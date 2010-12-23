@@ -14,7 +14,7 @@
 			<div class="options">
 				<label for="wpDestFile"><?= wfMsg('filename') ?>:</label><input type="text" name="wpDestFile" size="60" autocomplete="off"><br>
 				<label for="wpUploadDescription"><?= wfMsg('summary') ?>:</label><textarea name="wpUploadDescription"></textarea><br>
-				<label for="wpLicense"><?= wfMsg('license') ?></label><select name="wpLicense"><?= $licensesHtml ?></select><br>
+				<label for="wpLicense"><?= wfMsg('license') ?></label><?= $licensesHtml ?><br>
 				<label><input type="checkbox" name="wpIgnoreWarning"><?= wfMsg('ignorewarnings') ?></label>
 			</div>
 		</div>

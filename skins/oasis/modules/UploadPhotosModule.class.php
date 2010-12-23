@@ -11,8 +11,8 @@ class UploadPhotosModule extends Module {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 		
-		$licenses = new Licenses(array('licenses' => ''));
-		$this->licensesHtml = $licenses->getInputHTML('');
+		$licenses = new Licenses(array('id' => 'wpLicense', 'name' => 'wpLicense'));
+		$this->licensesHtml = $licenses->getInputHTML(null);
 		
 		wfProfileOut(__METHOD__);
 	}
@@ -23,16 +23,49 @@ class UploadPhotosModule extends Module {
 	 */
 	public function executeUpload($params) {
 		wfProfileIn(__METHOD__);
-		global $wgRequest;
+		global $wgRequest, $wgUser;
+		
+		if(!$wgUser->isLoggedIn()) {
+			echo 'Not logged in';
+			exit();
+		}
+		
+		$this->comment = $wgRequest->getText('wpUploadDescription');
+		$this->watchthis = $wgRequest->getBool('wpWatchthis') && $wgUser->isLoggedIn();
+		$this->license = $wgRequest->getText('wpLicense');
+		$this->copyrightstatus = $wgRequest->getText('wpUploadCopyStatus');
+		$this->copyrightsource = $wgRequest->getText('wpUploadSource');
+		$this->ignorewarning = $wgRequest->getCheck('wpIgnoreWarning');
 		
 		$details = null;
+		$up = new UploadFromFile();
+		$up->initializeFromRequest($wgRequest);
+		$up->getTitle();
 		
-		$f = new UploadForm($wgRequest);
-		$this->status = $f->internalProcessUpload($details);
+		$details = $up->verifyUpload();
+		
+		$this->status = (is_array($details) ? $details['status'] : UploadBase::UPLOAD_VERIFICATION_ERROR);
 		$this->statusMessage = '';
 		
 		if ($this->status > 0) {
-			$this->statusMessage = $this->uploadMessage($this->status, $details, $f);
+			$this->statusMessage = $this->uploadMessage($this->status, $details);
+		} else {
+			$warnings = array();
+			if(!$this->ignorewarning) {
+				$warnings = $up->checkWarnings();
+				if(!empty($warnings)) {
+					$this->status = 12;
+					$this->statusMessage .= $this->uploadWarning($warnings);
+				}
+			}
+			if(empty($warnings)) {
+				$pageText = SpecialUpload::getInitialPageText( $this->comment, $this->license,
+					$this->copyrightstatus, $this->copyrightsource );
+				$status = $up->performUpload( $this->comment, $pageText, $this->watchthis, $wgUser );
+				if (!$status->isGood()) {
+					$this->statusMessage .= "something is wrong with upload";
+				}
+			}
 		}
 	
 		echo json_encode($this->getData());
@@ -47,7 +80,7 @@ class UploadPhotosModule extends Module {
 		wfProfileIn(__METHOD__);
 		global $wgRequest;
 		
-		$this->existsWarning = UploadForm::ajaxGetExistsWarning($wgRequest->getVal('wpDestFile'));
+		$this->existsWarning = SpecialUpload::ajaxGetExistsWarning($wgRequest->getVal('wpDestFile'));
 		if(!empty($this->existsWarning) && $this->existsWarning != '&nbsp;') {
 			$this->existsWarning = '<h3>'.wfMsg('uploadwarning').'</h3>'.$this->existsWarning;
 		} else {
@@ -60,46 +93,35 @@ class UploadPhotosModule extends Module {
 	/**
 	 * This is practicaly a copy of UploadForm->processUpload(SpecialUpload.php), but just handles and returns status message
 	 */
-	private function uploadMessage($statusCode, $details, $mwUploadForm = null) {
+	private function uploadMessage($statusCode, $details) {
 		global $wgLang, $wgFileExtensions, $wgOut, $wgUser, $wgRequest;
 		$msg = '';
 		switch($statusCode) {
-			case UploadForm::SUCCESS:
+			case UploadBase::SUCCESS:
 				break;
-
-			case UploadForm::BEFORE_PROCESSING:
-				break;
-
-			case UploadForm::LARGE_FILE_SERVER:
-				$msg = wfMsgHtml( 'largefileserver' );
-				break;
-
-			case UploadForm::EMPTY_FILE:
+				
+			case UploadBase::EMPTY_FILE:
 				$msg = wfMsgHtml( 'emptyfile' );
 				break;
 
-			case UploadForm::MIN_LENGTH_PARTNAME:
+			case UploadBase::MIN_LENGTH_PARTNAME:
 				$msg = wfMsgHtml( 'minlength1' );
 				break;
 
-			case UploadForm::ILLEGAL_FILENAME:
+			case UploadBase::ILLEGAL_FILENAME:
 				$filtered = $details['filtered'];
 				$msg = wfMsgWikiHtml( 'illegalfilename', htmlspecialchars( $filtered ) );
 				break;
 
-			case UploadForm::PROTECTED_PAGE:
-				$msg = $details['permissionserrors'];
-				break;
-
-			case UploadForm::OVERWRITE_EXISTING_FILE:
+			case UploadBase::OVERWRITE_EXISTING_FILE:
 				$msg = $details['overwrite'];
 				break;
 
-			case UploadForm::FILETYPE_MISSING:
+			case UploadBase::FILETYPE_MISSING:
 				$msg = wfMsgExt( 'filetype-missing', array ( 'parseinline' ) );
 				break;
 
-			case UploadForm::FILETYPE_BADTYPE:
+			case UploadBase::FILETYPE_BADTYPE:
 				$finalExt = $details['finalExt'];
 				$msg = wfMsgExt( 'filetype-banned-type',
 						array( 'parseinline' ),
@@ -109,28 +131,8 @@ class UploadPhotosModule extends Module {
 					);
 				break;
 
-			case UploadForm::VERIFICATION_ERROR:
-				$veri = $details['veri'];
-				$msg = $veri->toString();
-				break;
-
-			case UploadForm::UPLOAD_VERIFICATION_ERROR:
-				$msg = $details['error'];
-				break;
-
-			case UploadForm::UPLOAD_WARNING:
-				$msg = '<h3>'.wfMsg('uploadwarning').'</h3>';
-				$msg .= $details['warning'];
-				/*
-				$tempname = 'Temp_file_'. $wgUser->getID(). '_' . time();
-				$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
-				$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
-				$msg .= "<div class=\"original\">{$file->getThumbnail(min($file->getWidth(), 250))->toHTML()}</div>";
-				*/
-				break;
-
-			case UploadForm::INTERNAL_ERROR:
-				$msg = $details['internal'];
+			case UploadBase::VERIFICATION_ERROR:
+				$msg = wfMsgHtml($details['details'][0]);
 				break;
 
 			default:
@@ -138,6 +140,31 @@ class UploadPhotosModule extends Module {
 	 	}
 	 	
 	 	return $msg;
+	}
+	
+	private function uploadWarning($warnings) {
+		$msg = '<h2>'.wfMsgHtml('uploadwarning').'</h2><ul class="warning">';
+		
+		foreach($warnings as $warning => $args) {
+			if( $warning == 'exists' ) {
+				$msg .= "\t<li>" . SpecialUpload::getExistsWarning( $args ) . "</li>\n";
+			} elseif( $warning == 'duplicate' ) {
+				$msg .= SpecialUpload::getDupeWarning( $args );
+			} elseif( $warning == 'duplicate-archive' ) {
+				$msg .= "\t<li>" . wfMsgExt( 'file-deleted-duplicate', 'parseinline',
+						array( Title::makeTitle( NS_FILE, $args )->getPrefixedText() ) )
+					. "</li>\n";
+			} else {
+				if ( $args === true )
+					$args = array();
+				elseif ( !is_array( $args ) )
+					$args = array( $args );
+				$msg .= "\t<li>" . wfMsgExt( $warning, 'parseinline', $args ) . "</li>\n";
+			}
+		}
+		
+		$msg .= '</ul>';
+		return $msg;
 	}
 	
 }
