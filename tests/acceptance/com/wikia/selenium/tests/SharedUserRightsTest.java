@@ -2,8 +2,8 @@ package com.wikia.selenium.tests;
 
 import org.testng.annotations.Test;
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.session;
-import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
+import static org.testng.AssertJUnit.assertFalse;
 
 public class SharedUserRightsTest extends BaseTest {
 
@@ -11,7 +11,8 @@ public class SharedUserRightsTest extends BaseTest {
 	public void testEnsureAnonymousUserCanNotChangeUserRights() throws Exception {
 		session().open("index.php?title=Special:UserRights");
 		session().waitForPageToLoad(TIMEOUT);
-		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h1"), "Permissions errors");
+		assertFalse(session().isElementPresent("//form[@id='mw-userrights-form1']"));
+		assertTrue(session().isTextPresent("You do not have permission to do that"));
 	}
 
 	@Test(groups={"oasis"})
@@ -19,7 +20,8 @@ public class SharedUserRightsTest extends BaseTest {
 		loginAsRegular();
 		session().open("index.php?title=Special:UserRights");
 		session().waitForPageToLoad(TIMEOUT);
-		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h1"), "Permissions errors");
+		assertFalse(session().isElementPresent("//form[@id='mw-userrights-form1']"));
+		assertTrue(session().isTextPresent("You do not have permission to do that"));
 	}
 
 	@Test(groups={"oasis"})

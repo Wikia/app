@@ -17,14 +17,15 @@ public class SkinChooserTest extends BaseTest {
 		session().open("index.php?title=Special:Preferences");
 		session().waitForPageToLoad(TIMEOUT);
 
-		assertFalse(session().isElementPresent("//input[@id='wpSkincologneblue']"));
-		assertFalse(session().isElementPresent("//input[@id='wpSkinmodern']"));
-		assertFalse(session().isElementPresent("//input[@id='wpSkinmyskin']"));
-		assertFalse(session().isElementPresent("//input[@id='wpSkinsimple']"));
-		assertFalse(session().isElementPresent("//input[@id='wpSkinstandard']"));
-		assertFalse(session().isElementPresent("//input[@id='wpCorporate']"));
-		assertFalse(session().isElementPresent("//input[@id='wpSkinmonaco_old']")); // RT#25098
-		assertTrue(session().isElementPresent("//input[@id='wpSkinoasis']"));
-		assertTrue(session().isElementPresent("//input[@id='wpSkinmonobook']"));
+		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-cologneblue']"));
+		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-modern']"));
+		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-myskin']"));
+		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-simple']"));
+		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-standard']"));
+		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-corporate']"));
+		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-monaco']")); // RT#25098
+		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-vector']"));
+		assertTrue(session().isElementPresent("//input[@id='mw-input-skin-oasis']"));
+		assertTrue(session().isElementPresent("//input[@id='mw-input-skin-monobook']"));
 	}
 }

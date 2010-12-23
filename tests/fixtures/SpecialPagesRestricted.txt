@@ -1,7 +1,7 @@
-Block,IP Address or username
-CheckUser,This tool scans recent changes to retrieve the IPs
+Block,IP address or username
+CheckUser,This tool scans recent changes to retrieve the IP
 MultiLookup,Search for accounts
-MultipleUpload,Upload multiple files
+MultipleUpload,Upload multiple photos
 Preferences,Your e-mail address was authenticated on
 UnwatchedPages,The following data is cached
-Upload,Upload image
+Upload,Upload photo

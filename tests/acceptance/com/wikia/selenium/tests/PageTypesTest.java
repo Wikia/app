@@ -86,6 +86,7 @@ public class PageTypesTest extends BaseTest {
 		
 		// cleanup
 		loginAsStaff();
+		session().open("index.php?title=Category:Some category");
 		doDelete("label=regexp:^.*Author request", "Wikia PageTypes test");
 	}
 

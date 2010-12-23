@@ -11,7 +11,7 @@ DoubleRedirects,The following data
 Editcount,User:
 FewestRevisions,Pages with the fewest revisions
 ImageList,This special page shows all uploaded files.
-ListRedirects,redirects
+ListRedirects,Redirects
 ListUsers,Display users starting at
 Log,Combined display of
 LonelyPages,The following pages are not linked from or transcluded into other pages in
@@ -22,7 +22,7 @@ RecentChanges,Recent changes
 RecentChangesLinked,Related changes
 ShortPages,Short pages
 TagsReport,pages, which contain special tag
-UncategorizedImages,Uncategorized files
+UncategorizedImages,Uncategorized photos
 UncategorizedPages,Uncategorized pages
 UnusedImages,Please note that other web sites may link
 UnusedTemplates,This page lists all pages in the

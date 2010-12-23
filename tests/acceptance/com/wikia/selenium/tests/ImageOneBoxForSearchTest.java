@@ -9,9 +9,9 @@ public class ImageOneBoxForSearchTest extends BaseTest {
 	@Test(groups={"CI"})
 	public void testImageSearchResults() throws Exception {
 		session().open("/");
-		waitForElement("search_box", TIMEOUT);
-		session().type("search_field", "kermit piggy");
-		session().click("search-button");
+		waitForElement("WikiaSearch", TIMEOUT); 
+		session().type("search", "kermit piggy");
+		session().click("//form[@id='WikiaSearch']//button/img[contains(@class, 'search')]");
 
 		session().waitForPageToLoad(TIMEOUT);
 		assertTrue(session().isElementPresent("image-one-box-search-results"));
