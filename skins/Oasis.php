@@ -4,6 +4,13 @@ if( !defined( 'MEDIAWIKI' ) )
 
 class SkinOasis extends SkinTemplate {
 
+	function __construct() {
+		$this->skinname  = 'oasis';
+		$this->stylename = 'oasis';
+		$this->template  = 'OasisTemplate';
+		$this->themename = 'oasis';	
+	}
+
 	function initPage( OutputPage $out ) {
 		parent::initPage( $out );
 		$this->skinname  = 'oasis';
