@@ -88,7 +88,10 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 					$fit = $this->appendLanguages( $p );
 					break;
 				default :
-					ApiBase :: dieDebug( __METHOD__, "Unknown prop=$p" );
+					wfRunHooks( 'UseExternalQuerySiteInfo', array(&$this) );
+					if ( !isset($this->noErrors) ) { 
+						ApiBase :: dieDebug( __METHOD__, "Unknown prop=$p" );
+					}
 			}
 			if ( !$fit )
 			{
