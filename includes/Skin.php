@@ -386,7 +386,6 @@ class Skin extends Linker {
 		global $wgVersion, $wgEnableAPI, $wgEnableWriteAPI;
 		global $wgRestrictionTypes;
 		global $wgMWSuggestTemplate, $wgDBname, $wgEnableMWSuggest;
-		global $wgEnableNewParser;
 		global $wgSitename;
 
 		$ns = $wgTitle->getNamespace();
@@ -434,7 +433,6 @@ class Skin extends Linker {
 			'wgVersion' => $wgVersion,
 			'wgEnableAPI' => $wgEnableAPI,
 			'wgEnableWriteAPI' => $wgEnableWriteAPI,
-			'wgEnableNewParser' => $wgEnableNewParser,
 			'wgSeparatorTransformTable' => $compactSeparatorTransTable,
 			'wgDigitTransformTable' => $compactDigitTransTable,
 			'wgMainPageTitle' => $mainPage ? $mainPage->getPrefixedText() : null,
