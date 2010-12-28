@@ -7,8 +7,8 @@ function wfSpecialProtectsite() {
 }
 
 /* Class that handles the actual Special:Protectsite page */
-require 'HTMLForm.php';
-class ProtectsiteForm extends HTMLForm
+
+class ProtectsiteForm 
 {
   var $mName, $mRequest, $action, $persist_data;
 
@@ -271,4 +271,12 @@ class ProtectsiteForm extends HTMLForm
       '</form>'
     );
   }
+  /**************************************************************/
+  /* dupe the code for the last non-overridden HTMLForm function used, so we can decouple from HTMLForm.
+     TODO: redo all output code to use Xml:: calls, and not these "helper" functions
+	 (or possibly shortterm: rewrite the helpers to use XML:: and leave it unitl proper templating happens) */
+  private function fieldset( $name, $content ) {
+		return "<fieldset><legend>".wfMsg($this->mName.'-'.$name)."</legend>\n" .
+			$content . "\n</fieldset>\n";
+	}
 }
