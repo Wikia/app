@@ -74,8 +74,8 @@ function wfSoapFailures(){
 		$songResult = getSong($artist, $song);*/
 		
 		// Pull in the NuSOAP code
-		global $IP;
-		require_once("$IP/extensions/3rdparty/LyricWiki/nusoap.php");
+		$dir = dirname(__FILE__) . '/';
+		require_once($dir . 'nusoap.php');
 		// Create the client instance
 		$wsdlUrl = 'http://'.$_SERVER['SERVER_NAME'].'/server.php?wsdl&1';
 		$client = new nusoapclient($wsdlUrl, true);
