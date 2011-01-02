@@ -9,6 +9,9 @@
 // Of Poker" on a search engine, they won't get LyricWiki results because there is no page by that
 // name.  However, now that we have implied redirects, that page can exist... so this extension makes
 // it so there will be a link to that name so that spiders can index that version of the page as well.
+//
+// This works in co-operation with Special_ArtistRedirects which will send the spiders to the various
+// spelled pages to begin with (this extension is just putting a link ON those pages).
 ////
 
 if(isset($wgScriptPath)){
