@@ -1,5 +1,7 @@
 <?php
 
+// NOTE: This doesn't appear to be included anywhere.  Is it used, or planned to be used? - SWC 20110101
+
 // require_once 'Special_SOAP.getSong.php';
 // require_once 'Special_SOAP.getSOTD.php';
 
