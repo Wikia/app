@@ -137,6 +137,7 @@ class CdbWriter_DBA {
 		if ( !rename( $this->tmpFileName, $this->realFileName ) ) {
 			throw new MWException( 'Unable to move the new CDB file into place.' );
 		}
+		chmod( $this->realFileName, 0775 );
 		unset( $this->handle );
 	}
 
