@@ -237,9 +237,15 @@ class CloseWikiMaintenance {
 					/**
 					 * drop database, get db handler for proper cluster
 					 */
-					global $wgDBserver, $wgDBadminuser, $wgDBadminpassword;
-					$centralDb = empty( $cluster) ? "wikicities" : "wikicities_{$cluster}";
-					$dbw = new Database( $wgDBserver, $wgDBadminuser, $wgDBadminpassword, $centralDb );
+					global $wgDBadminuser, $wgDBadminpassword;
+					$centralDB = empty( $cluster) ? "wikicities" : "wikicities_{$cluster}";
+
+					/**
+					 * get connection but actually we only need info about host
+					 */
+					$local = wfGetDB( DB_MASTER, array(), $centralDB );
+					$server = $local->getLBInfo( 'host' );
+					$dbw = new Database( $server, $wgDBadminuser, $wgDBadminpassword, $centralDB );
 					$dbw->begin();
 					$dbw->query( "DROP DATABASE `{$row->city_dbname}`");
 					$dbw->commit();
