@@ -140,6 +140,8 @@ function wfSIWEChooseAction(){
 function wfSIWEChangeUmbrella(){
 	global $wgRequest, $wgExternalSharedDB;
 
+	$ret = '';
+	
 	list($wikia, $wikiaID) = wfSIWEGetRequestData();
 
 	$db = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
@@ -429,6 +431,8 @@ function wfSIWELinkWikis(){
 	#	"?action=change_umbrella&amp;wikia_id=$wikiaID'>edit</a>] and $ext_wikiaURL [<a href='".
 	#	$_SERVER['PHP_SELF']. "?action=change_umbrella&amp;wikia_id=$ext_wikiaID'>edit</a>] <b>do not match</b>.");
 	#}
+	
+	$ret = '';
 
 	$ret .= "<p>The following interwiki links will be added:</p>\n
     <table class='wikitable'>

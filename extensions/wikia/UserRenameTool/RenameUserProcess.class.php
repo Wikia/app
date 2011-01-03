@@ -63,6 +63,8 @@ class RenameUserProcess {
 		array( 'table' => 'revision', 'userid_column' => 'rev_user', 'username_column' => 'rev_user_text' ),
 		array( 'table' => 'text', 'userid_column' => 'old_user', 'username_column' => 'old_user_text' ),
 		array( 'table' => 'user_newtalk', 'userid_column' => null, 'username_column' => 'user_ip' ),
+		# Core 1.16 tables
+		array( 'table' => 'logging', 'userid_column' => null, 'username_column' => 'log_user_text' ),
 		# AbuseFilter extension
 		array( 'table' => 'abuse_filter', 'userid_column' => 'af_user', 'username_column' => 'af_user_text' ),
 		array( 'table' => 'abuse_filter_log', 'userid_column' => 'afl_user', 'username_column' => 'afl_user_text' ),
