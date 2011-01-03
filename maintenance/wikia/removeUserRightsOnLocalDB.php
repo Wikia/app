@@ -25,8 +25,8 @@ if (isset($options['help'])) {
 $quiet = isset($options['quiet']);
 
 $conds = array(
-	'ug_group' => 'checkuser',
-	'ug_user' => array('874612', '826221', '126681', '35784')	//see RT#67513
+	'ug_group' => 'heper',
+	'ug_user' => array('96953')	//see RT#67513, RT#131567
 );
 
 $dbr = WikiFactory::db(DB_MASTER);
@@ -47,16 +47,17 @@ while ($row = $dbr->fetchObject($res)) {
 $dbr->freeResult($res);
 
 foreach ($databases as $city_id => $database) {
-  if( in_array( $city_id, array( 177 ) ) ) {
-      continue;
-  }
+	//skip central (global user rights)
+	if ( in_array( $city_id, array( 177 ) ) ) {
+		continue;
+	}
 
 	if (!$quiet) {
 		echo "Connecting to wiki (ID:$city_id, dbname:$database)\n";
 	}
 	$dbw = wfGetDB(DB_MASTER, array(), $database);
 	$dbw->delete(
-	        'user_groups',
+		'user_groups',
 		$conds,
 		__FUNCTION__
 	);
