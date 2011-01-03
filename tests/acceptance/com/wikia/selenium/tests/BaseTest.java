@@ -134,11 +134,20 @@ public class BaseTest {
 
 	protected void waitForTextPresent(String text, int timeOut)
 			throws Exception {
+		waitForTextPresent(text, timeOut, null);
+	}
+
+	protected void waitForTextPresent(String text, int timeOut, String message)
+			throws Exception {
 		long startTimestamp = (new Date()).getTime();
 		while (true) {
 			long curTimestamp = (new Date()).getTime();
 			if (curTimestamp-startTimestamp > timeOut) {
-				assertTrue(session().isTextPresent(text));
+				if (message == null) {
+					assertTrue(session().isTextPresent(text));
+				} else {
+					assertTrue(message, session().isTextPresent(text));
+				}
 				break;
 			}
 
@@ -149,6 +158,11 @@ public class BaseTest {
 			} catch( SeleniumException e ) {}
 			Thread.sleep(1000);
 		}
+	}
+
+	protected void waitForTextPresent(String text, String timeOut, String message)
+			throws Exception {
+		waitForTextPresent(text, Integer.parseInt(timeOut), message);
 	}
 
 	protected void waitForTextPresent(String text, String timeOut)
