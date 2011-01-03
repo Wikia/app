@@ -19,7 +19,7 @@ var MyTools = {
 			event.preventDefault();
 			return false;
 		});
-		
+
 		/** disables the enter key for this specific form **/
 		$(".my-tools-form").keypress(function(e) {
 			if (e.which == 13) {
@@ -48,12 +48,12 @@ var MyTools = {
 
 		});
 
-		$.getScript(stylepath + '/common/jquery/jquery.autocomplete.js', function() {
+		$.loadJQueryAutocomplete(function() {
 			$("#MyToolsConfiguration").find('.search').autocomplete({
 				serviceUrl: wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=MyTools&actionName=Suggestions&outputType=data',
 				onSelect: function(value, data) {
-					var drag = '<img src="' + stylepath + '/common/blank.gif" class="drag">';
-					var trash = '<img src="' + stylepath + '/common/blank.gif" class="trash">';
+					var drag = '<img src="' + wgBlankImgUrl + '" class="drag sprite">';
+					var trash = '<img src="' + wgBlankImgUrl + '" class="trash sprite">';
 					$("#MyToolsConfiguration").find('input[type=text]').val('');
 					$('<li>').addClass(data).html(drag + value + trash).appendTo("#MyToolsConfiguration .list");
 				},
