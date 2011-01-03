@@ -1,4 +1,5 @@
 == Changes since 20101213 ==
+* rt#86290: ArticleComments are shown on diff pages (Marooned)
 * rt#141744: wording on lightbox: plurals (Marooned)
 * rt#141743: wording on lightbox (Marooned)
 * rt#141335: wiki name used instead of user name on WikiBuilder (Marooned)
