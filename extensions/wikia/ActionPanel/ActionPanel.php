@@ -43,8 +43,8 @@ function wfAddActionPanel($tpl, &$html){
 
 	global $wgStyleVersion, $wgExtensionsPath;
 	
-	$html .= '<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/ActionPanel/ActionPanel.css?'.$wgStyleVersion.'"/>\n';
-	$html .= '<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/ActionPanel/ActionPanel.js?'.$wgStyleVersion.'"></script>\n';
+	$html .= '<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/ActionPanel/ActionPanel.css?'.$wgStyleVersion.'"/>';
+	$html .= '<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/ActionPanel/ActionPanel.js?'.$wgStyleVersion.'"></script>';
 	
 	return true;
 }
