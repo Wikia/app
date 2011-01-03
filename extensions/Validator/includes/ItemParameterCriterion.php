@@ -159,6 +159,7 @@ abstract class ItemParameterCriterion extends ParameterCriterion {
 	 */			
 	protected function getPartialListErrorMessage( Parameter $parameter, array $invalidItems, $allInvalid ) {
 		global $wgLang;
+
 		return $this->getFullListErrorMessage( $parameter ) . 
 			wfMsgExt(
 				'validator-error-omitted',
