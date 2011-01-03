@@ -2,7 +2,6 @@ package com.wikia.selenium.tests;
 
 import org.testng.annotations.Test;
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.session;
-import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class WikiaLogoTest extends BaseTest {
@@ -13,7 +12,7 @@ public class WikiaLogoTest extends BaseTest {
 		session().waitForPageToLoad(TIMEOUT);
 		session().click("//li[@class='WikiaLogo']/a");
 		session().waitForPageToLoad(TIMEOUT);
-		assertEquals("http://www.wikia.com/Special:LandingPage", session().getLocation());
+		assertTrue(session().getLocation().contains("http://www.wikia.com/Special:LandingPage"));
 		assertTrue(session().isElementPresent("//section[@class='LandingPage']"));
 	}
 }

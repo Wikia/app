@@ -29,6 +29,14 @@
         </user>
         <extension>
             <wikia>
+            	<AutoCreateWiki>
+            		<lang>en</lang>
+            		<lang>es</lang>
+            		<lang>de</lang>
+            		<lang>pl</lang>
+            		<lang>pt-br</lang>
+            		<lang>zh</lang>
+            	</AutoCreateWiki>
                 <PageLayoutBuilder>
                 </PageLayoutBuilder>
                 <Phalanx>
