@@ -96,7 +96,7 @@ class CriterionInArray extends ItemParameterCriterion {
 		if ( $originalCount > 15 ) {
 			$allowedValues = array_slice( $this->allowedValues, 0, 13 );
 			$omitCount = $originalCount - count( $allowedValues );
-			
+
 			return wfMsgExt(
 				'validator-error-accepts-only-omitted',
 				'parsemag',
@@ -130,13 +130,13 @@ class CriterionInArray extends ItemParameterCriterion {
 		if ( $originalCount > 15 ) {
 			$allowedValues = array_slice( $this->allowedValues, 0, 13 );
 			$omitCount = $originalCount - count( $allowedValues );
-			
+
 			return wfMsgExt(
 				'validator-list-error-accepts-only-omitted',
 				'parsemag',
 				$parameter->getOriginalName(),
-				$parameter->getValue(),
 				$wgLang->listToText( $allowedValues ),
+				count( $allowedValues ),
 				$wgLang->formatNum( $omitCount )
 			);			
 		}

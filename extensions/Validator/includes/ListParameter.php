@@ -111,13 +111,19 @@ class ListParameter extends Parameter {
 	 * @since 0.4
 	 */
 	protected function cleanValue() {
-		$this->value = explode( $this->delimiter, $this->originalValue );
-
-		if ( $this->trimValue ) {
-			foreach ( $this->value as &$item ) {
-				$item = trim( $item );
-			}
-		}		
+		if ( $this->originalValue == '' ) {
+			// If no value is provided, there are no items, and not a single empty item.
+			$this->value = array();			
+		}
+		else {
+			$this->value = explode( $this->delimiter, $this->originalValue );
+	
+			if ( $this->trimValue ) {
+				foreach ( $this->value as &$item ) {
+					$item = trim( $item );
+				}
+			}	
+		}
 	}	
 	
 	/**
