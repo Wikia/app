@@ -237,10 +237,10 @@ class CloseWikiMaintenance {
 					/**
 					 * drop database, get db handler for proper cluster
 					 */
+					global $wgDBserver, $wgDBadminuser, $wgDBadminpassword;
 					$centralDb = empty( $cluster) ? "wikicities" : "wikicities_{$cluster}";
-					$dbw = wfGetDB( DB_MASTER, array(), $centralDb );
+					$dbw = new Database( $wgDBserver, $wgDBadminuser, $wgDBadminpassword, $centralDb );
 					$dbw->begin();
-					#echo "DROP DATABASE `{$row->city_dbname}`";
 					$dbw->query( "DROP DATABASE `{$row->city_dbname}`");
 					$dbw->commit();
 					Wikia::log( __CLASS__, "info", "{$row->city_dbname} dropped from cluster {$cluster}" );
