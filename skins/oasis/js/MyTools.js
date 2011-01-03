@@ -61,7 +61,9 @@ var MyTools = {
 				appendTo: '#MyToolsConfiguration form',
 				width: '270px'
 			});
+		});
 
+		$.loadJQueryUI(function() {
 			$("#MyToolsConfiguration").find(".list").sortable({
 				axis: "y",
 				handle: ".drag",

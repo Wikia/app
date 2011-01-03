@@ -1,9 +1,6 @@
 <div id="MyToolsConfiguration" class="MyToolsConfiguration">
 
-	<script src="<?= $wgScriptPath ?>/skins/common/jquery/jquery-ui-1.7.2.custom.js"></script>
-
 	<h1><?= wfMsg('oasis-edit-my-tools-title') ?></h1>
-
 
 	<form class="my-tools-form">
 		<fieldset>
