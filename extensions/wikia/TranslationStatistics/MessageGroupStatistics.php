@@ -100,7 +100,7 @@ class MessageGroupStatistics {
 
 		$dbw->insert(
 				'groupstats',
-				$data
+				$data,
 			    );
 
 		return $data;
@@ -127,15 +127,10 @@ class MessageGroupStatistics {
 
 	// attaches to ArticleSaveComplete
 	public static function invalidateCache( &$article, &$user, $text, $summary, $minoredit, &$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {	
-
-		// we only care about namespace MediaWiki
-		if ( $article->mTitle->getNamespace() !== NS_MEDIAWIKI ) {
-			return true;
-		}
+		$ids = array();
 
 		$name = $article->mTitle->getText();
-                $parts = explode( $name, 2 );
-                $lang = empty( $parts[1] ) ? false : $parts[1];
+                list( $key, $lang ) = explode( $name, 2 );
 
 		// check if this is a valid language variant
 		if ( Language::getLanguageName( $lang ) == ''  ) {
@@ -143,18 +138,24 @@ class MessageGroupStatistics {
 		}
 
 		// match message to group here
-		if ( false ) {
+		$groups = TranslateUtils::messageKeyToGroups( $article->mTitle->getNamespace(), $key );
+		if ( empty( $groups ) ) {
 			// message does not belong to any recognized group
 			return true;
 		}
 
+		foreach ( $groups as $group ) {
+			$ids[] = $group->getId();
+		}
+
 		$conds = array(
-			'gs_group' => $groupId,
+			'gs_group' => $ids,
 			'gs_lang' => $lang,
 		);
 
 		$dbw = wfGetDB( DB_MASTER );
 
+		// @TODO maybe update instaed of delete
 		$dbw->delete( 'groupstats', $conds );
 
 		return true;
