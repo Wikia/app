@@ -10,18 +10,16 @@ class ArticleCommentInit {
 		if (is_null(self::$enable)) {
 			self::$enable = self::ArticleCommentCheckTitle($wgTitle);
 
-			//respect diffonly settings for user - see RT#65037
-			$diff = $wgRequest->getVal('diff');
-			$diffOnly = $wgRequest->getBool('diffonly', $wgUser->getOption('diffonly'));
-			if (isset($diff) && $diffOnly) {
+			if (self::$enable && !is_null($wgRequest->getVal('diff'))) {
 				self::$enable = false;
 			}
 
 			$action = $wgRequest->getVal('action', 'view');
-			if ($action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted()) {
+			if (self::$enable && $action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted()) {
 				self::$enable = false;
 			}
-			if ($action != 'view' && $action != 'purge') {
+
+			if (self::$enable && $action != 'view' && $action != 'purge') {
 				self::$enable = false;
 			}
 		}
