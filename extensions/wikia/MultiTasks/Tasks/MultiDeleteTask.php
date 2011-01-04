@@ -250,7 +250,7 @@ class MultiDeleteTask extends BatchTask {
 				$wikiArr[$oRow->city_id] = $oRow->city_id;
 			}
 			$dbr->freeResult ($oRes);
-		} elseif ( !empty($wikiaId) && ( !empty($wikiList) && !in_array( $wikiaId, $wikiList ) ) ) {
+		} elseif ( !empty($wikiaId) && ( is_array($wikiList) && !in_array( $wikiaId, $wikiList ) ) ) {
 			$dbname = WikiFactory::IDtoDB($wikiaId);
 			$dbr = wfGetDB (DB_SLAVE, 'stats', $dbname);
 			$where = array(
