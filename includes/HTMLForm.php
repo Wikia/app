@@ -92,7 +92,7 @@ class HTMLForm {
 	protected $mSubmitTooltip;
 	protected $mTitle;
 	
-	protected $mUseMultipart = false;
+	protected $mUseMultipart = true;
 	protected $mHiddenFields = array();
 	protected $mButtons = array();
 	
