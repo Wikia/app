@@ -2,6 +2,99 @@
 
 class SkinChooser {
 
+	public static function GetPreferences($user, &$defaultPreferences) {
+		global $wgEnableAnswers, $wgForceSkin, $wgAdminSkin, $wgDefaultSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgOasis2010111, $wgSkipSkins, $wgSkipOldSkins;
+
+		$mSkin  = $user->getOption('skin');
+
+		// hacks for Answers
+		if (!empty($wgEnableAnswers)) {
+			$mSkin = 'answers';
+		}
+
+		// no skin settings at all when skin is forced
+		if(!empty($wgForceSkin)) {
+			//return true;
+		}
+
+		if(!empty($wgAdminSkin)) {
+			$defaultSkinKey = $wgAdminSkin;
+		} else if(!empty($wgDefaultTheme)) {
+			$defaultSkinKey = $wgDefaultSkin . '-' . $wgDefaultTheme;
+		} else {
+			$defaultSkinKey = $wgDefaultSkin;
+		}
+		
+		// load list of skin names
+		$validSkinNames = Skin::getSkinNames();
+
+		// and sort them
+		foreach($validSkinNames as $skinkey => &$skinname) {
+			if(isset($skinNames[$skinkey]))  {
+				$skinname = $skinNames[$skinkey];
+			}
+		}
+		asort($validSkinNames);
+
+		$validSkinNames2 = $validSkinNames;
+		
+		$previewtext = wfMsg('skin-preview');
+		if(isset($wgSkinPreviewPage) && is_string($wgSkinPreviewPage)) {
+			$previewLinkTemplate = Title::newFromText($wgSkinPreviewPage)->getLocalURL('useskin=');
+		} else {
+			$mptitle = Title::newMainPage();
+			$previewLinkTemplate = $mptitle->getLocalURL('useskin=');
+		}		
+
+		$oldSkinNames = array();
+		foreach($validSkinNames as $skinKey => $skinVal) {
+			if (($skinKey == 'monaco' && !empty($wgOasis2010111)) || $skinKey == 'oasis' || ((in_array($skinKey, $wgSkipSkins) || in_array($skinKey, $wgSkipOldSkins)) && !($skinKey == $mSkin))) {
+				continue;
+			}
+			$oldSkinNames[$skinKey] = $skinVal;
+		}
+
+		$skins = array();
+		$skins[wfMsg('new-look')] = 'oasis';
+				
+		// display radio buttons for rest of skin
+		if(count($oldSkinNames) > 0) {
+			foreach($oldSkinNames as $skinKey => $skinVal) {
+				$previewlink = ' <a target="_blank" href="'.htmlspecialchars($previewLinkTemplate.$skinKey).'">'.$previewtext.'</a>';
+				$skins[$skinVal.$previewlink.($skinKey == $defaultSkinKey ? ' ('.wfMsg('default').')' : '')] = $skinKey;
+			}
+		}
+
+		// hide default MediaWiki skin fieldset
+		unset($defaultPreferences['skin']);
+
+		$defaultPreferencesTemp = array();
+		
+		foreach($defaultPreferences as $k => $v) {
+			$defaultPreferencesTemp[$k] = $v;
+			if($k == 'oldsig') {
+
+				$defaultPreferencesTemp['skin'] = array(
+					'type' => 'radio',
+					'options' => $skins,
+					'label' => '&nbsp;',
+					'section' => 'personal/layout',
+				);
+
+				$defaultPreferencesTemp['showAds'] = array(
+					'type' => 'toggle',
+					'label-message' => 'tog-showAds',
+					'section' => 'personal/layout',
+				);
+
+			}
+		}
+		
+		$defaultPreferences = $defaultPreferencesTemp;
+
+		return true;
+	}
+
 	static private $wgAllowUserSkinOriginal;
 
 	/**
@@ -168,176 +261,6 @@ class SkinChooser {
 		$extraToggle[] = 'skinoverwrite';
 		$extraToggle[] = 'showAds';
 		return true;
-	}
-
-	/**
-	 * Render skin chooser form for Special:Preferences
-	 */
-	public static function renderSkinPreferencesForm($pref) {
-		global $wgOut;
-		$wgOut->addHTML(SkinChooser::renderSkinPreferencesFormHtml($pref));
-		return false;
-	}
-
-	public static function renderSkinPreferencesFormHtml($pref) {
-		global $wgSkinTheme, $wgSkipSkins, $wgStylePath, $wgSkipThemes, $wgUser, $wgDefaultSkin, $wgDefaultTheme, $wgSkinPreviewPage, $wgAdminSkin, $wgSkipOldSkins, $wgForceSkin, $wgEnableAnswers, $wgOasis2010111;
-		$html = '';
-
-		// don't show "See custom wikis" inside misc tab
-		$pref->mUsedToggles['skinoverwrite'] = true;
-
-		// hacks for Answers
-		if (!empty($wgEnableAnswers)) {
-			$pref->mSkin = 'answers';
-			$pref->mTheme = self::getUserOption('theme');
-		}
-
-		if(!empty($wgForceSkin)) {
-			$html .= wfMsg('skin-forced');
-			$html .= '<div style="display:none;">'.self::getToggle('skinoverwrite').'</div>';
-
-			self::log(__METHOD__, "skin is forced ({$wgForceSkin})");
-			return false;
-		}
-
-		if(!empty($wgAdminSkin)) {
-			$defaultSkinKey = $wgAdminSkin;
-		} else if(!empty($wgDefaultTheme)) {
-			$defaultSkinKey = $wgDefaultSkin . '-' . $wgDefaultTheme;
-		} else {
-			$defaultSkinKey = $wgDefaultSkin;
-		}
-
-		# Load list of skin names
-		$validSkinNames = Skin::getSkinNames();
-
-		# And sort them
-		foreach ($validSkinNames as $skinkey => & $skinname ) {
-			if ( isset( $skinNames[$skinkey] ) )  {
-				$skinname = $skinNames[$skinkey];
-			}
-		}
-		asort($validSkinNames);
-
-		$validSkinNames2 = $validSkinNames;
-
-		$previewtext = wfMsg('skin-preview');
-		//ticket #2428 - Marooned
-		if(isset($wgSkinPreviewPage) && is_string($wgSkinPreviewPage)) {
-			$previewLinkTemplate = Title::newFromText($wgSkinPreviewPage)->getLocalURL('useskin=');
-		} else {
-			$mptitle = Title::newMainPage();
-			$previewLinkTemplate = $mptitle->getLocalURL('useskin=');
-		}
-
-		# Used to display different background color every 2nd section
-		$themeCount = 0;
-		$skinKey = "";
-
-		$html .= '<div '.($themeCount++%2!=1 ? 'class="prefSection"' : '').'>';
-		$html .= '<h2>'.wfMsg('site-layout').'</h2>';
-
-		$html .= '<div><input type="radio" value="oasis" id="wpSkinoasis" name="wpSkin"'.($pref->mSkin == 'oasis' ? ' checked="checked"' : '').'/><label for="wpSkinoasis">'.wfMsg('new-look').'</label> '.($skinKey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</div>';
-
-		$oldSkinNames = array();
-		foreach($validSkinNames as $skinKey => $skinVal) {
-			if (($skinKey=='monaco' && !empty($wgOasis2010111)) || $skinKey=='oasis' || ( ( in_array( $skinKey, $wgSkipSkins ) || in_array( $skinKey, $wgSkipOldSkins )) && !($skinKey == $pref->mSkin) ) ) {
-				continue;
-			}
-			$oldSkinNames[$skinKey] = $skinVal;
-		}
-
-		# Display radio buttons for rest of skin
-		if(count($oldSkinNames) > 0) {
-			foreach($oldSkinNames as $skinKey => $skinVal) {
-				$previewlink = '<a target="_blank" href="'.htmlspecialchars($previewLinkTemplate.$skinKey).'">'.$previewtext.'</a>';
-				$html .= '<div><input type="radio" value="'.$skinKey.'" id="wpSkin'.$skinKey.'" name="wpSkin"'.($pref->mSkin == $skinKey ? ' checked="checked"' : '').'/><label for="wpSkin'.$skinKey.'">'.$skinVal.'</label> '.$previewlink.($skinKey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</div>';
-			}
-		}
-
-		$html .= $pref->getToggle('showAds');
-
-		$html .= '</div>';
-
-		// RT:71650 removing monaco.  admin options are only for monaco.
-		if(empty($wgOasis2010111)) {
-			# Display ComboBox for admins/staff only
-			if( $wgUser->isAllowed( 'setadminskin' ) ) {
-
-				$html .= "<br/><h2>".wfMsg('admin_skin')."</h2>".wfMsg('defaultskin_choose');
-				$html .= '<select name="adminSkin" id="adminSkin">';
-
-				foreach($wgSkinTheme as $skinKey => $skinVal) {
-
-					# Do not display skins which are defined in wgSkipSkins array
-					if(in_array($skinKey, $wgSkipSkins)) {
-						continue;
-					}
-					if($skinKey == 'quartz') {
-						$skinKeyA = explode('-', $wgAdminSkin);
-						if($skinKey != $skinKeyA[0]) {
-							continue;
-						}
-					}
-
-					if(count($wgSkinTheme[$skinKey]) > 0) {
-						$html .= '<optgroup label="'.wfMsg($skinKey . '_skins').'">';
-						foreach($wgSkinTheme[$skinKey] as $themeKey => $themeVal) {
-
-							# Do not display themes which are defined in wgSkipThemes
-							if(isset($wgSkipThemes[$skinKey]) && in_array($themeVal, $wgSkipThemes[$skinKey])) {
-								continue;
-							}
-							if($skinKey == 'quartz') {
-								if($themeVal != $skinKeyA[1]) {
-									continue;
-								}
-							}
-							$skinkey = $skinKey . '-' . $themeVal;
-							$html .= "<option value='{$skinkey}'".($skinkey == $wgAdminSkin ? ' selected' : '').">".wfMsg($skinkey)."</option>";
-						}
-						$html .= '</optgroup>';
-					}
-				}
-				$html .= "<option value='ds'".(empty($wgAdminSkin) ? ' selected' : '').">".wfMsg('adminskin_ds')."</option>";
-				$html .= '</select>';
-
-				wfLoadExtensionMessages('SkinChooser');
-				//$html .= wfMsg( 'skinchooser-customcss' );
-				global $wgTitle;
-				$tmpParser = new Parser();
-				$tmpParser->setOutputType(OT_HTML);
-				$tmpParserOptions = new ParserOptions();
-				$html .= $tmpParser->parse( wfMsg( 'skinchooser-customcss' ), $wgTitle, $tmpParserOptions)->getText();
-			} else {
-				$html .= '<br/>';
-				if(!empty($wgAdminSkin)) {
-					$elems = explode('-', $wgAdminSkin);
-					$skin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
-					$theme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
-					if($theme != 'custom') {
-						$html .= wfMsg('defaultskin1', wfMsg($skin.'_skins').' '.wfMsg($wgAdminSkin));
-					} else {
-						global $wgEnableAnswers;
-						if( !empty($wgEnableAnswers) ) {
-							$skinname = 'Answers';
-						} else {
-							$skinname = ucfirst($skin);
-						}
-						$html .= wfMsgForContent('defaultskin2', wfMsg($skin.'_skins').' '.wfMsg($wgAdminSkin), Skin::makeNSUrl($skinname.'.css','',NS_MEDIAWIKI));
-					}
-				} else {
-					if(empty($wgDefaultTheme)) {
-						$name = $validSkinNames2[$wgDefaultSkin];
-					} else {
-						$name = wfMsg($wgDefaultSkin.'_skins').' '.wfMsg($wgDefaultSkin.'-'.$wgDefaultTheme);
-					}
-					$html .= wfMsg('defaultskin3',$name);
-				}
-			}
-		}
-
-		return $html;
 	}
 
 	/**
