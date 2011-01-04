@@ -18,9 +18,5 @@ $wgAutoloadClasses['SkinChooser'] = $dir . 'SkinChooser.class.php';
 $wgExtensionMessagesFiles['SkinChooser'] = $dir . 'SkinChooser.i18n.php';
 
 // register hooks
-$wgHooks['ModifyPreferencesValue'][] = 'SkinChooser::setThemeForPreferences';
-$wgHooks['SavePreferencesHook'][] = 'SkinChooser::savePreferences';
-$wgHooks['SavePreferences'][] = 'SkinChooser::savePreferencesAfter';
-$wgHooks['UserToggles'][] = 'SkinChooser::skinChooserExtraToggle';
 $wgHooks['GetPreferences'][] = 'SkinChooser::GetPreferences';
 $wgHooks['AlternateGetSkin'][] = 'SkinChooser::getSkin';
