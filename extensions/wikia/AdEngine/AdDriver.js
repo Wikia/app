@@ -399,6 +399,13 @@ var AdDriverCall = function (slotname, size, dartUrl) {
 		} 
 		url = url.replace("nofooter=N;", nofooter);
 
+		// country
+		if (typeof AdDriver.geoData != 'undefined' && AdDriver.geoData) {
+			if (AdDriver.geoData['country'] != 'US') {
+				url = url.replace('http://ad.doubleclick', 'http://ad.'+AdDriver.geoData['country'].toLowerCase()+'.doubleclick');
+			}
+		}
+
 		return url;
 	};
 
