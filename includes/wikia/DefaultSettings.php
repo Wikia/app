@@ -328,7 +328,8 @@ $wgSkipSkins = array(
 		'wikiaphoneold',
 		'smartphone',
 		'efmonaco',
-		'answers'
+		'answers',
+		'vector'
 );
 /**
  * @name wgSkipOldSkins

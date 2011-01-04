@@ -14,7 +14,7 @@ class SkinChooser {
 
 		// no skin settings at all when skin is forced
 		if(!empty($wgForceSkin)) {
-			//return true;
+			return true;
 		}
 
 		if(!empty($wgAdminSkin)) {
