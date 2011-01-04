@@ -23,8 +23,8 @@ class UserProfileRailModule extends Module {
 
 		$userProfilePage = UserProfilePage::getInstance();
 		$user = !empty( $userProfilePage ) ? $userProfilePage->getUser() : null;
-		$userId = !empty( $user ) ? $user->idForName() : 0;
-		
+		$userId = !empty( $user ) ? $user->getId() : 0;
+
 		if( !empty( $user ) && !empty( $userId ) ) {
 			$this->topWikis = $userProfilePage->getTopWikis( $this->maxTopWikis );
 			$this->hiddenTopWikis = $this->populateHiddenTopWikis( $userProfilePage->getHiddenTopWikis() );
@@ -34,7 +34,7 @@ class UserProfileRailModule extends Module {
 			$this->userPageUrl = $title->getLocalUrl();
 			$this->maxEdits = 0;
 			$this->currentWikiId = $wgCityId;
-			
+
 			if( !empty( $this->topWikis ) ) {
 				foreach ( $this->topWikis as $wikiId => $wikiData ) {
 					if ( $wikiData[ 'editCount' ] > $this->maxEdits ) {
@@ -55,8 +55,8 @@ class UserProfileRailModule extends Module {
 
 		$userProfilePage = UserProfilePage::getInstance();
 		$user = !empty( $userProfilePage ) ? $userProfilePage->getUser() : null;
-		$userId = !empty( $user ) ? $user->idForName() : 0;
-		
+		$userId = !empty( $user ) ? $user->getId() : 0;
+
 		if( !empty( $user ) && !empty( $userId ) ) {
 			$this->topPages = $userProfilePage->getTopPages( $this->maxTopPages );
 			$this->hiddenTopPages = $this->populateHiddenTopPages( $userProfilePage->getHiddenTopPages() );
@@ -91,7 +91,7 @@ class UserProfileRailModule extends Module {
 				unset( $pages[ $pageId ] );
 			}
 		}
-			
+
 		wfProfileOut( __METHOD__ );
 		return $pages;
 	}
@@ -99,7 +99,7 @@ class UserProfileRailModule extends Module {
 	private function populateHiddenTopWikis( $hiddenWikis ) {
 		wfProfileIn( __METHOD__ );
 		$wikis = array();
-		
+
 		foreach( $hiddenWikis as $wikiId ) {
 			$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 			$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
@@ -120,7 +120,7 @@ class UserProfileRailModule extends Module {
 
 			$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'wikiLogo' => $wikiLogo, 'editCount' => 0);
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $wikis;
 	}

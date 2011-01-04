@@ -288,8 +288,7 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 				$this->dieUsage( "User name {$userName} is not valid", 'param_user' );
 			}
 			else {
-				$user = User::newFromName( $userName );
-				$userId = $user->idForName();
+				$userId = User::idFromName( $userName );
 				if( empty( $userId ) ) {
 					$this->dieUsage( "User name {$userName} not found", 'param_user' );
 				}

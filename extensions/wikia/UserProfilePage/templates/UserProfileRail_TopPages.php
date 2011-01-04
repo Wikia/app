@@ -1,6 +1,6 @@
 <section id="profile-top-pages-body" class="module UserProfileRailModule_TopPages">
-	<h1><?= wfMsg( 'userprofilepage-top-pages-title', array( $userName, $wikiName ) ) ;?></h1>
 	<? if( !empty( $topPages ) ) :?>
+		<h1><?= wfMsg( 'userprofilepage-top-pages-title', array( $userName, $wikiName ) ) ;?></h1>
 		<? foreach( $topPages as $pageId => $page ) :?>
 			<div class="top-page-item hovered">
 				<a href="<?= $page['url'] ;?>" title="<?= $page['title'] ;?>">
