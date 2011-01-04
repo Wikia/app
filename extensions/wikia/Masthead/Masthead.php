@@ -21,8 +21,8 @@ define ('AVATAR_UPLOAD_FIELD', 'wkUserAvatar');
 
 $wgLogTypes[] = AVATAR_LOG_NAME;
 $wgLogHeaders[AVATAR_LOG_NAME] = 'blog-avatar-alt';
-$wgHooks['AdditionalUserProfilePreferences'][] = 'Masthead::additionalUserProfilePreferences';
-$wgHooks['SavePreferences'][] = 'Masthead::savePreferences';
+$wgHooks['GetPreferences'][] = 'Masthead::onGetPreferences';
+$wgHooks['SavePreferences'][] = 'Masthead::onSavePreferences';
 $wgHooks['SkinGetPageClasses'][] = 'Masthead::SkinGetPageClasses';
 $wgHooks['ArticleSaveComplete'][] = 'Masthead::userMastheadInvalidateCache';
 
@@ -751,70 +751,9 @@ class Masthead {
 		return $errorNo;
 	} // end postProcessImageInternal()
 
-	/**
-	 * additionalUserProfilePreferences -- Hook handler
-	 *
-	 * @param PreferencesForm $oPrefs  -- preferences form instance
-	 * @param String $html -- generated html
-	 */
-	static public function additionalUserProfilePreferences($oPrefs, &$html) {
-		global $wgUser, $wgCityId, $wgEnableUploads, $wgUploadDirectory, $wgOasis2010111;
-		wfProfileIn( __METHOD__ );
-		$oAvatarObj = Masthead::newFromUser( $wgUser );
-		$aDefAvatars = $oAvatarObj->getDefaultAvatars();
+	public static function onSavePreferences($formData, $error) {
+		global $wgRequest, $wgUser;
 
-		if ( $wgUser->isBlocked() ) {
-			# if user is blocked - don't show avatar form
-			return true;
-		}
-
-		// List of conditions taken from
-		// extensions/wikia/UserProfile_NY/SpecialUploadAvatar.php */
-		// RT#53727: Avatar uploads not disabled
-		$bUploadsPossible = $wgEnableUploads && $wgUser->isAllowed( 'upload' ) && is_writeable( $wgUploadDirectory );
-//		var_dump($wgEnableUploads,$wgUser->isAllowed( 'upload' ),is_writeable( $wgUploadDirectory ));
-
-		/**
-		 * run template
-		 */
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$oTmpl->set_vars( array(
-			'wgUser'           => $wgUser,
-			'sUserAvatar'      => $wgUser->getOption(AVATAR_USER_OPTION_NAME),
-			'cityId'           => $wgCityId,
-			'aDefAvatars'      => $aDefAvatars,
-			'oAvatarObj'       => $oAvatarObj,
-			'sUserImg'         => $oAvatarObj->getURL(),
-			'imgH'             => AVATAR_DEFAULT_HEIGHT,
-			'imgW'             => AVATAR_DEFAULT_WIDTH,
-			'sFieldName'       => AVATAR_UPLOAD_FIELD,
-			'bUploadsPossible' => $bUploadsPossible,
-		) );
-
-		$html .= wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE );
-		$html .= $oTmpl->execute('pref-avatar-form');
-		 
-		if (!empty($wgOasis2010111)) {
-			$html .= '<tr><td class="pref-label" colspan="2">'.SkinChooser::renderSkinPreferencesFormHtml($oPrefs).'</td></tr>';
-			global $wgAllowUserSkin;
-			$wgAllowUserSkin = false;
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
-	/**
-	 * savePreferences -- Hook handler
-	 *
-	 * @param PreferencesForm $oPrefs  -- preferences form instance
-	 * @param User $User -- user object
-	 * @param String $sMsg -- status message
-	 * @param $oldOptions
-	 */
-	static public function savePreferences( $oPrefs, $mUser, &$sMsg, $oldOptions ) {
-		global $wgRequest;
-		wfProfileIn( __METHOD__ );
 		$result = true;
 
 		$sUrl = wfBasename( $wgRequest->getVal( 'wkDefaultAvatar' ) );
@@ -832,7 +771,7 @@ class Masthead {
 		 */
 		$isNotUploaded = ( empty( $sUploadedAvatar ) && empty( $sUrl ) );
 		if ( !$isNotUploaded ) {
-			$oAvatarObj = Masthead::newFromUser( $mUser );
+			$oAvatarObj = Masthead::newFromUser( $wgUser );
 			/* check is set default avatar for user */
 			if ( empty($sUrl) ) {
 				/* upload user avatar */
@@ -841,23 +780,23 @@ class Masthead {
 				if ( $errorNo != UPLOAD_ERR_OK ) {
 					switch( $errorNo ) {
 						case UPLOAD_ERR_NO_FILE:
-							$sMsg .= wfMsg( 'blog-avatar-error-nofile');
+							$error = wfMsg( 'blog-avatar-error-nofile');
 							break;
 
 						case UPLOAD_ERR_CANT_WRITE:
-							$sMsg .= wfMsg( 'blog-avatar-error-cantwrite');
+							$error = wfMsg( 'blog-avatar-error-cantwrite');
 							break;
 
 						case UPLOAD_ERR_FORM_SIZE:
-							$sMsg .= wfMsg( 'blog-avatar-error-size', (int)(AVATAR_MAX_SIZE/1024) );
+							$error = wfMsg( 'blog-avatar-error-size', (int)(AVATAR_MAX_SIZE/1024) );
 							break;
 
 						case UPLOAD_ERR_EXTENSION:
-							$sMsg .= $errorMsg;
+							$error = $errorMsg;
 							break;
 
 						default:
-							$sMsg .= wfMsg( 'blog-avatar-error-cantwrite');
+							$error = wfMsg( 'blog-avatar-error-cantwrite');
 					}
 					$result = false;
 				} else {
@@ -876,18 +815,69 @@ class Masthead {
 						SquidUpdate::purge($urls);
 					}
 				}
-//				Wikia::log( __METHOD__, 'url', $sUrl );
 			}
 
 			if ( !empty($sUrl) ) {
 				/* set user option */
-				$mUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
+				$formData[AVATAR_USER_OPTION_NAME] = $sUrl;
+			}
+		}		
+
+		return $result;	
+	}
+	
+	public static function onGetPreferences($user, &$defaultPreferences) {
+		global $wgUser, $wgCityId, $wgEnableUploads, $wgUploadDirectory;
+
+		$oAvatarObj = Masthead::newFromUser( $wgUser );
+		$aDefAvatars = $oAvatarObj->getDefaultAvatars();
+
+		if ( $wgUser->isBlocked() ) {
+			# if user is blocked - don't show avatar form
+			return true;
+		}
+
+		// List of conditions taken from
+		// extensions/wikia/UserProfile_NY/SpecialUploadAvatar.php */
+		// RT#53727: Avatar uploads not disabled
+		$bUploadsPossible = $wgEnableUploads && $wgUser->isAllowed( 'upload' ) && is_writeable( $wgUploadDirectory );
+
+		/**
+		 * run template
+		 */
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		$oTmpl->set_vars( array(
+			'wgUser'           => $wgUser,
+			'sUserAvatar'      => $wgUser->getOption(AVATAR_USER_OPTION_NAME),
+			'cityId'           => $wgCityId,
+			'aDefAvatars'      => $aDefAvatars,
+			'oAvatarObj'       => $oAvatarObj,
+			'sUserImg'         => $oAvatarObj->getURL(),
+			'imgH'             => AVATAR_DEFAULT_HEIGHT,
+			'imgW'             => AVATAR_DEFAULT_WIDTH,
+			'sFieldName'       => AVATAR_UPLOAD_FIELD,
+			'bUploadsPossible' => $bUploadsPossible,
+		) );
+
+		$html = wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE );
+		$html .= $oTmpl->execute('pref-avatar-form');
+		
+		$defaultPreferencesTemp = array();
+		
+		foreach($defaultPreferences as $k => $v) {
+			$defaultPreferencesTemp[$k] = $v;
+			if($k == 'showAds') {
+				$defaultPreferencesTemp['avatarupload'] = array(
+					'help' => $html,
+					'label' => '&nbsp;',
+					'type' => 'info',
+					'section' => 'personal/avatarupload');
 			}
 		}
-//		Wikia::log( __METHOD__, 'url', 'selected avatar for user '.$mUser->getID().': $sUrl' );
+		
+		$defaultPreferences = $defaultPreferencesTemp;
 
-		wfProfileOut( __METHOD__ );
-		return $result;
+		return true;
 	}
 
 	static public function SkinGetPageClasses(&$classes) {

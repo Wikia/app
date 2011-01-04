@@ -1284,6 +1284,7 @@ class Preferences {
 		$saveBlacklist = array(
 			'realname',
 			'emailaddress',
+			'avatarupload'
 		);
 
 		if( $wgEnableEmail ) {
@@ -1337,6 +1338,13 @@ class Preferences {
 	}
 
 	public static function tryUISubmit( $formData ) {
+		
+		$error = null;
+		
+		if(!wfRunHooks('SavePreferences', array(&$formData, &$error))) {
+			return $error;
+		}
+		
 		$res = self::tryFormSubmit( $formData, 'ui' );
 
 		if( $res ) {
