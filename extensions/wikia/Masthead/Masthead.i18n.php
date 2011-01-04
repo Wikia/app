@@ -10,7 +10,7 @@ $messages['en'] = array(
 	'blog-avatar-goto-userpage' => 'Go to user page',
 	'blog-avatar-edit' => 'Change',
 	'blog-avatar-delete' => 'Delete',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Choose a new avatar',
 	'blog-avatar-upload-avatar' => 'Upload a new avatar',
 	'blog-avatar-nouser' => 'Cannot find this user!',
@@ -47,7 +47,7 @@ $messages['qqq'] = array(
 
 /** Afrikaans (Afrikaans) */
 $messages['af'] = array(
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 );
 
 /** Arabic (العربية)
@@ -60,7 +60,7 @@ $messages['ar'] = array(
 
 /** Bulgarian (Български) */
 $messages['bg'] = array(
-	'masthead-blog-avatar-preferences-title' => 'Аватар',
+	'prefs-avatarupload' => 'Аватар',
 );
 
 /** Breton (Brezhoneg)
@@ -72,7 +72,7 @@ $messages['br'] = array(
 	'blog-avatar-goto-userpage' => "Mont d'ar bajenn implijer",
 	'blog-avatar-edit' => 'Kemmañ',
 	'blog-avatar-delete' => 'Diverkañ',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Dibab un avatar nevez',
 	'blog-avatar-upload-avatar' => 'Enporzhiañ un avatar nevez',
 	'blog-avatar-nouser' => 'Dibosupl eo kavout an implijer !',
@@ -104,7 +104,7 @@ $messages['de'] = array(
 	'blog-avatar-goto-userpage' => 'Zur Benutzerseite',
 	'blog-avatar-edit' => 'Ändern',
 	'blog-avatar-delete' => 'Löschen',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Wähle neuen Avatar',
 	'blog-avatar-upload-avatar' => 'Neuen Avatar hochladen',
 	'blog-avatar-nouser' => 'Kann diesen Benutzer nicht finden!',
@@ -142,7 +142,7 @@ $messages['es'] = array(
 	'blog-avatar-goto-userpage' => 'Ir a la página de usuario',
 	'blog-avatar-edit' => 'Cambiar',
 	'blog-avatar-delete' => 'Borrar',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Elije un nuevo avatar',
 	'blog-avatar-upload-avatar' => 'Subir un nuevo avatar',
 	'blog-avatar-nouser' => '¡No se puede encontrar este usuario!',
@@ -181,7 +181,7 @@ $messages['fi'] = array(
 	'blog-avatar-goto-userpage' => 'Siirry käyttäjäsivulle',
 	'blog-avatar-edit' => 'Muuta',
 	'blog-avatar-delete' => 'Poista',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Valitse uusi avatar',
 	'blog-avatar-upload-avatar' => 'Lataa uusi avatar',
 	'blog-avatar-nouser' => 'Käyttäjää ei löytynyt!',
@@ -210,7 +210,7 @@ $messages['fr'] = array(
 	'blog-avatar-goto-userpage' => 'Aller à la page utilisateur',
 	'blog-avatar-edit' => 'Changer',
 	'blog-avatar-delete' => 'Supprimer',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Choisir un avatar',
 	'blog-avatar-upload-avatar' => 'Téléverser un nouvel avatar',
 	'blog-avatar-nouser' => 'Impossible de trouver l’utilisateur !',
@@ -241,7 +241,7 @@ $messages['gl'] = array(
 	'blog-avatar-goto-userpage' => 'Ir á páxina de usuario',
 	'blog-avatar-edit' => 'Cambiar',
 	'blog-avatar-delete' => 'Borrar',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Elixir un novo avatar',
 	'blog-avatar-upload-avatar' => 'Cargar un novo avatar',
 	'blog-avatar-nouser' => 'Non se pode atopar o usuario!',
@@ -273,7 +273,7 @@ $messages['hy'] = array(
 	'blog-avatar-goto-userpage' => 'Անցնել մասնակցի էջին',
 	'blog-avatar-edit' => 'Փոխել',
 	'blog-avatar-delete' => 'Ջնջել',
-	'masthead-blog-avatar-preferences-title' => 'Ավատար',
+	'prefs-avatarupload' => 'Ավատար',
 	'blog-avatar-choose-avatar' => 'Ընտրեք նոր ավատար',
 	'blog-avatar-upload-avatar' => 'Նոր ավատարի բեռնում',
 	'blog-avatar-nouser' => 'Չի ստացվում գտնել այդ մասնակցին:',
@@ -294,7 +294,7 @@ $messages['ia'] = array(
 	'blog-avatar-goto-userpage' => 'Ir al pagina de usator',
 	'blog-avatar-edit' => 'Cambiar',
 	'blog-avatar-delete' => 'Deler',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Selige un nove avatar',
 	'blog-avatar-upload-avatar' => 'Incargar un nove avatar',
 	'blog-avatar-nouser' => 'Non pote trovar iste usator!',
@@ -326,7 +326,7 @@ $messages['id'] = array(
 	'blog-avatar-goto-userpage' => 'Tuju ke halaman pengguna',
 	'blog-avatar-edit' => 'Ubah',
 	'blog-avatar-delete' => 'Hapus',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Pilih avatar baru',
 	'blog-avatar-upload-avatar' => 'memuat avatar baru',
 	'blog-avatar-nouser' => 'Tidak dapat menemukan pengguna ini!',
@@ -371,7 +371,7 @@ $messages['ja'] = array(
 	'blog-avatar-goto-userpage' => '利用者ページを表示',
 	'blog-avatar-edit' => '変更',
 	'blog-avatar-delete' => '削除',
-	'masthead-blog-avatar-preferences-title' => 'アバター',
+	'prefs-avatarupload' => 'アバター',
 	'blog-avatar-choose-avatar' => 'アバターを選択',
 	'blog-avatar-upload-avatar' => '新しいアバターをアップロード',
 	'blog-avatar-nouser' => 'この名前の利用者は見つかりませんでした',
@@ -396,7 +396,7 @@ $messages['ja'] = array(
 
 /** Luxembourgish (Lëtzebuergesch) */
 $messages['lb'] = array(
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 );
 
 /** Macedonian (Македонски)
@@ -407,7 +407,7 @@ $messages['mk'] = array(
 	'blog-avatar-goto-userpage' => 'Оди на корисничка страница',
 	'blog-avatar-edit' => 'Измени',
 	'blog-avatar-delete' => 'Избриши',
-	'masthead-blog-avatar-preferences-title' => 'Аватар',
+	'prefs-avatarupload' => 'Аватар',
 	'blog-avatar-choose-avatar' => 'Одберете нов аватар',
 	'blog-avatar-upload-avatar' => 'Подигни нов аватар',
 	'blog-avatar-nouser' => 'Не можам да го пронајдам корисникот!',
@@ -439,7 +439,7 @@ $messages['nl'] = array(
 	'blog-avatar-goto-userpage' => 'Ga naar gebruikerspagina',
 	'blog-avatar-edit' => 'Wijzigen',
 	'blog-avatar-delete' => 'Verwijderen',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Kies een nieuwe avatar',
 	'blog-avatar-upload-avatar' => 'Nieuwe avatar uploaden',
 	'blog-avatar-nouser' => 'Deze gebruiker is niet te vinden!',
@@ -475,7 +475,7 @@ $messages['no'] = array(
 	'blog-avatar-goto-userpage' => 'Gå til brukerside',
 	'blog-avatar-edit' => 'Endre',
 	'blog-avatar-delete' => 'Slett',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Velg en ny avatar',
 	'blog-avatar-upload-avatar' => 'Last opp en ny avatar',
 	'blog-avatar-nouser' => 'Kan ikke finne denne brukeren!',
@@ -505,7 +505,7 @@ $messages['pl'] = array(
 	'blog-avatar-goto-userpage' => 'Idź do strony użytkownika',
 	'blog-avatar-edit' => 'Zmień',
 	'blog-avatar-delete' => 'Usuń',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'wybierz nowy avatar',
 	'blog-avatar-upload-avatar' => 'Wczytaj nowy avatar',
 	'blog-avatar-nouser' => 'Nie znaleziono takiego użytkownika!',
@@ -530,7 +530,7 @@ $messages['pms'] = array(
 	'blog-avatar-goto-userpage' => 'Và a la pàgina utent',
 	'blog-avatar-edit' => 'Cambia',
 	'blog-avatar-delete' => 'Scancela',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => "Sern n'avatar neuv",
 	'blog-avatar-upload-avatar' => "Caria n'avatar neuv",
 	'blog-avatar-nouser' => 'Cost utent as treuva nen!',
@@ -572,7 +572,7 @@ $messages['pt'] = array(
 	'blog-avatar-goto-userpage' => 'Ir para a página de utilizador',
 	'blog-avatar-edit' => 'Alterar',
 	'blog-avatar-delete' => 'Eliminar',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Escolher um avatar novo',
 	'blog-avatar-upload-avatar' => 'Fazer upload de um avatar novo',
 	'blog-avatar-nouser' => 'Não é possível encontrar este utilizador!',
@@ -605,7 +605,7 @@ $messages['pt-br'] = array(
 	'blog-avatar-goto-userpage' => 'Ir para a página de usuário',
 	'blog-avatar-edit' => 'Alterar',
 	'blog-avatar-delete' => 'Apagar',
-	'masthead-blog-avatar-preferences-title' => 'Avatar',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Escolher um novo avatar',
 	'blog-avatar-upload-avatar' => 'Carregar um novo avatar',
 	'blog-avatar-nouser' => 'Não é possível encontrar este usuário!',
@@ -639,7 +639,7 @@ $messages['ru'] = array(
 	'blog-avatar-goto-userpage' => 'Перейти на страницу участника',
 	'blog-avatar-edit' => 'Изменить',
 	'blog-avatar-delete' => 'Удалить',
-	'masthead-blog-avatar-preferences-title' => 'Аватара',
+	'prefs-avatarupload' => 'Аватара',
 	'blog-avatar-choose-avatar' => 'Выберите новую аватару',
 	'blog-avatar-upload-avatar' => 'Загрузка новой аватары',
 	'blog-avatar-nouser' => 'Не удаётся найти этого участника!',
@@ -669,7 +669,7 @@ $messages['ru'] = array(
 $messages['si'] = array(
 	'blog-avatar-edit' => 'වෙනස',
 	'blog-avatar-delete' => 'මකන්න',
-	'masthead-blog-avatar-preferences-title' => 'මූර්තිය',
+	'prefs-avatarupload' => 'මූර්තිය',
 	'blog-avatar-choose-avatar' => 'නව මූර්තියක් තෝරන්න',
 	'blog-avatar-upload-avatar' => 'නව මූර්තියක් උඩුගත කරන්න',
 	'blog-avatar-nouser' => 'මෙම පරිශීලකයා සොයාගත නොහැකිය!',
@@ -683,7 +683,7 @@ $messages['sr-ec'] = array(
 	'blog-avatar-goto-userpage' => 'Пређи на корисничку страницу',
 	'blog-avatar-edit' => 'Промени',
 	'blog-avatar-delete' => 'Избриши',
-	'masthead-blog-avatar-preferences-title' => 'аватар',
+	'prefs-avatarupload' => 'аватар',
 	'blog-avatar-choose-avatar' => 'Изабери нови аватар',
 	'blog-avatar-upload-avatar' => 'Отпреми нови аватар',
 	'blog-avatar-nouser' => 'Овај корисник није пронађен!',
@@ -718,12 +718,12 @@ $messages['ta'] = array(
 
 /** Telugu (తెలుగు) */
 $messages['te'] = array(
-	'masthead-blog-avatar-preferences-title' => 'అవతారం',
+	'prefs-avatarupload' => 'అవతారం',
 );
 
 /** Tagalog (Tagalog) */
 $messages['tl'] = array(
-	'masthead-blog-avatar-preferences-title' => 'Huwaran',
+	'prefs-avatarupload' => 'Huwaran',
 );
 
 /** Ukrainian (Українська)
