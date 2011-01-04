@@ -47,6 +47,7 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 			switch (slotname) {
 				case 'CORP_TOP_RIGHT_BOXAD':
 				case 'HOME_TOP_RIGHT_BOXAD':
+				case 'TEST_TOP_RIGHT_BOXAD':
 				case 'TOP_RIGHT_BOXAD':
 					return 'Liftium';
 					break;
@@ -110,6 +111,7 @@ AdDriver.isHighValue = function(slotname) {
 		case 'TOP_LEADERBOARD':
 		case 'CORP_TOP_RIGHT_BOXAD':
 		case 'HOME_TOP_RIGHT_BOXAD':
+		case 'TEST_TOP_RIGHT_BOXAD':
 		case 'TOP_RIGHT_BOXAD':
 		case 'HOME_TOP_RIGHT_BUTTON':
 		case 'TOP_RIGHT_BUTTON':
@@ -297,6 +299,7 @@ AdDriver.postProcessSlot = function(slotname) {
 			break;
 		case 'CORP_TOP_RIGHT_BOXAD':
 		case 'HOME_TOP_RIGHT_BOXAD':
+		case 'TEST_TOP_RIGHT_BOXAD':
 		case 'TOP_RIGHT_BOXAD':
 		case 'PREFOOTER_LEFT_BOXAD':
 		case 'PREFOOTER_RIGHT_BOXAD':
