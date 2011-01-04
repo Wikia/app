@@ -117,15 +117,15 @@ class UserChangesHistory {
 	 *
 	 * @return true		process other hooks
 	 */
-	static public function SavePreferencesHook( $preferences, $user, $msg ) {
+	static public function SavePreferencesHook($formData, $error) {
 
-		global $wgStatsDB, $wgEnableScribeReport;
+		global $wgStatsDB, $wgEnableScribeReport, $wgUser;
 
 		if( wfReadOnly() ) { return true; }
 
 		wfProfileIn( __METHOD__ );
 
-		$id = $user->getId();
+		$id = $wgUser->getId();
 		if( $id ) {
 			/**
 			 * caanot use "insert from select" because we got two different db
@@ -133,14 +133,14 @@ class UserChangesHistory {
 			 */
 			$params = array(
 				"user_id"          => $id,
-				"user_name"        => $user->mName,
-				"user_real_name"   => $user->mRealName,
-				"user_password"    => $user->mPassword,
-				"user_newpassword" => $user->mNewpassword,
-				"user_email"       => $user->mEmail,
-				"user_options"     => $user->encodeOptions(),
-				"user_touched"     => $user->mTouched,
-				"user_token"       => $user->mToken
+				"user_name"        => $wgUser->mName,
+				"user_real_name"   => $wgUser->mRealName,
+				"user_password"    => $wgUser->mPassword,
+				"user_newpassword" => $wgUser->mNewpassword,
+				"user_email"       => $wgUser->mEmail,
+				"user_options"     => $wgUser->encodeOptions(),
+				"user_touched"     => $wgUser->mTouched,
+				"user_token"       => $wgUser->mToken
 			);
 			
 			if ( !empty($wgEnableScribeReport) ) {
