@@ -726,7 +726,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$html .= Xml::openElement('div', array('class' => 'wikia-gallery-row'));
 			}
 
-			$html .= Xml::openElement('div', array('class' => 'wikia-gallery-item', 'style' => $itemSpanStyle));
+			$html .= Xml::openElement('span', array('class' => 'wikia-gallery-item', 'style' => $itemSpanStyle));
 
 			$html .= Xml::openElement('div', array('class' => 'thumb', 'style' => $itemDivStyle));
 
@@ -880,7 +880,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$html .= Xml::closeElement('div');
 			}
 
-			$html .= Xml::closeElement('div');
+			$html .= Xml::closeElement('span'); // /span.wikia-gallery-item
 
 			if ($perRow != 'dynamic' && (($index % $perRow) == ($perRow - 1) || $index == (count($this->mImages) - 1))) {
 				$html .= Xml::closeElement('div');
@@ -1390,7 +1390,7 @@ JS;
 				$html .= Xml::openElement('div', array('class' => 'wikia-gallery-row'));
 			}
 
-			$html .= Xml::openElement('div', array('class' => 'wikia-gallery-item', 'style' => $itemSpanStyle));
+			$html .= Xml::openElement('span', array('class' => 'wikia-gallery-item', 'style' => $itemSpanStyle));
 
 			$html .= Xml::openElement('div', array('class' => 'thumb', 'style' => $itemDivStyle));
 
@@ -1475,7 +1475,7 @@ JS;
 				$html .= Xml::closeElement('div');
 			}
 
-			$html .= Xml::closeElement('div');
+			$html .= Xml::closeElement('span'); // /span.wikia-gallery-item
 
 			if ($perRow != 'dynamic' && (($index % $perRow) == ($perRow - 1) || $index == (count($this->mExternalImages) - 1))) {
 				$html .= Xml::closeElement('div');
