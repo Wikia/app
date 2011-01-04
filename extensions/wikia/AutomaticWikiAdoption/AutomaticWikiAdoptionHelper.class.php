@@ -300,32 +300,14 @@ class AutomaticWikiAdoptionHelper {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function ongetUserProfilePreferencesCustomEmailToggles(&$PreferencesForm, &$enotifminoredits) {
-		global $wgUser;
+	public static function onGetPreferences($user, &$defaultPreferences) {
 		wfProfileIn(__METHOD__);
 
-		//for admins only
-		if (in_array('sysop', $wgUser->getGroups())) {
-			$enotifminoredits .= $PreferencesForm->getToggle('adoptionmails');
-		}
-
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
-	/**
-	 * Hook handler
-	 *
-	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
-	 */
-	public static function onUserToggles($toggles, $defaults = false) {
-		wfProfileIn(__METHOD__);
-
-		if (is_array($defaults)) {
-			$defaults[] = 'adoptionmails';
-		} else {
-			$toggles[] = 'adoptionmails';
-		}
+		$defaultPreferences['adoptionmails'] = array(
+			'type' => 'toggle',
+			'label-message' => 'tog-adoptionmails',
+			'section' => 'rendering/advancedrendering',
+		);
 
 		wfProfileOut(__METHOD__);
 		return true;
