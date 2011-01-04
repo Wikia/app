@@ -101,6 +101,10 @@ class ApiUserrights extends ApiBase {
 			array( 'missingparam', 'user' ),
         ) );
 	}
+
+	public function needsToken() {
+		return true;
+	}
 	
 	public function getTokenSalt() {
 		$params = $this->extractRequestParams();
@@ -123,6 +127,6 @@ class ApiUserrights extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiUserrights.php 62686 2010-02-19 01:25:57Z reedy $';
+		return __CLASS__ . ': $Id: ApiUserrights.php 74217 2010-10-03 15:53:07Z reedy $';
 	}
 }

@@ -175,6 +175,10 @@ class ApiBlock extends ApiBase {
 		) );
 	}
 	
+	public function needsToken() {
+		return true;
+	}
+
 	public function getTokenSalt() {
 		return '';
 	}
@@ -187,6 +191,6 @@ class ApiBlock extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiBlock.php 62766 2010-02-21 12:32:46Z ashley $';
+		return __CLASS__ . ': $Id: ApiBlock.php 74217 2010-10-03 15:53:07Z reedy $';
 	}
 }

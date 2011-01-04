@@ -1006,6 +1006,14 @@ abstract class ApiBase {
 	}
 
 	/**
+	 * Returns whether this module requires a Token to execute
+	 * @returns bool
+	 */
+	public function needsToken() {
+		return false;
+	}
+
+	/**
 	 * Returns the token salt if there is one, '' if the module doesn't require a salt, else false if the module doesn't need a token
 	 * @returns bool
 	 */
@@ -1033,7 +1041,7 @@ abstract class ApiBase {
 			$ret[] = array( 'writedisabled' );
 		}
 
-		if ( $this->getTokenSalt() !== false ) {
+		if ( $this->needsToken() ) {
 			$ret[] = array( 'missingparam', 'token' );
 			$ret[] = array( 'sessionfailure' );
 		}
@@ -1184,6 +1192,6 @@ abstract class ApiBase {
 	 * @return string
 	 */
 	public static function getBaseVersion() {
-		return __CLASS__ . ': $Id: ApiBase.php 70066 2010-07-28 05:52:32Z tstarling $';
+		return __CLASS__ . ': $Id: ApiBase.php 79562 2011-01-04 06:15:54Z tstarling $';
 	}
 }

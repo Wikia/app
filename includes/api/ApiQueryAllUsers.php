@@ -184,7 +184,14 @@ class ApiQueryAllUsers extends ApiQueryBase {
 			}
 		}
 
-		$db->freeResult( $res );
+		if ( is_array( $lastUserData ) ) {
+		        $fit = $result->addValue( array( 'query', $this->getModuleName() ),
+		                        null, $lastUserData );
+		        if ( !$fit ) {
+		                $this->setContinueEnumParameter( 'from',
+		                                $this->keyToTitle( $lastUserData['name'] ) );
+		        }
+		}
 
 		$result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'u' );
 	}
@@ -244,6 +251,6 @@ class ApiQueryAllUsers extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllUsers.php 69932 2010-07-26 08:03:21Z tstarling $';
+		return __CLASS__ . ': $Id: ApiQueryAllUsers.php 79562 2011-01-04 06:15:54Z tstarling $';
 	}
 }

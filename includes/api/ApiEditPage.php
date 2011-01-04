@@ -454,6 +454,10 @@ class ApiEditPage extends ApiBase {
 		);
 	}
 	
+	public function needsToken() {
+		return true;
+	}
+
 	public function getTokenSalt() {
 		return '';
 	}
@@ -470,6 +474,6 @@ class ApiEditPage extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiEditPage.php 62600 2010-02-16 22:01:38Z reedy $';
+		return __CLASS__ . ': $Id: ApiEditPage.php 74217 2010-10-03 15:53:07Z reedy $';
 	}
 }

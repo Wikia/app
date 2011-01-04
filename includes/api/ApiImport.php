@@ -149,6 +149,10 @@ class ApiImport extends ApiBase {
 		) );
 	}
 	
+	public function needsToken() {
+		return true;
+	}
+
 	public function getTokenSalt() {
 		return '';
 	}
@@ -161,7 +165,7 @@ class ApiImport extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiImport.php 62599 2010-02-16 21:59:16Z reedy $';
+		return __CLASS__ . ': $Id: ApiImport.php 74217 2010-10-03 15:53:07Z reedy $';
 	}
 }
 

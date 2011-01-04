@@ -184,8 +184,12 @@ class ApiProtect extends ApiBase {
 		) );
 	}
 	
+	public function needsToken() {
+		return true;
+	}
+
 	public function getTokenSalt() {
-		return null;
+		return '';
 	}
 
 	protected function getExamples() {
@@ -196,6 +200,6 @@ class ApiProtect extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiProtect.php 62557 2010-02-15 23:53:43Z reedy $';
+		return __CLASS__ . ': $Id: ApiProtect.php 74217 2010-10-03 15:53:07Z reedy $';
 	}
 }

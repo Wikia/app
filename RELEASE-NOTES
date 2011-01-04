@@ -1,14 +1,16 @@
 = MediaWiki release notes =
 
-== MediaWiki 1.16.0 ==
+== MediaWiki 1.16.1 ==
 
-2010-07-28
+2011-01-04
 
-This is a stable release of the MediaWiki 1.16 branch.
+This is a security and maintenance release of the MediaWiki 1.16 branch.
 
 === Summary of selected changes in 1.16 ===
 
 Selected changes since MediaWiki 1.15 that may be of interest:
+
+* A new skin called Vector was added
 
 * Watchlists now have RSS/Atom feeds. RSS feeds generally are now hidden, 
   since Atom is a better protocol and is supported by virtually all clients.
@@ -41,6 +43,23 @@ or if you want to squeeze as much performance as possible out of Mediawiki,
 set $wgCacheDirectory to a writable path on the local filesystem. Make sure 
 you have the DBA extension for PHP installed, this will improve performance 
 further.
+
+== Changes since 1.16.0 ==
+
+* (bug 24981) Allow extensions to access SpecialUpload variables again
+* (bug 24724) list=allusers was out by 1 (shows total users - 1)
+* (bug 24166) Fixed API error when using rvprop=tags
+* For wikis using French as a content language, Special:Téléchargement works 
+  again as an alias for Special:Upload.
+* (bug 25167) Correctly load JS fixes for IE6 (fixing a regression in 1.16.0)
+* (bug 25248) Fixed paraminfo errors in certain API modules.
+* The installer now has improved handling for situations where safe_mode is 
+  active or exec() and similar functions are disabled.
+* (bug 19593) Specifying --server in now works for all maintenance scripts.
+* Fixed $wgLicenseTerms register globals.
+* (bug 26561) Fixed clickjacking vulnerabilities by introducing support for 
+  X-Frame-Options. The header value can be configured using $wgBreakFrames and
+  $wgEditPageFrameOptions.
 
 == Changes since 1.16 beta 3 ==
 
@@ -206,6 +225,7 @@ further.
 
 === New features in 1.16 ===
 
+* A new skin called Vector was added
 * Add CSS defintion of the 'wikitable' class to shared.css
 * (bug 17163) Added MediaWiki:Talkpageheader which will be displayed when
   viewing talk pages
@@ -856,7 +876,6 @@ comment from another wiki.
 * (bug 17790) Users instantly logged off on HughesNet
 
 == API changes in 1.16 ==
-
 * Added uiprop=changeablegroups to meta=userinfo
 * Added usprop=gender to list=users
 * (bug 18311) action=purge now works for images too

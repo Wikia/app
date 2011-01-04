@@ -50,7 +50,7 @@
 * @author Matt Knapp <mdknapp[at]gmail[dot]com>
 * @author Brett Stimmerman <brettstimmerman[at]gmail[dot]com>
 * @copyright 2005 Michal Migurski
-* @version CVS: $Id: Services_JSON.php 65683 2010-04-30 05:56:15Z tstarling $
+* @version CVS: $Id: Services_JSON.php 79562 2011-01-04 06:15:54Z tstarling $
 * @license http://www.opensource.org/licenses/bsd-license.php
 * @see http://pear.php.net/pepr/pepr-proposal-show.php?id=198
 */
