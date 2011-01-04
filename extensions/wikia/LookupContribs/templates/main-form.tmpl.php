@@ -57,8 +57,8 @@ $(document).ready(function() {
 			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : false, "sClass": "lc-datetime" },			
 			{
 				"fnRender": function ( oObj ) {
-					var row = '<span class="lc-row"><a href="' + oObj.aData[3] + '" target="new">' + oObj.aData[3] + '</a></span>';
-					row += '&nbsp;(<a href="' + oObj.aData[3] + 'index.php?title=Special:Contributions/' + username + '" target="new">';
+					var row = '<span class="lc-row"><a href="' + oObj.aData[3] + '">' + oObj.aData[3] + '</a></span>';
+					row += '&nbsp;(<a href="' + oObj.aData[3] + 'index.php?title=Special:Contributions/' + username + '">';
 					row += '<?=wfMsg('lookupcontribscontribs')?>';
 					row += '</a>)</span>';
 					return row;
