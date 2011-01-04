@@ -45,6 +45,7 @@ class WikiFactoryLoader {
 	public $mExpireDomainCacheTimeout = 86400; #--- 24 hours
 	public $mExpireValuesCacheTimeout = 86400; #--- 24 hours
 	public $mSaveDefaults = false;
+	public $mBeta = false;
 
 	private $mDBhandler, $mDBname;
 
@@ -158,6 +159,15 @@ class WikiFactoryLoader {
 					break;
 				}
 			}
+		}
+
+		/**
+		 * @author Krzysztof Krzyżaniak (eloy)
+		 *
+		 * handle beta.* domains
+		 */
+		if( getenv( "X-Beta") == 1 ) {
+			$this->mBeta = true;
 		}
 
 		WikiFactory::isUsed( true );
@@ -382,7 +392,7 @@ class WikiFactoryLoader {
 		/**
 		 * @todo check if owikis.wikia.com should not be regex
 		 */
-		if( $this->mServerName == "owikis.wikia.com" /* || strpos( $this->mServerName, "beta." ) === 0 */ ) {
+		if( $this->mServerName == "owikis.wikia.com" || $this->mBeta == true ) {
 			$this->mNoRedirect = true;
 		}
 
