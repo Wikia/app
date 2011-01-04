@@ -22,5 +22,5 @@ $wgHooks['ModifyPreferencesValue'][] = 'SkinChooser::setThemeForPreferences';
 $wgHooks['SavePreferencesHook'][] = 'SkinChooser::savePreferences';
 $wgHooks['SavePreferences'][] = 'SkinChooser::savePreferencesAfter';
 $wgHooks['UserToggles'][] = 'SkinChooser::skinChooserExtraToggle';
-$wgHooks['AlternateSkinPreferences'][] = 'SkinChooser::renderSkinPreferencesForm';
+$wgHooks['GetPreferences'][] = 'SkinChooser::GetPreferences';
 $wgHooks['AlternateGetSkin'][] = 'SkinChooser::getSkin';
