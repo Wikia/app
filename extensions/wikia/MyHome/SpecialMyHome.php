@@ -27,5 +27,5 @@ $wgSpecialPageGroups['WikiActivity'] = 'changes';
 // hooks
 $wgHooks['CustomUserData'][] = 'MyHome::addToUserMenu';
 $wgHooks['InitialQueriesMainPage'][] = 'MyHome::getInitialMainPage';
-$wgHooks['UserToggles'][] = 'MyHome::userToggles';
+$wgHooks['GetPreferences'][] = 'MyHome::onGetPreferences';
 $wgHooks['AddNewAccount2'][] = 'MyHome::addNewAccount';
