@@ -1005,4 +1005,6 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'mobile-full-site' => 'View full site',
 'mobile-show' => 'Show',
 'mobile-hide' => 'Hide',
+
+'prefs-layout' => 'Site Layouts',
 ));
