@@ -1,4 +1,5 @@
 == Changes since 20101213 ==
+* rt#140656: Recent Wiki Activity module: Design update (macbre)
 * rt#141177: Monobook: Image Maps broken (Marooned)
 * rt#86290: ArticleComments are shown on diff pages (Marooned)
 * rt#141744: wording on lightbox: plurals (Marooned)
