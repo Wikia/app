@@ -47,8 +47,7 @@ function AutomaticWikiAdoptionInit() {
 	global $wgHooks;
 
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'AutomaticWikiAdoptionHelper::onSkinTemplateOutputPageBeforeExec';
-	$wgHooks['getUserProfilePreferencesCustomEmailToggles'][] = 'AutomaticWikiAdoptionHelper::ongetUserProfilePreferencesCustomEmailToggles';
-	$wgHooks['UserToggles'][] = 'AutomaticWikiAdoptionHelper::onUserToggles';
+	$wgHooks['GetPreferences'][] = 'AutomaticWikiAdoptionHelper::onGetPreferences';
 }
 
 // Ajax dispatcher
@@ -68,8 +67,7 @@ function AutomaticWikiAdoptionAjax() {
 			$json = Wikia::json_encode( $data );
 			$response = new AjaxResponse( $json );
 			$response->setContentType( 'application/json; charset=utf-8' );
-		}
-		else {
+		} else {
 			// send text as text/html
 			$response = new AjaxResponse( $data );
 			$response->setContentType( 'text/html; charset=utf-8' );
