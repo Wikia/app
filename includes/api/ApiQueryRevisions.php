@@ -125,7 +125,7 @@ class ApiQueryRevisions extends ApiQueryBase {
 		}
 
 		$db = $this->getDB();
-		$this->addTables( array( 'page', 'revision' ) );
+		$this->addTables( 'page' );
 		$this->addFields( Revision::selectFields() );
 		$this->addWhere( 'page_id = rev_page' );
 
@@ -188,6 +188,9 @@ class ApiQueryRevisions extends ApiQueryBase {
 			else
 				$this->section = false;
 		}
+
+		//Bug 24166 - API error when using rvprop=tags
+		$this->addTables( 'revision' );
 
 		$userMax = ( $this->fld_content ? ApiBase::LIMIT_SML1 : ApiBase::LIMIT_BIG1 );
 		$botMax  = ( $this->fld_content ? ApiBase::LIMIT_SML2 : ApiBase::LIMIT_BIG2 );
@@ -603,6 +606,6 @@ class ApiQueryRevisions extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryRevisions.php 69932 2010-07-26 08:03:21Z tstarling $';
+		return __CLASS__ . ': $Id: ApiQueryRevisions.php 72117 2010-09-01 16:50:07Z reedy $';
 	}
 }

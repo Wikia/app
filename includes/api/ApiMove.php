@@ -219,6 +219,10 @@ class ApiMove extends ApiBase {
 		) );
 	}
 
+	public function needsToken() {
+		return true;
+	}
+
 	public function getTokenSalt() {
 		return '';
 	}
@@ -230,6 +234,6 @@ class ApiMove extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiMove.php 62810 2010-02-22 03:34:56Z mah $';
+		return __CLASS__ . ': $Id: ApiMove.php 74217 2010-10-03 15:53:07Z reedy $';
 	}
 }

@@ -92,6 +92,10 @@ class ApiPatrol extends ApiBase {
         ) );
 	}
 	
+	public function needsToken() {
+		return true;
+	}
+
 	public function getTokenSalt() {
 		return '';
 	}
@@ -103,6 +107,6 @@ class ApiPatrol extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiPatrol.php 69578 2010-07-20 02:46:20Z tstarling $';
+		return __CLASS__ . ': $Id: ApiPatrol.php 74217 2010-10-03 15:53:07Z reedy $';
 	}
 }

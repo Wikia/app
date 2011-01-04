@@ -230,6 +230,10 @@ class ApiDelete extends ApiBase {
 		) );
 	}
 
+	public function needsToken() {
+		return true;
+	}
+
 	public function getTokenSalt() {
 		return '';
 	}
@@ -242,6 +246,6 @@ class ApiDelete extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiDelete.php 62703 2010-02-19 12:54:09Z ashley $';
+		return __CLASS__ . ': $Id: ApiDelete.php 74217 2010-10-03 15:53:07Z reedy $';
 	}
 }
