@@ -72,7 +72,7 @@ class LatestActivityModule extends Module {
 				$item['changetype'] = $change['type'];
 				$title = Title::newFromText( $change['title'], $change['ns'] );
 				if ( is_object($title) ) {
-					$item['page_href'] = Xml::element('a', array('href' => $title->getLocalUrl()), $item['page_title']);
+					$item['page_href'] = Xml::element('a', array('href' => $title->getLocalUrl(), 'class' => 'page-title'), $item['page_title']);
 				}
 				switch ($change['type']) {
 					case 'new':

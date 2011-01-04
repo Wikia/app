@@ -244,14 +244,13 @@ var initTracker = function() {
 		else if (node.hasClass('more')) {
 			$.tracker.byStr(fakeUrl + 'more');
 		}
+		// items
 		else if (node.hasParent('em')) {
-			// user page links
-			if (node.index() == 0) {
-				$.tracker.byStr(fakeUrl + 'username');
-			}
-			// page name
-			else {
+			if (node.hasClass('page-title')) {
 				$.tracker.byStr(fakeUrl + 'article');
+			}
+			else {
+				$.tracker.byStr(fakeUrl + 'username');
 			}
 		}
 	});
@@ -465,7 +464,7 @@ var initTracker = function() {
 		if (!node.is('a')) {
 			return;
 		}
-		
+
 		// do not track links inside RTE editor
 		if (node.closest('.cke_editor').length > 0) {
 			return;
