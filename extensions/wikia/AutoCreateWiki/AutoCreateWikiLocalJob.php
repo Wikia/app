@@ -114,7 +114,6 @@ class AutoCreateWikiLocalJob extends Job {
 		switch( $this->mParams[ "type" ] ) {
 			case "answers":
 				$this->copyDefaultAvatars();
-				$this->sendWelcomeBoardMessage();
 				break;
 		}
 
@@ -499,6 +498,9 @@ class AutoCreateWikiLocalJob extends Job {
 	/**
 	 * some wikis have social tools enabled, they demand default avatars
 	 *
+	 * TODO: Fixme... the NY Social Tools have been deleted.  This function and any calls
+	 * to it can _PROBABLY_ be deleted.  UserMasthead or something might need default avatars though.
+	 *
 	 * @access private
 	 */
 	private function copyDefaultAvatars() {
@@ -517,48 +519,6 @@ class AutoCreateWikiLocalJob extends Job {
 		}
 		else {
 			Wikia::log( __METHOD__, "error", "Cannot create {$target} folder" );
-		}
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * set welcome message on user board
-	 *
-	 * @access private
-	 */
-	private function sendWelcomeBoardMessage() {
-		global $wgEnableUserBoard, $wgUser;
-		wfProfileIn( __METHOD__ );
-		if ( !empty($wgEnableUserBoard) ) {
-			$message = "autocreatewiki-welcomeuserboard";
-			if ( !wfEmptyMsg( $message, wfMsg($message) ) ) {
-				# staff
-				$oUser = Wikia::staffForLang( $this->wikiaLang );
-				$oUser = ( $oUser instanceof User ) ? $oUser : User::newFromName( "Angela" );
-				# staff page
-				$staffPage = $oUser->getUserPage();
-
-				$message = wfMsgExt(
-					$message,
-					array( 'language' => $this->wikiaLang ),
-					array(
-						$this->mFounder->getName(),
-						$staffPage->getFullURL(),
-						$wgUser->getName(),
-						$wgUser->getRealName(),
-						$this->wikiaName
-					)
-				);
-
-				$oUserBoard = new UserBoard();
-				$m = $oUserBoard->sendBoardMessage(
-					$oUser->getId(),
-					$oUser->getName(),
-					$this->mFounder->getId(),
-					$this->mFounder->getName(),
-					$message
-				);
-			}
 		}
 		wfProfileOut( __METHOD__ );
 	}
