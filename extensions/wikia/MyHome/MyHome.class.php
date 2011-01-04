@@ -271,7 +271,7 @@ class MyHome {
 	 * Return encoded (serialized/jsonized) data with extra prefix which can be stored in rc_params
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
-         */
+	 */
 	public static function packData($data) {
 		wfProfileIn(__METHOD__);
 		if (self::useJSON) {
@@ -290,7 +290,7 @@ class MyHome {
 	 * Return decoded (unserialized/unjsonized) data stored in rc_params
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
-         */
+	 */
 	public static function unpackData($field) {
 		wfProfileIn(__METHOD__);
 
@@ -333,9 +333,14 @@ class MyHome {
 	 * Add "Disable my redirect to My Home" switch to Special:Preferences (Misc tab)
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
-         */
-	public static function userToggles($toggles) {
-		$toggles[] = 'myhomedisableredirect';
+	 */
+	public static function onGetPreferences($user, &$preferences) {
+		$preferences['myhomedisableredirect'] = array(
+			'type' => 'toggle',
+			'section' => 'misc/myhome',
+			'label-message' => 'tog-myhomedisableredirect',
+		);
+
 		return true;
 	}
 
@@ -343,9 +348,8 @@ class MyHome {
 	 * Save default view in user preferences (can be either "watchlist" or "activity")
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
-         */
+	 */
 	public static function setDefaultView($defaultView) {
-
 		wfProfileIn(__METHOD__);
 
 		global $wgUser;
@@ -374,9 +378,8 @@ class MyHome {
 	 * Get default view from user preferences (can be either "watchlist" or "activity")
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
-         */
+	 */
 	public static function getDefaultView() {
-
 		wfProfileIn(__METHOD__);
 
 		global $wgUser;
