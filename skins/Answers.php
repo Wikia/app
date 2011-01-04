@@ -1035,7 +1035,7 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 	}
 
 	public function renderAttributionBox($answerPage) {
-		global $wgUploadPath, $wgAnswersEnableSocial;
+		global $wgUploadPath;
 
 		$contributors = $answerPage->getContributors();
 		if(count($contributors) == 0) {

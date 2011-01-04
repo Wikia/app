@@ -576,12 +576,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		 */
 		switch( $this->mType ) {
 			case "answers":
-				$sqlfiles[] = "{$IP}/extensions/SocialProfile/SystemGifts/systemgifts.sql";
-				$sqlfiles[] = "{$IP}/extensions/SocialProfile/UserGifts/usergifts.sql";
-				$sqlfiles[] = "{$IP}/extensions/SocialProfile/UserProfile/user_profile.sql";
-				$sqlfiles[] = "{$IP}/extensions/SocialProfile/UserBoard/user_board.sql";
-				$sqlfiles[] = "{$IP}/extensions/SocialProfile/UserRelationship/user_relationship.sql";
-				$sqlfiles[] = "{$IP}/extensions/SocialProfile/UserStats/user_stats.sql";
 				$sqlfiles[] = "{$IP}/maintenance/answers-additional-tables.sql";
 				break;
 		}
@@ -1590,9 +1584,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$WFSettingsVars[ "wgDefaultTheme"                    ] = 'sapphire';
 				$WFSettingsVars[ "wgEnableAnswers"                   ] = true;
 				$WFSettingsVars[ "wgEnableCategoryBlueLinks"         ] = true;
-				$WFSettingsVars[ "wgAnswersEnableSocial"             ] = true;
 				$WFSettingsVars[ "AutoFriendOnRegisterUsername"      ] = $this->mWikiData[ "founder-name" ];
-				$WFSettingsVars[ "wgEnableRandomUsersWithAvatarsExt" ] = true;
 				$WFSettingsVars[ "wgEnableRandomInCategoryExt"       ] = true;
 				$WFSettingsVars[ "wgEnableMagicAnswer"               ] = false;
 				$WFSettingsVars[ "wgUseNewAnswersSkin"               ] = true;

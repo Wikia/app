@@ -661,7 +661,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 	}
 
 	private function getMediaType($oTitle, $ns) {
-		global $wgEnableNYCSocialTools, $wgEnableVideoNY, $wgEnableVideoToolExt;
+		global $wgEnableVideoToolExt;
 		wfProfileIn( __METHOD__ );
 		$result = 0;
 		
@@ -672,12 +672,6 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 					$videoName = VideoPage::getNameFromTitle($oTitle);
 					if ( $videoName ) {
 						$oTitle = Title::makeTitle($ns, $videoName);
-					}
-				} elseif ( ( !empty($wgEnableNYCSocialTools) || !empty($wgEnableVideoNY) ) && class_exists('Video') ) {
-					// NY code
-					$oVideo = Video::newFromName( $oTitle->getDBkey() );
-					if ( is_object($oVideo) && $oVideo->exists() ) {
-						$result = 4;
 					}
 				}
 			}

@@ -1,3 +1,0 @@
-require_once( "{{path}}/SocialProfile.php" );
-$wgExtraNamespaces[NS_USER_PROFILE] = "User_profile";
-$wgExtraNamespaces[NS_USER_WIKI] = "UserWiki";

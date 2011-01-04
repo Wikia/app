@@ -2,7 +2,7 @@
 
 class PrefilledDefaultQuestion extends DefaultQuestion {
 	function create( $text ) {
-		global $wgOut, $wgUser, $wgContLang, $wgAnswersEnableSocial;
+		global $wgOut, $wgUser, $wgContLang;
 
 		if ( wfReadOnly() ) {
 			return false;
@@ -39,10 +39,6 @@ class PrefilledDefaultQuestion extends DefaultQuestion {
 		$article->doEdit( $default_text, wfMsgForContent("new_question_comment"), $flags );
 
 		if( $wgUser->isLoggedIn() ){
-			if( $wgAnswersEnableSocial ){
-				$stats = new UserStatsTrack($wgUser->getID(), $wgUser->getName());
-				$stats->incStatField("quiz_created"); //we'll use this to track how many questions a user created
-			}
 			$wgUser->addWatch( $this->title );
 		}
 
