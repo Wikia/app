@@ -8,7 +8,7 @@ Tested on
 # PHP: 5.0.5-2ubuntu1.5 (apache2handler)
 # MySQL: 4.0.24_Debian-10ubuntu2.3-log
 
-Developed for use by LyricWiki.org (http://www.lyricwiki.org/)
+Developed for use by LyricWiki (http://lyrics.wikia.com)
 
 ***********************************************************************************
 
