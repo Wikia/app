@@ -2,7 +2,7 @@
 
 class SkinChooser {
 
-	public static function GetPreferences($user, &$defaultPreferences) {
+	public static function onGetPreferences($user, &$defaultPreferences) {
 		global $wgEnableAnswers, $wgForceSkin, $wgAdminSkin, $wgDefaultSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgOasis2010111, $wgSkipSkins, $wgSkipOldSkins;
 
 		$mSkin  = $user->getOption('skin');
@@ -169,7 +169,7 @@ class SkinChooser {
 	/**
 	 * Select proper skin and theme based on user preferences / default settings
 	 */
-	public static function getSkin($user) {
+	public static function onGetSkin($user) {
 		global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme;
 		global $wgVisitorSkin, $wgVisitorTheme, $wgOldDefaultSkin, $wgSkinTheme, $wgOut, $wgForceSkin, $wgRequest, $wgHomePageSkin, $wgTitle;
 		global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest, $wgOasis2010111, $wgDevelEnvironment;
