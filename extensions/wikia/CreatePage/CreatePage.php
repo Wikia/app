@@ -65,8 +65,7 @@ function wfCreatePageInit() {
 	 */
 	$wgHooks['MakeGlobalVariablesScript'][] = 'wfCreatePageSetupVars';
 	$wgHooks['EditPage::showEditForm:initial'][] = 'wfCreatePageLoadPreformattedContent';
-	$wgHooks['UserToggles'][] = 'wfCreatePageToggleUserPreference';
-	$wgHooks['getEditingPreferencesTab'][] = 'wfCreatePageToggleUserPreference';
+	$wgHooks['GetPreferences'][] = 'wfCreatePageOnGetPreferences';
 
 	$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
 	$wgAjaxExportList[] = 'wfCreatePageAjaxCheckTitle';
@@ -101,15 +100,20 @@ function wfCreatePageLoadPreformattedContent( $editpage ) {
 	return true ;
 }
 
-function wfCreatePageToggleUserPreference( $toggles, $default_array = false ) {
-	if ( is_array( $default_array ) ) {
-		$default_array[] = 'createpagedefaultblank';
-		$default_array[] = 'createpagepopupdisabled';
-	}
-	else {
-		$toggles[] = 'createpagedefaultblank';
-		$toggles[] = 'createpagepopupdisabled';
-	}
+function wfCreatePageOnGetPreferences( $user, &$preferences ) {
+
+	$preferences['createpagedefaultblank'] = array(
+		'type' => 'toggle',
+		'section' => 'editing/advancedediting',
+		'label-message' => 'tog-createpagedefaultblank',
+	);
+
+	$preferences['createpagepopupdisabled'] = array(
+		'type' => 'toggle',
+		'section' => 'editing/advancedediting',
+		'label-message' => 'tog-createpagepopupdisabled',
+	);
+
 	return true;
 }
 
@@ -172,7 +176,7 @@ function wfCreatePageAjaxGetDialog() {
 	$body['width'] = $wgCreatePageDialogWidth;
 	$body['defaultOption'] = $defaultLayout;
 	$body['title'] = wfMsg( 'createpage-dialog-title' );
-	
+
 	$response = new AjaxResponse( json_encode( $body ) );
 	$response->setCacheDuration( 0 ); // no caching
 
