@@ -7,7 +7,7 @@ class PopularBlogPostsModule extends Module {
 		wfProfileIn(__METHOD__);
 		global $wgParser, $wgMemc, $wgLang;
 
-		$mcKey = wfSharedMemcKey( "OasisPopularBlogPosts", $wgLang->getCode() );
+		$mcKey = wfMemcKey( "OasisPopularBlogPosts", $wgLang->getCode() );
 		$this->body = $wgMemc->get($mcKey);
 		if (empty ($this->body)) {
 			$input = "	<title>" .wfMsg('oasis-popular-blogs-title') ."</title>
