@@ -28,7 +28,7 @@ $wgPFStringLengthLimit = 1000;
  * An alternative, saner solution for embedding complex text processing in 
  * MediaWiki templates can be found at: http://www.mediawiki.org/wiki/Extension:Lua
  */
-$wgPFEnableStringFunctions = false;
+$wgPFEnableStringFunctions = true;
 
 /** REGISTRATION */
 $wgExtensionFunctions[] = 'wfSetupParserFunctions';
