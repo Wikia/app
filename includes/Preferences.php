@@ -441,6 +441,23 @@ class Preferences {
 						'label-message' => 'tog-enotifrevealaddr',
 						'disabled' => $disableEmailPrefs,
 					);
+
+			/* Wikia change begin - @author: Inez */
+			$defaultPreferences['htmlemails'] =
+					array(
+						'type' => 'toggle',
+						'section' => 'personal/email',
+						'label-message' => 'tog-htmlemails',
+					);					
+
+			$defaultPreferences['marketingallowed'] =
+					array(
+						'type' => 'toggle',
+						'section' => 'personal/email',
+						'label-message' => 'tog-marketingallowed',
+					);
+			/* Wikia change end */					
+					
 		}
 	}
 
