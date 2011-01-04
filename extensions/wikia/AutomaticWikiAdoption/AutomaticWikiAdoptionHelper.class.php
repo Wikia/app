@@ -303,11 +303,14 @@ class AutomaticWikiAdoptionHelper {
 	public static function onGetPreferences($user, &$defaultPreferences) {
 		wfProfileIn(__METHOD__);
 
-		$defaultPreferences['adoptionmails'] = array(
-			'type' => 'toggle',
-			'label-message' => 'tog-adoptionmails',
-			'section' => 'rendering/advancedrendering',
-		);
+		//for admins only 
+		if (in_array('sysop', $user->getGroups())) { 
+			$defaultPreferences['adoptionmails'] = array(
+				'type' => 'toggle',
+				'label-message' => 'tog-adoptionmails',
+				'section' => 'rendering/advancedrendering',
+			);
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;
