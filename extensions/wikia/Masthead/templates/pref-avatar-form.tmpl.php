@@ -1,5 +1,9 @@
 <!-- s:<?= __FILE__ ?> -->
-<tr><td class="pref-label" colspan="2"><h2><?=wfMsg( 'masthead-blog-avatar-preferences-title' )?></h2></td></tr>
+<style>
+#mw-htmlform-avatarupload .mw-htmlform-field-HTMLInfoField {
+	display: none;
+}
+</style>
 <tr>
 <td class="pref-input" colspan="2">
 <table border="0" width="100%" valign="top">
