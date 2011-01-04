@@ -34,10 +34,6 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__).'/';
 
-if ( empty( $wgWikiPaymentAdsFreePrice ) ) {
-	$wgWikiPaymentAdsFreePrice = 4.99;
-}
-
 // autoloads
 $wgAutoloadClasses['SpecialWikiPayment'] = $dir . 'SpecialWikiPayment.class.php';
 
