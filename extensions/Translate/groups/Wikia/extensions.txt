@@ -194,9 +194,6 @@ file = Webtools/SpecialWebtools.i18n.php
 Where Is Extension
 file = WhereIsExtension/SpecialWhereIsExtension.i18n.php
 
-Widget Special Page
-file = WidgetSpecialPage/WidgetsSpecialPage.i18n.php
-
 Wikia Irc Gateway
 ignored = ircgate-channellist
 
