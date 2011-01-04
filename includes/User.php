@@ -1688,7 +1688,8 @@ class User {
 			global $wgCityId, $wgSitename;
 			$up = $this->getUserPage();
 			$utp = $up->getTalkPage();
-			$talks[$wgCityId] = array( "wiki" => $wgSitename, "link" => $utp->getFullURL() );
+			unset( $talks[$wgCityId] );
+			$talks[0] = array( "wiki" => $wgSitename, "link" => $utp->getFullURL() );
 			return $talks;
 		}
 
