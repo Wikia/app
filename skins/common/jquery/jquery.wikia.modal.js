@@ -76,8 +76,7 @@ $.fn.extend({
 				// no <h1> found - use title attribute (backward compatibility with Monaco)
 				headline = $('<h1>').html($(this).attr('title'));
 			}
-			
-			$().log(headline);
+
 			// add headline
 			headline.prependTo(wrapper);
 
@@ -120,13 +119,13 @@ $.fn.extend({
 		}
 
 		wrapper.log('makeModal: #' + id);
-		
+
 		var ads = $("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").add(".wikia-ad");
 
 		ads.each(function(index, el){
 			$(el).children().css("margin-left","-9999px");
 		});
-		
+
 		wrapper.data("ads", ads);
 
 		// get rid of tooltip - remove title attr
