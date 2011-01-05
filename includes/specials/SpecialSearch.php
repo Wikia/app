@@ -253,10 +253,14 @@ class SpecialSearch {
 			$totalRes += $textMatches->getTotalHits();
 
 		// show number of results and current offset
-		$wgOut->addHTML( $this->formHeader($term, $num, $totalRes));
-		if( $this->searchAdvanced ) {
-			$wgOut->addHTML( $this->powerSearchBox( $term ) );
+		/* Wikia change begin - @author: Macbre */
+		if (!Wikia::isOasis()) {
+			$wgOut->addHTML( $this->formHeader($term, $num, $totalRes));
+			if( $this->searchAdvanced ) {
+				$wgOut->addHTML( $this->powerSearchBox( $term ) );
+			}
 		}
+		/* Wikia change end */
 
 		$wgOut->addHtml( Xml::closeElement( 'form' ) );
 		$wgOut->addHtml( "<div class='searchresults'>" );
@@ -315,11 +319,29 @@ class SpecialSearch {
 		if( $num || $this->offset ) {
 			$wgOut->addHTML( "<p class='mw-search-pager-bottom'>{$prevnext}</p>\n" );
 		}
+
+		// show number of results and current offset
+		/* Wikia change begin - @author: Macbre */
+		if (Wikia::isOasis()) {
+			$wgOut->addHTML( $this->formHeader($term, $num, $totalRes));
+			if( $this->searchAdvanced ) {
+				$wgOut->addHTML( $this->powerSearchBox( $term ) );
+			}
+		}
+		/* Wikia change end */
+
 		wfProfileOut( __METHOD__ );
 	}
 
 	protected function showCreateLink( $t ) {
 		global $wgOut;
+
+		/* Wikia change begin - @author: Macbre */
+		/* Don't show "create an article" link in Oasis */
+		if (Wikia::isOasis()) {
+			return '';
+		}
+		/* Wikia change end */
 
 		// show direct page/create link if applicable
 		$messageName = null;
