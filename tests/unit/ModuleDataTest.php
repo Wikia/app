@@ -553,7 +553,10 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 		$moduleData = Module::get('PageHeader')->getData();
 
-		$this->assertTrue($moduleData['isMainPage']);
+		if ($wgTitle->exists()) {
+			$this->assertTrue($moduleData['isMainPage']);
+		}
+
 		$this->assertEquals('', $moduleData['title']);
 		$this->assertEquals('', $moduleData['subtitle']);
 
