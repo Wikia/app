@@ -13,7 +13,7 @@ if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
 	exit( 1 );
 }
 
-echo "Checking for ads that have expired or are expiring within next 25 hours\n";
+echo "Checking for ads that have expired or are expiring within the next hour\n";
 //FIXME refactor this piece into another data class
 $dbw = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 $res = $dbw->select(
@@ -21,7 +21,7 @@ $res = $dbw->select(
 		'*',
 		array(
 			'ad_closed' => null,
-			'ad_expires < TIMESTAMPADD(HOUR,25,NOW())',
+			'ad_expires < TIMESTAMPADD(HOUR,1,NOW())',
 			),
 		__METHOD__
 	       );
