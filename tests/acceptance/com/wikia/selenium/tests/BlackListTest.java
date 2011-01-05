@@ -41,7 +41,7 @@ public class BlackListTest extends BaseTest {
 			String pattern = "<a href=\"" + website + "\" class=\"free\" title=\"" + website + "\">" + website + "</a>";
 			assertTrue(content.indexOf(pattern) > 0);
 		}
-		
+
 		websites = getTestConfig().getStringArray("ci.extension.wikia.Phalanx.WhiteList.externalWebsite.url");
 		assertTrue(websites.length > 0);
 
