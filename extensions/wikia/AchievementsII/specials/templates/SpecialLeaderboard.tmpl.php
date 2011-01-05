@@ -42,6 +42,12 @@
 		*/
 		if (!isset($topUserBadges[$rankedUser->getID()])) continue;
 		$badge = $topUserBadges[$rankedUser->getID()];
+		$badgeIsSponsored = $badge->isSponsored();
+		$hoverUrl = $badge->getHoverPictureUrl();
+		$badgeTrackingUrl = $badge->getTrackingUrl();
+		$badgeClickUrl = $badge->getClickCommandUrl();
+		$hoverTrackingUrl = $badge->getHoverTrackingUrl();
+		$badgeEarnedBy = $badge->getEarnedBy();
 		
 	?>
 		<tr>
@@ -58,14 +64,28 @@
 			</td>
 			<td class="badge">
 				<div class="badges" style="position: relative;">
-					<div class="profile-hover">
-						<img src="<?=$badge->getPictureURL(90)?>">
-						<div class="profile-hover-text">
-							<h3 class="badge-name"><?=$badge->getName()?></h3>
-							<p><?=$badge->getDetails()?></p>							
-						</div>
+					<div class="profile-hover<?= ( $badgeIsSponsored ) ? ' sponsored-hover' : null ;?>"<?= ( $badgeIsSponsored && !empty( $hoverTrackingUrl ) ) ? " data-hovertrackurl=\"{$hoverTrackingUrl}\"" : null ;?>>
+						<? if ( $badgeIsSponsored ) :?>
+							<img src="<?= $hoverUrl ;?>"/>
+							<p class="earned"><?= wfMsgExt('achievements-earned', array('parsemag'), $badgeEarnedBy) ?></p>
+						<? else :?>
+							<img src="<?=$badge->getPictureURL(90)?>" width="90" height="90" />
+							<div class="profile-hover-text">
+								<h3 class="badge-name"><?=$badge->getName()?></h3>
+								<p><?=$badge->getDetails()?></p>
+							</div>
+						<? endif ;?>
 					</div>
-					<img src="<?=$badge->getPictureURL(40)?>" class="badge-icon">
+					<? if ( $badgeIsSponsored ) :?>
+						<a class="sponsored-link badge-icon badge-small"
+							<?= ( !empty( $badgeClickUrl ) ) ? " href=\"{$badgeClickUrl}\" title=\"". wfMsg( 'achievements-community-platinum-sponsored-badge-click-tooltip' ) . "\"" : null ;?>
+							title="<?= wfMsg( 'achievements-community-platinum-sponsored-badge-click-tooltip' ) ;?>"
+							<?= ( !empty( $badgeTrackingUrl ) ) ? " data-badgetrackurl=\"{$badgeTrackingUrl}\"" : null ;?>">
+					<? endif ;?>
+					<img src="<?=$badge->getPictureURL(40)?>" <?= ( !$badgeIsSponsored ) ? 'class="badge-icon" ' : null ;?>width="40" height="40" />
+					<? if ( $badgeIsSponsored ) :?>
+						</a>
+					<? endif ;?>
 					<?=$badge->getName()?>
 				</div>
 			</td>
