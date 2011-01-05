@@ -30,19 +30,19 @@ class AchAjaxService {
 		if($ret['errors'] == null && $wgRequest->getFileName('wpUploadFile')) {
 
 			ob_start();
-			$imageUrl = AchImageUploadService::uploadBadge(AchConfig::getInstance()->getBadgePictureName($badge_type_id), AchConfig::getInstance()->getLevelMsgKeyPart(BADGE_LEVEL_PLATINUM));
+			$badgeImage = AchImageUploadService::uploadBadge(AchConfig::getInstance()->getBadgePictureName($badge_type_id), AchConfig::getInstance()->getLevelMsgKeyPart(BADGE_LEVEL_PLATINUM));
 			ob_end_clean();
 			
-			if(!$imageUrl) {
+			if ( !$badgeImage ) {
 				$ret['errors'][] = wfMsg('achievements-upload-error');
 			}
 		}
 
 		//upload Sponsored achievement hover content
 		if ( $isSponsored && $wgRequest->getFileName( 'hover_content' ) ) {
-			$result = AchImageUploadService::uploadHover( AchConfig::getInstance()->getHoverPictureName( $badge_type_id ) );
+			$hoverImage = AchImageUploadService::uploadHover( AchConfig::getInstance()->getHoverPictureName( $badge_type_id ) );
 			
-			if ( empty( $result[ 'success' ] ) ) {
+			if ( !$hoverImage ) {
 				$ret['errors'][] = wfMsg('achievements-upload-error');
 			}
 		}
@@ -108,21 +108,26 @@ class AchAjaxService {
 			}
 
 			$dbw->commit();
-
-			$image = wfFindFile(AchConfig::getInstance()->getBadgePictureName($badge_type_id));
-			$hoverImage = wfFindFile( AchConfig::getInstance()->getHoverPictureName( $badge_type_id ) );
-
+			
+			if ( empty( $badgeImage ) ) {
+				$badgeImage = wfFindFile( AchConfig::getInstance()->getBadgePictureName( $badge_type_id ) );
+			}
+			
+			if ( empty( $hoverImage ) ) {
+				$hoverImage = wfFindFile( AchConfig::getInstance()->getHoverPictureName( $badge_type_id ) );
+			}
+			
 			// render form
 			$badge = array();
 			$badge['type_id'] = $badge_type_id;
 			$badge['enabled'] = $wgRequest->getBool('status');
-			$badge['thumb_url'] = $image->getThumbnail(90)->getUrl()."?".rand();
+			$badge['thumb_url'] = $badgeImage->getThumbnail(90)->getUrl()."?cb=".rand();
 			$badge['awarded_users'] = AchPlatinumService::getAwardedUserNames($badge_type_id, true);
 			$badge[ 'is_sponsored' ] = $isSponsored;
 			$badge[ 'badge_tracking_url' ] = $wgRequest->getText( 'badge_impression_pixel_url' );
 			$badge[ 'hover_tracking_url' ] = $wgRequest->getText( 'hover_impression_pixel_url' );
 			$badge[ 'click_tracking_url' ] = $wgRequest->getText( 'badge_redirect_url' );
-			$badge[ 'hover_content_url' ] = ( is_object( $hoverImage ) ) ? wfReplaceImageServer( $hoverImage->getFullUrl() ) . "?" . rand() : null;
+			$badge[ 'hover_content_url' ] = ( is_object( $hoverImage ) ) ? wfReplaceImageServer( $hoverImage->getFullUrl() ) . "?cb=" . rand() : null;
 
 			$ret['output'] = AchPlatinumService::getPlatinumForm($badge);
 		}
@@ -158,19 +163,19 @@ class AchAjaxService {
 		if($ret['errors'] == null && $wgRequest->getFileName('wpUploadFile')) {
 
 			ob_start();
-			$imageUrl = AchImageUploadService::uploadBadge(AchConfig::getInstance()->getBadgePictureName($badge_type_id), AchConfig::getInstance()->getLevelMsgKeyPart(BADGE_LEVEL_PLATINUM));
+			$badgeImage = AchImageUploadService::uploadBadge(AchConfig::getInstance()->getBadgePictureName($badge_type_id), AchConfig::getInstance()->getLevelMsgKeyPart(BADGE_LEVEL_PLATINUM));
 			ob_end_clean();
 
-			if(!$imageUrl) {
+			if ( !$badgeImage ) {
 				$ret['errors'][] = wfMsg('achievements-upload-error');
 			}
 		}
 
 		//upload Sponsored achievement hover content
 		if ( $isSponsored && $wgRequest->getFileName( 'hover_content' ) ) {
-			$result = AchImageUploadService::uploadHover( AchConfig::getInstance()->getHoverPictureName( $badge_type_id ) );
+			$hoverImage = AchImageUploadService::uploadHover( AchConfig::getInstance()->getHoverPictureName( $badge_type_id ) );
 
-			if ( empty( $result[ 'success' ] ) ) {
+			if ( !$hoverImage ) {
 				$ret['errors'][] = wfMsg('achievements-upload-error');
 			}
 		}
@@ -191,21 +196,18 @@ class AchAjaxService {
 			}
 
 			$dbw->commit();
-
-			$image = wfFindFile(AchConfig::getInstance()->getBadgePictureName($badge_type_id));
-			$hoverImage = wfFindFile( AchConfig::getInstance()->getHoverPictureName( $badge_type_id ) );
 			
 			// render form
 			$badge = array();
 			$badge['type_id'] = $badge_type_id;
 			$badge['enabled'] = false;
-			$badge['thumb_url'] = $image->getThumbnail(90)->getUrl();
+			$badge['thumb_url'] = $badgeImage->getThumbnail(90)->getUrl();
 			$badge['awarded_users'] = null;
 			$badge[ 'is_sponsored' ] = $isSponsored;
 			$badge[ 'badge_tracking_url' ] = $wgRequest->getText( 'badge_impression_pixel_url' );
 			$badge[ 'hover_tracking_url' ] = $wgRequest->getText( 'hover_impression_pixel_url' );
 			$badge[ 'click_tracking_url' ] = $wgRequest->getText( 'badge_redirect_url' );
-			$badge[ 'hover_content_url' ] = ( is_object( $hoverImage ) ) ? wfReplaceImageServer( $hoverImage->getFullUrl() ) . "?" . rand() : null;
+			$badge[ 'hover_content_url' ] = ( is_object( $hoverImage ) ) ? wfReplaceImageServer( $hoverImage->getFullUrl() ) . "?cb=" . rand() : null;
 
 			$ret['output'] = AchPlatinumService::getPlatinumForm($badge);
 		}
@@ -221,15 +223,14 @@ class AchAjaxService {
 		$lap = ($wgRequest->getVal('lap') != '') ? $wgRequest->getVal('lap') : null;
 		$level = $wgRequest->getVal('level');
 
-		$imageUrl = AchImageUploadService::uploadBadge(AchConfig::getInstance()->getBadgePictureName($badge_type_id, $lap), AchConfig::getInstance()->getLevelMsgKeyPart($level));
+		$badgeImage = AchImageUploadService::uploadBadge(AchConfig::getInstance()->getBadgePictureName($badge_type_id, $lap), AchConfig::getInstance()->getLevelMsgKeyPart($level));
 
 		$ret = array();
 
-		if(!$imageUrl)
+		if(!$badgeImage)
 			$ret['error'] = wfMsg('achievements-upload-error');
 		else {
-			$image = wfFindFile(AchConfig::getInstance()->getBadgePictureName($badge_type_id, $lap));
-			$ret['output'] = $image->getThumbnail(90)->getUrl();
+			$ret['output'] = $badgeImage->getThumbnail(90)->getUrl();
 		}
 		return '<script type="text/javascript">window.document.responseContent = '.json_encode($ret).';</script>';
 	}

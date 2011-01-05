@@ -84,6 +84,7 @@ $wgAutoloadClasses['AchRankedUser'] = $dir.'AchRankedUser.class.php';
 $wgAutoloadClasses['AchBadge'] = $dir.'AchBadge.class.php';
 
 //dependencies
+$wgAutoloadClasses[ 'UploadAchievementsFromFile' ] = "{$dir}UploadAchievementsFromFile.class.php";
 $wgAutoloadClasses[ 'WikiaPhotoGalleryUpload' ] = "{$dir}../WikiaPhotoGallery/WikiaPhotoGalleryUpload.class.php";
 
 // I18N
@@ -224,7 +225,7 @@ function AchAjax() {
 		$response->setContentType('text/html; charset=utf-8');
 		return $response;
 	}
-	elseif ($method == 'takeRankingSnapshot') {
+	/*elseif ($method == 'takeRankingSnapshot') {
 		ob_start();
 		Ach_TakeRankingSnapshot($wgRequest->getVal('force'));
 		$result = ob_get_clean();
@@ -232,7 +233,7 @@ function AchAjax() {
 		$response = new AjaxResponse($result);
 		$response->setContentType('text/html; charset=utf-8');
 		return $response;
-	}
+	}*/
 
 }
 
@@ -355,7 +356,8 @@ function Ach_isBadgeImage($destName, $checkUserRights = false) {
 	$isSponsoredBadge = strlen($destName) > strlen( ACHIEVEMENTS_HOVER_PREFIX ) && stripos($destName, ACHIEVEMENTS_HOVER_PREFIX) === 0;
 
 	if ($checkUserRights) {
-		$matches = $isBadge || ($isSponsoredBadge && !$wgUser->isAllowed('sponsored-achievements'));
+		$matches = ( $isBadge && !( $wgUser->isAllowed( 'platinum' ) || $wgUser->isAllowed( 'editinterface' ) ) ) ||
+			( $isSponsoredBadge && !$wgUser->isAllowed( 'sponsored-achievements' ) );
 	}
 	else {
 		$matches = $isBadge || $isSponsoredBadge;
