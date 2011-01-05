@@ -101,7 +101,6 @@ var CategoryExhibition = {
 
 	paginatorClick : function(pageSection, axMethod, clickedObj, name ){
 
-		$().log('categoryGallery',clickedObj.attr('data-page') + ' || ' + CategoryExhibition.lockTable[ name ]);
 		if ( CategoryExhibition.lockTable[ name ] == clickedObj.attr('data-page') ){
 		 	return false;
 		}
