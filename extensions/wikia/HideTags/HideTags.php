@@ -14,6 +14,7 @@ function efHideTagsSetup(&$parser) {
 	$parser->setHook( 'vote', 'efHideTags' );
 	$parser->setHook( 'comments', 'efHideTags' );
 	$parser->setHook( 'rhtml', 'efHideTags' );
+	$parser->setHook( 'pageby', 'efHideTags' );
 	/* copy above line and change tag name to hide additional tags */
 
 	$parser->setHook( 'loggedin', 'efJustPrintTags' );
