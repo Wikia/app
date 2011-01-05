@@ -35,6 +35,12 @@ class ServiceTest extends PHPUnit_Framework_TestCase {
 		$article = Article::newFromId($articleId);
 		$key = wfMemcKey('services', 'pageheader', 'current-revision', $articleId);
 
+		// macbre: perform this test only for existing pages
+		if (!$wgTitle->exists()) {
+			$this->markTestSkipped();
+			return;
+		}
+
 		$service = new PageStatsService($articleId);
 
 		$this->assertType('array', $service->getMostLinkedCategories());
