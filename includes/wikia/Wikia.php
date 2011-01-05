@@ -1372,6 +1372,8 @@ class Wikia {
 		$cityId = 177;
 		$name = $editor->getName();
 		
+		$keys['$UNSUBSCRIBEURL'] = '';
+		
 		if ( $editor->isIP( $name ) ) {
 			# don't do it for anons
 			return true;
@@ -1395,7 +1397,7 @@ class Wikia {
 			'token'		=> wfGenerateUnsubToken( $email, $ts )
 		);
 		
-		$keys['$UNSUBSCRIBEURL'] = $oTitle->getFullURL( $params ); 
+		$keys['$UNSUBSCRIBEURL'] = wfMsg( 'unsubscribe-email', $oTitle->getFullURL( $params ) );
 
 		return true;
 	}
