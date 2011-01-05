@@ -64,7 +64,7 @@ class ReCaptcha extends SimpleCaptcha {
          */
 	function getForm() {
 		global $recaptcha_public_key;
-		return "<script type=\"text/javascript\">var RecaptchaOptions = { tabindex : 1 }; </script> " .
+		return "<script>var RecaptchaOptions = { tabindex : 1 }; </script> " .
 		recaptcha_get_html($recaptcha_public_key, $this->recaptcha_error);
 	}
 

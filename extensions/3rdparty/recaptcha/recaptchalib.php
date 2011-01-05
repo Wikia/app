@@ -59,6 +59,7 @@ function _recaptcha_qsencode ($data) {
 
 /**
  * Submits an HTTP POST to a reCAPTCHA server
+ * @author tor -- changed from socks to native MediaWiki
  * @param string $host
  * @param string $path
  * @param array $data
@@ -67,27 +68,12 @@ function _recaptcha_qsencode ($data) {
  */
 function _recaptcha_http_post($host, $path, $data, $port = 80) {
 
-        $req = _recaptcha_qsencode ($data);
+	$options = array(
+		'postData' => $data,
+	);
 
-        $http_request  = "POST $path HTTP/1.0\r\n";
-        $http_request .= "Host: $host\r\n";
-        $http_request .= "Content-Type: application/x-www-form-urlencoded;\r\n";
-        $http_request .= "Content-Length: " . strlen($req) . "\r\n";
-        $http_request .= "User-Agent: reCAPTCHA/PHP\r\n";
-        $http_request .= "\r\n";
-        $http_request .= $req;
-
-        $response = '';
-        if( false == ( $fs = @fsockopen($host, $port, $errno, $errstr, 10) ) ) {
-                die ('Could not open socket');
-        }
-
-        fwrite($fs, $http_request);
-
-        while ( !feof($fs) )
-                $response .= fgets($fs, 1160); // One TCP-IP packet
-        fclose($fs);
-        $response = explode("\r\n\r\n", $response, 2);
+	$response = '';
+	$response = Http::post( 'http://' . $host . ':' . $port . $path, $options );
 
         return $response;
 }
