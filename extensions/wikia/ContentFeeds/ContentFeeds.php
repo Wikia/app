@@ -22,9 +22,10 @@ $wgExtensionCredits['specialpage'][] = array(
  * setup functions
  */
 $wgExtensionFunctions[] = 'wfContentFeedsInit';
+$wgExtensionMessagesFiles['ContentFeeds'] = $dir . 'ContentFeeds.i18n.php';
 
 function wfContentFeedsInit() {
-	global $wgHooks, $wgExtensionMessagesFiles, $wgAutoloadClasses;
+	global $wgHooks, $wgAutoloadClasses;
 
 	$dir = dirname(__FILE__) . '/';
 
@@ -34,11 +35,6 @@ function wfContentFeedsInit() {
 	$wgHooks['ParserFirstCallInit'][] = 'wfContentFeedsInitParserHooks';
 	$wgHooks['SpecialNewImages::beforeDisplay'][] = 'ContentFeeds::specialNewImagesHook';
 	$wgHooks['ParserBeforeStrip'][] = 'ContentFeeds::recentImagesParserHook';
-
-	/**
-	 * messages file
-	 */
-	$wgExtensionMessagesFiles['ContentFeeds'] = $dir . 'ContentFeeds.i18n.php';
 
 	/**
 	 * classes

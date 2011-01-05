@@ -8,11 +8,6 @@
 
 class WikiaNewFiles extends IncludableSpecialPage {
 	function execute( $par ) {
-		// FIXME: unused global.
-		global $wgExtensionMessagesFiles;
-
-		wfLoadExtensionMessages( "WikiaNewFiles" );
-
 		$this->name( 'WikiaNewFiles' );
 		$this->setHeaders();
 

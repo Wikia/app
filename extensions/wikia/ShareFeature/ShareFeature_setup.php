@@ -153,9 +153,6 @@ function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
 function wfShareFeatureInit() {
 	global $wgExtensionMessagesFiles, $wgAjaxExportList;
 
-	$wgExtensionMessagesFiles['ShareFeature'] = dirname(__FILE__).'/ShareFeature.i18n.php';
-	wfLoadExtensionMessages('ShareFeature');
-
 	$wgAjaxExportList[] = 'wfShareFeatureAjaxGetDialog';
 	$wgAjaxExportList[] = 'wfShareFeatureAjaxUpdateStats';
 }

@@ -76,6 +76,7 @@ $wgExtensionCredits['other'][] = array(
        'url' => 'http://wikitrust.soe.ucsc.edu',
        'description' => 'Adds wikitrust tab to visualize article trust and provide origin rev on click.'
    );
+$wgExtensionMessagesFiles['WikiTrust'] = $dir.'/WikiTrust.i18n.php';
 wfWikiTrustSetup();
 
 

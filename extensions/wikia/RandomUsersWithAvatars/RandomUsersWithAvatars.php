@@ -6,11 +6,11 @@
  */
 
 $wgExtensionFunctions[] = "wfRandomUsersWithAvatars";
+$wgExtensionMessagesFiles['randomuserswithavatars'] = dirname( __FILE__ ) . '/RandomUsersWithAvatars.i18n.php';
 
 function wfRandomUsersWithAvatars() {
-    global $wgParser, $wgOut, $wgExtensionMessagesFiles;
+    global $wgParser, $wgOut;
     $wgParser->setHook( "randomuserswithavatars", "GetRandomUsersWithAvatars" );
-	$wgExtensionMessagesFiles['randomuserswithavatars'] = dirname( __FILE__ ) . '/RandomUsersWithAvatars.i18n.php';
 }
 
 function GetRandomUsersWithAvatars( $input, $args, &$parser ){

@@ -11,6 +11,7 @@ if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 }
 
 $wgExtensionFunctions[] = 'WikiaVideo_init';
+$wgExtensionMessagesFiles['WikiaVideo'] = dirname(__FILE__).'/WikiaVideo.i18n.php';
 
 $wgHooks['ParserBeforeStrip'][] = 'WikiaVideoParserBeforeStrip';
 $wgHooks['SpecialNewImages::beforeQuery'][] = 'WikiaVideoNewImagesBeforeQuery';
@@ -260,9 +261,7 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 	// placeholder? treat differently
 	if( ('Placeholder' == $title->getText() ) || ('Template Placeholder' == $title->getText() ) ) {
 		// generate a single empty cell with a button
-		global $wgExtensionMessagesFiles, $wgWikiaVideoPlaceholderId, $wgContLang;
-		$wgExtensionMessagesFiles['WikiaVideo'] = dirname(__FILE__).'/WikiaVideo.i18n.php';
-		wfLoadExtensionMessages( 'WikiaVideo' );
+		global $wgWikiaVideoPlaceholderId, $wgContLang;
 
 		$params = array_map( 'trim', explode( '|', $options ) );
 
