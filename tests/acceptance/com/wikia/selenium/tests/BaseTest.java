@@ -37,7 +37,7 @@ public class BaseTest {
 	private String webSite;
 	private XMLConfiguration testConfig;
 	private String noCloseAfterFail;
-	
+
 	public XMLConfiguration getTestConfig() throws Exception{
 		if (null == this.testConfig) {
 			File file = new File(System.getenv("TESTSCONFIG"));
@@ -83,7 +83,7 @@ public class BaseTest {
 		} else {
 			waitForElement("//*[@id=\"header_username\"]/a[text() = \"" + username + "\"]");
 		}
-		
+
 	}
 
 	protected void login() throws Exception {
@@ -387,7 +387,7 @@ public class BaseTest {
 		session().click("wpConfirmB");
 		session().waitForPageToLoad(TIMEOUT);
 	}
-	
+
 	/**
 	 * Deletes the current page if the user is allowed to do so.  If not allowed,
 	 * does not throw an error and just continues on quietly.  This is for use when
@@ -431,7 +431,7 @@ public class BaseTest {
 		session().uncheck("watch");
 
 		clickAndWait("wpMove");
-		
+
 		if (session().isElementPresent("wpConfirm")) {
 			session().uncheck("wpLeaveRedirect");
 			session().uncheck("watch");
