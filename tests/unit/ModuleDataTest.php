@@ -475,7 +475,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 		ContentDisplayModule::renderPictureAttribution(false, false, $file, false, false, $html);
 
-		$this->assertRegExp('/^TEST<aside class="picture-attribution"><img src/', $html);
+		$this->assertRegExp('/^TEST<div class="picture-attribution"><img src/', $html);
 		$this->assertRegExp('/User:' . $addedBy . '/', $html);
 	}
 
