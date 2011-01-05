@@ -120,7 +120,7 @@ var Achievements = {
 			if(typeof response.error != 'undefined') {
 				alert(response.error);
 			} else {
-				img.attr('src', response.output + '?' + Math.random(0,1));
+				img.attr('src', response.output + '?cb=' + Math.random() );
 			}
 		}});
 		

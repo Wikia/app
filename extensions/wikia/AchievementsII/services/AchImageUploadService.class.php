@@ -88,22 +88,22 @@ class AchImageUploadService {
 	}
 	
 	public static function uploadBadge($destinationFileName, $badgeLevel) {
-		global $wgRequest;
+		global $wgRequest, $wgUser;
+		$upload = new UploadAchievementsFromFile();
 
-		$form = new UploadForm($wgRequest);
-		list($partname, $ext) = $form->splitExtensions(stripslashes($wgRequest->getFileName('wpUploadFile')));
-		$finalExt = !empty($ext) ? end($ext) : '';
-		$form->mFileProps = File::getPropsFromPath($form->mTempPath, $finalExt);
-		$form->checkMacBinary();
-		$result = $form->verify($form->mTempPath, $finalExt);
+		$upload->initialize( $destinationFileName, $wgRequest->getFileTempName( 'wpUploadFile' ), $wgRequest->getFileSize( 'wpUploadFile' ) );
+		//$upload->getTitle();//this call is needed, it's not an error, see UploadBase class
 
-		if($result !== true) {
+		$details = $upload->verifyUpload();
+		
+		//ignore warnings, existing files MUST be overwritten
+		//check only status
+		if ( $details[ 'status' ] != UploadBase::OK ) {
 			return false;
-			//return array($result->getMessage());
 		}
-
+		
 		// badge data
-		$badgeFile = $form->mTempPath;
+		$badgeFile = $upload->getTempPath();
 
 		// validate image using GD
 		$badgeImage = imagecreatefromstring(file_get_contents($badgeFile));
@@ -187,9 +187,8 @@ class AchImageUploadService {
 		self::merge_alphamask($badge, $img['top'], $img['bottom']);
 
 		// save badge
-		$badgeFile = tempnam(wfTempDir(), 'BADGE');
-		imagepng($badge, $badgeFile, 9, PNG_ALL_FILTERS);
-
+		$ret = imagepng($badge, $badgeFile, 9, PNG_ALL_FILTERS);
+		
 		wfDebug(__METHOD__ . ": generated badge saved as {$badgeFile}\n");
 
 		// collect garbage
@@ -199,28 +198,37 @@ class AchImageUploadService {
 			imagedestroy($i);
 		}
 
-		// name for generated badge
-		$imageTitle = Title::newFromText($destinationFileName, NS_FILE);
-
 		// upload generated badge
-		$file = new LocalFile($imageTitle, RepoGroup::singleton()->getLocalRepo());
-		$result = $file->upload($badgeFile, '', '');
-
-		// verify upload
-		if (empty($result->ok)) {
-			// return $result->getErrorsArray();
+		$status = $upload->performUpload('/* comment */', '/* page text */', false, $wgUser);
+		
+		if ( !$status->isGood() ) {
 			return false;
 		}
-
-		return $file;
+		
+		return $upload->getLocalFile();
 	}
 
 	public static function uploadHover( $destinationFileName ) {
-		global $wgRequest;
-		
-		wfLoadExtensionMessages( 'WikiaPhotoGallery' );
-		$ret = WikiaPhotoGalleryUpload::uploadImage( 'hover_content', $destinationFileName, true );
+		global $wgRequest, $wgUser;
+		$upload = new UploadAchievementsFromFile();
 
-		return $ret;
+		$upload->initialize( $destinationFileName, $wgRequest->getFileTempName( 'hover_content' ), $wgRequest->getFileSize( 'hover_content' ) );
+		//$upload->getTitle();//this call is needed, it's not an error, see UploadBase class
+
+		$details = $upload->verifyUpload();
+		
+		//ignore warnings, existing files MUST be overwritten
+		//check only status
+		if ( $details[ 'status' ] != UploadBase::OK ) {
+			return false;
+		}
+		
+		$status = $upload->performUpload('/* comment */', '/* page text */', false, $wgUser);
+		
+		if ( !$status->isGood() ) {
+			return false;
+		}
+		
+		return $upload->getLocalFile();
 	}
 }
