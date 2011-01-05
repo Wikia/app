@@ -6,6 +6,8 @@
 
 class LocalFileTest extends PHPUnit_Framework_TestCase {
 	function setUp() {
+		global $wgContLang;
+		$wgContLang = new Language;
 		$info = array(
 			'name' => 'test',
 			'directory' => '/testdir',
@@ -19,6 +21,11 @@ class LocalFileTest extends PHPUnit_Framework_TestCase {
 		$this->file_hl0 = $this->repo_hl0->newFile( 'test!' );
 		$this->file_hl2 = $this->repo_hl2->newFile( 'test!' );
 		$this->file_lc = $this->repo_lc->newFile( 'test!' );
+	}
+
+	function tearDown() {
+		global $wgContLang;
+		unset($wgContLang);
 	}
 
 	function testGetHashPath() {
@@ -75,10 +82,10 @@ class LocalFileTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testGetThumbVirtualUrl() {
-		$this->assertEquals( 'mwrepo://test/public/thumb/Test%21', $this->file_hl0->getThumbVirtualUrl() );
-		$this->assertEquals( 'mwrepo://test/public/thumb/a/a2/Test%21', $this->file_hl2->getThumbVirtualUrl() );
-		$this->assertEquals( 'mwrepo://test/public/thumb/Test%21/%21', $this->file_hl0->getThumbVirtualUrl( '!' ) );
-		$this->assertEquals( 'mwrepo://test/public/thumb/a/a2/Test%21/%21', $this->file_hl2->getThumbVirtualUrl( '!' ) );
+		$this->assertEquals( 'mwrepo://test/thumb/Test%21', $this->file_hl0->getThumbVirtualUrl() );
+		$this->assertEquals( 'mwrepo://test/thumb/a/a2/Test%21', $this->file_hl2->getThumbVirtualUrl() );
+		$this->assertEquals( 'mwrepo://test/thumb/Test%21/%21', $this->file_hl0->getThumbVirtualUrl( '!' ) );
+		$this->assertEquals( 'mwrepo://test/thumb/a/a2/Test%21/%21', $this->file_hl2->getThumbVirtualUrl( '!' ) );
 	}
 
 	function testGetUrl() {
