@@ -19,10 +19,18 @@ $messages = array();
 
 $messages['en'] = array(
 	'automaticwikiadoption' => 'Automatic wiki adoption',
-	'automaticwikiadoption-desc' => 'TODO',
+	'automaticwikiadoption-desc' => 'An AutomaticWikiAdoption extension for MediaWiki',
 	'automaticwikiadoption-header' => 'Adopt this wiki',
 	'automaticwikiadoption-button-adopt' => 'Adopt now',
-	'automaticwikiadoption-description' => "You've contributed ... TODO",
+	'automaticwikiadoption-description' => "You've contributed to this wiki, but there's no active administrator. Would you like the job?
+
+Being an administrator means that you will need to keep contributing content, but also encourage anyone else on the wiki directly, and be available to help them out when they need you.
+
+In return, we'll give you the power to block / unblock users, lock pages from editing, and a whole bunch of other features. We'll also send you an email when anyone else edits this wiki.
+
+In short, you'll have ownership, and you can shape this site to whatever you want it to be.
+
+Sound like fun?",
 	'automaticwikiadoption-know-more-header' => 'Want to know more?',
 	'automaticwikiadoption-know-more-description' => 'Check out these links for more information. And of course, feel free to contact us if you have any questions!',
 	'automaticwikiadoption-adoption-successed' => 'Congratulations! You are a now an administrator on this wiki!',
