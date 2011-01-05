@@ -108,24 +108,20 @@ class FounderEmails {
 		return $this->mLastEvetType;
 	}
 
-	public static function userTogglesHook( $toggles, $defaults = false ) {
-		if ( is_array( $defaults ) ) {
-			$defaults[] = 'founderemailsenabled';
-		}
-		else {
-			$toggles[] = 'founderemailsenabled';
-		}
-		return true;
-	}
-
-	public static function userProfilePreferencesHook( $prefsForm, $toggleHtml ) {
+	public static function onGetPreferences($user, &$defaultPreferences) {
 		global $wgUser;
+		wfProfileIn( __METHOD__ );
 
 		if ( FounderEmails::getInstance()->getWikiFounder()->getId() == $wgUser->getId() ) {
-			$prefsForm->mUsedToggles['founderemailsenabled'] = true;
-			$toggleHtml .= $prefsForm->getToggle( 'founderemailsenabled' ) . "<br />";
+			$defaultPreferences['founderemailsenabled'] = array(
+				'type' => 'toggle',
+				'label-message' => 'tog-founderemailsenabled',
+				'section' => 'personal/email',
+			);
 		}
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
+
 }

@@ -75,8 +75,7 @@ function wfFounderEmailsInit() {
 		}
 	}
 
-	$wgHooks['UserToggles'][] = 'FounderEmails::userTogglesHook';
-	$wgHooks['getUserProfilePreferencesCustomEmailToggles'][] = 'FounderEmails::userProfilePreferencesHook';
+	$wgHooks['GetPreferences'][] = 'FounderEmails::onGetPreferences';
 
 	// Set default for the toggle (applied to all new user accounts).  This is safe even if this user isn't a founder yet.
 	$wgDefaultUserOptions['founderemailsenabled'] = 1;
