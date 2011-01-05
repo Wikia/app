@@ -29,6 +29,8 @@ class WikiStatsPage extends IncludableSpecialPage
     var $mLang;
     var $mHub;
     var $mNS;
+    var $mNamespaces;
+    var $mPredefinedNamespaces;
     var $mAction;
     var $mActiveTab;
     var $mXLS;
@@ -63,8 +65,9 @@ class WikiStatsPage extends IncludableSpecialPage
             return;
         }
 
-        $this->mStats = WikiStats::newFromId($wgCityId);        
-        
+		$this->mCityId = ($this->TEST == 1 ) ? 177 : $wgCityId;
+        $this->mStats = WikiStats::newFromId($this->mCityId);        
+
 		$this->mUser = $wgUser;
 		$this->userIsSpecial = $this->mStats->isAllowed();
         
@@ -88,9 +91,8 @@ class WikiStatsPage extends IncludableSpecialPage
 			$this->mPredefinedNamespaces = $this->mStats->getPageNSList();   		
 		}
 
-		$this->mCityId 		= ($this->TEST == 1 ) ? 177 : $wgCityId;
 		$this->mCityDBName 	= ($this->TEST == 1 ) ? WikiFactory::IDtoDB($this->mCityId) : $wgDBname;
-		
+
 		#---
 		if ( $subpage ) { 
 			$path = explode("/", $subpage);
@@ -100,7 +102,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		if ( empty($this->mAction) ) {
 			$wgOut->redirect( $this->mTitle->getFullURL("action={$this->defaultAction}") );
 		}
-				
+		
 		$m = array();
 		$this->toYear 		= date('Y');
 		$this->toMonth 		= date('m');
@@ -114,7 +116,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		if ( preg_match("/^([0-9]{4})([0-9]{1,2})/", $this->mToDate, $m) ) {
 			list (, $this->toYear, $this->toMonth) = $m; 
 		}
-		
+
 		if ( $domain == 'all' || $all == 1 ) {
         	$this->mCityId = 0;
         	$this->mCityDBName = WIKISTATS_CENTRAL_ID;
@@ -128,19 +130,16 @@ class WikiStatsPage extends IncludableSpecialPage
         	$this->mCityDomain = WikiFactory::DBToDomain($this->mCityDBName);
 		}
 
-        #--- WikiaGenericStats instance
-        $this->mStats = WikiStats::newFromId($this->mCityId);        
-
         $this->mStats->setStatsDate( array( 
         	'fromMonth' => $this->fromMonth,
         	'fromYear' 	=> $this->fromYear,
         	'toMonth'	=> $this->toMonth,
         	'toYear'	=> $this->toYear
         ));
-        
+
         $this->mStats->setHub($this->mHub);
         $this->mStats->setLang($this->mLang);
-        
+
         #---
         $this->mSkin = $wgUser->getSkin();
         if ( is_object ($this->mSkin) ) {
@@ -150,8 +149,8 @@ class WikiStatsPage extends IncludableSpecialPage
         }     
 
 		$this->setHeaders();
-		$this->showForm();	
-		
+		$this->showForm();
+
 		if ( $this->mAction ) {
 			$func = sprintf("show%s", ucfirst(strtolower($this->mAction)));
 			if ( method_exists($this, $func) ) {
@@ -248,8 +247,6 @@ class WikiStatsPage extends IncludableSpecialPage
 		
 		#- additional menu for namespaces;
 		if ( $namespaces ) {
-			$params['mNS'] = $this->mNS;
-						
 			$params['namespaces'] = $this->mNamespaces;
 			$params['definedNamespaces'] = $this->mPredefinedNamespaces;
 			$params['mNS'] = $this->mNS;
@@ -275,6 +272,7 @@ class WikiStatsPage extends IncludableSpecialPage
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars( array(
 				"data"			=> $this->mStats->loadStatsFromDB(),
+				"ns_data"		=> $this->mStats->loadMonthlyNSActions(),
 				"today" 		=> date("Ym"),
 				"today_day"     => $this->mStats->getLatestStats(),
 				"user"			=> $wgUser,
@@ -300,10 +298,16 @@ class WikiStatsPage extends IncludableSpecialPage
 			}
 			wfProfileOut( __METHOD__ );
 		} else {
-			$data = $this->mStats->loadStatsFromDB();
-			$columns = $this->mStats->getRangeColumns();
-			$XLSObj = new WikiStatsXLS( $this->mStats, $data, wfMsg('wikistats_filename_mainstats', $this->mCityDBName));
-			$XLSObj->makeMainStats($columns);
+			// These are sorted by default in descending order; reverse it.
+			$count_data = array_reverse($this->mStats->loadStatsFromDB(), true);
+			$diffs_data = array_reverse($this->mStats->loadMonthlyDiffs(), true);
+			
+			$XLSObj = new WikiStatsXLS( $this->mStats,
+									    array_merge($count_data,
+													array('X' => array('label' => '')),
+													$diffs_data),
+										wfMsg('wikistats_filename_mainstats', $this->mCityDBName));
+			$XLSObj->makeMainStats();
 		}
         #---
         return 1; 
@@ -522,5 +526,3 @@ class WikiStatsPage extends IncludableSpecialPage
         wfProfileOut( __METHOD__ );
 	}
 }
-
-?>
