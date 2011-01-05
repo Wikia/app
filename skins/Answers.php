@@ -298,14 +298,6 @@ yieldbuild_loc = "leaderboard";
 			?>
 			<div id="question_actions">
 				<button class="button_small button_small_green" onclick="WET.byStr( 'articleAction/improveanswer' ); document.location='<?=$wgTitle->getEditURL()?>';"><span><? echo ($answer_page->isArticleAnswered() ? wfMsg("improve_this_answer") : wfMsg("answer_this_question"));?></span></button>
-				<?php
-				global $wgEnableEditResearch;
-				if( $wgEnableEditResearch ){
-				?>
-					<button class="button_small button_small_blue" onclick="WET.byStr( 'articleAction/researchthis' ); document.location='<?=$wgTitle->getEditURL()?>';"><span><?=wfMsg("research_this")?></span></button>
-				<?php
-				}
-				?>
 				<button class="button_small button_small_blue" onclick="WET.byStr( 'articleAction/emailwhenimproved' ); document.location='<?=$watchlist_url?>';"><span><? echo ($answer_page->isArticleAnswered() ? wfMsg("notify_improved") : wfMsg("notify_answered"));?></span></button>
 
 <?php if ($YB): ?>
