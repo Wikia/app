@@ -399,11 +399,49 @@ var AdDriverCall = function (slotname, size, dartUrl) {
 		} 
 		url = url.replace("nofooter=N;", nofooter);
 
-		// country
+		// continent/region
 		if (typeof AdDriver.geoData != 'undefined' && AdDriver.geoData) {
-			if (AdDriver.geoData['country'] != 'US') {
-				url = url.replace('http://ad.doubleclick', 'http://ad.'+AdDriver.geoData['country'].toLowerCase()+'.doubleclick');
+			var subdomain = '';
+			switch (AdDriver.geoData['continent']) {
+				case 'AF':
+				case 'EU':
+					subdomain = 'ad-emea';
+					break;
+				case 'AS':
+					switch (AdDriver.geoData['country']) {
+						// Middle East
+						case 'AE':
+						case 'CY':
+						case 'BH':
+						case 'IL':
+						case 'IQ':
+						case 'IR':
+						case 'JO':
+						case 'KW':
+						case 'LB':
+						case 'OM':
+						case 'PS':
+						case 'QA':
+						case 'SA':
+						case 'SY':
+						case 'TR':
+						case 'YE':
+							subdomain = 'ad-emea';
+							break;
+						default:
+							subdomain = 'ad-apac';
+					}
+					break;
+				case 'OC':
+					subdomain = 'ad-apac';
+					break;
+				case 'NA':
+				case 'SA':
+				default:
+					subdomain = 'ad';
 			}
+
+			url = url.replace('http://ad.doubleclick', 'http://'+subdomain+'.doubleclick');
 		}
 
 		return url;
