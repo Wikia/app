@@ -1,4 +1,5 @@
 == Changes since 20101213 ==
+* rt#143448: Image attribution showing in search result summaries (approach 1) (Marooned)
 * rt#141640: CreatePageTest (Selenium) fails - no "createpagedefaultblank" checkbox on preferences page (macbre)
 * rt#68369: WikiaPhotoGallery: galleries display as 1 column in IE7 (macbre)
 * rt#140656: Recent Wiki Activity module: Design update (macbre)
