@@ -76,7 +76,7 @@ $wgExtensionCredits['other'][] = array(
        'url' => 'http://wikitrust.soe.ucsc.edu',
        'description' => 'Adds wikitrust tab to visualize article trust and provide origin rev on click.'
    );
-$wgExtensionMessagesFiles['WikiTrust'] = $dir.'/WikiTrust.i18n.php';
+$wgExtensionMessagesFiles['WikiTrust'] = dirname(__FILE__) . '/includes/WikiTrust.i18n.php';
 wfWikiTrustSetup();
 
 
@@ -95,11 +95,6 @@ function wfWikiTrustError($msg){
 }
 
 function wfWikiTrustSetup() {
-    $dir = dirname(__FILE__) . '/includes/';
-
-    global $wgExtensionMessagesFiles;
-    $wgExtensionMessagesFiles['WikiTrust'] = $dir.'/WikiTrust.i18n.php';
-
     // Fixes the command-line options for eval_online_wiki.
     global $wgWikiTrustBlobPath, $wgWikiTrustCmdExtraArgs;
     if ($wgWikiTrustBlobPath) {
