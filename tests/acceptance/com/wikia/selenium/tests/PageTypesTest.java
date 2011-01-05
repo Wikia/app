@@ -62,6 +62,8 @@ public class PageTypesTest extends BaseTest {
 	@Test(groups={"oasis", "CI"})
 	public void testCategoryPage() throws Exception {
 		loginAsStaff();
+		editArticle("Category:Some category", "Wikia PageTypes test");
+		session().open("index.php?title=Category:Some category");
 		addCategory("Lorem ipsum", "Some content", "Some category");
 		logout();
 		session().open("index.php?title=Category:Some category");
@@ -168,7 +170,7 @@ public class PageTypesTest extends BaseTest {
 		assertTrue(session().isElementPresent("WikiaSearch"));
 
 		// "create blog post" button
-		assertTrue(session().isElementPresent("//div[@id='WikiaUserPagesHeader']//a[contains(@href,'Special:CreateBlogPage')]"));
+		assertTrue(session().isElementPresent("//div[@id='WikiaUserPagesHeader']/a[contains(@href,'Special:CreateBlogPage')]"));
 	}
 
 	@Test(groups={"oasis", "CI"})
@@ -196,7 +198,7 @@ public class PageTypesTest extends BaseTest {
 		session().waitForPageToLoad(TIMEOUT);
 
 		// page title
-		assertTrue(session().isElementPresent("//h1[contains(text(), 'Unregistered contributor')]"));
+		assertTrue(session().isElementPresent("//h1[contains(text(), 'A Wikia contributor')]"));
 		assertTrue(session().isElementPresent("//h1//small[text()= '1.2.3.4']"));
 
 		// avatar

@@ -154,9 +154,9 @@ public class CreatePageTest extends BaseTest {
 
 		session().click("//li/a[@href='#prefsection-4']");
 
-		if(session().isElementPresent("//div[@class='toggle']/input[@id='createpagedefaultblank' and contains(@checked, 'checked')]") == false) {
-			session().click("//div[@class='toggle']/input[@id='createpagedefaultblank']");
-			session().click("//td/input[@id='wpSaveprefs']");
+		if(session().isElementPresent("//input[@id='mw-input-createpagedefaultblank' and contains(@checked, 'checked')]") == false) {
+			session().click("//input[@id='mw-input-createpagedefaultblank']");
+			session().click("//input[@id='prefcontrol']");
 			session().waitForPageToLoad(TIMEOUT);
 		}
 		else {
