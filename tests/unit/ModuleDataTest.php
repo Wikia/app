@@ -214,9 +214,11 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		// preferences saved
 		NotificationsModule::clearNotifications();
 
-		$prefs = (object) array('mSuccess' => true);
-		$status = 'success';
-		NotificationsModule::addPreferencesConfirmation($prefs, $status, '');
+		global $wgRequest;
+		$wgRequest->setVal('success', 'on');
+
+		$prefs = false;
+		NotificationsModule::addPreferencesConfirmation($prefs);
 
 		$moduleData = Module::get('Notifications', 'Confirmation')->getData();
 
