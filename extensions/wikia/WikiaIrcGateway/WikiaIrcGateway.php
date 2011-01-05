@@ -24,12 +24,12 @@ $wgExtensionCredits['parserhook'][] = array(
 	'description' => 'Lets users insert IRC login form on any page'
 );
 
+$wgExtensionMessagesFiles['WikiaIrcGateway'] = dirname( __FILE__ ) . '/WikiaIrcGateway.i18n.php';
 $wgExtensionFunctions[] = "wfWikiaIrcGateway";
 
 function wfWikiaIrcGateway() {
-	global $wgParser, $wgExtensionMessagesFiles;
+	global $wgParser;
 	$wgParser->setHook( "irclogin", "printWikiaIrcGatewayLoginForm" );
-	$wgExtensionMessagesFiles['WikiaIrcGateway'] = dirname( __FILE__ ) . '/WikiaIrcGateway.i18n.php';
 }
 
 function printWikiaIrcGatewayLoginForm( $input, $argv ) {

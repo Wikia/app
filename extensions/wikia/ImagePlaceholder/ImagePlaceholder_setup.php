@@ -26,6 +26,7 @@ define('IMG_PLC_PLACEHOLDER', 'Placeholder');
 $dir = dirname(__FILE__).'/';
 
 $wgExtensionFunctions[] = 'ImagePlaceholder_init';
+$wgExtensionMessagesFiles['ImagePlaceholder'] = dirname(__FILE__).'/ImagePlaceholder.i18n.php';
 
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'ImagePlaceholderFetchTemplateAndTitle';
 $wgHooks['ImageBeforeProduceHTML'][] = 'ImagePlaceholderImageBeforeProduceHTML';
@@ -47,9 +48,7 @@ function ImagePlaceholderFetchTemplateAndTitle( $text, $finalTitle ) {
 }
 
 function ImagePlaceholder_init() {
-        global $wgAutoloadClasses, $wgExtensionMessagesFiles;
-	$wgExtensionMessagesFiles['ImagePlaceholder'] = dirname(__FILE__).'/ImagePlaceholder.i18n.php';
-        wfLoadExtensionMessages('ImagePlaceholder');
+	global $wgAutoloadClasses;
 	$wgWikiaImagesFoundInTemplates = 0;
 }
 
@@ -129,7 +128,7 @@ function ImagePlaceholderImageBeforeProduceHTML( $skin, $title, $file, $framePar
 
 // return empty string, this is for placeholders in templates
 function ImagePlaceholder_makeDullImage( $title, $options, $holders = false ) {
-	global $wgExtensionMessagesFiles, $wgWikiaVideoPlaceholderId, $wgContLang;
+	global $wgWikiaVideoPlaceholderId, $wgContLang;
 
 	// return none, null, zero
 	return '';
@@ -140,7 +139,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	wfProfileIn(__METHOD__);
 
-        global $wgRequest,$wgExtensionMessagesFiles, $wgWikiaImagePlaceholderId, $wgContLang;
+        global $wgRequest, $wgWikiaImagePlaceholderId, $wgContLang;
 	// Shortcuts
 	$fp =& $frameParams;
 	$hp =& $handlerParams;

@@ -9,7 +9,7 @@
 
 function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	global $wgUser, $wgOut, $wgLang, $wgRequest, $wgMiserMode, $wgUseWikiaNewFiles;
-	global $wgJsMimeType, $wgScriptPath, $wgStyleVersion, $wgExtensionMessagesFiles;
+	global $wgJsMimeType, $wgScriptPath, $wgStyleVersion;
 	global $wmu;
 
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgScriptPath/extensions/wikia/WikiaNewFiles/js/WikiaNewFiles.js?$wgStyleVersion\"></script>\n" );

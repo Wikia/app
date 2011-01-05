@@ -529,7 +529,7 @@ static $forum_tag = null;
 
 function AWC_FORUMS_POLL_DECODE_BeforePageDisplay(&$out) { 
     $out->mBodytext = preg_replace('/'."@POLL@".'([0-9a-zA-Z\\+\\/]+=*)'."@POLL@".'/e', 'base64_decode("$1")',  $out->mBodytext );   
-  return true;
+	return true;
 }
 
 /**
@@ -554,28 +554,25 @@ function AWC_FORUMS_ArticleViewHeader(&$article){
 
 
 function awcs_forum_wfLoadExtensionMessages( $extensionName ) {
-/* Idea taking form:
-http://www.mediawiki.org/wiki/Extension_talk:Renameuser#Call_to_undefined_function_wfLoadExtensionMessages.28.29
+	/* Idea taking form:
+	   http://www.mediawiki.org/wiki/Extension_talk:Renameuser#Call_to_undefined_function_wfLoadExtensionMessages.28.29
+	   To make AWC's Forum Extension lang files compatable with old wiki vers...
+	*/
 
-	To make AWC's Forum Extension lang files compatable with old wiki vers...
-*/
+	global $wgVersion;
+	if(version_compare($wgVersion, '1.11.0', '>=')){
+		wfLoadExtensionMessages($extensionName);
+		return true;	
+	}
 
-global $wgVersion;
-  if(version_compare($wgVersion, '1.11.0', '>=')){
-  		wfLoadExtensionMessages($extensionName);
-  return true;	
-  }
+	global $wgExtensionMessagesFiles;
+	global $wgMessageCache;
 
-
-global $wgExtensionMessagesFiles;
-global $wgMessageCache;
-
-       require( $wgExtensionMessagesFiles[$extensionName]); # adapt the path if necessary
-                foreach ( $messages as $lang => $langMessages ) {
-                        $wgMessageCache->addMessages( $langMessages, $lang );
-                }
-        return true;
-
+	require( $wgExtensionMessagesFiles[$extensionName]); # adapt the path if necessary
+	foreach ( $messages as $lang => $langMessages ) {
+		$wgMessageCache->addMessages( $langMessages, $lang );
+	}
+	return true;
 }
 
 

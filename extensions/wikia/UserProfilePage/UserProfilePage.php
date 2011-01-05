@@ -34,7 +34,7 @@ $wgExtensionMessagesFiles['UserProfilePage'] = dirname(__FILE__) . '/UserProfile
 
 
 function wfUserProfilePageInit() {
-	global $wgHooks, $wgExtensionMessagesFiles, $wgAutoloadClasses, $wgAjaxExportList, $wgUserProfilePagesNamespaces;
+	global $wgHooks, $wgAutoloadClasses, $wgAjaxExportList, $wgUserProfilePagesNamespaces;
 
 	$dir = dirname(__FILE__) . '/';
 
