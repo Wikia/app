@@ -1007,4 +1007,8 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'mobile-hide' => 'Hide',
 
 'prefs-layout' => 'Site Layouts',
+
+#unsubscribe email
+'unsubscribe-email' => 'If you no longer want to receive email from Wikia you can unsubscribe here: $1',
+
 ));

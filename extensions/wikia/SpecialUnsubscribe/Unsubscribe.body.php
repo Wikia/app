@@ -37,14 +37,6 @@ class UnsubscribePage extends UnlistedSpecialPage {
 
 		$this->setHeaders();
 
-		# DEVL - DONT FORGET TO REMOVE THIS
-		if ( !$wgUser->isAllowed( 'staff' ) ) {
-			#$wgOut->addHTML("no peeking, we're not ready");
-			#$this->displayRestrictionError();
-			#return;
-		}
-		# DEVL - end
-
 		$email = $wgRequest->getText( 'email' , null );
 		$token = $wgRequest->getText( 'token' , null );
 		$timestamp = $wgRequest->getText( 'timestamp' , null );
@@ -287,39 +279,6 @@ EOT
 		}
 
 		#true, because it a hook, keep looping other hooks
-		return true;
-	}
-	
-	static public function ComposeCommonBodyMail( $title, &$keys, &$message, $editor ) {
-		
-		$cityId = 177;
-		$name = $editor->getName();
-		
-		if ( $editor->isIP( $name ) ) {
-			# don't do it for anons
-			return true;
-		}
-
-		$oTitle = GlobalTitle::newFromText('Unsubscribe', NS_SPECIAL, $cityId);
-		if ( !is_object( $oTitle ) ) {
-			return true;
-		}
-		
-		if ( !is_array($keys) ) {
-			$keys = array();
-		}
-		
-		$email = $editor->getEmail();
-		$ts = time();
-		# unsubscribe params
-		$params = array(
-			'email' 	=> $email,
-			'timestamp' => $ts,
-			'token'		=> wfGenerateUnsubToken( $email, $ts )
-		);
-		
-		$keys['$UNSUBSCRIBEURL'] = wfMsg( 'unsubscribe-email-footer', $oTitle->getFullURL( $params ) );
-
 		return true;
 	}
 }
