@@ -198,9 +198,24 @@ $messages['en'] = array(
 	"wikistats_show_new_window" => "show result in new browser window",
 	"wikistats_show_nbr_wikis_check" => "Max. number of Wikis to mark: $1",
 	"wikistats_lifetime_editors" => "Total Editors",
+	"wikistats_article_total" => "Total Articles",
+	"wikistats_article_edits" => "Article edits",
+	"wikistats_article_created" => "Articles Created",
+	"wikistats_article_talk" => "Article:Talk",
+	"wikistats_blog_created" => "Blogs Created",
+	"wikistats_blog_comment" => "Blog Comments",
+	"wikistats_photo_new"    => "New Photos",
+	"wikistats_video_new"    => "New Videos",
+	"wikistats_user_page_edits" => 'User:Page Edits',
+	"wikistats_user_talk_edits" => 'User:Talk Edits',
+	"wikistats_article_daily" => 'Edits/day',
+	"wikistats_image_uploads" => "Images uploaded",
+	"wikistats_video_uploads" => "Videos uploaded",
+	"wikistats_per_namespace" => "Per Namespace Data",
 	"wikistats_months_edits" => "Editors this month",
 	"wikistats_main_namespace" => "content<br />namespaces",
 	"wikistats_content" => "content",
+	"wikistats_content_editors" => "Content Editors",
 	"wikistats_userns" => "user",
 	"wikistats_other_namespace" => "other<br />namespaces",
 	"wikistats_restricted_page" => "Restricted Page.<br />
@@ -3921,7 +3936,7 @@ U moet aangemeld zijn om de Wikia-statistieken in te zien.
 	'wikistats_pageviews_month' => 'Maandelijkse statistieken',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
@@ -5763,7 +5778,7 @@ $messages['wuu'] = array(
 	'wikistats_xls_cancel' => '取消',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (中文(繁體))
  * @author Horacewai2
  */
 $messages['zh-hant'] = array(
@@ -5772,7 +5787,7 @@ $messages['zh-hant'] = array(
 	'wikistats_pagetitle' => 'Wikia統計',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬)
+/** Chinese (Taiwan) (中文(台灣))
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(
