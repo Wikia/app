@@ -36,6 +36,7 @@ public class BaseTest {
 	public static final String TIMEOUT = "60000";
 	private String webSite;
 	private XMLConfiguration testConfig;
+	private String noCloseAfterFail;
 	
 	public XMLConfiguration getTestConfig() throws Exception{
 		if (null == this.testConfig) {
@@ -49,10 +50,11 @@ public class BaseTest {
 	}
 
 	@BeforeMethod(alwaysRun = true)
-	@Parameters( { "seleniumHost", "seleniumPort", "browser", "webSite", "timeout" })
+	@Parameters( { "seleniumHost", "seleniumPort", "browser", "webSite", "timeout", "noCloseAfterFail" })
 	protected void startSession(String seleniumHost, int seleniumPort,
-			String browser, String webSite, String timeout) throws Exception {
+			String browser, String webSite, String timeout, String noCloseAfterFail) throws Exception {
 		this.webSite = webSite;
+		this.noCloseAfterFail = noCloseAfterFail;
 		startSeleniumSession(seleniumHost, seleniumPort, browser, webSite);
 		session().setTimeout(timeout);
 		session().setSpeed("1000");
@@ -61,7 +63,9 @@ public class BaseTest {
 
 	@AfterMethod(alwaysRun = true)
 	protected void closeSession() throws Exception {
-		closeSeleniumSession();
+		if (noCloseAfterFail == null || noCloseAfterFail.equals("0")) {
+			closeSeleniumSession();
+		}
 	}
 
 	protected boolean isOasis() throws Exception {
