@@ -592,10 +592,25 @@ class WikiFactoryLoader {
 				restore_error_handler();
 
 				if( (!empty( $wgDevelEnvironment ) || $this->mNoRedirect ) && $oRow->cv_name === "wgServer" ) {
-					/**
-					 * skip this variable
-					 */
-					$this->debug( "{$oRow->cv_name} with value {$tUnserVal} skipped" );
+					if( $this->mBeta == true ) {
+						/**
+						 * add beta to hostname (if not exists already)
+						 */
+						$url = parse_url( $tUnserVal );
+						if( $url && isset( $url[ "host" ] ) ) {
+							if( !preg_match( "/^beta\./", $url[ "host" ] ) ) {
+								$url[ "host" ] = "beta." . $url[ "host" ];
+								$tUnserVal = http_build_url( $tUnserVal, $url );
+								$this->debug( "Set value of wgServer to {$tUnserVal} for beta wikis" );
+							}
+						}
+					}
+					else {
+						/**
+						 * skip this variable
+						 */
+						$this->debug( "{$oRow->cv_name} with value {$tUnserVal} skipped" );
+					}
 				}
 				else {
 					$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
