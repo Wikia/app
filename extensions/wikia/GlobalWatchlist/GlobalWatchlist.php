@@ -29,57 +29,29 @@ $wgExtensionMessagesFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWat
 $wgAutoloadClasses['GlobalWatchlistBot'] = dirname( __FILE__ ) . '/GlobalWatchlistBot.class.php';
 
 // hooks
-$wgHooks['getWatchlistPreferencesCustomHtml'][] = 'wfGlobalWatchlistPrefsCustomHtml';
-$wgHooks['getUserProfilePreferencesCustomEmailToggles'][] = 'wfGlobalWatchlistPrefsEmailToggle';
+$wgHooks['GetPreferences'][] = 'wfGlobalWatchlistOnGetPreferences';
 
-// user toggles
-$wgHooks['UserToggles'][] = 'wfGlobalWatchlistToggle';
-// $wgHooks['WatchArticleComplete'][] = 'wfGlobalWatchArticleComplete';
-// $wgHooks['UnwatchArticleComplete'][] = 'wfGlobalUnwatchArticleComplete';
+function wfGlobalWatchlistOnGetPreferences($user, &$defaultPreferences) {
+	global $wgUser, $wgExternalSharedDB;
 
-function wfGlobalWatchlistToggle( $extraToggles ) {
-	$extraToggles['watchlistdigest'] = 'watchlistdigest';
-	$extraToggles['watchlistdigestclear'] = 'watchlistdigestclear';
-	return true;
-}
+	$defaultPreferences['watchlistdigest'] = array(
+		'type' => 'toggle',
+		'label-message' => 'tog-watchlistdigest',
+		'section' => 'watchlist/advancedwatchlist',
+	);
 
-function wfGlobalWatchlistPrefsCustomHtml( $prefsForm ) {
-	global $wgOut, $wgUser, $wgExternalSharedDB;
-
-	/* Now extension is enabled for all users so I think the check is not necessary --- wladek
-	// RT#48350: Spec:Prefs - Move two watchlist/followed pages options from "misc" to "followed pages"
 	$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 	$oResource = $dbr->query("SELECT count(*) AS count FROM global_watchlist WHERE gwa_user_id='" . $wgUser->getID() . "'");
 	$oResultRow = $dbr->fetchObject($oResource);
 
 	if($oResultRow->count) {
-		// only for staff members at the moment
-	*/
-		wfLoadExtensionMessages( 'GlobalWatchlist' );
-
-		$tname = 'watchlistdigestclear';
-		$prefsForm->mUsedToggles[$tname] = true;
-
-		$wgOut->addHtml( $prefsForm->getToggle( $tname ) );
-	/*
+		// show this toggle only when there was actaully any global watchlist sent for this user
+		$defaultPreferences['watchlistdigestclear'] = array(
+			'type' => 'toggle',
+			'label-message' => 'tog-watchlistdigestclear',
+			'section' => 'watchlist/advancedwatchlist',
+		);
 	}
-	*/
-
-	return true;
-}
-
-function wfGlobalWatchlistPrefsEmailToggle( $prefsForm, $toggleHtml ) {
-	global $wgUser;
-
-	#if user not emailconfirmed, disable this (like the others)
-	$disable = $wgUser->getEmailAuthenticationTimestamp() ? false : true;
-
-	wfLoadExtensionMessages( 'GlobalWatchlist' );
-
-	$tname = 'watchlistdigest';
-	$prefsForm->mUsedToggles[$tname] = true;
-
-	$toggleHtml .= $prefsForm->getToggle( $tname, false, $disable ) . '<br />';
 
 	return true;
 }
