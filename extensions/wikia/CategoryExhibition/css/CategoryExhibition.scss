@@ -36,6 +36,13 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		vertical-align: middle;
 	}
 
+	.wikia-menu-button {
+
+		li{
+			float: none;
+		}
+	}
+
 	#category-exhibition-display-new {
 
 		display: inline-block;

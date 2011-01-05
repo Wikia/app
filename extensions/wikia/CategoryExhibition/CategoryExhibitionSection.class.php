@@ -77,7 +77,7 @@ class CategoryExhibitionSection {
 			$this->setSortTypeFromParam();
 			$return = $this->sortOption;
 		} else {
-			$return = $wgUser->getOption('CategoryExhibitionSortType', $this->allowedSortOptions[0]);
+			$return = $wgUser->getOption( 'CategoryExhibitionSortType', $this->allowedSortOptions[0] );
 		}
 
 		if ( !empty( $return ) && in_array( $return, $this->allowedSortOptions ) ){
@@ -173,8 +173,8 @@ class CategoryExhibitionSection {
 		if( empty( $cachedContent ) ){
 			$aTmpData = $this->fetchSectionItems( $namespace );
 			$pages = Paginator::newFromArray( $aTmpData, $itemsPerPage );
-			if ( is_array($aTmpData) && count($aTmpData) > 0 ){
-				$aTmpData = $pages->getPage( $this->paginatorPosition, true);
+			if ( is_array( $aTmpData ) && count( $aTmpData ) > 0 ){
+				$aTmpData = $pages->getPage( $this->paginatorPosition, true );
 				$aData = $this->getArticles( $aTmpData );
 				$oTmpl->set_vars(
 					array (
@@ -266,7 +266,7 @@ class CategoryExhibitionSection {
 			$imageUrl = $this->getImageFromPageId( $item['page_id'] );
 
 			if ( $imageUrl == '' ){
-				if ( empty($snippetText) && empty($imageUrl) ){
+				if ( empty( $snippetText ) && empty( $imageUrl ) ){
 					$snippetService = new ArticleService ( $item['page_id'] );
 					$snippetText = $snippetService->getTextSnippet();
 				}
@@ -274,9 +274,9 @@ class CategoryExhibitionSection {
 
 			$aData[] = array(
 			    'id'	=> $item['page_id'],
-			    'title'	=> Title::newFromID($item['page_id'])->getText(),
+			    'title'	=> Title::newFromID( $item['page_id'] )->getText(),
 			    'img'	=> $imageUrl,
-			    'url'	=> Title::newFromID($item['page_id'])->getFullURL(),
+			    'url'	=> Title::newFromID( $item['page_id'] )->getFullURL(),
 			    'snippet'	=> $snippetText
 			);
 		};		
@@ -291,18 +291,18 @@ class CategoryExhibitionSection {
 
 		global $wgTitle, $wgRequest;
 		$variableName = $this->urlParameter;
-		$paginatorPosition = 0;
+		$paginatorPosition = 1;
 		$reqValues = $wgRequest->getValues();
 		if ( !empty( $reqValues[ $variableName ] ) ){
 			$paginatorPosition = (int)$reqValues[ $variableName ];
 			unset( $reqValues[ $variableName ] );
 		};
 		$return = array();
-		foreach($reqValues AS $key => $value) {
+		foreach( $reqValues AS $key => $value ) {
 			$return[] = $key.'='.$value;
 		}
 
-		$url = $wgTitle->getFullURL().'?'.implode('&', $return);
+		$url = $wgTitle->getFullURL().'?'.implode( '&', $return );
 		if ( count($value) > 0 ){
 			$url.= '&'.$variableName.'=%s';
 		} else {
@@ -334,7 +334,7 @@ class CategoryExhibitionSection {
 		global $wgMemc;
 		$memcData = $this->getFromCache( );
 		if ( empty($memcData) ){
-			$wgMemc->set( $this->getKey( ), $content, 60*30);
+			$wgMemc->set( $this->getKey( ), $content, 60*30 );
 			return false;
 		}
 		return true;
