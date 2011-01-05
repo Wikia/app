@@ -53,7 +53,7 @@ function wfBlackTitlelistMessageLoader() {
 	return;
 }
 
-function wfSpamBlackTitleListCallback( $editPage, $text, $section, &$hookError ) {
+function wfSpamBlackTitleListCallback( $editPage, $text, $section, &$hookError, $summary ) {
 	global $IP, $useSpamRegexNoHttp;
 	#---
 	wfProfileIn( __METHOD__ );
@@ -168,7 +168,7 @@ function wfBlackListTitleParse($title) {
 		# check edited page title -> if page with regexes just clear memcache.
 		$blacklist->getSpamList()->clearListMemCache();
 	}
-
+	
 	if (!empty($aBlackListRegexes) && is_array($aBlackListRegexes)) {
 		wfDebug( "Checking text against " . count( $aBlackListRegexes ) . " regexes: " . implode( ', ', $aBlackListRegexes ) . "\n" );
 		foreach ($aBlackListRegexes as $id => $regex) {
