@@ -601,6 +601,7 @@ class WikiFactoryLoader {
 							if( !preg_match( "/^beta\./", $url[ "host" ] ) ) {
 								$url[ "host" ] = "beta." . $url[ "host" ];
 								$tUnserVal = http_build_url( $tUnserVal, $url );
+								$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
 								$this->debug( "Set value of wgServer to {$tUnserVal} for beta wikis" );
 							}
 						}
