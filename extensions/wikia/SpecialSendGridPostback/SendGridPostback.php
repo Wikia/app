@@ -56,7 +56,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 		$postedToken = $wgRequest->getVal('wikia-token');
 		$generatedToken = wfGetEmailPostbackToken($emailId, $emailAddr);
 		if($postedToken == $generatedToken){
-			// We don't take any actions yet, so log all token-validated postbacks to the database.
+			// Add the token-validated postback to the database.
 			$this->logPostbackForLater();
 
 			// Take action on the eventType.
@@ -136,7 +136,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 		// Invalidate the users email to force them to reverify it
 		$dbr = wfGetDb(DB_SLAVE);
 		$res = $dbr->select( 'user',
-							 array( 'id' ),
+							 array( 'user_id' ),
 							 array( 'user_email' => $email ),
 							 __METHOD__
 						   );
@@ -178,7 +178,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 		$url = $wgRequest->getVal('url', '');
 		$status = $wgRequest->getVal('status', '');
 		$reason = $wgRequest->getVal('reason', '');
-	
+
 		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
 		$dbw->insert(
 			self::$POSTBACK_LOG_TABLE_NAME,
