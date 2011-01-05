@@ -92,7 +92,7 @@ class ArticleCommentList {
 		$action = $wgRequest->getText( 'action', false );
 
 		$memckey = wfMemcKey( 'articlecomment', 'comm', $this->getTitle()->getArticleId(), 'v1' );
-		
+
 		/**
 		 * skip cache if purging or using master connection
 		 */
@@ -132,12 +132,12 @@ class ArticleCommentList {
 					$pages[$row->page_id]['level1'] = $row->page_id;
 				}
 			}
-			
+
 			$dbr->freeResult( $res );
 			$this->mCommentsAll = $pages;
 			$wgMemc->set( $memckey, $this->mCommentsAll, 3600 );
 		}
-		
+
 		foreach($this->mCommentsAll as $id => &$levels) {
 			if(isset($levels['level1'])) {
 				$levels['level1'] = ArticleComment::newFromId($levels['level1']);
@@ -400,11 +400,16 @@ class ArticleCommentList {
 	public function blockedPage() {
 		global $wgUser, $wgLang, $wgContLang;
 
+		// macbre: prevent fatals in code below
+		if (empty($wgUser->mBlock)) {
+			return '';
+		}
+
 		list ($blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended) = array(
 			User::whoIs( $wgUser->blockedBy() ),
 			$wgUser->blockedFor() ? $wgUser->blockedFor() : wfMsg( 'blockednoreason' ),
 			wfGetIP(),
-			$wgUser->mBlock->mId,
+			$wgUser->getBlockId(),
 			$wgLang->timeanddate( wfTimestamp( TS_MW, $wgUser->mBlock->mTimestamp ), true ),
 			$wgUser->mBlock->mExpiry,
 			$wgUser->mBlock->mAddress
@@ -744,18 +749,18 @@ class ArticleCommentList {
 		) );
 		return $template->render( 'comment-list' );
 	}
-	
-	/*
-	 * @access public 
-	 * @deprecated don't use it for Oasis, still needed for non-Oasis skins 
-	 * @deprecated - not used in Oasis 
-	 * 
-	 * @return String HTML text with rendered comments section 
-	 */ 
 
-	public function render() { 
-		return wfRenderModule('ArticleComments', 'Index'); 
- 	} 
+	/*
+	 * @access public
+	 * @deprecated don't use it for Oasis, still needed for non-Oasis skins
+	 * @deprecated - not used in Oasis
+	 *
+	 * @return String HTML text with rendered comments section
+	 */
+
+	public function render() {
+		return wfRenderModule('ArticleComments', 'Index');
+ 	}
 
 	/**
 	 * Hook
