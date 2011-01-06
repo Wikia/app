@@ -176,6 +176,7 @@ EOT;
 		$url .= $this->getKeywordsKV();
 		$url .= "qcseg=N;";	// wlee: placeholder for JS that sets the real key-value. See self::getIframeFillFunctionDefinition()
 		$url .= "nofooter=N;";	// wlee: placeholder for JS that sets the real key-value. See self::getIframeFillFunctionDefinition()
+		$url .= "impct=N;";	// impression count for current session (used only by AdDriver)
 		$url .= $this->getLocKV($slotname);
 		$url .= $this->getDcoptKV($slotname);
 		$url .= $mtfIFPath;

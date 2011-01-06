@@ -7,6 +7,7 @@
 var AdDriver = {
 	geoData: Geo.getGeoData(),
 	minNumDARTCall: 3,
+	cookieNameNumAllCall: 'adDriverNumAllCall',
 	cookieNameNumDARTCall: 'adDriverNumDARTCall',
 	cookieNameLastDARTCallNoAd: 'adDriverLastDARTCallNoAd',
 
@@ -152,10 +153,27 @@ AdDriver.isHighValue = function(slotname) {
 AdDriver.getNumDARTCall = function(slotname) {
 	var num = 0;
 
+	num = AdDriver.getNumCall(AdDriver.cookieNameNumDARTCall, slotname);
+	AdDriver.log(slotname + ' has ' + num + ' DART calls');
+
+	return num;
+}
+
+AdDriver.getNumAllCall = function(slotname) {
+	var num = 0;
+
+	num = AdDriver.getNumCall(AdDriver.cookieNameNumAllCall, slotname);
+
+	return num;
+}
+
+AdDriver.getNumCall = function(cookieName, slotname) {
+	var num = 0;
+
 	try {
-		var numDARTCallCookie = $.cookies.get(AdDriver.cookieNameNumDARTCall);
-		if (typeof(numDARTCallCookie) != 'undefined' && numDARTCallCookie) {
-			var slotnameObjs = $.parseJSON(numDARTCallCookie);
+		var numCallCookie = $.cookies.get(cookieName);
+		if (typeof(numCallCookie) != 'undefined' && numCallCookie) {
+			var slotnameObjs = $.parseJSON(numCallCookie);
 			for (var i = 0; i < slotnameObjs.length; i++) {
 				if (slotnameObjs[i].slotname == slotname) {
 					if (parseInt(slotnameObjs[i].ts) + window.wgAdDriverCookieLifetime*3600000 > window.wgNow.getTime()) {	// wgAdDriverCookieLifetime in hours, convert to msec
@@ -170,12 +188,18 @@ AdDriver.getNumDARTCall = function(slotname) {
 		AdDriver.log(e.message);
 	}
 
-	AdDriver.log(slotname + ' has ' + num + ' DART calls');
-
 	return num;
 }
 
 AdDriver.incrementNumDARTCall = function(slotname) {
+	return AdDriver.incrementNumCall(AdDriver.cookieNameNumDARTCall, slotname);
+}
+
+AdDriver.incrementNumAllCall = function(slotname) {
+	return AdDriver.incrementNumCall(AdDriver.cookieNameNumAllCall, slotname);
+}
+
+AdDriver.incrementNumCall = function(cookieName, slotname) {
 
 	var newSlotnameObjs = new Array();
 	var num = 0;
@@ -183,10 +207,10 @@ AdDriver.incrementNumDARTCall = function(slotname) {
 	var slotnameInCookie = false;
 
 	try {
-		var numDARTCallCookie = $.cookies.get(AdDriver.cookieNameNumDARTCall);
-		if (typeof(numDARTCallCookie) != 'undefined' && numDARTCallCookie) {
+		var numCallCookie = $.cookies.get(cookieName);
+		if (typeof(numCallCookie) != 'undefined' && numCallCookie) {
 			// find slotname and increment count
-			var slotnameObjs = $.parseJSON(numDARTCallCookie);
+			var slotnameObjs = $.parseJSON(numCallCookie);
 			for (var i = 0; i < slotnameObjs.length; i++) {
 				if (slotnameObjs[i].slotname == slotname) {
 					slotnameInCookie = true;
@@ -211,7 +235,7 @@ AdDriver.incrementNumDARTCall = function(slotname) {
 	}
 
 	var cookieOptions = {hoursToLive: window.wgAdDriverCookieLifetime, path: wgCookiePath};	// do not set cookie domain
-	$.cookies.set(AdDriver.cookieNameNumDARTCall, JSON.stringify(newSlotnameObjs), cookieOptions);
+	$.cookies.set(cookieName, JSON.stringify(newSlotnameObjs), cookieOptions);
 
 	return num;
 }
@@ -399,6 +423,10 @@ var AdDriverCall = function (slotname, size, dartUrl) {
 		} 
 		url = url.replace("nofooter=N;", nofooter);
 
+		// impression count
+		// the first time this is called, getNumAllCall() returns zero. To make this the 'first' impression, add one
+		url = url.replace('impct=N;', 'impct=' + (parseInt(AdDriver.getNumAllCall(slotname))+1) + ';'); 
+
 		// continent/region
 		if (typeof AdDriver.geoData != 'undefined' && AdDriver.geoData) {
 			var subdomain = '';
@@ -456,6 +484,7 @@ var AdDriverDelayedLoader = {
 	adDriverCalls: null,
 	adNum: 0,
 	currentAd: null,
+	currentSlot: null,
 	started: false,
 	init: function() {
 		AdDriverDelayedLoader.adDriverCalls = new Array();
@@ -564,6 +593,15 @@ AdDriverDelayedLoader.loadNext = function() {
 		AdDriverDelayedLoader.currentAd = AdDriverDelayedLoader.adDriverCalls.shift();
 		if (AdEngine.isSlotDisplayableOnCurrentPage(AdDriverDelayedLoader.currentAd.slotname)) {
 			var adProvider = AdDriver.getAdProvider(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriverDelayedLoader.currentAd.dartUrl);
+
+			// increment number of pageviews
+			if (adProvider == 'DART' || adProvider == 'Liftium') {
+				if (AdDriverDelayedLoader.currentSlot != AdDriverDelayedLoader.currentAd.slotname) {
+					AdDriver.incrementNumAllCall(AdDriverDelayedLoader.currentAd.slotname);
+					AdDriverDelayedLoader.currentSlot = AdDriverDelayedLoader.currentAd.slotname;
+				}
+			}
+
 			if (adProvider == 'DART') {
 				AdDriverDelayedLoader.callDART();
 			}
