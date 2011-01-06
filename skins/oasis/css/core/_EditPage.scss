@@ -43,35 +43,54 @@
 		border-color: $color-page-border;
 		border-top: none;
 	}
+
+	#editform > .edit_enhancements_toolbar_fixed {
+		position: fixed;
+		bottom: 0px;
+		margin: 0px !important;
+		z-index: 500;
+	}
+	#editform > .edit_enhancements_toolbar_static {
+		position: static;
+		width: auto;
+	}
+
 	#edit_enhancements_toolbar {
 		@include clearfix;
 		background-color: mix($color-buttons, $color-page, 5%);
 		margin: 0;
+		li {
+			display: inline;
+			line-height: 25px;
+			list-style: none;
+			margin-right: 5px;
+		}
 		#wpSummaryLabel {
 			margin-right: 5px;
 		}
 		#wpSummary {
 			width: 350px !important;
 		}
-		.minor {
+		.editCheckboxes {
 			clear: both;
+			display: block;
 			margin-left: 65px;
 			margin-right: 30px;
 		}
 		label, input {
 			vertical-align: middle;
 		}
-
-		// /** moving elements to the button, those elements will be gone anyway sone **/
-		li:last-child, .minor {
-			//position: absolute;
-			//margin-top: 35px;
-		}
-		.minor {
-			//margin-left: 0px;
-			//padding-left: 60px;
+		#scroll_down_arrow {
+			font-weight: bold;
+			width: 12px;
+			cursor: pointer;
+			float: right;
 		}
 	}
+	.edit_enhancements_toolbar_static #scroll_down_arrow {
+		display: none;
+	}
+	
 	#csMainContainer {
 		@include clearfix;
 		background-color: mix($color-buttons, $color-page, 5%);

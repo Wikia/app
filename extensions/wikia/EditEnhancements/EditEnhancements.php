@@ -2,7 +2,7 @@
 $wgExtensionCredits['other'][] = array(
 	'name' => 'EditEnhancements',
 	'description' => 'Puts edit summary and save button above the fold',
-	'version' => '1.2',
+	'version' => '2',
 	'author' => array('Maciej Brencz', 'Christian Williams', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
 );
 
