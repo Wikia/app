@@ -229,11 +229,7 @@ class MyHome {
 	public static function getInserts($linksUpdate) {
 		wfProfileIn(__METHOD__);
 
-		// get rc_data from current row from recentchanges
-		$rc_data = Wikia::getVar('rc_data');
-
-		// nothing has changed yet
-		$doUpdate = false;
+		$rc_data = array();
 
 		// store list of added images and videos
 		$imageInserts = Wikia::getVar('imageInserts');
@@ -241,7 +237,6 @@ class MyHome {
 			foreach($imageInserts as $one) {
 				$rc_data['imageInserts'][] = $one['il_to'];
 			}
-			$doUpdate = true;
 		}
 
 		// store list of added categories
@@ -250,21 +245,40 @@ class MyHome {
 			foreach($categoryInserts as $cat => $page) {
 				$rc_data['categoryInserts'][] = $cat;
 			}
-			$doUpdate = true;
 		}
 
 		// update if necessary
-		if ($doUpdate) {
-			$rc = Wikia::getVar('rc');
-			if ( is_object( $rc ) ) {
-				$rc_id = $rc->getAttribute('rc_id');
-
-				$dbw = wfGetDB( DB_MASTER );
-				$dbw->update('recentchanges', array('rc_params' => MyHome::packData($rc_data)), array('rc_id' => $rc_id));
-			}
+		if (count($rc_data) > 0) {
+			self::storeAdditionalRcData($rc_data);
 		}
+		
 		wfProfileOut(__METHOD__);
 		return true;
+	}
+	
+	/**
+	 * Given an associative array of data to store, adds this to additional data and updates
+	 * the row in recentchanges corresponding to the provided RecentChange (or, if rc is not
+	 * provided, then the RecentChange that is stored in Wikia::getVar('rc') will be used);
+	 */
+	public static function storeAdditionalRcData($additionalData, &$rc = null) {
+		wfProfileIn( __METHOD__ );
+
+		$rc_data = Wikia::getVar('rc_data');
+		$rc_data = ($rc_data ? $rc_data : array()); // rc_data might not have been set
+		$rc_data = array_merge($rc_data, $additionalData); // additionalData overwrites existing keys in rc_data if there are collisions.
+
+		if ( !is_object($rc) ) {
+			$rc = Wikia::getVar('rc');
+		}
+		if ( is_object( $rc ) ) {
+			$rc_id = $rc->getAttribute('rc_id');
+
+			$dbw = wfGetDB( DB_MASTER );
+			$dbw->update('recentchanges', array('rc_params' => MyHome::packData($rc_data)), array('rc_id' => $rc_id));
+		}
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/*
