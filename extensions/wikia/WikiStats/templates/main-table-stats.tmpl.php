@@ -8,37 +8,41 @@
 <caption></caption>
 <thead>
 <tr>
-	<th rowspan="3"><b><?= ucfirst(wfMsg('wikistats_date')) ?></b></th>
+	<th rowspan="2"><b><?= ucfirst(wfMsg('wikistats_date')) ?></b></th>
 	<th colspan="4"><b><a href="#wikians"><?= wfMsg('wikistats_wikians') ?></a></b></th>
-	<th colspan="3"><b><a href="#articles"><?= wfMsg('wikistats_articles') ?></a></b></th>
-	<th colspan="4"><b><a href="#media"><?= wfMsg('wikistats_media') ?></a></b></th>
-</tr>
-<tr>
-	<th colspan="2"><?=wfMsg('wikistats_namespaces')?></th>
-	<th colspan="2"><?=wfMsg('wikistats_edits')?></th>
-	<th rowspan="2"><?=wfMsg('wikistats_total')?></th>
-	<th rowspan="2"><?=wfMsg('wikistats_new_per_day')?></th>
-	<th rowspan="2"><?=wfMsg('wikistats_edits')?></th>
-	<th colspan="2"><?=wfMsg('wikistats_images')?></th>
-	<th colspan="2"><?=wfMsg('wikistats_video')?></th>
+	<th colspan="2"><b><a href="#articles"><?= wfMsg('wikistats_articles') ?></a></b></th>
+	<th colspan="2"><b><a href="#media"><?= wfMsg('wikistats_media') ?></a></b></th>
+	<th colspan="8"><b><a href="#media"><?= wfMsg('wikistats_per_namespace') ?></a></b></th>
+
 </tr>
 <tr>
 	<th><?=wfMsg('wikistats_total')?></th>
 	<th><?=wfMsg('wikistats_content')?></th>
-	<th>&gt;5</th>
-	<th>&gt;100</th>
-	<th><?=wfMsg('wikistats_links')?></th>
-	<th><?=wfMsg('wikistats_uploaded_images')?></th>
-	<th><?=wfMsg('wikistats_video_embeded')?></th>
-	<th><?=wfMsg('wikistats_uploaded_images')?></th>
+	<th><?=wfMsg('wikistats_edits')?> &gt;5</th>
+	<th><?=wfMsg('wikistats_edits')?> &gt;100</th>
+	<th><?=wfMsg('wikistats_total')?></th>
+	<th><?=wfMsg('wikistats_edits')?></th>
+	<th><?=wfMsg('wikistats_images')?></th>
+	<th><?=wfMsg('wikistats_video')?></th>
+	<th><?=wfMsg('wikistats_article_created')?></th>
+	<th><?=wfMsg('wikistats_article_talk')?></th>
+	<th><?=wfMsg('wikistats_blog_created')?></th>
+	<th><?=wfMsg('wikistats_blog_comment')?></th>
+	<th><?=wfMsg('wikistats_photo_new')?></th>
+	<th><?=wfMsg('wikistats_video_new')?></th>
+	<th><?=wfMsg('wikistats_user_page_edits')?></th>
+	<th><?=wfMsg('wikistats_user_talk_edits')?></th>
 </tr>
 </thead>
 <tbody>
 <?php $cols = array(); if (!empty($data)) { foreach ($data as $date => $columns) { ?>
 <tr id="ws-table-row-<?=$date?>">
 <?php 
-	$out = ""; $cols = array();
+	$out = "";
+	$cols = array();
 	foreach ( $columns as $column => $out ) {
+		if (in_array($column, array('F', 'H', 'J'))) continue;
+	
 		$__number = $out;
 		$row = "td";
 		if (empty($out) || ($out === 0)) {
@@ -61,7 +65,7 @@
 		$cols[] = $column;
 		$style = ""; if ( in_array( $column, array('E', 'I', 'K') ) ) $style = "background-color:#F5F5F5";		
 ?>
-	<<?=$row?> style="white-space:nowrap;<?=$style?>" title="<?=$__number?>"><?= $out ?></<?=$row?>>
+	<<?=$row?> style="white-space:nowrap;<?=$style?>" title="<?= $column ?> - <?=$__number?>"><?= $out ?></<?=$row?>>
 <?php		
 	}
 ?>
@@ -78,8 +82,6 @@ foreach ($diffData as $date => $columns) {
 	$loop++;
 	#-- don't display
 	if ( empty($userIsSpecial) && (is_array($wgStatsExcludedNonSpecialGroup)) && (in_array($loop, $wgStatsExcludedNonSpecialGroup) )) continue;
-	#-- not visible
-	if ( empty($columns['visible']) ) continue;
 
 	$stamp = mktime(23, 59, 59, substr($date, 4, 2), 1, substr($date, 0, 4));
 	$out = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
@@ -88,8 +90,9 @@ foreach ($diffData as $date => $columns) {
 	<th><?=$out?></th>
 <?php
 	foreach ($columns as $column => $out) {
-		if ( $column == 'visible' ) continue;
-		if ( empty($out) || ($out == 0) || ( $out > 100 ) ) {
+		if (in_array($column, array('date', 'F', 'H', 'J'))) continue;
+
+		if ( empty($out) || ($out == 0) ) {
 			$out = "&nbsp;";
 		} else {
 			$out = $mStats->diffFormat($out);
@@ -104,29 +107,29 @@ foreach ($diffData as $date => $columns) {
 }
 ?>
 <tr>
-	<th rowspan="3"><b><?= ucfirst(wfMsg('wikistats_date')) ?></b></th>
+	<th rowspan="2"><b><?= ucfirst(wfMsg('wikistats_date')) ?></b></th>
 	<th><?=wfMsg('wikistats_total')?></th>
 	<th><?=wfMsg('wikistats_content')?></th>
 	<th>&gt;5</th>
 	<th>&gt;100</th>
-	<th rowspan="2"><?=wfMsg('wikistats_total')?></th>
-	<th rowspan="2"><?=wfMsg('wikistats_new_per_day')?></th>
-	<th rowspan="2"><?=wfMsg('wikistats_edits')?></th>
-	<th><?=wfMsg('wikistats_links')?></th>
-	<th><?=wfMsg('wikistats_uploaded_images')?></th>
-	<th><?=wfMsg('wikistats_video_embeded')?></th>
-	<th><?=wfMsg('wikistats_uploaded_images')?></th>
+	<th><?=wfMsg('wikistats_total')?></th>
+	<th><?=wfMsg('wikistats_edits')?></th>
+	<th><?=wfMsg('wikistats_images')?></th>
+	<th><?=wfMsg('wikistats_video')?></th>
+	<th><?=wfMsg('wikistats_article_created')?></th>
+	<th><?=wfMsg('wikistats_article_talk')?></th>
+	<th><?=wfMsg('wikistats_blog_created')?></th>
+	<th><?=wfMsg('wikistats_blog_comment')?></th>
+	<th><?=wfMsg('wikistats_photo_new')?></th>
+	<th><?=wfMsg('wikistats_video_new')?></th>
+	<th><?=wfMsg('wikistats_user_page_edits')?></th>
+	<th><?=wfMsg('wikistats_user_talk_edits')?></th>
 </tr>	
 <tr>
-	<th colspan="2"><?=wfMsg('wikistats_namespaces')?></th>
-	<th colspan="2"><?=wfMsg('wikistats_edits')?></th>
-	<th colspan="2"><?=wfMsg('wikistats_images')?></th>
-	<th colspan="2"><?=wfMsg('wikistats_video')?></th>
-</tr>	
-<tr>
-	<th colspan="4"><b><a href="#wikians"><?= wfMsg('wikistats_wikians') ?></a></b></th>
-	<th colspan="3"><b><a href="#articles"><?= wfMsg('wikistats_articles') ?></a></b></th>
+	<th colspan="2"><b><a href="#wikians"><?= wfMsg('wikistats_wikians') ?></a></b></th>
+	<th colspan="2"><b><a href="#articles"><?= wfMsg('wikistats_articles') ?></a></b></th>
 	<th colspan="4"><b><a href="#media"><?= wfMsg('wikistats_media') ?></a></b></th>
+	<th colspan="8"><b><a href="#media"><?= wfMsg('wikistats_per_namespace') ?></a></b></th>
 </tr>
 </tfoot>
 </table>
