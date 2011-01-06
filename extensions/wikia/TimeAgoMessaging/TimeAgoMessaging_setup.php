@@ -15,9 +15,8 @@ if (!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['other'][] = array(
-	'author' => array('Maciej Brencz'),
-	'description' => 'Provides i18n for jquery.timeago.js plugin',
-	'description-msg' => 'timeago-desc',
+	'author' => 'Maciej Brencz',
+	'description-msg' => 'timeagomessaging-desc',
 	'name' => 'TimeAgo Messaging',
 	'version' => '1.0',
 );
