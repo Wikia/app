@@ -85,7 +85,7 @@ Please try another one!',
 	'leaderboard-intro-hide' => 'hide',
 	'leaderboard-intro-open' => 'open',
 	'leaderboard-intro-headline' => "What are Achievements?",
-	'leaderboard-intro' => "You can earn badges on this wiki by editing articles, uploading photos and leaving comments. Each badge earns you points - the more points you get, the higher up the leaderboard you go! You'll find the badges you've earned on your [[$1|user profile page]].
+	'leaderboard-intro' => "You can earn badges on this wiki by editing pages, uploading photos and leaving comments. Each badge earns you points - the more points you get, the higher up the leaderboard you go! You'll find the badges you've earned on your [[$1|user profile page]].
 
 	'''What are badges worth?'''",
 	'leaderboard' => 'Achievements leaderboard',
