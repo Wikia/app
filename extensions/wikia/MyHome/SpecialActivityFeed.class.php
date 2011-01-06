@@ -133,14 +133,9 @@ class SpecialActivityFeed extends SpecialPage {
 				if($rc){
 					Wikia::log(__METHOD__, "", "Found recent change to attach to.", $wgWikiaForceAIAFdebug);
 					// Add the (serialized) badge into the rc_params field.
-					$additionalData = array('Badge' => serialize($badge));
-					MyHome::storeInRecentChanges($rc, $additionalData);
-					$originalRcId = $rc->getAttribute('rc_id');
-					$rc->save();
-
-					// Since rc->save is actually only an insert (never an update), make sure to delete the original rc by originalRcId.
-					$dbw = &wfGetDB(DB_MASTER);
-					$dbw->delete("recentchanges", array("rc_id" => $originalRcId), __METHOD__ );
+					$rc_data = array();
+					$rc_data['Badge'] = serialize($badge);
+					MyHome::storeAdditionalRcData($rc_data, $rc);
 				}
 			} else {
 				// Spool this achievement for when its corresponding RecentChange shows up (later in this pageload).
