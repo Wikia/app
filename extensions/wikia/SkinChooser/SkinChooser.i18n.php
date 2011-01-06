@@ -7,7 +7,8 @@
 $messages = array();
 
 $messages['en'] = array(
+	'skinchooser-desc' => 'Allows users to choose skins in their preferences',
 	'skinchooser-customcss' => 'For custom themes, select the custom option in the menu above and specify custom CSS in [[MediaWiki:Monaco.css]].',
 	'new-look' => 'New Wikia Look',
-	'site-layout' => 'Site Layouts'
+	'site-layout' => 'Site Layouts',
 );
