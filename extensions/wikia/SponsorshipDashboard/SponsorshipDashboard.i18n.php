@@ -3,7 +3,8 @@
  * Internationalisation file for SponsorshipDashboard extension.
  *
  * @addtogroup Extensions
-*/
+ * @todo FIXME: most message keys need an extension specifix prefix to avoid key collision.
+ */
 
 $messages = array();
 
