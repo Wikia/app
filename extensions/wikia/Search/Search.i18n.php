@@ -3,11 +3,12 @@
 $messages = array();
 
 $messages['en'] = array(
+	'search-desc' => 'Cross-Wikia search engine using Solr backend',
 	'wikiasearch-titles-only' => 'Search only in page titles',
 	'wikiasearch-system-error-msg' => 'Due to a system error, your search could not be completed',
 	'wikiasearch-search-this-wiki' => 'Search Wikia Central only',
 	'wikiasearch-search-wikia' => 'Search Wikia',
-	'wikiasearch-image-results' => 'Image Results for "$1"'
+	'wikiasearch-image-results' => 'Image Results for "$1"',
 );
 
 /** Jamaican Creole English (Jamaican Creole English)
