@@ -420,9 +420,9 @@ var AdDriverCall = function (slotname, size, dartUrl) {
 			this.clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
 		}
 		if (this.clientWidth > 1024) {
-			url = url.replace('dissz=N;', 'dissz=large;');
+			url = url.replace('dis=N;', 'dis=large;');
 		} else {
-			url = url.replace('dissz=N;', '');
+			url = url.replace('dis=N;', '');
 		}
 
 		// prefooter ads?
