@@ -5,6 +5,12 @@
  * Author: Inez Korczynski
  */
 
+$wgExtensionCredits['other'][] = array(
+	'name'           => 'SkinChooser',
+	'author'         => 'Inez Korczynski',
+	'descriptionmsg' => 'skinchooser-desc',
+);
+
 // basic permissions
 #$wgGroupPermissions['sysop']['setadminskin'] = true; #rt74835
 $wgGroupPermissions['staff']['setadminskin'] = true;
