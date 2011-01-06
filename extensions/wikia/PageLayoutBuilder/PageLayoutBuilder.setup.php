@@ -1,16 +1,14 @@
 <?php
 
 $wgExtensionCredits['specialpage'][] = array(
-	'name' => '',
-    'author' => array( 'Tomasz Odrobny', 'Władysław Bodzek' ),
-	'url' => '',
-	'description' => 'PageLayoutBuilder',
-	'descriptionmsg' => 'plb-desc',
-	'version' => '0.0.0'
+	'name' => 'PageLayoutBuilder',
+	'author' => array( 'Tomasz Odrobny', 'Władysław Bodzek' ),
+	//'url' => '',
+	'descriptionmsg' => 'pagelayoutbuilder-desc',
+	'version' => '0.0.1'
 );
 
 define("NS_PLB_LAYOUT", 902);
-
 
 $wgExtraNamespaces[ NS_PLB_LAYOUT ] = "Layout";
 
