@@ -393,6 +393,10 @@ AdDriver.init();
 
 
 var AdDriverCall = function (slotname, size, dartUrl) {
+	this.clientWidth = 0;
+	this.clientHeight = 0;
+	this.hasPrefooters = null;
+
 	this.replaceTokensInDARTUrl = function(url) {
 
 		// tile and ord are synchronized only for DART calls made by AdDriver.
@@ -409,6 +413,27 @@ var AdDriverCall = function (slotname, size, dartUrl) {
 			window.dartOrd = Math.floor(Math.random()*10000000000000000);
 		}
 		url = url.replace("ord=N?", "ord="+window.dartOrd+"?");
+
+		// screen resolution
+		if (!this.clientWidth || !this.clientHeight) {
+			this.clientWidth = document.documentElement.clientWidth || document.body.clientWidth;
+			this.clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+		}
+		if (this.clientWidth > 1024) {
+			url = url.replace('dissz=N;', 'dissz=large;');
+		} else {
+			url = url.replace('dissz=N;', '');
+		}
+
+		// prefooter ads?
+		if (!this.hasPrefooters) {
+			if (AdEngine.isSlotDisplayableOnCurrentPage('PREFOOTER_LEFT_BOXAD')) {
+				this.hasPrefooters = 'yes';
+			} else {
+				this.hasPrefooters = 'no';
+			}
+		}
+		url = url.replace('hasp=N;', 'hasp='+this.hasPrefooters+';');
 
 		// Quantcast Segments
 		if (typeof(QuantcastSegments) !== "undefined") {
