@@ -2,7 +2,7 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WikiBuilder',
-	'description' => 'WikiBuilder for Oasis',
+	'descriptionmsg' => 'wikibuilder-desc',
 	'author' => array('Hyun Lim', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
 );
 
