@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Category Galleries extension
  *
@@ -14,11 +13,8 @@ if ( ! defined( 'MEDIAWIKI' ) ){
 
 $wgExtensionCredits['other'][] = array(
 	"name" => "CategoryGalleries",
-	"description" => "Shows articles gallery to category page",
-	"descriptionmsg" => "catgallery-desc",
+	'descriptionmsg' => 'categorygalleries-desc',
 //	"url" => "http://help.wikia.com/wiki/Help:Category_Galleries",
-	"svn-date" => '$LastChangedDate: 2010-08-19 15:37:51 +0200 (Cz, 19 sie 2010) $',
-	"svn-revision" => '$LastChangedRevision: 25551 $',
 	"author" => array('Władysław Bodzek')
 );
 
@@ -49,4 +45,3 @@ $wgHooks['InternalParseBeforeLinks'][] = 'CategoryGalleriesHelper::onInternalPar
 $wgAutoloadClasses[ 'CategoryService' ] = $dir . '/services/CategoryService.class.php';
 $wgHooks['ArticleUpdateCategoryCounts'][] = 'CategoryService::onArticleUpdateCategoryCounts';
 $wgHooks['TitleMoveComplete'][] = 'CategoryService::onTitleMoveComplete';
-
