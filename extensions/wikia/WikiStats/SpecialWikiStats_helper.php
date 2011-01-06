@@ -153,20 +153,16 @@ class WikiStats {
 	private function __load() {
 		if ( !isset($this->oWikia) ) {
 			$this->__loadWikia();
-		} 
-
+		}
 		if ( !isset($this->mRange) ) {
 			$this->__loadRange();
 		} 
-		
 		if ( !isset($this->mDateRange) ) {
 			$this->__loadMonths();
 		}
-		
 		if ( !isset($this->mUpdateDate) ) { 
 			$this->__loadDate();
 		}
-		
 		if ( !isset($this->mMonthDiffs) ) {
 			$this->__loadMonthDiffs();
 		}
@@ -181,7 +177,7 @@ class WikiStats {
 	 */
     private function __loadWikia() { 
     	global $wgLang, $wgContLang;
-    	
+
     	$this->oWikia = WikiFactory::getWikiByID($this->mCityId);
 		if ( isset($this->oWikia) && !empty($this->oWikia) ) {
 			# created 
@@ -528,7 +524,7 @@ class WikiStats {
 				'H'	=> 'images_links',
 				'I'	=> 'images_uploaded',
 				'J' => 'video_links',
-				'K' => 'video_uploaded'				
+				'K' => 'video_uploaded',	
 			);
 			
 			array_walk($db_fields, create_function('&$v,$k', '$v = $v . " as " . $k;'));
@@ -623,6 +619,74 @@ class WikiStats {
 				}
 			}
 			$dbr->freeResult( $oRes );
+			
+			// Merge in namespace stats
+			// Structure of $ns_action
+			// $ns_actions[$NAMESPACE][$DATE][$EVENT_TYPE]
+			$ns_actions = $this->loadMonthlyNSActions();
+			foreach ($this->mMainStats as $date => &$data) {
+				// Add in NS 0 (Main) create events
+				$ns = '0'; $event = 2;
+				$data['L'] = array_key_exists($ns, $ns_actions) &&
+				             array_key_exists($date, $ns_actions[$ns]) &&
+				             array_key_exists($event, $ns_actions[$ns][$date])
+				             ? $ns_actions[$ns][$date][$event] : 0;
+				             
+				// Add all NS 1 (Talk + Comment) which is NS 3 edits and creates
+				$ns = 1; $event = 1;
+				$data['M'] = array_key_exists($ns, $ns_actions) &&
+				             array_key_exists($date, $ns_actions[$ns]) &&
+				             array_key_exists($event, $ns_actions[$ns][$date])
+				             ? $ns_actions[$ns][$date][$event] : 0;
+				$event = 2;
+				$data['M'] += array_key_exists($ns, $ns_actions) &&
+				              array_key_exists($date, $ns_actions[$ns]) &&
+				              array_key_exists($event, $ns_actions[$ns][$date])
+				              ? $ns_actions[$ns][$date][$event] : 0;
+
+				// Add all NS 500 (Blog) create events
+				$ns = 500; $event = 2;
+				$data['N'] = array_key_exists($ns, $ns_actions) &&
+				             array_key_exists($date, $ns_actions[$ns]) &&
+				             array_key_exists($event, $ns_actions[$ns][$date])
+				             ? $ns_actions[$ns][$date][$event] : 0;
+
+				// Add all NS 501 (Blog Comment) edit events
+				$ns = 501;
+				$data['O'] = array_key_exists($ns, $ns_actions) &&
+				             array_key_exists($date, $ns_actions[$ns]) &&
+				             array_key_exists($event, $ns_actions[$ns][$date])
+				             ? $ns_actions[$ns][$date][$event] : 0;
+
+				// Add all NS 6 (File) create events
+				$ns = 6; $event = 2;
+				$data['P'] = array_key_exists($ns, $ns_actions) &&
+				             array_key_exists($date, $ns_actions[$ns]) &&
+				             array_key_exists($event, $ns_actions[$ns][$date])
+				             ? $ns_actions[$ns][$date][$event] : 0;
+				             
+				// Add all NS 400 (Video) create events
+				$ns = 400;
+				$data['Q'] = array_key_exists($ns, $ns_actions) &&
+				             array_key_exists($date, $ns_actions[$ns]) &&
+				             array_key_exists($event, $ns_actions[$ns][$date])
+				             ? $ns_actions[$ns][$date][$event] : 0;
+
+				// Add all NS 2 (User) edit events
+				$ns = 2; $event = 1;
+				$data['R'] = array_key_exists($ns, $ns_actions) &&
+				             array_key_exists($date, $ns_actions[$ns]) &&
+				             array_key_exists($event, $ns_actions[$ns][$date])
+				             ? $ns_actions[$ns][$date][$event] : 0;
+				             
+				// Add all NS 3 (User Talk) edit events
+				$ns = 3;
+				$data['S'] = array_key_exists($ns, $ns_actions) &&
+				             array_key_exists($date, $ns_actions[$ns]) &&
+				             array_key_exists($event, $ns_actions[$ns][$date])
+				             ? $ns_actions[$ns][$date][$event] : 0;
+			}
+			
 			
 			if ( !empty($this->mMainStats) ) {
 				krsort($this->mMainStats);
@@ -895,59 +959,153 @@ class WikiStats {
 		global $wgLang;
 		
 		wfProfileIn( __METHOD__ );
-		$this->mMonthDiffsStats = array();
-		#---
-		$prev_month = "";
-		foreach ( $this->mMonthDiffs as $id => $date ) {
-			# next record 
-			$next = $id + 1;
-			# 
-		    $record = false;
-		    if ( is_array($this->mMainStats) && array_key_exists($date, $this->mMainStats) ) {
-			    $record = $this->mMainStats[$date];
-            }
-			if ( empty($record) ) continue;
-			if ( empty( $this->mMonthDiffs[$next] ) ) continue;
-			#---
-			$prev_record = "";
-			if ( array_key_exists( $this->mMonthDiffs[$next], $this->mMainStats) ) {
-			    $prev_record = $this->mMainStats[ $this->mMonthDiffs[$next] ];
-            }
-			if ( empty($prev_record) ) continue;
+		
+		// Get a list of all months that exist for these stats
+		$months = array_keys($this->mMainStats);
+		sort($months);
 
-			$this->mMonthDiffsStats[$date] = array( 'visible' => 0 );
-			foreach ( array_keys( $this->mMainStats[$date] ) as $column ) {
-			    #---
-				if ($column != 'date') {
-					#---
-					if ( empty( $record[$column] ) ) {
-						$diff = 0;
-					} 
-					else {
-						$diff = $record[$column] - $prev_record[$column];
-						if ( $prev_record[$column] != 0 ) {
-							$diff = $wgLang->formatNum( sprintf("%0.2f", ($diff / $prev_record[$column]) * 100) );
-						} else {
-							$diff = 0;
-						}
-					}
-					#---
-					if ( empty($diff) ) {
-						$diff = 0;
-					} else {
-						$this->mMonthDiffsStats[ $date ][ 'visible' ] = 1;
-					}
-					#---
-					$this->mMonthDiffsStats[ $date ][ $column ] = $diff ;
-				}
+		// Get the column names used, eliminate the 'date' field.
+		$columns = array_keys($this->mMainStats[$months[0]]);
+		array_splice($columns, array_search('date', $columns), 1);
+
+		$this->mMonthDiffsStats = array();
+		
+		// Create a range of monthly dates and iterate through them
+		$prev_month = "";
+		foreach ($this->makeMonthRange($months[0], end($months)) as $cur_month) {
+			// The first month has nothing previous to diff against
+			if (empty($prev_month)) {
+				$prev_month = $cur_month;
+				continue;
 			}
-			$prev_month = $date;
+
+			// Get data for the current month
+			if (array_key_exists($cur_month, $this->mMainStats)) {
+				$cur_record = $this->mMainStats[$cur_month];
+			} else {
+				$cur_record = array();
+			}
+
+			// Get data for the previous month
+			if (array_key_exists($prev_month, $this->mMainStats)) {
+				$prev_record = $this->mMainStats[$prev_month];
+			} else {
+				$prev_record = array();
+			}
+
+			// Iterate through tbe column names for this data
+			foreach ($columns as $col) {
+				// Get the current value or zero if its not defined
+				$cur_val = 0;
+				if (array_key_exists($col, $cur_record) && !empty($cur_record[$col])) {
+					$cur_val = $cur_record[$col];
+				}
+				
+				// Get the previous value or zero if its not defined
+				$prev_val = 0;
+				if (array_key_exists($col, $prev_record) && !empty($prev_record[$col])) {
+					$prev_val = $prev_record[$col];
+				}
+
+				$change = 0;
+				if ($prev_val != 0) {
+					$change = $wgLang->formatNum(sprintf("%0.2f", (($cur_val - $prev_val)/$prev_val)*100));
+				}
+
+				$this->mMonthDiffsStats[$cur_month]['date'] = $cur_month;
+				$this->mMonthDiffsStats[$cur_month][$col] = $change;
+			}
+			
+			$prev_month = $cur_month;
 		}
 
-		#---
 		krsort($this->mMonthDiffsStats);
 		wfProfileOut( __METHOD__ );
+
 		return $this->mMonthDiffsStats;
+	}
+	
+	/**
+	 * loadMonthlyNSActions
+	 *
+	 * Load the monthly totals for creates, edits and deletes in all namespaces
+	 *
+	 */
+	
+	public function loadMonthlyNSActions() {
+		global $wgStatsDB;
+
+		// The existing index requires a city ID, so don't try anything without it
+		if (!$this->mCityId) return;
+
+		$startDate = sprintf("%04d-%02d-01", $this->mStatsDate['fromYear'], $this->mStatsDate['fromMonth']);
+		
+		$end_month = $this->mStatsDate['toMonth'] + 1;
+		$end_year  = $this->mStatsDate['toYear'];
+		if ($end_month == 13) {
+			$end_month = 1;
+			$end_year++;
+		}
+		
+		$endDate = sprintf("%04d-%02d-01", $end_year, $end_month);
+
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+		$oRes = $dbr->select(
+				array( 'events' ),
+				array( "DATE_FORMAT(rev_timestamp, '%Y%m') AS date", 'page_ns', 'event_type', 'count(*) AS cnt' ),
+				array( 'wiki_id' => $this->mCityId,
+				       "rev_timestamp BETWEEN '$startDate' AND '$endDate'",
+					 ),
+				__METHOD__,
+				array( 'GROUP BY' => 'date, page_ns, event_type' )
+		);
+
+		$ns_actions = array();
+		while( $oRow = $dbr->fetchObject( $oRes ) ) {
+			// Initialize this namespace to an empty array if neccessary
+			if (!array_key_exists($oRow->page_ns, $ns_actions)) $ns_actions[$oRow->page_ns] = array();
+			$for_ns = &$ns_actions[$oRow->page_ns];
+
+			// Initialize this month to an empty array if neccessary
+			if (!array_key_exists($oRow->date, $for_ns)) $for_ns[$oRow->date] = array();
+			$for_month = &$for_ns[$oRow->date];
+
+			$for_month[$oRow->event_type] = $oRow->cnt;
+		}
+
+		return $ns_actions;
+	}
+	
+	/**
+	 * makeMonthRange
+	 *
+	 * Create an array of sequential months from $start to $end.  Assumes months
+	 * are in the format YYYYMM
+	 *
+	 */
+	
+	public function makeMonthRange ($start, $end) {
+		// Verify the args to help prevent an infinite loop below
+		if (!preg_match('/^\d{6}$/', $start)) return;
+		if (!preg_match('/^\d{6}$/', $end))   return;
+
+		$range = array($start);
+		$cur_date = $start;
+
+		while ($cur_date != $end) {
+			preg_match('/(\d{4})(\d{2})/', $cur_date, $matches);
+			if ($matches[2] == 12) {
+				$matches[1]++;
+				$matches[2] = '01';
+				$cur_date = $matches[1].$matches[2];
+			} else {
+				$cur_date = $cur_date + 1;
+			}
+		
+			$range[] = $cur_date;
+		}
+		
+		return $range;
 	}
 	
 	/**
@@ -1005,20 +1163,14 @@ class WikiStats {
 	 */
 	public function diffFormat($number) {
 		wfProfileIn( __METHOD__ );
-		$out = sprintf("%0.0f%%", $number);
-		$values = array( -100, 0, 25, 75, 100 );
-		$colors = array( "800000", "555555", "008000", "#0000FF" );
-		$loop = 0;
-		foreach ( $values as $idx => $value ) {
-			$min = isset($values[$idx-1]) ? $values[$idx-1] : $values[$idx];
-			$max = isset($values[$idx+1]) ? $values[$idx+1] : $values[$idx];
+		$num = sprintf("%d%%", $number);
 		
-			if ( $min <= $number && $number < $max ) {
-				$out = Xml::openElement( 'span', array( 'style' => 'color:#' . $colors[$loop] ) ) . $out . Xml::closeElement('span');
-				break;
-			}
-			$loop++;
-		}
+		# Set colors for (x > 75), (75 > x > 25), (25 > x > 0) and (x < 0) 
+		$color = ($num > 75) ? "0000FF"
+							 : (($num > 25) ? "008000"
+											: (($num > 0) ? "555555" : "800000"));
+		$out = "<span style='color:#$color'>$num</span>";
+
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
