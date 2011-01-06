@@ -18,17 +18,23 @@
  * WikiFactory variable.
  */
 
+$wgExtensionCredits['other'][] = array(
+	'name' => 'ShowPerformanceStats',
+	'author' => 'Sean Colombo',
+	'descriptionmsg' => 'showperformancestats-desc',
+);
+
 $wgExtensionMessagesFiles['ShowPerformanceStats'] = dirname(__FILE__) . '/ShowPerformanceStats.i18n.php';
 
 $wgAvailableRights[] = 'performancestats';
 $wgGroupPermissions['*']['performancestats'] = false;
 $wgGroupPermissions['staff']['performancestats'] = true;
- 
+
 function wfGetPerformanceStats(){
 	wfProfileIn( __METHOD__ );
 	$statsString = "";
 	$precision = 3;
-	
+
 	// It seems reasonable to assume that this function will be called one or less times (so I'll call this here instead of an init function).
 	wfLoadExtensionMessages('ShowPerformanceStats');
 
