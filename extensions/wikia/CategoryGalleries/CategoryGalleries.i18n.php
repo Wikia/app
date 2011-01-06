@@ -6,5 +6,5 @@
 $messages = array();
 
 $messages['en'] = array(
-	'catgallery-desc' => 'Shows articles gallery to category page',
+	'categorygalleries-desc' => 'Shows a pages gallery on category pages',
 );
