@@ -24,9 +24,9 @@ if( empty($wgCrossWikiaSearchExcludedWikis) ) {
 
 $wgExtensionCredits['other'][] = array(
 	'name'        => 'Wikia Search',
-	'version'     => '0.1',
+	'version'     => '0.1.1',
 	'author'      => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek]',
-	'description' => 'cross-Wikia search engine using Solr backend'
+	'descriptionmsg' => 'search-desc',
 );
 
 $dir = dirname(__FILE__) . '/';
