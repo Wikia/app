@@ -109,7 +109,7 @@ $messages['en'] = array(
 	"awc-metrics-close-listed" => "Close all listed",
 	"awc-metrics-close-checked" => "Close checked",
 	"awc-metrics-exact-match" => "exact match",
-	"awc-metrics-recordspager" => 'Showing \'\'\'$1\'\'\' to \'\'\'\$2\'\'\' of \'\'\'$3\'\'\' records',
+	"awc-metrics-recordspager" => 'Showing \'\'\'$1\'\'\' to \'\'\'$2\'\'\' of \'\'\'$3\'\'\' records', // @todo FIXME: Needs plural support (in JavaScript).
 // closed Wiki
 	"closed-wiki" => "Closed Wiki",
 	"closed-wiki-info" => "This wiki has been closed",
