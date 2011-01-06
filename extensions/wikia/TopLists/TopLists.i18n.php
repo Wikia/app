@@ -36,7 +36,7 @@ $messages['en'] = array(
 	'toplists-error-add-item-permission' => 'Permission error: Your account has not been granted the right to create new items.',
 	'toplists-error-add-item-list-not-exists' => 'The "$1" Top 10 list does not exist.',
 	'toplists-error-backslash-not-allowed' => 'The "/" character is not allowed in the title of a Top 10 list.',
-	'toplists-upload-error-unknown' => 'An error occurred while processing the upload request, please try again.', 
+	'toplists-upload-error-unknown' => 'An error occurred while processing the upload request. Please try again.', 
 
 	//editor
 	'toplists-editor-title-label' => 'List name',
