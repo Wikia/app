@@ -37,8 +37,7 @@ class WikiStatsPage extends IncludableSpecialPage
     var $mAllWikis;
     var $mMonth;
     var $mLimit;
-	   
-	private $TEST = 0;
+
 	private $defaultAction = 'main';
     const USE_MEMC = 0;
 
@@ -65,21 +64,49 @@ class WikiStatsPage extends IncludableSpecialPage
             return;
         }
 
-		$this->mCityId = ($this->TEST == 1 ) ? 177 : $wgCityId;
-        $this->mStats = WikiStats::newFromId($this->mCityId);        
-
-		$this->mUser = $wgUser;
-		$this->userIsSpecial = $this->mStats->isAllowed();
+		// Set the current wiki ID, DB name and user from globals
+		$this->mCityId     = $wgCityId;
+		$this->mCityDBName = $wgDBname;    
+		$this->mUser       = $wgUser;
+		
+		// Check the current $wgUser against the set of groups WikiStats recognizes
+		$this->userIsSpecial = WikiStats::isAllowed();
         
-		$this->mFromDate 	= intval($wgRequest->getVal( "wsfrom", sprintf("%d%d", WIKISTATS_MIN_STATS_YEAR, WIKISTATS_MIN_STATS_MONTH) ));
-		$this->mToDate 		= intval($wgRequest->getVal( "wsto", sprintf("%d%d", date("Y"), date("m") ) ));
+		$this->mFromDate 	= $wgRequest->getVal("wsfrom", WIKISTATS_MIN_STATS_YEAR.WIKISTATS_MIN_STATS_MONTH);
+		$this->mToDate 		= $wgRequest->getVal("wsto", date("Ym"));
 		$this->mTitle 		= Title::makeTitle( NS_SPECIAL, "WikiStats" );
 		$this->mAction		= $wgRequest->getVal("action", "");
 		$this->mXLS 		= $wgRequest->getVal("wsxls", false);
 		$this->mMonth 		= $wgRequest->getVal("wsmonth", 0);
 		$this->mLimit		= $wgRequest->getVal("wslimit", WIKISTATS_WIKIANS_RANK_NBR);					
 		$this->mAllWikis 	= 0;
-			
+
+		// Use the first part of the subpage as the action
+		if ( $subpage ) { 
+			$path = explode("/", $subpage);
+			$this->mAction = $path[0];
+		}
+
+		// Redirect to the default action if one hasn't been set
+		if ( empty($this->mAction) ) {
+			$wgOut->redirect( $this->mTitle->getFullURL("action={$this->defaultAction}") );
+		}
+
+		// Split out the the from and to month and year for convenience
+		if ( preg_match("/^([0-9]{4})([0-9]{1,2})/", $this->mFromDate, $m) ) {
+			list (, $this->fromYear, $this->fromMonth) = $m; 
+		} else {
+			$wgOut->showErrorPage("Bad parameters", "wikistats_error_malformed_date");
+			return;
+		}
+
+		if ( preg_match("/^([0-9]{4})([0-9]{1,2})/", $this->mToDate, $m) ) {
+			list (, $this->toYear, $this->toMonth) = $m; 
+		} else {
+			$wgOut->showErrorPage("Bad parameters", "wikistats_error_malformed_date");
+			return;
+		}
+
 		$domain = $all = "";
 		if ( $this->userIsSpecial ) {		
 			$this->mLang 		= $wgRequest->getVal("wslang", "");
@@ -88,35 +115,9 @@ class WikiStatsPage extends IncludableSpecialPage
 			$domain 			= $wgRequest->getVal( "wswiki", "" );
 			$all 				= $wgRequest->getVal( "wsall", 0 );
 			$this->mNamespaces  = $wgLang->getNamespaces();
-			$this->mPredefinedNamespaces = $this->mStats->getPageNSList();   		
 		}
 
-		$this->mCityDBName 	= ($this->TEST == 1 ) ? WikiFactory::IDtoDB($this->mCityId) : $wgDBname;
-
-		#---
-		if ( $subpage ) { 
-			$path = explode("/", $subpage);
-			$this->mAction = $path[0];
-		}
-
-		if ( empty($this->mAction) ) {
-			$wgOut->redirect( $this->mTitle->getFullURL("action={$this->defaultAction}") );
-		}
-		
-		$m = array();
-		$this->toYear 		= date('Y');
-		$this->toMonth 		= date('m');
-		$this->fromYear 	= WIKISTATS_MIN_STATS_YEAR;
-		$this->fromMonth 	= WIKISTATS_MIN_STATS_MONTH;
-		
-		if ( preg_match("/^([0-9]{4})([0-9]{1,2})/", $this->mFromDate, $m) ) {
-			list (, $this->fromYear, $this->fromMonth) = $m; 
-		}
-
-		if ( preg_match("/^([0-9]{4})([0-9]{1,2})/", $this->mToDate, $m) ) {
-			list (, $this->toYear, $this->toMonth) = $m; 
-		}
-
+		// Override some values if we're special and got a domain (or 'all')
 		if ( $domain == 'all' || $all == 1 ) {
         	$this->mCityId = 0;
         	$this->mCityDBName = WIKISTATS_CENTRAL_ID;
@@ -129,6 +130,9 @@ class WikiStatsPage extends IncludableSpecialPage
 		} else {
         	$this->mCityDomain = WikiFactory::DBToDomain($this->mCityDBName);
 		}
+
+        $this->mStats = WikiStats::newFromId($this->mCityId);
+		$this->mPredefinedNamespaces = $this->mStats->getPageNSList();
 
         $this->mStats->setStatsDate( array( 
         	'fromMonth' => $this->fromMonth,
@@ -148,11 +152,10 @@ class WikiStatsPage extends IncludableSpecialPage
             $this->mSkinName = $skinname;
         }     
 
-		$this->setHeaders();
 		$this->showForm();
 
 		if ( $this->mAction ) {
-			$func = sprintf("show%s", ucfirst(strtolower($this->mAction)));
+			$func = 'show'.ucfirst(strtolower($this->mAction));
 			if ( method_exists($this, $func) ) {
 				$this->$func($subpage);
 			}
@@ -163,15 +166,13 @@ class WikiStatsPage extends IncludableSpecialPage
 		global $wgOut, $wgContLang, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath ;
         wfProfileIn( __METHOD__ );
 
+		$this->setHeaders();
+
 		# css
-		#$wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/WikiStats/css/jquery.tabs.css?{$wgStyleVersion}\" />\n");
-		#$wgOut->addScript("<!--[if lte IE 7]><link rel=\"stylesheet\" href=\"{$wgExtensionsPath}/wikia/WikiStats/css/jquery.tabs-ie.css?{$wgStyleVersion}\" type=\"text/css\"><![endif]-->");
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStats/css/wikistats.css?{$wgStyleVersion}");
 		$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css?{$wgStyleVersion}");
 
 		# script
-		#$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStats/js/visualize.jQuery.js?{$wgStyleVersion}\"></script>\n");
-		#$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStats/js/jquery.tabs.min.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStats/js/wikistats.js?{$wgStyleVersion}\"></script>\n");
 
 		# main page
