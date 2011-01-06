@@ -22,8 +22,12 @@
 	if ($wgEnableCorporatePageExt) {
 		echo wfRenderModule('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));
 	} else {
-		echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));
-		echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD'));
+		if (in_array('leaderboard', $wgABTests)) {
+			// no leaderboard ads
+		} else {
+			echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));
+			echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD'));
+		}
 	}
 	if ($isMainPage) {
 		echo '</div>';
@@ -47,12 +51,9 @@
 		<div id="WikiaArticle" class="WikiaArticle">
 			<div class="home-top-right-ads">
 			<?php 
-				// A/B test
-				$headers = function_exists('apache_request_headers') ? apache_request_headers() : array(); 
-				if (false && isset($headers['X-AB-Test-Server']) && $headers['X-AB-Test-Server'] == "boxad=1") {
+				if (in_array('leaderboard', $wgABTests)) {
 					echo wfRenderModule('Ad', 'Index', array('slotname' => 'TEST_HOME_TOP_RIGHT_BOXAD'));
-				}
-				else {
+				} else {
 					echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
 				}
 
