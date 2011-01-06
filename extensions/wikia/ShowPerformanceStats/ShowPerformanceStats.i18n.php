@@ -13,8 +13,8 @@ $messages['en'] = array(
  * Message documentation
  */
 $messages['qqq'] = array(
-	'showperformancestats-desc' => "{{desc}}"
-	'performancestat-total' => "Total time (in seconds) calculated from Varnish End time minus Varnish Start time."
-	'performancestat-apache' => "Apache time (in seconds)."
+	'showperformancestats-desc' => "{{desc}}",
+	'performancestat-total' => "Total time (in seconds) calculated from Varnish End time minus Varnish Start time.",
+	'performancestat-apache' => "Apache time (in seconds).",
 	'performancestat-cpu' => "CPU time (in seconds)."
 );
