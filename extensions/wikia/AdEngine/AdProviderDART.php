@@ -174,6 +174,8 @@ EOT;
 		$url .= 'pos=' . $slotname . ';';
 		$url .= $wpage;
 		$url .= $this->getKeywordsKV();
+		$url .= 'dissz=N;'; // screen resolution (used only by AdDriver)
+		$url .= 'hasp=N;'; // page has prefooter ads? (used only by AdDriver)
 		$url .= "qcseg=N;";	// wlee: placeholder for JS that sets the real key-value. See self::getIframeFillFunctionDefinition()
 		$url .= "nofooter=N;";	// wlee: placeholder for JS that sets the real key-value. See self::getIframeFillFunctionDefinition()
 		$url .= "impct=N;";	// impression count for current session (used only by AdDriver)
