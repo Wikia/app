@@ -257,6 +257,7 @@ Please [[Special:UserLogin|log in or create an account]] if you do not already h
 	'wikistats_namespaces_user' => 'User (include User talk)',
 	'wikistats_namespaces_maintenance' => 'Maintenance (Mediawiki, Template, Project)',
 	'wikistats_namespace_top' => 'Predefined namespaces',
+	'wikistats_error_malformed_date' => "Error: The date given is malformed",
 );
 
 /** Message documentation (Message documentation)

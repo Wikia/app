@@ -43,8 +43,6 @@ class WikiStats {
     const PV_LIMIT = 100;
     const PV_DELTA = 180;
     const DEF_LIMIT = 25;
-   
-  	var $mAllowedGroups = array('staff', 'sysop', 'janitor', 'bureaucrat');
 	
 	/**
 	 * initialization
@@ -69,6 +67,8 @@ class WikiStats {
 	public static function newFromId($cityId) { 
 		return new WikiStats($cityId);
 	}
+
+	public static function allowedGroups() { return array('staff', 'sysop', 'janitor', 'bureaucrat'); }
 
 	/**
 	 * newFromName
@@ -141,7 +141,7 @@ class WikiStats {
 		$userRights = $wgUser->getEffectiveGroups();         
 		$allowed = 0;
 		foreach ( $userRights as $id => $right ) {
-			if ( in_array( $right, $this->mAllowedGroups ) ) {
+			if ( in_array( $right, WikiStats::allowedGroups() ) ) {
 				$allowed = 1; 
 				break;
 			}
@@ -1036,7 +1036,7 @@ class WikiStats {
 		global $wgStatsDB;
 
 		// The existing index requires a city ID, so don't try anything without it
-		if (!$this->mCityId) return;
+		if (!$this->mCityId) return array();
 
 		$startDate = sprintf("%04d-%02d-01", $this->mStatsDate['fromYear'], $this->mStatsDate['fromMonth']);
 		
@@ -1569,7 +1569,7 @@ class WikiStats {
 		}
 		
 		# only for special users
-		if ( !$this->isAllowed() ) {
+		if ( !WikiStats::isAllowed() ) {
 			Wikia::log( __METHOD__, false, "unauthorized user: " . $wgUser->getName() . " tried to retrieve data");
 			return false;
 		}
