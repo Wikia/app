@@ -3,7 +3,8 @@
  * Internationalisation file for SpecialContact extension.
  *
  * @addtogroup Extensions
-*/
+ * @todo FIXME: Cannot add support for L10n in Translate because of key conflicts with MediaWiki SVN extension ContactPage.
+ */
 
 $messages = array();
 
