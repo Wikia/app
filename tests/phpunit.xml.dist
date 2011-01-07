@@ -9,6 +9,27 @@
          stopOnFailure="false"
          syntaxCheck="true"
          processIsolation="false">
+         <testsuite name="Wikia Test Suite">
+            <directory>./</directory>
+         </testsuite>
+         <!-- TODO: enable and fix tests -->
+         <!--
+         <testsuite name="Wikia Extensions Test Suite">
+            <directory>../extensions/wikia/</directory>
+         </testsuite>
+         -->
+         <!-- DO NOT run MW tests. These tests are dropping db tables, including users -->
+         <!--
+         <testsuite name="MediaWiki Test Suite">
+            <directory>../maintenance/tests/</directory>
+         </testsuite>
+         -->
+         <groups>
+             <exclude>
+                 <group>Broken</group>
+                 <group>Stub</group>
+             </exclude>
+         </groups>
          <filter>
              <blacklist>
                  <directory>../bin</directory>

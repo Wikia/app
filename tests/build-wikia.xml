@@ -53,12 +53,13 @@
         <testng classpathref="runtime.classpath"
                 outputdir="${build.logs}"
                 suitename="Selenium tests - first run"
-                listeners="org.uncommons.reportng.JUnitXMLReporter"
+                listeners="org.testng.reporters.DotTestListener,org.uncommons.reportng.JUnitXMLReporter"
                 parallel="methods"
                 threadCount="${threadCount}"
                 groups="${groups}"
                 excludedgroups="${excludegroups}"
-                failureProperty="test.failed">
+                failureProperty="test.failed"
+                verbose="2">
             <classfileset dir="${build.bin}/com/wikia/selenium/tests" includes="*.class" />
             <sysproperty key="java.security.policy" file="${testsdir}/testng.policy"/>
             <sysproperty key="webSite" value="${webSite}" />
@@ -76,8 +77,9 @@
         <testng classpathref="runtime.classpath"
                 outputdir="${build.logs}"
                 suitename="Selenium tests - second run"
-                listeners="org.uncommons.reportng.JUnitXMLReporter"
-                failureProperty="retest.failed" >
+                listeners="org.testng.reporters.DotTestListener,org.uncommons.reportng.JUnitXMLReporter"
+                failureProperty="retest.failed"
+                verbose="2">
             <xmlfileset file="${build.logs}/testng-failed.xml" />
             <sysproperty key="java.security.policy" file="testng.policy"/>
             <sysproperty key="webSite" value="${webSite}" />
@@ -105,10 +107,11 @@
         <testng classpathref="runtime.classpath"
                 outputdir="${build.logs}"
                 suitename="Wikia QA Single Test"
-                listeners="org.uncommons.reportng.JUnitXMLReporter"
+                listeners="org.testng.reporters.DotTestListener,org.uncommons.reportng.JUnitXMLReporter"
                 parallel="methods"
                 threadCount="1"
-                failureProperty="test.failed" >
+                failureProperty="test.failed"
+                verbose="2">
             <classfileset file="${build.bin}/com/wikia/selenium/tests/${testClass}.class" />
             <sysproperty key="java.security.policy" file="${testsdir}/testng.policy"/>
             <sysproperty key="webSite" value="${webSite}" />
