@@ -121,7 +121,7 @@ class AccountNavigationModule extends Module {
 			}
 
 			// link to Help:Content (never render as redlink)
-			$this->dropdown[] = View::link(Title::newFromText('Contents', NS_HELP), wfMsg('help'), array('title' => '', 'data-id' => 'help'), '', array('known'));
+			$this->dropdown[] = View::link(Title::newFromText( wfMsgForContent( 'helppage' ) ), wfMsg('help'), array('title' => '', 'data-id' => 'help'), '', array('known'));
 
 			// logout link
 			$this->links[] = $this->renderPersonalUrl('logout');
