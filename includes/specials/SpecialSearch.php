@@ -130,6 +130,16 @@ class SpecialSearch {
 
 		$this->setupPage( $term );
 
+		// Wikia change /Begin (ADi)
+		if(($search instanceof SearchErrorReporting) && $search->getError()) {
+			$wgOut->addWikiText( '==' . $search->getError() . '==' );
+			$wgOut->addHTML( $search->getErrorTracker());
+			$wgOut->addHTML( $this->powerSearchBox( $term ) );
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+		// Wikia change /End (ADi)
+
 		if( $wgDisableTextSearch ) {
 			global $wgSearchForwardUrl;
 			if( $wgSearchForwardUrl ) {
