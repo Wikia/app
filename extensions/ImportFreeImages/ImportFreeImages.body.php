@@ -8,68 +8,76 @@ class ImportFreeImages {
 	public $resultsPerPage;
 	public $resultsPerRow;
 	public $thumbType;
-	
+
 	public function __construct() {
 		# Load settings
 		global $wgIFI_FlickrAPIKey, $wgIFI_CreditsTemplate, $wgIFI_GetOriginal,
 			$wgIFI_PromptForFilename, $wgIFI_phpFlickr, $wgIFI_ResultsPerRow,
 			$wgIFI_ResultsPerPage, $wgIFI_FlickrLicense, $wgIFI_FlickrSort,
 			$wgIFI_FlickrSearchBy, $wgIFI_AppendRandomNumber, $wgIFI_ThumbType;
-			
+
 		$this->apiKey = $wgIFI_FlickrAPIKey;
 		$this->creditsTemplate = $wgIFI_CreditsTemplate;
 		$this->shouldGetOriginal = $wgIFI_GetOriginal;
 		$this->promptForFilename = $wgIFI_PromptForFilename;
 		$this->phpFlickrFile = $wgIFI_phpFlickr;
-		
+
 		$this->resultsPerRow = $wgIFI_ResultsPerRow;
 		$this->resultsPerPage = $wgIFI_ResultsPerPage;
-		$this->licenses = is_array( $wgIFI_FlickrLicense ) ? 
+		$this->licenses = is_array( $wgIFI_FlickrLicense ) ?
 			$wgIFI_FlickrLicense : explode( ',', $wgIFI_FlickrLicense );
 		$this->sortBy = $wgIFI_FlickrSort;
 		$this->searchBy = $wgIFI_FlickrSearchBy;
 		$this->appendRandomNumber = $wgIFI_AppendRandomNumber;
 		$this->thumbType = $wgIFI_ThumbType;
-		
+
 		$this->load();
 	}
-	
+
 	/**
-	 * Save the old error level and disable E_STRICT warnings. phpFlickr is 
+	 * Save the old error level and disable E_STRICT warnings. phpFlickr is
 	 * written for PHP4 and causes a lot of E_STRICT warnings.
 	 */
 	protected function suppressStrictWarnings() {
 		$this->oldLevel = error_reporting();
-		error_reporting( $this->oldLevel ^ E_STRICT );		
+		error_reporting( $this->oldLevel ^ E_STRICT );
 	}
 	/**
 	 * Restore the error levels disabled with suppressStrictWarnings()
 	 */
 	protected function restoreStrictWarnings() {
-		error_reporting( $this->oldLevel );			
+		error_reporting( $this->oldLevel );
 	}
-	
+
 	/**
-	 * Try to initiate a phpFlickr object. Will throw MWException if not 
+	 * Try to initiate a phpFlickr object. Will throw MWException if not
 	 * properly configured.
 	 */
 	protected function load() {
 		if ( !file_exists( $this->phpFlickrFile ) )
 			throw new MWException( 'phpFlickr can not be found at ' . $this->phpFlickrFile );
-		
+
 		$this->suppressStrictWarnings();
-		
+
 		require_once( $this->phpFlickrFile );
 		if ( !$this->apiKey )
 			throw new MWException( 'No Flickr API key found' );
 		$this->flickr = new phpFlickr( $this->apiKey );
-		
+
+		// wikia change start, @author Krzysztof Krzyżaniak (eloy)
+		global $wgHTTPProxy;
+		if( isset( $wgHTTPProxy ) ) {
+			list( $host, $port ) = explode( ':', $wgHTTPProxy );
+			$this->flickr->setProxy( $host, $port );
+		}
+		// wikia change end
+
 		$this->restoreStrictWarnings();
 	}
-	
+
 	/**
 	 * Search for Flickr photos
-	 * 
+	 *
 	 * @param $query string Search query
 	 * @param $page int Page number
 	 * @return array TODO
@@ -87,15 +95,15 @@ class ImportFreeImages {
 			)
 		);
 		$this->restoreStrictWarnings();
-		
+
 		if ( !$result || !is_array( $result ) || !isset( $result['photo'] ) )
 			return false;
 		return $result;
 	}
-	
+
 	/**
 	 * Get photo information for an id
-	 * 
+	 *
 	 * @param $id int id
 	 * @return array
 	 */
@@ -105,10 +113,10 @@ class ImportFreeImages {
 		$this->restoreStrictWarnings();
 		return $result;
 	}
-	
+
 	/**
 	 * Get author information for an nsid
-	 * 
+	 *
 	 * @param $owner string NSID
 	 * @return array TODO
 	 */
@@ -118,10 +126,10 @@ class ImportFreeImages {
 		$this->restoreStrictWarnings();
 		return $result;
 	}
-	
+
 	/**
 	 * Get sizes and urls for a certain photo
-	 * 
+	 *
 	 * @param $id int Flickr photo id
 	 * @return array [{'label': 'Large/Original', 'source': 'url', ...}, ...]
 	 */
@@ -133,4 +141,3 @@ class ImportFreeImages {
 	}
 
 }
-
