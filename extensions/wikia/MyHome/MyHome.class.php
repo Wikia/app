@@ -254,7 +254,7 @@ class MyHome {
 		if (count($rc_data) > 0) {
 			self::storeAdditionalRcData($rc_data);
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -280,6 +280,8 @@ class MyHome {
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->update('recentchanges', array('rc_params' => MyHome::packData($rc_data)), array('rc_id' => $rc_id));
 		}
+
+		Wikia::setVar('rc_data', $data);
 
 		wfProfileOut( __METHOD__ );
 	}
