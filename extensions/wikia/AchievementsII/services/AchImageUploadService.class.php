@@ -90,16 +90,23 @@ class AchImageUploadService {
 	public static function uploadBadge($destinationFileName, $badgeLevel) {
 		global $wgRequest, $wgUser;
 		$upload = new UploadAchievementsFromFile();
-
 		$upload->initialize( $destinationFileName, $wgRequest->getFileTempName( 'wpUploadFile' ), $wgRequest->getFileSize( 'wpUploadFile' ) );
-		//$upload->getTitle();//this call is needed, it's not an error, see UploadBase class
 
 		$details = $upload->verifyUpload();
 		
-		//ignore warnings, existing files MUST be overwritten
-		//check only status
+		//ignore warnings about existing files, they MUST be silently overwritten
 		if ( $details[ 'status' ] != UploadBase::OK ) {
 			return false;
+		} else {
+			$warnings = $upload->checkWarnings();
+
+			if ( $warnings && (
+				empty( $warnings[ 'exists' ] ) &&
+				empty( $warnings[ 'duplicate' ] ) &&
+				empty( $warnings[ 'duplicate-archive' ] )
+			) ) {
+				return false;
+			}
 		}
 		
 		// badge data
@@ -211,9 +218,7 @@ class AchImageUploadService {
 	public static function uploadHover( $destinationFileName ) {
 		global $wgRequest, $wgUser;
 		$upload = new UploadAchievementsFromFile();
-
 		$upload->initialize( $destinationFileName, $wgRequest->getFileTempName( 'hover_content' ), $wgRequest->getFileSize( 'hover_content' ) );
-		//$upload->getTitle();//this call is needed, it's not an error, see UploadBase class
 
 		$details = $upload->verifyUpload();
 		
@@ -221,6 +226,16 @@ class AchImageUploadService {
 		//check only status
 		if ( $details[ 'status' ] != UploadBase::OK ) {
 			return false;
+		} else {
+			$warnings = $upload->checkWarnings();
+
+			if ( $warnings && (
+				empty( $warnings[ 'exists' ] ) &&
+				empty( $warnings[ 'duplicate' ] ) &&
+				empty( $warnings[ 'duplicate-archive' ] )
+			) ) {
+				return false;
+			}
 		}
 		
 		$status = $upload->performUpload('/* comment */', '/* page text */', false, $wgUser);
