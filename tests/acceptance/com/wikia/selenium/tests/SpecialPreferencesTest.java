@@ -18,7 +18,7 @@ public class SpecialPreferencesTest extends BaseTest {
 		loginAsRegular();
 
 		loadPage();
-		assertTrue(session().isElementPresent("//ul[@id='preftoc']//a[text()='Appearance']"));
+		assertTrue(session().isElementPresent("//legend[.='Site Layouts']"));
 		session().click("//input[@value='oasis']");
 		session().click("//input[@id='prefcontrol']");
 		session().waitForPageToLoad(TIMEOUT);
