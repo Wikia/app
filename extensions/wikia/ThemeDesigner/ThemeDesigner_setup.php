@@ -9,6 +9,8 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname( __FILE__ );
 
 // autoloads
+$wgAutoloadClasses[ 'UploadBackgroundFromFile' ] = "{$dir}/UploadBackgroundFromFile.class.php";
+$wgAutoloadClasses[ 'UploadWordmarkFromFile' ] = "{$dir}/UploadWordmarkFromFile.class.php";
 $wgAutoloadClasses['ThemeDesignerModule'] = "$dir/ThemeDesignerModule.class.php";
 $wgAutoloadClasses['ThemeDesignerHelper'] = "$dir/ThemeDesignerHelper.class.php";
 $wgAutoloadClasses['SpecialThemeDesigner'] = "$dir/SpecialThemeDesigner.class.php";

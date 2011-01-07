@@ -22,6 +22,14 @@ class ThemeDesignerModule extends Module {
 	var $returnTo;
 	var $analytics;
 	var $globalVariablesScript;
+	
+	var $backgroundImageName = null;
+	var $backgroundImageUrl = null;
+	var $backgroundImageAlign = null;
+	var $backgroundImageThumb = null;
+	var $wordmarkImageName = null;
+	var $wordmarkImageUrl = null;
+	var $errors;
 
 	public function executeIndex() {
 		wfProfileIn( __METHOD__ );
@@ -80,89 +88,194 @@ class ThemeDesignerModule extends Module {
 	public function executePreview() {
 
 	}
+	
+	/**
+	 *
+	 * @author Federico "Lox" Lucignano
+	 */
+	private function getUploadErrorMessage( $status ) {
+		global $wgFileExtensions, $wgLang;
+		$msg = '';
+		
+		switch( $status[ 'status' ] ) {
+			case UploadBackgroundFromFile::FILESIZE_ERROR:
+				$msg = wfMsgHtml( 'themedesigner-size-error' );
+				break;
+			case UploadBackgroundFromFile::FILETYPE_ERROR:
+			case UploadWordmarkFromFile::FILETYPE_ERROR:
+				$msg = wfMsgHtml( 'themedesigner-type-error' );
+				break;
+			case UploadWordmarkFromFile::FILEDIMENSIONS_ERROR:
+				$msg = wfMsgHtml( 'themedesigner-dimensions-error' );
+				break;
+			case UploadBase::MIN_LENGTH_PARTNAME:
+				$msg = wfMsgHtml( 'minlength1' );
+				break;
+			case UploadBase::ILLEGAL_FILENAME:
+				$msg = wfMsgExt(
+					'illegalfilename',
+					'parseinline',
+					$status['filtered']
+				);
+				break;
+			case UploadBase::OVERWRITE_EXISTING_FILE:
+				$msg =  wfMsgExt(
+					$status['overwrite'],
+					'parseinline'
+				);
+				break;
+			case UploadBase::FILETYPE_MISSING:
+				$msg = wfMsgExt(
+					'filetype-missing',
+					'parseinline'
+				);
+				break;
+			case UploadBase::EMPTY_FILE:
+				$msg = wfMsgHtml( 'emptyfile' );
+				break;
+			case UploadBase::FILETYPE_BADTYPE:
+				$finalExt = $status['finalExt'];
 
-	var $wordmarkImageUrl;
-	var $wordmarkImageName;
-	var $errors;
+				$msg = wfMsgExt(
+					'filetype-banned-type',
+					array( 'parseinline' ),
+					htmlspecialchars( $finalExt ),
+					implode(
+						wfMsgExt(
+							'comma-separator',
+							array( 'escapenoentities' )
+						),
+						$wgFileExtensions
+					),
+					$wgLang->formatNum( count( $wgFileExtensions ) )
+				);
+				break;
+			case UploadBase::VERIFICATION_ERROR:
+				unset( $status['status'] );
+				$code = array_shift( $status['details'] );
+				$msg = wfMsgExt(
+					$code,
+					'parseinline',
+					$status['details']
+				);
+				break;
+			case UploadBase::HOOK_ABORTED:
+				if ( is_array( $status['error'] ) ) { # allow hooks to return error details in an array
+					$args = $status['error'];
+					$error = array_shift( $args );
+				} else {
+					$error = $status['error'];
+					$args = null;
+				}
+
+				$msg = wfMsgExt( $error, 'parseinline', $args );
+				break;
+			default:
+				throw new MWException( __METHOD__ . ": Unknown value `{$status['status']}`" );
+		}
+		
+		return $msg;
+	}
+	
+	/**
+	 *
+	 * @author Federico "Lox" Lucignano
+	 */
+	private function getUploadWarningMessages( $warnings ){
+		$ret = array();
+		
+		foreach( $warnings as $warning => $args ) {
+			if ( $args === true ) {
+				$args = array();
+			} elseif ( !is_array( $args ) ) {
+				$args = array( $args );
+			}
+
+			$ret[] = wfMsgExt( $warning, 'parseinline', $args );
+		}
+		
+		return $ret;
+	}
 
 	public function executeWordmarkUpload() {
 		global $wgRequest;
+		
+		$upload = new UploadWordmarkFromFile();
 
-		$filename = $wgRequest->getFileName('wpUploadFile');
+		$upload->initializeFromRequest( $wgRequest );
+		$details = $upload->verifyUpload();
 
-		// check if there is a file send
-		if($filename) {
+		if ( $details[ 'status' ] != UploadBase::OK ) {
+			$this->errors = array( $this->getUploadErrorMessage( $details ) );
+		} else {
+			$warnings = $upload->checkWarnings();
 
-			// check if it's a PNG file (just by extension)
-			if(strtolower(end(explode(".", $filename))) == 'png') {
-
-				// check if file is in correct size
-				$imageSize = getimagesize($_FILES['wpUploadFile']['tmp_name']);
-				if($imageSize[0] <= 250 && $imageSize[1] <= 65) {
-
-					$file = new FakeLocalFile(Title::newFromText('Temp_file_'.time(), 6), RepoGroup::singleton()->getLocalRepo());
-					$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
+			if ( $warnings && (
+				empty( $warnings[ 'exists' ] ) &&
+				empty( $warnings[ 'duplicate' ] ) &&
+				empty( $warnings[ 'duplicate-archive' ] )
+			) ) {
+				$this->errors = $this->getUploadWarningMessages( $warnings );
+			} else {
+				//save temp file
+				$status = $upload->performUpload();
+				
+				if( $status->isGood() ) {
+					$file = $upload->getLocalFile();
 					$this->wordmarkImageUrl = wfReplaceImageServer( $file->getUrl() );
 					$this->wordmarkImageName = $file->getName();
-
 				}
-
+				
+				// if wordmark url is not set then it means there was some problem
+				if ( empty( $this->wordmarkImageUrl ) || empty( $this->wordmarkImageName ) ) {
+					$this->errors = array( wfMsg( 'themedesigner-uknown-error' ) );
+				}
 			}
-
 		}
-
-		// if wordmark url is not set then it means there was some problem
-		if(empty($this->wordmarkImageUrl) || empty($this->wordmarkImageName)) {
-			$this->errors = array('Incorrect file type or file dimension.');
-		}
-
 	}
 
 	public function executeBackgroundImageUpload() {
 		global $wgRequest;
+		
+		$upload = new UploadBackgroundFromFile();
 
-		$filename = $wgRequest->getFileName('wpUploadFile');
+		$upload->initializeFromRequest( $wgRequest );
+		$details = $upload->verifyUpload();
 
-		// check if there is a file send
-		if($filename) {
+		if ( $details[ 'status' ] != UploadBase::OK ) {
+			$this->errors = array( $this->getUploadErrorMessage( $details ) );
+		} else {
+			$warnings = $upload->checkWarnings();
 
-			// check file type (just by extension)
-			$filetype = strtolower(end(explode(".", $filename)));
-			if($filetype == 'png' || $filetype == 'jpg' || $filetype == 'gif') {
+			if ( $warnings && (
+				empty( $warnings[ 'exists' ] ) &&
+				empty( $warnings[ 'duplicate' ] ) &&
+				empty( $warnings[ 'duplicate-archive' ] )
+			) ) {
+				$this->errors = $this->getUploadWarningMessages( $warnings );
+			} else {
+				$this->backgroundImageAlign = $upload->getImageAlign();
 
-				// check if file is correct file size
-				$imageFileSize = filesize($_FILES['wpUploadFile']['tmp_name']);
-				if ($imageFileSize < 102400) {
-
-					// center image if wider than 1050, otherwise left align
-					$imageSize = getimagesize($_FILES['wpUploadFile']['tmp_name']);
-					if($imageSize[0] > 1050) {
-						$this->backgroundImageAlign = "center";
-					} else {
-						$this->backgroundImageAlign = "left";
-					}
-
-					//save temp file
-					$file = new FakeLocalFile(Title::newFromText('Temp_file_'.time(), 6), RepoGroup::singleton()->getLocalRepo());
-					$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
+				//save temp file
+				//save temp file
+				$status = $upload->performUpload();
+				
+				if( $status->isGood() ) {
+					$file = $upload->getLocalFile();
 					$this->backgroundImageUrl = wfReplaceImageServer( $file->getUrl() );
 					$this->backgroundImageName = $file->getName();
 
 					//get cropped URL
-					$is = new imageServing(null, 120, array("w"=>"120", "h"=>"100"));
-					$this->backgroundImageThumb = wfReplaceImageServer($file->getThumbUrl( $is->getCut($file->width, $file->height, "origin")."-".$file->name));
-
+					$is = new imageServing( null, 120, array( "w"=>"120", "h"=>"100" ) );
+					$this->backgroundImageThumb = wfReplaceImageServer( $file->getThumbUrl( $is->getCut( $file->width, $file->height, "origin" ) . "-" . $file->name ) );
 				}
 
+				// if background image url is not set then it means there was some problem
+				if ( empty( $this->backgroundImageUrl ) ) {
+					$this->errors = array( wfMsg( 'themedesigner-uknown-error' ) );
+				}
 			}
-
 		}
-
-		// if background image url is not set then it means there was some problem
-		if(empty($this->backgroundImageUrl)) {
-			$this->errors = array('Incorrect file type or file size.');
-		}
-
 	}
 
 	public function executeSaveSettings() {
