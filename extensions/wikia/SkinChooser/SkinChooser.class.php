@@ -5,6 +5,9 @@ class SkinChooser {
 	public static function onGetPreferences($user, &$defaultPreferences) {
 		global $wgEnableAnswers, $wgForceSkin, $wgAdminSkin, $wgDefaultSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgOasis2010111, $wgSkipSkins, $wgSkipOldSkins;
 
+		// hide default MediaWiki skin fieldset
+		unset($defaultPreferences['skin']);		
+		
 		$mSkin  = $user->getOption('skin');
 
 		// hacks for Answers
@@ -64,9 +67,6 @@ class SkinChooser {
 				$skins[$skinVal.$previewlink.($skinKey == $defaultSkinKey ? ' ('.wfMsg('default').')' : '')] = $skinKey;
 			}
 		}
-
-		// hide default MediaWiki skin fieldset
-		unset($defaultPreferences['skin']);
 
 		$defaultPreferencesTemp = array();
 		
