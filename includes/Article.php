@@ -846,8 +846,9 @@ class Article {
 
 				case 3:
 					$text = $this->getContent();
-					wfRunHooks( 'ArticleNonExistentPage', array( $this, &$text ) );
-					if ( $text === false || $this->getID() == 0 ) {
+					$fakeReturn404 = false;
+					if ( ($text === false || $this->getID() == 0) 
+							&& wfRunHooks( 'ArticleNonExistentPage', array( $this, $wgOut, &$text, &$fakeReturn404 ) ) ) {
 						wfDebug( __METHOD__ . ": showing missing article\n" );
 						$this->showMissingArticle();
 						wfProfileOut( __METHOD__ );
@@ -1372,7 +1373,13 @@ class Article {
 		# Don't show section-edit links on old revisions... this way lies madness.
 		$parserOptions->setEditSection( $this->isCurrent() );
 		$useParserCache = $this->useParserCache( $oldid );
-		$this->outputWikiText( $this->getContent(), $useParserCache, $parserOptions );
+		/* Wikia change begin - @author: wladek */
+		$content = $this->getContent();
+		if ($this->getID() == 0) {
+			wfRunHooks('Article::view:not-existing', array( $this, &$content ) );
+		}
+		$this->outputWikiText( $content, $useParserCache, $parserOptions );
+		/* Wikia change end */
 	}
 
 	/**

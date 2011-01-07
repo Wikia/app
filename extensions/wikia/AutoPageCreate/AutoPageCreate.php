@@ -16,6 +16,7 @@ function wfAutoPageCreateInit() {
 
 	$wgHooks['EditPage::showEditForm:initial'][] = 'wfAutoPageCreateEditPage';
 	$wgHooks['ArticleNonExistentPage'][] = 'wfAutoPageCreateViewPage';
+	$wgHooks['Article::view:not-existing'][] = 'wfAutoPageCreateViewPageContent'; 
 	$wgHooks['MakeGlobalVariablesScript'][] = 'wfAutoPageCreateSetupVars';
 	$wgHooks['WikiaMiniUpload::fetchTextForImagePlaceholder'][] = 'wfAutoPageCreateTextForImagePlaceholder';
 
@@ -58,17 +59,20 @@ function wfAutoPageCreateIsAnonUserpage( $title  ) {
 }
 
 function wfAutoPageCreateSetupVars( $vars ) {
-        global $wgWikiaEnableAutoPageCreateExt;
-
-        $vars['WikiaEnableAutoPageCreate'] = $wgWikiaEnableAutoPageCreateExt;
-
-        return true;
+	global $wgWikiaEnableAutoPageCreateExt;
+	
+	$vars['WikiaEnableAutoPageCreate'] = $wgWikiaEnableAutoPageCreateExt;
+	
+	return true;
 }
 
-function wfAutoPageCreateViewPage( $article, &$text  ) {
+function wfAutoPageCreateViewPage( $article, $out, &$text  ) {
 	wfProfileIn(__METHOD__);
 
 	global $wgOut;
+	
+	$article->autoPageCreate__content = null;
+	$origText = $text;
 
 	$title = $article->mTitle;
 	$ns = $title->getNamespace();
@@ -148,7 +152,19 @@ END;
 				wfDebug(__METHOD__ . ": forced to not show the message\n");
 			}
 	}
+	
+	if ( $text !== $origText ) {
+		$article->autoPageCreate__content = $text;
+	}
 
 	wfProfileOut(__METHOD__);
 	return $retval;
+}
+
+function wfAutoPageCreateViewPageContent( $article, &$text ) {
+	if ( !empty($article->autoPageCreate__content) ) {
+		$text = $article->autoPageCreate__content;
+	}
+	
+	return true;
 }
