@@ -273,37 +273,67 @@ class FBConnectPushEvent {
 	 * short text for blog
 	 *
 	 * @author Tomasz Odrobny 
-	 * @access private
+	 * @access public
 	 *
 	 */	
 	
 	static public function shortenText($source_text, $char_count = 100) 
 	{
-		$source_text = strip_tags($source_text);
-	    $source_text = trim($source_text); 
-	    $source_text_no_endline = str_replace("\n", " ", $source_text);
+		$source_text = self::stripHtmlTags($source_text);
+		$source_text = trim($source_text);
+		$source_text_no_endline = str_replace("\n", " ", $source_text);
     	
-	    if ($source_text == "" ){
-	    	return "";
-	    }
+		if ($source_text == "" ){
+			return "";
+		}
 	    
-	    if (strlen($source_text) <= $char_count ) {
-    		return $source_text;
-            }
+		if (strlen($source_text) <= $char_count ) {
+			return $source_text;
+		}
 
-            $source_text_out = substr($source_text, 0, strrpos(substr($source_text_no_endline, 0, $char_count), ' '));
+		$source_text_out = substr($source_text, 0, strrpos(substr($source_text_no_endline, 0, $char_count), ' '));
 
-            if ($source_text_out == "" ){
-                    $source_text_out = substr($source_text, 0, $char_count);
-            }
+		if ($source_text_out == "" ){
+			$source_text_out = substr($source_text, 0, $char_count);
+		}
 
-            if ($source_text_out != $source_text) {
-                    $source_text = $source_text_out.'...';
-            }
+		if ($source_text_out != $source_text) {
+			$source_text = $source_text_out.'...';
+		}
 
-            return $source_text;
+		return $source_text;
 	}
 
+	/**
+	 * cleans html tags and content between.
+	 *
+	 * @author Jakub Kurcek
+	 * @access public
+	 *
+	 */
+
+	static public function stripHtmlTags( $text )
+	{
+		$text = preg_replace(
+			array(
+				// Remove invisible content
+				'@<head[^>]*?>.*?</head>@siu',
+				'@<style[^>]*?>.*?</style>@siu',
+				'@<script[^>]*?.*?</script>@siu',
+				'@<object[^>]*?.*?</object>@siu',
+				'@<embed[^>]*?.*?</embed>@siu',
+				'@<applet[^>]*?.*?</applet>@siu',
+				'@<noframes[^>]*?.*?</noframes>@siu',
+				'@<noscript[^>]*?.*?</noscript>@siu',
+				'@<noembed[^>]*?.*?</noembed>@siu',
+			),
+			array(
+			    ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
+			),
+			$text
+		);
+		return strip_tags( $text );
+	}
 	
 	/**
 	 * easy parse of article text
