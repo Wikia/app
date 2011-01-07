@@ -13,7 +13,7 @@ public class SpecialPreferencesTest extends BaseTest {
 		assertTrue(session().getLocation().contains("wiki/Special:Preferences"));
 	}
 
-	@Test(groups="oasis")
+	@Test(groups={"oasis", "CI"})
 	public void testEnsureRegisteredUserCanChangeSkin() throws Exception {
 		loginAsRegular();
 
