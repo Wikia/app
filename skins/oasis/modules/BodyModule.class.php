@@ -138,7 +138,15 @@ class BodyModule extends Module {
 
 		if($namespace == NS_SPECIAL) {
 			if ($wgTitle->isSpecial('Search')) {
-				$railModuleList = array();
+				$railModuleList = array(
+					1450 => array('PagesOnWiki', 'Index', null),
+					1300 => array('LatestActivity', 'Index', null),
+					1250 => array('LatestPhotos', 'Index', null),
+				);
+
+				if($wgEnableSpotlightsV2_Rail) {
+					$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
+				}
 			} else if ($wgTitle->isSpecial('Leaderboard')) {
 				$railModuleList = array (
 					1500 => array('Search', 'Index', null),
