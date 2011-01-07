@@ -281,7 +281,7 @@ class MyHome {
 			$dbw->update('recentchanges', array('rc_params' => MyHome::packData($rc_data)), array('rc_id' => $rc_id));
 		}
 
-		Wikia::setVar('rc_data', $data);
+		Wikia::setVar('rc_data', $rc_data);
 
 		wfProfileOut( __METHOD__ );
 	}
