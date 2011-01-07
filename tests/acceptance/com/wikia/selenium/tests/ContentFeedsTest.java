@@ -46,6 +46,6 @@ public class ContentFeedsTest extends BaseTest {
 		String content = "<recentimages size=\"5\" />";
 		editArticle("Project:RecentImagesTagTestArticle", content);
 
-		assertTrue(session().isElementPresent("//div[@class='wikia-gallery-item']"));
+		assertTrue(session().isElementPresent("//span[@class='wikia-gallery-item']"));
 	}
 }
