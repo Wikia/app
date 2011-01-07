@@ -466,8 +466,7 @@ class TopListHelper {
 			$upload = new UploadFromFile();
 			
 	                $upload->initializeFromRequest( $wgRequest );
-	                $upload->getTitle();//this call is needed, it's not an error, see UploadBase class
-			
+			$upload->getTitle();//Do not remove, needed to get uploading file info!
 			$details = $upload->verifyUpload();
 			
 			if ( $details[ 'status' ] != UploadBase::OK ) {
