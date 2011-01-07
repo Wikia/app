@@ -18,9 +18,11 @@
     <property name="browser" value="*firefox" />
 
     <property name="groups" value="" />
-    <property name="excludegroups" value="destructive" />
+    <property name="excludegroups" value="destructive,broken,answers,central" />
     <property name="threadCount" value="1" />
     <property name="timeout" value="120000" />
+
+    <property name="noCloseAfterFail" value="0" />
 
     <path id="compile.classpath">
         <fileset dir="${basedir}/lib">
@@ -65,6 +67,7 @@
             <sysproperty key="browser" value="${browser}" />
             <sysproperty key="threadCount" value="${threadCount}" />
             <sysproperty key="timeout" value="${timeout}" />
+            <sysproperty key="noCloseAfterFail" value="${noCloseAfterFail}" />
             <env key="TESTSCONFIG" value="${testsconfig}" />
         </testng>
     </target>
@@ -83,6 +86,7 @@
             <sysproperty key="browser" value="${browser}" />
             <sysproperty key="threadCount" value="${threadCount}" />
             <sysproperty key="timeout" value="${timeout}" />
+            <sysproperty key="noCloseAfterFail" value="${noCloseAfterFail}" />
             <env key="TESTSCONFIG" value="${testsconfig}" />
         </testng>
     </target>
@@ -112,6 +116,7 @@
             <sysproperty key="seleniumPort" value="${seleniumPort}" />
             <sysproperty key="browser" value="${browser}" />
             <sysproperty key="timeout" value="${timeout}" />
+            <sysproperty key="noCloseAfterFail" value="${noCloseAfterFail}" />
             <env key="TESTSCONFIG" value="${testsconfig}" />
         </testng>
         <junitreport todir="${build.logs}">
