@@ -92,6 +92,9 @@ class MyHome {
 				// remove <script> tags (RT #46350)
 				$content = preg_replace('#<script[^>]+>(.*)<\/script>#', '', $content);
 
+				// remove text between tags (RT #141394)
+				$content = ActivityFeedHelper::filterTextBetweenTags( $content );
+
 				// remove HTML tags
 				$content = trim(strip_tags($content));
 
