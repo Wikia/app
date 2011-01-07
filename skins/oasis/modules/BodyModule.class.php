@@ -148,6 +148,7 @@ class BodyModule extends Module {
 			} else if ($wgTitle->isSpecial('WikiActivity')) {
 				$railModuleList = array (
 					1500 => array('Search', 'Index', null),
+					1450 => array('PagesOnWiki', 'Index', null),
 					1300 => array('HotSpots', 'Index', null),
 					1290 => array('CommunityCorner', 'Index', null),
 				);
