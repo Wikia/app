@@ -83,8 +83,8 @@ function axACWRequestCheckAccount() {
 
 	$sName = $wgRequest->getVal('name');
 	$sLang = $wgRequest->getVal('lang');
-	$sValue = $wgRequest->getVal('value');
-	$sPass = $wgRequest->getVal('pass');
+	$sValue = urldecode( $wgRequest->getText('value') );
+	$sPass = urldecode( $wgRequest->getText('pass') );
 
 	$isError = false;
 	$sResponse = "";
@@ -99,7 +99,7 @@ function axACWRequestCheckAccount() {
 			break;
 		}
 		case "password" : {
-			$sUsername = $wgRequest->getVal('username');
+			$sUsername = urldecode( $wgRequest->getText('username') );
 			$sResponse = AutoCreateWiki::checkPasswordIsCorrect($sUsername, $sValue);
 			break;
 		}
