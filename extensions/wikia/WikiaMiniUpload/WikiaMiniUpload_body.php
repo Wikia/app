@@ -102,18 +102,18 @@ class WikiaMiniUpload {
 
         if($sourceId == 1) {
 
-            require_once($IP.'/extensions/3rdparty/ImportFreeImages/phpFlickr-2.2.0/phpFlickr.php');
+            require_once($IP.'/lib/phpFlickr/phpFlickr.php');
             $flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
             $proxyArr = explode(':', $wgHTTPProxy);
             $flickrAPI->setProxy($proxyArr[0], $proxyArr[1]);
             $flickrResult = $flickrAPI->photos_search(array('tags' => $query, 'tag_mode' => 'all', 'page' => $page, 'per_page' => 8, 'license' => '4,5', 'sort' => 'interestingness-desc'));
             $tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
             $tmpl->set_vars(array('results' => $flickrResult, 'query' => addslashes($query)));
-           
+
             return $tmpl->execute('results_flickr');
 
         } else if($sourceId == 0) {
-			
+
             $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 
             $query = mb_strtolower($dbr->escapeLike($query));
@@ -251,7 +251,7 @@ class WikiaMiniUpload {
 		$upload = new UploadFromFile();
 		$upload->initializeFromRequest($wgRequest);
 		$upload->getTitle(); // yes - this is correct
-		
+
 		$ret = $upload->verifyUpload();
 
 		if(!wfRunHooks('WikiaMiniUpload:BeforeProcessing', $mSrcName)) {
@@ -503,7 +503,7 @@ class WikiaMiniUpload {
 							for( $i = 0; $i < count( $ext ) - 1; $i++ )
 								$partname .= '.' . $ext[$i];
 						}
-						
+
 						$tmpl->set_vars(array(
 									'partname' => $partname,
 									'extension' => strtolower( $finalExt ),
