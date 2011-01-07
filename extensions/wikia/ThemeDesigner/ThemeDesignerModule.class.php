@@ -102,7 +102,7 @@ class ThemeDesignerModule extends Module {
 
 					$file = new FakeLocalFile(Title::newFromText('Temp_file_'.time(), 6), RepoGroup::singleton()->getLocalRepo());
 					$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
-					$this->wordmarkImageUrl = $file->getUrl();
+					$this->wordmarkImageUrl = wfReplaceImageServer( $file->getUrl() );
 					$this->wordmarkImageName = $file->getName();
 
 				}
@@ -145,7 +145,7 @@ class ThemeDesignerModule extends Module {
 					//save temp file
 					$file = new FakeLocalFile(Title::newFromText('Temp_file_'.time(), 6), RepoGroup::singleton()->getLocalRepo());
 					$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
-					$this->backgroundImageUrl = $file->getUrl();
+					$this->backgroundImageUrl = wfReplaceImageServer( $file->getUrl() );
 					$this->backgroundImageName = $file->getName();
 
 					//get cropped URL
