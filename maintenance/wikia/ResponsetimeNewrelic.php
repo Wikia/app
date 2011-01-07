@@ -34,11 +34,8 @@ class ResponseTimeNewRelic {
 
 	public function getData () {
 
-		$req = HttpRequest::factory( $this->summaryDataURL, array ('method' => "GET", 'timeout' => 'default') );
-		$req->setHeader("http-x-license-key", $this->licenceKey);
-		
-		$status = $req->execute();
-		$response = $req->getContent();
+		$options = array (CURLOPT_HTTPHEADER => array("http-x-license-key: $this->licenceKey"));
+		$response = Http::get($this->summaryDataURL, "default", $options);
 		$data = array();
 
 		if ($response) {
@@ -78,6 +75,8 @@ class ResponseTimeNewRelic {
 }
 
 // newrelic AccountID, AppID, LicenceKey are defined in CommonSettings.php
+// Request has to go directly through squid because it is https so we override CommonSettings value here
+$wgHTTPProxy = "squid-proxy.local:3128";
 
 // Simple driver
 $rt = new ResponseTimeNewRelic($wgNewRelicAccountID, $wgNewRelicAppID, $wgNewRelicLicenceKey);
