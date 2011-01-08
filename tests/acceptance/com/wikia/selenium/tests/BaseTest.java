@@ -81,7 +81,7 @@ public class BaseTest {
 		if(isOasis()) {
 			waitForElement("//ul[@id='AccountNavigation']/li/a[contains(@href, '" + username + "')]");
 		} else {
-			waitForElement("//*[@id=\"header_username\"]/a[text() = \"" + username + "\"]");
+			waitForElement("//*[@id=\"pt-userpage\"]/a[text() = \"" + username + "\"]");
 		}
 
 	}
