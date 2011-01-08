@@ -406,13 +406,13 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$railList = $moduleData['railModuleList'];
 		$this->assertEquals (null, $railList);
 
-		//Special search page should only have ad modules on it
+		//Special search page has a custom list of modules
 		$wgTitle = Title::newFromText('Special:Search');
 		$moduleData = Module::get('Body')->getData();
 		$railList = $moduleData['railModuleList'];
-		foreach ($railList as $module) {
-			$this->assertEquals ('Ad', $module[0]);
-		}
+		$this->assertEquals($railList[1450][0], 'PagesOnWiki');
+		$this->assertEquals($railList[1300][0], 'LatestActivity');
+		$this->assertEquals($railList[1250][0], 'LatestPhotos');
 
 		// User page check
 		$wgTitle = Title::newFromText('User:WikiaBot');
