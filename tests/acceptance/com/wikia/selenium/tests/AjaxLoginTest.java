@@ -19,7 +19,7 @@ public class AjaxLoginTest extends BaseTest {
 		if(isOasis()) {
 			assertTrue(session().isElementPresent("//ul[@id='AccountNavigation']/li/a[contains(., '" + getTestConfig().getString("ci.user.wikiabot.username") + "')]"));
 		} else {
-			assertTrue(session().isElementPresent("//span[@id=\"header_username\"]/a[text() = \"" + getTestConfig().getString("ci.user.wikiabot.username") + "\"]"));
+			assertTrue(session().isElementPresent("//span[@id=\"pt-userpage\"]/a[text() = \"" + getTestConfig().getString("ci.user.wikiabot.username") + "\"]"));
 		}
 	}
 

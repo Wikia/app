@@ -19,7 +19,7 @@ public class SignupTest extends BaseTest {
 		if(isOasis()) {
 			waitForElement("//ul[@id='AccountNavigation']/li/a[contains(., '" + getTestConfig().getString("ci.user.wikiabot.username") + "')]");
 		} else {
-			waitForElement("//span[@id=\"header_username\"]/a[text() = \"" + getTestConfig().getString("ci.user.wikiabot.username") + "\"]");
+			waitForElement("//span[@id=\"pt-userpage\"]/a[text() = \"" + getTestConfig().getString("ci.user.wikiabot.username") + "\"]");
 		}
 	}
 
