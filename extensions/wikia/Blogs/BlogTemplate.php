@@ -332,6 +332,7 @@ class BlogTemplateClass {
 		/* parse all and return result */
 		$res = self::__parse($aParams, $params, $parser, $returnPlainData);
 		wfProfileOut( __METHOD__ );
+		$res = array($res, 'markerType' => 'nowiki');
 		return $res;
 	}
 
