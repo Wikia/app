@@ -54,7 +54,7 @@ class ArticleCommentsAjax {
 
 		$comment = ArticleComment::newFromId( $commentId );
 		if ( $comment ) {
-			$comment->load();
+			$comment->load(true);
 			if ( $comment->canEdit() ) {
 				$response = $comment->doSaveComment( $wgRequest, $wgUser, $title );
 				if ( $response !== false ) {
