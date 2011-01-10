@@ -13,6 +13,12 @@ class MobileApiSearch extends MobileApiBase {
 	public function getGlobalResults(){
 		wfProfileIn( __METHOD__ );
 		
+		//This needs to be true but setting it in WF will make it happen in Special:Search too
+		//Probably not wanted if this is not going to be enabled on communitycentral
+		global $wgEnableCrossWikiaSearch;
+		$origEnableCrossWikiaSearchValue = $wgEnableCrossWikiaSearch;
+		$wgEnableCrossWikiaSearch = true;
+		
 		//if ( $request->wasPosted() ) {
 			wfLoadExtensionMessages( 'MobileApp' );
 			$ret = Array();
@@ -94,6 +100,7 @@ class MobileApiSearch extends MobileApiBase {
 			$this->setResponseContent( Wikia::json_encode( $ret ) );
 		//}
 		
+		$wgEnableCrossWikiaSearch = $origEnableCrossWikiaSearchValue;
 		wfProfileOut( __METHOD__ );
 	}
 	
@@ -104,10 +111,7 @@ class MobileApiSearch extends MobileApiBase {
 		if( $result->isBrokenTitle() ) {
 			return "Broken link";
 		}
-
-		$sk = $wgUser->getSkin();
-		$title = $result->getTitle();
-
+		
 		// If the page doesn't *exist*... our search index is out of date.
 		// The least confusing at this point is to drop the result.
 		// You may get less results, but... oh well. :P
@@ -117,7 +121,7 @@ class MobileApiSearch extends MobileApiBase {
 		}
 		
 		wfProfileOut( __METHOD__ );
-		return $title->getFullURL();
+		return $result->getUrl();
 	}
 	
 	private function processMatches( $matches, $type, &$output ) {
@@ -129,10 +133,10 @@ class MobileApiSearch extends MobileApiBase {
 				);
 				
 				$output[ "{$type}MatchesInfo" ] = $matches->getInfo();
-				$ret[ "{$type}Matches" ] = Array();
+				$output[ "{$type}Matches" ] = Array();
 				
 				while( $result = $matches->next() ) {
-					$ret[ "{$type}Matches" ][] = Array(
+					$output[ "{$type}Matches" ][] = Array(
 						'link' => $this->showHit( $result),
 						'terms' => $terms
 					);
