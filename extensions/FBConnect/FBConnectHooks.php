@@ -624,34 +624,34 @@ JS;
 		$id = FBConnectDB::getFacebookIDs($user, DB_MASTER);
 		if( count($id) > 0 ) {
 			$html = Xml::openElement("div",array("id" => "fbDisconnectLink" ));
-				$html .= '<br/>'.wfMsg('fbconnect-disconnect-link');
+				$html .= wfMsg('fbconnect-disconnect-link');
 			$html .= Xml::closeElement( "div" );
 
 			$html .= Xml::openElement("div",array("style" => "display:none","id" => "fbDisconnectProgress" ));
-				$html .= '<br/>'.wfMsg('fbconnect-disconnect-done');
+				$html .= wfMsg('fbconnect-disconnect-done');
 				$html .= Xml::openElement("img",array("id" => "fbDisconnectProgressImg", 'src' => $wgBlankImgUrl, "class" => "sprite progress" ),true);
 			$html .= Xml::closeElement( "div" );
 
 			$html .= Xml::openElement("div",array("style" => "display:none","id" => "fbDisconnectDone" ));
-				$html .= '<br/>'.wfMsg('fbconnect-disconnect-info');
+				$html .= wfMsg('fbconnect-disconnect-info');
 			$html .= Xml::closeElement( "div" );
 
 			$preferences['fbconnect-prefstext' ] = array(
 					'label' => "",
 					'type' => 'info',
-					'section' => 'fbconnect-prefstext' );
+					'section' => 'fbconnect-prefstext/fbconnect-event-prefstext' );
 
 			$preferences['fbconnect-push-allow-never'] = array(
 					'type' => 'toggle',
 					'label-message' => 'tog-fbconnect-push-allow-never',
-					'section' => 'fbconnect-prefstext',
+					'section' => 'fbconnect-prefstext/fbconnect-event-prefstext',
 					'default' => 1); 
 
 			$preferences['fbconnect-connect'] = array(
 					'help' => $html,
 					'label' => "",
 					'type' => 'info',
-					'section' => 'fbconnect-prefstext' ); 
+					'section' => 'fbconnect-prefstext/fbconnect-status-prefstext' ); 
 		} else {
 			// User is a MediaWiki user but isn't connected yet.  Display a message and button to connect.
 			$loginButton = '<fb:login-button id="fbPrefsConnect" '.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>';
@@ -661,7 +661,7 @@ JS;
 					'help' => $html,
 					'label' => "",
 					'type' => 'info',
-					'section' => 'fbconnect-prefstext' );
+					'section' => 'fbconnect-prefstext/fbconnect-status-prefstext' );
 		}
 		return true;
 	}

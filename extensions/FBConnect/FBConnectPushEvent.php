@@ -20,7 +20,7 @@ class FBConnectPushEvent {
 
 	// This must correspond to the name of the message for the text on the tab itself.
 	static private $eventCounter = 0;
-	static protected $PREFERENCES_TAB_NAME = "fbconnect-prefstext";
+	static protected $PREFERENCES_TAB_NAME = "fbconnect-prefstext/fbconnect-event-prefstext";
 	static public $PREF_TO_DISABLE_ALL = "fbconnect-push-allow-never";
 
 	/**
@@ -121,6 +121,7 @@ class FBConnectPushEvent {
 				$result = array(
 					'id' => $prefName,
 					'name' => $prefName,
+					'section' => self::$PREFERENCES_TAB_NAME,
 					'text' => $prefText,
 					'shortText' => $prefTextShort,
 					'checked' => true
@@ -137,6 +138,7 @@ class FBConnectPushEvent {
 					'fullLine' => true,
 					'id' => $prefName,
 					'name' => $prefName,
+					'section' => self::$PREFERENCES_TAB_NAME,
 					'text' => $prefText,
 					'shortText' => $prefText 
 			);
