@@ -304,7 +304,6 @@ class BlogTemplateClass {
 
 	public static function setMagicWord( &$magicWords, $langCode ) {
 		wfProfileIn( __METHOD__ );
-		wfLoadExtensionMessages("Blogs");
 		/* add the magic word */
 		$magicWords[ BLOGTPL_TAG ] = array( 0, BLOGTPL_TAG );
 		wfProfileOut( __METHOD__ );
@@ -321,7 +320,6 @@ class BlogTemplateClass {
 	public static function parseTag( $input, $params, &$parser, $frame = null, $returnPlainData = false) {
 		global $wgTitle;
 		wfProfileIn( __METHOD__ );
-		wfLoadExtensionMessages("Blogs");
 		/* parse input parameters */
 		if (is_null(self::$oTitle)) {
 			self::$oTitle = ( is_null($wgTitle) ) ? $parser->getTitle() : $wgTitle;
@@ -331,8 +329,9 @@ class BlogTemplateClass {
 		wfDebugLog( __METHOD__, "parse input parameters\n" );
 		/* parse all and return result */
 		$res = self::__parse($aParams, $params, $parser, $returnPlainData);
-		wfProfileOut( __METHOD__ );
 		$res = array($res, 'markerType' => 'nowiki');
+
+		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 
