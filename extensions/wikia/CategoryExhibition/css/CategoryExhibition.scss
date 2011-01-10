@@ -273,6 +273,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		margin-top: $thumb-size-height + $thumb-border-top - 9px;
 		line-height: 16px;
 		max-height: 32px;
+		max-width: $thumb-size-width + 5px;
 		overflow: hidden;
 		font-weight: normal;
 		font-size: 11px;
