@@ -147,7 +147,6 @@ JS
 			'classWatchlist' => $this->classWatchlist,
 			'defaultView' => $this->defaultView,
 			'loggedIn' => $wgUser->isLoggedIn(),
-			'showDefaultViewSwitch' => $showDefaultViewSwitch,
 			'type' => $this->feedSelected,
 		));
 

@@ -1,8 +1,12 @@
 <nav class="activity-nav">
 	<ul>
-		<?php if ($loggedIn) { ?>
-		<li class="<?= $classWatchlist ?> watchlist"><?= View::specialPageLink('WikiActivity/watchlist', 'oasis-button-wiki-activity-watchlist') ?></li>
-		<?php } ?>
+		<?php if ( $loggedIn ) {
+			if ( $type == 'watchlist' ){
+				?><li class="watchlist"><?= View::specialPageLink('WikiActivity/activity', 'myhome-activity-feed') ?></li><?
+			} else {
+				?><li class="watchlist"><?= View::specialPageLink('WikiActivity/watchlist', 'oasis-button-wiki-activity-watchlist') ?></li><?
+			}
+		} ?>
 		<li class="<?= $classActivity ?>"><?= View::specialPageLink('RecentChanges', 'oasis-button-wiki-activity-feed') ?></li>
 	</ul>
 <?php
