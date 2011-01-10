@@ -675,7 +675,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	 *
 	 */
 	
-	public static function alternateEditHook(&$oEditPage) {
+	public static function alternateEditHook($oEditPage) {
 		global $wgOut, $wgRequest;
 		if(empty($oEditPage->mTitle) || empty($oEditPage)) {
 			return true;
