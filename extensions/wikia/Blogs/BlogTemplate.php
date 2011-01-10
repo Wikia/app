@@ -329,6 +329,7 @@ class BlogTemplateClass {
 		wfDebugLog( __METHOD__, "parse input parameters\n" );
 		/* parse all and return result */
 		$res = self::__parse($aParams, $params, $parser, $returnPlainData);
+		/* Parser in MW1.16 allows to change the way of parsing custom tags */
 		$res = array($res, 'markerType' => 'nowiki');
 
 		wfProfileOut( __METHOD__ );
