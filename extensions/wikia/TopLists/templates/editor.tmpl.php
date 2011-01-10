@@ -3,9 +3,11 @@
 	<div class="ImageBrowser">
 		<div class="frame">
 			<div class="NoPicture"
-			     <?= ( !empty( $selectedImage ) ) ? 'style="display: none;"' : null ;?>
+				<?= ( !empty( $selectedImage ) ) ? 'style="display: none;"' : null ;?>
 			     title="<?= wfMsg( 'toplits-image-browser-no-picture-selected' ) ;?>">
-				<?= wfMsg( 'toplists-editor-image-browser-tooltip' ) ;?>
+				<span>
+					<?= wfMsg( 'toplists-editor-image-browser-tooltip' ) ;?>
+				</span>
 			</div>
 
 			<? if ( !empty( $selectedImage ) ) :?>
