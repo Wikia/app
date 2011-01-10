@@ -1,8 +1,3 @@
-$(function() {
-	AchievementsThing.init();
-		$().log('init', 'AchievementsModule');
-});
-
 var AchievementsThing = {
 	init: function() {
 		$(".AchievementsModule, .WikiaLatestEarnedBadgesModule").find(".view-all").click(AchievementsThing.seeAllClick);
@@ -28,10 +23,10 @@ var AchievementsThing = {
 				.show();
 
 			AchievementsThing.trackSponsored(hover.attr('data-hovertrackurl'));
-			
+
 			//Why this has been commented out?
 			//self.track('userprofile/hover');
-			
+
 		}, function() {
 			$(this).prevAll(".profile-hover").hide();
 		});
@@ -74,3 +69,8 @@ var AchievementsThing = {
 	}
 
 };
+
+$(function() {
+		AchievementsThing.init();
+		$().log('init', 'AchievementsModule');
+});

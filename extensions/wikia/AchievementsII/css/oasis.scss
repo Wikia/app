@@ -183,6 +183,9 @@
 				img {
 					float: left;
 				}
+				/* IE7 fixes - RT #72881 */
+				*clear: none;
+				*float: left;
 			}
 
 		}
@@ -200,6 +203,11 @@
 		.line-top {
 			margin-top: 10px;
 			@include clearfix;
+		}
+
+		/* IE7 fix - RT #72881 */
+		& > div {
+			*display: inline;
 		}
 	}
 	
