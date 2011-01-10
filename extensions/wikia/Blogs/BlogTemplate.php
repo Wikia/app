@@ -313,12 +313,12 @@ class BlogTemplateClass {
 
 	public static function setParserHook( &$parser ) {
 		wfProfileIn( __METHOD__ );
-		$parser->setHook( BLOGTPL_TAG, array( __CLASS__, "parseTag" ) );
+		$parser->setHook( BLOGTPL_TAG, array( __CLASS__, 'parseTag' ) );
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
-	public static function parseTag( $input, $params, &$parser, $returnPlainData = false) {
+	public static function parseTag( $input, $params, &$parser, $frame = null, $returnPlainData = false) {
 		global $wgTitle;
 		wfProfileIn( __METHOD__ );
 		wfLoadExtensionMessages("Blogs");
@@ -1325,7 +1325,7 @@ class BlogTemplateClass {
 						/* set new value of offset */
 						$params['offset'] = $offset;
 						/* run parser */
-						$result = self::parseTag( $input, $params, $wgParser, false, $skin );
+						$result = self::parseTag( $input, $params, $wgParser );
 					}
 				}
 			} else {
