@@ -204,8 +204,7 @@ function getLangSpecificNamespace( &$lang, $code, $bot='' ){
 
    $r = '';
 
-   $rs = $lang->getLocalisationArray( $code );
-   $ns = $rs['namespaceNames'];
+   $ns = $lang->getNamespaces();
 
 	if($bot == 'goog'){
 		$r .= "# " . $code . "\n" ;
