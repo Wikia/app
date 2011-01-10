@@ -111,6 +111,14 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 
 			.NoPicture {
 				background-color: $color-module-shadow;
+				display: table-cell;
+				vertical-align: middle;
+				line-height: 15px;
+				max-height: 80px;
+
+				span {
+					padding: 0 10px;
+				}
 			}
 		}
 
