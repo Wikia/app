@@ -123,6 +123,9 @@
 	}
 	ul {
 		margin: 15px 0 0;
+		h1 {
+			margin-bottom: 0 !important;
+		}
 		.WikiaBlogListingPost {
 			@include clearfix;
 			border-top: solid 1px $color-page-border;

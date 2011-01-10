@@ -821,6 +821,12 @@ class BlogTemplateClass {
 			/* parse or not parse - this is a good question */
 			$localParser = new Parser();
 			if ( !in_array(self::$aOptions['type'], array('array', 'noparse')) ) {
+				/* macbre - remove parser hooks (RT #67074) */
+				global $wgParser;
+				$hooks = $wgParser->getTags();
+				$hooksRegExp = implode('|', array_map('preg_quote', $hooks));
+				$sBlogText = preg_replace('#<(' . $hooksRegExp . ')[^>]{0,}>(.*)<\/[^>]+>#s', '', $sBlogText);
+
 				/* skip HTML tags */
 				if (!empty(self::$blogTAGS)) {
 					/* skip some special tags  */
@@ -828,6 +834,7 @@ class BlogTemplateClass {
 						$sBlogText = preg_replace($tag, '', $sBlogText);
 					}
 				}
+
 				$sBlogText = strip_tags($sBlogText, self::$skipStrinBeforeParse);
 				/* skip invalid Wiki-text  */
 				$sBlogText = preg_replace('/\{\{\/(.*?)\}\}/si', '', $sBlogText);
