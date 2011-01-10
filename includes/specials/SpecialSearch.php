@@ -213,15 +213,6 @@ class SpecialSearch {
 				)
 			)
 		);
-		$wgOut->addHtml(
-			Xml::openElement( 'table', array( 'id'=>'mw-search-top-table', 'border'=>0, 'cellpadding'=>0, 'cellspacing'=>0 ) ) .
-			Xml::openElement( 'tr' ) .
-			Xml::openElement( 'td' ) . "\n"	.
-			$this->shortDialog( $term ) .
-			Xml::closeElement('td') .
-			Xml::closeElement('tr') .
-			Xml::closeElement('table')
-		);
 
 		// Sometimes the search engine knows there are too many hits
 		if( $titleMatches instanceof SearchResultTooMany ) {
@@ -270,9 +261,10 @@ class SpecialSearch {
 				$wgOut->addHTML( $this->powerSearchBox( $term ) );
 			}
 		}
+
+		//$wgOut->addHtml( Xml::closeElement( 'form' ) );
 		/* Wikia change end */
 
-		$wgOut->addHtml( Xml::closeElement( 'form' ) );
 		$wgOut->addHtml( "<div class='searchresults'>" );
 
 		// prev/next links
@@ -338,6 +330,8 @@ class SpecialSearch {
 				$wgOut->addHTML( $this->powerSearchBox( $term ) );
 			}
 		}
+
+		$wgOut->addHtml( Xml::closeElement( 'form' ) );
 		/* Wikia change end */
 
 		wfProfileOut( __METHOD__ );
@@ -920,7 +914,17 @@ class SpecialSearch {
 	protected function formHeader( $term, $resultsShown, $totalNum ) {
 		global $wgContLang, $wgLang;
 
-		$out = Xml::openElement('div', array( 'class' =>  'mw-search-formheader' ) );
+		/* Wikia change begin - @author: Macbre */
+		$out = Xml::openElement( 'table', array( 'id'=>'mw-search-top-table', 'border'=>0, 'cellpadding'=>0, 'cellspacing'=>0 ) ) .
+			Xml::openElement( 'tr' ) .
+			Xml::openElement( 'td' ) . "\n"	.
+			$this->shortDialog( $term ) .
+			Xml::closeElement('td') .
+			Xml::closeElement('tr') .
+			Xml::closeElement('table');
+		/* Wikia change end */
+
+		$out .= Xml::openElement('div', array( 'class' =>  'mw-search-formheader' ) );
 
 		$bareterm = $term;
 		if( $this->startsWithImage( $term ) ) {
