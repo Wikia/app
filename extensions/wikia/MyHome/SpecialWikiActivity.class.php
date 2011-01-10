@@ -141,12 +141,13 @@ JS
 
 		// RT #68074: show default view checkbox for logged-in users only
 		$showDefaultViewSwitch = $wgUser->isLoggedIn() && ($this->defaultView != $this->feedSelected);
-
+		
 		$template->set_vars(array(
 			'classActivity' => $this->classActivity,
 			'classWatchlist' => $this->classWatchlist,
 			'defaultView' => $this->defaultView,
 			'loggedIn' => $wgUser->isLoggedIn(),
+			'showDefaultViewSwitch' => $showDefaultViewSwitch,
 			'type' => $this->feedSelected,
 		));
 
