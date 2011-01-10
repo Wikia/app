@@ -162,6 +162,12 @@
 	padding: 0px;
 }
 
+.wpAjaxLoginInput .captcha .captchadesc {
+	margin:0px;
+	width: 136px;
+}
+
+
 .wpAjaxLoginInput .captcha img
 {
 	width: 112px;
@@ -172,6 +178,8 @@
 	border-width: 1px;
 	border-color: #AAAAAA;
 	margin-left:6px;
+	float: right;
+    margin-right: 70px;
 }
 
 .wpAjaxLoginInput #wpCaptchaInfo
