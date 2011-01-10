@@ -53,6 +53,11 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 		return true;
 	}
 
+	// setup functions can call MakeExternalLink before wgTitle is set RT#144229
+	if (empty($wgTitle)){
+		return true;
+	}
+
 	// if there are no other ads on this page, do not show exitstitial
 	$adSlots = Module::get('Ad', 'config')->getData('conf'); 
 	if (empty($adSlots) || !sizeof($adSlots)) {
