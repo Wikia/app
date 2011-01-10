@@ -1326,7 +1326,7 @@ class Preferences {
 
 		//  Keeps old preferences from interfering due to back-compat
 		//  code, etc.
-		$wgUser->resetOptions();
+		//$wgUser->resetOptions(); RT#144314
 
 		foreach( $formData as $key => $value ) {
 			$wgUser->setOption( $key, $value );
