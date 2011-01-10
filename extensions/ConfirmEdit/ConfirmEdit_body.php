@@ -151,10 +151,10 @@ class SimpleCaptcha {
 				wfDebug( "ConfirmEdit: user group allows skipping captcha on account creation\n" );
 				return true;
 			}
-			$template->set( 'header',
+			$template->set( 'captcha',
 				"<div class='captcha'>" .
-				$wgOut->parse( $this->getMessage( 'createaccount' ) ) .
 				$this->getForm() .
+				'<p class="captchadesc" >' . $this->getMessage( 'createaccount' ) .'</p>'.
 				"</div>\n" );
 		}
 		return true;
