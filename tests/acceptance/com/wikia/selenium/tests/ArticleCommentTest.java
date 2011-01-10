@@ -451,6 +451,7 @@ public class ArticleCommentTest extends BaseTest {
 		if (numberOfComments.intValue() == 0) {
 			String commentContent = "test comment: " + new Date().toString();
 			addComment(commentContent);
+			numberOfComments = session().getXpathCount("//ul[@id='article-comments-ul']//li[contains(@class, 'article-comments-li')]");
 		}
 
 		String articleCommentHeader = session().getText("//h1[@id='article-comments-counter-header']");
@@ -459,7 +460,7 @@ public class ArticleCommentTest extends BaseTest {
 		String stringToCompare = numberOfComments + " comments";
 		assertTrue(articleCommentHeader.equals(stringToCompare));
 	}
-
+		
 	@Test(groups={"CI"})
 	public void testq17AddComment() throws Exception {
 		//System.out.println("Starting testq17AddComment...");
