@@ -1323,6 +1323,8 @@ function do_unique_pl_tl_il() {
 }
 
 function do_log_search_population() {
+
+	return 1; // eloy, remove later
 	global $wgDatabase;
 	if( update_row_exists( 'populate log_search' ) ) {
 		wfOut( "...log_search table already populated.\n" );
