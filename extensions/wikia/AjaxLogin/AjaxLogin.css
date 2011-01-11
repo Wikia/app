@@ -191,6 +191,7 @@
 .wpAjaxLoginInput .captcha input
 {
 	width: 120px;
+	display: inline;
 }
 
 .wpAjaxLoginLine td
