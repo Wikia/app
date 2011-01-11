@@ -18,7 +18,8 @@ class ContactForm extends SpecialPage {
 	function execute() {
 		global $wgLang, $wgAllowRealName, $wgRequest;
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
-		
+		global $wgUser;
+
 		//$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/SpecialContact/SpecialContact.css?{$wgStyleVersion}");
 		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/SpecialContact/SpecialContact.scss' ) );
 		$this->mName = null;
@@ -34,9 +35,11 @@ class ContactForm extends SpecialPage {
 
 		if( $this->mPosted && ('submit' == $this->mAction ) ) {
 			
-			$captchaObj = new FancyCaptcha();
-			$captchaObj->retrieveCaptcha();
-			$info = $captchaObj->retrieveCaptcha();
+			if( !$wgUser->isLoggedIn() ){
+				$captchaObj = new FancyCaptcha();
+				$captchaObj->retrieveCaptcha();
+				$info = $captchaObj->retrieveCaptcha();
+			}
 			
 			#ubrfzy note: these were moved inside to (lazy) prevent some stupid bots
 			$this->mName = $wgRequest->getText( 'wpName' );
@@ -58,11 +61,13 @@ class ContactForm extends SpecialPage {
 			}
 			
 			#captcha
-			if(!( !empty($info) &&  $captchaObj->keyMatch( $wgRequest->getVal('wpCaptchaWord'), $info )))  {
-				$this->err[].= wfMsg('contactcaptchafail');
-				$this->errInputs['wpCaptchaWord'] = true; 
+			if(!$wgUser->isLoggedIn()){ // logged in users don't need the captcha (RT#139647)
+				if(!( !empty($info) &&  $captchaObj->keyMatch( $wgRequest->getVal('wpCaptchaWord'), $info )))  {
+					$this->err[].= wfMsg('contactcaptchafail');
+					$this->errInputs['wpCaptchaWord'] = true; 
+				}
 			}
-			
+
 			#no errors?
 			if( empty($this->err) )
 			{
@@ -167,11 +172,13 @@ class ContactForm extends SpecialPage {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 
-		$captchaObj = new FancyCaptcha();
-		$captcha = $captchaObj->pickImage();
-		$captchaIndex = $captchaObj->storeCaptcha( $captcha );
-		$titleObj = SpecialPage::getTitleFor( 'Captcha/image' );
-		$captchaUrl = $titleObj->getLocalUrl( 'wpCaptchaId=' . urlencode( $captchaIndex ) );
+		if( !$wgUser->isLoggedIn() ){
+			$captchaObj = new FancyCaptcha();
+			$captcha = $captchaObj->pickImage();
+			$captchaIndex = $captchaObj->storeCaptcha( $captcha );
+			$titleObj = SpecialPage::getTitleFor( 'Captcha/image' );
+			$captchaUrl = $titleObj->getLocalUrl( 'wpCaptchaId=' . urlencode( $captchaIndex ) );
+		}
 		
 		if( $wgUser->isAnon() == false ) {
 			//user mode
@@ -272,14 +279,16 @@ class ContactForm extends SpecialPage {
 		$wgOut->addHTML( '<p class="contactformcaption">'  . wfMsg( 'contactproblemdesc' ) . '</p>' .
 						"<textarea ".$this->getClass('wpContactDesc')." tabindex='" . ($tabindex++) . "' name=\"wpContactDesc\" rows=\"10\" cols=\"60\">{$encProblemDesc}</textarea>" );
 		
-		$wgOut->addHTML('<p class="contactformcaption">'  . wfMsg( 'contactcaptchatitle' ) . '</p>' . 
-						"<div class='contactCaptch' >
-							<input ".$this->getClass('wpCaptchaWord')." type='text' id='wpCaptchaWord' name='wpCaptchaWord' value='' />
-							<span class='captchDesc'>".wfMsg('contactcaptchainfo')."</span>
-						</div>
-						<img class='contactCaptch' width=150 height=70 src='".$captchaUrl."' />
-						<input type='hidden' value='".$captchaIndex."' id='wpCaptchaId' name='wpCaptchaId'> " );
-		
+		if( !$wgUser->isLoggedIn() ){
+			$wgOut->addHTML('<p class="contactformcaption">'  . wfMsg( 'contactcaptchatitle' ) . '</p>' . 
+							"<div class='contactCaptch' >
+								<input ".$this->getClass('wpCaptchaWord')." type='text' id='wpCaptchaWord' name='wpCaptchaWord' value='' />
+								<span class='captchDesc'>".wfMsg('contactcaptchainfo')."</span>
+							</div>
+							<img class='contactCaptch' width=150 height=70 src='".$captchaUrl."' />
+							<input type='hidden' value='".$captchaIndex."' id='wpCaptchaId' name='wpCaptchaId'> " );
+		}
+
 		$wgOut->addHTML( "<p><input tabindex='" . ($tabindex++) . "' type='submit' value=\"". wfMsg( 'contactmail' ) ."\" /></p>" );
 
 		if( !$wgUser->isAnon() && $wgUser->getEmail() != '') {
