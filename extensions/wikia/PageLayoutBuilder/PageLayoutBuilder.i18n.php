@@ -45,7 +45,7 @@ $messages['en'] = array (
 
 	// Errors when trying to save a layout
 	'plb-create-empty-title-error' => 'Please enter a title for this layout.',
-	'plb-create-invalid-title-error' => "The title for this layout isn't valid. Try entering a different title.",
+	'plb-create-invalid-title-error' => "The title for this layout is invalid. Try entering a different title.",
 	'plb-create-already-exists-error' => 'A layout with this title already exists. Try entering a different title.',
 	'plb-create-updated-summary' => 'The summary for this title was updated.',
 	'plb-create-cant-edit' => "We could not save this layout. It looks like you do not have permission to edit right now.",
