@@ -114,7 +114,7 @@ var TopList = {
 	},
 
 	attachEvents: function() {
-		TopList._mWrapper.find('.VoteButton').bind('click', TopList.voteItem);
-		TopList._mWrapper.parent().delegate('.NewItemForm', 'submit', TopList.addItem );
+		TopList._mWrapper.find('.VoteButton').unbind('click').bind('click', TopList.voteItem);
+		TopList._mWrapper.parent().find('.NewItemForm').unbind('submit').bind('submit', TopList.addItem);
 	}
 }
