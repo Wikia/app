@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'logger-desc' => 'Logger for backend scripts',
 	'logger' => 'Backend logger',
 	'loggertitle'  => 'Backend logger', 
 	'loggerselectlogname' => 'Select log name:',
