@@ -42,7 +42,7 @@
 		border-top: 1px solid mix($color-header-text, $color-header, 20%);
 		border-bottom: 1px solid mix(#000, $color-header, 80%);
 		font-size: 20px;
-		height: 44px;
+		height: 35px;
 		>ul>li:last-child {
 			padding: 0;
 		}
@@ -51,7 +51,7 @@
 		border-left: 1px solid mix($color-header-text, $color-header, 20%);
 		float: left;
 		height: 22px;
-		margin-top: 11px;
+		margin-top: 7px;
 		padding: 0 15px;
 		&:first-child {
 			border: 0;
@@ -95,8 +95,8 @@
 	//top level navigation list
 	li {
 		border: 0;
-		height: 34px;
-		margin-top: -11px;
+		height: 30px;
+		margin-top: -13px;
 		padding: 11px 0 0;
 		&:hover {
 			@include linear-gradient(false, top, rgba(#000, 0), 0, #000, 100%);
@@ -107,7 +107,7 @@
 		float: left;
 		font-size: 16px;
 		&:visited, &:active {
-			color: $color-header-text;		
+			color: $color-header-text;
 		}
 	}
 	a {
@@ -136,7 +136,7 @@
 		width: $width-outside - 20px;
 		&.show {
 			display: block;
-			top: 44px;
+			top: 35px;
 		}
 		li {
 			display: inline;
@@ -152,7 +152,7 @@
 			a {
 				font-weight: bold;
 			}
-			
+
 		}
 		>li:first-child {
 			padding-top: 10px;
