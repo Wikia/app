@@ -26,7 +26,7 @@ class WikiaAssets {
 
 			$out = "\n/* Version: nginx Call to: {$url} */\n";
 			$out .= '<!--# include virtual="'.$url.'" -->';
-			
+
 			$resultWasEmpty = true; // always empty now... we don't have nginx anymore.
 
 			return $out;
@@ -85,7 +85,7 @@ class WikiaAssets {
 		global $wgRequest, $wgStylePath, $wgStyleVersion;
 
 		$type = $wgRequest->getVal('type');
-		
+
 		global $wgHttpProxy;
 		$wgHttpProxy = "127.0.0.1:80";
 
@@ -121,7 +121,7 @@ class WikiaAssets {
 				// There are race-conditions in deployment.  Always use the greater style version b/w the request and the local value.
 				$cb = $wgRequest->getVal('cb', 0);
 				$cb = max($wgStyleVersion, $cb);
-				
+
 				if(strpos($reference['url'], '?') === false) {
 					$reference['url'] .= '?'.$cb;
 				} else {
@@ -156,7 +156,7 @@ class WikiaAssets {
 		} else if($type == 'CoreJS') {
 			$contentType = "text/javascript";
 			$references = array();
-			
+
 			// configure based on skin
 			//if(Wikia::isOasis()){
 			if($wgRequest->getBool('isOasis', false)) {
@@ -195,7 +195,7 @@ class WikiaAssets {
 				$hadAnError |= $errorOnThisCall;
 			}
 		}
-		
+
 		// If one or more of the files failed... tell varnish/akamai/etc. not to cache this.
 		if($hadAnError){
 			header('HTTP/1.0 503 Temporary error');
@@ -248,7 +248,7 @@ class WikiaAssets {
 
 		return $cssReferences;
 	}
-	
+
 	private function GetPrintCSSReferences($cb=""){
 		global $wgRequest;
 		$cssReferences = array();
@@ -437,7 +437,9 @@ $wgHooks['SpecialRecentChangesQuery'][] = "Wikia::makeRecentChangesQuery";
 $wgHooks['SpecialPage_initList'][] = "Wikia::disableSpecialPage";
 $wgHooks['UserRights'][] = "Wikia::notifyUserOnRightsChange";
 $wgHooks['SetupAfterCache'][] = "Wikia::setupAfterCache";
-$wgHooks['ComposeCommonBodyMail'][] = "Wikia::ComposeCommonBodyMail";	
+$wgHooks['ComposeCommonBodyMail'][] = "Wikia::ComposeCommonBodyMail";
+$wgHooks['SoftwareInfo'][] = "Wikia::softwareInfo";
+
 //$wgHooks['IsTrustedProxy'][] = "Wikia::trustInternalIps";
 //$wgHooks['RawPageViewBeforeOutput'][] = 'Wikia::rawPageViewBeforeOutput';
 /**
@@ -1363,19 +1365,19 @@ class Wikia {
 		wfProfileOut( __METHOD__ );
 		return $isOasis;
 	}
-	
+
 	/**
 	 * Returns true. Replace UNSUBSCRIBEURL with message and link to Special::Unsubscribe page
-	 */	
+	 */
 	static public function ComposeCommonBodyMail( $title, &$keys, &$message, $editor ) {
 		global $wgCityId;
-		
+
 		# to test MW 1.16
 		$cityId = ( $wgCityId == 1927 ) ? $wgCityId : 177;
 		$name = $editor->getName();
-		
+
 		$keys['$UNSUBSCRIBEURL'] = '';
-		
+
 		if ( $editor->isIP( $name ) ) {
 			# don't do it for anons
 			return true;
@@ -1385,11 +1387,11 @@ class Wikia {
 		if ( !is_object( $oTitle ) ) {
 			return true;
 		}
-		
+
 		if ( !is_array($keys) ) {
 			$keys = array();
 		}
-		
+
 		$email = $editor->getEmail();
 		$ts = time();
 		# unsubscribe params
@@ -1398,9 +1400,29 @@ class Wikia {
 			'timestamp' => $ts,
 			'token'		=> wfGenerateUnsubToken( $email, $ts )
 		);
-		
+
 		$keys['$UNSUBSCRIBEURL'] = $oTitle->getFullURL( $params );
 
+		return true;
+	}
+
+	/**
+	 * @static
+	 * @acces public
+	 * @author Krzysztof Krzyżaniak (eloy)
+	 *
+	 * add entries to software info
+	 */
+	static public function softwareInfo( &$software ) {
+		global $wgCityId;
+
+		if( !empty( $wgCityId ) ) {
+			$software[ "city id" ] = $wgCityId;
+		}
+
+		/**
+		 * obligatory hook return value
+		 */
 		return true;
 	}
 }
