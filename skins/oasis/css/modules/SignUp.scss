@@ -18,14 +18,14 @@
 		clear: both;
 		display: block;
 	}
-	
+
 	.select-container {
 			clear: both;
 			display: block;
 	}
 	
 	.captcha {
-		position: absolute;
+
 		div {
 			width: 135px;
 			float: none !important; // /** overwriting inline-css from Monaco **/
@@ -33,7 +33,6 @@
 		}
 		
 		img {
-			position: absolute;
 			left: 136px;
 			top: 0px;
 			&.sprite {
@@ -43,9 +42,9 @@
 			}
 		}
 		
-		input {
-			display: block;
-			clear: both;
+		input[type=text],  input[type=password] {
+			display: inline;
+			clear: none;
 		}
 		br {
 			display: none; // /** getting rid of the space **/
