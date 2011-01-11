@@ -19,6 +19,8 @@ $wgTitle = Title::newFromText( "MediaWiki database updater" );
 
 echo( "MediaWiki {$wgVersion} Updater\n\n" );
 
+wfWaitForSlaves( 5 ); // let's not kill databases, shall we? ;) --tor
+
 if( !isset( $options['skip-compat-checks'] ) ) {
 	install_version_checks();
 } else {
