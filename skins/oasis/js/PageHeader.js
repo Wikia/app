@@ -28,6 +28,24 @@ var PageHeader = {
 				likeWrapper.css('width', 'auto');
 			});
 		}
+
+		// RT #83920: make <fb:like> tags work in IE
+		if (typeof $.browser.msie != 'undefined') {
+			GlobalTriggers.bind('fbinit', function() {
+				$('.likes').each(function() {
+					var node = $(this),
+						html = node.html();
+
+					// FB JS adds 'fb' namespace support in IE, regenerate FBML tags
+					node.html('').append(html);
+
+					// force like button to be rendered again
+					FB.XFBML.parse(node.get(0));
+				});
+
+				$().log('fixed like buttons', 'FB');
+			});
+		}
 	},
 
 	setupTimeAgo: function(node) {
@@ -37,7 +55,6 @@ var PageHeader = {
 	},
 
 	historyMouseover: function(event) {
-
 		//stop the mouseout timer
 		clearTimeout(PageHeader.mouseoutTimer);
 
@@ -50,7 +67,6 @@ var PageHeader = {
 	},
 
 	historyMouseout: function(event) {
-
 		//stop the mouseover timer
 		clearTimeout(PageHeader.mouseoverTimer);
 
@@ -76,13 +92,5 @@ var PageHeader = {
 
 			PageHeader.setupTimeAgo(PageHeader.history.find("time.timeago"));
 		});
-
-		// lazy load of avatars
-		/*
-		$(".avatar", PageHeader.history).each(function() {
-			$(this).attr("src", $(this).attr("data-realUrl"));
-		});
-		*/
 	}
-
 };
