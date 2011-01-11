@@ -7,7 +7,8 @@
  * @package MediaWiki
  * @subpackage Extensions
  * @author Przemek Piotrowski <ppiotr@wikia.com> for Wikia, Inc.
- * @copyright (C) 2006-2008, Wikia Inc.
+ * @author Sean Colombo <sean@wikia-inc.com> for Wikia, Inc.
+ * @copyright (C) 2006-2011, Wikia Inc.
  * @licence GNU General Public Licence 2.0 or later
  *
  * This program is free software; you can redistribute it and/or modify
@@ -43,14 +44,23 @@ if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 	$wgExtensionFunctions[] = 'wfYouTube';
 }
 
+// Initialize magic word for the parserfunction(s).
+$wgHooks['LanguageGetMagic'][] = 'wfParserFunction_magic';
+
 $wgExtensionCredits['parserhook'][] = array
 (
 	'name'        => 'YouTube',
-	'version'     => '1.9',
-	'author'      => 'Przemek Piotrowski',
+	'version'     => '1.10',
+	'author'      => 'Przemek Piotrowski, Sean Colombo',
 	'url'         => 'http://help.wikia.com/wiki/Help:YouTube',
 	'description' => 'embeds YouTube and Google Video movies + Archive.org audio and video + WeGame and Gametrailers video + Tangler forum + GoGreenTube video + Crispy Gamer',
 );
+
+// Register the magic word "youtube" so that it can be used as a parser-function.
+function wfParserFunction_magic(&$magicWords, $langCode){
+	$magicWords['youtube'] = array(0, 'youtube');
+	return true;
+}
 
 function wfYouTube()
 {
@@ -66,6 +76,8 @@ function wfYouTube()
 	$wgParser->setHook('nicovideo', 'embedNicovideo');
 	$wgParser->setHook('ggtube', 'embedGoGreenTube');
 	$wgParser->setHook('cgamer', 'embedCrispyGamer');
+	
+	$wgParser->setFunctionHook( 'youtube', 'wfParserFunction_youTube' );
 
 	return true;
 }
@@ -87,6 +99,26 @@ function embedYouTube_url2ytid($url)
 
 	return $id;
 }
+
+/**
+ * Parser-function for #youtube.  The purpose of having this in addition to the parser-tag is that
+ * parser-functions can receive template-parameters as input so this parserfunction can be used
+ * in a template.
+ *
+ * Example usage:
+ * {{#youtube:Vd34vJohGXc|250|209}}
+ */
+function wfParserFunction_youTube($parser, $ytid ='', $width = '', $height = ''){
+	$width = ($width==""?"":" width='$width'");
+	$height = ($height==""?"":" height='$height'");
+	$output = "<youtube ytid='$ytid'$width$height/>";
+
+	// Note: an alternate way to do this would be to set up parameters and call embedYouTube directly (and the returned output
+	// would not need to still be made parseable).  Any benefit to that?  The current way seems more easily debuggable by the end-user if they mess up.
+
+	// Return the code in such a way that it still gets parsed (since we're just returning the parsertag).
+	return array($output, 'noparse' => false);
+} // end wfParserFunction_youTube()
 
 function embedYouTube($input, $argv, $parser )
 {
