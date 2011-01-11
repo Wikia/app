@@ -17,11 +17,13 @@
 class AutomaticWikiAdoptionJobSetAdoptionFlag {
 	function execute($commandLineOptions, $jobOptions, $wikiId, $wikiData) {
 		//let wiki to be adopted
-		$jobOptions['dataMapper']->setFlags($wikiId, WikiFactory::FLAG_ADOPTABLE);
+		if (!isset($commandLineOptions['dryrun'])) {
+			$jobOptions['dataMapper']->setFlags($wikiId, WikiFactory::FLAG_ADOPTABLE);
+		}
 
 		//print info
 		if (!isset($commandLineOptions['quiet'])) {
-			echo "Wiki (id:$row->wiki_id) set as adoptable.\n";
+			echo "Wiki (id:$wikiId) set as adoptable.\n";
 		}
 	}
 }

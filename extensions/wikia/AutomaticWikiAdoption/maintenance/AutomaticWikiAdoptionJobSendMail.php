@@ -33,24 +33,31 @@ class AutomaticWikiAdoptionJobSendMail {
 		foreach ($wikiData['admins'] as $adminId) {
 			//print info
 			if (!isset($commandLineOptions['quiet'])) {
-				echo "Sending e-mail to user (id:$adminId) on wiki (id:$wikiId).\n";
+				echo "Trying to send the e-mail to the user (id:$adminId) on wiki (id:$wikiId).\n";
 			}
 
 			$adminUser = User::newFromId($adminId);
 			$acceptMails = $adminUser->getOption('adoptionmails', null);
 			if ($acceptMails && $adminUser->isEmailConfirmed()) {
 				$adminName = $adminUser->getName();
-				$adminUser->sendMail(
-					wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-subject"),
-					wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-content", $adminName, $specialUserRightsUrl, $specialPreferencesUrl),
-					null, //from
-					null, //replyto
-					'AutomaticWikiAdoption',
-					wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-content-HTML", $adminName, $specialUserRightsUrl, $specialPreferencesUrl)
-				);
+				if (!isset($commandLineOptions['quiet'])) {
+					echo "Really sending the e-mail to the user (id:$adminId, name:$adminName) on wiki (id:$wikiId).\n";
+				}
+				if (!isset($commandLineOptions['dryrun'])) {
+					$adminUser->sendMail(
+						wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-subject"),
+						wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-content", $adminName, $specialUserRightsUrl, $specialPreferencesUrl),
+						null, //from
+						null, //replyto
+						'AutomaticWikiAdoption',
+						wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-content-HTML", $adminName, $specialUserRightsUrl, $specialPreferencesUrl)
+					);
+				}
 			}
 		}
 
-		$jobOptions['dataMapper']->setFlags($wikiId, $flag);
+		if (!isset($commandLineOptions['dryrun'])) {
+			$jobOptions['dataMapper']->setFlags($wikiId, $flag);
+		}
 	}
 }

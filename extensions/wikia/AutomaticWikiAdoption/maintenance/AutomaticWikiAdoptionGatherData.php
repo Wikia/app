@@ -22,7 +22,7 @@ class AutomaticWikiAdoptionGatherData {
 
 		if (empty($wgEnableAutomaticWikiAdoptionMaintenanceScript)) {
 			if (!isset($commandLineOptions['quiet'])) {
-				echo "wgEnableAutomaticWikiAdoptionMaintenanceScript not true - quitting.\n";
+				echo "wgEnableAutomaticWikiAdoptionMaintenanceScript not true on central wiki (ID:177) - quitting.\n";
 			}
 			return;
 		}

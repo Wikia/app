@@ -20,6 +20,7 @@ if (isset($options['help'])) {
 	die( "Usage: php AutomaticWikiAdoptionGatherData.php [--quiet]
 
 		  --help     you are reading it right now
+		  --dryrun   do not perform any activity - only print it out on the screen
 		  --quiet    do not print anything to output\n\n");
 }
 
