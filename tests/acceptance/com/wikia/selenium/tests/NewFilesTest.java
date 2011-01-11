@@ -25,8 +25,8 @@ public class NewFilesTest extends BaseTest {
 		
 		session().open("wiki/Special:NewFiles");
 		waitForElement("//div[@id='gallery-']", TIMEOUT);
-		assertTrue(session().isElementPresent("//div[@id='gallery-']/div/div[@class='thumb']"));
-		assertTrue(session().isElementPresent("//div[@id='gallery-']/div/div[@class='lightbox-caption']"));
+		assertTrue(session().isElementPresent("//div[@id='gallery-']//div[@class='thumb']"));
+		assertTrue(session().isElementPresent("//div[@id='gallery-']//div[@class='lightbox-caption']"));
 	}
 
 	@Test(groups={"CI"})
