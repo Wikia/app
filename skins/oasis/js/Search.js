@@ -6,6 +6,8 @@ WikiaSearchApp = {
 	searchForm: false,
 	searchField: false,
 
+	ads: false,
+
 	track: function(url) {
 		$.tracker.byStr('module/search/' + url);
 	},
@@ -14,12 +16,32 @@ WikiaSearchApp = {
 		WikiaSearchApp.searchForm = $('#WikiaSearch');
 		WikiaSearchApp.searchField = WikiaSearchApp.searchForm.children('input[placeholder]');
 
+		// RT #141437 - hide HOME_TOP_RIGHT_BOXAD when showing search suggestions
+		WikiaSearchApp.ads = $("[id$='TOP_RIGHT_BOXAD']");
+
+		WikiaSearchApp.searchField.bind({
+			'suggestShow': WikiaSearchApp.hideAds,
+			'suggestHide': WikiaSearchApp.showAds
+		});
+
 		// load autosuggest code on first focus
 		WikiaSearchApp.searchField.one('focus', WikiaSearchApp.initSuggest);
 
 		// track form submittion
 		WikiaSearchApp.searchForm.submit(function(ev) {
 			WikiaSearchApp.track('submit');
+		});
+	},
+
+	hideAds: function() {
+		WikiaSearchApp.ads.each(function() {
+			$(this).children().css('margin-left', '-9999px');
+		});
+	},
+
+	showAds: function() {
+		WikiaSearchApp.ads.each(function() {
+			$(this).children().css('margin-left', 'auto');
 		});
 	},
 
