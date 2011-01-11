@@ -51,7 +51,7 @@ window.onFBloaded = function() {
 	// @see http://threebrothers.org/brendan/blog/facebook-connect-ie-fb_xd_fragment-iframe/
 	var channelUrl = window.location.protocol + '//' +
 		window.location.host + window.wgScriptPath +
-		'/extensions/FBConnect/channel.php?lang=' + encodeURIComponent(window.fbScriptLangCode);
+		'/channel.php?lang=' + encodeURIComponent(window.fbScriptLangCode);
 
 	// Initialize the library with the API key
 	FB.init({
