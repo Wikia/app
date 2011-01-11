@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is used for cross-domain messaging by Facebook SDK
+ * This file is used by IE for cross-domain messaging by Facebook SDK (RT #140425)
  *
  * @see ttp://developers.facebook.com/docs/reference/javascript/FB.init
  */
