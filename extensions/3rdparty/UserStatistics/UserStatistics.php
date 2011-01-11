@@ -223,8 +223,6 @@ function first_useredit( $text ) {
     return $ret ;
   }
 
-  $wgParser->disableCache();
-
   list( $username, $namespace ) = extractParamaters( $text );
 
   $username = Title::newFromText( $username );
@@ -295,8 +293,6 @@ function counting_usercreate( $text, $params = array() ) {
       }
     }
   }
-
-  $wgParser->disableCache();
 
   list( $username, $namespace ) = extractParamaters( $text );
 
