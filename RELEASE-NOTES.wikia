@@ -1,4 +1,5 @@
 == Changes since 20101213 ==
+* rt#143579: Long text breaks Signup page layout (Jakub)
 * rt#141979: Wiki Activity: On watchlist view, change "Followed Pages only" link to "Activity feed" link (Jakub)
 * rt#141394: Strange stuff when making a big edit on a page with a big slider gallery (Jakub)
 * rt#139988: Category galleries: Small design fail for long article names (Jakub)
