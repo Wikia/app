@@ -11,6 +11,7 @@ class MobileApiSearch extends MobileApiBase {
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 */
 	public function getGlobalResults(){
+		global $wgDevelEnvironment;
 		wfProfileIn( __METHOD__ );
 		
 		//This needs to be true but setting it in WF will make it happen in Special:Search too
@@ -19,21 +20,21 @@ class MobileApiSearch extends MobileApiBase {
 		$origEnableCrossWikiaSearchValue = $wgEnableCrossWikiaSearch;
 		$wgEnableCrossWikiaSearch = true;
 		
-		//if ( $request->wasPosted() ) {
+		//get requests are allowed only when running on test environment
+		if ( $request->wasPosted() || $wgDevelEnvironment ) {
 			wfLoadExtensionMessages( 'MobileApp' );
 			$ret = Array();
 			
-			//-----//
+			//TODO: handle empty search term
 			$term = $this->getRequest()->getText( 'term' );
 			
 			$search = SearchEngine::create();
 			$search->setLimitOffset( self::RESULTS_LIMIT );
 			$search->setNamespaces( SearchEngine::searchableNamespaces() );
 			$search->showRedirects = true;
-			//$search->prefix = $this->mPrefix;
-			$term = $search->transformSearchTerm($term);
 			
-			$rewritten = $search->replacePrefixes($term);
+			$term = $search->transformSearchTerm( $term );
+			$rewritten = $search->replacePrefixes( $term );
 			$titleMatches = $search->searchTitle( $rewritten );
 			$textMatches = $search->searchText( $rewritten );
 			
@@ -94,11 +95,10 @@ class MobileApiSearch extends MobileApiBase {
 					'tracker' => $search->getErrorTracker()
 				);
 			}
-			//-----//
 			
 			$this->setResponseContentType( 'application/json; charset=utf-8' );
 			$this->setResponseContent( Wikia::json_encode( $ret ) );
-		//}
+		}
 		
 		$wgEnableCrossWikiaSearch = $origEnableCrossWikiaSearchValue;
 		wfProfileOut( __METHOD__ );
@@ -121,6 +121,7 @@ class MobileApiSearch extends MobileApiBase {
 		}
 		
 		wfProfileOut( __METHOD__ );
+		//TODO: return more data, like the article readable title, perhaps an article snippet via ArticleService and the wiki name
 		return $result->getUrl();
 	}
 	
