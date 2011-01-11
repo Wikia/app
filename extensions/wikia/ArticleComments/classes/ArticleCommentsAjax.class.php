@@ -103,7 +103,7 @@ class ArticleCommentsAjax {
 		 */
 		$comment = ArticleComment::newFromId( $commentId );
 		if ( $comment ) {
-			$comment->load();
+			$comment->load(true);
 			if ( $comment->canEdit() ) {
 				$result['error'] = 0;
 				$result['show'] = true;
