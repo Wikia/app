@@ -1397,7 +1397,7 @@ class Wikia {
 			'token'		=> wfGenerateUnsubToken( $email, $ts )
 		);
 		
-		$keys['$UNSUBSCRIBEURL'] = wfMsg( 'unsubscribe-email', $oTitle->getFullURL( $params ) );
+		$keys['$UNSUBSCRIBEURL'] = $oTitle->getFullURL( $params );
 
 		return true;
 	}
