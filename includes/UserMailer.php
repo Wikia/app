@@ -756,6 +756,7 @@ class EmailNotification {
 		$keys['$PAGEEDITOR_WIKI'] = $userPage->escapeFullURL();
 		wfRunHooks('ComposeCommonBodyMail', array( $this->title, &$keys, &$body, $editor ));
 		$body = strtr( $body, $keys );
+		
 		if ($bodyHTML) {
 			$bodyHTML = strtr( $bodyHTML, $keys );
 		}
@@ -780,6 +781,8 @@ class EmailNotification {
 
 		if ( !$this->composed_common )
 			$this->composeCommonMailtext();
+
+		wfRunHooks('ComposeMail', array( $user, &$this->body, &$this->bodyHTML, &$this->subject ));
 
 		if ( $wgEnotifImpersonal ) {
 			$this->mailTargets[] = new MailAddress( $user );
