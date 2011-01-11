@@ -1,4 +1,5 @@
 == Changes since 20101213 ==
+* rt#143278: Global header: design update (macbre)
 * rt#83920: oasis facebook like button vanishes under IE8 (macbre)
 * rt#67074: Gallery tag (and its contents) should be stripped out of text used in blog listing (macbre)
 * rt#72881: Badges: user profile pages layout broken on IE7 (macbre)
