@@ -98,7 +98,7 @@ class SkinWikiaphone extends SkinTemplate {
 		
 		$data = '';
 		
-		$data .= '<div id="mw-data-after-content"><div id="fullsite"><a href="#" class="fullsite">'.wfMsg('mobile-full-site').'</a> | '.$this->getCopyright().'</div>';
+		$data .= '<div id="mw-data-after-content"><div id="fullsite"><a href="#" class="fullsite" rel="nofollow">'.wfMsg('mobile-full-site').'</a> | '.$this->getCopyright().'</div>';
 		
 		$data .= '<script>var MobileSkinData = {showtext: "'.wfMsg("mobile-show").'", hidetext:"'.wfMsg("mobile-hide").'"};</script>';
 		
