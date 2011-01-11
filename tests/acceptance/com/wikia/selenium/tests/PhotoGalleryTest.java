@@ -117,10 +117,10 @@ public class PhotoGalleryTest extends BaseTest {
 		session().waitForPageToLoad(TIMEOUT);
 
 		// verify edit from view mode
-		assertTrue(session().isElementPresent("//div[@class='wikia-gallery-item']"));
+		assertTrue(session().isElementPresent("//span[@class='wikia-gallery-item']"));
 
 		// check for image added from view mode
-		assertTrue(session().isElementPresent("//div[2 and @class='wikia-gallery-item']//img[contains(@title,'Test link')]"));
+		assertTrue(session().isElementPresent("//span[2 and @class='wikia-gallery-item']//img[contains(@title,'Test link')]"));
 	}
 
 	@Test(groups={"CI"})
@@ -153,7 +153,7 @@ public class PhotoGalleryTest extends BaseTest {
 		// upload form
 		session().attachFile("WikiaPhotoGalleryImageUpload", uploadFileUrl);
 		//session().type("WikiaPhotoGalleryImageUpload", uploadFileName);
-        session().submit("WikiaPhotoGalleryImageUploadForm");
+		session().submit("WikiaPhotoGalleryImageUploadForm");
 
 		// wait for upload to be completed (either conflict screen or photo options screen)
 		session().waitForCondition("window.WikiaPhotoGallery.editor.currentPage > window.WikiaPhotoGallery.UPLOAD_FIND_PAGE", "7500");
@@ -213,7 +213,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// search for images on wiki's main page
 		session().type("//form[@id='WikiaPhotoGallerySearch']//input[@type='text']", session().getEval("window.wgMainpage"));
-        session().click("//form[@id='WikiaPhotoGallerySearch']//button");
+		session().click("//form[@id='WikiaPhotoGallerySearch']//button");
 		waitForElementVisible("//ul[@type='results']//li");
 
 		// select first image
@@ -338,7 +338,7 @@ public class PhotoGalleryTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[contains(@class, 'wikia-gallery')]"));
 
 		// check for image added from view mode
-		assertTrue(session().isElementPresent("//div[contains(@class, 'wikia-gallery')]/div/div/a/img[@class='image link-external lightbox']"));
+		assertTrue(session().isElementPresent("//div[contains(@class, 'wikia-gallery')]//img[contains(@class, 'image') and contains(@class, 'link-external') and contains(@class, 'lightbox')]"));
 	}
 
 	//@author Marooned
