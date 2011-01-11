@@ -439,7 +439,7 @@ class UserMailer {
  */
 class EmailNotification {
 	protected $action;
-	protected $to, $subject, $body, $replyto, $from;
+	protected $to, $subject, $body, $replyto, $from, $bodyHTML;
 	protected $user, $title, $timestamp, $summary, $minorEdit, $oldid, $composed_common, $editor;
 	protected $mailTargets = array();
 
