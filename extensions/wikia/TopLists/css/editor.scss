@@ -254,6 +254,10 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 
 	div.selected {
 		background-color: $color-module-shadow;
+		display: table-cell;
+		vertical-align: middle;
+		line-height: 15px;
+		max-height: 86px;
 	}
 
 	ul {
@@ -273,6 +277,7 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 				border: 1px solid $color-page-border;
 				width: $image-thumb-small-width;
 				height: $image-thumb-small-height;
+				max-height: $image-thumb-small-height;
 				padding: 2px;
 				font-size: 9px;
 				overflow: hidden;
@@ -281,6 +286,13 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 			div.NoPicture {
 				background-color: $color-module-shadow;
 				cursor: pointer;
+				display: table-cell;
+				vertical-align: middle;
+				line-height: 15px;
+
+				span{
+				
+}
 			}
 		}
 	}

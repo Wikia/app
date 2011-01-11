@@ -9,7 +9,7 @@ global $wgScriptPath;
 	<? else :?>
 		<div class="selected"
 		     title="<?= wfMsg( 'toplits-image-browser-no-picture-selected' ) ;?>">
-			<?= wfMsg( 'toplits-image-browser-no-picture-selected' ) ;?>
+			<span><?= wfMsg( 'toplits-image-browser-no-picture-selected' ) ;?></span>
 		</div>
 	<? endif ;?>
 
@@ -24,7 +24,7 @@ global $wgScriptPath;
 		<li>
 			<div class="NoPicture"
 			     title="<?= wfMsg( 'toplits-image-browser-clear-picture' ) ;?>">
-				<?= wfMsg( 'toplits-image-browser-clear-picture' ) ;?>
+				<span><?= wfMsg( 'toplits-image-browser-clear-picture' ) ;?></span>
 			</div>
 		</li>
 	</ul>
