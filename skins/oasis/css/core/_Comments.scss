@@ -77,13 +77,13 @@
 		border: 1px solid $color-page-border;
 		height: 75px;
 		margin: 15px 5px;
+		line-height: 21px;
 		margin: {
 			top: 7px;
 			left: 5px;
 			right: 5px;
 			bottom: 15px;
 		}
-
 		padding: 2px;
 		width: 574px;
 		font-size: 12px !important;
@@ -105,6 +105,7 @@
 	list-style: none;
 
 	textarea {
+		line-height: 21px;
 		font-family: "Dagny", "Helvetica", "Arial", sans-serif;
 		font-size: 11px;
 		width: 528px !important;
