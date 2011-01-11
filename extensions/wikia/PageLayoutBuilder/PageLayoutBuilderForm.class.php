@@ -2,7 +2,7 @@
 
 class PageLayoutBuilderForm extends SpecialPage {
     function __construct() {
-	    wfLoadExtensionMessages( 'PageLayoutBuilder' );	
+	    wfLoadExtensionMessages( 'PageLayoutBuilder' );
 	    parent::__construct( 'PageLayoutBuilderForm', 'PageLayoutBuilderForm' );
 	}
     function execute($article_id = null, $limit = "", $offset = "", $show = true) {
@@ -10,13 +10,13 @@ class PageLayoutBuilderForm extends SpecialPage {
 
 		$this->pageId = (int) $wgRequest->getVal('pageId', ''); // article ID
 		$this->id = (int) $wgRequest->getVal('plbId',''); // layout ID
-		//TODO: rename vars 
+		//TODO: rename vars
 
 		if($this->id == 0) {
 			$this->executeIsNolayout();
 			return true;
 		}
-		
+
 		if( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
 			return;
@@ -26,20 +26,20 @@ class PageLayoutBuilderForm extends SpecialPage {
 			$wgOut->blockedPage();
 			return;
 		}
-		
+
 		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/form.scss' ) );
 		$wgOut->addStyle( wfGetSassUrl( 'skins/oasis/css/core/_EditPage.scss' ) );
-		
+
 		$wgOut->addScript("<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/PageLayoutBuilder/widget/allWidgets.js?$wgStyleVersion\"></script>");
-		
+
 		//$wgOut->addScriptFile($wgScriptPath."/extensions/wikia/PageLayoutBuilder/widget/allWidgets.js");
-		
+
 		if($this->pageId > 0) {
 			if( $this->id != PageLayoutBuilderModel::articleIsFromPLB( $this->pageId ) ) {
 				$this->executeIsNoArtile();
 				return true;
 			}
-			
+
 			$this->pageTitle = Title::newFromID($this->pageId, GAID_FOR_UPDATE);
 			if(!($this->pageTitle instanceof Title)) {
 				$this->executeIsNoArtile();
@@ -50,13 +50,13 @@ class PageLayoutBuilderForm extends SpecialPage {
 				$wgOut->permissionRequired( 'edit' );
 				return true;
 			}
-		
+
 			$this->pageHeader = wfMsg( 'plb-special-form-edit-article', array( "$1" => $this->pageTitle->getText() ));
 		} else {
 			if(!$wgUser->isAllowed('createpage')) {
 				$wgOut->permissionRequired( 'createpage' );
 				return true;
-			}	
+			}
 		}
 
 		$this->layoutTitle = Title::newFromID($this->id);
@@ -70,13 +70,13 @@ class PageLayoutBuilderForm extends SpecialPage {
 			if(!($this->pageId > 0)) {
 				$this->pageHeader = wfMsg( 'plb-special-form-create-new',  array( "$1" => $this->layoutTitle) );
 			}
-			
+
 			$oArticle = new Article( $this->layoutTitle );
 			$parser = new PageLayoutBuilderParser();
 			$parser->setOutputType(OT_HTML);
 			$parserOptions = ParserOptions::newFromUser($wgUser);
 			$parserOptions->setEditSection(false);
-			
+
 			if($wgRequest->wasPosted()) {
 				$this->executeSubmit($parser);
 			} elseif($this->pageId > 0) {
@@ -87,31 +87,31 @@ class PageLayoutBuilderForm extends SpecialPage {
 
 			$text = $parser->preParseForm( $oArticle->getContent() );
 			$parserOut = $parser->parse($text , $this->layoutTitle, $parserOptions);
-			
+
 			if($this->isCategorySelect()) {
 				global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgCategorySelectMetaData,$wgHooks,$wgRequest;
-				
+
 				$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
 				$wgOut->addScript("<script type=\"text/javascript\">var formId = 0;".CategorySelectGetCategories(true)."</script>");
 				$wgOut->addScript("<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/CategorySelect/CategorySelect.js?$wgStyleVersion\"></script>");
 
 				$cssFile = wfGetSassUrl('/extensions/wikia/CategorySelect/oasis.scss');
 				$wgOut->addExtensionStyle($cssFile);
-				
+
 				wfLoadExtensionMessages('CategorySelect');
 
 				if(!empty($loadedValues['cswikitext'])) {
-					$cattext = $loadedValues['cswikitext'];	
+					$cattext = $loadedValues['cswikitext'];
 				} else {
 					$cattext = $wgRequest->getVal('csWikitext', '');
 				}
-								
-				$categories = CategorySelect::SelectCategoryAPIgetData($cattext);      
+
+				$categories = CategorySelect::SelectCategoryAPIgetData($cattext);
 				$categories = htmlspecialchars(Wikia::json_encode($categories['categories']));
-				$catHtml = '<input type="hidden" value="'.$categories.'" name="wpCategorySelectWikitext" id="wpCategorySelectWikitext" /> ';	
-				$catHtml .= CategorySelectGenerateHTMLforEditRaw( $cattext );	
+				$catHtml = '<input type="hidden" value="'.$categories.'" name="wpCategorySelectWikitext" id="wpCategorySelectWikitext" /> ';
+				$catHtml .= CategorySelectGenerateHTMLforEditRaw( $cattext );
 			}
-			
+
 			$html = $parserOut->getText();
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars(array(
@@ -140,9 +140,9 @@ class PageLayoutBuilderForm extends SpecialPage {
 				$copywarnMsg = array( 'copyrightwarning2',
 					'[[' . wfMsgForContent( 'copyrightpage' ) . ']]' );
 			}
-			
+
 			$wgOut->wrapWikiMsg( "<div id=\"editpage-copywarn\">\n$1\n</div>", $copywarnMsg );
-			
+
 			$sk = $wgUser->getSkin();
 			$cancel = "";
 			if(isset($this->pageTitle) && $this->pageTitle->getText()) {
@@ -154,10 +154,10 @@ class PageLayoutBuilderForm extends SpecialPage {
 
 			$edithelpurl = Skin::makeInternalOrExternalUrl( wfMsgForContent( 'edithelppage' ));
 			$edithelp = '<a target="helpwindow" href="'.$edithelpurl.'" id="wpEdithelp">'.
-			htmlspecialchars( wfMsg( 'edithelp' ) ).'</a> ';				
+			htmlspecialchars( wfMsg( 'edithelp' ) ).'</a> ';
 
 			$wgOut->addHTML( $cancel.$edithelp );
-				
+
 		} else {
 			$this->executeIsNolayout();
 			return true;
@@ -168,10 +168,10 @@ class PageLayoutBuilderForm extends SpecialPage {
 
 	function executeSubmit(&$parser) {
 		global $wgRequest, $wgOut;
-		
+
 		$articleName = $wgRequest->getVal('wgArticleName', '');
 		$elements = PageLayoutBuilderModel::getElementList( $this->layoutTitle->getArticleID() );
-		
+
 		$this->formErrors = array();
 		$this->formErrorsList = array();
 		$tagValues = array();
@@ -186,7 +186,7 @@ class PageLayoutBuilderForm extends SpecialPage {
 				if(!($validateResult === true)) {
 					$this->formErrorsList[$key] = 1;
 					if(!in_array($validateResult, $this->formErrors)) {
-						$this->formErrors = $this->formErrors + $validateResult;	
+						$this->formErrors = $this->formErrors + $validateResult;
 					}
 				}
 
@@ -245,7 +245,7 @@ class PageLayoutBuilderForm extends SpecialPage {
 			$parserOut = $preParser->preParserArticle($mwText, $fakeTitle );
 			$mwText = $parserOut->getText();
 		}
-		
+
 		$status = PageLayoutBuilderModel::saveArticle( $this->mArticle, $mwText, $wgRequest->getVal("wpSummary", "") );
 		switch( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:
@@ -279,20 +279,25 @@ class PageLayoutBuilderForm extends SpecialPage {
 		return false;
 	}
 
-	public static function alternateEditHook(EditPage &$oEditPage) {
+	/**
+	 * Hook entry
+	 *
+	 * @static
+	 */
+	public static function alternateEditHook( $oEditPage ) {
 		global $wgOut, $wgUser, $wgTitle;
 
 		if( !($wgTitle->userCan('edit') || $wgTitle->userCan('createpage')) ) {
 			return true;
 		}
-		
+
 		if( self::articleIsFromPLBFull($oEditPage->mTitle->getArticleID(), $oEditPage->mArticle->getContent() ) ) {
 			$layout_id = PageLayoutBuilderModel::articleIsFromPLB( $oEditPage->mTitle->getArticleID() );
-					 
+
 			$oSpecialPageTitle = Title::newFromText('LayoutBuilderForm', NS_SPECIAL);
 			$wgOut->redirect($oSpecialPageTitle->getFullUrl("plbId=" . $layout_id . "&pageId=".$oEditPage->mTitle->getArticleId() ));
 		}
-		
+
 		return true;
 	}
 
@@ -319,7 +324,7 @@ class PageLayoutBuilderForm extends SpecialPage {
 		global $wgOut;
 		$wgOut->showErrorPage( 'plb-special-no-article', 'plb-special-no-article-body', array(wfGetReturntoParam()));
 	}
-	
+
 	private function isCategorySelect() {
 		if(function_exists('CategorySelectInitializeHooks')) {
 			return true;
