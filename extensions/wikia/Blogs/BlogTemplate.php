@@ -1357,6 +1357,9 @@ class BlogTemplateClass {
 			}
 		}
 		wfProfileOut( __METHOD__ );
+		if(is_array($result)) {
+			return $result[0];
+		}
 		return $result;
 	}
 }
