@@ -437,9 +437,8 @@ $wgHooks['SpecialRecentChangesQuery'][] = "Wikia::makeRecentChangesQuery";
 $wgHooks['SpecialPage_initList'][] = "Wikia::disableSpecialPage";
 $wgHooks['UserRights'][] = "Wikia::notifyUserOnRightsChange";
 $wgHooks['SetupAfterCache'][] = "Wikia::setupAfterCache";
-$wgHooks['ComposeCommonBodyMail'][] = "Wikia::ComposeCommonBodyMail";
-$wgHooks['SoftwareInfo'][] = "Wikia::softwareInfo";
-
+$wgHooks['ComposeMail'][] = "Wikia::ComposeMail";
+$wgHooks['SoftwareInfo'][] = "Wikia::softwareInfo";	
 //$wgHooks['IsTrustedProxy'][] = "Wikia::trustInternalIps";
 //$wgHooks['RawPageViewBeforeOutput'][] = 'Wikia::rawPageViewBeforeOutput';
 /**
@@ -1369,16 +1368,18 @@ class Wikia {
 	/**
 	 * Returns true. Replace UNSUBSCRIBEURL with message and link to Special::Unsubscribe page
 	 */
-	static public function ComposeCommonBodyMail( $title, &$keys, &$message, $editor ) {
+	static public function ComposeMail( $user, $body, $bodyHTML, $subject ) {
 		global $wgCityId;
 
+		if ( !$user instanceof User ) {
+			return true;
+		}
+		
 		# to test MW 1.16
 		$cityId = ( $wgCityId == 1927 ) ? $wgCityId : 177;
-		$name = $editor->getName();
+		$name = $user->getName();
 
-		$keys['$UNSUBSCRIBEURL'] = '';
-
-		if ( $editor->isIP( $name ) ) {
+		if ( $user->isIP( $name ) ) {
 			# don't do it for anons
 			return true;
 		}
@@ -1392,7 +1393,7 @@ class Wikia {
 			$keys = array();
 		}
 
-		$email = $editor->getEmail();
+		$email = $user->getEmail();
 		$ts = time();
 		# unsubscribe params
 		$params = array(
@@ -1401,8 +1402,12 @@ class Wikia {
 			'token'		=> wfGenerateUnsubToken( $email, $ts )
 		);
 
-		$keys['$UNSUBSCRIBEURL'] = $oTitle->getFullURL( $params );
-
+		$url = $oTitle->getFullURL( $params );
+		$body = str_replace( '$UNSUBSCRIBEURL', $url, $body );
+		if ( $bodyHTML ) {
+			$bodyHTML = str_replace( '$UNSUBSCRIBEURL', $url, $bodyHTML );
+		}
+		
 		return true;
 	}
 
