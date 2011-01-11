@@ -30,10 +30,13 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname( __FILE__ ) . '/';
 
 //classes
-$wgAutoloadClasses[ 'MobileApiBase' ] = "{$dir}modules/MobileApiBase.class.php";
+$wgAutoloadClasses[ 'MobileApiBase' ] = "{$dir}MobileApiBase.class.php";
+$wgAutoloadClasses[ 'MobileApiException' ] = "{$dir}MobileApiException.class.php";
+
 
 //modules
 global $wgMobileApiModules;//TODO: add to DefaultSettings.php in includes/wikia
+
 $wgMobileApiModules = array(
 	'MobileApiRecommendedContent' => "{$dir}modules/MobileApiRecommendedContent.class.php",
 	'MobileApiSearch' => "{$dir}modules/MobileApiSearch.class.php"
@@ -49,26 +52,41 @@ $wgAjaxExportList[] = 'MobileApi';
 function MobileApi() {
 	global $wgMobileApiModules, $wgAutoloadClasses, $wgRequest;
 	wfProfileIn( __METHOD__ );
-	
-	$moduleName = $wgRequest->getVal( 'module' );
-	$methodName = $wgRequest->getVal( 'method' );
 	$out = new AjaxResponse();
 	$module = null;
+	$err = null;
 	
-	if( !empty( $wgMobileApiModules[ $moduleName ] ) ) {
+	try {
+		$moduleName = $wgRequest->getVal( 'module' );
+		$methodName = $wgRequest->getVal( 'method' );
 		
-		$wgAutoloadClasses[ $moduleName ] = $wgMobileApiModules[ $moduleName ];
-		
-		if( method_exists( $moduleName, $methodName ) ) {
-			$module = new $moduleName( $wgRequest );
-			$module->$methodName();
-			$out->addText( $module->getResponseContent() );
-			$out->setContentType( $module->getResponseContentType() );
-			$out->setResponseCode( $module->getResponseStatusCode() );
+
+		if( !empty( $wgMobileApiModules[ $moduleName ] ) ) {
+
+			$wgAutoloadClasses[ $moduleName ] = $wgMobileApiModules[ $moduleName ];
+
+			if( method_exists( $moduleName, $methodName ) ) {
+				$module = new $moduleName( $wgRequest );
+				
+				if( $module->$methodName() !== false ){
+					$out->addText( $module->getResponseContent() );
+					$out->setContentType( $module->getResponseContentType() );
+					$out->setResponseCode( $module->getResponseStatusCode() );
+				} else {
+					$err = "{$module}::{$methodName} returned false, aborting";
+				}
+			}
 		}
+	} catch ( MobileApiException $e ) {
+		$out->addText( (string) $e );
+		$out->setResponseCode( $e->getStatusCode() );
+	} catch( Exception $e ) {
+		$out->addText( (string) $e );
+		$out->setResponseCode( '501 Not Implemented' );//500 gets redirected to Iowa, avoid unnecessary overhead
 	}
 	
 	if( empty( $module ) ) {
+		$out->addText( 'Not found' );
 		$out->setResponseCode('404 Not Found');
 	}
 	
