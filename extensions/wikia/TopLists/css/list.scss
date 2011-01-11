@@ -38,10 +38,19 @@ $item-width: 415px;
 			margin-bottom: 25px;
 			position: relative;
 
+			span {
+				margin-left: 25px;				
+			}
+
+			span.author {
+				margin: 0px;
+			}
+
 			div.No1 {
 				background: url("/extensions/wikia/TopLists/images/sprites.png") no-repeat scroll 10px 0 transparent;/* $wgCdnStylePath */
 				font-size: 18px;
 				height: 65px;
+				width: 60px;
 				line-height: 30px;
 				padding-top: 13px;
 				position: absolute;
@@ -54,7 +63,7 @@ $item-width: 415px;
 			}
 
 			.ItemNumber {
-				text-align: center;
+				
 				position: absolute;
 				color: #999999; /*$color-module-highlight;*/
 
