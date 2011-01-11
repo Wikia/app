@@ -696,7 +696,7 @@ Timer = $.createClass(Object,{
 
 	constructor: function ( callback, timeout ) {
 		this.callback = callback;
-		this.timeout = timeout || this.timeout;
+		this.timeout = (typeof timeout == 'number') ? timeout : this.timeout;
 	},
 
 	run: function () {
@@ -705,7 +705,7 @@ Timer = $.createClass(Object,{
 
 	start: function ( timeout ) {
 		this.stop();
-		timeout = timeout || this.timeout;
+		timeout = (typeof timeout == 'number') ? timeout : this.timeout;
 		this.timer = setTimeout(this.callback,timeout);
 	},
 
