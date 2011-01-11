@@ -12,7 +12,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "Logger",
-    "description" => "Logger for backend scripts",
+    'descriptionmsg' => 'logger-desc',
     "author" => "Piotr Molski"
 );
 
