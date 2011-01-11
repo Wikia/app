@@ -212,7 +212,7 @@ public class PhotoGalleryTest extends BaseTest {
 		waitForElementVisible("WikiaPhotoGallerySearchResults");
 
 		// search for images on wiki's main page
-		session().type("//form[@id='WikiaPhotoGallerySearch']//input[@type='text']", session().getEval("window.wgMainpage"));
+		session().type("//form[@id='WikiaPhotoGallerySearch']//input[@type='text']", "logo");
 		session().click("//form[@id='WikiaPhotoGallerySearch']//button");
 		waitForElementVisible("//ul[@type='results']//li");
 
