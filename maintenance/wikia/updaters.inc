@@ -24,8 +24,9 @@ $wgUpdates[ "mysql" ][] = array( "do_page_wikia_props_update" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "imagetags" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "send_queue" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "send_stats" );
-$wgUpdates[ "mysql" ][] = array( "do_drop_table", "searchindex" );
-
+if( !empty( $wgCityId ) ) {
+	$wgUpdates[ "mysql" ][] = array( "do_drop_table", "searchindex" );
+}
 
 /**
  * @todo drop send_stats shared/send_queue
