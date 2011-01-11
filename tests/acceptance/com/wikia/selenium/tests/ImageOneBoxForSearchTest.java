@@ -10,7 +10,7 @@ public class ImageOneBoxForSearchTest extends BaseTest {
 	public void testImageSearchResults() throws Exception {
 		session().open("/");
 		waitForElement("WikiaSearch", TIMEOUT); 
-		session().type("search", "kermit piggy");
+		session().type("search", "logo logo");
 		session().click("//form[@id='WikiaSearch']//button/img[contains(@class, 'search')]");
 
 		session().waitForPageToLoad(TIMEOUT);
@@ -20,6 +20,6 @@ public class ImageOneBoxForSearchTest extends BaseTest {
 		session().click("//li[@id='image-one-box-search-result-1']/div/a");
 
 		session().waitForPageToLoad(TIMEOUT);
-		assertTrue(session().isElementPresent("article"));
+		assertTrue(session().isElementPresent("//article[@id='WikiaMainContent']"));
 	}
 }
