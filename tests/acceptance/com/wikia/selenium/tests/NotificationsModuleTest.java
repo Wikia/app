@@ -14,7 +14,7 @@ public class NotificationsModuleTest extends BaseTest {
 	}
 
 	@Test(groups={"oasis", "CI"})
-	public void testTalkPageNotification() throws Exception {
+	public void testTalkPageNotificationSend() throws Exception {
 		loginAsRegular();
 		session().open("index.php?title=User_talk:" + getTestConfig().getString("ci.user.wikiastaff.username") + "&action=edit&section=new");
 		session().waitForPageToLoad(TIMEOUT);
@@ -23,7 +23,10 @@ public class NotificationsModuleTest extends BaseTest {
 		session().type("//input[@name='wpSummary']", "Message");
 		doEdit("Test message --~~~~");
 		doSave();
+	}
 
+	@Test(groups={"oasis", "CI"},dependsOnMethods={"testTalkPageNotificationSend"})
+	public void testTalkPageNotificationReceive() throws Exception {
 		// check messages for staff
 		loginAsStaff();
 
@@ -31,11 +34,10 @@ public class NotificationsModuleTest extends BaseTest {
 		assertTrue(session().isElementPresent(xPath));
 
 		// dismiss the message
-		session().click(xPath + "//a[@class='close']");
-		Thread.sleep(5000);
+		session().click(xPath + "//a[contains(@class,'close-notification')]");
 
 		// message should be removed from DOM
-		assertFalse(session().isElementPresent(xPath));
+		waitForElementNotPresent(xPath);
 
 		// message should now be dismissed
 		randomPage();
@@ -43,12 +45,15 @@ public class NotificationsModuleTest extends BaseTest {
 	}
 
 	@Test(groups={"oasis", "CI"})
-	public void testCommunityMessageNotification() throws Exception {
+	public void testCommunityMessageNotificationSend() throws Exception {
 		loginAsStaff();
 
 		// edit community message
 		editArticle("Mediawiki:community-corner", "Community message test --~~~~");
+	}
 
+	@Test(groups={"oasis", "CI"},dependsOnMethods={"testCommunityMessageNotificationSend"})
+	public void testCommunityMessageNotificationReceive() throws Exception {
 		loginAsRegular();
 	
 		// check confirmation
@@ -56,8 +61,8 @@ public class NotificationsModuleTest extends BaseTest {
 		assertTrue(session().isElementPresent(xPath));
 
 		// dismiss the message
-		session().click(xPath + "//a[@class='close']");
-		session().waitForCondition("selenium.isElementNotPresent('" + xPath + "')", TIMEOUT);
+		session().click(xPath + "//a[contains(@class, 'close-notification')]");
+		waitForElementNotPresent(xPath, TIMEOUT);
 
 		// message should be removed from DOM
 		assertFalse(session().isElementPresent(xPath));
@@ -79,7 +84,7 @@ public class NotificationsModuleTest extends BaseTest {
 		assertFalse(session().isElementPresent(xPath));
 
 		// save preferences
-		session().click("wpSaveprefs");
+		session().click("prefcontrol");
 		session().waitForPageToLoad(TIMEOUT);
 
 		// check confirmation
