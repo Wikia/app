@@ -77,7 +77,9 @@ window.onFBloaded = function() {
 		}
 	});
 
-	$(window).trigger('fbinit');
+	if (typeof GlobalTriggers != 'undefined') {
+		GlobalTriggers.fire('fbinit');
+	}
 };
 
 /**
