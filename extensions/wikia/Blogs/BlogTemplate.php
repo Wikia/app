@@ -312,11 +312,29 @@ class BlogTemplateClass {
 
 	public static function setParserHook( &$parser ) {
 		wfProfileIn( __METHOD__ );
-		$parser->setHook( BLOGTPL_TAG, array( __CLASS__, 'parseTag' ) );
+		$parser->setHook( BLOGTPL_TAG, array( __CLASS__, 'parseTagForParser' ) );
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
+	/*
+	 * This method is used by MW parser to parse blog listing tag
+	 *
+	 * @author macbre
+	 */
+	public static function parseTagForParser($input, $params, &$parser, $frame = null, $returnPlainData = false) {
+		$res = self::parseTag($input, $params, &$parser, $frame, $returnPlainData);
+
+		/* Parser in MW1.16 allows to change the way of parsing custom tags */
+		/* Do not perform additional parsing of HTML returned by this method */
+		$res = array($res, 'markerType' => 'nowiki');
+
+		return $res;
+	}
+
+	/*
+	 * This method can be used by extensions to render blog listing
+	 */
 	public static function parseTag( $input, $params, &$parser, $frame = null, $returnPlainData = false) {
 		global $wgTitle;
 		wfProfileIn( __METHOD__ );
@@ -329,8 +347,6 @@ class BlogTemplateClass {
 		wfDebugLog( __METHOD__, "parse input parameters\n" );
 		/* parse all and return result */
 		$res = self::__parse($aParams, $params, $parser, $returnPlainData);
-		/* Parser in MW1.16 allows to change the way of parsing custom tags */
-		$res = array($res, 'markerType' => 'nowiki');
 
 		wfProfileOut( __METHOD__ );
 		return $res;
