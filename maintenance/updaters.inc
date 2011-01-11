@@ -1271,6 +1271,7 @@ function do_category_population() {
 }
 
 function do_populate_parent_id() {
+	return 1; // eloy, remove later
 	if( update_row_exists( 'populate rev_parent_id' ) ) {
 		wfOut( "...rev_parent_id column already populated.\n" );
 		return;
