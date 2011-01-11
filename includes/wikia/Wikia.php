@@ -1368,8 +1368,10 @@ class Wikia {
 	 * Returns true. Replace UNSUBSCRIBEURL with message and link to Special::Unsubscribe page
 	 */	
 	static public function ComposeCommonBodyMail( $title, &$keys, &$message, $editor ) {
+		global $wgCityId;
 		
-		$cityId = 177;
+		# to test MW 1.16
+		$cityId = ( $wgCityId == 1927 ) ? $wgCityId : 177;
 		$name = $editor->getName();
 		
 		$keys['$UNSUBSCRIBEURL'] = '';
