@@ -31,20 +31,20 @@ public class FollowedPagesTest extends BaseTest {
 		session().open("index.php?title=Special:Preferences");
 		session().waitForPageToLoad(TIMEOUT);
 		session().click("//ul[@id='preftoc']/li[6]");
-		waitForElement("//input[@id='watchlisthidebots']");
+		waitForElement("//input[@id='mw-input-watchlisthidebots']");
 		waitForElement("//li[@class='selected']");
 
-		session().uncheck( "//input[@id='enotiffollowedminoredits']" );
-		session().check( "//input[@id='enotiffollowedminoredits']" );
-		waitForElement("//input[@id='enotifminoredits' and contains(@checked, 'checked')]");
+		session().uncheck( "//input[@id='mw-input-enotiffollowedminoredits']" );
+		session().check( "//input[@id='mw-input-enotiffollowedminoredits']" );
+		waitForElement("//input[@id='mw-input-enotifminoredits' and contains(@checked, 'checked')]");
 
-		session().uncheck( "//input[@id='enotifwatchlistpages']" );
-		session().check( "//input[@id='enotifwatchlistpages']" );
+		session().uncheck( "//input[@id='mw-input-enotifwatchlistpages']" );
+		session().check( "//input[@id='mw-input-enotifwatchlistpages']" );
 
-		waitForElement("//input[@id='enotifminoredits' and contains(@checked, 'checked')]");
-		session().check( "//input[@id='hidefollowedpages']" );
+		waitForElement("//input[@id='mw-input-enotifminoredits' and contains(@checked, 'checked')]");
+		session().check( "//input[@id='mw-input-hidefollowedpages']" );
 
-		session().click( "//input[@id='wpSaveprefs']" );
+		session().click( "//input[@id='prefcontrol']" );
 		session().waitForPageToLoad(TIMEOUT);
 		session().open( "index.php?title=Special:Following/" + getTestConfig().getString("ci.user.wikiastaff.username"));
 		session().waitForPageToLoad(TIMEOUT);

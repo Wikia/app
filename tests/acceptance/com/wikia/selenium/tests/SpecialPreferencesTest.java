@@ -28,7 +28,7 @@ public class SpecialPreferencesTest extends BaseTest {
 		session().click("//input[@value='monobook']");
 		session().click("//input[@id='prefcontrol']");
 		session().waitForPageToLoad(TIMEOUT);
-		assertTrue(session().isElementPresent("//body[contains(@class, 'wikiaSkinMonobook')]"));
+		assertTrue(session().isElementPresent("//body[contains(@class, 'skin-monobook')]"));
 
 		loadPage();
 		session().click("//input[@value='oasis']");
