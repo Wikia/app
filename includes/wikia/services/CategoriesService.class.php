@@ -67,8 +67,8 @@ class CategoriesService extends Service {
 			}
 		}
 
-		// remove "false" entries
-		$categories = array_filter($categories);
+		// remove "false" entries and recalculate numeric keys
+		$categories = array_values( array_filter($categories) );
 
 		wfProfileOut(__METHOD__);
 		return $categories;
