@@ -72,19 +72,8 @@ class RelatedPages {
 		$categories = $this->getCategories();
 
 		if ( count($categories) > 0 ) {
-			//RT:80681 Category blacklist
-			$blacklist = explode( "\n",wfMsgForContent( 'categoryblacklist' ));
-			if(!empty($blacklist)) {
-				foreach($blacklist as $word) {
-					$word = trim(strtolower($word), '* ');
-					for($i = 0; $i < count($categories); $i++) {
-						if($word == strtolower($categories[$i])){
-							$categories[$i] = false;
-						}
-					}
-				}
-				$categories = array_filter($categories);
-			}
+			//RT#80681/RT#139837: apply category blacklist
+			$categories = CategoriesService::filterOutBlacklistedCategories($categories);
 
 			$categories = $this->getCategoriesByRank( $categories );
 
@@ -95,7 +84,7 @@ class RelatedPages {
 
 			// limit * 2 - get more pages (some can be filtered out - RT #72703)
 			$pages = $this->getPagesForCategories($articleId, $limit * 2, $categories);
-			
+
 			if( class_exists('imageServing') ) {
 				// ImageServing extension enabled, get images
 				$imageServing = new imageServing( array_keys($pages), 200, array( 'w' => 2, 'h' => 1 ) );
@@ -193,7 +182,7 @@ class RelatedPages {
 	private function getPagesForCategories($articleId, $limit, Array $categories) {
 		global $wgMemc, $wgContentNamespaces;
 
-		wfProfileIn(__METHOD__);	
+		wfProfileIn(__METHOD__);
 		$cacheKey = wfMemcKey(__METHOD__, $articleId);
 		$cache = $wgMemc->get($cacheKey);
 		if (is_array($cache)) {
@@ -203,7 +192,7 @@ class RelatedPages {
 
 		$dbr = wfGetDB(DB_SLAVE);
 		$pages = array();
-		
+
 		if ( empty($categories) ) {
 			wfProfileOut(__METHOD__);
 			return $pages;
@@ -220,7 +209,7 @@ class RelatedPages {
 			array(),
 			$joinSql
 		);
-		
+
 		$sql = "SELECT page_id, count(*) c FROM ( $innerSQL ) i WHERE page_id != $articleId GROUP BY page_id ORDER BY c desc LIMIT 6";
 		$res = $dbr->query($sql, __METHOD__);
 		while ($row = $dbr->fetchObject($res)) {

@@ -125,34 +125,6 @@ class PageStatsService extends Service {
 	}
 
 	/**
-	 * Checks whether given category is blacklisted in $wgBiggestCategoriesBlacklist
-	 */
-	private function isCategoryBlacklisted($category) {
-		wfProfileIn(__METHOD__);
-
-		global $wgBiggestCategoriesBlacklist;
-
-		$blacklist = array_merge(
-			$wgBiggestCategoriesBlacklist,
-			explode( "\n", wfMsgForContent( 'categoryblacklist' ) )
-		);
-
-		// perfrom case insensitive check
-		$category = strtolower($category);
-
-		foreach($blacklist as $word) {
-			$word = str_replace( ' ', '_', trim( strtolower($word), '* ' ) );
-			if (strpos($category, $word) !== false) {
-				wfProfileOut(__METHOD__);
-				return true;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return false;
-	}
-
-	/**
 	 * Get list of two most linked categories current article is in
 	 */
 	public function getMostLinkedCategories() {
@@ -195,9 +167,11 @@ class PageStatsService extends Service {
 			);
 
 			// order and filter out blacklisted categories
+			$service = new CategoriesService();
 			$categories = array();
+
 			while($obj = $dbr->fetchObject($res)) {
-				if (!$this->isCategoryBlacklisted($obj->cl_to)) {
+				if (!$service->isCategoryBlacklisted($obj->cl_to)) {
 					$categories[$obj->cl_to] = $obj->cnt;
 				}
 			}

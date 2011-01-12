@@ -110,6 +110,7 @@ $wgAutoloadClasses['UserContribsProviderService'] = $IP.'/includes/wikia/service
 $wgAutoloadClasses['UserStatsService'] = $IP.'/includes/wikia/services/UserStatsService.class.php';
 $wgAutoloadClasses['PaypalPaymentService'] = $IP.'/includes/wikia/services/PaypalPaymentService.class.php';
 $wgHooks['PayPalInstantPaymentNotification'][] = 'PaypalPaymentService::onInstantPaymentNotification';
+$wgAutoloadClasses['CategoriesService'] = $IP.'/includes/wikia/services/CategoriesService.class.php';
 
 // modules
 $wgAutoloadClasses['OasisModule'] = $IP.'/skins/oasis/modules/OasisModule.class.php';
