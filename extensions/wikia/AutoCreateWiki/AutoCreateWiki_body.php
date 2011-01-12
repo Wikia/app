@@ -1257,15 +1257,12 @@ class AutoCreateWikiPage extends SpecialPage {
 		# Now create a dummy user ($oUser) and check if it is valid
 		$name = trim( $this->mUsername );
 		$oUser = User::newFromName( $name, 'creatable' );
-		if ( is_null( $oUser ) ) {
-			$this->makeError( "wiki-username", wfMsg( 'noname' ) );
-		} else {
+
+		if ( $oUser instanceof User) {
 			if ( 0 != $oUser->idForName() ) {
 				$this->makeError( "wiki-username", wfMsg( 'userexists' ) );
 			}
-		}
 
-		if ( $oUser instanceof User) {
 			# Set some additional data so the AbortNewAccount hook can be
 			# used for more than just username validation
 			$oUser->setEmail( $this->mEmail );
@@ -1292,6 +1289,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->makeError( "wiki-username", wfMsg('externaldberror') );
 			}
 		} else {
+			$this->makeError( "wiki-username", wfMsg('noname') );
 			$this->makeError( "wiki-username", wfMsg('autocreatewiki-blocked-username') );
 		}
 
