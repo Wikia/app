@@ -38,7 +38,7 @@ public class BlackListTest extends BaseTest {
 		for (String website: websites) {
 			editArticle(articleTitle, website + "<br>" + time);
 			String content = session().getHtmlSource();
-			String pattern = "<a href=\"" + website + "\" class=\"free\" title=\"" + website + "\">" + website + "</a>";
+			String pattern = "<a href=\"" + website + "\" class=\"free\">" + website + "</a>";
 			assertTrue(content.indexOf(pattern) > 0);
 		}
 
@@ -48,7 +48,7 @@ public class BlackListTest extends BaseTest {
 		for (String website: websites) {
 			editArticle(articleTitle, website + "<br>" + time);
 			String content = session().getHtmlSource();
-			String pattern = "<a href=\"" + website + "\" class=\"external free\" title=\"" + website + "\" rel=\"nofollow\">" + website + "</a>";
+			String pattern = "<a href=\"" + website + "\" class=\"external free\" rel=\"nofollow\">" + website + "</a>";
 			assertTrue(content.indexOf(pattern) > 0);
 		}
 	}
@@ -79,7 +79,7 @@ public class BlackListTest extends BaseTest {
 		for (String image: images) {
 			editArticle(articleTitle, image + "<br>" + time);
 			String content = session().getHtmlSource();
-			String pattern = "<a href=\"" + image + "\" class=\"external free\" title=\"" + image + "\" rel=\"nofollow\">" + image + "</a>";
+			String pattern = "<a href=\"" + image + "\" class=\"external free\" rel=\"nofollow\">" + image + "</a>";
 			assertTrue(content.indexOf(pattern) > 0);
 		}
 	}
