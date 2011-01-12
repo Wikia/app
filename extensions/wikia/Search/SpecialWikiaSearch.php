@@ -201,7 +201,6 @@ STOP;
 			$wgOut->addWikiText( '==' . $search->getError() . '==' );
 			$wgOut->addHTML( $search->getErrorTracker());
 			$wgOut->addHTML( $this->powerSearchBox( $term ) );
-			$wgOut->addHTML( $this->powerSearchFocus() );
 			wfProfileOut( __METHOD__ );
 			return;
 		}
@@ -238,7 +237,6 @@ STOP;
 			$wgSupressSiteNotice = true;
 			$wgOut->setSubtitle( '' );
 			$wgOut->addHTML( $this->powerSearchBox( $term ) );
-			$wgOut->addHTML( $this->powerSearchFocus() );
 			wfProfileOut( __METHOD__ );
 			return;
 		}
@@ -287,7 +285,6 @@ STOP;
 		if ($titleMatches instanceof SearchResultTooMany) {
 			$wgOut->addWikiText( '==' . wfMsg( 'toomanymatches' ) . "==\n" );
 			$wgOut->addHTML( $this->powerSearchBox( $term ) );
-			$wgOut->addHTML( $this->powerSearchFocus() );
 			wfProfileOut( __METHOD__ );
 			return;
 		}
