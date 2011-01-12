@@ -6,7 +6,7 @@
 				<img src="<?= $wgBlankImgUrl; ?>" class="sprite logo">
 			</div>
 			<?php if ($hub && $hub->cat_id != 4) { // 4: Corporate ?>
-			<div class="hub"><a href="http://www.wikia.com/<?=$hub->cat_name?>"><?=$hub->cat_name?></a></div>
+			<div class="hub"><a href="<?=$hub->cat_link?>"><?=$hub->cat_name?></a></div>
 			<?php } ?>
 		</div>
 		<ul>
