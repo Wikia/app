@@ -255,7 +255,7 @@ Please [[Special:UserLogin|log in or create an account]] if you do not already h
 	'wikistats_namespaces_top10list' => 'Top 10 list',
 	'wikistats_namespaces_blog' => 'Blogs (include blog and blog comments)',
 	'wikistats_namespaces_user' => 'User (include User talk)',
-	'wikistats_namespaces_maintenance' => 'Maintenance (Mediawiki, Template, Project)',
+	'wikistats_namespaces_maintenance' => 'Maintenance (MediaWiki, Template, Project)',
 	'wikistats_namespace_top' => 'Predefined namespaces',
 	'wikistats_error_malformed_date' => "Error: The date given is malformed",
 );
