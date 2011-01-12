@@ -26,7 +26,7 @@ $messages['af'] = array(
 	'sitemap-desc' => 'Genereer "sitemaps" vir die wiki',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -74,6 +74,11 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'sitemap-desc' => 'Xerar mapas do sitio para o wiki',
+);
+
+/** Hebrew (עברית) */
+$messages['he'] = array(
+	'sitemap-desc' => 'יצירת מפות אתרים לאתר הוויקי בו במקום',
 );
 
 /** Interlingua (Interlingua)

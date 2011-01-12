@@ -98,6 +98,11 @@ $messages['es'] = array(
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|editor|editores}}</span>',
 );
 
+/** Finnish (Suomi) */
+$messages['fi'] = array(
+	'hub-blog-showarticle' => 'Näytä sivu',
+);
+
 /** French (Français)
  * @author Peter17
  */
@@ -162,6 +167,11 @@ $messages['ia'] = array(
 	'hub-show-feed' => 'Revelar syndication',
 	'hub-contributors-info' => 'Le usatores le plus productive de iste septimana, rangiate per numero de modificationes.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|redactor|redactores}}</span>',
+);
+
+/** Luxembourgish (Lëtzebuergesch) */
+$messages['lb'] = array(
+	'unhide' => 'Nees weisen',
 );
 
 /** Macedonian (Македонски)
@@ -289,6 +299,7 @@ $messages['pt'] = array(
  */
 $messages['ru'] = array(
 	'unhide' => 'Показать',
+	'hub-blog-comments' => '{{PLURAL:$1|один комментарий|$1 комментария|$1 комментариев}}',
 );
 
 /** Tamil (தமிழ்)
@@ -298,5 +309,13 @@ $messages['ta'] = array(
 	'hub-header' => '$1 விக்கிகள்',
 	'hub-blog-continue' => 'படிப்பதைத் தொடரவும்',
 	'hub-blog-showarticle' => 'பக்கத்தைக் காட்டவும்',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'hub-blog-showarticle' => 'Показати сторінку',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|редактор|редактори|редакторів}}</span>',
 );
 

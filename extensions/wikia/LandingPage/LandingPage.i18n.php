@@ -31,6 +31,7 @@ $messages['en'] = array(
  */
 $messages['br'] = array(
 	'landingpage' => "Deuet mat oc'h war Wikia",
+	'landingpage-start-exploring' => "Ha prest oc'h evit kregiñ gant an ergerzherezh ?",
 	'landingpage-readfaq' => 'Goulennoù ? Lennit hor FAG &gt;',
 	'landingpage-buttons-learn-more' => "Gouzout hiroc'h &gt;",
 );
@@ -49,6 +50,16 @@ $messages['de'] = array(
  */
 $messages['es'] = array(
 	'landingpage' => 'Bienvenido a Wikia',
+	'landingpage-start-exploring' => '¿Listo para empezar a explorar?',
+	'landingpage-start-exploring-text' => 'Busca por tu tema favorito o navega por algunos favoritos de la comunidad más abajo.',
+	'landingpage-readfaq' => '¿Preguntas? Lee nuestro FAW &gt;',
+	'landingpage-text' => 'En Wikia puedes <strong>conectarte con personas</strong> quienes comparten tus <strong>pasiones e intereses</strong>. Encuentra tu grupo, haz comentarios y ediciones, incluso <strong>comienza tu propio sitio web</strong> y la comunidad.',
+	'landingpage-buttons-learn-more' => 'Aprende más &gt;',
+);
+
+/** Finnish (Suomi) */
+$messages['fi'] = array(
+	'landingpage' => 'Tervetuloa Wikiaan',
 );
 
 /** French (Français)
@@ -88,6 +99,26 @@ $messages['ia'] = array(
 	'landingpage-readfaq' => 'Questiones? Lege nostre FAQ &gt;',
 	'landingpage-text' => 'In Wikia tu pote <strong>connecter te a personas</strong> que ha <strong>passiones e interesses</strong> in commun con te. Cerca tu gruppo, face commentos e modificationes, o mesmo <strong>comencia tu proprie sito web</strong> e communitate.',
 	'landingpage-buttons-learn-more' => 'Leger plus &gt;',
+);
+
+/** Indonesian (Bahasa Indonesia) */
+$messages['id'] = array(
+	'landingpage' => 'Selamat datang di Wikia',
+	'landingpage-start-exploring' => 'Siap untuk memulai penjelajahan?',
+	'landingpage-start-exploring-text' => 'Cari topik favorit Anda atau telusuri beberapa favorit komunitas berikut.',
+	'landingpage-readfaq' => 'Ada pertanyaan? Baca FAQ kami &gt;',
+	'landingpage-text' => 'Di Wikia, Anda dapat <strong>berhubungan dengan orang-orang</strong> yang memiliki <strong>hasrat dan minat</strong> serupa. Temukan kelompok Anda, kirimkan komentar dan suntingan, bahkan <strong>buat situs web Anda sendiri</strong> dan komunitas.',
+	'landingpage-buttons-learn-more' => 'Selengkapnya &gt;',
+);
+
+/** Korean (한국어) */
+$messages['ko'] = array(
+	'landingpage' => '위키아에 오신 것을 환영합니다',
+	'landingpage-start-exploring' => '탐험을 시작할 준비가 되셨나요?',
+	'landingpage-start-exploring-text' => '아래에서 당신이 선호하는 주제나 공동체를 찾아보세요.',
+	'landingpage-readfaq' => '질문이 있으신가요? 자주 묻는 질문을 읽어보세요 &gt;',
+	'landingpage-text' => '위키아에서 당신은 <strong>열정과 관심사를 공유</strong>하는 사람들과 <strong>만나실 수 있습니다</strong>. 당신만의 공동체를 찾아보시고 댓글을 달거나 편집을 해보세요. 마음에 드는 공동체가 없으시다면 <strong>새로 시작</strong>하실 수도 있습니다.',
+	'landingpage-buttons-learn-more' => '더 알아보기 &gt;',
 );
 
 /** Macedonian (Македонски)
@@ -133,13 +164,22 @@ $messages['no'] = array(
 	'landingpage-buttons-learn-more' => 'Lær mer &gt;',
 );
 
+/** Polish (Polski) */
+$messages['pl'] = array(
+	'landingpage' => 'Witamy na Wikii',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
 	'landingpage' => 'Bin ëvnù su Wikia',
-	'landingpage-buttons-learn-more' => 'Ampara ëd pi',
+	'landingpage-start-exploring' => 'Pront a parte a esploré?',
+	'landingpage-start-exploring-text' => 'Serca tò argoment favorì o varda quàiche comunità favorìe sì sota.',
+	'landingpage-readfaq' => 'Custion? Les nòst FAQ &gt;',
+	'landingpage-text' => "A Wikia it peule <strong>coleghete con përson-e</strong> ch'a condivido toe <strong>passion e antëress</strong>. Treuva tò grup, fà coment e modìfiche, ëdcò <strong>ancamin-a tò sit web</strong> e toa comunità.",
+	'landingpage-buttons-learn-more' => 'Ampara ëd pi &gt;',
 );
 
 /** Portuguese (Português)
@@ -167,7 +207,8 @@ $messages['pt-br'] = array(
  */
 $messages['ru'] = array(
 	'landingpage' => 'Добро пожаловать в Викиа',
-	'landingpage-buttons-learn-more' => 'Подробнее',
+	'landingpage-readfaq' => 'Есть вопросы? Прочтите наш FAQ &gt;',
+	'landingpage-buttons-learn-more' => 'Подробнее &gt;',
 );
 
 /** Tagalog (Tagalog)
@@ -176,5 +217,12 @@ $messages['ru'] = array(
 $messages['tl'] = array(
 	'landingpage' => 'Maligayang Pagdating sa Wikia',
 	'landingpage-buttons-learn-more' => 'Umalam ng marami pa',
+);
+
+/** Ukrainian (Українська) */
+$messages['uk'] = array(
+	'landingpage' => 'Ласкаво просимо у Wikia',
+	'landingpage-readfaq' => 'Є запитання? Читайте наші FAQ &gt;',
+	'landingpage-buttons-learn-more' => 'Дізнатись більше &gt;',
 );
 

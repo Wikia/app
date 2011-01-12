@@ -209,7 +209,7 @@ $messages['ru'] = array(
 Действия на страницах оценки '''не''' учитываются.",
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */

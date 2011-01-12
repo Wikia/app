@@ -34,7 +34,7 @@ $messages['ar'] = array(
 	'ajaxpoll-submitting' => 'يرجى الانتظار ، يتم تقديم صوتك...',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Wizardist
  */
@@ -74,13 +74,25 @@ $messages['de'] = array(
 	'ajaxpoll-submitting' => 'Bitte warte kurz, deine Stimme wird verarbeitet.',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
 	'ajaxpoll-thankyou' => 'Vielen Dank für Ihre Stimme!',
 	'ajaxpoll-error' => 'Es gab ein Problem bei der Verarbeitung Ihrer Stimme. Probieren Sie es bitte noch einmal.',
 	'ajaxpoll-submitting' => 'Bitte warten Sie kurz, Ihre Stimme wird verarbeitet.',
+);
+
+/** Greek (Ελληνικά)
+ * @author Evropi
+ */
+$messages['el'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;όλων των ψήφων',
+	'ajaxpoll-thankyou' => 'Ευχαριστούμε για την ψήφο σας!',
+	'ajaxpoll-summary' => 'Η ψηφοφορία δημιουργήθηκε στις $1, $2 και μέχρι στιγμής $3 άτομα έχουν ψηφίσει.',
+	'ajaxpoll-submit' => 'Ψηφίστε!',
+	'ajaxpoll-closed' => 'Η ψηφοφορία έχει κλείσει. Απολαύστε τα αποτελέσματα.',
+	'ajaxpoll-submitting' => 'Παρακαλώ περιμένετε, υποβάλλοντας την ψήφο σας...',
 );
 
 /** Spanish (Español)
@@ -121,9 +133,9 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'ajaxpoll-percentVotes' => '$1% de tous les votes',
-	'ajaxpoll-thankyou' => "Merci d'avoir voté!",
-	'ajaxpoll-error' => 'Une erreur est survenue lors de la validation de votre vote, veuillez réessayer.',
-	'ajaxpoll-summary' => 'Le sondage fut créé le $1 $2, et $3 personnes ont déjà voté.',
+	'ajaxpoll-thankyou' => 'Merci pour votre vote !',
+	'ajaxpoll-error' => 'Une erreur est survenue lors du traitement de votre vote, veuillez réessayer.',
+	'ajaxpoll-summary' => 'Ce sondage a été créé le $2 $1 et $3 personnes ont déjà voté.',
 	'ajaxpoll-submit' => 'Voter !',
 	'ajaxpoll-closed' => 'Le sondage est désormais terminé. Comparez les résultats.',
 	'ajaxpoll-submitting' => "Veuillez patienter pendant l'envoi de votre vote...",
@@ -391,7 +403,7 @@ $messages['ru'] = array(
 	'ajaxpoll-submitting' => 'Пожалуйста, подождите, передаётся информация о вашем голосе…',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */

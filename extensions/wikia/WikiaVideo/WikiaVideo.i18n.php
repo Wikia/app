@@ -78,7 +78,7 @@ $messages['az'] = array(
 	'wikiavideo-pixel' => 'piksel',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -195,6 +195,7 @@ $messages['cy'] = array(
 	'wikiavideo-category' => 'Fideos',
 	'wikiavideo-links' => 'Cysylltau',
 	'wikiavideo-placeholder' => 'Dalfan',
+	'wikiavideo-gallery-template' => "Mae'r galeri hwn o fideos wedi ei osod oddi mewn i nodyn, ac ni ellir ei olygu yn y modd gwylio. Golygwch y nodyn perthnasol os gwelwch yn dda.",
 	'wikiavideo-not-supported' => "Nid yw'r wedd hon yn gadael i chi osod fideo mewn oriel tra eich bod yn y modd gweld.",
 	'wikiavideo-pixel' => '  picsel',
 	'wikiavideo-deleted-old' => "Mae'r diwygiad o '''[$1 $2]''' a wnaethpwyd am $3, $4, wedi cael ei ddileu.",
@@ -221,7 +222,7 @@ $messages['de'] = array(
 	'wikiavideo-intro-old' => "Du löschst die Version von '''[$1 $5]''' vom [$4 $3, $2].",
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -300,7 +301,7 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'wikiavideo-reverted' => 'La vidéo $1 a été révoquée avec succès. Revenir à $2.',
 	'wikiavideo-unreverted' => "Vous n'avez pas la permission de révoquer $1.",
-	'wikiavideo-added' => 'a jouté la vidéo $1',
+	'wikiavideo-added' => 'a ajouté la vidéo $1',
 	'wikiavideo-back' => 'revenir',
 	'wikiavideo-create' => 'Ajouter une vidéo',
 	'wikiavideo-replace' => 'Remplacer la vidéo',
@@ -340,7 +341,7 @@ $messages['gl'] = array(
 $messages['he'] = array(
 	'wikiavideo-reverted' => 'הסרטון $1 שוחזר בהצלחה. חיזרו אל $2.',
 	'wikiavideo-unreverted' => 'אינכם מורשים לשחזר $1.',
-	'wikiavideo-added' => 'סרטון נוסף $ 1',
+	'wikiavideo-added' => 'הסרטון $1 נוסף',
 	'wikiavideo-back' => 'חזרה',
 	'wikiavideo-create' => 'הוסף סרטון',
 	'wikiavideo-replace' => 'החלף סרטון',
@@ -502,8 +503,10 @@ $messages['lb'] = array(
 	'wikiavideo-back' => 'zréck',
 	'wikiavideo-create' => 'Video derbäisetzen',
 	'wikiavideo-replace' => 'Video ersetzen',
+	'wikiavideo-category' => 'Videoen',
 	'wikiavideo-links' => 'Linken',
 	'wikiavideo-pixel' => 'Pixel',
+	'wikiavideo-intro-old' => "Dir läscht  d'Versioun vum '''[$1 $5]''' vum [$4 $3, $2].",
 );
 
 /** Macedonian (Македонски)
@@ -710,6 +713,9 @@ $messages['ru'] = array(
  */
 $messages['si'] = array(
 	'wikiavideo-back' => 'ආපස්සට යන්න',
+	'wikiavideo-category' => 'වීඩියෝ',
+	'wikiavideo-links' => 'සබැඳි',
+	'wikiavideo-pixel' => 'pixel',
 );
 
 /** Slovenian (Slovenščina)
@@ -719,7 +725,7 @@ $messages['sl'] = array(
 	'wikiavideo-back' => 'nazaj',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */

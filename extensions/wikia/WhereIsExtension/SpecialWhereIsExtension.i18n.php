@@ -72,7 +72,7 @@ $messages['ar'] = array(
 	'whereisextension-filter' => 'مُرشِّح',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -88,6 +88,12 @@ $messages['be-tarask'] = array(
 	'whereisextension-search-type' => 'Тып:',
 	'whereisextension-search-type-bool' => 'Лягічны',
 	'whereisextension-search-type-full' => 'Падобна',
+);
+
+/** Bulgarian (Български) */
+$messages['bg'] = array(
+	'whereisextension-submit' => 'Търсене',
+	'whereisextension-all-groups' => 'Всички групи',
 );
 
 /** Breton (Brezhoneg)
@@ -170,7 +176,17 @@ $messages['es'] = array(
  * @author An13sa
  */
 $messages['eu'] = array(
+	'whereisextension' => 'Non dagoen zehazteko luzapena',
 	'whereisextension-submit' => 'Bilatu',
+	'whereisextension-list' => 'Irizpideekin bat datozen wikien zerrenda',
+	'whereisextension-isset' => 'ezarpen honekin dago:',
+	'whereisextension-filter' => 'Irazi',
+	'whereisextension-all-groups' => 'Talde guztiak',
+	'whereisextension-name-contains' => 'aldagaiaren izenak hau dauka:',
+	'whereisextension-search-like-value' => 'Honen antzekoa:',
+	'whereisextension-search-type' => 'Mota:',
+	'whereisextension-search-type-bool' => 'Boolearra',
+	'whereisextension-search-type-full' => 'Honen antzekoa:',
 );
 
 /** Finnish (Suomi)
@@ -295,7 +311,7 @@ $messages['ja'] = array(
 	'whereisextension' => '拡張子の場所',
 	'whereisextension-submit' => '検索',
 	'whereisextension-list' => 'ウィキに一致した基準の一覧',
-	'whereisextension-filter' => 'フィルタ',
+	'whereisextension-filter' => 'フィルター',
 	'whereisextension-all-groups' => 'すべてのグループ',
 	'whereisextension-search-like-value' => 'Like演算子:',
 	'whereisextension-search-type' => 'タイプ:',
@@ -492,6 +508,11 @@ $messages['ru'] = array(
 	'whereisextension-search-type-full' => 'Подобно',
 );
 
+/** Sinhala (සිංහල) */
+$messages['si'] = array(
+	'whereisextension-submit' => 'සොයන්න',
+);
+
 /** Slovenian (Slovenščina)
  * @author Dbc334
  */
@@ -509,7 +530,7 @@ $messages['sl'] = array(
 	'whereisextension-search-type-full' => 'Kot',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */

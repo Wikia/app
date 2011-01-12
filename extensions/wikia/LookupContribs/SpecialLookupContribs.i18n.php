@@ -103,7 +103,7 @@ $messages['af'] = array(
 	'lookupcontribscontent' => 'inhoud',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -147,6 +147,7 @@ $messages['br'] = array(
 	'lookupcontribscontribslink' => 'Liammoù war-du an degasadennoù',
 	'lookupcontribsdetails' => 'Gwelet ar munudoù evit :',
 	'lookupcontribslastedited' => 'Kemmet da ziwezhañ',
+	'lookupcontribsrecordspager' => "Diskwel enrolladennoù '''$1''' da '''$2''' war '''$3'''.",
 	'lookupcontribscontribs' => 'degasadennoù',
 	'lookupcontribsnbrresult' => "Niver a zisoc'hoù :",
 	'lookupcontribsnext' => 'da-heul',
@@ -161,6 +162,7 @@ $messages['br'] = array(
 	'lookupcontribscontent' => 'danvez',
 	'lookupcontribscontribtitleforuser' => 'Degasadennoù an implijer :',
 	'lookupcontribsnormal' => 'nevez',
+	'lookupcontribsfinal' => 'dibenn',
 	'lookupcontribsall' => 'pep tra',
 );
 
@@ -218,7 +220,7 @@ Bitte überprüfe den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
 	'lookupcontribsall' => 'alle',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -260,8 +262,11 @@ $messages['es'] = array(
 	'lookupcontribswikidbname' => 'Nombre de la BD',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Título',
+	'lookupcontribswikioptions' => 'Opciones',
 	'lookupcontribscontribslink' => 'Enlace a sus contribuciones',
 	'lookupcontribsdetails' => 'Ver detalles para:',
+	'lookupcontribslastedited' => 'Última edición',
+	'lookupcontribsrecordspager' => "Mostrando '''$1''' a '''$2''' de '''$3''' registros.",
 	'lookupcontribscontribs' => 'contribuciones',
 	'lookupcontribsnbrresult' => 'Número de resultados:',
 	'lookupcontribsnext' => 'siguiente',
@@ -274,6 +279,10 @@ $messages['es'] = array(
 	'right-lookupcontribs' => 'Ver las ediciones globales del usuario',
 	'lookupcontribsshowpages' => 'Todas las páginas ($1 espacios de nombre)',
 	'lookupcontribscontent' => 'contenido',
+	'lookupcontribscontribtitleforuser' => 'Contribuciones para el usuario:',
+	'lookupcontribsnormal' => 'reciente',
+	'lookupcontribsfinal' => 'final',
+	'lookupcontribsall' => 'todo',
 );
 
 /** Finnish (Suomi)
@@ -928,8 +937,11 @@ $messages['ru'] = array(
 	'lookupcontribswikidbname' => 'Название БД',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Название',
+	'lookupcontribswikioptions' => 'Параметры',
 	'lookupcontribscontribslink' => 'Ссылка на вклад',
 	'lookupcontribsdetails' => 'Подробнее о:',
+	'lookupcontribslastedited' => 'Последняя правка',
+	'lookupcontribsrecordspager' => "Показано от '''$1''' до '''$2''' из '''$3''' записей.",
 	'lookupcontribscontribs' => 'вклад',
 	'lookupcontribsnbrresult' => 'Количество результатов:',
 	'lookupcontribsnext' => 'след.',
@@ -942,9 +954,13 @@ $messages['ru'] = array(
 	'right-lookupcontribs' => 'просмотр глобальных правок участника',
 	'lookupcontribsshowpages' => 'Все страницы ($1 пространств имён)',
 	'lookupcontribscontent' => 'содержимое',
+	'lookupcontribscontribtitleforuser' => 'Вклад участника:',
+	'lookupcontribsnormal' => 'последние',
+	'lookupcontribsfinal' => 'последняя',
+	'lookupcontribsall' => 'все',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -1062,6 +1078,9 @@ Suriin ang ibinigay na pangalan ng tagagamit para sa maaaring mga kamalian.</p>'
  * @author Тест
  */
 $messages['uk'] = array(
+	'lookupcontribsrestore' => 'відновити',
 	'lookupcontribslog' => 'журнал',
+	'lookupcontribshist' => 'історія',
+	'lookupcontribsdiff' => 'різн.',
 );
 

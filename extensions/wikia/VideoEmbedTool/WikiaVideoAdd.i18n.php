@@ -52,7 +52,7 @@ $messages['ar'] = array(
 	'wva-notallowed' => 'لا يمكنك إضافة فيديو في هذه الويكي',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -136,7 +136,7 @@ $messages['de'] = array(
 	'wva-protected' => 'Dieses Video ist geschützt',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -188,6 +188,7 @@ $messages['fa'] = array(
 	'wva-title' => 'به سرعت فیلم را از نشانی اینترنتی واردکردن',
 	'wva-notlogged' => 'برای وارد کردن فیلم، شما باید به سامانه وارد شوید یا ثبت نام کنید.',
 	'wva-notallowed' => 'شما نمی‌توانید در این ویکی فیلم وارد کنید.',
+	'wva-protected' => 'این ویدیو حفاظت شده است.',
 );
 
 /** Finnish (Suomi)
@@ -574,7 +575,15 @@ $messages['ru'] = array(
 	'wva-protected' => 'Это видео защищено.',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Sinhala (සිංහල) */
+$messages['si'] = array(
+	'wva-name' => 'නම යොදන්න:',
+	'wva-url' => 'URLඑක යොදන්න:',
+	'wva-add' => 'එක්කරන්න',
+	'wva-protected' => 'මෙම වීඩියෝව ආරක්‍ෂිතය',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */

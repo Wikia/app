@@ -33,7 +33,7 @@ $messages['arn'] = array(
 	'wikiawidget' => 'Wikia ñi widgets',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -76,7 +76,7 @@ $messages['de'] = array(
 	'wikiawidget' => 'Wikia Widgets',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -111,6 +111,11 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'wikiawidget' => 'Widgets de Wikia',
+);
+
+/** Hebrew (עברית) */
+$messages['he'] = array(
+	'wikiawidget' => 'וידג׳טים של Wikia',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -306,7 +311,7 @@ $messages['ru'] = array(
 	'wikiawidget' => 'Виджеты Wikia',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -339,6 +344,13 @@ $messages['tl'] = array(
  */
 $messages['uk'] = array(
 	'wikiawidget' => 'Віджети Wikia',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'wikiawidget' => 'Wikia 窗口小部件',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

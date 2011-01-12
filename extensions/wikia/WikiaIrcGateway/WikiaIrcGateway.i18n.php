@@ -51,7 +51,7 @@ $messages['ar'] = array(
 	'ircgate-channel' => 'لقناة :',
 );
 
-/** Bashkir (Башҡорт)
+/** Bashkir (Башҡортса)
  * @author Comp1089
  */
 $messages['ba'] = array(
@@ -59,7 +59,7 @@ $messages['ba'] = array(
 	'ircgate-channel' => 'Канал:',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -221,7 +221,7 @@ $messages['it'] = array(
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
-	'ircgate-username' => 'ユーザー名:',
+	'ircgate-username' => 'ユーザー名：',
 	'ircgate-channel' => 'チャンネル:',
 );
 
@@ -359,7 +359,13 @@ $messages['ru'] = array(
 	'ircgate-channel' => 'Канал:',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Sinhala (සිංහල) */
+$messages['si'] = array(
+	'ircgate-username' => 'පරිශීලක-නාමය:',
+	'ircgate-channel' => 'චැනලය:',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Verlor
  */
 $messages['sr-ec'] = array(

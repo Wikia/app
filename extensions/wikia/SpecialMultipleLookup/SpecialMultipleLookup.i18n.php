@@ -67,7 +67,7 @@ Kontroleer die gegewe IP-adres; u met moontlik \'n invoerfout gemaak.</p>',
 	'multilookuplastedit' => 'Laste wysiging vanaf die IP:',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -115,8 +115,12 @@ $messages['br'] = array(
 	'multilookuplistwikiainfo' => "roll ar wikioù zo bet kemmet pennadoù warno gant an implierien o deus ur chomlec'h IP :<b>$1</b>",
 	'multilookupinvaliduser' => '<p class="error">IP "<b>$1</b>" n\'eus ket anezhañ.  Gwiriit ar chomlec\'h IP abalamour da fazioù a c\'\'hallfe bezañ ennañ. C</p>',
 	'multilookuplastedit' => "Kemm diwezhañ ar chomlec'h IP-mañ :",
+	'multilookupwikidbname' => 'Anv an diaz roadennoù',
+	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => 'Titl',
 	'multilookupwikioptions' => 'Dibarzhioù',
+	'multilookuplastedithdr' => 'Kemm diwezhañ',
+	'multilookuprecordspager' => "Diskwel enrolladennoù '''$1''' da '''$2''' war '''$3'''.",
 	'right-multilookup' => 'Klask titouroù diwar-benn implijerien e meur a wiki.',
 );
 
@@ -170,7 +174,7 @@ $messages['de'] = array(
 	'right-multilookup' => 'Multiaccount-Suche auf mehreren Wikis',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  * @author The Evil IP address
  */
@@ -201,6 +205,12 @@ $messages['es'] = array(
 	'multilookuplistwikiainfo' => 'Lista de wikis cuyos artículos fueron editados por usuarios de IP: <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">IP "<b>$1</b>" no existe. Revisa si hay posible errores ortográficos en la IP dada.</p>',
 	'multilookuplastedit' => 'Última edición desde esta IP:',
+	'multilookupwikidbname' => 'Nombre de la BD',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Título',
+	'multilookupwikioptions' => 'Opciones',
+	'multilookuplastedithdr' => 'Última edición',
+	'multilookuprecordspager' => "Mostrando '''$1''' a '''$2''' de '''$3''' registros.",
 	'right-multilookup' => 'Información de búsqueda de usuarios en múltiples wikis',
 );
 
@@ -213,7 +223,7 @@ $messages['fi'] = array(
 	'multilookupnotspecify' => 'Et määrittänyt IP-osoitetta vielä',
 	'multilookupnext' => 'seuraava',
 	'multilookupprevious' => 'edellinen',
-	'multilookupnbrresult' => 'Tulosten lukumäärä:',
+	'multilookupnbrresult' => 'Tulosten määrä:',
 	'multilookupinvalidresults' => 'Virheelliset tulokset!',
 	'multilookupnoresultfound' => 'Tulosta ei löytynyt!',
 	'multilookupwiki' => 'Wiki',
@@ -464,6 +474,17 @@ $messages['no'] = array(
 	'right-multilookup' => 'Slå opp informasjon om brukere på flere wikier',
 );
 
+/** Deitsch (Deitsch) */
+$messages['pdc'] = array(
+	'multilookupnext' => 'Neegschte',
+);
+
+/** Pälzisch (Pälzisch) */
+$messages['pfl'] = array(
+	'multilookupnext' => 'Negschte',
+	'multilookupprevious' => 'Voriche',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */
@@ -510,7 +531,7 @@ $messages['pms'] = array(
 	'multilookuplistwikiainfo' => "Lista ëd wiki anté che dj'artìcoj a j'ero stàit modificà da utent con IP :<b>$1</b>",
 	'multilookupinvaliduser' => '<p class="error">IP "<b>$1</b>" a esist pa. Ch\'a contròla l\'IP dàit për possìbij eror ëd batidura.</p>',
 	'multilookuplastedit' => 'Ultima modìfica da sto IP-sì:',
-	'multilookupwikidbname' => 'Nòm DB',
+	'multilookupwikidbname' => 'Nòm ëd la base ëd dàit',
 	'multilookupwikiurl' => "Adrëssa an sl'aragnà",
 	'multilookupwikititle' => 'Tìtol',
 	'multilookupwikioptions' => 'Opsion',
@@ -608,10 +629,13 @@ $messages['ru'] = array(
 	'multilookuplistwikiainfo' => 'Список вики, статьи которых были отредактированы участниками с IP: <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">IP «<b>$1</b>» не существует. Проверьте указанный IP на возможные опечатки.</p>',
 	'multilookuplastedit' => 'Последняя правка с этого IP-адреса:',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Заголовок',
+	'multilookupwikioptions' => 'Параметры',
 	'right-multilookup' => 'просмотр сведений об участниках в нескольких вики',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -670,7 +694,13 @@ $messages['tl'] = array(
  * @author Тест
  */
 $messages['uk'] = array(
+	'multilookupgo' => 'Перейти',
 	'multilookupnext' => 'наступні',
 	'multilookupprevious' => 'попередні',
+	'multilookupnbrresult' => 'Кількість результатів:',
+	'multilookupnoresultfound' => 'Нічого не знайдено!',
+	'multilookupwiki' => 'Вікі',
+	'multilookupwikititle' => 'Назва',
+	'multilookuplastedithdr' => 'Останнє редагування',
 );
 

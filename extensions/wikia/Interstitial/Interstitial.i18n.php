@@ -24,3 +24,68 @@ $messages['en'] = array(
 	"exitstitial-register" => "<a href=\"#\" class=\"register\">Register</a> or <a href=\"#\" class=\"login\">Login</a> to skip ads.",
 	"exitstitial-button" => "Skip This Ad"
 );
+
+/** Message documentation (Message documentation)
+ * @author Siebrand
+ */
+$messages['qqq'] = array(
+	'interstitial-disabled-no-link' => "''On the World Wide Web, interstitials are web page advertisements that are displayed before or after an expected content page, often to display advertisements or confirm the user's age.''",
+);
+
+/** Spanish (Español)
+ * @author Bola
+ */
+$messages['es'] = array(
+	'interstitial-default-campaign-code' => '¡Wikia te quiere!',
+	'interstitial-skip-ad' => 'Omitir este anuncio',
+	'interstitial-already-logged-in-no-link' => 'Ya estás identificado y no hay ninguna configuración destinada',
+	'interstitial-disabled-no-link' => 'No hay ninguna configuración destinada y no está activado en este wiki interstitials.',
+	'interstitial-link-away' => '¡Aquí no hay nada que ver!<br /><br />¿Prefieres ir a la [[{{MediaWiki:Mainpage}}|Portada]] o quizás prefieres una [[Special:Random|página aleatoria]]?',
+	'exitstitial-register' => '<a href="#" class="register">Regístrate</a> o <a href="#" class="login">identifícate</a> para omitir la publicidad.',
+	'exitstitial-button' => 'Omitir este anuncio',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'interstitial-default-campaign-code' => 'Wikia te ama!',
+	'interstitial-skip-ad' => 'Saltar iste annuncio',
+	'interstitial-already-logged-in-no-link' => 'Tu ha jam aperite session e il non ha un destination definite.',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'interstitial-default-campaign-code' => 'Викија ве сака!',
+	'interstitial-skip-ad' => 'Прескокни ја рекламава',
+	'interstitial-already-logged-in-no-link' => 'Веќе сте најавени, а нема зададено одредница.',
+	'interstitial-disabled-no-link' => 'Нема зададено одредница, а на викито не се овозможени меѓупросторни реклами.',
+	'interstitial-link-away' => 'Тука нема што да се види!<br /><br />Дали би сакале да појдете на [[{{MediaWiki:Mainpage}}|Главната страница]] или пак да отворите [[Special:Random|случајна]]?',
+	'exitstitial-register' => '<a href="#" class="register">Регистрирајте се</a> или <a href="#" class="login">Најавете се</a> за да ги прескокнете рекламите.',
+	'exitstitial-button' => 'Прескокни ја рекламава',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'interstitial-default-campaign-code' => 'Wikia houdt van u!',
+	'interstitial-skip-ad' => 'Deze advertentie overslaan',
+	'interstitial-already-logged-in-no-link' => 'U bent al aangemeld en er is nog geen bestemming ingesteld.',
+	'interstitial-disabled-no-link' => 'Er is nog geen bestemming ingesteld en voorloopadvertenties zijn niet ingeschakeld op deze wiki.',
+	'interstitial-link-away' => 'Er is hier niets te zien!<br /><br />Wilt u naar de [[{{MediaWiki:Mainpage}}|Hoofdpagina]] of misschien naar een [[Special:Random|willekeurige pagina]]?',
+	'exitstitial-register' => '<a href="#" class="register">Registreer</a> of <a href="#" class="login">Meld u aan</a> om advertenties te kunnen verbergen.',
+	'exitstitial-button' => 'Deze advertentie overslaan',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'interstitial-default-campaign-code' => 'Wikia elsker deg!',
+	'interstitial-skip-ad' => 'Hopp over annonse',
+	'exitstitial-button' => 'Hopp over annonse',
+);
+

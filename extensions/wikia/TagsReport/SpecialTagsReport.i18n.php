@@ -39,7 +39,7 @@ $messages['af'] = array(
 	'tagsreportgenerated' => 'Gegenereer op $1',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -98,7 +98,7 @@ $messages['de'] = array(
 	'tagsreportgenerated' => 'Erzeugt am $1',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -394,7 +394,7 @@ $messages['ru'] = array(
 	'tagsreportgenerated' => 'Создано $1',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */

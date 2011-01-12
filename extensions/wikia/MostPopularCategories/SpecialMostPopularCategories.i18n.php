@@ -40,7 +40,7 @@ $messages['az'] = array(
 	'mostpopularcategories' => 'Ən çox müraciət edilən kateqoriyalar',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -286,6 +286,11 @@ $messages['ru'] = array(
 	'mostpopularcategories' => 'Самые популярные категории',
 );
 
+/** Tachelhit (Tašlḥiyt) */
+$messages['shi'] = array(
+	'mostpopularcategories' => '↓ Taggayyin lli bahra ttuyssanin',
+);
+
 /** Sinhala (සිංහල)
  * @author බිඟුවා
  */
@@ -300,7 +305,7 @@ $messages['sl'] = array(
 	'mostpopularcategories' => 'Najbolj priljubljene kategorije',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -354,5 +359,12 @@ $messages['tr'] = array(
  */
 $messages['uk'] = array(
 	'mostpopularcategories' => 'Найпопулярніші категорії',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'mostpopularcategories' => '最受欢迎的类别',
 );
 

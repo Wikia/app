@@ -13,7 +13,7 @@ $messages['af'] = array(
 	'tog-disablelinksuggest' => 'Moet nie skakel-voorstelle wys nie',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -227,7 +227,7 @@ $messages['ru'] = array(
 	'tog-disablelinksuggest' => 'Не показывать предложения ссылок',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -267,6 +267,18 @@ $messages['tr'] = array(
  */
 $messages['tt-cyrl'] = array(
 	'tog-disablelinksuggest' => 'Сылтамаларны күрсәтмәскә',
+);
+
+/** Ukrainian (Українська) */
+$messages['uk'] = array(
+	'tog-disablelinksuggest' => 'Не показувати пропозиції посилань',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'tog-disablelinksuggest' => '不会显示链接建议',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

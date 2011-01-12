@@ -420,7 +420,7 @@ Eine Menge passiert auf deiner Seite heute! Schau mal auf $MYHOMEURL vorbei, um 
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  * @author The Evil IP address
  * @author Umherirrender
@@ -665,6 +665,25 @@ Parece que alguien ha editado tu wiki! Por qué no verificas $MYHOMEURL para ver
 Parece que alguien ha editado tu wiki! Por qué no <a href="$MYHOMEURL">verificas</a> para ver que cambió?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- El Equipo Wikia</div>',
 	'founderemails-lot-happening-subject' => '¡Han ocurrido muchas cosas hoy en tu sitio!',
+	'founderemails-lot-happening-body' => 'Hola $FOUNDERNAME,
+
+¡Hay muchas cosas sucediendo hoy en tu wiki! Pasa por $MYHOMEURL para ver lo que ha estado pasando.
+
+-- El Equipo de Wikia',
+	'founderemails-lot-happening-body-HTML' => 'Hola &FOUNDERNAME,<br /><br />
+¡Hay muchas cosas sucediendo hoy en tu wiki! Pasa por $MYHOMEURL para ver lo que ha estado pasando.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- El Equipo de Wikia</div>',
+);
+
+/** Finnish (Suomi)
+ * @author Nike
+ */
+$messages['fi'] = array(
+	'founderemails-email-page-edited-reg-user-body' => 'Hei $FOUNDERNAME,
+
+Näyttää siltä, että rekisteröitynyt käyttäjä $USERNAME on muokannut wikiäsi! Miksi et sano hänelle ($USERTALKPAGEURL) hei?
+
+-- The Wikia Team',
 );
 
 /** French (Français)
@@ -1566,6 +1585,55 @@ Det er en masse som skjer på wikien din i dag! Stikk innom $MYHOMEURL for å se
 <div style="font-style: italic; font-size: 120%;">-- Wikia-teamet</div>',
 );
 
+/** Polish (Polski) */
+$messages['pl'] = array(
+	'founderemails-email-user-registered-subject' => 'Ktoś zarejestrował konto na Twojej wiki!',
+	'founderemails-email-user-registered-body' => 'Cześć $FOUNDERNAME,
+
+$USERNAME zarejestrował się na Twojej wiki! Może przywitasz się z nim na jego stronie dyskusji $USERTALKPAGEURL?
+
+-- Zespół Wikii',
+	'founderemails-email-user-registered-body-HTML' => 'Cześć $FOUNDERNAME,<br /><br />
+$USERNAME zarejestrował się na twojej wiki! Może przywitasz się z nim na jego <a href="$USERTALKPAGEURL">stronie dyskusji</a>?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Zespół Wikii</div>',
+	'founderemails-email-0-days-passed-subject' => 'Witamy na Wikii!',
+	'founderemails-email-0-days-passed-body' => 'Gratulujemy utworzenia $WIKINAME - jesteś teraz częścią społeczności Wikii!
+
+-- Zespół Wikia',
+	'founderemails-email-0-days-passed-body-HTML' => 'Gratulujemy utworzenia <strong>$WIKINAME</strong> - jesteś teraz częścią społeczności Wikii!<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Zespół Wikia</div>',
+	'founderemails-email-3-days-passed-subject' => 'Sprawdzanie',
+	'founderemails-email-3-days-passed-body' => 'Cześć $FOUNDERNAME,
+
+Minęło już kilka dni od powstania twojej wiki, pomyśleliśmy że chciałbyś sprawdzić kilka rzeczy, które możesz zrobić.
+
+-- Zespół Wikia',
+	'founderemails-email-3-days-passed-body-HTML' => 'Cześć $FOUNDERNAME, <br /> <br />
+Minęło już kilka dni od powstania twojej wiki, pomyśleliśmy że chciałbyś dowiedzieć się, co jeszcze możesz zrobić.
+<div style="font-style: italic; font-size: 120%;">-- Zespół Wikia</div>',
+	'founderemails-email-10-days-passed-subject' => 'Co słychać na twojej wiki?',
+	'founderemails-email-10-days-passed-body' => 'Cześć $FOUNDERNAME,
+
+Minęło trochę czasu odkąd stworzyłeś swoją wiki - mamy nadzieje że wszystko idzie dobrze! Chcemy podzielić się kilkoma bajerami które pozwolą Ci czuć się jak u siebie w domu.
+
+-- Zespół Wikia',
+	'founderemails-email-10-days-passed-body-HTML' => 'Cześć $FOUNDERNAME,<br /><br />
+
+Minęło trochę czasu odkąd stworzyłeś swoją wiki - mamy nadzieje że wszystko idzie dobrze! Chcemy podzielić się kilkoma bajerami które pozwolą Ci czuć się jak u siebie w domu.<br /><br />
+
+<div style="font-style: italic; font-size: 120%;">-- Zespół Wikia</div>',
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Zarejestrowany użytkownik po raz pierwszy zmienił coś w Twojej!',
+	'founderemails-email-page-edited-anon-subject' => 'Ktoś dokonał zmian na Twojej wiki!',
+	'founderemails-email-page-edited-anon-body' => 'Hej $FOUNDERNAME,
+
+Wygląda na to, że ktoś dokonał zmiany na twojej wiki! Może sprawdzisz $MYHOMEURL co się zmieniło?
+
+-- Zespół Wikia',
+	'founderemails-email-page-edited-anon-body-HTML' => 'Hej $FOUNDERNAME,<br /><br />
+Wygląda na to, że ktoś dokonał zmiany na twojej wiki! Może <a href="$MYHOMEURL">sprawdzisz</a> co się zmieniło?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Zespół Wikia</div>',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -2057,5 +2125,20 @@ Matagal-tagal na rin magmula noong magsimula ka ng isang wiki sa Wikia - umaasa 
 	'founderemails-answers-email-page-edited-reg-user-subject' => 'Binago ng nagpatalang tagagamit ang iyong sityo!',
 	'founderemails-answers-email-page-edited-anon-subject' => 'May tao na nagbago ng iyong sityo!',
 	'founderemails-lot-happening-subject' => 'Maraming nagaganap sa sityo mo ngayong araw na ito!',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'founderemails-desc' => 'Допомагає інформуванню засновників про зміни на їх вікі',
+	'founderemails-email-user-registered-subject' => 'Хтось зареєстрував обліковий запис у вашій вікі!',
+	'founderemails-email-0-days-passed-subject' => 'Ласкаво просимо до Wikia!',
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Зареєстрований користувач змінив вашу вікі в перший раз!',
+	'founderemails-email-page-edited-reg-user-subject' => 'Зареєстрований користувач змінив ваш вікі!',
+	'founderemails-email-page-edited-anon-subject' => 'Хтось змінив вашу вікі!',
+	'founderemails-answers-email-page-edited-reg-user-subject' => 'Зареєстрований користувач змінив ваш сайт!',
+	'founderemails-answers-email-page-edited-anon-subject' => 'Хтось змінив ваш сайт!',
+	'founderemails-lot-happening-subject' => 'Сьогодні на вашому сайті відбувається багато подій!',
 );
 

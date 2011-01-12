@@ -98,7 +98,7 @@ $messages['be'] = array(
 	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 статыстыка]',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
@@ -214,7 +214,7 @@ Versuche es noch einmal.',
 	'textregex-return-mainpage' => '[{{SERVER}}$1 zurück zur Liste]',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -267,6 +267,7 @@ Por favor intente nuevamente.',
  */
 $messages['fi'] = array(
 	'textregex-page-title' => 'Luettelo ei-toivotuista lausekkeista',
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 poista]',
 	'textregex-submit-regex' => 'Lisää fraasi',
 	'textregex-invalid-regex' => 'Virheellinen säännöllinen lauseke.',
 	'textregex-select-default' => '-- valitse --',
@@ -705,7 +706,7 @@ $messages['ru'] = array(
 	'textregex-return-mainpage' => '[{{SERVER}}$1 Возврат к списку]',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -771,5 +772,8 @@ Subukan uli.',
 $messages['uk'] = array(
 	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 вилучити]',
 	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 статистика]',
+	'textregex-submit-regex' => 'Додати фразу',
+	'textregex-select-regexlist' => 'перейти до списку',
+	'textregex-return-mainpage' => '[{{SERVER}}$1 повернутися до списку]',
 );
 

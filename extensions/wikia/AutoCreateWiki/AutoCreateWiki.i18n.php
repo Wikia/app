@@ -286,7 +286,7 @@ $messages['ar'] = array(
 	'autocreatewiki-subname-answers' => 'إجابات',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Wizardist
  */
 $messages['be-tarask'] = array(
@@ -465,6 +465,18 @@ Ur raktres nevez-flamm an hini eo. Skrivit dimp, mar plij, m'hoc'h eus tra goule
 	'autocreatewiki-subname-answers' => 'Respontoù',
 );
 
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'autocreatewiki' => 'ویکییەکی نوێ دروست بکە',
+	'autocreatewiki-page-title-default' => 'دروستکردنی ویکییەکی نوێ',
+	'autocreatewiki-category-select' => 'یەکێک ھەڵبژێرە',
+	'autocreatewiki-language-top' => '$1 زمانی سەرتر',
+	'autocreatewiki-language-all' => 'گشت زمانەکان',
+	'autocreatewiki-birthdate' => 'ڕێکەوتی لەدایکبوون:',
+	'autocreatewiki-log-title' => 'ویکییەکەت خەریکە دروست‌دەبێ',
+	'autocreatewiki-welcometalk-log' => 'پەیامی بەخێرھاتن',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author The Evil IP address
@@ -612,7 +624,7 @@ indem du <a href="$2">$2</a> besuchst.</p>
 	'autocreatewiki-subname-answers' => 'Antworten',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  * @author The Evil IP address
  */
@@ -982,11 +994,13 @@ $messages['fi'] = array(
 	'autocreatewiki-done' => 'tehty',
 	'autocreatewiki-error' => 'virhe',
 	'autocreatewiki-haveaccount-question' => 'Onko sinulla jo Wikia-tili?',
+	'autocreatewiki-info-terms-agree' => 'Luomalla wikin ja käyttäjätunnuksen hyväksyt <a href="http://www.wikia.com/wiki/Terms_of_use">Wikian käyttösäännöt</a>.',
 	'autocreatewiki-busy-username' => 'Tämä käyttäjätunnus on jo varattu.',
 	'autocreatewiki-empty-category' => 'Valitse yksi luokista.',
 	'autocreatewiki-empty-wikiname' => 'Wikinimi ei voi olla tyhjä.',
 	'autocreatewiki-empty-username' => 'Käyttäjätunnus ei voi olla tyhjä.',
 	'autocreatewiki-empty-password' => 'Salasana ei voi olla tyhjä.',
+	'autocreatewiki-category-label' => 'Luokka:',
 	'autocreatewiki-category-other' => 'Muu',
 	'autocreatewiki-set-username' => 'Aseta käyttäjätunnus ensin.',
 	'autocreatewiki-invalid-birthday' => 'Virheellinen syntymäaika',
@@ -1863,9 +1877,11 @@ $messages['lb'] = array(
 	'autocreatewiki-done' => 'fäerdeg',
 	'autocreatewiki-error' => 'Feeler',
 	'autocreatewiki-success-get-started' => 'Ufänken',
+	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-invalid-username' => 'Dëse Benotzernumm ass net valabel.',
 	'autocreatewiki-empty-username' => 'De Benotzernumm kann net eidel sinn.',
 	'autocreatewiki-empty-password' => "D'Passwuert kann net eidel sinn.",
+	'autocreatewiki-category-label' => 'Kategorie:',
 	'autocreatewiki-log-title' => 'Är Wiki gëtt ugeluecht',
 	'autocreatewiki-congratulation' => 'Gratulatioun!',
 	'autocreatewiki-welcometalk-log' => 'Wëllkommensmessage',
@@ -2051,7 +2067,7 @@ $messages['nl'] = array(
 	'autocreatewiki-error' => 'fout',
 	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,it,ja,nl,no,pl,pt,pt-br,zh',
 	'autocreatewiki-haveaccount-question' => 'Hebt u al een Wikia-gebruiker?',
-	'autocreatewiki-success-title-default' => 'U wiki is aangemaakt!',
+	'autocreatewiki-success-title-default' => 'Uw wiki is aangemaakt!',
 	'autocreatewiki-success-title-answers' => 'Uw Antwoordensite is aangemaakt!',
 	'autocreatewiki-success-subtitle' => 'U kunt nu gaan werken aan uw wiki door deze pagina te bezoeken:',
 	'autocreatewiki-success-has-been-created' => 'is aangemaakt!',
@@ -2066,7 +2082,7 @@ $messages['nl'] = array(
 	'autocreatewiki-info-birthdate' => 'Wikia vraagt aan alle gebruikers om hun echte geboortedatum op te geven voor veiligheid maar ook om de integriteit van de site aan de federale regels te laten voldoen.',
 	'autocreatewiki-info-blurry-word' => 'Om het automatisch aanmaken van gebruikers tegen te gaan moet u het wazige woord dat u in dit veld ziet invoeren.',
 	'autocreatewiki-info-terms-agree' => 'Door een wiki en een gebruiker aan te maken accepteert u de <a href="http://www.wikia.com/wiki/Terms_of_use">gebruikersvoorwaarden van Wikia</a>.',
-	'autocreatewiki-info-staff-username' => '<b>Alleen voor staf:</b> de aangegeven gebruiker wordt vermeld als de oprichter.',
+	'autocreatewiki-info-staff-username' => '<b>Alleen voor stafleden:</b> de aangegeven gebruiker wordt vermeld als de oprichter.',
 	'autocreatewiki-title-template' => '$1 wiki',
 	'autocreatewiki-limit-day' => "Wikia heeft het maximum aantal nieuwe wiki's voor vandaag ($1) overschreden.",
 	'autocreatewiki-limit-creation' => "U hebt het maximum aantal nieuwe wiki's in 24 uur ($1) overschreden.",
@@ -3007,7 +3023,7 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'autocreatewiki' => 'Создать новую вики',
-	'autocreatewiki-desc' => 'Создание вики на ВикиФабрике по запросам участников',
+	'autocreatewiki-desc' => 'Создание вики на Вики-фабрике по запросам участников',
 	'autocreatewiki-page-title-default' => 'Создание новой вики',
 	'autocreatewiki-page-title-answers' => 'Создать новый сайт ответов',
 	'createwiki' => 'Создание новой вики',
@@ -3147,7 +3163,7 @@ $3
 	'autocreatewiki-subname-answers' => 'Ответы',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
@@ -3320,6 +3336,7 @@ $messages['tl'] = array(
 /** Ukrainian (Українська)
  * @author NickK
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'autocreatewiki' => 'Створити нову Вікі',
@@ -3329,9 +3346,15 @@ $messages['uk'] = array(
 	'autocreatewiki-required' => "$1 = обов'язково",
 	'autocreatewiki-web-address' => 'Веб-адреса:',
 	'autocreatewiki-category-select' => 'Виберіть одну',
+	'autocreatewiki-language-all' => 'Всі мови',
+	'autocreatewiki-birthdate' => 'Дата народження:',
 	'autocreatewiki-create-account' => 'Створити обліковий запис',
 	'autocreatewiki-error' => 'помилка',
 	'autocreatewiki-info-topic' => 'Додайте короткий опис, наприклад, "Зоряні війни" або "ТВ-шоу".',
+	'autocreatewiki-info-category-default' => 'Це допоможе відвідувачам знайти вашу вікі.',
+	'autocreatewiki-busy-username' => "Це ім'я користувача вже зайнято.",
+	'autocreatewiki-empty-category' => 'Будь ласка, виберіть категорію.',
+	'autocreatewiki-category-label' => 'Категорія:',
 	'autocreatewiki-protect-reason' => 'Частина офіційного інтерфейсу',
 	'newwikis' => 'Нові вікі',
 );
@@ -3359,10 +3382,33 @@ $messages['zh-cn'] = array(
 	'createwiki' => '申请wiki',
 );
 
-/** Simplified Chinese (‪中文(简体)‬) */
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
 $messages['zh-hans'] = array(
+	'autocreatewiki' => '创建一个新的维基',
+	'autocreatewiki-desc' => '通过用户的请求，在维基工厂中创建维基',
 	'autocreatewiki-page-title-default' => '申请wiki',
+	'autocreatewiki-page-title-answers' => '创建一个新的解答网站',
 	'createwiki' => '申请wiki',
+	'autocreatewiki-chooseone' => '请选择一个',
+	'autocreatewiki-required' => '$1 = 所需',
+	'autocreatewiki-web-address' => '网站地址：',
+	'autocreatewiki-category-select' => '选择一个',
+	'autocreatewiki-language-top' => '顶部$1语言',
+	'autocreatewiki-language-all' => '所有语言',
+	'autocreatewiki-birthdate' => '出生日期：',
+	'autocreatewiki-blurry-word' => '模糊的词：',
+	'autocreatewiki-remember' => '记得我',
+	'autocreatewiki-create-account' => '创建帐户',
+	'autocreatewiki-done' => '搞定',
+	'autocreatewiki-error' => '错误',
+	'autocreatewiki-haveaccount-question' => '您已经有一个 Wikia 帐户吗？',
+	'autocreatewiki-success-title-default' => '您的维基已创造了！',
+	'autocreatewiki-success-title-answers' => '您的解答网站已创造了！',
+	'autocreatewiki-success-subtitle' => '您可以开始在您的新维基开工。请点击：',
+	'autocreatewiki-success-has-been-created' => '已创建！',
+	'autocreatewiki-success-get-started' => '开始',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬) */

@@ -111,7 +111,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Keine Blogseite gefunden.',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  * @author The Evil IP address
  */
@@ -201,10 +201,11 @@ Wikia
  * @author IAlex
  * @author Peter17
  * @author Urhixidur
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'globalwatchlist-desc' => 'Envoie un sommaire hebdomadaire par courriel avec les pages suivies sur tous les wikis',
-	'tog-watchlistdigest' => "M'envoyer un résumé par e-mail une fois par semaine",
+	'tog-watchlistdigest' => "M'envoyer un résumé par courriel une fois par semaine",
 	'tog-watchlistdigestclear' => 'Marquer toutes les pages de mon résumé hebdomadaire comme visitées',
 	'globalwatchlist-see-more' => 'Veuillez vérifier vos listes de suivi locales pour afficher davantage de modifications',
 	'globalwatchlist-digest-email-subject' => 'Sommaire de la semaine',
@@ -227,7 +228,7 @@ Wikia
 * Pour marquer comme visitées toutes les pages de ce résumé hebdomadaire, référez-vous à l'option de l'onglet « Liste de suivi » de votre page de préférences",
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 commentaire{{PLURAL:$2||s}})',
 	'globalwatchlist-no-page-found' => 'Aucune page trouvée.',
-	'globalwatchlist-no-blog-page-found' => 'Aucune page de blogue trouvée.',
+	'globalwatchlist-no-blog-page-found' => 'Aucune page de blog trouvée.',
 );
 
 /** Galician (Galego)
@@ -604,7 +605,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Не найдено страниц блогов.',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */

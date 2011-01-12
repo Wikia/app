@@ -22,7 +22,7 @@ $messages['af'] = array(
 	'randomwiki' => 'Willekeurige wiki',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -62,6 +62,16 @@ $messages['de'] = array(
 $messages['es'] = array(
 	'randomwiki-desc' => 'Permite a los usuarios explorar un wiki al azar',
 	'randomwiki' => 'Wiki aleatorio',
+);
+
+/** Persian (فارسی) */
+$messages['fa'] = array(
+	'randomwiki' => 'ویکی تصادفی',
+);
+
+/** Finnish (Suomi) */
+$messages['fi'] = array(
+	'randomwiki' => 'Satunnainen wiki',
 );
 
 /** French (Français)
@@ -220,5 +230,29 @@ $messages['tl'] = array(
 $messages['tt-cyrl'] = array(
 	'randomwiki-desc' => 'Кулланучыларга теләсә нинди очраклы бит карарга ярдәм итә',
 	'randomwiki' => 'Очраклы  Wiki',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'randomwiki-desc' => 'Дозволяє користувачам переглянути випадкові вікі',
+	'randomwiki' => 'Випадкова вікі',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'randomwiki-desc' => '让用户探讨一个随机的维基',
+	'randomwiki' => '随机维基',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ */
+$messages['zh-hant'] = array(
+	'randomwiki-desc' => '容許用戶去訪問一個隨機的維基',
+	'randomwiki' => '隨機維基',
 );
 

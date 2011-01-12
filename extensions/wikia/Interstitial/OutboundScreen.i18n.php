@@ -42,7 +42,7 @@ Möchtest du zur [[{{MediaWiki:Mainpage}}|Hauptseite]] oder vielleicht auf eine 
 	'outbound-screen-you-are-leaving' => 'Du verlässt jetzt Wikia.',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -64,6 +64,13 @@ No hay nada que ver aquí!
 
 Desearías ir a la [[{{MediaWiki:Mainpage}}|Página principal]] o tal vez a una [[Special:Random|página aleatoria]]?',
 	'outbound-screen-you-are-leaving' => 'Estás ahora saliendo de Wikia',
+);
+
+/** Finnish (Suomi)
+ * @author Nike
+ */
+$messages['fi'] = array(
+	'outbound-screen-you-are-leaving' => 'Olet poistumassa Wikiasta.',
 );
 
 /** French (Français)
@@ -151,7 +158,7 @@ $messages['ja'] = array(
  */
 $messages['mk'] = array(
 	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Создајте нова сметка]] или [[Special:UserLogin|најавете се со постечка сметка]] за повеќе да не се прикажува оваа страница.',
-	'outbound-screen-already-logged-in-no-link' => 'Сè уште нема дестинација.
+	'outbound-screen-already-logged-in-no-link' => 'Сè уште нема одредница.
 Тука нема што да се види!
 
 Дали би сакале да појдете на [[{{MediaWiki:Mainpage}}|Главната страница]] или пак можеби на некоја [[Special:Random|случајна страница]]?',
@@ -193,6 +200,11 @@ I a pas res a veire aicí !
 
 Anatz a la [[{{MediaWiki:Mainpage}}|pagina d'acuèlh]] o benlèu a [[Special:Random|una pagina a l'azard]] ?",
 	'outbound-screen-you-are-leaving' => 'Ara, sètz a quitar Wikia.',
+);
+
+/** Polish (Polski) */
+$messages['pl'] = array(
+	'outbound-screen-you-are-leaving' => 'Opuszczasz Wikię.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -245,7 +257,7 @@ $messages['ru'] = array(
 	'outbound-screen-you-are-leaving' => 'Вы покидаете Wikia.',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */
@@ -275,5 +287,6 @@ Nais mo bang pumunta sa [[{{MediaWiki:Mainpage}}|Unang pahina]] o kaya sa [[Spec
  */
 $messages['uk'] = array(
 	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Створіть новий обліковий запис]] або [[Special:UserLogin|увійдіть в існуючий обліковий запис]], щоб пропустити цю сторінку в подальшому.',
+	'outbound-screen-you-are-leaving' => 'Зараз ви залишаєте Wikia.',
 );
 

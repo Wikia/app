@@ -12,3 +12,41 @@ $messages['en'] = array(
 	'new-look' => 'New Wikia Look',
 	'site-layout' => 'Site Layouts',
 );
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'new-look' => 'Neuz nevez Wikia',
+);
+
+/** Spanish (Español)
+ * @author Bola
+ */
+$messages['es'] = array(
+	'skinchooser-desc' => 'Permite a los usuarios escoger la apariencia del wiki en sus preferencias',
+	'skinchooser-customcss' => 'Para personalizar los temas, selecciona la opción "personalizar" in el menú de abajo y especifica la página CSS personalizada en [[MediaWiki:Monaco.css]]',
+	'new-look' => 'Nuevo Aspecto de Wikia',
+	'site-layout' => 'Diseños del sitio',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'skinchooser-desc' => 'Им овозможува на корисниците да изберат руво во нагодувањата',
+	'skinchooser-customcss' => 'Ако сакате да направите свој изглед, одберете ја таа можност во менито погоре и назначете пролагодена CSS во [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Нов изглед',
+	'site-layout' => 'Распореди на страницата',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'skinchooser-desc' => 'Maakt het mogelijk voor gebruikers in hun voorkeuren een vormgeving te kiezen',
+	'skinchooser-customcss' => 'Voor eigengemaakte vormgeving kiest u de maatwerkinstelling in het bovenstaande menu in slaat u zelfgemaakte CSS op in [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Nieuw Wikia-uiterlijk',
+	'site-layout' => 'Sitevormgevingen',
+);
+

@@ -24,7 +24,7 @@ $messages['ar'] = array(
 	'theorytab-parent-title' => 'المقالة الأصلية',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -92,6 +92,12 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'theorytab-title' => 'Teoría',
 	'theorytab-parent-title' => 'Artigo principal',
+);
+
+/** Hebrew (עברית) */
+$messages['he'] = array(
+	'theorytab-title' => 'תאוריה',
+	'theorytab-parent-title' => 'ערך הורה',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -257,6 +263,11 @@ $messages['ru'] = array(
 	'theorytab-parent-title' => 'Родительская статья',
 );
 
+/** Sinhala (සිංහල) */
+$messages['si'] = array(
+	'theorytab-parent-title' => 'මවු ලිපිය',
+);
+
 /** Slovenian (Slovenščina)
  * @author Dbc334
  */
@@ -265,7 +276,7 @@ $messages['sl'] = array(
 	'theorytab-parent-title' => 'Starševski članek',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */

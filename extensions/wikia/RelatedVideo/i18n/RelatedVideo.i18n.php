@@ -44,6 +44,27 @@ $messages['de'] = array(
 	'relatedvideo' => 'Ähnliche Videos',
 );
 
+/** Greek (Ελληνικά) */
+$messages['el'] = array(
+	'related-video-random-video' => 'Τυχαία βίντεο',
+	'related-video-related' => 'Σχετικά βίντεο',
+	'relatedvideo' => 'Σχετικά βίντεο',
+);
+
+/** Spanish (Español) */
+$messages['es'] = array(
+	'related-video-random-video' => 'Vídeo aleatorio',
+	'related-video-related' => 'Vídeos relacionados',
+	'relatedvideo' => 'Vídeos relacionados',
+);
+
+/** French (Français) */
+$messages['fr'] = array(
+	'related-video-random-video' => 'Vidéo aléatoire',
+	'related-video-related' => 'Vidéos similaires',
+	'relatedvideo' => 'Vidéos similaires',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
@@ -89,6 +110,13 @@ $messages['no'] = array(
 	'relatedvideo' => 'Relaterte videoer',
 );
 
+/** Piedmontese (Piemontèis) */
+$messages['pms'] = array(
+	'related-video-random-video' => 'Video a cas',
+	'related-video-related' => 'Filmà assossià',
+	'relatedvideo' => 'Filmà assossià',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -105,6 +133,13 @@ $messages['pt-br'] = array(
 	'related-video-random-video' => 'Vídeo aleatório',
 	'related-video-related' => 'Vídeos relacionados',
 	'relatedvideo' => 'Vídeos relacionados',
+);
+
+/** Russian (Русский) */
+$messages['ru'] = array(
+	'related-video-random-video' => 'Случайное видео',
+	'related-video-related' => 'Похожие видео',
+	'relatedvideo' => 'Похожие видео',
 );
 
 /** Telugu (తెలుగు)

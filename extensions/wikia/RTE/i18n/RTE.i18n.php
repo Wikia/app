@@ -37,7 +37,7 @@ $messages['af'] = array(
 	'enablerichtexteditor' => 'Aktiveer uitgebreide teksverwerker',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -128,6 +128,7 @@ $messages['el'] = array(
 );
 
 /** Spanish (Español)
+ * @author Bola
  * @author Crazymadlover
  */
 $messages['es'] = array(
@@ -153,15 +154,18 @@ $messages['es'] = array(
 
 ''Ten en cuenta que el nuevo editor está disponible actualmente en la mayoría de los wikis, pero no en todos.''",
 	'rte-first-run-notice' => 'Hemos hecho algunas mejoras al editor. Para saber más, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lee el anuncio].',
+	'prefs-rte' => 'Editor de Texto Enriquecido',
 );
 
 /** Persian (فارسی) */
 $messages['fa'] = array(
+	'rte-edgecase-redirect' => 'تغییرمسیر',
 	'enablerichtexteditor' => 'فعال کردن ویرایشگر پیشرفته',
 );
 
 /** French (Français)
  * @author IAlex
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'rte-desc' => 'Intégration de CKeditor pour MediaWiki',
@@ -181,6 +185,7 @@ $messages['fr'] = array(
 	'enablerichtexteditor' => 'Activer le nouvel éditeur',
 	'rte-enablerichtexteditormessage' => 'Nouvel éditeur activé!',
 	'rte-first-run-notice' => "Nous avons apporté quelques améliorations à l'éditeur. Pour en savoir plus, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lisez l'annonce].",
+	'prefs-rte' => 'Éditeur de texte enrichi',
 );
 
 /** Galician (Galego)
@@ -204,6 +209,7 @@ $messages['gl'] = array(
 	'enablerichtexteditor' => 'Activar o editor de texto enriquecido',
 	'rte-enablerichtexteditormessage' => 'O editor de texto enriquecido está activado!',
 	'rte-first-run-notice' => 'Fixemos algunhas melloras no editor. Para obter máis información, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news bótelle un ollo ás notas de publicación].',
+	'prefs-rte' => 'Editor de texto enriquecido',
 );
 
 /** Interlingua (Interlingua)
@@ -227,6 +233,7 @@ $messages['ia'] = array(
 	'enablerichtexteditor' => 'Activar le editor de texto inricchite',
 	'rte-enablerichtexteditormessage' => 'Le editor de texto inricchite es active!',
 	'rte-first-run-notice' => 'Nos ha facite qualque meliorationes al editor. Pro saper plus, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lege le annuncio].',
+	'prefs-rte' => 'Editor de texto inricchite',
 );
 
 /** Japanese (日本語)
@@ -260,6 +267,7 @@ $messages['mk'] = array(
 	'enablerichtexteditor' => 'Овозможи го уредникот на збогатен текст',
 	'rte-enablerichtexteditormessage' => 'Уредникот на збогатен текст е овозможен!',
 	'rte-first-run-notice' => 'Направивме извесни подобрувања во уредникот. За повеќе информации [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news прочитајте го соопштението].',
+	'prefs-rte' => 'Уредник на збогатен текст',
 );
 
 /** Dutch (Nederlands)
@@ -284,6 +292,7 @@ $messages['nl'] = array(
 	'enablerichtexteditor' => 'Uitgebreide tekstverwerker inschakelen',
 	'rte-enablerichtexteditormessage' => 'De uitgebreide tekstverwerker is ingeschakeld.',
 	'rte-first-run-notice' => 'We hebben een aantal verbeteringen gemaakt aan de tekstverwerker. [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news Lees ook de aankondiging].',
+	'prefs-rte' => 'Uitgebreide tekstverwerker',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -308,6 +317,7 @@ $messages['no'] = array(
 	'enablerichtexteditor' => 'Aktiver Rik tekstredaktør',
 	'rte-enablerichtexteditormessage' => 'Rik tekstredaktør aktivert!',
 	'rte-first-run-notice' => 'Vi har gjort noen forbedringer på redaktøren. For å lære mer kan du [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lese annonseringen].',
+	'prefs-rte' => 'Rich Text Editor',
 );
 
 /** Polish (Polski)
@@ -356,6 +366,7 @@ $messages['pms'] = array(
 	'enablerichtexteditor' => "Abìlité l'editor ëd test anrichì",
 	'rte-enablerichtexteditormessage' => 'Editor ëd test anrichì abilità!',
 	'rte-first-run-notice' => "I l'oma fàit chèich ameliorassion a l'editor. Për savejne ëd pi, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news ch'a lesa l'anonsi].",
+	'prefs-rte' => 'Editor ëd Test Anrichì',
 );
 
 /** Portuguese (Português)
@@ -432,7 +443,7 @@ $messages['ru'] = array(
 	'rte-first-run-notice' => 'Мы сделали несколько улучшений в редактор. Чтобы узнать больше, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news посетите страницу] с описанием изменений.',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -489,12 +500,14 @@ $messages['tr'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author NickK
  * @author Тест
  */
 $messages['uk'] = array(
 	'rte-edgecase-triplecurls' => 'параметри шаблону',
 	'rte-edgecase-syntax' => 'недозволений синтаксис',
 	'rte-edgecase-redirect' => 'перенаправлення',
+	'rte-edgecase-unclosed-tags' => 'незакритий HTML-тег',
 );
 
 /** Chinese (中文) */

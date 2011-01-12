@@ -24,7 +24,7 @@ $messages['af'] = array(
 	'imgplc-image' => 'Beeld',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Wizardist
  */
 $messages['be-tarask'] = array(
@@ -54,7 +54,7 @@ $messages['de'] = array(
 	'imgplc-notinhistory' => 'Du kannst keine Bilder im Verlaufsmodus hinzufügen.',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -84,6 +84,7 @@ $messages['fa'] = array(
 	'imgplc-create' => 'افزودن تصویر',
 	'imgplc-placeholder' => 'مکان نگه‏دار',
 	'imgplc-image' => 'تصویر',
+	'imgplc-notinhistory' => 'شما نمی‌توانید در حالت تاریخچه تصویر اضافه کنید.',
 );
 
 /** Finnish (Suomi)
@@ -179,6 +180,11 @@ $messages['ko'] = array(
 	'imgplc-create' => '그림 넣기',
 	'imgplc-placeholder' => '플레이스홀더',
 	'imgplc-image' => '그림',
+);
+
+/** Luxembourgish (Lëtzebuergesch) */
+$messages['lb'] = array(
+	'imgplc-image' => 'Bild',
 );
 
 /** Macedonian (Македонски)
@@ -298,7 +304,7 @@ $messages['ru'] = array(
 	'imgplc-notinhistory' => 'Вы не можете добавить изображение в режиме истории.',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */

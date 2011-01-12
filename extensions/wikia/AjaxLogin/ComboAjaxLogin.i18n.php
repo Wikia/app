@@ -135,6 +135,7 @@ $messages['es'] = array(
 <li>Comparte con tus amigos en Facebook la actividad que realices en Wikia</li>
 <li>Controla completamente qué cosas publicas</li>
 </ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Inicia sesión con Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Conecta tus cuentas</h1>
 <ul>
 <li>Conserva tus datos actuales: nombre de usuario, historial, ediciones, etc. Nada cambia salvo la forma de iniciar sesión</li>
@@ -148,6 +149,10 @@ $messages['es'] = array(
 Una vez que lo hagas, puedes iniciar sesión fácilmente usando cualquier botón de conexión de Facebook.',
 	'comboajaxlogin-post-not-understood' => 'Hubo un error en la forma en que este formulario fue construído.
 Por favor intenta de nuevo o [[Special:Contact|reporta esto]].',
+	'comboajaxlogin-readonlytext' => '<h2>¡Lo sentimos!</h2>
+<p>No puedes crear una cuenta por el momento. Estaremos disponible nuevamente en breve. Esto es lo que está ocurriendo:<br /><em>$1</em></p>
+<p>Por favor revisa en <a href="http://twitter.com/wikia">Twitter</a> o en <a herf="http://facebook.com/wikia">Facebook</a> para más información.<br />
+(Si ya tienes una cuenta, puedes <a href="#">iniciar sesión</a> de forma normal, pero no serás capaz de editar.)</p>',
 );
 
 /** French (Français)
@@ -180,6 +185,11 @@ $messages['fr'] = array(
 Une fois que vous avez terminé, vous pouvez vous connecter facilement à l'aide de n'importe quel bouton Facebook Connect.",
 	'comboajaxlogin-post-not-understood' => 'Il y a eu une erreur dans la façon dont ce formulaire a été construit. 
 Veuillez essayer à nouveau ou [[Special:Contact|le signaler]].',
+	'comboajaxlogin-readonlytext' => '<h2>Désolé !</h2>
+<p>Vous ne pouvez pas créer de compte actuellement - nous devrions être de nouveau disponibles dans peu de temps. Voici ce qui se passe :<br /><em>$1</em></p>
+<p>Veuillez consulter <a href="http://twitter.com/wikia">Twitter</a> ou <a href="http://facebook.com/wikia">Facebook</a> pour plus d’informations.
+<br />
+(Si vous avez déjà un compte, vous pouvez <a href="#">vous identifier</a> comme d’habitude, mais vous ne pourrez rien modifier.)</p>',
 );
 
 /** Galician (Galego)
@@ -270,11 +280,11 @@ $messages['ja'] = array(
 <li>ウィキア上でのあなたの活動を Facebook 上の友達と共有できます</li>
 <li>どの情報を表示させるかは設定により指定できます</li>
 </ul>',
-	'comboajaxlogin-connectmarketing-oasis' => '<h1>アカウントを接続する</h1>
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>ウィキアのアカウントを Facebook に接続する</h1>
 <ul>
 <li>現在の利用者名や履歴、編集機能などは維持され、ログイン方法以外に変更されるものはありません。</li>
 <li>ウィキア上でのあなたの活動を Facebook 上の友達と共有できます</li>
-<li>どの情報を表示させるかは設定により指定できます</li>
+<li>ウィキアでの活動を、Facebook 上で友達と共有できます。どの情報を表示させるかは設定で指定できます</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; 戻る',
 	'comboajaxlogin-connectmarketing-forward' => '次へ &raquo;',
@@ -402,6 +412,29 @@ Vennligst prøv igjen eller [[Special:Contact|rapporter dette]].',
 $messages['pl'] = array(
 	'comboajaxlogin-createlog' => 'Zaloguj się lub utwórz konto',
 	'comboajaxlogin-actionmsg' => 'Aby wykonać tę akcję musisz się najpierw zalogować lub utworzyć konto.',
+	'comboajaxlogin-actionmsg-protected' => 'Aby wykonać tę czynność, musisz najpierw zalogować się lub utworzyć konto.',
+	'comboajaxlogin-connectmarketing' => '<h1>Połącz swoje konta</h1>
+<ul>
+<li>Zachowaj swoją obecną nazwę użytkownika, historię, edycje... Nic się nie zmieni oprócz sposobu logowania.</li>
+<li>Dziel się swoją aktywnością na Wikii z przyjaciółmi na Facebooku.</li>
+<li>Będziesz miał pełną kontrolę nad publikowanymi informacjami.</li>
+</ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Zaloguj się korzystając z „Facebook Connect”</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Przyłącz swoje konto na Wikii do tego na Facebooku</h1>
+<ul>
+<li>Zachowaj swoją obecną nazwę użytkownika, historię, edycje... Nic się nie zmieni oprócz sposobu logowania.</li>
+<li>Dziel się swoją aktywnością na Wikii z przyjaciółmi na Facebooku, utrzymując pełną kontrolę nad publikowanymi informacjami.</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Wróć',
+	'comboajaxlogin-connectmarketing-forward' => 'Rozpocznij &raquo;',
+	'comboajaxlogin-connectdirections' => 'Wpisz tutaj swoją nazwę użytkownika i hasło na Wikii – połączymy w tle Twoje konta na Wikii i Facebooku.
+
+Gdy skończysz, będziesz mógł się łatwo zalogować korzystając z każdego przycisku „Facebook Connect”.',
+	'comboajaxlogin-readonlytext' => '<h2>Przepraszamy!</h2>
+<p>W tym momencie nie możesz utworzyć konta. Wkrótce wszystko ponownie wrócić do normy. Przyczyna problemów:<br /><em>$1</em></p>
+<p>Więcej informacji odnajdziesz na stronach <a href="http://twitter.com/wikia">Twittera</a> lub <a href="http://facebook.com/wikia">Facebooka</a>.
+<br />
+(Jeśli już masz konto, możesz zwyczajnie <a href="#">zalogować się</a>, ale nie będziesz mógł edytować.)</p>',
 );
 
 /** Piedmontese (Piemontèis)
@@ -432,6 +465,11 @@ $messages['pms'] = array(
 Na vira ch'a l'abia fàit, a peule intré facilment ant ël sistema an dovrand un boton Facebook Connect qualsëssìa.",
 	'comboajaxlogin-post-not-understood' => "A-i é stàje n'eror ant la manera che cont formolari a l'é stàit fabricà.
 Për piasì, ch'a preuva torna o [[Special:Contact|ch'a lo signala]].",
+	'comboajaxlogin-readonlytext' => '<h2>Spiasent!</h2>
+<p>It peule pa creé un cont al moment - i podrìo esse an pé e torna giré tra pòch. Ambelessì a-i é lòn ch\'a l\'é capitaje:<br /><em>$1</em></p>
+<p>Për piasì contròla <a href="http://twitter.com/wikia">Twitter</a> o <a href="http://facebook.com/wikia">Facebook</a> për savejne ëd pi.
+<br />
+(If you already have an account, you can <a href="#">log in</a> as normal, but you won\'t be able to edit.)</p>',
 );
 
 /** Pashto (پښتو)
@@ -471,6 +509,11 @@ $messages['pt'] = array(
 Quando acabar, poderá autenticar-se usando qualquer botão Ligação Facebook.',
 	'comboajaxlogin-post-not-understood' => 'Foi detectado um erro na forma como este formulário foi construído.
 Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
+	'comboajaxlogin-readonlytext' => '<h2>Desculpe!</h2>
+<p>Neste momento não pode criar uma conta - devemos estar novamente operacionais dentro de pouco tempo. O que está a acontecer é o seguinte:<br /><em>$1</em></p>
+<p>Para mais informações, verifique o <a href="http://twitter.com/wikia">Twitter</a> ou o <a href="http://facebook.com/wikia">Facebook</a>, por favor.
+<br />
+(Se já tem uma conta, pode <a href="#">autenticar-se</a> normalmente, mas não poderá editar.)</p>',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -500,6 +543,11 @@ $messages['pt-br'] = array(
 Quando acabar, poderá autenticar-se usando qualquer botão Ligação Facebook.',
 	'comboajaxlogin-post-not-understood' => 'Foi detectado um erro na forma como este formulário foi construído.
 Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
+	'comboajaxlogin-readonlytext' => '<h2>Desculpe!</h2>
+<p>Neste momento você não pode criar uma conta - devemos estar novamente operacionais dentro de pouco tempo. O que está acontecendo é o seguinte:<br /><em>$1</em></p>
+<p>Para mais informações, verifique o <a href="http://twitter.com/wikia">Twitter</a> ou o <a href="http://facebook.com/wikia">Facebook</a>, por favor.
+<br />
+(Se já tem uma conta, pode <a href="#">autenticar-se</a> normalmente, mas não poderá editar.)</p>',
 );
 
 /** Russian (Русский)
@@ -532,6 +580,11 @@ $messages['ru'] = array(
 После завершения вы сможете легко представляться системе с помощью любой из кнопок Facebook Connect.',
 	'comboajaxlogin-post-not-understood' => 'Произошла ошибка при построении этой формы.
 Пожалуйста, попробуйте снова или [[Special:Contact|сообщите об этом]].',
+	'comboajaxlogin-readonlytext' => '<h2>Извините!</h2>
+<p>Вы не можете создать учётную запись в данный момент. Мы должны скоро восстановить свою работу. Вот что происходит:<br /><em>$1</em></p>
+<p>Подробности можно посмотреть в <a href="http://twitter.com/wikia">Twitter</a> или <a href="http://facebook.com/wikia">Facebook</a>.
+<br />
+(Если у вас уже есть учётная запись, вы можете <a href="#">войти</a> как обычно, но вы не сможете редактировать.)</p>',
 );
 
 /** Tagalog (Tagalog)
@@ -567,7 +620,10 @@ Pakisubukan uli o [[Special:Contact|iulat ito]].',
  * @author Тест
  */
 $messages['uk'] = array(
+	'comboajaxlogin-desc' => 'Динамічне вікно, яке дозволяє користувачам увійти, нагадати пароль та зареєструватись',
 	'comboajaxlogin-createlog' => 'Увійти або створити обліковий запис',
+	'comboajaxlogin-actionmsg' => 'Для виконання цієї дії вам необхідно спочатку увійти в систему або створити обліковий запис',
+	'comboajaxlogin-actionmsg-protected' => 'Для виконання цієї дії вам необхідно спочатку увійти в систему або створити обліковий запис',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Назад',
 );
 

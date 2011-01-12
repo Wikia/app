@@ -43,7 +43,7 @@ $messages['az'] = array(
 	'wikiasearch-image-results' => '"$1" üçün şəkil axtarışının nəticələri',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -80,7 +80,7 @@ $messages['de'] = array(
 	'wikiasearch-image-results' => 'Bild-Ergebnisse für „$1“',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -114,6 +114,12 @@ $messages['es'] = array(
  */
 $messages['et'] = array(
 	'wikiasearch-titles-only' => 'Otsi ainult lehtede pealkirjadest',
+);
+
+/** Persian (فارسی) */
+$messages['fa'] = array(
+	'wikiasearch-titles-only' => 'جستجو فقط در عنوان صفحه‌ها',
+	'wikiasearch-system-error-msg' => 'به علت مشکلی در سیستم جستجو پایان نیافت',
 );
 
 /** Finnish (Suomi)
@@ -166,6 +172,7 @@ $messages['hsb'] = array(
 	'wikiasearch-system-error-msg' => 'Systemoweho zmylka dla waše pytanje njeda so dokónčić',
 	'wikiasearch-search-this-wiki' => 'Jenož centralnu Wikiju přepytać',
 	'wikiasearch-search-wikia' => 'Wikiju přepytać',
+	'wikiasearch-image-results' => 'Wobrazowe wuslědki za "$1"',
 );
 
 /** Hungarian (Magyar)
@@ -270,6 +277,7 @@ $messages['lg'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'search-desc' => 'Пребарувач низ сета Викија на основа на Solr',
 	'wikiasearch-titles-only' => 'Пребарувај само наслови на страници',
 	'wikiasearch-system-error-msg' => 'Се појави системска грешја и пребарувањето не можеше да се изврши',
 	'wikiasearch-search-this-wiki' => 'Пербарувај само по Викија Централата',
@@ -281,6 +289,7 @@ $messages['mk'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'search-desc' => "Zoekmachine die gebruik maakt van Solr om in alle Wikia-wiki's te zoeken",
 	'wikiasearch-titles-only' => 'Alleen paginanamen doorzoeken',
 	'wikiasearch-system-error-msg' => 'Door een systeemfout was het niet mogelijk uw zoekopdracht uit te voeren',
 	'wikiasearch-search-this-wiki' => 'Alleen Wikia Central doorzoeken',
@@ -379,7 +388,7 @@ $messages['ru'] = array(
 	'wikiasearch-image-results' => 'Результаты поиска изображения для «$1»',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Verlor
  */
 $messages['sr-ec'] = array(

@@ -283,7 +283,7 @@ $messages['af'] = array(
 	'multiwikirecords' => "Gevind op $1 wiki's",
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -401,6 +401,13 @@ $messages['br'] = array(
 	'multiwikirecords' => '$1 wiki bet kavet',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'multidelete_title' => 'Дуккха дIадайар',
+);
+
 /** Sorani (کوردی) */
 $messages['ckb'] = array(
 	'multidelete_button' => 'سڕینەوە',
@@ -516,7 +523,7 @@ $messages['de'] = array(
 	'multiwikirecords' => '$1 Wiki gefunden',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -550,6 +557,13 @@ $messages['de-formal'] = array(
 /** Ewe (Eʋegbe) */
 $messages['ee'] = array(
 	'multidelete_button' => 'Tutui',
+);
+
+/** Esperanto (Esperanto)
+ * @author Petrus Adamus
+ */
+$messages['eo'] = array(
+	'multidelete_czech_wikis' => 'ĉiuj Ĉeĥaj vikioj',
 );
 
 /** Spanish (Español)
@@ -664,6 +678,11 @@ $messages['es'] = array(
 	'multiwikifindpagenames' => 'Encontara nombres de página',
 	'multiwikienterpagename' => 'Ingresar un nombre de página:',
 	'multiwikirecords' => '$1 wiki encontrado',
+);
+
+/** Persian (فارسی) */
+$messages['fa'] = array(
+	'multidelete_select_all' => 'انتخاب همه',
 );
 
 /** Finnish (Suomi)
@@ -1672,6 +1691,17 @@ $messages['no'] = array(
 	'multiwikirecords' => '$1 wiki funnet',
 );
 
+/** Polish (Polski)
+ * @author Anoon6
+ */
+$messages['pl'] = array(
+	'multiwikiedit_button' => 'EDYTUJ',
+	'multidelete_button' => 'USUŃ',
+	'multidelete_this_wiki' => 'ta wiki',
+	'multidelete_all_wikis' => 'wszystkie wiki',
+	'multidelete_selected_wikis' => 'wybrane wiki',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -2066,7 +2096,7 @@ $messages['ru'] = array(
 	'multiwikirecords' => 'найдено $1 вики',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Sasa Stefanovic
  * @author Verlor
  * @author Жељко Тодоровић
@@ -2176,8 +2206,18 @@ $messages['uk'] = array(
 	'multidelete_button' => 'ВИЛУЧИТИ',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬) */
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'multiwikiedit_button' => '編輯',
+);
+
+/** Chinese (Taiwan) (‪中文(台灣)‬)
+ * @author Ffaarr
+ */
 $messages['zh-tw'] = array(
+	'multiwikiedit_button' => '編輯',
 	'multiwikiedit_norecentchanges_caption' => '不要將此項修訂顯示於最近修改頁。',
 	'multidelete_button' => '刪除',
 	'multidelete_caption' => '頁面列表',

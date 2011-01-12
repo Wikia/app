@@ -50,7 +50,7 @@ $messages['af'] = array(
 	'sponsorpage-save' => 'Stoor',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -102,23 +102,23 @@ $messages['br'] = array(
 $messages['de'] = array(
 	'sponsorpage-desc' => 'Ermöglicht es Benutzern, Patenschaften für Seiten zu übernehmen',
 	'sponsor-header' => '<h2> Links von Sponsoren </h2>',
-	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Sponsor für diese Seite werden</a></li>',
-	'sponsor-preview-prompt' => 'Hier siehst du, wie deine Patenschaft aussehen wird - klicke auf „Bearbeiten“, um Änderungen vorzunehmen, oder auf „Speichern“, um mit PayPal fortzufahren.',
-	'sponsor-preview-errors' => 'Es sind Fehler in deiner Vorlage:',
-	'sponsor-form-url' => 'URL deiner sponsernden Website:',
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Sponsor dieser Seite werden</a></li>',
+	'sponsor-preview-prompt' => 'Hier eine Vorschau, wie die Anzeige aussehen wird. Mit „Bearbeiten“ können Änderungen vorgenommen werden, mit „Speichern“ geht es weiter zu PayPal.',
+	'sponsor-preview-errors' => 'Es sind Fehler in der Vorlage:',
+	'sponsor-form-url' => 'URL der Website, zu der verlinkt werden soll:',
 	'sponsor-form-linktext' => 'Text, der als Link angezeigt werden soll:',
-	'sponsor-form-additionaltext' => 'Text, der unter deinem Link angezeigt werden soll:',
-	'sponsor-form-page' => 'Seite, die du sponsern willst:',
+	'sponsor-form-additionaltext' => 'Text, der unterhalb des Links angezeigt werden soll:',
+	'sponsor-form-page' => 'Seite, die gesponsert werden soll:',
 	'sponsor-form-price' => 'Höhe des Sponsorings:',
 	'sponsor-form-email' => 'Deine E-Mail-Adresse:',
-	'sponsor-form-thanks' => 'Vielen Dank für dein Sponsoring!',
+	'sponsor-form-thanks' => 'Vielen Dank für das Sponsoring!',
 	'sponsor-price-45yr' => '$45 pro Jahr',
 	'sponsor-price-5mo' => '$5 pro Monat',
 	'sponsorpage-edit' => 'Bearbeiten',
 	'sponsorpage-save' => 'Speichern',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Laximilian scoken
  */
 $messages['de-formal'] = array(
@@ -152,7 +152,7 @@ $messages['es'] = array(
  * @author Nike
  */
 $messages['fi'] = array(
-	'sponsorpage-desc' => 'Mahdollistaa sivujen sponsoroimisen',
+	'sponsorpage-desc' => 'Mahdollistaa sivujen sponsoroimisen.',
 	'sponsor-header' => '<h2>Ulkoiset sponsorointilinkit</h2>',
 	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Sponsoroi tätä sivua</a></li>',
 	'sponsor-preview-prompt' => 'Tältä sponsorointisi näyttää – palaa takaisin tekemään muutoksia napsauttamalla »Muokkaa» tai tallenna napsauttamalla »Tallenna» ja siirry PayPal-sivustolle.',
@@ -185,7 +185,7 @@ $messages['fr'] = array(
 	'sponsor-form-additionaltext' => 'Texte à afficher sous votre lien :',
 	'sponsor-form-page' => 'Page à parrainer :',
 	'sponsor-form-price' => 'Montant du parrainage :',
-	'sponsor-form-email' => 'Votre adresse électronique :',
+	'sponsor-form-email' => 'Votre adresse de courriel :',
 	'sponsor-form-thanks' => 'Merci pour votre parrainage !',
 	'sponsor-price-45yr' => '$45 par an',
 	'sponsor-price-5mo' => '$5 par mois',
@@ -230,7 +230,7 @@ $messages['ia'] = array(
 	'sponsor-form-page' => 'Pagina a sponsorisar:',
 	'sponsor-form-price' => 'Amonta de sponsoring:',
 	'sponsor-form-email' => 'Tu adresse de e-mail:',
-	'sponsor-form-thanks' => 'Gratias pro tu sponsoring!',
+	'sponsor-form-thanks' => 'Gratias pro esser sponsor!',
 	'sponsor-price-45yr' => '45$ per anno',
 	'sponsor-price-5mo' => '5$ per mense',
 	'sponsorpage-edit' => 'Modificar',
@@ -260,6 +260,7 @@ $messages['lb'] = array(
 	'sponsorpage-desc' => 'Erlaabt Benotzer et fir Sponsor fir Säiten ze ginn',
 	'sponsor-header' => '<h2>Linke vun externe Sponsoren</h2>',
 	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Dës Säit sponsoren</a></li>',
+	'sponsor-form-linktext' => 'Text, deen als Link soll gewise ginn:',
 	'sponsor-form-page' => 'Säit fir ze sponsoren:',
 	'sponsor-form-email' => 'Är E-Mailadress:',
 	'sponsor-price-45yr' => '$45 pro Joer',
@@ -333,6 +334,11 @@ $messages['no'] = array(
 	'sponsor-price-5mo' => '$5 per måned',
 	'sponsorpage-edit' => 'Rediger',
 	'sponsorpage-save' => 'Lagre',
+);
+
+/** Pälzisch (Pälzisch) */
+$messages['pfl'] = array(
+	'sponsorpage-edit' => 'Bearwaide',
 );
 
 /** Piedmontese (Piemontèis)

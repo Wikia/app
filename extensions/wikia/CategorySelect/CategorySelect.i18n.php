@@ -95,7 +95,14 @@ $messages['ar'] = array(
 	'tog-disablecategoryselect' => 'تعطيل وسم التصنيفات',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Assamese (অসমীয়া) */
+$messages['as'] = array(
+	'categoryselect-addcategory-button' => 'শ্ৰেণী সংযুগ কৰক',
+	'categoryselect-button-save' => 'সঞ্চিত কৰক',
+	'categoryselect-button-cancel' => 'বাতিল কৰক',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -166,7 +173,7 @@ $messages['de'] = array(
 	'tog-disablecategoryselect' => 'Vereinfachtes Kategorisieren ausschalten',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -284,7 +291,7 @@ $messages['gl'] = array(
 	'categoryselect-error-not-exist' => 'O artigo [id=$1] non existe.',
 	'categoryselect-error-user-rights' => 'Erro de dereitos de usuario.',
 	'categoryselect-error-db-locked' => 'A base de datos está bloqueada.',
-	'categoryselect-edit-abort' => 'O hook da extensión abortou a modificación que intentou realizar',
+	'categoryselect-edit-abort' => 'O asociador da extensión abortou a modificación que intentou realizar',
 	'tog-disablecategoryselect' => 'Desactivar a etiquetaxe de categorías',
 );
 
@@ -393,7 +400,7 @@ $messages['ja'] = array(
 	'categoryselect-error-not-exist' => '記事 [id=$1] が存在しません。',
 	'categoryselect-error-user-rights' => '利用者権限のエラーです。',
 	'categoryselect-error-db-locked' => 'データベースがロックされています',
-	'categoryselect-edit-abort' => 'システムにより変更が中断されました',
+	'categoryselect-edit-abort' => '拡張機能のフックによって、修正が中断されました',
 	'tog-disablecategoryselect' => 'カテゴリタグ付け機能を無効にする',
 );
 
@@ -500,6 +507,12 @@ $messages['no'] = array(
 	'categoryselect-error-db-locked' => 'Database er låst.',
 	'categoryselect-edit-abort' => 'Endringene du prøvde å utføre ble avbrutt av en utvidelseskrok',
 	'tog-disablecategoryselect' => 'Deaktiver kategorimerking',
+);
+
+/** Polish (Polski) */
+$messages['pl'] = array(
+	'categoryselect-button-save' => 'Zapisz',
+	'categoryselect-button-cancel' => 'Anuluj',
 );
 
 /** Piedmontese (Piemontèis)
@@ -621,7 +634,7 @@ $messages['sl'] = array(
 	'categoryselect-button-save' => 'Shrani',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Verlor
  */
 $messages['sr-ec'] = array(

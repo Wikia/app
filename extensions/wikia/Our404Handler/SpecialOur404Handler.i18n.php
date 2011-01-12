@@ -39,7 +39,20 @@ Artikel '''$1''' kon nie gevind word nie.
 * Om na die tuisblad van hierdie webwerf te gaan: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca) */
+$messages['az'] = array(
+	'our404handler' => 'Xəta 404: Səhifə tapılmadı!',
+	'our404handler-oops' => 'Sizin axtardığınız səhifə mövcud deyil. Zəhmət olmasa, bunlara əməl edin.',
+	'message404' => "'''Təəssüflər olsun ki, hansısa səbəbdən, sizin axtardığınız səhifə mövcud deyil.'''
+
+'''$1''' məqaləsi tapılmır.
+
+* Siz [[$2]] məqaləsini axtara bilərsiniz.
+* Siz səhifənin sol küncündəki axtarış pəncərəsindən istifadə edə bilərsiniz.
+* Ana səhifəyə keçid etmək üçün bu keçiddən istifadə edin: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Wizardist
  */
@@ -104,7 +117,7 @@ Der Artikel '''$1''' konnte nicht gefunden werden.
 * Um zur Hauptseite zu gelangen, klicke auf diesen Link: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -568,7 +581,7 @@ $messages['sl'] = array(
 * Za obisk glavne strani tega mesta kliknite povezavo: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */
@@ -635,6 +648,11 @@ $messages['tt-cyrl'] = array(
 * Сез [[$2]] мәкаләсен карый аласыз.
 * Сез эзләү тәрәзәсен куллана аласыз.
 * Баш биткә күчү өчен [{{SERVER}} {{SITENAME}}] төймәсенә басыгыз.",
+);
+
+/** Ukrainian (Українська) */
+$messages['uk'] = array(
+	'our404handler' => 'Помилка 404: Сторінку не знайдено!',
 );
 
 /** Vietnamese (Tiếng Việt)

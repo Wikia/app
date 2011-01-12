@@ -54,7 +54,7 @@ $messages['af'] = array(
 	'protectsite-unprotect' => 'Verwyder beskerming',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
@@ -589,7 +589,7 @@ $messages['ru'] = array(
 	'protectsite-unprotect' => 'Снять защиту',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
@@ -663,7 +663,26 @@ $messages['tl'] = array(
  * @author Тест
  */
 $messages['uk'] = array(
+	'specialprotectsite-desc' => 'Дозволяє адміністратору сайту [[Special:ProtectSite|тимчасово блокувати різні зміни сайту]]',
+	'protectsite' => 'Захист сайту',
+	'protectsite-text-protect' => '<!-- Інструкції/Коментарі/Правила використання -->',
+	'protectsite-text-unprotect' => '<!-- Інструкції/Коментарі під час дії захисту -->',
 	'protectsite-title' => 'Налаштування захисту сайту',
+	'protectsite-allowall' => 'Всім користувачам',
+	'protectsite-allowusersysop' => 'Зареєстрованим користувачам та адміністраторам',
+	'protectsite-allowsysop' => 'Лише адміністраторам',
+	'protectsite-createaccount' => 'Дозволити створення нових облікових записів',
+	'protectsite-createpage' => 'Дозволити створення сторінок',
+	'protectsite-edit' => 'Дозволити редагування сторінок',
+	'protectsite-move' => 'Дозволити перейменування сторінок',
+	'protectsite-upload' => 'Дозволити завантаження файлів',
+	'protectsite-timeout' => 'Часовий інтервал:',
+	'protectsite-timeout-error' => "'''Помилковий часовий інтервал.'''",
+	'protectsite-maxtimeout' => 'Максимум:',
 	'protectsite-comment' => 'Коментар:',
+	'protectsite-ucomment' => 'Коментар до зняття захисту:',
+	'protectsite-until' => 'Захищено до:',
+	'protectsite-protect' => 'Захистити',
+	'protectsite-unprotect' => 'Зняти захист',
 );
 
