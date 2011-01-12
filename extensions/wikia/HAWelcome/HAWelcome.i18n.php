@@ -137,7 +137,7 @@ Wenn du Hilfe brauchst, und kein Admin von hier in der Nähe ist, möchtest du v
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|Hilfe]] | [[w:sblog|Blog]])</small>',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  * @author The Evil IP address
  */
@@ -284,6 +284,7 @@ Jos tarvitset apua ja täällä ei ole paikallisia ylläpitäjiä, tahdot ehkä 
 /** French (Français)
  * @author Peter17
  * @author Urhixidur
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'welcome-user-page' => 'Cette page est votre page personnelle. Vous pouvez y ajouter des informations vous concernant !
@@ -309,14 +310,16 @@ N'hésitez pas à laisser un message sur [[$2|ma page de discussion]] si je peux
 	'welcome-message-user-staff' => "== Bienvenue ==
 Bonjour et bienvenue sur {{SITENAME}} ! Merci d'avoir modifié la page [[:$1]].
 
-Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:Forum:Community Central Forum|forums du Wiki Central de la Communauté]] $3",
+Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:fr:Forum:Vue d'ensemble|forums du Wiki Central de la Communauté]] $3",
 	'welcome-message-anon-staff' => "== Bienvenue ==
-Bonjour et bienvenue sur {{SITENAME}}. Merci d'avoir modifié la page [[:$1]].
+Bonjour et bienvenue sur {{SITENAME}}.
+Merci d'avoir modifié la page [[:$1]].
 
-'''[[Special:Userlogin|Merci de bien vouloir vous enregistrer et créer un nom d'utilisateur]]'''. C'est un moyen simple pour garder la trace de vos contributions et qui vous aidera à communiquer avec le reste de la communauté.
+'''[[Special:UserLogin|Merci de bien vouloir vous enregistrer et créer un nom d'utilisateur]]'''.
+C'est un moyen simple pour garder la trace de vos contributions et qui vous aidera à communiquer avec le reste de la communauté.
 
-Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:Forum:Community Central Forum|forums du Wiki Central de la Communauté]] $3",
-	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum d’aide]] | [[w:sblog|blogue]])</small>',
+Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:fr:Forum:Vue d'ensemble|forums du Wiki Central de la Communauté]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum d’aide]] | [[w:sblog|blog]])</small>',
 );
 
 /** Galician (Galego)
@@ -970,7 +973,7 @@ $messages['ru'] = array(
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|справочный форум]] | [[w:sblog|блог]])</small>',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  * @author Жељко Тодоровић
@@ -1086,6 +1089,7 @@ dalawin ang [[wikia:Forum:Community Central Forum|mga poro sa Wiki ng Pangunahin
 /** Ukrainian (Українська)
  * @author Ast
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'welcome-user-page' => "==Про мене==
@@ -1104,11 +1108,18 @@ $messages['uk'] = array(
 	'welcome-message-user' => 'Привіт, ласкаво просимо до {{SITENAME}}! Дякуємо за редагування сторінки [[:$1]].
 
 Будь-ласка, залиште повідомлення на [[$2|моїй сторінці обговорення]], якщо я можу чим-небудь допомогти! $3',
+	'welcome-message-anon' => "Вітаю, ласкаво просимо до {{SITENAME}}! Дякую за редагування сторінки [[:$1]].
+
+'''[[Special:Userlogin|Будь ласка, увійдіть в систему, створіть обліковий запис]]'''.
+Це допоможе вам легко стежити за вашим внеском і спілкуватися з іншими учасниками спільноти.
+
+Будь ласка, повідомте на [[$2|моїй сторінці обговорення]], якщо я можу чимось допомогти! $3",
 	'welcome-message-log' => 'привітання нового учасника',
 	'welcome-message-user-staff' => '==Вітаємо==
 
 Привіт, ласкаво просимо на {{SITENAME}}! Дякуємо за ваші зміни на сторінці [[:$1]].
 
 Якщо вам потрібна допомога, а локальні адміністратори відсутні, ви можете відвідати [[wikia:Forum:Community Central Forum|форуми спільноти Central Wiki]] $3',
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|форум допомоги]] | [[w:sblog|блог]])</small>',
 );
 

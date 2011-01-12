@@ -64,9 +64,36 @@ $messages['de'] = array(
 	'all-blog-posts' => 'alle Kategorien',
 );
 
+/** Spanish (Español) */
+$messages['es'] = array(
+	'partner-feed-achievements-leaderboard' => 'Tabla de líderes con más logros',
+	'partner-feed-earned-badges' => 'Logros recientemente ganados para una wiki específica',
+	'partner-feed-recent-blog-posts' => 'Entradas de blog recientes relacionadas con una promoción',
+	'partner-feed-latest-images' => 'Galería de las últimas imágenes que han sido subidas',
+	'partner-feed-hotcontent' => 'Hub / "Contenido Novedoso" clasificado por el número de editores',
+	'partner-feed-recent-blog-comments' => 'Comentarios recientes relacionados a una entrada de blog especificada.',
+	'partnerfeed' => 'Partner feed',
+	'error-no-article' => 'Error: No fue pasado el parámetro "artículo"',
+	'feed-title-blogposts' => 'Entradas de blog recientes',
+	'feed-title-recent-badges' => 'Logros recientes',
+	'feed-title-recent-images' => 'Imágenes recientes',
+	'feed-title-leaderboard' => 'Tablón de logros',
+	'feed-main-title' => 'Wikia partner feed',
+	'all-blog-posts' => 'todas las categorías',
+	'blog-posts-from-listing' => 'de la lista: $1',
+	'feed-title-hot-content' => 'Contenido Novedoso - $1',
+	'feed-title-blogcomments' => 'Comentarios de $1',
+);
+
+/** Persian (فارسی) */
+$messages['fa'] = array(
+	'feed-title-recent-images' => 'تصاویر اخیر',
+);
+
 /** French (Français)
  * @author Peter17
  * @author Verdy p
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'partner-feed-achievements-leaderboard' => 'Tableau des challenges des wikis',
@@ -77,7 +104,7 @@ $messages['fr'] = array(
 	'partner-feed-recent-blog-comments' => 'Commentaires récents liés au billet de blog spécifié.',
 	'partnerfeed' => 'Partenaire de flux',
 	'error-no-article' => 'Erreur : paramètre « article » non passé',
-	'feed-title-blogposts' => 'Derniers messages de blogue',
+	'feed-title-blogposts' => 'Billets récents',
 	'feed-title-recent-badges' => 'Badges récents',
 	'feed-title-recent-images' => 'Images récentes',
 	'feed-title-leaderboard' => 'Tableau de bord des réalisations',

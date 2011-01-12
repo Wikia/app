@@ -31,7 +31,7 @@ $messages['ar'] = array(
 	'quickcreate' => 'أرسل وصفتك',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -64,7 +64,7 @@ $messages['de'] = array(
 	'quickcreate' => 'Sende dein Rezept',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -84,7 +84,7 @@ $messages['es'] = array(
  * @author Nike
  */
 $messages['fi'] = array(
-	'quickcreate-desc' => 'Lisää "luo uusi sivu" -painikkeen, jolla anonyymit käyttäjät voiva kirjautua sisään',
+	'quickcreate-desc' => 'Lisää "luo uusi sivu" -painikkeen, jolla anonyymit käyttäjät voivat kirjautua sisään.',
 	'quickcreate' => 'reseptin lähetys',
 );
 
@@ -93,7 +93,7 @@ $messages['fi'] = array(
  * @author IAlex
  */
 $messages['fr'] = array(
-	'quickcreate-desc' => 'Ajoute un bouton de création de nouvelle page avec la capacité de connexion pour les utilisateurs anonymes',
+	'quickcreate-desc' => 'Ajoute un bouton de création de nouvelle page avec la possibilité de se connecter pour les utilisateurs anonymes',
 	'quickcreate' => 'Proposez votre recette',
 );
 
@@ -103,6 +103,12 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'quickcreate-desc' => 'Engade un botón para crear unha nova páxina coa capacidade de acceder ao sistema para os usuarios anónimos',
 	'quickcreate' => 'enviar a súa receita',
+);
+
+/** Hebrew (עברית) */
+$messages['he'] = array(
+	'quickcreate-desc' => 'הוספת לחצן ליצירת דפים חדשים עם אפשרות כניסה למשתמשים אלמוניים',
+	'quickcreate' => 'שליחת המתכון שלך',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -234,7 +240,7 @@ $messages['ru'] = array(
 	'quickcreate' => 'отправить свой рецепт',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */

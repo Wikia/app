@@ -137,7 +137,7 @@ $messages['ar'] = array(
 كتابة عنوان المقطع الثاني من مقالك هنا.',
 );
 
-/** Bashkir (Башҡорт)
+/** Bashkir (Башҡортса)
  * @author Рустам Нурыев
  */
 $messages['ba'] = array(
@@ -160,7 +160,7 @@ $messages['br'] = array(
 	'createpage_article_already_exists' => 'Ur pennad gant an anv-se a zo dija.
 Mar plij dibabit un anv disheñvel',
 	'createpage_spam' => "Digarezit, n'eo ket bet enrollet ho kemmoù",
-	'createpage_cant_edit' => "Diposubl eo ober ar c'hemm",
+	'createpage_cant_edit' => "Dibosupl eo seveniñ ar c'hemm",
 	'createpage-dialog-title' => 'Krouiñ ur Pennad Nevez',
 	'createpage-dialog-message1' => "Youc'hou, emaoc'h o krouiñ ur bajenn nevez !",
 	'createpage-dialog-message2' => "Penaos hoc'h eus c'hoant envel anezhi ?",
@@ -231,7 +231,7 @@ Schreibe den ersten Abschnitt deines Artikels hier.
 Schreibe den zweiten Abschnitt deines Artikels hier.',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -266,11 +266,16 @@ Schreiben Sie den zweiten Abschnitt Ihres Artikels hier.',
 
 /** Greek (Ελληνικά)
  * @author Dead3y3
+ * @author Evropi
  * @author Περίεργος
  */
 $messages['el'] = array(
+	'createpage-desc' => 'Σας επιτρέπει να δημιουργήσετε μια νέα σελίδα χρησιμοποιώντας τον επεξεργαστή WYSIWYG της Wikia',
+	'createpage-sp-title' => 'Δημιουργήσετε μια νέα σελίδα',
 	'createpage_title' => 'Δημιουργήστε ένα καινούργιο άρθρο',
 	'createpage_title_caption' => 'Τίτλος:',
+	'createpage_invalid_title_error' => 'Άκυρος τίτλος',
+	'createpage-dialog-blank' => 'Κενή σελίδα',
 );
 
 /** Spanish (Español)
@@ -380,6 +385,7 @@ $messages['fi'] = array(
 Valitse eri nimi.',
 	'createpage_spam' => 'Muokkaustasi ei valitettavasti voitu tallentaa',
 	'createpage-dialog-title' => 'Luo uusi artikkeli',
+	'createpage-dialog-message1' => 'Olet luomassa uutta sivua.',
 	'createpage-dialog-blank' => 'Tyhjä sivu',
 	'createpage-error-empty-title' => 'Kirjoita artikkelisi otsikko',
 );
@@ -387,11 +393,12 @@ Valitse eri nimi.',
 /** French (Français)
  * @author Crochet.david
  * @author IAlex
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'createpage-desc' => 'Permet de créer une nouvelle page en utilisant l’éditeur WYSIWYG de Wikia',
 	'createpage-sp-title' => 'Créer un nouvel article',
-	'createpage_title' => 'Créer un nouvel article',
+	'createpage_title' => 'Créer une nouvelle page',
 	'createpage_title_caption' => 'Titre :',
 	'createpage_enter_text' => 'Texte :',
 	'createpage_empty_title_error' => 'Titre requis',
@@ -473,6 +480,7 @@ Escriba aquí a segunda sección do seu artigo.',
  * @author 0ftal
  */
 $messages['he'] = array(
+	'createpage-desc' => 'ההרחבה מאפשרת ליצור דף חדש באמצעות העורך החזותי של Wikia',
 	'createpage-sp-title' => 'כתוב מאמר חדש',
 	'createpage_title' => 'כתוב מאמר חדש',
 	'createpage_title_caption' => 'כותרת:',
@@ -499,6 +507,7 @@ $messages['he'] = array(
 אנא השתמש בכותרת שונה.',
 	'createpage-error-article-blocked' => 'מצטערים, אינך יכול ליצור את המאמר הזה כרגע.',
 	'tog-createpagedefaultblank' => 'השתמש בדף ריק ליצירת מאמרים כברירת מחדל',
+	'tog-createpagepopupdisabled' => 'נטרול החלונית ליצירת דפים',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 כתוב את הפסקה הראשונה במאמר שלך כאן.
 
@@ -709,7 +718,7 @@ Schreiwt déi zweet Sektioun vun Ärem Artikel hei.',
  * @author Jagwar
  */
 $messages['mg'] = array(
-	'createpage-desc' => "Avela mamorona pejy amin'ny alàlan'ny mpanova pejy WYSWIG an'i Wikia",
+	'createpage-desc' => "Avela mamorona pejy amin'ny mpanova pejy WYSWIG an'i Wikia",
 	'createpage-sp-title' => 'Hamorona takelaka vaovzo',
 	'createpage_title' => 'Hamorona takelaka vaovao',
 	'createpage_title_caption' => 'Lohateny :',
@@ -902,8 +911,38 @@ $messages['pa'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'createpage-desc' => 'Pozwala na utworzenie nowej strony za pomocą edytora WYSIWYG',
 	'createpage_title' => 'Stwórz Stronę',
 	'createpage_title_caption' => 'Tytuł',
+	'createpage_invalid_title_error' => 'Nieprawidłowy tytuł',
+	'createpage_article_already_exists' => 'Strona o zadanej nazwie już istnieje.
+Wybierz inną nazwę.',
+	'createpage_spam' => 'Niestety zmiany nie mogą zostać zapisane',
+	'createpage_cant_edit' => 'Nie można wykonać edycji',
+	'createpage-dialog-title' => 'Utwórz nową stronę',
+	'createpage-dialog-message1' => 'Hura! Tworzysz nową stronę!',
+	'createpage-dialog-message2' => 'Jak chcesz ją nazwać?',
+	'createpage-dialog-choose' => 'Wybierz układ strony:',
+	'createpage-dialog-format' => 'Standardowy układ',
+	'createpage-dialog-blank' => 'Pusta strona',
+	'createpage-error-empty-title' => 'Podaj tytuł strony',
+	'createpage-error-invalid-title' => 'Tytuł strony jest nieprawidłowy.
+Podaj inny tytuł.',
+	'createpage-error-article-spam' => 'Tytuł strony został odrzucony przez nasz filtr antyspamowy.
+Podaj inny tytuł.',
+	'createpage-error-article-blocked' => 'Nie można utworzyć strony w tej chwili.',
+	'tog-createpagedefaultblank' => 'Domyślnie twórz nowe strony puste',
+	'tog-createpagepopupdisabled' => 'Wyłącz wyskakujące okno tworzenia nowej strony',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Tutaj umieść treść pierwszego paragrafu.
+
+==Nagłówek sekcji==
+
+Tutaj napisz treść pierwszej sekcji strony.
+
+==Nagłówek sekcji==
+
+Tutaj napisz treść drugiej sekcji strony.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1153,7 +1192,7 @@ $messages['sah'] = array(
 Манна ыстатыйаҥ иккис салаатын суруй.',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић

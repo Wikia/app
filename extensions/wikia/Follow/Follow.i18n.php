@@ -149,8 +149,6 @@ $messages['ar'] = array(
 	'wikiafollowedpages-special-title-userbar' => 'الصفحات المتابعة',
 	'tog-enotiffollowedpages' => 'أرسل لي رسالة إلكترونية عندما يتم تغيير صفحة في قائمة متابعتي',
 	'tog-enotiffollowedminoredits' => 'أرسل لي رسالة إلكترونية عند حدوث تغييرات طفيفة لصفحة أتابعها',
-	'wikiafollowedpages-prefs-advanced' => 'خيارات متقدمة',
-	'wikiafollowedpages-prefs-watchlist' => 'قائمة المراقبة فقط',
 	'tog-hidefollowedpages' => 'جعل صفحات متابعتي خاصة بي فقط',
 	'follow-categoryadd-summary' => 'تمت إضافة الصفحة للتصنيف',
 	'follow-bloglisting-summary' => 'تمت إضافة مدونة في صفحة المدونات',
@@ -232,8 +230,10 @@ ___________________________________________
  */
 $messages['br'] = array(
 	'follow-desc' => 'Gwelladennoù evit ar roll evezhiañ',
+	'prefs-basic' => 'Dibarzhioù diazez',
 	'wikiafollowedpages-special-heading-category' => 'Rummadoù ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Pennadoù ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Blogoù ha kemennadennoù ($1)',
 	'wikiafollowedpages-special-heading-forum' => 'Sujedoù ar foromoù ($1)',
 	'wikiafollowedpages-special-heading-project' => 'Pajennoù raktres ($1)',
 	'wikiafollowedpages-special-heading-user' => 'Pajennoù implijer ($1)',
@@ -241,6 +241,8 @@ $messages['br'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'Pajennoù MediaWiki ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Skeudennoù ha videoioù ($1)',
 	'wikiafollowedpages-special-namespace' => '(pajenn $1)',
+	'wikiafollowedpages-special-empty' => 'Goullo eo roll evezhiañ an implijer-mañ.
+Ouzhpennit pajennoù d\'ar roll-mañ en ur glikañ war "{{int:watch}}" e laez ur bajenn.',
 	'wikiafollowedpages-special-anon' => 'Mar plij [[Special:Signup|kevreit]] evit krouiñ pe sellout ouzh ho roll evezhiañ.',
 	'oasis-wikiafollowedpages-special-seeall' => 'Gwelet pep tra >',
 	'wikiafollowedpages-special-seeall' => 'Gwelet pep tra >',
@@ -256,8 +258,7 @@ $messages['br'] = array(
 	'wikiafollowedpages-special-title-userbar' => 'Pajennoù heuliet',
 	'tog-enotiffollowedpages' => 'Kas ur postel din pa vez degaset kemmoù war ur bajenn evezhiet ganin',
 	'tog-enotiffollowedminoredits' => "Kelaouiñ ac'hanon dre postel pa vez degaset kemmoù dister d'ar pajennoù a heulian",
-	'wikiafollowedpages-prefs-advanced' => 'Dibarzhioù araokaet',
-	'wikiafollowedpages-prefs-watchlist' => 'Roll evezhiañ hepken',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Dibarzhioù araokaet',
 	'tog-hidefollowedpages' => 'Lakaat va roll evezhiañ da vezañ prevez',
 	'follow-categoryadd-summary' => "Pajenn bet ouzhpennet d'ar rummad",
 	'follow-bloglisting-summary' => 'Blog postet war pajennoù ar blogoù',
@@ -266,9 +267,16 @@ $messages['br'] = array(
 	'wikiafollowedpages-userpage-more' => "Muioc'h",
 	'wikiafollowedpages-userpage-hide' => 'kuzhat',
 	'wikiafollowedpages-userpage-empty' => 'Goullo eo roll evezhiañ an implijer-mañ.
-Ouzhpennit pajennoù d\'ar roll-se en ur klikañ war "{{int:watch}}" e talbenn ar bajenn.',
+Ouzhpennit pajennoù d\'ar roll-mañ en ur glikañ war "{{int:watch}}" e laez ur bajenn.',
 	'enotif_subject_categoryadd' => 'Ar bajenn $PAGETITLE eus al lec\'hienn {{SITENAME}} a zo bet ouzhpennet da $CATEGORYNAME gant $PAGEEDITOR',
 	'enotif_subject_blogpost' => 'Ar bajenn $PAGETITLE eus al lec\'hienn {{SITENAME}} a zo bet postet war $BLOGLISTINGNAME gant $PAGEEDITOR',
+);
+
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'wikiafollowedpages-special-heading-templates' => 'Куцкепаш ($1)',
 );
 
 /** German (Deutsch)
@@ -307,8 +315,6 @@ Du kannst durch Klicken des {{int:watch}}-Buttons Seiten dieser Liste hinzufüge
 	'wikiafollowedpages-special-title-userbar' => 'Beobachtete Seiten',
 	'tog-enotiffollowedpages' => 'Bei Änderungen an beobachteten Seiten E-Mails senden',
 	'tog-enotiffollowedminoredits' => 'Auch bei kleinen Änderungen an beobachteten Seiten E-Mails senden',
-	'wikiafollowedpages-prefs-advanced' => 'Erweiterte Optionen',
-	'wikiafollowedpages-prefs-watchlist' => 'Nur Beobachtungsliste',
 	'tog-hidefollowedpages' => 'Halte meine Beobachtungsliste privat',
 	'follow-categoryadd-summary' => 'Seite zu Kategorie hinzugefügt',
 	'follow-bloglisting-summary' => 'Blog auf Blogseite gepostet',
@@ -384,7 +390,7 @@ Schau doch mal rein und bearbeite sie weiter...
 </p>',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author The Evil IP address
  */
 $messages['de-formal'] = array(
@@ -457,13 +463,26 @@ Schauen Sie doch mal rein und bearbeiten Sie sie weiter...
 </p>',
 );
 
+/** Greek (Ελληνικά)
+ * @author Evropi
+ */
+$messages['el'] = array(
+	'wikiafollowedpages-special-heading-category' => 'Κατηγορίες ($1)',
+	'wikiafollowedpages-special-heading-article' => 'Άρθρα ($1)',
+	'wikiafollowedpages-special-showall' => 'Προβολή όλων >',
+	'wikiafollowedpages-userpage-more' => 'Περισσότερα',
+	'wikiafollowedpages-userpage-hide' => 'απόκρυψη',
+);
+
 /** Spanish (Español)
+ * @author Bola
  * @author Crazymadlover
  * @author Danke7
  * @author Sanbec
  */
 $messages['es'] = array(
 	'follow-desc' => 'Mejoras para la funcionalidad de la lista de vigilancia',
+	'prefs-basic' => 'Opciones básicas',
 	'wikiafollowedpages-special-heading-category' => 'Categorías ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Artículos ($1)',
 	'wikiafollowedpages-special-heading-blogs' => 'Blogs y mensajes ($1)',
@@ -491,8 +510,8 @@ Agregar páginas a esta lista haciendo click en "{{int:watch}}" arriba de una p�
 	'wikiafollowedpages-special-title-userbar' => 'Páginas seguidas',
 	'tog-enotiffollowedpages' => 'Enviarme un correo electrónico cuando una página que estoy siguiendo es cambiada',
 	'tog-enotiffollowedminoredits' => 'Enviarme un correo electrónico por ediciones menores a las páginas que estoy siguiendo',
-	'wikiafollowedpages-prefs-advanced' => 'Opciones avanzadas',
-	'wikiafollowedpages-prefs-watchlist' => 'Lista de seguimiento solamente',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Opciones avanzadas',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Solo lista de seguimiento',
 	'tog-hidefollowedpages' => 'Hacer privada mi lista de páginas seguidas',
 	'follow-categoryadd-summary' => 'Página agregada a categoría',
 	'follow-bloglisting-summary' => 'Blog publicado en la página de blog',
@@ -570,13 +589,16 @@ Por favor visita y edita frecuentemente...
 
 /** French (Français)
  * @author Peter17
+ * @author Sherbrooke
  * @author Urhixidur
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'follow-desc' => 'Améliorations pour la liste de suivi',
+	'prefs-basic' => 'Préférences de base',
 	'wikiafollowedpages-special-heading-category' => 'Catégories ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Articles ($1)',
-	'wikiafollowedpages-special-heading-blogs' => 'Blogs et posts ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Blogs et billets ($1)',
 	'wikiafollowedpages-special-heading-forum' => 'Sujets de forums ($1)',
 	'wikiafollowedpages-special-heading-project' => 'Pages de projet ($1)',
 	'wikiafollowedpages-special-heading-user' => 'Pages utilisateur ($1)',
@@ -584,28 +606,28 @@ $messages['fr'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'Pages MediaWiki ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Images et vidéos ($1)',
 	'wikiafollowedpages-special-namespace' => '(page $1)',
-	'wikiafollowedpages-special-empty' => 'La liste de suivi de cet utilisateur est vide.
-Ajoutez des pages à cette liste en cliquant sur « Suivre » en haut d’une page.',
+	'wikiafollowedpages-special-empty' => 'Votre liste de suivi est vide.
+Ajoutez des pages à cette liste en cliquant sur « {{int:watch}} » en bas d’une page.',
 	'wikiafollowedpages-special-anon' => 'Veuillez [[Special:Signup|vous identifier]] pour créer ou voir votre liste de suivi.',
 	'oasis-wikiafollowedpages-special-seeall' => 'Tout voir >',
 	'wikiafollowedpages-special-seeall' => 'Tout voir >',
 	'wikiafollowedpages-special-showall' => 'Tout afficher >',
-	'wikiafollowedpages-special-showmore' => 'Voir plus',
+	'wikiafollowedpages-special-showmore' => 'Voir davantage',
 	'wikiafollowedpages-special-title' => 'Pages suivies',
-	'wikiafollowedpages-special-delete-tooltip' => 'Supprimer cette page',
-	'wikiafollowedpages-special-hidden' => 'Cet {{GENDER:$1|utilisateur|utilisatrice|utilisateur}} a choisi de cacher sa liste de suivi au public.',
-	'wikiafollowedpages-special-hidden-unhide' => 'Ne pas masquer cette liste.',
+	'wikiafollowedpages-special-delete-tooltip' => 'Retirer cette page',
+	'wikiafollowedpages-special-hidden' => 'Cet{{GENDER:$1||te|}} {{GENDER:$1|utilisateur|utilisatrice|utilisateur}} a choisi de cacher sa liste de suivi au public.',
+	'wikiafollowedpages-special-hidden-unhide' => 'Afficher cette liste.',
 	'wikiafollowedpages-special-blog-by' => 'par $1',
 	'wikiafollowedpages-masthead' => 'Pages suivies',
 	'wikiafollowedpages-following' => 'Suivi',
 	'wikiafollowedpages-special-title-userbar' => 'Pages suivies',
-	'tog-enotiffollowedpages' => 'M’avertir par courrier électronique lorsqu’une page de ma liste de suivi est modifiée',
+	'tog-enotiffollowedpages' => 'M’avertir par courriel lorsqu’une page de ma liste de suivi est modifiée',
 	'tog-enotiffollowedminoredits' => 'M’avertir par courrier électronique lors des modifications mineures des pages que je suis',
-	'wikiafollowedpages-prefs-advanced' => 'Options avancées',
-	'wikiafollowedpages-prefs-watchlist' => 'Liste de suivi uniquement',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Préférences avancées',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Liste de suivi uniquement',
 	'tog-hidefollowedpages' => 'Rendre privée ma liste de suivi',
 	'follow-categoryadd-summary' => 'Page ajoutée à la catégorie',
-	'follow-bloglisting-summary' => 'Blogue posté sur la page des blogues',
+	'follow-bloglisting-summary' => 'Blog posté sur la page de blog',
 	'wikiafollowedpages-userpage-heading' => 'Pages que je suis',
 	'wikiafollowedpages-userpage-hide-tooltip' => 'Cacher votre liste de suivi de la vue du public',
 	'wikiafollowedpages-userpage-more' => 'Plus',
@@ -710,8 +732,6 @@ Engada páxinas a esta lista premendo no botón "{{int:watch}}" que aparecerá n
 	'wikiafollowedpages-special-title-userbar' => 'Páxinas vixiadas',
 	'tog-enotiffollowedpages' => 'Enviádeme unha mensaxe de correo electrónico cando unha páxina da miña lista de vixilancia cambie',
 	'tog-enotiffollowedminoredits' => 'Enviádeme unha mensaxe de correo electrónico cando fagan unha edición pequena nalgunha páxina que vixío',
-	'wikiafollowedpages-prefs-advanced' => 'Opcións avanzadas',
-	'wikiafollowedpages-prefs-watchlist' => 'Lista de vixilancia só',
 	'tog-hidefollowedpages' => 'Facer privada a miña lista de vixilancia',
 	'follow-categoryadd-summary' => 'Páxina engadida á categoría',
 	'follow-bloglisting-summary' => 'Blogue publicado na páxina do blogue',
@@ -790,9 +810,11 @@ Volva e edite a miúdo...
 /** Hebrew (עברית)
  * @author Rotemliss
  * @author YaronSh
+ * @author שומבלע
  */
 $messages['he'] = array(
 	'follow-desc' => 'שיפורים לתכונת רשימת המעקב',
+	'prefs-basic' => 'אפשרויות בסיסיות',
 	'wikiafollowedpages-special-heading-category' => 'קטגוריות ($1)',
 	'wikiafollowedpages-special-heading-article' => 'ערכים ($1)',
 	'wikiafollowedpages-special-heading-blogs' => 'בלוגים ורשומות ($1)',
@@ -820,8 +842,8 @@ $messages['he'] = array(
 	'wikiafollowedpages-special-title-userbar' => 'דפים במעקב',
 	'tog-enotiffollowedpages' => 'יש לשלוח לי דוא״ל כאשר דף אחריו אני במעקב משתנה',
 	'tog-enotiffollowedminoredits' => 'יש לשלוח לי דוא״ל על שינויים מזעריים בדפים אחריהם אני במעקב',
-	'wikiafollowedpages-prefs-advanced' => 'אפשרויות מתקדמות',
-	'wikiafollowedpages-prefs-watchlist' => 'רשימת מעקב בלבד',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'אפשרויות מתקדמות',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'רשימת מעקב בלבד',
 	'tog-hidefollowedpages' => 'הפיכת רשימות דפי המעקב שלי לפרטיות',
 	'follow-categoryadd-summary' => 'נוסף דף לקטגוריה',
 	'follow-bloglisting-summary' => 'פורסם בלוג בדף בלוג',
@@ -863,6 +885,38 @@ ___________________________________________
 <li>רוצים לקבוע אילו הודעות דוא"ל לקבל? ראו <a href="{{fullurl:{{ns:special}}:Preferences}}">העדפות המשתמש</a></li>
 </ul>
 </p>',
+	'enotif_subject_blogpost' => 'הדף ב{{grammar:תחילית|SITENAME}} בשם $PAGETITLE פורסם בבלוג $BLOGLISTINGNAME על ידי $PAGEEDITOR',
+	'enotif_body_blogpost' => 'שלום $WATCHINGUSERNAME,
+
+רישום אחד הבלוגים אחריו יש לך מעקב באתר {{SITENAME}} נערך.
+
+ניתן לבקר בכתובת "$PAGETITLE_URL" לצפייה ברשומה החדשה.
+
+נא לבקר ולערוך לעתים קרובות...
+
+{{SITENAME}}
+
+___________________________________________
+* בואו לעיין באתרי הוויקי המומלצים שלנו! http://www.wikia.com
+
+* מעוניינים לשלוט בהודעות הדוא״ל המגיעות לתיבה שלכם?
+כנסו אל: {{fullurl:{{ns:special}}:Preferences}}.',
+	'enotif_body_blogpost-HTML' => '<p style="direction:rtl;">
+שלום $WATCHINGUSERNAME,
+<br /><br />
+רישום אחד הבלוגים אחריו יש לך מעקב באתר {{SITENAME}} נערך.
+<br /><br />
+ניתן לבקר בכתובת "$PAGETITLE_URL" לצפייה ברשומה החדשה.
+<br /><br />
+נא לבקר ולערוך לעתים קרובות...
+<br /><br />
+{{SITENAME}}
+<br /><hr />
+<ul>
+<li><a href="http://www.wikia.com">בואו לעיין באתרי הוויקי המומלצים שלנו!</a></li>
+<li>מעוניינים לשלוט בהודעות הדוא״ל המגיעות לתיבה שלכם? כנסו אל: <a href="{{fullurl:{{ns:special}}:Preferences}}">העדפות המשתמש</a></li>
+</ul>
+</p>',
 );
 
 /** Interlingua (Interlingua)
@@ -870,6 +924,7 @@ ___________________________________________
  */
 $messages['ia'] = array(
 	'follow-desc' => 'Meliorationes pro le functionalitate del observatorio',
+	'prefs-basic' => 'Optiones de base',
 	'wikiafollowedpages-special-heading-category' => 'Categorias ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Articulos ($1)',
 	'wikiafollowedpages-special-heading-blogs' => 'Blogs e articulos ($1)',
@@ -897,8 +952,8 @@ Adde paginas a iste lista cliccante super "Observar" in alto de un pagina.',
 	'wikiafollowedpages-special-title-userbar' => 'Paginas sub observation',
 	'tog-enotiffollowedpages' => 'Notificar me via e-mail quando un pagina que io observa es modificate',
 	'tog-enotiffollowedminoredits' => 'Notificar me via e-mail de minor modificationes a paginas que io observa',
-	'wikiafollowedpages-prefs-advanced' => 'Optiones avantiate',
-	'wikiafollowedpages-prefs-watchlist' => 'Observatorio solmente',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Optiones avantiate',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Observatorio solmente',
 	'tog-hidefollowedpages' => 'Render mi listas de paginas sub observation private',
 	'follow-categoryadd-summary' => 'Pagina addite a categoria',
 	'follow-bloglisting-summary' => 'Articulo publicate in pagina de blog',
@@ -1038,8 +1093,6 @@ $messages['ja'] = array(
 	'wikiafollowedpages-special-title-userbar' => 'フォローしているページ',
 	'tog-enotiffollowedpages' => 'フォローしているページが編集されたらメールで通知する',
 	'tog-enotiffollowedminoredits' => '細部の編集でもメールを受け取る',
-	'wikiafollowedpages-prefs-advanced' => '高度な設定',
-	'wikiafollowedpages-prefs-watchlist' => 'ウォッチリストのみ',
 	'tog-hidefollowedpages' => 'フォローしているページのリストを非公開にする',
 	'follow-categoryadd-summary' => 'カテゴリへのページの追加',
 	'follow-bloglisting-summary' => 'ブログリストへのブログ記事の追加',
@@ -1116,8 +1169,6 @@ $messages['lb'] = array(
 	'wikiafollowedpages-special-hidden-unhide' => 'Dës Lëscht net méi verstoppen.',
 	'wikiafollowedpages-masthead' => 'Iwwerwaachte Säiten',
 	'wikiafollowedpages-special-title-userbar' => 'Iwwerwaachte Säiten',
-	'wikiafollowedpages-prefs-advanced' => 'Erweidert Optiounen',
-	'wikiafollowedpages-prefs-watchlist' => 'Nëmmen Iwwerwaachungslëscht',
 	'follow-categoryadd-summary' => "Säit gouf bäi d'Kategorie derbäigesat",
 	'wikiafollowedpages-userpage-heading' => 'Säiten, déi ech iwwerwaachen',
 	'wikiafollowedpages-userpage-more' => 'Méi',
@@ -1129,6 +1180,7 @@ $messages['lb'] = array(
  */
 $messages['mk'] = array(
 	'follow-desc' => 'Збогатени можности на списокот на набљудувања',
+	'prefs-basic' => 'Основни поставки',
 	'wikiafollowedpages-special-heading-category' => 'Категории ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Статии ($1)',
 	'wikiafollowedpages-special-heading-blogs' => 'Блогови и написи ($1)',
@@ -1156,8 +1208,8 @@ $messages['mk'] = array(
 	'wikiafollowedpages-special-title-userbar' => 'Следени страници',
 	'tog-enotiffollowedpages' => 'Извести ме по е-пошта кога ќе се измени страница што ја следам',
 	'tog-enotiffollowedminoredits' => 'Известувај ме по е-пошта за ситни промени во страниците што ги следам',
-	'wikiafollowedpages-prefs-advanced' => 'Напредни нагодувања',
-	'wikiafollowedpages-prefs-watchlist' => 'Само Списокот на набљудувања',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Напредни поставки',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Само Списокот на набљудувања',
 	'tog-hidefollowedpages' => 'Сокриј ги од други корисници моите списоци на следени страници',
 	'follow-categoryadd-summary' => 'Страницата е додадена во категоријата',
 	'follow-bloglisting-summary' => 'Блогот е објавен на страницата за блогови',
@@ -1238,6 +1290,7 @@ ___________________________________________
  */
 $messages['nl'] = array(
 	'follow-desc' => 'Verbeteringen voor de volglijstfunctie',
+	'prefs-basic' => 'Basisinstellingen',
 	'wikiafollowedpages-special-heading-category' => 'Categorieën ($1)',
 	'wikiafollowedpages-special-heading-article' => "Inhoudspagina's ($1)",
 	'wikiafollowedpages-special-heading-blogs' => 'Blogs en blogberichten ($1)',
@@ -1265,8 +1318,8 @@ Voeg pagina\'s toe aan deze lijst door te klikken op "Volgen" bovenaan pagina\'s
 	'wikiafollowedpages-special-title-userbar' => "Pagina's op volglijst",
 	'tog-enotiffollowedpages' => 'Mij e-mailen als een pagina op mijn volglijst wijzigt',
 	'tog-enotiffollowedminoredits' => 'Mij e-mailen bij kleine bewerkingen van pagina’s op mijn volglijst',
-	'wikiafollowedpages-prefs-advanced' => 'Gevorderde instellingen',
-	'wikiafollowedpages-prefs-watchlist' => 'Alleen volglijst',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Gevorderde instellingen',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Alleen volglijst',
 	'tog-hidefollowedpages' => "Pagina's op mijn volglijst niet publiek maken",
 	'follow-categoryadd-summary' => 'Pagina aan een categorie toegevoegd',
 	'follow-bloglisting-summary' => 'Blogbericht toegevoegd aan blogpagina',
@@ -1348,6 +1401,7 @@ Kom alstublieft vaak langs om bewerkingen te maken...
  */
 $messages['no'] = array(
 	'follow-desc' => 'Forbedringer for overvåkningslistens funksjonalitet',
+	'prefs-basic' => 'Grunnleggende valg',
 	'wikiafollowedpages-special-heading-category' => 'Kategorier ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Artikler ($1)',
 	'wikiafollowedpages-special-heading-blogs' => 'Blogger og innlegg ($1)',
@@ -1375,8 +1429,8 @@ Legg til sider i listen ved å trykke «Følg» øverst på siden.',
 	'wikiafollowedpages-special-title-userbar' => 'Fulgte sider',
 	'tog-enotiffollowedpages' => 'Send meg en e-post når en side jeg følger blir redigert',
 	'tog-enotiffollowedminoredits' => 'Send meg en e-post for mindre endringer på sider jeg følger',
-	'wikiafollowedpages-prefs-advanced' => 'Avanserte innstillinger',
-	'wikiafollowedpages-prefs-watchlist' => 'Kun overvåkningsliste',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Avanserte valg',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Kun overvåkningsliste',
 	'tog-hidefollowedpages' => 'Gjør min liste over fulgte sider privat',
 	'follow-categoryadd-summary' => 'Side lagt til kategori',
 	'follow-bloglisting-summary' => 'Blogg lagt ut på bloggsiden',
@@ -1452,6 +1506,39 @@ Vennligst kom på besøk og rediger ofte...
 </p>',
 );
 
+/** Polish (Polski) */
+$messages['pl'] = array(
+	'wikiafollowedpages-special-heading-category' => 'Kategorie ($1)',
+	'wikiafollowedpages-special-heading-article' => 'Artykuły ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Blogi i posty ($1)',
+	'wikiafollowedpages-special-heading-forum' => 'Wątki na forum ($1)',
+	'wikiafollowedpages-special-heading-project' => 'Strony projektu ($1)',
+	'wikiafollowedpages-special-heading-user' => 'Strony użytkownika ($1)',
+	'wikiafollowedpages-special-heading-templates' => 'Szablony ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'Strony MediaWiki ($1)',
+	'wikiafollowedpages-special-heading-media' => 'Grafiki i filmy ($1)',
+	'wikiafollowedpages-special-empty' => 'Lista stron obserwowanych przez tego użytkownika jest pusta.
+Dodaj strony do tej listy klikając "{{int:watch}}" na górze strony.',
+	'wikiafollowedpages-special-anon' => 'Proszę, [[Special:Signup|zaloguj się]] żeby stworzyć lub przeglądać swoją listę obserwowanych stron.',
+	'oasis-wikiafollowedpages-special-seeall' => 'Pokaż wszystkie >',
+	'wikiafollowedpages-special-seeall' => 'Pokaż wszystkie >',
+	'wikiafollowedpages-special-showall' => 'Pokaż wszystkie >',
+	'wikiafollowedpages-special-showmore' => 'Pokaż więcej',
+	'wikiafollowedpages-special-title' => 'Obserwowane strony',
+	'wikiafollowedpages-special-delete-tooltip' => 'Usuń tę stronę',
+	'wikiafollowedpages-special-hidden' => 'Ten użytkownik zdecydował się ukryć {{GENDER:$1|swoją|swoją|ich}} listę stron obserwowanych przed widokiem publicznym.',
+	'wikiafollowedpages-special-hidden-unhide' => 'Odkryj tę listę.',
+	'wikiafollowedpages-special-blog-by' => 'przez $1',
+	'wikiafollowedpages-masthead' => 'Obserwowane strony',
+	'wikiafollowedpages-following' => 'Obserwowane',
+	'wikiafollowedpages-special-title-userbar' => 'Obserwowane strony',
+	'tog-enotiffollowedpages' => 'Wyślij do mnie e‐mail, jeśli strona z listy moich obserwowanych zostanie zmodyfikowana',
+	'tog-enotiffollowedminoredits' => 'Wyślij do mnie e‐mail, w przypadku drobnych zmian na stronach z mojej listy obserwowanych',
+	'wikiafollowedpages-userpage-heading' => 'Strony, które obserwuję',
+	'wikiafollowedpages-userpage-more' => 'Więcej',
+	'wikiafollowedpages-userpage-hide' => 'ukryj',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -1485,8 +1572,6 @@ Ch\'a gionta dle pàgine a costa lista an sgnacand "{{int:watch}}" an cò dla p�
 	'wikiafollowedpages-special-title-userbar' => 'Pàgine tnùe sot euj',
 	'tog-enotiffollowedpages' => "Mandeme un mëssagi an pòsta eletrònica quand che na pàgina ch'im ten-o sot euj a l'é modìficà",
 	'tog-enotiffollowedminoredits' => "Mandeme un mëssagi an pòsta eletrònica për dle modìfiche cite a le pàgine ch'im ten-o sot euj",
-	'wikiafollowedpages-prefs-advanced' => 'Opsion avansà',
-	'wikiafollowedpages-prefs-watchlist' => "Mach la lista ëd lòn ch'i ten-o sot euj",
 	'tog-hidefollowedpages' => "Rende privà le liste dle pàgine ch'im ten-o sot euj",
 	'follow-categoryadd-summary' => 'Pàgine giontà a la categorìa',
 	'follow-bloglisting-summary' => 'Scartari scrivù an sla pàgina djë scartari',
@@ -1583,7 +1668,6 @@ $messages['ps'] = array(
 	'wikiafollowedpages-masthead' => 'څارلي مخونه',
 	'wikiafollowedpages-following' => 'د څار لاندې',
 	'wikiafollowedpages-special-title-userbar' => 'څارلي مخونه',
-	'wikiafollowedpages-prefs-watchlist' => 'يوازې کتنلړ',
 	'wikiafollowedpages-userpage-heading' => 'هغه مخونه چې زه يې څارم',
 	'wikiafollowedpages-userpage-more' => 'نور',
 	'wikiafollowedpages-userpage-hide' => 'پټول',
@@ -1623,8 +1707,6 @@ Adicione páginas à lista clicando "{{int:watch}}" no topo de uma página.',
 	'wikiafollowedpages-special-title-userbar' => 'Páginas seguidas',
 	'tog-enotiffollowedpages' => 'Notificar-me por correio electrónico quando uma página seguida for alterada',
 	'tog-enotiffollowedminoredits' => 'Notificar-me por correio electrónico quando uma página seguida sofrer uma edição menor',
-	'wikiafollowedpages-prefs-advanced' => 'Opções avançadas',
-	'wikiafollowedpages-prefs-watchlist' => 'Só a lista de páginas vigiadas',
 	'tog-hidefollowedpages' => 'Tornar privada a minha lista de páginas seguidas',
 	'follow-categoryadd-summary' => 'Página adicionada à categoria',
 	'follow-bloglisting-summary' => 'Mensagem publicada numa página de blogue',
@@ -1709,7 +1791,6 @@ $messages['pt-br'] = array(
 	'wikiafollowedpages-special-heading-user' => 'Páginas de usuário ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Imagens e vídeos ($1)',
 	'wikiafollowedpages-special-delete-tooltip' => 'Remover esta página',
-	'wikiafollowedpages-prefs-advanced' => 'Opções avançadas',
 	'wikiafollowedpages-userpage-more' => 'Mais',
 );
 
@@ -1747,8 +1828,6 @@ $messages['ru'] = array(
 	'wikiafollowedpages-special-title-userbar' => 'Отслеживаемые страницы',
 	'tog-enotiffollowedpages' => 'Уведомлять по эл. почте об изменениях страниц, которые я отслеживаю',
 	'tog-enotiffollowedminoredits' => 'Уведомлять меня по эл. почте о малых правках в страницах, которые я отслеживаю',
-	'wikiafollowedpages-prefs-advanced' => 'Расширенные настройки',
-	'wikiafollowedpages-prefs-watchlist' => 'Только список наблюдения',
 	'tog-hidefollowedpages' => 'Спрятать мой список отслеживаемых страниц от публичного просмотра',
 	'follow-categoryadd-summary' => 'Страница добавлена в категорию',
 	'follow-bloglisting-summary' => 'Блог опубликован на странице блога',
@@ -1823,7 +1902,7 @@ ___________________________________________
 </p>',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1842,7 +1921,6 @@ $messages['sr-ec'] = array(
 	'wikiafollowedpages-special-title' => 'Праћене странице',
 	'wikiafollowedpages-special-delete-tooltip' => 'Уклони ову страницу',
 	'wikiafollowedpages-special-blog-by' => 'од $1',
-	'wikiafollowedpages-prefs-advanced' => 'Напредне опције',
 	'wikiafollowedpages-userpage-more' => 'Више',
 	'wikiafollowedpages-userpage-hide' => 'сакриј',
 );
@@ -1872,7 +1950,6 @@ $messages['te'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'మీడియావికీ పుటలు ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 పుట)',
 	'wikiafollowedpages-special-showall' => 'అన్నిటినీ చూపించు >',
-	'wikiafollowedpages-prefs-advanced' => 'ఉన్నత ఎంపికలు',
 	'wikiafollowedpages-userpage-hide' => 'దాచు',
 );
 
@@ -1908,8 +1985,6 @@ Idagdag ang mga pahina sa talaang ito sa pamamagitan ng pagpindot sa "{{int:watc
 	'wikiafollowedpages-special-title-userbar' => 'Sinusundang mga pahina',
 	'tog-enotiffollowedpages' => 'Padalhan ako ng e-liham kapag ang isang pahinang sinusundan ko ay nabago',
 	'tog-enotiffollowedminoredits' => 'Padalhan ako ng e-liham para sa maliliit na mga pagbabago sa mga pahinang sinusundan ko',
-	'wikiafollowedpages-prefs-advanced' => 'Mas masulong na mga pagpipilian',
-	'wikiafollowedpages-prefs-watchlist' => 'Talaan ng binabantayan lamang',
 	'tog-hidefollowedpages' => 'Gawing pribado ang aking mga talaan ng sinusundang mga pahina',
 	'follow-categoryadd-summary' => 'Idinagdag ang pahina sa kategorya',
 	'follow-bloglisting-summary' => 'Ipinaskil ang blog sa pahina ng blog',
@@ -1991,6 +2066,7 @@ Mangyaring bumisita at mamatnugot ng madalas...
  */
 $messages['uk'] = array(
 	'follow-desc' => 'Покращення для функціональності списку спостереження',
+	'prefs-basic' => 'Основні параметри',
 	'wikiafollowedpages-special-heading-category' => 'Категорії ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Статті ($1)',
 	'wikiafollowedpages-special-heading-blogs' => 'Блоґи та повідомлення ($1)',
@@ -2004,6 +2080,8 @@ $messages['uk'] = array(
 	'wikiafollowedpages-special-empty' => 'Список статей спостереження цього користувача порожній.
 Щоб додати сторінки в цей список, натисніть "{{int:watch}}" зверху цієї сторінки.',
 	'wikiafollowedpages-special-anon' => 'Будь ласка, [[Special:Signup|увійдіть до системи]] для створення або перегляду сторінок свого списку спостереження.',
+	'oasis-wikiafollowedpages-special-seeall' => 'Переглянути всі >',
+	'wikiafollowedpages-special-seeall' => 'Переглянути всі >',
 	'wikiafollowedpages-special-showall' => 'Показати всі >',
 	'wikiafollowedpages-special-showmore' => 'Показати більше',
 	'wikiafollowedpages-special-title' => 'Сторінки спостереження',
@@ -2016,8 +2094,8 @@ $messages['uk'] = array(
 	'wikiafollowedpages-special-title-userbar' => 'Сторінки спостереження',
 	'tog-enotiffollowedpages' => 'Повідомляти по електронній пошті про зміну сторінок зі списку спостереження',
 	'tog-enotiffollowedminoredits' => 'Повідомляти по електронній пошті про невеликі правки в сторінках зі списку спостереження',
-	'wikiafollowedpages-prefs-advanced' => 'Додаткові настройки',
-	'wikiafollowedpages-prefs-watchlist' => 'Тільки список спостереження',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Додаткові параметри',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Тільки список спостереження',
 	'tog-hidefollowedpages' => 'Зробити мій список спостереження прихованим від публічного перегляду',
 	'follow-categoryadd-summary' => 'Сторінка добавлена до категорії',
 	'follow-bloglisting-summary' => 'Блог опублікований на сторінці блогу',

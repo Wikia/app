@@ -43,7 +43,7 @@ $messages['af'] = array(
 	'iwedit-success' => '<p>Die skakel is geskep.</p>',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -340,7 +340,7 @@ $messages['si'] = array(
 	'iwedit-update' => 'යාවත්කාලීන',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */

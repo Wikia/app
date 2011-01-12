@@ -15,12 +15,42 @@ $messages['af'] = array(
 	'paginator-back' => 'Vorige',
 );
 
+/** Azerbaijani (Azərbaycanca) */
+$messages['az'] = array(
+	'paginator-next' => 'Sonrakı',
+	'paginator-back' => 'Əvvəlki',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
 	'paginator-next' => "War-lerc'h",
 	'paginator-back' => 'Distreiñ',
+);
+
+/** Welsh (Cymraeg) */
+$messages['cy'] = array(
+	'paginator-next' => 'Nesaf',
+	'paginator-back' => 'Yn ôl',
+);
+
+/** German (Deutsch) */
+$messages['de'] = array(
+	'paginator-next' => 'Vor',
+	'paginator-back' => 'Zurück',
+);
+
+/** Spanish (Español) */
+$messages['es'] = array(
+	'paginator-next' => 'Siguiente',
+	'paginator-back' => 'Atrás',
+);
+
+/** French (Français) */
+$messages['fr'] = array(
+	'paginator-next' => 'Suivant',
+	'paginator-back' => 'Retour',
 );
 
 /** Galician (Galego)
@@ -31,12 +61,24 @@ $messages['gl'] = array(
 	'paginator-back' => 'Volver',
 );
 
+/** Hebrew (עברית) */
+$messages['he'] = array(
+	'paginator-next' => 'הבא',
+	'paginator-back' => 'הקודם',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
 	'paginator-next' => 'Sequente',
 	'paginator-back' => 'Retornar',
+);
+
+/** Luxembourgish (Lëtzebuergesch) */
+$messages['lb'] = array(
+	'paginator-next' => 'Weider',
+	'paginator-back' => 'Zréck',
 );
 
 /** Macedonian (Македонски)
@@ -61,5 +103,35 @@ $messages['nl'] = array(
 $messages['no'] = array(
 	'paginator-next' => 'Neste',
 	'paginator-back' => 'Tilbake',
+);
+
+/** Piedmontese (Piemontèis) */
+$messages['pms'] = array(
+	'paginator-next' => 'Anans',
+	'paginator-back' => 'André',
+);
+
+/** Portuguese (Português) */
+$messages['pt'] = array(
+	'paginator-next' => 'Seguinte',
+	'paginator-back' => 'Voltar',
+);
+
+/** Brazilian Portuguese (Português do Brasil) */
+$messages['pt-br'] = array(
+	'paginator-next' => 'Seguinte',
+	'paginator-back' => 'Voltar',
+);
+
+/** Russian (Русский) */
+$messages['ru'] = array(
+	'paginator-next' => 'Далее',
+	'paginator-back' => 'Назад',
+);
+
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'paginator-next' => 'Ijayo',
+	'paginator-back' => 'Rudi',
 );
 

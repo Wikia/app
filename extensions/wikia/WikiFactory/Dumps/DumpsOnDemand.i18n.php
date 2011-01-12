@@ -57,7 +57,7 @@ $messages['ar'] = array(
 	'dump-database-info-more' => 'الرجاء <a href="http://community.wikia.com/wiki/Help:Database_download">قراءة هذا</a> لمزيد من المعلومات',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -71,6 +71,7 @@ $messages['be-tarask'] = array(
 	'dump-database-request' => 'Запытаць абнаўленьне',
 	'dump-database-request-info' => '(Копіі звычайна ствараюцца штотыдзень)',
 	'dump-database-request-submit' => 'Даслаць запыт',
+	'dump-database-request-already-submitted' => 'Копія была запытаная нядаўна (меней 7 дзён таму)',
 	'dump-database-request-requested' => 'Запыт копіі базы зьвестак дасланы',
 	'dump-database-info-more' => 'Калі ласка, глядзіце дадатковую інфармацыю <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
 );
@@ -581,7 +582,14 @@ $messages['ru'] = array(
 	'dump-database-info-more' => 'Пожалуйста, <a href="http://community.wikia.com/wiki/Help:Database_download">см. дополнительные сведения</a>',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Sinhala (සිංහල) */
+$messages['si'] = array(
+	'dump-database-curr-pages' => 'වත්මන් පිටු',
+	'dump-database-full-pages' => 'වත්මන් පිටු සහ ඉතිහාසය',
+	'dump-database-request-submit' => 'ඉල්ලීම යවන්න',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */

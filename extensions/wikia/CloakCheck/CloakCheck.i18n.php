@@ -50,7 +50,11 @@ $messages['br'] = array(
  * @author Diebuche
  */
 $messages['de'] = array(
+	'cloakcheck' => 'Prüfung der Anspruchsberechtigung auf einen IRC Cloak',
+	'cloakcheck-desc' => 'Stellt eine ganzheitliche Schnittstelle zur Verfügung, die der Prüfung der Voraussetzungen für einen IRC Cloak dient',
+	'cloakcheck-form-username' => 'Benutzername:',
 	'cloakcheck-form-check' => 'Benutzernamen überprüfen',
+	'cloakcheck-process-empty' => 'Bitte einen Benutzernamen angeben.',
 	'cloakcheck-process-emailconf-yes' => 'E-Mail-Adresse bestätigt.',
 	'cloakcheck-process-emailconf-no' => 'E-Mail-Adresse nicht bestätigt.',
 );
@@ -60,10 +64,27 @@ $messages['de'] = array(
  * @author Locos epraix
  */
 $messages['es'] = array(
+	'cloakcheck' => 'Verificador de elegibilidad de cloak de IRC',
+	'cloakcheck-desc' => 'Proporciona una interfaz todo-en-uno y verifica los requisitos para una cloak de IRC',
 	'cloakcheck-form-username' => 'Nombre de usuario:',
 	'cloakcheck-form-check' => 'Verificar el nombre de usuario',
+	'cloakcheck-form-check-self' => 'Verificar elegibilidad de cloak de IRC',
+	'cloakcheck-process-empty' => 'El nombre de usuario no debe estar vacío.',
+	'cloakcheck-process-notexist' => 'El nombre de usuario no existe.',
 	'cloakcheck-process-username' => 'Nombre de usuario: $1',
+	'cloakcheck-process-accountage-yes' => 'La cuenta tiene la edad suficiente.',
 	'cloakcheck-process-accountage-no' => 'La cuenta es demasiado nueva.',
+	'cloakcheck-process-emailconf-yes' => 'Dirección de correo electrónico confirmada.',
+	'cloakcheck-process-emailconf-no' => 'Dirección de correo electrónico no confirmada.',
+	'cloakcheck-process-edits-yes' => 'El usuario tiene suficiente ediciones.',
+	'cloakcheck-process-edits-no' => 'El usuario no tiene suficiente ediciones.',
+);
+
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'cloakcheck-process-username' => 'Käyttäjätunnus: $1',
 );
 
 /** French (Français)
@@ -126,6 +147,30 @@ $messages['ia'] = array(
 	'cloakcheck-process-edits-no' => 'Le usator non ha facite satis de modificationes.',
 );
 
+/** Japanese (日本語) */
+$messages['ja'] = array(
+	'cloakcheck' => 'IRCクローク付与適格性検査',
+	'cloakcheck-desc' => 'IRCクロークの付与に必要な要件を満たしているかどうかの検査を一括して行うインタフェースを提供する',
+	'cloakcheck-form-username' => '利用者名：',
+	'cloakcheck-form-check' => '利用者名をチェック',
+	'cloakcheck-form-check-self' => 'IRCクロークの付与適格性をチェックする',
+	'cloakcheck-process-empty' => '利用者名は空欄にできません。',
+	'cloakcheck-process-notexist' => '利用者名が存在しません。',
+	'cloakcheck-process-username' => '利用者名: $1',
+	'cloakcheck-process-accountage-yes' => '十分な時間が経過したアカウントです。',
+	'cloakcheck-process-accountage-no' => 'アカウントが新しすぎます。',
+	'cloakcheck-process-emailconf-yes' => 'Eメールアドレスが認証されています。',
+	'cloakcheck-process-emailconf-no' => 'Eメールアドレスが認証されていません。',
+	'cloakcheck-process-edits-yes' => '十分な回数編集しています。',
+	'cloakcheck-process-edits-no' => '編集回数が不足しています。',
+);
+
+/** Luxembourgish (Lëtzebuergesch) */
+$messages['lb'] = array(
+	'cloakcheck-form-username' => 'Benotzernumm:',
+	'cloakcheck-process-username' => 'Benotzernumm: $1',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -186,6 +231,17 @@ $messages['no'] = array(
 	'cloakcheck-process-edits-no' => 'Bruker har ikke redigeringer nok.',
 );
 
+/** Polish (Polski) */
+$messages['pl'] = array(
+	'cloakcheck-form-username' => 'Nazwa użytkownika',
+	'cloakcheck-form-check' => 'Sprawdź nazwę użytkownika',
+	'cloakcheck-process-empty' => 'Nazwa użytkownika nie może być pusta.',
+	'cloakcheck-process-notexist' => 'Użytkownik o tej nazwie nie istnieje.',
+	'cloakcheck-process-username' => 'Nazwa użytkownika: $1',
+	'cloakcheck-process-edits-yes' => 'Użytkownik wykonał wystarczającą liczbę zmian.',
+	'cloakcheck-process-edits-no' => 'Użytkownik nie wykonał wystarczającej liczby zmian.',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -241,8 +297,11 @@ $messages['pt'] = array(
  */
 $messages['ru'] = array(
 	'cloakcheck-form-username' => 'Имя участника:',
+	'cloakcheck-form-check' => 'Проверить имя пользователя',
 	'cloakcheck-process-notexist' => 'Участника с таким именем не существует.',
 	'cloakcheck-process-username' => 'Имя участника: $1',
+	'cloakcheck-process-accountage-yes' => 'Учетная запись достаточно старая.',
+	'cloakcheck-process-accountage-no' => 'Учетная запись слишком новая.',
 	'cloakcheck-process-emailconf-yes' => 'Адрес электронной почты подтверждён.',
 	'cloakcheck-process-emailconf-no' => 'Адрес электронной почты не подтверждён.',
 	'cloakcheck-process-edits-yes' => 'Участником сделано необходимое число правок.',

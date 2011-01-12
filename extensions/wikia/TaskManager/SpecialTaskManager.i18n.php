@@ -22,7 +22,7 @@ $messages['af'] = array(
 	'taskmanager_tasklist' => 'Keer terug na taaklys',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -91,6 +91,13 @@ $messages['gl'] = array(
 	'taskmanager' => 'Mostrar e xestionar as tarefas de fondo',
 	'taskmanager_title' => 'Mostrar e xestionar as tarefas de fondo',
 	'taskmanager_tasklist' => 'Volver á lista de tarefas',
+);
+
+/** Hebrew (עברית) */
+$messages['he'] = array(
+	'taskmanager' => 'הצגה וניהול של משימות רקע',
+	'taskmanager_title' => 'הצגה וניהול של משימות רקע',
+	'taskmanager_tasklist' => 'חזרה לרשימת המשימות',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -243,7 +250,7 @@ $messages['si'] = array(
 	'taskmanager_tasklist' => 'කාර්යයන් නාමාවලිය වෙත නැවත යන්න',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */

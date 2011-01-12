@@ -45,7 +45,7 @@ $messages['az'] = array(
 	'mostvisitedpagesalllink' => 'Ən çox nəzərdən keçirilən səhifələrə bax',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Wizardist
  */
 $messages['be-tarask'] = array(
@@ -388,7 +388,7 @@ $messages['sl'] = array(
 	'mostvisitedpagesalllink' => 'Ogled najbolj obiskanih strani',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */
@@ -483,5 +483,12 @@ $messages['uk'] = array(
  */
 $messages['vi'] = array(
 	'mostvisitedpages' => 'Các trang được xem nhiều nhất',
+);
+
+/** Chinese (Taiwan) (‪中文(台灣)‬)
+ * @author Ffaarr
+ */
+$messages['zh-tw'] = array(
+	'mostvisitedpages' => '訪問次數最多的頁面',
 );
 

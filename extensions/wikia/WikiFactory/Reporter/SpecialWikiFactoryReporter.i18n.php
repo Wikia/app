@@ -39,7 +39,7 @@ $messages['az'] = array(
 	'wikifactoryreporter' => 'Məruzəçi WikiFactory',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -152,6 +152,11 @@ $messages['gl'] = array(
 	'wikifactoryreporter' => 'Reporteiro da fábrica de wikis',
 );
 
+/** Hebrew (עברית) */
+$messages['he'] = array(
+	'wikifactoryreporter' => 'המדווח של WikiFactory',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -234,6 +239,11 @@ $messages['krc'] = array(
  */
 $messages['ksh'] = array(
 	'wikifactoryreporter' => 'WikiFactory-Reporter',
+);
+
+/** Kirghiz (Кыргызча) */
+$messages['ky'] = array(
+	'wikifactoryreporter' => 'УикиФабрика баяндамачысы',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -348,6 +358,11 @@ $messages['ru'] = array(
 	'wikifactoryreporter' => 'Репортёр WikiFactory',
 );
 
+/** Sinhala (සිංහල) */
+$messages['si'] = array(
+	'wikifactoryreporter' => 'WikiFactory වාර්තාකරු',
+);
+
 /** Slovenian (Slovenščina)
  * @author Dbc334
  */
@@ -355,7 +370,7 @@ $messages['sl'] = array(
 	'wikifactoryreporter' => 'Poročevalec WikiFactory',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  */
 $messages['sr-ec'] = array(
@@ -409,5 +424,12 @@ $messages['uk'] = array(
  */
 $messages['vec'] = array(
 	'wikifactoryreporter' => 'WikiFactory Reporter',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'wikifactoryreporter' => 'WikiFactory 报告',
 );
 

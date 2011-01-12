@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'slidertag-featured-wikis' => 'Featured wikis',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(

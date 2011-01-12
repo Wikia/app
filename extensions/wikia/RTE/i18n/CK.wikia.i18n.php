@@ -139,7 +139,7 @@ $messages['be'] = array(
 	'rte-ck-templateDropDown-label' => 'Шаблон',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -310,6 +310,13 @@ $messages['br'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => "Dilemel al lec'hienn evit ur video ?",
 	'rte-ck-videoPlaceholder-tooltip' => "Miret eo al lec'hienn-mañ evit ur video.",
 	'rte-ck-widescreen-toggle' => 'Gweredekaat/diweredekaat ar skramm leun',
+);
+
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'rte-ck-templateDropDown-label' => 'Куцкеп',
 );
 
 /** German (Deutsch)
@@ -488,6 +495,27 @@ $messages['es'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Remover este marcador de posición de video?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Este es un marcador de posición de video.',
 	'rte-ck-widescreen-toggle' => 'Activar o desactivar pantalla panorámica',
+);
+
+/** Persian (فارسی) */
+$messages['fa'] = array(
+	'rte-ck-errorPopupTitle' => 'خطا!',
+	'rte-ck-hoverPreview-delete' => 'حذف',
+	'rte-ck-hoverPreview-edit' => 'ویرایش',
+	'rte-ck-image-add' => 'افزودن یک تصویر',
+	'rte-ck-link-error-title' => 'خطا',
+	'rte-ck-signature-label' => 'امضا',
+	'rte-ck-templateDropDown-label' => 'الگو',
+);
+
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'rte-ck-errorPopupTitle' => 'Virhe!',
+	'rte-ck-media-delete' => 'poista',
+	'rte-ck-photoGallery-tooltip' => 'Tämä on galleria.',
+	'rte-ck-video-add' => 'Lisää video',
 );
 
 /** French (Français)
@@ -1129,6 +1157,11 @@ $messages['pdc'] = array(
 	'rte-ck-hoverPreview-comment-title' => 'Aamaericking',
 );
 
+/** Pälzisch (Pälzisch) */
+$messages['pfl'] = array(
+	'rte-ck-hoverPreview-edit' => 'bearwaide',
+);
+
 /** Polish (Polski)
  * @author Holek
  * @author Sp5uhe
@@ -1589,7 +1622,7 @@ $messages['ru'] = array(
 	'rte-ck-widescreen-toggle' => 'Широкоэкранный режим',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1838,15 +1871,25 @@ $messages['uk'] = array(
 	'rte-ck-hoverPreview-comment-title' => 'Коментар',
 	'rte-ck-hoverPreview-delete' => 'вилучити',
 	'rte-ck-hoverPreview-edit' => 'редагувати',
+	'rte-ck-image-add' => 'Додати зображення',
 	'rte-ck-link-error-title' => 'Помилка',
 	'rte-ck-link-external-tab' => 'Зовнішнє посилання',
 	'rte-ck-link-internal-pageName' => 'Назва сторінки',
 	'rte-ck-link-internal-tab' => 'Внутрішнє посилання',
+	'rte-ck-link-status-exists' => 'Сторінка існує',
 	'rte-ck-media-delete' => 'видалити',
+	'rte-ck-media-edit' => 'змінити',
+	'rte-ck-signature-label' => 'Підпис',
+	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Інший шаблон / магічне слово',
 	'rte-ck-templateDropDown-label' => 'Шаблон',
+	'rte-ck-templateDropDown-title' => 'Вибір шаблона',
 	'rte-ck-templateEditor-dialog-insert' => 'Вставити',
+	'rte-ck-templateEditor-dialog-magicWords' => 'Магічні слова',
 	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Вибрати інший шаблон',
 	'rte-ck-templateEditor-editor-parameters' => 'Параметри',
+	'rte-ck-templateEditor-editor-previewButton' => 'Попередній перегляд',
+	'rte-ck-templateEditor-editor-previewTitle' => 'Попередній перегляд',
+	'rte-ck-video-add' => 'Додати відео',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -1855,5 +1898,12 @@ $messages['uk'] = array(
 $messages['vi'] = array(
 	'rte-ck-image-add' => 'Chèn hình ảnh',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Chuyển sang chế độ WYSIWYG',
+);
+
+/** Chinese (Taiwan) (‪中文(台灣)‬)
+ * @author Ffaarr
+ */
+$messages['zh-tw'] = array(
+	'rte-ck-hoverPreview-edit' => '編輯',
 );
 

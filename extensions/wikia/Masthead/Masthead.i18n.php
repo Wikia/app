@@ -96,6 +96,13 @@ Diwallit, hollek eo an avataroù. Lemel avatar un implijer en deus un efed war W
 	'right-removeavatar' => 'Lemel avatarioù implijerien',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'blog-avatar-getuser' => 'Лаха',
+);
+
 /** German (Deutsch)
  * @author The Evil IP address
  */
@@ -126,7 +133,7 @@ $messages['de'] = array(
 	'right-removeavatar' => 'Avatar eines Benutzers entfernen',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author The Evil IP address
  */
 $messages['de-formal'] = array(
@@ -154,6 +161,7 @@ Por favor, recuerda que los avatares son globales - borrando el avatar de un usu
 	'blog-avatar-error-nofile' => 'Por favor, elija un archivo para almacenar.',
 	'blog-avatar-error-size' => 'El archivo subido es demasiado grande, el tamaño máximo permitido es de $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Ha ocurrido un error y no puedes almacenar el archivo.',
+	'blog-avatar-error-type' => 'Tipo MIME no válido. Proporcionado: $1 - Permitido: $2',
 	'blog-avatar-changed-log' => '(Avatar añadido o cambiado)',
 	'blog-avatar-removed-log' => 'Removido avatares de $1',
 	'blog-avatar-save-info' => 'Si quieres guardar los cambios <a href="#prefcontrol">ve al final</a> y presiona el botón de "Guardar"',
@@ -194,7 +202,7 @@ Muista, että avatarit ovat jaettuja – poistamalla käyttäjän avatarin poist
 	'blog-avatar-error-nofile' => 'Ole hyvä ja hae tiedosto levyltä.',
 	'blog-avatar-error-size' => 'Lähetetty tiedosto on liian iso. Suurin sallittu koko on $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Tiedoston tallennus ei onnistu.',
-	'blog-avatar-changed-log' => 'Avatarin on lisännyt tai vahtanut $1',
+	'blog-avatar-changed-log' => 'Avatar lisätty tai vaihdettu',
 	'blog-avatar-save-info' => 'Jos haluat tallentaa asetukset – <a href="#prefcontrol">siirry alas</a> ja napsauta painiketta ”{{int:saveprefs}}”.',
 	'blog-avatar-alt' => 'Avatar',
 	'removeuseravatar' => 'Poista käyttäjän avatar',
@@ -203,6 +211,7 @@ Muista, että avatarit ovat jaettuja – poistamalla käyttäjän avatarin poist
 /** French (Français)
  * @author Peter17
  * @author Urhixidur
+ * @author Wyz
  * @author Y-M D
  */
 $messages['fr'] = array(
@@ -214,19 +223,19 @@ $messages['fr'] = array(
 	'blog-avatar-choose-avatar' => 'Choisir un avatar',
 	'blog-avatar-upload-avatar' => 'Téléverser un nouvel avatar',
 	'blog-avatar-nouser' => 'Impossible de trouver l’utilisateur !',
-	'blog-avatar-cannot-remove' => 'Impossible de retirer l’avatar à l’utilisateur sélectionné !',
+	'blog-avatar-cannot-remove' => 'Impossible de retirer les avatars de l’utilisateur sélectionné !',
 	'blog-avatar-remove-info' => 'Cette page permet de retirer l’avatar d’un utilisateur. Entrez le nom d’utilisateur exact dans la boîte prévue et cliquez le bouton « {{int:blog-avatar-getuser}} ».
 Attention, les avatars sont globaux. Retirer l’avatar d’un utilisateur prend effet sur tout Wikia.',
 	'blog-avatar-getuser' => 'Rechercher',
-	'blog-avatar-remove-confirm' => 'Êtes-vous sûr de vouloir retirer l’avatar ?',
+	'blog-avatar-remove-confirm' => 'Êtes-vous sûr{{GENDER:||e|}} de vouloir retirer l’avatar ?',
 	'blog-avatar-error-nofile' => 'Choisissez un fichier sur votre disque dur.',
-	'blog-avatar-error-size' => 'Le fichier téléversé est trop gros. La taille permise est $1 Kio maximum.',
+	'blog-avatar-error-size' => 'Le fichier téléversé est trop gros, la taille maximale autorisée est de $1 Kio.',
 	'blog-avatar-error-cantwrite' => 'Une erreur s’est produite ; impossible d’enregistrer le fichier.',
 	'blog-avatar-error-type' => 'Type MIME invalide. Fourni : $1 - Autorisés : $2',
 	'blog-avatar-changed-log' => 'A créé ou modifié son avatar',
 	'blog-avatar-removed-log' => 'A retiré l’avatar de $1',
 	'blog-avatar-save-info' => 'Pour enregistrer l’avatar <a href="#prefcontrol">allez au bas de cette page</a> et cliquez sur le bouton « {{int:saveprefs}} ».',
-	'masthead-edits-since' => 'éditions depuis le',
+	'masthead-edits-since' => 'modifications depuis le',
 	'useravatar-log' => 'Journal des avatars des utilisateurs',
 	'blog-avatar-alt' => 'Journaux des ajouts et retraits d’avatars des utilisateurs',
 	'removeuseravatar' => 'Retirer l’avatar de l’utilisateur',
@@ -384,6 +393,7 @@ $messages['ja'] = array(
 	'blog-avatar-error-nofile' => 'ディスクからファイルを探してください。',
 	'blog-avatar-error-size' => 'アップロードされたファイルが大きすぎます。アップロードできるのは $1 KB までです。',
 	'blog-avatar-error-cantwrite' => 'ファイルをディスクに書き込めません。',
+	'blog-avatar-error-type' => 'MIMEタイプが不適切です。 指定されたMIMEタイプ: $1 - 許可されているMIMEタイプ: $2',
 	'blog-avatar-changed-log' => 'アバターが追加・変更されました',
 	'blog-avatar-removed-log' => '$1 のアバターを削除しました',
 	'blog-avatar-save-info' => 'ここで行った変更は<a href="#prefcontrol">設定を保存</a>しないと反映されません。',
@@ -396,6 +406,7 @@ $messages['ja'] = array(
 
 /** Luxembourgish (Lëtzebuergesch) */
 $messages['lb'] = array(
+	'blog-avatar-delete' => 'Läschen',
 	'prefs-avatarupload' => 'Avatar',
 );
 
@@ -675,7 +686,7 @@ $messages['si'] = array(
 	'blog-avatar-nouser' => 'මෙම පරිශීලකයා සොයාගත නොහැකිය!',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -730,6 +741,15 @@ $messages['tl'] = array(
  * @author Тест
  */
 $messages['uk'] = array(
+	'blog-avatar-edit' => 'Змінити',
+	'blog-avatar-delete' => 'Вилучити',
 	'masthead-edits-since' => 'редагувань з',
+);
+
+/** Chinese (Taiwan) (‪中文(台灣)‬)
+ * @author Ffaarr
+ */
+$messages['zh-tw'] = array(
+	'removeuseravatar' => '刪除用戶的頭像',
 );
 

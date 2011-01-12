@@ -162,7 +162,7 @@ $messages['af'] = array(
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Geselshoekie',
 	'myhome-community-corner-edit' => 'wysig boodskap',
-	'myhome-hot-spots-definition' => 'Bladsye met die meeste outeurs oor die laaste $1 dae',
+	'myhome-hot-spots-definition' => 'Bladsye met die meeste outeurs oor die laaste {{PLURAL:$1|dag|$1 dage}}.',
 	'tooltip-pt-myhome' => 'Gaan na My Tuisblad',
 );
 
@@ -257,7 +257,23 @@ $messages['as'] = array(
 	'myhome-feed-new-article-comment-details' => 'মন্তব্য',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca) */
+$messages['az'] = array(
+	'wikiactivity' => 'Viki-fəaliyyət',
+	'myhome-activity-feed' => 'Son dəyişikliklər',
+	'myhome-feed-newpage' => 'yeni səhifə',
+	'myhome-feed-edit' => 'redaktə',
+	'myhome-feed-talkpage' => 'müzakirə səhifəsi',
+	'myhome-feed-new-page-details' => 'Yeni səhifə',
+	'myhome-feed-section-edit-details' => 'Bölmənin redaktəsi',
+	'myhome-feed-new-blog-post-details' => 'Yeni bloq',
+	'myhome-feed-new-blog-comment-details' => 'Şərh',
+	'myhome-feed-new-article-comment-details' => 'Şərh',
+	'myhome-feed-redirect-details' => 'İstiqamətləndirmə',
+	'myhome-namespace-blog' => 'Bloq',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -309,12 +325,39 @@ $messages['be-tarask'] = array(
 	'myhome-community-corner-edit' => 'рэдагаваць паведамленьне',
 );
 
+/** Tibetan (བོད་ཡིག) */
+$messages['bo'] = array(
+	'myhome' => 'ང་ཡི་ཁྱིམ།',
+	'wikiactivity' => 'ཝེ་ཁེ་བྱ་འགུལ།',
+	'myhome-activity-more' => 'ཉེ་བའི་བྱ་འགུལ་མང་བ།',
+	'myhome-activity-feed' => 'བྱ་འགུལ་རྒྱུ་ཆ།',
+	'myhome-watchlist-feed' => 'མཉམ་འཇོག་ཐོ།',
+	'myhome-user-contributions-feed' => 'བྱས་རྗེས།',
+	'myhome-hot-spots-newest' => 'ཝེ་ཁེ་སྟེང་གི་ཤོག་ངོས་གསར་བ།',
+	'myhome-hot-spots-brandnew' => 'འདི་ནི་ཝེ་ཁེའི་ཆ་ཤས་གསར་བ་ཞིག་ཡིན། [[special:CreatePage|Newpage]]ལ་མནན་ཏེ་འབྲི་བར་འགོ་རྩོམ།',
+	'tog-myhomedisableredirect' => 'ང་ཡི་ཁྱིམ་ལ་ཁ་ཕྱོགས་གསར་བ་ནུས་མེད་གཏོང་བ།',
+	'myhome-feed-newpage' => 'ཤོག་ངོས་གསར་བ།',
+	'myhome-feed-edit' => 'རྩོམ་སྒྲིག',
+	'myhome-feed-move' => 'ཤོག་ངོས་སྤོར་ཟིན།',
+	'myhome-feed-talkpage' => 'གྲོས་མོལ་ཤོག་ངོས།',
+	'myhome-feed-blogcomment' => 'པོད་ཁུག་བསམ་ཚུལ།',
+	'myhome-feed-delete' => 'བསུབས་ཟིན།',
+	'myhome-feed-image' => 'པར་བསྣན་ཟིན།',
+	'myhome-feed-video' => 'གློག་བརྙན་བསྣན་ཟིན།',
+	'myhome-feed-new-blog-comment-details' => 'བསམ་ཚུལ།',
+	'myhome-feed-new-article-comment-details' => 'བསམ་ཚུལ།',
+	'myhome-feed-move-details' => 'མིང་གསར།',
+	'myhome-feed-redirect-details' => 'ཁ་ཕྱོགས་གསར་བ།',
+	'myhome-feed-inserted-image-details' => 'འདྲ་པར་$1 བསྣན་པ།',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
+	'myhome-desc' => 'Ur bajenn degemer prevez evit an implijerien kevreet',
 	'myhome' => 'Va zi',
 	'wikiactivity' => 'Oberiantiz ar wiki',
 	'myhome-activity-more' => 'Gwelet an oberoù neveshañ',
@@ -388,7 +431,7 @@ Ma'z oc'h diazezer ar wiki-mañ pe unan eus merourien anezhañ e c'hallit kemma�
 * Trugarekaat un den degaset gantañ un dra bennak dedennus evit ar wiki
 
 * Pe postañ un nebeud gerioù evit kalonekaat unan bennak hepken !",
-	'myhome-hot-spots-definition' => 'Ar pajennoù gant ar muiañ a genlabourer e kerzh an $1 devezh ziwezhañ.',
+	'myhome-hot-spots-definition' => 'Ar pajennoù dezho ar muiañ a genlabourerien e-kerzh an {{PLURAL:$1|devezh|$1 devezh}} diwezhañ.',
 	'myhome-default-view-checkbox' => 'Lakaat ar sell $1 da ziouer',
 	'myhome-default-view-success' => 'Mat eo, hon sell dre ziouer eo bremañ',
 	'tooltip-pt-myhome' => "Mont d'am Degemer",
@@ -415,7 +458,7 @@ $messages['cy'] = array(
  */
 $messages['de'] = array(
 	'myhome' => 'Startseite',
-	'wikiactivity' => 'Wiki Aktivität',
+	'wikiactivity' => 'Wiki-Aktivität',
 	'myhome-activity-more' => 'mehr kürzliche Änderungen',
 	'myhome-activity-feed' => 'Letzte Aktivitäten',
 	'myhome-activity-feed-empty' => "Dieses Wiki wartet auf deine Beteiligung.
@@ -429,7 +472,7 @@ Mit deiner Beobachtungsliste kannst du die letzten Änderungen an Seiten verfolg
 Klicke auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu beginnen!",
 	'myhome-hot-spots-newest' => 'Neue Seiten im Wiki',
 	'myhome-hot-spots-brandnew' => 'Dies ist ein nagelneues Wiki. Klicke auf [[Special:CreatePage|Neue Seite]] um mit dem Schreiben zu beginnen!',
-	'tog-myhomedisableredirect' => 'Weiterleitung zur Startseite unterbinden',
+	'tog-myhomedisableredirect' => 'Weiterleitung zu Wiki Activity unterbinden',
 	'myhome-feed-newpage' => 'neue Seite',
 	'myhome-feed-edit' => 'bearbeiten',
 	'myhome-feed-move' => 'Seite verschoben',
@@ -470,7 +513,7 @@ Probier es einfach aus!',
 	'myhome-switch-to-monaco' => "Die Startseiten-Funktion ist nur für das Monaco-Design verfügbar.
 Wenn du die Startseite sehen möchtest, gehe bitte zu '''[[Special:Preferences|deinen Einstellungen]]''' um dein Design zu wechseln.",
 	'myhome-namespace-blog' => 'Benutzer-Blog',
-	'myhome-community-corner-header' => 'Gemeinschafts-Bereich',
+	'myhome-community-corner-header' => 'Gemeinschafts-Nachrichten',
 	'oasis-myhome-community-corner-edit' => 'Bearbeiten &gt;',
 	'myhome-community-corner-edit' => 'Bearbeiten',
 	'community-corner' => "'''Willkommen auf deiner Startseite!'''
@@ -488,14 +531,14 @@ Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht
 * Einen Benutzer vorstellen, der etwas Spezielles zum Wiki beigetragen hat.
 
 * Oder einfach ein paar Worte zur Motivation!",
-	'myhome-hot-spots-definition' => 'Seiten mit den meisten Bearbeitern in den letzten $1 Tagen.',
+	'myhome-hot-spots-definition' => 'Seiten mit den meisten Bearbeitern {{PLURAL:$1|am letzten Tag|in den letzten $1 Tagen}}.',
 	'myhome-default-view-checkbox' => '$1 zu meiner Standardansicht machen',
 	'myhome-default-view-success' => 'Deine Einstellung wurde gespeichert.',
 	'tooltip-pt-myhome' => 'Gehe zu meiner Startseite',
 	'activityfeed' => 'Aktivitäten-Feed',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  * @author The Evil IP address
  */
@@ -614,12 +657,14 @@ $messages['el'] = array(
 
 /** Spanish (Español)
  * @author Absay
+ * @author Bola
  * @author Crazymadlover
  * @author Danke7
  * @author Locos epraix
  * @author Peter17
  */
 $messages['es'] = array(
+	'myhome-desc' => 'Una página de inicio privada para usuarios registrados',
 	'myhome' => 'Mi página de inicio',
 	'wikiactivity' => 'Actividad Wiki',
 	'myhome-activity-more' => 'ver más actividad reciente',
@@ -632,7 +677,8 @@ $messages['es'] = array(
 	'myhome-hot-spots-feed-empty' => "Este wiki está esperando a que te unas. ¡Haz clic en '''[[Special:CreatePage|nueva página]]''' para comenzar a escribir!",
 	'myhome-hot-spots-newest' => 'Páginas nuevas en el wiki',
 	'myhome-hot-spots-brandnew' => 'Este es un wiki nuevo. ¡Haz clic en [[Special:CreatePage|Nueva página]] para comenzar a escribir!',
-	'tog-myhomedisableredirect' => 'Desactivar la redirección a Inicio',
+	'tog-myhomedisableredirect' => 'Desactivar la redirección a Wiki Actividad',
+	'prefs-myhome' => 'Inicio',
 	'myhome-feed-newpage' => 'nueva página',
 	'myhome-feed-edit' => 'modificar',
 	'myhome-feed-move' => 'Se movió página',
@@ -687,11 +733,19 @@ Si eres el fundador o un administrador de este wiki, puedes cambiar este mensaje
 * Anunciar a un editor que ha añadido algo especial al wiki
 
 * ¡O sólo para publicar algunas palabras que alienten la edición!",
-	'myhome-hot-spots-definition' => 'Páginas con más editores en los últimos $1 días',
+	'myhome-hot-spots-definition' => 'Páginas con más editores en {{PLURAL:$1|el último día|los últimos días}}',
 	'myhome-default-view-checkbox' => 'Hacer de $1 mi vista por defecto',
 	'myhome-default-view-success' => 'Perfecto, así será a partir de ahora',
 	'tooltip-pt-myhome' => 'Ir a mi página',
 	'activityfeed' => 'Lista de actividad',
+);
+
+/** Persian (فارسی) */
+$messages['fa'] = array(
+	'myhome-watchlist-feed' => 'فهرست پی‌گیری‌ها',
+	'myhome-feed-newpage' => 'صفحهٔ جدید',
+	'myhome-feed-summary-details' => 'خلاصه',
+	'myhome-feed-redirect-details' => 'تغییرمسیر',
 );
 
 /** Finnish (Suomi)
@@ -702,6 +756,7 @@ Si eres el fundador o un administrador de este wiki, puedes cambiar este mensaje
  */
 $messages['fi'] = array(
 	'myhome' => 'Kotisivu',
+	'wikiactivity' => 'Aktiivisuus wikissä',
 	'myhome-activity-more' => 'katso lisää viimeisintä toimintaa',
 	'myhome-activity-feed' => 'Toimintasyöte',
 	'myhome-watchlist-feed' => 'Tarkkailulista',
@@ -767,11 +822,13 @@ Jos olet tämän wikin perustaja tai olet ylläpitäjänä tässä wikissä, voi
  * @author Peter17
  * @author Slamduck
  * @author Urhixidur
+ * @author Wyz
  */
 $messages['fr'] = array(
+	'myhome-desc' => 'Une page d’accueil privée pour les utilisateurs identifiés',
 	'myhome' => 'Mon Accueil',
 	'wikiactivity' => 'Activité du wiki',
-	'myhome-activity-more' => 'Voir les dernières activités',
+	'myhome-activity-more' => "voir plus d'activité récente",
 	'myhome-activity-feed' => "Flux d'activité",
 	'myhome-activity-feed-empty' => "Vous n'avez pas encore participé à ce wiki. Cliquez sur '''[[Special:CreatePage|Nouvelle page]]''' pour commencer à écrire !",
 	'myhome-watchlist-feed' => 'Liste de suivi',
@@ -779,37 +836,38 @@ $messages['fr'] = array(
 Vous pouvez vous servir de votre liste de suivi pour garder une trace des derniers changements effectués sur les pages qui vous intéressent.',
 	'myhome-user-contributions-feed' => 'Contributions',
 	'myhome-hot-spots-feed' => 'Pages les plus actives',
-	'myhome-hot-spots-feed-empty' => "Ce wiki nécessite votre participation. Cliquez sur '''[[Special:CreatePage|Nouvelle page]]''' pour commencer à écrire !",
+	'myhome-hot-spots-feed-empty' => "Vous n'avez pas encore participé à ce wiki.
+Cliquez sur '''[[Special:CreatePage|Nouvelle page]]''' pour commencer à écrire !",
 	'myhome-hot-spots-newest' => 'Nouvelles pages du wiki',
 	'myhome-hot-spots-brandnew' => 'Vous êtes sur un tout nouveau wiki. Cliquez sur [[Special:CreatePage|Nouvelle page]] pour commencer à écrire !',
-	'tog-myhomedisableredirect' => 'Désactiver la redirection vers Mon Accueil',
+	'tog-myhomedisableredirect' => 'Désactiver la redirection vers l’activité du wiki',
 	'myhome-feed-newpage' => 'nouvelle page',
 	'myhome-feed-edit' => 'modifier',
 	'myhome-feed-move' => 'page déplacée',
 	'myhome-feed-talkpage' => 'page de discussion',
-	'myhome-feed-blogcomment' => 'commentaire de blogue',
-	'myhome-feed-delete' => 'supprimé',
+	'myhome-feed-blogcomment' => 'commentaire de blog',
+	'myhome-feed-delete' => 'supprimée',
 	'myhome-feed-image' => 'image ajoutée',
 	'myhome-feed-video' => 'vidéo ajoutée',
 	'myhome-feed-categorization' => 'catégorisation',
-	'myhome-feed-created-by' => 'créé par $1',
+	'myhome-feed-created-by' => 'créée par $1',
 	'myhome-feed-added-by' => 'ajouté par $1',
-	'myhome-feed-edited-by' => 'édité par $1',
+	'myhome-feed-edited-by' => 'modifiée par $1',
 	'myhome-feed-posted-by' => 'posté par $1',
 	'myhome-feed-comment-by' => 'commenté par $1',
-	'myhome-feed-deleted-by' => 'supprimé par $1',
-	'myhome-feed-moved-by' => 'déplacé par $1',
+	'myhome-feed-deleted-by' => 'supprimée par $1',
+	'myhome-feed-moved-by' => 'déplacée par $1',
 	'myhome-feed-article-comment-created-by' => 'nouveau commentaire de $1',
 	'myhome-feed-article-comment-edited-by' => 'commentaire modifié par $1',
 	'myhome-feed-by' => 'par $1',
 	'myhome-feed-diff-alt' => 'voir les changements de cette page',
 	'myhome-feed-new-page-details' => 'Nouvelle page',
 	'myhome-feed-summary-details' => 'Résumé',
-	'myhome-feed-section-edit-details' => 'Section éditée',
-	'myhome-feed-new-blog-post-details' => 'Nouveau blogue',
-	'myhome-feed-new-blog-comment-details' => 'Commenter',
-	'myhome-feed-new-article-comment-details' => 'Commenter',
-	'myhome-feed-move-details' => 'Renommé',
+	'myhome-feed-section-edit-details' => 'Section modifiée',
+	'myhome-feed-new-blog-post-details' => 'Nouveau blog',
+	'myhome-feed-new-blog-comment-details' => 'Commentaire',
+	'myhome-feed-new-article-comment-details' => 'Commentaire',
+	'myhome-feed-move-details' => 'Renommée',
 	'myhome-feed-redirect-details' => 'Redirection',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Photo ajoutée|Photos ajoutées}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Vidéo ajoutée|Vidéos ajoutées}}',
@@ -819,9 +877,9 @@ Tout le monde peut faire des modifications, ajouter des informations ou corriger
 Le wiki est construit par la communauté, et une fois que vous aurez cliqué sur le bouton de modification, vous ferez partie de la communauté.
 Essayez donc !",
 	'myhome-hot-spots-number-of-editors' => 'contributeurs',
-	'myhome-log-in' => "<center>La fonction Mon Accueil n'est disponible que si vous êtes connecté(e).<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Veuillez vous connecter pour voir cette page !]</span>'''</big></center>",
+	'myhome-log-in' => "<center>La fonction Mon Accueil n'est disponible que si vous êtes connecté{{GENDER:||e|}}.<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Veuillez vous connecter pour voir cette page !]</span>'''</big></center>",
 	'myhome-switch-to-monaco' => "La fonction Mon Accueil n'est disponible que si vous utilisez l'habillage Monaco. Si vous voulez accéder à Mon Accueil, veuillez modifier '''[[Special:Preferences|vos Préférences]]''' pour changer votre habillage.",
-	'myhome-namespace-blog' => 'Blogue',
+	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Messages de la communauté',
 	'oasis-myhome-community-corner-edit' => 'modifier le message &gt;',
 	'myhome-community-corner-edit' => 'modifier le message',
@@ -840,7 +898,7 @@ Si vous êtes le fondateur ou bien un administrateur de ce wiki, vous pouvez cha
 * Remercier un contributeur qui a apporté quelque chose d'intéressant au wiki
 
 * Ou alors poster tout simplement quelques mots d'encouragement !",
-	'myhome-hot-spots-definition' => 'Les pages avec le plus de contributeurs durant les $1 derniers jours.',
+	'myhome-hot-spots-definition' => 'Les pages avec le plus de contributeurs durant {{PLURAL:$1|le dernier jour|les $1 derniers jours}}.',
 	'myhome-default-view-checkbox' => 'Faire de $1 ma vue par défaut',
 	'myhome-default-view-success' => "C'est parfait, ceci est désormais votre vue par défaut",
 	'tooltip-pt-myhome' => 'Aller à Mon Accueil',
@@ -851,6 +909,7 @@ Si vous êtes le fondateur ou bien un administrateur de ce wiki, vous pouvez cha
  * @author Toliño
  */
 $messages['gl'] = array(
+	'myhome-desc' => 'Unha páxina principal privada para os usuarios rexistrados',
 	'myhome' => 'A miña páxina de inicio',
 	'wikiactivity' => 'Actividade no wiki',
 	'myhome-activity-more' => 'ver a actividade máis recente',
@@ -864,7 +923,7 @@ Pode usar a súa lista de vixilancia para seguir as modificacións recentes nas 
 	'myhome-hot-spots-feed-empty' => "Este wiki está agardando a que se involucre. Prema sobre '''[[Special:CreatePage|páxina nova]]''' para comezar a escribir!",
 	'myhome-hot-spots-newest' => 'Novas páxinas do wiki',
 	'myhome-hot-spots-brandnew' => 'Este é un wiki novo. Prema sobre [[Special:CreatePage|páxina nova]] para comezar a escribir!',
-	'tog-myhomedisableredirect' => 'Desactivar a miña redirección cara á miña páxina de inicio',
+	'tog-myhomedisableredirect' => 'Desactivar a redirección cara á miña actividade no wiki',
 	'myhome-feed-newpage' => 'páxina nova',
 	'myhome-feed-edit' => 'editar',
 	'myhome-feed-move' => 'páxina movida',
@@ -922,7 +981,7 @@ Se vostede é o fundador ou un administrador desde wiki, pode cambiar esta mensa
 * Agasallar nunha mensaxe a un colaborador que engadira algo de especial ao wiki
 
 * Ou simplemente escribir algunhas palabras de alento!",
-	'myhome-hot-spots-definition' => 'Páxinas con máis editores nos últimos $1 días.',
+	'myhome-hot-spots-definition' => 'Páxinas con máis editores {{PLURAL:$1|no último día|nos últimos $1 días}}.',
 	'myhome-default-view-checkbox' => 'Facer que $1 sexa a miña vista por defecto',
 	'myhome-default-view-success' => 'De acordo, así será de agora en diante',
 	'tooltip-pt-myhome' => 'Ir á miña páxina de inicio',
@@ -939,14 +998,16 @@ $messages['ha'] = array(
  * @author 0ftal
  */
 $messages['he'] = array(
+	'myhome-desc' => 'דף בית פרטי למשתמשים שנכנסים',
 	'myhome' => 'הבית שלי',
+	'wikiactivity' => 'פעילות ויקי',
 	'myhome-activity-more' => 'ראה עוד פעילויות אחרונות',
 	'myhome-activity-feed' => 'עדכונים',
 	'myhome-activity-feed-empty' => "אנחנו מחכים שתצטרף אלינו ותהיה מעורב.
 לחץ על '''[[Special:CreatePage|New page]]''' כדי להתחיל לכתוב!",
 	'myhome-watchlist-feed' => 'רשימת המעקב',
-	'myhome-watchlist-feed-empty' => 'ניתן להוסיף עמודים לרשימת המעקב על ידי לחיצה על "צפה" בשורת הקישורים שבחלק העליון של הדף.
-ניתן להשתמש ברשימת המעקב כדי לעקוב אחר השינויים האחרונים בדפים חשובים לך.',
+	'myhome-watchlist-feed-empty' => 'באפשרותך להוסיף עמודים לרשימת המעקב שלך על ידי לחיצה על הקישור "{{int:watch}}" בשורת הקישורים שבחלק העליון של הדף.
+באפשרותך להשתמש ברשימת המעקב שלך כדי לעקוב אחר השינויים האחרונים בדפים החשובים לך.',
 	'myhome-user-contributions-feed' => 'תרומות',
 	'myhome-hot-spots-feed' => 'דפים חמים',
 	'myhome-hot-spots-feed-empty' => "אנחנו מחכים שתצטרף אלינו ותהיה מעורב.
@@ -963,6 +1024,7 @@ $messages['he'] = array(
 	'myhome-feed-delete' => 'נמחק',
 	'myhome-feed-image' => 'תמונה הועלתה',
 	'myhome-feed-video' => 'סרטון נוסף',
+	'myhome-feed-categorization' => 'חלוקה לקטגוריות',
 	'myhome-feed-created-by' => 'נוצר על ידי $1',
 	'myhome-feed-added-by' => 'נוסף על ידי $1',
 	'myhome-feed-edited-by' => 'נערך על ידי $1',
@@ -985,16 +1047,17 @@ $messages['he'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|הוסיף תמונה|הוסיף תמונות}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|הוסיף סרטון|הוסיף סרטונים}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|הוסיף קטגוריה|הוסיף קטגוריות}}',
-	'myhome-user-contributions-empty' => 'אתה יכול להיות מעורב בוויקי הזאת על ידי לחיצה על "עריכה" בכל ראש מאמר, וכתיבת פרטים שאתה יודע.
-כולם יכולים לעשות שינויים, להוסיף מידע או לתקן טעויות.
-הוויקי הזאת נבנית על ידי הקהילה, וכאשר אתה לוחץ על כפתור העריכה, אתה חלק מהקהילה.
-נסה ולא תצטער!',
+	'myhome-user-contributions-empty' => 'ניתן לגלות מעורבות באתר ויקי זה על ידי לחיצה על "{{int:editthispage}}" בכל דף שהוא, וכתיבת הפרטים הידועים לך.
+כולם יכולים לערוך שינויים, להוסיף מידע או לתקן טעויות.
+אתר ויקי זה נבנה על ידי הקהילה, ובעת לחיצה על לחצן העריכה, תרומתך מהווה חלק מהקהילה.
+מאוד מומלץ לנסות!',
 	'myhome-hot-spots-number-of-editors' => 'עורכים',
 	'myhome-log-in' => "<center>הבית שלי זמין רק אם אתה מחובר.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} אנא התחבר כדי לראות את העמוד!]'''</big></center>",
 	'myhome-switch-to-monaco' => "פיצ'ר \"הבית שלי\" זמין אך ורק אם אתה משתמש בסקין \"מונקו\".
 אם ברצונך להשתמש בפיצ'ר \"הבית שלי\", אנא היכנס ל'''[[Special:Preferences|your Preferences]]''' כדי לשנות את הסקין שלך.",
 	'myhome-namespace-blog' => 'בלוג',
-	'myhome-community-corner-header' => 'שער הקהילה',
+	'myhome-community-corner-header' => 'הודעות הקהילה',
+	'oasis-myhome-community-corner-edit' => 'עריכת הודעה &gt;',
 	'myhome-community-corner-edit' => 'עריכת הודעה',
 	'community-corner' => "'''ברוכים הבאים לבית שלי!'''
 
@@ -1003,10 +1066,11 @@ $messages['he'] = array(
 אנא, פרסמו את הוויקי ועזרו לנו להרחיב אותה ככל שתוכלו.
 
 אם יש לכם שאלה תוכלו לפנות אל אחד מהמנהלים.",
-	'myhome-hot-spots-definition' => 'דפים שנערכו על ידי עורכים רבים ב$1 הימים האחרונים.',
+	'myhome-hot-spots-definition' => 'דפים שנערכו על ידי עורכים רבים ב{{PLURAL:$1|יום האחרון|$1 הימים האחרונים}}.',
 	'myhome-default-view-checkbox' => 'הפוך את $1 לתצוגת ברירת המחדל שלי',
 	'myhome-default-view-success' => 'אוקיי, זאת ברירת המחדל שלך עכשיו',
 	'tooltip-pt-myhome' => 'עבור אל הבית שלי',
+	'activityfeed' => 'הזנת פעילות',
 );
 
 /** Hungarian (Magyar)
@@ -1046,6 +1110,7 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'myhome-desc' => 'Un pagina personal private pro usatores authenticate',
 	'myhome' => 'Mi pagina initial',
 	'wikiactivity' => 'Activitate in wiki',
 	'myhome-activity-more' => 'vider le activitate plus recente',
@@ -1058,7 +1123,7 @@ $messages['ia'] = array(
 	'myhome-hot-spots-feed-empty' => "Iste wiki attende tu participation. Clicca super '''[[Special:CreatePage|Nove pagina]]''' pro comenciar a scriber!",
 	'myhome-hot-spots-newest' => 'Nove paginas in le wiki',
 	'myhome-hot-spots-brandnew' => 'Iste wiki es toto nove. Clicca super [[Special:CreatePage|Nove pagina]] pro comenciar a scriber!',
-	'tog-myhomedisableredirect' => 'Disactivar le redirection verso Mi pagina initial',
+	'tog-myhomedisableredirect' => 'Disactivar mi redirection verso le activitate del wiki',
 	'myhome-feed-newpage' => 'nove pagina',
 	'myhome-feed-edit' => 'modificar',
 	'myhome-feed-move' => 'pagina renominate',
@@ -1113,7 +1178,7 @@ Si tu es le fundator o un administrator de iste wiki, tu pote cambiar iste messa
 * Regratiar publicamente un contributor qui ha addite qualcosa de special al wiki
 
 * O simplemente scriber alcun parolas de incoragiamento!",
-	'myhome-hot-spots-definition' => 'Paginas con le plus contributores in le ultime $1 dies.',
+	'myhome-hot-spots-definition' => 'Paginas con le plus contributores in le ultime {{PLURAL:$1|die|$1 dies}}.',
 	'myhome-default-view-checkbox' => 'Facer de $1 mi vista predefinite',
 	'myhome-default-view-success' => 'Ben, predefinition succedite',
 	'tooltip-pt-myhome' => 'Ir a mi pagina initial',
@@ -1281,6 +1346,7 @@ Se sei il fondatore o un admin di questo wiki, puoi modificare questo messaggio 
  * @author 青子守歌
  */
 $messages['ja'] = array(
+	'myhome-desc' => '登録利用者向けのプライベートホームページ',
 	'myhome' => 'My Home',
 	'wikiactivity' => 'ウィキアクティビティ',
 	'myhome-activity-more' => 'もっと詳しく',
@@ -1330,7 +1396,7 @@ $messages['ja'] = array(
 	'myhome-log-in' => "<center>My Home を利用するにはログインする必要があります。<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} このページを閲覧するためにログインしてください！]'''</big></center>",
 	'myhome-switch-to-monaco' => 'My Home は Monaco スキンでのみ利用できます。もし My Home を閲覧したいのであれば、[[Special:Preferences|スキンの設定を変更]]してください。',
 	'myhome-namespace-blog' => 'Blog',
-	'myhome-community-corner-header' => 'コミュニティコーナー',
+	'myhome-community-corner-header' => 'コミュニティメッセージ',
 	'oasis-myhome-community-corner-edit' => 'メッセージを編集 &gt;',
 	'myhome-community-corner-edit' => 'メッセージを編集',
 	'community-corner' => "'''My Home にようこそ！'''
@@ -1369,20 +1435,22 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'myhome-desc' => 'Приватна домашна страница за најавени корисници',
 	'myhome' => 'Мојата домашна страница',
 	'wikiactivity' => 'Активности на викито',
 	'myhome-activity-more' => 'понови активности',
 	'myhome-activity-feed' => 'Канал со најнови активности',
 	'myhome-activity-feed-empty' => "Ова вики чека на вашето учество. Кликнете на '''[[Special:CreatePage|Нова страница]]''' за да почнете да пишувате!",
 	'myhome-watchlist-feed' => 'Список на набљудувања',
-	'myhome-watchlist-feed-empty' => 'Можете да додавате страници во списокот на набљудувања со притискање на врската „{{int:watch}}“ во лентата на врвот од страницата.
+	'myhome-watchlist-feed-empty' => 'Можете да додавате страници во списокот на набљудувања со притискање на врската „{{int:watch}}“ во лентата на врвот од страницата. 
 Со списокот можете да ги следите најновите промени во страниците за кои сте заинтересирани.',
 	'myhome-user-contributions-feed' => 'Придонеси',
 	'myhome-hot-spots-feed' => 'Најактивни места',
 	'myhome-hot-spots-feed-empty' => "Ова вики чека на вашето учество. Кликнете на '''[[Special:CreatePage|Нова страница]]''' за да почнете да пишувате!",
 	'myhome-hot-spots-newest' => 'Нови страници на викито',
 	'myhome-hot-spots-brandnew' => 'Ова е сосема ново вики. Кликнете на [[Special:CreatePage|Нова страница]] за да почнете со пишување!',
-	'tog-myhomedisableredirect' => 'Оневозможи пренасочување кон Мојата домашна страница',
+	'tog-myhomedisableredirect' => 'Оневозможи го моето пренасочување кон Викиактивност',
+	'prefs-myhome' => 'Моја домашна',
 	'myhome-feed-newpage' => 'нова страница',
 	'myhome-feed-edit' => 'уредување',
 	'myhome-feed-move' => 'преместена страница',
@@ -1414,8 +1482,8 @@ $messages['mk'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Додадена фотографија|Додадени фотографии}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Додадена видеоснимка|Додадени видеоснимки}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Додадена категорија|Додадени категории}}',
-	'myhome-user-contributions-empty' => 'Можете да се приклучите на ова вики со тоа што ќе кликнете на „{{int:editthispage}}“ не било која статија, и ќе го додадете она од коешто имате познавања.
-Секој може да прави измени, да додава информации и да поправа грешки.
+	'myhome-user-contributions-empty' => 'Можете да се приклучите на ова вики со тоа што ќе кликнете на „{{int:editthispage}}“ не било која статија, и ќе го додадете она од коешто имате познавања. 
+Секој може да прави измени, да додава информации и да поправа грешки. 
 Викито го гради заедницата, и штом еднаш ќе го стиснете копчето за уредување, веќе станувате дел од таа заедница. Испробајте!',
 	'myhome-hot-spots-number-of-editors' => 'уредници',
 	'myhome-log-in' => "<center>Функцијата „Мојата домашна страница“ е достапна само ако сте најавени.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Најавете се за да ја видите страницата!]'''</big></center>",
@@ -1439,7 +1507,7 @@ $messages['mk'] = array(
 * Обратете внимание на уредник кој има придонесено нешто особено за викито
 
 * Или само објавете по неколку збора во поддршка на уредниците!",
-	'myhome-hot-spots-definition' => 'Страници со највеќе уредувања во {{PLURAL:$1|изминатиот|изминатите}} $1 {{PLURAL:$1|ден|дена}}.',
+	'myhome-hot-spots-definition' => 'Страници со највеќе уредници во {{PLURAL:$1|изминатиот|изминатите}} $1 {{PLURAL:$1|ден|дена}}.',
 	'myhome-default-view-checkbox' => 'Постави го погледот на $1 како основен',
 	'myhome-default-view-success' => 'Во ред, сега ова е вашиот основен поглед',
 	'tooltip-pt-myhome' => 'Оди на Мојата домашна страница',
@@ -1460,6 +1528,7 @@ $messages['ms'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'myhome-desc' => 'Een eigen startpagina voor aangemelde gebruikers',
 	'myhome' => 'Mijn startpagina',
 	'wikiactivity' => 'Wikiactiviteit',
 	'myhome-activity-more' => 'meer recente activiteit bekijken',
@@ -1475,7 +1544,8 @@ U kunt uw volglijst gebruiken om de laatste wijzigingen aan pagina\'s waar u bij
 Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!",
 	'myhome-hot-spots-newest' => "Nieuwe pagina's op de Wiki",
 	'myhome-hot-spots-brandnew' => "Dit is een splinternieuwe Wiki. Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!",
-	'tog-myhomedisableredirect' => 'Doorverwijzing naar Mijn startpagina uitschakelen',
+	'tog-myhomedisableredirect' => 'Doorverwijzing naar Wikiactiviteit uitschakelen',
+	'prefs-myhome' => 'Mijn startpagina',
 	'myhome-feed-newpage' => 'nieuwe pagina',
 	'myhome-feed-edit' => 'bewerken',
 	'myhome-feed-move' => 'pagina hernoemd',
@@ -1536,7 +1606,7 @@ Als u de oprichter of een beheerder van deze wiki bent, kunt u dit bericht gebru
 * Een bepaalde gebruiker prijzen die iets speciaals heeft toegevoegd aan de wiki
 
 * Of gewoon wat schrijven om mensen aan te moedigen!",
-	'myhome-hot-spots-definition' => "Pagina's met de meeste bewerkers in de laatste $1 dagen.",
+	'myhome-hot-spots-definition' => "Pagina's met de meeste bewerkers in de afgelopen {{PLURAL:$1|dag|$1 dagen}}.",
 	'myhome-default-view-checkbox' => 'Maak $1 mijn standaard weergave',
 	'myhome-default-view-success' => 'De nieuwe instellingen zijn opgeslagen',
 	'tooltip-pt-myhome' => 'Naar Mijn startpagina',
@@ -1548,6 +1618,7 @@ Als u de oprichter of een beheerder van deze wiki bent, kunt u dit bericht gebru
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'myhome-desc' => 'En privat hjem-side for innloggede brukere',
 	'myhome' => 'Mitt hjem',
 	'wikiactivity' => 'Wiki-aktivitet',
 	'myhome-activity-more' => 'se mer nylig aktivitet',
@@ -1563,7 +1634,8 @@ Du kan bruke overvåkningslisten for å holde styr på siste endringer på sider
 Klikk på '''[[Special:CreatePage|Ny side]]''' for å begynne å skrive.",
 	'myhome-hot-spots-newest' => 'Nye sider på wikien',
 	'myhome-hot-spots-brandnew' => 'Dette er en helt ny wiki. Klikk på [[Special:CreatePage|Ny side]] for å begynne å skrive.',
-	'tog-myhomedisableredirect' => 'Deaktiver omdirigeringen min til Mitt hjem',
+	'tog-myhomedisableredirect' => 'Deaktiver omdirigering til Wiki-aktivitet',
+	'prefs-myhome' => 'Mitt hjem',
 	'myhome-feed-newpage' => 'ny side',
 	'myhome-feed-edit' => 'redigert',
 	'myhome-feed-move' => 'side flyttet',
@@ -1623,7 +1695,7 @@ For eksempel kan du:
 * Gi oppmerksomhet til en bidragsyter som la til noe spesielt på wikien
 
 *Eller bare poste noen oppmuntrende ord.",
-	'myhome-hot-spots-definition' => 'Sider med flest bidragsytere de siste $1 dager.',
+	'myhome-hot-spots-definition' => 'Sider med flest bidragsytere {{PLURAL:$1|den siste dagen|de siste $1 dagene}}.',
 	'myhome-default-view-checkbox' => 'Gjør $1 til min standardvisning',
 	'myhome-default-view-success' => 'Greit, dette er standarden din nå',
 	'tooltip-pt-myhome' => 'Gå til Mitt hjem',
@@ -1698,6 +1770,11 @@ $messages['pdc'] = array(
 	'myhome-hot-spots-definition' => 'Bledder mit de meescht Schreiwer vun de letscht $1 Daag.',
 );
 
+/** Pälzisch (Pälzisch) */
+$messages['pfl'] = array(
+	'myhome-feed-edit' => 'bearwaide',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */
@@ -1739,6 +1816,7 @@ Jeśli chcesz widzieć „Moja strona domowa” zmień '''[[Special:Preferences|
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'myhome-desc' => 'Na pàgina home privà për utent intrà',
 	'myhome' => 'Mia Intrada',
 	'wikiactivity' => 'Atività dla Wiki',
 	'myhome-activity-more' => "varda j'atività pi recente",
@@ -1751,7 +1829,7 @@ $messages['pms'] = array(
 	'myhome-hot-spots-feed-empty' => "Sta wiki-sì a speta che chiel a ancamin-a. Ch'a sgnaca dzora a '''[[Special:CreatePage|Pàgina neuva]]''' për ancaminé a scrive!",
 	'myhome-hot-spots-newest' => 'Pàgine neuve an sla wiki',
 	'myhome-hot-spots-brandnew' => "Costa-sì a l'é na wiki neuva ëd pianta. Ch'a sgnaca dzora a [[Special:CreatePage|Pàgina neuva]] për ancaminé a scrive!",
-	'tog-myhomedisableredirect' => 'Disabilité la ridiression vers Mia Intrada',
+	'tog-myhomedisableredirect' => 'Disabilité mia ridiression vers Atività Wiki',
 	'myhome-feed-newpage' => 'pàgina neuva',
 	'myhome-feed-edit' => 'modifiché',
 	'myhome-feed-move' => 'pàgina tramudà',
@@ -1783,7 +1861,7 @@ $messages['pms'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Fòto giontà|Fòto giontà}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Filmà giontà|Filmà giontà}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categorìa giontà|Categorìe giontà}}',
-	'myhome-user-contributions-empty' => "A peul anserisse an sta wiki-sì an sgnacand \"{{int:editthispage}}\" su qualsëssìa pàgina, e giontand lòn ch'a sa. Tuti a peulo fé 'd modìfiche, gionté dj'anformassion o corege dj'eror.
+	'myhome-user-contributions-empty' => "A peul anserisse an sta wiki-sì an sgnacand \"{{int:editthispage}}\" su qualsëssìa pàgina, e giontand lòn ch'a sa. Tuti a peulo fé 'd modìfiche, gionté dj'anformassion o corege dj'eror. 
 La wiki a l'é fàita da la comunità, e na vira ch'a sgnaca ël boton ëd modìfica, chiel a l'é part ëd la comunità. Ch'a fasa la preuva!",
 	'myhome-hot-spots-number-of-editors' => 'editor',
 	'myhome-log-in' => "<center>La funsion Mia Intrada a l'é disponìbil mach s'a l'é intrà ant ël sistema.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Ch'a intra ant ël sistema për vëdde sta pàgina-sì!]'''</big></center>",
@@ -1807,7 +1885,7 @@ Se chiel a l'é ël fondador o n'aministrator ëd la wiki, a peul cangé sto më
 * Dé na vos a un contribudor ch'a l'ha giontà cheicòs dë special a la wiki
 
 * O bele mach buté chèich paròle d'ancoragiament!",
-	'myhome-hot-spots-definition' => "Pàgine con pi editor ant j'ùltim $1 di.",
+	'myhome-hot-spots-definition' => "Pàgine con pi editor ant j'ùltim {{PLURAL:$1|di|$1 di}}.",
 	'myhome-default-view-checkbox' => 'Rende $1 mia visualisassion ëstàndard',
 	'myhome-default-view-success' => "Va bin, adess cost a l'é sò stàndard",
 	'tooltip-pt-myhome' => 'Andé a Mia Intrada',
@@ -1840,7 +1918,7 @@ $messages['ps'] = array(
 
 دا مخ په همدې ويکي باندې د هغو پېښو په اړه چې تازه پېښې شوي، له تاسې سره مرسته کوي.
 
-که تاسې د دې ويکي بنسټګر او يا هم پازوال ياست، نو تاسې د دې ويکي د ټولنې سره د اهمو شيانو او پېښو اړوند د خبرو اترو په تکل  دا پيغام بدلولی شی.
+که تاسې د دې ويکي بنسټګر او يا هم پازوال ياست، نو تاسې د دې ويکي د ټولنې سره د اهمو شيانو او پېښو اړوند د خبرو اترو په تکل  دا پيغام بدلولی شی. 
 د بېلګې په توګه، تاسې کولای شی چې:
 
 * يوه داسې پروژه ترتيب کړی چې د دې ويکي د بېلابېلو برخو د جوړ سبب شي
@@ -1859,6 +1937,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
+	'myhome-desc' => 'Uma página privada para utilizadores autenticados',
 	'myhome' => 'A Minha Casa',
 	'wikiactivity' => 'Actividade na Wiki',
 	'myhome-activity-more' => 'ver mais actividade recente',
@@ -1934,7 +2013,7 @@ Pode, por exemplo:
 * Destacar um participante que tenha adicionado algo de especial à wiki
 
 * Ou simplesmente publicar algumas palavras de encorajamento!",
-	'myhome-hot-spots-definition' => 'Páginas com mais editores nos últimos $1 dias.',
+	'myhome-hot-spots-definition' => 'Páginas com mais editores {{PLURAL:$1|no último dia|nos últimos $1 dias}}.',
 	'myhome-default-view-checkbox' => 'Tornar $1 a minha vista padrão',
 	'myhome-default-view-success' => 'Foi configurada',
 	'tooltip-pt-myhome' => 'Ir para A Minha Casa',
@@ -1946,6 +2025,7 @@ Pode, por exemplo:
  * @author Jesielt
  */
 $messages['pt-br'] = array(
+	'myhome-desc' => 'Uma página privada para usuários autenticados',
 	'myhome' => 'Minha página inicial',
 	'wikiactivity' => 'Atividade na Wiki',
 	'myhome-activity-more' => 'ver mais atividades recentes',
@@ -2017,7 +2097,7 @@ Se você é o fundador ou um administrador desta wiki, pode mudar esta mensagem 
 * Anunciar um editor que acrescentou algo especial à wiki
 
 * Ou apenas publicar algumas palavras de encorajamento!",
-	'myhome-hot-spots-definition' => 'Páginas com mais editores nos últimos $1 dias.',
+	'myhome-hot-spots-definition' => 'Páginas com mais editores {{PLURAL:$1|no último dia|nos últimos $1 dias}}.',
 	'myhome-default-view-checkbox' => 'Transformar $1 na minha visualização padrão',
 	'myhome-default-view-success' => 'OK, esse é o seu padrão agora',
 	'tooltip-pt-myhome' => 'Ir para Minha Página Inicial',
@@ -2042,6 +2122,7 @@ $messages['roa-tara'] = array(
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'myhome-desc' => 'Личная заглавная страница для авторизованных пользователей',
 	'myhome' => 'Личный кабинет',
 	'wikiactivity' => 'Вики-деятельность',
 	'myhome-activity-more' => 'обновить список изменений',
@@ -2150,7 +2231,7 @@ $messages['sl'] = array(
 	'myhome-feed-summary-details' => 'Povzetek',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
@@ -2482,7 +2563,7 @@ $messages['uk'] = array(
 	'myhome-watchlist-feed' => 'Список спостереження',
 	'myhome-user-contributions-feed' => 'Внесок',
 	'myhome-hot-spots-newest' => 'Нові сторінки у вікі',
-	'tog-myhomedisableredirect' => 'Вимкнути перенаправлення на мою домашню сторінку',
+	'tog-myhomedisableredirect' => 'Вимкнути перенаправлення мене на сторінку вікі-активності',
 	'myhome-feed-newpage' => 'нова сторінка',
 	'myhome-feed-edit' => 'редагування',
 	'myhome-feed-move' => 'переміщено сторінку',
@@ -2499,6 +2580,7 @@ $messages['uk'] = array(
 	'myhome-feed-new-page-details' => 'Нова сторінка',
 	'myhome-feed-summary-details' => 'Короткий опис',
 	'myhome-feed-section-edit-details' => 'Відредаговано розділ',
+	'myhome-feed-new-blog-post-details' => 'Новий блог',
 	'myhome-feed-new-blog-comment-details' => 'Коментар',
 	'myhome-feed-new-article-comment-details' => 'Коментар',
 	'myhome-feed-move-details' => 'Перейменовано',
@@ -2507,6 +2589,7 @@ $messages['uk'] = array(
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Додано категорію|Додані категорії}}',
 	'myhome-hot-spots-number-of-editors' => 'редактори',
 	'myhome-log-in' => "<center>Можливості \"Моєї домашньої сторінки\" доступні тільки після входу в систему.<br /><br /><big>'''[{{fullurl:Special:Signup|\$1}} Будь ласка, увійдіть, щоб побачити цю сторінку!]'''</big></center>",
+	'myhome-namespace-blog' => 'Блог',
 	'myhome-community-corner-header' => 'Повідомлення спільноти',
 	'myhome-community-corner-edit' => 'редагувати повідомлення',
 	'myhome-hot-spots-definition' => 'Сторінки з найбільшою кількістю редакторів за {{PLURAL:$1|останній день|останні $1 дні|останніх $1 днів}}.',
@@ -2522,9 +2605,11 @@ $messages['zh'] = array(
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)
+ * @author Ffaarr
  * @author Yyaootw
  */
 $messages['zh-tw'] = array(
 	'myhome' => '我的首頁',
+	'myhome-feed-edit' => '編輯',
 );
 

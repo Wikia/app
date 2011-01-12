@@ -30,7 +30,7 @@ $messages['az'] = array(
 	'wikiarelatedpages-heading' => 'Daha ətraflı',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -63,6 +63,12 @@ $messages['de'] = array(
 	'wikiarelatedpages-heading' => 'Lies mehr',
 );
 
+/** Greek (Ελληνικά) */
+$messages['el'] = array(
+	'wikiarelatedpages-desc' => 'Προσθέτει μια λίστα με σχετικές σελίδες σε σελίδες',
+	'wikiarelatedpages-heading' => 'Διαβάστε περισσότερα',
+);
+
 /** Spanish (Español)
  * @author Absay
  * @author Danke7
@@ -77,7 +83,7 @@ $messages['es'] = array(
  */
 $messages['fr'] = array(
 	'wikiarelatedpages-desc' => 'Ajoute une liste de pages liées à d’autres pages',
-	'wikiarelatedpages-heading' => 'Lire la suite',
+	'wikiarelatedpages-heading' => 'Pour aller plus loin',
 );
 
 /** Galician (Galego)
@@ -102,6 +108,12 @@ $messages['ia'] = array(
 $messages['id'] = array(
 	'wikiarelatedpages-desc' => 'Menambahkan daftar dengan halaman terkait ke halaman',
 	'wikiarelatedpages-heading' => 'Baca lebih lanjut',
+);
+
+/** Korean (한국어) */
+$messages['ko'] = array(
+	'wikiarelatedpages-desc' => '문서 하단에 관련 문서 링크를 추가합니다.',
+	'wikiarelatedpages-heading' => '더 읽기',
 );
 
 /** Colognian (Ripoarisch)
@@ -187,11 +199,12 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Exlex
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'wikiarelatedpages-desc' => 'Добавляет на страницы список связанных страниц',
-	'wikiarelatedpages-heading' => 'Читать подробнее',
+	'wikiarelatedpages-heading' => 'Читать больше',
 );
 
 /** Tagalog (Tagalog)
@@ -200,5 +213,10 @@ $messages['ru'] = array(
 $messages['tl'] = array(
 	'wikiarelatedpages-desc' => 'Nagdaragdag sa mga pahina ng isang talaan sa kaugnay na mga pahina',
 	'wikiarelatedpages-heading' => 'Magbasa pa ng iba',
+);
+
+/** Ukrainian (Українська) */
+$messages['uk'] = array(
+	'wikiarelatedpages-heading' => 'Читати далі',
 );
 

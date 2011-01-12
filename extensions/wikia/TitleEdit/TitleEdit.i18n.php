@@ -95,6 +95,7 @@ $messages['arz'] = array(
 
 /** Assamese (অসমীয়া) */
 $messages['as'] = array(
+	'titleedit-desc' => 'শিৰোনামা সম্পাদনা বোতাম পৃষ্ঠাৰ ওপৰ যোগ দিয়ক',
 	'titleedit' => 'সম্পাদন',
 );
 
@@ -126,7 +127,7 @@ $messages['az'] = array(
 	'titleedit' => 'redaktə',
 );
 
-/** Bashkir (Башҡорт)
+/** Bashkir (Башҡортса)
  * @author Assele
  */
 $messages['ba'] = array(
@@ -160,7 +161,7 @@ $messages['be'] = array(
 	'titleedit' => 'Правіць',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -576,7 +577,7 @@ $messages['hu'] = array(
  * @author Pandukht
  */
 $messages['hy'] = array(
-	'titleedit-desc' => 'Էջի վերևի մասում ագելացնում է անվանման ձևափոխման կոճակը',
+	'titleedit-desc' => 'Էջի վերևի մասում ավելացնում է անվանման ձևափոխման կոճակը',
 	'titleedit' => 'Խմբագրել',
 );
 
@@ -729,13 +730,14 @@ $messages['kv'] = array(
 	'titleedit' => 'Веськӧдны',
 );
 
-/** Cornish (Kernewek) */
+/** Cornish (Kernowek) */
 $messages['kw'] = array(
 	'titleedit' => 'Chanjya',
 );
 
 /** Kirghiz (Кыргызча) */
 $messages['ky'] = array(
+	'titleedit-desc' => 'Аталышын өзгөртүү баскычын барактын төбө жагына кошот.',
 	'titleedit' => 'Оңдоо',
 );
 
@@ -873,7 +875,8 @@ $messages['mk'] = array(
 
 /** Malayalam (മലയാളം) */
 $messages['ml'] = array(
-	'titleedit' => 'മാറ്റിയെഴുതുക',
+	'titleedit-desc' => 'താളുകൾടെ മുകളിലായി തലക്കെട്ട് തിരുത്താനുള്ള ബട്ടൺ ചേർക്കുന്നു',
+	'titleedit' => 'തിരുത്തുക',
 );
 
 /** Mongolian (Монгол)
@@ -1059,7 +1062,7 @@ $messages['pdt'] = array(
 	'titleedit' => 'Endre',
 );
 
-/** Pfälzisch (Pfälzisch) */
+/** Pälzisch (Pälzisch) */
 $messages['pfl'] = array(
 	'titleedit' => 'Bearwaide',
 );
@@ -1217,6 +1220,7 @@ $messages['sh'] = array(
 
 /** Tachelhit (Tašlḥiyt) */
 $messages['shi'] = array(
+	'titleedit-desc' => 'Zayd tajrrayt n imbddln i uzwl lli illan ɣ uflla n tisniwin',
 	'titleedit' => 'bddl',
 );
 
@@ -1267,7 +1271,7 @@ $messages['sq'] = array(
 	'titleedit' => 'Redaktoni',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -1541,6 +1545,12 @@ $messages['za'] = array(
 /** Zeeuws (Zeêuws) */
 $messages['zea'] = array(
 	'titleedit' => 'Bewerken',
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$messages['zh-hans'] = array(
+	'titleedit-desc' => '将编辑标题的按钮添加到页面顶部',
+	'titleedit' => '编辑',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

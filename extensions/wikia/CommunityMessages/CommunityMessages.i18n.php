@@ -71,6 +71,12 @@ $messages['gl'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|As mensaxes á comunidade están actualizadas]].',
 );
 
+/** Hebrew (עברית) */
+$messages['he'] = array(
+	'communitymessages-desc' => 'הרחבת סיוע ל־Community Messages (הודעות קהילה)',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Community Messages עודכנה]].',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */

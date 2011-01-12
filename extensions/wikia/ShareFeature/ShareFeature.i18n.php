@@ -34,7 +34,7 @@ $messages['ar'] = array(
 	'sf-link-tooltip' => 'شارك هذه المقالة مع أصدقائك',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
@@ -87,7 +87,7 @@ $messages['de'] = array(
 	'sf-link-tooltip' => 'Teile diesen Artikel mit deinen Freunden',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -293,7 +293,7 @@ $messages['ru'] = array(
 	'sf-link-tooltip' => 'Поделиться ссылкой на статью с друзьями',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Verlor
  */
 $messages['sr-ec'] = array(

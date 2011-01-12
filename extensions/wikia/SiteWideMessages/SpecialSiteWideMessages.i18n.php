@@ -210,7 +210,7 @@ $messages['ar'] = array(
 	'swm-list-table-lang' => 'اللغات',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -351,6 +351,12 @@ $messages['br'] = array(
 	'swm-lang-other' => 'an holl yezhoù a chom',
 );
 
+/** Bosnian (Bosanski) */
+$messages['bs'] = array(
+	'swm-yes' => 'Da',
+	'swm-no' => 'Ne',
+);
+
 /** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  * @author ОйЛ
  */
@@ -438,7 +444,7 @@ $messages['de'] = array(
 	'swm-lang-other' => 'alle verbleibenden Sprachen',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -868,7 +874,7 @@ $messages['id'] = array(
 	'swm-label-recipient' => 'Penerima',
 	'swm-label-recipient-wikis' => 'Wiki',
 	'swm-label-recipient-users' => 'Pengguna',
-	'swm-label-expiration' => 'Waktu kadaluwarsa',
+	'swm-label-expiration' => 'Waktu kedaluwarsa',
 	'swm-label-mode-wikis-all' => 'Semua wiki',
 	'swm-label-mode-wikis-hub' => 'Hub Dipilih',
 	'swm-label-mode-wikis-wiki' => 'Wiki dipilih',
@@ -1247,6 +1253,11 @@ $messages['pdc'] = array(
 	'swm-no' => 'Nee',
 );
 
+/** Pälzisch (Pälzisch) */
+$messages['pfl'] = array(
+	'swm-label-edit' => 'Bearwaide',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -1537,7 +1548,7 @@ $messages['sl'] = array(
 	'swm-no' => 'Ne',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -1604,6 +1615,10 @@ $messages['sw'] = array(
 	'swm-label-recipient-wikis' => 'Wiki',
 	'swm-label-recipient-users' => 'Watumiaji',
 	'swm-label-mode-wikis-all' => 'Wiki zote',
+	'swm-list-table-wiki' => 'Wiki',
+	'swm-list-table-date' => 'Tarehe ya kutuma',
+	'swm-list-table-tools' => 'Vifaa',
+	'swm-list-table-lang' => 'Lugha',
 );
 
 /** Tamil (தமிழ்)
@@ -1774,18 +1789,33 @@ $messages['tt-cyrl'] = array(
  * @author Тест
  */
 $messages['uk'] = array(
+	'sitewidemessages' => 'Повідомлення сайту',
+	'swm-page-title-preview' => 'Повідомлення сайту :: Попередній перегляд',
+	'swm-page-title-list' => 'Повідомлення сайту :: Список',
+	'swm-label-preview' => 'Попередній перегляд',
 	'swm-label-edit' => 'Редагувати',
 	'swm-label-remove' => 'Вилучити',
+	'swm-label-sent' => 'Надіслане',
 	'swm-label-list' => 'Список',
 	'swm-label-recipient-users' => 'Користувачі',
+	'swm-label-mode-users-all' => 'Всі користувачі',
+	'swm-label-mode-users-active' => 'Активні користувачі',
 	'swm-label-comment' => 'Коментар',
 	'swm-label-language' => 'Мова',
+	'swm-button-preview' => '[ Попередній перегляд ]',
+	'swm-button-send' => '[ Надіслати ]',
 	'swm-button-save' => '[ Зберегти ]',
 	'swm-button-new' => '[ Нове ]',
+	'swm-msg-sent-ok' => '<h3>Повідомлення надіслане.</h3>',
+	'swm-list-no-messages' => 'Немає повідомлень.',
+	'swm-list-table-wiki' => 'Вікі',
 	'swm-list-table-group' => 'Група',
+	'swm-list-table-date' => 'Дата надсилання',
 	'swm-list-table-tools' => 'Інструменти',
 	'swm-list-table-lang' => 'Мови',
+	'swm-yes' => 'Так',
 	'swm-no' => 'Ні',
+	'swm-error-no-such-wiki' => 'Немає такої вікі!',
 );
 
 /** Volapük (Volapük)

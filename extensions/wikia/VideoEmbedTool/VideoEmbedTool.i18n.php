@@ -198,6 +198,7 @@ U sal moontlik die videobladsy moet opruim (purge) om die verandering te sien.',
  */
 $messages['an'] = array(
 	'vet-insert' => 'Insertar',
+	'vet-thumbnail' => 'Miniatura',
 );
 
 /** Belarusian (Беларуская)
@@ -208,7 +209,7 @@ $messages['be'] = array(
 	'vet-size' => 'Памер',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -285,6 +286,21 @@ $messages['be-tarask'] = array(
 	'vet-right' => 'Справа',
 	'vet-gallery' => 'Галерэя',
 	'vet-protected' => 'Гэтае відэа было абароненае',
+);
+
+/** Bulgarian (Български) */
+$messages['bg'] = array(
+	'vet-thiswiki' => 'Това уики',
+	'vet-find-btn' => 'Търсене',
+	'vet-name' => 'Име',
+	'vet-license' => 'Лиценз',
+	'vet-size' => 'Размер',
+	'vet-prev' => 'Предишни 8',
+	'vet-next' => 'Следващи 8',
+	'vet-close' => 'Затваряне',
+	'vet-left' => 'Ляво',
+	'vet-right' => 'Дясно',
+	'vet-gallery' => 'Галерия',
 );
 
 /** Breton (Brezhoneg)
@@ -472,7 +488,7 @@ $messages['de'] = array(
 	'vet-protected' => 'Dieses Video ist geschützt',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -596,6 +612,7 @@ $messages['eu'] = array(
 /** Finnish (Suomi)
  * @author Crt
  * @author Silvonen
+ * @author Tofu II
  */
 $messages['fi'] = array(
 	'vet-thiswiki' => 'Tämä wiki',
@@ -611,7 +628,9 @@ $messages['fi'] = array(
 	'vet-hide-message' => 'piilota viesti',
 	'vet-hide-license-msg' => 'piilota lisenssiteksti',
 	'vet-show-license-msg' => 'näytä lisenssiteksti',
+	'vet-title' => 'Lisää video artikkeliin',
 	'vet-add-button' => 'Lisää video',
+	'vet-gallery' => 'Galleria',
 	'vet-protected' => 'Tämä video on suojattu',
 );
 
@@ -684,7 +703,7 @@ $messages['fr'] = array(
 	'vet-page-success' => 'La page de la vidéo a été mise à jour avec succès. Vous devez purger la page de la vidéo pour voir les changements.',
 	'vet-add-button' => 'Ajouter une vidéo',
 	'vet-added-from-gallery' => "Vidéo ajoutée d'une galerie de vidéos",
-	'vet-see-all' => 'Tout voir',
+	'vet-see-all' => 'tout voir',
 	'vet-bad-search' => 'Une erreur est survenue durant le chargement de la requête',
 	'vet-no-preview' => 'Vous ne pouvez pas ajouter de vidéos lors du mode de prévisualisation',
 	'vet-single-success' => "La vidéo fut placée avec succès dans l'article",
@@ -791,7 +810,7 @@ $messages['he'] = array(
 	'vet-upload-btn' => 'המשך',
 	'vet-find-btn' => 'חיפוש',
 	'vet-flickr-inf' => 'חיפוש תמונות ברישיון חופשי ב־Flickr והוספה לאתר.',
-	'vet-conflict-inf' => '<h1 style=";text-align:right;direction:rtl"> אופס, סרטון עם שם זהה כבר קיים. </h1> מה ברצונך לעשות עם <b>$1?</b>',
+	'vet-conflict-inf' => '<h1 style=";text-align:right;direction:rtl"> אופס, סרטון עם שם זהה כבר קיים. </h1> מה ברצונך לעשות עם <b>$1</b>?',
 	'vet-rename' => 'שינוי שם הסרטון',
 	'vet-existing' => 'שימוש בסרטונים קיימים',
 	'vet-overwrite' => 'החלפת הסרטון הקיים באחר',
@@ -809,7 +828,7 @@ $messages['he'] = array(
 	'vet-optional' => '(אפשרי)',
 	'vet-insert2' => 'הוספת סרטון',
 	'vet-update' => 'עדכון סרטון',
-	'vet-video-replace-link' => 'כדי להחליף את הסרטון, עברו אל [[: $ 1]]',
+	'vet-video-replace-link' => 'כדי להחליף את הסרטון, נא לעבור אל [[:$1]]',
 	'vet-prev' => '8 הקודמים',
 	'vet-next' => '8 הבאים',
 	'vet-metacafe' => 'סרטוני Metacafe ($1 {{PLURAL:$1|תוצאה|תוצאות}})',
@@ -1488,9 +1507,15 @@ $messages['oc'] = array(
  */
 $messages['pdc'] = array(
 	'vet-find-btn' => 'Uffgucke',
-	'vet-next' => 'Neegscht 8',
+	'vet-next' => 'Neegschte 8',
 	'vet-back' => 'zerrick',
 	'vet-close' => 'zumache',
+);
+
+/** Pälzisch (Pälzisch) */
+$messages['pfl'] = array(
+	'vet-prev' => 'Voriche 8',
+	'vet-next' => 'Negschte 8',
 );
 
 /** Polish (Polski)
@@ -1560,7 +1585,7 @@ Podaj nazwę tego filmu. Może to być np. opis jego zawartości.',
 	'vet-page-success' => 'Strona filmu została zaktualizowana. Być może trzeba będzie odświeżyć stronę, aby zobaczyć zmianę.',
 	'vet-add-button' => 'Dodaj film',
 	'vet-added-from-gallery' => 'dodano film z galerii',
-	'vet-see-all' => 'zobacz wszystko',
+	'vet-see-all' => 'pokaż wszystko',
 	'vet-bad-search' => 'Błąd podczas ładowania zapytania.',
 	'vet-no-preview' => 'Nie możesz w trybie podglądu dodać filmu z artykułu.',
 	'vet-single-success' => 'Film został pomyślnie dodany do artykułu.',
@@ -1920,7 +1945,7 @@ $messages['sl'] = array(
 	'vet-back' => 'Nazaj',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -2013,6 +2038,7 @@ $messages['uk'] = array(
 	'vet-find-btn' => 'Знайти',
 	'vet-insert' => 'Вставити',
 	'vet-name' => 'Назва',
+	'vet-size' => 'Розмір',
 	'vet-thumbnail' => 'Мініатюра',
 	'vet-prev' => 'Попередні 8',
 	'vet-next' => 'Наступні 8',

@@ -86,7 +86,7 @@ $messages['af'] = array(
 	'editaccount-nouser' => 'Die gebruiker "$1" bestaan nie.',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -207,7 +207,7 @@ $messages['de'] = array(
 	'right-editaccount' => 'Bearbeite andere Benutzereinstellungen',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -291,7 +291,7 @@ $messages['fa'] = array(
  */
 $messages['fi'] = array(
 	'editaccount' => 'Muokkaa käyttäjätunnuksia',
-	'editaccount-desc' => 'Henkilöstön jäsenet voivat hallita käyttäjätunnuksien tietoja',
+	'editaccount-desc' => 'Henkilöstön jäsenet voivat hallita käyttäjätunnuksien tietoja.',
 	'editaccount-title' => 'Special: EditAccount',
 	'editaccount-frame-manage' => 'Muokkaa käyttäjätunnusta',
 	'editaccount-frame-usage' => 'Huomioi',
@@ -740,6 +740,14 @@ $messages['pa'] = array(
 	'editaccount-submit-realname' => 'ਅਸਲੀ ਨਾਂ ਸੰਭਾਲੋ',
 );
 
+/** Polish (Polski) */
+$messages['pl'] = array(
+	'editaccount' => 'Edytuj konto',
+	'editaccount-desc' => 'Pozwala zmienić informacje o koncie użytkownika',
+	'editaccount-title' => 'Special:EditAccount',
+	'editaccount-frame-manage' => 'Edytuj konto',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -958,6 +966,26 @@ $messages['sah'] = array(
 	'editaccount-submit-pass' => 'Киирии тылы бигэргэтии',
 	'editaccount-submit-realname' => 'Дьиҥнээх ааты бигэргэтии',
 	'editaccount-submit-close' => 'Бэлиэтэммит ааты суох оҥоруу',
+	'editaccount-warning-close' => '<b>Болҕой!</b> Эн <b>$1</b> диэн ааты букатын сотон эрэҕин. Бу дьайыы төннөрүллэр кыаҕа суох. Инньэ гынаары гынаргын бигэргэтэҕин дуо?',
+	'editaccount-status' => 'Турук биллэриитэ',
+	'editaccount-success-email-blank' => 'Бэлиэтэммит $1 аат эл. почтата сотулунна.',
+	'editaccount-success-pass' => 'Бэлиэтэммит $1 аат киирии тыла уларыйда.',
+	'editaccount-success-realname' => 'Бэлиэтэммит $1 аат киһитин дьиҥнээх аата уларыйда.',
+	'editaccount-success-close' => 'Бэлиэтэммит $1 аат араарылынна.',
+	'editaccount-error-email' => 'Эл. почта уларыйбата. Өссө төгүл боруобалаа, эбэтэр көмөлөһөр сулууспаҕа таҕыс.',
+	'editaccount-error-pass' => 'Киирии тыл уларыйбата. Өссө төгүл боруобалаа, эбэтэр көмөлөһөр сулууспаҕа таҕыс.',
+	'editaccount-error-realname' => 'Дьиҥнээх аат уларыйбата. Өссө төгүл боруобалаа, эбэтэр көмөлөһөр сулууспаҕа таҕыс.',
+	'editaccount-error-close' => 'Бэлиэтэммит ааты сабарга моһуок үөскээтэ. Өссө төгүл боруобалаа эбэтэр көмөлөһөр сулууспаҕа таҕыс.',
+	'editaccount-invalid-email' => '«$1» эл. почта аадырыһа буолбатах!',
+	'editaccount-nouser' => 'Бэлиэммит «$1» аат суох эбит!',
+	'editaccount-log' => 'Ааты бэлиэтиир сурунаал',
+	'editaccount-log-header' => 'Бу сирэйгэ Викиа үлэһиттэрэ уларыппыт кыттааччы тус туруоруулара көрдөрүлүннүлэр',
+	'editaccount-log-entry-email' => '$2 кыттааччы эл. почтатын уларыппыт',
+	'editaccount-log-entry-pass' => '$2 кыттааччы кирии тылын уларыппыт',
+	'editaccount-log-entry-realname' => '$2 кыттааччы дьиҥнээх аатын уларыппыт',
+	'editaccount-log-entry-close' => '$2 кыттааччы бэлиэтэниитин араарбыт',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Бу аат араарыллыбыт.</div>',
+	'right-editaccount' => 'Атын кыттааччылар туруорууларын уларытыы',
 );
 
 /** Sinhala (සිංහල)
@@ -970,7 +998,7 @@ $messages['si'] = array(
 	'editaccount-submit-pass' => 'මුර පදය සුරකින්න',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -1100,6 +1128,11 @@ $messages['tl'] = array(
 	'right-editaccount' => 'Baguhin ang mga nais ng iba pang mga tagagamit',
 );
 
+/** Turkish (Türkçe) */
+$messages['tr'] = array(
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Bu hesap devre dışı bırakıldı.</div>',
+);
+
 /** Ukrainian (Українська)
  * @author Prima klasy4na
  */
@@ -1112,5 +1145,12 @@ $messages['uk'] = array(
  */
 $messages['vi'] = array(
 	'editaccount' => 'Sửa đổi tài khoản',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ */
+$messages['zh-hant'] = array(
+	'editaccount' => '編輯帳戶',
 );
 

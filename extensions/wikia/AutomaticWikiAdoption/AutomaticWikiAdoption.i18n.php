@@ -116,6 +116,107 @@ $messages['bs'] = array(
 	'automaticwikiadoption-adoption-successed' => 'Čestitke! Sada ste administator na ovoj wiki!',
 );
 
+/** Spanish (Español) */
+$messages['es'] = array(
+	'automaticwikiadoption' => 'Adopción automática de wikis',
+	'automaticwikiadoption-header' => 'Adopta esta wiki',
+	'automaticwikiadoption-button-adopt' => 'Adoptar ahora',
+	'automaticwikiadoption-know-more-header' => '¿Quieres saber más?',
+	'automaticwikiadoption-know-more-description' => 'Revisa estos enlaces para obtener más información. Y, por supuesto, ¡no dudes en contactarnos si tienes alguna pregunta!',
+	'automaticwikiadoption-adoption-successed' => '¡Felicitaciones! ¡Ahora eres un administrador en esta wiki!',
+	'automaticwikiadoption-adoption-failed' => 'Lo sentimos. Intentamos hacerte administrador, pero no ha funcionado. Por favor [http://community.wikia.com/Special:Contact contáctanos], y trataremos de ayudarte.',
+	'automaticwikiadoption-not-allowed' => 'Lo sentimos. No puedes adoptar esta wiki por ahora.',
+	'automaticwikiadoption-log-reason' => 'Adopción automática de wikis',
+	'automaticwikiadoption-notification' => "¡$1 está disponible para la adopción! Puedes ser el nuevo fundador. '''¡Adóptala ahora!'''",
+	'automaticwikiadoption-mail-first-subject' => 'No te hemos visto desde hace algún tiempo',
+	'automaticwikiadoption-mail-first-content-HTML' => 'Hola $1,<br /><br />
+Han pasado un par de semanas desde que hemos visto a un administrador en tu wiki. Recuerda, tu comunidad te estará buscando para asegurarse que la wiki trabaja sin problemas.<br /><br />
+Si necesitas ayuda para cuidar de la wiki, puedes permitir que otros miembros de la comunidad sean administradores, yendo a <a href="$2">Configuración de permisos de usuarios</a>.<br /><br />
+<b>El Equipo de Wikia</b><br /><br />
+<small>Puedes <a href="$3">cancelar tu suscripción</a> para futuros cambios de esta lista.</small>',
+	'automaticwikiadoption-mail-second-subject' => 'Pondremos tu wiki pronta para la adopción',
+	'automaticwikiadoption-mail-second-content' => 'Hola $1,
+
+Han pasado un par de semanas desde que hemos visto a un administrador en tu wiki. Es importante tener administradores activos para la comunidad así la wiki puede continuar trabajando sin problemas, así que pondremos tu wiki en adopción y darle un chance para que tenga administradores activos nuevamente.
+
+El Equipo de Wikia
+
+Haz clic en el siguiente enlace para cancelar tu suscripción de esta lista: $3.',
+	'automaticwikiadoption-mail-second-content-HTML' => 'Hola $1,
+
+Han pasado un par de semanas desde que hemos visto a un administrador en tu wiki. Es importante tener administradores activos para la comunidad así la wiki puede continuar trabajando sin problemas, así que pondremos tu wiki en adopción y darle un chance para que tenga administradores activos nuevamente.
+
+El Equipo de Wikia
+
+<small>Puedes <a href="$3">cancelar</a> tu suscripción de esta lista.</small>',
+	'automaticwikiadoption-mail-adoption-subject' => 'Tu wiki ha sido adoptada',
+	'automaticwikiadoption-mail-adoption-content' => 'Hola $1,
+
+¡Tu wiki ha sido adoptada! Esto significa que otro usuario a colaborado para ayudar a mantener a la comunidad y el contenido en el sitio. No te preocupes, aún sigues siendo un administrador, y eres bienvenido a regresar en cualquier momento.
+
+El Equipo de Wikia
+
+Haz clic en el siguiente enlace para cancelar tu suscripción de la lista: $3.',
+	'automaticwikiadoption-mail-adoption-content-HTML' => 'Hola $1,<br /><br />
+¡Tu wiki ha sido adoptada! Esto significa que otro usuario a colaborado para ayudar a mantener a la comunidad y el contenido en el sitio. No te preocupes, aún sigues siendo un administrador, y eres bienvenido a regresar en cualquier momento.<br /><br />
+<b>El Equipo de Wikia</b><br /><br />
+<small>Puedes <a href="$3">cancelar</a> tu suscripción de esta lista.</small>',
+	'tog-adoptionmails' => 'Notificarme por correo electrónico sobre cambios a la administración de la wiki (sólo administradores)',
+);
+
+/** Finnish (Suomi) */
+$messages['fi'] = array(
+	'automaticwikiadoption-header' => 'Adoptoi tämä wiki',
+);
+
+/** French (Français) */
+$messages['fr'] = array(
+	'automaticwikiadoption' => 'Adoption de wiki automatique',
+	'automaticwikiadoption-header' => 'Adopter ce wiki',
+	'automaticwikiadoption-button-adopt' => 'Adopter maintenant',
+	'automaticwikiadoption-know-more-header' => 'Vous voulez en savoir plus ?',
+	'automaticwikiadoption-know-more-description' => "Veuillez consultez ces liens pour plus d'informations. Et, bien entendu, n’hésitez pas à nous contacter si vous avez des questions !",
+	'automaticwikiadoption-adoption-successed' => 'Félicitations ! Vous êtes maintenant administrateur sur ce wiki !',
+	'automaticwikiadoption-adoption-failed' => 'Nous sommes désolés. Nous avons essayé de vous nommer administrateur, mais cela n’a pas fonctionné. Veuillez [http://community.wikia.com/Special:Contact nous contacter], et nous allons essayer de vous aider.',
+	'automaticwikiadoption-not-allowed' => 'Nous sommes désolés. Vous ne pouvez pas adopter ce wiki maintenant.',
+	'automaticwikiadoption-log-reason' => 'Adoption de wiki automatique',
+	'automaticwikiadoption-notification' => "$1 est disponible pour l’adoption ! Vous pouvez en devenir le nouveau propriétaire. '''Adoptez maintenant !'''",
+	'automaticwikiadoption-mail-first-subject' => 'Nous ne vous avons pas vu depuis un bon moment',
+	'automaticwikiadoption-mail-first-content-HTML' => 'Bonjour $1,<br /><br />
+Cela fait quelques semaines que nous n’avons pas vu d’administrateur sur votre wiki. Rappelez-vous que votre communauté se tournera vers vous pour s’assurer que le wiki fonctionne sans problème.<br /><br />
+Si vous avez besoin d’aide pour prendre soin du wiki, vous pouvez aussi permettre aux membres de la communauté de devenir des administrateurs en allant dans le <a href="$2">gestionnaire des droits des utilisateurs</a>.<br /><br />
+<b>L’équipe Wikia</b><br /><br />
+<small>Vous pouvez <a href="$3">vous désabonner</a> des mises à jour de cette liste.</small>',
+	'automaticwikiadoption-mail-second-subject' => 'Nous mettrons votre wiki disponible pour l’adoption dans peu de temps',
+	'automaticwikiadoption-mail-second-content' => 'Bonjour $1,
+
+Cela fait un certain temps que nous n’avons pas vu d’administrateur sur votre wiki. Il est important d’avoir des administrateurs actifs dans la communauté pour que le wiki continue de fonctionner sans problème. Nous allons donc rendre votre wiki disponible pour l’adoption dans peu de temps, afin qu’il ait une chance d’avoir à nouveau des administrateurs actifs.
+
+L’équipe Wikia
+
+Cliquez sur le lien suivant pour vous désinscrire des mises à jour de cette liste : $3.',
+	'automaticwikiadoption-mail-second-content-HTML' => 'Bonjour $1,
+
+Cela fait un certain temps que nous n’avons pas vu d’administrateur sur votre wiki. Il est important d’avoir des administrateurs actifs dans la communauté pour que le wiki continue de fonctionner sans problème. Nous allons donc rendre votre wiki disponible pour l’adoption dans peu de temps, afin qu’il ait une chance d’avoir à nouveau des administrateurs actifs.
+
+<b>L’équipe Wikia</b>
+
+<small>Cliquez sur le lien suivant pour <a href="$3">vous désabonner</a> des mises à jour de cette liste.</small>',
+	'automaticwikiadoption-mail-adoption-subject' => 'Votre wiki a été adopté',
+	'automaticwikiadoption-mail-adoption-content' => 'Bonjour $1,
+
+Votre wiki a été adopté ! Cela signifie que quelqu’un d’autre s’est porté volontaire pour maintenir la communauté et le contenu du site. Ne vous inquiétez pas - vous êtes toujours administrateur et vous êtes invité à revenir à tout moment.
+
+L’équipe Wikia
+
+Cliquez sur le lien suivant pour vous désabonner des mises à jour de cette liste : $3.',
+	'automaticwikiadoption-mail-adoption-content-HTML' => 'Bonjour $1,<br /><br />
+Votre wiki a été adopté ! Cela signifie que quelqu’un d’autre s’est porté volontaire pour maintenir la communauté et le contenu du site. Ne vous inquiétez pas - vous êtes toujours administrateur et vous êtes invité à revenir à tout moment.<br /><br />
+<b>L’équipe Wikia</b><br /><br />
+<small>Cliquez sur le lien suivant pour <a href="$3">vous désabonner</a> des mises à jour de cette liste.</small>',
+	'tog-adoptionmails' => 'Écrivez-moi lorsque quelque chose change à propos de l’administration du wiki (administrateurs seulement)',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
@@ -138,8 +239,41 @@ $messages['ia'] = array(
 	'automaticwikiadoption-log-reason' => 'Adoption automatic de wikis',
 	'automaticwikiadoption-notification' => "$1 es disponibile pro adoption! Tu pote devenir le nove proprietario. '''Adopta lo ora!'''",
 	'automaticwikiadoption-mail-first-subject' => 'Nos non te ha vidite durante un tempore',
+	'automaticwikiadoption-mail-first-content-HTML' => 'Salute $1,<br /><br />
+Plure septimanas ha passate depost que nos ha vidite un administrator in tu wiki. Rememora que tu communitate depende de te pro assecurar le bon functionamento del wiki.<br /><br />
+Si tu ha besonio de adjuta pro le gerentia del wiki, tu pote permitter a altere membros de devenir administrator via le pagina pro <a href="$2">gestion de derectos de usator</a>.<br /><br />
+<b>Le equipa de Wikia</b><br /><br />
+<small>Tu pote <a href="$3">cancellar le subscription</a> al cambios a iste lista.</small>',
 	'automaticwikiadoption-mail-second-subject' => 'Nos rendera tu wiki disponibile pro adoption tosto',
+	'automaticwikiadoption-mail-second-content' => 'Salute $1,
+
+Un certe tempore ha passate depost que nos ha vidite un administrator connectite in tu wiki. Es importante haber administratores active pro le communitate pro assecurar le bon functionamento del wiki; dunque, nos offerera tosto le wiki pro adoption, de sorta que illo pote haber de novo administratores active.
+
+Le equipa de Wikia
+
+Clicca le sequente ligamine pro cancellar le subscription al cambios in iste lista: $3.',
+	'automaticwikiadoption-mail-second-content-HTML' => 'Salute $1,
+
+Un certe tempore ha passate depost que nos ha vidite un administrator active in tu wiki. Es importante haber administratores active in le communitate pro assecurar le bon functionamento del wiki, dunque nos offerera tosto tu wiki pro adoption a fin que illo pote haber de novo administratores active.
+
+<b>Le equipa de Wikia</b>
+
+<small>Tu pote <a href="$3">cancellar le subscription</a> a cambiamentos in iste lista.</small>',
 	'automaticwikiadoption-mail-adoption-subject' => 'Tu wiki ha essite adoptate',
+	'automaticwikiadoption-mail-adoption-content' => 'Salute $1,
+
+Tu wiki ha essite adoptate! Isto vole dicer que alcuno altere se ha offerite como voluntario pro adjutar a mantener le communitate e contento in le sito. Non te inquieta; tu es ancora administrator, e tu es benvenite a retornar quandocunque tu vole.
+
+Le equipa de Wikia
+
+Clicca le sequente ligamine pro cancellar le subscription a cambiamentos in iste wiki: $3.',
+	'automaticwikiadoption-mail-adoption-content-HTML' => 'Salute $1,
+
+Tu wiki ha essite adoptate! Isto significa que un altere persona se ha offerite pro adjutar a mantener le communitate e contento del sito. Non te inquieta: tu continua a esser administrator, e tu es benvenite a retornar a omne momento.
+
+<b>Le equipa de Wikia</b>
+
+<small>Tu pote <nowiki><a href="{{fullurl:{{ns:special}}:Preferences}}">cancellar le subscription</a></nowiki> al modificationes de iste lista.</small>',
 	'tog-adoptionmails' => 'Inviar me e-mail si alique cambia in le administration del wiki (administratores solmente)',
 );
 
@@ -165,8 +299,37 @@ $messages['mk'] = array(
 	'automaticwikiadoption-log-reason' => 'Автоматско посвојување на вики',
 	'automaticwikiadoption-notification' => "$1 може да се посвои! Имате можност да бидете новиот сопственик. '''Посвојте го веднаш!'''",
 	'automaticwikiadoption-mail-first-subject' => 'Не ве имаме видено во последно време',
+	'automaticwikiadoption-mail-first-content-HTML' => 'Здраво $1,<br /><br />
+Има пар недели како немаме видено администратор на вашето вики. Запомнете дека вашата заедница очекува од вас да се грижите викито да работи правилно.<br /><br />
+Ако ви треба помош со одржувањето на викито, можете да назначите и други членови на заедницата за администратори на страницата<a href="$2">Раководење со кориснички права</a>.<br /><br />
+<b>Екипата на Викија</b><br /><br />
+<small>Можете да се <a href="$3">отпишете</a> за повеќе да не добивате известувања за измените на овој список.</small>',
 	'automaticwikiadoption-mail-second-subject' => 'Наскоро ќе го понудиме вашето вики за посвојување',
+	'automaticwikiadoption-mail-second-content' => 'Hi $1,
+Помина извесно време како не сме виделе администратор на вашето вики. Од голема важност е да имате активни администратори на викито за да може да работи правилно - затоа ќе ви го дадеме викито на посвојување, давајќи му шанса повторно да има активни администратори.
+
+Екипата на Викија
+
+Ако сакате да не добивање известувања за измените на списоков, проследете ја врската: $3.',
+	'automaticwikiadoption-mail-second-content-HTML' => 'Здраво $1,
+
+Помина извесно време како не сме виделе администратор на вашето вики. Од голема важност е да имате активни администратори на викито за да може да работи правилно - затоа ќе ви го дадеме викито на посвојување, давајќи му шанса повторно да има активни администратори.
+
+<b>Екипата на Викија</b>
+
+<small>Можете да се <a href="$3">отпишете</a> за повеќе да не добивате известувања за измените на овој список.</small>',
 	'automaticwikiadoption-mail-adoption-subject' => 'Вашето вики е посвоено',
+	'automaticwikiadoption-mail-adoption-content' => 'Здраво $1,
+
+Вашето вики е посвоено! Ова значи дека некој се пријавил да ја одржува заедницата и содржините на мрежното место. Не грижете се - вие останувате администратор, и добредојдени сте да се вратите во секое време.
+
+Екипата на Викија
+
+Ако сакате да не добивање известувања за измените на списоков, проследете ја врската: $3.',
+	'automaticwikiadoption-mail-adoption-content-HTML' => 'Здраво $1,<br /><br />
+Вашето вики е посвоено! Ова значи дека некој се пријавил да ја одржува заедницата и содржините на мрежното место. Не грижете се - вие останувате администратор, и добредојдени сте да се вратите во секое време..<br /><br />
+<b>Екипата на Викија</b><br /><br />
+<small>Можете да се <a href="$3">отпишете</a> за повеќе да не добивате известувања за измените на овој список.</small>',
 	'tog-adoptionmails' => 'Извести ме по е-пошта ако нешто се измени во администрацијата на викито (само за администратори)',
 );
 
@@ -185,8 +348,35 @@ $messages['nl'] = array(
 	'automaticwikiadoption-log-reason' => 'Automatische wikiadoptie',
 	'automaticwikiadoption-notification' => "$1 kan geadopteerd worden. U kunt de nieuwe eigenaar worden. '''Adopteer de wiki nu!'''",
 	'automaticwikiadoption-mail-first-subject' => 'We hebben u al een tijdje niet gezien',
+	'automaticwikiadoption-mail-first-content-HTML' => 'Hallo $1,<br /><br />
+Het is al weer een aantal weken geleden dat er een beheerder actief is geweest op uw wiki. Denk er alstublieft aan dat uw gemeenschap naar u kijkt als het gaat om het soepel laten draaien van de wiki.<br /><br />
+Als u hulp nodig hebt bij het zorgen voor de wiki, dan kunt u ook andere gemeenschapsleden beheerder maken via <a href="$2">Gebruikersrechtenbeheer</a>.<br /><br />
+<b>Het Wikia-team</b><br /><br />
+<small>U kunt zich van wijzigingen op deze lijst <a href="$3">uitschrijven</a>.</small>',
 	'automaticwikiadoption-mail-second-subject' => 'Uw wiki wordt binnenkort voor adoptie opgegeven',
+	'automaticwikiadoption-mail-second-content' => 'Hallo $1,
+
+Het is al weer even geleden dat we een beheerder hebben zien langskomen bij uw wiki. Het is voor de gemeenschap belangrijk dat er actieve beheerders zijn om ervoor te zorgen dat de wiki lekker blijft draaien. Daarom wordt uw wiki binnenkort beschikbaar gemaakt voor adoptie zodat er weer een kans op actieve beheerders gaat bestaan.
+
+Het Wikia-team
+
+U kunt zich van wijzigingen op deze lijst uitschrijven: $3.',
+	'automaticwikiadoption-mail-second-content-HTML' => 'Hallo $1,<br /><br />
+Het is al weer even geleden dat we een beheerder hebben zien langskomen bij uw wiki. Het is voor de gemeenschap belangrijk dat er actieve beheerders zijn om ervoor te zorgen dat de wiki lekker blijft draaien. Daarom wordt uw wiki binnenkort beschikbaar gemaakt voor adoptie zodat er weer een kans op actieve beheerders gaat bestaan.<br /><br />
+<b>Het Wikia-team</b><br /><br />
+<small>U kunt zich van wijzigingen op deze lijst <a href="$3">uitschrijven</a>.</small>',
 	'automaticwikiadoption-mail-adoption-subject' => 'Uw wiki is geadopteerd',
+	'automaticwikiadoption-mail-adoption-content' => 'Hallo $1,
+
+Uw wiki is geadopteerd! Dit betekent dat iemand anders zich heeft opgeworpen om te helpen bij het onderhouden van de gemeenschap en de inhoud van de site. Vrees niet. U bent nog steeds beheerder en u bent nog steeds op ieder moment van harte welkom.
+
+Het Wikia-team
+
+U kunt zich van wijzigingen op deze lijst uitschrijven: $3.',
+	'automaticwikiadoption-mail-adoption-content-HTML' => 'Hallo $1,<br /><br />
+Uw wiki is geadopteerd! Dit betekent dat iemand anders zich heeft opgeworpen om te helpen bij het onderhouden van de gemeenschap en de inhoud van de site. Vrees niet. U bent nog steeds beheerder en u bent nog steeds op ieder moment van harte welkom.<br /><br />
+<b>Het Wikia-team</b><br /><br />
+<small>U kunt zich van wijzigingen op deze lijst <a href="$3">uitschrijven</a>.</small>',
 	'tog-adoptionmails' => 'Mij e-mailen als er wijzigingen zijn in het wikibeheer (alleen voor beheerders)',
 );
 
@@ -205,9 +395,53 @@ $messages['no'] = array(
 	'automaticwikiadoption-log-reason' => 'Automatisk wikiadopsjon',
 	'automaticwikiadoption-notification' => "$1 kan adopteres! Du kan bli den nye eieren. '''Adopter nå!'''",
 	'automaticwikiadoption-mail-first-subject' => 'Vi har ikke sett deg på en stund',
+	'automaticwikiadoption-mail-first-content-HTML' => 'Hei $1,<br /><br />
+Det har gått noen uker siden vi har sett en administrator på wikien din. Husk at fellesskapet regner med at du sørger for at wikien går problemfritt.<br /><br />
+Hvis du trenger hjelp til å ta vare på wikien, kan du la andre medlemmer av fellesskapet bli administratorer ved å gå til href="$2">Brukerrettighetskontroll</a>.<br /><br />',
 	'automaticwikiadoption-mail-second-subject' => 'Vi vil sette opp wikien din til adopsjon snart',
+	'automaticwikiadoption-mail-second-content' => 'Hei $1,
+
+Det er en stund siden vi har sett en administrator på wikien din. Det er viktig å ha aktive administratorer i fellesskapet slik at wikien går problemfritt - så vi vil snart sette opp wikien din for adopsjon slik at den får sjansen til å ha aktive administratorer igjen.
+
+Wikia-teamet
+
+Trykk på følgende lenke for å stoppe abonnementet på endringer fra denne listen: $3.',
+	'automaticwikiadoption-mail-second-content-HTML' => 'Hei $1,
+
+Det er en stund siden vi har sett en administrator på wikien din. Det er viktig å ha aktive administratorer i fellesskapet slik at wikien går problemfritt - så vi vil snart sette opp wikien din for adopsjon slik at den får sjansen til å ha aktive administratorer igjen.
+
+<b>Wikia-teamet</b>
+
+<small>Du kan <a href="$3">stoppe abonnementet</a> på endringer fra denne listen.</small>',
 	'automaticwikiadoption-mail-adoption-subject' => 'Wikien din har blitt adoptert',
+	'automaticwikiadoption-mail-adoption-content' => 'Hei $1,
+
+Wikien din har blitt adoptert! Dette betyr at noen andre har meldt seg frivillig til å hjelpe til med å opprettholde fellesskapet og innholdet på siden. Ikke bekymre deg - du er fremdeles en administrator, og du er velkommen til å komme tilbake når som helst.
+
+Wikia-teamet
+
+Trykk på følgende lenke for å stoppe abonnementet på endringer fra denne listen: $3.',
+	'automaticwikiadoption-mail-adoption-content-HTML' => 'Hei $1,<br /><br />
+Wikien din har blitt adoptert! Dette betyr at noen andre har meldt seg frivillig til å hjelpe til med å opprettholde fellesskapet og innholdet på siden. Ikke bekymre deg - du er fremdeles en administrator, og du er velkommen til å komme tilbake når som helst.<br /><br />
+<b>Wikia-teamet</b><br /><br />
+<small>Du kan <a href="$3">stoppe abonnementet</a> på endringer fra denne listen.</small>',
 	'tog-adoptionmails' => 'Send meg en e-post når wikiadministrasjonen endres (kun administratorer)',
+);
+
+/** Polish (Polski) */
+$messages['pl'] = array(
+	'automaticwikiadoption' => 'Automatyczna adopcja wiki',
+	'automaticwikiadoption-header' => 'Adoptuj tę wiki',
+	'automaticwikiadoption-button-adopt' => 'Adoptuj teraz',
+	'automaticwikiadoption-know-more-header' => 'Chcesz wiedzieć więcej?',
+	'automaticwikiadoption-adoption-successed' => 'Gratulacje! Jesteś teraz administratorem na tej wiki!',
+	'automaticwikiadoption-mail-second-content' => 'Witaj $1,
+
+Minęło sporo czasu od momentu, gdy ostatni raz widzieliśmy administratora na Twojej wiki. Obecność aktywnych administratorów jest ważna dla utrzymania porządku. Wkrótce oddamy Twoją wiki do adopcji, aby dać jej kolejną szansę na posiadanie aktywnych administratorów.
+
+Zespół Wikii
+
+Kliknij następujący link, jeśli chcesz zrezygnować z otrzymywania zmian na tej liście: $3.',
 );
 
 /** Portuguese (Português)
@@ -225,14 +459,54 @@ $messages['pt'] = array(
 	'automaticwikiadoption-log-reason' => 'Adopção Automática de Wikis',
 	'automaticwikiadoption-notification' => "É possível adoptar a wiki $1! Pode tornar-se o novo proprietário. '''Adopte-a agora!'''",
 	'automaticwikiadoption-mail-first-subject' => 'Já não o vemos há algum tempo',
+	'automaticwikiadoption-mail-first-content-HTML' => 'Olá $1,<br /><br />
+Há já duas semanas que um administrador não visita a sua wiki. Lembre-se que a comunidade depende de si para garantir que a wiki está a funcionar normalmente.<br /><br />
+Se precisa de ajuda para tomar conta da wiki, pode permitir que outros membros da comunidade também sejam administradores, na página <a href="$2">Privilégios dos utilizadores</a>.<br /><br />
+<b>A Equipa da Wikia</b><br /><br />
+<small>Pode <a href="$3">cancelar a subscrição</a> de alterações a esta lista.</small>',
 	'automaticwikiadoption-mail-second-subject' => 'A sua wiki será proposta para adopção em breve',
+	'automaticwikiadoption-mail-second-content' => 'Olá $1,
+
+Há já algum tempo que nenhum administrador visita a sua wiki. É importante, para a comunidade, que existam administradores activos para que a wiki continue a funcionar normalmente - por isso, iremos propor a sua wiki para adopção em breve, de forma a que esta possa voltar a ter administradores activos.
+
+A Equipa da Wikia
+
+Para cancelar a subscrição de alterações a esta lista, clique o seguinte link: $3',
+	'automaticwikiadoption-mail-second-content-HTML' => 'Olá $1,
+
+Há já algum tempo que nenhum administrador visita a sua wiki. É importante, para a comunidade, que existam administradores activos para que a wiki continue a funcionar normalmente - por isso, iremos propor a sua wiki para adopção em breve, de forma a que esta possa voltar a ter administradores activos.
+
+<b>A Equipa da Wikia</b>
+
+<small>Pode <a href="$3">cancelar a subscrição</a> de alterações a esta lista.</small>',
 	'automaticwikiadoption-mail-adoption-subject' => 'A sua wiki foi adoptada',
+	'automaticwikiadoption-mail-adoption-content' => 'Olá $1,
+
+A sua wiki foi adoptada! Isto significa que alguém se voluntariou para manter a comunidade e o conteúdo do site. Não se preocupe - continua a ser administrador e pode voltar à wiki em qualquer altura.
+
+A Equipa da Wikia
+
+Para cancelar a subscrição de alterações a esta lista, clique o seguinte link: $3',
+	'automaticwikiadoption-mail-adoption-content-HTML' => 'Olá $1,<br /><br />
+A sua wiki foi adoptada! Isto significa que alguém se voluntariou para manter a comunidade e o conteúdo do site. Não se preocupe - continua a ser administrador e pode voltar à wiki em qualquer altura.<br /><br />
+<b>A Equipa da Wikia</b><br /><br />
+<small>Pode <a href="$3">cancelar a subscrição</a> de alterações a esta lista.</small>',
 	'tog-adoptionmails' => 'Notificar-me por correio electrónico quando houver alterações na administração (só para administradores)',
 );
 
-/** Telugu (తెలుగు)
- * @author Veeven
- */
+/** Russian (Русский) */
+$messages['ru'] = array(
+	'automaticwikiadoption-mail-adoption-content' => 'Привет, $1.
+
+Вашу вки приютили! Это означает, что кто-то ещё добровольно вызвался поддерживать сообщество и содержание на сайте. Не беспокойтесь — Вы всё ещё администратор, и можете вернуться в любое время.
+
+Команда Викии
+
+Кликните по ссылке, чтобы отписаться от изменений в этом списке: $3.',
+);
+
+/** Telugu (తెలుగు) */
 $messages['te'] = array(
 	'automaticwikiadoption-know-more-header' => 'మరింత తెలుసుకోవాలనుకుంటున్నారా?',
 );
+

@@ -44,7 +44,7 @@ $messages['az'] = array(
 	'staffpowers-ipblock-aborted' => 'Wikia əməkdaşını bloklamaq mümkün deyil. Zəhmət olmasa, bizim əməkdaşlarımızla bağlı problemlər haqqında məlumat vermək üçün [[Special:Contact]] səhifəsindən istifadə edin.',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -102,7 +102,7 @@ $messages['de'] = array(
 	'staffpowers-ipblock-aborted' => 'Mitarbeiter von Wikia können nicht gesperrt werden. Verwende bitte bei Problemen mit Mitarbeitern [[Special:Contact|das Kontaktformular]].',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -294,7 +294,12 @@ $messages['ru'] = array(
 	'staffpowers-ipblock-aborted' => 'Невозможно заблокировать сотрудника Wikia. Пожалуйста, воспользуйтесь [[Special:Contact]], чтобы сообщить о проблемах, связанных с нашими сотрудниками.',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Tachelhit (Tašlḥiyt) */
+$messages['shi'] = array(
+	'staffpowers-ipblock-aborted' => 'Ur  as tufit ad tqnt f midn n trabbut n Wikia. Tzḍart ad tswwurt s [[Special:Contact]] bac adaɣ tmlt timukrisin lli dark illan d tarabbut nɣ',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
  */
 $messages['sr-ec'] = array(
@@ -334,5 +339,12 @@ $messages['tl'] = array(
  */
 $messages['tr'] = array(
 	'staffpowers-ipblock-aborted' => 'Wikia personelini engellemek olası değildir. [[Special:Contact]] sayfasını kullanarak personelimiz hakkındaki problemlerinizi iletebilirsiniz.',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'staffpowers-ipblock-aborted' => 'Заблокувати співробітника Wikia неможливо. Будь ласка, скористайтесь [[Special:Contact]], щоб повідомити про будь-яких питання або проблеми з нашими співробітниками.',
 );
 
