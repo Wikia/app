@@ -48,4 +48,5 @@
 			<input type="submit" name="wpPreview" value="<?php echo wfMsg( 'plb-special-form-preview-button' ); ?>" />
 		</li>
 	</ul>
+	<?php echo $wpEditToken; ?>
 </form>

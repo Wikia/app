@@ -126,7 +126,8 @@ class PageLayoutBuilderForm extends SpecialPage {
 				"ispreview" => !empty($this->isPreview) && $this->isPreview,
 				"previewdata" => !empty($this->previewData) ? $this->previewData:"",
 				"isdelete" => PageLayoutBuilderModel::layoutIsDelete($this->formValues['plbId']),
-				"catHtml" => $catHtml
+				"catHtml" => $catHtml,
+				"wpEditToken" => Xml::hidden( "wpEditToken", $wgUser->editToken() )
 			));
 			$wgOut->addHTML( $oTmpl->render( "create-article" ) );
 			//TODO: move this to template
@@ -167,7 +168,7 @@ class PageLayoutBuilderForm extends SpecialPage {
     }
 
 	function executeSubmit(&$parser) {
-		global $wgRequest, $wgOut;
+		global $wgRequest, $wgOut, $wgUser;
 
 		$articleName = $wgRequest->getVal('wgArticleName', '');
 		$elements = PageLayoutBuilderModel::getElementList( $this->layoutTitle->getArticleID() );
@@ -177,6 +178,14 @@ class PageLayoutBuilderForm extends SpecialPage {
 		$tagValues = array();
 		$formValue = array();
 
+		//check edit token 
+		$token = $wgRequest->getVal( 'wpEditToken' );
+		$this->mTokenOk = $wgUser->matchEditToken( $token );
+
+		if (!$this->mTokenOk ) {
+			$this->formErrors[] = wfMsg( 'plb-special-form-session-fail' );
+		}
+		
 		if(isset($elements)) {
 			foreach($elements as $key => $value) {
 				$reqVal = $wgRequest->getVal('plb_'.$key, '');
