@@ -17,7 +17,7 @@ class CorporateFooterModule extends Module {
 			$wgMemc->set($mKey, $this->footer_links, 86400);
 		}
 
-		$this->hub = $this->getHub();
+		$this->hub = $this->getHub();		
 	}
 
 	private function getHub() {
@@ -29,6 +29,8 @@ class CorporateFooterModule extends Module {
 			//Use Recipes Wiki cityID to force Lifestyle hub
 			$catInfo = WikiFactory::getCategory(3355);
 		}
+
+		$catInfo->cat_link = wfMsg('oasis-corporatefooter-hub-'. $catInfo->cat_name .'-link');
 
 		//i18n
 		if (!empty($catInfo)) {

@@ -132,7 +132,10 @@ You can reorder or delete tools in the field below.
 	'oasis-upload-photos-title' => 'Upload a Photo to the Wiki',
 	'oasis-upload-photos-advanced' => 'Advanced options',
 	'oasis-upload-photos-force' => 'Upload anyway',
-
+	
+	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
+	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming',
+	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle'
 );
 
 /** Message documentation (Message documentation)
@@ -180,7 +183,7 @@ Example:
 * X Pages on Translatewiki',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -1063,7 +1066,7 @@ U kunt hulpmiddelen verwijderen of ordenen in het veld hieronder.
 	'oasis-upload-photos-force' => 'Toch uploaden',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
@@ -1726,7 +1729,7 @@ $messages['uk'] = array(
 	'oasis-upload-photos-advanced' => 'Додаткові параметри',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (中文(繁體))
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
@@ -1764,7 +1767,7 @@ $messages['zh-hant'] = array(
 	'oasis-interlang-languages' => '其他語言',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬)
+/** Chinese (Taiwan) (中文(台灣))
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(
