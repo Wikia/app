@@ -247,7 +247,7 @@ PageLayoutBuilder.showGalleryForPLB = function(element_id) {
 		data: {
 			element_id : element_id,
 			text :text,
-			plb_id: $("#wpPlbId").val(),
+			plb_id: $("#wpPlbId").val()
 		},
 		type: "POST",
 		dataType: "json",
