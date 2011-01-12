@@ -50,7 +50,7 @@ $messages['en'] = array (
 	'plb-create-already-exists-error' => 'A layout with this title already exists. Try entering a different title.',
 	'plb-create-updated-summary' => 'The summary for this title was updated.',
 	'plb-create-cant-edit' => "We could not save this layout. It looks like you do not have permission to edit right now.",
-	'plb-create-spam' => "We couldn't save this layout.",
+	'plb-create-spam' => "We could not save this layout.",
 
 	'plb-special-form-submit-button' => 'Save page',
 	'plb-special-form-preview-button' => 'Preview page',
@@ -102,7 +102,7 @@ $messages['en'] = array (
 	'plb-create-from-article-button-title' => 'Make a Layout from this page',
 	'plb-create-from-article-button-desc' => 'Use this page as the basis for a Layout. <a href="#">Learn more ></a>',
 
-	'plb-layout-usercant' => "Sorry, you don't have access to Layout Builder. Check with an administrator on this wiki to help you out.",
+	'plb-layout-usercant' => "Sorry, you do not have access to Layout Builder. Check with an administrator on this wiki to help you out.",
 
 	'plb-editor-elements-in-the-editor' => '<span>ITEMS</span> IN THE EDITOR FORM',
 	'plb-editor-add-element' => 'Add item',
