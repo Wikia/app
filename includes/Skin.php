@@ -727,11 +727,6 @@ CSS;
 				}
 
 				wfProfileOut(__METHOD__ . '::checkForEmptyUserCSS');
-
-				$out->addStyle( self::makeUrl(
-					$this->userpage . '/' . $this->getSkinName() . '.css',
-					'action=raw&ctype=text/css' )
-				);
 			}
 		}
 
