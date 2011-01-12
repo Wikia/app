@@ -266,7 +266,7 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 ?>	
 
 	</table>
-	<?php if( @$this->haveData( 'uselang' ) ) { ?><input type="hidden" name="uselang" value="<?php $this->text( 'uselang' ); ?>" /><?php } ?>
+	<?/*commented out, part of fix #135575 if( @$this->haveData( 'uselang' ) ) { ?><input type="hidden" name="uselang" value="<?php $this->text( 'uselang' ); ?>" /><?php } */?>
 </div>
 </td>
 </tr>
