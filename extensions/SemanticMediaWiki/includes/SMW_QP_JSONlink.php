@@ -102,7 +102,7 @@ class SMWJSONResultPrinter extends SMWResultPrinter {
 
 				//try to determine type/category
 				$catlist = array();
-				$dbr  = &wfGetDB(DB_SLAVE);
+				$dbr  = &wfGetDB(DB_SLAVE, 'smw');
 				$cl   = $dbr->tableName('categorylinks');
 				$arttitle   = Title::newFromText($label);
 				if($arttitle instanceof Title){
