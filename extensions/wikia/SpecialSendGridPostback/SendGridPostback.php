@@ -51,7 +51,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 		$emailAddr = $wgRequest->getVal('email');
 		$cityId = $wgRequest->getVal('wikia-email-city-id'); // cityId of the wiki which sent the email
 		$senderDbName = $wgRequest->getVal('wikia-db');
-		
+
 		// Verify the token so that we know this POST probably came from SendGrid.
 		$postedToken = $wgRequest->getVal('wikia-token');
 		$generatedToken = wfGetEmailPostbackToken($emailId, $emailAddr);
@@ -90,10 +90,10 @@ class SendGridPostback extends UnlistedSpecialPage {
 
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	private function handleClick ($id, $email, $url) {
 		Wikia::log(__METHOD__, false, "<postback>" . $email . "</postback>\n", true);
-		
+
 		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
 		$dbw->update(
 			Mail_wikiadb::$MAIL_TABLE_NAME,
@@ -102,7 +102,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 			""
 		);
 	}
-	
+
 	private function handleOpen ($id, $email) {
 		Wikia::log(__METHOD__, false, "<postback>" . $email . "</postback>\n", true);
 
@@ -114,15 +114,15 @@ class SendGridPostback extends UnlistedSpecialPage {
 			""
 		);
 	}
-	
+
 	private function handleUnsubscribe ($id, $email) {
 		Wikia::log(__METHOD__, false, "<postback>" . $email . "</postback>\n", true);
 	}
-	
+
 	private function handleBounce ($id, $email, $status, $reason) {
 		Wikia::log(__METHOD__, false, "<postback>$email, $status, $reason</postback>\n", true);
 
-		// Update the mail table to include details about the bounce		
+		// Update the mail table to include details about the bounce
 		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
 		$dbw->update(
 			Mail_wikiadb::$MAIL_TABLE_NAME,
@@ -132,26 +132,28 @@ class SendGridPostback extends UnlistedSpecialPage {
 			array( /* WHERE */'id' => $id ),
 			""
 		);
-		
+
 		// Invalidate the users email to force them to reverify it
-		$dbr = wfGetDb(DB_SLAVE);
-		$res = $dbr->select( 'user',
-							 array( 'user_id' ),
-							 array( 'user_email' => $email ),
-							 __METHOD__
-						   );
-		while ($row = $dbr->fetchObject($res)) {
-			$user = User::newFromId($row->id);
-			if (!$user) next;
-			
+		$dbr = wfGetDb( DB_SLAVE );
+		$res = $dbr->select(
+			array( 'user' ),
+			array( 'user_id' ),
+			array( 'user_email' => $email ),
+			__METHOD__
+		);
+		while( $row = $dbr->fetchObject( $res ) ) {
+			$user = User::newFromId( $row->user_id );
+			if (!$user) {
+				next;
+			}
 			$user->invalidateEmail();
 			$user->saveSettings();
 		}
 	}
-	
+
 	private function handleSpam ($id, $email) {
 		Wikia::log(__METHOD__, false, "<postback>" . $email . "</postback>\n", true);
-		
+
 		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
 		$dbw->update(
 			Mail_wikiadb::$MAIL_TABLE_NAME,
@@ -160,7 +162,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 			""
 		);
 	}
-	
+
 	/**
 	 * We're not sure how we want to handle the postbacks in all cases, so for now just log them to the db and come back for them later.
 	 *
@@ -169,7 +171,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 	private function logPostbackForLater(){
 		global $wgRequest;
 		wfProfileIn(__METHOD__);
-		
+
 		$eventType = $wgRequest->getVal('event');
 		$emailId = $wgRequest->getVal('wikia-email-id');
 		$emailAddr = $wgRequest->getVal('email');
