@@ -1,4 +1,5 @@
 == Changes since 20101213 ==
+* rt#143722: oasis css vs image attribution vs imagemaps (Marooned)
 * rt#144589: PHP fatal error: Call to a member function idForName() on a non-object (Marooned)
 * rt#139837: Related Pages: Disambiguation Pages Should Not Have Them (macbre)
 * rt#143579: Long text breaks Signup page layout (Jakub)
