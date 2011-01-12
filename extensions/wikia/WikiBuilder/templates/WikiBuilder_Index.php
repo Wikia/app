@@ -78,7 +78,7 @@
 		<div class="step4" style="display:none">
 			<h2><?= wfMsg('owb-step4') ?>: <?= wfMsg('owb-step4-label') ?></h2>
 			<p><?= wfMsg('owb-step4-instruction') ?></p>
-			<div class="basic box">
+			<div class="wb-basic box">
 				<header>
 					<h1>
 						<img class="sprite logo" src="<?= $wgBlankImgUrl ?>" height="15" width="61">
@@ -92,9 +92,9 @@
 				<div class="details">
 				<?= wfMsg('owb-step4-basic-details') ?>
 				</div>
-				<input type="button" value="<?= wfMsg('owb-button-done') ?>" class="basic">
+				<input type="button" value="<?= wfMsg('owb-button-done') ?>" class="wb-basic">
 			</div>
-			<div class="plus box">
+			<div class="wb-plus box">
 				<header>
 					<h1>
 						<img class="sprite logo" src="<?= $wgBlankImgUrl ?>" height="15" width="61">
@@ -108,7 +108,7 @@
 				<div class="details">
 				<?= wfMsg('owb-step4-plus-details') ?>
 				</div>
-				<input type="button" value="<?= wfMsg('owb-button-plus') ?>" class="plus">
+				<input type="button" value="<?= wfMsg('owb-button-plus') ?>" class="wb-plus">
 				<img src="<?= $wgStylePath ?>/common/images/ajax.gif" class="throbber">
 			</div>
 			<div class="status"></div>
