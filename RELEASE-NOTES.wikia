@@ -1,4 +1,5 @@
 == Changes since 20101213 ==
+* rt#144589: PHP fatal error: Call to a member function idForName() on a non-object (Marooned)
 * rt#139837: Related Pages: Disambiguation Pages Should Not Have Them (macbre)
 * rt#143579: Long text breaks Signup page layout (Jakub)
 * rt#141979: Wiki Activity: On watchlist view, change "Followed Pages only" link to "Activity feed" link (Jakub)
