@@ -58,11 +58,11 @@ $messages['en'] = array(
 <li>Connect and like on Facebook</li>
 <li>No bandwidth limit</li></ul>',
 	'owb-step4-error-caption' => 'Error',
-	'owb-step4-error-upgrade-content' => "This Wiki can't be upgraded to Plus.",
+	'owb-step4-error-upgrade-content' => "This wiki cannot be upgraded to Plus.",
 	'owb-step4-error-token-content' => 'Failed to get proper token from PayPal.',
 	'owb-status-saving' => 'Saving',
 	'owb-unable-to-edit-description' => 'The description is uneditable with Wiki Builder',
-	'owb-readonly-try-again' => 'The Wiki is currently in readonly mode. Please try again in a few moments',
+	'owb-readonly-try-again' => 'The Wiki is currently in read-only mode. Please try again in a few moments',
 	'owb-error-saving-articles' => 'Error Saving Pages',
 	'owb-new-pages-text' => "[[File:Placeholder|right|300px]]
 Write the first paragraph of your page here.
@@ -73,5 +73,5 @@ Write the first section of your page here. Remember to include links to other pa
 
 ==Section heading==
 
-Write the second section of your page here. Do not forget to add a category, to help people find the page.",
+Write the second section of your page here. Do not forget to add a category to help people find the page.",
 );
