@@ -95,7 +95,7 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 	// (b) content, file, user, etc. (on edit)
 
 	if (!$force) {
-		if ( ( !in_array($title->mNamespace, $wgContentNamespaces) && ( $action == 'view' || $action == 'purge' ) )
+		if ( ( !in_array($title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_CATEGORY, NS_VIDEO ) ) ) && ( $action == 'view' || $action == 'purge' ) )
 			|| !in_array($title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) ) ) ) {
 			return true;
 		}
