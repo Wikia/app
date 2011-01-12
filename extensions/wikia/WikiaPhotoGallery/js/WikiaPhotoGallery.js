@@ -985,6 +985,12 @@ var WikiaPhotoGallery = {
 
 		// setup is done - show the results
 		results.show();
+
+		if (self.isSlider()){
+			// hides all images that does not have 'data-strict'.
+			$('#WikiaPhotoGallerySearchResults').find('li').hide()
+				.filter('[data-strict]').show();
+		}
 	},
 
 	// setup mini-MW toolbar for caption editor
@@ -1801,7 +1807,9 @@ var WikiaPhotoGallery = {
 			self.log('adding next picture...');
 			self.track('/dialog/slider/preview/addPhoto');
 
-			$('#WikiaPhotoGallerySearchResults .strict-image-0').css('display', 'none');
+			// hides all images that does not have 'data-strict'.
+			$('#WikiaPhotoGallerySearchResults').find('li').hide()
+				.filter('[data-strict]').show();
 
 			self.selectPage(self.UPLOAD_FIND_PAGE, {});
 		});
