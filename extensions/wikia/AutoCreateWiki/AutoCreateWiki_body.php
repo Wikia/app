@@ -1258,11 +1258,11 @@ class AutoCreateWikiPage extends SpecialPage {
 		$name = trim( $this->mUsername );
 		$oUser = User::newFromName( $name, 'creatable' );
 
-		if ( $oUser instanceof User) {
-			if ( 0 != $oUser->idForName() ) {
-				$this->makeError( "wiki-username", wfMsg( 'userexists' ) );
-			}
-
+		if ( ! $oUser instanceof User) {
+			$this->makeError( "wiki-username", wfMsg('noname') );
+		} elseif ( 0 != $oUser->idForName() ) {
+			$this->makeError( "wiki-username", wfMsg( 'userexists' ) );
+		} else {
 			# Set some additional data so the AbortNewAccount hook can be
 			# used for more than just username validation
 			$oUser->setEmail( $this->mEmail );
@@ -1272,25 +1272,22 @@ class AutoCreateWikiPage extends SpecialPage {
 				// Hook point to add extra creation throttles and blocks
 				wfDebug( "LoginForm::addNewAccountInternal: a hook blocked creation\n" );
 				$this->makeError( "wiki-blurry-word", $abortError );
-			}
-
-			if ( $wgAccountCreationThrottle && $wgUser->isPingLimitable() ) {
-				$key = wfMemcKey( 'acctcreate', 'ip', $ip );
-				$value = $wgMemc->incr( $key );
-				if ( !$value ) {
-					$wgMemc->set( $key, 1, 86400 );
+			} else {
+				if ( $wgAccountCreationThrottle && $wgUser->isPingLimitable() ) {
+					$key = wfMemcKey( 'acctcreate', 'ip', $ip );
+					$value = $wgMemc->incr( $key );
+					if ( !$value ) {
+						$wgMemc->set( $key, 1, 86400 );
+					}
+					if ( $value > $wgAccountCreationThrottle ) {
+						$this->makeError( "wiki-username", wfMsgExt('acct_creation_throttle_hit', array("parse"), $wgAccountCreationThrottle) );
+					}
 				}
-				if ( $value > $wgAccountCreationThrottle ) {
-					$this->makeError( "wiki-username", wfMsgExt('acct_creation_throttle_hit', array("parse"), $wgAccountCreationThrottle) );
+
+				if ( empty($this->mErrors) && !$wgAuth->addUser( $oUser, $this->mPassword, $this->mEmail, "" ) ) {
+					$this->makeError( "wiki-username", wfMsg('externaldberror') );
 				}
 			}
-
-			if ( !$wgAuth->addUser( $oUser, $this->mPassword, $this->mEmail, "" ) ) {
-				$this->makeError( "wiki-username", wfMsg('externaldberror') );
-			}
-		} else {
-			$this->makeError( "wiki-username", wfMsg('noname') );
-			$this->makeError( "wiki-username", wfMsg('autocreatewiki-blocked-username') );
 		}
 
 		if ( $this->mErrors > 0 ) {
