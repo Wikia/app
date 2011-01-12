@@ -6,7 +6,7 @@
  * @ingroup Extensions
  */
 
-#messages = array();
+$messages = array();
 
 /** English
  * @author 
