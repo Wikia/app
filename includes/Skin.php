@@ -654,12 +654,13 @@ CSS;
 			}
 
 			// Wikia
-			if( empty($this->themename) || $this->themename == 'custom' ) {
+			if( empty($this->themename) || $this->themename == 'custom' || $this->themename == 'oasis' ) {
 				$skinname = $this->getSkinName();
 				if($skinname == 'oasis') {
 					// For anon users, SiteCSS will be added in a combined format in OasisModule in anonSiteCSS.
 					if($wgUser->isLoggedIn()){
 						// Moved into OasisModule.class.php so that this file is AFTER other headscripts.
+						$wgOasisLastCssScripts[] = "sup dogg";
 						$wgOasisLastCssScripts[] = self::makeNSUrl( 'Wikia.css', $query, NS_MEDIAWIKI );
 					}
 				} else {
