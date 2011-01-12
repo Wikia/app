@@ -1,4 +1,5 @@
 == Changes since 20101213 ==
+* rt#84626: CategorySelection: enable on file namespace (Marooned)
 * rt#144593: MW 1.16: issue with MW CSS (user / wiki / global) (macbre)
 * rt#143722: oasis css vs image attribution vs imagemaps (Marooned)
 * rt#144589: PHP fatal error: Call to a member function idForName() on a non-object (Marooned)
