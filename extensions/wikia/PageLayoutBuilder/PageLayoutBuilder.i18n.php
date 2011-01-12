@@ -22,6 +22,7 @@ $messages['en'] = array (
 	'plb-special-form-cat-info' => 'Assign categories to every page created with this layout:',
 	'plb-special-form-error-info' => 'Please correct the following errors:',
 	'plb-special-form-new' => 'New layout',
+	'plb-special-form-session-fail' => 'There seems to be a problem with your login session',
 	'plb-special-no-layout' => 'No layout specified.',
 	'plb-special-no-layout-body' => 'It looks like you are trying to create a new page using a layout, but we cannot tell which layout to use. Sorry about this!',
 	'plb-special-no-article' => 'Invalid page specified.',
