@@ -1254,7 +1254,7 @@ function wfAppendTimerHeader ($label, $time, $calculateOffset = false) {
  * This is intended to be called from OutputPage::output
  */
 function wgSendTimerHeader () {
-	global $wgApacheTimerString, $wgProfiler, $wgDBname, $action;
+	global $wgApacheTimerString, $wgProfiler;
 
 	if ($wgProfiler instanceof ProfilerSimpleText) {
 		$db_time = 0;
