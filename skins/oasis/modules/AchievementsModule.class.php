@@ -54,10 +54,6 @@ class AchievementsModule extends Module {
 		$this->ownerRank = $rankingService->getUserRank($userProfileService->mUserOwner->getId());
 		$this->ownerScore = $rankingService->getUserScore($userProfileService->mUserOwner->getId());
 
-		if (count($this->ownerBadges) >= 4) {
-			$this->max_challenges = 4;
-		}
-
 		if($userProfileService->mUserViewer && $userProfileService->mUserViewer->isLoggedIn() && $userProfileService->mUserViewer->getId() == $userProfileService->mUserOwner->getId()) {
 			$this->viewer_is_owner = true;
 			$this->challengesBadges = $userProfileService->mChallengesBadges;
