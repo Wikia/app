@@ -60,7 +60,6 @@ class imageServing{
 
 			foreach ( $articles as $key => $value ) {
 				$mcOut = $wgMemc->get( $this->_makeKey( $value, $n ), null );
-
 				if($mcOut != null) {
 					unset( $articles[ $key ] );
 					$cache_return[ $value ] = $mcOut;
@@ -97,7 +96,7 @@ class imageServing{
 			while ($row =  $db->fetchRow( $res ) ) {
 				$props = unserialize( $row['props'] );
 				foreach( $props as $key => $value ) {
-					if( empty($image_list[$value][$row['page_id']]) ) {
+					if( empty($image_list[$value][$row['page_id']]) && ($image_list[$value][$row['page_id']] === 0) ) {
 						if( empty($image_list[$value]) ) {
 							$images_name[] = $value;
 						}
@@ -116,17 +115,15 @@ class imageServing{
 			$db_out = array();
 			if ( !empty($images_name) ) {
 				foreach ( $images_name as $img_name ) {
-					$result = $db->select(
-						array( 'imagelinks' ),
-						array( 'il_from' ),
-						array(
-							'il_to' => $img_name
-						),
-						__METHOD__,
-						array ('LIMIT' => ($this->maxCount + 1))
+					$oRow = $db->selectRow(
+						"( SELECT il_to  FROM `imagelinks`  WHERE il_to = " . $db->addQuotes($img_name) . "  LIMIT " . ($this->maxCount + 1) . " ) as t1 ",
+						array( 'count(il_to) as cnt' ),
+						array( ),
+						__METHOD__						
 					);
-					# skip images which are too popular
-					if ($result->numRows() > $this->maxCount ) continue;
+					
+					if ( $oRow->cnt > $this->maxCount ) continue;
+						
 					# check image table 
 					$oRowImg = $db->selectRow(
 						array( 'image' ),
@@ -144,7 +141,7 @@ class imageServing{
 					if ( $oRowImg->img_height > $this->minSize && $oRowImg->img_width > $this->minSize ) {
 						if ( !in_array( $oRowImg->img_minor_mime, array( "svg+xml","svg") ) ) {
 							$db_out[ $oRowImg->img_name ] = array(
-								'cnt'            => $result->numRows(),
+								'cnt'            => $oRow->cnt,
 								'il_to'          => $oRowImg->img_name,
 								'img_width'      => $oRowImg->img_width,
 								'img_height'     => $oRowImg->img_height,
