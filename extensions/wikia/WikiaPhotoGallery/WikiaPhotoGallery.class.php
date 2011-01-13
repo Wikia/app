@@ -1224,6 +1224,9 @@ JS;
 			$linkText = $this->mData['images'][$p]['linktext'];
 			$time = $descQuery = false;
 
+			// parse link (RT #142515)
+			$linkAttribs = $this->parseLink($nt->getLocalUrl(), $nt->getText(), $link);
+
 			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 			$img = wfFindFile( $nt, $time );
 			if (	is_object($img) && ($nt->getNamespace() == NS_FILE) &&
@@ -1242,7 +1245,7 @@ JS;
 				$out[] = array(
 				    'imageUrl' => $pictureURL,
 				    'imageTitle' => $text,
-				    'imageLink' => $link,
+				    'imageLink' => !empty($link) ? $linkAttribs['href'] : '',
 				    'imageDescription' => $linkText,
 				    'imageThumbnail' => $thumbUrl
 				);
