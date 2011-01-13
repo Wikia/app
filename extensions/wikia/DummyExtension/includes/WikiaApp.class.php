@@ -19,6 +19,7 @@ class WikiaApp {
 	 * @var WikiaHookDispatcher
 	 */
 	private $hookDispatcher = null;
+	private $functionWrapper = null;
 
 	/**
 	 * constructor
@@ -85,6 +86,19 @@ class WikiaApp {
 
 	public function setGlobal($globalVarName, $value) {
 		return $this->getRegistry()->set($globalVarName, $value, 'mediawiki');
+	}
+
+	/**
+	 * simple global function wrapper
+	 *
+	 * @param string $funcName global function name
+	 * @param mixed $arg1 - $argN function arguments
+	 * @experimental
+	 */
+	public function runFunction() {
+		$funcArgs = func_get_args();
+		$funcName = array_shift($funcArgs);
+		return call_user_func_array( $funcName, $funcArgs );
 	}
 
 }
