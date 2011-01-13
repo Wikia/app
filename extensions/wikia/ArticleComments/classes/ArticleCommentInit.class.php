@@ -38,27 +38,27 @@ class ArticleCommentInit {
 		$enable = self::ArticleCommentCheckNamespace($title);
 
 		//non-existing articles
-		if (!$title->exists()) {
+		if ($enable && !$title->exists()) {
 			$enable = false;
 		}
 
 		//disable on main page (RT#33703)
-		if (Title::newMainPage()->getText() == $title->getText()) {
+		if ($enable && Title::newMainPage()->getText() == $title->getText()) {
 			$enable = false;
 		}
 
 		//disable on redirect pages (RT#44315)
-		if ($title->isRedirect()) {
+		if ($enable && $title->isRedirect()) {
 			$enable = false;
 		}
 
 		//disable on pages that cant be read (RT#49525)
-		if (!$title->userCan('read')) {
+		if ($enable && !$title->userCan('read')) {
 			$enable = false;
 		}
 
 		//blog listing? (eg: User:Name instead of User:Name/Blog_name) - do not show comments
-		if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE && strpos($title->getText(), '/') === false) {
+		if ($enable && defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE && strpos($title->getText(), '/') === false) {
 			$enable = false;
 		}
 
