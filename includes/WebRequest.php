@@ -67,6 +67,11 @@ class WebRequest {
 	public function interpolateTitle() {
 		global $wgUsePathInfo;
 
+		// bug 16019: title interpolation on API queries is useless and sometimes harmful
+		if ( defined( 'MW_API' ) ) {
+			return;
+		}
+
 		if ( $wgUsePathInfo ) {
 			// PATH_INFO is mangled due to http://bugs.php.net/bug.php?id=31892
 			// And also by Apache 2.x, double slashes are converted to single slashes.

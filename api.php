@@ -34,6 +34,9 @@
  * in the URL.
  */
 
+// So extensions (and other code) can check whether they're running in API mode
+define( 'MW_API', true );
+ 
 // Initialise common code
 require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 
@@ -98,9 +101,6 @@ if ( $wgCrossSiteAJAXdomains && isset( $_SERVER['HTTP_ORIGIN'] ) ) {
 		}
 	}
 }
-
-// So extensions can check whether they're running in API mode
-define( 'MW_API', true );
 
 // Wikia change
 if (function_exists('newrelic_background_job')) {
