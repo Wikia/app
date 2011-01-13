@@ -19,6 +19,7 @@ class WikiaImport {
 		while( $this->getSource() ) {
 			if ( $this->getContent() ) {
 				if ( $this->translate() ) {
+					wfWaitForSlaves( 5 );
 					$this->save();
 				}
 			}
