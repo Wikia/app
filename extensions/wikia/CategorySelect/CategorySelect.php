@@ -65,8 +65,7 @@ function CategorySelectInit($forceInit = false) {
 
 	global $wgHooks;
 	$wgHooks['MediaWikiPerformAction'][] = 'CategorySelectInitializeHooks';
-	$wgHooks['UserToggles'][] = 'CategorySelectToggleUserPreference';
-	$wgHooks['getEditingPreferencesTab'][] = 'CategorySelectToggleUserPreference';
+	$wgHooks['GetPreferences'][] = 'CategorySelectOnGetPreferences';
 }
 
 /**
@@ -587,11 +586,11 @@ function CategorySelectGenerateHTMLforView() {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CategorySelectToggleUserPreference($toggles, $default_array = false) {
-	if (is_array($default_array)) {
-		$default_array[] = 'disablecategoryselect';
-	} else {
-		$toggles[] = 'disablecategoryselect';
-	}
+function CategorySelectOnGetPreferences($user, &$preferences) {
+	$preferences['disablecategoryselect'] = array(
+		'type' => 'toggle',
+		'section' => 'editing/advancedediting',
+		'label' => wfMsg('tog-disablecategoryselect'),
+	);
 	return true;
 }
