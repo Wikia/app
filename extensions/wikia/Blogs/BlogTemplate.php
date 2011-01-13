@@ -323,7 +323,7 @@ class BlogTemplateClass {
 	 * @author macbre
 	 */
 	public static function parseTagForParser($input, $params, &$parser, $frame = null, $returnPlainData = false) {
-		$res = self::parseTag($input, $params, &$parser, $frame, $returnPlainData);
+		$res = self::parseTag($input, $params, $parser, $frame, $returnPlainData);
 
 		/* Parser in MW1.16 allows to change the way of parsing custom tags */
 		/* Do not perform additional parsing of HTML returned by this method */
