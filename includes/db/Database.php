@@ -2727,12 +2727,20 @@ class DBQueryError extends DBError {
 	}
 
 	function getSQL() {
-		global $wgShowSQLErrors;
+		/* Wikia change begin - @author: Marooned */
+		/* add unique ID to query - useful for users reports to find proper query */
+		global $wgShowSQLErrors, $wgDBname;
+		$time = wfTimestamp( TS_MW );
+		$uri  = $_SERVER[ 'SERVER_NAME' ] . $_SERVER[ 'REQUEST_URI' ];
+		$qry  = $_SERVER[ 'QUERY_STRING' ];
+		error_log("DBQueryError: id=$time, errorNo={$this->errno}, errorMessage={$this->error}, SQL={$this->sql}");
+		error_log("DBQueryError: id=$time, errorNo={$this->errno}, NAME={$wgDBname}, functionName={$this->fname}, URI={$uri}, QUERY={$qry}");
 		if( !$wgShowSQLErrors ) {
-			return $this->msg( 'sqlhidden', 'SQL hidden' );
+			return "/*id=$time*/ " . $this->msg( 'sqlhidden', 'SQL hidden' );
 		} else {
-			return $this->sql;
+			return "/*id=$time*/ " . $this->sql;
 		}
+		/* Wikia change end */
 	}
 
 	function getLogMessage() {
