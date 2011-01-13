@@ -102,6 +102,11 @@ if ( $wgCrossSiteAJAXdomains && isset( $_SERVER['HTTP_ORIGIN'] ) ) {
 // So extensions can check whether they're running in API mode
 define( 'MW_API', true );
 
+// Wikia change
+if (function_exists('newrelic_background_job')) {
+	newrelic_background_job(true);
+}
+
 // Set a dummy $wgTitle, because $wgTitle == null breaks various things
 // In a perfect world this wouldn't be necessary
 $wgTitle = Title::makeTitle( NS_MAIN, 'API' );

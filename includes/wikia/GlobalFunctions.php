@@ -1223,6 +1223,7 @@ function wfDeleteWikiaPageProp($type, $pageID) {
  * Varnish also sets this as a cookie
  * Set-Cookie: loadtime=S1289350323.474201918,VS0,AS13,CD150,MD30,DD30,AE240,VE255;
  *
+ * Also sends timing info to newrelic if the module is installed (Owen)
  */
 function wfAppendTimerHeader ($label, $time, $calculateOffset = false) {
 	global $wgApacheTimerString;
@@ -1236,10 +1237,14 @@ function wfAppendTimerHeader ($label, $time, $calculateOffset = false) {
 		if ($calculateOffset) {
 			list($startTime) = explode(',',$wgApacheTimerString);
  			$startTime = substr($startTime, 1);  // chop off the S
-			$wgApacheTimerString .= sprintf(",%s%d",$label, ($time - $startTime) * 1000);
+			$elapsedTime = ($time - $startTime) * 1000;
 		} else {
 			// do not need offset from start, just append the label and duration to our header
-			$wgApacheTimerString .= sprintf(",%s%d",$label, ($time * 1000));
+			$elapsedTime = ($time * 1000);
+		}
+		$wgApacheTimerString .= sprintf(",%s%d",$label, $elapsedTime);
+		if (function_exists('newrelic_add_custom_parameter')) {
+			newrelic_custom_metric($label, $elapsedTime);
 		}
 	}
 }
@@ -1249,12 +1254,22 @@ function wfAppendTimerHeader ($label, $time, $calculateOffset = false) {
  * This is intended to be called from OutputPage::output
  */
 function wgSendTimerHeader () {
-	global $wgApacheTimerString, $wgProfiler;
+	global $wgApacheTimerString, $wgProfiler, $wgDBname, $action;
 
 	if ($wgProfiler instanceof ProfilerSimpleText) {
-		wfAppendTimerHeader('MD', $wgProfiler->mCollated['memcached::get']['real']);
-		$db_time = $wgProfiler->mCollated['Database::query-master']['real'] + $wgProfiler->mCollated['Database::query']['real'];
-		wfAppendTimerHeader('DD', $db_time);
+		$db_time = 0;
+		if (isset($wgProfiler->mCollated['MWMemcached::get']['real'])) {
+			wfAppendTimerHeader('MD', $wgProfiler->mCollated['MWMemcached::get']['real']);
+		}
+		if (isset($wgProfiler->mCollated['Database::query-master']['real'])) {
+			$db_time += $wgProfiler->mCollated['Database::query-master']['real'];
+		}
+		if (isset($wgProfiler->mCollated['Database::query']['real'])) {
+			$db_time += $wgProfiler->mCollated['Database::query']['real'];
+		}
+		if ($db_time > 0) {
+			wfAppendTimerHeader('DD', $db_time);
+		}
 	}
 	// Corresponding start time AS is at the top of index.php
 	if ($wgApacheTimerString) {
