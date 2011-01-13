@@ -171,7 +171,7 @@ class PageStatsService extends Service {
 			$categories = array();
 
 			while($obj = $dbr->fetchObject($res)) {
-				if (!$service->isCategoryBlacklisted($obj->cl_to)) {
+				if (!$service->isCategoryBlacklisted($obj->cl_to) && !$service->isCategoryHidden($obj->cl_to)) {
 					$categories[$obj->cl_to] = $obj->cnt;
 				}
 			}
