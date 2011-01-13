@@ -9,13 +9,13 @@
 class RandomImage {
 
 	private $parser = null;
-	
+
 	private $width = false;
 	private $float = false;
 	private $caption = '';
-	
+
 	private $choices = array();
-	
+
 	/**
 	 * Constructor
 	 *
@@ -28,7 +28,7 @@ class RandomImage {
 		$this->caption = $caption;
 		$this->setOptions( $options );
 	}
-	
+
 	/**
 	 * Extract applicable options from tag attributes
 	 *
@@ -38,21 +38,8 @@ class RandomImage {
 		if( isset( $options['size'] ) ) {
 			$size = intval( $options['size'] );
 			if( $size > 0 )
-				$this->width = $size;			
+				$this->width = $size;
 		}
-		/* Wikia change begin - @author: Marooned */
-		/* We use `frame` instead of `thumb` which doesn't have default width - fix it */
-		else {
-			global $wgUser, $wgThumbLimits;
-			$wopt = $wgUser->getOption('thumbsize');
-
-			if (!isset($wgThumbLimits[$wopt])) {
-				$wopt = User::getDefaultOption('thumbsize');
-			}
-
-			$this->width = $wgThumbLimits[$wopt];
-		}
-		/* Wikia change end */
 		if( isset( $options['float'] ) ) {
 			$float = strtolower( $options['float'] );
 			// TODO: Use magic words instead
@@ -65,7 +52,7 @@ class RandomImage {
 				$this->choices = $choices;
 		}
 	}
-	
+
 	/**
 	 * Render a random image
 	 *
@@ -74,16 +61,15 @@ class RandomImage {
 	public function render() {
 		$title = $this->pickImage();
 		if( $title instanceof Title && $this->imageExists( $title ) ) {
-			/* Wikia change begin - @author: Marooned */
-			/* Do not use removeMagnifier() - it fails with HTML5 plus XPath is no loger valid */
-			return $this->parser->recursiveTagParse(
-				$this->buildMarkup( $title )
+			return $this->removeMagnifier(
+				$this->parser->recursiveTagParse(
+					$this->buildMarkup( $title )
+				)
 			);
-			/* Wikia change end */
 		}
 		return '';
 	}
-	
+
 	/**
 	 * Does the specified image exist?
 	 *
@@ -100,7 +86,7 @@ class RandomImage {
 			: new Image( $title );
 		return is_object( $file ) && $file->exists();
 	}
-	
+
 	/**
 	 * Prepare image markup for the given image
 	 *
@@ -109,10 +95,7 @@ class RandomImage {
 	 */
 	protected function buildMarkup( $title ) {
 		$parts[] = $title->getPrefixedText();
-		/* Wikia change begin - @author: Marooned */
-		/* Render frame instead of thumb - the same but without magnifier - no need to use removeMagnifier() */
-		$parts[] = 'frame';
-		/* Wikia change end */
+		$parts[] = 'thumb';
 		if( $this->width !== false )
 			$parts[] = "{$this->width}px";
 		if( $this->float )
@@ -128,6 +111,10 @@ class RandomImage {
 	 * @return string
 	 */
 	protected function removeMagnifier( $html ) {
+		/* Wikia change begin - @author: Marooned */
+		/* 1) loadHTML breaks with HTML5; 2) markup has changed so x-path is not valid anymore; 3) replace is much faster */
+		return preg_replace('%<a href="[^"]+" class="[\w -]*magnify[\w -]*" [^>]+></a>%i', '', $html);
+		/* Wikia change end */
 		$doc = DOMDocument::loadHTML( $html );
 		$xpath = new DOMXPath( $doc );
 		foreach( $xpath->query( '//div[@class="magnify"]' ) as $mag )
@@ -178,7 +165,7 @@ class RandomImage {
 			return $pick;
 		}
 	}
-	
+
 	/**
 	 * Select a random image from the choices given
 	 *
@@ -190,7 +177,7 @@ class RandomImage {
 			: $this->choices[0];
 		return Title::makeTitleSafe( NS_IMAGE, $name );
 	}
-	
+
 	/**
 	 * Select a random image from the database
 	 *
@@ -225,7 +212,7 @@ class RandomImage {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Get various options for database selection
 	 *
@@ -254,7 +241,7 @@ class RandomImage {
 			);
 		}
 	}
-	
+
 	/**
 	 * Parser hook callback
 	 *
@@ -270,7 +257,7 @@ class RandomImage {
 		$random = new RandomImage( $parser, $args, $input );
 		return $random->render();
 	}
-	
+
 	/**
 	 * Strip <randomcaption> tags out of page text
 	 *
@@ -282,5 +269,5 @@ class RandomImage {
 		$text = preg_replace( '!</?randomcaption>!i', '', $text );
 		return true;
 	}
-	
+
 }
