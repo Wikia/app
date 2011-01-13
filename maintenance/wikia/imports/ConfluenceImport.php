@@ -32,6 +32,10 @@ class ConfluenceWikiaImport extends WikiaImport {
 		return true;
 	}
 
+	function getUrl() {
+		return $this->remoteUrl . $this->remotePath . $this->i;
+	}
+
 	function getTitle() {
 		$this->mTitle = null;
 
@@ -137,7 +141,7 @@ class ConfluenceWikiaImport extends WikiaImport {
 
 		// handle tables
 		$text = preg_replace( "/\|(?!\|)(.*)\|(?!\|)/", "|-\n|$1|", $text ); // separate rows first
-		$text = preg_replace( "/\|\|-.\|/s", "{|\n! ", $text ); // mark beginning and headers
+		$text = preg_replace( "/\|\|-.\|/s", "{| class=\"wikitable\"\n! ", $text ); // mark beginning and headers
 
 		$text = explode( "\n", $text );
 		$tableState = false;

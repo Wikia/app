@@ -1,10 +1,12 @@
 <?php
 
-class WikiaImport {
+abstract class WikiaImport {
 	var $i = 0;
 	var $verbose = true;
 	var $overwrite = true;
 	var $notify = "TOR";
+	var $remoteUrl = "";
+	var $remotePath = "";
 	var $parameters = array(
 		'overwrite' => 'Shall I overwite existing pages?',
 	);
@@ -14,7 +16,7 @@ class WikiaImport {
 
 		$this->getParams();
 
-		$this->msg( "OK. Starting import!", true );
+		$this->msg( "\n\nOK. Starting import!", true );
 
 		while( $this->getSource() ) {
 			if ( $this->getContent() ) {
@@ -40,14 +42,12 @@ class WikiaImport {
 				$this->$param = $input;
 			}
 		}
-
-		echo "\n\n";
 	}
 
 	function getSource() {
 		$this->mSource = false;
 
-		$url = $this->remoteUrl . $this->remotePath . $this->i;
+		$url = $this->getUrl();
 
 		$this->msg( "Fetching source document from $url... " );
 
@@ -58,9 +58,11 @@ class WikiaImport {
 		return (bool) $this->mSource;
 	}
 
-	function getContent() { return false; }
+	abstract function getUrl() { return ''; }
 
-	function translate() { return false; }
+	abstract function getContent() { return false; }
+
+	abstract function translate() { return false; }
 
 	function save() {
 		global $wgUser, $wgTitle;
