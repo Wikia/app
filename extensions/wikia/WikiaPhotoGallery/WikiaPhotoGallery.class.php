@@ -1278,7 +1278,7 @@ JS;
 	 * @author Marooned
 	 */
 	private function renderFeedGallery() {
-		global $wgLang, $wgBlankImgUrl, $wgParser;
+		global $wgLang, $wgBlankImgUrl;
 
 		wfProfileIn(__METHOD__);
 
