@@ -66,6 +66,11 @@ if( $wgTitle === null ) {
 
 wfProfileOut( 'main-misc-setup' );
 
+// Wikia change -- Send a more meaningful transaction name to newrelic
+if (function_exists('newrelic_name_transaction')) {
+	newrelic_name_transaction("$wgDBname/$action");
+}
+
 #
 # Send Ajax requests to the Ajax dispatcher.
 #
