@@ -547,7 +547,7 @@ class Skin extends Linker {
 		$s .= "\n\n/* MediaWiki:" . ucfirst( $skinName ) . ".js */\n";
 		// avoid inclusion of non defined user JavaScript (with custom skins only)
 		// by checking for default message content
-		$msgKey = ucfirst( $skinName ) . '.js';
+		$msgKey = ucfirst( $jsFileName ) . '.js';
 		$userJS = wfMsgExt( $msgKey, 'content' );
 		if ( !wfEmptyMsg( $msgKey, $userJS ) ) {
 			$s .= $userJS . "\n";
