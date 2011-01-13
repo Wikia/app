@@ -19,7 +19,6 @@ class WikiaApp {
 	 * @var WikiaHookDispatcher
 	 */
 	private $hookDispatcher = null;
-	private $functionWrapper = null;
 
 	/**
 	 * constructor
