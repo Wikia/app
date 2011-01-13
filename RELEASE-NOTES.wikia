@@ -1,3 +1,6 @@
+== Changes since 20110110 ==
+* rt#144479: not all options visible in the section "More Badges You Can Earn!" (federico)
+
 == Changes since 20101213 ==
 * rt#142515: Gallery sliders link broken for non ms-0 mainspace/non http link (macbre)
 * rt#141161: Remove green colour from paid wikis step in nwb (Marooned)
