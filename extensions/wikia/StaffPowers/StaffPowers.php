@@ -16,7 +16,7 @@ $wgGroupPermissions['staff']['unblockable'] = true;
 function efPowersMakeUnblockable( $block, $user ) {
 	$blockedUser = User::newFromName( $block->getRedactedName() );
 
-        if ( $blockedUser === null || !$blockedUser->isAllowed( 'unblockable' ) ) {
+        if (empty($blockedUser) || !$blockedUser->isAllowed( 'unblockable' ) ) {
 		return true;
 	}
 
