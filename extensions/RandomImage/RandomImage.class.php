@@ -40,6 +40,19 @@ class RandomImage {
 			if( $size > 0 )
 				$this->width = $size;			
 		}
+		/* Wikia change begin - @author: Marooned */
+		/* We use `frame` instead of `thumb` which doesn't have default width - fix it */
+		else {
+			global $wgUser, $wgThumbLimits;
+			$wopt = $wgUser->getOption('thumbsize');
+
+			if (!isset($wgThumbLimits[$wopt])) {
+				$wopt = User::getDefaultOption('thumbsize');
+			}
+
+			$this->width = $wgThumbLimits[$wopt];
+		}
+		/* Wikia change end */
 		if( isset( $options['float'] ) ) {
 			$float = strtolower( $options['float'] );
 			// TODO: Use magic words instead
