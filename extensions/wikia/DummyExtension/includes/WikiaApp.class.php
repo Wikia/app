@@ -88,7 +88,7 @@ class WikiaApp {
 	}
 
 	/**
-	 * simple global function wrapper
+	 * simple global function wrapper (most likely it won't work for references)
 	 *
 	 * @param string $funcName global function name
 	 * @param mixed $arg1 - $argN function arguments
