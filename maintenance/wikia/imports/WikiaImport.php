@@ -58,11 +58,11 @@ abstract class WikiaImport {
 		return (bool) $this->mSource;
 	}
 
-	abstract function getUrl() { return ''; }
+	abstract function getUrl();
 
-	abstract function getContent() { return false; }
+	abstract function getContent();
 
-	abstract function translate() { return false; }
+	abstract function translate();
 
 	function save() {
 		global $wgUser, $wgTitle;
