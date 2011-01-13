@@ -3,8 +3,19 @@
 class WikiaImport {
 	var $i = 0;
 	var $verbose = true;
+	var $overwrite = true;
+	var $notify = "TOR";
+	var $parameters = array(
+		'overwrite' => 'Shall I overwite existing pages?',
+	);
 
 	function execute() {
+		$this->msg( "\nWelcome! What shall we import today?\n", true );
+
+		$this->getParams();
+
+		$this->msg( "OK. Starting import!", true );
+
 		while( $this->getSource() ) {
 			if ( $this->getContent() ) {
 				if ( $this->translate() ) {
@@ -14,6 +25,22 @@ class WikiaImport {
 
 			$this->i++;
 		}
+	}
+
+	function getParams() {
+		foreach ( $this->parameters as $param => $prompt ) {
+			$input = trim( readline( $prompt . " (default: {$this->$param}) " ) );
+			if ( !empty( $input ) ) {
+				if ( in_array( $input, array( "no", "n", "N", "No" ) ) ) {
+					$input = false;
+				} elseif ( in_array( $input, array( "yes", "y", "Y", "Yes" ) ) ) {
+					$input = true;
+				}
+				$this->$param = $input;
+			}
+		}
+
+		echo "\n\n";
 	}
 
 	function getSource() {
@@ -35,12 +62,21 @@ class WikiaImport {
 	function translate() { return false; }
 
 	function save() {
+		global $wgUser, $wgTitle;
+
+		// set username to something generic
+		$wgUser = User::newFromName( 'Wikia' );
+
 		$this->msg( "Saving article... " );
 
 		$title = Title::newFromText( $this->mTitle );
 
+		if ( $title->exists() && !$this->overwrite ) {
+			$this->msg( "Article {$this->mTitle} already exists! Giving up (because you told me to)!", true, true );
+			exit( 0 );
+		}
+
 		$wgTitle = $title;
-		$wgUser = User::newFromName( 'Wikia' );
 
 		$article = new Article( $title );
 
@@ -49,10 +85,16 @@ class WikiaImport {
 		$this->msgStatus( $status );
 	}
 
-	function msg( $text, $newline = false ) {
+	function msg( $text, $newline = false, $sendMail = false ) {
 		if ( $this->verbose ) {
 			$text = $newline ? $text . "\n" : $text;
 			echo $text;
+		}
+
+		if ( $sendMail ) {
+			$user = User::newFromName( $this->notify );
+			$subject = "Import " . $this->remoteUrl . " failed at " . $this->i;
+			$user->sendMail( $subject, $text );
 		}
 	}
 
