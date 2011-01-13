@@ -1,4 +1,5 @@
 == Changes since 20110110 ==
+* rt#71577: "Read more" categories do not respect hidden cats (macbre)
 * rt#144479: not all options visible in the section "More Badges You Can Earn!" (federico)
 
 == Changes since 20101213 ==
