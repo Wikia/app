@@ -583,7 +583,7 @@ JS;
 			$mwUser = FBConnectDB::getUser($fbId);
 			$id = $mwUser ? $mwUser->getId() : 0;
 			// If the user doesn't exist, ask them to name their new account
-			if (!$id) {
+			if (!$id && !empty($wgTitle)) {
 				$returnto = $wgTitle->isSpecial('Userlogout') || $wgTitle->isSpecial('Connect') ?
 							'' : 'returnto=' . $wgTitle->getPrefixedURL();
 				// Don't redirect if we're on certain special pages
@@ -645,13 +645,13 @@ JS;
 					'type' => 'toggle',
 					'label-message' => 'tog-fbconnect-push-allow-never',
 					'section' => 'fbconnect-prefstext/fbconnect-event-prefstext',
-					'default' => 1); 
+					'default' => 1);
 
 			$preferences['fbconnect-connect'] = array(
 					'help' => $html,
 					'label' => "",
 					'type' => 'info',
-					'section' => 'fbconnect-prefstext/fbconnect-status-prefstext' ); 
+					'section' => 'fbconnect-prefstext/fbconnect-status-prefstext' );
 		} else {
 			// User is a MediaWiki user but isn't connected yet.  Display a message and button to connect.
 			$loginButton = '<fb:login-button id="fbPrefsConnect" '.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>';
