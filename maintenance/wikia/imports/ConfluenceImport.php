@@ -9,6 +9,13 @@ class ConfluenceWikiaImport extends WikiaImport {
 	var $remotePath = "/pages/viewpagesrc.action?pageId=";
 	var $remotePathInfo = "/pages/pageinfo.action?pageId=";
 	var $i = 119;
+	var $parameters = array(
+		'remoteUrl' => "What's the site's base URL?",
+		'remotePath' => "What's the path to the source page?",
+		'remotePathInfo' => "What's the path to the info page?",
+		'i' => "Where shall I start counting?",
+		'overwrite' => "Shall I overwrite existing articles?",
+	);
 
 	function getSource() {
 		parent::getSource();
@@ -18,7 +25,7 @@ class ConfluenceWikiaImport extends WikiaImport {
 
 		// check if this is the end
 		if ( empty( $this->mSource ) || strpos( $this->mSource, "Enter your account details below to login to Confluence" ) ) {
-			$this->msg( "Got login page at ID $i - QUITTING.", true );
+			$this->msg( "Got login page at ID $i - QUITTING.", true, true );
 			return false;
 		}
 
@@ -52,7 +59,7 @@ class ConfluenceWikiaImport extends WikiaImport {
 
 		$this->mTitle = $title;
 
-		$this->msg( $this->mTitle . " ", true );
+		$this->msg( $this->mTitle . " " );
 		$this->msgStatus( true );
 
 		return true;
@@ -84,8 +91,6 @@ class ConfluenceWikiaImport extends WikiaImport {
 
 		$this->mContent = $dom->saveXML( $node );
 
-		echo "\n\n\n" . $this->mContent . "\n\n\n";
-
 		return (bool) $this->mContent;
 	}
 
@@ -98,43 +103,68 @@ class ConfluenceWikiaImport extends WikiaImport {
 		// remove the surrounding div first
 		$text = trim( $text );
 		$text = str_replace( '<div id="confluence_content">', "", $text );
+
 		$text = substr_replace( $text, '', -6 );
 
 		// get rid of <br>s
 		$text = str_replace( "<br/>", "\n", $text );
-		$this->msg( "1: " . strlen( $text ), true );
 
 		// handle headers
-		$text = preg_replace( "/h1\.(.*)/m", "= $1 =", $text );
-		$this->msg( "2: " . strlen( $text ), true );
-		$text = preg_replace( "/h2\.(.*)/m", "== $1 ==", $text );
-		$this->msg( "5: " . strlen( $text ), true );
-		$text = preg_replace( "/h3\.(.*)/m", "=== $1 ===", $text );
-		$this->msg( "4: " . strlen( $text ), true );
-		$text = preg_replace( "/h4\.(.*)/m", "==== $1 ====", $text );
-		$this->msg( "5: " . strlen( $text ), true );
+		$text = preg_replace( "/h1\.(.*)/", "= $1 =", $text );
+		$text = preg_replace( "/h2\.(.*)/", "== $1 ==", $text );
+		$text = preg_replace( "/h3\.(.*)/", "=== $1 ===", $text );
+		$text = preg_replace( "/h4\.(.*)/", "==== $1 ====", $text );
 
 		// handle bold
-		/* ... */
+		$text = preg_replace( "/\*([^ *]+)\*/", "'''$1'''", $text );
 
-		// handle underlines
-		/* ... */
+		// handle italics
+		$text = preg_replace( "/\b_([^ _]+)_\b/", "''$1''", $text );
+
+		// handle pre
+		// @TODO this doesn't prevent the wrapped text from being "parsed" – it should
+		$text = preg_replace( "/\{noformat\}(.*)\{noformat\}/ms", "<pre>$1</pre>", $text );
 
 		// handle external links
 		// from [http://foo.com foo.com] to [http://foo]
-		/* ... */
-		$this->msg( "6: " . strlen( $text ), true );
+		$text = preg_replace( "/\[(http|ftp):\/\/(.*?)\|(.*?)]/", "[$1://$2 $3]", $text );
 
 		// from [link|text] to [[link|text]]
-#		$text = preg_replace( "/\[([^]]+)|[([^]]+)\]/", "[[$1|$2]]", $text );
-#		$this->msg( "7: " . strlen( $text ), true );
+		$text = preg_replace( "/\[([^\]]+)\|([^\]]+)\]/", "[[$1|$2]]", $text );
+
 		// from [link] to [[link]]
 		$text = preg_replace( "/\[([^]]+)\]/", "[[$1]]", $text );
-		$this->msg( "8: " . strlen( $text ), true );
 
 		// handle tables
-		/* ... */
+		$text = preg_replace( "/\|(?!\|)(.*)\|(?!\|)/", "|-\n|$1|", $text ); // separate rows first
+		$text = preg_replace( "/\|\|-.\|/s", "{|\n! ", $text ); // mark beginning and headers
 
+		$text = explode( "\n", $text );
+		$tableState = false;
+		foreach ( $text as &$l ) {
+			if ( $l == "{|" ) {
+				$tableState = true;
+				continue;
+			}
+
+			if ( $tableState ) {
+				if ( strpos( $l, "!" ) === 0 ) {
+					// regex to correct headers
+					$l = preg_replace( "/\|\|/", "!!", $l );
+					$l = preg_replace( "/!!$/", "", $l );
+				} elseif ( strpos( $l, "|" ) === 0 && trim( $l ) != "|-" ) {
+					//regex to correct rows and cells
+					$l = preg_replace( "/(?<!^)\|/", "||", $l );
+					$l = preg_replace( "/\|\|$/", "", $l );
+				} elseif ( trim( $l ) === "" ) {
+					$l = "|}";
+					$tableState = false;
+				}
+
+				continue;
+			}
+		}
+		$text = implode( "\n", $text );
 		$text = trim( $text );
 
 		$this->mWikitext = $text;
