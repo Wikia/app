@@ -20,6 +20,7 @@ class FollowHelper {
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
 		if ( empty($categoryInserts) ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -66,24 +67,24 @@ class FollowHelper {
 			$queryIn[] = $dbw->addQuotes( $value ) ;
 		}
 
-		/* Wikia change begin - @author: wladek */ 
-		/* RT#55604: Add a timeout to the watchlist email block */ 
- 
+		/* Wikia change begin - @author: wladek */
+		/* RT#55604: Add a timeout to the watchlist email block */
+
 
 	/*
-	 	global $wgWatchlistNotificationTimeout; 
-		
-	  	if ( isset($wgWatchlistNotificationTimeout) ) { // not using !empty() to allow setting integer value 0 
-			$blockTimeout = wfTimestamp(TS_MW,wfTimestamp(TS_UNIX,$timestamp) - intval($wgWatchlistNotificationTimeout) ); 
-			$notificationTimeoutSql = "($notificationTimeoutSql OR wl_notificationtimestamp < '$blockTimeout')"; 
-		} */ 
+	 	global $wgWatchlistNotificationTimeout;
+
+	  	if ( isset($wgWatchlistNotificationTimeout) ) { // not using !empty() to allow setting integer value 0
+			$blockTimeout = wfTimestamp(TS_MW,wfTimestamp(TS_UNIX,$timestamp) - intval($wgWatchlistNotificationTimeout) );
+			$notificationTimeoutSql = "($notificationTimeoutSql OR wl_notificationtimestamp < '$blockTimeout')";
+		} */
 
 		$notificationTimeoutSql = "wl_notificationtimestamp IS NULL";
-		
+
 		if($action == "blogpost") {
 			$notificationTimeoutSql = "1";
 		}
-		
+
 		$res = $dbw->select( array( 'watchlist' ),
 				array( 'wl_user, wl_title' ),
 				array(
@@ -355,9 +356,9 @@ class FollowHelper {
 	static public function renderFollowPrefs($user, &$defaultPreferences) {
 		global $wgUseRCPatrol, $wgEnableAPI, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgOut;
 		wfProfileIn(__METHOD__);
-		
+
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Follow/js/ajax.js?{$wgStyleVersion}\"></script>\n");
-		
+
 		$watchTypes = array(
 			'edit' => 'watchdefault'
 		);
@@ -365,7 +366,7 @@ class FollowHelper {
 		if( $user->isAllowed( 'createpage' ) || $user->isAllowed( 'createtalk' ) ) {
 			$watchTypes['read'] = 'watchcreations';
 		}
-	
+
 		foreach( $watchTypes as $action => $pref ) {
 			if( $user->isAllowed( $action ) ) {
 				$defaultPreferences[$pref] = array(
@@ -381,25 +382,25 @@ class FollowHelper {
 			'section' => 'watchlist/basic',
 			'label-message' => "tog-enotiffollowedpages",
 		);
-		
+
 		$defaultPreferences['enotiffollowedminoredits'] = array(
 			'type' => 'toggle',
 			'section' => 'watchlist/basic',
 			'label-message' => "tog-enotiffollowedminoredits",
 		);
-		
+
 		$defaultPreferences['hidefollowedpages'] = array(
 			'type' => 'toggle',
 			'section' => 'watchlist/basic',
 			'label-message' => "tog-hidefollowedpages",
 		);
-		
-					
+
+
 		$watchTypes = array();
 
-		$watchTypes['move'] = 'watchmoves'; 
+		$watchTypes['move'] = 'watchmoves';
 		$watchTypes['delete'] = 'watchdeletion';
-		
+
 		foreach( $watchTypes as $action => $pref ) {
 			if( $user->isAllowed( $action ) ) {
 				$defaultPreferences[$pref] = array(
@@ -409,10 +410,10 @@ class FollowHelper {
 				);
 			}
 		}
-		
+
 
 		//wikiafollowedpages-prefs-watchlist
-		
+
 		## Watchlist #####################################
 		$defaultPreferences['watchlistdays'] =
 				array(
