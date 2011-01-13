@@ -43,6 +43,7 @@
 * Upgraded OggHandler extension to newest version from MediaWiki repository and deleted 3rdparty version (sean)
 * Fixed XSS vulnerability in Special:Signup (sean)
 * Fixed XSS vulnerability in /extensions/3rdparty/tabber (sean)
+* Added #youtube parser function to be an equivalent of a <youtube> parser tag which accepts template params (sean)
 
 == Changes since 20101129 ==
 * rt#93196: Phalanx: if blocked by phalanx, prevent use of user2user email (Marooned)
