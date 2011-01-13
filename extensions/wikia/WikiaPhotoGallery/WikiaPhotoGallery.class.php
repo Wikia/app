@@ -1412,7 +1412,7 @@ JS;
 			$image['classes'] = $linkAttribs['class'] . ' lightbox';	//parseLink mark it as external - add lightbox class
 
 			//see Image SEO project
-			$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($wgParser->mStripState->unstripBoth($image['linkTitle'])));
+			$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($image['linkTitle']));
 
 			$html .= Xml::openElement('div', array(
 				'class' => 'gallery-image-wrapper'.
