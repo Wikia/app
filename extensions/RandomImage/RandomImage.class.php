@@ -61,11 +61,12 @@ class RandomImage {
 	public function render() {
 		$title = $this->pickImage();
 		if( $title instanceof Title && $this->imageExists( $title ) ) {
-			return $this->removeMagnifier( 
-				$this->parser->recursiveTagParse(
-					$this->buildMarkup( $title )
-				)
+			/* Wikia change begin - @author: Marooned */
+			/* Do not use removeMagnifier() - it fails with HTML5 plus XPath is no loger valid */
+			return $this->parser->recursiveTagParse(
+				$this->buildMarkup( $title )
 			);
+			/* Wikia change end */
 		}
 		return '';
 	}
@@ -95,7 +96,10 @@ class RandomImage {
 	 */
 	protected function buildMarkup( $title ) {
 		$parts[] = $title->getPrefixedText();
-		$parts[] = 'thumb';
+		/* Wikia change begin - @author: Marooned */
+		/* Render frame instead of thumb - the same but without magnifier - no need to use removeMagnifier() */
+		$parts[] = 'frame';
+		/* Wikia change end */
 		if( $this->width !== false )
 			$parts[] = "{$this->width}px";
 		if( $this->float )
