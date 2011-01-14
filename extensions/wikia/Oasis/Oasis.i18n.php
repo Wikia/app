@@ -99,9 +99,9 @@ You can reorder or delete tools in the field below.
 	'oasis-spotlights-footer-title' => "Around Wikia's network",
 	'themedesigner' => 'Theme designer', // @todo FIXME: give this an extension specific key prefix. Also is defined in ThemeDesigner, already. Keys should be defined once in the whole code base.
 	'oasis-pages-on-wiki-header' => 'Pages on $1',
-	'oasis-latest-activity-new' => '$2 created by $1',
-	'oasis-latest-activity-edit' => '$2 edited by $1',
-	'oasis-latest-activity-delete' => '$2 deleted by $1',
+	'oasis-latest-activity-new-details' => 'created by $1 $2',
+	'oasis-latest-activity-edit-details' => 'edited by $1 $2',
+	'oasis-latest-activity-delete-details' => 'deleted by $1 $2',
 
 	'oasis-interlang-show-all' => '... see all >',
 	'oasis-interlang-languages' => 'Languages:',
@@ -132,7 +132,7 @@ You can reorder or delete tools in the field below.
 	'oasis-upload-photos-title' => 'Upload a Photo to the Wiki',
 	'oasis-upload-photos-advanced' => 'Advanced options',
 	'oasis-upload-photos-force' => 'Upload anyway',
-	
+
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming',
 	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle'

@@ -17,12 +17,13 @@ class LatestActivityModule extends Module {
 		wfLoadExtensionMessages('MyHome');
 
 		$this->moduleHeader = wfMsg('oasis-activity-header');
-		
+
+		// TODO: add comment
 		if( !empty( $wgEnableUserProfilePagesExt ) && UserProfilePage::isAllowed() ) {
 			$userPage = UserProfilePage::getInstance( $wgTitle );
 			$user = ( !empty( $userPage ) ) ? $userPage->getUser() : null;
 			$userId = ( !empty( $user ) ) ? $user->getId() : 0;
-			
+
 			if( !empty( $userId ) ) {
 				$this->userName = $user->getName();
 				$this->moduleHeader = wfMsg('userprofilepage-recent-activity-title', array( $this->userName ));
@@ -72,38 +73,27 @@ class LatestActivityModule extends Module {
 				$item['changetype'] = $change['type'];
 				$title = Title::newFromText( $change['title'], $change['ns'] );
 				if ( is_object($title) ) {
-					$item['page_href'] = Xml::element('a', array('href' => $title->getLocalUrl(), 'class' => 'page-title'), $item['page_title']);
+					$item['page_href'] = Xml::element('a', array('href' => $title->getLocalUrl()), $item['page_title']);
 				}
 				switch ($change['type']) {
 					case 'new':
-						if( empty( $this->userName ) ) {
-							$item['changemessage'] = wfMsg("oasis-latest-activity-new", $item['user_href'], $item['page_href']);
-						}
-						else {
-							$item['changemessage'] = wfMsg("userprofilepage-activity-new", $item['page_href']);
-						}
-						$item['changeicon'] = 'new';
-						break;
 					case 'edit':
-						if( empty( $this->userName ) ) {
-							$item['changemessage'] = wfMsg("oasis-latest-activity-edit", $item['user_href'], $item['page_href']);
-						}
-						else {
-							$item['changemessage'] = wfMsg("userprofilepage-activity-edit", $item['page_href']);
-						}
-						$item['changeicon'] = 'edit';
-						break;
 					case 'delete':
-						if( empty( $this->userName ) ) {
-							$item['changemessage'] = wfMsg("oasis-latest-activity-delete", $item['user_href'], $item['page_href']);
+						// different formatting for User Profile Pages
+						if( !empty( $this->userName ) ) {
+							$item['page_href'] = wfMsg("userprofilepage-activity-{$change['type']}", $item['page_href']);
+							$item['changemessage'] = $item['time_ago'];
 						}
 						else {
-							$item['changemessage'] = wfMsg("userprofilepage-activity-delete", $item['page_href']);
+							// format message (RT #144814)
+							$item['changemessage'] = wfMsg("oasis-latest-activity-{$change['type']}-details", $item['user_href'], $item['time_ago']);
 						}
-						$item['changeicon'] = 'delete';
+
+						$item['changeicon'] = $change['type'];
 						break;
 					default:
-						$item['changemessage'] = '';
+						// show just a timestamp
+						$item['changemessage'] = $item['time_ago'];
 						break;
 				}
 				$this->changeList[] = $item;
