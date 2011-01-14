@@ -210,7 +210,7 @@ class ArticleCommentsAjax {
 			
 			$wgMemc->set( wfMemcKey( 'articlecomment', 'comm', $title->getArticleId(), 'v1' ), null);
 			// make sure our comment list is refreshed from the master RT#141861
-			$listing->getCommentPages(true, false);
+			$listing->getCommentList(true);
 			
 			$addedComment = ArticleComment::newFromArticle($response[1]);
 			
@@ -227,11 +227,15 @@ class ArticleCommentsAjax {
 			// RT#68254 RT#69919 RT#86385
 			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
 				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'useMaster' => true));
-				$count = $wgLang->formatNum($listing->getCountAllNested());
+				$countAll = $wgLang->formatNum($listing->getCountAllNested());
+				$countDisplayed = $countAll;
+				if (!$showall && ($countAll > $wgArticleCommentsMaxPerPage)) {
+					$countDisplayed = $wgLang->formatNum($wgArticleCommentsMaxPerPage);
+				}
 				$counter = array(
-				    'plain' =>		$count,
-				    'header' =>		wfMsg('oasis-comments-header', $count),
-				    'recent' =>		wfMsg('oasis-comments-showing-most-recent', $count)
+				    'plain' =>		$countAll,
+				    'header' =>		wfMsg('oasis-comments-header', $countAll),
+				    'recent' =>		wfMsg('oasis-comments-showing-most-recent', $countDisplayed)
 				);
 			} else {
 				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'useMaster' => false));

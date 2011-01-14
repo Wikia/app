@@ -9,7 +9,9 @@ class ArticleCommentList {
 	private $mText;
 	private $mComments = false;
 	private $mCommentsAll = false;
-	private $mCountAll = false;
+	private $mCount = false;       // Count of comments actually loaded after paging rules are applied
+	private $mCountNested = false;
+	private $mCountAll = false;    // Count of all comments
 	private $mCountAllNested = false;
 	private static $mArticlesToDelete;
 	private static $mDeletionInProgress = false;
@@ -59,7 +61,7 @@ class ArticleCommentList {
 	 */
 	public function getCountAll() {
 		if ($this->mCountAll === false) {
-			$this->getCommentPages(false, false);
+			$this->getCommentList(false);
 		}
 		return $this->mCountAll;
 	}
@@ -69,13 +71,55 @@ class ArticleCommentList {
 	 */
 	public function getCountAllNested() {
 		if ($this->mCountAllNested === false) {
-			$this->getCommentPages(false, false);
+			$this->getCommentList(false);
 		}
 		return $this->mCountAllNested;
 	}
 
 	/**
-	 * getCommentPages -- take pages connected to comments list
+	 * getCommentPages -- get the article contents from the list of article pages
+	 *
+	 * pass false in page parameter to get ALL pages but
+	 * try not to defeat the paging, getting ALL articles is expensive
+	 */
+
+	public function getCommentPages( $master = true, $page = 1) {
+		global $wgRequest, $wgArticleCommentsMaxPerPage;
+
+		//initialize list of comment ids if not done already
+		if ($this->mCommentsAll === false) {
+			$this->getCommentList( $master );
+		}
+		$showall = $wgRequest->getText( 'showall', false );
+
+		//pagination
+		if ($page !== false && ($showall != 1 || $this->getCountAllNested() > 200 /*see RT#64641*/)) {
+			$this->mComments = array_slice($this->mCommentsAll, ($page - 1) * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
+		} else {
+			$this->mComments = $this->mCommentsAll;
+		}
+
+		$this->mCount = count($this->mComments);
+		$this->mCountNested = 0;
+
+		// grab article contents for each comment
+		foreach($this->mComments as $id => &$levels) {
+			if(isset($levels['level1'])) {
+				$levels['level1'] = ArticleComment::newFromId($levels['level1']);
+				$this->mCountNested++;
+			}
+			if(isset($levels['level2'])) {
+				foreach($levels['level2'] as $subid => &$sublevel) {
+					$sublevel = ArticleComment::newFromId($subid);
+					$this->mCountNested++;
+				}
+			}
+		}
+		return $this->mComments;
+	}
+
+	/**
+	 * getCommentList -- get the list of pages but NOT the article contents
 	 *
 	 * @access public
 	 *
@@ -83,16 +127,15 @@ class ArticleCommentList {
 	 *
 	 * @return array
 	 */
-	public function getCommentPages( $master = true, $page = 1 ) {
-		global $wgRequest, $wgMemc, $wgArticleCommentsMaxPerPage;
+	public function getCommentList( $master = true ) {
+		global $wgRequest, $wgMemc;
 
 		wfProfileIn( __METHOD__ );
 
-		$showall = $wgRequest->getText( 'showall', false );
 		$action = $wgRequest->getText( 'action', false );
 
 		$memckey = wfMemcKey( 'articlecomment', 'comm', $this->getTitle()->getArticleId(), 'v1' );
-
+		
 		/**
 		 * skip cache if purging or using master connection
 		 */
@@ -138,17 +181,6 @@ class ArticleCommentList {
 			$wgMemc->set( $memckey, $this->mCommentsAll, 3600 );
 		}
 
-		foreach($this->mCommentsAll as $id => &$levels) {
-			if(isset($levels['level1'])) {
-				$levels['level1'] = ArticleComment::newFromId($levels['level1']);
-			}
-			if(isset($levels['level2'])) {
-				foreach($levels['level2'] as $subid => &$sublevel) {
-					$sublevel = ArticleComment::newFromId($subid);
-				}
-			}
-		}
-
 		$this->mCountAll = count($this->mCommentsAll);
 		//1st level descending, 2nd level ascending
 		krsort($this->mCommentsAll, SORT_NUMERIC);
@@ -160,15 +192,9 @@ class ArticleCommentList {
 				$this->mCountAllNested += count($comment['level2']);
 			}
 		}
-		//pagination
-		if ($page !== false && ($showall != 1 || $this->getCountAllNested() > 200 /*see RT#64641*/)) {
-			$this->mComments = array_slice($this->mCommentsAll, ($page - 1) * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
-		} else {
-			$this->mComments = $this->mCommentsAll;
-		}
 
 		wfProfileOut( __METHOD__ );
-		return $this->mComments;
+		return $this->mCommentsAll;
 	}
 
 	/**
@@ -285,9 +311,8 @@ class ArticleCommentList {
 		$isReadOnly = wfReadOnly();
 		$showall = $wgRequest->getText( 'showall', false );
 
-		//get first or last page to show newest comments in default view
 		//default to using slave. comments are posted with ajax which hits master db
-		$comments = $this->getCommentPages(false, false);
+		$commentList = $this->getCommentList(false);
 		$countComments = $this->getCountAll();
 		$countCommentsNested = $this->getCountAllNested();
 		$countPages = ceil($countComments / $wgArticleCommentsMaxPerPage);
@@ -297,10 +322,7 @@ class ArticleCommentList {
 		if ($pageRequest <= $countPages && $pageRequest > 0) {
 			$page = $pageRequest;
 		}
-
-		if ($showall != 1 || $this->getCountAllNested() > 200 /*see RT#64641*/) {
-			$comments = array_slice($comments, ($page - 1) * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
-		}
+		$comments = $this->getCommentPages(false, $page);
 		$pagination = self::doPagination($countComments, count($comments), $page);
 		$commentListHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'useMaster' => false));
 
