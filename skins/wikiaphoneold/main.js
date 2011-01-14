@@ -1,8 +1,15 @@
-_uacct = "UA-2871474-1";
+function WikiaPhoneOldTracker(str) {
+	if(typeof urchinTracker !== 'undefined') {
+		_uff = 0;
+		_uacct = "UA-2871474-1";
+		urchinTracker(str);
+	}
+}
+
 username = wgUserName == null ? 'anon' : 'user';
-urchinTracker('/1_wikiaphone/' + username + '/view');
+WikiaPhoneOldTracker('/1_wikiaphone/' + username + '/view');
 if(wgPrivateTracker) {
-	urchinTracker('/1_wikiaphone/' + wgDB + '/' + username + '/view');
+	WikiaPhoneOldTracker('/1_wikiaphone/' + wgDB + '/' + username + '/view');
 }
 
 document.onclick = function(event){
@@ -18,16 +25,16 @@ document.onclick = function(event){
 		case 'searchGoButton':
 		case 'mw-searchButton':
 			eventToTrack += 'search'
-			urchinTracker(eventToTrack);
+			WikiaPhoneOldTracker(eventToTrack);
 			break;
 		default:
 			if(target.nodeName === 'A'){
 				if(target.href.indexOf(CategoryNamespaceMessage) !== -1){
 					eventToTrack += 'categorylink';
-					urchinTracker(eventToTrack);
+					WikiaPhoneOldTracker(eventToTrack);
 				}else if(target.href.indexOf(SpecialNamespaceMessage) === -1){
 					eventToTrack += 'contentlink';
-					urchinTracker(eventToTrack);
+					WikiaPhoneOldTracker(eventToTrack);
 				}
 			}
 			
@@ -35,11 +42,11 @@ document.onclick = function(event){
 				switch(target.parentNode.id){
 					case 'ca-edit':
 						eventToTrack += 'edit';
-						urchinTracker(eventToTrack);
+						WikiaPhoneOldTracker(eventToTrack);
 						break;
 					case 'n-randompage':
 						eventToTrack += 'randompage';
-						urchinTracker(eventToTrack);
+						WikiaPhoneOldTracker(eventToTrack);
 						break;
 				}
 			}

@@ -92,7 +92,14 @@ class AnswersTemplate extends MonacoTemplate {
 		<!-- Combo-handled YUI JS files: -->
 		<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.7.0/build/utilities/utilities.js&2.7.0/build/datasource/datasource-min.js&2.7.0/build/autocomplete/autocomplete-min.js&2.7.0/build/container/container-min.js&2.7.0/build/logger/logger-min.js"></script>
 		<script type="text/javascript" src="<?=$wgStylePath?>/common/yui/3rdpart/tools.js"></script>
+<?php
+global $wgEnableGA;
+if(empty($wgEnableGA)) {
+?>
 		<script type="text/javascript" src="<?=$wgStylePath?>/common/urchin.js?<?=$wgStyleVersion?>"></script>
+<?php
+}
+?>
 		<script type="text/javascript" src="<?=$wgStylePath?>/answers/js/tracker.js?<?=$wgStyleVersion?>"></script>
 		<script type="text/javascript" src="<?=$wgStylePath?>/common/tracker.js?<?=$wgStyleVersion?>"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>

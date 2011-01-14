@@ -11,6 +11,14 @@ var MobileSkin = {
 	h: null,
 	b: null,
 	
+	track: function(str) {
+		if(typeof urchinTracker !== 'undefined') {
+			_uff = 0;
+			_uacct = MobileSkin.uacct;
+			urchinTracker(str);
+		}		
+	},
+	
 	initTracking: function(){
 		MobileSkin.trackEvent(MobileSkin.username + '/view');
 		
@@ -41,16 +49,9 @@ var MobileSkin = {
 	},
 	
 	trackEvent: function(eventName) {
-		var eventToTrack = '/1_mobile/' + eventName;
-		
-		if(typeof urchinTracker !== 'undefined') {
-			_uff = 0;
-			_uacct = MobileSkin.uacct;
-			urchinTracker(eventToTrack);
-			if(wgPrivateTracker) {
-				eventToTrack = '/1_mobile/' + wgDB + '/' + eventName;
-				urchinTracker(eventToTrack);
-			}
+		MobileSkin.track('/1_mobile/' + eventName);
+		if(wgPrivateTracker) {
+			MobileSkin.track('/1_mobile/' + wgDB + '/' + eventName);
 		}
 	},
 	
