@@ -427,7 +427,7 @@ class SMWExportController {
 	public function printAll( $outfile, $ns_restriction = false, $delay, $delayeach ) {
 		global $smwgNamespacesWithSemanticLinks;
 		$linkCache =& LinkCache::singleton();
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 
 		$this->delay_flush = 10;
 		if ( !$this->prepareSerialization( $outfile ) ) return;
@@ -491,7 +491,7 @@ class SMWExportController {
 		global $smwgNamespacesWithSemanticLinks;
 		wfProfileIn( "RDF::PrintPageList" );
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$this->prepareSerialization();
 		$this->delay_flush = 35; // don't do intermediate flushes with default parameters
 		$linkCache = LinkCache::singleton();
@@ -551,7 +551,7 @@ class SMWExportController {
 
 		global $wgSitename, $wgLanguageCode;
 
-		$db = & wfGetDB( DB_SLAVE );
+		$db = & wfGetDB( DB_SLAVE, 'smw' );
 		$this->prepareSerialization();
 		$this->delay_flush = 35; // don't do intermediate flushes with default parameters
 		$linkCache = LinkCache::singleton();
