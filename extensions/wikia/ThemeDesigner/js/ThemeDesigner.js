@@ -605,24 +605,18 @@ var ThemeDesigner = {
 
 			if (ThemeDesigner.settings["wordmark-type"] == "text") {
 				$("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark")
-					.css({
-						"background-image": "none"
-					})
 					.removeClass()
 					.addClass("wordmark")
 					.addClass(ThemeDesigner.settings["wordmark-font-size"])
 					.find("a")
 						.text(ThemeDesigner.settings["wordmark-text"])
-						.css("display", "inline");
 			} else if (ThemeDesigner.settings["wordmark-type"] == "graphic") {
 				$("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark")
 					.addClass("graphic")
-					.css({
-						"background-image": "url(" + ThemeDesigner.settings["wordmark-image-url"] + ")"
-					})
-					.find("a").hide()
+					.find("a")
+						.html('')
+						.append('<img src="' + ThemeDesigner.settings["wordmark-image-url"] + '">');
 			}
-
 		}
 	},
 
