@@ -136,7 +136,8 @@ class FBConnectDB {
 					'user_id' => $user->getId(),
 					'user_fbid' => $fbid
 				),
-				__METHOD__
+				__METHOD__,
+				array('IGNORE')
 			);
 		}
 		
