@@ -1271,7 +1271,6 @@ function do_category_population() {
 }
 
 function do_populate_parent_id() {
-	return 1; // eloy, remove later
 	if( update_row_exists( 'populate rev_parent_id' ) ) {
 		wfOut( "...rev_parent_id column already populated.\n" );
 		return;
@@ -1324,8 +1323,6 @@ function do_unique_pl_tl_il() {
 }
 
 function do_log_search_population() {
-
-	return 1; // eloy, remove later
 	global $wgDatabase;
 	if( update_row_exists( 'populate log_search' ) ) {
 		wfOut( "...log_search table already populated.\n" );
