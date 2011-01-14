@@ -1,7 +1,9 @@
 <?php
 /**
  * Negref
- * @package Negref
+ *
+ * @file
+ * @ingroup Extensions
  * @author Daniel Friesen (http://mediawiki.org/wiki/User:Dantman) <mediawiki@danielfriesen.name>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  *
@@ -32,7 +34,6 @@ $wgExtensionCredits['parserhook'][] = array (
 
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['NegRef'] = $dir . 'Negref.i18n.php';
-$wgExtensionFunctions[] = 'efNegrefSetup';
 $wgHooks['ParserFirstCallInit'][] = 'efNegrefRegisterParser';
 
 function efNegrefRegisterParser( &$parser ) {
