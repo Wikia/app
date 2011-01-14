@@ -1,16 +1,26 @@
 <?php
-/**
+
+/*
+ * Enable easy column formatting for wiki mainpages
+ *
  * @author Christian Williams
- * This extension provides parser tags to properly render the main column layout for mainpages. One column requires two div elements, so two div elements have been added to all.
-*/
+ */
+
+
 if( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
 $wgHooks['ParserFirstCallInit'][] = 'wfMainPageTag';
+/// Set to "true" once the right column parser tag has run. Used to establish the order in which the column tags were called.
 $wfMainPageTag_rcs_called = false;
+/// Set to "true" once the left column parser tag has run. Used to establish the order in which the column tags were called.
 $wfMainPageTag_lcs_called = false;
 
+/**
+ * Set hooks for each of the three parser tags
+ * @param parser reference to MediaWiki Parser object
+ */
 function wfMainPageTag( &$parser ) {
 	$parser->setHook( 'mainpage-rightcolumn-start', 'wfMainPageTag_rcs' );
 	$parser->setHook( 'mainpage-leftcolumn-start', 'wfMainPageTag_lcs' );
@@ -18,6 +28,13 @@ function wfMainPageTag( &$parser ) {
 	return true;
 }
 
+/**
+ * Inserts the necessary HTML to start the right column
+ *
+ * @param input Input between the <sample> and </sample> tags, or null if the tag is "closed", i.e. <sample />
+ * @param args Tag arguments, which are entered like HTML tag attributes; this is an associative array indexed by attribute name.
+ * @param parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
+ */
 function wfMainPageTag_rcs( $input, $args, $parser ) {
 	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called;
 	if(!$wfMainPageTag_lcs_called) {
@@ -27,6 +44,13 @@ function wfMainPageTag_rcs( $input, $args, $parser ) {
 	return $html;
 }
 
+/**
+ * Inserts the necessary HTML to start the left column
+ *
+ * @param input Input between the <sample> and </sample> tags, or null if the tag is "closed", i.e. <sample />
+ * @param args Tag arguments, which are entered like HTML tag attributes; this is an associative array indexed by attribute name.
+ * @param parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
+ */
 function wfMainPageTag_lcs( $input, $args, $parser ) {
 	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called;
 	$wfMainPageTag_lcs_called = true;
@@ -48,6 +72,9 @@ function wfMainPageTag_lcs( $input, $args, $parser ) {
 	return $html;
 }
 
+/**
+ * Inserts the necessary HTML to end either left or right column
+ */
 function wfMainPageTag_ec( $input, $args, $parser ) {
 	$html = '</div></div>';
 	return $html;
