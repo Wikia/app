@@ -15,7 +15,14 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * Defines the maximum length of a string that string functions are allowed to operate on
  * Prevention against denial of service by string function abuses.
  */
-$wgPFStringLengthLimit = 1000;
+/* Wikia change start */
+//Let this value be overridden by WikiFactory as per #144868
+if ( empty( $wgPFStringLengthLimit ) ) {
+/* Wikia change end */
+	$wgPFStringLengthLimit = 1000;
+/* Wikia chamge start */
+}
+/* Wikia change end */
 
 /**
  * Enable string functions.
@@ -24,7 +31,7 @@ $wgPFStringLengthLimit = 1000;
  * parsers in the ugliest, most inefficient programming language known to man: 
  * MediaWiki wikitext with ParserFunctions.
  *
- * WARNING: enabling this may have an adverse impact on the sanity of your users.
+	 * WARNING: enabling this may have an adverse impact on the sanity of your users.
  * An alternative, saner solution for embedding complex text processing in 
  * MediaWiki templates can be found at: http://www.mediawiki.org/wiki/Extension:Lua
  */
