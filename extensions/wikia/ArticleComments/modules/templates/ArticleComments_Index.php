@@ -1,7 +1,7 @@
 <section id="WikiaArticleComments" class="WikiaArticleComments noprint">
 
 	<ul class="controls">
-		<li id="article-comments-counter-recent"><?= wfMsg('oasis-comments-showing-most-recent', $countCommentsNested) ?></li>
+		<li id="article-comments-counter-recent"><?= wfMsg('oasis-comments-showing-most-recent', count($commentListRaw)) ?></li>
 	<?php
 	 /*see RT#64641*/  /*see RT#65179*/  /*see RT#68572 */
 	if ( $countCommentsNested > 1 && $countCommentsNested <= 200 && $countComments > $commentsPerPage ) {
