@@ -1,4 +1,5 @@
 == Changes since 20110110 ==
+* rt#132014: Hardcoded "by" in right rail blog list (Marooned)
 * rt#107814: Oasis: search suggest doesn't properly encode % character (macbre)
 * rt#71577: "Read more" categories do not respect hidden cats (macbre)
 * rt#144868: allow wgPFStringLengthLimit to be overridden in wikifactory (federico)
