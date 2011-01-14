@@ -44,7 +44,6 @@ class SMWQuery {
 	protected $m_inline; // query used inline? (required for finding right default parameters)
 	protected $m_concept; // query used in concept? (required for finding right default parameters)
 	protected $m_extraprintouts = array(); // SMWPrintoutRequest objects supplied outside querystring
-	protected $m_distance = 5; // default is 5 miles
 
 	/**
 	 * Constructor.
@@ -54,23 +53,19 @@ class SMWQuery {
 	 * @param $concept bool stating whether this query belongs to a concept; used to determine
 	 * proper default parameters (concepts usually have less restrictions)
 	 */
-	public function __construct($description = null, $inline = false, $concept = false) {
+	public function __construct( $description = null, $inline = false, $concept = false ) {
 		global $smwgQMaxLimit, $smwgQMaxInlineLimit;
-		if ($inline) {
-			$this->m_limit = $smwgQMaxInlineLimit;
-		} else {
-			$this->m_limit = $smwgQMaxLimit;
-		}
+		$this->m_limit = $inline ? $smwgQMaxInlineLimit : $smwgQMaxLimit;
 		$this->m_inline = $inline;
 		$this->m_concept = $concept;
 		$this->m_description = $description;
 		$this->applyRestrictions();
 	}
 
-	public function setDescription(SMWDescription $description) {
+	public function setDescription( SMWDescription $description ) {
 		$this->m_description = $description;
-		foreach ($this->m_extraprintouts as $printout) {
-			$this->m_description->addPrintRequest($printout);
+		foreach ( $this->m_extraprintouts as $printout ) {
+			$this->m_description->addPrintRequest( $printout );
 		}
 		$this->applyRestrictions();
 	}
@@ -79,11 +74,11 @@ class SMWQuery {
 		return $this->m_description;
 	}
 
-	public function setExtraPrintouts($extraprintouts) {
+	public function setExtraPrintouts( $extraprintouts ) {
 		$this->m_extraprintouts = $extraprintouts;
-		if ($this->m_description !== null) {
-			foreach ($extraprintouts as $printout) {
-				$this->m_description->addPrintRequest($printout);
+		if ( $this->m_description !== null ) {
+			foreach ( $extraprintouts as $printout ) {
+				$this->m_description->addPrintRequest( $printout );
 			}
 		}
 	}
@@ -96,18 +91,18 @@ class SMWQuery {
 		return $this->m_errors;
 	}
 
-	public function addErrors($errors) {
-		$this->m_errors = array_merge($this->m_errors, $errors);
+	public function addErrors( $errors ) {
+		$this->m_errors = array_merge( $this->m_errors, $errors );
 	}
 
-	public function setQueryString($querystring) {
+	public function setQueryString( $querystring ) {
 		$this->m_querystring = $querystring;
 	}
 
 	public function getQueryString() {
-		if ($this->m_querystring !== false) {
+		if ( $this->m_querystring !== false ) {
 			return $this->m_querystring;
-		} elseif ($this->m_description !== null) {
+		} elseif ( $this->m_description !== null ) {
 			return $this->m_description->getQueryString();
 		} else {
 			return '';
@@ -126,10 +121,10 @@ class SMWQuery {
 	 * @todo The function should be extended to take into account whether or not we
 	 * are in inline mode (not critical, since offsets are usually not applicable inline).
 	 */
-	public function setOffset($offset) {
+	public function setOffset( $offset ) {
 		global $smwgQMaxLimit;
- 		$this->m_offset = min($smwgQMaxLimit, $offset); //select integer between 0 and maximal limit;
-		$this->m_limit = min($smwgQMaxLimit - $this->m_offset, $this->m_limit); // note that limit might become 0 here
+ 		$this->m_offset = min( $smwgQMaxLimit, $offset ); // select integer between 0 and maximal limit;
+		$this->m_limit = min( $smwgQMaxLimit - $this->m_offset, $this->m_limit ); // note that limit might become 0 here
 		return $this->m_offset;
 	}
 
@@ -144,24 +139,11 @@ class SMWQuery {
 	 * The function returns the chosen limit.
 	 * @note It makes sense to have limit==0, e.g. to only show a link to the search special
 	 */
-	public function setLimit($limit, $restrictinline = true) {
+	public function setLimit( $limit, $restrictinline = true ) {
 		global $smwgQMaxLimit, $smwgQMaxInlineLimit;
-		if ($this->m_inline && $restrictinline) {
-			$maxlimit = $smwgQMaxInlineLimit;
-		} else {
-			$maxlimit = $smwgQMaxLimit;
-		}
-		$this->m_limit = min($maxlimit - $this->m_offset, $limit);
+		$maxlimit = ( $this->m_inline && $restrictinline ) ? $smwgQMaxInlineLimit : $smwgQMaxLimit;
+		$this->m_limit = min( $smwgQMaxLimit - $this->m_offset, $limit, $maxlimit );
 		return $this->m_limit;
-	}
-
-	public function setDistance($distance) {
-		$this->m_distance = $distance;
-		return $this->m_distance;
-	}
-
-	public function getDistance() {
-		return $this->m_distance;
 	}
 
 	/**
@@ -169,8 +151,8 @@ class SMWQuery {
 	 */
 	public function applyRestrictions() {
 		global $smwgQMaxSize, $smwgQMaxDepth, $smwgQConceptMaxSize, $smwgQConceptMaxDepth;
-		if ($this->m_description !== null) {
-			if ($this->m_concept) {
+		if ( $this->m_description !== null ) {
+			if ( $this->m_concept ) {
 				$maxsize = $smwgQConceptMaxSize;
 				$maxdepth = $smwgQConceptMaxDepth;
 			} else {
@@ -178,10 +160,10 @@ class SMWQuery {
 				$maxdepth = $smwgQMaxDepth;
 			}
 			$log = array();
-			$this->m_description = $this->m_description->prune($maxsize, $maxdepth, $log);
-			if (count($log) > 0) {
-				wfLoadExtensionMessages('SemanticMediaWiki');
-				$this->m_errors[] = wfMsgForContent('smw_querytoolarge',str_replace('[','&#x005B;',implode(', ' , $log)));
+			$this->m_description = $this->m_description->prune( $maxsize, $maxdepth, $log );
+			if ( count( $log ) > 0 ) {
+				smwfLoadExtensionMessages( 'SemanticMediaWiki' );
+				$this->m_errors[] = wfMsgForContent( 'smw_querytoolarge', str_replace( '[', '&#x005B;', implode( ', ' , $log ) ) );
 			}
 		}
 	}
