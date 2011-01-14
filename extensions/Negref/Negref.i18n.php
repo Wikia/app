@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension Negref.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 require_once( dirname(__FILE__) . '/Negref.i18n.magic.php' );
@@ -49,6 +50,13 @@ $messages['br'] = array(
  */
 $messages['bs'] = array(
 	'negref-desc' => 'Omogućuje oznaku za pronalazak mjesta neke <nowiki><ref/></nowiki> oznake unutar teksta unosa zbog ispravljanja korištenja nekih šablona',
+);
+
+/** German (Deutsch)
+ * @author Kghbln
+ */
+$messages['de'] = array(
+	'negref-desc' => 'Stellt einen Tag bereit mit dem die Position jeglicher <nowiki><ref/></nowiki>-Tags innerhalb einer Texteingabe verändert werden kann, um damit Probleme beim Verwenden von Vorlagen zu beheben.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -150,7 +158,7 @@ $messages['ja'] = array(
 	'negref-desc' => '一部のテンプレート使用に伴う問題の解決手段として、入力テキスト内の<nowiki><ref/></nowiki>タグの位置を処理するタグを提供する。',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -161,14 +169,14 @@ $messages['ksh'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'negref-desc' => "Liwwert en Tag deen et erlaabt fir d'Plaz vun engem <nowiki><ref/></nowiki> Tag bannert engem Text, dee vu Bnotzer agi gëtt, festzelleeën, dëst fir datt verschidde Schabloune korrekt fonctionnéieren.",
+	'negref-desc' => "Liwwert en Tag deen et erlaabt fir d'Plaz vun engem <nowiki><ref/></nowiki> Tag bannent engem Text, dee vu Benotzer agi gëtt, festzeleeën, dëst fir datt verschidde Schabloune korrekt fonctionnéieren.",
 );
 
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'negref-desc' => 'Дава ознака за нагодување на локацијата на било кои <nowiki><ref/></nowiki> ознаки во влезен текст за поправка на извесни случаи на употреба на шаблони',
+	'negref-desc' => 'Дава ознака за нагодување на местоположбата на било која <nowiki><ref/></nowiki> ознака во влезен текст за поправка на извесни случаи на употреба на шаблони',
 );
 
 /** Dutch (Nederlands)
@@ -176,6 +184,13 @@ $messages['mk'] = array(
  */
 $messages['nl'] = array(
 	'negref-desc' => 'Biedt een tag om de plaats van de tag <nowiki><ref/></nowiki> te bepalen binnen invoertekst om bepaald gebruik van sjablonen te repareren',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'negref-desc' => 'Gir en merkelapp for å fikse plasseringen av alle <nowiki><ref /></nowiki>-merkelapper inni inn-teksten for å fikse enkelte problemer ved bruk av malene.',
 );
 
 /** Occitan (Occitan)
@@ -221,10 +236,11 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author Ytsukeng Fyvaprol
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
-	'negref-desc' => 'Предоставляет тег для установления местоположения любого тега <nowiki><ref/></nowiki> внутри поля ввода, для устранения некоторых случаях использование шаблонов',
+	'negref-desc' => 'Предоставляет тег для установления местоположения любого тега <nowiki><ref/></nowiki> внутри поля ввода для устранения некоторых случаев использования шаблонов',
 );
 
 /** Slovak (Slovenčina)
@@ -234,10 +250,36 @@ $messages['sk'] = array(
 	'negref-desc' => 'Poskytuje značku na vyjednanie umiestnenia akýchkoľvek značiek <nowiki><ref/></nowiki> v zadávanom texte na opravu niektorých prípadov použitia šablón.',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'negref-desc' => 'Омогућава таг за подешавање места сваког појединачног <nowiki><ref/></nowiki> тага унутар унешеног текста, да би се поправили неки случајеви употребе шаблона',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica)) */
+$messages['sr-el'] = array(
+	'negref-desc' => 'Omogućava tag za podešavanje mesta svakog pojedinačnog <nowiki><ref/></nowiki> taga unutar unešenog teksta, da bi se popravili neki slučajevi upotrebe šablona',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'negref-desc' => 'Nagbibigay ng isang tatak upang mapag-usapan ang lokasyon ng anumang mga tatak na <nowiki><ref/></nowiki> sa loob ng ipinasok na teksto upang maayos ang ilang mga kaso ng paggamit ng suleras',
+);
+
 /** Turkish (Türkçe)
  * @author Vito Genovese
  */
 $messages['tr'] = array(
 	'negref-desc' => 'Bazı şablon kullanım durumlarını düzeltmek için girilen metnin içinde bulunan <nowiki><ref/></nowiki> etiketlerinin konumunu ayarlayacak bir etiket sağlar',
+);
+
+/** Ukrainian (Українська)
+ * @author Ytsukeng Fyvaprol
+ */
+$messages['uk'] = array(
+	'negref-desc' => 'Надає тег для встановлення місцезнаходження будь-якого тега <nowiki><ref/></nowiki> всередині поля введення для усунення деяких випадків використання шаблонів',
 );
 
