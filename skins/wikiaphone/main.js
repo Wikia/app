@@ -12,7 +12,10 @@ var MobileSkin = {
 	b: null,
 	
 	track: function(str) {
-		if(typeof urchinTracker !== 'undefined') {
+		if(typeof wgEnableGA != "undefined" && wgEnableGA == true) {
+			_gaq.push(['_setAccount', MobileSkin.uacct]);
+			_gaq.push(['_trackPageview', str]);
+		} else if(typeof urchinTracker !== 'undefined') {
 			_uff = 0;
 			_uacct = MobileSkin.uacct;
 			urchinTracker(str);
