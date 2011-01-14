@@ -270,7 +270,7 @@ class BlogArticle extends Article {
 		$dbr->freeResult( $res );
 		wfProfileOut( __METHOD__ );
 
-		Wikia::log( __METHOD__, "props", $page_id );
+		wfDebug( __METHOD__ . ": getting props for $page_id\n" );
 
 		return $return;
 	}
