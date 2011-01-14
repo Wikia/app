@@ -49,6 +49,7 @@ It is an easy way to keep track of your contributions and helps you communicate 
 
 If you need help, and there are no local admins here, you may want to visit the [[wikia:Forum:Community Central Forum|forums on the Community Central Wiki]] $3",
 	'staffsig-text' => "$1<staff /> <small>([[w:forums|help forum]] | [[w:sblog|blog]])</small>",
+	'hawelcomeedit' => "HAWelcomeEdit",
 );
 
 /** Breton (Brezhoneg)

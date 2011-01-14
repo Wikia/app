@@ -716,3 +716,12 @@ class HAWelcomeTask extends BatchTask {
 		return true;
 	}
 }
+
+$wgSpecialPages['HAWelcomeEdit'] = 'HAWelcomeEdit';
+$wgSpecialPageGroups['HAWelcomeEdit'] = 'wikia';
+
+$wgAvailableRights[] = 'HAWelcomeEdit';
+$wgGroupPermissions['*']['HAWelcomeEdit'] = false;
+$wgGroupPermissions['staff']['HAWelcomeEdit'] = true;
+
+$wgAutoloadClasses['HAWelcomeEdit'] = dirname(__FILE__) . '/HAWelcomeEdit.body.php';
