@@ -52,7 +52,7 @@ WikiaSearchApp = {
 				serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 				onSelect: function(v, d) {
 					WikiaSearchApp.track('suggest');
-					window.location.href = wgArticlePath.replace(/\$1/, v.replace(/ /g, '_'));
+					window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_')));
 				},
 				appendTo: '#WikiaSearch',
 				deferRequestBy: 250,
