@@ -86,6 +86,21 @@ YAHOO.Wikia.Tracker = {
 	trackById: function(e) {
 		YAHOO.Wikia.Tracker.track(this.id, e);
 	},
+	
+	trackStr: function(str, account) {
+		if(typeof wgEnableGA != "undefined" && wgEnableGA == true) {
+			if(typeof account != 'undefined') {
+				_gaq.push(['_setAccount', account]);
+			}
+			_gaq.push(['_trackPageview', str]);
+		} else if(typeof urchinTracker != 'undefined') {
+			if(typeof account != 'undefined') {
+				_uacct = account;
+			}
+			urchinTracker(str);
+		}
+		YAHOO.log(str, "info", "tracker");
+	},
 
 	track: function(fakeurl, e) {
 
@@ -101,28 +116,19 @@ YAHOO.Wikia.Tracker = {
 		else if (skin == 'monaco') { skinname = 'monaco'; }
 		else if (skin == 'home') { skinname = 'home'; }
 		else if (skin == 'answers') { skinname = 'answers'; }
-		
-		if(window.skinname && (typeof urchinTracker != 'undefined') && YAHOO.lang.isFunction(urchinTracker)) {
-			_uacct = "UA-2871474-1";
 
+		if(window.skinname) {
 			username = wgUserName == null ? 'anon' : 'user';
-
-			fake = '/1_' + skinname + '/' + username + '/' + fakeurl;
-			urchinTracker(fake);
-			YAHOO.log(fake, "info", "tracker");
-
+			YAHOO.Wikia.Tracker.trackStr('/1_' + skinname + '/' + username + '/' + fakeurl, 'UA-2871474-1');
 			if(typeof wgPrivateTracker!="undefined") {
-				fake = '/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl;
-				urchinTracker(fake);
-				YAHOO.log(fake, "info", "tracker");
+				YAHOO.Wikia.Tracker.trackStr('/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl);
+				
 			}
-
 			if(wgServer.indexOf('-abc') > 0) {
-				fake = '/1_' + skinname + '/abc-' + wgDB + '/' + username + '/' + fakeurl;
-				urchinTracker(fake);
-				YAHOO.log(fake, "info", "tracker");
+				YAHOO.Wikia.Tracker.trackStr('/1_' + skinname + '/abc-' + wgDB + '/' + username + '/' + fakeurl);
 			}
 		}
+
 	}
 
 };

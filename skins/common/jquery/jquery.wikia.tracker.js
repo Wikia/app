@@ -276,6 +276,24 @@ jQuery.tracker.byId = function(e) {
 	$.tracker.track(this.id);
 };
 
+jQuery.tracker.trackStr = function(str, account) {
+	if(typeof wgEnableGA != "undefined" && wgEnableGA == true) {
+		if(typeof account != 'undefined') {
+			_gaq.push(['_setAccount', account]);
+		}
+		_gaq.push(['_trackPageview', str]);
+		$().log('tracker: ' + str);
+	} else if(typeof urchinTracker != 'undefined') {
+		if(typeof account != 'undefined') {
+			_uacct = account;
+		}
+		urchinTracker(str);
+		$().log('tracker: ' + str);
+	} else {
+		$().log('tracker [void]: ' + str);
+	}
+};
+
 jQuery.tracker.track = function(fakeurl) {
 	fakeurlArray = fakeurl.split('/');
 
@@ -301,28 +319,13 @@ jQuery.tracker.track = function(fakeurl) {
 		return;
 	}
 
-	var fake = '/1_' + skinname + '/' + username + '/' + fakeurl;
-
-	if(typeof urchinTracker != 'undefined') {
-		_uacct = "UA-2871474-1";
-		$().log('tracker: ' + fake);
-		urchinTracker(fake);
-		if(wgPrivateTracker) {
-			fake = '/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl;
-			$().log('tracker: ' + fake);
-			urchinTracker(fake);
-		}
-
-		var testGroupName = document.cookie.match(/wikia-ab=[^;]*name=(.*?)\//);
-		if(testGroupName) {
-			_uacct = "UA-19473076-1";
-			fake = '/1_' + skinname + '/' + testGroupName[1] + '/' + username + '/' + fakeurl;
-			$().log('tracker: ' + fake);
-			urchinTracker(fake);
-		}
+	$.tracker.trackStr(fake = '/1_' + skinname + '/' + username + '/' + fakeurl, 'UA-2871474-1');
+	if(wgPrivateTracker) {
+		$.tracker.trackStr('/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl);
 	}
-	else {
-		$().log('tracker [void]: ' + fake);
+	if(typeof testGroupName != 'undefined' && testGroupName) {
+		_uacct = "UA-19473076-1";
+		$.tracker.trackStr('/1_' + skinname + '/' + testGroupName[1] + '/' + username + '/' + fakeurl, 'UA-19473076-1');
 	}
 };
 

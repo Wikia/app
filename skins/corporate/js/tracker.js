@@ -77,19 +77,29 @@ var initTracker = function()
 	 
 }
 
+jQuery.tracker.trackStr = function(str, account) {
+	if(typeof wgEnableGA != "undefined" && wgEnableGA == true) {
+		if(typeof account != 'undefined') {
+			_gaq.push(['_setAccount', account]);
+		}
+		_gaq.push(['_trackPageview', str]);
+		$().log('tracker: ' + str);
+	} else if(typeof urchinTracker != 'undefined') {
+		if(typeof account != 'undefined') {
+			_uacct = account;
+		}
+		urchinTracker(str);
+		$().log('tracker: ' + str);
+	} else {
+		$().log('tracker [void]: ' + str);
+	}
+};
 
-jQuery.tracker.track = function(fakeurl) {     
-    fakeurlArray = fakeurl.split('/');
-    if(typeof urchinTracker != 'undefined') {
-        _uacct = "UA-2871474-1";
-        var username = wgUserName == null ? 'anon' : 'user';
-        var fake = '/1_home/' + username + '/' + fakeurl;
-        $().log('tracker: ' + fake);
-        urchinTracker(fake);
-        if(wgPrivateTracker) {
-            fake = '/1_home/' + wgDB + '/' + username + '/' + fakeurl;
-            $().log('tracker: ' + fake);
-            urchinTracker(fake);
-        }
-    }
+jQuery.tracker.track = function(fakeurl) {
+    var username = wgUserName == null ? 'anon' : 'user';
+	$.tracker.trackStr('/1_home/' + username + '/' + fakeurl, 'UA-2871474-1');
+	if(wgPrivateTracker) {
+		$.tracker.trackStr(''/1_home/' + wgDB + '/' + username + '/' + fakeurl');
+	
+	}
 };
