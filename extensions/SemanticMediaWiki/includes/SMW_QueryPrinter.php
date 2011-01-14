@@ -7,9 +7,9 @@
  */
 
 // constants that define how/if headers should be displayed
-define('SMW_HEADERS_SHOW', 2);
-define('SMW_HEADERS_PLAIN', 1);
-define('SMW_HEADERS_HIDE', 0); // used to be "false" hence use "0" to support extensions that still assume this
+define( 'SMW_HEADERS_SHOW', 2 );
+define( 'SMW_HEADERS_PLAIN', 1 );
+define( 'SMW_HEADERS_HIDE', 0 ); // used to be "false" hence use "0" to support extensions that still assume this
 
 /**
  * Abstract base class for SMW's novel query printing mechanism. It implements
@@ -22,24 +22,30 @@ abstract class SMWResultPrinter {
 
 	protected $m_params;
 
-	/** Text to print *before* the output in case it is *not* empty; assumed to be wikitext.
-	  * Normally this is handled in SMWResultPrinter and can be ignored by subclasses. */
+	/**
+	 * Text to print *before* the output in case it is *not* empty; assumed to be wikitext.
+	 * Normally this is handled in SMWResultPrinter and can be ignored by subclasses.
+	 */
 	protected $mIntro = '';
 
-	/** Text to print *after* the output in case it is *not* empty; assumed to be wikitext.
-	  * Normally this is handled in SMWResultPrinter and can be ignored by subclasses. */
+	/**
+	 * Text to print *after* the output in case it is *not* empty; assumed to be wikitext.
+	 * Normally this is handled in SMWResultPrinter and can be ignored by subclasses.
+	 */
 	protected $mOutro = '';
 
-	/** Text to use for link to further results, or empty if link should not be shown.
-	 *  Unescaped! Use SMWResultPrinter::getSearchLabel() and SMWResultPrinter::linkFurtherResults()
-	 *  instead of accessing this directly. */
+	/**
+	 * Text to use for link to further results, or empty if link should not be shown.
+	 * Unescaped! Use SMWResultPrinter::getSearchLabel() and SMWResultPrinter::linkFurtherResults()
+	 * instead of accessing this directly.
+	 */
 	protected $mSearchlabel = null;
 
 	/** Default return value for empty queries. Unescaped. Normally not used in sub-classes! */
 	protected $mDefault = '';
 
 	// parameters relevant for printers in general:
-	protected $mFormat;  // a string identifier describing a valid format
+	protected $mFormat; // a string identifier describing a valid format
 	protected $mLinkFirst; // should article names of the first column be linked?
 	protected $mLinkOthers; // should article names of other columns (besides the first) be linked?
 	protected $mShowHeaders = SMW_HEADERS_SHOW; // should the headers (property names) be printed?
@@ -71,15 +77,21 @@ abstract class SMWResultPrinter {
 	public static $maxRecursionDepth = 2;
 
 	/**
+	 * Return serialised results in specified format.
+	 * Implemented by subclasses.
+	 */
+	abstract protected function getResultText( /* SMWQueryResult */ $res, $outputmode );
+
+	/**
 	 * Constructor. The parameter $format is a format string
 	 * that may influence the processing details.
 	 */
-	public function SMWResultPrinter($format, $inline) {
+	public function __construct( $format, $inline ) {
 		global $smwgQDefaultLinking;
 		$this->mFormat = $format;
 		$this->mInline = $inline;
-		$this->mLinkFirst = ($smwgQDefaultLinking != 'none');
-		$this->mLinkOthers = ($smwgQDefaultLinking == 'all');
+		$this->mLinkFirst = ( $smwgQDefaultLinking != 'none' );
+		$this->mLinkOthers = ( $smwgQDefaultLinking == 'all' );
 		$this->mLinker = new Linker(); ///TODO: how can we get the default or user skin here (depending on context)?
 	}
 
@@ -107,92 +119,112 @@ abstract class SMWResultPrinter {
 	 * effectively can get down to level 3. The basic maximal depth of 2 can be changed by setting the
 	 * variable SMWResultPrinter::$maxRecursionDepth (in LocalSettings.php, after enableSemantics()).
 	 * Do this at your own risk.
+	 *
+	 * @param SMWQueryResult $results
+	 * @param array $params
+	 * @param $outputmode
+	 *
+	 * @return string
 	 */
-	public function getResult($results, $params, $outputmode) {
+	public function getResult( $results, $params, $outputmode ) {
 		global $wgParser;
+
 		$this->isHTML = false;
 		$this->hasTemplates = false;
-		$this->readParameters($params,$outputmode);
+		$this->readParameters( $params, $outputmode );
 
 		// Default output for normal printers:
-		if ( ($outputmode != SMW_OUTPUT_FILE) && // not in FILE context,
-		     ($results->getCount() == 0) && // no results,
-		     ($this->getMimeType($results) === false)) { // normal printer -> take over processing
-			if (!$results->hasFurtherResults()) {
-				return $this->escapeText($this->mDefault,$outputmode) . $this->getErrorString($results);
-			} elseif ($this->mInline) {
+		if ( ( $outputmode != SMW_OUTPUT_FILE ) && // not in FILE context,
+				( $results->getCount() == 0 ) && // no results,
+				( $this->getMimeType( $results ) === false ) ) { // normal printer -> take over processing
+			if ( !$results->hasFurtherResults() ) {
+				return $this->escapeText( $this->mDefault, $outputmode ) . $this->getErrorString( $results );
+			} elseif ( $this->mInline ) {
 				$label = $this->mSearchlabel;
-				if ($label === null) { //apply defaults
-					wfLoadExtensionMessages('SemanticMediaWiki');
-					$label = wfMsgForContent('smw_iq_moreresults');
+
+				if ( $label === null ) { // apply defaults
+					smwfLoadExtensionMessages( 'SemanticMediaWiki' );
+					$label = wfMsgForContent( 'smw_iq_moreresults' );
 				}
-				if ($label != '') {
-					$link = $results->getQueryLink($this->escapeText($label,$outputmode));
-					$result = $link->getText($outputmode,$this->mLinker);
+
+				if ( $label != '' ) {
+					$link = $results->getQueryLink( $this->escapeText( $label, $outputmode ) );
+					$result = $link->getText( $outputmode, $this->mLinker );
 				} else {
 					$result = '';
 				}
-				$result .= $this->getErrorString($results);
+
+				$result .= $this->getErrorString( $results );
+
 				return $result;
 			}
 		}
 
 		// Get output from printer:
-		$result = $this->getResultText($results,$outputmode);
-		if ($outputmode == SMW_OUTPUT_FILE) { // just return result in file mode
+		$result = $this->getResultText( $results, $outputmode );
+
+		if ( $outputmode == SMW_OUTPUT_FILE ) { // just return result in file mode
 			return $result;
 		}
-		$result .= $this->getErrorString($results); // append errors
-		if ( (!$this->isHTML) && ($this->hasTemplates) ) { // preprocess embedded templates if needed
-			if ( ($wgParser->getTitle() instanceof Title) && ($wgParser->getOptions() instanceof ParserOptions) ) {
+
+		$result .= $this->getErrorString( $results ); // append errors
+
+		if ( ( !$this->isHTML ) && ( $this->hasTemplates ) ) { // preprocess embedded templates if needed
+			if ( ( $wgParser->getTitle() instanceof Title ) && ( $wgParser->getOptions() instanceof ParserOptions ) ) {
 				SMWResultPrinter::$mRecursionDepth++;
-				if (SMWResultPrinter::$mRecursionDepth <= SMWResultPrinter::$maxRecursionDepth) { // restrict recursion
-					$result = '[[SMW::off]]' . $wgParser->replaceVariables($result) . '[[SMW::on]]';
+
+				if ( SMWResultPrinter::$mRecursionDepth <= SMWResultPrinter::$maxRecursionDepth ) { // restrict recursion
+					$result = '[[SMW::off]]' . $wgParser->replaceVariables( $result ) . '[[SMW::on]]';
 				} else {
 					$result = ''; /// TODO: explain problem (too much recursive parses)
 				}
+
 				SMWResultPrinter::$mRecursionDepth--;
 			} else { // not during parsing, no preprocessing needed, still protect the result
 				$result = '[[SMW::off]]' . $result . '[[SMW::on]]';
 			}
 		}
 
-		if ( ($this->isHTML) && ($outputmode == SMW_OUTPUT_WIKI) ) {
-			$result = array($result, 'isHTML' => true);
-		} elseif ( (!$this->isHTML) && ($outputmode == SMW_OUTPUT_HTML) ) {
+		if ( ( $this->isHTML ) && ( $outputmode == SMW_OUTPUT_WIKI ) ) {
+			$result = array( $result, 'isHTML' => true );
+		} elseif ( ( !$this->isHTML ) && ( $outputmode == SMW_OUTPUT_HTML ) ) {
 			SMWResultPrinter::$mRecursionDepth++;
+
 			// check whether we are in an existing parse, or if we should start a new parse for $wgTitle
-			if (SMWResultPrinter::$mRecursionDepth <= SMWResultPrinter::$maxRecursionDepth) { // retrict recursion
-				if ( ($wgParser->getTitle() instanceof Title) && ($wgParser->getOptions() instanceof ParserOptions) ) {
-					$result = $wgParser->recursiveTagParse($result);
+			if ( SMWResultPrinter::$mRecursionDepth <= SMWResultPrinter::$maxRecursionDepth ) { // retrict recursion
+				if ( ( $wgParser->getTitle() instanceof Title ) && ( $wgParser->getOptions() instanceof ParserOptions ) ) {
+					$result = $wgParser->recursiveTagParse( $result );
 				} else {
 					global $wgTitle;
+
 					$popt = new ParserOptions();
-					$popt->setEditSection(false);
-					$pout = $wgParser->parse($result . '__NOTOC__', $wgTitle, $popt);
+					$popt->setEditSection( false );
+					$pout = $wgParser->parse( $result . '__NOTOC__', $wgTitle, $popt );
+
 					/// NOTE: as of MW 1.14SVN, there is apparently no better way to hide the TOC
-					SMWOutputs::requireFromParserOutput($pout);
+					SMWOutputs::requireFromParserOutput( $pout );
 					$result = $pout->getText();
 				}
 			} else {
 				$result = ''; /// TODO: explain problem (too much recursive parses)
 			}
+
 			SMWResultPrinter::$mRecursionDepth--;
 		}
 
-		if ( ($this->mIntro) && ($results->getCount() > 0) ) {
-			if ($outputmode == SMW_OUTPUT_HTML) {
+		if ( ( $this->mIntro ) && ( $results->getCount() > 0 ) ) {
+			if ( $outputmode == SMW_OUTPUT_HTML ) {
 				global $wgParser;
-				$result = $wgParser->recursiveTagParse($this->mIntro) . $result;
+				$result = $wgParser->recursiveTagParse( $this->mIntro ) . $result;
 			} else {
 				$result = $this->mIntro . $result;
 			}
 		}
 
-		if ( ($this->mOutro) && ($results->getCount() > 0) ) {
-			if ($outputmode == SMW_OUTPUT_HTML) {
+		if ( ( $this->mOutro ) && ( $results->getCount() > 0 ) ) {
+			if ( $outputmode == SMW_OUTPUT_HTML ) {
 				global $wgParser;
-				$result = $result . $wgParser->recursiveTagParse($this->mOutro);
+				$result = $result . $wgParser->recursiveTagParse( $this->mOutro );
 			} else {
 				$result = $result . $this->mOutro;
 			}
@@ -205,41 +237,50 @@ abstract class SMWResultPrinter {
 	 * Read an array of parameter values given as key-value-pairs and
 	 * initialise internal member fields accordingly. Possibly overwritten
 	 * (extended) by subclasses.
+	 *
+	 * @param array $params
+	 * @param $outputmode
 	 */
-	protected function readParameters($params,$outputmode) {
+	protected function readParameters( /* array */ $params, $outputmode ) {
 		$this->m_params = $params;
-		if (array_key_exists('intro', $params)) {
-			$this->mIntro = str_replace('_',' ',$params['intro']);
+
+		if ( array_key_exists( 'intro', $params ) ) {
+			$this->mIntro = $params['intro'];
 		}
-		if (array_key_exists('outro', $params)) {
-			$this->mOutro = str_replace('_',' ',$params['outro']);
+
+		if ( array_key_exists( 'outro', $params ) ) {
+			$this->mOutro = $params['outro'];
 		}
-		if (array_key_exists('searchlabel', $params)) {
+
+		if ( array_key_exists( 'searchlabel', $params ) ) {
 			$this->mSearchlabel = $params['searchlabel'];
 		}
-		if (array_key_exists('link', $params)) {
-			switch (strtolower(trim($params['link']))) {
+
+		if ( array_key_exists( 'link', $params ) ) {
+			switch ( strtolower( trim( $params['link'] ) ) ) {
 			case 'head': case 'subject':
 				$this->mLinkFirst = true;
-				$this->mLinkOthers  = false;
+				$this->mLinkOthers = false;
 				break;
 			case 'all':
 				$this->mLinkFirst = true;
-				$this->mLinkOthers  = true;
+				$this->mLinkOthers = true;
 				break;
 			case 'none':
 				$this->mLinkFirst = false;
-				$this->mLinkOthers  = false;
+				$this->mLinkOthers = false;
 				break;
 			}
 		}
-		if (array_key_exists('default', $params)) {
-			$this->mDefault = str_replace('_',' ',$params['default']);
+
+		if ( array_key_exists( 'default', $params ) ) {
+			$this->mDefault = str_replace( '_', ' ', $params['default'] );
 		}
-		if (array_key_exists('headers', $params)) {
-			if ( 'hide' == strtolower(trim($params['headers']))) {
+
+		if ( array_key_exists( 'headers', $params ) ) {
+			if ( strtolower( trim( $params['headers'] ) ) == 'hide' ) {
 				$this->mShowHeaders = SMW_HEADERS_HIDE;
-			} elseif ( 'plain' == strtolower(trim($params['headers']))) {
+			} elseif ( strtolower( trim( $params['headers'] ) ) == 'plain' ) {
 				$this->mShowHeaders = SMW_HEADERS_PLAIN;
 			} else {
 				$this->mShowHeaders = SMW_HEADERS_SHOW;
@@ -248,19 +289,13 @@ abstract class SMWResultPrinter {
 	}
 
 	/**
-	 * Return serialised results in specified format.
-	 * Implemented by subclasses.
-	 */
-	abstract protected function getResultText($res, $outputmode);
-
-	/**
 	 * Depending on current linking settings, returns a linker object
 	 * for making hyperlinks or NULL if no links should be created.
 	 *
 	 * @param $firstcol True of this is the first result column (having special linkage settings).
 	 */
-	protected function getLinker($firstcol = false) {
-		if ( ($firstcol && $this->mLinkFirst) || (!$firstcol && $this->mLinkOthers) ) {
+	protected function getLinker( $firstcol = false ) {
+		if ( ( $firstcol && $this->mLinkFirst ) || ( !$firstcol && $this->mLinkOthers ) ) {
 			return $this->mLinker;
 		} else {
 			return null;
@@ -277,7 +312,7 @@ abstract class SMWResultPrinter {
 	 * not be regarded as a printer that displays in-line results. This is used to
 	 * determine if a file output should be generated in Special:Ask.
 	 */
-	public function getMimeType($res) {
+	public function getMimeType( $res ) {
 		return false;
 	}
 
@@ -294,7 +329,7 @@ abstract class SMWResultPrinter {
 	 * like RSS will use MODE_INSTANCES on special pages (so that instances are
 	 * retrieved for the export) and MODE_NONE otherwise (displaying just a download link).
 	 */
-	public function getQueryMode($context) {
+	public function getQueryMode( $context ) {
 		return SMWQuery::MODE_INSTANCES;
 	}
 
@@ -307,7 +342,7 @@ abstract class SMWResultPrinter {
 	 *
 	 * See also SMWResultPrinter::getMimeType()
 	 */
-	public function getFileName($res) {
+	public function getFileName( $res ) {
 		return false;
 	}
 
@@ -317,6 +352,8 @@ abstract class SMWResultPrinter {
 	 * refer to messages here. The format name is normally not used in
 	 * wiki text but only in forms etc. hence the user language should be
 	 * used when retrieving messages.
+	 *
+	 * @return string
 	 */
 	public function getName() {
 		return $this->mFormat;
@@ -326,66 +363,84 @@ abstract class SMWResultPrinter {
 	 * Provides a simple formatted string of all the error messages that occurred.
 	 * Can be used if not specific error formatting is desired. Compatible with HTML
 	 * and Wiki.
+	 *
+	 * @return string
 	 */
-	public function getErrorString($res) {
-		return $this->mShowErrors?smwfEncodeMessages($res->getErrors()):'';
+	public function getErrorString( $res ) {
+		return $this->mShowErrors ? smwfEncodeMessages( $res->getErrors() ) : '';
 	}
 
 	/**
 	 * Set whether errors should be shown. By default they are.
+	 *
+	 * @param boolean $show
 	 */
-	public function setShowErrors($show) {
+	public function setShowErrors( $show ) {
 		$this->mShowErrors = $show;
 	}
 
 	/**
 	 * If $outputmode is SMW_OUTPUT_HTML, escape special characters occuring in the
 	 * given text. Otherwise return text as is.
+	 *
+	 * @return string
 	 */
-	protected function escapeText($text, $outputmode) {
-		return ($outputmode == SMW_OUTPUT_HTML)?htmlspecialchars($text):$text;
+	protected function escapeText( $text, $outputmode ) {
+		return ( $outputmode == SMW_OUTPUT_HTML ) ? htmlspecialchars( $text ) : $text;
 	}
 
 	/**
 	 * Get the string the user specified as a text for the "further results" link,
 	 * properly escaped for the current output mode.
+	 *
+	 * @return string
 	 */
-	protected function getSearchLabel($outputmode) {
-		return $this->escapeText($this->mSearchlabel, $outputmode);
+	protected function getSearchLabel( $outputmode ) {
+		return $this->escapeText( $this->mSearchlabel, $outputmode );
 	}
 
 	/**
 	 * Check whether a "further results" link would normally be generated for this
 	 * result set with the given parameters. Individual result printers may decide to
 	 * create or hide such a link independent of that, but this is the default.
+	 *
+	 * @return boolean
 	 */
-	protected function linkFurtherResults($results) {
-		return ($this->mInline && $results->hasFurtherResults() && ($this->mSearchlabel !== ''));
+	protected function linkFurtherResults( $results ) {
+		return ( $this->mInline && $results->hasFurtherResults() && ( $this->mSearchlabel !== '' ) );
 	}
 
 	/**
 	 * Return an array describing the parameters of specifically text-based
 	 * formats, like 'list' and 'table', for use in their getParameters()
 	 * functions
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return array
 	 */
 	protected function textDisplayParameters() {
 		return array(
-			array('name' => 'intro', 'type' => 'string', 'description' => wfMsg('smw_paramdesc_intro')),
-			array('name' => 'outro', 'type' => 'string', 'description' => wfMsg('smw_paramdesc_outro')),
-			array('name' => 'default', 'type' => 'string', 'description' => wfMsg('smw_paramdesc_default')),
+			array( 'name' => 'intro', 'type' => 'string', 'description' => wfMsg( 'smw_paramdesc_intro' ) ),
+			array( 'name' => 'outro', 'type' => 'string', 'description' => wfMsg( 'smw_paramdesc_outro' ) ),
+			array( 'name' => 'default', 'type' => 'string', 'description' => wfMsg( 'smw_paramdesc_default' ) ),
 		);
 	}
 
 	/**
 	 * Return an array describing the parameters of the export formats
 	 * like 'rss' and 'csv', for use in their getParameters() functions
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return array
 	 */
 	protected function exportFormatParameters() {
 		return array(
-			array('name' => 'limit', 'type' => 'int', 'description' => wfMsg('smw_paramdesc_limit')),
-			array('name' => 'headers', 'type' => 'enumeration', 'description' => wfMsg('smw_paramdesc_headers'), 'values' => array('show', 'hide', 'plain')),
-			array('name' => 'mainlabel', 'type' => 'string', 'description' => wfMsg('smw_paramdesc_mainlabel')),
-			array('name' => 'searchlabel', 'type' => 'string', 'description' => wfMsg('smw_paramdesc_searchlabel')),
+			array( 'name' => 'limit', 'type' => 'int', 'description' => wfMsg( 'smw_paramdesc_limit' ) ),
+			array( 'name' => 'headers', 'type' => 'enumeration', 'description' => wfMsg( 'smw_paramdesc_headers' ), 'values' => array( 'show', 'hide', 'plain' ) ),
+			array( 'name' => 'mainlabel', 'type' => 'string', 'description' => wfMsg( 'smw_paramdesc_mainlabel' ) ),
+			array( 'name' => 'searchlabel', 'type' => 'string', 'description' => wfMsg( 'smw_paramdesc_searchlabel' ) ),
 		);
 	}
 
@@ -393,13 +448,17 @@ abstract class SMWResultPrinter {
 	 * A function to describe the allowed parameters of a query using
 	 * any specific format - most query printers should override this
 	 * function
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return array
 	 */
 	public function getParameters() {
 		return array(
-			array('name' => 'limit', 'type' => 'int', 'description' => wfMsg('smw_paramdesc_limit')),
-			array('name' => 'headers', 'type' => 'enumeration', 'description' => wfMsg('smw_paramdesc_headers'), 'values' => array('show', 'hide', 'plain')),
-			array('name' => 'mainlabel', 'type' => 'string', 'description' => wfMsg('smw_paramdesc_mainlabel')),
-			array('name' => 'link', 'type' => 'enumeration', 'description' => wfMsg('smw_paramdesc_link'), 'values' => array('all', 'subject', 'none')),
+			array( 'name' => 'limit', 'type' => 'int', 'description' => wfMsg( 'smw_paramdesc_limit' ) ),
+			array( 'name' => 'headers', 'type' => 'enumeration', 'description' => wfMsg( 'smw_paramdesc_headers' ), 'values' => array( 'show', 'hide', 'plain' ) ),
+			array( 'name' => 'mainlabel', 'type' => 'string', 'description' => wfMsg( 'smw_paramdesc_mainlabel' ) ),
+			array( 'name' => 'link', 'type' => 'enumeration', 'description' => wfMsg( 'smw_paramdesc_link' ), 'values' => array( 'all', 'subject', 'none' ) ),
 		);
 	}
 

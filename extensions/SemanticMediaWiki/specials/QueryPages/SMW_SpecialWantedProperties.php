@@ -1,26 +1,63 @@
 <?php
+
 /**
- * @author Markus Krötzsch
+ * File holding the SMWSpecialWantedProperties class for the Special:WantedProperties page. 
  *
- * This page shows all wanted properties (used but not having a page).
- * @file
+ * @file SMW_SpecialWantedProperties.php
+ * 
  * @ingroup SMWSpecialPage
  * @ingroup SpecialPage
+ *
+ * @author Markus Krötzsch
+ * @author Jeroen De Dauw
  */
 
-function smwfDoSpecialWantedProperties() {
-	global $wgOut;
-	wfProfileIn('smwfDoSpecialWantedProperties (SMW)');
-	list( $limit, $offset ) = wfCheckLimits();
-	$rep = new SMWWantedPropertiesPage();
-	$result = $rep->doQuery( $offset, $limit );
-	SMWOutputs::commitToOutputPage($wgOut); // make sure locally collected output data is pushed to the output!
-	wfProfileOut('smwfDoSpecialWantedProperties (SMW)');
-	return $result;
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die( 'Not an entry point.' );
 }
 
 /**
- * @ingroup SMWQuery
+ * This special page for MediaWiki shows all wanted properties (used but not having a page).
+ * 
+ * @ingroup SMWSpecialPage
+ * @ingroup SpecialPage
+ * 
+ * @author Markus Krötzsch
+ * @author Jeroen De Dauw
+ */
+class SMWSpecialWantedProperties extends SpecialPage {
+	
+	public function __construct() {
+		parent::__construct( 'WantedProperties' );
+		smwfLoadExtensionMessages( 'SemanticMediaWiki' );
+	}
+	
+	public function execute( $param ) {
+		wfProfileIn( 'smwfDoSpecialWantedProperties (SMW)' );
+		
+		global $wgOut;
+		
+		$wgOut->setPageTitle( wfMsg( 'wantedproperties' ) );
+		
+		$rep = new SMWWantedPropertiesPage();
+		
+		list( $limit, $offset ) = wfCheckLimits();
+		$rep->doQuery( $offset, $limit );
+		
+		// Ensure locally collected output data is pushed to the output!
+		SMWOutputs::commitToOutputPage( $wgOut );
+		
+		wfProfileOut( 'smwfDoSpecialWantedProperties (SMW)' );	
+	}
+}
+
+/**
+ * This query page shows all wanted properties.
+ * 
+ * @ingroup SMWSpecialPage
+ * @ingroup SpecialPage
+ * 
+ * @author Markus Krötzsch
  */
 class SMWWantedPropertiesPage extends SMWQueryPage {
 
@@ -38,22 +75,20 @@ class SMWWantedPropertiesPage extends SMWQueryPage {
 	}
 
 	function getPageHeader() {
-		wfLoadExtensionMessages('SemanticMediaWiki');
-		return '<p>' . wfMsg('smw_wantedproperties_docu') . "</p><br />\n";
+		return '<p>' . wfMsg( 'smw_wantedproperties_docu' ) . "</p><br />\n";
 	}
 
 	function formatResult( $skin, $result ) {
 		global $wgLang;
-		if ($result[0]->isUserDefined()) {
-			$proplink = $skin->makeLinkObj($result[0]->getWikiPageValue()->getTitle(), $result[0]->getWikiValue(), 'action=view');
+		if ( $result[0]->isUserDefined() ) {
+			$proplink = $skin->makeLinkObj( $result[0]->getWikiPageValue()->getTitle(), $result[0]->getWikiValue(), 'action=view' );
 		} else {
-			$proplink = $result[0]->getLongHTMLText($skin);
+			$proplink = $result[0]->getLongHTMLText( $skin );
 		}
-		wfLoadExtensionMessages('SemanticMediaWiki');
-		return wfMsgExt( 'smw_wantedproperty_template', array( 'parsemag' ), $proplink, $result[1]);
+		return wfMsgExt( 'smw_wantedproperty_template', array( 'parsemag' ), $proplink, $result[1] );
 	}
 
-	function getResults($requestoptions) {
-		return smwfGetStore()->getWantedPropertiesSpecial($requestoptions);
+	function getResults( $requestoptions ) {
+		return smwfGetStore()->getWantedPropertiesSpecial( $requestoptions );
 	}
 }

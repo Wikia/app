@@ -28,14 +28,14 @@ abstract class SMWLanguage {
 	protected $m_NamespaceAliases = array();
 	/// Twelve strings naming the months. English is always supported in Type:Date, but
 	/// we still need the English defaults to ensure that labels are returned by getMonthLabel()
-	protected $m_months = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+	protected $m_months = array( "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" );
 	/// Twelve strings briefly naming the months. English is always supported in Type:Date, so
 	/// the default is simply empty (no labels in addition to English)
 	protected $m_monthsshort = array();
 	/// Preferred interpretations for dates with 1, 2, and 3 components. There is an array for
 	/// each case, and the constants define the obvious order (e.g. SMW_YDM means "first Year,
 	/// then Day, then Month). Unlisted combinations will not be accepted at all.
-	protected $m_dateformats = array(array(SMW_Y), array(SMW_MY,SMW_YM), array(SMW_DMY,SMW_MDY,SMW_YMD,SMW_YDM));
+	protected $m_dateformats = array( array( SMW_Y ), array( SMW_MY, SMW_YM ), array( SMW_DMY, SMW_MDY, SMW_YMD, SMW_YDM ) );
 	/// Should English default aliases be used in this language?
 	protected $m_useEnDefaultAliases = true;
 	/// Default English aliases for namespaces (typically used in all languages)
@@ -60,20 +60,24 @@ abstract class SMWLanguage {
 		'Temperature'           => '_tem',
 		'Date'                  => '_dat',
 		'Email'                 => '_ema',
-		'Annotation URI'        => '_anu'
+		'Annotation URI'        => '_anu',
+		'Telephone number'      => '_tel',
+	    'Record'                => '_rec'
 	);
 	/// Default English aliases for special property names (typically used in all languages)
 	static protected $enPropertyAliases = array(
 		'Has type'          => '_TYPE',
 		'Equivalent URI'    => '_URI',
 		'Subproperty of'    => '_SUBP',
+		'Subcategory of'    => '_SUBC',
 		'Display units'     => '_UNIT',
 		'Imported from'     => '_IMPO',
 		'Corresponds to'    => '_CONV',
 		'Provides service'  => '_SERV',
 		'Allows value'      => '_PVAL',
 		'Modification date' => '_MDAT',
-		'Has improper value for' => '_ERRP'
+		'Has improper value for' => '_ERRP',
+		'Has fields'        => '_LIST',
 	);
 
 
@@ -88,7 +92,7 @@ abstract class SMWLanguage {
 	 * Function that returns an array of namespace aliases, if any.
 	 */
 	function getNamespaceAliases() {
-		return $this->m_useEnDefaultAliases?
+		return $this->m_useEnDefaultAliases ?
 		       $this->m_NamespaceAliases + SMWLanguage::$enNamespaceAliases:
 			   $this->m_NamespaceAliases;
 	}
@@ -108,7 +112,7 @@ abstract class SMWLanguage {
 	 * should also have a primary label defined in m_DatatypeLabels.
 	 */
 	function getDatatypeAliases() {
-		return $this->m_useEnDefaultAliases?
+		return $this->m_useEnDefaultAliases ?
 		       $this->m_DatatypeAliases + SMWLanguage::$enDatatypeAliases:
 			   $this->m_DatatypeAliases;
 	}
@@ -124,7 +128,7 @@ abstract class SMWLanguage {
 	 * Aliases for predefined properties, if any.
 	 */
 	function getPropertyAliases() {
-		return $this->m_useEnDefaultAliases?
+		return $this->m_useEnDefaultAliases ?
 		       $this->m_SpecialPropertyAliases + SMWLanguage::$enPropertyAliases:
 			   $this->m_SpecialPropertyAliases;
 	}
@@ -141,14 +145,14 @@ abstract class SMWLanguage {
 	 * @todo Should we add functionality to ignore case here?
 	 * @todo Should there be prefix string matching instead of two arrays for full and short names?
 	 */
-	function findMonth($label) {
-		$id = array_search($label, $this->m_months);
-		if ($id !== false) {
-			return $id+1;
+	function findMonth( $label ) {
+		$id = array_search( $label, $this->m_months );
+		if ( $id !== false ) {
+			return $id + 1;
 		}
-		$id = array_search($label, $this->m_monthsshort);
-		if ($id !== false) {
-			return $id+1;
+		$id = array_search( $label, $this->m_monthsshort );
+		if ( $id !== false ) {
+			return $id + 1;
 		}
 		return false;
 	}
@@ -156,8 +160,8 @@ abstract class SMWLanguage {
 	/**
 	 * Return the name of the month with the given number.
 	 */
-	function getMonthLabel($number) {
-	  return (($number>=1)&&($number<=12))?$this->m_months[(int)($number-1)]:'';
+	function getMonthLabel( $number ) {
+	  return ( ( $number >= 1 ) && ( $number <= 12 ) ) ? $this->m_months[(int)( $number - 1 )]:'';
 	}
 
 }

@@ -1,7 +1,68 @@
 For a documentation of all features, see http://semantic-mediawiki.org
 
-== SMW 1.5.? ==
+== SMW 1.5.5 ==
 
+* Support for Turtle syntax (e.g. use "syntax=turtle" as a parameter to 
+  when calling Special:ExportRDF.
+* New query format "rdf" to export query results to RDF; the "syntax" 
+  parameter can be set to "rdfxml" or "turtle" to specify a syntax.
+* Fixed several bugs, including whitespace problems in queries using the
+  list format, an issue with large offset values and DatatypeProperties
+  being declared as ObjectProperties.
+* More modular export code (split one file into 3), simplifies 
+  manipulation and maintenance.
+
+== SMW 1.5.4 ==
+
+* Fixed several bugs, including problems with #declare, the extra options
+  on Special:Ask and the style of the factbox and tables when using MW 1.17.
+* Various style and documentation improvements and translation updates.
+
+== SMW 1.5.3 ==
+
+* Compatibility with MediaWiki 1.17
+* Added << and >> comparators for strict comparisons. Also added ≤ and ≥ for
+  non-strict comparisons. And introduced $smwStrictComparators setting that
+  allows changing the behaviour of < and > to doing strict comparisons.
+* Various style and documentation improvements and translation updates.
+
+== SMW 1.5.2 ==
+
+* 'Printouts' textarea in Special:Ask now has autocompletion on property
+  names.
+* SMW now has it's own copy of the jQuery and jQuery UI libraries.
+* Added a number of hooks to allow further customization by extensions.
+* 'Semantic' extension type that can be used by extensions to SMW to be
+  grouped together on Special:Version and other pages listing extensions.
+* Various bugfixes, style and documentation improvements and translation updates.
+
+== SMW 1.5.1 ==
+
+* Added query comparator "!~" that works like the negation of "~", i.e. that
+  retrieves exactly those values to which the provided pattern (with * and ?)
+  does not match.
+* Updated OWL/RDF export to include more data (modification dates, and page
+  namespaces). Changed export ontology to no longer use OWL AnnoationProperties
+  since OWL 2 DL supports property values also for classes/properties.
+* Improvements in code style and structure, following general MediaWiki
+  conventions. Most notably, the file to include for loading SMW now is
+  SemanticMediaWiki.php in the base directory (including the old Settings.php
+  will still work).
+* Preparation of future "SMWLight" release for wikis that want to enable users
+  to add property values to pages, but which do not want to include complex
+  query features.
+* Added a nmber of hooks to improve compatibility with extensions.
+* Various bugfixes, and translation updates.
+
+== SMW 1.5.0 ==
+
+* The former multi-valued/n-ary properties are now supported by a dedicated
+  datatype Record. Wikis that use the old style of these properties need to
+  update affected property pages as described at
+  http://semantic-mediawiki.org/wiki/SMW_1.5.0
+* The Type:Geographic_coordinates has been moved from SMW to the SemanticMaps
+  extension. Wikis that use this datatype need to install this extension to get
+  it back.
 * The "like" comparator ~ in inline queries is now enabled by default. To use
   the former setting, use $smwgQComparators = '<|>|!'; in your LocalSettings.php.
 * A new datatype, "Telephone number", has been introduced for validating phone
@@ -17,7 +78,9 @@ For a documentation of all features, see http://semantic-mediawiki.org
 * Support for inverse properties: use "-" in front of property names anywhere to
   refer to the inverse direction of a property. Works in browsing interfaces,
   queries, and query output directives. In queries only for properties of Type:Page.
-* Compatibility with new MediaWiki skin "Vector"
+* New configuration options $smwgUseCategoryHierarchy and $smwgCategoriesAsInstances
+  to configure how MediaWiki categories should be interpreted by SMW.
+* Compatibility with new MediaWiki skin "Vector" and with MediaWiki 1.16.
 * Removed support for backwards compatibility to SMW <1.0 ($smwgSMWBetaCompatible).
 * The page Special:Ask was overhauled to include inputs for entering values
   for the selected format's parameters, and to use Ajax where possible
@@ -473,10 +536,10 @@ Semantic MediaWiki 0.4 includes the following new features:
   relations and attributes is now counted
 * Improved ontology import feature, allowing to import ontologies and to
   update existing pages with new ontological information
-* Experimental suport for date/time datatype
-* More datypes with units: mass and time duration
+* Experimental support for date/time datatype
+* More datatypes with units: mass and time duration
 * Support for EXP-notation with numbers, as e.g. 2.345e13. Improved number
-  formating in infobox.
+  formatting in infobox.
 * Configurable infobox: infobox can be hidden if empty, or switched off
   completely. This also works around a bug with MediaWiki galeries.
 * Prototype version of Special:Types, showing all available datatypes with
