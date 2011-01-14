@@ -99,7 +99,6 @@ jQuery.tracker.track = function(fakeurl) {
     var username = wgUserName == null ? 'anon' : 'user';
 	$.tracker.trackStr('/1_home/' + username + '/' + fakeurl, 'UA-2871474-1');
 	if(wgPrivateTracker) {
-		$.tracker.trackStr(''/1_home/' + wgDB + '/' + username + '/' + fakeurl');
-	
+		$.tracker.trackStr('/1_home/' + wgDB + '/' + username + '/' + fakeurl');
 	}
 };
