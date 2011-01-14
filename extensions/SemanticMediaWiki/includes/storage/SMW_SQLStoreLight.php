@@ -75,7 +75,7 @@ class SMWSQLStoreLight extends SMWStore {
 			$this->m_sdstate = array( $sid => $this->m_sdstate[$sid] );
 		}
 		//*** Read the data ***//
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		foreach ( array( 'smwsimple_data', 'smwsimple_special' ) as $tablename ) {
 			if ( array_key_exists( $tablename, $this->m_sdstate[$sid] ) ) continue;
 			if ( $filter !== false ) {
@@ -120,7 +120,7 @@ class SMWSQLStoreLight extends SMWStore {
 			}
 		} else { // no subject given, get all values for the given property
 			$tablename = SMWSQLStoreLight::findPropertyTableName( $property );
-			$db = wfGetDB( DB_SLAVE );
+			$db = wfGetDB( DB_SLAVE, 'smw' );
 			$res = $db->select( $tablename, array( 'value' ), array( 'propname' => $property->getDBkey() ),
 			                    'SMW::getPropertyValues', $this->getSQLOptions( $requestoptions, 'value' ) + array( 'DISTINCT' ) );
 			$result = array();
@@ -148,7 +148,7 @@ class SMWSQLStoreLight extends SMWStore {
 
 		// ***  First build $select, $from, and $where for the DB query  ***//
 		$tablename = SMWSQLStoreLight::findPropertyTableName( $property );
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$from = $db->tableName( 'page' ) . " AS p INNER JOIN " . $db->tableName( $tablename ) . " AS t ON t.pageid=p.page_id";
 		$where = 't.propname=' . $db->addQuotes( $property->getDBkey() );
 		if ( $value !== null ) {
@@ -188,7 +188,7 @@ class SMWSQLStoreLight extends SMWStore {
 			return array();
 		}
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$result = array();
 		if ( $requestoptions !== null ) { // potentially need to get more results, since options apply to union
 			$suboptions = clone $requestoptions;
@@ -223,7 +223,7 @@ class SMWSQLStoreLight extends SMWStore {
 	 */
 	public function getInProperties( SMWDataValue $value, $requestoptions = null ) {
 		wfProfileIn( "SMWSQLStoreLight::getInProperties (SMW)" );
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$result = array();
 		$typeid = $value->getTypeID();
 
@@ -500,7 +500,7 @@ class SMWSQLStoreLight extends SMWStore {
 	protected function getSQLConditions( $requestoptions, $valuecol = '', $labelcol = '', $addand = true ) {
 		$sql_conds = '';
 		if ( $requestoptions !== null ) {
-			$db = wfGetDB( DB_SLAVE ); /// TODO avoid doing this here again, all callers should have one
+			$db = wfGetDB( DB_SLAVE, 'smw' ); /// TODO avoid doing this here again, all callers should have one
 			if ( ( $valuecol != '' ) && ( $requestoptions->boundary !== null ) ) { // apply value boundary
 				if ( $requestoptions->ascending ) {
 					$op = $requestoptions->include_boundary ? ' >= ':' > ';

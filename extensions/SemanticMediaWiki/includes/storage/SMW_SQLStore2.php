@@ -312,7 +312,7 @@ class SMWSQLStore2 extends SMWStore {
 
 		wfProfileIn( "SMWSQLStore2::fetchSemanticData-" . $proptable->name .  " (SMW)" );
 		$result = array();
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 
 		// ***  First build $from, $select, and $where for the DB query  ***//
 		$from   = $db->tableName( $proptable->name ); // always use actual table
@@ -474,7 +474,7 @@ class SMWSQLStore2 extends SMWStore {
 
 		$proptables = self::getPropertyTables();
 		$proptable = $proptables[$tableid];
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 
 		if ( $proptable->idsubject ) { // join in smw_ids to get title data
 			$from = $db->tableName( 'smw_ids' ) . " INNER JOIN " . $db->tableName( $proptable->name ) . " AS t1 ON t1.s_id=smw_id";
@@ -525,7 +525,7 @@ class SMWSQLStore2 extends SMWStore {
 	 * @param $tableindex
 	 */
 	protected function prepareValueQuery( &$from, &$where, $proptable, $value, $tableindex = 1 ) {
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 
 		if ( $value instanceof SMWContainerValue ) { // recursive handling of containers
 			$joinfield = "t$tableindex." . reset( array_keys( $proptable->objectfields ) ); // this must be a type 'p' object
@@ -611,7 +611,7 @@ class SMWSQLStore2 extends SMWStore {
 			return array();
 		}
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$result = array();
 
 		if ( $requestoptions !== null ) { // potentially need to get more results, since options apply to union
@@ -680,7 +680,7 @@ class SMWSQLStore2 extends SMWStore {
 	public function getInProperties( SMWDataValue $value, $requestoptions = null ) {
 		wfProfileIn( "SMWSQLStore2::getInProperties (SMW)" );
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$result = array();
 		$typeid = $value->getTypeID();
 
@@ -1007,7 +1007,7 @@ class SMWSQLStore2 extends SMWStore {
 		global $smwgIP;
 		include_once( "$smwgIP/includes/storage/SMW_SQLStore2_Queries.php" );
 
-		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_SLAVE ) );
+		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_SLAVE, 'smw' ) );
 		$result = $qe->getQueryResult( $query );
 		wfProfileOut( 'SMWSQLStore2::getQueryResult (SMW)' );
 
@@ -1022,7 +1022,7 @@ class SMWSQLStore2 extends SMWStore {
 	 */
 	public function getPropertiesSpecial( $requestoptions = null ) {
 		wfProfileIn( "SMWSQLStore2::getPropertiesSpecial (SMW)" );
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		// the query needs to do the filtering of internal properties, else LIMIT is wrong
 		$queries = array();
 
@@ -1067,7 +1067,7 @@ class SMWSQLStore2 extends SMWStore {
 		global $wgDBtype;
 
 		wfProfileIn( "SMWSQLStore2::getUnusedPropertiesSpecial (SMW)" );
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$fname = 'SMW::getUnusedPropertySubjects';
 
 		// we use a temporary table for executing this costly operation on the DB side
@@ -1159,7 +1159,7 @@ class SMWSQLStore2 extends SMWStore {
 		$result = array();
 
 		if ( $proptable->fixedproperty == false ) { // anything else would be crazy, but let's fail gracefully even if the whole world is crazy
-			$db = wfGetDB( DB_SLAVE );
+			$db = wfGetDB( DB_SLAVE, 'smw' );
 			$options = $this->getSQLOptions( $requestoptions, 'title' );
 			$options['ORDER BY'] = 'count DESC';
 			$res = $db->select( $db->tableName( $proptable->name ) . ' INNER JOIN ' . $db->tableName( 'smw_ids' ) .
@@ -1181,7 +1181,7 @@ class SMWSQLStore2 extends SMWStore {
 	public function getStatistics() {
 		wfProfileIn( 'SMWSQLStore2::getStatistics (SMW)' );
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$result = array();
 		$proptables = self::getPropertyTables();
 
@@ -1509,7 +1509,7 @@ class SMWSQLStore2 extends SMWStore {
 		}
 
 		// update by internal SMW id --> make sure we get all objects in SMW
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$res = $db->select( 'smw_ids', array( 'smw_id', 'smw_title', 'smw_namespace', 'smw_iw' ),
 		                   "smw_id >= $index AND smw_id < " . $db->addQuotes( $index + $count ), __METHOD__ );
 
@@ -1612,7 +1612,7 @@ class SMWSQLStore2 extends SMWStore {
 	public function getConceptCacheStatus( $concept ) {
 		wfProfileIn( 'SMWSQLStore2::getConceptCacheStatus (SMW)' );
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$cid = $this->getSMWPageID( $concept->getDBkey(), $concept->getNamespace(), '', false );
 
 		$row = $db->selectRow( 'smw_conc2',
@@ -1682,7 +1682,7 @@ class SMWSQLStore2 extends SMWStore {
 		$sql_conds = '';
 
 		if ( $requestoptions !== null ) {
-			$db = wfGetDB( DB_SLAVE ); /// TODO avoid doing this here again, all callers should have one
+			$db = wfGetDB( DB_SLAVE, 'smw' ); /// TODO avoid doing this here again, all callers should have one
 
 			if ( ( $valuecol != '' ) && ( $requestoptions->boundary !== null ) ) { // Apply value boundary.
 				if ( $requestoptions->ascending ) {
@@ -1954,7 +1954,7 @@ class SMWSQLStore2 extends SMWStore {
 			$this->m_ids = array();
 		}
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$id = 0;
 
 		if ( $iw != '' ) { // external page; no need to think about redirects
@@ -2368,7 +2368,7 @@ class SMWSQLStore2 extends SMWStore {
 		$sid = $this->getSMWPageID( $subject_t, $subject_ns, '', false ); // find real id of subject, if any
 		/// NOTE: $sid can be 0 here; this is useful to know since it means that fewer table updates are needed
 		$new_tid = $curtarget_t ? ( $this->makeSMWPageID( $curtarget_t, $curtarget_ns, '', false ) ):0; // real id of new target, if given
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 
 		$res = $db->select( array( 'smw_redi2' ), 'o_id', array( 's_title' => $subject_t, 's_namespace' => $subject_ns ), $fname, array( 'LIMIT' => 1 ) );
 		$old_tid = ( $row = $db->fetchObject( $res ) ) ? $row->o_id:0; // real id of old target, if any
