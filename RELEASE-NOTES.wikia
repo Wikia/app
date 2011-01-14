@@ -1,4 +1,5 @@
 == Changes since 20110110 ==
+* rt#107814: Oasis: search suggest doesn't properly encode % character (macbre)
 * rt#71577: "Read more" categories do not respect hidden cats (macbre)
 * rt#144479: not all options visible in the section "More Badges You Can Earn!" (federico)
 * rt#144678: Fix the API for MW 1.16 for sites with short URLs (no /wiki/ in them). Merged in r78209-r78210 from core. (sean)
