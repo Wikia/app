@@ -84,11 +84,11 @@
 			margin: 0;
 			padding: 0;
 		}
-	
+
 		.wikia-button {
 			font-weight: normal;
 		}
-	
+
 		h1 {
 			font: {
 				size: 17px;
@@ -99,11 +99,11 @@
 				bottom: 25px;
 			}
 		}
-	
+
 		h2 {
 			@extend h1;
 			clear: both;
-	
+
 			margin: {
 				top: 0;
 				bottom: 10px;
@@ -111,15 +111,15 @@
 			padding-top: 15px;
 			/*border-top: 1px solid $color-page-border;*/
 		}
-	
+
 		b {
 			font-weight: bold;
 		}
-	
+
 		.line-top {
 			border-top: solid 1px $color-page-border;
 		}
-	
+
 		.chevron {
 			border-top-color: $color-text;
 		}
@@ -188,8 +188,9 @@
 			border: 0;
 		}
 		em {
-			font-size: 11px;
-			line-height: 15px;
+			display: inline-block;
+			font-size: 14px;
+			line-height: 22px;
 		}
 	}
 	.sprite {
@@ -213,6 +214,15 @@
 	}
 	.more {
 		font-weight: bold;
+	}
+}
+
+.UserProfileRailModule_RecentActivity {
+	li {
+		em {
+			font-size: 12px;
+			line-height: 20px;
+		}
 	}
 }
 
