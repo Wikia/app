@@ -19,8 +19,7 @@
 
 		<details>
 			<?= $post['avatar'] ?>
-			<span><?= $post['date'] ?></span>
-			<span> by <a href="<?= htmlspecialchars($post['userpage']) ?>"><?= $post['username'] ?></a></span>
+			<span><?= wfMsg('blog-by', $post['date'], Xml::element('a', array('href' => htmlspecialchars($post['userpage'])), $post['username'], false)) ?></span>
 		</details>
 
 		<blockquote>
