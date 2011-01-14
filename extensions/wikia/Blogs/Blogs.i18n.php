@@ -127,6 +127,7 @@ Avatar6.jpg",
 	"blog-desc" => "Blog articles",
 	"blog-movepage-badtitle" => "Invalid blog post title.",
 	"blog-comment-sending" => "Sending...",
+	'blog-by' => '$1 by $2',
 );
 
 /** Message documentation (Message documentation)
