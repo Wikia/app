@@ -117,6 +117,7 @@ Head to Wikia to check out the changes! $1
 $messages['qqq'] = array(
 	'toplists-category' => 'The name for the category that lists all the Top 10 Lists on a wiki',
 	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.',
+	'toplists-list-vote-up' => 'Keep this as short as possible. Everything exceeding allowed lenght will be cutted out!'
 );
 
 /** Breton (Brezhoneg)

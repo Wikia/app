@@ -94,6 +94,8 @@ $item-width: 415px;
 
 					&.VoteButton {
 						visibility: hidden;
+						max-width: 80px;
+						overflow: hidden;
 					}
 				}
 
@@ -105,9 +107,14 @@ $item-width: 415px;
 					height: 21px;
 					line-height: 21px;
 					margin: 0px;
-					padding: 0 0 0 10px;
+					padding: 0px;
 					position: relative;
 					top: -25px;
+					left: -5px;
+					overflow: hidden;
+					max-width: 85px;
+					width: 85px;
+					text-align: center;
 					font: {
 						size: 12px;
 						weight: normal;
@@ -121,6 +128,7 @@ $item-width: 415px;
 						margin-top:3px;
 						width:16px;
 						height:15px;
+						display:none;
 					}
 				}
 			}
