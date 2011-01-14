@@ -150,7 +150,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 						weight: bold;
 						size: 40px;
 					}
-					
+
 					color: $color-text;
 					position: absolute;
 					display: block;
@@ -164,7 +164,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 						size: 13px;
 						weight: bold;
 					}
-					
+
 					color: $color-text;
 					position: relative;
 					display: block;
@@ -221,6 +221,16 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 		}
 	}
 
+	/* macbre: RT #144814 */
+	.UserProfileRailModule_RecentActivity {
+		li {
+			em {
+				font-size: 12px;
+				line-height: 20px;
+			}
+		}
+	}
+
 	#profile-top-wikis-body, #profile-top-pages-body {
 		.profile-loading-screen {
 			@include opacity(75);
@@ -254,7 +264,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 			}
 		}
 	}
-	
+
 	ul.user-profile-action-menu {
 		position: absolute;
 		right: 0px;
@@ -313,7 +323,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 
 .WikiaUserPagesHeader {
 	height: 270px;
-	
+
 	&>h1 {
 		border-bottom: 1px solid #D9D9D9;
 		display: block;
@@ -324,7 +334,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 		@include clearfix;
 		float: right;
 		margin: 7px 5px 0 0;
-		
+
 		li {
 			font: {
 				size: 11px;
@@ -336,7 +346,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 				position: 0px 14px;
 				repeat: repeat-x;
 			}
-			
+
 			float: left;
 			height: 20px;
 			margin-right: 7px;
@@ -351,7 +361,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 
 	.wikia-avatar {
 		margin-right: 10px;
-		
+
 		.avatar-menu {
 			@include opacity(85);
 			display: none;
@@ -416,7 +426,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 
 	&>.last-action {
 		margin-top: 15px;
-		
+
 		img {
 			float: left;
 		}
@@ -429,18 +439,18 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 		.last-action-title {
 			color: $color-lighter-text;
 		}
-		
+
 		.last-action-snippet {
 			font-size: 120%;
 		}
 	}
-	
+
 	.tabs-container {
 		position: absolute;
 		bottom: 0px;
 		left: 0px;
 		width: 100%;
-		
+
 		.tabs {
 			margin-bottom: 9px;
 		}
@@ -484,7 +494,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 									style: solid;
 									width: 4px;
 								}
-								
+
 								content: ' ';
 								height: 0px;
 								left: 28px;
@@ -504,7 +514,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 									style: solid;
 									width: 4px;
 								}
-								
+
 								content: ' ';
 								height: 0px;
 								left: 28px;
@@ -521,7 +531,7 @@ $color-lighter-text: mix($color-page, $color-text, 50%);
 									style: solid;
 									width: 5px;
 								}
-								
+
 								content: ' ';
 								height: 0px;
 								left: 26px;
