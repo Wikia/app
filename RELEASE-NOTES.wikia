@@ -6,6 +6,7 @@
 * rt#144678: Fix the API for MW 1.16 for sites with short URLs (no /wiki/ in them). Merged in r78209-r78210 from core. (sean)
 
 == Changes since 20101213 ==
+* rt#72715: Bad i18n in WikiBuilder (Marooned)
 * rt#142515: Gallery sliders link broken for non ms-0 mainspace/non http link (macbre)
 * rt#141161: Remove green colour from paid wikis step in nwb (Marooned)
 * rt#84626: CategorySelection: enable on file namespace (Marooned)
