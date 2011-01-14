@@ -52,11 +52,13 @@ WikiaFooterApp = {
 				}
 				windowObj.resolvePosition();
 			};
-
-			windowObj.resolvePosition();
-			windowObj.centerBar();
-			windowObj.scroll(windowObj.resolvePosition);
-			windowObj.resize(windowObj.centerBar);
+			
+			if(jQuery.support.positionFixed){
+				windowObj.resolvePosition();
+				windowObj.centerBar();
+				windowObj.scroll(windowObj.resolvePosition);
+				windowObj.resize(windowObj.centerBar);
+			}
 		}
 	},
 
