@@ -12,9 +12,9 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 		} else {
 			$called = true;
 		}
-		
+
 		if(!empty($wgEnableGA)) {
-			return  '';
+			return "<script type=\"text/javascript\">(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();urchinTracker = function() {_gaq.push(['_setAccount', 'UA-2871474-1']);_gaq.push(['_trackEvent', 'Error', 'FakeUrchinTrackerCalled']);};</script>";		
 		} else {
 			return  '<script type="text/javascript" src="http://www.google-analytics.com/urchin.js"></script>' . "\n";
 		}
@@ -70,7 +70,7 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 
 	/* For certain wikis, we issue an additional call to track page views independently */
 	private function onewiki($city_id){
-		global $wgGoogleAnalyticsAccount;
+		global $wgGoogleAnalyticsAccount, $wgEnableGA;
 
 		if (empty($wgGoogleAnalyticsAccount)){
 			return '<!-- No tracking for this wiki -->';
