@@ -190,10 +190,15 @@ class CreateBlogListingPage extends SpecialBlogPage {
 		}
 	}
 
+	/**
+	 *   Adding the page to the category BlogListingPage ensures that it is purged when new blogs are posted
+	 */
+
 	private function buildTag() {
 		$this->mTagBody = "<bloglist summary=\"true\" timestamp=\"true\" count=" . self::defaultListingCount . ">\n";
 		$this->buildTagContent();
 		$this->mTagBody.= "</bloglist>\n";
+		$this->mTagBody.= "[[Category:BlogListingPage]]";
 	}
 
 	public function parseTag($sTitle) {

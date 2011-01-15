@@ -89,6 +89,7 @@ $wgAutoloadClasses[ "WikiaApiBlogs" ] = dirname(__FILE__) . "/api/WikiaApiBlogs.
 global $wgAPIModules;
 $wgAPIModules[ "blogs" ] = "WikiaApiBlogs";
 
+$wgExtensionFunctions[] = array('BlogArticle', 'createCategory');
 
 /**
  * messages file

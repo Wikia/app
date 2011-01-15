@@ -21,15 +21,23 @@ class BlogArticle extends Article {
 	private $mCount = 5;
 
 	/**
-	 * setup -- called on initialization (unused)
-	 * moved setup code to ::ArticleFromTitle instead of hooking that twice [owen]
+	 * setup function called on initialization
+	 * Create a Category:BlogListingPage so that we can purge by category when new blogs are posted
+	 * moved other setup code to ::ArticleFromTitle instead of hooking that twice [owen]
 	 *
 	 * @access public
 	 * @static
 	 */
-	public static function setup() {
-
-		return true;
+	public static function createCategory() {
+		// make sure page "Category:BlogListingTag" exists
+		$title = Title::newFromText( 'Category:BlogListingPage' );
+		global $wgUser;
+		if ( !$title->exists() && $wgUser->isAllowed( 'edit' ) ) {
+			$article = new Article( $title );
+			$article->doEdit(
+				"__HIDDENCAT__", $title, EDIT_NEW | EDIT_FORCE_BOT
+			);
+		} 
 	}
 
 	/**
@@ -72,7 +80,7 @@ class BlogArticle extends Article {
 	 * @access private
 	 */
 	private function showBlogListing() {
-		global $wgOut, $wgRequest, $wgParser, $wgMemc;
+		global $wgOut, $wgRequest, $wgMemc;
 
 		/**
 		 * use cache or skip cache when action=purge
@@ -91,16 +99,19 @@ class BlogArticle extends Article {
 		}
 
 		if( !$listing ) {
-			$params = array(
-				"author" => $user,
-				"count"  => $this->mCount,
-				"summary" => true,
-				"summarylength" => 750,
-				"type" => "plain",
-				"title" => "Blogs",
-				"offset" => $offset
-			);
-			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
+			$text = "
+				<bloglist
+					author=$user
+					count=$this->mCount
+					summary=true
+					summarylength=750
+					type=plain
+					title=Blogs
+					offset=$offset>
+					<author>$user</author>
+				</bloglist>";
+			$parserOutput = $this->getOutputFromWikitext( $text, false,  new ParserOptions() );
+			$listing = $parserOutput->getText();
 			$wgMemc->set( wfMemcKey( "blog", "listing", $userMem, $page ), $listing, 3600 );
 		}
 
@@ -109,7 +120,7 @@ class BlogArticle extends Article {
 
 
 	/**
-	 * clear data from memcache
+	 * clear data from memcache and purge any pages in Category:BlogListingPage
 	 *
 	 * @access public
 	 */
@@ -121,6 +132,10 @@ class BlogArticle extends Article {
 			$wgMemc->delete( wfMemcKey( "blog", "listing", $user, $page ) );
 		}
 		$this->doPurge();
+
+		$title = Title::newFromText( 'Category:BlogListingPage' );
+		$title->touchLinks();
+
 	}
 
 	/**
