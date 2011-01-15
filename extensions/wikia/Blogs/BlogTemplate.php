@@ -1002,7 +1002,7 @@ class BlogTemplateClass {
 		return $aOutput;
 	}
 
-	private static function __parse( $aInput, $aParams, &$parser, $returnPlainData = false, $knownSkin = false ) {
+	private static function __parse( $aInput, $aParams, &$parser, $returnPlainData = false ) {
 		global $wgLang, $wgUser, $wgCityId, $wgParser, $wgTitle;
 		global $wgExtensionsPath, $wgStylePath, $wgRequest;
 
@@ -1196,37 +1196,34 @@ class BlogTemplateClass {
 								$iCount = self::getResultsCount();
 								$sPager = self::__getPager($iCount, intval(self::$aOptions['offset']));
 							}
-							/* run template */
-							$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-							$oTmpl->set_vars( array(
-								"wgUser"		=> $wgUser,
-								"cityId"		=> $wgCityId,
-								"wgLang"		=> $wgLang,
-								"aRows"			=> $aResult,
-								"aOptions"		=> self::$aOptions,
-								"wgParser"		=> $wgParser,
-								"skin"			=> $wgUser->getSkin(),
-								"wgExtensionsPath" 	=> $wgExtensionsPath,
-								"wgStylePath" 		=> $wgStylePath,
-								"sPager"		=> $sPager,
-								"wgTitle"		=> self::$oTitle,
-							) );
-							#---
-							if ( self::$aOptions['type'] == 'box' ) {
-								$result = $oTmpl->execute("blog-page");
+							if (Wikia::isOasis() ) {
+								wfRunHooks('BlogsRenderBlogArticlePage', array(&$result, $aResult, self::$aOptions, $sPager));
 							} else {
-								$page = $oTmpl->execute("blog-post-page");
+								/* run template */
+								$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 								$oTmpl->set_vars( array(
-									"page" => $page
+									"wgUser"		=> $wgUser,
+									"cityId"		=> $wgCityId,
+									"wgLang"		=> $wgLang,
+									"aRows"			=> $aResult,
+									"aOptions"		=> self::$aOptions,
+									"wgParser"		=> $wgParser,
+									"skin"			=> $wgUser->getSkin(),
+									"wgExtensionsPath" 	=> $wgExtensionsPath,
+									"wgStylePath" 		=> $wgStylePath,
+									"sPager"		=> $sPager,
+									"wgTitle"		=> self::$oTitle,
 								) );
-								$result = $oTmpl->execute("blog-article-page");
-							}
-							// macbre: let Oasis add HTML
-							if(empty($knownSkin)) {
-								wfRunHooks('BlogsRenderBlogArticlePage', array(&$result, $aResult, self::$aOptions, $sPager));
-							} else if($knownSkin == 'oasis'){
-								$result = "";
-								wfRunHooks('BlogsRenderBlogArticlePage', array(&$result, $aResult, self::$aOptions, $sPager));
+								#---
+								if ( self::$aOptions['type'] == 'box' ) {
+									$result = $oTmpl->execute("blog-page");
+								} else {
+									$page = $oTmpl->execute("blog-post-page");
+									$oTmpl->set_vars( array(
+										"page" => $page
+									) );
+									$result = $oTmpl->execute("blog-article-page");
+								}
 							}
 						} else {
 							unset($result);

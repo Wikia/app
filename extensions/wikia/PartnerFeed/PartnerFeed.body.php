@@ -197,7 +197,7 @@ class PartnerFeed extends SpecialPage {
 				"count" => $maxNumberOfBlogPosts,
 			);
 
-			$result = BlogTemplateClass::parseTag( $input, $params, $wgParser, true );
+			$result = BlogTemplateClass::parseTag( $input, $params, $wgParser, null, true );
 			$feedArray = array();
 
 			foreach( $result as $val ){
