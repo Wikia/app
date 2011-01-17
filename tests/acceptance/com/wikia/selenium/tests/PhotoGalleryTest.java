@@ -214,7 +214,7 @@ public class PhotoGalleryTest extends BaseTest {
 		// search for images on wiki's main page
 		session().type("//form[@id='WikiaPhotoGallerySearch']//input[@type='text']", "logo");
 		session().click("//form[@id='WikiaPhotoGallerySearch']//button");
-		waitForElementVisible("//ul[@type='results']//li");
+		waitForElement("//ul[@type='results']//li");
 
 		// select first image
 		session().click("//ul[@type='results']//li//label");
@@ -234,10 +234,10 @@ public class PhotoGalleryTest extends BaseTest {
 		session().waitForPageToLoad(TIMEOUT);
 
 		// verify edit from view mode
-		assertTrue(session().isElementPresent("//div[@class='wikia-gallery-item']"));
+		assertTrue(session().isElementPresent("//span[@class='wikia-gallery-item']"));
 
 		// check for image added from view mode
-		assertTrue(session().isElementPresent("//div[2 and @class='wikia-gallery-item']//img[contains(@title,'Image search test')]"));
+		assertTrue(session().isElementPresent("//span[@class='wikia-gallery-item']//img[contains(@title,'Image search test')]"));
 	}
 
 	@Test(groups={"CI"})
