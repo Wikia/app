@@ -46,7 +46,7 @@ public class PhalanxTest extends BaseTest {
  	 * Console logging
  	 */
 	private void log(String message) {
-		// System.out.println(message);
+		//System.out.println(message);
 	}
 
 	/**
@@ -265,17 +265,17 @@ public class PhalanxTest extends BaseTest {
 		session().type("wpDestFile", destName);
 		session().type("wpUploadDescription", "Phalanx test");
 		session().uncheck("wpWatchthis");
-		clickAndWait("wpUpload");
+		clickAndWait("//input[@name='wpUpload']");
 		
 		if (session().isTextPresent("Upload warning")) {
-			clickAndWait("wpUpload");
+			clickAndWait("//input[@name='wpUpload']");
 		}
 
 		assertFalse(session().isTextPresent("Upload error"));
 
 		// upload warning - duplicate ...
 		if (session().isTextPresent("Upload warning")) {
-			clickAndWait("wpUpload");
+			clickAndWait("//input[@name='wpUploadIgnoreWarning']");
 		}
 
 		assertTrue(session().isTextPresent("Image:" + destName) || session().isTextPresent("File:" + destName));
@@ -411,9 +411,9 @@ public class PhalanxTest extends BaseTest {
 		this.log("Test articles creation (via WikiBuilder)");
 
 		Random randomGenerator = new Random();
-		String articleNameSuffix = Integer.toString(randomGenerator.nextInt(666));
+		String articleNameSuffix = Integer.toString(randomGenerator.nextInt(99999));
 
-		login();
+		loginAsStaff();
 
 		session().open("index.php?title=Special:WikiBuilder");
 		session().waitForPageToLoad(TIMEOUT);
@@ -431,7 +431,7 @@ public class PhalanxTest extends BaseTest {
 
 		// create pages
 		session().click("//form[@id='Pages']//input[contains(@class, 'save')]");
-		session().waitForPageToLoad(TIMEOUT);
+		waitForElementVisible("//div[@class='step4']");
 
 		// test how many pages were created
 		session().open("index.php?title=" + this.testArticleName + articleNameSuffix);
@@ -440,7 +440,7 @@ public class PhalanxTest extends BaseTest {
 		assertFalse(session().isTextPresent("This page needs content"));
 		try {
 			session().open("index.php?title=" + this.testArticleName + this.badWord + articleNameSuffix);
-			assertTrue(session().isTextPresent("This page needs content"));
+			assertTrue(false); // this page shouldn't be created, should be blocked by Phalanx
 		} catch (Exception e) {
 			// catch 404
 		}
