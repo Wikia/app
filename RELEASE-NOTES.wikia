@@ -1,4 +1,5 @@
 == Changes since 20110110 ==
+* rt#142858: RTE: Contextual menu doesn't show in Chrome (macbre)
 * rt#142109: text color on popups in RTE isnt readable (macbre)
 * rt#141522: Rich text editor: upgrade to CK 3.5 (macbre)
 * rt#139460: Top ten lists i18n text placement (Jakub)
