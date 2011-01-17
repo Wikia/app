@@ -1,4 +1,5 @@
 <?php
+
 $messages = array();
 
 $messages['en'] = array(
@@ -211,7 +212,6 @@ $messages['qqq'] = array(
 * $1 is a feed title',
 	'wikiaPhotoGallery-error-caption' => '{{Identical|Error}}',
 	'wikiaPhotoGallery-upload-uploadtitle' => '{{Identical|Upload}}',
-	'wikiaPhotoGallery-upload-uploadbutton' => '',
 	'wikiaPhotoGallery-upload-findtitle' => '{{Identical|Find}}',
 	'wikiaPhotoGallery-upload-findbutton' => '{{Identical|Find}}',
 	'wikiaPhotoGallery-upload-page-next' => '{{Identical|Next}}',
