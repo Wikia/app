@@ -103,11 +103,9 @@ public class ReturnToTest extends BaseTest {
 		//assertTrue(session().isElementPresent("//" + rootElement + "//a[contains(@href, 'title=Special:Signup&returnto=Special%3AUpload')]"));
 
 		// check link for selected special page
-		// not on a list anymore?
-		//assertTrue(session().isElementPresent("//" + rootElement + "//a[contains(@href, 'title=Special:Signup&returnto=Special%3ACreateBlogPage')]"));
+		assertTrue(session().isElementPresent("//" + rootElement + "//a[contains(@href, 'title=Special:Signup&returnto=Special%3ACreateBlogPage')]"));
 
 		// check link for selected special page
-		// not on a list anymore?
-		//assertTrue(session().isElementPresent("//" + rootElement + "//a[contains(@href, 'title=Special:Signup&returnto=Special%3ACreateBlogListingPage')]"));
+		assertTrue(session().isElementPresent("//" + rootElement + "//a[contains(@href, 'title=Special:Signup&returnto=Special%3ACreateBlogListingPage')]"));
 	}
 }
