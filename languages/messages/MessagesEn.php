@@ -2008,7 +2008,10 @@ Pages on [[Special:Watchlist|your watchlist]] are '''bold'''.",
 'reuploaddesc'                => 'Cancel upload and return to the upload form',
 'upload-tryagain'             => 'Submit modified file description',
 'uploadnologin'               => 'Not logged in',
-'uploadnologintext'           => 'You must be [[Special:UserLogin|logged in]] to upload files.',
+/* Wikia change begin - @author: Marooned */
+/* pass returnTo parameter */
+'uploadnologintext'           => 'You must be <span class="plainlinks">[{{fullurl:Special:Signup|$1}} logged in]</span> to upload files.',
+/* Wikia change end */
 'upload_directory_missing'    => 'The upload directory ($1) is missing and could not be created by the webserver.',
 'upload_directory_read_only'  => 'The upload directory ($1) is not writable by the webserver.',
 'uploaderror'                 => 'Upload error',
