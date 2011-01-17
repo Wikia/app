@@ -700,3 +700,9 @@ $wgPayPalUrl = 'http://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checko
 $wgPayflowProAPIUrl = 'https://pilot-payflowpro.paypal.com';
 $wgPayflowProCredentials = array();
 $wgWikiPaymentAdsFreePrice = 4.99;	//used in WikiPayment/WikiBuilder
+
+/**
+ * sets memcached timeout back to what it was in mw1.15
+ */
+
+$wgMemCachedTimeout = 500000; //Data timeout in microseconds
