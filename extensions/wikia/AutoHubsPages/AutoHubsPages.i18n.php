@@ -41,7 +41,6 @@ $messages['qqq'] = array(
 * $1 is the number of comments.',
 	'hub-topusers-editpoints' => 'Parameters:
 * $1 is the number of edit points.',
-	'hub-hotspot-from' => 'from',
 	'hub-editors' => 'Parameters:
 * $1 is the number of editors.',
 );
