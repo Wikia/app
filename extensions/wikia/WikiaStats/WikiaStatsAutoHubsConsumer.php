@@ -116,7 +116,6 @@ class WikiaStatsAutoHubsConsumer {
 						# tags
 						$oWFTags = new WikiFactoryTags($city_id);
 						$tags = $oWFTags->getTags();
-						$tags = ( isset($tags['byid']) ) ? $tags['byid'] : $tags;			
 											
 						foreach ( $rows as $oRow ) {
 							if ( is_object( $oRow ) ) {
