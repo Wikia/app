@@ -2,7 +2,7 @@
 <!-- DISTRIBUTION TABLE -->
 <p class='error'><?=$error?></p>
 <form method="get" action="<?=$action?>">
-<div style="padding:3px"><?=wfMsg('tagsreportpagesfound', (!is_array($tagList)) ? 0 : array_sum($tagList))?></div>
+<div style="padding:3px"><?=wfMsgExt('tagsreportpagesfound', 'parsemag', (!is_array($tagList)) ? 0 : array_sum($tagList))?></div>
 <? if (!empty($tagList)) { ?>
 <? foreach ($tagList as $tag => $cnt) { ?>
 <div style="margin:4px 10px">

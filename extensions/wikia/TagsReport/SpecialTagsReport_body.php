@@ -61,7 +61,7 @@ class TagsReportPage extends SpecialPage {
 		$tagList = $this->getTagsList();
 
 		$timestamp = $this->getGenDate();
-		$wgOut->setSubtitle(wfMsg('tagsreportgenerated', $timestamp));
+		$wgOut->setSubtitle(wfMsg('tagsreportgenerated', $timestamp[0], $timestamp[1]));
 
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
@@ -168,7 +168,10 @@ class TagsReportPage extends SpecialPage {
 			__METHOD__
 		);
 
-		return $wgLang->timeanddate( wfTimestamp( TS_MW, $s->ts ), true );
+		return array(
+			$wgLang->date( wfTimestamp( TS_MW, $s->ts ), true ),
+			$wgLang->time( wfTimestamp( TS_MW, $s->ts ), true ),
+		);
 	}
 
 }
