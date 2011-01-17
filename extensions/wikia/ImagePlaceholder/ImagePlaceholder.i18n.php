@@ -5,14 +5,7 @@ $messages['en'] = array(
 	'imgplc-create' => 'Add Image',
 	'imgplc-placeholder' => 'Placeholder',
 	'imgplc-image' => 'Image',
-	'imgplc-notinhistory' => "You can't add picture in history mode."
-);
-
-/** Message documentation (Message documentation)
- * @author LWChris
- */
-$messages['qqq'] = array(
-	'imgplc-notinhistory' => 'add a picture - or - add pictures',
+	'imgplc-notinhistory' => "You cannot add a picture in history mode."
 );
 
 /** Afrikaans (Afrikaans)
