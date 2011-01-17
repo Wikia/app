@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class RegexBlockArticleTest extends BaseTest {
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI","uncyclopedia"})
 	public void testRegexBlockArticleSave() throws Exception {
 		loginAsRegular();
 		String content = (new Date()).toString();
@@ -21,19 +21,16 @@ public class RegexBlockArticleTest extends BaseTest {
 		assertFalse(session().isElementPresent("wpSave"));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI","uncyclopedia"})
 	public void testRegexBlockArticleSaveUnmatching() throws Exception {
 		login();
 		String content = (new Date()).toString();
-		System.out.println("1");
 		editArticle("Project:WikiaBotAutomatedTest",
 				"Regex Block Test. Tested: " + content + " \n");
-		System.out.println("1");
 		assertTrue(session().isElementPresent("wpSave"));
-		System.out.println("1");
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI","uncyclopedia"})
 	public void testRegexBlockArticleAddFreshMatch() throws Exception {
 		loginAsStaff();
 		session().open("index.php?title=Special:RegexBlock");
@@ -43,11 +40,11 @@ public class RegexBlockArticleTest extends BaseTest {
 
 		login();
 		session().open("index.php?title=Project:WikiaBotAutomatedTest");
-		clickAndWait("ca-edit");
+		clickAndWait("//a[@data-id='edit']");
 		assertTrue(session().isElementPresent("wpSave"));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI","uncyclopedia"})
 	public void testRegexBlockArticleClearFreshMatch() throws Exception {
 		loginAsStaff();
 		String content = (new Date()).toString();
