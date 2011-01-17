@@ -115,25 +115,27 @@ class WikiaStatsAutoHubsConsumer {
 						
 						# tags
 						$oWFTags = new WikiFactoryTags($city_id);
-						$tags = $oWFTags->getAllTags();
+						$tags = $oWFTags->getTags();
 						$tags = ( isset($tags['byid']) ) ? $tags['byid'] : $tags;			
 											
 						foreach ( $rows as $oRow ) {
 							if ( is_object( $oRow ) ) {
 								if( NS_BLOG_ARTICLE == $oRow->page_ns ) {
-									foreach( $tags as $id => $val ) {
-										if ( !isset($data['blogs'][$lang][$id]) ) {
-											$data['blogs'][$lang][$id] = array();
+									if ( !empty($tags) ) {
+										foreach( $tags as $id => $val ) {
+											if ( !isset($data['blogs'][$lang][$id]) ) {
+												$data['blogs'][$lang][$id] = array();
+											}
+											# prepare insert data
+											$data['blogs'][$lang][$id][] = array(
+												'tb_city_id'	=> $city_id, 
+												'tb_page_id'	=> $oRow->page_id, 
+												'tb_tag_id'		=> $id, 
+												'tb_date'		=> date("Y-m-d"),
+												'tb_city_lang'	=> $lang,
+												'tb_count'		=> 1										
+											);
 										}
-										# prepare insert data
-										$data['blogs'][$lang][$id][] = array(
-											'tb_city_id'	=> $city_id, 
-											'tb_page_id'	=> $oRow->page_id, 
-											'tb_tag_id'		=> $id, 
-											'tb_date'		=> date("Y-m-d"),
-											'tb_city_lang'	=> $lang,
-											'tb_count'		=> 1										
-										);
 									}
 								} else {		
 									$memkey = sprintf( "%s:user:%d", __METHOD__, $oRow->user_id );	
@@ -154,39 +156,41 @@ class WikiaStatsAutoHubsConsumer {
 										continue;
 									}
 				
-									foreach( $tags as $id => $val ) {
-										$date = date("Y-m-d");
-										$mcKey = wfSharedMemcKey( "auto_hubs", "unique_control", $city_id, $oRow->page_id, $oRow->user_id, $id, $date );
-										$out = $wgMemc->get($mcKey,null);
-										if ($out == 1) { continue ; }
-										$wgMemc->set($mcKey, 1, 24*60*60);
-																				
-										if ( !isset($data['user'][$lang][$id]) ) {
-											$data['user'][$lang][$id] = array();
+									if ( !empty($tags) ) {
+										foreach( $tags as $id => $val ) {
+											$date = date("Y-m-d");
+											$mcKey = wfSharedMemcKey( "auto_hubs", "unique_control", $city_id, $oRow->page_id, $oRow->user_id, $id, $date );
+											$out = $wgMemc->get($mcKey,null);
+											if ($out == 1) { continue ; }
+											$wgMemc->set($mcKey, 1, 24*60*60);
+																					
+											if ( !isset($data['user'][$lang][$id]) ) {
+												$data['user'][$lang][$id] = array();
+											}
+											if ( !isset($data['articles'][$lang][$id]) ) {
+												$data['articles'][$lang][$id] = array();
+											}										
+											#
+											# prepare insert data
+											$data['articles'][$lang][$id][] = array(									
+												'ta_city_id'	=> $city_id, 
+												'ta_page_id' 	=> $oRow->page_id, 
+												'ta_tag_id' 	=> $id, 
+												'ta_date'		=> $date,
+												'ta_city_lang' 	=> $lang,
+												'ta_count'		=> 1
+											);	
+											
+											$data['user'][$lang][$id][] = array(									
+												'tu_user_id'	=> $oRow->user_id, 
+												'tu_tag_id'		=> $id, 
+												'tu_date'		=> $date,
+												'tu_groups'		=> $user['groups'],
+												'tu_username'	=> addslashes($user['name']), 
+												'tu_city_lang'	=> $lang,
+												'tu_count'		=> 1										
+											);		
 										}
-										if ( !isset($data['articles'][$lang][$id]) ) {
-											$data['articles'][$lang][$id] = array();
-										}										
-										#
-										# prepare insert data
-										$data['articles'][$lang][$id][] = array(									
-											'ta_city_id'	=> $city_id, 
-											'ta_page_id' 	=> $oRow->page_id, 
-											'ta_tag_id' 	=> $id, 
-											'ta_date'		=> $date,
-											'ta_city_lang' 	=> $lang,
-											'ta_count'		=> 1
-										);	
-										
-										$data['user'][$lang][$id][] = array(									
-											'tu_user_id'	=> $oRow->user_id, 
-											'tu_tag_id'		=> $id, 
-											'tu_date'		=> $date,
-											'tu_groups'		=> $user['groups'],
-											'tu_username'	=> addslashes($user['name']), 
-											'tu_city_lang'	=> $lang,
-											'tu_count'		=> 1										
-										);		
 									}
 								}
 							}
