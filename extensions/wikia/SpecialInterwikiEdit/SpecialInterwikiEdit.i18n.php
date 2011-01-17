@@ -29,7 +29,6 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'iwedit-update' => '{{Identical|Update}}',
-	'iwedit-success' => 'succe-ss-fu-l, not succe-s-fu-ll. Needs correction in EN.',
 );
 
 /** Afrikaans (Afrikaans)
