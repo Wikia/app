@@ -29,8 +29,7 @@ class Foo {
 
 
 /**
- * @group all
- * @group core
+ * @group mwabstract
  */
 class WikiaFactoryTest	extends PHPUnit_Framework_TestCase {
 
