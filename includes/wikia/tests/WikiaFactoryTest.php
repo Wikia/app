@@ -1,6 +1,6 @@
 <?php
 
-require_once( dirname(__FILE__) . "/../includes/WikiaFactory.class.php");
+require_once( dirname(__FILE__) . "/../WikiaFactory.class.php");
 
 class Foo {
 	public $id = null;
