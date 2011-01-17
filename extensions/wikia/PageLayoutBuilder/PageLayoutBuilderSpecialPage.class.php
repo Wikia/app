@@ -476,13 +476,12 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			}
 		}
 
-		$body = $this->getTextFromRTEHTML($this->mFormData['body']);
+	/*	$body = $this->getTextFromRTEHTML($this->mFormData['body']);
 		if ( empty( $body ) ) {
-			$this->mFormErrors[] = wfMsg( 'plb-create-empty-body-error' );
-		}
+			$this->mFormErrors[] = ;
+		} */
 
 		$desc = trim( $this->mFormData['desc'] );
-
 		if( empty($desc) ) {
 			$this->mFormErrors[] = wfMsg( 'plb-create-empty-desc' );
 		}
@@ -526,6 +525,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$bot = $wgUser->isAllowed('bot') && $wgRequest->getBool( 'bot', true );
 		$this->mEditPage->summary = empty($this->mFormData['summary']) ? '' : $this->mFormData['summary'];
 		$status = $this->mEditPage->internalAttemptSave( $result, $bot );
+		echo $status;
 		switch( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
@@ -541,6 +541,10 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 				PageLayoutBuilderModel::saveElementList($this->mArticle->getID(), $wgParser->mPlbFormElements);
 				return true;
 			break;
+			case EditPage::AS_BLANK_ARTICLE:
+				$this->mFormErrors[] =  wfMsg( 'plb-create-empty-body-error' );
+				return false;
+				break;
 			case EditPage::AS_ARTICLE_WAS_DELETED:
 				return true;
 				break;
