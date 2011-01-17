@@ -48,7 +48,7 @@ public class CreateWikiTest extends BaseTest {
 				session().click("//input[@value='Continue to your wiki']");
 				
 				waitForTextPresent("Welcome to the Wiki", TIMEOUT, "Wiki has not been created, language: " + languages[i]);
-				assertTrue(session().getLocation().contains("http://" + languages[i] + "." + getWikiName() + ".wikia.com/wiki/"));
+				assertTrue(session().getLocation().contains("http://" + getWikiName() + ".wikia.com/wiki/"));
 			} else {
 				waitForTextPresent("Your wiki has been created!", TIMEOUT, "Wiki has not been created, language: " + languages[i]);
 				clickAndWait("//div[@class='awc-domain']/a");
