@@ -3,6 +3,8 @@ $(function() {
 });
 
 var ThemeDesigner = {
+	slideByDefaultWidth: 760,
+	slideByItems: 5,
 
 	track: function(url) {
 		$.tracker.byStr('themedesigner/' + url);
@@ -56,8 +58,8 @@ var ThemeDesigner = {
 
 	themeTabInit: function() {
 
-		var slideBy = 760;
-		var slideMax = -Math.floor($("#ThemeTab .slider ul li").length / 5) * 760;
+		var slideBy = ThemeDesigner.slideByDefaultWidth;
+		var slideMax = -Math.floor($("#ThemeTab .slider ul li").length / ThemeDesigner.slideByItems) * ThemeDesigner.slideByDefaultWidth;
 
 		// click handler for next and previous arrows in theme slider
 		$("#ThemeTab .previous, #ThemeTab .next").click(function(event) {
