@@ -1,4 +1,5 @@
 <?php
+/*
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
 class AdSS_PublisherTest extends PHPUnit_Extensions_SeleniumTestCase {
@@ -13,3 +14,4 @@ class AdSS_PublisherTest extends PHPUnit_Extensions_SeleniumTestCase {
 		$this->assertElementPresent('css=div.sponsormsg > ul > li');
 	}
 }
+*/

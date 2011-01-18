@@ -15,7 +15,7 @@
  * @author Wojciech Szela <wojtek@wikia-inc.com>
  * @link http://pl2.php.net/manual/en/class.exception.php
  */
-class WikiaException extends Exception {
+class WikiaException extends MWException {
 	/**
 	 * Previous exception
 	 * 
