@@ -29,13 +29,11 @@ class DummyExtension extends WikiaHookHandler {
 	}
 
 	public function onOutputPageBeforeHTML( &$out, &$text ) {
-		echo __METHOD__ . " - hook handler fired!<br />";
-		echo "Title: " . $this->getTitle()->getText() . "<br />";
 
 		$dbr = $this->wikia->runFunction( 'wfGetDB', DB_SLAVE, array(), $this->wikia->getGlobal( 'wgExternalSharedDB' ) );
 
 		//var_dump( $dbr );
-		var_dump( $this->getHookOptions() );
+		//var_dump( $this->getHookOptions() );
 
 		return true;
 	}
