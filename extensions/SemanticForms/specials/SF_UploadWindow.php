@@ -1529,7 +1529,7 @@ EOT
 		if ( !$user->isAllowed( 'reupload-own' ) )
 			return false;
 		
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$row = $dbr->selectRow( 'image',
 		/* SELECT */ 'img_user',
 		/* WHERE */ array( 'img_name' => $img )

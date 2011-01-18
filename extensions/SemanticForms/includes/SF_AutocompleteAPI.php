@@ -126,7 +126,7 @@ class SFAutocompleteAPI extends ApiBase {
 		global $sfgMaxAutocompleteValues;
 
 		$values = array();
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$sql_options = array();
 		$sql_options['LIMIT'] = $sfgMaxAutocompleteValues;
 		
