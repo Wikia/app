@@ -34,7 +34,7 @@ class DummyExtension extends WikiaHookHandler {
 
 		$dbr = $this->wikia->runFunction( 'wfGetDB', DB_SLAVE, array(), $this->wikia->getGlobal( 'wgExternalSharedDB' ) );
 
-		var_dump( $dbr );
+		//var_dump( $dbr );
 		var_dump( $this->getHookOptions() );
 
 		return true;
