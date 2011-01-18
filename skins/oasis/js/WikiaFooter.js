@@ -6,8 +6,7 @@ WikiaFooterApp = {
 
 	settings: {
 		mouseoverdelay: 300,
-		mouseoutdelay: 350,
-		float: false
+		mouseoutdelay: 350
 	},
 
 	init: function() {
