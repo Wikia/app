@@ -69,6 +69,22 @@ if($wgDBname != 'uncyclo') {
 global $wgAutoloadClasses;
 
 /**
+ * MW Abstraction Layer classes
+ */
+$wgAutoloadClasses['WF'] = $IP . '/includes/wikia/WikiaFactory.class.php';
+$wgAutoloadClasses['WikiaApp'] = $IP . '/includes/wikia/WikiaApp.class.php';
+$wgAutoloadClasses['WikiaHookHandler'] = $IP . '/includes/wikia/WikiaHookHandler.class.php';
+$wgAutoloadClasses['IWikiaHookHandler'] = $IP . '/includes/wikia/IWikiaHookHandler.interface.php';
+$wgAutoloadClasses['WikiaHookDispatcher'] = $IP . '/includes/wikia/WikiaHookDispatcher.class.php';
+$wgAutoloadClasses['WikiaRegistry'] = $IP . '/includes/wikia/WikiaRegistry.class.php';
+$wgAutoloadClasses['WikiaGlobalsRegistry'] = $IP . '/includes/wikia/WikiaGlobalsRegistry.class.php';
+$wgAutoloadClasses['WikiaLocalRegistry'] = $IP . '/includes/wikia/WikiaLocalRegistry.class.php';
+$wgAutoloadClasses['WikiaCompositeRegistry'] = $IP . '/includes/wikia/WikiaCompositeRegistry.class.php';
+
+WF::setInstance( 'App', new WikiaApp() );
+
+
+/**
  * custom wikia classes
  */
 $wgAutoloadClasses["Tyrant_Exception"] = "$IP/lib/Tyrant/Exception.php";
