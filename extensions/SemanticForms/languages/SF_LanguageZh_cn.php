@@ -6,9 +6,9 @@
 class SF_LanguageZh_cn extends SF_Language {
 
 	/* private */ var $m_SpecialProperties = array(
-		//always start upper-case
-		SF_SP_HAS_DEFAULT_FORM    => '预设表单',	//(Has default form) 
-		SF_SP_HAS_ALTERNATE_FORM  => '代用表单'  //(Has alternate form)
+		// always start upper-case
+		SF_SP_HAS_DEFAULT_FORM    => '预设表单',	// (Has default form) 
+		SF_SP_HAS_ALTERNATE_FORM  => '代用表单'  // (Has alternate form)
 	);
 
 	var $m_Namespaces = array(
@@ -18,5 +18,5 @@ class SF_LanguageZh_cn extends SF_Language {
 
 }
 
-$m_SpecialPropertyAliases['设有表单'] = SF_SP_HAS_DEFAULT_FORM;	//(Has default form) //Adding the item "Has alternate form", this item will not be suitable for translating into “设有表单＂. It has changed to use “预设表单＂. 
+$m_SpecialPropertyAliases['设有表单'] = SF_SP_HAS_DEFAULT_FORM;	// (Has default form) //Adding the item "Has alternate form", this item will not be suitable for translating into “设有表单＂. It has changed to use “预设表单＂. 
 

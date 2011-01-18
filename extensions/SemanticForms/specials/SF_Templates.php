@@ -5,27 +5,39 @@
  * @author Yaron Koren
  */
 
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 class SFTemplates extends SpecialPage {
 
 	/**
 	 * Constructor
 	 */
-	function SFTemplates() {
-		SpecialPage::SpecialPage('Templates');
-		wfLoadExtensionMessages('SemanticForms');
+	function __construct() {
+		parent::__construct( 'Templates' );
+		SFUtils::loadMessages();
 	}
 
-	function execute($query) {
+	function execute( $query ) {
 		$this->setHeaders();
 		list( $limit, $offset ) = wfCheckLimits();
 		$rep = new TemplatesPage();
-		return $rep->doQuery( $offset, $limit );
+		// execute() method added in MW 1.18
+		if ( method_exists( $rep, 'execute' ) ) {
+			$rep->execute( $query );
+		} else {
+			return $rep->doQuery( $offset, $limit );
+		}
 	}
 }
 
 class TemplatesPage extends QueryPage {
+	public function __construct( $name = 'Templates' ) {
+		// For MW <= 1.17
+                if ( $this instanceof SpecialPage ) {
+			parent::__construct( $name );
+		}
+	}
+	
 	function getName() {
 		return "Templates";
 	}
@@ -37,13 +49,13 @@ class TemplatesPage extends QueryPage {
 	function getPageHeader() {
 		global $wgUser;
 		
-		wfLoadExtensionMessages('SemanticForms');
+		SFUtils::loadMessages();
 		
 		$sk = $wgUser->getSkin();
-		$ct = SpecialPage::getPage('CreateTemplate');
-		$create_template_link = $sk->makeKnownLinkObj($ct->getTitle(), $ct->getDescription());
+		$ct = SpecialPage::getPage( 'CreateTemplate' );
+		$create_template_link = $sk->makeKnownLinkObj( $ct->getTitle(), $ct->getDescription() );
 		$header = "<p>" . $create_template_link . ".</p>\n";
-		$header .= '<p>' . wfMsg('sf_templates_docu') . "</p><br />\n";
+		$header .= '<p>' . wfMsg( 'sf_templates_docu' ) . "</p><br />\n";
 		return $header;
 	}
 
@@ -63,32 +75,41 @@ class TemplatesPage extends QueryPage {
 			WHERE page_namespace = {$NStemp}";
 	}
 
+	// For MW 1.18+
+	function getQueryInfo() {
+		return array(
+			'tables' => array( 'page' ),
+			'fields' => array( 'page_title AS title', 'page_title AS value' ),
+			'conds' => array( 'page_namespace' => NS_TEMPLATE )
+		);
+	}
+
 	function sortDescending() {
 		return false;
 	}
 
-	function getCategoryDefinedByTemplate($template_article) {
+	function getCategoryDefinedByTemplate( $template_article ) {
 		global $wgContLang;
 
 		$template_text = $template_article->getContent();
-		$cat_ns_name = $wgContLang->getNsText(14);
-		if (preg_match_all("/\[\[$cat_ns_name:(.*)\]\]/", $template_text, $matches)) {
+		$cat_ns_name = $wgContLang->getNsText( 14 );
+		if ( preg_match_all( "/\[\[(Category|$cat_ns_name):([^\]]*)\]\]/", $template_text, $matches ) ) {
 			// get the last match - if there's more than one
 			// category tag, there's a good chance that the last
 			// one will be the relevant one - the others are
 			// probably part of inline queries
-			return trim(end($matches[1]));
+			return trim( end( $matches[2] ) );
 		}
 		return "";
 	}
 
-	function formatResult($skin, $result) {
-		wfLoadExtensionMessages('SemanticForms');
+	function formatResult( $skin, $result ) {
+		SFUtils::loadMessages();
 		$title = Title::makeTitle( NS_TEMPLATE, $result->value );
 		$text = $skin->makeLinkObj( $title, $title->getText() );
-		$category = $this->getCategoryDefinedByTemplate(new Article($title));
-		if ($category != '')
-			$text .= ' ' . wfMsg('sf_templates_definescat') . ' ' . SFUtils::linkText(NS_CATEGORY, $category);
+		$category = $this->getCategoryDefinedByTemplate( new Article( $title ) );
+		if ( $category != '' )
+			$text .= ' ' . wfMsg( 'sf_templates_definescat' ) . ' ' . SFUtils::linkText( NS_CATEGORY, $category );
 		return $text;
 	}
 }
