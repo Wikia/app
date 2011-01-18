@@ -1,4 +1,4 @@
-[[Semantic Drilldown 0.7]]
+[[Semantic Drilldown 0.8.1]]
 
 Contents:
 * Disclaimer
@@ -7,12 +7,6 @@ Contents:
 * Contact
 
 == Disclaimer ==
-
-Semantic Drilldown is a new extension, and there is no
-guarantee that any of it will work on your system. However, it does
-not make any modifications to the database, other than creating
-temporary database tables that are deleted soon afterwards, so it
-should be a low-risk installation.
 
 For a proper legal disclaimer, see the file "COPYING".
 

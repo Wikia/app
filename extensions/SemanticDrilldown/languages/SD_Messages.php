@@ -69,15 +69,14 @@ $messages['en'] = array(
  * @author EugeneZelenko
  * @author Jon Harald Søby
  * @author Purodha
+ * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'semanticdrilldown-desc' => 'Short desciption of this extension.
-Shown in [[Special:Version]].
-Do not translate link targets,
-or tag names.',
+	'semanticdrilldown-desc' => '{{desc}}',
 	'sd_browsedata_other' => '{{Identical|Other}}',
 	'sd_browsedata_none' => '{{Identical|None}}',
+	'sd_browsedata_or' => '{{Identical|Or}}',
 	'filters' => '{{Identical|Filter}}',
 	'sd_createfilter_name' => '{{Identical|Name}}',
 	'sd_blank_error' => '{{Identical|Cannot be blank}}',
@@ -134,6 +133,8 @@ $messages['am'] = array(
  * @author Juanpabl
  */
 $messages['an'] = array(
+	'sd_browsedata_other' => 'Un atro',
+	'sd_browsedata_none' => 'Garra',
 	'filters' => 'Filtros',
 	'sd_createfilter_name' => 'Nombre:',
 );
@@ -198,12 +199,20 @@ $messages['ar'] = array(
  * @author Basharh
  */
 $messages['arc'] = array(
+	'sd_browsedata_choosecategory' => 'ܓܒܝ ܣܕܪܐ',
+	'sd_browsedata_viewcategory' => 'ܚܘܝ ܣܕܪܐ',
+	'sd_browsedata_subcategory' => 'ܣܕܪ̈ܐ ܦܪ̈ܥܝܐ',
 	'sd_browsedata_other' => 'ܐܚܪܢܐ',
 	'sd_browsedata_none' => 'ܠܐ ܡܕܡ',
 	'sd_browsedata_or' => 'ܐܘ',
+	'sd_browsedata_daterangestart' => 'ܫܘܪܝܐ:',
+	'sd_browsedata_daterangeend' => 'ܫܘܠܡܐ:',
+	'createfilter' => 'ܒܪܝ ܡܨܦܝܢܝܬܐ',
 	'sd_createfilter_name' => 'ܫܡܐ:',
+	'sd_blank_error' => 'ܠܐ ܡܨܐ ܕܢܗܘܐ ܣܦܝܩܐ',
 	'sd_filter_year' => 'ܫܢܬܐ',
 	'sd_filter_month' => 'ܝܪܚܐ',
+	'sd_filter_freetext' => 'ܟܬܒܬܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -293,6 +302,14 @@ $messages['avk'] = array(
 	'sd_filter_hasvalues' => 'In va $1 voda se digir.',
 	'sd_filter_requiresfilter' => 'Batcoba va tira ke $1 espasiki kucilar.',
 	'sd_filter_haslabel' => 'In tir dem $1 kral.',
+);
+
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'filters' => 'Фільтры',
+	'sd_filter_freetext' => 'тэкст',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
@@ -387,6 +404,7 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'semanticdrilldown-desc' => 'Un etrefas poelladennoù evit merdeiñ dre roadennoù ereadurel',
 	'specialpages-group-sd_group' => 'Poelladenn semantek',
 	'browsedata' => 'Furchal ar roadennoù',
 	'sd_browsedata_choosecategory' => 'Dibab ur rummad',
@@ -414,10 +432,14 @@ $messages['br'] = array(
 	'sd_createfilter_property' => "Perc'henniezh a vo goloet gant ar sil-mañ :",
 	'sd_createfilter_usepropertyvalues' => "Implijout holl talvoudoù ar berc'henniezh evit ar sil-mañ",
 	'sd_createfilter_usecategoryvalues' => 'Kaout an talvoudoù evit ar sil adalek ar rummad-mañ :',
+	'sd_createfilter_usedatevalues' => "Implijout a ra bloc'hadoù deiziad evit ar sil-mañ gant an amzervezh-mañ :",
+	'sd_createfilter_entervalues' => "Lakait c'hwi hoc'h-unan talvoudoù evit ar sil-mañ (gant skejoù e tle an talvoudoù bezañ dispartiet - ma vez ur skej en un talvoud, lakait ur \"\\,\" en e lec'h):",
 	'sd_createfilter_inputtype' => 'Ar seurt moned e-barzh evit ar sil-mañ :',
 	'sd_createfilter_listofvalues' => 'roll talvoudoù (dre ziouer)',
+	'sd_createfilter_requirefilter' => 'Goulenn ma vo diuzet ur sil all a-raok na zeufe hemañ war wel :',
 	'sd_createfilter_label' => 'Tiketenn evit ar sil-mañ (diret) :',
 	'sd_blank_error' => "ne c'hall ket bezañ goullo",
+	'sd_filter_coversproperty' => "Ar sil-mañ a ra war-dro ar perc'henniezh $1.",
 	'sd_filter_getsvaluesfromcategory' => 'E dalvoudoù en deus eus ar rummad $1.',
 	'sd_filter_usestimeperiod' => 'Implijout a ra $1 evel padelezh ar prantad',
 	'sd_filter_year' => 'Bloaz',
@@ -426,6 +448,7 @@ $messages['br'] = array(
 	'sd_filter_hasinputtype' => 'Ar seurt moned e-barzh $1 en deus.',
 	'sd_filter_combobox' => 'stern roll disachañ',
 	'sd_filter_freetext' => 'testenn',
+	'sd_filter_daterange' => 'emled an deiziad',
 	'sd_filter_requiresfilter' => 'Ezhomm en deus eus bezañs ar sil $1.',
 	'sd_filter_haslabel' => 'An tikedenn $1 en deus.',
 );
@@ -434,6 +457,8 @@ $messages['br'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'semanticdrilldown-desc' => 'Interfejs za postupnu navigaciju kroz semantičke podatke',
+	'specialpages-group-sd_group' => 'Semantičko istančavanje',
 	'browsedata' => 'Pregledaj podatke',
 	'sd_browsedata_choosecategory' => 'Izaberi kategoriju',
 	'sd_browsedata_viewcategory' => 'pogledaj kategoriju',
@@ -460,8 +485,11 @@ $messages['bs'] = array(
 	'sd_createfilter_property' => 'Svojstvo koje ovaj filter pokriva:',
 	'sd_createfilter_usepropertyvalues' => 'Koristi sve vrijednosti ovog svojstva za filter',
 	'sd_createfilter_usecategoryvalues' => 'Preuzmi vrijednosti za filter iz ove kategorije:',
+	'sd_createfilter_usedatevalues' => 'Koristite datumski period za ovaj filter za ovim vremenskim periodom:',
+	'sd_createfilter_entervalues' => 'Unesite ručno vrijednosti za filter (vrijednosti se trebaju razdvojiti zarezima - ako vrijednost sadrži zarez, zamijenite ga sa "\\,"):',
 	'sd_createfilter_inputtype' => 'Tip unosa za ovaj filter:',
 	'sd_createfilter_listofvalues' => 'spisak vrijednosti (pretpostavljeno)',
+	'sd_createfilter_requirefilter' => 'Zahtijeva drugi filter da bude odabran prije nego se ovaj prikaže:',
 	'sd_createfilter_label' => 'Naslov za ovaj filter (opcija):',
 	'sd_blank_error' => 'ne može biti prazno',
 	'sd_filter_coversproperty' => 'Ovaj filter pokriva svojstvo $1.',
@@ -471,6 +499,7 @@ $messages['bs'] = array(
 	'sd_filter_month' => 'mjesec',
 	'sd_filter_hasvalues' => 'Ima vrijednosti $1.',
 	'sd_filter_hasinputtype' => 'Ima vrstu ulaza $1.',
+	'sd_filter_combobox' => 'rasklopna kutija',
 	'sd_filter_freetext' => 'tekst',
 	'sd_filter_daterange' => 'vremenski raspon',
 	'sd_filter_requiresfilter' => 'Zahtjeva prisustvo filtera $1.',
@@ -480,6 +509,7 @@ $messages['bs'] = array(
 /** Catalan (Català)
  * @author Dvdgmz
  * @author Jordi Roqué
+ * @author Paucabot
  * @author Solde
  */
 $messages['ca'] = array(
@@ -500,7 +530,7 @@ $messages['ca'] = array(
 	'sd_browsedata_removefilter' => 'Elimina aquest filtre',
 	'sd_browsedata_removesubcategoryfilter' => 'Elimina aquest filtre de subcategoria',
 	'sd_browsedata_resetfilters' => 'Restaura filtres',
-	'sd_browsedata_addanothervalue' => 'Afegir un altre valor',
+	'sd_browsedata_addanothervalue' => 'Feu clic sobre la fletxa per afegir un altre valor',
 	'sd_browsedata_daterangestart' => 'Inici:',
 	'sd_browsedata_daterangeend' => 'Fi:',
 	'sd_browsedata_novalues' => "No s'han trobat valors per aquest filtre",
@@ -532,6 +562,19 @@ $messages['ca'] = array(
 	'sd_filter_haslabel' => 'Té el ròtul $1.',
 );
 
+/** Czech (Česky)
+ * @author Juan de Vojníkov
+ */
+$messages['cs'] = array(
+	'sd_browsedata_subcategory' => 'Podkategorie',
+	'sd_browsedata_other' => 'Jiné',
+	'sd_browsedata_none' => 'Nic',
+	'sd_browsedata_daterangeend' => 'Konec:',
+	'sd_createfilter_name' => 'Jméno:',
+	'sd_filter_year' => 'Rok',
+	'sd_filter_month' => 'Měsíc',
+);
+
 /** Welsh (Cymraeg)
  * @author Lloffiwr
  */
@@ -552,6 +595,7 @@ $messages['da'] = array(
 /** German (Deutsch)
  * @author ChrisiPK
  * @author DaSch
+ * @author Kghbln
  * @author Krabina
  * @author Lyzzy
  * @author Melancholie
@@ -562,7 +606,7 @@ $messages['da'] = array(
  * @author Umherirrender
  */
 $messages['de'] = array(
-	'semanticdrilldown-desc' => 'Eine Benutzerschnittstelle, um über schrittweise Verfeinerungen durch semantische Daten zu navigieren',
+	'semanticdrilldown-desc' => 'Stellt eine Benutzerschnittstelle zur Verfügung, die eine gestufte Navigation durch semantische Daten ermöglicht',
 	'specialpages-group-sd_group' => 'Semantisches Drill-Down',
 	'browsedata' => 'Daten ansehen',
 	'sd_browsedata_choosecategory' => 'Kategorie auswählen',
@@ -770,6 +814,7 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Bola
  * @author Crazymadlover
  * @author Dvdgmz
  * @author Imre
@@ -803,7 +848,7 @@ $messages['es'] = array(
 	'sd_createfilter_name' => 'Nombre:',
 	'sd_createfilter_property' => 'Propiedad que este filtro cubre:',
 	'sd_createfilter_usepropertyvalues' => 'Usar todos los valores de esta propiedad para el filtro',
-	'sd_createfilter_usecategoryvalues' => 'Obtenga valores para el filtro desde esta catagoría:',
+	'sd_createfilter_usecategoryvalues' => 'Obtenga valores para el filtro desde esta categoría:',
 	'sd_createfilter_usedatevalues' => 'Usar rangos de fecha para este filtro con este periodo de tiempo:',
 	'sd_createfilter_entervalues' => 'Ingresar valores para el filtro manualmente (valores deberían estar separados por comas - si un valor contiene una coma, reemplacela con "\\,"):',
 	'sd_createfilter_inputtype' => 'Tipo de entrada de datos para este filtro:',
@@ -849,6 +894,7 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author Huji
  * @author Ibrahim
  * @author Tofighi
@@ -868,11 +914,11 @@ $messages['fa'] = array(
 	'sd_browsedata_removefilter' => 'حذف این فیلتر',
 	'sd_browsedata_removesubcategoryfilter' => 'حذف این فیلتر زیر رده',
 	'sd_browsedata_resetfilters' => 'تنظیم فیلترها از نو',
-	'sd_browsedata_addanothervalue' => 'مقدار دیگری اضافه کنید',
+	'sd_browsedata_addanothervalue' => 'برای اضافه‌کردن مقداری دیگر بر روی پیکان کلیک کنید.',
 	'sd_browsedata_daterangestart' => ':شروع',
 	'filters' => 'پالایه‌ها',
 	'sd_filters_docu' => 'فیلترهای زیر در این ویکی وجود دارد:',
-	'createfilter' => 'فیلتر بسازید',
+	'createfilter' => 'پالایه‌ای بسازید',
 	'sd_createfilter_name' => 'نام:',
 	'sd_createfilter_property' => 'ویژگی که این فیلتر شامل آن می‌شود:',
 	'sd_createfilter_usepropertyvalues' => 'همه مقادیر این ویژگی را برای این فیلتر به‌کار برید',
@@ -999,17 +1045,41 @@ $messages['fr'] = array(
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'specialpages-group-sd_group' => 'Ègzèrcice de sèmantica',
+	'browsedata' => 'Navegar les balyês',
+	'sd_browsedata_choosecategory' => 'Chouèsir una catègorie',
+	'sd_browsedata_viewcategory' => 'vêre la catègorie',
 	'sd_browsedata_subcategory' => 'Sot-catègorie',
 	'sd_browsedata_other' => 'Ôtro',
 	'sd_browsedata_none' => 'Nion',
+	'sd_browsedata_filterbyvalue' => 'Filtrar per ceta valor',
+	'sd_browsedata_filterbysubcategory' => 'Filtrar per ceta sot-catègorie',
+	'sd_browsedata_otherfilter' => 'Fâre vêre les pâges avouéc una ôtra valor por ceti filtro',
+	'sd_browsedata_nonefilter' => 'Fâre vêre les pâges avouéc gins de valor por ceti filtro',
+	'sd_browsedata_or' => 'ou ben',
+	'sd_browsedata_removefilter' => 'Enlevar ceti filtro',
+	'sd_browsedata_removesubcategoryfilter' => 'Enlevar ceti filtro de sot-catègorie',
+	'sd_browsedata_resetfilters' => 'Tornar inicialisar los filtros',
 	'sd_browsedata_daterangestart' => 'Comencement :',
 	'sd_browsedata_daterangeend' => 'Fin :',
 	'filters' => 'Filtros',
+	'sd_filters_docu' => 'Cetos filtros ègzistont dessus {{SITENAME}} :',
 	'createfilter' => 'Fâre un filtro',
 	'sd_createfilter_name' => 'Nom :',
+	'sd_createfilter_inputtype' => 'Tipo d’entrâ por ceti filtro :',
+	'sd_createfilter_listofvalues' => 'Lista de les valors (per dèfôt)',
+	'sd_createfilter_label' => 'Ètiquèta por ceti filtro (u chouèx) :',
+	'sd_blank_error' => 'pôt pas étre vouedo',
+	'sd_filter_coversproperty' => 'Ceti filtro côvre la propriètât $1.',
+	'sd_filter_getsvaluesfromcategory' => 'Il at ses valors dês la catègorie $1.',
 	'sd_filter_year' => 'An',
 	'sd_filter_month' => 'Mês',
+	'sd_filter_hasvalues' => 'Il at les valors $1.',
+	'sd_filter_hasinputtype' => 'Il at lo tipo d’entrâ $1.',
+	'sd_filter_combobox' => 'Bouèta combô',
 	'sd_filter_freetext' => 'tèxto',
+	'sd_filter_daterange' => 'plage de dâtes',
+	'sd_filter_haslabel' => 'Il at l’ètiquèta $1.',
 );
 
 /** Western Frisian (Frysk)
@@ -1196,7 +1266,7 @@ $messages['he'] = array(
 	'sd_browsedata_removefilter' => 'הסרת מסנן זה',
 	'sd_browsedata_removesubcategoryfilter' => 'הסרת המסנן של קטגוריית משנה זו',
 	'sd_browsedata_resetfilters' => 'איפוס המסננים',
-	'sd_browsedata_addanothervalue' => 'הוספת ערך נוסף',
+	'sd_browsedata_addanothervalue' => 'יש ללחוץ על החץ כדי להוסיף ערך נוסף',
 	'sd_browsedata_daterangestart' => 'התחלה:',
 	'sd_browsedata_daterangeend' => 'סיום:',
 	'sd_browsedata_novalues' => 'אין ערכים עבור מסנן זה',
@@ -1392,7 +1462,7 @@ $messages['ia'] = array(
 	'sd_browsedata_or' => 'o',
 	'sd_browsedata_removefilter' => 'Remover iste filtro',
 	'sd_browsedata_removesubcategoryfilter' => 'Remover iste filtro de subcategoria',
-	'sd_browsedata_resetfilters' => 'Reinitiar filtros',
+	'sd_browsedata_resetfilters' => 'Reinitialisar filtros',
 	'sd_browsedata_addanothervalue' => 'Clicca super le sagitta pro adder ancora un valor',
 	'sd_browsedata_daterangestart' => 'Initio:',
 	'sd_browsedata_daterangeend' => 'Fin:',
@@ -1502,11 +1572,13 @@ $messages['is'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Civvì
  * @author Darth Kule
  * @author Gianfranco
  */
 $messages['it'] = array(
 	'semanticdrilldown-desc' => "Un'interfaccia drilldown per navigare attraverso dati semantici",
+	'specialpages-group-sd_group' => 'Drilldown semantico',
 	'browsedata' => 'Esplora i dati',
 	'sd_browsedata_choosecategory' => 'Scegli una categoria',
 	'sd_browsedata_viewcategory' => 'vedi categoria',
@@ -1547,6 +1619,7 @@ $messages['it'] = array(
 	'sd_filter_month' => 'Mese',
 	'sd_filter_hasvalues' => 'Ha i valori $1.',
 	'sd_filter_hasinputtype' => 'Ha il tipo di input $1.',
+	'sd_filter_combobox' => 'combo box',
 	'sd_filter_freetext' => 'testo',
 	'sd_filter_daterange' => 'intervallo date',
 	'sd_filter_requiresfilter' => 'Richiede la presenza del filtro $1.',
@@ -1695,6 +1768,9 @@ $messages['km'] = array(
 $messages['kn'] = array(
 	'sd_browsedata_other' => 'ಇತರ',
 	'sd_createfilter_name' => 'ಹೆಸರು:',
+	'sd_filter_year' => 'ವರ್ಷ',
+	'sd_filter_month' => 'ತಿಂಗಳು',
+	'sd_filter_freetext' => 'ಪಠ್ಯ',
 );
 
 /** Korean (한국어)
@@ -1704,7 +1780,7 @@ $messages['ko'] = array(
 	'filters' => '필터',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -1761,6 +1837,7 @@ en däm Wäät <code>\\,</code> enjävve, domet et keine Dorjeneijn jitt.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
@@ -1772,26 +1849,26 @@ $messages['lb'] = array(
 	'sd_browsedata_subcategory' => 'Ënnerkategorie',
 	'sd_browsedata_other' => 'Aner',
 	'sd_browsedata_none' => 'Keen',
-	'sd_browsedata_filterbyvalue' => 'Filter fir dëse Wert',
+	'sd_browsedata_filterbyvalue' => 'Filter fir dëse Wäert',
 	'sd_browsedata_filterbysubcategory' => 'No dëser Ënnerkategorie filteren',
-	'sd_browsedata_otherfilter' => 'Säite weisen déi matt engem anere Wert fir dëse Filter',
-	'sd_browsedata_nonefilter' => 'Sàite weisen déi kee Wert fir dëse Filter hunn',
+	'sd_browsedata_otherfilter' => 'Säite weisen déi mat engem anere Wäert fir dëse Filter',
+	'sd_browsedata_nonefilter' => 'Säite weisen déi kee Wäert fir dëse Filter hunn',
 	'sd_browsedata_or' => 'oder',
 	'sd_browsedata_removefilter' => 'Dëse filtr ewechhuelen',
 	'sd_browsedata_removesubcategoryfilter' => 'Dëse Filter vun den Ënnerkategorien ewechhuelen',
 	'sd_browsedata_resetfilters' => 'Filteren zrécksetzen',
-	'sd_browsedata_addanothervalue' => 'Klickt op de Feil fir een anere Wert derbäisetzen',
+	'sd_browsedata_addanothervalue' => 'Klickt op de Feil fir een anere Wäert derbäisetzen',
 	'sd_browsedata_daterangestart' => 'Ufank:',
 	'sd_browsedata_daterangeend' => 'Enn:',
-	'sd_browsedata_novalues' => 'Et gëtt keng Werter fir dëse Filter',
+	'sd_browsedata_novalues' => 'Et gëtt keng Wäerter fir dëse Filter',
 	'filters' => 'Filteren',
 	'sd_filters_docu' => 'Dës Filtere gëtt et op {{SITENAME}}:',
 	'createfilter' => 'E Filter uleeën',
 	'sd_createfilter_name' => 'Numm:',
-	'sd_createfilter_usepropertyvalues' => 'All Werter vun dëser Eegeschaft fir de Filter benotzen',
+	'sd_createfilter_usepropertyvalues' => 'All Wäerter vun dëser Eegeschaft fir de Filter benotzen',
 	'sd_createfilter_usecategoryvalues' => 'Werter fir dëse Filter vun dëser Kategorie kréien:',
 	'sd_createfilter_inputtype' => 'Gitt den Typ vun dësem Filter un.',
-	'sd_createfilter_listofvalues' => 'Lëscht vun de Werter (stanard)',
+	'sd_createfilter_listofvalues' => 'Lëscht vun de Wäerter (Standard)',
 	'sd_createfilter_requirefilter' => 'Verlaangen dat en anere Filter gewielt gëtt ier dësen ugewise gëtt:',
 	'sd_createfilter_label' => 'Etiquette fir dëse Filter (fakultativ):',
 	'sd_blank_error' => 'däerf net eidel sinn',
@@ -1800,7 +1877,7 @@ $messages['lb'] = array(
 	'sd_filter_usestimeperiod' => 'E benotzt $1 als Zäitraum',
 	'sd_filter_year' => 'Joer',
 	'sd_filter_month' => 'Mount',
-	'sd_filter_hasvalues' => 'En huet de Wert $1.',
+	'sd_filter_hasvalues' => 'En huet de Wäert $1.',
 	'sd_filter_combobox' => 'Combinéiert Këscht (combo box)',
 	'sd_filter_freetext' => 'Text',
 	'sd_filter_daterange' => 'Datumsberäich',
@@ -1817,9 +1894,10 @@ $messages['mhr'] = array(
 
 /** Macedonian (Македонски)
  * @author Bjankuloski06
+ * @author Brest
  */
 $messages['mk'] = array(
-	'semanticdrilldown-desc' => 'Интерфејс за истенчена навигација по семантички податоци',
+	'semanticdrilldown-desc' => 'Посредник за истенчена навигација по семантички податоци',
 	'specialpages-group-sd_group' => 'Семантичко истенчување',
 	'browsedata' => 'Прелистај податоци',
 	'sd_browsedata_choosecategory' => 'Одберете категорија',
@@ -1834,7 +1912,7 @@ $messages['mk'] = array(
 	'sd_browsedata_nonefilter' => 'Прикажи страници без вредности за овој филтер',
 	'sd_browsedata_or' => 'или',
 	'sd_browsedata_removefilter' => 'Отстрани го филтерот',
-	'sd_browsedata_removesubcategoryfilter' => 'Отстрани го овој филтер за поткатегорија',
+	'sd_browsedata_removesubcategoryfilter' => 'Отстрани го овој филтер за поткатегории',
 	'sd_browsedata_resetfilters' => 'Врати ги филтрите по основно',
 	'sd_browsedata_addanothervalue' => 'Кликнете на стрелката за да додадете друга вредност',
 	'sd_browsedata_daterangestart' => 'Почеток:',
@@ -1850,7 +1928,7 @@ $messages['mk'] = array(
 	'sd_createfilter_usedatevalues' => 'Користи датумски опсези за овој филтер со овој временски период:',
 	'sd_createfilter_entervalues' => 'Рачно внесете вредности за филтерот (вредностите треба да бидат одвоени со запирки - ако самата вредност содржи запирка, тогаш заменете ја со „\\,“):',
 	'sd_createfilter_inputtype' => 'Тип на внос за овој филтер:',
-	'sd_createfilter_listofvalues' => 'листа на вредности (по основно)',
+	'sd_createfilter_listofvalues' => 'список на вредности (по основно)',
 	'sd_createfilter_requirefilter' => 'Побарувај да биде избран друг филтер пред да се прикаже овој:',
 	'sd_createfilter_label' => 'Наслов за овој филтер (незадолжително)',
 	'sd_blank_error' => 'не може да стои празно',
@@ -1872,30 +1950,30 @@ $messages['mk'] = array(
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'sd_browsedata_choosecategory' => 'ഒരു വര്‍ഗ്ഗം തിരഞ്ഞെടുക്കുക',
-	'sd_browsedata_viewcategory' => 'വര്‍ഗ്ഗം കാണുക',
+	'sd_browsedata_choosecategory' => 'ഒരു വർഗ്ഗം തിരഞ്ഞെടുക്കുക',
+	'sd_browsedata_viewcategory' => 'വർഗ്ഗം കാണുക',
 	'sd_browsedata_subcategory' => 'ഉപവർഗ്ഗം',
 	'sd_browsedata_other' => 'മറ്റുള്ളവ',
 	'sd_browsedata_none' => 'ഒന്നുമില്ല',
 	'sd_browsedata_filterbyvalue' => 'ഈ മൂല്യം ഉപയോഗിച്ച് അരിക്കുക',
 	'sd_browsedata_filterbysubcategory' => 'ഈ ഉപവർഗ്ഗം ഉപയോഗിച്ച് അരിക്കുക',
-	'sd_browsedata_otherfilter' => 'ഈ ഫില്‍റ്റര്‍ ഉപയോഗിച്ച് മറ്റൊരു മൂല്യത്തിലുള്ള താളുകള്‍ കാണിക്കുക',
-	'sd_browsedata_nonefilter' => 'മൂല്യമൊന്നും ചേര്‍ക്കാതെ ഈ ഫില്‍റ്റര്‍ ഉപയോഗിച്ച് താളുകള്‍ കാണിക്കുക',
-	'sd_browsedata_or' => 'അല്ലെങ്കില്‍',
-	'sd_browsedata_removefilter' => 'ഈ ഫില്‍റ്റര്‍ ഒഴിവാക്കുക',
-	'sd_browsedata_removesubcategoryfilter' => 'ഈ ഉപവർഗ്ഗ ഫില്‍റ്റര്‍ ഒഴിവാക്കുക',
-	'sd_browsedata_resetfilters' => 'ഫില്‍റ്ററുകള്‍ പുനഃക്രമീകരിക്കുക',
-	'sd_browsedata_addanothervalue' => 'മറ്റൊരു മൂല്യം ചേര്‍ക്കുക',
-	'filters' => 'ഫില്‍റ്ററുകള്‍',
-	'sd_filters_docu' => '{{SITENAME}} സം‌രംഭത്തില്‍ താഴെ പ്രദര്‍ശിപ്പിച്ചിരിക്കുന്ന ഫില്‍റ്ററുകള്‍ നിലവിലുണ്ട്:',
-	'createfilter' => 'ഒരു ഫില്‍റ്റര്‍ സൃഷ്ടിക്കുക',
+	'sd_browsedata_otherfilter' => 'ഈ ഫിൽറ്റർ ഉപയോഗിച്ച് മറ്റൊരു മൂല്യത്തിലുള്ള താളുകൾ കാണിക്കുക',
+	'sd_browsedata_nonefilter' => 'മൂല്യമൊന്നും ചേർക്കാതെ ഈ ഫിൽറ്റർ ഉപയോഗിച്ച് താളുകൾ കാണിക്കുക',
+	'sd_browsedata_or' => 'അല്ലെങ്കിൽ',
+	'sd_browsedata_removefilter' => 'ഈ ഫിൽറ്റർ ഒഴിവാക്കുക',
+	'sd_browsedata_removesubcategoryfilter' => 'ഈ ഉപവർഗ്ഗ ഫിൽറ്റർ ഒഴിവാക്കുക',
+	'sd_browsedata_resetfilters' => 'ഫിൽറ്ററുകൾ പുനഃക്രമീകരിക്കുക',
+	'sd_browsedata_addanothervalue' => 'മറ്റൊരു മൂല്യം ചേർക്കുക',
+	'filters' => 'ഫിൽറ്ററുകൾ',
+	'sd_filters_docu' => '{{SITENAME}} സം‌രംഭത്തിൽ താഴെ പ്രദർശിപ്പിച്ചിരിക്കുന്ന ഫിൽറ്ററുകൾ നിലവിലുണ്ട്:',
+	'createfilter' => 'ഒരു ഫിൽറ്റർ സൃഷ്ടിക്കുക',
 	'sd_createfilter_name' => 'പേര്‌:',
 	'sd_blank_error' => 'ശൂന്യമാക്കിയിടുന്നത് അനുവദനീയമല്ല',
-	'sd_filter_getsvaluesfromcategory' => '$1 എന്ന വർഗ്ഗത്തില്‍ നിന്നാണ്‌ ഇതിനു മൂല്യങ്ങള്‍ കിട്ടുന്നത്.',
+	'sd_filter_getsvaluesfromcategory' => '$1 എന്ന വർഗ്ഗത്തിൽ നിന്നാണ്‌ ഇതിനു മൂല്യങ്ങൾ കിട്ടുന്നത്.',
 	'sd_filter_usestimeperiod' => 'ഇതു സമയ പരിധിയായി ഉപയോഗിക്കുന്നത് $1 ആണ്‌.',
-	'sd_filter_year' => 'വര്‍ഷം',
+	'sd_filter_year' => 'വർഷം',
 	'sd_filter_month' => 'മാസം',
-	'sd_filter_hasvalues' => 'ഇതിന്റെ മൂല്യങ്ങള്‍ $1 ആണ്‌.',
+	'sd_filter_hasvalues' => 'ഇതിന്റെ മൂല്യങ്ങൾ $1 ആണ്‌.',
 );
 
 /** Mongolian (Монгол)
@@ -2227,6 +2305,13 @@ $messages['pdc'] = array(
 	'sd_filter_month' => 'Munet',
 );
 
+/** Pfälzisch (Pfälzisch)
+ * @author Xqt
+ */
+$messages['pfl'] = array(
+	'sd_browsedata_none' => 'Kääns',
+);
+
 /** Polish (Polski)
  * @author Airwolf
  * @author Maikking
@@ -2342,6 +2427,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'browsedata' => 'مالومات سپړل',
 	'sd_browsedata_choosecategory' => 'يوه وېشنيزه ټاکل',
 	'sd_browsedata_viewcategory' => 'وېشنيزه ښکاره کول',
 	'sd_browsedata_subcategory' => 'وړه-وېشنيزه',
@@ -2355,6 +2441,7 @@ $messages['ps'] = array(
 	'filters' => 'چاڼګرونه',
 	'createfilter' => 'يو چاڼګر جوړول',
 	'sd_createfilter_name' => 'نوم:',
+	'sd_blank_error' => 'بايد تش نه وي',
 	'sd_filter_year' => 'کال',
 	'sd_filter_month' => 'مياشت',
 	'sd_filter_freetext' => 'متن',
@@ -2368,8 +2455,8 @@ $messages['ps'] = array(
  * @author Waldir
  */
 $messages['pt'] = array(
-	'semanticdrilldown-desc' => 'Uma interface de introspecção para navegar através de dados semânticos',
-	'specialpages-group-sd_group' => 'Introspecção Semântica',
+	'semanticdrilldown-desc' => 'Uma interface de prospecção para navegar através de dados semânticos',
+	'specialpages-group-sd_group' => 'Prospecção Semântica',
 	'browsedata' => 'Navegar pelos dados',
 	'sd_browsedata_choosecategory' => 'Escolha uma categoria',
 	'sd_browsedata_viewcategory' => 'ver categoria',
@@ -2420,6 +2507,7 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
  * @author Enqd
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'semanticdrilldown-desc' => 'Uma interface de introspecção para navegar através de dados semânticos',
@@ -2439,7 +2527,7 @@ $messages['pt-br'] = array(
 	'sd_browsedata_removefilter' => 'Remover este filtro',
 	'sd_browsedata_removesubcategoryfilter' => 'Remover o filtro por esta subcategoria',
 	'sd_browsedata_resetfilters' => 'Zerar filtros',
-	'sd_browsedata_addanothervalue' => 'Adicionar outro valor',
+	'sd_browsedata_addanothervalue' => 'Clique na seta para adicionar outro valor',
 	'sd_browsedata_daterangestart' => 'Início:',
 	'sd_browsedata_daterangeend' => 'Fim:',
 	'sd_browsedata_novalues' => 'Não há valores para este filtro',
@@ -2475,27 +2563,30 @@ $messages['pt-br'] = array(
  * @author Firilacroco
  * @author KlaudiuMihaila
  * @author Mihai
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
-	'browsedata' => 'Răsfoiţi data',
-	'sd_browsedata_choosecategory' => 'Alegeţi o categorie',
-	'sd_browsedata_viewcategory' => 'vedeţi categoria',
+	'browsedata' => 'Răsfoiți data',
+	'sd_browsedata_choosecategory' => 'Alegeți o categorie',
+	'sd_browsedata_viewcategory' => 'vedeți categoria',
 	'sd_browsedata_subcategory' => 'Subcategorie',
 	'sd_browsedata_other' => 'Altul',
 	'sd_browsedata_none' => 'Nimic',
 	'sd_browsedata_filterbyvalue' => 'Filtrează după această valoare',
 	'sd_browsedata_filterbysubcategory' => 'Filtrează după această subcategorie',
+	'sd_browsedata_otherfilter' => 'Arată paginile cu o altă valoare pentru acest filtru',
+	'sd_browsedata_nonefilter' => 'Arată paginile cu nicio valoare pentru acest filtru',
 	'sd_browsedata_or' => 'sau',
 	'sd_browsedata_removefilter' => 'Elimină acest filtru',
 	'sd_browsedata_removesubcategoryfilter' => 'Elimină acest filtru de subcategorie',
-	'sd_browsedata_resetfilters' => 'Resetaţi filtrele',
+	'sd_browsedata_resetfilters' => 'Resetați filtrele',
 	'sd_browsedata_addanothervalue' => 'Adaugă altă valoare',
 	'sd_browsedata_daterangestart' => 'Început:',
-	'sd_browsedata_daterangeend' => 'Sfârşit:',
+	'sd_browsedata_daterangeend' => 'Sfârșit:',
 	'sd_browsedata_novalues' => 'Nu există valori pentru acest filtru',
 	'filters' => 'Filtre',
 	'sd_filters_docu' => 'Următoarele filtre există la {{SITENAME}}:',
-	'createfilter' => 'Creaţi un filtru',
+	'createfilter' => 'Creați un filtru',
 	'sd_createfilter_name' => 'Nume:',
 	'sd_blank_error' => 'nu poate fi gol',
 	'sd_filter_year' => 'An',
@@ -2572,6 +2663,20 @@ $messages['ru'] = array(
 	'sd_filter_haslabel' => 'Имеет пометку $1.',
 );
 
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'sd_browsedata_choosecategory' => 'Выбрати катеґорію',
+	'sd_browsedata_viewcategory' => 'видїти катеґорію',
+	'sd_browsedata_subcategory' => 'Підкатегорія',
+	'sd_browsedata_other' => 'Інше',
+	'sd_browsedata_none' => 'Жадне',
+	'sd_filter_year' => 'Рік',
+	'sd_filter_month' => 'Місяць',
+	'sd_filter_freetext' => 'текст',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -2625,6 +2730,13 @@ $messages['sk'] = array(
 	'sd_filter_haslabel' => 'Má označenie $1.',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'sd_filter_year' => 'Leto',
+);
+
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Sasa Stefanovic
  * @author Михајло Анђелковић
@@ -2633,9 +2745,12 @@ $messages['sr-ec'] = array(
 	'sd_browsedata_choosecategory' => 'Изабери категорију',
 	'sd_browsedata_viewcategory' => 'види категорију',
 	'sd_browsedata_subcategory' => 'Подкатегорија',
+	'sd_browsedata_other' => 'Друго',
 	'sd_browsedata_none' => 'Нема',
+	'sd_browsedata_or' => 'или',
 	'sd_browsedata_daterangestart' => 'Почетак:',
 	'sd_browsedata_daterangeend' => 'Крај:',
+	'filters' => 'Филтери',
 	'sd_createfilter_name' => 'Име:',
 	'sd_filter_year' => 'Година',
 	'sd_filter_month' => 'Месец',
@@ -2648,9 +2763,12 @@ $messages['sr-el'] = array(
 	'sd_browsedata_choosecategory' => 'Izaberi kategoriju',
 	'sd_browsedata_viewcategory' => 'vidi kategoriju',
 	'sd_browsedata_subcategory' => 'Podkategorija',
+	'sd_browsedata_other' => 'Drugo',
 	'sd_browsedata_none' => 'Nema',
+	'sd_browsedata_or' => 'ili',
 	'sd_browsedata_daterangestart' => 'Početak:',
 	'sd_browsedata_daterangeend' => 'Kraj:',
+	'filters' => 'Filteri',
 	'sd_createfilter_name' => 'Ime:',
 	'sd_filter_year' => 'Godina',
 	'sd_filter_month' => 'Mesec',
@@ -2779,15 +2897,17 @@ $messages['te'] = array(
 	'sd_browsedata_addanothervalue' => 'మరో విలువని చేర్చండి',
 	'sd_browsedata_daterangestart' => 'మొదలు:',
 	'sd_browsedata_daterangeend' => 'ముగింపు:',
+	'sd_browsedata_novalues' => 'ఈ వడపోతకి విలువలు ఏమీ లేవు',
 	'filters' => 'వడపోతలు',
 	'sd_filters_docu' => '{{SITENAME}}లో ఈ క్రింది వడపోతలు ఉన్నాయి:',
 	'sd_createfilter_name' => 'పేరు:',
 	'sd_createfilter_usecategoryvalues' => 'వడపోతకి విలువలని ఈ వర్గంనుండి తీసుకోవాలి:',
+	'sd_createfilter_listofvalues' => 'విలువల జాబితా (అప్రమేయం)',
 	'sd_blank_error' => 'ఖాళీగా ఉండకూడదు',
 	'sd_filter_year' => 'సంవత్సరం',
 	'sd_filter_month' => 'నెల',
 	'sd_filter_freetext' => 'పాఠ్యం',
-	'sd_filter_daterange' => 'కాల వ్యవధి',
+	'sd_filter_daterange' => 'తేదీ అవధి',
 );
 
 /** Tetum (Tetun)
@@ -2896,9 +3016,10 @@ $messages['tl'] = array(
 	'sd_browsedata_removefilter' => 'Tanggalin ang pansalang ito',
 	'sd_browsedata_removesubcategoryfilter' => 'Tanggalin ang ganitong pansala ng kabahaging kaurian',
 	'sd_browsedata_resetfilters' => 'Muling itakda ang mga pansala',
-	'sd_browsedata_addanothervalue' => 'Magdagdag ng iba pang halaga',
+	'sd_browsedata_addanothervalue' => 'Pindutin ang palaso upang makapagdagdag ng ibang halaga',
 	'sd_browsedata_daterangestart' => 'Simula:',
 	'sd_browsedata_daterangeend' => 'Wakas:',
+	'sd_browsedata_novalues' => 'Walang mga halaga para sa pansalang ito',
 	'filters' => 'Mga pansala',
 	'sd_filters_docu' => 'Umiiral ang sumusunod na mga pansala sa loob ng {{SITENAME}}:',
 	'createfilter' => 'Lumikha ng isang pansala',
@@ -2920,6 +3041,7 @@ $messages['tl'] = array(
 	'sd_filter_month' => 'Buwan',
 	'sd_filter_hasvalues' => 'Mayroon itong mga halagang $1.',
 	'sd_filter_hasinputtype' => 'Mayroon itong uri ng pagpasok/ipinasok na $1.',
+	'sd_filter_combobox' => 'kahong pangkombo',
 	'sd_filter_freetext' => 'teksto',
 	'sd_filter_daterange' => 'saklaw ng petsa',
 	'sd_filter_requiresfilter' => 'Kinakailangan nito ang pagkakaroon ng pansalang $1.',
@@ -2953,6 +3075,27 @@ $messages['tr'] = array(
 	'sd_filter_combobox' => 'kombo kutu',
 	'sd_filter_freetext' => 'metin',
 	'sd_filter_daterange' => 'tarih aralığı',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'sd_browsedata_choosecategory' => 'Виберіть категорію',
+	'sd_browsedata_viewcategory' => 'перегляд категорії',
+	'sd_browsedata_subcategory' => 'Підкатегорія',
+	'sd_browsedata_other' => 'Інші',
+	'sd_browsedata_or' => 'або',
+	'sd_browsedata_addanothervalue' => 'Натисніть на стрілку, щоб додати інше значення',
+	'sd_browsedata_daterangestart' => 'Початок:',
+	'sd_browsedata_daterangeend' => 'Кінець:',
+	'filters' => 'Фільтри',
+	'createfilter' => 'Створити фільтр',
+	'sd_createfilter_name' => 'Назва:',
+	'sd_blank_error' => 'не може бути порожнім',
+	'sd_filter_year' => 'Рік',
+	'sd_filter_month' => 'Місяць',
+	'sd_filter_freetext' => 'текст',
 );
 
 /** Veps (Vepsan kel')
@@ -3118,6 +3261,8 @@ $messages['zh-hans'] = array(
 	'sd_browsedata_or' => '或',
 	'sd_browsedata_daterangestart' => '开始：',
 	'sd_browsedata_daterangeend' => '结束：',
+	'filters' => '过滤器',
+	'sd_createfilter_name' => '名称：',
 	'sd_blank_error' => '不可留空',
 	'sd_filter_year' => '年',
 	'sd_filter_month' => '月',
