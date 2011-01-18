@@ -1371,3 +1371,21 @@ if (!function_exists('http_build_url')) {
 			;
 	}
 }
+
+/**
+ * Registers an EzAPI module, the module must be a subclass of EzApiModuleBase
+ * 
+ * @author Federico "Lox" Lucignano
+ * @global Array $wgEzApiModules Stores the list of available modules
+ * @param string The defined class name of the module to register
+ * @param string The absolute path of the file containing the module class definition 
+ */
+function wfRegisterEzApiModule( $moduleClass, $moduleSource ){
+	global $wgEzApiModules;
+	
+	if( !empty( $moduleClass ) && !empty( $moduleSource ) ) {
+		$wgEzApiModules[ $moduleClass ] = $moduleSource;
+	} else {
+		throw new MWException( __METHOD__ . ': module class or source not defined.' );
+	}
+}
