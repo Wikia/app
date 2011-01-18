@@ -54,8 +54,8 @@ public class PhalanxTest extends BaseTest {
 	 */
 	private boolean isArticleViewMode(String articleName) throws Exception {
 		String content = session().getHtmlSource();
-		String patternTitle = "wgTitle = \"" + articleName + "\"";
-		String patternAction = "wgAction = \"view\"";
+		String patternTitle = "wgTitle=\"" + articleName + "\"";
+		String patternAction = "wgAction=\"view\"";
 
 		return (content.indexOf(patternTitle) > -1 && content.indexOf(patternAction) > -1);
 	}
@@ -413,7 +413,7 @@ public class PhalanxTest extends BaseTest {
 		Random randomGenerator = new Random();
 		String articleNameSuffix = Integer.toString(randomGenerator.nextInt(99999));
 
-		loginAsStaff();
+		loginAsSysop();
 
 		session().open("index.php?title=Special:WikiBuilder");
 		session().waitForPageToLoad(TIMEOUT);
