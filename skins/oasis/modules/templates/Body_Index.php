@@ -1,3 +1,12 @@
+<script>
+wgAfterContentAndJS.push(function() {
+	if($) {
+		console.log("### jQuery loaded");
+	} else {
+		console.log("### jQuery not loaded");
+	}
+});
+</script>
 <h1>Wikia</h1>
 <div class="skiplinkcontainer">
 <a class="skiplink" rel="nofollow" href="#WikiaArticle">Skip to Content</a>
