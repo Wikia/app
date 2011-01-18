@@ -20,7 +20,32 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 
-$wgAutoloadClasses['WikiaLabs'] = $dir . 'WikiaLabs.body.php'; # Tell MediaWiki to load the extension body.
-$wgExtensionMessagesFiles['WikiaLabs'] = $dir . 'WikiaLabs.i18n.php';
-$wgExtensionAliasesFiles['WikiaLabs'] = $dir . 'WikiaLabs.alias.php';
-$wgSpecialPages['WikiaLabs'] = 'WikiaLabs'; # Let MediaWiki know about your new special page.
+/**
+ * @var WikiaApp
+ */
+$app = WF::build('App');
+
+/**
+ * classes
+ */
+$app->registerClass('WikiaLabs', $dir . 'WikiaLabs.body.php');
+
+/**
+ * special pages
+ */
+$app->registerSpecialPage('WikiaLabs', 'WikiaLabs');
+
+/**
+ * message files
+ */
+$app->registerExtensionMessageFile('WikiaLabs', $dir . 'WikiaLabs.i18n.php' );
+
+/**
+ * alias files
+ */
+$app->registerExtensionAliasFile('WikiaLabs', $dir . 'WikiaLabs.alias.php');
+
+/**
+ * hooks
+ */
+//$app->registerHook('OutputPageBeforeHTML', 'DummyExtension', 'onOutputPageBeforeHTML' );
