@@ -5,33 +5,32 @@
  * @author Yaron Koren
  */
 
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
-define('SD_VERSION','0.7');
+define( 'SD_VERSION', '0.8.1' );
 
 // constants for special properties
-define('SD_SP_HAS_FILTER', 1);
-define('SD_SP_COVERS_PROPERTY', 2);
-define('SD_SP_HAS_VALUE', 3);
-define('SD_SP_GETS_VALUES_FROM_CATEGORY', 4);
-define('SD_SP_USES_TIME_PERIOD', 5);
-define('SD_SP_REQUIRES_FILTER', 6);
-define('SD_SP_HAS_LABEL', 7);
-define('SD_SP_HAS_DRILLDOWN_TITLE', 8);
-define('SD_SP_HAS_INPUT_TYPE', 9);
-define('SD_SP_HAS_DISPLAY_PARAMETERS', 10);
+define( 'SD_SP_HAS_FILTER', 1 );
+define( 'SD_SP_COVERS_PROPERTY', 2 );
+define( 'SD_SP_HAS_VALUE', 3 );
+define( 'SD_SP_GETS_VALUES_FROM_CATEGORY', 4 );
+define( 'SD_SP_USES_TIME_PERIOD', 5 );
+define( 'SD_SP_REQUIRES_FILTER', 6 );
+define( 'SD_SP_HAS_LABEL', 7 );
+define( 'SD_SP_HAS_DRILLDOWN_TITLE', 8 );
+define( 'SD_SP_HAS_INPUT_TYPE', 9 );
+define( 'SD_SP_HAS_DISPLAY_PARAMETERS', 10 );
 
-$wgExtensionCredits['specialpage'][]= array(
+$wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'specialpage'][] = array(
 	'path'        => __FILE__,
 	'name'        => 'Semantic Drilldown',
 	'version'     => SD_VERSION,
-	'author'      => array('Yaron Koren', 'David Loomer'),
+	'author'      => array( 'Yaron Koren', 'David Loomer' ),
 	'url'         => 'http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
-	'description' =>  'A drilldown interface for navigating through semantic data',
 	'descriptionmsg'  => 'semanticdrilldown-desc',
 );
 
-require_once($sdgIP . '/languages/SD_Language.php');
+require_once( $sdgIP . '/languages/SD_Language.php' );
 
 $wgExtensionMessagesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Messages.php';
 $wgExtensionAliasesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Aliases.php';
@@ -47,7 +46,7 @@ $wgSpecialPages['BrowseData'] = 'SDBrowseData';
 $wgAutoloadClasses['SDBrowseData'] = $sdgIP . '/specials/SD_BrowseData.php';
 $wgSpecialPageGroups['BrowseData'] = 'sd_group';
 
-$wgAutoloadClasses['SDUtils'] = $sdgIP . '/includes/SD_Utils.inc';
+$wgAutoloadClasses['SDUtils'] = $sdgIP . '/includes/SD_Utils.php';
 $wgAutoloadClasses['SDFilter'] = $sdgIP . '/includes/SD_Filter.php';
 $wgAutoloadClasses['SDFilterValue'] = $sdgIP . '/includes/SD_FilterValue.php';
 $wgAutoloadClasses['SDAppliedFilter'] = $sdgIP . '/includes/SD_AppliedFilter.php';
@@ -69,17 +68,17 @@ function sdfInitNamespaces() {
 	global $sdgNamespaceIndex, $wgExtraNamespaces, $wgNamespaceAliases, $wgNamespacesWithSubpages, $smwgNamespacesWithSemanticLinks;
 	global $wgLanguageCode, $sdgContLang;
 
-	if (!isset($sdgNamespaceIndex)) {
+	if ( !isset( $sdgNamespaceIndex ) ) {
 		$sdgNamespaceIndex = 170;
 	}
 
-	define('SD_NS_FILTER',       $sdgNamespaceIndex);
-	define('SD_NS_FILTER_TALK',  $sdgNamespaceIndex+1);
+	define( 'SD_NS_FILTER',       $sdgNamespaceIndex );
+	define( 'SD_NS_FILTER_TALK',  $sdgNamespaceIndex + 1 );
 
-	sdfInitContentLanguage($wgLanguageCode);
+	sdfInitContentLanguage( $wgLanguageCode );
 
 	// Register namespace identifiers
-	if (!is_array($wgExtraNamespaces)) { $wgExtraNamespaces=array(); }
+	if ( !is_array( $wgExtraNamespaces ) ) { $wgExtraNamespaces = array(); }
 	$wgExtraNamespaces = $wgExtraNamespaces + $sdgContLang->getNamespaces();
 	$wgNamespaceAliases = $wgNamespaceAliases + $sdgContLang->getNamespaceAliases();
 
@@ -100,25 +99,25 @@ function sdfInitNamespaces() {
 /**********************************************/
 
 /**
- * Initialise a global language object for content language. This
+ * Initialize a global language object for content language. This
  * must happen early on, even before user language is known, to
  * determine labels for additional namespaces. In contrast, messages
- * can be initialised much later when they are actually needed.
+ * can be initialized much later when they are actually needed.
  */
-function sdfInitContentLanguage($langcode) {
+function sdfInitContentLanguage( $langcode ) {
 	global $sdgIP, $sdgContLang;
 
-	if (!empty($sdgContLang)) { return; }
+	if ( !empty( $sdgContLang ) ) { return; }
 
 	$sdContLangClass = 'SD_Language' . str_replace( '-', '_', ucfirst( $langcode ) );
 
-	if (file_exists($sdgIP . '/languages/'. $sdContLangClass . '.php')) {
-		include_once( $sdgIP . '/languages/'. $sdContLangClass . '.php' );
+	if ( file_exists( $sdgIP . '/languages/' . $sdContLangClass . '.php' ) ) {
+		include_once( $sdgIP . '/languages/' . $sdContLangClass . '.php' );
 	}
 
 	// fallback if language not supported
-	if ( !class_exists($sdContLangClass)) {
-		include_once($sdgIP . '/languages/SD_LanguageEn.php');
+	if ( !class_exists( $sdContLangClass ) ) {
+		include_once( $sdgIP . '/languages/SD_LanguageEn.php' );
 		$sdContLangClass = 'SD_LanguageEn';
 	}
 
@@ -126,22 +125,22 @@ function sdfInitContentLanguage($langcode) {
 }
 
 /**
- * Initialise the global language object for user language. This
- * must happen after the content language was initialised, since
+ * Initialize the global language object for user language. This
+ * must happen after the content language was initialized, since
  * this language is used as a fallback.
  */
-function sdfInitUserLanguage($langcode) {
+function sdfInitUserLanguage( $langcode ) {
 	global $sdgIP, $sdgLang;
 
-	if (!empty($sdgLang)) { return; }
+	if ( !empty( $sdgLang ) ) { return; }
 
 	$sdLangClass = 'SD_Language' . str_replace( '-', '_', ucfirst( $langcode ) );
-	if (file_exists($sdgIP . '/languages/'. $sdLangClass . '.php')) {
-		include_once( $sdgIP . '/languages/'. $sdLangClass . '.php' );
+	if ( file_exists( $sdgIP . '/languages/' . $sdLangClass . '.php' ) ) {
+		include_once( $sdgIP . '/languages/' . $sdLangClass . '.php' );
 	}
 
         // fallback if language not supported
-        if ( !class_exists($sdLangClass)) {
+        if ( !class_exists( $sdLangClass ) ) {
                 include_once( $sdgIP . '/languages/SD_LanguageEn.php' );
                 $sdLangClass = 'SD_LanguageEn';
         }
@@ -158,54 +157,54 @@ function sdfLoadMessagesManually() {
 	global $sdgIP, $wgMessageCache;
 
 	# add messages
-	require($sdgIP . '/languages/SD_Messages.php');
-	foreach($messages as $key => $value) {
-		$wgMessageCache->addMessages($messages[$key], $key);
+	require( $sdgIP . '/languages/SD_Messages.php' );
+	foreach ( $messages as $key => $value ) {
+		$wgMessageCache->addMessages( $messages[$key], $key );
 	}
 }
 
 function sdfInitProperties() {
 	global $sdgContLang, $wgLanguageCode;
 	$sd_property_vals = array(
-		SD_SP_HAS_FILTER => array('_SD_F', '_wpg'),
-		SD_SP_COVERS_PROPERTY => array('_SD_CP', '_wpp'),
-		SD_SP_HAS_VALUE => array('_SD_V', '_str'),
-		SD_SP_GETS_VALUES_FROM_CATEGORY => array('_SD_VC', '_wpc'),
-		SD_SP_USES_TIME_PERIOD => array('_SD_TP', '_str'),
-		SD_SP_HAS_INPUT_TYPE => array('_SD_IT', '_str'),
-		SD_SP_REQUIRES_FILTER => array('_SD_RF', '_wpg'),
-		SD_SP_HAS_LABEL => array('_SD_L', '_str'),
-		SD_SP_HAS_DRILLDOWN_TITLE => array('_SD_DT', '_str'),
-		SD_SP_HAS_DISPLAY_PARAMETERS => array('_SD_DP', '_str'),
+		SD_SP_HAS_FILTER => array( '_SD_F', '_wpg' ),
+		SD_SP_COVERS_PROPERTY => array( '_SD_CP', '_wpp' ),
+		SD_SP_HAS_VALUE => array( '_SD_V', '_str' ),
+		SD_SP_GETS_VALUES_FROM_CATEGORY => array( '_SD_VC', '_wpc' ),
+		SD_SP_USES_TIME_PERIOD => array( '_SD_TP', '_str' ),
+		SD_SP_HAS_INPUT_TYPE => array( '_SD_IT', '_str' ),
+		SD_SP_REQUIRES_FILTER => array( '_SD_RF', '_wpg' ),
+		SD_SP_HAS_LABEL => array( '_SD_L', '_str' ),
+		SD_SP_HAS_DRILLDOWN_TITLE => array( '_SD_DT', '_str' ),
+		SD_SP_HAS_DISPLAY_PARAMETERS => array( '_SD_DP', '_str' ),
 	);
 	// register main property labels
 	$sd_prop_labels = $sdgContLang->getPropertyLabels();
-	foreach ($sd_prop_labels as $prop_id => $prop_alias) {
+	foreach ( $sd_prop_labels as $prop_id => $prop_alias ) {
 		$prop_vals = $sd_property_vals[$prop_id];
-		SMWPropertyValue::registerProperty($prop_vals[0], $prop_vals[1], $prop_alias, true);
+		SMWPropertyValue::registerProperty( $prop_vals[0], $prop_vals[1], $prop_alias, true );
 	}
 	// if it's not English, add the English-language aliases as well
-	if ($wgLanguageCode != 'en') {
+	if ( $wgLanguageCode != 'en' ) {
 		$sd_prop_aliases = $sdgContLang->getPropertyAliases();
-		foreach ($sd_prop_aliases as $prop_alias => $prop_id) {
+		foreach ( $sd_prop_aliases as $prop_alias => $prop_id ) {
 			$prop_vals = $sd_property_vals[$prop_id];
-			SMWPropertyValue::registerPropertyAlias($prop_vals[0], $prop_alias);
+			SMWPropertyValue::registerPropertyAlias( $prop_vals[0], $prop_alias );
 		}
 	}
         return true;
 }
 
-function sdfAddToAdminLinks(&$admin_links_tree) {
-        $browse_search_section = $admin_links_tree->getSection(wfMsg('adminlinks_browsesearch'));
-        $sd_row = new ALRow('sd');
-        $sd_row->addItem(ALItem::newFromSpecialPage('BrowseData'));
-        $sd_row->addItem(ALItem::newFromSpecialPage('Filters'));
-        $sd_row->addItem(ALItem::newFromSpecialPage('CreateFilter'));
-        $sd_name = wfMsg('specialpages-group-sd_group');
-        $sd_docu_label = wfMsg('adminlinks_documentation', $sd_name);
-        $sd_row->addItem(AlItem::newFromExternalLink("http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label));
+function sdfAddToAdminLinks( &$admin_links_tree ) {
+        $browse_search_section = $admin_links_tree->getSection( wfMsg( 'adminlinks_browsesearch' ) );
+        $sd_row = new ALRow( 'sd' );
+        $sd_row->addItem( ALItem::newFromSpecialPage( 'BrowseData' ) );
+        $sd_row->addItem( ALItem::newFromSpecialPage( 'Filters' ) );
+        $sd_row->addItem( ALItem::newFromSpecialPage( 'CreateFilter' ) );
+        $sd_name = wfMsg( 'specialpages-group-sd_group' );
+        $sd_docu_label = wfMsg( 'adminlinks_documentation', $sd_name );
+        $sd_row->addItem( AlItem::newFromExternalLink( "http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label ) );
 
-        $browse_search_section->addRow($sd_row);
+        $browse_search_section->addRow( $sd_row );
 
         return true;
 }
