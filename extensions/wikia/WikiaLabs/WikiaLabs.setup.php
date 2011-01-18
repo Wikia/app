@@ -11,7 +11,7 @@ EOT;
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WikiaLabs',
-	'author' => 'Tomasz Odrobny Adi Wieczorek',
+	'author' => "Tomasz Odrobny Adrain 'ADi' Wieczorek",
 	'url' => '',
 	'description' => '',
 	'descriptionmsg' => 'myextension-desc',
@@ -29,6 +29,7 @@ $app = WF::build('App');
  * classes
  */
 $app->registerClass('WikiaLabs', $dir . 'WikiaLabs.body.php');
+$app->registerClass('WikiaLabsProject', $dir . 'WikiaLabsProject.class.php');
 
 /**
  * special pages
@@ -44,6 +45,11 @@ $app->registerExtensionMessageFile('WikiaLabs', $dir . 'WikiaLabs.i18n.php' );
  * alias files
  */
 $app->registerExtensionAliasFile('WikiaLabs', $dir . 'WikiaLabs.alias.php');
+
+/**
+ * Factory config
+ */
+WF::addClassConstructor( 'WikiaLabsProject', array( 'app' => $app, 'id' => 0 ) );
 
 /**
  * hooks
