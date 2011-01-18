@@ -18,6 +18,8 @@ class WikiaGlobalsRegistry extends WikiaRegistry {
 		else {
 			$GLOBALS[$propertyName][$key][] = $value;
 		}
+		
+		return $this;
 	}
 
 	public function set($propertyName, $value, $key = null) {

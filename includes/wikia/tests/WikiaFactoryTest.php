@@ -31,7 +31,7 @@ class Foo {
 /**
  * @group mwabstract
  */
-class WikiaFactoryTest	extends PHPUnit_Framework_TestCase {
+class WikiaFactoryTest extends PHPUnit_Framework_TestCase {
 
 	const TEST_ID = 12345;
 	const TEST_TYPE = '-x-TestType-x-';

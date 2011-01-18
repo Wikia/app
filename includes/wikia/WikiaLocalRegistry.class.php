@@ -15,11 +15,13 @@ class WikiaLocalRegistry extends WikiaRegistry {
 	public function set($propertyName, $value) {
 		$this->validatePropertyName($propertyName);
 		$this->container[$propertyName] = $value;
+		return $this;
 	}
 
 	public function remove($propertyName) {
 		$this->validatePropertyName($propertyName);
 		unset($this->container[$propertyName]);
+		return $this;
 	}
 
 	public function has($propertyName) {
