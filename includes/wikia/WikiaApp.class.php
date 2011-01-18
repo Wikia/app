@@ -90,7 +90,7 @@ class WikiaApp {
 	 * @param string $filePath
 	 */
 	public function registerExtensionMessageFile($name, $filePath) {
-		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set('wgExtensionMessagesFiles', $name, $filePath);
+		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set('wgExtensionMessagesFiles', $filePath, $name);
 	}
 
 	/**
@@ -99,7 +99,7 @@ class WikiaApp {
 	 * @param string $filePath
 	 */
 	public function registerExtensionAliasFile($name, $filePath) {
-		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set('wgExtensionAliasesFiles', $name, $filePath);
+		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set('wgExtensionAliasesFiles', $filePath, $name);
 	}
 
 	/**
@@ -108,7 +108,7 @@ class WikiaApp {
 	 * @param string $className class name
 	 */
 	public function registerSpecialPage($name, $className) {
-		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set('wgSpecialPages', $name, $className);
+		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set('wgSpecialPages', $className, $name);
 	}
 
 	/**
