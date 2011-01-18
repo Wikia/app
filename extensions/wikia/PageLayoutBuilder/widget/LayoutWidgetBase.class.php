@@ -182,11 +182,18 @@ abstract class LayoutWidgetBase {
 				$data["__plb_param_".$name] = $this->attributes[$name];
 			}
 		}
-		if ($directly) {
-			return RTEData::addDataToTag($data, $this->renderForRTE());
+		
+		global $wgEnableRTEExt;
+		if ($wgEnableRTEExt) {
+			if ($directly) {
+				return RTEData::addDataToTag($data, $this->renderForRTE());
+			} else {
+				$dataIdx = RTEData::put('data', $data);
+				return RTEData::addIdxToTag($dataIdx, $this->renderForRTE());
+			}
 		} else {
-			$dataIdx = RTEData::put('data', $data);
-			return RTEData::addIdxToTag($dataIdx, $this->renderForRTE());
+			// This value will not be used when RTE is disabled
+			return '';
 		}
 	}
 

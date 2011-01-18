@@ -93,9 +93,11 @@ class PageLayoutBuilderParser extends Parser {
 	}
 
 	public static function parserTag( $content, $attributes, Parser $self ) {
+		global $wgEnableRTEExt;
 		// TODO: move to RTEParser
 		foreach ($attributes as $k => $v) {
-			$attributes[$k] = htmlspecialchars_decode(RTEParser::unmarkEntities($v),ENT_QUOTES);
+			$v = !empty($wgEnableRTEExt) ? RTEParser::unmarkEntities($v) : $v;
+			$attributes[$k] = htmlspecialchars_decode($v,ENT_QUOTES);
 		}
 
 		$value = (isset($attributes['id']) && isset($self->formValues[$attributes['id']])) ? $self->formValues[$attributes['id']]:"";
