@@ -107,6 +107,7 @@ class ParserFunctions_HookStub {
 			$parser->setFunctionHook( 'count',    array(&$this, 'runCount'    ));
 			$parser->setFunctionHook( 'replace',  array(&$this, 'runReplace'  ));
 			$parser->setFunctionHook( 'explode',  array(&$this, 'runExplode'  ));
+			$parser->setFunctionHook( 'pad',  array(&$this, 'runPad'  ));
 		}
 
 		return true;
