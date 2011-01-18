@@ -641,6 +641,35 @@ AdDriverDelayedLoader.loadNext = function() {
 	}
 }
 
+// This functions reorders the queue of slots so that TOP_LEADERBOARD and
+// TOP_RIGHT_BOXAD are first. It does not guarantee the order of the rest of
+// the slots.
+AdDriverDelayedLoader.reorderItems = function() {
+	var highPriorityItems = ['TOP_LEADERBOARD', 'TOP_RIGHT_BOXAD'];
+	var tmpItems = [];
+	for (var i=0; i<AdDriverDelayedLoader.adDriverItems.length; i++) {
+		var foundHighPriorityItem = false;
+		for (var j=0; j<highPriorityItems.length; j++) {
+			if (AdDriverDelayedLoader.adDriverItems[i].slotname.indexOf(highPriorityItems[j]) > -1) {
+				// we have a high priority item. make sure TOP_LEADERBOARD is first in the reordered queue
+				if (tmpItems.length && tmpItems[0].slotname.indexOf('TOP_LEADERBOARD') > -1) {
+					tmpItems.splice(1, 0, AdDriverDelayedLoader.adDriverItems[i]);
+				}
+				else {
+					tmpItems.unshift(AdDriverDelayedLoader.adDriverItems[i]);
+				}
+				foundHighPriorityItem = true;
+				break;
+			}
+		}
+		if (!foundHighPriorityItem) {
+			tmpItems.push(AdDriverDelayedLoader.adDriverItems[i]);
+		}
+	}
+
+	AdDriverDelayedLoader.adDriverItems = tmpItems;
+}
+
 AdDriverDelayedLoader.load = function() {
 	AdDriverDelayedLoader.started = true;
 
@@ -652,6 +681,8 @@ AdDriverDelayedLoader.load = function() {
 	if (AdDriver.isNoAdWiki()) {
 		return;
 	}
+
+	AdDriverDelayedLoader.reorderItems();
 
 	AdDriverDelayedLoader.loadNext();
 }
