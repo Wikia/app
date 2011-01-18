@@ -45,7 +45,7 @@ EOT;
 			AdDriverDelayedLoader.reset();
 			var loadExitstitial = true;
 		}
-		AdDriverDelayedLoader.appendCall(new AdDriverCall("$slotname", "{$slot['size']}",  "$dartUrl"));
+		AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem("$slotname", "{$slot['size']}",  "$dartUrl"));
 		if (typeof loadExitstitial != 'undefined' && loadExitstitial) {
 			AdDriverDelayedLoader.load();
 		}
@@ -57,7 +57,7 @@ EOT;
 			$out .= <<<EOT
 	wgAfterContentAndJS.push(function() {
 		if (typeof(AdDriverDelayedLoader) != 'undefined') {
-			AdDriverDelayedLoader.appendCall(new AdDriverCall("$slotname", "{$slot['size']}",  "$dartUrl"));
+			AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem("$slotname", "{$slot['size']}",  "$dartUrl"));
 		}
 	});
 EOT;

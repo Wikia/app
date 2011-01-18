@@ -4,6 +4,8 @@
 /* requires extensions/wikia/Geo/geo.js */
 /* requires extensions/wikia/QuantcastSegments/qcs.js */
 /* requires extensions/wikia/AdEngine/ghost */
+
+///// BEGIN AdDriver
 var AdDriver = {
 	geoData: Geo.getGeoData(),
 	minNumDARTCall: 3,
@@ -305,12 +307,7 @@ AdDriver.setLastDARTCallNoAd = function(slotname, value) {
 	return value;
 }
 
-AdDriver.beforeCallDART = function(slotname) {
-	AdDriver.incrementNumDARTCall(slotname);
-	AdDriver.setLastDARTCallNoAd(slotname, null);
-}
-
-AdDriver.postProcessSlot = function(slotname) {
+AdDriver.adjustSlotDisplay = function(slotname) {
 	switch (slotname) {
 		case 'CORP_TOP_LEADERBOARD':
 		case 'HOME_TOP_LEADERBOARD':
@@ -352,24 +349,6 @@ AdDriver.canCallLiftium = function(slotname) {
 	return true;
 }
 
-AdDriver.callDARTCallback = function(slotname) {
-	if (typeof(window.adDriverLastDARTCallNoAds[slotname]) == 'undefined' || !window.adDriverLastDARTCallNoAds[slotname]) {
-		AdDriver.log(slotname + ' was filled by DART');
-		AdDriver.postProcessSlot(slotname);
-		return;
-	}
-	else {
-		AdDriver.setLastDARTCallNoAd(slotname, window.wgNow.getTime());
-		AdDriver.log(slotname + ' was not filled by DART');
-		if (AdDriver.canCallLiftium(slotname)) {
-			return 'Liftium';
-		}
-		else {
-			return;
-		}
-	}
-}
-
 AdDriver.getAdProvider = function(slotname, size, dartUrl) {
 	var specialCaseAdProvider = AdDriver.getAdProviderForSpecialCase(slotname);
 	if (specialCaseAdProvider) {
@@ -390,9 +369,10 @@ AdDriver.getAdProvider = function(slotname, size, dartUrl) {
 }
 
 AdDriver.init();
+//// END AdDriver
 
-
-var AdDriverCall = function (slotname, size, dartUrl) {
+//// BEGIN AdDriverDelayedLoaderItem
+var AdDriverDelayedLoaderItem = function (slotname, size, dartUrl) {
 	this.clientWidth = 0;
 	this.clientHeight = 0;
 	this.hasPrefooters = null;
@@ -504,15 +484,17 @@ var AdDriverCall = function (slotname, size, dartUrl) {
 	this.size = size;
 	this.dartUrl = this.replaceTokensInDARTUrl(dartUrl);
 }
+//// END AdDriverDelayedLoaderItem
 
+//// BEGIN AdDriverDelayedLoader
 var AdDriverDelayedLoader = {
-	adDriverCalls: null,
+	adDriverItems: null,
 	adNum: 0,
 	currentAd: null,
 	currentSlot: null,
 	started: false,
 	init: function() {
-		AdDriverDelayedLoader.adDriverCalls = new Array();
+		AdDriverDelayedLoader.adDriverItems = new Array();
 		AdDriverDelayedLoader.adNum = 0;
 		AdDriverDelayedLoader.currentAd = null;
 		AdDriverDelayedLoader.started = false;
@@ -521,17 +503,18 @@ var AdDriverDelayedLoader = {
 
 AdDriverDelayedLoader.init();
 
-AdDriverDelayedLoader.appendCall = function(adDriverCall) {
-	AdDriverDelayedLoader.adDriverCalls.push(adDriverCall);
+AdDriverDelayedLoader.appendItem = function(adDriverItem) {
+	AdDriverDelayedLoader.adDriverItems.push(adDriverItem);
 }
 
-AdDriverDelayedLoader.prependCall = function(adDriverCall) {
-	AdDriverDelayedLoader.adDriverCalls.unshift(adDriverCall);
+AdDriverDelayedLoader.prependItem = function(adDriverItem) {
+	AdDriverDelayedLoader.adDriverItems.unshift(adDriverItem);
 }
 
 AdDriverDelayedLoader.callDART = function() {
 	AdDriver.log(AdDriverDelayedLoader.currentAd.slotname + ': calling DART...');
-	AdDriver.beforeCallDART(AdDriverDelayedLoader.currentAd.slotname);
+	AdDriver.incrementNumDARTCall(AdDriverDelayedLoader.currentAd.slotname);
+	AdDriver.setLastDARTCallNoAd(AdDriverDelayedLoader.currentAd.slotname, null);
 	var slot = document.getElementById(AdDriverDelayedLoader.currentAd.slotname);
 
 	ghostwriter(
@@ -540,11 +523,26 @@ AdDriverDelayedLoader.callDART = function() {
 			insertType: "append",
 			script: { src: AdDriverDelayedLoader.currentAd.dartUrl },
 			done: function() { 
+
 				ghostwriter.flushloadhandlers();
-				var callbackAdProvider = AdDriver.callDARTCallback(AdDriverDelayedLoader.currentAd.slotname); 
-				if (callbackAdProvider == 'Liftium') { 
-					var liftiumCall = new AdDriverCall(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, ''); 
-					AdDriverDelayedLoader.prependCall(liftiumCall); 
+
+				var nextAdProvider = null;
+
+				if (typeof(window.adDriverLastDARTCallNoAds[AdDriverDelayedLoader.currentAd.slotname]) == 'undefined' || !window.adDriverLastDARTCallNoAds[AdDriverDelayedLoader.currentAd.slotname]) {
+					AdDriver.log(AdDriverDelayedLoader.currentAd.slotname + ' was filled by DART');
+					AdDriver.adjustSlotDisplay(AdDriverDelayedLoader.currentAd.slotname);
+				}
+				else {
+					AdDriver.log(AdDriverDelayedLoader.currentAd.slotname + ' was not filled by DART');
+					AdDriver.setLastDARTCallNoAd(AdDriverDelayedLoader.currentAd.slotname, window.wgNow.getTime());
+					if (AdDriver.canCallLiftium(AdDriverDelayedLoader.currentAd.slotname)) {
+						nextAdProvider = 'Liftium';
+					}
+				}
+
+				if (nextAdProvider == 'Liftium') { 
+					var liftiumItem = new AdDriverDelayedLoaderItem(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, ''); 
+					AdDriverDelayedLoader.prependItem(liftiumItem); 
 				} 
 				else {
 					// track ad call in Google Analytics, for forecasting.
@@ -601,7 +599,7 @@ AdDriverDelayedLoader.callLiftium = function() {
 				script: { text: script },
 				done: function() {
 					ghostwriter.flushloadhandlers();
-					AdDriver.postProcessSlot(slotname);
+					AdDriver.adjustSlotDisplay(slotname);
 					AdDriverDelayedLoader.loadNext();
 				}
 			}
@@ -614,8 +612,8 @@ AdDriverDelayedLoader.callLiftium = function() {
 }
 
 AdDriverDelayedLoader.loadNext = function() {
-	if (AdDriverDelayedLoader.adDriverCalls.length) {
-		AdDriverDelayedLoader.currentAd = AdDriverDelayedLoader.adDriverCalls.shift();
+	if (AdDriverDelayedLoader.adDriverItems.length) {
+		AdDriverDelayedLoader.currentAd = AdDriverDelayedLoader.adDriverItems.shift();
 		if (AdEngine.isSlotDisplayableOnCurrentPage(AdDriverDelayedLoader.currentAd.slotname)) {
 			var adProvider = AdDriver.getAdProvider(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriverDelayedLoader.currentAd.dartUrl);
 
@@ -646,7 +644,7 @@ AdDriverDelayedLoader.loadNext = function() {
 AdDriverDelayedLoader.load = function() {
 	AdDriverDelayedLoader.started = true;
 
-	if (typeof wgNow != 'undefined' && AdDriverDelayedLoader.adDriverCalls.length) {
+	if (typeof wgNow != 'undefined' && AdDriverDelayedLoader.adDriverItems.length) {
 		var loadTime = (new Date()).getTime() - wgNow.getTime();
 		$().log('AdDriver started loading after ' + loadTime + ' ms');
 	}
@@ -663,8 +661,9 @@ AdDriverDelayedLoader.reset = function() {
 }
 
 AdDriverDelayedLoader.isRunning = function() {
-	return AdDriverDelayedLoader.started && AdDriverDelayedLoader.adDriverCalls.length;
+	return AdDriverDelayedLoader.started && AdDriverDelayedLoader.adDriverItems.length;
 }
+//// END AdDriverDelayedLoader
 
 $(window).bind('load', function() {
 	AdDriverDelayedLoader.load();
