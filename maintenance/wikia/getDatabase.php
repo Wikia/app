@@ -56,12 +56,20 @@ if (array_key_exists( 'f', $opts )) {
 			if (count($matches) != 4) {
 				exit ("this does not look like a database directory: $dir\n");
 			}
-			list($unused, $day, $month, $year) = $matches;
-			$day_of_year = date('z', mktime('0','0','0', $month, $day, $year));
-			$date_list[$year][$day_of_year] = "fulldump_$day.$month.$year";
+			// order of date in filenames changed in 2011 from DMY to YMD
+			list($unused, $day, $month, $year) = $matches;  
+			if ($day > 2000) {
+				list ($unused, $year, $month, $day) = $matches;
+				$day_of_year = date('z', mktime('0','0','0', $month, $day, $year));
+				$date_list[$year][$day_of_year] = "fulldump_$year.$month.$day";
+			} else {
+				$day_of_year = date('z', mktime('0','0','0', $month, $day, $year));
+				$date_list[$year][$day_of_year] = "fulldump_$day.$month.$year";
+			}
 		}
+		krsort($date_list, SORT_NUMERIC);
 		foreach ($date_list as &$arr) {
-			krsort($arr);
+			krsort($arr, SORT_NUMERIC);
 		}
 		//print_r($date_list);
 
