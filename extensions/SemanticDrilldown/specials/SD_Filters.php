@@ -40,7 +40,7 @@ class FiltersPage extends QueryPage {
 			parent::__construct( $name );
 		}
 	}
-	
+
 	function getName() {
 		return "Filters";
 	}
@@ -57,7 +57,7 @@ class FiltersPage extends QueryPage {
 
 	function getSQL() {
 		$filter_ns = SD_NS_FILTER;
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$page = $dbr->tableName( 'page' );
 		// QueryPage uses the value from this SQL in an ORDER clause,
 		// so return page_title as title.

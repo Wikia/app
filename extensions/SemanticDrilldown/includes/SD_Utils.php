@@ -17,7 +17,7 @@ class SDUtils {
 	 */
 	static function getTopLevelCategories() {
 		$categories = array();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		extract( $dbr->tableNames( 'page', 'categorylinks', 'page_props' ) );
 		$cat_ns = NS_CATEGORY;
 		$sql = "SELECT page_title FROM $page p LEFT OUTER JOIN $categorylinks cl ON p.page_id = cl.cl_from WHERE p.page_namespace = $cat_ns AND cl.cl_to IS NULL";
@@ -97,7 +97,7 @@ class SDUtils {
 	 * namespace
 	 */
 	static function getFilters() {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$res = $dbr->select( 'page', 'page_title', array( 'page_namespace' => SD_NS_FILTER ) );
 		$filters = array();
 		while ( $row = $dbr->fetchRow( $res ) ) {
@@ -162,7 +162,7 @@ class SDUtils {
 		}
 		$pages = array();
 		$subcategories = array();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		extract( $dbr->tableNames( 'page', 'categorylinks' ) );
 		$cat_ns = NS_CATEGORY;
 		$query_category = str_replace( ' ', '_', $category_name );
@@ -323,7 +323,7 @@ END;
 		$magicWordVariableIDs[] = 'MAG_SHOWINDRILLDOWN';
 		return true;
 	}
- 
+
 	/**
 	 * Set the actual value of the magic words
 	 */
