@@ -1,4 +1,6 @@
 == Changes since 20110110 ==
+* rt#143732: RTE: list style changer is meaningless (macbre)
+* rt#139297: RTE: ensure hover controls always appear within edit window (macbre)
 * rt#145277: ReturnToTest fails (Selenium) (Marooned)
 * rt#142858: RTE: Contextual menu doesn't show in Chrome (macbre)
 * rt#142109: text color on popups in RTE isnt readable (macbre)
