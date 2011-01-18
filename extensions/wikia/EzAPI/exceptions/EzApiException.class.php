@@ -2,11 +2,10 @@
 /**
  * @author Federico "Lox" Lucignano
  * 
- * Exception class for MobileAPI modules
+ * Base exception class for EzAPI modules
  */
-
-class MobileApiException extends Exception {
-	const DEFAULT_STATUS_CODE = '501 Not Implemented'; //500 gets redirected to Iowa
+class EzApiException extends Exception {
+	const DEFAULT_STATUS_CODE = EzApiStatusCodes::BAD_REQUEST; //500 gets redirected to Iowa
 	
 	protected $mStatusCode;
 	
@@ -19,5 +18,3 @@ class MobileApiException extends Exception {
 		return $this->mStatusCode;
 	}
 }
-
-?>

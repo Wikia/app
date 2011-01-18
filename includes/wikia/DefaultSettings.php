@@ -722,3 +722,9 @@ $wgWikiPaymentAdsFreePrice = 4.99;	//used in WikiPayment/WikiBuilder
  */
 
 $wgMemCachedTimeout = 500000; //Data timeout in microseconds
+
+/**
+ * Global variable for registering EzAPI modules
+ * see /extensions/wikia/EzAPI
+ */
+$wgEzApiModules = array();
