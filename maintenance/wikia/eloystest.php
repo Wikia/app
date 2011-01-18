@@ -8,7 +8,7 @@
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( "commandLine.inc" );
 
-function testDelayedEmails() {
+function testSchwartzEmails() {
 	$from      = "community@wikia-inc.com";
 	$recipient = "eloy@wikia-inc.com";
 	$body      = "Test email";
@@ -24,30 +24,14 @@ function testDelayedEmails() {
 	foreach( $headers as $header => $value ) {
 		$textHeaders .= "{$header}: $value\n";
 	}
-	#Http::post("http://theschwartz/theschwartz/inject", 'default', array (
-	#	CURLOPT_POSTFIELDS => array (
-	#		"rcpt" => $recipient,
-	#		"env_from" => $from,
-	#		"msg" => "$textHeaders" . "\n\n" . "$body"
-	#	)
-	#) );
-
-	/**
-	 * delayed email
-	 */
-	global $wgTheSchwartzSecretToken;
-	$url = sprintf( "http://lyric.wikia.com/api.php?action=awcreminder&user_id=%d&token=%s",
-		51098,
-		$wgTheSchwartzSecretToken
-	);
-	Wikia::log( __METHOD__, "url", $url );
-	print_r( Http::post("http://theschwartz/function/TheSchwartz::Worker::URL", 'default', array (
+	$status = Http::post("http://theschwartz/theschwartz/inject", array (
 		CURLOPT_POSTFIELDS => array (
-			"theschwartz_run_after" => time() + 300,
-			"url" => $url
-		),
-		CURLOPT_PROXY => "127.0.0.1:6081"
-	) ) );
+			"rcpt" => $recipient,
+			"env_from" => $from,
+			"msg" => "$textHeaders" . "\n\n" . "$body"
+		)
+	) );
+
 }
 
 function testStomp() {
@@ -143,4 +127,5 @@ function testExternalSMW() {
 #testInterwikiLink();
 #testAvatars();
 #testRiak();
-testExternalSMW();
+#testExternalSMW();
+testSchwartzEmails();
