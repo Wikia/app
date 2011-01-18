@@ -26,7 +26,7 @@ class SFCreateForm extends SpecialPage {
 
 function doSpecialCreateForm() {
 	global $wgOut, $wgRequest, $wgUser, $sfgScriptPath, $wgContLang;
-	$db = wfGetDB( DB_SLAVE );
+	$db = wfGetDB( DB_SLAVE, 'smw' );
 
 	SFUtils::loadMessages();
 

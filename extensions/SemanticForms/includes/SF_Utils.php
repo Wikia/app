@@ -56,7 +56,7 @@ class SFUtils {
 	 */
 	static function getCategoriesForPage( $title = NULL ) {
 		$categories = array();
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$conditions = null;
 		if ( !is_null( $title ) ) {
 			$titlekey = $title->getArticleId();
@@ -185,7 +185,7 @@ END;
 	/**
 	 * Includes the necessary Javascript and CSS files for the form
 	 * to display and work correctly
-	 * 
+	 *
 	 * Accepts an optional Parser instance, or uses $wgOut if omitted.
 	 */
 	static function addJavascriptAndCSS( $parser = NULL ) {
@@ -220,7 +220,7 @@ END;
 			else
 				$wgOut->addLink( $link );
 		}
-		
+
 		$scripts = array();
 		if ( !$sfgUseFormEditPage )
 			$scripts[] = "$sfgScriptPath/libs/SF_ajax_form_preview.js";
@@ -265,7 +265,7 @@ END;
 	 * Return an array of all form names on this wiki
  	*/
 	static function getAllForms() {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$res = $dbr->select( 'page',
 			'page_title',
 			array( 'page_namespace' => SF_NS_FORM,
@@ -329,7 +329,7 @@ END;
 		if ( 0 == $num_levels ) return $top_category;
 		global $sfgMaxAutocompleteValues;
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$top_category = str_replace( ' ', '_', $top_category );
 		$categories = array( $top_category );
 		$checkcategories = array( $top_category );
@@ -428,7 +428,7 @@ END;
 		// names of all the pages in that namespace to $names_array
 		global $wgContLang;
 		$namespaces = $wgContLang->getNamespaces();
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$pages = array();
 		foreach ( $namespaces as $ns_code => $ns_name ) {
 			if ( $ns_name == $namespace_name ) {
