@@ -764,4 +764,56 @@ class ExtParserFunctions {
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
+	
+	function runPad( &$parser, $inStr = '', $inLen = 0, $inWith = '', $inDirection = '' ) {
+		global $wgStringFunctionsLimitPad;
+
+		# direction
+		switch ( strtolower ( $inDirection ) ) {
+			case 'center':
+				$direction = STR_PAD_BOTH;
+				break;
+			case 'right':
+				$direction = STR_PAD_RIGHT;
+				break;
+			case 'left':
+			default:
+				$direction = STR_PAD_LEFT;
+				break;
+		}
+
+		# prevent markers in padding
+		$a = explode ( $parser->mUniqPrefix, $inWith, 2 );
+		if ( $a[0] === '' )
+			$inWith = ' ';
+		else $inWith = $a[0];
+
+		# limit pad length
+		$inLen = intval ( $inLen );
+		if ($wgStringFunctionsLimitPad > 0)
+			$inLen = min ( $inLen, $wgStringFunctionsLimitPad );
+
+		# adjust for multibyte strings
+		$inLen += strlen( $inStr ) - $this->mwSplit( $parser, $inStr, $a );
+
+		# pad
+		return str_pad ( $inStr, $inLen, $inWith, $direction );
+	}
+
+	function mwSplit ( &$parser, $str, &$chars ) {
+		# Get marker prefix & suffix
+		$prefix = preg_quote( $parser->mUniqPrefix, '/' );
+		if ( defined('Parser::MARKER_SUFFIX') )
+			$suffix = preg_quote( Parser::MARKER_SUFFIX, '/' );
+		elseif ( isset($parser->mMarkerSuffix) )
+			$suffix = preg_quote( $parser->mMarkerSuffix, '/' );
+		elseif ( defined('MW_PARSER_VERSION') && strcmp( MW_PARSER_VERSION, '1.6.1' ) > 0 )
+			$suffix = "QINU\x07";
+		else $suffix = 'QINU';
+
+		# Treat strip markers as single multibyte characters
+		$count = preg_match_all('/' . $prefix . '.*?' . $suffix . '|./su', $str, $arr);
+		$chars = $arr[0];
+		return $count;
+	}
 }
