@@ -23,7 +23,7 @@ class SFCreatePageJob extends Job {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-                $article = new Article($this->title);
+                $article = new Article( $this->title );
                 if ( !$article ) {
                         $this->error = 'createPage: Article not found "' . $this->title->getPrefixedDBkey() . '"';
                         wfProfileOut( __METHOD__ );
@@ -36,9 +36,9 @@ class SFCreatePageJob extends Job {
 		// replacement
 		global $wgUser;
 		$actual_user = $wgUser;
-		$wgUser = User::newFromId($this->params['user_id']);
-		$edit_summary = ''; //$this->params['edit_summary'];
-		$article->doEdit($page_text, $edit_summary);
+		$wgUser = User::newFromId( $this->params['user_id'] );
+		$edit_summary = ''; // $this->params['edit_summary'];
+		$article->doEdit( $page_text, $edit_summary );
 		$wgUser = $actual_user;
 		wfProfileOut( __METHOD__ );
 		return true;

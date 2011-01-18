@@ -1,0 +1,109 @@
+/**
+ * The main CSS file for the Semantic Forms extension.
+ */
+
+/* Override "width: 100%" setting in standard MediaWiki skins */
+textarea.createboxInput {
+	width: auto;
+}
+textarea.mandatoryField {
+	width: auto;
+}
+
+/* Used in 'create template' page */
+.fieldBox {
+        border: 1px black solid;
+        background: #dddddd;
+        padding: 10px 20px 10px 20px;
+        margin: 0px 20px 20px 20px;
+}
+
+/* Used in 'create form' page */
+.templateForm {
+        border: 1px black solid;
+        background: #dddddd;
+        padding: 0px 20px 10px 20px;
+        margin-bottom: 20px;
+}
+
+/* Used in form pages */
+table.formtable th {
+	text-align: left;
+	vertical-align: top;
+}
+/* another possible layout */
+table.formtable2 {
+	width: 100%;
+	margin: 5px 0 0;
+	padding: 0.3em 0.2em 0.2em 0.2em;
+	background: transparent;
+	border-collapse: collapse;
+}
+table.formtable2 th, table.formtable2 td {
+	vertical-align: top;
+}
+/* this makes sure that in long lists with checkboxes the checkbox and the
+corresponding label are not torn apart by a line break */
+span.checkboxSpan {
+	/* 'nowrap' doesn't work in IE, unfortunately */
+	/* white-space: nowrap; */
+	float: left;
+	padding-right: 9px;
+}
+/* the "remove" and "add another" buttons used for multiple templates */
+input.remove, input.addanother {
+}
+/* this selects text and dropdown list inputs that have been set to
+mandatory */
+input.mandatoryField, select.mandatoryField {
+	/* (suggested formatting) */
+	/* border: 1px #d72227 solid; */
+}
+/* a span around radiobuttons and checkboxes that are set to mandatory,
+since some browsers don't support formatting of these elements, and a
+span around a set of them looks nicer anyway */
+span.mandatoryFieldsSpan {
+	/* (suggested formatting) */
+	/* border: 1px #d72227 solid;
+	padding: 4px; */
+}
+
+div.infoMessage {
+	border: 1px solid #777777;
+	padding: 12px;
+	margin: 25px;
+	width:auto;
+	background: #eeeeee;
+}
+div.warningMessage {
+	border: 1px solid #777777;
+	padding: 12px;
+	margin: 25px;
+	width:auto;
+	font-weight: bold;
+	color: red;
+}
+span.errorMessage {
+	color: red;
+}
+.multipleTemplate {
+	background-color: #cccccc;
+	padding: 7px;
+	margin: 10px 0px 10px 0px;
+}
+
+.autoGrow {
+	overflow: hidden;
+	height: auto;
+	width: 326px;
+}
+
+/* Override some jQuery UI settings */
+.ui-button { margin-left: -1px; }
+.ui-button-icon-only .ui-button-text { padding: 0.35em; }
+button.ui-button-icon-only {
+	width: 1.7em;
+	height: 1.5em;
+	vertical-align: bottom;
+	margin-top: 0.2em;
+} /* button elements seem to need a little more width */

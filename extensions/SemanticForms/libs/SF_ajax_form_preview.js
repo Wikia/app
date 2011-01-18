@@ -28,12 +28,14 @@ function ajaxFormPreviewInit(){
     btn.value2 = btn.value;
  
     btn.accessKey = btnOld.accessKey;
+    btn.disabled = btnOld.disabled;
+    btn.tabIndex = btnOld.tabIndex;
  
     btnOld.parentNode.replaceChild(btn, btnOld);
 }
  
 function ajaxFormPreviewClick(){ajaxFormPreviewRun(this)}
- 
+
 function ajaxFormPreviewRun(btn){
  
     wkPreview = document.getElementById('wikiPreview');
@@ -45,12 +47,7 @@ function ajaxFormPreviewRun(btn){
     var el = document.getElementById("form_error_header");
     if (el) el.parentNode.removeChild(el);
  
-    var elts = document.body.getElementsByTagName("span");
- 
-    for (var i = 0; i < elts.length; ++i)
-	if (elts[i].className == 'errorMessage') elts[i].innerHTML = '';
- 
-    if (!wkPreview || !form || !aj || !aj2 || !validate_all() ) return;
+    if (!wkPreview || !form || !aj || !aj2 || !validateAll() ) return;
  
     var frag=document.createElement("div");
  
@@ -132,7 +129,12 @@ function ajaxFormPreviewRun(btn){
 
 	    if (aj2.readyState != 4) return;
 
-	    htm = aj2.responseText.replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/&apos;/g,"'");
+	    htm = aj2.responseText.replace(/&gt;/g,'>')
+			.replace(/&lt;/g,'<')
+			.replace(/&quot;/g,'"')
+			.replace(/&amp;/g,'&')
+			.replace(/&apos;/g,"'")
+			.replace("</body>", "<span id='SF_PREVIEW_EOD'/></body>");
 
 	    ifr = document.createElement('iframe');
 	    ifr.onload="alert('load')";
@@ -162,30 +164,31 @@ function ajaxFormPreviewRun(btn){
 
 	    doc.open();
 	    doc.write(htm);
-	    doc.close();        
+	    doc.close();
  
 	    interval=setInterval(function(){
+
+		    if ( ! doc.getElementById("SF_PREVIEW_EOD") ) return;
 
 		    var visible = null;
 
 		    visible = doc.getElementById("wikiPreview");
 
-                    if (!visible) return;
-
-                    clearInterval(interval);
+		    clearInterval(interval);
 
 		    var currentfr=document.getElementById('ifrPreview');
 
 		    if (currentfr && !window.opera){
 
 			if (currentfr.contentDocument) { //ns6 syntax
-			    doc = currentfr.contentDocument; 
+			    doc = currentfr.contentDocument;
 			} else if (currentfr.Document && currentfr.Document.body.scrollHeight) { //ie5+ syntax
 			    doc = currentfr.Document;
 			}
 
 			ifr.style.display="block";
 			vish = visible.clientHeight;
+			if (vish == 0) vish = visible.scrollHeight; //IE
 
 			while (visible.tagName.toLowerCase() != "body") {
 
@@ -196,23 +199,25 @@ function ajaxFormPreviewRun(btn){
 			    visible.style.border="0px";
 
 			    pv = visible;
-			    
-			    while(pv.previousSibling) {
+
+			    while (pv.previousSibling) {
 				pv = pv.previousSibling;
 				if (pv.style) pv.style.display="none";
 			    }
 
 			    pv = visible;
-				
-			    while(pv.nextSibling) {
+
+			    while (pv.nextSibling) {
 				pv = pv.nextSibling;
 				if (pv.style) pv.style.display="none";
 			    }
 
 			    visible = visible.parentNode;
 			}
-			
-			currentfr.style.height = " " + doc.body.scrollHeight + "px";
+
+			doc.getElementById('content').style.background = "none white";
+
+			currentfr.style.height = " " + vish + "px";
 
 			window.scrollTo(currentfr.offsetLeft, currentfr.offsetTop);
 			document.body.style.cursor = '';
@@ -239,5 +244,6 @@ function ajaxFormPreviewRun(btn){
     }
 }
 
-if (wgAction=='formedit' || wgCanonicalSpecialPageName == 'AddData' || wgCanonicalSpecialPageName == 'EditData')
-    addOnloadHook(ajaxFormPreviewInit);
+if (wgAction=='formedit' || wgCanonicalSpecialPageName == 'FormEdit')
+//    addOnloadHook(ajaxFormPreviewInit);
+	jQuery(function(){ajaxFormPreviewInit()});

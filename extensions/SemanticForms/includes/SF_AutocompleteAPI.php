@@ -10,15 +10,17 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die( 'Not an entry point.' );
+}
 
 /**
- * @addtogroup API
+ * @ingroup API
  */
 class SFAutocompleteAPI extends ApiBase {
 
-	public function __construct($query, $moduleName) {
-		parent :: __construct($query, $moduleName);
+	public function __construct( $query, $moduleName ) {
+		parent::__construct( $query, $moduleName );
 	}
 
 	public function execute() {
@@ -34,48 +36,54 @@ class SFAutocompleteAPI extends ApiBase {
 		$external_url = $params['external_url'];
 		$limit = $params['limit'];
 
-		if (strlen($substr) == 0)
-		{
-			$this->dieUsage("The substring must be specified", 'param_substr');
+		if ( strlen( $substr ) == 0 ) {
+			$this->dieUsage( 'The substring must be specified', 'param_substr' );
 		}
-		if ($attribute != '') {
-			$data = self::getAllValuesForProperty(false, $attribute, $substr);
-		} elseif ($relation != '') {
-			$data = self::getAllValuesForProperty(true, $relation, $substr);
-		} elseif ($category != '') {
-			$data = SFUtils::getAllPagesForCategory($category, 3, $substr);
-		} elseif ($concept != '') {
-			$data = SFUtils::getAllPagesForConcept($concept, $substr);
-		} elseif ($namespace != '') {
-			// special handling for main (blank) namespace
-			if ($namespace == 'main')
+		
+		if ( $attribute != '' ) {
+			$data = self::getAllValuesForProperty( false, $attribute, $substr );
+		} elseif ( $relation != '' ) {
+			$data = self::getAllValuesForProperty( true, $relation, $substr );
+		} elseif ( $category != '' ) {
+			$data = SFUtils::getAllPagesForCategory( $category, 3, $substr );
+		} elseif ( $concept != '' ) {
+			$data = SFUtils::getAllPagesForConcept( $concept, $substr );
+		} elseif ( $namespace != '' ) {
+			// Special handling for main (blank) namespace.
+			if ( $namespace == 'main' ) {
 				$namespace = '';
-			$data = SFUtils::getAllPagesForNamespace($namespace, $substr);
-		} elseif ($external_url != '') {
-			$data = SFUtils::getValuesFromExternalURL($external_url, $substr);
+			}
+			$data = SFUtils::getAllPagesForNamespace( $namespace, $substr );
+		} elseif ( $external_url != '' ) {
+			$data = SFUtils::getValuesFromExternalURL( $external_url, $substr );
 		} else {
 			$data = array();
 		}
-		if (count($data)<=0) {
+		
+		// to prevent JS parsing problems, display should be the same
+		// even if there are no results
+		/*
+		if ( count( $data ) <= 0 ) {
 			return;
 		}
+		 */
 
-		// Set top-level elements
+		// Set top-level elements.
 		$result = $this->getResult();
-		$result->setIndexedTagName($data, 'p');
-		$result->addValue(null, $this->getModuleName(), $data);
+		$result->setIndexedTagName( $data, 'p' );
+		$result->addValue( null, $this->getModuleName(), $data );
 	}
 
 	protected function getAllowedParams() {
 		return array (
 			'limit' => array (
-				ApiBase :: PARAM_TYPE => 'limit',
-				ApiBase :: PARAM_DFLT => 10,
-				ApiBase :: PARAM_MIN => 1,
-				ApiBase :: PARAM_MAX => ApiBase :: LIMIT_BIG1,
-				ApiBase :: PARAM_MAX2 => ApiBase :: LIMIT_BIG2
+				ApiBase::PARAM_TYPE => 'limit',
+				ApiBase::PARAM_DFLT => 10,
+				ApiBase::PARAM_MIN => 1,
+				ApiBase::PARAM_MAX => ApiBase::LIMIT_BIG1,
+				ApiBase::PARAM_MAX2 => ApiBase::LIMIT_BIG2
 			),
-			'substr' => null,
+			'substr' => null, // Once 1.17 becomes acceptable as dependency, use ApiBase::PARAM_REQUIRED
 			'attribute' => null,
 			'relation' => null,
 			'category' => null,
@@ -111,46 +119,50 @@ class SFAutocompleteAPI extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id$';
+		return __CLASS__ . ': $Id: SF_AutocompleteAPI.php 70880 2010-08-11 14:30:25Z jeroendedauw $';
 	}
 
-	public static function getAllValuesForProperty($is_relation, $property_name, $substring = null) {
+	public static function getAllValuesForProperty( $is_relation, $property_name, $substring = null ) {
 		global $sfgMaxAutocompleteValues;
 
-		$fname = "SFAutocompleteAPI::getAllValuesForProperty";
 		$values = array();
 		$db = wfGetDB( DB_SLAVE );
 		$sql_options = array();
 		$sql_options['LIMIT'] = $sfgMaxAutocompleteValues;
-		if ($is_relation) {
+		
+		if ( $is_relation ) {
 			$value_field = 'o_ids.smw_title';
-			$from_clause = $db->tableName('smw_rels2') . " r JOIN " . $db->tableName('smw_ids') . " p_ids ON r.p_id = p_ids.smw_id JOIN " . $db->tableName('smw_ids') . " o_ids ON r.o_id = o_ids.smw_id";
+			$from_clause = $db->tableName( 'smw_rels2' ) . " r JOIN " . $db->tableName( 'smw_ids' ) . " p_ids ON r.p_id = p_ids.smw_id JOIN " . $db->tableName( 'smw_ids' ) . " o_ids ON r.o_id = o_ids.smw_id";
 		} else {
 			$value_field = 'a.value_xsd';
-			$from_clause = $db->tableName('smw_atts2') . " a JOIN " . $db->tableName('smw_ids') . " p_ids ON a.p_id = p_ids.smw_id";
+			$from_clause = $db->tableName( 'smw_atts2' ) . " a JOIN " . $db->tableName( 'smw_ids' ) . " p_ids ON a.p_id = p_ids.smw_id";
 		}
-		$property_name = str_replace(' ', '_', $property_name);
+		
+		$property_name = str_replace( ' ', '_', $property_name );
 		$conditions = "p_ids.smw_title = '$property_name'";
-		if ($substring != null) {
-			$substring = str_replace("'", "\'", strtolower($substring));
+		
+		if ( $substring != null ) {
+			$substring = str_replace( "'", "\'", strtolower( $substring ) );
 			// utf8 conversion is needed in case MediaWiki is using
 			// binary data storage
 			$conditions .= " AND (REPLACE(LOWER(CONVERT($value_field USING utf8)),'_',' ') LIKE '" . $substring . "%' OR REPLACE(LOWER(CONVERT($value_field USING utf8)),'_',' ') LIKE '% " . $substring . "%')";
 		}
+		
 		$sql_options['ORDER BY'] = $value_field;
-		$res = $db->select( $from_clause,
-			"DISTINCT $value_field",
-			$conditions, $fname, $sql_options);
-		while ($row = $db->fetchRow($res)) {
-			if ($substring != null) {
-				$values[] = array('title' => str_replace('_', ' ', $row[0]));
+		$res = $db->select( $from_clause, "DISTINCT $value_field",
+			$conditions, __METHOD__, $sql_options );
+			
+		while ( $row = $db->fetchRow( $res ) ) {
+			if ( $substring != null ) {
+				$values[] = array( 'title' => str_replace( '_', ' ', $row[0] ) );
 			} else {
-				$cur_value = str_replace("'", "\'", $row[0]);
-				$values[] = str_replace('_', ' ', $cur_value);
+				$cur_value = str_replace( "'", "\'", $row[0] );
+				$values[] = str_replace( '_', ' ', $cur_value );
 			}
 		}
-		$db->freeResult($res);
+		$db->freeResult( $res );
+		
 		return $values;
 	}
+	
 }
-
