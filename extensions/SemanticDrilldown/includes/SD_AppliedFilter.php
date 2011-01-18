@@ -43,7 +43,7 @@ class SDAppliedFilter {
 	 */
 	function checkSQL( $value_field ) {
 		$sql = "(";
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		if ( $this->search_term != null ) {
 			$search_term = str_replace( "'", "\'", $this->search_term );
 			if ( $this->filter->is_relation ) {
@@ -113,7 +113,7 @@ class SDAppliedFilter {
 	function getAllOrValues( $category ) {
 		$possible_values = array();
 		$property_value = $this->filter->escaped_property;
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		if ( $this->filter->is_relation ) {
 			$property_table_name = $dbr->tableName( 'smw_rels2' );
 			$property_table_nickname = "r";

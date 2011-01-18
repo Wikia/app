@@ -178,7 +178,7 @@ class SDBrowseDataPage extends QueryPage {
 		$this->applied_filters = $applied_filters;
 		$this->remaining_filters = $remaining_filters;
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$categorylinks = $dbr->tableName( 'categorylinks' );
 		$page = $dbr->tableName( 'page' );
 		$cat_ns = NS_CATEGORY;
@@ -231,7 +231,7 @@ class SDBrowseDataPage extends QueryPage {
 	 * all remaining filters
 	 */
 	function createTempTable( $category, $subcategory, $subcategories, $applied_filters ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$sql1 = "CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL )";
 		$dbr->query( $sql1 );
 		$sql2 = "CREATE INDEX id_index ON semantic_drilldown_values ( id )";
@@ -262,7 +262,7 @@ class SDBrowseDataPage extends QueryPage {
 	 * subcategory's child subcategories, to ensure completeness.
 	 */
 	function getSQLFromClauseForCategory( $subcategory, $child_subcategories ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$smw_insts = $dbr->tableName( 'smw_inst2' );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		$ns_cat = NS_CATEGORY;
@@ -287,7 +287,7 @@ class SDBrowseDataPage extends QueryPage {
 	 * category, subcategory and filters
 	 */
 	function getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		$smw_insts = $dbr->tableName( 'smw_inst2' );
 		$smw_rels = $dbr->tableName( 'smw_rels2' );
@@ -381,7 +381,7 @@ class SDBrowseDataPage extends QueryPage {
 	 * set of filters and either a new subcategory or a new filter.
 	 */
 	function getNumResults( $subcategory, $subcategories, $new_filter = null ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$sql = "SELECT COUNT(DISTINCT sdv.id) ";
 		if ( $new_filter )
 			$sql .= $this->getSQLFromClauseForField( $new_filter );
@@ -630,7 +630,7 @@ END;
 		}
 
 		$combobox_js =<<<END
-<script type="text/javascript">               
+<script type="text/javascript">
 	jQuery(document).ready(function(){
 		jQuery("#$combobox_id").combobox();
 	});
@@ -648,7 +648,7 @@ END;
 		foreach ( $filter_values as $value => $num_instances ) {
 			if ( $value != '_other' && $value != '_none' ) {
 				$display_value = str_replace( '_', ' ', $value );
-				$text .= '			<option value="'.$display_value.'">'.$display_value.'</option>';			
+				$text .= '			<option value="'.$display_value.'">'.$display_value.'</option>';
 			}
 		}
 
@@ -1015,7 +1015,7 @@ END;
 	function getOrder() {
 		return ' ORDER BY sortkey ';
 	}
-	
+
 	function getOrderFields() {
 		return array( 'sortkey' );
 	}
@@ -1081,7 +1081,7 @@ END;
  		}
 		// Force one more parser function, so links appear.
 		$wgParser->replaceLinkHolders( $prtext );
- 
+
 		$html = array();
 		$html[] = $prtext;
 
