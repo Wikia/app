@@ -82,8 +82,9 @@ class ThemeSettings {
 		return $history;
 	}
 
-	public function saveSettings($settings) {
+	public function saveSettings($settings, $cityId = null) {
 		global $wgCityId, $wgUser;
+		$cityId = empty($cityId) ? $wgCityId : $cityId;
 
 		if(strpos($settings['wordmark-image-name'], 'Temp_file_') === 0) {
 			$temp_file = new LocalFile(Title::newFromText($settings['wordmark-image-name'], 6), RepoGroup::singleton()->getLocalRepo());
@@ -141,7 +142,7 @@ class ThemeSettings {
 		}
 
 		// update WF variable with current theme settings
-		WikiFactory::setVarByName(self::WikiFactorySettings, $wgCityId, $settings, $reason);		
+		WikiFactory::setVarByName(self::WikiFactorySettings, $cityId, $settings, $reason);		
 		
 		// add entry
 		$history[] = array(
@@ -165,7 +166,7 @@ class ThemeSettings {
 			}
 		}
 
-		WikiFactory::setVarByName(self::WikiFactoryHistory, $wgCityId, $history, $reason);
+		WikiFactory::setVarByName(self::WikiFactoryHistory, $cityId, $history, $reason);
 
 	}		
 
