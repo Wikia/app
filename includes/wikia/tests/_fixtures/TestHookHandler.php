@@ -7,5 +7,6 @@ class TestHookHandler extends WikiaHookHandler {
 	}
 	
 	public function onEvent() {
+		$this->getHookOptions();
 	}
 }

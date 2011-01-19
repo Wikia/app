@@ -120,11 +120,11 @@ class WikiaApp {
 	 * @param string $globalVarName
 	 */
 	public function getGlobal($globalVarName) {
-		return $this->getRegistry()->get($globalVarName, 'mediawiki');
+		return $this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->get($globalVarName);
 	}
 
 	public function setGlobal($globalVarName, $value) {
-		return $this->getRegistry()->set($globalVarName, $value, 'mediawiki');
+		return $this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set($globalVarName, $value);
 	}
 
 	/**
