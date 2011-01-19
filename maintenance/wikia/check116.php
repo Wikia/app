@@ -8,7 +8,7 @@ $dbr = WikiFactory::db( DB_SLAVE );
 $sth = $dbr->select(
 	array( "city_list" ),
 	array( "city_dbname", "city_id" ),
-	array( "city_cluster is null", "city_public" => 1 ),
+	array( "city_public" => 1 ),
 	__METHOD__
 );
 
@@ -19,7 +19,7 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 
 	$dbc = wfGetDB( DB_SLAVE, array( ), $row->city_dbname );
 	if( ! $dbc->fieldExists( "logging", "log_user_text" ) ) {
-		wfDie( "$row->city_id $row->city_dbname don't have table \n");
+		echo "$city_id\n";
 	}
 	$dbc->close();
 }
