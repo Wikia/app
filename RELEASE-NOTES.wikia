@@ -1,4 +1,5 @@
 == Changes since 20110110 ==
+* rt#145371: MW 1.16 upgrade: & is being represented in article titles as &amp; (macbre)
 * rt#143732: RTE: list style changer is meaningless (macbre)
 * rt#139297: RTE: ensure hover controls always appear within edit window (macbre)
 * rt#145277: ReturnToTest fails (Selenium) (Marooned)
