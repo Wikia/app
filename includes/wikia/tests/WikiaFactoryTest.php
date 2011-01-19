@@ -19,7 +19,6 @@ class WikiaFactoryTest extends PHPUnit_Framework_TestCase {
 
 	protected function tearDown() {
 		WikiaFactory::reset('WikiaFactoryTestClass');
-		WikiaFactory::reset(); // just for making code coverage report all green ;)
 	}
 
 	public function testBuildWithDefaultConstructor() {
