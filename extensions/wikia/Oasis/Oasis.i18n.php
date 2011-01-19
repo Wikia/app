@@ -130,8 +130,10 @@ You can reorder or delete tools in the field below.
 <p>You cannot edit this page at the moment. We should be up and running again shortly. Here's what's happening:<br /><em>$1</em></p>
 <p>Please check <a href=\"http://twitter.com/wikia\">Twitter</a> or <a href=\"http://facebook.com/wikia\">Facebook</a> for more information.</p>",
 	'oasis-upload-photos-title' => 'Upload a Photo to the Wiki',
-	'oasis-upload-photos-advanced' => 'Advanced options',
+	'oasis-upload-photos-more-options' => 'More Options',
+	'oasis-upload-photos-fewer-options' => 'Fewer Options',
 	'oasis-upload-photos-force' => 'Upload anyway',
+	'oasis-upload-photos-caption' => 'Caption',
 
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming',
