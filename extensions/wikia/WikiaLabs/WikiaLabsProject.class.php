@@ -175,6 +175,14 @@ class WikiaLabsProject {
 			$this->id = $db->insertId();
 		}
 	}
+	
+	public function isValide(array()) {
+		$validator = new WikiaAndValidator(array(
+			'width' => new WikiaIntValidator()
+		));
+		
+		return $validator->isValid(array('width' => $this->width));
+	}
 
 	public function delete() {
 		if($this->getId()) {

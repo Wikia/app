@@ -20,6 +20,9 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 
+
+
+
 /**
  * @var WikiaApp
  */
@@ -28,13 +31,16 @@ $app = WF::build('App');
 /**
  * classes
  */
-$app->registerClass('WikiaLabs', $dir . 'WikiaLabs.body.php');
+$app->registerClass('WikiaLabsSpecial', $dir . 'WikiaLabs.body.php');
+$app->registerClass('WikiaLabsModule', $dir . 'WikiaLabsModule.class.php');
+$app->registerClass('WikiaLabs', $dir . 'WikiaLabs.class.php');
 $app->registerClass('WikiaLabsProject', $dir . 'WikiaLabsProject.class.php');
+
 
 /**
  * special pages
  */
-$app->registerSpecialPage('WikiaLabs', 'WikiaLabs');
+$app->registerSpecialPage('WikiaLabs', 'WikiaLabsSpecial');
 
 /**
  * message files
@@ -54,4 +60,10 @@ WF::addClassConstructor( 'WikiaLabsProject', array( 'app' => $app, 'id' => 0 ) )
 /**
  * hooks
  */
-//$app->registerHook('OutputPageBeforeHTML', 'DummyExtension', 'onOutputPageBeforeHTML' );
+$app->registerHook('GetRailModuleSpecialPageList', 'WikiaLabs', 'initGetRailModuleList' );
+
+/*
+ * ajax function
+ */
+
+$wgAjaxExportList[] = 'WikiaLabs::getProjectModal';
