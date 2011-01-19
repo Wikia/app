@@ -3,7 +3,7 @@ var WikiaScriptLoader = function() {
 	// detect Firefox (ignore Fx4.0 beta - RT #91718) / Opera and use script DOM node injection for them
 	var userAgent = navigator.userAgent.toLowerCase();
 	this.useDOMInjection = (userAgent.indexOf('opera') != -1) ||
-		(userAgent.indexOf('firefox') != -1 && userAgent.indexOf('/4.0b') == -1);
+		(userAgent.indexOf('firefox') != -1 && document.createElement("script").async != true);
 
 	// detect IE
 	this.isIE = (userAgent.indexOf('opera') == -1) && (userAgent.indexOf('msie') != -1);
@@ -17,9 +17,11 @@ WikiaScriptLoader.prototype = {
 	// see pages 57 and 58 of "Even Faster Web Sites"
 	loadScript: function(url, onloadCallback) {
 		if (this.useDOMInjection) {
+			// Opera, Firefox 3.6.x
 			this.loadScriptDOMInjection(url, onloadCallback);
 		}
 		else {
+			// IE, Firefox 4 beta, WebKit browsers
 			this.loadScriptDocumentWrite(url, onloadCallback);
 		}
 	},
