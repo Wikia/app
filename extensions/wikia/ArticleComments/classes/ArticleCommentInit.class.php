@@ -3,12 +3,17 @@
 class ArticleCommentInit {
 	public static $enable = null;
 
-	static public function ArticleCommentCheck() {
-		global $wgTitle, $wgRequest, $wgUser;
+	static public function ArticleCommentCheck( $title=null ) {
+		global $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
 
+		if( $title === null ) {
+			global $wgTitle;
+			$title = $wgTitle;
+		}
+
 		if (is_null(self::$enable)) {
-			self::$enable = self::ArticleCommentCheckTitle($wgTitle);
+			self::$enable = self::ArticleCommentCheckTitle($title);
 
 			if (self::$enable && !is_null($wgRequest->getVal('diff'))) {
 				self::$enable = false;
@@ -20,6 +25,10 @@ class ArticleCommentInit {
 			}
 
 			if (self::$enable && $action != 'view' && $action != 'purge') {
+				self::$enable = false;
+			}
+
+			if (self::$enable && !wfRunHooks('ArticleCommentCheck')) {
 				self::$enable = false;
 			}
 		}
