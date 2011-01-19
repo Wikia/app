@@ -32,6 +32,8 @@ define('NS_WIKIA_POLL_TALK', 801);
 
 $wgExtensionNamespacesFiles['WikiaPoll'] = "{$dir}/WikiaPoll.namespaces.php";
 wfLoadExtensionNamespaces('WikiaPoll', array(NS_WIKIA_POLL, NS_WIKIA_POLL_TALK));
+// use comments and not talk pages for poll pages
+$wgArticleCommentsNamespaces[] = NS_WIKIA_POLL;  
 
 // classes
 $wgAutoloadClasses['WikiaPoll'] = "{$dir}/WikiaPoll.class.php";
@@ -47,6 +49,7 @@ $wgHooks['ArticleFromTitle'][] = 'WikiaPollHooks::onArticleFromTitle';
 $wgHooks['ArticleSaveComplete'][] = 'WikiaPollHooks::onArticleSaveComplete';
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'WikiaPollHooks::onFetchTemplateAndTitle';
 $wgHooks['ParserAfterTidy'][] = 'WikiaPollHooks::onParserAfterTidy';
+$wgHooks['ParserBeforeStrip'][] = 'WikiaPollHooks::onParserBeforeStrip';
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'WikiaPollAjax';
