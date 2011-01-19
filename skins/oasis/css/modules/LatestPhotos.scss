@@ -17,23 +17,48 @@
 		cursor: pointer;
 	}
 	.options {
-		border: 1px solid transparent;	/* jquery anim fix */
+		background: $color-article-thumb-background;
+		border-bottom: 1px solid $color-article-thumb-border;
 		display: none;
+		margin-top: 10px;
+		padding: 15px;
 		label {
 			display:block;
 			margin-top:15px;
+			&:first-child {
+				margin-top: 0;
+			}
 		}
 		textarea {
 			height: 4em;
 			width: 425px;
 		}
 	}
+	.toggles {
+		margin-top: 15px;
+		label {
+			display: inline;
+		}
+	}
 	.error {
 		color: red;
 	}
 	.advanced {
-		display: block;
+		display: inline-block;
 		margin: 15px 0 5px;
+		.chevron {
+			border-width: 5px;
+			border-color: $color-text transparent transparent;
+			border-style: solid;
+			height: 0;
+			position: relative;
+			top: .3em;
+			width: 0;
+			&.up {
+				border-color: transparent transparent $color-text;
+				top: -.3em;
+			}			
+		}
 	}
 	.status {
 		display: none;
@@ -71,6 +96,10 @@
 	.ajaxwait{
 		display: none;
 	}
+}
+
+#UploadPhotosWrapper .modalContent {
+	border: 0;
 }
 
 .LatestPhotosModule {
