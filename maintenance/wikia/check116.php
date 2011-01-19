@@ -18,8 +18,9 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 	}
 
 	$dbc = wfGetDB( DB_SLAVE, array( ), $row->city_dbname );
+#	echo "{$row->city_id} {$row->city_dbname}\n";
 	if( ! $dbc->fieldExists( "logging", "log_user_text" ) ) {
-		echo "$city_id\n";
+		echo "$row->city_id\n";
 	}
 	$dbc->close();
 }
