@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wmu-upload-image' => 'Upload Image',
 	'wmu-upload' => 'Upload',
 	'wmu-notlogged' => 'Log in or register to upload images from your computer',
 	'wmu-find' => 'Find',
@@ -250,7 +251,7 @@ $messages['ar'] = array(
 	'wmu-license' => 'الرخصة',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -608,7 +609,7 @@ $messages['de'] = array(
 	'wmu-no-rights' => 'Du bist nicht berechtigt Bilder auf dieser Seite hinzuzufügen',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form))
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -1469,7 +1470,7 @@ $messages['mt'] = array(
 	'wmu-close' => 'agħlaq',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+/** Norwegian Bokmål (Norsk (bokmål)) */
 $messages['nb'] = array(
 	'wmu-added-from-plc' => 'Fil lagt til via bildeplassholderen',
 );
@@ -1553,7 +1554,7 @@ U kunt er geen afbeeldingen aan toevoegen.',
 	'wmu-no-rights' => 'U mag geen afbeeldingen toevoegen aan deze pagina',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1942,7 +1943,7 @@ $messages['sl'] = array(
 	'wmu-back' => 'nazaj',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  * @author Verlor
  */
@@ -2141,7 +2142,7 @@ $messages['uk'] = array(
 	'wmu-gallery' => 'Галерея',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Gaoxuewei
  * @author Xiaomingyan
  */
