@@ -212,7 +212,7 @@ function WMU_manualWidthInput( elem ) {
 			$G( 'ImageUploadManualWidth' ).value = image.width;
 			WMU_readjustSlider( image.width );
 			WMU_shownMax = true;
-			alert (wmu_max_thumb);
+			//alert (wmu_max_thumb);
 		}
 	} else {
 		image.height = val / WMU_ratio;
@@ -807,6 +807,18 @@ function WMU_displayDetails(responseText) {
 
 	$('#ImageUploadLicense').bind('change', WMU_licenseSelectorCheck);
 	
+	// If Details view and showhide link exists, adjust the height of the right sidebar
+	$('#WMU_showhide').click(function(event) {
+		event.preventDefault();
+		if ($("#NameRow").is(":visible")) {
+			$("#NameRow, #LicensingRow").hide();
+			$(this).text("Show more");
+		}	else {
+			$("#NameRow, #LicensingRow").show();
+			$(this).text("Show less");
+		}
+	});
+	
 	if( WMU_skipDetails ){
 		$G('ImageUpload' + WMU_curScreen).style.display = 'none';
 		$G('ImageUploadLayoutLeft').checked = 'checked';
@@ -877,6 +889,7 @@ function WMU_displayDetails(responseText) {
 		WMU_manualWidthInput( $G( 'ImageUploadManualWidth' ) );
 	} else {
 		if ( $G( 'ImageUploadSlider' ) ) {
+			//alert(WMU_size);
 			$G( 'ImageUploadSlider' ).style.visibility = 'hidden';
 			$G( 'ImageUploadInputWidth' ).style.visibility = 'hidden';
 		}
@@ -1007,7 +1020,7 @@ function WMU_insertImage(e, type) {
 
 	var callback = {
 		success: function(o) {
-
+		
 			var screenType = o.getResponseHeader['X-screen-type'];
 			if(typeof screenType == "undefined") {
 				screenType = o.getResponseHeader['X-Screen-Type'];
@@ -1023,10 +1036,11 @@ function WMU_insertImage(e, type) {
 					$G('ImageUpload' + WMU_curScreen).innerHTML = o.responseText;
 					break;
 				case 'summary':
+					
 					WMU_switchScreen('Summary');
 					$G('ImageUploadBack').style.display = 'none';
 					$G('ImageUpload' + WMU_curScreen).innerHTML = o.responseText;
-
+					
 					var event = jQuery.Event("imageUploadSummary");
 					$("body").trigger(event, [$G('ImageUpload' + WMU_curScreen)]);
 					if ( event.isDefaultPrevented() ) {
@@ -1128,7 +1142,7 @@ function MWU_imageWidthChanged(changes) {
 function MWU_imageSizeChanged(size) {
 	WMU_track('size/' + size); // tracking
 	YAHOO.util.Dom.setStyle(['ImageWidthRow', 'ImageLayoutRow'], 'display', size == 'thumb' ? '' : 'none');
-	YAHOO.util.Dom.setStyle(['ImageColumnRow'], 'display', size == 'gallery' ? '' : 'none');
+	//YAHOO.util.Dom.setStyle(['ImageColumnRow'], 'display', size == 'gallery' ? '' : 'none');
 
 	if($G('ImageUploadThumb')) {
 		var image = $G('ImageUploadThumb').firstChild;
@@ -1209,6 +1223,10 @@ function WMU_switchScreen(to) {
 					break;
 			}
 		}, 50);
+	}
+	// Don't show summary screen - just close the WMU
+	if (WMU_curScreen == "Summary") {
+		WMU_close();
 	}
 }
 
