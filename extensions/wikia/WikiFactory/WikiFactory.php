@@ -1130,10 +1130,10 @@ class WikiFactory {
 	 */
 	static public function getVarsKey( $city_id ) {
 		if( empty( $city_id ) ) {
-			return "wikifactory:variables:v4:0";
+			return "wikifactory:variables:v5:0";
 		}
 		else {
-			return "wikifactory:variables:v4:{$city_id}";
+			return "wikifactory:variables:v5:{$city_id}";
 		}
 	}
 
