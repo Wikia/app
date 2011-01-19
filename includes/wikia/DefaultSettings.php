@@ -204,6 +204,16 @@ $wgAutoloadClasses[ "WikiaApiQueryScribeEvents"    ] = "{$IP}/extensions/wikia/W
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"        ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
 $wgAutoloadClasses[ "ApiRunJob"                    ] = "{$IP}/extensions/wikia/WikiaApi/ApiRunJob.php";
 
+/*
+ * validators
+ */
+
+$wgAutoloadClasses["WikiaValidator"] = "includes/wikia/validators/WikiaValidator.class.php";
+$wgAutoloadClasses["WikiaValidatorArray"] = "includes/wikia/validators/WikiaValidatorArray.class.php";
+$wgAutoloadClasses["WikiaValidatorInteger"] = "includes/wikia/validators/WikiaValidatorInteger.class.php";
+$wgAutoloadClasses["WikiaValidatorString"] = "includes/wikia/validators/WikiaValidatorString.class.php";
+$wgAutoloadClasses["WikiaValidatorInArray"] = "includes/wikia/validators/WikiaValidatorInArray.class.php";
+
 
 /**
  * registered API methods
