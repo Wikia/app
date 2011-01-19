@@ -99,4 +99,19 @@ JS;
 		wfProfileOut(__METHOD__);
 		return true;
 	}
+
+	/**
+	 *  transform [[Poll:name]] into {{Poll:name}} in parser before template expansion
+	 */
+
+	public static function onParserBeforeStrip(&$parser, &$text, &$stripState) {
+		global $wgContLang;
+		$pollNamespace = $wgContLang->getNsText( NS_WIKIA_POLL );
+
+		if (preg_match( "/\[\[$pollNamespace\:([^\]]*)]]/", $text, $match )) {
+			$poll_name = $match[1];
+			$text = "{{" . $pollNamespace . ":" . $poll_name . "}}";
+		}
+		return true;
+	}
 }
