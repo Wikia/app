@@ -17,7 +17,7 @@
 	}
 	?>
 
-	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
+	<h1><?= !empty($displaytitle) ? $title : htmlspecialchars($title) ?></h1>
 
 <?php
 	// edit button with actions dropdown
@@ -28,7 +28,7 @@
 ?>
 
 	<?= View::specialPageLink('Upload', 'oasis-add-photo', (!$wgUser->isLoggedIn() ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo', 'sprite photo') ?>
-	
+
 <?php
 	}
 	// render page type line
