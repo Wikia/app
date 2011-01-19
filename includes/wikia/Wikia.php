@@ -438,7 +438,7 @@ $wgHooks['SpecialPage_initList'][] = "Wikia::disableSpecialPage";
 $wgHooks['UserRights'][] = "Wikia::notifyUserOnRightsChange";
 $wgHooks['SetupAfterCache'][] = "Wikia::setupAfterCache";
 $wgHooks['ComposeMail'][] = "Wikia::ComposeMail";
-$wgHooks['SoftwareInfo'][] = "Wikia::softwareInfo";	
+$wgHooks['SoftwareInfo'][] = "Wikia::softwareInfo";
 //$wgHooks['IsTrustedProxy'][] = "Wikia::trustInternalIps";
 //$wgHooks['RawPageViewBeforeOutput'][] = 'Wikia::rawPageViewBeforeOutput';
 /**
@@ -1374,7 +1374,7 @@ class Wikia {
 		if ( !$user instanceof User ) {
 			return true;
 		}
-		
+
 		# to test MW 1.16
 		$cityId = ( $wgCityId == 1927 ) ? $wgCityId : 177;
 		$name = $user->getName();
@@ -1407,7 +1407,7 @@ class Wikia {
 		if ( $bodyHTML ) {
 			$bodyHTML = str_replace( '$UNSUBSCRIBEURL', $url, $bodyHTML );
 		}
-		
+
 		return true;
 	}
 
@@ -1419,11 +1419,19 @@ class Wikia {
 	 * add entries to software info
 	 */
 	static public function softwareInfo( &$software ) {
-		global $wgCityId;
+		global $wgCityId, $wgDBcluster;
 
 		if( !empty( $wgCityId ) ) {
-			$software[ "city id" ] = $wgCityId;
+			$info = "Wikia id: {$wgCityId}";
 		}
+		if( empty( $wgDBcluster ) ) {
+			$info .= ", cluster: c1";
+		}
+		else {
+			$info .= ", cluster: $wgDBcluster";
+		}
+
+		$software[ "Wikia internals" ] = $info;
 
 		/**
 		 * obligatory hook return value
