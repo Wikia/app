@@ -12,6 +12,9 @@
          <testsuite name="Wikia Test Suite">
             <directory>./</directory>
          </testsuite>
+         <testsuite name="Wikia Includes Test Suite">
+            <directory>../includes/wikia/</directory>
+         </testsuite>
          <!-- TODO: enable and fix tests -->
          <!--
          <testsuite name="Wikia Extensions Test Suite">

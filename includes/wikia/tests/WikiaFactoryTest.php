@@ -1,32 +1,6 @@
 <?php
 
-require_once( dirname(__FILE__) . "/../WikiaFactory.class.php");
-
-class Foo {
-	public $id = null;
-	public $type = null;
-	public $bar = null;
-
-	public function __construct($type, $id = 0)	{
-		$this->id = $id;
-		$this->type = $type;
-	}
-
-	public function setId($value) {
-		$this->id = $value;
-	}
-
-	public function setBar($value) {
-		$this->bar = $value;
-	}
-
-	public static function newFromTypeAndBar($type, $bar) {
-		$object = new Foo($type);
-		$object->bar = $bar;
-		return $object;
-	}
-}
-
+require_once dirname(__FILE__) . "/_fixtures/WikiaFactoryTestClass.php";
 
 /**
  * @group mwabstract
@@ -39,67 +13,67 @@ class WikiaFactoryTest extends PHPUnit_Framework_TestCase {
 	const TEST_BAR = '-x-TestBar-x-';
 
 	protected function setUp() {
-		WikiaFactory::addClassConstructor('Foo');
-		WikiaFactory::addClassConstructor('Foo', array( 'type' => self::TEST_DEFAULT_TYPE), 'newFromTypeAndBar');
+		WikiaFactory::addClassConstructor('WikiaFactoryTestClass');
+		WikiaFactory::addClassConstructor('WikiaFactoryTestClass', array( 'type' => self::TEST_DEFAULT_TYPE), 'newFromTypeAndBar');
 	}
 
 	protected function tearDown() {
-		WikiaFactory::reset('Foo');
+		WikiaFactory::reset('WikiaFactoryTestClass');
 		WikiaFactory::reset(); // just for making code coverage report all green ;)
 	}
 
 	public function testBuildWithDefaultConstructor() {
 		// call default constructor with all params set
-		$foo = WikiaFactory::build('Foo', array( 'type' => self::TEST_TYPE, 'id' => self::TEST_ID));
+		$object = WikiaFactory::build('WikiaFactoryTestClass', array( 'type' => self::TEST_TYPE, 'id' => self::TEST_ID));
 
-		$this->assertInstanceOf('Foo', $foo);
-		$this->assertEquals(self::TEST_ID, $foo->id);
-		$this->assertEquals(self::TEST_TYPE, $foo->type);
-		$this->assertNull($foo->bar);
+		$this->assertInstanceOf('WikiaFactoryTestClass', $object);
+		$this->assertEquals(self::TEST_ID, $object->id);
+		$this->assertEquals(self::TEST_TYPE, $object->type);
+		$this->assertNull($object->bar);
 
 		// call default constructor with default id
-		$foo = WikiaFactory::build('Foo', array( 'type' => self::TEST_TYPE ));
+		$object = WikiaFactory::build('WikiaFactoryTestClass', array( 'type' => self::TEST_TYPE ));
 
-		$this->assertInstanceOf('Foo', $foo);
-		$this->assertEquals(0, $foo->id);
-		$this->assertEquals(self::TEST_TYPE, $foo->type);
-		$this->assertNull($foo->bar);
+		$this->assertInstanceOf('WikiaFactoryTestClass', $object);
+		$this->assertEquals(0, $object->id);
+		$this->assertEquals(self::TEST_TYPE, $object->type);
+		$this->assertNull($object->bar);
 	}
 
 	public function testBuildWithFactoryConstructor() {
 		// call factory constructor with all params set
-		$foo = WikiaFactory::build('Foo', array( 'type' => self::TEST_TYPE, 'bar' => self::TEST_BAR), 'newFromTypeAndBar');
+		$object = WikiaFactory::build('WikiaFactoryTestClass', array( 'type' => self::TEST_TYPE, 'bar' => self::TEST_BAR), 'newFromTypeAndBar');
 
-		$this->assertInstanceOf('Foo', $foo);
-		$this->assertEquals(0, $foo->id);
-		$this->assertEquals(self::TEST_TYPE, $foo->type);
-		$this->assertEquals(self::TEST_BAR, $foo->bar);
+		$this->assertInstanceOf('WikiaFactoryTestClass', $object);
+		$this->assertEquals(0, $object->id);
+		$this->assertEquals(self::TEST_TYPE, $object->type);
+		$this->assertEquals(self::TEST_BAR, $object->bar);
 
 		// call factory constructor without all params, so defaults should be passed
-		$foo = WikiaFactory::build('Foo', array( 'bar' => self::TEST_BAR), 'newFromTypeAndBar');
+		$object = WikiaFactory::build('WikiaFactoryTestClass', array( 'bar' => self::TEST_BAR), 'newFromTypeAndBar');
 
-		$this->assertInstanceOf('Foo', $foo);
-		$this->assertEquals(0, $foo->id);
-		$this->assertEquals(self::TEST_DEFAULT_TYPE, $foo->type);
-		$this->assertEquals(self::TEST_BAR, $foo->bar);
+		$this->assertInstanceOf('WikiaFactoryTestClass', $object);
+		$this->assertEquals(0, $object->id);
+		$this->assertEquals(self::TEST_DEFAULT_TYPE, $object->type);
+		$this->assertEquals(self::TEST_BAR, $object->bar);
 	}
 
 	public function testBuildWithClassSetters() {
-		WikiaFactory::setClassSetters('Foo', array( 'setId' => self::TEST_ID, 'setBar' => self::TEST_BAR ));
+		WikiaFactory::setClassSetters('WikiaFactoryTestClass', array( 'setId' => self::TEST_ID, 'setBar' => self::TEST_BAR ));
 
-		$foo = WikiaFactory::build('Foo', array( self::TEST_TYPE ));
+		$object = WikiaFactory::build('WikiaFactoryTestClass', array( self::TEST_TYPE ));
 
-		$this->assertInstanceOf('Foo', $foo);
-		$this->assertEquals(self::TEST_ID, $foo->id);
-		$this->assertEquals(self::TEST_TYPE, $foo->type);
-		$this->assertEquals(self::TEST_BAR, $foo->bar);
+		$this->assertInstanceOf('WikiaFactoryTestClass', $object);
+		$this->assertEquals(self::TEST_ID, $object->id);
+		$this->assertEquals(self::TEST_TYPE, $object->type);
+		$this->assertEquals(self::TEST_BAR, $object->bar);
 
-		$foo = 	WikiaFactory::build('Foo', array( 'type' => self::TEST_TYPE, 'bar' => 'anotherBarToOverride'), 'newFromTypeAndBar');
+		$object = 	WikiaFactory::build('WikiaFactoryTestClass', array( 'type' => self::TEST_TYPE, 'bar' => 'anotherBarToOverride'), 'newFromTypeAndBar');
 
-		$this->assertInstanceOf('Foo', $foo);
-		$this->assertEquals(self::TEST_ID, $foo->id);
-		$this->assertEquals(self::TEST_TYPE, $foo->type);
-		$this->assertEquals(self::TEST_BAR, $foo->bar);
+		$this->assertInstanceOf('WikiaFactoryTestClass', $object);
+		$this->assertEquals(self::TEST_ID, $object->id);
+		$this->assertEquals(self::TEST_TYPE, $object->type);
+		$this->assertEquals(self::TEST_BAR, $object->bar);
 	}
 
 	public function testSettingInstance() {
@@ -107,44 +81,39 @@ class WikiaFactoryTest extends PHPUnit_Framework_TestCase {
 		$type = '01010101';
 		$bar = 'barbarbar';
 
-		$fooObjA = new Foo($type, $id);
-		$fooObjA->setBar($bar);
+		$objectObjA = new WikiaFactoryTestClass($type, $id);
+		$objectObjA->setBar($bar);
 
-		WikiaFactory::reset('Foo');
-		WikiaFactory::setInstance('Foo', $fooObjA);
+		WikiaFactory::reset('WikiaFactoryTestClass');
+		WikiaFactory::setInstance('WikiaFactoryTestClass', $objectObjA);
 
-		$fooObjB = WikiaFactory::build('Foo');
+		$objectObjB = WikiaFactory::build('WikiaFactoryTestClass');
 
-		$this->assertEquals($fooObjA, $fooObjB);
+		$this->assertEquals($objectObjA, $objectObjB);
 
 		//re-instantiate
-		$fooObjC = new Foo('reinstantiate', 5);
+		$objectObjC = new WikiaFactoryTestClass('reinstantiate', 5);
 
-		WikiaFactory::setInstance('Foo', $fooObjC);
+		WikiaFactory::setInstance('WikiaFactoryTestClass', $objectObjC);
 
-		$this->assertEquals($fooObjC, WikiaFactory::build('Foo'));
+		$this->assertEquals($objectObjC, WikiaFactory::build('WikiaFactoryTestClass'));
 	}
 
-	/**
-	 * @expectedException WikiaException
-	 */
 	public function testUnknownConstructorCall() {
-		$foo = WikiaFactory::build('Foo', array(), 'nonExistentFactoryMethod');
+		$this->setExpectedException('WikiaException');
+		$object = WikiaFactory::build('WikiaFactoryTestClass', array(), 'nonExistentFactoryMethod');
 	}
 
-	/**
-	 * @expectedException WikiaException
-	 */
 	public function testSettingInstanceWithConstructorDefined() {
-		WikiaFactory::setInstance('Foo', new Foo(1));
+		$this->setExpectedException('WikiaException');
+		WikiaFactory::setInstance('WikiaFactoryTestClass', new WikiaFactoryTestClass(1));
 	}
 
 	public function testAddingConstructorWithInstancePredefined() {
-		WikiaFactory::reset('Foo');
-		WikiaFactory::setInstance('Foo', new Foo(1));
+		WikiaFactory::reset('WikiaFactoryTestClass');
+		WikiaFactory::setInstance('WikiaFactoryTestClass', new WikiaFactoryTestClass(1));
 
 		$this->setExpectedException('WikiaException');
-
-		WikiaFactory::addClassConstructor('Foo');
+		WikiaFactory::addClassConstructor('WikiaFactoryTestClass');
 	}
 }
