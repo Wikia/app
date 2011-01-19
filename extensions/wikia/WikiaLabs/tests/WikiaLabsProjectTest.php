@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__FILE__) . '/../WikiaLabs.setup.php';
 
 class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 	const TEST_PROJECT_NAME = 'Test Project';

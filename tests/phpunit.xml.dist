@@ -15,12 +15,9 @@
          <testsuite name="Wikia Includes Test Suite">
             <directory>../includes/wikia/</directory>
          </testsuite>
-         <!-- TODO: enable and fix tests -->
-         <!--
          <testsuite name="Wikia Extensions Test Suite">
             <directory>../extensions/wikia/</directory>
          </testsuite>
-         -->
          <!-- DO NOT run MW tests. These tests are dropping db tables, including users -->
          <!--
          <testsuite name="MediaWiki Test Suite">
