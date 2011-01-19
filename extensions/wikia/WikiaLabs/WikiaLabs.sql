@@ -6,6 +6,11 @@ CREATE TABLE wikia_labs_project (
 	wlpr_release_date DATE,
 	wlpr_is_active ENUM('y','n') DEFAULT 'n',
 	wlpr_is_graduated ENUM('y','n') DEFAULT 'n'
+	wlpr_activations_num INT DEFAULT '0',
+	wlpr_rating DECIMAL(10,2) DEFAULT '0.00',
+	wlpr_pm_email VARCHAR(64),
+	wlpr_tech_email VARCHAR(64),
+	wlpr_fogbugz_project VARCHAR(64)
 ) Engine=InnoDB;
 
 CREATE TABLE wikia_labs_project_rating (
