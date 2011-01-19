@@ -32,7 +32,8 @@ var UploadPhotos = {
 			UploadPhotos.destfile = UploadPhotos.d.find("input[name=wpDestFile]");
 			UploadPhotos.filepath = UploadPhotos.d.find("input[name=wpUploadFile]");
 			UploadPhotos.status = UploadPhotos.d.find("div.status");
-			UploadPhotos.advanced = UploadPhotos.d.find(".advanced");
+			UploadPhotos.advanced = UploadPhotos.d.find(".advanced a");
+			UploadPhotos.advancedChevron = UploadPhotos.d.find(".advanced .chevron");
 			UploadPhotos.options = UploadPhotos.d.find(".options");
 			UploadPhotos.uploadbutton = UploadPhotos.d.find("input[type=submit]");
 			UploadPhotos.step1 = UploadPhotos.d.find(".step-1");
@@ -49,7 +50,17 @@ var UploadPhotos = {
 			UploadPhotos.destfile.blur(UploadPhotos.destFileSet);
 			UploadPhotos.advanced.click(function(evt) {
 				evt.preventDefault();
-				UploadPhotos.options.toggle(400);
+				
+				//set correct text for link and arrow direction
+				if (UploadPhotos.options.is(":visible")) {
+					UploadPhotos.advanced.text(UploadPhotos.advanced.data("more"));
+					UploadPhotos.advancedChevron.removeClass("up");
+				} else {
+					UploadPhotos.advanced.text(UploadPhotos.advanced.data("fewer"));
+					UploadPhotos.advancedChevron.addClass("up");
+				}
+				
+				UploadPhotos.options.slideToggle(400);
 			});
 			UploadPhotos.destfile.keyup(function() {
 				if(UploadPhotos.dftimer) {
