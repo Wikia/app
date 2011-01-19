@@ -562,20 +562,31 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 		$wgSupressPageTitle = false;
 
+		// main namespace page
+		$wgTitle = Title::newFromText('Main&Bar');
+
+		$moduleData = Module::get('PageHeader')->getData();
+
+		$this->assertRegExp('/Main&Bar/', $moduleData['title']);
+		$this->assertFalse($moduleData['displaytitle']);
+
 		// talk page
-		$wgTitle = Title::newFromText('Foo', NS_TALK);
+		$wgTitle = Title::newFromText('Foo&Bar', NS_TALK);
 
 		$moduleData = Module::get('PageHeader')->getData();
 
 		$this->assertRegExp('/Talk:/', $moduleData['title']);
-		$this->assertRegExp('/Foo" title="Foo"/', $moduleData['pageTalkSubject']);
+		$this->assertRegExp('/Foo&amp;Bar/', $moduleData['title']);
+		$this->assertRegExp('/title="Foo&amp;Bar/', $moduleData['pageTalkSubject']);
+		$this->assertTrue($moduleData['displaytitle']);
 
 		// category page
-		$wgTitle = Title::newFromText('Stubs', NS_CATEGORY);
+		$wgTitle = Title::newFromText('Stubs&Stuff', NS_CATEGORY);
 
 		$moduleData = Module::get('PageHeader')->getData();
 
-		$this->assertEquals('Stubs', $moduleData['title']);
+		$this->assertEquals('Stubs&Stuff', $moduleData['title']);
+		$this->assertFalse($moduleData['displaytitle']);
 		$this->assertEquals('Category page', $moduleData['pageType']);
 		$this->assertFalse($moduleData['categories']);
 		$this->assertFalse($moduleData['revisions']);
@@ -588,19 +599,21 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertRegExp('/Special page/', $moduleData['pageSubtitle']);
 
 		// forum page
-		$wgTitle = Title::newFromText('Foo', NS_FORUM);
+		$wgTitle = Title::newFromText('Forum&Bar', NS_FORUM);
 
 		$moduleData = Module::get('PageHeader')->getData();
 
-		$this->assertEquals('Foo', $moduleData['title']);
+		$this->assertEquals('Forum&Bar', $moduleData['title']);
+		$this->assertFalse($moduleData['displaytitle']);
 		$this->assertFalse($moduleData['comments']);
 
 		// file page
-		$wgTitle = Title::newFromText('Foo', NS_FILE);
+		$wgTitle = Title::newFromText('Foo&Bar', NS_FILE);
 
 		$moduleData = Module::get('PageHeader')->getData();
 
-		$this->assertEquals('Foo', $moduleData['title']);
+		$this->assertEquals('Foo&Bar', $moduleData['title']);
+		$this->assertFalse($moduleData['displaytitle']);
 		$this->assertEquals('', $moduleData['subtitle']);
 
 		// history page header
@@ -635,12 +648,14 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 */
 		// edit page
 		$wgRequest->setVal('action', 'edit');
-		$wgTitle = Title::newFromText('Foo', NS_TALK);
+		$wgTitle = Title::newFromText('Foo&Bar', NS_TALK);
 
 		$moduleData = Module::get('PageHeader', 'EditPage')->getData();
 
 		$this->assertRegExp('/Editing:/', $moduleData['title']);
-		$this->assertRegExp('/Talk:Foo" title="Talk:Foo"/', $moduleData['subtitle']);
+		$this->assertRegExp('/Foo&amp;Bar/', $moduleData['title']);
+		$this->assertRegExp('/Talk:Foo%26Bar" title="Talk:Foo&amp;Bar/', $moduleData['subtitle']);
+		$this->assertTrue($moduleData['displaytitle']);
 
 		// edit page (section edit)
 		$wgRequest->setVal('section', 3);
@@ -648,6 +663,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$moduleData = Module::get('PageHeader', 'EditPage')->getData();
 		$this->assertTrue($wgSuppressToolbar);
 		$this->assertRegExp('/(section)/', $moduleData['title']);
+		$this->assertTrue($moduleData['displaytitle']);
 
 		$wgRequest->setVal('section', null);
 		$wgRequest->setVal('action', '');
@@ -656,7 +672,8 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$moduleData = Module::get('PageHeader', 'EditBox')->getData();
 
 		$this->assertRegExp('/Editing:/', $moduleData['title']);
-		$this->assertRegExp('/Talk:Foo" title="Talk:Foo"/', $moduleData['subtitle']);
+		$this->assertRegExp('/Talk:Foo%26Bar" title="Talk:Foo&amp;Bar"/', $moduleData['subtitle']);
+		$this->assertTrue($moduleData['displaytitle']);
 
 		// add edit box header
 		$editPage = (object) array(

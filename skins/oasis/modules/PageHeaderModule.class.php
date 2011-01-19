@@ -33,7 +33,7 @@ class PageHeaderModule extends Module {
 	var $showSearchBox;
 	var $isMainPage;
 	var $total;
-	
+
 	var $wgUser;
 	var $isNewFiles;
 	var $wgABTests;
@@ -119,7 +119,7 @@ class PageHeaderModule extends Module {
 	 */
 	private function getRecentRevisions() {
 		global $wgTitle, $wgMemc, $wgABTests;
-		
+
 		$revisions = array();
 
 		// use service to get data
@@ -186,6 +186,10 @@ class PageHeaderModule extends Module {
 
 		// for not existing pages page header is a bit different
 		$this->pageExists = !empty($wgTitle) && $wgTitle->exists();
+
+		// default title "settings" (RT #145371)
+		$this->displaytitle = false;
+		$this->title = $wgTitle->getPrefixedText();
 
 		if ($this->pageExists) {
 			// use service to get data
