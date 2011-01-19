@@ -31,8 +31,8 @@ class WikiaApp {
 			$registry = WF::build( 'WikiaCompositeRegistry' );
 		}
 		if(is_null($hookDispatcher)) {
-			WF::setInstance( 'HookDispatcher', new WikiaHookDispatcher());
-			$hookDispatcher = WF::build( 'HookDispatcher' );
+			WF::setInstance( 'WikiaHookDispatcher', new WikiaHookDispatcher());
+			$hookDispatcher = WF::build( 'WikiaHookDispatcher' );
 		}
 
 		$this->hookDispatcher = $hookDispatcher;
@@ -109,6 +109,10 @@ class WikiaApp {
 	 */
 	public function registerSpecialPage($name, $className) {
 		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set('wgSpecialPages', $className, $name);
+	}
+
+	public function registerAjaxFunction() {
+
 	}
 
 	/**
