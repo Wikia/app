@@ -500,7 +500,7 @@ public class PhalanxTest extends BaseTest {
 	public void whitelistTest() throws Exception {
 		this.log("Test whitelist");
 
-		loginAsStaff();
+		loginAsSysop();
 
 		// edit whitelist - allow "fuck" word
 		String whitelist = " #<!-- Phalanx whitelist text --> <pre>\n" +
