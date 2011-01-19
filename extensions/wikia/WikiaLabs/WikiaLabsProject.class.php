@@ -9,6 +9,11 @@ class WikiaLabsProject {
 	protected $releaseDate;
 	protected $isActive = false;
 	protected $isGraduated = false;
+	protected $activationsNum = 0;
+	protected $rating = 0;
+	protected $pmEmail;
+	protected $techEmail;
+	protected $fogbugzProject;
 
 	public function __construct( WikiaApp $app, $id = 0) {
 		$this->app = $app;
@@ -70,10 +75,54 @@ class WikiaLabsProject {
 		$this->isGraduated = $value;
 	}
 
+	public function getActivationsNum() {
+		return $this->activationsNum;
+	}
+
+	public function setActivationsNum($value) {
+		$this->activationsNum = $value;
+	}
+
+	public function incrActivationsNum() {
+		$this->activationsNum++;
+	}
+
+	public function getRating() {
+		return $this->rating;
+	}
+
+	public function setRating($value) {
+		$this->rating = $value;
+	}
+
+	public function getPMEmail() {
+		return $this->pmEmail;
+	}
+
+	public function setPMEmail($value) {
+		$this->pmEmail = $value;
+	}
+
+	public function getTechEmail() {
+		return $this->techEmail;
+	}
+
+	public function setTechEmail($value) {
+		$this->techEmail = $value;
+	}
+
+	public function getFogbugzProject() {
+		return $this->fogbugzProject;
+	}
+
+	public function setFogbugzProject($value) {
+		$this->fogbugzProject = $value;
+	}
+
 	public function loadFromDb($id) {
 		$project = $this->getDb()->selectRow(
 			array( 'wikia_labs_project' ),
-			array( 'wlpr_name', 'wlpr_data', 'wlpr_release_date', 'wlpr_is_active', 'wlpr_is_graduated' ),
+			array( 'wlpr_name', 'wlpr_data', 'wlpr_release_date', 'wlpr_is_active', 'wlpr_is_graduated', 'wlpr_activations_num', 'wlpr_rating', 'wlpr_pm_email', 'wlpr_tech_email', 'wlpr_fogbugz_project' ),
 			array( "wlpr_id" => $id ),
 			__METHOD__
 		);
@@ -85,6 +134,11 @@ class WikiaLabsProject {
 			$this->releaseDate = $project->wlpr_release_date;
 			$this->isActive = ( $project->wlpr_is_active == 'y' ) ? true : false;
 			$this->isGraduated = ( $project->wlpr_is_graduated == 'y' ) ? true : false;
+			$this->activationsNum = $project->wlpr_activations_num;
+			$this->rating = $project->wlpr_rating;
+			$this->pmEmail = $project->wlpr_pm_email;
+			$this->techEmail = $project->wlpr_tech_email;
+			$this->fogbugzProject = $project->wlpr_fogbugz_project;
 		}
 	}
 
@@ -96,7 +150,12 @@ class WikiaLabsProject {
 			'wlpr_data' => serialize( $this->getData() ),
 			'wlpr_release_date' => $this->getReleaseDate(),
 			'wlpr_is_active' => $this->isActive() ? 'y' : 'n',
-			'wlpr_is_graduated' => $this->isGraduated() ? 'y' : 'n'
+			'wlpr_is_graduated' => $this->isGraduated() ? 'y' : 'n',
+			'wlpr_activations_num' => $this->getActivationsNum(),
+			'wlpr_rating' => $this->getRating(),
+			'wlpr_pm_email' => $this->getPMEmail(),
+			'wlpr_tech_email' => $this->getTechEmail(),
+			'wlpr_fogbugz_project' => $this->getFogbugzProject()
 		);
 
 		if($this->getId()) {

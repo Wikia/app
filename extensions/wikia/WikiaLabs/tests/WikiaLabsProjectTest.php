@@ -34,6 +34,8 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 		$this->assertGreaterThan( 0, $this->object->getId() );
 		$this->assertEquals( self::TEST_PROJECT_NAME, $this->object->getName() );
 		$this->assertEquals( $releaseDate, $this->object->getReleaseDate() );
+		$this->assertEquals( 0, $this->object->getActivationsNum() );
+		$this->assertEquals( 0, $this->object->getRating() );
 		$this->assertTrue( $this->object->isActive() );
 		$this->assertFalse( $this->object->isGraduated() );
 
@@ -55,6 +57,7 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 
 		$object = WF::build( 'WikiaLabsProject', array( 'id' => $this->object->getId() ) );
 		$object->setActive( true );
+		$object->incrActivationsNum();
 		$object->update();
 
 		unset($object);
@@ -62,6 +65,7 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 		$object = WF::build( 'WikiaLabsProject', array( 'id' => $this->object->getId() ) );
 		$this->assertEquals( self::TEST_PROJECT_NAME, $object->getName() );
 		$this->assertTrue( $object->isActive() );
+		$this->assertEquals( 1, $object->getActivationsNum() );
 
 		$object->delete();
 	}
