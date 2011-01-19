@@ -168,6 +168,7 @@ public class RTETest extends BaseTest {
 				"bar „foo“ ;)",
 				"[[&]]\n\n[[&amp;]]\n\n[[foo & bar]]es\n\n[[Flip & Flap]]\n\n[[Flip & Flap|and &amp; entity]]\n\n[[Flip &amp; Entity]]\n\nfoo & bar\n\nfoo &amp; entity\n\n[[foo|&amp;]]\n\n[[foo|Caption with &amp; entity]]",
 				"[[/foo]]\n\n[[/foo/]]\n\n[[/foo bar]]\n\n[[/foo bar/]]",
+				"[[RTE_test_page/foo|foo]]\n\n[[/foo/]]\n\n[[RTE_test_page/foo|bar]]\n\n[[RTE_test_page/foo]]",
 				"\n<div>123</div>\n\n<div>456</div>\n\n\n<div>789</div>",
 				"<div>123</div>\n\n<div>456</div>\n\n\n\n<div>\n\n\n789</div>",
 				"<div>\n\n{|\n|123\n|}\n</div>",
@@ -247,7 +248,7 @@ public class RTETest extends BaseTest {
 
 		for(String wikitext : wikitexts) {
 			// logging
-			// System.out.println("Test case " + testCaseId + "/" + Integer.toString(wikitexts.length));
+			System.out.println("Test case " + testCaseId + "/" + Integer.toString(wikitexts.length));
 			testCaseId++;
 
 			// set text in source mode
