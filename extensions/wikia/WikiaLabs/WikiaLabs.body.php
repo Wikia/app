@@ -1,6 +1,6 @@
 <?php
 
-class WikiaLabs extends SpecialPage {
+class WikiaLabsSpecial extends SpecialPage {
 
 	//private $mpa = null;
 	protected $app = null;
@@ -18,9 +18,10 @@ class WikiaLabs extends SpecialPage {
 		$oTmpl = WF::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
 		$oTmpl->set_vars( array() );
 
-		$this->app->getGlobal('wgOut')->addHTML( $oTmpl->render("wikialabs-main") );
-
+		$this->app->getGlobal('wgOut')->addHTML( $oTmpl->render("wikialabs-main") );		
+		$this->app->getGlobal('wgOut')->addScriptFile( $this->app->getGlobal('wgScriptPath')."/extensions/wikia/WikiaLabs/js/main.js" );
+		
+		
 		return ;
 	}
 }
-

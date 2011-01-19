@@ -181,9 +181,9 @@ class BodyModule extends Module {
 			else {
 				// don't show any module for MW core special pages
 				$railModuleList = array();
-
+				wfRunHooks( 'GetRailModuleSpecialPageList', array( &$railModuleList ) );
 				wfProfileOut(__METHOD__);
-				return;
+				return $railModuleList;
 			}
 		}
 		else {

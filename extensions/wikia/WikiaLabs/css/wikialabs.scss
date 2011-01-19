@@ -4,7 +4,226 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/core/color";
 
+$toolbox-button: 105px;
+$margin-images: 10px;
 
-li {
-	margin-right:8px;
+.WikiaArticle ul.wikiaLabsMainView {
+	list-style: none outside none;
+	margin-left: 2px;
+	li {
+		@include clearfix;
+		position: relative;
+		padding-bottom: 20px;
+	    margin-top: 20px;
+	    border-bottom: 1px solid;
+    	border-width: 1px;
+    	border-color:$color-headline-border;
+    	min-height: 114px;
+	    .appScreen {
+	    	float: left;
+			margin-right: $margin-images;
+			border-color: $color-text;
+			border: 1px solid;
+	    }
+		.details{
+			vertical-align: top;
+			padding-right: $toolbox-button + $margin-images; 
+			display: block;
+			.prjname {
+				display: block; 
+				font-size: 20px;
+				.data {
+				    font-size: 10px;
+    				padding-bottom: 4px;
+    				padding-left: 10px;
+				}
+			}
+		}
+		.buttons {
+	    	position: absolute;
+	    	right: 0;
+	    	vertical-align: top;	
+	    	border: medium solid;
+    		top: 0;
+    		width: $toolbox-button;
+    		border: none;
+    		.feedback {
+				margin-top: 6px;
+				margin-bottom: 6px;
+			    img {
+    			    float: left;
+    				margin-left: -3px;
+				    margin-top: -2px;
+    				padding: 0;
+    				width: 20px;
+				}
+    		}
+    		.active {
+    		    display: block;
+    			font-size: 11px;
+    			.wikia-button{ 
+    			    padding-left: 3px;
+    				padding-right: 3px;
+    				margin-right: 6px;
+    			}
+    		}
+    		.stars {
+    			padding-left: 2px;
+    			display: block;
+    			margin-top: -5px;
+    			img {
+    				margin-right: -10px;
+    				margin-left: -10px;
+    			}
+    			.ratings{
+    			   display: block;
+    				float: right;
+    				font-size: 8px;
+    				line-height: 8px;
+    				padding-top: 8px;
+    				text-align: center;
+    			}
+    		}
+    		.slider{
+    			background: url(/extensions/wikia/WikiaLabs/images/toggle-bkg-inactive.png);
+    		    border: medium solid;
+    			display: block;
+    			height: 27px;
+    			width: 109px;
+    			border: none;
+    			&.on {
+    				background: url(/extensions/wikia/WikiaLabs/images/toggle-bkg-active.png);
+    			}
+    			.texton {
+    			   	margin-left: 18px;
+    				position: absolute;
+    				top: 2px;
+    				color: #FFFFFF;
+    				font-weight: bold;
+    				display: none;
+    				&.on {
+    					display: block;
+    				}
+    			}
+				.textoff {
+    			   	margin-left: 45px;
+    				position: absolute;
+    				top: 2px;
+    				color: #000;
+    				font-weight: bold;
+    				&.on {
+    					display: none;
+    				}
+    			}
+    			.button {
+    				background: url(/extensions/wikia/WikiaLabs/images/toggle-switch.png);
+					border: none;
+    				display: block;
+    				height: 27px;
+    				padding: 0;
+    				width: 42px;
+    				&.on { 
+    					left: 67px;
+    					position: absolute;
+    				}
+    			}
+    		}
+		}	
+	}
 }
+
+.WikiaLabsGraduates {
+	h1{ 
+		img{
+			float: left;
+	    	margin-top: -10px;
+	    	width: 32px;
+	    }
+	    @include clearfix;
+    }
+    li {
+     	@include clearfix;
+     	padding-bottom: 20px;
+	    img {
+	    	float: left;
+	        border: 1px solid;
+	    	height: 80px;
+	    	width: 80px;
+	    }
+	    div {	
+	    	padding-left: 92px;
+	    	.title {
+	    	    display: block;
+    			font-size: 20px;
+    			padding-bottom: 3px;
+	    	}
+	    }
+    }
+}
+
+.WikiaLabsStaff{
+	h1.title {
+		display: block; 
+		position: relative;
+		margin-bottom: 0;
+		#addProject {
+    		position: absolute;
+    		right: 0;
+    		top: -4px;		
+		}	
+	}
+	.redinfo {
+	    color: red;
+    	font-size: 11px;
+    	display: block;	
+	}
+	.editinfo {
+	 	display: block;
+    	font-size: 12px;
+    	margin-top: 23px;
+	}
+	.prjselect {
+	    margin-bottom: 20px;
+    	width: 150px;	
+	}
+}
+
+.addprjmodal {
+	.label {
+	    font-weight: bold;
+		padding-top: 15px;
+    	padding-bottom: 3px;
+	}
+	.input input {
+		width:350px;
+	}
+	.input textarea {
+		width:350px;
+		height: 100px;
+	}
+	.input input.checkbox {
+		width: 20px;
+		margin-left: 0;
+	} 
+	.buttons {
+		 padding-top: 24px;
+	}
+	.image {
+		float: right;
+    	margin-right: 80px;
+    	margin-top: 50px;
+    	position: relative;
+    	img {
+    	    height: 100px;
+    		width: 150px;
+    		border: 1px solid;
+    		border-color: $color-text;
+    	}
+    	button {
+    	    left: 37px;
+    		position: absolute;
+    		top: 41px;
+    	}
+	}
+}
+
