@@ -299,6 +299,34 @@ class UserPagesHeaderModule extends Module {
 			$this->stats = false;
 		}
 
+		// extra logic for subpages (RT #74091)
+		if (!empty($this->subtitle)) {
+			switch($namespace) {
+				// for user subpages add link to theirs talk pages
+				case NS_USER:
+					$talkPage = $wgTitle->getTalkPage();
+
+					// get number of revisions for talk page
+					$service = new PageStatsService($wgTitle->getArticleId());
+					$comments = $service->getCommentsCount();
+
+					// render comments bubble
+					$bubble = wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'bubble' => true));
+
+					$this->subtitle .= ' | ';
+					$this->subtitle .= $bubble;
+					$this->subtitle .= View::link($talkPage);
+					break;
+
+				case NS_USER_TALK:
+					$subjectPage = $wgTitle->getSubjectPage();
+
+					$this->subtitle .= ' | ';
+					$this->subtitle .= View::link($subjectPage);
+					break;
+			}
+		}
+
 		wfProfileOut(__METHOD__);
 	}
 
