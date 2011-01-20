@@ -17,7 +17,7 @@ class DPLMain {
 		error_reporting( E_ALL );
 
 		global $wgUser, $wgLang, $wgContLang, $wgRequest, $wgRawHtml;
-		global $wgTitle, $wgArticle, $wgNonincludableNamespaces;
+		global $wgTitle, $wgNonincludableNamespaces;
 
 		// we use "makeKnownLinkObject" to create hyperlinks; 
 		// the code we store in the dplcache may contain <html>....</html> sequences
@@ -59,7 +59,7 @@ class DPLMain {
 		}
 
 		// get database access
-		$dbr = wfGetDB( DB_SLAVE, 'dpl' );
+		$dbr = wfGetDB( DB_SLAVE );
 		$sPageTable = $dbr->tableName( 'page' );
 		$sCategorylinksTable = $dbr->tableName( 'categorylinks' );
 
@@ -1413,10 +1413,8 @@ class DPLMain {
 
 				case 'dplcache':
 					if ( $sArg != '' ) {
-						if ( isset( $wgArticle ) ) {
-							$DPLCache = $wgArticle->getID() . '_' . $sArg . '.txt';
-							$DPLCachePath = $wgArticle->getID() % 10;
-						}
+						$DPLCache = $parser->mTitle->getArticleID() . '_' . $sArg . '.txt';
+						$DPLCachePath = $parser->mTitle->getArticleID() % 10;
 					} else {
 						$output .= $logger->msgWrongParam( 'dplcache', $sArg );
 					}
@@ -3269,7 +3267,7 @@ class DPLMain {
 		// update dependencies to CacheAPI if DPL is to respect the MW ParserCache and the page containing the DPL query is changed
 		if ( ExtDynamicPageList::$useCacheAPI && $bAllowCachedResults && $wgRequest->getVal( 'action', 'view' ) == 'submit' ) {
 /*
-			CacheAPI::remDependencies( $wgArticle->getID());
+			CacheAPI::remDependencies( $parser->mTitle->getArticleID());
 
 			// add category dependencies
 			$conditionTypes = array( CACHETYPE_CATEGORY );
@@ -3290,7 +3288,7 @@ class DPLMain {
 
 			// add general dependencies
 
-			// CacheAPI::addDependencies ( $wgArticle->getID(), $conditionTypes, $conditions); 
+			// CacheAPI::addDependencies ( $parser->mTitle->getArticleID(), $conditionTypes, $conditions); 
 */
 		}
 
@@ -3413,7 +3411,7 @@ class DPLMain {
 	}
 
 	private static function getSubcategories( $cat, $sPageTable, $depth ) {
-		$dbr = wfGetDB( DB_SLAVE, 'dpl' );
+		$dbr = wfGetDB( DB_SLAVE );
 		$cats = $cat;
 		$res = $dbr->query(
 			"SELECT DISTINCT page_title FROM " . $dbr->tableName( 'page' ) . " INNER JOIN "

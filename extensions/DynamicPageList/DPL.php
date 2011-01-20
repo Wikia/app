@@ -1124,7 +1124,7 @@ class DPL {
     }
 
 	function updateArticle( $title, $text, $summary ) {
-		global $wgUser, $wgRequest, $wgArticle, $wgOut;
+		global $wgUser, $wgRequest, $wgOut;
 
 		if ( !$wgUser->matchEditToken( $wgRequest->getVal( 'token' ) ) ) {
 			$wgOut->addWikiMsg( 'sessionfailure' );
@@ -1132,11 +1132,11 @@ class DPL {
 		}
 
 		$titleX = Title::newFromText( $title );
-
-		$wgArticle = $articleX = new Article( $titleX );
-		$permission_errors = $articleX->mTitle->getUserPermissionsErrors( 'edit', $wgUser );
+		$permission_errors = $titleX->getUserPermissionsErrors( 'edit', $wgUser );
 		if ( count( $permission_errors ) == 0 ) {
-			$articleX->updateArticle( $text, $summary, false, $titleX->userIsWatching() );
+			$articleX = new Article( $titleX );
+			$articleX->doEdit( $text, $summary, EDIT_UPDATE | EDIT_DEFER_UPDATES | EDIT_AUTOSUMMARY );
+			$wgOut->redirect( $titleX->getFullUrl( $articleX->isRedirect() ? 'redirect=no' : '' ) );
 			return '';
 		} else {
 			$wgOut->showPermissionsErrorPage( $permission_errors );
@@ -1425,11 +1425,9 @@ class DPL {
 		$reason .= "\nbulk delete by DPL query";
 
 		$titleX = Title::newFromText( $title );
-		global $wgArticle;
-		$wgArticle = $articleX = new Article( $titleX );
 		if ( $exec ) {
 			# Check permissions
-			$permission_errors = $articleX->mTitle->getUserPermissionsErrors( 'delete', $wgUser );
+			$permission_errors = $titleX->getUserPermissionsErrors( 'delete', $wgUser );
 			if ( count( $permission_errors ) > 0 ) {
 				$wgOut->showPermissionsErrorPage( $permission_errors );
 				return 'permission error';
@@ -1437,6 +1435,7 @@ class DPL {
 				$wgOut->readOnlyPage();
 				return 'DPL: read only mode';
 			} else {
+				$articleX = new Article( $titleX );
 				$articleX->doDelete( $reason );
 			}
 		} else {
