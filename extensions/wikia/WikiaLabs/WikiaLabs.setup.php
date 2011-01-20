@@ -55,12 +55,14 @@ $app->registerExtensionAliasFile('WikiaLabs', $dir . 'WikiaLabs.alias.php');
 /**
  * Factory config
  */
+WF::addClassConstructor( 'WikiaLabs', array( 'app' => $app ) );
 WF::addClassConstructor( 'WikiaLabsProject', array( 'app' => $app, 'id' => 0 ) );
+
 
 /**
  * hooks
  */
-$app->registerHook('GetRailModuleSpecialPageList', 'WikiaLabs', 'initGetRailModuleList' );
+$app->registerHook('GetRailModuleSpecialPageList', 'WikiaLabs', 'onGetRailModuleSpecialPageList' );
 
 /*
  * ajax function

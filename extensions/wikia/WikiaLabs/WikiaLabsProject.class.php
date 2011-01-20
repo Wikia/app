@@ -184,8 +184,32 @@ class WikiaLabsProject {
 
 	public function getList(Array $refinements = array()) {
 		$whereClause = array();
-		if(!empty($refinements['active'])) {
 
+		if(isset($refinements['active'])) {
+			$whereClause['wlpr_is_active'] = ( $refinements['active'] ? 'y' : 'n' );
 		}
+
+		if(isset($refinements['graduated'])) {
+			$whereClause['wlpr_is_graduated'] = ( $refinements['graduated'] ? 'y' : 'n' );
+		}
+
+		if(!empty($refinements['name'])) {
+			$whereClause['wlpr_name'] = $refinements['name'];
+		}
+
+		$res = $this->getDb()->select(
+			array( 'wikia_labs_project' ),
+			array( 'wlpr_id' ),
+			$whereClause,
+			__METHOD__
+		);
+
+		$projects = array();
+		while( $row = $res->fetchObject( $res ) ) {
+			$projects[] = WF::build( 'WikiaLabsProject', array( 'id' => $row->wlpr_id ) );
+		}
+
+		return $projects;
 	}
+
 }
