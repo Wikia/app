@@ -17,7 +17,7 @@
 				<?= wfMsg('achievements-gold') ?>
 				<span><?= wfMsg('achievements-gold-points') ?></span>
 			</li>
-		</ul>	
+		</ul>
 	</div>
 </div>
 
@@ -48,7 +48,7 @@
 		$badgeClickUrl = $badge->getClickCommandUrl();
 		$hoverTrackingUrl = $badge->getHoverTrackingUrl();
 		$badgeEarnedBy = $badge->getEarnedBy();
-		
+		$userScore = $rankedUser->getScore();
 	?>
 		<tr>
 			<td class="rank">
@@ -59,8 +59,8 @@
 				<a href="<?=$rankedUser->getUserPageUrl();?>"><?=htmlspecialchars($rankedUser->getName());?></a>
 			</td>
 			<td class="tally">
-				<em><?=$wgLang->formatNum($rankedUser->getScore());?></em>
-				<span><?= wfMsg('achievements-leaderboard-points') ?></span>
+				<em><?=$wgLang->formatNum($userScore);?></em>
+				<span><?= wfMsg('achievements-leaderboard-points', $userScore) ?></span>
 			</td>
 			<td class="badge">
 				<div class="badges" style="position: relative;">

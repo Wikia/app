@@ -98,7 +98,7 @@ Please try another one!',
 	'achievements-leaderboard-rank-label' => 'Rank',
 	'achievements-leaderboard-member-label' => 'Member',
 	'achievements-leaderboard-points-label' => 'Points',
-	'achievements-leaderboard-points' => '$1 {{PLURAL:$1|point|points}}',
+	'achievements-leaderboard-points' => '{{PLURAL:$1|point|points}}',
 	'achievements-leaderboard-most-recently-earned-label' => 'Most recently earned',
 	/*
 	 * AchievementsCustomize
