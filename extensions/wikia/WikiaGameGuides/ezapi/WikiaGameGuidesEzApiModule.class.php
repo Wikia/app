@@ -12,7 +12,7 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 	 * 
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 */
-	public function getRecommendedWikis(){
+	public function listWikis(){
 		global $wgDevelEnvironment;
 		wfProfileIn( __METHOD__ );
 		
@@ -21,7 +21,7 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 		}
 		wfLoadExtensionMessages( 'WikiaGameGuides' );
 		$this->setContentType( EzApiContentTypes::JSON );
-		$this->setResponseContent( Wikia::json_encode( $this->getRecommendedWikisData() ) );
+		$this->setResponseContent( Wikia::json_encode( $this->getWikisData() ) );
 		
 		wfProfileOut( __METHOD__ );
 	}
@@ -32,7 +32,7 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 	 * 
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 */
-	protected function getRecommendedWikisData(){
+	protected function getWikisData(){
 		wfProfileIn( __METHOD__ );
 		$ret = Array();
 		
