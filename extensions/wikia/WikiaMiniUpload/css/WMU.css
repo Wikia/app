@@ -325,6 +325,14 @@
 	width: 290px;
 	z-index: 5;
 }
+.ImageUploadRight .chevron {
+	border-color: #000 transparent transparent;
+	border-width: 4px;
+	border-style: solid;
+}
+.ImageUploadRight .chevron.up {
+	border-color: transparent transparent #000;
+}
 .ImageUploadRight h3 {
 	clear: left;
 	font-weight: bold;
@@ -338,6 +346,9 @@
 	display: inline-block;
 	margin-top: 10px;
 }
-#NameRow, #LicensingRow {
+.advanced {
 	display: none;
+}
+#ImageLayoutRow img {
+	vertical-align: middle;
 }

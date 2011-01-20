@@ -810,13 +810,14 @@ function WMU_displayDetails(responseText) {
 	// If Details view and showhide link exists, adjust the height of the right sidebar
 	$('#WMU_showhide').click(function(event) {
 		event.preventDefault();
-		if ($("#NameRow").is(":visible")) {
-			$("#NameRow, #LicensingRow").hide();
-			$(this).text("Show more");
+		if ($(".advanced").is(":visible")) {
+			$(".ImageUploadRight .chevron").removeClass("up");
+			$(this).text($(this).data("more"));
 		}	else {
-			$("#NameRow, #LicensingRow").show();
-			$(this).text("Show less");
+			$(".ImageUploadRight .chevron").addClass("up");
+			$(this).text($(this).data("fewer"));
 		}
+		$(".ImageUploadRight .advanced").slideToggle("fast");
 	});
 	
 	if( WMU_skipDetails ){
@@ -1224,7 +1225,7 @@ function WMU_switchScreen(to) {
 
 			switch(to) {
 				case 'Details':
-					WMU_moveBackButton($('.ImageUploadNoBorder').last().find('input'));
+					WMU_moveBackButton($(".ImageUploadLeft").find('input:last'));
 					break;
 
 				case 'Conflict':
