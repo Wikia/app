@@ -51,5 +51,16 @@
                  <directory>../t</directory>
                  <directory>../tests</directory>
              </blacklist>
+             <whitelist>
+                 <directory>../includes/wikia</directory>
+                 <directory>../extensions/wikia/WikiaLabs</directory>
+                 <exclude>
+                     <directory>../includes/wikia/ajax/templates</directory>
+                     <directory>../includes/wikia/tests</directory>
+                     <file>../includes/wikia/DefaultSettings.php</file>
+                     <file>../includes/wikia/Defines.php</file>
+                     <file>../includes/wikia/services/Service.php</file>
+                 </exclude>
+             </whitelist>
          </filter>
 </phpunit>
