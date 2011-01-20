@@ -404,7 +404,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$wgTitle = Title::newFromText('Special:SpecialPages');
 		$moduleData = Module::get('Body')->getData();
 		$railList = $moduleData['railModuleList'];
-		$this->assertEquals (null, $railList);
+		$this->assertEquals (0, count($railList));
 
 		//Special search page has a custom list of modules
 		$wgTitle = Title::newFromText('Special:Search');
