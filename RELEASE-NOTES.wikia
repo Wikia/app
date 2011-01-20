@@ -1,4 +1,5 @@
 == Changes since 20110110 ==
+* rt#141166: Blog Post module design is borked (macbre)
 * rt#74091: Oasis: cannot access talk page of user subpage (macbre)
 * rt#143377: Rich text editor: breaking some complex links to subpages (macbre)
 * rt#77757: Rich text editor: cannot use scrollbars in Fx4 beta (macbre)
