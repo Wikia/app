@@ -6,7 +6,7 @@ class WikiaLabsProject {
 	protected $app = null;
 	protected $name;
 	protected $data;
-	protected $releaseDate;
+	protected $releaseDate = null;
 	protected $isActive = false;
 	protected $isGraduated = false;
 	protected $activationsNum = 0;
@@ -14,6 +14,7 @@ class WikiaLabsProject {
 	protected $pmEmail;
 	protected $techEmail;
 	protected $fogbugzProject;
+	protected $extension;
 
 	public function __construct( WikiaApp $app, $id = 0) {
 		$this->app = $app;
@@ -87,6 +88,10 @@ class WikiaLabsProject {
 		$this->activationsNum++;
 	}
 
+	public function decrActivationsNum() {
+		$this->activationsNum--;
+	}
+
 	public function getRating() {
 		return $this->rating;
 	}
@@ -119,10 +124,34 @@ class WikiaLabsProject {
 		$this->fogbugzProject = $value;
 	}
 
+	public function getExtension() {
+		return $this->extension;
+	}
+
+	public function setExtension($value) {
+		$this->extension = $value;
+	}
+
+	public function isEnabled( $wikiId ) {
+		$enable = $this->getDb()->selectRow( 'wikia_labs_project_wiki_link', array( 'wlpwli_id' ), array( 'wlpwli_wiki_id' => $wikiId ), __METHOD__ );
+		return is_object($enable) ? true : false;
+	}
+
+	public function setEnabled( $wikiId ) {
+		$this->incrActivationsNum();
+		$this->getDb( DB_MASTER )->insert( 'wikia_labs_project_wiki_link', array( 'wlpwli_wlpr_id' => $this->getId(), 'wlpwli_wiki_id' => $wikiId ), __METHOD__ );
+		$this->update();
+	}
+
+	public function setDisabled( $wikiId ) {
+		$this->decrActivationsNum();
+		$this->getDb( DB_MASTER )->delete( 'wikia_labs_project_wiki_link', array( 'wlpwli_wlpr_id' => $this->getId(), 'wlpwli_wiki_id' => $wikiId ), __METHOD__ );
+	}
+
 	public function loadFromDb($id) {
 		$project = $this->getDb()->selectRow(
 			array( 'wikia_labs_project' ),
-			array( 'wlpr_name', 'wlpr_data', 'wlpr_release_date', 'wlpr_is_active', 'wlpr_is_graduated', 'wlpr_activations_num', 'wlpr_rating', 'wlpr_pm_email', 'wlpr_tech_email', 'wlpr_fogbugz_project' ),
+			array( 'wlpr_name', 'wlpr_data', 'wlpr_release_date', 'wlpr_is_active', 'wlpr_is_graduated', 'wlpr_activations_num', 'wlpr_rating', 'wlpr_pm_email', 'wlpr_tech_email', 'wlpr_fogbugz_project', 'wlpr_extension' ),
 			array( "wlpr_id" => $id ),
 			__METHOD__
 		);
@@ -139,6 +168,7 @@ class WikiaLabsProject {
 			$this->pmEmail = $project->wlpr_pm_email;
 			$this->techEmail = $project->wlpr_tech_email;
 			$this->fogbugzProject = $project->wlpr_fogbugz_project;
+			$this->extension = $project->wlpr_extension;
 		}
 	}
 
@@ -148,14 +178,15 @@ class WikiaLabsProject {
 		$fields = array(
 			'wlpr_name' => $this->getName(),
 			'wlpr_data' => serialize( $this->getData() ),
-			'wlpr_release_date' => $this->getReleaseDate(),
+			'wlpr_release_date' => date( 'Y-m-d', $this->getReleaseDate()),
 			'wlpr_is_active' => $this->isActive() ? 'y' : 'n',
 			'wlpr_is_graduated' => $this->isGraduated() ? 'y' : 'n',
 			'wlpr_activations_num' => $this->getActivationsNum(),
 			'wlpr_rating' => $this->getRating(),
 			'wlpr_pm_email' => $this->getPMEmail(),
 			'wlpr_tech_email' => $this->getTechEmail(),
-			'wlpr_fogbugz_project' => $this->getFogbugzProject()
+			'wlpr_fogbugz_project' => $this->getFogbugzProject(),
+			'wlpr_extension' => $this->getExtension()
 		);
 
 		if($this->getId()) {
@@ -167,6 +198,11 @@ class WikiaLabsProject {
 			);
 		}
 		else {
+			if( $this->releaseDate == null ) {
+				// set current date as release date
+				$this->setReleaseDate();
+				$fields['wlpr_release_date'] = date( 'Y-m-d', $this->getReleaseDate());
+			}
 			$db->insert(
 				'wikia_labs_project',
 				$fields,

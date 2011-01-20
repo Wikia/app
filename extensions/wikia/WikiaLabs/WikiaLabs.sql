@@ -10,7 +10,8 @@ CREATE TABLE wikia_labs_project (
 	wlpr_rating DECIMAL(10,2) DEFAULT '0.00',
 	wlpr_pm_email VARCHAR(64),
 	wlpr_tech_email VARCHAR(64),
-	wlpr_fogbugz_project VARCHAR(64)
+	wlpr_fogbugz_project VARCHAR(64),
+	wlpr_extension VARCHAR(255)
 ) Engine=InnoDB;
 
 CREATE TABLE wikia_labs_project_rating (
@@ -19,6 +20,16 @@ CREATE TABLE wikia_labs_project_rating (
 	wlpra_user_id INT,
 	wlpra_value TINYINT,
 	CONSTRAINT wlpra_wlpr_id FOREIGN KEY (wlpra_wlpr_id)
+		REFERENCES wikia_labs_project(wlpr_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+) Engine=InnoDB;
+
+CREATE TABLE wikia_labs_project_wiki_link (
+	wlpwli_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	wlpwli_wlpr_id INT NOT NULL DEFAULT '0',
+	wlpwli_wiki_id INT,
+	CONSTRAINT wlpwli_wlpr_id FOREIGN KEY (wlpwli_wlpr_id)
 		REFERENCES wikia_labs_project(wlpr_id)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE

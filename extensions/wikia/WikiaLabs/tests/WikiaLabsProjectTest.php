@@ -5,6 +5,8 @@ wfLoadAllExtensions();
 class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 	const TEST_PROJECT_NAME = 'Test Project';
 	const TEST_PROJECT_DESC = 'Hello World!';
+	const TEST_WIKI_ID = 177;
+	const TEST_EXTENSION = 'HelloWorldExtension';
 
 	/**
 	 * WikiaLabsProject object
@@ -60,6 +62,7 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 		$object = WF::build( 'WikiaLabsProject', array( 'id' => $this->object->getId() ) );
 		$object->setActive( true );
 		$object->incrActivationsNum();
+		$object->setExtension( self::TEST_EXTENSION );
 		$object->update();
 
 		unset($object);
@@ -67,6 +70,8 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 		$object = WF::build( 'WikiaLabsProject', array( 'id' => $this->object->getId() ) );
 		$this->assertEquals( self::TEST_PROJECT_NAME, $object->getName() );
 		$this->assertTrue( $object->isActive() );
+		$this->assertEquals( date('Y-m-d'), date('Y-m-d', $object->getReleaseDate()) );
+		$this->assertEquals( self::TEST_EXTENSION, $object->getExtension() );
 		$this->assertEquals( 1, $object->getActivationsNum() );
 
 		$object->delete();
@@ -107,6 +112,22 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 
 		$project1->delete();
 		$project2->delete();
+	}
+
+	public function testEnablingAndDisablingForWiki() {
+		$this->object->setName( self::TEST_PROJECT_NAME );
+		$this->object->update();
+
+		$this->assertFalse( $this->object->isEnabled( self::TEST_WIKI_ID ) );
+		$this->assertEquals(0, $this->object->getActivationsNum());
+
+		$this->object->setEnabled( self::TEST_WIKI_ID );
+		$this->assertTrue( $this->object->isEnabled( self::TEST_WIKI_ID ) );
+		$this->assertEquals(1, $this->object->getActivationsNum());
+
+		$this->object->setDisabled( self::TEST_WIKI_ID );
+		$this->assertFalse( $this->object->isEnabled( self::TEST_WIKI_ID ) );
+		$this->assertEquals(0, $this->object->getActivationsNum());
 	}
 
 }
