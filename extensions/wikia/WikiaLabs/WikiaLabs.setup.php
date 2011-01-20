@@ -67,3 +67,6 @@ $app->registerHook('GetRailModuleSpecialPageList', 'WikiaLabs', 'initGetRailModu
  */
 
 $wgAjaxExportList[] = 'WikiaLabs::getProjectModal';
+$wgAjaxExportList[] = 'WikiaLabs::saveProject';
+$wgAjaxExportList[] = 'WikiaLabs::getUrlImageAjax';
+
