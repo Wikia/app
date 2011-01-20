@@ -28,7 +28,7 @@ class ArticleCommentInit {
 				self::$enable = false;
 			}
 
-			if (self::$enable && !wfRunHooks('ArticleCommentCheck')) {
+			if (self::$enable && !wfRunHooks('ArticleCommentCheck', array($title))) {
 				self::$enable = false;
 			}
 		}
