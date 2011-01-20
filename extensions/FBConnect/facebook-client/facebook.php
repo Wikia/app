@@ -170,6 +170,8 @@ class Facebook {
 	$fb_params_str = ltrim($_COOKIE['fbs_'.$this->api_key], '\\"');
 	$fb_params_str = rtrim($fb_params_str, '\\"');
 	parse_str($fb_params_str,$fb_params);
+	//temporary fix for http://bugs.php.net/48697 (fixes RT#69832)
+	mb_internal_encoding('UTF-8');
 	$this->fb_params = $this->get_valid_fb_params($fb_params, null, $this->api_key);
 	$this->base_domain = $fb_params['base_domain'];
 	$expires = isset($fb_params['expires']) ? $fb_params['expires'] : null;
@@ -413,6 +415,8 @@ class Facebook {
     $fb_params_str = ltrim($_COOKIE['fbs_'.$this->api_key], '\\"');
     $fb_params_str = rtrim($fb_params_str, '\\"');
     parse_str($fb_params_str,$fb_params);
+    //temporary fix for http://bugs.php.net/48697 (fixes RT#69832)
+    mb_internal_encoding('UTF-8');
 
     if (!$this->in_fb_canvas() && (!isset($_COOKIE[$this->api_key . '_user'])
                                    || $_COOKIE[$this->api_key . '_user'] != $user || !isset($fb_params['uid']) || $fb_params['uid'])) {
