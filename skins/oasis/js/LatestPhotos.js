@@ -60,7 +60,7 @@ var UploadPhotos = {
 					UploadPhotos.advancedChevron.addClass("up");
 				}
 				
-				UploadPhotos.options.slideToggle(400);
+				UploadPhotos.options.slideToggle(50);
 			});
 			UploadPhotos.destfile.keyup(function() {
 				if(UploadPhotos.dftimer) {

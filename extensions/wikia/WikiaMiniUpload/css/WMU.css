@@ -298,20 +298,22 @@
 /* New stuff */
 
 .ImageUploadLeft {
-	margin-top: 240px;
+	max-height: 350px;
+	padding-bottom: 100px;
 	position: relative;	
 	width: 350px;
-	z-index: 5;
+}
+.ImageUploadLeft .details {
+	bottom: 0;
+	position: absolute;
 }
 .ImageUploadLeftMask {
 	background: #FFF;
 	opacity: .9; 
 	filter: alpha(opacity=90);
-	height: 200px;
+	height: 100px;
 	position: absolute;
-	top: 240px;
 	width: 350px;
-	z-index: 4;
 }
 .ImageUploadRight {
 	background: #EEE;

@@ -418,7 +418,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
                 if(typeof size != "undefined") {
                         WMU_size = size;
                 }
-
+                
                 if(typeof caption != "undefined") {
                         WMU_caption = caption;
                 }
@@ -848,6 +848,11 @@ function WMU_displayDetails(responseText) {
 				WMU_slider.initialRound = false;
 				} else {
 				$G('ImageUploadManualWidth').value = WMU_slider.getRealValue();
+
+				if ($("#ImageUploadWidthCheckbox").val() == "false") {
+					$("#ImageUploadWidthCheckbox").val("true");
+				}
+
 				}
 				image.width = WMU_slider.getRealValue();
 				$G('ImageUploadManualWidth').value = image.width;
@@ -889,9 +894,8 @@ function WMU_displayDetails(responseText) {
 		WMU_manualWidthInput( $G( 'ImageUploadManualWidth' ) );
 	} else {
 		if ( $G( 'ImageUploadSlider' ) ) {
-			//alert(WMU_size);
-			$G( 'ImageUploadSlider' ).style.visibility = 'hidden';
-			$G( 'ImageUploadInputWidth' ).style.visibility = 'hidden';
+			//$G( 'ImageUploadSlider' ).style.visibility = 'hidden';
+			//$G( 'ImageUploadInputWidth' ).style.visibility = 'hidden';
 		}
 	}
         if( '' != WMU_caption ) {
@@ -909,11 +913,11 @@ function WMU_displayDetails(responseText) {
 			$G('ImageUploadLicenseLink').innerHTML = '[' + wmu_show_license_message  + ']';
 		}
 	}
-	$G( 'ImageColumnRow' ).style.display = 'none';
+	//$G( 'ImageColumnRow' ).style.display = 'none';
 //	if( -1 != WMU_gallery ) {
 		// todo gallery stuff here
 //		if( -2 == WMU_gallery ) { // placeholder stuff, don't need that
-			$G( 'WMU_LayoutGalleryBox' ).style.display = 'none';
+			//$G( 'WMU_LayoutGalleryBox' ).style.display = 'none';
 //		}
 //	}
 
@@ -993,7 +997,7 @@ function WMU_insertImage(e, type) {
 		}
 		params.push('layout=' + ($G('ImageUploadLayoutLeft').checked ? 'left' : 'right'));
 		params.push('caption=' + $G('ImageUploadCaption').value);
-		params.push('slider=' + $G('ImageUploadWidthCheckbox').checked);
+		params.push('slider=' + $('#ImageUploadWidthCheckbox').val());
 	}
 
 	if( -1 != WMU_gallery ) {
@@ -1117,6 +1121,10 @@ function WMU_insertImage(e, type) {
 }
 
 function MWU_imageWidthChanged(changes) {
+	
+	//test
+	return;
+
 	var image = $G('ImageUploadThumb').firstChild;
 	if( !$G( 'ImageUploadWidthCheckbox' ).checked ) {
 		$G('ImageUploadManualWidth').value = '';
