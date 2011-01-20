@@ -109,7 +109,6 @@ class GoogleMaps {
 		&$pCustomMessages,
 		&$pProcessTemplateVariables,
 		&$pJsMimeType,
-		&$pLanguageCode,
 		&$pContLang,
 		&$pProxyKey,
 		&$pTitle ) {
@@ -118,7 +117,6 @@ class GoogleMaps {
 		$this->mEnablePaths =& $pEnablePaths;
 		$this->mMapDefaults =& $pMapDefaults;
 		$this->mJsMimeType =& $pJsMimeType;
-		$this->mLanguageCode			  =& $pLanguageCode;
 		$this->mUrlPath	 =& $pUrlPath;
 		$this->mMessages =& $pMessages;
 		$this->mCustomMessages			  =& $pCustomMessages;
@@ -145,6 +143,8 @@ class GoogleMaps {
 	 * @return boolean - true if successful
 	 **/
 	function editForm ( $pForm ) {
+
+		$this->mLanguageCode = $this->mLanguage->getCode();
 
 		// get the current map settings
 		$o = self::getMapSettings( $this->mTitle, $this->mMapDefaults );
@@ -313,6 +313,9 @@ JAVASCRIPT;
 	 * @return boolean - true if successful
 	 **/
 	function commentJS ( &$pParser, &$pValue ) {
+
+		$this->mLanguageCode = $this->mLanguage->getCode();
+
 		// check to see if the proxy token appears in the page output (if not, we don't have a map so
 		// no need to output our stuff)
 		if( isset( $this->mGoogleMapsOnThisPage ) && strstr( $pValue, "%%BEGINJAVASCRIPT" . $this->mProxyKey . "%%" ) ) {
@@ -379,6 +382,7 @@ JAVASCRIPT;
 	function render ( $pContent, $pArgv, &$pParser, &$pLocalParser ) {
             $pLocalParser->mTitle = $this->mTitle;
             $pLocalParser->mOptions = $pParser->mOptions;
+			$this->mLanguageCode = $this->mLanguage->getCode();
 
             // Keep a count of how many <googlemap> tags were used for unique ids
             if( !isset( $this->mGoogleMapsOnThisPage ) ) {
@@ -454,7 +458,7 @@ JAVASCRIPT;
                     }
 
                     if( $state == GOOGLE_MAPS_PARSE_ADD_MARKER ) {
-                        self::addMarker($exporter, $pParser, $pLocalParser, $lat, $lon, 
+                        self::addMarker($exporter, $pParser, $pLocalParser, $lat, $lon,
                             $icon, $title, $tabs, $caption, isset($lineColor));
 
                         $tabs    = array( );
@@ -492,7 +496,7 @@ JAVASCRIPT;
                 else if( preg_match( "/^(?:\(([.a-zA-Z0-9_-]*?)\))? *([0-9.-]+), *([0-9.-]+)(?:, ?(.+))?/", $line, $matches ) ) {
                     // first create the previous marker, now that we have all the tab/caption info
                     if( $state == GOOGLE_MAPS_PARSE_ADD_MARKER ) {
-                        self::addMarker($exporter, $pParser, $pLocalParser, $lat, $lon, 
+                        self::addMarker($exporter, $pParser, $pLocalParser, $lat, $lon,
                             $icon, $title, $tabs, $caption, isset($lineColor));
 
                         $tabs    = array( );
@@ -543,7 +547,7 @@ JAVASCRIPT;
 
                 // if the last iteration was to add a marker, add it
                 if( $state == GOOGLE_MAPS_PARSE_ADD_MARKER ) {
-                    self::addMarker($exporter, $pParser, $pLocalParser, $lat, $lon, $icon, 
+                    self::addMarker($exporter, $pParser, $pLocalParser, $lat, $lon, $icon,
                         $title, $tabs, $caption, isset($lineColor));
                 }
 
@@ -553,14 +557,14 @@ JAVASCRIPT;
                 }
         }
 
-        static function addMarker(&$pExporter, &$pParser, &$pLocalParser, $pLat, $pLon, 
+        static function addMarker(&$pExporter, &$pParser, &$pLocalParser, $pLat, $pLon,
             $pIcon, $pTitle, $pTabs, $pCaption, $pLineColorSet) {
             global $wgUser, $wgVersion;
             $parsed = self::parseWikiText($pParser, $pLocalParser, preg_replace('/\r\n/', '<br />', $pCaption), $pParser->mTitle, $pParser->mOptions);
             $title = Title::newFromText($pTitle);
             $revision = is_null($title) ? null :
                 Revision::newFromTitle($title);
-            $parsedArticleText = is_null($revision) ? null : 
+            $parsedArticleText = is_null($revision) ? null :
                 self::parseWikiText($pParser, $pLocalParser, $revision->getText(), $revision->getTitle(), $pParser->mOptions);
             $titleMaybeNonexistent = is_null($title) ? Title::makeTitleSafe(NS_MAIN, $pTitle) : $title;
             $skin = $wgUser->getSkin();
@@ -867,6 +871,8 @@ JAVASCRIPT;
 	 * @return string - the message
 	 **/
 	function translateMessage ( $pKey ) {
+
+		$this->mLanguageCode = $this->mLanguage->getCode();
 
 		// the current content language code
 		$code = $this->mLanguageCode;
