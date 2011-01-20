@@ -9,10 +9,26 @@ class EzApiModuleBase {
 	private $mContentType = EzApiContentTypes::HTML;
 	private $mCharset = EzApiCharsets::UTF8;
 	private $mResponseStatusCode = EzApiStatusCodes::OK;
+	private $mRequiresPost = false;
 	private $mRequest = null;
 	
 	function __construct( WebRequest $request ){
 		$this->mRequest = $request;
+		
+		if( $this->mRequiresPost && !$this->mRequest->wasPosted() ) {
+			throw new EzApiRequestNotPostedException();
+		}
+	}
+	
+	/**
+	 * Use it in subclass constructor before calling parent::__construnct()
+	 */
+	public function setRequiresPost( $val ){
+		$this->mRequiresPost = (bool) $val;
+	}
+	
+	public function getRequiresPost(){
+		return $this->mRequiresPost;
 	}
 	
 	public function getResponseContent(){
