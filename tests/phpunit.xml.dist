@@ -15,9 +15,15 @@
          <testsuite name="Wikia Includes Test Suite">
             <directory>../includes/wikia/</directory>
          </testsuite>
+         <testsuite name="WikiaLabs Test Suite">
+            <directory>../extensions/wikia/WikiaLabs/</directory>
+         </testsuite>
+         <!-- don't uncomment it until /extensions/wikia is cleared from outdated tests -->
+         <!--
          <testsuite name="Wikia Extensions Test Suite">
             <directory>../extensions/wikia/</directory>
          </testsuite>
+         -->
          <!-- DO NOT run MW tests. These tests are dropping db tables, including users -->
          <!--
          <testsuite name="MediaWiki Test Suite">
