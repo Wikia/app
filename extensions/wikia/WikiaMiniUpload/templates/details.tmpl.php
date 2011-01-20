@@ -1,5 +1,5 @@
 <?php
-global $wgExtensionsPath; 
+global $wgExtensionsPath, $wgBlankImgUrl; 
 
 // is this a newly uploaded image? get some file info
 if(isset($props['name'])) {
@@ -82,31 +82,34 @@ if(isset($props['name'])) {
 	if(isset($props['name'])) {
 	?>
 	
-	<div id="NameRow">
-		<h3>Name</h3>
-		<input id="ImageUploadName" type="text" size="30" value="<?= $props['partname'] ?>" />
-		<label for="ImageUploadName">.<?= $props['extension'] ?></label>
-		<input id="ImageUploadExtension" type="hidden" value="<?= $props['extension'] ?>" />
-		<input id="ImageUploadReplaceDefault" type="hidden" value="on" />
-	</div>
-	
-	<div id="LicensingRow">
-		<h3>Licensing</h3>	
-		<span id="ImageUploadLicenseSpan" >
-		<?php
-			$licenses = new Licenses(array('id' => 'ImageUploadLicense', 'name' => 'ImageUploadLicense'));
-			echo $licenses->getInputHTML(null);
-		?>
-		</span>
-		<div id="ImageUploadLicenseControl">
-			<a id="ImageUploadLicenseLink" href="#" onclick="WMU_toggleLicenseMesg(event);" >[<?= wfMsg( 'wmu-hide-license-msg' ) ?>]</a>
+	<div class="advanced">
+		<div id="NameRow">
+			<h3>Name</h3>
+			<input id="ImageUploadName" type="text" size="30" value="<?= $props['partname'] ?>" />
+			<label for="ImageUploadName">.<?= $props['extension'] ?></label>
+			<input id="ImageUploadExtension" type="hidden" value="<?= $props['extension'] ?>" />
+			<input id="ImageUploadReplaceDefault" type="hidden" value="on" />
 		</div>
-		<div id="ImageUploadLicenseTextWrapper">
-			<div id="ImageUploadLicenseText">&nbsp;</div>
+		
+		<div id="LicensingRow">
+			<h3>Licensing</h3>	
+			<span id="ImageUploadLicenseSpan" >
+			<?php
+				$licenses = new Licenses(array('id' => 'ImageUploadLicense', 'name' => 'ImageUploadLicense'));
+				echo $licenses->getInputHTML(null);
+			?>
+			</span>
+			<div id="ImageUploadLicenseControl">
+				<a id="ImageUploadLicenseLink" href="#" onclick="WMU_toggleLicenseMesg(event);" >[<?= wfMsg( 'wmu-hide-license-msg' ) ?>]</a>
+			</div>
+			<div id="ImageUploadLicenseTextWrapper">
+				<div id="ImageUploadLicenseText">&nbsp;</div>
+			</div>
 		</div>
 	</div>
 		
-	<a href="#" id="WMU_showhide" class="show">More options</a>
+	<img src="<?= $wgBlankImgUrl ?>" class="chevron"> <a href="#" id="WMU_showhide" class="show" data-more="<?= wfMsg('wmu-more-options') ?>" data-fewer="<?= wfMsg('wmu-fewer-options') ?>"><?= wfMsg('wmu-more-options') ?></a>
+	
 	<?
 	} else {
 	?>

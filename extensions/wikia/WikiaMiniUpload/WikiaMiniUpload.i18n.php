@@ -72,6 +72,8 @@ $messages['en'] = array(
 	'wmu-no-preview' => 'You cannot add image from page in preview mode',
 	'wmu-no-protect' => 'This page is protected, you cannot add image to it',
 	'wmu-no-rights' => 'You are not allowed to add images to this page',
+	'wmu-more-options' => 'More options',
+	'wmu-fewer-options' => 'Fewer options',
 );
 
 /** Message documentation (Message documentation)
