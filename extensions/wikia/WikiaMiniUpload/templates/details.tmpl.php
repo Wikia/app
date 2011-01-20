@@ -29,10 +29,10 @@ if(isset($props['name'])) {
 
 
 <div class="ImageUploadRight">
-	<h2>Appearance in Article</h2>
+	<h2><?= wfMsg('wmu-appearance-in-article') ?></h2>
 
 
-	<h3>Layout</h3>
+	<h3><?= wfMsg('wmu-layout') ?></h3>
 	<span id="WMU_LayoutThumbBox">
 		<input onclick="MWU_imageSizeChanged('thumb');" type="radio" name="fullthumb" id="ImageUploadThumbOption" checked=checked /> <label for="ImageUploadThumbOption" onclick="MWU_imageSizeChanged('thumb');"><?= wfMsg('wmu-thumbnail') ?></label>
 	&nbsp;
@@ -61,7 +61,7 @@ if(isset($props['name'])) {
 
 
 	<div id="ImageLayoutRow">	
-		<h3>Alignment</h3>
+		<h3><?= wfMsg('wmu-alignment') ?></h3>
 		<input type="radio" id="ImageUploadLayoutLeft" name="layout" />
 		<label for="ImageUploadLayoutLeft"><img src="<?= $wgExtensionsPath.'/wikia/WikiaMiniUpload/images/image_upload_left.png' ?>" /></label>
 	
@@ -74,7 +74,7 @@ if(isset($props['name'])) {
 
 
 	<div id="ImageLinkRow">
-		<h3>Link</h3>
+		<h3><?= wfMsg('wmu-link') ?></h3>
 		<input id="ImageUploadLink" type="text" />
 	</div>
 	
@@ -84,7 +84,7 @@ if(isset($props['name'])) {
 	
 	<div class="advanced">
 		<div id="NameRow">
-			<h3>Name</h3>
+			<h3><?= wfMsg('wmu-name') ?></h3>
 			<input id="ImageUploadName" type="text" size="30" value="<?= $props['partname'] ?>" />
 			<label for="ImageUploadName">.<?= $props['extension'] ?></label>
 			<input id="ImageUploadExtension" type="hidden" value="<?= $props['extension'] ?>" />
@@ -92,7 +92,7 @@ if(isset($props['name'])) {
 		</div>
 		
 		<div id="LicensingRow">
-			<h3>Licensing</h3>	
+			<h3><?= wfMsg('wmu-licensing') ?></h3>	
 			<span id="ImageUploadLicenseSpan" >
 			<?php
 				$licenses = new Licenses(array('id' => 'ImageUploadLicense', 'name' => 'ImageUploadLicense'));
@@ -113,8 +113,8 @@ if(isset($props['name'])) {
 	<?
 	} else {
 	?>
-	<h3>Caption</h3>
-	<input id="ImageUploadReplaceDefault" type="checkbox"> replace default caption
+	<h3><?= wfMsg('wmu-caption') ?></h3>
+	<input id="ImageUploadReplaceDefault" type="checkbox"> <?= wfMsg('wmu-replace-default-caption') ?>
 	<?
 	}
 	?>
