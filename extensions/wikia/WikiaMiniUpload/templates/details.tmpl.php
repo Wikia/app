@@ -9,30 +9,28 @@ if(isset($props['name'])) {
 
 <h1><?= wfMsg('wmu-upload-image') ?></h1>
 
-<div id="ImageUploadThumb" style="text-align: right; position: absolute; z-index: 3; left: 15px; height: <?= isset($props['name']) ? '230' : '230' ?>px;"><?= $props['file']->getThumbnail(min($props['file']->getWidth(), 400))->toHTML() ?></div>
-
-<div class="ImageUploadLeftMask"></div>
 
 <div class="ImageUploadLeft">	
-	<label><?= wfMsg('wmu-caption') ?></label>
-	<textarea id="ImageUploadCaption"></textarea>
+	<div id="ImageUploadThumb"><?= $props['file']->getThumbnail(min($props['file']->getWidth(), 400))->toHTML() ?></div>
 	
-	<a class="backbutton" href="#" style="display:none" ><?= wfMsg('wmu-back') ?></a>
-	<input type="submit" value="<?= wfMsg('wmu-insert2') ?>" onclick="WMU_insertImage(event, 'details');" />
+
+	<div class="details">
+		<div class="ImageUploadLeftMask"></div>
+		
+		<div style="position: relative; z-index: 2">
+			<label><?= wfMsg('wmu-caption') ?></label>
+			<textarea id="ImageUploadCaption"></textarea>
+			
+			<a class="backbutton" href="#" style="display:none" ><?= wfMsg('wmu-back') ?></a>
+			<input type="submit" value="<?= wfMsg('wmu-insert2') ?>" onclick="WMU_insertImage(event, 'details');" />
+		</div>
+	</div>
 </div>
 
 
 <div class="ImageUploadRight">
 	<h2>Appearance in Article</h2>
 
-	<div id="ImageLayoutRow">	
-		<h3>Alignment</h3>
-		<input type="radio" id="ImageUploadLayoutLeft" name="layout" />
-		<label for="ImageUploadLayoutLeft"><img src="<?= $wgExtensionsPath.'/wikia/WikiaMiniUpload/images/image_upload_left.png' ?>" /></label>
-	
-		<input type="radio" id="ImageUploadLayoutRight" name="layout" checked="checked" />
-		<label for="ImageUploadLayoutRight"><img src="<?= $wgExtensionsPath.'/wikia/WikiaMiniUpload/images/image_upload_right.png' ?>" /></label>
-	</div>
 
 	<h3>Layout</h3>
 	<span id="WMU_LayoutThumbBox">
@@ -49,9 +47,9 @@ if(isset($props['name'])) {
 	*/ ?>
 
 
-
 	<div id="ImageWidthRow">
-		<input onclick="MWU_imageWidthChanged(WMU_widthChanges++);" type="checkbox" id="ImageUploadWidthCheckbox" />
+		<? /*<input onclick="MWU_imageWidthChanged(WMU_widthChanges++);" type="checkbox" id="ImageUploadWidthCheckbox" />*/ ?>
+		<input type="hidden" name="ImageUploadWidthCheckbox" id="ImageUploadWidthCheckbox" value="false">
 		<div id="ImageUploadSlider">
 			<img src="<?= $wgExtensionsPath.'/wikia/WikiaMiniUpload/images/slider_thumb_bg.png' ?>" id="ImageUploadSliderThumb" />
 		</div>
@@ -59,6 +57,19 @@ if(isset($props['name'])) {
 			<input type="text" id="ImageUploadManualWidth" name="ImageUploadManualWidth" value="" onchange="WMU_manualWidthInput(this)" onkeyup="WMU_manualWidthInput(this)" /> px
 		</span>
 	</div>
+
+
+
+	<div id="ImageLayoutRow">	
+		<h3>Alignment</h3>
+		<input type="radio" id="ImageUploadLayoutLeft" name="layout" />
+		<label for="ImageUploadLayoutLeft"><img src="<?= $wgExtensionsPath.'/wikia/WikiaMiniUpload/images/image_upload_left.png' ?>" /></label>
+	
+		<input type="radio" id="ImageUploadLayoutRight" name="layout" checked="checked" />
+		<label for="ImageUploadLayoutRight"><img src="<?= $wgExtensionsPath.'/wikia/WikiaMiniUpload/images/image_upload_right.png' ?>" /></label>
+	</div>
+
+
 
 
 
