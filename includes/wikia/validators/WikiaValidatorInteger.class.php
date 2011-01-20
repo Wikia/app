@@ -11,7 +11,7 @@ class WikiaValidatorInteger extends WikiaValidator {
 			'min' => 0, 
 			'max' => 32767 
 		);
-		parent::__construct($options, $msg)
+		parent::__construct($options, $msg);
 	}
 	
 	public function isValid($value = null) {
