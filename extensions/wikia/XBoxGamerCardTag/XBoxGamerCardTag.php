@@ -48,11 +48,11 @@ function wfMakeXboxCard( $contents, $attributes, $parser ) {
 	$xbox_id = $contents;
 	if( 0 == preg_match("/^[A-Za-z][A-Za-z0-9 ]*$/", $xbox_id) )
 	{
-		$out .= "invalid characters in tag";
+		$out .= "invalid characters in gamertag";
 	}
 	else
 	{
-		$xbox_id_e = urlencode($xbox_id);
+		$xbox_id_e = rawurlencode($xbox_id); #we use raw version because microsoft no longer accepts spaces as +, MUST be %20
 		$out .= "<iframe src=\"http://gamercard.xbox.com/{$xbox_id_e}.card\" scrolling=\"no\" frameBorder=\"0\" height=\"140\" width=\"204\">{$xbox_id}</iframe>";
 	}
 	
