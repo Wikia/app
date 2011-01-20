@@ -1,18 +1,21 @@
 <?php
 
 class WikiaLabs {
-	function __construct() {
-		$this->app = WF::build( 'App' );	
-		$this->request = $this->app->getGlobal('wgRequest');
+	private $app = null;
+	private $request = null;
+
+	public function __construct(WikiaApp $app) {
+		$this->app = $app;
+		$this->request = $app->getGlobal('wgRequest');
 	}
-	
-	function initGetRailModuleList(&$railModuleList) {
+
+	public function onGetRailModuleSpecialPageList(&$railModuleList) {
 		if($this->app->getGlobal('wgTitle')->isSpecial('WikiaLabs')) {
 			$railModuleList['1500'] = array('Search', 'Index', null);
 			$railModuleList['1400'] = array('WikiaLabs', 'Staff', null);
 			$railModuleList['1450'] = array('WikiaLabs', 'Graduates', null);
 		}
-				
+
 		return true;
 	}
 
@@ -21,28 +24,28 @@ class WikiaLabs {
 		$oTmpl = WF::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
 		$oTmpl->set_vars( array() );
 		$oTmpl->render("wikialabs-addproject");
-		
+
 		$response->addText( $oTmpl->render("wikialabs-addproject") );
 		return $response;
-	}	
-	
+	}
+
 	function saveProject() {
 		global $wgRequest;
 		//TODO: need to refactore remove global
-		
+
 		$project = $wgRequest->getArray('project');
 		self::validateProjectForm($project);
 	}
 
 	public function validateProjectForm($values = array()) {
-		//TODO: laod array form fog bugz 
+		//TODO: laod array form fog bugz
 		$areas = array(1,2,3,4,5);
-		$status = array(1,2,3,4,5); 
+		$status = array(1,2,3,4,5);
 		$projects = array('Project 1', 'Project 2');
 		$values['enablewarning'] = isset($values['enablewarning']);
 		$values['graduates'] = isset($values['graduates']);
-		
-		
+
+
 		//TODO: translate msg
 		$mulitvalidator = new WikiaValidatorArray(array(
 			'validators'  => array(
@@ -54,21 +57,21 @@ class WikiaLabs {
 				'area' =>  new WikiaValidatorInArray(array("allowed" => $areas)),
 				'project' => new WikiaValidatorInArray(array("allowed" => $projects)),
 		)));
-		
+
 		var_dump($mulitvalidator->isValid(
 			$values
 		));
-		
+
 		var_dump($mulitvalidator->getErrors());
 
 		exit;
 	}
-	
-	
+
+
 	public function getUrlImageAjax() {
 		global $wgRequest;
 		$name = $wgRequest->getVal("name", "");
-		
+
 		if(!empty($name)) {
 			$file_title = Title::newFromText( $name, NS_FILE );
 			$img = wfFindFile( $file_title  );
@@ -83,12 +86,10 @@ class WikiaLabs {
 		$response->addText(json_encode(array("status" => "ok",
 				"url" => wfReplaceImageServer( $img->getThumbUrl( $img->thumbName( array( 'width' => 150 ) ) ) ),
 		)));
-		
+
 		return $response;
 	}
-	
-	
+
+
 }
-
-
 

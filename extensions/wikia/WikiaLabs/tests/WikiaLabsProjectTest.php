@@ -71,4 +71,41 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 		$object->delete();
 	}
 
+	public function testGettingListOfProjects() {
+		$testName = self::TEST_PROJECT_NAME . __METHOD__;
+
+		$project1 = WF::build( 'WikiaLabsProject' );
+		$project1->setName( $testName );
+		$project1->setActive(true);
+		$project1->setGraduated(true);
+		$project1->update();
+
+		$project2 = WF::build( 'WikiaLabsProject' );
+		$project2->setName( $testName );
+		$project2->setActive(false);
+		$project2->setGraduated(true);
+		$project2->update();
+
+		$list = $this->object->getList( array( 'active' => true, 'name' => $testName ) );
+
+		$this->assertEquals( 1, count($list) );
+		$this->assertEquals( $project1->getId(), $list[0]->getId() );
+		$this->assertEquals( $project1->getName(), $list[0]->getName() );
+		unset($list);
+
+		$list = $this->object->getList( array( 'active' => false, 'name' => $testName ) );
+
+		$this->assertEquals( 1, count($list) );
+		$this->assertEquals( $project2->getId(), $list[0]->getId() );
+		$this->assertEquals( $project2->getName(), $list[0]->getName() );
+		unset($list);
+
+		$list = $this->object->getList( array( 'graduated' => true, 'name' => $testName ) );
+
+		$this->assertEquals( 2, count($list) );
+
+		$project1->delete();
+		$project2->delete();
+	}
+
 }
