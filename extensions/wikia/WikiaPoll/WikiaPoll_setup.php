@@ -40,16 +40,19 @@ $wgAutoloadClasses['WikiaPoll'] = "{$dir}/WikiaPoll.class.php";
 $wgAutoloadClasses['WikiaPollAjax'] = "{$dir}/WikiaPollAjax.class.php";
 $wgAutoloadClasses['WikiaPollArticle'] = "{$dir}/WikiaPollArticle.class.php";
 $wgAutoloadClasses['WikiaPollHooks'] = "{$dir}/WikiaPollHooks.class.php";
-
+$wgAutoloadClasses['SpecialCreateWikiaPoll'] = "{$dir}/SpecialCreateWikiaPoll.class.php";
 // modules
 $wgAutoloadClasses['WikiaPollModule'] = "{$dir}/WikiaPollModule.class.php";
+
+// Special Page
+$wgSpecialPages['CreatePoll'] = 'SpecialCreateWikiaPoll';
 
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'WikiaPollHooks::onArticleFromTitle';
 $wgHooks['ArticleSaveComplete'][] = 'WikiaPollHooks::onArticleSaveComplete';
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'WikiaPollHooks::onFetchTemplateAndTitle';
 $wgHooks['ParserAfterTidy'][] = 'WikiaPollHooks::onParserAfterTidy';
-$wgHooks['ParserBeforeStrip'][] = 'WikiaPollHooks::onParserBeforeStrip';
+$wgHooks['InternalParseBeforeLinks'][] = 'WikiaPollHooks::onInternalParseBeforeLinks';
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'WikiaPollAjax';

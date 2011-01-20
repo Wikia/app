@@ -100,18 +100,22 @@ JS;
 		return true;
 	}
 
+	public static function parseLinkCallback ($link) {
+		$str = $link[0];
+		$str = str_replace(array("[[", "]]"), array("{{", "}}"), $str);
+		return $str;
+	}
+
 	/**
 	 *  transform [[Poll:name]] into {{Poll:name}} in parser before template expansion
 	 */
 
-	public static function onParserBeforeStrip(&$parser, &$text, &$stripState) {
+	public static function onInternalParseBeforeLinks(&$parser, &$text, &$stripState) {
 		global $wgContLang;
 		$pollNamespace = $wgContLang->getNsText( NS_WIKIA_POLL );
-
-		if (preg_match( "/\[\[$pollNamespace\:([^\]]*)]]/", $text, $match )) {
-			$poll_name = $match[1];
-			$text = "{{" . $pollNamespace . ":" . $poll_name . "}}";
-		}
+		$newtext = preg_replace_callback( "/\[\[$pollNamespace\:([^\]]*)\]\]/", "WikiaPollHooks::parseLinkCallback", $text, -1, $count );
+		if ($count > 0)
+			$text = $parser->recursiveTagParse($newtext);
 		return true;
 	}
 }
