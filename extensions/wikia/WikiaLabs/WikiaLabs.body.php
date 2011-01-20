@@ -11,7 +11,7 @@ class WikiaLabsSpecial extends SpecialPage {
 	}
 
 	function execute($article_id = null, $limit = "", $offset = "", $show = true) {
-
+		
 		$this->app->getGlobal('wgOut')->addStyle( $this->app->runFunction( 'wfGetSassUrl' , 'extensions/wikia/WikiaLabs/css/wikialabs.scss' ) );
 
 
