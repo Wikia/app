@@ -1738,7 +1738,7 @@ function lw_pageExists($pageTitle){
 		$retVal = $EXIST_CACHE[$pageTitle];
 	} else {
 		$queryTitle = str_replace("'", "\'", $pageTitle);
-		$retVal = (0 < lw_simpleQuery("SELECT COUNT(*) FROM page WHERE page_title='$queryTitle' AND page_namespace='0'")); // the page_namespace='0' speeds it up significantly
+		$retVal = (0 < lw_simpleQuery("SELECT /* LyricWiki API server.php::lw_pageExists() */ COUNT(*) FROM page WHERE page_title='$queryTitle' AND page_namespace='0'")); // the page_namespace='0' speeds it up significantly
 		$EXIST_CACHE[$pageTitle] = $retVal;
 	}
 	return $retVal;
