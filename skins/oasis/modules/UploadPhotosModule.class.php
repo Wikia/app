@@ -37,11 +37,11 @@ class UploadPhotosModule extends Module {
 		$this->copyrightstatus = $wgRequest->getText('wpUploadCopyStatus');
 		$this->copyrightsource = $wgRequest->getText('wpUploadSource');
 		$this->ignorewarning = $wgRequest->getCheck('wpIgnoreWarning');
-		
+		$this->defaultcaption = $wgRequest->getText('wpDefaultCaption', 'forcing default caption');
 		$details = null;
 		$up = new UploadFromFile();
 		$up->initializeFromRequest($wgRequest);
-		$up->getTitle();
+		$title = $up->getTitle();
 		
 		$details = $up->verifyUpload();
 		
@@ -63,7 +63,10 @@ class UploadPhotosModule extends Module {
 				$pageText = SpecialUpload::getInitialPageText( $this->comment, $this->license,
 					$this->copyrightstatus, $this->copyrightsource );
 				$status = $up->performUpload( $this->comment, $pageText, $this->watchthis, $wgUser );
-				if (!$status->isGood()) {
+				if ($status->isGood()) {
+					$aPageProps = array ( 'default_caption' => $this->defaultcaption );
+					Wikia::setProps( $title->getArticleID(), $aPageProps );
+				} else {
 					$this->statusMessage .= "something is wrong with upload";
 				}
 			}
@@ -167,5 +170,5 @@ class UploadPhotosModule extends Module {
 		$msg .= '</ul>';
 		return $msg;
 	}
-	
+
 }

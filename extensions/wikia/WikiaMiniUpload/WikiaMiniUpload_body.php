@@ -216,6 +216,7 @@ class WikiaMiniUpload {
 			$props = array();
 			$props['file'] = $file;
 			$props['mwname'] = $itemId;
+			$props['default_caption'] = Wikia::getProps($file->getTitle()->getArticleID(), 'default_caption');
 		} else if($sourceId == 1) {
                     require_once($IP.'/extensions/3rdparty/ImportFreeImages/phpFlickr-2.2.0/phpFlickr.php');
                     $flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
@@ -302,6 +303,7 @@ class WikiaMiniUpload {
 			$props['mwname'] = $tempname;
 			$props['tempid'] = $tempid;
 			$props['upload'] = true;
+			$props['default_caption'] = Wikia::getProps($file->getTitle()->getArticleID(), 'default_caption');
 			return $this->detailsPage($props);
 		} else {
 			return $this->loadMain( $this->translateError( $check_result ) );
@@ -484,6 +486,7 @@ class WikiaMiniUpload {
 						$props = array();
 						$props['file'] = $file;
 						$props['mwname'] = $name;
+						$props['default_caption'] = Wikia::getProps($file->getTitle()->getArticleID(), 'default_caption');
 						return $this->detailsPage($props);
 					} else {
 						header('X-screen-type: conflict');
@@ -672,16 +675,22 @@ class WikiaMiniUpload {
 				$tag .= ']]';
 			}
 		}
-				$message = wfMsg( 'wmu-success' );
+		$message = wfMsg( 'wmu-success' );
 
-		                $tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-		                $tmpl->set_vars(array(
-                                        'tag' => $tag,
-		                				'filename' => $ns_img . ':'.$title->getDBkey(),
-                                        'message' => $message,
-                                        'code' => isset($embed_code) ? $embed_code : '',
-                                     ));
-                return $tmpl->execute('summary');
+		$update_default_caption = $wgRequest->getVal ( 'update_caption' );
+		file_put_contents('/tmp/file.log', print_r("udc = $update_default_caption \n", true), FILE_APPEND);
+		if ($update_default_caption == 'on') {
+			Wikia::setProps($title->getArticleID(), array('default_caption' => $caption));
+		}
+
+		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
+		$tmpl->set_vars(array(
+						'tag' => $tag,
+						'filename' => $ns_img . ':'.$title->getDBkey(),
+						'message' => $message,
+						'code' => isset($embed_code) ? $embed_code : '',
+					 ));
+		return $tmpl->execute('summary');
 	}
 
 	function clean() {
