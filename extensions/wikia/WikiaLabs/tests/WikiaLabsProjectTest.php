@@ -53,7 +53,10 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 	public function testUpdatingExistingProject() {
 		$this->assertInstanceOf( 'WikiaLabsProject', $this->object );
 
+		$testData = array( 'foo' => true, 'bar' => 1, 'desc' => self::TEST_PROJECT_DESC );
+
 		$this->object->setName( self::TEST_PROJECT_NAME );
+		$this->object->setData( $testData );
 		$this->object->update();
 
 		$this->assertEquals( self::TEST_PROJECT_NAME, $this->object->getName() );
@@ -73,6 +76,12 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( date('Y-m-d'), date('Y-m-d', $object->getReleaseDate()) );
 		$this->assertEquals( self::TEST_EXTENSION, $object->getExtension() );
 		$this->assertEquals( 1, $object->getActivationsNum() );
+
+		$actualData = $object->getData();
+
+		$this->assertEquals( $testData['foo'], $actualData['foo'] );
+		$this->assertEquals( $testData['bar'], $actualData['bar'] );
+		$this->assertEquals( $testData['desc'], $actualData['desc'] );
 
 		$object->delete();
 	}
