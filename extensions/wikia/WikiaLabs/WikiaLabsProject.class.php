@@ -159,7 +159,7 @@ class WikiaLabsProject {
 		if(!empty($project)) {
 			$this->id = $id;
 			$this->name = $project->wlpr_name;
-			$this->data = $project->wlpr_data;
+			$this->data = unserialize( $project->wlpr_data );
 			$this->releaseDate = $project->wlpr_release_date;
 			$this->isActive = ( $project->wlpr_is_active == 'y' ) ? true : false;
 			$this->isGraduated = ( $project->wlpr_is_graduated == 'y' ) ? true : false;
