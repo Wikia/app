@@ -60,7 +60,7 @@
 			</td>
 			<td class="tally">
 				<em><?=$wgLang->formatNum($rankedUser->getScore());?></em>
-				<span>Points</span>
+				<span><?= wfMsg('achievements-leaderboard-points') ?></span>
 			</td>
 			<td class="badge">
 				<div class="badges" style="position: relative;">
