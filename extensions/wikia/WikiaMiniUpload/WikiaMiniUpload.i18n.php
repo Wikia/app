@@ -20,6 +20,7 @@ $messages['en'] = array(
 	'wmu-details-inf' => '<h1>File details</h1>Specify a name for this file. Make it something descriptive.',
 	'wmu-name' => 'Name',
 	'wmu-license' => 'License',
+	'wmu-licensing' => 'Licensing',
 	'wmu-details-inf2' => '<h1>Article options</h1>Choose how you want this file to look in your page.',
 	'wmu-size' => 'Size',
 	'wmu-thumbnail' => 'Thumbnail',
@@ -74,6 +75,9 @@ $messages['en'] = array(
 	'wmu-no-rights' => 'You are not allowed to add images to this page',
 	'wmu-more-options' => 'More options',
 	'wmu-fewer-options' => 'Fewer options',
+	'wmu-replace-default-caption' => 'replace default caption',
+	'wmu-appearance-in-article' => 'Appearance in Article',
+	'wmu-alignment' => 'Alignment',
 );
 
 /** Message documentation (Message documentation)
