@@ -946,6 +946,7 @@ function WMU_insertImage(e, type) {
 	params.push('type='+type);
 	params.push('mwname='+$G('ImageUploadMWname').value);
 	params.push('tempid='+$G('ImageUploadTempid').value);
+	params.push('update_caption='+$G('ImageUploadReplaceDefault').value);
 
 	if(type == 'overwrite') {
 		params.push('name='+ encodeURIComponent( $G('ImageUploadExistingName').value ) );

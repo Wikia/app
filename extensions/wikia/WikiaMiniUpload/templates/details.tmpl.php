@@ -19,7 +19,7 @@ if(isset($props['name'])) {
 		
 		<div style="position: relative; z-index: 2">
 			<label><?= wfMsg('wmu-caption') ?></label>
-			<textarea id="ImageUploadCaption"></textarea>
+			<textarea id="ImageUploadCaption"><?=$props['default_caption']?></textarea>
 			
 			<a class="backbutton" href="#" style="display:none" ><?= wfMsg('wmu-back') ?></a>
 			<input type="submit" value="<?= wfMsg('wmu-insert2') ?>" onclick="WMU_insertImage(event, 'details');" />
@@ -87,6 +87,7 @@ if(isset($props['name'])) {
 		<input id="ImageUploadName" type="text" size="30" value="<?= $props['partname'] ?>" />
 		<label for="ImageUploadName">.<?= $props['extension'] ?></label>
 		<input id="ImageUploadExtension" type="hidden" value="<?= $props['extension'] ?>" />
+		<input id="ImageUploadReplaceDefault" type="hidden" value="on" />
 	</div>
 	
 	<div id="LicensingRow">
@@ -110,7 +111,7 @@ if(isset($props['name'])) {
 	} else {
 	?>
 	<h3>Caption</h3>
-	<input type="checkbox"> replace default caption
+	<input id="ImageUploadReplaceDefault" type="checkbox"> replace default caption
 	<?
 	}
 	?>

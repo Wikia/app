@@ -1413,7 +1413,7 @@ class Wikia {
 
 	/**
 	 * @static
-	 * @acces public
+	 * @access public
 	 * @author Krzysztof Krzyżaniak (eloy)
 	 *
 	 * add entries to software info
@@ -1438,4 +1438,76 @@ class Wikia {
 		 */
 		return true;
 	}
+
+	/**
+	 * get properties for page
+	 * FIXME: maybe it should be cached?
+	 * @static
+	 * @access public
+	 * @param page_id
+	 * @param oneProp if you just want one property, this will return the value only, not an array
+	 * @return Array
+	 */
+
+	static public function getProps( $page_id, $oneProp = null ) {
+
+		wfProfileIn( __METHOD__ );
+		$return = array();
+		if (empty($page_id)) return null;
+
+		$where = array( "pp_page" => $page_id );
+		if ($oneProp != null) {
+			$where['pp_propname'] = $oneProp;
+			$return[$oneProp] = '';   // empty default placeholder in case value is not set
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select(
+			array( "page_props" ),
+			array( "*" ),
+			$where,
+			__METHOD__
+		);
+		while( $row = $dbr->fetchObject( $res ) ) {
+			$return[ $row->pp_propname ] = $row->pp_value;
+			Wikia::log( __METHOD__, "get", "id: {$page_id}, key: {$row->pp_propname}, value: {$row->pp_value}" );
+		}
+		$dbr->freeResult( $res );
+		wfProfileOut( __METHOD__ );
+
+		if ($oneProp != null) return $return[$oneProp];
+		return $return;
+	}
+
+
+	/**
+	 * save article extra properties to page_props table
+	 * @static
+	 * @access public
+	 * @param array $props array of properties to save (prop name => prop value)
+	 */
+
+	static public function setProps( $page_id, Array $props ) {
+
+		wfProfileIn( __METHOD__ );
+		$dbw = wfGetDB( DB_MASTER );
+		foreach( $props as $sPropName => $sPropValue) {
+			$dbw->replace(
+				"page_props",
+				array(
+					"pp_page",
+					"pp_propname"
+				),
+				array(
+					"pp_page" => $page_id,
+					"pp_propname" => $sPropName,
+					"pp_value" => $sPropValue
+				),
+				__METHOD__
+			);
+			Wikia::log( __METHOD__, "save", "id: {$page_id}, key: {$sPropName}, value: {$sPropValue}" );
+		}
+		$dbw->commit(); #--- for ajax
+		wfProfileOut( __METHOD__ );
+	}
+	
 }
