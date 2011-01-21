@@ -433,11 +433,13 @@ class DefaultMessagesCache {
 				$type = substr( $entry, 0, 1 );
 				if ( $type == ' ' ) {
 					return substr( $entry, 1 );
-				} elseif ( $type == '!' ) {
-					// negative caching
-					return false;
 				}
 			}
+		}
+
+		# If there is no cache entry and no placeholder, it doesn't exist
+		if ( $type !== '!' ) {
+			return false;
 		}
 
 		$titleKey = $this->memcKey( 'messages', 'individual', $title );
