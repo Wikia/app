@@ -54,10 +54,11 @@ class SpecialWikiPayment extends UnlistedSpecialPage {
 
 		$action = $wgRequest->getVal( 'action', 'init' );
 		$token = $wgRequest->getVal( 'token', null );
+		$cityId = $wgRequest->getVal( 'cityId', null);
 
 		switch( $action ) {
 			case 'returnOk':
-				$this->returnPayment( $token );
+				$this->returnPayment( $token, $cityId );
 				break;
 			case 'returnCancel':
 				$this->cancelPayment( $token );
@@ -87,7 +88,7 @@ class SpecialWikiPayment extends UnlistedSpecialPage {
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function returnPayment( $token ) {
+	private function returnPayment( $token, $cityId = null ) {
 		global $wgOut, $wgWikiPaymentAdsFreePrice;
 
 		wfProfileIn( __METHOD__ );
@@ -117,7 +118,7 @@ class SpecialWikiPayment extends UnlistedSpecialPage {
 						return;
 					} else {
 						//disable ads
-						self::toggleAds(false, $BAId);
+						self::toggleAds(false, $BAId, $cityId);
 					}
 				}
 			}
@@ -145,21 +146,23 @@ class SpecialWikiPayment extends UnlistedSpecialPage {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	private static function toggleAds($enable = true, $BAId = null) {
+	private static function toggleAds($enable = true, $BAId = null, $cityId = null) {
 		global $wgCityId, $wgShowAds, $wgUser, $wgExternalDatawareDB, $wgServer;
 
 		wfProfileIn( __METHOD__ );
+		
+		$cityId = empty($cityId) ? $wgCityId : $cityId;
 
 		if ($wgShowAds != $enable) {
 			//update DB if current value is different than new one
-			$result = WikiFactory::setVarByName('wgShowAds', $wgCityId, (bool)$enable, 'WikiPayment extension');
+			$result = WikiFactory::setVarByName('wgShowAds', $cityId, (bool)$enable, 'WikiPayment extension');
 
 			//record payment in DB for further list generating of paid wikis
 			if (!is_null($BAId)) {
 				$dbw = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
 				$dbw->replace('user_flags', null /*not used*/,
 					array(
-						'city_id' => $wgCityId,
+						'city_id' => $cityId,
 						'user_id' => $wgUser->getID(),
 						'type' => self::USER_FLAGS_PAID_WIKI,
 						'data' => serialize(array('BAId' => $BAId, 'enable' => $enable, 'endDate' => date( 'Y-m-d', strtotime( "+1 MONTH" ) )))
@@ -188,16 +191,18 @@ class SpecialWikiPayment extends UnlistedSpecialPage {
 	/**
 	 * check status of the list (vote/edit permissions)
 	 */
-	public static function fetchPaypalToken() {
-		global $wgRequest, $wgPayflowProCredentials, $wgPayflowProAPIUrl, $wgHTTPProxy, $wgPayPalUrl;
+	public static function fetchPaypalToken($cityId = null) {
+		global $wgRequest, $wgPayflowProCredentials, $wgPayflowProAPIUrl, $wgHTTPProxy, $wgPayPalUrl, $wgCityId;
 		wfProfileIn( __METHOD__ );
+		$cityId = empty($cityId) ? $wgCityId : $cityId;
 
 		$result = array( 'url' => false );
 
 		$paypalService = new PaypalPaymentService( array_merge( $wgPayflowProCredentials, array( 'APIUrl' => $wgPayflowProAPIUrl, 'HTTPProxy' => $wgHTTPProxy ) ) );
-		$returnTitle = Title::makeTitle( NS_SPECIAL, 'WikiPayment' );
-
-		$success = $paypalService->fetchToken( $returnTitle->getFullUrl( 'action=returnOk' ), $returnTitle->getFullUrl( 'action=returnCancel' ) );
+		$returnTitle = GlobalTitle::newFromText('WikiPayment', NS_SPECIAL, $cityId);
+		
+		$url = $returnTitle->getFullUrl( 'action=returnOk'.(empty($cityId) ? '' : '&cityId='.$cityId));
+		$success = $paypalService->fetchToken( $url, $returnTitle->getFullUrl( 'action=returnCancel' ) );
 
 		if ( $success ) {
 			$result['url'] = $wgPayPalUrl . $paypalService->getToken() . "&useraction=commit";
