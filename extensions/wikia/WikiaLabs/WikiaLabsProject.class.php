@@ -249,13 +249,13 @@ class WikiaLabsProject {
 		return $projects;
 	}
 	public function getExtensionsDict() {
-		return $this->app->getGlobal( 'wgWikiaLabsAllowed'); 		
+		return $this->app->getGlobal( 'wgWikiaLabsAllowed');
 	}
-	
+
 	public function getStatusDict() {
 		$status = array(
 			'0' => wfMsg('wikialabs-add-project-status-inactive'),
-			'1' => wfMsg('wikialabs-add-project-status-active'), 
+			'1' => wfMsg('wikialabs-add-project-status-active'),
 	//		'2' => wfMsg('wikialabs-add-project-status-hide-alow-to-inactive')
 		);
 		return $status;

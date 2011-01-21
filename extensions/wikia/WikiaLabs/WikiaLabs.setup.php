@@ -20,9 +20,6 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 
-
-
-
 /**
  * @var WikiaApp
  */
@@ -75,7 +72,7 @@ $wgAjaxExportList[] = 'WikiaLabs::getUrlImageAjax';
 
 
 /*
- * TEMP !!!! Move it to common ext 
+ * TEMP !!!! Move it to common ext
  */
 
 $wgWikiaLabsAllowed = array(

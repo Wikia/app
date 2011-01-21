@@ -1,6 +1,6 @@
 <h1> <?php echo wfMsg('wikialabs-add-project-title'); ?> </h1>
 <form>
-<div class="addprjmodal" >	
+<div class="addprjmodal" >
 	<div id='errorBox'  class="display: block;" >
 		<div id="wpError">You have not specified a valid user name.</div>
 	</div>
@@ -10,18 +10,18 @@
 		<input class="prjscreen" name="project[prjscreen]" value=""  type="hidden" />
 		<span><?php echo wfMsg('wikialabs-add-project-add-image-info'); ?></span>
 	</div>
-		
+
 	<div class="label"><?php echo wfMsg('wikialabs-add-project-name') ?></div>
 	<div class="input"><input name="project[name]" id="projectName" ></div>
 	<div class="label"><?php echo wfMsg('wikialabs-add-project-link') ?></div>
 	<div class="input">
 		<input name="project[link]" id="projectLink" >
 	</div>
-	<div class="label"><?php echo wfMsg('wikialabs-add-project-description') ?></div>	
+	<div class="label"><?php echo wfMsg('wikialabs-add-project-description') ?></div>
 	<div class="input">
 		<textarea name="project[description]" id="projectDescription" ></textarea>
 	</div>
-	
+
 	<div class="label"><?php echo wfMsg('wikialabs-add-project-project') ?></div>
 	<div class="input">
 		<select name="project[extension]" id="projectExtension" >
@@ -30,19 +30,19 @@
 			<?php endforeach;?>
 		</select>
 	</div>
-	
+
 	<div class="label"><?php echo wfMsg('wikialabs-add-project-fogbugz-area') ?></div>
 	<div class="input">
 		<select name="project[area]" id="projectArea" >
-			<option value="1" > Area 1 </option>
-			<option value="2" > Area 2 </option>
-			<option value="3" > Area 3 </option>
+			<?php foreach($areas as $area): ?>
+				<option value="<?php echo $area['id']; ?>" ><?php echo $area['name']; ?></option>
+			<?php endforeach;?>
 		</select>
 	</div>
-	
+
 	<div class="label"><?php echo wfMsg('wikialabs-add-project-status') ?></div>
 	<div class="input">
-		<input name="project[graduates]" id="projectGraduates" class="checkbox" type="checkbox" >		
+		<input name="project[graduates]" id="projectGraduates" class="checkbox" type="checkbox" >
 		<?php echo wfMsg('wikialabs-add-project-show-in-graduates') ?><br>
 		<select name="project[status]" id="projectStatus" >
 			<?php foreach($status as $key => $value): ?>
@@ -52,7 +52,7 @@
 	</div>
 	<div class="label"><?php echo wfMsg('wikialabs-add-project-warning') ?></div>
 	<div class="input">
-		<input name="project[enablewarning]" id="projectEnablewarning" class="checkbox" type="checkbox" > 
+		<input name="project[enablewarning]" id="projectEnablewarning" class="checkbox" type="checkbox" >
 		<?php echo wfMsg('wikialabs-add-project-enable-warning') ?>
 		<br>
 		<textarea name="project[warning]" id="projectWarning" ></textarea>
