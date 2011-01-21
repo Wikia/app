@@ -18,7 +18,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 */
 	/*private*/ var $mName;
 	/*private*/ var $mStateDirty = false;
-	/*private*/ var $mVersion = 2;
 	/*private*/ var $mDelayInvalidation = 0;
 
 	static $mCacheVars = array(
@@ -42,8 +41,9 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		'mVersion',
 		'mOptions',
 		'mGroups',
+		'mOptionOverrides'
 	);
-
+	
 	function __construct( $username ) {
 		$this->mName = $username;
 		$this->resetState();
@@ -135,6 +135,29 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		$dbr = self::getCentralDB();
 		$oRow = $dbr->selectRow( array( '`user`' ), array( '*' ), array( 'user_id' => $userId ), __METHOD__ );
 		return $oRow;
+	}
+
+	/*
+	 * load row by id
+	 */
+	private function loadOptions( ) {
+		if ( isset($this->mOptionOverrides) ) {
+			# options loaded 
+			return false;
+		}
+		
+		$dbr = self::getCentralDB();		
+		$res = $dbr->select(
+			'user_properties',
+			'*',
+			array( 'up_user' => $this->getId() ),
+			__METHOD__
+		);
+
+		while( $row = $dbr->fetchObject( $res ) ) {
+			$this->mOptionOverrides[$row->up_property] = $row->up_value;
+			$this->mOptions[$row->up_property] = $row->up_value;
+		}
 	}
 
 	/**
@@ -271,10 +294,10 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			$fromMaster = true;
 		}
 
-		if ( !is_array($cache) || ( isset($cache['mVersion']) && ($cache['mVersion'] < $this->mVersion) ) ) {
+		if ( !is_array($cache) || ( isset($cache['mVersion']) && ($cache['mVersion'] < MW_USER_VERSION) ) ) {
 			// Out of date cache.
 			wfDebug( __METHOD__ . ": Global User: cache miss for {$this->mName}, " .
-				"version {$cache['mVersion']}, expected {$this->mVersion} \n" );
+				"version {$cache['mVersion']}, expected: " . MW_USER_VERSION . "\n" );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -303,6 +326,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	protected function getCacheObject() {
 		$this->loadState();
 		$this->loadGroups();
+		$this->loadOptions();
 
 		$obj = array();
 		foreach( self::$mCacheVars as $var ) {
@@ -345,10 +369,19 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 */
 	protected function getCacheKey() {
 		global $wgWikiaCentralAuthMemcPrefix;
-		if ( isset($this->mGlobalId) ) {
-			$memcKey = wfMemcKey( 'user', 'id', $this->mGlobalId );
+		
+		if ( !isset( $this->mGlobalId ) ) {
+			$id = $this->idFromName();
 		} else {
-			$memcKey = $wgWikiaCentralAuthMemcPrefix . md5($this->mName . rand());
+			$id = $this->mGlobalId;
+		}
+		
+		if ( !empty( $id ) ) {
+			// global cache
+			$memcKey = wfMemcKey( 'user', 'id', $id );
+		} else {
+			// local cache
+			$memcKey = $wgWikiaCentralAuthMemcPrefix . md5( $this->mName );
 		}
 		return $memcKey;
 	}
@@ -437,12 +470,27 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * @private
 	 */
 	function decodeOptions( $str ) {
+		
+		if ( isset($this->mOptionOverrides) ) {
+			# already loaded
+			return true;
+		}
+
+		$this->mOptionOverrides = array();
 		$this->mOptions = array();
-		$a = explode( "\n", $str );
-		foreach ( $a as $s ) {
-			$m = array();
-			if ( preg_match( "/^(.[^=]*)=(.*)$/", $s, $m ) ) {
-				$this->mOptions[$m[1]] = $m[2];
+		
+		# use user_preferences table
+		$this->loadOptions();
+		
+		# preferences not found - use user_options
+		if ( empty( $this->mOptions ) ) {
+			$a = explode( "\n", $str );
+			foreach ( $a as $s ) {
+				$m = array();
+				if ( preg_match( "/^(.[^=]*)=(.*)$/", $s, $m ) ) {
+					$this->mOptionOverrides[$m[1]] = $m[2];
+					$this->mOptions[$m[1]] = $m[2];
+				}
 			}
 		}
 	}
