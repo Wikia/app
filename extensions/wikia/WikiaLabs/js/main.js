@@ -16,9 +16,20 @@ WikiLabs.init = function() {
 					$.ajax({
 						type: "POST",
 						url: wgScript + '?action=ajax&rs=WikiaLabs::saveProject',
+						dataType: "json",
 						data: modal.find('form').serialize(),
-						success: function(msg){
-							alert( "Data Saved: " + msg );
+						success: function(data) {
+							if( data.status == "error" ) {
+								var errorBox = $(".addprjmodal #errorBox").show().find('div');
+								errorBox.empty();
+								for( var i = 0; i < data.errors.length; i++ ) {
+									var error = $( "<p>" + data.errors[i] + "</p>");
+									$().log( error );
+									errorBox.append( error );
+								}
+							} else {
+								window.location = wgScript = '?title=' + wgCanonicalNamespace + ':' + wgCanonicalSpecialPageName; 
+							}
 						}
 					});
 					return false;
@@ -31,6 +42,7 @@ WikiLabs.init = function() {
 			}
 		});
 	});
+	$('.buttons .slider').click(WikiLabs.switchTogel);
 } 
 
 WikiLabs.uploadImage = function ( imgelement ) {
@@ -64,5 +76,30 @@ WikiLabs.uploadImage = function ( imgelement ) {
 	});
 	return false;
 }
+
+WikiLabs.switchTogel = function(e) {
+	var slider;
+	slider = $(e.target).closest('.buttons').find('.slider');
+	$().log(slider, 'WikiLabs');
+	
+	if( slider.hasClass('on') ) {      
+			slider.find('.textoff').fadeIn();              
+	    	slider.find('.texton').fadeOut();    
+	    	
+	    	slider.find('.button').animate({       
+		    	left: '-=67'     
+		    });   
+		    slider.removeClass('on');
+	    } else {               	 
+	    	slider.find('.texton').fadeIn();              
+	    	slider.find('.textoff').fadeOut();
+		    
+	    	slider.find('.button').animate({       
+	    		left: '+=67'     
+	    	});
+	    	slider.addClass('on'); 
+	}	
+} 
+
 
 

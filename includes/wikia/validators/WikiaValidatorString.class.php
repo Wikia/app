@@ -9,7 +9,7 @@ class WikiaValidatorString extends WikiaValidator {
 		);
 		$this->options = array(
 			'min' => 0, 
-			'max' => 255 
+			'max' => 0 
 		);
 		parent::__construct($options, $msg);
 	}
@@ -21,7 +21,7 @@ class WikiaValidatorString extends WikiaValidator {
 			return false;
 		}
 		
-		if(strlen($value) > $this->options['max']) {
+		if((!empty($this->options['max'])) && (strlen($value) > $this->options['max'])) {
 			$this->errors['too_long'] = $this->msg['too_long'];
 			return false;
 		}

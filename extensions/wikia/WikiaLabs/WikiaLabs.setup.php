@@ -72,3 +72,14 @@ $wgAjaxExportList[] = 'WikiaLabs::getProjectModal';
 $wgAjaxExportList[] = 'WikiaLabs::saveProject';
 $wgAjaxExportList[] = 'WikiaLabs::getUrlImageAjax';
 
+
+
+/*
+ * TEMP !!!! Move it to common ext 
+ */
+
+$wgWikiaLabsAllowed = array(
+	'wgEnablePageLayoutBuilder'
+);
+
+

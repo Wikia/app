@@ -43,12 +43,7 @@ PageLayoutBuilder.uploadImage = function (size, name) {
 				  method: "get",
 				  success: function(data) {
 					if(data.status == "ok") {
-						$("#imageboxdiv_" + name).css("width", (parseInt( data.size.width ) + 4) + "px");
-						$("#imagediv_" + name).css("width", data.size.width + "px")
-						.css("line-height", data.size.height + "px")
-						.css('background-image', 'url("' +  data.url +'")');
-						$("#plb_" + name).val( $("#ImageUploadFileName").val()  + " | " + $("#ImageUploadCaption").val() );
-						$("#thumbcaption").val($("#ImageUploadCaption").val());
+						console.log(data);
 					}
 					WMU_close();
 				  }

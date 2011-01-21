@@ -1,6 +1,9 @@
 <h1> <?php echo wfMsg('wikialabs-add-project-title'); ?> </h1>
 <form>
 <div class="addprjmodal" >	
+	<div id='errorBox'  class="display: block;" >
+		<div id="wpError">You have not specified a valid user name.</div>
+	</div>
 	<div class="image" >
 		<button class="prjscreen" ><?php echo wfMsg('wikialabs-add-project-add-image'); ?> </button>
 		<img class="prjscreen" id="projectPrjscreen" src="/extensions/wikia/PageLayoutBuilder/images/picture-placeholder.png" /> <br>
@@ -21,10 +24,10 @@
 	
 	<div class="label"><?php echo wfMsg('wikialabs-add-project-project') ?></div>
 	<div class="input">
-		<select name="project[project]" id="projectProject" >
-			<option> Project 1 </option>
-			<option> Project 2 </option>
-			<option> Project 3 </option>
+		<select name="project[extension]" id="projectExtension" >
+			<?php foreach($extensions as $value): ?>
+				<option value="<?php echo $value; ?>" ><?php echo $value; ?></option>
+			<?php endforeach;?>
 		</select>
 	</div>
 	
@@ -42,10 +45,9 @@
 		<input name="project[graduates]" id="projectGraduates" class="checkbox" type="checkbox" >		
 		<?php echo wfMsg('wikialabs-add-project-show-in-graduates') ?><br>
 		<select name="project[status]" id="projectStatus" >
-			<option value="1" ><?php echo wfMsg('wikialabs-add-project-status-show') ?></option>
-			<option value="2" ><?php echo wfMsg('wikialabs-add-project-status-hide') ?></option>
-			<option value="3" ><?php echo wfMsg('wikialabs-add-project-status-hide-alow-to-inactive') ?></option>
-			<option value="4" ><?php echo wfMsg('wikialabs-add-project-status-hide-and-inactive') ?></option>
+			<?php foreach($status as $key => $value): ?>
+				<option value="<?php echo $key; ?>" ><?php echo $value; ?></option>
+			<?php endforeach;?>
 		</select>
 	</div>
 	<div class="label"><?php echo wfMsg('wikialabs-add-project-warning') ?></div>
