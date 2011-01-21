@@ -326,7 +326,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	protected function getCacheObject() {
 		$this->loadState();
 		$this->loadGroups();
-		$this->loadOptions();
+		//$this->loadOptions();
 
 		$obj = array();
 		foreach( self::$mCacheVars as $var ) {
@@ -465,7 +465,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 */
 	function decodeOptions( $str ) {
 		
-		if ( isset($this->mOptionOverrides) ) {
+		if ( !empty($this->mOptionOverrides) ) {
 			# already loaded
 			return true;
 		}
@@ -474,7 +474,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		$this->mOptions = array();
 		
 		# use user_preferences table
-		$this->loadOptions();
+		//$this->loadOptions();
 		
 		# preferences not found - use user_options
 		if ( empty( $this->mOptions ) ) {
