@@ -12,7 +12,7 @@ $messages['en'] = array(
 	"taskmanager_title" => "Display and manage background tasks",
 	"taskmanager_tasklist" => "Return to Task List",
 	'right-taskmanager' => "Can display background tasks",
-	'right-taskmanager-action' = "Can manage background tasks",
+	'right-taskmanager-action' => "Can manage background tasks",
 );
 
 /** Afrikaans (Afrikaans)
