@@ -1,6 +1,8 @@
 <?php
 
 class WikiaLabs {
+	const FOGBUGZ_AREAS_PROJECT_ID = 13;
+
 	function __construct() {
 		$this->app = WF::build( 'App' );
 		$this->request = $this->app->getGlobal('wgRequest');
@@ -31,7 +33,7 @@ class WikiaLabs {
 		$oTmpl->set_vars( array(
 			'status' => $wikiaLabsProject->getStatusDict(),
 			'extensions' => $wikiaLabsProject->getExtensionsDict(),
-			'areas' => $fogbugzService->getAreas()
+			'areas' => $fogbugzService->logon()->getAreas( self::FOGBUGZ_AREAS_PROJECT_ID )
 		));
 
 		$oTmpl->render("wikialabs-addproject");
