@@ -230,6 +230,12 @@ class MWMemcached {
 	 */
 	var $_connect_attempts;
 
+   /**
+    * Internal memoization to avoid unnecessary network requests
+    * If a get() is done twice in a single request use the stored value
+    */
+   var $_dupe_cache;
+
 	// }}}
 	// }}}
 	// {{{ methods
@@ -255,6 +261,7 @@ class MWMemcached {
 
 		$this->_cache_sock = array();
 		$this->_host_dead = array();
+		$this->_dupe_cache = array();
 
 		$this->_timeout_seconds = 0;
 		$this->_timeout_microseconds = $wgMemCachedTimeout;
@@ -310,6 +317,8 @@ class MWMemcached {
 		if ( !$this->_active ) {
 			return false;
 		}
+
+		unset($this->_dupe_cache[$key]);
 
 		$sock = $this->get_sock( $key );
 		if ( !is_resource( $sock ) ) {
@@ -403,6 +412,14 @@ class MWMemcached {
 
 		@$this->stats['get']++;
 
+        // Memoize duplicate memcache requests for the same key in the same request
+		if (isset($this->_dupe_cache[$key])) {
+			wfProfileIn ( __METHOD__ . "::$key !DUPE");
+			wfProfileOut ( __METHOD__ . "::$key !DUPE");
+			wfProfileOut( __METHOD__ );
+			return $this->_dupe_cache[$key];
+		}
+
 		$cmd = "get $key\r\n";
 		if ( !$this->_safe_fwrite( $sock, $cmd, strlen( $cmd ) ) ) {
 			$this->_dead_sock( $sock );
@@ -419,8 +436,20 @@ class MWMemcached {
 			}
 		}
 
+		// Owen wants to get more detailed profiling info
+		if (isset ($val[$key])) {
+			$this->_dupe_cache[$key] = $val[$key];
+			wfProfileIn ( __METHOD__ . "::$key !HIT");
+			wfProfileOut ( __METHOD__ . "::$key !HIT");
+		} else {
+			$this->_dupe_cache[$key] = null;
+			wfProfileIn ( __METHOD__ . "::$key !MISS");
+			wfProfileOut ( __METHOD__ . "::$key !MISS");
+		}
+
 		wfProfileOut( __METHOD__ );
-		return @$val[$key];
+		return isset($val[$key]) ? $val[$key] : null;
+		//return @$val[$key];
 	}
 
 	// }}}
@@ -802,6 +831,7 @@ class MWMemcached {
 		}
 
 		$key = is_array( $key ) ? $key[1] : $key;
+		unset($this->_dupe_cache[$key]);
 		@$this->stats[$cmd]++;
 		if ( !$this->_safe_fwrite( $sock, "$cmd $key $amt\r\n" ) ) {
 			return $this->_dead_sock( $sock );
@@ -898,6 +928,9 @@ class MWMemcached {
 		if ( !is_resource( $sock ) ) {
 			return false;
 		}
+
+		// Memoize duplicate memcache requests for the same key in the same request
+		$this->_dupe_cache[$key] = $val;
 
 		@$this->stats[$cmd]++;
 
