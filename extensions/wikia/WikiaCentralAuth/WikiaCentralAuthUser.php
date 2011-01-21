@@ -370,15 +370,9 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	protected function getCacheKey() {
 		global $wgWikiaCentralAuthMemcPrefix;
 		
-		if ( !isset( $this->mGlobalId ) ) {
-			$id = $this->idFromName();
-		} else {
-			$id = $this->mGlobalId;
-		}
-		
-		if ( !empty( $id ) ) {
+		if ( !empty( $this->mGlobalId ) ) {
 			// global cache
-			$memcKey = wfMemcKey( 'user', 'id', $id );
+			$memcKey = wfMemcKey( 'user', 'id', $this->mGlobalId );
 		} else {
 			// local cache
 			$memcKey = $wgWikiaCentralAuthMemcPrefix . md5( $this->mName );
