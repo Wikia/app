@@ -44,9 +44,10 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 		wfProfileIn( __METHOD__ );
 		
 		$ret = $this->getWikiContents();
+		$limit = $this->getRequest()->getInt('limit', null);
 		
 		$this->setContentType( EzApiContentTypes::JSON );
-		$this->setResponseContent( Wikia::json_encode( $this->getWikiContents() ) );
+		$this->setResponseContent( Wikia::json_encode( $this->getWikiContents($limit) ) );
 		
 		wfProfileOut( __METHOD__ );
 		return $ret;
@@ -97,13 +98,13 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 	 * 
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 */
-	private function getWikiContents(){
+	private function getWikiContents($limit = null){
 		wfProfileIn( __METHOD__ );
 		
 		$ret = Array();
 		
 		foreach ( $this->getTabsLabels() as $tab ) {
-			$ret[] = $this->getCategoryInfo( $tab );
+			$ret[] = $this->getCategoryInfo( $tab, $limit );
 		}
 		
 		$ret[] = $this->getMoreCategoriesInfo();
@@ -133,7 +134,7 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 	 * 
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 */
-	private function getCategoryInfo( $categoryName ) {
+	private function getCategoryInfo( $categoryName, $limit = null ) {
 		$categoryName = trim( $categoryName );
 		$category = Category::newFromName( $categoryName );
 		
@@ -144,7 +145,7 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 		
 		if ( $category ) {
 			$ret[ 'name' ] = $category->getTitle()->getText();
-			$titles = $category->getMembers();
+			$titles = $category->getMembers($limit);
 			
 			foreach( $titles as $title ) {
 				$ret[ 'items' ][] = Array(
