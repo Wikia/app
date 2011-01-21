@@ -26,7 +26,7 @@ class TaskManagerPage extends SpecialPage {
 	 */
 	public function  __construct() {
 		#--- we use 'createwiki' restriction
-		parent::__construct( "TaskManager"  /*class*/, 'wikifactory' /*restriction*/ );
+		parent::__construct( "TaskManager"  /*class*/, 'taskmanager' /*restriction*/ );
 		$this->mTasks = array();
 		$this->mLoadPager = true;
 		wfLoadExtensionMessages( "TaskManager" );
@@ -53,7 +53,7 @@ class TaskManagerPage extends SpecialPage {
 			$wgOut->readOnlyPage();
 			return;
 		}
-		if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
+		if ( !$wgUser->isAllowed( 'taskmanager' ) ) {
 			$this->displayRestrictionError();
 			return;
 		}
@@ -313,6 +313,11 @@ class TaskManagerPage extends SpecialPage {
 	 * @return nothing
      */
 	private function loadTaskForm() {
+		global $wgUser;
+		if( !$wgUser->isAllowed('taskmanager-action') ) {
+			return;
+		}
+
 		global $wgOut, $wgWikiaBatchTasks;
 
 		/**
@@ -446,6 +451,11 @@ class TaskManagerPager extends TablePager {
 				$iTaskID = $this->mCurrentRow->task_id;
 				$iTaskStatus = $this->mCurrentRow->task_status;
 				$sRetval = "";
+
+				global $wgUser;
+				if( !$wgUser->isAllowed('taskmanager-action') ) {
+					return "";
+				}
 				$offset = $wgRequest->getVal( "offset", "" );
 				if( $offset !== "" ) {
 					$offset = "&offset={$offset}";
