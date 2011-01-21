@@ -15,7 +15,8 @@
 class CreateWiki {
 
 	private $mName, $mDomain, $mLanguage, $mHub, $mType, $mStarters,
-		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mWikiData;
+		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
+		$mLangSubdomain;
 
 	const ERROR_BAD_EXECUTABLE_PATH      = 1;
 	const ERROR_DOMAIN_NAME_TAKEN        = 2;
@@ -24,6 +25,8 @@ class CreateWiki {
 	const ERROR_DOMAIN_TOO_LONG          = 5;
 	const ERROR_DOMAIN_TOO_SHORT	     = 6;
 	const ERROR_DOMAIN_POLICY_VIOLATIONS = 7;
+	const ERROR_SQL_FILE_BROKEN          = 8;
+	const ERROR_DATABASE_ALREADY_EXISTS  = 9;
 
 
 	const IMGROOT           = "/images/";
@@ -35,7 +38,7 @@ class CreateWiki {
 	const DEFAULT_DOMAIN    = "wikia.com";
 	const ACTIVE_CLUSTER    = "c3";
 	const DEFAULT_NAME      = "Wiki";
-	const DEFAULT_WIKI_TYPE = "default";
+	const DEFAULT_WIKI_TYPE = "";
 
 
 	/**
@@ -46,13 +49,32 @@ class CreateWiki {
 	 * @param string $language - language code
 	 * @param integer $hub - category/hub which should be set for created wiki
 	 * @param mixed $type - type of wiki, currently 'answers' for answers or false for others
+	 * @param mixed $founder - creator of wiki, by default false which means $wgUser
 	 */
-	public function __construct( $name, $domain, $language, $hub, $type = self::DEFAULT_WIKI_TYPE  ) {
+	public function __construct( $name, $domain, $language, $hub, $type = self::DEFAULT_WIKI_TYPE, $founder = false ) {
+		global $wgUser;
+
+		// wiki containter
+		$this->mNewWiki = new stdClass();
+
 		$this->mDomain = $domain;
 		$this->mName = $name;
 		$this->mLanguage = $language;
 		$this->mHub = $hub;
 		$this->mType = $type;
+
+		// founder of wiki
+		if( $founder === false ) {
+			$this->mFounder = $wgUser;
+		}
+		else {
+			if( ! $founder instanceof User ) {
+				throw new MWException( "Founder in constructor is not instance of User class" );
+			}
+			else {
+				$this->mFounder = $founder;
+			}
+		}
 
 		/**
 		 * starters map: langcode => database name
@@ -92,30 +114,364 @@ class CreateWiki {
 	 */
 	public function create() {
 
+		global $wgWikiaLocalSettingsPath, $wgExternalSharedDB;
+
 		wfProfileIn( __METHOD__ );
 
-		/**
-		 * check executables
-		 */
+		// check executables
 		$status = $this->checkExecutables();
 		if( $status != 0 ) {
 			wfProfileOut( __METHOD__ );
 			return $status;
 		}
 
-		/**
-		 * check domain name
-		 */
+		// check domains
 		$status = $this->checkDomain();
 		if( $status != 0 ) {
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
 
+		// prepare all values needed for creating wiki
+		$this->prepareValues( $this->mDomain, $this->mLanguage, $this->mType );
+
+		print_r( $this->mNewWiki );
+
+		if( strpos( $wgWikiaLocalSettingsPath, "central") !== false ) {
+			$wgWikiaLocalSettingsPath = str_replace( "central", "wiki.factory", $wgWikiaLocalSettingsPath );
+		}
+
+
+		// start counting time
+		$this->mCurrTime = wfTime();
+		$startTime = $this->mCurrTime;
+
+		// check and create database
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); # central
+
+		///
+		// local database handled is handler to cluster we create new wiki.
+		// It doesn't have to be the same like wikifactory cluster or db cluster
+		// where Special:CreateWiki exists.
+		//
+		// @todo do not use hardcoded name, code below is only for test
+		//
+		// set $activeCluster to false if you want to create wikis on first
+		// cluster
+		//
+		$clusterdb = ( self::ACTIVE_CLUSTER ) ? "wikicities_" . self::ACTIVE_CLUSTER : "wikicities";
+		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $clusterdb ); // database handler, old $dbwTarget
+
+		// check if database is creatable
+		// @todo move all database creation checkers to canCreateDatabase
+		if( !$this->canCreateDatabase() ) {
+			wfDebugLog( "createwiki", "Database {$newWikiaData[ "dbname"]} exists\n", true );
+			wfProfileOut( __METHOD__ );
+			return self::ERROR_DATABASE_ALREADY_EXISTS;
+		}
+		else {
+			$dbwTarget->query( sprintf( "CREATE DATABASE `%s`", $newWikiaData[ "dbname"] ) );
+			wfDebugLog( "createwiki", "Database {$newWikiaData[ "dbname"]} created\n", true );
+		}
+
+
 		/**
-		 * prepare all values needed for creating wiki
+		 * create position in wiki.factory
+		 * (I like sprintf construction, so sue me)
 		 */
-		$newWikia = $this->prepareValues( $this->mDomain, $this->mLanguage, $this->mType );
+		$insertFields = array(
+			'city_title'          => $this->mWikiData[ "title" ],
+			'city_dbname'         => $this->mWikiData[ "dbname"],
+			'city_url'            => $this->mWikiData[ "url" ],
+			'city_founding_user'  => $this->mWikiData[ "founder" ],
+			'city_founding_email' => $this->mWikiData[ "founder-email" ],
+			'city_path'           => $this->mWikiData[ "path" ],
+			'city_description'    => $this->mWikiData[ "title" ],
+			'city_lang'           => $this->mWikiData[ "language" ],
+			'city_created'        => wfTimestamp( TS_DB, time() ),
+		);
+		if( self::ACTIVE_CLUSTER ) {
+			$insertFields[ "city_cluster" ] = self::ACTIVE_CLUSTER;
+		}
+
+
+		$bIns = $dbw->insert( "city_list", $insertFields, __METHOD__ );
+		if ( empty($bIns) ) {
+			#----
+			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3') );
+			$this->log( "Cannot set data in city_list table" );
+			$wgOut->addHTML(wfMsg('autocreatewiki-step3-error'));
+			return;
+		}
+		/*
+		 * get Wiki ID
+		 */
+		$this->mWikiId = $dbw->insertId();
+		$this->mWikiData[ "city_id" ] = $this->mWikiId;
+
+		if ( empty($this->mWikiId) ) {
+			#----
+			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3') );
+			$this->log( "Empty city_id = {$this->mWikiId}" );
+			$wgOut->addHTML(wfMsg('autocreatewiki-step3-error'));
+			return;
+		}
+
+		$this->log( "Creating row in city_list table, city_id = {$this->mWikiId}" );
+
+		$res = $dbw->insert(
+			"city_domains",
+			array(
+				array(
+					'city_id'     => $this->mWikiId,
+					'city_domain' => $this->mWikiData[ "domain" ]
+				),
+				array(
+					'city_id'     => $this->mWikiId,
+					'city_domain' => sprintf( "www.%s", $this->mWikiData[ "domain" ] )
+				)
+			),
+			__METHOD__
+		);
+
+		if ( empty( $res ) ) {
+			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3') );
+			$this->log( "Cannot set data in city_domains table" );
+			$wgOut->addHTML(wfMsg('autocreatewiki-step3-error'));
+			return;
+		}
+
+		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step3') );
+		$this->log( "Populating city_domains" );
+
+		/**
+		 * create image folder
+		 */
+		wfMkdirParents( "{$this->mWikiData[ "images_dir"]}" );
+		$this->log( "Create {$this->mWikiData[ "images_dir"]} folder" );
+		$this->setInfoLog('OK', wfMsg('autocreatewiki-step1'));
+		/**
+		 * copy defaul logo & favicon
+		 */
+		wfMkdirParents("{$this->mWikiData[ "images_logo" ]}");
+		wfMkdirParents("{$this->mWikiData[ "images_icon" ]}");
+
+		if (file_exists(self::CREATEWIKI_LOGO)) {
+			copy(self::CREATEWIKI_LOGO, "{$this->mWikiData[ "images_logo" ]}/Wiki.png");
+		}
+		if (file_exists(self::CREATEWIKI_ICON)) {
+			copy(self::CREATEWIKI_ICON, "{$this->mWikiData[ "images_icon" ]}/Favicon.ico");
+		}
+		$this->log( "Coping favicon and logo" );
+		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step4') );
+
+		/**
+		 * wikifactory variables
+		 */
+		$this->setWFVariables();
+		$this->log( "Populating city_variables" );
+		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step5') );
+
+		/**
+		 * we got empty database created, now we have to create tables and
+		 * populate it with some default values
+		 */
+		$tmpSharedDB = $wgSharedDB;
+		$wgSharedDB = $this->mWikiData[ "dbname"];
+		$dbwTarget->selectDB( $this->mWikiData[ "dbname"] );
+		$this->log( "Creating tables in database" );
+
+		$sqlfiles = array(
+			"{$IP}/maintenance/tables.sql",
+			"{$IP}/maintenance/interwiki.sql",
+			"{$IP}/maintenance/wikia/city_interwiki_links.sql",
+			"{$IP}/extensions/CheckUser/cu_changes.sql",
+			"{$IP}/extensions/CheckUser/cu_log.sql",
+			"{$IP}/maintenance/archives/wikia/patch-watchlist-improvements.sql",
+			"{$IP}/maintenance/archives/wikia/patch-create-blog_listing_relation.sql",
+			"{$IP}/maintenance/archives/wikia/patch-create-page_vote.sql",
+			"{$IP}/maintenance/archives/wikia/patch-create-page_visited.sql",
+		);
+
+		/**
+		 * tables which maybe exists or maybe not, better safe than sorry
+		 */
+		$extrafiles = array(
+			"{$IP}/extensions/wikia/AjaxPoll/patch-create-poll_info.sql",
+			"{$IP}/extensions/wikia/AjaxPoll/patch-create-poll_vote.sql",
+			"{$IP}/extensions/wikia/ImageServing/sql/table.sql"
+		);
+		foreach( $extrafiles as $file ) {
+			if( is_readable( $file ) ) {
+				$sqlfiles[] = $file;
+			}
+		}
+
+		/**
+		 * additional tables per type
+		 */
+		switch( $this->mType ) {
+			case "answers":
+				$sqlfiles[] = "{$IP}/maintenance/answers-additional-tables.sql";
+				break;
+		}
+
+		foreach( $sqlfiles as $file ) {
+			$error = $dbwTarget->sourceFile( $file );
+			$this->log("populating database with $file" );
+			if ( $error !== true ) {
+				wfProfileOut( __METHOD__ );
+				return self::ERROR_SQL_FILE_BROKEN;
+			}
+		}
+
+		/**
+		 * import language starter
+		 */
+		$starter = $this->getStarter();
+		if( $starter !== false ) {
+			switch( $this->mType ) {
+				case "answers":
+					$tables = "categorylinks externallinks image imagelinks langlinks page pagelinks revision templatelinks text user_profile";
+					break;
+
+				default:
+					$tables = "categorylinks externallinks image imagelinks langlinks page pagelinks revision templatelinks text";
+			}
+			$cmd = sprintf(
+				"%s -h%s -u%s -p%s %s %s | %s -h%s -u%s -p%s %s",
+				$this->mMYSQLdump,
+				$starter[ "host"      ],
+				$starter[ "user"      ],
+				$starter[ "password"  ],
+				$starter[ "dbStarter" ],
+				$tables,
+				$this->mMYSQLbin,
+				$dbwTarget->getLBInfo( 'host' ),
+				$wgDBadminuser,
+				$wgDBadminpassword,
+				$this->mWikiData[ "dbname"]
+			);
+			wfShellExec( $cmd );
+
+			$error = $dbwTarget->sourceFile( "{$IP}/maintenance/cleanupStarter.sql" );
+			wfDebugLog( "createwiki", __METHOD__ . ": {$IP}/maintenance/cleanupStarter.sql" );
+
+			if ($error !== true) {
+				wfProfileOut( __METHOD__ );
+				return self::ERROR_SQL_FILE_BROKEN;
+			}
+
+			/**
+			 * @todo move copying images from local database changes section
+			 * use wikifactory variable to determine proper path to images
+			 */
+			$startupImages = $starter[ "uploadDir" ];
+
+			if (file_exists( $startupImages ) && is_dir( $startupImages ) ) {
+				wfShellExec("/bin/cp -af {$startupImages}/* {$this->mWikiData[ "images_dir" ]}/");
+				$this->log("/bin/cp -af {$startupImages}/* {$this->mWikiData[ "images_dir" ]}/");
+			}
+			$cmd = sprintf(
+				"SERVER_ID=%d %s %s/maintenance/updateArticleCount.php --update --conf %s",
+				$this->mWikiId,
+				$this->mPHPbin,
+				$IP,
+				$wgWikiaLocalSettingsPath
+			);
+			wfShellExec( $cmd );
+
+			$this->log( "Copying starter database" );
+		}
+		/**
+		 * making the wiki founder a sysop/bureaucrat
+		 */
+		if ( $this->mWikiData[ "founder" ] ) {
+			$dbwTarget->replace( "user_groups", array( ), array( "ug_user" => $this->mWikiData[ "founder" ], "ug_group" => "sysop" ) );
+			$dbwTarget->replace( "user_groups", array( ), array( "ug_user" => $this->mWikiData[ "founder" ], "ug_group" => "bureaucrat" ) );
+		}
+		$this->log( "Create user sysop/bureaucrat" );
+
+		/**
+		 * set images timestamp to current date (see: #1687)
+		 */
+		$dbwTarget->update("image", array( "img_timestamp" => date('YmdHis') ), "*", __METHOD__ );
+		$this->log( "Set images timestamp to current date" );
+
+		/**
+		 * init site_stats table (add empty row)
+		 */
+		$dbwTarget->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
+
+		/**
+		 * add local job
+		 */
+		$localJob = new AutoCreateWikiLocalJob(	Title::newFromText( NS_MAIN, "Main" ), $this->mWikiData );
+		$localJob->WFinsert( $this->mWikiId, $this->mWikiData[ "dbname" ] );
+
+		/**
+		 * destroy connection to newly created database
+		 */
+		$dbwTarget->commit();
+		$wgSharedDB = $tmpSharedDB;
+
+		/**
+		 * set hub/category
+		 */
+		$hub = WikiFactoryHub::getInstance();
+		$hub->setCategory( $this->mWikiId, $this->mWikiData[ "hub" ] );
+		$this->log( "Wiki added to the category hub " . $this->mWikiData[ "hub" ] );
+
+		/**
+		 * define wiki type
+		 */
+		$wiki_type = ( !empty($this->mType) ) ? $this->mType : self::DEFAULT_WIKI_TYPE;
+
+		/**
+		 * modify variables
+		 */
+		$this->addCustomSettings( 0, $wgUniversalCreationVariables[$wiki_type], "universal" );
+
+		/**
+		 * set variables per language
+		 */
+		$this->addCustomSettings(
+			$this->mWikiData[ "language" ],
+			isset($wgLangCreationVariables[$wiki_type]) ? $wgLangCreationVariables[$wiki_type] : $wgLangCreationVariables,
+			"language"
+		);
+
+		/**
+		 * move main page
+		 */
+		$cmd = sprintf(
+			"SERVER_ID=%d %s %s/maintenance/wikia/moveMain.php -t '%s' --conf %s",
+			$this->mWikiId,
+			$this->mPHPbin,
+			$IP,
+			$this->mWikiData[ "title" ],
+			$wgWikiaLocalSettingsPath
+		);
+		$output = wfShellExec( $cmd );
+
+		/**
+		 * show congratulation message
+		 */
+
+		/**
+		 * inform task manager
+		 */
+		$Task = new LocalMaintenanceTask();
+		$Task->createTask(
+			array(
+				"city_id" 	=> $this->mWikiId,
+				"command" 	=> "maintenance/runJobs.php",
+				"type" 		=> "ACWLocal",
+				"data" 		=> $this->mWikiData
+			),
+			TASK_QUEUED
+		);
+		$this->log( "Add local maintenance task" );
 
 		wfProfileOut( __METHOD__ );
 
@@ -140,13 +496,13 @@ class CreateWiki {
 		 */
 		$this->mPHPbin = "/usr/bin/php";
 		if( !file_exists( $this->mPHPbin ) && !is_executable( $this->mPHPbin ) ) {
-			wfDebug( __METHOD__ . ": {$this->mPHPbin} doesn't exists or is not executable\n" );
+			wfDebugLog( "createwiki", __METHOD__ . ": {$this->mPHPbin} doesn't exists or is not executable\n", true );
 			return self::ERROR_BAD_EXECUTABLE_PATH;
 		}
 
 		$this->mMYSQLdump = "/usr/bin/mysqldump";
 		if( !file_exists( $this->mMYSQLdump ) && !is_executable( $this->mMYSQLdump ) ) {
-			wfDebug( __METHOD__ . ": {$this->mMYSQLdump} doesn't exists or is not executable\n" );
+			wfDebugLog( "createwiki", __METHOD__ . ": {$this->mMYSQLdump} doesn't exists or is not executable\n", true );
 			return self::ERROR_BAD_EXECUTABLE_PATH;
 		}
 
@@ -213,78 +569,79 @@ class CreateWiki {
 	 * @param
 	 */
 	private function prepareValues() {
-		global $wgUser;
+		global $wgUser, $wgContLang;
 
 		wfProfileIn( __METHOD__ );
 
 		$this->fixSubdomains( $this->mLanguage );
 
 		// founder
-		$result = array();
-		$result[ "founder" ] = $wgUser;
+		$this->mNewWiki->founder = $this->mFounder;
 
 		// sitename
 		$fixedTitle = trim( $this->mName );
 		$fixedTitle = preg_replace("/\s+/", " ", $fixedTitle );
 		$fixedTitle = preg_replace("/ (w|W)iki$/", "", $fixedTitle );
 		$fixedTitle = $wgContLang->ucfirst( $fixedTitle );
-		$result[ "sitename" ] = wfMsgExt( 'autocreatewiki-title-template', array( 'language' => $this->mLanguage ), $fixedTitle );
+		$this->mNewWiki->sitename = wfMsgExt( 'autocreatewiki-title-template', array( 'language' => $this->mLanguage ), $fixedTitle );
 
 		// domain part
 		$this->mDomain = preg_replace( "/(\-)+$/", "", $this->mDomain );
 		$this->mDomain = preg_replace( "/^(\-)+/", "", $this->mDomain );
-		$result[ "domain" ] = strtolower( trim( $this->mDomain ) );
+		$this->mNewWiki->domain = strtolower( trim( $this->mDomain ) );
 
 		// hub
 		$result[ "hub" ] = $this->mHub;
 
+		// name
+		$result[ "name" ] = strtolower( trim( $this->mDomain ) );
+
 		switch( $this->mType ) {
 			case "answers":
-				$this->mWikiData[ "title"      ] = $fixedTitle . " " . $this->mDefSitename;
+				$result[ "sitename" ] = $fixedTitle . " " . $this->mDefSitename;
 				break;
 		}
 
 		$result[ "language"   ] = $this->mLanguage;
-		$this->mWikiData[ "subdomain"  ] = $this->mWikiData[ "name"];
-		$this->mWikiData[ "redirect"   ] = $this->mWikiData[ "name"];
+		$result[ "subdomain"  ] = $result[ "name"];
+		$result[ "redirect"   ] = $result[ "name"];
 
-		$this->mWikiData[ "path"       ] = "/usr/wikia/docroot/wiki.factory";
-		$this->mWikiData[ "testWiki"   ] = false;
+		$result[ "path"       ] = "/usr/wikia/docroot/wiki.factory";
 
-		$this->mWikiData[ "images_url" ] = $this->prepareDirValue();
-		$this->mWikiData[ "images_dir" ] = sprintf("%s/%s", strtolower( substr( $this->mWikiData[ "name"], 0, 1 ) ), $this->mWikiData[ "images_url" ]);
+		$result[ "images_url" ] = $this->prepareDirValue( $result[ "name"], $result[ "language" ] );
+		$result[ "images_dir" ] = sprintf("%s/%s", strtolower( substr( $result[ "name"], 0, 1 ) ), $result[ "images_url" ]);
 
-		if ( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
+		if ( isset( $result[ "language" ] ) && $result[ "language" ] !== "en" ) {
 			if ( $this->mLangSubdomain ) {
-				$this->mWikiData[ "subdomain"  ]  = strtolower( $this->mWikiData[ "language"] ) . "." . $this->mWikiData[ "name"];
-				$this->mWikiData[ "redirect"   ]  = strtolower( $this->mWikiData[ "language" ] ) . "." . ucfirst( $this->mWikiData[ "name"] );
+				$result[ "subdomain"  ]  = strtolower( $result[ "language"] ) . "." . $result[ "name"];
+				$result[ "redirect"   ]  = strtolower( $result[ "language" ] ) . "." . ucfirst( $result[ "name"] );
 			}
-			$this->mWikiData[ "images_url" ] .= "/" . strtolower( $this->mWikiData[ "language" ] );
-			$this->mWikiData[ "images_dir" ] .= "/" . strtolower( $this->mWikiData[ "language" ] );
+			$result[ "images_url" ] .= "/" . strtolower( $result[ "language" ] );
+			$result[ "images_dir" ] .= "/" . strtolower( $result[ "language" ] );
 		}
 
 		switch( $this->mType ) {
 			case "answers":
-				$this->mWikiData[ "images_url" ] .= "/" . $this->mType;
-				$this->mWikiData[ "images_dir" ] .= "/" . $this->mType;
+				$result[ "images_url" ] .= "/" . $this->mType;
+				$result[ "images_dir" ] .= "/" . $this->mType;
 				break;
 		}
 
-		$this->mWikiData[ "images_dir"    ] = self::IMGROOT  . $this->mWikiData[ "images_dir" ] . "/images";
-		$this->mWikiData[ "images_url"    ] = self::IMAGEURL . $this->mWikiData[ "images_url" ] . "/images";
-		$this->mWikiData[ "images_logo"   ]	= sprintf("%s/%s", $this->mWikiData[ "images_dir" ], "b/bc" );
-		$this->mWikiData[ "images_icon"   ]	= sprintf("%s/%s", $this->mWikiData[ "images_dir" ], "6/64" );
-
-		$this->mWikiData[ "domain"        ] = sprintf("%s.%s", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain);
-		$this->mWikiData[ "url"           ] = sprintf( "http://%s.%s/", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain );
-		$this->mWikiData[ "dbname"        ] = $this->prepareDBName( $this->mWikiData[ "name"], $this->awcLanguage );
-		$this->mWikiData[ "founder-name"  ] = $this->mFounder->getName();
-		$this->mWikiData[ "founder-email" ] = $this->mFounder->getEmail();
-		$this->mWikiData[ "founder"       ] = $this->mFounder->getId();
-
-		$this->mWikiData[ "type"          ] = $this->mType;
+		$result[ "images_dir"    ] = self::IMGROOT  . $result[ "images_dir" ] . "/images";
+		$result[ "images_url"    ] = self::IMAGEURL . $result[ "images_url" ] . "/images";
+		$result[ "images_logo"   ] = sprintf("%s/%s", $result[ "images_dir" ], "b/bc" );
+		$result[ "images_icon"   ] = sprintf("%s/%s", $result[ "images_dir" ], "6/64" );
+		$result[ "domain"        ] = sprintf("%s.%s", $result[ "subdomain" ], $this->mDefSubdomain);
+		$result[ "url"           ] = sprintf( "http://%s.%s/", $result[ "subdomain" ], $this->mDefSubdomain );
+		$result[ "dbname"        ] = $this->prepareDatabaseName( $result[ "name"], $this->mLanguage );
+		$result[ "founder-name"  ] = $this->mFounder->getName();
+		$result[ "founder-email" ] = $this->mFounder->getEmail();
+		$result[ "founder"       ] = $this->mFounder->getId();
+		$result[ "type"          ] = $this->mType;
 
 		wfProfileOut( __METHOD__ );
+
+		return $result;
 	}
 
 	/**
@@ -304,6 +661,7 @@ class CreateWiki {
 		switch( $this->mType ) {
 			case "answers":
 				$this->mDomains = Wikia::getAnswersDomains();
+				print_r( $this->mDomains );
 				$this->mSitenames = Wikia::getAnswersSitenames();
 				if( isset($this->mDomains[ $lang ] ) && !empty( $this->mDomains[ $lang ] ) ) {
 					$this->mDefSubdomain = sprintf( "%s.%s", $this->mDomains[$lang], self::DEFAULT_DOMAIN );
@@ -334,5 +692,169 @@ class CreateWiki {
 		wfProfileOut( __METHOD__ );
 	}
 
-}
+	/**
+	 * check folder exists
+	 *
+	 * @access private
+	 * @author Piotr Molski (Moli)
+	 *
+	 * @param
+	 */
+	private function prepareDirValue( $name, $language ) {
+		wfProfileIn( __METHOD__ );
 
+		wfDebug( __METHOD__ . ": Checking {$name} folder" );
+
+		$isExist = false; $suffix = "";
+		$prefix = strtolower( substr( $name, 0, 1 ) );
+		$dir_base = $name;
+		$dir_lang = ( isset( $language ) && $language !== "en" )
+				? "/" . strtolower( $language )
+				: "";
+
+		while ( $isExist == false ) {
+			switch( $this->mType ) {
+				case "answers":
+					$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/answers/images";
+					break;
+				default:
+					$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
+			}
+
+			if ( file_exists( $dirName ) ) {
+				$suffix = rand(1, 9999);
+			}
+			else {
+				$dir_base = $dir_base . $suffix;
+				$isExist = true;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $dir_base;
+	}
+
+	/**
+	 * prepareDatabaseName
+	 *
+	 * check if database name is used, if it's used prepare another one
+	 *
+	 * @author Piotr Molski <moli@wikia-inc.com>
+	 * @access private
+	 *
+	 * @param string	$dbname -- name of DB to check
+	 * @param string	$lang   -- language for wiki
+	 *
+	 * @todo when second cluster will come this function has to changed
+	 *
+	 * @return string: fixed name of DB
+	 */
+	private function prepareDatabaseName( $dbname, $lang ) {
+
+		wfProfileIn( __METHOD__ );
+
+		$dbwf = WikiFactory::db( DB_SLAVE );
+		$dbr  = wfGetDB( DB_MASTER );
+
+		wfDebugLog( "createwiki", __METHOD__, ": checking database name for dbname=$dbname, language={$lang} type={$this->mType}\n", true );
+		/**
+		 * for other types add type name in database
+		 */
+		if( $this->mType ) {
+			$dbname = $dbname . $this->mType;
+		}
+
+		if( $lang !== "en" ) {
+			$dbname = $lang . $dbname;
+		}
+
+		$dbname = substr( str_replace( "-", "", $dbname ), 0 , 50 );
+
+		/**
+		 * check city_list
+		 */
+		$exists = 1;
+		$suffix = "";
+		while( $exists == 1 ) {
+			$dbname = sprintf("%s%s", $dbname, $suffix);
+			wfDebugLog( "createwiki", __METHOD__, ": Checking if database {$dbname} already exists in city_list\n", true );
+			$row = $dbwf->selectRow(
+				array( "city_list" ),
+				array( "count(*) as count" ),
+				array( "city_dbname" => $dbname ),
+				__METHOD__
+			);
+			$exists = 0;
+			if( $row->count > 0 ) {
+				wfDebugLog( "createwiki", __METHOD__, ": Database {$dbname} exists in city_list!\n", true );
+				$exists = 1;
+			}
+			else {
+				wfDebugLog( "createwiki", __METHOD__, ": Checking if database {$dbname} already exists in database", true );
+				$sth = $dbr->query( sprintf( "show databases like '%s'", $dbname) );
+				if ( $dbr->numRows( $sth ) > 0 ) {
+					wfDebugLog( "createwiki", __METHOD__, ": Database {$dbname} exists on cluster!", true );
+					$exists = 1;
+				}
+			}
+			# add suffix
+			if( $exists == 1 ) {
+				$suffix = rand( 1, 999 );
+			}
+		}
+		wfProfileOut( __METHOD__ );
+
+		return $dbname;
+	}
+
+	/**
+	 * can create database?
+	 * @todo this code is probably duplication of other checkers
+	 */
+	private function canCreateDatabase() {
+
+		// default response
+		$can = true;
+
+		// check local cluster
+		$row = $this->mNewWiki->dbw->selectRow(
+			"INFORMATION_SCHEMA.SCHEMATA",
+			array( "SCHEMA_NAME as name" ),
+			array( 'SCHEMA_NAME' => $this->mNewWiki->dbname ),
+			__METHOD__
+		);
+
+		if( isset( $row->name ) && $row->name === $this->mNewWiki->dbname ) {
+			wfDebugLog( "createwiki", __METHOD__ . ": database {$this->mNewWiki->dbname} already exists on active cluster\n" );
+			$can = false;
+		}
+		else {
+			// check city_list
+			$dbw = WikiFactory::db( DB_MASTER );
+			$row = $dbw->selectRow(
+				"city_list",
+				array( "count(*) as count" ),
+				array( "city_dbname" => $this->mNewWiki->dbname ),
+				__METHOD__
+			);
+
+			if( $row->count > 0 ) {
+				wfDebugLog( "createwiki", __METHOD__ . ": database {$this->mNewWiki->dbname} already used in city_list\n" );
+				$can = false;
+			} else {
+				// check domain
+				$row = $dbw->selectRow(
+					"city_list",
+					array( "count(*) as count" ),
+					array( "city_url" => $this->mNewWiki->url ),
+					__METHOD__
+				);
+				if( $row->count > 0 ) {
+					wfDebugLog( "createwiki", __METHOD__ . ": domain {$this->mNewWiki->url} already used in city_list\n" );
+					$can = false;
+				}
+			}
+		}
+		return $can;
+	}
+}
