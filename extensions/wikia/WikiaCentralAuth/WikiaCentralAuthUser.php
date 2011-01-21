@@ -141,7 +141,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * load row by id
 	 */
 	private function loadOptions( ) {
-		if ( isset($this->mOptionOverrides) ) {
+		if ( !empty($this->mOptionOverrides) ) {
 			# options loaded 
 			return false;
 		}
@@ -1189,7 +1189,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 
 		foreach( self::$mCacheVars as $var ) {
 			if ( !in_array($var, array('mOptions','mGroups') ) ) {
-				$oUser->$var = $this->$var;
+				$oUser->$var = ( isset( $this->$var ) ) ? $this->$var : null;
 			}
 		}
 		#--- don't load data from local cache
