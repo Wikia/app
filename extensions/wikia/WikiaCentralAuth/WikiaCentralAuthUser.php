@@ -395,7 +395,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		if ( empty($this->mIsAttached) ) {
 			wfDebug ( __METHOD__ . ": User is not attached - check local db \n");
 			$oUser = User::newFromName($this->mName);
-			if ( isset($oUser) && ( 0 != $oUser->getId() )  ) {
+			if ( is_object($oUser) && ( 0 != $oUser->getId() )  ) {
 				$this->mIsAttached = 1;
 			}
 		}
