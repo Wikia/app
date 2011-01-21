@@ -3,10 +3,10 @@
 /*<![CDATA[*/
 .TablePager {width: 100%;}
 .TablePager, .TablePager th, .TablePager td {border: 1px solid #777777;}
-td.tablepager-col-2 {background: rgb(173, 216, 230); }
-td.tablepager-col-3 {background: rgb(180, 230, 164); }
-td.tablepager-col-4 {background: rgb(230, 166, 166); }
-td.tablepager-col-5 {background: rgb(180, 163, 226); }
+.TablePager td.tablepager-col-2 {background: rgb(173, 216, 230); }
+.TablePager td.tablepager-col-3 {background: rgb(180, 230, 164); }
+.TablePager td.tablepager-col-4 {background: rgb(230, 166, 166); }
+.TablePager td.tablepager-col-5 {background: rgb(180, 163, 226); }
 /*]]>*/
 </style>
 <div>
@@ -16,7 +16,8 @@ td.tablepager-col-5 {background: rgb(180, 163, 226); }
     </div>
     <?= $nav ?>
 </div>
-<table>
+<br/>
+<table class="TablePager" style="width:auto;">
     <td class="tablepager-col-2">run</td>
     <td class="tablepager-col-3">finished ok</td>
     <td class="tablepager-col-4">finished error</td>
