@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `messages_text`
 	`msg_lang`            varchar (255),
 	PRIMARY KEY (`msg_id`)
 );
-CREATE UNIQUE index removed_mode_expire_date ON messages_text (msg_removed,msg_mode,msg_expire,msg_date);
+CREATE index removed_mode_expire_date ON messages_text (msg_removed,msg_mode,msg_expire,msg_date);
 -- msg_mode: 0 = all users, 1 = selected users
 
 -- Messages metadata
