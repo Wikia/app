@@ -127,6 +127,7 @@ $wgAutoloadClasses['UserStatsService'] = $IP.'/includes/wikia/services/UserStats
 $wgAutoloadClasses['PaypalPaymentService'] = $IP.'/includes/wikia/services/PaypalPaymentService.class.php';
 $wgHooks['PayPalInstantPaymentNotification'][] = 'PaypalPaymentService::onInstantPaymentNotification';
 $wgAutoloadClasses['CategoriesService'] = $IP.'/includes/wikia/services/CategoriesService.class.php';
+$wgAutoloadClasses['FogbugzService'] = $IP . '/includes/wikia/services/FogbugzService.class.php';
 
 // modules
 $wgAutoloadClasses['OasisModule'] = $IP.'/skins/oasis/modules/OasisModule.class.php';
@@ -738,3 +739,8 @@ $wgMemCachedTimeout = 500000; //Data timeout in microseconds
  * see /extensions/wikia/EzAPI
  */
 $wgEzApiModules = array();
+
+/**
+ * Fogbugz API config
+ */
+$wgFogbugzAPIConfig = array();
