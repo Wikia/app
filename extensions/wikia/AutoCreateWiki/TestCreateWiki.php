@@ -15,6 +15,7 @@ class TestCreateWiki extends Maintenance {
 	 */
 	public function __construct() {
 		parent::__construct();
+
 		$this->mDescription = "Create test wiki";
 		$this->addOption( 'domain', 'Maximum number of jobs to run', false, true );
 		$this->addOption( 'language', 'Type of job to run', false, true );
@@ -25,7 +26,26 @@ class TestCreateWiki extends Maintenance {
 	 * main entry point
 	 */
 	public function execute() {
-		$createWiki = new CreateWiki( "Test Create Wiki", "test20110117", "en", 1 );
+
+		global $wgDebugLogGroups;
+
+		// just for now for debugging
+		$wgDebugLogGroups[ "createwiki" ] = "php://stdout";
+
+
+		$languages = array( 'en', 'pl', 'de', 'pt-br' );
+		shuffle( $languages );
+
+		$types = array( false, "answers" );
+		shuffle( $types );
+
+		$createWiki = new CreateWiki(
+			"Test Create Wiki", // sitename
+			"test20110117", // domain
+			array_shift( $languages ), // lang
+			1, // hub
+			array_shift( $types )
+		);
 		$createWiki->create( );
 	}
 }
