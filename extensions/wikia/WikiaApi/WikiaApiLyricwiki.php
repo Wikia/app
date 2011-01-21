@@ -216,7 +216,7 @@ class WikiaApiLyricwiki extends ApiBase {
 				break;
 			case "json":
 				$result = getSong($artist, $songName);
-				$this->writeJSON($result);
+				$this->writeJSON_deprecated($result);
 				break;
 			case "realjson":
 				$result = getSong($artist, $songName);
@@ -440,8 +440,11 @@ class WikiaApiLyricwiki extends ApiBase {
 
 	////
 	// create object using a broken JSON format (oops)
+	//
+	// This is kept for backwards compatibility since it was written by an app developer who used
+	// it in this format.
 	////
-	function writeJSON(&$result) {
+	function writeJSON_deprecated(&$result) {
 		header('Content-type: text/javascript; charset=UTF-8');
 		echo "song = {\n";
 		echo "'artist':'".$this->escapeJavaScript(utf8_decode($result['artist']))."',\n";
