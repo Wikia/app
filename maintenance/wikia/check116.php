@@ -8,7 +8,7 @@ $dbr = WikiFactory::db( DB_SLAVE );
 $sth = $dbr->select(
 	array( "city_list" ),
 	array( "city_dbname", "city_id" ),
-	array( "city_public" => 1, "city_cluster" => "c2" ),
+	array( "city_public" => 1, "city_cluster" => "c3" ),
 	__METHOD__
 );
 
