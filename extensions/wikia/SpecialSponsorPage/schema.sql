@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `advert_ads` (
   `last_pay_date` date NOT NULL COMMENT 'last completed paypal payment',
   PRIMARY KEY  (`ad_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
-CREATE UNIQUE INDEX wiki_db_page_id_ad_price on advert_ads (wiki_db,page_id,ad_price);
+CREATE INDEX wiki_db_page_id_ad_price on advert_ads (wiki_db,page_id,ad_price);
 
 CREATE TABLE IF NOT EXISTS `advert_pmts` (
   `pay_id` int(10) unsigned NOT NULL auto_increment,
