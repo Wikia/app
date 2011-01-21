@@ -27,6 +27,7 @@ class CreateWiki {
 	const ERROR_DOMAIN_POLICY_VIOLATIONS = 7;
 	const ERROR_SQL_FILE_BROKEN          = 8;
 	const ERROR_DATABASE_ALREADY_EXISTS  = 9;
+	const ERROR_DATABASE_WIKI_FACTORY_TABLES_BROKEN = 10;
 
 
 	const IMGROOT           = "/images/";
@@ -165,13 +166,13 @@ class CreateWiki {
 		// check if database is creatable
 		// @todo move all database creation checkers to canCreateDatabase
 		if( !$this->canCreateDatabase() ) {
-			wfDebugLog( "createwiki", "Database {$newWikiaData[ "dbname"]} exists\n", true );
+			wfDebugLog( "createwiki", "Database {$this->mNewWiki->dbname} exists\n", true );
 			wfProfileOut( __METHOD__ );
 			return self::ERROR_DATABASE_ALREADY_EXISTS;
 		}
 		else {
-			$dbwTarget->query( sprintf( "CREATE DATABASE `%s`", $newWikiaData[ "dbname"] ) );
-			wfDebugLog( "createwiki", "Database {$newWikiaData[ "dbname"]} created\n", true );
+			$this->mNewWiki->dbw->query( sprintf( "CREATE DATABASE `%s`", $this->mNewWiki->dbname ) );
+			wfDebugLog( "createwiki", "Database {$this->mNewWiki->dbname} created\n", true );
 		}
 
 
@@ -180,14 +181,14 @@ class CreateWiki {
 		 * (I like sprintf construction, so sue me)
 		 */
 		$insertFields = array(
-			'city_title'          => $this->mWikiData[ "title" ],
-			'city_dbname'         => $this->mWikiData[ "dbname"],
-			'city_url'            => $this->mWikiData[ "url" ],
-			'city_founding_user'  => $this->mWikiData[ "founder" ],
-			'city_founding_email' => $this->mWikiData[ "founder-email" ],
-			'city_path'           => $this->mWikiData[ "path" ],
-			'city_description'    => $this->mWikiData[ "title" ],
-			'city_lang'           => $this->mWikiData[ "language" ],
+			'city_title'          => $this->mNewWiki->sitename,
+			'city_dbname'         => $this->mNewWiki->dbname,
+			'city_url'            => $this->mNewWiki->url,
+			'city_founding_user'  => $this->mNewWiki->founderId,
+			'city_founding_email' => $this->mNewWiki->founderEmail,
+			'city_path'           => $this->mNewWiki->path,
+			'city_description'    => $this->mNewWiki->sitename,
+			'city_lang'           => $this->mNewWiki->language,
 			'city_created'        => wfTimestamp( TS_DB, time() ),
 		);
 		if( self::ACTIVE_CLUSTER ) {
@@ -195,46 +196,37 @@ class CreateWiki {
 		}
 
 
-		$bIns = $dbw->insert( "city_list", $insertFields, __METHOD__ );
-		if ( empty($bIns) ) {
-			#----
-			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3') );
-			$this->log( "Cannot set data in city_list table" );
-			$wgOut->addHTML(wfMsg('autocreatewiki-step3-error'));
-			return;
-		}
-		/*
-		 * get Wiki ID
-		 */
-		$this->mWikiId = $dbw->insertId();
-		$this->mWikiData[ "city_id" ] = $this->mWikiId;
-
-		if ( empty($this->mWikiId) ) {
-			#----
-			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3') );
-			$this->log( "Empty city_id = {$this->mWikiId}" );
-			$wgOut->addHTML(wfMsg('autocreatewiki-step3-error'));
-			return;
+		$res = $dbw->insert( "city_list", $insertFields, __METHOD__ );
+		if( empty( $res ) ) {
+			wfDebugLog( "createwiki", __METHOD__ .": Cannot set data in city_list table\n", true );
+			return self::ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN;
 		}
 
-		$this->log( "Creating row in city_list table, city_id = {$this->mWikiId}" );
+		// get city id
+		$this->mNewWiki->city_id = $dbw->insertId();
+		if( empty( $this->mNewWiki->city_id ) ) {
+			wfDebugLog( "createwiki", __METHOD__ . ": Cannot set data in city_list table. city_id is empty after insert\n", true );
+			return self::ERROR_DATABASE_WIKI_FACTORY_TABLES_BROKEN;
+		}
+
+		wfDebugLog( "createwiki", __METHOD__ . ": Creating row in city_list table, city_id = {$this->mNewWiki->city_id}\n", true );
 
 		$res = $dbw->insert(
 			"city_domains",
 			array(
 				array(
-					'city_id'     => $this->mWikiId,
+					'city_id'     => $this->mNewWiki->city_id,
 					'city_domain' => $this->mWikiData[ "domain" ]
 				),
 				array(
-					'city_id'     => $this->mWikiId,
+					'city_id'     => $this->mNewWiki->city_id,
 					'city_domain' => sprintf( "www.%s", $this->mWikiData[ "domain" ] )
 				)
 			),
 			__METHOD__
 		);
 
-		if ( empty( $res ) ) {
+		if( empty( $res ) ) {
 			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3') );
 			$this->log( "Cannot set data in city_domains table" );
 			$wgOut->addHTML(wfMsg('autocreatewiki-step3-error'));
@@ -374,7 +366,7 @@ class CreateWiki {
 			}
 			$cmd = sprintf(
 				"SERVER_ID=%d %s %s/maintenance/updateArticleCount.php --update --conf %s",
-				$this->mWikiId,
+				$this->mNewWiki->city_id,
 				$this->mPHPbin,
 				$IP,
 				$wgWikiaLocalSettingsPath
@@ -407,7 +399,7 @@ class CreateWiki {
 		 * add local job
 		 */
 		$localJob = new AutoCreateWikiLocalJob(	Title::newFromText( NS_MAIN, "Main" ), $this->mWikiData );
-		$localJob->WFinsert( $this->mWikiId, $this->mWikiData[ "dbname" ] );
+		$localJob->WFinsert( $this->mNewWiki->city_id, $this->mWikiData[ "dbname" ] );
 
 		/**
 		 * destroy connection to newly created database
@@ -419,7 +411,7 @@ class CreateWiki {
 		 * set hub/category
 		 */
 		$hub = WikiFactoryHub::getInstance();
-		$hub->setCategory( $this->mWikiId, $this->mWikiData[ "hub" ] );
+		$hub->setCategory( $this->mNewWiki->city_id, $this->mWikiData[ "hub" ] );
 		$this->log( "Wiki added to the category hub " . $this->mWikiData[ "hub" ] );
 
 		/**
@@ -446,10 +438,10 @@ class CreateWiki {
 		 */
 		$cmd = sprintf(
 			"SERVER_ID=%d %s %s/maintenance/wikia/moveMain.php -t '%s' --conf %s",
-			$this->mWikiId,
+			$this->mNewWiki->city_id,
 			$this->mPHPbin,
 			$IP,
-			$this->mWikiData[ "title" ],
+			$this->mNewWiki->sitename,
 			$wgWikiaLocalSettingsPath
 		);
 		$output = wfShellExec( $cmd );
@@ -464,7 +456,7 @@ class CreateWiki {
 		$Task = new LocalMaintenanceTask();
 		$Task->createTask(
 			array(
-				"city_id" 	=> $this->mWikiId,
+				"city_id" 	=> $this->mNewWiki->city_id,
 				"command" 	=> "maintenance/runJobs.php",
 				"type" 		=> "ACWLocal",
 				"data" 		=> $this->mWikiData
@@ -575,9 +567,6 @@ class CreateWiki {
 
 		$this->fixSubdomains( $this->mLanguage );
 
-		// founder
-		$this->mNewWiki->founder = $this->mFounder;
-
 		// sitename
 		$fixedTitle = trim( $this->mName );
 		$fixedTitle = preg_replace("/\s+/", " ", $fixedTitle );
@@ -591,57 +580,57 @@ class CreateWiki {
 		$this->mNewWiki->domain = strtolower( trim( $this->mDomain ) );
 
 		// hub
-		$result[ "hub" ] = $this->mHub;
+		$this->mNewWiki->hub = $this->mHub;
 
 		// name
-		$result[ "name" ] = strtolower( trim( $this->mDomain ) );
+		$this->mNewWiki->name = strtolower( trim( $this->mDomain ) );
 
 		switch( $this->mType ) {
 			case "answers":
-				$result[ "sitename" ] = $fixedTitle . " " . $this->mDefSitename;
+				$this->mNewWiki->sitename = $fixedTitle . " " . $this->mDefSitename;
 				break;
 		}
 
-		$result[ "language"   ] = $this->mLanguage;
-		$result[ "subdomain"  ] = $result[ "name"];
-		$result[ "redirect"   ] = $result[ "name"];
+		$this->mNewWiki->language  = $this->mLanguage;
+		$this->mNewWiki->subdomain = $this->mNewWikiname->name;
+		$this->mNewWiki->redirect  = $this->mNewWikiname->name;
 
-		$result[ "path"       ] = "/usr/wikia/docroot/wiki.factory";
+		$this->mNewWiki->path = "/usr/wikia/docroot/wiki.factory";
 
-		$result[ "images_url" ] = $this->prepareDirValue( $result[ "name"], $result[ "language" ] );
-		$result[ "images_dir" ] = sprintf("%s/%s", strtolower( substr( $result[ "name"], 0, 1 ) ), $result[ "images_url" ]);
+		$this->mNewWiki->images_url = $this->prepareDirValue( $this->mNewWiki->name, $this->mNewWiki->language );
+		$this->mNewWiki->images_dir = sprintf("%s/%s", strtolower( substr( $this->mNewWiki->name, 0, 1 ) ), $this->mNewWiki->images_url );
 
-		if ( isset( $result[ "language" ] ) && $result[ "language" ] !== "en" ) {
+		if ( isset( $this->mNewWiki->language ) && $this->mNewWiki->language !== "en" ) {
 			if ( $this->mLangSubdomain ) {
-				$result[ "subdomain"  ]  = strtolower( $result[ "language"] ) . "." . $result[ "name"];
-				$result[ "redirect"   ]  = strtolower( $result[ "language" ] ) . "." . ucfirst( $result[ "name"] );
+				$this->mNewWiki->subdomain  = strtolower( $this->mNewWiki->language ) . "." . $this->mNewWiki->name;
+				$this->mNewWiki->redirect  = strtolower( $this->mNewWiki->language ) . "." . ucfirst( $this->mNewWiki->name );
 			}
-			$result[ "images_url" ] .= "/" . strtolower( $result[ "language" ] );
-			$result[ "images_dir" ] .= "/" . strtolower( $result[ "language" ] );
+			$this->mNewWiki->images_url .= "/" . strtolower( $this->mNewWiki->language );
+			$this->mNewWiki->images_dir .= "/" . strtolower( $this->mNewWiki->language );
 		}
 
 		switch( $this->mType ) {
 			case "answers":
-				$result[ "images_url" ] .= "/" . $this->mType;
-				$result[ "images_dir" ] .= "/" . $this->mType;
+				$this->mNewWiki->images_url .= "/" . $this->mType;
+				$this->mNewWiki->images_dir .= "/" . $this->mType;
 				break;
 		}
 
-		$result[ "images_dir"    ] = self::IMGROOT  . $result[ "images_dir" ] . "/images";
-		$result[ "images_url"    ] = self::IMAGEURL . $result[ "images_url" ] . "/images";
-		$result[ "images_logo"   ] = sprintf("%s/%s", $result[ "images_dir" ], "b/bc" );
-		$result[ "images_icon"   ] = sprintf("%s/%s", $result[ "images_dir" ], "6/64" );
-		$result[ "domain"        ] = sprintf("%s.%s", $result[ "subdomain" ], $this->mDefSubdomain);
-		$result[ "url"           ] = sprintf( "http://%s.%s/", $result[ "subdomain" ], $this->mDefSubdomain );
-		$result[ "dbname"        ] = $this->prepareDatabaseName( $result[ "name"], $this->mLanguage );
-		$result[ "founder-name"  ] = $this->mFounder->getName();
-		$result[ "founder-email" ] = $this->mFounder->getEmail();
-		$result[ "founder"       ] = $this->mFounder->getId();
-		$result[ "type"          ] = $this->mType;
+		$this->mNewWiki->images_dir = self::IMGROOT  . $this->mNewWiki->images_dir . "/images";
+		$this->mNewWiki->images_url = self::IMAGEURL . $this->mNewWiki->images_url . "/images";
+		$this->mNewWiki->images_logo = sprintf("%s/%s", $this->mNewWiki->images_dir, "b/bc" );
+		$this->mNewWiki->images_icon = sprintf("%s/%s", $this->mNewWiki->images_dir, "6/64" );
+		$this->mNewWiki->domain = sprintf("%s.%s", $this->mNewWiki->subdomain, $this->mDefSubdomain);
+		$this->mNewWiki->url = sprintf( "http://%s.%s/", $this->mNewWiki->subdomain, $this->mDefSubdomain );
+		$this->mNewWiki->dbname = $this->prepareDatabaseName( $this->mNewWiki->name, $this->mLanguage );
+		$this->mNewWiki->founderName = $this->mFounder->getName();
+		$this->mNewWiki->founderEmail = $this->mFounder->getEmail();
+		$this->mNewWiki->founderId = $this->mFounder->getId();
+		$this->mNewWiki->type = $this->mType;
 
 		wfProfileOut( __METHOD__ );
 
-		return $result;
+		return $this->mNewWiki;
 	}
 
 	/**
