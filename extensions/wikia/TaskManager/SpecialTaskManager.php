@@ -40,8 +40,10 @@ extAddBatchTask( dirname(__FILE__)."/Tasks/LocalMaintenanceTask.php", "local-mai
 /**
  * permissions
  */
-$wgAvailableRights[] = 'wikifactory';
-$wgGroupPermissions['staff']['wikifactory'] = true;
+$wgAvailableRights[] = 'taskmanager';
+$wgAvailableRights[] = 'taskmanager-action';
+$wgGroupPermissions['staff']['taskmanager'] = true;
+$wgGroupPermissions['staff']['taskmanager-action'] = true;
 
 /**
  * message file
