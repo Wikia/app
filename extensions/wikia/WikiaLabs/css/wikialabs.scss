@@ -106,7 +106,7 @@ $margin-images: 10px;
     				}
     			}
 				.textoff {
-    			   	margin-left: 45px;
+    			   	margin-left: 49px;
     				position: absolute;
     				top: 2px;
     				color: #000;
@@ -122,9 +122,10 @@ $margin-images: 10px;
     				height: 27px;
     				padding: 0;
     				width: 42px;
+    				position: absolute;
+    				z-index: 9999;
     				&.on { 
     					left: 67px;
-    					position: absolute;
     				}
     			}
     		}
@@ -186,9 +187,20 @@ $margin-images: 10px;
 	    margin-bottom: 20px;
     	width: 150px;	
 	}
+	.appScreen {
+		width: 80px;
+		height: 80px;
+	}
 }
 
 .addprjmodal {
+	#errorBox {
+	    background-color: #FFFFCC;
+    	border: 1px solid #AAAAAA;
+    	display: none;
+    	margin: 1em 3em 1em 0;
+    	padding: 6px;
+	}
 	.label {
 	    font-weight: bold;
 		padding-top: 15px;
@@ -226,4 +238,3 @@ $margin-images: 10px;
     	}
 	}
 }
-

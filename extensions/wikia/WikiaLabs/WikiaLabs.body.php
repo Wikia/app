@@ -14,13 +14,16 @@ class WikiaLabsSpecial extends SpecialPage {
 		
 		$this->app->getGlobal('wgOut')->addStyle( $this->app->runFunction( 'wfGetSassUrl' , 'extensions/wikia/WikiaLabs/css/wikialabs.scss' ) );
 
-
 		$oTmpl = WF::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
-		$oTmpl->set_vars( array() );
-
+		$out = WF::build( 'WikiaLabsProject')->getList();
+		
+	
+		$oTmpl->set_vars( array(
+			'projects' => $out
+		));
+		
 		$this->app->getGlobal('wgOut')->addHTML( $oTmpl->render("wikialabs-main") );		
 		$this->app->getGlobal('wgOut')->addScriptFile( $this->app->getGlobal('wgScriptPath')."/extensions/wikia/WikiaLabs/js/main.js" );
-		
 		
 		return ;
 	}

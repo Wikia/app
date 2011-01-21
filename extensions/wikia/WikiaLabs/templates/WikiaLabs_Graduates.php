@@ -1,26 +1,20 @@
 <section class="FormCornerModule module WikiaLabsGraduates">
 	<h1 class='title'>
 		<img src="/extensions/wikia/WikiaLabs/images/graduated.png"/>
-			Graduates of Wikia Labs
+		<?php echo wfMsg( 'wikialabs-graduates-tile' ); ?>	
 	</h1>
 
 <ul>
+	<?php foreach($projects as $value): ?>
 	<li>
-		<img src="/extensions/wikia/PageLayoutBuilder/images/picture-placeholder.png"  class="appScreen"/>
+		<img src="<?php echo $value['prjscreenurl'] ?>"  class="appScreen"/>
 		<div>
-		<a class='title'> uuuuiuuiui uuij</a>
-		hhjhh hjhjhhh hjhjhjh hjhjhh hjjhhjh hjjhhjjh hjhjhj hjhhjhj hjjhhjhj hjjhhjh hjhjhjh jhjhh hhhhjhj hjhjhh hjjhh hjhjhhjjh
+		<a class='title' href="<?php echo $value['link']; ?>" ><?php echo $value['name']; ?></a>
+		<?php echo $value['description'] ?>
 		
 		</div>
 	</li>
-	<li>
-		<img src="/extensions/wikia/PageLayoutBuilder/images/picture-placeholder.png"  class="appScreen"/>
-		<div>
-		<a class='title'> uuuuiuuiui uuij</a>
-		hhjhh hjhjhhh hjhjhjh hjhjhh hjjhhjh hjjhhjjh hjhjhj hjhhjhj hjjhhjhj hjjhhjh hjhjhjh jhjhh hhhhjhj hjhjhh hjjhh hjhjhhjjh
-		
-		</div>
-	</li>
+	<?php endforeach; ?>
 </ul>
 
 
