@@ -22,15 +22,37 @@ $messages['qqq'] = array(
  */
 $messages['br'] = array(
 	'performancestat-total' => 'Hollad : $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
 );
 
 /** Spanish (Español)
  * @author Bola
+ * @author VegaDark
  */
 $messages['es'] = array(
+	'showperformancestats-desc' => 'Devuelve estadísticas humanas legibles de rendimiento',
 	'performancestat-total' => 'Total: $1s',
 	'performancestat-apache' => 'Apache: $1s',
 	'performancestat-cpu' => 'CPU: $1s',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'showperformancestats-desc' => 'Retorna statisticas ben legibile sur le rendimento del systema',
+	'performancestat-total' => 'Total: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'performancestat-total' => 'Total: $1 s',
+	'performancestat-cpu' => 'CPU: $1 s',
 );
 
 /** Macedonian (Македонски)

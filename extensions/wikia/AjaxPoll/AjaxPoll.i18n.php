@@ -416,6 +416,18 @@ $messages['sr-ec'] = array(
 	'ajaxpoll-submitting' => 'Сачекајте, шаљемо ваш глас...',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'ajaxpoll-thankyou' => 'Tack för din röst!',
+	'ajaxpoll-error' => 'Det uppstod ett problem med bearbetningen av din röst, var god försök igen.',
+	'ajaxpoll-summary' => 'Röstningen skapades den $1 på $2, och hittills har $3 personer röstat.',
+	'ajaxpoll-submit' => 'Rösta!',
+	'ajaxpoll-closed' => 'Röstningen är nu stängd. Njut av resultaten.',
+	'ajaxpoll-submitting' => 'Du skickar in din röst, var god vänta...',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

@@ -861,6 +861,14 @@ $messages['kn'] = array(
 	'rte-ck-templateDropDown-label' => 'ಟೆಂಪ್ಲೇಟು',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'rte-ck-errorPopupTitle' => 'Çewtî!',
+	'rte-ck-signature-label' => 'Îmze',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

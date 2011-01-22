@@ -147,7 +147,7 @@ You can reorder or delete tools in the field below.
 $messages['qqq'] = array(
 	'oasis-home' => "This refers to the wiki's main page title shown on the top of the page.",
 	'oasis-related-video-by-5min' => '"5min Video" is a web site name. See http://www.5min.com/',
-	'oasis-latest-photos-by' => 'Should probably have paramters.',
+	'oasis-latest-photos-by' => 'Should probably have parameters.',
 	'oasis-latest-photos-posted-in' => 'Needs parameter?',
 	'oasis-page-header-edited-by' => '* $1 is the time span since the last edit of the page, eg. "3 days ago"
 * $2 is the username of the last editor',
@@ -183,9 +183,24 @@ Parameters:
 * $1 the name of the wiki
 Example:
 * X Pages on Translatewiki',
+	'oasis-latest-activity-new-details' => 'Parameters:
+* $1 is a username
+* $2 is a point in time
+
+Example output: created by Avatar 3 hours ago',
+	'oasis-latest-activity-edit-details' => 'Parameters:
+* $1 is a username
+* $2 is a point in time
+
+Example output: edited by Avatar 3 hours ago',
+	'oasis-latest-activity-delete-details' => 'Parameters:
+* $1 is a username
+* $2 is a point in time
+
+Example output: deleted by Avatar 3 hours ago',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -292,9 +307,9 @@ Adurzhiañ pe diverkañ an ostilhoù a c'hallit er vaezienn a-is.
 	'oasis-spotlights-footer-title' => 'En-dro da rouedad Wikia',
 	'themedesigner' => 'Empenner an tem',
 	'oasis-pages-on-wiki-header' => 'Pajennoù war $1',
-	'oasis-latest-activity-new' => 'krouet eo bet $1 gant $2',
-	'oasis-latest-activity-edit' => 'kemmet eo bet $1 gant $2',
-	'oasis-latest-activity-delete' => 'diverket eo bet $1 gant $2',
+	'oasis-latest-activity-new-details' => 'krouet gant $1 $2',
+	'oasis-latest-activity-edit-details' => 'embannet gant $1 $2',
+	'oasis-latest-activity-delete-details' => 'dilamet gant $1 $2',
 	'oasis-interlang-show-all' => '... gwelet pep tra >',
 	'oasis-interlang-languages' => 'Yezhoù :',
 	'imageseo-featured-on' => 'Embannet war talbenn :',
@@ -303,7 +318,8 @@ Adurzhiañ pe diverkañ an ostilhoù a c'hallit er vaezienn a-is.
 <p>N\'hallit ket degas kemmoù war ar bajenn-mañ evit ar mare. Dleout a rafemp mont en-dro adarre a-raok pell. Setu ar pezh a c\'hoarvez :<br /><em>$1</em></p>
 <p>Sellit ouzh <a href="http://twitter.com/wikia">Twitter</a> pe <a href="http://facebook.com/wikia">Facebook</a> evit gouzout hiroc\'h.</p>',
 	'oasis-upload-photos-title' => 'Enporzhiañ ur skeudenn war ar wiki',
-	'oasis-upload-photos-advanced' => 'Dibarzhioù araokaet',
+	'oasis-upload-photos-more-options' => 'Dibarzhioù ouzhpenn',
+	'oasis-upload-photos-fewer-options' => "Nebeutoc'h a zibarzhioù",
 	'oasis-upload-photos-force' => 'Enporzhiañ memes tra',
 );
 
@@ -438,9 +454,6 @@ $messages['es'] = array(
 	'oasis-spotlights-footer-title' => 'Más wikis de Wikia',
 	'themedesigner' => 'Diseñador',
 	'oasis-pages-on-wiki-header' => 'Páginas en $1',
-	'oasis-latest-activity-new' => '$1 creó $2',
-	'oasis-latest-activity-edit' => '$1 editó $2',
-	'oasis-latest-activity-delete' => '$1 borró $2',
 	'oasis-interlang-show-all' => '... ver todo >',
 	'oasis-interlang-languages' => 'Idiomas:',
 	'imageseo-featured-on' => 'Utilizado en:',
@@ -449,7 +462,6 @@ $messages['es'] = array(
 <p>No puedes editar esta página por el momento. Estaremos de vuelta en breve. Aquí tienes lo que ocurre:<br /><em>$1</em></p>
 <p>Por favor, revisa en <a href="http://twitter.com/wikia">Twitter</a> o en <a href="http://facebook.com/wikia">Facebook</a> para más información.</p>',
 	'oasis-upload-photos-title' => 'Subir una imagen a la Wiki',
-	'oasis-upload-photos-advanced' => 'Opciones avanzadas',
 	'oasis-upload-photos-force' => 'Subir igualmente',
 );
 
@@ -532,7 +544,7 @@ $messages['fr'] = array(
 	'oasis-page-header-subtitle-special-wikiactivity' => "Voir toute l'activité >",
 	'oasis-search-results-from' => 'Affichage des résultats de : $1',
 	'oasis-user-page-change-avatar' => 'Changer d’avatar',
-	'oasis-content-picture-added-by' => 'Ajouté par $1',
+	'oasis-content-picture-added-by' => 'Ajoutée par $1',
 	'oasis-confirmation-page-deleted' => '« $1 » a été supprimé. ([[Special:Undelete/$1|rétablir]])',
 	'oasis-confirmation-comment-deleted' => 'Le commentaire a été supprimé.',
 	'oasis-confirmation-page-undeleted' => 'Cette page a été restaurée.',
@@ -567,9 +579,6 @@ Vous pouvez réordonner ou supprimer des outils dans le champ ci-dessous.
 	'oasis-spotlights-footer-title' => 'Autour du réseau de Wikia',
 	'themedesigner' => 'Concepteur de thème',
 	'oasis-pages-on-wiki-header' => 'Pages sur $1',
-	'oasis-latest-activity-new' => '$1 a créé $2',
-	'oasis-latest-activity-edit' => '$1 a modifié $2',
-	'oasis-latest-activity-delete' => '$1 a supprimé $2',
 	'oasis-interlang-show-all' => '... tout voir >',
 	'oasis-interlang-languages' => 'Langues :',
 	'imageseo-featured-on' => 'Paru à la une de :',
@@ -578,7 +587,6 @@ Vous pouvez réordonner ou supprimer des outils dans le champ ci-dessous.
 <p>Vous ne pouvez pas modifier cette page pour le moment. Nous devrions être de nouveau disponibles prochainement. Voici ce qui se passe :<br /><em>$1</em></p>
 <p>Veuillez consulter <a href="http://twitter.com/wikia">Twitter</a> ou <a href="http://facebook.com/wikia">Facebook</a> pour plus d’informations.</p>',
 	'oasis-upload-photos-title' => 'Importer une photo sur le wiki',
-	'oasis-upload-photos-advanced' => 'Options avancées',
 	'oasis-upload-photos-force' => 'Envoyer malgré tout',
 );
 
@@ -619,6 +627,107 @@ $messages['gl'] = array(
 	'oasis-page-header-subtitle-category' => 'Páxina de categoría',
 	'oasis-page-header-subtitle-forum' => 'Páxina de foro',
 	'themedesigner' => 'Deseñador de temas visuais',
+);
+
+/** Hebrew (עברית)
+ * @author שומבלע
+ */
+$messages['he'] = array(
+	'oasis-home' => 'דף הבית',
+	'oasis-more' => 'עוד >',
+	'oasis-mytools' => 'הכלים שלי',
+	'oasis-follow' => 'מעקב',
+	'oasis-share' => 'שיתוף',
+	'oasis-like' => 'אהבתי',
+	'oasis-edit-protected-article' => 'כניסה כדי לערוך',
+	'oasis-button-random-page' => 'דף אקראי',
+	'oasis-button-random-wiki' => 'ויקי אקראית',
+	'oasis-button-wiki-activity' => 'פעילות ויקי',
+	'oasis-button-wiki-activity-feed' => 'כל הפעילות >',
+	'oasis-button-wiki-activity-watchlist' => 'מעקב דפים בלבד',
+	'oasis-activity-watchlist-login' => 'נדרשת התחברות כדי לצפות ברשימת המעקב.',
+	'oasis-activity-header' => 'פעילות ויקי אחרונה',
+	'oasis-related-video-header' => 'סרטוני וידאו קשורים',
+	'oasis-related-video-by-5min' => 'על ידי 5min',
+	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|דף באתר זה|דפים באתר זה}}</span>',
+	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|תמונה באתר זה|תמונות באתר זה}}</span>',
+	'oasis-latest-photos-more' => 'עוד >',
+	'oasis-latest-photos-inner-message' => 'כל התמונות',
+	'oasis-latest-photos-empty' => 'כל אחד יכול לעזור לאתר זה להראות טוב <br /> <span>הוספת תמונה!</span>',
+	'oasis-latest-photos-by' => 'על ידי',
+	'oasis-latest-photos-posted-in' => 'פורסם ב',
+	'oasis-latest-photos-more-dotdotdot' => 'עוד...',
+	'oasis-global-nav-create-wiki' => 'התחלת ויקי',
+	'oasis-page-header-no-comments-tooltip' => 'להתחיל שיחה על דף זה',
+	'oasis-page-header-comments' => '{{PLURAL:$1|הערה|הערות}}',
+	'oasis-page-header-comments-k' => '$1k',
+	'oasis-page-header-comments-m' => '$1M',
+	'oasis-page-header-talk' => 'שיחה',
+	'oasis-page-header-edited-by' => 'עריכת $1 על ידי $2',
+	'oasis-page-header-edited' => 'עריכת $1',
+	'oasis-page-header-read-more' => 'קריאה נוספת: $1',
+	'oasis-page-header-history-link' => 'הצגת היסטוריה מלאה',
+	'oasis-page-header-back-to-article' => 'חזרה לדף',
+	'oasis-page-header-back-to-template' => 'חזרה לתבנית',
+	'oasis-page-header-back-to-mediawiki' => 'חזרה לדף מדיה-ויקי',
+	'oasis-page-header-back-to-category' => 'חזרה לקטגוריה',
+	'oasis-page-header-back-to-file' => 'חזרה לקובץ',
+	'oasis-page-header-back-to-video' => 'חזרה לסרטון',
+	'oasis-page-header-add-topic' => 'הוספת נושא',
+	'oasis-page-header-edit-profile' => 'עריכת פרופיל',
+	'oasis-page-header-editing' => '<strong>עריכה:</strong> $1',
+	'oasis-page-header-editing-section' => '<strong>עריכה:</strong> $1 (פסקה)',
+	'oasis-page-header-preview' => '<strong>תצוגה מקדימה:</strong> $1',
+	'oasis-page-header-changes' => '<strong>שינויים:</strong> $1',
+	'oasis-page-header-diff' => '<strong>שינויים:</strong> $1',
+	'oasis-page-header-history' => '<strong>היסטוריה:</strong> $1',
+	'oasis-anon-header' => 'תןרם אנונימי <small>$1</small>',
+	'oasis-preview-confirmation' => 'מצב תצוגה מקדימה: לא נשמרו אף שינויים עדיין! יש לגלול כלפי מטה כדי להמשיך בעריכה.',
+	'oasis-page-header-subtitle-mediawiki' => 'דף מדיה-ויקי',
+	'oasis-page-header-subtitle-special' => 'דף מיוחד',
+	'oasis-page-header-subtitle-template' => 'דף תבנית',
+	'oasis-page-header-subtitle-category' => 'דף קטגוריה',
+	'oasis-page-header-subtitle-forum' => 'דף פורום',
+	'oasis-page-header-subtitle-special-wikiactivity' => 'כל הפעילות >',
+	'oasis-search-results-from' => 'מציג תוצאות מ: $1',
+	'oasis-user-page-change-avatar' => 'שינוי תמונת פרופיל',
+	'oasis-content-picture-added-by' => 'נוסף על ידי $1',
+	'oasis-confirmation-page-deleted' => '"$1" נמחק. ([[Special:Undelete/$1|ביטול מחיקה]])',
+	'oasis-confirmation-comment-deleted' => 'ההערה נמחקה.',
+	'oasis-confirmation-page-undeleted' => 'דף זה שוחזר.',
+	'oasis-confirmation-user-logout' => 'התנתקת מהחשבון.',
+	'oasis-notification-youhavenewmessages' => 'יש לך $1.',
+	'oasis-member-since' => 'חבר מאז 1$',
+	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|edit|edits}} על ידי </sup>',
+	'oasis-edit-my-tools-link' => 'עריכת הכלים שלי',
+	'oasis-edit-my-tools-title' => 'עריכת הכלים שלי',
+	'oasis-edit-my-tools-addtool' => 'הוספת כלי',
+	'oasis-edit-my-tools-list' => 'רשימת כלים',
+	'oasis-edit-my-tools-save' => 'שמירה',
+	'oasis-edit-my-tools-about' => 'אודות הכלים שלי',
+	'oasis-edit-my-tools-desc' => 'הוספת כלים מתקדמים לסרגל הכלים שלך על ידי הקלדת שם הכלי בשדה הטקסט. 
+ ניתן לסדר מחדש או למחוק כלים בשדה למטה. 
+
+[[Help:MyTools|רשימת כלי ויקי מתקדמים >]]',
+	'oasis-comments-header' => '{{PLURAL:$1|הערה|הערות}}',
+	'oasis-comments-showing-most-recent' => 'מציג $1 אחרונים',
+	'oasis-comments-anonymous-prompt' => 'משתמש אנונימי<br /> <a href="#">להתחבר?</a>',
+	'oasis-comments-show-all' => 'הצג הכל',
+	'oasis-comments-added-by' => '$1 על ידי $2',
+	'oasis-random-wiki' => 'ויקי אקראית',
+	'oasis-add-photo' => 'הוספת תמונה',
+	'oasis-anon-user' => 'תורם Wikia',
+	'oasis-add-page' => 'הוספת דף',
+	'oasis-section-edit' => 'עריכה',
+	'oasis-section-edit-alt' => 'עריכת $1 (פסקה)',
+	'oasis-spotlights-rail-title' => 'יותר מ',
+	'oasis-spotlights-footer-title' => 'ברחבי אתר Wikia',
+	'themedesigner' => 'מעצב ערכת נושא',
+	'oasis-interlang-show-all' => '...הכל >',
+	'oasis-interlang-languages' => 'שפות:',
+	'imageseo-featured-more' => 'עוד...',
+	'oasis-upload-photos-title' => 'העלאת תמונות לאתר',
+	'oasis-upload-photos-force' => 'העלאה בכל מקרה',
 );
 
 /** Interlingua (Interlingua)
@@ -721,9 +830,9 @@ Tu pote reordinar o remover instrumentos in le campo hic infra.
 	'oasis-spotlights-footer-title' => 'Circa le rete de Wikia',
 	'themedesigner' => 'Designator de apparentias',
 	'oasis-pages-on-wiki-header' => 'Paginas sur $1',
-	'oasis-latest-activity-new' => '$1 creava $2',
-	'oasis-latest-activity-edit' => '$1 modificava $2',
-	'oasis-latest-activity-delete' => '$1 deleva $2',
+	'oasis-latest-activity-new-details' => 'create per $1 $2',
+	'oasis-latest-activity-edit-details' => 'modificate per $1 $2',
+	'oasis-latest-activity-delete-details' => 'delite per $1 $2',
 	'oasis-interlang-show-all' => '... vider totes >',
 	'oasis-interlang-languages' => 'Linguas:',
 	'imageseo-featured-on' => 'In evidentia sur:',
@@ -732,8 +841,10 @@ Tu pote reordinar o remover instrumentos in le campo hic infra.
 <p>Tu non pote modificar iste articulo al momento; iste problema essera probabilemente remediate tosto. Ecce lo que occurre:<br /><em>$1</em></p>
 <p>Per favor reguarda <a href="http://twitter.com/wikia">Twitter</a> o <a href="http://facebook.com/wikia">Facebook</a> pro plus informationes.</p>',
 	'oasis-upload-photos-title' => 'Incargar un photo al wiki',
-	'oasis-upload-photos-advanced' => 'Optiones avantiate',
+	'oasis-upload-photos-more-options' => 'Plus optiones',
+	'oasis-upload-photos-fewer-options' => 'Minus optiones',
 	'oasis-upload-photos-force' => 'Incargar totevia',
+	'oasis-upload-photos-caption' => 'Legenda',
 );
 
 /** Japanese (日本語) */
@@ -824,9 +935,6 @@ $messages['ja'] = array(
 	'oasis-spotlights-rail-title' => 'ウィキアスポットライト',
 	'oasis-spotlights-footer-title' => 'ウィキアネットワーク',
 	'themedesigner' => 'テーマデザイナ',
-	'oasis-latest-activity-new' => '$1 による作成: $2',
-	'oasis-latest-activity-edit' => '$1 による編集: $2',
-	'oasis-latest-activity-delete' => '$1 による削除: $2',
 	'oasis-interlang-show-all' => '全て表示 >',
 	'oasis-interlang-languages' => '他の言語:',
 );
@@ -836,6 +944,16 @@ $messages['ko'] = array(
 	'oasis-editpage-readonlywarning' => '<h2>죄송합니다!</h2>
 <p>지금 이 문서를 편집하실 수 없습니다. 잠시 후에 다시 시도해주세요. 지금 일어나는 상황에 대해서는 다음을 참고하세요:<br /><em>$1</em></p>
 <p>위키아의 <a href="http://twitter.com/wikia">트위터</a>나 <a href="http://facebook.com/wikia">페이스북</a>을 확인하시면 서버에 상태에 대한 정보를 더 얻으실 수 있습니다.</P>',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'oasis-home' => 'Mal',
+	'oasis-page-header-subtitle-special' => 'Rûpela taybet',
+	'oasis-page-header-subtitle-category' => 'Rûpela kategoriyê',
+	'oasis-interlang-languages' => 'Zimanan:',
 );
 
 /** Macedonian (Македонски)
@@ -938,9 +1056,9 @@ $messages['mk'] = array(
 	'oasis-spotlights-footer-title' => 'Низ мрежата на Викија',
 	'themedesigner' => 'Ликовен уредник',
 	'oasis-pages-on-wiki-header' => 'Страници $1',
-	'oasis-latest-activity-new' => '$1 го создаде $2',
-	'oasis-latest-activity-edit' => '$1 го уреди $2',
-	'oasis-latest-activity-delete' => '$1 го избриша $2',
+	'oasis-latest-activity-new-details' => 'создадено од $1 $2',
+	'oasis-latest-activity-edit-details' => 'уредено од $1 $2',
+	'oasis-latest-activity-delete-details' => 'избришано од $1 $2',
 	'oasis-interlang-show-all' => '... сите >',
 	'oasis-interlang-languages' => 'Јазици',
 	'imageseo-featured-on' => 'Истакната на:',
@@ -949,8 +1067,13 @@ $messages['mk'] = array(
 <p>Моментално не можете да создадете сметка - но би требало набргу да проработиме. Еве што се случува:<br /><em>$1</em></p>
 <p>За повеќе информации, погледајте на <a href="http://twitter.com/wikia">Twitter</a> или <a href="http://facebook.com/wikia">Facebook</a>.',
 	'oasis-upload-photos-title' => 'Подигни слика на викито',
-	'oasis-upload-photos-advanced' => 'Напредни нагодувања',
+	'oasis-upload-photos-more-options' => 'Повеќе можности',
+	'oasis-upload-photos-fewer-options' => 'Помалку можности',
 	'oasis-upload-photos-force' => 'Сепак подигни',
+	'oasis-upload-photos-caption' => 'Опис',
+	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
+	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming',
+	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle',
 );
 
 /** Dutch (Nederlands)
@@ -1053,9 +1176,9 @@ U kunt hulpmiddelen verwijderen of ordenen in het veld hieronder.
 	'oasis-spotlights-footer-title' => 'Rond het netwerk van Wikia',
 	'themedesigner' => 'Thema ontwerpen',
 	'oasis-pages-on-wiki-header' => "Pagina's op $1",
-	'oasis-latest-activity-new' => '$1 heeft $2 aangemaakt',
-	'oasis-latest-activity-edit' => '$1 heeft $2 bewerkt',
-	'oasis-latest-activity-delete' => '$1 heeft $2 bewerkt',
+	'oasis-latest-activity-new-details' => 'aangemaakt door $1 $2',
+	'oasis-latest-activity-edit-details' => 'bewerkt door $1 $2',
+	'oasis-latest-activity-delete-details' => 'verwijderd door $1 $2',
 	'oasis-interlang-show-all' => '... allemaal bekijken >',
 	'oasis-interlang-languages' => 'Talen:',
 	'imageseo-featured-on' => 'Uitgelicht op:',
@@ -1064,11 +1187,13 @@ U kunt hulpmiddelen verwijderen of ordenen in het veld hieronder.
 <p>U kunt deze pagina op dit moment niet bewerken. Deze storing is waarschijnlijk snel verholpen. Dit is er aan de hand<br /><em>$1</em></p>
 <p>Kijk op <a href="http://twitter.com/wikia">Twitter</a> of <a href="http://facebook.com/wikia">Facebook</a> voor meer informatie.</p>',
 	'oasis-upload-photos-title' => 'Een foto naar de wiki uploaden',
-	'oasis-upload-photos-advanced' => 'Gevorderde instellingen',
+	'oasis-upload-photos-more-options' => 'Meer instellingen',
+	'oasis-upload-photos-fewer-options' => 'Minder instellingen',
 	'oasis-upload-photos-force' => 'Toch uploaden',
+	'oasis-upload-photos-caption' => 'Bijschrift',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
 $messages['no'] = array(
@@ -1168,9 +1293,9 @@ Du kan omorganisere eller slette verktøy i feltet under.
 	'oasis-spotlights-footer-title' => 'Rundt Wikias nettverk',
 	'themedesigner' => 'Temautformer',
 	'oasis-pages-on-wiki-header' => 'Sider på $1',
-	'oasis-latest-activity-new' => '$1 opprettet $2',
-	'oasis-latest-activity-edit' => '$1 redigerte $2',
-	'oasis-latest-activity-delete' => '$1 slettet $2',
+	'oasis-latest-activity-new-details' => 'opprettet av $1 for $2',
+	'oasis-latest-activity-edit-details' => 'redigert av $1 for $2',
+	'oasis-latest-activity-delete-details' => 'slettet av $1 for $2',
 	'oasis-interlang-show-all' => '... se alle >',
 	'oasis-interlang-languages' => 'Språk:',
 	'imageseo-featured-on' => 'Utvalgt fra:',
@@ -1179,7 +1304,6 @@ Du kan omorganisere eller slette verktøy i feltet under.
 <p>Du kan ikke redigere denne artikkelen for øyeblikket - vi burde være oppegående igjen om kort tid. Dette er hva som skjer:<br /><em>$1</em></p>
 <p>Vennligst sjekk ut <a href="http://twitter.com/wikia">Twitter</a> eller <a href="http://facebook.com/wikia">Facebook</a> for mer informasjon.</p>',
 	'oasis-upload-photos-title' => 'Last opp et bilde til wikien',
-	'oasis-upload-photos-advanced' => 'Avanserte alternativer',
 	'oasis-upload-photos-force' => 'Last opp allikevel',
 );
 
@@ -1281,9 +1405,6 @@ Możesz uporządkować lub usunąć dodane narzędzia w poniższym polu.
 	'oasis-spotlights-footer-title' => 'O sieci Wikii',
 	'themedesigner' => 'Kreator motywu',
 	'oasis-pages-on-wiki-header' => 'Strony na $1',
-	'oasis-latest-activity-new' => '$1 utworzył $2',
-	'oasis-latest-activity-edit' => '$1 edytował $2',
-	'oasis-latest-activity-delete' => '$1 usunął $2',
 	'oasis-interlang-show-all' => '... zobacz wszystkie >',
 	'oasis-interlang-languages' => 'Języki:',
 	'imageseo-featured-on' => 'Użyto w:',
@@ -1292,7 +1413,6 @@ Możesz uporządkować lub usunąć dodane narzędzia w poniższym polu.
 <p>Chwilowo nie możesz edytować tej strony. Wkrótce wszystko ponownie wrócić do normy. Przyczyna problemów:<br /><em>$1</em></p>
 <p>Więcej informacji odnajdziesz na stronach <a href="http://twitter.com/wikia">Twittera</a> lub <a href="http://facebook.com/wikia">Facebooka</a>.</p>',
 	'oasis-upload-photos-title' => 'Prześlij grafikę na tę wiki',
-	'oasis-upload-photos-advanced' => 'Zaawansowane opcje',
 	'oasis-upload-photos-force' => 'Prześlij mimo wszystko',
 );
 
@@ -1435,9 +1555,9 @@ $messages['pt'] = array(
 	'oasis-spotlights-footer-title' => 'Rede da Wikia',
 	'themedesigner' => 'Variantes do Tema',
 	'oasis-pages-on-wiki-header' => 'Páginas na $1',
-	'oasis-latest-activity-new' => '$1 criou $2',
-	'oasis-latest-activity-edit' => '$1 editou $2',
-	'oasis-latest-activity-delete' => '$1 eliminou $2',
+	'oasis-latest-activity-new-details' => 'criada por $1 $2',
+	'oasis-latest-activity-edit-details' => 'editada por $1 $2',
+	'oasis-latest-activity-delete-details' => 'eliminada por $1 $2',
 	'oasis-interlang-show-all' => '... ver todas >',
 	'oasis-interlang-languages' => 'Línguas:',
 	'imageseo-featured-on' => 'Usada em:',
@@ -1446,8 +1566,10 @@ $messages['pt'] = array(
 <p>Não pode editar esta página nesta altura. Voltaremos a estar operacionais em breve. O que está a acontecer é o seguinte:<br /><em>$1</em></p>
 <p>Verifique o <a href="http://twitter.com/wikia">Twitter</a> ou o <a href="http://facebook.com/wikia">Facebook</a> para obter mais informações, por favor.</p>',
 	'oasis-upload-photos-title' => 'Fazer upload de uma Foto',
-	'oasis-upload-photos-advanced' => 'Opções avançadas',
+	'oasis-upload-photos-more-options' => 'Mais Opções',
+	'oasis-upload-photos-fewer-options' => 'Menos Opções',
 	'oasis-upload-photos-force' => 'Enviar à mesma',
+	'oasis-upload-photos-caption' => 'Legenda',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -1548,9 +1670,6 @@ $messages['pt-br'] = array(
 	'oasis-spotlights-footer-title' => 'Mais da comunidade Wikia',
 	'themedesigner' => 'Compositor de Temas Visuais',
 	'oasis-pages-on-wiki-header' => 'Páginas na $1',
-	'oasis-latest-activity-new' => '$1 criou $2',
-	'oasis-latest-activity-edit' => '$1 modificou $2',
-	'oasis-latest-activity-delete' => '$1 deletou $2',
 	'oasis-interlang-show-all' => '... ver tudo >',
 	'oasis-interlang-languages' => 'Línguas:',
 	'imageseo-featured-on' => 'Destaque em:',
@@ -1559,7 +1678,6 @@ $messages['pt-br'] = array(
 <p>Você não pode editar essa página no momento. Nós devemos estar de volta brevemente. Aqui o que está acontecendo:<br /><em>$1</em></p>
 <p>Por favor verifique nosso <a href="http://twitter.com/wikia">Twitter</a> ou o <a href="http://facebook.com/wikia">Facebook</a> para mais informações.</p>',
 	'oasis-upload-photos-title' => 'Carregar uma foto para a Wiki',
-	'oasis-upload-photos-advanced' => 'Opções avançadas',
 	'oasis-upload-photos-force' => 'Carregar mesmo assim',
 );
 
@@ -1630,14 +1748,58 @@ $messages['ru'] = array(
 	'oasis-spotlights-footer-title' => 'Сеть Викиа',
 	'themedesigner' => 'Конструктор тем',
 	'oasis-pages-on-wiki-header' => 'Страницы на $1',
-	'oasis-latest-activity-new' => '$1 создал $2',
-	'oasis-latest-activity-edit' => '$1 отредактировал $2',
-	'oasis-latest-activity-delete' => '$1 удалил $2',
 	'oasis-interlang-show-all' => '... см. все >',
 	'oasis-interlang-languages' => 'Языки:',
 	'imageseo-featured-more' => 'больше ...',
-	'oasis-upload-photos-advanced' => 'Дополнительные настройки',
 	'oasis-upload-photos-force' => 'Загрузить всё равно',
+);
+
+/** Swedish (Svenska)
+ * @author Avatar
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'oasis-home' => 'Hem',
+	'oasis-more' => 'Se mer >',
+	'oasis-mytools' => 'Mina Verktyg',
+	'oasis-follow' => 'Följ',
+	'oasis-share' => 'Dela',
+	'oasis-like' => 'Gilla',
+	'oasis-edit-protected-article' => 'Logga in för att redigera',
+	'oasis-button-random-page' => 'Slumpmässig sida',
+	'oasis-button-random-wiki' => 'Slumpmässig Wiki',
+	'oasis-button-wiki-activity' => 'Wiki Aktivitet',
+	'oasis-button-wiki-activity-feed' => 'Se all aktivitet >',
+	'oasis-button-wiki-activity-watchlist' => 'endast Bevakade Sidor',
+	'oasis-activity-watchlist-login' => 'Du måste logga in för att se dina bevakade sidor.',
+	'oasis-activity-header' => 'Senaste Wiki-aktivitet',
+	'oasis-related-video-header' => 'Relaterade Videor',
+	'oasis-related-video-by-5min' => 'av 5min Video',
+	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|sida på denna wiki|sidor på denna wiki}}</span>',
+	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|foto på denna wiki|foton på denna wiki}}</span>',
+	'oasis-latest-photos-more' => 'Se mer >',
+	'oasis-latest-photos-inner-message' => 'Se alla bilder',
+	'oasis-latest-photos-by' => 'av',
+	'oasis-latest-photos-more-dotdotdot' => 'mer...',
+	'oasis-page-header-talk' => 'Diskutera',
+	'oasis-page-header-read-more' => 'Läs mer: $1',
+	'oasis-page-header-back-to-article' => 'Tillbaka till sidan',
+	'oasis-page-header-back-to-template' => 'Tillbaka till mall',
+	'oasis-page-header-back-to-mediawiki' => 'Tillbaka till MediaWiki-sidan',
+	'oasis-page-header-back-to-category' => 'Tillbaka till Kategorin',
+	'oasis-page-header-back-to-file' => 'Tillbaka till Fil',
+	'oasis-page-header-back-to-video' => 'Tillbaka till Video',
+	'oasis-page-header-add-topic' => 'Nytt ämne',
+	'oasis-page-header-edit-profile' => 'Redigera profil',
+	'oasis-member-since' => 'Medlem sedan $1',
+	'oasis-edit-my-tools-save' => 'Spara',
+	'oasis-add-photo' => 'Lägg till ett foto',
+	'oasis-add-page' => 'Lägg till sida',
+	'oasis-section-edit' => 'Redigera',
+	'oasis-interlang-languages' => 'Språk:',
+	'oasis-editpage-readonlywarning' => '<h2>Tyvärr!</h2>
+<p>Du kan inte redigera den här sidan för tillfället. Vi borde vara igång igen inom kort. Detta är vad som händer:<br /><em>$1</em></p>
+<p>Vänligen kontrollera <a href="http://twitter.com/wikia">Twitter</a> eller <a href="http://facebook.com/wikia">Facebook</a> för mer information.</p>',
 );
 
 /** Tagalog (Tagalog)
@@ -1721,17 +1883,13 @@ $messages['uk'] = array(
 	'oasis-spotlights-rail-title' => 'Більше з',
 	'themedesigner' => 'Конструктор тем',
 	'oasis-pages-on-wiki-header' => 'Сторінок на $1',
-	'oasis-latest-activity-new' => '$1 створив $2',
-	'oasis-latest-activity-edit' => '$1 відредагував $2',
-	'oasis-latest-activity-delete' => '$1 вилучив $2',
 	'oasis-interlang-show-all' => '... переглянути всі >',
 	'oasis-interlang-languages' => 'Мови:',
 	'imageseo-featured-more' => 'більше...',
 	'oasis-upload-photos-title' => 'Завантажити фото до вікі',
-	'oasis-upload-photos-advanced' => 'Додаткові параметри',
 );
 
-/** Traditional Chinese (中文(繁體))
+/** Traditional Chinese (‪中文(繁體)‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
@@ -1769,8 +1927,9 @@ $messages['zh-hant'] = array(
 	'oasis-interlang-languages' => '其他語言',
 );
 
-/** Chinese (Taiwan) (中文(台灣))
+/** Chinese (Taiwan) (‪中文(台灣)‬)
  * @author Ffaarr
+ * @author Mark85296341
  */
 $messages['zh-tw'] = array(
 	'oasis-home' => '首頁',
@@ -1827,7 +1986,7 @@ $messages['zh-tw'] = array(
 	'oasis-edit-my-tools-title' => '編輯我的工具',
 	'oasis-edit-my-tools-addtool' => '新增工具',
 	'oasis-edit-my-tools-list' => '工具清單',
-	'oasis-edit-my-tools-save' => '保存',
+	'oasis-edit-my-tools-save' => '儲存',
 	'oasis-edit-my-tools-about' => '關於我的工具',
 	'oasis-comments-show-all' => '顯示全部',
 	'oasis-random-wiki' => '隨機wiki',

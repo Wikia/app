@@ -216,7 +216,7 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-upload-findbutton' => '{{Identical|Find}}',
 	'wikiaPhotoGallery-upload-page-next' => '{{Identical|Next}}',
 	'wikiaPhotoGallery-upload-page-prev' => '{{Identical|Previous}}',
-	'wikiaPhotoGallery-upload-error-title' => ' "Error" but successful? Maybe "could not be completed" is meant?',
+	'wikiaPhotoGallery-upload-error-title' => '"Error" but successful? Maybe "could not be completed" is meant?',
 	'wikiaPhotoGallery-upload-error-conflict-insert' => '{{Identical|Insert}}',
 	'wikiaPhotoGallery-upload-select-images' => '{{Identical|Select}}',
 	'wikiaPhotoGallery-photooptions-done' => '{{Identical|Done}}',
@@ -1001,6 +1001,7 @@ $messages['el'] = array(
  * @author Diego Grez
  * @author Drini
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'wikiaphotogallery-desc' => 'Proporciona una interfaz para la gestión de galerías y presentaciones de diapositivas en las páginas',
@@ -1054,6 +1055,8 @@ Por favor, renombra el archivo e inténtalo de nuevo.',
 	'wikiaPhotoGallery-preview-previewtitle' => 'Vista previa de galería',
 	'wikiaPhotoGallery-preview-add-photo' => 'Añadir una imagen',
 	'wikiaPhotoGallery-preview-add-caption' => 'Añadir un título',
+	'wikiaPhotoGallery-preview-add-description' => 'Añade una descripción',
+	'wikiaPhotoGallery-preview-add-link' => 'Añade un enlace',
 	'wikiaPhotoGallery-preview-placeholder-caption' => 'Leyenda que aparecerá aquí',
 	'wikiaPhotoGallery-preview-link-tooltip' => 'La imagen enlaza a "$1"',
 	'wikiaPhotoGallery-preview-feed-label' => 'Desde la dirección URL de la fuente RSS:',
@@ -1294,6 +1297,8 @@ Que voulez-vous faire ?',
 	'wikiaPhotoGallery-preview-previewtitle' => 'Prévisualisation de la galerie',
 	'wikiaPhotoGallery-preview-add-photo' => 'Ajouter une photo',
 	'wikiaPhotoGallery-preview-add-caption' => 'Ajouter une légende',
+	'wikiaPhotoGallery-preview-add-description' => 'Ajouter une description',
+	'wikiaPhotoGallery-preview-add-link' => 'Ajouter un lien',
 	'wikiaPhotoGallery-preview-placeholder-caption' => 'La légende apparaîtra ici',
 	'wikiaPhotoGallery-preview-link-tooltip' => 'La photo lie vers « $1 »',
 	'wikiaPhotoGallery-preview-feed-label' => 'Depuis l’URL du flux RSS :',
@@ -1358,7 +1363,7 @@ Autrement, vous pouvez cliquer sur « $2 » pour voir la page telle qu’elle es
 	'wikiaPhotoGallery-quit-savequit' => 'Sauvegarder et quitter',
 	'wikiaPhotoGallery-quit-quitonly' => 'Ignorer les modifications et quitter',
 	'wikiaPhotoGallery-slideshow-view-popout-tooltip' => 'Développer le diaporama',
-	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Ajouter la photo',
+	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Ajouter une photo',
 	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'Photo suivante',
 	'wikiaPhotoGallery-slideshow-view-prev-tooltip' => 'Photo précédente',
 	'wikiaPhotoGallery-slideshow-view-title' => 'Diaporama',
@@ -1371,6 +1376,7 @@ Autrement, vous pouvez cliquer sur « $2 » pour voir la page telle qu’elle es
 	'wikiaPhotoGallery-choice-intro' => 'Souhaitez-vous faire un diaporama ou une galerie de photos ?',
 	'wikiaPhotoGallery-choice-slideshow' => 'Créer un diaporama',
 	'wikiaPhotoGallery-choice-gallery' => 'Créer une galerie',
+	'wikiaPhotoGallery-choice-slider' => 'Créer un carrousel de page d’accueil',
 	'wikiaPhotoGallery-slideshowpreview-title' => 'Créateur de diaporama',
 	'wikiaPhotoGallery-slideshowpreview-optionstitle' => 'Options du diaporama',
 	'wikiaPhotoGallery-slideshowpreview-size' => 'Largeur du diaporama :',
@@ -1384,8 +1390,16 @@ Autrement, vous pouvez cliquer sur « $2 » pour voir la page telle qu’elle es
 	'wikiaPhotoGallery-slideshowpreview-position-left' => 'Gauche',
 	'wikiaPhotoGallery-slideshowpreview-position-center' => 'Centre',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Droite',
-	'wikiaPhotoGallery-upload-title-slideshow' => 'Créateur de diaporama - Rechercher et téléverser des photos',
-	'wikiaPhotoGallery-upload-title-gallery' => 'Créateur de galerie - Rechercher et téléverser des photos',
+	'wikiaPhotoGallery-sliderpreview-photostitle' => 'Photos du carrousel',
+	'wikiaPhotoGallery-sliderpreview-optionstitle' => 'Options du carrousel',
+	'wikiaPhotoGallery-sliderpreview-choosetype' => 'Position du menu du carrousel',
+	'wikiaPhotoGallery-sliderpreview-choosetype-bottom-tooltip' => 'Vignettes horizontales',
+	'wikiaPhotoGallery-sliderpreview-choosetype-right-tooltip' => 'Vignettes verticales',
+	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Ajouter une photo',
+	'wikiaPhotoGallery-sliderpreview-title' => 'Générateur de carrousel',
+	'wikiaPhotoGallery-upload-title-slideshow' => 'Générateur de diaporama - Rechercher et téléverser des photos',
+	'wikiaPhotoGallery-upload-title-gallery' => 'Générateur de galerie - Rechercher et téléverser des photos',
+	'wikiaPhotoGallery-upload-title-slider' => 'Générateur de carrousel - Rechercher et téléverser des photos',
 	'wikiaPhotoGallery-upload-uploadtext' => 'Importez un fichier de votre ordinateur',
 	'wikiaPhotoGallery-upload-existingtext' => "'''ou bien''' cliquez pour choisir des photos à partir de :",
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'cette page',
@@ -1400,6 +1414,11 @@ Décrivez cette photo.",
 	'wikiaPhotoGallery-photooptions-linksub' => "'''Optionnel.''' Quand cette photo est cliquée, aller sur cette page.",
 	'wikiaPhotoGallery-photooptions-linktext' => 'Texte à afficher pour le lien.',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Lien vers (insérez le nom ou l’URL de la page).',
+	'wikiaPhotoGallery-photooptions-description' => 'Détails de l’image',
+	'wikiaPhotoGallery-search-tooltip' => 'Rechercher des photos sur ce wiki',
+	'wikiaPhotoGallery-upload-image-size-error' => 'Taille d’image incorrecte. Les images doivent mesurer 673 par 410 px.',
+	'wikiaPhotoGallery-upload-image-size' => 'Les images doivent mesurer 673 par 410 px',
+	'wikiaPhotoGallery-not-displayed' => 'Non affiché',
 	'galery-slider-read-more' => 'En savoir plus &gt;',
 );
 
@@ -2270,6 +2289,16 @@ $messages['ja'] = array(
 	'wikiaPhotoGallery-photooptions-linksub' => '<b>オプション:</b> 画像をクリックした際に飛ぶページを設定',
 	'wikiaPhotoGallery-photooptions-linktext' => '表示されるテキスト（リンクテキスト）',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'リンク（ページ名もしくはURLを入力）',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'wikiaPhotoGallery-preview-position-right' => 'Rast',
+	'wikiaPhotoGallery-preview-spacing-small' => ' Biçûk',
+	'wikiaPhotoGallery-preview-bordersize-small' => 'Biçûk',
+	'wikiaPhotoGallery-preview-captions-right' => 'Rast',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -3866,6 +3895,32 @@ $messages['sr-ec'] = array(
 	'wikiaPhotoGallery-photooptions-linksub' => 'Када је ова фотографија кликнута, иди на ову страницу.',
 	'wikiaPhotoGallery-photooptions-linktext' => 'Текст за приказивање везе.',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Повежи (налепите наслов или адресу странице).',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'wikiaPhotoGallery-preview-captionalignment-left' => 'Vänster',
+	'wikiaPhotoGallery-preview-captionalignment-center' => 'Center',
+	'wikiaPhotoGallery-preview-captionalignment-right' => 'Höger',
+	'wikiaPhotoGallery-preview-captionsize' => 'Bildtextens storlek',
+	'wikiaPhotoGallery-preview-captionsize-small' => 'Liten',
+	'wikiaPhotoGallery-preview-captionsize-medium' => 'Medium',
+	'wikiaPhotoGallery-preview-captionsize-large' => 'Stor',
+	'wikiaPhotoGallery-preview-captioncolor' => 'Bildtextens färg',
+	'wikiaPhotoGallery-preview-bordersize' => 'Kantens bredd',
+	'wikiaPhotoGallery-preview-bordersize-none' => 'Ingen',
+	'wikiaPhotoGallery-preview-bordersize-small' => 'Liten',
+	'wikiaPhotoGallery-preview-bordersize-medium' => 'Medium',
+	'wikiaPhotoGallery-preview-bordersize-large' => 'Stor',
+	'wikiaPhotoGallery-preview-delete-title' => 'Ta bort detta foto?',
+	'wikiaPhotoGallery-preview-saving-intro' => 'Vänta medan ditt galleri sparas.',
+	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Lägg till foto',
+	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'Nästa foto',
+	'wikiaPhotoGallery-slideshow-view-prev-tooltip' => 'Föregående foto',
+	'wikiaPhotoGallery-slideshow-view-number' => '$1 av $2',
+	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Gå till $1',
 );
 
 /** Tamil (தமிழ்)

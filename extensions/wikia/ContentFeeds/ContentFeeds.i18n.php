@@ -32,8 +32,11 @@ $messages['af'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fout: Bladsyinhoud benodig',
 );
 
-/** Breton (Brezhoneg) */
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
 $messages['br'] = array(
+	'contentfeeds-firstfewarticles-tag-header' => 'Krouit ho pajennoù kentañ !',
 	'contentfeeds-firstfewarticles-tag-title' => 'Titl',
 	'contentfeeds-firstfewarticles-tag-next' => "War-lerc'h",
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Fazi : rekis eo titl ar bajenn',

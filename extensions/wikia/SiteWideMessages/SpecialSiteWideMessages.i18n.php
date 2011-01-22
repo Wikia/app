@@ -357,6 +357,13 @@ $messages['bs'] = array(
 	'swm-no' => 'Ne',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'swm-label-mode-users-active' => 'Жигар декъашхой',
+);
+
 /** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  * @author ОйЛ
  */
@@ -1602,6 +1609,35 @@ $messages['sr-ec'] = array(
 	'swm-error-empty-message' => 'Унесите садржај поруке',
 	'swm-error-empty-group' => 'Унесите име за групу:',
 	'swm-lang-other' => 'сви преостали језици',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'swm-label-preview' => 'Förhandsgranska',
+	'swm-label-edit' => 'Redigera',
+	'swm-label-remove' => 'Ta bort',
+	'swm-label-sent' => 'Skickat',
+	'swm-label-list' => 'Lista',
+	'swm-label-recipient' => 'Mottagare',
+	'swm-label-recipient-wikis' => 'Wikis',
+	'swm-label-recipient-users' => 'Användare',
+	'swm-label-expiration' => 'Förfallotid',
+	'swm-label-mode-wikis-all' => 'Alla wikis',
+	'swm-label-mode-wikis-hub' => 'Valda nav',
+	'swm-label-mode-wikis-wiki' => 'Vald wiki',
+	'swm-label-mode-users-all' => 'Alla användare',
+	'swm-label-mode-users-active' => 'Aktiva användare',
+	'swm-label-mode-users-group' => 'Användare som tillhör gruppen',
+	'swm-label-mode-users-group-hint' => '<i>Välj en grupp från rullgardinsmenyn eller skriv namnet för hand för att överskriva valet i rullgardinsmenyn.</i>',
+	'swm-label-mode-users-user' => 'Vald användare',
+	'swm-label-mode-users-user-hint' => '<i>Det här alternativet ignorerar markeringen i gruppen "Wikis".</i>',
+	'swm-label-content' => 'Innehåll',
+	'swm-label-comment' => 'Kommentera',
+	'swm-label-language' => 'Språk',
+	'swm-button-lang-checkall' => '[ Kontrollera alla ]',
+	'swm-button-lang-checknone' => '[ Kontrollera ingen ]',
 );
 
 /** Swahili (Kiswahili)

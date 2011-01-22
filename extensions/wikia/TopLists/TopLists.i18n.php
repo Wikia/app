@@ -117,7 +117,7 @@ Head to Wikia to check out the changes! $1
 $messages['qqq'] = array(
 	'toplists-category' => 'The name for the category that lists all the Top 10 Lists on a wiki',
 	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.',
-	'toplists-list-vote-up' => 'Keep this as short as possible. Everything exceeding allowed lenght will be cutted out!'
+	'toplists-list-vote-up' => 'Keep this as short as possible. Everything exceeding allowed lenght will be cutted out!',
 );
 
 /** Breton (Brezhoneg)
@@ -710,6 +710,13 @@ Tu pote <a href="$4">cancellar le subscription</a> al cambios in iste lista.',
 	'toplists-msg-fb-OnRateArticle-short' => 'ha votate in un lista Top 10 in $WIKINAME!',
 	'toplists-create-heading' => '<em>Nove!</em> Crea tu proprie top dece',
 	'toplists-create-button-msg' => 'Crear un lista',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'toplists-editor-title-label' => 'Navê lîstê',
 );
 
 /** Macedonian (Македонски)

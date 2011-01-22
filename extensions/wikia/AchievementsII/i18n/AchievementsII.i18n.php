@@ -404,16 +404,16 @@ Parameters:
 Possible messages for $1 are: {{msg-mw|achievements-badge-to-get-blogcomment|notext=1}}, {{msg-mw|achievements-badge-to-get-blogpost|notext=1}}, {{msg-mw|achievements-badge-to-get-caffeinated|notext=1}}, {{msg-mw|achievements-badge-to-get-category|notext=1}}, {{msg-mw|achievements-badge-to-get-creator|notext=1}}, {{msg-mw|achievements-badge-to-get-edit|notext=1}}, {{msg-mw|achievements-badge-to-get-edit-plus-category|notext=1}}, {{msg-mw|achievements-badge-to-get-introduction|notext=1}}, {{msg-mw|achievements-badge-to-get-love|notext=1}}, {{msg-mw|achievements-badge-to-get-luckyedit|notext=1}}, {{msg-mw|achievements-badge-to-get-picture|notext=1}}, {{msg-mw|achievements-badge-to-get-pounce|notext=1}}, {{msg-mw|achievements-badge-to-get-sayhi|notext=1}}, {{msg-mw|achievements-badge-to-get-welcome|notext=1}}',
 	'achievements-masthead-points' => 'Parameters:
 * $1 is the number of earned points.',
-	'achievements-profile-title-no' => "Capitalization has been requested by Product Management, please don't change it. Parameters:
-* $1 is a user name.",
-	'achievements-track-name-edit' => 'Capitalization has been requested by Product Management, please don\'t change it.
+	'achievements-profile-title-no' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}} Parameters:
+* $1 is a user name.',
+	'achievements-track-name-edit' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}
 
 This is a track name, so "edit" is a noun, not a verb. In other words, this could be translated as "track of edits", \'\'not\'\' as "edit the track".',
-	'achievements-track-name-picture' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-track-name-category' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-track-name-blogpost' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-track-name-blogcomment' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-track-name-love' => "Capitalization has been requested by Product Management, please don't changeit",
+	'achievements-track-name-picture' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-track-name-category' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-track-name-blogpost' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-track-name-blogcomment' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-track-name-love' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
 	'achievements-notification-title' => 'Parameters:
 * $1 is a user name',
 	'achievements-notification-subtitle' => 'Parameters:
@@ -440,10 +440,10 @@ All messages for the triggers: {{msg-mw|achievements-badge-your-desc-blogcomment
 * $1 is the number of points',
 	'achievements-earned' => 'Parameters:
 * $1 is the number of users that has earned a badge.',
-	'achievements-profile-title' => "Capitalization has been requested by Product Management, please don't change it. Parameters:
+	'achievements-profile-title' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}} Parameters:
 * $1 is a user name
-* $2 is the number of earned badges",
-	'achievements-profile-title-challenges' => "Capitalization has been requested by Product Management, please don't change it",
+* $2 is the number of earned badges',
+	'achievements-profile-title-challenges' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
 	'achievements-ranked' => 'Parameter:
 * $1 is the rank number of a user on a wiki with regards to achievement points.',
 	'achievements-viewless' => '{{Identical|Close}}',
@@ -452,7 +452,7 @@ All messages for the triggers: {{msg-mw|achievements-badge-your-desc-blogcomment
 * $2 is the user's position on the leaderboard
 Example:
 * John is Ranked #3 on this wiki",
-	'achievements-recent-earned-badges' => "Capitalization has been requested by Product Management, please don't changeit",
+	'achievements-recent-earned-badges' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
 	'achievements-recent-info' => 'Parameters:
 * $1 is a link to a user page
 * $2 is a user name
@@ -490,36 +490,38 @@ $4 is any of:
 	'achievements-community-platinum-edit' => '{{Identical|Edit}}',
 	'achievements-community-platinum-save' => '{{Identical|Save}}',
 	'achievements-community-platinum-cancel' => '{{Identical|Cancel}}',
-	'achievements-badge-name-edit-0' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-edit-1' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-edit-2' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-edit-3' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-edit-4' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-edit-5' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-edit-6' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-edit-7' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-category-0' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-category-1' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-category-3' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-category-5' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-category-6' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-blogpost-0' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-blogpost-1' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-blogpost-2' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-blogpost-3' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-blogpost-4' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-blogcomment-1' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-love-0' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-love-1' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-love-5' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-love-6' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-welcome' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-sayhi' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-creator' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-name-luckyedit' => "Capitalization has been requested by Product Management, please don't changeit",
-	'achievements-badge-to-get-edit-plus-category' => '$2 is a pagetype, e. g. content, talk, etc.',
+	'achievements-badge-name-edit-0' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-edit-1' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-edit-2' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-edit-3' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-edit-4' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-edit-5' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-edit-6' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-edit-7' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-category-0' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-category-1' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-category-3' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-category-5' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-category-6' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-blogpost-0' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-blogpost-1' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-blogpost-2' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-blogpost-3' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-blogpost-4' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-blogcomment-1' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-love-0' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-love-1' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-love-5' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-love-6' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-welcome' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-sayhi' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-creator' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-name-luckyedit' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
+	'achievements-badge-to-get-edit-plus-category' => 'Parameters:
+* $1 is the number of edits
+* $2 is a pagetype, e.g. content, talk, etc.',
 	'achievements-badge-to-get-edit-plus-category-details' => 'What is $1 here? Possibly localised (?) form of "category", or another namespace name.',
-	'achievements-badge-to-get-sayhi-details' => 'The word "people" has been requested by Product Management, please don\'t changeit',
+	'achievements-badge-to-get-sayhi-details' => '{{doc-important|The word "people" was decided upon by Product Management of Wikia. Please do not change it in English.}}',
 	'achievements-badge-hover-desc-edit' => 'Parameters:
 * $1 is the number of edits made.',
 	'achievements-badge-hover-desc-edit-plus-category' => 'Parameters:
@@ -1513,6 +1515,7 @@ $messages['el'] = array(
  * @author Crazymadlover
  * @author Peter17
  * @author Sanbec
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'achievementsii-desc' => 'Un sistema de logros para los usuarios del wiki',
@@ -1545,6 +1548,7 @@ Por favor, inténtalo con otra imagen.',
 	'achievements-track-name-blogpost' => 'Referentes a Entradas de blog',
 	'achievements-track-name-blogcomment' => 'Referentes a Comentarios de blog',
 	'achievements-track-name-love' => 'Referentes a "Amor por el wiki"',
+	'achievements-track-name-sharing' => 'Compartir seguimiento',
 	'achievements-notification-title' => '¡Así se hace, $1!',
 	'achievements-notification-subtitle' => 'Acabas de conseguir el logro "$1", $2',
 	'achievements-notification-link' => '<strong><big>¡[[Special:MyPage|Haz clic aquí para ver más logros que puedes conseguir]]!</big></strong>',
@@ -1562,8 +1566,8 @@ Por favor, inténtalo con otra imagen.',
 	'achievements-viewall-oasis' => 'Ver todos',
 	'leaderboard-intro-hide' => 'ocultar',
 	'leaderboard-intro-open' => 'abrir',
-	'leaderboard-intro-headline' => 'Logros. Una breve introducción.',
-	'leaderboard-intro' => "Puedes ganar logros al participar (haciendo ediciones, subiendo imágenes) en esta wiki.<br />Cada logro te gana puntos, los cuales pueden llevarte más arriba en la clasificación.
+	'leaderboard-intro-headline' => '¿Qué son los logros?',
+	'leaderboard-intro' => "Puedes ganar logros al participar (haciendo ediciones, subiendo imágenes) en esta wiki. Cada logro te gana puntos, los cuales pueden llevarte más arriba en la clasificación. Podrás encontrar los logros que has ganado en tu [[$1|página de usuario]].
 
 '''¿Cuánto valen los logros?'''",
 	'leaderboard' => 'Tabla de líderes con más logros',
@@ -1691,6 +1695,10 @@ Echa un vistazo a este logro de lujo en tu <a href="$5">perfil de usuario</a>.',
 	'achievements-badge-name-love-4' => 'Adicto',
 	'achievements-badge-name-love-5' => 'Su vida es el wiki',
 	'achievements-badge-name-love-6' => 'Héroe del Wiki',
+	'achievements-badge-name-sharing-0' => 'Compartir',
+	'achievements-badge-name-sharing-1' => 'Regresar',
+	'achievements-badge-name-sharing-3' => 'Anunciante',
+	'achievements-badge-name-sharing-4' => 'Evangelista',
 	'achievements-badge-name-welcome' => 'Bienvenido al wiki',
 	'achievements-badge-name-introduction' => 'Introducción',
 	'achievements-badge-name-sayhi' => 'Deteniendo para decir hola',
@@ -2524,6 +2532,7 @@ Per favor essaya un altere!',
 	'achievements-leaderboard-rank-label' => 'Rango',
 	'achievements-leaderboard-member-label' => 'Membro',
 	'achievements-leaderboard-points-label' => 'Punctos',
+	'achievements-leaderboard-points' => '{{PLURAL:$1|puncto|punctos}}',
 	'achievements-leaderboard-most-recently-earned-label' => 'Ganiate le plus recentemente',
 	'achievements-send' => 'Salveguardar imagine',
 	'achievements-save' => 'Confirmar modificationes',
@@ -2793,6 +2802,7 @@ Per favore, provane un'altra!",
 	'leaderboard-title' => 'Classifica',
 	'achievements-leaderboard-most-recently-earned-label' => 'Ottenute di recente',
 	'achievements-special-saved' => 'Modifiche salvate.',
+	'achievementscustomize' => 'Personalizza le medaglie',
 	'achievements-about-content' => "Gli amministratori di questa wiki possono personalizzare i nomi e le immagini delle medaglie.
 
 Puoi caricare qualsiasi immagine .jpg o .png e l'immagine si adatterà automaticamente all'interno della cornice.
@@ -3191,6 +3201,19 @@ $messages['ksh'] = array(
 	'achievements-badge-name-blogpost-4' => 'Öffentlesch Reddeschwenger',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'achievements-gold' => 'Zêr',
+	'leaderboard-intro-hide' => 'veşêre',
+	'achievements-leaderboard-member-label' => 'Endam',
+	'achievements-about-title' => 'der barê vê rûpelê...',
+	'achievements-community-platinum-edit' => 'biguherîne',
+	'achievements-community-platinum-save' => 'qeyd bike',
+	'achievements-community-platinum-cancel' => 'betal bike',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -3274,7 +3297,7 @@ $messages['mk'] = array(
 	'achievements-profile-title-oasis' => 'наградни <br /> бодови',
 	'achievements-ranked-oasis' => '$1 се [[Special:Leaderboard|котира на $2 место]] на ова вики',
 	'achievements-viewall-oasis' => 'Сите',
-	'leaderboard-intro-hide' => 'сокриј',
+	'leaderboard-intro-hide' => 'скриј',
 	'leaderboard-intro-open' => 'отвори',
 	'leaderboard-intro-headline' => 'Што се достигнувања?',
 	'leaderboard-intro' => "Учествувајќи (уредувајќи, подигајќи слики) на ова вики, добивате значки.<br />Значките носат бодови, и со нив се искачувате повисоко на таблата со предводници. Добиените значки ќе ги најдете на вашиот [[$1|кориснички профил]].
@@ -3290,6 +3313,7 @@ $messages['mk'] = array(
 	'achievements-leaderboard-rank-label' => 'Ранг',
 	'achievements-leaderboard-member-label' => 'Член',
 	'achievements-leaderboard-points-label' => 'Бодови',
+	'achievements-leaderboard-points' => '{{PLURAL:$1|бод|бода}}',
 	'achievements-leaderboard-most-recently-earned-label' => 'Неодамна заработени',
 	'achievements-send' => 'Зачувај слика',
 	'achievements-save' => 'Зачувај промени',
@@ -3581,6 +3605,7 @@ Kies dan een ander plaatje.',
 	'achievements-leaderboard-rank-label' => 'Positie',
 	'achievements-leaderboard-member-label' => 'Lid',
 	'achievements-leaderboard-points-label' => 'Punten',
+	'achievements-leaderboard-points' => '{{PLURAL:$1|punt|punten}}',
 	'achievements-leaderboard-most-recently-earned-label' => 'Meer recent verdiend',
 	'achievements-send' => 'Afbeelding opslaan',
 	'achievements-save' => 'Wijzigingen opslaan',
@@ -3879,6 +3904,7 @@ Vennligst prøv et annet!',
 	'achievements-leaderboard-rank-label' => 'Rangering',
 	'achievements-leaderboard-member-label' => 'Medlem',
 	'achievements-leaderboard-points-label' => 'Poeng',
+	'achievements-leaderboard-points' => '{{PLURAL:$1|poeng|poeng}}',
 	'achievements-leaderboard-most-recently-earned-label' => 'Sist tildelt',
 	'achievements-send' => 'Lagre bilde',
 	'achievements-save' => 'Lagre endringer',
@@ -4139,16 +4165,33 @@ Spróbuj dodać inny!',
 	'achievements-notification-subtitle' => 'Właśnie otrzymałeś odznakę „$1” $2',
 	'achievements-points' => '$1 {{PLURAL:$1|punkt|punkty|punktów}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|punkt|punkty|punktów}}',
+	'achievements-profile-title' => '$1 zdobył $2 odznak {{PLURAL:$2|badge|badges}}',
 	'achievements-profile-title-challenges' => 'Więcej odznak, które możesz zdobyć!',
+	'achievements-ranked' => 'Na miejscu #$1 na tej wiki',
 	'achievements-viewall' => 'Pokaż wszystkie',
 	'achievements-viewless' => 'Zamknij',
+	'achievements-ranked-oasis' => '$1 jest na [[Special:Leaderboard|miejscu #$2]] na tej wiki.',
 	'achievements-viewall-oasis' => 'Pokaż wszystkie',
 	'leaderboard-intro-hide' => 'ukryj',
 	'leaderboard-intro-open' => 'otwórz',
+	'leaderboard-intro-headline' => 'Czym są Odznaczenia?',
+	'leaderboard' => 'Ranking osiągnięć',
+	'achievements-title' => 'Odznaczenia',
+	'leaderboard-title' => 'Ranking',
+	'achievements-recent-earned-badges' => 'Ostatnio zdobyte odznaki',
+	'achievements-recent-info' => '↓ <strong>$3</strong><br />$4<br />zdobyte przez <a href="$1">$2</a><br />$5',
 	'platinum' => 'Platyna',
 	'achievements-community-platinum-awarded-email-subject' => 'Otrzymałeś nową platynową odznakę!',
 	'achievements-community-platinum-awarded-for' => 'Przyznane za:',
 	'achievements-community-platinum-how-to-earn' => 'Jak zdobyć:',
+	'achievements-badge-to-get-edit' => 'wykonaj $1 {{PLURAL:$1|edycję|edycje|edycji}} na {{PLURAL:$1|stronie|stronach}}',
+	'achievements-badge-to-get-edit-plus-category' => 'wykonaj {{PLURAL:$1|jedną edycję|$1 edycje|$1 edycji}} na {{PLURAL:$1|stronie|stronach}} z przestrzeni $2',
+	'achievements-badge-to-get-picture' => 'dodaj $1 {{PLURAL:$1|obrazek|obrazki/ów}} na {{PLURAL:$1|stronę|strony}}',
+	'achievements-badge-to-get-category' => 'dodaj $1 {{PLURAL:$1|stronę|stron}} do kategorii.',
+	'achievements-badge-to-get-blogcomment' => 'napisz komentarz pod {{PLURAL:$1|postem na blogu|$1 różnymi postami na blogu}}',
+	'achievements-badge-to-get-love' => 'bądź aktywny na wiki codziennie przez {{PLURAL:$1|jeden dzień|$1 dni}}',
+	'achievements-badge-to-get-welcome' => 'dołącz do wiki',
+	'achievements-badge-to-get-pounce' => 'bądź szybki',
 	'achievements-badge-to-get-caffeinated-details' => 'Zdobycie tej odznaki może trochę potrwać.
 Nie przestawaj edytować!',
 	'achievements-badge-your-desc-edit' => 'za wykonanie {{PLURAL:$1|swojej pierwszej edycji strony|$1 edycji stron}}!',
@@ -5210,6 +5253,45 @@ $messages['sr-ec'] = array(
 	'achievements-badge-name-picture-3' => 'Колекционар',
 	'achievements-badge-name-category-4' => 'Навигатор',
 	'achievements-badge-name-blogpost-2' => 'Ток-шоу',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'achievements-upload-error' => 'Tyvärr!
+Den här bilden fungerar inte.
+Se till att bilden är en .jpg eller .png fil.
+Om det fortfarande inte fungerar, kan bilden vara för stor.
+Försök med en annan!',
+	'achievements-non-existing-category' => 'Den angivna kategorin finns inte.',
+	'achievements-platinum' => 'Platina',
+	'achievements-gold' => 'Guld',
+	'achievements-silver' => 'Silver',
+	'achievements-bronze' => 'Brons',
+	'achievements-gold-points' => '100<br />poäng',
+	'achievements-silver-points' => '50<br />poäng',
+	'achievements-bronze-points' => '10<br />poäng',
+	'achievements-you-must' => 'Du måste tjäna $1 för att få detta märke.',
+	'achievements-viewall' => 'Visa alla',
+	'achievements-viewless' => 'Stäng',
+	'achievements-viewall-oasis' => 'Se alla',
+	'leaderboard-intro-hide' => 'göm',
+	'leaderboard-intro-open' => 'öppna',
+	'achievements-send' => 'Spara bild',
+	'achievements-save' => 'Spara ändringar',
+	'achievements-enable-track' => 'aktiverad',
+	'achievements-revert' => 'Återgå till standard',
+	'achievements-special-saved' => 'Ändringar sparade.',
+	'achievements-about-title' => 'Om den här sidan...',
+	'achievements-community-platinum-enabled' => 'aktiverad',
+	'achievements-community-platinum-edit' => 'redigera',
+	'achievements-community-platinum-save' => 'spara',
+	'achievements-community-platinum-cancel' => 'avbryt',
+	'achievements-badge-name-blogcomment-1' => 'Och en sak till',
+	'achievements-badge-to-get-introduction-details' => 'Är din användarsida tom?
+Klicka på ditt användarnamn längst upp på skärmen för att se.
+Klicka sedan på "{{int:edit}}" för att lägga till lite information om dig själv!',
 );
 
 /** Swahili (Kiswahili)

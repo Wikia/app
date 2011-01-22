@@ -346,6 +346,13 @@ $messages['ko'] = array(
 	'our404handler' => '404 오류: 페이지를 찾을 수 없습니다.',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'our404handler' => 'Çewtiya 404: Rûpel nehate dîtin!',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

@@ -1211,6 +1211,21 @@ $messages['kn'] = array(
 	'vet-right' => 'ಬಲ',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'vet-upload-btn' => ' Biçe',
+	'vet-find-btn' => 'Lêbigere',
+	'vet-name' => 'Nav',
+	'vet-show-message' => 'mesajê nîşan bide',
+	'vet-hide-message' => 'mesajê veşêre',
+	'vet-hide-license-msg' => 'Lîsansa nivîsê veşêre',
+	'vet-show-license-msg' => 'Lîsansa nivîsê nîşan bide',
+	'vet-left' => 'Çep',
+	'vet-right' => 'Rast',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -1277,8 +1292,8 @@ $messages['mk'] = array(
 
 ''Погледајте го и [[Special:Log/upload|дневникот на подигања]] и [[Special:ImageList|списокот на сите подигнати податотеки]].''",
 	'vet-show-message' => 'прикажи порака',
-	'vet-hide-message' => 'сокриј порака',
-	'vet-hide-license-msg' => 'сокриј текст на лиценцата',
+	'vet-hide-message' => 'скриј порака',
+	'vet-hide-license-msg' => 'скриј текст на лиценцата',
 	'vet-show-license-msg' => 'прикажи текст на лиценцата',
 	'vet-max-thumb' => 'надмината е максиналната дозволена големина на минијатурата; ја враќам првичната големина',
 	'vet-notallowed' => 'Не можете да вметнувате видеоснимки на ова вики',
@@ -1999,6 +2014,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Jopparn
+ * @author Tobulos1
  */
 $messages['sv'] = array(
 	'vet-upload' => 'Fullständig URL',
@@ -2006,6 +2022,12 @@ $messages['sv'] = array(
 	'vet-find' => 'Finn igen en video',
 	'vet-thiswiki' => 'Denna Wiki',
 	'vet-flickr' => 'Flickr',
+	'vet-find-btn' => 'Sök',
+	'vet-name' => 'Namn',
+	'vet-license' => 'Licens',
+	'vet-prev' => 'Föregående 8',
+	'vet-next' => 'Nästa 8',
+	'vet-success' => '<h1>Succé</h1>',
 );
 
 /** Swahili (Kiswahili)
@@ -2038,6 +2060,7 @@ $messages['uk'] = array(
 	'vet-find-btn' => 'Знайти',
 	'vet-insert' => 'Вставити',
 	'vet-name' => 'Назва',
+	'vet-license' => 'Ліцензія',
 	'vet-size' => 'Розмір',
 	'vet-thumbnail' => 'Мініатюра',
 	'vet-prev' => 'Попередні 8',

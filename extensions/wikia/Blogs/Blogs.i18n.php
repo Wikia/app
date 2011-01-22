@@ -487,6 +487,7 @@ Gallout a reer krouiñ pajennadoù rollañ bloagoù evit rummadoù evel "Barack 
 	'blog-desc' => 'Pennadoù ar blog',
 	'blog-movepage-badtitle' => 'Titl blogadenn direizh',
 	'blog-comment-sending' => 'O kas...',
+	'blog-by' => '$1 gant $2',
 );
 
 /** Sorani (کوردی) */
@@ -1050,6 +1051,7 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
 	'blog-desc' => 'Articles de blog',
 	'blog-movepage-badtitle' => 'Titre du billet de blog invalide.',
 	'blog-comment-sending' => 'Envoi en cours...',
+	'blog-by' => '$1 par $2',
 );
 
 /** Galician (Galego)
@@ -1456,6 +1458,7 @@ Tu pote crear listas de blogs pro categorias como "Barack Obama", "libros", o me
 	'blog-desc' => 'Articulos de blog',
 	'blog-movepage-badtitle' => 'Invalide titulo de articulo de blog.',
 	'blog-comment-sending' => 'Invio in curso...',
+	'blog-by' => '$1 per $2',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -1763,6 +1766,16 @@ $messages['kn'] = array(
 	'blog-comment-delete' => 'ಅಳಿಸು',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'blog-comment-hide' => 'veşêre',
+	'blog-comment-unhide' => 'nîşan bide',
+	'blog-comment-history' => 'dîrok',
+	'blog-fromsitename' => 'Ji $1',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -1887,7 +1900,7 @@ $messages['mk'] = array(
 	'blog-comments-asc' => 'Најновите последни',
 	'blog-comments-anonymous' => 'Анонимен корисник',
 	'blog-comment-delete' => 'избриши',
-	'blog-comment-hide' => 'сокриј',
+	'blog-comment-hide' => 'скриј',
 	'blog-comment-unhide' => 'покажи',
 	'blog-comment-history' => 'историја',
 	'blog-comment-edit' => 'уреди',
@@ -1916,6 +1929,7 @@ $messages['mk'] = array(
 	'blog-desc' => 'Блог-статии',
 	'blog-movepage-badtitle' => 'Неважечки наслов на блог-запис.',
 	'blog-comment-sending' => 'Испраќам...',
+	'blog-by' => '$1 од $2',
 );
 
 /** Dutch (Nederlands)
@@ -2035,6 +2049,7 @@ Gebruik alstublieft een van de beschikbare parameters: <code>$2</code>.',
 	'blog-desc' => 'Blogberichten',
 	'blog-movepage-badtitle' => 'Ongeldige titel voor blogbericht.',
 	'blog-comment-sending' => 'Bezig met opslaan...',
+	'blog-by' => '$1 door $2',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -2153,6 +2168,7 @@ Opprett bloggoppføringssider for å kategorier som «Barack Obama», «Fan Fict
 	'blog-desc' => 'Blogginnlegg',
 	'blog-movepage-badtitle' => 'Ugyldig blogginnleggtittel.',
 	'blog-comment-sending' => 'Sender ...',
+	'blog-by' => '$1 av $2',
 );
 
 /** Occitan (Occitan)
@@ -2865,6 +2881,33 @@ $messages['sr-ec'] = array(
 	'blog-fromsitename' => 'од $1',
 	'blogs-reportproblem' => 'Пријави проблем',
 	'blogs-comment-hidden' => 'Коментар је сакривен.',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'createblogpage' => 'Skapa blogg',
+	'createbloglistingpage' => 'Skapa blogglista',
+	'create-blog-invalid-title-error' => 'Ogiltig rubrik',
+	'create-blog-no-login' => 'Inte inloggad',
+	'create-blog-save' => 'Spara sida',
+	'create-blog-preview' => 'Visa förhandsgranskning',
+	'create-blog-listing-sortby' => 'Sortera efter',
+	'create-blog-listing-sortby-date' => 'Senaste',
+	'create-blog-listing-sortby-author' => 'Författare',
+	'blog-readfullpost' => 'Läs mer',
+	'blog-olderposts' => 'Äldre inlägg',
+	'blog-newerposts' => 'Nyare inlägg',
+	'blog-nbrcomments' => '{{PLURAL:$1|En kommentar|$1 kommentarer}}',
+	'blog-nopostfound' => 'Inga inlägg hittades.',
+	'blog-writeone' => 'Skriv en!',
+	'blog-comment-delete' => 'radera',
+	'blog-comment-hide' => 'göm',
+	'blog-comment-unhide' => 'ta fram',
+	'blog-comment-edit' => 'redigera',
+	'blog-page-rate' => 'Betygsätt den här artikeln:',
+	'blog-fromsitename' => 'Från $1',
 );
 
 /** Swahili (Kiswahili)

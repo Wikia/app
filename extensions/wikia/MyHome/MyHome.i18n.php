@@ -358,7 +358,7 @@ $messages['bo'] = array(
  */
 $messages['br'] = array(
 	'myhome-desc' => 'Ur bajenn degemer prevez evit an implijerien kevreet',
-	'myhome' => 'Va zi',
+	'myhome' => 'Va Degemer',
 	'wikiactivity' => 'Oberiantiz ar wiki',
 	'myhome-activity-more' => 'Gwelet an oberoù neveshañ',
 	'myhome-activity-feed' => 'Gwazh obererezh',
@@ -374,6 +374,7 @@ Klikit war '''[[Special:CreatePage|Pajenn nevez]]''' evit kregiñ da skrivañ !"
 	'myhome-hot-spots-newest' => 'Pajennoù nevez war ar wiki',
 	'myhome-hot-spots-brandnew' => "Ur wiki nevez eo. Klikit war '''[[Special:CreatePage|Pajenn nevez]]''' evit kregiñ da skrivañ !",
 	'tog-myhomedisableredirect' => 'Diweredekaat an adkas davet Ma Degemer',
+	'prefs-myhome' => 'Va Degemer',
 	'myhome-feed-newpage' => 'pajenn nevez',
 	'myhome-feed-edit' => 'kemmañ',
 	'myhome-feed-move' => 'pajenn bet fiñvet',
@@ -856,7 +857,7 @@ Cliquez sur '''[[Special:CreatePage|Nouvelle page]]''' pour commencer à écrire
 	'myhome-feed-posted-by' => 'posté par $1',
 	'myhome-feed-comment-by' => 'commenté par $1',
 	'myhome-feed-deleted-by' => 'supprimée par $1',
-	'myhome-feed-moved-by' => 'déplacée par $1',
+	'myhome-feed-moved-by' => 'renommée par $1',
 	'myhome-feed-article-comment-created-by' => 'nouveau commentaire de $1',
 	'myhome-feed-article-comment-edited-by' => 'commentaire modifié par $1',
 	'myhome-feed-by' => 'par $1',
@@ -867,7 +868,7 @@ Cliquez sur '''[[Special:CreatePage|Nouvelle page]]''' pour commencer à écrire
 	'myhome-feed-new-blog-post-details' => 'Nouveau blog',
 	'myhome-feed-new-blog-comment-details' => 'Commentaire',
 	'myhome-feed-new-article-comment-details' => 'Commentaire',
-	'myhome-feed-move-details' => 'Renommée',
+	'myhome-feed-move-details' => 'Nouveau nom',
 	'myhome-feed-redirect-details' => 'Redirection',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Photo ajoutée|Photos ajoutées}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Vidéo ajoutée|Vidéos ajoutées}}',
@@ -924,6 +925,7 @@ Pode usar a súa lista de vixilancia para seguir as modificacións recentes nas 
 	'myhome-hot-spots-newest' => 'Novas páxinas do wiki',
 	'myhome-hot-spots-brandnew' => 'Este é un wiki novo. Prema sobre [[Special:CreatePage|páxina nova]] para comezar a escribir!',
 	'tog-myhomedisableredirect' => 'Desactivar a redirección cara á miña actividade no wiki',
+	'prefs-myhome' => 'Inicio',
 	'myhome-feed-newpage' => 'páxina nova',
 	'myhome-feed-edit' => 'editar',
 	'myhome-feed-move' => 'páxina movida',
@@ -1124,6 +1126,7 @@ $messages['ia'] = array(
 	'myhome-hot-spots-newest' => 'Nove paginas in le wiki',
 	'myhome-hot-spots-brandnew' => 'Iste wiki es toto nove. Clicca super [[Special:CreatePage|Nove pagina]] pro comenciar a scriber!',
 	'tog-myhomedisableredirect' => 'Disactivar mi redirection verso le activitate del wiki',
+	'prefs-myhome' => 'Mi pagina initial',
 	'myhome-feed-newpage' => 'nove pagina',
 	'myhome-feed-edit' => 'modificar',
 	'myhome-feed-move' => 'pagina renominate',
@@ -1414,6 +1417,16 @@ $messages['ja'] = array(
 	'myhome-default-view-success' => 'このページがデフォルトに設定されました',
 	'tooltip-pt-myhome' => 'My Home',
 	'activityfeed' => 'アクティビティフィード',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'myhome' => 'Mala min',
+	'myhome-feed-newpage' => 'rûpela nû',
+	'myhome-feed-new-page-details' => 'Rûpela nû',
+	'myhome-feed-summary-details' => 'Kurte',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1784,7 +1797,7 @@ $messages['pl'] = array(
 	'myhome-activity-feed' => 'Aktywność',
 	'myhome-watchlist-feed' => 'Obserwowane',
 	'myhome-user-contributions-feed' => 'Wkład użytkownika',
-	'tog-myhomedisableredirect' => 'Wyłącz przekierowanie do mojej strony domowej',
+	'tog-myhomedisableredirect' => 'Wyłącz przekierowanie do strony aktywności na wiki',
 	'myhome-feed-created-by' => 'utworzony przez $1',
 	'myhome-feed-added-by' => 'dodany przez $1',
 	'myhome-feed-edited-by' => 'edytowany przez $1',
@@ -2306,9 +2319,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author McDutchie
+ * @author Tobulos1
  */
 $messages['sv'] = array(
-	'myhome' => 'My Home',
+	'myhome' => 'Mitt Hem',
 	'myhome-activity-more' => 'se mer senaste aktivitet',
 	'myhome-activity-feed' => 'Aktivitet påfyllning',
 	'myhome-activity-feed-empty' => "Denna wiki väntar på att du engagerar dig. Klicka på '''[[Special:CreatePage|Ny sida]]''' för att börja skriva!",
@@ -2319,7 +2333,16 @@ $messages['sv'] = array(
 	'myhome-hot-spots-feed-empty' => "Denna wiki väntar på dig att engagera. Klicka på '''[[Special:CreatePage|Ny sida]]''' för att börja skriva!",
 	'myhome-hot-spots-newest' => 'Nya sidor på wikin',
 	'myhome-hot-spots-brandnew' => "Detta är en helt ny wiki. Klicka på '''[[Special:CreatePage|Ny sida]]''' för att börja skriva!",
-	'tog-myhomedisableredirect' => 'Inaktivera min omdirigera till My Home',
+	'tog-myhomedisableredirect' => 'Inaktivera mina omdirigeringar till Wiki Aktivitet',
+	'prefs-myhome' => 'Mitt Hem',
+	'myhome-feed-newpage' => 'ny sida',
+	'myhome-feed-edit' => 'redigera',
+	'myhome-feed-move' => 'sidan är flyttad',
+	'myhome-feed-talkpage' => 'diskussionssida',
+	'myhome-feed-blogcomment' => 'bloggkommentar',
+	'myhome-feed-delete' => 'raderad',
+	'myhome-feed-image' => 'bild tillagd',
+	'myhome-feed-video' => 'video tillagd',
 	'myhome-feed-created-by' => 'skapad av $1',
 	'myhome-feed-added-by' => 'tillagt av $1',
 	'myhome-feed-edited-by' => 'redigerad av $1',
@@ -2333,6 +2356,7 @@ $messages['sv'] = array(
 	'myhome-feed-section-edit-details' => 'Redigerad avsnittet',
 	'myhome-feed-new-blog-post-details' => 'Ny blogg',
 	'myhome-feed-new-blog-comment-details' => 'Kommentar',
+	'myhome-feed-new-article-comment-details' => 'Kommentera',
 	'myhome-feed-move-details' => 'Namnändrad',
 	'myhome-feed-redirect-details' => 'Omdirigera',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Lagt till bild|Lagt till bilder}}',
@@ -2344,6 +2368,7 @@ $messages['sv'] = array(
 	'myhome-switch-to-monaco' => "My Home funktionen är bara tillgänglig om du använder Monaco utseenden. Om du vill se My Home, går du till '''[[Special:Preferences|dina Inställningar]]''' för att ändra din utseende.",
 	'myhome-namespace-blog' => 'Blogg',
 	'myhome-community-corner-header' => 'Community Hörn',
+	'oasis-myhome-community-corner-edit' => 'redigera meddelande &gt;',
 	'myhome-community-corner-edit' => 'ändra meddelande',
 	'community-corner' => "'''Välkommen till My Home!'''
 
@@ -2363,6 +2388,7 @@ Om du är grundaren eller en administratör på denna wiki kan du ändra detta b
 	'myhome-hot-spots-definition' => 'Sidor med flest redigerare i sista $1 dagar.',
 	'myhome-default-view-checkbox' => 'Gör $1 min standardvy',
 	'myhome-default-view-success' => 'Okej, detta är din standard nu',
+	'tooltip-pt-myhome' => 'Gå till Mitt Hem',
 );
 
 /** Swahili (Kiswahili) */
@@ -2564,6 +2590,7 @@ $messages['uk'] = array(
 	'myhome-user-contributions-feed' => 'Внесок',
 	'myhome-hot-spots-newest' => 'Нові сторінки у вікі',
 	'tog-myhomedisableredirect' => 'Вимкнути перенаправлення мене на сторінку вікі-активності',
+	'prefs-myhome' => 'Моя домашня сторінка',
 	'myhome-feed-newpage' => 'нова сторінка',
 	'myhome-feed-edit' => 'редагування',
 	'myhome-feed-move' => 'переміщено сторінку',

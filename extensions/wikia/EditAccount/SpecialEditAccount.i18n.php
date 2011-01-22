@@ -1149,6 +1149,7 @@ $messages['vi'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Horacewai2
+ * @author Waihorace
  */
 $messages['zh-hant'] = array(
 	'editaccount' => '編輯帳戶',

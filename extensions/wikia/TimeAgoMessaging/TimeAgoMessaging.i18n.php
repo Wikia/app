@@ -10,6 +10,27 @@ $messages['en'] = array(
 	'timeago-second' => 'a minute ago',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'timeagomessaging-desc' => 'Bied i18n vir die plugin jquery.timeago.js',
+	'timeago-day' => "{{PLURAL:$1|'n dag|$1 dae}} gelede",
+	'timeago-hour' => "{{PLURAL:$1|'n uur|$1 ure}} gelede",
+	'timeago-minute' => "{{PLURAL:$1|'n minuut|$1 minute}} gelede",
+	'timeago-second' => "'n minuut gelede",
+);
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'timeago-day' => '{{PLURAL:$1|un devezh|$1 devezh}} zo',
+	'timeago-hour' => '{{PLURAL:$1|un eurvezh|$1 eurvezh}} zo',
+	'timeago-minute' => '{{PLURAL:$1|ur vunutenn|$1 munutenn}} zo',
+	'timeago-second' => 'ur vunutenn zo',
+);
+
 /** Spanish (Español)
  * @author Bola
  */
@@ -19,6 +40,28 @@ $messages['es'] = array(
 	'timeago-hour' => 'hace {{PLURAL:$1|una hora|$1 horas}}',
 	'timeago-minute' => 'hace $1 {{PLURAL:$1|minuto|$1 minutos}}',
 	'timeago-second' => 'hace un minuto',
+);
+
+/** French (Français)
+ * @author Wyz
+ */
+$messages['fr'] = array(
+	'timeagomessaging-desc' => 'Support du i18n pour le plugin jquery.timeago.js',
+	'timeago-day' => '{{PLURAL:$1|la veille|il y a $1 jours}}',
+	'timeago-hour' => 'il y a {{PLURAL:$1|une heure|$1 heures}}',
+	'timeago-minute' => 'il y a {{PLURAL:$1|une minute|$1 minutes}}',
+	'timeago-second' => 'il y a une minute',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'timeagomessaging-desc' => 'Forni internationalisation pro le plug-in jquery.timeago.js',
+	'timeago-day' => '{{PLURAL:$1|un die|$1 dies}} retro',
+	'timeago-hour' => '{{PLURAL:$1|un hora|$1 horas}} retro',
+	'timeago-minute' => '{{PLURAL:$1|un minuta|$1 minutas}} retro',
+	'timeago-second' => 'un minuta retro',
 );
 
 /** Macedonian (Македонски)
@@ -41,6 +84,16 @@ $messages['nl'] = array(
 	'timeago-hour' => '{{PLURAL:$1|een uur|$1 uur}} geleden',
 	'timeago-minute' => '{{PLURAL:$1|een minuut|$1 minuten}} geleden',
 	'timeago-second' => 'een minuut geleden',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'timeago-day' => '{{PLURAL:$1|én dag|$1 dager}} siden',
+	'timeago-hour' => '{{PLURAL:$1|én time|$1 timer}} siden',
+	'timeago-minute' => '{{PLURAL:$1|ett minutt|$1 minutter}} siden',
+	'timeago-second' => 'et øyeblikk siden',
 );
 
 /** Polish (Polski) */

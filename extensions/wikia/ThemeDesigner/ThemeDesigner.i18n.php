@@ -386,6 +386,10 @@ $messages['fr'] = array(
 	'themedesigner-history-item' => '$1 par $2',
 	'themedesigner-button-change-text' => 'Modifier le texte',
 	'themedesigner-reason' => 'Concepteur de thème - sauvegarde effectuée par $1',
+	'themedesigner-size-error' => 'Taille de fichier incorrecte',
+	'themedesigner-dimensions-error' => 'La taille de l’image dépasse les limites',
+	'themedesigner-type-error' => 'Type de fichier incorrect',
+	'themedesugber-uknown-error' => 'Une erreur s’est produite, nous n’avons malheureusement pas été capable de l’identifier, veuillez réessayer',
 );
 
 /** Galician (Galego)
@@ -480,6 +484,10 @@ $messages['ia'] = array(
 	'themedesigner-history-item' => '$1 per $2',
 	'themedesigner-button-change-text' => 'Cambiar texto',
 	'themedesigner-reason' => 'Designator de apparentias – salveguardate per $1',
+	'themedesigner-size-error' => 'Dimension de file incorrecte',
+	'themedesigner-dimensions-error' => 'Le imagine excede le limites del dimensiones',
+	'themedesigner-type-error' => 'Typo de file incorrecte',
+	'themedesugber-uknown-error' => 'Un error occurreva. Regrettabilemente nos non succedeva a identificar lo. Per favor reproba.',
 );
 
 /** Japanese (日本語)
@@ -731,7 +739,7 @@ $messages['pl'] = array(
 	'themedesigner-size' => 'rozmiar',
 	'themedesigner-button-save' => 'Zapisz',
 	'themedesigner-upload-a-graphic' => 'prześlij grafikę',
-	'themedesigner-rules-wordmark' => '250x65 pikseli (tylko pliki .png)',
+	'themedesigner-rules-wordmark' => 'do 250x65 pikseli (tylko pliki .png)',
 	'themedesigner-dont-use-a-graphic' => 'Nie używaj grafiki',
 	'themedesigner-history-item' => '$1 przez $2',
 	'themedesigner-button-change-text' => 'Zmień tekst',
@@ -843,10 +851,15 @@ $messages['pt'] = array(
 	'themedesigner-size' => 'tamanho',
 	'themedesigner-button-save' => 'Gravar',
 	'themedesigner-upload-a-graphic' => 'upload de um padrão gráfico',
-	'themedesigner-rules-wordmark' => '250x65 pixels (só ficheiros .png)',
+	'themedesigner-rules-wordmark' => 'até 250x65 pixels (só ficheiros .png)',
 	'themedesigner-dont-use-a-graphic' => 'Não usar um padrão gráfico',
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Alterar texto',
+	'themedesigner-reason' => 'Compositor de Variantes do Tema - gravado por $1',
+	'themedesigner-size-error' => 'Tamanho de ficheiro incorrecto',
+	'themedesigner-dimensions-error' => 'A imagem excede os limites de tamanho',
+	'themedesigner-type-error' => 'Tipo de ficheiro incorrecto',
+	'themedesugber-uknown-error' => 'Ocorreu um erro que não é possível identificar. Tente novamente, por favor.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

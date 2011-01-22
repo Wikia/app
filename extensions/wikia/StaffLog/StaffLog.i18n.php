@@ -137,6 +137,13 @@ $messages['pt-br'] = array(
 	'stafflog-piggybacklogoutmsg' => 'Personificação $1 - usuário $2 saiu da conta $3',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'stafflog-blockmsg' => '$1 $2 försökte blockera personalanvändaren $3 på wikin $4. Anledning: $5',
+);
+
 /** Ukrainian (Українська)
  * @author Тест
  */

@@ -257,7 +257,7 @@ $messages['ar'] = array(
 	'wmu-license' => 'الرخصة',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -615,7 +615,7 @@ $messages['de'] = array(
 	'wmu-no-rights' => 'Du bist nicht berechtigt Bilder auf dieser Seite hinzuzufügen',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -874,7 +874,7 @@ $messages['fr'] = array(
 	'wmu-success' => '<h1>Succès</h1>Votre image a été insérée.',
 	'wmu-success-placeholder' => '<h1>Succès</h1>',
 	'wmu-return' => 'Revenir à la modification',
-	'wmu-back' => 'retour',
+	'wmu-back' => 'Retour',
 	'wmu-close' => 'fermer',
 	'wmu-warn1' => "Vous devez d'abord spécifier ce que vous recherchez !",
 	'wmu-warn2' => "Vous devez d'abord sélectionner un fichier !",
@@ -1106,6 +1106,7 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'wmu-upload-image' => 'Incargar imagine',
 	'wmu-upload' => 'Incargamento',
 	'wmu-notlogged' => 'Aperi un session o crea un conto pro incargar imagines ex tu computator',
 	'wmu-find' => 'Recerca',
@@ -1122,6 +1123,7 @@ $messages['ia'] = array(
 	'wmu-details-inf' => '<h1>Detalios del file</h1>Specifica un nomine descriptive pro iste file.',
 	'wmu-name' => 'Nomine',
 	'wmu-license' => 'Licentia',
+	'wmu-licensing' => 'Licentia',
 	'wmu-details-inf2' => '<h1>Optiones del articulo</h1>Selige le apparentia de iste file in tu articulo.',
 	'wmu-size' => 'Dimension',
 	'wmu-thumbnail' => 'Miniatura',
@@ -1174,6 +1176,11 @@ $messages['ia'] = array(
 	'wmu-no-preview' => 'Tu non pote adder un imagine ex un articulo in modo de previsualisation',
 	'wmu-no-protect' => 'Iste pagina es protegite, tu non pote adder imagines a illo',
 	'wmu-no-rights' => 'Tu non ha le permission de adder imagines a iste pagina',
+	'wmu-more-options' => 'Plus optiones',
+	'wmu-fewer-options' => 'Minus optiones',
+	'wmu-replace-default-caption' => 'reimplaciar le legenda predefinite',
+	'wmu-appearance-in-article' => 'Apparentia in articulo',
+	'wmu-alignment' => 'Alineamento',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -1399,6 +1406,7 @@ $messages['lv'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'wmu-upload-image' => 'Подигни слика',
 	'wmu-upload' => 'Подигање',
 	'wmu-notlogged' => 'Најавете се или регистрирајте сметка за да можете да подигате слики од вашиот сметач',
 	'wmu-find' => 'Пребарување',
@@ -1415,6 +1423,7 @@ $messages['mk'] = array(
 	'wmu-details-inf' => '<h1>Податоци за податотека</h1>Назначете име за оваа податотека. Името треба да биде описно.',
 	'wmu-name' => 'Име',
 	'wmu-license' => 'Лиценца',
+	'wmu-licensing' => 'Лиценцирање',
 	'wmu-details-inf2' => '<h1>Нагодувања за статија</h1>Одберете како сакате да изгледа оваа податотека на вашата статија.',
 	'wmu-size' => 'Големина',
 	'wmu-thumbnail' => 'Минијатура',
@@ -1449,8 +1458,8 @@ $messages['mk'] = array(
 
 ''Погледајте го и [[Special:Log/upload|дневникот на подигања]] и [[Special:ImageList|списокот на сите подигнати податотеки]].''",
 	'wmu-show-message' => 'прикажи порака',
-	'wmu-hide-message' => 'сокриј порака',
-	'wmu-hide-license-msg' => 'сокриј текст на лиценцата',
+	'wmu-hide-message' => 'скриј порака',
+	'wmu-hide-license-msg' => 'скриј текст на лиценцата',
 	'wmu-show-license-msg' => 'прикажи текст на лиценцата',
 	'wmu-max-thumb' => 'надмината е максималната дозволена големина на минијатурата; ја враќам првичната големина',
 	'wmu-notallowed' => 'Не можете да подигате слики на ова вики',
@@ -1467,6 +1476,11 @@ $messages['mk'] = array(
 	'wmu-no-preview' => 'Не можете да додавате слики од статија додека сте во прегледен режим',
 	'wmu-no-protect' => 'Оваа страница е заштитена, и затоа не можете да додадете слика на неа',
 	'wmu-no-rights' => 'Не ви е дозволено да додавате слики на оваа страница',
+	'wmu-more-options' => 'Повеќе можности',
+	'wmu-fewer-options' => 'Помалку можности',
+	'wmu-replace-default-caption' => 'замени зададен опис',
+	'wmu-appearance-in-article' => 'Изглед во статија',
+	'wmu-alignment' => 'Порамнување',
 );
 
 /** Maltese (Malti)
@@ -1476,7 +1490,7 @@ $messages['mt'] = array(
 	'wmu-close' => 'agħlaq',
 );
 
-/** Norwegian Bokmål (Norsk (bokmål)) */
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
 $messages['nb'] = array(
 	'wmu-added-from-plc' => 'Fil lagt til via bildeplassholderen',
 );
@@ -1486,6 +1500,7 @@ $messages['nb'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'wmu-upload-image' => 'Afbeelding uploaden',
 	'wmu-upload' => 'Uploaden',
 	'wmu-notlogged' => 'Meld u aan of registreer een gebruiker om afbeeldingen te uploaden',
 	'wmu-find' => 'Zoeken',
@@ -1502,6 +1517,7 @@ $messages['nl'] = array(
 	'wmu-details-inf' => '<h1>Bestandsgegeven</h1>Geef een beschrijvende naam op voor dit bestand.',
 	'wmu-name' => 'Naam',
 	'wmu-license' => 'Licentie',
+	'wmu-licensing' => 'Licentie',
 	'wmu-details-inf2' => '<h1>Paginaopties</h1>Bepaal hoe u het bestand in uw pagina wilt invoegen.',
 	'wmu-size' => 'Grootte',
 	'wmu-thumbnail' => 'Miniatuur',
@@ -1558,13 +1574,19 @@ Klik hieronder om meer afbeeldingen aan de galerij toe te voegen.',
 	'wmu-no-protect' => 'Deze pagina is beveiligd.
 U kunt er geen afbeeldingen aan toevoegen.',
 	'wmu-no-rights' => 'U mag geen afbeeldingen toevoegen aan deze pagina',
+	'wmu-more-options' => 'Meer instellingen',
+	'wmu-fewer-options' => 'Minder instellingen',
+	'wmu-replace-default-caption' => 'standaardbijschrift vervangen',
+	'wmu-appearance-in-article' => 'Weergave in pagina',
+	'wmu-alignment' => 'Uitlijning',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'wmu-upload-image' => 'Last opp bilde',
 	'wmu-upload' => 'Last opp',
 	'wmu-notlogged' => 'Logg inn eller registrer deg for å laste opp bilder fra datamaskinen',
 	'wmu-find' => 'Finn',
@@ -1581,6 +1603,7 @@ $messages['no'] = array(
 	'wmu-details-inf' => '<h1>Fildetaljer</h1>Angi et navn for denne filen. Gi det noe beskrivende.',
 	'wmu-name' => 'Navn',
 	'wmu-license' => 'Lisens',
+	'wmu-licensing' => 'Lisensiering',
 	'wmu-details-inf2' => '<h1>Artikkelvalg</h1>Velg hvordan du vil at denne filen til å se ut i artikkelen din.',
 	'wmu-size' => 'Størrelse',
 	'wmu-thumbnail' => 'Miniatyrbilde',
@@ -1633,6 +1656,11 @@ $messages['no'] = array(
 	'wmu-no-preview' => 'Du kan ikke legge til bilde fra en side i forhåndsvisningsmodus',
 	'wmu-no-protect' => 'Denne siden er beskyttet, du kan ikke legge bilder til den',
 	'wmu-no-rights' => 'Du er ikke tillatt å legge til bilder til denne siden',
+	'wmu-more-options' => 'Flere alternativer',
+	'wmu-fewer-options' => 'Færre alternativer',
+	'wmu-replace-default-caption' => 'erstatt standard bildetekst',
+	'wmu-appearance-in-article' => 'Utseende i artikkel',
+	'wmu-alignment' => 'Justering',
 );
 
 /** Deitsch (Deitsch)
@@ -1949,7 +1977,7 @@ $messages['sl'] = array(
 	'wmu-back' => 'nazaj',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -2010,8 +2038,12 @@ $messages['sr-ec'] = array(
 	'wmu-no-rights' => 'Није вам дозвољено да додајете слике на ову страну',
 );
 
-/** Swedish (Svenska) */
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
 $messages['sv'] = array(
+	'wmu-upload-btn' => 'Ladda upp',
+	'wmu-name' => 'Namn',
 	'wmu-added-from-plc' => 'Arkiv tillsätts med hjälp av bild platshållare',
 );
 
@@ -2148,7 +2180,7 @@ $messages['uk'] = array(
 	'wmu-gallery' => 'Галерея',
 );
 
-/** Simplified Chinese (中文(简体))
+/** Simplified Chinese (‪中文(简体)‬)
  * @author Gaoxuewei
  * @author Xiaomingyan
  */
