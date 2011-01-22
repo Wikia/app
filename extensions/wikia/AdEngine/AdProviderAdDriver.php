@@ -71,7 +71,7 @@ EOT;
 		}
 
 		$out .= $this->getSetupHtml();
-		$out .= AdProviderLiftium::getInstance()->getSetupHtml();
+		$out .= AdProviderLiftium::getInstance()->getSetupHtml(array('isCalledAfterOnload'=>1, 'hasMoreCalls'=>1, 'maxLoadDelay'=>3000));
 
 		return $out;
 	}

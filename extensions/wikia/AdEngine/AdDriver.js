@@ -639,6 +639,10 @@ AdDriverDelayedLoader.loadNext = function() {
 			AdDriverDelayedLoader.loadNext();
 		}
 	}
+	
+	if (!AdDriverDelayedLoader.adDriverItems.length) {
+		Liftium.hasMoreCalls = 0;
+	}
 }
 
 // This functions reorders the queue of slots so that TOP_LEADERBOARD and
@@ -679,6 +683,7 @@ AdDriverDelayedLoader.load = function() {
 	}
 
 	if (AdDriver.isNoAdWiki()) {
+		Liftium.hasMoreCalls = 0;
 		return;
 	}
 

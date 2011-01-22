@@ -18,7 +18,7 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 		return false;
 	}
 
-	public function getSetupHtml(){
+	public function getSetupHtml($params=null){
                 static $called = false;
                 if ($called){
                         return false;
@@ -49,6 +49,19 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 			$options['kv_dart'] = $wgDartCustomKeyValues;
 		}
 		$options['kv_domain'] = $_SERVER['HTTP_HOST'];
+		if (!empty($params)) {
+			if (isset($params['isCalledAfterOnload'])) {
+				$options['isCalledAfterOnload'] = $params['isCalledAfterOnload'];
+			}
+
+			if (isset($params['hasMoreCalls'])) {
+				$options['hasMoreCalls'] = $params['hasMoreCalls'];
+			}
+
+			if (isset($params['maxLoadDelay'])) {
+				$options['maxLoadDelay'] = $params['maxLoadDelay'];
+			}
+		}
 
 		// LiftiumOptions as json
 		$out = '<script type="text/javascript">' . "\n";
