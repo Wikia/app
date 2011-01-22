@@ -75,6 +75,14 @@ $messages['ia'] = array(
 	'paginator-back' => 'Retornar',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'paginator-next' => 'Vörahn',
+	'paginator-back' => 'Zeröck',
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $messages['lb'] = array(
 	'paginator-next' => 'Weider',

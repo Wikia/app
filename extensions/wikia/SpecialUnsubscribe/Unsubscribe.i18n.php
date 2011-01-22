@@ -64,6 +64,26 @@ $messages['es'] = array(
 	'unsubscribe-working-done' => 'Completado.',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'unsubscribe' => 'Cancellar subscription',
+	'unsubscribe-badaccess' => 'Nos regretta que iste pagina non pote esser usate directemente.
+Per favor seque le ligamine ab tu e-mail.',
+	'unsubscribe-badtoken' => 'Occurreva un problema con le indicio de securitate.',
+	'unsubscribe-bademail' => 'Occurreva un problema con le e-mail.',
+	'unsubscribe-badtime' => 'Le ligamine ha expirate. Per favor usa un ligamine que ha minus de 7 dies de etate.',
+	'unsubscribe-nousers' => 'Nulle usator trovate con iste adresse de e-mail.',
+	'unsubscribe-noconfusers' => 'Nulle usator confirmate trovate con iste adresse de e-mail.',
+	'unsubscribe-confirm-legend' => 'Confirmar',
+	'unsubscribe-confirm-text' => 'Cancellar subscription de tote le contos con <code>$1</code>?',
+	'unsubscribe-confirm-button' => 'Si, io es secur',
+	'unsubscribe-working' => 'Cancella subscription de $1 {{PLURAL:$1|conto|contos}} pro $2',
+	'unsubscribe-working-problem' => 'problema de cargamento del information de usator pro: $1',
+	'unsubscribe-working-done' => 'Complete.',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -100,6 +120,22 @@ $messages['nl'] = array(
 	'unsubscribe-working' => 'Bezig met het uitschrijven van {{PLURAL:$1|een gebruiker|$1 gebruikers}} voor $2',
 	'unsubscribe-working-problem' => 'probleem bij het laden van de gebruikersgegevens voor: $1',
 	'unsubscribe-working-done' => 'Afgerond.',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'unsubscribe-badaccess' => 'Beklager, denne siden kan ikke brukes direkte. Vennligst følg lenken fra e-posten din.',
+	'unsubscribe-badtoken' => 'Beklager, det oppstod et problem med sikkerhetskoden.',
+	'unsubscribe-bademail' => 'Beklager, det oppstod et problem med e-posten.',
+	'unsubscribe-badtime' => 'Beklager, lenken har utgått. Vennligst bruk en lenke som er mindre enn syv dager gammel.',
+	'unsubscribe-nousers' => 'Ingen brukere funnet med denne e-postadressen.',
+	'unsubscribe-noconfusers' => 'Ingen bekreftede brukere funnet med den e-postadressen.',
+	'unsubscribe-confirm-legend' => 'Bekreft',
+	'unsubscribe-confirm-text' => 'Avslutt abonnement for alle kontoer med <code>$1</code>?',
+	'unsubscribe-confirm-button' => 'Ja, jeg er sikker',
+	'unsubscribe-working-done' => 'Fullført.',
 );
 
 /** Ukrainian (Українська)

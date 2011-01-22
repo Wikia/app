@@ -52,6 +52,10 @@ $messages['ia'] = array(
 	'interstitial-default-campaign-code' => 'Wikia te ama!',
 	'interstitial-skip-ad' => 'Saltar iste annuncio',
 	'interstitial-already-logged-in-no-link' => 'Tu ha jam aperite session e il non ha un destination definite.',
+	'interstitial-disabled-no-link' => 'Nulle destination ha essite definite e le annuncios interstitial non es activate in iste wiki.',
+	'interstitial-link-away' => 'Il ha nihil a vider hic!<br /><br />Vole tu ir al [[{{MediaWiki:Mainpage}}|pagina principal]] o forsan a un [[Special:Random|pagina aleatori]]?',
+	'exitstitial-register' => '<a href="#" class="register">Crea un conto</a> o <a href="#" class="login">aperi session</a> pro saltar le publicitate.',
+	'exitstitial-button' => 'Saltar iste annuncio',
 );
 
 /** Macedonian (Македонски)
@@ -86,6 +90,8 @@ $messages['nl'] = array(
 $messages['no'] = array(
 	'interstitial-default-campaign-code' => 'Wikia elsker deg!',
 	'interstitial-skip-ad' => 'Hopp over annonse',
+	'interstitial-already-logged-in-no-link' => 'Du er allerede logget inn, og det er ikke angitt et mål.',
+	'interstitial-link-away' => 'Det er ingenting å se her!<br /><br />Vil du gå til [[{{MediaWiki:Mainpage}}|hovedsiden]] eller kanskje til en [[Special:Random|tilfeldig side]]?',
 	'exitstitial-button' => 'Hopp over annonse',
 );
 

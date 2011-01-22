@@ -312,7 +312,7 @@ N'hésitez pas à laisser un message sur [[$2|ma page de discussion]] si je peux
 Bonjour et bienvenue sur {{SITENAME}} ! Merci d'avoir modifié la page [[:$1]].
 
 Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:fr:Forum:Vue d'ensemble|forums du Wiki Central de la Communauté]] $3",
-	'welcome-message-anon-staff' => "== Bienvenue ==
+	'welcome-message-anon-staff' => "==Bienvenue==
 Bonjour et bienvenue sur {{SITENAME}}.
 Merci d'avoir modifié la page [[:$1]].
 
@@ -321,6 +321,7 @@ C'est un moyen simple pour garder la trace de vos contributions et qui vous aide
 
 Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:fr:Forum:Vue d'ensemble|forums du Wiki Central de la Communauté]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum d’aide]] | [[w:sblog|blog]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 /** Galician (Galego)
@@ -475,6 +476,7 @@ Salute, benvenite a {{SITENAME}}. Gratias pro tu modification del pagina [[:$1]]
 
 Si tu ha besonio de adjuta, e il ha nulle administratores local hic, nos suggere visitar le [[wikia:Forum:Community Central Forum|foros in le wiki Community Central]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|foro de adjuta]] | [[w:sblog|blog]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -617,6 +619,7 @@ $messages['mk'] = array(
 
 Ако ви треба помош, а нема локални администратори, ви препорачуваме да ги посетите [[wikia:Forum:Community Central Forum|форумите на Центарот на Заедницата]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|форум за помош]] | [[w:sblog|блог]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 /** Dutch (Nederlands)
@@ -657,6 +660,7 @@ Hallo! Welkom bij {{SITENAME}}. Dank u wel voor uw bewerking aan de pagina [[:$1
 
 Als u hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum voor hulp]] | [[w:sblog|blog]])</small>',
+	'hawelcomeedit' => 'HA Welkom bewerken',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)

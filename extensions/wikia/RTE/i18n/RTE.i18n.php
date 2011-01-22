@@ -391,6 +391,7 @@ $messages['pt'] = array(
 	'enablerichtexteditor' => 'Activar o Editor de Texto Enriquecido ("Rich Text Editor")',
 	'rte-enablerichtexteditormessage' => 'O Editor de Texto Enriquecido foi activado!',
 	'rte-first-run-notice' => 'Fizemos algumas melhorias no editor. Para saber mais, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news leia o anúncio].',
+	'prefs-rte' => 'Editor de Texto Enriquecido',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

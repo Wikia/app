@@ -609,10 +609,21 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Per
+ * @author Tobulos1
  */
 $messages['sv'] = array(
+	'dump-database' => 'Databasdumps',
+	'dump-database-info' => 'Databasdumps kan användas som en personlig backup (Wikia producerar separata säkerhetskopior av alla wikis automatiskt) eller för underhållsbots',
+	'dump-database-curr-pages' => 'Nuvarande sidor',
+	'dump-database-curr-pages-info' => '(Denna version är oftast bäst för bot-användning)',
+	'dump-database-full-pages' => 'Aktuella sidor och historia',
+	'dump-database-full-pages-info' => '(Varning: den här filen kan vara mycket stor)',
 	'dump-database-request' => 'Begär en uppdatering',
+	'dump-database-request-info' => '(Dumpar är ofta generade varje vecka)',
 	'dump-database-request-submit' => 'Skicka begäran',
+	'dump-database-request-already-submitted' => 'Dump har begärts nyligen (mindre än 7 dagar sedan)',
+	'dump-database-request-requested' => 'Begäran om databasdump har skickats',
+	'dump-database-info-more' => 'Vänligen <a href="http://community.wikia.com/wiki/Help:Database_download">se</a> för mer info',
 );
 
 /** Tamil (தமிழ்)

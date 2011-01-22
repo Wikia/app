@@ -1863,12 +1863,20 @@ Bes esu joot un versöök et noch ens.',
 	'userrenametool-move-log' => 'Di Sigg weet automatesch ömjenannt weil mer dä Metmaacher „[[User:$1|$1]]“ op „[[User:$2|$2]]“ öm am däufe sin.',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin)) */
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
 $messages['ku-latn'] = array(
+	'userrenametool' => 'Navê bikarhênerekî biguherîne',
 	'userrenametool-old' => 'Navî niha:',
 	'userrenametool-new' => 'Navî nuh:',
+	'userrenametool-reason' => 'Sedema ji bo navguhertinê:',
+	'userrenametool-confirm' => 'Erê, navê vî bikarhênerî biguherîne',
 	'userrenametool-submit' => 'Bike',
+	'userrenametool-errorbot' => "Bikarhêner <nowiki>$1</nowiki> bot'ek e.",
 	'userrenametool-success' => 'Navî bikarhênerê "<nowiki>$1</nowiki>" bû "<nowiki>$2</nowiki>"',
+	'userrenametool-confirm-yes' => 'Erê',
+	'userrenametool-confirm-no' => 'Na',
 	'userrenametool-log' => 'yê $1 beşdarîyên xwe hebû. $2',
 );
 
@@ -2977,6 +2985,7 @@ $messages['su'] = array(
  * @author Lejonel
  * @author M.M.S.
  * @author Najami
+ * @author Tobulos1
  */
 $messages['sv'] = array(
 	'userrenametool-desc' => "Lägger till en [[Special:Renameuser|specialsida]] för att byta namn på en användare (kräver behörigheten ''renameuser'')",
@@ -2995,6 +3004,9 @@ $messages['sv'] = array(
 	'userrenametool-error-request' => 'Ett problem inträffade i hanteringen av begäran. Gå tillbaks och försök igen.',
 	'userrenametool-error-same-user' => 'Du kan inte byta namn på en användare till samma som tidigare.',
 	'userrenametool-success' => 'Användaren "<nowiki>$1</nowiki>" har fått sitt namn bytt till "<nowiki>$2</nowiki>"',
+	'userrenametool-confirm-intro' => 'Vill du verkligen göra det här?',
+	'userrenametool-confirm-yes' => 'Ja',
+	'userrenametool-confirm-no' => 'Nej',
 	'userrenametool-page-exists' => 'Sidan $1 finns redan och kan inte skrivas över automatiskt.',
 	'userrenametool-page-moved' => 'Sidan $1 har flyttats till $2.',
 	'userrenametool-page-unmoved' => 'Sidan $1 kunde inte flyttas till $2.',

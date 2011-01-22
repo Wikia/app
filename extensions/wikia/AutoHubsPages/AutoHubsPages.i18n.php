@@ -168,6 +168,14 @@ $messages['ia'] = array(
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|redactor|redactores}}</span>',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'hub-blog-showarticle' => 'Rûpelê nîşan bide',
+	'hub-hotspot-from' => 'ji',
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $messages['lb'] = array(
 	'unhide' => 'Nees weisen',
@@ -189,7 +197,7 @@ $messages['mk'] = array(
 	'hub-blog-showarticle' => 'Прикажи страница',
 	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">{{PLURAL:$1|бод|бода}} за уредување</span>',
 	'hub-hotspot-from' => 'од',
-	'hub-hide-feed' => 'Сокриј канал',
+	'hub-hide-feed' => 'Скриј канал',
 	'hub-show-feed' => 'Прикажи канал',
 	'hub-contributors-info' => 'Ова се најкотираните корисници неделава, рангирани по број науредувања.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|уредник|уредници}}</span>',
@@ -299,6 +307,15 @@ $messages['pt'] = array(
 $messages['ru'] = array(
 	'unhide' => 'Показать',
 	'hub-blog-comments' => '{{PLURAL:$1|один комментарий|$1 комментария|$1 комментариев}}',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'unhide' => 'Ta fram',
+	'hub-hotspot-from' => 'från',
+	'hub-hide-feed' => 'Göm feed',
 );
 
 /** Tamil (தமிழ்)

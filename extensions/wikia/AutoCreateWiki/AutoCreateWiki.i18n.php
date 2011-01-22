@@ -1862,6 +1862,14 @@ $3
 	'autocreatewiki-subname-answers' => 'Answers',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'autocreatewiki-category-label' => 'Kategorî:',
+	'autocreatewiki-subname-answers' => 'Bersivan',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -3234,6 +3242,39 @@ $messages['sr-ec'] = array(
 
 <p>-- Тим Викија заједнице</p>',
 	'autocreatewiki-subname-answers' => 'Одговори',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'autocreatewiki' => 'Skapa en ny wiki',
+	'autocreatewiki-page-title-default' => 'Skapa en ny wiki',
+	'createwiki' => 'Skapa en ny wiki',
+	'autocreatewiki-required' => '$1 = krävs',
+	'autocreatewiki-language-top' => 'Topp $1-språk',
+	'autocreatewiki-language-all' => 'Alla språk',
+	'autocreatewiki-birthdate' => 'Födelsedatum:',
+	'autocreatewiki-blurry-word' => 'Suddigt ord:',
+	'autocreatewiki-remember' => 'Kom ihåg mig',
+	'autocreatewiki-create-account' => 'Skapa ett konto',
+	'autocreatewiki-done' => 'klar',
+	'autocreatewiki-error' => 'fel',
+	'autocreatewiki-haveaccount-question' => 'Har du redan ett konto hos Wikia?',
+	'autocreatewiki-success-title-default' => 'Din wiki har skapats!',
+	'autocreatewiki-limit-day' => 'Wikia har överskridit det maximala antalet av skapade wikis idag ($1).',
+	'autocreatewiki-name-too-short' => 'Detta namn är för kort. Välj ett namn med minst 3 tecken.',
+	'autocreatewiki-name-too-long' => 'Detta namn är för långt. Välj ett namn med högst 50 tecken.',
+	'autocreatewiki-invalid-username' => 'Detta användarnamn är ogiltigt.',
+	'autocreatewiki-busy-username' => 'Detta användarnamn är upptaget.',
+	'autocreatewiki-empty-wikiname' => 'Namnet på wikin kan inte vara tomt.',
+	'autocreatewiki-empty-username' => 'Användarnamnet kan inte vara tomt.',
+	'autocreatewiki-empty-password' => 'Lösenordet kan inte vara tomt.',
+	'autocreatewiki-category-label' => 'Kategori:',
+	'autocreatewiki-congratulation' => 'Grattis!',
+	'autocreatewiki-welcomesubject' => '$1 har skapats!',
+	'newwikis' => 'Nya wikis',
+	'autocreatewiki-subname-answers' => 'Svar',
 );
 
 /** Swahili (Kiswahili) */

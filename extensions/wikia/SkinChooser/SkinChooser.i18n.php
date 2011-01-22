@@ -30,6 +30,16 @@ $messages['es'] = array(
 	'site-layout' => 'Diseños del sitio',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'skinchooser-desc' => 'Permitte al usatores de seliger apparentias in lor preferentias',
+	'skinchooser-customcss' => 'Pro personalisar le apparentia, selige le option "Personalisate" in le menu hic supra e specifica le codice CSS personalisate in [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Nove aspecto de Wikia',
+	'site-layout' => 'Designos del sito',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -48,5 +58,15 @@ $messages['nl'] = array(
 	'skinchooser-customcss' => 'Voor eigengemaakte vormgeving kiest u de maatwerkinstelling in het bovenstaande menu in slaat u zelfgemaakte CSS op in [[MediaWiki:Monaco.css]].',
 	'new-look' => 'Nieuw Wikia-uiterlijk',
 	'site-layout' => 'Sitevormgevingen',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'skinchooser-desc' => 'Tillåter användare att välja utseende i deras inställningar',
+	'skinchooser-customcss' => 'För anpassade teman, välj alternativet "anpassa" i menyn ovan och ange din anpassade CSS i [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Wikias nya utseende',
+	'site-layout' => 'Layouter för webbplatsen',
 );
 

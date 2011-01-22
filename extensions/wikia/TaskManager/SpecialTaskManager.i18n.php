@@ -127,6 +127,8 @@ $messages['ia'] = array(
 	'taskmanager' => 'Monstrar e gerer processos de fundo',
 	'taskmanager_title' => 'Monstrar e gerer processos de fundo',
 	'taskmanager_tasklist' => 'Retornar al lista de processos',
+	'right-taskmanager' => 'Pote examinar le processos de secunde plano',
+	'right-taskmanager-action' => 'Pote gerer le processos de secunde plano',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -170,6 +172,8 @@ $messages['mk'] = array(
 	'taskmanager' => 'Прикажувај и раководи со позадински задачи',
 	'taskmanager_title' => 'Прикажувај и раководи со позадински задачи',
 	'taskmanager_tasklist' => 'Назад кон Списокот на задачи',
+	'right-taskmanager' => 'Може да прикажува позадински задачи',
+	'right-taskmanager-action' => 'Може да раководи со позадински задачи',
 );
 
 /** Dutch (Nederlands)
@@ -179,6 +183,8 @@ $messages['nl'] = array(
 	'taskmanager' => 'Achtergrondtaken weergeven en beheren',
 	'taskmanager_title' => 'Achtergrondtaken weergeven en beheren',
 	'taskmanager_tasklist' => 'Terugkeren naar de takenlijst',
+	'right-taskmanager' => 'Kan achtergrondtaken bekijken',
+	'right-taskmanager-action' => 'Kan achtergrondtaken beheren',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)

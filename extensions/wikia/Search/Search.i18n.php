@@ -100,8 +100,10 @@ $messages['el'] = array(
 /** Spanish (Español)
  * @author Bola
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
+	'search-desc' => 'Motor de búsqueda a través de Wikia usando Solr',
 	'wikiasearch-titles-only' => 'Buscar sólo en títulos de páginas',
 	'wikiasearch-system-error-msg' => 'Debido a un error del sistema, su búsqueda no se pudo completar',
 	'wikiasearch-search-this-wiki' => 'Buscar sólo en Wikia Central',
@@ -201,6 +203,7 @@ $messages['hy'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'search-desc' => 'Motor de recerca trans-Wikia usante le back-end Solr',
 	'wikiasearch-titles-only' => 'Cercar solmente in titulos de paginas',
 	'wikiasearch-system-error-msg' => 'A causa de un error de systema, le recerca non poteva esser completate',
 	'wikiasearch-search-this-wiki' => 'Cercar solmente in Wikia Central',
@@ -357,6 +360,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
+	'search-desc' => 'Motor de pesquisa em toda a Wikia, usando o backend Solr',
 	'wikiasearch-titles-only' => 'Pesquisar apenas nos títulos de página',
 	'wikiasearch-system-error-msg' => 'Não foi possível concluir a sua pesquisa devido a um erro de sistema',
 	'wikiasearch-search-this-wiki' => 'Pesquisar apenas na Wikia Central',

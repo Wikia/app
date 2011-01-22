@@ -214,6 +214,13 @@ $messages['ru'] = array(
 	'sitemap-desc' => 'Создание файлов Sitemap для вики на лету',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'sitemap-desc' => 'Generate Sitemaps for the wiki on the fly',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

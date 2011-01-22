@@ -13,6 +13,13 @@ $messages['af'] = array(
 	'tog-disablelinksuggest' => 'Moet nie skakel-voorstelle wys nie',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author PPerviz
+ */
+$messages['az'] = array(
+	'tog-disablelinksuggest' => 'Keçid təklifini göstərmə',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */

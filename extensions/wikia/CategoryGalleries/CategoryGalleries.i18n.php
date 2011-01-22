@@ -9,11 +9,39 @@ $messages['en'] = array(
 	'categorygalleries-desc' => 'Shows a pages gallery on category pages',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'categorygalleries-desc' => "Wys 'n galery met bladsye op kategoriebladsye",
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'categorygalleries-desc' => 'Prikazuje galeriju na stranici kategorije',
+);
+
 /** Spanish (Español)
  * @author Bola
  */
 $messages['es'] = array(
 	'categorygalleries-desc' => 'Muestra una galería de páginas encima de las páginas de la categoría',
+);
+
+/** French (Français)
+ * @author Wyz
+ */
+$messages['fr'] = array(
+	'categorygalleries-desc' => 'Affiche une galerie de pages sur les pages de catégorie',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'categorygalleries-desc' => 'Mostrar unha galería de páxinas nas páxinas das categorías',
 );
 
 /** Interlingua (Interlingua)
@@ -42,6 +70,13 @@ $messages['nl'] = array(
  */
 $messages['no'] = array(
 	'categorygalleries-desc' => 'Viser et sidegalleri på kategorisider',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'categorygalleries-desc' => 'Mostra uma galeria de páginas nas páginas das categorias',
 );
 
 /** Ukrainian (Українська)

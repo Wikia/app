@@ -363,9 +363,11 @@ Hemen zure artikuluaren lehen atala idatz ezazu.
 Hemen zure artikuluaren bigarren atala idatz ezazu.',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
 $messages['fa'] = array(
-	'createpage-sp-title' => 'ایجاد مقاله جدید',
+	'createpage-sp-title' => 'ایجاد صفحهٔ جدید',
 	'createpage_title' => 'ایجاد مقالۀ جدید',
 	'createpage_title_caption' => 'نام',
 	'createpage_enter_text' => 'متن',
@@ -668,6 +670,17 @@ $messages['ja'] = array(
 
 == 節見出し ==
 ここに2番目の節を書く。',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'createpage-sp-title' => 'Rûpeleka nû çêke',
+	'createpage_title' => 'Rûpeleka nû çêke',
+	'createpage_title_caption' => 'Sernav:',
+	'createpage_enter_text' => 'Nivîs:',
+	'createpage-dialog-title' => 'Rûpeleka nû çêke',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

@@ -36,10 +36,12 @@ $messages['es'] = array(
 	'signup' => 'Registrarse',
 );
 
-/** French (Français) */
+/** French (Français)
+ * @author Wyz
+ */
 $messages['fr'] = array(
 	'signup-desc' => 'Ajoute l’alias [[{{#Special:Signup}}]] pour [[{{#Special:UserLogin}}/signup]]',
-	'signup' => 'Inscription',
+	'signup' => 'Connexion',
 );
 
 /** Interlingua (Interlingua) */
@@ -94,6 +96,14 @@ $messages['ru'] = array(
 $messages['shi'] = array(
 	'signup-desc' => 'Zayd alias [[{{#Special:Signup}}]] i [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Aqqiyd (akcum)',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'signup-desc' => 'Lägger till alias [[{{#Special:Signup}}]] för [[{{#Special:UserLogin}}/signup]]',
+	'signup' => 'Registrera',
 );
 
 /** Telugu (తెలుగు) */

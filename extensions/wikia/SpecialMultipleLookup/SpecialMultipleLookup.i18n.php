@@ -332,7 +332,7 @@ $messages['ia'] = array(
 	'multilookupwikititle' => 'Titulo',
 	'multilookupwikioptions' => 'Optiones',
 	'multilookuplastedithdr' => 'Ultime modification',
-	'multilookuprecordspager' => "Monstra regulas '''$1''' a '''$2''' de '''$3'''.",
+	'multilookuprecordspager' => "Monstra lineas '''$1''' a '''$2''' de '''$3'''.",
 	'right-multilookup' => 'Cercar information super usatores in multiple wikis',
 );
 

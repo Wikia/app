@@ -29,7 +29,6 @@ $messages['qqq'] = array(
 	'wikiavideo-deleted-old' => 'Message displayed when you succeed in deleting a version of a video.
 
 Parameters:
-
 * $1 is the URL of the local video file
 * $2 is the video title
 * $3 is the time the old video version was created
@@ -494,6 +493,13 @@ $messages['krc'] = array(
 	'wikiavideo-pixel' => 'пиксель',
 	'wikiavideo-deleted-old' => "$4 $3 тамалы болгъан  '''[$1 $2]'''  версия кетерилгенди.",
 	'wikiavideo-intro-old' => "Сиз [$4 $3, $2] тамалы болгъан  '''[$1 $5]''' версияны кетересиз .",
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'wikiavideo-links' => 'Lînkan',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

@@ -134,6 +134,18 @@ No, the message won\'t be displayed of $1 or $2 was just "1".',
 	'multiwikirecords' => 'If $1 is a number, add plural support',
 );
 
+/** Message documentation (Message documentation) */
+$messages['qqq'] = array(
+	'multiwikiedit_task_link' => ' "check" as in "verify" or as in "select"?',
+	'multiwikiedit_on' => 'Lego. Probably has leading and trailing parameters. Please add this to the message...',
+	'multidelete_button' => '{{Identical|Delete}}',
+	'multidelete_task_link' => ' "check" as in "verify" or as in "select"?',
+	'multidelete_split_results' => 'Needs plural support for $1 and $2.
+No, the message won\'t be displayed of $1 or $2 was just "1".',
+	'multidelete_max_display_size' => 'Needs plural support for $1',
+	'multiwikirecords' => 'If $1 is a number, add plural support',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -972,7 +984,7 @@ $messages['ia'] = array(
 	'multiwikiedit_edit_options' => 'Optiones de modification',
 	'multidelete' => 'Deler lot de paginas',
 	'multidelete_button' => 'DELER',
-	'multidelete_help' => 'Dele un lot de paginas via un carga de fundo. Tu pote facer lo pro iste wiki, tote le wikis in le base de datos usate in commun, le wikis seligite o le linguas seligite. Es possibile deler le paginas in nomine de te o in nomine de un conto de script preconfigurate.',
+	'multidelete_help' => 'Deler un lot de paginas via un processo de secunde plano. Tu pote facer lo pro iste wiki, tote le wikis in le base de datos usate in commun, le wikis seligite o le linguas seligite. Es possibile deler le paginas in nomine de te, o in nomine de un conto de script preconfigurate.',
 	'multidelete_caption' => 'Lista de paginas',
 	'multidelete_title' => 'Deletion multiple',
 	'multidelete_both_modes' => 'Per favor selige, o un del paginas specificate, o un lista date de paginas.',
@@ -1220,6 +1232,16 @@ $messages['kn'] = array(
 	'multidelete_french_wikis' => 'ಎಲ್ಲಾ ಫ಼್ರೆಂಚ್ ವಿಕಿಗಳು',
 	'multidelete_swedish_wikis' => 'ಎಲ್ಲಾ ಸ್ವೀಡಿಷ್ ವಿಕಿಗಳು',
 	'multidelete_german_wikis' => 'ಎಲ್ಲಾ ಜರ್ಮನ್ ವಿಕಿಗಳು',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'multiwikiedit_minoredit_caption' => 'Guhertina biçûk',
+	'multiwikiedit_success_subtitle' => 'ji bo $',
+	'multiwikiedit_select_yourself' => 'tu',
+	'multidelete_success_subtitle' => 'ji bo $1',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -2085,11 +2107,22 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Per
+ * @author Tobulos1
  */
 $messages['sv'] = array(
 	'multiwikiedit_or' => '<b>ELLER</b>',
 	'multidelete_button' => 'RADERA',
 	'multidelete_or' => '<b>ELLER</b>',
+	'multidelete_success_subtitle' => 'för $1',
+	'multidelete_brazilian_portuguese_wikis' => 'alla brasilianska portugisiska wikis',
+	'multidelete_hebrew_wikis' => 'alla hebreiska wikis',
+	'multidelete_chinese_wikis' => 'alla kinesiska wikis',
+	'multidelete_polish_wikis' => 'alla polska wikis',
+	'multidelete_czech_wikis' => 'alla tjeckiska wikis',
+	'multidelete_portuguese_wikis' => 'alla portugisiska wikis',
+	'multidelete_dutch_wikis' => 'alla nederländska wikis',
+	'multidelete_italian_wikis' => 'alla italienska wikis',
+	'multidelete_russian_wikis' => 'alla ryska wikis',
 	'multidelete_english_wikis' => 'alla engelska wikis',
 	'multidelete_japanese_wikis' => 'alla japanska wikis',
 	'multidelete_finnish_wikis' => 'alla finska wikis',

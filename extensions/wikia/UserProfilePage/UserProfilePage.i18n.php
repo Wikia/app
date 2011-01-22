@@ -295,7 +295,19 @@ $messages['bs'] = array(
 	'recipes-template-user-affiliation-hint' => 'Naklonost',
 );
 
-/** Spanish (Español) */
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'userprofilepage-user-group-bot' => 'Шаболххо',
+	'userprofilepage-user-group-bureaucrat' => 'Даржахо',
+	'recipes-template-user-gender-label' => 'Ву/Йу',
+	'recipes-template-user-gender-hint' => 'Ву/Йу',
+);
+
+/** Spanish (Español)
+ * @author VegaDark
+ */
 $messages['es'] = array(
 	'userprofilepage-desc' => 'Proporciona una página de usuario que es divertida y fácil de actualizar',
 	'userprofilepage-edit-avatar-label' => 'Editar imagen',
@@ -308,7 +320,8 @@ $messages['es'] = array(
 	'userprofilepage-edit-permision-denied-info' => 'No tienes los permisos para editar la página o subpágina de otros',
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">¡Toda la comunidad de esta wiki le gustaría saber más de ti!</div><a href="$1">Edita esta sección</a> para añadir más información sobre ti y dinos acerca de las cosas que te gustan.',
 	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 no ha añadido ninguna información aún.</div>Puedes <a href="$2">dejarles un mensaje</a>',
-	'userprofilepage-user-doesnt-exists' => 'El usuario $1 no existe',
+	'userprofilepage-user-doesnt-exists' => 'El usuario $1 no existe en Wikia. Revisa la [[Special:WikiActivity|Wiki Actividad]] para ver quién está activo en esta wiki.',
+	'userprofilepage-user-anon' => 'Este usuario no se ha registrado aún en Wikia. ¡[[Special:Signup|Regístrate]] una cuenta nueva y reclama puntos de edición, logros y apreciaciones de tus amigos editores!',
 	'userprofilepage-leave-message' => 'Dejar un mensaje',
 	'userprofilepage-edits-since' => 'Ediciones desde que se unió a la wiki<br />$1',
 	'userprofilepage-user-last-action-edit' => '$1 editó la página <a href="$2">$3</a>',
@@ -570,7 +583,7 @@ $messages['mk'] = array(
 	'userprofilepage-top-wikis-edit-count' => 'Бр. на уредувања',
 	'userprofilepage-top-wikis-hidden-see-more' => 'Сокривте {{PLURAL:$1|$1 вики|$1 вики}}',
 	'userprofilepage-top-wikis-unhide-label' => 'откриј',
-	'userprofilepage-top-wikis-hide-label' => 'сокриј',
+	'userprofilepage-top-wikis-hide-label' => 'скриј',
 	'userprofilepage-top-wikis-locked-label' => 'Тековното вики не може да се крие',
 	'userprofilepage-recent-activity-title' => 'Скорешни активности на $1',
 	'userprofilepage-activity-edit' => 'ја уреди страницата $1',
@@ -748,7 +761,9 @@ $messages['ps'] = array(
 	'userprofilepage-top-wikis-hide-label' => 'پټول',
 );
 
-/** Portuguese (Português) */
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
 $messages['pt'] = array(
 	'userprofilepage-desc' => 'Fornece uma página de utilizador divertida e fácil de actualizar',
 	'userprofilepage-edit-avatar-label' => 'Editar imagem',
@@ -761,7 +776,8 @@ $messages['pt'] = array(
 	'userprofilepage-edit-permision-denied-info' => 'Não tem permissões para editar a página de utilizador ou subpáginas, de outro utilizador',
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Todos nesta wiki adorariam saber mais sobre si!</div><a href="$1">Edite esta secção</a> para acrescentar pormenores sobre si e sobre as coisas de que gosta.',
 	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 ainda não acrescentou nenhuma informação.</div>Se quiser, pode <a href="$2">deixar-lhe uma mensagem</a>',
-	'userprofilepage-user-doesnt-exists' => 'O utilizador $1 não existe',
+	'userprofilepage-user-doesnt-exists' => 'O utilizador $1 não existe na Wikia. Visite a [[Special:WikiActivity|Actividade na Wiki]] para saber quem está activo nesta wiki.',
+	'userprofilepage-user-anon' => 'Este utilizador ainda não se registou na Wikia. [[Special:Signup|Registe-se]] para ter uma conta e receber pontos de edições, medalhas e o reconhecimento dos outros editores!',
 	'userprofilepage-leave-message' => 'Deixar mensagem',
 	'userprofilepage-edits-since' => 'Edições desde a adesão a esta wiki<br />$1',
 	'userprofilepage-user-last-action-edit' => '$1 editou a página <a href="$2">$3</a>',
@@ -861,6 +877,21 @@ $messages['ru'] = array(
 $messages['shi'] = array(
 	'userprofilepage-edit-button' => '↓ Ẓreg (bddel)',
 	'userprofilepage-about-article-title' => '↓ F',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'userprofilepage-edit-avatar-label' => 'Redigera bild',
+	'userprofilepage-edit-button' => 'Redigera',
+	'userprofilepage-about-article-title' => 'Om',
+	'userprofilepage-user-group-sysop-tooltip' => 'Den här användaren är en administratör på denna wiki',
+	'userprofilepage-top-wikis-unhide-label' => 'ta fram',
+	'userprofilepage-top-wikis-hide-label' => 'göm',
+	'userprofilepage-top-page-unhide-label' => 'ta fram',
+	'recipes-template-user-gender-label' => 'Kön',
+	'recipes-template-user-gender-hint' => 'Kön',
 );
 
 /** Telugu (తెలుగు)

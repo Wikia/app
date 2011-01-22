@@ -259,6 +259,7 @@ Ouzhpennit pajennoù d\'ar roll-mañ en ur glikañ war "{{int:watch}}" e laez ur
 	'tog-enotiffollowedpages' => 'Kas ur postel din pa vez degaset kemmoù war ur bajenn evezhiet ganin',
 	'tog-enotiffollowedminoredits' => "Kelaouiñ ac'hanon dre postel pa vez degaset kemmoù dister d'ar pajennoù a heulian",
 	'prefs-wikiafollowedpages-prefs-advanced' => 'Dibarzhioù araokaet',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Rollad evezhiañ hepken',
 	'tog-hidefollowedpages' => 'Lakaat va roll evezhiañ da vezañ prevez',
 	'follow-categoryadd-summary' => "Pajenn bet ouzhpennet d'ar rummad",
 	'follow-bloglisting-summary' => 'Blog postet war pajennoù ar blogoù',
@@ -277,6 +278,7 @@ Ouzhpennit pajennoù d\'ar roll-mañ en ur glikañ war "{{int:watch}}" e laez ur
  */
 $messages['ce'] = array(
 	'wikiafollowedpages-special-heading-templates' => 'Куцкепаш ($1)',
+	'wikiafollowedpages-userpage-more' => 'Кхин',
 );
 
 /** German (Deutsch)
@@ -1149,6 +1151,15 @@ $PAGETITLE_URL
 <a href="{{fullurl:Special:Preferences}}">{{fullurl:Special:Preferences}}</a></p>',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'wikiafollowedpages-special-heading-category' => 'Kategoriyan ($1)',
+	'wikiafollowedpages-special-heading-article' => 'Gotaran ($1)',
+	'wikiafollowedpages-userpage-hide' => 'veşêre',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -1210,13 +1221,13 @@ $messages['mk'] = array(
 	'tog-enotiffollowedminoredits' => 'Известувај ме по е-пошта за ситни промени во страниците што ги следам',
 	'prefs-wikiafollowedpages-prefs-advanced' => 'Напредни поставки',
 	'prefs-wikiafollowedpages-prefs-watchlist' => 'Само Списокот на набљудувања',
-	'tog-hidefollowedpages' => 'Сокриј ги од други корисници моите списоци на следени страници',
+	'tog-hidefollowedpages' => 'Скриј ги од други корисници моите списоци на следени страници',
 	'follow-categoryadd-summary' => 'Страницата е додадена во категоријата',
 	'follow-bloglisting-summary' => 'Блогот е објавен на страницата за блогови',
 	'wikiafollowedpages-userpage-heading' => 'Страници што ги следам',
 	'wikiafollowedpages-userpage-hide-tooltip' => 'Сокривање на вашиот список на следени страници од јавноста',
 	'wikiafollowedpages-userpage-more' => 'Повеќе',
-	'wikiafollowedpages-userpage-hide' => 'сокриј',
+	'wikiafollowedpages-userpage-hide' => 'скриј',
 	'wikiafollowedpages-userpage-empty' => 'Списокот на следени страници на овој корисник е празен.
 Додавајте страници на списокот со стискање на „Следи“ на врвот од страницата.',
 	'enotif_subject_categoryadd' => 'Страницата $PAGETITLE на {{SITENAME}} е додадена во $CATEGORYNAME од $PAGEEDITOR',
@@ -1923,6 +1934,14 @@ $messages['sr-ec'] = array(
 	'wikiafollowedpages-special-blog-by' => 'од $1',
 	'wikiafollowedpages-userpage-more' => 'Више',
 	'wikiafollowedpages-userpage-hide' => 'сакриј',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'wikiafollowedpages-userpage-more' => 'Mer',
+	'wikiafollowedpages-userpage-hide' => 'göm',
 );
 
 /** Swahili (Kiswahili) */

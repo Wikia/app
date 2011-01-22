@@ -234,6 +234,15 @@ $messages['ja'] = array(
 	'mostvisitedpagesalllink' => '全期間の結果を見る',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'mostvisitedpagessearchtext' => 'Navê gotarê:',
+	'mostvisitedpagessearchbtn' => 'lêbigere',
+	'mostvisitedpageslatest' => 'di $1 deqîqên dawî de',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

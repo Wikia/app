@@ -87,14 +87,126 @@ $messages['qqq'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'owb-title' => 'Saver Wiki',
+	'owb-headline' => "Ac'hanta, $1",
+	'owb-button-skip' => 'Mont hebiou',
+	'owb-button-save-intro' => 'Enrollañ an digoradur',
+	'owb-button-save-pages' => 'Enrollañ pajennoù',
+	'owb-step1' => 'Pazenn 1',
+	'owb-step2' => 'Pazenn 2',
 	'owb-step2-label' => 'Dibab un tem',
+	'owb-step3' => 'Pazenn 3',
 	'owb-step3-examples2' => '<li>Monopoly</li>
 <li>Risk</li><li>Scrabble</li>
 <li>Trivial Pursuit</li>
 <li>Pictionary</li>
 <li>Taboo</li>',
+	'owb-step4' => 'Pazenn 4',
+	'owb-step4-basic-price' => '<strong>$0</strong>/miz',
+	'owb-step4-plus-price' => '<strong>$$1</strong>/miz',
 	'owb-step4-error-caption' => 'Fazi',
 	'owb-status-saving' => "Oc'h enrollañ",
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Assistente de creation de nove wikis]]',
+	'owb-title' => 'Constructor de wikis',
+	'owb-headline' => 'Salute, $1',
+	'owb-button-skip' => 'Saltar',
+	'owb-button-save-intro' => 'Salveguardar intro',
+	'owb-button-save-theme' => 'Salveguardar apparentia',
+	'owb-button-save-pages' => 'Salveguardar paginas',
+	'owb-button-done' => 'Continuar a tu wiki',
+	'owb-button-plus' => 'Seliger Wikia+Plus',
+	'owb-step1' => 'Passo 1',
+	'owb-step1-label' => 'De que se tracta?',
+	'owb-step1-label-formatted' => 'De que<br />se tracta?',
+	'owb-step1-instruction' => 'Scribe un curte introduction pro tu pagina initial. Rende lo concise e enthusiasmante pro motivar altere personas a contribuer a tu projecto.',
+	'owb-step1-sample' => 'Exemplo de un pagina wiki initial',
+	'owb-step2' => 'Passo 2',
+	'owb-step2-label' => 'Selige un apparentia',
+	'owb-step2-label-formatted' => 'Selige un<br />apparentia',
+	'owb-step2-instruction1' => 'Es facile render le aspecto de tu wiki unic. Simplemente selige un apparentia que conveni tu projecto.',
+	'owb-step2-instruction2' => 'Tu pote cambiar de apparentia, o designar un proprie, a omne tempore.',
+	'owb-step2-gallery' => 'Galeria de apparentias',
+	'owb-step3' => 'Passo 3',
+	'owb-step3-label' => 'Face le prime paginas',
+	'owb-step3-label-formatted' => 'Face le<br />prime paginas',
+	'owb-step3-instruction' => 'Pro comenciar tu wiki, tu debe crear alcun paginas. Tu pote sempre adder plus paginas a omne momento desirate.',
+	'owb-step3-your-pages' => 'Le nomines de tu paginas',
+	'owb-step3-examples1-title' => 'Exemplo: Nomines de paginas sur filmes de monstro',
+	'owb-step3-examples1' => '<li>Le monstro de Frankenstein</li>
+<li>Le homine lupo</li>
+<li>Le ululation</li>
+<li>Le mumia</li>
+<li>Le casa de cera</li>
+<li>Le creatura del palude</li>',
+	'owb-step3-examples2-title' => 'Exemplo: Nomines de paginas sur jocos de tabuliero',
+	'owb-step3-examples2' => '<li>Monopoly</li>
+<li>Risk</li><li>Scrabble</li>
+<li>Trivial Pursuit</li>
+<li>Pictionary</li>
+<li>Taboo</li>',
+	'owb-step4' => 'Passo 4',
+	'owb-step4-label-formatted' => 'Plano<br />premium',
+	'owb-step4-label' => 'Adder un plano premium',
+	'owb-step4-instruction' => 'Optar pro eliminar le publicitate con Wikia+Plus o continuar con Wikia Basic.',
+	'owb-step4-basic-price' => '<strong>0$</strong> per mense',
+	'owb-step4-basic-details' => '<ul><li>Publicitate Wikia pro usatores que non ha aperite session</li>
+<li>Paginas e imagines sin limite</li>
+<li>Instrumentos pro modification facile del wiki</li>
+<li>Connecter e placer in Facebook</li>
+<li>Nulle limite de consumption de datos</li></ul>',
+	'owb-step4-plus-price' => '<strong>$1$</strong> per mense',
+	'owb-step4-plus-details' => '<ul><li><strong>Sin publicitate!<small><em>(limites es applicabile a grande wikis)</em></small></strong></li>
+<li>Paginas e imagines sin limite</li>
+<li>Instrumentos pro modification facile del wiki</li>
+<li>Connecter e placer in Facebook</li>
+<li>Nulle limite de consumption de datos</li></ul>',
+	'owb-step4-error-caption' => 'Error',
+	'owb-step4-error-upgrade-content' => 'Iste wiki non pote esser promovite a Plus.',
+	'owb-step4-error-token-content' => 'Falleva de reciper un indicio correcte de PayPal.',
+	'owb-status-saving' => 'Salveguarda in curso',
+	'owb-unable-to-edit-description' => 'Le description es immodificabile con Wiki Builder',
+	'owb-readonly-try-again' => 'Le wiki es actualmente in modo de lectura sol. Per favor reproba post alcun momentos.',
+	'owb-error-saving-articles' => 'Error durante le salveguarda de paginas',
+	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
+Scribe hic le prime paragrapho de tu pagina.
+
+==Titulo de section==
+
+Scribe hic le prime section de tu pagina. Memora de includer ligamines a altere paginas in le wiki.
+
+==Titulo de section==
+
+Scribe hic le secunde section de tu pagina. Non oblida de adder un categoria pro adjutar le gente a trovar le pagina.',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'owb-headline' => 'Silav,  $1',
+	'owb-step1' => 'Gav 1',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'owb-button-skip' => 'Iwwersprangen',
+	'owb-button-save-pages' => 'Säit späicheren',
+	'owb-step1' => 'Schrëtt 1',
+	'owb-step1-label' => 'Wourëm geet et?',
+	'owb-step2' => 'Schrëtt 2',
+	'owb-step3' => 'Schrëtt 3',
+	'owb-step4' => 'Schrëtt 4',
+	'owb-step4-plus-price' => '<strong>$$1</strong>/Mount',
+	'owb-step4-error-caption' => 'Feeler',
+	'owb-status-saving' => 'Späicheren',
 );
 
 /** Macedonian (Македонски)
@@ -175,6 +287,7 @@ $messages['mk'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author McDutchie
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -220,13 +333,13 @@ $messages['nl'] = array(
 	'owb-step4-label-formatted' => 'Premium<br />plan',
 	'owb-step4-label' => 'Premium Plan toevoegen',
 	'owb-step4-instruction' => 'Verwijder advertenties met Wikia+Plus of ga door met Wikia Basic.',
-	'owb-step4-basic-price' => '<strong>$0</strong>/maand',
+	'owb-step4-basic-price' => '<strong>$0</strong> per maand',
 	'owb-step4-basic-details' => '<ul><li>Wikia-advertenties voor gebruikers die niet zijn aangemeld</li>
 <li>Geen limiet aan pagina\'s en afbeeldingen</li>
 <li>Eenvoudige bewerkingshulpmiddelen</li>
 <li>Verbinden en "Vind ik leuk" op Facebook</li>
 <li>Geen limiet aan bandbreedte</li></ul>',
-	'owb-step4-plus-price' => '<strong>$$1</strong>/maand',
+	'owb-step4-plus-price' => '<strong>$$1</strong> per maand',
 	'owb-step4-plus-details' => "<ul><li><strong>Geen advertenties!<small><em>(voor grote wiki's zijn er beperkingen)</em></small></strong></li>
 <li>Geen limiet voor pagina's en afbeeldingen</li>
 <li>Eenvoudige bewerkingshulpmiddelen editor tools</li>
@@ -249,6 +362,78 @@ Schrijf hier het eerste deel van uw pagina. Denk eraan dat u verwijzingen naar a
 ==Koptekst==
 
 Schrijf hier het tweede deel van uw pagina. Vergeet niet een categorie toe te voegen zodat andere gebruikers de pagina kunnen vinden.",
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Opprett Wiki-veiviser]]',
+	'owb-title' => 'Wiki-bygger',
+	'owb-headline' => 'Hei, $1',
+	'owb-button-skip' => 'Hopp over',
+	'owb-button-save-intro' => 'Lagre intro',
+	'owb-button-save-theme' => 'Lagre tema',
+	'owb-button-save-pages' => 'Lagre sider',
+	'owb-button-done' => 'Fortsett til wikien din',
+	'owb-button-plus' => 'Velg Wikia+Plus',
+	'owb-step1' => 'Trinn 1',
+	'owb-step1-label' => 'Hva handler det om?',
+	'owb-step1-label-formatted' => 'Hva<br />handler det om?',
+	'owb-step1-sample' => 'Eksempel på wikiens Hjem-side',
+	'owb-step2' => 'Trinn 2',
+	'owb-step2-label' => 'Velg et tema',
+	'owb-step3' => 'Trinn 3',
+	'owb-step3-label' => 'Opprett noen sider',
+	'owb-step3-examples1' => '<li>Frankensteins monster</li>
+<li>Ulvemannen</li>
+<li>Hyleren</li>
+<li>Mumien</li>
+<li>Vokshuset</li>
+<li>Sumptingen</li>',
+	'owb-step3-examples2' => '<li>Monopol</li>
+<li>Risk</li><li>Scrabble</li>
+<li>Trivial Pursuit</li>
+<li>Pictionary</li>
+<li>Taboo</li>',
+	'owb-step4' => 'Trinn 4',
+	'owb-step4-instruction' => 'Velg å fjerne annonser med Wikia+Plus eller fortsett med Wikia Basic.',
+	'owb-step4-basic-price' => '<strong>$0</strong>/måned',
+	'owb-step4-basic-details' => '<ul><li>Wikia-annonser for brukere som ikke er logget inn</li>
+<li>Ubegrenset antall sider og bilder</li>
+<li>Enkle verktøy for wiki-redaktører</li>
+<li>Koble til og lik på Facebook</li>
+<li>Ubegrenset båndbredde</li></ul>',
+	'owb-step4-plus-price' => '<strong>$$1</strong>/måned',
+	'owb-step4-plus-details' => '<ul><li><strong>Ingen annonser!<small><em>(begrensninger finnes for store wikier)</em></small></strong></li>
+<li>Ubegrenset antall sider og bilder</li>
+<li>Enkle verktøy for wiki-redaktører</li>
+<li>Koble til og lik på Facebook</li>
+<li>Ubegrenset båndbredde</li></ul>',
+	'owb-step4-error-caption' => 'Feil',
+	'owb-step4-error-upgrade-content' => 'Denne wikien kan ikke oppgraderes til Plus.',
+	'owb-status-saving' => 'Lagrer',
+	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
+Skriv sidens første avsnitt her . 
+
+==Overskrift for seksjon==
+
+Skriv sidens første seksjon her. Husk å inkludere lenker til andre sider på wikien.
+
+==Overskrift for seksjon==
+
+Skriv sidens andre seksjon her. Ikke glem å legge til en kategori for å hjelpe folk med å finne siden.',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'owb-step1' => 'Steg 1',
+	'owb-step1-label' => 'Vad handlar det om?',
+	'owb-step1-label-formatted' => 'Vad handlar<br />det om?',
+	'owb-step1-instruction' => 'Skriv en kort introduktion för din hemsida. Skriv det kvickt och roligt för att få andra uppspelta över att bidra till ditt projekt.',
+	'owb-step4-error-caption' => 'Fel',
 );
 
 /** Ukrainian (Українська)

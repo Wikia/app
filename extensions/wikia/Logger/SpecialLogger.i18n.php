@@ -13,6 +13,14 @@ $messages['en'] = array(
 	'loggernoresult' => 'No results found',
 );
 
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'loggergo' => 'Diskouez',
+	'loggernoresult' => "N'eus bet kavet disoc'h ebet",
+);
+
 /** Spanish (Español)
  * @author Bola
  */
@@ -25,6 +33,27 @@ $messages['es'] = array(
 	'loggerrecords' => '$1 registros',
 	'loggergo' => 'Mostrar',
 	'loggernoresult' => 'No se encontraron resultados',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'logger-desc' => 'Registrator pro scripts back-end',
+	'logger' => 'Registrator back-end',
+	'loggertitle' => 'Registrator back-end',
+	'loggerselectlogname' => 'Selige un nomine de registro:',
+	'loggerrecordswithpercent' => "'''$1''' registros ('''$2''' per cento finite)",
+	'loggerrecords' => '$1 registros',
+	'loggergo' => 'Monstrar',
+	'loggernoresult' => 'Nulle resultato trovate',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'loggergo' => 'Nîşan bide',
 );
 
 /** Macedonian (Македонски)
@@ -59,6 +88,8 @@ $messages['nl'] = array(
  * @author Audun
  */
 $messages['no'] = array(
+	'loggerrecords' => '$1 oppføringer',
 	'loggergo' => 'Vis',
+	'loggernoresult' => 'Ingen resultater funnet',
 );
 
