@@ -652,7 +652,7 @@ function getSong($artist, $song="", $doHyphens=true){
 
 	GLOBAL $SHUT_DOWN_API;
 	if($SHUT_DOWN_API){
-		$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $defaultLyrics, 'url' => 'http://lyrics.wikia.com');
+		$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $defaultLyrics, 'url' => 'http://lyrics.wikia.com', 'page_namespace' => '', 'page_id' => '');
 		global $SHUT_DOWN_API_REASON;
 		$retVal['lyrics'] = $SHUT_DOWN_API_REASON;
 	} else {
@@ -791,10 +791,6 @@ function getSong($artist, $song="", $doHyphens=true){
 				$finalName = $page_namespace = $page_id = "";
 				$content = lw_getPage($title, array(), $finalName, $debug, $page_namespace, $page_id);
 
-				// Additional data to help with tracking the hits for royalty payments via Gracenote (among other potential uses).
-				$retVal['page_namespace'] = $page_namespace;
-				$retVal['page_id'] = $page_id;
-
 				// Parse the lyrics from the content.
 				$matches = array();
 				if(0<preg_match("/<lyrics?>(.*)<.lyrics?>/si", $content, $matches) || (0<preg_match("/<lyrics?>(.*)/si", $content, $matches))){
@@ -819,7 +815,14 @@ function getSong($artist, $song="", $doHyphens=true){
 				}
 				$content = trim($content);
 				$url = $urlRoot.str_replace("%3A", ":", urlencode($finalName)); // %3A as ":" is for readability.
-				$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $content, 'url' => $url);
+				$retVal['artist'] = $artist;
+				$retVal['song'] = $song;
+				$retVal['lyrics'] = $content;
+				$retVal['url'] = $url;
+
+				// Additional data to help with tracking the hits for royalty payments via Gracenote (among other potential uses).
+				$retVal['page_namespace'] = $page_namespace;
+				$retVal['page_id'] = $page_id;
 
 				// Set the artist and song to the artist and song which were actually found (not what was passed in).
 				$index = strpos($finalName, ":");
@@ -917,7 +920,7 @@ function getSong($artist, $song="", $doHyphens=true){
 			}
 		}
 	} // end of the "if shut_down_api else"
-
+	
 	requestFinished($id);
 	return $retVal;
 } // end getSong()
