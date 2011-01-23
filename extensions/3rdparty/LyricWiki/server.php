@@ -648,7 +648,7 @@ function getSong($artist, $song="", $doHyphens=true){
 	$DENIED_NOTICE.= "\nThe lyrics for this song can be found at the following URL:\n";
 	$DENIED_NOTICE_SUFFIX = "\n\n\n(Please note: this is not the fault of the developer who created this application, but is a restriction imposed by the music publishers themselves.)";
 	//$TRUNCATION_NOTICE = "Our licenses prevent us from returning the full lyrics to this song via the API.  For full lyrics, please visit: $urlRoot"."$artist:$song";
-	$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $defaultLyrics, 'url' => $defaultUrl);
+	$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $defaultLyrics, 'url' => $defaultUrl, 'page_namespace' => '', 'page_id' => '');
 
 	GLOBAL $SHUT_DOWN_API;
 	if($SHUT_DOWN_API){
@@ -788,8 +788,12 @@ function getSong($artist, $song="", $doHyphens=true){
 			}
 			$lookedFor .= "$title\n";
 			if(lw_pageExists($title)){
-				$finalName = "";
-				$content = lw_getPage($title, array(), $finalName, $debug);
+				$finalName = $page_namespace = $page_id = "";
+				$content = lw_getPage($title, array(), $finalName, $debug, $page_namespace, $page_id);
+
+				// Additional data to help with tracking the hits for royalty payments via Gracenote (among other potential uses).
+				$retVal['page_namespace'] = $page_namespace;
+				$retVal['page_id'] = $page_id;
 
 				// Parse the lyrics from the content.
 				$matches = array();
@@ -878,6 +882,19 @@ function getSong($artist, $song="", $doHyphens=true){
 					}
 				}
 
+				// Make encoding work with UTF8 - NOTE: We do not apply this again to a result that the doHyphens/lastHyphen trick grabbed because that has already been encoded.
+				$retVal['artist'] = utf8_encode($retVal['artist']);
+				$retVal['song'] = utf8_encode($retVal['song']);
+				$retVal['lyrics'] = utf8_encode($retVal['lyrics']);
+				// Haven't run this test in a while.  Commenting out for now.
+				//if(isset($_GET['test']) && $_GET['test']=="encoding"){
+				//	$isUTF = utf8_compliant("$artist:$song:$lyrics");
+				//	print "UTF8: ".($isUTF?"true":"false")."<br/>";
+				//	print "UTF8-artist: ".(utf8_compliant($artist)?"true":"false")."<br/>";
+				//	print "UTF8-song: ".(utf8_compliant($song)?"true":"false")."<br/>";
+				//	print "UTF8-lyrics: ".(utf8_compliant($lyrics)?"true":"false")."<br/>";
+				//}
+				
 				// SWC 20090802 - Neuter the actual lyrics :( - return an explanation with a link to the LyricWiki page.
 				// SWC 20091021 - Gil has determined that up to 17% of the lyrics can be returned as fair-use - we'll stick with 1/7th (about 14.3%) of the characters for safety.
 				if(!$allowFullLyrics){
@@ -896,18 +913,6 @@ function getSong($artist, $song="", $doHyphens=true){
 						$retVal['lyrics'] = $lyrics;
 						//$retVal['lyrics'] = $DENIED_NOTICE . $retVal['url'] . $urlLink . $DENIED_NOTICE_SUFFIX;
 					}
-				}
-
-				// Make encoding work with UTF8 - NOTE: We do not apply this again to a result that the doHyphens/lastHyphen trick grabbed because that has already been encoded..
-				$retVal['artist'] = utf8_encode($retVal['artist']);
-				$retVal['song'] = utf8_encode($retVal['song']);
-				$retVal['lyrics'] = utf8_encode($retVal['lyrics']);
-				if(isset($_GET['test']) && $_GET['test']=="encoding"){
-					$isUTF = utf8_compliant("$artist:$song:$lyrics");
-					print "UTF8: ".($isUTF?"true":"false")."<br/>";
-					print "UTF8-artist: ".(utf8_compliant($artist)?"true":"false")."<br/>";
-					print "UTF8-song: ".(utf8_compliant($song)?"true":"false")."<br/>";
-					print "UTF8-lyrics: ".(utf8_compliant($lyrics)?"true":"false")."<br/>";
 				}
 			}
 		}
@@ -1752,8 +1757,11 @@ function lw_pageExists($pageTitle){
 //
 // If there are redirects, finalName will be modified to contain the pageName
 // of the page which the redirection stops upon.
+//
+// If the page is found to be an existing article, then page_namespace and page_id will be set
+// to the namespace number and the article id (which matches page.page_id) respectively.
 ////
-function lw_getPage($pageTitle, $pages=array(), &$finalName='', $debug=false){
+function lw_getPage($pageTitle, $pages=array(), &$finalName='', $debug=false, &$page_namespace='', &$page_id=''){
 	$retVal = "";
 	$finalName = $pageTitle;
 
@@ -1761,6 +1769,9 @@ function lw_getPage($pageTitle, $pages=array(), &$finalName='', $debug=false){
 	$title = Title::newFromDBkey($pageTitle);
 	if( $title ) {
 		if($title->exists()){
+			$page_id = $title->getArticleID();
+			$page_namespace = $title->getNamespace();
+
 			$article = Article::newFromID($title->getArticleID());
 			if($article->isRedirect()){
 				$reTitle = $article->followRedirect(); // follows redirects recursively
