@@ -30,6 +30,7 @@ function wfOasisSetup() {
 	$wgHooks['MessageCacheReplace'][] = 'LatestPhotosModule::onMessageCacheReplace';
 	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayModule::onShowEditLink';
 	$wgHooks['UploadComplete'][] = 'LatestPhotosModule::onImageUpload';
+	$wgHooks['FileUpload'][] = 'LatestPhotosModule::onImageUpload';
 
 	// confirmations
 	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsModule::addPageDeletedConfirmation';
