@@ -640,7 +640,7 @@ AdDriverDelayedLoader.loadNext = function() {
 		}
 	}
 	
-	if (!AdDriverDelayedLoader.adDriverItems.length) {
+	if (!AdDriverDelayedLoader.adDriverItems.length && typeof Liftium != 'undefined' && Liftium) {
 		Liftium.hasMoreCalls = 0;
 	}
 }
@@ -682,7 +682,7 @@ AdDriverDelayedLoader.load = function() {
 		$().log('AdDriver started loading after ' + loadTime + ' ms');
 	}
 
-	if (AdDriver.isNoAdWiki()) {
+	if (AdDriver.isNoAdWiki() && typeof Liftium != 'undefined' && Liftium) {
 		Liftium.hasMoreCalls = 0;
 		return;
 	}
