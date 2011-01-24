@@ -1118,13 +1118,18 @@ function lw_pushSong(&$headingStack, &$song, &$artist) {
 			$title = "$foundArtist:$title";
 		}
 
-		$headingStack[$size-1]['songs'][] =& $title;
+		// Sometimes singles are being put into the page as songs, don't add those to the discography.
+		if(preg_match("/[_ ]\([0-9]{4}\)$/", $title) == 0){
+			$headingStack[$size-1]['songs'][] =& $title;
+		}
 	}
 } // end lw_pushSong()
 
 ////
 // Given the chunks of wikitext returned from regexes for the album names and track-listing code,
 // returns the albums that were found.
+//
+// TODO: REMOVE? This may not be used anymore because of the parseDiscographies stacking method.
 ////
 function lw_getTracksFromWikiText($artist, $albumNames, $listing){
 	GLOBAL $amazonRoot;
