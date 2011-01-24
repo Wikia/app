@@ -30,10 +30,9 @@ class CorporateFooterModule extends Module {
 			$catInfo = WikiFactory::getCategory(3355);
 		}
 
-		$catInfo->cat_link = wfMsg('oasis-corporatefooter-hub-'. $catInfo->cat_name .'-link');
-
 		//i18n
 		if (!empty($catInfo)) {
+			$catInfo->cat_link = wfMsg('oasis-corporatefooter-hub-'. $catInfo->cat_name .'-link');
 			$catInfo->cat_name = wfMsg('hub-'. $catInfo->cat_name);
 		}
 
