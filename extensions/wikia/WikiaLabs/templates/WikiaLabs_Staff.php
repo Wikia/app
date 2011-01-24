@@ -1,18 +1,18 @@
 <section class="FormCornerModule module WikiaLabsStaff">
 	<h1 class='title'>
-	Labs Staff Controle
+		<?php echo wfMsg('wikialabs-staff-title'); ?>
 		<button id="addProject"/>
-			<img width="0" height="0" class="sprite new" src="http://images1.wikia.nocookie.net/__cb31819/common/skins/common/blank.gif">
-			Add Lab item
+			<img width="0" height="0" class="sprite new" src="<?= wfBlankImgUrl() ;?>">
+			<?php echo wfMsg('wikialabs-staff-add'); ?>
 		</button>
 	</h1>
-	<span class="redinfo">visible to Wikia staff only</span>
+	<span class="redinfo"><?php echo wfMsg('wikialabs-staff-info'); ?></span>
 	
-	<span class="editinfo" >Edit Lab Item</span>
+	<span class="editinfo" ><?php echo wfMsg('wikialabs-staff-items'); ?></span>
 	<select class="prjselect" >
-		<option> Project 1 </option>
-		<option> Project 2 </option>
-		<option> Project 3 </option>
-	</select>
-	
+		<option value="0"><?php echo wfMsg('wikialabs-staff-empty-project'); ?></option>
+		<?php foreach($projects as $value): ?>
+			<option value="<?php echo $value->getId(); ?>"><?php echo $value->getName(); ?></option>
+		<?php endforeach; ?>
+	</select>	
 </section>

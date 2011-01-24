@@ -2,6 +2,8 @@
 
 class WikiaLabsModule extends Module {
 	public function executeStaff() {
+		$out = WF::build( 'WikiaLabsProject')->getList(array( ) );
+		$this->projects = $out;
 		return array();
 	}
 	

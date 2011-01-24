@@ -17,40 +17,61 @@ class WikiaLabs {
 
 		return true;
 	}
-
+	
+	// TODO: refactore this //
 	function getProjectModal() {
-		$app = WF::build( 'App' );
+		global $wgRequest;
+		$id = $wgRequest->getVal('id');
+		$wl = WF::build( 'WikiaLabs');
 		$response =  WF::build( 'AjaxResponse' );
+		$result = $wl->getProjectModalInternal((int) $wgRequest->getVal('id', 0));
+		$response->addText($result);
+		return $response;
+	}
+	
+	function getProjectModalInternal($id) {
 		$oTmpl = WF::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
 		$wikiaLabsProject = WF::build( 'WikiaLabsProject' );
 
-		$fogbugzAPIConfig = $app->getGlobal( 'wgFogbugzAPIConfig' );
+		if( $id > 0) {
+			$wlp = WF::build( 'WikiaLabsProject', array( 'id' => $id ) ); 
+		} else {
+			$wlp = WF::build( 'WikiaLabsProject', array() );
+		}
+			
+		$oTmpl->set_vars( array(
+			'project' => $wlp,
+			'projectdata' => $wlp->getData(),
+			'status' => $wikiaLabsProject->getStatusDict(),
+			'extensions' => $wikiaLabsProject->getExtensionsDict(),
+			'areas' => $this->getFogbugzAreas()
+		));
+
+		return $oTmpl->render("wikialabs-addproject");
+	}
+	
+	function getFogbugzAreas() {
+		$fogbugzAPIConfig = $this->app->getGlobal( 'wgFogbugzAPIConfig' );
 		$fogbugzService = WF::build( 'FogbugzService', array( 'url' => $fogbugzAPIConfig['apiUrl'] ) );
 		$fogbugzService->setLogin( $fogbugzAPIConfig['username'] );
 		$fogbugzService->setPasswd( $fogbugzAPIConfig['password'] );
-		$fogbugzService->setHTTPProxy( $app->getGlobal( 'wgHTTPProxy' ) );
-
-		$oTmpl->set_vars( array(
-			'status' => $wikiaLabsProject->getStatusDict(),
-			'extensions' => $wikiaLabsProject->getExtensionsDict(),
-			'areas' => $fogbugzService->logon()->getAreas( self::FOGBUGZ_AREAS_PROJECT_ID )
-		));
-
-		$oTmpl->render("wikialabs-addproject");
-
-		$response->addText( $oTmpl->render("wikialabs-addproject") );
+		$fogbugzService->setHTTPProxy( $this->app->getGlobal( 'wgHTTPProxy' ) );
+		return $fogbugzService->logon()->getAreas( self::FOGBUGZ_AREAS_PROJECT_ID );
+	}
+	
+	// TODO: refactore this //
+	function saveProject() {
+		global $wgRequest;
+		$response = new AjaxResponse();
+		
+		$wl = WF::build( 'WikiaLabs');
+		$out = $wl->saveProjectInternal($wgRequest->getArray('project'));
+		$response->addText(json_encode($out));	
 		return $response;
 	}
 
-	function saveProject() {
-		global $wgRequest;
-		//TODO: need to refactore remove global
-
-		$response = new AjaxResponse();
-
+	function saveProjectInternal($project) {
 		$out = array();
-
-		$project = $wgRequest->getArray('project');
 
 		$project['enablewarning'] = isset($project['enablewarning']);
 		$project['graduates'] = isset($project['graduates']);
@@ -65,12 +86,11 @@ class WikiaLabs {
 					$out['errors'][] = $val2;
 				}
 			}
-			$response->addText(json_encode($out));
-			return $response;
+			return $out;
 		} else {
-
-			if( isset($project['id']) && isInt($project['id'])) {
-				$wlp = WF::build( 'WikiaLabsProject', array($project['id']) );
+			$project['id'] = (int) $project['id'];
+			if( $project['id'] > 0 ) {
+				$wlp = WF::build( 'WikiaLabsProject', array( 'id' => $project['id'] ) );
 			} else {
 				$wlp = WF::build( 'WikiaLabsProject', array() );
 			}
@@ -78,18 +98,11 @@ class WikiaLabs {
 			$wlp->setName($project['name']);
 			$wlp->setFogbugzProject($project['area']);
 
-
-			if(!empty($project['prjscreen'])) {
-				$file_title = Title::newFromText( $project['prjscreen'], NS_FILE );
-				$img = wfFindFile( $file_title  );
-			}
-
-			//TODO:
 			$data = array(
 				'description' => $project['description'],
 				'link' => $project['link'],
 				'prjscreen' => $project['prjscreen'],
-				'prjscreenurl' => wfReplaceImageServer( $img->getThumbUrl( $img->thumbName( array( 'width' => 150 ) ) ) ),
+				'prjscreenurl' => $this->getImageUrl($project['prjscreen']),
 				'warning' =>  $project['warning'],
 				'enablewarning' => $project['enablewarning']
 			);
@@ -97,31 +110,39 @@ class WikiaLabs {
 			$wlp->setData($data);
 			$wlp->setGraduated( $project['graduates'] );
 			$wlp->setActive($project['status'] == 1);
+			$wlp->setStatus($project['status']);
 			$wlp->setExtension($project['extension']);
 			$wlp->update();
 
 			$out['status'] = 'ok';
-			$response->addText(json_encode($out));
-			return $response;
+			return $out;
 		}
 	}
 
 	public function validateProjectForm($values = array()) {
 		//TODO: laod array form fog bugz
 		$wikiaLabsProject = WF::build( 'WikiaLabsProject' );
-
-		$areas = array(1,2,3,4,5);
+		
+		$areas = array();
+		$areasData = $this->getFogbugzAreas();
+		
+		foreach( $areasData as $value ) {
+			$areas[] = $value['id'];
+		}
+		
 		$status = array_keys($wikiaLabsProject->getStatusDict());
 		$projects = $wikiaLabsProject->getExtensionsDict();
 
-		//TODO: translate msg
 		$mulitvalidator = new WikiaValidatorArray(array(
 			'validators'  => array(
-				'description' => new WikiaValidatorString(array("min" => 1)),
-				'name' => new WikiaValidatorString(array("min" => 1)),
-				'link' => new WikiaValidatorString(array("min" => 1)),
-				'prjscreen' => new WikiaValidatorString(array("min" => 3)),
-				'warning' => new WikiaValidatorString(array("min" => 1)),
+				'description' => new WikiaValidatorString(array("min" => 1),
+					array('too_short' => wfMsg('wikialabs-add-project-validator-description') ) ),
+				'name' => new WikiaValidatorString(array("min" => 1),
+					array('too_short' => wfMsg('wikialabs-add-project-validator-name') )),
+				'link' => new WikiaValidatorString(array("min" => 0)),
+				'prjscreen' => new WikiaValidatorString(array("min" => 3),
+					array('too_short' => wfMsg('wikialabs-add-project-validator-prjscreen') )),
+				'warning' => new WikiaValidatorString(array("min" => 0) ),
 				'status' => new WikiaValidatorInArray(array("allowed" => $status)),
 				'area' =>  new WikiaValidatorInArray(array("allowed" => $areas)),
 				'extension' => new WikiaValidatorInArray(array("allowed" => $projects)),
@@ -130,31 +151,62 @@ class WikiaLabs {
 		return $mulitvalidator;
 	}
 
+	// TODO: refactore this //
+	public function switchProject() {
+		global $wgRequest, $wgCityId;
+		$id = $wgRequest->getVal('id');
+		$onoff  = $wgRequest->getVal('onoff');
+		$wl = WF::build( 'WikiaLabs');
+		$result = $wl->switchProjectInternal($wgCityId ,$id, $onoff) ? "ok":"error";
+		$response = new AjaxResponse();
+		$response->addText(json_encode(array("status" => $result)));
+		return $response;
+	}
+	
+	public function switchProjectInternal($city_id, $id, $onoff = true) {
+		$wikiaLabsProject = WF::build( 'WikiaLabsProject', array( "id" => $id));
+		if($wikiaLabsProject->getId() == 0) {
+			return false;
+		}
+		
+		if(!empty($onoff)) {
+			$wikiaLabsProject->setEnabled($city_id);	
+		} else {
+			$wikiaLabsProject->setDisabled($city_id);
+		}
+		
+		$wikiaLabsProject->update();
+		
+		$this->app->runFunction( 'wfRunHooks', 'WikiFactoryChanged', array( $wikiaLabsProject->getExtension() , $city_id, !empty($onoff) ) );
+		
 
-	public function getUrlImageAjax() {
+		return $this->app->runFunction( 'WikiFactory::setVarByName',  $wikiaLabsProject->getExtension(), $city_id, !empty($onoff), "WikiaLabs" );
+	}
+
+	protected function getImageUrl($name) {
+		if(empty($name)){
+			return "";
+		}
+
+		$file_title = Title::newFromText( $name, NS_FILE );
+		$img = wfFindFile( $file_title  );
+				
+		return wfReplaceImageServer( $img->getThumbUrl( $img->thumbName( array( 'width' => 150 ) ) ) );
+	}
+	
+	// TODO: refactore this //
+	public function getImageUrlForEdit() {
 		global $wgRequest;
 		$name = $wgRequest->getVal("name", "");
-
-		if(!empty($name)) {
-			$file_title = Title::newFromText( $name, NS_FILE );
-			$img = wfFindFile( $file_title  );
-		}
-
+		
+		$wl = WF::build( 'WikiaLabs');
 		$response = new AjaxResponse();
-		if(empty($img)) {
-			$response->addText(json_encode(array("status" => "error")));
-			return $response;
-		}
-
-		$response->addText(json_encode(array("status" => "ok",
-				"url" => wfReplaceImageServer( $img->getThumbUrl( $img->thumbName( array( 'width' => 150 ) ) ) ),
-		)));
+		$response->addText(json_encode($wl->getImageUrlForEditInternal($name)));
 
 		return $response;
 	}
-
-
+	
+	public function getImageUrlForEditInternal($name) {	
+		return array("status" => "ok", "url" => $this->getImageUrl($name) );
+	}
 }
-
-
-

@@ -67,7 +67,9 @@ $app->registerHook('GetRailModuleSpecialPageList', 'WikiaLabs', 'onGetRailModule
 
 $wgAjaxExportList[] = 'WikiaLabs::getProjectModal';
 $wgAjaxExportList[] = 'WikiaLabs::saveProject';
-$wgAjaxExportList[] = 'WikiaLabs::getUrlImageAjax';
+$wgAjaxExportList[] = 'WikiaLabs::getImageUrlForEdit';
+$wgAjaxExportList[] = 'WikiaLabs::switchProject';
+
 
 
 
@@ -76,7 +78,8 @@ $wgAjaxExportList[] = 'WikiaLabs::getUrlImageAjax';
  */
 
 $wgWikiaLabsAllowed = array(
-	'wgEnablePageLayoutBuilder'
+	'wgEnablePageLayoutBuilder',
+	'wgEnableTest',
 );
 
 

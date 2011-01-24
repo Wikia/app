@@ -15,6 +15,7 @@ class WikiaLabsProject {
 	protected $techEmail;
 	protected $fogbugzProject;
 	protected $extension;
+	protected $status = 0;
 
 	public function __construct( WikiaApp $app, $id = 0) {
 		$this->app = $app;
@@ -53,6 +54,10 @@ class WikiaLabsProject {
 
 	public function getReleaseDate() {
 		return strtotime( $this->releaseDate );
+	}
+
+	public function getReleaseDateMW() {
+		return $this->app->runFunction( 'wfTimestamp', TS_MW, strtotime( $this->releaseDate ) );
 	}
 
 	public function setReleaseDate( $timestamp = null ) {
@@ -131,9 +136,17 @@ class WikiaLabsProject {
 	public function setExtension($value) {
 		$this->extension = $value;
 	}
+	
+	public function getStatus() {
+		return $this->status;
+	}
+	
+	public function setStatus($status) {
+		$this->status = $status;
+	}
 
 	public function isEnabled( $wikiId ) {
-		$enable = $this->getDb()->selectRow( 'wikia_labs_project_wiki_link', array( 'wlpwli_id' ), array( 'wlpwli_wiki_id' => $wikiId ), __METHOD__ );
+		$enable = $this->getDb()->selectRow( 'wikia_labs_project_wiki_link', array( 'wlpwli_id' ), array(  'wlpwli_wlpr_id' => $this->getId(), 'wlpwli_wiki_id' => $wikiId ), __METHOD__ );
 		return is_object($enable) ? true : false;
 	}
 
@@ -151,7 +164,7 @@ class WikiaLabsProject {
 	public function loadFromDb($id) {
 		$project = $this->getDb()->selectRow(
 			array( 'wikia_labs_project' ),
-			array( 'wlpr_name', 'wlpr_data', 'wlpr_release_date', 'wlpr_is_active', 'wlpr_is_graduated', 'wlpr_activations_num', 'wlpr_rating', 'wlpr_pm_email', 'wlpr_tech_email', 'wlpr_fogbugz_project', 'wlpr_extension' ),
+			array( 'wlpr_name', 'wlpr_status', 'wlpr_data', 'wlpr_release_date', 'wlpr_is_active', 'wlpr_is_graduated', 'wlpr_activations_num', 'wlpr_rating', 'wlpr_pm_email', 'wlpr_tech_email', 'wlpr_fogbugz_project', 'wlpr_extension' ),
 			array( "wlpr_id" => $id ),
 			__METHOD__
 		);
@@ -169,6 +182,7 @@ class WikiaLabsProject {
 			$this->techEmail = $project->wlpr_tech_email;
 			$this->fogbugzProject = $project->wlpr_fogbugz_project;
 			$this->extension = $project->wlpr_extension;
+			$this->status = $project->wlpr_status;
 		}
 	}
 
@@ -186,7 +200,8 @@ class WikiaLabsProject {
 			'wlpr_pm_email' => $this->getPMEmail(),
 			'wlpr_tech_email' => $this->getTechEmail(),
 			'wlpr_fogbugz_project' => $this->getFogbugzProject(),
-			'wlpr_extension' => $this->getExtension()
+			'wlpr_extension' => $this->getExtension(),
+			'wlpr_status' => $this->status,
 		);
 
 		if($this->getId()) {
@@ -260,5 +275,4 @@ class WikiaLabsProject {
 		);
 		return $status;
 	}
-
 }
