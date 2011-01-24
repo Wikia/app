@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -97,9 +97,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	}
 
 	// Returns the CSS property to be used for identing a given element.
-	function getIndentCssProperty( element )
+	function getIndentCssProperty( element, dir )
 	{
-		return element.getComputedStyle( 'direction' ) == 'ltr' ? 'margin-left' : 'margin-right';
+		return ( dir || element.getComputedStyle( 'direction' ) ) == 'ltr' ? 'margin-left' : 'margin-right';
 	}
 
 	function isListItem( node )
@@ -181,8 +181,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			   // Convert the array back to a DOM forest (yes we might have a few subtrees now).
 			   // And replace the old list with the new forest.
-			   var newListDir = listNode.getAttribute( 'dir' ) || listNode.getStyle( 'direction' );
-			   var newList = CKEDITOR.plugins.list.arrayToList( listArray, database, null, editor.config.enterMode, newListDir );
+			   var newList = CKEDITOR.plugins.list.arrayToList( listArray, database, null, editor.config.enterMode, listNode.getDirection() );
 
 			   // Avoid nested <li> after outdent even they're visually same,
 			   // recording them for later refactoring.(#3982)
@@ -244,7 +243,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				   indentElement( block );
 		   }
 
-		   function indentElement( element )
+		   function indentElement( element, dir )
 		   {
 			   if ( element.getCustomData( 'indent_processed' ) )
 				   return false;
@@ -272,15 +271,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 				   indentStep = Math.min( indentStep, editor.config.indentClasses.length );
 				   indentStep = Math.max( indentStep, 0 );
-				   var className = CKEDITOR.tools.ltrim( element.$.className.replace( self.classNameRegex, '' ) );
-				   if ( indentStep < 1 )
-					   element.$.className = className;
-				   else
+				   element.$.className = CKEDITOR.tools.ltrim( element.$.className.replace( self.classNameRegex, '' ) );
+				   if ( indentStep > 0 )
 					   element.addClass( editor.config.indentClasses[ indentStep - 1 ] );
 			   }
 			   else
 			   {
-				   var indentCssProperty = getIndentCssProperty( element ),
+				   var indentCssProperty = getIndentCssProperty( element, dir ),
 					   currentOffset = parseInt( element.getStyle( indentCssProperty ), 10 );
 				   if ( isNaN( currentOffset ) )
 					   currentOffset = 0;
@@ -352,10 +349,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			   if ( nearestListBlock )
 			   {
-				   var firstListItem = nearestListBlock.getFirst( function( node )
-						   {
-						   return node.type == CKEDITOR.NODE_ELEMENT && node.is( 'li' );
-						   }),
+					var firstListItem = nearestListBlock.getFirst( isListItem ),
+					   hasMultipleItems = !!firstListItem.getNext( isListItem ),
 					   rangeStart = range.startContainer,
 					   indentWholeList = firstListItem.equals( rangeStart ) || firstListItem.contains( rangeStart );
 
@@ -363,7 +358,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				   // Only do that for indenting or when using indent classes or when there is something to outdent. (#6141)
 				   if ( !( indentWholeList &&
 							   ( self.name == 'indent' || self.useIndentClasses || parseInt( nearestListBlock.getStyle( getIndentCssProperty( nearestListBlock ) ), 10 ) ) &&
-							   indentElement( nearestListBlock ) ) )
+							   indentElement( nearestListBlock, !hasMultipleItems && firstListItem.getDirection() ) ) )
 					   indentList( nearestListBlock );
 			   }
 			   else
@@ -419,8 +414,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			editor.on( 'dirChanged', function( e )
 			{
 				var range = new CKEDITOR.dom.range( editor.document );
-				range.setStartBefore( e.data );
-				range.setEndAfter( e.data );
+				range.setStartBefore( e.data.node );
+				range.setEndAfter( e.data.node );
 
 				var walker = new CKEDITOR.dom.walker( range ),
 					node;
@@ -430,11 +425,26 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					if ( node.type == CKEDITOR.NODE_ELEMENT )
 					{
 						// A child with the defined dir is to be ignored.
-						if ( !node.equals( e.data ) && node.getDirection() )
+						if ( !node.equals( e.data.node ) && node.getDirection() )
 						{
 							range.setStartAfter( node );
 							walker = new CKEDITOR.dom.walker( range );
 							continue;
+						}
+
+						// Switch alignment classes.
+						var classes = editor.config.indentClasses;
+						if ( classes )
+						{
+							var suffix = ( e.data.dir == 'ltr' ) ? [ '_rtl', '' ] : [ '', '_rtl' ];
+							for ( var i = 0; i < classes.length; i++ )
+							{
+								if ( node.hasClass( classes[ i ] + suffix[ 0 ] ) )
+								{
+									node.removeClass( classes[ i ] + suffix[ 0 ] );
+									node.addClass( classes[ i ] + suffix[ 1 ] );
+								}
+							}
 						}
 
 						// Switch the margins.
@@ -454,6 +464,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 /**
  * Size of each indentation step
+ * @name CKEDITOR.config.indentOffset
  * @type Number
  * @default 40
  * @example
@@ -462,6 +473,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
  /**
  * Unit for the indentation style
+ * @name CKEDITOR.config.indentUnit
  * @type String
  * @default 'px'
  * @example
@@ -471,6 +483,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  /**
  * List of classes to use for indenting the contents. If it's null, no classes will be used
  * and instead the {@link #indentUnit} and {@link #indentOffset} properties will be used.
+ * @name CKEDITOR.config.indentClasses
  * @type Array
  * default null
  * @example

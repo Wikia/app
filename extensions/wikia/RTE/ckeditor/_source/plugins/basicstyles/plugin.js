@@ -29,7 +29,7 @@ CKEDITOR.plugins.add( 'basicstyles',
 				});
 		};
 
-		var config = editor.config, 
+		var config = editor.config,
 			lang = editor.lang;
 
 		addButtonCommand( 'Bold'		, lang.bold		, 'bold'		, config.coreStyles_bold );

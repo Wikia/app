@@ -56,7 +56,6 @@ CKEDITOR.themes.add( 'wikia', (function()
 			var container = CKEDITOR.dom.element.createFromHtml( [
 				'<span' +
 					' id="cke_', name, '"' +
-					' onmousedown="return false;"' +
 					' class="', editor.skinClass, '"' +
 					' dir="', editor.lang.dir, '"' +
 					' title="', ( CKEDITOR.env.gecko ? ' ' : '' ), '"' +

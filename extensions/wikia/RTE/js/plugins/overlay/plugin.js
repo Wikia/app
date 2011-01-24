@@ -46,23 +46,30 @@ CKEDITOR.plugins.add('rte-overlay',
 	showOverlay: function(node) {
 		//$().log(node, 'showOverlay');
 
-		var overlay = this.getOverlay(node);
-		var position = this.getOverlayPositon(node);
+		var overlay = this.getOverlay(node),
+			position = this.getOverlayPositon(node);
 
+		// try to keep overlay within editor's viewport (RT #139297):
+		// 1. overlay goes beoynd editor's viewport - move it to the left
+		var rightMargin = Math.max((position.left + overlay.width()) - RTE.getEditor().width(), 0);
+		overlay.children('div'). css('right', rightMargin + 'px');
+
+		// 2. overlay is above RTE toolbar - move it down
+		position.top = Math.max(position.top, 0);
+
+		// position overlay
 		overlay.css({
 			'left': position.left + 'px',
 			'top': parseInt(position.top + 2) + 'px'
 		});
 
-		// don't show [modify] / [remove] menu above RTE toolbar
 		var menu = overlay.children().eq(0);
-		if (position.top > 0) {
-			menu.show();
-		}
+		menu.show();
 
 		// don't show caption when it's going outside RTE window (RT #46409)
-		var caption = overlay.children().eq(1);
-		var positionCaption = parseInt(position.top) + parseInt(caption.css('top')) + 16 /* caption height */;
+		var caption = overlay.children().eq(1),
+			positionCaption = parseInt(position.top) + parseInt(caption.css('top')) + 16 /* caption height */;
+
 		if (positionCaption < RTE.tools.getEditorHeight()) {
 			caption.show();
 		}

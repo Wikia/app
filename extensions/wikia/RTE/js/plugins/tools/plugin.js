@@ -131,6 +131,26 @@ window.RTE.tools = {
 		return $('#cke_contents_wpTextbox1').height();
 	},
 
+	// get editor's document scroll offsets
+	getEditorScrollOffsets: function() {
+		var scrollLeft, scrollTop;
+
+		if (CKEDITOR.env.webkit) {
+			// RT #46408: use different property for Safari to get scroll offset
+			scrollLeft = RTE.instance.document.$.body.scrollLeft;
+			scrollTop = RTE.instance.document.$.body.scrollTop;
+		}
+		else {
+			scrollLeft = RTE.instance.document.$.documentElement.scrollLeft;
+			scrollTop = RTE.instance.document.$.documentElement.scrollTop;
+		}
+
+		return {
+			left: scrollLeft,
+			top: scrollTop
+		};
+	},
+
 	// get theme colors from .color1 CSS class
 	// TODO: use SASS settings echo'ed by PHP to JS variable(s)
 	getThemeColors: function() {
@@ -160,19 +180,11 @@ window.RTE.tools = {
 	// get position of given placeholder in coordinates of browser window
 	getPlaceholderPosition: function(placeholder) {
 		var position = placeholder.position(),
-			scrollTop;
-
-		if (CKEDITOR.env.webkit) {
-			// RT #46408: use different property for Safari to get v-scroll offset
-			scrollTop = RTE.instance.document.$.body.scrollTop;
-		}
-		else {
-			scrollTop = RTE.instance.document.$.documentElement.scrollTop;
-		}
+			scrollOffsets = this.getEditorScrollOffsets();
 
 		return {
-			left: parseInt(position.left - 10),
-			top: parseInt(position.top - scrollTop)
+			left: parseInt(position.left - 10 - scrollOffsets.left),
+			top: parseInt(position.top - scrollOffsets.top)
 		};
 	},
 

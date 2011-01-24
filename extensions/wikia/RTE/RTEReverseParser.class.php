@@ -796,12 +796,17 @@ class RTEReverseParser {
 					$data['link'] = $textContent;
 				}
 
-				// keep [[/foo/]] (RT #56095)
+				// support [[/foo/]] (RT #56095) and [[Page/foo|foo]] (RT #143377)
+				// both are giving the same entries in $data - detect them using original wikitext
 				if ($data['link'] == "{$pageName}/{$textContentOriginal}") {
-					$data['link'] = "/{$textContent}/";
 
-					// don't check for possible trails
-					$trail = '';
+					// keep [[/foo/]] links (RT #56095)
+					if (strpos($data['wikitext'], '|') === false) {
+						$data['link'] = "/{$textContent}/";
+
+						// don't check for possible trails and after-pipe descriptions
+						$trail = '';
+					}
 				}
 
 				$out .= $data['link'];

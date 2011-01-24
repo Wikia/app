@@ -280,7 +280,7 @@ CKEDITOR.dom.range = function( document )
 				// If there's any visible text, then we're not at the start.
 				if ( CKEDITOR.tools.trim( node.getText() ).length )
 					return false;
-				}
+			}
 			else if ( node.type == CKEDITOR.NODE_ELEMENT )
 			{
 				// Wikia - start
@@ -314,7 +314,7 @@ CKEDITOR.dom.range = function( document )
 		return node.type != CKEDITOR.NODE_TEXT
 			    && node.getName() in CKEDITOR.dtd.$removeEmpty
 			    || !CKEDITOR.tools.trim( node.getText() )
-			    || node.getParent().hasAttribute( '_cke_bookmark' );
+			    || !!node.getParent().data( 'cke-bookmark' );
 	}
 
 	var whitespaceEval = new CKEDITOR.dom.walker.whitespaces(),
@@ -357,7 +357,10 @@ CKEDITOR.dom.range = function( document )
 			this.collapsed = true;
 		},
 
-		// The selection may be lost when cloning (due to the splitText() call).
+		/**
+		 *  The content nodes of the range are cloned and added to a document fragment, which is returned.
+		 *  <strong> Note: </strong> Text selection may lost after invoking this method. (caused by text node splitting).
+		 */
 		cloneContents : function()
 		{
 			var docFrag = new CKEDITOR.dom.documentFragment( this.document );
@@ -368,6 +371,9 @@ CKEDITOR.dom.range = function( document )
 			return docFrag;
 		},
 
+		/**
+		 * Deletes the content nodes of the range permanently from the DOM tree.
+		 */
 		deleteContents : function()
 		{
 			if ( this.collapsed )
@@ -376,6 +382,10 @@ CKEDITOR.dom.range = function( document )
 			execContentsAction( this, 0 );
 		},
 
+		/**
+		 *  The content nodes of the range are cloned and added to a document fragment,
+		 * meanwhile they're removed permanently from the DOM tree.
+		 */
 		extractContents : function()
 		{
 			var docFrag = new CKEDITOR.dom.documentFragment( this.document );
@@ -409,7 +419,7 @@ CKEDITOR.dom.range = function( document )
 			var collapsed = this.collapsed;
 
 			startNode = this.document.createElement( 'span' );
-			startNode.setAttribute( '_cke_bookmark', 1 );
+			startNode.data( 'cke-bookmark', 1 );
 			startNode.setStyle( 'display', 'none' );
 
 			// For IE, it must have something inside, otherwise it may be
@@ -719,10 +729,10 @@ CKEDITOR.dom.range = function( document )
 				endNode = this.endContainer;
 
 			if ( startNode.is && startNode.is( 'span' )
-				&& startNode.hasAttribute( '_cke_bookmark' ) )
+				&& startNode.data( 'cke-bookmark' ) )
 				this.setStartAt( startNode, CKEDITOR.POSITION_BEFORE_START );
 			if ( endNode && endNode.is && endNode.is( 'span' )
-				&& endNode.hasAttribute( '_cke_bookmark' ) )
+				&& endNode.data( 'cke-bookmark' ) )
 				this.setEndAt( endNode,  CKEDITOR.POSITION_AFTER_END );
 		},
 
@@ -928,7 +938,7 @@ CKEDITOR.dom.range = function( document )
 								// If this is a visible element.
 								// We need to check for the bookmark attribute because IE insists on
 								// rendering the display:none nodes we use for bookmarks. (#3363)
-								if ( sibling.$.offsetWidth > 0 && sibling.$.nodeType == CKEDITOR.NODE_ELEMENT && !sibling.getAttribute( '_cke_bookmark' ) )
+								if ( sibling.$.offsetWidth > 0 && sibling.$.nodeType == CKEDITOR.NODE_ELEMENT && !sibling.data( 'cke_bookmark' ) )
 								{
 									// We'll accept it only if we need
 									// whitespace, and this is an inline
@@ -1087,7 +1097,7 @@ CKEDITOR.dom.range = function( document )
 								// If this is a visible element.
 								// We need to check for the bookmark attribute because IE insists on
 								// rendering the display:none nodes we use for bookmarks. (#3363)
-								if ( sibling.$.offsetWidth > 0 && sibling.$.nodeType == CKEDITOR.NODE_ELEMENT && !sibling.getAttribute( '_cke_bookmark' ) )
+								if ( sibling.$.offsetWidth > 0 && sibling.$.nodeType == CKEDITOR.NODE_ELEMENT && !sibling.data( 'cke_bookmark' ) )
 								{
 									// We'll accept it only if we need
 									// whitespace, and this is an inline
@@ -1354,9 +1364,9 @@ CKEDITOR.dom.range = function( document )
 				return !!( moveStart || moveEnd );
 			}
 		},
-		
+
 		// Wikia - start
-		enlargeFormattables : function () 
+		enlargeFormattables : function ()
 		{
 			var node;
 			if (this.startContainer.isReadOnly()) {
@@ -1369,7 +1379,7 @@ CKEDITOR.dom.range = function( document )
 					this.setEndAfter(node);
 				}
 			}
-			
+
 			return this;
 		},
 		// Wikia - end
@@ -1438,7 +1448,7 @@ CKEDITOR.dom.range = function( document )
 			// Fixing invalid range start inside dtd empty elements.
 			if( startNode.type == CKEDITOR.NODE_ELEMENT
 				&& CKEDITOR.dtd.$empty[ startNode.getName() ] )
-				startNode = startNode.getParent(), startOffset = startNode.getIndex();
+				startOffset = startNode.getIndex(), startNode = startNode.getParent();
 
 			this.startContainer	= startNode;
 			this.startOffset	= startOffset;

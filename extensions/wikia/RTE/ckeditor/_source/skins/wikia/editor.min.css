@@ -8,7 +8,7 @@ DO NOT modify this file by hand! Use minify.sh maintenance script to regenerate 
 .cke_skin_wikia a:hover,
 .cke_skin_wikia a:link,
 .cke_skin_wikia a:visited,
-.cke_skin_wikia a:active{text-decoration:none;border:0;width:auto;height:auto;border-collapse:collapse;vertical-align:baseline;white-space:nowrap;cursor:auto;color:#000;font-size:12px;font-family:arial,sans-serif}.cke_skin_wikia div,
+.cke_skin_wikia a:active{text-decoration:none;border:0;width:auto;height:auto;border-collapse:collapse;vertical-align:baseline;white-space:nowrap;cursor:auto;font-size:12px;font-family:arial,sans-serif}.cke_skin_wikia div,
 .cke_skin_wikia fieldset,
 .cke_skin_wikia
 legend{margin:0;padding:0}.cke_skin_wikia .cke_rtl *,
@@ -27,7 +27,9 @@ textarea{cursor:text}.cke_skin_wikia .cke_browser_gecko textarea[disabled]{curso
 .cke_skin_wikia input[type="password"]{cursor:text}.cke_skin_wikia input[type="text"][disabled],
 .cke_skin_wikia input[type="password"][disabled]{background:#f1f1f1;cursor:default}.cke_browser_ie
 .cke_dialog_contents{height:99% !important;margin-top: -15px !important}.cke_browser_ie
-.cke_dialog_tabs{position:relative;top: -22px}.cke_skin_wikia{display:block;_display:inline-block}.cke_skin_wikia
+.cke_dialog_tabs{position:relative;top: -22px}.cke_button .cke_label,
+.cke_menuitem
+.cke_label{color:#000}.cke_skin_wikia{display:block;_display:inline-block}.cke_skin_wikia
 .cke_wrapper{display:block;position:relative}.cke_skin_wikia .cke_browser_ie6 .cke_wrapper,
 .cke_skin_wikia .cke_browser_iequirks
 .cke_wrapper{background-image:none}.cke_skin_wikia
@@ -42,7 +44,7 @@ iframe{background-color:#fff}.cke_skin_wikia
 .cke_focus{outline:auto 5px -webkit-focus-ring-color}.cke_skin_wikia
 textarea.cke_source{font-family:monospace;font-size:13px;background-color:#fff;white-space:pre}.cke_skin_wikia .cke_browser_iequirks
 textarea.cke_source{_white-space:normal}.cke_skin_wikia
-.cke_resizer{width:12px;height:12px;margin-top:9px;display:block;float:right;background-image:url(images/sprites.png);_background-image:url(images/sprites_ie6.png);background-position:0 -1428px;background-repeat:no-repeat;cursor:se-resize}.cke_skin_wikia .cke_rtl
+.cke_resizer{width:12px;height:12px;margin-right:7px;margin-top:9px;display:block;float:right;background-image:url(images/sprites.png);_background-image:url(images/sprites_ie6.png);background-position:0 -1428px;background-repeat:no-repeat;cursor:se-resize}.cke_skin_wikia .cke_rtl
 .cke_resizer{cursor:sw-resize;background-position:0 -1455px;float:left}.cke_skin_wikia .cke_maximized
 .cke_resizer{display:none}.cke_skin_wikia .cke_browser_ie6 .cke_contents textarea,
 .cke_skin_wikia .cke_browser_ie7 .cke_contents textarea,
