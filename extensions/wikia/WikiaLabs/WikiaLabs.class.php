@@ -78,17 +78,37 @@ class WikiaLabs {
 		return $this->getFogbugzService()->logon()->getAreas( self::FOGBUGZ_PROJECT_ID );
 	}
 
-	public function saveFeedback() {
+	public static function saveFeedback() {
+		$request = WF::build( 'App' )->getGlobal( 'wgRequest' );
+
+		$wikiaLabs = WF::build( 'WikiaLabs' );
+		$response = new AjaxResponse();
+
+		$project = WF::build( 'WikiaLabsProject', array( 'id' => $request->getVal( 'projectId', null ) ) );
+		$projectId = $project->getId();
+		if( !empty( $projectId ) ) {
+			$result = $wikiaLabs->saveFeedbackInternal( $project, $request->getVal( 'description', null ) );
+		}
+		else {
+			$result = array( 'error' => 'Invalid project ID' );
+		}
+
+		$response->addText( json_encode( $result ) );
+		return $response;
+	}
+
+	public function saveFeedbackInternal( WikiaLabsProject $project, $message ) {
 		// @todo store rating in db
 
-		$this->saveFeedbackInFogbugz();
+		$this->saveFeedbackInFogbugz( $project, $message );
+		return array( 'success' => true );
 	}
 
 	private function saveFeedbackInFogbugz( WikiaLabsProject $project, $message ) {
 		$areaId = $project->getFogbugzProject();
 		$title = self::FOGBUGZ_CASE_TITLE . $project->getName();
 
-		$this->getFogbugzService()->logon()->createCase( $areaId, $title, self::FOGBUGZ_PROJECT_ID, $message, array( self::FOGBUGZ_CASE_TAG ) );
+		$this->getFogbugzService()->logon()->createCase( $areaId, $title, self::FOGBUGZ_CASE_PRIORITY, $message, array( self::FOGBUGZ_CASE_TAG ) );
 	}
 
 	// TODO: refactor this //
@@ -241,16 +261,16 @@ class WikiaLabs {
 	public function getImageUrlForEditInternal($name) {
 		return array( "status" => "ok", "url" => $this->getImageUrl($name) );
 	}
-	
+
 	public function onGetDefaultTools(&$list) {
 		if($this->user->isAllowed( 'wikialabsuser' )) {
 			$list[] = array(
-				'text' => wfMsg( 'wikialabs-mytools' ), 
+				'text' => wfMsg( 'wikialabs-mytools' ),
 				'name' => 'wikialabsuser',
 				'href' => Title::newFromText( "WikiaLabs", NS_SPECIAL )->getFullUrl()
 			);
 		}
-		
+
 		return true;
 	}
 }

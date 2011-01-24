@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="1" skipfailedinvocationCounts="false" verbose="2" name="Failed suite [Wikia QA Single Test]" junit="false" parallel="methods" annotations="JDK" data-provider-thread-count="10">
+  <test name="Ant test(failed)" junit="false" parallel="methods" annotations="JDK">
+    <classes>
+      <class name="com.wikia.selenium.tests.ContentFeedsTest">
+        <methods>
+          <include name="closeSession"/>
+          <include name="testRecentImagesTag"/>
+          <include name="startSession"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+</suite>

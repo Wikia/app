@@ -1,0 +1,131 @@
+<testng-results>
+  <reporter-output>
+  </reporter-output>
+  <suite name="Wikia QA Single Test">
+    <groups>
+      <group name="CI">
+        <method signature="com.wikia.selenium.tests.ContentFeedsTest.testMostVisitedTag()" name="testMostVisitedTag" class="com.wikia.selenium.tests.ContentFeedsTest"/>
+        <method signature="com.wikia.selenium.tests.ContentFeedsTest.testRecentImagesTag()" name="testRecentImagesTag" class="com.wikia.selenium.tests.ContentFeedsTest"/>
+        <method signature="com.wikia.selenium.tests.ContentFeedsTest.testWikiTweetsTag()" name="testWikiTweetsTag" class="com.wikia.selenium.tests.ContentFeedsTest"/>
+      </group>
+    </groups>
+    <test name="Ant test">
+      <class name="com.wikia.selenium.tests.ContentFeedsTest">
+        <test-method status="PASS" signature="startSession(java.lang.String, int, java.lang.String, java.lang.String, java.lang.String, java.lang.String)" name="startSession" is-config="true" duration-ms="3100" started-at="2011-01-07T17:03:23Z" finished-at="2011-01-07T17:03:26Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[localhost]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[4444]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[safari]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[http://harrypotter.qa.wikia-dev.com]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[120000]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[0]]>
+              </value>
+            </param>
+          </params>
+        </test-method>
+        <test-method status="PASS" signature="testMostVisitedTag()" name="testMostVisitedTag" duration-ms="54274" started-at="2011-01-07T17:03:26Z" finished-at="2011-01-07T17:04:20Z">
+        </test-method>
+        <test-method status="PASS" signature="closeSession()" name="closeSession" is-config="true" duration-ms="32" started-at="2011-01-07T17:04:20Z" finished-at="2011-01-07T17:04:20Z">
+        </test-method>
+        <test-method status="PASS" signature="startSession(java.lang.String, int, java.lang.String, java.lang.String, java.lang.String, java.lang.String)" name="startSession" is-config="true" duration-ms="3413" started-at="2011-01-07T17:04:20Z" finished-at="2011-01-07T17:04:24Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[localhost]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[4444]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[safari]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[http://harrypotter.qa.wikia-dev.com]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[120000]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[0]]>
+              </value>
+            </param>
+          </params>
+        </test-method>
+        <test-method status="PASS" signature="testRecentImagesTag()" name="testRecentImagesTag" duration-ms="51575" started-at="2011-01-07T17:04:24Z" finished-at="2011-01-07T17:05:15Z">
+        </test-method>
+        <test-method status="PASS" signature="closeSession()" name="closeSession" is-config="true" duration-ms="28" started-at="2011-01-07T17:05:15Z" finished-at="2011-01-07T17:05:15Z">
+        </test-method>
+        <test-method status="PASS" signature="startSession(java.lang.String, int, java.lang.String, java.lang.String, java.lang.String, java.lang.String)" name="startSession" is-config="true" duration-ms="3287" started-at="2011-01-07T17:05:15Z" finished-at="2011-01-07T17:05:19Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[localhost]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[4444]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[safari]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[http://harrypotter.qa.wikia-dev.com]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[120000]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[0]]>
+              </value>
+            </param>
+          </params>
+        </test-method>
+        <test-method status="PASS" signature="testWikiTweetsTag()" name="testWikiTweetsTag" duration-ms="50917" started-at="2011-01-07T17:05:19Z" finished-at="2011-01-07T17:06:09Z">
+        </test-method>
+        <test-method status="PASS" signature="closeSession()" name="closeSession" is-config="true" duration-ms="31" started-at="2011-01-07T17:06:09Z" finished-at="2011-01-07T17:06:10Z">
+        </test-method>
+      </class>
+    </test>
+  </suite>
+</testng-results>
