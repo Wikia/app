@@ -48,10 +48,10 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		$this->mName = $username;
 		$this->resetState();
 	}
-
+	
 	function WikiaCentralAuthUser( $oUser ) {
 		$this->mName = $oUser->getName();
-		$this->resetState();
+		$this->resetState();	
 	}
 
 	/**
@@ -168,7 +168,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		if ( $recache ) {
 			wfDebug( __METHOD__ . ": Reset state so take data from DB \n" );
 			$this->resetState();
-		} elseif ( isset( $this->mGlobalId ) ) {
+		} elseif ( isset( $this->mGlobalId ) && isset( $this->mName ) ) {
 			// Already loaded
 			return;
 		}
@@ -982,7 +982,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 				'user_real_name' => $this->mRealName,
 		 		'user_email' => $this->mEmail,
 		 		'user_email_authenticated' => $dbw->timestampOrNull( $this->mEmailAuthenticated ),
-				'user_options' => $this->encodeOptions($this->mOptions),
+				'user_options' => $this->encodeOptions($this->mOptionOverrides),
 				'user_touched' => $dbw->timestamp($this->mTouched),
 				'user_token' => $this->mToken,
 				'user_email_token' => $this->mEmailToken,
@@ -1188,7 +1188,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		#--- load data from local cache
 
 		foreach( self::$mCacheVars as $var ) {
-			if ( !in_array($var, array('mOptions','mGroups') ) ) {
+			if ( !in_array($var, array('mOptions','mOptionOverrides','mGroups') ) ) {
 				$oUser->$var = ( isset( $this->$var ) ) ? $this->$var : null;
 			}
 		}

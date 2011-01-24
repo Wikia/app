@@ -38,65 +38,6 @@ class WikiaCentralAuthHooks {
 		return $res;
 	}
 
-	static function onUserLoadFromSession_old( User $oUser, &$result ) {
-		global $wgWikiaCentralAuthCookies, $wgWikiaCentralAuthCookiePrefix;
-		wfProfileIn( __METHOD__ );
-		if( !$wgWikiaCentralAuthCookies ) {
-			// Use local sessions only.
-			wfDebug( __METHOD__ . ": central cookies authentication is disabled \n" );
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-		$prefix = $wgWikiaCentralAuthCookiePrefix;
-
-		if( $oUser->isLoggedIn() ) {
-			// Already logged in; don't worry about the global session.
-			wfDebug( __METHOD__ . ": user is logged in \n" );
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-		if (isset($_COOKIE["{$prefix}UserID"]) && isset($_COOKIE["{$prefix}Token"])) {
-			$userName = $_COOKIE["{$prefix}UserID"];
-			$token = $_COOKIE["{$prefix}Token"];
-		} elseif ( (bool)( $session = WikiaCentralAuthUser::getSession() ) ) {
-			$token = $session['wsAuthToken'];
-			$userName = $session['wsAuthUser'];
-		} else {
-			wfDebug( __METHOD__ .": no token or session\n \n" );
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-		$oCUser = new WikiaCentralAuthUser( $userName );
-		$localId = User::idFromName( $userName );
-
-		if ( $oCUser->authenticateWithToken( $token ) != 'ok' ) {
-			wfDebug( __METHOD__ .": token mismatch\n \n" );
-		} elseif ( !$oCUser->isAttached() && $localId ) {
-			wfDebug( __METHOD__ .": exists, and not attached\n" );
-		} else {
-			if ( !$localId ) {
-				// User does not exist locally, attempt to create it
-				if ( !self::attemptAddUser( $oUser, $userName ) ) {
-					// Can't create user, give up now
-					wfProfileOut( __METHOD__ );
-					return true;
-				}
-			} else {
-				$oUser->setID( $localId );
-				$oUser->loadFromId();
-			}
-			// Auth OK.
-			wfDebug( __METHOD__ .": logged in from session\n" );
-			self::initSession( $oUser, $token );
-			$oUser->centralAuth = $oCUser;
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
 	static function onUserLoadFromSession( User $oUser, &$result ) {
 		global $wgCookiePrefix;
         if ( wfReadOnly() ) {
@@ -106,6 +47,7 @@ class WikiaCentralAuthHooks {
 
 		wfProfileIn( __METHOD__ );
 
+		wfDebug( __METHOD__ . ": Load user from session " );
 		if( $oUser->isLoggedIn() ) {
 			// Already logged in; don't worry about the global session.
 			wfDebug( __METHOD__ . ": user is logged in \n" );
@@ -141,6 +83,8 @@ class WikiaCentralAuthHooks {
 			$_SESSION['wsUserName'] = $sName;
 		}
 
+		wfDebug( __METHOD__ . ": User from session: $sName " );
+		
 		if ( empty( $sName ) ) {
 			wfDebug( __METHOD__ .": username doesn't exists \n" );
 			wfProfileOut( __METHOD__ );
@@ -164,12 +108,16 @@ class WikiaCentralAuthHooks {
 			return true;
 		} else {
 			if ( !empty($sName) && !$localId ) {
+				wfDebug( __METHOD__ . ": User $sName doesn't exist in local database - so update" );
 				// User does not exist locally, attempt to create it
 				if ( !self::attemptAddUser( $oUser, $sName ) ) {
 					// Can't create user, give up now
+					wfDebug( __METHOD__ . ": User $sName updated in local db" );
 					wfProfileOut( __METHOD__ );
 					return true;
 				}
+			} else {
+				wfDebug( __METHOD__ . ": User $sName exists in local database - update is not needed" );
 			}
 		}
 
@@ -232,12 +180,13 @@ class WikiaCentralAuthHooks {
 		wfProfileIn( __METHOD__ );
 		$userName = $oUser->getName();
 		wfSetupSession();
+		wfDebug( __METHOD__ .": Initializing session for $userName with token $token.\n" );
 		if ($token != @$_SESSION['globalloggedin'] ) {
 			$_SESSION['globalloggedin'] = $token;
 			$oUser->invalidateCache();
-			wfDebug( __METHOD__ .": Initialising session for $userName with token $token.\n" );
+			wfDebug( __METHOD__ .": Session initialized for $userName with token $token.\n" );
 		} else {
-			wfDebug( __METHOD__ .": Session already initialised for $userName with token $token.\n" );
+			wfDebug( __METHOD__ .": Session already initialized for $userName with token $token.\n" );
 		}
 		wfProfileOut( __METHOD__ );
 	}
@@ -519,6 +468,7 @@ class WikiaCentralAuthHooks {
 		if ( !$oUser instanceof User ) {
 			return true;
 		}
+		
 		wfDebug( __METHOD__ . ": Load from central database user: {$oUser->getName()} \n" );
 		$userName = $oUser->mName;
 		if ( User::isValidUserName($userName) ) {
