@@ -8,7 +8,7 @@ class WikiaLabsSpecial extends SpecialPage {
 	function __construct() {
 		$this->app = WF::build( 'App' );
 		$this->out = $this->app->getGlobal('wgOut'); 
-		parent::__construct( 'WikiaLabs', 'wikilabsadmin' );
+		parent::__construct( 'WikiaLabs', 'wikialabsuser' );
 	}
 
 	function execute($article_id = null, $limit = "", $offset = "", $show = true) {

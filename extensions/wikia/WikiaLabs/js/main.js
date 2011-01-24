@@ -13,41 +13,35 @@ WikiaLabs.init = function() {
 	});
 	$('.buttons .slider').click(WikiaLabs.switchTogel);
 	$('.WikiaLabsStaff select').change( WikiaLabs.staffEditCombo ).val(0); 
+	$('.wikiaLabsMainView .buttons .feedback').click( WikiaLabs.showFeedback );
+}
 
-} 
+WikiaLabs.showFeedback = function(e){
+	var id = $(e.target).closest('.feedback').attr('data-id');
+	var modal =	$('#feedbackmodal').clone().attr('id','').show().makeModal({ width : 650});
 
-WikiaLabs.giveFeedback = function(id, callback) {
-	$.ajax({
-		url: wgScript + '?action=ajax&rs=WikiaLabs::getProjectFeedbackModal&id=' + id,
-		dataType: "html",
-		method: "post",
-		success: function(data) {
-			callback(data);
-			var modal = $(data).makeModal( { width: 650 } );
-			modal.find('#saveFeedback').click(function() {
-				$.ajax({
-					type: "POST",
-					url: wgScript + '?action=ajax&rs=WikiaLabs::saveFeedback',
-					dageType: "json",
-					data: modal.find('form').serialize(),
-					success: function(data) {
-						if( data.status == "error" ) {
-							var errorBox = $(".addprjmodal #errorBox").show().find('div');
-							errorBox.empty();
-							for( var i = 0; i < data.errors.length; i++ ) {
-								var error = $( "<p>" + data.errors[i] + "</p>");
-								$().log( error );
-								errorBox.append( error );
-							}
-						}
-						else {
-							window.location = wgScript = '?title=' + wgCanonicalNamespace + ':' + wgCanonicalSpecialPageName;
-						}
+	modal.find('.okbutton').click(function() {
+		$.ajax({
+			type: "POST",
+			url: wgScript + '?action=ajax&rs=WikiaLabs::saveFeedback',
+			dageType: "json",
+			data: modal.find('form').serialize(),
+			success: function(data) {
+				if( data.status == "error" ) {
+					var errorBox = $(".addprjmodal #errorBox").show().find('div');
+					errorBox.empty();
+					for( var i = 0; i < data.errors.length; i++ ) {
+						var error = $( "<p>" + data.errors[i] + "</p>");
+						$().log( error );
+						errorBox.append( error );
 					}
-				});
-				return false;
-			});
-		}
+				}
+				else {
+					window.location = wgScript = '?title=' + wgCanonicalNamespace + ':' + wgCanonicalSpecialPageName;
+				}
+			}
+		});
+		return false;
 	});
 }
 

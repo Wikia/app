@@ -16,8 +16,8 @@ $messages['en'] = array(
 	'wikialabs-add-project-status' => 'Status',
 	'wikialabs-add-project-status-inactive' => 'Hide project from main view',
 	'wikialabs-add-project-status-active' => 'Show project',
-	'wikialabs-add-project-save' => 'Save', 
-	'wikialabs-add-project-cancel' => 'Cancel',
+	'wikialabs-add-project-add-save' => 'Save', 
+	'wikialabs-add-project-add-cancel' => 'Cancel',
 	'wikialabs-add-project-validator-description' => 'Description can not be empty', 
 	'wikialabs-add-project-validator-name' => 'Name can not be empty',
 	'wikialabs-add-project-validator-link' => 'Link can not be empty',
@@ -35,5 +35,10 @@ $messages['en'] = array(
 	'wikialabs-staff-info' => 'visible to Wikia staff only',
 	'wikialabs-staff-items' => 'Edit Lab Item',
 	'wikialabs-staff-empty-project' => 'Select project...',
-	'wikialabs-staff-add' => 'Add Lab item'
+	'wikialabs-staff-add' => 'Add Lab item',
+
+	'wikialabs-mytools' => 'WikiaLabs',
+	
+	
+	'wikialabs-feedback-submit' => 'Submit'
 );
