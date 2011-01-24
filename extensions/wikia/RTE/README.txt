@@ -11,6 +11,22 @@ Markers definition:
 * \x7f-FF - Used to encode double quotes (") in JSON-encoded strings.
 
 
+Edgecases description:
+
+* COMMENT - comment found in the middle of wikitext line - foo <!-- test --> bar
+* COMPLEX.01 - wikitext marker found in original wikitext (triggered in RTEData::replaceIdxByData)
+* COMPLEX.02 - data marker found in original wikitext (triggered in RTEData::replaceIdxByData)
+* COMPLEX.03 - template found within template call - {{Foo|{{bar}}}}
+* COMPLEX.04 - marker found in table's attributes - {|{{foo}}
+* COMPLEX.05 - marker found in row attributes - |- {{foo}}
+* COMPLEX.06 - marker found in table's caption
+* COMPLEX.07 - marker found in original wikitext (triggered in RTEData::replaceIdxByData)
+* COMPLEX.08 - marker found in HTML tag attributes - <div {{foo}}></div>
+* COMPLEX.09 - double brackets found in image/video caption - [[Image:Foo.png|{{foo}}]]
+* COMPLEX.10 - table cell line begin with a comment
+* COMPLEX.11 - parser hook found inside HTML table - <table><staff /></table>
+
+
 Custom HTML5 data-* attributes used by RTE:
 
 * data-rte-attibs - stores original list of HTML attributes and their values (to preserve their order and formatting)

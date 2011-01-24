@@ -20,7 +20,7 @@
 		nextId: 1,
 		nextWidgetId: 1000
 	});
-	
+
 	/*
 	 * LIBRARY entries:
 	 *   - editorHtml - HTML for properties editor form
@@ -30,18 +30,18 @@
 	 *   - attributes - list of allowed attributes and its default values
 	 *   - requiredAttributes - list of required attributes
 	 */
-	
+
 	PLB.Widget = $.createClass(Object,{
-		
+
 		ed: null,
 		el: null,
-		
+
 		type: null,
 		md: null,
-		
+
 		onSave: null,
 		onDismiss: null,
-		
+
 		constructor: function( editor, el ) {
 			PLB.Widget.superclass.constructor.call(this);
 			this.ed = editor;
@@ -53,30 +53,30 @@
 			}
 			this.md = PLB.Library[this.type];
 		},
-		
+
 		getElement : function () {
 			return this.el;
 		},
-		
+
 		getType : function () {
 			return this.el.attr(PLB.HTML_PARAM_TYPE);
 		},
-		
+
 		getId : function () {
 			var data = this.el.getData() || {};
 			return data[PLB.PARAM_ID];
 		},
-		
+
 		setId : function (id) {
 			this.el.setData(PLB.PARAM_ID,id);
 			$().log(this.el[0],'PLB - assigning ID '+id);
 		},
-		
+
 		getCaption : function () {
 			var data = this.el.getData() || {};
 			return data[PLB.PARAM_CAPTION];
 		},
-		
+
 		getProperties : function () {
 			var type = this.getType();
 			var list = PLB.Library[type].attributes;
@@ -87,7 +87,7 @@
 			}
 			return props;
 		},
-		
+
 		setProperties : function ( props ) {
 			var newCaption;
 			var type = this.getType(this.el);
@@ -103,38 +103,38 @@
 			}
 			this.extSetProperties( props );
 		},
-		
+
 		setAge : function ( value ) {
 			this.el.attr('data-plb-paste-age',value);
 		},
-		
+
 		getAge : function () {
 			var v = parseInt(this.el.attr('data-plb-paste-age'));
 			return isNaN(v) ? 0 : v;
 		},
-		
+
 		edit : function () {
 			if (this.editing) {
 				return;
 			}
-			
+
 			$().log("edit", "PLB");
 			var type = this.getType();
-			var values = this.getProperties();	
-		
+			var values = this.getProperties();
+
 			this.ed.fire('widgetbeforeedit',this,type,values);
-			
+
 			this.editing = true;
 			var pe = PLB.PropertyEditor.create(type,values);
 			pe.on('save',$.proxy(this.onEditorSave,this));
 			pe.on('dismiss',$.proxy(this.onEditorDismiss,this));
 			pe.show();
 		},
-		
+
 		remove: function () {
 			this.el.remove();
 		},
-		
+
 		onEditorSave : function ( pe ) {
 			var v = pe.getValues();
 			this.ed.fire('widgetbeforechange',this,this.getType(),v);
@@ -143,23 +143,23 @@
 			this.ed.fire('widgetchanged',this,this.getType(),v);
 			this.ed.fire('widgetafteredit',this,this.getType(),v);
 		},
-		
+
 		onEditorDismiss : function ( pe ) {
 			this.editing = false;
 			this.ed.fire('widgetafteredit',this,this.getType(),this.getProperties());
 		},
-		
+
 		extSetProperties: function () {}
 	});
-	
+
 	PLB.Widgets = {};
-	
+
 	PLB.Widgets['plb_image'] = $.createClass(PLB.Widget,{
 
 		constructor: function() {
 			PLB.Widgets['plb_image'].superclass.constructor.apply(this,arguments);
 		},
-		
+
 		extSetProperties: function ( props ) {
 			/* align */
 			if (typeof props['align'] != 'undefined') {
@@ -176,16 +176,16 @@
 				$('img',this.el).attr('alt',props['caption']);
 			}
 		}
-	
+
 	});
-	
+
 	PLB.Widgets['plb_gallery'] = PLB.Widgets['plb_image'];
-	
+
 	PLB.Widget.getType = function ( el ) {
 		el = $(el);
 		return el.attr(PLB.HTML_PARAM_TYPE) || el.getData()[PLB.PARAM_TYPE];
 	};
-	
+
 	PLB.Widget.create = function ( editor, el ) {
 		var type = PLB.Widget.getType(el);
 		if (typeof PLB.Widgets[type] == 'undefined') {
@@ -193,31 +193,31 @@
 		}
 		return new PLB.Widgets[type](editor,el);
 	};
-	
-	
+
+
 	PLB.RTEInstance = $.createClass(Observable,{
-		
+
 		instance: null,
 		rte: null,
-		
+
 		document: null,
 		body: null,
 		rawBody: null,
-		
+
 		onRTEDocumentCallbacks: null,
 		modeReadyFired: false,
 
 		constructor: function(instance) {
 			PLB.RTEInstance.superclass.constructor.apply(this);
-			
+
 			// RTE is a signleton
 			GlobalTriggers.on('rteready',$.proxy(this.onRTEReady,this));
 			GlobalTriggers.on('rterequestcss',$.proxy(this.onRTERequestCSS,this));
-			
+
 			// Fix wgAction
 			window.wgAction = 'edit';
 		},
-		
+
 		getBody: function( fresh ) {
 			var rawBody = this.instance && this.instance.document && this.instance.document.$ && this.instance.document.$.body;
 			if (rawBody != this.rawBody) {
@@ -226,19 +226,19 @@
 			}
 			return this.body;
 		},
-		
+
 		getRTE: function() {
 			return this.rte;
 		},
-		
+
 		getInstance: function() {
 			return this.instance;
 		},
-		
+
 		getSidebar: function() {
 			return $('#cke_contents_wpTextbox1_sidebar');
 		},
-		
+
 		insertElement: function () {
 			/*
 			var args = arguments;
@@ -249,12 +249,12 @@
 			*/
 			this.rte.tools.insertElement.apply(this.rte.tools,arguments);
 		},
-		
+
 		isFullWysiwyg: function() {
 			var s;
 			return this.instance && (s=this.instance.getSelection()) && s.getNative();
 		},
-		
+
 		onRTEReady: function(instance) {
 			this.rte = RTE;
 			this.instance = instance;
@@ -273,143 +273,143 @@
 			this.instance.on('droppedElements', $.proxy(this.onRTEDroppedElements,this));
 			this.fire('ready',this);
 		},
-		
-		onRTEWysiwygModeReady: function () {			
+
+		onRTEWysiwygModeReady: function () {
 			if (!this.modeReadyFired) {
 				this.modeReadyFired = true;
 				this.fire('modeready',this,this.instance.mode);
 			}
-			
+
 			if (this.onRTEDocumentCallbacks == null) {
 				this.onRTEDocumentCallbacks = {};
 				this.onRTEDocumentCallbacks['applyStyle'] = { type : "document", "callback": $.proxy(this.onRTEBeforeApplyStyle,this) };
-				this.onRTEDocumentCallbacks['afterApplyStyle'] = { type : "document", "callback": $.proxy(this.onRTEAfterApplyStyle,this) }; 
+				this.onRTEDocumentCallbacks['afterApplyStyle'] = { type : "document", "callback": $.proxy(this.onRTEAfterApplyStyle,this) };
 				this.onRTEDocumentCallbacks['beforepaste'] = { type : "body", "callback":  this.onRTEEventProxy(this ,'beforepaste') };
 			}
-			
+
 			this.document = this.instance.document;
 			this.body = this.rte.getEditor();
-			
+
 			var target = null;
 			for( var i in this.onRTEDocumentCallbacks ) {
 				if(this.onRTEDocumentCallbacks[i].type == "document") {
-					target = this.document; 
+					target = this.document;
 				}
 
 				if(this.onRTEDocumentCallbacks[i].type == "body") {
 					target = this.document.getBody();
 				}
-				
+
 				target.removeListener(i, this.onRTEDocumentCallbacks[i].callback);
 				target.on(i, this.onRTEDocumentCallbacks[i].callback);
 			}
-			
-			this.instance.focus();			
+
+			this.instance.focus();
 			this.fire('rebind',this);
 		},
-		
+
 		onRTEEventProxy : function(self, eventname) {
 			return function(event) {
 				self.fire(eventname, self, event.data ,event);
 			};
 		},
-		
+
 		onRTEBeforeApplyStyle: function( event ) {
 			this.fire('beforestyle',this,event.data,event);
 		},
-		
+
 		onRTEAfterApplyStyle: function( event ) {
 			this.fire('afterstyle',this,event.data,event);
 		},
-		
+
 		onRTEBeforeCommandExec: function( event ) {
 //			$().log(event,'RTE-before-command-exec');
 			this.fire('beforecommand',this,event.data,event);
 		},
-		
+
 		onRTEAfterCommandExec: function( event ) {
 //			$().log(event,'RTE-after-command-exec');
 			this.fire('aftercommand',this,event.data,event);
 		},
-		
+
 		onRTEBeforeInsertContent: function( event ) {
 //			$().log(event,'RTE-before-insert');
 			this.fire('beforecommand',this,event.data,event);
 		},
-		
+
 		onRTEAfterInsertContent: function( event ) {
 //			$().log(event,'RTE-after-insert');
 			this.fire('aftercommand',this,event.data,event);
 		},
-		
+
 		onRTEBeforeCreateUndoSnapshot: function( event ) {
 			this.fire('beforesnapshot',this,event.data,event);
 		},
-		
+
 		onRTEAfterCreateUndoSnapshot: function( event ) {
 			this.fire('aftersnapshot',this,event.data,event);
 		},
-		
+
 		onRTEDroppedElements: function( event ) {
 			this.fire('droppedelements',this,event.data,event);
 		},
-	
+
 		onRTERequestCSS: function(css) {
 			this.fire('requestcss',this,css);
 		},
-	
+
 		onRTEModeSwitched: function() {
 			this.modeReadyFired = false;
 			this.fire('modeswitch',this,this.instance.mode);
 		},
-		
+
 		onRTESelectionChange: function( event ) {
 			this.fire('selectionchange',this,event.data.event);
 		},
-		
+
 		onRTEDroppedElements: function( event ) {
 			this.fire('droppedelements',this,event.data,event);
 		},
-		
+
 		onRTEKey: function( event ) {
 			this.fire('key',this,event.data,event);
 		}
-		
+
 	});
-	
+
 	PLB.Editor = $.createClass(Observable,{
-		
+
 		id: null,
 		rte: null,
-		
+
 		isRTEReady: false,
 		isDataReady: false,
-		
+
 		sidebar: null,
-		
+
 		adding: null,
-		
+
 		placeholders: null,
 		pastedage: 1,
-		
+
 		nextWidgetId: 1,
 		usedWidgetIds: null,
 
 		// Create the editor object
 		constructor: function () {
 			PLB.Editor.superclass.constructor.call(this);
-			
+
 			// Generate unique ID
 			this.id = PLB.nextId++;
 			this.usedWidgetIds = {};
-			
+
 			this.on({
 				widgetbeforechange: this.onWidgetBeforeChange,
 				widgetchanged: this.onWidgetChanged,
 				widgetafteredit: this.onWidgetAfterEdit,
 				scope: this
 			});
-			
+
 			// RTE is a singleton
 			this.rte = new PLB.RTEInstance();
 			this.rte.bind({
@@ -425,22 +425,22 @@
 				beforesnapshot: this.onRTEBeforeCreateUndoSnapshot,
 				aftersnapshot: this.onRTEAfterCreateUndoSnapshot,
 				*/
-				
+
 				afterstyle: this.onContentChange,
 				aftercommand: this.onContentChange,
-				
+
 				beforepaste: this.onRTEBeforePaste,
 				afterpaste: this.onRTEAfterPaste,
-				
+
 				droppedelements: this.onRTEDroppedElements,
-				
+
 				selectionchange: this.onRTESelectionChange,
-				
+
 				key: this.onRTEKey,
-				
+
 				scope: this
 			});
-			
+
 			// Fetch PLB editor data through Ajax call
 			var dataLoadedCallback = $.proxy(this.onDataLoaded,this);
 			$(function(){
@@ -495,16 +495,16 @@
 							}
 						]};
 				});
-				
+
 				/*
-				time = new Date(); 
-				$.getScript(window.wgScript + '?action=ajax&rs=PageLayoutBuilderEditor::getPLBEditorData&uselang=' + window.wgUserLanguage + '&cb=' + time.getTime(), 
+				time = new Date();
+				$.getScript(window.wgScript + '?action=ajax&rs=PageLayoutBuilderEditor::getPLBEditorData&uselang=' + window.wgUserLanguage + '&cb=' + time.getTime(),
 						dataLoadedCallback);
 				*/
 				GlobalTriggers.on('plbdataloaded',dataLoadedCallback);
 			});
 		},
-		
+
 		onRTEBeforePaste : function() {
 			var list = this.getWidgets();
 			for (var i=0;i<list.length;i++) {
@@ -512,7 +512,7 @@
 			}
 			this.pastedage++;
 		},
-		
+
 		onRTEAfterPaste: function() {
 			//$().log('RTE: event = AfterPaste');
 			this.fixPaste();
@@ -541,7 +541,7 @@
 				}
 			}
 		},
-		
+
 		fixPaste: function()
 		{
 			var list = this.getWidgets();
@@ -558,18 +558,18 @@
 					sorted[el.getId()].push(el);
 				}
 			}
-			
+
 			for (var i in sorted) {
 				if (sorted[i].length > 1) {
 					this.fixPasteCollision(sorted[i]);
 				}
 			}
 		},
-		
+
 		onRTEDroppedElements: function (rte,els,event) {
 			els.each($.proxy(this.fixDraggedElement,this));
 		},
-		
+
 		fixDraggedElement: function (i,el) {
 			el = $(el).closest('.plb-rte-widget');
 			if (el.length > 0) {
@@ -590,13 +590,13 @@
 				*/
 			}
 		},
-		
+
 		// Store the information that RTE is ready
 		onRTEReady : function () {
 			this.isRTEReady = true;
 			this.onCheckReady();
 		},
-		
+
 		// Store the information that data has been loaded
 		onDataLoaded : function() {
 			this.isDataReady = true;
@@ -604,13 +604,13 @@
 			var pe = new PageLayoutBuilder.WidgetCreator();
 			var helpbox = new PageLayoutBuilder.HelpBox();
 		},
-		
+
 		// Check if all requirements are met to initialize PLB editor
 		onCheckReady : function() {
 			if (!this.isRTEReady || !this.isDataReady) {
 				return;
 			}
-			
+
 			// Create the UI inside sidebar
 			this.ui = new PLB.UI(this);
 			this.ui.bind({
@@ -620,13 +620,13 @@
 				scope: this
 			});
 		},
-		
+
 		// RTE might switch the whole IFRAME in the meantime, now there is an opportunity
 		// to rebind all event handlers = RTE event 'wysiwygModeReady'
 		onRTERebind : function () {
 			this.fire('rebind',this);
 		},
-		
+
 		onRTERequestCSS: function (rte,css) {
 			if (PLB.Data.editorCss) {
 				var l = PLB.Data.editorCss;
@@ -635,29 +635,29 @@
 				}
 			}
 		},
-		
+
 		onRTEKey: function (rte,data,event) {
 			this.fire('rtekey',rte,data,event);
 		},
-		
+
 		onRTEBeforeCreateUndoSnapshot: function(rte,data,e) {
 			if (!rte.isFullWysiwyg()) {
 				return;
 			}
 			$().log('','PLB->>>-onRTEBeforeCreateUndoSnapshot');
 			var undoSnapshot = {};
-			
+
 			undoSnapshot.selection = this.saveSelection(null,null);
 			undoSnapshot.elements = this.replacePlaceholders(this.rte,undoSnapshot.selection);
 			if (undoSnapshot.elements.length > 0) {
 				this.restoreSelection(undoSnapshot.selection);
 			}
-			
+
 			this.undoSnapshot = undoSnapshot;
-			
+
 			$().log(this.undoSnapshot,'PLB-<<<-onRTEBeforeCreateUndoSnapshot');
 		},
-		
+
 		onRTEAfterCreateUndoSnapshot: function(rte,data,e) {
 			if (!rte.isFullWysiwyg()) {
 				return;
@@ -675,11 +675,11 @@
 				}
 				debug.placeholders = placeholders;
 			}
-			
+
 			this.undoSnapshot = null;
 			$().log(debug,'PLB-<<<-onRTEAfterCreateUndoSnapshot');
 		},
-		
+
 		insertPlaceholders: function (rte,state) {
 			if (!rte.isFullWysiwyg()) {
 				return;
@@ -687,29 +687,29 @@
 			if (state.command && state.command.canUndo === false) {
 				return;
 			}
-			
+
 			$().log('','PLB->>>-insertPlaceholders');
-			
+
 			var debug = {};
 			var selData = this.saveSelection(state.selection,state.ranges);
-			
+
 			var placeholders = [];
 			var elements = this.getWidgetElements();
 			for (var i=0;i<elements.length;i++) {
 				placeholders.push(this.createPlaceholder(elements[i]));
 			}
 			this.restoreSelection(selData);
-		    
+
 			debug.selection = selData;
 			debug.placeholders = placeholders;
-			
+
 			$().log(debug,'PLB-<<<-insertPlaceholders');
-			
+
 			this.fire('placeholderscreated',placeholders);
-		    
+
 		    return placeholders;
 		},
-		
+
 		replacePlaceholders: function (rte,state) {
 			if (!rte.isFullWysiwyg()) {
 				return;
@@ -720,28 +720,28 @@
 //				return;
 //			}
 			$().log('','PLB->>>-replacePlaceholders');
-			
+
 			var debug = {};
 			var selData = this.saveSelection(state.selection,state.ranges);
-			
+
 			var elements = [];
 		    var placeholders = $('.plb-rte-widget-placeholder',rte.getBody());
 		    for( var i = 0; i < placeholders.length; i++ ) {
 		    	elements.push(this.replacePlaceholder(placeholders[i]));
 		    }
 		    this.restoreSelection(selData);
-		    
+
 		    debug.selection = selData;
 		    debug.elements = elements;
 
 		    this.fire('placeholdersremoved',elements);
-		    
+
 		    $().log(debug,'PLB-<<<-replacePlaceholders');
-		    
+
 		    this.fixPaste();
 		    return elements;
 		},
-		
+
 		createPlaceholder: function( el ) {
 			el = $(el);
 			var wrapper = $('<div>').append(el.clone());
@@ -759,7 +759,7 @@
 			return ph;
 			*/
 		},
-		
+
 		replacePlaceholder: function( el ) {
 			var wrapper = $(el);
 			var widgetEl = null;
@@ -769,7 +769,7 @@
 			}
 			return widgetEl;
 		},
-		
+
 		saveSelection: function( data ) {
 			var sel = data && typeof data == 'object' && data.selection || this.rte.instance.getSelection();
 			var ranges = data && typeof data == 'object' && data.ranges || sel.getRanges();
@@ -778,11 +778,11 @@
 				ranges: ranges
 			};
 		},
-		
+
 		restoreSelection: function( data ) {
 			data.selection.selectRanges(data.ranges);
 		},
-		
+
 		fixReadOnlySelection: function() {
 			/*
 			var selection = this.rte.instance && this.rte.instance.getSelection(),
@@ -821,21 +821,21 @@
 				} else {
 					// IE selection is so stupid!!!
 					this.rte.instance.getSelection()._.cache.ranges = ranges;
-				}	
+				}
 			}
 		},
-		
+
 		onRTEModeSwitch: function (rte,mode) {
 			if (this.ui) {
 				this.ui[mode == 'source' ? 'hide':'show']();
 			}
 		},
-		
+
 		onRTESelectionChange: function (rte,data,event) {
 			this.fire('selectionchange',this,data);
 		},
-		
-		
+
+
 		getWidgetElements : function () {
 			return $('.plb-rte-widget',this.rte.getBody());
 		},
@@ -851,7 +851,7 @@
 			},this));
 			return list;
 		},
-		
+
 		// Find specific widget by its id
 		getWidget : function ( id ) {
 			if (typeof id == 'object') {
@@ -859,7 +859,7 @@
 				id = data[PLB.PARAM_ID];
 			}
 			id = Number(id) + 0;
-			
+
 			var l = this.getWidgets();
 			for (var i=0;i<l.length;i++) {
 				if (l[i].getId() == id) {
@@ -868,7 +868,7 @@
 			}
 			return null;
 		},
-		
+
 		generateWidgetId: function () {
 			var id = this.nextWidgetId;
 			while (this.usedWidgetIds[""+id]) {
@@ -878,22 +878,21 @@
 			this.nextWidgetId = id + 1;
 			return id;
 		},
-		
+
 		// Create new widget
 		createWidget : function ( type ) {
 			var el = $(PLB.Library[type].templateHtml);
 			var w = PLB.Widget.create(this,el);
 			w.setId(this.generateWidgetId());
-			w.getElement().attr('_rte_instance', window.RTEInstanceId);
-			window.RTEInstanceId
+			w.getElement().attr('data-rte-instance', window.RTE.instanceId);
 			this.adding = w;
 			w.edit();
 		},
-		
+
 		onWidgetBeforeChange : function (widget,type,props) {
 			this.rte.instance.fire('saveSnapshot');
 		},
-		
+
 		onWidgetChanged : function (widget,type,props) {
 			if (this.adding) {
 				var el = this.adding.getElement();
@@ -907,40 +906,40 @@
 			this.rte.instance.fire('saveSnapshot');
 			this.fire('changed',this,widget,type,props);
 		},
-		
+
 		onWidgetAfterEdit : function () {
 			this.adding = null;
 		},
-		
+
 		onCreateWidgetRequest: function ( type ) {
 			this.createWidget(type);
 		},
-		
+
 		onEditWidgetRequest: function ( id ) {
 			this.getWidget(id).edit();
 		},
-		
+
 		onDeleteWidgetRequest: function ( id ) {
 			this.rte.instance.fire('saveSnapshot');
 			this.getWidget(id).remove();
 			this.rte.instance.fire('saveSnapshot');
 			this.fire('changed');
 		},
-		
+
 		onContentChange: function () {
 			this.fire('changed');
 		}
-		
+
 	});
 
 	PLB.UI = $.createClass(Observable,{
-		
+
 		ed: null,
 		el: null,
 		rte: null,
-		
+
 		state: true,
-		
+
 		addButton: null,
 		widgetsManager: null,
 		widgetsTutorial: null,
@@ -953,15 +952,15 @@
 		rebindOverlaysTimerDelay: 500,
 		refreshSelectionTimer: null,
 		refreshSelectionTimerDelay: 100,
-		
-		
+
+
 		constructor: function( editor ) {
 			PLB.UI.superclass.constructor.call(this);
-			
+
 			this.refreshTimer = Timer.create($.proxy(this.refresh,this),this.refreshTimerDelay);
 			this.rebindOverlaysTimer = Timer.create($.proxy(this.rebindOverlays,this),this.rebindOverlaysTimerDelay);
 			this.refreshSelectionTimer = Timer.create($.proxy(this.refreshSelection,this),this.refreshSelectionTimerDelay);
-			
+
 			this.ed = editor;
 			this.ed.bind({
 				rebind: this.rebind,
@@ -972,15 +971,15 @@
 				scope: this
 			});
 			this.rte = this.ed.rte;
-			
+
 			this.el = this.rte.getSidebar();
-			
+
 			this.setup();
 			this.rebind();
-			//lazy  load of catselect 
+			//lazy  load of catselect
 			initCatSelectForEdit();
 		},
-		
+
 		setup: function () {
 			// Move the editor's sidebar to the left
 			this.el.insertBefore(this.el.prev());
@@ -1008,56 +1007,56 @@
 				$().log('UI::rebind() - cannot find RTE.getEditor()','PLB');
 			}
 			*/
-			
+
 			this.rebindOverlays();
-			
+
 			this.refresh();
 		},
-		
+
 		delayedRebindOverlays : function () {
 			this.rebindOverlaysTimer.start();
 		},
-		
+
 		rebindOverlays: function() {
 			this.rebindOverlaysTimer.stop();
-			
+
 			var wels = this.ed.getWidgetElements();
 			wels.unbind('.plb-clickable')
 				.bind('click.plb-clickable',$.proxy(this.onWidgetEdgeClickCheck,this));
 			var cels = $('.plb-rte-widget-clickable',wels);
 			cels.unbind('.plb-clickable')
-				.bind('click.plb-clickable',$.proxy(this.onWidgetEdgeClickCheck,this));			
+				.bind('click.plb-clickable',$.proxy(this.onWidgetEdgeClickCheck,this));
 			return;
 		},
-		
+
 		hide: function() {
 			$('>*',this.el).css('display','none');
 			this.state = false;
 		},
-		
+
 		show: function() {
 			$('>*',this.el).css('display','');
 			this.state = true;
 		},
-		
+
 		delayedRefresh : function () {
 			this.refreshTimer.start();
 		},
-		
+
 		// Searches the editor DOM for all PLB widgets and refreshes the list in toolbox
 		refresh : function () {
 			this.refreshTimer.stop();
-			
+
 			if ( !this.state ) {
 				this.refreshTimer.start(1000);
 				return;
 			}
-			
+
 			if ( !this.rte.getBody() ) {
 				this.refreshTimer.start();
 				return;
 			}
-			
+
 			$().log('refreshing wigdets list...','PLB');
 			// Find all PLB widgets in the editor
 			var l = this.ed.getWidgets();
@@ -1073,7 +1072,7 @@
 						.replace("[$ID]",$.htmlentities(e.getId()))
 						.replace("[$CAPTION]",$.htmlentities(e.getCaption()))
 						.replace("[$BUTTONS]",bs);
-					$(html).appendTo(this.widgetsList);	
+					$(html).appendTo(this.widgetsList);
 				}
 			},this));
 			// Set visibility of list depending on whether we have any element or not
@@ -1096,54 +1095,54 @@
 			// Bind to the edit and delete buttons from the overlay
 			$('.edit',this.widgetsList).click($.proxy(this.onItemEditClick,this));
 			$('.delete',this.widgetsList).click($.proxy(this.onItemDeleteClick,this));
-			
+
 			$('.plb-rte-widget-edit-button',this.rte.getBody()).each($.proxy(function(i,e){
 				$(e)
 					.unbind('.plbeditbutton')
 					.bind('click.plbeditbutton',$.proxy(this.onWidgetEditClick,this));
 			},this));
-			
+
 			this.refreshHovers(this.ed.getWidgetElements());
 		},
-		
+
 		onMouseEnter : function (e) {
 			var el = $(e.target).closest('li');
 			el.addClass('hover');
 		},
-		
+
 		onMouseLeave : function (e) {
 			var el = $(e.target).closest('li');
 			el.removeClass('hover');
 		},
-		
+
 		delayedRefreshSelection : function () {
 			this.refreshSelectionTimer.start();
 		},
-		
+
 		// Searches the editor DOM for all PLB widgets and refreshes the list in toolbox
 		refreshSelection : function () {
 			this.refreshSelectionTimer.stop();
 
 			var sel = this.rte.instance.getSelection(),
 				element = sel && sel.getStartElement();
-			
+
 			var current = false;
 			if (element && element.$) {
 				var el = element.findFormattableAncestor();
 				if (el) current = $(el.$);
 			}
-			
+
 			if (this.previousSelection && this.previousSelection != current) {
 				this.previousSelection.removeClass('selected');
 				this.previousSelection = false;
 			}
-			
+
 			if (current && this.previousSelection != current) {
 				this.previousSelection = current;
 				this.previousSelection.addClass('selected');
 			}
 		},
-		
+
 		onWidgetEdgeClickCheck : function(e) {
 			var el = $(e.target), wel = el.closest('.plb-rte-widget');
 			var pos_l = e.pageX - wel.offset().left, pos_r = wel.innerWidth() - pos_l;
@@ -1156,7 +1155,7 @@
 				return false;
 			}
 		},
-		
+
 		setCursorNearWidget : function( widget, atEnd ) {
 			widget = $(widget);
 			var element = new CKEDITOR.dom.element(widget[0]);
@@ -1166,7 +1165,7 @@
 			var selection = this.rte.instance.getSelection();
 			selection.selectRanges(new CKEDITOR.dom.rangeList([range]));
 		},
-		
+
 		// Handle click on edit button in the widgets list
 		onItemEditClick : function (e) {
 			var el = $(e.target).closest('li');
@@ -1174,7 +1173,7 @@
 			this.fire('edit',id);
 			return false;
 		},
-		
+
 		// Handle click on delete button in the widgets list
 		onItemDeleteClick : function (e) {
 			var el = $(e.target).closest('li');
@@ -1191,17 +1190,17 @@
 			this.fire('create',value);
 			return false;
 		},
-		
+
 		onOverlayEditClick : function(node) {
 			this.fire('edit',$(node));
 		},
-		
+
 		onWidgetEditClick : function(event) {
 			var w = $(event.target).closest('.plb-rte-widget');
 			this.fire('edit',w);
 			return false;
 		},
-		
+
 		refreshHovers : function(elements) {
 			elements.each(function(i,el){
 				el = $(el)
@@ -1216,11 +1215,11 @@
 					});
 			});
 		}
-		
+
 	});
-	
+
 	PLB.PropertyEditor = $.createClass(Observable,{
-		
+
 		width: 425,
 		editorHtml: null,
 		attributes: null,
@@ -1228,13 +1227,13 @@
 
 		type: null,
 		values: null,
-		
+
 		form: null,
 		wrapper: null,
 		saveButton: null,
-		
+
 		valid: false,
-		
+
 		constructor: function( type, values ) {
 			PLB.PropertyEditor.superclass.constructor.call(this);
 			this.type = type;
@@ -1245,37 +1244,37 @@
 			this.values = $.extend({},this.attributes,values);
 			$.extend(this,PLB.Library[this.type]);
 		},
-		
+
 		getValues: function() {
 			return this.values;
 		},
-		
+
 		show: function() {
-			// Create form 
+			// Create form
 			this.form = $(this.editorHtml);
-			
+
 			// Find the buttons and assign proper handlers to them
 			this.saveButton = $('.plb-pe-button-save',this.form);
 			$('.plb-pe-button-save',this.form).bind('click',$.proxy(this.doSave,this));
 			$('.plb-pe-button-cancel',this.form).bind('click',$.proxy(this.doDismiss,this));
 			$('form',this.form).bind('submit',function(){return false;});
-			
+
 			// Give the subclasses way to initialize the form
 			this.extFormSetup(this.form);
-			
+
 			// Write all current values to the form
 			this.writeValues();
 			// Bind to change events and invoke it once
-			
+
 			var form = $('form', this.form);
 			form.find('[name],',this.form).change($.proxy(this.onChange,this));;
 			form.find('[name],',this.form).blur($.proxy(this.onChange,this));
 			form.find('input[name], textarea[name]',this.form).keyup($.proxy(this.onChange,this));
-			
+
 			$('.helpicon',this.form).each(function(i,el){
 				new PLB.Tooltip(el);
 			});
-		
+
 			this.onChange();
 			// Show modal box
 			var mopts = {
@@ -1284,7 +1283,7 @@
 				width: this.width
 			};
 			this.wrapper = this.form.makeModal(mopts);
-			
+
 			//init preview
 			this.refreshPreview(this.getValues());
 			$('.plb-pe-window-preview').find('input[name], textarea[name]')
@@ -1292,16 +1291,16 @@
 				.blur($.proxy(this.blurPreviewInput,this));
 			$('.plb-pe-window-preview button').attr("onclick", "");
 		},
-		
+
 		focusPreviewInput: function(e) {
 			$(e.target).val("").removeClass('plb-empty-input');
 		},
-		
+
 		blurPreviewInput: function(e) {
 			this.refreshPreview(this.values);
 			$(e.target).addClass('plb-empty-input');
 		},
-		
+
 		refreshPreview: function(values) {
 			$().log("refreshPreview", "PLB")
 			if( typeof(values.caption) != 'undefined' ) {
@@ -1312,13 +1311,13 @@
 				$('.plb-pe-window-preview .plb-input-instructions').val($.htmlentities(values.instructions));
 				$('.plb-pe-window-preview .plb-span-instructions').html($.htmlentities(values.instructions));
 			}
-			
+
 			this.extRefreshPreview(values);
 		},
-		
+
 		setupForm: function() {
 		},
-		
+
 		readValue: function( name ) {
 			var state = { value: undefined };
 			var el = $('[name='+name+']',this.form);
@@ -1332,7 +1331,7 @@
 			this.extFormGetValue(name,state);
 			return state.value;
 		},
-		
+
 		writeValue: function( name, value ) {
 			var el = $('[name='+name+']',this.form);
 			if (el.length>0) {
@@ -1346,7 +1345,7 @@
 			var state = { value: value };
 			this.extFormSetValue(name,state);
 		},
-		
+
 		showFieldValidation: function( name, value ) {
 			var el = $('[name='+name+']',this.form);
 			if (el.length>0) {
@@ -1355,26 +1354,26 @@
 			var state = { value: value };
 			this.extShowFieldValidation(name,state);
 		},
-		
+
 		readValues: function( el ) {
 			$.each(this.attributes,$.proxy(function(attr,d){
 				if (attr != PLB.PARAM_ID_RAW) {
-					this.values[attr] = this.readValue(attr); 
+					this.values[attr] = this.readValue(attr);
 				}
 			},this));
 			return this.values;
 		},
-		
+
 		writeValues: function( el ) {
 			$.each(this.attributes,$.proxy(function(attr,d){
 				this.writeValue(attr,this.values[attr]);
 			},this));
 		},
-		
+
 		updateValues: function () {
 			this.values = this.readValues();
 		},
-		
+
 		validate: function() {
 			var state = { valid: true, status: {} };
 			$.each(this.attributes,function(name,value){
@@ -1392,7 +1391,7 @@
 //			this.showValidation();
 			return this.valid;
 		},
-		
+
 		showValidation: function() {
 			var box = this.form.find('>:first-child');
 			if (box.length == 0 || !box.hasClass('plb-pe-validation-status')) {
@@ -1410,14 +1409,14 @@
 			}
 			box.html(msg.join('<br />'));
 		},
-		
+
 		onChange: function(ev) {
 			this.updateValues();
 			this.refreshPreview(this.values);
 			this.extFormChange(ev);
 			this.validate();
 		},
-		
+
 		doSave: function() {
 			this.updateValues();
 			this.validate();
@@ -1425,19 +1424,19 @@
 			if (!this.valid) {
 				return false;
 			}
-			
+
 			$().log(this.values,'PLB-properties');
 			this.fire('save',this);
 			this.wrapper.closeModal();
 			return false;
 		},
-		
+
 		doDismiss: function() {
 			this.wrapper.closeModal();
 			this.fire('dismiss',this);
 			return false;
 		},
-		
+
 		extFormSetup: function() {},
 		extFormGetValue: function() {},
 		extFormSetValue: function() {},
@@ -1448,15 +1447,15 @@
 			$().log('extRefreshPreview',"EXT");
 		}
 	});
-	
+
 	PLB.PropertyEditors = {};
-	
+
 	PLB.PropertyEditors['plb_image'] = $.createClass(PLB.PropertyEditor,{
-		
+
 		constructor: function() {
 			PLB.PropertyEditors['plb_image'].superclass.constructor.apply(this,arguments);
 		},
-		
+
 		extFormValidate: function(state) {
 			if (this.values['size'] != '') {
 				var e = parseInt(this.values['size']);
@@ -1469,37 +1468,37 @@
 				}
 			}
 		},
-		
+
 		extFormGetValue: function(name,state) {
 			if (name == 'type') {
 				state.value = this.readValue('x-type') ? 'thumb' : 'frameless';
 			}
 		},
-		
+
 		extFormSetValue: function(name,state) {
 			if (name == 'type') {
 				this.writeValue('x-type',state.value == 'thumb' ? 1 : 0);
 			}
 		},
-		
+
 		extShowFieldValidation: function(name,state) {
 			if (name == 'type') {
 				this.showFieldValidation('x-type',state.value);
 			}
-		}, 
-		
+		},
+
 		extRefreshPreview : function(values) {
 			$().log(values, 'PLB image');
 		}
 	});
-	
-	
+
+
 	PLB.PropertyEditors['plb_gallery'] = $.createClass(PLB.PropertyEditor,{
-		
+
 		constructor: function() {
 			PLB.PropertyEditors['plb_gallery'].superclass.constructor.apply(this,arguments);
 		},
-		
+
 		extFormValidate: function(state) {
 			if (this.values['size'] != '') {
 				var e = parseInt(this.values['size']);
@@ -1519,14 +1518,14 @@
 		constructor: function() {
 			PLB.PropertyEditors['plb_sinput'].superclass.constructor.apply(this,arguments);
 		},
-		
+
 		extFormValidate: function(state) {
 			if (this.values['options'].indexOf('|') == -1) {
 				state.status['options'].push(PLB.Lang['plb-property-editor-not-enough-items']);
 				state.valid = false;
 			}
 		},
-		
+
 		extFormGetValue: function(name,state) {
 			if (name == 'options') {
 				var l = String(this.readValue('x-options')).split('\n');
@@ -1535,12 +1534,12 @@
 					if (v != '')
 						ll.push(v.replace("|", "&#124;"));
 				});
-				  
+
 				state.value = ll.join('|');
 				return state;
 			}
 		},
-		
+
 		extFormSetValue: function(name,state) {
 			if (name == 'options') {
 				var l = String(state.value).split('|');
@@ -1552,22 +1551,22 @@
 				this.writeValue('x-options',ll.join('\n'));
 			}
 		},
-		
+
 		extShowFieldValidation: function(name,state) {
 			if (name == 'options') {
 				this.showFieldValidation('x-options',state.value);
 			}
 		},
-		
+
 		extRefreshPreview : function(values) {
-			var value = this.extFormGetValue('options', {}); 
+			var value = this.extFormGetValue('options', {});
 			var l = String(value.value).split('|');
 
 			var element = $('.plb-pe-window-preview select');
 			element.empty();
 			if (typeof(values.instructions) != 'undefined') {
-			//	$(element).append($("<option/>").text(values.instructions).val(""));	
-			} 
+			//	$(element).append($("<option/>").text(values.instructions).val(""));
+			}
 			if(l.length > 0) {
 				$.each(l,function(i,v){
 					if (v != '') {
@@ -1579,29 +1578,29 @@
 			PageLayoutBuilder.initSelect();
 		}
 	});
-	
-	
+
+
 	PLB.PropertyEditor.create = function ( type, values ) {
 		if (typeof PLB.PropertyEditors[type] == 'undefined') {
 			PLB.PropertyEditors[type] = PLB.PropertyEditor;
 		}
 		return new PLB.PropertyEditors[type](type,values);
 	};
-	
+
 	PLB.Tooltip = $.createClass(Object,{
-		
+
 		ts: null,
-		
+
 		el: null,
 		tip: null,
-		
+
 		constructor: function( el ) {
 			this.el = $(el);
 			this.el.hover($.proxy(this.enter,this),$.proxy(this.leave,this));
 			this.tip = $('>.helpicon-text',this.el);
 			this.ts = $('#TooltipHolder') || $('<div id="TooltipHolder"')
 		},
-		
+
 		enter: function() {
 			/*
 			var offset = this.el.offset();
@@ -1617,14 +1616,14 @@
 				.css('bottom','-'+(this.el.outerHeight() - 2)+'px');
 			this.tip.css('display','block');
 		},
-		
+
 		leave: function() {
 			this.tip.css('display','none');
 		}
-		
-		
+
+
 	});
-	
+
 	PLB.WidgetCreator = $.createClass(Observable,{
 		constructor: function() {
 			var addButton = $('.plb-add-element');
@@ -1645,7 +1644,7 @@
 					$.proxy(this.onMouseEnter,this),
 					$.proxy(this.onMouseLeave,this)
 				);
-			
+
 			WikiaButtons.add(addButton, {
 				click:WikiaButtons.clickToggle
 			});
@@ -1678,9 +1677,9 @@
 			pe.on('save',function() {
 			    var props = pe.getValues();
 			    var attr = '';
-			    $.each(props, function(i,v){   
+			    $.each(props, function(i,v){
 			    	attr += ' ' + i + '="' + $.htmlentities(v) + '"' + ' ';
-			    });			
+			    });
 			    insertTags('<' + pe.type + ' ' + attr + ' />','','');
 			});
 			pe.show();
@@ -1689,35 +1688,35 @@
 
 	PLB.HelpBox = $.createClass(Observable,{
 		constructor: function() {
-			
+
 			if( $.getUrlVar('action') == 'submit' ) {
 				return true;
 			}
-		
+
 			if(PageLayoutBuilder.helpbox.show == 0) {
 				return true;
-			} 
-		
+			}
+
 			var helpbox = $(PageLayoutBuilder.helpbox.html);
-			
+
 			var mopts = {
 				onClose: function() {},
 				closeOnBlackoutClick: false,
 				width: 960
 			};
-			
+
 			this.wrapper = helpbox.makeModal(mopts);
 			this.wrapper.showModal();
-			
+
 			$('#getStarted2, #getStarted1').click($.proxy(this.buttonClick, this));
-			
+
 			$('#getStartedBlock1, #getStartedBlock2').click($.proxy(this.checkboxClick, this));
 		},
 		buttonClick: function(e){
 			this.wrapper.closeModal();
 			return false;
 		},
-		
+
 		checkboxClick: function(e) {
 			$('#getStartedBlock1, #getStartedBlock2').attr('checked',  $(e.target).attr('checked'));
 			$.ajax({
@@ -1730,9 +1729,9 @@
 			});
 		}
 	});
-	
-	window.plb = new PLB.Editor();	
-	
+
+	window.plb = new PLB.Editor();
+
 	GlobalTriggers.on("beforeMWToolbarRender",function(toolbar){
 		$("#sourceModeInsertElement").prependTo(toolbar).show();
 	});

@@ -12,14 +12,14 @@ $dir = dirname(__FILE__);
 // autoloaded classes
 $wgAutoloadClasses['RTE'] = "$dir/RTE.class.php";
 $wgAutoloadClasses['RTEAjax'] = "$dir/RTEAjax.class.php";
+$wgAutoloadClasses['RTEData'] = "$dir/RTEData.class.php";
+$wgAutoloadClasses['RTELang'] = "$dir/RTELang.class.php";
+$wgAutoloadClasses['RTELinker'] = "$dir/RTELinker.class.php";
+$wgAutoloadClasses['RTEMagicWord'] = "$dir/RTEMagicWord.class.php";
+$wgAutoloadClasses['RTEMarker'] = "$dir/RTEMarker.class.php";
 $wgAutoloadClasses['RTEParser'] = "$dir/RTEParser.class.php";
 $wgAutoloadClasses['RTEReverseParser'] = "$dir/RTEReverseParser.class.php";
-$wgAutoloadClasses['RTELinker'] = "$dir/RTELinker.class.php";
-$wgAutoloadClasses['RTEMarker'] = "$dir/RTEMarker.class.php";
-$wgAutoloadClasses['RTEData'] = "$dir/RTEData.class.php";
-$wgAutoloadClasses['RTEMagicWord'] = "$dir/RTEMagicWord.class.php";
-$wgAutoloadClasses['RTELang'] = "$dir/RTELang.class.php";
-$wgAutoloadClasses['CKEditor'] = "$dir/ckeditor/ckeditor_php5.php";
+$wgAutoloadClasses['CKEditor'] = "$dir/ckeditor/ckeditor_php5.php"; // used by minify.php
 
 // hooks
 $wgHooks['EditPage::showEditForm:initial'][] = 'RTE::init';

@@ -226,7 +226,7 @@ class RTEParser extends Parser {
 		RTE::log(__METHOD__, $data);
 
 		// image width
-		$imageWidth = $image->getWidth();
+		$imageWidth = intval($image->getWidth());
 
 		if (!empty($data['params']['width'])) {
 			// width provided in wikitext

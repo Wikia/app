@@ -60,6 +60,8 @@ CKEDITOR.plugins.add( 'floatpanel',
 				children : [],
 				dir : editor.lang.dir
 			};
+
+			editor.on( 'mode', function(){ this.hide(); }, this );
 		},
 
 		proto :
@@ -123,10 +125,11 @@ CKEDITOR.plugins.add( 'floatpanel',
 
 				element.setStyles(
 					{
-						top : 0,
+						top : top + 'px',
 						left: 0,
 						display	: ''
 					});
+
 				// Don't use display or visibility style because we need to
 				// calculate the rendering layout later and focus the element.
 				element.setOpacity( 0 );
@@ -278,7 +281,7 @@ CKEDITOR.plugins.add( 'floatpanel',
 							}
 
 							// Trigger the onHide event of the previously active panel to prevent
-							// incorrect styles from being applied (#6170) 
+							// incorrect styles from being applied (#6170)
 							var innerElement = element.getFirst(),
 								activePanel;
 							if ( ( activePanel = innerElement.getCustomData( 'activePanel' ) ) )
@@ -302,7 +305,7 @@ CKEDITOR.plugins.add( 'floatpanel',
 							// We need this get fired manually because of unfired focus() function.
 							this.allowBlur( true );
 						}, 0, this);
-					}, 0, this);
+					},  CKEDITOR.env.air ? 200 : 0, this);
 				this.visible = 1;
 
 				if ( this.onShow )
@@ -318,7 +321,7 @@ CKEDITOR.plugins.add( 'floatpanel',
 					this.hideChild();
 					this.element.setStyle( 'display', 'none' );
 					this.visible = 0;
-					this.element.getFirst().removeCustomData( 'activePanel' ); 
+					this.element.getFirst().removeCustomData( 'activePanel' );
 				}
 			},
 

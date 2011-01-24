@@ -18,6 +18,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	margin: 0;
 	padding: 0;
 	background: transparent;
+	color: #000;
 	font: normal normal normal 100% Sans-Serif;
 	text-align: left;
 */
@@ -29,7 +30,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	vertical-align: baseline;
 	white-space: nowrap;
 	cursor: auto;
-	color: #000;
 
 	font-size: 12px;
 	font-family: arial, sans-serif;
@@ -98,4 +98,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_browser_ie .cke_dialog_tabs {
 	position: relative;
 	top: -22px;
+}
+
+/* color fixes - RT #142109 */
+.cke_button .cke_label,
+.cke_menuitem .cke_label {
+	color: #000;
 }

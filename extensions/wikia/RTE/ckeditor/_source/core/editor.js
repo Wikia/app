@@ -227,6 +227,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			plugins = plugins.replace( removeRegex, '' );
 		}
 
+		// Load the Adobe AIR plugin conditionally.
+		CKEDITOR.env.air && ( plugins += ',adobeair' );
+
 		// Load all plugins defined in the "plugins" setting.
 		CKEDITOR.plugins.load( plugins.split( ',' ), function( plugins )
 			{
@@ -756,6 +759,22 @@ CKEDITOR.tools.extend( CKEDITOR.editor.prototype,
 		},
 
 		/**
+		 * Insert text content into the currently selected position in the
+		 * editor, in WYSIWYG mode, styles of the selected element will be applied to the inserted text,
+		 * spaces around the text will be leaving untouched.
+		 * <strong>Note:</strong> two subsequent line-breaks will introduce one paragraph, which element depends on {@link CKEDITOR.config.enterMode};
+		 * A single line-break will be instead translated into one &lt;br /&gt;.
+		 * @since 3.5
+		 * @param {String} text Text to be inserted into the editor.
+		 * @example
+		 * CKEDITOR.instances.editor1.<b>insertText( ' line1 \n\n line2' )</b>;
+		 */
+		insertText : function( text )
+		{
+			this.fire( 'insertText', text );
+		},
+
+		/**
 		 * Inserts an element into the currently selected position in the
 		 * editor.
 		 * @param {CKEDITOR.dom.element} element The element to be inserted
@@ -781,7 +800,7 @@ CKEDITOR.tools.extend( CKEDITOR.editor.prototype,
 		 *     if ( CKEDITOR.instances.editor1.<b>checkDirty()</b> )
 		 * 	        return e.returnValue = "You'll loose the changes made in the editor.";
 		 * }
-		 * 
+		 *
 		 * if ( window.addEventListener )
 		 *     window.addEventListener( 'beforeunload', beforeUnload, false );
 		 * else

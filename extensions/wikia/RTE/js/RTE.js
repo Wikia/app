@@ -17,7 +17,7 @@ window.RTE = {
 		'format_tags': 'p;h2;h3;h4;h5;pre',
 		'height': 400,
 		'language': window.wgUserLanguage,
-		'removePlugins': 'about,elementspath,filebrowser,flash,forms,horizontalrule,image,justify,link,maximize,newpage,pagebreak,toolbar,save,scayt,smiley,wsc',
+		'removePlugins': 'about,elementspath,filebrowser,flash,forms,horizontalrule,image,justify,link,liststyle,maximize,newpage,pagebreak,toolbar,save,scayt,smiley,wsc',
 		'resize_enabled': false,
 		'skin': 'wikia',
 		'startupFocus': CKEDITOR.env.gecko ? false : true,
