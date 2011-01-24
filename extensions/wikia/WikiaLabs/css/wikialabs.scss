@@ -91,6 +91,7 @@ $margin-images: 10px;
     			height: 27px;
     			width: 109px;
     			border: none;
+    			cursor:pointer;
     			&.on {
     				background: url(/extensions/wikia/WikiaLabs/images/toggle-bkg-active.png);
     			}
@@ -236,5 +237,31 @@ $margin-images: 10px;
     		position: absolute;
     		top: 41px;
     	}
+	}
+}
+
+.warning {
+	h2 {
+  		font-size: 25px;
+    	height: 20px;
+    	padding-bottom: 30px;
+    	padding-left: 30px;
+		background: url("/extensions/wikia/WikiaLabs/images/cross-24-ns.png") no-repeat scroll 0 0 transparent;
+	}
+	.buttons {
+		padding-top:20px;
+	}
+}
+
+
+#WikiaPageHeader {
+	h1 {
+	    background: url("/extensions/wikia/WikiaLabs/images/labs.png") no-repeat scroll 0 0 transparent;
+    	padding-bottom: 12px;
+    	padding-left: 44px;
+    	padding-top: 12px;
+	}
+	h2 {
+		display: none;
 	}
 }

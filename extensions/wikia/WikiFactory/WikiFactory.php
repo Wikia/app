@@ -469,6 +469,7 @@ class WikiFactory {
 	 * @return boolean: transaction status
 	 */
 	static public function setVarById( $cv_variable_id, $city_id, $value, $reason=null ) {
+
 		global $wgWikicitiesReadOnly;
 
 		if( ! self::isUsed() ) {
