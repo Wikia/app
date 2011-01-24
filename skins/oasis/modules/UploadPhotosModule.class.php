@@ -37,7 +37,7 @@ class UploadPhotosModule extends Module {
 		$this->copyrightstatus = $wgRequest->getText('wpUploadCopyStatus');
 		$this->copyrightsource = $wgRequest->getText('wpUploadSource');
 		$this->ignorewarning = $wgRequest->getCheck('wpIgnoreWarning');
-		$this->defaultcaption = $wgRequest->getText('wpDefaultCaption', 'forcing default caption');
+		$this->defaultcaption = $wgRequest->getText('wpDefaultCaption');
 		$details = null;
 		$up = new UploadFromFile();
 		$up->initializeFromRequest($wgRequest);
