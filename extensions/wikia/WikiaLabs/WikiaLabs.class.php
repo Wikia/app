@@ -1,7 +1,7 @@
 <?php
 
 class WikiaLabs {
-	const FOGBUGZ_AREAS_PROJECT_ID = 13;
+	const FOGBUGZ_PROJECT_ID = 13;
 
 	function __construct() {
 		$this->app = WF::build( 'App' );
@@ -17,7 +17,7 @@ class WikiaLabs {
 
 		return true;
 	}
-	
+
 	// TODO: refactore this //
 	function getProjectModal() {
 		global $wgRequest;
@@ -28,17 +28,17 @@ class WikiaLabs {
 		$response->addText($result);
 		return $response;
 	}
-	
+
 	function getProjectModalInternal($id) {
 		$oTmpl = WF::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
 		$wikiaLabsProject = WF::build( 'WikiaLabsProject' );
 
 		if( $id > 0) {
-			$wlp = WF::build( 'WikiaLabsProject', array( 'id' => $id ) ); 
+			$wlp = WF::build( 'WikiaLabsProject', array( 'id' => $id ) );
 		} else {
 			$wlp = WF::build( 'WikiaLabsProject', array() );
 		}
-			
+
 		$oTmpl->set_vars( array(
 			'project' => $wlp,
 			'projectdata' => $wlp->getData(),
@@ -49,24 +49,26 @@ class WikiaLabs {
 
 		return $oTmpl->render("wikialabs-addproject");
 	}
-	
+
 	function getFogbugzAreas() {
 		$fogbugzAPIConfig = $this->app->getGlobal( 'wgFogbugzAPIConfig' );
+
 		$fogbugzService = WF::build( 'FogbugzService', array( 'url' => $fogbugzAPIConfig['apiUrl'] ) );
 		$fogbugzService->setLogin( $fogbugzAPIConfig['username'] );
 		$fogbugzService->setPasswd( $fogbugzAPIConfig['password'] );
 		$fogbugzService->setHTTPProxy( $this->app->getGlobal( 'wgHTTPProxy' ) );
-		return $fogbugzService->logon()->getAreas( self::FOGBUGZ_AREAS_PROJECT_ID );
+
+		return $fogbugzService->logon()->getAreas( self::FOGBUGZ_PROJECT_ID );
 	}
-	
-	// TODO: refactore this //
+
+	// TODO: refactor this //
 	function saveProject() {
 		global $wgRequest;
 		$response = new AjaxResponse();
-		
+
 		$wl = WF::build( 'WikiaLabs');
 		$out = $wl->saveProjectInternal($wgRequest->getArray('project'));
-		$response->addText(json_encode($out));	
+		$response->addText(json_encode($out));
 		return $response;
 	}
 
@@ -122,14 +124,14 @@ class WikiaLabs {
 	public function validateProjectForm($values = array()) {
 		//TODO: laod array form fog bugz
 		$wikiaLabsProject = WF::build( 'WikiaLabsProject' );
-		
+
 		$areas = array();
 		$areasData = $this->getFogbugzAreas();
-		
+
 		foreach( $areasData as $value ) {
 			$areas[] = $value['id'];
 		}
-		
+
 		$status = array_keys($wikiaLabsProject->getStatusDict());
 		$projects = $wikiaLabsProject->getExtensionsDict();
 
@@ -162,23 +164,23 @@ class WikiaLabs {
 		$response->addText(json_encode(array("status" => $result)));
 		return $response;
 	}
-	
+
 	public function switchProjectInternal($city_id, $id, $onoff = true) {
 		$wikiaLabsProject = WF::build( 'WikiaLabsProject', array( "id" => $id));
 		if($wikiaLabsProject->getId() == 0) {
 			return false;
 		}
-		
+
 		if(!empty($onoff)) {
-			$wikiaLabsProject->setEnabled($city_id);	
+			$wikiaLabsProject->setEnabled($city_id);
 		} else {
 			$wikiaLabsProject->setDisabled($city_id);
 		}
-		
+
 		$wikiaLabsProject->update();
-		
+
 		$this->app->runFunction( 'wfRunHooks', 'WikiFactoryChanged', array( $wikiaLabsProject->getExtension() , $city_id, !empty($onoff) ) );
-		
+
 
 		return $this->app->runFunction( 'WikiFactory::setVarByName',  $wikiaLabsProject->getExtension(), $city_id, !empty($onoff), "WikiaLabs" );
 	}
@@ -190,23 +192,23 @@ class WikiaLabs {
 
 		$file_title = Title::newFromText( $name, NS_FILE );
 		$img = wfFindFile( $file_title  );
-				
+
 		return wfReplaceImageServer( $img->getThumbUrl( $img->thumbName( array( 'width' => 150 ) ) ) );
 	}
-	
+
 	// TODO: refactore this //
 	public function getImageUrlForEdit() {
 		global $wgRequest;
 		$name = $wgRequest->getVal("name", "");
-		
+
 		$wl = WF::build( 'WikiaLabs');
 		$response = new AjaxResponse();
 		$response->addText(json_encode($wl->getImageUrlForEditInternal($name)));
 
 		return $response;
 	}
-	
-	public function getImageUrlForEditInternal($name) {	
+
+	public function getImageUrlForEditInternal($name) {
 		return array("status" => "ok", "url" => $this->getImageUrl($name) );
 	}
 }
