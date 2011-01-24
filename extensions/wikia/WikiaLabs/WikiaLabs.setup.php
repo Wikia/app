@@ -69,8 +69,7 @@ $wgAjaxExportList[] = 'WikiaLabs::getProjectModal';
 $wgAjaxExportList[] = 'WikiaLabs::saveProject';
 $wgAjaxExportList[] = 'WikiaLabs::getImageUrlForEdit';
 $wgAjaxExportList[] = 'WikiaLabs::switchProject';
-
-
+$wgAjaxExportList[] = 'WikiaLabs::saveFeedback';
 
 
 /*
