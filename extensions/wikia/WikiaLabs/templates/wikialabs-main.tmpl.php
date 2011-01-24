@@ -9,7 +9,7 @@
 			<span class='buttons'>
 				<span data-id="<?php echo $value->getId(); ?>" class='slider <?php echo $value->isEnabled($cityId) ? "on":""; ?>'>
 					<span class='button  <?php echo $value->isEnabled($cityId) ? "on":""; ?>'>
-					</span> 
+					</span>
 					<span class="textoff  <?php echo $value->isEnabled($cityId) ? "on":""; ?>">inactive</span>
 					<span class="texton  <?php echo $value->isEnabled($cityId) ? "on":""; ?>" >active</span>
 					<?php if($data['enablewarning']): ?>
@@ -23,16 +23,16 @@
 						</div>
 					<?php endif;?>
 				</span>
-	
+
 				<a class="wikia-button secondary feedback">
 					<img src="/extensions/wikia/WikiaLabs/images/star-inactive.png">
 					<?php echo wfMsg('wikialabs-list-project-add-give-feedback'); ?>
 				</a>
-				
+
 				<span class="active" >
 					<a href="#" class="wikia-button secondary" ><?php echo $value->getActivationsNum(); ?></a><?php echo wfMsg('wikialabs-list-project-currently-active'); ?>
 				</span>
-				
+
 				<span class="stars" >
 					<img src="/extensions/wikia/WikiaLabs/images/star-inactive.png"/>
 					<img src="/extensions/wikia/WikiaLabs/images/star-inactive.png"/>
