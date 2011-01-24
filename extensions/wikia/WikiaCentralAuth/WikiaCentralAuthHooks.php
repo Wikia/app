@@ -47,7 +47,7 @@ class WikiaCentralAuthHooks {
 
 		wfProfileIn( __METHOD__ );
 
-		wfDebug( __METHOD__ . ": Load user from session " );
+		wfDebug( __METHOD__ . ": Load user from session \n " );
 		if( $oUser->isLoggedIn() ) {
 			// Already logged in; don't worry about the global session.
 			wfDebug( __METHOD__ . ": user is logged in \n" );
@@ -83,7 +83,7 @@ class WikiaCentralAuthHooks {
 			$_SESSION['wsUserName'] = $sName;
 		}
 
-		wfDebug( __METHOD__ . ": User from session: $sName " );
+		wfDebug( __METHOD__ . ": User from session: $sName \n " );
 		
 		if ( empty( $sName ) ) {
 			wfDebug( __METHOD__ .": username doesn't exists \n" );
@@ -108,16 +108,16 @@ class WikiaCentralAuthHooks {
 			return true;
 		} else {
 			if ( !empty($sName) && !$localId ) {
-				wfDebug( __METHOD__ . ": User $sName doesn't exist in local database - so update" );
+				wfDebug( __METHOD__ . ": User $sName doesn't exist in local database - so update \n" );
 				// User does not exist locally, attempt to create it
 				if ( !self::attemptAddUser( $oUser, $sName ) ) {
 					// Can't create user, give up now
-					wfDebug( __METHOD__ . ": User $sName updated in local db" );
+					wfDebug( __METHOD__ . ": User $sName updated in local db \n" );
 					wfProfileOut( __METHOD__ );
 					return true;
 				}
 			} else {
-				wfDebug( __METHOD__ . ": User $sName exists in local database - update is not needed" );
+				wfDebug( __METHOD__ . ": User $sName exists in local database - update is not needed \n" );
 			}
 		}
 
