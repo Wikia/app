@@ -60,7 +60,7 @@ WF::addClassConstructor( 'WikiaLabsProject', array( 'app' => $app, 'id' => 0 ) )
  * hooks
  */
 $app->registerHook('GetRailModuleSpecialPageList', 'WikiaLabs', 'onGetRailModuleSpecialPageList' );
-
+$app->registerHook('MyTools::getDefaultTools', 'WikiaLabs', 'onGetDefaultTools' );
 /*
  * ajax function
  */

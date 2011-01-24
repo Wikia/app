@@ -265,3 +265,27 @@ $margin-images: 10px;
 		display: none;
 	}
 }
+
+.feedbackmodal {
+ 	.feedbacktext {
+ 	 	margin-bottom: 12px;
+    	height: 100px;
+    	width: 400px;
+ 	 	display: block;
+ 	}
+ 	
+ 	.stars {
+ 	    img {
+    		margin-right: -10px;
+    		margin-left: -10px;
+    	}
+ 	}
+ 	
+	.comments{
+    	display: block;	
+	}
+	
+	.title {
+	   display: block;	
+	}
+}

@@ -14,6 +14,7 @@ class WikiaLabs {
 	public function __construct() {
 		$this->app = WF::build( 'App' );
 		$this->request = $this->app->getGlobal('wgRequest');
+		$this->user = $this->app->getGlobal( 'wgUser' );
 		$this->fogbugzAPIConfig = $this->app->getGlobal( 'wgFogbugzAPIConfig' );
 	}
 
@@ -238,6 +239,18 @@ class WikiaLabs {
 	}
 
 	public function getImageUrlForEditInternal($name) {
-		return array("status" => "ok", "url" => $this->getImageUrl($name) );
+		return array( "status" => "ok", "url" => $this->getImageUrl($name) );
+	}
+	
+	public function onGetDefaultTools(&$list) {
+		if($this->user->isAllowed( 'wikialabsuser' )) {
+			$list[] = array(
+				'text' => wfMsg( 'wikialabs-mytools' ), 
+				'name' => 'wikialabsuser',
+				'href' => Title::newFromText( "WikiaLabs", NS_SPECIAL )->getFullUrl()
+			);
+		}
+		
+		return true;
 	}
 }

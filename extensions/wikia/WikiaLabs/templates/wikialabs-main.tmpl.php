@@ -24,7 +24,7 @@
 					<?php endif;?>
 				</span>
 
-				<a class="wikia-button secondary feedback">
+				<a class="wikia-button secondary feedback" data-id="<?php echo $value->getId(); ?>" >
 					<img src="/extensions/wikia/WikiaLabs/images/star-inactive.png">
 					<?php echo wfMsg('wikialabs-list-project-add-give-feedback'); ?>
 				</a>
@@ -47,3 +47,20 @@
 		</li>
 	<?php endforeach; ?>
 </ul>
+
+<div style="display:none" id="feedbackmodal" class="feedbackmodal" >
+	<span class="title" ><?php echo wfMsg( 'wikialabs-feedback-title' ); ?></span>
+	<span class="project" ><?php echo wfMsg( 'wikialabs-feedback-project' ); ?></span>		
+			
+	<span class="stars" >
+		<img src="/extensions/wikia/WikiaLabs/images/star-inactive.png"/>
+		<img src="/extensions/wikia/WikiaLabs/images/star-inactive.png"/>
+		<img src="/extensions/wikia/WikiaLabs/images/star-inactive.png"/>
+		<img src="/extensions/wikia/WikiaLabs/images/star-active.png"/>
+		<img src="/extensions/wikia/WikiaLabs/images/star-active.png"/>
+	</span>
+				
+	<span class="comments" ><?php echo wfMsg( 'wikialabs-feedback-comments' ); ?></span>
+	<textarea class="feedbacktext" ></textarea>
+	<button class="okbutton" ><?php echo wfMsg('wikialabs-feedback-submit'); ?></button>
+</div>
