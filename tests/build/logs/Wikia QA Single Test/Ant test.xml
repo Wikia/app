@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Ant test" failures="0" tests="3" time="166.713" errors="0">
-  <properties/>
-  <testcase name="testMostVisitedTag" time="54.274" classname="com.wikia.selenium.tests.ContentFeedsTest"/>
-  <testcase name="testRecentImagesTag" time="51.575" classname="com.wikia.selenium.tests.ContentFeedsTest"/>
-  <testcase name="testWikiTweetsTag" time="50.917" classname="com.wikia.selenium.tests.ContentFeedsTest"/>
-</testsuite>
