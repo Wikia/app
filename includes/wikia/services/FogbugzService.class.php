@@ -138,6 +138,40 @@ class FogbugzService extends Service {
 		return $results;
 	}
 
+	/**
+	 * create new case in Fogbugz
+	 * @param int $areaId
+	 * @param string $title
+	 * @param int $priority
+	 * @param string $message
+	 * @param array $tags
+	 */
+	public function createCase( $areaId, $title, $priority, $message, Array $tags = null ) {
+		if( !empty($this->token) ) {
+			$this->resetParams();
+			$this->setParam( 'cmd', 'new' );
+			$this->setParam( 'token', $this->token );
+			$this->setParam( 'sTitle', $title );
+			$this->setParam( 'ixArea', $areaId );
+			$this->setParam( 'ixPriority', $priority );
+			$this->setParam( 'sScoutMessage', $message );
+			if(!empty($tags)) {
+				$this->setParam( 'sTags', implode( ',', $tags ));
+			}
+
+			$this->curl->setopt_array( $this->getCurlOptions() );
+
+			$xml = $this->curl->exec();
+			if( !empty( $xml ) ) {
+				var_dump($xml);
+				return true;
+			}
+			else {
+				throw new WikiaException("Fogbugz connection failed");
+			}
+		}
+	}
+
 	protected function setParam( $name, $value ) {
 		$this->params[$name] = $value;
 	}
