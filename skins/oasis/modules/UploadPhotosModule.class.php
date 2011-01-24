@@ -31,13 +31,12 @@ class UploadPhotosModule extends Module {
 			exit();
 		}
 		
-		$this->comment = $wgRequest->getText('wpUploadDescription');
 		$this->watchthis = $wgRequest->getBool('wpWatchthis') && $wgUser->isLoggedIn();
 		$this->license = $wgRequest->getText('wpLicense');
 		$this->copyrightstatus = $wgRequest->getText('wpUploadCopyStatus');
 		$this->copyrightsource = $wgRequest->getText('wpUploadSource');
 		$this->ignorewarning = $wgRequest->getCheck('wpIgnoreWarning');
-		$this->defaultcaption = $wgRequest->getText('wpDefaultCaption');
+		$this->defaultcaption = $wgRequest->getText('wpUploadDescription');
 		$details = null;
 		$up = new UploadFromFile();
 		$up->initializeFromRequest($wgRequest);
@@ -60,9 +59,9 @@ class UploadPhotosModule extends Module {
 				}
 			}
 			if(empty($warnings)) {
-				$pageText = SpecialUpload::getInitialPageText( $this->comment, $this->license,
+				$pageText = SpecialUpload::getInitialPageText( $this->defaultcaption, $this->license,
 					$this->copyrightstatus, $this->copyrightsource );
-				$status = $up->performUpload( $this->comment, $pageText, $this->watchthis, $wgUser );
+				$status = $up->performUpload( $this->defaultcaption, $pageText, $this->watchthis, $wgUser );
 				if ($status->isGood()) {
 					$aPageProps = array ( 'default_caption' => $this->defaultcaption );
 					Wikia::setProps( $title->getArticleID(), $aPageProps );
