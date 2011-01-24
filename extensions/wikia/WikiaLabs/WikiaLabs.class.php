@@ -2,10 +2,19 @@
 
 class WikiaLabs {
 	const FOGBUGZ_PROJECT_ID = 13;
+	const FOGBUGZ_CASE_PRIORITY = 5;
+	const FOGBUGZ_CASE_TITLE = 'WikiaLabs Feedback - Project: ';
+	const FOGBUGZ_CASE_TAG = 'WikiaLabsFeedback';
 
-	function __construct() {
+	protected $app = null;
+	protected $request = null;
+	protected $fogbugzAPIConfig = null;
+	protected $fogbugzService = null;
+
+	public function __construct() {
 		$this->app = WF::build( 'App' );
 		$this->request = $this->app->getGlobal('wgRequest');
+		$this->fogbugzAPIConfig = $this->app->getGlobal( 'wgFogbugzAPIConfig' );
 	}
 
 	function onGetRailModuleSpecialPageList(&$railModuleList) {
@@ -50,15 +59,35 @@ class WikiaLabs {
 		return $oTmpl->render("wikialabs-addproject");
 	}
 
-	function getFogbugzAreas() {
-		$fogbugzAPIConfig = $this->app->getGlobal( 'wgFogbugzAPIConfig' );
+	/**
+	 * get fogbugz service object
+	 * @return FogbugzService
+	 */
+	private function getFogbugzService() {
+		if( $this->fogbugzService == null ) {
+			$this->fogbugzService = WF::build( 'FogbugzService', array( 'url' => $this->fogbugzAPIConfig['apiUrl'] ) );
+			$this->fogbugzService->setLogin( $this->fogbugzAPIConfig['username'] );
+			$this->fogbugzService->setPasswd( $this->fogbugzAPIConfig['password'] );
+			$this->fogbugzService->setHTTPProxy( $this->app->getGlobal( 'wgHTTPProxy' ) );
+		}
+		return $this->fogbugzService;
+	}
 
-		$fogbugzService = WF::build( 'FogbugzService', array( 'url' => $fogbugzAPIConfig['apiUrl'] ) );
-		$fogbugzService->setLogin( $fogbugzAPIConfig['username'] );
-		$fogbugzService->setPasswd( $fogbugzAPIConfig['password'] );
-		$fogbugzService->setHTTPProxy( $this->app->getGlobal( 'wgHTTPProxy' ) );
+	private function getFogbugzAreas() {
+		return $this->getFogbugzService()->logon()->getAreas( self::FOGBUGZ_PROJECT_ID );
+	}
 
-		return $fogbugzService->logon()->getAreas( self::FOGBUGZ_PROJECT_ID );
+	public function saveFeedback() {
+		// @todo store rating in db
+
+		$this->saveFeedbackInFogbugz();
+	}
+
+	private function saveFeedbackInFogbugz( WikiaLabsProject $project, $message ) {
+		$areaId = $project->getFogbugzProject();
+		$title = self::FOGBUGZ_CASE_TITLE . $project->getName();
+
+		$this->getFogbugzService()->logon()->createCase( $areaId, $title, self::FOGBUGZ_PROJECT_ID, $message, array( self::FOGBUGZ_CASE_TAG ) );
 	}
 
 	// TODO: refactor this //
