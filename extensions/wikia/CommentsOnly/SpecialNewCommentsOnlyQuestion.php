@@ -27,7 +27,7 @@ class SpecialNewCommentsOnlyQuestion extends UnlistedSpecialPage {
 		}
 
 		$article = new Article( $title );
-		$article->doEdit( $question, '', EDIT_NEW );
+		$article->doEdit( '[[Category:Forums]]', '', EDIT_NEW );
 
 		$wgOut->redirect( $title->getLocalURL() );
 
