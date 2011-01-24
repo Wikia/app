@@ -100,12 +100,6 @@ JS;
 		return true;
 	}
 
-	public static function parseLinkCallback ($link) {
-		$str = $link[0];
-		$str = str_replace(array("[[", "]]"), array("{{", "}}"), $str);
-		return $str;
-	}
-
 	/**
 	 *  transform [[Poll:name]] into {{Poll:name}} in parser before template expansion
 	 */
@@ -118,4 +112,12 @@ JS;
 			$text = $parser->recursiveTagParse($newtext);
 		return true;
 	}
+
+	/**
+	 * Helper callback for onInternalParseBeforeLinks
+	 */
+	public static function parseLinkCallback ($link) {
+		return str_replace(array("[[", "]]"), array("{{", "}}"), $link[0]);
+	}
+
 }
