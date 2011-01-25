@@ -51,7 +51,7 @@ $margin-images: 10px;
 				margin-top: 6px;
 				margin-bottom: 6px;
 			    img {
-    			    float: left;
+    			    vertical-align: middle;
     				margin-left: -3px;
 				    margin-top: -2px;
     				padding: 0;
@@ -69,6 +69,7 @@ $margin-images: 10px;
     		}
     		.stars {
     			padding-left: 2px;
+    			position: relative;
     			display: block;
     			margin-top: -5px;
     			img {
@@ -82,7 +83,10 @@ $margin-images: 10px;
     				}
     			}
     			.ratings{
-    			   display: block;
+    			    position: absolute;
+    				right: 0;
+    				top: 0;
+    			   	display: block;
     				float: right;
     				font-size: 8px;
     				line-height: 8px;
@@ -142,12 +146,15 @@ $margin-images: 10px;
 
 .WikiaLabsGraduates {
 	h1{ 
+		width: 100%;
 		img{
 			float: left;
 	    	margin-top: -10px;
 	    	width: 32px;
 	    }
-	    @include clearfix;
+    }
+    .size {
+    	float: right;
     }
     li {
      	@include clearfix;
@@ -174,12 +181,11 @@ $margin-images: 10px;
 		display: block; 
 		position: relative;
 		margin-bottom: 0;
-		#addProject {
-    		position: absolute;
-    		right: 0;
-    		top: -4px;		
-		}	
 	}
+	#addProject {
+    	float: right;
+    	width: 115px;
+	}	
 	.redinfo {
 	    color: red;
     	font-size: 11px;
@@ -226,6 +232,9 @@ $margin-images: 10px;
 	} 
 	.buttons {
 		 padding-top: 24px;
+		 button {
+		     margin-right: 4px;
+		 }
 	}
 	.image {
 		float: right;
@@ -239,7 +248,8 @@ $margin-images: 10px;
     		border-color: $color-text;
     	}
     	button {
-    	    left: 37px;
+    	    width: 110px;
+    	    left: 24px;
     		position: absolute;
     		top: 41px;
     	}
@@ -258,6 +268,10 @@ $margin-images: 10px;
 		padding-top:20px;
 		.okbutton {
 			width: 125px;
+			margin-left: 4px;
+		}
+		.cancelbutton {
+		    width: 60px;
 		}
 	}
 }
@@ -312,7 +326,8 @@ $margin-images: 10px;
 	}
 	
 	.title {
-	   display: block;
+		display: block;
+		clear: both;
 	    font-size: 21px;
 	    margin-top: 10px;
     	margin-bottom: 10px;	
