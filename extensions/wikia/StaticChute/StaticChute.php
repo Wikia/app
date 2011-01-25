@@ -535,14 +535,10 @@ class StaticChute {
 	 * we have multiple apaches that have different timestamps on the files, it
 	 * produces too many distinct urls
 	 */
-	public function getChecksum($files, $packages=''){
+	public function getChecksum($files){
 		$data = '';
 		foreach($files as $file){
-			if (empty($file)) {
-				Wikia::log(__FUNCTION__, __LINE__, "Empty filename for package=$packages");
-			} else {
-				$data .= file_get_contents($file);
-			}
+			$data .= file_get_contents($file);
 		}
 		return md5($data . $this->cdnStylePath . $this->cacheBuster);
 	}
@@ -673,7 +669,7 @@ class StaticChute {
 			return false;
 		}
 
-		$checksum = $this->getChecksum($files, $packages);
+		$checksum = $this->getChecksum($files);
 
 		return $this->getChuteUrlPath() . "/static/$type/$packages/$checksum.$type";
 	}
