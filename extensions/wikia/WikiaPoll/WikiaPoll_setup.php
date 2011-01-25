@@ -85,3 +85,11 @@ function WikiaPollAjax() {
 		return $response;
 	}
 }
+
+//Edit page
+$wgHooks['EditPage::showEditForm:initial2'][] = 'CreatePollSetup';
+function CreatePollSetup($editform) {
+	global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+	$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/WikiaPoll/js/CreateWikiaPoll.js?'.$wgStyleVersion.'"></script>');
+	return true;
+}

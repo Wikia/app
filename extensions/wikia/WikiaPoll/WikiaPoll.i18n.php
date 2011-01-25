@@ -9,6 +9,8 @@ $messages['en'] = array(
 	'wikiapoll-thanks-for-vote' => 'Thanks!',
 	'wikiapoll-vote' => 'Vote!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 vote|$1 votes}}',
+	'wikiapoll-question-mark-after' => '?',
+	'wikiapoll-question-mark-before' => '',
 );
 
 $messages['qqq'] = array(

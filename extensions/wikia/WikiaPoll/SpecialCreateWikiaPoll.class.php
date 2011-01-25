@@ -7,8 +7,14 @@ class SpecialCreateWikiaPoll extends SpecialPage {
 	}
 
 	public function execute ($subpage) {
-		global $wgOut;
-		$wgOut->addHtml(wfRenderPartial('WikiaPoll', 'SpecialPage'));
+		global $wgOut, $wgBlankImgUrl, $wgJsMimeType, $wgExtensionsPath, $wgStylePath;
+
+		$wgOut->addScript("<script src=\"{$wgStylePath}/common/jquery/jquery-ui-1.7.2.custom.js\" type=\"{$wgJsMimeType}\"></script>");
+		$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/WikiaPoll/js/CreateWikiaPoll.js\" type=\"{$wgJsMimeType}\"></script>");
+
+		$wgOut->addStyle(wfGetSassUrl('/extensions/wikia/WikiaPoll/css/CreateWikiaPoll.scss'));
+
+		$wgOut->addHtml(wfRenderModule('WikiaPoll', 'SpecialPage'));
 	}
 }
 ?>

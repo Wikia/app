@@ -42,4 +42,5 @@ class WikiaPollAjax {
 		wfProfileOut(__METHOD__);
 		return $ret;
 	}
+	
 }

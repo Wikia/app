@@ -61,6 +61,7 @@ $messages['en'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Remove this gallery?',
 	'rte-ck-photoGallery-tooltip' => 'This is a gallery.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'This is a slideshow.',
+	'rte-ck-poll-add' => 'Add a poll',
 	'rte-ck-signature-add' => 'Add your signature',
 	'rte-ck-signature-label' => 'Signature',
 	'rte-ck-table-alignNotSet' => 'Not set',
@@ -139,7 +140,7 @@ $messages['be'] = array(
 	'rte-ck-templateDropDown-label' => 'Шаблон',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -1071,7 +1072,7 @@ $messages['nl'] = array(
 	'rte-ck-widescreen-toggle' => 'Breedbeeld in- of uitschakelen',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1630,7 +1631,7 @@ $messages['ru'] = array(
 	'rte-ck-widescreen-toggle' => 'Широкоэкранный режим',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1908,7 +1909,7 @@ $messages['vi'] = array(
 	'rte-ck-modeSwitch-toWysiwyg' => 'Chuyển sang chế độ WYSIWYG',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬)
+/** Chinese (Taiwan) (中文(台灣))
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(

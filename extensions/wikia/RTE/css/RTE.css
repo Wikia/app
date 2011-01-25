@@ -499,6 +499,12 @@ div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
 	background-position: 0 -1264px;
 }
 
+/* poll icon */
+#editform .RTEPollButton .cke_icon {
+	background-position: 0 -1328px;
+}
+
+
 /* link suggest - RT #37690 */
 .RTEloading .link-suggest-container,
 .rte_wysiwyg .link-suggest-container {

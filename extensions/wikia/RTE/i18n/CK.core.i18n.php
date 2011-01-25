@@ -1,6 +1,6 @@
 <?php
 
-/* CKeditor core messages -- auto-generated on 2011-01-17 12:23:50 - 58 languages - 414 messages per language - DO NOT modify this file by hand! */
+/* CKeditor core messages -- auto-generated on 2011-01-20 22:19:57 - 58 languages - 407 messages per language - DO NOT modify this file by hand! */
 
 $messages = array();
 $messages['af'] = array(
