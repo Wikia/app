@@ -64,6 +64,8 @@ $messages['en'] = array(
 	'owb-unable-to-edit-description' => 'The description is uneditable with Wiki Builder',
 	'owb-readonly-try-again' => 'The Wiki is currently in read-only mode. Please try again in a few moments',
 	'owb-error-saving-articles' => 'Error Saving Pages',
+	'owb-api-error-title' => 'Error processing your request',
+	'owb-api-error' => 'Please try once again or skip this step',
 	'owb-new-pages-text' => "[[File:Placeholder|right|300px]]
 Write the first paragraph of your page here.
 
@@ -414,7 +416,7 @@ $messages['no'] = array(
 	'owb-step4-error-upgrade-content' => 'Denne wikien kan ikke oppgraderes til Plus.',
 	'owb-status-saving' => 'Lagrer',
 	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
-Skriv sidens første avsnitt her . 
+Skriv sidens første avsnitt her .
 
 ==Overskrift for seksjon==
 

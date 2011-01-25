@@ -94,7 +94,15 @@ Mediawiki.apiCall = function(apiParams, callbackSuccess, callbackError, method, 
 
 	// Callbacks
 	if (typeof callbackSuccess == "function"){
-		p.success = callbackSuccess;
+		// trigger an error when JSON is empty / malformed (BugID: 1702)
+		p.success = function(data) {
+			if (data) {
+				callbackSuccess(data);
+			}
+			else {
+				p.error();
+			}
+		};
 	} else {
 		p.async = false;
 		Mediawiki.waiting(Mediawiki.apiTimeout);
@@ -621,7 +629,7 @@ Mediawiki.login = function (username, password, callbackSuccess, callbackError, 
 	};
 	Mediawiki.loginCallbackSuccess = callbackSuccess;
 	Mediawiki.loginCallbackError = callbackError;
-	
+
 	// Since newer MediaWikis will have a response of NeedToken, store the values for resubmission:
 	Mediawiki.loginUsername = username;
 	Mediawiki.loginPassword = password;
