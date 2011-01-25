@@ -65,7 +65,8 @@ window.RTE = {
 		'toolbar',
 		'tools',
 		'track',
-		'widescreen'
+		'widescreen',
+		'poll'
 	],
 
 	// use firebug / opera console to log events / dump objects
@@ -481,7 +482,7 @@ CKEDITOR.config.toolbar_Wikia =
 		{
 			msg: 'insert',
 			groups: [
-				['Image', 'Gallery', 'Video'],
+				['Image', 'Gallery', 'Poll', 'Video'],
 				['Table'],
 				['Template'],
 				['Signature']

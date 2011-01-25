@@ -5,6 +5,7 @@ class WikiaPollModule extends Module {
 	var $data;
 	var $embedded;
 	var $poll;
+	var $wgBlankImgUrl;
 
 	/**
 	 * Render HTML Poll namespace pages
@@ -19,6 +20,8 @@ class WikiaPollModule extends Module {
 
 		$this->embedded = !empty($params['embedded']);
 	}
+
+	public function executeSpecialPage() {}
 
 	/**
 	 * Calculate percantage for votes and scale bars
@@ -50,5 +53,5 @@ class WikiaPollModule extends Module {
 			}
 		}
 	}
-
+		
 }
