@@ -38,6 +38,11 @@
 			<?=wfMsg('partner-feed-recent-blog-comments'); ?>
 		</a>
 	</li>
+	<li>
+		<a href="?feed=rss&type=RecentChanges">
+			<?=wfMsg('partner-feed-recent-changes'); ?>
+		</a>
+	</li>
 	<? } ?>
 </ul>
 

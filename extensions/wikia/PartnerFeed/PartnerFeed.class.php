@@ -50,7 +50,7 @@ class PartnerRSSFeed extends RSSFeed {
 			"item"		=> $item
 		));
 		
-		echo $oTmpl->execute( "rss-item" );
+		echo $oTmpl->render( "rss-item" );
 	}
 
 	function outHeader() {
@@ -67,7 +67,7 @@ class PartnerRSSFeed extends RSSFeed {
 			"version"		=> $wgVersion
 		));
 
-		echo $oTmpl->execute( "rss-header" );
+		echo $oTmpl->render( "rss-header" );
 		
 	}
 
@@ -84,7 +84,7 @@ class PartnerAtomFeed extends AtomFeed {
 			"item"		=> $item
 		));
 
-		echo $oTmpl->execute( "atom-item" );
+		echo $oTmpl->render( "atom-item" );
 	}
 
 	function outHeader() {
@@ -104,7 +104,7 @@ class PartnerAtomFeed extends AtomFeed {
 			"version"		=> $wgVersion
 		));
 
-		echo $oTmpl->execute( "atom-header" );
+		echo $oTmpl->render( "atom-header" );
 
 	}
 }
