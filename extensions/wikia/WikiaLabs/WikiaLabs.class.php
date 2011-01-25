@@ -202,7 +202,6 @@ class WikiaLabs {
 	}
 
 	public function validateProjectForm($values = array()) {
-		//TODO: laod array form fog bugz
 		$wikiaLabsProject = WF::build( 'WikiaLabsProject' );
 
 		$areas = array();

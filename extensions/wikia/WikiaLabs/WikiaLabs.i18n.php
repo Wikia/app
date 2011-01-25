@@ -42,5 +42,10 @@ $messages['en'] = array(
 
 	'wikialabs-feedback-title' => 'Feedback',
 	'wikialabs-feedback-rating' => 'Your rating:',
-	'wikialabs-feedback-comments' => 'Comments:'
+	'wikialabs-feedback-comments' => 'Comment:',
+	
+	'wikialabs-feedback-validator-message-too-long' => 'Comment can not be longer than 255 characters',
+	'wikialabs-feedback-validator-message-too-short' => 'Please enter a comment',
+	'wikialabs-feedback-validator-rating' => 'Please give a rating',
+	
 );
