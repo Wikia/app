@@ -42,7 +42,7 @@ AdConfig = {
 			default:
 				return false;
 		}
-	}
+	},
 
 	init: function() {
 		AdConfig.pullGeo();
