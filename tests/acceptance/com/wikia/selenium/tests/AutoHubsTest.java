@@ -9,18 +9,22 @@ public class AutoHubsTest extends BaseTest {
 
 	@Test(groups={"CI"})
 	public void testFeeds() throws Exception {
-		String baseurl = "index.php?title=Test_tag";
+		String baseurl = "/wiki/TV";
 		session().open( baseurl );
 
 		/* check count of feeds on the lists */
 		waitForElement( "//ul[@id=\"top-wikis-list-1\"]/li[10]" );
 
-		assertTrue(session().isElementPresent( "//ul[@id=\"hub-blog-articles\"]/li[3]" ));
+		if ( !isOasis() ) {
+			assertTrue(session().isElementPresent( "//ul[@id=\"hub-blog-articles\"]/li[3]" ));
+		}
 		assertTrue(session().isElementPresent( "//section[@id=\"hub-top-contributors\"]/ul/li[5]" ));
 		assertTrue(session().isElementPresent( "//section[@id=\"wikia-global-hot-spots\"]/ol/li[5]" ));
 
 		assertTrue(!session().isElementPresent( "//ul[@id=\"top-wikis-list-1\"]/li[11]" ));
-		assertTrue(!session().isElementPresent( "//ul[@id=\"hub-blog-articles\"]/li[4]" ));
+		if ( !isOasis() ) {		
+			assertTrue(!session().isElementPresent( "//ul[@id=\"hub-blog-articles\"]/li[4]" ));
+		}
 		assertTrue(!session().isElementPresent( "//section[@id=\"hub-top-contributors\"]/ul/li[6]" ));
 		assertTrue(!session().isElementPresent( "//section[@id=\"wikia-global-hot-spots\"]/ol/li[6]" ));
 
@@ -29,7 +33,7 @@ public class AutoHubsTest extends BaseTest {
 
 	@Test(groups={"CI"})
 	public void testStaffTools() throws Exception {
-		String baseurl = "index.php?title=Test_tag";
+		String baseurl = "/wiki/TV";
 		loginAsBot();
 
 		session().open( baseurl );
