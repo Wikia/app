@@ -46,12 +46,14 @@ var CreateWikiaPoll = {
 		// load CSS for editor popup and jQuery UI library (if not loaded yet) via loader function
 		$.getResources([
 			$.loadJQueryUI,
-			wgExtensionsPath + '/wikia/WikiaPoll/css/CreateWikiaPoll.css?' + wgStyleVersion
+			wfGetSassUrl('/extensions/wikia/WikiaPoll/css/CreateWikiaPoll.scss'),
+			wgExtensionsPath + '/wikia/WikiaPoll/js/CreateWikiaPoll.js?' + wgStyleVersion
 		], function() {
 			$.post(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=WikiaPoll&actionName=SpecialPage&outputType=html', function(data) {
 				$.showModal('', data, {
 					callback: function() {
 						$().log("modal loaded");
+						CreateWikiaPoll.init();
 					}
 				});
 			});

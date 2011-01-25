@@ -21,6 +21,7 @@ $color-poll-label: lighten($color-text, 30%);
 	}
 	ul {
 		list-style: none;
+		overflow: auto;
 		margin: 0;
 		padding: 0;
 	}
@@ -67,5 +68,8 @@ $color-poll-label: lighten($color-text, 30%);
 	}
 	.toolbar {
 		text-align: right;
+		.secondary {
+			display: none;
+		}
 	}
 }
