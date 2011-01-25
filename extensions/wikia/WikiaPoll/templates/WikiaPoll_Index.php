@@ -32,7 +32,7 @@
 ?>
 		</ul>
 		<details>
-			<span class="votes"><?= wfMsgExt('wikiapoll-people-voted', array('parsemag'), $data['votes']) ?></span>
+			<span class="votes"><?= wfMsgExt( 'wikiapoll-people-voted', array( 'parsemag' ), $wgLang->formatNum( $data['votes'] ) ) ?></span>
 			<input type="submit" name="wpVote" value="<?= wfMsg('wikiapoll-vote') ?>" style="display:none" />
 		</details>
 	</form>
