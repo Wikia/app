@@ -24,7 +24,7 @@ public class CreateWikiTest extends BaseTest {
 	public void testCreateWikiAsLoggedInUser() throws Exception {
 		loginAsStaff();
 		session().open("");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		String[] languages = getTestConfig().getStringArray("ci.extension.wikia.AutoCreateWiki.lang");
 
@@ -38,7 +38,7 @@ public class CreateWikiTest extends BaseTest {
 			clickAndWait("wiki-submit");
 		
 			if (languages[i].equals("en")) {
-				waitForTextPresent("Write a brief intro for your home page.", TIMEOUT, "Wiki has not been created, language: " + languages[i]);
+				waitForTextPresent("Write a brief intro for your home page.", this.getTimeout(), "Wiki has not been created, language: " + languages[i]);
 				session().click("//input[@value='Save Intro']");
 				waitForElementVisible("ThemeTab");
 				session().click("//input[@value='Save Theme']");
@@ -47,10 +47,10 @@ public class CreateWikiTest extends BaseTest {
 				waitForElementVisible("//section[@id='WikiBuilder']/div/div[@class='step4']");
 				session().click("//input[@value='Continue to your wiki']");
 				
-				waitForTextPresent("Welcome to the Wiki", TIMEOUT, "Wiki has not been created, language: " + languages[i]);
+				waitForTextPresent("Welcome to the Wiki", this.getTimeout(), "Wiki has not been created, language: " + languages[i]);
 				assertTrue(session().getLocation().contains("http://" + getWikiName() + ".wikia.com/wiki/"));
 			} else {
-				waitForTextPresent("Your wiki has been created!", TIMEOUT, "Wiki has not been created, language: " + languages[i]);
+				waitForTextPresent("Your wiki has been created!", this.getTimeout(), "Wiki has not been created, language: " + languages[i]);
 				clickAndWait("//div[@class='awc-domain']/a");
 		
 				assertTrue(session().getLocation().contains("http://" + languages[i] + "." + getWikiName() + ".wikia.com/wiki/"));
@@ -75,7 +75,7 @@ public class CreateWikiTest extends BaseTest {
 	@Test(groups={"envProduction"},dependsOnMethods={"cleanupTestCreateWikiAsLoggedInUser"})
 	public void testCreateWikiAsLoggedOutUser() throws Exception {
 		session().open("");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		clickAndWait("link=Start a wiki");
 		
 		session().type("wiki-name", getWikiName());
@@ -88,7 +88,7 @@ public class CreateWikiTest extends BaseTest {
 		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiastaff.username"));
 		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiastaff.password"));
 		session().click("wpLoginattempt");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		assertEquals(session().getValue("wiki-name"), getWikiName());
 		assertEquals(session().getValue("wiki-domain"), getWikiName());
@@ -111,7 +111,7 @@ public class CreateWikiTest extends BaseTest {
 	
 	public void deleteWiki(String language) throws Exception {
 		session().open("http://community.wikia.com/wiki/Special:WikiFactory");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		session().type("citydomain", language + "." + getWikiName() + ".wikia.com");
 		clickAndWait("//form[@id='WikiFactoryDomainSelector']//button");

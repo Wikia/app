@@ -17,27 +17,27 @@ public class CategoryExhibitionTest extends BaseTest {
 
 		// open video page in classic preview
 		session().open("wiki/Category:Videos?display=page&sort=mostvisited");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		if ( session().isElementPresent("//div[@class='category-gallery-form']") ){
 
 			// open video page ( mostvisited )
 			session().open("wiki/Category:Videos?display=exhibition&sort=mostvisited");
-			session().waitForPageToLoad(TIMEOUT);
+			session().waitForPageToLoad(this.getTimeout());
 
 			Number numberOfMostvisitedPages = session().getXpathCount("//div[@id='mw-images']//div[@class='wikia-paginator']//a");
 //			System.out.println("Counted pages for mostvisited video : " + numberOfMostvisitedPages);
 
 			// open video page ( alphabetical )
 			session().open("wiki/Category:Videos?display=exhibition&sort=alphabetical");
-			session().waitForPageToLoad(TIMEOUT);
+			session().waitForPageToLoad(this.getTimeout());
 
 			Number numberOfAlphabeticalPages = session().getXpathCount("//div[@id='mw-images']//div[@class='wikia-paginator']//a");
 //			System.out.println("Counted pages for alphabetical video : " + numberOfAlphabeticalPages);
 
 			// open video page ( recent edits )
 			session().open("wiki/Category:Videos?display=exhibition&sort=recentedits");
-			session().waitForPageToLoad(TIMEOUT);
+			session().waitForPageToLoad(this.getTimeout());
 
 			Number numberOfRecentEditsPages = session().getXpathCount("//div[@id='mw-images']//div[@class='wikia-paginator']//a");
 //			System.out.println("Counted pages for recetly edited video : " + numberOfRecentEditsPages);
@@ -63,7 +63,7 @@ public class CategoryExhibitionTest extends BaseTest {
 
 		// open video page ( most visited edits )
 		session().open("/wiki/Category:Images?display=exhibition&sort=recentedits");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// System.out.println("Checking Images lightbox.");
 		session().click( "//div[@id='mw-images']//a[@class='lightbox']" );
@@ -77,7 +77,7 @@ public class CategoryExhibitionTest extends BaseTest {
 		// open video page ( most visited edits )
 
 		session().open("/wiki/Category:Videos?display=exhibition&sort=recentedits");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// System.out.println("Checking video player.");
 		session().click("//div[@id='mw-images']//div[@class='category-gallery-item-play']");

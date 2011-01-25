@@ -9,7 +9,7 @@ public class MainPageTest extends BaseTest {
 	@Test(groups={"oasis", "CI"})
 	public void testMainPageNoRail() throws Exception {
 		session().open("index.php");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// rail
 		assertFalse(session().isElementPresent("WikiaRail"));

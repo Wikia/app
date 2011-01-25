@@ -15,16 +15,16 @@ public class MyHomeTest extends BaseTest {
 	public void testMyHome() throws Exception {
 		login();
 		session().open("index.php?useskin=monaco");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// check presence of link to MyHome
 		assertTrue(session().isElementPresent("header_myhome"));
 
 		// and click it
 		session().click("//span[@id='header_myhome']/a");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().open(session().getLocation() + "?useskin=monaco");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// check presence of masthead
 		assertTrue(session().isElementPresent("user_masthead"));
@@ -36,20 +36,20 @@ public class MyHomeTest extends BaseTest {
 	@Test(groups={"monaco"})
 	public void testActivityFeed() throws Exception {
 		session().open("index.php?useskin=monaco");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().open("index.php?title=Special:Random");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().open(session().getLocation() + "?useskin=monaco");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// check presence of link to ActivityFeed for anons
 		assertTrue(session().isElementPresent("community-widget-action-button"));
 
 		// and click it
 		session().click("community-widget-action-button");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().open(session().getLocation() + "?useskin=monaco");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// masthead should not be shown
 		assertTrue(!session().isElementPresent("user_masthead"));

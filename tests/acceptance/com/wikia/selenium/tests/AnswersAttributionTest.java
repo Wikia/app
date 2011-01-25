@@ -12,7 +12,7 @@ public class AnswersAttributionTest extends BaseTest {
 	public void testUserEditPoints() throws Exception {
 		for (int i = 1; i <= 10; i++) {
 			session().open("index.php?title=Special:Randomincategory/Answered_questions");
-			waitForElement("contributors", TIMEOUT);
+			waitForElement("contributors", this.getTimeout());
 			assertTrue(session().isElementPresent("contributors"));
 			if(session().isElementPresent("//a[@class='userPageLink']")) {
 				// non-anon contributors were found, proceed..
@@ -32,7 +32,7 @@ public class AnswersAttributionTest extends BaseTest {
 		
 		// check user page
 		session().open(userPage);
-		waitForElement("profile-title", TIMEOUT);
+		waitForElement("profile-title", this.getTimeout());
 		assertTrue(session().isElementPresent("profile-title"));
 		assertTrue(session().isElementPresent("//span[@class='profile-title-points']"));
 		
@@ -50,8 +50,8 @@ public class AnswersAttributionTest extends BaseTest {
 			System.out.println("Checking random page edited by user: " + recentlyEditedPage);
 			
 			session().open(recentlyEditedPage);
-			session().waitForPageToLoad(TIMEOUT);
-			//waitForElement("contributors", TIMEOUT);
+			session().waitForPageToLoad(this.getTimeout());
+			//waitForElement("contributors", this.getTimeout());
 			if(session().isElementPresent("contributors")) {
 				// question is answered
 				assertTrue(session().isElementPresent("//a[@href='" + userPage + "']/../div[@class='userEditPoints']/span[@class='userPoints']"));

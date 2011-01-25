@@ -33,9 +33,9 @@ public class BlogArticleTest extends BaseTest {
 		// create test article
 		doEdit( ( "blogtest by bot " + new Date()).toString() );
 		session().click("wpPreview");
-		session().waitForPageToLoad( TIMEOUT );
+		session().waitForPageToLoad( this.getTimeout() );
 		session().click("wpSave");
-		session().waitForPageToLoad( TIMEOUT );
+		session().waitForPageToLoad( this.getTimeout() );
 		
 		assertEquals(title, session().getText("//div[@id='WikiaUserPagesHeader']/h1"));
 

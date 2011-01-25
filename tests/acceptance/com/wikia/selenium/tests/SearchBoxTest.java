@@ -10,7 +10,7 @@ public class SearchBoxTest extends BaseTest {
 
 	private void randomPage() throws Exception {
 		session().open("index.php?title=Special:Random");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 	}
 
 	@Test(groups={"oasis", "CI"})

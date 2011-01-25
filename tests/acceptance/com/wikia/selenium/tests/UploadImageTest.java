@@ -20,7 +20,7 @@ public class UploadImageTest extends BaseTest {
 		loginAsStaff();
 
 		session().open("index.php?title=Special:Upload");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().attachFile("wpUploadFile", uploadFileUrl);
 		session().type("wpDestFile", destinationFileName);
 		session().type("wpUploadDescription", "WikiaBot automated test.");
@@ -47,7 +47,7 @@ public class UploadImageTest extends BaseTest {
 
 		loginAsStaff();
 		session().open("index.php?title=File:" + destinationFileName);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		clickAndWait("//a[@data-id='delete']");
 		session().type("wpReason", "this was for test");
 		session().uncheck("wpWatch");

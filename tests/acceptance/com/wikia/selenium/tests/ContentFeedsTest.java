@@ -22,7 +22,7 @@ public class ContentFeedsTest extends BaseTest {
 		String content = "<wikitweets size=\"5\" keywords=\"wikia\" />";
 		editArticle("Project:WikiTweetsTagTestArticle", content);
 
-		waitForElement("//ul[@class='cfWikiTweetsTag']/li/a", TIMEOUT);
+		waitForElement("//ul[@class='cfWikiTweetsTag']/li/a", this.getTimeout());
 
 		assertTrue(session().isElementPresent("//ul[@class='cfWikiTweetsTag']"));
 		assertTrue(session().isElementPresent("//ul[@class='cfWikiTweetsTag']/li/a"));

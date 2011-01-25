@@ -13,7 +13,7 @@ public class CategoryHubsTest extends BaseTest {
 	public void testViewMode() throws Exception {
 		loginAsStaff();
 		session().open("index.php?title=Category:Lyrics");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// Test to make some basic elements show up (title bar, progress bar, top contributors).
 		// System.out.println("\tLooking for title bar...");
@@ -33,7 +33,7 @@ public class CategoryHubsTest extends BaseTest {
 	public void testContent() throws Exception {
 		loginAsStaff();
 		session().open("index.php?title=Category:Lyrics");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// Make sure that there are tabs of content (it's possible that there won't be any unanswered).
 		// System.out.println("\tLooking at the Answered/Unanswered tabs...");
@@ -56,7 +56,7 @@ public class CategoryHubsTest extends BaseTest {
 	public void testTabs() throws Exception {
 		loginAsStaff();
 		session().open("index.php?title=Category:Lyrics");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// Test to make sure that jquery-ui applies to the tabs (look for classes inserted by it).
 		waitForElement("//div[@id='cathub-title-bar']");

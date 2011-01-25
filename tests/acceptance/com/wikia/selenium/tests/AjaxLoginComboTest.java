@@ -16,7 +16,7 @@ public class AjaxLoginComboTest extends BaseTest {
 		session().open("index.php?title=comboPlaceholder&action=edit&useeditor=mediawiki");
 		session().type("wpTextbox1", "[[image:placeholder]]");
 		session().click("wpSave");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		session().click("//a[@class='ajaxLogin']");
 		waitForElement("AjaxLoginButtons");
@@ -28,7 +28,7 @@ public class AjaxLoginComboTest extends BaseTest {
 		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiabot.username"));
 		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiabot.password"));
 		session().click("wpLoginattempt");
-	    session().waitForPageToLoad(TIMEOUT);
+	    session().waitForPageToLoad(this.getTimeout());
 		waitForWikiabotLoggedIn();
 
 		assertTrue(session().isElementPresent("ImageUpload"));
@@ -54,11 +54,11 @@ public class AjaxLoginComboTest extends BaseTest {
 		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiabot.username"));
 		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiabot.password"));
 		session().click("wpLoginattempt");
-	    session().waitForPageToLoad(TIMEOUT);
+	    session().waitForPageToLoad(this.getTimeout());
 
 		waitForWikiabotLoggedIn();
 		session().click("wpPreview");
-	    session().waitForPageToLoad(TIMEOUT);
+	    session().waitForPageToLoad(this.getTimeout());
 		waitForWikiabotLoggedIn();
 
 		session().isTextPresent("Test Text wikieditor");

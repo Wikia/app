@@ -11,6 +11,6 @@ public class EditEnhancementsTest extends BaseTest {
 		session().open("index.php?title=WikiaAutomatedTest&action=edit");
 		assertTrue(session().isElementPresent("edit_enhancements_toolbar"));
 		session().click("wpPreview");
-		waitForElement("edit_enhancements_toolbar", TIMEOUT);
+		waitForElement("edit_enhancements_toolbar", this.getTimeout());
 	}
 }

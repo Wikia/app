@@ -30,7 +30,7 @@ public class SharedHelpImagesTest extends BaseTest {
 			assertTrue(se.getMessage().contains("Response_Code = 404"));
 		};
 
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// basic check to see if shared help is displayed
 		assertTrue( session().isElementPresent("//div[@class='sharedHelp']") );

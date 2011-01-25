@@ -14,9 +14,9 @@ public class ArticleVotingTest extends BaseTest {
 		if (!isOasis()) {
 			session().open("index.php?title=Special:Random");
 			session().click("star5");
-			waitForElementVisible("unrateLink", TIMEOUT);
+			waitForElementVisible("unrateLink", this.getTimeout());
 			session().click("unrate");
-			waitForElementNotVisible("unrateLink", TIMEOUT);
+			waitForElementNotVisible("unrateLink", this.getTimeout());
 		}
 	}
 }

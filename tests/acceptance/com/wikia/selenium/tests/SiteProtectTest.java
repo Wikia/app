@@ -12,19 +12,19 @@ public class SiteProtectTest extends BaseTest {
 		// Protect the site
 		loginAsStaff();
 		session().open("index.php?title=Special:Protectsite");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		waitForElement("//input[@name='createpage']");
 		session().click("//input[@name='createpage' and @value='1']");
 		session().click("//input[@name='edit' and @value='1']");
 		session().type("timeout", "5 minutes");
 		session().type("comment", "Wikia automated test");
 		session().click("protect");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		logout();
 
 		// Verify
 		session().open("index.php?title=WikiaAutomatedTest&action=edit");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		if(isOasis()){
 			assertTrue(session().isTextPresent("You do not have permission to edit this page, for the following reason:"));
 		} else {
@@ -38,14 +38,14 @@ public class SiteProtectTest extends BaseTest {
 		// Unprotect the site
 		loginAsStaff();
 		session().open("index.php?title=Special:Protectsite");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().type("ucomment", "end of test");
 		session().click("unprotect");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		logout();
 		// Verify
 		session().open("index.php?title=WikiaAutomatedTest&action=edit");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		if(isOasis()){
 			assertEquals("Editing: WikiaAutomatedTest", session().getText("//article/div[@id='WikiaPageHeader']/h1"));
 		} else {

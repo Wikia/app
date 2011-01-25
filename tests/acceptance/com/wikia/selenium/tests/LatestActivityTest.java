@@ -13,7 +13,7 @@ public class LatestActivityTest extends BaseTest {
 	public void testLatestActivity() throws Exception {
 		loginAsStaff(); 
 		session().click("link=Random Page");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		String ArticleTitle = session().getText("//header[@id='WikiaPageHeader']/h1");
 		String content = (new Date()).toString();
 		editArticle(ArticleTitle, "*Tested: " + content + " by [[wikia:user:" + getTestConfig().getString("ci.user.wikiabot.username")  + "|" + getTestConfig().getString("ci.user.wikiabot.username") + "]]");

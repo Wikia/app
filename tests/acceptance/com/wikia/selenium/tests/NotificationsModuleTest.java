@@ -10,14 +10,14 @@ public class NotificationsModuleTest extends BaseTest {
 
 	private void randomPage() throws Exception {
 		session().open("index.php?title=Special:Random");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 	}
 
 	@Test(groups={"oasis", "CI"})
 	public void testTalkPageNotificationSend() throws Exception {
 		loginAsRegular();
 		session().open("index.php?title=User_talk:" + getTestConfig().getString("ci.user.wikiastaff.username") + "&action=edit&section=new");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// leave message for staff
 		session().type("//input[@name='wpSummary']", "Message");
@@ -62,7 +62,7 @@ public class NotificationsModuleTest extends BaseTest {
 
 		// dismiss the message
 		session().click(xPath + "//a[contains(@class, 'close-notification')]");
-		waitForElementNotPresent(xPath, TIMEOUT);
+		waitForElementNotPresent(xPath, this.getTimeout());
 
 		// message should be removed from DOM
 		assertFalse(session().isElementPresent(xPath));
@@ -78,21 +78,21 @@ public class NotificationsModuleTest extends BaseTest {
 
 		// go to user preferences
 		session().open("index.php?title=Special:Preferences");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String xPath = "//div[@class='WikiaConfirmation']";
 		assertFalse(session().isElementPresent(xPath));
 
 		// save preferences
 		session().click("prefcontrol");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// check confirmation
 		assertTrue(session().isElementPresent(xPath));
 
 		// logout
 		session().click("link=Log out");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		assertTrue(session().isElementPresent(xPath));
 	}

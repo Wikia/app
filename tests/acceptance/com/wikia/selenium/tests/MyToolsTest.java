@@ -9,7 +9,7 @@ public class MyToolsTest extends BaseTest {
 	@Test(groups={"oasis", "CI"})
 	public void testMyTools() throws Exception {
 		session().open("index.php");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		assertFalse(session().isElementPresent("//li[@class='mytools']"));
 

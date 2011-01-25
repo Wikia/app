@@ -11,7 +11,7 @@ public class ShareFeatureTest extends BaseTest {
 	public void testSharedFeatureLoggedIn() throws Exception {
 		login();
 		session().open("index.php?title=Special:Random");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().click(isOasis() ? "control_share_feature" : "ca-share_feature");
 		waitForElement("//section[@id='shareFeatureInsideWrapper']");
 		session().click("link=Facebook");
@@ -22,7 +22,7 @@ public class ShareFeatureTest extends BaseTest {
 	@Test(groups={"CI"})
 	public void testSharedFeatureAnon() throws Exception {
 		session().open("index.php?title=Special:Random");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().click(isOasis() ? "control_share_feature" : "ca-share_feature");
 		waitForElement("//section[@id='shareFeatureInsideWrapper']");
 		session().click("link=Facebook");

@@ -12,7 +12,7 @@ public class AchievementsOasisTest extends BaseTest {
 
 		// got to user profile page  
 		session().open("/wiki/User:" + getTestConfig().getString("ci.user.regular.username"));
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// check for elements
 		assertTrue(session().isElementPresent("//div[contains(@class,'AchievementsModule')]"));

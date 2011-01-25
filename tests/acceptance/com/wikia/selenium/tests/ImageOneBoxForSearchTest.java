@@ -9,17 +9,17 @@ public class ImageOneBoxForSearchTest extends BaseTest {
 	@Test(groups={"CI"})
 	public void testImageSearchResults() throws Exception {
 		session().open("/");
-		waitForElement("WikiaSearch", TIMEOUT); 
+		waitForElement("WikiaSearch", this.getTimeout()); 
 		session().type("search", "logo logo");
 		session().click("//form[@id='WikiaSearch']//button/img[contains(@class, 'search')]");
 
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().isElementPresent("image-one-box-search-results"));
 		assertTrue(session().isElementPresent("image-one-box-search-result-1"));
 
 		session().click("//li[@id='image-one-box-search-result-1']/div/a");
 
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().isElementPresent("//article[@id='WikiaMainContent']"));
 	}
 }

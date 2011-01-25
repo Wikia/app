@@ -14,7 +14,7 @@ public class WhatIsMyIpTest extends BaseTest {
 	@Test(groups={"oasis", "CI"})
 	public void testAssertThatInfrastructureIPsAreNotPresented() throws Exception {
 		session().open("index.php?title=Special:WhatIsMyIP");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// check what page you land on
 		assertTrue(session().getLocation().contains("index.php?title=Special:WhatIsMyIP"));

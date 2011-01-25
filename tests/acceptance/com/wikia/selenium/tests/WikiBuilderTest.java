@@ -30,7 +30,7 @@ public class WikiBuilderTest extends BaseTest {
 		waitForElementVisible("//section[@id='WikiBuilder']/div/div[@class='step4']");
 		session().click("//input[@value='Continue to your wiki']");
 
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		waitForElement("//div[@id='WikiaArticle']");
 		assertTrue(session().isTextPresent("abc123"));
 
@@ -38,6 +38,6 @@ public class WikiBuilderTest extends BaseTest {
 		session().click("//input[@type='submit']");
 		waitForElement("//header/h1");
 		assertTrue(session().isTextPresent(rand));
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 	}
 }

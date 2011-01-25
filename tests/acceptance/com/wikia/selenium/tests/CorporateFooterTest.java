@@ -10,7 +10,7 @@ public class CorporateFooterTest extends BaseTest {
 	public void testLatestPhotos() throws Exception {
 		loginAsRegular();
 		session().open("/");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 	
 		// Coporate Footer Module
 		assertTrue(session().isElementPresent("//footer[@class='CorporateFooter']"));

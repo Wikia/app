@@ -40,7 +40,7 @@ public class CategorySelectTest extends BaseTest {
 
 		// System.out.println("Switching to wikitext version...");
 		session().click(isOasis() ? "//a[@data-id='edit']" : "ca-edit");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().click("csSwitchView");
 		waitForElementVisible("csWikitext");
 
@@ -63,10 +63,10 @@ public class CategorySelectTest extends BaseTest {
 		// System.out.println("Testing that users can still add categories right in the wikitext of the article...");
 		doEdit("Wikia automated test for CategorySelect\n[[Category:Other category]] added via textbox");
 		session().click("wpPreview");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().click("//div[@id='csItemsContainer']/a[1]/img/");
 		session().click("wpSave");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertEquals("Other Category", session().getText("link=Other Category"));
 
 		// TODO: Test to make sure that deleting one tag by clicking an X deletes exactly that one tag (and not more, if there are more). See rt#45033

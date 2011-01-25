@@ -12,7 +12,7 @@ public class SearchTest extends BaseTest {
 	@Test(groups={"oasis", "CI"})
 	public void testEnsureThatWhenThereAreNoSearchResultProperMessageIsDisplayed() throws Exception {
 		session().open("/");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String searchTerm = "randomSearchTerm" + UUID.randomUUID().toString().replace("-","");
 
@@ -25,7 +25,7 @@ public class SearchTest extends BaseTest {
 			session().click("search-button");
 		}
 
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().isTextPresent("There were no results matching the query."));
 	}
 	
@@ -34,7 +34,7 @@ public class SearchTest extends BaseTest {
 		session().open("/");
 		session().type("//input[@name='search']", "main page");
 		session().click("//form[@id='WikiaSearch']/input[3]");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		// check what page you land on
 		assertTrue(session().getLocation().contains("wiki/Main_Page"));
