@@ -260,7 +260,6 @@ class WikiaLabs {
 
 		$this->app->runFunction( 'wfRunHooks', 'WikiFactoryChanged', array( $wikiaLabsProject->getExtension() , $city_id, !empty($onoff) ) );
 
-
 		return $this->app->runFunction( 'WikiFactory::setVarByName',  $wikiaLabsProject->getExtension(), $city_id, !empty($onoff), "WikiaLabs" );
 	}
 
