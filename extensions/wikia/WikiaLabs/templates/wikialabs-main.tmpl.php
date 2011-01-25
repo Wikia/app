@@ -10,8 +10,8 @@
 				<span data-id="<?php echo $value->getId(); ?>" class='slider <?php echo $value->isEnabled($cityId) ? "on":""; ?>'>
 					<span class='button  <?php echo $value->isEnabled($cityId) ? "on":""; ?>'>
 					</span> 
-					<span class="textoff  <?php echo $value->isEnabled($cityId) ? "on":""; ?>">inactive</span>
-					<span class="texton  <?php echo $value->isEnabled($cityId) ? "on":""; ?>" >active</span>
+					<span class="textoff  <?php echo $value->isEnabled($cityId) ? "on":""; ?>"><?php echo wfMsg('wikialabs-list-project-inactive'); ?></span>
+					<span class="texton  <?php echo $value->isEnabled($cityId) ? "on":""; ?>" ><?php echo wfMsg('wikialabs-list-project-active'); ?></span>
 					<?php if($data['enablewarning']): ?>
 						<div class="warning" style="display:none" >
 						<h1><?php echo wfMsg( 'wikialabs-list-project-warning' ); ?></h2>
@@ -24,7 +24,7 @@
 					<?php endif;?>
 				</span>
 	
-				<a class="wikia-button secondary feedback" data-id="<?php echo $value->getId(); ?>" >
+				<a class="wikia-button secondary feedback" data-user-feedback="<?php echo $value->getRatingByUser( $userId ); ?>"  data-id="<?php echo $value->getId(); ?>" >
 					<img src="/extensions/wikia/WikiaLabs/images/star-inactive.png">
 					<?php echo wfMsg('wikialabs-list-project-add-give-feedback'); ?>
 				</a>
@@ -35,10 +35,15 @@
 				
 				<span class="stars" >
 					<?php for($i = 1; $i < 6; $i ++): ?> 
-						<img data-index="<?php echo $i; ?>" src="<?= wfBlankImgUrl() ;?>"/>
+						<?php if(round($value->getRating()) >= $i): ?>
+							<img class="staractive" data-index="<?php echo $i; ?>" src="<?= wfBlankImgUrl() ;?>"/>
+						<?php else: ?>
+							<img data-index="<?php echo $i; ?>" src="<?= wfBlankImgUrl() ;?>"/>
+						<?php endif; ?>
 					<?php endfor; ?>
 					<span class="ratings" >
-	    				1<br>ratings
+	    				<?php echo $value->getRating(); ?><br>
+	    				<?php echo wfMsg('wikialabs-list-project-ratings'); ?>
 	    			</span>
 				</span>
 			</span>
