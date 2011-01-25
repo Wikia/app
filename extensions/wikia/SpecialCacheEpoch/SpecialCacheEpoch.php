@@ -1,5 +1,4 @@
 <?php
-
 /**
  * SpecialCacheEpoch
  *
@@ -27,9 +26,10 @@ $wgExtensionMessagesFiles['CacheEpoch'] = dirname(__FILE__) . '/SpecialCacheEpoc
 $wgExtensionCredits['special'][] = array(
 	'name' => 'SpecialCacheEpoch',
 	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
-	'description-msg' => 'specialcacheepoch-desc',
+	'description-msg' => 'cacheepoch-desc',
 );
 
+// @todo FIXME: split off to class page.
 class SpecialCacheEpoch extends SpecialPage {
 	public function __construct() {
 		parent::__construct('CacheEpoch', 'cacheepoch');
