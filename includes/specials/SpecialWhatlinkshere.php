@@ -28,6 +28,7 @@ class SpecialWhatLinksHere extends SpecialPage {
 
 	function execute( $par ) {
 		global $wgOut, $wgRequest;
+		global $wgWhatlinkshereLimit;
 
 		$this->setHeaders();
 
@@ -369,7 +370,7 @@ class SpecialWhatLinksHere extends SpecialPage {
 
 		# Build up the form
 		$f = Xml::openElement( 'form', array( 'action' => $wgScript ) );
-		
+
 		# Values that should not be forgotten
 		$f .= Xml::hidden( 'title', SpecialPage::getTitleFor( 'Whatlinkshere' )->getPrefixedText() );
 		foreach ( $this->opts->getUnconsumedValues() as $name => $value ) {
@@ -401,7 +402,7 @@ class SpecialWhatLinksHere extends SpecialPage {
 
 	/**
 	 * Create filter panel
-	 * 
+	 *
 	 * @return string HTML fieldset and filter panel with the show/hide links
 	 */
 	function getFilterPanel() {
