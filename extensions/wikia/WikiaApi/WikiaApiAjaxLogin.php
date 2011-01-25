@@ -83,6 +83,10 @@ class WikiaApiAjaxLogin extends ApiBase {
 					$result['result'] = 'NeedToken';
 					$result['text'] = wfMsg('sessionfailure');
 					break;
+				case LoginForm :: THROTTLED :
+					$result['result'] = 'Throttled';
+					$result['text'] = wfMsg('login-throttled');
+					break;
 				default :
 					ApiBase :: dieDebug(__METHOD__, "Unhandled case value: \"$caseCode\"");
 			}
