@@ -58,14 +58,17 @@ WikiaLabs.showFeedback = function(e){
 	}).mouseleave(function(e){
 		setStarValue(starValue);
 	});
-
-	modal.find('.okbutton').click(function() {
+	
+	var okbutton = modal.find('.okbutton');
+	okbutton.click(function() {
+		okbutton.css('opacity', '0.5' );
 		$.ajax({
 			type: "POST",
 			url: wgScript + '?action=ajax&rs=WikiaLabs::saveFeedback' +'&rating=' + starValue ,
 			dataType: "json",
 			data: modal.find('form').serialize() + '&projectId=' + id,
 			success: function(data) {
+				okbutton.css('opacity', '1' );
 				if( data.status == "error" ) {
 					var errorBox = modal.find(".errorBox").show().find('div');
 					errorBox.empty();
@@ -76,8 +79,7 @@ WikiaLabs.showFeedback = function(e){
 					}
 				}
 				else {
-					button.attr('data-user-feedback', starValue);
-					modalWrap.closeModal();
+					window.location = wgScript = '?title=' + wgCanonicalNamespace + ':' + wgCanonicalSpecialPageName;
 				}
 			}
 		});
@@ -95,13 +97,16 @@ WikiaLabs.editProject = function(id, callback) {
 		success: function(data) {
 			callback(data);
 			var modal =	$(data).makeModal({ width : 650});
-			modal.find('#saveProject').click(function() {
+			okbutton = modal.find('#saveProject'); 
+			okbutton.click(function() {
+				okbutton.css('opacity', '0.5' );
 				$.ajax({
 					type: "POST",
 					url: wgScript + '?action=ajax&rs=WikiaLabs::saveProject',
 					dataType: "json",
 					data: modal.find('form').serialize(),
 					success: function(data) {
+						okbutton.css('opacity', '1' );
 						if( data.status == "error" ) {
 							var errorBox = $(".addprjmodal #errorBox").show().find('div');
 							errorBox.empty();
