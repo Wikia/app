@@ -8,5 +8,5 @@ $messages['en'] = array(
 	'wikiapoll-question' => '$1?',
 	'wikiapoll-thanks-for-vote' => 'Thanks!',
 	'wikiapoll-vote' => 'Vote!',
-	'wikiapoll-votes' => '{{formatnum:$1}} {{PLURAL:$1|vote|votes}}',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 vote|$1 votes}}',
 );
