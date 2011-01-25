@@ -24,6 +24,25 @@ class PayflowAPITest extends PHPUnit_Framework_TestCase {
 		'APIUrl'    => 'APIUrl',
 		'HTTPProxy' => 'HTTPProxy'
 	);
+	private $wgPayflowProCredentialsBackup;
+	private $wgPayflowProAPIUrlBackup;
+	private $wgHTTPProxyBackup;
+
+	protected function setUp(){
+
+		global $wgPayflowProCredentials, $wgPayflowProAPIUrl, $wgHTTPProxy;
+		$this->wgPayflowProCredentialsBackup = $wgPayflowProCredentials;
+		$this->wgPayflowProAPIUrlBackup = $wgPayflowProAPIUrl;
+		$this->wgHTTPProxyBackup = $wgHTTPProxy;
+	}
+
+	protected function tearDown(){
+
+		global $wgPayflowProCredentials, $wgPayflowProAPIUrl, $wgHTTPProxy;
+		$wgPayflowProCredentials = $this->wgPayflowProCredentialsBackup;
+		$wgPayflowProAPIUrl = $this->wgPayflowProAPIUrlBackup;
+		$wgHTTPProxy = $this->wgHTTPProxyBackup;
+	}
 
 	public function testConstructorReadsFromGlobalsIfOptionsAreNotGiven() {
 		global $wgPayflowProCredentials, $wgPayflowProAPIUrl, $wgHTTPProxy;
