@@ -72,8 +72,14 @@ $margin-images: 10px;
     			display: block;
     			margin-top: -5px;
     			img {
+    			    background: url("/extensions/wikia/WikiaLabs/images/star-inactive.png") repeat scroll 0 0 transparent;
+    				height: 32px;
+    				width: 32px;
     				margin-right: -10px;
     				margin-left: -10px;
+    				&.staractive{
+    					background: url("/extensions/wikia/WikiaLabs/images/star-active.png") repeat scroll 0 0 transparent;
+    				}
     			}
     			.ratings{
     			   display: block;
@@ -274,18 +280,55 @@ $margin-images: 10px;
  	 	display: block;
  	}
  	
+ 	.clearfix {
+		@include clearfix;
+		margin-top: 18px;
+ 	}
+ 	
  	.stars {
+ 	    margin-left: 3px;
  	    img {
-    		margin-right: -10px;
-    		margin-left: -10px;
+		    background: url("/extensions/wikia/WikiaLabs/images/star-inactive.png") transparent;
+			height: 18px;
+			width: 15px;
+			margin-left: -3px;
+			background-position: -8px -8px;
+			&.staractive {
+				background: url("/extensions/wikia/WikiaLabs/images/star-active.png") transparent;
+				background-position: -8px -8px;
+			}
+    		margin-top: -4px;
+    		vertical-align: middle;
     	}
  	}
  	
 	.comments{
     	display: block;	
+    	padding-bottom: 2px;
+    	padding-top: 6px;
 	}
 	
 	.title {
-	   display: block;	
+	   display: block;
+	    font-size: 21px;
+	    margin-top: 10px;
+    	margin-bottom: 10px;	
 	}
+	
+	.appScreen {
+    	float: left;
+		margin-right: $margin-images;
+		border-color: $color-text;
+		border: 1px solid;	
+	}
+	
+	.prjname {
+	    margin-bottom: 6px;
+		display: block; 
+		font-size: 20px;
+	}
+	
+	.data{
+		display:none;
+	}	
 }

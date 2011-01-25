@@ -17,8 +17,42 @@ WikiaLabs.init = function() {
 }
 
 WikiaLabs.showFeedback = function(e){
-	var id = $(e.target).closest('.feedback').attr('data-id');
-	var modal =	$('#feedbackmodal').clone().attr('id','').show().makeModal({ width : 650});
+	var target = $(e.target);
+	var id = target.closest( '.feedback' ).attr('data-id');
+	
+	var modal =	$( '#feedbackmodal' )
+					.clone()
+					.attr('id','')
+					.show()
+					.prepend($("<div class='clearfix' ></div>"))
+					.prepend(target.closest('li').find('.appScreen,.details').clone());
+	
+	var starValue = 0;
+	var inputRating = modal.find(".rating");
+	
+	var stars = modal.find('.stars img');
+	
+	var setStarValue = function( index ) {
+		stars.each(function() {
+			var element = $(this);
+			if(index >= element.attr('data-index') ) {
+			    element.addClass('staractive')	
+			} else {
+				element.removeClass('staractive')	
+            }
+		});
+	} 
+	
+	modal.find('.stars img').mouseenter(function(e){
+		var index =  $(e.target).attr('data-index');
+		setStarValue(index);
+	}).click(function(e){
+		var index =  $(e.target).attr('data-index');
+		starValue = index;
+		inputRating.val(index);
+	}).mouseleave(function(e){
+		setStarValue(starValue);
+	});
 
 	modal.find('.okbutton').click(function() {
 		$.ajax({
@@ -43,6 +77,8 @@ WikiaLabs.showFeedback = function(e){
 		});
 		return false;
 	});
+	
+	modal.makeModal({ width : 650});
 }
 
 WikiaLabs.editProject = function(id, callback) {
