@@ -70,6 +70,7 @@ EOT;
 			$out .= '</div>';
 		}
 
+		$out .= AdEngine::getInstance()->getSetupHtml();
 		$out .= $this->getSetupHtml();
 		$out .= AdProviderLiftium::getInstance()->getSetupHtml(array('isCalledAfterOnload'=>1, 'hasMoreCalls'=>1, 'maxLoadDelay'=>3000));
 
@@ -91,7 +92,7 @@ EOT;
 	var dartOrd = Math.random()*10000000000000000;
 </script>
 EOT;
-		$out .= AdEngine::getInstance()->providerValuesAsJavascript($wgCityId);
+		//$out .= AdEngine::getInstance()->providerValuesAsJavascript($wgCityId);
 
 		return $out;
 	}

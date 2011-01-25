@@ -1,0 +1,412 @@
+AdConfig = {
+	adDriverNumCallCookieName: 'adDriverNumAllCall',
+	geo: null, 
+	geoCookieName: 'Geo',
+	quantcastSegmentCookieName: 'qcseg',
+	init: function() {
+		AdConfig.pullGeo();
+	}
+};
+
+/* DART Configuration */
+AdConfig.DART = {
+	adDriverNumCall: null,
+	hasPrefooters: null,
+	height: null,
+	largeWidth: 1024,
+	ord: Math.round(Math.random() * 23456787654), // The random number should be generated once and the same for all
+	tile: 1,
+	width: null,
+	
+	sizeMap: {
+	   '300x250': '300x250,300x600',
+	   '600x250': '600x250,300x250',
+	   '728x90': '728x90,468x60,980x130,980x65',
+	   '160x600': '160x600,120x600',
+	   '0x0': '1x1'
+	},
+
+	slotMap: {
+       'CORP_TOP_LEADERBOARD': {'tile':2, 'loc': 'top', 'dcopt': 'ist'},
+       'CORP_TOP_RIGHT_BOXAD': {'tile':1, 'loc': 'top'},
+	   'DOCKED_LEADERBOARD': {'tile': 8, 'loc': "bottom"},
+	   'EXIT_STITIAL_BOXAD_1': {'tile':2, 'loc': "exit"},
+	   'EXIT_STITIAL_BOXAD_2': {'tile':3, 'loc': "exit"},
+	   'EXIT_STITIAL_INVISIBLE': {'tile':1, 'loc': "exit", 'dcopt': "ist"},
+	   'FOOTER_BOXAD': {'tile': 5, 'loc': "footer"},
+	   'HOME_INVISIBLE_TOP': {'tile':12, 'loc': "invisible"},
+	   'HOME_LEFT_SKYSCRAPER_1': {'tile':3, 'loc': "top"},
+	   'HOME_LEFT_SKYSCRAPER_2': {'tile':3, 'loc': "middle"},
+	   'HOME_TOP_LEADERBOARD': {'tile': 2, 'loc': "top", 'dcopt': "ist"},
+	   'HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
+	   'INCONTENT_BOXAD_1': {'tile':4, 'loc': "middle"},
+	   'INCONTENT_BOXAD_2': {'tile':5, 'loc': "middle"},
+	   'INCONTENT_BOXAD_3': {'tile':6, 'loc': "middle"},
+	   'INCONTENT_BOXAD_4': {'tile':7, 'loc': "middle"},
+	   'INCONTENT_BOXAD_5': {'tile':8, 'loc': "middle"},
+	   'INCONTENT_LEADERBOARD_1': {'tile':4, 'loc': "middle"},
+	   'INCONTENT_LEADERBOARD_2': {'tile':5, 'loc': "middle"},
+	   'INCONTENT_LEADERBOARD_3': {'tile':6, 'loc': "middle"},
+	   'INCONTENT_LEADERBOARD_4': {'tile':7, 'loc': "middle"},
+	   'INCONTENT_LEADERBOARD_5': {'tile':8, 'loc': "middle"},
+	   'INVISIBLE_1': {'tile':10, 'loc': "invisible"},
+	   'INVISIBLE_2': {'tile':11, 'loc': "invisible"},
+	   'INVISIBLE_TOP': {'tile':13, 'loc': "invisible"},
+	   'LEFT_SKYSCRAPER_1': {'tile': 3, 'loc': "top"},
+	   'LEFT_SKYSCRAPER_2': {'tile': 3, 'loc': "middle"},
+	   'LEFT_SKYSCRAPER_3': {'tile': 6, 'loc': "middle"},
+	   'PREFOOTER_BIG': {'tile': 5, 'loc': "footer"},
+	   'PREFOOTER_LEFT_BOXAD': {'tile': 5, 'loc': "footer"},
+	   'PREFOOTER_RIGHT_BOXAD': {'tile': 5, 'loc': "footer"},
+	   'TOP_LEADERBOARD': {'tile': 2, 'loc': "top", 'dcopt': "ist"},
+	   'TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"}, 
+	   'TEST_HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"}, 
+	   'TEST_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"}
+	}
+};
+
+AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
+	if (AdConfig.DART.sizeMap[size]) {
+		size = AdConfig.DART.sizeMap[size];
+	}
+
+	var mtfIFPath = '';
+	var src = '';
+	switch (adProvider) {
+		case 'AdDriver':
+			src = 'driver';
+			break;
+		case 'DART':
+			src = 'direct';
+			mtfIFPath = 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857, http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117427
+			break;
+		default:
+		case 'Liftium':
+			src = 'liftium';
+			mtfIFPath = 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857, http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117427
+			break;
+	}
+
+	var url = 'http://' +
+		AdConfig.DART.getSubdomain() +
+		'.doubleclick.net/' +
+		// TODO: port AdProviderDARTFirstChunk from PHP
+		AdConfig.DART.getAdType(useIframe) + '/' +
+		AdConfig.DART.getSite(window.cityShort) + '/' +
+		AdConfig.DART.getZone1(window.wgDBname) + '/' +
+		AdConfig.DART.getZone2(window.adLogicPageType) + ';' +
+		's0=' + window.cityShort + ';' +
+		's1=' + AdConfig.DART.getZone1(window.wgDBname) + ';' +
+		's2=' + AdConfig.DART.getZone2(window.adLogicPageType) + ';' +
+		window.ProviderValues.string +
+		AdConfig.DART.getArticleKV() +
+		AdConfig.DART.getDomainKV(window.location.hostname) +
+		'pos=' + slotname + ';' +
+		AdConfig.DART.getTitle() +
+		// TODO when we get better at search, support "kw" key-value
+		AdConfig.DART.getResolution() +
+		AdConfig.DART.getPrefooterStatus() +
+		AdConfig.DART.getQuantcastSegmentKV() +
+		AdConfig.DART.getImpressionCount(slotname) +
+		AdConfig.DART.getLocKV(slotname) +
+		AdConfig.DART.getDcoptKV(slotname) +
+		mtfIFPath +
+		'src=' + src + ';' +
+		'sz=' + size + ';' +
+		'mtfInline=true;' +	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
+		AdConfig.DART.getTileKV(slotname, adProvider) +
+		'endtag=$;' +
+		'ord=' + AdConfig.DART.ord + '?';
+
+	return url;
+}
+
+AdConfig.DART.getSubdomain = function() {
+	var subdomain = 'ad';
+
+	if (AdConfig.geo) {
+		switch (AdConfig.geo.continent) {
+			case 'AF':
+			case 'EU':
+				subdomain = 'ad-emea';
+				break;
+			case 'AS':
+				switch (AdConfig.geo.country) {
+					// Middle East
+					case 'AE':
+					case 'CY':
+					case 'BH':
+					case 'IL':
+					case 'IQ':
+					case 'IR':
+					case 'JO':
+					case 'KW':
+					case 'LB':
+					case 'OM':
+					case 'PS':
+					case 'QA':
+					case 'SA':
+					case 'SY':
+					case 'TR':
+					case 'YE':
+						subdomain = 'ad-emea';
+						break;
+					default:
+						subdomain = 'ad-apac';
+				}
+				break;
+			case 'OC':
+				subdomain = 'ad-apac';
+				break;
+			case 'NA':
+			case 'SA':
+			default:
+				subdomain = 'ad';
+		}
+	}
+
+	return subdomain;
+}
+
+AdConfig.DART.getAdType = function(useIframe) {
+	if (useIframe) {
+		return 'adi';
+	} else {
+		return 'adj';
+	}
+}
+
+AdConfig.DART.getSite = function(hub) {
+	return 'wka.' + hub;
+}
+
+// Effectively the dbname, defaulting to wikia.
+AdConfig.DART.getZone1 = function(dbname){
+	// Zone1 is prefixed with "_" because zone's can't start with a number, and some dbnames do.
+	if (typeof dbname != 'undefined' && dbname){
+		return '_' + dbname.replace('/[^0-9A-Z_a-z]/', '_');
+	} else {
+		return '_wikia';
+	}
+};
+
+// Page type, ie, "home" or "article"
+AdConfig.DART.getZone2 = function(pageType){
+	if (typeof pageType != 'undefined' && pageType) {
+		return pageType;
+	} else {
+		return 'article';
+	}
+};
+
+AdConfig.DART.getArticleKV = function(){
+	if (typeof wgArticleId != 'undefined' && wgArticleId) {
+		return "artid=" + wgArticleId + ';';
+	} else {
+		return '';
+	}
+};
+
+AdConfig.DART.getDomainKV = function (hostname){
+	var lhost, pieces, sld='', np;
+	lhost = hostname.toLowerCase();
+
+	pieces = lhost.split(".");
+	np = pieces.length;
+
+	if (pieces[np-2] == 'co'){
+		// .co.uk or .co.jp
+		sld = pieces[np-3] + '.' + pieces[np-2] + '.' + pieces[np-1];
+	} else {
+		sld = pieces[np-2] + '.' + pieces[np-1];
+	}
+
+	if (sld !== ''){
+		return 'dmn=' + sld.replace(/\./g, '') + ';';
+	} else {
+		return '';
+	}
+
+};
+
+AdConfig.DART.getTitle = function(){
+	if (typeof wgPageName != 'undefined' && wgPageName) {
+		return "wpage=" + wgPageName + ";";
+	} else {
+		return "";
+	}
+};
+
+AdConfig.DART.getResolution = function () {
+	if (!AdConfig.DART.width || !AdConfig.DART.height) {
+		AdConfig.DART.width = document.documentElement.clientWidth || document.body.clientWidth;
+		AdConfig.DART.height = document.documentElement.clientHeight || document.body.clientHeight;
+	}
+	if (AdConfig.DART.width > AdConfig.DART.largeWidth) {
+		return 'dis=large;';
+	} else {
+		return '';
+	}
+};
+
+AdConfig.DART.getPrefooterStatus = function () {
+	if (AdConfig.DART.hasPrefooters == null) {
+		if (typeof AdEngine != "undefined") {
+			if (AdEngine.isSlotDisplayableOnCurrentPage("PREFOOTER_LEFT_BOXAD")) {
+				AdConfig.DART.hasPrefooters = "yes";
+			} else {
+				AdConfig.DART.hasPrefooters = "no";
+			}
+		} else {
+			AdConfig.DART.hasPrefooters = "unknown";
+		}
+	}
+
+	return "hasp=" + AdConfig.DART.hasPrefooters + ";";
+};
+
+AdConfig.DART.getQuantcastSegmentKV = function (){
+	var kv = '';
+	if (typeof wgIntegrateQuantcastSegments == 'undefined' || !wgIntegrateQuantcastSegments) {
+		return kv;
+	}
+	var cookie = AdConfig.cookie(AdConfig.quantcastSegmentCookieName);
+	if (typeof cookie != 'undefined' && cookie) {
+		try {
+			var qc = eval('(' + cookie + ')');
+			if (qc && qc.segments) {
+				for (var i in qc.segments) {
+					kv += 'qcseg=' + qc.segments[i].id + ';';
+				}
+			}
+		} catch (e) {
+		}
+	}
+
+	return kv;
+};
+
+AdConfig.DART.getImpressionCount = function (slotname) {
+	// return key-value only if impression cookie exists
+
+	if (AdConfig.DART.adDriverNumCall == null) {
+		var cookie = AdConfig.cookie('adDriverNumAllCall');
+		if (typeof cookie != 'undefined' && cookie) {
+			AdConfig.DART.adDriverNumCall = eval('(' + cookie + ')');
+		}
+	}
+
+	if (AdConfig.DART.adDriverNumCall != null) {
+		for (var i=0; i < AdConfig.DART.adDriverNumCall.length; i++) {
+			if (AdConfig.DART.adDriverNumCall[i].slotname == slotname) {
+				// check cookie expiration
+				if (parseInt(AdConfig.DART.adDriverNumCall[i].ts) + wgAdDriverCookieLifetime*3600000 > wgNow.getTime()) {  // wgAdDriverCookieLifetime in hours, convert to msec
+					var num = parseInt(AdConfig.DART.adDriverNumCall[i].num);
+					return 'impct=' + num + ';';
+				}
+			}
+		}
+	}
+
+	return '';
+}
+
+AdConfig.DART.getLocKV = function (slotname){
+	if (AdConfig.DART.slotMap[slotname] && AdConfig.DART.slotMap[slotname].loc){
+		return 'loc=' + AdConfig.DART.slotMap[slotname].loc + ';';
+	} else {
+		return '';
+	}
+};
+
+AdConfig.DART.getDcoptKV = function(slotname){
+	if (AdConfig.DART.slotMap[slotname] && AdConfig.DART.slotMap[slotname].dcopt){
+		return 'dcopt=' + AdConfig.DART.slotMap[slotname].dcopt + ';';
+	} else {
+		return '';
+	}
+};
+
+AdConfig.DART.getTitle = function(){
+	if (typeof wgPageName != 'undefined' && wgPageName) {
+		return "wpage=" + wgPageName + ";";
+	} else {
+		return "";
+	}
+};
+
+AdConfig.DART.getTileKV = function (slotname, adProvider){
+	switch (adProvider) {
+		case 'AdDriver':
+			return 'tile=' + AdConfig.DART.tile++ + ';';
+			break;
+		default:
+			if (AdConfig.DART.slotMap[slotname] && AdConfig.DART.slotMap[slotname].tile){
+				return 'tile=' + AdConfig.DART.slotMap[slotname].tile + ';';
+			}
+	}
+
+	return '';
+};
+
+/* Set/get cookies. Borrowed from a jquery plugin. Note that options.expires is either a date object,
+ * or a number of *milli*seconds until the cookie expires */
+AdConfig.cookie = function(name, value, options) {
+    if (arguments.length > 1) { // name and value given, set cookie
+	options = options || {};
+	if (typeof value == 'undefined' || !value) {
+	    value = '';
+	    options.expires = -1;
+	}
+	var expires = '';
+	if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+	    var d;
+	    if (typeof options.expires == 'number') {
+		d = new Date();
+		d.setTime(d.getTime() + (options.expires));
+	    } else {
+		d = options.expires;
+	    }
+	    expires = '; expires=' + d.toUTCString(); // use expires attribute, max-age is not supported by IE
+	}
+	// CAUTION: Needed to parenthesize options.path and options.domain
+	// in the following expressions, otherwise they evaluate to undefined
+	// in the packed version for some reason...
+	var path = options.path ? '; path=' + (options.path) : '';
+	var domain = options.domain ? '; domain=' + (options.domain) : '';
+	var secure = options.secure ? '; secure' : '';
+	document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+	return true;
+    } else { // only name given, get cookie
+	var cookieValue = null;
+	if (typeof document.cookie != 'undefined' && document.cookie){
+	    var cookies = document.cookie.split(';');
+	    for (var i = 0, l = cookies.length; i < l; i++) {
+		var cookie = cookies[i].replace( /^\s+|\s+$/g, "");
+		// Does this cookie string begin with the name we want?
+		if (cookie.substring(0, name.length + 1) == (name + '=')) {
+		    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		    break;
+		}
+	    }
+	}
+	return cookieValue;
+    }
+};
+
+/* Pull the geo data from cookie */
+AdConfig.pullGeo = function (){
+	if (AdConfig.geo) {
+		return; 
+	}
+
+	var cookie = AdConfig.cookie(AdConfig.geoCookieName);
+	if (typeof cookie != 'undefined' && cookie) {
+		AdConfig.geo = eval('(' + cookie + ')');
+		return;
+	}
+
+	return;
+};
+
+AdConfig.init();

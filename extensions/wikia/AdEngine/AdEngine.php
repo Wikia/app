@@ -28,6 +28,9 @@ function wfAdEngineSetupJSVars($vars) {
 	// AdDriver
 	$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;
 
+	// ArticleAdLogic
+	$vars['adLogicPageType'] = ArticleAdLogic::getPageType();
+
 	return true;
 }
 
@@ -140,8 +143,18 @@ class AdEngine {
 	// Load up all the providers. For each one, set up
 
 	public function getSetupHtml(){
+		global $wgExtensionsPath, $wgCityId;
+
+		static $called = false;
+		if ($called) {
+			return false;
+		}
+		$called = true;
 
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
+
+		$out .= AdEngine::getInstance()->providerValuesAsJavascript($wgCityId);
+		$out .=  '<script type="text/javascript" src="'. $wgExtensionsPath .'/wikia/AdEngine/AdConfig.js?' . self::cacheKeyVersion . '"></script>' . "\n";
 
 		// If loading the ads inline, call the set up html for each provider.
 		// If loading delayed, this is done in getDelayedAdLoading method instead.
