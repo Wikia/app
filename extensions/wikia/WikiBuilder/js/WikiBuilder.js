@@ -221,7 +221,21 @@ var WikiBuilder = {
 	},
 
 	apiFailed: function(reqObj, msg, error) {
-		if (typeof msg == 'object'){
+		$().log('API request has failed', 'WikiBuilder');
+
+		// show generic dialog when API request fails / timeouts (BugID: 1702)
+		if (!msg) {
+			$.showModal(WikiBuilder.msg('owb-api-error-title'), WikiBuilder.msg('owb-api-error'), {id: 'WikiBuilderError', width: 500});
+
+			// unblock disabled buttons and hide progress indicator
+			var nav = $('#WikiBuilder > .dialog nav');
+			nav.children('.status').html('');
+			nav.children('input').attr('disabled', false);
+
+			// track API problems
+			$.tracker.byStr('wikibuilder/apiFailed');
+		}
+		else if (typeof msg == 'object') {
 			msg = Mediawiki.print_r(msg);
 		}
 	},

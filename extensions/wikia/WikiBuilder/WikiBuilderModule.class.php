@@ -28,6 +28,8 @@ class WikiBuilderModule extends Module {
 		$this->messages['owb-new-pages-text'] = wfMsgForContent('owb-new-pages-text');
 		$this->messages['owb-error-saving-articles'] = wfMsgForContent('owb-error-saving-articles');
 		$this->messages['owb-unable-to-edit-description'] = wfMsgForContent('owb-unable-to-edit-description');
+		$this->messages['owb-api-error-title'] = wfMsgForContent('owb-api-error-title');
+		$this->messages['owb-api-error'] = wfMsgForContent('owb-api-error');
 
 		$this->userName = $wgUser->getName();
 
