@@ -81,21 +81,21 @@ class WikiaLabs {
 	public static function saveFeedback() {
 		$app = WF::build( 'App' );
 		$request = $app->getGlobal( 'wgRequest' );
-		$userId = $app->getGlobal( 'wgUser' )->getId();
+		$user = $app->getGlobal( 'wgUser' );
 		$wikiaLabs = WF::build( 'WikiaLabs' );
 
 		$response = new AjaxResponse();
-		$result =  $wikiaLabs->saveFeedbackInternal( $request->getVal('projectId', 0), $userId, $request->getVal('rating', 0), $request->getVal('feedbacktext') );
+		$result =  $wikiaLabs->saveFeedbackInternal( $request->getVal('projectId', 0), $user, $request->getVal('rating', 0), $request->getVal('feedbacktext') );
 
 		$response->addText( json_encode( $result ) );
 		return $response;
 	}
 
-	public function saveFeedbackInternal( $projectId, $userId, $rating, $message ) {
+	public function saveFeedbackInternal( $projectId, User $user, $rating, $message ) {
 		$project = WF::build( 'WikiaLabsProject', array( 'id' => (int) $projectId ) );
 		$projectId = $project->getId();
 
-		$project->updateRating( $userId, $rating );
+		$project->updateRating( $user->getId(), $rating );
 
 		$mulitvalidator = new WikiaValidatorArray(array(
 			'validators'  => array(
@@ -130,15 +130,15 @@ class WikiaLabs {
 			return $out;
 		}
 
-		$this->saveFeedbackInFogbugz( $project, $message );
+		$this->saveFeedbackInFogbugz( $project, $message, $user->getEmail() );
 		return $out;
 	}
 
-	private function saveFeedbackInFogbugz( WikiaLabsProject $project, $message ) {
+	private function saveFeedbackInFogbugz( WikiaLabsProject $project, $message, $userEmail ) {
 		$areaId = $project->getFogbugzProject();
 		$title = self::FOGBUGZ_CASE_TITLE . $project->getName();
 
-		$this->getFogbugzService()->logon()->createCase( $areaId, $title, self::FOGBUGZ_CASE_PRIORITY, $message, array( self::FOGBUGZ_CASE_TAG ) );
+		$this->getFogbugzService()->logon()->createCase( $areaId, $title, self::FOGBUGZ_CASE_PRIORITY, $message, array( self::FOGBUGZ_CASE_TAG ), $userEmail );
 	}
 
 	// TODO: refactor this //
