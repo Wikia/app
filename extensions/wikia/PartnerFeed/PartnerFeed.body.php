@@ -58,13 +58,16 @@ class PartnerFeed extends SpecialPage {
 					$this->FeedRecentBadges( $feed );
 				break;
 				case 'HotContent':
-					$this->FeedHotContent( $feed );
+					$this->FeedHotContent( $feed, true );
 				break;
 				case 'RecentBlogPosts':
-					$this->FeedRecentBlogPosts ( $feed );
+					$this->FeedRecentBlogPosts( $feed );
 				break;
 				case 'RecentBlogComments':
-					$this->FeedRecentBlogComments ( $feed );
+					$this->FeedRecentBlogComments( $feed );
+				break;
+				case 'RecentChanges':
+					$this->FeedRecentChanges( $feed );
 				break;
 				default :
 					$this->showMenu();
@@ -89,7 +92,7 @@ class PartnerFeed extends SpecialPage {
 			    'displayAchievements' => (!empty($wgEnableAchievementsExt))
 			)
 		);
-		$wgOut->addHTML( $oTmpl->execute( "main-page" ) );
+		$wgOut->addHTML( $oTmpl->render( "main-page" ) );
 	}
 
 /**
@@ -147,9 +150,59 @@ class PartnerFeed extends SpecialPage {
 				$oTmpl->set_vars( array(
 					"blogPostName"		=> $sBlogPost
 				));
-				$wgOut->addHTML( $oTmpl->execute( "error-page-blog-comments" ) );
+				$wgOut->addHTML( $oTmpl->render( "error-page-blog-comments" ) );
 			}
 		}
+	}
+
+/**
+ * @author Jakub Kurcek
+ * @param format string 'rss' or 'atom'
+ *
+ */
+	private function FeedRecentChanges ( $format ){
+
+		global	$wgEnableBlogArticles, $wgParser, $wgUser, $wgServer,
+			$wgOut, $wgExtensionsPath, $wgRequest;
+
+		$userAvatarSize = 48;
+		
+		$aReturn = ApiService::call(
+			array(
+				'action' => 'query',
+				'list' => 'recentchanges',
+				'rclimit' => '30',
+				'rcprop' => 'user|comment|timestamp|title|ids',
+				'rctype' => 'new|edit',
+				'rcshow' => '!anon|!bot',
+				'rcnamespace' => '0'
+			)
+		);
+
+		$feedArray = array();
+		foreach( $aReturn['query']['recentchanges'] as $val ){
+
+			$oTitle = Title::newFromText( $val['title'] );
+
+			if ( $val['type'] == 'edit' ){
+				$action = 'edited';
+			} else {
+				$action = 'created';
+			};
+			
+			$feedArray[] = array(
+				'title' => $val['title'],
+				'description' => $val['user'].' '.$action.' the '.$val['title'],
+				'url' => $oTitle->getFullURL(),
+				'date' => $val['timestamp'],
+				'author' => $val['user'],
+				'otherTags' => array(
+					'image' => AvatarService::getAvatarUrl( $val['user'], $userAvatarSize )
+				)
+			);
+		}
+
+		$this->showFeed( $format , wfMsg('feed-title-recentchanges'), $feedArray);
 	}
 
 /**
@@ -207,7 +260,7 @@ class PartnerFeed extends SpecialPage {
 				$feedArray[] = array(
 					'title' => $aValue[1],
 					'description' => substr( str_replace( '&nbsp;', ' ', strip_tags( $val['text'] ) ), 0, $postCharacterLimit ),
-					'url' => $wgServer.$val['userpage'],
+					'url' => $oTitle->getFullURL(),
 					'date' => $val['date'],
 					'author' => $val['username'],
 					'otherTags' => array(
@@ -225,7 +278,7 @@ class PartnerFeed extends SpecialPage {
  */
 	private function FeedRecentBadges ( $format ){
 
-		global $wgUser, $wgOut, $wgExtensionsPath, $wgServer, $wgEnableAchievementsExt;
+		global $wgUser, $wgOut, $wgExtensionsPath, $wgServerName, $wgEnableAchievementsExt;
 
 		if ( empty ($wgEnableAchievementsExt) ){
 			$this->showMenu();
@@ -251,23 +304,23 @@ class PartnerFeed extends SpecialPage {
 			// getRecentAwardedBadges can sometimes return more than $max items
 			foreach ( $awardedBadges as $badgeData ) {
 				$recents[] = $badgeData;
-				$descriptionText = wfMsg('achievements-recent-info',
-					$badgeData['user']->getUserPage()->getLocalURL(),
-					substr($badgeData['user']->getName(), 0, $userNameLength),
-					substr($badgeData['badge']->getName(), 0, $badgeNameLength),
-					$badgeData['badge']->getGiveFor(),
-					wfTimeFormatAgo($badgeData['date'])
-				);
-				$descriptionText = preg_replace('/<br\s*\/*>/i',"$1 $2",$descriptionText);
-				$descriptionText = strip_tags($descriptionText);
+				$descriptionText = $badgeData['badge']->getName().$badgeData['badge']->getGiveFor();
+				$descriptionText = preg_replace( '/<br\s*\/*>/i', "$1 $2", $descriptionText );
+				$descriptionText = strip_tags( $descriptionText );
+				$imgURL = $badgeData['badge']->getPictureUrl( $badgeImageSize );
+				if ( strpos( $imgURL, 'http' ) === false ){
+					$imgURL = 'http://'.$wgServerName.$imgURL;
+				}
 				$feedArray[] = array (
-					'title' => $badgeData['user']->mName ,
+					'title' => $badgeData['user']->getName(),
 					'description' => $descriptionText,
-					'url' => $badgeData['user']->getUserPage()->getFullURL(),
+				    	'url' => $badgeData['user']->getUserPage()->getFullURL(),
 					'date' => $badgeData['date'],
 					'author' => '',
 					'otherTags' => array(
-					    'image' => $badgeData['badge']->getPictureUrl($badgeImageSize),
+					    'image' => $imgURL,
+					    'earnedby' => $badgeData['user']->getName(),
+					    'nicedate' => wfTimeFormatAgo( $badgeData['date'] )
 					)
 				);
 
@@ -293,7 +346,7 @@ class PartnerFeed extends SpecialPage {
 		$defaultWidth = 124;
 		$defaultHeight = 72;
 
-		$imageServing = new imageServing( array(), $defaultWidth, array("w" => $defaultWidth, "h" => $defaultHeight) );
+		$imageServing = new imageServing( array(), $defaultWidth, array( "w" => $defaultWidth, "h" => $defaultHeight ) );
 		$dbw = wfGetDB( DB_SLAVE );
 
 		$res = $dbw->select( 'image',
@@ -324,7 +377,7 @@ class PartnerFeed extends SpecialPage {
 			
 			$tmpTitle = Title::newFromText( $row->img_name, NS_FILE );
 			$image = wfFindFile( $tmpTitle );
-
+			
 			if ( !$image ) continue;
 			
 			$testImage = wfReplaceImageServer(
@@ -332,11 +385,11 @@ class PartnerFeed extends SpecialPage {
 					$imageServing->getCut($row->img_width, $row->img_height)."-".$image->getName()
 				)
 			);
-
+			
 			$feedArray[] = array (
 				'title' => '',
-				'description' => '',
-				'url' => '',
+				'description' => $row->img_name,
+				'url' => $tmpTitle->getFullURL(),
 				'date' => $image->getTimestamp(),
 				'author' => $row->img_user_text,
 				'otherTags' => array(
@@ -352,7 +405,7 @@ class PartnerFeed extends SpecialPage {
  * @author Jakub Kurcek
  * @param format string 'rss' or 'atom'
  */
-	private function FeedHotContent ( $format ) {
+	private function FeedHotContent ( $format, $forceReload = false ) {
 
 		global $wgRequest;
 
@@ -367,7 +420,7 @@ class PartnerFeed extends SpecialPage {
 			$oTitle = Title::newFromText( $defaultHubTitle, 150 );
 		}
 		$hubId = AutoHubsPagesHelper::getHubIdFromTitle( $oTitle );
-		$feedArray = $this->PrepareHotContentFeed( $hubId );
+		$feedArray = $this->PrepareHotContentFeed( $hubId, $forceReload );
 		$this->showFeed( $format, wfMsg( 'feed-title-hot-content', $oTitle->getText() ), $feedArray );
 	}
 	
@@ -397,7 +450,6 @@ class PartnerFeed extends SpecialPage {
 			$out = $datafeeds->getTopArticles($hubId, $lang, $resultsNumber);
 			$feedArray = array();
 			foreach( $out['value'] as $key => $val ){
-
 				$httpResultArr = $this->getDataFromApi(
 					$val['wikiurl'].'/api.php?action=imagecrop&imgId='.$val['page_id'].'&imgSize='.(integer)$thumbSize.'&imgHeight='.(integer)$thumbHeight.'&format=json'
 				);
@@ -409,7 +461,8 @@ class PartnerFeed extends SpecialPage {
 					'date' => time(),
 					'author' => 'Wikia',
 					'otherTags' => array(
-						'image' => $httpResultArr
+						'image' => $httpResultArr,
+						'fromwikia' => $val['wikiname']
 					)
 				);
 			}
