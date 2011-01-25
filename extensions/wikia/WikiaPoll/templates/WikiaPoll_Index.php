@@ -19,7 +19,12 @@
 				</label>
 				<span class="bar" style="width: <?= $answer['bar-width'] ?>%">
 					<span class="percentage"><?= $answer['percentage'] ?>%</span>
-					<span class="votes"><?= wfMsgExt('wikiapoll-votes', array('parsemag'), $answer['votes']) ?></span>
+					<span class="votes">
+<?php
+	global $wgLang;
+	wfMsgExt('wikiapoll-votes', array('parsemag'), $wgLang->formatNum( $answer['votes']) );
+?>
+					</span>
 				</span>
 			</li>
 <?php
