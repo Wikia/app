@@ -3953,7 +3953,14 @@ class User {
 		$extuser = ExternalUser::newFromUser( $this );
 
 		$this->loadOptions();
-		$dbw = wfGetDB( DB_MASTER );
+		// wikia change
+		global $wgExternalSharedDB, $wgSharedDB;
+		if( isset( $wgSharedDB ) ) {
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+		}
+		else {
+			$dbw = wfGetDB( DB_MASTER );
+		}
 
 		$insert_rows = array();
 
@@ -3988,8 +3995,8 @@ class User {
 		}
 
 		$dbw->begin();
-		$dbw->delete( 'user_properties', array( 'up_user' => $this->getId() ), __METHOD__ );
-		$dbw->insert( 'user_properties', $insert_rows, __METHOD__ );
+		$dbw->delete( '`user_properties`', array( 'up_user' => $this->getId() ), __METHOD__ );
+		$dbw->insert( '`user_properties`', $insert_rows, __METHOD__ );
 		$dbw->commit();
 	}
 
