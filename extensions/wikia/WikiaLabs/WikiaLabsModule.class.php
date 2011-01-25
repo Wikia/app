@@ -2,8 +2,13 @@
 
 class WikiaLabsModule extends Module {
 	public function executeStaff() {
+		
+		$this->app = WF::build( 'App' );
+		$this->user = $this->app->getGlobal('wgUser');
+		
 		$out = WF::build( 'WikiaLabsProject')->getList(array( ) );
 		$this->projects = $out;
+		$this->show = $this->user->isAllowed( 'wikialabsadmin' );
 		return array();
 	}
 	

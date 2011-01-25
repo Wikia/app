@@ -18,7 +18,10 @@ WikiaLabs.init = function() {
 
 WikiaLabs.showFeedback = function(e){
 	var target = $(e.target);
-	var id = target.closest( '.feedback' ).attr('data-id');
+	var button = target.closest( '.feedback' );
+	
+	var id = button.attr('data-id');
+	var starValue = button.attr('data-user-feedback');
 	
 	var modal =	$( '#feedbackmodal' )
 					.clone()
@@ -27,7 +30,7 @@ WikiaLabs.showFeedback = function(e){
 					.prepend($("<div class='clearfix' ></div>"))
 					.prepend(target.closest('li').find('.appScreen,.details').clone());
 	
-	var starValue = 0;
+	
 	var inputRating = modal.find(".rating");
 	
 	var stars = modal.find('.stars img');
@@ -42,6 +45,8 @@ WikiaLabs.showFeedback = function(e){
             }
 		});
 	} 
+	
+	setStarValue(starValue);
 	
 	modal.find('.stars img').mouseenter(function(e){
 		var index =  $(e.target).attr('data-index');
@@ -71,6 +76,7 @@ WikiaLabs.showFeedback = function(e){
 					}
 				}
 				else {
+					button.attr('data-user-feedback', starValue);
 					modalWrap.closeModal();
 				}
 			}

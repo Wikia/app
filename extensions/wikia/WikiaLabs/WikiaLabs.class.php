@@ -40,6 +40,11 @@ class WikiaLabs {
 	}
 
 	function getProjectModalInternal($id) {
+		
+		if(!$this->user->isAllowed( 'wikialabsuser' )) {
+			return array();	
+		}
+		
 		$oTmpl = WF::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
 		$wikiaLabsProject = WF::build( 'WikiaLabsProject' );
 
@@ -92,6 +97,11 @@ class WikiaLabs {
 	}
 
 	public function saveFeedbackInternal( $projectId, User $user, $rating, $message ) {
+		
+		if(!$this->user->isAllowed( 'wikialabsuser' )) {
+			return array();	
+		}
+		
 		$project = WF::build( 'WikiaLabsProject', array( 'id' => (int) $projectId ) );
 		$projectId = $project->getId();
 
@@ -153,6 +163,11 @@ class WikiaLabs {
 	}
 
 	function saveProjectInternal($project) {
+		
+		if(!$this->user->isAllowed( 'wikialabsadmin' )) {
+			return array();	
+		}
+		
 		$out = array();
 
 		$project['enablewarning'] = isset($project['enablewarning']);
@@ -245,6 +260,10 @@ class WikiaLabs {
 	}
 
 	public function switchProjectInternal($city_id, $id, $onoff = true) {
+		if(!$this->user->isAllowed( 'wikialabsuser' )) {
+			return array();	
+		}
+		
 		$wikiaLabsProject = WF::build( 'WikiaLabsProject', array( "id" => $id));
 		if($wikiaLabsProject->getId() == 0) {
 			return false;

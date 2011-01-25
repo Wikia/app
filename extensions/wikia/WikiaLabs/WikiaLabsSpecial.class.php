@@ -7,20 +7,28 @@ class WikiaLabsSpecial extends SpecialPage {
 
 	function __construct() {
 		$this->app = WF::build( 'App' );
-		$this->out = $this->app->getGlobal('wgOut'); 
+		$this->out = $this->app->getGlobal('wgOut');
+		$this->user = $this->app->getGlobal('wgUser');
 		parent::__construct( 'WikiaLabs', 'wikialabsuser' );
 	}
-
-	function execute($article_id = null, $limit = "", $offset = "", $show = true) {
+	
+	function execute( $par ) {
+		if ( !$this->user->userCanExecute( $wgUser ) ) {
+			$this->displayRestrictionError();
+		}
+		
 		$oTmpl = WF::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
 
 		$out = WF::build( 'WikiaLabsProject')->getList(array("graduated" => false, "active" => true  )  );
+
+		$userId = $this->user->getId();
 	
 		$oTmpl->set_vars( array(
 			'projects' => $out,
-			'cityId' => $this->app->getGlobal('wgCityId'),
-			'contLang' => $this->app->getGlobal('wgContLang')
-		));
+			'cityId' => $this->app->getGlobal( 'wgCityId' ),
+			'userId' => $userId,
+			'contLang' => $this->app->getGlobal( 'wgContLang' ),
+		) );
 		
 		$this->out->addStyle( $this->app->runFunction( 'wfGetSassUrl' , 'extensions/wikia/WikiaLabs/css/wikialabs.scss' ) );
 		$this->out->addHTML( $oTmpl->render("wikialabs-main") );		
