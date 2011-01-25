@@ -473,7 +473,7 @@ class StaticChute {
 						if (empty($file)) {
 							Wikia::log(__FUNCTION__, __LINE__, "Empty filename for package=$package, basedir=$basedir, file=$f", true);
 						} else {
-							$out[] = $file
+							$out[] = $file;
 						}
 					}
 
@@ -486,7 +486,7 @@ class StaticChute {
 							if (empty($file)) {
 								Wikia::log(__FUNCTION__, __LINE__, "Empty filename for package=$package, basedir=$basedir, file=$f", true);
 							} else {
-								$out[] = $file
+								$out[] = $file;
 							}
 						}
 					}
