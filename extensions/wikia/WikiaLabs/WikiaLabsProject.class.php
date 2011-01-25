@@ -293,4 +293,16 @@ class WikiaLabsProject {
 			$this->update();
 		}
 	}
+
+	public function getRatingByUser( $userId, $dbType = DB_SLAVE ) {
+		$rating = 0;
+		if( $this->getId() ) {
+			$row = $this->getDb( $dbType )->selectRow( 'wikia_labs_project_rating', array( 'wlpra_value' ), array( 'wlpra_wlpr_id' => $this->getId(), 'wlpra_user_id' => $userId ), __METHOD__ );
+			if( !empty( $row->wlpra_value ) ) {
+				$rating = $row->wlpra_value;
+			}
+		}
+		return $rating;
+
+	}
 }
