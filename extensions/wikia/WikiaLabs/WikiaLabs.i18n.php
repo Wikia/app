@@ -38,7 +38,9 @@ $messages['en'] = array(
 	'wikialabs-staff-add' => 'Add Lab item',
 
 	'wikialabs-mytools' => 'WikiaLabs',
+	'wikialabs-feedback-submit' => 'Submit',
 	
-	
-	'wikialabs-feedback-submit' => 'Submit'
+	'wikialabs-feedback-title' => 'Feedback',
+	'wikialabs-feedback-rating' => 'Your rating:',
+	'wikialabs-feedback-comments' => 'Comments:'
 );
