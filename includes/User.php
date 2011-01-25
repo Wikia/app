@@ -3930,7 +3930,7 @@ class User {
 			}
 
 			$res = $dbr->select(
-				'user_properties',
+				'`user_properties`',
 				'*',
 				array( 'up_user' => $this->getId() ),
 				__METHOD__
