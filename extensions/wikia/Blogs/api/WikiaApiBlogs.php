@@ -28,6 +28,7 @@ class WikiaApiBlogs extends ApiBase {
 			
 		$cats = BlogTemplateClass::parseTag( "<pages>".((int) $page_id)."</pages>", $params, $wgParser );
 
+		$this->getResult()->setIndexedTagName($cats, 'id');
 		$this->getResult()->addValue(null, 'blogpage', $cats);
 	}
 
