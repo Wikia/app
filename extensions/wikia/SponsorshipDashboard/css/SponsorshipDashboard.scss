@@ -1,30 +1,66 @@
 @import "../../../../skins/oasis/css//core/color";
 
-#placeholder {
-	width:930px;
+
+.sponsorship-dashboard-panel {
+	height: 500px;
+	float: left;
+	&.left {	
+		width: 290px;
+		margin-top: 35px;
+		margin-left: 10px;
+	}
+	&.right {
+		float:left;
+		width: 600px;
+	
+		.sponsorship-dashboard-panel-header {
+			height: 60px;
+			width: 660px;
+			margin: 0px;
+
+			.datepicker {
+				float: left;
+				padding: 5px;
+
+				&.left {
+					margin-left: 50px;
+				}
+			}
+		}
+
+		.sponsorship-dashboard-panel-body {
+			position: absolute;
+		}
+	}
+}
+
+.placeholder {
+	width:630px;
 	height:400px;
 	margin-left: 20px;
 }
 
-#overviewWrapper {
+h2.title {
+	margin: 40px 0 10px 0;
+}
 
+div.description {
+	margin: 0px 0px 20px 10px;
+}
+
+.overviewWrapper {
 	float:right;
-	margin-right:20px;
-	margin-top:10px;
-
+	margin:0px;
 	
-	#overview {
-
-		width:300px;
-		height:50px;
+	.overview {
+		width:200px;
+		height:35px;
 		cursor:col-resize;
 	}
 
-	#overviewLabel {
-		
+	.overviewLabel {
 		margin-left: 10px;
-		width:300px;
-		height:20px;
+		width:200px;
 	}
 }
 .colorHolder {
@@ -33,7 +69,7 @@
 	margin-top:2px;
 }
 
-#toolTip {
+.toolTip {
 	position: absolute;
 	display: none;
 	color: #000;
@@ -43,24 +79,24 @@
 	z-index: 99px;
 }
 
-#hubposition {
+.hubposition {
 	text-align: right;
 	margin-right: 40px;
 }
 
-#choices {
+.choices {
 	margin-left: 20px;
 }
 
-#show {
-	margin-left: 20px;
+h3.sponsorship-dashboard-show {
+	margin: 0px 0px 10px 0px;
 }
 
 div.sponsorship-dashboard-form-text {
 	display: inline;
 	vertical-align:text-top;
 	line-height: 5px;
-	margin-left: 20px;
+	margin: 10px 0 10px 0
 }
 
 div.tabs-container {
@@ -73,8 +109,33 @@ div.tickLabels {
 	}
 }
 
-#sponsorship-dashboard-nodata {
+.sponsorship-dashboard-nodata {
 	text-align: center;
 }
+
+p.sponsorship-dashboard-choices {
+	margin: 5px 5px 10px;
+}
+
+ul.subcats{
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	display: inline-block;
+}
+
+ul.subcats li{
+	display: inline;
+}
+
+ul.subcats li a{
+	float: left; text-decoration: none;
+	padding: 10px 11px;
+	
+}
+
+ul.tabs {
+	margin: 0.4em 0px 0.5em 0;
+}
+
 
 /* end of FF3.0 hack */

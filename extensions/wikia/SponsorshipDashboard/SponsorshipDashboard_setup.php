@@ -22,3 +22,4 @@ $wgExtensionMessagesFiles['SponsorshipDashboard'] = $dir . 'SponsorshipDashboard
 $wgSpecialPages['SponsorshipDashboard']		= 'SponsorshipDashboard';
 $wgSpecialPageGroups['SponsorshipDashboard']	= 'wikia';
 
+
