@@ -35,7 +35,7 @@ public class MonacoSidebarTest extends BaseTest {
 
 		session().waitForCondition(
 				"!!window.document.getElementsByClassName(\"autocomplete\")",
-				TIMEOUT);
+				this.getTimeout());
 	}
 
 	@Test(groups={"monaco"})

@@ -10,7 +10,7 @@ public class CreatePageTest extends BaseTest {
 
 	private void openDialogOnRandomPage() throws Exception {
 		session().open("index.php?title=Special:Random");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		if (isOasis()) {
 			session().click("//div[@id='WikiaRail']//a[@class='wikia-button createpage']");
@@ -19,7 +19,7 @@ public class CreatePageTest extends BaseTest {
 			session().click("//a[@id='dynamic-links-write-article-link']");
 		}
 
-		waitForElement("CreatePageDialog", TIMEOUT);
+		waitForElement("CreatePageDialog", this.getTimeout());
 		assertTrue(session().isElementPresent("CreatePageDialog"));
 	}
 
@@ -33,7 +33,7 @@ public class CreatePageTest extends BaseTest {
 	}
 
 	private void checkEditPage(String title) throws Exception {
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		if (isOasis()) {
 			assertTrue(session().isElementPresent("//div[@id='WikiaPageHeader']//h1"));
@@ -54,25 +54,25 @@ public class CreatePageTest extends BaseTest {
 		// existing title error checking
 		session().type("wpCreatePageDialogTitle", pageTitle);
 		session().click("wpCreatePageDialogButton");
-		waitForElement("createPageErrorMsg", TIMEOUT);
+		waitForElement("createPageErrorMsg", this.getTimeout());
 		assertTrue(session().isElementPresent("createPageErrorMsg"));
 
 		// invalid title error checking
 		session().type("wpCreatePageDialogTitle", "inval|dt|tle");
 		session().click("wpCreatePageDialogButton");
-		waitForElement("createPageErrorMsg", TIMEOUT);
+		waitForElement("createPageErrorMsg", this.getTimeout());
 		assertTrue(session().isElementPresent("createPageErrorMsg"));
 
 		// empty title error checking
 		session().type("wpCreatePageDialogTitle", "");
 		session().click("wpCreatePageDialogButton");
-		waitForElement("createPageErrorMsg", TIMEOUT);
+		waitForElement("createPageErrorMsg", this.getTimeout());
 		assertTrue(session().isElementPresent("createPageErrorMsg"));
 
 		// spam title error checking
 		session().type("wpCreatePageDialogTitle", "WikiaTestBadWordDontRemoveMe");
 		session().click("wpCreatePageDialogButton");
-		waitForElement("createPageErrorMsg", TIMEOUT);
+		waitForElement("createPageErrorMsg", this.getTimeout());
 		assertTrue(session().isElementPresent("createPageErrorMsg"));
 	}
 
@@ -117,7 +117,7 @@ public class CreatePageTest extends BaseTest {
 
 		// clicking redlink
 		session().click("//a[@title='" + testTitle + " (page does not exist)']");
-		waitForElement("CreatePageDialog", TIMEOUT);
+		waitForElement("CreatePageDialog", this.getTimeout());
 		assertTrue(session().isElementPresent("CreatePageDialog"));
 		assertEquals(testTitle, session().getValue("//input[@id='wpCreatePageDialogTitle']"));
 
@@ -127,7 +127,7 @@ public class CreatePageTest extends BaseTest {
 		testTitle = "Test Title 2";
 		session().type("//div[@class='createbox'][1]/form/input[@class='createboxInput']", testTitle);
 		session().click("//div[@class='createbox'][1]/form/input[@type='submit']");
-		waitForElement("CreatePageDialog", TIMEOUT);
+		waitForElement("CreatePageDialog", this.getTimeout());
 		assertTrue(session().isElementPresent("CreatePageDialog"));
 		assertEquals(testTitle, session().getValue("//input[@id='wpCreatePageDialogTitle']"));
 
@@ -137,7 +137,7 @@ public class CreatePageTest extends BaseTest {
 		testTitle = "Test Title 3";
 		session().type("//div[@class='createbox'][2]/form/input[@class='createboxInput']", testTitle);
 		session().click("//div[@class='createbox'][2]/form/input[@type='submit']");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().isElementPresent(isOasis() ? "WikiaArticle" : "article"));
 
 		// delete temporary created article
@@ -150,14 +150,14 @@ public class CreatePageTest extends BaseTest {
 	public void testUserSetting() throws Exception {
 		login();
 		session().open("index.php?title=Special:Preferences");
-		waitForElement("preftoc", TIMEOUT);
+		waitForElement("preftoc", this.getTimeout());
 
 		session().click("//li/a[@href='#prefsection-4']");
 
 		if(session().isElementPresent("//input[@id='mw-input-createpagedefaultblank' and contains(@checked, 'checked')]") == false) {
 			session().click("//input[@id='mw-input-createpagedefaultblank']");
 			session().click("//input[@id='prefcontrol']");
-			session().waitForPageToLoad(TIMEOUT);
+			session().waitForPageToLoad(this.getTimeout());
 		}
 		else {
 			System.out.println("createpagedefaultblank is already set");

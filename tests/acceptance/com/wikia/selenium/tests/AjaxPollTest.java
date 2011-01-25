@@ -28,7 +28,7 @@ public class AjaxPollTest extends BaseTest {
 		session().click("axPollSubmit" + pollId);
 		waitForElementNotVisible("pollSubmittingInfo" + pollId);
 		session().open("index.php?title=WikiaAutomatedTest&action=purge");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertEquals("1", session().getText("wpPollVote" + pollId + "-3"));
 		assertEquals("1", session().getText("wpPollTotal" + pollId));
 

@@ -9,7 +9,7 @@ public class SpecialPreferencesTest extends BaseTest {
 
 	private void loadPage() throws Exception {
 		session().open("wiki/Special:Preferences");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().getLocation().contains("wiki/Special:Preferences"));
 	}
 
@@ -21,18 +21,18 @@ public class SpecialPreferencesTest extends BaseTest {
 		assertTrue(session().isElementPresent("//legend[.='Site Layouts']"));
 		session().click("//input[@value='oasis']");
 		session().click("//input[@id='prefcontrol']");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().isElementPresent("//body[contains(@class, 'skin-oasis')]"));
 
 		loadPage();
 		session().click("//input[@value='monobook']");
 		session().click("//input[@id='prefcontrol']");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().isElementPresent("//body[contains(@class, 'skin-monobook')]"));
 
 		loadPage();
 		session().click("//input[@value='oasis']");
 		session().click("//input[@id='prefcontrol']");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 	}
 }

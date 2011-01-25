@@ -45,7 +45,7 @@ public class CentralSearchRelevancyTest extends BaseTest {
 		
 		for (int i = 0; i < phrases.length; i++) {
 			session().open("index.php?title=Special:Search/" + phrases[i]);
-			waitForElement("powersearch", TIMEOUT);
+			waitForElement("powersearch", this.getTimeout());
 			assertTrue(session().isElementPresent("powersearch"));
 			assertTrue(session().isElementPresent("//a[@href='http://" + results[i] + "']"));
 		}

@@ -11,7 +11,7 @@ public class HotSpotsTest extends BaseTest {
 	public void testHotSpots() throws Exception {
 		loginAsRegular();
 		session().open("/wiki/Special:WikiActivity");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		// Hot Spots Module elements
 		assertTrue(session().isElementPresent("//section[contains(@class,'HotSpotsModule')]"));

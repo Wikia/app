@@ -232,7 +232,7 @@ public class RTETest extends BaseTest {
 	// change RTE edit mode and wait for switch to complete
 	private void setRTEMode(String mode) throws Exception {
 		session().runScript("window.RTE.instance.switchMode('" + mode + "')");
-		session().waitForCondition("window.RTE.instance.mode == '"+mode+"'", TIMEOUT);
+		session().waitForCondition("window.RTE.instance.mode == '"+mode+"'", this.getTimeout());
 	}
 
 	@Test(groups={"RTE", "CI"})

@@ -11,7 +11,7 @@ public class LatestPhotosTest extends BaseTest {
 	public void testLatestPhotos() throws Exception {
 		loginAsRegular();
 		session().open("index.php?title=Special:Random");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// Latest Photos Module
 		assertTrue(session().isElementPresent("//section[contains(@class,'LatestPhotosModule')]"));
@@ -24,20 +24,20 @@ public class LatestPhotosTest extends BaseTest {
 		session().click("//section[@id='UploadPhotosWrapper']//button[contains(@class, 'close')]");
 
 		session().open("index.php?title=Special:Random");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// browse through gallery
 		String firstPhotoSrc = session().getAttribute("//section[contains(@class,'LatestPhotosModule')]//ul[@class='carousel']/li/a/img@src");
 		session().click("//div[@id='WikiaRail']/section[contains(@class,'LatestPhotosModule')]/a[@class='next']/img");
-		waitForAttributeNotEquals("//section[contains(@class,'LatestPhotosModule')]//ul[@class='carousel']/li/a/img@src", firstPhotoSrc, TIMEOUT);
+		waitForAttributeNotEquals("//section[contains(@class,'LatestPhotosModule')]//ul[@class='carousel']/li/a/img@src", firstPhotoSrc, this.getTimeout());
 
 		//view all photos
 		session().click("//section[contains(@class,'LatestPhotosModule')]/a[@class='more']");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h1"), "New photos on this wiki");
 
 		session().open("index.php?title=Special:Random");
-	 	session().waitForPageToLoad(TIMEOUT);
+	 	session().waitForPageToLoad(this.getTimeout());
 
 		// open a photo in the lightbox
 		session().click("//section[contains(@class,'LatestPhotosModule')]//ul[@class='carousel']/li/a");

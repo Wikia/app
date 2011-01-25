@@ -15,7 +15,7 @@ public class AjaxLoginTest extends BaseTest {
 		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiabot.username"));
 		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiabot.password"));
 		session().click("wpLoginattempt");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		if(isOasis()) {
 			assertTrue(session().isElementPresent("//ul[@id='AccountNavigation']/li/a[contains(., '" + getTestConfig().getString("ci.user.wikiabot.username") + "')]"));
 		} else {

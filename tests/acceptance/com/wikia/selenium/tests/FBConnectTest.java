@@ -49,7 +49,7 @@ public class FBConnectTest extends BaseTest {
 	private void testButtonOnUserLinks() throws Exception {
 		//System.out.println("FBConnect: testing for buttons on User Links");
 		session().open("index.php?title=Special:Random&useskin=oasis");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		if(isOasis()){
 			assertTrue(session().isElementPresent("//ul[@id='AccountNavigation']/li/span[@id='fbconnect']/a"));
 		} else {
@@ -73,7 +73,7 @@ public class FBConnectTest extends BaseTest {
 	private void testButtonOnSpecialSignup() throws Exception {
 		//System.out.println("FBConnect: testing for buttons on Special:Signup");
 		session().open("index.php?title=Special:Signup");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		if(isOasis()){
 			assertTrue(session().isElementPresent("//div[@id='AjaxLoginBox']//div[@id='AjaxLoginSlider']//span[@class='fb_button_text']"));
@@ -85,7 +85,7 @@ public class FBConnectTest extends BaseTest {
 	private void testButtonOnSpecialConnect() throws Exception {
 		//System.out.println("FBConnect: testing for buttons on Special:Connect");
 		session().open("index.php?title=Special:Connect");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().isElementPresent("//a/span[@class='fb_button_text']"));
 	}
 
@@ -93,7 +93,7 @@ public class FBConnectTest extends BaseTest {
 		//System.out.println("FBConnect: testing for buttons on Special:Preferences");
 		loginAsRegular();
 		session().open("index.php?title=Special:Preferences");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		waitForElement("//li/a[text() = \"Facebook Connect\"]");
 		session().click("//li/a[text() = \"Facebook Connect\"]"); // select the correct tab
 		assertTrue(session().isElementPresent("//fieldset[@class='prefsection']//a/span[@class='fb_button_text']"));
@@ -103,7 +103,7 @@ public class FBConnectTest extends BaseTest {
 		//System.out.println("FBConnect: testing for buttons on LoginAndConnect");
 		logout();
 		session().open("index.php?title=Special:Random&useskin=oasis");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		waitForElement("//a[@class='ajaxLogin']");
 		session().click("//a[@class='ajaxLogin']");
 		waitForElement("//div[@id='AjaxLoginBox']");

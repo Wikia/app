@@ -45,17 +45,17 @@ public class ArticleCommentTest extends BaseTest {
 	private void openOrCreatePage(String pageName) throws Exception {
 		try{
 			session().open(pageName);
-			session().waitForPageToLoad(TIMEOUT);
+			session().waitForPageToLoad(this.getTimeout());
 		} catch(SeleniumException e){
 			session().open(pageName + "&action=edit");
-			session().waitForPageToLoad(TIMEOUT);
+			session().waitForPageToLoad(this.getTimeout());
 			waitForElement("wpTextbox1");
 			waitForElement("wpSave");
 			doEdit("Test page content");
 			session().click("wpSave");
-			session().waitForPageToLoad(TIMEOUT);
+			session().waitForPageToLoad(this.getTimeout());
 			session().open(pageName);
-			session().waitForPageToLoad(TIMEOUT);
+			session().waitForPageToLoad(this.getTimeout());
 		}
 	}
 
@@ -71,17 +71,17 @@ public class ArticleCommentTest extends BaseTest {
 			// Page might not exist yet.
 			loginAsStaff();
 			session().open("index.php?title=Special:CreateBlogPage");
-			session().waitForPageToLoad(TIMEOUT);
+			session().waitForPageToLoad(this.getTimeout());
 			waitForElement("wpTextbox1");
 			waitForElement("wpSave");
 			session().type("blogPostTitle", blogPostName);
 			doEdit("Test page content");
 			session().click("wpSave");
-			session().waitForPageToLoad(TIMEOUT);
+			session().waitForPageToLoad(this.getTimeout());
 			session().open(pageName);
 		}
 
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 	}
 
 	private void addComment(String commentContent) throws Exception {
@@ -122,7 +122,7 @@ public class ArticleCommentTest extends BaseTest {
 	public void testa1CommentSection() throws Exception {
 		//System.out.println("Starting testa1CommentSection...");
 		session().open(articlePath);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		assertTrue(session().isElementPresent("WikiaArticleComments"));
 	}
@@ -131,24 +131,24 @@ public class ArticleCommentTest extends BaseTest {
 	public void testb2ShowAllComments() throws Exception {
 		//System.out.println("Starting testb2ShowAllComments...");
 		session().open(articlePath);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// adding (articleCommentsMaxPerPage + 1) comments
 		for (int i = 0; i < articleCommentsMaxPerPage + 1; i++)
 			addComment("comment " + i + ": " + new Date().toString());
 
 		session().refresh();
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		String location = session().getLocation();
 		//System.out.println(location);
 		session().open(location);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		assertTrue(session().isElementPresent("//div[contains(@class,'article-comments-pagination')]//a"));
 
 		session().click("link=Show all");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		assertFalse(session().isElementPresent("//div[contains(@class,'article-comments-pagination')]//a"));
 	}
@@ -175,7 +175,7 @@ public class ArticleCommentTest extends BaseTest {
 	public void testd4AddComment() throws Exception {
 		//System.out.println("Starting testd4AddComment...");
 		session().open(articlePath);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
@@ -187,7 +187,7 @@ public class ArticleCommentTest extends BaseTest {
 		loginAsRegular();
 
 		session().open(articlePath + "&showall=1");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
@@ -218,7 +218,7 @@ public class ArticleCommentTest extends BaseTest {
 		loginAsRegular();
 
 		session().open(articlePath);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
@@ -246,7 +246,7 @@ public class ArticleCommentTest extends BaseTest {
 		loginAsRegular();
 
 		session().open(articlePath);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		String location = session().getLocation();
 
@@ -273,7 +273,7 @@ public class ArticleCommentTest extends BaseTest {
 		logout();
 		loginAsStaff();
 		session().open(location);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		session().click("//ul[@id='article-comments-ul']/li[1]" +
 				"//a[@class='article-comm-edit']");
@@ -320,7 +320,7 @@ public class ArticleCommentTest extends BaseTest {
 		logout();
 
 		session().open(pageToUse);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 
 		assertTrue(session().isElementPresent("//ul[@id='article-comments-ul']/li[1]//a[@class='article-comm-history']"));
@@ -332,7 +332,7 @@ public class ArticleCommentTest extends BaseTest {
 		loginAsRegular();
 
 		session().open(articlePath);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		//System.out.println(session().getLocation());
 
@@ -349,7 +349,7 @@ public class ArticleCommentTest extends BaseTest {
 		loginAsStaff();
 
 		session().open(articlePath);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		waitForElement("article-comm");
 
 		String commentContent = "test comment: " + new Date().toString();
@@ -358,10 +358,10 @@ public class ArticleCommentTest extends BaseTest {
 		session().click("//ul[@id='article-comments-ul']" +
 				"/li[1 and contains(@class, 'article-comments-li')]" +
 				"//a[@class='article-comm-delete']");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		session().click("wpConfirmB");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// check if the comment was deleted
 		assertFalse(session().isElementPresent("//ul[@id='article-comments-ul']" +
@@ -375,7 +375,7 @@ public class ArticleCommentTest extends BaseTest {
 		loginAsStaff();
 
 		session().open(articlePath);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		waitForElement("article-comm");
 
 		String commentContent = "test comment: " + new Date().toString();
@@ -386,10 +386,10 @@ public class ArticleCommentTest extends BaseTest {
 		session().click("//ul[@id='article-comments-ul']" +
 				"/li[1 and contains(@class,'article-comments-li')]" +
 				"//a[@class='article-comm-delete']");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		session().click("wpConfirmB");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// check if the comment and replies were deleted
 		assertTrue(!session().isElementPresent("//ul[@id='article-comments-ul']" +
@@ -428,12 +428,12 @@ public class ArticleCommentTest extends BaseTest {
 		}
 
 		session().refresh();
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		assertTrue(session().isElementPresent("//div[contains(@class, 'article-comments-pagination')]//a"));
 
 		session().click("link=Show all");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertFalse(session().isElementPresent("//div[contains(@class, 'article-comments-pagination')]//a"));
 	}
 
@@ -488,7 +488,7 @@ public class ArticleCommentTest extends BaseTest {
 		// Re-open in showall mode.
 		loginAsRegular();
 		session().open("/wiki/User_blog:WikiaStaff/Blog_post_number_1?showall=1");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		Number numberOfComments = session().getXpathCount("//ul[@id='article-comments-ul']//li[contains(@class, 'article-comments-li')]");
 
@@ -550,7 +550,7 @@ public class ArticleCommentTest extends BaseTest {
 		loginAsStaff();
 
 		session().open("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName + "?showall=1");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String id = session().getAttribute("//ul[@id='article-comments-ul']/li[1]@id");
 		String commentContent = "test comment: " + new Date().toString();
@@ -579,7 +579,7 @@ public class ArticleCommentTest extends BaseTest {
 
 		// Revisit it
 		session().open("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
@@ -595,7 +595,7 @@ public class ArticleCommentTest extends BaseTest {
 		logout();
 
 		session().open("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		assertTrue(session().isElementPresent("//ul[@id='article-comments-ul']/li[1]//a[@class='article-comm-history']"));
 	}
@@ -607,7 +607,7 @@ public class ArticleCommentTest extends BaseTest {
 		loginAsRegular();
 
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
@@ -630,13 +630,13 @@ public class ArticleCommentTest extends BaseTest {
 		session().click("//ul[@id='article-comments-ul']" +
 			"/li[1 and contains(@class, 'article-comments-li')]" +
 			"//a[@class='article-comm-delete']");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		session().click("wpConfirmB");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		session().open("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		assertFalse(session().isElementPresent("//ul[@id='article-comments-ul']//p[contains(text(), '" + commentContent + "')]"));
 	}
@@ -656,13 +656,13 @@ public class ArticleCommentTest extends BaseTest {
 		session().click("//ul[@id='article-comments-ul']" +
 				"/li[1 and contains(@class, 'article-comments-li')]" +
 				"//a[@class='article-comm-delete']");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		session().click("wpConfirmB");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		session().open("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// check if the comment and replies were deleted
 		assertFalse(session().isTextPresent(commentContent));

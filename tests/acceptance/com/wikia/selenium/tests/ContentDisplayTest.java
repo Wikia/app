@@ -12,7 +12,7 @@ public class ContentDisplayTest extends BaseTest {
 	public void testContentDisplay() throws Exception {
 		// find an image to use in wikitext
 		session().open("index.php?title=Special:NewFiles");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String fileName = session().getEval("window.jQuery('.wikia-gallery').find('img').eq(0).attr('src')");
 		fileName = fileName.substring(fileName.lastIndexOf("/") + 1);

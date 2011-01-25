@@ -29,7 +29,7 @@ public class FollowedPagesTest extends BaseTest {
 	public void testSpecialPreferences() throws Exception {
 		loginAsStaff();
 		session().open("index.php?title=Special:Preferences");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().click("//ul[@id='preftoc']/li[6]");
 		waitForElement("//input[@id='mw-input-watchlisthidebots']");
 		waitForElement("//li[@class='selected']");
@@ -45,16 +45,16 @@ public class FollowedPagesTest extends BaseTest {
 		session().check( "//input[@id='mw-input-hidefollowedpages']" );
 
 		session().click( "//input[@id='prefcontrol']" );
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().open( "index.php?title=Special:Following/" + getTestConfig().getString("ci.user.wikiastaff.username"));
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		assertTrue( session().isTextPresent("chosen to hide"));
 
 		session().click("link=Log out");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().open( "index.php?title=Special:Following/" + getTestConfig().getString("ci.user.wikiastaff.username"));
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertFalse( session().isTextPresent("chosen to hide"));
 		assertTrue( session().isTextPresent("Please log in to create or view your followed pages list."));
 	}
@@ -66,27 +66,27 @@ public class FollowedPagesTest extends BaseTest {
 		session().open("index.php?title=TESTFOLLOW&action=edit&useeditor=mediawiki");
 		session().type("wpTextbox1", "test123");
 		session().click("wpSave");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().open("index.php?title=Special:Following&show_followed=1");
 		session().open("index.php?title=TESTFOLLOW&action=unwatch");
 		session().open( "index.php?title=Special:Following/" + getTestConfig().getString("ci.user.wikiabot.username"));
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue( !session().isTextPresent("TESTFOLLOW") );
 
 		//a[@class='title-link' and contains(text(), 'TESTFOLLOW') ]
 
 		session().open("index.php?title=TESTFOLLOW&action=watch");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().open( "index.php?title=Special:Following/" + getTestConfig().getString("ci.user.wikiabot.username"));
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().isElementPresent("//a[@class='title-link' and contains(text(), 'TESTFOLLOW') ]"));
 
 		session().open("index.php?title=User:" + getTestConfig().getString("ci.user.wikiabot.username") + "&action=edit&useeditor=mediawiki&useeditor=mediawiki");
 		session().type("wpTextbox1", "test123");
 		session().click("wpSave");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().open( "index.php?title=User:" + getTestConfig().getString("ci.user.wikiabot.username"));
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().isElementPresent("//a[contains(text(), 'TESTFOLLOW')]"));
 	}
 
@@ -95,14 +95,14 @@ public class FollowedPagesTest extends BaseTest {
 	public void testFollowedPages() throws Exception {
 		login();
 		session().click("link=Random Page");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		String ArticleTitle = session().getText("//header[@id='WikiaPageHeader']/h1");
 		session().click("ca-watch");
 		session().click("link=Followed pages");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().isElementPresent("link=" + ArticleTitle));
 		session().click("link=" + ArticleTitle);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().click("ca-unwatch");
 		session().click("link=Followed pages");
 		assertFalse(session().isElementPresent("link=" + ArticleTitle));

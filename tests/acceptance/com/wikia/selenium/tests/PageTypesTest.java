@@ -11,7 +11,7 @@ public class PageTypesTest extends BaseTest {
 	@Test(groups={"oasis", "CI"})
 	public void testContentPage() throws Exception {
 		session().open("index.php?title=Special:Random");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String title = session().getEval("window.wgTitle");
 
@@ -40,7 +40,7 @@ public class PageTypesTest extends BaseTest {
 		editArticle("MediaWiki:Mainpage", "Mainpage");
 		logout();
 		session().open("index.php?title=MediaWiki:Mainpage");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// no right rail
 		assertFalse(session().isElementPresent("WikiaRail"));
@@ -67,7 +67,7 @@ public class PageTypesTest extends BaseTest {
 		addCategory("Lorem ipsum", "Some content", "Some category");
 		logout();
 		session().open("index.php?title=Category:Some category");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// right rail
 		assertTrue(session().isElementPresent("WikiaRail"));
@@ -155,7 +155,7 @@ public class PageTypesTest extends BaseTest {
 	@Test(groups={"oasis", "CI"})
 	public void testBlogPostsListingPage() throws Exception {
 		session().open("index.php?title=Blog:Recent_posts");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// right rail
 		assertTrue(session().isElementPresent("WikiaRail"));
@@ -179,7 +179,7 @@ public class PageTypesTest extends BaseTest {
 		try {
 			session().open("index.php?title=User:" + getTestConfig().getString("ci.user.regular.username") + "/Subpage");
 		} catch(Exception e) {};
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// page title
 		assertTrue(session().isElementPresent("//h1[text()='" + getTestConfig().getString("ci.user.regular.username") + "/Subpage']"));
@@ -195,7 +195,7 @@ public class PageTypesTest extends BaseTest {
 			session().open("index.php?title=User:1.2.3.4");
 		} catch(Exception e) {};
 
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// page title
 		assertTrue(session().isElementPresent("//h1[contains(text(), 'A Wikia contributor')]"));
@@ -211,7 +211,7 @@ public class PageTypesTest extends BaseTest {
 
 	private void addCategory(String articleName, String content, String categoryName) throws Exception {
 		session().open("index.php?title=" + articleName + "&action=edit&useeditor=source");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		doEdit(content);
 	

@@ -11,7 +11,7 @@ public class ToolbarTest extends BaseTest {
 	@Test(groups="oasis")
 	public void testEnsuresThatToolbarIsPresent() throws Exception {
 		session().open("index.php");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().isElementPresent("WikiaFooter"));
 		assertTrue(session().isElementPresent("//div[contains(@class, 'toolbar')]"));
 	}

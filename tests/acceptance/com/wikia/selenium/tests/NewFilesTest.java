@@ -24,7 +24,7 @@ public class NewFilesTest extends BaseTest {
 		prepareTestArticle();
 		
 		session().open("wiki/Special:NewFiles");
-		waitForElement("//div[@id='gallery-']", TIMEOUT);
+		waitForElement("//div[@id='gallery-']", this.getTimeout());
 		assertTrue(session().isElementPresent("//div[@id='gallery-']//div[@class='thumb']"));
 		assertTrue(session().isElementPresent("//div[@id='gallery-']//div[@class='lightbox-caption']"));
 	}
@@ -35,7 +35,7 @@ public class NewFilesTest extends BaseTest {
 		prepareTestArticle();
 
 		session().open("wiki/Special:NewFiles");
-		waitForElement("//div[@id='gallery-']", TIMEOUT);
+		waitForElement("//div[@id='gallery-']", this.getTimeout());
 		session().click("//a[@class='image lightbox']");
 		assertTrue(session().isElementPresent("//div[@id='lightbox-image']"));
 	}

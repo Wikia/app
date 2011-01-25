@@ -67,7 +67,7 @@ public class PhalanxTest extends BaseTest {
 		this.log(" Removing an article: '" + articleName + "'");
 
 		session().open("index.php?action=delete&title=" + articleName);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// seems that given article does not exist
 		if (!session().isElementPresent("wpDeleteReasonList")) {
@@ -78,7 +78,7 @@ public class PhalanxTest extends BaseTest {
 		session().type("wpReason", "Cleanup after Phalanx test");
 		session().uncheck("wpWatch");
 		session().click("wpConfirmB");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class PhalanxTest extends BaseTest {
 		this.log(" Removing an image: '" + imageName + "'");
 
 		session().open("index.php?title=File:" + imageName);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		clickAndWait("//a[@data-id='delete']");
 
@@ -106,12 +106,12 @@ public class PhalanxTest extends BaseTest {
 		this.log(" Asking a question: '" + question + "'");
 
 		session().open("index.php");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// ask question (usage of new answers skin is assumed here)
 		session().type("answers_ask_field", question);
 		session().click("ask_button");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// return true if article creation was successful
 		if (this.isArticleViewMode(question)) {
@@ -131,12 +131,12 @@ public class PhalanxTest extends BaseTest {
 		this.log(" Asking a question: '" + question + "'");
 
 		session().open("index.php");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// ask question (usage of new answers skin is assumed here)
 		session().type("answers_ask_field", question);
 		session().click("ask_button");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		assertTrue(this.isArticleViewMode(question));
 
@@ -154,7 +154,7 @@ public class PhalanxTest extends BaseTest {
 	 */
 	private boolean isQuestionOnListOfRecentlyAsked(String question) throws Exception {
 		session().open("index.php?smaxage=1&action=ajax&rs=HomePageListAjax&method=recent_unanswered_questions");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String content = session().getHtmlSource();
 		String pattern = ">" + question + "?</a></li>";
@@ -176,7 +176,7 @@ public class PhalanxTest extends BaseTest {
 		this.log(" Creating an article: '" + articleName + "'");
 
 		session().open("index.php?title=" + articleName + "&action=edit&useeditor=mediawiki");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		doEdit(articleContent);
 
@@ -210,7 +210,7 @@ public class PhalanxTest extends BaseTest {
 
 		// try to move it
 		session().open("index.php?title=Special:MovePage/" + oldName);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		session().type("wpNewTitle", newName);
 		session().type("wpReason", "Phalanx test");
@@ -259,7 +259,7 @@ public class PhalanxTest extends BaseTest {
 		this.log(" Uploading an image: '" + srcName + " as " + destName + "'");
 
 		session().open("index.php?title=Special:Upload");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		session().attachFile("wpUploadFile", srcName);
 		session().type("wpDestFile", destName);
@@ -416,7 +416,7 @@ public class PhalanxTest extends BaseTest {
 		loginAsSysop();
 
 		session().open("index.php?title=Special:WikiBuilder");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().click("//form[@name='step1-form']//input[contains(@class, 'skip')]");
 		waitForElementVisible("//div[@class='step2']");
 		session().click("//div[@class='step2']//input[contains(@class, 'skip')]");
@@ -482,7 +482,7 @@ public class PhalanxTest extends BaseTest {
 		login("TestUserFuck", "fuck");
 
 		session().open("index.php?title=User:TestUserFuck&action=edit");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// user should not be able to save the page
 		assertFalse(session().isElementPresent("wpSave"));
@@ -543,7 +543,7 @@ public class PhalanxTest extends BaseTest {
 
 		// add new block via special page
 		session().open("index.php?title=Special:Phalanx");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		assertTrue(session().isElementPresent("wpPhalanxFilter"));
 
@@ -556,7 +556,7 @@ public class PhalanxTest extends BaseTest {
 
 		// refresh the page
 		session().open("index.php?title=Special:Phalanx");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// get ID of added block
 		String blockId = session().getAttribute("//li[contains(@id, 'phalanx-block-')]/b[text() = '" + blockFilter + "']/..@id");
@@ -577,7 +577,7 @@ public class PhalanxTest extends BaseTest {
 		this.log(" Testing stats page");
 		loginAsStaff();
 		session().open("index.php?title=Special:PhalanxStats/" + blockId);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		assertTrue(session().isElementPresent("phalanx-block-" + blockId + "-stats"));
 
@@ -585,14 +585,14 @@ public class PhalanxTest extends BaseTest {
 		this.log(" Removing content block for '" + blockFilter + "' (#" + blockId + ")");
 
 		session().open("index.php?title=Special:Phalanx");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		session().click("//li[@id='phalanx-block-" + blockId + "']/a[@class='unblock']");
 		Thread.sleep(2000);
 
 		// refresh the page
 		session().open("index.php?title=Special:Phalanx");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// check whether block is not on the list
 		assertFalse(session().isTextPresent(blockFilter));

@@ -20,7 +20,7 @@ public class ExternalLinkCaptchaTest extends BaseTest {
 		assertNotNull("No captcha word for " + captchaID, captchaWord);
 		session().type("wpCaptchaWord", captchaWord);
 		session().click("wpSave");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		assertTrue(session().isTextPresent("www.wp.pl"));
 		assertFalse(session().isTextPresent("Incorrect or missing confirmation code."));

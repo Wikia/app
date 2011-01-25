@@ -16,7 +16,7 @@ public class WikiActivityTest extends BaseTest {
 
 		// and click it
 		session().click("//a[@data-id='wikiactivity']");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// check what page you land on
 		assertTrue(session().getLocation().contains("/wiki/Special:WikiActivity"));

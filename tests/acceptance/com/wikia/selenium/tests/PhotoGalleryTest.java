@@ -17,7 +17,7 @@ public class PhotoGalleryTest extends BaseTest {
 	// let's create an article on which view mode tests will be performed
 	private void prepareTestArticle() throws Exception {
 		editArticle(PhotoGalleryTest.testArticleName, "Wikia automated test for PhotoGallery\n\n===Gallery===\n\n<gallery>\nWiki.png\n</gallery>\n\n===Slideshow===\n\n<gallery type=\"slideshow\">\nWiki.png|'''Caption'''\n</gallery>\n\n[[Category:Wikia tests]]");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 	}
 
 	@Test(groups={"CI"})
@@ -28,22 +28,22 @@ public class PhotoGalleryTest extends BaseTest {
 		// open slideshow popout
 		waitForElement("//img[@class='wikia-slideshow-popout']");
 		session().click("//img[@class='wikia-slideshow-popout']");
-		waitForElement("//div[@class='wikia-slideshow-popout-images-wrapper']", TIMEOUT);
+		waitForElement("//div[@class='wikia-slideshow-popout-images-wrapper']", this.getTimeout());
 
 		// verify existance of image carousel
 		assertTrue(session().isElementPresent("//div[@class='wikia-slideshow-popout-carousel']"));
 
 		// stop slideshow
 		session().click("//div[@class='wikia-slideshow-popout-start-stop']/a[2]");
-		waitForElement("//section[@state='stopped']", TIMEOUT);
+		waitForElement("//section[@state='stopped']", this.getTimeout());
 
 		// restart slideshow
 		session().click("//div[@class='wikia-slideshow-popout-start-stop']/a[1]");
-		waitForElement("//section[@state='playing']", TIMEOUT);
+		waitForElement("//section[@state='playing']", this.getTimeout());
 
 		// check "Add photo" button
 		session().click("//a[@class='wikia-button secondary wikia-slideshow-popout-add-image']");
-		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", TIMEOUT);
+		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", this.getTimeout());
 
 		// slideshow popout should be closed now
 		assertFalse(session().isElementPresent("//div[@class='wikia-slideshow-popout-images-wrapper']"));
@@ -58,7 +58,7 @@ public class PhotoGalleryTest extends BaseTest {
 		// open editor's dialog
 		waitForElement("link=Add photo");
 		session().click("link=Add photo");
-		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", TIMEOUT);
+		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", this.getTimeout());
 		assertFalse(session().isVisible("WikiaPhotoGallerySearchResults"));
 		session().click("WikiaPhotoGallerySlideshowAddImage");
 		waitForElementVisible("WikiaPhotoGallerySearchResults");
@@ -79,7 +79,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// let's save this slideshow
 		session().click("//a[@id='WikiaPhotoGalleryEditorSave']");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// verify edit from view mode
 		assertTrue(session().isElementPresent("//div[@class='wikia-slideshow clearfix floatright']"));
@@ -96,8 +96,8 @@ public class PhotoGalleryTest extends BaseTest {
 		// open editor's dialog
 		waitForElement("link=Add a photo to this gallery");
 		session().click("//a[contains(@class, 'wikia-photogallery-add')]");
-		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", TIMEOUT);
-		waitForElement("WikiaPhotoGallerySearchResults", TIMEOUT);
+		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", this.getTimeout());
+		waitForElement("WikiaPhotoGallerySearchResults", this.getTimeout());
 		assertFalse(session().isVisible("WikiaPhotoGallerySearchResults"));
 		session().click("WikiaPhotoGalleryAddImage");
 		waitForElementVisible("WikiaPhotoGallerySearchResults");
@@ -114,7 +114,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// let's save this gallery
 		session().click("//a[@id='WikiaPhotoGalleryEditorSave']");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// verify edit from view mode
 		assertTrue(session().isElementPresent("//span[@class='wikia-gallery-item']"));
@@ -129,7 +129,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// go to edit page
 		session().open("index.php?title=" + PhotoGalleryTest.testArticleName + "&action=edit&useeditor=mediawiki");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// clear wikitext
 		session().type("wpTextbox1", "");
@@ -139,7 +139,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// open slideshow editor
 		session().click("//img[@id='mw-editbutton-wpg']");
-		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", TIMEOUT);
+		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", this.getTimeout());
 
 		// let's use gallery flow
 		session().click("//section[@id='WikiaPhotoGalleryEditor']//a[@type='1']");
@@ -190,7 +190,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// go to edit page
 		session().open("index.php?title=" + PhotoGalleryTest.testArticleName + "&action=edit&useeditor=mediawiki");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// clear wikitext
 		session().type("wpTextbox1", "");
@@ -200,7 +200,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// open slideshow editor
 		session().click("//img[@id='mw-editbutton-wpg']");
-		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", TIMEOUT);
+		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", this.getTimeout());
 
 		// let's use gallery flow
 		session().click("//section[@id='WikiaPhotoGalleryEditor']//a[@type='1']");
@@ -231,7 +231,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// let's save edit page
 		session().click("wpSave");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// verify edit from view mode
 		assertTrue(session().isElementPresent("//span[@class='wikia-gallery-item']"));
@@ -246,7 +246,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// go to edit page (RTE, but start in source mode)
 		session().open("index.php?title=" + PhotoGalleryTest.testArticleName + "&action=edit&useeditor=source");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// clear wikitext
 		session().runScript("window.RTE.instance.setData('');");
@@ -260,7 +260,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// invoke dialog
 		session().click("//a[contains(@class, 'RTEGalleryButton')]");
-		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", TIMEOUT);
+		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", this.getTimeout());
 
 		// let's use slideshow flow
 		session().click("//section[@id='WikiaPhotoGalleryEditor']//a[@type='2']");
@@ -286,7 +286,7 @@ public class PhotoGalleryTest extends BaseTest {
 		session().click("//a[@id='WikiaPhotoGalleryEditorSave']");
 		waitForElementNotVisible("WikiaPhotoGallerySearchResults");
 		session().click("wpSave");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// verify edit from view mode
 		assertTrue(session().isElementPresent("//div[@class='wikia-slideshow clearfix floatright']"));
@@ -315,7 +315,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// invoke dialog
 		session().click("//a[contains(@class, 'RTEGalleryButton')]");
-		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", TIMEOUT);
+		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", this.getTimeout());
 
 		// let's use slideshow flow
 		session().click("//section[@id='WikiaPhotoGalleryEditor']//a[@type='1']");
@@ -332,7 +332,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		//save the article
 		session().click("wpSave");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// verify edit from view mode
 		assertTrue(session().isElementPresent("//div[contains(@class, 'wikia-gallery')]"));
@@ -361,7 +361,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// invoke dialog
 		session().click("//a[contains(@class, 'RTEGalleryButton')]");
-		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", TIMEOUT);
+		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", this.getTimeout());
 
 		// let's use slideshow flow
 		session().click("//section[@id='WikiaPhotoGalleryEditor']//a[@type='2']");
@@ -378,7 +378,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		//save the article
 		session().click("wpSave");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		// verify edit from view mode
 		assertTrue(session().isElementPresent("//div[contains(@class, 'wikia-slideshow')]"));
@@ -391,7 +391,7 @@ public class PhotoGalleryTest extends BaseTest {
 		String fileNameExtenstion = uploadFileUrl.substring(uploadFileUrl.length() - 3, uploadFileUrl.length());
 		String destinationFileName = uploadFileUrl.substring(uploadFileUrl.lastIndexOf("/") + 1);
 		session().open("index.php?title=Special:Upload");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().attachFile("wpUploadFile", uploadFileUrl);
 		session().type("wpDestFile", destinationFileName);
 		session().type("wpUploadDescription", "WikiaBot automated test.");

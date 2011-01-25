@@ -19,11 +19,11 @@ public class PageLayoutBuilderTest extends BaseTest {
 	{
 		loginAsStaff();
 		session().open("index.php?title=Special:PageLayoutBuilder&action=list");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		while (!session().isTextPresent("Layouts(0)")) {
 			clickAndWait("//table[@id='plbLayoutList']/tbody/tr[1]/td[1]/p[2]/a[contains(@class, 'delete')]");
 			assertTrue(session().getConfirmation().matches("^Are you sure you want to delete this layout[\\s\\S]$"));
-			session().waitForPageToLoad(TIMEOUT);
+			session().waitForPageToLoad(this.getTimeout());
 		}
 		logout();
 	}
@@ -32,13 +32,13 @@ public class PageLayoutBuilderTest extends BaseTest {
 	public void testPrivileges() throws Exception {
 		loginAsStaff();
 		session().open("index.php?title=Special:PageLayoutBuilder");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertEquals(session().getText("//div[@id='WikiaPageHeader']/h1"), "Create a new layout");
 		logout();
 		
 		loginAsRegular();
 		session().open("index.php?title=Special:PageLayoutBuilder");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().isTextPresent("Permission error"));
 		logout();
 	}
@@ -48,7 +48,7 @@ public class PageLayoutBuilderTest extends BaseTest {
 		loginAsStaff();
 		session().click("link=My Tools");
 		session().click("link=Layout builder");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		int layoutsNum = session().getXpathCount("/html/body/section/article/div/table/tbody/tr").intValue();
 		clickAndWait("plbNewButton");
 
@@ -77,7 +77,7 @@ public class PageLayoutBuilderTest extends BaseTest {
 		loginAsStaff();
 		session().click("link=My Tools");
 		session().click("link=Layout builder");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		clickAndWait("plbNewButton");
 
 		String date  = (new Date()).toString();
@@ -99,7 +99,7 @@ public class PageLayoutBuilderTest extends BaseTest {
 		assertTrue(session().isTextPresent("plb-create-already-exists-error"));
 		
 		session().open("index.php?title=Special:PageLayoutBuilder&action=list");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertEquals(layoutsNum, session().getXpathCount("/html/body/section/article/div/table/tbody/tr").intValue());
 	}
 
@@ -107,7 +107,7 @@ public class PageLayoutBuilderTest extends BaseTest {
 	public void testCreateLayoutWithCategories() throws Exception {
 		loginAsStaff();
 		session().open("index.php?title=Special:PageLayoutBuilder");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String date  = (new Date()).toString();
 		String title = "Test layout " + date;
@@ -165,7 +165,7 @@ public class PageLayoutBuilderTest extends BaseTest {
 		
 		// open category page
 		session().open("index.php?title=Category:Test_category_A");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertFalse(session().isTextPresent("Test layout"));
 	}
 
@@ -173,7 +173,7 @@ public class PageLayoutBuilderTest extends BaseTest {
 	public void testPreviewFormAndArticle() throws Exception {
 		loginAsStaff();
 		session().open("index.php?title=Special:PageLayoutBuilder");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String date  = (new Date()).toString();
 		String title = "Test layout " + date;
@@ -203,7 +203,7 @@ public class PageLayoutBuilderTest extends BaseTest {
 
 		loginAsStaff();
 		session().open("index.php?title=Special:PageLayoutBuilder");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		switchEditorMode("source");
 		session().type("//td[@id='cke_contents_wpTextbox1']/textarea", allInputTypesContent);
@@ -224,7 +224,7 @@ public class PageLayoutBuilderTest extends BaseTest {
 	public void testEditingInlineInputElements() throws Exception {
 		loginAsStaff();
 		session().open("index.php?title=Special:PageLayoutBuilder");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		waitForElement("//td[@id='cke_contents_wpTextbox1_sidebar']/div[@class='plb-manager']/ul/li");
 		session().click("//td[@id='cke_contents_wpTextbox1_sidebar']/div[@class='plb-manager']/ul/li");
@@ -278,7 +278,7 @@ public class PageLayoutBuilderTest extends BaseTest {
 	public void testEditingParagraphElements() throws Exception {
 		loginAsStaff();
 		session().open("index.php?title=Special:PageLayoutBuilder");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		waitForElement("//td[@id='cke_contents_wpTextbox1_sidebar']/div[@class='plb-manager']/ul/li");
 		session().click("//td[@id='cke_contents_wpTextbox1_sidebar']/div[@class='plb-manager']/ul/li");
@@ -333,7 +333,7 @@ public class PageLayoutBuilderTest extends BaseTest {
 	public void testEditingImageElements() throws Exception {
 		loginAsStaff();
 		session().open("index.php?title=Special:PageLayoutBuilder");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		waitForElement("//td[@id='cke_contents_wpTextbox1_sidebar']/div[@class='plb-manager']/ul/li");
 		session().click("//td[@id='cke_contents_wpTextbox1_sidebar']/div[@class='plb-manager']/ul/li");
@@ -406,7 +406,7 @@ public class PageLayoutBuilderTest extends BaseTest {
 	public void testEditingComboBoxElements() throws Exception {
 		loginAsStaff();
 		session().open("index.php?title=Special:PageLayoutBuilder");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		waitForElement("//td[@id='cke_contents_wpTextbox1_sidebar']/div[@class='plb-manager']/ul/li");
 		session().click("//td[@id='cke_contents_wpTextbox1_sidebar']/div[@class='plb-manager']/ul/li");

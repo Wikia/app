@@ -10,7 +10,7 @@ public class SharedUserRightsTest extends BaseTest {
 	@Test(groups={"oasis"})
 	public void testEnsureAnonymousUserCanNotChangeUserRights() throws Exception {
 		session().open("index.php?title=Special:UserRights");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertFalse(session().isElementPresent("//form[@id='mw-userrights-form1']"));
 		assertTrue(session().isTextPresent("You do not have permission to do that"));
 	}
@@ -19,7 +19,7 @@ public class SharedUserRightsTest extends BaseTest {
 	public void testEnsureRegularUserCanNotChangeUserRights() throws Exception {
 		loginAsRegular();
 		session().open("index.php?title=Special:UserRights");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertFalse(session().isElementPresent("//form[@id='mw-userrights-form1']"));
 		assertTrue(session().isTextPresent("You do not have permission to do that"));
 	}
@@ -28,7 +28,7 @@ public class SharedUserRightsTest extends BaseTest {
 	public void testEnsureStaffCanChangeUserRights() throws Exception {
 		loginAsStaff();
 		session().open("index.php?title=Special:UserRights");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().isElementPresent("//form[@id='mw-userrights-form1']"));
 	}
 }

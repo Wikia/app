@@ -15,7 +15,7 @@ public class SkinChooserTest extends BaseTest {
 		login();
 
 		session().open("index.php?title=Special:Preferences");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-cologneblue']"));
 		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-modern']"));

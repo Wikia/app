@@ -17,17 +17,17 @@ public class RelatedVideoTest extends BaseTest {
 		
 		// open any page
 		session().open("/wiki/Special:RandomPage");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		// wait for scripts to load
-		waitForElement("//div[contains(@class,'WikiaRelatedVideoSpotlightModule')]//div[@class='fmts-img_wrapper']", TIMEOUT);
+		waitForElement("//div[contains(@class,'WikiaRelatedVideoSpotlightModule')]//div[@class='fmts-img_wrapper']", this.getTimeout());
 		
 		// click on element
 		session().click("//div[contains(@class,'WikiaRelatedVideoSpotlightModule')]//div[@class='fmts-img_wrapper']//a[@class='fmts-btn_click']");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		// is page loaded properly
-		waitForElement("//*[@id='FiveminPlayer']", TIMEOUT);
+		waitForElement("//*[@id='FiveminPlayer']", this.getTimeout());
 	}
 	
 	@Test(groups={"CI"})
@@ -35,16 +35,16 @@ public class RelatedVideoTest extends BaseTest {
 		
 		// open any page
 		session().open("/wiki/Special:RandomPage");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		// wait for scripts to load
-		waitForElement("//section[contains(@class,'WikiaRelatedVideoModule')]//div[@class='fmts-img_wrapper']", TIMEOUT);
+		waitForElement("//section[contains(@class,'WikiaRelatedVideoModule')]//div[@class='fmts-img_wrapper']", this.getTimeout());
 		
 		// click on element
 		session().click("//section[contains(@class,'WikiaRelatedVideoModule')]//div[@class='fmts-img_wrapper']//a[@class='fmts-btn_click']");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		
 		// is page loaded properly
-		waitForElement("//*[@id='FiveminPlayer']", TIMEOUT);
+		waitForElement("//*[@id='FiveminPlayer']", this.getTimeout());
 	}
 }

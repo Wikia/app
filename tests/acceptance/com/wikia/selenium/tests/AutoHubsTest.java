@@ -37,7 +37,7 @@ public class AutoHubsTest extends BaseTest {
 		waitForElement( "//a[contains(@class,\"head-hide-link\")]" );
 		Boolean Status = session().isElementPresent( "//ul[@id=\"top-wikis-list-1\"]/li[position()=1 and contains(@class,\"hide-blog\")]" );
 		session().click("//ul[@id=\"top-wikis-list-1\"]/li[1]/div/a");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		waitForElement( "//ul[@id=\"top-wikis-list-1\"]/li[15]" );
 

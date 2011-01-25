@@ -14,7 +14,7 @@ public class SignupTest extends BaseTest {
 		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiabot.username"));
 		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiabot.password"));
 		session().click("wpLoginattempt");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		if(isOasis()) {
 			waitForElement("//ul[@id='AccountNavigation']/li/a[contains(., '" + getTestConfig().getString("ci.user.wikiabot.username") + "')]");
@@ -46,7 +46,7 @@ public class SignupTest extends BaseTest {
 	@Test(groups={"CI"})
 	public void testSignupWrongPassword() throws Exception {
 		session().open("index.php?title=Special:Signup&type=signup");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String username = getTestConfig().getString("ci.user.wikiabot.username") + Long.toString((new Date()).getTime());
 		String captchaWord = getWordFromCaptchaId(session().getValue("wpCaptchaId"));

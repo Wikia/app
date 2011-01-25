@@ -34,7 +34,7 @@ public class CorporatePageTest extends BaseTest {
 		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiastaff.username"));
 		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiastaff.password"));
 		session().click("wpLoginattempt");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		waitForElement("//p[@id='wikia-account-tools']/strong[text() = '" + getTestConfig().getString("ci.user.wikiastaff.username") + "']");
 	}
 
@@ -44,7 +44,7 @@ public class CorporatePageTest extends BaseTest {
 		String item = "Test item " + UUID.randomUUID();
 		editArticle("MediaWiki:Corporatepage-sidebar", "*http://header.wikia.com/|Test header\n**http://item.wikia.com/|" + item);
 		session().open("index.php?title=Main_Page&action=purge");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		// move mouse to first menu item to show items (doesn't work?)
 //		session().mouseOver("//nav[@id='GlobalNav']//ul[@class='nav-top-level']/li[@class='last']/a");
 
@@ -59,7 +59,7 @@ public class CorporatePageTest extends BaseTest {
 		String text = "Test description " + UUID.randomUUID();
 		editArticle("MediaWiki:Corporatepage-slider", "*http://test.wikia.com/|Test Wiki|" + text + "|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg");
 		session().open("index.php?title=Main_Page&action=purge");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String result = session().getText("//div[@id='homepage-feature-box']/section[@id='homepage-feature-spotlight']/ul/li[@id='homepage-feature-spotlight-0']/div/p");
 		undoLastEdit("MediaWiki:Corporatepage-slider", "");
@@ -72,7 +72,7 @@ public class CorporatePageTest extends BaseTest {
 		String text = "Test what's up text " + UUID.randomUUID();
 		editArticle("MediaWiki:Corporatepage-wikia-whats-up", text);
 		session().open("index.php?title=Main_Page&action=purge");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		String result = session().getText("//section[@id='wikia-whats-up']/div");
 		undoLastEdit("MediaWiki:Corporatepage-wikia-whats-up", "");
@@ -108,7 +108,7 @@ public class CorporatePageTest extends BaseTest {
 
 		//visit main page
 		session().open("index.php?title=Main_Page&action=purge");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		//store values for tests
 		String leftHeaderValue = session().getText("//section[@id='wikia-international']/h1");

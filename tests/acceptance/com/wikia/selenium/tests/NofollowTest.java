@@ -21,7 +21,7 @@ public class NofollowTest extends BaseTest {
 		String content = (new Date()).toString();
 		editArticle("WikiaAutomatedTest", "*Tested: " + content + " by [[wikia:user:" + getTestConfig().getString("ci.user.wikiabot.username") + "|" + getTestConfig().getString("ci.user.wikiabot.username") + "]]\n[[Category:Wikia tests]]");
 		session().open("index.php?title=WikiaAutomatedTest");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		//testing t:r9070
 		assertEquals(session().getAttribute("//div[@id=\"mw-normal-catlinks\"]/a[1]@rel"), "nofollow");
 	}

@@ -33,7 +33,7 @@ import org.apache.commons.configuration.XMLConfiguration;
  */
 public class BaseTest {
 
-	public static final String TIMEOUT = "60000";
+	private String timeout;
 	private String webSite;
 	private XMLConfiguration testConfig;
 	private String noCloseAfterFail;
@@ -55,6 +55,7 @@ public class BaseTest {
 			String browser, String webSite, String timeout, String noCloseAfterFail) throws Exception {
 		this.webSite = webSite;
 		this.noCloseAfterFail = noCloseAfterFail;
+		this.setTimeout(timeout);
 		startSeleniumSession(seleniumHost, seleniumPort, browser, webSite);
 		session().setTimeout(timeout);
 		session().setSpeed("1000");
@@ -71,13 +72,21 @@ public class BaseTest {
 	protected boolean isOasis() throws Exception {
 		return session().getEval("window.skin").equals("oasis");
 	}
+	
+	protected void setTimeout(String timeout) {
+		this.timeout = timeout;
+	}
+	
+	protected String getTimeout() {
+		return this.timeout;
+	}
 
 	protected void login(String username, String password) throws Exception {
 		session().open("index.php?title=Special:Signup");
 		session().type("wpName2Ajax", username);
 		session().type("wpPassword2Ajax", password);
 		session().click("wpLoginattempt");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		if(isOasis()) {
 			waitForElement("//ul[@id='AccountNavigation']/li/a[contains(@href, '" + username + "')]");
 		} else {
@@ -108,9 +117,9 @@ public class BaseTest {
 
 	protected void logout() throws Exception {
 		session().open("index.php?useskin=oasis");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().click("link=Log out");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().isTextPresent("You have been logged out."));
 		assertTrue(session().isElementPresent("//a[@class='ajaxLogin']"));
 	}
@@ -133,7 +142,7 @@ public class BaseTest {
 		}
 	}
 	protected void waitForAttributeNotEquals(String elementId, String value, String timeOut) throws Exception {
-		waitForAttributeNotEquals(elementId, value, Integer.parseInt(TIMEOUT));
+		waitForAttributeNotEquals(elementId, value, Integer.parseInt(this.getTimeout()));
 	}
 
 	protected void waitForTextPresent(String text, int timeOut)
@@ -175,7 +184,7 @@ public class BaseTest {
 	}
 
 	protected void waitForTextPresent(String text) throws Exception {
-		waitForTextPresent(text, TIMEOUT);
+		waitForTextPresent(text, this.getTimeout());
 	}
 
 	protected void waitForElementNotPresent(String elementId, int timeOut)
@@ -203,7 +212,7 @@ public class BaseTest {
 	}
 
 	protected void waitForElementNotPresent(String elementId) throws Exception {
-		waitForElementNotPresent(elementId, TIMEOUT);
+		waitForElementNotPresent(elementId, this.getTimeout());
 	}
 
 	protected void waitForElement(String elementId, int timeOut)
@@ -231,7 +240,7 @@ public class BaseTest {
 	}
 
 	protected void waitForElement(String elementId) throws Exception {
-		waitForElement(elementId, TIMEOUT);
+		waitForElement(elementId, this.getTimeout());
 	}
 
 	protected void waitForElementVisible(String elementId, int timeOut)
@@ -256,7 +265,7 @@ public class BaseTest {
 	}
 
 	protected void waitForElementVisible(String elementId) throws Exception {
-		waitForElementVisible(elementId, TIMEOUT);
+		waitForElementVisible(elementId, this.getTimeout());
 	}
 
 	protected void waitForElementNotVisible(String elementId, int timeOut)
@@ -281,12 +290,12 @@ public class BaseTest {
 	}
 
 	protected void waitForElementNotVisible(String elementId) throws Exception {
-		waitForElementNotVisible(elementId, TIMEOUT);
+		waitForElementNotVisible(elementId, this.getTimeout());
 	}
 
 	protected void clickAndWait(String location) {
 		session().click(location);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 	}
 
 	protected String md5(InputStream is) throws NoSuchAlgorithmException,
@@ -342,7 +351,7 @@ public class BaseTest {
 	protected void editArticle(String articleName, String content)
 			throws Exception {
 		session().open("index.php?title=" + articleName + "&action=edit&useeditor=source");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		doEdit(content);
 		doSave();
 	}
@@ -364,13 +373,13 @@ public class BaseTest {
 
 	protected void doSave() throws Exception {
 		session().click("wpSave");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 	}
 
 	protected void deleteArticle(String articleName, String reasonGroup,
 			String reason) throws Exception {
 		session().open("index.php?title=" + articleName);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		doDelete(reasonGroup, reason);
 	}
 
@@ -380,12 +389,12 @@ public class BaseTest {
 		} else {
 			session().click("ca-delete");
 		}
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		session().select("wpDeleteReasonList", reasonGroup);
 		session().type("wpReason", reason);
 		session().uncheck("wpWatch");
 		session().click("wpConfirmB");
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 	}
 
 	/**
@@ -402,18 +411,18 @@ public class BaseTest {
 		}
 		if(session().isElementPresent(xpath)){
 			session().click(xpath);
-			session().waitForPageToLoad(TIMEOUT);
+			session().waitForPageToLoad(this.getTimeout());
 			session().select("wpDeleteReasonList", reasonGroup);
 			session().type("wpReason", reason);
 			session().uncheck("wpWatch");
 			session().click("wpConfirmB");
-			session().waitForPageToLoad(TIMEOUT);
+			session().waitForPageToLoad(this.getTimeout());
 		}
 	}
 
 	protected void undeleteArticle(String articleName, String reason) throws Exception {
 		session().open("index.php?title=Special:Undelete/" + articleName);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		session().type("wpComment", reason);
 
@@ -422,7 +431,7 @@ public class BaseTest {
 
 	protected void moveArticle(String oldName, String newName, String reason) throws Exception {
 		session().open("index.php?title=Special:MovePage/" + oldName);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 
 		session().type("wpNewTitle", newName);
 		session().type("wpReason", reason);
@@ -444,7 +453,7 @@ public class BaseTest {
 	protected void undoLastEdit(String articleName, String summary) throws Exception {
 		//go to history page
 		session().open("index.php?action=history&title=" + articleName);
-		session().waitForPageToLoad(TIMEOUT);
+		session().waitForPageToLoad(this.getTimeout());
 		try {
 			//go to undo page
 			String href = session().getAttribute("//ul[@id='pagehistory']/li[1]/span[@class='mw-history-undo']/a@href");
@@ -455,12 +464,12 @@ public class BaseTest {
 			if (Integer.parseInt(session().getEval("window.document.getElementById('pagehistory').getElementsByTagName('li').length;")) == 1) {
 				//can't use deleteArticle() - it's working only for regular skins (with navbar)
 				session().open("index.php?action=delete&title=" + articleName);
-				session().waitForPageToLoad(TIMEOUT);
+				session().waitForPageToLoad(this.getTimeout());
 				session().select("wpDeleteReasonList", "label=regexp:.*Author request");
 				session().type("wpReason", "Wikia automated test");
 				session().uncheck("wpWatch");
 				session().click("wpConfirmB");
-				session().waitForPageToLoad(TIMEOUT);
+				session().waitForPageToLoad(this.getTimeout());
 			}
 			return;
 		}
