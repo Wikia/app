@@ -131,7 +131,6 @@ class StaticChute {
 			'common/widgets/js/widgetsConfig.js',
 			'monaco/js/widgetsFramework.js',
 			'../extensions/wikia/AdEngine/AdEngine.js',
-			'../extensions/wikia/Userengagement/Userengagement.js',
 			'common/contributed.js',
 			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 			'../extensions/wikia/ArticleComments/js/ArticleComments.js',
@@ -215,7 +214,6 @@ class StaticChute {
 			'common/widgets/js/widgetsConfig.js',
 			'monaco/js/widgetsFramework.js',
 			'../extensions/wikia/AdEngine/AdEngine.js',
-			'../extensions/wikia/Userengagement/Userengagement.js',
 			'common/contributed.js',
 			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 			'../extensions/wikia/CreatePage/js/CreatePage.js',
@@ -471,7 +469,12 @@ class StaticChute {
 					continue;
 				} else {
 					foreach ($this->config[$package] as $f){
-						$out[] = realpath($basedir . '/' . $f);
+						$file = realpath($basedir . '/' . $f);
+						if (empty($file)) {
+							Wikia::log(__FUNCTION__, __LINE__, "Empty filename for package=$package, basedir=$basedir, file=$f", true);
+						} else {
+							$out[] = $file
+						}
 					}
 
 					// macbre: rt #18765
@@ -479,7 +482,12 @@ class StaticChute {
 					$moreFiles = $this->getMoreFileList($package, $args);
 					if (!empty($moreFiles)) {
 						foreach ($moreFiles as $f) {
-							$out[] = realpath($basedir . '/' . $f);
+							$file = realpath($basedir . '/' . $f);
+							if (empty($file)) {
+								Wikia::log(__FUNCTION__, __LINE__, "Empty filename for package=$package, basedir=$basedir, file=$f", true);
+							} else {
+								$out[] = $file
+							}
 						}
 					}
 				}
