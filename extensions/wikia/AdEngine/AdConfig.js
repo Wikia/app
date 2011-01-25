@@ -3,6 +3,46 @@ AdConfig = {
 	geo: null, 
 	geoCookieName: 'Geo',
 	quantcastSegmentCookieName: 'qcseg',
+
+	isHighValueCountry: function(country) {
+		switch (country) {
+			case 'CA':
+			case 'DE':
+			case 'ES':
+			case 'FR':
+			case 'IT':
+			case 'UK':
+			case 'US':
+				return true;
+				break;
+			default:
+				return false;
+		}
+	},
+
+	isHighValueSlot: function(slotname) {
+		switch (slotname) {
+			case 'CORP_TOP_LEADERBOARD':
+			case 'CORP_TOP_RIGHT_BOXAD':
+			case 'EXIT_STITIAL_BOXAD_1':
+			case 'HOME_INVISIBLE_TOP':
+			case 'HOME_TOP_LEADERBOARD':
+			case 'HOME_TOP_RIGHT_BOXAD':
+			case 'HOME_TOP_RIGHT_BUTTON':
+			case 'INVISIBLE_1':		// footer
+			case 'INVISIBLE_TOP':	// skin
+			case 'TEST_HOME_TOP_RIGHT_BOXAD':
+			case 'TEST_TOP_RIGHT_BOXAD':
+			case 'TOP_LEADERBOARD':
+			case 'TOP_RIGHT_BOXAD':
+			case 'TOP_RIGHT_BUTTON':
+				return true;
+				break;
+			default:
+				return false;
+		}
+	}
+
 	init: function() {
 		AdConfig.pullGeo();
 	}
