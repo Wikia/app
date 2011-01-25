@@ -1,11 +1,11 @@
 <?php if($show): ?>
 	<section class="FormCornerModule module WikiaLabsStaff">
+		<button id="addProject"/>
+			<img width="0" height="0" class="sprite new" src="<?= wfBlankImgUrl() ;?>">
+			<?php echo wfMsg('wikialabs-staff-add'); ?>
+		</button>
 		<h1 class='title'>
 			<?php echo wfMsg('wikialabs-staff-title'); ?>
-			<button id="addProject"/>
-				<img width="0" height="0" class="sprite new" src="<?= wfBlankImgUrl() ;?>">
-				<?php echo wfMsg('wikialabs-staff-add'); ?>
-			</button>
 		</h1>
 		<span class="redinfo"><?php echo wfMsg('wikialabs-staff-info'); ?></span>
 		

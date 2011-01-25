@@ -79,6 +79,7 @@ WikiaLabs.showFeedback = function(e){
 					}
 				}
 				else {
+					modalWrap.closeModal();
 					window.location = wgScript = '?title=' + wgCanonicalNamespace + ':' + wgCanonicalSpecialPageName;
 				}
 			}
@@ -116,6 +117,7 @@ WikiaLabs.editProject = function(id, callback) {
 								errorBox.append( error );
 							}
 						} else {
+							modal.closeModal();
 							window.location = wgScript = '?title=' + wgCanonicalNamespace + ':' + wgCanonicalSpecialPageName; 
 						}
 					}
