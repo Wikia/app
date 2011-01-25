@@ -163,7 +163,7 @@ class FogbugzService extends Service {
 
 			$xml = $this->curl->exec();
 			if( !empty( $xml ) ) {
-				var_dump($xml);
+				//var_dump($xml);
 				return true;
 			}
 			else {
