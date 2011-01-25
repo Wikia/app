@@ -111,6 +111,9 @@ if(isset($props['name'])) {
 	<img src="<?= $wgBlankImgUrl ?>" class="chevron"> <a href="#" id="WMU_showhide" class="show" data-more="<?= wfMsg('wmu-more-options') ?>" data-fewer="<?= wfMsg('wmu-fewer-options') ?>"><?= wfMsg('wmu-more-options') ?></a>
 	
 	<?
+	} else if ( empty($props['default_caption'])) { ?>
+		<input id="ImageUploadReplaceDefault" type="hidden" value="on" />
+	<?
 	} else {
 	?>
 	<h3><?= wfMsg('wmu-caption') ?></h3>

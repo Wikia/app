@@ -53,8 +53,6 @@ function WMUSetupVars($vars) {
 	$vars['file_blacklist'] = $wgFileBlacklist;
 	$vars['check_file_extensions'] = $wgCheckFileExtensions;
 	$vars['strict_file_extensions'] = $wgStrictFileExtensions;
-	$vars['wmu_show_message'] = wfMsg('wmu-show-message');
-	$vars['wmu_hide_message'] = wfMsg('wmu-hide-message');
 	$vars['wmu_show_license_message'] = wfMsg('wmu-show-license-msg');
 	$vars['wmu_hide_license_message'] = wfMsg('wmu-hide-license-msg');
 	$vars['wmu_max_thumb'] = wfMsg('wmu-max-thumb');

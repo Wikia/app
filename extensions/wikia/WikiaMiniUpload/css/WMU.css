@@ -267,7 +267,6 @@
 	height: auto;
 	overflow: auto;
 }
-*/
 
 #ImageUploadMessageControl {
 	position: absolute;
@@ -275,6 +274,7 @@
 	right: 24px;
 	top: 6px;
 }
+*/
 
 #ImageUploadTextCont td {
 	padding-top: 0;

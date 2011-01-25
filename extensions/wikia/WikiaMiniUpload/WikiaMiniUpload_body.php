@@ -24,8 +24,6 @@ class WikiaMiniUpload {
 		$script_a['wmu_warn3'] = htmlspecialchars( wfMsg('wmu-warn3') );
 
 		$script_a['wmu_bad_extension'] = htmlspecialchars( wfMsg('wmu-bad-extension') );
-		$script_a['wmu_show_message'] = htmlspecialchars( wfMsg('wmu-show-message') );
-		$script_a['wmu_hide_message'] = htmlspecialchars( wfMsg('wmu-hide-message') );
 		$script_a['wmu_title'] = htmlspecialchars( wfMsg('wmu-title') );
 		$script_a['wmu_max_thumb'] = htmlspecialchars( wfMsg('wmu-max-thumb') );
 		$script_a['wmu_no_protect'] = htmlspecialchars( wfMsg('wmu-no-protect') );
