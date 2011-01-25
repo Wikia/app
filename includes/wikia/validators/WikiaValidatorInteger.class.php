@@ -17,7 +17,7 @@ class WikiaValidatorInteger extends WikiaValidator {
 	public function isValid($value = null) {
 		$this->errors = array();
 		
-		if(!is_int($value)){
+		if(!is_numeric($value) || ((int) $value) != $value  ) {
 			$this->errors['not_int'] = $this->msg['not_int'];
 			return false;
 		}
