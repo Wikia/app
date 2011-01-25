@@ -146,7 +146,7 @@ class FogbugzService extends Service {
 	 * @param string $message
 	 * @param array $tags
 	 */
-	public function createCase( $areaId, $title, $priority, $message, Array $tags = null ) {
+	public function createCase( $areaId, $title, $priority, $message, Array $tags = null, $customerEmail = '' ) {
 		if( !empty($this->token) ) {
 			$this->resetParams();
 			$this->setParam( 'cmd', 'new' );
@@ -154,9 +154,12 @@ class FogbugzService extends Service {
 			$this->setParam( 'sTitle', $title );
 			$this->setParam( 'ixArea', $areaId );
 			$this->setParam( 'ixPriority', $priority );
-			$this->setParam( 'sScoutMessage', $message );
-			if(!empty($tags)) {
+			$this->setParam( 'sEvent', $message );
+			if( !empty($tags) ) {
 				$this->setParam( 'sTags', implode( ',', $tags ));
+			}
+			if( !empty( $customerEmail ) ) {
+				$this->setParam( 'sCustomerEmail', $customerEmail );
 			}
 
 			$this->curl->setopt_array( $this->getCurlOptions() );
