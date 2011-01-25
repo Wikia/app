@@ -251,6 +251,9 @@ var AjaxLogin = {
 			case 'WrongPass':
 				AjaxLogin.blockLoginForm(false);
 				$('#wpPassword1').attr('value', '').focus();
+				
+			case 'Throttled':
+				AjaxLogin.blockLoginForm(false);
 
 			default:
 				// Bartek: tracking
