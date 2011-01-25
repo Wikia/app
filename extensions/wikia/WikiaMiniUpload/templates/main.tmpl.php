@@ -1,17 +1,6 @@
 <div id="ImageUploadError"></div>
-<div id="ImageUploadMessageControl"><a id="ImageUploadMessageLink" href="#" onclick="WMU_toggleMainMesg(event);" >[<?= wfMsg( 'wmu-hide-message' ) ?>]</a></div>
-<?php
-	$uploadmesg = wfMsgExt( 'wmu-uploadtext', 'parse' );
-	$uploadmesg = preg_replace( '/(<a[^>]+)/', '$1 target="_new" ', $uploadmesg );
-
-?>
 
 <table cellspacing="0" style="width: 100%;" id="ImageUploadInputTable">
-	<tr id="ImageUploadTextCont">
-		<td colspan="2">
-			<div id="ImageUploadMessage"><?= $uploadmesg ?></div>
-		</td>
-	</tr>
 
 	<tr id="ImageUploadUpload">
 		<td><h1><?= wfMsg('wmu-upload') ?></h1></td>

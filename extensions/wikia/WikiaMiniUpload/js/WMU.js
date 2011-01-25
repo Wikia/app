@@ -1176,21 +1176,6 @@ function MWU_imageSizeChanged(size) {
 	}
 }
 
-function WMU_toggleMainMesg(e) {
-	YAHOO.util.Event.preventDefault(e);
-	if ('none' == $G('ImageUploadTextCont').style.display) {
-		$G('ImageUploadTextCont').style.display = '';
-		$G('ImageUploadMessageLink').innerHTML = '[' + wmu_hide_message  + ']';
-		WMU_track( 'mainMessage/show' ); // tracking
-		document.cookie = "wmumainmesg=1";
-	} else {
-		$G('ImageUploadTextCont').style.display = 'none';
-		$G('ImageUploadMessageLink').innerHTML = '[' + wmu_show_message  + ']';
-		WMU_track( 'mainMessage/hide' ); // tracking
-		document.cookie = "wmumainmesg=0";
-	}
-}
-
 function WMU_toggleLicenseMesg(e) {
 	YAHOO.util.Event.preventDefault(e);
 	if ('none' == $G('ImageUploadLicenseText').style.display) {

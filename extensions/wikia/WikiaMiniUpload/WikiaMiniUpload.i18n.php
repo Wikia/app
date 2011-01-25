@@ -51,11 +51,6 @@ $messages['en'] = array(
 	'wmu-bad-extension' => 'You tried to upload an illegal file type. Please try again.',
 	'wmu-filetype-missing' => 'This upload is missing its file extension',
 	'wmu-filetype-incorrect' => 'This upload has an incorrect file extension',
-	'wmu-uploadtext' => '\'\'\'This form allows you to quickly upload and display files in pages.\'\'\'
-
-\'\'See also the [[Special:Log/upload|upload log]] and a [[Special:ImageList|list of all uploaded files]].\'\'',
-	'wmu-show-message' => 'show message',
-	'wmu-hide-message' => 'hide message',
 	'wmu-hide-license-msg' => 'hide license text',
 	'wmu-show-license-msg' => 'show license text',
 	'wmu-max-thumb' => 'maximum thumbnail size exceeded, reverting to original size',
@@ -163,11 +158,6 @@ Kies hoe hierdie lêer in u artikel moet lyk.',
 Probeer asseblief weer.",
 	'wmu-filetype-missing' => "Hierdie lêer het nie 'n uitbreiding nie",
 	'wmu-filetype-incorrect' => "Die lêer het 'n verkeerde uitbreiding",
-	'wmu-uploadtext' => "'''Hierdie vorm laat u toe om vinnig beelde op te laai en by artikels te voeg.'''
-
-''Sien ook die [[Special:Log/upload|oplaailogboek]] en 'n [[Special:ImageList|lys met al die opgelaaide lêers]].''",
-	'wmu-show-message' => 'wys boodskap',
-	'wmu-hide-message' => 'versteek boodskap',
 	'wmu-hide-license-msg' => 'versteek lisensie-teks',
 	'wmu-show-license-msg' => 'wys lisensie-teks',
 	'wmu-max-thumb' => 'die maksimum duimnaelgrootte is oorskry; die oorspronklike grootte word gebruik',
@@ -308,11 +298,6 @@ $messages['be-tarask'] = array(
 	'wmu-bad-extension' => 'Вы спрабавалі загрузіць файл недазволенага тыпу. Калі ласка, паспрабуйце зноў.',
 	'wmu-filetype-missing' => 'У гэтай загрузкі адсутнічае пашырэньне файла',
 	'wmu-filetype-incorrect' => 'У гэтай загрузкі няслушнае пашырэньне файла',
-	'wmu-uploadtext' => "'''Гэтая форма дазваляе Вам хутка загружаць і паказваць файлы на старонках.'''
-
-''Глядзіце таксама [[Special:Log/upload|журнал загрузак]] і [[Special:ImageList|сьпіс усіх загружаных файлаў]].''",
-	'wmu-show-message' => 'паказаць паведамленьне',
-	'wmu-hide-message' => 'схаваць паведамленьне',
 	'wmu-hide-license-msg' => 'схаваць тэкст ліцэнзіі',
 	'wmu-show-license-msg' => 'паказаць тэкст ліцэнзіі',
 	'wmu-max-thumb' => 'перавышаны максымальны памер мініятуры, вярніцеся да пачатковага памеру',
@@ -399,11 +384,6 @@ $messages['br'] = array(
 	'wmu-bad-extension' => 'Klasket ho peus ezporzhiañ ur seurt restr e-maez al lezenn. Klaskit en-dro, mar plij.',
 	'wmu-filetype-missing' => 'astenn ar restr a vank en enporzhiadenn-mañ',
 	'wmu-filetype-incorrect' => "N'eo ket reizh astenn ar restr enporzhiet",
-	'wmu-uploadtext' => "'''Gant ar furmskrid-mañ e c'hallit enporzhiañ buan ur resr hag ensoc'hañ anezhi er pennad.''
-
-Gwelit ivez [[Special:Log/upload|lroll an enporzhiadurioù]] ha[[Special:ImageList|roll an holl skeudennoù enporzhiet]].",
-	'wmu-show-message' => 'Diskouez ar gemennadenn',
-	'wmu-hide-message' => 'kuzhat ar gemenadenn',
 	'wmu-hide-license-msg' => 'Kuzhat skrid an aotre-implijout',
 	'wmu-show-license-msg' => 'Diskwel skrid an aotre-implijout',
 	'wmu-max-thumb' => "Ment vrasañ ar skeudennig dic'hlann, distroit d'ar vent orin",
@@ -517,11 +497,6 @@ $messages['cy'] = array(
 	'wmu-bad-extension' => 'Rydych wedi ceisio uwchlwytho ffeil o fath na chaniateir. Ceisiwch eto os gwelwch yn dda.',
 	'wmu-filetype-missing' => "Mae'r estyniad ffeil yn eisiau ar y ffeil yr ydych am ei huwchlwytho",
 	'wmu-filetype-incorrect' => "Mae'r estyniad ffeil ar y ffeil yr ydych am ei huwchlwytho yn anghywir",
-	'wmu-uploadtext' => "'''Mae'r ffurflen hon yn eich galluogi i uwchlwytho ffeiliau'n gyflym a'u harddangos mewn tudalennau.''' 
-
- ''Gweler hefyd y [[Special:Log/upload|lòg uwchlwytho]] a [[Special:ImageList|rhestr yr holl ffeiliau a uwchlwythwyd]].''",
-	'wmu-show-message' => 'dangos y neges',
-	'wmu-hide-message' => "cuddio'r neges",
 	'wmu-hide-license-msg' => 'cuddio testun y drwydded',
 	'wmu-show-license-msg' => 'dangos testun y drwydded',
 	'wmu-max-thumb' => "y mân-lun yn fwy na'r maint mwyaf posib, felly'n gosod ar faint y gwreiddiol",
@@ -591,11 +566,6 @@ $messages['de'] = array(
 	'wmu-bad-extension' => 'Du hast versucht einen nicht erlaubten Dateityp hochzuladen.',
 	'wmu-filetype-missing' => 'Diesem Upload fehlt die Dateiendung',
 	'wmu-filetype-incorrect' => 'Dieser Upload hat eine falsche Dateiendung',
-	'wmu-uploadtext' => "'''Dieses Formular erlaubt dir das schnelle Hochladen und Einbinden von Videos in Artikel.'''
-
-''Siehe auch das [[Special:Log/upload|Datei-Logbuch]] und die [[Special:ImageList|Liste aller hochgeladenen Dateien]].''",
-	'wmu-show-message' => 'Hinweis anzeigen',
-	'wmu-hide-message' => 'Hinweis ausblenden',
 	'wmu-hide-license-msg' => 'Lizenz-Text ausblenden',
 	'wmu-show-license-msg' => 'Lizenz-Text einblenden',
 	'wmu-max-thumb' => 'Maximale Vorschau-Größe überschritten, zurückgesetzt auf Original-Größe',
@@ -665,11 +635,6 @@ $messages['de-formal'] = array(
 	'wmu-bad-extension' => 'Sie haben versucht einen nicht erlaubten Dateityp hochzuladen.',
 	'wmu-filetype-missing' => 'Diesem Upload fehlt die Dateiendung',
 	'wmu-filetype-incorrect' => 'Dieser Upload hat eine falsche Dateiendung',
-	'wmu-uploadtext' => "'''Dieses Formular erlaubt Ihnen das schnelle Hochladen und Einbinden von Dateien in Artikel.'''
-
-''Siehe auch das [[Special:Log/upload|Datei-Logbuch]] und die [[Special:ImageList|Liste aller hochgeladenen Dateien]].''",
-	'wmu-show-message' => 'Hinweis anzeigen',
-	'wmu-hide-message' => 'Hinweis ausblenden',
 	'wmu-hide-license-msg' => 'Lizenz-Text ausblenden',
 	'wmu-show-license-msg' => 'Lizenz-Text einblenden',
 	'wmu-max-thumb' => 'Maximale Vorschau-Größe überschritten, zurückgesetzt auf Original-Größe',
@@ -742,10 +707,6 @@ $messages['es'] = array(
 	'wmu-bad-extension' => 'Intestaste subir un tipo de archivo no permitido. Por favor inténtalo de nuevo.',
 	'wmu-filetype-missing' => 'A este archivo subido le falta la extensión de archivo',
 	'wmu-filetype-incorrect' => 'Este archivo que quieres subir tiene una extensión incorrecta',
-	'wmu-uploadtext' => "'''Este formulario te permite subir rápidamente y mostrar archivos en las páginas.''' 
-''Mira también el [[Special:Log/upload|registro de cargas]] y la [[Special:ImageList|lista de todos los archivos subidos]].''",
-	'wmu-show-message' => 'mostrar mensaje',
-	'wmu-hide-message' => 'ocultar mensaje',
 	'wmu-hide-license-msg' => 'ocultar el texto de la licencia',
 	'wmu-show-license-msg' => 'mostrar el texto de la licencia',
 	'wmu-max-thumb' => 'tamaño máximo de la miniatura superado, revertiendo al tamaño original',
@@ -790,7 +751,6 @@ $messages['eu'] = array(
 	'wmu-close' => 'itxi',
 	'wmu-imagelink' => '<b>Berria!</b> Irudiak gehitu',
 	'wmu-imagebutton' => 'Irudiak gehitu',
-	'wmu-show-message' => 'Mezua erakutsi',
 	'wmu-column' => 'Zutabeak',
 );
 
@@ -824,8 +784,6 @@ $messages['fi'] = array(
 	'wmu-thiswiki2' => 'Tämän wikin kuvat ($1 {{PLURAL:$1|tulos|tulosta}})',
 	'wmu-success' => '<h1>Onnistui</h1>Kuvasi on lisätty.',
 	'wmu-imagebutton' => 'Lisää kuvia',
-	'wmu-show-message' => 'näytä viesti',
-	'wmu-hide-message' => 'piilota viesti',
 	'wmu-hide-license-msg' => 'piilota lisenssiteksti',
 	'wmu-show-license-msg' => 'näytä lisenssiteksti',
 );
@@ -885,11 +843,6 @@ $messages['fr'] = array(
 	'wmu-bad-extension' => "Vous avez essayé d'importer un type de fichier non autorisé. Veuillez réessayer.",
 	'wmu-filetype-missing' => "L'extension du fichier importé est manquante",
 	'wmu-filetype-incorrect' => "L'extension du fichier importé est incorrecte",
-	'wmu-uploadtext' => "'''Ce formulaire vous permet d'importer des fichiers et de les inclure rapidement dans les pages.'''
-
-''Voir aussi [[Special:Log/upload|la liste des importations]] et [[Special:ImageList|la liste de toutes les images importées]].''",
-	'wmu-show-message' => 'afficher le message',
-	'wmu-hide-message' => 'masquer le message',
 	'wmu-hide-license-msg' => 'masquer le texte de la licence',
 	'wmu-show-license-msg' => 'afficher le texte de la licence',
 	'wmu-max-thumb' => 'taille maximale de miniature dépassée, retour à la taille originale',
@@ -959,11 +912,6 @@ $messages['gl'] = array(
 	'wmu-bad-extension' => 'Intentou cargar un tipo de ficheiro non permitido. Por favor, probe de novo.',
 	'wmu-filetype-missing' => 'Nesta carga falta a extensión do ficheiro',
 	'wmu-filetype-incorrect' => 'A extensión do ficheiro desta carga é incorrecta',
-	'wmu-uploadtext' => "'''Este formulario permítelle cargar ficheiros rapidamente e incluílos en artigos.'''
-
-''Olle tamén o [[Special:Log/upload|rexistro de cargas]] e mais unha [[Special:ImageList|lista con todos os ficheiros cargados]].''",
-	'wmu-show-message' => 'mostrar a mensaxe',
-	'wmu-hide-message' => 'agochar a mensaxe',
 	'wmu-hide-license-msg' => 'agochar o texto da licenza',
 	'wmu-show-license-msg' => 'mostrar o texto da licenza',
 	'wmu-max-thumb' => 'superouse o tamaño máximo para unha miniatura; volvendo ao tamaño orixinal',
@@ -1034,11 +982,6 @@ $messages['he'] = array(
 	'wmu-bad-extension' => 'ניסיתם להעלות  סוג קובץ לא חוקי. אנא נסו שנית.',
 	'wmu-filetype-missing' => 'לקובץ זה חסרה סיומת קובץ',
 	'wmu-filetype-incorrect' => 'לקובץ המצורף יש סיומת קובץ שגויה',
-	'wmu-uploadtext' => "'''טופס זה מאפשר לך להעלות ולהציג קבצי הדפים בקלות.''' 
-
-''ראו גם  [[Special:Log/upload|יומן העלאות]] ו[[Special:ImageList|רשימת כל הקבצים באתר]].''",
-	'wmu-show-message' => 'הצגת הודעה',
-	'wmu-hide-message' => 'הסתרת הודעה',
 	'wmu-hide-license-msg' => 'הסתרת הרישיון',
 	'wmu-show-license-msg' => 'הצגת הרישיון',
 	'wmu-max-thumb' => 'חריגה מגודל תמונה מקסימלי ,מחזיר לגודל המקורי',
@@ -1092,8 +1035,6 @@ $messages['hu'] = array(
 	'wmu-close' => 'bezárás',
 	'wmu-imagelink' => '<b>Újdonság!</b> Képek hozzáadása',
 	'wmu-imagebutton' => 'Kép hozzáadása',
-	'wmu-show-message' => 'üzenet megjelenítése',
-	'wmu-hide-message' => 'üzenet elrejtése',
 	'wmu-hide-license-msg' => 'licenc szövegének elrejtése',
 	'wmu-show-license-msg' => 'licenc szövegének megjelenítése',
 	'wmu-placeholder' => 'Helyfoglaló',
@@ -1154,11 +1095,6 @@ $messages['ia'] = array(
 	'wmu-bad-extension' => 'Tu ha tentate incargar un file de un typo non permittite. Per favor reproba.',
 	'wmu-filetype-missing' => 'Le nomine del file incargate non ha un extension',
 	'wmu-filetype-incorrect' => 'Le nomine del file incargate ha un extension incorrecte',
-	'wmu-uploadtext' => "'''Iste formulario permitte rapidemente incargar e presentar files in articulos.'''
-
-''Vide etiam le [[Special:Log/upload|registro de incargamentos]] e un [[Special:ImageList|lista de tote le files incargate]].''",
-	'wmu-show-message' => 'revelar message',
-	'wmu-hide-message' => 'celar message',
 	'wmu-hide-license-msg' => 'celar texto del licentia',
 	'wmu-show-license-msg' => 'revelar texto del licentia',
 	'wmu-max-thumb' => 'dimension maximal del miniatura excedite, reversion al dimension original',
@@ -1234,11 +1170,6 @@ $messages['id'] = array(
 	'wmu-bad-extension' => 'Anda mencoba untuk meng-unggah jenis file yang tidak diperbolehkan. Silakan coba lagi.',
 	'wmu-filetype-missing' => 'Unggahan ini hilang nama extensi berkasnya',
 	'wmu-filetype-incorrect' => 'Unggahan ini memiliki extensi berkas yang salah',
-	'wmu-uploadtext' => "'''Formulir ini memungkinkan anda untuk mengunduh cepat dan menampilkan berkas di halaman.'''
-
-''Lihat juga [[Special:Log/upload|log pengunggahan]] dan [[Special:ImageList|daftar semua berkas]].''",
-	'wmu-show-message' => 'tunjukkan pesan',
-	'wmu-hide-message' => 'sembunyikan pesan',
 	'wmu-hide-license-msg' => 'sembunyikan teks lisensi',
 	'wmu-show-license-msg' => 'tampilkan teks lisensi',
 	'wmu-max-thumb' => 'ukuran thumbnail maksimum terlampaui, kembali ke ukuran aslinya',
@@ -1333,9 +1264,6 @@ $messages['ja'] = array(
 	'wmu-bad-extension' => 'アップロードしようとしたファイルのタイプが不適切です。選択し直してください。',
 	'wmu-filetype-missing' => 'ファイルに拡張子がありません',
 	'wmu-filetype-incorrect' => 'ファイルの拡張子が不適切です',
-	'wmu-uploadtext' => '<b>このフォームでは、簡単に画像をアップロード・記事への挿入ができます。</b><br /><i>[[Special:Log/upload|アップロードログ]]や[[Special:ImageList|アップロードされているファイルの一覧]]もご覧ください。</i>',
-	'wmu-show-message' => 'メッセージを表示',
-	'wmu-hide-message' => 'メッセージを非表示',
 	'wmu-hide-license-msg' => 'ライセンステキストを非表示',
 	'wmu-show-license-msg' => 'ライセンステキストを表示',
 	'wmu-max-thumb' => 'サムネイルのサイズはオリジナルのサイズより大きくできません。オリジナルのサイズに戻します。',
@@ -1390,8 +1318,6 @@ $messages['lb'] = array(
 	'wmu-close' => 'zoumaachen',
 	'wmu-imagelink' => '<b>Nei!</b> Biller derbäisetzenimages',
 	'wmu-imagebutton' => 'Biller derbäisetzen',
-	'wmu-show-message' => 'Message weisen',
-	'wmu-hide-message' => 'Message verstoppen',
 	'wmu-gallery' => 'Gallerie',
 );
 
@@ -1454,11 +1380,6 @@ $messages['mk'] = array(
 	'wmu-bad-extension' => 'Се обидовте да подигнете недозволен тип на податотека. Обидете се повторно.',
 	'wmu-filetype-missing' => 'На подигнатата податотека ѝ недостасува наставка',
 	'wmu-filetype-incorrect' => 'Оваа подигната податотека има неправилна наставка',
-	'wmu-uploadtext' => "'''Овој образец служи за брзо подигање и поставање на податотеки во статии.'''
-
-''Погледајте го и [[Special:Log/upload|дневникот на подигања]] и [[Special:ImageList|списокот на сите подигнати податотеки]].''",
-	'wmu-show-message' => 'прикажи порака',
-	'wmu-hide-message' => 'скриј порака',
 	'wmu-hide-license-msg' => 'скриј текст на лиценцата',
 	'wmu-show-license-msg' => 'прикажи текст на лиценцата',
 	'wmu-max-thumb' => 'надмината е максималната дозволена големина на минијатурата; ја враќам првичната големина',
@@ -1549,11 +1470,6 @@ $messages['nl'] = array(
 Probeer het nog een keer.',
 	'wmu-filetype-missing' => 'Dit bestand heeft geen extensie',
 	'wmu-filetype-incorrect' => 'Dit bestand heeft een onjuiste extensie',
-	'wmu-uploadtext' => "'''Via dit formulier kunt u snel uploaden en bestanden weergeven op pagina's.'''
-
-''Zie ook het [[Special:Log/upload|uploadlogboek]] en een [[Special:ImageList|lijst met alle toegevoegde bestanden]].''",
-	'wmu-show-message' => 'bericht weergeven',
-	'wmu-hide-message' => 'bericht verbergen',
 	'wmu-hide-license-msg' => 'licentietekst verbergen',
 	'wmu-show-license-msg' => 'licentietekst weergeven',
 	'wmu-max-thumb' => 'de maximale miniatuurgrootte is overschreden; de originele afmetingen worden ingesteld',
@@ -1634,11 +1550,6 @@ $messages['no'] = array(
 	'wmu-bad-extension' => 'Du prøvde å laste opp en ulovlig filtype. Vennligst prøv igjen.',
 	'wmu-filetype-missing' => 'Denne opplastingen mangler en filtype',
 	'wmu-filetype-incorrect' => 'Denne opplastingen har en ugyldig filtype',
-	'wmu-uploadtext' => "'''Dette skjemaet tillater deg å raskt laste opp og vise filer på sider.'''
-
-''Se også [[Special:Log/upload|opplastingsloggen]] og [[Special:ImageList|en liste over alle opplastede filer]].''",
-	'wmu-show-message' => 'vis melding',
-	'wmu-hide-message' => 'skjul melding',
 	'wmu-hide-license-msg' => 'skjul lisenstekst',
 	'wmu-show-license-msg' => 'vis lisenstekst',
 	'wmu-max-thumb' => 'maksimal miniatyrbildestørrelse overskredet, går tilbake til opprinnelig størrelse',
@@ -1735,11 +1646,6 @@ $messages['pms'] = array(
 	'wmu-bad-extension' => "A l'ha provà a carié na sòrt d'archivi pa legal. Për piasì, ch'a preuva torna.",
 	'wmu-filetype-missing' => "Ës cariament-sì a l'é sensa estension dl'archivi",
 	'wmu-filetype-incorrect' => "Ës cariament-sì a l'ha n'estension d'archivi pa giusta",
-	'wmu-uploadtext' => "'''Ës formolari-sì a-j përmët ëd carié an pressa e visualisé j'archivi ant j'artìcoj.'''
-
-''Ch'a bèica ëdcò ël [[Special:Log/upload|registr dij cariament]] e na [[Special:ImageList|lista ëd tùit j'archivi carià]].''",
-	'wmu-show-message' => 'smon-e ël mëssagi',
-	'wmu-hide-message' => 'stërma mëssagi',
 	'wmu-hide-license-msg' => 'stërmé ël test dla licensa',
 	'wmu-show-license-msg' => 'smon-e ël test dla licensa',
 	'wmu-max-thumb' => 'dimension màssima dla figurin-a sorpassà, artorn a la dimension original',
@@ -1775,8 +1681,6 @@ $messages['ps'] = array(
 	'wmu-link' => 'تړنه',
 	'wmu-close' => 'تړل',
 	'wmu-imagebutton' => 'انځورونه ورګډول',
-	'wmu-show-message' => 'پيغام ښکاره کول',
-	'wmu-hide-message' => 'پيغام پټول',
 	'wmu-gallery' => 'نندارتون',
 	'wmu-gallery-btn1' => 'يو بل انځور ورګډول',
 );
@@ -1832,11 +1736,6 @@ $messages['pt'] = array(
 	'wmu-bad-extension' => 'Tentou importar um tipo de ficheiro não permitido. Tente novamente, por favor.',
 	'wmu-filetype-missing' => 'Falta a extensão do ficheiro neste upload',
 	'wmu-filetype-incorrect' => 'Este upload tem uma extensão de ficheiro incorrecta',
-	'wmu-uploadtext' => "'''Este formulário permite-lhe importar ficheiros e apresentá-los nas páginas com rapidez.'''
-
-''Veja também o [[Special:Log/upload|registo de uploads]] e uma [[Special:ImageList|lista de todos os ficheiros importados]].''",
-	'wmu-show-message' => 'mostrar mensagem',
-	'wmu-hide-message' => 'esconder mensagem',
 	'wmu-hide-license-msg' => 'esconder texto da licença',
 	'wmu-show-license-msg' => 'mostrar texto da licença',
 	'wmu-max-thumb' => 'foi excedido o tamanho máximo para miniaturas; a reverter para o original',
@@ -1884,8 +1783,6 @@ $messages['pt-br'] = array(
 	'wmu-imagebutton' => 'Adicionar imagens',
 	'wmu-filetype-missing' => 'Este carregamento está sem uma extensão de arquivo',
 	'wmu-filetype-incorrect' => 'Este carregamento tem uma extensão de arquivo incorreta',
-	'wmu-show-message' => 'mostrar mensagem',
-	'wmu-hide-message' => 'ocultar mensagem',
 	'wmu-gallery' => 'Galeria',
 	'wmu-columns' => '$1 {{PLURAL:$1|coluna|colunas}}',
 	'wmu-column' => 'Colunas',
@@ -1946,11 +1843,6 @@ $messages['ru'] = array(
 	'wmu-bad-extension' => 'Вы попытались загрузить файл недопустимого типа. Пожалуйста, попробуйте ещё раз.',
 	'wmu-filetype-missing' => 'У этой загрузки отсутствует расширение файла',
 	'wmu-filetype-incorrect' => 'У этой загрузки неверное расширение файла',
-	'wmu-uploadtext' => "'''Эта форма позволяет быстро загрузить и отобразить файлы в статьях.'''
-
-''См. также [[Special:Log/upload|журнал загрузок]] и [[Special:ImageList|список всех загруженных файлов]].''",
-	'wmu-show-message' => 'показать сообщение',
-	'wmu-hide-message' => 'скрыть сообщение',
 	'wmu-hide-license-msg' => 'показать текст лицензии',
 	'wmu-show-license-msg' => 'скрыть текст лицензии',
 	'wmu-max-thumb' => 'превышен максимальный размер миниатюры, возврат к исходному размеру',
@@ -2024,8 +1916,6 @@ $messages['sr-ec'] = array(
 	'wmu-warn3' => 'Треба да наведете прво име фајла!',
 	'wmu-imagelink' => '<b>Ново!</b> Додајте слике',
 	'wmu-imagebutton' => 'Додај слике',
-	'wmu-show-message' => 'Покажи поруку',
-	'wmu-hide-message' => 'сакриј поруку',
 	'wmu-hide-license-msg' => 'сакриј текст лиценце',
 	'wmu-show-license-msg' => 'оикажи текст лиценце',
 	'wmu-notallowed' => 'Не можете да пошаљете слике на ову викију',
@@ -2130,11 +2020,6 @@ $messages['tl'] = array(
 	'wmu-bad-extension' => 'Sinubok mong magkarga ng isang uri ng talaksang ilegal.  Mangyaring subukan uli.',
 	'wmu-filetype-missing' => 'Nawawala mula sa kargang ito ang kanyang pandugtong ng talaksan',
 	'wmu-filetype-incorrect' => 'May hindi tamang pandugtong ng talaksan ang kargang ito',
-	'wmu-uploadtext' => "'''Nagpapahintulot ang pormularyong ito na mabilisang magkarga at magpakita ng mga talaksan sa loob ng mga pahina.'''
-
-''Tingnan din ang [[Special:Log/upload|talaan ng pagkarga]] at ang isang [[Special:ImageList|talaan ng lahat ng mga talaksang naikarga na]].''",
-	'wmu-show-message' => 'ipakita ang mensahe',
-	'wmu-hide-message' => 'ikubli ang mensahe',
 	'wmu-hide-license-msg' => 'ikubli ang teksto ng lisensya',
 	'wmu-show-license-msg' => 'ipakita ang teksto ng lisensya',
 	'wmu-max-thumb' => 'lumabis sa pinakamataas na sukat ng kagyat, nagpapanumbalik sa orihinal na sukat',
@@ -2231,11 +2116,6 @@ $messages['zh-hans'] = array(
 	'wmu-bad-extension' => '您上传的文件类型不被支持。请再试一次。',
 	'wmu-filetype-missing' => '本次上传丢失了文件扩展信息',
 	'wmu-filetype-incorrect' => '本次上传遇到了不正确的文件扩展名',
-	'wmu-uploadtext' => "'''使用本表单可以快速上传文件并显示在文件中。'''
-
-''请参见[[Special:Log/upload|上传记录]]和[[Special:ImageList|上传列表]]。''",
-	'wmu-show-message' => '显示信息',
-	'wmu-hide-message' => '隐藏信息',
 	'wmu-hide-license-msg' => '隐藏授权文本',
 	'wmu-show-license-msg' => '显示授权文本',
 	'wmu-max-thumb' => '缩略图尺寸过大，恢复为原始尺寸',
