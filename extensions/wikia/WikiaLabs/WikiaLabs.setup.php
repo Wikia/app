@@ -28,7 +28,7 @@ $app = WF::build('App');
 /**
  * classes
  */
-$app->registerClass('WikiaLabsSpecial', $dir . 'WikiaLabs.body.php');
+$app->registerClass('WikiaLabsSpecial', $dir . 'WikiaLabsSpecial.class.php');
 $app->registerClass('WikiaLabsModule', $dir . 'WikiaLabsModule.class.php');
 $app->registerClass('WikiaLabs', $dir . 'WikiaLabs.class.php');
 $app->registerClass('WikiaLabsProject', $dir . 'WikiaLabsProject.class.php');
