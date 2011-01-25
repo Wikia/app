@@ -3918,7 +3918,16 @@ class User {
 		} else {
 			wfDebug( "Loading options for user " . $this->getId() . " from database.\n" );
 			// Load from database
-			$dbr = wfGetDB( DB_SLAVE );
+			// wikia change, load always from first cluster when we use
+			// shared users database
+			// @author Krzysztof Krzyżaniak (eloy)
+			global $wgExternalSharedDB, $wgSharedDB;
+			if( isset( $wgSharedDB ) ) {
+				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+			}
+			else {
+				$dbr = wfGetDB( DB_SLAVE );
+			}
 
 			$res = $dbr->select(
 				'user_properties',
