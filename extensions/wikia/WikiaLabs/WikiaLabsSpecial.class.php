@@ -19,13 +19,19 @@ class WikiaLabsSpecial extends SpecialPage {
 		}
 		
 		$oTmpl = WF::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
-
-		$out = WF::build( 'WikiaLabsProject')->getList(array("graduated" => false, "active" => true  )  );
-
+		$projects = WF::build( 'WikiaLabsProject')->getList(array("graduated" => false, "active" => true  )  );
 		$userId = $this->user->getId();
 	
+		/*sync with WF*/
+		foreach($projects as $value) {
+			if(!$value->isActive() && $this->app->runFunction( 'WikiFactory::getVarByName',  $wikiaLabsProject->getExtension(), $this->app->getGlobal( 'wgCityId' )) ){
+				$value->setActive(true);
+				$value->update();
+			} 
+		}
+		
 		$oTmpl->set_vars( array(
-			'projects' => $out,
+			'projects' => $projects,
 			'cityId' => $this->app->getGlobal( 'wgCityId' ),
 			'userId' => $userId,
 			'contLang' => $this->app->getGlobal( 'wgContLang' ),
