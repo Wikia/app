@@ -652,7 +652,7 @@ class Preferences {
 	}
 
 	static function editingPreferences( $user, &$defaultPreferences ) {
-		global $wgUseExternalEditor, $wgLivePreview;
+		global $wgUseExternalEditor, $wgLivePreview, $wgAllowUserCssPrefs;
 
 		/* Wikia change begin - @author: Macbre */
 		wfRunHooks( 'EditingPreferencesBefore', array($user, &$defaultPreferences ) );
@@ -676,18 +676,21 @@ class Preferences {
 					'max' => 1000,
 				);
 
-		$defaultPreferences['editfont'] =
-				array(
-					'type' => 'select',
-					'section' => 'editing/advancedediting',
-					'label-message' => 'editfont-style',
-					'options' => array(
-						wfMsg( 'editfont-default' ) => 'default',
-						wfMsg( 'editfont-monospace' ) => 'monospace',
-						wfMsg( 'editfont-sansserif' ) => 'sans-serif',
-						wfMsg( 'editfont-serif' ) => 'serif',
-					)
-				);
+		if ( $wgAllowUserCssPrefs ) {
+			$defaultPreferences['editfont'] =
+					array(
+						'type' => 'select',
+						'section' => 'editing/advancedediting',
+						'label-message' => 'editfont-style',
+						'options' => array(
+							wfMsg( 'editfont-default' ) => 'default',
+							wfMsg( 'editfont-monospace' ) => 'monospace',
+							wfMsg( 'editfont-sansserif' ) => 'sans-serif',
+							wfMsg( 'editfont-serif' ) => 'serif',
+						)
+					);
+		}
+		
 		$defaultPreferences['previewontop'] =
 				array(
 					'type' => 'toggle',
