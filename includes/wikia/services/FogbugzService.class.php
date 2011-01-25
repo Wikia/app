@@ -163,8 +163,15 @@ class FogbugzService extends Service {
 
 			$xml = $this->curl->exec();
 			if( !empty( $xml ) ) {
-				//var_dump($xml);
-				return true;
+				$dom = new DOMDocument;
+				$dom->loadXML( $xml );
+				$case = $dom->getElementsByTagName( 'case' )->item(0);
+				if( $case instanceof DOMNode ) {
+					return array( 'caseId' => $case->attributes->getNamedItem( 'ixBug' )->nodeValue );
+				}
+				else {
+					throw new WikiaException("Fogbugz creating case Failed");
+				}
 			}
 			else {
 				throw new WikiaException("Fogbugz connection failed");
