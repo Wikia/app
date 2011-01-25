@@ -13,8 +13,9 @@ class WikiaLabsSpecial extends SpecialPage {
 	}
 	
 	function execute( $par ) {
-		if ( !$this->user->userCanExecute( $wgUser ) ) {
-			$this->displayRestrictionError();
+		if ( !$this->userCanExecute( $this->user ) ) {
+			$this->displayRestrictionError($this->user);
+			return ;
 		}
 		
 		$oTmpl = WF::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
