@@ -40,7 +40,9 @@ function wfAdProviderDARTFirstChunkForHubs($first_chunk) {
 
 	switch ($wgTitle->getText()){
 		case "Entertainment":  $first_chunk = "wka.ent/_entertainment/hub"; break;
+		case "Movie":
 		case "Movies":         $first_chunk = "wka.ent/_movies/hub";        break;
+		case "TV":
 		case "Television":     $first_chunk = "wka.ent/_tv/hub";            break;
 		case "Music":          $first_chunk = "wka.ent/_music/hub";         break;
 		case "Anime":          $first_chunk = "wka.ent/_anime/hub";         break;
@@ -52,7 +54,9 @@ function wfAdProviderDARTFirstChunkForHubs($first_chunk) {
 		case "PS3 Games":      $first_chunk = "wka.gaming/_ps3/hub";        break;
 		case "Wii Games":      $first_chunk = "wka.gaming/_wii/hub";        break;
 		case "Handheld":       $first_chunk = "wka.gaming/_handheld/hub";   break;
+		case "Casual Games":   $first_chunk = "wka.gaming/_casualgames/hub";break;
 		case "Lifestyle":      $first_chunk = "wka.life/_lifestyle/hub";    break;
+		case "Recipes":        $first_chunk = "wka.life/_recipes/hub";      break;
 
 		default:               $first_chunk = "wka.wikia/_wikiaglobal/hub";
 	}
