@@ -742,7 +742,6 @@ class SponsorshipDashboardService extends Service {
 
 	private function getFromCache ( $prefix, $cityId = false ){
 
-		return false;
 		global $wgMemc;
 		return $wgMemc->get( $this->getKey( $prefix, $cityId ) );
 	}
