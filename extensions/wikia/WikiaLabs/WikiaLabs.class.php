@@ -79,29 +79,35 @@ class WikiaLabs {
 	}
 
 	public static function saveFeedback() {
-		$request = WF::build( 'App' )->getGlobal( 'wgRequest' );
+		$app = WF::build( 'App' );
+		$request = $app->getGlobal( 'wgRequest' );
+		$userId = $app->getGlobal( 'wgUser' )->getId();
 		$wikiaLabs = WF::build( 'WikiaLabs' );
-		$response = new AjaxResponse();		
-		$result =  $wikiaLabs->saveFeedbackInternal( $request->getVal('projectId', 0), $request->getVal('rating', 0), $request->getVal('feedbacktext') );
+
+		$response = new AjaxResponse();
+		$result =  $wikiaLabs->saveFeedbackInternal( $request->getVal('projectId', 0), $userId, $request->getVal('rating', 0), $request->getVal('feedbacktext') );
+
 		$response->addText( json_encode( $result ) );
 		return $response;
 	}
 
-	public function saveFeedbackInternal($projectId, $rating, $message ) {
+	public function saveFeedbackInternal( $projectId, $userId, $rating, $message ) {
 		$project = WF::build( 'WikiaLabsProject', array( 'id' => (int) $projectId ) );
 		$projectId = $project->getId();
-		
+
+		$project->updateRating( $userId, $rating );
+
 		$mulitvalidator = new WikiaValidatorArray(array(
 			'validators'  => array(
 				'message' => new WikiaValidatorString(array("min" => 1, "max" => 255),
 					array('too_short' => wfMsg('wikialabs-feedback-validator-message-too-short'),
-						  'too_long' => wfMsg('wikialabs-feedback-validator-message-too-long'), 
+						  'too_long' => wfMsg('wikialabs-feedback-validator-message-too-long'),
 				)),
 				'projectId' => new WikiaValidatorInteger(array("min" => 1)),
 				'rating' => new WikiaValidatorInteger(array("min" => 1, "max" => 5),
 					array(
 						'too_small' => wfMsg('wikialabs-feedback-validator-rating')
-				)), 
+				)),
 		)));
 
 		$in = array(
@@ -121,7 +127,7 @@ class WikiaLabs {
 			}
 			$out['in'] = $in;
 			$out['status'] = "error";
-			return $out;  
+			return $out;
 		}
 
 		$this->saveFeedbackInFogbugz( $project, $message );

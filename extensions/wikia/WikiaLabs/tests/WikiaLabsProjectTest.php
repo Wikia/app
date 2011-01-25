@@ -7,6 +7,8 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 	const TEST_PROJECT_DESC = 'Hello World!';
 	const TEST_WIKI_ID = 177;
 	const TEST_EXTENSION = 'HelloWorldExtension';
+	const TEST_USER_ID1 = 1;
+	const TEST_USER_ID2 = 2;
 
 	/**
 	 * WikiaLabsProject object
@@ -137,6 +139,22 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 		$this->object->setDisabled( self::TEST_WIKI_ID );
 		$this->assertFalse( $this->object->isEnabled( self::TEST_WIKI_ID ) );
 		$this->assertEquals(0, $this->object->getActivationsNum());
+	}
+
+	public function testUpdateRating() {
+		$this->object->update();
+
+		$testRating1 = 5;
+		$testRating2 = 2;
+
+		$this->object->updateRating( self::TEST_USER_ID1, $testRating1 );
+		$this->object->updateRating( self::TEST_USER_ID2, $testRating2 );
+
+		$this->assertEquals( (($testRating1+$testRating2)/2), $this->object->getRating() );
+
+		$this->object->updateRating( self::TEST_USER_ID2, $testRating1 );
+
+		$this->assertEquals( (($testRating1+$testRating1)/2), $this->object->getRating() );
 	}
 
 }

@@ -136,11 +136,11 @@ class WikiaLabsProject {
 	public function setExtension($value) {
 		$this->extension = $value;
 	}
-	
+
 	public function getStatus() {
 		return $this->status;
 	}
-	
+
 	public function setStatus($status) {
 		$this->status = $status;
 	}
@@ -274,5 +274,23 @@ class WikiaLabsProject {
 	//		'2' => wfMsg('wikialabs-add-project-status-hide-alow-to-inactive')
 		);
 		return $status;
+	}
+
+	public function updateRating( $userId, $rating ) {
+		if( $this->getId() ) {
+			$row = $this->getDb()->selectRow( 'wikia_labs_project_rating', array( 'wlpra_id' ), array( 'wlpra_wlpr_id' => $this->getId(), 'wlpra_user_id' => $userId ), __METHOD__ );
+			$fields = array( 'wlpra_wlpr_id' => $this->getId(), 'wlpra_user_id' => $userId, 'wlpra_value' => $rating );
+			if( !empty( $row->wlpra_id ) ) {
+				$this->getDb( DB_MASTER )->update( 'wikia_labs_project_rating', $fields, array( 'wlpra_id' => $row->wlpra_id ), __METHOD__ );
+			}
+			else {
+				$this->getDb( DB_MASTER )->insert( 'wikia_labs_project_rating', $fields, __METHOD__ );
+			}
+
+			$row = $this->getDb( DB_MASTER )->selectRow( 'wikia_labs_project_rating', array( 'SUM(wlpra_value)/COUNT(*) AS rating' ), array( 'wlpra_wlpr_id' => $this->getId() ) );
+
+			$this->setRating( $row->rating );
+			$this->update();
+		}
 	}
 }
