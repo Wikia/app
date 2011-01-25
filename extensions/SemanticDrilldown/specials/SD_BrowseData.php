@@ -232,7 +232,7 @@ class SDBrowseDataPage extends QueryPage {
 	 */
 	function createTempTable( $category, $subcategory, $subcategories, $applied_filters ) {
 		$dbr = wfGetDB( DB_SLAVE, 'smw' );
-		$sql1 = "CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL )";
+		$sql1 = "CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL ) Engine=Memory";
 		$dbr->query( $sql1 );
 		$sql2 = "CREATE INDEX id_index ON semantic_drilldown_values ( id )";
 		$dbr->query( $sql2 );
