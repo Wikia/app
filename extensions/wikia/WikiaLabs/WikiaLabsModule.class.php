@@ -13,6 +13,13 @@ class WikiaLabsModule extends Module {
 	}
 	
 	public function executeGraduates() {
+		
+		
+		$this->app = WF::build( 'App' );
+		$this->user = $this->app->getGlobal('wgUser');
+		
+		$this->show = $this->user->isAllowed( 'wikialabsuser' );
+		
 		$out = WF::build( 'WikiaLabsProject')->getList( array("graduated" => true ) );
 		foreach($out as $key => $value) {
 			$data = $value->getData();
