@@ -73,9 +73,6 @@ class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
 				dartUrl = dartUrl.replace("qcseg=N;", getQuantcastSegmentKV());
     		}
 		}
-		var nofooter = "";
-		if(document.cookie.match(/wikia-ab=[^;]*(nofooter=1)/)) { nofooter = "nofooter=1;"; } 
-		dartUrl = dartUrl.replace("nofooter=N;", nofooter);
 EOT;
 		if ($params['ghostwriter']) {
 			$out .= <<<EOT
@@ -177,7 +174,6 @@ EOT;
 		$url .= 'dis=N;'; // screen resolution (used only by AdDriver)
 		$url .= 'hasp=N;'; // page has prefooter ads? (used only by AdDriver)
 		$url .= "qcseg=N;";	// wlee: placeholder for JS that sets the real key-value. See self::getIframeFillFunctionDefinition()
-		$url .= "nofooter=N;";	// wlee: placeholder for JS that sets the real key-value. See self::getIframeFillFunctionDefinition()
 		$url .= "impct=N;";	// impression count for current session (used only by AdDriver)
 		$url .= $this->getLocKV($slotname);
 		$url .= $this->getDcoptKV($slotname);
@@ -443,8 +439,6 @@ EOT;
 		'var qcsegs = QuantcastSegments.getQcsegAsDARTKeyValues(); ' . "\n" .	// wlee: Quantcast Segments
 		'url = url.replace("qcseg=N;", qcsegs); ' . "\n" .
 		'} ' .
-		'var nofooter = ""; ' . "\n" .	// wlee: A/B test for footer ads
-		'if(document.cookie.match(/wikia-ab=[^;]*(nofooter=1)/)) { nofooter = "nofooter=1;"; } url = url.replace("nofooter=N;", nofooter); ' . "\n" .
 		'var ad_iframeOld = document.getElementById("' . addslashes($slotname) ."_iframe\"); " . "\n" .
 		'if (typeof ad_iframeOld == "undefined") { return; } ' . "\n" .
 		"var parent_node = ad_iframeOld.parentNode; ad_iframe = ad_iframeOld.cloneNode(true); " . "\n" .

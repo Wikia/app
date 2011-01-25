@@ -421,13 +421,6 @@ var AdDriverDelayedLoaderItem = function (slotname, size, dartUrl) {
 			url = url.replace("qcseg=N;", qcsegs);
 		}
 
-		// A/B tests
-		var nofooter = '';
-		if(document.cookie.match(/wikia-ab=[^;]*(nofooter=1)/)) { 
-			nofooter = "nofooter=1;"; 
-		} 
-		url = url.replace("nofooter=N;", nofooter);
-
 		// impression count
 		// the first time this is called, getNumAllCall() returns zero. To make this the 'first' impression, add one
 		url = url.replace('impct=N;', 'impct=' + (parseInt(AdDriver.getNumAllCall(slotname))+1) + ';'); 
