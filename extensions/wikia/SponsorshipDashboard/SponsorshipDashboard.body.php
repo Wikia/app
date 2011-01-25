@@ -8,175 +8,194 @@
  */
 
 class SponsorshipDashboard extends SpecialPage {
+	
+	const TEMPLATE_EMPTY_CHART = 'emptychart';
+	const TEMPLATE_ERROR = 'error';
+	const TEMPLATE_CHART = 'chart';
+
+	// important: array key and any array item value cannot be the same
+	protected $reports = array(
+		'marketresearch' => array (
+			'competitors',
+			'interests',
+			'keywords',
+			'source'
+		),
+		'userengagement' => array (
+			'activity',
+			'engagement',
+			'participation',
+		),
+	    	'growthmetrics' => array (
+			'visitors',
+			'traffic',
+			'content',
+		)
+	);
+
+	protected $tagDependentReports = array(
+	    'competitors',
+	    'interests'
+	);
+
+	protected $monthlyReports = array(
+	    'activity',
+	    'engagements',
+	    'participation',
+	    'visitors'
+	);
 
 
-
-	private $allowedSubpages = array('error', 'report1', 'report2', 'report3', 'report4');
-	private $popularCityHubs;
+	protected $currentReport = '';
+	protected $popularCityHubs = array();
+	protected $chartCounter = 0;
+	protected $hiddenSeries = array();
+	protected $dataMonthly = false;
+	protected $tagDependent = false;
+	protected $currentCityHub = false;
+	protected $allowed = false;
+	protected $fromYear = 0;
 
 	function  __construct() {
 
-		global $wgUser, $wgSponsorshipDashboardAllowAdmins;
+		global $wgSponsorshipDashboardAllowAdmins;
+		$wgUser = WF::build('App')->getGlobal('wgUser');
+				
+		$this->allowed = ( in_array('wikimetrics', $wgUser->getRights()) );
 
-		$listed = (
-			( in_array('staff', $wgUser->getEffectiveGroups()) ) ||
-			( in_array('admin', $wgUser->getEffectiveGroups()) && !empty( $wgSponsorshipDashboardAllowAdmins ) )
-		);
-
-		parent::__construct( "SponsorshipDashboard" , '', $listed /*restriction*/);
+		parent::__construct( 'SponsorshipDashboard', 'sponsorship-dashboard', $this->allowed);
 		wfLoadExtensionMessages("SponsorshipDashboard");
 	}
 
-	function execute( $subpage = 'report2' ) {
+	public function isAllowed(){
 
-		global $wgSupressPageSubtitle, $wgUser, $wgRequest, $wgSponsorshipDashboardAllowAdmins;
+		return $this->allowed;
+	}
+
+	protected function isReportPage( $reportName ){
+
+		foreach ( $this->reports as $reports ){
+			if ( in_array( $reportName, $reports ) ){
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected function getReportsTab( $reportName ){
+
+		$firstTab = false;
+		
+		foreach ( $this->reports as $tab => $reports ){
+			if ( in_array( $reportName, $reports ) ){
+				return $tab;
+			} elseif ( empty( $firstTab ) ){
+				$firstTab = $tab;
+			}
+		}
+
+		return $firstTab;
+	}
+
+	protected function getTabsReport( $tabName ){
+
+		// 2DO: add checking user prefences;
+
+		if ( !isset( $this->reports[ $tabName ] ) ){
+			$tabName = key( $this->reports );
+		}
+
+		return $this->reports[ $tabName ][ key( $this->reports[ $tabName ] ) ];
+	}
+
+	function execute( $subpage = false ) {
+
+		global $wgSupressPageSubtitle;
+
+		if ( !empty( $subpage ) && $this->isReportPage( $subpage ) ){
+			$report = $subpage;
+		} else {
+			$report = $this->getTabsReport( $subpage );
+		}
 
 		$wgSupressPageSubtitle = true;
 
-		if (	in_array( 'staff', $wgUser->getEffectiveGroups() ) ||
-			( in_array('admin', $wgUser->getEffectiveGroups()) && !empty( $wgSponsorshipDashboardAllowAdmins ))
-		){
-			
-			if ( in_array( $subpage, $this->allowedSubpages ) ){
-				$function = 'HTML'.$subpage;
-				$this->$function();
-			} else {
-				$this->HTMLreport2();
-			}
+		if ( $this->isAllowed() ){
+			$this->currentReport = $report;
+			$this->tagDependent = in_array( $report, $this->tagDependentReports );
+			$this->dataMonthly = in_array( $report, $this->monthlyReports );
+			$this->displayChart( $report );
 		} else {
 			$this->HTMLerror();
 		}
 	}
-	
+
 	/**
 	 * HTMLmain - displays report 1 subpage.
 	 */
 
-	private function HTMLreport1(){
-
-		global $wgOut;
-
-		wfProfileIn( __METHOD__ );
-
-		$currentCityHub = $this->getCurrentCityHub();
-
-		$this->displayHeader();
-		$this->displayTagSelector();
-
-		if ( empty( $currentCityHub ) ){
-			$this->displayChart( false, false );
-		} else {
-			$sponsorshipDashboardService = new SponsorshipDashboardService;
-			$fromWikiStats = $sponsorshipDashboardService->loadRelatedWikiasData( $currentCityHub );
-			$this->displayChart( $fromWikiStats['serie'], $fromWikiStats['ticks'] );
-		}
-		
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * HTMLmain - displays report 2 subpage.
-	 */
-
-	private function HTMLreport2(){
-
-		global $wgOut, $wgSponsorshipDashboardAllowRanking;
-
-		wfProfileIn( __METHOD__ );
-
-		$sponsorshipDashboardService = new SponsorshipDashboardService;
-		$fromWikiStats = $sponsorshipDashboardService->loadDataFromWikiStats();
-
-		$hiddenSeries = array('A' , 'B', 'C', 'D', 'E', 'G', 'I', 'K', 'L', 'X', 'Y');
-		$this->displayHeader( 1 );
-
-		if ( !empty( $wgSponsorshipDashboardAllowRanking ) ){
-			$this->displayRanking( $sponsorshipDashboardService->loadTagPosition() );
-		}
-
-		$this->displayChart( $fromWikiStats['serie'], $fromWikiStats['ticks'], $hiddenSeries );
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * HTMLmain - displays report 3 subpage.
-	 */
-
-	private function HTMLreport3(){
-
-		global $wgOut;
-
-		wfProfileIn( __METHOD__ );
-
-		$sponsorshipDashboardService = new SponsorshipDashboardService;
-		$GAData = $sponsorshipDashboardService->loadGAData();
-
-		$hiddenSeries = array( 'clicks' , 'visits', 'newVisits', 'newVisitsTimeOnSite' );
-
-		$this->displayHeader(2);
-		$this->displayChart( $GAData['serie'], $GAData['ticks'], $hiddenSeries );
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * HTMLmain - displays report 4 subpage.
-	 */
-
-	private function HTMLreport4(){
-
-		global $wgOut;
-
-		wfProfileIn( __METHOD__ );
-
-		$currentCityHub = $this->getCurrentCityHub();
-
-		$this->displayHeader(4);
-		$this->displayTagSelector( 'report4');
-		
-		if ( empty( $currentCityHub ) ){
-			$this->displayChart( false, false );
-		} else {
-			$sponsorshipDashboardService = new SponsorshipDashboardService;
-			$GAData = $sponsorshipDashboardService->loadTop10CompetitionData( $currentCityHub );
-			$hiddenSeries = array( 'clicks' , 'visits', 'newVisits', 'newVisitsTimeOnSite' );
-			$this->displayChart( $GAData['serie'], $GAData['ticks'], $hiddenSeries );
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
+//	private function HTMLcompetitors(){
+//
+//		$this->tagDependent = true;
+//		$this->displayChart( 'competitors', 'loadCompetitorsData' );
+//	}
+//
+//	private function HTMLinterests(){
+//
+//		$this->tagDependent = true;
+//		$this->displayChart( 'interests', 'loadInterestsData' );
+//	}
+//
+//	private function HTMLkeywords(){
+//
+//		$this->displayChart( 'keywords', 'loadKeywordsData' );
+//	}
+//
+//	private function HTMLsource(){
+//
+//		$this->displayChart( 'source', 'loadSourceData' );
+//	}
+//
+//	private function HTMLactivity(){
+//
+//		$this->dataMonthly = true;
+//		$this->displayChart( 'activity', 'loadActivityData' );
+//	}
+//
+//	private function HTMLengagement(){
+//
+//		$this->dataMonthly = true;
+//		$this->displayChart( 'engagement', 'loadEngagementData' );
+//	}
+//
+//	private function HTMLparticipation(){
+//
+//		$this->dataMonthly = true;
+//		$this->displayChart( 'participation', 'loadParticipationData' );
+//	}
+//
+//	private function HTMLvisitors(){
+//
+//		$this->dataMonthly = true;
+//		$this->displayChart( 'visitors', 'loadVisitorsData' );
+//	}
+//
+//	private function HTMLtraffic(){
+//
+//		$this->displayChart( 'traffic', 'loadTrafficData' );
+//	}
+//
+//	private function HTMLcontent(){
+//
+//		$this->displayChart( 'content', 'loadContentData' );
+//	}
 
 	/**
 	 * HTMLmain - displays tag selector.
 	 */
 
-	private function displayTagSelector( $subpage = 'report1' ){
-
-		global $wgOut, $wgRequest, $wgTitle;
-
-		wfProfileIn( __METHOD__ );
-
-		$sponsorshipDashboardService = new SponsorshipDashboardService;
-		$aPopularHubs = $this->getPopularHubs();
-
-		if ( is_array( $aPopularHubs ) && count( $aPopularHubs ) > 1){
-			
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$oTmpl->set_vars(
-				array(
-					"current"		=> $this->getCurrentCityHub(),
-					"selectorItems"		=> $aPopularHubs,
-					"path"			=> $wgTitle->getFullURL().'/'.$subpage
-				)
-			);
-			$wgOut->addHTML( $oTmpl->execute( "form" ) );
-		
-		}
-		wfProfileOut( __METHOD__ );
-	}
-
-	private function displayHeader( $tab = 0 ){
+	protected function displayHeader(){
 
 		global $wgOut, $wgTitle;
 
@@ -186,23 +205,31 @@ class SponsorshipDashboard extends SpecialPage {
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(
-				array(
-					"tab"			=> (int) $tab,
-					"path"			=> $wgTitle->getFullURL()				)
-			);
+			array(
+				"tab"			=> $this->getReportsTab( $this->currentReport ),
+				"tabs"			=> $this->reports,
+				"path"			=> $wgTitle->getFullURL(),
+				"report"		=> $this->currentReport
+			)
+		);
 		$wgOut->addHTML( $oTmpl->execute( "header" ) );
 
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function getCurrentCityHub(){
+	protected function getCurrentCityHub(){
 		
 		global $wgRequest;
 
+		if ( !empty( $this->currentCityHub ) ){
+			return  $this->currentCityHub;
+		}
+		
 		$aPopularHubs = $this->getPopularHubs();
 		if ( empty( $aPopularHubs ) ){ 
 			return false;
 		}
+
 		$value = ( int ) $wgRequest->getVal( 'cityHub', 0 );
 		if ( empty( $value ) || !in_array( $value, $aPopularHubs ) ){
 			reset( $aPopularHubs );
@@ -211,10 +238,11 @@ class SponsorshipDashboard extends SpecialPage {
 		} else {
 			$aCurrent = array('id' => $value, 'name' => array_search( $value , $aPopularHubs ) );
 		}
+
 		return $aCurrent;
 	}
 	
-	private function getPopularHubs(){
+	protected function getPopularHubs(){
 
 		if ( empty( $this->popularCityHubs ) ){
 			$sponsorshipDashboardService = new SponsorshipDashboardService;
@@ -224,7 +252,7 @@ class SponsorshipDashboard extends SpecialPage {
 		return $this->popularCityHubs;
 	}
 
-	private function displayRanking( $tagPosition ){
+	protected function displayRanking( $tagPosition ){
 
 		global $wgOut, $wgJsMimeType, $wgStyleVersion, $wgHTTPProxy;
 
@@ -249,30 +277,82 @@ class SponsorshipDashboard extends SpecialPage {
 	/**
 	 * HTMLmain - main function for displaying chart.
 	 */
-	
-	private function displayChart( $datasets, $ticks, $hiddenSeries = false ){
 
-		global $wgOut, $wgJsMimeType, $wgStyleVersion, $wgHTTPProxy;
+	protected function getChartData( $title ){
+		
+		if ( !empty( $this->tagDependent ) ){
+			$this->currentCityHub = $this->getCurrentCityHub();
+		}
 
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$sponsorshipDashboardService = new SponsorshipDashboardService;
+		$method = 'load'.ucfirst( $title ).'Data';
 
-		if ( empty( $datasets ) || empty( $datasets ) ){
-			$wgOut->addHTML( $oTmpl->execute( "emptychart" ) );
+		$aData = array();
+
+		if ( empty($this->tagDependent) ) {
+			$aData = $sponsorshipDashboardService->$method();
+		} elseif ( !empty($this->currentCityHub) ){
+			$this->getPopularHubs();
+			$aData = $sponsorshipDashboardService->$method( $this->currentCityHub );
+		}
+
+
+		$this->fromYear = $sponsorshipDashboardService->getFromYear();
+
+		return $aData;
+
+	}
+
+	protected function displayChart( $title ){
+
+		global $wgTitle, $wgOut, $wgJsMimeType, $wgStyleVersion, $wgHTTPProxy;
+
+		wfProfileIn( __METHOD__ );
+
+		$aData = $this->getChartData( $title );
+
+		$this->displayHeader();
+
+		$oTmpl = WF::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) );
+
+		if (	!isset ( $aData['ticks'] ) || !isset ( $aData['serie'] ) || !isset ( $aData['fullTicks'] ) ||
+			empty ( $aData['ticks'] ) || empty ( $aData['serie'] ) || empty ( $aData['fullTicks'] ) )
+		{
+			$wgOut->addHTML( $oTmpl->execute( self::TEMPLATE_EMPTY_CHART ) );
 		} else {
 
+			$datasets = $aData['serie'];
+			$ticks = $aData['ticks'];
+			$fullTicks = $aData['fullTicks'];
+			
 			$oTmpl->set_vars(
 				array(
+					"title"			=> wfMsg( 'sponsorship-dashboard-report-'.$title ),
+					"description"		=> wfMsg( 'sponsorship-dashboard-description-'.$title ),
 					"datasets"		=> $datasets,
 					"ticks"			=> $ticks,
-					"hiddenSeries"	=> ( !empty( $hiddenSeries ) && is_array( $hiddenSeries ) ) ? "['".implode("', '", $hiddenSeries)."']" : "[]"
+					"fullTicks"		=> $fullTicks,
+					"hiddenSeries"		=> ( !empty( $this->hiddenSeries ) ) ? "['".implode( "', '", $this->hiddenSeries )."']" : "[]",
+					"number"		=> ++$this->chartCounter,
+					"path"			=> $wgTitle->getFullURL().'/'.$this->currentReport,
+					"current"		=> $this->currentCityHub,
+					"selectorItems"		=> $this->popularCityHubs,
+					"monthly"		=> $this->dataMonthly,
+					"fromYear"		=> $this->fromYear
 				)
 			);
 
 			$wgOut->addScript( "<!--[if IE]><script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/excanvas.min.js?{$wgStyleVersion}\"></script><![endif]-->\n" );
 			$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/jquery.flot.js?{$wgStyleVersion}\"></script>\n" );
 			$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/jquery.flot.selection.js?{$wgStyleVersion}\"></script>\n" );
-			$wgOut->addHTML( $oTmpl->execute( "chart" ) );
+			$wgOut->addHTML( $oTmpl->execute( self::TEMPLATE_CHART ) );
 		}
+
+
+
+		wfProfileOut( __METHOD__ );
+		
+		return true;
 
 	}
 
@@ -280,12 +360,14 @@ class SponsorshipDashboard extends SpecialPage {
 	 * HTMLerror - displays error subpage.
 	 */
 
-	private function HTMLerror(){
+	protected function HTMLerror(){
 
 		global $wgOut;
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$wgOut->addHTML( $oTmpl->execute( "error" ) );
+		$wgOut->addHTML( $oTmpl->execute( self::TEMPLATE_ERROR ) );
+
+		return false;
 
 	}
 	

@@ -8,10 +8,19 @@ class SponsorshipDashboardService extends Service {
 
 	var $mStats;
 	var $aCityHubs;
+	var $iNumberOfXGuideLines = 7;
+	var $fromYear = 2001;
 
-	public function loadRelatedWikiasData( $hubId = false ){
+	public function getFromYear(){
+		return $this->fromYear;
+	}
 
-		global $wgCityId, $wgStatsDB;
+	public function loadInterestsData( $hubId = false ){
+
+		global $wgStatsDB;
+		$wgCityId = WF::build( 'App' )->getGlobal( 'wgCityId' );
+
+		$this->fromYear = 2001;
 
 		// loads current city id popular hubs
 		$this->getPopularHubs();
@@ -44,7 +53,8 @@ class SponsorshipDashboardService extends Service {
 		$res = $dbr->query( $sql, __METHOD__ );
 		
 		while ( $row = $res->fetchObject( $res ) ) {
-			$cityUniqueUsers[ $row->pv_week ] = intval( $row->cityuniqueusers );
+			$rowDate = date("Y-m-d", strtotime("1.1.".substr( $row->pv_week, 0, 4 )." + ".substr( $row->pv_week, 4, 2 )." weeks"));
+			$cityUniqueUsers[ $rowDate ] = intval( $row->cityuniqueusers );
 		}
 
 		// loads top 10 related
@@ -70,19 +80,24 @@ class SponsorshipDashboardService extends Service {
 		$weeks = array();
 		
 		while ($row = $res->fetchObject($res)) {
-			if (	isset( $cityUniqueUsers[ $row->week ] ) &&
-				!empty( $cityUniqueUsers[ $row->week ] ) &&
-				( ( !isset( $all[ $row->week ] ) ) || ( count( $all[ $row->week ] ) <= 10 ) )
-			){
-				$familiarity = round( ( $row->citycommonusers / $cityUniqueUsers[ $row->week ] * 100 ) , 2 );
+			
+			$rowDate = date("Y-m-d", strtotime("1.1.".substr( $row->week, 0, 4 )." + ".substr( $row->week, 4, 2 )." weeks"));
 
-				if ( !isset( $heckValue[ $row->cityId ] ) ) $heckValue[ $row->cityId ] = false;
-				$heckValue[ $row->cityId ] = ( $heckValue[ $row->cityId ] || ( $familiarity > 5 ) );
+			if ( ( count( $titles ) < 10 ) || ( in_array( $row->city_title, $titles ) ) ){
+				if (	isset( $cityUniqueUsers[ $rowDate ] ) &&
+					!empty( $cityUniqueUsers[ $rowDate ] ) &&
+					( ( !isset( $all[ $rowDate ] ) ) || ( count( $all[ $rowDate ] ) <= 10 ) )
+				){
+					$familiarity = round( ( $row->citycommonusers / $cityUniqueUsers[ $rowDate ] * 100 ) , 2 );
 
-				$all[ $row->week ]['date'] = $row->week;
-				$all[ $row->week ][ $row->cityId ] = $familiarity;
-				$titles[ $row->cityId ] = $row->city_title;
-				$weeks[] = $row->week;
+					if ( !isset( $heckValue[ $row->cityId ] ) ) $heckValue[ $row->cityId ] = false;
+					$heckValue[ $row->cityId ] = ( $heckValue[ $row->cityId ] || ( $familiarity > 5 ) );
+
+					$all[ $rowDate ]['date'] = $rowDate;
+					$all[ $rowDate ][ $row->cityId ] = $familiarity;
+					$titles[ $row->cityId ] = $row->city_title;
+					$weeks[] = $rowDate;
+				}
 			}
 		}
 
@@ -109,16 +124,20 @@ class SponsorshipDashboardService extends Service {
 	 * @return array
 	 */
 
-	public function loadTop10CompetitionData( $hub ){
+	public function loadCompetitorsData( $hub = false ){
 
-		global $wgCityId, $wgStatsDB;
+		global $wgStatsDB;
+
+		$wgCityId = WF::build( 'App' )->getGlobal( 'wgCityId' );
 
 		if( empty( $hub )){
+			// 2DO fix it;
 		 	return false;
 		}
-
+		$this->fromYear = 2010;
+		
 		// loads cache data
-		$cachedData = $this->getFromCache( 'Top10CompetitionStats:Hub'.$hub['id'] );
+		$cachedData = $this->getFromCache( 'CompetitorsData:Hub'.$hub['id'] );
 		if ( !empty($cachedData) ){
 			return $cachedData;
 		}
@@ -173,7 +192,7 @@ class SponsorshipDashboardService extends Service {
 
 		while ( $row = $res->fetchObject( $res ) ) {
 
-			// sets $cityUniqueUsers for current city_id
+			//// sets $cityUniqueUsers for current city_id
 			if ( !isset( $cityUniqueUsers )){
 				$cityUniqueUsers = $row->citycommonusers;
 			}
@@ -185,7 +204,7 @@ class SponsorshipDashboardService extends Service {
 
 			$all = array_merge_recursive (
 				$all,
-				$this->getMonthlyCityPageviewsFromGA(
+				$this->getDailyCityPageviewsFromGA(
 					$row->cityUrl,
 					$row->cityId,
 					'c',
@@ -195,9 +214,14 @@ class SponsorshipDashboardService extends Service {
 			);
 
 		}
-		
+
+		if ( empty( $titles ) ){
+			Wikia::log( __METHOD__, false, wfMsg( 'sponsorship-dashboard-error-nodataforcurrentweek' ) );
+		}
+
 		$returnData = $this->simplePrepareToDisplay( $all, $titles , array( 'newVisits' ) );
-		$this->saveToCache( 'Top10CompetitionStats:Hub'.$hub['id'] , $returnData );
+		
+		$this->saveToCache( 'CompetitorsData:Hub'.$hub['id'] , $returnData );
 		
 		return $returnData;
 
@@ -213,42 +237,51 @@ class SponsorshipDashboardService extends Service {
 	 * @return array
 	 */
 
-	private function getMonthlyCityPageviewsFromGA( $cityUrl, $cityId, $prefix, $hubId, $generateDate ){
+	private function getDailyCityPageviewsFromGA( $cityUrl, $cityId, $prefix, $hubId, $generateDate ){
 
 		// inner cache. Various city id can be asked from many places.
-		$cachedData = $this->getFromCache( 'MonthlyCityPageviewsFromGA:Hub'.$hubId, $cityId );
+		$cachedData = $this->getFromCache( 'DailyCityPageviewsFromGA:Hub'.$hubId, $cityId );
 		if ( !empty($cachedData) ){
 			return $cachedData;
 		}
 
+		$this->fromYear = 2001;
+
 		global $wgWikiaGALogin, $wgWikiaGAPassword, $wgHTTPProxy;
 
 		$ga = new gapi( $wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy );
-		$ga->requestReportData(
-			31330353,
-			array( 'month', 'year' ),
-			array( 'pageviews' ),
-			array( '-year', '-month' ),
-			'hostname=~^'.$this->prepareGAUrl( $cityUrl ),
-			'2010-04-01',
-			date('Y-m-d'),
-			1,
-			360
-		);
+
+		try {
+			$ga->requestReportData(
+				31330353,
+				array( 'day', 'month', 'year' ),
+				array( 'pageviews' ),
+				array( '-year', '-month', '-day' ),
+				'hostname=~^'.$this->prepareGAUrl( $cityUrl ),
+				'2010-04-01',
+				date('Y-m-d'),
+				1,
+				360
+			);
+		} catch ( Exception $e ) {
+
+			Wikia::log(__METHOD__, false, $e->getMessage());
+			return false;
+		}
 
 		$results = $ga->getResults();
 		reset( $results );
 		unset ( $results[ key( $results ) ] );
 
 		foreach( $results as $obj ) {
-			$date = $obj->getYear().'/'.$obj->getMonth();
+			$date = $obj->getYear().'-'.$obj->getMonth().'-'.$obj->getDay();
 			if ( $generateDate ){
 				$all[ $date ][ 'date' ] = $date;
 			}
 			$all[ $date ][ $prefix.$cityId ] = $obj->getPageviews();
 		}
 
-		$this->saveToCache( 'MonthlyCityPageviewsFromGA:Hub'.$hubId, $all, $cityId );
+		$this->saveToCache( 'DailyCityPageviewsFromGA:Hub'.$hubId, $all, $cityId );
 
 		return $all;
 
@@ -268,16 +301,72 @@ class SponsorshipDashboardService extends Service {
 		$hostname = str_replace( 'http://', '', $url );
 		$hostname = str_replace( '/', '', $hostname );
 		$hostname = str_replace( '.', '\\.', $hostname );
-
 		if ( $wgDevEnvironment ){
 			$hostname = explode('\\', $hostname);
-			$hostname = $hostname[0].'\\.wikia\\.com';
+			$hostname = $hostname[0].'.wikia.com';
 		}
 
 		return $hostname;
 		
 	}
+	
+	public function loadTrafficData(){
 
+		global $wgStatsDB, $wgWikiaGALogin, $wgWikiaGAPassword, $wgHTTPProxy, $wgDevEnvironment;
+
+		$wgServer = WF::build('App')->getGlobal('wgServer');
+
+		$this->fromYear = 2010;
+
+		// Cache check
+		$cachedData = $this->getFromCache( 'TrafficData' );
+		if ( !empty($cachedData) ){
+		 	return $cachedData;
+		}
+
+		$hostname = $this->prepareGAUrl( $wgServer );
+
+		try {
+			$ga = new gapi($wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy);
+
+			$ga->requestReportData(
+				31330353,
+				array('day', 'month', 'year'),
+				array('pageviews'),
+				array('-year', '-month', '-day'),
+				'hostname=~^'.$hostname,
+				'2010-04-01',
+				date('Y-m-d'),
+				1,
+				360
+			);
+		} catch ( Exception $e ) {
+
+			Wikia::log(__METHOD__, false, $e->getMessage());
+			return false;
+		}
+
+		$results = $ga->getResults();
+
+		$all = array();
+		$titles = array();
+		reset( $results );
+		unset ( $results[ key( $results ) ] );
+
+		foreach( $results as $res ) {
+			$date = $res->getYear().'-'.$res->getMonth().'-'.$res->getDay();
+			$all[ $date ][ 'pageviews' ] = $res->getPageviews();
+			$all[ $date ][ 'date' ] = $date;
+		}
+
+		$titles[ 'pageviews' ] = wfMsg('sponsorship-dashboard-serie-pageviews');
+
+		$returnData = $this->simplePrepareToDisplay( $all , $titles , array( 'newVisits' ));
+
+		$this->saveToCache( 'TrafficData' , $returnData );
+		return $returnData;
+
+	}
 	/**
 	 * loadGAData - loads data from GA for current cityId
 	 * @return array
@@ -285,10 +374,13 @@ class SponsorshipDashboardService extends Service {
 
 	public function loadGAData(){
 
-		global $wgCityId, $wgStatsDB, $wgServer, $wgWikiaGALogin, $wgWikiaGAPassword, $wgHTTPProxy, $wgDevEnvironment;
+		global $wgStatsDB, $wgWikiaGALogin, $wgWikiaGAPassword, $wgHTTPProxy, $wgDevEnvironment;
+
+		$this->fromYear = 2010;
+		$wgServer = WF::build('App')->getGlobal('wgServer');
 
 		// Cache check
-		$cachedData = $this->getFromCache( 'GAStats' );
+		$cachedData = $this->getFromCache( 'GAData' );
 		if ( !empty($cachedData) ){
 		 	return $cachedData;
 		}
@@ -297,17 +389,23 @@ class SponsorshipDashboardService extends Service {
 		
 		$ga = new gapi($wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy);
 
-		$ga->requestReportData(
-			31330353,
-			array('day', 'month', 'year'),
-			array('timeOnSite', 'visits', 'pageviews', 'bounces', 'newVisits'),
-			array('-year', '-month', '-day'),
-			'hostname=~^'.$hostname,
-			'2010-04-01',
-			date('Y-m-d'),
-			1,
-			360
-		);
+		try {
+			$ga->requestReportData(
+				31330353,
+				array('day', 'month', 'year'),
+				array('timeOnSite', 'visits', 'pageviews', 'bounces', 'newVisits'),
+				array('-year', '-month', '-day'),
+				'hostname=~^'.$hostname,
+				'2010-04-01',
+				date('Y-m-d'),
+				1,
+				360
+			);
+		} catch ( Exception $e ) {
+
+			Wikia::log(__METHOD__, false, $e->getMessage());
+			return false;
+		}
 		
 		$results = $ga->getResults();
 		
@@ -317,7 +415,7 @@ class SponsorshipDashboardService extends Service {
 		unset ( $results[ key( $results ) ] );
 		
 		foreach( $results as $res ) {
-			$date = $res->getYear().'/'.$res->getMonth().'/'.$res->getDay();
+			$date = $res->getYear().'-'.$res->getMonth().'-'.$res->getDay();
 			$all[ $date ][ 'date' ] = $date;
 			$all[ $date ][ 'pageviews' ] = $res->getPageviews();
 			$all[ $date ][ 'clicks' ] = $all[ $date ][ 'pageviews' ] - $res->getBounces();
@@ -336,8 +434,9 @@ class SponsorshipDashboardService extends Service {
 
 		$returnData = $this->simplePrepareToDisplay( $all , $titles , array( 'newVisits' ));
 		
-		$this->saveToCache( 'GAStats' , $returnData );
+		$this->saveToCache( 'GAData' , $returnData );
 		return $returnData;
+		
 	}
 	
 	/**
@@ -361,9 +460,10 @@ class SponsorshipDashboardService extends Service {
 					$results[$key][$i] = "[{$i}, {$val}]";
 				}
 			}
-			if ( ( $i % ceil((count($data) / 11)) ) == 0 ){
+			if ( ( $i % ceil((count($data) / $this->iNumberOfXGuideLines )) ) == 0 ){
 				$result['date'][$i] = "[{$i}, '{$collumns['date']}']";
 			}
+			$result['fullWikiaDate'][$collumns['date']] = "['{$collumns['date']}', {$i}]";
 			$i++;
 		};
 
@@ -384,7 +484,9 @@ class SponsorshipDashboardService extends Service {
 		$sSerie = $this->createJSobj( $aSerie );
 
 		$ticks = "[".implode(', ',$result['date'])."]";
-		return array( 'serie' => $sSerie, 'ticks' => $ticks );
+		$fullWikiaDate = "[".implode(', ',$result['fullWikiaDate'])."]";
+		
+		return array( 'serie' => $sSerie, 'ticks' => $ticks, 'fullTicks' => $fullWikiaDate );
 	}
 
 	/**
@@ -392,20 +494,24 @@ class SponsorshipDashboardService extends Service {
 	 * @return array
 	 */
 
-	public function loadDataFromWikiStats(){
+	public function loadContentData(){
 
 		global $wgUser, $wgLang, $wgOut, $wgEnableBlogArticles, $wgJsMimeType, $wgExtensionsPath, $wgHubsPages, $wgStyleVersion, $wgRequest, $wgAllowRealName;
-		global $wgCityId, $wgDBname;
+		global $wgDBname;
+
+		$wgCityId = WF::build( 'App' )->getGlobal( 'wgCityId' );
 
 		// Cache check
-		$cachedData = $this->getFromCache( 'WikiStats' );
+		$cachedData = $this->getFromCache( 'ContentData' );
 		if ( !empty($cachedData) ){
 			return $cachedData;
 		}
 
+		$this->fromYear = 2001;
+
 		// WikiaGenericStats instance
 		$date = $this->get_previous_month();
-		$this->mStats = WikiStats::newFromId($wgCityId);
+		$this->mStats = WikiStats::newFromId( $wgCityId );
 		$this->mStats->setStatsDate(
 			array(
 				'fromMonth'	=> WIKISTATS_MIN_STATS_MONTH,
@@ -438,9 +544,55 @@ class SponsorshipDashboardService extends Service {
 			}
 		}
 
-		$outData = $this->prepareToDisplay( $outData );
+		// ==
+		$i = 0;
+		
+		foreach( array_reverse( $outData ) as $collumns ){
 
-		$this->saveToCache( 'WikiStats', $outData );
+			$collumns['date'] = date("Y-m-d", strtotime("1.1.".substr( $collumns['date'], 0, 4 )." + ".substr( $collumns['date'], 4, 2 )." weeks"));
+
+			$result1['data'][$i] = "[{$i}, {$collumns['C']}]";
+			$result2['data'][$i] = "[{$i}, {$collumns['H']}]";
+			$result3['data'][$i] = "[{$i}, {$collumns['I']}]";
+			$result4['data'][$i] = "[{$i}, {$collumns['J']}]";
+			$result5['data'][$i] = "[{$i}, {$collumns['K']}]";
+			if ( isset($collumns['X']) ) $result12['data'][$i] = "[{$i}, {$collumns['X']}]";
+			if ( isset($collumns['Y']) ) $result13['data'][$i] = "[{$i}, {$collumns['Y']}]";
+			if ( ( $i % ceil((count($outData) / $this->iNumberOfXGuideLines )) ) == 0 ){
+				$result['date'][$i] = "[{$i}, '{$collumns['date']}']";
+			}
+			$result['fullWikiaDate'][$collumns['date']] = "['{$collumns['date']}', {$i}]";
+			$i++;
+		};
+
+		if (	!isset( $result1['data'] ) ||
+			!isset( $result2['data'] ) || 
+			!isset( $result3['data'] ) || 
+			!isset( $result4['data'] ) ||
+			!isset( $result5['data'] )
+		){
+			return false;
+		}
+
+		$aSerie = array(
+			'A' => $this->createSerie( wfMsg('sponsorship-dashboard-serie-content-article'), $result1['data'] ),
+			'B' => $this->createSerie( wfMsg('sponsorship-dashboard-serie-image-linked'), $result2['data'] ),
+			'C' => $this->createSerie( wfMsg('sponsorship-dashboard-serie-image-uploaded'), $result3['data'] ),
+			'D' => $this->createSerie( wfMsg('sponsorship-dashboard-serie-video-embeded'), $result4['data'] ),
+			'E' => $this->createSerie( wfMsg('sponsorship-dashboard-serie-video-uploaded'), $result5['data'] )
+		);
+		if ( isset( $result12 ) ) $aSerie['X'] = $this->createSerie( wfMsg('sponsorship-dashboard-serie-toplists'), $result12['data'] );
+		if ( isset( $result13 ) ) $aSerie['Y'] = $this->createSerie( wfMsg('sponsorship-dashboard-serie-blog-comments'), $result13['data'] );
+
+		$sSerie = $this->createJSobj($aSerie);
+
+		$ticks = "[".implode(', ',$result['date'])."]";
+		$fullWikiaDate = "[".implode(', ',$result['fullWikiaDate'])."]";
+		$outData = array( 'serie' => $sSerie, 'ticks' => $ticks, 'fullTicks' => $fullWikiaDate );
+
+		// ==
+
+		$this->saveToCache( 'ContentData', $outData );
 		return $outData;
 	}
 
@@ -513,6 +665,7 @@ class SponsorshipDashboardService extends Service {
 	private function prepareToDisplay( $data ){
 		
 		$i = 0;
+
 		foreach(array_reverse($data) as $collumns){
 			$result['data'][$i] = "[{$i}, {$collumns['A']}]";
 			$result1['data'][$i] = "[{$i}, {$collumns['B']}]";
@@ -528,9 +681,10 @@ class SponsorshipDashboardService extends Service {
 			$result11['data'][$i] = "[{$i}, {$collumns['K']}]";
 			if ( isset($collumns['X']) ) $result12['data'][$i] = "[{$i}, {$collumns['X']}]";
 			if ( isset($collumns['Y']) ) $result13['data'][$i] = "[{$i}, {$collumns['Y']}]";
-			if ( ( $i % ceil((count($data) / 11)) ) == 0 ){
-				$result['date'][$i] = "[{$i}, '{$collumns['date']}']";
+			if ( ( $i % ceil((count($data) / $this->iNumberOfXGuideLines )) ) == 0 ){
+				$result['date'][$i] = "[{$i}, '{$collumns['date']}']";	
 			}
+			$result['fullWikiaDate'][$collumns['date']] = "['{$collumns['date']}', {$i}]";
 			$i++;
 		};
 
@@ -554,7 +708,9 @@ class SponsorshipDashboardService extends Service {
 		$sSerie = $this->createJSobj($aSerie);
 
 		$ticks = "[".implode(', ',$result['date'])."]";
-		return array( 'serie' => $sSerie, 'ticks' => $ticks );
+		$fullWikiaDate = "[".implode(', ',$result['fullWikiaDate'])."]";
+
+		return array( 'serie' => $sSerie, 'ticks' => $ticks, 'fullTicks' => $fullWikiaDate );
 	}
 
 	/**
@@ -568,8 +724,7 @@ class SponsorshipDashboardService extends Service {
 	private function getKey( $prefix, $cityId = false ) {
 
 		if ( empty( $cityId ) ){
-			global $wgCityId;
-			$cityId = $wgCityId;
+			$cityId = WF::build( 'App' )->getGlobal( 'wgCityId' );
 		}
 		return wfSharedMemcKey( 'SponsoredDashboard', $prefix, $cityId );
 	}
@@ -587,6 +742,7 @@ class SponsorshipDashboardService extends Service {
 
 	private function getFromCache ( $prefix, $cityId = false ){
 
+		return false;
 		global $wgMemc;
 		return $wgMemc->get( $this->getKey( $prefix, $cityId ) );
 	}
@@ -596,7 +752,6 @@ class SponsorshipDashboardService extends Service {
 		global $wgMemc;
 		return $wgMemc->delete( $this->getKey( $prefix, $cityId ) );
 	}
-
 
 	// other methods
 
@@ -631,7 +786,7 @@ class SponsorshipDashboardService extends Service {
 		global $wgTitle, $wgCityId, $wgHubsPages, $wgStatsDB;
 
 		// Cache check
-		$cachedData = $this->getFromCache( 'rankingByHub' );
+		$cachedData = $this->getFromCache( 'TagPosition' );
 		if ( !empty( $cachedData ) ){
 			return $cachedData;
 		}
@@ -678,7 +833,7 @@ class SponsorshipDashboardService extends Service {
 			$aPosition[$key]['name'] = $cityTags[$key];
 		}
 		if ( !empty( $aPosition ) ){
-			$this->saveToCache( 'rankingByHub', $aPosition );
+			$this->saveToCache( 'TagPosition', $aPosition );
 		}
 		return $aPosition;
 	}
@@ -727,7 +882,9 @@ class SponsorshipDashboardService extends Service {
 
 	public function getPopularHubs(){
 
-		global $wgHubsPages, $wgCityId;
+		global $wgHubsPages;
+
+		$wgCityId = WF::build( 'App' )->getGlobal( 'wgCityId' );
 
 		if ( !empty($this->aCityHubs) ){
 			return $this->aCityHubs;
@@ -750,5 +907,447 @@ class SponsorshipDashboardService extends Service {
 		}
 		$this->aCityHubs = $popularCityHubs;
 		return $popularCityHubs;
+	}
+
+
+// =============================
+
+	public function loadParticipationData(){
+
+		global $wgUser, $wgLang, $wgOut, $wgEnableBlogArticles, $wgJsMimeType, $wgExtensionsPath, $wgHubsPages, $wgStyleVersion, $wgRequest, $wgAllowRealName;
+		global $wgCityId, $wgDBname;
+
+		// Cache check
+		$cachedData = $this->getFromCache( 'ParticipationData' );
+		if ( !empty($cachedData) ){
+			return $cachedData;
+		}
+
+		$this->fromYear = 2001;
+
+		$aData = $this->loadWikiaGenericStats();
+		$outData = $this->prepareWikiaGenericStats( $aData );
+		
+		// ===
+		
+		$i = 0;
+		foreach( array_reverse($outData) as $collumns ){
+			$collumns['date'] = substr($collumns['date'], 0,4).'-'.substr($collumns['date'], 4,2);
+			$result['data'][$i] = "[{$i}, {$collumns['A']}]";
+			$result1['data'][$i] = "[{$i}, {$collumns['B']}]";
+			$result3['data'][$i] = "[{$i}, {$collumns['C']}]";
+			$result4['data'][$i] = "[{$i}, {$collumns['D']}]";
+			if ( ( $i % ceil((count($outData) / $this->iNumberOfXGuideLines )) ) == 0 ){
+				$result['date'][$i] = "[{$i}, '{$collumns['date']}']";
+			}
+			$result['fullWikiaDate'][$collumns['date']] = "['{$collumns['date']}', {$i}]";
+			$i++;
+		};
+		
+		if (	!isset( $result['data'] ) ||
+			!isset( $result1['data'] ) ||
+			!isset( $result3['data'] ) ||
+			!isset( $result4['data'] ) ) {
+			return false;
+		}
+
+
+		$aSerie = array(
+			'A' => $this->createSerie( wfMsg('sponsorship-dashboard-serie-general-edits'), $result['data'] ),
+			'B' => $this->createSerie( wfMsg('sponsorship-dashboard-serie-article-edits-1'), $result1['data'] ),
+			'C' => $this->createSerie( wfMsg('sponsorship-dashboard-serie-article-edits-5'), $result3['data'] ),
+			'D' => $this->createSerie( wfMsg('sponsorship-dashboard-serie-article-edits-10'), $result4['data'] ),
+			
+		);
+		
+		$sSerie = $this->createJSobj($aSerie);
+
+		$ticks = "[".implode(', ',$result['date'])."]";
+		$fullWikiaDate = "[".implode(', ',$result['fullWikiaDate'])."]";
+
+		$outData = array( 'serie' => $sSerie, 'ticks' => $ticks, 'fullTicks' => $fullWikiaDate );
+
+		// ==
+
+		$this->saveToCache( 'ParticipationData', $outData );
+		return $outData;
+	
+	}
+
+	public function loadEngagementData(){
+
+		global $wgStatsDB, $wgWikiaGALogin, $wgWikiaGAPassword, $wgHTTPProxy, $wgDevEnvironment;
+
+		$this->fromYear = 2010;
+		$wgServer = WF::build('App')->getGlobal('wgServer');
+
+		//// Cache check
+		$cachedData = $this->getFromCache( 'EngagementData' );
+		if ( !empty($cachedData) ){
+		 	return $cachedData;
+		}
+
+		$hostname = $this->prepareGAUrl( $wgServer );
+
+		$ga = new gapi($wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy);
+
+		try {
+			$ga->requestReportData(
+				31330353,
+				array('month', 'year'),
+				array('timeOnSite', 'newVisits', 'visits'),
+				array('-year', '-month'),
+				'hostname=~^'.$hostname,
+				'2010-04-01',
+				date('Y-m-d'),
+				1,
+				360
+			);
+		} catch ( Exception $e ) {
+
+			Wikia::log(__METHOD__, false, $e->getMessage());
+			return false;
+		}
+
+		$results = $ga->getResults();
+
+		$all = array();
+		$titles = array();
+		reset( $results );
+		unset ( $results[ key( $results ) ] );
+
+		foreach( $results as $res ) {
+			$date = $res->getYear().'-'.$res->getMonth();
+			$all[ $date ][ 'date' ] = $date;
+			$visits = $res->getVisits();
+			$all[ $date ][ 'timeOnSite' ] = round( $res->getTimeOnSite()/60/60 );
+			$all[ $date ][ 'newVisitsTimeOnSite' ] = ( !empty( $visits ) ) ? round( $all[ $date ][ 'timeOnSite' ] * $res->getNewVisits() / $visits  ) : 0;
+		}
+
+		$titles[ 'timeOnSite' ] = wfMsg('timeOnSite');
+		$titles[ 'newVisitsTimeOnSite' ] = wfMsg('newVisitsTimeOnSite');
+
+		$returnData = $this->simplePrepareToDisplay( $all , $titles , array());
+
+		$this->saveToCache( 'EngagementData' , $returnData );
+		return $returnData;
+
+	}
+
+	public function loadVisitorsData(){
+
+		global $wgStatsDB, $wgWikiaGALogin, $wgWikiaGAPassword, $wgHTTPProxy, $wgDevEnvironment;
+
+		$this->fromYear = 2010;
+		$wgServer = WF::build('App')->getGlobal('wgServer');
+
+		// Cache check
+		$cachedData = $this->getFromCache( 'VisitorsData' );
+		if ( !empty($cachedData) ){
+		 	return $cachedData;
+		}
+
+		$hostname = $this->prepareGAUrl( $wgServer );
+
+		$ga = new gapi($wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy);
+
+		try {
+			$ga->requestReportData(
+				31330353,
+				array('month', 'year'),
+				array('newVisits', 'visits'),
+				array('-year', '-month'),
+				'hostname=~^'.$hostname,
+				'2010-04-01',
+				date('Y-m-d'),
+				1,
+				360
+			);
+		} catch ( Exception $e ) {
+
+			Wikia::log(__METHOD__, false, $e->getMessage());
+			return false;
+		}
+
+		$results = $ga->getResults();
+
+		$all = array();
+		$titles = array();
+		reset( $results );
+		unset ( $results[ key( $results ) ] );
+
+		foreach( $results as $res ) {
+			$date = $res->getYear().'-'.$res->getMonth();
+			$all[ $date ][ 'date' ] = $date;
+			$all[ $date ][ 'visits' ] = $res->getVisits();
+			$all[ $date ][ 'newVisits' ] = $res->getNewVisits();
+		}
+
+		$titles[ 'visits' ] = wfMsg('visits');
+		$titles[ 'newVisits' ] = wfMsg('newVisits');
+
+		$returnData = $this->simplePrepareToDisplay( $all , $titles , array());
+
+		$this->saveToCache( 'VisitorsData' , $returnData );
+		return $returnData;
+
+	}
+
+	public function loadActivityData(){
+
+		global $wgUser, $wgLang, $wgOut, $wgEnableBlogArticles, $wgJsMimeType, $wgExtensionsPath, $wgHubsPages, $wgStyleVersion, $wgRequest, $wgAllowRealName;
+		global $wgDBname;
+
+		// Cache check
+		$cachedData = $this->getFromCache( 'ActivityData' );
+		if ( !empty($cachedData) ){
+			return $cachedData;
+		}
+
+		$this->fromYear = 2001;
+
+		$aData = $this->loadWikiaGenericStats();
+		$outData = $this->prepareWikiaGenericStats( $aData );
+
+		// ===
+
+		$i = 0;
+		$oldE = 0;
+		$result = array();
+		foreach( array_reverse($outData) as $collumns ){
+
+			$collumns['date'] = substr( $collumns['date'], 0, 4 ).'-'.substr( $collumns['date'], 4, 2 );
+			$newE = $collumns['E'] - $oldE;
+			$result['data'][$i] = "[{$i}, {$newE}]";
+			$oldE = $collumns['E'];
+			$result1['data'][$i] = "[{$i}, {$collumns['G']}]";
+			if ( ( $i % ceil((count($outData) / $this->iNumberOfXGuideLines )) ) == 0 ){
+				$result['date'][$i] = "[{$i}, '{$collumns['date']}']";
+			}
+			$result['fullWikiaDate'][$collumns['date']] = "['{$collumns['date']}', {$i}]";
+			$i++;
+		
+		};
+
+		if ( !isset( $result['data'] ) || !isset( $result1['data'] ) ) {
+			return false;
+		}
+
+		$aSerie = array(
+			'A' => $this->createSerie( wfMsg('serie-8'), $result['data'] ),
+			'B' => $this->createSerie( wfMsg('sponsorship-dashboard-serie-new-articles-content-namespace'), $result1['data'] ),
+		);
+
+
+		$sSerie = $this->createJSobj($aSerie);
+
+		$ticks = "[".implode(', ',$result['date'])."]";
+		$fullTicks = "[".implode(', ',$result['fullWikiaDate'])."]";
+
+		$outData = array( 'serie' => $sSerie, 'ticks' => $ticks, 'fullTicks' => $fullTicks );
+
+		// ==
+
+		$this->saveToCache( 'ActivityData', $outData );
+		return $outData;
+
+	}
+
+	public function loadSourceData(){
+
+		global $wgStatsDB, $wgWikiaGALogin, $wgWikiaGAPassword, $wgHTTPProxy, $wgDevEnvironment;
+		
+		$this->fromYear = 2010;
+		$wgServer = WF::build('App')->getGlobal('wgServer');
+
+		// Cache check
+		$cachedData = $this->getFromCache( 'SourceData' );
+		if ( !empty($cachedData) ){
+		 	return $cachedData;
+		}
+
+		$hostname = $this->prepareGAUrl( $wgServer );
+
+		$ga = new gapi( $wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy);
+
+		try {
+			$ga->requestReportData(
+				31330353,
+				array('day', 'month', 'year', 'medium'),
+				array('visits'),
+				array('-year', '-month', '-day', 'medium'),
+				'hostname=~^'.$hostname,
+				'2010-04-01',
+				date('Y-m-d'),
+				1,
+				360
+			);
+		} catch ( Exception $e ) {
+
+			Wikia::log(__METHOD__, false, $e->getMessage());
+			return false;
+		}
+
+		$results = $ga->getResults();
+
+		$all = array();
+		$titles = array();
+//		reset( $results );
+//		unset ( $results[ key( $results ) ] );
+
+		foreach( $results as $res ) {
+			$medium = $res->getMedium();
+			if ( $medium != 'referral' && $medium != 'organic' ){
+				$medium = 'direct';
+			}
+			$date = $res->getYear().'-'.$res->getMonth().'-'.$res->getDay();
+			$all[ $date ][ $medium ] = $res->getVisits();
+			$titles[ $medium ] = wfMsg( 'sponsorship-dashboard-serie-'.$medium );
+			$all[ $date ][ 'date' ] = $date;
+		}
+
+		
+		
+		$returnData = $this->simplePrepareToDisplay( $all , $titles , array());
+
+		$this->saveToCache( 'SourceData' , $returnData );
+		return $returnData;
+
+	}
+
+	public function loadKeywordsData(){
+
+		global $wgStatsDB, $wgWikiaGALogin, $wgWikiaGAPassword, $wgHTTPProxy, $wgDevEnvironment;
+
+		$this->fromYear = 2010;
+		$wgServer = WF::build('App')->getGlobal('wgServer');
+
+		// Cache check
+		$cachedData = $this->getFromCache( 'KeywordData' );
+		if ( !empty($cachedData) ){
+			return $cachedData;
+		}
+
+		$hostname = $this->prepareGAUrl( $wgServer );
+
+		$ga = new gapi($wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy);
+
+		try {
+			$ga->requestReportData(
+				31330353,
+				array('keyword', 'day', 'month', 'year', ),
+				array('visits'),
+				array('-year', '-month', '-day', '-visits'),
+				'hostname=~^'.$hostname,
+				'2010-04-01',
+				date('Y-m-d'),
+				1,
+				360
+			);
+		} catch ( Exception $e ) {
+
+			Wikia::log(__METHOD__, false, $e->getMessage());
+			return false;
+		}
+
+		$results = $ga->getResults();
+		
+		$all = array();
+		$titles = array();
+		
+		$controlArray = array();
+		$sortArray = array();
+		$dateArray = array();
+		foreach( $results as $res ) {
+
+			$keywords = $res->getKeyword();
+			if ( $keywords != '(not set)' ){
+				$visits = $res->getVisits();
+				$key = 'a'.md5( $keywords );
+				if( !isset( $sortArray[ $key ] ) ){
+					$sortArray[ $key ] = $visits;
+				}
+				$sortArray[ $key ] += $visits;
+			}
+			$date = $res->getYear().'-'.$res->getMonth().'-'.$res->getDay();
+			$dateArray[ $date ] = $date;
+		}
+
+		asort( $sortArray );
+		$sortArray = array_reverse( $sortArray );
+		reset( $sortArray );
+		$finalArray = array();
+
+		while ( ( count( $finalArray ) < 10 ) || ( count( $finalArray ) == count( $sortArray ) ) ) {
+			$finalArray[] = key( $sortArray );
+			next( $sortArray );
+		}
+
+		foreach ( $dateArray as $date){
+			foreach( $finalArray as $value ){
+				$all[ $date ][ $value ] = 0;
+			}
+			$all[ $date ][ 'date' ] = $date;
+		}
+
+		foreach( $results as $res ) {
+
+			$keywords = $res->getKeyword();
+			$key = 'a'.md5( $keywords );
+			$date = $res->getYear().'-'.$res->getMonth().'-'.$res->getDay();
+
+			if ( in_array( $key, $finalArray ) ){
+				$titles[ $key ] = htmlspecialchars( $keywords );
+				$all[ $date ][ $key ] = $res->getVisits();
+			}
+		}
+		ksort( $all );
+		
+		$returnData = $this->simplePrepareToDisplay( array_reverse( $all ) , $titles , array());
+		$this->saveToCache( 'KeywordData' , $returnData );
+		return $returnData;
+
+	}
+
+
+	protected function loadWikiaGenericStats(){
+
+		$wgCityId = WF::build( 'App' )->getGlobal( 'wgCityId' );
+
+		// WikiaGenericStats instance
+		$date = $this->get_previous_month();
+		$this->mStats = WikiStats::newFromId( $wgCityId );
+		$this->mStats->setStatsDate(
+			array(
+				'fromMonth'	=> WIKISTATS_MIN_STATS_MONTH,
+				'fromYear' 	=> WIKISTATS_MIN_STATS_YEAR,
+				'toMonth'	=> date('m', $date),
+				'toYear'	=> date('Y', $date)
+			)
+		);
+
+		$this->mStats->setHub("");
+		$this->mStats->setLang("");
+		return $this->mStats->loadStatsFromDB();
+	}
+
+	protected function prepareWikiaGenericStats( $aData ){
+
+		$outData = $aData;
+		foreach( $aData as $key => $row ){
+			$terminate = true;
+			foreach( $row as $key2=>$val ){
+				if ( $key2 != 'date' ){
+					$terminate = ( empty( $val ) && $terminate );
+				}
+			}
+			if ( !$terminate ){
+				break;
+			} else {
+				unset($outData[$key]);
+			}
+		}
+
+		return $outData;
 	}
 }
