@@ -80,28 +80,52 @@ class WikiaLabs {
 
 	public static function saveFeedback() {
 		$request = WF::build( 'App' )->getGlobal( 'wgRequest' );
-
 		$wikiaLabs = WF::build( 'WikiaLabs' );
-		$response = new AjaxResponse();
-
-		$project = WF::build( 'WikiaLabsProject', array( 'id' => $request->getVal( 'projectId', null ) ) );
-		$projectId = $project->getId();
-		if( !empty( $projectId ) ) {
-			$result = $wikiaLabs->saveFeedbackInternal( $project, $request->getVal( 'description', null ) );
-		}
-		else {
-			$result = array( 'error' => 'Invalid project ID' );
-		}
-
+		$response = new AjaxResponse();		
+		$result =  $wikiaLabs->saveFeedbackInternal( $request->getVal('projectId', 0), $request->getVal('rating', 0), $request->getVal('feedbacktext') );
 		$response->addText( json_encode( $result ) );
 		return $response;
 	}
 
-	public function saveFeedbackInternal( WikiaLabsProject $project, $message ) {
-		// @todo store rating in db
+	public function saveFeedbackInternal($projectId, $rating, $message ) {
+		$project = WF::build( 'WikiaLabsProject', array( 'id' => (int) $projectId ) );
+		$projectId = $project->getId();
+		
+		$mulitvalidator = new WikiaValidatorArray(array(
+			'validators'  => array(
+				'message' => new WikiaValidatorString(array("min" => 1, "max" => 255),
+					array('too_short' => wfMsg('wikialabs-feedback-validator-message-too-short'),
+						  'too_long' => wfMsg('wikialabs-feedback-validator-message-too-long'), 
+				)),
+				'projectId' => new WikiaValidatorInteger(array("min" => 1)),
+				'rating' => new WikiaValidatorInteger(array("min" => 1, "max" => 5),
+					array(
+						'too_small' => wfMsg('wikialabs-feedback-validator-rating')
+				)), 
+		)));
+
+		$in = array(
+			'message' => $message,
+			'projectId' => $projectId,
+			'rating' => $rating
+		);
+
+		$out = array();
+		$out['status'] = "ok";
+		if( !$mulitvalidator->isValid( $in ) ) {
+			$errors = $mulitvalidator->getErrors();
+			foreach($errors as  $val1) {
+				foreach($val1 as $val2) {
+					$out['errors'][] = $val2;
+				}
+			}
+			$out['in'] = $in;
+			$out['status'] = "error";
+			return $out;  
+		}
 
 		$this->saveFeedbackInFogbugz( $project, $message );
-		return array( 'success' => true );
+		return $out;
 	}
 
 	private function saveFeedbackInFogbugz( WikiaLabsProject $project, $message ) {

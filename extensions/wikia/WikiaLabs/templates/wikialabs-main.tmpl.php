@@ -48,6 +48,9 @@
 
 <div style="display:none" id="feedbackmodal" class="feedbackmodal" >
 	<form>
+		<div class='errorBox' >
+			<div id="wpError"></div>
+		</div>
 		<span class="title" ><?php echo wfMsg( 'wikialabs-feedback-title' ); ?></span>
 		<span class="project" ><?php echo wfMsg( 'wikialabs-feedback-rating' ); ?></span>		
 				
@@ -58,7 +61,6 @@
 		</span>		
 		<span class="comments" ><?php echo wfMsg( 'wikialabs-feedback-comments' ); ?></span>
 		<textarea name="feedbacktext" class="feedbacktext" ></textarea>
-		<input name="rating" class="rating" type="hidden"  />
 		<button class="okbutton" ><?php echo wfMsg('wikialabs-feedback-submit'); ?></button>
 	</form>
 </div>
