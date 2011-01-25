@@ -2,8 +2,8 @@
 <form>
 <input type="hidden" value="<?php echo $project->getId(); ?>" name="project[id]" id="projectId" >
 <div class="addprjmodal" >
-	<div id='errorBox'  class="display: block;" >
-		<div id="wpError">You have not specified a valid user name.</div>
+	<div id='errorBox' >
+		<div id="wpError"></div>
 	</div>
 	<div class="image" >
 		<button class="prjscreen" ><?php echo wfMsg('wikialabs-add-project-add-image'); ?> </button>
