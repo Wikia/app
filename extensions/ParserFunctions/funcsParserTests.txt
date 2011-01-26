@@ -166,3 +166,12 @@ no
 empty
 </p>
 !! end
+
+!! test
+Bug 22866: #ifexpr should evaluate "-0" as false
+!! input
+{{#ifexpr: (-1)*0 | true | false }}
+!! result
+<p>false
+</p>
+!! end

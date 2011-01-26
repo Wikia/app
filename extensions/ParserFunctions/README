@@ -1,8 +1,8 @@
-ParserFunctions v1.1.1
+ParserFunctions v1.4.0
 
 1. Licensing
 2. How to install
-3. How to config
+3. Tests
 
 1. Licensing
 Licensed under GNU GPL. See COPYING for more license information.
@@ -10,8 +10,8 @@ Licensed under GNU GPL. See COPYING for more license information.
 2. How to install
    a. Download this tarbell and extract the contents to $IP/extensions/ParserFunctions/
       where $IP is your root wiki install
-   b. Add 'require( "extensions/ParserFunctions/ParserFunctions.php");' to your
-      LocalSettings (without the single quotes)
+   b. Add 'require_once( "$IP/extensions/ParserFunctions/ParserFunctions.php");' to the 
+      end of your LocalSettings (without the single quotes)
    c. Enjoy
 
 3. Tests
