@@ -7,7 +7,7 @@ import static org.testng.AssertJUnit.assertTrue;
 
 public class AutoHubsTest extends BaseTest {
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI","central"})
 	public void testFeeds() throws Exception {
 		String baseurl = "/wiki/TV";
 		session().open( baseurl );
@@ -31,7 +31,7 @@ public class AutoHubsTest extends BaseTest {
 		assertTrue(!session().isElementPresent( "//a[contains(@class,\"head-hide-link\")]" ));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI","central"})
 	public void testStaffTools() throws Exception {
 		String baseurl = "/wiki/TV";
 		loginAsBot();
