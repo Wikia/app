@@ -21,9 +21,11 @@ function minify($type, $files, $target) {
 	$revision = SpecialVersion::getSvnRevision(dirname(__FILE__));
 	$build = date('Ymd');
 
+	$year = date('Y');
+
 	$header = <<<HEAD
 /*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-$year, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 
 DO NOT modify this file by hand! Use minify.sh maintenance script to regenerate this file!
@@ -32,13 +34,7 @@ DO NOT modify this file by hand! Use minify.sh maintenance script to regenerate 
 HEAD;
 
 	// concatenate files
-	$res = '';
-	foreach($files as $file) {
-		$res .= file_get_contents($file);
-	}
-
-	// remove BOM UTF-8 marker
-	$res = str_replace("\xEF\xBB\xBF", '', $res);
+	$res = MinifyService::mergeFiles($files);
 
 	// minify
 	switch($type) {
@@ -46,7 +42,8 @@ HEAD;
 			// remove @import url("foo") lines
 			$res = preg_replace('#^@import url.*$#m', '', $res);
 
-			$res = $chute->minifyCSSData($res);
+			//$res = $chute->minifyCSSData($res);
+			$res = MinifyService::minifyCSS($res);
 			break;
 
 		case 'js':
@@ -54,7 +51,8 @@ HEAD;
 			$res = preg_replace('#^.*@Packager\\.RemoveLine.*$#m', '', $res);
 
 			// minify
-			$res = $chute->minifyJSData($res);
+			//$res = $chute->minifyJSData($res);
+			$res = MinifyService::minifyJS($res);
 
 			// add date and revision data
 			$res = str_replace('%REV%', "r{$revision} build {$build}", $res);
