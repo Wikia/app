@@ -91,7 +91,7 @@ You can reorder or delete tools in the field below.
 	'oasis-add-photo' => 'Add a Photo',
 	'oasis-anon-user' => 'A Wikia contributor',
 	'oasis-create-page' => 'Create a new page on this wiki',
-	'oasis-add-page' => 'Add Page',
+	'oasis-add-page' => 'Add a Page',
 	'oasis-section-edit' => 'Edit',
 	'oasis-section-edit-alt' => 'Edit $1 section',
 	'oasis-popular-blogs-title' => 'Popular blog<br />posts',
@@ -200,7 +200,7 @@ Example output: edited by Avatar 3 hours ago',
 Example output: deleted by Avatar 3 hours ago',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -1193,7 +1193,7 @@ U kunt hulpmiddelen verwijderen of ordenen in het veld hieronder.
 	'oasis-upload-photos-caption' => 'Bijschrift',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
@@ -1889,7 +1889,7 @@ $messages['uk'] = array(
 	'oasis-upload-photos-title' => 'Завантажити фото до вікі',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (中文(繁體))
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
@@ -1927,7 +1927,7 @@ $messages['zh-hant'] = array(
 	'oasis-interlang-languages' => '其他語言',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬)
+/** Chinese (Taiwan) (中文(台灣))
  * @author Ffaarr
  * @author Mark85296341
  */

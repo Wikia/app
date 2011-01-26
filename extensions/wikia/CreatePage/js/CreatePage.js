@@ -61,6 +61,11 @@ CreatePage.openDialog = function(e, titleText) {
 						CreatePage.setPageLayout( data.defaultOption );
 
 						$('#wpCreatePageDialogTitle').focus();
+						
+						$('#CreatePageDialogButton .createpage').click(function(e) {
+							e.preventDefault();
+							CreatePage.submitDialog(false);
+						});
 					},
 					onClose: function() {
 						CreatePage.track( 'close' );
