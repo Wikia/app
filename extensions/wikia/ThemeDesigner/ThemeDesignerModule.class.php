@@ -210,11 +210,7 @@ class ThemeDesignerModule extends Module {
 		} else {
 			$warnings = $upload->checkWarnings();
 
-			if ( $warnings && (
-				empty( $warnings[ 'exists' ] ) &&
-				empty( $warnings[ 'duplicate' ] ) &&
-				empty( $warnings[ 'duplicate-archive' ] )
-			) ) {
+			if ( !empty( $warnings ) ) {
 				$this->errors = $this->getUploadWarningMessages( $warnings );
 			} else {
 				//save temp file
@@ -247,11 +243,7 @@ class ThemeDesignerModule extends Module {
 		} else {
 			$warnings = $upload->checkWarnings();
 
-			if ( $warnings && (
-				empty( $warnings[ 'exists' ] ) &&
-				empty( $warnings[ 'duplicate' ] ) &&
-				empty( $warnings[ 'duplicate-archive' ] )
-			) ) {
+			if ( !empty( $warnings ) ) {
 				$this->errors = $this->getUploadWarningMessages( $warnings );
 			} else {
 				$this->backgroundImageAlign = $upload->getImageAlign();

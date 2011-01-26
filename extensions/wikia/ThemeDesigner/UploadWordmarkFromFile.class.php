@@ -1,5 +1,5 @@
 <?php
-/*8
+/*
  * @author Federico "Lox" Lucignano
  */
 
@@ -42,6 +42,19 @@ class UploadWordmarkFromFile extends UploadFromFile {
 		}
 		
 		return $this->mLocalFile;
+	}
+	
+	public function checkWarnings(){
+		$warnings = parent::checkWarnings();
+		
+		//for wordmark we allow overwriting and don't care of
+		//filname mismatch for FakeLocalFile (see UploadBase::checkWarnings)
+		unset( $warnings[ 'exists' ]);
+		unset( $warnings[ 'duplicate' ] );
+		unset( $warnings[ 'duplicate-archive' ]);
+		unset( $warnings[ 'badfilename' ]);
+		
+		return $warnings;
 	}
 }
 ?>
