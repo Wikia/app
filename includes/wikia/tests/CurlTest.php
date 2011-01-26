@@ -16,6 +16,7 @@ $wgAutoloadClasses['Curl']  =  $IP.'/includes/wikia/Curl.php';
  * @category Wikia
  * @package  Wikia_Test
  * @see Curl
+ * @group Infrastructure
  * @author Wojciech Szela <wojtek@wikia-inc.com>
  */
 class CurlTest extends PHPUnit_Framework_TestCase {
