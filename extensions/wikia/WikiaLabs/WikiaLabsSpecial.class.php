@@ -22,10 +22,11 @@ class WikiaLabsSpecial extends SpecialPage {
 		$projects = WF::build( 'WikiaLabsProject')->getList(array("graduated" => false, "active" => true  )  );
 		$userId = $this->user->getId();
 	
+		$cityId = $this->app->getGlobal( 'wgCityId' );
 		/*sync with WF*/
 		foreach($projects as $value) {
-			if(!$value->isActive() && $this->app->runFunction( 'WikiFactory::getVarByName',  $wikiaLabsProject->getExtension(), $this->app->getGlobal( 'wgCityId' )) ){
-				$value->setActive(true);
+			if((!$value->isEnabled($cityId)) && $this->app->runFunction( 'WikiFactory::getVarByName',  $value->getExtension(), $cityId) ){
+				$value->setEnabled($cityId);
 				$value->update();
 			} 
 		}
