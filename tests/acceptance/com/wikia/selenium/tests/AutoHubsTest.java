@@ -34,7 +34,7 @@ public class AutoHubsTest extends BaseTest {
 	@Test(groups={"CI","central"})
 	public void testStaffTools() throws Exception {
 		String baseurl = "/wiki/TV";
-		loginAsBot();
+		loginAsStaff();
 
 		session().open( baseurl );
 
