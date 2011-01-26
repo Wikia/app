@@ -188,7 +188,7 @@ END;
 		}
 		$query_property = $this->escaped_property;
 		$sql = <<<END
-	CREATE TEMPORARY TABLE semantic_drilldown_filter_values
+	CREATE TEMPORARY TABLE semantic_drilldown_filter_values Engine=MyIsam
 	AS SELECT s_id AS id, $value_field AS value
 	FROM $table_name
 	JOIN $smw_ids p_ids ON $table_name.p_id = p_ids.smw_id
