@@ -992,7 +992,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'enterconfirmcode' => 'Enter code',
 
 # Button labels
-'button-createpage' => 'Create a Page',
+'button-createpage' => 'Add a Page',
 
 'wikianewfiles-title' => 'New photos on this wiki',
 
