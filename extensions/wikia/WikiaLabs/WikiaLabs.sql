@@ -5,7 +5,7 @@ CREATE TABLE wikia_labs_project (
 	wlpr_data TEXT,
 	wlpr_release_date DATE,
 	wlpr_is_active ENUM('y','n') DEFAULT 'n',
-	wlpr_is_graduated ENUM('y','n') DEFAULT 'n'
+	wlpr_is_graduated ENUM('y','n') DEFAULT 'n',
 	wlpr_activations_num INT DEFAULT '0',
 	wlpr_status INT DEFAULT '0',
 	wlpr_rating DECIMAL(10,2) DEFAULT '0.00',
