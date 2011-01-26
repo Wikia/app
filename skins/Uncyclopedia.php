@@ -47,20 +47,25 @@ class SkinUncyclopedia extends SkinMonoBook {
 		$out->addStyle( 'uncyclopedia/rtl.css', 'screen', '', 'rtl' );
 	}
 
-	// add credit buttons
-	protected function buildWikiaToolbox() {
+	// add credit buttons (instead of wikia messsages)
+	function wikiaBox() {
 		global $wgStylePath;
-		return "
-	<div id=\"projects\" class=\"portlet\">
+
+		$html = <<<HTML
+	<div id="projects" class="portlet">
 		<h5>projects</h5>
-		<div class=\"pBody\"><a href=\"http://stillwatersca.blogspot.com/\">
-			<img src=\"{$wgStylePath}/uncyclopedia/stillwaters-button.png\" alt=\"Stillwaters\" width=\"80\" height=\"15\" /></a>
-			<a href=\"http://www.chronarion.org/\">
-				<img src=\"{$wgStylePath}/uncyclopedia/chronarionbutton.png\" alt=\"chronarion.org\" width=\"80\" height=\"15\" />
+		<div class="pBody">
+			<a href="http://stillwatersca.blogspot.com/">
+				<img src="$wgStylePath/uncyclopedia/stillwaters-button.png" alt="Stillwaters" width="80" height="15" />
+			</a>
+			<a href="http://www.chronarion.org/">
+				<img src="$wgStylePath/uncyclopedia/chronarionbutton.png" alt="chronarion.org" width="80" height="15" />
 			</a>
 		</div>
 	</div>
-";
+HTML;
+
+		echo $html;
 	}
 
 	public function addWikiaCss(&$out) {
