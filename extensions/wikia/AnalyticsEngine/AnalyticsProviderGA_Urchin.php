@@ -213,14 +213,14 @@ urchinTracker("resolution/" + screenWidth + "/" + browserThousands + "/" + brows
 		$ns = $wgTitle->getNamespace();
 
 		if(!empty($wgEnableGA)) {
-			$out  = '<script type="text/javascript">_gaq.push([\'_setAccount\', \'UA-12241505-1\']);_gaq.push([\'_trackPageview\', \'/GN2/'.$ns.'\']);</script>';
+			$out  = "<script type=\"text/javascript\">_gaq.push(['_setAccount', 'UA-12241505-1']);_gaq.push(['_trackPageview', '/GN2/".$ns."']);</script>";
 		} else {
 			$out  = "<script type=\"text/javascript\">_uff=0; _uacct=\"UA-12241505-1\"; urchinTracker(\"/GN2/{$ns}\");</script>\n";
 		}
 
 		if (in_array($ns, array(0, 220))) {
 			if(!empty($wgEnableGA)) {
-				$out  = '<script type="text/javascript">_gaq.push([\'_setAccount\', \'UA-12241505-1\']);_gaq.push([\'_trackPageview\', \'/GN4/'.$ns.'/'.$wgTitle->getArticleID().'\']);</script>';			
+				$out .= "<script type=\"text/javascript\">_gaq.push(['_setAccount', 'UA-12241505-1']);_gaq.push(['_trackPageview', '/GN4/".$ns."/".$wgTitle->getArticleID()."']);</script>";
 			} else {
 				$out .= "<script type=\"text/javascript\">_uff=0; _uacct=\"UA-12241505-1\"; urchinTracker(\"/GN4/{$ns}/{$wgTitle->getArticleID()}\");</script>\n";
 			}
