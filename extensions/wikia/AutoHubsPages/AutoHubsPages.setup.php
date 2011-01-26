@@ -30,6 +30,7 @@ $wgHooks['CorporateBeforeMsgCacheClear'][] = 'AutoHubsPagesHelper::beforeMsgCach
 $wgAjaxExportList[] = 'AutoHubsPagesHelper::setHubsFeedsVariable';
 $wgAjaxExportList[] = 'AutoHubsPagesHelper::hideFeed';
 
+//@TODO remove wfAdProviderDARTFirstChunkForHubs, duplicated in /extensions/wikia/AdEngine/AdConfig.js
 $wgHooks["AdProviderDARTFirstChunk"][] = "wfAdProviderDARTFirstChunkForHubs";
 function wfAdProviderDARTFirstChunkForHubs($first_chunk) {
 	global $wgTitle;
@@ -38,6 +39,7 @@ function wfAdProviderDARTFirstChunkForHubs($first_chunk) {
 		return true;
 	}
 
+	// ANY CHANGE TO THESE HUBS MUST BE REPLICATED IN /extensions/wikia/AdEngine/AdConfig.js
 	switch ($wgTitle->getText()){
 		case "Entertainment":  $first_chunk = "wka.ent/_entertainment/hub"; break;
 		case "Movie":
@@ -53,8 +55,8 @@ function wfAdProviderDARTFirstChunkForHubs($first_chunk) {
 		case "Xbox 360 Games": $first_chunk = "wka.gaming/_xbox360/hub";    break;
 		case "PS3 Games":      $first_chunk = "wka.gaming/_ps3/hub";        break;
 		case "Wii Games":      $first_chunk = "wka.gaming/_wii/hub";        break;
-		case "Handheld":       $first_chunk = "wka.gaming/_handheld/hub";   break;
-		case "Casual Games":   $first_chunk = "wka.gaming/_casualgames/hub";break;
+		case "Handheld Games": $first_chunk = "wka.gaming/_handheld/hub";   break;
+		case "Casual Games":   $first_chunk = "wka.gaming/_casual/hub";     break;
 		case "Lifestyle":      $first_chunk = "wka.life/_lifestyle/hub";    break;
 		case "Recipes":        $first_chunk = "wka.life/_recipes/hub";      break;
 
@@ -64,4 +66,13 @@ function wfAdProviderDARTFirstChunkForHubs($first_chunk) {
 	return true;
 
 
+}
+
+$wgHooks['MakeGlobalVariablesScript'][] = 'wfAutoHubsPagesSetupJSVars';
+function wfAutoHubsPagesSetupJSVars($vars) {
+	global $wgHubsPages, $wgContLanguageCode;
+
+	$vars['wgHubsPages'] = $wgHubsPages[$wgContLanguageCode];
+
+	return true;
 }
