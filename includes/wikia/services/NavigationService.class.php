@@ -220,8 +220,8 @@ class NavigationService {
 
 				$fname = $this->extraWordsMap[$extraWord];
 				$data = DataProvider::$fname();
-
-				if(count($data) > 0) {
+				//http://bugs.php.net/bug.php?id=46322 count(false) == 1
+				if (!empty($data)) {
 					$node['children'] = array();
 					foreach($data as $val) {
 						$node['children'][] = $this->lastExtraIndex;
