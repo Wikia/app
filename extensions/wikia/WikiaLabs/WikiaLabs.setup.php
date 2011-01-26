@@ -72,13 +72,3 @@ $wgAjaxExportList[] = 'WikiaLabs::switchProject';
 $wgAjaxExportList[] = 'WikiaLabs::saveFeedback';
 
 
-/*
- * TEMP !!!! Move it to common ext
- */
-
-$wgWikiaLabsAllowed = array(
-	'wgEnablePageLayoutBuilder',
-	'wgEnableTest',
-);
-
-
