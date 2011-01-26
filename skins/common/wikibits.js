@@ -687,7 +687,7 @@ function ts_resortTable( lnk ) {
 		if( (' ' + row.className + ' ').indexOf(' unsortable ') < 0 ) {
 			var keyText = ts_getInnerText( row.cells[column] );
 			if( keyText === undefined ) {
-				keyText = ''; 
+				keyText = '';
 			}
 			var oldIndex = ( reverse ? -j : j );
 			var preprocessed = preprocessor( keyText.replace(/^[\s\xa0]+/, '').replace(/[\s\xa0]+$/, '') );
@@ -1087,7 +1087,7 @@ function getLabelFor (obj_id) {
 	return false;
 }
 
-if (skin != 'monaco' && skin != 'oasis' && skin != 'uncyclopedia') {
+if (skin != 'monaco' && skin != 'oasis') {
 	//see RT#46116
 	if ( !(skin == 'answers' && !window.wgOldAnswerSkin) ) {
 		addOnloadHook(function() { for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();} });
