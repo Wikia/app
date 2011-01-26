@@ -45,7 +45,7 @@
 		<?php endif; ?>
 		<input id="hiddenCreatePageDialogButton" type="submit" style="display: none;" name="hiddenCreatePageDialogButton" value="<?= wfMsg("createpage-dialog-title") ?>" />
 		<div id="CreatePageDialogButton" class="modalToolbar neutral">
-			<input type="submit" id="wpCreatePageDialogButton" onclick="CreatePage.submitDialog(false);" value="<?= wfMsg("createpage-dialog-title") ?>" />
+			<?= View::specialPageLink('CreatePage', 'button-createpage', 'wikia-button createpage', 'blank.gif', 'oasis-create-page', 'sprite new'); ?>
 		</div>
 	</form>
 </div>
