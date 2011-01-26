@@ -59,11 +59,11 @@ var WikiBuilder = {
 			WikiBuilder.transition(3, 4);
 			$.tracker.byStr(tracking_prepend + '3/skip');
 		});
-		$('.dialog .step4 input.basic').click(function(e){
+		$('.dialog .step4 input.wb-basic').click(function(e){
 			window.location.href = redirect;
 			$.tracker.byStr(tracking_prepend + '4/save');
 		});
-		$('.dialog .step4 input.plus').click(function(e){
+		$('.dialog .step4 input.wb-plus').click(function(e){
 			WikiBuilder.upgradeToWikiaPlus.call(this);
 			$.tracker.byStr(tracking_prepend + '4/skip');
 		});
