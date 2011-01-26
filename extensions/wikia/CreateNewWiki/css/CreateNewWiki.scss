@@ -1,0 +1,333 @@
+$color-borders: #CECECE;
+
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/core/color";
+
+@import "../../ThemeDesigner/css/ThemeTab";
+
+.WikiaPage {
+	@include linear-gradient(false, top, #01386e, 20%, #2185da, 70%, #fff, 100%);
+	border: none;
+}
+
+.CorporateFooter {
+	display: none;
+}
+
+.WikiaFooter {
+	padding-bottom: 10px;
+	section {
+		display: none;
+	}
+}
+
+.AccountNavigation {
+	display: none;
+}
+
+#CreateNewWiki {
+	background: white;
+	border: 10px solid #8ac342;
+	color: #747474;
+	font-size: 12px;
+	font-weight: normal;
+	margin: 135px auto 0;
+	padding: 30px 30px 60px 75px;
+	position: relative;
+	width: 500px;
+	h1 {
+		display: none;
+	}
+	h2 {
+		border: none;
+		color: #2c85d6;
+		font-size: 23px;
+		font-weight: bold;
+		line-height: 26px;
+		margin: 0 0 14px;
+	}
+	nav {
+		input[type=button] {
+			bottom: 10px;
+			position: absolute;
+			right: 20px;
+			&.back {
+				left: 20px;
+				right: auto;
+			}
+		}
+		.submit-error {
+			position: absolute;
+			bottom: 10px;
+			right: 100px;
+		}
+	}
+	input[type=text],
+	input[type=password] {
+		background: #e2f1fe;
+		border: 1px solid #e3f1fe;
+		font-size: 17px;
+		padding: 0.3em;
+	}
+	label {
+		/* following !important is used because the existing template has inline styles */
+		font-weight: normal !important;
+		font-size: 17px !important;
+		line-height: 23px;
+	}
+	.creative {
+		font-size: 17px;
+	}
+	.status-icon {
+		position: relative;
+		img {
+			bottom: -3px;
+			position: absolute;
+			right: 5px;
+		}
+	}
+	.steps {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.awesome-box {
+		left: -122px;
+		position: absolute;
+		top: -127px;
+	}
+	.error-msg {
+		color: red;
+		font-size: 12px;
+		font-style: italic;
+	}
+}
+
+#StepsIndicator {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	li {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.step {
+		@include border-radius(5px);
+		background-color: #f4f4f4;
+		float: left;
+		height: 10px;
+		margin-left: 10px;
+		width: 10px;
+		&.active {
+			background-color: #fe5a1d;
+		}
+	}
+}
+
+#NameWiki {
+	width: 500px;
+	form {
+		font-size: 17px;
+		label {
+			display: block;
+			margin-top: 15px;
+		}
+		input[type=text],
+		input[type=password] {
+			width: 380px;
+		}
+		.language-default {
+			font-size: 12px;
+			margin-top: 20px;
+		}
+		.language-choice {
+			display: none;
+		}
+	}
+}
+
+#Auth {
+	width: 600px;
+	.login-msg {
+		display: none;
+		text-align: right;
+		.fb_button {
+			clear: left;
+		}
+	}
+	.signup {
+		display: none;
+	}
+	.signup-msg {
+	}
+	.signup-msg,
+	.login-msg {
+		position: absolute;
+		right: 109px;
+		top: 95px;
+	}
+	.fb_button {
+				
+	}
+	nav {
+		.signup {
+			display: none;
+			
+		}
+	}
+	.modalToolbar {
+		display: none;
+	}
+	.facebook.login {
+		float: left;
+		margin: -25px 0 0 67px;
+		text-align: center;
+		>span {
+			display: block;
+			text-align: center;
+		}
+	}
+	.plain {
+		font-size: 12px;
+	}
+}
+
+div#userloginErrorBox3 {
+	margin-top: 2em;
+}
+
+#labelFor_wpRemember2Ajax {
+	font-size: 12px;
+}
+
+#wpLoginattempt {
+	display: none;
+}
+
+#AjaxLoginConnectMarketing {
+	display: none;
+}
+
+.skin-oasis #AjaxLoginSlider {
+	div.ajax-login-slider-panel {
+		padding: 0;
+		width: auto;
+	}
+}
+
+#userajaxloginform {
+	input[type=text],
+	input[type=password] {
+		width: 380px;
+	}
+}
+
+#DescWiki {
+	width: 700px;
+	ol {
+		left: 515px;
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		top: 100px;
+		width: 265px;
+		li {
+			@include linear-gradient(#0255a1, top, #0255a1, 50%, #2b84d6, 100%);
+			@include border-radius(10px);
+			@include box-shadow(1px, 1px, 1px, #000);
+			color: #f6f2f3;
+			font-size: 17px;
+			font-weight: bold;
+			list-style: none;
+			margin-bottom: 10px;
+			padding:10px;
+			.tip-creative {
+				font-size: 14px;
+				font-weight: normal;
+			}
+		}
+	}
+	textarea {
+		font-size: 17px;
+		height: 220px;
+		padding: 0;
+		resize: none;
+		width: 425px;
+	}
+	label {
+		margin-top: 10px;
+		display: block;
+	}
+}
+
+#ThemeWiki {
+	width: 650px;
+	.ThemeTab {
+		height: 150px;
+		left: 45px;
+		position: absolute;
+		top: 95px;
+		.slider {
+			top: 0;
+			width: 608px;
+			ul {
+				list-style: none;
+				margin: 0;
+				li {
+					padding-bottom: 0;
+					padding-top: 0;
+				}
+			}
+		}
+		.chevron {
+			top: 67px;
+			&.next {
+				left: 645px;
+			}
+		}
+	}
+	.instruction {
+		margin-top: 175px;
+	}
+}
+
+#UpgradeWiki {
+	width: 625px;
+	.marketing {
+		font-size: 17px;
+		position: relative;
+		.upgrade {
+			@include linear-gradient(#8ddd56, top, #8ddd56, 20%, #74af39, 100%);
+			border: 1px solid #74af39;
+			font-size: 18px;
+			height: auto;
+			left: 430px;
+			padding: 9px 12px;
+			position: absolute;
+			top: 40px;
+			&:hover {
+				@include linear-gradient(#7dbf43, top, #7dbf43, 20%, #74af39, 100%);
+			}
+			&:active {
+				@include linear-gradient(#74af39, top, #74af39, 20%, #8ddd56, 100%);
+			}
+		}
+	}
+	ul {
+		@include clearfix;
+		clear: both;
+		margin: 15px 50px;
+		width: 400px;
+		li {
+			float: left;
+			width: 200px;
+		}
+	}
+}

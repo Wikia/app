@@ -1,0 +1,180 @@
+<section id="CreateNewWiki">
+	<h1><?= wfMsg('cnw-title') ?></h1>
+	<ol class="steps">
+		<li id="NameWiki" style="" class="step">
+			<h2><?= wfMsg('cnw-name-wiki-headline') ?></h2>
+			<p class="creative"><?= wfMsg('cnw-name-wiki-creative') ?></p>
+			<form name="label-wiki-form">
+				<label for="wiki-name"><?= wfMsg('cnw-name-wiki-label') ?></label>
+				<span class="wiki-name-status-icon status-icon"></span>
+				<input type="text" name="wiki-name" value="<?= $wikiName ?>"> <?= wfMsg('cnw-name-wiki-wiki') ?>
+				<div class="wiki-name-error error-msg"></div>
+				<label for="wiki-domain"><?= wfMsg('cnw-name-wiki-domain-label') ?></label>
+				<span class="domain-status-icon status-icon"></span>
+				<span class="domain-country"></span>
+				<?= wfMsg('cnw-name-wiki-language') ?><input type="text" name="wiki-domain" value="<?= $wikiDomain ?>"> <?= wfMsg('cnw-name-wiki-domain') ?>
+				<div class="wiki-domain-error error-msg"></div>
+				<div class="language-default">
+					<?= wfMsg('cnw-desc-default-lang') ?> - <a href="#" id="ChangeLang"><?= wfMsg('cnw-desc-change-lang') ?></a>
+				</div>
+				<div class="language-choice">
+					<label for="wiki-language"><?= wfMsg('cnw-desc-lang') ?></label>
+					<select name="wiki-language">
+					
+					<?php
+		$isSelected = false;
+		$selectedLang = empty($wikiLanguage) ? $wgLanguageCode : $wikiLanguage;
+		if (!empty($aTopLanguages) && is_array($aTopLanguages)) :
+	?>
+					<optgroup label="<?= wfMsg('autocreatewiki-language-top', count($aTopLanguages)) ?>">
+	<?php foreach ($aTopLanguages as $sLang) :
+			$selected = '';
+			if ( empty($isSelected) && $sLang == $selectedLang ) {
+				$isSelected = true;
+				$selected = ' selected="selected"';
+			}
+	?>
+					<option value="<?=$sLang?>" <?=$selected?>><?=$sLang?>: <?=$aLanguages[$sLang]?></option>
+	<?php endforeach ?>
+					</optgroup>
+	<?php endif ?>
+					<optgroup label="<?= wfMsg('autocreatewiki-language-all') ?>">
+	<?php if (!empty($aLanguages) && is_array($aLanguages)) : ?>
+	<?php
+		ksort($aLanguages);
+		foreach ($aLanguages as $sLang => $sLangName) :
+			$selected = "";
+			if ( empty($isSelected) && ( ( isset($params['wiki-language'] ) && ( $sLang == $params['wiki-language'] ) ) || ( !isset($params['wiki-language']) && ( $sLang == $mLanguage ) ) ) ) :
+				$isSelected = true;
+				$selected = ' selected="selected"';
+			endif;
+	?>
+					<option value="<?=$sLang?>" <?=$selected?>><?=$sLang?>: <?=$sLangName?></option>
+	<?php endforeach ?>
+					</optgroup>
+	<?php endif ?>
+					
+					</select>
+				</div>
+	
+				
+				<nav>
+					<span class="submit-error error-msg"></span>
+					<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next">
+				</nav>
+			</form>
+		</li>
+<?php
+	if (!$wgUser->isLoggedIn()) {
+?>
+		<li id="Auth" style="display:none" class="step">
+			<h2><?= wfMsg('cnw-auth-headline') ?></h2>
+			<p class="creative login"><?= wfMsg('cnw-auth-creative') ?></p>
+			<p class="creative signup"><?= wfMsg('cnw-auth-signup-creative') ?></p>
+			<?= AjaxLoginForm::getTemplateForCombinedForms()->execute('ComboAjaxLogin') ?>
+			<p class="signup-msg">
+				<?= wfMsg('cnw-signup-prompt') ?> <a href="#"><?= wfMsg('cnw-call-to-signup') ?></a>
+			</p>
+			<p class="login-msg">
+				<?= wfMsg('cnw-login-prompt') ?> <a href="#"><?= wfMsg('cnw-call-to-login') ?></a>
+				<br>
+				<?php print '<fb:login-button id="fbAjaxLoginConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'>Login with Facebook</fb:login-button>'; ?>
+			</p>
+			<div class="facebook login">
+				<span>- <?= wfMsg('cnw-or') ?> -</span>
+				<?php print '<fb:login-button id="fbAjaxLoginConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'>Login with Facebook</fb:login-button>'; ?>
+			</div>
+			<nav>
+				<input type="button" value="<?= wfMsg('cnw-back') ?>" class="secondary back">
+				<input type="button" value="<?= wfMsg('cnw-login') ?>" class="login">
+				<input type="button" value="<?= wfMsg('cnw-signup') ?>" class="signup">
+			</nav>
+		</li>
+<?php
+	} // if isLoggedIn
+?>
+		<li id="DescWiki" style="display:none" class="step">
+			<h2><?= wfMsg('cnw-desc-headline') ?></h2>
+			<p class="creative"><?= wfMsg('cnw-desc-creative') ?></p>
+			<form name="desc-form">
+				<textarea id="Description" placeholder="<?= wfMsg('cnw-desc-placeholder') ?>"></textarea>
+				<ol>
+					<li>
+						<?= wfMsg('cnw-desc-tip1') ?>
+						<div class="tip-creative"><?= wfMsg('cnw-desc-tip1-creative') ?></div>
+					</li>
+					<li>
+						<?= wfMsg('cnw-desc-tip2') ?>
+						<div class="tip-creative"><?= wfMsg('cnw-desc-tip2-creative') ?></div>
+					</li>
+					<li>
+						<?= wfMsg('cnw-desc-tip3') ?>
+						<div class="tip-creative"><?= wfMsg('cnw-desc-tip3-creative') ?></div>
+					</li>
+				</ol>
+				<label for="wiki-category"><?= wfMsg('cnw-desc-choose') ?></label>
+				<select name="wiki-category">
+					<option value=""><?=wfMsg('cnw-desc-select-one')?></option>
+	<?php
+		foreach ($aCategories as $iCat => $catData) {
+			$sCatName = $catData["name"];
+			if( in_array( $sCatName, array( 'Wikia', 'Wikianswers' ) ) )
+				continue;
+	?>
+					<option value="<?php echo $iCat ?>"><?php echo $sCatName?></option>
+	<?php
+		}
+	?>
+				</select>
+				<nav>
+					<input type="button" value="<?= wfMsg('cnw-back') ?>" class="secondary back">
+					<span class="submit-error error-msg"></span>
+					<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next">
+				</nav>
+			</form>
+		</li>
+		<li id="ThemeWiki" style="display:none" class="step">
+			<h2><?= wfMsg('cnw-theme-headline') ?></h2>
+			<p class="creative"><?= wfMsg('cnw-theme-creative') ?></p>
+			<?= wfRenderModule('ThemeDesigner', 'ThemeTab') ?>
+			<p class="instruction creative"><?= wfMsg('cnw-theme-instruction') ?></p>
+			<nav>
+				<input type="button" value="<?= wfMsg('cnw-back') ?>" class="secondary back">
+				<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next">
+			</nav>
+		</li>
+		<li id="UpgradeWiki" style="display:none" class="step">
+			<h2><?= wfMsg('cnw-upgrade-headline') ?></h2>
+			<p class="creative"><?= wfMsg('cnw-upgrade-creative') ?></p>
+			<div class="marketing">
+				<?= wfMsg('cnw-upgrade-marketing') ?>
+				<input type="button" value="<?= wfMsg('cnw-upgrade-now') ?>" class="upgrade">
+			</div>
+			<nav>
+				<input type="button" value="<?= wfMsg('cnw-upgrade-decline') ?>" class="next">
+			</nav>
+		</li>
+	</ol>
+	<ul id="StepsIndicator">
+		<?php
+			$steps = $wgUser->isLoggedIn() ? 4 : 5;
+			$active = empty($currentStep) ? 1 : 3;
+			for($i = 0; $i < $steps; $i++) {
+		?>
+			<li class="step<?= $active > 0 ? ' active' : '' ?>"></li>
+		<?php
+				$active--;
+			}
+		?>
+	</ul>
+	<img class="awesome-box" src="/extensions/wikia/CreateNewWiki/images/box_art.png">
+</section>
+<script>
+	WikiBuilderCfg = {
+		'name-wiki-submit-error':'<?= wfMsg('cnw-name-wiki-submit-error') ?>',
+		'desc-wiki-submit-error':'<?= wfMsg('cnw-desc-wiki-submit-error') ?>',
+		'currentstep':'<?= $currentStep ?>',
+		'skipwikiaplus':'<?= $skipWikiaPlus ?>'
+	};
+	var themes = <?= Wikia::json_encode($wgOasisThemes) ?>;
+</script>
