@@ -59,6 +59,8 @@ class SpecialWikiPayment extends UnlistedSpecialPage {
 		switch( $action ) {
 			case 'returnOk':
 				$this->returnPayment( $token, $cityId );
+				global $wgOut;
+				$wgOut->redirect(wfMsgForContent( 'mainpage' ).'?wiki-welcome=1');
 				break;
 			case 'returnCancel':
 				$this->cancelPayment( $token );
