@@ -19,7 +19,7 @@ class DPLMain {
 		global $wgUser, $wgLang, $wgContLang, $wgRequest, $wgRawHtml;
 		global $wgTitle, $wgNonincludableNamespaces;
 
-		// we use "makeKnownLinkObject" to create hyperlinks; 
+		// we use "makeKnownLinkObject" to create hyperlinks;
 		// the code we store in the dplcache may contain <html>....</html> sequences
 		// for both reasons we need to enable rawHtml output
 		// note that this does not affect the article wiki source - a <html> tag in the wiki source
@@ -59,7 +59,7 @@ class DPLMain {
 		}
 
 		// get database access
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'dpl' );
 		$sPageTable = $dbr->tableName( 'page' );
 		$sCategorylinksTable = $dbr->tableName( 'categorylinks' );
 
@@ -911,7 +911,7 @@ class DPLMain {
 						$output .= $logger->msgWrongParam( 'debug', $sArg );
 					}
 					break;
-					
+
 				/**
 				 * Unknown parameter
 				 */
@@ -946,7 +946,7 @@ class DPLMain {
 					}
 					$bConflictsWithOpenReferences = true;
 					break;
-				
+
 				case 'notlinksto':
 					$problems = self::getPageNameList(
 						'notlinksto', $sArg, $aNotLinksTo,
@@ -1251,7 +1251,7 @@ class DPLMain {
 				case 'includematch':
 					$aSecLabelsMatch = explode( ',', $sArg );
 					break;
-	
+
 				case 'includenotmatchparsed':
 					$bIncParsed = true;
 				case 'includenotmatch':
@@ -1274,7 +1274,7 @@ class DPLMain {
 						$output .= $logger->msgWrongParam( 'adduser', $sArg );
 					}
 					break;
-					
+
 				case 'addauthor':
 					if ( in_array( $sArg, ExtDynamicPageList::$options['addauthor'] ) ) {
 						$bAddAuthor = self::argBoolean( $sArg );
@@ -1360,7 +1360,7 @@ class DPLMain {
 						$output .= $logger->msgWrongParam( 'tablesortcol', $sArg );
 					}
 					break;
-					
+
 				case 'dominantsection':
 					if ( preg_match( ExtDynamicPageList::$options['dominantsection']['pattern'], $sArg ) ) {
 						$iDominantSection = ( $sArg == '' ) ? null : intval( $sArg );
@@ -1752,7 +1752,7 @@ class DPLMain {
 		$iTotalIncludeCatCount = count( $aIncludeCategories, COUNT_RECURSIVE ) - $iIncludeCatCount;
 		$iExcludeCatCount = count( $aExcludeCategories );
 		$iTotalCatCount = $iTotalIncludeCatCount + $iExcludeCatCount;
-		
+
 		if ( $calledInMode == 'tag' ) {
 			// in tag mode 'eliminate' is the same as 'reset' for tpl,cat,img
 			if ( $bReset[5] ) {
@@ -1803,7 +1803,7 @@ class DPLMain {
 		if ( $iTotalCatCount < ExtDynamicPageList::$minCategoryCount ) {
 			return $output . $logger->escapeMsg( DPL_i18n::FATAL_TOOFEWCATS, ExtDynamicPageList::$minCategoryCount );
 		}
-	
+
 		// no selection criteria! Warn only if no debug level is set
 		if ( $iTotalCatCount == 0 && $bSelectionCriteriaFound == false ) {
 			if ( $logger->iDebugLevel <= 1 ) {
@@ -1831,11 +1831,11 @@ class DPLMain {
 			return $output . $logger->escapeMsg( DPL_i18n::FATAL_MORETHAN1TYPEOFDATE );
 		}
 
-		// the dominant section must be one of the sections mentioned in includepage 	
+		// the dominant section must be one of the sections mentioned in includepage
 		if ( $iDominantSection > 0 && count( $aSecLabels ) < $iDominantSection ) {
 			return $output . $logger->escapeMsg( DPL_i18n::FATAL_DOMINANTSECTIONRANGE, count( $aSecLabels ) );
 		}
-	
+
 		// category-style output requested with not compatible order method
 		if ( $sPageListMode == 'category' && !array_intersect( $aOrderMethods, array( 'sortkey', 'title', 'titlewithoutnamespace' ) ) ) {
 			return $output . $logger->escapeMsg( DPL_i18n::FATAL_WRONGORDERMETHOD, 'mode=category', 'sortkey | title | titlewithoutnamespace' );
@@ -1932,7 +1932,7 @@ class DPLMain {
 				}
 			}
 			$aListSeparators[1] = '';
-			// the user may have specified the third parameter of 'format' to add meta attributes of articles to the table 
+			// the user may have specified the third parameter of 'format' to add meta attributes of articles to the table
 			if ( !array_key_exists( 2, $aListSeparators ) ) {
 				$aListSeparators[2] = '';
 			}
@@ -2686,7 +2686,7 @@ class DPLMain {
 			}
 			$sSqlWhere .= ')';
 		}
-	
+
 		// rev_minor_edit IS
 		if ( isset( $sMinorEdits ) && $sMinorEdits == 'exclude' ) {
 			$sSqlWhere .= ' AND rev_minor_edit=0';
@@ -2864,7 +2864,7 @@ class DPLMain {
 
 		// ###### DUMP SQL QUERY ######
 		if ( $logger->iDebugLevel >= 3 ) {
-			// DEBUG: output SQL query 
+			// DEBUG: output SQL query
 			$output .= "DPL debug -- Query=<br />\n<tt>" . $sSqlSelectFrom . $sSqlWhere . "</tt>\n\n";
 		}
 
@@ -3288,7 +3288,7 @@ class DPLMain {
 
 			// add general dependencies
 
-			// CacheAPI::addDependencies ( $parser->mTitle->getArticleID(), $conditionTypes, $conditions); 
+			// CacheAPI::addDependencies ( $parser->mTitle->getArticleID(), $conditionTypes, $conditions);
 */
 		}
 
@@ -3394,7 +3394,7 @@ class DPLMain {
 			}
 		}
 	}
-	
+
 	private static function validParametersList() {
 		$plist = '';
 		foreach ( ExtDynamicPageList::$validParametersForRichnessLevel as $level => $p ) {
@@ -3411,7 +3411,7 @@ class DPLMain {
 	}
 
 	private static function getSubcategories( $cat, $sPageTable, $depth ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'dpl' );
 		$cats = $cat;
 		$res = $dbr->query(
 			"SELECT DISTINCT page_title FROM " . $dbr->tableName( 'page' ) . " INNER JOIN "
@@ -3435,7 +3435,7 @@ class DPLMain {
 				substr( $t, 6, 2 ) . '  ' . substr( $t, 8, 2 ) . ':' .
 				substr( $t, 10, 2 ) . ':' . substr( $t, 12, 2 );
 	}
-	
+
 	private static function durationTime( $t ) {
 		if ( $t < 60 ) {
 			return '00:00:' . str_pad( $t, 2, '0', STR_PAD_LEFT );
@@ -3486,7 +3486,7 @@ class DPLMain {
 		}
 		return  false;
 	}
-	
+
 	private static function resolveUrlArg( $input, $arg ) {
 		global $wgRequest;
 		$dplArg = $wgRequest->getVal( $arg, '' );
