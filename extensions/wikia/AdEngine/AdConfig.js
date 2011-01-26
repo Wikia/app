@@ -4,6 +4,46 @@ AdConfig = {
 	geoCookieName: 'Geo',
 	quantcastSegmentCookieName: 'qcseg',
 
+	isHighValueCountry: function(country) {
+		switch (country) {
+			case 'CA':
+			case 'DE':
+			case 'ES':
+			case 'FR':
+			case 'GB':
+			case 'IT':
+			case 'UK':
+			case 'US':
+				return true;
+				break;
+			default:
+				return false;
+		}
+	},
+
+	isHighValueSlot: function(slotname) {
+		switch (slotname) {
+			case 'CORP_TOP_LEADERBOARD':
+			case 'CORP_TOP_RIGHT_BOXAD':
+			case 'EXIT_STITIAL_BOXAD_1':
+			case 'HOME_INVISIBLE_TOP':
+			case 'HOME_TOP_LEADERBOARD':
+			case 'HOME_TOP_RIGHT_BOXAD':
+			case 'HOME_TOP_RIGHT_BUTTON':
+			case 'INVISIBLE_1':		// footer
+			case 'INVISIBLE_TOP':	// skin
+			case 'TEST_HOME_TOP_RIGHT_BOXAD':
+			case 'TEST_TOP_RIGHT_BOXAD':
+			case 'TOP_LEADERBOARD':
+			case 'TOP_RIGHT_BOXAD':
+			case 'TOP_RIGHT_BUTTON':
+				return true;
+				break;
+			default:
+				return false;
+		}
+	},
+
 	/* Set/get cookies. Borrowed from a jquery plugin. Note that options.expires is either a date object,
 	 * or a number of *milli*seconds until the cookie expires */
 	cookie: function(name, value, options) {
@@ -64,46 +104,6 @@ AdConfig = {
 		return;
 	},
 
-	isHighValueCountry: function(country) {
-		switch (country) {
-			case 'CA':
-			case 'DE':
-			case 'ES':
-			case 'FR':
-			case 'GB':
-			case 'IT':
-			case 'UK':
-			case 'US':
-				return true;
-				break;
-			default:
-				return false;
-		}
-	},
-
-	isHighValueSlot: function(slotname) {
-		switch (slotname) {
-			case 'CORP_TOP_LEADERBOARD':
-			case 'CORP_TOP_RIGHT_BOXAD':
-			case 'EXIT_STITIAL_BOXAD_1':
-			case 'HOME_INVISIBLE_TOP':
-			case 'HOME_TOP_LEADERBOARD':
-			case 'HOME_TOP_RIGHT_BOXAD':
-			case 'HOME_TOP_RIGHT_BUTTON':
-			case 'INVISIBLE_1':		// footer
-			case 'INVISIBLE_TOP':	// skin
-			case 'TEST_HOME_TOP_RIGHT_BOXAD':
-			case 'TEST_TOP_RIGHT_BOXAD':
-			case 'TOP_LEADERBOARD':
-			case 'TOP_RIGHT_BOXAD':
-			case 'TOP_RIGHT_BUTTON':
-				return true;
-				break;
-			default:
-				return false;
-		}
-	},
-
 	init: function() {
 		AdConfig.pullGeo();
 	}
@@ -112,12 +112,37 @@ AdConfig = {
 /* DART Configuration */
 AdConfig.DART = {
 	adDriverNumCall: null,
+	corporateDbName: 'wikiaglobal',
 	hasPrefooters: null,
 	height: null,
 	largeWidth: 1024,
 	ord: Math.round(Math.random() * 23456787654), // The random number should be generated once and the same for all
+	size: null,
 	tile: 1,
 	width: null,
+	zone1: null,
+	zone2: null,
+
+	hubMap: {
+		"Entertainment": {"site":"ent", "zone1":"_entertainment"},
+		"Movie": {"site":"ent", "zone1":"_movies"},
+		"Movies": {"site":"ent", "zone1":"_movies"},
+		"TV": {"site":"ent", "zone1":"_tv"},
+		"Television": {"site":"ent", "zone1":"_tv"},
+		"Music": {"site":"ent", "zone1":"_music"},
+		"Anime": {"site":"ent", "zone1":"_anime"},
+		"Sci-Fi": {"site":"ent", "zone1":"_scifi"},
+		"Horror": {"site":"ent", "zone1":"_horror"},
+		"Gaming": {"site":"gaming", "zone1":"_gaming"},
+		"PC Games": {"site":"gaming", "zone1":"_pcgaming"},
+		"Xbox 360 Games": {"site":"gaming", "zone1":"_xbox360"},
+		"PS3 Games": {"site":"gaming", "zone1":"_ps3"},
+		"Wii Games": {"site":"gaming", "zone1":"_wii"},
+		"Handheld Games": {"site":"gaming", "zone1":"_handheld"},
+		"Casual Games": {"site":"gaming", "zone1":"_casual"},
+		"Lifestyle": {"site":"life", "zone1":"_lifestyle"},
+		"Recipes": {"site":"life", "zone1":"_recipes"}
+	},
 	
 	sizeMap: {
 	   '300x250': '300x250,300x600',
@@ -188,17 +213,16 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 			break;
 	}
 
+	AdConfig.DART.initSiteAndZones();
+
 	var url = 'http://' +
 		AdConfig.DART.getSubdomain() +
 		'.doubleclick.net/' +
-		// TODO: port AdProviderDARTFirstChunk from PHP
 		AdConfig.DART.getAdType(useIframe) + '/' +
-		AdConfig.DART.getSite(window.cityShort) + '/' +
-		AdConfig.DART.getZone1(window.wgDBname) + '/' +
-		AdConfig.DART.getZone2(window.adLogicPageType) + ';' +
-		's0=' + window.cityShort + ';' +
-		's1=' + AdConfig.DART.getZone1(window.wgDBname) + ';' +
-		's2=' + AdConfig.DART.getZone2(window.adLogicPageType) + ';' +
+		AdConfig.DART.site + '/' + AdConfig.DART.zone1 + '/' + AdConfig.DART.zone2 + ';' +
+		's0=' + AdConfig.DART.site.replace(/wka\./, '') + ';' +
+		's1=' + AdConfig.DART.zone1 + ';' +
+		's2=' + AdConfig.DART.zone2 + ';' +
 		window.ProviderValues.string +
 		AdConfig.DART.getArticleKV() +
 		AdConfig.DART.getDomainKV(window.location.hostname) +
@@ -275,6 +299,48 @@ AdConfig.DART.getAdType = function(useIframe) {
 	} else {
 		return 'adj';
 	}
+}
+
+AdConfig.DART.initSiteAndZones = function() {
+	if (AdConfig.DART.isHub()) {
+		AdConfig.DART.zone2 = 'hub';
+
+		if (AdConfig.DART.hubMap[wgTitle]) {
+			AdConfig.DART.site = AdConfig.DART.getSite(AdConfig.DART.hubMap[wgTitle]['site']);
+			AdConfig.DART.zone1 = AdConfig.DART.hubMap[wgTitle]['zone1'];
+		}
+		else {
+			AdConfig.DART.site = AdConfig.DART.getSite(window.cityShort);
+			AdConfig.DART.zone1 = AdConfig.DART.getZone1(window.wgDBname);
+		}
+	}
+	else {
+		AdConfig.DART.site = AdConfig.DART.getSite(window.cityShort);
+		AdConfig.DART.zone1 = AdConfig.DART.getZone1(window.wgDBname);
+		AdConfig.DART.zone2 = AdConfig.DART.getZone2(window.adLogicPageType);
+	}
+}
+
+AdConfig.DART.isHub = function() {
+	if (wgDBname != AdConfig.DART.corporateDbName) {
+		return false;
+	}
+
+	if (typeof wgHubsPages == 'undefined') {
+		return false;
+	}
+
+	for (var key in wgHubsPages) {
+		if (typeof key == 'object' && key['name']) {
+			key = key['name'];
+		}
+
+		if (wgPageName.toLowerCase() == key.toLowerCase()) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 AdConfig.DART.getSite = function(hub) {
