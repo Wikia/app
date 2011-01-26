@@ -205,7 +205,12 @@ urchinTracker("resolution/" + screenWidth + "/" + browserThousands + "/" + brows
 
 	private function lyrics() {
 		global $wgRequest, $wgEnableGA;
-		if ("view" != $wgRequest->getVal("action", "view")) return "";
+
+		// Only record stats when the user is viewing lyrics rather than performing other actions on it (submitting a form, starting an edit, etc.).
+		$action = $wgRequest->getVal("action", "view");
+		if(!in_array($action, array("view", "purge"))){
+			return "<!-- Not a lyrics view (action: \"$action\"). -->";
+		}
 
 		global $wgTitle;
 		if (!is_object($wgTitle) || !($wgTitle instanceof Title)) return "";
