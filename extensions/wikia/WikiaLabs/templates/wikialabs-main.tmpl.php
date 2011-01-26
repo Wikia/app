@@ -1,3 +1,7 @@
+<div class='warningBox' >
+	<img src="/extensions/wikia/WikiaLabs/images/cross-16-ns.png">	
+	<?php echo wfMsg('wikialabs-list-project-warning-box'); ?>
+</div>
 <ul class="wikiaLabsMainView">
 	<?php foreach($projects as $value):   $data = $value->getData();  ?>
 		<li>

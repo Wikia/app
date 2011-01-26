@@ -32,6 +32,7 @@ $messages['en'] = array(
 	'wikialabs-list-project-warning-ok' => 'Yes, deactivate',
 	'wikialabs-list-project-warning-cancel' => 'Cancel',
 	'wikialabs-list-project-currently-active' => 'currently active',
+	'wikialabs-list-project-warning-box' => 'Projects in Wikia Labs are experimental and should no be used for mission critical features on any wiki.<br>They may <b>change</b>, <b>break</b>, or <b>disappear</b> at any time.',
 	'wikialabs-graduates-tile' => 'Graduates of Wikia Labs',
 	
 	'wikialabs-staff-title' => 'Labs Staff Control',
@@ -49,6 +50,5 @@ $messages['en'] = array(
 	
 	'wikialabs-feedback-validator-message-too-long' => 'Comment can not be longer than 255 characters',
 	'wikialabs-feedback-validator-message-too-short' => 'Please enter a comment',
-	'wikialabs-feedback-validator-rating' => 'Please give a rating',
-	
+	'wikialabs-feedback-validator-rating' => 'Please give a rating',	
 );

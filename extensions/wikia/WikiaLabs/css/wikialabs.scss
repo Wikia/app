@@ -7,9 +7,21 @@
 $toolbox-button: 105px;
 $margin-images: 10px;
 
+.WikiaArticle .warningBox {
+    background-color: #FFFFCC;
+	border: 1px solid #AAAAAA;
+	margin: 1em 3em 1em 0;
+	padding: 6px;
+	width: 100%;
+	img {
+	    margin-top: -4px;
+	}	
+}
+	
 .WikiaArticle ul.wikiaLabsMainView {
 	list-style: none outside none;
 	margin-left: 2px;
+
 	li {
 		@include clearfix;
 		position: relative;
