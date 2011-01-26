@@ -4,6 +4,66 @@ AdConfig = {
 	geoCookieName: 'Geo',
 	quantcastSegmentCookieName: 'qcseg',
 
+	/* Set/get cookies. Borrowed from a jquery plugin. Note that options.expires is either a date object,
+	 * or a number of *milli*seconds until the cookie expires */
+	cookie: function(name, value, options) {
+	    if (arguments.length > 1) { // name and value given, set cookie
+		options = options || {};
+		if (typeof value == 'undefined' || !value) {
+		    value = '';
+		    options.expires = -1;
+		}
+		var expires = '';
+		if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+		    var d;
+		    if (typeof options.expires == 'number') {
+			d = new Date();
+			d.setTime(d.getTime() + (options.expires));
+		    } else {
+			d = options.expires;
+		    }
+		    expires = '; expires=' + d.toUTCString(); // use expires attribute, max-age is not supported by IE
+		}
+		// CAUTION: Needed to parenthesize options.path and options.domain
+		// in the following expressions, otherwise they evaluate to undefined
+		// in the packed version for some reason...
+		var path = options.path ? '; path=' + (options.path) : '';
+		var domain = options.domain ? '; domain=' + (options.domain) : '';
+		var secure = options.secure ? '; secure' : '';
+		document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+		return true;
+	    } else { // only name given, get cookie
+		var cookieValue = null;
+		if (typeof document.cookie != 'undefined' && document.cookie){
+		    var cookies = document.cookie.split(';');
+		    for (var i = 0, l = cookies.length; i < l; i++) {
+			var cookie = cookies[i].replace( /^\s+|\s+$/g, "");
+			// Does this cookie string begin with the name we want?
+			if (cookie.substring(0, name.length + 1) == (name + '=')) {
+			    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+			    break;
+			}
+		    }
+		}
+		return cookieValue;
+	    }
+	},
+
+	/* Pull the geo data from cookie */
+	pullGeo: function (){
+		if (AdConfig.geo) {
+			return; 
+		}
+	
+		var cookie = AdConfig.cookie(AdConfig.geoCookieName);
+		if (typeof cookie != 'undefined' && cookie) {
+			AdConfig.geo = eval('(' + cookie + ')');
+			return;
+		}
+	
+		return;
+	},
+
 	isHighValueCountry: function(country) {
 		switch (country) {
 			case 'CA':
@@ -388,66 +448,6 @@ AdConfig.DART.getTileKV = function (slotname, adProvider){
 	}
 
 	return '';
-};
-
-/* Set/get cookies. Borrowed from a jquery plugin. Note that options.expires is either a date object,
- * or a number of *milli*seconds until the cookie expires */
-AdConfig.cookie = function(name, value, options) {
-    if (arguments.length > 1) { // name and value given, set cookie
-	options = options || {};
-	if (typeof value == 'undefined' || !value) {
-	    value = '';
-	    options.expires = -1;
-	}
-	var expires = '';
-	if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
-	    var d;
-	    if (typeof options.expires == 'number') {
-		d = new Date();
-		d.setTime(d.getTime() + (options.expires));
-	    } else {
-		d = options.expires;
-	    }
-	    expires = '; expires=' + d.toUTCString(); // use expires attribute, max-age is not supported by IE
-	}
-	// CAUTION: Needed to parenthesize options.path and options.domain
-	// in the following expressions, otherwise they evaluate to undefined
-	// in the packed version for some reason...
-	var path = options.path ? '; path=' + (options.path) : '';
-	var domain = options.domain ? '; domain=' + (options.domain) : '';
-	var secure = options.secure ? '; secure' : '';
-	document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
-	return true;
-    } else { // only name given, get cookie
-	var cookieValue = null;
-	if (typeof document.cookie != 'undefined' && document.cookie){
-	    var cookies = document.cookie.split(';');
-	    for (var i = 0, l = cookies.length; i < l; i++) {
-		var cookie = cookies[i].replace( /^\s+|\s+$/g, "");
-		// Does this cookie string begin with the name we want?
-		if (cookie.substring(0, name.length + 1) == (name + '=')) {
-		    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-		    break;
-		}
-	    }
-	}
-	return cookieValue;
-    }
-};
-
-/* Pull the geo data from cookie */
-AdConfig.pullGeo = function (){
-	if (AdConfig.geo) {
-		return; 
-	}
-
-	var cookie = AdConfig.cookie(AdConfig.geoCookieName);
-	if (typeof cookie != 'undefined' && cookie) {
-		AdConfig.geo = eval('(' + cookie + ')');
-		return;
-	}
-
-	return;
 };
 
 AdConfig.init();
