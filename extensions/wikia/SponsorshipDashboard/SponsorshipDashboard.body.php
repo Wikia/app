@@ -132,66 +132,6 @@ class SponsorshipDashboard extends SpecialPage {
 	}
 
 	/**
-	 * HTMLmain - displays report 1 subpage.
-	 */
-
-//	private function HTMLcompetitors(){
-//
-//		$this->tagDependent = true;
-//		$this->displayChart( 'competitors', 'loadCompetitorsData' );
-//	}
-//
-//	private function HTMLinterests(){
-//
-//		$this->tagDependent = true;
-//		$this->displayChart( 'interests', 'loadInterestsData' );
-//	}
-//
-//	private function HTMLkeywords(){
-//
-//		$this->displayChart( 'keywords', 'loadKeywordsData' );
-//	}
-//
-//	private function HTMLsource(){
-//
-//		$this->displayChart( 'source', 'loadSourceData' );
-//	}
-//
-//	private function HTMLactivity(){
-//
-//		$this->dataMonthly = true;
-//		$this->displayChart( 'activity', 'loadActivityData' );
-//	}
-//
-//	private function HTMLengagement(){
-//
-//		$this->dataMonthly = true;
-//		$this->displayChart( 'engagement', 'loadEngagementData' );
-//	}
-//
-//	private function HTMLparticipation(){
-//
-//		$this->dataMonthly = true;
-//		$this->displayChart( 'participation', 'loadParticipationData' );
-//	}
-//
-//	private function HTMLvisitors(){
-//
-//		$this->dataMonthly = true;
-//		$this->displayChart( 'visitors', 'loadVisitorsData' );
-//	}
-//
-//	private function HTMLtraffic(){
-//
-//		$this->displayChart( 'traffic', 'loadTrafficData' );
-//	}
-//
-//	private function HTMLcontent(){
-//
-//		$this->displayChart( 'content', 'loadContentData' );
-//	}
-
-	/**
 	 * HTMLmain - displays tag selector.
 	 */
 
@@ -252,28 +192,6 @@ class SponsorshipDashboard extends SpecialPage {
 		return $this->popularCityHubs;
 	}
 
-	protected function displayRanking( $tagPosition ){
-
-		global $wgOut, $wgJsMimeType, $wgStyleVersion, $wgHTTPProxy;
-
-		wfProfileIn( __METHOD__ );
-
-		if ( empty( $tagPosition ) ){
-			return false;
-		}
-
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars(
-			array(
-				"tagPosition"		=> $tagPosition
-			)
-		);
-
-		$wgOut->addHTML( $oTmpl->execute( "ranking" ) );
-
-		wfProfileOut( __METHOD__ );
-	}
-
 	/**
 	 * HTMLmain - main function for displaying chart.
 	 */
@@ -289,9 +207,9 @@ class SponsorshipDashboard extends SpecialPage {
 
 		$aData = array();
 
-		if ( empty($this->tagDependent) ) {
+		if ( empty( $this->tagDependent ) ) {
 			$aData = $sponsorshipDashboardService->$method();
-		} elseif ( !empty($this->currentCityHub) ){
+		} elseif ( !empty( $this->currentCityHub ) ){
 			$this->getPopularHubs();
 			$aData = $sponsorshipDashboardService->$method( $this->currentCityHub );
 		}
