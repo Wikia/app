@@ -60,7 +60,6 @@ class imageServing{
 
 			foreach ( $articles as $key => $value ) {
 				$mcOut = $wgMemc->get( $this->_makeKey( $value, $n ), null );
-				$mcOut = null;
 				if($mcOut != null) {
 					unset( $articles[ $key ] );
 					$cache_return[ $value ] = $mcOut;
