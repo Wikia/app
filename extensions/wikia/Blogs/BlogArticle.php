@@ -101,7 +101,6 @@ class BlogArticle extends Article {
 		if( !$listing ) {
 			$text = "
 				<bloglist
-					author=$user
 					count=$this->mCount
 					summary=true
 					summarylength=750
