@@ -64,7 +64,7 @@ WikiaLabs.showFeedback = function(e){
 		okbutton.css('opacity', '0.5' );
 		$.ajax({
 			type: "POST",
-			url: wgScript + '?action=ajax&rs=WikiaLabs::saveFeedback' +'&rating=' + starValue ,
+			url: wgScript + '?action=ajax&rs=WikiaLabsHelper::saveFeedback' +'&rating=' + starValue ,
 			dataType: "json",
 			data: modal.find('form').serialize() + '&projectId=' + id,
 			success: function(data) {
@@ -92,7 +92,7 @@ WikiaLabs.showFeedback = function(e){
 
 WikiaLabs.editProject = function(id, callback) {
 	$.ajax({
-		url: wgScript + '?action=ajax&rs=WikiaLabs::getProjectModal&id=' + id  ,
+		url: wgScript + '?action=ajax&rs=WikiaLabsHelper::getProjectModal&id=' + id  ,
 		dataType: "html",
 		method: "post", //post to prevent cache
 		success: function(data) {
@@ -103,7 +103,7 @@ WikiaLabs.editProject = function(id, callback) {
 				okbutton.css('opacity', '0.5' );
 				$.ajax({
 					type: "POST",
-					url: wgScript + '?action=ajax&rs=WikiaLabs::saveProject',
+					url: wgScript + '?action=ajax&rs=WikiaLabsHelper::saveProject',
 					dataType: "json",
 					data: modal.find('form').serialize(),
 					success: function(data) {
@@ -160,7 +160,7 @@ WikiaLabs.uploadImage = function ( imgelement ) {
 
 			WikiaLabs.WMU_insertImage = function(event,body) {
 				$.ajax({
-				  url: wgScript + '?action=ajax&rs=WikiaLabs::getImageUrlForEdit&name=' + $("#ImageUploadFileName").val(),
+				  url: wgScript + '?action=ajax&rs=WikiaLabsHelper::getImageUrlForEdit&name=' + $("#ImageUploadFileName").val(),
 				  dataType: "json",
 				  method: "get",
 				  success: function(data) {
@@ -226,7 +226,7 @@ WikiaLabs.switchTogel = function(e) {
 
 WikiaLabs.switchRequest = function(slider, onoff) {
 	$.ajax({
-		url: wgScript + '?action=ajax&rs=WikiaLabs::switchProject&id=' +  slider.attr('data-id') + '&onoff=' + onoff ,
+		url: wgScript + '?action=ajax&rs=WikiaLabsHelper::switchProject&id=' +  slider.attr('data-id') + '&onoff=' + onoff ,
 		dataType: "json",
 		type: "POST",
 		success: function(data) {
