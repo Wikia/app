@@ -158,6 +158,7 @@ class WikiaPollAjax {
 	 * @return array {hasVoted}
 	 */
 	static public function hasVoted() {
+		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		$pollId = $wgRequest->getInt('pollId');
