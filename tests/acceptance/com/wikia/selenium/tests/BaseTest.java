@@ -43,7 +43,6 @@ public class BaseTest {
 			File file = new File(System.getenv("TESTSCONFIG"));
 			if (null != file) {
 				this.testConfig = new XMLConfiguration(file);
-				this.testConfig.load();
 			}
 		}
 		return this.testConfig;
