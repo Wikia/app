@@ -94,7 +94,7 @@ WikiaLabs.editProject = function(id, callback) {
 	$.ajax({
 		url: wgScript + '?action=ajax&rs=WikiaLabsHelper::getProjectModal&id=' + id  ,
 		dataType: "html",
-		method: "post", //post to prevent cache
+		type: "POST",
 		success: function(data) {
 			callback(data);
 			var modal =	$(data).makeModal({ width : 650});
@@ -133,6 +133,9 @@ WikiaLabs.editProject = function(id, callback) {
 				WikiaLabs.uploadImage(modal.find('.prjscreen'));
 				return false;
 			}); 
+			//solve YUI modal problem 
+            modal.css('z-index', 9999);
+            $('.blackout').css('z-index', 9998);
 			
 		}
 	});
@@ -153,21 +156,21 @@ WikiaLabs.uploadImage = function ( imgelement ) {
 		importStylesheetURI( wgExtensionsPath+ '/wikia/WikiaMiniUpload/css/WMU.css?'+wgStyleVersion );
 		$.getScript(wgExtensionsPath+ '/wikia/WikiaMiniUpload/js/WMU.js?'+wgStyleVersion, function() {
 			WMU_show();
-			
 			WMU_Event_OnLoadDetails = function() {
 				$('#ImageColumnRow,#ImageSizeRow,#ImageWidthRow,#ImageLayoutRow').hide();
 			};			
 
 			WikiaLabs.WMU_insertImage = function(event,body) {
+				var val = $("#ImageUploadFileName").val();
 				$.ajax({
-				  url: wgScript + '?action=ajax&rs=WikiaLabsHelper::getImageUrlForEdit&name=' + $("#ImageUploadFileName").val(),
+				  url: wgScript + '?action=ajax&rs=WikiaLabs::getImageUrlForEdit&name=' + val,
 				  dataType: "json",
 				  method: "get",
 				  success: function(data) {
 					if(data.status == "ok") {
 						$().log(imgelement);
 						imgelement.filter('img').attr('src', data.url );
-						imgelement.filter('input').val($("#ImageUploadFileName").val());
+						$('input.prjscreen').val(val);
 					}
 					WMU_close();
 				  }
