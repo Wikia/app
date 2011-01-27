@@ -40,7 +40,7 @@ class CreateWiki {
 	const DEFAULT_STAFF        = "Angela";
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
-	const ACTIVE_CLUSTER       = "c3";
+	const ACTIVE_CLUSTER       = "";
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
@@ -58,7 +58,7 @@ class CreateWiki {
 	 * @param mixed $founder - creator of wiki, by default false which means $wgUser
 	 */
 	public function __construct( $name, $domain, $language, $hub, $type = self::DEFAULT_WIKI_TYPE, $founder = false ) {
-		global $wgUser, $IP;
+		global $wgUser, $IP, $wgJobClasses, $wgAutoloadClasses;
 
 		// wiki containter
 		$this->mNewWiki = new stdClass();
@@ -160,6 +160,12 @@ class CreateWiki {
 				"{$this->mIP}/maintenance/answers-additional-tables.sql",
 			)
 		);
+		
+		/**
+		 * local job
+		 */
+		$wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
+		$wgAutoloadClasses[ "CreateWikiLocalJob" ] = dirname(__FILE__) . "/CreateWikiLocalJob.php";		 
 	}
 
 
@@ -169,7 +175,7 @@ class CreateWiki {
 	 * @return integer status of operation, 0 for success, non 0 for error
 	 */
 	public function create() {
-		global $wgWikiaLocalSettingsPath, $wgExternalSharedDB;
+		global $wgWikiaLocalSettingsPath, $wgExternalSharedDB, $wgSharedDB;
 
 		wfProfileIn( __METHOD__ );
 
@@ -343,7 +349,7 @@ class CreateWiki {
 		 * destroy connection to newly created database
 		 */
 		$this->mNewWiki->dbw->commit();
-		wfDebugLog( "createwiki", __METHOD__ . ": Database changes commited \n", true );		
+		wfDebugLog( "createwiki", __METHOD__ . ": Database changes commited \n", true );	
 		$wgSharedDB = $tmpSharedDB;
 
 		/**
