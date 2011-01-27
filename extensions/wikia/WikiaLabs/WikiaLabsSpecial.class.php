@@ -24,13 +24,15 @@ class WikiaLabsSpecial extends SpecialPage {
 	
 		$cityId = $this->app->getGlobal( 'wgCityId' );
 		/*sync with WF*/
-		foreach($projects as $value) {
-			if((!$value->isEnabled($cityId)) && $this->app->runFunction( 'WikiFactory::getVarByName',  $value->getExtension(), $cityId) ){
+
+		foreach($projects as $value) {	
+			$val = $this->app->runFunction( 'WikiFactory::getVarValueByName',  $value->getExtension(), $cityId);
+			if((!$value->isEnabled($cityId))  && $val  ){
 				$value->setEnabled($cityId);
 				$value->update();
 			} 
-		}
-		
+		} 
+
 		$oTmpl->set_vars( array(
 			'projects' => $projects,
 			'cityId' => $this->app->getGlobal( 'wgCityId' ),

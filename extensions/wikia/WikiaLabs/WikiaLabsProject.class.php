@@ -181,7 +181,7 @@ class WikiaLabsProject {
 	}
 
 	protected function getCachedEnablesKey() {
-		return $this->app->runFunction( 'wfMemcKey', __CLASS__, 'getCachedEnables', $this->getId());
+		return $this->app->runFunction( 'wfMemcKey', __CLASS__, 'getCachedEnables' , $this->getId() );
 	}
 
 	protected function updateCachedEnables( $wikiId, $status ) {
@@ -374,7 +374,7 @@ class WikiaLabsProject {
 	}
 
 	protected function getCachedRatingKey() {
-		return $this->app->runFunction( 'wfMemcKey', __CLASS__, 'getCachedRatings', $this->getId()  );
+		return $this->app->runFunction( 'wfMemcKey', __CLASS__, 'getCachedRatings' );
 	}
 
 	protected function updateCachedRating( $userId, $rating ) {
