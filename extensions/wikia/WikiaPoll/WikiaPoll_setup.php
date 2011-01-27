@@ -63,18 +63,8 @@ function WikiaPollAjax() {
 	if (method_exists('WikiaPollAjax', $method)) {
 		wfProfileIn(__METHOD__);
 
-		// construct poll's object and check its existance
-		$pollId = $wgRequest->getInt('pollId');
-		$poll = WikiaPoll::newFromId($pollId);
-
-		if (!empty($poll) && $poll->exists()) {
-			wfLoadExtensionMessages('WikiaPoll');
-
-			$data = WikiaPollAjax::$method($poll);
-		}
-		else {
-			$data = array();
-		}
+		wfLoadExtensionMessages('WikiaPoll');
+		$data = WikiaPollAjax::$method();
 
 		// send array as JSON
 		$json = Wikia::json_encode($data);

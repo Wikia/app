@@ -3,32 +3,32 @@
 
 	<div class="question">
 		<span><?= wfMsg("wikiapoll-question-mark-before") ?></span>
-		<input type="text">
+		<input type="text" name="question">
 		<span><?= wfMsg("wikiapoll-question-mark-after") ?></span>
 	</div>
 	
 	<ul>
 		<li class="new-item">
 			<label>#0</label>
-			<span><input type="text"></span>
+			<span><input type="text" name ="answer[]"></span>
 			<img src="<?= $wgBlankImgUrl ?>" class="sprite trash">
 			<img src="<?= $wgBlankImgUrl ?>" class="sprite drag">
 		</li>
 		<li>
 			<label>#1</label>
-			<span><input type="text"></span>
+			<span><input type="text" name="answer[]"></span>
 			<img src="<?= $wgBlankImgUrl ?>" class="sprite trash">
 			<img src="<?= $wgBlankImgUrl ?>" class="sprite drag">
 		</li>
 		<li>
 			<label>#2</label>
-			<span><input type="text"></span>
+			<span><input type="text" name="answer[]"></span>
 			<img src="<?= $wgBlankImgUrl ?>" class="sprite trash">
 			<img src="<?= $wgBlankImgUrl ?>" class="sprite drag">
 		</li>
 		<li>
 			<label>#3</label>
-			<span><input type="text"></span>
+			<span><input type="text" name="answer[]"></span>
 			<img src="<?= $wgBlankImgUrl ?>" class="sprite trash">
 			<img src="<?= $wgBlankImgUrl ?>" class="sprite drag">
 		</li>
