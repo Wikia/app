@@ -333,7 +333,7 @@ class AutoCreateWiki {
 				$sResponse = wfMsg('autocreatewiki-empty-password');
 			} else {
 				$u = User::newFromName( $sUsername );
-				if ( is_null( $u ) ) {
+				if ( empty( $u ) ) {
 					$u = new StubUser();
 				}
 				if ( !$u->isValidPassword( $sValue ) ) {
