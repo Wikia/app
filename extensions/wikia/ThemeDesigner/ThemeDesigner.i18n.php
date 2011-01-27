@@ -381,7 +381,7 @@ $messages['fr'] = array(
 	'themedesigner-size' => 'taille',
 	'themedesigner-button-save' => 'Enregistrer',
 	'themedesigner-upload-a-graphic' => 'importer une image',
-	'themedesigner-rules-wordmark' => '&#32;250x65 pixels max (fichiers .png uniquement)',
+	'themedesigner-rules-wordmark' => '&#32;250x65 pixels max (.png uniquement)',
 	'themedesigner-dont-use-a-graphic' => "Ne pas utiliser d'image",
 	'themedesigner-history-item' => '$1 par $2',
 	'themedesigner-button-change-text' => 'Modifier le texte',
@@ -691,6 +691,10 @@ $messages['no'] = array(
 	'themedesigner-history-item' => '$1 av $2',
 	'themedesigner-button-change-text' => 'Skift tekst',
 	'themedesigner-reason' => 'Temautformer - lagring gjort av $1',
+	'themedesigner-size-error' => 'Feil filstørrelse',
+	'themedesigner-dimensions-error' => 'Bildet overstiger størrelsesbegrensningene',
+	'themedesigner-type-error' => 'Feil filtype',
+	'themedesugber-uknown-error' => 'En feil har oppstått, og vi var desverre ikke i stand til å identifisere den. Vennligst prøv igjen',
 );
 
 /** Deitsch (Deitsch) */

@@ -53,6 +53,7 @@ If you need help, and there are no local admins here, you may want to visit the 
 );
 
 /** Breton (Brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -93,6 +94,7 @@ Demat, Degemer mat war {{SITENAME}}; Trugarez da vezañ kemmet ar bajenn [[:$1]]
 
 M'ho peus ezhomm skoazell ha ma n'eus merour ebet amañ e c'hallit gweladenniñ ar [[wikia:Forum:Community Central Forum|foromoù Kreiz ar Gumuniezh]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forom skoazellañ]] | [[w:sblog|blog]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 /** German (Deutsch)
@@ -183,6 +185,7 @@ Wenn Sie Hilfe brauchen, und kein Admin von hier in der Nähe ist, möchten Sie 
  * @author Bola
  * @author Crazymadlover
  * @author Pertile
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'welcome-user-page' => "==Sobre mi==
@@ -220,6 +223,7 @@ Hola, bienvenido a {{SITENAME}}. Gracias por editar la página [[:$1]].
 
 Si necesita ayuda y no hay administradores locales aquí, quizás quiera visitar los $3 [[wikia:Forum:Community Central Forum|foros de la Comunidad Central Wiki]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|foro de ayuda]] | [[w:sblog|blog]])</small>',
+	'hawelcomeedit' => 'HaWelcomeEdit',
 );
 
 /** Persian (فارسی)
@@ -706,6 +710,7 @@ Hei, velkommen til {{SITENAME}}. Takk for at du har redigert [[:$1]]-siden.
 
 Hvis du trenger hjelp og det ikke er noen lokale administratorer her vil du kanskje besøke [[wikia:Forum:Community Central Forum|forumene på Community Central Wiki]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|hjelpeforum]] | [[w:sblog|blogg]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 /** Occitan (Occitan)
@@ -980,44 +985,48 @@ $messages['ru'] = array(
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
+ * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
  */
 $messages['sr-ec'] = array(
-	'welcome-user-page' => "==О мени==
+	'welcome-user-page' => "== О мени ==
 
-''Ово је Ваша корисничка страница. Молимо, промените је да бисте рекли заједници нешто о себи!''
+''Ово је ваша корисничка страница. Помените је да бисте рекли нешто о себи!''
 
-==Моји доприноси==
+== Доприноси ==
 
 * [[Special:Contributions/{{PAGENAME}}|Доприноси корисника]]
 
-==Моје омиљене странице==
+== Омиљене странице ==
 
-* Додаје везе ка твојим омиљеним страницама на викију!
+* Додаје везе до ваших омиљених страница на викији!
 * Омиљена страница #2
 * Омиљена страница #3",
-	'welcome-message-user' => 'Здраво и добро дошли у {{SITENAME}}! Хвала Вам на измени на [[:$1]] страници.
+	'welcome-message-user' => 'Здраво и добро дошли на {{SITENAME}}! Хвала вам на измени на [[:$1]] страници.
 
-Молимо, оставите коментар на [[$2|мојој страници за разговор]] ако Вам икако могу помоћи! $3',
-	'welcome-message-anon' => "Здраво и добро дошли у {{SITENAME}}! Хвала Вам на измени на [[:$1]] страници.
+Оставите коментар на [[$2|страници за разговор]] ако вам икако могу помоћи! $3',
+	'welcome-message-anon' => "Здраво и добро дошли на {{SITENAME}}! Хвала вам на измени на [[:$1]] страници.
 
-'''[[Special:Userlogin|Молимо, пријавите се и направите корисничко име]]'''. То је најлакши начин да приступите Вашим доприносима и комуницирате с остатком заједнице.
+'''[[Special:Userlogin|Пријавите се и направите корисничко име]]'''.
+То је најлакши начин да приступите својим доприносима и комуницирате с остатком заједнице.
 
-Молимо, оставите коментар на [[$2|мојој страници за разговор]] ако Вам икако могу помоћи! $3",
-	'welcome-message-log' => 'поздрав за новог корисника',
-	'welcome-message-user-staff' => '==Добродошлица==
+Оставите коментар на [[$2|страници за разговор]] ако вам икако могу помоћи! $3",
+	'welcome-message-log' => 'добродошлица за новог корисника',
+	'welcome-message-user-staff' => '== Добродошлица ==
 
-Здраво и добро дошли у {{SITENAME}}! Хвала Вам на измени на [[:$1]] страници.
+Здраво и добро дошли на {{SITENAME}}! Хвала вам на измени на [[:$1]] страници.
 
-Ако Вам буде затребала помоћ, а не нађете локалног администратора, посетите [[wikia:Forum:Community Central Forum|форум на Централној вики заједници]] $3',
-	'welcome-message-anon-staff' => "==Добродошлица==
+Ако вам буде затребала помоћ а не нађете администратора, посетите [[wikia:Forum:Community Central Forum|форум на Централној вики заједници]] $3',
+	'welcome-message-anon-staff' => "== Добродошлица ==
 
-Здраво и добро дошли у {{SITENAME}}. Хвала Вам на измени на [[:$1]] страници.
+Здраво и добро дошли на {{SITENAME}}.
+Хвала вам на измени на [[:$1]] страници.
 
-'''[[Special:Userlogin|Молимо, пријавите се и направите корисничко име]]'''. То је најлакши начин да приступите Вашим доприносима и комуницирате с остатком заједнице.
+'''[[Special:UserLogin|Пријавите се и направите корисничко име]]'''.
+То је најлакши начин да приступите својим доприносима и комуницирате с остатком заједнице.
 
-Ако Вам буде затребала помоћ а не нађете локалног администратора, посетите [[wikia:Forum:Community Central Forum|форум на Централној вики заједници]] $3",
+Ако вам буде затребала помоћ а не нађете администратора, посетите [[wikia:Forum:Community Central Forum|форум на Централној вики заједници]] $3",
 );
 
 /** Swedish (Svenska) */

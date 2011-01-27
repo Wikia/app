@@ -163,6 +163,7 @@ $messages['mk'] = array(
 	'partner-feed-latest-images' => 'Галерија на најнови подигнати слики',
 	'partner-feed-hotcontent' => 'Средиште / список на „Актуелни содржини“ според број на уредници',
 	'partner-feed-recent-blog-comments' => 'Скорешни коментари поврзани со одреден блог-запис.',
+	'partner-feed-recent-changes' => 'Скорешни промени',
 	'partnerfeed' => 'Партнерски канал',
 	'error-no-article' => 'Грешка: Не е добиен параметар „статија“',
 	'feed-title-blogposts' => 'Скорешни блог-записи',
@@ -174,6 +175,7 @@ $messages['mk'] = array(
 	'blog-posts-from-listing' => 'од списокот: $1',
 	'feed-title-hot-content' => 'Актуелна содржина - $1',
 	'feed-title-blogcomments' => 'Коментари на $1',
+	'feed-title-recentchanges' => 'Скорешни промени',
 );
 
 /** Dutch (Nederlands)
@@ -186,6 +188,7 @@ $messages['nl'] = array(
 	'partner-feed-latest-images' => 'Galerij van de laatst toegevoegde afbeeldingen',
 	'partner-feed-hotcontent' => '"Populaire inhoud" van hub geordend op aantal auteurs',
 	'partner-feed-recent-blog-comments' => 'Recente opmerkingen bij specifieke blogberichten.',
+	'partner-feed-recent-changes' => 'Recente wijzigingen',
 	'partnerfeed' => 'Partnerfeed',
 	'error-no-article' => 'Fout: de parameter "article" is niet doorgegeven',
 	'feed-title-blogposts' => 'Recente blogberichten',
@@ -197,6 +200,7 @@ $messages['nl'] = array(
 	'blog-posts-from-listing' => 'van lijst: $1',
 	'feed-title-hot-content' => 'Populaire inhoud - $1',
 	'feed-title-blogcomments' => 'Opmerkingen bij $1',
+	'feed-title-recentchanges' => 'Recent changes',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -209,6 +213,7 @@ $messages['no'] = array(
 	'partner-feed-latest-images' => 'Galleri av de siste bildene som har blitt lastet opp',
 	'partner-feed-hotcontent' => 'Hub / vertikalt «Hett innhold» som rangert etter antall redaktører',
 	'partner-feed-recent-blog-comments' => 'Siste kommentarer tilknyttet spesifiserte blogginnlegg.',
+	'partner-feed-recent-changes' => 'Siste endringer',
 	'partnerfeed' => 'Partner-feed',
 	'error-no-article' => 'Feil: Ikke noe «artikkel»-parameter sendt',
 	'feed-title-blogposts' => 'Siste blogginnlegg',
@@ -220,6 +225,7 @@ $messages['no'] = array(
 	'blog-posts-from-listing' => 'fra opplisting: $1',
 	'feed-title-hot-content' => 'Hot innhold - $1',
 	'feed-title-blogcomments' => 'Kommentarer til $1',
+	'feed-title-recentchanges' => 'Siste endringer',
 );
 
 /** Piedmontese (Piemontèis)

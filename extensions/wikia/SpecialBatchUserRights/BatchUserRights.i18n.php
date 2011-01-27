@@ -32,6 +32,7 @@ $messages['af'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -39,6 +40,7 @@ $messages['br'] = array(
 	'batchuserrights-desc' => "Aotreañ a ra da ouzhpennañ unan pe meur a implijer d'ur strollad en un obererezh hepken",
 	'batchuserrights-names' => "Anvioù implijer da ouzhpennañ d'ar strollad-mañ (unan dre linenn) :",
 	'batchuserrights-single-progress-update' => '{{PLURAL:$1|Strollad|Strolladoù}} ouzhpennet da <strong>$2</strong>.',
+	'batchuserrights-add-groups' => "Ouzhpennañ {{PLURAL:$1|un implijer|$1 implijer}} d'ar {{PLURAL:$2|strollad|strolladoù}}-mañ : <strong>$3</strong>.",
 	'batchuserrights-userload-error' => "Dibosupl eo kargañ an implijer \"'''\$1'''\".",
 );
 

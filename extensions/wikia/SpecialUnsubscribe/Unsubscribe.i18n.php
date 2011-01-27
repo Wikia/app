@@ -126,6 +126,7 @@ $messages['nl'] = array(
  * @author Audun
  */
 $messages['no'] = array(
+	'unsubscribe' => 'Avbryt abonnement',
 	'unsubscribe-badaccess' => 'Beklager, denne siden kan ikke brukes direkte. Vennligst følg lenken fra e-posten din.',
 	'unsubscribe-badtoken' => 'Beklager, det oppstod et problem med sikkerhetskoden.',
 	'unsubscribe-bademail' => 'Beklager, det oppstod et problem med e-posten.',
@@ -135,7 +136,28 @@ $messages['no'] = array(
 	'unsubscribe-confirm-legend' => 'Bekreft',
 	'unsubscribe-confirm-text' => 'Avslutt abonnement for alle kontoer med <code>$1</code>?',
 	'unsubscribe-confirm-button' => 'Ja, jeg er sikker',
+	'unsubscribe-working' => 'Avbryter abonnement for $1 {{PLURAL:$1|konto|kontoer}} for $2',
+	'unsubscribe-working-problem' => 'problem med å laste brukerinformasjon for: $1',
 	'unsubscribe-working-done' => 'Fullført.',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'unsubscribe' => 'Avsluta prenumeration',
+	'unsubscribe-badaccess' => 'Tyvärr kan inte denna sida användas direkt. Vänligen följ länken i din e-post.',
+	'unsubscribe-badtoken' => 'Tyvärr, det var ett problem med säkerhetsnyckel.',
+	'unsubscribe-bademail' => 'Tyvärr, det var ett problem med e-posten.',
+	'unsubscribe-badtime' => 'Tyvärr har länken löpt ut. Använd en länk som är mindre än 7 dagar gammal.',
+	'unsubscribe-nousers' => 'Inga användare hittades med den e-postadress.',
+	'unsubscribe-noconfusers' => 'Inga bekräftade användare hittade med den e-postadress.',
+	'unsubscribe-confirm-legend' => 'Bekräfta',
+	'unsubscribe-confirm-text' => 'Avsluta prenumerationer för alla konton med <code>$1</code>?',
+	'unsubscribe-confirm-button' => 'Ja, jag är säker',
+	'unsubscribe-working' => 'Avslutar prenumerationen $1 {{PLURAL:$1|konto|konton}} för $2',
+	'unsubscribe-working-problem' => 'problem med att läsa användarinformationen för: $1',
+	'unsubscribe-working-done' => 'Komplett.',
 );
 
 /** Ukrainian (Українська)

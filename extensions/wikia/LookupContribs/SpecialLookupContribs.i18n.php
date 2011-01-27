@@ -537,6 +537,16 @@ $messages['ja'] = array(
 	'lookupcontribscontent' => 'コンテンツ',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'lookupcontribsgo' => 'Biçe',
+	'lookupcontribswikititle' => 'Sernav',
+	'lookupcontribscontent' => 'naverrok',
+	'lookupcontribsall' => 'hemû',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -965,23 +975,23 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'lookupcontribsselectuser' => 'Одабери корисника',
-	'lookupcontribsnoresultfound' => 'Нема резултата претраге',
-	'lookupcontribsinvalidresults' => 'Неправилан резултат',
+	'lookupcontribsselectuser' => 'Избор корисника:',
+	'lookupcontribsnoresultfound' => 'Нема резултата!',
+	'lookupcontribsinvalidresults' => 'Неисправни резултати!',
 	'lookupcontribswiki' => 'Вики',
-	'lookupcontribswikidbname' => 'Име базе под.',
-	'lookupcontribswikiurl' => 'УРЛ',
+	'lookupcontribswikidbname' => 'Име базе',
+	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Наслов',
 	'lookupcontribsdetails' => 'Погледајте детаље за:',
 	'lookupcontribscontribs' => 'прилози',
 	'lookupcontribsnbrresult' => 'Број резултата:',
 	'lookupcontribsnext' => 'следеће',
-	'lookupcontribsprevious' => 'Претходна',
-	'lookupcontribspageremoved' => 'уклоњено:',
-	'lookupcontribsrestore' => 'поврати',
+	'lookupcontribsprevious' => 'претходно',
+	'lookupcontribspageremoved' => 'Уклоњено:',
+	'lookupcontribsrestore' => 'врати',
 	'lookupcontribslog' => 'извештај',
-	'lookupcontribshist' => 'истор.',
-	'lookupcontribsdiff' => 'разл.',
+	'lookupcontribshist' => 'истор',
+	'lookupcontribsdiff' => 'разл',
 	'lookupcontribscontent' => 'садржај',
 );
 
@@ -1078,6 +1088,7 @@ Suriin ang ibinigay na pangalan ng tagagamit para sa maaaring mga kamalian.</p>'
  * @author Тест
  */
 $messages['uk'] = array(
+	'lookupcontribsgo' => 'Перейти',
 	'lookupcontribsrestore' => 'відновити',
 	'lookupcontribslog' => 'журнал',
 	'lookupcontribshist' => 'історія',

@@ -235,10 +235,11 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'tog-disablelinksuggest' => 'Не показуј предложену везу',
+	'tog-disablelinksuggest' => 'Не приказуј предложену везу',
 );
 
 /** Sundanese (Basa Sunda)

@@ -869,7 +869,7 @@ $messages['no'] = array(
 	'createpage-dialog-title' => 'Opprett en ny artikkel',
 	'createpage-dialog-message1' => 'Hurra, du oppretter en ny side!',
 	'createpage-dialog-message2' => 'Hva vil du kalle den?',
-	'createpage-dialog-choose' => 'Velg en sideutforming:',
+	'createpage-dialog-choose' => 'Velg et oppsett for siden:',
 	'createpage-dialog-format' => 'Standardoppsett',
 	'createpage-dialog-blank' => 'Blank side',
 	'createpage-error-empty-title' => 'Vennligst skriv en tittel på artikkelen din',
@@ -1211,29 +1211,29 @@ $messages['sah'] = array(
  * @author Жељко Тодоровић
  */
 $messages['sr-ec'] = array(
-	'createpage-sp-title' => 'Започни нови чланак',
-	'createpage_title' => 'Започни нови чланак',
+	'createpage-sp-title' => 'Направи нову страницу',
+	'createpage_title' => 'Направи нову страницу',
 	'createpage_title_caption' => 'Наслов:',
 	'createpage_enter_text' => 'Текст:',
 	'createpage_empty_title_error' => 'Потребан је наслов',
 	'createpage_empty_article_body_error' => 'Потребан је текст чланка',
-	'createpage_invalid_title_error' => 'Погрешан наслов',
-	'createpage_article_already_exists' => 'Постоји чланак са тим насловом.
-Молимо Вас да одаберете друго име.',
-	'createpage_spam' => 'Извините, али не може се сачувати ваша измена',
-	'createpage_cant_edit' => 'Не може се извести измена',
-	'createpage-dialog-title' => 'Напишите нови чланак',
-	'createpage-dialog-message1' => 'Ура! Пишете нову страницу!',
-	'createpage-dialog-message2' => 'Како желите да га назовете?',
-	'createpage-dialog-choose' => 'Одаберите изглед странице:',
+	'createpage_invalid_title_error' => 'Неисправан наслов',
+	'createpage_article_already_exists' => 'Страница с тим именом већ постоји.
+Изаберите друго име.',
+	'createpage_spam' => 'Ваша измена није сачувана.',
+	'createpage_cant_edit' => 'Измена није извршена',
+	'createpage-dialog-title' => 'Направи нову страницу',
+	'createpage-dialog-message1' => 'Пишете нову страницу!',
+	'createpage-dialog-message2' => 'Како желите да је назовете?',
+	'createpage-dialog-choose' => 'Изаберите изглед странице:',
 	'createpage-dialog-format' => 'Стандардан изглед',
 	'createpage-dialog-blank' => 'Празна страница',
-	'createpage-error-empty-title' => 'Молимо Вас да напишете наслов за ваш чланак',
-	'createpage-error-invalid-title' => 'Извините, али наслов вашег чланка није добар
-Молимо Вас да користите други наслов',
-	'createpage-error-article-exists' => 'Већ постоји чланак са тим именом.
-Можете да одете на <a href="$1">$2</a> или можете да преименујете страницу',
-	'createpage-error-article-blocked' => 'Нажалост неможете сада да направите чланак',
+	'createpage-error-empty-title' => 'Унесите наслов странице',
+	'createpage-error-invalid-title' => 'Наслов странице је неисправан.
+Унесите други назив.',
+	'createpage-error-article-exists' => 'Страница с тим називом већ постоји.
+Посетите <a href="$1">$2</a> или преименујте је.',
+	'createpage-error-article-blocked' => 'Не можете да направите страницу.',
 );
 
 /** Swedish (Svenska)

@@ -33,9 +33,12 @@ $messages['af'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
+	'contentfeeds-newimages-rss-title' => 'Froud RSS evit {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Froud diwar $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'Krouit ho pajennoù kentañ !',
 	'contentfeeds-firstfewarticles-tag-title' => 'Titl',
 	'contentfeeds-firstfewarticles-tag-next' => "War-lerc'h",

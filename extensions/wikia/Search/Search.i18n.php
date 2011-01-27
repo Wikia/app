@@ -135,9 +135,11 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author IAlex
  * @author Peter17
  */
 $messages['fr'] = array(
+	'search-desc' => 'Moteur de recherche à travers les Wikia utilisant Solr',
 	'wikiasearch-titles-only' => 'Ne chercher que dans les titres des pages',
 	'wikiasearch-system-error-msg' => "À cause d'une erreur du système, nous n'avons pas pu accomplir votre recherche",
 	'wikiasearch-search-this-wiki' => 'Ne chercher que dans Wikia Central',
@@ -305,6 +307,7 @@ $messages['nl'] = array(
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'search-desc' => 'Kryss-Wikia søkemotor som bruker Solr-bakgrunnsfunksjon',
 	'wikiasearch-titles-only' => 'Kun søk i sidetitler',
 	'wikiasearch-system-error-msg' => 'På grunn av en systemfeil kunne ikke søket ditt fullføres',
 	'wikiasearch-search-this-wiki' => 'Søk kun i Wikiasentralen',
@@ -393,13 +396,14 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'wikiasearch-titles-only' => 'Претражи само у насловима страница',
-	'wikiasearch-system-error-msg' => 'Због системске грешке ваша претрага не може да се изврши',
-	'wikiasearch-search-this-wiki' => 'Претражи само централну викију',
-	'wikiasearch-search-wikia' => 'Претражи викију',
+	'wikiasearch-titles-only' => 'Претражи само наслове страница',
+	'wikiasearch-system-error-msg' => 'Због системске грешке, ваша претрага се не може извршити',
+	'wikiasearch-search-this-wiki' => 'Претражи само централну Викију',
+	'wikiasearch-search-wikia' => 'Претражи Викију',
 );
 
 /** Swedish (Svenska)

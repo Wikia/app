@@ -200,7 +200,7 @@ Example output: edited by Avatar 3 hours ago',
 Example output: deleted by Avatar 3 hours ago',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -208,6 +208,7 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
@@ -321,6 +322,7 @@ Adurzhiañ pe diverkañ an ostilhoù a c'hallit er vaezienn a-is.
 	'oasis-upload-photos-more-options' => 'Dibarzhioù ouzhpenn',
 	'oasis-upload-photos-fewer-options' => "Nebeutoc'h a zibarzhioù",
 	'oasis-upload-photos-force' => 'Enporzhiañ memes tra',
+	'oasis-upload-photos-caption' => 'Deskrivadur',
 );
 
 /** Bosnian (Bosanski)
@@ -358,6 +360,7 @@ $messages['de'] = array(
 
 /** Spanish (Español)
  * @author Absay
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'oasis-home' => 'Inicio',
@@ -454,6 +457,9 @@ $messages['es'] = array(
 	'oasis-spotlights-footer-title' => 'Más wikis de Wikia',
 	'themedesigner' => 'Diseñador',
 	'oasis-pages-on-wiki-header' => 'Páginas en $1',
+	'oasis-latest-activity-new-details' => 'creado por $1 $2',
+	'oasis-latest-activity-edit-details' => 'editado por $1 $2',
+	'oasis-latest-activity-delete-details' => 'borrado por $1 $2',
 	'oasis-interlang-show-all' => '... ver todo >',
 	'oasis-interlang-languages' => 'Idiomas:',
 	'imageseo-featured-on' => 'Utilizado en:',
@@ -462,7 +468,10 @@ $messages['es'] = array(
 <p>No puedes editar esta página por el momento. Estaremos de vuelta en breve. Aquí tienes lo que ocurre:<br /><em>$1</em></p>
 <p>Por favor, revisa en <a href="http://twitter.com/wikia">Twitter</a> o en <a href="http://facebook.com/wikia">Facebook</a> para más información.</p>',
 	'oasis-upload-photos-title' => 'Subir una imagen a la Wiki',
+	'oasis-upload-photos-more-options' => 'Más Opciones',
+	'oasis-upload-photos-fewer-options' => 'Menos Opciones',
 	'oasis-upload-photos-force' => 'Subir igualmente',
+	'oasis-upload-photos-caption' => 'Comentario',
 );
 
 /** Persian (فارسی) */
@@ -478,6 +487,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author IAlex
  * @author Sherbrooke
  * @author Verdy p
  * @author Wyz
@@ -508,7 +518,7 @@ $messages['fr'] = array(
 	'oasis-latest-photos-by' => 'par',
 	'oasis-latest-photos-posted-in' => 'Posté dans',
 	'oasis-latest-photos-more-dotdotdot' => 'plus...',
-	'oasis-global-nav-create-wiki' => 'Démarrer un wiki',
+	'oasis-global-nav-create-wiki' => 'Créer un wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Soyez le premier à discuter de cette page',
 	'oasis-page-header-comments' => 'Commentaire{{PLURAL:$1||s}}',
 	'oasis-page-header-comments-k' => '$1k',
@@ -579,6 +589,9 @@ Vous pouvez réordonner ou supprimer des outils dans le champ ci-dessous.
 	'oasis-spotlights-footer-title' => 'Autour du réseau de Wikia',
 	'themedesigner' => 'Concepteur de thème',
 	'oasis-pages-on-wiki-header' => 'Pages sur $1',
+	'oasis-latest-activity-new-details' => 'créée par $1 $2',
+	'oasis-latest-activity-edit-details' => 'modifiée par $1 $2',
+	'oasis-latest-activity-delete-details' => 'supprimée par $1 $2',
 	'oasis-interlang-show-all' => '... tout voir >',
 	'oasis-interlang-languages' => 'Langues :',
 	'imageseo-featured-on' => 'Paru à la une de :',
@@ -587,7 +600,10 @@ Vous pouvez réordonner ou supprimer des outils dans le champ ci-dessous.
 <p>Vous ne pouvez pas modifier cette page pour le moment. Nous devrions être de nouveau disponibles prochainement. Voici ce qui se passe :<br /><em>$1</em></p>
 <p>Veuillez consulter <a href="http://twitter.com/wikia">Twitter</a> ou <a href="http://facebook.com/wikia">Facebook</a> pour plus d’informations.</p>',
 	'oasis-upload-photos-title' => 'Importer une photo sur le wiki',
+	'oasis-upload-photos-more-options' => "Plus d'options",
+	'oasis-upload-photos-fewer-options' => "Moins d'options",
 	'oasis-upload-photos-force' => 'Envoyer malgré tout',
+	'oasis-upload-photos-caption' => 'Légende',
 );
 
 /** Galician (Galego)
@@ -1193,7 +1209,7 @@ U kunt hulpmiddelen verwijderen of ordenen in het veld hieronder.
 	'oasis-upload-photos-caption' => 'Bijschrift',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
 $messages['no'] = array(
@@ -1304,7 +1320,10 @@ Du kan omorganisere eller slette verktøy i feltet under.
 <p>Du kan ikke redigere denne artikkelen for øyeblikket - vi burde være oppegående igjen om kort tid. Dette er hva som skjer:<br /><em>$1</em></p>
 <p>Vennligst sjekk ut <a href="http://twitter.com/wikia">Twitter</a> eller <a href="http://facebook.com/wikia">Facebook</a> for mer informasjon.</p>',
 	'oasis-upload-photos-title' => 'Last opp et bilde til wikien',
+	'oasis-upload-photos-more-options' => 'Flere alternativer',
+	'oasis-upload-photos-fewer-options' => 'Færre alternativer',
 	'oasis-upload-photos-force' => 'Last opp allikevel',
+	'oasis-upload-photos-caption' => 'Bildetekst',
 );
 
 /** Polish (Polski)
@@ -1889,7 +1908,7 @@ $messages['uk'] = array(
 	'oasis-upload-photos-title' => 'Завантажити фото до вікі',
 );
 
-/** Traditional Chinese (中文(繁體))
+/** Traditional Chinese (‪中文(繁體)‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
@@ -1927,7 +1946,7 @@ $messages['zh-hant'] = array(
 	'oasis-interlang-languages' => '其他語言',
 );
 
-/** Chinese (Taiwan) (中文(台灣))
+/** Chinese (Taiwan) (‪中文(台灣)‬)
  * @author Ffaarr
  * @author Mark85296341
  */

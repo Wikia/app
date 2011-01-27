@@ -13,6 +13,7 @@ $messages['en'] = array(
 	'wikiapoll-question-mark-before' => '',
 );
 
+/** Message documentation (Message documentation) */
 $messages['qqq'] = array(
 	'wikiapoll-desc' => '{{desc}}',
 	'wikiapoll-people-voted' => 'Parameters:
@@ -24,3 +25,84 @@ $messages['qqq'] = array(
 	'wikiapoll-votes' => 'Paramters:
 * $1 is the number of votes cast.',
 );
+
+/** Spanish (Español)
+ * @author VegaDark
+ */
+$messages['es'] = array(
+	'wikiapoll-desc' => 'Proporciona una manera fácil de crear y administrar encuestas',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 persona votó|$1 personas votaron}}',
+	'wikiapoll-question' => '¿$1?',
+	'wikiapoll-thanks-for-vote' => '¡Gracias!',
+	'wikiapoll-vote' => '¡Vota!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 voto|$1 votos}}',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'wikiapoll-desc' => 'Forni un modo facile de crear e gerer sondages',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 persona|$1 personas}} votava',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Gratias!',
+	'wikiapoll-vote' => 'Votar!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 voto|$1 votos}}',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'wikiapoll-desc' => 'Дава лесен начин на создавање и раководење со анкети',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|Гласало $1 лице|Гласале $1 лица}}',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Благодариме!',
+	'wikiapoll-vote' => 'Гласај!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 глас|$1 гласа}}',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'wikiapoll-desc' => 'Biedt een eenvoudige manier om opiniepeilingen aan te maken en te beheren',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 gebruiker heeft|$1 gebruikers hebben}} gestemd',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Dank u wel!',
+	'wikiapoll-vote' => 'Stemmen',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 stem|$1 stemmen}}',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'wikiapoll-desc' => 'Tilbyr en enkel måte å opprette og administrere avstemninger',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 person|$1 personer}} stemte',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Takk!',
+	'wikiapoll-vote' => 'Stem!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 stemme|$1 stemmer}}',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'wikiapoll-desc' => 'Ger ett enkelt sätt att skapa och hantera omröstningar',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 person|$1 personer}} röstade',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Tack!',
+	'wikiapoll-vote' => 'Rösta!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 röst|$1 röster}}',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'కృతజ్ఞతలు!',
+);
+

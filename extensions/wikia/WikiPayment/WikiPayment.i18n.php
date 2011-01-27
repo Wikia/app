@@ -12,6 +12,17 @@ $messages['en'] = array(
 	'wikipayment-paypal-profile-name' => "Paid Wiki"
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'wikipayment-desc' => 'Aotren a ra paeañ dre wiki evit diweredekaat ar bruderezh.',
+	'wikipayment-paypal-redirect' => "Oc'h adkas davet PayPal, gortozit ur pennadig...",
+	'wikipayment-paypal-error' => 'Fazi paeañ PayPal (kod : $1)',
+	'wikipayment-paypal-return-ok' => 'Paeet ervat dre PayPal',
+	'wikipayment-paypal-return-cancel' => 'Paeamant dre PayPal nullet',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -65,6 +76,18 @@ $messages['nl'] = array(
 	'wikipayment-paypal-return-ok' => 'PayPal-betaling afgerond',
 	'wikipayment-paypal-return-cancel' => 'PayPal-betaling geannuleerd',
 	'wikipayment-paypal-profile-name' => 'Betaalde wiki',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'wikipayment-desc' => 'Tillater betaling per wiki for å deaktivere annonser.',
+	'wikipayment-paypal-redirect' => 'Omdirigerer til PayPal, vennligst vent...',
+	'wikipayment-paypal-error' => 'PayPal-betalingsfeil (kode: $1)',
+	'wikipayment-paypal-return-ok' => 'PayPal-betaling vellykket',
+	'wikipayment-paypal-return-cancel' => 'PayPal-betaling avbrutt',
+	'wikipayment-paypal-profile-name' => 'Betalt Wiki',
 );
 
 /** Swedish (Svenska)

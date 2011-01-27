@@ -14,9 +14,11 @@ $messages['en'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
+	'loggerrecords' => '$1 enrolladenn',
 	'loggergo' => 'Diskouez',
 	'loggernoresult' => "N'eus bet kavet disoc'h ebet",
 );
@@ -88,6 +90,11 @@ $messages['nl'] = array(
  * @author Audun
  */
 $messages['no'] = array(
+	'logger-desc' => 'Logger for bakgrunnsskript',
+	'logger' => 'Logger for bakgrunnsskript',
+	'loggertitle' => 'Logger for bakgrunnsskript',
+	'loggerselectlogname' => 'Velg loggnavn:',
+	'loggerrecordswithpercent' => "'''$1''' oppføringer ('''$2''' prosent fullført)",
 	'loggerrecords' => '$1 oppføringer',
 	'loggergo' => 'Vis',
 	'loggernoresult' => 'Ingen resultater funnet',

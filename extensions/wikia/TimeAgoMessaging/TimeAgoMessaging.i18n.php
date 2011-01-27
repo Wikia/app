@@ -90,10 +90,11 @@ $messages['nl'] = array(
  * @author Audun
  */
 $messages['no'] = array(
-	'timeago-day' => '{{PLURAL:$1|én dag|$1 dager}} siden',
-	'timeago-hour' => '{{PLURAL:$1|én time|$1 timer}} siden',
-	'timeago-minute' => '{{PLURAL:$1|ett minutt|$1 minutter}} siden',
-	'timeago-second' => 'et øyeblikk siden',
+	'timeagomessaging-desc' => 'Gir i18n til jquery.timeago.js plugginnen',
+	'timeago-day' => 'for {{PLURAL:$1|én dag|$1 dager}} siden',
+	'timeago-hour' => 'for {{PLURAL:$1|én time|$1 timer}} siden',
+	'timeago-minute' => 'for {{PLURAL:$1|ett minutt|$1 minutter}} siden',
+	'timeago-second' => 'for et øyeblikk siden',
 );
 
 /** Polish (Polski) */

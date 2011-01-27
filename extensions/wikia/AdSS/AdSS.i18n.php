@@ -176,14 +176,17 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
+	'adss-desc' => 'Bruderezh emservij',
 	'adss' => 'AdSS',
 	'adss-sponsor-links' => 'Liammoù paeroniet war Wikia',
 	'adss-ad-header' => '<h2>Liammoù davet ar paeroned diavaez</h2>',
 	'adss-ad-default-text' => 'Klikit amañ !',
+	'adss-ad-default-desc' => "Prenit ul liamm sponsoret hag un deskrivadur evit ho lec'hienn web war ar bajenn-mañ. Hastit buan, nebeut a ginnigoù sponsorañ zo ha gwerzhet bua e vezont !",
 	'adss-form-header' => 'Krouit ho pruderezh',
 	'adss-form-url' => "URL al lec'hienn paeron (ho lec'hienn web) :",
 	'adss-form-linktext' => "Testenn hoc'h eus c'hoant diskouez el liamm :",
@@ -196,12 +199,23 @@ $messages['br'] = array(
 	'adss-form-email' => "Ho chomlec'h postel :",
 	'adss-form-password' => 'Ho ker-tremen :',
 	'adss-form-login-link' => 'Kevreañ',
+	'adss-form-login-desc' => "Ur ger-tremen hoc'h eus ? $1 evit gounit amzer ha prenañ bruderezh gant ur c'hlik hepken !",
 	'adss-form-usd-per-day' => '$1 USD dre zevezh',
 	'adss-form-usd-per-week' => '$1 USD dre sizhun',
 	'adss-form-usd-per-month' => '$1 USD dre miz',
+	'adss-form-auth-errormsg' => "Direizh eo ho chomlec'h postel pe ho ker-tremen.",
 	'adss-form-field-empty-errormsg' => 'Ar vaezienn-se ne rank ket bezañ goullo !',
 	'adss-form-non-existent-title-errormsg' => "N'eus ket eus ar bajenn-se",
+	'adss-form-banner-upload-errormsg' => "Ret eo deoc'h diuzañ ur skeudenn da gargañ",
+	'adss-form-pick-plan-errormsg' => "Ret eo deoc'h diuzañ ur steuñv",
+	'adss-form-pick-plan' => 'Dibabit ur pakad bruderezh',
+	'adss-form-site-plan-header' => 'Prenañ ul liamm sponsoret war wel er wiki a-bezh',
+	'adss-form-site-plan-price' => '$1 eo an tamm',
+	'adss-form-site-premium-plan-header' => 'Prenañ 4 liamm sponsoret e priz 3',
+	'adss-form-site-premium-plan-price' => '$1 hepken evit pevar zamm !',
+	'adss-form-page-plan-header' => 'Prenañ ul liamm war ur bajenn hepken',
 	'adss-form-page-plan-price' => '$1 eo koust ul liamm',
+	'adss-form-banner-plan-price' => '$1 evit un tamm eus ar bannieloù',
 	'adss-form-or' => '- pe -',
 	'adss-form-thanks' => 'Trugarez evit ho paeroniañ !',
 	'adss-button-preview' => 'Rakwelet',
@@ -220,6 +234,13 @@ $messages['br'] = array(
 	'adss-preview-header' => 'Rakwelet',
 	'adss-preview-prompt' => 'Setu da betra e tenno ho paeroniañ. Klikit war "kemmañ" evit distreiñ ha degas kemmoù pe war "saveteiñ" evit enrollañ hag evit mont war PayPal.',
 	'adss-click-here' => 'Klikit amañ',
+	'adss-paypal-redirect' => "$1 ma n'oc'h ket adkaset da bPaypal a-benn 5 eilenn.",
+	'adss-paypal-error' => "Ne c'haller ket paeañ gant PayPal bremañ. Esaeit en-dro diwezhatoc'h, mar plij.
+
+Distreiñ da [[Special:AdSS|{{int:Adss}}]].",
+	'adss-error' => "C'hoarvezet ez eus ur fazi. Esaeit en-dro diwezhatoc'h.
+
+Distreiñ da [[Special:AdSS|{{int:Adss}}]].",
 	'adss-per-site' => 'An holl bajennoù',
 	'adss-per-page' => 'Ur bajenn hepken',
 	'adss-close' => 'Serriñ',
@@ -243,6 +264,8 @@ $messages['br'] = array(
 	'adss-ad' => 'Bruderezh',
 	'adss-status' => 'Statud',
 	'adss-created' => 'Krouet',
+	'adss-your-billing-agreement' => 'Asant fakturenniñ PayPal :',
+	'adss-create-billing-agreement' => 'Krouiñ un emglev fakturenniñ',
 	'adss-paypal-payment' => 'Paeamant PayPal',
 	'adss-adss-fee' => 'Frejoù AdSS',
 	'adss-fee' => 'Frejoù',
@@ -250,6 +273,7 @@ $messages['br'] = array(
 	'adss-timestamp' => 'Merker amzer',
 	'adss-description' => 'Deskrivadur',
 	'adss-amount' => '$1$',
+	'adss-cancel-confirmation' => "Ha sur oc'h hoc'h eus c'hoant da zilemel ar c'hemennad-mañ ?",
 	'adss-welcome-subject' => '[AdSS] Trugarez evit ho paeroniañ !',
 );
 
@@ -1255,9 +1279,9 @@ $messages['no'] = array(
 	'adss-ad-header' => '<h2>Eksterne sponsorlenker</h2>',
 	'adss-ad-default-text' => 'Klikk her.',
 	'adss-ad-default-desc' => 'Kjøp en sponset lenke og beskrivelse for ditt nettsted på denne siden. Vær rask, de få sponsorplassene blir fort utsolgt!',
-	'adss-form-header' => 'Design annonsen din',
+	'adss-form-header' => 'Utform annonsen din',
 	'adss-form-url' => 'URL for det sponsende nettstedet (ditt nettsted):',
-	'adss-form-linktext' => 'Tkest som skal vises i lenken:',
+	'adss-form-linktext' => 'Tekst som skal vises i lenken:',
 	'adss-form-additionaltext' => 'Tekst som skal vises under lenken din:',
 	'adss-form-type' => 'Sponsingstype:',
 	'adss-form-page' => 'Side som skal sponses:',
@@ -1756,6 +1780,12 @@ $messages['sv'] = array(
 1 aktie är för närvarande lika med $1% av {{SITENAME}} sponsrade länkar och kostar bara $2. Du kan avbryta när som helst.',
 	'adss-form-site-plan-price' => '$1 för en aktie',
 	'adss-form-site-premium-plan-header' => 'Köp 4 Sponsrade Länkar till priset av 3',
+	'adss-form-site-premium-plan-description' => 'Få Sponsrade Länkar på {{SITENAME}} och få ännu mer exponering genom att köpa i stora partier.
+
+1 aktie är för närvarande lika med $1% av {{SITENAME}} sponsrade länkar. Med det här alternativet kan du köpa fyra aktier till priset av tre! Du kan avbryta när som helst.',
+	'adss-form-site-premium-plan-price' => 'Endast $1 för fyra aktier!',
+	'adss-form-page-plan-header' => 'Köp en länk på en enda sida',
+	'adss-form-page-plan-price' => '$1 för en länk',
 	'adss-form-or' => '- eller -',
 	'adss-form-thanks' => 'Tack för din sponsring! Din annons har köpts in och kommer att släppas live efter ett manuellt godkännande (inom 48 timmar).
 
@@ -1798,7 +1828,9 @@ $messages['sv'] = array(
 	'adss-rejected' => 'Avvisad',
 	'adss-approved' => 'Godkänd',
 	'adss-pending' => 'Oavgjord',
+	'adss-wikia' => 'Wikia',
 	'adss-type' => 'Typ',
+	'adss-no-shares' => '# aktier',
 	'adss-price' => 'Pris',
 	'adss-ad' => 'Annons',
 	'adss-status' => 'Status',
@@ -1810,6 +1842,7 @@ $messages['sv'] = array(
 	'adss-description' => 'Beskrivning',
 	'adss-amount' => '$$1',
 	'adss-cancel-confirmation' => 'Är du säker på att du vill ta bort denna annons?',
+	'adss-welcome-subject' => '[AdSS] Tack för din sponsring!',
 	'adss-welcome-body' => 'Hej,
 
 Gratulerar, ditt konto är anordnat och dina annonser kommer starta

@@ -56,9 +56,11 @@ $messages['no'] = array(
 	'imageserving-desc' => 'Velger ut bilder fra en angitt rekke sider basert på visuelle krav',
 );
 
-/** Piedmontese (Piemontèis) */
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
 $messages['pms'] = array(
-	'imageserving-desc' => "A selession-a figure da n'array specificà ëd pàgine basà dzora a arceste visuaj",
+	'imageserving-desc' => "A selession-a le figure da n'ansem specificà ëd pàgine basandse ëdzora a jë bzògn visuaj",
 );
 
 /** Portuguese (Português) */

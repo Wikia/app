@@ -2988,6 +2988,7 @@ $messages['su'] = array(
  * @author Tobulos1
  */
 $messages['sv'] = array(
+	'userrenametool' => 'Ändra en användares namn',
 	'userrenametool-desc' => "Lägger till en [[Special:Renameuser|specialsida]] för att byta namn på en användare (kräver behörigheten ''renameuser'')",
 	'userrenametool-old' => 'Nuvarande användarnamn:',
 	'userrenametool-new' => 'Nytt användarnamn:',

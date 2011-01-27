@@ -61,9 +61,11 @@ $messages['no'] = array(
 	'sharedmessages-desc' => 'Gjør det mulig å bruke meldinger fra den delte databasen',
 );
 
-/** Piedmontese (Piemontèis) */
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
 $messages['pms'] = array(
-	'sharedmessages-desc' => 'A përmëtt ëd dovré mëssagi dal database condivis',
+	'sharedmessages-desc' => "A përmët ëd dovré dij mëssagi ch'a ven-o da la base ëd dàit partagià",
 );
 
 /** Portuguese (Português) */

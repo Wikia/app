@@ -689,6 +689,7 @@ Näyttää siltä, että rekisteröitynyt käyttäjä $USERNAME on muokannut wik
 /** French (Français)
  * @author IAlex
  * @author Peter17
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'founderemails-desc' => 'Aide les fondateurs en les informant des changements sur leurs wikis',
@@ -732,9 +733,16 @@ Maintenant que vous avez passé quelques jours sur votre wiki, nous avons pensé
 On dirait que l’utilisateur enregistré $USERNAME a modifié votre wiki pour la première fois ! Pourquoi ne pas passer lui dire bonjour sur sa page de discussion ($USERTALKPAGEURL) ?
 
 -- L’équipe Wikia',
-	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Salut $FOUNDERNAME,<br /><br />
-On dirait que l’utilisateur enregistré $USERNAME a modifié votre wiki pour la première fois ! Pourquoi ne pas passer lui dire bonjour sur <a href="$USERTALKPAGEURL">sa page de discussion</a> ?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- L’équipe Wikia</div>',
+	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => '<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Bonjour $FOUNDERNAME,</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">$USERNAME a rejoint votre wiki et a effectué sa toute première modification !</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Passez lui dire bonjour sur <a href="$USERTALKPAGEURL">sa page de discussion</a> et pour répondre aux questions qu’il peut avoir. Les contributeurs actifs sont très importants, ils peuvent aider à développer votre wiki et le rendre populaire. Faites au mieux pour l’encourager et l’aider à s’impliquer.</p>
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Des contributeurs heureux font des wikis où ils fait bon vivre !</p> 
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">L’équipe Wikia</p>
+
+<div style="font-family:Arial,sans-serif;color: #333;font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour ne plus recevoir ces courriels.</div>',
 	'founderemails-email-page-edited-reg-user-subject' => 'Un utilisateur enregistré a modifié votre wiki !',
 	'founderemails-email-page-edited-reg-user-body' => 'Salut $FOUNDERNAME,
 

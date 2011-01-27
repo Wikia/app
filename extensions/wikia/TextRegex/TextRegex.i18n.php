@@ -417,6 +417,13 @@ $messages['ja'] = array(
 	'textregex-currently-blocked' => '’’’現在投稿ブロックされているフレーズ:’’’',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'textregex-select-default' => '-- ußwähle --',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -455,7 +462,7 @@ $messages['mk'] = array(
 	'textregex-select-default' => '-- одберете --',
 	'textregex-create-subpage' => 'или создајте нов список:',
 	'textregex-select-regexlist' => 'оди на списокот',
-	'textregex-invalid-regexid' => 'Неважечки идентификатор на регуларниот израз.',
+	'textregex-invalid-regexid' => 'НеважечкА назнака на регуларниот израз.',
 	'textregex-phrase-statistics' => "Статистики за изразот '''$1''' (број на записи: $2)",
 	'textregex-return-mainpage' => '[{{SERVER}}$1 назад кон списокот]',
 );

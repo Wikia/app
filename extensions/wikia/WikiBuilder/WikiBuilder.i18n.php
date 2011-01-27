@@ -110,6 +110,85 @@ $messages['br'] = array(
 	'owb-status-saving' => "Oc'h enrollañ",
 );
 
+/** Spanish (Español)
+ * @author VegaDark
+ */
+$messages['es'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Asistente de creación de wiki]]',
+	'owb-title' => 'Creador de Wikis',
+	'owb-headline' => 'Hola, $1',
+	'owb-button-skip' => 'Saltar',
+	'owb-button-save-intro' => 'Guardar Introducción',
+	'owb-button-save-theme' => 'Guardar Tema',
+	'owb-button-save-pages' => 'Guardar Páginas',
+	'owb-button-done' => 'Continuar a tu wiki',
+	'owb-button-plus' => 'Seleccionar Wikia+Plus',
+	'owb-step1' => 'Paso 1',
+	'owb-step1-label' => '¿De qué trata?',
+	'owb-step1-label-formatted' => '¿De<br />qué trata?',
+	'owb-step1-instruction' => 'Escribe una breve introducción para tu página principal. Que sea clara y divertida para atraer usuarios a tu proyecto.',
+	'owb-step1-sample' => 'Muestra de una Página Principal',
+	'owb-step2' => 'Paso 2',
+	'owb-step2-label' => 'Elige un tema',
+	'owb-step2-label-formatted' => 'Elige<br />un tema',
+	'owb-step2-instruction1' => 'Es fácil hacer que tu wiki parezca única. Solo escoge un tema que se adapte a tu proyecto.',
+	'owb-step2-instruction2' => 'Puedes cambiar el tema o diseñar uno propio en cualquier momento.',
+	'owb-step2-gallery' => 'Galería de temas',
+	'owb-step3' => 'Paso 3',
+	'owb-step3-label' => 'Empieza algunas páginas',
+	'owb-step3-label-formatted' => 'Empieza<br />algunas páginas',
+	'owb-step3-instruction' => 'Para comenzar tu wiki, necesitas añadir algunas páginas. Puedes añadir más cuando lo quieras.',
+	'owb-step3-your-pages' => 'Tus nombres de páginas',
+	'owb-step3-examples1-title' => 'Muestra: Nombres de páginas de películas de monstruos',
+	'owb-step3-examples1' => '<li>Monstruos de Frankenstein</li>
+<li>El Hombre Lobo</li>
+<li>El Aullido</li>
+<li>La Momia</li>
+<li>La Cas de Cera</li>
+<li>La Cosa del Pantano</li>',
+	'owb-step3-examples2-title' => 'Muestra: Nombres de página de juegos de mesa',
+	'owb-step3-examples2' => '<li>Monopoly</li>
+<li>Risk</li><li>Scrabble</li>
+<li>Trivial Pursuit</li>
+<li>Pictionary</li>
+<li>Taboo</li>',
+	'owb-step4' => 'Paso 4',
+	'owb-step4-label-formatted' => 'Plan<br />premium',
+	'owb-step4-label' => 'Añadir un plan premium',
+	'owb-step4-instruction' => 'Elige eliminar los anuncios con Wikia-Plus o continuar con Wikia Básico.',
+	'owb-step4-basic-price' => 'strong>$0</strong>/mes',
+	'owb-step4-basic-details' => '<ul><li>Anuncios de Wikia para usuarios no registrados</li>
+<li>Páginas e imágenes ilimitadas</li>
+<li>Herramientas fáciles de edición</li>
+<li>Conectarse en Facebook</li>
+<li>Sin límite de ancho de banda</li></ul>',
+	'owb-step4-plus-price' => '<strong>$$1</strong>/mes',
+	'owb-step4-plus-details' => '<ul><li><strong>¡Sin anuncios!<small><em>(los límites aplican a wikis grandes)</em></small></strong></li>
+<li>Páginas e imágenes ilimitadas</li>
+<li>Herramientas fáciles de edición</li>
+<li>Conectarse en Facebook</li>
+<li>Sin límite en ancho de banda</li></ul>',
+	'owb-step4-error-caption' => 'Error',
+	'owb-step4-error-upgrade-content' => 'Esta wiki no puede ser actualizada a la versión Plus.',
+	'owb-step4-error-token-content' => 'No se pudo obtener un token apropiado para PayPal.',
+	'owb-status-saving' => 'Guardando',
+	'owb-unable-to-edit-description' => 'La descripción no se puede editar con el Creador de Wikis',
+	'owb-readonly-try-again' => 'La wiki está actualmente en modo se sólo lectura. Por favor, inténtalo de nuevo en unos momentos',
+	'owb-error-saving-articles' => 'Error al guardar las páginas',
+	'owb-api-error-title' => 'Error al procesar tu solicitud',
+	'owb-api-error' => 'Por favor, inténtalo una vez o salta este paso',
+	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
+Escribe el primer párrafo de tu página aquí.
+
+==Sección de encabezado==
+
+Escribe la primera sección de tu página aquí. Recuerda incluir enlaces a otras páginas en la wiki.
+
+==Sección de encabezado==
+
+Escribe la segunda sección de tu página aquí. No olvides añadir una categoría para ayudar a las personas a encontrar la página.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -175,6 +254,8 @@ $messages['ia'] = array(
 	'owb-unable-to-edit-description' => 'Le description es immodificabile con Wiki Builder',
 	'owb-readonly-try-again' => 'Le wiki es actualmente in modo de lectura sol. Per favor reproba post alcun momentos.',
 	'owb-error-saving-articles' => 'Error durante le salveguarda de paginas',
+	'owb-api-error-title' => 'Error durante le tractamento de tu requesta',
+	'owb-api-error' => 'Per favor tenta lo altere vice, o salta iste passo',
 	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
 Scribe hic le prime paragrapho de tu pagina.
 
@@ -276,6 +357,8 @@ $messages['mk'] = array(
 	'owb-unable-to-edit-description' => 'Описот не може да се уреди со Викиградителот',
 	'owb-readonly-try-again' => 'Викито е моментално во режим „само за читање“. Обидете се повторно за некоја минута',
 	'owb-error-saving-articles' => 'Грешка при зачувувањето на страниците',
+	'owb-api-error-title' => 'Грешка при обработката на вашето барање',
+	'owb-api-error' => 'Обидете се повторно или прескокнете го овој чекор',
 	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
 Тука напишете го првиот пасус на страницата.
 
@@ -354,6 +437,8 @@ $messages['nl'] = array(
 	'owb-unable-to-edit-description' => 'De beschrijving is niet te bewerken met de Wikiwizard',
 	'owb-readonly-try-again' => 'De wiki staat op dit moment in alleen-lezenmodus. Probeer het over een paar minuten opnieuw.',
 	'owb-error-saving-articles' => "Fout bij het opslaan van pagina's",
+	'owb-api-error-title' => 'Er is een fout opgetreden tijdens het verwerken van uw aanvraag',
+	'owb-api-error' => 'Probeer het opnieuw of sla deze stap over',
 	'owb-new-pages-text' => "[[File:Placeholder|right|300px]]
 Schrijf hier de eerste paragraaf van uw pagina.
 
@@ -382,23 +467,35 @@ $messages['no'] = array(
 	'owb-step1' => 'Trinn 1',
 	'owb-step1-label' => 'Hva handler det om?',
 	'owb-step1-label-formatted' => 'Hva<br />handler det om?',
+	'owb-step1-instruction' => 'Skriv en kort intro til hjemsiden. Gjør den morsom og fengende for å gi andre lyst til å bidra til prosjektet ditt.',
 	'owb-step1-sample' => 'Eksempel på wikiens Hjem-side',
 	'owb-step2' => 'Trinn 2',
 	'owb-step2-label' => 'Velg et tema',
+	'owb-step2-label-formatted' => 'Velg</br >et tema',
+	'owb-step2-instruction1' => 'Det er lett å gjøre wikien din unik. Bare velg et tema som passer prosjektet ditt.',
+	'owb-step2-instruction2' => 'Du kan endre temaet eller utforme ditt eget når som helst.',
+	'owb-step2-gallery' => 'Temagalleri',
 	'owb-step3' => 'Trinn 3',
 	'owb-step3-label' => 'Opprett noen sider',
+	'owb-step3-label-formatted' => 'Opprett<br />noen sider',
+	'owb-step3-instruction' => 'For å starte wikien din må du legge til noen sider. Du kan legge til flere når du vil.',
+	'owb-step3-your-pages' => 'Dine sidenavn',
+	'owb-step3-examples1-title' => 'Eksempel: Navn på sider om monsterfilmer',
 	'owb-step3-examples1' => '<li>Frankensteins monster</li>
 <li>Ulvemannen</li>
 <li>Hyleren</li>
 <li>Mumien</li>
 <li>Vokshuset</li>
 <li>Sumptingen</li>',
+	'owb-step3-examples2-title' => 'Eksempel: Navn på sider om brettspill',
 	'owb-step3-examples2' => '<li>Monopol</li>
 <li>Risk</li><li>Scrabble</li>
 <li>Trivial Pursuit</li>
 <li>Pictionary</li>
 <li>Taboo</li>',
 	'owb-step4' => 'Trinn 4',
+	'owb-step4-label-formatted' => 'Premium-<br />plan',
+	'owb-step4-label' => 'Legg til en premiumplan',
 	'owb-step4-instruction' => 'Velg å fjerne annonser med Wikia+Plus eller fortsett med Wikia Basic.',
 	'owb-step4-basic-price' => '<strong>$0</strong>/måned',
 	'owb-step4-basic-details' => '<ul><li>Wikia-annonser for brukere som ikke er logget inn</li>
@@ -414,9 +511,15 @@ $messages['no'] = array(
 <li>Ubegrenset båndbredde</li></ul>',
 	'owb-step4-error-caption' => 'Feil',
 	'owb-step4-error-upgrade-content' => 'Denne wikien kan ikke oppgraderes til Plus.',
+	'owb-step4-error-token-content' => 'Klarte ikke å motta en gyldig kode fra PayPal.',
 	'owb-status-saving' => 'Lagrer',
+	'owb-unable-to-edit-description' => 'Beskrivelsen er ikke redigerbar med Wiki-byggeren',
+	'owb-readonly-try-again' => 'Wikien er for øyeblikket i skrivebeskyttet modus. Vennligst prøv igjen om en liten stund',
+	'owb-error-saving-articles' => 'Feil under lagring av sider',
+	'owb-api-error-title' => 'Feil under behandling av forespørselen',
+	'owb-api-error' => 'Vennligst prøv igjen eller hopp over dette trinnet',
 	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
-Skriv sidens første avsnitt her .
+Skriv sidens første avsnitt her . 
 
 ==Overskrift for seksjon==
 
@@ -431,17 +534,85 @@ Skriv sidens andre seksjon her. Ikke glem å legge til en kategori for å hjelpe
  * @author Tobulos1
  */
 $messages['sv'] = array(
+	'owb-title' => 'Wiki Builder',
+	'owb-headline' => 'Hej, $1',
+	'owb-button-skip' => 'Hoppa över',
+	'owb-button-save-intro' => 'Spara Intro',
+	'owb-button-save-theme' => 'Spara Tema',
+	'owb-button-save-pages' => 'Spara Sidor',
+	'owb-button-done' => 'Fortsätt till din wiki',
+	'owb-button-plus' => 'Välj Wikia+Plus',
 	'owb-step1' => 'Steg 1',
 	'owb-step1-label' => 'Vad handlar det om?',
 	'owb-step1-label-formatted' => 'Vad handlar<br />det om?',
 	'owb-step1-instruction' => 'Skriv en kort introduktion för din hemsida. Skriv det kvickt och roligt för att få andra uppspelta över att bidra till ditt projekt.',
+	'owb-step1-sample' => 'Ett prov på en Wiki hemsida',
+	'owb-step2' => 'Steg 2',
+	'owb-step2-label' => 'Välj ett tema',
+	'owb-step2-label-formatted' => 'Välj ett<br />tema',
+	'owb-step2-instruction1' => 'Det är enkelt att göra din wikis utseende unikt. Välj bara ett tema som passar ditt projekt.',
+	'owb-step2-instruction2' => 'Du kan ändra ditt tema eller din design när som helst.',
+	'owb-step2-gallery' => 'Tema-Galleri',
+	'owb-step3' => 'Steg 3',
+	'owb-step3-label' => 'Starta några sidor',
+	'owb-step3-label-formatted' => 'Start<br />några sidor',
+	'owb-step3-instruction' => 'För att starta din wiki, måste du lägga till några sidor. Du kan lägga till fler när du vill.',
+	'owb-step3-your-pages' => 'Dina sidonamn',
+	'owb-step3-examples1-title' => 'Exempel: Monsterfilmer',
+	'owb-step3-examples1' => "<li>Frankenstein's Monster</li>
+<li>The Wolfman</li>
+<li>The Howling</li>
+<li>The Mummy</li>
+<li>House of Wax</li>
+<li>Swamp Thing</li>",
+	'owb-step3-examples2-title' => 'Exempel: Brädspel',
+	'owb-step3-examples2' => '<li>Monopol</li>
+<li>Risk</li><li>Scrabble</li>
+<li>Trivial Pursuit</li>
+<li>Pictionary</li>
+<li>Taboo</li>',
+	'owb-step4' => 'Steg 4',
+	'owb-step4-label-formatted' => 'Premium<br />plan',
+	'owb-step4-label' => 'Lägg till en premium plan',
+	'owb-step4-instruction' => 'Välj att ta bort annonser med Wikia+Plus eller fortsätt med Wikia Basic.',
+	'owb-step4-basic-price' => '<strong>$0</strong>/månad',
+	'owb-step4-basic-details' => '<ul><li>Wikia annonser för användare som inte är inloggade</li>
+<li>Obegränsade sidor och bilder</li>
+<li>Lättanvända redigeringsverktyg</li>
+<li>Anslut och gilla på Facebook</li>
+<li>Ingen bredbandsgräns</li></ul>',
+	'owb-step4-plus-price' => '<strong>$$1</strong>/månad',
+	'owb-step4-plus-details' => '<ul><li><strong>Inga annonser!<small><em>(gränser gäller stora wikis)</em></small></strong></li>
+<li>Obegränsade sidor och bilder</li>
+<li>Lättanvända redigeringsverktyg</li>
+<li>Anslut och gilla på Facebook</li>
+<li>Ingen bredbandsgräns</li></ul>',
 	'owb-step4-error-caption' => 'Fel',
+	'owb-step4-error-upgrade-content' => 'Denna wiki kan inte uppgraderas till Plus.',
+	'owb-step4-error-token-content' => 'Misslyckades med att få korrekt token från PayPal.',
+	'owb-status-saving' => 'Sparar',
+	'owb-unable-to-edit-description' => 'Beskrivningen kan inte redigeras med Wiki Builder',
+	'owb-readonly-try-again' => 'Wikin är för närvarande i skrivskyddat läge. Försök igen om en stund',
+	'owb-error-saving-articles' => 'Fel vid sparande av sidor',
+	'owb-api-error-title' => 'Ett fel uppstod med din begäran',
+	'owb-api-error' => 'Försök igen eller hoppa över detta steg',
+	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
+Skriv ditt första stycke på din sida här.
+
+==Rubrik på avsnitt==
+
+Skriv den första delen av din sida här. Kom ihåg att inkludera länkar till andra sidor på wikin.
+
+==Rubrik på avsnitt==
+
+Skriv den andra delen av din sida här. Glöm inte att lägga till en kategori för att hjälpa människor att hitta sidan.',
 );
 
 /** Ukrainian (Українська)
  * @author Тест
  */
 $messages['uk'] = array(
+	'owb-button-skip' => 'Пропустити',
 	'owb-step4-error-caption' => 'Помилка',
 );
 

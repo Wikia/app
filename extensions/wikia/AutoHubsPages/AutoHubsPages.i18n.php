@@ -314,8 +314,14 @@ $messages['ru'] = array(
  */
 $messages['sv'] = array(
 	'unhide' => 'Ta fram',
+	'hub-header' => '$1 Wikis',
+	'hub-hotspot-info' => 'Dessa är de hetaste sidorna den här veckan, rankas av flesta redaktörer.',
+	'hub-blog-comments' => '{{PLURAL:$1|en kommentar|$1 kommentarer}}',
+	'hub-blog-continue' => 'Fortsätt läsa',
+	'hub-blog-showarticle' => 'Visa sida',
 	'hub-hotspot-from' => 'från',
 	'hub-hide-feed' => 'Göm feed',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|redaktör|redaktörer}}</span>',
 );
 
 /** Tamil (தமிழ்)

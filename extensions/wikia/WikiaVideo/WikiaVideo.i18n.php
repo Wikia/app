@@ -752,6 +752,26 @@ $messages['sr-ec'] = array(
 	'wikiavideo-intro-old' => "Управо ћете да обришете '''[$1 $5]''' издање, као и [$4 $3, $2].",
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'wikiavideo-reverted' => 'Videon $1 har återställts. Gå tillbaka till $2.',
+	'wikiavideo-unreverted' => 'Du har inte behörighet att återställa $1.',
+	'wikiavideo-added' => 'lade till videon $1',
+	'wikiavideo-back' => 'tillbaka',
+	'wikiavideo-create' => 'Lägg till Video',
+	'wikiavideo-replace' => 'Ersätt Video',
+	'wikiavideo-category' => 'Videoklipp',
+	'wikiavideo-links' => 'Länkar',
+	'wikiavideo-placeholder' => 'Platshållare',
+	'wikiavideo-gallery-template' => 'Detta videogalleri är inne i en mall, och kan inte redigeras från visningsläget. Var god redigera mallen istället.',
+	'wikiavideo-not-supported' => 'Detta skal har inte stöd för att sätta in videor från visningsläget i gallerier.',
+	'wikiavideo-pixel' => ' bildpunkt',
+	'wikiavideo-deleted-old' => "Versionen av '''[$1 $2]''' från $4, $3 har raderats.",
+	'wikiavideo-intro-old' => "Du håller på att radera versionen av '''[$1 $5]''' från [$4 $3, $2].",
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

@@ -79,6 +79,13 @@ $messages['pt'] = array(
 	'categorygalleries-desc' => 'Mostra uma galeria de páginas nas páginas das categorias',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'categorygalleries-desc' => 'Visar ett sido-galleri på kategorisidor',
+);
+
 /** Ukrainian (Українська)
  * @author Тест
  */
