@@ -22,9 +22,6 @@ function wfAdEngineSetupJSVars($vars) {
 	$vars["cityShort"] = $cat['short'];
 	$vars['wgEnableOpenXSPC'] = $wgEnableOpenXSPC;
 
-	// footer ads
-	$vars['wgAdslot_INVISIBLE_1'] = $wgAdslot_INVISIBLE_1;
-
 	// AdDriver
 	$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;
 

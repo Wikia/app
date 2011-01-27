@@ -102,11 +102,4 @@ var displayAnchorAd = function(){
 		AnchorAd.init();
 	}
 
-if (wgAdslot_INVISIBLE_1 == 'AdDriver') {
-	displayAnchorAd();
-}
-else {
-	wgAfterContentAndJS.push(function() {
-		displayAnchorAd();
-	});
-}
+displayAnchorAd(); // assume jQuery is already loaded (AdDriver is handling ads)

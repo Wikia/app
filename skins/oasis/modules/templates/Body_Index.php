@@ -7,8 +7,9 @@
 <?= $afterBodyHtml ?>
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
-<?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')) ?>
-<?= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')) ?>
+<?// Skins can be served out of TOP_LEADERBOARD with dcopt=ist option. Turning off INVISIBLE_TOP ?>
+<?//= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')) ?>
+<?//= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')) ?>
 <?= wfRenderModule('GlobalHeader') ?>
 
 <section id="WikiaPage" class="WikiaPage">

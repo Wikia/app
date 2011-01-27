@@ -65,7 +65,8 @@
 
 <?php
 	if (empty($wgSuppressAds)) {
-		echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
+		// Footer Ads can be served out of TOP_LEADERBOARD with dcopt=ist option. Turning off INVISIBLE_1
+		//echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
 		if (!$wgEnableCorporatePageExt) {
 			echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
 		}
