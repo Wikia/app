@@ -27,6 +27,11 @@ class PageLayoutBuilderForm extends SpecialPage {
 			return;
 		}
 
+		$staticChute = new StaticChute('js');
+		$staticChute->useLocalChuteUrl();
+
+		$wgOut->addScript($staticChute->getChuteHtmlForPackage('yui'));
+		
 		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/form.scss' ) );
 		$wgOut->addStyle( wfGetSassUrl( 'skins/oasis/css/core/_EditPage.scss' ) );
 
