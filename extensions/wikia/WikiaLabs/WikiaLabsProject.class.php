@@ -1,6 +1,7 @@
 <?php
 
 class WikiaLabsProject {
+	const CACHE_TTL = 10800;
 
 	protected $id = 0;
 	protected $app = null;
@@ -20,7 +21,7 @@ class WikiaLabsProject {
 	public function __construct( WikiaApp $app, $id = 0) {
 		$this->app = $app;
 		if( !empty($id) ) {
-			$this->loadFromDb($id);
+			$this->load( $id );
 		}
 	}
 
@@ -30,6 +31,31 @@ class WikiaLabsProject {
 	 */
 	protected function getDb( $type = DB_SLAVE ) {
 		return $this->app->runFunction( 'wfGetDB', $type, array(), $this->app->getGlobal( 'wgExternalDatawareDB' ) );
+	}
+
+	/**
+	 * get cache handler
+	 */
+	protected function getCache() {
+		return $this->app->getGlobal( 'wgMemc' );
+	}
+
+	protected function getCacheKey() {
+		return $this->app->runFunction( 'wfMemcKey', __CLASS__, $this->getId() );
+	}
+
+	protected function getDataFromCache() {
+		return $this->getCache()->get( $this->getCacheKey() );
+	}
+
+	protected function setDataToCache( $data ) {
+		$data['id'] = $this->getId();
+		$this->getCache()->set( $this->getCacheKey(), $data, self::CACHE_TTL );
+	}
+
+	protected function deleteDataFromCache() {
+		$this->getCache()->delete( $this->getCacheKey() );
+		$this->getCache()->delete( $this->getCachedRatingKey() );
 	}
 
 	public function getId() {
@@ -145,32 +171,91 @@ class WikiaLabsProject {
 		$this->status = $status;
 	}
 
+	protected function getCachedEnables() {
+		return $this->getCache()->get( $this->getCachedEnablesKey() );
+	}
+
+	protected function setCachedEnables( $enables ) {
+		$this->getCache()->set( $this->getCachedEnablesKey(), $enables, self::CACHE_TTL );
+	}
+
+	protected function getCachedEnablesKey() {
+		return $this->app->runFunction( 'wfMemcKey', __CLASS__, 'getCachedEnables' );
+	}
+
+	protected function updateCachedEnables( $wikiId, $status ) {
+		$enables = $this->getCachedEnables();
+		if( empty( $enables ) ) {
+			$enables = array();
+		}
+
+		$enables[ $wikiId ] = $status;
+		$this->setCachedEnables( $enables );
+	}
+
 	public function isEnabled( $wikiId ) {
+		$cachedEnables = $this->getCachedEnables();
+		if( !empty( $cachedEnables[$wikiId] ) ) {
+			return $cachedEnables[$wikiId];
+		}
+
 		$enable = $this->getDb()->selectRow( 'wikia_labs_project_wiki_link', array( 'wlpwli_id' ), array(  'wlpwli_wlpr_id' => $this->getId(), 'wlpwli_wiki_id' => $wikiId ), __METHOD__ );
-		return is_object($enable) ? true : false;
+		$status = is_object($enable) ? true : false;
+
+		$this->updateCachedEnables( $wikiId, $status );
+		return $status;
 	}
 
 	public function setEnabled( $wikiId ) {
 		$this->incrActivationsNum();
 		$this->getDb( DB_MASTER )->insert( 'wikia_labs_project_wiki_link', array( 'wlpwli_wlpr_id' => $this->getId(), 'wlpwli_wiki_id' => $wikiId ), __METHOD__ );
+		$this->updateCachedEnables( $wikiId, true );
 		$this->update();
 	}
 
 	public function setDisabled( $wikiId ) {
 		$this->decrActivationsNum();
 		$this->getDb( DB_MASTER )->delete( 'wikia_labs_project_wiki_link', array( 'wlpwli_wlpr_id' => $this->getId(), 'wlpwli_wiki_id' => $wikiId ), __METHOD__ );
+		$this->updateCachedEnables( $wikiId, false );
+		$this->update();
 	}
 
-	public function loadFromDb($id) {
+	public function load($id) {
+		$this->id = $id;
+		$cachedData = $this->getDataFromCache();
+		if( !empty( $cachedData ) ) {
+			$this->loadFromCache( $cachedData );
+		}
+		else {
+			$this->loadFromDb();
+		}
+	}
+
+	protected function loadFromCache( $cachedData ) {
+		$this->id = $cachedData['id'];
+		$this->name = $cachedData['wlpr_name'];
+		$this->data = unserialize( $cachedData['wlpr_data'] );
+		$this->releaseDate = $cachedData['wlpr_release_date'];
+		$this->isActive = ( $cachedData['wlpr_is_active'] == 'y' ) ? true : false;
+		$this->isGraduated = ( $cachedData['wlpr_is_graduated'] == 'y' ) ? true : false;
+		$this->activationsNum = $cachedData['wlpr_activations_num'];
+		$this->rating = $cachedData['wlpr_rating'];
+		$this->pmEmail = $cachedData['wlpr_pm_email'];
+		$this->techEmail = $cachedData['wlpr_tech_email'];
+		$this->fogbugzProject = $cachedData['wlpr_fogbugz_project'];
+		$this->extension = $cachedData['wlpr_extension'];
+		$this->status = $cachedData['wlpr_status'];
+	}
+
+	protected function loadFromDb() {
 		$project = $this->getDb()->selectRow(
 			array( 'wikia_labs_project' ),
 			array( 'wlpr_name', 'wlpr_status', 'wlpr_data', 'wlpr_release_date', 'wlpr_is_active', 'wlpr_is_graduated', 'wlpr_activations_num', 'wlpr_rating', 'wlpr_pm_email', 'wlpr_tech_email', 'wlpr_fogbugz_project', 'wlpr_extension' ),
-			array( "wlpr_id" => $id ),
+			array( "wlpr_id" => $this->id ),
 			__METHOD__
 		);
 
 		if(!empty($project)) {
-			$this->id = $id;
 			$this->name = $project->wlpr_name;
 			$this->data = unserialize( $project->wlpr_data );
 			$this->releaseDate = $project->wlpr_release_date;
@@ -226,11 +311,13 @@ class WikiaLabsProject {
 			$this->id = $db->insertId();
 		}
 		$db->commit();
+		$this->setDataToCache( $fields );
 	}
 
 	public function delete() {
 		if($this->getId()) {
 			$this->getDb( DB_MASTER )->delete( 'wikia_labs_project', array( "wlpr_id" => $this->getId() ) );
+			$this->deleteDataFromCache();
 		}
 	}
 
@@ -263,6 +350,7 @@ class WikiaLabsProject {
 
 		return $projects;
 	}
+
 	public function getExtensionsDict() {
 		return $this->app->getGlobal( 'wgWikiaLabsAllowed');
 	}
@@ -276,6 +364,33 @@ class WikiaLabsProject {
 		return $status;
 	}
 
+	protected function getCachedRatings() {
+		return $this->getCache()->get( $this->getCachedRatingKey() );
+	}
+
+	protected function setCachedRatings( $ratings ) {
+		$this->getCache()->set( $this->getCachedRatingKey(), $ratings, self::CACHE_TTL );
+	}
+
+	protected function getCachedRatingKey() {
+		return $this->app->runFunction( 'wfMemcKey', __CLASS__, 'getCachedRatings' );
+	}
+
+	protected function updateCachedRating( $userId, $rating ) {
+		$ratings = $this->getCachedRatings();
+		if( empty( $ratings ) ) {
+			$ratings = array();
+		}
+
+		if( empty( $ratings[$this->getId()] ) ) {
+			$ratings[$this->getId()] = array();
+		}
+
+		$ratings[$this->getId()][$userId] = $rating;
+
+		$this->setCachedRatings( $ratings );
+	}
+
 	public function updateRating( $userId, $rating ) {
 		if( $this->getId() ) {
 			$row = $this->getDb()->selectRow( 'wikia_labs_project_rating', array( 'wlpra_id' ), array( 'wlpra_wlpr_id' => $this->getId(), 'wlpra_user_id' => $userId ), __METHOD__ );
@@ -286,6 +401,7 @@ class WikiaLabsProject {
 			else {
 				$this->getDb( DB_MASTER )->insert( 'wikia_labs_project_rating', $fields, __METHOD__ );
 			}
+			$this->updateCachedRating( $userId, $rating );
 
 			$row = $this->getDb( DB_MASTER )->selectRow( 'wikia_labs_project_rating', array( 'SUM(wlpra_value)/COUNT(*) AS rating' ), array( 'wlpra_wlpr_id' => $this->getId() ) );
 
@@ -294,15 +410,26 @@ class WikiaLabsProject {
 		}
 	}
 
+	protected function getCachedRatingByUser( $userId ) {
+		$ratings = $this->getCachedRatings();
+		return ( !empty($ratings[$this->getId()][$userId]) ? $ratings[$this->getId()][$userId] : false );
+	}
+
 	public function getRatingByUser( $userId, $dbType = DB_SLAVE ) {
 		$rating = 0;
 		if( $this->getId() ) {
+			$cachedRating = $this->getCachedRatingByUser( $userId );
+			if( !empty( $cachedRating ) ) {
+				return $cachedRating;
+			}
+
 			$row = $this->getDb( $dbType )->selectRow( 'wikia_labs_project_rating', array( 'wlpra_value' ), array( 'wlpra_wlpr_id' => $this->getId(), 'wlpra_user_id' => $userId ), __METHOD__ );
 			if( !empty( $row->wlpra_value ) ) {
 				$rating = $row->wlpra_value;
 			}
+
+			$this->updateCachedRating( $userId, $rating );
 		}
 		return $rating;
-
 	}
 }
