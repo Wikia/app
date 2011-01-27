@@ -61,11 +61,14 @@ $messages['de'] = array(
 
 /** Spanish (Español)
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'taskmanager' => 'Muestra y administra tareas en segundo plano',
 	'taskmanager_title' => 'Muestra y administra tareas en segundo plano',
 	'taskmanager_tasklist' => 'Volver al listado de tareas',
+	'right-taskmanager' => 'Puede mostrar tareas en segundo plano',
+	'right-taskmanager-action' => 'Puede administrar tareas en segundo plano',
 );
 
 /** Finnish (Suomi)
@@ -79,11 +82,14 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Peter17
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'taskmanager' => "Afficher et gérer les tâches d'arrière-plan",
 	'taskmanager_title' => "Afficher et gérer les tâches d'arrière-plan",
 	'taskmanager_tasklist' => 'Retourner à la liste des tâches',
+	'right-taskmanager' => 'Peut afficher les tâches en arrière-plan',
+	'right-taskmanager-action' => 'Peut gérer les tâches en arrière-plan',
 );
 
 /** Galician (Galego)
@@ -188,12 +194,15 @@ $messages['nl'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'taskmanager' => 'Vis og administrer bakgrunnsoppgaver',
 	'taskmanager_title' => 'Vis og administrer bakgrunnsoppgaver',
 	'taskmanager_tasklist' => 'Gå tilbake til oppgaveliste',
+	'right-taskmanager' => 'Kan vise bakgrunnsprosesser',
+	'right-taskmanager-action' => 'Kan ta hånd om bakgrunnsprosesser',
 );
 
 /** Occitan (Occitan)

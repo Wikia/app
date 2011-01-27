@@ -369,6 +369,14 @@ $messages['ja'] = array(
 	'right-multilookup' => '複数ウィキにおけるユーザの情報を閲覧',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'multilookupgo' => 'Biçe',
+	'multilookupwikititle' => 'Sernav',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

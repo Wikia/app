@@ -599,6 +599,22 @@ $messages['sr-ec'] = array(
 	'wva-notallowed' => 'Не можете да убаците снимак на овом викију.',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'wva-success' => 'Video-sidan $1 har lagts till.',
+	'wva-success-replaced' => 'Video-sidan $1 har blivit ersatt.',
+	'wva-failure' => 'Vänligen ange giltiga parametrar.',
+	'wva-name' => 'Ange namn:',
+	'wva-url' => 'Ange URL:',
+	'wva-add' => 'Lägg till',
+	'wva-title' => 'Lägg till video snabbt från URL',
+	'wva-notlogged' => 'Du måste logga in eller registrera dig för att infoga videoklipp.',
+	'wva-notallowed' => 'Du kan inte infoga videoklipp på denna wiki.',
+	'wva-protected' => 'Denna video är skyddad.',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

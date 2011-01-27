@@ -208,6 +208,14 @@ $messages['sl'] = array(
 	'tog-watchlistsubpages' => 'Sledi podstranem',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'wikia-watchsubpages-desc' => 'Auto following for subpages',
+	'tog-watchlistsubpages' => 'Följ undersidor',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

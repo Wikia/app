@@ -294,12 +294,13 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'sf-link' => 'Подели овај чланак',
-	'sf-link-popup' => 'Подели овај чланак другима',
-	'sf-link-tooltip' => 'Подели овај чланак пријатељима',
+	'sf-link-popup' => 'Подели овај чланак',
+	'sf-link-tooltip' => 'Подели овај чланак с пријатељима',
 );
 
 /** Swedish (Svenska)

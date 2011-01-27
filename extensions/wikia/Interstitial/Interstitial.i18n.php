@@ -32,6 +32,13 @@ $messages['qqq'] = array(
 	'interstitial-disabled-no-link' => "''On the World Wide Web, interstitials are web page advertisements that are displayed before or after an expected content page, often to display advertisements or confirm the user's age.''",
 );
 
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ */
+$messages['br'] = array(
+	'interstitial-default-campaign-code' => "Wikia a gar ac'hanoc'h !",
+);
+
 /** Spanish (Español)
  * @author Bola
  */
@@ -91,7 +98,9 @@ $messages['no'] = array(
 	'interstitial-default-campaign-code' => 'Wikia elsker deg!',
 	'interstitial-skip-ad' => 'Hopp over annonse',
 	'interstitial-already-logged-in-no-link' => 'Du er allerede logget inn, og det er ikke angitt et mål.',
+	'interstitial-disabled-no-link' => 'Det er ikke valgt noe mål, og entrésider er ikke aktivert for denne wikien.',
 	'interstitial-link-away' => 'Det er ingenting å se her!<br /><br />Vil du gå til [[{{MediaWiki:Mainpage}}|hovedsiden]] eller kanskje til en [[Special:Random|tilfeldig side]]?',
+	'exitstitial-register' => '<a href="#" class="register">Registrer deg</a> eller <a href="#" class="login">Logg inn</a> for å hoppe over annonser.',
 	'exitstitial-button' => 'Hopp over annonse',
 );
 

@@ -827,7 +827,7 @@ Jos olet tämän wikin perustaja tai olet ylläpitäjänä tässä wikissä, voi
  */
 $messages['fr'] = array(
 	'myhome-desc' => 'Une page d’accueil privée pour les utilisateurs identifiés',
-	'myhome' => 'Mon Accueil',
+	'myhome' => 'Mon accueil',
 	'wikiactivity' => 'Activité du wiki',
 	'myhome-activity-more' => "voir plus d'activité récente",
 	'myhome-activity-feed' => "Flux d'activité",
@@ -842,6 +842,7 @@ Cliquez sur '''[[Special:CreatePage|Nouvelle page]]''' pour commencer à écrire
 	'myhome-hot-spots-newest' => 'Nouvelles pages du wiki',
 	'myhome-hot-spots-brandnew' => 'Vous êtes sur un tout nouveau wiki. Cliquez sur [[Special:CreatePage|Nouvelle page]] pour commencer à écrire !',
 	'tog-myhomedisableredirect' => 'Désactiver la redirection vers l’activité du wiki',
+	'prefs-myhome' => 'Mon accueil',
 	'myhome-feed-newpage' => 'nouvelle page',
 	'myhome-feed-edit' => 'modifier',
 	'myhome-feed-move' => 'page déplacée',
@@ -2250,71 +2251,71 @@ $messages['sl'] = array(
  * @author Жељко Тодоровић
  */
 $messages['sr-ec'] = array(
-	'myhome' => 'Моја Кућа',
-	'myhome-activity-more' => 'погледај скорашњу активност',
+	'myhome' => 'Моја страница',
+	'myhome-activity-more' => 'прикажи скорашњу активност',
 	'myhome-activity-feed' => 'Активности',
-	'myhome-activity-feed-empty' => "Ова вики чека да се ви укључите
-Кликни на '''[[Special:CreatePage|New page]]''' да би почео да пишеш!",
+	'myhome-activity-feed-empty' => "Ова викија чека да се ви укључите.
+Кликните на ''[[Special:CreatePage|Нова страница]]'' да бисте почели да пишете!",
 	'myhome-watchlist-feed' => 'Списак надгледања',
 	'myhome-user-contributions-feed' => 'Прилози',
 	'myhome-hot-spots-feed' => 'Вруће тачке',
-	'myhome-hot-spots-newest' => 'Нове стране на вашој викији',
-	'myhome-hot-spots-brandnew' => 'Ово је нова-новцата вики. Кликни на [[Special:CreatePage|New page]]  да би започео са писањем!',
-	'myhome-feed-newpage' => 'Нова страница',
-	'myhome-feed-edit' => 'Уреди',
-	'myhome-feed-move' => 'Премештање стране',
-	'myhome-feed-talkpage' => 'Страна за разговор',
-	'myhome-feed-blogcomment' => 'Коментар блога',
+	'myhome-hot-spots-newest' => 'Нове странице на викији',
+	'myhome-hot-spots-brandnew' => "Ово је нова новцата викија. Кликните на ''[[Special:CreatePage|Нова страница]]'' да бисте започели с писањем!",
+	'myhome-feed-newpage' => 'нова страница',
+	'myhome-feed-edit' => 'уреди',
+	'myhome-feed-move' => 'страница је премештена',
+	'myhome-feed-talkpage' => 'страница за разговор',
+	'myhome-feed-blogcomment' => 'коментар на блогу',
 	'myhome-feed-delete' => 'обрисано',
-	'myhome-feed-image' => 'Додавање слике',
-	'myhome-feed-video' => 'видео додан',
+	'myhome-feed-image' => 'слика је додата',
+	'myhome-feed-video' => 'видео снимак је додат',
 	'myhome-feed-categorization' => 'категоризација',
-	'myhome-feed-created-by' => 'Направио $1',
-	'myhome-feed-added-by' => 'Додао $1',
-	'myhome-feed-edited-by' => 'Уређивао $1',
-	'myhome-feed-posted-by' => 'Послао $1',
-	'myhome-feed-comment-by' => 'Комантарисао $1',
-	'myhome-feed-deleted-by' => 'обрисао  $1',
-	'myhome-feed-moved-by' => 'преместио  $1',
-	'myhome-feed-article-comment-created-by' => 'нови коментар од $1',
-	'myhome-feed-article-comment-edited-by' => 'уређивао коментар $1',
-	'myhome-feed-by' => 'од стране $1',
-	'myhome-feed-diff-alt' => 'Покажи промене на овој страници',
+	'myhome-feed-created-by' => 'направио/-ла $1',
+	'myhome-feed-added-by' => 'додао/-ла $1',
+	'myhome-feed-edited-by' => 'уредио/-ла $1',
+	'myhome-feed-posted-by' => 'послао/-ла $1',
+	'myhome-feed-comment-by' => 'прокоментарисао/-ла $1',
+	'myhome-feed-deleted-by' => 'обрисао/-ла $1',
+	'myhome-feed-moved-by' => 'преместио/-ла $1',
+	'myhome-feed-article-comment-created-by' => 'нови коментар од члана $1',
+	'myhome-feed-article-comment-edited-by' => 'уређен коментар од члана $1',
+	'myhome-feed-by' => 'од $1',
+	'myhome-feed-diff-alt' => 'прикажи измене на овој страници',
 	'myhome-feed-new-page-details' => 'Нова страница',
-	'myhome-feed-summary-details' => 'Опис',
-	'myhome-feed-section-edit-details' => 'уређивао одељак',
+	'myhome-feed-summary-details' => 'Сажетак',
+	'myhome-feed-section-edit-details' => 'уредио/-ла одељак',
 	'myhome-feed-new-blog-post-details' => 'Нови блог',
 	'myhome-feed-new-blog-comment-details' => 'Коментар',
 	'myhome-feed-new-article-comment-details' => 'Коментар',
-	'myhome-feed-move-details' => 'Преименуј',
-	'myhome-feed-redirect-details' => 'Премести',
-	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Додана слика|Додане слике}}',
-	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Додан видео|Додани видеи}}',
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Додана категорија|Додане категорије}}',
-	'myhome-hot-spots-number-of-editors' => 'Уређивачи',
-	'myhome-log-in' => "<center>Моја Кућа је досутпна само ако сте логирани.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Молимо да се логирате, да би видели ову страницу!]'''</big></center>",
+	'myhome-feed-move-details' => 'Преименовано',
+	'myhome-feed-redirect-details' => 'Преусмери',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Додата слика|Додате слике}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Додат видео снимак|Додати видео снимци}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Додата категорија|Додате категорије}}',
+	'myhome-hot-spots-number-of-editors' => 'уређивачи',
+	'myhome-log-in' => "<center>Моја страница је доступна само пријављеним корисницима.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Пријавите се да бисте видели ову страницу!]'''</big></center>",
 	'myhome-namespace-blog' => 'Блог',
-	'myhome-community-corner-header' => 'Заједнички кутак',
+	'myhome-community-corner-header' => 'Заједничке поруке',
 	'myhome-community-corner-edit' => 'уреди поруку',
-	'community-corner' => "'''Добро дошли у Моју Кућу!'''
+	'community-corner' => "'''Добро дошли на Моју страницу!'''
 
-Ова страница помаже Вам да знате шта се дешава на вашој Викији.
+На овој страници можете пратити дешавања на викији.
 
-Ако сте оснивач или администратор на овој Викији, можете да измените ову поруку да би разговарали са заједницом о значајним стварима, које се дешавају на вашем сајту.
-Например, Ви можете да:
+Ако сте оснивач или администратор, можете да измените ову поруку да бисте разговарали са заједницом о важним стварима које се дешавају на енциклопедији.
+На пример, можете да:
 
-* организујете пројект да би изградили једно подручје на викији
+* организујете пројекат за изградњу подручја викије
 
-* покажете неке нове стране, које сви могу да виде
+* покажете неке нове странице које сви могу да виде
 
-* омогућите људима да дискутују о дешавањима на сајту
+* омогућите људима да разговарају о дешавањима
 
-* да се обратите уређивачу, који је додао нешто специјално на вашу вики
+* контактирате уређивача који је додао нешто посебно
 
-* или само да пошаљете неколико речи охрабрења!",
-	'myhome-hot-spots-definition' => 'Странице са највише уређивача током задњих $1 дана',
-	'myhome-default-view-checkbox' => 'Учини да $1 буде мој стандардан приказ',
-	'tooltip-pt-myhome' => 'Иди на МојаКућа',
+* поставите неколико речи охрабрења!",
+	'myhome-hot-spots-definition' => 'Странице с највише уређивача {{PLURAL:$1|протеклог дана|протекла $1 дана|протеклих $1 дана}}.',
+	'myhome-default-view-checkbox' => 'Начини $1 као подразумевани приказ',
+	'tooltip-pt-myhome' => 'Пређи на Моју страницу',
 );
 
 /** Swedish (Svenska)

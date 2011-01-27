@@ -108,6 +108,7 @@ $messages['de-formal'] = array(
 
 /** Spanish (Español)
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'tagsreport' => 'Informe de etiquetas',
@@ -118,8 +119,8 @@ $messages['es'] = array(
 	'tagsreportnoresults' => 'No se han encontrado resultados',
 	'tagsreportmainnspace' => 'Principal',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
-	'tagsreportpagesfound' => '<strong>$1</strong> páginas encontradas, que contengan alguna etiqueta especial (dpl, youtube, etc.)',
-	'tagsreportgenerated' => 'Generado en $1 $2',
+	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|página encontrada|páginas encontradas}}, que contengan alguna etiqueta especial (dpl, youtube, etc.)',
+	'tagsreportgenerated' => 'Generado el $1 a $2',
 );
 
 /** Finnish (Suomi)

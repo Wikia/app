@@ -147,6 +147,13 @@ $messages['ia'] = array(
 	'cloakcheck-process-edits-no' => 'Le usator non ha facite satis de modificationes.',
 );
 
+/** Italian (Italiano)
+ * @author Minerva Titani
+ */
+$messages['it'] = array(
+	'cloakcheck-process-emailconf-yes' => 'Indirizzo e-mail confermato.',
+);
+
 /** Japanese (日本語) */
 $messages['ja'] = array(
 	'cloakcheck' => 'IRCクローク付与適格性検査',
@@ -163,6 +170,14 @@ $messages['ja'] = array(
 	'cloakcheck-process-emailconf-no' => 'Eメールアドレスが認証されていません。',
 	'cloakcheck-process-edits-yes' => '十分な回数編集しています。',
 	'cloakcheck-process-edits-no' => '編集回数が不足しています。',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'cloakcheck-form-username' => 'Navê bikarhêner:',
+	'cloakcheck-process-username' => 'Navê bikarhêner: $1',
 );
 
 /** Luxembourgish (Lëtzebuergesch) */

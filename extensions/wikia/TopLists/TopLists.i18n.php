@@ -892,12 +892,12 @@ U kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
  * @author Nghtwlkr
  */
 $messages['no'] = array(
-	'toplists-desc' => 'Topp-10-lister',
-	'right-toplists-create-edit-list' => 'Opprett og rediger Topp-10-listesider.',
-	'right-toplists-create-item' => 'Opprett og legg elementer til en Topp-10-listeside',
-	'createtoplist' => 'Opprett en ny Topp-10-liste',
-	'edittoplist' => 'Rediger Topp-10-liste',
-	'toplists-category' => 'Topp-10-lister',
+	'toplists-desc' => 'Topp 10-lister',
+	'right-toplists-create-edit-list' => 'Opprett og rediger Topp 10-listesider.',
+	'right-toplists-create-item' => 'Opprett og legg elementer til en Topp 10-listeside',
+	'createtoplist' => 'Opprett en ny Topp 10-liste',
+	'edittoplist' => 'Rediger Topp 10-liste',
+	'toplists-category' => 'Topp 10-lister',
 	'toplists-error-invalid-title' => 'Den oppgitte teksten er ikke gyldig.',
 	'toplists-error-invalid-picture' => 'Det valgte bildet er ikke gyldig.',
 	'toplists-error-title-exists' => 'Denne siden eksisterer allerede. Du kan gå til <a href="$2" target="_blank">$1</a> eller oppgi et annet navn.',
@@ -911,8 +911,8 @@ $messages['no'] = array(
 	'toplists-error-image-already-exists' => 'Et bilde med det samme navnet eksisterer allerede.',
 	'toplists-error-add-item-anon' => 'Anonyme bukrere er ikke tillatt å legge til objekter i listene. Vennligst <a class="ajaxLogin" id="login" href="$1">Logg inn</a> eller <a class="ajaxLogin" id="signup" href="$2">registrer en ny konto</a>.',
 	'toplists-error-add-item-permission' => 'Tillatelsesfeil: Kontoen din har ikke blitt gitt rettighetene til å opprette nye elementer.',
-	'toplists-error-add-item-list-not-exists' => 'Topp-10-listen «$1» eksisterer ikke.',
-	'toplists-error-backslash-not-allowed' => '«/»-tegnet er ikke tillatt i tittelen på en Topp-10-liste.',
+	'toplists-error-add-item-list-not-exists' => 'Topp 10-listen «$1» eksisterer ikke.',
+	'toplists-error-backslash-not-allowed' => '«/»-tegnet er ikke tillatt i tittelen på en Topp 10-liste.',
 	'toplists-upload-error-unknown' => 'En feil har oppstått under behandlingen av opplastningsforespørselen, vennligst prøv igjen.',
 	'toplists-editor-title-label' => 'Listenavn',
 	'toplists-editor-title-placeholder' => 'Oppgi et navn til listen',
@@ -949,8 +949,8 @@ $messages['no'] = array(
 	'toplists-list-add-item-label' => 'Legg til element',
 	'toplists-list-add-item-name-label' => 'La listen fortsette...',
 	'toplists-list-item-voted' => 'Stemt',
-	'toplists-createpage-dialog-label' => 'Topp-10-liste',
-	'toplists-email-subject' => 'En topp-10-liste har blitt endret',
+	'toplists-createpage-dialog-label' => 'Topp 10-liste',
+	'toplists-email-subject' => 'En topp 10-liste har blitt endret',
 	'toplists-email-body' => 'Wikia sier hei!
 
 Listen <a href="$1">$2</a> på Wikia har blitt endret.
@@ -987,38 +987,38 @@ $messages['pms'] = array(
 	'toplists-error-invalid-picture' => "La figura selessionà a l'é pa bon-a.",
 	'toplists-error-title-exists' => 'Sta pàgina a esist già. It peule andé a <a href="$2" target="_blank">$1</a> o dé un nòm diferent.',
 	'toplists-error-title-spam' => 'Ël test dàit a conten quàiche paròle arconossùe com rumenta.',
-	'toplists-error-article-blocked' => 'It peule pa creé na pàgina con sto nòm. Spiasent.',
+	'toplists-error-article-blocked' => 'A peul pa creé na pàgina con sto nòm-sì. An dëspias.',
 	'toplists-error-article-not-exists' => '"$1" a esist pa. Veus-to <a href="$2" target="_blank">creelo</a>?',
 	'toplists-error-picture-not-exists' => '"$1" a esist pa. Veus-to <a href="$2" target="_blank">carielo</a>?',
-	'toplists-error-duplicated-entry' => 'It peule pa dovré ëll midem nòm pi che na vira.',
+	'toplists-error-duplicated-entry' => 'A peul pa dovré ël midem nòm pi che na vira.',
 	'toplists-error-empty-item-name' => "Ël nòm ëd n'element esistent a peul pa esse veuid.",
-	'toplists-item-cannot-delete' => 'Scanselassin dë sto element falìa.',
-	'toplists-error-image-already-exists' => 'na figura con ë midem nòm a esist già.',
-	'toplists-error-add-item-anon' => 'J\'utent anònim a peulo pa gionté element a la lista. Për piasì <a class="ajaxLogin" id="login" href="$1">Intra</a> o <a class="ajaxLogin" id="signup" href="$2">registra un cont neuv</a>.',
-	'toplists-error-add-item-permission' => "Eror ëd përmess: Tò cont a l'ha pa ël drit ëd creé element neuv.",
+	'toplists-item-cannot-delete' => "La scancelassion ëd s'element a l'é falìa.",
+	'toplists-error-image-already-exists' => 'Na figura con ël midem nòm a esist già.',
+	'toplists-error-add-item-anon' => 'J\'utent anònim a peulo pa gionté d\'element a la lista. Për piasì <a class="ajaxLogin" id="login" href="$1">ch\'a intra ant ël sistema</a> o <a class="ajaxLogin" id="signup" href="$2">ch\'a registra un cont neuv</a>.',
+	'toplists-error-add-item-permission' => "Eror ëd përmess: Sò cont a l'ha pa ël drit ëd creé d'element neuv.",
 	'toplists-error-add-item-list-not-exists' => 'La lista "$1" dij Prim 10 a esist pa.',
 	'toplists-error-backslash-not-allowed' => 'Ël caràter "/" a l\'é pa përmëttù ant ël tìtol ëd na lista dij Prim 10.',
-	'toplists-editor-title-label' => 'Nòm lista',
-	'toplists-editor-title-placeholder' => 'Ansëriss un nòm për la lista',
+	'toplists-editor-title-label' => 'Nòm ëd lista',
+	'toplists-editor-title-placeholder' => 'Buté un nòm për la lista',
 	'toplists-editor-related-article-label' => 'Pàgina corelà <small>(opsional, ma selession-a na figura)</small>',
-	'toplists-editor-related-article-placeholder' => 'Ansëriss un nòm ëd pàgina esistent',
+	'toplists-editor-related-article-placeholder' => 'Buté un nòm ëd na pàgina esistenta',
 	'toplists-editor-image-browser-tooltip' => 'Gionta na figura',
-	'toplists-editor-remove-item-tooltip' => 'Gava element',
-	'toplists-editor-drag-item-tooltip' => 'Tira për cangé ordin',
+	'toplists-editor-remove-item-tooltip' => "Gavé l'element",
+	'toplists-editor-drag-item-tooltip' => "Fé sghijé për cangé l'órdin",
 	'toplists-editor-add-item-label' => "Gionta n'element neuv",
 	'toplists-editor-add-item-tooltip' => "Gionta n'element neuv a la lista",
-	'toplists-create-button' => 'Crea lista',
-	'toplists-update-button' => 'Salva lista',
+	'toplists-create-button' => 'Creé na lista',
+	'toplists-update-button' => 'Salvé la lista',
 	'toplists-cancel-button' => 'Scancela',
 	'toplists-items-removed' => '$1 {{PLURAL:$1|element|element}} gavà',
 	'toplists-items-created' => '$1 {{PLURAL:$1|element|element}} creà',
 	'toplists-items-updated' => '$1 {{PLURAL:$1|element|element}} agiornà',
 	'toplists-items-nochange' => 'Pa gnun element cangià',
 	'toplits-image-browser-no-picture-selected' => 'Pa gnun-e figure selessionà',
-	'toplits-image-browser-clear-picture' => 'Scansela figura',
+	'toplits-image-browser-clear-picture' => 'Scancelé la figura',
 	'toplits-image-browser-selected-picture' => 'Selessionà al moment: $1',
 	'toplists-image-browser-upload-btn' => 'Sern',
-	'toplists-image-browser-upload-label' => 'Caria tò pròpi',
+	'toplists-image-browser-upload-label' => "Ch'a caria la soa",
 	'toplists-list-creation-summary' => 'Creé na lista, $1',
 	'toplists-list-update-summary' => 'Agiorné na lista, $1',
 	'toplists-item-creation-summary' => "Creé n'element ëd na lista",
@@ -1028,10 +1028,10 @@ $messages['pms'] = array(
 	'toplists-list-related-to' => 'Corelà a:',
 	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />vot|$1<br />vot}}',
 	'toplists-list-created-by' => 'da [[User:$1|$1]]',
-	'toplists-list-vote-up' => 'Vòta su',
+	'toplists-list-vote-up' => 'Voté a pro',
 	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|vot|vot}} an $2',
-	'toplists-list-add-item-label' => 'Gionta element',
-	'toplists-list-add-item-name-label' => 'Manten la lista andasend...',
+	'toplists-list-add-item-label' => "Gionté n'element",
+	'toplists-list-add-item-name-label' => 'Lassé core la lista...',
 	'toplists-list-item-voted' => 'Votà',
 	'toplists-createpage-dialog-label' => 'Lista dij prim 10',
 	'toplists-email-subject' => "Na lista dij Prim 10 a l'é stàita cangià",
@@ -1192,6 +1192,31 @@ $messages['ru'] = array(
 	'toplists-hours' => '$1 {{PLURAL:$1|час|часа|часов}}',
 	'toplists-weeks' => '$1 {{PLURAL:$1|неделя|недели|недель}}',
 	'toplists-create-button-msg' => 'Создать список',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'toplists-email-body' => 'Ett hej från Wikia!
+
+Listan <a href="$1">$2</a> på Wikia har blivit ändrad.
+
+ $3
+
+Besök Wikia för att kolla förändringarna! $1
+
+- Wikia
+
+Du kan <a href="$4">avbryta prenumerationen</a> från förändringslistan när du vill.',
+	'toplists-seconds' => '$1 {{PLURAL:$1|sekund|sekunder}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|minut|minuter}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|timme|timmar}}',
+	'toplists-days' => '$1 {{PLURAL:$1|dag|dagar}}',
+	'toplists-weeks' => '$1 {{PLURAL:$1|vecka|veckor}}',
+	'toplists-msg-fb-OnRateArticle-short' => 'har röstat på Topp 10 listan på $WIKINAME!',
+	'toplists-create-heading' => '<em>Nyhet!</em> Skapa Din Egen Topp Tio',
+	'toplists-create-button-msg' => 'Skapa en lista',
 );
 
 /** Tagalog (Tagalog)

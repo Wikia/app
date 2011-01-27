@@ -75,3 +75,13 @@ $messages['nl'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'showperformancestats-desc' => 'Returnerer menneskelig lesbar ytelsesstatistikk',
+	'performancestat-total' => 'Totalt: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
+);
+

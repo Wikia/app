@@ -465,11 +465,11 @@ $messages['pms'] = array(
 Na vira ch'a l'abia fàit, a peule intré facilment ant ël sistema an dovrand un boton Facebook Connect qualsëssìa.",
 	'comboajaxlogin-post-not-understood' => "A-i é stàje n'eror ant la manera che cont formolari a l'é stàit fabricà.
 Për piasì, ch'a preuva torna o [[Special:Contact|ch'a lo signala]].",
-	'comboajaxlogin-readonlytext' => '<h2>Spiasent!</h2>
-<p>It peule pa creé un cont al moment - i podrìo esse an pé e torna giré tra pòch. Ambelessì a-i é lòn ch\'a l\'é capitaje:<br /><em>$1</em></p>
-<p>Për piasì contròla <a href="http://twitter.com/wikia">Twitter</a> o <a href="http://facebook.com/wikia">Facebook</a> për savejne ëd pi.
+	'comboajaxlogin-readonlytext' => '<h2>An dëspias!</h2>
+<p>A peul pa creé un cont al moment - i dovrìo torna esse bon a marcé da si \'n pòch. Ambelessì a-i é lòn ch\'a l\'é capitaje:<br /><em>$1</em></p>
+<p>Për piasì, ch\'a contròla <a href="http://twitter.com/wikia">Twitter</a> o <a href="http://facebook.com/wikia">Facebook</a> për savèjne ëd pi.
 <br />
-(If you already have an account, you can <a href="#">log in</a> as normal, but you won\'t be able to edit.)</p>',
+(S\'a l\'ha già un cont, a peul <a href="#">intré ant ël sistema</a> coma al sòlit, ma a podrà pa fé \'d modìfiche.)</p>',
 );
 
 /** Pashto (پښتو)

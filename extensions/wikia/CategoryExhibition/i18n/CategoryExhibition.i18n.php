@@ -126,6 +126,13 @@ $messages['ia'] = array(
 	'category-exhibition-display-new' => 'Monstrar como exhibition de categorias',
 );
 
+/** Italian (Italiano)
+ * @author Minerva Titani
+ */
+$messages['it'] = array(
+	'category-exhibition-mostvisited' => 'Più visitate',
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $messages['lb'] = array(
 	'category-exhibition-alphabetical' => 'Alphabetesch',
@@ -216,6 +223,21 @@ $messages['ru'] = array(
 	'category-exhibition-page-header' => 'Страниц в категории «$1»',
 	'category-exhibition-subcategories-header' => 'Подкатегории',
 	'category-exhibition-blogs-header' => 'Сообщения блога',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'category-exhibition-sorttype' => 'Sortering:',
+	'category-exhibition-alphabetical' => 'Alfabetisk',
+	'category-exhibition-mostvisited' => 'Mest visade',
+	'category-exhibition-recentedits' => 'Nyligen ändrade',
+	'category-exhibition-page-header' => 'Sidor i kategori "$1"',
+	'category-exhibition-subcategories-header' => 'Underkategorier',
+	'category-exhibition-media-header' => 'Media i kategori "$1"',
+	'category-exhibition-blogs-header' => 'Blogg-inlägg',
+	'category-exhibition-display-old' => 'Kategori-listvyn',
 );
 
 /** Telugu (తెలుగు) */

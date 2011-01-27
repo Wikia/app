@@ -373,6 +373,14 @@ $messages['sr-ec'] = array(
 	'ircgate-channel' => 'Канал',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'ircgate-username' => 'Användarnamn:',
+	'ircgate-channel' => 'Kanal:',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

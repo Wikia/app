@@ -259,15 +259,16 @@ $messages['ru'] = array(
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Направите нови налог]] или се [[Special:UserLogin|пријавите на већ постојећи]] да бисте прескочили ову страницу у будућности.',
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Отворите нови налог]] или се [[Special:UserLogin|пријавите на већ постојећи]] да бисте прескочили ову страницу.',
 	'outbound-screen-already-logged-in-no-link' => 'Одредиште није постављено.
 Овде нема ништа да се види!
 
-Да ли бисте желели да одете на [[{{MediaWiki:Mainpage}}|главну страницу]] или можда на [[Special:Random|насумичну]]?',
-	'outbound-screen-you-are-leaving' => 'Сада напуштате Викију.',
+Желите ли да одете на [[{{MediaWiki:Mainpage}}|главну страницу]] или можда на [[Special:Random|насумичну]]?',
+	'outbound-screen-you-are-leaving' => 'Напуштате Викију.',
 );
 
 /** Tagalog (Tagalog)

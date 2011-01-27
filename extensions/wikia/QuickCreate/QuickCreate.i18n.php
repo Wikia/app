@@ -242,10 +242,11 @@ $messages['ru'] = array(
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'quickcreate-desc' => 'Додаје дугме „Направи нову страницу“ с могућношћу да се пријавите за анонимне кориснике',
+	'quickcreate-desc' => 'Додаје дугме „Направи нову страницу“ с могућношћу да се пријавите као анониман корисник',
 	'quickcreate' => 'пошаљите свој рецепт',
 );
 

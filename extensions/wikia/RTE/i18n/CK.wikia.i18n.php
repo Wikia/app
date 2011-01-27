@@ -140,7 +140,7 @@ $messages['be'] = array(
 	'rte-ck-templateDropDown-label' => 'Шаблон',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -954,6 +954,7 @@ $messages['mk'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Да ја отстранам галеријава?',
 	'rte-ck-photoGallery-tooltip' => 'Ова е галерија.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Ова е подвижна галерија.',
+	'rte-ck-poll-add' => 'Додај анекета',
 	'rte-ck-signature-add' => 'Ставете ваш потпис',
 	'rte-ck-signature-label' => 'Потпис',
 	'rte-ck-table-alignNotSet' => 'Непоставено',
@@ -1041,6 +1042,7 @@ $messages['nl'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Deze galerij verwijderen?',
 	'rte-ck-photoGallery-tooltip' => 'Dit is een galerij.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Dit is een diavoorstelling.',
+	'rte-ck-poll-add' => 'Peiling toevoegen',
 	'rte-ck-signature-add' => 'Handtekening toevoegen',
 	'rte-ck-signature-label' => 'Handtekening',
 	'rte-ck-table-alignNotSet' => 'Niet ingesteld',
@@ -1072,7 +1074,7 @@ $messages['nl'] = array(
 	'rte-ck-widescreen-toggle' => 'Breedbeeld in- of uitschakelen',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1128,6 +1130,7 @@ $messages['no'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Fjern dette galleriet?',
 	'rte-ck-photoGallery-tooltip' => 'Dette er et galleri.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Dette er en lysbildefremvisning',
+	'rte-ck-poll-add' => 'Legg til avstemning',
 	'rte-ck-signature-add' => 'Legg til signaturen din',
 	'rte-ck-signature-label' => 'Signatur',
 	'rte-ck-table-alignNotSet' => 'Ikke satt',
@@ -1631,7 +1634,7 @@ $messages['ru'] = array(
 	'rte-ck-widescreen-toggle' => 'Широкоэкранный режим',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1640,19 +1643,19 @@ $messages['sr-ec'] = array(
 	'rte-ck-bucket-controls' => 'Контроле',
 	'rte-ck-commentEditor-title' => 'Уређивач коментара',
 	'rte-ck-errorPopupTitle' => 'Грешка!',
-	'rte-ck-hoverPreview-codedElement-intro' => 'Пребаците у изворни режим како бисте мењали текст!',
+	'rte-ck-hoverPreview-codedElement-intro' => 'Промените на изворни режим како бисте уређивали текст!',
 	'rte-ck-hoverPreview-comment-title' => 'Коментар',
-	'rte-ck-hoverPreview-delete' => 'избриши',
+	'rte-ck-hoverPreview-delete' => 'обриши',
 	'rte-ck-hoverPreview-edit' => 'уреди',
-	'rte-ck-hoverPreview-media-notExisting' => 'Ова слика или датотека не постоји!',
+	'rte-ck-hoverPreview-media-notExisting' => 'Ова датотека не постоји!',
 	'rte-ck-hoverPreview-template-intro' => 'Ово је шаблон.',
 	'rte-ck-hoverPreview-template-notExisting' => 'Овај шаблон не постоји!',
-	'rte-ck-hoverPreview-video-notExisting' => 'Овај снимак не постоји!',
-	'rte-ck-image-add' => 'Додај фотографију',
-	'rte-ck-image-confirmDeleteTitle' => 'Избрисати ову слику?',
+	'rte-ck-hoverPreview-video-notExisting' => 'Овај видео снимак не постоји!',
+	'rte-ck-image-add' => 'Додај слику',
+	'rte-ck-image-confirmDeleteTitle' => 'Обрисати ову слику?',
 	'rte-ck-link-error-badPageTitle' => 'Унесите наслов странице.',
 	'rte-ck-link-error-title' => 'Грешка',
-	'rte-ck-photoGallery-confirmDeleteTitle' => 'Избрисати ову галерију?',
+	'rte-ck-photoGallery-confirmDeleteTitle' => 'Обрисати ову галерију?',
 	'rte-ck-photoGallery-tooltip' => 'Ово је галерија.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Ово је покретни приказ.',
 	'rte-ck-signature-add' => 'Додај свој потпис',
@@ -1667,8 +1670,8 @@ $messages['sr-ec'] = array(
 	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Најчешће коришћено',
 	'rte-ck-templateEditor-dialog-search' => 'Претражите шаблон',
 	'rte-ck-templateEditor-editor-parameters' => 'Параметри',
-	'rte-ck-templateEditor-editor-previewButton' => 'Преглед',
-	'rte-ck-templateEditor-editor-previewTitle' => 'Преглед',
+	'rte-ck-templateEditor-editor-previewButton' => 'Претпреглед',
+	'rte-ck-templateEditor-editor-previewTitle' => 'Претпреглед',
 	'rte-ck-templateEditor-title' => 'Уређивач шаблона',
 	'rte-ck-unlink' => 'Уклони везу',
 	'rte-ck-video-add' => 'Додај видео запис',
@@ -1909,7 +1912,7 @@ $messages['vi'] = array(
 	'rte-ck-modeSwitch-toWysiwyg' => 'Chuyển sang chế độ WYSIWYG',
 );
 
-/** Chinese (Taiwan) (中文(台灣))
+/** Chinese (Taiwan) (‪中文(台灣)‬)
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(

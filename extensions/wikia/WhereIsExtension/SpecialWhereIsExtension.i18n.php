@@ -544,6 +544,18 @@ $messages['sr-ec'] = array(
 	'whereisextension-name-contains' => 'име променљиве садржи',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'whereisextension-submit' => 'Sök',
+	'whereisextension-list' => 'Lista över wikis med matchade kriterier',
+	'whereisextension-isset' => 'är inställd på',
+	'whereisextension-filter' => 'Filter',
+	'whereisextension-all-groups' => 'Alla grupper',
+	'whereisextension-search-type' => 'Typ:',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

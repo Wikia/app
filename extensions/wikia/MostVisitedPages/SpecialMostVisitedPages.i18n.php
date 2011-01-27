@@ -399,14 +399,15 @@ $messages['sl'] = array(
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'mostvisitedpages' => 'Најпосећеније стране',
-	'mostvisitedpagessearchtext' => 'Име чланка:',
+	'mostvisitedpages' => 'Најпосећеније странице',
+	'mostvisitedpagessearchtext' => 'Назив чланка:',
 	'mostvisitedpagessearchbtn' => 'претрага',
 	'mostvisitedpageslatest' => 'последњих $1 минута',
-	'mostvisitedpageslatestlink' => 'Погледај последње посећене странице',
+	'mostvisitedpageslatestlink' => 'Прикажи последње посећене странице',
 	'mostvisitedpagesalllink' => 'Погледај најпосећеније странице',
 );
 

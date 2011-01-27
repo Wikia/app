@@ -60,6 +60,16 @@ $messages['nl'] = array(
 	'site-layout' => 'Sitevormgevingen',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'skinchooser-desc' => 'Lar brukere velge utseende i innstillingene sine',
+	'skinchooser-customcss' => 'For egendefinerte temaer, velg egendefinert-alternativet i menyen ovenfor og spesifiser egendefinert CDD i [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Wikias nye utseende',
+	'site-layout' => 'Sideoppsett',
+);
+
 /** Swedish (Svenska)
  * @author Tobulos1
  */

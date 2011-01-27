@@ -175,6 +175,13 @@ $messages['ko'] = array(
 	'imgplc-image' => '그림',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'imgplc-image' => 'Wêne',
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $messages['lb'] = array(
 	'imgplc-image' => 'Bild',
@@ -299,13 +306,14 @@ $messages['ru'] = array(
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'imgplc-create' => 'Додај слику',
 	'imgplc-placeholder' => 'Чувар места',
 	'imgplc-image' => 'Слика',
-	'imgplc-notinhistory' => 'Не можете додати слику у режиму историјата.',
+	'imgplc-notinhistory' => 'Не можете додати слику у историјат.',
 );
 
 /** Swedish (Svenska)

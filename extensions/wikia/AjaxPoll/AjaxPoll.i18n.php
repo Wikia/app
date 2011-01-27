@@ -409,17 +409,18 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;од свих гласова',
-	'ajaxpoll-thankyou' => 'Хвала Вам што сте гласали!',
-	'ajaxpoll-error' => 'Био је неки проблем са обрадом вашег гласа, молимо Вас да покушате поново да гласате!',
+	'ajaxpoll-thankyou' => 'Хвала што сте гласали!',
+	'ajaxpoll-error' => 'Дошло је до грешке при бележењу вашег гласа. Покушајте поново.',
 	'ajaxpoll-submit' => 'Гласај!',
-	'ajaxpoll-closed' => 'Гласање је завршено. ПОгледајте резултате.',
-	'ajaxpoll-submitting' => 'Сачекајте, шаљемо ваш глас...',
+	'ajaxpoll-closed' => 'Гласање је завршено. Погледајте резултате.',
+	'ajaxpoll-submitting' => 'Бележење вашег гласа...',
 );
 
 /** Swedish (Svenska)
  * @author Tobulos1
  */
 $messages['sv'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;av alla röster',
 	'ajaxpoll-thankyou' => 'Tack för din röst!',
 	'ajaxpoll-error' => 'Det uppstod ett problem med bearbetningen av din röst, var god försök igen.',
 	'ajaxpoll-summary' => 'Röstningen skapades den $1 på $2, och hittills har $3 personer röstat.',

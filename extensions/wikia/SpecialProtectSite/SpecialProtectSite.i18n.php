@@ -337,6 +337,13 @@ $messages['ja'] = array(
 	'protectsite-unprotect' => '保護解除',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'protectsite-allowall' => 'Hemû bikarhêneran',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

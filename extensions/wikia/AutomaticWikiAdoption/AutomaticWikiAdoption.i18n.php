@@ -277,6 +277,14 @@ Tu wiki ha essite adoptate! Isto significa que un altere persona se ha offerite 
 	'tog-adoptionmails' => 'Inviar me e-mail si alique cambia in le administration del wiki (administratores solmente)',
 );
 
+/** Italian (Italiano)
+ * @author Minerva Titani
+ */
+$messages['it'] = array(
+	'automaticwikiadoption-header' => 'Adotta questa wiki',
+	'automaticwikiadoption-mail-adoption-subject' => 'La tua wiki è stata adottata',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -503,6 +511,56 @@ $messages['ru'] = array(
 Команда Викии
 
 Кликните по ссылке, чтобы отписаться от изменений в этом списке: $3.',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'automaticwikiadoption' => 'Automatisk wiki-adoption',
+	'automaticwikiadoption-header' => 'Adoptera den här wikin',
+	'automaticwikiadoption-button-adopt' => 'Adoptera nu',
+	'automaticwikiadoption-know-more-header' => 'Vill du veta mer?',
+	'automaticwikiadoption-know-more-description' => 'Kolla dessa länkar för mer information. Och naturligtvis är du välkommen att kontakta oss om du har några frågor!',
+	'automaticwikiadoption-adoption-successed' => 'Grattis! Du är nu en administratör på denna wiki!',
+	'automaticwikiadoption-adoption-failed' => 'Vi ber om ursäkt. Vi försökte att göra dig till en administratör, men det fungerade inte. Vänligen [http://community.wikia.com/Special:Contact kontakta oss], så ska vi försöka hjälpa dig.',
+	'automaticwikiadoption-not-allowed' => 'Vi ber om ursäkt. Du kan inte adoptera denna wiki just nu.',
+	'automaticwikiadoption-log-reason' => 'Automatisk Wiki-Adoption',
+	'automaticwikiadoption-notification' => "$1 är tillgänglig för adoption! Du kan bli den nya ägaren. '''Adoptera nu!'''",
+	'automaticwikiadoption-mail-first-subject' => 'Vi har inte sett dig på ett tag',
+	'automaticwikiadoption-mail-first-content-HTML' => 'Hej $1,<br /><br />
+Det har varit ett par veckor sen vi såg en administratör på din wiki. Kom ihåg att din commynity kommer att titta till er för att se om wikin fungerar som den ska.<br /><br />
+Om du behöver hjälp med att sköta din wiki, kan du tillåta andra medlemmar i din community att bli administratörer genom att gå till <a href="$2">Användarrättigheterna</a>.<br /><br />
+<b>The Wikia Team</b><br /><br />
+<small>Du kan <a href="$3">avbryta prenumerationen</a> från ändringar av denna lista.</small>',
+	'automaticwikiadoption-mail-second-subject' => 'Vi kommer att sätta upp din wiki för adoption snart',
+	'automaticwikiadoption-mail-second-content' => 'Hej $1,
+
+Det var ett tag sen vi såg en administratör på din wiki. Det är viktigt att ha aktiva administratörer för din community så att wikin kan fortsätta att fungera smidigt - så vi kommer att sätta upp din wiki för adoption snart för att ge den en chans att få aktiva administratörer igen.
+
+The Wikia Team
+
+Klicka på följande länk för att avbryta din prenumeration på ändringar i denna lista: $3.',
+	'automaticwikiadoption-mail-second-content-HTML' => 'Hej $1,
+
+Det var ett tag sen vi såg en administratör på din wiki. Det är viktigt att ha aktiva administratörer för din community så att din wiki kan fortsätta att fungera smidigt - så vi kommer att sätta upp din wiki för adoption snart för att ge den en chans att få aktiva administratörer igen.
+
+<b>The Wikia Team</b>
+
+<small>Du kan <a href="$3">avbryta prenumerationen</a> från ändringar på denna lista.</small>',
+	'automaticwikiadoption-mail-adoption-subject' => 'Din wiki har adopterats',
+	'automaticwikiadoption-mail-adoption-content' => 'Hej $1,
+
+Din wiki har adopterats! Detta innebär att någon annan har erbjudit sig att bidra till att upprätthålla din community och innehållet på webbplatsen. Oroa dig inte - du är fortfarande en administratör, och du är välkommen att komma tillbaka när som helst.
+
+The Wikia Team
+
+Klicka på följande länk för att avsluta prenumerationen på ändringar i denna lista: $3.',
+	'automaticwikiadoption-mail-adoption-content-HTML' => 'Hej $1,<br /><br />
+Din wiki har adopterats! Detta innebär att någon annan har erbjudit sig att bidra till att upprätthålla din community och innehållet på webbplatsen. Oroa dig inte - du är fortfarande en administratör, och du är välkommen att komma tillbaka när som helst.<br /><br />
+<b>The Wikia Team</b><br /><br />
+<small>Du kan <a href="$3">avbryta prenumerationen</a> på ändringar i denna lista.</small>',
+	'tog-adoptionmails' => 'Skicka ett e-mail till mig när något ändras om wikins administration (endast administratörer)',
 );
 
 /** Telugu (తెలుగు) */

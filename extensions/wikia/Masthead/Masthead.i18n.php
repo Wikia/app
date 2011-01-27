@@ -690,21 +690,21 @@ $messages['si'] = array(
  * @author Rancher
  */
 $messages['sr-ec'] = array(
-	'blog-avatar-removeavatar' => 'Уклони аватар',
+	'blog-avatar-removeavatar' => 'Уклони сличицу',
 	'blog-avatar-goto-userpage' => 'Пређи на корисничку страницу',
 	'blog-avatar-edit' => 'Промени',
-	'blog-avatar-delete' => 'Избриши',
-	'prefs-avatarupload' => 'аватар',
-	'blog-avatar-choose-avatar' => 'Изабери нови аватар',
-	'blog-avatar-upload-avatar' => 'Отпреми нови аватар',
+	'blog-avatar-delete' => 'Обриши',
+	'prefs-avatarupload' => 'Корисничка сличица',
+	'blog-avatar-choose-avatar' => 'Изабери нову сличицу',
+	'blog-avatar-upload-avatar' => 'Отпреми нову сличицу',
 	'blog-avatar-nouser' => 'Овај корисник није пронађен!',
-	'blog-avatar-cannot-remove' => 'Аватари не могу да се уклоне с изабраног корисника!',
+	'blog-avatar-cannot-remove' => 'Корисничке сличице се не могу уклонити с изабраног корисника!',
 	'blog-avatar-getuser' => 'Претражи',
-	'blog-avatar-remove-confirm' => 'Да ли сте сигурни да желите да уклоните аватар?',
-	'blog-avatar-error-nofile' => 'Изаберите датотеку са диска',
+	'blog-avatar-remove-confirm' => 'Желите ли да уклоните корисничку сличицу?',
+	'blog-avatar-error-nofile' => 'Изаберите датотеку с рачунара',
 	'masthead-edits-since' => 'измена од',
-	'removeuseravatar' => 'Брисање корисничких аватара',
-	'right-removeavatar' => 'Уклони аватаре корисника',
+	'removeuseravatar' => 'Брисање корисничких сличица',
+	'right-removeavatar' => 'брисање корисничких сличица',
 );
 
 /** Swedish (Svenska) */

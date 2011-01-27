@@ -371,9 +371,12 @@ $messages['ig'] = array(
 	'categoryselect-button-cancel' => 'Emekwàlà',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author Minerva Titani
+ */
 $messages['it'] = array(
 	'categoryselect-addcategory-button' => 'Aggiungi categoria',
+	'categoryselect-suggest-hint' => 'Premi INVIO quando hai fatto',
 	'categoryselect-button-save' => 'Salva',
 	'categoryselect-button-cancel' => 'Annulla',
 	'categoryselect-error-db-locked' => 'Database bloccato.',
@@ -635,20 +638,41 @@ $messages['sl'] = array(
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'categoryselect-code-view' => 'Кодни преглед',
 	'categoryselect-visual-view' => 'Визуални преглед',
-	'categoryselect-infobox-category' => 'Дајте име категорији:',
+	'categoryselect-infobox-category' => 'Унесите име категорије:',
 	'categoryselect-addcategory-button' => 'Додај категорију',
-	'categoryselect-suggest-hint' => 'Стисните ЕНТЕР када завршите.',
+	'categoryselect-suggest-hint' => 'Притисните Enter када завршите.',
 	'categoryselect-edit-summary' => 'Додавање категорија',
 	'categoryselect-button-save' => 'Сачувај',
-	'categoryselect-button-cancel' => 'Одустани',
+	'categoryselect-button-cancel' => 'Откажи',
 	'categoryselect-error-not-exist' => 'Чланак [id=$1] не постоји.',
-	'categoryselect-error-user-rights' => 'Грешка у корисничким правима',
-	'categoryselect-error-db-locked' => 'База података је закључана',
+	'categoryselect-error-user-rights' => 'Грешка у корисничким правима.',
+	'categoryselect-error-db-locked' => 'База података је закључана.',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article',
+	'categoryselect-code-view' => 'Kodvyn',
+	'categoryselect-visual-view' => 'Visuell vy',
+	'categoryselect-infobox-caption' => 'Kategori-alternativ',
+	'categoryselect-infobox-category' => 'Ge namnet på kategorin:',
+	'categoryselect-addcategory-button' => 'Lägg till kategori',
+	'categoryselect-suggest-hint' => 'Tryck Enter när du är klar',
+	'categoryselect-edit-summary' => 'Lägg till kategorier',
+	'categoryselect-empty-name' => 'Ge kategorinamn (del innan |)',
+	'categoryselect-button-save' => 'Spara',
+	'categoryselect-button-cancel' => 'Avbryt',
+	'categoryselect-error-not-exist' => 'Artikel [id=$1] finns inte.',
+	'categoryselect-error-user-rights' => 'Fel om användarrättigheter.',
+	'categoryselect-error-db-locked' => 'Databasen är låst.',
 );
 
 /** Swahili (Kiswahili) */

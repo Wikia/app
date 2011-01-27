@@ -448,10 +448,10 @@ $messages['ru'] = array(
  * @author Rancher
  */
 $messages['sr-ec'] = array(
-	'rte-edgecase-info-title' => 'Неопходан је изворни режим',
+	'rte-edgecase-info-title' => 'Потребан је изворни режим',
 	'rte-edgecase-comment' => 'HTML коментари',
 	'rte-edgecase-redirect' => 'преусмери',
-	'rte-edgecase-unclosed-tags' => 'незатворене HTML ознаке',
+	'rte-edgecase-unclosed-tags' => 'отворене HTML ознаке',
 );
 
 /** Tagalog (Tagalog)
