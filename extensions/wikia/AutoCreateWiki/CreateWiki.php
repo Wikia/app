@@ -533,8 +533,8 @@ class CreateWiki {
 		}
 
 		$this->mNewWiki->language  = $this->mLanguage;
-		$this->mNewWiki->subdomain = $this->mNewWikiname->name;
-		$this->mNewWiki->redirect  = $this->mNewWikiname->name;
+		$this->mNewWiki->subdomain = $this->mNewWiki->name;
+		$this->mNewWiki->redirect  = $this->mNewWiki->name;
 
 		$this->mNewWiki->path = "/usr/wikia/docroot/wiki.factory";
 
