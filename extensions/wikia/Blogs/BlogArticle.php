@@ -35,7 +35,7 @@ class BlogArticle extends Article {
 		if ( !$title->exists() && $wgUser->isAllowed( 'edit' ) ) {
 			$article = new Article( $title );
 			$article->doEdit(
-				"__HIDDENCAT__", $title, EDIT_NEW | EDIT_FORCE_BOT
+				"__HIDDENCAT__", $title, EDIT_NEW | EDIT_FORCE_BOT | EDIT_SUPPRESS_RC
 			);
 		} 
 	}
