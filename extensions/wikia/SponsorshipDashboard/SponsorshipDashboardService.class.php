@@ -6,6 +6,10 @@
  */
 class SponsorshipDashboardService extends Service {
 
+	const SD_RETURNPARAM_TICKS = 'ticks';
+	const SD_RETURNPARAM_FULL_TICKS = 'fullTicks';
+	const SD_RETURNPARAM_SERIE = 'serie';
+
 	var $mStats;
 	var $aCityHubs;
 	var $iNumberOfXGuideLines = 7;
@@ -110,7 +114,6 @@ class SponsorshipDashboardService extends Service {
 		}
 		
 		$returnData = $this->simplePrepareToDisplay( $all , $titles );
-
 		$this->saveToCache( 'RelatedWikiaStats:'.$currentHub , $returnData );
 
 		return $returnData;
@@ -212,7 +215,6 @@ class SponsorshipDashboardService extends Service {
 					( empty( $all ) )
 				)
 			);
-
 		}
 
 		if ( empty( $titles ) ){
@@ -237,11 +239,11 @@ class SponsorshipDashboardService extends Service {
 	 * @return array
 	 */
 
-	private function getDailyCityPageviewsFromGA( $cityUrl, $cityId, $prefix, $hubId, $generateDate ){
+	protected function getDailyCityPageviewsFromGA( $cityUrl, $cityId, $prefix, $hubId, $generateDate, $retries = 4 ){
 
 		// inner cache. Various city id can be asked from many places.
 		$cachedData = $this->getFromCache( 'DailyCityPageviewsFromGA:Hub'.$hubId, $cityId );
-		if ( !empty($cachedData) ){
+		if ( !empty( $cachedData ) ){
 			return $cachedData;
 		}
 
@@ -266,7 +268,16 @@ class SponsorshipDashboardService extends Service {
 		} catch ( Exception $e ) {
 
 			Wikia::log(__METHOD__, false, $e->getMessage());
-			return false;
+
+			// #FB:1823 Retry Google API calls when quota is reached;
+			if ( empty( $retries ) ){
+				return false;
+			} else {
+				// Sleep added to bypass GoogleAnaytics Quota limitations - max 10 queries per second.
+				$retries--;
+				sleep( 1 );
+				$this->getDailyCityPageviewsFromGA( $cityUrl, $cityId, $prefix, $hubId, $generateDate, $retries );
+			}
 		}
 
 		$results = $ga->getResults();
@@ -294,7 +305,7 @@ class SponsorshipDashboardService extends Service {
 	 * @return string
 	 */
 
-	private function prepareGAUrl( $url ){
+	protected function prepareGAUrl( $url ){
 
 		global $wgDevEnvironment;
 
@@ -307,7 +318,6 @@ class SponsorshipDashboardService extends Service {
 		}
 
 		return $hostname;
-		
 	}
 	
 	public function loadTrafficData(){
@@ -364,81 +374,10 @@ class SponsorshipDashboardService extends Service {
 		$returnData = $this->simplePrepareToDisplay( $all , $titles , array( 'newVisits' ));
 
 		$this->saveToCache( 'TrafficData' , $returnData );
+
 		return $returnData;
-
 	}
-	/**
-	 * loadGAData - loads data from GA for current cityId
-	 * @return array
-	 */
-
-	public function loadGAData(){
-
-		global $wgStatsDB, $wgWikiaGALogin, $wgWikiaGAPassword, $wgHTTPProxy, $wgDevEnvironment;
-
-		$this->fromYear = 2010;
-		$wgServer = WF::build('App')->getGlobal('wgServer');
-
-		// Cache check
-		$cachedData = $this->getFromCache( 'GAData' );
-		if ( !empty($cachedData) ){
-		 	return $cachedData;
-		}
-
-		$hostname = $this->prepareGAUrl( $wgServer );
 		
-		$ga = new gapi($wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy);
-
-		try {
-			$ga->requestReportData(
-				31330353,
-				array('day', 'month', 'year'),
-				array('timeOnSite', 'visits', 'pageviews', 'bounces', 'newVisits'),
-				array('-year', '-month', '-day'),
-				'hostname=~^'.$hostname,
-				'2010-04-01',
-				date('Y-m-d'),
-				1,
-				360
-			);
-		} catch ( Exception $e ) {
-
-			Wikia::log(__METHOD__, false, $e->getMessage());
-			return false;
-		}
-		
-		$results = $ga->getResults();
-		
-		$all = array();
-		$titles = array();
-		reset( $results );
-		unset ( $results[ key( $results ) ] );
-		
-		foreach( $results as $res ) {
-			$date = $res->getYear().'-'.$res->getMonth().'-'.$res->getDay();
-			$all[ $date ][ 'date' ] = $date;
-			$all[ $date ][ 'pageviews' ] = $res->getPageviews();
-			$all[ $date ][ 'clicks' ] = $all[ $date ][ 'pageviews' ] - $res->getBounces();
-			$all[ $date ][ 'timeOnSite' ] = round( $res->getTimeOnSite()/60/60 );
-			$all[ $date ][ 'visits' ] = $res->getVisits();
-			$all[ $date ][ 'newVisits' ] = ( !empty( $all[ $date ][ 'visits' ] ) ) ? round( $res->getNewVisits() / $all[ $date ][ 'visits' ] * 100 ) : 0;
-			$all[ $date ][ 'newVisitsTimeOnSite' ] = ( !empty( $all[ $date ][ 'visits' ] ) ) ? round( $all[ $date ][ 'timeOnSite' ] * $res->getNewVisits() / $all[ $date ][ 'visits' ]  ) : 0;
-		}
-
-		$titles[ 'pageviews' ] = wfMsg('pageviews');
-		$titles[ 'clicks' ] = wfMsg('clicks');
-		$titles[ 'visits' ] = wfMsg('visits');
-		$titles[ 'timeOnSite' ] = wfMsg('timeOnSite');
-		$titles[ 'newVisits' ] = wfMsg('newVisits');
-		$titles[ 'newVisitsTimeOnSite' ] = wfMsg('newVisitsTimeOnSite');
-
-		$returnData = $this->simplePrepareToDisplay( $all , $titles , array( 'newVisits' ));
-		
-		$this->saveToCache( 'GAData' , $returnData );
-		return $returnData;
-		
-	}
-	
 	/**
 	 * simplePrepareToDisplay - prepares data to be easily printed in chart
 	 * @param $data data array
@@ -448,7 +387,7 @@ class SponsorshipDashboardService extends Service {
 	 * @return array
 	 */
 
-	private function simplePrepareToDisplay( $data, $labels, $aSecondYAxis = array() ){
+	protected function simplePrepareToDisplay( $data, $labels, $aSecondYAxis = array() ){
 
 		if ( empty( $data ) || empty( $labels ) ){
 			return false;
@@ -486,7 +425,7 @@ class SponsorshipDashboardService extends Service {
 		$ticks = "[".implode(', ',$result['date'])."]";
 		$fullWikiaDate = "[".implode(', ',$result['fullWikiaDate'])."]";
 		
-		return array( 'serie' => $sSerie, 'ticks' => $ticks, 'fullTicks' => $fullWikiaDate );
+		return array( 'serie' => $sSerie, self::SD_RETURNPARAM_TICKS => $ticks, self::SD_RETURNPARAM_FULL_TICKS => $fullWikiaDate );
 	}
 
 	/**
@@ -588,7 +527,7 @@ class SponsorshipDashboardService extends Service {
 
 		$ticks = "[".implode(', ',$result['date'])."]";
 		$fullWikiaDate = "[".implode(', ',$result['fullWikiaDate'])."]";
-		$outData = array( 'serie' => $sSerie, 'ticks' => $ticks, 'fullTicks' => $fullWikiaDate );
+		$outData = array( 'serie' => $sSerie, self::SD_RETURNPARAM_TICKS => $ticks, self::SD_RETURNPARAM_FULL_TICKS => $fullWikiaDate );
 
 		// ==
 
@@ -604,7 +543,7 @@ class SponsorshipDashboardService extends Service {
 	 * @return array
 	 */
 
-	private function pushArticleNumbersFromNamespace( $aData, $iNamespace, $sKey){
+	protected function pushArticleNumbersFromNamespace( $aData, $iNamespace, $sKey){
 
 		$this->mStats->mPageNS = array( $iNamespace );
 		$this->mStats->mPageNSList = array( $iNamespace );
@@ -628,7 +567,7 @@ class SponsorshipDashboardService extends Service {
 	 * @return string
 	 */
 
-	private function createJSobj( $aArray ){
+	protected function createJSobj( $aArray ){
 
 		$result = '{ ';
 		$first = true;
@@ -651,77 +590,18 @@ class SponsorshipDashboardService extends Service {
 	 * @return string
 	 */
 
-	private function createSerie( $sLabel, $aData, $bSecondAxis = false ){
+	protected function createSerie( $sLabel, $aData, $bSecondAxis = false ){
 
 		return "{label:'".addslashes($sLabel)."', data: [".implode( ', ',array_filter( $aData, array("self", "filter") ) )."], yaxis: ".( ( $bSecondAxis ) ? 2 : 1 )." }";
 	}
 
 	/**
-	 * prepareToDisplay - returns data ready to be displayed in template
-	 * @param	$data	array
-	 * @return	array
-	 */
-
-	private function prepareToDisplay( $data ){
-		
-		$i = 0;
-
-		foreach(array_reverse($data) as $collumns){
-			$result['data'][$i] = "[{$i}, {$collumns['A']}]";
-			$result1['data'][$i] = "[{$i}, {$collumns['B']}]";
-			$result2['data'][$i] = "[{$i}, ".($collumns['B'] - $collumns['C'] - $collumns['D'])."]";
-			$result3['data'][$i] = "[{$i}, {$collumns['C']}]";
-			$result4['data'][$i] = "[{$i}, {$collumns['D']}]";
-			$result5['data'][$i] = "[{$i}, {$collumns['E']}]";
-			$result6['data'][$i] = "[{$i}, {$collumns['F']}]";
-			$result7['data'][$i] = "[{$i}, {$collumns['G']}]";
-			$result8['data'][$i] = "[{$i}, {$collumns['H']}]";
-			$result9['data'][$i] = "[{$i}, {$collumns['I']}]";
-			$result10['data'][$i] = "[{$i}, {$collumns['J']}]";
-			$result11['data'][$i] = "[{$i}, {$collumns['K']}]";
-			if ( isset($collumns['X']) ) $result12['data'][$i] = "[{$i}, {$collumns['X']}]";
-			if ( isset($collumns['Y']) ) $result13['data'][$i] = "[{$i}, {$collumns['Y']}]";
-			if ( ( $i % ceil((count($data) / $this->iNumberOfXGuideLines )) ) == 0 ){
-				$result['date'][$i] = "[{$i}, '{$collumns['date']}']";	
-			}
-			$result['fullWikiaDate'][$collumns['date']] = "['{$collumns['date']}', {$i}]";
-			$i++;
-		};
-
-		$aSerie = array(
-			'A' => $this->createSerie( wfMsg('serie-1'), $result['data'] ),
-			'B' => $this->createSerie( wfMsg('serie-2'), $result1['data'] ),
-			'C' => $this->createSerie( wfMsg('serie-3'), $result2['data'] ),
-			'D' => $this->createSerie( wfMsg('serie-4'), $result3['data'] ),
-			'E' => $this->createSerie( wfMsg('serie-5'), $result4['data'] ),
-			'F' => $this->createSerie( wfMsg('serie-6'), $result5['data'] ),
-			'G' => $this->createSerie( wfMsg('serie-7'), $result6['data'] ),
-			'H' => $this->createSerie( wfMsg('serie-8'), $result7['data'] ),
-			'I' => $this->createSerie( wfMsg('serie-9'), $result8['data'] ),
-			'J' => $this->createSerie( wfMsg('serie-10'), $result9['data'] ),
-			'K' => $this->createSerie( wfMsg('serie-11'), $result10['data'] ),
-			'L' => $this->createSerie( wfMsg('serie-12'), $result11['data'] )
-		);
-		if ( isset($result12) ) $aSerie['X'] = $this->createSerie( wfMsg('serie-13'), $result12['data'] );
-		if ( isset($result13) ) $aSerie['Y'] = $this->createSerie( wfMsg('serie-14'), $result13['data'] );
-
-		$sSerie = $this->createJSobj($aSerie);
-
-		$ticks = "[".implode(', ',$result['date'])."]";
-		$fullWikiaDate = "[".implode(', ',$result['fullWikiaDate'])."]";
-
-		return array( 'serie' => $sSerie, 'ticks' => $ticks, 'fullTicks' => $fullWikiaDate );
-	}
-
-	/**
 	 * @author Jakub Kurcek
-	 * @param hubId integer
-	 * @param content array
 	 *
 	 * Caching functions.
 	 */
 	
-	private function getKey( $prefix, $cityId = false ) {
+	protected function getKey( $prefix, $cityId = false ) {
 
 		if ( empty( $cityId ) ){
 			$cityId = WF::build( 'App' )->getGlobal( 'wgCityId' );
@@ -729,32 +609,32 @@ class SponsorshipDashboardService extends Service {
 		return wfSharedMemcKey( 'SponsoredDashboard', $prefix, $cityId );
 	}
 
-	private function saveToCache( $prefix, $content, $cityId = false ) {
+	protected function saveToCache( $prefix, $content, $cityId = false ) {
 
 		global $wgMemc;
 		$memcData = $this->getFromCache( $prefix, $cityId );
-		if ( $memcData == null ){
+		if ( empty( $memcDat ) ){
 			$wgMemc->set( $this->getKey( $prefix, $cityId ), $content, 60*60*24);
 			return false;
 		}
 		return true;
 	}
 
-	private function getFromCache ( $prefix, $cityId = false ){
+	protected function getFromCache ( $prefix, $cityId = false ){
 
 		global $wgMemc;
 		return $wgMemc->get( $this->getKey( $prefix, $cityId ) );
 	}
 
-	private function clearCache ( $prefix, $cityId = false ){
-
-		global $wgMemc;
-		return $wgMemc->delete( $this->getKey( $prefix, $cityId ) );
-	}
+//	private function clearCache ( $prefix, $cityId = false ){
+//
+//		global $wgMemc;
+//		return $wgMemc->delete( $this->getKey( $prefix, $cityId ) );
+//	}
 
 	// other methods
 
-	private function get_previous_month( $date = false ) {
+	protected function get_previous_month( $date = false ) {
 
 		if ( empty( $date ) ){
 			$date = time();
@@ -768,110 +648,8 @@ class SponsorshipDashboardService extends Service {
 		return mktime( 0, 0, 0, $month, 1, $year );
 	}
 
-	private function filter( $var ){
+	protected function filter( $var ){
 		return(( $var%5 ) == 0);
-	}
-
-
-	/**
-	 * loadTagPosition - loads data from WikiFactory.
-	 * @return array
-	 */
-
-	public function loadTagPosition(){
-
-		// 2DO: fix - too slow.
-
-		global $wgTitle, $wgCityId, $wgHubsPages, $wgStatsDB;
-
-		// Cache check
-		$cachedData = $this->getFromCache( 'TagPosition' );
-		if ( !empty( $cachedData ) ){
-			return $cachedData;
-		}
-
-		$popularCityHubs = $this->getPopularHubs();
-		if ( empty( $popularCityHubs ) ){
-			return false;
-		}
-
-		// checkes for number of views of current cityId
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
-		$oRes = $dbr->select(
-			array( 'page_views_tags' ),
-			array( 'pv_views' ),
-			array(
-			    'city_id' => $wgCityId,
-			    'use_date' => date( "Ymd", time()-86400 ),
-			    'namespace' => NS_MAIN
-			),
-			__METHOD__,
-			array()
-		);
-		$currentCityViews = 0;
-		while( $oRow = $dbr->fetchObject( $oRes ) ) {
-			$currentCityViews = $oRow->pv_views;
-		}
-
-		// gathers all cities with higher pageview and in current city hubs
-		// using yesterdays data to be sure we have complete daily view
-
-		$tmpArray = $this->getDailyHigherPageViewsForHubs( $currentCityViews, date( "Ymd", time()-86400 ), $popularCityHubs );
-
-		// sorts data into hub lists
-		if ( empty( $tmpArray ) ){
-			return false;
-		}
-		
-		$wikiFactoryTags = new WikiFactoryTags($wgCityId);
-		$cityTags = $wikiFactoryTags->getTags();
-
-		$aPosition = array();
-		foreach( $tmpArray as $key=>$val ){
-			$aPosition[$key]['position'] = count( $tmpArray[$key] ) + 1;
-			$aPosition[$key]['name'] = $cityTags[$key];
-		}
-		if ( !empty( $aPosition ) ){
-			$this->saveToCache( 'TagPosition', $aPosition );
-		}
-		return $aPosition;
-	}
-
-	/**
-	 * getDailyHigherPageViewsForHubs - returns an array with current wikia position in specific hubs ( by page views ).
-	 * @param $currentCityViews int
-	 * @param $date string date in Ymd format
-	 * @param $popularCityHubs array
-	 * @return array
-	 */
-
-	private function getDailyHigherPageViewsForHubs( $currentCityViews, $date, $popularCityHubs ){
-
-		if ( empty( $popularCityHubs ) || empty( $currentCityViews ) ){
-			return array();
-		}
-
-		global $wgStatsDB;
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
-		$oRes = $dbr->select(
-			array( 'page_views_tags' ),
-			array( 'city_id, tag_id' ),
-			array(
-			    'use_date' => $date,
-			    'pv_views > '.$currentCityViews,
-			    'namespace' => NS_MAIN,
-			    "tag_id IN (".implode(',', $popularCityHubs).")"
-			),
-			__METHOD__,
-			array()
-		);
-
-		$tmpArray = array();
-		while( $oRow = $dbr->fetchObject( $oRes ) ) {
-			$tmpArray[$oRow->tag_id][] = $oRow->city_id;
-		}
-
-		return $tmpArray;
 	}
 
 	/**
@@ -964,7 +742,7 @@ class SponsorshipDashboardService extends Service {
 		$ticks = "[".implode(', ',$result['date'])."]";
 		$fullWikiaDate = "[".implode(', ',$result['fullWikiaDate'])."]";
 
-		$outData = array( 'serie' => $sSerie, 'ticks' => $ticks, 'fullTicks' => $fullWikiaDate );
+		$outData = array( 'serie' => $sSerie, self::SD_RETURNPARAM_TICKS => $ticks, self::SD_RETURNPARAM_FULL_TICKS => $fullWikiaDate );
 
 		// ==
 
@@ -1143,7 +921,7 @@ class SponsorshipDashboardService extends Service {
 		$ticks = "[".implode(', ',$result['date'])."]";
 		$fullTicks = "[".implode(', ',$result['fullWikiaDate'])."]";
 
-		$outData = array( 'serie' => $sSerie, 'ticks' => $ticks, 'fullTicks' => $fullTicks );
+		$outData = array( 'serie' => $sSerie, self::SD_RETURNPARAM_TICKS => $ticks, self::SD_RETURNPARAM_FULL_TICKS => $fullTicks );
 
 		// ==
 
