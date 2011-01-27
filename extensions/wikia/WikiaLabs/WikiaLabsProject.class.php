@@ -56,6 +56,7 @@ class WikiaLabsProject {
 	protected function deleteDataFromCache() {
 		$this->getCache()->delete( $this->getCacheKey() );
 		$this->getCache()->delete( $this->getCachedRatingKey() );
+		$this->getCache()->delete( $this->getCachedEnablesKey() );
 	}
 
 	public function getId() {
