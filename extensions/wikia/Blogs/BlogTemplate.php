@@ -1136,7 +1136,7 @@ class BlogTemplateClass {
 				}
 				/* invalid name of parameter or empty name */
 				if ( !in_array($sParamName, array_keys(self::$aBlogParams)) ) {
-					throw new Exception( wfMsg('blog_invalidparam', $sParamName, implode(", ", array_keys(self::$aBlogParams))) );
+					throw new Exception( wfMsg('blog-invalidparam', $sParamName, implode(", ", array_keys(self::$aBlogParams))) );
 				}
 
 				/* parse value of parameter */
