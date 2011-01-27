@@ -32,6 +32,7 @@ $app->registerClass('WikiaLabsSpecial', $dir . 'WikiaLabsSpecial.class.php');
 $app->registerClass('WikiaLabsModule', $dir . 'WikiaLabsModule.class.php');
 $app->registerClass('WikiaLabs', $dir . 'WikiaLabs.class.php');
 $app->registerClass('WikiaLabsProject', $dir . 'WikiaLabsProject.class.php');
+$app->registerClass('WikiaLabsHelper', $dir . 'WikiaLabsHelper.class.php');
 
 
 /**
@@ -65,10 +66,10 @@ $app->registerHook('MyTools::getDefaultTools', 'WikiaLabs', 'onGetDefaultTools' 
 /*
  * ajax function
  */
-$wgAjaxExportList[] = 'WikiaLabs::getProjectModal';
-$wgAjaxExportList[] = 'WikiaLabs::saveProject';
-$wgAjaxExportList[] = 'WikiaLabs::getImageUrlForEdit';
-$wgAjaxExportList[] = 'WikiaLabs::switchProject';
-$wgAjaxExportList[] = 'WikiaLabs::saveFeedback';
+$wgAjaxExportList[] = 'WikiaLabsHelper::getProjectModal';
+$wgAjaxExportList[] = 'WikiaLabsHelper::saveProject';
+$wgAjaxExportList[] = 'WikiaLabsHelper::getImageUrlForEdit';
+$wgAjaxExportList[] = 'WikiaLabsHelper::switchProject';
+$wgAjaxExportList[] = 'WikiaLabsHelper::saveFeedback';
 
 
