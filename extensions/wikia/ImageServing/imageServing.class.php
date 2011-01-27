@@ -96,7 +96,7 @@ class imageServing{
 			while ($row =  $db->fetchRow( $res ) ) {
 				$props = unserialize( $row['props'] );
 				foreach( $props as $key => $value ) {
-					if( !isset($image_list[$value][$row['page_id']]) ) {
+					if( empty($image_list[$value][$row['page_id']]) && ($image_list[$value][$row['page_id']] !== 0) ) {
 						if( empty($image_list[$value]) ) {
 							$images_name[] = $value;
 						}
@@ -125,8 +125,6 @@ class imageServing{
 						array ('LIMIT' => ($this->maxCount + 1))
 					);
 
-					if ( $oRow->cnt > $this->maxCount ) continue;
-						
 					# skip images which are too popular
 					if ($result->numRows() > $this->maxCount ) continue;
 					# check image table 
