@@ -37,13 +37,19 @@ PageLayoutBuilder.uploadImage = function (size, name) {
 			};			
 
 			PageLayoutBuilder.WMU_insertImage = function(event,body) {
+				var imageName = $("#ImageUploadFileName").val();
 				$.ajax({
-				  url: wgScript + '?action=ajax&rs=LayoutWidgetImage::getUrlImageAjax&name=' + $("#ImageUploadFileName").val() + "&size=" + size,
+				  url: wgScript + '?action=ajax&rs=LayoutWidgetImage::getUrlImageAjax&name=' + imageName + "&size=" + size,
 				  dataType: "json",
 				  method: "get",
 				  success: function(data) {
 					if(data.status == "ok") {
-						console.log(data);
+                        $("#imageboxdiv_" + name).css("width", (parseInt( data.size.width ) + 4) + "px");
+                        $("#imagediv_" + name).css("width", data.size.width + "px")
+                        .css("line-height", data.size.height + "px")
+                        .css('background-image', 'url("' +  data.url +'")');
+                        $("#" + name).val( imageName  + " | " + $("#ImageUploadCaption").val() );
+                        $("#thumbcaption").val($("#ImageUploadCaption").val());
 					}
 					WMU_close();
 				  }
