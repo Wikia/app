@@ -187,9 +187,11 @@ class PageHeaderModule extends Module {
 		// for not existing pages page header is a bit different
 		$this->pageExists = !empty($wgTitle) && $wgTitle->exists();
 
-		// default title "settings" (RT #145371)
-		$this->displaytitle = false;
-		$this->title = $wgTitle->getPrefixedText();
+		// default title "settings" (RT #145371), don't touch special pages
+		if ($ns != NS_SPECIAL) {
+			$this->displaytitle = false;
+			$this->title = $wgTitle->getPrefixedText();
+		}
 
 		if ($this->pageExists) {
 			// use service to get data
