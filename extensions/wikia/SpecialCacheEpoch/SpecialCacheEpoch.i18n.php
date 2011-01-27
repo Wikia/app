@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'cacheepoch-desc' => 'Provides an interface for changing wgCacheEpoch per wiki.',
+	'cacheepoch-desc' => 'Provides an interface for changing wgCacheEpoch per wiki',
 	'cacheepoch' => 'Cache Epoch interface',
 	'cacheepoch-header' => 'Increase wgCacheEpoch',
 	'cacheepoch-value' => 'Current value of wgCacheEpoch is "$1". Press the button to set it to current timestamp.',
