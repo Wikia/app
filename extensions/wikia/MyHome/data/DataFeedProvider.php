@@ -127,6 +127,11 @@ class DataFeedProvider {
 					$users[$res['user']] = Xml::element('a', array('href' => Skin::makeSpecialUrl('Contributions').'/'.$res['user'], 'rel' => 'nofollow'), wfMsg('masthead-anonymous-user'));
 				} else {
 					$ut = Title::newFromText($res['user'], NS_USER);
+					if (empty($ut)) {
+						//we have malformed user names in UTF-8 that causes above function to fail (see FB#1731)
+						wfProfileOut(__METHOD__);
+						return;
+					}
 					if ($ut->isKnown()) {
 						$users[$res['user']] = Xml::element('a', array('href' => $ut->getLocalUrl(), 'rel' => 'nofollow'), $res['user']);
 					} else {
