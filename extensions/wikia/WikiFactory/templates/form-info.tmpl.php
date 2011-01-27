@@ -6,7 +6,7 @@
 	<li>
 		Founder name: <strong><?php echo $user_name ?></strong> (id <?php echo $wiki->city_founding_user ?>)
 			<? if($wiki->city_founding_user): ?>
-			<sup><a href="<?php echo $wikiFactoryUrl; ?>/Metrics?founder=<?php echo urlencode($user_name); ?>">more by user</a></sup><? endif; ?>
+			<sup><a href="<?php echo $wikiFactoryUrl; ?>/Metrics?founder=<?php echo rawurlencode($user_name); ?>">more by user</a></sup><? endif; ?>
 	</li>
 	<li>
 		Founder email: <?php if( empty( $wiki->city_founding_email) ) :
@@ -21,6 +21,10 @@
 		<sup><a href="<?php echo "{$wikiFactoryUrl}/{$wiki->city_id}"; ?>/tags">edit</a></sup>
 	</li>
 	<?php if ($statuses[$wiki->city_public] == 'disabled') : ?><li>
-		<div>Disabled reason: <?=wfMsg('closed-reason')?> (<?=$wiki->city_additional?>)</div>
+		<div>Disabled reason: <?php echo wfMsg('closed-reason')?> (<?php echo $wiki->city_additional?>)</div>
 	</li><?php endif ?>
+	<li>
+		<?php $pstats = GlobalTitle::newFromText("PhalanxStats/wiki/" . $wiki->city_id, NS_SPECIAL, 177);
+		print "<a href=\"". $pstats->getFullURL() ."\">Phalanx activity</a>\n"; ?>
+	</li>
 </ul>
