@@ -31,7 +31,7 @@ abstract class WikiaLabsHelper {
 
 		$wikiaLabs = WF::build( 'WikiaLabs' );
 		$response = new AjaxResponse();
-		$response->addText( json_encode( $wikiaLabs->getImageUrlForEditInternal( $name ) ) );
+		$response->addText( json_encode( $wikiaLabs->getImageUrlForEdit( $name ) ) );
 
 		return $response;
 	}
