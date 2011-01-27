@@ -48,7 +48,7 @@ PageLayoutBuilder.uploadImage = function (size, name) {
                         $("#imagediv_" + name).css("width", data.size.width + "px")
                         .css("line-height", data.size.height + "px")
                         .css('background-image', 'url("' +  data.url +'")');
-                        $("#" + name).val( imageName  + " | " + $("#ImageUploadCaption").val() );
+                        $("#plb_" + name).val( imageName  + " | " + $("#ImageUploadCaption").val() );
                         $("#thumbcaption").val($("#ImageUploadCaption").val());
 					}
 					WMU_close();
