@@ -9,6 +9,7 @@ class SponsorshipDashboardService extends Service {
 	const SD_RETURNPARAM_TICKS = 'ticks';
 	const SD_RETURNPARAM_FULL_TICKS = 'fullTicks';
 	const SD_RETURNPARAM_SERIE = 'serie';
+	const SD_GAPI_RETRIES = 4;
 
 	var $mStats;
 	var $aCityHubs;
@@ -239,7 +240,7 @@ class SponsorshipDashboardService extends Service {
 	 * @return array
 	 */
 
-	protected function getDailyCityPageviewsFromGA( $cityUrl, $cityId, $prefix, $hubId, $generateDate, $retries = 4 ){
+	protected function getDailyCityPageviewsFromGA( $cityUrl, $cityId, $prefix, $hubId, $generateDate ){
 
 		// inner cache. Various city id can be asked from many places.
 		$cachedData = $this->getFromCache( 'DailyCityPageviewsFromGA:Hub'.$hubId, $cityId );
@@ -251,36 +252,38 @@ class SponsorshipDashboardService extends Service {
 
 		global $wgWikiaGALogin, $wgWikiaGAPassword, $wgHTTPProxy;
 
-		$ga = new gapi( $wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy );
+		$return = array();
+		
+		// #FB:1823 Retry Google API calls when quota is reached;try {
+		$retries = self::SD_GAPI_RETRIES;
+		$results = array();
+		while ( ( $retries > 0 ) || empty( $return ) ){
 
-		try {
-			$ga->requestReportData(
-				31330353,
-				array( 'day', 'month', 'year' ),
-				array( 'pageviews' ),
-				array( '-year', '-month', '-day' ),
-				'hostname=~^'.$this->prepareGAUrl( $cityUrl ),
-				'2010-04-01',
-				date('Y-m-d'),
-				1,
-				360
-			);
-		} catch ( Exception $e ) {
+			try {
+				
+				$ga = new gapi( $wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy );
+				$ga->requestReportData(
+					31330353,
+					array( 'day', 'month', 'year' ),
+					array( 'pageviews' ),
+					array( '-year', '-month', '-day' ),
+					'hostname=~^'.$this->prepareGAUrl( $cityUrl ),
+					'2010-04-01',
+					date( 'Y-m-d' ),
+					1,
+					360
+				);
+				$results = $ga->getResults();
 
-			Wikia::log(__METHOD__, false, $e->getMessage());
+			} catch ( Exception $e ) {
 
-			// #FB:1823 Retry Google API calls when quota is reached;
-			if ( empty( $retries ) ){
-				return false;
-			} else {
-				// Sleep added to bypass GoogleAnaytics Quota limitations - max 10 queries per second.
 				$retries--;
 				sleep( 1 );
-				$this->getDailyCityPageviewsFromGA( $cityUrl, $cityId, $prefix, $hubId, $generateDate, $retries );
+				Wikia::log( __METHOD__, false, $e->getMessage() );
+				
 			}
 		}
-
-		$results = $ga->getResults();
+		
 		reset( $results );
 		unset ( $results[ key( $results ) ] );
 
