@@ -349,9 +349,11 @@ class CreateWiki {
 		 * destroy connection to newly created database
 		 */
 		$this->mNewWiki->dbw->commit();
-		wfDebugLog( "createwiki", __METHOD__ . ": Database changes commited \n", true );	
+		wfDebugLog( "createwiki", __METHOD__ . ": Database changes commited \n", true );
 		$wgSharedDB = $tmpSharedDB;
 
+
+		$this->mNewWiki->dbw->selectDB($wgSharedDB);
 		/**
 		 * set hub/category
 		 */
