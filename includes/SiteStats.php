@@ -25,7 +25,7 @@ class SiteStats {
 			# Update schema
 			$u = new SiteStatsUpdate( 0, 0, 0 );
 			$u->doUpdate();
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 			self::$row = $dbr->selectRow( 'site_stats', '*', false, __METHOD__ );
 		}
 
@@ -34,7 +34,7 @@ class SiteStats {
 
 	static function loadAndLazyInit() {
 		wfDebug( __METHOD__ . ": reading site_stats from slave\n" );
-		$row = self::doLoad( wfGetDB( DB_SLAVE ) );
+		$row = self::doLoad( wfGetDB( DB_SLAVE, 'vslow' ) );
 
 		/*
 		if( !self::isSane( $row ) ) {
@@ -125,7 +125,7 @@ class SiteStats {
 			$key = wfMemcKey( 'SiteStats', 'groupcounts', $group );
 			$hit = $wgMemc->get( $key );
 			if ( !$hit ) {
-				$dbr = wfGetDB( DB_SLAVE );
+				$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 				$hit = $dbr->selectField( 'user_groups', 'COUNT(*)',
 					array( 'ug_group' => $group ), __METHOD__ );
 				$wgMemc->set( $key, $hit, 3600 );
@@ -137,7 +137,7 @@ class SiteStats {
 
 	static function jobs() {
 		if ( !isset( self::$jobs ) ) {
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 			self::$jobs = $dbr->selectField( 'job', 'COUNT(*)', '', __METHOD__ );
 			/* Zero rows still do single row read for row that doesn't exist, but people are annoyed by that */
 			if (self::$jobs == 1) {
@@ -150,7 +150,7 @@ class SiteStats {
 	static function pagesInNs( $ns ) {
 		wfProfileIn( __METHOD__ );
 		if( !isset( self::$pageCount[$ns] ) ) {
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 			$pageCount[$ns] = (int)$dbr->selectField( 'page', 'COUNT(*)', array( 'page_namespace' => $ns ), __METHOD__ );
 		}
 		wfProfileOut( __METHOD__ );
@@ -237,15 +237,15 @@ class SiteStatsUpdate {
 		$dbr = wfGetDB( DB_SLAVE, array( 'SpecialStatistics', 'vslow') );
 		# Get non-bot users than did some recent action other than making accounts.
 		# If account creation is included, the number gets inflated ~20+ fold on enwiki.
-		$active_users_conds = array( 
-			'rc_user != 0', 
-			'rc_bot' => 0, 
-			"rc_log_type != 'newusers' OR rc_log_type IS NULL" 
+		$active_users_conds = array(
+			'rc_user != 0',
+			'rc_bot' => 0,
+			"rc_log_type != 'newusers' OR rc_log_type IS NULL"
 		);
 		if ( !empty($wgRCMaxAge) ) {
 			$active_users_conds[] = sprintf("rc_timestamp >= '%s'", date( 'YmdHis', time()- $wgRCMaxAge ));
 		}
-		
+
 		$activeUsers = $dbr->selectField( 'recentchanges', 'COUNT( DISTINCT rc_user_text )', $active_users_conds, __METHOD__ );
 		$dbw->update( 'site_stats',
 			array( 'ss_active_users' => intval($activeUsers) ),
@@ -302,16 +302,26 @@ class SiteStatsInit {
 		$this->mPages = $this->db->selectField( 'page', 'COUNT(*)', '', __METHOD__ );
 		return $this->mPages;
 	}
-	
+
 	/**
 	 * Count total users
 	 * @return int
 	 */
 	public function users() {
-		$this->mUsers = $this->db->selectField( 'user', 'COUNT(*)', '', __METHOD__ );
+		/**
+		 * wikia change
+		 * cache number of users for 12hours
+		 * it's not important to have exact numbers there
+		 */
+		$cache = WF::build( "App" )->getGlobal( "wgMemc" );
+		$this->mUsers = $cache->get( wfSharedMemcKey( "registered-users-number" ) );
+		if( empty( $this->mUser ) ) {
+			$this->mUsers = $this->db->selectField( 'user', 'COUNT(*)', '', __METHOD__ );
+			$cache->set( wfSharedMemcKey( "registered-users-number" ), $this->mUsers, 60*60*12 );
+		}
 		return $this->mUsers;
 	}
-	
+
 	/**
 	 * Count views
 	 * @return int
