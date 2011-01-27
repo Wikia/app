@@ -61,10 +61,10 @@ WF::addClassConstructor( 'WikiaLabsProject', array( 'app' => $app, 'id' => 0 ) )
  */
 $app->registerHook('GetRailModuleSpecialPageList', 'WikiaLabs', 'onGetRailModuleSpecialPageList' );
 $app->registerHook('MyTools::getDefaultTools', 'WikiaLabs', 'onGetDefaultTools' );
+
 /*
  * ajax function
  */
-
 $wgAjaxExportList[] = 'WikiaLabs::getProjectModal';
 $wgAjaxExportList[] = 'WikiaLabs::saveProject';
 $wgAjaxExportList[] = 'WikiaLabs::getImageUrlForEdit';
