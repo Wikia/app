@@ -31,7 +31,7 @@ $messages['en'] = array(
 	'wikialabs-list-project-warning' => 'Are you sure?',
 	'wikialabs-list-project-warning-ok' => 'Yes, deactivate',
 	'wikialabs-list-project-warning-cancel' => 'Cancel',
-	'wikialabs-list-project-currently-active' => 'currently active',
+	'wikialabs-list-project-currently-active' => 'active',
 	'wikialabs-list-project-warning-box' => 'Projects in Wikia Labs are experimental and should no be used for mission critical features on any wiki.<br>They may <b>change</b>, <b>break</b>, or <b>disappear</b> at any time.',
 	'wikialabs-graduates-tile' => 'Graduates of Wikia Labs',
 	
