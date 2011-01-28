@@ -83,7 +83,7 @@ var UploadPhotos = {
 				if(json['status'] == 0) {	// 0 is success...
 					$.tracker.byStr('action/uploadphoto/upload');
 					window.location = '/wiki/Special:NewFiles';
-				} else if(json['status'] == 12) {	// show conflict dialog
+				} else if(json['status'] == -2) {	// show conflict dialog
 					UploadPhotos.step1.hide(400, function() {
 						UploadPhotos.conflict.html(json['statusMessage']);
 						UploadPhotos.step2.show(400, function() {

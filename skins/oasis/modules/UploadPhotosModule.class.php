@@ -4,7 +4,8 @@
  */
  
 class UploadPhotosModule extends Module {
-	const UPLOAD_WARNING = 12;
+	const UPLOAD_WARNING = -2;
+	const UPLOAD_PERMISSION_ERROR = -1;
 
 	var $wgScriptPath;
 	var $licensesHtml;
@@ -44,7 +45,7 @@ class UploadPhotosModule extends Module {
 		$permErrors = $up->verifyPermissions( $wgUser );
 		
 		if ( $permErrors !== true ) {
-			$this->status = self::UPLOAD_WARNING;
+			$this->status = self::UPLOAD_PERMISSION_ERROR;
 			$this->statusMessage = $this->uploadMessage( $this->status, null );
 		} else {
 			$details = $up->verifyUpload();
@@ -144,7 +145,7 @@ class UploadPhotosModule extends Module {
 				$msg = wfMsgHtml($details['details'][0]);
 				break;
 			
-			case self::UPLOAD_WARNING:
+			case self::UPLOAD_PERMISSION_ERROR:
 				$msg = wfMsg( 'badaccess' );
 				break;
 			default:
