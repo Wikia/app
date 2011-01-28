@@ -1,4 +1,5 @@
 == Changes since 20110125 ==
+* fb#1944: TopLists special pages can be accessed by blocked users (federico)
 * fb#1731: Fatal error in DataFeedProvider.php (Marooned)
 * fb#1688: Double next/previous page buttons on categories (Marooned)
 
