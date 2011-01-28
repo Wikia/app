@@ -1,5 +1,6 @@
 == Changes since 20110125 ==
 * fb#1731: Fatal error in DataFeedProvider.php (Marooned)
+* fb#1688: Double next/previous page buttons on categories (Marooned)
 
 == Changes since 20110110 ==
 * rt#137889: Missing message on Special:Leaderboard (Marooned)
