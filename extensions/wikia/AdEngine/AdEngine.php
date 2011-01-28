@@ -637,7 +637,6 @@ class AdEngine {
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 
 		global $wgCityId;
-		$out .=  $this->providerValuesAsJavascript($wgCityId);
 		// wlee: this code is duplicated from AdEngine.js. This workaround is necessary
 		// because sometimes StaticChute has not loaded by the time this function is
 		// invoked. Need to make sure that hiddenSlotOnShortPage is available.

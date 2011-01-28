@@ -111,6 +111,19 @@ EOT;
 		return $out;
 	}
 	
+	/**
+	 * wlee 2011/01/28
+	 * With the advent of AdConfig.js, this function is no longer maintained.
+	 * All DART URL development should be done in AdConfig.js only.
+	 *
+	 * Wikia's standard invocation of DART, in an iframe, has been changed to
+	 * use AdConfig.js.
+	 *
+	 * This function exists only to support AdProviderDART::getAd() [the JS
+	 * invocation of DART]. As of this date, there is no good reason to call getAd().
+	 * I hope that we can someday deprecate getAd() this function, and all
+	 * the helper functions involved in creating the DART url.
+	 */
 	public function getUrl($slotname, $slot){
 
 		// Manipulate DART sizes for values it expects
@@ -425,6 +438,11 @@ EOT;
 		return 'dmn=' . $this->sanitizeKeyValue($match1[0]) . ';';
 	}
 
+	/**
+	 * wlee 2011/01/28
+	 * This function has been updated to use AdConfig.js, the new single place 
+	 * for DART url configuration.
+	 */
 	protected function getIframeFillFunctionDefinition($function_name, $slotname, $slot) {
 		$this->useIframe = true; 
 		
@@ -434,7 +452,7 @@ EOT;
 		'if(typeof(AdEngine) != "undefined") { ' .
 			'if(AdEngine.hiddenSlotOnShortPage("' . addslashes($slotname) .'")) { return; }' .
 		'} else { if(hiddenSlotOnShortPage("' . addslashes($slotname) .'")) { return; } } ' .
-		'var url = "'.addslashes($this->getUrl($slotname, $slot)).'"; ' . "\n" .	// url is actually a template with tokens to replace
+		"var url = AdConfig.DART.getUrl('$slotname', '{$slot['size']}', true, 'DART');\n" .
 		'if (typeof(QuantcastSegments) !== "undefined") { ' .
 		'var qcsegs = QuantcastSegments.getQcsegAsDARTKeyValues(); ' . "\n" .	// wlee: Quantcast Segments
 		'url = url.replace("qcseg=N;", qcsegs); ' . "\n" .
