@@ -178,33 +178,51 @@ class LatestPhotosModule extends Module {
 	private function getLinkedFiles ( $name ) {
 		global $wgUser;
 
-		// The ORDER BY ensures we get NS_MAIN pages first
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-					array( 'imagelinks', 'page' ),
-					array( 'page_namespace', 'page_title' ),
-					array( 'il_to' => $name, 'il_from = page_id' ),
-					__METHOD__,
-					array( 'LIMIT' => 2, 'ORDER BY' => 'page_namespace ASC' )
-			   );
+		wfProfileIn( __METHOD__ );
+		$cacheKey = wfMemcKey( __METHOD__, $name );
+		$data = $wgMemc->get( $cacheKey );
+		if( !is_array($data) ) {
+			// The ORDER BY ensures we get NS_MAIN pages first
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select(
+						array( 'imagelinks', 'page' ),
+						array( 'page_namespace', 'page_title' ),
+						array( 'il_to' => $name, 'il_from = page_id' ),
+						__METHOD__,
+						array( 'LIMIT' => 2, 'ORDER BY' => 'page_namespace ASC' )
+				   );
+			
+			$data = array() ;
+			// link where this page is used...
+			if ( $s = $res->fetchObject() ) {
+				$data[] = array( 'ns' => $s->page_namespace, 'title' => $s->page_title );
+			}
+			// if used in more than one place, add "more" link
+			if ( $s = $res->fetchObject() ) {
+				$data[] = array( 'ns' => NS_FILE, 'title' => $name );
+			}
+			
+			$wgMemc->set( $cacheKey, $data, 60*15 );			
+		}
 
-		$sk = $wgUser->getSkin();
 		$links = array();
-
-		// link where this page is used...
-		if ( $s = $res->fetchObject() ) {
-			$page_title = Title::makeTitle( $s->page_namespace, $s->page_title );
-			$links[] = $sk->link( $page_title, null, array( 'class' => 'wikia-gallery-item-posted' ) );
+		if ( !empty( $data ) ) {
+			$sk = $wgUser->getSkin();
+			
+			foreach ( $data as $inx => $row ) {
+				$Title = Title::makeTitle( $row['ns'], $row['title'] );
+				
+				if ( $row['title'] == $name && $row['ns'] == NS_FILE ) {
+					$links[] = '<a href="' . $Title->getLocalUrl() .
+							'#filelinks" class="wikia-gallery-item-more">' .
+							wfMsg( 'oasis-latest-photos-more-dotdotdot' ) . '</a>';					
+				} else {
+					$links[] = $sk->link( $Title, null, array( 'class' => 'wikia-gallery-item-posted' ) );
+				}
+			}
 		}
-		// if used in more than one place, add "more" link
-		if ( $s = $res->fetchObject() ) {
-			$file_title = Title::makeTitle( NS_FILE, $name );
-
-			$links[] = '<a href="' . $file_title->getLocalUrl() .
-				'#filelinks" class="wikia-gallery-item-more">' .
-				wfMsg( 'oasis-latest-photos-more-dotdotdot' ) . '</a>';
-		}
-
+		
+		wfProfileOut(__METHOD__);
 		return $links;
 	}
 
