@@ -478,10 +478,18 @@ class LoginForm {
 		// If the user doesn't have a login token yet, set one.
 		if ( !self::getLoginToken() ) {
 			self::setLoginToken();
+			/* Wikia change begin - @author: Marooned */
+			/* Additional logging to help debugging session issues. */
+			Wikia::log(__FUNCTION__, __LINE__, 'Token problem: no token in session', true);
+			/* Wikia change end */
 			return self::NEED_TOKEN;
 		}
 		// If the user didn't pass a login token, tell them we need one
 		if ( !$this->mToken ) {
+			/* Wikia change begin - @author: Marooned */
+			/* Additional logging to help debugging session issues. */
+			Wikia::log(__FUNCTION__, __LINE__, 'Token problem: no token in request', true);
+			/* Wikia change end */
 			return self::NEED_TOKEN;
 		}
 		
@@ -506,6 +514,10 @@ class LoginForm {
 		
 		// Validate the login token
 		if ( $this->mToken !== self::getLoginToken() ) {
+			/* Wikia change begin - @author: Marooned */
+			/* Additional logging to help debugging session issues. */
+			Wikia::log(__FUNCTION__, __LINE__, 'Token problem: tokens in session and request do no match', true);
+			/* Wikia change end */
 			return self::WRONG_TOKEN;
 		}
 
