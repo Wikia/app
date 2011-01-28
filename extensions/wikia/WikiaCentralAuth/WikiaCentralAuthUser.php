@@ -46,13 +46,11 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	
 	function __construct( $username ) {
 		$this->mName = $username;
-		wfDebug( __METHOD__ . ": Create object : {$username} \n" );
 		$this->resetState();
 	}
 	
 	function WikiaCentralAuthUser( $oUser ) {
 		$this->mName = $oUser->getName();
-		wfDebug( __METHOD__ . ": Create object : {$this->mName} \n" );		
 		$this->resetState();	
 	}
 
@@ -62,24 +60,19 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * @param User $user
 	 */
 	static function getInstance( $user ) {
-		$name = $user->getName();
 		if ( !isset( $user->centralAuth ) ) {
-			wfDebug( __METHOD__ . ": New instance : {$name} \n" );			
-			$user->centralAuth = new self( $name );
+			$user->centralAuth = new self( $user->getName() );
 		}
-		wfDebug( __METHOD__ . ": Instance exists : {$name} \n" );			
 		return $user->centralAuth;
 	}
 
 	public static function getCentralDB() {
 		global $wgWikiaCentralAuthDatabase;
-		wfDebug( __METHOD__ . ": wgWikiaCentralAuthDatabase : {$wgWikiaCentralAuthDatabase} \n" );			
 		return wfGetDB(DB_MASTER, array(), $wgWikiaCentralAuthDatabase);
 	}
 
 	public static function getCentralSlaveDB() {
 		global $wgWikiaCentralAuthDatabase;
-		wfDebug( __METHOD__ . ": wgWikiaCentralAuthDatabase : {$wgWikiaCentralAuthDatabase} \n" );				
 		return wfGetDB(DB_SLAVE, array(), $wgWikiaCentralAuthDatabase);
 	}
 
@@ -101,14 +94,12 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * Create a WikiaCentralAuthUser object from a joined globaluser row
 	 */
 	public static function newFromRow( $row, $fromMaster = false ) {
-		wfDebug( __METHOD__ . ": row: {$row->user_name} \n" );					
 		if ( !is_object( $row ) ) {
 			$caUser = null;
 		} else {
 			$caUser = new self( $row->user_name );
 			$caUser->loadFromRow( $row, $fromMaster );
 		}
-		wfDebug( __METHOD__ . ": loadFromRow: {$row->user_name}, {$fromMaster} \n" );
 		return $caUser;
 	}
 
@@ -117,7 +108,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * Does not clear $this->mName, so the state information can be reloaded with loadState()
 	 */
 	protected function resetState() {
-		wfDebug( __METHOD__ . "\n" );	
 		unset( $this->mGlobalId );
 		unset( $this->mGroups );
 	}
@@ -126,7 +116,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * Load up state information, but don't use the cache
 	*/
 	protected function loadStateNoCache() {
-		wfDebug( __METHOD__ . "\n" );				
 		$this->loadState( true );
 	}
 
@@ -135,7 +124,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 */
 	static function loadFromDatabaseByName($userName) {
 		$dbr = self::getCentralDB();
-		wfDebug( __METHOD__ . ": userName = $userName \n" );	
 		$oRow = $dbr->selectRow( array( '`user`' ), array( '*' ), array( 'user_name' => $userName ), __METHOD__ );
 		return $oRow;
 	}
@@ -145,7 +133,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 */
 	static function loadFromDatabaseById($userId) {
 		$dbr = self::getCentralDB();
-		wfDebug( __METHOD__ . ": userId = $userId \n" );
 		$oRow = $dbr->selectRow( array( '`user`' ), array( '*' ), array( 'user_id' => $userId ), __METHOD__ );
 		return $oRow;
 	}
@@ -154,7 +141,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * load row by id
 	 */
 	private function loadOptions( ) {
-		wfDebug( __METHOD__ . ": mOptionOverrides = " . print_r($this->mOptionOverrides, true) . " \n" );		
 		if ( !empty($this->mOptionOverrides) ) {
 			# options loaded 
 			return false;
@@ -172,8 +158,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			$this->mOptionOverrides[$row->up_property] = $row->up_value;
 			$this->mOptions[$row->up_property] = $row->up_value;
 		}
-		
-		wfDebug( __METHOD__ . ": mOptionOverrides = " . print_r($this->mOptionOverrides, true) . " \n" );
 	}
 
 	/**
@@ -181,7 +165,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * @param boolean $recache Force a load from the database then save back to the cache
 	 */
 	protected function loadState( $recache = false ) {
-		wfDebug( __METHOD__ . ": id = {$this->mGlobalId}, name : {$this->mName} \n" );
 		if ( $recache ) {
 			wfDebug( __METHOD__ . ": Reset state so take data from DB \n" );
 			$this->resetState();
@@ -297,8 +280,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			$this->mEmail = '';
 			$this->mEmailAuthenticated = false;
 		}
-		
-		wfDebug( __METHOD__ . ": loadFromRow: {$this->mGlobalId}, options : " . print_r($this->mOptions, true) . " \n" );		
 	}
 
 	/**
@@ -321,8 +302,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			return false;
 		}
 		$this->loadFromCacheObject( $cache, $fromMaster );
-		
-		wfDebug( __METHOD__ . ": cache: " . print_r($cache, true) . " , fromMaster: {$fromMaster} \n" );	
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -357,8 +336,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 				$obj[$var] = null;
 			}
 		}
-		
-		wfDebug( __METHOD__ . ": obj: " . print_r($obj, true) . " \n" );	
 
 		return $obj;
 	}
@@ -393,14 +370,8 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	protected function getCacheKey() {
 		global $wgWikiaCentralAuthMemcPrefix;
 		
-		if ( $this->getId() ) {
-			$memcKey = wfMemcKey( 'user', 'id', $this->mGlobalId ); 
-		} else {
-			$memcKey = wfMemcKey($wgWikiaCentralAuthMemcPrefix . md5( $this->mName )); 
-		}
+		$memcKey = wfMemcKey($wgWikiaCentralAuthMemcPrefix . md5( $this->mName )); 
 
-		wfDebug( __METHOD__ . ": memkey {$memcKey} \n" );	
-		
 		return $memcKey;
 	}
 
@@ -423,8 +394,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 				$this->mIsAttached = 1;
 			}
 		}
-		
-		wfDebug( __METHOD__ . ": isAttached {$this->mIsAttached} \n" );			
 		return ( !empty($this->mIsAttached) ) ? true : false;
 	}
 
@@ -450,14 +419,9 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	public function getAuthToken() {
 		$this->loadState();
 
-		wfDebug( __METHOD__ . ": authToken {$this->mToken} \n" );			
-
 		if (!isset( $this->mToken ) || !$this->mToken) {
 			$this->resetAuthToken();
 		}
-		
-		wfDebug( __METHOD__ . ": authToken (2) {$this->mToken} \n" );
-					
 		return $this->mToken;
 	}
 
@@ -501,13 +465,11 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			return true;
 		}
 
-		if ( empty( $this->mOptions ) ) {
-			$this->mOptionOverrides = array();
-			$this->mOptions = array();
-			
-			# use user_preferences table
-			$this->loadOptions();
-		}
+		$this->mOptionOverrides = array();
+		$this->mOptions = array();
+		
+		# use user_preferences table
+		$this->loadOptions();
 		
 		# preferences not found - use user_options
 		if ( empty( $this->mOptions ) ) {
@@ -520,8 +482,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 				}
 			}
 		}
-		
-		wfDebug( __METHOD__ . ": options: " . print_r($this->mOptions, true) . " \n" );					
 	}
 
 	/*
@@ -538,8 +498,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			}
 		}
 		$s = implode( "\n", $a );
-		
-		wfDebug( __METHOD__ . ": options: {$s} \n" );					
 		return $s;
 	}
 
@@ -575,7 +533,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			'user_editcount' => 0,
 		);
 
-		wfDebug( __METHOD__ . ": fields: " . print_r($fields, true) . " \n" );			
 		$ok = $dbw->insert ( '`user`', $fields, __METHOD__, array('IGNORE') );
 
 		if( $ok ) {
@@ -681,9 +638,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * @todo Currently only the "ok" result is used (i.e. either use, or return a bool).
 	 */
 	public function authenticate( $password ) {
-		
-		wfDebug( __METHOD__ . ": options: " . print_r($this->mOptions, true) . " \n" );					
-		
 		if (($ret = $this->canAuthenticate()) !== true) {
 			wfDebug ( __METHOD__ . ": Cannot authenticate user: {$this->mName} \n" );
 			return $ret;
@@ -983,8 +937,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * not randomly log users out (so on logout, as is done currently, is a good time).
 	 */
 	function resetAuthToken( $token = false) {
-		
-		wfDebug( __METHOD__ . ": options: {$token} \n" );				
 		// Generate a random token.
 		if ( !$token ) {
 			$this->mToken = wfGenerateToken( $this->getId() );
@@ -1100,9 +1052,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	}
 
 	public function invalidateCache() {
-		
-		wfDebug( __METHOD__ . "\n" );		
-				
 		if (!$this->mDelayInvalidation) {
 			wfDebug( __METHOD__ . ": Updating cache for global user {$this->mName} \n" );
 

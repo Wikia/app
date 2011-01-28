@@ -90,13 +90,9 @@ class WikiaCentralAuthHooks {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
-		
-		wfDebug( __METHOD__ . ": name: $sName \n" );		
 
 		$oCUser = new WikiaCentralAuthUser( $sName );
 		$localId = User::idFromName( $sName );
-		
-		wfDebug( __METHOD__ . ": localId: $localId \n" );		
 
 		if ( empty($localId) ) {
 			$localId = $oCUser->idFromName();
@@ -145,11 +141,8 @@ class WikiaCentralAuthHooks {
 			return true;
 		}
 		$oCUser = WikiaCentralAuthUser::getInstance( $oUser );
-		
-		wfDebug( __METHOD__ . ": oCUser: " . print_r($oCUser, true) . " \n" );		
-		
+
 		if ($oCUser->exists()) {
-			wfDebug( __METHOD__ . ": delete session \n" );		
 			$oCUser->deleteGlobalCookies();
 			$oCUser->resetAuthToken();
 			$oCUser->quickInvalidateCache();
@@ -212,8 +205,6 @@ class WikiaCentralAuthHooks {
             return false;
         }
 
-		wfDebug( __METHOD__ . ": userName: $userName, oUser " . print_r($oUser, true) . " \n" );		
-		
 		wfProfileIn( __METHOD__ );
 		// Denied by configuration?
 		if ( !$wgAuth->autoCreate() ) {
