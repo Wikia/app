@@ -247,32 +247,34 @@ function getLinkedFiles ( $image ) {
 
 	wfProfileIn( __METHOD__ );
 	$cacheKey = wfMemcKey( __METHOD__, $image->img_name );
-	$cache = $wgMemc->get( $cacheKey );
-	if( is_array($cache) ) {
-		wfProfileOut( __METHOD__ );
-		return $cache;
-	}
+	$data = $wgMemc->get( $cacheKey );
+	if( !is_array($data) ) {
+		// The ORDER BY ensures we get NS_MAIN pages first
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select(
+			array( 'imagelinks', 'page' ),
+			array( 'page_namespace', 'page_title' ),
+			array( 'il_to' => $image->img_name, 'il_from = page_id' ),
+			__METHOD__,
+			array( 'LIMIT' => 2, 'ORDER BY' => 'page_namespace ASC' )
+	   );
+			   
+		while ( $s = $res->fetchObject() ) {
+			$data[] = array( 'ns' => $s->page_namespace, 'title' => $s->page_title );
+		}	
+		$dbr->freeResult($res);
+		
+		$wgMemc->set( $cacheKey, $data, 60*15 );
+	}		   
 
-	// The ORDER BY ensures we get NS_MAIN pages first
-	$dbr = wfGetDB( DB_SLAVE );
-	$res = $dbr->select(
-				array( 'imagelinks', 'page' ),
-				array( 'page_namespace', 'page_title' ),
-				array( 'il_to' => $image->img_name, 'il_from = page_id' ),
-				__METHOD__,
-				array( 'LIMIT' => 2, 'ORDER BY' => 'page_namespace ASC' )
-		   );
-
-	$sk = $wgUser->getSkin();
 	$links = array();
-
-	while ( $s = $res->fetchObject() ) {
-		$name = Title::makeTitle( $s->page_namespace, $s->page_title );
-		$links[] = $sk->link( $name, null, array( 'class' => 'wikia-gallery-item-posted' ) );
-	}
-
-	if ( !empty($links) ) {
-		$wgMemc->set( $cacheKey, $links, 60*15 );
+	
+	if ( !empty($data) ) {
+		$sk = $wgUser->getSkin();
+		foreach ( $data as $row ) {
+			$name = Title::makeTitle( $row['ns'], $row['title'] );
+			$links[] = $sk->link( $name, null, array( 'class' => 'wikia-gallery-item-posted' ) );
+		}
 	}
 	
 	wfProfileOut( __METHOD__ );
