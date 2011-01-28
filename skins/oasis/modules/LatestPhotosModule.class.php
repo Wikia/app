@@ -176,7 +176,7 @@ class LatestPhotosModule extends Module {
 	}
 
 	private function getLinkedFiles ( $name ) {
-		global $wgUser;
+		global $wgUser, $wgMemc;
 
 		wfProfileIn( __METHOD__ );
 		$cacheKey = wfMemcKey( __METHOD__, $name );
