@@ -264,7 +264,7 @@
 <td>talkspace</td>
 <td><input type="text" name="ezns_tns_id" value="<?php echo $suggest+1; ?>" size="5" /></td>
 <td><input type="text" id="ezns_tns_text" name="ezns_tns_text"/><br/>
-<input type="checkbox" id="ezns_tns_lazy" name="ezns_tns_lazy" checked="checked" /><small title="just append 'talk' to the end of the namespace">lazy mode</small></td>
+<input type="checkbox" id="ezns_tns_lazy" name="ezns_tns_lazy" checked="checked" /><small style="border-bottom:1px dashed black; cursor: help;" title="just append 'talk' to the end of the namespace (EN only)">'lazy' mode</small></td>
 <td><input type="checkbox" name="ezns_tns_content" /></td>
 <td><input type="checkbox" name="ezns_tns_search" /></td>
 <td><input type="checkbox" name="ezns_tns_sub" /></td>
