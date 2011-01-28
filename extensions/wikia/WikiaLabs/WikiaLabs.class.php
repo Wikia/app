@@ -5,20 +5,22 @@ class WikiaLabs {
 	const FOGBUGZ_CASE_PRIORITY = 5;
 	const FOGBUGZ_CASE_TITLE = 'WikiaLabs Feedback - Project: ';
 	const FOGBUGZ_CASE_TAG = 'WikiaLabsFeedback';
+	const TEMPLATE_NAME_ADDPROJECT = 'wikialabs-addproject';
+	const STATUS_OK = 'ok';
+	const STATUS_ERROR = 'error';
 
 	protected $app = null;
-	protected $request = null;
+	protected $user = null;
 	protected $fogbugzAPIConfig = null;
 	protected $fogbugzService = null;
 
 	public function __construct() {
 		$this->app = WF::build( 'App' );
-		$this->request = $this->app->getGlobal('wgRequest');
-		$this->user = $this->app->getGlobal( 'wgUser' );
+		$this->setUser( $this->app->getGlobal( 'wgUser' ) );
 		$this->fogbugzAPIConfig = $this->app->getGlobal( 'wgFogbugzAPIConfig' );
 	}
 
-	function onGetRailModuleSpecialPageList(&$railModuleList) {
+	public function onGetRailModuleSpecialPageList(&$railModuleList) {
 		if($this->app->getGlobal('wgTitle')->isSpecial('WikiaLabs')) {
 			$railModuleList['1500'] = array('Search', 'Index', null);
 			$railModuleList['1400'] = array('WikiaLabs', 'Staff', null);
@@ -28,29 +30,31 @@ class WikiaLabs {
 		return true;
 	}
 
-	public function getProjectModal( $projectId ) {
-		if(!$this->user->isAllowed( 'wikialabsuser' )) {
+	public function getUser() {
+		return $this->user;
+	}
+
+	public function setUser($user) {
+		$this->user = $user;
+	}
+
+	public function getProjectModal( $projectId = 0 ) {
+		if(!$this->getUser()->isAllowed( 'wikialabsuser' )) {
 			return array();
 		}
 
 		$oTmpl = WF::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
-		$wikiaLabsProject = WF::build( 'WikiaLabsProject' );
-
-		if( $projectId > 0 ) {
-			$project = WF::build( 'WikiaLabsProject', array( 'id' => $projectId ) );
-		} else {
-			$project = WF::build( 'WikiaLabsProject', array() );
-		}
+		$project = WF::build( 'WikiaLabsProject', array( 'id' => $projectId ) );
 
 		$oTmpl->set_vars( array(
 			'project' => $project,
 			'projectdata' => $project->getData(),
-			'status' => $wikiaLabsProject->getStatusDict(),
-			'extensions' => $wikiaLabsProject->getExtensionsDict(),
+			'status' => $project->getStatusDict(),
+			'extensions' => $project->getExtensionsDict(),
 			'areas' => $this->getFogbugzAreas()
 		));
 
-		return $oTmpl->render("wikialabs-addproject");
+		return $oTmpl->render( self::TEMPLATE_NAME_ADDPROJECT );
 	}
 
 	/**
@@ -67,20 +71,16 @@ class WikiaLabs {
 		return $this->fogbugzService;
 	}
 
-	private function getFogbugzAreas() {
+	public function getFogbugzAreas() {
 		return $this->getFogbugzService()->logon()->getAreas( self::FOGBUGZ_PROJECT_ID );
 	}
 
 	public function saveFeedback( $projectId, User $user, $rating, $message ) {
-
-		if(!$this->user->isAllowed( 'wikialabsuser' )) {
+		if(!$user->isAllowed( 'wikialabsuser' )) {
 			return array();
 		}
 
 		$project = WF::build( 'WikiaLabsProject', array( 'id' => (int) $projectId ) );
-		$projectId = $project->getId();
-
-		$project->updateRating( $user->getId(), $rating );
 
 		$mulitvalidator = new WikiaValidatorArray(array(
 			'validators'  => array(
@@ -102,7 +102,7 @@ class WikiaLabs {
 		);
 
 		$out = array();
-		$out['status'] = "ok";
+		$out['status'] = self::STATUS_OK;
 		if( !$mulitvalidator->isValid( $in ) ) {
 			$errors = $mulitvalidator->getErrors();
 			foreach($errors as  $val1) {
@@ -111,15 +111,16 @@ class WikiaLabs {
 				}
 			}
 			$out['in'] = $in;
-			$out['status'] = "error";
+			$out['status'] = self::STATUS_ERROR;
 			return $out;
 		}
 
+		$project->updateRating( $user->getId(), $rating );
 		$this->saveFeedbackInFogbugz( $project, $message, $user->getEmail() );
 		return $out;
 	}
 
-	private function saveFeedbackInFogbugz( WikiaLabsProject $project, $message, $userEmail ) {
+	protected function saveFeedbackInFogbugz( WikiaLabsProject $project, $message, $userEmail ) {
 		$areaId = $project->getFogbugzProject();
 		$title = self::FOGBUGZ_CASE_TITLE . $project->getName();
 
@@ -127,7 +128,7 @@ class WikiaLabs {
 	}
 
 	public function saveProject( $project ) {
-		if(!$this->user->isAllowed( 'wikialabsadmin' )) {
+		if(!$this->getUser()->isAllowed( 'wikialabsadmin' )) {
 			return array();
 		}
 
@@ -136,9 +137,9 @@ class WikiaLabs {
 		$project['enablewarning'] = isset($project['enablewarning']);
 		$project['graduates'] = isset($project['graduates']);
 
-		$validateResult = self::validateProjectForm($project);
+		$validateResult = $this->validateProjectForm($project);
 		if( !$validateResult->isValid($project) ) {
-			$out['status'] = "error";
+			$out['status'] = self::STATUS_ERROR;
 			$out['errors'] = array();
 			$errors = $validateResult->getErrors();
 			foreach($errors as  $val1) {
@@ -149,12 +150,8 @@ class WikiaLabs {
 			return $out;
 		} else {
 			$project['id'] = (int) $project['id'];
-			if( $project['id'] > 0 ) {
-				$wlp = WF::build( 'WikiaLabsProject', array( 'id' => $project['id'] ) );
-			} else {
-				$wlp = WF::build( 'WikiaLabsProject', array() );
-			}
 
+			$wlp = WF::build( 'WikiaLabsProject', array( 'id' => $project['id'] ) );
 			$wlp->setName($project['name']);
 			$wlp->setFogbugzProject($project['area']);
 
@@ -174,7 +171,7 @@ class WikiaLabs {
 			$wlp->setExtension($project['extension']);
 			$wlp->update();
 
-			$out['status'] = 'ok';
+			$out['status'] = self::STATUS_OK;
 			return $out;
 		}
 	}
@@ -211,7 +208,7 @@ class WikiaLabs {
 	}
 
 	public function switchProject($city_id, $id, $onoff = true) {
-		if(!$this->user->isAllowed( 'wikialabsuser' )) {
+		if(!$this->getUser()->isAllowed( 'wikialabsuser' )) {
 			return array();
 		}
 
@@ -249,7 +246,7 @@ class WikiaLabs {
 	}
 
 	public function onGetDefaultTools(&$list) {
-		if($this->user->isAllowed( 'wikialabsuser' )) {
+		if($this->getUser()->isAllowed( 'wikialabsuser' )) {
 			$list[] = array(
 				'text' => wfMsg( 'wikialabs' ),
 				'name' => 'wikialabsuser',
