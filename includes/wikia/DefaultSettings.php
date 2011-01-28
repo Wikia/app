@@ -127,6 +127,9 @@ $wgAutoloadClasses['UserStatsService'] = $IP.'/includes/wikia/services/UserStats
 $wgAutoloadClasses['PaypalPaymentService'] = $IP.'/includes/wikia/services/PaypalPaymentService.class.php';
 $wgHooks['PayPalInstantPaymentNotification'][] = 'PaypalPaymentService::onInstantPaymentNotification';
 $wgAutoloadClasses['CategoriesService'] = $IP.'/includes/wikia/services/CategoriesService.class.php';
+$wgAutoloadClasses['UserCommandsService'] = $IP.'/includes/wikia/services/UserCommandsService.class.php';
+$wgAutoloadClasses['ToolbarService'] = $IP.'/includes/wikia/services/OasisToolbarService.class.php';
+$wgAutoloadClasses['OasisToolbarService'] = $IP.'/includes/wikia/services/OasisToolbarService.class.php';
 $wgAutoloadClasses['FogbugzService'] = $IP . '/includes/wikia/services/FogbugzService.class.php';
 $wgAutoloadClasses['MinifyService'] = $IP . '/includes/wikia/services/MinifyService.class.php';
 

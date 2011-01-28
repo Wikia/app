@@ -3,11 +3,6 @@ class FooterModule extends Module {
 
 	var $wgBlankImgUrl;
 
-	var $showLike;
-	var $showShare;
-	var $showFollow;
-	var $showMyTools;
-	var $follow;
 	var $showToolbar;
 	var $showNotifications;
 	var $showLoadTime;
@@ -24,101 +19,10 @@ class FooterModule extends Module {
 
 		// show only "My Tools" dropdown on toolbar
 		if (!empty($wgShowMyToolsOnly)) {
-			$this->showMyTools = true;
 			return;
 		}
 
-		if(isset(self::$skinTemplateObj->data['content_actions']['watch'])) {
-			$this->follow = self::$skinTemplateObj->data['content_actions']['watch'];
-			$this->follow['action'] = 'watch';
-		} else if(isset(self::$skinTemplateObj->data['content_actions']['unwatch'])) {
-			$this->follow = self::$skinTemplateObj->data['content_actions']['unwatch'];
-			$this->follow['action'] = 'unwatch';
-		}
-
 		$this->showNotifications = true;
-
-		$namespace = $wgTitle->getNamespace();
-
-		if(false) {
-
-			/*
-			global $wgRequest;
-			$action = $wgRequest->getVal('action');
-			if($action == 'edit' || $action == 'submit') {
-			}
-			*/
-
-		} else if(in_array($namespace, $wgContentNamespaces)) {
-
-			// content namespaces
-
-			$this->showLike = true;
-			$this->showShare = true;
-			$this->showFollow = true;
-			$this->showMyTools = true;
-
-		} else if($wgTitle->isTalkPage() || $namespace == NS_USER_TALK) {
-
-			// article talk page
-			// user talk page
-
-			$this->showFollow = true;
-			$this->showMyTools = true;
-
-		} else if(defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) {
-
-			// blog post page and user blog listing page
-
-			if(!$wgTitle->isSubpage()) {
-				$this->showLike = true;
-			}
-			$this->showShare = true;
-			$this->showFollow = true;
-			$this->showMyTools = true;
-
-		} else if(defined('NS_BLOG_LISTING') && $namespace == NS_BLOG_LISTING) {
-
-			// blog listing
-
-			$this->showShare = true;
-			$this->showFollow = true;
-			$this->showMyTools = true;
-
-		} else if($namespace == NS_SPECIAL) {
-
-			// special pages
-
-			$this->showShare = true;
-			$this->showMyTools = true;
-
-		} else if($namespace == NS_TEMPLATE) {
-
-			// template pages
-
-			$this->showShare = true;
-			$this->showFollow = true;
-			$this->showMyTools = true;
-
-		//} else if($namespace == NS_MEDIAWIKI || $namespace == NS_CATEGORY || $namespace == NS_MAIN || $namespace == NS_USER) {
-		} else {
-
-			// default
-			// main page
-			// user pages
-			// category pages
-			// mediawiki pages
-
-			$this->showLike = true;
-			$this->showShare = true;
-			$this->showFollow = true;
-			$this->showMyTools = true;
-
-		}
-
-		if($wgUser->isAnon()) {
-			$this->showMyTools = false;
-		}
 
 		// If this user is a member of staff, display the 'loadtime' stats in the footer bar.
 		$this->showLoadTime = false;
@@ -129,4 +33,73 @@ class FooterModule extends Module {
 			}
 		}
 	}
+	
+	static protected $toolbarService = null;
+	
+	protected function getToolbarService() {
+		if (empty(self::$toolbarService)) {
+			self::$toolbarService = new OasisToolbarService();
+		}
+		return self::$toolbarService;
+	}
+	
+	
+	public function executeToolbar() {
+		$service = $this->getToolbarService();
+		$this->toolbar = $service->listToInstance($service->getVisibleList());
+	}
+	
+	public function executeToolbarConfigurationPopup() {
+	}
+	
+	public function executeToolbarConfigurationRenameItemPopup() {
+	}
+	
+	public function executeToolbarConfiguration() {
+		$this->configurationHtml = wfRenderModule('Footer','ToolbarConfigurationPopup');
+		$this->renameItemHtml = wfRenderModule('Footer','ToolbarConfigurationRenameItemPopup');
+		
+		$service = $this->getToolbarService();
+		$this->defaultOptions = $service->listToJson($service->getDefaultList());
+		$this->options = $service->listToJson($service->getCurrentList());
+		$this->allOptions = $service->sortJsonByCaption($service->listToJson($service->getAllList()));
+		$this->popularOptions = $service->sortJsonByCaption($service->listToJson($service->getPopularList()));
+	}
+	
+	public function executeToolbarSave( $params ) {
+		$this->status = false;
+		$service = $this->getToolbarService();
+		if (isset($params['toolbar']) && is_array($params['toolbar'])) {
+			$data = $service->jsonToList($params['toolbar']);
+			if (!empty($data)) {
+				global $wgUser;
+				$this->status = $service->save($data);
+			}
+		}
+		$this->toolbar = wfRenderModule('Footer','Toolbar');
+	}
+	
+	public function executeToolbarGetList() {
+		$service = $this->getToolbarService();
+		$this->allOptions = $service->listToJson($service->getAllList());
+	}
+	
+	public function executeDebug() {
+		global $wgRequest;
+		$service = $this->getToolbarService();
+		if ($wgRequest->getVal('clear',false)) {
+			$service->clear();
+		}
+		$this->defaultList = $service->listToJson($service->getDefaultList());
+		$this->storedList = $service->load();
+		$this->currentList = $service->listToJson($service->getCurrentList());
+		
+		$this->seenPromotions = $service->getSeenPromotions();
+		
+		global $wgUser;
+		$data = $wgUser->getOption('myTools',false);
+		$data = $data ? json_decode($data,true) : false;
+		$this->myTools = $data;
+	}
+	
 }
