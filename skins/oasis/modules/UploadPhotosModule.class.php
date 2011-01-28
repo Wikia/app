@@ -4,6 +4,7 @@
  */
  
 class UploadPhotosModule extends Module {
+	const UPLOAD_WARNING = 12;
 
 	var $wgScriptPath;
 	var $licensesHtml;
@@ -40,33 +41,38 @@ class UploadPhotosModule extends Module {
 		$details = null;
 		$up = new UploadFromFile();
 		$up->initializeFromRequest($wgRequest);
-		$title = $up->getTitle();
+		$permErrors = $up->verifyPermissions( $wgUser );
 		
-		$details = $up->verifyUpload();
-		
-		$this->status = (is_array($details) ? $details['status'] : UploadBase::UPLOAD_VERIFICATION_ERROR);
-		$this->statusMessage = '';
-		
-		if ($this->status > 0) {
-			$this->statusMessage = $this->uploadMessage($this->status, $details);
+		if ( $permErrors !== true ) {
+			$this->status = self::UPLOAD_WARNING;
+			$this->statusMessage = $this->uploadMessage($this->status);
 		} else {
-			$warnings = array();
-			if(!$this->ignorewarning) {
-				$warnings = $up->checkWarnings();
-				if(!empty($warnings)) {
-					$this->status = 12;
-					$this->statusMessage .= $this->uploadWarning($warnings);
+			$details = $up->verifyUpload();
+			
+			$this->status = (is_array($details) ? $details['status'] : UploadBase::UPLOAD_VERIFICATION_ERROR);
+			$this->statusMessage = '';
+			
+			if ($this->status > 0) {
+				$this->statusMessage = $this->uploadMessage($this->status, $details);
+			} else {
+				$warnings = array();
+				if(!$this->ignorewarning) {
+					$warnings = $up->checkWarnings();
+					if(!empty($warnings)) {
+						$this->status = self::UPLOAD_WARNING;
+						$this->statusMessage .= $this->uploadWarning($warnings);
+					}
 				}
-			}
-			if(empty($warnings)) {
-				$pageText = SpecialUpload::getInitialPageText( $this->defaultcaption, $this->license,
-					$this->copyrightstatus, $this->copyrightsource );
-				$status = $up->performUpload( $this->defaultcaption, $pageText, $this->watchthis, $wgUser );
-				if ($status->isGood()) {
-					$aPageProps = array ( 'default_caption' => $this->defaultcaption );
-					Wikia::setProps( $title->getArticleID(), $aPageProps );
-				} else {
-					$this->statusMessage .= "something is wrong with upload";
+				if(empty($warnings)) {
+					$pageText = SpecialUpload::getInitialPageText( $this->defaultcaption, $this->license,
+						$this->copyrightstatus, $this->copyrightsource );
+					$status = $up->performUpload( $this->defaultcaption, $pageText, $this->watchthis, $wgUser );
+					if ($status->isGood()) {
+						$aPageProps = array ( 'default_caption' => $this->defaultcaption );
+						Wikia::setProps( $up->getTitle()->getArticleID(), $aPageProps );
+					} else {
+						$this->statusMessage .= "something is wrong with upload";
+					}
 				}
 			}
 		}
@@ -137,7 +143,10 @@ class UploadPhotosModule extends Module {
 			case UploadBase::VERIFICATION_ERROR:
 				$msg = wfMsgHtml($details['details'][0]);
 				break;
-
+			
+			case self::UPLOAD_WARNING:
+				$msg = wfMsg( 'badaccess' );
+				break;
 			default:
 				throw new MWException( __METHOD__ . ": Unknown value `{$value}`" );
 	 	}

@@ -198,73 +198,85 @@ class ThemeDesignerModule extends Module {
 	}
 
 	public function executeWordmarkUpload() {
-		global $wgRequest;
+		global $wgRequest, $wgUser;
 		
 		$upload = new UploadWordmarkFromFile();
 
 		$upload->initializeFromRequest( $wgRequest );
-		$details = $upload->verifyUpload();
-
-		if ( $details[ 'status' ] != UploadBase::OK ) {
-			$this->errors = array( $this->getUploadErrorMessage( $details ) );
+		$permErrors = $upload->verifyPermissions( $wgUser );
+		
+		if ( $permErrors !== true ) {
+			$this->errors = array( wfMsg( 'badaccess' ) );
 		} else {
-			$warnings = $upload->checkWarnings();
-
-			if ( !empty( $warnings ) ) {
-				$this->errors = $this->getUploadWarningMessages( $warnings );
+			$details = $upload->verifyUpload();
+	
+			if ( $details[ 'status' ] != UploadBase::OK ) {
+				$this->errors = array( $this->getUploadErrorMessage( $details ) );
 			} else {
-				//save temp file
-				$status = $upload->performUpload();
-				
-				if( $status->isGood() ) {
-					$file = $upload->getLocalFile();
-					$this->wordmarkImageUrl = wfReplaceImageServer( $file->getUrl() );
-					$this->wordmarkImageName = $file->getName();
-				}
-				
-				// if wordmark url is not set then it means there was some problem
-				if ( empty( $this->wordmarkImageUrl ) || empty( $this->wordmarkImageName ) ) {
-					$this->errors = array( wfMsg( 'themedesigner-uknown-error' ) );
+				$warnings = $upload->checkWarnings();
+	
+				if ( !empty( $warnings ) ) {
+					$this->errors = $this->getUploadWarningMessages( $warnings );
+				} else {
+					//save temp file
+					$status = $upload->performUpload();
+					
+					if( $status->isGood() ) {
+						$file = $upload->getLocalFile();
+						$this->wordmarkImageUrl = wfReplaceImageServer( $file->getUrl() );
+						$this->wordmarkImageName = $file->getName();
+					}
+					
+					// if wordmark url is not set then it means there was some problem
+					if ( empty( $this->wordmarkImageUrl ) || empty( $this->wordmarkImageName ) ) {
+						$this->errors = array( wfMsg( 'themedesigner-uknown-error' ) );
+					}
 				}
 			}
 		}
 	}
 
 	public function executeBackgroundImageUpload() {
-		global $wgRequest;
+		global $wgRequest, $wgUser;
 		
 		$upload = new UploadBackgroundFromFile();
 
 		$upload->initializeFromRequest( $wgRequest );
-		$details = $upload->verifyUpload();
-
-		if ( $details[ 'status' ] != UploadBase::OK ) {
-			$this->errors = array( $this->getUploadErrorMessage( $details ) );
+		$permErrors = $upload->verifyPermissions( $wgUser );
+		
+		if ( $permErrors !== true ) {
+			$this->errors = array( wfMsg( 'badaccess' ) );
 		} else {
-			$warnings = $upload->checkWarnings();
-
-			if ( !empty( $warnings ) ) {
-				$this->errors = $this->getUploadWarningMessages( $warnings );
+			$details = $upload->verifyUpload();
+	
+			if ( $details[ 'status' ] != UploadBase::OK ) {
+				$this->errors = array( $this->getUploadErrorMessage( $details ) );
 			} else {
-				$this->backgroundImageAlign = $upload->getImageAlign();
-
-				//save temp file
-				//save temp file
-				$status = $upload->performUpload();
-				
-				if( $status->isGood() ) {
-					$file = $upload->getLocalFile();
-					$this->backgroundImageUrl = wfReplaceImageServer( $file->getUrl() );
-					$this->backgroundImageName = $file->getName();
-
-					//get cropped URL
-					$is = new imageServing( null, 120, array( "w"=>"120", "h"=>"100" ) );
-					$this->backgroundImageThumb = wfReplaceImageServer( $file->getThumbUrl( $is->getCut( $file->width, $file->height, "origin" ) . "-" . $file->name ) );
-				}
-
-				// if background image url is not set then it means there was some problem
-				if ( empty( $this->backgroundImageUrl ) ) {
-					$this->errors = array( wfMsg( 'themedesigner-uknown-error' ) );
+				$warnings = $upload->checkWarnings();
+	
+				if ( !empty( $warnings ) ) {
+					$this->errors = $this->getUploadWarningMessages( $warnings );
+				} else {
+					$this->backgroundImageAlign = $upload->getImageAlign();
+	
+					//save temp file
+					//save temp file
+					$status = $upload->performUpload();
+					
+					if( $status->isGood() ) {
+						$file = $upload->getLocalFile();
+						$this->backgroundImageUrl = wfReplaceImageServer( $file->getUrl() );
+						$this->backgroundImageName = $file->getName();
+	
+						//get cropped URL
+						$is = new imageServing( null, 120, array( "w"=>"120", "h"=>"100" ) );
+						$this->backgroundImageThumb = wfReplaceImageServer( $file->getThumbUrl( $is->getCut( $file->width, $file->height, "origin" ) . "-" . $file->name ) );
+					}
+	
+					// if background image url is not set then it means there was some problem
+					if ( empty( $this->backgroundImageUrl ) ) {
+						$this->errors = array( wfMsg( 'themedesigner-uknown-error' ) );
+					}
 				}
 			}
 		}
