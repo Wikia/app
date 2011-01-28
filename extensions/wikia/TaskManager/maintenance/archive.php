@@ -14,7 +14,7 @@ require_once( "Maintenance.php" );
 class TaskManagerArchive extends Maintenance {
 
 	const CUTOFFDAYS = 30;
-	const LIMIT      = 50000;
+	const LIMIT      = 100000;
 
 	private $mData;
 
