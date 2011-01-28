@@ -45,7 +45,7 @@ class UploadPhotosModule extends Module {
 		
 		if ( $permErrors !== true ) {
 			$this->status = self::UPLOAD_WARNING;
-			$this->statusMessage = $this->uploadMessage($this->status);
+			$this->statusMessage = $this->uploadMessage( $this->status, null );
 		} else {
 			$details = $up->verifyUpload();
 			
