@@ -95,9 +95,9 @@ class imageServing{
 			/* build list of images to get info about it */
 			while ($row =  $db->fetchRow( $res ) ) {
 				$props = unserialize( $row['props'] );
-				foreach( $props as $key => $value ) {
-					if( empty($image_list[$value][$row['page_id']]) && ($image_list[$value][$row['page_id']] !== 0) ) {
-						if( empty($image_list[$value]) ) {
+				foreach ( $props as $key => $value ) {
+					if ( !isset($image_list[$value][$row['page_id']]) ) {
+						if ( empty($image_list[$value]) ) {
 							$images_name[] = $value;
 						}
 						$image_list[$value][$row['page_id']] = $key;
