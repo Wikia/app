@@ -619,10 +619,9 @@ $(function() {
 			<li <?php echo ( $tab === "ezsharedupload" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "ezsharedupload", $tab, $wiki->city_id ); ?>
 			</li>
-			<?php /* hiding this for now
 			<li <?php echo ( $tab === "eznamespace" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "eznamespace", $tab, $wiki->city_id ); ?>
-			</li> */ ?>
+			</li>
 		</ul>
 <?php
 	}
@@ -641,52 +640,55 @@ $(function() {
 		</ul>
 <?php
 	}
+
 	switch( $tab ):
 		case "info":
 			include_once( "form-info.tmpl.php" );
-		break;
+			break;
 
 		case "variables":
 			include_once( "form-variables.tmpl.php" );
-		break;
+			break;
 
 			case "ezsharedupload":
 				include_once( "form-shared-upload.tmpl.php" );
-			break;
+				break;
 
-			#case "eznamespace":
-			#	print "coming soon!\n";
-			#break;
+			case "eznamespace":
+				include_once( "form-namespace.tmpl.php" );
+				break;
 
 		case "domains":
 			include_once( "form-domains.tmpl.php" );
-		break;
+			break;
 
 		case "hubs":
 			include_once( "form-hubs.tmpl.php" );
-		break;
+			break;
 
 		case "clog":
 			include_once( "form-clog.tmpl.php" );
-		break;
+			break;
 
 		case "tags":
 			include_once( "form-tags.tmpl.php" );
-		break;
+			break;
 
 			case "masstags":
 				include_once( "form-tags-mass.tmpl.php" );
-			break;
+				break;
 
 			case "findtags":
 				include_once( "form-tags-find.tmpl.php" );
-			break;
+				break;
+
 		case "google":
 			include_once( "form-google.tmpl.php" );
 			break;
+
 		case "close":
 			include_once( "form-close.tmpl.php" );
-		break;
+			break;
 
 	endswitch;
 ?>
