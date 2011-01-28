@@ -5,38 +5,23 @@
  * @addtopackage maintenance
  */
 
-#
-# note! this table has to be created on archive storage, not wikicities table
-#
-# CREATE TABLE  IF NOT EXISTS `wikia_tasks` (
-#  `task_id` int(11) NOT NULL auto_increment,
-#  `task_user_id` int(5) unsigned NOT NULL default '0',
-#  `task_type` varchar(255) NOT NULL default '',
-#  `task_priority` tinyint(4) NOT NULL default '0',
-#  `task_status` tinyint(4) NOT NULL default '0',
-#  `task_started` char(14) NOT NULL,
-#  `task_finished` char(14) NOT NULL,
-#  `task_arguments` text,
-#  `task_log` mediumblob,
-#  `task_added` char(14) NOT NULL,
-#  PRIMARY KEY  (`task_id`),
-#  KEY `task_added_idx` (`task_added`)
-#) ENGINE=InnoDB;
-#
-
-
 ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
-require_once( "commandLine.inc" );
+require_once( "Maintenance.php" );
 
 /**
  * archive rows in dataware/archive database
  */
-class TaskManagerArchive {
+class TaskManagerArchive extends Maintenance {
 
 	const CUTOFFDAYS = 30;
-	const LIMIT      = 10000;
+	const LIMIT      = 50000;
 
 	private $mData;
+
+	public function __construct() {
+		parent::__construct();
+		$this->mDescription = "Remove old entries from Task Manager table.";
+	}
 
 	/**
 	 * main entry point
@@ -60,11 +45,9 @@ class TaskManagerArchive {
 	 */
 	private function getRows() {
 
-		global $wgExternalSharedDB;
-
 		wfProfileIn( __METHOD__ );
 
-		$dbr = WikiFactory::db( DB_SLAVE, array(), $wgExternalSharedDB );
+		$dbr = WikiFactory::db( DB_SLAVE );
 		$res = $dbr->select(
 			array( "wikia_tasks" ),
 			array(
@@ -122,10 +105,9 @@ class TaskManagerArchive {
 	 */
 	private function moveRows() {
 
-		global $wgExternalArchiveDB;
 		wfProfileIn( __METHOD__ );
 
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalArchiveDB );
+		$dbw = WikiFactory::db( DB_MASTER );
 		$dbw->begin();
 		foreach( $this->mData as $num => $task ) {
 			$values = array(
@@ -150,6 +132,7 @@ class TaskManagerArchive {
 			$this->mData[ $num ]->moved = true;
 		}
 		$dbw->commit();
+
 		wfProfileOut( __METHOD__ );
 
 		return true;
@@ -162,18 +145,16 @@ class TaskManagerArchive {
 	 */
 	private function removeRows() {
 
-		global $wgExternalSharedDB;
-
 		wfProfileIn( __METHOD__ );
 
-		$dbw = WikiFactory::db( DB_MASTER, array(), $wgExternalSharedDB );
+		$dbw = WikiFactory::db( DB_MASTER );
 
 		foreach( $this->mData as $num => $task ) {
 			if( !empty( $task->moved ) ) {
 				$dbw->delete(
 					"wikia_tasks",
 					array( "task_id" => $task->task_id ),
-					__method__
+					__METHOD__
 				);
 				Wikia::log( __METHOD__, "", sprintf("Task id=%d type=%s added=%s removed.", $task->task_id, $task->task_type, $task->task_added ) );
 			}
@@ -185,6 +166,5 @@ class TaskManagerArchive {
 	}
 }
 
-
-$taskArchive = new TaskManagerArchive();
-$taskArchive->execute();
+$maintClass = "TaskManagerArchive";
+require_once( DO_MAINTENANCE );
