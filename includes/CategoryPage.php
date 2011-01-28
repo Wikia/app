@@ -97,8 +97,7 @@ class CategoryViewer {
 		$r = $this->getSubcategorySection() .
 			$this->getPagesSection() .
 			$this->getImageSection() .
-			$this->getOtherSection() .
-			$this->getCategoryBottom();
+			$this->getOtherSection();
 
 		if ( $r == '' ) {
 			// If there is no category content to display, only
