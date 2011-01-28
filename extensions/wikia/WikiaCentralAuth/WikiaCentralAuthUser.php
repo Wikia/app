@@ -370,7 +370,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	protected function getCacheKey() {
 		global $wgWikiaCentralAuthMemcPrefix;
 		
-		$memcKey = wfMemcKey( $wgWikiaCentralAuthMemcPrefix, 'id', md5( $this->mName ) );
+		$memcKey = wfMemcKey($wgWikiaCentralAuthMemcPrefix . md5( $this->mName )); 
 
 		return $memcKey;
 	}
