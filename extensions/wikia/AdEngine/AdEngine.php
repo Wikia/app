@@ -11,7 +11,7 @@ $wgHooks['BeforePageDisplay'][] = 'adEngineAdditionalScripts';
 $wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
 
 function wfAdEngineSetupJSVars($vars) {
-	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC, $wgAdslot_INVISIBLE_1, $wgAdDriverCookieLifetime;
+	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC, $wgAdslot_INVISIBLE_1, $wgAdDriverCookieLifetime, $wgCityId;
 
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 	$vars['wgNoExternals'] = $wgNoExternals;
@@ -27,6 +27,9 @@ function wfAdEngineSetupJSVars($vars) {
 
 	// ArticleAdLogic
 	$vars['adLogicPageType'] = ArticleAdLogic::getPageType();
+
+	// ProviderValues (for DART requests)
+	$vars['ProviderValues'] = AdEngine::getProviderValues($wgCityId);
 
 	return true;
 }
@@ -149,9 +152,6 @@ class AdEngine {
 		$called = true;
 
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
-
-		$out .= AdEngine::getInstance()->providerValuesAsJavascript($wgCityId);
-		$out .=  '<script type="text/javascript" src="'. $wgExtensionsPath .'/wikia/AdEngine/AdConfig.js?' . self::cacheKeyVersion . '"></script>' . "\n";
 
 		// If loading the ads inline, call the set up html for each provider.
 		// If loading delayed, this is done in getDelayedAdLoading method instead.
@@ -731,12 +731,24 @@ EOT;
 	 * Key value string as a javascript variable.
 	 */
 	public function providerValuesAsJavascript($city_id){
-		global $wgMemc, $wgRequest, $wgExternalSharedDB;
-		$cacheKey = wfMemcKey(__CLASS__ . 'dartkeyvalues', self::cacheKeyVersion);
+		$providerValues = self::getProviderValues($city_id);
 
-		$out = $wgMemc->get($cacheKey);
-		if (!empty($out) &&  $wgRequest->getVal('action') != 'purge'){
-			return $out;
+		$out =  '<script type="text/javascript">' . "\n" .
+			'ProviderValues = {};' . "\n" .
+			'ProviderValues.list = ' . json_encode($providerValues['list']) . ";\n" .
+			'ProviderValues.string = "' . $providerValues['string'] . '"' . ";\n" .
+			'</script>';
+
+		return $out;
+	}
+
+	public static function getProviderValues($city_id) {
+		global $wgMemc, $wgRequest, $wgExternalSharedDB;
+		$cacheKey = wfMemcKey(__CLASS__ . 'providervalues', self::cacheKeyVersion);
+
+		$providerValues = $wgMemc->get($cacheKey);
+		if (!empty($providerValues) &&  $wgRequest->getVal('action') != 'purge'){
+			return $providerValues;
 		}
 
 		$db = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
@@ -752,15 +764,13 @@ EOT;
 			$string .= $row->keyname . '=' . urlencode($row->keyvalue) . ';';
 		}
 
-		$out =  '<script type="text/javascript">' . "\n" .
-			'ProviderValues = {};' . "\n" .
-			'ProviderValues.list = ' . json_encode($list) . ";\n" .
-			'ProviderValues.string = "' . $string . '"' . ";\n" .
-			'</script>';
+		$providerValues = array();
+		$providerValues['list'] = $list;
+		$providerValues['string'] = $string;
 
-		$wgMemc->set($cacheKey, $out, self::cacheTimeout);
+		$wgMemc->set($cacheKey, $providerValues, self::cacheTimeout);
 
-		return $out;
+		return $providerValues;
 	}
 
 

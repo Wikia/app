@@ -1,13 +1,10 @@
 /* requires jquery */
 /* requires AdEngine.js */
 /* requires Liftium.js */
-/* requires extensions/wikia/Geo/geo.js */
-/* requires extensions/wikia/QuantcastSegments/qcs.js */
 /* requires extensions/wikia/AdEngine/ghost */
 
 ///// BEGIN AdDriver
 var AdDriver = {
-	geoData: Geo.getGeoData(),
 	minNumDARTCall: 3,
 	cookieNameNumAllCall: 'adDriverNumAllCall',
 	cookieNameNumDARTCall: 'adDriverNumDARTCall',
@@ -21,18 +18,6 @@ var AdDriver = {
 	log: function(msg) {
 		$().log('AdDriver: ' + msg);
 	}
-}
-
-AdDriver.isNoAdWiki = function() {
-	switch (wgDB) {
-		case 'diabetesindogs':
-		case 'help':
-		case 'lahomeless':
-		case 'wikicities':
-			return true;
-	}
-
-	return false;
 }
 
 AdDriver.getAdProviderForSpecialCase = function(slotname) {
@@ -109,48 +94,7 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 }
 
 AdDriver.isHighValue = function(slotname) {
-	switch (slotname) {
-		case 'CORP_TOP_LEADERBOARD':
-		case 'HOME_TOP_LEADERBOARD':
-		case 'TOP_LEADERBOARD':
-		case 'CORP_TOP_RIGHT_BOXAD':
-		case 'HOME_TOP_RIGHT_BOXAD':
-		case 'TEST_HOME_TOP_RIGHT_BOXAD':
-		case 'TEST_TOP_RIGHT_BOXAD':
-		case 'TOP_RIGHT_BOXAD':
-		case 'HOME_TOP_RIGHT_BUTTON':
-		case 'TOP_RIGHT_BUTTON':
-		case 'HOME_INVISIBLE_TOP':
-		case 'INVISIBLE_TOP':	// skin
-		case 'INVISIBLE_1':		// footer
-		case 'EXIT_STITIAL_BOXAD_1':
-			// continue processing after switch
-			break;
-		default:
-			return false;
-	}
-
-	if (typeof AdDriver.geoData != 'undefined' && AdDriver.geoData) {
-		switch (AdDriver.geoData['country']) {
-			case 'CA':
-			case 'DE':
-			case 'ES':
-			case 'FR':
-			case 'GB':
-			case 'IT':
-			case 'UK':
-			case 'US':
-				// continue processing after switch
-				break;
-			default:
-				return false;
-		}
-	}
-	else {
-		return false;
-	}
-
-	return true;
+	return AdConfig.isHighValueCountry(AdConfig.geo.country) && AdConfig.isHighValueSlot(slotname);
 }
 
 AdDriver.getNumDARTCall = function(slotname) {
@@ -373,110 +317,22 @@ AdDriver.init();
 //// END AdDriver
 
 //// BEGIN AdDriverDelayedLoaderItem
-var AdDriverDelayedLoaderItem = function (slotname, size, dartUrl) {
+var AdDriverDelayedLoaderItem = function (slotname, size) {
 	this.clientWidth = 0;
 	this.clientHeight = 0;
 	this.hasPrefooters = null;
-
-	this.replaceTokensInDARTUrl = function(url) {
-
-		// tile and ord are synchronized only for DART calls made by AdDriver.
-		// DART calls made by Liftium will have different tile and ord values.
-
-		// tile
-		if (typeof(window.dartTile) == 'undefined') {
-			window.dartTile = 1;
-		}
-		url = url.replace("tile=N;", "tile="+(window.dartTile++)+";");
-
-		// ord
-		if (typeof(window.dartOrd) == 'undefined') {
-			window.dartOrd = Math.floor(Math.random()*10000000000000000);
-		}
-		url = url.replace("ord=N?", "ord="+window.dartOrd+"?");
-
-		// screen resolution
-		if (!this.clientWidth || !this.clientHeight) {
-			this.clientWidth = document.documentElement.clientWidth || document.body.clientWidth;
-			this.clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
-		}
-		if (this.clientWidth > 1024) {
-			url = url.replace('dis=N;', 'dis=large;');
-		} else {
-			url = url.replace('dis=N;', '');
-		}
-
-		// prefooter ads?
-		if (!this.hasPrefooters) {
-			if (AdEngine.isSlotDisplayableOnCurrentPage('PREFOOTER_LEFT_BOXAD')) {
-				this.hasPrefooters = 'yes';
-			} else {
-				this.hasPrefooters = 'no';
-			}
-		}
-		url = url.replace('hasp=N;', 'hasp='+this.hasPrefooters+';');
-
-		// Quantcast Segments
-		if (typeof(QuantcastSegments) !== "undefined") {
-			var qcsegs = QuantcastSegments.getQcsegAsDARTKeyValues();
-			url = url.replace("qcseg=N;", qcsegs);
-		}
-
-		// impression count
-		// the first time this is called, getNumAllCall() returns zero. To make this the 'first' impression, add one
-		url = url.replace('impct=N;', 'impct=' + (parseInt(AdDriver.getNumAllCall(slotname))+1) + ';'); 
-
-		// continent/region
-		if (typeof AdDriver.geoData != 'undefined' && AdDriver.geoData) {
-			var subdomain = '';
-			switch (AdDriver.geoData['continent']) {
-				case 'AF':
-				case 'EU':
-					subdomain = 'ad-emea';
-					break;
-				case 'AS':
-					switch (AdDriver.geoData['country']) {
-						// Middle East
-						case 'AE':
-						case 'CY':
-						case 'BH':
-						case 'IL':
-						case 'IQ':
-						case 'IR':
-						case 'JO':
-						case 'KW':
-						case 'LB':
-						case 'OM':
-						case 'PS':
-						case 'QA':
-						case 'SA':
-						case 'SY':
-						case 'TR':
-						case 'YE':
-							subdomain = 'ad-emea';
-							break;
-						default:
-							subdomain = 'ad-apac';
-					}
-					break;
-				case 'OC':
-					subdomain = 'ad-apac';
-					break;
-				case 'NA':
-				case 'SA':
-				default:
-					subdomain = 'ad';
-			}
-
-			url = url.replace('http://ad.doubleclick', 'http://'+subdomain+'.doubleclick');
-		}
-
-		return url;
-	};
-
 	this.slotname = slotname;
 	this.size = size;
-	this.dartUrl = this.replaceTokensInDARTUrl(dartUrl);
+	this.dartUrl = null;
+	// do not generate DART url until it is needed. This allows
+	// for last-minute reordering of slots, and correct value of tile
+	this.getDARTUrl = function (){
+		if (!this.dartUrl) {
+			this.dartUrl = AdConfig.DART.getUrl(slotname, size, false, 'AdDriver');
+		}
+
+		return this.dartUrl;
+	};
 }
 //// END AdDriverDelayedLoaderItem
 
@@ -515,7 +371,7 @@ AdDriverDelayedLoader.callDART = function() {
 		slot,
 		{
 			insertType: "append",
-			script: { src: AdDriverDelayedLoader.currentAd.dartUrl },
+			script: { src: AdDriverDelayedLoader.currentAd.getDARTUrl() },
 			done: function() { 
 
 				ghostwriter.flushloadhandlers();
@@ -609,7 +465,7 @@ AdDriverDelayedLoader.loadNext = function() {
 	if (AdDriverDelayedLoader.adDriverItems.length) {
 		AdDriverDelayedLoader.currentAd = AdDriverDelayedLoader.adDriverItems.shift();
 		if (AdEngine.isSlotDisplayableOnCurrentPage(AdDriverDelayedLoader.currentAd.slotname)) {
-			var adProvider = AdDriver.getAdProvider(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriverDelayedLoader.currentAd.dartUrl);
+			var adProvider = AdDriver.getAdProvider(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriverDelayedLoader.currentAd.getDARTUrl());
 
 			// increment number of pageviews
 			if (adProvider == 'DART' || adProvider == 'Liftium') {
@@ -676,10 +532,8 @@ AdDriverDelayedLoader.load = function() {
 		$().log('AdDriver started loading after ' + loadTime + ' ms');
 	}
 
-	if (AdDriver.isNoAdWiki() && typeof Liftium != 'undefined' && Liftium) {
-		Liftium.hasMoreCalls = 0;
-		return;
-	}
+	// there used to be a check for no-ad wikis here. In practice, no-ad wikis
+	// have wgShowAds set to false, so this function will never execute
 
 	AdDriverDelayedLoader.reorderItems();
 

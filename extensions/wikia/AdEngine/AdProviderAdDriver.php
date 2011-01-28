@@ -34,7 +34,6 @@ class AdProviderAdDriver implements iAdProvider {
 			$out .= '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint'.$extraClasses.'">';
 		}
 
-		$dartUrl = AdProviderDART::getInstance()->getUrl($slotname, $slot);
 		$out .= <<<EOT
 <script type="text/javascript">
 EOT;
@@ -45,7 +44,7 @@ EOT;
 			AdDriverDelayedLoader.reset();
 			var loadExitstitial = true;
 		}
-		AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem("$slotname", "{$slot['size']}",  "$dartUrl"));
+		AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem("$slotname", "{$slot['size']}"));
 		if (typeof loadExitstitial != 'undefined' && loadExitstitial) {
 			AdDriverDelayedLoader.load();
 		}
@@ -57,7 +56,7 @@ EOT;
 			$out .= <<<EOT
 	wgAfterContentAndJS.push(function() {
 		if (typeof(AdDriverDelayedLoader) != 'undefined') {
-			AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem("$slotname", "{$slot['size']}",  "$dartUrl"));
+			AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem("$slotname", "{$slot['size']}"));
 		}
 	});
 EOT;
@@ -70,8 +69,6 @@ EOT;
 			$out .= '</div>';
 		}
 
-		$out .= AdEngine::getInstance()->getSetupHtml();
-		$out .= $this->getSetupHtml();
 		$out .= AdProviderLiftium::getInstance()->getSetupHtml(array('isCalledAfterOnload'=>1, 'hasMoreCalls'=>1, 'maxLoadDelay'=>3000));
 
 		return $out;
@@ -86,13 +83,7 @@ EOT;
 		}
 		$called = true;
 
-		$out = <<<EOT
-<script type="text/javascript">
-	var dartTile = 1;
-	var dartOrd = Math.random()*10000000000000000;
-</script>
-EOT;
-		//$out .= AdEngine::getInstance()->providerValuesAsJavascript($wgCityId);
+		$out = '';
 
 		return $out;
 	}
