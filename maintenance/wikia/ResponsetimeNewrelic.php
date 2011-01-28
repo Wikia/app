@@ -34,8 +34,11 @@ class ResponseTimeNewRelic {
 
 	public function getData () {
 
-		$options = array (CURLOPT_HTTPHEADER => array("http-x-license-key: $this->licenceKey"));
-		$response = Http::get($this->summaryDataURL, "default", $options);
+		// Crazy workaround for HttpRequest not accepting user options
+		$req = HttpRequest::factory( $this->summaryDataURL, array ('method' => "GET", 'timeout' => 'default') );
+		$req->setHeader("http-x-license-key", $this->licenceKey);
+		$status = $req->execute();
+		$response = $req->getContent();
 		$data = array();
 
 		if ($response) {
