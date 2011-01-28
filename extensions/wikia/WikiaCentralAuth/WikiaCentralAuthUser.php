@@ -326,7 +326,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	protected function getCacheObject() {
 		$this->loadState();
 		$this->loadGroups();
-		//$this->loadOptions();
+		$this->loadOptions();
 
 		$obj = array();
 		foreach( self::$mCacheVars as $var ) {
@@ -469,7 +469,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		$this->mOptions = array();
 		
 		# use user_preferences table
-		//$this->loadOptions();
+		$this->loadOptions();
 		
 		# preferences not found - use user_options
 		if ( empty( $this->mOptions ) ) {
@@ -1202,7 +1202,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	function invalidateCentralUser( User &$oUser ) {
 		wfDebug( __METHOD__ . ": Update Central User data with wgUser values ({$oUser->getName()}) \n" );
 		foreach( self::$mCacheVars as $var ) {
-			if ( !in_array($var, array('mOptions','mGroups') ) ) {
+			if ( !in_array($var, array('mOptions','mGroups','mOptionOverrides') ) ) {
 				if ( isset($oUser->$var) ) {
 					$this->$var = $oUser->$var;
 					$this->mStateDirty = true;
