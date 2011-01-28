@@ -15,6 +15,12 @@ class SpecialCreateTopList extends SpecialPage {
 
 		global $wgExtensionsPath, $wgStyleVersion, $wgStylePath , $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
 
+		//Check blocks
+		if( $wgUser->isBlocked() ) {
+			$wgOut->blockedPage();
+			return;
+		}
+		
 		if( !$this->userCanExecute( $wgUser ) || !Wikia::isOasis() ) {
 			$this->displayRestrictionError();
 			return;
