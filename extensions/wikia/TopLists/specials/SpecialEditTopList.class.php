@@ -22,7 +22,13 @@ class SpecialEditTopList extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		global $wgExtensionsPath, $wgStyleVersion, $wgStylePath , $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
-
+		
+		//Check blocks
+		if( $wgUser->isBlocked() ) {
+			$wgOut->blockedPage();
+			return;
+		}
+		
 		if( !$this->userCanExecute( $wgUser )  || !Wikia::isOasis() ) {
 			$this->displayRestrictionError();
 			return;
