@@ -5,6 +5,7 @@
  */
 
 class WikiaMiniUpload {
+	const USER_PERMISSION_ERROR = -1;
 
 	// this is the function that wraps up the WMU loaded from view, because otherwise
 	// there would be a problem loading the messages
@@ -243,14 +244,18 @@ class WikiaMiniUpload {
 
 	// perform image check
 	function checkImage() {
-		global $IP, $wgRequest;
+		global $IP, $wgRequest, $wgUser;
 
 		$mSrcName = stripslashes($wgRequest->getFileName( 'wpUploadFile' ));
 
 		$upload = new UploadFromFile();
 		$upload->initializeFromRequest($wgRequest);
-		$upload->getTitle(); // yes - this is correct
-
+		$permErrors = $upload->verifyPermissions( $wgUser );
+		
+		if ( $permErrors !== true ) {
+			return self::USER_PERMISSION_ERROR;
+		}
+		
 		$ret = $upload->verifyUpload();
 
 		if(!wfRunHooks('WikiaMiniUpload:BeforeProcessing', $mSrcName)) {
@@ -281,6 +286,8 @@ class WikiaMiniUpload {
 				return wfMsg( 'filetype-bad-extension' );
 			case UploadBase::VERIFICATION_ERROR:
 				return "File type verification error!" ;
+			case self::USER_PERMISSION_ERROR:
+				return wfMsg( 'badaccess' );
 			default:
 				return false;
 		}

@@ -457,7 +457,7 @@ class TopListHelper {
 	}
 
 	static public function uploadImage() {
-		global $wgRequest, $wgUser, $wgFileExtensions, $wgLang;
+		global $wgRequest, $wgUser, $wgFileExtensions, $wgLang, $wgOut;
 
 		if ( $wgRequest->wasPosted() ) {
 			wfLoadExtensionMessages( 'TopLists' );
@@ -466,134 +466,140 @@ class TopListHelper {
 			$upload = new UploadFromFile();
 			
 	                $upload->initializeFromRequest( $wgRequest );
-			$upload->getTitle();//Do not remove, needed to get uploading file info!
-			$details = $upload->verifyUpload();
+			$permErrors = $upload->verifyPermissions( $wgUser );
 			
-			if ( $details[ 'status' ] != UploadBase::OK ) {
+			if ( $permErrors !== true ) {
 				$ret[ 'error' ] = true;
-				
-				switch( $details[ 'status' ] ) {
-
-					/** Statuses that only require name changing **/
-					case UploadBase::MIN_LENGTH_PARTNAME:
-						$ret[ 'message' ] = wfMsgHtml( 'minlength1' );
-						break;
-					case UploadBase::ILLEGAL_FILENAME:
-						$ret[ 'message' ] = wfMsgExt(
-							'illegalfilename',
-							'parseinline',
-							$details['filtered']
-						);
-						break;
-					case UploadBase::OVERWRITE_EXISTING_FILE:
-						$ret[ 'message' ] =  wfMsgExt(
-							$details['overwrite'],
-							'parseinline'
-						);
-						break;
-					case UploadBase::FILETYPE_MISSING:
-						$ret[ 'message' ] = wfMsgExt(
-							'filetype-missing',
-							'parseinline'
-						);
-						break;
-					case UploadBase::EMPTY_FILE:
-						$ret[ 'message' ] = wfMsgHtml( 'emptyfile' );
-						break;
-					case UploadBase::FILETYPE_BADTYPE:
-						$finalExt = $details['finalExt'];
-						
-						$ret[ 'message' ] = wfMsgExt(
-							'filetype-banned-type',
-							array( 'parseinline' ),
-							htmlspecialchars( $finalExt ),
-							implode(
-								wfMsgExt(
-									'comma-separator',
-									array( 'escapenoentities' )
-								),
-								$wgFileExtensions
-							),
-							$wgLang->formatNum( count( $wgFileExtensions ) )
-						);
-						break;
-					case UploadBase::VERIFICATION_ERROR:
-						unset( $details['status'] );
-						$code = array_shift( $details['details'] );
-						$ret[ 'message' ] = wfMsgExt(
-							$code,
-							'parseinline',
-							$details['details']
-						);
-						break;
-					case UploadBase::HOOK_ABORTED:
-						if ( is_array( $details['error'] ) ) { # allow hooks to return error details in an array
-							$args = $details['error'];
-							$error = array_shift( $args );
-						} else {
-							$error = $details['error'];
-							$args = null;
-						}
-
-						$ret[ 'message' ] = wfMsgExt( $error, 'parseinline', $args );
-						break;
-					default:
-						throw new MWException( __METHOD__ . ": Unknown value `{$details['status']}`" );
-				}
+				$ret[ 'message' ] = wfMsg( 'badaccess' );
 			} else {
-				$warnings = $upload->checkWarnings();
+				$details = $upload->verifyUpload();
 				
-				if ( $warnings ) {
-					if (
-						!empty( $warnings[ 'exists' ] ) ||
-						!empty( $warnings[ 'duplicate' ] ) ||
-						!empty( $warnings[ 'duplicate-archive' ] )
-					) {
-						$ret[ 'conflict' ] = true;
-						$ret[ 'message' ] = wfMsg( 'toplists-error-image-already-exists' );
-					} else {
-						$ret[ 'error' ] = true;
-						$ret[ 'message' ] = '';
-						
-						foreach( $warnings as $warning => $args ) {
-							if ( $args === true ) {
-								$args = array();
-							} elseif ( !is_array( $args ) ) {
-								$args = array( $args );
+				if ( $details[ 'status' ] != UploadBase::OK ) {
+					$ret[ 'error' ] = true;
+					
+					switch( $details[ 'status' ] ) {
+	
+						/** Statuses that only require name changing **/
+						case UploadBase::MIN_LENGTH_PARTNAME:
+							$ret[ 'message' ] = wfMsgHtml( 'minlength1' );
+							break;
+						case UploadBase::ILLEGAL_FILENAME:
+							$ret[ 'message' ] = wfMsgExt(
+								'illegalfilename',
+								'parseinline',
+								$details['filtered']
+							);
+							break;
+						case UploadBase::OVERWRITE_EXISTING_FILE:
+							$ret[ 'message' ] =  wfMsgExt(
+								$details['overwrite'],
+								'parseinline'
+							);
+							break;
+						case UploadBase::FILETYPE_MISSING:
+							$ret[ 'message' ] = wfMsgExt(
+								'filetype-missing',
+								'parseinline'
+							);
+							break;
+						case UploadBase::EMPTY_FILE:
+							$ret[ 'message' ] = wfMsgHtml( 'emptyfile' );
+							break;
+						case UploadBase::FILETYPE_BADTYPE:
+							$finalExt = $details['finalExt'];
+							
+							$ret[ 'message' ] = wfMsgExt(
+								'filetype-banned-type',
+								array( 'parseinline' ),
+								htmlspecialchars( $finalExt ),
+								implode(
+									wfMsgExt(
+										'comma-separator',
+										array( 'escapenoentities' )
+									),
+									$wgFileExtensions
+								),
+								$wgLang->formatNum( count( $wgFileExtensions ) )
+							);
+							break;
+						case UploadBase::VERIFICATION_ERROR:
+							unset( $details['status'] );
+							$code = array_shift( $details['details'] );
+							$ret[ 'message' ] = wfMsgExt(
+								$code,
+								'parseinline',
+								$details['details']
+							);
+							break;
+						case UploadBase::HOOK_ABORTED:
+							if ( is_array( $details['error'] ) ) { # allow hooks to return error details in an array
+								$args = $details['error'];
+								$error = array_shift( $args );
+							} else {
+								$error = $details['error'];
+								$args = null;
 							}
-
-							$ret[ 'message' ] .= wfMsgExt( $warning, 'parseinline', $args ) . "/n";
-						}
+	
+							$ret[ 'message' ] = wfMsgExt( $error, 'parseinline', $args );
+							break;
+						default:
+							throw new MWException( __METHOD__ . ": Unknown value `{$details['status']}`" );
 					}
 				} else {
-					$status = $upload->performUpload('/* comment */', '/* page text */', false, $wgUser);
+					$warnings = $upload->checkWarnings();
 					
-					if ( !$status->isGood() ) {
-						$ret[ 'error' ] = true;
-						$ret[ 'message' ] = wfMsg( 'toplists-upload-error-unknown' );
+					if ( $warnings ) {
+						if (
+							!empty( $warnings[ 'exists' ] ) ||
+							!empty( $warnings[ 'duplicate' ] ) ||
+							!empty( $warnings[ 'duplicate-archive' ] )
+						) {
+							$ret[ 'conflict' ] = true;
+							$ret[ 'message' ] = wfMsg( 'toplists-error-image-already-exists' );
+						} else {
+							$ret[ 'error' ] = true;
+							$ret[ 'message' ] = '';
+							
+							foreach( $warnings as $warning => $args ) {
+								if ( $args === true ) {
+									$args = array();
+								} elseif ( !is_array( $args ) ) {
+									$args = array( $args );
+								}
+	
+								$ret[ 'message' ] .= wfMsgExt( $warning, 'parseinline', $args ) . "/n";
+							}
+						}
 					} else {
-						$ret[ 'success' ] = true;
+						$status = $upload->performUpload('/* comment */', '/* page text */', false, $wgUser);
 						
-						$source = new imageServing(
-							null,
-							120,
-							array(
-								"w" => 3,
-								"h" => 2
-							)
-						);
-
-						$thumbs = $source->getThumbnails( array( $upload->getLocalFile() ) );
-						$pictureName = $upload->getTitle()->getText();
-
-						if( !empty( $thumbs[ $pictureName ] ) ) {
-							$ret[ 'name' ] = $thumbs[ $pictureName ][ 'name' ];
-							$ret[ 'url' ] = $thumbs[ $pictureName ][ 'url' ];
+						if ( !$status->isGood() ) {
+							$ret[ 'error' ] = true;
+							$ret[ 'message' ] = wfMsg( 'toplists-upload-error-unknown' );
+						} else {
+							$ret[ 'success' ] = true;
+							
+							$source = new imageServing(
+								null,
+								120,
+								array(
+									"w" => 3,
+									"h" => 2
+								)
+							);
+	
+							$thumbs = $source->getThumbnails( array( $upload->getLocalFile() ) );
+							$pictureName = $upload->getTitle()->getText();
+	
+							if( !empty( $thumbs[ $pictureName ] ) ) {
+								$ret[ 'name' ] = $thumbs[ $pictureName ][ 'name' ];
+								$ret[ 'url' ] = $thumbs[ $pictureName ][ 'url' ];
+							}
 						}
 					}
 				}
 			}
-
+			
 			$response = new AjaxResponse('<script type="text/javascript">window.document.responseContent = ' . json_encode( $ret ) . ';</script>');
 			$response->setContentType('text/html; charset=utf-8');
 			return $response;

@@ -8,6 +8,7 @@
 
 class WikiaPhotoGalleryUpload {
 	const DEFAULT_FILE_FIELD_NAME = 'wpUploadFile';
+	const USER_PERMISSION_ERROR = -1;
 
 	/**
 	 * Handle image upload
@@ -186,11 +187,15 @@ class WikiaPhotoGalleryUpload {
 	 * Perform image name check
 	 */
 	private static function checkImageName( $imageName, $uploadFieldName = self::DEFAULT_FILE_FIELD_NAME ) {
-		global $wgRequest;
+		global $wgRequest, $wgUser;
 
 		$upload = new UploadFromFile();
 		$upload->initializeFromRequest($wgRequest);
-		$upload->getTitle(); // yes - this is correct
+		$permErrors = $upload->verifyPermissions( $wgUser );
+		
+		if ( $permErrors !== true ) {
+			return self::USER_PERMISSION_ERROR;
+		}
 		
 		$ret = $upload->verifyUpload();
 
@@ -276,6 +281,10 @@ class WikiaPhotoGalleryUpload {
 
 			case UploadBase::VERIFICATION_ERROR:
 				$ret = "File type verification error!" ;
+				break;
+			
+			case self::USER_PERMISSION_ERROR:
+				$ret = wfMsg( 'badaccess' );
 				break;
 		}
 
