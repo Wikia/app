@@ -243,7 +243,15 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 }
 
 function getLinkedFiles ( $image ) {
-	global $wgUser;
+	global $wgUser, $wgMemc;
+
+	wfProfileIn( __METHOD__ );
+	$cacheKey = wfMemcKey( __METHOD__, $image->img_name );
+	$cache = $wgMemc->get( $cacheKey );
+	if( is_array($cache) ) {
+		wfProfileOut( __METHOD__ );
+		return $cache;
+	}
 
 	// The ORDER BY ensures we get NS_MAIN pages first
 	$dbr = wfGetDB( DB_SLAVE );
@@ -263,5 +271,11 @@ function getLinkedFiles ( $image ) {
 		$links[] = $sk->link( $name, null, array( 'class' => 'wikia-gallery-item-posted' ) );
 	}
 
+	if ( !empty($links) ) {
+		$wgMemc->set( $cacheKey, $links, 60*15 );
+	}
+	
+	wfProfileOut( __METHOD__ );
+	
 	return $links;
 }
