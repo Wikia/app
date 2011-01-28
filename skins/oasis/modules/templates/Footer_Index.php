@@ -6,38 +6,12 @@
 	 		echo wfRenderModule('Notifications'); 
 	 	} ?> 
 		<ul class="tools">
-
-<?php if($showMyTools) { ?>
-			<li class="mytools">
-				<img src="<?= $wgBlankImgUrl; ?>" class="sprite mytools" height="15" width="15">
-				<a href="#"><?= wfMsg('oasis-mytools') ?></a>
-				<?= wfRenderModule('MyTools') ?>
-			</li>
-<?php } ?>
-<?php if($showFollow && $follow) { ?>
-			<li>
-				<a href="<?= $follow['href'] ?>"><img src="<?= $wgBlankImgUrl; ?>" class="sprite follow" height="15" width="15"></a>
-				<a accesskey= "w" href="<?= $follow['href'] ?>" id="ca-<?= $follow['action'] ?>"><?= $follow['text'] ?></a>
-			</li>
-<?php } ?>
-<?php if($showShare) { ?>
-			<li id="ca-share_feature">
-				<img src="<?= $wgBlankImgUrl; ?>" class="sprite share" height="15" width="15">
-				<a href="#" id="control_share_feature"><?= wfMsg('oasis-share') ?></a>
-			</li>
-<?php } ?>
-<?php if($showLike && false /* we do not have like feature yet available */) { ?>
-			<li>
-				<img src="/skins/oasis/images/icon_footer_like.png">
-				<a href="#"><?= wfMsg('oasis-like') ?></a>
-			</li>
-<?php } ?>
 <?php if($showLoadTime) { ?>
-			<li class="loadtime">
+			<li class="loadtime disable-more">
 				<?= $loadTimeStats ?>
 			</li>
 <?php } ?>
-
+			<?php echo wfRenderModule('Footer','Toolbar'); ?>
 		</ul>
 		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
 		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">

@@ -23,7 +23,7 @@ $messages['en'] = array(
 	'wikialabs-add-project-validator-link' => 'Link cannot be empty',
 	'wikialabs-add-project-validator-prjscreen' => 'Image cannot be empty',
 	'wikialabs-add-project-validator-description' => 'Description cannot be empty',
-	'wikialabs-list-project-title' => 'WikiaLabs',
+	'wikialabs-list-project-title' => 'Wikia Labs',
 	'wikialabs-list-project-add-give-feedback' => 'Give feedback',
 	'wikialabs-list-project-ratings' => 'ratings',
 	'wikialabs-list-project-inactive' => 'inactive', 
@@ -41,7 +41,7 @@ $messages['en'] = array(
 	'wikialabs-staff-empty-project' => 'Select project...',
 	'wikialabs-staff-add' => 'Add lab item',
 
-	'wikialabs-mytools' => 'WikiaLabs',
+	'wikialabs' => 'Wikia Labs',
 	'wikialabs-feedback-submit' => 'Submit',
 
 	'wikialabs-feedback-title' => 'Feedback',

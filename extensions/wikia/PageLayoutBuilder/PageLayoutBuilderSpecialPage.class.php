@@ -27,7 +27,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			$this->mFormData[$key] = "";
 		}
 
-	    parent::__construct( 'PageLayoutBuilder', 'PageLayoutBuilder' );
+	    parent::__construct( 'PageLayoutBuilder', 'plbmanager' );
     }
 
     /**
@@ -848,7 +848,14 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		
 		return true;
 	}
-
+	
+	public static function myTools2( $userCommand, &$options ) {
+		$options['caption'] = wfMsg('plb-mytools-link');
+		$options['href'] = Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullUrl("action=list");
+		
+		return true;
+	}
+	
 	/**
 	 * myTools add link to mytools   
 	 *

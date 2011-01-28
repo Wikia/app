@@ -90,5 +90,6 @@ $wgHooks['EditPage::CategoryBox'][] = 'PageLayoutBuilderSpecialPage::addNewButto
 
 $wgHooks['CreatePage::FetchOptions'][] = 'PageLayoutBuilderSpecialPage::createPageOptions';
 $wgHooks['MyTools::getDefaultTools'][] = 'PageLayoutBuilderSpecialPage::myTools';
+$wgHooks['UserCommand::SpecialPage::PageLayoutBuilder'][] = 'PageLayoutBuilderSpecialPage::myTools2';
 
 $wgAjaxExportList[] = 'PageLayoutBuilderEditor::getPLBEditorData';

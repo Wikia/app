@@ -3,7 +3,7 @@ $.ajaxSetup({cache: true});
 
 // replace stock function for getting rid of response-speed related issues in Firefox
 // @see http://stackoverflow.com/questions/1130921/is-the-callback-on-jquerys-getscript-unreliable-or-am-i-doing-something-wrong
-jQuery.getScript = function(url, callback) {
+jQuery.getScript = function(url, callback, failureFn) {
 	jQuery.ajax({
 		type: "GET",
 		url: url,
@@ -19,6 +19,7 @@ jQuery.getScript = function(url, callback) {
 				}
 			}
 		},
+		error: typeof failure == 'function' ? failureFn : $.noop,
 		dataType: 'script'
 	});
 }
@@ -158,7 +159,7 @@ jQuery['confirm'] = function(options) {
 /* example of usage
 $.showCustomModal('title', '<b>content</b>',
 	{buttons: [
-		{id:'ok', default:true, message:'OK', handler:function(){alert('ok');}},
+		{id:'ok', defaultButton:true, message:'OK', handler:function(){alert('ok');}},
 		{id:'cancel', message:'Cancel', handler:function(){alert('cancel');}}
 	]}
 );
@@ -284,7 +285,7 @@ $.loadJQueryAIM = function(callback) {
 /**
  * Loads library file if it's not already loaded and fires callback
  */
-$.loadLibrary = function(name, file, typeCheck, callback) {
+$.loadLibrary = function(name, file, typeCheck, callback, failureFn) {
 	if (typeCheck === 'undefined') {
 		$().log('loading ' + name, 'loadLibrary');
 
@@ -292,13 +293,70 @@ $.loadLibrary = function(name, file, typeCheck, callback) {
 			$().log(name + ' loaded', 'loadLibrary');
 
 			if (typeof callback == 'function') callback();
-		});
+		},failureFn);
 	}
 	else {
 		$().log(name + ' already loaded', 'loadLibrary');
 
 		if (typeof callback == 'function') callback();
 	}
+}
+
+$.chainFn = function(fn1,fn2) {
+	var fns = Array.prototype.slice.call(arguments,0);
+	return function() {
+		var args = Array.prototype.slice.call(arguments,0);
+		var ex = {};
+		for (var i=0;i<fns.length;i++) {
+			if (typeof fns[i] != 'function')
+				continue;
+			try {
+				fns[i].apply(this,args);
+			} catch (e) {
+				ex[i] = e;
+			}
+		}
+		for (var i=0;i<fns.length;i++) {
+			if (ex[i]) throw ex[i];
+		}
+		return true;
+	};
+}
+
+$.bulkLoad = function(list,success,failure) {
+	var count = list.length, done = 0;
+	var successFn = function() { if (done >= 0) done++; if (done >= count) success(); };
+	var failureFn = function() { failure(); done = -1; };
+	for (var i=0;i<list.length;i++) {
+		var el = list[i];
+		switch (typeof el) {
+		case 'string':
+			var fn = {
+				'yui': $.loadYUI,
+				'autocomplete': $.loadJQueryAutocomplete,
+				'tooltip': $.loadWikiaTooltip,
+				'jquery-ui': $.loadJQueryUI,
+				'jquery-aim': $.loadJQueryAIM,
+				'modal': $.loadModalJS
+			}[el];
+			if (fn) {
+				fn.call(window,successFn,failureFn);
+				continue;
+			}
+			$().log(el,'$.bulkLoad(): unknown list item');
+			break;
+		case 'object':
+			var options = $.extend({},el,{
+				success: $.chainFn(el.success,successFn),
+				error: $.chainFn(el.error,failureFn)
+			});
+			$.ajax(options);
+			break;
+		default:
+			$().log(el,'$.bulkLoad(): unknown list item');
+		}
+	}
+	return true;
 }
 
 /*
@@ -554,6 +612,15 @@ $.extend({
 		bc.prototype.constructor = bc;
 		bc.superclass = sc.prototype;
 		return bc;
+	}
+});
+
+$.extend({
+	proxyBind: function (fn,thisObject,baseArgs) {
+		return function() {
+			var args = baseArgs.slice(0).concat(Array.prototype.call(arguments,0));
+			return fn.apply(thisObject,args);
+		}
 	}
 });
 

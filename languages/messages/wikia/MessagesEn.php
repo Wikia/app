@@ -612,6 +612,7 @@ div.wikiaDialog h2,
 'hidesome' => 'Hide Some',
 'popular-articles' => 'Popular Pages',
 'popular-wikis' => 'Popular Wikis',
+'mycontributions' => 'My contributions',
 
 #Wikia Widgets
 

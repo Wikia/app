@@ -72,16 +72,23 @@ $messages['en'] = array(
 	'oasis-notification-youhavenewmessages' => 'You have $1.',
 	'oasis-member-since' => 'Member since $1',
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|edit|edits}} made</sup>',
-	'oasis-edit-my-tools-link' => 'Edit My Tools',
-	'oasis-edit-my-tools-title' => 'Edit My Tools',
-	'oasis-edit-my-tools-addtool' => 'Add tool',
-	'oasis-edit-my-tools-list' => 'List of tools',
-	'oasis-edit-my-tools-save' => 'Save',
-	'oasis-edit-my-tools-about' => "About My Tools",
-	'oasis-edit-my-tools-desc' => "Add expert tools to your toolbar by typing the name of the tool in this text field.
-You can reorder or delete tools in the field below.
 
-[[Help:MyTools|List of advanced wiki contributor tools >]]",
+	# Toolbar customize
+	'oasis-toolbar-edit-title' => 'Customize Toolbar',
+	'oasis-toolbar-edit-toolbar-list' => 'Toolbar List',
+	'oasis-toolbar-edit-reset-defaults' => 'reset defaults',
+	'oasis-toolbar-edit-find-a-tool' => 'Find A Tool',
+	'oasis-toolbar-edit-advanced-tools' => '[[Help:MyTools|list of advanced contributor tools]]',
+	'oasis-toolbar-edit-search-for-tool' => 'Search for tool',
+	'oasis-toolbar-edit-popular-tools' => 'Popular Tools',
+	'oasis-toolbar-edit-hide-tools' => 'Hide Tools',
+	'oasis-toolbar-edit-save' => 'Save',
+	'oasis-toolbar-edit-cancel' => 'Cancel',
+	'oasis-toolbar-edit-rename-item' => 'Rename Item',
+	'oasis-toolbar-for-admins-only' => 'This tool can be used by wiki administrators.',
+	'oasis-toolbar-not-enabled-here' => 'This tool is not available on this wiki.',
+	'oasis-toolbar-customize' => 'Customize',
+
 	'oasis-comments-header' => '$1 {{PLURAL:$1|comment|comments}}',
 	'oasis-comments-showing-most-recent' => 'Showing $1 most recent',
 	'oasis-comments-anonymous-prompt' => 'Anonymous User<br /> <a href="#">Log in?</a>',
@@ -137,7 +144,7 @@ You can reorder or delete tools in the field below.
 
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle'
+	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle',
 );
 
 /** Message documentation (Message documentation)

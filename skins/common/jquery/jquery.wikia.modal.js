@@ -11,7 +11,8 @@ $.fn.extend({
 
 	makeModal: function(options) {
 		var settings = {
-			width: 400
+			width: 400,
+			topOffset: 0
 		};
 		if (options) {
 			$.extend(settings, options);
@@ -97,7 +98,7 @@ $.fn.extend({
 			//position modal. width must be set before calculating negative left margin
 			wrapper.css({
 				left: "50%",
-				top: $(window).scrollTop() + 50,
+				top: $(window).scrollTop() + 50 + settings.topOffset,
 				width: modalWidth,
 				zIndex: zIndex + 1
 			}).css("margin-left", -wrapper.outerWidth()/2);

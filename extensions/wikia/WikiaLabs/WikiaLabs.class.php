@@ -251,7 +251,7 @@ class WikiaLabs {
 	public function onGetDefaultTools(&$list) {
 		if($this->user->isAllowed( 'wikialabsuser' )) {
 			$list[] = array(
-				'text' => wfMsg( 'wikialabs-mytools' ),
+				'text' => wfMsg( 'wikialabs' ),
 				'name' => 'wikialabsuser',
 				'href' => Title::newFromText( "WikiaLabs", NS_SPECIAL )->getFullUrl()
 			);
