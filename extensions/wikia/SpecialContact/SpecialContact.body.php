@@ -86,7 +86,10 @@ class ContactForm extends SpecialPage {
 	 * @access private
 	 */
 	function processCreation() {
-		global $wgUser, $wgOut, $wgCityId;
+		global $wgUser, $wgOut, $wgCityId, $wgSpecialContactEmail;
+
+		// If not configured, fall back to a default just in case.
+		$wgSpecialContactEmail = (empty($wgSpecialContactEmail)?"community@wikia.com":$wgSpecialContactEmail);
 
 		$wgOut->setPageTitle( wfMsg( 'contactpagetitle' ) );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
@@ -125,7 +128,7 @@ class ContactForm extends SpecialPage {
 		}
 
 		$mail_user = new MailAddress($this->mEmail);
-		$mail_community = new MailAddress("community@wikia-inc.com");
+		$mail_community = new MailAddress($wgSpecialContactEmail);
 
 		$errors = '';
 
