@@ -5,7 +5,7 @@
 	print "last {$days} days<br/>\n";
 }
 ?>
-<table class="filehistory">
+<table class="wikitable">
 	<tr>
 		<th>date</th>
 		<th>total</th>
