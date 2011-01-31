@@ -254,10 +254,10 @@ class SponsorshipDashboardService extends Service {
 
 		$return = array();
 		
-		// #FB:1823 Retry Google API calls when quota is reached;try {
+		// #FB:1823 Retry Google API calls when quota is reached;
 		$retries = self::SD_GAPI_RETRIES;
 		$results = array();
-		while ( ( $retries > 0 ) || empty( $return ) ){
+		while ( ( $retries > 0 ) && empty( $return ) ){
 
 			try {
 				
