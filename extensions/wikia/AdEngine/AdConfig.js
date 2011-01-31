@@ -124,24 +124,24 @@ AdConfig.DART = {
 	zone2: null,
 
 	hubMap: {
-		"Entertainment": {"site":"ent", "zone1":"_entertainment"},
-		"Movie": {"site":"ent", "zone1":"_movies"},
-		"Movies": {"site":"ent", "zone1":"_movies"},
-		"TV": {"site":"ent", "zone1":"_tv"},
-		"Television": {"site":"ent", "zone1":"_tv"},
-		"Music": {"site":"ent", "zone1":"_music"},
-		"Anime": {"site":"ent", "zone1":"_anime"},
-		"Sci-Fi": {"site":"ent", "zone1":"_scifi"},
-		"Horror": {"site":"ent", "zone1":"_horror"},
-		"Gaming": {"site":"gaming", "zone1":"_gaming"},
-		"PC Games": {"site":"gaming", "zone1":"_pcgaming"},
-		"Xbox 360 Games": {"site":"gaming", "zone1":"_xbox360"},
-		"PS3 Games": {"site":"gaming", "zone1":"_ps3"},
-		"Wii Games": {"site":"gaming", "zone1":"_wii"},
-		"Handheld Games": {"site":"gaming", "zone1":"_handheld"},
-		"Casual Games": {"site":"gaming", "zone1":"_casual"},
-		"Lifestyle": {"site":"life", "zone1":"_lifestyle"},
-		"Recipes": {"site":"life", "zone1":"_recipes"}
+		"Entertainment": {"site":"ent"},
+		"Movie": {"site":"ent"},
+		"TV": {"site":"ent"},
+		"Music": {"site":"ent"},
+		"Animation": {"site":"ent"},
+		"Anime": {"site":"ent"},
+		"Sci-Fi": {"site":"ent"},
+		"Horror": {"site":"ent"},
+		"Gaming": {"site":"gaming"},
+		"PC Games": {"site":"gaming"},
+		"Xbox 360 Games": {"site":"gaming"},
+		"PS3 Games": {"site":"gaming"},
+		"Wii Games": {"site":"gaming"},
+		"Handheld Games": {"site":"gaming"},
+		"Casual Games": {"site":"gaming"},
+		"Mobile Games": {"site":"gaming"},
+		"Lifestyle": {"site":"life"},
+		"Recipes": {"site":"life"}
 	},
 	
 	sizeMap: {
@@ -303,15 +303,14 @@ AdConfig.DART.getAdType = function(useIframe) {
 
 AdConfig.DART.initSiteAndZones = function() {
 	if (AdConfig.DART.isHub()) {
+		AdConfig.DART.zone1 = wgHubsPages[wgPageName.toLowerCase()];
 		AdConfig.DART.zone2 = 'hub';
 
 		if (AdConfig.DART.hubMap[wgTitle]) {
 			AdConfig.DART.site = AdConfig.DART.getSite(AdConfig.DART.hubMap[wgTitle]['site']);
-			AdConfig.DART.zone1 = AdConfig.DART.hubMap[wgTitle]['zone1'];
 		}
 		else {
 			AdConfig.DART.site = AdConfig.DART.getSite(window.cityShort);
-			AdConfig.DART.zone1 = AdConfig.DART.getZone1(window.wgDBname);
 		}
 	}
 	else {

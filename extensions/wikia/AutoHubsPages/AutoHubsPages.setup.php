@@ -33,39 +33,45 @@ $wgAjaxExportList[] = 'AutoHubsPagesHelper::hideFeed';
 //@TODO remove wfAdProviderDARTFirstChunkForHubs, duplicated in /extensions/wikia/AdEngine/AdConfig.js
 $wgHooks["AdProviderDARTFirstChunk"][] = "wfAdProviderDARTFirstChunkForHubs";
 function wfAdProviderDARTFirstChunkForHubs($first_chunk) {
-	global $wgTitle;
+	global $wgTitle, $wgHubsPages;
 
 	if( !AutoHubsPagesHelper::isHubsPage( $wgTitle ) ) {
 		return true;
 	}
 
 	// ANY CHANGE TO THESE HUBS MUST BE REPLICATED IN /extensions/wikia/AdEngine/AdConfig.js
-	switch ($wgTitle->getText()){
-		case "Entertainment":  $first_chunk = "wka.ent/_entertainment/hub"; break;
-		case "Movie":
-		case "Movies":         $first_chunk = "wka.ent/_movies/hub";        break;
-		case "TV":
-		case "Television":     $first_chunk = "wka.ent/_tv/hub";            break;
-		case "Music":          $first_chunk = "wka.ent/_music/hub";         break;
-		case "Anime":          $first_chunk = "wka.ent/_anime/hub";         break;
-		case "Sci-Fi":         $first_chunk = "wka.ent/_scifi/hub";         break;
-		case "Horror":         $first_chunk = "wka.ent/_horror/hub";        break;
-		case "Gaming":         $first_chunk = "wka.gaming/_gaming/hub";     break;
-		case "PC Games":       $first_chunk = "wka.gaming/_pcgaming/hub";   break;
-		case "Xbox 360 Games": $first_chunk = "wka.gaming/_xbox360/hub";    break;
-		case "PS3 Games":      $first_chunk = "wka.gaming/_ps3/hub";        break;
-		case "Wii Games":      $first_chunk = "wka.gaming/_wii/hub";        break;
-		case "Handheld Games": $first_chunk = "wka.gaming/_handheld/hub";   break;
-		case "Casual Games":   $first_chunk = "wka.gaming/_casual/hub";     break;
-		case "Lifestyle":      $first_chunk = "wka.life/_lifestyle/hub";    break;
-		case "Recipes":        $first_chunk = "wka.life/_recipes/hub";      break;
-
-		default:               $first_chunk = "wka.wikia/_wikiaglobal/hub";
+	switch ($wgTitle->getUserCaseDBKey()) {
+		case 'Entertainment':
+		case 'Movie':
+		case 'TV':
+		case 'Music':
+		case 'Animation':
+		case 'Anime':
+		case 'Sci-Fi':
+		case 'Horror':
+			$site = 'ent';
+			break;
+		case 'Gaming':
+		case 'PC_Games':
+		case 'Xbox_360_Games':
+		case 'PS3_Games':
+		case 'Wii_Games':
+		case 'Handheld_Games':
+		case 'Casual_Games':
+		case 'Mobile_Games':
+			$site = 'gaming';
+			break;
+		case 'Lifestyle':
+		case 'Recipes':
+			$site = 'life';
+			break;
+		default:
+			$site = 'wikia';
 	}
 
+	$first_chunk = 'wka.'.$site.'/_'.AutoHubsPagesHelper::getHubNameFromTitle($wgTitle).'/hub';
+
 	return true;
-
-
 }
 
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfAutoHubsPagesSetupJSVars';
