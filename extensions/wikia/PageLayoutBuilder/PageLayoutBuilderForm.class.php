@@ -82,10 +82,13 @@ class PageLayoutBuilderForm extends SpecialPage {
 			$parserOptions = ParserOptions::newFromUser($wgUser);
 			$parserOptions->setEditSection(false);
 
+			$pageTs = "";
 			if($wgRequest->wasPosted()) {
 				$this->executeSubmit($parser);
 			} elseif($this->pageId > 0) {
 				$loadedValues = $parser->loadForm($this->pageTitle, $this->id );
+				$pageArticle = new Article($this->pageTitle); 
+				$pageTs = $pageArticle->getTimestamp();
 			} else {
 				$this->formValues['articleName'] = $wgRequest->getVal('default', '');
 			}
@@ -116,11 +119,12 @@ class PageLayoutBuilderForm extends SpecialPage {
 				$catHtml = '<input type="hidden" value="'.$categories.'" name="wpCategorySelectWikitext" id="wpCategorySelectWikitext" /> ';
 				$catHtml .= CategorySelectGenerateHTMLforEditRaw( $cattext );
 			}
-
+ 
 			$html = $parserOut->getText();
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars(array(
 				"data" => $this->formValues,
+				"wpEdittime" => $wgRequest->getVal('wpEdittime', $pageTs ), 
 				"errors" => $this->formErrors,
 				"title_error" => isset($this->formErrors["title"]),
 				"iserror" => !empty($this->formErrors),
@@ -260,7 +264,7 @@ class PageLayoutBuilderForm extends SpecialPage {
 			$mwText = $parserOut->getText();
 		}
 
-		$status = PageLayoutBuilderModel::saveArticle( $this->mArticle, $mwText, $wgRequest->getVal("wpSummary", "") );
+		$status = PageLayoutBuilderModel::saveArticle( $this->mArticle, $mwText,  $wgRequest->getVal('wpEdittime'), $wgRequest->getVal("wpSummary", "") );
 		switch( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:

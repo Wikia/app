@@ -71,7 +71,7 @@ class PageLayoutBuilderModel {
 		return $out;
 	}
 	
-	public static function saveArticle(Article $article, $body, $summary = "" ) {
+	public static function saveArticle(Article $article, $body, $edittime, $summary = "" ) {
 		global $wgOut, $wgUser, $wgContLang, $wgRequest, $wgCaptchaTriggers;
 
 		$editPage = new EditPage( $article );
@@ -80,6 +80,7 @@ class PageLayoutBuilderModel {
 		$editPage->minoredit = false;
 		$editPage->recreate = true;
 		$editPage->summary = $summary;
+		$editPage->edittime = $edittime;
 		
 		$result = false;
 		$wgCaptchaTriggers = array();
