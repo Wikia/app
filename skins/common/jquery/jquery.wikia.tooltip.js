@@ -13,30 +13,30 @@
  *
  *Examples
  *	//passing a string
- *	$('#test').tooltip('this is a tooltip');
+ *	$('#test').wikiaTooltip('this is a tooltip');
  *	
  *	//passing a jQuery object
  *	<div class="wikia-tooltip" id="test-tooltip">This is a tooltip</div>
- *	$('#test').tooltip($('#test-tooltip'));
+ *	$('#test').wikiaTooltip($('#test-tooltip'));
  *	
  *	//passing a callback returning a string
- *	$('#test').tooltip(function(elm){return elm.id + Math.random();});
+ *	$('#test').wikiaTooltip(function(elm){return elm.id + Math.random();});
  *	
  *	//passing a callback returning a jQuery object
- *	$('#test').tooltip(function(elm){return $('#' + elm.id + '-tooltip');});
+ *	$('#test').wikiaTooltip(function(elm){return $('#' + elm.id + '-tooltip');});
  *	
  *	//customizing options
- *	$('#test').tooltip('this is a tooltip', {position: 'relative', top: -15, left: 20});
+ *	$('#test').wikiaTooltip('this is a tooltip', {position: 'relative', top: -15, left: 20});
  *	
  *	//change tooltip on the fly
- *	$('#test').tooltip('this is a tooltip aligned top-left');
- *	$('#test').tooltip('and this is a tooltip aligned bottom-right', {side: 'bottom', align: 'right'});
+ *	$('#test').wikiaTooltip('this is a tooltip aligned top-left');
+ *	$('#test').wikiaTooltip('and this is a tooltip aligned bottom-right', {side: 'bottom', align: 'right'});
  *	
  *	//loading asynchronously the script
- *	$.loadWikiaTooltip(function(){$('#test').tooltip('this is a tooltip');});
+ *	$.loadWikiaTooltip(function(){$('#test').wikiaTooltip('this is a tooltip');});
  *	
  *	//loading asynchronously the script and the required stylesheet
- *	$.getResources([$.loadWikiaTooltip, wfGetSassUrl("skins/oasis/css/modules/WikiaTooltip.scss")], function(){$('#test').tooltip('this is a tooltip');});
+ *	$.getResources([$.loadWikiaTooltip, wfGetSassUrl("skins/oasis/css/modules/WikiaTooltip.scss")], function(){$('#test').wikiaTooltip('this is a tooltip');});
  *
  *	//loading the script and required stylesheet via PHP
  *	global $wgOut, $wgJsMimeType, $wgStylePath
@@ -49,6 +49,8 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 		if(typeof tooltip !== 'undefined'){
 			var defaultOptions = jQuery.extend(
 				{
+					//position should be calculated relative to the element parent (for relative-positioned elements)
+					relativeToParent: false,
 					//include margins in size calculations
 					includeMargin: true,
 					//suppress native title tooltip
@@ -128,6 +130,7 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 		var elm = $(this);
 		var options = elm.data('tooltip-options');
 		var tooltip = elm.data('tooltip-cached');
+		var position = {};
 
 		if(typeof tooltip === 'undefined'){
 			tooltip = elm.data('tooltip-value');
@@ -142,6 +145,7 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 				default:
 					//could use HTML5 details tag, but support for Monobook is preferred
 					tooltip = $('<div>' + tooltip.toString() + '</div>');
+					position['white-space'] = 'nowrap';
 					$('body').append(tooltip);
 					break;
 			}
@@ -153,7 +157,7 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 				.removeData('tooltip-cached-position');
 		}
 
-		var globalPosition = elm.offset();
+		var globalPosition = (options.relativeToParent) ? elm.position() : elm.offset();
 		var cachedPosition = elm.data('tooltip-cached-position');
 
 		if(typeof cachedPosition === 'undefined' ||
@@ -162,8 +166,6 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 				options.position !== 'absolute'
 			)
 		){
-			var position = {};
-			
 			switch(options.position){
 				default:
 				case 'auto':

@@ -22,25 +22,23 @@ class SpecialLeaderboard extends SpecialPage {
 		$skinName = get_class($wgUser->getSkin());
 
 		if ($skinName == 'SkinOasis') {
+			//tooltips
+			$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgStylePath/common/jquery/jquery.wikia.tooltip.js?{$wgStyleVersion}\"></script>");
+			$wgOut->addStyle(wfGetSassUrl('skins/oasis/css/modules/WikiaTooltip.scss'));
+			
 			$wgOut->addStyle(wfGetSassUrl('/extensions/wikia/AchievementsII/css/leaderboard_oasis.scss'));
-		} else if ($skinName == 'SkinMonoBook') {
-			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard_monobook.css?{$wgStyleVersion}");
-		} else if ($skinName == 'SkinWikiaphone') {
-			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard_wikiaphone.css?{$wgStyleVersion}");
-		}
-		
-		/** don't show and use JavaScript and CSS from Monoaco on Oasis **/
-		if ($skinName != 'SkinOasis') {
-			$wgOut->addStyle( "common/article_sidebar.css" );
-
-			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css?{$wgStyleVersion}");
-			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
-		}
-
-		/** use Oasis JavaScript **/
-		if ($skinName == 'SkinOasis') {
 			$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/SpecialLeaderboard.js?{$wgStyleVersion}\"></script>\n");
 			$wgOut->addScript("<script src=\"{$wgStylePath}/oasis/js/Achievements.js?{$wgStyleVersion}\"></script>\n");
+		} else {
+			$wgOut->addStyle( "common/article_sidebar.css" );
+			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css?{$wgStyleVersion}");
+			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
+			
+			if ($skinName == 'SkinMonoBook') {
+				$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard_monobook.css?{$wgStyleVersion}");
+			} else if ($skinName == 'SkinWikiaphone') {
+				$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard_wikiaphone.css?{$wgStyleVersion}");
+			}
 		}
 		
 		// ranking

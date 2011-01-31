@@ -34,10 +34,6 @@
 		}
 	}
 
-	a.sponsored-link, img {
-		position: static !important; // /** Monaco uses position absolute **/
-	}
-
 	li {
 		border-bottom: 1px solid $color-page-border;
 		margin: 10px 2px 7px 0;
@@ -58,20 +54,12 @@
 	}
 
 	.profile-hover { // /** the popup when mouse stays over badge **/
-		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
-		@include border-radius(3px);
-		background-color: White;
-		border: solid 1px $color-page-border;
 		display: none;
 		padding: 5px 10px;
-		position: absolute;
 		min-width: 270px;
-		z-index: 1001;
 		margin-bottom: 3px;
 
 		&.sponsored-hover {
-			@include border-radius-se(0);
-			@include border-radius-sw(0);
 			padding: 0 0 0 0;
 			border: {
 				color:$color-buttons;
@@ -131,11 +119,6 @@
 	}
 }
 
-.recent-badges,.badges-tracks{
-	.profile-hover{
-		right: 100px;
-	}
-}
 /* rail in the right side */
 .WikiaLatestEarnedBadgesModule {
 	.clearfix { /** @todo questionable **/
@@ -145,9 +128,6 @@
 
 .WikiaRail {
 	& > div.AchievementsModule {
-		/*background: #00F;*/
-		/*border-top: 10px;*/
-
 		.achievements-leaderboard-button {
 			clear: both;
 			margin: {

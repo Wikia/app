@@ -3,32 +3,10 @@ var AchievementsThing = {
 		$(".AchievementsModule, .WikiaLatestEarnedBadgesModule").find(".view-all").click(AchievementsThing.seeAllClick);
 
 		//Show badge description when hovering over the badge
-		$('.AchievementsModule, .WikiaLatestEarnedBadgesModule').find('.badges li > img, .badges .sponsored-link').add("#LeaderboardTable .badge-icon").hover(function() {
+		$('.AchievementsModule, .WikiaLatestEarnedBadgesModule').find('.badges li > img, .badges .sponsored-link').add("#LeaderboardTable .badge-icon").each(function(){
 			var badge = $(this);
 			var hover = badge.prevAll(".profile-hover");
-			var badgeWidth = 0;
-
-			if(badge.is('a'))
-				badgeWidth = badge.find('img').width();
-			else
-				badgeWidth = badge.width();
-
-			var hoverPosition = {
-				top : -hover.outerHeight() - parseInt(hover.css('margin-bottom')),
-				right: (badge.hasClass('badge-small')) ? badge.parent().width() - badgeWidth : 0
-			};
-
-			hover
-				.css(hoverPosition)
-				.show();
-
-			AchievementsThing.trackSponsored(hover.attr('data-hovertrackurl'));
-
-			//Why this has been commented out?
-			//self.track('userprofile/hover');
-
-		}, function() {
-			$(this).prevAll(".profile-hover").hide();
+			badge.wikiaTooltip(hover, {relativeToParent:true, align:'right'});
 		});
 
 		$('.AchievementsModule, .WikiaLatestEarnedBadgesModule').find('.sponsored-link img:not(.badges-more)').each(function(){
