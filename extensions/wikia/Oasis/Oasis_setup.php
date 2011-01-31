@@ -29,7 +29,7 @@ function wfOasisSetup() {
 	$wgHooks['MakeThumbLink2'][] = 'ContentDisplayModule::renderPictureAttribution';
 	$wgHooks['MessageCacheReplace'][] = 'LatestPhotosModule::onMessageCacheReplace';
 	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayModule::onShowEditLink';
-	$wgHooks['UploadComplete'][] = 'LatestPhotosModule::onImageUpload';
+	$wgHooks['UploadComplete'][] = 'LatestPhotosModule::onImageUploadComplete';
 	$wgHooks['FileUpload'][] = 'LatestPhotosModule::onImageUpload';
 
 	// confirmations
