@@ -1336,6 +1336,9 @@ function getTopSongs($limit){
 				}
 				if(0 < preg_match("/<itms:coverArt height=['\"]100['\"] width=['\"]100['\"]>(.*?)<\/itms:coverArt>/i", $item, $itemMatches)){
 					$image = htmlspecialchars_decode($itemMatches[1]);
+
+					// There is a bigger size available (doesn't show up in _this_ RSS feed, but it's in others). Convert.
+					$image = str_replace("100x100", "170x170", $image);
 				}
 				if(0 < preg_match("/<itms:link>(.*?)<\/itms:link>/i", $item, $itemMatches)){
 					$link = htmlspecialchars_decode($itemMatches[1]);
