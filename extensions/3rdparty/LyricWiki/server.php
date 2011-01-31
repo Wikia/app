@@ -202,6 +202,8 @@ if(!$funcsOnly){
 			'song' => array('name' => 'song', 'type' => 'xsd:string'),
 			'nominatedBy' => array('name' => 'nominatedBy', 'type' => 'xsd:string'),
 			'reason' => array('name' => 'reason', 'type' => 'xsd:string'),
+# TODO: Add the image into the results for getSotd
+#			'image' => array('name' => 'image', 'type' => 'xsd:string'),
 			'lyrics' => array('name' => 'lyrics', 'type' => 'xsd:string')
 		)
 	);
@@ -226,6 +228,32 @@ if(!$funcsOnly){
 			'year' => array('name' => 'year', 'type' => 'xsd:int'),
 			'amazonLink' => array('name' => 'amazonLink', 'type' => 'xsd:string'),
 			'songs' => array('name' => 'songs', 'type' => 'tns:ArrayOfstring')
+		)
+	);
+	
+	$server->wsdl->addComplexType(
+		'TopSongsArray',
+		'complexType',
+		'array',
+		'',
+		'SOAP-ENC:Array',
+		array(),
+		array(array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'TopSong[]')),
+		'tns:TopSong'
+	);
+	$server->wsdl->addComplexType(
+		'TopSong',
+		'complexType',
+		'struct',
+		'all',
+		'',
+		array(
+			'rank' => array('name' => 'rank', 'type' => 'xsd:int'),
+			'artist' => array('name' => 'artist', 'type' => 'xsd:string'),
+			'song' => array('name' => 'song', 'type' => 'xsd:string'),
+			'image' => array('name' => 'image', 'type' => 'xsd:string'),
+			'itunes' => array('name' => 'itunes', 'type' => 'xsd:string'),
+			'url' => array('name' => 'url', 'type' => 'xsd:string')
 		)
 	);
 
@@ -333,6 +361,17 @@ if(!$funcsOnly){
 		'encoded',
 		'Gets the hometown for an artist'
 	);
+	
+	$server->register('getTopSongs',
+		array('limit' => 'xsd:string'),
+		array('topSongs' => 'tns:TopSongsArray'),
+		$ns,
+		"$action#getTopSongs",
+		'rpc',
+		'encoded',
+		'Gets the most popular songs. Currently, this data comes from the iTunes Top 100 feed, so the largest possible value of "limit" is 100.  Limit defaults to 10.'
+	);
+
 	///////// FETCHING METHODS - END /////////
 	//////////////////////////////////////////////////////////////////////////////
 
@@ -1250,7 +1289,105 @@ function getHometown($artist){
 	$retVal = array('country' => $country, 'state' => $state, 'hometown' => $hometown);
 	requestFinished($id);
 	return $retVal;
-} // end getHometown(..)
+} // end getHometown()
+
+////
+// Returns a list of the Top Songs of the moment. The list will
+// contain up to 'limit' items (with a maximum of 100 and a default of 10).
+//
+// Currently, this is powered by the iTunes Top 100 (see http://lyrics.wikia.com/LW:100 ).
+// The results contain a rank, an image URL (which may be album art for the song, an artist
+// picture, or a placeholder image if nothing better is available).
+////
+function getTopSongs($limit){
+	global $wgMemc;
+	wfProfileIn( __METHOD__ );
+	$id = requestStarted(__METHOD__, "$limit");
+
+	$DEFAULT_LIMIT = 10;
+	$limit = (empty($limit)?DEFAULT_LIMIT:$limit);
+	$defaultUrl = "http://lyrics.wikia.com";
+	$urlRoot = "http://lyrics.wikia.com/"; // may differ from default URL, should contain a slash after it.
+
+	// Grab the data from memcached if possible.
+	$memKey = wfMemcKey('LyricWikiApi', 'server.php', 'getTopSongs');
+	$retVal = $wgMemc->get($memKey);
+	if(empty($retVal)){
+		$retVal = array();
+
+		$ITUNES_TOP_100_FEED_URL = "http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStore.woa/wpa/MRSS/topsongs/limit=100/rss.xml";
+		$rss = Http::get($ITUNES_TOP_100_FEED_URL);
+
+		$rank = 1;
+		$matches = array();
+		if(0 < preg_match_all("/<item>(.*?)<\/item>/is", $rss, $matches)){
+			for($index=0; $index < count($matches[1]); $index++){
+				$item = $matches[1][$index];
+
+				$artist = $song = $image = $itunes = $url = "";
+
+				// Grab the initial data out of the RSS feed (we'll have to post-process some of it).
+				$itemMatches = array();
+				if(0 < preg_match("/<itms:artist>(.*?)<\/itms:artist>/i", $item, $itemMatches)){
+					$artist = htmlspecialchars_decode($itemMatches[1]);
+				}
+				if(0 < preg_match("/<itms:song>(.*?)<\/itms:song>/i", $item, $itemMatches)){
+					$song = htmlspecialchars_decode($itemMatches[1]);
+				}
+				if(0 < preg_match("/<itms:coverArt height=['\"]100['\"] width=['\"]100['\"]>(.*?)<\/itms:coverArt>/i", $item, $itemMatches)){
+					$image = htmlspecialchars_decode($itemMatches[1]);
+				}
+				if(0 < preg_match("/<itms:link>(.*?)<\/itms:link>/i", $item, $itemMatches)){
+					$link = htmlspecialchars_decode($itemMatches[1]);
+					
+					// Convert the iTunes URL into one with our affiliate link built into it.
+// TODO: Make affiliate iTunes URL out of the default one!!
+/*
+// iTunes affiliate link format
+	http://click.linksynergy.com/fs-bin/stat?id=gRMzf83mih4&offerid=78941&type=3&subid=0&tmpid=1826&RD_PARM1=http%253A%252F%252Fitunes.apple.com%252F{{
+  #if:{{#pos:{{{id}}}|&cc=}}|{{
+  #explode:{{{id}}}|&cc=|1}}|us}}%252Falbum%252F{{urlencode:{{urlencode:{{#explode:{{{id}}}|&cc=|0}}}}}}{{
+  #if:{{#pos:{{{id}}}|?i=}}||%253Fi%253D}}%2526partnerId%253D30
+ */
+					$itunes = $link;
+				}
+
+				// TODO: Make LW url.
+				$url = $defaultUrl;
+// TODO: FORMAT THE artist/song correctly and use lw_pageExists or whatever to figure out the correct name (or call getSong on it?).
+// TEMP HACK TO JUST MAKE THIS URL UP... WILL NOTTTT BE OKAY TO RELEASE IT LIKE THIS SINCE IT WOULD GIVE A TON OF BAD URLs EVEN WHEN WE HAVE GOOD URLS:
+$finalName = "$artist:$song";
+// TODO: ACCOMPLISH THIS BY EXTRACTING THE TITLE-MATCHING, IMPLIED REDIRECTS, ETC. FROM getSong() INTO A DIFF FUNCTION (maybe call it findMatchingPageTitle?).
+				$url = $urlRoot.str_replace("%3A", ":", urlencode($finalName)); // %3A as ":" is for readability.
+
+				// TODO: LATER: Add album to the return array? (could build it from itms:artist, itms:album, and itms:releasedate).
+
+				$itemData = array(
+					'rank' => $rank++,
+					'artist' => $artist,
+					'song' => $song,
+					'image' => $image,
+					'itunes' => $itunes,
+					'url' => $url,
+				);
+				
+				$retVal[] = $itemData;
+			}
+
+			// Store this maximum-sized array of results in memcached.
+			$HOURS_TO_CACHE = 2;
+			$wgMemc->set($memKey, $retVal, 60 * 60 * $HOURS_TO_CACHE);
+		}
+	}
+
+	// Trim the array to the size desired by the client.
+	$retVal = array_slice($retVal, 0, $limit);
+	
+	requestFinished($id);
+	wfProfileOut( __METHOD__ );
+
+	return $retVal;
+} // end getTopSongs()
 
 //////////////////////////////////////////
 // POSTING FUNCTIONS
@@ -1805,6 +1942,9 @@ function lw_createPage($pageTitle, $content, $summary="Page created using [[Lyri
 	GLOBAL $wgRequestTime,$wgRUstart,$mediaWiki,$wgTitle;
 	GLOBAL $wgOut,$wgLang,$wgUser,$wgRequest;
 	$retVal = 'lw_createPage';
+
+	$fname = "lw_createPage";
+	wfProfileIn($fname);
 
 	lw_initAdvanced();
 	$wgTitle = $pageTitle; // must be done after lw_initAdvanced()
