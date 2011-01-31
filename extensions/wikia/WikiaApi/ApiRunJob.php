@@ -33,7 +33,7 @@ if (!defined('MEDIAWIKI')) {
  */
 class ApiRunJob extends ApiBase {
 
-	private $maxJobs = 5;
+	private $maxJobs = 20;
 
 	/**
 	 * @access public
