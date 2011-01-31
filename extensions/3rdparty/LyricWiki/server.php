@@ -1344,14 +1344,16 @@ function getTopSongs($limit){
 					$link = htmlspecialchars_decode($itemMatches[1]);
 					
 					// Convert the iTunes URL into one with our affiliate link built into it.
-// TODO: Make affiliate iTunes URL out of the default one!!
-/*
-// iTunes affiliate link format
-	http://click.linksynergy.com/fs-bin/stat?id=gRMzf83mih4&offerid=78941&type=3&subid=0&tmpid=1826&RD_PARM1=http%253A%252F%252Fitunes.apple.com%252F{{
-  #if:{{#pos:{{{id}}}|&cc=}}|{{
-  #explode:{{{id}}}|&cc=|1}}|us}}%252Falbum%252F{{urlencode:{{urlencode:{{#explode:{{{id}}}|&cc=|0}}}}}}{{
-  #if:{{#pos:{{{id}}}|?i=}}||%253Fi%253D}}%2526partnerId%253D30
- */
+					$matches = array();
+					if(0 < preg_match("/[^w]id([0-9]+).*?[^w]i=([0-9]+)/i", $link, $matches)){
+						$id = $matches[1];
+						$i = $matches[2];
+						
+						$link = "http://click.linksynergy.com/fs-bin/stat?id=gRMzf83mih4&amp;offerid=78941&amp;type=3&amp;subid=0&amp;tmpid=1826&amp;RD_PARM1=http%253A%252F%252Fitunes.apple.com%252Fus%252Falbum%252F";
+						$link .= "id$id%253Fi%253D3$i";
+						$link .= "%2526partnerId%253D30";
+					}
+
 					$itunes = $link;
 				}
 
