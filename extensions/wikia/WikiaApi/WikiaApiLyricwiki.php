@@ -54,6 +54,9 @@ class WikiaApiLyricwiki extends ApiBase {
 			case 'getArtist':
 				$this->rest_getArtist( $artist, $fmt );
 				break;
+			case 'getTopSongs':
+				$this->rest_getTopSongs( $limit, $fmt );
+				break;
 			case 'getSong':
 			default:
 				$this->rest_getSong( $artist, $song, $fmt );
@@ -68,7 +71,7 @@ class WikiaApiLyricwiki extends ApiBase {
 		if(empty( $fmt )){
 			$fmt = 'html';
 		}
-	
+
 		switch ( $fmt ) {
 			case 'text':
 				$result = getArtist($artist);
@@ -157,7 +160,38 @@ class WikiaApiLyricwiki extends ApiBase {
 				print "</body>\n</html>\n";
 				break;
 		}
-	}
+	} // end rest_getArtist()
+
+	function rest_getTopSongs( $limit, $fmt ) {
+		if(empty( $fmt )){
+			$fmt = 'html';
+		}
+
+		$result = getTopSongs($limit);
+		switch ( $fmt ) {
+		case "xml" :
+			header('Content-Type: application/xml', true);
+			print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+
+			// TODO: FIX THIS FORMAT! (each item in the array isn't wrapped. The only well-formed XML is a hack. Figure out a better way to structure the data so that dumpXML can be generic.
+				// TODO: Maybe array("topSongs" => array("topSong", $result)) so that it knows what to call each item in the array?
+			// TODO: FIX THIS FORMAT! (each item in the array isn't wrapped. The only well-formed XML is a hack. Figure out a better way to structure the data so that dumpXML can be generic.
+
+			$result = array("topSongs" => $result);
+			$this->dumpXML($result);
+		case "text":
+// TODO: IMPLEMENT
+// TODO: IMPLEMENT
+		case "html":
+// TODO: IMPLEMENT
+// TODO: IMPLEMENT
+		default:
+		case "json":
+		case "realjson":
+			$this->writeRealJSON($result);
+			break;
+		}
+	} // end rest_getTopSongs()
 
 	function rest_getSong( $artist, $song, $fmt ) {
 		// Phase 'title' out (deprecated).  this is not the same as the soap.  I was coding too fast whilst in an IRC discussion and someone said artist/title just for the sake of argument and I didn't check against the SOAP :[ *embarassing*
@@ -303,7 +337,7 @@ class WikiaApiLyricwiki extends ApiBase {
 				break;
 			}
 		}
-	}
+	} // end rest_getSong()
 
 	public function getVersion() {
 		return __CLASS__ . ': $Id: WikiaApiQueryDomains.php 12417 2008-05-07 09:33:11Z eloy $';
@@ -326,6 +360,9 @@ class WikiaApiLyricwiki extends ApiBase {
 			),
 			"func" => array(
 				ApiBase::PARAM_TYPE => 'string'
+			),
+			"limit" => array(
+				Apibase::PARAM_TYPE => 'integer'
 			)
 		);
 	}
@@ -336,6 +373,7 @@ class WikiaApiLyricwiki extends ApiBase {
 			"song" => "Song name",
 			"fmt" => "Response format",
 			"func" => "Query type",
+			"limit" => "Max number of items to return (eg: in getTopSongs)",
 		);
 	}
 
