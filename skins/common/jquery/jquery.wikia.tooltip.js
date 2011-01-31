@@ -37,6 +37,11 @@
  *	
  *	//loading asynchronously the script and the required stylesheet
  *	$.getResources([$.loadWikiaTooltip, wfGetSassUrl("skins/oasis/css/modules/WikiaTooltip.scss")], function(){$('#test').tooltip('this is a tooltip');});
+ *
+ *	//loading the script and required stylesheet via PHP
+ *	global $wgOut, $wgJsMimeType, $wgStylePath
+ *	$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgStylePath/common/jquery/jquery.wikia.tooltip.js\"></script>");
+ *	$wgOut->addStyle(wfGetSassUrl('skins/oasis/css/modules/WikiaTooltip.scss'));
  */
 
 if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
