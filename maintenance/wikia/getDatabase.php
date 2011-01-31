@@ -52,7 +52,14 @@ if (array_key_exists( 'f', $opts )) {
 		foreach ($dir_list as $dir) {
 			if ($dir == "") continue;
 			//print_r("dir = $dir \n");
-			preg_match('/.*fulldump_(\d+)[\.-](\d+)[\.-](\d+).*/', $dir, $matches);
+			preg_match('/.*fulldump_(\d+)\.(\d+)\.(\d+).*/', $dir, $matches);
+			if (count($matches) == 4) {
+				$spacer = ".";
+			} else {
+				// how did C backup names end up with dashes?
+				$spacer = "-";
+				preg_match('/.*fulldump_(\d+)-(\d+)-(\d+).*/', $dir, $matches);
+			}
 			if (count($matches) != 4) {
 				exit ("this does not look like a database directory: $dir\n");
 			}
@@ -61,10 +68,10 @@ if (array_key_exists( 'f', $opts )) {
 			if ($day > 2000) {
 				list ($unused, $year, $month, $day) = $matches;
 				$day_of_year = date('z', mktime('0','0','0', $month, $day, $year));
-				$date_list[$year][$day_of_year] = "fulldump_$year.$month.$day";
+				$date_list[$year][$day_of_year] = "fulldump_$year$spacer$month$spacer$day";
 			} else {
 				$day_of_year = date('z', mktime('0','0','0', $month, $day, $year));
-				$date_list[$year][$day_of_year] = "fulldump_$day.$month.$year";
+				$date_list[$year][$day_of_year] = "fulldump_$day$spacer$month$spacer$year";
 			}
 		}
 		krsort($date_list, SORT_NUMERIC);
