@@ -287,11 +287,11 @@ class BlogTemplateClass {
 	private static $oTitle 					= null;
 
 	private static $blogWIKITEXT = array(
-		"/\[\[Video\:(.*)\]\]\s/iU",
+		"/\[\[Video\:(.*)\]\]/siU",
 		"/\[\[Image\:(.*)\]\]/siU",
 		"/\[\[File\:(.*)\]\]/siU",
-		"/\[\[(.*)\:((.+\.[a-z]{3,4})(\|)(.*))*\]\](.*)/i", #images [[Image:Test.png|(.*)]]
-		"/\[\[(.*)\:((.+\.[a-z]{3,4}))\]\]/i", #images [[Image:Test.png]]
+		"/\[\[(.*)\:((.+\.[a-z]{3,4})(\|)(.*))*\]\](.*)/iU", #images [[Image:Test.png|(.*)]]
+		"/\[\[(.*)\:((.+\.[a-z]{3,4}))\]\]/iU", #images [[Image:Test.png]]
 	);
 
 	private static $blogTAGS = array(
@@ -299,7 +299,7 @@ class BlogTemplateClass {
 		"/\{\{#dplchapter(.*)\}\}/siU",
 		"/<(dpl|dynamicpagelist)(.*)>(.*)<\/(dpl|dynamicpagelist)>/siU",
 		"/<(youtube|gvideo|aovideo|aoaudio|wegame|tangler|gtrailer|nicovideo|ggtube)(.*)>(.*)<\/(youtube|gvideo|aovideo|aoaudio|wegame|tangler|gtrailer|nicovideo|ggtube)>/siU",
-		"/<(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet)(.*)>(.*)<\/(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet)>/siU",
+		"/<(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet|gallery)(.*)>(.*)<\/(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet|gallery)>/siU",
 	);
 
 	public static function setMagicWord( &$magicWords, $langCode ) {
