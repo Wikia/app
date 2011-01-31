@@ -20,7 +20,7 @@ class SponsorshipDashboardService extends Service {
 		return $this->fromYear;
 	}
 
-	public function loadInterestsData( $hubId = false ){
+	public function loadInterestsData( $hubId = array() ){
 
 		global $wgStatsDB;
 		$wgCityId = WF::build( 'App' )->getGlobal( 'wgCityId' );
@@ -32,13 +32,13 @@ class SponsorshipDashboardService extends Service {
 		if ( empty( $this->aCityHubs ) ){
 			return false;
 		}
-
+		
 		// if no asked hub or asked for wrong hub, proceeds with first hub from the list
-		if ( isset( $this->aCityHubs[$hubId['name']] ) ){
-			$currentHub = $hubId['id'];
+		if ( isset( $hubId['name'] ) && isset( $this->aCityHubs[ $hubId[ 'name' ] ] ) ){
+			$currentHub = $hubId[ 'id' ];
 		} else {
 			$aKeys = array_keys( $this->aCityHubs );
-			$currentHub = $this->aCityHubs[ $aKeys[0] ];
+			$currentHub = $this->aCityHubs[ $aKeys[ 0 ] ];
 		}
 
 		// loads cache data
@@ -46,7 +46,7 @@ class SponsorshipDashboardService extends Service {
 		if ( !empty($cachedData) ){
 			return $cachedData;
 		}
-
+		
 		$currentYearWeek = date('YW');
 		
 		// loads current city id current week unique users
@@ -83,7 +83,7 @@ class SponsorshipDashboardService extends Service {
 		$titles = array();
 		$heckValue = array();
 		$weeks = array();
-		
+
 		while ($row = $res->fetchObject($res)) {
 			
 			$rowDate = date("Y-m-d", strtotime("1.1.".substr( $row->week, 0, 4 )." + ".substr( $row->week, 4, 2 )." weeks"));
@@ -128,24 +128,14 @@ class SponsorshipDashboardService extends Service {
 	 * @return array
 	 */
 
-	public function loadCompetitorsData( $hub = false ){
+	public function loadCompetitorsData( $hub = array() ){
 
 		global $wgStatsDB;
 
 		$wgCityId = WF::build( 'App' )->getGlobal( 'wgCityId' );
 
-		if( empty( $hub )){
-			// 2DO fix it;
-		 	return false;
-		}
 		$this->fromYear = 2010;
 		
-		// loads cache data
-		$cachedData = $this->getFromCache( 'CompetitorsData:Hub'.$hub['id'] );
-		if ( !empty($cachedData) ){
-			return $cachedData;
-		}
-
 		// loads current city id popular hubs
 		$this->getPopularHubs();
 		if ( empty( $this->aCityHubs ) ){
@@ -153,13 +143,19 @@ class SponsorshipDashboardService extends Service {
 		}
 
 		// if no asked hub or asked for wrong hub, proceeds with first hub from the list
-		if ( isset( $this->aCityHubs[$hub['name']] ) ){
+		if ( isset( $hubId['name'] ) && isset( $this->aCityHubs[$hub['name']] ) ){
 			$currentHub = $hub['id'];
 		} else {
 			$aKeys = array_keys( $this->aCityHubs );
 			$currentHub = $this->aCityHubs[ $aKeys[0] ];
 		}
-		
+
+		// loads cache data
+		$cachedData = $this->getFromCache( 'CompetitorsData:Hub'.$currentHub );
+		if ( !empty($cachedData) ){
+			return $cachedData;
+		}
+
 		// never use current data. use data from last week.
 		$currentYearWeek = date('YW');
 		if ( (int)date('W') > 0 ){
@@ -210,7 +206,7 @@ class SponsorshipDashboardService extends Service {
 				$row->cityUrl,
 				$row->cityId,
 				'c',
-				$hub['id'],
+				$currentHub,
 				( empty( $all ) )
 			);
 
@@ -231,7 +227,7 @@ class SponsorshipDashboardService extends Service {
 
 		$returnData = $this->simplePrepareToDisplay( $all, $titles , array( 'newVisits' ) );
 		
-		$this->saveToCache( 'CompetitorsData:Hub'.$hub['id'] , $returnData );
+		$this->saveToCache( 'CompetitorsData:Hub'.$currentHub , $returnData );
 		
 		return $returnData;
 
@@ -247,7 +243,7 @@ class SponsorshipDashboardService extends Service {
 	 * @return array
 	 */
 
-	protected function getDailyCityPageviewsFromGA( $cityUrl, $cityId, $prefix, $hubId, $generateDate ){
+	public function getDailyCityPageviewsFromGA( $cityUrl, $cityId, $prefix, $hubId, $generateDate ){
 
 		// inner cache. Various city id can be asked from many places.
 		$cachedData = $this->getFromCache( 'DailyCityPageviewsFromGA:Hub'.$hubId, $cityId );
@@ -264,11 +260,12 @@ class SponsorshipDashboardService extends Service {
 		// #FB:1823 Retry Google API calls when quota is reached;
 		$retries = self::SD_GAPI_RETRIES;
 		$results = array();
+				
+		$ga = WF::build('gapi', array( $wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy ) );
+
 		while ( ( $retries > 0 ) && empty( $results ) ){
 
 			try {
-				
-				$ga = new gapi( $wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy );
 				$ga->requestReportData(
 					31330353,
 					array( 'day', 'month', 'year' ),
@@ -281,6 +278,7 @@ class SponsorshipDashboardService extends Service {
 					360
 				);
 				$results = $ga->getResults();
+				break;
 
 			} catch ( Exception $e ) {
 
@@ -296,7 +294,10 @@ class SponsorshipDashboardService extends Service {
 		}
 		
 		reset( $results );
+
 		unset ( $results[ key( $results ) ] );
+
+		$all = array();
 
 		foreach( $results as $obj ) {
 			$date = $obj->getYear().'-'.$obj->getMonth().'-'.$obj->getDay();
@@ -406,20 +407,24 @@ class SponsorshipDashboardService extends Service {
 		if ( empty( $data ) || empty( $labels ) ){
 			return false;
 		}
+
+		$results = array();
 		$i = 0;
-		foreach( array_reverse($data) as $collumns ){
+		
+		foreach( array_reverse( $data ) as $collumns ){
 			foreach( $collumns as $key => $val ){
 				if ( !in_array( $key, array('date') ) ){
 					$results[$key][$i] = "[{$i}, {$val}]";
 				}
 			}
 			if ( ( $i % ceil((count($data) / $this->iNumberOfXGuideLines )) ) == 0 ){
-				$result['date'][$i] = "[{$i}, '{$collumns['date']}']";
+				$result['date'][$i] =
+					"[{$i}, '{$collumns['date']}']";
 			}
 			$result['fullWikiaDate'][$collumns['date']] = "['{$collumns['date']}', {$i}]";
 			$i++;
 		};
-
+		
 		if ( empty( $results ) ){
 			return false;
 		}
@@ -663,7 +668,7 @@ class SponsorshipDashboardService extends Service {
 	}
 
 	protected function filter( $var ){
-		return(( $var%5 ) == 0);
+		return( ( $var%5 ) == 0 );
 	}
 
 	/**
@@ -677,17 +682,18 @@ class SponsorshipDashboardService extends Service {
 
 		$wgCityId = WF::build( 'App' )->getGlobal( 'wgCityId' );
 
-		if ( !empty($this->aCityHubs) ){
+		if ( !empty( $this->aCityHubs ) ){
 			return $this->aCityHubs;
 		}
-		
-		$wikiFactoryTags = new WikiFactoryTags($wgCityId);
+
+		$wikiFactoryTags = new WikiFactoryTags( $wgCityId );
 		$cityTags = $wikiFactoryTags->getTags();
 
 		if ( empty( $cityTags ) ){
 			Wikia::log( __METHOD__ , false, "City [{$wgCityId}] has no tags" );
 			return array();
 		}
+
 		$popularCityHubs = array();
 		foreach( $wgHubsPages['en'] as $hubs_key=>$hubsPages ){
 			foreach( $cityTags as $key => $val ){
