@@ -157,8 +157,6 @@ class imageServing{
 
 			$etime = time();
 			
-			Wikia::log( __METHOD__, false, sprintf("get images: %0d s", $etime-$stime), true );
-
 			if (count($db_out) == 0) {
 				wfProfileOut(__METHOD__);
 				return $cache_return;
