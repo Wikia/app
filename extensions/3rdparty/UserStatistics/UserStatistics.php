@@ -118,7 +118,7 @@ function counting_useredit( $text ) {
     return $ret ;
   }
 
-  $wgParser->disableCache();
+//  $wgParser->disableCache();
 
   $totalall = 0;
   // Parse each parameter
@@ -171,7 +171,7 @@ function counting_useredit_topten( $text ) {
     return $ret ;
   }
 
-  $wgParser->disableCache();
+//  $wgParser->disableCache();
 
   $skin = $wgUser->getSkin();
   
@@ -248,7 +248,7 @@ function last_useredit( $text ) {
     return $ret ;
   }
 
-  $wgParser->disableCache();
+//  $wgParser->disableCache();
 
   list( $username, $namespace ) = extractParamaters( $text );
 
@@ -285,7 +285,7 @@ function counting_usercreate( $text, $params = array() ) {
     }
     else {
       if ($wgMySQL40Userright) {
-        return counting_usercreate_4_0_x ( $text, $params );
+//        return counting_usercreate_4_0_x ( $text, $params );
       }
       else {
         $ret = "DBUser need user right DROP and CREATE_TMP_TABLE";
@@ -309,108 +309,6 @@ function counting_usercreate( $text, $params = array() ) {
     }
     else {
       $total = createsByUser( $uid );
-    }
-
-    $ret = $wgLang->formatNum( $total );
-  } else {
-    $ret = "Benutzer nicht bekannt";  
-  }
-
-  return $ret ;
-}
-
-function counting_usercreate_4_0_x( $text, $params = array() ) {
-  global $wgVersion, $wgOut;
-  global $wgParser;
-
-  $fname = 'UserStatistics::counting_usercreate_4_0_x';
-
-  $ret = "" ;
-  
-  if ( version_compare( $wgVersion, '1.5beta4', '<' ) ) {
-    $ret = "1.5.x  of MediaWiki required";
-    return $ret ;
-  }
-
-  $wgParser->disableCache();
-
-  list( $username, $namespace ) = extractParamaters( $text );
-
-  $username = Title::newFromText( $username );
-  $username = is_object( $username ) ? $username->getText() : '';
-  
-  $uid = User::idFromName( $username );
-
-  if ($uid != 0) {
-    global $wgLang;
-  
-    if (isset( $params['all'] )) {
-    wfProfileIn( $fname );
-
-    $dbw =& wfGetDB( DB_MASTER );
-
-    $oldignore = $dbw->ignoreErrors( true );
-
-    $old_user_abort = ignore_user_abort( true );
-
-    $usercreatesTable = $dbw->tableName( 'accusercreate' );
-    $revision = $dbw->tableName( 'revision' );
-    $page = $dbw->tableName( 'page' );
-
-    $dbw->query("CREATE TEMPORARY TABLE $usercreatesTable ENGINE=HEAP ".
-                "SELECT MIN(rev_id), rev_user, rev_page FROM $revision GROUP BY rev_page ORDER BY rev_page, rev_timestamp", "UserStatistics::CreateTempTable");
-    $sql = "SELECT COUNT(*) AS Counter FROM $usercreatesTable, $page WHERE rev_user = $uid AND rev_page = page_id AND page_is_redirect=0 ORDER BY rev_page";
-    $res = $dbw->query( $sql, "UserStatistics::QueryCounting" );
-    $dbw->query("DROP TABLE $usercreatesTable", "UserStatistics::DropTempTable");
-
-    $obj = $dbw->fetchObject( $res );
-    $nscount = 0;
-      if ($obj)  {
-        $nscount = $obj->Counter;
-      }
-
-      $dbw->freeResult( $res );
-      
-      $total = $nscount;
-
-      ignore_user_abort( $old_user_abort );
-
-      $oldignore = $dbw->ignoreErrors( $oldignore );
-      wfProfileOut( $fname );
-    }
-    else {
-      wfProfileIn( $fname );
-
-      $dbw =& wfGetDB( DB_MASTER );
-
-      $oldignore = $dbw->ignoreErrors( true );
-
-      $old_user_abort = ignore_user_abort( true );
-
-      $usercreatesTable = $dbw->tableName( 'accusercreate' );
-      $revision = $dbw->tableName( 'revision' );
-      $page = $dbw->tableName( 'page' );
-
-      $dbw->query("CREATE TEMPORARY TABLE $usercreatesTable ENGINE=HEAP ".
-                  "SELECT MIN(rev_id), rev_user, rev_page FROM $revision GROUP BY rev_page ORDER BY rev_page, rev_timestamp", "UserStatistics::CreateTempTable");
-      $sql = "SELECT COUNT(*) AS Counter FROM $usercreatesTable, $page WHERE rev_user = $uid AND rev_page = page_id AND page_is_redirect=0 AND page_namespace = 0 ORDER BY rev_page";
-      $res = $dbw->query( $sql, "UserStatistics::QueryCounting" );
-      $dbw->query("DROP TABLE $usercreatesTable", "UserStatistics::DropTempTable");
-
-      $obj = $dbw->fetchObject( $res );
-      $nscount = 0;
-      if ($obj)  {
-        $nscount = $obj->Counter;
-      }
-
-      $dbw->freeResult( $res );
-      
-      $total = $nscount;
-
-      ignore_user_abort( $old_user_abort );
-
-      $oldignore = $dbw->ignoreErrors( $oldignore );
-      wfProfileOut( $fname );
     }
 
     $ret = $wgLang->formatNum( $total );
@@ -464,15 +362,16 @@ function extractParamaters( $par ) {
  * @return array
  */
 function editsByNumber( $uid ) {
-  $fname = 'UserStatistics::editsByNumber';
+   $ret = '';
 
-  $dbr =& wfGetDB( DB_SLAVE );
-  $rev  = $dbr->tableName( 'revision' );
-  $sql  = "SELECT COUNT(*) AS count FROM $rev WHERE rev_user = $uid";
-  $res  = $dbr->query( $sql, $fname );
+   $service = new UserStatsService( $uid );
+   $stats = $service->getStats();
 
-  $row = $dbr->fetchObject( $res );
-  return $row->count;
+  if ( !empty( $stats ) ) {
+	$ret = $stats['edits'];
+  }
+
+  return $ret;
 }
 
 /**
@@ -486,26 +385,14 @@ function editFirstDate( $uid ) {
 
   $ret = "";
 
-  $fname = 'UserStatistics::editFirstDate';
+   $service = new UserStatsService( $uid );
+   $stats = $service->getStats();
 
-  $dbr =& wfGetDB( DB_SLAVE );
-  $rev  = $dbr->tableName( 'revision' );
-  $sql  = "SELECT MIN(rev_id) AS number FROM $rev WHERE rev_user = $uid";
-  $res  = $dbr->query( $sql, $fname );
+   if ( !empty( $stats ) ) {
+	$ret = $wgLang->timeanddate( wfTimestamp(TS_MW, $stats['date']), true);
+   }
 
-  $revid = $dbr->fetchObject( $res );
-
-  if ($revid)  {
-    $sql  = "SELECT rev_timestamp FROM $rev WHERE rev_id = $revid->number";
-    $res  = $dbr->query( $sql, $fname );
-
-    $row = $dbr->fetchObject( $res );
-    if ($row)  {
-      $ret = $wgLang->timeanddate( wfTimestamp(TS_MW, $row->rev_timestamp), true);
-    }
-  }
-
-  return $ret;
+   return $ret;
 }
 
 /**
@@ -548,16 +435,15 @@ function editLastDate( $uid ) {
  * @return array
  */
 function editsByName( $usName ) {
-  $fname = 'UserStatistics::editsByName';
-  $nscount = array();
+  $ret = '';
 
-  $dbr =& wfGetDB( DB_SLAVE );
-  $rev  = $dbr->tableName( 'revision' );
-  $sql  = "SELECT COUNT(*) AS count FROM $rev WHERE rev_user_text = \"$usName\"";
-  $res  = $dbr->query( $sql, $fname );
+  $user = User::newFromName( $usName );
 
-  $row = $dbr->fetchObject( $res );
-  return $row->count;
+  if ( $user instanceof User ) {
+	$ret = editsByNumber( $user->getId() );
+  }
+
+  return $ret;
 }
 
 /**
@@ -617,5 +503,3 @@ function createsByUserAll( $uid ) {
 
   return $nscount;
 }
-
-?>
