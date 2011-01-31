@@ -1,10 +1,204 @@
 For a documentation of all features, see http://www.mediawiki.org/wiki/Extension:Semantic_Maps
 
 == Semantic Maps change log ==
+
 This change log contains a list of completed to-do's (new features, bug fixes, refactoring) for every
 version of Semantic Maps. You can find the most upt-do-date version at
 http://www.mediawiki.org/wiki/Extension:Semantic_Maps/Version_history#Semantic_Maps_change_log
 
+
+=== Semantic Maps 0.7.4 ===
+
+
+=== Semantic Maps 0.7.3 ===
+(2010-11-30)
+
+==== new features ====
+
+* Added KML result format that allows the export of geographical data queried via SMW in the form of .kml files.
+
+=== Semantic Maps 0.7.2 ===
+(2010-10-28)
+
+==== Bug fixes ====
+
+* Fixed small layout issue in query pop-ups when property names are blank.
+
+=== Semantic Maps 0.7.1 ===
+(2010-10-20)
+
+==== New features ====
+
+* Image layers for OpenLayers maps, defined via pages in the Layer namespace.
+
+==== Bug fixes ====
+
+* Support for images without namespace prefix in the statispoints parameter in map ask queries.
+
+* Fixed several issue with the OpenLayers form input.
+
+* Fixed fatal error for Google Maps v2 options on Special:Ask. 
+
+=== Semantic Maps 0.7 ===
+(2010-10-15)
+
+==== New features ====
+
+* Added 'locations' parameter to the map query printers that allows for displaying static locations
+  in addition to query results in queries. It behaves the same as the locations parameter in display_points.
+
+==== Bug fixes ====
+
+* Fixed compatibility with the MW 1.17 resource loader.
+
+==== Internal improvements ====
+
+* Use of Validator 0.4, allowing for more robust and consistent error reporting.
+
+* Restructured the directory structure of the extension to better match it's architecture.
+
+=== Semantic Maps 0.6.6 ===
+(2010-08-26)
+
+=== New features ===
+
+* Added support for 'semantic' extension type, added by SMW 1.5.2 and above.
+
+==== Refactoring ====
+
+* Use of the new MapsMappingServices class of the Maps extension instead of the globals.
+
+==== Bug fixes ====
+
+* Fixed issue that caused popup contents to be displayed incorrectly when using templates.
+
+* Fixed issue that lowercased template names provided with the template parameter in queries. 
+
+=== Semantic Maps 0.6.5 ===
+(2010-07-27)
+
+==== New features ====
+
+* Added hook for default result formats based on queried data types (requires SMW 1.5.2 or above).
+
+==== Refactoring ====
+
+* Moved map id creation to the mapping service class for all features.
+
+* Moved marker js creation for query printers to the mapping service class for all features.
+
+* Moved default zoom level access method to the mapping service class for all features.
+
+* Cleaned up the way specific parameter info is handled.
+
+* Improved the structure of the geocoding functionality in form inputs.
+
+==== Bug fixes ====
+
+* Fixed the default zoom for form inputs and query printers.
+
+=== Semantic Maps 0.6.4 ===
+(2010-07-08)
+
+==== New features ====
+
+* Re-added service link support, which got removed in 0.6.
+
+==== Refactoring ====
+
+* Moved more functionality over from feature classes to service classes to prevent crazy code-flow and code duplication.
+
+==== Bug fixes ====
+
+* Fixed php notice that occurred in some queries, introduced in 0.6.3.
+
+* Fixed issue that caused result format maps not to load when a centre address was provided that could not be geocoded.
+
+=== Semantic Maps 0.6.3 ===
+(2010-06-20)
+
+==== Refactoring ====
+
+* Mayor refactoring of the mapping service handling, to make the code flow less messy and be able to do mapping service related things in a more consistent fashion.
+
+==== Bug fixes ====
+
+* Fixed issue that caused Yahoo! Maps and OpenLayers maps not to load on form pages.
+
+* Fixed php warning originating from Validator that occurred on form pages with maps.
+
+* Fixed issue that caused a fatal error when doing a query via special:ask with a mapping format, present since 0.6.
+
+=== Semantic Maps 0.6.2 ===
+(2010-06-07)
+
+==== Bug fixes ====
+
+* Fixed fatal error that occurred when editing a page via a form with a map on it.
+
+=== Semantic Maps 0.6.1 ===
+(2010-06-04)
+
+==== Bug fixes ====
+
+* Fixed serious bug that caused mapping parameters to get ignored in semantic queries and forms.
+
+* Fixed fatal error that occurred when not disabling the form input feature when Semantic Forms is not installed.
+
+* Fixed bug in map form inputs that stored 'west' coordinates as 'south' coordinates, effectively rendering the resulting coordinate set invalid.
+
+=== Semantic Maps 0.6 ===
+(2010-05-31)
+
+==== New features ====
+
+* Added full support for both directional and non-directional coordinate notations in DMS, DD, DM and float notation.
+
+* Added native geographical proximity query support.
+
+* Added settings to specify the width and height of maps in forms.
+
+* Added settings to specify the format of coordinates as shown in query printouts. 
+
+==== Refactoring ====
+
+* Rewrote map divs and added loading message for each map.
+
+* Rewrote individual map JS to be added to the page header.
+
+* Restructured the directory structure to make what the services and features are more clear.
+
+* Rewrote storage of coordinates to make the proximity query scalable.
+
+==== Bug fixes ====
+
+* Fixed conflict with prototype library that caused compatibility problems with the Halo extension.
+
+=== Semantic Maps 0.5.5 ===
+(2010-03-20)
+
+==== Refactoring ====
+
+* Moved the geographical proximity query from Semantic MediaWiki over to Semantic Maps.
+
+* Stylized the code to conform to MediaWiki's spacing conventions.
+
+==== Bug fixes ====
+
+* Fixed issue causing properties of type Page to not show up in pop-ups when using the template parameter.
+
+* Fixed escaping issues that caused pop-ups to break when they contained '-signs.
+
+=== Semantic Maps 0.5.4 ===
+(2010-03-01)
+
+==== Bug fixes ====
+
+* Fixed potential xss vectors.
+
+* Fixed minor JS error that was present for all maps except OSM.
+
+* Fixed i18n issue that caused geocoords not to be recognized on several foreign language wiki's.
 
 === Semantic Maps 0.5.3 ===
 (2010-02-01)
@@ -57,10 +251,10 @@ http://www.mediawiki.org/wiki/Extension:Semantic_Maps/Version_history#Semantic_M
 
 * Fixed issue with the query printers causing error messages to be shown for ask specific parameters.
 
-=== Semantic Maps 0.5 ===
+===Semantic Maps 0.5===
 (2009-12-17)
 
-==== New features ====
+====New features====
 
 * Added a result format for the OL optimized for OSM service.
 
