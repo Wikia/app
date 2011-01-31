@@ -128,7 +128,7 @@ class SponsorshipDashboardService extends Service {
 	 * @return array
 	 */
 
-	public function loadCompetitorsData( $hub = array() ){
+	public function loadCompetitorsData( $hubId = array() ){
 
 		global $wgStatsDB;
 
@@ -143,8 +143,8 @@ class SponsorshipDashboardService extends Service {
 		}
 
 		// if no asked hub or asked for wrong hub, proceeds with first hub from the list
-		if ( isset( $hubId['name'] ) && isset( $this->aCityHubs[$hub['name']] ) ){
-			$currentHub = $hub['id'];
+		if ( isset( $hubId['name'] ) && isset( $this->aCityHubs[ $hubId['name']] ) ){
+			$currentHub = $hubId['id'];
 		} else {
 			$aKeys = array_keys( $this->aCityHubs );
 			$currentHub = $this->aCityHubs[ $aKeys[0] ];
