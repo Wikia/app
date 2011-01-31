@@ -234,17 +234,27 @@ class LatestPhotosModule extends Module {
 		}
 		return $mKey;
 	}
-
-    public static function onImageUpload(&$image) {
+	
+	private static function avoidUpdateRace(){
 		global $wgMemc;
 		// avoid a race in update event propgation by deleting key after 10 seconds
 		// Memcache delete with a timeout is not implemented, but we can use set to fake it
 		$thumbUrls = $wgMemc->get(LatestPhotosModule::memcacheKey());
+		
 		if (!empty($thumbUrls))
 			$wgMemc->set(LatestPhotosModule::memcacheKey(), $thumbUrls, 10);
-		return true;
-    }
+	}
 
+	public static function onImageUpload( $image ){
+		self::avoidUpdateRace();
+		return true;
+	}
+	
+	public static function onImageUploadComplete( &$image ){
+		self::avoidUpdateRace();
+		return true;
+	}
+	
     public static function onImageDelete(&$file, $oldimage, $article, $user, $reason) {
 		global $wgMemc;
 		$wgMemc->delete(LatestPhotosModule::memcacheKey());
