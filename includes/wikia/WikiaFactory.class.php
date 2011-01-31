@@ -34,12 +34,21 @@ abstract class WikiaFactory {
 		if(!isset(self::$constructors[$className])) {
 			self::$constructors[$className] = array();
 		}
-		elseif((count(self::$constructors[$className]) > 0) && !isset(self::$constructors[$className]['INSTANCE'])) {
-			throw new WikiaException("WikiaFactory: Class $className has already defined constructor by addClassConstructor() call, unable to set instance");
-		}
 
 		self::$constructors[$className]['INSTANCE'] = $instance;
 	}
+
+
+	/**
+	 * reset predefined instance of given class (if any)
+	 * @param string $className
+	 */
+	public static function unsetInstance($className) {
+		if(isset(self::$constructors[$className]['INSTANCE'])) {
+			unset(self::$constructors[$className]['INSTANCE']);
+		}
+	}
+
 
 	/**
 	 * set class setter methods to be called while building an object

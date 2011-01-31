@@ -23,6 +23,7 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 
 	protected function tearDown() {
 		WF::setInstance( 'App', $this->app );
+		WF::unsetInstance( 'WikiaLabsProject' );
 	}
 
 	protected function getUserMock() {
@@ -74,7 +75,6 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 		$project->expects( $this->once() )
 		        ->method( 'getExtensionsDict' );
 
-		WF::reset( 'WikiaLabsProject' );
 		WF::setInstance( 'EasyTemplate', $tmpl );
 		WF::setInstance( 'WikiaLabsProject', $project );
 
@@ -108,7 +108,6 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 			        ->with( $this->equalTo( self::TEST_USER_ID ), $this->equalTo( $rating ) );
 		}
 
-		WF::reset( 'WikiaLabsProject' );
 		WF::setInstance( 'WikiaLabsProject', $project );
 
 		$user = $this->getUserMock();
@@ -195,7 +194,6 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 			$project->expects( $this->once() )
 			        ->method( 'update' );
 
-			WF::reset( 'WikiaLabsProject' );
 			WF::setInstance( 'WikiaLabsProject', $project );
 		}
 
@@ -278,7 +276,6 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 			        ->will( $this->returnValue( $extension ) );
 		}
 
-		WF::reset( 'WikiaLabsProject' );
 		WF::setInstance( 'WikiaLabsProject', $project );
 
 		$this->object = WF::build( 'WikiaLabs' );
