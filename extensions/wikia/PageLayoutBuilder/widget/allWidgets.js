@@ -23,6 +23,16 @@ $(function() {
 		$("input.plb-empty-input, textarea.plb-empty-input ").val("");
 	});
 	
+	PageLayoutBuilder.hideImageButtons();
+	
+	$('.gallerybox').hover(function() {
+	    $(this).find("button").css("visibility", "visible");
+	},function() {
+		if(PageLayoutBuilder.hasImage($(this))) {
+			$(this).find("button").css("visibility", "hidden");	
+		}
+	});
+
 	WikiaPhotoGalleryView.initGalleries();
 });
 
@@ -50,6 +60,7 @@ PageLayoutBuilder.uploadImage = function (size, name) {
                         .css('background-image', 'url("' +  data.url +'")');
                         $("#plb_" + name).val( imageName  + " | " + $("#ImageUploadCaption").val() );
                         $("#thumbcaption").val($("#ImageUploadCaption").val());
+                        PageLayoutBuilder.hideImageButtons();
 					}
 					WMU_close();
 				  }
@@ -61,6 +72,27 @@ PageLayoutBuilder.uploadImage = function (size, name) {
 	});
 	return false;
 }
+
+
+PageLayoutBuilder.hasImage = function(element) {
+	if($( '#'  + element.attr('id').replace('imagediv','plb') ).val() == "") {
+		return false; 
+	};
+	return true;
+}
+
+
+PageLayoutBuilder.hideImageButtons = function() {
+	$('.gallerybox').each(
+			function(){
+			    var element = $(this);
+			    if(PageLayoutBuilder.hasImage(element)) {
+			    	element.find("button").css("visibility", "hidden");	
+			    }
+			}
+	);
+}
+
 //* END IMAGE *//
 
 //* MULTILINE *//
@@ -299,7 +331,7 @@ $(function() {
 	
 });
 
-
+		
 //* end gallery * //
 
 
