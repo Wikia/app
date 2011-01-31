@@ -206,15 +206,22 @@ class SponsorshipDashboardService extends Service {
 			$titles[ 'c'.$row->cityId ] = wfMsg('sponsorship-dashboard-cityname-and-familiarity', $row->city_title, $familiarity);;
 			$sortBy[] =  $row->cityId;
 
+			$GAresult = $this->getDailyCityPageviewsFromGA (
+				$row->cityUrl,
+				$row->cityId,
+				'c',
+				$hub['id'],
+				( empty( $all ) )
+			);
+
+			if ( empty( $GAresult ) ) {
+				return false;
+			}
+
 			$all = array_merge_recursive (
 				$all,
-				$this->getDailyCityPageviewsFromGA(
-					$row->cityUrl,
-					$row->cityId,
-					'c',
-					$hub['id'],
-					( empty( $all ) )
-				)
+				$GAresult
+				
 			);
 		}
 
@@ -257,7 +264,7 @@ class SponsorshipDashboardService extends Service {
 		// #FB:1823 Retry Google API calls when quota is reached;
 		$retries = self::SD_GAPI_RETRIES;
 		$results = array();
-		while ( ( $retries > 0 ) && empty( $return ) ){
+		while ( ( $retries > 0 ) && empty( $results ) ){
 
 			try {
 				
@@ -282,6 +289,10 @@ class SponsorshipDashboardService extends Service {
 				Wikia::log( __METHOD__, false, $e->getMessage() );
 				
 			}
+		}
+
+		if ( empty( $results ) ) {
+			return false;
 		}
 		
 		reset( $results );
