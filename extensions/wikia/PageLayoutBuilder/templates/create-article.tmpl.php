@@ -48,5 +48,6 @@
 			<input type="submit" name="wpPreview" value="<?php echo wfMsg( 'plb-special-form-preview-button' ); ?>" />
 		</li>
 	</ul>
+	<input type="hidden" value="<?php echo $wpEdittime ?>" id="wpEdittime" name="wpEdittime" />
 	<?php echo $wpEditToken; ?>
 </form>
