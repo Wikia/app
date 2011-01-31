@@ -780,7 +780,6 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 		$wgSuppressToolbar = false;
 		$moduleData = Module::get('Footer')->getData();
-		$this->assertTrue($moduleData['showMyTools']);
 		$this->assertTrue($moduleData['showToolbar']);
 
 		$wgSuppressToolbar = true;
@@ -792,39 +791,6 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$moduleData = Module::get('Footer')->getData();
 		$this->assertTrue($moduleData['showToolbar']);
 		$wgShowMyToolsOnly = false;
-
-		$wgTitle = Title::newFromText('Foo', NS_TALK);
-		$moduleData = Module::get('Footer')->getData();
-		$this->assertNull($moduleData['showLike']);
-
-		$wgTitle = Title::NewFromText('SpecialPages', NS_SPECIAL);
-		$moduleData = Module::get('Footer')->getData();
-		$this->assertNull($moduleData['showFollow']);
-
-		$wgTitle = Title::NewFromText('Foo', NS_TEMPLATE);
-		$moduleData = Module::get('Footer')->getData();
-		$this->assertNull($moduleData['showLike']);
-
-		$wgTitle = Title::newFromText('User:WikiaBot');
-		$moduleData = Module::get('Footer')->getData();
-		$this->assertTrue($moduleData['showShare']);
-
-		$wgTitle = Title::newFromText('Blog:WikiaBot');
-		$moduleData = Module::get('Footer')->getData();
-		$this->assertTrue($moduleData['showShare']);
-
-		$wgTitle = Title::newFromText('Foo', NS_BLOG_ARTICLE);
-		$moduleData = Module::get('Footer')->getData();
-		$this->assertTrue($moduleData['showShare']);
-
-		$wgTitle = Title::newFromText('Foo', NS_BLOG_LISTING);
-		$moduleData = Module::get('Footer')->getData();
-		$this->assertNull($moduleData['showLike']);
-
-		$wgTitle = Title::newMainPage();
-		$moduleData = Module::get('Footer')->getData();
-		$this->assertTrue($moduleData['showShare']);
-
 	}
 
 	// These are hards one to test, since the old ArticleCommentsCode is not modular
