@@ -52,7 +52,7 @@ if (array_key_exists( 'f', $opts )) {
 		foreach ($dir_list as $dir) {
 			if ($dir == "") continue;
 			//print_r("dir = $dir \n");
-			preg_match('/.*fulldump_(\d+)\.(\d+)\.(\d+).*/', $dir, $matches);
+			preg_match('/.*fulldump_(\d+)[\.-](\d+)[\.-](\d+).*/', $dir, $matches);
 			if (count($matches) != 4) {
 				exit ("this does not look like a database directory: $dir\n");
 			}
