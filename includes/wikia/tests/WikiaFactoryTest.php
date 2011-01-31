@@ -103,16 +103,28 @@ class WikiaFactoryTest extends PHPUnit_Framework_TestCase {
 		$object = WikiaFactory::build('WikiaFactoryTestClass', array(), 'nonExistentFactoryMethod');
 	}
 
-	public function testSettingInstanceWithConstructorDefined() {
-		$this->setExpectedException('WikiaException');
-		WikiaFactory::setInstance('WikiaFactoryTestClass', new WikiaFactoryTestClass(1));
-	}
-
 	public function testAddingConstructorWithInstancePredefined() {
 		WikiaFactory::reset('WikiaFactoryTestClass');
 		WikiaFactory::setInstance('WikiaFactoryTestClass', new WikiaFactoryTestClass(1));
 
 		$this->setExpectedException('WikiaException');
 		WikiaFactory::addClassConstructor('WikiaFactoryTestClass');
+	}
+	
+	public function testUnsettingInstanceDoesNotResetConstructors() {
+		$object = new WikiaFactoryTestClass('reinstantiate', 5);
+		WikiaFactory::setInstance('WikiaFactoryTestClass', $object);
+
+		$this->assertEquals($object, WikiaFactory::build('WikiaFactoryTestClass'));
+
+		WikiaFactory::unsetInstance('WikiaFactoryTestClass');
+
+		$this->assertInstanceOf('WikiaFactoryTestClass', WikiaFactory::build('WikiaFactoryTestClass', array(1)));
+		$this->assertInstanceOf('WikiaFactoryTestClass', WikiaFactory::build('WikiaFactoryTestClass', array(1, 2), 'newFromTypeAndBar'));
+
+		WikiaFactory::reset('WikiaFactoryTestClass');
+
+		$this->setExpectedException('WikiaException');
+		WikiaFactory::build('WikiaFactoryTestClass', array(1, 2), 'newFromTypeAndBar');
 	}
 }
