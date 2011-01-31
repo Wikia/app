@@ -170,7 +170,7 @@ class FBConnect {
 		// avoid unstubbing $wgParser on setHook() too early, as per r35980
 		if (!defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' )) {
 			global $wgParser;
-			wfRunHooks( 'ParserFirstCallInit', $wgParser );
+			wfRunHooks( 'ParserFirstCallInit', array( $wgParser ) );
 		}
 	}
 
