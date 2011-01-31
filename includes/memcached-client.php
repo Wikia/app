@@ -1079,6 +1079,6 @@ class MWMemcached {
 
 class MemCachedClientforWiki extends MWMemcached {
 	function _debugprint( $text ) {
-		wfDebug( "memcached: $text" );
+		wfDebugLog( "memcached", "memcached: $text", true );
 	}
 }
