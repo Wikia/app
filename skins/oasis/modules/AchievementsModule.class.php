@@ -17,9 +17,14 @@ class AchievementsModule extends Module {
 	var $max_challenges = 'all';  // limit how many badges are in the "more badges you can earn" list. either a number or 'all'
 
 	public function executeIndex() {
-		global $wgTitle, $wgUser, $wgOut, $wgExtensionsPath, $wgStylePath, $wgStyleVersion;
+		global $wgTitle, $wgUser, $wgOut, $wgExtensionsPath, $wgStylePath, $wgStyleVersion, $wgJsMimeType;
 
 		// add CSS for this module
+		
+		//tooltips
+		$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgStylePath/common/jquery/jquery.wikia.tooltip.js?{$wgStyleVersion}\"></script>");
+		$wgOut->addStyle(wfGetSassUrl('skins/oasis/css/modules/WikiaTooltip.scss'));
+		
 		//$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/Achievements.scss"));
 		$wgOut->addStyle(wfGetSassUrl("extensions/wikia/AchievementsII/css/oasis.scss"));
 		// add JS for this module
@@ -30,9 +35,14 @@ class AchievementsModule extends Module {
 	}
 
 	public function executeUserProfilePagesModule() {
-		global $wgTitle, $wgUser, $wgOut, $wgExtensionsPath, $wgStylePath, $wgStyleVersion;
+		global $wgTitle, $wgUser, $wgOut, $wgExtensionsPath, $wgStylePath, $wgStyleVersion, $wgJsMimeType;
 
 		// add CSS for this module
+		
+		//tooltips
+		$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgStylePath/common/jquery/jquery.wikia.tooltip.js?{$wgStyleVersion}\"></script>");
+		$wgOut->addStyle(wfGetSassUrl('skins/oasis/css/modules/WikiaTooltip.scss'));
+		
 		$wgOut->addStyle( wfGetSassUrl( "extensions/wikia/AchievementsII/css/oasis.scss" ) );
 		// add JS for this module
 		$wgOut->addScript( "<script src=\"{$wgStylePath}/oasis/js/Achievements.js?{$wgStyleVersion}\"></script>\n" );

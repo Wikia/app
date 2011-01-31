@@ -80,7 +80,7 @@
 						<a class="sponsored-link badge-icon badge-small"
 							<?= ( !empty( $badgeClickUrl ) ) ? " href=\"{$badgeClickUrl}\" title=\"". wfMsg( 'achievements-community-platinum-sponsored-badge-click-tooltip' ) . "\"" : null ;?>
 							title="<?= wfMsg( 'achievements-community-platinum-sponsored-badge-click-tooltip' ) ;?>"
-							<?= ( !empty( $badgeTrackingUrl ) ) ? " data-badgetrackurl=\"{$badgeTrackingUrl}\"" : null ;?>">
+							<?= ( !empty( $badgeTrackingUrl ) ) ? " data-badgetrackurl=\"{$badgeTrackingUrl}\"" : null ;?>>
 					<? endif ;?>
 					<img src="<?=$badge->getPictureURL(40)?>" <?= ( !$badgeIsSponsored ) ? 'class="badge-icon" ' : null ;?>width="40" height="40" />
 					<? if ( $badgeIsSponsored ) :?>

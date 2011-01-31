@@ -43,7 +43,7 @@
 						<a class="sponsored-link badge-icon"
 							<?= ( !empty( $badge_click_url ) ) ? " href=\"{$badge_click_url}\" title=\"". wfMsg( 'achievements-community-platinum-sponsored-badge-click-tooltip' ) . "\"" : null ;?>
 							title="<?= wfMsg( 'achievements-community-platinum-sponsored-badge-click-tooltip' ) ;?>"
-							<?= ( !empty( $badge_tracking_url ) ) ? " data-badgetrackurl=\"{$badge_tracking_url}\"" : null ;?>">
+							<?= ( !empty( $badge_tracking_url ) ) ? " data-badgetrackurl=\"{$badge_tracking_url}\"" : null ;?>>
 						<? endif ;?>
 								<img class="<?= ( !$is_sponsored ) ? 'badge-icon ' : null ;?>badge-icon-<?= $i  . $moreClass ?>" width="90" height="90" src="<?= $badge_url ?>" alt="<?=$badge_name;?>" />
 						<? if ( $is_sponsored ) :?>
