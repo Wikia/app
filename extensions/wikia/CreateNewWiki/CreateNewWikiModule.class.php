@@ -18,6 +18,7 @@ class CreateNewWikiModule extends Module {
 	var $wikiDomain;
 	var $wikiLanguage;
 	var $wikiCategory;
+	var $params;
 	
 	// state variables
 	var $currentStep;
@@ -37,8 +38,8 @@ class CreateNewWikiModule extends Module {
 		$hubs = WikiFactoryHub::getInstance();
 		$this->aCategories = $hubs->getCategories();
 		$useLang = $wgRequest->getVal('uselang');
-		$this->wikiLanguage = empty($this->wikiLanguage) ? $useLang: $this->wikiLanguage;
-		$this->wikiLanguage = empty($useLang) ? $this->wgLanguageCode : $useLang;  // precedence: selected form field, uselang, default wiki lang
+		$this->params['wikiLanguage'] = empty($this->params['wikiLanguage']) ? $useLang: $this->params['wikiLanguage'];
+		$this->params['wikiLanguage'] = empty($useLang) ? $this->wgLanguageCode : $useLang;  // precedence: selected form field, uselang, default wiki lang
 		
 		$this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
 		$this->aLanguages = wfGetFixedLanguageNames();
@@ -99,19 +100,22 @@ class CreateNewWikiModule extends Module {
 		wfProfileIn(__METHOD__);
 		global $wgRequest;
 		
-		$name = $wgRequest->getVal('name');
-		$domain = $wgRequest->getVal('domain');
-		$lang = $wgRequest->getVal('lang');
-		$category = $wgRequest->getVal('category');
+		$params = $wgRequest->getArray('data');
 		
-		//$status = $this-createWiki($name, $domain, $lang, $category)
-		
-		wfProfileOut(__METHOD__);
-	}
-	
-	private function createWiki() {
-		wfProfileIn(__METHOD__);
-		
+		if ( empty($params) || 
+			empty($params['wikiName']) || 
+			empty($params['wikiDomain']) ||
+			empty($params['wikiLanguage']) ||
+			empty($params['wikiCategory']) )
+		{
+			// do nothing
+			$this->status = 'error';
+		} else {
+			$createWiki = new CreateWiki($params['wikiName'], $params['wikiDomain'], $params['wikiLanguage'], $params['wikiCategory']);
+			$createWiki->create();
+			$this->status = 'ok';
+			$this->cityId = $createWiki->getWikiInfo('cityId');
+		}
 		
 		
 		wfProfileOut(__METHOD__);
@@ -123,13 +127,22 @@ class CreateNewWikiModule extends Module {
 	 */
 	public function executeSaveState() {
 		wfProfileIn(__METHOD__);
-		global $wgRequest;
+		global $wgRequest, $wgCookieDomain;
 		
-		$params = array();
+		$params = $_SESSION['wsCreateNewWikiParams'];
+		$params = empty($params) ? array() : $params;
 		
+		$data = $wgRequest->getArray('data');
+		
+		foreach ($data as $key => $value ) {
+			$params[$key] = $value;
+		}
+		
+		/*
 		$params['name'] = $wgRequest->getVal('name');
 		$params['domain'] = $wgRequest->getVal('domain');
 		$params['lang'] = $wgRequest->getVal('lang');
+		*/
 		
 		$_SESSION['wsCreateNewWikiParams'] = $params;
 
@@ -142,11 +155,14 @@ class CreateNewWikiModule extends Module {
 	public function executeLoadState() {
 		wfProfileIn(__METHOD__);
 		if(!empty($_SESSION['wsCreateNewWikiParams'])) {
-			$params = $_SESSION['wsCreateNewWikiParams'];
+			$this->params =  $_SESSION['wsCreateNewWikiParams'];
 			
-			$this->wikiName = $params['name'];
-			$this->wikiDomain = $params['domain'];
-			$this->wikiLanguage = $params['lang'];
+			/*
+			$this->wikiName = $params['wikiName'];
+			$this->wikiDomain = $params['wikiDomain'];
+			$this->wikiLanguage = $params['wikiLang'];
+			*/
+			
 		}
 		wfProfileOut(__METHOD__);
 	}
@@ -163,9 +179,7 @@ class CreateNewWikiModule extends Module {
 		$cityId = $wgRequest->getVal('cityId');
 		
 		// XSS security needed here
-
 		if (method_exists('SpecialWikiPayment', 'fetchPaypalToken')) {
-
 			$data = SpecialWikiPayment::fetchPaypalToken($cityId);
 			if (empty($data['url'])) {
 				$this->status = 'error';
@@ -180,6 +194,7 @@ class CreateNewWikiModule extends Module {
 			$this->caption = wfMsg('owb-step4-error-caption');
 			$this->content = wfMsg('owb-step4-error-upgrade-content');
 		}
+		
 		wfProfileOut( __METHOD__ );
 	}
 	
@@ -210,7 +225,14 @@ class CreateNewWikiModule extends Module {
 		$cityId = $wgRequest->getVal( 'cityId' );
 		$desc = $wgRequest->getVal( 'desc' );
 		
-		$this->mainpage = wfMsgForContent( 'mainpage' );
+		//$mainpage = GlobalTitle::newFromText('Mainpage', NS_MEDIAWIKI, $cityId);
+		$mainpage = GlobalTitle::newFromText('A1', NS_MAIN, $cityId);
+		$id = $mainpage->getLastEdit();
+		/*
+		$a = Article::newFromId($id);
+		$this->cont = $a->getRawText();
+		$this->status = 'ok';
+		*/
 		
 		wfProfileOut( __METHOD__ );
 	}

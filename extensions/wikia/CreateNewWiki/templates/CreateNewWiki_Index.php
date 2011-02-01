@@ -7,12 +7,13 @@
 			<form name="label-wiki-form">
 				<label for="wiki-name"><?= wfMsg('cnw-name-wiki-label') ?></label>
 				<span class="wiki-name-status-icon status-icon"></span>
-				<input type="text" name="wiki-name" value="<?= $wikiName ?>"> <?= wfMsg('cnw-name-wiki-wiki') ?>
+				<input type="text" name="wiki-name" value="<?= empty($params['wikiName']) ? '' : $params['wikiName'] ?>"> <?= wfMsg('cnw-name-wiki-wiki') ?>
 				<div class="wiki-name-error error-msg"></div>
 				<label for="wiki-domain"><?= wfMsg('cnw-name-wiki-domain-label') ?></label>
 				<span class="domain-status-icon status-icon"></span>
 				<span class="domain-country"></span>
-				<?= wfMsg('cnw-name-wiki-language') ?><input type="text" name="wiki-domain" value="<?= $wikiDomain ?>"> <?= wfMsg('cnw-name-wiki-domain') ?>
+				<?= wfMsg('cnw-name-wiki-language') ?>
+				<input type="text" name="wiki-domain" value="<?= empty($params['wikiDomain']) ? '' : $params['wikiDomain'] ?>"> <?= wfMsg('cnw-name-wiki-domain') ?>
 				<div class="wiki-domain-error error-msg"></div>
 				<div class="language-default">
 					<?= wfMsg('cnw-desc-default-lang') ?> - <a href="#" id="ChangeLang"><?= wfMsg('cnw-desc-change-lang') ?></a>
@@ -23,7 +24,7 @@
 					
 					<?php
 		$isSelected = false;
-		$selectedLang = empty($wikiLanguage) ? $wgLanguageCode : $wikiLanguage;
+		$selectedLang = empty($params['wikiLanguage']) ? $wgLanguageCode : $params['wikiLanguage'];
 		if (!empty($aTopLanguages) && is_array($aTopLanguages)) :
 	?>
 					<optgroup label="<?= wfMsg('autocreatewiki-language-top', count($aTopLanguages)) ?>">
@@ -139,7 +140,6 @@
 			<?= wfRenderModule('ThemeDesigner', 'ThemeTab') ?>
 			<p class="instruction creative"><?= wfMsg('cnw-theme-instruction') ?></p>
 			<nav>
-				<input type="button" value="<?= wfMsg('cnw-back') ?>" class="secondary back">
 				<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next">
 			</nav>
 		</li>
