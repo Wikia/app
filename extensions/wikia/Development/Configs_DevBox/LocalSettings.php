@@ -34,6 +34,14 @@ $wgSessionsInMemcached = false;
 $wgSessionsInRiak = !$wgSessionsInMemcached;
 
 /**
+ * initialize session handlers in riak
+ */
+if( $wgSessionsInRiak === true ) {
+	$wgSessionHandler = "user";
+	include( "$IP/includes/wikia/RiakSessionsHandler.php" );
+}
+
+/**
  * Definition of global memcached servers
  *
  * Before altering the wgMemCachedServers array below, make sure you planned
