@@ -11,7 +11,7 @@ $.fn.extend({
 
 	makeModal: function(options) {
 		var settings = {
-			width: 400,
+			width: (skin == "oasis") ? $("#WikiaMainContent").width() + 30 : 400, // 30px for padding
 			topOffset: 0
 		};
 		if (options) {
@@ -87,19 +87,11 @@ $.fn.extend({
 				modalTabs.insertBefore(wrapper.find('.modalContent'));
 			}
 
-			//set up dimensions and position
-			var modalWidth = $("#WikiaMainContent").width();
-
-			// or use width provided
-			if (typeof options.width != 'undefined') {
-				modalWidth = options.width + 30 /* padding */;
-			}
-
 			//position modal. width must be set before calculating negative left margin
 			wrapper.css({
 				left: "50%",
 				top: $(window).scrollTop() + 50 + settings.topOffset,
-				width: modalWidth,
+				width: settings.width,
 				zIndex: zIndex + 1
 			}).css("margin-left", -wrapper.outerWidth()/2);
 
