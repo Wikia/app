@@ -15,6 +15,10 @@
 		protected function buildData() {}
 		
 		protected $items = array();
+
+		protected function getTrackerName() {
+			return '';
+		}
 		
 		public function addItem( $item ) {
 			$this->items[] = $item;

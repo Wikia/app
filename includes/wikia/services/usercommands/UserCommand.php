@@ -76,12 +76,16 @@
 		protected function getLinkAttributes() {
 			$attributes = array();
 			$attributes['data-tool-id'] = $this->id;
-			$attributes['data-name'] = $this->name;
+			$attributes['data-name'] = $this->getTrackerName();
 			if ($this->href) $attributes['href'] = $this->href;
 			if ($this->linkId) $attributes['id'] = $this->linkId;
 			if ($this->linkClass) $attributes['class'] = $this->linkClass;
 			if ($this->accessKey) $attributes['accesskey'] = $this->accessKey;
 			return $attributes;
+		}
+		
+		protected function getTrackerName() {
+			return strtolower($this->name);
 		}
 		
 		public function render() {

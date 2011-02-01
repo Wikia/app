@@ -125,9 +125,9 @@ WikiaFooterApp = {
 		},
 		
 		showOnClick: function( evt ) {
+			evt.preventDefault();
 			this.showing = $(evt.currentTarget).parent();
 			this.show(evt);
-			return false;
 		},
 		
 		hide: function( evt ) {
@@ -173,11 +173,10 @@ WikiaFooterApp = {
 			this.handleMore();
 		},
 		
-		openConfiguration: function() {
+		openConfiguration: function( evt ) {
+			evt.preventDefault();
 			var conf = new TC.ConfigurationLoader(this);
 			conf.show();
-			
-			return false;
 		},
 		
 		createMore: function () {
@@ -194,10 +193,11 @@ WikiaFooterApp = {
 			var moreable = all.not('.disable-more');
 			var where = all.filter('.menu').last();
 			
-			var width = 0, mwidth = 0, fwidth = this.el.innerWidth() - 10;
+			var width = 0, mwidth = 0, fwidth;
 			all.each(function(i,v){width += $(v).outerWidth();});
 			moreable.each(function(i,v){mwidth += $(v).outerWidth();});
-			
+			fwidth = this.el.innerWidth() - 10 - (width - mwidth);
+				
 			if (width < fwidth) {
 				return;
 			}
@@ -207,9 +207,9 @@ WikiaFooterApp = {
 			if (where.exists()) where.before(li_more)
 			else this.el.append(li_more);
 			var more = li_more.children('ul');
-			var moreWidth = 80;
+			var moreWidth = 100;
 			
-			var rwidth = fwidth - (width - mwidth) - moreWidth;
+			var rwidth = fwidth - moreWidth;
 			moreable.each(function(i,v){
 				rwidth -= $(v).outerWidth();
 				if (rwidth < 0)

@@ -17,4 +17,8 @@
 			return "<img src=\"$wgBlankImgUrl\" class=\"gear-icon\" height=\"16\" width=\"16\" />";
 		}
 		
+		protected function getTrackerName() {
+			return 'customize';
+		}
+		
 	}
