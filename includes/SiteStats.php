@@ -271,7 +271,7 @@ class SiteStatsInit {
 	 * @param $useMaster bool Whether to use the master db
 	 */
 	public function __construct( $useMaster = false ) {
-		$this->db = wfGetDB( $useMaster ? DB_MASTER : DB_SLAVE );
+		$this->db = wfGetDB( $useMaster ? DB_MASTER : DB_SLAVE, array(), 'vslow' );
 	}
 
 	/**
