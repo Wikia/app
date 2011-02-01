@@ -208,7 +208,8 @@ class AutoHubsPagesHelper{
 		global $wgHubsPages, $wgContLanguageCode;
 		wfProfileIn( __METHOD__ );
 
-		if( is_array($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]) ) {
+		if( is_array($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]) 
+		&& isset($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]['langcode']) ) {
 			wfProfileOut( __METHOD__ );
 			return $wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]['langcode'];
 		}
