@@ -60,8 +60,6 @@ $wgHooks['ChangesListInsertArticleLink'][] = 'ArticleCommentList::ChangesListIns
 // special::watchlist
 $wgHooks['ComposeCommonSubjectMail'][] = 'ArticleComment::ComposeCommonMail';
 $wgHooks['ComposeCommonBodyMail'][] = 'ArticleComment::ComposeCommonMail';
-// ActivityFeed
-$wgHooks['MyHome:BeforeStoreInRC'][] = 'ArticleCommentList::BeforeStoreInRC';
 // TOC
 $wgHooks['Parser::InjectTOCitem'][] = 'ArticleCommentInit::InjectTOCitem';
 // omit captcha

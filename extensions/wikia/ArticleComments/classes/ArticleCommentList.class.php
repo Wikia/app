@@ -785,27 +785,6 @@ class ArticleCommentList {
  	}
 
 	/**
-	 * Hook
-	 *
-	 * @param RecentChange $rc -- instance of RecentChange class
-	 * @param array $data -- data used by ActivityFeed
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @return true -- because it's a hook
-	 */
-	static function BeforeStoreInRC(&$rc, &$data) {
-		$rcTitle = $rc->getAttribute('rc_title');
-		$rcNamespace = $rc->getAttribute('rc_namespace');
-		$title = Title::newFromText($rcTitle, $rcNamespace);
-		if (ArticleComment::isTitleComment($title)) {
-			$data['articleComment'] = true;
-		}
-		return true;
-	}
-
-	/**
 	 * static entry point for hook
 	 *
 	 * @static
