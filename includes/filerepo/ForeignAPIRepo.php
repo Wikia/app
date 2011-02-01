@@ -41,6 +41,9 @@ class ForeignAPIRepo extends FileRepo {
 		if( $this->canCacheThumbs() && !$this->thumbUrl ) {
 			$this->thumbUrl = $this->url . '/thumb';
 		}
+
+		// wikia change, register api name
+		$this->repositoryName = $info[ "name" ];
 	}
 
 	/**
@@ -212,18 +215,15 @@ class ForeignAPIRepo extends FileRepo {
 				return false;
 			}
 			// We need the same filename as the remote one :)
+			// this part is rewritten for Wikia thumbnail system
 			$fileName = rawurldecode( pathinfo( $foreignUrl, PATHINFO_BASENAME ) );
 			$path = 'thumb/' . $this->getHashPath( $name ) . $name . "/";
-			if ( !is_dir($wgUploadDirectory . '/' . $path) ) {
-				wfMkdirParents($wgUploadDirectory . '/' . $path);
-			}
-			$localUrl =  $wgServer . $wgUploadPath . '/' . $path . $fileName;
-			# FIXME: Delete old thumbs that aren't being used. Maintenance script?
-			if( !file_put_contents($wgUploadDirectory . '/' . $path . $fileName, $thumb ) ) {
-				wfDebug( __METHOD__ . " could not write to thumb path\n" );
-				$wgDebugLogFile = false; // wikia
-				return $foreignUrl;
-			}
+
+			// replace nnnpx- with nnnpx@repositoryname
+			$fileName = preg_replace( "/(\d+px\-)/", "\1@{$this->repositoryName}-");
+			$localUrl = $wgUploadPath . '/' . $path . $fileName;
+
+
 			$wgMemc->set( $key, $localUrl, $this->apiThumbCacheExpiry );
 			wfDebug( __METHOD__ . " got local thumb $localUrl, saving to cache \n" );
 			$wgDebugLogFile = false; // wikia
