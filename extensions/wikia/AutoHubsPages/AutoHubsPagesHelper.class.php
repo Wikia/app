@@ -237,6 +237,24 @@ class AutoHubsPagesHelper{
 	}
 
 	/*
+	 * Author: William Lee
+	 * get DART site for hub
+	 */
+
+	static function getSiteForHub($title){
+		global $wgHubsPages, $wgContLanguageCode;
+		wfProfileIn( __METHOD__ );
+
+		if( is_array($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]) 
+		&& isset($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]['site']) ) {
+			wfProfileOut( __METHOD__ );
+			return $wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]['site'];
+		}
+
+		return 'wikia';
+	}
+
+	/*
 	* Author: Tomasz Odrobny
 	* add slider msg to list of cached msg
 	*/

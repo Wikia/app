@@ -123,27 +123,6 @@ AdConfig.DART = {
 	zone1: null,
 	zone2: null,
 
-	hubMap: {
-		"Entertainment": {"site":"ent"},
-		"Movie": {"site":"ent"},
-		"TV": {"site":"ent"},
-		"Music": {"site":"ent"},
-		"Animation": {"site":"ent"},
-		"Anime": {"site":"ent"},
-		"Sci-Fi": {"site":"ent"},
-		"Horror": {"site":"ent"},
-		"Gaming": {"site":"gaming"},
-		"PC Games": {"site":"gaming"},
-		"Xbox 360 Games": {"site":"gaming"},
-		"PS3 Games": {"site":"gaming"},
-		"Wii Games": {"site":"gaming"},
-		"Handheld Games": {"site":"gaming"},
-		"Casual Games": {"site":"gaming"},
-		"Mobile Games": {"site":"gaming"},
-		"Lifestyle": {"site":"life"},
-		"Recipes": {"site":"life"}
-	},
-	
 	sizeMap: {
 	   '300x250': '300x250,300x600',
 	   '600x250': '600x250,300x250',
@@ -303,19 +282,18 @@ AdConfig.DART.getAdType = function(useIframe) {
 
 AdConfig.DART.initSiteAndZones = function() {
 	if (AdConfig.DART.isHub()) {
-		AdConfig.DART.zone1 = wgHubsPages[wgPageName.toLowerCase()];
+		AdConfig.DART.site = wgHubsPages[wgPageName.toLowerCase()]['site'];
+		AdConfig.DART.zone1 = wgHubsPages[wgPageName.toLowerCase()]['name'];
 		AdConfig.DART.zone2 = 'hub';
-
-		if (AdConfig.DART.hubMap[wgTitle]) {
-			AdConfig.DART.site = AdConfig.DART.getSite(AdConfig.DART.hubMap[wgTitle]['site']);
-		}
-		else {
-			AdConfig.DART.site = AdConfig.DART.getSite(window.cityShort);
-		}
 	}
-	else {
+
+	if (!AdConfig.DART.site) {
 		AdConfig.DART.site = AdConfig.DART.getSite(window.cityShort);
+	}
+	if (!AdConfig.DART.zone1) {
 		AdConfig.DART.zone1 = AdConfig.DART.getZone1(window.wgDBname);
+	}
+	if (!AdConfig.DART.zone2) {
 		AdConfig.DART.zone2 = AdConfig.DART.getZone2(window.adLogicPageType);
 	}
 }
