@@ -68,6 +68,7 @@ if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 }
 
 $wgHooks[ 'WikiFactoryChanged' ][] = 'PageLayoutBuilderHelper::wikiFactoryChanged';
+$wgHooks[ 'LoadExtensionSchemaUpdates' ][] = 'PageLayoutBuilderHelper::schemaUpdate';
 
 $wgHooks['AlternateEdit'][] = 'PageLayoutBuilderSpecialPage::alternateEditHook';
 $wgHooks['AlternateEdit'][] = 'PageLayoutBuilderForm::alternateEditHook';
