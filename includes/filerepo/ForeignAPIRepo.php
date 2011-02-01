@@ -223,7 +223,6 @@ class ForeignAPIRepo extends FileRepo {
 			$fileName = preg_replace( "/(\d+px\-)/", "\1@{$this->repositoryName}-");
 			$localUrl = $wgUploadPath . '/' . $path . $fileName;
 
-
 			$wgMemc->set( $key, $localUrl, $this->apiThumbCacheExpiry );
 			wfDebug( __METHOD__ . " got local thumb $localUrl, saving to cache \n" );
 			$wgDebugLogFile = false; // wikia
