@@ -385,16 +385,6 @@ $HeadURL = explode('/', '$HeadURL$');
 $wgReleaseNumber = ($HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5];
 
 /**
- * Definition of new log type (settings), related to ticket #2657,
- * will be me moved to different configuration file
- */
-$wgLogTypes[] = 'var_log';
-$wgLogHeaders['var_log'] = 'var_logheader';
-$wgLogNames['var_log'] = 'var_logtext';
-$wgLogNames['var_set'] = 'var_set';
-$wgLogActions['var_log/var_set'] = 'var_set';
-
-/**
  * @name $wgBiggestCategoriesBlacklist
  * Lists phrases that disqualify a category from appearing in
  * the biggest category list (Monaco sidebar)
