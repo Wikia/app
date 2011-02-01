@@ -110,7 +110,7 @@ class UsercreateTemplate extends QuickTemplate {
 
 	function execute() {
 
-		global $wgOut, $wgStylePath, $wgStyleVersion;
+		global $wgOut, $wgStylePath, $wgStyleVersion, $wgBlankImgUrl;
 
 		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'. $wgStylePath . '/wikia/common/NewUserRegister.css?' . $wgStyleVersion . "\" />\n");
 
@@ -149,7 +149,17 @@ class UsercreateTemplate extends QuickTemplate {
 </div>
 <div id="userlogin<?php if ($this->data['ajax']) { ?>Ajax<?php } ?>">
 <form name="userlogin2" id="userlogin2" method="post" action="<?php $this->text('actioncreate') ?>" onsubmit="return UserRegistration.checkForm()">
-<?php if( @$this->haveData( 'createToken' ) ) { ?><input type="hidden" name="wpCreateaccountToken" value="<?php $this->text( 'createToken' ); ?>" /><?php } ?>
+<?php
+	// TODO: Check to see if 'createToken' is still used at all.
+	if( @$this->haveData( 'createToken' ) || @$this->haveData( 'token' ) ) {
+	?><input type="hidden" name="wpCreateaccountToken" value="<?php
+		if( @$this->haveData( 'createToken' ) ){
+			$this->text( 'createToken' );
+		} else if( @$this->haveData( 'token' ) ){
+			$this->text( 'token' );
+		}
+	?>" /><?php
+} ?>
 <?php		if( $this->data['message'] && $this->data['ajax'] ) { ?>
 	<div class="<?php $this->text('messagetype') ?>box" style="margin:0px">
 		<?php if ( $this->data['messagetype'] == 'error' ) { ?>
