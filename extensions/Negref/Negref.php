@@ -41,7 +41,7 @@ function efNegrefRegisterParser( &$parser ) {
 	return true;
 }
 
-function efNegrefHook( $parser, $input, $replaceData, $replaceRef, $pattern ) {
+function efNegrefHook( $parser, $input, $replaceData='', $replaceRef='', $pattern='' ) {
 	$data = $input;
 	$ref = '';
 
