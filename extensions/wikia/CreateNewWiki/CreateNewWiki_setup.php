@@ -9,6 +9,8 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__).'/';
 
 // class autoloads mappings
+$wgAutoloadClasses['CreateWikiLocalJob'] = $dir."../AutoCreateWiki/CreateWikiLocalJob.php";
+$wgAutoloadClasses['CreateWiki'] = $dir."../AutoCreateWiki/CreateWiki.php";
 $wgAutoloadClasses['CreateNewWikiModule'] = $dir . 'CreateNewWikiModule.class.php';
 $wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
 

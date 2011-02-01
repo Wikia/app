@@ -15,8 +15,9 @@ var WikiBuilder = {
 	registerInit: false,
 	wntimer: false,
 	wdtimer: false,
-	wikistate: false,
+	createStatus: false,
 	themestate: false,
+	cityId: false,
 	init: function() {
 		// pre-cache
 		WikiBuilder.wb = $('#CreateNewWiki');
@@ -117,7 +118,8 @@ var WikiBuilder = {
 			var val = WikiBuilder.wikiCategory.find('option:selected').val();
 			if(val) {
 				// call create wiki ajax
-				WikiBuilder.saveMainPageDescription();
+				//WikiBuilder.saveMainPageDescription();
+				WikiBuilder.createWiki();
 				WikiBuilder.transition('DescWiki', true, '+');
 			} else {
 				WikiBuilder.descWikiSubmitError.show().html(WikiBuilderCfg['desc-wiki-submit-error']).delay(3000).fadeOut();
@@ -155,7 +157,7 @@ var WikiBuilder = {
 		var name = WikiBuilder.wikiName.val();
 		var lang = WikiBuilder.wikiLanguage.val();
 		WikiBuilder.showIcon(WikiBuilder.wikiNameStatus, 'spinner');
-		$.get(wgScript, {
+		$.post(wgScript, {
 			action: 'ajax',
 			rs: 'moduleProxy',
 			moduleName: 'CreateNewWiki',
@@ -184,7 +186,7 @@ var WikiBuilder = {
 		wd = wd.toLowerCase();
 		WikiBuilder.wikiDomain.val(wd);
 		WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, 'spinner');
-		$.get(wgScript, {
+		$.post(wgScript, {
 			action: 'ajax',
 			rs: 'moduleProxy',
 			moduleName: 'CreateNewWiki',
@@ -271,22 +273,24 @@ var WikiBuilder = {
 	},
 	
 	saveState: function () {
-		$.get(wgScript, {
+		$.post(wgScript, {
 			action: 'ajax',
 			rs: 'moduleProxy',
 			moduleName: 'CreateNewWiki',
 			actionName: 'SaveState',
 			outputType: 'data',
-			name: WikiBuilder.wikiName.val(),
-			domain: WikiBuilder.wikiDomain.val(),
-			lang: WikiBuilder.wikiLanguage.find('option:selected').val()
+			data: {
+				wikiName: WikiBuilder.wikiName.val(),
+				wikiDomain: WikiBuilder.wikiDomain.val(),
+				wikiLang: WikiBuilder.wikiLanguage.find('option:selected').val()
+			}
 		}, function(res) {
 			
 		});
 	},
 	
 	upgradeToWikiaPlus: function() {
-		$.getJSON(wgScript,
+		$.postJSON(wgScript,
 			{
 				action: 'ajax',
 				rs: 'moduleProxy',
@@ -306,7 +310,7 @@ var WikiBuilder = {
 	}, 
 	
 	saveMainPageDescription: function() {
-		$.getJSON(wgScript,
+		$.postJSON(wgScript,
 			{
 				action: 'ajax',
 				rs: 'moduleProxy',
@@ -324,6 +328,28 @@ var WikiBuilder = {
 	
 	gotoMainPage: function() {
 		location.href = 'http://hyuntest91.hyun.wikia-dev.com/wiki/Main_Page?wiki-welcome=1';
+	},
+	
+	createWiki: function() {
+		$.postJSON(wgScript,
+			{
+				action: 'ajax',
+				rs: 'moduleProxy',
+				moduleName: 'CreateNewWiki',
+				actionName: 'CreateWiki',
+				outputType: 'data',
+				data: {
+					wikiName: WikiBuilder.wikiName.val(),
+					wikiDomain: WikiBuilder.wikiDomain.val(),
+					wikiLanguage: WikiBuilder.wikiLanguage.find('option:selected').val(),
+					wikiCategory: WikiBuilder.wikiCategory.find('option:selected').val()
+				}
+			},
+			function(res) {
+				Wikibuilder.cityId = res.cityId;
+				WikiBuilder.createStatus = res.status;
+			}
+		);
 	}
 }
 
