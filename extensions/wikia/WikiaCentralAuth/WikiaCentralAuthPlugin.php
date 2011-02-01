@@ -102,6 +102,11 @@ class WikiaCentralAuthPlugin extends AuthPlugin {
 	 * @public
 	 */
 	function updateUser( User &$oUser ) {
+		if ( !is_object( $oUser ) ) {
+			wfDebug( __METHOD__ . ": invalid user object" );
+            return false;			
+		}
+		
         if ( wfReadOnly() ) {
 			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
             return false;
