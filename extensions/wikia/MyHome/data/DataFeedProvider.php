@@ -327,17 +327,10 @@ class DataFeedProvider {
 				$item['comment'] = $res['comment'];
 			}
 
-			if (class_exists('ArticleComment')) {
-				if (defined('NS_BLOG_ARTICLE') && $res['ns'] === NS_BLOG_ARTICLE) {
-					$parts = ArticleComment::explode($res['title']);
-					$item['title'] = $parts['title'];
-				}
-
-				if (!empty($res['rc_params']['articleComment'])) {
-					$item['articleComment'] = true;
-					$parts = ArticleComment::explode($res['title']);
-					$item['title'] = $parts['title'];
-				}
+			if (class_exists('ArticleComment') && ArticleComment::isTitleComment($title)) {
+				$item['articleComment'] = true;
+				$parts = ArticleComment::explode($res['title']);
+				$item['title'] = $parts['title'];
 			}
 		}
 
@@ -367,8 +360,7 @@ class DataFeedProvider {
 
 			$item['title'] = $res['title'];
 			$item['url'] = $title->getLocalUrl();
-
-			if (!empty($res['rc_params']['articleComment']) && class_exists('ArticleComment')) {
+			if (class_exists('ArticleComment') && ArticleComment::isTitleComment($title)) {
 				$item['articleComment'] = true;
 				$parts = ArticleComment::explode($res['title']);
 				$item['title'] = $parts['title'];
@@ -444,6 +436,12 @@ class DataFeedProvider {
 				$oldTitle = Title::newFromText($res['title']);
 
 				if (empty($oldTitle)) {
+					wfProfileOut(__METHOD__);
+					return;
+				}
+
+				// Filter Article Comments from Activity Log without using rc_params FB:1336
+				if (class_exists('ArticleComment') && ArticleComment::isTitleComment($newTitle)) {
 					wfProfileOut(__METHOD__);
 					return;
 				}

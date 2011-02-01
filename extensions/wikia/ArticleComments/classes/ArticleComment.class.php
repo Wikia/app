@@ -805,7 +805,7 @@ class ArticleComment {
 				if ( $error !== true ) {
 					Wikia::log( __METHOD__, 'movepage',
 						'cannot move blog comments: old comment: ' . $oCommentTitle->getPrefixedText() . ', ' .
-						'new comment: ' . $newCommentTitle->getPrefixedText() . ', error: ' . @implode(', ', $error)
+						'new comment: ' . $oNewTitle->getPrefixedText() . ', error: ' . @implode(', ', $error)
 					);
 				} else {
 					$moved++;
@@ -820,7 +820,7 @@ class ArticleComment {
 						if ( $error !== true ) {
 							Wikia::log( __METHOD__, 'movepage',
 								'cannot move blog comments: old comment: ' . $oCommentTitle->getPrefixedText() . ', ' .
-								'new comment: ' . $newCommentTitle->getPrefixedText() . ', error: ' . @implode(', ', $error)
+								'new comment: ' . $oNewTitle->getPrefixedText() . ', error: ' . @implode(', ', $error)
 							);
 						} else {
 							$moved++;
