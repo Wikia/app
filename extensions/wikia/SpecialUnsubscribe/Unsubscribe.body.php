@@ -37,9 +37,25 @@ class UnsubscribePage extends UnlistedSpecialPage {
 
 		$this->setHeaders();
 
-		$email = $wgRequest->getText( 'email' , null );
-		$token = $wgRequest->getText( 'token' , null );
-		$timestamp = $wgRequest->getText( 'timestamp' , null );
+		$hash_key = $wgRequest->getText('key', null );
+		
+		$email = $token = $timestamp = null;
+		if ( !empty( $hash_key ) ) {
+			#$hask_key = urldecode ( $hash_key );
+			$data = Wikia::verifyUserSecretKey( $hash_key, 'sha256' );
+			if ( !empty( $data ) ) {
+				$username 	= ( isset( $data['user'] ) ) ? $data['user'] : null;
+				$token 		= ( isset( $data['token'] ) ) ? $data['token'] : null;
+				$timestamp 	= ( isset( $data['signature1'] ) ) ? $data['signature1'] : null;
+				
+				$oUser = User::newFromName( $username );
+				$email = $oUser->getEmail();
+			}
+		} else {	 
+			$email = $wgRequest->getText( 'email' , null );
+			$token = $wgRequest->getText( 'token' , null );
+			$timestamp = $wgRequest->getText( 'timestamp' , null );
+		}
 		
 		if($email == null || $token == null || $timestamp == null) {
 			#give up now, abandon all hope.

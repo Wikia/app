@@ -1389,25 +1389,17 @@ class Wikia {
 			return true;
 		}
 
-		if ( !is_array($keys) ) {
-			$keys = array();
-		}
-
 		$email = $user->getEmail();
 		$ts = time();
 		# unsubscribe params
-		$params = array(
-			'email' 	=> $email,
-			'timestamp' => $ts,
-			'token'		=> wfGenerateUnsubToken( $email, $ts )
-		);
-
-		$url = $oTitle->getFullURL( $params );
+		$hash_url = Wikia::buildUserSecretKey( $user->getName(), 'sha256' );
+		
+		$url = ( $hash_url ) ? $oTitle->getFullURL( array( 'key' => $hash_url ) ) : '';
 		$body = str_replace( '$UNSUBSCRIBEURL', $url, $body );
 		if ( $bodyHTML ) {
 			$bodyHTML = str_replace( '$UNSUBSCRIBEURL', $url, $bodyHTML );
 		}
-
+		
 		return true;
 	}
 
@@ -1487,7 +1479,6 @@ class Wikia {
 	 */
 
 	static public function setProps( $page_id, Array $props ) {
-
 		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER );
 		foreach( $props as $sPropName => $sPropValue) {
@@ -1510,4 +1501,107 @@ class Wikia {
 		wfProfileOut( __METHOD__ );
 	}
 	
+	/**
+	 * build user authentication key
+	 * @static
+	 * @access public
+	 * @param array $params
+	 */
+	static public function buildUserSecretKey( $username, $hash_algorithm = 'sha256' ) {
+		global $wgWikiaAuthTokenKeys;
+		wfProfileIn( __METHOD__ );
+		
+		$oUser = User::newFromName( $username );
+		if ( !is_object($oUser) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+		
+		if ( 0 == $oUser->getId() ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+			 
+		$email = $oUser->getEmail();
+		if ( empty($email) ) {
+			wfProfileOut( __METHOD__ );
+			return false;			
+		}
+		
+		$ts = time();
+		$params = array(
+			'user' 			=> (string) $username,
+			'signature1' 	=> (string) $ts,
+			'token'			=> (string) wfGenerateUnsubToken( $email, $ts ),
+		);
+
+		// Generate content verification signature
+		$data = serialize( $params );  
+
+		// signature to compare
+		$signature = hash_hmac( $hash_algorithm, $data, $wgWikiaAuthTokenKeys[ 'private' ] );  
+		
+		// encode public information
+		$public_information = array( $username, $ts, $signature, $wgWikiaAuthTokenKeys[ 'public' ] );
+		$result = strtr( base64_encode( implode( "|", $public_information ) ), '+/=', '-_,' );  
+		
+		wfProfileOut( __METHOD__ );
+		
+		return $result;
+	}
+	
+	/**
+	 * check user authentication key
+	 * @static
+	 * @access public
+	 * @param array $params
+	 */
+	static public function verifyUserSecretKey( $url, $hash_algorithm = 'sha256' ) {
+		global $wgWikiaAuthTokenKeys;
+		wfProfileIn( __METHOD__ );
+		
+		@list( $user, $signature1, $signature2, $public_key ) = explode("|", base64_decode( strtr($url, '-_,', '+/=') ));
+		
+		if ( empty( $user ) || empty( $signature1 ) || empty( $signature2 ) || empty ( $public_key) ) {
+			wfProfileOut( __METHOD__ );
+			return false;			
+		}		
+
+		# verification public key
+		if ( $wgWikiaAuthTokenKeys['public'] == $public_key ) {
+			$private_key = $wgWikiaAuthTokenKeys['private'];  
+		} else {
+			wfProfileOut( __METHOD__ );
+			return false;			
+		}
+		
+		$oUser = User::newFromName( $user );
+		if ( !is_object($oUser) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		// verify params
+		$email = $oUser->getEmail();
+		$params = array(
+			'user'			=> (string) $user,
+			'signature1'	=> (string) $signature1, 
+			'token'			=> (string) wfGenerateUnsubToken( $email, $signature1 )
+		);
+		
+		// message to hash
+		$message = serialize( $params );
+		
+		// computed signature
+		$hash = hash_hmac( $hash_algorithm, $message, $private_key ); 
+
+		// compare values
+		if ( $hash != $signature2 ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $params;
+	}	
 }
