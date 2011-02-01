@@ -276,7 +276,7 @@
 			var insertionPoint = (window.skin == "oasis") ? "body" : "#positioned_elements";
 			$(insertionPoint).append(this.data.configurationHtml);
 			this.w = $("#MyToolsConfiguration").makeModal({
-				width: 704,
+				width: 710,
 				closeOnBlackoutClick: false
 			});
 			// End of copy

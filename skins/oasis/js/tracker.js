@@ -180,6 +180,10 @@ var initTracker = function() {
 			return;
 		}
 
+		if (node.hasParent('.mytools')) {
+			fakeUrl += 'mytools/';
+		}
+		
 		// (un)watch + share
 		if (node.attr('id')) {
 			switch(node.attr('id')) {
@@ -195,24 +199,15 @@ var initTracker = function() {
 					$.tracker.byStr(fakeUrl + 'share');
 					break;
 			}
-		}
-		// my tools
-		else if (node.hasParent('.mytools')) {
-			fakeUrl += 'mytools/';
-
-			// menu links
-			if (node.hasParent('#my-tools-menu')) {
-				// "Edit My Tools"
-				if (node.hasClass('my-tools-edit')) {
-					$.tracker.byStr(fakeUrl + 'edit');
-				}
-				else {
-					// RT #69819
-					$.tracker.byStr(fakeUrl + node.attr('data-name'));
-				}
-			}
-			// "My Tools" link
-			else {
+		} else {
+			if (node.hasClass('tools-customize')) {
+				// Customize clicked
+				$.tracker.byStr(fakeUrl + 'customize');
+			} else if (node.attr('data-name')) {
+				// Every other option clicked
+				$.tracker.byStr(fakeUrl + node.attr('data-name'));
+			} else if (node.parent().hasClass('mytools')) {
+				// "My Tools" menu opened
 				$.tracker.byStr(fakeUrl + 'open');
 			}
 		}
