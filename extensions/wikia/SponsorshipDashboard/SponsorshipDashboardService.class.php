@@ -454,7 +454,7 @@ class SponsorshipDashboardService extends Service {
 
 	public function loadContentData(){
 
-		global $wgUser, $wgLang, $wgOut, $wgEnableBlogArticles, $wgJsMimeType, $wgExtensionsPath, $wgHubsPages, $wgStyleVersion, $wgRequest, $wgAllowRealName;
+		global $wgUser, $wgLang, $wgOut, $wgEnableBlogArticles, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgRequest, $wgAllowRealName;
 		global $wgDBname;
 
 		$wgCityId = WF::build( 'App' )->getGlobal( 'wgCityId' );
@@ -697,7 +697,8 @@ class SponsorshipDashboardService extends Service {
 		$popularCityHubs = array();
 		foreach( $wgHubsPages['en'] as $hubs_key=>$hubsPages ){
 			foreach( $cityTags as $key => $val ){
-				if ( $hubsPages == $val ){
+				$hubName = is_array($hubsPages) ? $hubsPages['name'] : $hubsPages; 
+				if ( $hubName == $val ){
 					$popularCityHubs[$val] = $key;
 				}
 			}
@@ -711,7 +712,7 @@ class SponsorshipDashboardService extends Service {
 
 	public function loadParticipationData(){
 
-		global $wgUser, $wgLang, $wgOut, $wgEnableBlogArticles, $wgJsMimeType, $wgExtensionsPath, $wgHubsPages, $wgStyleVersion, $wgRequest, $wgAllowRealName;
+		global $wgUser, $wgLang, $wgOut, $wgEnableBlogArticles, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgRequest, $wgAllowRealName;
 		global $wgCityId, $wgDBname;
 
 		// Cache check
@@ -892,7 +893,7 @@ class SponsorshipDashboardService extends Service {
 
 	public function loadActivityData(){
 
-		global $wgUser, $wgLang, $wgOut, $wgEnableBlogArticles, $wgJsMimeType, $wgExtensionsPath, $wgHubsPages, $wgStyleVersion, $wgRequest, $wgAllowRealName;
+		global $wgUser, $wgLang, $wgOut, $wgEnableBlogArticles, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgRequest, $wgAllowRealName;
 		global $wgDBname;
 
 		// Cache check

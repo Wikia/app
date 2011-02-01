@@ -23,7 +23,7 @@ class PartnerFeed extends SpecialPage {
 	}
 
 	function execute() {
-		global $wgLang, $wgAllowRealName, $wgRequest, $wgOut, $wgHubsPages;
+		global $wgLang, $wgAllowRealName, $wgRequest, $wgOut;
 
 		$this->mName = $wgRequest->getText( 'wpName' );
 		$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
