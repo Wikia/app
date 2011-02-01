@@ -142,6 +142,11 @@
 		height: 16px;
 		width: 16px;
 	}
+	&.error {
+		background-position: -1176px -80px;
+		height: 16px;
+		width: 16px;	
+	}
 	
 	//Notifications
 	&.close-notification {
@@ -172,6 +177,13 @@
 		background-position: -1192px -32px;
 		height: 13px;
 		width: 13px;
+	}
+	
+	//Toolbar
+	&.gear {
+		background-position: -1192px -80px;
+		height: 16px;
+		width: 16px;		
 	}
 }
 
