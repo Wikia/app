@@ -63,6 +63,7 @@ class RiakSessionHandler {
 		global $wgRiakSessionNode;
 
 		$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode );
+		wfDebugLog( "session", __METHOD__ . ": reading $id from session storage\n", true );
 		return $cache->get( self::key( $id ) );
 	}
 
@@ -70,6 +71,7 @@ class RiakSessionHandler {
 		global $wgRiakSessionNode;
 
 		$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode );
+		wfDebugLog( "session", __METHOD__ . ": store on session storage with key {$id}\n", true );
 		$cache->set( self::key( $id ), $data, self::EXPIRE );
 	}
 
