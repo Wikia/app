@@ -18,11 +18,11 @@
 class WikiaException extends MWException {
 	/**
 	 * Previous exception
-	 * 
+	 *
 	 * @var Exception|null
 	 */
-	private $previous;
-	
+	private $_previous;
+
 	/**
 	 * Constructor
 	 *
@@ -42,9 +42,9 @@ class WikiaException extends MWException {
 
 	/**
 	 * Simulates getPrevious() introduced in PHP 5.3
-	 * 
+	 *
 	 * @link   http://pl2.php.net/manual/en/exception.getprevious.php
-	 * @param  string $method 
+	 * @param  string $method
 	 * @param  array $args
 	 * @return mixed
 	 */
@@ -64,7 +64,7 @@ class WikiaException extends MWException {
 	 */
 	public function __toString() {
 		if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-			if (null !== ($e = $this->getPrevious())) {
+			if (null !== ($e = $this->_getPrevious())) {
 				return $e->__toString() . "\n\nNext " . parent::__toString();
 			}
 		}

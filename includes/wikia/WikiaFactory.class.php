@@ -80,7 +80,12 @@ abstract class WikiaFactory {
 
 			if($constructorMethod == '__construct') {
 				$reflectionObject = new ReflectionClass($className);
-				$object = $reflectionObject->newInstanceArgs($buildParams);
+				if(!empty($buildParams)) {
+					$object = $reflectionObject->newInstanceArgs($buildParams);
+				}
+				else {
+					$object = $reflectionObject->newInstanceArgs();
+				}
 			}
 			else {
 				$object = call_user_func_array(array($className, $constructorMethod), $buildParams);
