@@ -439,6 +439,7 @@ $wgHooks['UserRights'][] = "Wikia::notifyUserOnRightsChange";
 $wgHooks['SetupAfterCache'][] = "Wikia::setupAfterCache";
 $wgHooks['ComposeMail'][] = "Wikia::ComposeMail";
 $wgHooks['SoftwareInfo'][] = "Wikia::softwareInfo";
+$wgHooks['AddNewAccount'][] = 'Wikia::ignoreUser';
 //$wgHooks['IsTrustedProxy'][] = "Wikia::trustInternalIps";
 //$wgHooks['RawPageViewBeforeOutput'][] = 'Wikia::rawPageViewBeforeOutput';
 /**
@@ -1500,7 +1501,18 @@ class Wikia {
 		$dbw->commit(); #--- for ajax
 		wfProfileOut( __METHOD__ );
 	}
-	
+
+	static public function ingoreUser( $user, $byEmail ) {
+		global $wgStatsDB;
+
+		if ( ( $user instanceof User ) && ( 0 === strpos( $user->getName(), 'WikiaTestAccount', __METHOD__, "IGNORE" ) ) ) {
+			$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
+
+			$dbw->insert( 'ignored_users', array( 'user_id' => $user->getId() ) );
+		}
+
+		return true;
+	}
 	/**
 	 * build user authentication key
 	 * @static
