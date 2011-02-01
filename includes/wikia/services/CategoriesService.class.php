@@ -97,7 +97,7 @@ class CategoriesService extends Service {
 		$blacklist = $this->getBlacklist();
 
 		foreach($blacklist as $entry) {
-			if (strpos($category, $entry) !== false) {
+			if ( (!empty($entry)) && (strpos($category, $entry) !== false) ) {
 				wfProfileOut(__METHOD__);
 				return true;
 			}
