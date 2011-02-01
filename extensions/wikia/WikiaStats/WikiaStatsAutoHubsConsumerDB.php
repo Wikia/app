@@ -715,7 +715,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		$wikis = json_decode($html_out, true);
 
 		$res = array( 'rows' => array() );
-		if ( !empty($wikis['blogpage'][$page_id]) ){
+		if ( isset($wikis['blogpage'][$page_id]) && !empty($wikis['blogpage'][$page_id]) && isset( $wikis['blogpage'][$page_id]['description'] ) ){
 			$this->shortenText($wikis['blogpage'][$page_id]['description'], 30);
 
 			if (strpos( $wikis['blogpage'][$page_id]['description'], 'wgAfterContentAndJS' ) > 0 ) {
