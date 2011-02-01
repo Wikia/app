@@ -42,7 +42,7 @@ class WikiaPollAjax {
 				'success' => true,
 				'pollId' => $article->getID(),
 				'url'  => $title_object->getLocalUrl() ,
-				'text' => $title_object->getPrefixedText()
+				'question' => $title_object->getPrefixedText()
 				);
 		}
 		wfProfileOut(__METHOD__);
@@ -77,7 +77,7 @@ class WikiaPollAjax {
 				'success' => true,
 				'pollId' => $article->getID(),
 				'url'  => $title_object->getLocalUrl() ,
-				'text' => $title_object->getPrefixedText()
+				'question' => $title_object->getPrefixedText()
 				);
 		}
 
@@ -86,13 +86,14 @@ class WikiaPollAjax {
 	}
 
 	/**
-	 * check for poll existing
+	 * checks for poll existing
+	 * returns contents of poll
 	 * 
 	 * @param wgRequest pollId
 	 * @return array {exists, url, text}
 	 */
 
-	static public function exists() {
+	static public function get() {
 		global $wgRequest ;
 		wfProfileIn(__METHOD__);
 
@@ -109,7 +110,8 @@ class WikiaPollAjax {
 			$res = array (
 				'exists' => true,
 				'url'  => $title_object->getLocalUrl() ,
-				'text' => $title_object->getPrefixedText()
+				'question' => $title_object->getPrefixedText(),
+				'answer' => $article_object->getContent()
 			);
 		} 
 		wfProfileOut(__METHOD__);
