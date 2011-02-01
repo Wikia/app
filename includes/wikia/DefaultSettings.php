@@ -171,6 +171,8 @@ $wgAutoloadClasses['EditPageModule'] = $IP.'/skins/oasis/modules/EditPageModule.
 $wgAutoloadClasses['UploadPhotosModule'] = $IP.'/skins/oasis/modules/UploadPhotosModule.class.php';
 $wgAutoloadClasses['ThemeSettings'] = $IP.'/extensions/wikia/ThemeDesigner/ThemeSettings.class.php';
 
+$wgAutoloadClasses['ErrorModule'] = $IP.'/skins/oasis/modules/ErrorModule.class.php';
+
 // TODO:move this inclusion to CommonExtensions?
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
 

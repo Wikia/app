@@ -73,3 +73,9 @@ $color-poll-label: lighten($color-text, 30%);
 		}
 	}
 }
+
+.modalContent .CreateWikiaPoll {
+	.toolbar .secondary {
+		display: inline-block;
+	}
+}

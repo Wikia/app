@@ -145,6 +145,8 @@ $messages['en'] = array(
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming',
 	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle',
+	
+	'oasis-modal-error-headline' => 'Please correct the following errors',
 );
 
 /** Message documentation (Message documentation)
@@ -207,7 +209,7 @@ Example output: edited by Avatar 3 hours ago',
 Example output: deleted by Avatar 3 hours ago',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -1216,7 +1218,7 @@ U kunt hulpmiddelen verwijderen of ordenen in het veld hieronder.
 	'oasis-upload-photos-caption' => 'Bijschrift',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
@@ -1915,7 +1917,7 @@ $messages['uk'] = array(
 	'oasis-upload-photos-title' => 'Завантажити фото до вікі',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (中文(繁體))
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
@@ -1953,7 +1955,7 @@ $messages['zh-hant'] = array(
 	'oasis-interlang-languages' => '其他語言',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬)
+/** Chinese (Taiwan) (中文(台灣))
  * @author Ffaarr
  * @author Mark85296341
  */
