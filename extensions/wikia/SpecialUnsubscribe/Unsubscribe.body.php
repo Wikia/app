@@ -260,17 +260,15 @@ EOT
 				#our new flag
 				$user->setOption( $this->mPrefname, 1);
 
-				#play it safe, turn off the standard stuff
-				#(users can do this on their own in they are logged in)
-				#(this really just covers more bases)
+				#FB:1758 don't invalidate email, but do turn off email options
+				#(users can do this on their own when they are logged in)
+				$user->setOption( 'enotiffollowedpages', 0);
 				$user->setOption( 'enotifusertalkpages', 0);
 				$user->setOption( 'enotifwatchlistpages', 0);
 				$user->setOption( 'enotifminoredits', 0);
 				$user->setOption( 'watchlistdigest', 0);
 				$user->setOption( 'marketingallowed', 0);
-
-				#(un)sets all the timestamp stuff
-				$user->invalidateEmail();
+				$user->setOption( 'disablemail', 0);
 
 				#super important, dont forget to save the bits back to metal
 				$user->saveSettings();
