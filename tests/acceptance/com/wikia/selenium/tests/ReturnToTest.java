@@ -59,9 +59,12 @@ public class ReturnToTest extends BaseTest {
 			assertTrue(session().isElementPresent("//div[@id='bodyContent']//a[contains(@href, 'title=Special:Signup&returnto=Special:Upload')]"));
 		}
 	}
-
-	@Test(groups={"oasis", "CI"})
-	//works ONLY when $wgGroupPermissions['*']['edit'] = false;
+	
+	/**
+	 * works ONLY when $wgGroupPermissions['*']['edit'] = false;
+	 * Requires configuration management
+	 */
+	@Test(groups={"oasis", "CI", "broken"})
 	public void testEditPermission() throws Exception {
 		// go to Special:Upload
 		session().open("index.php?title=Main_Page&action=edit");
