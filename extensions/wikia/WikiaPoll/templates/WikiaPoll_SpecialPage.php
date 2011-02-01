@@ -1,6 +1,10 @@
-<section class="CreateWikiaPoll">
-	<label>question</label>
+<section class="CreateWikiaPoll" id="CreateWikiaPoll">
 
+	<h1>Create Poll</h1>
+	
+	<form>
+	<label>question</label>
+	
 	<div class="question">
 		<span><?= wfMsg("wikiapoll-question-mark-before") ?></span>
 		<input type="text" name="question">
@@ -39,7 +43,9 @@
 	</div>
 	
 	<div class="toolbar">
-		<input type="button" value="Cancel" class="secondary">
-		<input type="button" value="Create Poll">
+		<input type="button" value="Cancel" class="cancel secondary">
+		<input type="button" value="Create Poll" class="create">
 	</div>
+	
+	</form>
 </section>

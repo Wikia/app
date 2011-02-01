@@ -24,7 +24,7 @@ class WikiaPollAjax {
 			// TODO msg this
 			$res = array (
 				'success' => false,
-				'error' => "A poll with that name already exists."
+				'error' => wfRenderModule('Error', 'Index', 'A poll with that name already exists.')				
 				);
 		} else {
 
