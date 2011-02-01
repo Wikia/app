@@ -22,7 +22,7 @@ public class BlackListTest extends BaseTest {
 
 		for (String website: websites) {
 			editArticle(articleTitle, website);
-			assertTrue(session().isTextPresent("Spam protection filter"));
+			assertTrue(session().isTextPresent("The page you wanted to save was blocked by the spam filter"));
 		}
 	}
 
