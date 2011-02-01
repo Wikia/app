@@ -200,18 +200,14 @@ class ForeignAPIRepo extends FileRepo {
 		}
 		else {
 			// wikia debug, remove later
-			global $wgDebugLogFile;
-			$wgDebugLogFile  = "php://stderr";
 			$foreignUrl = $this->getThumbUrl( $name, $width, $height );
 			if( !$foreignUrl ) {
 				wfDebug( __METHOD__ . " Could not find thumburl\n" );
-				$wgDebugLogFile = false; // wikia
 				return false;
 			}
 			$thumb = Http::get( $foreignUrl );
 			if( !$thumb ) {
 				wfDebug( __METHOD__ . " Could not download thumb\n" );
-				$wgDebugLogFile = false; // wikia
 				return false;
 			}
 			// We need the same filename as the remote one :)
@@ -225,7 +221,6 @@ class ForeignAPIRepo extends FileRepo {
 
 			$wgMemc->set( $key, $localUrl, $this->apiThumbCacheExpiry );
 			wfDebug( __METHOD__ . " got local thumb $localUrl, saving to cache \n" );
-			$wgDebugLogFile = false; // wikia
 			return $localUrl;
 		}
 	}
