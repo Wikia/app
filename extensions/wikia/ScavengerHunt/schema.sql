@@ -1,4 +1,0 @@
---TODO: add tables to dataware
---1) (game data) game ID, game data
---2) (game connection to articles) many-to-many: game ID <--> article ID
---3) (game results) user name, user ID (for logged in), e-mail, exrta data
