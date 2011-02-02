@@ -31,35 +31,7 @@
 	}
 	.modal-tabs {
 		border-bottom: none;
-	}
-	
-	.errorbox {
-		border: 1px solid #A91000;
-		background: #F2CFD2;
-		color: #A91000;
-		float: none;
-		font-size: 12px;
-		margin: 5px 0 15px;
-		padding: 5px 25px;
-		position: relative;
-		.sprite.error {
-			position: absolute;
-			top: 4px;
-			left: 5px;
-		}
-		h1 {
-			text-decoration: underline;
-		}
-		a {
-			color: #A91000;
-			text-decoration: underline;
-		}
-		li {
-			list-style: disc outside none;
-			margin: 0 0 0 20px;
-			padding: 4px 0 0;
-		}
-	}
+	}	
 }
 
 .modalContent {
