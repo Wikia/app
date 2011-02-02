@@ -180,10 +180,11 @@ WikiaFooterApp = {
 		},
 		
 		createMore: function () {
+			var caption = this.el.attr('data-more-caption') || 'more ...';
 			return $(
 				'<li class="menu disable-more more-menu">'
 				+'<span class="arrow-icon-ctr"><span class="arrow-icon arrow-icon-top"></span><span class="arrow-icon arrow-icon-bottom"></span></span>'
-				+'<a href="#">more ...</a>'
+				+'<a href="#">'+caption+'</a>'
 				+'<ul class="tools-menu"></ul>'
 				+'</li>'); 
 		},
@@ -193,10 +194,9 @@ WikiaFooterApp = {
 			var moreable = all.not('.disable-more');
 			var where = all.filter('.menu').last();
 			
-			var width = 0, mwidth = 0, fwidth;
+			var width = 0, mwidth = 0, fwidth = this.el.innerWidth() - 5;
 			all.each(function(i,v){width += $(v).outerWidth();});
 			moreable.each(function(i,v){mwidth += $(v).outerWidth();});
-			fwidth = this.el.innerWidth() - 10 - (width - mwidth);
 				
 			if (width < fwidth) {
 				return;
@@ -207,9 +207,9 @@ WikiaFooterApp = {
 			if (where.exists()) where.before(li_more)
 			else this.el.append(li_more);
 			var more = li_more.children('ul');
-			var moreWidth = 100;
+			var moreWidth = li_more.outerWidth() + 5;
 			
-			var rwidth = fwidth - moreWidth;
+			var rwidth = fwidth - moreWidth - (width - mwidth);
 			moreable.each(function(i,v){
 				rwidth -= $(v).outerWidth();
 				if (rwidth < 0)
