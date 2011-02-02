@@ -238,6 +238,7 @@ class StaticChute {
 		$this->config['monaco_css'] = array(
 			'common/yui_2.5.2/tabview/assets/tabview.css',
 			'common/shared.css',
+			'common/successerror.css',
 			'wikia/shared.css',
 			'monaco/css/monobook_modified.css',
 			'monaco/css/reset_modified.css',
@@ -429,6 +430,7 @@ class StaticChute {
 			'common/yui300css-reset-min.css',
 			'common/wikia_ui/buttons.css',
 			'common/shared.css',
+			'common/successerror.css',
 			'common/sprite.css',
 			'corporate/css/modal.css',
 			'corporate/css/main.css',
