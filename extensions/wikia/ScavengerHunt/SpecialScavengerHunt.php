@@ -36,14 +36,7 @@ class SpecialScavengerHunt extends SpecialPage {
 		}
 
 		if ($wgRequest->wasPosted()) {
-			$wgOut->addHTML('<h2>' . wfMsg('scavengerhunt-todo-add-some-stuff-here') . '</h2>');
-		} else {
-			$wgOut->addHTML('<h2>' . wfMsg('scavengerhunt-todo-add-some-stuff-here') . '</h2>');
 		}
-
-		$wgOut->addHTML(Xml::openElement('form', array('action' => $this->mTitle->getFullURL(), 'method' => 'post')));
-		$wgOut->addHTML(Xml::submitButton(wfMsg('scavengerhunt-submit')));
-		$wgOut->addHTML(Xml::closeElement('form'));
 
 		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
 		$template->set_vars(array(
