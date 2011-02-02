@@ -3,6 +3,8 @@
 include( "/usr/wikia/source/wiki/maintenance/commandLine.inc" );
 include( "WikiaImport.php" );
 
+unset( $wgHTTPProxy );
+
 class ConfluenceWikiaImport extends WikiaImport {
 	// @TODO these should be defined from the commandline
 	var $remoteUrl = "http://chassisregister.com";
@@ -120,10 +122,10 @@ class ConfluenceWikiaImport extends WikiaImport {
 		$text = preg_replace( "/h4\.(.*)/", "==== $1 ====", $text );
 
 		// handle bold
-		$text = preg_replace( "/\*([^ *]+)\*/", "'''$1'''", $text );
+		$text = preg_replace( "/\*([^\*]+)\*/", "'''$1'''", $text );
 
 		// handle italics
-		$text = preg_replace( "/\b_([^ _]+)_\b/", "''$1''", $text );
+		$text = preg_replace( "/\b_([^_]+)_\b/", "''$1''", $text );
 
 		// handle pre
 		// @TODO this doesn't prevent the wrapped text from being "parsed" – it should
@@ -139,6 +141,27 @@ class ConfluenceWikiaImport extends WikiaImport {
 		// from [link] to [[link]]
 		$text = preg_replace( "/\[([^]]+)\]/", "[[$1]]", $text );
 
+		// cut out meta lists
+		preg_match_all( "/\{metadata-list\}(.*?)\{metadata-list\}/s", $text, $metalists );
+		$text = preg_replace( "/\{metadata-list\}.*?\{metadata-list\}/s", "!META-LIST-PLACEHOLDER!", $text );
+
+		$metalists_translated = array();
+
+		if ( !empty( $metalists ) ) {
+			$i = 0;
+			foreach ( $metalists[1] as $list ) {
+				
+				$metalists_translated[$i] = "{| class=\"wikitable\"";
+				$list = preg_replace( "/\| *$/m", "", $list );
+				$list = preg_replace( "/\|/", "||", $list );
+				$list = preg_replace( "/^\|\|\|\|/m", "|-\n|", $list );
+
+				$metalists_translated[$i] .= $list;
+				$metalists_translated[$i] .= "|}\n";
+				$i++;
+			}
+		}
+
 		// handle tables
 		$text = preg_replace( "/\|(?!\|)(.*)\|(?!\|)/", "|-\n|$1|", $text ); // separate rows first
 		$text = preg_replace( "/\|\|-.\|/s", "{| class=\"wikitable\"\n! ", $text ); // mark beginning and headers
@@ -146,7 +169,7 @@ class ConfluenceWikiaImport extends WikiaImport {
 		$text = explode( "\n", $text );
 		$tableState = false;
 		foreach ( $text as &$l ) {
-			if ( $l == "{|" ) {
+			if ( strpos( $l, "{|" ) === 0 ) {
 				$tableState = true;
 				continue;
 			}
@@ -155,11 +178,14 @@ class ConfluenceWikiaImport extends WikiaImport {
 				if ( strpos( $l, "!" ) === 0 ) {
 					// regex to correct headers
 					$l = preg_replace( "/\|\|/", "!!", $l );
-					$l = preg_replace( "/!!$/", "", $l );
+					$l = rtrim( $l, "!" );
 				} elseif ( strpos( $l, "|" ) === 0 && trim( $l ) != "|-" ) {
 					//regex to correct rows and cells
-					$l = preg_replace( "/(?<!^)\|/", "||", $l );
-					$l = preg_replace( "/\|\|$/", "", $l );
+					// FIXME: this is fucking insane
+					$l = substr( $l, 1 );
+					$l = preg_replace( "/\|/", "$1||$2", $l );
+					$l = rtrim( $l, "|" );
+					$l = "|" . $l;
 				} elseif ( trim( $l ) === "" ) {
 					$l = "|}";
 					$tableState = false;
@@ -169,6 +195,12 @@ class ConfluenceWikiaImport extends WikiaImport {
 			}
 		}
 		$text = implode( "\n", $text );
+
+		// FIXME: this is awkward, use preg_replace_callback?
+		foreach ( $metalists_translated as $t ) {
+			$text = preg_replace( "/!META-LIST-PLACEHOLDER!/", $t, $text, 1 );
+		}
+
 		$text = trim( $text );
 
 		$this->mWikitext = $text;
