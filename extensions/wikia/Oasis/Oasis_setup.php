@@ -214,3 +214,9 @@ function moduleProxy() {
 
 // Messages
 $wgExtensionMessagesFiles['Oasis'] = dirname(__FILE__) . '/Oasis.i18n.php';
+
+$wgExtensionCredits['other'][] = array(
+	'name' => 'Toolbar Customize',
+	'version' => '1.0',
+	'author' => array('Władysław Bodzek'),
+);
