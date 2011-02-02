@@ -242,7 +242,7 @@ class CorporatePageHelper{
 	 * @author Marooned
 	 */
 	static function ArticleFromTitle(&$title, &$article) {
-		global $wgRequest,$wgTitle;
+		global $wgRequest,$wgTitle, $wgCorporatePageRedirectWiki;
 		//do not redirect for action different than view (allow creating, deleting, etc)
 		if ($wgRequest->getVal('action', 'view') != 'view') {
 			return true;
@@ -268,8 +268,8 @@ class CorporatePageHelper{
 			case 501: //NS_BLOG_ARTICLE_TALK
 			case 502: //NS_BLOG_LISTING
 			case 503: //NS_BLOG_LISTING_TALK
-				if (!$title->exists()) {
-					$redirect = 'http://community.wikia.com/wiki/' . $title->prefix($title->getPartialURL());
+				if (!$title->exists() && !empty( $wgCorporatePageRedirectWiki )) {
+					$redirect = $wgCorporatePageRedirectWiki . $title->prefix($title->getPartialURL());
 				}
 				break;
 
