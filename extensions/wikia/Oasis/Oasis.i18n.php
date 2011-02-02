@@ -87,7 +87,7 @@ $messages['en'] = array(
 	'oasis-toolbar-edit-rename-item' => 'Rename Item',
 	'oasis-toolbar-for-admins-only' => 'This tool can be used by wiki administrators.',
 	'oasis-toolbar-not-enabled-here' => 'This tool is not available on this wiki.',
-	'oasis-toolbar-more' => 'more ...',
+	'oasis-toolbar-more' => 'more&hellip;',
 	'oasis-toolbar-customize' => 'Customize',
 
 	'oasis-comments-header' => '$1 {{PLURAL:$1|comment|comments}}',
