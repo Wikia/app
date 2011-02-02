@@ -249,7 +249,7 @@ class GlobalTitle extends Title {
 		 */
 		$city = WikiFactory::getWikiByID( $this->mCityId );
 		if( $city ) {
-			$server = rtrim( $server->city_url, "/" );
+			$server = rtrim( $city->city_url, "/" );
 			$this->mServer = $server;
 			return $server;
 		}
