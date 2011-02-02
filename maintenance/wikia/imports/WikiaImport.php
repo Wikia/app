@@ -2,6 +2,7 @@
 
 abstract class WikiaImport {
 	var $i = 0;
+	var $end = 0;
 	var $verbose = true;
 	var $overwrite = true;
 	var $notify = "TOR";
@@ -18,7 +19,7 @@ abstract class WikiaImport {
 
 		$this->msg( "\n\nOK. Starting import!", true );
 
-		while( $this->getSource() ) {
+		while( $this->proceed() && $this->getSource() ) {
 			if ( $this->getContent() ) {
 				if ( $this->translate() ) {
 					wfWaitForSlaves( 5 );
@@ -28,6 +29,14 @@ abstract class WikiaImport {
 
 			$this->i++;
 		}
+	}
+
+	function proceed() {
+		if ( empty( $this->end ) ) {
+			return true;
+		}
+
+		return ( $this->i <= $this->end );
 	}
 
 	function getParams() {
