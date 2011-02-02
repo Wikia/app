@@ -20,7 +20,9 @@
 $wgExtensionCredits['special'][] = array(
 	'name' => 'Scavenger hunt',
 	'version' => '1.0',
-	'author' => array('[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
+	'author' => array(
+		'[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
+		'Władysław Bodzek' ),
 	'description-msg' => 'scavengerhunt-desc'
 );
 
@@ -33,6 +35,10 @@ $app = WF::build('App');
 $app->registerClass('ScavengerHunt', "$dir/ScavengerHunt.class.php");
 $app->registerClass('ScavengerHuntAjax', "$dir/ScavengerHuntAjax.class.php");
 $app->registerClass('SpecialScavengerHunt', "$dir/SpecialScavengerHunt.php");
+$app->registerClass('ScavengerHuntService', "$dir/data/ScavengerHuntService.class.php");
+$app->registerClass('ScavengerHuntGame', "$dir/data/ScavengerHuntGame.class.php");
+$app->registerClass('ScavengerHuntGameArticle', "$dir/data/ScavengerHuntGameArticle.class.php");
+$app->registerClass('ScavengerHuntGameEntry', "$dir/data/ScavengerHuntGameEntry.class.php");
 
 // hooks
 $app->registerHook('MakeGlobalVariablesScript', 'ScavengerHunt', 'onMakeGlobalVariablesScript' );
@@ -42,6 +48,15 @@ $app->registerExtensionMessageFile('ScavengerHunt', "$dir/ScavengerHunt.i18n.php
 
 // special page
 $app->registerSpecialPage('ScavengerHunt', 'SpecialScavengerHunt');
+
+// constuctors
+WF::addClassConstructor( 'ScavengerHuntService', array( 'app' => $app ) );
+WF::addClassConstructor( 'ScavengerHuntGame', array( 'app' => $app, 'id' => 0 ) );
+WF::addClassConstructor( 'ScavengerHuntGame', array( 'app' => $app, 'row' => null ), 'newFromRow' );
+WF::addClassConstructor( 'ScavengerHuntGameEntry', array(), 'newFromRow' );
+
+// XXX: standard MW constructors - needed to be moved to global place
+WF::addClassConstructor( 'Title', array(), 'newFromText' );
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'ScavengerHuntAjax';
