@@ -156,8 +156,8 @@ class SpecialVersion extends SpecialPage {
 	/** Return a string of the Wikia version with SVN revision */
 	public static function getWikiaVersion() {
 		global $IP;
-		if (preg_match('/([^\/: ]+) *\$$/', '$HeadURL$', $matches)) {
-			$wikia_release = $matches[1];
+		if (preg_match('/\/wikia\/(tags\/)?([^\/]+)/', '$HeadURL$', $matches)) {
+			$wikia_release = $matches[2];
 		} else {
 			$wikia_release = '';
 		}
