@@ -2,10 +2,10 @@
 
 <?php if($showToolbar) { ?>
 	<div class="toolbar">
-		<?php if ($showNotifications) { 
-	 		echo wfRenderModule('Notifications'); 
-	 	} ?> 
-		<ul class="tools">
+		<?php if ($showNotifications) {
+	 		echo wfRenderModule('Notifications');
+	 	} ?>
+		<ul class="tools" data-more-caption="<?= htmlspecialchars(wfMsg('oasis-toolbar-more')); ?>">
 <?php if($showLoadTime) { ?>
 			<li class="loadtime disable-more">
 				<?= $loadTimeStats ?>
@@ -19,5 +19,5 @@
 <?php } ?>
 
 	<?= wfRenderModule('Spotlights', 'Index', array('mode'=>'FOOTER', 'adslots'=>array( 'SPOTLIGHT_FOOTER_1', 'SPOTLIGHT_FOOTER_2', 'SPOTLIGHT_FOOTER_3' ), 'adGroupName'=>'SPOTLIGHT_FOOTER')) ?>
-	
+
 </footer>
