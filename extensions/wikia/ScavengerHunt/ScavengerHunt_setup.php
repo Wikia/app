@@ -26,19 +26,22 @@ $wgExtensionCredits['special'][] = array(
 
 $dir = dirname(__FILE__);
 
+// WikiaApp
+$app = WF::build('App');
+
 // autoloaded classes
-$wgAutoloadClasses['ScavengerHunt'] = "$dir/ScavengerHunt.class.php";
-$wgAutoloadClasses['ScavengerHuntAjax'] = "$dir/ScavengerHuntAjax.class.php";
-$wgAutoloadClasses['SpecialScavengerHunt'] = "$dir/SpecialScavengerHunt.php";
+$app->registerClass('ScavengerHunt', "$dir/ScavengerHunt.class.php");
+$app->registerClass('ScavengerHuntAjax', "$dir/ScavengerHuntAjax.class.php");
+$app->registerClass('SpecialScavengerHunt', "$dir/SpecialScavengerHunt.php");
 
 // hooks
-$wgHooks['MakeGlobalVariablesScript'][] = array('ScavengerHunt::onMakeGlobalVariablesScript');
+$app->registerHook('MakeGlobalVariablesScript', 'ScavengerHunt', 'onMakeGlobalVariablesScript' );
 
 // i18n
-$wgExtensionMessagesFiles['ScavengerHunt'] = $dir.'/ScavengerHunt.i18n.php';
+$app->registerExtensionMessageFile('ScavengerHunt', "$dir/ScavengerHunt.i18n.php");
 
 // special page
-$wgSpecialPages['ScavengerHunt'] = 'SpecialScavengerHunt';
+$app->registerSpecialPage('ScavengerHunt', 'SpecialScavengerHunt');
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'ScavengerHuntAjax';
