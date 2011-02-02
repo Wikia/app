@@ -97,7 +97,7 @@
 	'fj' => 'Na Vosa Vakaviti',	# Fijian
 	'fo' => 'Føroyskt',	# Faroese
 	'fr' => 'Français',	# French
-	'frc' => 'Français cadien', # Cajun French
+#	'frc' => 'Français cadien', # Cajun French
 	'frp' => 'Arpetan',	# Franco-Provençal/Arpitan
 	'frr' => 'Frasch',	# North Frisian
 	'fur' => 'Furlan',		# Friulian
