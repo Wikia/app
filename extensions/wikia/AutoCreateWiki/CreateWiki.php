@@ -207,7 +207,7 @@ class CreateWiki {
 		$startTime = $this->mCurrTime;
 
 		// check and create database
-		$mDBw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); # central
+		$this->mDBw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); # central
 
 		///
 		// local database handled is handler to cluster we create new wiki.
@@ -245,7 +245,7 @@ class CreateWiki {
 		}
 
 		// set new city_id 
-		$this->mNewWiki->city_id = $mDBw->insertId();
+		$this->mNewWiki->city_id = $this->mDBw->insertId();
 		if ( empty( $this->mNewWiki->city_id ) ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": Cannot set data in city_list table. city_id is empty after insert\n", true );
 			wfProfileOut( __METHOD__ );
@@ -306,6 +306,8 @@ class CreateWiki {
 		 */
 		wfDebugLog( "createwiki", __METHOD__ . ": Creating tables in database\n", true );		
 		
+		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mNewWiki->dbname );			
+		
 		if ( !$this->createTables() ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": Creating tables not finished\n", true );	
 			wfProfileOut( __METHOD__ );
@@ -354,8 +356,6 @@ class CreateWiki {
 		wfDebugLog( "createwiki", __METHOD__ . ": Database changes commited \n", true );
 		$wgSharedDB = $tmpSharedDB;
 
-
-		$this->mNewWiki->dbw->selectDB($wgSharedDB);
 		/**
 		 * set hub/category
 		 */
@@ -809,9 +809,6 @@ class CreateWiki {
 	 *
 	 */	
 	private function addToCityList() {
-		global $wgExternalSharedDB;
-		$mDBw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-		
 		$insertFields = array(
 			'city_title'          => $this->mNewWiki->sitename,
 			'city_dbname'         => $this->mNewWiki->dbname,
@@ -827,7 +824,7 @@ class CreateWiki {
 			$insertFields[ "city_cluster" ] = self::ACTIVE_CLUSTER;
 		}
 
-		$res = $mDBw->insert( "city_list", $insertFields, __METHOD__ );
+		$res = $this->mDBw->insert( "city_list", $insertFields, __METHOD__ );
 		
 		return $res;
 	}
@@ -843,10 +840,7 @@ class CreateWiki {
 	 *
 	 */	
 	private function addToCityDomains() {
-		global $wgExternalSharedDB;
-		$mDBw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );		
-		
-		$res = $mDBw->insert(
+		$res = $this->mDBw->insert(
 			"city_domains",
 			array(
 				array(
@@ -875,8 +869,6 @@ class CreateWiki {
 	 *
 	 */	
 	private function createTables() {
-
-		$this->mNewWiki->dbw->selectDB( $this->mNewWiki->dbname );
 
 		$mSqlFiles = $this->mDefaultTables;
 
@@ -922,9 +914,6 @@ class CreateWiki {
 	 *
 	 */
 	private function setWFVariables() {
-		global $wgExternalSharedDB;
-		$mDBw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );	
-				
 		// WF Variables containter
 		$this->mWFSettingVars = array();
 
@@ -984,7 +973,7 @@ class CreateWiki {
 				break;
 		}
 
-		$oRes = $mDBw->select(
+		$oRes = $this->mDBw->select(
 			"city_variables_pool",
 			array( "cv_id, cv_name" ),
 			array( "cv_name in ('" . implode( "', '", array_keys( $this->mWFSettingVars ) ) . "')"),
@@ -992,10 +981,10 @@ class CreateWiki {
 		);
 
 		$this->mWFVars = array();
-		while ( $oRow = $mDBw->fetchObject( $oRes ) ) {
+		while ( $oRow = $this->mDBw->fetchObject( $oRes ) ) {
 			$this->mWFVars[ $oRow->cv_name ] = $oRow->cv_id;
 		}
-		$mDBw->freeResult( $oRes );
+		$this->mDBw->freeResult( $oRes );
 
 		foreach( $this->mWFSettingVars as $variable => $value ) {
 			/**
@@ -1010,7 +999,7 @@ class CreateWiki {
 			 * then, insert value for wikia
 			 */
 			if( !empty($cv_id) ) {
-				$mDBw->insert(
+				$this->mDBw->insert(
 					"city_variables",
 					array(
 						"cv_value"       => serialize( $value ),
