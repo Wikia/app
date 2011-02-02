@@ -5,5 +5,5 @@
  */
 
 
-$wgCacheBuster = '30985';
+$wgCacheBuster = '32969';
 
