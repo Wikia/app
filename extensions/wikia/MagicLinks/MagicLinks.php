@@ -15,7 +15,7 @@
  *
  * To activate this functionality, place this file in your extensions/
  * subdirectory, and add the following line to LocalSettings.php:
- *     require_once("$IP/extensions/wikia/SiteWideMessages/SpecialSiteWideMessages.php");
+ *     include("$IP/extensions/wikia/MagicLinks/MagicLinks.php");
  */
 
 if (!defined('MEDIAWIKI')) {
@@ -40,14 +40,16 @@ function MagicLinksReplaceLinks(&$out, &$text) {
 	$aSearch = array(
 		'/(?<=^|[[(<>\s])(t:r(\d+))/mi',	//new svn
 		'/(?<=^|[[(<>\s])(r(\d+))(?=[])<>\s]|$)/mi',	//old svn
-		'/(?<=^|[[(<>\s])(rt#(\d+))/mi',	//new tickets (RT)
-		'/(?<=^|[[(<>\s])(trac#(\d+))/mi',	//old tickets (trac)
+		'/(?<=^|[[(<>\s])(rt#(\d+))/mi',	//tickets (RT)
+		'/(?<=^|[[(<>\s])(trac#(\d+))/mi',	//tickets (trac)
+		'/(?<=^|[[(<>\s])(fb#(\d+))/mi',	//tickets (FogBugz)
 	);
 	$aReplace = array(
 		'<a class="magicLink svnNew" href="http://trac.wikia-code.com/changeset/\2">\1</a>',
 		'<a class="magicLink svnOld" href="https://trac.wikia-inc.com/trac/wikia/changeset/\2">\1</a>',
 		'<a class="magicLink ticketRT" href="https://rt.wikia-inc.com/Ticket/Display.html?id=\2">\1</a>',
 		'<a class="magicLink ticketTrac" href="https://trac.wikia-inc.com/trac/wikia/ticket/\2">\1</a>',
+		'<a class="magicLink ticketFogBugz" href="https://wikia.fogbugz.com/default.asp?\2">\1</a>',
 	);
 	$text = preg_replace($aSearch, $aReplace, $text);
 	return true;
