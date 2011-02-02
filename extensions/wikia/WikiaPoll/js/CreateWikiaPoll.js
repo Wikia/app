@@ -73,7 +73,7 @@ var CreateWikiaPoll = {
 			console.log(data);
 			if ($("#CreateWikiaPoll").closest(".modalWrapper").exists()) { // in modal
 				if (data.success) {
-					RTE.mediaEditor._add("{{" + data.text + "}}");
+					RTE.mediaEditor._add("{{" + data.question + "}}");
 					$("#CreateWikiaPoll").closest(".modalWrapper").closeModal();
 				} else if (data.error) {
 					$("#CreateWikiaPoll").find(".errorbox").remove().end().prepend(data.error);
@@ -82,7 +82,7 @@ var CreateWikiaPoll = {
 				if (data.success) {
 					document.location = data.url;				
 				} else if (data.error) {
-					// handle error	
+					$("#CreateWikiaPoll").find(".errorbox").remove().end().prepend(data.error);
 				}
 			}
 		});		
