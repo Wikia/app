@@ -156,12 +156,12 @@ class SpecialVersion extends SpecialPage {
 	/** Return a string of the Wikia version with SVN revision */
 	public static function getWikiaVersion() {
 		global $IP;
-		if (preg_match('/([^\/: ]+) *\$$/', '$HeadURL: $', $matches)) {
+		if (preg_match('/([^\/: ]+) *\$$/', '$HeadURL$', $matches)) {
 			$wikia_release = $matches[1];
 		} else {
 			$wikia_release = '';
 		}
-		if (preg_match('/([0-9]+) *\$$/', '$Revision: $', $matches)) {
+		if (preg_match('/([0-9]+) *\$$/', '$Revision$', $matches)) {
 			$wikia_revision = $matches[1];
 		} else {
 			$wikia_revision = '';
