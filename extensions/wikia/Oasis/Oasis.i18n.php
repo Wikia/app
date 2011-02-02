@@ -87,6 +87,7 @@ $messages['en'] = array(
 	'oasis-toolbar-edit-rename-item' => 'Rename Item',
 	'oasis-toolbar-for-admins-only' => 'This tool can be used by wiki administrators.',
 	'oasis-toolbar-not-enabled-here' => 'This tool is not available on this wiki.',
+	'oasis-toolbar-more' => 'more ...',
 	'oasis-toolbar-customize' => 'Customize',
 
 	'oasis-comments-header' => '$1 {{PLURAL:$1|comment|comments}}',
@@ -145,7 +146,7 @@ $messages['en'] = array(
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming',
 	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle',
-	
+
 	'oasis-modal-error-headline' => 'Please correct the following errors',
 );
 
@@ -730,8 +731,8 @@ $messages['he'] = array(
 	'oasis-edit-my-tools-list' => 'רשימת כלים',
 	'oasis-edit-my-tools-save' => 'שמירה',
 	'oasis-edit-my-tools-about' => 'אודות הכלים שלי',
-	'oasis-edit-my-tools-desc' => 'הוספת כלים מתקדמים לסרגל הכלים שלך על ידי הקלדת שם הכלי בשדה הטקסט. 
- ניתן לסדר מחדש או למחוק כלים בשדה למטה. 
+	'oasis-edit-my-tools-desc' => 'הוספת כלים מתקדמים לסרגל הכלים שלך על ידי הקלדת שם הכלי בשדה הטקסט.
+ ניתן לסדר מחדש או למחוק כלים בשדה למטה.
 
 [[Help:MyTools|רשימת כלי ויקי מתקדמים >]]',
 	'oasis-comments-header' => '{{PLURAL:$1|הערה|הערות}}',
