@@ -11,11 +11,13 @@ class ConfluenceWikiaImport extends WikiaImport {
 	var $remotePath = "/pages/viewpagesrc.action?pageId=";
 	var $remotePathInfo = "/pages/pageinfo.action?pageId=";
 	var $i = 119;
+	var $end = 0;
 	var $parameters = array(
 		'remoteUrl' => "What's the site's base URL?",
 		'remotePath' => "What's the path to the source page?",
 		'remotePathInfo' => "What's the path to the info page?",
 		'i' => "Where shall I start counting?",
+		'end' => "Where shall I stop?",
 		'overwrite' => "Shall I overwrite existing articles?",
 	);
 
