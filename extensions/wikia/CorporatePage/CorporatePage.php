@@ -12,6 +12,11 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 
+// this should be set in CommonSettings.php / WikiFactory
+if ( !isset( $wgCorporatePageRedirectWiki ) ) {
+	$wgCorporatePageRedirectWiki = "http://community.wikia.com/wiki/";
+}
+
 $wgAutoloadClasses['CorporatePageHelper']  = $dir . 'CorporatePageHelper.class.php';
 $wgAutoloadClasses['CorporateSiteModule'] = $dir . 'modules/CorporateSiteModule.class.php';
 
