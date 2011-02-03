@@ -71,6 +71,7 @@ function deleteCategory(e) {
 	var catId = e.parentNode.getAttribute('catId');
 	e.parentNode.parentNode.removeChild(e.parentNode);
 	categories[catId] = null;
+	$('#csWikitext').html(generateWikitextForCategories());
 }
 
 function modifyCategory(e) {
