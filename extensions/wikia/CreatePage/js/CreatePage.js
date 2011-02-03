@@ -29,13 +29,9 @@ CreatePage.openDialog = function(e, titleText) {
 	e.preventDefault();
 	if( false == CreatePageEnabled ) {
 		CreatePageEnabled = true;
-		$.getJSON(wgScript + '?action=ajax&rs=wfCreatePageAjaxGetDialog', null, function() {
-
-		});
-
 		jQuery.ajax({
 			async: false,
-			type: "GET",
+			type: "POST",
 			url: wgScript + '?action=ajax&rs=wfCreatePageAjaxGetDialog',
 			data: null,
 			success: function(data) {
@@ -141,14 +137,8 @@ $(function() {
 		$().log('init', 'CreatePage');
 
 		if( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
-			if( $( '#dynamic-links-write-article-icon' ).exists() ) {
-				// open dialog on clicking
-				$( '#dynamic-links-write-article-icon' ).click( function(e) {CreatePage.openDialog(e, null);});
-			}
-			if( $( '#dynamic-links-write-article-link' ).exists() ) {
-				// open dialog on clicking
-				$( '#dynamic-links-write-article-link' ).click( function(e) {CreatePage.openDialog(e, null);});
-			}
+			$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click( function(e) {CreatePage.openDialog(e, null);});			
+			$('.noarticletext a').click( function(e) {CreatePage.openDialog(e, wgTitle); return false; });
 		}
 
 		// CreatePage chicklet (Oasis)

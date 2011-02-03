@@ -163,7 +163,7 @@ WikiaLabs.uploadImage = function ( imgelement ) {
 			WikiaLabs.WMU_insertImage = function(event,body) {
 				var val = $("#ImageUploadFileName").val();
 				$.ajax({
-				  url: wgScript + '?action=ajax&rs=WikiaLabs::getImageUrlForEdit&name=' + val,
+				  url: wgScript + '?action=ajax&rs=WikiaLabsHelper::getImageUrlForEdit&name=' + val,
 				  dataType: "json",
 				  method: "get",
 				  success: function(data) {

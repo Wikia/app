@@ -73,3 +73,16 @@ $wgAjaxExportList[] = 'WikiaLabsHelper::switchProject';
 $wgAjaxExportList[] = 'WikiaLabsHelper::saveFeedback';
 
 
+/*
+ * set global 
+*/
+
+$logTypes = $app->getGlobal('wgLogTypes');
+$logTypes[] = 'wikialabs';
+$app->setGlobal('wgLogTypes', $logTypes);
+
+$logHeaders = $app->getGlobal('wgLogHeaders');
+$logHeaders['wikialabs'] = 'wikialabs';
+$app->setGlobal('wgLogHeaders', $logHeaders);
+
+
