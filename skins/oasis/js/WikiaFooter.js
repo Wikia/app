@@ -207,7 +207,7 @@ WikiaFooterApp = {
 			if (where.exists()) where.before(li_more)
 			else this.el.append(li_more);
 			var more = li_more.children('ul');
-			var moreWidth = li_more.outerWidth() + 5;
+			var moreWidth = li_more.outerWidth() + 20;
 			
 			var rwidth = fwidth - moreWidth - (width - mwidth);
 			moreable.each(function(i,v){
