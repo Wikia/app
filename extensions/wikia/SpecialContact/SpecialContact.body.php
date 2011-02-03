@@ -109,9 +109,9 @@ class ContactForm extends SpecialPage {
 		$info[] = "\n" . 'IP:' . wfGetIP();
 		$info[] = 'wkID: ' . $wgCityId;
 
-		global $wgAdminSkin, $wgDefaultSkin, $wgDefaultTheme;
-		$nominalSkin = ( !empty($wgAdminSkin) )?( $wgAdminSkin ):( ( !empty($wgDefaultTheme) )?("{$wgDefaultSkin}-{$wgDefaultTheme}"):($wgDefaultSkin) );
-		$info[] = 'Skin: ' . $nominalSkin;
+		#global $wgAdminSkin, $wgDefaultSkin, $wgDefaultTheme;
+		#$nominalSkin = ( !empty($wgAdminSkin) )?( $wgAdminSkin ):( ( !empty($wgDefaultTheme) )?("{$wgDefaultSkin}-{$wgDefaultTheme}"):($wgDefaultSkin) );
+		#$info[] = 'Skin: ' . $nominalSkin;
 
 		$uid = $wgUser->getID();
 		if( !empty($uid) ) {
