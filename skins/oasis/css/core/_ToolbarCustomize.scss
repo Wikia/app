@@ -40,7 +40,7 @@
 			width: 12px;
 			
 			img {
-				background: url(/skins/oasis/images/icon_return_6.png) top left transparent no-repeat;
+				background: url(/skins/oasis/images/icon_return_6.png) top left transparent no-repeat; /* $wgCdnStylePath */
 				height: 6px;
 				left: 3px;
 				position: relative;
@@ -112,7 +112,7 @@
 			}
 			
 			.folder-icon {
-				background-image: url(/skins/oasis/images/icon_folder_16.png);
+				background-image: url(/skins/oasis/images/icon_folder_16.png); /* $wgCdnStylePath */
 				verical-align: middle;
 				height: 16px;
 				width: 16px;
