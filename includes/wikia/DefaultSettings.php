@@ -80,6 +80,15 @@ $wgAutoloadClasses['WikiaRegistry'] = $IP . '/includes/wikia/WikiaRegistry.class
 $wgAutoloadClasses['WikiaGlobalsRegistry'] = $IP . '/includes/wikia/WikiaGlobalsRegistry.class.php';
 $wgAutoloadClasses['WikiaLocalRegistry'] = $IP . '/includes/wikia/WikiaLocalRegistry.class.php';
 $wgAutoloadClasses['WikiaCompositeRegistry'] = $IP . '/includes/wikia/WikiaCompositeRegistry.class.php';
+$wgAutoloadClasses['WikiaDispatcher'] = $IP . '/includes/wikia/WikiaDispatcher.class.php';
+$wgAutoloadClasses['WikiaController'] = $IP . '/includes/wikia/WikiaController.class.php';
+$wgAutoloadClasses['WikiaErrorController'] = $IP . '/includes/wikia/WikiaErrorController.class.php';
+$wgAutoloadClasses['WikiaRequest'] = $IP . '/includes/wikia/WikiaRequest.class.php';
+$wgAutoloadClasses['WikiaHTTPRequest'] = $IP . '/includes/wikia/WikiaHTTPRequest.class.php';
+$wgAutoloadClasses['WikiaResponse'] = $IP . '/includes/wikia/WikiaResponse.class.php';
+$wgAutoloadClasses['WikiaResponsePrinter'] = $IP . '/includes/wikia/WikiaResponsePrinter.class.php';
+$wgAutoloadClasses['WikiaResponseJSONPrinter'] = $IP . '/includes/wikia/WikiaResponseJSONPrinter.class.php';
+$wgAutoloadClasses['WikiaResponseHTMLPrinter'] = $IP . '/includes/wikia/WikiaResponseHTMLPrinter.class.php';
 
 WF::setInstance( 'App', new WikiaApp() );
 

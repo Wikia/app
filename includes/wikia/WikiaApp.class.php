@@ -19,6 +19,11 @@ class WikiaApp {
 	 * @var WikiaHookDispatcher
 	 */
 	private $hookDispatcher = null;
+	/**
+	 * dispatcher
+	 * @var WikiaDispatcher
+	 */
+	private $dispatcher = null;
 
 	/**
 	 * constructor
@@ -37,6 +42,9 @@ class WikiaApp {
 
 		$this->hookDispatcher = $hookDispatcher;
 		$this->registry = $registry;
+
+		// register ajax dispatcher
+		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->append('wgAjaxExportList', 'WikiaApp::ajax');
 	}
 
 	/**
@@ -53,6 +61,17 @@ class WikiaApp {
 	 */
 	public function getRegistry() {
 		return $this->registry;
+	}
+
+	/**
+	 * get dispatcher object
+	 * @return WikiaDispatcher
+	 */
+	protected function getDispatcher() {
+		if( $this->dispatcher == null ) {
+			$this->dispatcher = WF::build( 'WikiaDispatcher' );
+		}
+		return $this->dispatcher;
 	}
 
 	/**
@@ -123,8 +142,14 @@ class WikiaApp {
 		return $this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->get($globalVarName);
 	}
 
-	public function setGlobal($globalVarName, $value) {
-		return $this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set($globalVarName, $value);
+	/**
+	 * set global variable (alias: WikiaGlobalRegistry::set(var, value, key))
+	 * @param string $globalVarName variable name
+	 * @param mixed $value value
+	 * @param string $key key (optional)
+	 */
+	public function setGlobal($globalVarName, $value, $key = null) {
+		return $this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set($globalVarName, $value, $key);
 	}
 
 	/**
@@ -138,6 +163,18 @@ class WikiaApp {
 		$funcArgs = func_get_args();
 		$funcName = array_shift($funcArgs);
 		return call_user_func_array( $funcName, $funcArgs );
+	}
+
+	public function dispatch( $request = null, WikiaResponse $response = null ) {
+		if( is_array( $request ) ) {
+			$request = new WikiaRequest( $request );
+		}
+
+		return $this->getDispatcher()->dispatch( $request, $response );
+	}
+
+	public static function ajax() {
+		return WF::build( 'App' )->dispatch();
 	}
 
 }
