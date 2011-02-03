@@ -221,7 +221,7 @@ class CreateWiki {
 		//
 		$clusterdb = ( self::ACTIVE_CLUSTER ) ? "wikicities_" . self::ACTIVE_CLUSTER : "wikicities";
 		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $clusterdb ); // database handler, old $dbwTarget
-
+		
 		// check if database is creatable
 		// @todo move all database creation checkers to canCreateDatabase
 		if( !$this->canCreateDatabase() ) {
@@ -251,7 +251,7 @@ class CreateWiki {
 			wfProfileOut( __METHOD__ );
 			return self::ERROR_DATABASE_WIKI_FACTORY_TABLES_BROKEN;
 		}
-
+		
 		wfDebugLog( "createwiki", __METHOD__ . ": Row added added into city_list table, city_id = {$this->mNewWiki->city_id}\n", true );
 
 		/**
@@ -336,7 +336,6 @@ class CreateWiki {
 		wfDebugLog( "createwiki", __METHOD__ . ": Set images timestamp to current date \n", true );
 		$this->mNewWiki->dbw->update("image", array( "img_timestamp" => date('YmdHis') ), "*", __METHOD__ );
 
-
 		/**
 		 * init site_stats table (add empty row)
 		 */
@@ -372,8 +371,10 @@ class CreateWiki {
 		 * modify variables
 		 */
 		global $wgUniversalCreationVariables;
-		$this->addCustomSettings( 0, $wgUniversalCreationVariables[$wiki_type], "universal" );
-		wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wiki_type} \n", true );		
+		if(!empty($wgUniversalCreationVariables) && !empty($wiki_type)) {
+			$this->addCustomSettings( 0, $wgUniversalCreationVariables[$wiki_type], "universal" );
+			wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wiki_type} \n", true );		
+		}
 
 		/**
 		 * set variables per language
@@ -578,7 +579,7 @@ class CreateWiki {
 		$this->mNewWiki->founderEmail = $this->mFounder->getEmail();
 		$this->mNewWiki->founderId = $this->mFounder->getId();
 		$this->mNewWiki->type = $this->mType;
-
+		
 		wfProfileOut( __METHOD__ );
 
 		return $this->mNewWiki;
@@ -1176,5 +1177,10 @@ class CreateWiki {
 
 		wfProfileOut( __METHOD__ );
 		return 1;
-	}	
+	}
+	
+	public function getWikiInfo($key) {
+		$ret = $this->mNewWiki->$key;
+		return $ret;
+	}
 }
