@@ -69,6 +69,26 @@ class RTE {
 		// this is placeholder
 		$data['placeholder'] = 1;
 
+		// Special check for WikiaPoll placeholder
+		if (defined ( "NS_WIKIA_POLL" )) {
+			global $wgContLang;
+			$pollNamespace = $wgContLang->getNsText( NS_WIKIA_POLL );
+			// Fixme for i18n
+			if (isset($data['title']) && stripos($data['title'], 'Poll') === 0) {
+				$data['type'] = 'poll';
+				$title = Title::newFromText($data['title'], NS_WIKIA_POLL);
+				if ($title->exists()) {
+					$data['pollID'] = $title->getArticleId();
+					$poll = WikiaPoll::newFromTitle($title);
+					$pollData = $poll->getData();
+					if (isset($pollData['answers'])) {
+						foreach ($pollData["answers"] as $answer ) {
+							$data['answers'][] = $answer['text'];
+						}
+					}
+				}
+			}
+		}
 		// store data
 		$dataIdx = RTEData::put('data', $data);
 
