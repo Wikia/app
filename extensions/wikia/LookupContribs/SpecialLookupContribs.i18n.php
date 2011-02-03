@@ -990,7 +990,7 @@ $messages['sr-ec'] = array(
 	'lookupcontribspageremoved' => 'Уклоњено:',
 	'lookupcontribsrestore' => 'врати',
 	'lookupcontribslog' => 'извештај',
-	'lookupcontribshist' => 'истор',
+	'lookupcontribshist' => 'ист',
 	'lookupcontribsdiff' => 'разл',
 	'lookupcontribscontent' => 'садржај',
 );

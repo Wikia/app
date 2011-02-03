@@ -372,9 +372,10 @@ $messages['sl'] = array(
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
+ * @author Rancher
  */
 $messages['sr-ec'] = array(
-	'wikifactoryreporter' => 'WikiFactory репортер',
+	'wikifactoryreporter' => 'Викифабрикин репортер',
 );
 
 /** Sundanese (Basa Sunda)

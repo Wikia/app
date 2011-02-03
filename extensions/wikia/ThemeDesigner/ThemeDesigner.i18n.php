@@ -793,7 +793,7 @@ $messages['pms'] = array(
 	'themedesigner-rules-wordmark' => '250x65 pontin (mach archivi .png)',
 	'themedesigner-dont-use-a-graphic' => "Dovré pa 'd gràfich",
 	'themedesigner-history-item' => '$1 da $2',
-	'themedesigner-button-change-text' => 'Cangia test',
+	'themedesigner-button-change-text' => 'Modifiché ël test',
 );
 
 /** Pashto (پښتو)
@@ -929,6 +929,50 @@ $messages['ru'] = array(
 	'themedesigner-dont-use-a-graphic' => 'Не использовать изображение',
 	'themedesigner-history-item' => '$1 — $2',
 	'themedesigner-button-change-text' => 'Изменить текст',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'themedesigner-desc' => 'Allows wiki administrators to design a theme for a wiki',
+	'themedesigner-title' => 'Wikias Tema Designer',
+	'themedesigner-background' => 'Bakgrund',
+	'themedesigner-page' => 'Sida',
+	'themedesigner-color' => 'färg',
+	'themedesigner-graphic' => 'grafik',
+	'themedesigner-buttons' => 'knappar',
+	'themedesigner-links' => 'länkar',
+	'themedesigner-header' => 'header',
+	'themedesigner-small' => 'Liten',
+	'themedesigner-medium' => 'Medium',
+	'themedesigner-large' => 'Stor',
+	'themedesigner-tab-theme' => 'Tema',
+	'themedesigner-tab-customize' => 'Anpassa',
+	'themedesigner-preview-mode' => 'Förhandsgranskningsläge...',
+	'themedesigner-previous-versions' => 'Tidigare versioner',
+	'themedesigner-button-save-im-done' => 'Spara, jag är klar',
+	'themedesigner-button-cancel' => 'Avbryt',
+	'themedesigner-pick-a-color' => 'Välj en färg',
+	'themedesigner-enter-your-own' => 'Ange din egen',
+	'themedesigner-color-name-or-hex-code' => 'Färgnamn eller hex-kod',
+	'themedesigner-button-ok' => 'Ok',
+	'themedesigner-pick-an-image' => 'Välj en bild',
+	'themedesigner-dont-use-a-background' => 'Använd inte en bakgrund',
+	'themedesigner-upload-your-own' => 'Ladda upp din egen',
+	'themedesigner-button-upload' => 'Ladda upp',
+	'themedesigner-rules-background' => 'jpg, gif eller png. Gräns på 100 kilobyte',
+	'themedesigner-default' => 'Standard',
+	'themedesigner-font' => 'teckensnitt',
+	'themedesigner-size' => 'storlek',
+	'themedesigner-button-save' => 'Spara',
+	'themedesigner-rules-wordmark' => 'upp till 250x65 pixlar (endast .png filer)',
+	'themedesigner-history-item' => '$1 av $2',
+	'themedesigner-button-change-text' => 'Ändra text',
+	'themedesigner-size-error' => 'Fel filstorlek',
+	'themedesigner-dimensions-error' => 'Bilden överskrider måttets gränser',
+	'themedesigner-type-error' => 'Fel filtyp',
+	'themedesugber-uknown-error' => 'Ett fel har uppstått, tyvärr kunde vi inte identifiera det, försök igen',
 );
 
 /** Telugu (తెలుగు) */

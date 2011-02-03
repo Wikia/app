@@ -94,6 +94,8 @@ $messages['br'] = array(
 	'owb-button-skip' => 'Mont hebiou',
 	'owb-button-save-intro' => 'Enrollañ an digoradur',
 	'owb-button-save-pages' => 'Enrollañ pajennoù',
+	'owb-button-done' => "Kenderc'hel d'ho wiki",
+	'owb-button-plus' => 'Diuzañ Wikia+Plus',
 	'owb-step1' => 'Pazenn 1',
 	'owb-step2' => 'Pazenn 2',
 	'owb-step2-label' => 'Dibab un tem',
@@ -528,6 +530,49 @@ Skriv sidens første seksjon her. Husk å inkludere lenker til andre sider på w
 ==Overskrift for seksjon==
 
 Skriv sidens andre seksjon her. Ikke glem å legge til en kategori for å hjelpe folk med å finne siden.',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Водич за прављење викије]]',
+	'owb-title' => 'Вики градитељ',
+	'owb-headline' => 'Здраво, $1',
+	'owb-button-skip' => 'Прескочи',
+	'owb-button-save-intro' => 'Сачувај увод',
+	'owb-button-save-theme' => 'Сачувај пресвлаку',
+	'owb-button-save-pages' => 'Сачувај странице',
+	'owb-button-plus' => 'Изаберите Викију Плус',
+	'owb-step1' => 'Корак 1',
+	'owb-step2-label' => 'Изаберите пресвлаку',
+	'owb-step2-gallery' => 'Галерија пресвлака',
+	'owb-step3' => 'Корак 3',
+	'owb-step3-label' => 'Покрените странице',
+	'owb-step4' => 'Корак 4',
+	'owb-step4-label' => 'Додај премијум план',
+	'owb-step4-instruction' => 'Уклоните огласе с Викијом Плус или наставите са основном Викијом.',
+	'owb-step4-basic-price' => '<strong>0</strong>долара/месец',
+	'owb-step4-plus-price' => '<strong>$1</strong>долара/месец',
+	'owb-step4-error-caption' => 'Грешка',
+	'owb-step4-error-upgrade-content' => 'Ова викија се не може доградити.',
+	'owb-step4-error-token-content' => 'Преузимање исправног жетона с Пејпала није успело.',
+	'owb-status-saving' => 'Чување',
+	'owb-unable-to-edit-description' => 'Опис се не може изменити помоћу Вики градитеља',
+	'owb-readonly-try-again' => 'Ова викија је тренутно доступна само за читање. Покушајте поново за неколико тренутака',
+	'owb-error-saving-articles' => 'Грешка при чувању страница',
+	'owb-api-error-title' => 'Грешка при извршавању захтева',
+	'owb-api-error' => 'Пробајте још једном или прескочите овај корак',
+	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
+Овде напишите први пасус странице.
+
+== Наслов одељка ==
+
+Овде напишите први одељак странице. Укључите и везе до осталих страница на викији.
+
+== Наслов одељка ==
+
+Овде напишите други одељак странице. Додајте и категорије да бисте олакшали корисницима да пронађу страницу.',
 );
 
 /** Swedish (Svenska)

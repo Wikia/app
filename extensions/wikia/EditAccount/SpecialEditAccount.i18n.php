@@ -1029,6 +1029,51 @@ $messages['sr-ec'] = array(
 	'editaccount-log-entry-close' => '$2 налог је затворен',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'editaccount' => 'Redigera konto',
+	'editaccount-desc' => 'Enables staff members to manage user account information',
+	'editaccount-title' => 'Special:EditAccount',
+	'editaccount-frame-manage' => 'Redigera ett konto',
+	'editaccount-frame-usage' => 'Notis',
+	'editaccount-usage' => 'Användardata är cachad separat för varje wiki. När du återställer ett lösenord eller en e-post kommer cachen att brytas för, endast, denna wiki. Vänligen styr användaren till denna wiki för att logga in med ett nybildat lösenord för att undvika cache-problem.',
+	'editaccount-label-select' => 'Välj ett användarkonto',
+	'editaccount-submit-account' => 'Hantera konto',
+	'editaccount-frame-account' => 'Redigerar användarkonto: $1',
+	'editaccount-frame-close' => 'Inaktivera användarkonto: $1',
+	'editaccount-label-email' => 'Ange ny e-postadress',
+	'editaccount-label-pass' => 'Ange nytt lösenord',
+	'editaccount-label-realname' => 'Ange ett nytt riktigt namn',
+	'editaccount-submit-email' => 'Spara e-postadress',
+	'editaccount-submit-pass' => 'Spara lösenord',
+	'editaccount-submit-realname' => 'Spara riktigt namn',
+	'editaccount-submit-close' => 'Stäng konto',
+	'editaccount-usage-close' => 'Du kan också inaktivera ett användarkonto genom att förvränga lösenordet och ta bort e-postadressen. Observera att på detta sätt gåt data förlorad och kommer inte att återvinnas.',
+	'editaccount-warning-close' => '<b>Varning!</b> Du håller på att permanent inaktivera kontot för användare <b>$1</b>. Detta kan inte återställas. Är du säker på att det är vad du vill göra?',
+	'editaccount-status' => 'Statusmeddelande',
+	'editaccount-success-email' => 'Ändrade e-postadressen för kontot $1 till $2.',
+	'editaccount-success-email-blank' => 'Tog bort e-postadressen för kontot $1.',
+	'editaccount-success-pass' => 'Ändrade lösenordet för kontot $1.',
+	'editaccount-success-realname' => 'Ändrade riktigt namn för kontot $1.',
+	'editaccount-success-close' => 'Konto $1 har avaktiverats.',
+	'editaccount-error-email' => 'E-postadressen ändrades inte. Försök igen eller kontakta Tech Teamet.',
+	'editaccount-error-pass' => 'Lösenordet ändrades inte. Försök igen eller kontakta Tech Teamet.',
+	'editaccount-error-realname' => 'Riktigt namn ändrades inte. Försök igen eller kontakta Tech Teamet.',
+	'editaccount-error-close' => 'Ett problem uppstod när kontot skulle avslutas. Försök igen eller kontakta Tech Teamet.',
+	'editaccount-invalid-email' => '"$1" är inte en giltig e-postadress!',
+	'editaccount-nouser' => 'Konto "$1" existerar inte!',
+	'editaccount-log' => 'Användarkontots log',
+	'editaccount-log-header' => 'Denna sida listar förändringar av användarnas inställningar av Wikias personal.',
+	'editaccount-log-entry-email' => 'ändrade e-post för användare $2',
+	'editaccount-log-entry-pass' => 'ändrade lösenord för användare $2',
+	'editaccount-log-entry-realname' => 'ändrade riktigt namn för användare $2',
+	'editaccount-log-entry-close' => 'inaktiverade kontot $2',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Detta konto har inaktiverats.</div>',
+	'right-editaccount' => 'Redigera andra användares inställningar',
+);
+
 /** Tamil (தமிழ்)
  * @author Mahir78
  * @author TRYPPN
@@ -1145,6 +1190,13 @@ $messages['uk'] = array(
  */
 $messages['vi'] = array(
 	'editaccount' => 'Sửa đổi tài khoản',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'editaccount-frame-usage' => '注意',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

@@ -2592,6 +2592,7 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 	'blog-desc' => 'Entradas em blogues',
 	'blog-movepage-badtitle' => 'O título da entrada é inválido.',
 	'blog-comment-sending' => 'A enviar...',
+	'blog-by' => '$1 de $2',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -2977,6 +2978,7 @@ Skapa blogg-listor för kategorier som "Barack Obama", "Fan Fiction", eller komb
 	'blog-fromsitename' => 'Från $1',
 	'blogs-reportproblem' => 'Rapportera problem',
 	'blogs-comment-hidden' => 'Kommentar gömd.',
+	'blog-comment-sending' => 'Skickar...',
 	'blog-by' => '$1 av $2',
 );
 
@@ -3279,10 +3281,19 @@ $messages['uk'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
  * @author Wilsonmess
  */
 $messages['zh-hans'] = array(
 	'createblogpage' => '创建博客',
 	'create-blog-cant-edit' => '无法执行编辑',
+	'create-blog-categories-submit' => '提交',
+	'create-blog-save' => '保存页面',
+	'blog-defaulttitle' => '博客',
+	'blog-writeone' => '写一个！',
+	'blog-comment-delete' => '删除',
+	'blog-comment-history' => '历史',
+	'blog-comment-edit' => '编辑',
+	'blug-cut-sign' => '。。。',
 );
 

@@ -137,6 +137,14 @@ $messages['ru'] = array(
 	'paginator-back' => 'Назад',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'paginator-next' => 'Nästa',
+	'paginator-back' => 'Tillbaka',
+);
+
 /** Swahili (Kiswahili) */
 $messages['sw'] = array(
 	'paginator-next' => 'Ijayo',

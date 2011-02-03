@@ -1238,10 +1238,47 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Per
+ * @author Tobulos1
  */
 $messages['sv'] = array(
-	'createpage_title' => 'Skapa en ny artikel',
-	'createpage_title_caption' => 'Artikeltitel',
+	'createpage-desc' => "Allows to create a new page using Wikia's WYSIWYG editor",
+	'createpage-sp-title' => 'Skapa en ny sida',
+	'createpage_title' => 'Skapa en ny sida',
+	'createpage_title_caption' => 'Rubrik:',
+	'createpage_enter_text' => 'Text:',
+	'createpage_empty_title_error' => 'Rubrik krävs',
+	'createpage_empty_article_body_error' => 'Text på sidan krävs',
+	'createpage_invalid_title_error' => 'Ogiltig rubrik',
+	'createpage_article_already_exists' => 'En sida med det namnet finns redan. 
+Välj ett annat namn.',
+	'createpage_spam' => 'Tyvärr, din redigering kunde inte sparas',
+	'createpage_cant_edit' => 'Kunde inte utföra redigering',
+	'createpage-dialog-title' => 'Skapa en ny sida',
+	'createpage-dialog-message1' => 'Hurra, du skapar en ny sida!',
+	'createpage-dialog-message2' => 'Vad vill du kalla den?',
+	'createpage-dialog-choose' => 'Välj en sidlayout:',
+	'createpage-dialog-format' => 'Standard layout',
+	'createpage-dialog-blank' => 'Tom sida',
+	'createpage-error-empty-title' => 'Vänligen skriv in en rubrik för din sida.',
+	'createpage-error-invalid-title' => 'Tyvärr, den rubriken är ogiltig.
+Använd en annan rubrik.',
+	'createpage-error-article-exists' => 'En sida med den rubriken finns redan.
+Du kan gå till <a href="$1">$2</a>, eller byta namn på din sida',
+	'createpage-error-article-spam' => 'Tyvärr stoppades den rubriken av vårt spamfilter. 
+Använd en annan titel.',
+	'createpage-error-article-blocked' => 'Tyvärr kan du inte skapa den sidan just nu.',
+	'tog-createpagedefaultblank' => 'Använd en tom sida som standard för att skapa en ny sida',
+	'tog-createpagepopupdisabled' => 'Inaktivera Skapa Sida pop-up',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Skriv det första stycket på din sida här.
+
+==Rubrik på avsnitt==
+
+Skriv det första avsnittet på din sida här.
+
+==Rubrik på avsnitt==
+
+Skriv det andra avsnittet på din sida här',
 );
 
 /** Swahili (Kiswahili) */
@@ -1351,11 +1388,13 @@ $messages['zh-cn'] = array(
 	'createpage_enter_text' => '输入文字',
 );
 
-/** Simplified Chinese (‪中文(简体)‬) */
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
 $messages['zh-hans'] = array(
 	'createpage-sp-title' => '新增文章',
 	'createpage_title' => '发表新文章',
-	'createpage_title_caption' => '文章标题',
+	'createpage_title_caption' => '标题：',
 	'createpage_enter_text' => '输入文字',
 );
 

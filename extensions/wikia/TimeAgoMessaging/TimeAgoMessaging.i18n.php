@@ -106,6 +106,17 @@ $messages['pl'] = array(
 	'timeago-second' => 'minutę temu',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'timeagomessaging-desc' => 'Ger i18n för jquery.timeago.js plugin',
+	'timeago-day' => '{{PLURAL:$1|en dag|$1 dagar}} sedan',
+	'timeago-hour' => '{{PLURAL:$1|en timme|$1 timmar}} sedan',
+	'timeago-minute' => '{{PLURAL:$1|en minut|$1 minuter}} sedan',
+	'timeago-second' => 'en minut sedan',
+);
+
 /** Ukrainian (Українська)
  * @author Тест
  */

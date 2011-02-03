@@ -148,6 +148,13 @@ $messages['ckb'] = array(
 	'categoryselect-button-save' => 'پاشەکەوت',
 );
 
+/** Czech (Česky)
+ * @author Darth Daron
+ */
+$messages['cs'] = array(
+	'categoryselect-addcategory-button' => 'Přidat kategorii',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -751,6 +758,14 @@ $messages['zh'] = array(
 	'categoryselect-addcategory-button' => '增加分類',
 	'categoryselect-suggest-hint' => '完成時請鍵入＜ＥＮＴＥＲ＞',
 	'categoryselect-button-save' => '儲存',
+	'categoryselect-button-cancel' => '取消',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'categoryselect-button-save' => '保存',
 	'categoryselect-button-cancel' => '取消',
 );
 

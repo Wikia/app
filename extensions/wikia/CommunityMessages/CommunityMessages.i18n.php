@@ -196,6 +196,13 @@ $messages['ru'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Сообщения сообщества были обновлены]].',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Community Meddelanden har uppdaterats]].',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

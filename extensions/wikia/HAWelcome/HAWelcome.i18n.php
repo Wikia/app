@@ -311,7 +311,7 @@ Vous pouvez laisser un message sur ma page de [[$2|discussion]] si je peux vous 
 '''Merci de vous [[Special:Userlogin|connecter ou de créer un compte]]'''. C'est un moyen simple de garder une trace de vos contributions et facilite la communication avec le reste de la communauté.
 
 N'hésitez pas à laisser un message sur [[$2|ma page de discussion]] si je peux vous aider pour quoi que ce soit ! $3",
-	'welcome-message-log' => 'Accueillir un nouvel utilisateur',
+	'welcome-message-log' => 'accueil nouveau contributeur',
 	'welcome-message-user-staff' => "== Bienvenue ==
 Bonjour et bienvenue sur {{SITENAME}} ! Merci d'avoir modifié la page [[:$1]].
 
@@ -894,6 +894,7 @@ Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]
 
 Se necessita de ajuda e não encontra administradores locais, talvez queira visitar os [[wikia:Forum:Community Central Forum|fóruns na Wiki Community Central]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|fórum de ajuda]] | [[w:sblog|blogue]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

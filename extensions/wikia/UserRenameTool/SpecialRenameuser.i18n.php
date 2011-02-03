@@ -2893,31 +2893,34 @@ $messages['sq'] = array(
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Millosh
+ * @author Rancher
  * @author Sasa Stefanovic
  */
 $messages['sr-ec'] = array(
-	'userrenametool-desc' => "Додаје [[Special:Renameuser|посебу страну]] за преименовање сарадника (потребно право ''renameuser'').",
+	'userrenametool-desc' => "Додаје [[Special:UserRenameTool|посебну страницу]] за преименовање корисника (потребно је ''renameuser'' право) и извршавање свих сродних података",
 	'userrenametool-old' => 'Тренутно корисничко име:',
 	'userrenametool-new' => 'Ново корисничко име:',
-	'userrenametool-reason' => 'Разлог преименовања:',
-	'userrenametool-move' => 'Премести корисничку страницу и страницу за разговор (и њихове подстранице) на ново име',
+	'userrenametool-reason' => 'Разлог:',
+	'userrenametool-move' => 'Премести корисничку страницу и страницу за разговор (и њихове подстранице) на нови назив',
 	'userrenametool-warnings' => 'Упозорења:',
-	'userrenametool-confirm' => 'Да, преименуј сарадничко име.',
+	'userrenametool-confirm' => 'Да, преименуј корисника',
 	'userrenametool-submit' => 'Прихвати',
-	'userrenametool-errordoesnotexist' => 'Корисник "<nowiki>$1</nowiki>" не постоји',
-	'userrenametool-errorexists' => 'Корисник "<nowiki>$1</nowiki>" већ постоји',
-	'userrenametool-errorinvalid' => 'Погрешно корисничко име: "<nowiki>$1</nowiki>"',
-	'userrenametool-errortoomany' => 'Корисник "<nowiki>$1</nowiki>" има $2 {{PLURAL:$2|прилог|прилога|прилога}}, преименовање корисника са више од $3 {{PLURAL:$3|прилог|прилога|прилога}} може да утиче на перформансе сајта.',
-	'userrenametool-error-request' => 'Јавио се проблем приликом прихватања захтева. Иди назад и покушај поново.',
-	'userrenametool-error-same-user' => 'Не можеш преименовати сарадничко име у исто као и претходно.',
-	'userrenametool-success' => 'Корисник "<nowiki>$1</nowiki>" је преименован на "<nowiki>$2</nowiki>"',
-	'userrenametool-page-exists' => 'Страница $1 већ постоји и не може бити аутоматски преснимљена.',
-	'userrenametool-page-moved' => 'Страница $1 је премештена на $2.',
-	'userrenametool-page-unmoved' => 'Страница $1 не може бити премештена на $2.',
-	'userrenametool-logpagetext' => 'Ово је историја измена преименовања корисника',
-	'userrenametool-logentry' => 'је преименовао $1 у „$2“',
-	'userrenametool-log' => '{{PLURAL:$1|1 измена|$1 измене|$1 измена}}. Разлог: $2',
-	'userrenametool-move-log' => 'Аутоматски померене стране приликом преименовања сарадничког имена: "[[User:$1|$1]]" у "[[User:$2|$2]]".',
+	'userrenametool-errordoesnotexist' => 'Корисник „<nowiki>$1</nowiki>“ не постоји.',
+	'userrenametool-errorexists' => 'Корисник „<nowiki>$1</nowiki>“ већ постоји.',
+	'userrenametool-errorinvalid' => '„<nowiki>$1</nowiki>“ није исправно корисничко име.',
+	'userrenametool-errortoomany' => 'Корисник „<nowiki>$1</nowiki>“ има $2 {{PLURAL:$2|прилог|прилога|прилога}}. Преименовање корисника с више од $3 {{PLURAL:$3|прилог|прилога|прилога}} може да утиче на перформансе сајта.',
+	'userrenametool-error-request' => 'Дошло је до проблема при примању захтева.
+Вратите се назад и покушајте поново.',
+	'userrenametool-error-same-user' => 'Не можете преименовати корисника у исто име.',
+	'userrenametool-success' => 'Корисник „<nowiki>$1</nowiki>“ је преименован у „<nowiki>$2</nowiki>“.',
+	'userrenametool-page-exists' => 'Страница $1 већ постоји и не може се заменити.',
+	'userrenametool-page-moved' => 'Страница $1 је премештена у $2.',
+	'userrenametool-page-unmoved' => 'Страница $1 се не може преместити у $2.',
+	'userrenametool-logpagetext' => 'Ово је историјат измена корисничких имена.',
+	'userrenametool-logentry' => '{{GENDER:|је преименовао|је преименовала|преименова}} $1 у „$2“',
+	'userrenametool-log' => '{{PLURAL:$1|1 измена|$1 измене|$1 измена}}.
+Разлог: $2',
+	'userrenametool-move-log' => 'Премештене странице приликом преименовања корисника: „[[User:$1|$1]]“ у „[[User:$2|$2]]“.',
 );
 
 /** Seeltersk (Seeltersk)
@@ -2989,6 +2992,8 @@ $messages['su'] = array(
  */
 $messages['sv'] = array(
 	'userrenametool' => 'Ändra en användares namn',
+	'userrenametool-warning' => 'Innan du byter namn på en användare, vänligen se till att all information är korrekt, och se till att användaren vet att det kan ta tid att slutföra.
+Se [[Special:Stafflog|personalloggen]] för loggar.',
 	'userrenametool-desc' => "Lägger till en [[Special:Renameuser|specialsida]] för att byta namn på en användare (kräver behörigheten ''renameuser'')",
 	'userrenametool-old' => 'Nuvarande användarnamn:',
 	'userrenametool-new' => 'Nytt användarnamn:',
@@ -3001,9 +3006,15 @@ $messages['sv'] = array(
 	'userrenametool-errordoesnotexist' => 'Användaren "<nowiki>$1</nowiki>" finns inte',
 	'userrenametool-errorexists' => 'Användaren "<nowiki>$1</nowiki>" finns redan.',
 	'userrenametool-errorinvalid' => 'Användarnamnet "<nowiki>$1</nowiki>" är ogiltigt.',
+	'userrenametool-errorinvalidnew' => '"<nowiki>$1</nowiki>" är inte ett giltigt nytt användarnamn.',
 	'userrenametool-errortoomany' => 'Användaren "<nowiki>$1</nowiki>" har $2 {{PLURAL:$2|redigering|redigeringar}}. Att byta namn på en användare som gjort mer än $3 {{PLURAL:$3|redigering|redigeringar}} kan påverka webbplatsens prestanda negativt.',
+	'userrenametool-errorprocessing' => 'Processen för att byta namn på användare <nowiki>$1</nowiki> till <nowiki>$2</nowiki> pågår redan.',
+	'userrenametool-errorblocked' => 'Användare <nowiki>$1</nowiki> blockeras av <nowiki>$2</nowiki> för $3.',
+	'userrenametool-errorlocked' => 'Användare <nowiki>$1</nowiki> är låst.',
+	'userrenametool-errorbot' => 'Användare <nowiki>$1</nowiki> är en bot.',
 	'userrenametool-error-request' => 'Ett problem inträffade i hanteringen av begäran. Gå tillbaks och försök igen.',
 	'userrenametool-error-same-user' => 'Du kan inte byta namn på en användare till samma som tidigare.',
+	'userrenametool-error-cannot-rename-account' => 'Att byta namn på användarkontot på den delade globala databasen misslyckades.',
 	'userrenametool-success' => 'Användaren "<nowiki>$1</nowiki>" har fått sitt namn bytt till "<nowiki>$2</nowiki>"',
 	'userrenametool-confirm-intro' => 'Vill du verkligen göra det här?',
 	'userrenametool-confirm-yes' => 'Ja',

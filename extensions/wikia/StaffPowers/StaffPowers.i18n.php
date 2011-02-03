@@ -301,9 +301,10 @@ $messages['shi'] = array(
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
+ * @author Rancher
  */
 $messages['sr-ec'] = array(
-	'staffpowers-ipblock-aborted' => 'Блокирање Викија уредника није могуће. Молимо, користите [[Special:Contact]] да бисте пријавили било какве проблеме с нашим тимом.',
+	'staffpowers-ipblock-aborted' => 'Блокирање уредника Викије није могуће. Користите [[Special:Contact|образац за контактирање]] да бисте пријавили било какве проблеме с нашим тимом.',
 );
 
 /** Sundanese (Basa Sunda)
@@ -315,9 +316,10 @@ $messages['su'] = array(
 
 /** Swedish (Svenska)
  * @author Per
+ * @author Tobulos1
  */
 $messages['sv'] = array(
-	'staffpowers-ipblock-aborted' => 'Blockering av Wikiamedarbetare är inte möjligt. Vänligen använd [[Special:Contact|Kontakta]] för att rapportera problem med någon av våra medarbetare.',
+	'staffpowers-ipblock-aborted' => 'Att blockera personal på Wikia är inte möjligt. Använd [[Special:Contact]] för att rapportera eventuella problem med vår personal.',
 );
 
 /** Telugu (తెలుగు)

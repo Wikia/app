@@ -246,12 +246,13 @@ $messages['ar'] = array(
 );
 
 /** Assamese (অসমীয়া)
+ * @author Bellayet
  * @author Chaipau
  */
 $messages['as'] = array(
 	'myhome-watchlist-feed' => 'লক্ষ্য তালিকা',
 	'myhome-user-contributions-feed' => 'অৱদানসমূহ',
-	'myhome-feed-newpage' => 'নতুন পৃষ্ঠা',
+	'myhome-feed-newpage' => 'নতুন পাতা',
 	'myhome-feed-edit' => 'সম্পাদন কৰক',
 	'myhome-feed-new-blog-comment-details' => 'মন্তব্য',
 	'myhome-feed-new-article-comment-details' => 'মন্তব্য',
@@ -437,6 +438,13 @@ Ma'z oc'h diazezer ar wiki-mañ pe unan eus merourien anezhañ e c'hallit kemma�
 	'myhome-default-view-success' => 'Mat eo, hon sell dre ziouer eo bremañ',
 	'tooltip-pt-myhome' => "Mont d'am Degemer",
 	'activityfeed' => 'Gwazh obererezh',
+);
+
+/** Czech (Česky)
+ * @author Darth Daron
+ */
+$messages['cs'] = array(
+	'wikiactivity' => 'Wiki Aktivita',
 );
 
 /** Welsh (Cymraeg)
@@ -1501,7 +1509,8 @@ $messages['mk'] = array(
 Викито го гради заедницата, и штом еднаш ќе го стиснете копчето за уредување, веќе станувате дел од таа заедница. Испробајте!',
 	'myhome-hot-spots-number-of-editors' => 'уредници',
 	'myhome-log-in' => "<center>Функцијата „Мојата домашна страница“ е достапна само ако сте најавени.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Најавете се за да ја видите страницата!]'''</big></center>",
-	'myhome-switch-to-monaco' => "Функцијата „Мојата домашна страница“ е достапна само ако го користите изгледот „Монако“. Ако сакате да ја видите „Мојата домашна страница“, одете на '''[[Special:Preferences|вашите нагодувања]]''' и променете го изгледот.",
+	'myhome-switch-to-monaco' => "Функцијата ВикиАктивност е достапна само ако го користите рувото „Викија“.
+Ако сакате да ја погледате Мојата домашна страница, одете на '''[[Special:Preferences|нагодувањата]]''' и сменете го рувото.",
 	'myhome-namespace-blog' => 'Блог',
 	'myhome-community-corner-header' => 'Пораки на заедницата',
 	'oasis-myhome-community-corner-edit' => 'уреди порака &gt;',
@@ -1599,7 +1608,7 @@ Probeer het maar!',
 	'myhome-hot-spots-number-of-editors' => 'bewerkers',
 	'myhome-log-in' => "<center>De functie Mijn Startpagina is alleen beschikbaar als u bent aangemeld.<br /><br />
 <big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Meld u aan om deze pagina te bekijken!]</span>'''</big></center>",
-	'myhome-switch-to-monaco' => "De functie \"Mijn startpagina\" is alleen beschikbaar als uw de Monaco-vormgeving gebruikt.
+	'myhome-switch-to-monaco' => "De functie \"Mijn startpagina\" is alleen beschikbaar als uw de Wikia-vormgeving gebruikt.
 Als u \"Mijn startpagina\" wilt bekijken, wijzig in '''[[Special:Preferences|uw voorkeuren]]''' het siteuiterlijk.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Communityberichten',
@@ -1687,8 +1696,8 @@ Wikien er bygd av fellesskapet og når du klikker på redigeringsknappen er du m
 Prøv det!',
 	'myhome-hot-spots-number-of-editors' => 'bidragsytere',
 	'myhome-log-in' => "<center>Mitt hjem-funksjonen er kun tilgjengelig om du er logget inn.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Logg inn for å se denne siden.]'''</big></center>",
-	'myhome-switch-to-monaco' => "Mitt hjem-funksjonen er kun tilgjengelig om du bruker utseendet Monaco.
-Om du vil se Mitt hjem, gå til '''[[Special:Preferences|innstillingene dine]]''' for å endre drakt.",
+	'myhome-switch-to-monaco' => "WikiAktivitet-funksjonen er bare tilgjengelig om du bruker Wikia-utseendet.
+Hvis du vil se Mitt hjem, vennligst gå til '''[[Special:Preferences|instillingene dine]]''' for å endre utseendet.",
 	'myhome-namespace-blog' => 'Blogg',
 	'myhome-community-corner-header' => 'Fellesskapsbeskjeder',
 	'oasis-myhome-community-corner-edit' => 'rediger melding &gt;',
@@ -1830,7 +1839,7 @@ Jeśli chcesz widzieć „Moja strona domowa” zmień '''[[Special:Preferences|
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'myhome-desc' => 'Na pàgina home privà për utent intrà',
+	'myhome-desc' => "Na pàgina d'intrada privà për j'utent identificà",
 	'myhome' => 'Mia Intrada',
 	'wikiactivity' => 'Atività dla Wiki',
 	'myhome-activity-more' => "varda j'atività pi recente",
@@ -1967,7 +1976,8 @@ Use a lista de páginas vigiadas para monitorizar alterações das páginas que 
 Clique '''[[Special:CreatePage|Página nova]]''' para começar a escrever!",
 	'myhome-hot-spots-newest' => 'Páginas novas na wiki',
 	'myhome-hot-spots-brandnew' => "Esta wiki é nova. Clique '''[[Special:CreatePage|Página nova]]''' para começar a escrever!",
-	'tog-myhomedisableredirect' => 'Desactivar o meu redireccionamento para A Minha Casa',
+	'tog-myhomedisableredirect' => 'Desactivar o meu redireccionamento para a Actividade na Wikia',
+	'prefs-myhome' => 'A Minha Casa',
 	'myhome-feed-newpage' => 'página nova',
 	'myhome-feed-edit' => 'editar',
 	'myhome-feed-move' => 'página movida',
@@ -2598,6 +2608,7 @@ $messages['uk'] = array(
 	'myhome-feed-talkpage' => 'сторінка обговорення',
 	'myhome-feed-delete' => 'вилучено',
 	'myhome-feed-image' => 'додано зображення',
+	'myhome-feed-categorization' => 'категоризація',
 	'myhome-feed-created-by' => 'створено користувачем $1',
 	'myhome-feed-added-by' => 'додано користувачем $1',
 	'myhome-feed-edited-by' => 'відредаговано користувачем $1',

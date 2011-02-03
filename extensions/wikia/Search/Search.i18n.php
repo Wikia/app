@@ -408,10 +408,14 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Dafer45
+ * @author Tobulos1
  */
 $messages['sv'] = array(
 	'wikiasearch-titles-only' => 'Sök endast i sidtitlar',
 	'wikiasearch-system-error-msg' => 'På grund av ett systemfel kunde sökningen inte slutföras',
+	'wikiasearch-search-this-wiki' => 'Sök endast på Wikia Central',
+	'wikiasearch-search-wikia' => 'Sök Wikia',
+	'wikiasearch-image-results' => 'Bildresultat för "$1"',
 );
 
 /** Tamil (தமிழ்)

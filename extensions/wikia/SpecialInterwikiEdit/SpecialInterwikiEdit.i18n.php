@@ -341,15 +341,16 @@ $messages['si'] = array(
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'iwedit-title' => 'Интервики уредник',
-	'iwedit-language-interwikis' => 'само језички интервики',
-	'iwedit-all-interwikis' => 'сви интервикији',
+	'iwedit-title' => 'Међувики уређивач',
+	'iwedit-language-interwikis' => 'само језички међувикији',
+	'iwedit-all-interwikis' => 'сви међувикији',
 	'iwedit-update' => 'Ажурирај',
-	'iwedit-error' => '<p>Дошло је до грешке</p>.',
-	'iwedit-success' => '<p>Прављење везе је успешно завршено.</p>',
+	'iwedit-error' => '<p>Дошло је до грешке.</p>',
+	'iwedit-success' => '<p>Стварање везе је успело.</p>',
 );
 
 /** Swedish (Svenska)

@@ -19,6 +19,13 @@ $messages['qqq'] = array(
 	'wikiagameguides-tab-more' => 'Tab text. Best keep it really short. Suggesting 1 to 8 characters.',
 );
 
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'wikiagameguides-tab-more' => "Muioc'h",
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -81,10 +88,23 @@ $messages['no'] = array(
 	'wikiagameguides-tab-more' => 'Mer',
 );
 
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'wikiagameguides-tab-1' => 'Језичак 1',
+	'wikiagameguides-tab-2' => 'Језичак 2',
+	'wikiagameguides-tab-3' => 'Језичак 3',
+	'wikiagameguides-tab-more' => 'Више',
+);
+
 /** Swedish (Svenska)
  * @author Tobulos1
  */
 $messages['sv'] = array(
+	'wikiagameguides-tab-1' => 'Flik 1',
+	'wikiagameguides-tab-2' => 'Flik 2',
+	'wikiagameguides-tab-3' => 'Flik 3',
 	'wikiagameguides-tab-more' => 'Mer',
 );
 

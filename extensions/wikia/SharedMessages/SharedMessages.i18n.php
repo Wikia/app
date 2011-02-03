@@ -88,3 +88,10 @@ $messages['ru'] = array(
 	'sharedmessages-desc' => 'Позволяет использовать сообщения из общей базы данных',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'sharedmessages-desc' => 'Tillåter användning av meddelanden från den gemensamma databasen',
+);
+

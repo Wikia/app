@@ -223,13 +223,14 @@ $messages['id'] = array(
 /** Italian (Italiano)
  * @author Beta16
  * @author Gifh
+ * @author Minerva Titani
  */
 $messages['it'] = array(
 	'ajaxpoll-percentVotes' => '$1% di tutti i voti',
 	'ajaxpoll-thankyou' => 'Grazie per aver votato!',
 	'ajaxpoll-error' => "C'è stato un problema con l'elaborazione del tuo voto, si prega di riprovare.",
 	'ajaxpoll-summary' => 'Il sondaggio è stato creato da $1 il $2, e finora $3 persone hanno votato.',
-	'ajaxpoll-submit' => 'Voti!',
+	'ajaxpoll-submit' => 'Vota!',
 	'ajaxpoll-closed' => 'Il sondaggio è chiuso. Consulta i risultati!',
 	'ajaxpoll-submitting' => 'Attendere prego, il tuo voto è in elaborazione ...',
 );

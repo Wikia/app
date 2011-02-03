@@ -250,6 +250,14 @@ $messages['sr-ec'] = array(
 	'quickcreate' => 'пошаљите свој рецепт',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'quickcreate-desc' => 'Adds a create new page button with ability to log in for anonymous users',
+	'quickcreate' => 'skicka in ditt recept',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

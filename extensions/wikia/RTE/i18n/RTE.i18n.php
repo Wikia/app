@@ -93,6 +93,30 @@ $messages['br'] = array(
 	'rte-first-run-notice' => "Degaset hon eus un nebeut gwelladennoù d'an embanner. Evit gouzout hiroc'h, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lennit ar c'hemenn].",
 );
 
+/** Czech (Česky)
+ * @author Darth Daron
+ */
+$messages['cs'] = array(
+	'rte-desc' => 'Integrace CKeditoru k MediaWiki',
+	'rte-no-js-fallback' => 'Rozšířený textový editor nefunguje při vypnutém JavaScriptu. Prosím povolte ho v nastavení prohlížeče nebo navštivte [[Special:Preferences|nastavení]] a přepněte na starý MediaWiki editor.',
+	'rte-edgecase-info-title' => 'Požadován zdrojový mód',
+	'rte-edgecase-info' => 'Rozšířený textový editor byl zakázán, protože stránka obsahuje komplexní kód.',
+	'rte-edgecase-comment' => 'HTML komentáře',
+	'rte-edgecase-triplecurls' => 'parametry šablony',
+	'rte-edgecase-nowysiwyg' => '"žádný WYSIWYG" příkaz',
+	'rte-edgecase-complex-description' => 'externí adresu URL nebo šablona v rámci popisu odkazu',
+	'rte-edgecase-template-with-link' => 'šablona s odkazem jako parametr',
+	'rte-edgecase-syntax' => 'nedovolená syntaxe',
+	'rte-edgecase-image-with-link' => 'obrázek s odkazem v popisu',
+	'rte-edgecase-redirect' => 'přesměrování',
+	'rte-edgecase-templateintable' => 'tabulka s voláním šablony v definici',
+	'rte-edgecase-unclosed-tags' => 'neuzavřený HTML tag',
+	'enablerichtexteditor' => 'Povolit rozšířený textový editor',
+	'rte-enablerichtexteditormessage' => 'Rozšířený textový editor povolen!',
+	'rte-first-run-notice' => 'Udělali jsme několik vylepšení editoru. Chcete-li se dozvědět více, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news přečtěte si oznámení].',
+	'prefs-rte' => 'Rozšířený textový editor',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author The Evil IP address
@@ -452,6 +476,22 @@ $messages['sr-ec'] = array(
 	'rte-edgecase-comment' => 'HTML коментари',
 	'rte-edgecase-redirect' => 'преусмери',
 	'rte-edgecase-unclosed-tags' => 'отворене HTML ознаке',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'rte-edgecase-comment' => 'HTML-kommentarer',
+	'rte-edgecase-triplecurls' => 'mallparametrar',
+	'rte-edgecase-complex-description' => 'en extern URL eller mall inom en länk beskrivning',
+	'rte-edgecase-template-with-link' => 'en mall med en länk som en parameter',
+	'rte-edgecase-syntax' => 'inte tillåten syntax',
+	'rte-edgecase-image-with-link' => 'bild med en länk i beskrivningen',
+	'rte-edgecase-redirect' => 'omdirigera',
+	'enablerichtexteditor' => 'Aktivera Rich Text Editor',
+	'rte-enablerichtexteditormessage' => 'Rich Text Editor aktiverat!',
+	'rte-first-run-notice' => 'Vi har gjort den del förbättringar om redigeraren. Om du vill veta mer, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news läs nyheten].',
 );
 
 /** Tagalog (Tagalog)

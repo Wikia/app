@@ -603,18 +603,43 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'protectsite-allowall' => 'Сви корисници',
-	'protectsite-allowusersysop' => 'Регистровани корисници и Администратори',
+	'protectsite-allowusersysop' => 'Уписани корисници и администратори',
 	'protectsite-allowsysop' => 'Само администратори',
 	'protectsite-createpage' => 'Дозволи стварање страница од стране',
 	'protectsite-edit' => 'Дозволи уређивање страница од стране',
 	'protectsite-move' => 'Дозволи преусмеравање страница од стране',
-	'protectsite-timeout' => 'Време истекло (тајмаут)',
-	'protectsite-maxtimeout' => 'Максимум:',
+	'protectsite-timeout' => 'Време истека:',
+	'protectsite-maxtimeout' => 'Највише:',
 	'protectsite-comment' => 'Коментар:',
-	'protectsite-ucomment' => 'Скини заштиту коментара:',
-	'protectsite-until' => 'Заштићена јединица',
+	'protectsite-ucomment' => 'Скини заштиту са коментара:',
+	'protectsite-until' => 'Заштићено до:',
 	'protectsite-protect' => 'Заштити',
 	'protectsite-unprotect' => 'Скини заштиту',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'protectsite' => 'Skydda sida',
+	'protectsite-text-protect' => '<!-- Instruktioner/Kommentarer/Policy för användning -->',
+	'protectsite-text-unprotect' => '<!-- Instruktioner/Kommentarer när skyddad -->',
+	'protectsite-title' => 'Webbplatsens skyddsinställningar',
+	'protectsite-allowall' => 'Alla användare',
+	'protectsite-allowusersysop' => 'Registrerade användare och administratörer',
+	'protectsite-allowsysop' => 'Endast administratörer',
+	'protectsite-createaccount' => 'Tillåt skapande av nya konton av',
+	'protectsite-createpage' => 'Tillåta skapande av sidor av',
+	'protectsite-edit' => 'Tillåt redigering av sidor av',
+	'protectsite-move' => 'Tillåt flyttning av sidor av',
+	'protectsite-upload' => 'Tillåt filuppladdningar av',
+	'protectsite-timeout' => 'Timeout:',
+	'protectsite-timeout-error' => "'''Ogiltig Timeout.'''",
+	'protectsite-maxtimeout' => 'Maximal:',
+	'protectsite-comment' => 'Kommentar:',
+	'protectsite-until' => 'Skyddad till:',
+	'protectsite-protect' => 'Skydda',
+	'protectsite-unprotect' => 'Oskyddad',
 );
 
 /** Swahili (Kiswahili)
