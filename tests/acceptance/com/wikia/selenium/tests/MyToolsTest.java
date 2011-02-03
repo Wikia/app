@@ -11,10 +11,10 @@ public class MyToolsTest extends BaseTest {
 		session().open("index.php");
 		session().waitForPageToLoad(this.getTimeout());
 
-		assertFalse(session().isElementPresent("//li[@class='mytools']"));
+		assertFalse(session().isElementPresent("//li[contains(@class, 'mytools')]"));
 
 		loginAsRegular();
 
-		assertTrue(session().isElementPresent("//li[@class='mytools']"));
+		assertTrue(session().isElementPresent("//li[contains(@class, 'mytools')]"));
 	}
 }
