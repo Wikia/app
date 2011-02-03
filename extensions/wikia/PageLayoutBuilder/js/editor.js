@@ -1302,15 +1302,18 @@
 		},
 
 		refreshPreview: function(values) {
-			$().log("refreshPreview", "PLB")
-			if( typeof(values.caption) != 'undefined' ) {
-				$('.plb-pe-window-preview .plb-form-caption-p').html($.htmlentities(values.caption));
+			var val = PageLayoutBuilder.Lang["plb-editor-preview-desc"];
+			
+			if( typeof(values.caption) != 'undefined' ) {	
+				$('.plb-pe-window-preview .plb-form-caption-p').html($.htmlentities( values.caption ));
 			}
-
-			if(typeof(values.instructions) != 'undefined') {
-				$('.plb-pe-window-preview .plb-input-instructions').val($.htmlentities(values.instructions));
-				$('.plb-pe-window-preview .plb-span-instructions').html($.htmlentities(values.instructions));
+			
+			if((typeof(values.instructions) != 'undefined') && (values.instructions != "")) {
+				val = values.instructions;
 			}
+			
+			$('.plb-pe-window-preview .plb-input-instructions').val($.htmlentities( val ));
+			$('.plb-pe-window-preview .plb-span-instructions').html($.htmlentities( val ));
 
 			this.extRefreshPreview(values);
 		},

@@ -159,8 +159,7 @@ class PageLayoutBuilderParser extends Parser {
 
 	public static function parserLayoutTag( $content, $attributes, Parser $self ) {
 		global $wgUser, $wgPLBwidgets;
-		$title = $self->Title();
-
+		//$title = $self->Title();
 		wfLoadExtensionMessages( 'PageLayoutBuilder' );
 
 		if(empty($attributes['layout_id'])) {
@@ -172,13 +171,12 @@ class PageLayoutBuilderParser extends Parser {
 		}
 		
 		$layoutTitle = Title::newFromID($attributes['layout_id']);
-
-		$oArticle = new Article( $layoutTitle );
-		$title = $oArticle->getTitle();
-		$cArticle = $oArticle->getContent();
+		//* can't use Article->getContent becasue of problem with oldid in url *//
+		$rev = Revision::newFromTitle( $layoutTitle );
+		$layoutText = $rev ? $rev->getRawText() : "";
 
 		$dom = new simple_html_dom;
-		$dom->load($cArticle, false);
+		$dom->load($layoutText, false);
 
 		$plbParser = new PageLayoutBuilderParser();
 		$formValues = $plbParser->extractFormValues($attributes);
@@ -221,7 +219,7 @@ class PageLayoutBuilderParser extends Parser {
 		if(!empty($attributes['cswikitext'])) {
 			$cat = $attributes['cswikitext'];	
 		}
-
+		
 		return $self->recursiveTagParse( self::removeGalleryAndIP($dom->__toString()).$cat );
 	}
 	/*

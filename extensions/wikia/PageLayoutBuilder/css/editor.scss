@@ -245,6 +245,9 @@ $plb-window-items-space: 2px;
 		font-size:23px;
 		margin-bottom:17px;
 		margin-top:17px;
+		border-top: 1px solid $color-page-border;
+    	border-width: 1px;
+    	padding-top: 10px;
 	}
 	.plb-pe-buttons {
 	

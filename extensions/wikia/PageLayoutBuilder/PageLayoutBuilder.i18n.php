@@ -95,7 +95,7 @@ $messages['en'] = array (
 	'plb-parser-preview-input' => 'The user\'s text will appear here.',
 	'plb-parser-preview-mlinput' => 'This is a multi-line item. When a user fills in the form to create new pages based on this layout, they will see a big input box, and when they fill it in to generate a page, that text will appear in this block on your layout. Combining this with other variables means you can create beautiful and complete layouts, but all users need to do is fill in a form - so you can get lots of amazing pages generated as quickly as possible.',
 	'plb-parser-preview-sinput' => 'The user\'s choice will appear here.',
-	'plb-special-form-none-value' => 'plb-special-form-none-value',
+	'plb-special-form-none-value' => 'One or more required fields have not been filled in.',
 
 	'plb-create-from-article-new' => '<span style="color:red">New!</span> Layout Builder',
 	'plb-create-from-article-button' => 'Make a Layout from this page',
@@ -112,9 +112,12 @@ $messages['en'] = array (
 	'plb-editor-toolbar-static' => 'Static',
 	'plb-editor-rte-caption' => "Add item",
 	'plb-editor-preview' => 'Preview',
+	'plb-editor-preview-desc' => 'Extra editor help',
+	'plb-editor-info' => '',
+	'plb-editor-preview-info' => 'Info',
 	'plb-editor-overlay-edit' => 'edit',
 	'plb-editor-enter-caption' => 'Enter form question.',
-	'plb-editor-left-sidebar-tutorial' => '<br /><b>Welcome to the Layout Builder!</b><br /><br />To start adding items, click the <em>Add item</em> button above and choose the desired type.<br /><br />As you add items, new questions will be added new page will be automatically generated based on all items you put into the layout.',
+	'plb-editor-left-sidebar-tutorial' => '<br /><b>Welcome to the Layout Builder!</b><br /><br />To start adding items, click the <em>Add item</em> button above and choose the desired type.<br /><br />As you add items here, new questions are added to the creation process for the page.',
 
 	'plb-widget-name-plb_input' => 'Input Box',
 	'plb-widget-name-plb_mlinput' => 'Paragraph',

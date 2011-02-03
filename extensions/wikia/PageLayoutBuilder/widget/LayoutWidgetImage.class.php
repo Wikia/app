@@ -28,12 +28,12 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 		$data['width'] = $data['size'];
 		$data['id'] = 'plb_'.$this->getAttrVal('id', true);
 		$data['img'] = "";
-		$data['value'] = $this->getValue();
+		$data['value'] = $this->getImageName();
 
 		$img = null;
 
 		if(!empty($this->value)) {
-			$file_title = Title::newFromText( $this->getValue() ,NS_FILE );
+			$file_title = Title::newFromText( $this->getImageName() ,NS_FILE );
 			$img = wfFindFile( $file_title  );
 		}
 
@@ -50,11 +50,12 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 			$data['divwidth'] =  $data['width'];
 			$data['img'] = wfReplaceImageServer( $img->getThumbUrl( $img->thumbName( array( 'width' => $data["width"] ) ) ) ); 
 		}
+		
 		return $this->renderForPreviewAndForm($data).XML::element('input',array(
 								'name' => 'plb_'.$this->getAttrVal('id', true),
 								'id' => 'plb_'.$this->getAttrVal('id', true),
 								'type' => 'hidden',
-								'value' => $this->getValue()
+								'value' => $this->value
 							), "", true );
 	}
 
@@ -62,10 +63,10 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 		$caption = $this->getCaption();
 		$caption = str_replace( array('|', ']', '[') , array('&#124;', '&#93;', '&#91;'), $caption);
 
-		if(strpos($this->getValue(), ":" ) > 0 ) {
-			$value = $this->getValue();	
+		if(strpos($this->getImageName(), ":" ) > 0 ) {
+			$value = $this->getImageName();	
 		} else {
-			$value = "Image:".$this->getValue();
+			$value = "Image:".$this->getImageName();
 		}
 		
 		if($this->getAttrVal('type', true) == 'frameless') {
@@ -96,7 +97,7 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 		return $this->renderForPreviewAndForm($data);
 	}
 
-	private function getValue() {
+	private function getImageName() {
 		if(empty($this->value)) {
 			return "";
 		}
@@ -111,13 +112,9 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 	}
 
 	private function getCaption() {
-		if(empty($this->value)) {
-			$this->getAttrVal("caption", true);
-		}
-
 		$pos = strpos($this->value, "|");
 		if($pos === false) {
-			return $this->getAttrVal("caption", true);
+			return $this->getImageName();
 		}
 		$out = explode('|', $this->value, 2);
 		return trim($out[1]);
