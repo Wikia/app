@@ -107,7 +107,7 @@ JS;
 	public static function onInternalParseBeforeLinks(&$parser, &$text, &$stripState) {
 		global $wgContLang;
 		$pollNamespace = $wgContLang->getNsText( NS_WIKIA_POLL );
-		$newtext = preg_replace_callback( "/\[\[$pollNamespace\:([^\]]*)\]\]/", "WikiaPollHooks::parseLinkCallback", $text, -1, $count );
+		$newtext = preg_replace_callback( "/\[\[Poll|$pollNamespace\:([^\]]*)\]\]/", "WikiaPollHooks::parseLinkCallback", $text, -1, $count );
 		if ($count > 0)
 			$text = $parser->recursiveTagParse($newtext);
 		return true;
