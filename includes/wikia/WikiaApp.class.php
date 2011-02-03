@@ -44,7 +44,7 @@ class WikiaApp {
 		$this->registry = $registry;
 
 		// register ajax dispatcher
-		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->append('wgAjaxExportList', 'WikiaApp::ajax');
+		//$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->append('wgAjaxExportList', 'WikiaApp::ajax');
 	}
 
 	/**
