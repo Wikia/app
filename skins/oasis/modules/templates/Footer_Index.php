@@ -6,12 +6,12 @@
 	 		echo wfRenderModule('Notifications');
 	 	} ?>
 		<ul class="tools" data-more-caption="<?= htmlspecialchars(wfMsg('oasis-toolbar-more')); ?>">
+			<?php echo wfRenderModule('Footer','Toolbar'); ?>
 <?php if($showLoadTime) { ?>
 			<li class="loadtime disable-more">
 				<?= $loadTimeStats ?>
 			</li>
 <?php } ?>
-			<?php echo wfRenderModule('Footer','Toolbar'); ?>
 		</ul>
 		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
 		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
