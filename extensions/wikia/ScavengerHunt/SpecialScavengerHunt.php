@@ -19,30 +19,73 @@
 
 class SpecialScavengerHunt extends SpecialPage {
 	public function __construct() {
+		$this->app = WF::build('App');
+		$this->out = $this->app->getGlobal('wgOut');
+		$this->request = $this->app->getGlobal('wgRequest');
+		$this->user = $this->app->getGlobal('wgUser');
 		parent::__construct('ScavengerHunt', 'scavengerhunt');
 	}
 
 	public function execute($subpage) {
-		global $wgOut, $wgRequest, $wgUser;
-
 		wfProfileIn(__METHOD__);
 
 		$this->setHeaders();
 		$this->mTitle = SpecialPage::getTitleFor('scavengerhunt');
 
-		if ($this->isRestricted() && !$this->userCanExecute($wgUser)) {
+		if ($this->isRestricted() && !$this->userCanExecute($this->user)) {
 			$this->displayRestrictionError();
 			return;
 		}
 
-		if ($wgRequest->wasPosted()) {
+		$this->out->addStyle($this->app->runFunction('wfGetSassUrl', 'extensions/wikia/ScavengerHunt/css/scavenger-special.scss'));
+		$this->out->addScriptFile($this->app->getGlobal('wgScriptPath') . '/extensions/wikia/ScavengerHunt/js/scavenger-special.js');
+		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
+
+		if ($this->request->wasPosted()) {
+			//adding new game
+			if ($this->request->getVal('add')) {
+				$template->set_vars(array(
+					'enabled' => false,
+					'gameId' => 0
+				));
+
+				$this->out->addHTML($template->render('form'));
+			}
+
+			//save changes
+			elseif ($this->request->getVal('save')) {
+				$game = WF::build('ScavengerHuntGame', array('id' => $this->request->getVal('gameId'), 'readWrite' => true));
+				//set fields
+				$game->setWikiId($this->app->getGlobal('wgCityId'));
+				$game->setLandingTitle($this->request->getVal('landing'));
+				$game->setStartingClueText($this->request->getVal('startingClue'));
+				$game->setArticles();
+				$game->setFinalFormText($this->request->getVal('entryForm'));
+				$game->setFinalFormQuestion($this->request->getVal('finalQuestion'));
+				$game->setGoodbyeText($this->request->getVal('goodbyeMsg'));
+				//save to DB
+				$game->saveToDb();
+			}
+
+			//enable/disable game
+			elseif ($this->request->getVal('enable')) {
+			}
+
+			//delete game
+			elseif ($this->request->getVal('delete')) {
+			}
+
+			//export to csv
+			elseif ($this->request->getVal('export')) {
+			}
+		} else {
+			//default form - entry point
+			$template->set_vars(array(
+			));
+
+			$this->out->addHTML($template->render('main'));
 		}
 
-		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
-		$template->set_vars(array(
-		));
-
-		$wgOut->addHTML($template->render('form'));
 		wfProfileOut(__METHOD__);
 	}
 }
