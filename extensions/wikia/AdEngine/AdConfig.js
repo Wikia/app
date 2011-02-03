@@ -282,8 +282,8 @@ AdConfig.DART.getAdType = function(useIframe) {
 
 AdConfig.DART.initSiteAndZones = function() {
 	if (AdConfig.DART.isHub()) {
-		AdConfig.DART.site = wgHubsPages[wgPageName.toLowerCase()]['site'];
-		AdConfig.DART.zone1 = wgHubsPages[wgPageName.toLowerCase()]['name'];
+		AdConfig.DART.site = AdConfig.DART.getSite(wgHubsPages[wgPageName.toLowerCase()]['site']);
+		AdConfig.DART.zone1 = AdConfig.DART.getZone1(wgHubsPages[wgPageName.toLowerCase()]['name']);
 		AdConfig.DART.zone2 = 'hub';
 	}
 
@@ -296,9 +296,6 @@ AdConfig.DART.initSiteAndZones = function() {
 	if (!AdConfig.DART.zone2) {
 		AdConfig.DART.zone2 = AdConfig.DART.getZone2(window.adLogicPageType);
 	}
-
-	AdConfig.DART.site = 'wka.' + AdConfig.DART.site;
-	AdConfig.DART.zone1 = '_' + AdConfig.DART.zone1;
 }
 
 AdConfig.DART.isHub = function() {
