@@ -483,7 +483,14 @@ abstract class DatabaseBase {
 			} else {
 				$userName = '';
 			}
-			$commentedSql = preg_replace('/\s/', " /* $fname $userName */ ", $sql, 1);
+			// wikia change, add url as well
+			global $wgTitle;
+			$title = '';
+			if( $wgTitle instanceof Title ) {
+				$title = $wgTitle->getFullURL();
+			}
+			// end of wikia change
+			$commentedSql = preg_replace('/\s/', " /* $fname $userName $title */ ", $sql, 1);
 		#} else {
 		#	$commentedSql = $sql;
 		#}
