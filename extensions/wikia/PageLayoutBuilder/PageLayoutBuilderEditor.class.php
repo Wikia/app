@@ -11,6 +11,7 @@
 			'plb-editor-toolbar-caption',
 			'plb-editor-toolbar-formatting',
 			'plb-editor-toolbar-static',
+			'plb-editor-preview-desc',
 			'plb-property-editor-value-required',
 		);
 

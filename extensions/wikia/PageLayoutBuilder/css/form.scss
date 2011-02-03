@@ -19,12 +19,19 @@ div.plb-article-form-space {
 
 ul.plb-form-actions {
 	list-style: none;
+	margin-left: 0;
 	li {
 		float: left;
 		padding-left:1px;
 		padding-right:1px;
 		span {
 			margin-right:8px;
+		}
+		input {
+		    font-size: 16px;
+    		height: 40px;
+    		padding-left: 15px;
+    		padding-right: 15px;
 		}
 	}
 }
@@ -130,8 +137,15 @@ ul.plb-form-actions {
 	color: $color-button-text;
 }
 
-#WikiaPhotoGalleryOptionsTabs {
-	display: none;
+div#WikiaPhotoGalleryOptionsTabs {
+	min-height: 4px;
+	div {
+		display: none;
+	}
+	div.WikiaPhotoGalleryOptionsTab {
+		padding: 0;
+		display: none;
+	}
 }
 
 #WikiaPhotoGalleryEditorCheckboxes {
@@ -140,7 +154,7 @@ ul.plb-form-actions {
 
 .WikiaPhotoGalleryEditorPage {
 	h1{
-		display: none;
+	
 	}
 }
 
