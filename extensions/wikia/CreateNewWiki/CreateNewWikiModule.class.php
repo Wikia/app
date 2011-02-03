@@ -25,7 +25,7 @@ class CreateNewWikiModule extends Module {
 	var $skipWikiaPlus;
 
 	public function executeIndex() {
-		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $fbOnLoginJsOverride, $wgRequest;
+		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $fbOnLoginJsOverride, $wgRequest, $wgPageQuery;
 		wfProfileIn( __METHOD__ );
 		
 		// hide some default oasis UI things
@@ -33,6 +33,18 @@ class CreateNewWikiModule extends Module {
 		$wgSuppressPageHeader = true;
 		$wgSuppressFooter = false;
 		$wgSuppressAds = true;
+		
+		// fbconnected means user has gone through step 2 to login via facebook.  
+		// Therefore, we need to reload some values and start at the step after signup/login
+		$fbconnected = $wgRequest->getVal('fbconnected');
+		$fbreturn = $wgRequest->getVal('fbreturn');
+		if((!empty($fbconnected) && $fbconnected === '1') || (!empty($fbreturn) && $fbreturn === '1')) {
+			$this->executeLoadState();
+			$this->currentStep = 'DescWiki';
+		} else {
+			$this->currentStep = '';
+		}
+		$wgPageQuery[] = 
 		
 		// form field values
 		$hubs = WikiFactoryHub::getInstance();
@@ -46,20 +58,10 @@ class CreateNewWikiModule extends Module {
 		asort($this->aLanguages);
 		
 		// facebook callback overwrite on login.  CreateNewWiki re-uses current login stuff.
-		$fbOnLoginJsOverride = 'WikiBuilder.fbLoginCallback()';
-		
-		// fbconnected means user has gone through step 2 to login via facebook.  
-		// Therefore, we need to reload some values and start at the step after signup/login
-		$fbconnected = $wgRequest->getVal('fbconnected');
-		if(!empty($fbconnected) && $fbconnected === '1') {
-			$this->executeLoadState();
-			$this->currentStep = 'DescWiki';
-		} else {
-			$this->currentStep = '';
-		}
+		$fbOnLoginJsOverride = 'WikiBuilder.fbLoginCallback();';
 		
 		// If not english, skip Wikia Plus signup step
-		$this->skipWikiaPlus = $this->wikiLanguage != 'en';
+		$this->skipWikiaPlus = $this->params['wikiLanguage'] != 'en';
 		
 		wfProfileOut( __METHOD__ );
 	}
@@ -96,9 +98,12 @@ class CreateNewWikiModule extends Module {
 		wfProfileOut(__METHOD__);
 	}
 	
+	/**
+	 * Creates wiki
+	 */
 	public function executeCreateWiki() {
 		wfProfileIn(__METHOD__);
-		global $wgRequest;
+		global $wgRequest, $wgDevelDomains;
 		
 		$params = $wgRequest->getArray('data');
 		
@@ -114,7 +119,9 @@ class CreateNewWikiModule extends Module {
 			$createWiki = new CreateWiki($params['wikiName'], $params['wikiDomain'], $params['wikiLanguage'], $params['wikiCategory']);
 			$createWiki->create();
 			$this->status = 'ok';
-			$this->cityId = $createWiki->getWikiInfo('cityId');
+			$this->cityId = $createWiki->getWikiInfo('city_id');
+			$finishCreateTitle = GlobalTitle::newFromText("FinishCreate", NS_SPECIAL, $this->cityId);
+			$this->finishCreateUrl = empty($wgDevelDomains) ? $finishCreateTitle->getFullURL() : str_replace('.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL());
 		}
 		
 		
@@ -122,47 +129,33 @@ class CreateNewWikiModule extends Module {
 	}
 	
 	/**
-	 * Saves current form values into session.
-	 * Currently, only for the first step.  May need to expand this to all steps later.
+	 * Saves anything in the data in the request into session.
+	 * It overwrites any existing values if the keys are the same.
 	 */
 	public function executeSaveState() {
 		wfProfileIn(__METHOD__);
 		global $wgRequest, $wgCookieDomain;
 		
-		$params = $_SESSION['wsCreateNewWikiParams'];
-		$params = empty($params) ? array() : $params;
+		$params = empty($_SESSION['wsCreateNewWikiParams']) ? array() : $_SESSION['wsCreateNewWikiParams'];
 		
 		$data = $wgRequest->getArray('data');
 		
 		foreach ($data as $key => $value ) {
 			$params[$key] = $value;
 		}
-		
-		/*
-		$params['name'] = $wgRequest->getVal('name');
-		$params['domain'] = $wgRequest->getVal('domain');
-		$params['lang'] = $wgRequest->getVal('lang');
-		*/
-		
+
 		$_SESSION['wsCreateNewWikiParams'] = $params;
 
 		wfProfileOut(__METHOD__);
 	}
 	
 	/**
-	 * Loads form values from session.
+	 * Loads params from session.
 	 */
 	public function executeLoadState() {
 		wfProfileIn(__METHOD__);
 		if(!empty($_SESSION['wsCreateNewWikiParams'])) {
 			$this->params =  $_SESSION['wsCreateNewWikiParams'];
-			
-			/*
-			$this->wikiName = $params['wikiName'];
-			$this->wikiDomain = $params['wikiDomain'];
-			$this->wikiLanguage = $params['wikiLang'];
-			*/
-			
 		}
 		wfProfileOut(__METHOD__);
 	}
@@ -178,7 +171,6 @@ class CreateNewWikiModule extends Module {
 		
 		$cityId = $wgRequest->getVal('cityId');
 		
-		// XSS security needed here
 		if (method_exists('SpecialWikiPayment', 'fetchPaypalToken')) {
 			$data = SpecialWikiPayment::fetchPaypalToken($cityId);
 			if (empty($data['url'])) {
@@ -204,37 +196,33 @@ class CreateNewWikiModule extends Module {
 		wfProfileOut(__METHOD__);
 	}
 	
-	public function executeSaveSettings() {
-		global $wgRequest;
-
-		wfProfileIn( __METHOD__ );
-
-		$data = $wgRequest->getArray( 'settings' );
-		$cityId = $wgRequest->getVal( 'cityId' );
+	public function executeFinishCreate() {
+		global $wgOut;
+		$this->executeLoadState();
 		
+		$mainPage = wfMsgForContent( 'mainpage' );
+		
+		// set description on main page
+		if(!empty($this->params['wikiDescription'])) {
+			$mainTitle = Title::newFromText($mainPage);
+			$mainId = $mainTitle->getArticleID();
+			$mainArticle = Article::newFromID($mainId);
+			$firstSectionText = $mainArticle->getSection($mainArticle->getRawText(), 1);
+			//$mainArticle->updateArticle($this->params['wikiDescription'].$mainText, '', false, false);
+			$matches = array();
+			if(preg_match('/={2,3}[^=]+={2,3}/', $firstSectionText, $matches)) {
+				$newSectionText = $mainArticle->replaceSection(1, "{$matches[0]}\n{$this->params['wikiDescription']}");
+			} else {
+				$newSectionText = $mainArticle->replaceSection(1, $this->params['wikiDescription']);
+			}
+			$mainArticle->updateArticle($newSectionText, '', false, false);
+		}
+		
+		// set theme
 		$themeSettings = new ThemeSettings();
-		$themeSettings->saveSettings($data, $cityId);
-
-		wfProfileOut( __METHOD__ );
-	}
-	
-	public function executeSaveMainPageDescription() {
-		global $wgRequest;
-		wfProfileIn( __METHOD__ );
+		$themeSettings->saveSettings($this->params);
 		
-		$cityId = $wgRequest->getVal( 'cityId' );
-		$desc = $wgRequest->getVal( 'desc' );
-		
-		//$mainpage = GlobalTitle::newFromText('Mainpage', NS_MEDIAWIKI, $cityId);
-		$mainpage = GlobalTitle::newFromText('A1', NS_MAIN, $cityId);
-		$id = $mainpage->getLastEdit();
-		/*
-		$a = Article::newFromId($id);
-		$this->cont = $a->getRawText();
-		$this->status = 'ok';
-		*/
-		
-		wfProfileOut( __METHOD__ );
+		$wgOut->redirect($mainPage.'?wiki-welcome=1');
 	}
 
 }

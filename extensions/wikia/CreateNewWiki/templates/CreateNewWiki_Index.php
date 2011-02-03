@@ -140,6 +140,7 @@
 			<?= wfRenderModule('ThemeDesigner', 'ThemeTab') ?>
 			<p class="instruction creative"><?= wfMsg('cnw-theme-instruction') ?></p>
 			<nav>
+				<span class="submit-error finish-status"></span>
 				<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next">
 			</nav>
 		</li>
@@ -151,6 +152,7 @@
 				<input type="button" value="<?= wfMsg('cnw-upgrade-now') ?>" class="upgrade">
 			</div>
 			<nav>
+				<span class="submit-error finish-status"></span>
 				<input type="button" value="<?= wfMsg('cnw-upgrade-decline') ?>" class="next">
 			</nav>
 		</li>

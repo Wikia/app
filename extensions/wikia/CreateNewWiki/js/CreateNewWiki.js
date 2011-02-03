@@ -18,6 +18,8 @@ var WikiBuilder = {
 	createStatus: false,
 	themestate: false,
 	cityId: false,
+	finishCreateUrl: false,
+	retryGoto: 0,
 	init: function() {
 		// pre-cache
 		WikiBuilder.wb = $('#CreateNewWiki');
@@ -35,13 +37,19 @@ var WikiBuilder = {
 		WikiBuilder.wikiLanguage = $('#NameWiki select[name=wiki-language]');
 		WikiBuilder.wikiCategory = $('#DescWiki select[name=wiki-category]');
 		WikiBuilder.descWikiSubmitError = $('#DescWiki .submit-error');
+		WikiBuilder.nextButtons = WikiBuilder.wb.find('nav .next');
+		WikiBuilder.finishSpinner = $('#CreateNewWiki .finish-status');
 		
 		// Name Wiki event handlers
 		$('#NameWiki input.next').click(function() {
 			if (!WikiBuilder.wikiDomain.val() || !WikiBuilder.wikiName.val() || $('#NameWiki .error-msg').html()) {
 				WikiBuilder.nameWikiSubmitError.show().html(WikiBuilderCfg['name-wiki-submit-error']).delay(3000).fadeOut();
 			} else {
-				WikiBuilder.saveState();
+				WikiBuilder.saveState({
+					wikiName: WikiBuilder.wikiName.val(),
+					wikiDomain: WikiBuilder.wikiDomain.val(),
+					wikiLang: WikiBuilder.wikiLanguage.find('option:selected').val()
+				});
 				if ($('#Auth')) {
 					AjaxLogin.init($('#AjaxLoginLoginForm form:first'));
 				}
@@ -118,9 +126,12 @@ var WikiBuilder = {
 			var val = WikiBuilder.wikiCategory.find('option:selected').val();
 			if(val) {
 				// call create wiki ajax
-				//WikiBuilder.saveMainPageDescription();
-				WikiBuilder.createWiki();
-				WikiBuilder.transition('DescWiki', true, '+');
+				WikiBuilder.saveState({
+					wikiDescription: $('#Description').val()
+				}, function() {
+					WikiBuilder.createWiki();
+					WikiBuilder.transition('DescWiki', true, '+');
+				});
 			} else {
 				WikiBuilder.descWikiSubmitError.show().html(WikiBuilderCfg['desc-wiki-submit-error']).delay(3000).fadeOut();
 			}
@@ -272,32 +283,30 @@ var WikiBuilder = {
 		
 	},
 	
-	saveState: function () {
+	saveState: function (data, callback) {
 		$.post(wgScript, {
 			action: 'ajax',
 			rs: 'moduleProxy',
 			moduleName: 'CreateNewWiki',
 			actionName: 'SaveState',
 			outputType: 'data',
-			data: {
-				wikiName: WikiBuilder.wikiName.val(),
-				wikiDomain: WikiBuilder.wikiDomain.val(),
-				wikiLang: WikiBuilder.wikiLanguage.find('option:selected').val()
-			}
+			data: data
 		}, function(res) {
-			
+			if(callback) {
+				callback();
+			}
 		});
 	},
 	
 	upgradeToWikiaPlus: function() {
-		$.postJSON(wgScript,
+		$.post(wgScript,
 			{
 				action: 'ajax',
 				rs: 'moduleProxy',
 				moduleName: 'CreateNewWiki',
 				actionName: 'UpgradeToPlus',
 				outputType: 'data',
-				cityId: '184073'
+				cityId: WikiBuilder.cityId
 			},
 			function(res) {
 				if (res.status == 'ok') {
@@ -309,25 +318,18 @@ var WikiBuilder = {
 		);
 	}, 
 	
-	saveMainPageDescription: function() {
-		$.postJSON(wgScript,
-			{
-				action: 'ajax',
-				rs: 'moduleProxy',
-				moduleName: 'CreateNewWiki',
-				actionName: 'SaveMainPageDescription',
-				outputType: 'data',
-				cityId: '184073',
-				desc: $('#Description').val()
-			},
-			function(res) {
-				console.log(res);
-			}
-		);
-	},
-	
 	gotoMainPage: function() {
-		location.href = 'http://hyuntest91.hyun.wikia-dev.com/wiki/Main_Page?wiki-welcome=1';
+		WikiBuilder.nextButtons.attr('disabled', true);
+		if(WikiBuilder.finishCreateUrl) {
+			location.href = WikiBuilder.finishCreateUrl;
+		} else if (WikiBuilder.retryGoto < 300) {
+			if(!WikiBuilder.finishSpinner.data('spinning')) {
+				WikiBuilder.finishSpinner.data('spinning', 'true');
+				WikiBuilder.showIcon(WikiBuilder.finishSpinner, 'spinner');
+			}
+			WikiBuilder.retryGoto++;
+			setTimeout(WikiBuilder.gotoMainPage, 200);
+		}
 	},
 	
 	createWiki: function() {
@@ -346,10 +348,15 @@ var WikiBuilder = {
 				}
 			},
 			function(res) {
-				Wikibuilder.cityId = res.cityId;
+				WikiBuilder.cityId = res.cityId;
+				WikiBuilder.finishCreateUrl = res.finishCreateUrl;
 				WikiBuilder.createStatus = res.status;
 			}
 		);
+	}, 
+	
+	fbLoginCallback: function() {
+		alert('foo');
 	}
 }
 
@@ -384,16 +391,10 @@ ThemeDesigner.set = function(setting, newValue) {
 	ThemeDesigner.settings = t;
 };
 ThemeDesigner.save = function() {
-	$.post(wgScript, {
-			action: 'ajax',
-			rs: 'moduleProxy',
-			moduleName: 'CreateNewWiki',
-			actionName: 'SaveSettings',
-			outputType: 'data',
-			settings: ThemeDesigner.settings,
-			cityId: '184073'
-		}, function(data) {
-			WikiBuilder.themeState = 'saved';
-		},
-		'json');
+	WikiBuilder.saveState(ThemeDesigner.settings);
 };
+
+function sendToConnectOnLogin(){
+	wgPageQuery += encodeURIComponent('&fbreturn=1');
+	sendToConnectOnLoginForSpecificForm("");
+}
