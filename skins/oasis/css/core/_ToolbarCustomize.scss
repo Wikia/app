@@ -1,4 +1,5 @@
 @import "color";
+@import "../mixins/clearfix";
 @import "../mixins/menus";
 @import "../mixins/gradient";
 
@@ -12,6 +13,7 @@
 }
 
 .MyToolsConfiguration {
+	@include clearfix;
 
 	.column {
 		position: relative;
@@ -227,9 +229,10 @@
 	}
 	
 	.buttons {
+		@include clearfix;
 		clear: both;
-		float: left;
 		margin-left: 10px;
+		*margin-left: 5px;
 	}
 
 }

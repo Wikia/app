@@ -47,10 +47,11 @@
 				+' data-default-caption="'+$.htmlentities(item.defaultCaption)+'"'
 				+' data-caption="'+$.htmlentities(item.caption)+'"'
 				+(cl?' class="'+cl+'"':'')+'>';
-			if (type == 'menu') 
+			if (type == 'menu') {
 				html += '<img src="'+wgBlankImgUrl+'" class="folder-icon" height="16" width="16" />';
+			}
 			html += '<span class="name">'+$.htmlentities(item.caption)+'</span>';
-			if (!item.items) {
+			if (type == 'item') {
 				html += ''
 				+'<img src="'+wgBlankImgUrl+'" class="sprite edit-pencil">'
 				+'<img src="'+wgBlankImgUrl+'" class="sprite trash">'
@@ -96,7 +97,7 @@
 		},
 		
 		update: function() {
-			this.updateLevels;
+			this.updateLevels();
 		},
 		
 		add: function(item,level) {

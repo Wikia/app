@@ -40,7 +40,7 @@
 			background-image: url(/skins/oasis/images/checkers.png); /* $wgCdnStylePath */
 			display: block;
 			list-style: none;
-			padding-right: 30px;
+			padding: 0 10px;
 			z-index: 1000;	/* IE7 */
 			>li {
 				border-left: 1px solid mix($color-header-text, $color-header, 20%);
