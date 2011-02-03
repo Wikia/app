@@ -18,6 +18,9 @@ class SDFilter {
 	var $input_type = null;
 	var $allowed_values;
 	var $possible_applied_filters = array();
+	// wikia change
+	var $dbr = false;
+	var $dbw = false;
 
 	static function load( $filter_name ) {
 		$f = new SDFilter();
@@ -84,7 +87,7 @@ class SDFilter {
 	function getTimePeriodValues() {
 		$possible_dates = array();
 		$property_value = $this->escaped_property;
-		$dbr = wfGetDB( DB_SLAVE, 'smw' );
+		$dbr = $this>getDB( DB_SLAVE );
 		if ( $this->time_period == wfMsg( 'sd_filter_month' ) ) {
 			$fields = "YEAR(value_xsd), MONTH(value_xsd)";
 		} else {
@@ -128,7 +131,7 @@ END;
 
 		$possible_values = array();
 		$property_value = $this->escaped_property;
-		$dbr = wfGetDB( DB_SLAVE, 'smw' );
+		$dbr = $this->getDB( DB_SLAVE );
 		if ( $this->is_relation ) {
 			$property_table_name = $dbr->tableName( 'smw_rels2' );
 			$property_table_nickname = "r";
@@ -175,7 +178,7 @@ END;
 	 * and for getting the set of 'None' values.
 	 */
 	function createTempTable() {
-		$dbr = wfGetDB( DB_SLAVE, 'smw' );
+		$dbr = $this->getDB( DB_SLAVE );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		if ( $this->is_relation ) {
 			$table_name = $dbr->tableName( 'smw_rels2' );
@@ -205,10 +208,32 @@ END;
 	 * Deletes the temporary table.
 	 */
 	function dropTempTable() {
-		$dbr = wfGetDB( DB_SLAVE, 'smw' );
+		$dbr = $this->getDB( DB_SLAVE );
 		// DROP TEMPORARY TABLE would be marginally safer, but it's
 		// not supported on all RDBMS's.
 		$sql = "DROP TABLE semantic_drilldown_filter_values";
 		$dbr->query( $sql );
+	}
+
+	/**
+	 * get database handler
+	 * @author Krzysztof Krzyżaniak (eloy)
+	 *
+	 * @param string $type -- database type DB_SLAVE or DB_MASTER
+	 */
+	function getDB( $type ) {
+
+		if( $type == DB_MASTER ) {
+			if( !$this->dbw ) {
+				$this->dbw = wfGetDB( DB_MASTER );
+			}
+		}
+		else {
+			if( !$this->dbr ) {
+				$this->dbr = wfGetDB( DB_SLAVE, 'smw');
+			}
+		}
+
+		return ( $type == DB_MASTER ) ? $this->dbw : $this->dbr;
 	}
 }
