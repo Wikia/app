@@ -532,12 +532,13 @@ $messages['sl'] = array(
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'whereisextension' => 'Где је екстензија',
-	'whereisextension-submit' => 'Претрага',
-	'whereisextension-list' => 'Листа викија са траженим критеријима',
+	'whereisextension' => 'Где је прикључак',
+	'whereisextension-submit' => 'Претражи',
+	'whereisextension-list' => 'Списак викија са поклапањима',
 	'whereisextension-isset' => 'је подешена на',
 	'whereisextension-filter' => 'Филтар',
 	'whereisextension-all-groups' => 'Све групе',

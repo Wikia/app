@@ -568,3 +568,13 @@ $messages['te'] = array(
 	'automaticwikiadoption-know-more-header' => 'మరింత తెలుసుకోవాలనుకుంటున్నారా?',
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'automaticwikiadoption' => '制动维基领养',
+	'automaticwikiadoption-header' => '领养这个维基',
+	'automaticwikiadoption-button-adopt' => '现在领养',
+	'automaticwikiadoption-log-reason' => '制动维基领养',
+);
+

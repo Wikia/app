@@ -279,11 +279,14 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Per
+ * @author Tobulos1
  */
 $messages['sv'] = array(
 	'taskmanager' => 'Visa och hantera bakgrundsuppgifter',
 	'taskmanager_title' => 'Visa och hantera bakgrundsuppgifter',
 	'taskmanager_tasklist' => 'Återgå till uppgiftslistan',
+	'right-taskmanager' => 'Kan visa bakgrundsaktiviteter',
+	'right-taskmanager-action' => 'Kan hantera bakgrundsaktiviteter',
 );
 
 /** Telugu (తెలుగు)

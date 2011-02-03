@@ -157,7 +157,7 @@ $messages['sv'] = array(
 	'unsubscribe-confirm-button' => 'Ja, jag är säker',
 	'unsubscribe-working' => 'Avslutar prenumerationen $1 {{PLURAL:$1|konto|konton}} för $2',
 	'unsubscribe-working-problem' => 'problem med att läsa användarinformationen för: $1',
-	'unsubscribe-working-done' => 'Komplett.',
+	'unsubscribe-working-done' => 'Slutfört.',
 );
 
 /** Ukrainian (Українська)

@@ -587,6 +587,40 @@ $messages['ru'] = array(
 (Если у вас уже есть учётная запись, вы можете <a href="#">войти</a> как обычно, но вы не сможете редактировать.)</p>',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'comboajaxlogin-desc' => 'En dynamisk box som tillåter användare att logga in, påminna lösenord och registrera användare',
+	'comboajaxlogin-createlog' => 'Logga in eller skapa ett konto',
+	'comboajaxlogin-actionmsg' => 'För att utföra denna åtgärd måste du först logga in eller skapa ett konto',
+	'comboajaxlogin-actionmsg-protected' => 'För att utföra denna åtgärd måste du först logga in eller skapa ett konto.',
+	'comboajaxlogin-connectmarketing' => '<h1>Anslut dina konton</h1>
+<ul>
+<li>Behåll ditt nuvarande användarnamn, din historik, dina redigeringar... ingenting förändras förutom sättet du loggar in</li>
+<li>Dela dina aktiviteter på Wikia med dina vänner på Facebook</li>
+<li>Fullständig kontroll över vad som publiceras</li>
+</ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Logga in med Facebook Connect</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Anslut ditt Wikia konto till Facebook</h1>
+<ul>
+<li>Behåll ditt nuvarande användarnamn, din historik, dina redigeringar... ingenting förändras förutom sättet du loggar in</li>
+<li>Dela dina aktiviteter på Wikia med dina vänner på Facebook, med fullständig kontroll över vad som publiceras</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Tillbaka',
+	'comboajaxlogin-connectmarketing-forward' => 'Kom igång &raquo;',
+	'comboajaxlogin-connectdirections' => 'Ange ditt användarnamn och lösenord på Wikia här - vi kommer magiskt ansluta ditt Wikia- och Facebook-konto i bakgrunden.
+
+När du är klar, kan du logga in enkelt och snabbt med hjälp av någon Facebook Connect knapp.',
+	'comboajaxlogin-post-not-understood' => 'Det uppstod ett fel i denna form.
+Försök igen eller [[Special:Contact|anmäl det här]].',
+	'comboajaxlogin-readonlytext' => '<h2>Tyvärr!</h2>
+<p>Du kan inte skapa ett konto för tillfället - vi borde vara igång igen inom kort. Här är vad som händer:<br /><em>$1</em></p>
+<p>Kolla in <a href="http://twitter.com/wikia">Twitter</a> eller <a href="http://facebook.com/wikia">Facebook</a> för mer information.
+<br />
+(Om du redan har ett konto kan du <a href="#">logga in</a> som vanligt, men du kommer inte kunna redigera.)</p>',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

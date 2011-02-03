@@ -2069,6 +2069,18 @@ $messages['ru'] = array(
 <div style="font-style: italic; font-size: 120%;">-- Команда Викиа</div>',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'founderemails-email-user-registered-subject' => 'Någon registrerade ett konto på din wiki!',
+	'founderemails-email-user-registered-body' => 'Hej $FOUNDERNAME,
+
+Det ser ut som $USERNAME har registrerat ett konto på din wiki! Varför går du inte och besöker dem på deras diskussionssida $USERTALKPAGEURL och säger hej?
+
+-- The Wikia Team',
+);
+
 /** Tamil (தமிழ்)
  * @author TRYPPN
  */

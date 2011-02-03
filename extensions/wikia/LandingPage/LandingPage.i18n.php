@@ -176,10 +176,10 @@ $messages['pl'] = array(
 $messages['pms'] = array(
 	'landingpage' => 'Bin ëvnù su Wikia',
 	'landingpage-start-exploring' => 'Pront a parte a esploré?',
-	'landingpage-start-exploring-text' => 'Serca tò argoment favorì o varda quàiche comunità favorìe sì sota.',
-	'landingpage-readfaq' => 'Custion? Les nòst FAQ &gt;',
-	'landingpage-text' => "A Wikia it peule <strong>coleghete con përson-e</strong> ch'a condivido toe <strong>passion e antëress</strong>. Treuva tò grup, fà coment e modìfiche, ëdcò <strong>ancamin-a tò sit web</strong> e toa comunità.",
-	'landingpage-buttons-learn-more' => 'Ampara ëd pi &gt;',
+	'landingpage-start-exploring-text' => "ch'a sërca ij sò argoment favorì o ch'a varda lòn che la comunità a preferiss sì-sota.",
+	'landingpage-readfaq' => "Dle chestion? Ch'a lesa nòstre FAQ &gt;",
+	'landingpage-text' => "An Wikia a peul <strong>comuniché con dla gent</strong> ch'a partagia soe <strong>passion e anteresse</strong>. Ch'a treuva soa companìa, ch'a fasa dij coment e dle modìfiche, a peul fin-a <strong>anandié sò sit an sl'aragnà</strong> e soa comunità.",
+	'landingpage-buttons-learn-more' => 'Amprende ëd pi &gt;',
 );
 
 /** Portuguese (Português)

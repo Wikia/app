@@ -648,14 +648,14 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'multilookupnotspecify' => 'Нисте још специфицирали ИП',
+	'multilookupnotspecify' => 'Још увек нисте унели IP адресу.',
 	'multilookupnext' => 'следеће',
-	'multilookupprevious' => 'Претходна',
+	'multilookupprevious' => 'претходно',
 	'multilookupnbrresult' => 'Број резултата:',
-	'multilookupinvalidresults' => 'Неправилни резултати',
-	'multilookupnoresultfound' => 'Нема резултата претраге',
+	'multilookupinvalidresults' => 'Неисправни резултати!',
+	'multilookupnoresultfound' => 'Нема резултата!',
 	'multilookupwiki' => 'Вики',
-	'multilookupdetails' => 'погледај детаље',
+	'multilookupdetails' => 'Прикажи детаље',
 );
 
 /** Swahili (Kiswahili)

@@ -110,13 +110,15 @@ $messages['no'] = array(
 	'stafflog-piggybacklogoutmsg' => '$1 operasjon som annen bruker - bruker $2 logger ut fra $3-konto',
 );
 
-/** Piedmontese (Piemontèis) */
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
 $messages['pms'] = array(
 	'stafflog-desc' => "Argistrassion sentralisà për l'echip",
 	'stafflog' => 'StaffLog',
 	'stafflog-blockmsg' => "$1 $2 a l'ha provà a bloché l'utent ëd l'echip $3 an sla wiki $4. Rason: $5",
-	'stafflog-piggybackloginmsg' => "$1 Piggyback - l'utent $2 a l'é intrà com $3",
-	'stafflog-piggybacklogoutmsg' => "$1 Piggyback - l'utent $2 a l'é surtì dal cont $3",
+	'stafflog-piggybackloginmsg' => "$1 Conession mùltipla - l'utent $2 a l'é intrà com $3",
+	'stafflog-piggybacklogoutmsg' => "$1 Conession mùltipla - l'utent $2 a l'é surtì dal cont $3",
 );
 
 /** Portuguese (Português) */

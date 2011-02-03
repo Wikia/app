@@ -447,6 +447,28 @@ $messages['sl'] = array(
 	'sponsorpage-save' => 'Shrani',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'sponsorpage-desc' => 'Tillåter användare att köpa sponsring för sidor',
+	'sponsor-header' => '<h2>Externa Sponsorlänkar</h2>',
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Sponsra denna sida</a></li>',
+	'sponsor-preview-prompt' => 'Såhär kommer din sponsring att se ut - klicka på "Redigera" för att gå tillbaka och göra ändringar, eller "Spara" för att spara den och gå till PayPal.',
+	'sponsor-preview-errors' => 'Det finns fel i din ansökan:',
+	'sponsor-form-url' => 'URL-adressen till den sponsrade webbplatsen (din webbplats):',
+	'sponsor-form-linktext' => 'Text som du vill att ska visas i länken:',
+	'sponsor-form-additionaltext' => 'Texten som ska visas under din länk:',
+	'sponsor-form-page' => 'Sida till sponsor:',
+	'sponsor-form-price' => 'Sponsringsbelopp:',
+	'sponsor-form-email' => 'Din e-postadress:',
+	'sponsor-form-thanks' => 'Tack för din sponsring!',
+	'sponsor-price-45yr' => '$45 per år',
+	'sponsor-price-5mo' => '$5 per månad',
+	'sponsorpage-edit' => 'Redigera',
+	'sponsorpage-save' => 'Spara',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

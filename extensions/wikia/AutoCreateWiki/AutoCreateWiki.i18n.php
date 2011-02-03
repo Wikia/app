@@ -1685,13 +1685,22 @@ $messages['ig'] = array(
 
 /** Italian (Italiano)
  * @author Gifh
+ * @author Minerva Titani
  */
 $messages['it'] = array(
 	'autocreatewiki' => 'Crea un nuovo wiki',
-	'autocreatewiki-page-title-default' => 'Crea un nuovo wiki',
+	'autocreatewiki-page-title-default' => 'Crea una nuova wiki',
 	'autocreatewiki-birthdate' => 'Data di nascita:',
 	'autocreatewiki-create-account' => 'Crealo ora',
 	'autocreatewiki-error' => 'errore',
+	'autocreatewiki-haveaccount-question' => 'Hai già un account Wikia?',
+	'autocreatewiki-info-email-address' => 'Il tuo indirizzo e-mail non viene mai mostrato ad alcun utente di Wikia.',
+	'autocreatewiki-empty-field' => 'Si prega di compilare questo campo.',
+	'autocreatewiki-invalid-wikiname' => 'Il nome non può contenere caratteri speciali (come $ o @) e non può essere vuoto',
+	'autocreatewiki-name-too-short' => 'Questo nome è troppo breve. Per favore scegli un nome con almeno 3 caratteri.',
+	'autocreatewiki-name-too-long' => 'Questo nome è troppo lungo. Per favore scegli un nome con un massimo di 50 caratteri.',
+	'autocreatewiki-similar-wikis' => 'Qui sotto trovi le wiki già create su questo argomento. Ti consigliamo di contribuire a una di queste.',
+	'autocreatewiki-blocked-username' => 'Non puoi creare un account.',
 	'autocreatewiki-category-other' => 'Altro',
 	'autocreatewiki-congratulation' => 'Congratulazioni!',
 	'autocreatewiki-protect-reason' => "parte dell'interfaccia ufficiale",
@@ -2656,7 +2665,7 @@ $messages['ps'] = array(
 	'autocreatewiki-birthdate' => 'د زېږون نېټه:',
 	'autocreatewiki-blurry-word' => 'تته ويکه:',
 	'autocreatewiki-remember' => 'ما په ياد لره',
-	'autocreatewiki-create-account' => 'يو کارن-حساب جوړول',
+	'autocreatewiki-create-account' => 'يو ګڼون جوړول',
 	'autocreatewiki-done' => 'ترسره شو',
 	'autocreatewiki-error' => 'تېروتنه',
 	'autocreatewiki-haveaccount-question' => 'آيا تاسې له پخوا نه په ويکييا کې يو کارن-حساب لرۍ؟',

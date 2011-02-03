@@ -207,6 +207,14 @@ $messages['ru'] = array(
 	'wikiarelatedpages-heading' => 'Читать больше',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'wikiarelatedpages-desc' => 'Adds a list with related pages to pages',
+	'wikiarelatedpages-heading' => 'Läs mer',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

@@ -85,3 +85,10 @@ $messages['no'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'performancestat-total' => 'Totalt: $1s',
+);
+

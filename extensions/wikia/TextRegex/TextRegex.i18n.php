@@ -714,29 +714,59 @@ $messages['ru'] = array(
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'textregex-page-title' => 'листа непожељних израза',
-	'textregex-currently-blocked' => "'''тренутно блокиране фразе:'''",
-	'textregex_nocurrently-blocked' => 'Нису нађене блокиране фразе',
-	'textregex-addedby-user' => 'додао $1 на $2',
-	'textregex-unblock-succ' => 'Деблокирање успешно',
-	'textregex-block-succ' => 'Блокирање је успело',
-	'textregex-unblock-message' => "Фраза '''$1''' уклоњена је са списак непожељних израза",
-	'textregex-block-message' => "Фраза '''$1''' додана је на листу непожељних порука",
-	'textregex-regex-block' => 'Фраза за блокирање:',
+	'textregex-page-title' => 'Списак непожељних израза',
+	'textregex-currently-blocked' => "'''Забрањене фразе:'''",
+	'textregex_nocurrently-blocked' => 'Нема забрањених фраза',
+	'textregex-addedby-user' => 'додао/-ла $1 у $2',
+	'textregex-unblock-succ' => 'Приступ је враћен',
+	'textregex-block-succ' => 'Приступ је забрањен',
+	'textregex-unblock-message' => "Израз '''$1''' је уклоњен са списка непожељних фраза.",
+	'textregex-block-message' => "Израз '''$1''' је додат на списак непожељних фраза.",
+	'textregex-regex-block' => 'Забрањена фраза:',
 	'textregex-submit-regex' => 'Додај фразу',
-	'textregex-empty-regex' => 'Наведите фразу коју треба блокирати.',
-	'textregex-already-added' => '$1" је већ блокирано',
-	'textregex-nodata-found' => 'Нису нађени подаци',
-	'textregex-select-subpage' => 'Одабери један списак фраза',
-	'textregex-select-default' => '-- одабери --',
-	'textregex-create-subpage' => 'или направи нови списак',
-	'textregex-select-regexlist' => 'Повратак на списак',
-	'textregex-invalid-regexid' => 'неважећа фраза',
-	'textregex-phrase-statistics' => "Статистика за \"'''\$1'''\"  фразу (број појављивања: \$2)",
+	'textregex-empty-regex' => 'Унесите фразу коју желите да забраните.',
+	'textregex-already-added' => '„$1“ је већ додато',
+	'textregex-nodata-found' => 'Подаци нису пронађени',
+	'textregex-select-subpage' => 'Изаберите један од спискова фраза:',
+	'textregex-select-default' => 'изабери',
+	'textregex-create-subpage' => 'или направите нови списак:',
+	'textregex-select-regexlist' => 'пређи на списак',
+	'textregex-invalid-regexid' => 'Неисправна фраза.',
+	'textregex-phrase-statistics' => "Статистика за „'''$1'''“  фразу (број појављивања: $2)",
 	'textregex-return-mainpage' => '[{{SERVER}}$1 повратак на списак]',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'textregex-page-title' => 'Lista över oönskade uttryck',
+	'textregex-error-unblocking' => 'Fel med avblockeringen ($1).
+Försök igen.',
+	'textregex-currently-blocked' => "'''Nuvarande blockerande fraser:'''",
+	'textregex_nocurrently-blocked' => 'Inga blockerade fraser hittades',
+	'textregex-addedby-user' => 'lades till av $1 den $2',
+	'textregex-unblock-succ' => 'Avblockering lyckades',
+	'textregex-block-succ' => 'Blockering lyckades',
+	'textregex-unblock-message' => "Fras '''$1''' har tagits bort från de oönskade uttrycken.",
+	'textregex-block-message' => "Fras '''$1''' ha lagts till de oönskade uttrycken.",
+	'textregex-regex-block' => 'Fras att blockera:',
+	'textregex-submit-regex' => 'Lägg till fras',
+	'textregex-empty-regex' => 'Ge en bra fras att blockera.',
+	'textregex-invalid-regex' => 'Ogiltig regex.',
+	'textregex-already-added' => '"$1" är redan tillagd',
+	'textregex-nodata-found' => 'Hittade ingen data',
+	'textregex-stats-record' => "ordet ''$1'' användes av $2 den $3 (''kommentar: $4'')",
+	'textregex-select-subpage' => 'Välj en lista av fraser:',
+	'textregex-select-default' => '-- välj --',
+	'textregex-create-subpage' => 'eller skapa en ny lista:',
+	'textregex-select-regexlist' => 'gå till listan',
+	'textregex-invalid-regexid' => 'Ogiltig fras.',
+	'textregex-phrase-statistics' => "Statistik för \"'''\$1'''\" fras (antal poster: \$2)",
 );
 
 /** Tagalog (Tagalog)

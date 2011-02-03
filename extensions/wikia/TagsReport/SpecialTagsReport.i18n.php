@@ -399,19 +399,31 @@ $messages['ru'] = array(
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'tagsreport' => 'Извештај ознака',
 	'tagsreporttitle' => 'Извештај ознака',
-	'tagsreportselecttag' => 'Изаберите ознаку:',
+	'tagsreportselecttag' => 'Избор ознаке:',
 	'tagsreportgo' => 'Прикажи',
-	'tagsreportnotspecify' => 'Још увек нисте изабрали ниједну посебну ознаку',
-	'tagsreportnoresults' => 'Нема резултата претраге',
+	'tagsreportnotspecify' => 'Нисте изабрали ниједну посебну ознаку',
+	'tagsreportnoresults' => 'Нема резултата',
 	'tagsreportmainnspace' => 'Главно',
-	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|page|странице}})',
-	'tagsreportpagesfound' => 'Пронађено је <strong>$1</strong> страница које садрже посебне ознаке (dpl, youtube, итд.)',
-	'tagsreportgenerated' => 'Направљено на $1 $2',
+	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|страница|странице|страница}})',
+	'tagsreportpagesfound' => 'Пронађено је <strong>$1</strong> {{PLURAL:$1|страница|странице|страница}} које садрже посебну ознаку (DPL, YouTube, итд.)',
+	'tagsreportgenerated' => 'Створено $1 у $2',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'tagsreportgo' => 'Visa',
+	'tagsreportnoresults' => 'Inga resultat hittades',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|sida|sidor}})',
+	'tagsreportpagesfound' => 'Hittade <strong>$1</strong> {{PLURAL:$1|sida|sidor}}, som innehåller speciella taggar (DPL, YouTube, etc.)',
+	'tagsreportgenerated' => 'Skapad den $1, $2',
 );
 
 /** Swahili (Kiswahili)

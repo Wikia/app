@@ -209,6 +209,14 @@ $messages['ru'] = array(
 	'randomwiki' => 'Случайные Wiki',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'randomwiki-desc' => 'Lets users explore a random wiki',
+	'randomwiki' => 'Slumpmässig Wiki',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

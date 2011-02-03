@@ -68,10 +68,12 @@ $messages['no'] = array(
 	'signup' => 'Registrer',
 );
 
-/** Piedmontese (Piemontèis) */
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
 $messages['pms'] = array(
 	'signup-desc' => "A gionta dj'alias [[{{#Special:Signup}}]] për [[{{#Special:UserLogin}}/signup]]",
-	'signup' => 'Signup',
+	'signup' => 'Conession',
 );
 
 /** Portuguese (Português) */

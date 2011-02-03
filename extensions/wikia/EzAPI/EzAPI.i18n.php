@@ -11,6 +11,13 @@ $messages['qqq'] = array(
 	'ezapi-desc' => '{{desc}}',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'ezapi-desc' => 'Ongekompliseerde AJAX API module ontwikkeling',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -51,5 +58,12 @@ $messages['nl'] = array(
  */
 $messages['no'] = array(
 	'ezapi-desc' => 'Ukomplisert AJAX API-modulutvikling',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'ezapi-desc' => 'Módulo de desenvolvimento simplificado com a API AJAX',
 );
 

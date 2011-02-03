@@ -26,6 +26,16 @@ $messages['qqq'] = array(
 * $1 is the number of votes cast.',
 );
 
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'wikiapoll-question' => '$1 ?',
+	'wikiapoll-thanks-for-vote' => 'Trugarez !',
+	'wikiapoll-vote' => 'Votiñ !',
+	'wikiapoll-votes' => '({{PLURAL:$1|$1 vouezh|$1 mouezh}})',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */

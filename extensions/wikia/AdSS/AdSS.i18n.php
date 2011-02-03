@@ -1516,9 +1516,9 @@ $messages['pt'] = array(
 	'adss-form-additionaltext' => 'Texto para ser apresentado abaixo do link:',
 	'adss-form-type' => 'Tipo de patrocínio:',
 	'adss-form-page' => 'Página para patrocinar:',
-	'adss-form-banner' => 'O seu anúncio:',
+	'adss-form-banner' => 'Faça o upload do seu anúncio aqui:',
 	'adss-form-price' => 'Montante do patrocínio:',
-	'adss-form-shares' => 'Número de acções:',
+	'adss-form-shares' => 'Número de quotas:',
 	'adss-form-email' => 'Endereço de correio electrónico:',
 	'adss-form-password' => 'A sua palavra-chave:',
 	'adss-form-login-link' => 'Autentique-se',
@@ -1529,6 +1529,7 @@ $messages['pt'] = array(
 	'adss-form-auth-errormsg' => 'O seu correio electrónico ou a palavra-chave estão incorrectos.',
 	'adss-form-field-empty-errormsg' => 'Este campo não pode estar vazio',
 	'adss-form-non-existent-title-errormsg' => 'Esta página não existe',
+	'adss-form-banner-upload-errormsg' => 'Tem de seleccionar uma imagem para enviar',
 	'adss-form-pick-plan-errormsg' => 'Tem que seleccionar um plano',
 	'adss-form-pick-plan' => 'Escolha o seu plano',
 	'adss-form-site-plan-header' => 'Compre um link para a wiki toda',
@@ -1544,9 +1545,9 @@ $messages['pt'] = array(
 	'adss-form-page-plan-header' => 'Comprar um link só nesta página',
 	'adss-form-page-plan-description' => 'Isto permite-lhe direccionar uma mensagem personalizada para a melhor página para o seu produto por apenas $1 e pode cancelar em qualquer altura.',
 	'adss-form-page-plan-price' => '1 link custa $1',
-	'adss-form-banner-plan-header' => 'Compre um anúncio no cimo de todas as páginas',
-	'adss-form-banner-plan-description' => 'Ponha o seu anúncio em toda a wiki por um preço baixo.',
-	'adss-form-banner-plan-price' => '$1 por um anúncio',
+	'adss-form-banner-plan-header' => 'Compre uma quota dos anúncios gráficos 728x90 no topo da wiki',
+	'adss-form-banner-plan-description' => 'Obtenha uma quota dos anúncios de toda a wiki por um preço baixo.',
+	'adss-form-banner-plan-price' => '$1 por uma acção dos anúncios',
 	'adss-form-or' => '- ou -',
 	'adss-form-thanks' => 'Obrigado pelo seu patrocínio! O seu anúncio foi comprado e ficará visível após aprovação manual (dentro de 48 horas).
 
@@ -1558,6 +1559,11 @@ Agora [[Special:AdSS|compre]] outro anúncio!',
 	'adss-button-save-pay' => 'Gravar e pagar',
 	'adss-button-pay-paypal' => 'Pagar com PayPal',
 	'adss-button-select' => 'Seleccionar',
+	'adss-button-buy-now' => 'Comprar AGORA',
+	'adss-button-save' => 'Gravar',
+	'adss-button-cancel' => 'Cancelar',
+	'adss-button-yes' => 'Sim',
+	'adss-button-no' => 'Não',
 	'adss-preview-header' => 'Antevisão',
 	'adss-preview-prompt' => 'O aspecto do seu patrocínio será este - clique "editar" para voltar atrás e fazer alterações, ou "gravar" para gravar e ir para o PayPal.',
 	'adss-click-here' => 'Clique aqui',
@@ -1915,6 +1921,32 @@ $messages['uk'] = array(
 	'adss-button-no' => 'Ні',
 	'adss-type' => 'Тип',
 	'adss-status' => 'Статус',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'adss-form-email' => '您的电邮地址：',
+	'adss-form-password' => '您的密码：',
+	'adss-form-login-link' => '登入',
+	'adss-button-edit' => '编辑',
+	'adss-button-login' => '登入',
+	'adss-button-save-pay' => '保存于还钱',
+	'adss-button-pay-paypal' => '用 PayPal 来还钱',
+	'adss-button-select' => '选择',
+	'adss-button-buy-now' => '就在现在把它买了',
+	'adss-button-save' => '保存',
+	'adss-button-cancel' => '取消',
+	'adss-button-yes' => '是',
+	'adss-button-no' => '不是',
+	'adss-click-here' => '点击这里',
+	'adss-per-site' => '所有页面',
+	'adss-per-page' => '一页而已',
+	'adss-close' => '关闭',
+	'adss-cancel' => '取消',
+	'adss-manager-tab-adList' => '您的广告',
+	'adss-canceled' => '已取消',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬) */

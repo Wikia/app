@@ -591,20 +591,22 @@ $messages['si'] = array(
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'dump-database' => 'Похрањена база података',
-	'dump-database-info' => 'Похрањена база података се може користити као лична резерва (Wikia аутоматски ствара одвојене копије свих викија) или за роботе за одржавање',
-	'dump-database-curr-pages' => 'Садашње странице',
-	'dump-database-curr-pages-info' => '(ово издање је обично најбоље за сврху робота)',
+	'dump-database' => 'Исписи базе података',
+	'dump-database-info' => 'Исписи базе података се могу користити као лична резерва (Викија самостално ствара одвојене примерке свих викија) или за ботове за одржавање',
+	'dump-database-curr-pages' => 'Тренутне странице',
+	'dump-database-curr-pages-info' => '(ово издање је обично најбоље за ботове)',
 	'dump-database-full-pages' => 'Тренутне странице и историјат',
 	'dump-database-full-pages-info' => '(Упозорење: ова датотека је веома велика)',
 	'dump-database-request' => 'Затражи доградњу',
-	'dump-database-request-info' => '(Ђубриште се обично производи сваке недеље)',
+	'dump-database-request-info' => '(Исписи се обично стварају недељно)',
 	'dump-database-request-submit' => 'Пошаљи захтев',
-	'dump-database-request-requested' => 'Захтев за похрањивање базе података је послат',
-	'dump-database-info-more' => 'Молимо Вас, <a href="http://community.wikia.com/wiki/Help:Database_download">погледајте ово</a> за више информација',
+	'dump-database-request-already-submitted' => 'Испис је недавно затражен (пре мање од седам дана)',
+	'dump-database-request-requested' => 'Захтев за исписивање базе података је послат',
+	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Погледајте ово</a> за више информација',
 );
 
 /** Swedish (Svenska)

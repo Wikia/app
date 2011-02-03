@@ -172,6 +172,20 @@ $messages['ru'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Ошибка: Требуется тело страницы',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'contentfeeds-desc' => 'Ger riklig och aktuell information genom olika taggar eller "feeds"',
+	'contentfeeds-newimages-rss-title' => 'RSS Feed för {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Feed från $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Skapa dina första sidor!',
+	'contentfeeds-firstfewarticles-tag-title' => 'Rubrik',
+	'contentfeeds-firstfewarticles-tag-next' => 'Nästa',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Fel: Sidrubrik krävs',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fel: Sidans kropp krävs',
+);
+
 /** Swahili (Kiswahili) */
 $messages['sw'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Jina',

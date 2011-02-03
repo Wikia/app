@@ -196,6 +196,13 @@ $messages['ru'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Страница обсуждения создана автоматически',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'sharedhelp-autotalkcreate-summary' => 'Diskussionssidan skapas automatiskt',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

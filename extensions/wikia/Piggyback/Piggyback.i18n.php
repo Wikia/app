@@ -175,6 +175,18 @@ $messages['ru'] = array(
 	'piggyback-wronguser' => '$1 — не ваше имя пользователя.',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'piggyback-otherusername' => 'Annat användarnamn:',
+	'piggyback-nosuchuser' => 'Det finns ingen användare med namnet "$1".
+Användarnamn är skriftlägeskänsliga.
+Kontrollera stavningen.',
+	'piggyback-wronguser' => '$1 är inte ditt användarnamn',
+	'piggyback-loginprompt' => 'Vänligen ange ditt användarnamn och lösenord.',
+);
+
 /** Telugu (తెలుగు) */
 $messages['te'] = array(
 	'piggyback-otherusername' => 'ఇతర వాడుకరిపేరు:',

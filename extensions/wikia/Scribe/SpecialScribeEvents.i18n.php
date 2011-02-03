@@ -68,9 +68,11 @@ $messages['no'] = array(
 	'scribeeventsrecords' => 'Oppføringer',
 );
 
-/** Piedmontese (Piemontèis) */
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
 $messages['pms'] = array(
-	'scribe-desc' => '[[Special:Scribeevents|Tool]] për sërché un tìtol ëd pàgina specìfica an sjë wiki',
+	'scribe-desc' => '[[Special:Scribeevents|Utiss]] për sërché un tìtol ëd pàgina spessìfich a travers dle wiki',
 	'scribeevents' => 'Event recent',
 	'scribeeventsrecords' => 'Argistrassion',
 );

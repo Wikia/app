@@ -110,9 +110,11 @@ $messages['no'] = array(
 	'relatedvideo' => 'Relaterte videoer',
 );
 
-/** Piedmontese (Piemontèis) */
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
 $messages['pms'] = array(
-	'related-video-random-video' => 'Video a cas',
+	'related-video-random-video' => 'Filmà a asar',
 	'related-video-related' => 'Filmà assossià',
 	'relatedvideo' => 'Filmà assossià',
 );
@@ -140,6 +142,15 @@ $messages['ru'] = array(
 	'related-video-random-video' => 'Случайное видео',
 	'related-video-related' => 'Похожие видео',
 	'relatedvideo' => 'Похожие видео',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'related-video-random-video' => 'Slumpmässig video',
+	'related-video-related' => 'Relaterade videos',
+	'relatedvideo' => 'Relaterade videos',
 );
 
 /** Telugu (తెలుగు)

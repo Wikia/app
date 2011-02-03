@@ -1078,6 +1078,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author GTNS
+ * @author Hamilton Abreu
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -1102,6 +1103,7 @@ $messages['pt'] = array(
 	'toplists-error-add-item-permission' => 'Erro de permissões: Não foi concedida à sua conta a capacidade de criar elementos.',
 	'toplists-error-add-item-list-not-exists' => 'A lista Top 10 "$1" não existe.',
 	'toplists-error-backslash-not-allowed' => 'O carácter "/" não é permitido no título de uma lista Top 10.',
+	'toplists-upload-error-unknown' => 'Ocorreu um erro ao processar o pedido de upload. Tente novamente, por favor.',
 	'toplists-editor-title-label' => 'Nome da lista',
 	'toplists-editor-title-placeholder' => 'Introduza um nome para a lista',
 	'toplists-editor-related-article-label' => 'Página relacionada <small>(opcional, mas selecciona uma imagem)</small>',
@@ -1156,7 +1158,7 @@ Pode <a href="$4">cancelar a subscrição</a> de alterações à lista.',
 	'toplists-days' => '$1 {{PLURAL:$1|dia|dias}}',
 	'toplists-weeks' => '$1 {{PLURAL:$1|semana|semanas}}',
 	'toplists-msg-fb-OnRateArticle-short' => 'votou numa lista Top 10 na $WIKINAME!',
-	'toplists-create-heading' => '<em>Novo!</em> Crie o Seu Próprio Top Ten',
+	'toplists-create-heading' => '<em>Novo!</em> Crie o Seu Próprio Top 10',
 	'toplists-create-button-msg' => 'Criar uma lista',
 );
 
@@ -1198,6 +1200,56 @@ $messages['ru'] = array(
  * @author Tobulos1
  */
 $messages['sv'] = array(
+	'toplists-error-invalid-title' => 'Den medföljande texten är inte giltig.',
+	'toplists-error-invalid-picture' => 'Den valda bilden är inte giltig.',
+	'toplists-error-title-exists' => 'Den här sidan finns redan. Du kan gå till <a href="$2" target="_blank">$1</a> eller ge den ett annat namn.',
+	'toplists-error-title-spam' => 'Den medföljande texten innehåller en del ord som räknas som spam.',
+	'toplists-error-article-blocked' => 'Du har inte tillåtelse att skapa en sida med detta namn. Tyvärr.',
+	'toplists-error-article-not-exists' => '"$1" existerar inte. Vill du <a href="$2" target="_blank">skapa den</a>?',
+	'toplists-error-picture-not-exists' => '"$1" existerar inte. Vill du <a href="$2" target="_blank">ladda upp den</a>?',
+	'toplists-error-duplicated-entry' => 'Du kan inte använda samma namn mer än en gång.',
+	'toplists-error-empty-item-name' => 'Namnet på ett befintligt objekt kan inte vara tomt.',
+	'toplists-item-cannot-delete' => 'Borttagning av detta objektet misslyckades.',
+	'toplists-error-image-already-exists' => 'En bild med samma namn finns redan.',
+	'toplists-error-add-item-anon' => 'Anonyma användare är inte tillåtna att lägga till objekt i listor. Vänligen <a class="ajaxLogin" id="login" href="$1">logga in</a> eller <a class="ajaxLogin" id="signup" href="$2">registrera ett konto</a>.',
+	'toplists-error-add-item-permission' => 'Tillståndsfel: Ditt konto har inte beviljats rätten att skapa nya objekt.',
+	'toplists-error-backslash-not-allowed' => 'Tecknet "/" är inte tillåtet i rubriken till en Topp 10 lista.',
+	'toplists-upload-error-unknown' => 'Ett fel uppstod vid bearbetningen av uppladdningen. Försök igen.',
+	'toplists-editor-title-label' => 'Listnamn',
+	'toplists-editor-title-placeholder' => 'Ange ett namn för listan',
+	'toplists-editor-related-article-label' => 'Relaterad sida <small>(valfritt, men väljer en bild)</small>',
+	'toplists-editor-related-article-placeholder' => 'Ange ett befintligt namn för en sida',
+	'toplists-editor-image-browser-tooltip' => 'Lägg till en bild',
+	'toplists-editor-remove-item-tooltip' => 'Ta bort objekt',
+	'toplists-editor-drag-item-tooltip' => 'Dra för att ändra ordning',
+	'toplists-editor-add-item-label' => 'Lägg till ett nytt objekt',
+	'toplists-editor-add-item-tooltip' => 'Lägg till ett nytt objekt i listan',
+	'toplists-create-button' => 'Skapa lista',
+	'toplists-update-button' => 'Spara listan',
+	'toplists-cancel-button' => 'Avbryt',
+	'toplists-items-removed' => '$1 {{PLURAL:$1|objekt|objekt}} borttagna',
+	'toplists-items-created' => '$1 {{PLURAL:$1|objekt|objekt}} skapade',
+	'toplists-items-updated' => '$1 {{PLURAL:$1|objekt|objekt}} uppdaterade',
+	'toplists-items-nochange' => 'Inga objekt ändrades',
+	'toplits-image-browser-no-picture-selected' => 'Ingen bild markerad',
+	'toplits-image-browser-selected-picture' => 'Markerade: $1',
+	'toplists-image-browser-upload-btn' => 'Välj',
+	'toplists-image-browser-upload-label' => 'Ladda upp dina egna',
+	'toplists-list-creation-summary' => 'Skapar en lista, $1',
+	'toplists-list-update-summary' => 'Uppdaterar en lista, $1',
+	'toplists-item-creation-summary' => 'Skapar ett listobjekt',
+	'toplists-item-update-summary' => 'Uppdaterar ett listobjekt',
+	'toplists-item-remove-summary' => 'Objekt raderat från listan',
+	'toplists-item-restored' => 'Objekt återställt',
+	'toplists-list-related-to' => 'Relaterat till:',
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />röst|$1<br />röster}}',
+	'toplists-list-created-by' => 'av [[User:$1|$1]]',
+	'toplists-list-vote-up' => 'Rösta upp',
+	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|röst|röster}} i $2',
+	'toplists-list-add-item-label' => 'Lägg till objekt',
+	'toplists-list-add-item-name-label' => 'Håll igång listan...',
+	'toplists-list-item-voted' => 'Röstat',
+	'toplists-createpage-dialog-label' => 'Topp 10-lista',
 	'toplists-email-body' => 'Ett hej från Wikia!
 
 Listan <a href="$1">$2</a> på Wikia har blivit ändrad.

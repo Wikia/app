@@ -733,21 +733,22 @@ $messages['sl'] = array(
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Charmed94
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'wikiavideo-reverted' => '$1 снимак је успешно враћен. Вратите се на $2.',
+	'wikiavideo-reverted' => 'Видео снимак $1 је успешно враћен. Вратите се на $2.',
 	'wikiavideo-unreverted' => 'Немате дозволу да вратите $1.',
-	'wikiavideo-added' => '$1 снимак је додат.',
+	'wikiavideo-added' => 'видео снимак $1 је додат.',
 	'wikiavideo-back' => 'назад',
-	'wikiavideo-create' => 'Додај видео',
-	'wikiavideo-replace' => 'Замени снимак',
-	'wikiavideo-category' => 'Снимци',
+	'wikiavideo-create' => 'Додај видео снимак',
+	'wikiavideo-replace' => 'Замени видео снимак',
+	'wikiavideo-category' => 'Видео снимци',
 	'wikiavideo-links' => 'Везе',
 	'wikiavideo-placeholder' => 'Чувар места',
-	'wikiavideo-gallery-template' => 'Ова видео галерија је у шаблону, тако да се не може уредити из режима приказа. Молимо, измените одређени шаблон.',
-	'wikiavideo-not-supported' => 'Ова тема не подржава убацивање снимака из режима приказа у галерије.',
-	'wikiavideo-pixel' => 'пиксел',
+	'wikiavideo-gallery-template' => 'Ова видео галерија је унутар шаблона, тако да се не може уредити из режима приказа. Измените одређени шаблон.',
+	'wikiavideo-not-supported' => 'Ова пресвлака не подржава убацивање видео снимака из режима приказа у галерије.',
+	'wikiavideo-pixel' => 'тачка',
 	'wikiavideo-deleted-old' => "Издање '''[$1 $2]''', као и $4, $3 је обрисано.",
 	'wikiavideo-intro-old' => "Управо ћете да обришете '''[$1 $5]''' издање, као и [$4 $3, $2].",
 );

@@ -48,6 +48,7 @@ $messages['qqq'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'partner-feed-recent-changes' => 'Kemmoù diwezhañ',
 	'feed-title-recent-badges' => 'Badjoù diwezhañ',
 	'feed-title-recent-images' => 'Skeudennoù diwezhañ',
 	'all-blog-posts' => 'an holl rummadoù',
@@ -66,7 +67,9 @@ $messages['de'] = array(
 	'all-blog-posts' => 'alle Kategorien',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author VegaDark
+ */
 $messages['es'] = array(
 	'partner-feed-achievements-leaderboard' => 'Tabla de líderes con más logros',
 	'partner-feed-earned-badges' => 'Logros recientemente ganados para una wiki específica',
@@ -74,6 +77,7 @@ $messages['es'] = array(
 	'partner-feed-latest-images' => 'Galería de las últimas imágenes que han sido subidas',
 	'partner-feed-hotcontent' => 'Hub / "Contenido Novedoso" clasificado por el número de editores',
 	'partner-feed-recent-blog-comments' => 'Comentarios recientes relacionados a una entrada de blog especificada.',
+	'partner-feed-recent-changes' => 'Cambios recientes',
 	'partnerfeed' => 'Partner feed',
 	'error-no-article' => 'Error: No fue pasado el parámetro "artículo"',
 	'feed-title-blogposts' => 'Entradas de blog recientes',
@@ -85,6 +89,7 @@ $messages['es'] = array(
 	'blog-posts-from-listing' => 'de la lista: $1',
 	'feed-title-hot-content' => 'Contenido Novedoso - $1',
 	'feed-title-blogcomments' => 'Comentarios de $1',
+	'feed-title-recentchanges' => 'Cambios recientes',
 );
 
 /** Persian (فارسی) */
@@ -140,6 +145,7 @@ $messages['ia'] = array(
 	'partner-feed-latest-images' => 'Galeria de imagines recentemente incargate',
 	'partner-feed-hotcontent' => '"Contento popular" del centro, classificate per numero de contributores',
 	'partner-feed-recent-blog-comments' => 'Recente commentos a proposito de un articulo de blog specificate.',
+	'partner-feed-recent-changes' => 'Modificationes recente',
 	'partnerfeed' => 'Syndication de partner',
 	'error-no-article' => 'Error: nulle parametro "article" passate',
 	'feed-title-blogposts' => 'Recente articulos de blog',
@@ -151,6 +157,7 @@ $messages['ia'] = array(
 	'blog-posts-from-listing' => 'del lista: $1',
 	'feed-title-hot-content' => 'Contento popular - $1',
 	'feed-title-blogcomments' => 'Commentos a $1',
+	'feed-title-recentchanges' => 'Modificationes recente',
 );
 
 /** Macedonian (Македонски)
@@ -179,6 +186,7 @@ $messages['mk'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author McDutchie
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -200,7 +208,7 @@ $messages['nl'] = array(
 	'blog-posts-from-listing' => 'van lijst: $1',
 	'feed-title-hot-content' => 'Populaire inhoud - $1',
 	'feed-title-blogcomments' => 'Opmerkingen bij $1',
-	'feed-title-recentchanges' => 'Recent changes',
+	'feed-title-recentchanges' => 'Recente wijzigingen',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -269,6 +277,7 @@ $messages['pt'] = array(
 	'partner-feed-latest-images' => 'Galeria das últimas imagens enviadas',
 	'partner-feed-hotcontent' => '"Pontos Quentes" dos portais, de acordo com o número de editores',
 	'partner-feed-recent-blog-comments' => 'Comentários recentes relacionados com a entrada de blogue especificada.',
+	'partner-feed-recent-changes' => 'Mudanças recentes',
 	'partnerfeed' => 'Feed de um parceiro',
 	'error-no-article' => 'Erro: Não foi passado o parâmetro "article"',
 	'feed-title-blogposts' => 'Entradas recentes em blogues',
@@ -280,6 +289,7 @@ $messages['pt'] = array(
 	'blog-posts-from-listing' => 'da listagem: $1',
 	'feed-title-hot-content' => 'Conteúdo popular - $1',
 	'feed-title-blogcomments' => 'Comentários em $1',
+	'feed-title-recentchanges' => 'Mudanças recentes',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -306,6 +316,13 @@ $messages['ru'] = array(
 	'feed-title-blogposts' => 'Последние записи в блоге',
 	'feed-title-recent-badges' => 'Последние значки',
 	'feed-title-recent-images' => 'Последние изображения',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'all-blog-posts' => 'alla kategorier',
 );
 
 /** Tagalog (Tagalog)

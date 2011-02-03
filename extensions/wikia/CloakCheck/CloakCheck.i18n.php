@@ -323,6 +323,23 @@ $messages['ru'] = array(
 	'cloakcheck-process-edits-no' => 'Участником не сделано необходимого числа правок.',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'cloakcheck-form-username' => 'Användarnamn:',
+	'cloakcheck-form-check' => 'Kontrollera användarnamn',
+	'cloakcheck-process-empty' => 'Användarnamnet får inte vara tomt.',
+	'cloakcheck-process-notexist' => 'Användarnamnet finns inte.',
+	'cloakcheck-process-username' => 'Användarnamn: $1',
+	'cloakcheck-process-accountage-yes' => 'Kontot är gammal nog.',
+	'cloakcheck-process-accountage-no' => 'Kontot är för nytt.',
+	'cloakcheck-process-emailconf-yes' => 'E-postadressen bekräftades.',
+	'cloakcheck-process-emailconf-no' => 'E-postadressen bekräftades inte.',
+	'cloakcheck-process-edits-yes' => 'Användaren har gjort nog med redigeringar.',
+	'cloakcheck-process-edits-no' => 'Användaren har inte gjort nog med redigeringar.',
+);
+
 /** Tamil (தமிழ்)
  * @author TRYPPN
  */
@@ -351,5 +368,14 @@ $messages['tl'] = array(
 	'cloakcheck-process-emailconf-no' => 'Hindi natiyak ang tirahan ng e-liham.',
 	'cloakcheck-process-edits-yes' => 'May sapat na pamamatnugot ang tagagamit.',
 	'cloakcheck-process-edits-no' => 'Walang sapat na mga pamamatnugot ang tagagamit.',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'cloakcheck-form-username' => '用户名：',
+	'cloakcheck-form-check' => '检查用户名',
+	'cloakcheck-process-username' => '用户名：$1',
 );
 
