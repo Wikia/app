@@ -294,13 +294,13 @@ AdDriver.canCallLiftium = function(slotname) {
 	return true;
 }
 
-AdDriver.getAdProvider = function(slotname, size, dartUrl) {
+AdDriver.getAdProvider = function(slotname, size, defaultAdProvider) {
 	var specialCaseAdProvider = AdDriver.getAdProviderForSpecialCase(slotname);
 	if (specialCaseAdProvider) {
 		return specialCaseAdProvider;
 	}
 
-	if (!dartUrl) {
+	if (defaultAdProvider == 'Liftium') {
 		return 'Liftium';
 	}
 
@@ -317,12 +317,13 @@ AdDriver.init();
 //// END AdDriver
 
 //// BEGIN AdDriverDelayedLoaderItem
-var AdDriverDelayedLoaderItem = function (slotname, size) {
+var AdDriverDelayedLoaderItem = function (slotname, size, defaultAdProvider) {
 	this.clientWidth = 0;
 	this.clientHeight = 0;
 	this.hasPrefooters = null;
 	this.slotname = slotname;
 	this.size = size;
+	this.defaultAdProvider = defaultAdProvider;
 	this.dartUrl = null;
 	// do not generate DART url until it is needed. This allows
 	// for last-minute reordering of slots, and correct value of tile
@@ -391,7 +392,7 @@ AdDriverDelayedLoader.callDART = function() {
 				}
 
 				if (nextAdProvider == 'Liftium') { 
-					var liftiumItem = new AdDriverDelayedLoaderItem(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, ''); 
+					var liftiumItem = new AdDriverDelayedLoaderItem(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, 'Liftium'); 
 					AdDriverDelayedLoader.prependItem(liftiumItem); 
 				} 
 				else {
@@ -465,7 +466,7 @@ AdDriverDelayedLoader.loadNext = function() {
 	if (AdDriverDelayedLoader.adDriverItems.length) {
 		AdDriverDelayedLoader.currentAd = AdDriverDelayedLoader.adDriverItems.shift();
 		if (AdEngine.isSlotDisplayableOnCurrentPage(AdDriverDelayedLoader.currentAd.slotname)) {
-			var adProvider = AdDriver.getAdProvider(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriverDelayedLoader.currentAd.getDARTUrl());
+			var adProvider = AdDriver.getAdProvider(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriverDelayedLoader.currentAd.defaultAdProvider);
 
 			// increment number of pageviews
 			if (adProvider == 'DART' || adProvider == 'Liftium') {
