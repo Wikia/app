@@ -149,8 +149,13 @@ img.WikiaPhotoGalleryProgress {
 }
 
 /* search results */
+#WikiaPhotoGallerySearchResultsChooser {
+    padding-bottom: 20px;
+}
+
 #WikiaPhotoGallerySearchResultsChooser span {
 	font-weight: bold;
+
 }
 
 #WikiaPhotoGallerySearchResultsChooser span.clickable {
