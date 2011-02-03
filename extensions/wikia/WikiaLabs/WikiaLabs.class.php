@@ -224,9 +224,11 @@ class WikiaLabs {
 		}
 
 		$wikiaLabsProject->update();
-
+		
+		$log = new LogPage( 'wikialabs' );
+		$log->addEntry( 'wikialabs', SpecialPage::getTitleFor( 'WikiaLabs'), ($onoff ? "ON":"OFF") . " - " . $wikiaLabsProject->getExtension(),  array() );
+		
 		$this->app->runFunction( 'wfRunHooks', 'WikiFactoryChanged', array( $wikiaLabsProject->getExtension() , $city_id, !empty($onoff) ) );
-
 		return $this->app->runFunction( 'WikiFactory::setVarByName',  $wikiaLabsProject->getExtension(), $city_id, !empty($onoff), "WikiaLabs" );
 	}
 

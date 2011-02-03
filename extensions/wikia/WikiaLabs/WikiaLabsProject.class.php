@@ -41,7 +41,7 @@ class WikiaLabsProject {
 	}
 
 	protected function getCacheKey() {
-		return $this->app->runFunction( 'wfMemcKey', __CLASS__, $this->getId() );
+		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $this->getId() );
 	}
 
 	protected function getDataFromCache() {
@@ -181,7 +181,7 @@ class WikiaLabsProject {
 	}
 
 	protected function getCachedEnablesKey() {
-		return $this->app->runFunction( 'wfMemcKey', __CLASS__, 'getCachedEnables' , $this->getId() );
+		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, 'getCachedEnables' , $this->getId() );
 	}
 
 	protected function updateCachedEnables( $wikiId, $status ) {
@@ -374,7 +374,7 @@ class WikiaLabsProject {
 	}
 
 	protected function getCachedRatingKey() {
-		return $this->app->runFunction( 'wfMemcKey', __CLASS__, 'getCachedRatings' );
+		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, 'getCachedRatings' );
 	}
 
 	protected function updateCachedRating( $userId, $rating ) {
