@@ -194,10 +194,10 @@ WikiaFooterApp = {
 			var moreable = all.not('.disable-more');
 			var where = all.filter('.menu').last();
 			
-			var width = 0, mwidth = 0, fwidth = this.el.innerWidth() - 5;
-			all.each(function(i,v){width += $(v).outerWidth();});
-			moreable.each(function(i,v){mwidth += $(v).outerWidth();});
-				
+			var width = 0, mwidth = 0, fwidth = this.el.width();
+			all.each(function(i,v){width += $(v).outerWidth(true);});
+			moreable.each(function(i,v){mwidth += $(v).outerWidth(true);});
+			
 			if (width < fwidth) {
 				return;
 			}
@@ -207,11 +207,11 @@ WikiaFooterApp = {
 			if (where.exists()) where.before(li_more)
 			else this.el.append(li_more);
 			var more = li_more.children('ul');
-			var moreWidth = li_more.outerWidth() + 20;
+			var moreWidth = li_more.outerWidth(true) + 5;
 			
 			var rwidth = fwidth - moreWidth - (width - mwidth);
 			moreable.each(function(i,v){
-				rwidth -= $(v).outerWidth();
+				rwidth -= $(v).outerWidth(true);
 				if (rwidth < 0)
 					$(v).prependTo(more);
 			});
