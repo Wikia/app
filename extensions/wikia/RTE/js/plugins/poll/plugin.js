@@ -38,5 +38,5 @@ CKEDITOR.plugins.add('rte-poll',
 			RTE.log('WikiaPoll is not enabled here - disabling "Poll" button');
 			return;
 		}
-	},
+	}
 });
