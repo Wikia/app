@@ -155,20 +155,15 @@ class SpecialVersion extends SpecialPage {
 
 	/** Return a string of the Wikia version with SVN revision */
 	public static function getWikiaVersion() {
-		global $IP;
+		global $wgWikiaConfRevision;
 		if (preg_match('/\/wikia\/(tags\/)?([^\/]+)/', '$HeadURL$', $matches)) {
 			$wikia_release = $matches[2];
 		} else {
 			$wikia_release = '';
 		}
-		if (preg_match('/([0-9]+) *\$$/', '$Revision$', $matches)) {
-			$wikia_revision = $matches[1];
-		} else {
-			$wikia_revision = '';
-		}
-		
-		$wikia_conf = self::getSvnRevision( '/usr/wikia/conf/current/' );
-		return "$wikia_release (code r$wikia_revision, configuration r$wikia_conf)";
+		$wikia_revision = substr(substr('$Revision$', 11), 0, -2);
+
+		return "$wikia_release (code r$wikia_revision, configuration r$wgWikiaConfRevision)";
 	}
 	
 	/**
