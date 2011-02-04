@@ -3481,7 +3481,7 @@ class Parser
 		$text = $skip = false;
 		$finalTitle = $title;
 		$deps = array();
-
+		
 		// Loop to fetch the article, with up to 1 redirect
 		for ( $i = 0; $i < 2 && is_object( $title ); $i++ ) {
 			# Give extensions a chance to select the revision instead

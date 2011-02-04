@@ -93,7 +93,12 @@ class PageLayoutBuilderParser extends Parser {
 	}
 
 	public static function parserTag( $content, $attributes, Parser $self ) {
-		global $wgEnableRTEExt;
+		global $wgEnableRTEExt, $wgRTEParserEnabled;
+		
+		
+		if(!( !empty($wgRTEParserEnabled) || !empty($self->isInsideLayoutTag) || $self->getTitle()->getNamespace() == NS_PLB_LAYOUT )) {
+			return '<span class="error">' . wfMsgForContent( 'plb-parser-error-not-on-plb-article'  ) . '</span>';
+		}
 		// TODO: move to RTEParser
 		foreach ($attributes as $k => $v) {
 			$v = !empty($wgEnableRTEExt) ? RTEParser::unmarkEntities($v) : $v;
@@ -119,7 +124,6 @@ class PageLayoutBuilderParser extends Parser {
 			return self::parserReturnMarker($self, $marker, wfMsg('plb-special-form-unknow-error'));
 		}
 
-		global $wgRTEParserEnabled;
 		if(empty($wgRTEParserEnabled)) {
 			$validateElementStatus = $oWidget->validateAttribute($self->mPlbFormElements);
 			if ($validateElementStatus !== true) {
@@ -219,8 +223,10 @@ class PageLayoutBuilderParser extends Parser {
 		if(!empty($attributes['cswikitext'])) {
 			$cat = $attributes['cswikitext'];	
 		}
-		
-		return $self->recursiveTagParse( self::removeGalleryAndIP($dom->__toString()).$cat );
+		$self->isInsideLayoutTag = true; 
+		$out = $self->recursiveTagParse( self::removeGalleryAndIP($dom->__toString()).$cat );
+		$self->isInsideLayoutTag = false;
+		return $out;
 	}
 	/*
 	 * load values for form form existing article
@@ -307,6 +313,23 @@ class PageLayoutBuilderParser extends Parser {
 		if (isset($wgPLBwidgets[$name])) {
 			return false;
 		}
+		return true;
+	}
+	
+	
+	
+	public static function fetchTemplateAndTitleHook(&$text, &$title) {
+		global $wgPLBwidgets;
+		if(strpos($text, "plb_") > 0 ) {
+			$dom = new simple_html_dom;
+			$dom->load($text, false);
+			$elements = array_keys($wgPLBwidgets);
+			foreach($dom->find(implode(",", $elements)) as $element) {
+				$element->outertext = '<span class="error">' . wfMsgForContent( 'plb-parser-error-use-on-template'  ) . '</span>';
+			}
+		} 
+		
+		$text = $dom->__toString();
 		return true;
 	}
 }

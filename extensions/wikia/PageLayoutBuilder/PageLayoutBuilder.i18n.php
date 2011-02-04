@@ -183,6 +183,9 @@ $messages['en'] = array (
 	'plb-helpbox-checkboxinfo2' => 'Do not show this tutorial again.',
 	'plb-helpbox-help-desc' => 'Still have questions?',
 	'plb-helpbox-help-link' => 'Read the layout builder guide.',
+
+	'plb-parser-error-not-on-plb-article' => "Layout elements can only be used on layout pages", 
+	'plb-parser-error-use-on-template' => "Can't use layout elements in templates"
 );
 
 /** Message documentation (Message documentation)
@@ -1440,7 +1443,7 @@ $messages['sv'] = array(
 	'plb-list-action-publish' => 'Publicera',
 	'plb-list-action-create' => 'Skapa sida',
 	'plb-list-title' => 'Layouter ($1)',
-	'plb-parser-enter-caption' => 'Du måste ställa ett frågeformulär.',
+	'plb-parser-enter-caption' => 'Du måste ställa ett frågeformulär.',   
 );
 
 /** Ukrainian (Українська)
