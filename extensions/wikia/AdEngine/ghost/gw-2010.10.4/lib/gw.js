@@ -11,7 +11,6 @@
 /* 
  * Title: GhostWriter
  * */
-if(window == window.top) 
 window['ghostwriter']= (function(){
 var 
 	 D= document
