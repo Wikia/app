@@ -22,16 +22,17 @@ $messages = array();
 $messages['en'] = array(
 	'scavengerhunt-desc' => 'Alows to create a scavenger hunt game on a wiki.',
 	'scavengerhunt' => 'Scavenger hunt interface',
-	'scavengerhunt-label-entry-info' => 'Entry',
-	'scavengerhunt-label-landing' => 'Landing page name',
-	'scavengerhunt-label-starting-clue' => 'Starting Clue box text',
-	'scavengerhunt-label-page-title' => 'Page title',
-	'scavengerhunt-label-hidden-image' => 'Page picture (direct image url)',
-	'scavengerhunt-label-clue-image' => 'Picture in a clue box (direct image url)',
-	'scavengerhunt-label-clue' => 'Clue box text',
-	'scavengerhunt-label-entry-form' => 'Entry form text',
-	'scavengerhunt-label-final-question' => 'Final entry form question',
-	'scavengerhunt-label-goodbye-msg' => 'Goodbye message',
+	'scavengerhunt-label-entry-info' => 'Entry:',
+	'scavengerhunt-label-game-name' => 'Game name:',
+	'scavengerhunt-label-landing' => 'Landing page name:',
+	'scavengerhunt-label-starting-clue' => 'Starting Clue box text:',
+	'scavengerhunt-label-page-title' => 'Page title:',
+	'scavengerhunt-label-hidden-image' => 'Page picture (direct image url):',
+	'scavengerhunt-label-clue-image' => 'Picture in a clue box (direct image url):',
+	'scavengerhunt-label-clue' => 'Clue box text:',
+	'scavengerhunt-label-entry-form' => 'Entry form text:',
+	'scavengerhunt-label-final-question' => 'Final entry form question:',
+	'scavengerhunt-label-goodbye-msg' => 'Goodbye message:',
 	'scavengerhunt-button-add' => 'Add a game',
 	'scavengerhunt-button-save' => 'Save',
 	'scavengerhunt-button-disable' => 'Disable',
@@ -45,6 +46,12 @@ $messages['en'] = array(
 	'scavengerhunt-form-invalid-article-title' => 'Please enter existing titles as game articles.',
 	'scavengerhunt-form-no-hidden-image' => 'Please enter hidden images addresses for every game article.',
 	'scavengerhunt-form-no-clue-text' => 'Please enter clue texts for every game article.',
+
+	'scavengerhunt-game-has-been-created' => 'New Scavenger Hunt game has been created.',
+	'scavengerhunt-game-has-been-saved' => 'Scavenger Hunt game has been saved.',
+	'scavengerhunt-game-has-been-enabled' => 'Selected Scavenger Hunt game has been enabled.',
+	'scavengerhunt-game-has-been-disabled' => 'Selected Scavenger Hunt game has been disabled.',
+
 );
 
 $messages['qqq'] = array(
