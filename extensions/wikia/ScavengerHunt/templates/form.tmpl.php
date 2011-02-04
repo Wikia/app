@@ -25,11 +25,14 @@
 	</div>
 <?php foreach ($pageTitle as $n => $unused) { ?>
 	<div class="scavenger-entry">
+		<div class="scavenger-entry-info">
+			<?= wfMsg('scavengerhunt-label-entry-info') ?>
+		</div>
 		<div>
 			<label>
 				<?= wfMsg('scavengerhunt-label-page-title') ?>
 				<br>
-				<input type="text" name="pageTitle[]" value="<?= $pageTitle[$n]; ?>">
+				<input type="text" name="pageTitle[]" class="scavenger-page-title" value="<?= $pageTitle[$n]; ?>">
 			</label>
 		</div>
 		<div>

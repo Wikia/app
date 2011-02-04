@@ -31,5 +31,10 @@
 
 	.scavenger-entry {
 		border: 1px solid;
+		padding-left: 20px;
+
+		.scavenger-entry-info {
+			font-style: italic;
+		}
 	}
 }
