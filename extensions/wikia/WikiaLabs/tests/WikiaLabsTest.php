@@ -24,6 +24,7 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 	protected function tearDown() {
 		WF::setInstance( 'App', $this->app );
 		WF::unsetInstance( 'WikiaLabsProject' );
+		WF::unsetInstance( 'LogPage' );
 	}
 
 	protected function getUserMock() {
@@ -271,7 +272,13 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 		        ->will( $this->returnValue( $projectId ));
 
 		if( !empty( $projectId ) ) {
-			$project->expects( $this->exactly(2) )
+			$log = $this->getMock( 'LogPage', array(), array(), '', false );
+			$log->expects( $this->once() )
+			    ->method( 'addEntry' );
+
+			WF::setInstance( 'LogPage', $log );
+
+			$project->expects( $this->exactly(3) )
 			        ->method( 'getExtension' )
 			        ->will( $this->returnValue( $extension ) );
 		}
