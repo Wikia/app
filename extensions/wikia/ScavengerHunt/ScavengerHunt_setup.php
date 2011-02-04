@@ -51,7 +51,7 @@ $app->registerSpecialPage('ScavengerHunt', 'SpecialScavengerHunt');
 
 // constuctors
 WF::addClassConstructor( 'ScavengerHuntService', array( 'app' => $app ) );
-WF::addClassConstructor( 'ScavengerHuntGame', array( 'app' => $app, 'id' => 0 ) );
+WF::addClassConstructor( 'ScavengerHuntGame', array( 'app' => $app, 'id' => 0, 'readWrite' => false ) );
 WF::addClassConstructor( 'ScavengerHuntGame', array( 'app' => $app, 'row' => null ), 'newFromRow' );
 WF::addClassConstructor( 'ScavengerHuntGameEntry', array(), 'newFromRow' );
 

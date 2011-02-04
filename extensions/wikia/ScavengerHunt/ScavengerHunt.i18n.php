@@ -37,6 +37,13 @@ $messages['en'] = array(
 	'scavengerhunt-button-enable' => 'Enable',
 	'scavengerhunt-button-delete' => 'Delete',
 	'scavengerhunt-button-export' => 'Export to CSV',
+
+	'scavengerhunt-form-error' => 'Please correct the following errors:',
+	'scavengerhunt-form-invalid-landing-title' => 'Please enter an existing title as landing page.',
+	'scavengerhunt-form-no-final-form-text' => 'Please enter a final form text.',
+	'scavengerhunt-form-invalid-article-title' => 'Please enter existing titles as game articles.',
+	'scavengerhunt-form-no-hidden-image' => 'Please enter hidden images addresses for every game article.',
+	'scavengerhunt-form-no-clue-text' => 'Please enter clue texts for every game article.',
 );
 
 $messages['qqq'] = array(
