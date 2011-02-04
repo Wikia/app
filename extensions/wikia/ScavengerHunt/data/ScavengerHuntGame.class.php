@@ -19,6 +19,11 @@
 		public function __construct( WikiaApp $app, $id = 0, $readWrite = false ) {
 			$this->app = $app;
 			$this->id = $id;
+			$this->readWrite = $readWrite || empty($id);
+		}
+
+		public function getId() {
+			return $this->id;
 		}
 
 		public function getWikiId() {

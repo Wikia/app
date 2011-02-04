@@ -5,6 +5,21 @@
 @import "../../../../skins/oasis/css/core/color";
 
 .scavenger-form {
+
+	.form-errorbox {
+		background-color:#FFFFCC;
+		border:1px solid #AAAAAA;
+		padding:3px;
+		width:100%;
+		ul {
+			padding-left:30px;
+		}
+		strong {
+			padding-left:13px;
+			list-style:none outside none;
+		}
+	}
+
 	textarea {
 		height: 100px;
 		width: 600px;
