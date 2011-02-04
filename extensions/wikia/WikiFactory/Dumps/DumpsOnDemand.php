@@ -19,12 +19,9 @@ class DumpsOnDemand {
 	static public function customSpecialStatistics( &$specialpage, &$text ) {
 		global $wgOut, $wgDBname, $wgLang, $wgRequest, $wgTitle, $wgUser, $wgCityId, $wgHTTPProxy;
 
-		wfLoadExtensionMessages( "DumpsOnDemand" );
-
 		/**
 		 * read json file with dumps information
 		 */
-
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$index = array();
 		$proxy = array();
@@ -35,9 +32,14 @@ class DumpsOnDemand {
 			$proxy[ "noProxy" ] = true;
 		}
 
-		$json = Http::get( self::getUrl( $wgDBname, "index.json" ), 5, $proxy );
+		$url = self::getUrl( $wgDBname, "index.json" );
+		$json = Http::get( $url, 5, $proxy );
 		if( $json ) {
+			wfDebug( __METHOD__ . ": getting informations about last dump from $url succeded\n" );
 			$index = (array )Wikia::json_decode( $json );
+		}
+		else {
+			wfDebug( __METHOD__ . ": getting informations about last dump from $url failed\n" );
 		}
 
 		/**
@@ -72,7 +74,7 @@ class DumpsOnDemand {
 
 		if( $wgRequest->wasPosted() && !$wgUser->isAnon() ) {
 			self::sendMail();
-			Wikia::log( __METHOD__, "info", "request was posted" );
+			wfDebug( __METHOD__, ": request for database dump was posted\n" );
 			$text = Wikia::successbox( wfMsg( "dump-database-request-requested" ) ) . $text;
 		}
 
