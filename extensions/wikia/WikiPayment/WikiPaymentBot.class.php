@@ -26,7 +26,7 @@ class WikiPaymentBot {
 	public function run() {
 		global $wgExternalDatawareDB;
 
-		$dbw = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 		$res = $dbw->select(
 			array( 'user_flags' ),
 			array( 'city_id', 'user_id', 'data' ),
