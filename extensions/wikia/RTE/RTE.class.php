@@ -84,6 +84,7 @@ class RTE {
 					$data['pollID'] = $title->getArticleId();
 					$poll = WikiaPoll::newFromTitle($title);
 					$pollData = $poll->getData();
+					$data['question'] = $pollData['question'];
 					if (isset($pollData['answers'])) {
 						foreach ($pollData["answers"] as $answer ) {
 							$data['answers'][] = $answer['text'];
