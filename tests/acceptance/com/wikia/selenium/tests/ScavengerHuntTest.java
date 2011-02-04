@@ -1,3 +1,17 @@
+/**
+ * ScavengerHunt
+ *
+ * A ScavengerHunt extension for MediaWiki
+ * Alows to create a scavenger hunt game on a wiki
+ *
+ * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
+ * @date 2011-01-31
+ * @copyright Copyright (C) 2010 Maciej Błaszkowski, Wikia Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ * @package MediaWiki
+ *
+ */
+
 package com.wikia.selenium.tests;
 
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.session;
