@@ -1029,8 +1029,8 @@ function wfGetSassUrl($fileName, $forceSassParams=null){
 	$url = $fileName;
 
 	// Make sure that the filename doesn't start with a slash.
-	while((strlen($fileName) > 0) && (substr(0, 1, $fileName) == "/")){
-		$fileName = substr(1, $fileName);
+	while((strlen($fileName) > 0) && (substr($fileName, 0, 1) == "/")){
+		$fileName = substr($fileName, 1);
 	}
 
 	// Load the associative array of SASS parameters based on the user/theme.
@@ -1388,4 +1388,25 @@ function wfRegisterEzApiModule( $moduleClass, $moduleSource ){
 	} else {
 		throw new MWException( __METHOD__ . ': module class or source not defined.' );
 	}
+}
+
+/**
+ * Sleep until wgDBLightMode is enable. This variable is used to disable (sleep) all 
+ * maintanance scripts while something is wrong with performance
+ *
+ * @author Piotr Molski (moli) <moli at wikia-inc.com>
+ * @param int $maxSleep
+ * @return null
+ */
+function wfDBLightMode( $maxSleep ) {
+	global $wgExternalSharedDB;
+	
+	if ( !$maxSleep ) return false;
+
+	while ( WikiFactory::getVarValueByName( 'wgDBLightMode', WikiFactory::DBToId( $wgExternalSharedDB ), true ) ) {
+		echo "All crons works in DBLightMode ( sleep $maxSleep ) ...\n";
+		sleep($maxSleep);
+	}
+	
+	return true;
 }
