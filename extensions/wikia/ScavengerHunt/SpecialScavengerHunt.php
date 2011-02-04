@@ -61,7 +61,7 @@ class SpecialScavengerHunt extends SpecialPage {
 					// save changes
 					$game->saveToDb();
 
-					$this->out-redirect( $this->mTitle->getFullUrl() );
+					$this->out->redirect( $this->mTitle->getFullUrl() );
 				} else {
 					// errors
 					$template->set_vars(array(
