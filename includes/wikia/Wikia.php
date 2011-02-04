@@ -434,14 +434,16 @@ class WikiaAssets {
  */
 $wgHooks['SpecialRecentChangesLinks'][] = "Wikia::addRecentChangesLinks";
 $wgHooks['SpecialRecentChangesQuery'][] = "Wikia::makeRecentChangesQuery";
-$wgHooks['SpecialPage_initList'][] = "Wikia::disableSpecialPage";
-$wgHooks['UserRights'][] = "Wikia::notifyUserOnRightsChange";
-$wgHooks['SetupAfterCache'][] = "Wikia::setupAfterCache";
-$wgHooks['ComposeMail'][] = "Wikia::ComposeMail";
-$wgHooks['SoftwareInfo'][] = "Wikia::softwareInfo";
-$wgHooks['AddNewAccount'][] = 'Wikia::ignoreUser';
-//$wgHooks['IsTrustedProxy'][] = "Wikia::trustInternalIps";
-//$wgHooks['RawPageViewBeforeOutput'][] = 'Wikia::rawPageViewBeforeOutput';
+$wgHooks['SpecialPage_initList']     []	= "Wikia::disableSpecialPage";
+$wgHooks['UserRights']               [] = "Wikia::notifyUserOnRightsChange";
+$wgHooks['SetupAfterCache']          [] = "Wikia::setupAfterCache";
+$wgHooks['ComposeMail']              [] = "Wikia::ComposeMail";
+$wgHooks['SoftwareInfo']             [] = "Wikia::softwareInfo";
+$wgHooks['AddNewAccount']            [] = "Wikia::ignoreUser";
+$wgHooks['WikiFactory::execute']     [] = "Wikia::switchDBToLightMode";
+//$wgHooks['IsTrustedProxy']           [] = "Wikia::trustInternalIps";
+//$wgHooks['RawPageViewBeforeOutput']  [] = 'Wikia::rawPageViewBeforeOutput';
+
 /**
  * This class have only static methods so they can be used anywhere
  *
@@ -1616,4 +1618,23 @@ class Wikia {
 		wfProfileOut( __METHOD__ );
 		return $params;
 	}	
+	
+
+	/**
+	 * Sleep until wgDBLightMode is enable. This variable is used to disable (sleep) all 
+	 * maintanance scripts while something is wrong with performance
+	 *
+	 * @author Piotr Molski (moli) <moli at wikia-inc.com>
+	 * @param int $maxSleep
+	 * @return null
+	 */
+	function switchDBToLightMode( $WFLoader ) {
+		// commandline scripts only
+		error_log ( "WFLoader = " . print_r($WFLoader, true) );
+		if ( $WFLoader->mCommandLine ) {
+			// switch db to light mode
+			wfDBLightMode(60);
+		}
+		return true;
+	}
 }
