@@ -202,11 +202,12 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 		's0=' + AdConfig.DART.site.replace(/wka\./, '') + ';' +
 		's1=' + AdConfig.DART.zone1 + ';' +
 		's2=' + AdConfig.DART.zone2 + ';' +
-		window.ProviderValues.string +
+		AdConfig.DART.getCustomKeyValues() +
 		AdConfig.DART.getArticleKV() +
 		AdConfig.DART.getDomainKV(window.location.hostname) +
 		'pos=' + slotname + ';' +
 		AdConfig.DART.getTitle() +
+		AdConfig.DART.getLanguage() +
 		// TODO when we get better at search, support "kw" key-value
 		AdConfig.DART.getResolution() +
 		AdConfig.DART.getPrefooterStatus() +
@@ -343,6 +344,14 @@ AdConfig.DART.getZone2 = function(pageType){
 	}
 };
 
+AdConfig.DART.getCustomKeyValues = function(){
+	if (typeof wgDartCustomKeyValues != 'undefined' && wgDartCustomKeyValues) {
+		return wgDartCustomKeyValues + ';';
+	}
+
+	return window.ProviderValues.string;
+};
+
 AdConfig.DART.getArticleKV = function(){
 	if (typeof wgArticleId != 'undefined' && wgArticleId) {
 		return "artid=" + wgArticleId + ';';
@@ -379,6 +388,14 @@ AdConfig.DART.getTitle = function(){
 	} else {
 		return "";
 	}
+};
+
+AdConfig.DART.getLanguage = function(){
+	var lang = 'unknown';
+	if (typeof wgContentLanguage != 'undefined' && wgContentLanguage) {
+		lang = wgContentLanguage;
+	}
+	return 'lang=' + lang + ';';
 };
 
 AdConfig.DART.getResolution = function () {

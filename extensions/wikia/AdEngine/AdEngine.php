@@ -11,7 +11,7 @@ $wgHooks['BeforePageDisplay'][] = 'adEngineAdditionalScripts';
 $wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
 
 function wfAdEngineSetupJSVars($vars) {
-	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC, $wgAdslot_INVISIBLE_1, $wgAdDriverCookieLifetime, $wgCityId;
+	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC, $wgAdslot_INVISIBLE_1, $wgAdDriverCookieLifetime, $wgCityId, $wgDartCustomKeyValues;
 
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 	$vars['wgNoExternals'] = $wgNoExternals;
@@ -29,6 +29,7 @@ function wfAdEngineSetupJSVars($vars) {
 	$vars['adLogicPageType'] = ArticleAdLogic::getPageType();
 
 	// ProviderValues (for DART requests)
+	$vars['wgDartCustomKeyValues'] = $wgDartCustomKeyValues;
 	$vars['ProviderValues'] = AdEngine::getProviderValues($wgCityId);
 
 	return true;
