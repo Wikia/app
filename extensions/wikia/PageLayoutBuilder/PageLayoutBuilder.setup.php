@@ -81,6 +81,7 @@ $wgHooks['RTEcustomHandleTag'][] = 'PageLayoutBuilderParser::reverseParser';
 
 $wgHooks['ParserAfterTidy'][] = 'PageLayoutBuilderParser::replaceTags';
 $wgHooks['ParserAfterStrip'][] = 'PageLayoutBuilderParser::removeGalleryAndIPHook';
+$wgHooks['Parser::FetchTemplateAndTitle'][] =  'PageLayoutBuilderParser::fetchTemplateAndTitleHook'; 
 
 $wgHooks['ArticleRollbackComplete'][] = 'PageLayoutBuilderSpecialPage::rollbackHook';
 $wgHooks['EditPageBeforeEditButtons'][] = 'PageLayoutBuilderForm::addFormButton';

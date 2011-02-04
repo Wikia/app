@@ -138,7 +138,7 @@ $(function() {
 
 		if( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
 			$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click( function(e) {CreatePage.openDialog(e, null);});			
-			$('.noarticletext a').click( function(e) {CreatePage.openDialog(e, wgTitle); return false; });
+			$('.noarticletext a').click( function(e) {CreatePage.openDialog(e, wgPageName); return false; });
 		}
 
 		// CreatePage chicklet (Oasis)

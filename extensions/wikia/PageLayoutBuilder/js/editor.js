@@ -1311,9 +1311,9 @@
 			if((typeof(values.instructions) != 'undefined') && (values.instructions != "")) {
 				val = values.instructions;
 			}
-			
-			$('.plb-pe-window-preview .plb-input-instructions').val($.htmlentities( val ));
-			$('.plb-pe-window-preview .plb-span-instructions').html($.htmlentities( val ));
+			$('.plb-pe-window-preview input').val(val);;
+			$('.plb-pe-window-preview .plb-span-instructions:not(textarea)').html($.htmlentities( val ));
+			$('.plb-pe-window-preview textarea').text( val );
 
 			this.extRefreshPreview(values);
 		},
