@@ -81,9 +81,15 @@
 	</div>
 	<div>
 		<input type="submit" name="save" value="<?= wfMsg('scavengerhunt-button-save') ?>">
+		<?php
+		if ($gameId) {
+		?>
 		<input type="submit" name="enable" value="<?= $enabled ? wfMsg('scavengerhunt-button-disable') : wfMsg('scavengerhunt-button-enable') ?>">
 		<input type="submit" name="delete" value="<?= wfMsg('scavengerhunt-button-delete') ?>">
 		<input type="submit" name="export" value="<?= wfMsg('scavengerhunt-button-export') ?>">
+		<?php
+		}
+		?>
 		<input type="hidden" name="gameId" value="<?= $gameId ?>">
 	</div>
 </form>
