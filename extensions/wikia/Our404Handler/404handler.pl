@@ -244,6 +244,7 @@ my @tests = qw(
 	/s/sartrans/ru/images/thumb/3/3e/%D0%94%D0%B0%D1%87%D0%BD%D0%B0%D1%8F_%D0%BB%D0%B8%D0%BD%D0%B8%D1%8F.svg/82px-155,900,0,744-%D0%94%D0%B0%D1%87%D0%BD%D0%B0%D1%8F_%D0%BB%D0%B8%D0%BD%D0%B8%D1%8F.svg.png
 	/k/kuroshitsuji/images/thumb/c/c8/Snake_Revealed.png/82px-0%2C459%2C0%2C459-Snake_Revealed.png
 	/s/science/ru/images/thumb/2/29/Gtk-redo-ltr.svg/17px-Gtk-redo-ltr.svg.png
+	/b/biologija/lt/images/thumb/7/7d/Eagle_Owl_IMG_9203.JPG/800px-@commons-Eagle_Owl_IMG_9203.JPG
 );
 use warnings;
 my @done = ();
@@ -355,6 +356,10 @@ while( $request->Accept() >= 0 || $test ) {
 	#
 	( $width ) = $last =~ /^seek=(\d+)\-.+\w$/ unless $width;
 	( $width ) = $last =~ /^(mid)\-.+\w$/ unless $width;
+
+	#
+	# instant commons has source in other place
+	#
 
 	if( $width ) {
 		$width = $maxwidth if $width =~ /^\d+$/ && $width > $maxwidth;
