@@ -1630,7 +1630,6 @@ class Wikia {
 	 */
 	function switchDBToLightMode( $WFLoader ) {
 		// commandline scripts only
-		error_log ( "WFLoader = " . print_r($WFLoader, true) );
 		if ( $WFLoader->mCommandLine ) {
 			// switch db to light mode
 			wfDBLightMode(60);
