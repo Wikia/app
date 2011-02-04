@@ -4,7 +4,7 @@ var SpecialScavengerHunt = {
 	init: function() {
 		SpecialScavengerHunt.entry = $('.scavenger-entry').clone();
 		SpecialScavengerHunt.entry.find('input').val('');
-		$('#landing').focus();
+		$('#gameName').focus();
 		$('.scavenger-form').delegate('.scavenger-page-title', 'blur', SpecialScavengerHunt.onPageTitleBlur);
 	},
 

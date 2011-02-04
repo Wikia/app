@@ -2,12 +2,16 @@
 
 	class ScavengerHuntGame {
 
+		const GAMES_TABLE_NAME = "scavenger_hunt_games";
+		const ENTRIES_TABLE_NAME = "scavenger_hunt_entries";
+
 		protected $app = null;
 		protected $readWrite = false;
 
 		protected $id = 0;
 		protected $wikiId = null;
 		protected $isEnabled = false;
+		protected $name = '';
 		protected $landingTitle = '';
 		protected $landingArticleId = 0;
 		protected $startingClueText = '';
@@ -42,13 +46,21 @@
 			$this->isEnabled = $isEnabled;
 		}
 
+		public function getName() {
+			return $this->name;
+		}
+
+		public function setName( $name ) {
+			$this->name = $name;
+		}
+
 		public function getLandingTitle() {
 			return $this->landingTitle;
 		}
 
 		public function setLandingTitle( $title ) {
 			$this->landingTitle = $title;
-			$titleObj = WF::build('Title',array($this->title),'newFromText');
+			$titleObj = WF::build('Title',array($this->landingTitle),'newFromText');
 			$this->landingArticleId = $titleObj ? $titleObj->getArticleId() : 0;
 		}
 
@@ -109,6 +121,7 @@
 		protected function loadFromDbData( $game ) {
 			$data = unserialize( $game->game_data );
 			$this->isEnabled = $game->game_is_enabled;
+			$this->name = $game->game_name;
 			$this->landingTitle = $data['landingTitle'];
 			$this->landingArticleId = $data['landingArticleId'];
 			$this->startingClueText = $data['startingClueText'];
@@ -118,26 +131,24 @@
 			$this->goodbyeText = $data['goodbyeText'];
 		}
 
-		protected function loadFromDb( $game = null ) {
-			if (is_null($data)) {
-				$db = null;
-				$options = array();
-				if ($readWrite === true) {
-					$db = $this->getDb(DB_MASTER);
-					$options[] = 'FOR UPDATE';
-				} else {
-					$db = $this->getDb();
-				}
-
-				// read data
-				$game = $db->selectRow(
-					array( 'sh_games' ),
-					array( 'game_id', 'wiki_id', 'game_is_enabled', 'game_data' ),
-					array( "game_id" => $this->id ),
-					__METHOD__,
-					$options
-				);
+		protected function loadFromDb() {
+			$db = null;
+			$options = array();
+			if ($this->readWrite === true) {
+				$db = $this->getDb(DB_MASTER);
+				$options[] = 'FOR UPDATE';
+			} else {
+				$db = $this->getDb();
 			}
+
+			// read data
+			$game = $db->selectRow(
+				array( self::GAMES_TABLE_NAME ),
+				array( 'game_id', 'wiki_id', 'game_name', 'game_is_enabled', 'game_data' ),
+				array( "game_id" => $this->id ),
+				__METHOD__,
+				$options
+			);
 
 			if(!empty($game)) {
 				$this->loadFromDbData($game);
@@ -166,14 +177,15 @@
 			// save data
 			$fields = array(
 				'wiki_id' => $this->wikiId,
+				'game_name' => $this->name,
 				'game_is_enabled' => $this->isEnabled,
-				'game_data' => $data,
+				'game_data' => serialize( $data ),
 			);
 
 			$db = $this->getDb(DB_MASTER);
 			if($this->getId()) {
 				$db->update(
-					'sh_games',
+					self::GAMES_TABLE_NAME,
 					$fields,
 					array( "game_id" => $this->getId() ),
 					__METHOD__
@@ -181,7 +193,7 @@
 			}
 			else {
 				$db->insert(
-					'sh_games',
+					self::GAMES_TABLE_NAME,
 					$fields,
 					__METHOD__
 				);
@@ -190,6 +202,17 @@
 			$db->commit();
 			return true;
 		}
+
+		public function load() {
+			if ($this->id) {
+				$this->loadFromDb();
+			}
+		}
+
+		public function save() {
+			$this->saveToDb();
+		}
+
 
 		static public function newFromRow( WikiaApp $app, $row ) {
 			$id = $row->game_id;
@@ -214,7 +237,7 @@
 			);
 
 			$this->getDb(DB_MASTER)->insert(
-				'sh_entries',
+				self::ENTRIES_TABLE_NAME,
 				$fields,
 				__METHOD__
 			);
@@ -233,7 +256,7 @@
 				'game_id' => $this->getId(),
 			);
 			$res = $this->getDb()->select(
-				array( 'sh_entries' ),
+				array( self::ENTRIES_TABLE_NAME ),
 				array( 'user_id', 'name', 'email', 'answer' ),
 				$whereClause,
 				__METHOD__

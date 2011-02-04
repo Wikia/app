@@ -26,8 +26,14 @@ class SpecialScavengerHunt extends SpecialPage {
 		parent::__construct('ScavengerHunt', 'scavengerhunt');
 	}
 
-	public function execute($subpage) {
+	public function execute( $subpage ) {
 		wfProfileIn(__METHOD__);
+
+		@list( $action, $id ) = explode('/',$subpage);
+		$action = !empty($action) ? $action : 'list';
+		$id = (int)$id;
+		$game = WF::build('ScavengerHuntGame',array('id'=>(int)$id,'readWrite'=>true));
+		$game->load();
 
 		$this->setHeaders();
 		$this->mTitle = SpecialPage::getTitleFor('scavengerhunt');
@@ -40,6 +46,68 @@ class SpecialScavengerHunt extends SpecialPage {
 		$this->out->addStyle($this->app->runFunction('wfGetSassUrl', 'extensions/wikia/ScavengerHunt/css/scavenger-special.scss'));
 		$this->out->addScriptFile($this->app->getGlobal('wgScriptPath') . '/extensions/wikia/ScavengerHunt/js/scavenger-special.js');
 		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
+
+		switch ($action) {
+			case 'list':
+				$template->set_vars(array(
+					'addUrl' => $this->mTitle->getFullUrl() . "/add",
+				));
+
+				$this->out->addHTML($template->render('main'));
+				break;
+			case 'edit':
+				if ($this->request->wasPosted()) {
+					if ($this->request->getVal('enable')) {
+						$enabled = !$this->request->getVal('prevEnabled');
+						$game->setEnabled($enabled);
+						$game->save();
+
+						NotificationsModule::addConfirmation(
+							wfMsg('scavengerhunt-game-has-been-'.($enabled?'enabled':'disabled'))
+						);
+
+						$this->out->redirect( $this->mTitle->getFullUrl() . "/edit/$id" );
+						return;
+					} else if ($this->request->getVal('delete')) {
+
+						$game->delete();
+
+						NotificationsModule::addConfirmation(
+							wfMsg('scavengerhunt-game-has-been-deleted')
+						);
+						$this->out->redirect( $this->mTitle->getFullUrl() );
+						return;
+					}
+				}
+			case 'add':
+//				$game = WF::build('ScavengerHuntGame',array('id'=>$id,'readWrite'=>true));
+				$errors = array();
+				if ($this->request->wasPosted()) {
+					if ($this->request->getVal('save')) {
+						$game = $this->updatePostedGame($game);
+						$errors = $this->validateGame($game);
+						if (empty($errors)) {
+							// save changes
+							$game->save();
+
+							NotificationsModule::addConfirmation(
+								$action == 'add'
+								? wfMsg('scavengerhunt-game-has-been-created')
+								: wfMsg('scavengerhunt-game-has-been-saved')
+							);
+
+							$this->out->redirect( $this->mTitle->getFullUrl() );
+							return;
+						}
+					}
+				}
+				$template->set('errors', $errors);
+				$template->set_vars($this->getTemplateVarsFromGame($game));
+				$this->out->addHTML($template->render('form'));
+				break;
+		}
+
+		return;
 
 		if ($this->request->wasPosted()) {
 
@@ -59,7 +127,7 @@ class SpecialScavengerHunt extends SpecialPage {
 
 				if (empty($errors)) {
 					// save changes
-					$game->saveToDb();
+					$game->save();
 
 					$this->out->redirect( $this->mTitle->getFullUrl() );
 				} else {
@@ -100,7 +168,8 @@ class SpecialScavengerHunt extends SpecialPage {
 		}
 
 		// set fields
-		$game->setWikiId($this->app->getGlobal('wgCityId'));
+//		$game->setWikiId($this->app->getGlobal('wgCityId'));
+		$game->setName($this->request->getVal('gameName'));
 		$game->setLandingTitle($this->request->getVal('landing'));
 		$game->setStartingClueText($this->request->getVal('startingClue'));
 		$game->setFinalFormText($this->request->getVal('entryForm'));
@@ -127,6 +196,8 @@ class SpecialScavengerHunt extends SpecialPage {
 			$articles[] = $arcicle;
 		}
 		$game->setArticles($articles);
+
+		return $game;
 	}
 
 	protected function validateGame( ScavengerHuntGame $game ) {
@@ -142,7 +213,7 @@ class SpecialScavengerHunt extends SpecialPage {
 			$errors[] =	wfMsg( 'scavengerhunt-form-no-final-form-text' );
 		}
 
-		$articles = $game->getArticle();
+		$articles = $game->getArticles();
 		foreach ($articles as $n => $article) {
 			$articleId = $article->getArticleId();
 			$hiddenImage = $article->getHiddenImage();
@@ -175,6 +246,7 @@ class SpecialScavengerHunt extends SpecialPage {
 		$vars = array(
 			'gameId' => $game->getId(),
 			'enabled' => $game->isEnabled(),
+			'gameName' => $game->getName(),
 			'landing' => $game->getLandingTitle(),
 			'startingClue' => $game->getStartingClueText(),
 			'entryForm' => $game->getFinalFormText(),

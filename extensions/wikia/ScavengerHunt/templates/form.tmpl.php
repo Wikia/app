@@ -11,9 +11,16 @@
 <?php } ?>
 	<div>
 		<label>
+			<?= wfMsg('scavengerhunt-label-game-name') ?>
+			<br>
+			<input type="text" id="gameName" name="gameName" value="<?= $gameName; ?>">
+		</label>
+	</div>
+	<div>
+		<label>
 			<?= wfMsg('scavengerhunt-label-landing') ?>
 			<br>
-			<input type="text" id="landing" name="landing" value="<?= $landing ?>">
+			<input type="text" name="landing" value="<?= $landing ?>">
 		</label>
 	</div>
 	<div>
@@ -87,6 +94,7 @@
 		<input type="submit" name="enable" value="<?= $enabled ? wfMsg('scavengerhunt-button-disable') : wfMsg('scavengerhunt-button-enable') ?>">
 		<input type="submit" name="delete" value="<?= wfMsg('scavengerhunt-button-delete') ?>">
 		<input type="submit" name="export" value="<?= wfMsg('scavengerhunt-button-export') ?>">
+		<input type="hidden" name="prevEnabled" value="<?= (int)$enabled ?>">
 		<?php
 		}
 		?>
