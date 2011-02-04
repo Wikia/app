@@ -3,9 +3,9 @@
 	<div class="form-errorbox" >
 		<strong><?php echo wfMsg('scavengerhunt-form-error'); ?></strong>
 		<ul>
-			<?php foreach ($errors as $value): ?>
-				<li><?php echo $value; ?></li>
-			<?php endforeach; ?>
+			<?php foreach ($errors as $value) { ?>
+				<li><?= $value ?></li>
+			<?php } ?>
 		</ul>
 	</div>
 <?php } ?>
@@ -13,14 +13,14 @@
 		<label>
 			<?= wfMsg('scavengerhunt-label-landing') ?>
 			<br>
-			<input type="text" id="landing" name="landing" value="<?= $landing; ?>">
+			<input type="text" id="landing" name="landing" value="<?= $landing ?>">
 		</label>
 	</div>
 	<div>
 		<label>
 			<?= wfMsg('scavengerhunt-label-starting-clue') ?>
 			<br>
-			<textarea name="startingClue"><?= $startingClue; ?></textarea>
+			<textarea name="startingClue"><?= $startingClue ?></textarea>
 		</label>
 	</div>
 <?php foreach ($pageTitle as $n => $unused) { ?>
@@ -32,28 +32,28 @@
 			<label>
 				<?= wfMsg('scavengerhunt-label-page-title') ?>
 				<br>
-				<input type="text" name="pageTitle[]" class="scavenger-page-title" value="<?= $pageTitle[$n]; ?>">
+				<input type="text" name="pageTitle[]" class="scavenger-page-title" value="<?= $pageTitle[$n] ?>">
 			</label>
 		</div>
 		<div>
 			<label>
 				<?= wfMsg('scavengerhunt-label-hidden-image') ?>
 				<br>
-				<input type="text" name="hiddenImage[]" value="<?= $hiddenImage[$n]; ?>">
+				<input type="text" name="hiddenImage[]" value="<?= $hiddenImage[$n] ?>">
 			</label>
 		</div>
 		<div>
 			<label>
 				<?= wfMsg('scavengerhunt-label-clue-image') ?>
 				<br>
-				<input type="text" name="clueImage[]" value="<?= $clueImage[$n]; ?>">
+				<input type="text" name="clueImage[]" value="<?= $clueImage[$n] ?>">
 			</label>
 		</div>
 		<div>
 			<label>
 				<?= wfMsg('scavengerhunt-label-clue') ?>
 				<br>
-				<textarea name="clue[]"><?= $clue[$n]; ?></textarea>
+				<textarea name="clue[]"><?= $clue[$n] ?></textarea>
 			</label>
 		</div>
 	</div>
@@ -62,21 +62,21 @@
 		<label>
 			<?= wfMsg('scavengerhunt-label-entry-form') ?>
 			<br>
-			<textarea name="entryForm"><?= $entryForm; ?></textarea>
+			<textarea name="entryForm"><?= $entryForm ?></textarea>
 		</label>
 	</div>
 	<div>
 		<label>
 			<?= wfMsg('scavengerhunt-label-final-question') ?>
 			<br>
-			<textarea name="finalQuestion"><?= $finalQuestion; ?></textarea>
+			<textarea name="finalQuestion"><?= $finalQuestion ?></textarea>
 		</label>
 	</div>
 	<div>
 		<label>
 			<?= wfMsg('scavengerhunt-label-goodbye-msg') ?>
 			<br>
-			<textarea name="goodbyeMsg"><?= $goodbyeMsg; ?></textarea>
+			<textarea name="goodbyeMsg"><?= $goodbyeMsg ?></textarea>
 		</label>
 	</div>
 	<div>
