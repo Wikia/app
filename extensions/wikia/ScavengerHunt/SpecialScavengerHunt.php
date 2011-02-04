@@ -54,15 +54,39 @@ class SpecialScavengerHunt extends SpecialPage {
 
 			//save changes
 			elseif ($this->request->getVal('save')) {
+				//TODO: add data validation, show error if required fields are empty
 				$game = WF::build('ScavengerHuntGame', array('id' => $this->request->getVal('gameId'), 'readWrite' => true));
+
 				//set fields
 				$game->setWikiId($this->app->getGlobal('wgCityId'));
 				$game->setLandingTitle($this->request->getVal('landing'));
 				$game->setStartingClueText($this->request->getVal('startingClue'));
-				$game->setArticles();
 				$game->setFinalFormText($this->request->getVal('entryForm'));
 				$game->setFinalFormQuestion($this->request->getVal('finalQuestion'));
 				$game->setGoodbyeText($this->request->getVal('goodbyeMsg'));
+
+				//create list of articles
+				$pageTitles = $this->request->getArray('pageTitle');
+				$hiddenImages = $this->request->getArray('hiddenImage');
+				$clueImages = $this->request->getArray('clueImage');
+				$clues = $this->request->getArray('clue');
+
+				$articles = array();
+				$count = count($pageTitles);
+				for ($i = 0; $i < $count; $i++) {
+					if (empty($pageTitles[$i])) {
+						continue;
+					}
+					$article = WF::build('ScavengerHuntGameArticle');
+					$article->setTitle();
+					$article->setHiddenImage();
+					$article->setSuccessImage();
+					$article->setClueText();
+					$articles[] = $arcicle;
+				}
+
+				$game->setArticles();
+
 				//save to DB
 				$game->saveToDb();
 			}
