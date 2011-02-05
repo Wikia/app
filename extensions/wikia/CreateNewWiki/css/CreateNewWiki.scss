@@ -53,6 +53,7 @@ $color-borders: #CECECE;
 	nav {
 		input[type=button] {
 			bottom: 10px;
+			*display: inline;
 			position: absolute;
 			right: 20px;
 			&.back {
@@ -158,6 +159,7 @@ $color-borders: #CECECE;
 }
 
 #Auth {
+	display: none;
 	width: 600px;
 	.login-msg {
 		display: none;
@@ -248,6 +250,7 @@ div#userloginErrorBox3 {
 }
 
 #DescWiki {
+	display: none;
 	width: 700px;
 	ol {
 		left: 515px;
@@ -286,6 +289,7 @@ div#userloginErrorBox3 {
 }
 
 #ThemeWiki {
+	display: none;
 	width: 650px;
 	.ThemeTab {
 		height: 150px;
@@ -293,6 +297,7 @@ div#userloginErrorBox3 {
 		position: absolute;
 		top: 125px;
 		.slider {
+			height: 106px;
 			top: 0;
 			width: 608px;
 			ul {
@@ -320,6 +325,7 @@ div#userloginErrorBox3 {
 }
 
 #UpgradeWiki {
+	display: none;
 	width: 625px;
 	.marketing {
 		font-size: 17px;

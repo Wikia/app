@@ -1,7 +1,7 @@
 <section id="CreateNewWiki">
 	<h1><?= wfMsg('cnw-title') ?></h1>
 	<ol class="steps">
-		<li id="NameWiki" style="display:block" class="step">
+		<li id="NameWiki" class="step">
 			<h2><?= wfMsg('cnw-name-wiki-headline') ?></h2>
 			<p class="creative"><?= wfMsg('cnw-name-wiki-creative') ?></p>
 			<form name="label-wiki-form">
@@ -59,8 +59,6 @@
 					
 					</select>
 				</div>
-	
-				
 				<nav>
 					<span class="submit-error error-msg"></span>
 					<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next">
@@ -70,7 +68,7 @@
 <?php
 	if (!$wgUser->isLoggedIn()) {
 ?>
-		<li id="Auth" style="display:none" class="step">
+		<li id="Auth" class="step">
 			<h2><?= wfMsg('cnw-auth-headline') ?></h2>
 			<p class="creative login"><?= wfMsg('cnw-auth-creative') ?></p>
 			<p class="creative signup"><?= wfMsg('cnw-auth-signup-creative') ?></p>
@@ -96,7 +94,7 @@
 <?php
 	} // if isLoggedIn
 ?>
-		<li id="DescWiki" style="display:none" class="step">
+		<li id="DescWiki" class="step">
 			<h2><?= wfMsg('cnw-desc-headline') ?></h2>
 			<p class="creative"><?= wfMsg('cnw-desc-creative') ?></p>
 			<form name="desc-form">
@@ -137,7 +135,7 @@
 				</nav>
 			</form>
 		</li>
-		<li id="ThemeWiki" style="display:none" class="step">
+		<li id="ThemeWiki" class="step">
 			<h2><?= wfMsg('cnw-theme-headline') ?></h2>
 			<p class="creative"><?= wfMsg('cnw-theme-creative') ?></p>
 			<?= wfRenderModule('ThemeDesigner', 'ThemeTab') ?>
@@ -147,7 +145,7 @@
 				<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next">
 			</nav>
 		</li>
-		<li id="UpgradeWiki" style="display:none" class="step">
+		<li id="UpgradeWiki" class="step">
 			<h2><?= wfMsg('cnw-upgrade-headline') ?></h2>
 			<p class="creative"><?= wfMsg('cnw-upgrade-creative') ?></p>
 			<div class="marketing">
