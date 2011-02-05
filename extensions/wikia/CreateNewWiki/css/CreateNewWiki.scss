@@ -78,16 +78,20 @@ $color-borders: #CECECE;
 		font-weight: normal !important;
 		font-size: 17px !important;
 		line-height: 23px;
+		&[for=wpRemember],
+		&[for=wpMarketingOptIn] {
+			font-size: 12px !important;
+		}
 	}
 	.creative {
 		font-size: 17px;
 	}
-	.status-icon {
+	.wiki-domain-container {
 		position: relative;
 		img {
-			bottom: -3px;
+			bottom: 4px;
 			position: absolute;
-			right: 5px;
+			left: -40px;
 		}
 	}
 	.steps {
@@ -141,7 +145,7 @@ $color-borders: #CECECE;
 		}
 		input[type=text],
 		input[type=password] {
-			width: 380px;
+			width: 365px;
 		}
 		.language-default {
 			font-size: 12px;
@@ -186,11 +190,14 @@ $color-borders: #CECECE;
 		display: none;
 	}
 	.facebook.login {
+		@include clearfix;
 		float: left;
 		margin: -25px 0 0 67px;
+		padding-bottom: 10px;
 		text-align: center;
 		>span {
 			display: block;
+			margin: 6px 0;
 			text-align: center;
 		}
 	}
@@ -226,6 +233,17 @@ div#userloginErrorBox3 {
 	input[type=text],
 	input[type=password] {
 		width: 380px;
+	}
+}
+
+.wpAjaxLoginInput .captcha .captchadesc {
+	line-height: 16px;
+}
+
+#termsOfUse {
+	margin-top: -5px;
+	p {
+		margin-top: 0;
 	}
 }
 
@@ -273,7 +291,7 @@ div#userloginErrorBox3 {
 		height: 150px;
 		left: 45px;
 		position: absolute;
-		top: 95px;
+		top: 125px;
 		.slider {
 			top: 0;
 			width: 608px;
@@ -283,11 +301,14 @@ div#userloginErrorBox3 {
 				li {
 					padding-bottom: 0;
 					padding-top: 0;
+					label{ 
+						display: none;
+					}
 				}
 			}
 		}
 		.chevron {
-			top: 67px;
+			top: 37px;
 			&.next {
 				left: 645px;
 			}
@@ -327,6 +348,8 @@ div#userloginErrorBox3 {
 		width: 400px;
 		li {
 			float: left;
+			font-size: 15px;
+			line-height: 25px;
 			width: 200px;
 		}
 	}

@@ -15,7 +15,9 @@
 
 #WikiWelcome {
 	p {
+		color: #747474;
 		font-size: 18px;
+		line-height: 25px;
 		&.help {
 			font-size: 14px;
 			margin-top: 25px;
@@ -24,7 +26,7 @@
 	.createpage {
 		font-size: 17px;
 		margin: 20px;
-		padding: 5px 8px;
+		padding: 7px;
 	}
 	.sprite.new {
 		margin-right: 5px;

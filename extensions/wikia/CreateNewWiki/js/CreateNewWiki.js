@@ -64,20 +64,19 @@ var WikiBuilder = {
 		});
 		WikiBuilder.wikiName.keyup(function() {
 			var name = $(this).val();
-			if(name) {
-				name = name.replace(/\W/, '').replace(/ /g, '');
-				WikiBuilder.wikiDomain.val(name.toLowerCase()).trigger('keyup');
-			}
+			name = name.replace(/[^a-zA-Z0-9]+/g, '').replace(/ /g, '');
+			WikiBuilder.wikiDomain.val(name.toLowerCase()).trigger('keyup');
 			if(WikiBuilder.wntimer) {
 				clearTimeout(WikiBuilder.wntimer);
 			}
 			WikiBuilder.wntimer = setTimeout(WikiBuilder.checkWikiName, 500);
 		});
-		WikiBuilder.wikiLanguage.click(function () {
-			WikiBuilder.wikiName.add(WikiBuilder.wikiDomain).trigger('keyup');
-			if($(this).val()){
-				WikiBuilder.domainCountry.html();
-			}
+		WikiBuilder.wikiLanguage.bind('change', function () {
+			//WikiBuilder.wikiName.add(WikiBuilder.wikiDomain).trigger('keyup');
+			WikiBuilder.checkWikiName();
+			WikiBuilder.checkDomain();
+			var selected = WikiBuilder.wikiLanguage.find('option:selected').val();
+			WikiBuilder.wikiDomainCountry.html((selected && selected !== 'en') ? selected + '.' : '');
 		});
 		$('#CreateNewWiki nav .back').bind('click', function() {
 			var id = $(this).closest('.step').attr('id');
@@ -167,58 +166,68 @@ var WikiBuilder = {
 	checkWikiName: function(e) {
 		var name = WikiBuilder.wikiName.val();
 		var lang = WikiBuilder.wikiLanguage.val();
-		WikiBuilder.showIcon(WikiBuilder.wikiNameStatus, 'spinner');
-		$.post(wgScript, {
-			action: 'ajax',
-			rs: 'moduleProxy',
-			moduleName: 'CreateNewWiki',
-			actionName: 'CheckWikiName',
-			outputType: 'data',
-			name: name,
-			lang: lang
-		}, function(res) {
-			if(res) {
-				var json = $.parseJSON(res);
-				var response = res['response'];
-				if(response) {
-					WikiBuilder.showIcon(WikiBuilder.wikiNameStatus, '');
-					WikiBuilder.wikiNameError.html(response);
-				} else {
-					WikiBuilder.showIcon(WikiBuilder.wikiNameStatus, 'ok');
-					WikiBuilder.wikiNameError.html('');
+		if(name) {
+			//WikiBuilder.showIcon(WikiBuilder.wikiNameStatus, 'spinner');
+			$.post(wgScript, {
+				action: 'ajax',
+				rs: 'moduleProxy',
+				moduleName: 'CreateNewWiki',
+				actionName: 'CheckWikiName',
+				outputType: 'data',
+				name: name,
+				lang: lang
+			}, function(res) {
+				if(res) {
+					var json = $.parseJSON(res);
+					var response = res['response'];
+					if(response) {
+						//WikiBuilder.showIcon(WikiBuilder.wikiNameStatus, '');
+						WikiBuilder.wikiNameError.html(response);
+					} else {
+						//WikiBuilder.showIcon(WikiBuilder.wikiNameStatus, 'ok');
+						WikiBuilder.wikiNameError.html('');
+					}
 				}
-			}
-		});
+			});
+		} else {
+			WikiBuilder.showIcon(WikiBuilder.wikiNameStatus, '');
+			WikiBuilder.wikiNameError.html('');
+		}
 	},
 	
 	checkDomain: function(e) {
 		var wd = WikiBuilder.wikiDomain.val();
 		var lang = WikiBuilder.wikiLanguage.val();
-		wd = wd.toLowerCase();
-		WikiBuilder.wikiDomain.val(wd);
-		WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, 'spinner');
-		$.post(wgScript, {
-			action: 'ajax',
-			rs: 'moduleProxy',
-			moduleName: 'CreateNewWiki',
-			actionName: 'CheckDomain',
-			outputType: 'data',
-			name: wd,
-			lang: lang,
-			type: ''
-		}, function(res) {
-			if(res) {
-				var json = $.parseJSON(res);
-				var response = res['response'];
-				if(response) {
-					WikiBuilder.wikiDomainError.html(response);
-					WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, '');
-				} else {
-					WikiBuilder.wikiDomainError.html('');
-					WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, 'ok');
+		if(wd) {
+			wd = wd.toLowerCase();
+			WikiBuilder.wikiDomain.val(wd);
+			WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, 'spinner');
+			$.post(wgScript, {
+				action: 'ajax',
+				rs: 'moduleProxy',
+				moduleName: 'CreateNewWiki',
+				actionName: 'CheckDomain',
+				outputType: 'data',
+				name: wd,
+				lang: lang,
+				type: ''
+			}, function(res) {
+				if(res) {
+					var json = $.parseJSON(res);
+					var response = res['response'];
+					if(response) {
+						WikiBuilder.wikiDomainError.html(response);
+						WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, '');
+					} else {
+						WikiBuilder.wikiDomainError.html('');
+						WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, 'ok');
+					}
 				}
-			}
-		});
+			});
+		} else {
+			WikiBuilder.wikiDomainError.html('');
+			WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, '');
+		}
 		
 	},
 	
@@ -353,10 +362,6 @@ var WikiBuilder = {
 				WikiBuilder.createStatus = res.status;
 			}
 		);
-	}, 
-	
-	fbLoginCallback: function() {
-		alert('foo');
 	}
 }
 
@@ -371,7 +376,9 @@ function realoadAutoCreateForm() {
 }
 
 // ThemeDesigner.js overwrites
-ThemeDesigner.init = function() {};
+ThemeDesigner.init = function() {
+	$('#ThemeTab li label').remove();
+};
 ThemeDesigner.set = function(setting, newValue) {
 	var t = themes[newValue];
 	var sass = '/__sass/skins/oasis/css/oasis.scss/3337777333333/';

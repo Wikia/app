@@ -207,20 +207,24 @@ class CreateNewWikiModule extends Module {
 			$mainTitle = Title::newFromText($mainPage);
 			$mainId = $mainTitle->getArticleID();
 			$mainArticle = Article::newFromID($mainId);
-			$firstSectionText = $mainArticle->getSection($mainArticle->getRawText(), 1);
-			//$mainArticle->updateArticle($this->params['wikiDescription'].$mainText, '', false, false);
-			$matches = array();
-			if(preg_match('/={2,3}[^=]+={2,3}/', $firstSectionText, $matches)) {
-				$newSectionText = $mainArticle->replaceSection(1, "{$matches[0]}\n{$this->params['wikiDescription']}");
-			} else {
-				$newSectionText = $mainArticle->replaceSection(1, $this->params['wikiDescription']);
+			if (!empty($mainArticle)) {
+				$firstSectionText = $mainArticle->getSection($mainArticle->getRawText(), 1);
+				//$mainArticle->updateArticle($this->params['wikiDescription'].$mainText, '', false, false);
+				$matches = array();
+				if(preg_match('/={2,3}[^=]+={2,3}/', $firstSectionText, $matches)) {
+					$newSectionText = $mainArticle->replaceSection(1, "{$matches[0]}\n{$this->params['wikiDescription']}");
+				} else {
+					$newSectionText = $mainArticle->replaceSection(1, $this->params['wikiDescription']);
+				}
+				$mainArticle->updateArticle($newSectionText, '', false, false);
 			}
-			$mainArticle->updateArticle($newSectionText, '', false, false);
 		}
 		
 		// set theme
-		$themeSettings = new ThemeSettings();
-		$themeSettings->saveSettings($this->params);
+		if(!empty($this->params['color-body'])) {
+			$themeSettings = new ThemeSettings();
+			$themeSettings->saveSettings($this->params);
+		}
 		
 		$wgOut->redirect($mainPage.'?wiki-welcome=1');
 	}

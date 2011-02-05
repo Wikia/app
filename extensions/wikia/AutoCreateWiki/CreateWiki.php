@@ -629,6 +629,7 @@ class CreateWiki {
 				$this->mDefSitename = self::DEFAULT_NAME;
 				$this->mDomains = array('default' => '');
 				$this->mSitenames = array();
+				$this->mLangSubdomain = true;
 		}
 		wfProfileOut( __METHOD__ );
 	}
