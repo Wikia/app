@@ -610,30 +610,33 @@ function getSOTD(){
 		$matches = array();
 		$sotdPage = lw_getPage("Template:Song_Of_The_Day");
 		$nominatedBy = $reason = "";
-		if(0 == preg_match("/'''Song:\s*\[\[([^\]]*)\]\]('''|<br.?>)/si", $sotdPage, $matches)){
+		if(0 == preg_match("/'''Song:[\s\"']*\[\[([^\]\|]*)(\||\]\])/si", $sotdPage, $matches)){
 			$matches[1] = ''; // TODO: RETURN AN ERROR.
 		} else {
 			$fullTitle = $matches[1];
-		}
-		if(0<preg_match("/'''Nominated By:\s*\[\[(.*?)\]\]/si", $sotdPage, $matches)){
-			$nominatedBy = $matches[1];
-			if($index = strpos($nominatedBy, "|")){
-				$nominatedBy = substr($nominatedBy, 0, $index); // chop off the alias
+			if(0<preg_match("/'''Nominated By:\s*\[\[(.*?)\]\]/si", $sotdPage, $matches)){
+				$nominatedBy = $matches[1];
+				if($index = strpos($nominatedBy, "|")){
+					$nominatedBy = substr($nominatedBy, 0, $index); // chop off the alias
+				}
+			}
+			if(0<preg_match("/'''Reason:(''')?\s*(.*?)\s*<!-- SOTD END -->/si", $sotdPage, $matches)){
+				$reason = $matches[2];
+			}
+
+			// Have to break up the artist and songname because getSong retuns the result in the same format it is given the data (to make verification easier).
+			if($index = strpos($fullTitle,":")){
+				$artist = substr($fullTitle, 0, $index);
+				$song = substr($fullTitle, $index+1);
+			} else {
+				$artist = $fullTitle; // lw_getTitle can handle this regardless of format (even if it had a colon already).
+				$song = "";
 			}
 		}
-		if(0<preg_match("/'''Reason:(''')?\s*(.*?)\s*<!-- SOTD END -->/si", $sotdPage, $matches)){
-			$reason = $matches[2];
-		}
-
-		// Have to break up the artist and songname because getSong retuns the result in the same format it is given the data (to make verification easier).
-		if($index = strpos($fullTitle,":")){
-			$artist = substr($fullTitle, 0, $index);
-			$song = substr($fullTitle, $index+1);
-		} else {
-			$artist = $fullTitle; // lw_getTitle can handle this regardless of format (even if it had a colon already).
-			$song = "";
-		}
+		
+		// TODO: Could memcache this result since the getSong will be called a bunch fo this song & it shouldn't change for a day.
 		$retVal = getSong($artist, $song);
+
 		$retVal['artist'] = str_replace("_", " ", $retVal['artist']);
 		$retVal['song'] = str_replace("_", " ", $retVal['song']);
 		$retVal['nominatedBy'] = str_replace("_", " ", $nominatedBy);
@@ -1365,7 +1368,7 @@ $finalName = "$artist:$song";
 // TODO: ACCOMPLISH THIS BY EXTRACTING THE TITLE-MATCHING, IMPLIED REDIRECTS, ETC. FROM getSong() INTO A DIFF FUNCTION (maybe call it findMatchingPageTitle?).
 				$url = $urlRoot.str_replace("%3A", ":", urlencode($finalName)); // %3A as ":" is for readability.
 
-				// TODO: LATER: Add album to the return array? (could build it from itms:artist, itms:album, and itms:releasedate).
+				// LATER: Add album to the return array? (could build it from itms:artist, itms:album, and itms:releasedate).
 
 				$itemData = array(
 					'rank' => $rank++,
@@ -1375,7 +1378,7 @@ $finalName = "$artist:$song";
 					'itunes' => $itunes,
 					'url' => $url,
 				);
-				
+
 				$retVal[] = $itemData;
 			}
 

@@ -57,6 +57,10 @@ class WikiaApiLyricwiki extends ApiBase {
 			case 'getTopSongs':
 				$this->rest_getTopSongs( $limit, $fmt );
 				break;
+			case 'getSOTD':
+			case 'getSotd':
+				$this->rest_getSotd( $fmt );
+				break;
 			case 'getSong':
 			default:
 				$this->rest_getSong( $artist, $song, $fmt );
@@ -162,6 +166,7 @@ class WikiaApiLyricwiki extends ApiBase {
 		}
 	} // end rest_getArtist()
 
+	// Returns the current most popular songs (right now, powered by iTunes).
 	function rest_getTopSongs( $limit, $fmt ) {
 		if(empty( $fmt )){
 			$fmt = 'html';
@@ -192,6 +197,33 @@ class WikiaApiLyricwiki extends ApiBase {
 			break;
 		}
 	} // end rest_getTopSongs()
+	
+	// Returns the Song Of The Day.
+	function rest_getSotd(){
+		if(empty( $fmt )){
+			$fmt = 'html';
+		}
+
+		$result = getSOTD();
+		switch ( $fmt ) {
+		case "xml" :
+			header('Content-Type: application/xml', true);
+			print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+			$result = array("songOfTheDay" => $result);
+			$this->dumpXML($result);
+		case "text":
+// TODO: IMPLEMENT
+// TODO: IMPLEMENT
+		case "html":
+// TODO: IMPLEMENT
+// TODO: IMPLEMENT
+		default:
+		case "json":
+		case "realjson":
+			$this->writeRealJSON($result);
+			break;
+		}
+	} // end rest_getSotd()
 
 	function rest_getSong( $artist, $song, $fmt ) {
 		// Phase 'title' out (deprecated).  this is not the same as the soap.  I was coding too fast whilst in an IRC discussion and someone said artist/title just for the sake of argument and I didn't check against the SOAP :[ *embarassing*
