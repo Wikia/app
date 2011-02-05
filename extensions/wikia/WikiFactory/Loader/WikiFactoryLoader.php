@@ -38,6 +38,7 @@ function wfUnserializeHandler( $errno, $errstr ) {
 
 class WikiFactoryLoader {
 
+	// TODO: FIXME: Why is there a mWikiID and an mCityID?
 	public $mServerName, $mWikiID, $mCityHost, $mCityID, $mOldServerName;
 	public $mAlternativeDomainUsed, $mCityDB, $mDebug;
 	public $mDomain, $mVariables, $mIsWikiaActive, $mAlwaysFromDB;
@@ -241,7 +242,7 @@ class WikiFactoryLoader {
 		 * setting the mCityID then returning true will override which wiki
 		 * to use.
 		 *
-		 * @author Sean
+		 * @author Sean Colombo
 		 */
 		if( !wfRunHooks( 'WikiFactory::execute', array( &$this ) ) ) {
 			return $this->mWikiID;
@@ -254,7 +255,7 @@ class WikiFactoryLoader {
 
 		if( empty( $this->mAlwaysFromDB ) ) {
 			wfProfileIn( __METHOD__."-domaincache" );
-			$key = WikiFactory::getDomainKey( $this->mServerName, $this->mCityID );
+			$key = WikiFactory::getDomainKey( $this->mCityID );
 			$this->mDomain = $oMemc->get( $key );
 			$this->mDomain = isset( $this->mDomain["id"] ) ? $this->mDomain : array ();
 			$this->debug( "reading from cache, key {$key}" );
@@ -360,7 +361,7 @@ class WikiFactoryLoader {
 				 * store value in cache
 				 */
 				$oMemc->set(
-					WikiFactory::getDomainKey( $this->mServerName, $this->mCityID ),
+					WikiFactory::getDomainKey( $this->mCityID ),
 					$this->mDomain,
 					$this->mExpireDomainCacheTimeout
 				);

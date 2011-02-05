@@ -176,7 +176,7 @@ class WikiFactory {
 			/**
 			 * skip cache if we want master
 			 */
-			$key = sprintf( "wikifactory:domains:%d", $city_id );
+			$key = self::getDomainKey( $city_id );
 			if( ! $master ) {
 				$domains = $wgMemc->get( $key );
 
@@ -297,8 +297,7 @@ class WikiFactory {
 		/**
 		 * clear cache
 		 */
-		$wgMemc->delete( sprintf( "wikifactory:domains:%d:%d", $city_id, true ) );
-		$wgMemc->delete( sprintf( "wikifactory:domains:%d:%d", $city_id, false ) );
+		self::clearDomainCache( $city_id );
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -311,12 +310,12 @@ class WikiFactory {
 	 *
 	 * @author tor@wikia-inc.com
 	 *
-	 * @param integer $wiki: wiki identifier in city_list
+	 * @param integer $city_id: wiki identifier in city_list
 	 * @param string $domain: domain name (on null)
 	 *
 	 * @return boolean: true - removed, false otherwise
 	 */
-	static public function removeDomain ( $wiki, $domain = null ) {
+	static public function removeDomain ( $city_id, $domain = null ) {
 		if( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
@@ -326,7 +325,7 @@ class WikiFactory {
 		$dbw = self::db( DB_MASTER );
 		$dbw->begin();
 
-		$cond = array( "city_id" => $wiki );
+		$cond = array( "city_id" => $city_id );
 		if ( !is_null($domain) ) {
 			$cond["city_domain"] = $domain;
 		}
@@ -337,8 +336,10 @@ class WikiFactory {
 			return false;
 		}
 
-		self::log( self::LOG_DOMAIN, "{$domain} removed.", $wiki );
+		self::log( self::LOG_DOMAIN, "{$domain} removed.", $city_id );
 		$dbw->commit();
+
+		self::clearDomainCache( $city_id );
 
 		wfProfileOut( __METHOD__ );
 
@@ -350,12 +351,12 @@ class WikiFactory {
 	 *
 	 * sets domain as main (wgServer)
 	 *
-	 * @param integer $wiki: wiki identifier in city_list
+	 * @param integer $city_id: wiki identifier in city_list
 	 * @param string $domain: domain name (on null)
 	 *
 	 * @return boolean: true - set, false otherwise
 	 */
-	static public function setmainDomain ( $wiki, $domain = null ) {
+	static public function setmainDomain ( $city_id, $domain = null ) {
 		if( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
@@ -365,7 +366,11 @@ class WikiFactory {
 			$domain = 'http://' . $domain;
 		}
 
-		return WikiFactory::setVarByName("wgServer", $wiki, $domain);
+		$retVal = WikiFactory::setVarByName("wgServer", $city_id, $domain);
+
+		self::clearDomainCache( $city_id );
+
+		return $retVal;
 	}
 
 	/**
@@ -422,15 +427,10 @@ class WikiFactory {
 		$city_id = false;
 
 		$oMemc = wfGetCache( CACHE_MEMCACHED );
-		$domains = $oMemc->get( self::getDomainKey( $domain ) );
+		$domainKey = "wikifactory:domain:byDomain:".self::getDomainHash($domain);
+		$city_id = $oMemc->get( $domainKey );
 
-		if( isset( $domains[ "id" ] ) ) {
-			/**
-			 * success, we have it from memcached!
-			 */
-			$city_id = $domains[ "id" ];
-		}
-		else {
+		if( empty($city_id) ){
 			/**
 			 * failure, getting from database
 			 */
@@ -442,6 +442,10 @@ class WikiFactory {
 				__METHOD__
 			);
 			$city_id = is_object( $oRow ) ? $oRow->city_id : null;
+
+			// Cache the mapping in memcached.
+			$ONE_DAY_IN_SECONDS = 60*60*24;
+			$oMemc->set($domainKey, $city_id, $ONE_DAY_IN_SECONDS);
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -1005,11 +1009,10 @@ class WikiFactory {
 	 * @static
 	 *
 	 * @param string  $domain	domain name
-	 * @param integer $city_id	wiki identifier in city_list table
 	 *
 	 * @return string with normalized domain
 	 */
-	public static function getDomainHash( $domain, $city_id = false ) {
+	public static function getDomainHash( $domain ) {
 
 		$domain = strtolower( $domain );
 		if( substr($domain, 0, 4) === "www." ) {
@@ -1018,13 +1021,7 @@ class WikiFactory {
 			 */
 			$domain = substr($domain, 4, strlen($domain) - 4 );
 		}
-		if( $city_id ) {
-			/**
-			 * if city_id is defined it means that we have www/dofus/memory-alpha
-			 * case.
-			 */
-			$domain = sprintf( "%d.$domain", $city_id );
-		}
+
 		return $domain;
 	}
 
@@ -1141,20 +1138,18 @@ class WikiFactory {
 	/**
 	 * getDomainKey
 	 *
-	 * get memcached key for domain
+	 * get memcached key for domain info by city_id.
 	 *
 	 * @author eloy@wikia
 	 * @access public
 	 * @static
 	 *
-	 * @param string  $domain	wiki domain
-	 * @param integer $city_id	wiki identifier in city_list table
+	 * @param string  $city_id the city_id of the wiki whose domain array will be cached at the returned key
 	 *
-	 * @return boolean status
+	 * @return string memcached key for where the info will be cached for the given city_id
 	 */
-	static public function getDomainKey( $domain, $city_id = false ) {
-		$key = self::getDomainHash( $domain, $city_id );
-		return "wikifactory:domains:{$key}";
+	static public function getDomainKey( $city_id ) {
+		return "wikifactory:domains:by_city_id:{$city_id}";
 	}
 
 	/**
@@ -1209,13 +1204,7 @@ class WikiFactory {
 		/**
 		 * clear domains cache
 		 */
-		$domains = self::getDomains( $city_id, true );
-		if( is_array( $domains ) ) {
-			foreach( $domains as $domain ) {
-				$wgMemc->delete( self::getDomainKey( $domain ) );
-				Wikia::log( __METHOD__, "", "Remove {$domain} from wikifactory cache" );
-			}
-		}
+		self::clearDomainCache( $city_id );
 
 		/**
 		 * clear variables cache
@@ -1226,6 +1215,19 @@ class WikiFactory {
 
 		return true;
 	}
+
+	/**
+	 * Given a city_id, removes the domain-data array from memcached.
+	 */
+	static public function clearDomainCache( $city_id ){
+		global $wgMemc;
+		wfProfileIn( __METHOD__ );
+		
+		$wgMemc->delete( self::getDomainKey( $city_id ) );
+		Wikia::log( __METHOD__, "", "Remove domain data for wiki with city_id: {$city_id} from wikifactory cache" );
+		
+		wfProfileOut( __METHOD__ );
+	} // end clearDomainCache()
 
 	/**
 	 * getGroups
@@ -1803,6 +1805,9 @@ class WikiFactory {
 				}
 			}
 		}
+		
+		self::clearDomainCache( $city_id );
+		self::clearDomainCache( $new_city_id );
 
 		wfProfileOut( __METHOD__ );
 		return $res;
@@ -1920,6 +1925,8 @@ class WikiFactory {
 					),
 					__METHOD__
 				);
+				
+				self::clearDomainCache( $row->city_id );
 			}
 			$dbw->freeResult( $sth );
 			$dba->commit();
