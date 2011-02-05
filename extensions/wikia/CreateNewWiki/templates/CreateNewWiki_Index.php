@@ -1,7 +1,7 @@
 <section id="CreateNewWiki">
 	<h1><?= wfMsg('cnw-title') ?></h1>
 	<ol class="steps">
-		<li id="NameWiki" style="" class="step">
+		<li id="NameWiki" style="display:block" class="step">
 			<h2><?= wfMsg('cnw-name-wiki-headline') ?></h2>
 			<p class="creative"><?= wfMsg('cnw-name-wiki-creative') ?></p>
 			<form name="label-wiki-form">
@@ -10,10 +10,12 @@
 				<input type="text" name="wiki-name" value="<?= empty($params['wikiName']) ? '' : $params['wikiName'] ?>"> <?= wfMsg('cnw-name-wiki-wiki') ?>
 				<div class="wiki-name-error error-msg"></div>
 				<label for="wiki-domain"><?= wfMsg('cnw-name-wiki-domain-label') ?></label>
-				<span class="domain-status-icon status-icon"></span>
-				<span class="domain-country"></span>
-				<?= wfMsg('cnw-name-wiki-language') ?>
-				<input type="text" name="wiki-domain" value="<?= empty($params['wikiDomain']) ? '' : $params['wikiDomain'] ?>"> <?= wfMsg('cnw-name-wiki-domain') ?>
+				<div class="wiki-domain-container">
+					<span class="domain-status-icon status-icon"></span>
+					<span class="domain-country"></span>
+					<?= wfMsg('cnw-name-wiki-language') ?>
+					<input type="text" name="wiki-domain" value="<?= empty($params['wikiDomain']) ? '' : $params['wikiDomain'] ?>"> <?= wfMsg('cnw-name-wiki-domain') ?>
+				</div>
 				<div class="wiki-domain-error error-msg"></div>
 				<div class="language-default">
 					<?= wfMsg('cnw-desc-default-lang') ?> - <a href="#" id="ChangeLang"><?= wfMsg('cnw-desc-change-lang') ?></a>
@@ -126,6 +128,7 @@
 	<?php
 		}
 	?>
+					<option value="3"><?=wfMsg('autocreatewiki-category-other')?></option>
 				</select>
 				<nav>
 					<input type="button" value="<?= wfMsg('cnw-back') ?>" class="secondary back">

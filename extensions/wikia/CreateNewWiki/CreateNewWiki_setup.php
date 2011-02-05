@@ -27,5 +27,6 @@ $wgAvailableRights[] = 'createnewwiki';
 $wgGroupPermissions['*']['createnewwiki'] = true;
 $wgGroupPermissions['staff']['createnewwiki'] = true;
 $wgAvailableRights[] = 'finishcreate';
-$wgGroupPermissions['*']['finishcreate'] = true;
 $wgGroupPermissions['staff']['finishcreate'] = true;
+$wgGroupPermissions['sysop']['finishcreate'] = true;
+$wgGroupPermissions['bureaucrat']['finishcreate'] = true;
