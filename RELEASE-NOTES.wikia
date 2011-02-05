@@ -1,5 +1,6 @@
 == Changes since release-007 ==
 * fb#2216: Moved staff-only performance stats to the right side of the footer toolbar (sean)
+* fb#1341: Refactored WikiFactory to do a better job of caching and clearing the cache of domain info (sean)
 
 == Changes since 20110125 ==
 * fb#1944: TopLists special pages can be accessed by blocked users (federico)
