@@ -81,7 +81,7 @@ class RTE {
 				$cssClass = "media-placeholder placeholder-poll";
 				$title = Title::newFromText($data['title'], NS_WIKIA_POLL);
 				if ($title->exists()) {
-					$data['pollID'] = $title->getArticleId();
+					$data['pollId'] = $title->getArticleId();
 					$poll = WikiaPoll::newFromTitle($title);
 					$pollData = $poll->getData();
 					$data['question'] = $pollData['question'];
