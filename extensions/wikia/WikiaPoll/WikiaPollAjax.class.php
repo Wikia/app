@@ -55,12 +55,12 @@ class WikiaPollAjax {
 	 */
 
 	static public function update() {
-		global $wgRequest;
+		global $wgRequest, $wgUser;
 		wfProfileIn(__METHOD__);
 
-		$id = $wgRequest->getInt ('pollId');
+		$pollId = $wgRequest->getInt ('pollId');
 		$answers = $wgRequest->getArray ('answer');  // array
-
+		$res = array();
 		$poll = WikiaPoll::newFromId($pollId);
 		if (!empty($poll) && $poll->exists()) {
 
@@ -69,9 +69,9 @@ class WikiaPollAjax {
 				$content .= "*$answer\n";
 			}
 
-			$article = Article::newFromID($id);
+			$article = Article::newFromID($pollId);
 			$status = $article->doEdit($content, 'Poll Updated', EDIT_UPDATE, false, $wgUser);
-
+			$title_object = $article->getTitle();
 			// Fixme: check status object
 			$res = array (
 				'success' => true,
