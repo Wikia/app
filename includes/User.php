@@ -1695,13 +1695,10 @@ class User {
 			$talks[0] = array( "wiki" => $wgSitename, "link" => $utp->getFullURL() );
 			return $talks;
 		}
-		/* Wikia change end */
-
-		if( !$this->getNewtalk() )
+		else {
 			return array_values($talks);
-		$up = $this->getUserPage();
-		$utp = $up->getTalkPage();
-		return array( array( 'wiki' => wfWikiID(), 'link' => $utp->getLocalURL() ) );
+		}
+		/* Wikia change end */
 	}
 
 	/**
