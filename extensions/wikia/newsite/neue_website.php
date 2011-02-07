@@ -105,8 +105,10 @@ function neue_website( $nws ) {
 	$crypt = strtr(trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 'WsImgS33CCrret', $armor, MCRYPT_MODE_ECB,
 			mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)))), '+/', '-!');
 
-	$url = fopen("http://thumbs.websitewiki.de/$crypt", "r");
-	fclose($url);
+	$url = @fopen("http://thumbs.websitewiki.de/$crypt", "r");
+	if ( $url !== false ) {
+		fclose($url);
+	}
 
 	// redirect on success!
 	$wgOut->redirect( $title->getFullURL() );
