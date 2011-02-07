@@ -1,4 +1,9 @@
 <?php
+/**
+ * Internationalisation file for Special:BatchMove extension.
+ *
+ * @addtogroup Extensions
+ */
 
 $messages = Array();
 $messages["en"] = Array(
@@ -24,6 +29,4 @@ $messages["en"] = Array(
 	"batchmove-preview-header"=>"<i>This is only a preview, no action has been taken yet.</i>",
 
 	"batchmove-complete"=>"Batch move complete''",
-	);
-
-?>
+);

@@ -300,7 +300,7 @@ class ArticleCommentList {
 		if (class_exists('Masthead')){
 			$avatar = Masthead::newFromUser( $wgUser );
 		} else {
-			// Answers
+			// Formerly Answers (this was in the Social code).
 			$avatar = new wAvatar($wgUser->getId(), 'ml');
 		}
 

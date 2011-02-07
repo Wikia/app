@@ -1,4 +1,9 @@
 <?php
+/**
+ * Internationalisation file for Special:Wikify extension.
+ *
+ * @addtogroup Extensions
+ */
 
 $messages = array();
 $messages['en'] = array(
@@ -36,6 +41,4 @@ $messages['en'] = array(
 	'wft-error-unknownmethod' => "Unknown formatting method: \$1",
 	'wft-error-nomatch' => "No match found",
 	'wft-error-noformats' => "There are currently no available formats available. Please contact the site administrator to enable this functionality"
-	);
-
-?>
+);

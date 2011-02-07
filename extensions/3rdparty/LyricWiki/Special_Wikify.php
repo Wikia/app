@@ -20,6 +20,18 @@ Version 0.1	2008-??-??
 
 */
 
+# Alert the user that this is not a valid entry point to MediaWiki if they try to access the skin file directly.
+if (!defined('MEDIAWIKI')) {
+        echo <<<EOT
+To install my extension, put the following line in LocalSettings.php:
+require_once( "$IP/extensions/MyExtension/MyExtension.php" );
+EOT;
+        exit( 1 );
+}
+
+
+
+
 // Extension Credits Definition
 if(isset($wgScriptPath)){
 	$wgExtensionCredits["specialpage"][] = array(
@@ -31,19 +43,8 @@ if(isset($wgScriptPath)){
 	);
 }
 
-# Alert the user that this is not a valid entry point to MediaWiki if they try to access the skin file directly.
-if (!defined('MEDIAWIKI')) {
-        echo <<<EOT
-To install my extension, put the following line in LocalSettings.php:
-require_once( "$IP/extensions/MyExtension/MyExtension.php" );
-EOT;
-        exit( 1 );
-}
-
 $dir = dirname(__FILE__) . '/';
 
 $wgAutoloadClasses['Wikify'] = $dir . 'Special_Wikify.body.php'; # Tell MediaWiki to load the extension body.
 $wgExtensionMessagesFiles['Wikify'] = $dir . 'Special_Wikify.i18n.php';
 $wgSpecialPages['Wikify'] = 'Wikify'; # Let MediaWiki know about your new special page.
-
-?>
