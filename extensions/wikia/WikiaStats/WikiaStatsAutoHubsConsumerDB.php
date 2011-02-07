@@ -13,6 +13,7 @@ class WikiaStatsAutoHubsConsumerDB {
     private $article_limits = array();
     private $refresh_time = 300;
     private $baned_user_groups = array('staff', 'bot', 'patrollers');
+    private $baned_user_names = array('Wikia', 'CreateWiki script' );
 	/**
 	 * constructor
 	 */
@@ -42,6 +43,10 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 		wfProfileOut( __METHOD__ );
 		return sprintf($sql, implode(' ', $options), $table, implode(',', $keys), $records, $onUpdate);
+	}
+
+	public function getBanedUsers() {
+		return $this->baned_user_names;
 	}
 
 	 /**
@@ -868,7 +873,7 @@ class WikiaStatsAutoHubsConsumerDB {
 			}
 		}
 
-		if( 'Wikia' == $row['username'] ) {
+		if ( in_array( $row['username'], $this->baned_user_names ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
