@@ -42,6 +42,7 @@ public class ContentFeedsTest extends BaseTest {
 	@Test(groups={"CI"})
 	public void testRecentImagesTag() throws Exception {
 		login();
+		uploadImage("");
 
 		String content = "<recentimages size=\"5\" />";
 		editArticle("Project:RecentImagesTagTestArticle", content);
