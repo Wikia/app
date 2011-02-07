@@ -183,6 +183,9 @@ class EditPage {
 					!$oldrev->isDeleted( Revision::DELETED_TEXT ) ) {
 
 					$undotext = $this->mArticle->getUndoText( $undorev, $oldrev );
+					
+					wfRunHooks( 'EditPage::getContent::end', array( &$this, $undotext, $undorev, $oldrev  ) );
+					
 					if ( $undotext === false ) {
 						# Warn the user that something went wrong
 						$this->editFormPageTop .= $wgOut->parse( '<div class="error mw-undo-failure">' . wfMsgNoTrans( 'undo-failure' ) . '</div>' );
