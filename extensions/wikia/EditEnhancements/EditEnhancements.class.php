@@ -17,9 +17,9 @@ class EditEnhancements {
 	public static function render($skin, &$html) {
 		wfRunHooks('BeforeEditEnhancements', array(&$this) );
 		if($this->action == 'edit' && !$this->undo ) {
-			$this->editPageJS($skin, &$html);
+			$this->editPageJS($skin, $html);
 		} else if ($this->action == 'submit' || $this->undo) {
-			$this->previewJS($skin, &$html);
+			$this->previewJS($skin, $html);
 		}
 	}
 	
