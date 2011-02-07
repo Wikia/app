@@ -181,7 +181,7 @@ class ArticleCommentInit {
 		if (self::ArticleCommentCheck()) {
 			wfLoadExtensionMessages('ArticleComments');
 			$tocnumber = ++$sublevelCount[1];
-			$toc .= $sk->tocLine('article-comment-header', wfMsg('article-comments-toc-item'), $tocnumber, 1);
+			$toc .= $sk->tocLine('article-comments', wfMsg('article-comments-toc-item'), $tocnumber, 1);
 		}
 		return true;
 	}
