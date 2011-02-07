@@ -107,7 +107,7 @@ function Ach_Setup() {
 	$wgHooks['Masthead::editCounter'][] = 'Ach_MastheadEditCounter';
 
 	//hooks for user preferences
-	$wgHooks['UserToggles'][] = 'Ach_UserToggles';
+	$wgHooks['GetPreferences'][] = 'Ach_UserPreferences';
 	$wgHooks['MonacoSidebarGetMenu'][] = 'Ach_GetMenu';
 	wfProfileOut(__METHOD__);
 }
@@ -237,8 +237,17 @@ function AchAjax() {
 
 }
 
-function Ach_UserToggles(&$toggles) {
-	$toggles[] = 'hidepersonalachievements';
+
+function Ach_UserPreferences( $user, &$preferences ) {
+	if( $user->isLoggedIn() ) {
+		wfLoadExtensionMessages( 'AchievementsII' );
+		$preferences['hidepersonalachievements'] = array(
+			'type' => 'toggle',
+			'label-message' => 'achievements-toggle-hide', // a system message
+			'section' => 'misc'
+		);
+	}
+	
 	return true;
 }
 
