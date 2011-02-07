@@ -673,8 +673,7 @@ class EmailNotification {
 		if( $this->oldid ) {
 			/* WIKIA change, watchlist link tracking, rt#33913 */
 			$difflink = $this->title->getFullUrl( 's=wldiff&diff=0&oldid=' . $this->oldid );
-			$keys['$NEWPAGE'] = wfMsgForContent( 'enotif_lastvisited', $difflink );
-			$keys['$NEWPAGEHTML'] = wfMsgForContent( 'enotif_lastvisited-HTML', $difflink );
+			list( $keys['$NEWPAGE'], $keys['$NEWPAGEHTML'] ) = wfMsgHTMLwithLanguageAndAlternative( 'enotif_lastvisited', 'enotif_lastvisited', $wgLanguageCode, array(), $difflink );
 			$keys['$OLDID']   = $this->oldid;
 			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'changed' );
 		} else {
