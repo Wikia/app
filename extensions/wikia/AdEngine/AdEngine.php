@@ -45,8 +45,6 @@ function adEngineAdditionalScripts( &$out, &$sk ){
 	return true;
 } // end adEngineAdditionalScripts()
 
-$wgHooks["WikiFactoryChanged"][] = "AdEngine::clearSlotCache";
-
 interface iAdProvider {
 	public static function getInstance();
 	public function getAd($slotname, $slot, $params = null);
@@ -178,18 +176,8 @@ class AdEngine {
 		return $out;
 	}
 
-	public static function clearSlotCache($cv_name , $city_id, $value) {
-		if (!preg_match("/^wgAdslot/", $cv_name)) return true;
-
-		global $wgMemc;
-		$cacheKey = wfForeignMemcKey(WikiFactory::IDtoDB($city_id), false, __CLASS__ . 'slots', 'monaco', AdEngine::cacheKeyVersion);
-		$wgMemc->delete($cacheKey);
-
-		return true;
-	}
-
 	public function loadConfig() {
-		global $wgMemc, $wgCityId, $wgUser, $wgRequest, $wgExternalSharedDB, $wgDBname;
+		global $wgAdSlots, $wgUser;
 
 		$skin_name = null;
 		if ( is_object($wgUser)){
@@ -199,44 +187,14 @@ class AdEngine {
 		// sometimes no skin set yet; hack copied from Interstitial::getCss
 		if (empty($skin_name)) $skin_name = substr(get_class($wgUser->getSkin()), 4);
 
-		if ($skin_name == 'awesome' || $skin_name == 'answers' || $skin_name == 'oasis'){
-			// Temporary hack while we transition to lean monaco
-			$skin_name = 'monaco';
-		} else if ($wgDBname == "wikiaglobal"){
-			// Hack for www
-			$skin_name = 'corporate';
+		if ($skin_name == 'awesome' || $skin_name == 'answers' || $skin_name == 'monaco'){
+			$skin_name = 'oasis';
 		}
 
-		$cacheKey = wfMemcKey(__CLASS__ . 'slots', $skin_name, self::cacheKeyVersion);
-		$this->slots = $wgMemc->get($cacheKey);
-
-		if(is_array($this->slots) && $wgRequest->getVal('action') != 'purge') {
-			// Found a cached value
-			return true;
-		}
-
-		$db = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$ad_slot_table = 'ad_slot';
-		$ad_provider_value_table = 'ad_provider_value';
-
-		$sql = "SELECT ad_slot.as_id, ad_slot.slot, ad_slot.size, ad_slot.load_priority,
-				default_provider_id AS provider_id,
-				default_enabled AS enabled
-				FROM $ad_slot_table
-				WHERE skin='".$db->strencode($skin_name)."'";
-
-		$res = $db->query($sql);
-		$this->slots = array();
-
-		while($row = $db->fetchObject($res)){
-			$this->slots[$row->slot] = array(
-				'as_id' => $row->as_id,
-				'size' => $row->size,
-				'provider_id' => $row->provider_id,
-				'provider' => isset($this->providers[$row->provider_id]) ? $this->providers[$row->provider_id] : 'null',	 // information only
-				'enabled' => $row->enabled,
-				'load_priority' => $row->load_priority
-			);
+		$this->slots = $wgAdSlots[$skin_name];
+		foreach ($this->slots as $slot=>&$slotdata) {
+			// set provider (for information only)
+			$slotdata['provider'] = isset($this->providers[$slotdata['provider_id']]) ? $this->providers[$slotdata['provider_id']] : 'null';
 		}
 
 		$this->applyWikiOverrides();
@@ -272,8 +230,6 @@ class AdEngine {
 				}
 			}
 		}
-
-		$wgMemc->set($cacheKey, $this->slots, self::cacheTimeout);
 
 		return true;
 	}
