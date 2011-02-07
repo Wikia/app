@@ -5,10 +5,16 @@
 
 ///// BEGIN AdDriver
 var AdDriver = {
-	minNumDARTCall: 3,
+	adProviderAdDriver: 'AdDriver',
+	adProviderDart: 'DART',
+	adProviderLiftium: 'Liftium',
+	classNameDefaultHeight: 'default-height',
 	cookieNameNumAllCall: 'adDriverNumAllCall',
 	cookieNameNumDARTCall: 'adDriverNumDARTCall',
 	cookieNameLastDARTCallNoAd: 'adDriverLastDARTCallNoAd',
+	minNumDARTCall: 3,
+	standardLeaderboardMinHeight: 90,
+	standardLeaderboardMaxHeight: 95,
 
 	init: function() {
 		window.adDriverLastDARTCallNoAds = new Array();
@@ -28,7 +34,7 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 		case 'sexpositive':
 		case 'wswiki':
 		case 'valuewiki':
-			return 'Liftium';
+			return AdProvider.adProviderLiftium;
 			break;
 		case 'glee':
 		case 'lyricwiki':
@@ -38,7 +44,7 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 				case 'TEST_HOME_TOP_RIGHT_BOXAD':
 				case 'TEST_TOP_RIGHT_BOXAD':
 				case 'TOP_RIGHT_BOXAD':
-					return 'Liftium';
+					return AdProvider.adProviderLiftium;
 					break;
 				default:
 			}
@@ -51,7 +57,7 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 					return 'NO-AD';
 					break;	
 				default:
-					return 'Liftium';
+					return AdProvider.adProviderLiftium;
 			}
 			break;
 		case 'cookbook_import':
@@ -257,10 +263,10 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 		case 'CORP_TOP_LEADERBOARD':
 		case 'HOME_TOP_LEADERBOARD':
 		case 'TOP_LEADERBOARD':
-			$('#'+slotname).removeClass('default-height');
+			$('#'+slotname).removeClass(AdDriver.classNameDefaultHeight);
 			// if jumbo/expanding leaderboard, change padding-top and padding-bottom
-			if (($('#'+slotname).height() >= 0 && $('#'+slotname).height() < 90) // expandable leaderboard, minimized state
-			|| $('#'+slotname).height() > 95) { // jumbo leaderboard or expandable leaderboard, maximized state
+			if (($('#'+slotname).height() >= 0 && $('#'+slotname).height() < AdDriver.standardLeaderboardMinHeight) // expandable leaderboard, minimized state
+			|| $('#'+slotname).height() > AdDriver.standardLeaderboardMaxHeight) { // jumbo leaderboard or expandable leaderboard, maximized state
 				$('#'+slotname).css('padding-top', 0); 
 			}
 			return true;
@@ -272,7 +278,7 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 		case 'TOP_RIGHT_BOXAD':
 		case 'PREFOOTER_LEFT_BOXAD':
 		case 'PREFOOTER_RIGHT_BOXAD':
-			$('#'+slotname).removeClass('default-height');
+			$('#'+slotname).removeClass(AdDriver.classNameDefaultHeight);
 			return true;
 			break;
 	}
@@ -300,17 +306,17 @@ AdDriver.getAdProvider = function(slotname, size, defaultAdProvider) {
 		return specialCaseAdProvider;
 	}
 
-	if (defaultAdProvider == 'Liftium') {
-		return 'Liftium';
+	if (defaultAdProvider == AdDriver.adProviderLiftium) {
+		return AdDriver.adProviderLiftium;
 	}
 
 	if (AdDriver.isHighValue(slotname)) {
 		if (AdDriver.getNumDARTCall(slotname) < AdDriver.minNumDARTCall || !AdDriver.isLastDARTCallNoAd(slotname)) {
-			return 'DART';
+			return AdDriver.adProviderDart;
 		}
 	}
 
-	return 'Liftium';
+	return AdDriver.adProviderLiftium;
 }
 
 AdDriver.init();
@@ -329,7 +335,7 @@ var AdDriverDelayedLoaderItem = function (slotname, size, defaultAdProvider) {
 	// for last-minute reordering of slots, and correct value of tile
 	this.getDARTUrl = function (){
 		if (!this.dartUrl) {
-			this.dartUrl = AdConfig.DART.getUrl(slotname, size, false, 'AdDriver');
+			this.dartUrl = AdConfig.DART.getUrl(slotname, size, false, AdDriver.adProviderAdDriver);
 		}
 
 		return this.dartUrl;
@@ -387,12 +393,12 @@ AdDriverDelayedLoader.callDART = function() {
 					AdDriver.log(AdDriverDelayedLoader.currentAd.slotname + ' was not filled by DART');
 					AdDriver.setLastDARTCallNoAd(AdDriverDelayedLoader.currentAd.slotname, window.wgNow.getTime());
 					if (AdDriver.canCallLiftium(AdDriverDelayedLoader.currentAd.slotname)) {
-						nextAdProvider = 'Liftium';
+						nextAdProvider = AdDriver.adProviderLiftium;
 					}
 				}
 
-				if (nextAdProvider == 'Liftium') { 
-					var liftiumItem = new AdDriverDelayedLoaderItem(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, 'Liftium'); 
+				if (nextAdProvider == AdDriver.adProviderLiftium) { 
+					var liftiumItem = new AdDriverDelayedLoaderItem(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriver.adProviderLiftium); 
 					AdDriverDelayedLoader.prependItem(liftiumItem); 
 				} 
 				else {
@@ -400,7 +406,7 @@ AdDriverDelayedLoader.callDART = function() {
 					// Track only calls that do not fall back to Liftium.
 					// (Those calls will be tracked by Liftium.)
 					// Based on Liftium.callInjectedIframeAd
-					Liftium.trackEvent(Liftium.buildTrackUrl(["slot", AdDriverDelayedLoader.currentAd.size+ "_" + AdDriverDelayedLoader.currentAd.slotname]), "UA-17475676-6");
+					Liftium.trackEvent(Liftium.buildTrackUrl(["slot", AdDriverDelayedLoader.currentAd.size+ "_" + AdDriverDelayedLoader.currentAd.slotname]), AdConfig.gaLiftiumTrackingAcct);
 				}
 				AdDriverDelayedLoader.loadNext();
 			}
@@ -416,7 +422,7 @@ AdDriverDelayedLoader.getPlaceHolderIframeScript = function(slotname, size) {
 AdDriverDelayedLoader.getLiftiumCallScript = function(slotname, size) {
 	var script = '';
 
-	if (slotname.indexOf('INVISIBLE_') > -1) {
+	if (slotname in AdConfig.adSlotsRequiringJSInvocation) {
 		script = 'Liftium.callAd("'+size+'");';
 	}
 	else {
@@ -469,17 +475,17 @@ AdDriverDelayedLoader.loadNext = function() {
 			var adProvider = AdDriver.getAdProvider(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriverDelayedLoader.currentAd.defaultAdProvider);
 
 			// increment number of pageviews
-			if (adProvider == 'DART' || adProvider == 'Liftium') {
+			if (adProvider == AdDriver.adProviderDart || adProvider == AdDriver.adProviderLiftium) {
 				if (AdDriverDelayedLoader.currentSlot != AdDriverDelayedLoader.currentAd.slotname) {
 					AdDriver.incrementNumAllCall(AdDriverDelayedLoader.currentAd.slotname);
 					AdDriverDelayedLoader.currentSlot = AdDriverDelayedLoader.currentAd.slotname;
 				}
 			}
 
-			if (adProvider == 'DART') {
+			if (adProvider == AdDriver.adProviderDart) {
 				AdDriverDelayedLoader.callDART();
 			}
-			else if (adProvider == 'Liftium') {
+			else if (adProvider == AdDriver.adProviderLiftium) {
 				AdDriverDelayedLoader.callLiftium();
 			}
 			else {
