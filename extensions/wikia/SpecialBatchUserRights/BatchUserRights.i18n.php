@@ -1,4 +1,9 @@
 <?php
+/**
+ * Internationalisation file for Special:BatchUserRights extension.
+ *
+ * @addtogroup Extensions
+ */
 
 $messages = array();
 
