@@ -473,13 +473,10 @@ class OutputPage {
 	 * but if it is not from page title, it can override all other names.
 	 */
 	public function setHTMLTitle( $name, $frompagetitle = false ) {
-		if ( $frompagetitle && $this->mHTMLtitleFromPagetitle ) {
-			$this->mHTMLtitle = $name;
-		}
-		elseif ( $this->mHTMLtitleFromPagetitle ) {
-			$this->mHTMLtitle = $name;
-			$this->mHTMLtitleFromPagetitle = false;
-		}
+		/* Wikia change start */
+		//Fix FB#1672, change extracted from http://www.mediawiki.org/wiki/Special:Code/MediaWiki/64876
+		$this->mHTMLtitle = $name;
+		/* Wikia change end */
 	}
 
 	/**
@@ -1127,10 +1124,15 @@ class OutputPage {
 			}
 		}
 		// Page title
-		$title = $parserOutput->getTitleText();
+		/* Wikia change start */
+		//Commented out, Fix FB#1672, change extracted from http://www.mediawiki.org/wiki/Special:Code/MediaWiki/64876
+		/*
+		 $title = $parserOutput->getTitleText();
 		if ( $title != '' ) {
 			$this->setPageTitle( $title );
 		}
+		*/
+		/* Wikia change end */
 
 		// Hooks registered in the object
 		global $wgParserOutputHooks;
@@ -2207,7 +2209,7 @@ class OutputPage {
 		if( $wgMimeType == 'text/xml' || $wgMimeType == 'application/xhtml+xml' || $wgMimeType == 'application/xml' ) {
 			$ret .= "<?xml version=\"1.0\" encoding=\"$wgOutputEncoding\" ?" . ">\n";
 		}
-
+		
 		if ( $this->getHTMLTitle() == '' ) {
 			wfProfileIn( "parsePageTitle" );
 			$this->setHTMLTitle(  $this->getWikiaPageTitle( $this->getPageTitle() ) );
