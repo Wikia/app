@@ -479,4 +479,30 @@ public class BaseTest {
 		//click save
 		doSave();
 	}
+
+	protected void uploadImage(String imageUrl) throws Exception {
+		if (imageUrl.equals("")) {
+			imageUrl = "http://images.wikia.com/wikiaglobal/images/b/bc/Wiki.png";
+		}
+		// keep file extensions consistent (uploaded image can be either PNG or JPG)
+		String fileNameExtenstion = imageUrl.substring(imageUrl.length() - 3, imageUrl.length());
+		String destinationFileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+		
+		session().open("index.php?title=Special:Upload");
+		session().waitForPageToLoad(this.getTimeout());
+		session().attachFile("wpUploadFile", imageUrl);
+		session().type("wpDestFile", destinationFileName);
+		session().type("wpUploadDescription", "WikiaBot automated test.");
+		session().uncheck("wpWatchthis");
+		clickAndWait("wpUpload");
+		
+		assertFalse(session().isTextPresent("Upload error"));
+
+		// upload warning - duplicate ...
+		if (session().isTextPresent("Upload warning")) {
+			clickAndWait("wpUpload");
+		}
+		assertTrue(session().isTextPresent("Image:" + destinationFileName)
+			|| session().isTextPresent("File:" + destinationFileName));
+	}
 }
