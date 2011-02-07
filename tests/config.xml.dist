@@ -65,6 +65,11 @@
                 </WhatIsMyIP>
             </wikia>
         </extension>
+        <onlineStatus>
+            <website>http://wikia.com</website>
+            <website>http://websitewiki.de</website>
+            <website>http://www.wowwiki.com</website>
+        </onlineStatus>
     </ci>
     <development extends="ci">
     </development>
