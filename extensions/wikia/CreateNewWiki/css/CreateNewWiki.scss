@@ -51,20 +51,13 @@ $color-borders: #CECECE;
 		margin: 0 0 14px;
 	}
 	nav {
-		input[type=button] {
-			bottom: 10px;
-			*display: inline;
-			position: absolute;
+		bottom: 10px;
+		position: absolute;
+		&.next-controls {
 			right: 20px;
-			&.back {
-				left: 20px;
-				right: auto;
-			}
 		}
-		.submit-error {
-			position: absolute;
-			bottom: 10px;
-			right: 100px;
+		&.back-controls {
+			left: 20px;
 		}
 	}
 	input[type=text],
@@ -185,7 +178,6 @@ $color-borders: #CECECE;
 	nav {
 		.signup {
 			display: none;
-			
 		}
 	}
 	.modalToolbar {

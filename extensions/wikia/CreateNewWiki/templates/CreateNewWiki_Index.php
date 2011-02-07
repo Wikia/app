@@ -1,4 +1,5 @@
 <section id="CreateNewWiki">
+	<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
 	<h1><?= wfMsg('cnw-title') ?></h1>
 	<ol class="steps">
 		<li id="NameWiki" class="step">
@@ -59,7 +60,7 @@
 					
 					</select>
 				</div>
-				<nav>
+				<nav class="next-controls">
 					<span class="submit-error error-msg"></span>
 					<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next">
 				</nav>
@@ -79,14 +80,16 @@
 			<p class="login-msg">
 				<?= wfMsg('cnw-login-prompt') ?> <a href="#"><?= wfMsg('cnw-call-to-login') ?></a>
 				<br>
-				<?php print '<fb:login-button id="fbAjaxLoginConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'>Login with Facebook</fb:login-button>'; ?>
+				<?php print '<fb:login-button id="fbAjaxSignupConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'>Login with Facebook</fb:login-button>'; ?>
 			</p>
 			<div class="facebook login">
 				<span>- <?= wfMsg('cnw-or') ?> -</span>
 				<?php print '<fb:login-button id="fbAjaxLoginConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'>Login with Facebook</fb:login-button>'; ?>
 			</div>
-			<nav>
+			<nav class="back-controls">
 				<input type="button" value="<?= wfMsg('cnw-back') ?>" class="secondary back">
+			</nav>
+			<nav class="next-controls">
 				<input type="button" value="<?= wfMsg('cnw-login') ?>" class="login">
 				<input type="button" value="<?= wfMsg('cnw-signup') ?>" class="signup">
 			</nav>
@@ -128,8 +131,10 @@
 	?>
 					<option value="3"><?=wfMsg('autocreatewiki-category-other')?></option>
 				</select>
-				<nav>
+				<nav class="back-controls">
 					<input type="button" value="<?= wfMsg('cnw-back') ?>" class="secondary back">
+				</nav>
+				<nav class="next-controls">
 					<span class="submit-error error-msg"></span>
 					<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next">
 				</nav>
@@ -140,7 +145,7 @@
 			<p class="creative"><?= wfMsg('cnw-theme-creative') ?></p>
 			<?= wfRenderModule('ThemeDesigner', 'ThemeTab') ?>
 			<p class="instruction creative"><?= wfMsg('cnw-theme-instruction') ?></p>
-			<nav>
+			<nav class="next-controls">
 				<span class="submit-error finish-status"></span>
 				<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next">
 			</nav>
@@ -152,7 +157,7 @@
 				<?= wfMsg('cnw-upgrade-marketing') ?>
 				<input type="button" value="<?= wfMsg('cnw-upgrade-now') ?>" class="upgrade">
 			</div>
-			<nav>
+			<nav class="next-controls">
 				<span class="submit-error finish-status"></span>
 				<input type="button" value="<?= wfMsg('cnw-upgrade-decline') ?>" class="next">
 			</nav>
