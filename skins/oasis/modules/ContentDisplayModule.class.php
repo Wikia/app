@@ -61,7 +61,7 @@ class ContentDisplayModule extends Module {
 	}
 
 	public static function onDoEditSectionLink( $skin, $title, $section, $tooltip, $result, $lang = false ) {
-		global $wgBlankImgUrl, $wgTitle, $wgUser;
+		global $wgBlankImgUrl, $wgUser;
 		wfProfileIn(__METHOD__);
 
 		$result = ''; // reset result first
@@ -72,7 +72,7 @@ class ContentDisplayModule extends Module {
 
 		// RT#84733 - prompt to login if the user is an anon and can't edit right now (protected pages and wgDisableAnonEditing wikis).
 		$extraClass = "";
-		if ( !$wgTitle->userCan('edit') && $wgUser->isAnon() ) {
+		if ( !$title->userCan('edit') && $wgUser->isAnon() ) {
 			$class .= " loginToEditProtectedPage";
 		}
 
