@@ -3,14 +3,20 @@ class OnlineStatusTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @group Monitoring
+	 * @dataProvider websitesProvider
 	 */
-	function testAvatarService() {
-		global $config;
+	public function testWebsiteIsNotDown($website) {
 		$searchText = '<h1>Wikia</h1>';
-		$websites = $config->onlineStatus->website;
-		foreach ($websites as $website) {
-			$this->assertTrue($this->isOnline($website, $searchText), sprintf('Website "%s" is down', $website));
+		$this->assertTrue($this->isOnline($website, $searchText), sprintf('Website "%s" is down', $website));
+	}
+	
+	public function websitesProvider() {
+		global $config;
+		$data = array();
+		foreach ($config->onlineStatus->website as $website) {
+			$data[] = array($website);
 		}
+		return $data;
 	}
 	
 	private function isOnline($url, $searchText) {
