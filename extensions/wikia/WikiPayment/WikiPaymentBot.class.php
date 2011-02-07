@@ -62,8 +62,8 @@ class WikiPaymentBot {
 								break;
 							case self::BAID_CANCELLED:
 								$data['endDate'] = 0;
-								$date['cancelDate'] = date('Y-m-d');
-								$date['enable'] = true;
+								$data['cancelDate'] = date('Y-m-d');
+								$data['enable'] = true;
 								break;
 						}
 						$this->updateStatusInDb( $dbw, $cityId, $userId, $data );
