@@ -41,7 +41,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
     
     function execute($article_id = null, $limit = "", $offset = "", $show = true) {
 		global $wgRequest, $wgOut, $wgTitle, $wgUser, $wgExtensionsPath, $wgScriptPath, $wgScript, $wgLang;
-
+		
 		if( !$wgUser->isLoggedIn() ) {
 			$wgOut->showErrorPage( 'plb-special-no-login', 'plb-login-required', array(wfGetReturntoParam()));
 			return;
@@ -68,6 +68,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$action = $wgRequest->getVal("action");
 		if($action == 'list') {
 			$wgOut->addScriptFile($wgScriptPath."/extensions/wikia/PageLayoutBuilder/js/list.js");
+			$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/list.scss' ) );	
 			$this->executeList();
 			return true;
 		}
@@ -132,7 +133,6 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	 * execute - View a list of layouts
 	 *
 	 * @author Tomek Odrobny
-	 * 
 	 * @access public
 	 *
 	 */
@@ -164,15 +164,11 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			$out = PageLayoutBuilderModel::getListOfLayout();
 		}
 
-		$button = XML::element("a",array(
-			"id" => "plbNewButton",
-			"class" => "wikia-button",
-			"href" => Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullURL() ),
-			wfMsg('plb-special-form-new')
-		);
+		$button = "<a id='plbNewButton' class='wikia-button' 'href'=".Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullURL().">".
+			XML::element("img",array( "class" => "sprite new", "src" => $wgBlankImgUrl)).wfMsg('plb-special-form-new')."</a>";
 		
 		$msg = wfMsg("plb-list-title", array("$1" => count($out) ) );
-		//$wgOut->setPageTitle( $msg . $button);
+		$wgOut->setPageTitle( $msg . $button);
 		$wgOut->mPagetitle = $msg . $button; //1.16 trick 
 		$wgOut->setHTMLTitle( $msg );
 		$title = Title::newFromText('LayoutBuilder', NS_SPECIAL);
@@ -180,7 +176,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			$out[$key]['page_title_escaped'] = htmlspecialchars($out[$key]['page_title']);
 			$out[$key]['page_actions']['edit'] = array(
 				"link" => $title->getFullURL('plbId='.$value['page_id'] ),
-				"name" => wfMsg("plb-list-action-edit"), //XML::element("img",array("src" => $wgBlankImgUrl)).
+				"name" => XML::element("img",array( "class" => "sprite edit-pencil", "src" => $wgBlankImgUrl)).wfMsg("plb-list-action-edit"), 
 				"class" => "edit wikia-button secondary",
 				"separator" => 1,
 			);
@@ -203,11 +199,18 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 
 			$out[$key]['page_actions']['delete'] = array(
 				"link" => "#plbId-".$value['page_id'],
+				"class" => "delete",
+				"name" => '<img src="'.$wgBlankImgUrl.'" class="sprite trash"/>',
+				"separator" => 0,
+			);
+			/*
+			$out[$key]['page_actions']['delete'] = array(
+				"link" => "#plbId-".$value['page_id'],
 				"name" => "",//wfMsg("plb-list-action-delete"),
 				"class" => "delete",
 				"separator" => 0,
 			);
-
+*/
 			$out[$key]['profile_name'] = $value['rev_user']->getName();
 			$out[$key]['profile_link'] = AvatarService::getUrl($out[$key]['profile_name']);
 			$out[$key]['profile_avatar'] = AvatarService::renderAvatar($out[$key]['profile_name'], 20);
@@ -279,9 +282,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			}
 		}
 
-		$wgOut->setPageTitle( $this->editTitle1 );;
-		$wgOut->setHTMLTitle(  strip_tags($this->editTitle1) );
-		$wgOut->mPageLinkTitle = true;
+
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
 
 		$this->mFormData['emptytitle'] = empty($this->mFormData['title']);
@@ -293,10 +294,9 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		    "data" => $this->mFormData,
 			"iserror" => (count($this->mFormErrors) > 0),
 			"errors" => $this->mFormErrors,
-			"ispreview" => isset($this->previewOut),
 			"title2" =>	$this->editTitle2,
+			"ispreview" => isset($this->previewOut),
 			"showtitle"  => !(!empty($this->isFromDb) && $this->isFromDb),
-			"previewdata" =>  isset($this->previewOut) ?  $this->previewOut:""
 		) );
 		$wgOut->addHTML( $oTmpl->render("create-form") );
 	}
@@ -338,10 +338,20 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	 */
 	
 	private function renderCreatePage() {
+		global $wgOut;
 		if( $this->isCategorySelect() ) {
 			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
 		}
+	
+		if(isset($this->previewOut)) {
+			$wgOut->addHTML( '<div class="plb-preview-div">'.$this->previewOut.'</div>');	
+		}
+		
 		$this->mEditPage->showEditForm( array($this, 'renderFormHeader') );
+		
+		$wgOut->setPageTitle( $this->editTitle1 );;
+		$wgOut->setHTMLTitle(  strip_tags($this->editTitle1) );
+		$wgOut->mPageLinkTitle = true;
 	}
 
 		
@@ -583,7 +593,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 					"type" => "submit",
 					"tabindex" => 5,
 					"value" => wfMsg('plb-create-button-layout'),
-					"title" => wfMsg('plb-create-button-draft-layout')
+					"title" => wfMsg('plb-create-button-layout-title')
 				)
 			);
 		
@@ -890,4 +900,42 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			wfRunHooks('AlternateEdit', array(&$this->mEditPage));
 		}
 	}
+	
+	
+	/**
+	 * 	onBeforeEditEnhancements    
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
+	function onBeforeEditEnhancements(&$self) {
+		//global $wgTitle;
+		if($wgTitle->isSpecial('PageLayoutBuilder') && empty($self->action) ) {
+			$self->action = 'edit';
+		}
+		return true;	
+	}
+	
+	/**
+	 * onGetRailModuleSpecialPageList    
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+
+		
+	public function onGetRailModuleList(&$railModuleList) {
+		global $wgTitle, $wgRequest;
+		$action = $wgRequest->getVal("action");
+		if($wgTitle->isSpecial('PageLayoutBuilder') && $action == "list" ) {
+			$railModuleList = array();
+		}
+
+		return true;
+	}
+	*/
 }

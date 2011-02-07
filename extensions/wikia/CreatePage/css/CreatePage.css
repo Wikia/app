@@ -21,6 +21,9 @@
 
 #CreatePageDialogChoices {
 	margin-bottom: 8px;
+	height: 280px;
+    overflow-y: auto;
+	overflow-x: hidden;
 	list-style-type: none;
 	margin: 0;
 }

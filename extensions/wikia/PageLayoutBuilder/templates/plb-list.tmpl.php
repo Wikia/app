@@ -41,9 +41,9 @@
 						<li>
 							<a href="<?php echo $value['profile_link']; ?>"><?php echo $value['profile_avatar'] ?></a>
 						</li>
-						<li class="username">
+						<li class="username"> 
 							<a href="<?php echo $value['profile_link']; ?>"><?php echo $value['profile_name'] ?></a><br>
-							<?php echo $value['edit_date'] ?>
+							<span><?php echo $value['edit_date'] ?></span>
 						</li>
 					</ul>
 				</td>

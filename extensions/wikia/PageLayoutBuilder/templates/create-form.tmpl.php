@@ -1,8 +1,4 @@
 <?php if($ispreview): ?>
-	<div class="plb-preview-div">
-		<?php echo $previewdata; ?>
-	</div>
-
 	<div class="WikiaPageHeader editbox" id="WikiaEditBoxHeader">
 		<h1>
 			<?php echo $title2 ?>
