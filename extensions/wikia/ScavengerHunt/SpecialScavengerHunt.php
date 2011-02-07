@@ -193,7 +193,7 @@ class SpecialScavengerHunt extends SpecialPage {
 			$article->setHiddenImage($hiddenImages[$i]);
 			$article->setSuccessImage($clueImages[$i]);
 			$article->setClueText($clues[$i]);
-			$articles[] = $arcicle;
+			$articles[] = $article;
 		}
 		$game->setArticles($articles);
 
