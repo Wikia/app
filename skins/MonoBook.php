@@ -174,7 +174,9 @@ class MonoBookTemplate extends QuickTemplate {
 		}
 
 		/* Wikia change begin - @author: Macbre */
-		$skin->wikiaBox();
+		if (method_exists($skin, 'wikiaBox')) {
+			$skin->wikiaBox();
+		}
 		/* Wikia change end */
 ?>
 </div><!-- end of the left (by default at least) column -->
