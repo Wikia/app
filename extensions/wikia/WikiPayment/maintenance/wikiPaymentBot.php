@@ -12,6 +12,7 @@ $wgAutoloadClasses['WikiPaymentBot'] = dirname(__FILE__) . '/../WikiPaymentBot.c
 
 $debugMode = (isset($options['d']) || isset($options['debug'])) ? true : false;
 $dryRunMode = isset($options['dryrun']) ? true : false;
+$limit = isset($options['limit']) ? $options['limit'] : 0;
 
 $paymentBot = new WikiPaymentBot( $debugMode, $dryRunMode );
-$paymentBot->run();
+$paymentBot->run( $limit );

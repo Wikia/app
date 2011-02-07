@@ -23,15 +23,21 @@ class WikiPaymentBot {
 		$this->isDryRun = $dryRun;
 	}
 
-	public function run() {
+	public function run( $limit = 0 ) {
 		global $wgExternalDatawareDB;
+
+		$options = array();
+		if( !empty( $limit )) {
+			$options = array( "LIMIT" => $limit );
+		}
 
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 		$res = $dbw->select(
 			array( 'user_flags' ),
 			array( 'city_id', 'user_id', 'data' ),
 			array( "type='" . self::PAID_WIKI_USER_FLAG . "'" ),
-			__METHOD__
+			__METHOD__,
+			$options
 		);
 
 		$paidWikisNum = 0;
