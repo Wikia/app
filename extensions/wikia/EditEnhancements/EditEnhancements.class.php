@@ -2,7 +2,7 @@
 
 class EditEnhancements {
 
-	private $action;
+	public $action;
 	private $undo;
 	private $tmpl;
 
@@ -11,16 +11,18 @@ class EditEnhancements {
 
 		$this->action = $action;
 		$this->undo = intval($wgRequest->getVal('undo', 0)) != 0;
-
-		if($this->action == 'edit' && !$this->undo) {
-			$wgHooks['GetHTMLAfterBody'][] = array(&$this, 'editPageJS');
-		} else if ($this->action == 'submit' || $this->undo) {
-			$wgHooks['GetHTMLAfterBody'][] = array(&$this, 'previewJS');
-		}
-
-		$this->tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		$wgHooks['GetHTMLAfterBody'][] = array(&$this, 'editPageJS');
 	}
 
+	public static function render($skin, &$html) {
+		wfRunHooks('BeforeEditEnhancements', array(&$this) );
+		if($this->action == 'edit' && !$this->undo ) {
+			$this->editPageJS($skin, &$html);
+		} else if ($this->action == 'submit' || $this->undo) {
+			$this->previewJS($skin, &$html);
+		}
+	}
+	
 	public function editPageJS($skin, &$html) {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/EditEnhancements/js/EditEnhancements.js?{$wgStyleVersion}\"></script>");

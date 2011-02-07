@@ -10,12 +10,12 @@ EditEnhancementsPreview = {
 	init: function() {	
 		/* Repostion elements in layout */
 		$('<div id="edit_enhancements_toolbar"><ul>').insertBefore("#editpage-copywarn");
-		var elements = ["#wpSave", "#wpPreview"];
+		
 		// NS_3 is User_Talk and shouldn't have the summary field and label repositioned.
 		if (wgNamespaceNumber != 3) {
 			elements.unshift("#wpSummaryLabel", "#wpSummary");
 		}
-		
+		$().log("EditEnhancementsPreview", elements.toString());
 		$(elements.toString()).each(function() {
 			$(this).wrap("<li>").parent().appendTo("#edit_enhancements_toolbar ul");
 		});

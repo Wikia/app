@@ -16,9 +16,8 @@ var EditEnhancements = {
 	init: function() {	
 		/* Repostion elements in layout */
 		$('<div id="edit_enhancements_toolbar"><ul>').insertBefore("#editpage-copywarn");
-		
 		/* List of elements to reposition */
-		var elements = ["#wpSave", "#wpPreview"];
+		var elements = ["#wpSave", "#wpPreview", /* plb */ "#wpDraft", "#wpPreviewform", "#wpPreviewarticle" ];
 		// NS_3 is User_Talk and shouldn't have the summary field and label repositioned.
 		if (wgNamespaceNumber != 3) {
 			elements.unshift("#wpSummaryLabel", "#wpSummary");

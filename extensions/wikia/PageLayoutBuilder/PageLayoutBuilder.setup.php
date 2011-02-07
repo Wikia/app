@@ -94,4 +94,7 @@ $wgHooks['CreatePage::FetchOptions'][] = 'PageLayoutBuilderSpecialPage::createPa
 $wgHooks['MyTools::getDefaultTools'][] = 'PageLayoutBuilderSpecialPage::myTools';
 $wgHooks['UserCommand::SpecialPage::PageLayoutBuilder'][] = 'PageLayoutBuilderSpecialPage::myTools2';
 
+$wgHooks['BeforeEditEnhancements'][] = 'PageLayoutBuilderSpecialPage::onBeforeEditEnhancements'; 
+//$wgHooks['GetRailModuleList'][] = 'PageLayoutBuilderSpecialPage::onGetRailModuleSpecialPageList';
+
 $wgAjaxExportList[] = 'PageLayoutBuilderEditor::getPLBEditorData';

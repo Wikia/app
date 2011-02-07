@@ -327,9 +327,9 @@ class PageLayoutBuilderParser extends Parser {
 			foreach($dom->find(implode(",", $elements)) as $element) {
 				$element->outertext = '<span class="error">' . wfMsgForContent( 'plb-parser-error-use-on-template'  ) . '</span>';
 			}
+			$text = $dom->__toString();
 		} 
 		
-		$text = $dom->__toString();
 		return true;
 	}
 }
