@@ -20,7 +20,7 @@ import static org.testng.AssertJUnit.*;
 import org.testng.annotations.Test;
 
 public class MainPageTest extends BaseTest {
-	@Test(groups={"oasis", "CI"})
+//	@Test(groups={"oasis", "CI"})
 	public void testAddGame() throws Exception {
 		DateFormat df = new SimpleDateFormat("yyyyMMDDHHmm");
 		String date = df.format(new Date());
