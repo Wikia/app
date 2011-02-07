@@ -14,6 +14,9 @@
 
 package com.wikia.selenium.tests;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.session;
 import static org.testng.AssertJUnit.*;
 
