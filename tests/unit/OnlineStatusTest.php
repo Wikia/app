@@ -14,7 +14,7 @@ class OnlineStatusTest extends PHPUnit_Framework_TestCase {
 		global $config;
 		$data = array();
 		foreach ($config->onlineStatus->website as $website) {
-			$data[] = array($website);
+			$data[$website] = array($website);
 		}
 		return $data;
 	}
