@@ -45,7 +45,7 @@ class WikiaStatsAutoHubsConsumer {
 				
 				$oRes = $dbr->select(
 					array( 'events' ),
-					array( 'wiki_id, page_id, page_ns, user_id, rev_timestamp' ),
+					array( 'wiki_id, page_id, page_ns, user_id, rev_timestamp, user_is_bot' ),
 					$where,
 					__METHOD__
 				);
@@ -119,6 +119,10 @@ class WikiaStatsAutoHubsConsumer {
 											
 						foreach ( $rows as $oRow ) {
 							if ( is_object( $oRow ) ) {
+								
+								$oUser = User::newFromId( $oRow->user_id );
+								if ( !is_object( $oUser ) ) continue;		
+														
 								if( NS_BLOG_ARTICLE == $oRow->page_ns ) {
 									if ( !empty($tags) ) {
 										foreach( $tags as $id => $val ) {
@@ -140,10 +144,6 @@ class WikiaStatsAutoHubsConsumer {
 									$memkey = sprintf( "%s:user:%d", __METHOD__, $oRow->user_id );	
 									$user = $wgMemc->get($memkey);	
 									if ( empty($user) ) {
-										$oUser = User::newFromId( $oRow->user_id );
-										if ( !is_object($oUser) ) {
-											continue;
-										}
 										$groups = $oUser->getGroups();	
 										$user_groups = implode(";", $groups);
 										
@@ -162,13 +162,15 @@ class WikiaStatsAutoHubsConsumer {
 											$out = $wgMemc->get($mcKey,null);
 											if ($out == 1) { continue ; }
 											$wgMemc->set($mcKey, 1, 24*60*60);
+											
+											$allowed = ( $oRow->user_is_bot != 'Y' && !in_array( $oUser->getName(), $producerDB->getBanedUsers() ) );
 																					
-											if ( !isset($data['user'][$lang][$id]) ) {
+											if ( !isset($data['user'][$lang][$id]) && $allowed ) {
 												$data['user'][$lang][$id] = array();
 											}
 											if ( !isset($data['articles'][$lang][$id]) ) {
 												$data['articles'][$lang][$id] = array();
-											}										
+											}
 											#
 											# prepare insert data
 											$data['articles'][$lang][$id][] = array(									
@@ -180,15 +182,17 @@ class WikiaStatsAutoHubsConsumer {
 												'ta_count'		=> 1
 											);	
 											
-											$data['user'][$lang][$id][] = array(									
-												'tu_user_id'	=> $oRow->user_id, 
-												'tu_tag_id'		=> $id, 
-												'tu_date'		=> $date,
-												'tu_groups'		=> $user['groups'],
-												'tu_username'	=> addslashes($user['name']), 
-												'tu_city_lang'	=> $lang,
-												'tu_count'		=> 1										
-											);		
+											if ( $allowed ) {
+												$data['user'][$lang][$id][] = array(									
+													'tu_user_id'	=> $oRow->user_id, 
+													'tu_tag_id'		=> $id, 
+													'tu_date'		=> $date,
+													'tu_groups'		=> $user['groups'],
+													'tu_username'	=> addslashes($user['name']), 
+													'tu_city_lang'	=> $lang,
+													'tu_count'		=> 1										
+												);
+											}
 										}
 									}
 								}
@@ -202,7 +206,7 @@ class WikiaStatsAutoHubsConsumer {
 					// insert data to database
 					# blogs 
 					$start = time(); 
-					Wikia::log( __METHOD__, 'events', 'Insert ' . count($data['blogs']) . 'blogs' );
+					Wikia::log( __METHOD__, 'events', 'Insert ' . count($data['blogs']) . ' blogs' );
 					$producerDB->insertBlogComment($data['blogs']);
 					$end = time();
 					$time = Wikia::timeDuration($end - $start);
@@ -210,14 +214,14 @@ class WikiaStatsAutoHubsConsumer {
 					
 					# articles
 					$start = time(); 
-					Wikia::log( __METHOD__, 'events', 'Insert ' . count($data['articles']) . 'articles' );
+					Wikia::log( __METHOD__, 'events', 'Insert ' . count($data['articles']) . ' articles' );
 					$producerDB->insertArticleEdit($data['articles']);
 					$end = time();
 					$time = Wikia::timeDuration($end - $start);
 					Wikia::log( __METHOD__, 'events', 'Inserts done in: ' . $time );					
 					
 					$start = time(); 					
-					Wikia::log( __METHOD__, 'events', 'Insert ' . count($data['user']) . 'users' );
+					Wikia::log( __METHOD__, 'events', 'Insert ' . count($data['user']) . ' users' );
 					$producerDB->insertUserEdit($data['user']);	
 					$end = time();
 					$time = Wikia::timeDuration($end - $start);
