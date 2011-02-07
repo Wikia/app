@@ -26,13 +26,16 @@ $messages['en'] = array(
 	'scavengerhunt-label-game-name' => 'Game name:',
 	'scavengerhunt-label-landing' => 'Landing page name:',
 	'scavengerhunt-label-starting-clue' => 'Starting Clue box text:',
+	'scavengerhunt-label-starting-image' => 'Starting Clue box image:',
 	'scavengerhunt-label-page-title' => 'Page title:',
 	'scavengerhunt-label-hidden-image' => 'Page picture (direct image url):',
 	'scavengerhunt-label-clue-image' => 'Picture in a clue box (direct image url):',
 	'scavengerhunt-label-clue' => 'Clue box text:',
+	'scavengerhunt-label-clue-link' => 'Clue box image:',
 	'scavengerhunt-label-entry-form' => 'Entry form text:',
 	'scavengerhunt-label-final-question' => 'Final entry form question:',
 	'scavengerhunt-label-goodbye-msg' => 'Goodbye message:',
+	'scavengerhunt-label-goodbye-image' => 'Goodbye image:',
 	'scavengerhunt-button-add' => 'Add a game',
 	'scavengerhunt-button-save' => 'Save',
 	'scavengerhunt-button-disable' => 'Disable',
@@ -51,6 +54,7 @@ $messages['en'] = array(
 	'scavengerhunt-game-has-been-saved' => 'Scavenger Hunt game has been saved.',
 	'scavengerhunt-game-has-been-enabled' => 'Selected Scavenger Hunt game has been enabled.',
 	'scavengerhunt-game-has-been-disabled' => 'Selected Scavenger Hunt game has been disabled.',
+	'scavengerhunt-game-has-not-been-saved' => 'Scavenger Hunt game has not been saved.',
 
 );
 

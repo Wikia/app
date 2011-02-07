@@ -18,6 +18,12 @@
  */
 
 class SpecialScavengerHunt extends SpecialPage {
+
+	/**
+	 * @var ScavengerHuntGames
+	 */
+	protected $games = null;
+
 	public function __construct() {
 		$this->app = WF::build('App');
 		$this->out = $this->app->getGlobal('wgOut');
@@ -29,11 +35,13 @@ class SpecialScavengerHunt extends SpecialPage {
 	public function execute( $subpage ) {
 		wfProfileIn(__METHOD__);
 
+		$this->games = WF::build('ScavengerHuntGames');
+
 		@list( $action, $id ) = explode('/',$subpage);
 		$action = !empty($action) ? $action : 'list';
 		$id = (int)$id;
-		$game = WF::build('ScavengerHuntGame',array('id'=>(int)$id,'readWrite'=>true));
-		$game->load();
+		$game = $this->games->findById($id);
+		if (empty($game)) $game = $this->games->newGame();
 
 		$this->setHeaders();
 		$this->mTitle = SpecialPage::getTitleFor('scavengerhunt');
@@ -63,7 +71,9 @@ class SpecialScavengerHunt extends SpecialPage {
 						$game->save();
 
 						NotificationsModule::addConfirmation(
-							wfMsg('scavengerhunt-game-has-been-'.($enabled?'enabled':'disabled'))
+							$enabled
+							? wfMsg('scavengerhunt-game-has-been-enabled')
+							: wfMsg('scavengerhunt-game-has-been-disabled')
 						);
 
 						$this->out->redirect( $this->mTitle->getFullUrl() . "/edit/$id" );
@@ -77,14 +87,25 @@ class SpecialScavengerHunt extends SpecialPage {
 						);
 						$this->out->redirect( $this->mTitle->getFullUrl() );
 						return;
+					} else if ($this->request->getVal('export')) {
+
+						$entries = $game->listEntries();
+
+						$csvService = new CsvService();
+						$csvService->output($headers,$entries);
+
+						return;
 					}
 				}
+				// no "break" on purpose
 			case 'add':
-//				$game = WF::build('ScavengerHuntGame',array('id'=>$id,'readWrite'=>true));
 				$errors = array();
 				if ($this->request->wasPosted()) {
 					if ($this->request->getVal('save')) {
 						$game = $this->updatePostedGame($game);
+						if ($action == 'add') {
+							$game->setWikiId($this->app->getGlobal('wgCityId'));
+						}
 						$errors = $this->validateGame($game);
 						if (empty($errors)) {
 							// save changes
@@ -98,6 +119,11 @@ class SpecialScavengerHunt extends SpecialPage {
 
 							$this->out->redirect( $this->mTitle->getFullUrl() );
 							return;
+						} else {
+							NotificationsModule::addConfirmation(
+								wfMsg('scavengerhunt-game-has-not-been-saved'),
+								NotificationsModule::CONFIRMATION_PREVIEW
+							);
 						}
 					}
 				}
@@ -107,64 +133,16 @@ class SpecialScavengerHunt extends SpecialPage {
 				break;
 		}
 
-		return;
-
-		if ($this->request->wasPosted()) {
-
-			//adding new game
-			if ($this->request->getVal('add')) {
-				$emptyGame = WF::build('ScavengerHuntGame');
-				$template->set_vars($this->getTemplateVarsFromGame($emptyGame));
-				$this->out->addHTML($template->render('form'));
-			}
-
-			//save changes
-			elseif ($this->request->getVal('save')) {
-
-				$game = $this->updatePostedGame();
-
-				$errors = $this->validateGame($game);
-
-				if (empty($errors)) {
-					// save changes
-					$game->save();
-
-					$this->out->redirect( $this->mTitle->getFullUrl() );
-				} else {
-					// errors
-					$template->set_vars(array(
-						'errors' => $errors,
-					));
-					$template->set_vars($this->getTemplateVarsFromGame($game));
-					$this->out->addHTML($template->render('form'));
-				}
-			}
-
-			//enable/disable game
-			elseif ($this->request->getVal('enable')) {
-			}
-
-			//delete game
-			elseif ($this->request->getVal('delete')) {
-			}
-
-			//export to csv
-			elseif ($this->request->getVal('export')) {
-			}
-		} else {
-			//default form - entry point
-			$template->set_vars(array(
-			));
-
-			$this->out->addHTML($template->render('main'));
-		}
-
 		wfProfileOut(__METHOD__);
 	}
 
 	protected function updatePostedGame( $game = null ) {
 		if (empty($game)) {
-			$game = WF::build('ScavengerHuntGame', array('id' => (int)$this->request->getVal('gameId'), 'readWrite' => true));
+			$gameId = (int)$this->request->getVal('gameId');
+			$game = $this->games->findById($gameId,true);
+			if (empty($game)) {
+				throw new WikiaException("Could not retrieve specified game");
+			}
 		}
 
 		// set fields
@@ -172,15 +150,18 @@ class SpecialScavengerHunt extends SpecialPage {
 		$game->setName($this->request->getVal('gameName'));
 		$game->setLandingTitle($this->request->getVal('landing'));
 		$game->setStartingClueText($this->request->getVal('startingClue'));
+		$game->setStartingClueImage($this->request->getVal('startingImage'));
 		$game->setFinalFormText($this->request->getVal('entryForm'));
 		$game->setFinalFormQuestion($this->request->getVal('finalQuestion'));
 		$game->setGoodbyeText($this->request->getVal('goodbyeMsg'));
+		$game->setGoodbyeImage($this->request->getVal('goodbyeImage'));
 
 		//create list of articles
 		$pageTitles = $this->request->getArray('pageTitle');
 		$hiddenImages = $this->request->getArray('hiddenImage');
 		$clueImages = $this->request->getArray('clueImage');
 		$clues = $this->request->getArray('clue');
+		$clueLinks = $this->request->getArray('clueLink');
 
 		$articles = array();
 		$count = count($pageTitles);
@@ -191,8 +172,9 @@ class SpecialScavengerHunt extends SpecialPage {
 			$article = WF::build('ScavengerHuntGameArticle');
 			$article->setTitle($pageTitles[$i]);
 			$article->setHiddenImage($hiddenImages[$i]);
-			$article->setSuccessImage($clueImages[$i]);
+			$article->setClueImage($clueImages[$i]);
 			$article->setClueText($clues[$i]);
+			$article->setLink($clueLinks[$i]);
 			$articles[] = $article;
 		}
 		$game->setArticles($articles);
@@ -237,11 +219,13 @@ class SpecialScavengerHunt extends SpecialPage {
 		$hiddenImages = array();
 		$clueImages = array();
 		$clues = array();
+		$clueLinks = array();
 		foreach ($game->getArticles() as $article) {
 			$pageTitles[] = $article->getTitle();
 			$hiddenImages[] = $article->getHiddenImage();
-			$clueImages[] = $article->getSuccessImage();
+			$clueImages[] = $article->getClueImage();
 			$clues[] = $article->getClueText();
+			$clueLinks[] = $article->getLink();
 		}
 		$vars = array(
 			'gameId' => $game->getId(),
@@ -249,13 +233,16 @@ class SpecialScavengerHunt extends SpecialPage {
 			'gameName' => $game->getName(),
 			'landing' => $game->getLandingTitle(),
 			'startingClue' => $game->getStartingClueText(),
+			'startingImage' => $game->getStartingClueImage(),
 			'entryForm' => $game->getFinalFormText(),
 			'finalQuestion' => $game->getFinalFormQuestion(),
 			'goodbyeMsg' => $game->getGoodbyeText(),
+			'goodbyeImage' => $game->getGoodbyeImage(),
 			'pageTitle' => array_merge( $pageTitles, array('') ),
 			'hiddenImage' => array_merge( $hiddenImages, array('') ),
 			'clueImage' => array_merge( $clueImages, array('') ),
 			'clue' => array_merge( $clues, array('') ),
+			'clueLink' => array_merge( $clueLinks, array('') ),
 		);
 
 		return $vars;
