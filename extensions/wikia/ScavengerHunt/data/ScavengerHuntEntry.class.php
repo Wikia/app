@@ -1,11 +1,20 @@
 <?php
 
-	class ScavengerHuntGameEntry {
+	class ScavengerHuntEntry {
 
+		protected $gameId = 0;
 		protected $userId = 0;
 		protected $name = '';
 		protected $email = '';
 		protected $answer = '';
+
+		public function getGameId() {
+			return $this->gameId;
+		}
+
+		public function setGameId( $gameId ) {
+			$this->gameId = $gameId;
+		}
 
 		public function getUserId() {
 			return $this->userId;
@@ -37,19 +46,6 @@
 
 		public function setAnswer( $answer ) {
 			$this->answer = $answer;
-		}
-
-		protected function loadFromDbData( $row ) {
-			$this->userId = $row->user_id;
-			$this->name = $row->name;
-			$this->email = $row->email;
-			$this->answer = $row->answer;
-		}
-
-		static public function newFromRow( $row ) {
-			$entryObj = WF::build('ScavengerHuntEntry');
-			$entryObj->loadFromDbData($row);
-			return $entryObj;
 		}
 
 	}

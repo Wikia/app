@@ -2,11 +2,14 @@
 
 	class ScavengerHuntGame {
 
-		const GAMES_TABLE_NAME = "scavenger_hunt_games";
-		const ENTRIES_TABLE_NAME = "scavenger_hunt_entries";
-
+		/**
+		 * @var WikiaApp
+		 */
 		protected $app = null;
-		protected $readWrite = false;
+		/**
+		 * @var ScavengerHuntGames
+		 */
+		protected $games = null;
 
 		protected $id = 0;
 		protected $wikiId = null;
@@ -15,19 +18,30 @@
 		protected $landingTitle = '';
 		protected $landingArticleId = 0;
 		protected $startingClueText = '';
+		protected $startingClueImage = '';
 		protected $articles = array();
 		protected $finalFormText = '';
 		protected $finalFormQuestion = '';
 		protected $goodbyeText = '';
+		protected $goodbyeImage = '';
 
-		public function __construct( WikiaApp $app, $id = 0, $readWrite = false ) {
+		public function __construct( WikiaApp $app, $id = 0 ) {
 			$this->app = $app;
 			$this->id = $id;
-			$this->readWrite = $readWrite || empty($id);
 		}
 
+		/** GETTER FOR GAMES OBJECT **/
+		public function setGames( $games ) {
+			$this->games = $games;
+		}
+
+		/** GETTERS AND SETTERS **/
 		public function getId() {
 			return $this->id;
+		}
+
+		public function setId( $id ) {
+			$this->id = $id;
 		}
 
 		public function getWikiId() {
@@ -58,8 +72,8 @@
 			return $this->landingTitle;
 		}
 
-		public function setLandingTitle( $title ) {
-			$this->landingTitle = $title;
+		public function setLandingTitle( $landingTitle ) {
+			$this->landingTitle = $landingTitle;
 			$titleObj = WF::build('Title',array($this->landingTitle),'newFromText');
 			$this->landingArticleId = $titleObj ? $titleObj->getArticleId() : 0;
 		}
@@ -68,12 +82,25 @@
 			return $this->landingArticleId;
 		}
 
+		public function setLandingTitleAndId( $landingTitle, $landingArticleId ) {
+			$this->landingTitle = $landingTitle;
+			$this->landingArticleId = $landingArticleId;
+		}
+
 		public function getStartingClueText() {
 			return $this->startingClueText;
 		}
 
 		public function setStartingClueText( $startingClueText ) {
 			$this->startingClueText = $startingClueText;
+		}
+
+		public function getStartingClueImage() {
+			return $this->startingClueImage;
+		}
+
+		public function setStartingClueImage( $startingClueImage ) {
+			$this->startingClueImage = $startingClueImage;
 		}
 
 		public function getArticles() {
@@ -108,166 +135,54 @@
 			$this->goodbyeText = $goodbyeText;
 		}
 
-
-
-		/**
-		 * get db handler
-		 * @return DatabaseBase
-		 */
-		protected function getDb( $type = DB_SLAVE ) {
-			return $this->app->runFunction( 'wfGetDB', $type, array(), $this->app->getGlobal( 'wgExternalDatawareDB' ) );
+		public function getGoodbyeImage() {
+			return $this->goodbyeImage;
 		}
 
-		protected function loadFromDbData( $game ) {
-			$data = unserialize( $game->game_data );
-			$this->isEnabled = $game->game_is_enabled;
-			$this->name = $game->game_name;
-			$this->landingTitle = $data['landingTitle'];
-			$this->landingArticleId = $data['landingArticleId'];
-			$this->startingClueText = $data['startingClueText'];
-			$this->articles = $data['articles'];
-			$this->finalFormText = $data['finalFormText'];
-			$this->finalFormQuestion = $data['finalFormQuestion'];
-			$this->goodbyeText = $data['goodbyeText'];
+		public function setGoodbyeImage( $goodbyeImage ) {
+			$this->goodbyeImage = $goodbyeImage;
 		}
 
-		protected function loadFromDb() {
-			$db = null;
-			$options = array();
-			if ($this->readWrite === true) {
-				$db = $this->getDb(DB_MASTER);
-				$options[] = 'FOR UPDATE';
-			} else {
-				$db = $this->getDb();
-			}
-
-			// read data
-			$game = $db->selectRow(
-				array( self::GAMES_TABLE_NAME ),
-				array( 'game_id', 'wiki_id', 'game_name', 'game_is_enabled', 'game_data' ),
-				array( "game_id" => $this->id ),
-				__METHOD__,
-				$options
-			);
-
-			if(!empty($game)) {
-				$this->loadFromDbData($game);
-			}
-		}
-
-		protected function saveToDb() {
-			if (!$this->readWrite) {
-				return false;
-			}
-
-			$data = array(
-				'landingTitle' => $this->landingTitle,
-				'landingArticleId' => $this->landingArticleId,
-				'startingClueText' => $this->startingClueText,
-				'articles' => $this->articles,
-				'finalFormText' => $this->finalFormText,
-				'finalFormQuestion' => $this->finalFormQuestion,
-				'goodbyeText' => $this->goodbyeText,
-			);
-
-			if (!isset($this->wikiId)) {
-				$this->wikiId = $this->app->getGlobal('wgCityId');
-			}
-
-			// save data
-			$fields = array(
-				'wiki_id' => $this->wikiId,
-				'game_name' => $this->name,
-				'game_is_enabled' => $this->isEnabled,
-				'game_data' => serialize( $data ),
-			);
-
-			$db = $this->getDb(DB_MASTER);
-			if($this->getId()) {
-				$db->update(
-					self::GAMES_TABLE_NAME,
-					$fields,
-					array( "game_id" => $this->getId() ),
-					__METHOD__
-				);
-			}
-			else {
-				$db->insert(
-					self::GAMES_TABLE_NAME,
-					$fields,
-					__METHOD__
-				);
-				$this->id = $db->insertId();
-			}
-			$db->commit();
-			return true;
+		/** BASIC OPERATIONS **/
+		public function save() {
+			return $this->games->save($this);
 		}
 
 		public function load() {
-			if ($this->id) {
-				$this->loadFromDb();
-			}
+			// already loaded - nothing to do
 		}
 
-		public function save() {
-			$this->saveToDb();
+		public function delete() {
+			return $this->games->delete($this);
 		}
 
-
-		static public function newFromRow( WikiaApp $app, $row ) {
-			$id = $row->game_id;
-			$game = WF::build('ScavengerHuntGame',array('app'=>$app,'id'=>$id));
-			$game->loadFromDb($row);
-			return $game;
+		/** HELPER METHODS **/
+		public function newGameArticle() {
+			return $this->games->newGameArticle();
 		}
 
+		protected function getEntries() {
+			return $this->games->getEntries();
+		}
 
-		/*** ENTRIES MANAGEMENT ***/
+		/** ENTRIES MANAGEMENT **/
 		public function addEntry( ScavengerHuntEntry $entry ) {
-			if (empty($this->id)) {
-				throw new WikiaException("Cannot add entry to non persistent game");
+			if ($this->getId() == 0) {
+				return false;
 			}
 
-			$fields = array(
-				'game_id' => $this->getId(),
-				'user_id' => $entry->getUserId(),
-				'name' => $entry->getName(),
-				'email' => $entry->getEmail(),
-				'answer' => $entry->getAnswer(),
-			);
-
-			$this->getDb(DB_MASTER)->insert(
-				self::ENTRIES_TABLE_NAME,
-				$fields,
-				__METHOD__
-			);
-			$entryId = $db->insertId();
-			$db->commit();
-
-			return $entryId;
+			$entry->setGameId($this->getId());
+			$entries = $this->getEntries();
+			return $entries->save($entry);
 		}
 
 		public function listEntries() {
-			if (empty($this->id)) {
+			if ($this->getId() == 0) {
 				return array();
 			}
 
-			$whereClause = array(
-				'game_id' => $this->getId(),
-			);
-			$res = $this->getDb()->select(
-				array( self::ENTRIES_TABLE_NAME ),
-				array( 'user_id', 'name', 'email', 'answer' ),
-				$whereClause,
-				__METHOD__
-			);
-
-			$entries = array();
-			while( $row = $res->fetchObject( $res ) ) {
-				$entries[] = WF::build( 'ScavengerHuntEntry', array( $row ), 'newFromRow' );
-			}
-
-			return $entries;
+			$entries = $this->getEntries();
+			return $entries->findAllByGameId($this->getId());
 		}
 
 	}

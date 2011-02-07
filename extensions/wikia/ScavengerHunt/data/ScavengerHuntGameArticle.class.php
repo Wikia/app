@@ -5,8 +5,9 @@
 		protected $title = '';
 		protected $articleId = 0;
 		protected $hiddenImage = '';
-		protected $successImage = '';
+		protected $clueImage = '';
 		protected $clueText = '';
+		protected $link = '';
 
 		public function setTitle( $title ) {
 			$this->title = $title;
@@ -16,6 +17,11 @@
 
 		public function getTitle() {
 			return $this->title;
+		}
+
+		public function setTitleAndId( $title, $articleId ) {
+			$this->title = $title;
+			$this->aritcleId = $articleId;
 		}
 
 		public function getArticleId() {
@@ -30,12 +36,12 @@
 			return $this->hiddenImage;
 		}
 
-		public function setSuccessImage( $successImage ) {
-			$this->successImage = $successImage;
+		public function setClueImage( $clueImage ) {
+			$this->clueImage = $clueImage;
 		}
 
-		public function getSuccessImage() {
-			return $this->successImage;
+		public function getClueImage() {
+			return $this->clueImage;
 		}
 
 		public function setClueText( $clueText ) {
@@ -44,6 +50,14 @@
 
 		public function getClueText() {
 			return $this->clueText;
+		}
+
+		public function setLink( $link ) {
+			$this->link = $link;
+		}
+
+		public function getLink() {
+			return $this->link;
 		}
 
 	}

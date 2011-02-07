@@ -30,6 +30,13 @@
 			<textarea name="startingClue"><?= $startingClue ?></textarea>
 		</label>
 	</div>
+	<div>
+		<label>
+			<?= wfMsg('scavengerhunt-label-starting-image') ?>
+			<br>
+			<input type="text" name="startingImage" value="<?= $startingImage ?>">
+		</label>
+	</div>
 <?php foreach ($pageTitle as $n => $unused) { ?>
 	<div class="scavenger-entry">
 		<div class="scavenger-entry-info">
@@ -63,6 +70,13 @@
 				<textarea name="clue[]"><?= $clue[$n] ?></textarea>
 			</label>
 		</div>
+		<div>
+			<label>
+				<?= wfMsg('scavengerhunt-label-clue-link') ?>
+				<br>
+				<input type="text" name="clueLink[]" value="<?= $clueLink[$n] ?>">
+			</label>
+		</div>
 	</div>
 <?php } ?>
 	<div>
@@ -84,6 +98,13 @@
 			<?= wfMsg('scavengerhunt-label-goodbye-msg') ?>
 			<br>
 			<textarea name="goodbyeMsg"><?= $goodbyeMsg ?></textarea>
+		</label>
+	</div>
+	<div>
+		<label>
+			<?= wfMsg('scavengerhunt-label-goodbye-image') ?>
+			<br>
+			<input type="text" name="goodbyeImage" value="<?= $goodbyeImage ?>">
 		</label>
 	</div>
 	<div>
