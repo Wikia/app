@@ -1685,6 +1685,8 @@ class User {
 	function getNewMessageLinks() {
 		$talks = array();
 		wfRunHooks( 'UserRetrieveNewTalks', array( &$this, &$talks) );
+
+		/* Wikia change begin - @author: XXX */
 		if( $this->getNewtalk() ) {
 			global $wgCityId, $wgSitename;
 			$up = $this->getUserPage();
@@ -1693,9 +1695,10 @@ class User {
 			$talks[0] = array( "wiki" => $wgSitename, "link" => $utp->getFullURL() );
 			return $talks;
 		}
+		/* Wikia change end */
 
 		if( !$this->getNewtalk() )
-			return array();
+			return array_values($talks);
 		$up = $this->getUserPage();
 		$utp = $up->getTalkPage();
 		return array( array( 'wiki' => wfWikiID(), 'link' => $utp->getLocalURL() ) );
