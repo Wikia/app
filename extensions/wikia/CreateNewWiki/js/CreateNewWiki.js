@@ -42,7 +42,7 @@ var WikiBuilder = {
 		
 		// Name Wiki event handlers
 		$('#NameWiki input.next').click(function() {
-			if (!WikiBuilder.wikiDomain.val() || !WikiBuilder.wikiName.val() || $('#NameWiki .error-msg').html()) {
+			if (!WikiBuilder.wikiDomain.val() || !WikiBuilder.wikiName.val() || $('#NameWiki .wiki-name-error').html() || $('#NameWiki .wiki-domain-error').html()) {
 				WikiBuilder.nameWikiSubmitError.show().html(WikiBuilderCfg['name-wiki-submit-error']).delay(3000).fadeOut();
 			} else {
 				WikiBuilder.saveState({
@@ -52,6 +52,9 @@ var WikiBuilder = {
 				});
 				if ($('#Auth')) {
 					AjaxLogin.init($('#AjaxLoginLoginForm form:first'));
+				}
+				if(onFBloaded) {  // FB hax
+					onFBloaded();
 				}
 				WikiBuilder.transition('NameWiki', true, '+');
 			}
@@ -381,7 +384,8 @@ ThemeDesigner.init = function() {
 };
 ThemeDesigner.set = function(setting, newValue) {
 	var t = themes[newValue];
-	var sass = '/__sass/skins/oasis/css/oasis.scss/3337777333333/';
+	ThemeDesigner.settings = t;
+	var sass = '/__sass/skins/oasis/css/oasis.scss/' + wgStyleVersion + '/';
 	var params = '';
 	params += 'color-body=' + escape(t['color-body']);
 	params += '&color-page=' + escape(t['color-page']);
@@ -392,10 +396,10 @@ ThemeDesigner.set = function(setting, newValue) {
 	params += '&background-align=' + escape(t['background-align']);
 	params += '&background-tiled=' + escape(t['background-tiled']);
 	$('.ThemeDesignerSASS').addClass('remove');
-	$('<style class="ThemeDesignerSASS">').appendTo('head').load(sass + params, function() {
+	$.get(sass+params, function(data) {
+		$('<style class="ThemeDesignerSASS">' + data + '</style>').appendTo('head');
 		$('.ThemeDesignerSASS.remove').remove();
 	});
-	ThemeDesigner.settings = t;
 };
 ThemeDesigner.save = function() {
 	WikiBuilder.saveState(ThemeDesigner.settings);
