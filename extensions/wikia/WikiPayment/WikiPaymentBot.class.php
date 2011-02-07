@@ -102,31 +102,37 @@ class WikiPaymentBot {
 	private function renewPayment( $cityId, $BAId ) {
 		global $wgWikiPaymentAdsFreePrice;
 
-		$result = $this->paypalService->checkBillingAgreement( $BAId );
-		//var_dump( $result );
-		if( $result ) {
-			// billing agreement is still valid, renew subscription
-			if( !$this->isDryRun ) {
-				$paymentId = $this->paypalService->collectPayment( $BAId, $wgWikiPaymentAdsFreePrice );
+		if( !empty( $wgWikiPaymentAdsFreePrice ) ) {
+			$result = $this->paypalService->checkBillingAgreement( $BAId );
+			//var_dump( $result );
+			if( $result ) {
+				// billing agreement is still valid, renew subscription
+				if( !$this->isDryRun ) {
+					$paymentId = $this->paypalService->collectPayment( $BAId, $wgWikiPaymentAdsFreePrice );
+				}
+				else {
+					$paymentId = true;
+				}
+
+				if ( $paymentId === false ) {
+					$this->printDebug( "Collecting payment failed. (BAId=$BAId, CityId=$cityId)" );
+					return self::PAYMENT_FAILED;
+				}
+				else {
+					// payment collected
+					return self::PAYMENT_OK;
+				}
+
 			}
 			else {
-				$paymentId = true;
+				$this->printDebug( "BAId=$BAId has been cancelled (CityId=$cityId)" );
+				$this->enableAds( $cityId );
+				return self::BAID_CANCELLED;
 			}
-
-			if ( $paymentId === false ) {
-				$this->printDebug( "Collecting payment failed. (BAId=$BAId, CityId=$cityId)" );
-				return self::PAYMENT_FAILED;
-			}
-			else {
-				// payment collected
-				return self::PAYMENT_OK;
-			}
-
 		}
 		else {
-			$this->printDebug( "BAId=$BAId has been cancelled (CityId=$cityId)" );
-			$this->enableAds( $cityId );
-			return self::BAID_CANCELLED;
+			$this->printDebug( "ERROR: wgWikiPaymentAdsFreePrice unknown." );
+			return self::PAYMENT_FAILED;
 		}
 	}
 
