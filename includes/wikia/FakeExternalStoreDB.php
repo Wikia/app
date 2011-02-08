@@ -22,7 +22,11 @@ class ExternalStoreDB {
 	function fetchFromURL( $url ) {
 		wfProfileIn( __METHOD__ );
 
-		$ret = Http::get( $this->buildUrl( $url ) );
+		/**
+		 * use noProxy because we don't want to redirect this through localhost
+		 * @see includes/HttpFunctions.php proxySetup()
+		 */
+		$ret = Http::get( $this->buildUrl( $url ), 'default', array( 'noProxy' => true ) );
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
