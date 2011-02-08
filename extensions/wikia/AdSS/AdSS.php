@@ -95,6 +95,20 @@ $wgAdSS_pricingConf['high'] = array(
 			'period'    => 'd', //daily
 			'min-slots' => 5,
 			),
+		'hub' => array(
+			'#default#' => array(
+				'price'  => '20.00',
+				'period' => 'd', //daily
+				),
+			'2' => array(
+				'price'  => '30.00',
+				'period' => 'd', //daily
+				),
+			'3' => array(
+				'price'  => '30.00',
+				'period' => 'd', //daily
+				),
+			),
 		'banner' => array(
 			'price'  => '20.00',
 			'period' => 'd', //daily
@@ -112,6 +126,20 @@ $wgAdSS_pricingConf['medium'] = array(
 			'period'    => 'd', //daily
 			'min-slots' => 5,
 			),
+		'hub' => array(
+			'#default#' => array(
+				'price'  => '20.00',
+				'period' => 'd', //daily
+				),
+			'2' => array(
+				'price'  => '30.00',
+				'period' => 'd', //daily
+				),
+			'3' => array(
+				'price'  => '30.00',
+				'period' => 'd', //daily
+				),
+			),
 		'banner' => array(
 			'price'  => '4.00',
 			'period' => 'd', //daily
@@ -128,6 +156,20 @@ $wgAdSS_pricingConf['low'] = array(
 			'price'     => '5.00',
 			'period'    => 'm', //monthly
 			'min-slots' => 5,
+			),
+		'hub' => array(
+			'#default#' => array(
+				'price'  => '20.00',
+				'period' => 'd', //daily
+				),
+			'2' => array(
+				'price'  => '30.00',
+				'period' => 'd', //daily
+				),
+			'3' => array(
+				'price'  => '30.00',
+				'period' => 'd', //daily
+				),
 			),
 		'banner' => array(
 			'price'  => '20.00',

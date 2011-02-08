@@ -82,7 +82,7 @@ class AdSS_ManagerController {
 
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/manager' );
 		$tmpl->set( 'adList', $pager->getBody() );
-		$tmpl->set( 'buyUrl', Title::makeTitle( NS_SPECIAL, "AdSS" )->getLocalURL( "b" ) );
+		$tmpl->set( 'buyUrl', Title::makeTitle( NS_SPECIAL, "AdSS" )->getLocalURL( ) );
 
 		$wgOut->addHTML( $tmpl->render( 'adList' ) );
 	}

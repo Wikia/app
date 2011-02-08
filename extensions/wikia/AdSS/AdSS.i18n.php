@@ -52,6 +52,11 @@ $messages['en'] = array(
 	'adss-form-banner-plan-header' => 'Buy a share of the 728x90 graphical banners at the top of the wiki',
 	'adss-form-banner-plan-description' => 'Get a share of the banners running across the site for one low price.',
 	'adss-form-banner-plan-price' => '$1 for one share of the banners',
+	'adss-form-hub-plan-header' => 'Buy a Sponsored Link across all $1 wikis',
+	'adss-form-hub-plan-description' => 'Get Sponsored Links on all (over $2) $1 wikis for one low price.
+
+This lets you reach more audience by showing your ad on others wikis from the same hub.',
+	'adss-form-hub-plan-price' => '$1 for one share',
 	'adss-form-or' => '- or -',
 	'adss-form-thanks' => "Thank you for your sponsorship! Your ad has been purchased and will go live after manual approval (within 48 hours).
 
@@ -81,6 +86,7 @@ Return to [[Special:AdSS|{{int:Adss}}]].",
 
 Return to [[Special:AdSS|{{int:Adss}}]].",
 	'adss-per-site' => 'All pages',
+	'adss-per-hub' => 'Hub',
 	'adss-per-page' => 'One page only',
 	'adss-close' => 'Close',
 	'adss-cancel' => 'Cancel',

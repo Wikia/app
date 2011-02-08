@@ -22,6 +22,7 @@ CREATE TABLE ads (
   ad_id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
   ad_user_id int unsigned NOT NULL,
   ad_type char(1) NOT NULL,
+  ad_hub_id int unsigned NOT NULL,
   ad_wiki_id int unsigned NOT NULL,
   ad_page_id int unsigned NOT NULL,
   ad_url text NULL DEFAULT NULL,
