@@ -4,7 +4,7 @@
  * create wiki tester as maintenance script
  */
 
-include( "../CreateWiki.php" );
+include_once( dirname(__FILE__) . "/../CreateWiki.php" );
 
 class CreateWikiTest extends PHPUnit_Framework_TestCase {
 
