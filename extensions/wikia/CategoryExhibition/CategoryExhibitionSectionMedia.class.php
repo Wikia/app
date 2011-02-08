@@ -46,29 +46,34 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 					} else {
 
 						// item is image
-						$elementClass = 'lightbox';
 						$image = wfFindFile( $itemTitle );
-						$proportions = $image->width / $image->height;
-						if ( $proportions < 1 ){
-							$calculatedWidth = floor( $proportions * $this->thumbWidth );
+						$elementClass = 'lightbox';
+							
+						if ( !is_object( $image ) || $image->height == 0 || $image->width == 0 ){
+							$imageSrc = '';
 						} else {
-							$calculatedWidth = $this->thumbMedia;
-						}
-						$forceWidth	= floor($calculatedWidth);
-						$forceHeight	= floor($calculatedWidth / $proportions);
+							$proportions = $image->width / $image->height;
+							if ( $proportions < 1 ){
+								$calculatedWidth = floor( $proportions * $this->thumbWidth );
+							} else {
+								$calculatedWidth = $this->thumbMedia;
+							}
+							$forceWidth	= floor($calculatedWidth);
+							$forceHeight	= floor($calculatedWidth / $proportions);
 
-						$imageServing = new imageServing( array( $item['page_id'] ), $calculatedWidth , array( "w" => $image->width, "h" => $image->height ) );
-						$imageSrc = wfReplaceImageServer(
-							$image->getThumbUrl(
-								$imageServing->getCut( $image->width, $image->height )."-".$image->getName()
-							)
-						);
+							$imageServing = new imageServing( array( $item['page_id'] ), $calculatedWidth , array( "w" => $image->width, "h" => $image->height ) );
+							$imageSrc = wfReplaceImageServer(
+								$image->getThumbUrl(
+									$imageServing->getCut( $image->width, $image->height )."-".$image->getName()
+								)
+							);
+						}
 					}
 					$linkedFiles = $this->getLinkedFiles( $itemTitle );
-					if (!empty($linkedFiles)){
+					if ( !empty( $linkedFiles ) ){
 						$linkText = $linkedFiles->getText();
 						$linkFullUrl = $linkedFiles->getFullURL();
-					}else{
+					} else {
 						$linkText = '';
 						$linkFullUrl = '';
 					}

@@ -7,6 +7,9 @@
 
 	<? foreach($data as $row){ ?>
 		<div class="category-gallery-media ">
+			<? if ( empty( $row['img'] ) ){ ?>
+				<span class="category-gallery-placeholder" ></span>
+			<? } else { ?>
 			<span class="category-gallery-item-image">
 				<a href="<?=$row['url'] ?>" data-ref="<?=$row['data-ref']; ?>" class="<?=$row['class']; ?>" title="<?=$row['title']; ?>">
 					<? if($row['class'] != 'lightbox'){ ?><div class="category-gallery-item-play"></div><? } ?>
@@ -20,6 +23,7 @@
 					?>" />
 				</a>
 			</span>
+			<? } ?>
 			<details><a href="<?=$row['url'] ?>" class="<?=$row['class']; ?>" title="<?=$row['title']; ?>"><?=$row['title']; ?></a></details>
 			<details class="bigger"><? if(!empty($row['targetUrl']) && !empty($row['targetText'])){ echo 'Posted in: <a href="'.$row['targetUrl'].'" title="'.$row['targetText'].'">'.$row['targetText'].'</a>';  } ; ?></details>
 		</div>
