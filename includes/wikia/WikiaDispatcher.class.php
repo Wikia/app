@@ -48,7 +48,7 @@ class WikiaDispatcher {
 					throw new WikiaException( sprintf('Could not dispatch %s::%s', $controllerClassName, $method) );
 				}
 
-				if( !$controller->canDispatch( $method, $response->getFormat()) ) {
+				if( !$request->isInternal() && !$controller->canDispatch( $method, $response->getFormat()) ) {
 					throw new WikiaException( sprintf('Access denied %s::%s', $controllerClassName, $method), 403 );
 				}
 				$controller->setRequest($request);
@@ -66,6 +66,10 @@ class WikiaDispatcher {
 				}
 			}
 		} while (!$request->isDispatched());
+		
+		if ($request->isInternal() && $response->hasException()) {
+			throw $response->getException();
+		}
 
 		$response->buildTemplatePath( $controllerName, $method );
 		return $response;

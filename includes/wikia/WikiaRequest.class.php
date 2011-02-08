@@ -3,8 +3,8 @@
 abstract class WikiaRequest {
 
 	private $isDispatched = false;
+	private $isInternal = false;
 	protected $params = array();
-
 
 	public function __construct( Array $params ) {
 		$this->params = $params;
@@ -28,6 +28,14 @@ abstract class WikiaRequest {
 
 	public function setDispatched($value) {
 		$this->isDispatched = (bool) $value;
+	}
+	
+	public function isInternal() {
+		return $this->isInternal;
+	}
+	
+	public function setInternal($flag) {
+		$this->isInternal = (bool) $flag;
 	}
 
 }

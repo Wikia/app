@@ -74,12 +74,13 @@ class WikiaResponse {
 	public function buildTemplatePath( $controllerName, $methodName, $forceRebuild = false ) {
 		if( ( $this->templatePath == null ) || $forceRebuild ) {
 			$autoloadClasses = WF::build( 'App' )->getGlobal( 'wgAutoloadClasses' );
+			$controllerClass = $controllerName . 'Controller';
 
-			if( empty( $autoloadClasses[$controllerName] ) ) {
+			if( empty( $autoloadClasses[$controllerClass] ) ) {
 				throw new WikiaException( "Invalid controller name: $controllerName" );
 			}
 
-			$this->setTemplatePath( dirname( $autoloadClasses[$controllerName] ) . '/templates/' . $controllerName . '_' . $methodName . '.php' );
+			$this->setTemplatePath( dirname( $autoloadClasses[$controllerClass] ) . '/templates/' . $controllerName . '_' . $methodName . '.php' );
 		}
 	}
 

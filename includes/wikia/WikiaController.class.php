@@ -12,8 +12,19 @@ abstract class WikiaController {
 	 * @var WikiaResponse
 	 */
 	protected $response = null;
+	
+	protected $allowedRequests = array(
+		'help' => array('html', 'json')
+	);
 
 	public function canDispatch( $method, $format ) {
+		if ( !is_array( $this->allowedRequests )
+		  || !isset( $this->allowedRequests[$method] )
+		  || !is_array( $this->allowedRequests[$method] )
+		  || !in_array( $format, $this->allowedRequests[$method] ) ) {
+			return false;
+		}
+		
 		return true;
 	}
 
@@ -41,6 +52,47 @@ abstract class WikiaController {
 		$this->request->setVal( 'controller', $controllerName );
 		$this->request->setVal( 'method', $methodName );
 		$this->request->setDispatched(false);
+	}
+	
+	public function sendRequest($controllerName, $methodName, $params = array(), $format = null) {
+		$request = SF::build( 'WikiaHTTPRequest', array_merge(
+			array('controller' => $controllerName, 'method' => $methodName, 'format' => $format),
+			$params
+		) );
+		$request->setInternal(true);
+		$format = $request->getVal('format', $request->isXmlHttp() ? 'json' : 'html');
+		$response = SF::build( 'WikiaResponse', array( 'format' => $format ) );
+		return SF::build('App')->dispatch($request, $response);
+	}
+	
+	/**
+	 * Prints documentation of current controller
+	 */
+	public function help() {
+		$reflection = new ReflectionClass($this);
+		$methods    = $reflection->getMethods(ReflectionMethod::IS_PUBLIC);
+		$help       = array();
+
+		foreach ($methods as $index => $method) {
+			if (!isset($this->allowedRequests[$method->name])) {
+				unset($methods[$index]);
+			} else {
+				$comment = $method->getDocComment();
+				if ($comment) {
+					$comment = substr($comment, 3, -2);
+					$comment = preg_replace('~^\s*\*\s*~m', '', $comment);
+				}
+				$data = array(
+					'method' => $method->name,
+					'formats' => $this->allowedRequests[$method->name],
+					'description' => $comment
+				);
+				$help[] = $data;
+			}
+		}
+		
+		$this->getResponse()->setVal('class', substr($reflection->name, 0, -10));
+		$this->getResponse()->setVal('methods', $help);
 	}
 
 	public function init() {}

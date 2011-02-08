@@ -175,7 +175,7 @@ class WikiaApp {
 
 	public function dispatch( $request = null, WikiaResponse $response = null ) {
 		if( is_array( $request ) ) {
-			$request = new WikiaRequest( $request );
+			$request = new WikiaHTTPRequest( $request );
 		}
 
 		return $this->getDispatcher()->dispatch( $request, $response );
