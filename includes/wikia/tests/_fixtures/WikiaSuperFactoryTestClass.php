@@ -1,6 +1,6 @@
 <?php
 
-class WikiaFactoryTestClass {
+class WikiaSuperFactoryTestClass {
 	public $id = null;
 	public $type = null;
 	public $bar = null;
@@ -19,7 +19,7 @@ class WikiaFactoryTestClass {
 	}
 
 	public static function newFromTypeAndBar($type, $bar) {
-		$object = new WikiaFactoryTestClass($type);
+		$object = new WikiaSuperFactoryTestClass($type);
 		$object->bar = $bar;
 		return $object;
 	}

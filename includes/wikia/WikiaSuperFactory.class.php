@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Wikia Factory class
+ * Wikia Super Factory class
  * @author ADi
  */
-abstract class WikiaFactory {
+abstract class WikiaSuperFactory {
 	protected static $constructors = array();
 	protected static $setters = array();
 
@@ -120,9 +120,10 @@ abstract class WikiaFactory {
 }
 
 /**
- * WikiaFactory class alias
+ * WikiaFactory class aliases
  * @author ADi
  *
  */
-abstract class WF extends WikiaFactory { }
+abstract class WF extends WikiaSuperFactory { }
+abstract class SF extends WikiaSuperFactory { }
 

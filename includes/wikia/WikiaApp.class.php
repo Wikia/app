@@ -32,19 +32,19 @@ class WikiaApp {
 	 */
 	public function __construct(WikiaCompositeRegistry $registry = null, WikiaHookDispatcher $hookDispatcher = null) {
 		if(is_null($registry)) {
-			WF::setInstance( 'WikiaCompositeRegistry', new WikiaCompositeRegistry( array( self::REGISTRY_MEDIAWIKI => new WikiaGlobalsRegistry(), self::REGISTRY_WIKIA => new WikiaLocalRegistry() ) ) );
-			$registry = WF::build( 'WikiaCompositeRegistry' );
+			SF::setInstance( 'WikiaCompositeRegistry', new WikiaCompositeRegistry( array( self::REGISTRY_MEDIAWIKI => new WikiaGlobalsRegistry(), self::REGISTRY_WIKIA => new WikiaLocalRegistry() ) ) );
+			$registry = SF::build( 'WikiaCompositeRegistry' );
 		}
 		if(is_null($hookDispatcher)) {
-			WF::setInstance( 'WikiaHookDispatcher', new WikiaHookDispatcher());
-			$hookDispatcher = WF::build( 'WikiaHookDispatcher' );
+			SF::setInstance( 'WikiaHookDispatcher', new WikiaHookDispatcher());
+			$hookDispatcher = SF::build( 'WikiaHookDispatcher' );
 		}
 
 		$this->hookDispatcher = $hookDispatcher;
 		$this->registry = $registry;
 
 		// register ajax dispatcher
-		//$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->append('wgAjaxExportList', 'WikiaApp::ajax');
+		$this->registry->getRegistry(self::REGISTRY_MEDIAWIKI)->append('wgAjaxExportList', 'WikiaApp::ajax');
 	}
 
 	/**
@@ -64,12 +64,20 @@ class WikiaApp {
 	}
 
 	/**
+	 * set registry
+	 * @param WikiaCompositeRegistry $registry
+	 */
+	public function setRegistry(WikiaCompositeRegistry $registry) {
+		$this->registry = $registry;
+	}
+
+	/**
 	 * get dispatcher object
 	 * @return WikiaDispatcher
 	 */
 	protected function getDispatcher() {
 		if( $this->dispatcher == null ) {
-			$this->dispatcher = WF::build( 'WikiaDispatcher' );
+			$this->dispatcher = SF::build( 'WikiaDispatcher' );
 		}
 		return $this->dispatcher;
 	}
@@ -174,7 +182,7 @@ class WikiaApp {
 	}
 
 	public static function ajax() {
-		return WF::build( 'App' )->dispatch();
+		return SF::build( 'App' )->dispatch();
 	}
 
 }
