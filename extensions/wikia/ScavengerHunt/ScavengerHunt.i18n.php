@@ -64,7 +64,8 @@ $messages['en'] = array(
 	'scavengerhunt-game-has-been-disabled' => 'Selected Scavenger Hunt game has been disabled.',
 	'scavengerhunt-game-has-not-been-saved' => 'Scavenger Hunt game has not been saved.',
 
-	'scavengerhunt-button-play' => 'Play the game!',
+	'scavengerhunt-starting-clue-title' => 'Scavenger Hunt',
+	'scavengerhunt-button-play' => 'Start the Scavenger Hunt!',
 );
 
 $messages['qqq'] = array(

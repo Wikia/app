@@ -75,14 +75,17 @@ function ScavengerHuntAjax() {
 			$json = Wikia::json_encode($data);
 			$response = new AjaxResponse($json);
 			$response->setContentType('application/json; charset=utf-8');
-		}
-		else {
+		} else {
 			// send text as text/html
 			$response = new AjaxResponse($data);
 			$response->setContentType('text/html; charset=utf-8');
 		}
 
-		wfProfileOut(__METHOD__);
-		return $response;
+	} else {
+		//TODO: add standard error message here
+		$response = new AjaxResponse();
+		$response->setContentType('text/html; charset=utf-8');
 	}
+	wfProfileOut(__METHOD__);
+	return $response;
 }
