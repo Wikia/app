@@ -568,10 +568,14 @@ abstract class DatabaseBase {
 	 * @param $tempIgnore Boolean
 	 */
 	function reportQueryError( $error, $errno, $sql, $fname, $tempIgnore = false ) {
-		global $wgCommandLineMode;
+		global $wgCommandLineMode, $wgEnabledDBReadOnlyRedirect;
 		# Ignore errors during error handling to avoid infinite recursion
 		$ignore = $this->ignoreErrors( true );
 		++$this->mErrorCount;
+
+		if ( $wgEnabledDBReadOnlyRedirect && function_exists( 'wfDBReadOnlyFailed' ) && $this->wasReadOnlyError() ) {
+			wfDBReadOnlyFailed();
+		}
 
 		if( $ignore || $tempIgnore ) {
 			wfDebug("SQL ERROR (ignored): $error\n");

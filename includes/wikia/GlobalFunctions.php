@@ -1410,3 +1410,19 @@ function wfDBLightMode( $maxSleep ) {
 	
 	return true;
 }
+
+/**
+ * return status code if the last failure was due to the database being read-only.
+ *
+ * @author Piotr Molski (moli) <moli at wikia-inc.com>
+ * @param
+ * @return exit 
+ */
+function wfDBReadOnlyFailed( ) {
+	global $wgOut, $wgDBReadOnlyStatusCode;
+	$wgOut->setPageTitle( 'DB Error' );
+	$wgOut->setRobotPolicy( "noindex,nofollow" );
+	$wgOut->setStatusCode( $wgDBReadOnlyStatusCode );
+	$wgOut->clearHTML();
+	exit;
+}
