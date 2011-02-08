@@ -4,6 +4,37 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/core/color";
 
+.scavengerhunt-list-table {
+	margin-bottom:10px;
+	width: 100%;
+	thead {
+		td {
+			@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
+			border-top: 1px solid $color-page-border;
+			border-bottom: 1px solid $color-page-border;
+			color: $color-text;
+			font-weight: bold;
+			&:first-child {
+				border-left: 1px solid $color-page-border;
+			}
+			&:last-child {
+				border-right: 1px solid $color-page-border;
+			}
+		}
+	}
+	td {
+		padding:7px;
+	}
+	tbody {
+		td {
+			border-bottom: 1px solid $color-page-border;
+			.edit {
+				color: $color-text;
+			}
+		}
+	}
+}
+
 .scavenger-form {
 
 	.form-errorbox {
