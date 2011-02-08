@@ -25,8 +25,8 @@ var ScavengerHunt = {
 
 	//init article page
 	initGame: function(gameId) {
-		//current article is taking part in the game
-		if ($.inArray(wgArticleId, window.ScavengerHuntArticles) != -1) {
+		//current article is taking part in the game that user is playing atm
+		if (gameId == window.ScavengerHuntArticleGameId) {
 			//prepare data to show immediately when user click image
 			var data = {
 				action: 'ajax',
@@ -46,7 +46,7 @@ var ScavengerHunt = {
 
 	//handler start button
 	onStartClick: function(e) {
-		$.cookies.set('ScavengerHuntInProgress', window.ScavengerHuntStart[0], {hoursToLive:24*7});
+		$.cookies.set('ScavengerHuntInProgress', window.ScavengerHuntStart, {hoursToLive:24*7});
 		$.showModal(
 			window.ScavengerHuntStartTitle,
 			//TODO: add nice layout here
@@ -55,14 +55,5 @@ var ScavengerHunt = {
 	}
 };
 
-/*
-ScavengerHuntStart="[1]",
-ScavengerHuntStartMsg="Start the Scavenger Hunt!",
-ScavengerHuntStartTitle="Scavenger Hunt",
-ScavengerHuntStartClue="TODO: startingClue here",
-ScavengerHuntStartImg="TODO: startingImage here",
-ScavengerHuntArticles="[1]",
-ScavengerHuntArticleImg='http://',
-*/
 //on content ready
 wgAfterContentAndJS.push(ScavengerHunt.init);

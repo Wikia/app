@@ -43,7 +43,7 @@ class ScavengerHunt {
 			}
 			if (is_array($triggers['article'])) {
 				//variables when on article page
-				$vars['ScavengerHuntArticles'] = json_encode(array_values($triggers['article']));
+				$vars['ScavengerHuntArticleGameId'] = json_encode(array_values($triggers['article']));
 				$vars['ScavengerHuntArticleImg'] = 'TODO: hiddenImage here';
 			}
 
