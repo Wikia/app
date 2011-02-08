@@ -92,7 +92,7 @@ class SpecialScavengerHunt extends SpecialPage {
 						$entries = $game->listEntries();
 
 						$csvService = new CsvService();
-						$csvService->output($headers,$entries);
+						$csvService->output($headers, $entries);
 
 						return;
 					}
@@ -137,6 +137,8 @@ class SpecialScavengerHunt extends SpecialPage {
 	}
 
 	protected function updatePostedGame( $game = null ) {
+		wfProfileIn(__METHOD__);
+
 		if (empty($game)) {
 			$gameId = (int)$this->request->getVal('gameId');
 			$game = $this->games->findById($gameId,true);
@@ -179,10 +181,13 @@ class SpecialScavengerHunt extends SpecialPage {
 		}
 		$game->setArticles($articles);
 
+		wfProfileOut(__METHOD__);
 		return $game;
 	}
 
 	protected function validateGame( ScavengerHuntGame $game ) {
+		wfProfileIn(__METHOD__);
+
 		$errors = array();
 
 		$landingTitle = $game->getLandingTitle();
@@ -211,10 +216,13 @@ class SpecialScavengerHunt extends SpecialPage {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return $errors;
 	}
 
 	protected function getTemplateVarsFromGame( ScavengerHuntGame $game ) {
+		wfProfileIn(__METHOD__);
+
 		$pageTitles = array();
 		$hiddenImages = array();
 		$clueImages = array();
@@ -245,7 +253,7 @@ class SpecialScavengerHunt extends SpecialPage {
 			'clueLink' => array_merge( $clueLinks, array('') ),
 		);
 
+		wfProfileOut(__METHOD__);
 		return $vars;
 	}
-
 }

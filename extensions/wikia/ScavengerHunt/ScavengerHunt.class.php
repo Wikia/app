@@ -28,8 +28,10 @@ class ScavengerHunt {
 		wfProfileIn(__METHOD__);
 
 		//TODO: if wgTitle is in game, add some information (gameID, numbers of al articles to be found)
-		if (false) {
-			$vars['scavengerhunt'] = 1;
+		if (true) {
+			$vars['ScavengerHuntStart'] = '[1]';
+			$vars['ScavengerHuntStartMsg'] = wfMsg('scavengerhunt-button-play');
+			$vars['ScavengerHuntArticles'] = '[1]';
 		}
 
 		wfProfileOut(__METHOD__);
