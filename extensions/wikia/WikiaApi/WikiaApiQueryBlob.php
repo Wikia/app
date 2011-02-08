@@ -4,12 +4,12 @@ if (!defined('MEDIAWIKI')) {
 	die();
 }
 
-class WikiaApiQueryBlob extends ApiBase {
+class WikiaApiQueryBlob extends ApiQueryBase {
 
 	private $type = 'plain';
 
 	public function __construct($main, $action) {
-		parent :: __construct($main, $action);
+		parent :: __construct($main, $action, '');
 	}
 
 	public function execute() {
@@ -28,7 +28,7 @@ class WikiaApiQueryBlob extends ApiBase {
 			$this->dieUsage( 'Invalid cluster', 2, 404 );
 		}
 		
-		$this->type = $type;
+		$this->type = ( $type ) ? $type : 'plain';
 		
 		$url = sprintf( "DB://%s/%d", $cluster, $blobid );
 		$text = ExternalStore::fetchFromURL( $url );
@@ -73,10 +73,28 @@ class WikiaApiQueryBlob extends ApiBase {
 		return array (
 			'cluster'	=> null,
 			'blobid' 	=> null,
-			'type' 	=> null
+			'type' 		=> null
 		);
 	}
 
+	public function getParamDescription() {
+		return array (
+			'cluster' 	=> 'cluster name',
+			'blobid' 	=> 'identifier of text',
+			'type' 		=> 'plain or gzip'
+		);
+	}
+	
+	public function getDescription() {
+		return 'Fetch revision text';
+	}
+
+	protected function getExamples() {
+		return array (
+			'api.php?action=blob&blobid=1',
+		);
+	}	
+	
 	public function getVersion() {
 		return __CLASS__ . ': $Id: WikiaApiQueryBlob.php 17065 2011-02-07 02:11:29Z moli $';
 	}
