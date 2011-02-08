@@ -29,6 +29,9 @@ class OasisModule extends Module {
 	var $comScore;
 	var $quantServe;
 
+	var $attributionName;
+	var $attributionURL;
+
 	// skin/template vars
 	var $pagetitle;
 	var $displaytitle;
@@ -183,6 +186,11 @@ class OasisModule extends Module {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
+
+		// for licensing
+		global $wgSitename, $wgTitle;
+		$this->attributionURL = $wgTitle->getFullUrl( array( 'action' => 'history' ) );
+		$this->attributionName = $wgSitename . " Community";
 
 	} // end executeIndex()
 
