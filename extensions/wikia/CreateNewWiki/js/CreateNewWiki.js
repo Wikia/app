@@ -42,6 +42,7 @@ var WikiBuilder = {
 		
 		// Name Wiki event handlers
 		$('#NameWiki input.next').click(function() {
+			$.tracker.byStr('createnewwiki/namewiki/next');
 			if (!WikiBuilder.wikiDomain.val() || !WikiBuilder.wikiName.val() || $('#NameWiki .wiki-name-error').html() || $('#NameWiki .wiki-domain-error').html()) {
 				WikiBuilder.nameWikiSubmitError.show().html(WikiBuilderCfg['name-wiki-submit-error']).delay(3000).fadeOut();
 			} else {
@@ -83,6 +84,7 @@ var WikiBuilder = {
 		});
 		$('#CreateNewWiki nav .back').bind('click', function() {
 			var id = $(this).closest('.step').attr('id');
+			$.tracker.byStr('createnewwiki/' + id.toLowerCase() + '/back');
 			if (id === 'DescWiki') {
 				WikiBuilder.transition('DescWiki', false, '-');
 				AjaxLogin.showLogin();
@@ -99,6 +101,7 @@ var WikiBuilder = {
 				$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, 
 					function() {
 						$('#Auth nav input.signup').click(function(){
+							$.tracker.byStr('createnewwiki/auth/signup');
 							UserRegistration.submitForm2('normal');
 						});
 				});
@@ -115,6 +118,7 @@ var WikiBuilder = {
 			WikiBuilder.loginEntities.hide();
 		});
 		$('#Auth nav input.login').click(function(e) {
+			$.tracker.byStr('createnewwiki/auth/login');
 			AjaxLogin.form.submit();
 		});
 		$('#ChangeLang').click(function(e) {
@@ -125,6 +129,7 @@ var WikiBuilder = {
 		
 		// Description event handlers
 		$('#DescWiki nav .next').click(function() {
+			$.tracker.byStr('createnewwiki/descwiki/next');
 			var val = WikiBuilder.wikiCategory.find('option:selected').val();
 			if(val) {
 				// call create wiki ajax
@@ -141,6 +146,7 @@ var WikiBuilder = {
 		
 		// Theme event handlers
 		$('#ThemeWiki nav .next').click(function() {
+			$.tracker.byStr('createnewwiki/themewiki/next');
 			ThemeDesigner.save();
 			if(WikiBuilderCfg.skipwikiaplus) {
 				WikiBuilder.gotoMainPage();
@@ -151,9 +157,11 @@ var WikiBuilder = {
 		
 		// Upgrade event handlers
 		$('#UpgradeWiki nav .next').click(function() {
+			$.tracker.byStr('createnewwiki/upgradewiki/next');
 			WikiBuilder.gotoMainPage();
 		});
 		$('#UpgradeWiki .upgrade').click(function() {
+			$.tracker.byStr('createnewwiki/upgradewiki/upgrade');
 			WikiBuilder.upgradeToWikiaPlus();
 		});
 		
@@ -163,6 +171,8 @@ var WikiBuilder = {
 			WikiBuilder.wb.width(pane.width());
 			WikiBuilder.steps.hide();
 			pane.show();
+		} else {
+			$.tracker.byStr('createnewwiki/view');
 		}
 	},
 	
@@ -290,6 +300,9 @@ var WikiBuilder = {
 				}
 			}
 			wb.height('auto');
+			if(next) {
+				$.tracker.byStr('createnewwiki/' + from.toLowerCase() + '/transition');
+			}
 		});
 		f.animate({'opacity':'hide'},{queue:false, duration: 250});
 		
@@ -333,6 +346,7 @@ var WikiBuilder = {
 	gotoMainPage: function() {
 		WikiBuilder.nextButtons.attr('disabled', true);
 		if(WikiBuilder.finishCreateUrl) {
+			$.tracker.byStr('createnewwiki/complete');
 			location.href = WikiBuilder.finishCreateUrl;
 		} else if (WikiBuilder.retryGoto < 300) {
 			if(!WikiBuilder.finishSpinner.data('spinning')) {
@@ -405,7 +419,9 @@ ThemeDesigner.save = function() {
 	WikiBuilder.saveState(ThemeDesigner.settings);
 };
 
-function sendToConnectOnLogin(){
+function sendToConnectOnLogin() {
+	$.tracker.byStr('createnewwiki/auth/transition');
+	$.tracker.byStr('createnewwiki/auth/facebook');
 	wgPageQuery += encodeURIComponent('&fbreturn=1');
 	sendToConnectOnLoginForSpecificForm("");
 }
