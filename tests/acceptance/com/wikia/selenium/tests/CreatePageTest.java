@@ -53,25 +53,25 @@ public class CreatePageTest extends BaseTest {
 
 		// existing title error checking
 		session().type("wpCreatePageDialogTitle", pageTitle);
-		session().click("wpCreatePageDialogButton");
+		session().click("//*[@id='CreatePageDialogButton']/a");
 		waitForElement("createPageErrorMsg", this.getTimeout());
 		assertTrue(session().isElementPresent("createPageErrorMsg"));
 
 		// invalid title error checking
 		session().type("wpCreatePageDialogTitle", "inval|dt|tle");
-		session().click("wpCreatePageDialogButton");
+		session().click("CreatePageDialogButton");
 		waitForElement("createPageErrorMsg", this.getTimeout());
 		assertTrue(session().isElementPresent("createPageErrorMsg"));
 
 		// empty title error checking
 		session().type("wpCreatePageDialogTitle", "");
-		session().click("wpCreatePageDialogButton");
+		session().click("CreatePageDialogButton");
 		waitForElement("createPageErrorMsg", this.getTimeout());
 		assertTrue(session().isElementPresent("createPageErrorMsg"));
 
 		// spam title error checking
 		session().type("wpCreatePageDialogTitle", "WikiaTestBadWordDontRemoveMe");
-		session().click("wpCreatePageDialogButton");
+		session().click("CreatePageDialogButton");
 		waitForElement("createPageErrorMsg", this.getTimeout());
 		assertTrue(session().isElementPresent("createPageErrorMsg"));
 	}
@@ -85,7 +85,7 @@ public class CreatePageTest extends BaseTest {
 		String nonExistentTitle = "N0n 3xist3nt p4ge t1tl3";
 		session().type("wpCreatePageDialogTitle", nonExistentTitle);
 		session().click("//input[@id='CreatePageDialogFormat']");
-		session().click("wpCreatePageDialogButton");
+		session().click("//*[@id='CreatePageDialogButton']/a");
 
 		// checking edit page
 		checkEditPage(nonExistentTitle);
@@ -100,7 +100,7 @@ public class CreatePageTest extends BaseTest {
 		String nonExistentTitle = "N0n 3xist3nt p4ge t1tl3";
 		session().type("wpCreatePageDialogTitle", nonExistentTitle);
 		session().click("//input[@id='CreatePageDialogBlank']");
-		session().click("wpCreatePageDialogButton");
+		session().click("//*[@id='CreatePageDialogButton']/a");
 
 		// checking edit page
 		checkEditPage(nonExistentTitle);
@@ -160,7 +160,7 @@ public class CreatePageTest extends BaseTest {
 			session().waitForPageToLoad(this.getTimeout());
 		}
 		else {
-			System.out.println("createpagedefaultblank is already set");
+			//System.out.println("createpagedefaultblank is already set");
 		}
 
 		openDialogOnRandomPage();
