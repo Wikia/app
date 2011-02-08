@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * create wiki tester as maintenance script
+ */
+
+include( "../CreateWiki.php" );
+
+class CreateWikiTest extends PHPUnit_Framework_TestCase {
+
+	const TEST_PROJECT_NAME = 'CreateWiki Project';
+	const TEST_PROJECT_DESC = 'Create Wiki';
+	const TEST_WIKI_ID = 177;
+	const TEST_EXTENSION = '';
+	const TEST_USER_ID1 = 1;
+	const TEST_USER_ID2 = 2;
+
+	/**
+	 * CreateWikiProject object
+	 * @var CreateWikiProject
+	 */
+	public function testWikiCreation() {
+		
+		$languages = array( 'en', 'pl', 'de', 'pt-br' );;
+
+		$types = array( false, "answers" );
+
+		foreach ( $types as $type ) {
+			foreach ( $languages as $lang ) {
+				$domain = sprintf("test%s", date('YmdHis'));
+
+				$this->oCWiki = new CreateWiki( 
+					"Test Create Wiki", // sitename
+					$domain, // domain
+					$lang, // lang
+					1, // hub
+					$type
+				);		
+				
+				$this->assertEquals( 0, $this->oCWiki->create(), "CreateWiki failed for language: {$lang} and type: {$type}" );
+			}
+		}
+	}
+}
+
