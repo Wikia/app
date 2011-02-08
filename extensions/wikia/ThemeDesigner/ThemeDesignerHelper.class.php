@@ -33,7 +33,7 @@ class ThemeDesignerHelper {
 			'darkslateblue', 'darkslategray', 'darkturquoise', 'darkviolet',
 			'deeppink', 'deepskyblue', 'dimgray', 'dodgerblue', 'firebrick',
 			'floralwhite', 'forestgreen', 'fuchsia', 'gainsboro', 'ghostwhite',
-			'gold', 'goldenrod', 'gray', 'grey', 'green', 'greenyellow', 'honeydew',
+			'gold', 'goldenrod', 'gray', 'green', 'greenyellow', 'honeydew',
 			'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush',
 			'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan',
 			'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightpink',
