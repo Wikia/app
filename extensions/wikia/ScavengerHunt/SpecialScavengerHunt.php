@@ -32,6 +32,10 @@ class SpecialScavengerHunt extends SpecialPage {
 		parent::__construct('ScavengerHunt', 'scavengerhunt');
 	}
 
+	protected function getBlankImgUrl() {
+		return $this->app->getGlobal('wgBlankImgUrl');
+	}
+
 	public function execute( $subpage ) {
 		wfProfileIn(__METHOD__);
 
@@ -57,11 +61,16 @@ class SpecialScavengerHunt extends SpecialPage {
 
 		switch ($action) {
 			case 'list':
+				// Add game button
 				$template->set_vars(array(
 					'addUrl' => $this->mTitle->getFullUrl() . "/add",
 				));
-
 				$this->out->addHTML($template->render('main'));
+
+				// Games list
+				$pager = WF::build('ScavengerHuntGamesPager',array($this->games,$this->mTitle->getFullUrl(),$template));
+				$this->out->addHTML($pager->getBody());
+
 				break;
 			case 'edit':
 				if ($this->request->wasPosted()) {
@@ -256,4 +265,54 @@ class SpecialScavengerHunt extends SpecialPage {
 		wfProfileOut(__METHOD__);
 		return $vars;
 	}
+}
+
+class ScavengerHuntGamesPager extends AlphabeticPager {
+
+	protected $games = null;
+	protected $url = '';
+	/**
+	 * @var EasyTemplate
+	 */
+	protected $tpl = null;
+
+	public function __construct( ScavengerHuntGames $games, $url, $tpl ) {
+		parent::__construct();
+		$this->games = $games;
+		$this->url = $url;
+		$this->tpl = $tpl;
+		$this->mDb = $this->games->getDb();
+	}
+
+	public function formatRow( $row ) {
+		$this->tpl->reset();
+		$game = $this->games->newGameFromRow($row);
+		$this->tpl->set_vars(array(
+			'editUrl' => $this->url . "/edit/" . ((int)$game->getId()),
+			'game' => $game,
+		));
+		return $this->tpl->render('game-list-item');
+	}
+
+	public function getStartBody() {
+		$this->tpl->reset();
+		return $this->tpl->render('game-list-top');
+	}
+
+	public function getEndBody() {
+		$this->tpl->reset();
+		return $this->tpl->render('game-list-bottom');
+	}
+
+	public function getQueryInfo() {
+		return array(
+			'tables' => ScavengerHuntGames::GAMES_TABLE_NAME,
+			'fields' => '*',
+		);
+	}
+
+	public function getIndexField() {
+		return 'game_id';
+	}
+
 }

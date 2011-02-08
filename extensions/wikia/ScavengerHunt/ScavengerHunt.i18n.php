@@ -22,6 +22,14 @@ $messages = array();
 $messages['en'] = array(
 	'scavengerhunt-desc' => 'Alows to create a scavenger hunt game on a wiki.',
 	'scavengerhunt' => 'Scavenger hunt interface',
+
+	'scavengerhunt-list-header-name' => 'Game name',
+	'scavengerhunt-list-header-is-enabled' => 'Enabled?',
+	'scavengerhunt-list-header-actions' => 'Actions',
+	'scavengerhunt-list-enabled' => 'Enabled',
+	'scavengerhunt-list-disabled' => 'Disabled',
+	'scavengerhunt-list-edit' => 'edit',
+
 	'scavengerhunt-label-entry-info' => 'Entry:',
 	'scavengerhunt-label-game-name' => 'Game name:',
 	'scavengerhunt-label-landing' => 'Landing page name:',

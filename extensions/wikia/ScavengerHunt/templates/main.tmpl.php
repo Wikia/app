@@ -3,3 +3,4 @@
 		<input type="submit" class="scavenger-add" value="<?= wfMsg('scavengerhunt-button-add') ?>" />
 	</div>
 </form>
+<br />

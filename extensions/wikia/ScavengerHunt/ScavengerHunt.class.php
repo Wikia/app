@@ -18,20 +18,28 @@
  */
 
 class ScavengerHunt {
+
 	/*
 	 * hook handler
 	 *
 	 * @author Marooned
+	 * @author wladek
 	 */
-	static function onMakeGlobalVariablesScript(&$vars) {
-		global $wgTitle;
+	function onMakeGlobalVariablesScript( &$vars ) {
 		wfProfileIn(__METHOD__);
 
-		//TODO: if wgTitle is in game, add some information (gameID, numbers of al articles to be found)
-		if (true) {
-			$vars['ScavengerHuntStart'] = '[1]';
-			$vars['ScavengerHuntStartMsg'] = wfMsgForContent('scavengerhunt-button-play');
-			$vars['ScavengerHuntArticles'] = '[1]';
+		$title = WF::build('App')->getGlobal('wgTitle');
+		$games = WF::build('ScavengerHuntGames');
+
+		$triggers = $games->getTitleTriggers($title);
+		if (is_array($triggers)) {
+			if (is_array($triggers['start'])) {
+				$vars['ScavengerHuntStart'] = json_encode(array_values($triggers['start']));
+				$vars['ScavengerHuntStartMsg'] = wfMsg('scavengerhunt-button-play');
+			}
+			if (is_array($triggers['article'])) {
+				$vars['ScavengerHuntArticles'] = json_encode(array_values($triggers['article']));
+			}
 		}
 
 		wfProfileOut(__METHOD__);

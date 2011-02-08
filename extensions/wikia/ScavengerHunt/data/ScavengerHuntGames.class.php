@@ -56,16 +56,16 @@
 		}
 
 		public function findAllByWikiId( $wikiId ) {
+			$db = $this->getDb();
 			$set = $db->select(
 				array( self::GAMES_TABLE_NAME ),
 				array( 'game_id', 'wiki_id', 'game_name', 'game_is_enabled', 'game_data' ),
 				array( 'wiki_id' => (int)$wikiId ),
-				__METHOD__,
-				$options
+				__METHOD__
 			);
 
 			$games = array();
-			while( $row = $res->fetchObject( $res ) ) {
+			while( $row = $set->fetchObject( $set ) ) {
 				$games[] = $this->newGameFromRow($row);
 			}
 
@@ -78,11 +78,15 @@
 		 * get db handler
 		 * @return DatabaseBase
 		 */
-		protected function getDb( $type = DB_SLAVE ) {
+		public function getDb( $type = DB_SLAVE ) {
 			return $this->app->runFunction( 'wfGetDB', $type, array(), $this->app->getGlobal( 'wgExternalDatawareDB' ) );
 		}
 
-		protected function newGameFromRow( $row ) {
+		public function getCache() {
+			return $this->app->getGlobal('wgMemc');
+		}
+
+		public function newGameFromRow( $row ) {
 			$game = $this->newGame();
 
 			$data = unserialize( $row->game_data );
@@ -92,12 +96,12 @@
 			$game->setEnabled( $row->game_is_enabled );
 			$game->setLandingTitleAndId( $data['landingTitle'], $data['landingArticleId'] );
 			$game->setStartingClueText( $data['startingClueText'] );
-			$game->setStartingClueImage( $data['startingClueImage'] );
+			$game->setStartingClueImage( @$data['startingClueImage'] );
 			$game->setArticles( $data['articles'] );
 			$game->setFinalFormText( $data['finalFormText'] );
 			$game->setFinalFormQuestion( $data['finalFormQuestion'] );
 			$game->setGoodbyeText( $data['goodbyeText'] );
-			$game->setGoodbyeImage( $data['goodbyeImage'] );
+			$game->setGoodbyeImage( @$data['goodbyeImage'] );
 
 			return $game;
 		}
@@ -138,6 +142,9 @@
 				$game->setId( $db->insertId() );
 			}
 			$db->commit();
+
+			$this->getCache()->delete($this->getIndexMemcKey());
+
 			return true;
 		}
 
@@ -153,7 +160,48 @@
 			$db->commit();
 			$game->setId(0);
 
+			$this->getCache()->delete($this->getIndexMemcKey());
+
 			return true;
 		}
+
+
+		const CACHE_TTL = 3600;
+
+		protected function getIndexMemcKey() {
+			return $this->app->runFunction('wfMemcKey',__CLASS__,'index');
+		}
+
+		protected function getIndexCache() {
+			$data = $this->getCache()->get($this->getIndexMemcKey());
+			if (!is_array($data)) {
+				$cityId = $this->app->getGlobal('wgCityId');
+				$games = $this->findAllByWikiId($cityId);
+				$data = array();
+				foreach ($games as $game) {
+					$gameId = $game->getId();
+					$title = WF::build('Title',array($game->getLandingTitle()),'newFromText');
+					if (!empty($title)) {
+						$data[$title->getPrefixedDBkey()]['start'][] = $gameId;
+					}
+					$articles = $game->getArticles();
+					foreach ($articles as $article) {
+						$title = WF::build('Title',array($article->getTitle()),'newFromText');
+						if (!empty($title)) {
+							$data[$title->getPrefixedDBkey()]['article'][] = $gameId;
+						}
+					}
+				}
+				$this->getCache()->set($this->getIndexMemcKey(),$data,self::CACHE_TTL);
+			}
+			return $data;
+		}
+
+		public function getTitleTriggers( Title $title ) {
+			$data = $this->getIndexCache();
+			return (array)@$data[$title->getPrefixedDBkey()];
+		}
+
+
 
 	}
