@@ -30,8 +30,10 @@
 	}
 
 	.scavenger-entry {
-		border: 1px solid;
+		border: 1px solid $color-page-border;
+		margin: 3px 0;
 		padding-left: 20px;
+		padding-bottom: 3px;
 
 		.scavenger-entry-info {
 			font-style: italic;
