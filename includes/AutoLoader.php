@@ -614,6 +614,7 @@ $wgAutoloadLocalClasses = array(
 );
 
 // wikia change start, use FakeExternalStoreDB for active-active clusters
+global $wgUseFakeExternalStoreDB;
 if( $wgUseFakeExternalStoreDB === true ) {
 	$wgAutoloadClasses[ 'ExternalStoreDB' ] = 'includes/wikia/FakeExternalStoreDB.php';
 }
