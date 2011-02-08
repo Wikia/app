@@ -35,7 +35,7 @@ class ScavengerHunt {
 		if (is_array($triggers)) {
 			if (is_array($triggers['start'])) {
 				//varialbles when on starting page
-				$vars['ScavengerHuntStart'] = json_encode(array_values($triggers['start']));
+				$vars['ScavengerHuntStart'] = (int)reset(array_values($triggers['start']));
 				$vars['ScavengerHuntStartMsg'] = wfMsgForContent('scavengerhunt-button-play');
 				$vars['ScavengerHuntStartTitle'] = wfMsgForContent('scavengerhunt-starting-clue-title');
 				$vars['ScavengerHuntStartClue'] = 'TODO: startingClue here';
@@ -43,7 +43,7 @@ class ScavengerHunt {
 			}
 			if (is_array($triggers['article'])) {
 				//variables when on article page
-				$vars['ScavengerHuntArticleGameId'] = json_encode(array_values($triggers['article']));
+				$vars['ScavengerHuntArticleGameId'] = (int)reset(array_values($triggers['article']));
 				$vars['ScavengerHuntArticleImg'] = 'TODO: hiddenImage here';
 			}
 
