@@ -49,6 +49,10 @@ $wgAkamaiLocalVersion = $wgAkamaiGlobalVersion;
  */
 $wgCityId = null;
 
+/**
+ * replace ExternalStoreDB with our version for other clusters than main
+ */
+$wgUseFakeExternalStoreDB = false;
 
 
 /**
@@ -486,7 +490,6 @@ $wgExternalArchiveDB = 'archive';
 $wgExternalStatsDB = 'dbstats';
 $wgStatsDB = 'stats';
 $wgExternalWikiaStatsDB = 'wikiastats';
-$wgUseFakeExternalStoreDB = false;
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
 
