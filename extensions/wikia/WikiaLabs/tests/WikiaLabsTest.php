@@ -45,7 +45,7 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 		     ->with( $this->equalTo( 'WikiaLabs' ) )
 		     ->will( $this->returnValue( true ) );
 
-		$app = $this->getMock( 'WikiaApp' );
+		$app = $this->getMock( 'WikiaApp', array( 'getGlobal' ) );
 		$app->expects( $this->at(2) )
 		    ->method( 'getGlobal' )
 		    ->with( $this->equalTo( 'wgTitle' ) )
@@ -239,7 +239,7 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 	public function testSwitchingProject( $projectId, $onOff ) {
 		$extension = "fooextension";
 
-		$app = $this->getMock( 'WikiaApp' );
+		$app = $this->getMock( 'WikiaApp', array( 'runFunction' ) );
 		if( !empty( $projectId ) ) {
 			$app->expects( $this->exactly(2) )
 			    ->method( 'runFunction' );
