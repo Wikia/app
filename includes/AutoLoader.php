@@ -613,6 +613,12 @@ $wgAutoloadLocalClasses = array(
 	'UserAjaxCreateTemplate' => 'includes/templates/wikia/UserAjaxCreate.php'
 );
 
+// wikia change start, use FakeExternalStoreDB for active-active clusters
+if( $wgUseFakeExternalStoreDB === true ) {
+	$wgAutoloadClasses[ 'ExternalStoreDB' ] = 'includes/wikia/FakeExternalStoreDB.php';
+}
+// wikia change end
+
 class AutoLoader {
 	/**
 	 * autoload - take a class name and attempt to load it

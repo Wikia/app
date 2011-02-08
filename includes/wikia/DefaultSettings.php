@@ -480,6 +480,7 @@ $wgExternalArchiveDB = 'archive';
 $wgExternalStatsDB = 'dbstats';
 $wgStatsDB = 'stats';
 $wgExternalWikiaStatsDB = 'wikiastats';
+$wgUseFakeExternalStoreDB = false;
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
 
@@ -723,7 +724,7 @@ $wgABTests = array();
  * default numbers of jobs done in ApiRunJob
  * @see extensions/wikia/WikiaApi/ApiRunJob.php
  */
-$wgApiRunJobsPerRequest = 10;
+$wgApiRunJobsPerRequest = 50;
 
 /**
  * default configuration for paypal payments
