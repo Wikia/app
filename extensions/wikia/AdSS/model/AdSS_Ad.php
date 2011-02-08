@@ -7,6 +7,7 @@ abstract class AdSS_Ad {
 	public $url;
 	public $userId;
 	public $userEmail;
+	public $hubId;
 	public $wikiId;
 	public $pageId;
 	public $status;
@@ -25,6 +26,7 @@ abstract class AdSS_Ad {
 		$this->url = '';
 		$this->userId = 0;
 		$this->userEmail = '';
+		$this->hubId = 0;
 		$this->wikiId = $wgCityId;
 		$this->pageId = 0;
 		$this->status = 0;
@@ -62,6 +64,13 @@ abstract class AdSS_Ad {
 				$this->price = AdSS_Util::getSitePricing();
 				$this->price['price'] = 3 * $this->price['price'];
 				break;
+			case 'hub':
+				$this->weight = $f->get( 'wpWeight' );
+				$this->price = AdSS_Util::getHubPricing();
+				$this->price['price'] = $this->weight * $this->price['price'];
+				$this->wikiId = 0;
+				$this->hubId = AdSS_Util::getHubId();
+				break;
 			default /* site */:
 				$this->weight = $f->get( 'wpWeight' );
 				$this->price = AdSS_Util::getSitePricing();
@@ -77,6 +86,7 @@ abstract class AdSS_Ad {
 		$this->url = $row->ad_url;
 		$this->userId = $row->ad_user_id;
 		$this->userEmail = $row->ad_user_email;
+		$this->hubId = $row->ad_hub_id;
 		$this->wikiId = $row->ad_wiki_id;
 		$this->pageId = $row->ad_page_id;
 		$this->status = $row->ad_status;

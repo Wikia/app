@@ -729,7 +729,7 @@ $wgApiRunJobsPerRequest = 10;
  *
  */
 $wgPayPalPaymentDBName = 'paypal';
-$wgPayPalUrl = 'http://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';
+$wgPayPalUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';
 $wgPayflowProAPIUrl = 'https://pilot-payflowpro.paypal.com';
 $wgPayflowProCredentials = array();
 $wgWikiPaymentAdsFreePrice = 4.99;	//used in WikiPayment/WikiBuilder

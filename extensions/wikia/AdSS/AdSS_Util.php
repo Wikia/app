@@ -12,6 +12,53 @@ class AdSS_Util {
 		return $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['banner'];
 	}
 
+	static function getHubPricing() {
+		global $wgAdSS_pricingConf, $wgAdSS_pricingLevel;
+		$hubId = self::getHubId();
+		if( isset( $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['hub'][$hubId] ) ) {
+			return $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['hub'][$hubId];
+		}
+		return $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['hub']['#default#'];
+	}
+
+	static private function getHubInfo( $wikiId=0 ) {
+		if( $wikiId == 0 ) {
+			global $wgCityId;
+			$wikiId = $wgCityId;
+		}
+
+		// copy&pasted from CorporateFooterModule
+		$catInfo = WikiFactory::getCategory($wikiId);
+		if( empty($catInfo) || ( $catInfo->cat_id != 2 && $catInfo->cat_id != 3 && $catInfo->cat_id != 4 ) ) { // 2: Gaming. 3: Entertainment. 4: Corporate
+			//Use Recipes Wiki cityID to force Lifestyle hub
+			$catInfo = WikiFactory::getCategory(3355);
+		}
+
+		return $catInfo;
+	}
+
+	static function getHubId( $wikiId=0 ) {
+		return self::getHubInfo($wikiId)->cat_id;
+	}
+
+	static function getHubName( $wikiId=0 ) {
+		$catInfo = self::getHubInfo($wikiId);
+		return wfMsg( 'hub-'.$catInfo->cat_name );
+	}
+
+	static function getHubWikisCount( $hubId ) {
+		switch( $hubId ) {
+			case 2:	// gaming
+				return '45,000';
+			case 3: // entertainment
+				return '50,000';
+			case 4: // corporate
+				return '150';
+			default: // lifestyle
+				return '110,000';
+		}
+	}
+
 	static function getPagePricing( $title=null ) {
 		global $wgAdSS_pricingConf, $wgAdSS_pricingLevel;
 

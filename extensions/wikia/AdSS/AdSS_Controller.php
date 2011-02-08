@@ -93,7 +93,9 @@ class AdSS_Controller extends SpecialPage {
 		$tmpl->set( 'token', AdSS_Util::getToken() );
 		$tmpl->set( 'pagePricing', AdSS_Util::getPagePricing() );
 		$tmpl->set( 'sitePricing', $sitePricing );
-		$tmpl->set( 'bannerPricing', AdSS_Util::getBannerPricing() );
+		$tmpl->set( 'hubPricing', AdSS_Util::getHubPricing() );
+		$tmpl->set( 'hubName', AdSS_Util::getHubName() );
+		$tmpl->set( 'wikiCount', AdSS_Util::getHubWikisCount( AdSS_Util::getHubId() ) );
 		$tmpl->set( 'adForm', $adForm );
 		$tmpl->set( 'currentShare', $currentShare );
 		if( $wgRequest->getSessionData( "AdSS_userId" ) === null ) {
@@ -106,13 +108,8 @@ class AdSS_Controller extends SpecialPage {
 			}
 		}
 
-		if( isset( $_GET['b'] ) ) {
-			$wgOut->addHTML( $tmpl->render( 'adForm-b' ) );
-			$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/adform-b.scss' ) );
-		} else {
-			$wgOut->addHTML( $tmpl->render( 'adForm' ) );
-			$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/adform.scss' ) );
-		}
+		$wgOut->addHTML( $tmpl->render( 'adForm' ) );
+		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/adform.scss' ) );
 	}
 
 	function save( $adForm ) {

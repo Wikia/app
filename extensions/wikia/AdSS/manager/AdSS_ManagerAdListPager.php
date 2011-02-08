@@ -31,8 +31,12 @@ class AdSS_ManagerAdListPager extends TablePager {
 		global $wgAdSS_templatesDir, $wgAdSS_ReadOnly;
 		switch( $name ) {
 			case 'ad_wiki_id':
-				$wiki = WikiFactory::getWikiByID( $value );
-				return Xml::element( 'a', array('href'=>$wiki->city_url), $wiki->city_title );
+				if( $this->ad->hubId > 0 ) {
+					return AdSS_Util::getHubName( $this->ad->hubId );
+				} else {
+					$wiki = WikiFactory::getWikiByID( $value );
+					return Xml::element( 'a', array('href'=>$wiki->city_url), $wiki->city_title );
+				}
 			case 'ad_type':
 				if( $this->ad->pageId > 0 ) {
 					global $wgCityId;
@@ -50,6 +54,8 @@ class AdSS_ManagerAdListPager extends TablePager {
 								$title );
 					}
 					return wfMsg( 'adss-per-page' ) . "<br />\n($url)";
+				} elseif( $this->ad->hubId > 0 ) {
+					return wfMsg( 'adss-per-hub' );
 				} else {
 					return wfMsg( 'adss-per-site' );
 				}

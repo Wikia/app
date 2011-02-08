@@ -17,10 +17,10 @@
 		</section>
 
 		<section class="box">
-			<h3><?php echo wfMsgHtml( 'adss-form-banner-plan-header' ); ?></h3>
-			<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-banner-plan-price', AdSS_Util::formatPrice( $bannerPricing ) ); ?></div>
-			<?php echo wfMsgWikiHtml( 'adss-form-banner-plan-description', AdSS_Util::formatPrice( $bannerPricing ) ); ?>
-			<a class="wikia-button" id="wpSelectBanner" href="#form"><?php echo wfMsgHtml( 'adss-button-select' ); ?></a>
+			<h3><?php echo wfMsgHtml( 'adss-form-hub-plan-header', $hubName ); ?></h3>
+			<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-hub-plan-price', AdSS_Util::formatPrice( $hubPricing ) ); ?></div>
+			<?php echo wfMsgWikiHtml( 'adss-form-hub-plan-description', $hubName, $wikiCount ); ?>
+			<a class="wikia-button" id="wpSelectHub" href="#form"><?php echo wfMsgHtml( 'adss-button-select' ); ?></a>
 		</section>
 </section>
 
@@ -44,12 +44,6 @@
 			<label for="wpDesc"><?php echo wfMsgHtml( 'adss-form-additionaltext' ); ?></label>
 			<?php echo $adForm->error( 'wpDesc' ); ?>
 			<textarea name="wpDesc" id="wpDesc"><?php $adForm->output( 'wpDesc' ); ?></textarea>
-			</div>
-
-			<div>
-			<label for="wpBanner"><?php echo wfMsgHtml( 'adss-form-banner' ); ?></label>
-			<?php echo $adForm->error( 'wpBanner' ); ?>
-			<input type="file" name="wpBanner" id="wpBanner" value="<?php $adForm->output( 'wpBanner' ); ?>" />
 			</div>
 
 			<div>
@@ -99,17 +93,13 @@
 $(function() {
 	if( $("#wpType").val() == "site-premium" ) {
 		$("#wpSelectSitePremium").parent().addClass("selected");
-		$("#wpBanner").parent().hide();
 		$("#wpWeight").val("4").attr("disabled", true);
 	}
 	else if( $("#wpType").val() == "site" ) {
 		$("#wpSelectSite").parent().addClass("selected");
-		$("#wpBanner").parent().hide();
 	}
-	else if( $("#wpType").val() == "banner" ) {
-		$("#wpSelectBanner").parent().addClass("selected");
-		$("#wpText").parent().hide();
-		$("fieldset.preview").hide();
+	else if( $("#wpType").val() == "hub" ) {
+		$("#wpSelectHub").parent().addClass("selected");
 	}
 	if( location.href.indexOf("#") == -1 ) {
 		location.href = location.href + "#form";
@@ -119,28 +109,19 @@ $("#wpSelectSite").click( function() {
 	$(".SponsoredLinkDesc section").removeClass("selected");
 	$(this).parent().addClass("selected");
 	$("#wpType").val("site");
-	$("#wpBanner").parent().hide();
-	$("#wpText").parent().show();
 	$("#wpWeight").val("1").removeAttr("disabled").parent().show();
-	$("fieldset.preview").show();
 } );
 $("#wpSelectSitePremium").click( function() {
 	$(".SponsoredLinkDesc section").removeClass("selected");
 	$(this).parent().addClass("selected");
 	$("#wpType").val("site-premium");
-	$("#wpBanner").parent().hide();
-	$("#wpText").parent().show();
 	$("#wpWeight").val("4").attr("disabled", true).parent().show();
-	$("fieldset.preview").show();
 } );
-$("#wpSelectBanner").click( function() {
+$("#wpSelectHub").click( function() {
 	$(".SponsoredLinkDesc section").removeClass("selected");
 	$(this).parent().addClass("selected");
-	$("#wpType").val("banner");
-	$("#wpBanner").parent().show();
-	$("#wpText").parent().hide();
+	$("#wpType").val("hub");
 	$("#wpWeight").val("1").removeAttr("disabled").parent().show();
-	$("fieldset.preview").hide();
 } );
 $("#adssLoginAction > a").click( function(e) {
 	e.preventDefault();
