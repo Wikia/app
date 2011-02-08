@@ -1,0 +1,3 @@
+<strong><?=$header; ?></strong><br />
+<br />
+This is some template...

@@ -4,13 +4,15 @@ class WikiaResponse {
 
 	private $printer = null;
 	private $body = null;
+	private $code = 200;
 	private $headers = array();
+	private $format = null;
 	protected $data = array();
 	protected $exception = null;
-	protected $responseCode = null;
+	protected $templatePath = null;
 
 	public function __construct( $format ) {
-		$this->setPrinter( WF::build( 'WikiaResponse' . strtoupper( $format ) . 'Printer' ) );
+		$this->setFormat( $format );
 	}
 
 	public function setException(Exception $exception) {
@@ -45,16 +47,84 @@ class WikiaResponse {
 		$this->body = $value;
 	}
 
+	public function resetData() {
+		$this->data = array();
+	}
+
 	public function appendBody($value) {
 		$this->body .= $value;
+	}
+
+	public function getCode() {
+		return $this->code;
+	}
+
+	public function setCode($value) {
+		$this->code = $value;
+	}
+
+	public function getTemplatePath() {
+		return $this->templatePath;
+	}
+
+	public function setTemplatePath( $value ) {
+		$this->templatePath = $value;
+	}
+
+	public function buildTemplatePath( $controllerName, $methodName, $forceRebuild = false ) {
+		if( ( $this->templatePath == null ) || $forceRebuild ) {
+			$autoloadClasses = WF::build( 'App' )->getGlobal( 'wgAutoloadClasses' );
+
+			if( empty( $autoloadClasses[$controllerName] ) ) {
+				throw new WikiaException( "Invalid controller name: $controllerName" );
+			}
+
+			$this->setTemplatePath( dirname( $autoloadClasses[$controllerName] ) . '/templates/' . $controllerName . '_' . $methodName . '.php' );
+		}
+	}
+
+	public function getFormat() {
+		return $this->format;
+	}
+
+	public function setFormat( $value ) {
+		$this->format = $value;
+		$this->setPrinter( WF::build( 'WikiaResponse' . strtoupper( $value ) . 'Printer' ) );
 	}
 
 	public function getHeaders() {
 		return $this->headers;
 	}
 
-	public function setHeader( $key, $value ) {
-		$this->headers[$key] = $value;
+	public function setHeader( $name, $value, $replace = true ) {
+		if( $replace ) {
+			$this->removeHeader( $name );
+		}
+
+		$this->headers[] = array(
+		 'name' => $name,
+		 'value' => $value,
+		 'replace' => $replace
+		);
+	}
+
+	public function getHeader( $name ) {
+		$result = array();
+		foreach( $this->headers as $key => $header ) {
+			if( $header['name'] == $name ) {
+				$result[] = $header;
+			}
+		}
+
+		return ( count($result) ? $result : null );
+	}
+
+	public function removeHeader( $name ) {
+		foreach( $this->headers as $key => $header ) {
+			if( $header['name'] == $name ) {
+				unset( $this->headers[ $key ] );
+			}
+		}
 	}
 
 	public function setVal( $key, $value ) {
@@ -91,13 +161,27 @@ class WikiaResponse {
 	}
 
 	public function sendHeaders() {
-		foreach ($this->getHeaders() as $key => $value) {
-			$this->sendHeader( $key, $value );
+		$this->getPrinter()->prepareResponse($this);
+
+		$responseCodeSent = false;
+
+		foreach( $this->getHeaders() as $header ) {
+			$this->sendHeader( ( $header['name'] . ': ' . $header['value'] ), $header['replace'], ( !$responseCodeSent ? $this->code : null ) );
+			$responseCodeSent = true;
+		}
+
+		if(!$responseCodeSent) {
+			$this->sendHeader( "HTTP/1.1 " . $this->code, false );
 		}
 	}
 
-	public function sendHeader( $key, $value ) {
-		header( $key, $value );
+	protected function sendHeader( $header, $replace, $responseCode = null ) {
+		if( !empty( $responseCode ) ) {
+			header( $header, $replace, $responseCode );
+		}
+		else {
+			header( $header, $replace );
+		}
 	}
 
 	public function __toString() {

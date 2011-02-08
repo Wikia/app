@@ -29,4 +29,9 @@ function wfDummyExtensionInit() {
 	 * hooks
 	 */
 	WF::build('App')->registerHook('OutputPageBeforeHTML', 'DummyExtension', 'onOutputPageBeforeHTML', array( 'foo' => 1, 'bar' => null ) );
+
+	/**
+	 * controllers
+	 */
+	WF::build('App')->registerClass('DummyExtensionController', $dir . 'DummyExtensionController.class.php');
 }

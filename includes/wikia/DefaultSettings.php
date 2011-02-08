@@ -71,7 +71,7 @@ global $wgAutoloadClasses;
 /**
  * MW Abstraction Layer classes
  */
-$wgAutoloadClasses['WF'] = $IP . '/includes/wikia/WikiaFactory.class.php';
+$wgAutoloadClasses['SF'] = $IP . '/includes/wikia/WikiaSuperFactory.class.php';
 $wgAutoloadClasses['WikiaApp'] = $IP . '/includes/wikia/WikiaApp.class.php';
 $wgAutoloadClasses['WikiaHookHandler'] = $IP . '/includes/wikia/WikiaHookHandler.class.php';
 $wgAutoloadClasses['IWikiaHookHandler'] = $IP . '/includes/wikia/IWikiaHookHandler.interface.php';
@@ -90,7 +90,7 @@ $wgAutoloadClasses['WikiaResponsePrinter'] = $IP . '/includes/wikia/WikiaRespons
 $wgAutoloadClasses['WikiaResponseJSONPrinter'] = $IP . '/includes/wikia/WikiaResponseJSONPrinter.class.php';
 $wgAutoloadClasses['WikiaResponseHTMLPrinter'] = $IP . '/includes/wikia/WikiaResponseHTMLPrinter.class.php';
 
-WF::setInstance( 'App', new WikiaApp() );
+SF::setInstance( 'App', new WikiaApp() );
 
 
 /**

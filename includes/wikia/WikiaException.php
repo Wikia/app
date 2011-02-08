@@ -48,13 +48,13 @@ class WikiaException extends MWException {
 	 * @param  array $args
 	 * @return mixed
 	 */
-    public function __call($method, array $args) {
+	public function __call($method, array $args) {
 		if ('getprevious' == strtolower($method)) {
 			return $this->_getPrevious();
 		}
 
 		return null;
-    }
+	}
 
 	/**
 	 * String representation of the exception
