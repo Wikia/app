@@ -220,6 +220,7 @@ $wgAutoloadClasses[ "WikiaApiQueryEventInfo"       ] = "{$IP}/extensions/wikia/W
 $wgAutoloadClasses[ "WikiaApiQueryScribeEvents"    ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryScribeEvents.php";
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"        ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
 $wgAutoloadClasses[ "ApiRunJob"                    ] = "{$IP}/extensions/wikia/WikiaApi/ApiRunJob.php";
+$wgAutoloadClasses[ "WikiaApiQueryBlob"            ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryBlob.php";
 
 /*
  * validators
@@ -287,7 +288,7 @@ $wgAPIModules[ "ajaxlogin"         ] = "WikiaApiAjaxLogin";
 $wgAPIModules[ "theschwartz"       ] = "WikiaApiReportEmail";
 $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
 $wgAPIModules[ "runjob"            ] = "ApiRunJob";
-
+$wgAPIModules[ "blob"              ] = "WikiaApiQueryBlob";
 
 /*
  * Widget FrameWork declarations
