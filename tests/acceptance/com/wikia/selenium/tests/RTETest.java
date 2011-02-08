@@ -211,6 +211,7 @@ public class RTETest extends BaseTest {
 				"{|\n| foo &rarr; bar\n| 123 &nbsp; 456\n|-\n| abc &mdash;\n| def &nbsp;\n|}",
 				"{|\n|\n----\nfoo\n|\n\n----\nfoo\n|}",
 				"[[File:Foo.ogg]]",
+				"[[Media:Wiki.png]]\n\n[[File:Wiki.png]]\n\n[[Media:Foo.png]]",
 				"[[Image:Placeholder]]",
 				"[[Image:Placeholder|thumb|200px|foo caption bar]]",
 				"[[Video:SomethingNotExisting]]",
