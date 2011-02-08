@@ -116,6 +116,7 @@ class ContactForm extends SpecialPage {
 		$uid = $wgUser->getID();
 		if( !empty($uid) ) {
 			$info[] = 'uID: ' . $uid . " (User:". $wgUser->getName() .")";
+			$info[] = 'uLang: ' . $wgUser->getOption('language');
 		}
 		$info = implode("; ", $info) . "\n";
 		//end wikia debug data
