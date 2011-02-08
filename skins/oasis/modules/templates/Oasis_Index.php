@@ -4,8 +4,6 @@
 	<meta http-equiv="Content-Type" content="<?= $mimetype ?>; charset=<?= $charset ?>">
 	<meta name="viewport" content="width=1200">
 	<?= $headlinks ?>
-	<link rel="license" href="http://creativecommons.org/licenses/by/3.0/" />
-	<link property="cc:attributionName" rel="cc:attributionURL" href="http://muppet.wikia.com/">Muppet Wiki Community</link>
 
 	<title><?= $pagetitle ?></title>
 	<!-- SASS-generated CSS file -->
@@ -91,11 +89,6 @@
 <?= $printableCss ?>
 
 <?= wfReportTime()."\n" ?>
-
-<div style="display:none">
-This work by <a xmlns:cc="http://creativecommons.org/ns#" href="<?= $attributionURL ?>" property="cc:attributionName" rel="cc:attributionURL"><?= $attributionName ?></a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported</a> License.
-</div>
-
 </body>
 <?= wfRenderModule('Ad', 'Config') ?>
 </html>
