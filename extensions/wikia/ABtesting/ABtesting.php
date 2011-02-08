@@ -14,7 +14,7 @@ function getABtestJSandCSS() {
 	global $wgOut, $wgExtensionsPath;
 	
 	// For testing
-	$wgABTests[] = 'editbutton3';
+	//$wgABTests[] = 'editbutton1';
 	
 	if (!isset($wgABTests)) {
 		return true;
