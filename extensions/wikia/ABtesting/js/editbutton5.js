@@ -9,10 +9,10 @@
 	editbutton.detach().prependTo(details);
 	
 	// insert blank image for separator
-	$('<img src="' + wgBlankImgUrl + '" class="separator">').insertAfter(editbutton).css("left", editbutton.width() + 10);
+	$('<img src="' + wgBlankImgUrl + '" class="separator">').insertAfter(editbutton).css("left", editbutton.outerWidth() + 10);
 	
 	// slide history menu over
-	history.css("margin-left", editbutton.width() + 17);
+	history.css("margin-left", editbutton.outerWidth() + 19);
 	
 	// move commentslikes
 	commentslikes.detach().prependTo(details);
