@@ -183,7 +183,7 @@ var initTracker = function() {
 		if (node.hasParent('.mytools')) {
 			fakeUrl += 'mytools/';
 		}
-		
+
 		// (un)watch + share
 		if (node.attr('id')) {
 			switch(node.attr('id')) {
@@ -241,12 +241,10 @@ var initTracker = function() {
 		}
 		// items
 		else if (node.hasParent('em')) {
-			if (node.hasClass('page-title')) {
-				$.tracker.byStr(fakeUrl + 'article');
-			}
-			else {
-				$.tracker.byStr(fakeUrl + 'username');
-			}
+			$.tracker.byStr(fakeUrl + 'article');
+		}
+		else if (node.hasParent('details')) {
+			$.tracker.byStr(fakeUrl + 'username');
 		}
 	});
 
