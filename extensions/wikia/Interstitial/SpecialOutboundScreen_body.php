@@ -86,7 +86,6 @@ class Outbound extends UnlistedSpecialPage {
 			}
 
 			$athenaInitStuff = AdProviderAthena::getInstance()->getSetupHtml();
-			$athenaInitStuff .= AdEngine::getInstance()->providerValuesAsJavascript($wgCityId);
 
 			// Create the JS-includes for the tracking code and jQuery - will just use StaticChute because it should be in user's cache by now.
 			$StaticChute = new StaticChute('js');
