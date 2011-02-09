@@ -7,7 +7,7 @@ var ScavengerHunt = {
 	//global init
 	init: function() {
 		//check if there is a need to initialize JS for start page
-		if (typeof ScavengerHuntStart != 'undefined') {
+		if (typeof window.ScavengerHuntStart != 'undefined') {
 			ScavengerHunt.initStart();
 		}
 
@@ -20,6 +20,12 @@ var ScavengerHunt = {
 
 	//init starting page
 	initStart: function() {
+		//check if user haven't already started this game - do not show start button again
+		var gameInProgress = $.cookies.get('ScavengerHuntInProgress');
+		if (window.ScavengerHuntStart == gameInProgress) {
+			return;
+		}
+
 		$('<input type="button">')
 			.val(ScavengerHuntStartMsg)
 			.click(ScavengerHunt.onStartClick)
