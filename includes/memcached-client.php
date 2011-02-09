@@ -1081,4 +1081,12 @@ class MemCachedClientforWiki extends MWMemcached {
 	function _debugprint( $text ) {
 		wfDebugLog( "memcached", "memcached: $text", true );
 	}
+	/* Wikia change begin - @author: garth */
+	public function delete( $key, $time = 0 ) {
+		global $wgSharedDB;
+		$dbw = wfGetDB( DB_MASTER, array(), $wgSharedDB );
+		$dbw->insert('memcached', array('memkey' => $key));
+		return parent::delete($key, $time);
+	}
+	/* Wikia change end */
 }
