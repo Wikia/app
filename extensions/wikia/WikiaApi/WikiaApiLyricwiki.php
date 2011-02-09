@@ -527,7 +527,36 @@ class WikiaApiLyricwiki extends ApiBase {
 	////
 	function writeRealJSON(&$result) {
 		header('Content-type: text/javascript; charset=UTF-8');
-		print json_encode($result, JSON_HEX_APOS);
+
+		// TODO: Use this once we are on PHP 5.3 or greater.
+		//print json_encode($result, JSON_HEX_APOS);
+
+		// TODO: Do we even need this? It might actually work already.
+		//$result = self::replaceApostrophes($result);
+		print json_encode($result);
 	} // end writeRealJSON()
+	
+	////
+	// Until we upgrade to PHP 5.3 so we can use the options on json_encode, this will
+	// help to make the single-quotes safe in the JSON.
+	////
+	private static function replaceApostrophes($result){
+		wfProfileIn( __METHOD__ );
+
+		foreach($result as $key => $val){
+			unset($result[$key]); // the key may change after escaping, so remove the old key
+
+			$key = str_replace("'", "\u0027", $key);
+			if(is_array($val)){
+				$val = self::replaceApostrophes($val);
+			} else {
+				$val = str_replace("'", "\u0027", $val);
+			}
+			$result[$key] = $val;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $result;
+	} // end replaceApostrophes()
 
 }
