@@ -20,27 +20,43 @@ var ScavengerHunt = {
 
 	//init starting page
 	initStart: function() {
-		var button = $('<input type="button">').val(ScavengerHuntStartMsg).click(ScavengerHunt.onStartClick).wrap('<div>').appendTo('#WikiaArticle');
+		$('<input type="button">')
+			.val(ScavengerHuntStartMsg)
+			.click(ScavengerHunt.onStartClick)
+			.wrap('<div>')
+			.appendTo('#WikiaArticle');
 	},
 
 	//init article page
 	initGame: function(gameId) {
 		//current article is taking part in the game that user is playing atm
 		if (gameId == window.ScavengerHuntArticleGameId) {
+			//check if user haven't already found this page - do not show it again
+			var found = $.cookies.get('ScavengerHuntArticlesFound');
+			if (found) {
+				if ($.inArray(''+wgArticleId, found.split(',')) != -1) {
+					return;
+				}
+			}
 			//prepare data to show immediately when user click image
 			var data = {
 				action: 'ajax',
-				article: wgArticleId,
+				articleId: wgArticleId,
 				gameId: gameId,
 				method: 'getArticleData',
 				rs: 'ScavengerHuntAjax'
 			};
 			$.getJSON(wgScript, data, function(json) {
 				window.ScavengerHuntArticleData = json;
+				//TODO: check `ScavengerHuntArticlesFound` cookie and return confirmed articles + update the cookie
 			});
 
-			//display image
-			//attach handler to image
+			//display image and attach handler to it
+			$('<img>')
+				.attr('src', window.ScavengerHuntArticleImg)
+				.click(ScavengerHunt.onHiddenImgClick)
+				.css({position:'absolute', top: '150px', left: '10px', 'z-index': 999})
+				.appendTo('body');
 		}
 	},
 
@@ -51,6 +67,25 @@ var ScavengerHunt = {
 			window.ScavengerHuntStartTitle,
 			//TODO: add nice layout here
 			window.ScavengerHuntStartClue + '<img src="' + window.ScavengerHuntStartImg + '">'
+		);
+	},
+
+	//handler hidden article image
+	onHiddenImgClick: function(e) {
+		$(this).remove();
+
+		var found = $.cookies.get('ScavengerHuntArticlesFound');
+		found = found ? found.split(',') : [];
+		if ($.inArray(''+wgArticleId, found) == -1) {
+			found.push(''+wgArticleId);
+			$.cookies.set('ScavengerHuntArticlesFound', found.join(','), {hoursToLive:24*7});
+		}
+		ScavengerHunt.log(found);
+
+		$.showModal(
+			window.ScavengerHuntStartTitle,
+			//TODO: add nice layout here
+			window.ScavengerHuntArticleData.clue + '<img src="' + window.ScavengerHuntArticleData.img + '"><br><a class="button" href="' + window.ScavengerHuntArticleData.buttonLink + '">Go!</a>'
 		);
 	}
 };
