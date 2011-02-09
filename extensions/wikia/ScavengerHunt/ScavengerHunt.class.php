@@ -31,6 +31,7 @@ class ScavengerHunt {
 		$title = WF::build('App')->getGlobal('wgTitle');
 		$games = WF::build('ScavengerHuntGames');
 
+		//TODO: limit below code to content namespaces?
 		$triggers = $games->getTitleTriggers($title);
 		if (is_array($triggers)) {
 			if (is_array($triggers['start'])) {
