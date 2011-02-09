@@ -9,8 +9,25 @@
 $dir = dirname(__FILE__) . '/';
 
 /**
- * DummyExtension specific stuff
+ * classes
  */
+WF::build('App')->registerClass('DummyExtension', $dir . 'DummyExtension.class.php');
+WF::build('App')->registerClass('DummyExtensionSpecialPageController', $dir . 'DummyExtensionSpecialPageController.class.php');
+
+/**
+ * hooks
+ */
+WF::build('App')->registerHook('OutputPageBeforeHTML', 'DummyExtension', 'onOutputPageBeforeHTML', array( 'foo' => 1, 'bar' => null ) );
+
+/**
+ * controllers
+ */
+WF::build('App')->registerClass('DummyExtensionController', $dir . 'DummyExtensionController.class.php');
+
+/**
+ * special pages
+ */
+WF::build('App')->registerSpecialPage('DummyExtension', 'DummyExtensionSpecialPageController');
 
 /**
  * setup functions
@@ -18,20 +35,5 @@ $dir = dirname(__FILE__) . '/';
 WF::build('App')->registerExtensionFunction('wfDummyExtensionInit');
 
 function wfDummyExtensionInit() {
-	$dir = dirname(__FILE__) . '/';
-
-	/**
-	 * classes
-	 */
-	WF::build('App')->registerClass('DummyExtension', $dir . 'DummyExtension.class.php');
-
-	/**
-	 * hooks
-	 */
-	WF::build('App')->registerHook('OutputPageBeforeHTML', 'DummyExtension', 'onOutputPageBeforeHTML', array( 'foo' => 1, 'bar' => null ) );
-
-	/**
-	 * controllers
-	 */
-	WF::build('App')->registerClass('DummyExtensionController', $dir . 'DummyExtensionController.class.php');
+	// place extension init stuff heere
 }
