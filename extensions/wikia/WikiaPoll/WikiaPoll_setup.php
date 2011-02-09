@@ -52,6 +52,7 @@ $wgHooks['ArticleFromTitle'][] = 'WikiaPollHooks::onArticleFromTitle';
 $wgHooks['ArticleSaveComplete'][] = 'WikiaPollHooks::onArticleSaveComplete';
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'WikiaPollHooks::onFetchTemplateAndTitle';
 $wgHooks['ParserAfterTidy'][] = 'WikiaPollHooks::onParserAfterTidy';
+$wgHooks['AlternateEdit'][] = 'WikiaPollHooks::onAlternateEdit';
 //$wgHooks['InternalParseBeforeLinks'][] = 'WikiaPollHooks::onInternalParseBeforeLinks';
 
 // Ajax dispatcher
