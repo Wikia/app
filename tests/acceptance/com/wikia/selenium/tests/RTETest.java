@@ -129,6 +129,7 @@ public class RTETest extends BaseTest {
 				"[http://wp.pl]\n\nhttp://onet.pl\n\n[http://wp.pl foo]",
 				"[[Bart|<span style='color:#1A2BBB'>foo</span>]]",
 				"[[Bart|<span style=\"color:#1A2BBB\">foo</span>]]",
+				"<span style=\"font-family: 'comic sans ms'; color:#666\">foo</span>",
 				"''i'' '''b''' - '''''bi'' b''' - '''''bi''' i''",
 				"{{123}}",
 				"inline template {{123}}",
