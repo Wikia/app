@@ -2,7 +2,6 @@
 
 class SpecialWikiActivity extends SpecialPage {
 	var $activeTab;
-	var $classActivity;
 	var $classWatchlist;
 	var $loggedIn;
 
@@ -74,11 +73,6 @@ JS
 				$feedRenderer = new WatchlistFeedRenderer();
 			}
 		} else {
-			// activity feed
-			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
-				$this->classActivity = "selected";
-			}
-
 			$this->feedSelected = 'activity';
 			$feedProxy = new ActivityFeedAPIProxy();
 			$feedRenderer = new ActivityFeedRenderer();
@@ -143,7 +137,6 @@ JS
 		$showDefaultViewSwitch = $wgUser->isLoggedIn() && ($this->defaultView != $this->feedSelected);
 		
 		$template->set_vars(array(
-			'classActivity' => $this->classActivity,
 			'classWatchlist' => $this->classWatchlist,
 			'defaultView' => $this->defaultView,
 			'loggedIn' => $wgUser->isLoggedIn(),

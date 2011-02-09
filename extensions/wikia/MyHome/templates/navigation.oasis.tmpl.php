@@ -7,7 +7,7 @@
 				?><li class="watchlist"><?= View::specialPageLink('WikiActivity/watchlist', 'oasis-button-wiki-activity-watchlist') ?></li><?
 			}
 		} ?>
-		<li class="<?= $classActivity ?>"><?= View::specialPageLink('RecentChanges', 'oasis-button-wiki-activity-feed') ?></li>
+		<li><?= View::specialPageLink('RecentChanges', 'oasis-button-wiki-activity-feed') ?></li>
 	</ul>
 <?php
 	// render checkbox select default view
