@@ -939,7 +939,7 @@ function getSong($artist, $song="", $doHyphens=true){
 				//	print "UTF8-song: ".(utf8_compliant($song)?"true":"false")."<br/>";
 				//	print "UTF8-lyrics: ".(utf8_compliant($lyrics)?"true":"false")."<br/>";
 				//}
-				
+
 				// SWC 20090802 - Neuter the actual lyrics :( - return an explanation with a link to the LyricWiki page.
 				// SWC 20091021 - Gil has determined that up to 17% of the lyrics can be returned as fair-use - we'll stick with 1/7th (about 14.3%) of the characters for safety.
 				if(!$allowFullLyrics){
@@ -1308,7 +1308,7 @@ function getTopSongs($limit){
 	$id = requestStarted(__METHOD__, "$limit");
 
 	$DEFAULT_LIMIT = 10;
-	$limit = (empty($limit)?DEFAULT_LIMIT:$limit);
+	$limit = (empty($limit)?$DEFAULT_LIMIT:$limit);
 	$defaultUrl = "http://lyrics.wikia.com";
 	$urlRoot = "http://lyrics.wikia.com/"; // may differ from default URL, should contain a slash after it.
 
