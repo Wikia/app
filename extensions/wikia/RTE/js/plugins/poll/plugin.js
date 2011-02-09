@@ -3,14 +3,12 @@ CKEDITOR.plugins.add('rte-poll',
 	init: function(editor) {
 		var self = this;
 
-		/*
 		editor.on('wysiwygModeReady', function() {
 			// get all gallery placeholders
-			var gallery = RTE.getEditor().find('.image-gallery');
+			var poll = RTE.getEditor().find('.placeholder-poll');
 
-			self.setupGallery(gallery);
+			self.setupPoll(poll);
 		});
-		*/
 		
 		// check existance of WikiaPoll extension
 		if (typeof window.CreateWikiaPoll != 'undefined') {
@@ -38,5 +36,15 @@ CKEDITOR.plugins.add('rte-poll',
 			RTE.log('WikiaPoll is not enabled here - disabling "Poll" button');
 			return;
 		}
+	},	
+	
+	setupPoll: function(poll) {
+		// show poll editor when [edit] in hover menu or placeholder is clicked
+		poll
+			.unbind('.poll')
+			.bind('click.poll edit.poll', function(ev) {
+				CreateWikiaPoll.showEditor(ev);
+			});
 	}
+	
 });
