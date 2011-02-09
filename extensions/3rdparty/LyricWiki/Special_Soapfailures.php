@@ -1,25 +1,33 @@
 <?php
-////
-// Author: Sean Colombo
-// Date: 20061231 - 20100305
-//
-// This special page just shows which songs have the most failed requests from
-// the LyricWiki SOAP.
-//
-// The structure of this special page was just copied from Teknomunk's
-// Batch Move special page.
-//
-//DROP TABLE IF EXISTS lw_soap_failures;
-//CREATE TABLE lw_soap_failures(
-//	request_artist VARCHAR(255) NOT NULL,
-//	request_song VARCHAR(255) NOT NULL,
-//	numRequests INT(11) DEFAULT 1,
-//	lookedFor BLOB, # all of the titles (in order, \n-delimited) which the API actually checked for.
-//	PRIMARY KEY (request_artist, request_song)
-//);
-//
-// TODO: Make better use of Internationalization.  There are a bunch of hardcoded strings still.
-////
+/**
+ * Author: Sean Colombo
+ * Date: 20061231 - 20100305
+ *
+ * This special page just shows which songs have the most failed requests from
+ * the LyricWiki SOAP.
+ *
+ * The structure of this special page was just copied from Teknomunk's
+ * Batch Move special page.
+ *
+ *DROP TABLE IF EXISTS lw_soap_failures;
+ *CREATE TABLE lw_soap_failures(
+ *	request_artist VARCHAR(255) NOT NULL,
+ *	request_song VARCHAR(255) NOT NULL,
+ *	numRequests INT(11) DEFAULT 1,
+ *	lookedFor BLOB, # all of the titles (in order, \n-delimited) which the API actually checked for.
+ *	PRIMARY KEY (request_artist, request_song)
+ *);
+ *DROP TABLE IF EXISTS lw_soap_failures_mobile;
+ *CREATE TABLE lw_soap_failures_mobile(
+ *	request_artist VARCHAR(255) NOT NULL,
+ *	request_song VARCHAR(255) NOT NULL,
+ *	numRequests INT(11) DEFAULT 1,
+ *	lookedFor BLOB, # all of the titles (in order, \n-delimited) which the API actually checked for.
+ *	PRIMARY KEY (request_artist, request_song)
+ *);
+ *
+ * TODO: Make better use of Internationalization.  There are a bunch of hardcoded strings still.
+ */
 
 if(!defined('MEDIAWIKI')) die();
 

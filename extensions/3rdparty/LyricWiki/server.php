@@ -12,6 +12,7 @@
 // NOTES FOR DEVELOPERS:
 // - When implementing a new method, make sure to check the global $SHUT_DOWN_API.
 // - Before writing anything to the database, remember to check wfReadOnly().
+// - See Special_Soapfailures.php for SQL to create the tables needed for logging inside of here.
 ////
 
 include_once 'extras.php'; // for lw_simpleQuery to start
@@ -2313,10 +2314,21 @@ function utf8_compliant($str){
 // the failure so that we can know what songs (or redirects) are desired that we don't have yet.
 ////
 function logSoapFailure($origArtistSql, $origSongSql, $lookedForSql){
-	global $wgReadOnly;
+	wfProfileIn( __METHOD__ );
+
 	if( !wfReadOnly() ) {
-		GLOBAL $wgMemc;
+		GLOBAL $wgMemc, $wgRequest;
 		$NUM_FAILS_TO_SPOOL = 10;
+		
+		// Store the soapfailures from mobile requests in a diff. table so that we know what users are
+		// searching for in that specific use-case.
+		$fullApiAuth = $wgRequest->getVal('fullApiAuth', '');
+		if(empty($fullApiAuth)){
+			$tableName = "lw_soap_failures";
+		} else {
+			$tableName = "lw_soap_failures_mobile";
+			$NUM_FAILS_TO_SPOOL = 0; // there are way less requests to mobile, so don't spool for now.
+		}
 
 		wfDebug("LWSOAP: Recording failure for \"$origArtistSql:$origSongSql\"\n");
 
@@ -2325,13 +2337,13 @@ function logSoapFailure($origArtistSql, $origSongSql, $lookedForSql){
 		// eloy, changed to md5
 		$memkey = wfMemcKey( 'lw_soap_failure', md5( sprintf( "%s:%s", $origArtistSql, $origSongSql ) ) );
 		$numFails = $wgMemc->get( $memkey );
-		if(empty($numFails)){
+		if(empty($numFails) && ($NUM_FAILS_TO_SPOOL > 0)){
 			wfDebug("LWSOAP: Setting $memkey to 1\n");
 			$wgMemc->set($memkey, 1);
 		} else if(($numFails + 1) >= $NUM_FAILS_TO_SPOOL){
 			wfDebug("LWSOAP: Storing the failure in the database.\n");
 			$numFails += 1;
-			$queryString = "INSERT INTO lw_soap_failures (request_artist,request_song, lookedFor, numRequests) VALUES ('$origArtistSql', '$origSongSql', '$lookedForSql', '$numFails') ON DUPLICATE KEY UPDATE numRequests=numRequests+$numFails";
+			$queryString = "INSERT INTO $tableName (request_artist,request_song, lookedFor, numRequests) VALUES ('$origArtistSql', '$origSongSql', '$lookedForSql', '$numFails') ON DUPLICATE KEY UPDATE numRequests=numRequests+$numFails";
 			$dbw = wfGetDB(DB_MASTER);
 			if($dbw->query($queryString)){
 				$dbw->commit();
@@ -2345,6 +2357,8 @@ function logSoapFailure($origArtistSql, $origSongSql, $lookedForSql){
 			$wgMemc->set($memkey, $numFails + 1);
 		}
 	}
+
+	wfProfileOut( __METHOD__ );
 } // end logSoapFailure()
 
 ////
