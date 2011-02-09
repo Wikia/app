@@ -86,6 +86,7 @@ $wgAutoloadClasses['WikiaLocalRegistry'] = $IP . '/includes/wikia/WikiaLocalRegi
 $wgAutoloadClasses['WikiaCompositeRegistry'] = $IP . '/includes/wikia/WikiaCompositeRegistry.class.php';
 $wgAutoloadClasses['WikiaDispatcher'] = $IP . '/includes/wikia/WikiaDispatcher.class.php';
 $wgAutoloadClasses['WikiaController'] = $IP . '/includes/wikia/WikiaController.class.php';
+$wgAutoloadClasses['WikiaSpecialPageController'] = $IP . '/includes/wikia/WikiaSpecialPageController.class.php';
 $wgAutoloadClasses['WikiaErrorController'] = $IP . '/includes/wikia/WikiaErrorController.class.php';
 $wgAutoloadClasses['WikiaRequest'] = $IP . '/includes/wikia/WikiaRequest.class.php';
 $wgAutoloadClasses['WikiaHTTPRequest'] = $IP . '/includes/wikia/WikiaHTTPRequest.class.php';

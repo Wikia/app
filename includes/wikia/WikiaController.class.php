@@ -12,7 +12,7 @@ abstract class WikiaController {
 	 * @var WikiaResponse
 	 */
 	protected $response = null;
-	
+
 	protected $allowedRequests = array(
 		'help' => array('html', 'json')
 	);
@@ -24,7 +24,7 @@ abstract class WikiaController {
 		  || !in_array( $format, $this->allowedRequests[$method] ) ) {
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -53,7 +53,7 @@ abstract class WikiaController {
 		$this->request->setVal( 'method', $methodName );
 		$this->request->setDispatched(false);
 	}
-	
+
 	public function sendRequest($controllerName, $methodName, $params = array(), $format = null) {
 		$request = SF::build( 'WikiaHTTPRequest', array_merge(
 			array('controller' => $controllerName, 'method' => $methodName, 'format' => $format),
@@ -64,7 +64,7 @@ abstract class WikiaController {
 		$response = SF::build( 'WikiaResponse', array( 'format' => $format ) );
 		return SF::build('App')->dispatch($request, $response);
 	}
-	
+
 	/**
 	 * Prints documentation of current controller
 	 */
@@ -90,7 +90,7 @@ abstract class WikiaController {
 				$help[] = $data;
 			}
 		}
-		
+
 		$this->getResponse()->setVal('class', substr($reflection->name, 0, -10));
 		$this->getResponse()->setVal('methods', $help);
 	}

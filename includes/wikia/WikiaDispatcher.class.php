@@ -66,12 +66,18 @@ class WikiaDispatcher {
 				}
 			}
 		} while (!$request->isDispatched());
-		
+
 		if ($request->isInternal() && $response->hasException()) {
 			throw $response->getException();
 		}
 
 		$response->buildTemplatePath( $controllerName, $method );
+
+		//if ($controller instanceof WikiaSpecialPageController) {
+		//global $wgOut;
+		//$wgOut->addHTML((string) $response);
+		//}
+
 		return $response;
 	}
 }
