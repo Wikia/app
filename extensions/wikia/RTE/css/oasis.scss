@@ -124,6 +124,14 @@ img.image-slideshow {
 	}
 }
 
+/* Wikia Poll placeholder */
+img.placeholder-poll {
+	background-image: url(/extensions/wikia/WikiaPoll/images/poll-placeholder.png);/* $wgCdnStylePath */
+	float: left;
+	height: 200px;
+	width: 300px;
+}
+
 /* redlinks (RT #87906) */
 a.new {
 	color: #cc2200 !important;

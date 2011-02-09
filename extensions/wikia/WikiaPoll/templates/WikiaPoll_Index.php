@@ -22,7 +22,7 @@
 					<span class="votes">
 <?php
 	global $wgLang;
-	wfMsgExt('wikiapoll-votes', array('parsemag'), $wgLang->formatNum( $answer['votes']) );
+	echo wfMsgExt('wikiapoll-votes', array('parsemag'), $wgLang->formatNum( $answer['votes']) );
 ?>
 					</span>
 				</span>
