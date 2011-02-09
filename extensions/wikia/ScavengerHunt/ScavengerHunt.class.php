@@ -25,29 +25,45 @@ class ScavengerHunt {
 	 * @author Marooned
 	 * @author wladek
 	 */
-	function onMakeGlobalVariablesScript( &$vars ) {
+	public function onMakeGlobalVariablesScript( &$vars ) {
 		wfProfileIn(__METHOD__);
 
 		$app = WF::build('App');
 		$out = $app->getGlobal('wgOut');
 		$title = $app->getGlobal('wgTitle');
+
+		// skip the rest if the title does not have article id
+		if (!$title->getArticleId()) {
+			return true;
+		}
+
 		$games = WF::build('ScavengerHuntGames');
 
 		//TODO: limit below code to content namespaces?
 		$triggers = $games->getTitleTriggers($title);
-		if (is_array($triggers)) {
-			if (isset($triggers['start']) && is_array($triggers['start'])) {
-				//varialbles when on starting page
-				$vars['ScavengerHuntStart'] = (int)reset(array_values($triggers['start']));
-				$vars['ScavengerHuntStartMsg'] = wfMsgForContent('scavengerhunt-button-play');
-				$vars['ScavengerHuntStartTitle'] = wfMsgForContent('scavengerhunt-starting-clue-title');
-				$vars['ScavengerHuntStartClue'] = 'TODO: startingClue here';
-				$vars['ScavengerHuntStartImg'] = 'TODO: startingImage here';
-			}
-			if (isset($triggers['article']) && is_array($triggers['article'])) {
-				//variables when on article page
-				$vars['ScavengerHuntArticleGameId'] = (int)reset(array_values($triggers['article']));
-				$vars['ScavengerHuntArticleImg'] = 'http://img844.imageshack.us/img844/5619/piggy2.png';
+		if (!empty($triggers)) {
+			if (!empty($triggers['start'])) {
+				$game = $games->findById(reset($triggers['start']));
+				if (!empty($game)) {
+					//variables for starting page
+					$vars['ScavengerHuntStart'] = (int)$game->getId();
+					$vars['ScavengerHuntStartMsg'] = $game->getLandingButtonText();
+					$vars['ScavengerHuntStartTitle'] = $game->getStartingClueTitle();
+					$vars['ScavengerHuntStartText'] = $game->getStartingClueText();
+					$vars['ScavengerHuntStartImage'] = $game->getStartingClueImage();
+					$vars['ScavengerHuntStartButtonText'] = $game->getStartingClueButtonText();
+					$vars['ScavengerHuntStartButtonTarget'] = $game->getStartingClueButtonTarget();
+				}
+			} else if (!empty($triggers['article'])) {
+				$game = $games->findById(reset($triggers['article']));
+				if (!empty($game)) {
+					$article = $game->findArticleByTitle($title);
+					if (!empty($article)) {
+						//variables for article page
+						$vars['ScavengerHuntArticleGameId'] = (int)$game->getId();
+						$vars['ScavengerHuntArticleImg'] = $article->getHiddenImage();
+					}
+				}
 			}
 
 			//include JS (TODO: and CSS) when on any page connected to the game
@@ -57,4 +73,5 @@ class ScavengerHunt {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
+
 }

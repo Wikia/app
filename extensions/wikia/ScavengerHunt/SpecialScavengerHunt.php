@@ -61,15 +61,18 @@ class SpecialScavengerHunt extends SpecialPage {
 
 		switch ($action) {
 			case 'list':
-				// Add game button
-				$template->set_vars(array(
-					'addUrl' => $this->mTitle->getFullUrl() . "/add",
-				));
-				$this->out->addHTML($template->render('main'));
+				$button = "<a class='wikia-button scavengerhunt-add-button' href='".$this->mTitle->getFullUrl()."/add'>".
+					XML::element("img",array( "class" => "sprite new", "src" => $this->app->getGlobal('wgBlankImgUrl'))).wfMsg('scavengerhunt-button-add')."</a>";
+
+				$this->out->mPagetitle .= $button;
+				$this->out->mPageLinkTitle = true;
 
 				// Games list
 				$pager = WF::build('ScavengerHuntGamesPager',array($this->games,$this->mTitle->getFullUrl(),$template));
-				$this->out->addHTML($pager->getBody());
+				$this->out->addHTML(
+					$pager->getBody() .
+					$pager->getNavigationBar()
+				);
 
 				break;
 			case 'edit':
@@ -112,14 +115,9 @@ class SpecialScavengerHunt extends SpecialPage {
 				if ($this->request->wasPosted()) {
 					if ($this->request->getVal('save')) {
 						$game = $this->updatePostedGame($game);
-						if ($action == 'add') {
-							$game->setWikiId($this->app->getGlobal('wgCityId'));
-						}
 						$errors = $this->validateGame($game);
-						if (empty($errors)) {
-							// save changes
-							$game->save();
-
+						// save changes
+						if (empty($errors) && $game->save()) {
 							NotificationsModule::addConfirmation(
 								$action == 'add'
 								? wfMsg('scavengerhunt-game-has-been-created')
@@ -156,36 +154,53 @@ class SpecialScavengerHunt extends SpecialPage {
 			}
 		}
 
-		// set fields
-//		$game->setWikiId($this->app->getGlobal('wgCityId'));
-		$game->setName($this->request->getVal('gameName'));
-		$game->setLandingTitle($this->request->getVal('landing'));
-		$game->setStartingClueText($this->request->getVal('startingClue'));
-		$game->setStartingClueImage($this->request->getVal('startingImage'));
-		$game->setFinalFormText($this->request->getVal('entryForm'));
-		$game->setFinalFormQuestion($this->request->getVal('finalQuestion'));
-		$game->setGoodbyeText($this->request->getVal('goodbyeMsg'));
-		$game->setGoodbyeImage($this->request->getVal('goodbyeImage'));
+		if ($game->getId() == 0) {
+			$game->setWikiId($this->app->getGlobal('wgCityId'));
+		}
+
+
+		$game->setData(array(
+			'name' => $this->request->getVal('name'),
+			'landingTitle' => $this->request->getVal('landingTitle'),
+			'landingButtonText' => $this->request->getVal('landingButtonText'),
+			'startingClueTitle' => $this->request->getVal('startingClueTitle'),
+			'startingClueText' => $this->request->getVal('startingClueText'),
+			'startingClueImage' => $this->request->getVal('startingClueImage'),
+			'startingClueButtonText' => $this->request->getVal('startingClueButtonText'),
+			'startingClueButtonTarget' => $this->request->getVal('startingClueButtonTarget'),
+			'entryFormTitle' => $this->request->getVal('entryFormTitle'),
+			'entryFormImage' => $this->request->getVal('entryFormImage'),
+			'entryFormText' => $this->request->getVal('entryFormText'),
+			'entryFormQuestion' => $this->request->getVal('entryFormQuestion'),
+			'goodbyeText' => $this->request->getVal('goodbyeText'),
+			'goodbyeImage' => $this->request->getVal('goodbyeImage'),
+		));
 
 		//create list of articles
-		$pageTitles = $this->request->getArray('pageTitle');
-		$hiddenImages = $this->request->getArray('hiddenImage');
-		$clueImages = $this->request->getArray('clueImage');
-		$clues = $this->request->getArray('clue');
-		$clueLinks = $this->request->getArray('clueLink');
+		$articleTitles = $this->request->getArray('articleTitle');
+		$articleHiddenImages = $this->request->getArray('articleHiddenImage');
+		$articleClueTitles = $this->request->getArray('articleClueTitle');
+		$articleClueTexts = $this->request->getArray('articleClueText');
+		$articleClueImages = $this->request->getArray('articleClueImage');
+		$articleClueButtonTexts = $this->request->getArray('articleClueButtonText');
+		$articleClueButtonTargets = $this->request->getArray('articleClueButtonTarget');
 
 		$articles = array();
-		$count = count($pageTitles);
+		$count = count($articleTitles);
 		for ($i = 0; $i < $count; $i++) {
-			if (empty($pageTitles[$i])) {
+			if (empty($articleTitles[$i])) {
 				continue;
 			}
-			$article = WF::build('ScavengerHuntGameArticle');
-			$article->setTitle($pageTitles[$i]);
-			$article->setHiddenImage($hiddenImages[$i]);
-			$article->setClueImage($clueImages[$i]);
-			$article->setClueText($clues[$i]);
-			$article->setLink($clueLinks[$i]);
+			$article = $game->newGameArticle();
+			$article->setAll(array(
+				'title' => $articleTitles[$i],
+				'hiddenImage' => $articleHiddenImages[$i],
+				'clueTitle' => $articleClueTitles[$i],
+				'clueText' => $articleClueTexts[$i],
+				'clueImage' => $articleClueImages[$i],
+				'clueButtonText' => $articleClueButtonTexts[$i],
+				'clueButtonTarget' => $articleClueButtonTargets[$i],
+			));
 			$articles[] = $article;
 		}
 		$game->setArticles($articles);
@@ -204,8 +219,8 @@ class SpecialScavengerHunt extends SpecialPage {
 		if (!empty($landingTitle) && empty($landingArticleId)) {
 			$errors[] = wfMsg( 'scavengerhunt-form-invalid-landing-title' );
 		}
-		$finalFormText = $game->getFinalFormText();
-		if (empty($finalFormText)) {
+		$entryFormText = $game->getEntryFormQuestion();
+		if (empty($entryFormText)) {
 			$errors[] =	wfMsg( 'scavengerhunt-form-no-final-form-text' );
 		}
 
@@ -217,12 +232,14 @@ class SpecialScavengerHunt extends SpecialPage {
 			if (empty($articleId)) {
 				$errors[] = wfMsg( 'scavengerhunt-form-invalid-article-title' );
 			}
+			/*
 			if (empty($hiddenImage)) {
 				$errors[] = wfMsg( 'scavengerhunt-form-no-hidden-image' );
 			}
 			if (empty($clueText)) {
 				$errors[] = wfmsg( 'scavengerhunt-form-no-clue-text' );
 			}
+			*/
 		}
 
 		wfProfileOut(__METHOD__);
@@ -232,35 +249,15 @@ class SpecialScavengerHunt extends SpecialPage {
 	protected function getTemplateVarsFromGame( ScavengerHuntGame $game ) {
 		wfProfileIn(__METHOD__);
 
-		$pageTitles = array();
-		$hiddenImages = array();
-		$clueImages = array();
-		$clues = array();
-		$clueLinks = array();
-		foreach ($game->getArticles() as $article) {
-			$pageTitles[] = $article->getTitle();
-			$hiddenImages[] = $article->getHiddenImage();
-			$clueImages[] = $article->getClueImage();
-			$clues[] = $article->getClueText();
-			$clueLinks[] = $article->getLink();
+		$vars = $game->getAll();
+		$vars['gameId'] = $vars['id'];
+		$vars['enabled'] = $vars['isEnabled'];
+		foreach ($vars['articles'] as $k => $v) {
+			$vars['articles'][$k] = $vars['articles'][$k]->getAll();
 		}
-		$vars = array(
-			'gameId' => $game->getId(),
-			'enabled' => $game->isEnabled(),
-			'gameName' => $game->getName(),
-			'landing' => $game->getLandingTitle(),
-			'startingClue' => $game->getStartingClueText(),
-			'startingImage' => $game->getStartingClueImage(),
-			'entryForm' => $game->getFinalFormText(),
-			'finalQuestion' => $game->getFinalFormQuestion(),
-			'goodbyeMsg' => $game->getGoodbyeText(),
-			'goodbyeImage' => $game->getGoodbyeImage(),
-			'pageTitle' => array_merge( $pageTitles, array('') ),
-			'hiddenImage' => array_merge( $hiddenImages, array('') ),
-			'clueImage' => array_merge( $clueImages, array('') ),
-			'clue' => array_merge( $clues, array('') ),
-			'clueLink' => array_merge( $clueLinks, array('') ),
-		);
+		$vars['articles'][] = $game->newGameArticle()->getAll();
+		unset($vars['id']);
+		unset($vars['isEnabled']);
 
 		wfProfileOut(__METHOD__);
 		return $vars;
