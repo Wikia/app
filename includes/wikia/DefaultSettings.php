@@ -622,6 +622,7 @@ $wgRiakSessionNode = "default";
 $wgAutoloadClasses[ "RiakClient" ] = "{$IP}/lib/riak/riak.php";
 $wgAutoloadClasses[ "RiakCache"  ] = "{$IP}/includes/wikia/RiakCache.php";
 $wgAutoloadClasses[ "ExternalStoreRiak"  ] = "{$IP}/includes/wikia/ExternalStoreRiak.php";
+$wgAutoloadClasses[ "RiakSessionHandler" ] = "{$IP}/includes/wikia/RiakSessionsHandler.php";
 $wgSolidCacheType = CACHE_RIAK;
 
 /*
