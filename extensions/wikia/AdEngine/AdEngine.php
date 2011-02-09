@@ -28,9 +28,8 @@ function wfAdEngineSetupJSVars($vars) {
 	// ArticleAdLogic
 	$vars['adLogicPageType'] = ArticleAdLogic::getPageType();
 
-	// ProviderValues (for DART requests)
+	// Custom KeyValues (for DART requests)
 	$vars['wgDartCustomKeyValues'] = $wgDartCustomKeyValues;
-	$vars['ProviderValues'] = AdEngine::getProviderValues($wgCityId);
 
 	return true;
 }
@@ -544,7 +543,6 @@ class AdEngine {
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 
 		global $wgCityId;
-		$out .=  $this->providerValuesAsJavascript($wgCityId);
 
 		// Get the setup code for ad providers used on this page. This is for Ad Providers that support multi-call.
 		foreach ($this->placeholders as $slotname => $load_priority){
@@ -681,54 +679,6 @@ EOT;
 			}
 		}
 	}
-
-
-	/* Odd request that I didn't have a better way to handle. Michael wanted the DART
-	 * Key value string as a javascript variable.
-	 */
-	public function providerValuesAsJavascript($city_id){
-		$providerValues = self::getProviderValues($city_id);
-
-		$out =  '<script type="text/javascript">' . "\n" .
-			'ProviderValues = {};' . "\n" .
-			'ProviderValues.list = ' . json_encode($providerValues['list']) . ";\n" .
-			'ProviderValues.string = "' . $providerValues['string'] . '"' . ";\n" .
-			'</script>';
-
-		return $out;
-	}
-
-	public static function getProviderValues($city_id) {
-		global $wgMemc, $wgRequest, $wgExternalSharedDB;
-		$cacheKey = wfMemcKey(__CLASS__ . 'providervalues', self::cacheKeyVersion);
-
-		$providerValues = $wgMemc->get($cacheKey);
-		if (!empty($providerValues) &&  $wgRequest->getVal('action') != 'purge'){
-			return $providerValues;
-		}
-
-		$db = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$ad_provider_value_table = 'ad_provider_value';
-
-		$sql = "SELECT * FROM $ad_provider_value_table WHERE city_id = ".intval($city_id);
-		$res = $db->query($sql);
-
-		$list = array();
-		$string = '';
-		while($row = $db->fetchObject($res)) {
-			$list[]= array('name'=> $row->keyname, 'value'=>$row->keyvalue);
-			$string .= $row->keyname . '=' . urlencode($row->keyvalue) . ';';
-		}
-
-		$providerValues = array();
-		$providerValues['list'] = $list;
-		$providerValues['string'] = $string;
-
-		$wgMemc->set($cacheKey, $providerValues, self::cacheTimeout);
-
-		return $providerValues;
-	}
-
 
 	public function getSlotNamesForProvider($provider_id){
 		$out = array();

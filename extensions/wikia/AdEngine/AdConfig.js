@@ -351,7 +351,7 @@ AdConfig.DART.getCustomKeyValues = function(){
 		return wgDartCustomKeyValues + ';';
 	}
 
-	return window.ProviderValues.string;
+	return '';
 };
 
 AdConfig.DART.getArticleKV = function(){
