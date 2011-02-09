@@ -314,5 +314,4 @@ class ScavengerHuntGamesPager extends AlphabeticPager {
 	public function getIndexField() {
 		return 'game_id';
 	}
-
 }

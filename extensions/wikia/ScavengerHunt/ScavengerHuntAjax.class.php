@@ -18,4 +18,20 @@
  */
 
 class ScavengerHuntAjax {
+	static public function getArticleData() {
+		wfProfileIn(__METHOD__);
+
+		$app = WF::build('App');
+		$request = $app->getGlobal('wgRequest');
+		$articleId = $request->getVal('articleId', false);
+		$gameId = $request->getVal('gameId', false);
+		$result = array(
+			'buttonLink' => 'TODO: link here',
+			'clue' => 'TODO: clue here',
+			'img' => 'TODO: img here'
+		);
+
+		wfProfileOut(__METHOD__);
+		return $result;
+	}
 }
