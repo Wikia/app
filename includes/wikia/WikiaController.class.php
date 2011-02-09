@@ -12,6 +12,10 @@ abstract class WikiaController {
 	 * @var WikiaResponse
 	 */
 	protected $response = null;
+	/**
+	 * application object
+	 * @var WikiaApp
+	 */
 	protected $app = null;
 
 	protected $allowedRequests = array(
@@ -64,13 +68,13 @@ abstract class WikiaController {
 	}
 
 	public function sendRequest($controllerName, $methodName, $params = array(), $format = null) {
-		$request = SF::build( 'WikiaHTTPRequest', array_merge(
+		$request = F::build( 'WikiaHTTPRequest', array_merge(
 			array('controller' => $controllerName, 'method' => $methodName, 'format' => $format),
 			$params
 		) );
 		$request->setInternal(true);
 		$format = $request->getVal('format', $request->isXmlHttp() ? 'json' : 'html');
-		$response = SF::build( 'WikiaResponse', array( 'format' => $format ) );
+		$response = F::build( 'WikiaResponse', array( 'format' => $format ) );
 		return $this->app->dispatch($request, $response);
 	}
 

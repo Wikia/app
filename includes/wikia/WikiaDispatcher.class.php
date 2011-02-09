@@ -16,13 +16,13 @@ class WikiaDispatcher {
 	}
 
 	protected function createRequest() {
-		return SF::build( 'WikiaHTTPRequest', array( 'params' => ( $_POST + $_GET ) ) );
+		return F::build( 'WikiaHTTPRequest', array( 'params' => ( $_POST + $_GET ) ) );
 	}
 
 	protected function createResponse( WikiaRequest $request ) {
 		$format = $request->getVal('format', $request->isXmlHttp() ? 'json' : 'html');
 
-		return SF::build( 'WikiaResponse', array( 'format' => $format ) );
+		return F::build( 'WikiaResponse', array( 'format' => $format ) );
 	}
 
 	public function dispatch(WikiaApp $app, WikiaRequest $request = null, WikiaResponse $response = null) {
@@ -44,7 +44,7 @@ class WikiaDispatcher {
 					throw new WikiaException( sprintf('Invalid controller name: %s', $controllerName ) );
 				}
 
-				$controller = SF::build( $controllerClassName );
+				$controller = F::build( $controllerClassName );
 
 				if ( !method_exists($controller, $method) || !is_callable( array($controller, $method) ) ) {
 					throw new WikiaException( sprintf('Could not dispatch %s::%s', $controllerClassName, $method) );

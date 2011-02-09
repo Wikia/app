@@ -125,5 +125,5 @@ abstract class WikiaSuperFactory {
  *
  */
 abstract class WF extends WikiaSuperFactory { }
-abstract class SF extends WikiaSuperFactory { }
+abstract class F extends WikiaSuperFactory { }
 

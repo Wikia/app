@@ -32,12 +32,12 @@ class WikiaApp {
 	 */
 	public function __construct(WikiaCompositeRegistry $registry = null, WikiaHookDispatcher $hookDispatcher = null) {
 		if(is_null($registry)) {
-			SF::setInstance( 'WikiaCompositeRegistry', new WikiaCompositeRegistry( array( self::REGISTRY_MEDIAWIKI => new WikiaGlobalsRegistry(), self::REGISTRY_WIKIA => new WikiaLocalRegistry() ) ) );
-			$registry = SF::build( 'WikiaCompositeRegistry' );
+			F::setInstance( 'WikiaCompositeRegistry', new WikiaCompositeRegistry( array( self::REGISTRY_MEDIAWIKI => new WikiaGlobalsRegistry(), self::REGISTRY_WIKIA => new WikiaLocalRegistry() ) ) );
+			$registry = F::build( 'WikiaCompositeRegistry' );
 		}
 		if(is_null($hookDispatcher)) {
-			SF::setInstance( 'WikiaHookDispatcher', new WikiaHookDispatcher());
-			$hookDispatcher = SF::build( 'WikiaHookDispatcher' );
+			F::setInstance( 'WikiaHookDispatcher', new WikiaHookDispatcher());
+			$hookDispatcher = F::build( 'WikiaHookDispatcher' );
 		}
 
 		$this->hookDispatcher = $hookDispatcher;
@@ -77,7 +77,7 @@ class WikiaApp {
 	 */
 	protected function getDispatcher() {
 		if( $this->dispatcher == null ) {
-			$this->dispatcher = SF::build( 'WikiaDispatcher' );
+			$this->dispatcher = F::build( 'WikiaDispatcher' );
 		}
 		return $this->dispatcher;
 	}
@@ -219,7 +219,7 @@ class WikiaApp {
 	}
 
 	public static function ajax() {
-		return SF::build( 'App' )->dispatch();
+		return F::build( 'App' )->dispatch();
 	}
 
 }
