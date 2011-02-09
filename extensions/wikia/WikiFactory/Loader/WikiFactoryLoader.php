@@ -253,6 +253,10 @@ class WikiFactoryLoader {
 		$oMemc = wfGetCache( CACHE_MEMCACHED );
 
 		if( empty( $this->mAlwaysFromDB ) ) {
+			/**
+			 * remember! for http requests we only known $this->mServerName
+			 * (domain), $this->mCityId is unknown (set to false in constructor)
+			 */
 			wfProfileIn( __METHOD__."-domaincache" );
 			$key = WikiFactory::getDomainKey( $this->mServerName, $this->mCityID );
 			$this->mDomain = $oMemc->get( $key );
