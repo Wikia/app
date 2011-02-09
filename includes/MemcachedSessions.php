@@ -61,8 +61,6 @@ function memsess_write( $id, $data ) {
 	$memc =& getMemc();
 	$memc->set( memsess_key( $id ), $data, 3600 );
 
-	RiakSessionHandler::write( $id, $data );
-
 	return true;
 }
 
