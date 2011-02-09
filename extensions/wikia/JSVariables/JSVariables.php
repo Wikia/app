@@ -24,6 +24,7 @@ function wfMakeGlobalVariablesScript($vars) {
 	$vars['wgID'] = isset($wgCityId) ? (int) $wgCityId : -1; // this one or one above should be deleted
 	$vars['wgEnableAjaxLogin'] = (is_array($wgEnableAjaxLogin)) ? in_array($vars['skin'], $wgEnableAjaxLogin) : false;
 	$vars['wgDB'] = $wgDBname;
+	$vars['wgDBname'] = $wgDBname;
 	$vars['wgBlankImgUrl'] = $wgBlankImgUrl;
 
 	// NOTE: This doesn't appear to be used in the code anywhere. If that's true, we can probably remove it.  It is set by the AdEngine though, so perhaps Athena uses it?
