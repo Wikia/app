@@ -545,8 +545,9 @@ function wfSIWEClearCache() {
 	foreach ( $res as $row ) {
 		$prefixes[] = $row->iw_prefix;
 	}
+
 	foreach ( $prefixes as $prefix ) {
-		$wgMemc->delete("$db:interwiki:$prefix");
+		$r = $wgMemc->delete("$db:interwiki:" . md5($prefix) );
 	}
 
 	return 'Cache cleared for ' . $db;
