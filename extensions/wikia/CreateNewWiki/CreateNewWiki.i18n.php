@@ -130,6 +130,7 @@ $messages['qqq'] = array(
 	'cnw-welcome-help' => 'Message to Community central with embedded anchor. (leave blank if community does not exist)',
 );
 
+/* this is fake spanish for testing reason.  A real one is needed */
 $messages['es'] = array(
 	// general messages
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki creation wizard]]',

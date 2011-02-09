@@ -7,8 +7,6 @@ $(function() {
 	ThemeDesigner.slideByDefaultWidth = 608;
 	ThemeDesigner.slideByItems = 4;
 	ThemeDesigner.themeTabInit();
-	//AjaxLogin.showRegister();
-	//$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion);
 });
 
 var WikiBuilder = {
@@ -180,7 +178,6 @@ var WikiBuilder = {
 		var name = WikiBuilder.wikiName.val();
 		var lang = WikiBuilder.wikiLanguage.val();
 		if(name) {
-			//WikiBuilder.showIcon(WikiBuilder.wikiNameStatus, 'spinner');
 			$.post(wgScript, {
 				action: 'ajax',
 				rs: 'moduleProxy',
@@ -194,10 +191,8 @@ var WikiBuilder = {
 					var json = $.parseJSON(res);
 					var response = res['response'];
 					if(response) {
-						//WikiBuilder.showIcon(WikiBuilder.wikiNameStatus, '');
 						WikiBuilder.wikiNameError.html(response);
 					} else {
-						//WikiBuilder.showIcon(WikiBuilder.wikiNameStatus, 'ok');
 						WikiBuilder.wikiNameError.html('');
 					}
 				}
