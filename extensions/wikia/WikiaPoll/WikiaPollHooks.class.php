@@ -19,6 +19,24 @@ class WikiaPollHooks {
 	}
 
 	/**
+	 * Override the edit button to point to the special page instead of the normal editor
+	 */
+
+	public static function onAlternateEdit( &$editPage ) {
+		global $wgOut;
+
+		$title = $editPage->getArticle()->getTitle();
+
+		if( $title->getNamespace() == NS_WIKIA_POLL ) {
+
+			$specialPageTitle = Title::newFromText( 'CreatePoll', NS_SPECIAL );
+			$wgOut->redirect( $specialPageTitle->getFullUrl() . '/' . $title->getDBkey() );
+		}
+
+		return true;
+	}
+
+	/**
 	 * Return HTML to be used when embedding polls using {{Poll:foo}} wikisyntax
 	 */
 	public static function onFetchTemplateAndTitle(&$text, &$finalTitle) {
