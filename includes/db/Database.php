@@ -488,9 +488,10 @@ abstract class DatabaseBase {
 			$title = '';
 			if( $wgTitle instanceof Title ) {
 				$title = $wgTitle->getFullURL();
+				// @todo escape url
 			}
 			// end of wikia change
-			$commentedSql = preg_replace('/\s/', " /* $fname $userName $title */ ", $sql, 1);
+			$commentedSql = preg_replace('/\s/', " /* $fname $userName */ ", $sql, 1);
 		#} else {
 		#	$commentedSql = $sql;
 		#}
