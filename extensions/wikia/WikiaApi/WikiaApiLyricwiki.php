@@ -12,8 +12,6 @@
    - The headers aren't being set (which is important for caching).  Find out where this page is called from.
    - getHometown wasn't ported over.
    - a lot seems to be missing... should make one pass over the code next to the original code & see what's up.
-
-
  */
 
 $wgAPIModules['lyrics'] = 'WikiaApiLyricwiki';
@@ -529,7 +527,7 @@ class WikiaApiLyricwiki extends ApiBase {
 	////
 	function writeRealJSON(&$result) {
 		header('Content-type: text/javascript; charset=UTF-8');
-		print json_encode($result);
+		print json_encode($result, JSON_HEX_APOS);
 	} // end writeRealJSON()
 
 }
