@@ -1,8 +1,10 @@
 <?php
 class WikiaDispatcher {
 
+	const DEFAULT_METHOD_NAME = 'index';
+
 	protected function getMethodName(WikiaRequest $request) {
-		return $request->getVal( 'method', null );
+		return $request->getVal( 'method', self::DEFAULT_METHOD_NAME );
 	}
 
 	protected function getControllerName(WikiaRequest $request) {
@@ -23,7 +25,7 @@ class WikiaDispatcher {
 		return SF::build( 'WikiaResponse', array( 'format' => $format ) );
 	}
 
-	public function dispatch(WikiaRequest $request = null, WikiaResponse $response = null) {
+	public function dispatch(WikiaApp $app, WikiaRequest $request = null, WikiaResponse $response = null) {
 		if (null === $request) {
 			$request = $this->createRequest();
 		}
@@ -38,8 +40,8 @@ class WikiaDispatcher {
 				$method = $this->getMethodName( $request );
 				$controllerName = $this->getControllerName( $request );
 				$controllerClassName = $this->getControllerClassName( $controllerName );
-				if( empty($method) || empty($controllerClassName) ) {
-					throw new WikiaException( 'Invalid controller or method name' );
+				if( empty($controllerClassName) ) {
+					throw new WikiaException( sprintf('Invalid controller name: %s', $controllerName ) );
 				}
 
 				$controller = SF::build( $controllerClassName );
@@ -51,8 +53,10 @@ class WikiaDispatcher {
 				if( !$request->isInternal() && !$controller->canDispatch( $method, $response->getFormat()) ) {
 					throw new WikiaException( sprintf('Access denied %s::%s', $controllerClassName, $method), 403 );
 				}
+
 				$controller->setRequest($request);
 				$controller->setResponse($response);
+				$controller->setApp($app);
 				$controller->init();
 				$controller->$method();
 
@@ -72,11 +76,6 @@ class WikiaDispatcher {
 		}
 
 		$response->buildTemplatePath( $controllerName, $method );
-
-		//if ($controller instanceof WikiaSpecialPageController) {
-		//global $wgOut;
-		//$wgOut->addHTML((string) $response);
-		//}
 
 		return $response;
 	}

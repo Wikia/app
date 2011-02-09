@@ -12,6 +12,7 @@ abstract class WikiaController {
 	 * @var WikiaResponse
 	 */
 	protected $response = null;
+	protected $app = null;
 
 	protected $allowedRequests = array(
 		'help' => array('html', 'json')
@@ -44,6 +45,14 @@ abstract class WikiaController {
 		return $this->response;
 	}
 
+	public function getApp() {
+		return $this->app;
+	}
+
+	public function setApp( WikiaApp $app ) {
+		$this->app = $app;
+	}
+
 	public function redirect( $controllerName, $methodName, $resetResponse = true ) {
 		if( $resetResponse ) {
 			$this->response->resetData();
@@ -62,7 +71,7 @@ abstract class WikiaController {
 		$request->setInternal(true);
 		$format = $request->getVal('format', $request->isXmlHttp() ? 'json' : 'html');
 		$response = SF::build( 'WikiaResponse', array( 'format' => $format ) );
-		return SF::build('App')->dispatch($request, $response);
+		return $this->app->dispatch($request, $response);
 	}
 
 	/**

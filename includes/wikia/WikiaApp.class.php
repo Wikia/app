@@ -161,6 +161,43 @@ class WikiaApp {
 	}
 
 	/**
+	 * get cookies array
+	 * @deprecated
+	 * @return array
+	 */
+	public function getCookies() {
+		return $_COOKIE;
+	}
+
+	/**
+	 * set cookie
+	 * @deprecated
+	 * @param string $key
+	 * @param mixed $value
+	 */
+	public function setCookie( $key, $value ) {
+		$_COOKIE[ $key ] = $value;
+	}
+
+	/**
+	 * unset cookie
+	 * @deprecated
+	 * @param string $key
+	 */
+	public function unsetCookie( $key ) {
+		unset( $_COOKIE[ $key ] );
+	}
+
+	/**
+	 * check if cookie is set
+	 * @deprecated
+	 * @param string $key
+	 */
+	public function isCookie( $key ) {
+		return (bool) isset( $_COOKIE[ $key ] );
+	}
+
+	/**
 	 * simple global function wrapper (most likely it won't work for references)
 	 *
 	 * @param string $funcName global function name
@@ -178,7 +215,7 @@ class WikiaApp {
 			$request = new WikiaHTTPRequest( $request );
 		}
 
-		return $this->getDispatcher()->dispatch( $request, $response );
+		return $this->getDispatcher()->dispatch( $this, $request, $response );
 	}
 
 	public static function ajax() {
