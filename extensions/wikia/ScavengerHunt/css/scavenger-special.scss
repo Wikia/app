@@ -35,6 +35,11 @@
 	}
 }
 
+.WikiaPageHeader .scavengerhunt-add-button {
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
 .scavenger-form {
 
 	.form-errorbox {
@@ -51,23 +56,22 @@
 		}
 	}
 
-	textarea {
-		height: 100px;
-		width: 600px;
-	}
-
-	input[type="text"] {
-		width: 600px;
-	}
-
-	.scavenger-entry {
-		border: 1px solid $color-page-border;
-		margin: 3px 0;
-		padding-left: 20px;
-		padding-bottom: 3px;
-
-		.scavenger-entry-info {
+	fieldset {
+		width: 610px;
+		padding: 0 10px 10px;
+		margin: 0 0 10px;
+		border: 2px solid $color-page-border;
+		legend {
 			font-style: italic;
+			padding-bottom: 0;
 		}
 	}
+	
+	textarea, input[type="text"] {
+		width: 600px;
+	}
+	textarea {
+		height: 100px;
+	}
+
 }

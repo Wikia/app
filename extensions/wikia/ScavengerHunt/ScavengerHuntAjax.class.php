@@ -23,13 +23,53 @@ class ScavengerHuntAjax {
 
 		$app = WF::build('App');
 		$request = $app->getGlobal('wgRequest');
-		$articleId = $request->getVal('articleId', false);
+		$games = WF::build('ScavengerHuntGames');
 		$gameId = $request->getVal('gameId', false);
-		$result = array(
-			'buttonLink' => 'TODO: link here',
-			'clue' => 'TODO: clue here',
-			'img' => 'TODO: img here'
-		);
+		$game = $games->findById((int)$gameId);
+
+		if (!empty($game)) {
+			$articleId = (int)$request->getVal('articleId', false);
+			$visitedIds = explode(',',(string)$_COOKIE['ScavengerHuntArticlesFound']);
+			$visitedIds[] = $articleId;
+			if ($game->isGameCompleted($visitedIds)) {
+				// game has just been completed
+				$result = array(
+					'status' => true,
+					'completed' => true,
+					'entryForm' => array(
+						'title' => $game->getEntryFormTitle(),
+						'image' => $game->getEntryFormImage(),
+						'question' => $game->getEntryFormQuestion(),
+					),
+				);
+			} else {
+				$article = $game->findArticleById($articleId);
+				if (!empty($article)) {
+					// article is a part of the game
+					$result = array(
+						'status' => true,
+						'completed' => false,
+						'clue' => array(
+							'title' => $article->getClueTitle(),
+							'text' => $article->getClueText(),
+							'image' => $article->getClueImage(),
+							'buttonText' => $article->getClueButtonText(),
+							'buttonTarget' => $article->getClueButtonTarget(),
+						),
+					);
+				} else {
+					// article is not in game
+					$result = array(
+						'status' => false,
+					);
+				}
+			}
+		} else {
+			// game not found
+			$result = array(
+				'status' => false,
+			);
+		}
 
 		wfProfileOut(__METHOD__);
 		return $result;
