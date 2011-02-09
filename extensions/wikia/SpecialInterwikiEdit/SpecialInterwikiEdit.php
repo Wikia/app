@@ -57,6 +57,7 @@ function wfSpecialInterwikiEdit (){
 		case 'edit_interwiki' :
 		case 'delete_interwiki' :
 		case 'Edit interwiki': $ret .= wfSIWEEditInterwiki(); break;
+		case 'clear_cache': $ret .= wfSIWEClearCache(); break;
 	    case 'choose':
 	    default : $ret .= wfSIWEChooseAction();
 	}
@@ -278,7 +279,11 @@ function wfSIWEEditInterwiki(){
   							<li>url: ". $fields['iw_url']. "</li>\n
   							<li>local: ". $fields['iw_local']. "</li>\n
   							<li>trans: ". $fields['iw_trans']. "</li>\n
-							</ul></p>\n";
+							</ul></p>\n
+							<form action='' method='POST'>\n
+							<input type='hidden' name='action' value='clear_cache' />\n
+							<input type='hidden' name='db' value='$wikiaDB' />\n
+							<input type='submit' value='Clear cache' /></form>";
   					}else{
 	  		        		$ret .= "Database error: data not changed</p>\n";
   					}
@@ -528,4 +533,22 @@ function wfSIWEGetRequestData() {
 		htmlspecialchars($wgRequest->getVal('ext_wikia_id', false)),
 	);
 }
-?>
+
+function wfSIWEClearCache() {
+	global $wgRequest, $wgMemc;
+	
+	$db = $wgRequest->getVal( 'db' );
+
+	$dbr = wfGetDB( DB_SLAVE, array(), $db );
+	$res = $dbr->select( 'interwiki', array( 'iw_prefix' ), false );
+	$prefixes = array();
+	foreach ( $res as $row ) {
+		$prefixes[] = $row->iw_prefix;
+	}
+	foreach ( $prefixes as $prefix ) {
+		$wgMemc->delete("$db:interwiki:$prefix");
+	}
+
+	return 'Cache cleared for ' . $db;
+}
+
