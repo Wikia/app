@@ -121,13 +121,8 @@ $.fn.extend({
 
 		wrapper.log('makeModal: #' + id);
 
-		var ads = $("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").add(".wikia-ad");
-
-		ads.each(function(index, el){
-			$(el).children().css("margin-left","-9999px");
-		});
-
-		wrapper.data("ads", ads);
+		// hide ads
+		$.hideAds();
 
 		// get rid of tooltip - remove title attr
 		this.removeAttr('title');
@@ -239,10 +234,7 @@ $.fn.extend({
 			$(this).remove();
 		});
 
-		//hide ads when a modal is present
-		this.closest(".modalWrapper").data("ads").each(function(index, el){
-			$(el).children().css({"margin-left":"-9999px"});
-		});
+		$.showAds();
 	},
 
 	// just hide the modal - don't remove DOM node
@@ -259,9 +251,7 @@ $.fn.extend({
 		});
 
 		//show ads again
-		this.closest(".modalWrapper").data("ads").each(function(index, el){
-			$(el).children().css({"margin-left":"auto"});
-		});
+		$.showAds();
 	},
 
 	// show previously hidden modal
@@ -291,9 +281,7 @@ $.fn.extend({
 			})
 			.log('showModal: #' + this.attr('id'));
 
-		this.closest(".modalWrapper").data("ads").each(function(index, el){
-			$(el).children().css({"margin-left":"auto"});
-		});
+		$.hideAds();
 
 		/*
 		//Defined twice in different scopes. This is bad. Figure out how to define just once.

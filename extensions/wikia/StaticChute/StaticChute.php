@@ -283,6 +283,7 @@ class StaticChute {
 			"common/jquery/jquery.cookies.2.1.0.js", // needed by geo.js
 			'common/jquery/jquery.timeago.js',
 			'oasis/js/tables.js',
+			'oasis/js/common.js',
 		);
 
 		// JS served for anon on article view

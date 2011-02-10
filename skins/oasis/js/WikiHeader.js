@@ -15,8 +15,7 @@ var WikiHeader = {
 		WikiHeader.nav = $("#WikiHeader").children("nav");
 		WikiHeader.subnav = WikiHeader.nav.find(".subnav");
 		WikiHeader.mouseoverTimerRunning = false;
-		WikiHeader.ads = $("#WikiaRail").find(".wikia-ad").first();
-		
+
 		WikiHeader.positionNav();
 
 		//Events
@@ -26,7 +25,7 @@ var WikiHeader = {
 				WikiHeader.hideNav();
 				WikiHeader.showSubNav($(this).parent("li"));
 			});
-			
+
 		//Accessibility Events
 		//Show when any inner anchors are in focus
 		WikiHeader.subnav.find("a").focus(function(event) {
@@ -110,7 +109,7 @@ var WikiHeader = {
 
 		if (subnav.exists()) {
 			subnav.css("top", WikiHeader.navtop).show();
-			//WikiHeader.ads.css("visibility", "hidden");
+			$.hideAds();
 
 			$.tracker.byStr('wikiheader/wikinav/open');
 		}
@@ -123,7 +122,7 @@ var WikiHeader = {
 		} else {
 			WikiHeader.subnav.hide();
 		}
-		//WikiHeader.ads.css("visibility", "visible");
+		$.showAds();
 	},
 
 	positionNav: function() {
