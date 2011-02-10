@@ -138,10 +138,6 @@ class WikiaApp {
 		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set('wgSpecialPages', $className, $name);
 	}
 
-	public function registerAjaxFunction() {
-
-	}
-
 	/**
 	 * get global variable (alias: WikiaCompositeRegistry::get(var,'mediawiki'))
 	 * @param string $globalVarName
