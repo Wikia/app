@@ -10,3 +10,28 @@
 .scavenger-clue-image {
 	position: absolute;
 }
+
+#scavengerClueModal {
+	h1, .modalContent {
+		border: none;
+		margin-left: 100px;
+	}
+
+	.scavenger-clue-text {
+		font-size: 18px;
+
+		span {
+			color: $color-links;
+		}
+	}
+
+	.scavenger-clue-button {
+		padding-top: 20px;
+		text-align: right;
+
+		a.button {
+			font-size: 18px;
+			padding: 10px;
+		}
+	}
+}

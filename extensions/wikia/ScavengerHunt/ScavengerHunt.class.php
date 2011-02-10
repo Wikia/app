@@ -62,6 +62,7 @@ class ScavengerHunt {
 					if (!empty($article)) {
 						//variables for article page
 						$vars['ScavengerHuntArticleGameId'] = (int)$game->getId();
+						//TODO: move to AJAX call
 						$vars['ScavengerHuntArticleImg'] = $article->getHiddenImage();
 					}
 				}
@@ -69,8 +70,24 @@ class ScavengerHunt {
 
 			//include JS and CSS when on any page connected to the game
 			$out->addScriptFile($app->getGlobal('wgScriptPath') . '/extensions/wikia/ScavengerHunt/js/scavenger-game.js');
-			$out->addStyle($app->runFunction('wfGetSassUrl', 'extensions/wikia/ScavengerHunt/css/scavenger-game.scss'));
 		}
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/*
+	 * hook handler
+	 *
+	 * @author Marooned
+	 * @author wladek
+	 */
+	public function onBeforePageDisplay($out, $skin) {
+		wfProfileIn(__METHOD__);
+
+		//TODO: check if page from game
+		$app = WF::build('App');
+		$out->addStyle($app->runFunction('wfGetSassUrl', 'extensions/wikia/ScavengerHunt/css/scavenger-game.scss'));
 
 		wfProfileOut(__METHOD__);
 		return true;

@@ -55,14 +55,15 @@ var ScavengerHunt = {
 			$.getJSON(wgScript, data, function(json) {
 				window.ScavengerHuntArticleData = json;
 				//TODO: check `ScavengerHuntArticlesFound` cookie and return confirmed articles + update the cookie
-			});
 
-			//display image and attach handler to it
-			$('<img>')
-				.attr('src', window.ScavengerHuntArticleImg)
-				.click(ScavengerHunt.onHiddenImgClick)
-				.css({position:'absolute', top: '150px', left: '10px', 'z-index': 999})
-				.appendTo('body');
+				//display image and attach handler to it
+				$('<img>')
+					.attr('src', window.ScavengerHuntArticleImg)
+					.click(ScavengerHunt.onHiddenImgClick)
+					.css({position:'absolute', top: '150px', left: '10px', 'z-index': 999})
+					.appendTo('body');
+
+			});
 		}
 	},
 
@@ -91,8 +92,8 @@ var ScavengerHunt = {
 		ScavengerHunt.log(found);
 
 		$.showModal(
-			window.ScavengerHuntArticleData.title,
-			window.ScavengerHuntArticleData.content,
+			window.ScavengerHuntArticleData.clue.title,
+			window.ScavengerHuntArticleData.clue.content,
 			{
 				id: 'scavengerClueModal',
 				showCloseButton: false,
