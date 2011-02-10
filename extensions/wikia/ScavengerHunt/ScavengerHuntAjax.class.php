@@ -14,7 +14,7 @@
  *
  * To activate this functionality, place this file in your extensions/
  * subdirectory, and add the following line to LocalSettings.php:
- *     require_once("$IP/extensions/wikia/ScavengerHunt/ScavengerHunt_setup.php");
+ *     include("$IP/extensions/wikia/ScavengerHunt/ScavengerHunt_setup.php");
  */
 
 class ScavengerHuntAjax {
@@ -29,7 +29,7 @@ class ScavengerHuntAjax {
 
 		if (!empty($game)) {
 			$articleId = (int)$request->getVal('articleId', false);
-			$visitedIds = explode(',',(string)$_COOKIE['ScavengerHuntArticlesFound']);
+			$visitedIds = isset($_COOKIE['ScavengerHuntArticlesFound']) ? explode(',',(string)$_COOKIE['ScavengerHuntArticlesFound']) : array();
 			$visitedIds[] = $articleId;
 			if ($game->isGameCompleted($visitedIds)) {
 				// game has just been completed
@@ -46,15 +46,21 @@ class ScavengerHuntAjax {
 				$article = $game->findArticleById($articleId);
 				if (!empty($article)) {
 					// article is a part of the game
+					$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
+					$template->set_vars(array(
+						'buttonTarget' => $article->getClueButtonTarget(),
+						'buttonText' => $article->getClueButtonText(),
+						'imageSrc' => $article->getClueImage(),
+						'imageStyle' => $article->getClueImageStyle(),
+						'text' => $article->getClueText()
+					));
+
 					$result = array(
 						'status' => true,
 						'completed' => false,
 						'clue' => array(
 							'title' => $article->getClueTitle(),
-							'text' => $article->getClueText(),
-							'image' => $article->getClueImage(),
-							'buttonText' => $article->getClueButtonText(),
-							'buttonTarget' => $article->getClueButtonTarget(),
+							'content' => $template->render('modal-clue')
 						),
 					);
 				} else {

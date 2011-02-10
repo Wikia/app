@@ -68,11 +68,13 @@ var ScavengerHunt = {
 
 	//handler start button
 	onStartClick: function(e) {
+		$(this).remove();
+
 		$.cookies.set('ScavengerHuntInProgress', window.ScavengerHuntStart, {hoursToLive:24*7});
 		$.showModal(
 			window.ScavengerHuntStartTitle,
 			//TODO: add nice layout here
-			window.ScavengerHuntStartClue + '<img src="' + window.ScavengerHuntStartImg + '">'
+			window.ScavengerHuntStartText + '<img src="' + window.ScavengerHuntStartImage + '">'
 		);
 	},
 
@@ -89,9 +91,13 @@ var ScavengerHunt = {
 		ScavengerHunt.log(found);
 
 		$.showModal(
-			window.ScavengerHuntStartTitle,
-			//TODO: add nice layout here
-			window.ScavengerHuntArticleData.clue + '<img src="' + window.ScavengerHuntArticleData.img + '"><br><a class="button" href="' + window.ScavengerHuntArticleData.buttonLink + '">Go!</a>'
+			window.ScavengerHuntArticleData.title,
+			window.ScavengerHuntArticleData.content,
+			{
+				id: 'scavengerClueModal',
+				showCloseButton: false,
+				width: 588
+			}
 		);
 	}
 };

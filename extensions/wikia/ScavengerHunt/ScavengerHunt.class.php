@@ -14,7 +14,7 @@
  *
  * To activate this functionality, place this file in your extensions/
  * subdirectory, and add the following line to LocalSettings.php:
- *     require_once("$IP/extensions/wikia/ScavengerHunt/ScavengerHunt_setup.php");
+ *     include("$IP/extensions/wikia/ScavengerHunt/ScavengerHunt_setup.php");
  */
 
 class ScavengerHunt {
@@ -54,7 +54,8 @@ class ScavengerHunt {
 					$vars['ScavengerHuntStartButtonText'] = $game->getStartingClueButtonText();
 					$vars['ScavengerHuntStartButtonTarget'] = $game->getStartingClueButtonTarget();
 				}
-			} else if (!empty($triggers['article'])) {
+			}
+			if (!empty($triggers['article'])) {
 				$game = $games->findById(reset($triggers['article']));
 				if (!empty($game)) {
 					$article = $game->findArticleByTitle($title);
@@ -66,12 +67,12 @@ class ScavengerHunt {
 				}
 			}
 
-			//include JS (TODO: and CSS) when on any page connected to the game
+			//include JS and CSS when on any page connected to the game
 			$out->addScriptFile($app->getGlobal('wgScriptPath') . '/extensions/wikia/ScavengerHunt/js/scavenger-game.js');
+			$out->addStyle($app->runFunction('wfGetSassUrl', 'extensions/wikia/ScavengerHunt/css/scavenger-game.scss'));
 		}
 
 		wfProfileOut(__METHOD__);
 		return true;
 	}
-
 }
