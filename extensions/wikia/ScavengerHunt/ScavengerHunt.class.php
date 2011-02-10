@@ -20,7 +20,7 @@
 class ScavengerHunt {
 
 	protected function getStyleForImageOffset( $offset ) {
-		return sprintf("margin-left: %dpx; margin-top: %dpx;",
+		return sprintf("left: %dpx; top: %dpx;",
 			intval(@$offset['left']), intval(@$offset['top']));
 	}
 
@@ -28,28 +28,26 @@ class ScavengerHunt {
 		// build entry form html
 		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
 		$template->set_vars(array(
-			'title' => $article->getStartingClueTitle(),
-			'text' => $article->getStartingClueText(),
-			'buttonText' => $article->getStartingClueButtonText(),
-			'buttonTarget' => $article->getStartingClueButtonTarget(),
-			'image' => $game->getStartingClueImage(),
+			'text' => $game->getStartingClueText(),
+			'buttonText' => $game->getStartingClueButtonText(),
+			'buttonTarget' => $game->getStartingClueButtonTarget(),
+			'imageSrc' => $game->getStartingClueImage(),
 			'imageStyle' => $this->getStyleForImageOffset($game->getStartingClueImageOffset()),
 		));
-		return $template->render('clue-box');
+		return $template->render('modal-clue');
 	}
 
-	public function getClueHtml( ScavengerHuntGame $game, ScavengerHuntGameArticle $article ) {
+	public function getClueHtml( ScavengerHuntGameArticle $article ) {
 		// build entry form html
 		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
 		$template->set_vars(array(
-			'title' => $article->getClueTitle(),
 			'text' => $article->getClueText(),
 			'buttonText' => $article->getClueButtonText(),
 			'buttonTarget' => $article->getClueButtonTarget(),
-			'image' => $game->getClueImage(),
-			'imageStyle' => $this->getStyleForImageOffset($game->getClueImageOffset()),
+			'imageSrc' => $article->getClueImage(),
+			'imageStyle' => $this->getStyleForImageOffset($article->getClueImageOffset()),
 		));
-		return $template->render('clue-box');
+		return $template->render('modal-clue');
 	}
 
 	public function getEntryFormHtml( ScavengerHuntGame $game ) {
@@ -73,10 +71,10 @@ class ScavengerHunt {
 			'text' => wfMsg('scavengerhunt-goodbye-text'),
 			'buttonText' => wfMsg('scavengerhunt-goodbye-button-text'),
 			'buttonTarget' => '',
-			'image' => $game->getEntryFormImage(),
+			'imageSrc' => $game->getEntryFormImage(),
 			'imageStyle' => $this->getStyleForImageOffset($game->getEntryFormImageOffset()),
 		));
-		return $template->render('clue-box');
+		return $template->render('modal-clue');
 	}
 
 
@@ -118,6 +116,7 @@ class ScavengerHunt {
 					//variables for starting page
 					$vars['ScavengerHuntStart'] = (int)$game->getId();
 					$vars['ScavengerHuntStartMsg'] = $game->getLandingButtonText();
+					$vars['ScavengerHuntStartClueTitle'] = $game->getStartingClueTitle();
 					$vars['ScavengerHuntStartClueHtml'] = $this->getStartingClueHtml($game);
 					/*
 					$vars['ScavengerHuntStartTitle'] = $game->getStartingClueTitle();

@@ -31,8 +31,9 @@ class ScavengerHuntAjax {
 		$game = $games->findEnabledById((int)$gameId);
 
 		if (!empty($game)) {
+			$articleId = $request->getInt('articleId', false);
 			$visitedIds = isset($_COOKIE['ScavengerHuntArticlesFound']) ? explode(',',(string)$_COOKIE['ScavengerHuntArticlesFound']) : array();
-			$visitedIds[] = intval($request->getVal('articleId',false));
+			$visitedIds[] = $articleId;
 			$completed = $helper->updateVisitedIds($game,$visitedIds);
 			$visitedIds = implode(',',$visitedIds);
 			if ($completed) {
@@ -49,7 +50,8 @@ class ScavengerHuntAjax {
 						'status' => true,
 						'completed' => false,
 						'visitedIds' => $visitedIds,
-						'clueHtml' => $helper->getClueHtml($game,$article),
+						'clueTitle' => $article->getClueTitle(),
+						'clueContent' => $helper->getClueHtml($article),
 					);
 				} else {
 					// article is not in game
@@ -83,7 +85,7 @@ class ScavengerHuntAjax {
 		$game = $games->findEnabledById((int)$gameId);
 
 		if (!empty($game)) {
-			$visitedIds = explode(',',(string)$_COOKIE['ScavengerHuntArticlesFound']);
+			$visitedIds = isset($_COOKIE['ScavengerHuntArticlesFound']) ? explode(',',(string)$_COOKIE['ScavengerHuntArticlesFound']) : array();
 			$completed = $helper->updateVisitedIds($game,$visitedIds);
 			if ($completed) {
 				$name = $request->getVal('name','');

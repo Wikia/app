@@ -12,7 +12,7 @@ var ScavengerHunt = {
 		}
 
 		//check if there is a need to initialize JS for game
-		var gameId  $.cookies.get('ScavengerHuntInProgress');
+		var gameId = $.cookies.get('ScavengerHuntInProgress');
 		if (gameId) {
 			ScavengerHunt.initGame(gameId);
 		}
@@ -60,6 +60,7 @@ var ScavengerHunt = {
 				$('<img>')
 					.attr('src', window.ScavengerHuntArticleImg)
 					.click(ScavengerHunt.onHiddenImgClick)
+					//TODO: use ScavengerHuntArticleImgOffset and move rest to CSS
 					.css({position:'absolute', top: '150px', left: '10px', 'z-index': 999})
 					.appendTo('body');
 
@@ -73,9 +74,13 @@ var ScavengerHunt = {
 
 		$.cookies.set('ScavengerHuntInProgress', window.ScavengerHuntStart, {hoursToLive:24*7});
 		$.showModal(
-			window.ScavengerHuntStartTitle,
-			//TODO: add nice layout here
-			window.ScavengerHuntStartText + '<img src="' + window.ScavengerHuntStartImage + '">'
+			window.ScavengerHuntStartClueTitle,
+			window.ScavengerHuntStartClueHtml,
+			{
+				id: 'scavengerClueModal',
+				showCloseButton: false,
+				width: 588
+			}
 		);
 	},
 
@@ -92,8 +97,8 @@ var ScavengerHunt = {
 		ScavengerHunt.log(found);
 
 		$.showModal(
-			window.ScavengerHuntArticleData.clue.title,
-			window.ScavengerHuntArticleData.clue.content,
+			window.ScavengerHuntArticleData.clueTitle,
+			window.ScavengerHuntArticleData.clueContent,
 			{
 				id: 'scavengerClueModal',
 				showCloseButton: false,
@@ -101,14 +106,14 @@ var ScavengerHunt = {
 			}
 		);
 	},
-	
+
 	showEntryForm: function() {
 		var data = window.ScavengerHuntArticleData;
 		if (!data) {
 			$.log('cannot show ebtry form popup - no data available', 'ScavengerHunt');
 			return false;
 		}
-		
+
 		$.loadModalJS(function(){
 			var w = $(data.entryFormHtml).makeModal();
 			w.find('input[type=submit]').click(function(e){
@@ -118,7 +123,7 @@ var ScavengerHunt = {
 					rs: 'ScavengerHuntAjax',
 					method: 'pushEntry',
 					gameId: window.ScavengerHuntArticleGameId,
-					
+
 					name: w.find('input[name=name]').val(),
 					email: w.find('input[name=email]').val(),
 					answer: w.find('textarea[name=answer]').val()
@@ -131,22 +136,21 @@ var ScavengerHunt = {
 			});
 		});
 	},
-	
+
 	showGoodbyeForm: function() {
 		var data = window.ScavengerHuntGoodbyeData;
 		if (!data) {
 			$.log('cannot show goodbye popup - no data available', 'ScavengerHunt');
 			return false;
 		}
-		
+
 		var w = $(data.goodbyeHtml);
 		w.makeModal();
 		w.find('.clue-button').click(function(){
 			w.closeModal();
 		});
 	}
-	
 };
 
 //on content ready
-wgAfterContentAndJS.push(ScavengerHunt.init
+wgAfterContentAndJS.push(ScavengerHunt.init);
