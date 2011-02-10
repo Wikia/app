@@ -19,6 +19,7 @@ class CreateWikiTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * CreateWikiProject object
 	 * @var CreateWikiProject
+	 * @group Infrastructure
 	 */
 	public function testWikiCreation() {
 		
