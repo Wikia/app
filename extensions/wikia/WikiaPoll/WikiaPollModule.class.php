@@ -21,7 +21,18 @@ class WikiaPollModule extends Module {
 		$this->embedded = !empty($params['embedded']);
 	}
 
-	public function executeSpecialPage() {}
+	public function executeSpecialPage() {
+
+	}
+
+	public function executeSpecialPageEdit($params) {
+		$title = Title::newFromText ($params['title'], NS_WIKIA_POLL) ;
+
+		if (is_object($title)) {
+			$this->poll = WikiaPoll::NewFromTitle($title);
+			$this->data = $this->poll->getData();
+		}
+	}
 
 	/**
 	 * Calculate percantage for votes and scale bars

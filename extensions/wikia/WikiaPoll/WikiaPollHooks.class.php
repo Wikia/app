@@ -19,6 +19,26 @@ class WikiaPollHooks {
 	}
 
 	/**
+	 *  Override the edit button behavior in the menu for Poll pages
+	 *  only allow the Poll creator or an admin to edit
+	 */
+	 public static function onMenuButtonAfterExecute (&$moduleObject, &$params) {
+		global $wgTitle, $wgUser;
+
+		if( $wgTitle->getNamespace() == NS_WIKIA_POLL ) {
+			$rev = $wgTitle->getFirstRevision();
+			$isAdmin = $wgUser->isAllowed('editinterface');
+			if ($isAdmin || $wgUser->getId() == $rev->getRawUser()) {
+				// okay to edit, do nothing
+			} else {
+				// remove button
+				$moduleObject->action = array();
+			}
+		}
+		return true;
+	 }
+
+	/**
 	 * Override the edit button to point to the special page instead of the normal editor
 	 */
 

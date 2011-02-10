@@ -109,8 +109,16 @@ var CreateWikiaPoll = {
 			// editing existing poll
 			$().log($("#CreateWikiaPoll").find("form").serialize());
 			$.get(wgScript + '?action=ajax&rs=WikiaPollAjax&method=update', $("#CreateWikiaPoll").find("form").serialize(), function(data) {
-				if (data.success) {
-					$("#CreateWikiaPoll").closest(".modalWrapper").closeModal();					
+				if ($("#CreateWikiaPoll").closest(".modalWrapper").exists()) { // in modal
+					if (data.success) {
+						$("#CreateWikiaPoll").closest(".modalWrapper").closeModal();
+					}
+				} else { // Special:Poll
+					if (data.success) {
+						document.location = data.url;
+					} else if (data.error) {
+						$("#CreateWikiaPoll").find(".errorbox").remove().end().prepend(data.error);
+					}
 				}
 			});
 		} else {
