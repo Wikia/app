@@ -1,4 +1,5 @@
 == Changes since release-007 ==
+* fb#2354: WikiaMiniUpload fails (macbre)
 * fb#2516: nav dropdown falling behind gallery & ad (macbre)
 * fb#1978: Click-tracking for Recent Wiki Activity module is mixed up (macbre)
 * fb#942: Bullet shapes vary in Firefox (macbre)
