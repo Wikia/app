@@ -14,7 +14,12 @@ class SpecialCreateWikiaPoll extends SpecialPage {
 
 		$wgOut->addStyle(wfGetSassUrl('/extensions/wikia/WikiaPoll/css/CreateWikiaPoll.scss'));
 
-		$wgOut->addHtml(wfRenderModule('WikiaPoll', 'SpecialPage'));
+		if( $subpage != '' ) {
+			// We came here from the edit link, go into edit mode
+			$wgOut->addHtml(wfRenderModule('WikiaPoll', 'SpecialPageEdit', array('title' => $subpage)));
+		} else {
+			$wgOut->addHtml(wfRenderModule('WikiaPoll', 'SpecialPage'));
+		}
 	}
 }
 ?>
