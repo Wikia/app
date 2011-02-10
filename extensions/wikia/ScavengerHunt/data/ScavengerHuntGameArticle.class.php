@@ -59,6 +59,4 @@
 			if (array_key_exists('title',$data) && !array_key_exists('articleId',$data))
 				$this->setTitle($data['title']);
 		}
-
-
 	}

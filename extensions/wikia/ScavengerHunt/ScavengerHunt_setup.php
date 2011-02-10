@@ -44,6 +44,7 @@ $app->registerClass('ScavengerHuntEntries', "$dir/data/ScavengerHuntEntries.clas
 
 // hooks
 $app->registerHook('MakeGlobalVariablesScript', 'ScavengerHunt', 'onMakeGlobalVariablesScript' );
+$app->registerHook('BeforePageDisplay', 'ScavengerHunt', 'onBeforePageDisplay' );
 
 // i18n
 $app->registerExtensionMessageFile('ScavengerHunt', "$dir/ScavengerHunt.i18n.php");
