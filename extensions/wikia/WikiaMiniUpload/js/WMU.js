@@ -102,7 +102,7 @@ function WMU_loadDetails() {
 
 	var params = Array();
 	params.push('sourceId=0');
-	params.push('itemId='+FCK.wysiwygData[WMU_refid].href.split(":")[1]);
+	params.push('itemId=' + encodeURIComponent(FCK.wysiwygData[WMU_refid].href.split(":")[1]));
 
 	WMU_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + params.join('&'), callback);
 }
@@ -418,7 +418,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
                 if(typeof size != "undefined") {
                         WMU_size = size;
                 }
-                
+
                 if(typeof caption != "undefined") {
                         WMU_caption = caption;
                 }
@@ -806,7 +806,7 @@ function WMU_displayDetails(responseText) {
 	$G('ImageUpload' + WMU_curScreen).innerHTML = responseText;
 
 	$('#ImageUploadLicense').bind('change', WMU_licenseSelectorCheck);
-	
+
 	// If Details view and showhide link exists, adjust the height of the right sidebar
 	$('#WMU_showhide').click(function(event) {
 		event.preventDefault();
@@ -819,7 +819,7 @@ function WMU_displayDetails(responseText) {
 		}
 		$(".ImageUploadRight .advanced").slideToggle("fast");
 	});
-	
+
 	if( WMU_skipDetails ){
 		$G('ImageUpload' + WMU_curScreen).style.display = 'none';
 		$G('ImageUploadLayoutLeft').checked = 'checked';
@@ -1026,7 +1026,7 @@ function WMU_insertImage(e, type) {
 
 	var callback = {
 		success: function(o) {
-		
+
 			var screenType = o.getResponseHeader['X-screen-type'];
 			if(typeof screenType == "undefined") {
 				screenType = o.getResponseHeader['X-Screen-Type'];
@@ -1042,17 +1042,17 @@ function WMU_insertImage(e, type) {
 					$G('ImageUpload' + WMU_curScreen).innerHTML = o.responseText;
 					break;
 				case 'summary':
-					
+
 					WMU_switchScreen('Summary');
 					$G('ImageUploadBack').style.display = 'none';
 					$G('ImageUpload' + WMU_curScreen).innerHTML = o.responseText;
-					
+
 					var event = jQuery.Event("imageUploadSummary");
 					$("body").trigger(event, [$G('ImageUpload' + WMU_curScreen)]);
 					if ( event.isDefaultPrevented() ) {
 					    return false;
 					}
-					
+
 					if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
 						if( -2 == WMU_gallery) {
 							WMU_insertPlaceholder( WMU_box );
@@ -1123,7 +1123,7 @@ function WMU_insertImage(e, type) {
 }
 
 function MWU_imageWidthChanged(changes) {
-	
+
 	//test
 	return;
 
