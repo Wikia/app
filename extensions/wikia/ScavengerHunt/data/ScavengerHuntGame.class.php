@@ -32,6 +32,7 @@
 		protected $entryFormImageTopOffset = 0;
 		protected $entryFormImageLeftOffset = 0;
 		protected $entryFormQuestion = '';
+		protected $goodbyeTitle = '';
 		protected $goodbyeText = '';
 		protected $goodbyeImage = '';
 		protected $goodbyeImageTopOffset = 0;
@@ -99,6 +100,7 @@
 		public function setEntryFormImageTopOffset( $entryFormImageTopOffset ) { $this->entryFormImageTopOffset = $entryFormImageTopOffset; }
 		public function setEntryFormImageLeftOffset( $entryFormImageLeftOffset ) { $this->entryFormImageLeftOffset = $entryFormImageLeftOffset; }
 		public function setEntryFormQuestion( $entryFormQuestion ) { $this->entryFormQuestion = $entryFormQuestion; }
+		public function setGoodbyeTitle( $goodbyeTitle ) { $this->goodbyeTitle = $goodbyeTitle; }
 		public function setGoodbyeText( $goodbyeText ) { $this->goodbyeText = $goodbyeText; }
 		public function setGoodbyeImage( $goodbyeImage ) { $this->goodbyeImage = $goodbyeImage; }
 		public function setGoodbyeImageTopOffset( $goodbyeImageTopOffset ) { $this->goodbyeImageTopOffset = $goodbyeImageTopOffset; }
@@ -125,6 +127,7 @@
 		public function getEntryFormImageTopOffset() { return $this->entryFormImageTopOffset; }
 		public function getEntryFormImageLeftOffset() { return $this->entryFormImageLeftOffset; }
 		public function getEntryFormQuestion() { return $this->entryFormQuestion; }
+		public function getGoodbyeTitle() { return $this->goodbyeTitle; }
 		public function getGoodbyeText() { return $this->goodbyeText; }
 		public function getGoodbyeImage() { return $this->goodbyeImage; }
 		public function getGoodbyeImageTopOffset() { return $this->goodbyeImageTopOffset; }
@@ -137,7 +140,7 @@
 				'startingClueText', 'startingClueImage', 'startingClueImageTopOffset', 'startingClueImageLeftOffset',
 				'startingClueButtonText', 'startingClueButtonTarget', 'articles', 'entryFormTitle', 'entryFormText',
 				'entryFormImage', 'entryFormImageTopOffset', 'entryFormImageLeftOffset', 'entryFormQuestion',
-				'goodbyeText', 'goodbyeImage', 'goodbyeImageTopOffset', 'goodbyeImageLeftOffset' );
+				'goodbyeTitle', 'goodbyeText', 'goodbyeImage', 'goodbyeImageTopOffset', 'goodbyeImageLeftOffset' );
 		}
 
 		public function getData() {
@@ -162,7 +165,7 @@
 				'startingClueText', 'startingClueImage', 'startingClueImageTopOffset', 'startingClueImageLeftOffset',
 				'startingClueButtonText', 'startingClueButtonTarget', 'articles', 'entryFormTitle', 'entryFormText',
 				'entryFormImage', 'entryFormImageTopOffset', 'entryFormImageLeftOffset', 'entryFormQuestion',
-				'goodbyeText', 'goodbyeImage', 'goodbyeImageTopOffset', 'goodbyeImageLeftOffset' );
+				'goodbyeTitle', 'goodbyeText', 'goodbyeImage', 'goodbyeImageTopOffset', 'goodbyeImageLeftOffset' );
 		}
 
 		public function getAll() {

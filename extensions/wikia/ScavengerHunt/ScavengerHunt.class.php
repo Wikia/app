@@ -32,7 +32,7 @@ class ScavengerHunt {
 			'buttonText' => $game->getStartingClueButtonText(),
 			'buttonTarget' => $game->getStartingClueButtonTarget(),
 			'imageSrc' => $game->getStartingClueImage(),
-			'imageStyle' => $this->getStyleForImageOffset($game->getStartingClueImageOffset()),
+			'imageOffset' => $game->getStartingClueImageOffset(),
 		));
 		return $template->render('modal-clue');
 	}
@@ -45,7 +45,7 @@ class ScavengerHunt {
 			'buttonText' => $article->getClueButtonText(),
 			'buttonTarget' => $article->getClueButtonTarget(),
 			'imageSrc' => $article->getClueImage(),
-			'imageStyle' => $this->getStyleForImageOffset($article->getClueImageOffset()),
+			'imageOffset' => $article->getClueImageOffset(),
 		));
 		return $template->render('modal-clue');
 	}
@@ -57,22 +57,22 @@ class ScavengerHunt {
 			'title' => $game->getEntryFormTitle(),
 			'text' => $game->getEntryFormText(),
 			'question' => $game->getEntryFormQuestion(),
-			'image' => $game->getEntryFormImage(),
-			'imageStyle' => $this->getStyleForImageOffset($game->getEntryFormImageOffset()),
+			'imageSrc' => $game->getEntryFormImage(),
+			'imageOffset' => $game->getEntryFormImageOffset(),
 		));
-		return $template->render('entry-form-box');
+		return $template->render('modal-form');
 	}
 
 	public function getGoodbyeHtml( ScavengerHuntGame $game ) {
 		// build entry form html
 		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
 		$template->set_vars(array(
-			'title' => $game->getEntryFormTitle(),
-			'text' => wfMsg('scavengerhunt-goodbye-text'),
+			'title' => $game->getGoodbyeTitle(),
+			'text' => $game->getGoodbyeText(),
 			'buttonText' => wfMsg('scavengerhunt-goodbye-button-text'),
 			'buttonTarget' => '',
 			'imageSrc' => $game->getEntryFormImage(),
-			'imageStyle' => $this->getStyleForImageOffset($game->getEntryFormImageOffset()),
+			'imageOffset' => $game->getEntryFormImageOffset(),
 		));
 		return $template->render('modal-clue');
 	}
@@ -118,13 +118,6 @@ class ScavengerHunt {
 					$vars['ScavengerHuntStartMsg'] = $game->getLandingButtonText();
 					$vars['ScavengerHuntStartClueTitle'] = $game->getStartingClueTitle();
 					$vars['ScavengerHuntStartClueHtml'] = $this->getStartingClueHtml($game);
-					/*
-					$vars['ScavengerHuntStartTitle'] = $game->getStartingClueTitle();
-					$vars['ScavengerHuntStartText'] = $game->getStartingClueText();
-					$vars['ScavengerHuntStartImage'] = $game->getStartingClueImage();
-					$vars['ScavengerHuntStartButtonText'] = $game->getStartingClueButtonText();
-					$vars['ScavengerHuntStartButtonTarget'] = $game->getStartingClueButtonTarget();
-					*/
 				}
 			}
 			if (!empty($triggers['article'])) {
@@ -134,9 +127,6 @@ class ScavengerHunt {
 					if (!empty($article)) {
 						//variables for article page
 						$vars['ScavengerHuntArticleGameId'] = (int)$game->getId();
-						//TODO: move to AJAX call
-						$vars['ScavengerHuntArticleImg'] = $article->getHiddenImage();
-						$vars['ScavengerHuntArticleImgOffset'] = $article->getHiddenImageOffset();
 					}
 				}
 			}

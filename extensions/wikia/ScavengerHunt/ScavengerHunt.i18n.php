@@ -53,6 +53,7 @@ $messages['en'] = array(
 
 	'scavengerhunt-label-entry-form' => 'Entry form',
 	'scavengerhunt-label-entry-form-title' => 'Popup title:',
+	'scavengerhunt-label-entry-form-text' => 'Popup text:',
 	'scavengerhunt-label-entry-form-image' => 'Popup image:',
 	'scavengerhunt-label-entry-form-question' => 'Popup question:',
 
@@ -80,8 +81,11 @@ $messages['en'] = array(
 	'scavengerhunt-game-has-been-disabled' => 'Selected Scavenger Hunt game has been disabled.',
 	'scavengerhunt-game-has-not-been-saved' => 'Scavenger Hunt game has not been saved.',
 
-	'scavengerhunt-starting-clue-title' => 'Scavenger Hunt',
-	'scavengerhunt-button-play' => 'Start the Scavenger Hunt!',
+	'scavengerhunt-entry-form-name' => 'Your name:',
+	'scavengerhunt-entry-form-email' => 'Your email:',
+	'scavengerhunt-entry-form-submit' => 'Submit entry',
+
+	'scavengerhunt-goodbye-button-text' => 'Bye',
 );
 
 $messages['qqq'] = array(

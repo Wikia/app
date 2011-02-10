@@ -11,7 +11,7 @@
 	position: absolute;
 }
 
-#scavengerClueModal {
+#scavengerClueModal, #scavengerEntryFormModal, #scavengerGoodbyeModal {
 	h1, .modalContent {
 		border: none;
 		margin-left: 100px;
@@ -34,4 +34,20 @@
 			padding: 10px;
 		}
 	}
+	
+	.scavenger-entry-form {
+		margin-top: 12px;
+		&>textarea,&>input,&>label {
+			display: block;
+		}
+		&>textarea,&>input {
+			width: 99%;
+			margin-bottom: 12px;
+			border: 1px solid $color-page-border;
+			&:focus {
+				border-color: $color-links;
+			}
+		}
+	}
+	
 }

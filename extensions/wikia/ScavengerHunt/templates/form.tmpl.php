@@ -53,7 +53,9 @@
 			<label>
 				<?= wfMsg('scavengerhunt-label-starting-clue-image') ?>
 				<br>
-				<input type="text" name="startingClueImage" value="<?= $startingClueImage ?>">
+				<input class="image" type="text" name="startingClueImage" value="<?= $startingClueImage ?>">
+				<input class="image-offset" type="text" name="startingClueImageTopOffset" value="<?= $startingClueImageTopOffset ?>">
+				<input class="image-offset" type="text" name="startingClueImageLeftOffset" value="<?= $startingClueImageLeftOffset ?>">
 			</label>
 		</div>
 		<div>
@@ -106,7 +108,9 @@
 			<label>
 				<?= wfMsg('scavengerhunt-label-article-clue-image') ?>
 				<br>
-				<input type="text" name="articleClueImage[]" value="<?= $article['clueImage'] ?>">
+				<input class="image" type="text" name="articleClueImage[]" value="<?= $article['clueImage'] ?>">
+				<input class="image-offset" type="text" name="articleClueImageTopOffset[]" value="<?= $article['clueImageTopOffset'] ?>">
+				<input class="image-offset" type="text" name="articleClueImageLeftOffset[]" value="<?= $article['clueImageLeftOffset'] ?>">
 			</label>
 		</div>
 		<div>
@@ -145,7 +149,9 @@
 			<label>
 				<?= wfMsg('scavengerhunt-label-entry-form-image') ?>
 				<br>
-				<input type="text" name="entryFormImage" value="<?= $entryFormImage ?>">
+				<input class="image" type="text" name="entryFormImage" value="<?= $entryFormImage ?>">
+				<input class="image-offset" type="text" name="entryFormImageTopOffset" value="<?= $entryFormImageTopOffset ?>">
+				<input class="image-offset" type="text" name="entryFormImageLeftOffset" value="<?= $entryFormImageLeftOffset ?>">
 			</label>
 		</div>
 		<div>
@@ -160,6 +166,13 @@
 		<legend><?= wfMsg('scavengerhunt-label-goodbye') ?></legend>
 		<div>
 			<label>
+				<?= wfMsg('scavengerhunt-label-goodbye-title') ?>
+				<br>
+				<input type="text" name="goodbyeTitle" value="<?= $goodbyeTitle ?>">
+			</label>
+		</div>
+		<div>
+			<label>
 				<?= wfMsg('scavengerhunt-label-goodbye-text') ?>
 				<br>
 				<textarea name="goodbyeText"><?= $goodbyeText ?></textarea>
@@ -169,7 +182,9 @@
 			<label>
 				<?= wfMsg('scavengerhunt-label-goodbye-image') ?>
 				<br>
-				<input type="text" name="goodbyeImage" value="<?= $goodbyeImage ?>">
+				<input class="image" type="text" name="goodbyeImage" value="<?= $goodbyeImage ?>">
+				<input class="image-offset" type="text" name="goodbyeImageTopOffset" value="<?= $goodbyeImageTopOffset ?>">
+				<input class="image-offset" type="text" name="goodbyeImageLeftOffset" value="<?= $goodbyeImageLeftOffset ?>">
 			</label>
 		</div>
 	</fieldset>
