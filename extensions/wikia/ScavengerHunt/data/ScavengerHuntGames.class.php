@@ -27,7 +27,7 @@
 			return $game;
 		}
 
-		public function findById( $id, $readWrite = false ) {
+		public function findById( $id, $readWrite = false, $where = array() ) {
 			$db = null;
 			$options = array();
 			if ($readWrite === true) {
@@ -37,11 +37,15 @@
 				$db = $this->getDb();
 			}
 
+			$where = array_merge($where,array(
+				'game_id' => (int)$id,
+			));
+
 			// read data
 			$row = $db->selectRow(
 				array( self::GAMES_TABLE_NAME ),
 				array( 'game_id', 'wiki_id', 'game_name', 'game_is_enabled', 'game_data' ),
-				array( 'game_id' => (int)$id ),
+				$where,
 				__METHOD__,
 				$options
 			);
@@ -55,12 +59,22 @@
 			return $game;
 		}
 
-		public function findAllByWikiId( $wikiId ) {
+		public function findEnabledById( $id, $readWrite = false ) {
+			return $this->findById($id, $readWrite, array(
+				'game_is_enabled' => 1,
+			));
+		}
+
+		public function findAllByWikiId( $wikiId, $where = array() ) {
+			$where = array_merge($where,array(
+				'wiki_id' => (int)$wikiId,
+			));
+
 			$db = $this->getDb();
 			$set = $db->select(
 				array( self::GAMES_TABLE_NAME ),
 				array( 'game_id', 'wiki_id', 'game_name', 'game_is_enabled', 'game_data' ),
-				array( 'wiki_id' => (int)$wikiId ),
+				$where,
 				__METHOD__
 			);
 
@@ -70,6 +84,12 @@
 			}
 
 			return $games;
+		}
+
+		public function findAllEnabledByWikiId( $wikiId ) {
+			return $this->findAllByWikiId($wikiId, array(
+				'game_is_enabled' => 1,
+			));
 		}
 
 
@@ -159,7 +179,7 @@
 			$data = $this->getCache()->get($this->getIndexMemcKey());
 			if (!is_array($data)) {
 				$cityId = $this->app->getGlobal('wgCityId');
-				$games = $this->findAllByWikiId($cityId);
+				$games = $this->findAllEnabledByWikiId($cityId);
 				$data = array();
 				foreach ($games as $game) {
 					$gameId = $game->getId();
@@ -181,6 +201,7 @@
 		}
 
 		protected function clearIndexCache() {
+			// XXX: add squid purges
 			$this->getCache()->delete($this->getIndexMemcKey());
 		}
 

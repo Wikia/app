@@ -136,6 +136,13 @@
 		</div>
 		<div>
 			<label>
+				<?= wfMsg('scavengerhunt-label-entry-form-text') ?>
+				<br>
+				<textarea name="entryFormText"><?= $entryFormText ?></textarea>
+			</label>
+		</div>
+		<div>
+			<label>
 				<?= wfMsg('scavengerhunt-label-entry-form-image') ?>
 				<br>
 				<input type="text" name="entryFormImage" value="<?= $entryFormImage ?>">

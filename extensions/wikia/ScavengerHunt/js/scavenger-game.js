@@ -12,7 +12,7 @@ var ScavengerHunt = {
 		}
 
 		//check if there is a need to initialize JS for game
-		var gameId = $.cookies.get('ScavengerHuntInProgress');
+		var gameId  $.cookies.get('ScavengerHuntInProgress');
 		if (gameId) {
 			ScavengerHunt.initGame(gameId);
 		}
@@ -100,8 +100,53 @@ var ScavengerHunt = {
 				width: 588
 			}
 		);
+	},
+	
+	showEntryForm: function() {
+		var data = window.ScavengerHuntArticleData;
+		if (!data) {
+			$.log('cannot show ebtry form popup - no data available', 'ScavengerHunt');
+			return false;
+		}
+		
+		$.loadModalJS(function(){
+			var w = $(data.entryFormHtml).makeModal();
+			w.find('input[type=submit]').click(function(e){
+				e.preventDefault();
+				var formdata = {
+					action: 'ajax',
+					rs: 'ScavengerHuntAjax',
+					method: 'pushEntry',
+					gameId: window.ScavengerHuntArticleGameId,
+					
+					name: w.find('input[name=name]').val(),
+					email: w.find('input[name=email]').val(),
+					answer: w.find('textarea[name=answer]').val()
+				};
+				$.getJSON(wgScript, formdata, function(json) {
+					window.ScavengerHuntGoodbyeData = json;
+					// XXX: clear game cookies if entry is saved
+					ScavengerHunt.showGoodbyeForm();
+				});
+			});
+		});
+	},
+	
+	showGoodbyeForm: function() {
+		var data = window.ScavengerHuntGoodbyeData;
+		if (!data) {
+			$.log('cannot show goodbye popup - no data available', 'ScavengerHunt');
+			return false;
+		}
+		
+		var w = $(data.goodbyeHtml);
+		w.makeModal();
+		w.find('.clue-button').click(function(){
+			w.closeModal();
+		});
 	}
+	
 };
 
 //on content ready
-wgAfterContentAndJS.push(ScavengerHunt.init);
+wgAfterContentAndJS.push(ScavengerHunt.init

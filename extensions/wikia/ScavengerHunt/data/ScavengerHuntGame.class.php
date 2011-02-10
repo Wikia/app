@@ -21,14 +21,21 @@
 		protected $startingClueTitle = '';
 		protected $startingClueText = '';
 		protected $startingClueImage = '';
+		protected $startingClueImageTopOffset = 0;
+		protected $startingClueImageLeftOffset = 0;
 		protected $startingClueButtonText = '';
 		protected $startingClueButtonTarget = '';
 		protected $articles = array();
 		protected $entryFormTitle = '';
+		protected $entryFormText = '';
 		protected $entryFormImage = '';
+		protected $entryFormImageTopOffset = 0;
+		protected $entryFormImageLeftOffset = 0;
 		protected $entryFormQuestion = '';
 		protected $goodbyeText = '';
 		protected $goodbyeImage = '';
+		protected $goodbyeImageTopOffset = 0;
+		protected $goodbyeImageLeftOffset = 0;
 
 		public function __construct( WikiaApp $app, $id = 0 ) {
 			$this->app = $app;
@@ -52,6 +59,27 @@
 			$this->landingArticleId = $landingArticleId;
 		}
 
+		public function getStartingClueImageOffset() {
+			return array(
+				'top' => $this->startingClueImageTopOffset,
+				'left' => $this->startingClueImageLeftOffset,
+			);
+		}
+
+		public function getEntryFormImageOffset() {
+			return array(
+				'top' => $this->entryFormImageTopOffset,
+				'left' => $this->entryFormImageLeftOffset,
+			);
+		}
+
+		public function getGoodbyeImageOffset() {
+			return array(
+				'top' => $this->goodbyeImageTopOffset,
+				'left' => $this->goodbyeImageLeftOffset,
+			);
+		}
+
 		public function setId( $id ) { $this->id = $id; }
 		public function setWikiId( $wikiId ) { $this->wikiId = $wikiId; }
 		public function setEnabled( $isEnabled ) { $this->isEnabled = $isEnabled; }
@@ -60,14 +88,21 @@
 		public function setStartingClueTitle( $startingClueTitle ) { $this->startingClueTitle = $startingClueTitle; }
 		public function setStartingClueText( $startingClueText ) { $this->startingClueText = $startingClueText; }
 		public function setStartingClueImage( $startingClueImage ) { $this->startingClueImage = $startingClueImage; }
+		public function setStartingClueImageTopOffset( $startingClueImageTopOffset ) { $this->startingClueImageTopOffset = $startingClueImageTopOffset; }
+		public function setStartingClueImageLeftOffset( $startingClueImageLeftOffset ) { $this->startingClueImageLeftOffset = $startingClueImageLeftOffset; }
 		public function setStartingClueButtonText( $startingClueButtonText ) { $this->startingClueButtonText = $startingClueButtonText; }
 		public function setStartingClueButtonTarget( $startingClueButtonTarget ) { $this->startingClueButtonTarget = $startingClueButtonTarget; }
 		public function setArticles( $articles ) { $this->articles = $articles; }
 		public function setEntryFormTitle( $entryFormTitle ) { $this->entryFormTitle = $entryFormTitle; }
+		public function setEntryFormText( $entryFormText ) { $this->entryFormText = $entryFormText; }
 		public function setEntryFormImage( $entryFormImage ) { $this->entryFormImage = $entryFormImage; }
+		public function setEntryFormImageTopOffset( $entryFormImageTopOffset ) { $this->entryFormImageTopOffset = $entryFormImageTopOffset; }
+		public function setEntryFormImageLeftOffset( $entryFormImageLeftOffset ) { $this->entryFormImageLeftOffset = $entryFormImageLeftOffset; }
 		public function setEntryFormQuestion( $entryFormQuestion ) { $this->entryFormQuestion = $entryFormQuestion; }
 		public function setGoodbyeText( $goodbyeText ) { $this->goodbyeText = $goodbyeText; }
 		public function setGoodbyeImage( $goodbyeImage ) { $this->goodbyeImage = $goodbyeImage; }
+		public function setGoodbyeImageTopOffset( $goodbyeImageTopOffset ) { $this->goodbyeImageTopOffset = $goodbyeImageTopOffset; }
+		public function setGoodbyeImageLeftOffset( $goodbyeImageLeftOffset ) { $this->goodbyeImageLeftOffset = $goodbyeImageLeftOffset; }
 
 		public function getId() { return $this->id; }
 		public function getWikiId() { return $this->wikiId; }
@@ -79,19 +114,30 @@
 		public function getStartingClueTitle() { return $this->startingClueTitle; }
 		public function getStartingClueText() { return $this->startingClueText; }
 		public function getStartingClueImage() { return $this->startingClueImage; }
+		public function getStartingClueImageTopOffset() { return $this->startingClueImageTopOffset; }
+		public function getStartingClueImageLeftOffset() { return $this->startingClueImageLeftOffset; }
 		public function getStartingClueButtonText() { return $this->startingClueButtonText; }
 		public function getStartingClueButtonTarget() { return $this->startingClueButtonTarget; }
 		public function getArticles() { return $this->articles; }
 		public function getEntryFormTitle() { return $this->entryFormTitle; }
+		public function getEntryFormText() { return $this->entryFormText; }
 		public function getEntryFormImage() { return $this->entryFormImage; }
+		public function getEntryFormImageTopOffset() { return $this->entryFormImageTopOffset; }
+		public function getEntryFormImageLeftOffset() { return $this->entryFormImageLeftOffset; }
 		public function getEntryFormQuestion() { return $this->entryFormQuestion; }
 		public function getGoodbyeText() { return $this->goodbyeText; }
 		public function getGoodbyeImage() { return $this->goodbyeImage; }
+		public function getGoodbyeImageTopOffset() { return $this->goodbyeImageTopOffset; }
+		public function getGoodbyeImageLeftOffset() { return $this->goodbyeImageLeftOffset; }
+
+
 
 		protected function getDataProperties() {
 			return array( 'landingTitle', 'landingArticleId', 'landingButtonText', 'startingClueTitle',
-				'startingClueText', 'startingClueImage', 'startingClueButtonText', 'startingClueButtonTarget', 'articles',
-				'entryFormTitle', 'entryFormImage', 'entryFormQuestion', 'goodbyeText', 'goodbyeImage' );
+				'startingClueText', 'startingClueImage', 'startingClueImageTopOffset', 'startingClueImageLeftOffset',
+				'startingClueButtonText', 'startingClueButtonTarget', 'articles', 'entryFormTitle', 'entryFormText',
+				'entryFormImage', 'entryFormImageTopOffset', 'entryFormImageLeftOffset', 'entryFormQuestion',
+				'goodbyeText', 'goodbyeImage', 'goodbyeImageTopOffset', 'goodbyeImageLeftOffset' );
 		}
 
 		public function getData() {
@@ -113,8 +159,10 @@
 		protected function getAllProperties() {
 			return array( 'id', 'wikiId', 'isEnabled', 'name',
 				'landingTitle', 'landingArticleId', 'landingButtonText', 'startingClueTitle',
-				'startingClueText', 'startingClueImage', 'startingClueButtonText', 'startingClueButtonTarget', 'articles',
-				'entryFormTitle', 'entryFormImage', 'entryFormQuestion', 'goodbyeText', 'goodbyeImage' );
+				'startingClueText', 'startingClueImage', 'startingClueImageTopOffset', 'startingClueImageLeftOffset',
+				'startingClueButtonText', 'startingClueButtonTarget', 'articles', 'entryFormTitle', 'entryFormText',
+				'entryFormImage', 'entryFormImageTopOffset', 'entryFormImageLeftOffset', 'entryFormQuestion',
+				'goodbyeText', 'goodbyeImage', 'goodbyeImageTopOffset', 'goodbyeImageLeftOffset' );
 		}
 
 		public function getAll() {
@@ -153,7 +201,10 @@
 		}
 
 		public function findArticleByTitle( Title $title ) {
-			$articleId = $title->getArticleId();
+			return $this->findArticleById($title->getArticleId());
+		}
+
+		public function findArticleById( $articleId ) {
 			if (!empty($articleId)) {
 				foreach ($this->articles as $article) {
 					if ($articleId === $article->getArticleId()) {
@@ -164,20 +215,19 @@
 			return false;
 		}
 
-		public function isGameCompleted( $visitedIds ) {
-			$ids = array();
-			foreach ($visitedIds as $v) $ids[(int)$v] = true;
+		public function getArticleIds() {
+			$articleIds = array();
 			foreach ($this->articles as $article) {
-				if (!isset($ids[$article->getArticleId()])) {
-					return false;
+				$articleId = $article->getArticleId();
+				if ($articleId > 0) {
+					$articleIds[] = $articleId;
 				}
 			}
-
-			return true;
+			return $articleIds;
 		}
 
 		protected function getEntries() {
-			return $this->games->getEntries();
+			return $this->games->getEntries($this);
 		}
 
 		/** ENTRIES MANAGEMENT **/

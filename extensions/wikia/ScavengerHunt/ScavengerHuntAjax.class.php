@@ -18,55 +18,44 @@
  */
 
 class ScavengerHuntAjax {
+
 	static public function getArticleData() {
 		wfProfileIn(__METHOD__);
 
 		$app = WF::build('App');
+		$helper = WF::build('ScavengerHunt');
 		$request = $app->getGlobal('wgRequest');
+
 		$games = WF::build('ScavengerHuntGames');
 		$gameId = $request->getVal('gameId', false);
-		$game = $games->findById((int)$gameId);
+		$game = $games->findEnabledById((int)$gameId);
 
 		if (!empty($game)) {
-			$articleId = (int)$request->getVal('articleId', false);
 			$visitedIds = isset($_COOKIE['ScavengerHuntArticlesFound']) ? explode(',',(string)$_COOKIE['ScavengerHuntArticlesFound']) : array();
-			$visitedIds[] = $articleId;
-			if ($game->isGameCompleted($visitedIds)) {
-				// game has just been completed
+			$visitedIds[] = intval($request->getVal('articleId',false));
+			$completed = $helper->updateVisitedIds($game,$visitedIds);
+			$visitedIds = implode(',',$visitedIds);
+			if ($completed) {
 				$result = array(
 					'status' => true,
 					'completed' => true,
-					'entryForm' => array(
-						'title' => $game->getEntryFormTitle(),
-						'image' => $game->getEntryFormImage(),
-						'question' => $game->getEntryFormQuestion(),
-					),
+					'visited' => $visitedIds,
+					'entryFormHtml' => $helper->getEntryFormHtml($game),
 				);
 			} else {
 				$article = $game->findArticleById($articleId);
 				if (!empty($article)) {
-					// article is a part of the game
-					$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
-					$template->set_vars(array(
-						'buttonTarget' => $article->getClueButtonTarget(),
-						'buttonText' => $article->getClueButtonText(),
-						'imageSrc' => $article->getClueImage(),
-						'imageStyle' => $article->getClueImageStyle(),
-						'text' => $article->getClueText()
-					));
-
 					$result = array(
 						'status' => true,
 						'completed' => false,
-						'clue' => array(
-							'title' => $article->getClueTitle(),
-							'content' => $template->render('modal-clue')
-						),
+						'visitedIds' => $visitedIds,
+						'clueHtml' => $helper->getClueHtml($game,$article),
 					);
 				} else {
 					// article is not in game
 					$result = array(
 						'status' => false,
+						'error' => 'article-not-in-game',
 					);
 				}
 			}
@@ -74,10 +63,72 @@ class ScavengerHuntAjax {
 			// game not found
 			$result = array(
 				'status' => false,
+				'error' => 'game-not-found',
 			);
 		}
 
 		wfProfileOut(__METHOD__);
 		return $result;
 	}
+
+	static public function pushEntry() {
+		wfProfileIn(__METHOD__);
+
+		$app = WF::build('App');
+		$helper = WF::build('ScavengerHunt');
+		$request = $app->getGlobal('wgRequest');
+
+		$games = WF::build('ScavengerHuntGames');
+		$gameId = $request->getVal('gameId', false);
+		$game = $games->findEnabledById((int)$gameId);
+
+		if (!empty($game)) {
+			$visitedIds = explode(',',(string)$_COOKIE['ScavengerHuntArticlesFound']);
+			$completed = $helper->updateVisitedIds($game,$visitedIds);
+			if ($completed) {
+				$name = $request->getVal('name','');
+				$email = $request->getVal('email','');
+				$answer = $request->getVal('answer','');
+
+				// XXX: validate data
+
+				$user = $app->getGlobal('wgUser');
+
+				$entry = $games->getEntries()->newEntry();
+				$entry->setUserId($user->getId());
+				$entry->setName($name);
+				$entry->setEmail($email);
+				$entry->setAnswer($answer);
+
+				if ($game->addEntry($entry)) {
+					$result = array(
+						'status' => true,
+						'goodbyeHtml' => $helper->getGoodbyeHtml(),
+					);
+				} else {
+					// entry could not be added
+					$result = array(
+						'status' => false,
+						'error' => 'entry-save-error',
+					);
+				}
+			} else {
+				// game was not completed
+				$result = array(
+					'status' => false,
+					'error' => 'game-was-not-completed',
+				);
+			}
+		} else {
+			// game not found
+			$result = array(
+				'status' => false,
+				'error' => 'game-not-found',
+			);
+		}
+
+		wfProfileOut(__METHOD__);
+		return $result;
+	}
+
 }
