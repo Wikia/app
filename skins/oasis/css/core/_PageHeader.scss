@@ -2,7 +2,7 @@
 	clear: both;
 	margin: 0 10px 10px 10px;
 	position: relative;
-	z-index: 1; //ie7 requirement
+	z-index: 2; //ie7 requirement
 	&.separator {
 		border-bottom: 1px solid $color-page-border;
 		padding: 0 0 15px 0;
