@@ -15,7 +15,7 @@
  */
 class RiakCache extends BagOStuff {
 
-	private $mBucket, $mNode, $mNodeName;
+	private $mBucket, $mNode, $mNodeName, $mClient;
 
 	public function __construct( $bucket = false, $node = false ) {
 		global $wgRiakStorageNodes, $wgRiakDefaultNode;
@@ -68,7 +68,7 @@ class RiakCache extends BagOStuff {
 	 */
 	function getRiakClient() {
 		try {
-			$riak = new RiakClient(
+			$this->mClient = new RiakClient(
 				$this->mNode[ "host" ],
 				$this->mNode[ "port" ],
 				$this->mNode[ "prefix" ],
@@ -78,9 +78,9 @@ class RiakCache extends BagOStuff {
 		}
 		catch ( Exception $e ) {
 			wfDebugLog( __CLASS__, __METHOD__ . $this->riakNode() . ": catched exception, error: " . $e->getMessage() . ".\n", true );
-			$riak = false;
+			$this->mClient = false;
 		}
-		return $riak;
+		return $this->mClient;
 	}
 
 	/**
@@ -130,6 +130,7 @@ class RiakCache extends BagOStuff {
 	public function get( $key ) {
 
 		$bucket = $this->getRiakClient()->bucket( $this->getBucket() );
+		$this->mClient->setR( 1 );
 		$object = $bucket->get( $key );
 		$data   = $object->getData();
 		$value  = false;
@@ -153,6 +154,7 @@ class RiakCache extends BagOStuff {
 	 */
 	public function set( $key, $value, $exptime = 0 ) {
 		$bucket = $this->getRiakClient()->bucket( $this->getBucket() );
+		$this->mClient->setW( 1 );
 		$object = $bucket->newObject( $key, array( $value, empty( $exptime ) ? 0 : time() + $exptime  ) );
 		$object->store();
 		wfDebugLog( __CLASS__, __METHOD__ . $this->riakNode() . ": storing value for key $key.\n" );
