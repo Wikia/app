@@ -1504,7 +1504,14 @@ class Wikia {
 		wfProfileOut( __METHOD__ );
 	}
 
-	static public function ignoreUser( $user, $byEmail ) {
+	/**
+	 * ignoreUser
+	 * @author tor
+	 *
+	 * marks a user as ignored for the purposes of stats counting, used to ignore test accounts
+	 * hooked up to AddNewAccount
+	 */
+	static public function ignoreUser( $user, $byEmail = false ) {
 		global $wgStatsDB;
 
 		if ( ( $user instanceof User ) && ( 0 === strpos( $user->getName(), 'WikiaTestAccount' ) ) ) {
