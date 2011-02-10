@@ -19,6 +19,75 @@
 
 class ScavengerHunt {
 
+	protected function getStyleForImageOffset( $offset ) {
+		return sprintf("margin-left: %dpx; margin-top: %dpx;",
+			intval(@$offset['left']), intval(@$offset['top']));
+	}
+
+	public function getStartingClueHtml( ScavengerHuntGame $game ) {
+		// build entry form html
+		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
+		$template->set_vars(array(
+			'title' => $article->getStartingClueTitle(),
+			'text' => $article->getStartingClueText(),
+			'buttonText' => $article->getStartingClueButtonText(),
+			'buttonTarget' => $article->getStartingClueButtonTarget(),
+			'image' => $game->getStartingClueImage(),
+			'imageStyle' => $this->getStyleForImageOffset($game->getStartingClueImageOffset()),
+		));
+		return $template->render('clue-box');
+	}
+
+	public function getClueHtml( ScavengerHuntGame $game, ScavengerHuntGameArticle $article ) {
+		// build entry form html
+		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
+		$template->set_vars(array(
+			'title' => $article->getClueTitle(),
+			'text' => $article->getClueText(),
+			'buttonText' => $article->getClueButtonText(),
+			'buttonTarget' => $article->getClueButtonTarget(),
+			'image' => $game->getClueImage(),
+			'imageStyle' => $this->getStyleForImageOffset($game->getClueImageOffset()),
+		));
+		return $template->render('clue-box');
+	}
+
+	public function getEntryFormHtml( ScavengerHuntGame $game ) {
+		// build entry form html
+		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
+		$template->set_vars(array(
+			'title' => $game->getEntryFormTitle(),
+			'text' => $game->getEntryFormText(),
+			'question' => $game->getEntryFormQuestion(),
+			'image' => $game->getEntryFormImage(),
+			'imageStyle' => $this->getStyleForImageOffset($game->getEntryFormImageOffset()),
+		));
+		return $template->render('entry-form-box');
+	}
+
+	public function getGoodbyeHtml( ScavengerHuntGame $game ) {
+		// build entry form html
+		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
+		$template->set_vars(array(
+			'title' => $game->getEntryFormTitle(),
+			'text' => wfMsg('scavengerhunt-goodbye-text'),
+			'buttonText' => wfMsg('scavengerhunt-goodbye-button-text'),
+			'buttonTarget' => '',
+			'image' => $game->getEntryFormImage(),
+			'imageStyle' => $this->getStyleForImageOffset($game->getEntryFormImageOffset()),
+		));
+		return $template->render('clue-box');
+	}
+
+
+	public function updateVisitedIds( ScavengerHuntGame $game, &$visitedIds ) {
+		$articleIds = $game->getArticleIds();
+		$visitedIds = array_unique( array_map( 'intval', $visitedIds ) );
+		$visitedIds = array_intersect( $articleIds, $visitedIds );
+		sort($visitedIds);
+		return count($articleIds) == count($visitedIds);
+	}
+
 	/*
 	 * hook handler
 	 *
@@ -31,9 +100,10 @@ class ScavengerHunt {
 		$app = WF::build('App');
 		$out = $app->getGlobal('wgOut');
 		$title = $app->getGlobal('wgTitle');
+		$articleId = $title->getArticleId();
 
 		// skip the rest if the title does not have article id
-		if (!$title->getArticleId()) {
+		if (!$articleId) {
 			return true;
 		}
 
@@ -43,27 +113,31 @@ class ScavengerHunt {
 		$triggers = $games->getTitleTriggers($title);
 		if (!empty($triggers)) {
 			if (!empty($triggers['start'])) {
-				$game = $games->findById(reset($triggers['start']));
+				$game = $games->findEnabledById(reset($triggers['start']));
 				if (!empty($game)) {
 					//variables for starting page
 					$vars['ScavengerHuntStart'] = (int)$game->getId();
 					$vars['ScavengerHuntStartMsg'] = $game->getLandingButtonText();
+					$vars['ScavengerHuntStartClueHtml'] = $this->getStartingClueHtml($game);
+					/*
 					$vars['ScavengerHuntStartTitle'] = $game->getStartingClueTitle();
 					$vars['ScavengerHuntStartText'] = $game->getStartingClueText();
 					$vars['ScavengerHuntStartImage'] = $game->getStartingClueImage();
 					$vars['ScavengerHuntStartButtonText'] = $game->getStartingClueButtonText();
 					$vars['ScavengerHuntStartButtonTarget'] = $game->getStartingClueButtonTarget();
+					*/
 				}
 			}
 			if (!empty($triggers['article'])) {
-				$game = $games->findById(reset($triggers['article']));
+				$game = $games->findEnabledById(reset($triggers['article']));
 				if (!empty($game)) {
-					$article = $game->findArticleByTitle($title);
+					$article = $game->findArticleById($articleId);
 					if (!empty($article)) {
 						//variables for article page
 						$vars['ScavengerHuntArticleGameId'] = (int)$game->getId();
 						//TODO: move to AJAX call
 						$vars['ScavengerHuntArticleImg'] = $article->getHiddenImage();
+						$vars['ScavengerHuntArticleImgOffset'] = $article->getHiddenImageOffset();
 					}
 				}
 			}

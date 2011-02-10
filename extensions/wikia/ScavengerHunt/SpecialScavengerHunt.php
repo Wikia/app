@@ -115,6 +115,7 @@ class SpecialScavengerHunt extends SpecialPage {
 				if ($this->request->wasPosted()) {
 					if ($this->request->getVal('save')) {
 						$game = $this->updatePostedGame($game);
+						// move the validation process to the moment of enabling the game
 						$errors = $this->validateGame($game);
 						// save changes
 						if (empty($errors) && $game->save()) {
@@ -169,8 +170,8 @@ class SpecialScavengerHunt extends SpecialPage {
 			'startingClueButtonText' => $this->request->getVal('startingClueButtonText'),
 			'startingClueButtonTarget' => $this->request->getVal('startingClueButtonTarget'),
 			'entryFormTitle' => $this->request->getVal('entryFormTitle'),
-			'entryFormImage' => $this->request->getVal('entryFormImage'),
 			'entryFormText' => $this->request->getVal('entryFormText'),
+			'entryFormImage' => $this->request->getVal('entryFormImage'),
 			'entryFormQuestion' => $this->request->getVal('entryFormQuestion'),
 			'goodbyeText' => $this->request->getVal('goodbyeText'),
 			'goodbyeImage' => $this->request->getVal('goodbyeImage'),
