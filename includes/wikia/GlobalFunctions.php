@@ -1404,7 +1404,7 @@ function wfDBLightMode( $maxSleep ) {
 	if ( !$maxSleep ) return false;
 
 	while ( WikiFactory::getVarValueByName( 'wgDBLightMode', WikiFactory::DBToId( $wgExternalSharedDB ), true ) ) {
-		echo "All crons works in DBLightMode ( sleep $maxSleep ) ...\n";
+		Wikia::log( __METHOD__, "info", "All crons works in DBLightMode ( sleep $maxSleep ) ..." );
 		sleep($maxSleep);
 	}
 	
