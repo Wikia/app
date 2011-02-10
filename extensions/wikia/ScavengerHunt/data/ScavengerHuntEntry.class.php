@@ -1,11 +1,17 @@
 <?php
 class ScavengerHuntEntry {
 
+	protected $entries = null;
+
 	protected $gameId = 0;
 	protected $userId = 0;
 	protected $name = '';
 	protected $email = '';
 	protected $answer = '';
+
+	public function setEntries( $entries ) {
+		$this->entries = $entries;
+	}
 
 	public function getGameId() {
 		return $this->gameId;
@@ -45,5 +51,9 @@ class ScavengerHuntEntry {
 
 	public function setAnswer( $answer ) {
 		$this->answer = $answer;
+	}
+
+	public function save() {
+		return $this->entries->save($this);
 	}
 }

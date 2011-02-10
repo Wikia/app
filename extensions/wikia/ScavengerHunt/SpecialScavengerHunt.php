@@ -167,14 +167,21 @@ class SpecialScavengerHunt extends SpecialPage {
 			'startingClueTitle' => $this->request->getVal('startingClueTitle'),
 			'startingClueText' => $this->request->getVal('startingClueText'),
 			'startingClueImage' => $this->request->getVal('startingClueImage'),
+			'startingClueImageTopOffset' => $this->request->getVal('startingClueImageTopOffset'),
+			'startingClueImageLeftOffset' => $this->request->getVal('startingClueImageLeftOffset'),
 			'startingClueButtonText' => $this->request->getVal('startingClueButtonText'),
 			'startingClueButtonTarget' => $this->request->getVal('startingClueButtonTarget'),
 			'entryFormTitle' => $this->request->getVal('entryFormTitle'),
 			'entryFormText' => $this->request->getVal('entryFormText'),
 			'entryFormImage' => $this->request->getVal('entryFormImage'),
+			'entryFormImageTopOffset' => $this->request->getVal('entryFormImageTopOffset'),
+			'entryFormImageLeftOffset' => $this->request->getVal('entryFormImageLeftOffset'),
 			'entryFormQuestion' => $this->request->getVal('entryFormQuestion'),
+			'goodbyeTitle' => $this->request->getVal('goodbyeTitle'),
 			'goodbyeText' => $this->request->getVal('goodbyeText'),
 			'goodbyeImage' => $this->request->getVal('goodbyeImage'),
+			'goodbyeImageTopOffset' => $this->request->getVal('goodbyeImageTopOffset'),
+			'goodbyeImageLeftOffset' => $this->request->getVal('goodbyeImageLeftOffset'),
 		));
 
 		//create list of articles
@@ -183,6 +190,8 @@ class SpecialScavengerHunt extends SpecialPage {
 		$articleClueTitles = $this->request->getArray('articleClueTitle');
 		$articleClueTexts = $this->request->getArray('articleClueText');
 		$articleClueImages = $this->request->getArray('articleClueImage');
+		$articleClueImageTopOffsets = $this->request->getArray('articleClueImageTopOffset');
+		$articleClueImageLeftOffsets = $this->request->getArray('articleClueImageLeftOffset');
 		$articleClueButtonTexts = $this->request->getArray('articleClueButtonText');
 		$articleClueButtonTargets = $this->request->getArray('articleClueButtonTarget');
 
@@ -199,6 +208,8 @@ class SpecialScavengerHunt extends SpecialPage {
 				'clueTitle' => $articleClueTitles[$i],
 				'clueText' => $articleClueTexts[$i],
 				'clueImage' => $articleClueImages[$i],
+				'clueImageTopOffset' => $articleClueImageTopOffsets[$i],
+				'clueImageLeftOffset' => $articleClueImageLeftOffsets[$i],
 				'clueButtonText' => $articleClueButtonTexts[$i],
 				'clueButtonTarget' => $articleClueButtonTargets[$i],
 			));

@@ -30,26 +30,33 @@ class ScavengerHuntAjax {
 		$gameId = $request->getVal('gameId', false);
 		$game = $games->findEnabledById((int)$gameId);
 
-		if (!empty($game)) {
-			$articleId = $request->getInt('articleId', false);
+		$articleId = $request->getInt('articleId', false);
+		$article = $game->findArticleById($articleId);
+
+		if (!empty($game) && !empty($article)) {
 			$visitedIds = isset($_COOKIE['ScavengerHuntArticlesFound']) ? explode(',',(string)$_COOKIE['ScavengerHuntArticlesFound']) : array();
 			$visitedIds[] = $articleId;
 			$completed = $helper->updateVisitedIds($game,$visitedIds);
 			$visitedIds = implode(',',$visitedIds);
+
 			if ($completed) {
 				$result = array(
 					'status' => true,
 					'completed' => true,
-					'visited' => $visitedIds,
-					'entryFormHtml' => $helper->getEntryFormHtml($game),
+					'visitedIds' => $visitedIds,
+					'hiddenImage' => $article->getHiddenImage(),
+					'hiddenImageOffset' => $article->getHiddenImageOffset(),
+					'entryFormTitle' => $game->getEntryFormTitle(),
+					'entryFormContent' => $helper->getEntryFormHtml($game),
 				);
 			} else {
-				$article = $game->findArticleById($articleId);
 				if (!empty($article)) {
 					$result = array(
 						'status' => true,
 						'completed' => false,
 						'visitedIds' => $visitedIds,
+						'hiddenImage' => $article->getHiddenImage(),
+						'hiddenImageOffset' => $article->getHiddenImageOffset(),
 						'clueTitle' => $article->getClueTitle(),
 						'clueContent' => $helper->getClueHtml($article),
 					);
@@ -85,7 +92,8 @@ class ScavengerHuntAjax {
 		$game = $games->findEnabledById((int)$gameId);
 
 		if (!empty($game)) {
-			$visitedIds = isset($_COOKIE['ScavengerHuntArticlesFound']) ? explode(',',(string)$_COOKIE['ScavengerHuntArticlesFound']) : array();
+			$visitedIds = $request->getVal('visitedIds');
+			$visitedIds = $visitedIds ? explode(',',(string)$visitedIds) : array();
 			$completed = $helper->updateVisitedIds($game,$visitedIds);
 			if ($completed) {
 				$name = $request->getVal('name','');
@@ -105,7 +113,8 @@ class ScavengerHuntAjax {
 				if ($game->addEntry($entry)) {
 					$result = array(
 						'status' => true,
-						'goodbyeHtml' => $helper->getGoodbyeHtml(),
+						'goodbyeTitle' => $game->getGoodbyeTitle(),
+						'goodbyeContent' => $helper->getGoodbyeHtml($game),
 					);
 				} else {
 					// entry could not be added
