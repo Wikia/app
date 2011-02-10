@@ -2,7 +2,7 @@
 	margin: 0 0 15px;
 	padding: 10px 10px 9px;
 	position: relative;
-	z-index: 2; //ie7 requirement
+	z-index: 1000; // BugId:2516
 	.wordmark {
 		@include wordmark;
 		color: $color-links;

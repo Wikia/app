@@ -24,7 +24,6 @@ HoverMenu = function(selector) {
 
 	//Variables
 	this.selector = selector;
-	this.ads = $("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").add(".wikia-ad");
 
 	//Events
 	$(selector).children("li").hover($.proxy(this.mouseover, this), $.proxy(this.mouseout, this));
@@ -106,9 +105,7 @@ HoverMenu.prototype.mouseout = function(event) {
 		//Start mouseoutTimer
 		this.mouseoutTimer = setTimeout(function() {
 			$(event.currentTarget).children("ul").removeClass("show");
-			self.ads.each(function(i, el){
-				$(el).children().css("margin-left","auto");
-			});
+			$.showAds();
 		}, this.settings.mouseoutDelay);
 
 	} else {
@@ -116,9 +113,7 @@ HoverMenu.prototype.mouseout = function(event) {
 
 		//Hide nav immediately
 		$(event.currentTarget).children("ul").removeClass("show");
-		self.ads.each(function(i, el){
-			$(el).children().css("margin-left","auto");
-		});
+		$.showAds();
 	}
 
 };
@@ -128,9 +123,7 @@ HoverMenu.prototype.showNav = function(parent) {
 
 	if (nav.exists()) {
 		nav.addClass("show");
-		this.ads.each(function(i, el){
-			$(el).children().css("margin-left", "-9999px");
-		});
+		$.hideAds();
 
 		// tracking
 		switch(this.selector) {
