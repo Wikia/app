@@ -323,6 +323,8 @@ class StaticChute {
 			'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
+			'../extensions/wikia/AdEngine/liftium/Liftium.js',
+			'../extensions/wikia/AdEngine/liftium/Wikia',
 			'../extensions/wikia/AdEngine/AdDriver.js',
 			'../extensions/wikia/AdSS/adss.js',
 			'../extensions/wikia/Interstitial/Exitstitial.js',
@@ -366,6 +368,8 @@ class StaticChute {
 			'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
 			'../extensions/wikia/Geo/geo.js',
 			'../extensions/wikia/QuantcastSegments/qcs.js',
+			'../extensions/wikia/AdEngine/liftium/Liftium.js',
+			'../extensions/wikia/AdEngine/liftium/Wikia',
 			'../extensions/wikia/AdEngine/AdDriver.js',
 			'../extensions/wikia/AdSS/adss.js',
 		);
