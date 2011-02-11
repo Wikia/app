@@ -23,8 +23,8 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 	}
 
 	protected function setUp() {
-		//$this->object = WF::build( 'WikiaLabsProject' );
-		$this->object = new WikiaLabsProject( WF::build( 'App' ) );
+		//$this->object = F::build( 'WikiaLabsProject' );
+		$this->object = new WikiaLabsProject( F::build( 'App' ) );
 	}
 
 	protected function setUpMock( $useCache ) {
@@ -32,7 +32,7 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 		if( !$useCache ) {
 			$this->cacheMock = $this->getMock( 'MemCachedClientforWiki', array(), array(), '', false );
 
-			$this->object = $this->getMock( 'WikiaLabsProject', array( 'getCache' ), array( WF::build( 'App' ) ) );
+			$this->object = $this->getMock( 'WikiaLabsProject', array( 'getCache' ), array( F::build( 'App' ) ) );
 			$this->object->expects($this->any())
 				->method( 'getCache' )
 				->will( $this->returnValue( $this->cacheMock) );
@@ -105,7 +105,7 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( self::TEST_PROJECT_NAME, $this->object->getName() );
 			$this->assertFalse( $this->object->isActive() );
 
-			$object = WF::build( 'WikiaLabsProject', array( 'id' => $this->object->getId() ) );
+			$object = F::build( 'WikiaLabsProject', array( 'id' => $this->object->getId() ) );
 			$object->setActive( true );
 			$object->incrActivationsNum();
 			$object->setExtension( self::TEST_EXTENSION );
@@ -113,7 +113,7 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 
 			unset($object);
 
-			$object = WF::build( 'WikiaLabsProject', array( 'id' => $this->object->getId() ) );
+			$object = F::build( 'WikiaLabsProject', array( 'id' => $this->object->getId() ) );
 
 			$this->assertEquals( self::TEST_PROJECT_NAME, $object->getName() );
 			$this->assertTrue( $object->isActive() );
@@ -138,13 +138,17 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 		$this->setUpMock( $useCache );
 		$testName = self::TEST_PROJECT_NAME . __METHOD__;
 
-		$project1 = WF::build( 'WikiaLabsProject' );
+		// hack: cleanup db first
+		$app = F::build('App');
+		$app->runFunction( 'wfGetDB', DB_MASTER, array(), $app->getGlobal( 'wgExternalDatawareDB' ) )->query( "DELETE FROM wikia_labs_project WHERE wlpr_name='" . $testName . "'" );
+
+		$project1 = F::build( 'WikiaLabsProject' );
 		$project1->setName( $testName );
 		$project1->setActive(true);
 		$project1->setGraduated(true);
 		$project1->update();
 
-		$project2 = WF::build( 'WikiaLabsProject' );
+		$project2 = F::build( 'WikiaLabsProject' );
 		$project2->setName( $testName );
 		$project2->setActive(false);
 		$project2->setGraduated(true);
