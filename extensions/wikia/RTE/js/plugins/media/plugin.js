@@ -351,6 +351,10 @@ CKEDITOR.plugins.add('rte-media',
 			case 'image-gallery':
 				type = 'photoGallery';
 				break;
+				
+			case 'poll':
+				type = 'poll';
+				break;
 		}
 
 		return type;
