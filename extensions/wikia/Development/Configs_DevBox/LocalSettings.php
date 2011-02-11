@@ -30,17 +30,6 @@ require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonSettings.php' );
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.sjc-dev.php' );
 
-$wgSessionsInMemcached = false;
-$wgSessionsInRiak = !$wgSessionsInMemcached;
-
-/**
- * initialize session handlers in riak
- */
-if( $wgSessionsInRiak === true ) {
-	$wgSessionHandler = "user";
-	include( "$IP/includes/wikia/RiakSessionsHandler.php" );
-}
-
 /**
  * Definition of global memcached servers
  *
