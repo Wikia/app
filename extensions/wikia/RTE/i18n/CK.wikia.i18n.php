@@ -91,6 +91,9 @@ $messages['en'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Remove this video placeholder?',
 	'rte-ck-videoPlaceholder-tooltip' => 'This is a video placeholder.',
 	'rte-ck-widescreen-toggle' => 'Toggle widescreen',
+	'rte-ck-poll-confirmDelete' => 'Are you sure you wish to remove the poll from this page?',
+	'rte-ck-poll-confirmDeleteTitle' => 'Remove this poll?',
+	
 );
 
 /** Message documentation (Message documentation)
@@ -140,7 +143,7 @@ $messages['be'] = array(
 	'rte-ck-templateDropDown-label' => 'Шаблон',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -1166,7 +1169,7 @@ $messages['nl'] = array(
 	'rte-ck-widescreen-toggle' => 'Breedbeeld in- of uitschakelen',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1727,7 +1730,7 @@ $messages['ru'] = array(
 	'rte-ck-widescreen-toggle' => 'Широкоэкранный режим',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2091,7 +2094,7 @@ $messages['vi'] = array(
 	'rte-ck-modeSwitch-toWysiwyg' => 'Chuyển sang chế độ WYSIWYG',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬)
+/** Chinese (Taiwan) (中文(台灣))
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(
