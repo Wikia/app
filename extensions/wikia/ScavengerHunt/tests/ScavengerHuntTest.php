@@ -59,12 +59,12 @@
 				->method('insert')
 				->with($this->anything(),$this->equalTo($fields),$this->anything());
 
-			$games = $this->getMock('ScavengerHuntGames',array('getDb','clearIndexCache'),array($app));
+			$games = $this->getMock('ScavengerHuntGames',array('getDb','clearCache'),array($app));
 			$games->expects($this->once())
 				->method('getDb')
 				->will($this->returnValue($db));
 			$games->expects($this->once())
-				->method('clearIndexCache')
+				->method('clearCache')
 				->will($this->returnValue(null));
 
 			$game = $games->newGame();
@@ -156,12 +156,12 @@
 				->with($this->anything(),$this->anything(),$this->equalTo($where),$this->anything(),$this->anything())
 				->will($this->returnValue($fakeRow));
 
-			$games = $this->getMock('ScavengerHuntGames',array('getDb'),array($app));
+			$games = $this->getMock('ScavengerHuntGames',array('getDb','clearCache'),array($app));
 			$games->expects($this->once())
 				->method('getDb')
 				->will($this->returnValue($db));
 			$games->expects($this->never())
-				->method('clearIndexCache')
+				->method('clearCache')
 				->will($this->returnValue(null));
 
 			$game = $games->findById(1001);
@@ -187,12 +187,12 @@
 				->with($this->anything(),$this->equalTo($where))
 				->will($this->returnValue(true));
 
-			$games = $this->getMock('ScavengerHuntGames',array('getDb','clearIndexCache'),array($app));
+			$games = $this->getMock('ScavengerHuntGames',array('getDb','clearCache'),array($app));
 			$games->expects($this->once())
 				->method('getDb')
 				->will($this->returnValue($db));
 			$games->expects($this->once())
-				->method('clearIndexCache')
+				->method('clearCache')
 				->will($this->returnValue(null));
 
 			$game = $games->newGame();

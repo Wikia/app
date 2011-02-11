@@ -127,8 +127,10 @@
 				'game_data' => serialize( $game->getData() ),
 			);
 
+			$oldGame = null;
 			$db = $this->getDb(DB_MASTER);
 			if($game->getId()) {
+				$oldGame = $this->findById($game->getId());
 				$db->update(
 					self::GAMES_TABLE_NAME,
 					$fields,
@@ -146,7 +148,7 @@
 			}
 			$db->commit();
 
-			$this->clearIndexCache();
+			$this->clearCache($oldGame,$game);
 
 			return true;
 		}
@@ -163,7 +165,7 @@
 			$db->commit();
 			$game->setId(0);
 
-			$this->clearIndexCache();
+			$this->clearCache($game,null);
 
 			return true;
 		}
@@ -205,8 +207,38 @@
 			return $data;
 		}
 
+		protected function clearCache( $oldGame, $newGame ) {
+			$this->clearIndexCache();
+
+			if ( (!$oldGame || !$oldGame->isEnabled()) && (!$newGame || !$newGame->isEnabled()) ) {
+				// no squid purges required - game not enabled
+				return;
+			}
+
+			$titles = array();
+			if ($oldGame) {
+				$title = WF::build('Title',array($oldGame->getLandingTitle()),'newFromText');
+				if ($title) $titles[$title->getPrefixedDBkey()] = $title;
+				foreach ($oldGame->getArticles() as $article) {
+					$title = WF::build('Title',array($article->getTitle()),'newFromText');
+					if ($title) $titles[$title->getPrefixedDBkey()] = $title;
+				}
+			}
+			if ($newGame) {
+				$title = WF::build('Title',array($newGame->getLandingTitle()),'newFromText');
+				if ($title) $titles[$title->getPrefixedDBkey()] = $title;
+				foreach ($newGame->getArticles() as $article) {
+					$title = WF::build('Title',array($article->getTitle()),'newFromText');
+					if ($title) $titles[$title->getPrefixedDBkey()] = $title;
+				}
+			}
+			foreach ($titles as $title) {
+				$title->invalidateCache();
+				$title->purgeSquid();
+			}
+		}
+
 		protected function clearIndexCache() {
-			// XXX: add squid purges
 			$this->getCache()->delete($this->getIndexMemcKey());
 		}
 
