@@ -413,8 +413,12 @@ span.plb-editor-element-list{
 		}	
 	}
 	
+	.checkboxinfo {
+	    font-size: 10px;
+	}
+	
 	.info2 {
-		font-size:1.1em;
+		font-size:1.2em;
 	}
 	
 	.bodyCaption {
@@ -428,6 +432,9 @@ span.plb-editor-element-list{
 		border-right:1px dashed;
 	}
 	
+	input {
+		margin-left:0px;
+	}
 	.infoAdmin, .infoForm, .infoArticle {
 		text-align:center;
 		min-height:570px;
@@ -447,12 +454,15 @@ span.plb-editor-element-list{
 
 	.footer1, .footer2, .footer3 {
 		width:33%;
-		float:left;		
+		float:left;	
 	}
 	
 	.footer2 {
 		text-align:center;
 		position:relative;
+		> span {
+			font-size: 15px;
+		}
 		.buttondiv {
 			left:26%;
 			margin-top:5px;
@@ -471,8 +481,12 @@ span.plb-editor-element-list{
 			display: inline-block;
 			position: relative;
 			background-image: url(/skins/common/images/icon_help.png);
-			width: 16px;
 			height: 16px;
+			background-repeat: no-repeat;
+    		margin-right: 4px;
+    		font-weight:bold;
+    		padding-left: 20px;
+    		padding-top: 3px;
 		}
 		span.link {
 			margin-left:20px;
@@ -489,9 +503,12 @@ span.plb-editor-element-list{
 		border:6px solid #99C5E6;
 		display:inline-block;
 		width:280px;
-		height:100px;
+		min-height:110px;
 		margin-bottom:50px;
 		position:relative;
+		h1 {
+			font-size: 16px;
+		}
 		img {
 			left:50%;
 			margin-left:-22px;

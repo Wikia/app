@@ -328,6 +328,7 @@ class StaticChute {
 			'../extensions/wikia/AdEngine/AdDriver.js',
 			'../extensions/wikia/AdSS/adss.js',
 			'../extensions/wikia/Interstitial/Exitstitial.js',
+			'../extensions/wikia/PageLayoutBuilder/js/view.js',
 		);
 		$this->config['oasis_anon_article_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_anon_article_js']); // order matters here: load jQuery first.
 
@@ -372,6 +373,7 @@ class StaticChute {
 			'../extensions/wikia/AdEngine/liftium/Wikia.js',
 			'../extensions/wikia/AdEngine/AdDriver.js',
 			'../extensions/wikia/AdSS/adss.js',
+			'../extensions/wikia/PageLayoutBuilder/js/view.js',
 		);
 		$this->config['oasis_loggedin_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_loggedin_js']);
 

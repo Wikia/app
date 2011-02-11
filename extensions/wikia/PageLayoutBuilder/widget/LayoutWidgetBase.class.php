@@ -109,7 +109,7 @@ abstract class LayoutWidgetBase {
 		if($this->getAttrVal('required')) {
 			$caption = $caption.'*';
 		} 
-		return XML::element('p', array('class' => 'plb-form-caption-p'), $caption);
+		return XML::element('p', array('id' =>  "input_".$this->getAttrVal( "id", true ), 'class' => 'plb-form-caption-p'), $caption);
 	}
 
 	protected function validateAllowedVal($name, $vals = array() ) {
@@ -130,9 +130,10 @@ abstract class LayoutWidgetBase {
 	}
 
 	public function isEmpty() {
-		if( empty( $this->value )) {
+		if( strlen( $this->value ) < 1) {
 			return true;
 		}
+		
 		return false;
 	}
 

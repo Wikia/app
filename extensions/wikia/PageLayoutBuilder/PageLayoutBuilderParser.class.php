@@ -196,6 +196,9 @@ class PageLayoutBuilderParser extends Parser {
 
 			$oWidget = LayoutWidgetBase::getNewWidget($name, $elementAttributes, $value );
 
+			
+			$positionMarker =  '<span style="display:none" class="position-marker" id="input_' . $id . '" ></span>';
+			 
 			$validateElementStatus = $oWidget->validateAttribute($elementsOut);
 			if($validateElementStatus === true) {
 				if($oWidget->isEmpty()) {
@@ -203,10 +206,10 @@ class PageLayoutBuilderParser extends Parser {
 						$element->outertext = "";
 					} else {
 						$url = $parserOptions->getIsPreview() ? "#":$self->getTitle()->getFullURL("action=edit");
-						$element->outertext = self::parserReturnMarker($self, $marker, $oWidget->renderForResultEmpty($url));
+						$element->outertext = self::parserReturnMarker($self, $marker, $oWidget->renderForResultEmpty($url) . $positionMarker );
 					}
 				} else {
-					$element->outertext = $oWidget->renderForResult();
+					$element->outertext = $oWidget->renderForResult() . $positionMarker;
 				}
 			} else {
 				$element->outertext = self::parserReturnMarker($self, $marker, $validateElementStatus);
@@ -232,18 +235,27 @@ class PageLayoutBuilderParser extends Parser {
 	 * load values for form form existing article
 	 */
 
-	public function loadForm(Title $page_title, $layout_id) {
+	public function loadForm(Title $pageTitle, $layoutId) {
 		wfProfileIn(__METHOD__);
-		if(!(PageLayoutBuilderModel::articleIsFromPLB( $page_title->getArticleID() ) == $layout_id )) {
+		
+		$rev = Revision::newFromTitle( $pageTitle );
+		$cArticle = $rev ? $rev->getRawText() : "";
+		
+		return $this->loadFormFromText( $cArticle, $pageTitle->getArticleID() , $layoutId );
+		
+		wfProfileOut(__METHOD__);
+	}
+	
+	
+	public function loadFormFromText( $cArticle, $pageId, $layoutId ) {
+		
+		if(!(PageLayoutBuilderModel::articleIsFromPLB( $pageId ) == $layoutId )) {
 			return false;
 		}
-
-		$oArticle = new Article( $page_title );
-		$cArticle = $oArticle->getContent();
-
+		
 		$dom = new simple_html_dom;
 		$dom->load($cArticle, false);
-		$element = $dom->find("plb_layout[layout_id=$layout_id]");
+		$element = $dom->find("plb_layout[layout_id=$layoutId]");
 
 		$this->formValues = array();
 		if(!empty($element[0])) {
@@ -251,8 +263,6 @@ class PageLayoutBuilderParser extends Parser {
 			wfProfileOut(__METHOD__);
 			return $out;
 		}
-
-		wfProfileOut(__METHOD__);
 	}
 
 	public function forceFormValue($values) {

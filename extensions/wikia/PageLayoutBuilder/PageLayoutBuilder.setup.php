@@ -90,7 +90,7 @@ $wgHooks['getUserPermissionsErrors'][] = 'PageLayoutBuilderSpecialPage::getUserP
 $wgHooks['EditPageBeforeEditButtons'][] = 'PageLayoutBuilderSpecialPage::addFormButton';
 $wgHooks['EditPage::CategoryBox'][] = 'PageLayoutBuilderSpecialPage::addNewButtonForArtilce';
 
-$wgHooks['EditPage::getContent::isUndo'] = 'PageLayoutBuilderSpecialPage::isUndo';
+$wgHooks['EditPage::getContent::isUndo'][] = 'PageLayoutBuilderForm::isUndo';
 
 $wgHooks['CreatePage::FetchOptions'][] = 'PageLayoutBuilderSpecialPage::createPageOptions';
 $wgHooks['MyTools::getDefaultTools'][] = 'PageLayoutBuilderSpecialPage::myTools';

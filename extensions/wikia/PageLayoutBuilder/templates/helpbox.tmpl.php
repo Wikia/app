@@ -42,7 +42,7 @@
 	</div>
 	
 	<div class="footer2">
-		<?php echo wfMsg( 'plb-helpbox-help-button-head3' ); ?><br>
+		<span><?php echo wfMsg( 'plb-helpbox-help-button-head3' ); ?></span>
 		<div class="buttondiv" > 
 			<input id="getStarted2" type="button" value="<?php echo wfMsg( 'plb-helpbox-getstarted' ); ?>" /> <br>
 			<input type="checkbox" id="getStartedBlock2"   />  <span class='checkboxinfo' > <?php echo wfMsg('plb-helpbox-checkboxinfo2'); ?> </span>
@@ -50,8 +50,8 @@
 	</div>
 	
 	<div class="footer3">
-		<span class="helpicon"></span><?php echo wfMsg( 'plb-helpbox-help-desc' ); ?>
-		<span class="link" ><a href="#"><?php echo wfMsg( 'plb-helpbox-help-link' ); ?> </a></span>
+		<span class="helpicon"><?php echo wfMsg( 'plb-helpbox-help-desc' ); ?></span>
+		<span class="link" ><a href="<?php echo $helplink; ?>"><?php echo wfMsg( 'plb-helpbox-help-link' ); ?> </a></span>
 	</div>
 	    
 </div>

@@ -176,14 +176,14 @@ $messages['en'] = array (
 	'plb-helpbox-buttton-head1' => 'Makes sense to me!',
 	'plb-helpbox-buttton-head2' => 'Continue to the Layout Builder.',
 	'plb-helpbox-checkboxinfo1' => 'Do not show this tutorial again.',
-	'plb-helpbox-box1' => 'Admin Creation<br />As an admin you have the ability to create new layouts for your wiki. Start the layout creation tool and place items like text boxes, image boxes, and more on a page, style them, and arrange their layout.',
-	'plb-helpbox-box2' => 'Editor Form<br />When your layout is finished it will appear as an option when an editor creates a new page. The layout will appear as a form for the editor to fill out. All they need to do is complete the form to create a new page.',
-	'plb-helpbox-box3' => 'Page View<br />When the editor has finished creating a new page, readers on your wiki will see the completed page in the layout you specified.',
+	'plb-helpbox-box1' => '<h1>Admin Creation</h1>As an admin you have the ability to create new layouts for your wiki. Start the layout creation tool and place items like text boxes, image boxes, and more on a page, style them, and arrange their layout.',
+	'plb-helpbox-box2' => '<h1>Editor Form</h1>When your layout is finished it will appear as an option when an editor creates a new page. The layout will appear as a form for the editor to fill out. All they need to do is complete the form to create a new page.',
+	'plb-helpbox-box3' => '<h1>Page View</h1>When the editor has finished creating a new page, readers on your wiki will see the completed page in the layout you specified.',
 	'plb-helpbox-help-button-head3' => 'Ready to try the layout builder?',
 	'plb-helpbox-checkboxinfo2' => 'Do not show this tutorial again.',
 	'plb-helpbox-help-desc' => 'Still have questions?',
 	'plb-helpbox-help-link' => 'Read the layout builder guide.',
-
+	'plb-helpbox-help-link-title' => 'Layout_builder',  
 	'plb-parser-error-not-on-plb-article' => "Layout elements can only be used on layout pages", 
 	'plb-parser-error-use-on-template' => "Can't use layout elements in templates"
 );

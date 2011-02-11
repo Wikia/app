@@ -1667,7 +1667,7 @@
 			} else {
 				text = $('#cke_contents_wpTextbox1 > textarea').val();
 			}
-			var elements = $(text).filter('[id]');
+			var elements = $( "<div>" + text + "</div>" ).filter('[id]');
 			var newID = 0;
 			$.each(elements,function(i,v) {
 			    var oldID = parseInt($(v).attr('id'));
@@ -1691,7 +1691,6 @@
 
 	PLB.HelpBox = $.createClass(Observable,{
 		constructor: function() {
-
 			if( $.getUrlVar('action') == 'submit' ) {
 				return true;
 			}
@@ -1702,6 +1701,8 @@
 
 			var helpbox = $(PageLayoutBuilder.helpbox.html);
 
+			$().log(PageLayoutBuilder.helpbox.html);
+			
 			var mopts = {
 				onClose: function() {},
 				closeOnBlackoutClick: false,

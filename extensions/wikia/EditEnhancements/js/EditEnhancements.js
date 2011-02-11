@@ -23,7 +23,7 @@ var EditEnhancements = {
 			elements.unshift("#wpSummaryLabel", "#wpSummary");
 		}
 		
-		$(elements.toString()).each(function() {
+		$(elements.join(",")).each(function() {
 			$(this).wrap("<li>").parent().appendTo("#edit_enhancements_toolbar ul");
 		});
 		// Checkboxes are done outside of each loop because it must appear last, but isn't last in original layout.
