@@ -30,6 +30,7 @@ $messages['en'] = array(
 	'scavengerhunt-list-disabled' => 'Disabled',
 	'scavengerhunt-list-edit' => 'edit',
 
+	'scavengerhunt-label-dialog-check' => '(show dialog)',
 	'scavengerhunt-label-general' => 'General',
 	'scavengerhunt-label-name' => 'Name:',
 	'scavengerhunt-label-landing-title' => 'Landing page name:',
@@ -58,6 +59,7 @@ $messages['en'] = array(
 	'scavengerhunt-label-entry-form-question' => 'Popup question:',
 
 	'scavengerhunt-label-goodbye' => 'Goodbye popup',
+	'scavengerhunt-label-goodbye-title' => 'Goodbye title:',
 	'scavengerhunt-label-goodbye-text' => 'Popup message:',
 	'scavengerhunt-label-goodbye-image' => 'Popup image:',
 

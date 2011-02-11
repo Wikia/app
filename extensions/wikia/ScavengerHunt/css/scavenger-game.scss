@@ -37,10 +37,10 @@
 	
 	.scavenger-entry-form {
 		margin-top: 12px;
-		&>textarea,&>input,&>label {
+		&>textarea, &>input, &>label {
 			display: block;
 		}
-		&>textarea,&>input {
+		&>textarea, &>input {
 			width: 99%;
 			margin-bottom: 12px;
 			border: 1px solid $color-page-border;
@@ -48,6 +48,5 @@
 				border-color: $color-links;
 			}
 		}
-	}
-	
+	}	
 }

@@ -9,7 +9,7 @@
 		</ul>
 	</div>
 <?php } ?>
-	<fieldset>
+	<fieldset class="scavenger-general">
 		<legend><?= wfMsg('scavengerhunt-label-general')?></legend>
 		<div>
 			<label>
@@ -33,7 +33,7 @@
 			</label>
 		</div>
 	</fieldset>
-	<fieldset>
+	<fieldset class="scavenger-starting">
 		<legend><?= wfMsg('scavengerhunt-label-starting-clue')?></legend>
 		<div>
 			<label>
@@ -52,11 +52,12 @@
 		<div>
 			<label>
 				<?= wfMsg('scavengerhunt-label-starting-clue-image') ?>
+				<a href="#" class="scavenger-dialog-check"><?= wfMsg('scavengerhunt-label-dialog-check') ?></a>
 				<br>
-				<input class="image" type="text" name="startingClueImage" value="<?= $startingClueImage ?>">
-				<input class="image-offset" type="text" name="startingClueImageTopOffset" value="<?= $startingClueImageTopOffset ?>">
-				<input class="image-offset" type="text" name="startingClueImageLeftOffset" value="<?= $startingClueImageLeftOffset ?>">
+				<input class="scavenger-image" type="text" name="startingClueImage" value="<?= $startingClueImage ?>">
 			</label>
+			<input class="scavenger-image-offset" type="text" name="startingClueImageTopOffset" value="<?= $startingClueImageTopOffset ?>">
+			<input class="scavenger-image-offset" type="text" name="startingClueImageLeftOffset" value="<?= $startingClueImageLeftOffset ?>">
 		</div>
 		<div>
 			<label>
@@ -74,7 +75,7 @@
 		</div>
 	</fieldset>
 <?php foreach ($articles as $n => $article) { ?>
-	<fieldset class="scavenger-entry">
+	<fieldset class="scavenger-article">
 		<legend><?= wfMsg('scavengerhunt-label-article') ?></legend>
 		<div>
 			<label>
@@ -107,11 +108,12 @@
 		<div>
 			<label>
 				<?= wfMsg('scavengerhunt-label-article-clue-image') ?>
+				<a href="#" class="scavenger-dialog-check"><?= wfMsg('scavengerhunt-label-dialog-check') ?></a>
 				<br>
-				<input class="image" type="text" name="articleClueImage[]" value="<?= $article['clueImage'] ?>">
-				<input class="image-offset" type="text" name="articleClueImageTopOffset[]" value="<?= $article['clueImageTopOffset'] ?>">
-				<input class="image-offset" type="text" name="articleClueImageLeftOffset[]" value="<?= $article['clueImageLeftOffset'] ?>">
+				<input class="scavenger-image" type="text" name="articleClueImage[]" value="<?= $article['clueImage'] ?>">
 			</label>
+			<input class="scavenger-image-offset" type="text" name="articleClueImageTopOffset[]" value="<?= $article['clueImageTopOffset'] ?>">
+			<input class="scavenger-image-offset" type="text" name="articleClueImageLeftOffset[]" value="<?= $article['clueImageLeftOffset'] ?>">
 		</div>
 		<div>
 			<label>
@@ -129,7 +131,7 @@
 		</div>
 	</fieldset>
 <?php } ?>
-	<fieldset>
+	<fieldset class="scavenger-entry">
 		<legend><?= wfMsg('scavengerhunt-label-entry-form') ?></legend>
 		<div>
 			<label>
@@ -148,11 +150,12 @@
 		<div>
 			<label>
 				<?= wfMsg('scavengerhunt-label-entry-form-image') ?>
+				<a href="#" class="scavenger-dialog-check"><?= wfMsg('scavengerhunt-label-dialog-check') ?></a>
 				<br>
-				<input class="image" type="text" name="entryFormImage" value="<?= $entryFormImage ?>">
-				<input class="image-offset" type="text" name="entryFormImageTopOffset" value="<?= $entryFormImageTopOffset ?>">
-				<input class="image-offset" type="text" name="entryFormImageLeftOffset" value="<?= $entryFormImageLeftOffset ?>">
+				<input class="scavenger-image" type="text" name="entryFormImage" value="<?= $entryFormImage ?>">
 			</label>
+			<input class="scavenger-image-offset" type="text" name="entryFormImageTopOffset" value="<?= $entryFormImageTopOffset ?>">
+			<input class="scavenger-image-offset" type="text" name="entryFormImageLeftOffset" value="<?= $entryFormImageLeftOffset ?>">
 		</div>
 		<div>
 			<label>
@@ -162,7 +165,7 @@
 			</label>
 		</div>
 	</fieldset>
-	<fieldset>
+	<fieldset class="scavenger-goodbye">
 		<legend><?= wfMsg('scavengerhunt-label-goodbye') ?></legend>
 		<div>
 			<label>
@@ -181,10 +184,11 @@
 		<div>
 			<label>
 				<?= wfMsg('scavengerhunt-label-goodbye-image') ?>
+				<a href="#" class="scavenger-dialog-check"><?= wfMsg('scavengerhunt-label-dialog-check') ?></a>
 				<br>
-				<input class="image" type="text" name="goodbyeImage" value="<?= $goodbyeImage ?>">
-				<input class="image-offset" type="text" name="goodbyeImageTopOffset" value="<?= $goodbyeImageTopOffset ?>">
-				<input class="image-offset" type="text" name="goodbyeImageLeftOffset" value="<?= $goodbyeImageLeftOffset ?>">
+				<input class="scavenger-image" type="text" name="goodbyeImage" value="<?= $goodbyeImage ?>">
+				<input class="scavenger-image-offset" type="text" name="goodbyeImageTopOffset" value="<?= $goodbyeImageTopOffset ?>">
+				<input class="scavenger-image-offset" type="text" name="goodbyeImageLeftOffset" value="<?= $goodbyeImageLeftOffset ?>">
 			</label>
 		</div>
 	</fieldset>

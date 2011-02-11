@@ -1,4 +1,7 @@
 var ScavengerHunt = {
+	articleData: null,
+	goodbyeData: null,
+
 	// console logging
 	log: function(msg) {
 		$().log(msg, 'ScavengerHunt');
@@ -53,11 +56,11 @@ var ScavengerHunt = {
 				rs: 'ScavengerHuntAjax'
 			};
 			$.getJSON(wgScript, data, function(json) {
-				window.ScavengerHuntArticleData = json;
+				ScavengerHunt.articleData = json;
 				//TODO: check `ScavengerHuntArticlesFound` cookie and return confirmed articles + update the cookie
-				
+
 				if (!json.status) {
-					$().log('cannot show hidden image - got broken data from server' ,'ScavengerHunt');
+					ScavengerHunt.log('cannot show hidden image - got broken data from server');
 					return;
 				}
 
@@ -93,9 +96,8 @@ var ScavengerHunt = {
 	onHiddenImgClick: function(e) {
 		$(this).remove();
 
-		var data = window.ScavengerHuntArticleData;
-		ScavengerHunt.log(data.visitedIds);
-		if (!data.completed) {
+		ScavengerHunt.log(ScavengerHunt.articleData.visitedIds);
+		if (!ScavengerHunt.articleData.completed) {
 			// next article found, game not finished
 			ScavengerHunt.showClue();
 		} else {
@@ -103,14 +105,13 @@ var ScavengerHunt = {
 			ScavengerHunt.showEntryForm();
 		}
 	},
-	
+
 	showClue: function() {
-		var data = window.ScavengerHuntArticleData;
-		$.cookies.set('ScavengerHuntArticlesFound',data.visitedIds, {hoursToLive:24*7});
-		
+		$.cookies.set('ScavengerHuntArticlesFound', ScavengerHunt.articleData.visitedIds, {hoursToLive:24*7});
+
 		$.showModal(
-			data.clueTitle,
-			data.clueContent,
+			ScavengerHunt.articleData.clueTitle,
+			ScavengerHunt.articleData.clueContent,
 			{
 				id: 'scavengerClueModal',
 				showCloseButton: false,
@@ -129,11 +130,9 @@ var ScavengerHunt = {
 	},
 
 	showEntryForm: function() {
-		var data = window.ScavengerHuntArticleData;
-		
 		$.showModal(
-			data.entryFormTitle,
-			data.entryFormContent,
+			ScavengerHunt.articleData.entryFormTitle,
+			ScavengerHunt.articleData.entryFormContent,
 			{
 				id: 'scavengerEntryFormModal',
 				showCloseButton: false,
@@ -151,20 +150,20 @@ var ScavengerHunt = {
 							rs: 'ScavengerHuntAjax',
 							method: 'pushEntry',
 							gameId: window.ScavengerHuntArticleGameId,
-							visitedIds: ids ? ids + ',' +window.wgArticleId : '' + window.wgArticleId,
+							visitedIds: ids ? ids + ',' + window.wgArticleId : '' + window.wgArticleId,
 
 							name: w.find('input[name=name]').val(),
 							email: w.find('input[name=email]').val(),
 							answer: w.find('textarea[name=answer]').val()
 						};
 						$.getJSON(wgScript, formdata, function(json) {
-							window.ScavengerHuntGoodbyeData = json;
+							ScavengerHunt.goodbyeData = json;
 							if (json.status) {
 								w.closeModal();
 								// XXX: clear game cookies if entry is saved
 								ScavengerHunt.showGoodbyeForm();
 							} else {
-								$().log('entryForm error: '+json.error,'ScavengerHunt');
+								ScavengerHunt.log('entryForm error: ' + json.error);
 								b.attr('disabled','');
 							}
 						});
@@ -176,16 +175,16 @@ var ScavengerHunt = {
 
 	showGoodbyeForm: function() {
 		$.cookies.del('ScavengerHuntArticlesFound');
+		//TODO: do not delete - mark as completed to not show 'start' button again
 		$.cookies.del('ScavengerHuntInProgress');
-		var data = window.ScavengerHuntGoodbyeData;
-		if (!data) {
-			$().log('cannot show goodbye popup - no data available', 'ScavengerHunt');
+		if (!ScavengerHunt.goodbyeData) {
+			ScavengerHunt.log('cannot show goodbye popup - no data available');
 			return false;
 		}
 
 		$.showModal(
-			data.goodbyeTitle,
-			data.goodbyeContent,
+			ScavengerHunt.goodbyeData.goodbyeTitle,
+			ScavengerHunt.goodbyeData.goodbyeContent,
 			{
 				id: 'scavengerGoodbyeModal',
 				width: 588,
@@ -200,7 +199,6 @@ var ScavengerHunt = {
 		);
 	}
 };
-window.ScavengerHunt = ScavengerHunt;
 
 //on content ready
 wgAfterContentAndJS.push(ScavengerHunt.init);

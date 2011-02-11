@@ -14,7 +14,7 @@
  *
  * To activate this functionality, place this file in your extensions/
  * subdirectory, and add the following line to LocalSettings.php:
- *     require_once("$IP/extensions/wikia/ScavengerHunt/ScavengerHunt_setup.php");
+ *     include("$IP/extensions/wikia/ScavengerHunt/ScavengerHunt_setup.php");
  */
 
 $wgExtensionCredits['special'][] = array(
