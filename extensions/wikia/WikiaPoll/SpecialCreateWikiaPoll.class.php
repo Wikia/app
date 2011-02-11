@@ -3,11 +3,25 @@
 class SpecialCreateWikiaPoll extends SpecialPage {
 
 	function SpecialCreateWikiaPoll() {
-			SpecialPage::SpecialPage("CreatePoll", "", false);
+		SpecialPage::SpecialPage("CreatePoll", "", false);
 	}
 
 	public function execute ($subpage) {
-		global $wgOut, $wgBlankImgUrl, $wgJsMimeType, $wgExtensionsPath, $wgStylePath;
+		global $wgOut, $wgUser, $wgBlankImgUrl, $wgJsMimeType, $wgExtensionsPath, $wgStylePath;
+
+		// Boilerplate special page permissions
+		if ($wgUser->isBlocked()) {
+			$wgOut->blockedPage();
+			return;
+		}
+		if (wfReadOnly() && !wfAutomaticReadOnly()) {
+			$wgOut->readOnlyPage();
+			return;
+		}
+		if (!$wgUser->isAllowed('createpage') || !$wgUser->isAllowed('edit')) {
+			$this->displayRestrictionError();
+			return;
+		}
 
 		$wgOut->addScript("<script src=\"{$wgStylePath}/common/jquery/jquery-ui-1.7.2.custom.js\" type=\"{$wgJsMimeType}\"></script>");
 		$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/WikiaPoll/js/CreateWikiaPoll.js\" type=\"{$wgJsMimeType}\"></script>");
