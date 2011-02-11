@@ -8,7 +8,7 @@ var WikiWelcome = {
 		$.get(wgScript, {
 			action: 'ajax',
 			rs: 'moduleProxy',
-			moduleName: 'CreateNewWiki',
+			moduleName: 'FinishCreateWiki',
 			actionName: 'WikiWelcomeModal',
 			outputType: 'html'
 		}, function(html) {

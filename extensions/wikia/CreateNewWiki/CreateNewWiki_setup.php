@@ -13,11 +13,9 @@ $wgAutoloadClasses['CreateWikiLocalJob'] = $dir."../AutoCreateWiki/CreateWikiLoc
 $wgAutoloadClasses['CreateWiki'] = $dir."../AutoCreateWiki/CreateWiki.php";
 $wgAutoloadClasses['CreateNewWikiModule'] = $dir . 'CreateNewWikiModule.class.php';
 $wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
-$wgAutoloadClasses['SpecialFinishCreate'] = $dir . 'SpecialFinishCreate.class.php';
 
 // special page mapping
 $wgSpecialPages['CreateNewWiki'] = 'SpecialCreateNewWiki';
-$wgSpecialPages['FinishCreate'] = 'SpecialFinishCreate';
 
 // i18n mapping
 $wgExtensionMessagesFiles['CreateNewWiki'] = $dir . 'CreateNewWiki.i18n.php';
@@ -26,7 +24,3 @@ $wgExtensionMessagesFiles['CreateNewWiki'] = $dir . 'CreateNewWiki.i18n.php';
 $wgAvailableRights[] = 'createnewwiki';
 $wgGroupPermissions['*']['createnewwiki'] = true;
 $wgGroupPermissions['staff']['createnewwiki'] = true;
-$wgAvailableRights[] = 'finishcreate';
-$wgGroupPermissions['staff']['finishcreate'] = true;
-$wgGroupPermissions['sysop']['finishcreate'] = true;
-$wgGroupPermissions['bureaucrat']['finishcreate'] = true;

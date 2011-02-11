@@ -16,7 +16,7 @@ class SpecialFinishCreate extends UnlistedSpecialPage {
 			return;
 		}
 		
-		Module::get('CreateNewWiki', 'FinishCreate')->getData();
+		Module::get('FinishCreateWiki', 'FinishCreate')->getData();
 		
 		wfProfileOut( __METHOD__ );
 	}
