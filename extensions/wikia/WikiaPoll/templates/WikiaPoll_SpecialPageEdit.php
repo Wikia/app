@@ -1,6 +1,9 @@
+<?php if (! isset($poll)) {
+	echo wfRenderModule('Error', 'Index', array('Poll does not exist'));
+} else { ?>
 <section class="CreateWikiaPoll" id="CreateWikiaPoll" data-pollId="<?=$poll->getID()?>">
 
-	<h1>Edit Poll</h1>
+	<h1><?= wfMsg('wikiapoll-editpoll-headline') ?></h1>
 	
 	<form>
 	<label>question</label>
@@ -29,15 +32,16 @@
 	</ul>
 	
 	<div class="add-new">
-		<a href="#" class="wikia-button secondary">+</a>Add new item
+		<a href="#" class="wikia-button secondary">+</a><?= wfMsg('wikiapoll-addnewitem-label') ?>
 	</div>
 	
 	<div class="toolbar">
-		<input type="button" value="Cancel" class="cancel secondary">
-		<input type="button" value="Edit Poll" class="create">
+		<input type="button" value="<?= wfMsg('wikiapoll-cancel-label') ?>" class="cancel secondary">
+		<input type="button" value="<?= wfMsg('wikiapoll-publish-label') ?>" class="create">
 	</div>
 	
 	<input type="hidden" name ="pollId" value="<?=$poll->getID()?>">
 
 	</form>
 </section>
+<?php } ?>

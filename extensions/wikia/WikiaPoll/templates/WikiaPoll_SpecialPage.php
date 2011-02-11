@@ -1,9 +1,9 @@
 <section class="CreateWikiaPoll" id="CreateWikiaPoll">
 
-	<h1>Create Poll</h1>
+	<h1><?= wfMsg('wikiapoll-createpoll-headline') ?></h1>
 	
 	<form>
-	<label>question</label>
+	<label><?= wfMsg('wikiapoll-question-label') ?></label>
 	
 	<div class="question">
 		<span><?= wfMsg("wikiapoll-question-mark-before") ?></span>
@@ -39,12 +39,12 @@
 	</ul>
 	
 	<div class="add-new">
-		<a href="#" class="wikia-button secondary">+</a>Add new item
+		<a href="#" class="wikia-button secondary">+</a><?= wfMsg('wikiapoll-addnewitem-label') ?>
 	</div>
 	
 	<div class="toolbar">
-		<input type="button" value="Cancel" class="cancel secondary">
-		<input type="button" value="Create Poll" class="create">
+		<input type="button" value="<?= wfMsg('wikiapoll-cancel-label') ?>" class="cancel secondary">
+		<input type="button" value="<?= wfMsg('wikiapoll-publish-label') ?>" class="create">
 	</div>
 	
 	</form>

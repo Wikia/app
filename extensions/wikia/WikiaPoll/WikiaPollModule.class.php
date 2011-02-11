@@ -28,7 +28,7 @@ class WikiaPollModule extends Module {
 	public function executeSpecialPageEdit($params) {
 		$title = Title::newFromText ($params['title'], NS_WIKIA_POLL) ;
 
-		if (is_object($title)) {
+		if (is_object($title) && $title->exists()) {
 			$this->poll = WikiaPoll::NewFromTitle($title);
 			$this->data = $this->poll->getData();
 		}

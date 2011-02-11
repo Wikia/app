@@ -11,6 +11,12 @@ $messages['en'] = array(
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 vote|$1 votes}}',
 	'wikiapoll-question-mark-after' => '?',
 	'wikiapoll-question-mark-before' => '',
+	'wikiapoll-createpoll-headline' => 'Create Poll',
+	'wikiapoll-editpoll-headline' => 'Edit Poll',
+	'wikiapoll-question-label' => 'Question',
+	'wikiapoll-addnewitem-label' => 'Add new item',
+	'wikiapoll-cancel-label' => 'Cancel',
+	'wikiapoll-publish-label' => 'Publish',
 );
 
 /** Message documentation (Message documentation) */
@@ -22,8 +28,14 @@ $messages['qqq'] = array(
 * $1 is the poll question without a question mark.',
 	'wikiapoll-thanks-for-vote' => 'Thank you to voting user.',
 	'wikiapoll-vote' => 'Button text to vote in a poll.',
-	'wikiapoll-votes' => 'Paramters:
+	'wikiapoll-votes' => 'Parameter:
 * $1 is the number of votes cast.',
+	'wikiapoll-createpoll-headline' => "Headline for Create Poll Special Page",
+	'wikiapoll-editpoll-headline' => "Headline for Edit Poll Special Page",
+	'wikiapoll-question-label' => 'Form Label for Special Page',
+	'wikiapoll-addnewitem-label' => 'Special Page text next to button for a new item to a poll',
+	'wikiapoll-cancel-label' => 'Cancel button label',
+	'wikiapoll-publish-label' => 'Create/Edit Poll button label for confirming changes',
 );
 
 /** Breton (Brezhoneg)
