@@ -71,36 +71,41 @@ abstract class WikiaSuperFactory {
 			return self::$constructors[$className]['INSTANCE'];
 		}
 
-		if(($constructorMethod == '__construct') || isset(self::$constructors[$className][$constructorMethod])) {
-			$object = null;
-			$buildParams = $params;
-			if (isset(self::$constructors[$className][$constructorMethod])) {
-				$buildParams = array_merge(self::$constructors[$className][$constructorMethod], $params);
+		if(($constructorMethod != '__construct') && !isset(self::$constructors[$className][$constructorMethod])) {
+			try {
+				$method = new ReflectionMethod($className, $constructorMethod);
 			}
+			catch(ReflectionException $e) {
+				throw new WikiaException("WikiaFactory: Unknown constructor ($constructorMethod) for class: $className");
+			}
+			self::addClassConstructor($className, array(), $constructorMethod);
+		}
 
-			if($constructorMethod == '__construct') {
-				$reflectionObject = new ReflectionClass($className);
-				if(!empty($buildParams)) {
-					$object = $reflectionObject->newInstanceArgs($buildParams);
-				}
-				else {
-					$object = $reflectionObject->newInstanceArgs();
-				}
+		$object = null;
+		$buildParams = $params;
+		if (isset(self::$constructors[$className][$constructorMethod])) {
+			$buildParams = array_merge(self::$constructors[$className][$constructorMethod], $params);
+		}
+
+		if($constructorMethod == '__construct') {
+			$reflectionObject = new ReflectionClass($className);
+			if(!empty($buildParams)) {
+				$object = $reflectionObject->newInstanceArgs($buildParams);
 			}
 			else {
-				$object = call_user_func_array(array($className, $constructorMethod), $buildParams);
+				$object = $reflectionObject->newInstanceArgs();
 			}
-
-			if(isset(self::$setters[$className])) {
-				foreach(self::$setters[$className] as $setterName => $value) {
-					call_user_func(array($object, $setterName), $value);
-				}
-			}
-			return $object;
 		}
 		else {
-			throw new WikiaException("WikiaFactory: Unknown constructor ($constructorMethod) for class: $className");
+			$object = call_user_func_array(array($className, $constructorMethod), $buildParams);
 		}
+
+		if(isset(self::$setters[$className])) {
+			foreach(self::$setters[$className] as $setterName => $value) {
+				call_user_func(array($object, $setterName), $value);
+			}
+		}
+		return $object;
 	}
 
 	/**
