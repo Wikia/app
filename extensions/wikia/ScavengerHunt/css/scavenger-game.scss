@@ -29,8 +29,9 @@
 		padding-top: 20px;
 		text-align: right;
 
-		a.button {
+		a.button, input.wikia-button {
 			font-size: 18px;
+			height: auto;
 			padding: 10px;
 		}
 	}
@@ -49,4 +50,15 @@
 			}
 		}
 	}	
+}
+
+/* reset margin for one dialog */
+#scavengerEntryFormModal {
+	h1, .modalContent {
+		margin-left: 0;
+	}
+
+	.scavenger-clue-text {
+		margin-bottom: 20px;
+	}
 }
