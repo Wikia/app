@@ -200,6 +200,117 @@
 			$this->assertNotEmpty($game->delete());
 		}
 
-	//	public function test
+		public function mock_Games_getTitleDbKey( $text) {
+			return str_replace(' ', '_', $text);
+		}
+
+		public function testIndexCacheGeneration() {
+			$app = WF::build('App');
+
+			$cacheData = array(
+				'About_Wikia' => array(
+					'start' => array( 10001 ),
+					'article' => array( 10002 ),
+				),
+				'The_new_look_2' => array(
+					'article' => array( 10001, 10002 ),
+				),
+				'Alice_Soft' => array(
+					'start' => array( 10002 ),
+					'article' => array( 10001 ),
+				),
+			);
+
+			$cache = $this->getMock('stdClass',array('get','set'));
+			$cache->expects($this->once())
+				->method('get')
+				->will($this->returnValue(null));
+			$cache->expects($this->once())
+				->method('set')
+				->with($this->anything(),$this->equalTo($cacheData),$this->anything());
+
+			$article1 = WF::build('ScavengerHuntGameArticle');
+			$article1->setAll(array(
+				'title' => 'The new look 2',
+				'articleId' => 123,
+			));
+			$article2 = WF::build('ScavengerHuntGameArticle');
+			$article2->setAll(array(
+				'title' => 'About Wikia',
+				'articleId' => 234,
+			));
+			$article3 = WF::build('ScavengerHuntGameArticle');
+			$article3->setAll(array(
+				'title' => 'Alice_Soft',
+				'articleId' => 345,
+			));
+
+			$game1 = WF::build('ScavengerHuntGame');
+			$game1->setAll(array(
+				'id' => 10001,
+				'idEnabled' => true,
+				'landingTitle' => 'About Wikia',
+				'landingArticleId' => 123,
+				'articles' => array( $article1, $article3 ),
+			));
+			$game2 = WF::build('ScavengerHuntGame');
+			$game2->setAll(array(
+				'id' => 10002,
+				'idEnabled' => true,
+				'landingTitle' => 'Alice Soft',
+				'landingArticleId' => 345,
+				'articles' => array( $article2, $article1 ),
+			));
+			$gamesData = array( $game1, $game2 );
+
+			$games = $this->getMock('ScavengerHuntGames',array('getCache','findAllEnabledByWikiId','getTitleDbKey'),array($app));
+			$games->expects($this->exactly(2))
+				->method('getCache')
+				->will($this->returnValue($cache));
+			$games->expects($this->once())
+				->method('findAllEnabledByWikiId')
+				->will($this->returnValue($gamesData));
+			$games->expects($this->any())
+				->method('getTitleDbKey')
+				->will($this->returnCallback(array($this,'mock_Games_getTitleDbKey')));
+
+			$this->assertEquals($cacheData,$games->getIndexCache());
+		}
+
+		public function testIndexCacheReading() {
+			$app = WF::build('App');
+
+			$cacheData = array(
+				'About_Wikia' => array(
+					'start' => array( 10001 ),
+					'article' => array( 10002 ),
+				),
+				'The_new_look_2' => array(
+					'article' => array( 10001, 10002 ),
+				),
+				'Alice_Soft' => array(
+					'start' => array( 10002 ),
+					'article' => array( 10001 ),
+				),
+			);
+
+			$cache = $this->getMock('stdClass',array('get','set'));
+			$cache->expects($this->once())
+				->method('get')
+				->will($this->returnValue($cacheData));
+			$cache->expects($this->never())
+				->method('set');
+
+			$games = $this->getMock('ScavengerHuntGames',array('getCache','findAllEnabledByWikiId','getTitleDbKey'),array($app));
+			$games->expects($this->once())
+				->method('getCache')
+				->will($this->returnValue($cache));
+			$games->expects($this->never())
+				->method('findAllEnabledByWikiId');
+			$games->expects($this->never())
+				->method('getTitleDbKey');
+
+			$this->assertEquals($cacheData,$games->getIndexCache());
+		}
 
 	}
