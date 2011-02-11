@@ -175,7 +175,12 @@
 			return $this->app->runFunction('wfMemcKey',__CLASS__,'index');
 		}
 
-		protected function getIndexCache() {
+		protected function getTitleDbKey() {
+			$title = WF::build('Title',array($game->getLandingTitle()),'newFromText');
+			return $title ? $title->getPrefixedDBkey() : false;
+		}
+
+		public function getIndexCache() {
 			$data = $this->getCache()->get($this->getIndexMemcKey());
 			if (!is_array($data)) {
 				$cityId = $this->app->getGlobal('wgCityId');
@@ -183,15 +188,15 @@
 				$data = array();
 				foreach ($games as $game) {
 					$gameId = $game->getId();
-					$title = WF::build('Title',array($game->getLandingTitle()),'newFromText');
+					$title = $this->getTitleDbKey($game->getLandingTitle());
 					if (!empty($title)) {
-						$data[$title->getPrefixedDBkey()]['start'][] = $gameId;
+						$data[$title]['start'][] = $gameId;
 					}
 					$articles = $game->getArticles();
 					foreach ($articles as $article) {
-						$title = WF::build('Title',array($article->getTitle()),'newFromText');
+						$title = $this->getTitleDbKey($article->getTitle());
 						if (!empty($title)) {
-							$data[$title->getPrefixedDBkey()]['article'][] = $gameId;
+							$data[$title]['article'][] = $gameId;
 						}
 					}
 				}
