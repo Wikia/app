@@ -38,7 +38,7 @@ $messages['en'] = array(
 
 	'scavengerhunt-label-starting-clue' => 'Starting Clue popup',
 	'scavengerhunt-label-starting-clue-title' => 'Popup title:',
-	'scavengerhunt-label-starting-clue-text' => 'Popup text:',
+	'scavengerhunt-label-starting-clue-text' => 'Popup text: <i>(text in &lt;span&gt; will have link color)</i>',
 	'scavengerhunt-label-starting-clue-image' => 'Popup image:',
 	'scavengerhunt-label-starting-clue-button-text' => 'Popup button text:',
 	'scavengerhunt-label-starting-clue-button-target' => 'Popup button target:',
