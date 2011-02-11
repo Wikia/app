@@ -123,8 +123,5 @@ class WikiaSuperFactoryTest extends PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf('WikiaSuperFactoryTestClass', WikiaSuperFactory::build('WikiaSuperFactoryTestClass', array(1, 2), 'newFromTypeAndBar'));
 
 		WikiaSuperFactory::reset('WikiaSuperFactoryTestClass');
-
-		$this->setExpectedException('WikiaException');
-		WikiaSuperFactory::build('WikiaSuperFactoryTestClass', array(1, 2), 'newFromTypeAndBar');
 	}
 }
