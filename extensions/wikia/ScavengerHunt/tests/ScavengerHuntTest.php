@@ -17,6 +17,8 @@
 			$article->setClueTitle('clt');
 			$article->setClueText('cly');
 			$article->setClueImage('cli');
+			$article->setClueImageTopOffset('100');
+			$article->setClueImageLeftOffset('-100');
 			$article->setClueButtonText('cbt');
 			$article->setClueButtonTarget('cby');
 
@@ -27,15 +29,22 @@
 				'startingClueTitle' => 'sct',
 				'startingClueText' => 'scy',
 				'startingClueImage' => 'sci',
+				'startingClueImageTopOffset' => '10',
+				'startingClueImageLeftOffset' => '-10',
 				'startingClueButtonText' => 'sbt',
 				'startingClueButtonTarget' => 'sby',
 				'articles' => array( $article ),
 				'entryFormTitle' => 'eft',
 				'entryFormText' => 'efy',
 				'entryFormImage' => 'efi',
+				'entryFormImageTopOffset' => '20',
+				'entryFormImageLeftOffset' => '-20',
 				'entryFormQuestion' => 'efq',
+				'goodbyeTitle' => 'gdw',
 				'goodbyeText' => 'gdt',
 				'goodbyeImage' => 'gdi',
+				'goodbyeImageTopOffset' => '30',
+				'goodbyeImageLeftOffset' => '-30',
 			);
 
 			$fields = array(
@@ -69,6 +78,8 @@
 			$article->setClueTitle('clt');
 			$article->setClueText('cly');
 			$article->setClueImage('cli');
+			$article->setClueImageTopOffset('100');
+			$article->setClueImageLeftOffset('-100');
 			$article->setClueButtonText('cbt');
 			$article->setClueButtonTarget('cby');
 			$articles[] = $article;
@@ -90,6 +101,8 @@
 			$article->setClueTitle('clt');
 			$article->setClueText('cly');
 			$article->setClueImage('cli');
+			$article->setClueImageTopOffset('100');
+			$article->setClueImageLeftOffset('-100');
 			$article->setClueButtonText('cbt');
 			$article->setClueButtonTarget('cby');
 
@@ -105,15 +118,22 @@
 				'startingClueTitle' => 'sct',
 				'startingClueText' => 'scy',
 				'startingClueImage' => 'sci',
+				'startingClueImageTopOffset' => '10',
+				'startingClueImageLeftOffset' => '-10',
 				'startingClueButtonText' => 'sbt',
 				'startingClueButtonTarget' => 'sby',
+				'articles' => array( $article ),
 				'entryFormTitle' => 'eft',
 				'entryFormText' => 'efy',
 				'entryFormImage' => 'efi',
+				'entryFormImageTopOffset' => '20',
+				'entryFormImageLeftOffset' => '-20',
 				'entryFormQuestion' => 'efq',
+				'goodbyeTitle' => 'gdw',
 				'goodbyeText' => 'gdt',
 				'goodbyeImage' => 'gdi',
-				'articles' => array( $article ),
+				'goodbyeImageTopOffset' => '30',
+				'goodbyeImageLeftOffset' => '-30',
 			));
 
 			return $row;
