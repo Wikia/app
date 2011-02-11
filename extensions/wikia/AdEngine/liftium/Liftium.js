@@ -1259,6 +1259,18 @@ Liftium.in_array = function (needle, haystack, ignoreCase){
 
 
 Liftium.init = function () {
+var luc_name = "LUC1";
+if (Liftium.e(Liftium.cookie(luc_name))) {
+	var luc_value = 0;
+	Liftium.d("LUC is empty", 1);
+} else {
+	var luc_value = Liftium.cookie(luc_name);
+	Liftium.d("LUC is " + luc_value, 1);
+}
+luc_value++;
+Liftium.cookie(luc_name, luc_value, {domain: ".wikia.com", path: "/", expires: 30 * 86400 * 1000});
+Liftium.luc = {name: luc_name, value: luc_value};
+
 	if (Liftium.e(LiftiumOptions.pubid)){
 		Liftium.reportError("LiftiumOptions.pubid must be set", "publisher"); // TODO: provide a link to documentation
 		return false;
@@ -1483,6 +1495,17 @@ Liftium.isValidCriteria = function (t, slotname){
 		Liftium.d(rejmsg + " - pacing criteria not met (" + t.pacing + ")", 5);
 		return false;
 	}
+
+if (t.tag_id == 844) {
+	Liftium.d("it's 844", 1, t);
+	if (!Liftium.e(Liftium.luc)) {
+		Liftium.d("luc is...", 1, Liftium.luc);
+		if (Liftium.luc.value > 3) {
+			Liftium.d("luc_value > 3, bailing out", 1);
+			return false;
+		}
+	}
+}
 
 	// All criteria passed 
 	Liftium.d("Targeting criteria passed for tag #" + t.tag_id, 6);
