@@ -32,7 +32,7 @@ $wgAutoloadClasses['GlobalWatchlistBot'] = dirname( __FILE__ ) . '/GlobalWatchli
 $wgHooks['GetPreferences'][] = 'wfGlobalWatchlistOnGetPreferences';
 
 function wfGlobalWatchlistOnGetPreferences($user, &$defaultPreferences) {
-	global $wgUser, $wgExternalSharedDB;
+	global $wgUser, $wgExternalDatawareDB;
 
 	$defaultPreferences['watchlistdigest'] = array(
 		'type' => 'toggle',
@@ -40,7 +40,7 @@ function wfGlobalWatchlistOnGetPreferences($user, &$defaultPreferences) {
 		'section' => 'watchlist/advancedwatchlist',
 	);
 
-	$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+	$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 	$oResource = $dbr->query("SELECT count(*) AS count FROM global_watchlist WHERE gwa_user_id='" . $wgUser->getID() . "'");
 	$oResultRow = $dbr->fetchObject($oResource);
 
