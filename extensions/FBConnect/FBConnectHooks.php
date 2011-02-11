@@ -168,7 +168,7 @@ STYLE;
 	 *
 	 * Fixes IE issue (RT #140425)
 	 */
-	static function SkinAfterBottomScripts(&$skin, &$scripts) {
+	static function SkinAfterBottomScripts( $skin, &$scripts ) {
 		global $wgJsMimeType, $fbScript, $wgNoExternals, $wgUser;
 		wfProfileIn(__METHOD__);
 
