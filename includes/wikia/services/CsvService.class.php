@@ -2,18 +2,41 @@
 
 	class CsvService extends Service {
 
-		public function output( $headers, $data ) {
-			// XXX: add headers to content-type: csv
+		protected $delimiter = ';';
+		protected $enclosure = '"';
 
-			$fp = fopen('php://temp', 'r+');
-			fputcsv($fp, $headers, $delimiter, $enclosure);
-			foreach ($data as $row) {
-				fputcsv($fp, $headers, $delimiter, $enclosure);
+		public function setDelimiter( $delimiter ) {
+			$this->delimiter = $delimiter;
+		}
+
+		public function setEnclosure( $enclosure ) {
+			$this->enclosure = $enclosure;
+		}
+
+		public function printHeaders( $fileName ) {
+			// http headers
+			header("Pragma: private");
+			header("Expires: 0");
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			header("Content-Type: application/octet-stream");
+			header("Content-Disposition: attachment;filename=".str_replace(" ", "_", $fileName));
+
+			global $wgOut;
+			$wgOut->setArticleBodyOnly(true);
+		}
+
+		public function printRow( $row ) {
+			return $this->printRows(array($row));
+		}
+
+		public function printRows( $rows ) {
+			$fp = fopen('php://temp', 'br+');
+			foreach ($rows as $row) {
+				fputcsv($fp, $row, $this->delimiter, $this->enclosure);
 			}
 			rewind($fp);
-			$csv = fgets($fp);
-
-			echo $csv;
+			fpassthru($fp);
+			fclose($fp);
 
 			return true;
 		}

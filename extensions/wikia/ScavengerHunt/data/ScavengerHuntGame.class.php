@@ -244,13 +244,13 @@
 			return $entries->save($entry);
 		}
 
-		public function listEntries() {
+		public function listEntries( $startId = 0, $limit = -1 ) {
 			if ($this->getId() == 0) {
 				return array();
 			}
 
 			$entries = $this->getEntries();
-			return $entries->findAllByGameId($this->getId());
+			return $entries->findAllByGameId($this->getId(),$startId,$limit);
 		}
 
 	}

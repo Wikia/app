@@ -3,6 +3,7 @@ class ScavengerHuntEntry {
 
 	protected $entries = null;
 
+	protected $entryId = 0;
 	protected $gameId = 0;
 	protected $userId = 0;
 	protected $name = '';
@@ -11,6 +12,14 @@ class ScavengerHuntEntry {
 
 	public function setEntries( $entries ) {
 		$this->entries = $entries;
+	}
+
+	public function getEntryId() {
+		return $this->entryId;
+	}
+
+	public function setEntryId( $entryId ) {
+		$this->entryId = $entryId;
 	}
 
 	public function getGameId() {
