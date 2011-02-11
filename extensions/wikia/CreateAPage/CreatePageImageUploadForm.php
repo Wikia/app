@@ -16,7 +16,7 @@ class CreatePageImageUploadForm extends UploadForm {
 
         error_log( __METHOD__ );
         #--- and call parent
-        parent::__construct( $request );
+        parent::__construct( $request->getValues() );
         error_log( __METHOD__ );
     }
 
