@@ -5,7 +5,7 @@ PageLayoutBuilder.list = {};
 
 
 PageLayoutBuilder.list.doAction = function(e, action) {
-	var val = parseInt(String($(e.target).attr("href")).replace("#plbId-",""));
+	var val = parseInt(String($(e.target).closest('a').attr("href")).replace("#plbId-",""));
 	if((typeof val) == "number" ) {
 		switch(action) {
 			case "delete":

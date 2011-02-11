@@ -223,6 +223,11 @@ class PageLayoutBuilderModel {
 			return null;
 		}
 		$title = Title::newFromID($layout_id);
+		
+		if(empty($title)) {
+			return null;
+		}
+		
 		if($title->getNamespace() == NS_PLB_LAYOUT) {
 			$db = wfGetDB(DB_MASTER, array());
 			//* rename it to prevent title validation problem */
