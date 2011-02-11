@@ -11,12 +11,19 @@ $wgExtensionCredits['other'][] = array(
 $wgHooks['BeforePageDisplay'][] = 'getABtestJSandCSS';
 
 function getABtestJSandCSS() {
-	global $wgOut, $wgExtensionsPath;
+	global $wgOut, $wgExtensionsPath, $wgUser, $wgABTests;
 	
 	// For testing
 	//$wgABTests[] = 'editbutton1';
-	
+
 	if (!isset($wgABTests)) {
+		return true;
+	}
+
+	// If a user logs in add them back to the current control group
+	if ($wgUser->isLoggedIn()) {
+		$expire = time() + 12*60*60;  // 12 hours
+		setrawcookie("wikia-ab", 'v5/name=control/UA=UA-19473076-23/', $expire, "/", 'wikia.com');
 		return true;
 	}
 	
