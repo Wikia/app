@@ -90,6 +90,16 @@ LiftiumDART.callAd = function (slotname, size, network_options){
 
 
 LiftiumDART.getUrl = function(slotname, size, network_options, iframe) {
+	var url2 = AdConfig.DART.getUrl(slotname, size, true, 'Liftium');
+	// replace sz=foo,bar,baz with sz=foo only
+	var sz = url2.match(/;sz=[0-9x,]+;/);
+	if (sz != null) {
+		var sz2 = sz[0].match(/[0-9]+x[0-9]+/);
+		url2 = url2.replace(/;sz=[0-9x,]+;/, ';sz=' + sz2[0] + ';');
+	}
+	Liftium.d("Dart URL2= " + url2, 4);
+	return url2;
+
 	// Hack for dart sizes 
         if (LiftiumDART.sizeconfig[size]){
                 size = LiftiumDART.sizeconfig[size];
