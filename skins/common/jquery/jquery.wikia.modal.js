@@ -11,6 +11,7 @@ $.fn.extend({
 
 	makeModal: function(options) {
 		var settings = {
+			showCloseButton: true,
 			width: 400,
 			topOffset: 0
 		};
@@ -104,7 +105,9 @@ $.fn.extend({
 			}).css("margin-left", -wrapper.outerWidth()/2);
 
 			//add close button
-			wrapper.prepend('<button class="close wikia-chiclet-button"><img src="' + stylepath + '/oasis/images/icon_close.png"></button>');
+			if (settings.showCloseButton) {
+				wrapper.prepend('<button class="close wikia-chiclet-button"><img src="' + stylepath + '/oasis/images/icon_close.png"></button>');
+			}
 
 		} else {
 			wrapper
