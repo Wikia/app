@@ -177,8 +177,8 @@
 			return $this->app->runFunction('wfMemcKey',__CLASS__,'index');
 		}
 
-		protected function getTitleDbKey() {
-			$title = WF::build('Title',array($game->getLandingTitle()),'newFromText');
+		protected function getTitleDbKey( $text ) {
+			$title = WF::build('Title',array($text),'newFromText');
 			return $title ? $title->getPrefixedDBkey() : false;
 		}
 

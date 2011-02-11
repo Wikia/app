@@ -37,17 +37,26 @@ class ScavengerHuntEntries {
 		return true;
 	}
 
-	public function findAllByGameId( $gameId ) {
+	public function findAllByGameId( $gameId, $startEntryId = 0, $limit = -1 ) {
+		$where = array(
+			'game_id' => (int)$gameId,
+			'entry_id >= '.(int)$startEntryId,
+		);
+		$options = array();
+		if ($limit > 0) {
+			$options['LIMIT'] = $limit;
+		}
+		$db = $this->getDb();
 		$set = $db->select(
 			array( self::ENTRIES_TABLE_NAME ),
-			array( 'game_id', 'user_id', 'entry_name', 'entry_email', 'entry_answer' ),
+			array( 'entry_id', 'game_id', 'user_id', 'entry_name', 'entry_email', 'entry_answer' ),
 			array( 'game_id' => (int)$gameId ),
 			__METHOD__,
 			$options
 		);
 
 		$entries = array();
-		while( $row = $res->fetchObject( $res ) ) {
+		while( $row = $set->fetchObject( $set ) ) {
 			$entries[] = $this->newEntryFromRow($row);
 		}
 
@@ -65,6 +74,7 @@ class ScavengerHuntEntries {
 	protected function newEntryFromRow( $row ) {
 		$entry = $this->newEntry();
 
+		$entry->setEntryId($row->entry_id);
 		$entry->setGameId($row->game_id);
 		$entry->setUserId($row->user_id);
 		$entry->setName($row->entry_name);
