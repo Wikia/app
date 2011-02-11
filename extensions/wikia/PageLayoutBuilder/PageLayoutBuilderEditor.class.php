@@ -76,11 +76,11 @@
 
 			if( !$wgUser->getOption("plbhidehelpbox") ) {
 				$helpboxTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-				
 				$helpboxTmpl->set_vars(array( 
 					's1' => $wgExtensionsPath. "/wikia/PageLayoutBuilder/images/help/s1.png",
 					's2' => $wgExtensionsPath. "/wikia/PageLayoutBuilder/images/help/s2.png",
 					's3' => $wgExtensionsPath. "/wikia/PageLayoutBuilder/images/help/s3.png",
+					'helplink' => Title::newFromText( wfMsg('plb-helpbox-help-link-title'), NS_HELP )->getFullUrl(),
 					'arrow' => $wgExtensionsPath. "/wikia/PageLayoutBuilder/images/help/arrow.png"
 				));	
 				

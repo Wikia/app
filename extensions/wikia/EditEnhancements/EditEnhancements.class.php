@@ -11,16 +11,18 @@ class EditEnhancements {
 
 		$this->action = $action;
 		$this->undo = intval($wgRequest->getVal('undo', 0)) != 0;
-		$wgHooks['GetHTMLAfterBody'][] = array(&$this, 'editPageJS');
+		$wgHooks['GetHTMLAfterBody'][] = array($this, 'render');
 	}
 
-	public static function render($skin, &$html) {
+	public function render($skin, &$html) {
 		wfRunHooks('BeforeEditEnhancements', array(&$this) );
+		
 		if($this->action == 'edit' && !$this->undo ) {
 			$this->editPageJS($skin, $html);
 		} else if ($this->action == 'submit' || $this->undo) {
 			$this->previewJS($skin, $html);
 		}
+		return true;
 	}
 	
 	public function editPageJS($skin, &$html) {

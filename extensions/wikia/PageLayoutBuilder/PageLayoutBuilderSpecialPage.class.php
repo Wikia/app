@@ -164,7 +164,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			$out = PageLayoutBuilderModel::getListOfLayout();
 		}
 
-		$button = "<a id='plbNewButton' class='wikia-button' 'href'=".Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullURL().">".
+		$button = "<a id='plbNewButton' class='wikia-button' href='".Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullURL()."'>".
 			XML::element("img",array( "class" => "sprite new", "src" => $wgBlankImgUrl)).wfMsg('plb-special-form-new')."</a>";
 		
 		$msg = wfMsg("plb-list-title", array("$1" => count($out) ) );
@@ -410,19 +410,6 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$this->mFormData['plbId'] = $this->mArticle->getID();
 
 		$this->isFromDb = true;
-	}
-	
-	/**
-	 * isUndo 
-	 *
-	 * @author Tomek Odrobny
-	 * 
-	 * @access public
-	 *
-	 */
-	
-	public static function isUndo() {
-		return true;	
 	}
 	
 	/**
@@ -926,7 +913,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	 */
 	
 	function onBeforeEditEnhancements(&$self) {
-		//global $wgTitle;
+		global $wgTitle;
 		if($wgTitle->isSpecial('PageLayoutBuilder') && empty($self->action) ) {
 			$self->action = 'edit';
 		}

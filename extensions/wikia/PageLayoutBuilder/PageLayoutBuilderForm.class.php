@@ -76,7 +76,7 @@ class PageLayoutBuilderForm extends SpecialPage {
 				$this->pageHeader = wfMsg( 'plb-special-form-create-new',  array( "$1" => $this->layoutTitle) );
 			}
 
-			$oArticle = new Article( $this->layoutTitle );
+			$LayoutArticle = new Article( $this->layoutTitle );
 			$parser = new PageLayoutBuilderParser();
 			$parser->setOutputType(OT_HTML);
 			$parserOptions = ParserOptions::newFromUser($wgUser);
@@ -86,14 +86,15 @@ class PageLayoutBuilderForm extends SpecialPage {
 			if($wgRequest->wasPosted()) {
 				$this->executeSubmit($parser);
 			} elseif($this->pageId > 0) {
-				$loadedValues = $parser->loadForm($this->pageTitle, $this->id );
-				$pageArticle = new Article($this->pageTitle); 
-				$pageTs = $pageArticle->getTimestamp();
+				$pageArticle = new Article($this->pageTitle);
+				$editPage = new EditPage( $pageArticle );
+				$loadedValues = $parser->loadFormFromText($editPage->getContent(), $this->pageId, $this->id );
+				$pageTs = $pageArticle->getTimestamp(); 
 			} else {
 				$this->formValues['articleName'] = $wgRequest->getVal('default', '');
 			}
 
-			$text = $parser->preParseForm( $oArticle->getContent() );
+			$text = $parser->preParseForm( $LayoutArticle->getContent() );
 			$parserOut = $parser->parse($text , $this->layoutTitle, $parserOptions);
 
 			if($this->isCategorySelect()) {
@@ -175,6 +176,28 @@ class PageLayoutBuilderForm extends SpecialPage {
 		$wgOut->setPageTitle( $this->pageHeader );
 		return true;
     }
+    
+
+	/**
+	 * isUndo 
+	 *
+	 * @author Tomek Odrobny
+	 * 
+	 * @access public
+	 *
+	 */
+	
+	public static function isUndo( &$self, $undotext, $undorev, $oldrev ) {	
+		global $wgOut;
+		$wgOut->addHTML( $self->editFormPageTop );
+	
+		if($undotext !== false) {
+			$self->textbox1 = $oldrev->getText();
+			$self->showDiff();	
+		}	
+				
+		return true;	
+	}
 
 	function executeSubmit(&$parser) {
 		global $wgRequest, $wgOut, $wgUser;
@@ -245,6 +268,18 @@ class PageLayoutBuilderForm extends SpecialPage {
 			return false;
 		}
 
+		
+		if( !empty( $this->pageId ) ) {
+			$pageTitle = Title::newFromID($this->pageId);
+			$oldValues = $parser->loadForm($pageTitle, $this->layoutTitle->getArticleId() );
+			
+			foreach($oldValues as $key => $oldValue) {
+				if(!isset($tagValues['val_'.$key])){
+					$tagValues['val_'.$key] = $oldValue;
+				}
+			}
+		}
+
 		$attribs = $tagValues + array("layout_id" => $this->layoutTitle->getArticleID(), 'cswikitext' => $wgRequest->getVal('csWikitext', '') );
 		$mwText = Xml::element("plb_layout", $attribs, '', false);
 
@@ -303,17 +338,29 @@ class PageLayoutBuilderForm extends SpecialPage {
 	 * @static
 	 */
 	public static function alternateEditHook( $oEditPage ) {
-		global $wgOut, $wgUser, $wgTitle;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest;
 
 		if( !($wgTitle->userCan('edit') || $wgTitle->userCan('createpage')) ) {
 			return true;
 		}
 
 		if( self::articleIsFromPLBFull($oEditPage->mTitle->getArticleID(), $oEditPage->mArticle->getContent() ) ) {
+			$undoafter = $wgRequest->getVal('undoafter', '');
+			$undo = $wgRequest->getVal('undo', '');
 			$layout_id = PageLayoutBuilderModel::articleIsFromPLB( $oEditPage->mTitle->getArticleID() );
-
 			$oSpecialPageTitle = Title::newFromText('LayoutBuilderForm', NS_SPECIAL);
-			$wgOut->redirect($oSpecialPageTitle->getFullUrl("plbId=" . $layout_id . "&pageId=".$oEditPage->mTitle->getArticleId() ));
+			
+			$url = "plbId=" . $layout_id . "&pageId=".$oEditPage->mTitle->getArticleId();
+			
+			if(!empty($undoafter)) {
+				$url .= "&undoafter=".$undoafter; 
+			}
+			
+			if(!empty($undo)) {
+				$url .= "&undo=".$undo;				
+			}			
+			
+			$wgOut->redirect($oSpecialPageTitle->getFullUrl($url));
 		}
 
 		return true;
@@ -342,7 +389,7 @@ class PageLayoutBuilderForm extends SpecialPage {
 		global $wgOut;
 		$wgOut->showErrorPage( 'plb-special-no-article', 'plb-special-no-article-body', array(wfGetReturntoParam()));
 	}
-
+	
 	private function isCategorySelect() {
 		if(function_exists('CategorySelectInitializeHooks')) {
 			return true;
