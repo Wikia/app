@@ -3,7 +3,8 @@
 $messages = array();
 
 $messages['en'] = array(
-	'phalanx' => 'Phalanx - Integrated Spam Defense Mechanism',
+	'phalanx' => 'Phalanx',
+	'phalanx-title' => 'Phalanx - Integrated Spam Defense Mechanism',
 	'phalanx-type-content' => 'page content',
 	'phalanx-type-summary' => 'page summary',
 	'phalanx-type-title' => 'page title',
