@@ -25,6 +25,7 @@ class SpecialPhalanx extends SpecialPage {
 		$wgOut->addStyle( "$wgExtensionsPath/wikia/Phalanx/css/Phalanx.css?$wgStyleVersion" );
 		$wgOut->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/Phalanx/js/Phalanx.js?$wgStyleVersion'></script>\n");
 		$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css?{$wgStyleVersion}");
+		$wgOut->setPageTitle( wfMsg('phalanx-title') );
 
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 
