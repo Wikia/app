@@ -50,6 +50,11 @@ class SpecialDatacenter extends UnlistedSpecialPage {
 				$wgRequest->response()->setcookie( $this->mCookieName, "ash" );
 				$this->mCookie = "ash";
 			}
+			elseif( $val == 4 ) {
+				$wgOut->addHTML( Wikia::successbox( "cookie set to closest" ) );
+				$wgRequest->response()->setcookie( $this->mCookieName, "closest" );
+				$this->mCookie = "closest";
+			}
 			else {
 				$wgOut->addHTML( Wikia::successbox( "cookie removed" ) );
 				$wgRequest->response()->setcookie( $this->mCookieName, "sjc", 1 );
@@ -75,6 +80,7 @@ class SpecialDatacenter extends UnlistedSpecialPage {
 		 */
 		$wgOut->addHTML( Xml::openElement( "form", array( "action" => $this->mTitle->getFullURL(), "method" => "post" ) ) );
 		$select = new XMLSelect( "iowacookie", "iowacookie" );
+		$select->addOption( "Switch to the closest", 4 );
 		$select->addOption( "Switch to San Jose", 2 );
 		$select->addOption( "Switch to Iowa",     1 );
 		$select->addOption( "Switch to Ashburn",  3 );
