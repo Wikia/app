@@ -22,12 +22,15 @@ class PhalanxStats extends UnlistedSpecialPage {
 			return;
 		}
 
+		#TODO: refactor this mode/id detection to support 'wikiId' url param to trigger blockWiki mode
+
 		if ( empty( $par ) ) {
 			$par = $wgRequest->getInt( 'blockId' );
 		}
 
 		// give up if no block ID is given
 		if ( empty( $par ) ) {
+			$this->showForms();
 			return true;
 		}
 
@@ -178,6 +181,48 @@ class PhalanxStats extends UnlistedSpecialPage {
 
 		$wgOut->addHTML( $html );
 	}	
+
+	private function showForms() {
+		global $wgOut;
+		# TODO: move text to i18n (will do after coding is finished and text/flow is finalized)
+	
+		$PSurl = Title::newFromText( 'PhalanxStats', NS_SPECIAL )->getFullUrl();
+
+		//-------------------------------------------------
+		$formParam = array('method'=>'GET', 'action'=>$PSurl);
+
+		$content = '';
+		$content .= Xml::openElement( 'form', $formParam ) . "\n";
+		$content .= "ID" . ": ";
+		$content .= Xml::input( 'blockId', 5, '', array() );
+		$content .= Xml::submitButton( 'load' ) . "\n";
+		$content .= Xml::closeElement( 'form' ) . "\n";
+		$content .= "Example:\n<ul>\n";
+		$content .= "<li>http://community.wikia.com/wiki/Special:PhalanxStats/123456</li>\n";
+		$content .= "<li>http://community.wikia.com/wiki/Special:PhalanxStats?blockId=123456</li>\n";
+		$content .= "</ul>\n";
+
+		$wgOut->addHTML( Xml::fieldset( "Recent triggers of a block", $content, array() ) );
+
+		//-------------------------------------------------
+		$formParam = array('method'=>'GET', 'action'=>$PSurl);
+
+		$content = '';
+		#commented out until wikiId is supported in the execute logic
+		// $content .= Xml::openElement( 'form', $formParam ) . "\n";
+		// $content .= "ID" . ": ";
+		// $content .= Xml::input( 'wikiId', 5, '', array() );
+		// $content .= Xml::submitButton( 'load' ) . "\n";
+		// $content .= Xml::closeElement( 'form' ) . "\n";
+			$content .= "<i>form coming soon</i><br/>\n";
+		$content .= "Example:\n<ul>\n";
+		$content .= "<li>http://community.wikia.com/wiki/Special:PhalanxStats/wiki/123456</li>\n";
+		$content .= "</ul>\n";
+
+		$wgOut->addHTML( Xml::fieldset( "Recent blocks on a wiki", $content, array() ) );
+
+		return;
+	}
 }
 
 class PhalanxStatsPager extends ReverseChronologicalPager {
