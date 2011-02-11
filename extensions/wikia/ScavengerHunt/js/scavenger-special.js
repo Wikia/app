@@ -2,11 +2,12 @@ var SpecialScavengerHunt = {
 	entry: null,
 
 	init: function() {
-		SpecialScavengerHunt.entry = $('.scavenger-entry').eq(0).clone();
+		SpecialScavengerHunt.entry = $('.scavenger-article').eq(0).clone();
 		SpecialScavengerHunt.entry.find('input').val('');
 		$('#gameName').focus();
 		$('.scavenger-form').delegate('.scavenger-page-title', 'blur', SpecialScavengerHunt.onPageTitleBlur);
 		$('input[name=delete]').bind('click.sumbit', SpecialScavengerHunt.onDeleteClick);
+		$('.scavenger-form').delegate('.scavenger-dialog-check', 'click', SpecialScavengerHunt.onDialogCheckClick);
 	},
 
 	// console logging
@@ -24,7 +25,7 @@ var SpecialScavengerHunt = {
 		});
 
 		if (!count) {
-			$('.scavenger-entry').last().after(SpecialScavengerHunt.entry.clone())
+			$('.scavenger-article').last().after(SpecialScavengerHunt.entry.clone())
 		}
 	},
 
@@ -37,6 +38,37 @@ var SpecialScavengerHunt = {
 			onOk: function() {
 				button.unbind('.sumbit').click();
 			}
+		});
+	},
+
+	onDialogCheckClick: function(e) {
+		e.preventDefault();
+
+		var fieldset = $(this).closest('fieldset');
+		var type = fieldset.attr('class');
+		var formData = {};
+		fieldset.find('input, textarea').each(function(i, el){
+			formData[$(el).attr('name')] = $(el).val();
+		});
+
+		var data = {
+			action: 'ajax',
+			method: 'getPreviewForm',
+			rs: 'ScavengerHuntAjax',
+			formData: $.toJSON(formData),
+			type: type
+		};
+
+		$.getJSON(wgScript, data, function(json) {
+			$.showModal(
+				json.title,
+				json.content,
+				{
+					id: 'scavengerClueModal',
+					showCloseButton: false,
+					width: 588
+				}
+			);
 		});
 	}
 };

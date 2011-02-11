@@ -142,4 +142,85 @@ class ScavengerHuntAjax {
 		return $result;
 	}
 
+	/**
+	 * generate modal preview
+	 * @author Marooned
+	 */
+	static public function getPreviewForm() {
+		wfProfileIn(__METHOD__);
+
+		$app = WF::build('App');
+		$request = $app->getGlobal('wgRequest');
+		$type = $request->getVal('type');
+		$data = json_decode($request->getVal('formData'), true);
+
+		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
+
+		switch ($type) {
+			case 'scavenger-starting':
+				$tmplName = 'modal-clue';
+				$title = $data['startingClueTitle'];
+				$template->set_vars(array(
+					'text' => $data['startingClueText'],
+					'buttonText' => $data['startingClueButtonText'],
+					'buttonTarget' => $data['startingClueButtonTarget'],
+					'imageSrc' => $data['startingClueImage'],
+					'imageOffset' => array(
+						'top' => $data['startingClueImageTopOffset'],
+						'left' => $data['startingClueImageLeftOffset']
+					)
+				));
+				break;
+
+			case 'scavenger-article':
+				$tmplName = 'modal-clue';
+				$title = $data['articleClueTitle[]'];
+				$template->set_vars(array(
+					'text' => $data['articleClueText[]'],
+					'buttonText' => $data['articleClueButtonText[]'],
+					'buttonTarget' => $data['articleClueButtonTarget[]'],
+					'imageSrc' => $data['articleClueImage[]'],
+					'imageOffset' => array(
+						'top' => $data['articleClueImageTopOffset[]'],
+						'left' => $data['articleClueImageLeftOffset[]']
+					)
+				));
+				break;
+
+			case 'scavenger-entry':
+				$tmplName = 'modal-form';
+				$title = $data['entryFormTitle'];
+				$template->set_vars(array(
+					'text' => $data['entryFormText'],
+					'question' => $data['entryFormQuestion'],
+					'imageSrc' => $data['entryFormImage'],
+					'imageOffset' => array(
+						'top' => $data['entryFormImageTopOffset'],
+						'left' => $data['entryFormImageLeftOffset']
+					)
+				));
+				break;
+
+			case 'scavenger-goodbye':
+				$tmplName = 'modal-clue';
+				$title = $data['goodbyeTitle'];
+				$template->set_vars(array(
+					'text' => $data['goodbyeText'],
+					'imageSrc' => $data['goodbyeImage'],
+					'imageOffset' => array(
+						'top' => $data['goodbyeImageTopOffset'],
+						'left' => $data['goodbyeImageLeftOffset']
+					)
+				));
+				break;
+		}
+
+		$result = array(
+			'title' => $title,
+			'content' => $template->render($tmplName),
+		);
+
+		wfProfileOut(__METHOD__);
+		return $result;
+	}
 }
