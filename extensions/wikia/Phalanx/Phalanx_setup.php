@@ -42,7 +42,7 @@ $wgLogActions['phalanx/delete']     = 'phalanx-rule-log-delete';
 
 
 function efPhalanxInit() {
-	global $wgUser, $wgHooks;
+	global $wgUser, $wgHooks, $wgPhalanxDisableContent;
 
 	// don't bother initializing hooks if user is immune to Phalanx
 	if ( $wgUser->isAllowed( 'phalanxexempt' ) ) {
@@ -53,10 +53,13 @@ function efPhalanxInit() {
 	// former RegexBlock (TYPE_USER)
 	$wgHooks['GetBlockedStatus'][] = 'UserBlock::blockCheck';
 
-	// former SpamRegex (TYPE_SUMMARY and TYPE_CONTENT)
-	$wgHooks['EditFilter'][] = 'ContentBlock::onEditFilter';
-	$wgHooks['AbortMove'][] = 'ContentBlock::onAbortMove';
-	$wgHooks['ProblemReportsContentCheck'][] = 'ContentBlock::genericContentCheck';
+	// allow for per wiki disable the content checks
+		// (mainly for vstf wiki, causes pain when reporting block issues)
+	if( empty($wgPhalanxDisableContent) ) {
+		// former SpamRegex (TYPE_SUMMARY and TYPE_CONTENT)
+		$wgHooks['EditFilter'][] = 'ContentBlock::onEditFilter';
+		$wgHooks['AbortMove'][] = 'ContentBlock::onAbortMove';
+	}
 
 	// former TitleBlackList (TYPE_TITLE)
 	$wgHooks['SpecialMovepageBeforeMove'][] = 'TitleBlock::beforeMove';
