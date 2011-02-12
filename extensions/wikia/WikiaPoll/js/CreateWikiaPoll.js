@@ -52,9 +52,6 @@ var CreateWikiaPoll = {
 	showEditor: function(event) {
 		var self = CreateWikiaPoll;
 	
-		$().log("event:");
-		$().log(event);
-	
 		// load CSS for editor popup and jQuery UI library (if not loaded yet) via loader function
 		$.getResources([
 			$.loadJQueryUI,
@@ -63,7 +60,6 @@ var CreateWikiaPoll = {
 		], function() {
 			$.get(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=WikiaPoll&actionName=SpecialPage&outputType=html', function(data) {
 				$(data).makeModal({width: 600});
-				$().log("modal loaded");
 				CreateWikiaPoll.init();
 				
 				// editing an existing poll?
@@ -76,8 +72,6 @@ var CreateWikiaPoll = {
 	
 	editExisting: function(placeholder) {
 		var pollData = $.parseJSON(unescape($(placeholder).data("rte-meta")))
-
-		$().log(pollData);
 
 		// add hidden form element for pollId
 		$("#CreateWikiaPoll").find("form").append('<input type="hidden" name="pollId" value="' + pollData.pollId + '">');
@@ -116,7 +110,6 @@ var CreateWikiaPoll = {
 
 		if ($("#CreateWikiaPoll").data('pollId')) {
 			// editing existing poll
-			$().log($("#CreateWikiaPoll").find("form").serialize());
 			$.get(wgScript + '?action=ajax&rs=WikiaPollAjax&method=update', $("#CreateWikiaPoll").find("form").serialize(), function(data) {
 				if ($("#CreateWikiaPoll").closest(".modalWrapper").exists()) { // in modal
 					if (data.success) {
