@@ -190,7 +190,7 @@ class PageHeaderModule extends Module {
 		// default title "settings" (RT #145371), don't touch special pages
 		if ($ns != NS_SPECIAL) {
 			$this->displaytitle = false;
-			$this->title = $wgTitle->getPrefixedText();
+			$this->title = $wgOut->getPageTitle();
 		}
 
 		if ($this->pageExists) {
