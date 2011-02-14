@@ -32,7 +32,7 @@ class AdSS_ManagerAdListPager extends TablePager {
 		switch( $name ) {
 			case 'ad_wiki_id':
 				if( $this->ad->hubId > 0 ) {
-					return AdSS_Util::getHubName( $this->ad->hubId );
+					return AdSS_Util::getHubName( $value );
 				} else {
 					$wiki = WikiFactory::getWikiByID( $value );
 					return Xml::element( 'a', array('href'=>$wiki->city_url), $wiki->city_title );

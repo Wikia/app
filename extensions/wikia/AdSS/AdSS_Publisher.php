@@ -49,7 +49,7 @@ class AdSS_Publisher {
 			$ads = array();
 			$dbr = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
 			$res = $dbr->select( 'ads', '*', array(
-						"ad_wiki_id = $wgCityId OR ad_hub_id = $hubId",
+						"(ad_wiki_id = $wgCityId OR ad_hub_id = $hubId)",
 						'ad_type' => 't',
 						'ad_page_id' => 0,
 						'ad_closed' => null,
