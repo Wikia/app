@@ -1,5 +1,4 @@
 <?php
-
 /**
  * ScavengerHunt
  *
@@ -20,7 +19,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'scavengerhunt-desc' => 'Alows to create a scavenger hunt game on a wiki.',
+	'scavengerhunt-desc' => 'Alows creation a scavenger hunt game on a wiki',
 	'scavengerhunt' => 'Scavenger hunt interface',
 
 	'scavengerhunt-list-header-name' => 'Game name',
@@ -73,9 +72,9 @@ $messages['en'] = array(
 	'scavengerhunt-form-error' => 'Please correct the following errors:',
 	'scavengerhunt-form-invalid-landing-title' => 'Please enter an existing title as landing page.',
 	'scavengerhunt-form-no-final-form-text' => 'Please enter a final form text.',
-	'scavengerhunt-form-invalid-article-title' => 'Please enter existing titles as game articles.',
-	'scavengerhunt-form-no-hidden-image' => 'Please enter hidden images addresses for every game article.',
-	'scavengerhunt-form-no-clue-text' => 'Please enter clue texts for every game article.',
+	'scavengerhunt-form-invalid-article-title' => 'Please enter existing titles as game pages.',
+	'scavengerhunt-form-no-hidden-image' => 'Please enter hidden images addresses for every game pages.',
+	'scavengerhunt-form-no-clue-text' => 'Please enter clue texts for every game page.',
 
 	'scavengerhunt-game-has-been-created' => 'New Scavenger Hunt game has been created.',
 	'scavengerhunt-game-has-been-saved' => 'Scavenger Hunt game has been saved.',
@@ -84,7 +83,7 @@ $messages['en'] = array(
 	'scavengerhunt-game-has-not-been-saved' => 'Scavenger Hunt game has not been saved.',
 
 	'scavengerhunt-entry-form-name' => 'Your name:',
-	'scavengerhunt-entry-form-email' => 'Your email:',
+	'scavengerhunt-entry-form-email' => 'Your e-mail address:',
 	'scavengerhunt-entry-form-submit' => 'Submit entry',
 
 	'scavengerhunt-goodbye-button-text' => 'Bye',
