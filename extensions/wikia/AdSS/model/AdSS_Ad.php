@@ -68,7 +68,6 @@ abstract class AdSS_Ad {
 				$this->weight = $f->get( 'wpWeight' );
 				$this->price = AdSS_Util::getHubPricing();
 				$this->price['price'] = $this->weight * $this->price['price'];
-				$this->wikiId = 0;
 				$this->hubId = AdSS_Util::getHubId();
 				break;
 			default /* site */:
