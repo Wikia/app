@@ -5,7 +5,7 @@
  * @note AUTOLOADED
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'Not an entry point.' );
 }
 
@@ -13,12 +13,12 @@ class SRFGooglePie extends SMWResultPrinter {
 	protected $m_width = 250;
 	protected $m_heighth = 250;
 
-	protected function readParameters($params,$outputmode) {
-		SMWResultPrinter::readParameters($params,$outputmode);
-		if (array_key_exists('width', $this->m_params)) {
+	protected function readParameters( $params, $outputmode ) {
+		SMWResultPrinter::readParameters( $params, $outputmode );
+		if ( array_key_exists( 'width', $this->m_params ) ) {
 			$this->m_width = $this->m_params['width'];
 		}
-		if (array_key_exists('height', $this->m_params)) {
+		if ( array_key_exists( 'height', $this->m_params ) ) {
 			$this->m_height = $this->m_params['height'];
 		} else {
 			$this->m_height = $this->m_width * 0.4;
@@ -26,10 +26,10 @@ class SRFGooglePie extends SMWResultPrinter {
 	}
 
 	public function getName() {
-		return wfMsg('srf_printername_googlepie');
+		return wfMsg( 'srf_printername_googlepie' );
 	}
 
-	protected function getResultText($res, $outputmode) {
+	protected function getResultText( $res, $outputmode ) {
 		global $smwgIQRunningNumber;
 		$this->isHTML = true;
 
@@ -39,12 +39,17 @@ class SRFGooglePie extends SMWResultPrinter {
 		$max = 0; // the biggest value. needed for scaling
 		while ( $row = $res->getNext() ) {
 			$name = $row[0]->getNextObject()->getShortWikiText();
-			foreach ($row as $field) {
-					while ( ($object = $field->getNextObject()) !== false ) {
-					if ($object->isNumeric()) { // use numeric sortkey
-						$nr = $object->getNumericValue();
-						$max = max($max, $nr);
-						if ($first) {
+			foreach ( $row as $field ) {
+					while ( ( $object = $field->getNextObject() ) !== false ) {
+					if ( $object->isNumeric() ) { // use numeric sortkey
+						if ( method_exists( $object, 'getValueKey' ) ) {
+							$nr = $object->getValueKey();
+						}
+						else {
+							$nr = $object->getNumericValue();
+						}
+						$max = max( $max, $nr );
+						if ( $first ) {
 							$first = false;
 							$t .= $nr;
 							$n = $name;
@@ -61,9 +66,9 @@ class SRFGooglePie extends SMWResultPrinter {
 
 	public function getParameters() {
 		return array(
-			array('name' => 'limit', 'type' => 'int', 'description' => wfMsg('smw_paramdesc_limit')),
-			array('name' => 'height', 'type' => 'int', 'description' => wfMsg('srf_paramdesc_chartheight')),
-			array('name' => 'width', 'type' => 'int', 'description' => wfMsg('srf_paramdesc_chartwidth')),
+			array( 'name' => 'limit', 'type' => 'int', 'description' => wfMsg( 'smw_paramdesc_limit' ) ),
+			array( 'name' => 'height', 'type' => 'int', 'description' => wfMsg( 'srf_paramdesc_chartheight' ) ),
+			array( 'name' => 'width', 'type' => 'int', 'description' => wfMsg( 'srf_paramdesc_chartwidth' ) ),
 		);
 	}
 

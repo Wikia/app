@@ -22,9 +22,9 @@ function smw_timeline_init() {
 function smw_make_timeline(div) {
 	// extract relevant event data:
 	var eventSource = new Timeline.DefaultEventSource();
-	
+
 	var theme = Timeline.ClassicTheme.create();
-	// make some elements opaque to unify look across platforms 
+	// make some elements opaque to unify look across platforms
 	// Timelines way of setting transparency fails on some browsers (some IE6s, Konquerors)
 	// Also, we use "imprecise instants" to display durations, since Timeline fails if
 	// only durations are used and multiple bands appear. See below.
@@ -71,7 +71,7 @@ function smw_make_timeline(div) {
 			case 3:	//TEXT_NODE -- ignore text on this level
 				break;
 		}
-		
+
 	}
 
 	// create bands
@@ -81,8 +81,8 @@ function smw_make_timeline(div) {
 		if (i == 0) {
 			bandinfo = Timeline.createBandInfo({
 				eventSource:    eventSource,
-				width:          smw_get_bandwidth(i,bandcount), 
-				intervalUnit:   bands[i], 
+				width:          smw_get_bandwidth(i,bandcount),
+				intervalUnit:   bands[i],
 				intervalPixels: 100,
 				date:           position,
 				theme:          theme
@@ -93,8 +93,8 @@ function smw_make_timeline(div) {
 				trackHeight:    0.5,
 				trackGap:       0.2,
 				eventSource:    eventSource,
-				width:          smw_get_bandwidth(i,bandcount), 
-				intervalUnit:   bands[i], 
+				width:          smw_get_bandwidth(i,bandcount),
+				intervalUnit:   bands[i],
 				intervalPixels: 100,
 				date:           position,
 				theme:          theme
@@ -109,8 +109,8 @@ function smw_make_timeline(div) {
 	if (bandcount == 0) {
 		bandInfos[0] = Timeline.createBandInfo({
 			eventSource:    eventSource,
-			width:          "100%", 
-			intervalUnit:   Timeline.DateTime.MONTH, 
+			width:          "100%",
+			intervalUnit:   Timeline.DateTime.MONTH,
 			intervalPixels: 100,
 			theme:          theme
 		})
@@ -170,17 +170,17 @@ function smw_add_event(evspan,evs) {
 						enddate = childs[i].firstChild.data;
 					evspan.removeChild(childs[i]);
 				break;
-				case "smwtltitle": 
+				case "smwtltitle":
 					if (childs[i].firstChild.nodeType == 3)
 						ttl = childs[i].firstChild.data;
 					evspan.removeChild(childs[i]);
 				break;
-				case "smwtlprefix": 
+				case "smwtlprefix":
 					if (childs[i].firstChild.nodeType == 3)
 						prefix = childs[i].firstChild.data;
 					evspan.removeChild(childs[i]);
 				break;
-				case "smwtlpostfix": 
+				case "smwtlpostfix":
 					if (childs[i].firstChild.nodeType == 3)
 						postfix = childs[i].firstChild.data;
 					evspan.removeChild(childs[i]);
@@ -195,7 +195,7 @@ function smw_add_event(evspan,evs) {
 					}
 					evspan.removeChild(childs[i]);
 				break;
-				case "smwtlcoloricon": 
+				case "smwtlcoloricon":
 					if (childs[i].firstChild.nodeType == 3) {
 						switch ( childs[i].firstChild.data ) {
 							case "0": icon =Timeline.urlPrefix + "images/dull-blue-circle.png";

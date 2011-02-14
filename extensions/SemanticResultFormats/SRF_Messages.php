@@ -2,8 +2,9 @@
 /**
  * Internationalization file for the Semantic Result Formats extension
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 // FIXME: Can be enabled when new style magic words are used (introduced in r52503)
 // require_once( dirname( __FILE__ ) . '/SRF_Magic.php' );
@@ -42,8 +43,8 @@ $messages['en'] = array(
 	// format "math"
 	'srf_printername_sum' => 'Sum of numbers',
 	'srf_printername_average' => 'Average of numbers',
-	'srf_printername_min' => 'Maximum number',
-	'srf_printername_max' => 'Minimum number',
+	'srf_printername_max' => 'Maximum number',
+	'srf_printername_min' => 'Minimum number',
 	'srf_paramdesc_limit' => 'The maximum number of pages to query',
 	// format "timeline"
 	'srf_printername_timeline' => 'Timeline',
@@ -58,11 +59,34 @@ $messages['en'] = array(
 	'srf_paramdesc_views' => 'The views to be displayed',
 	'srf_paramdesc_facets' => 'The set of properties to be displayed for each page',
 	'srf_paramdesc_lens' => 'The name of a template with which to display page properties',
-	// format "googlebar" and "googlepie"
+	// formats "googlebar" and "googlepie"
 	'srf_printername_googlebar' => 'Google bar chart',
 	'srf_printername_googlepie' => 'Google pie chart',
+	'srf_printername_jqplotbar' => 'jqPlot bar chart',
+	'srf_printername_jqplotpie' => 'jqPlot pie chart',
 	'srf_paramdesc_chartheight' => 'The height of the chart, in pixels',
 	'srf_paramdesc_chartwidth' => 'The width of the chart, in pixels',
+	'srf_paramdesc_charttitle'  => 'The title of the chart',
+	'srf_paramdesc_barcolor'   =>   'The color of the bars',
+	'srf_paramdesc_bardirection'=>  'The direction of the bar chart',
+	'srf_paramdesc_barnumbersaxislabel' => 'The label for the numbers axis',
+
+	// "gallery" format
+	'srf_printername_gallery' => 'Gallery',
+	'srf_paramdesc_perrow' => 'The amount of images per row',
+	'srf_paramdesc_widths' => 'The width of the images',
+	'srf_paramdesc_heights' => 'The height of the images',
+	'srf_paramdesc_autocaptions' => 'Use file name as caption when none is provided',
+
+	// "tagcloud" format
+	'srf_printername_tagcloud' => 'Tag cloud',
+	'srf_paramdesc_includesubject' => 'If the names of the subjects themselves should be included',
+	'srf_paramdesc_increase' => 'How to increase the size of tags',
+	'srf_paramdesc_tagorder' => 'The order of the tags',
+	'srf_paramdesc_mincount' => 'The minimum amount of times a value needs to occur to be listed',
+	'srf_paramdesc_minsize' => 'The size of the smallest tags in percent (default: 77)',
+	'srf_paramdesc_maxsize' => 'The size of the biggest tags in percent (default: 177)',
+	'srf_paramdesc_maxtags' => 'The maximum amount of tags in the cloud',
 );
 
 /** Message documentation (Message documentation)
@@ -122,8 +146,8 @@ $messages['ar'] = array(
 	'srf_paramdesc_outlineproperties' => 'قائمة الخصائص ليتم عرضها كعناوين عامة، مفصولة بواسطة فاصلات',
 	'srf_printername_sum' => 'مجموع الأرقام',
 	'srf_printername_average' => 'متوسط الأرقام',
-	'srf_printername_min' => 'الرقم الأقصى',
-	'srf_printername_max' => 'الرقم الأدنى',
+	'srf_printername_max' => 'الرقم الأقصى',
+	'srf_printername_min' => 'الرقم الأدنى',
 	'srf_paramdesc_limit' => 'أقصى عدد من الصفحات للاستعلام',
 	'srf_printername_timeline' => 'خط زمني',
 	'srf_printername_eventline' => 'خط الأحداث',
@@ -145,7 +169,13 @@ $messages['ar'] = array(
  * @author Basharh
  */
 $messages['arc'] = array(
+	'srfc_previousmonth' => 'ܝܪܚܐ ܕܕܥܒܪ',
+	'srfc_nextmonth' => 'ܝܪܚܐ ܕܐܬܐ',
 	'srfc_today' => 'ܝܘܡܢܐ',
+	'srf_printername_calendar' => 'ܦܠܛܐ ܝܪܚܝܐ',
+	'srf_printername_max' => 'ܡܬܚܐ ܥܠܝܐ ܕܡܢܝܢܐ',
+	'srf_printername_min' => 'ܡܬܚܐ ܬܚܬܝܐ ܕܡܢܝܢܐ',
+	'srf_printername_gallery' => 'ܒܝܬ ܓܠܚܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -171,8 +201,8 @@ $messages['arz'] = array(
 	'srf_paramdesc_outlineproperties' => 'قائمه الخصائص ليتم عرضها كعناوين عامه، مفصوله بواسطه فاصلات',
 	'srf_printername_sum' => 'مجموع الأرقام',
 	'srf_printername_average' => 'متوسط الأرقام',
-	'srf_printername_min' => 'الرقم الأقصى',
-	'srf_printername_max' => 'الرقم الأدنى',
+	'srf_printername_max' => 'الرقم الأقصى',
+	'srf_printername_min' => 'الرقم الأدنى',
 	'srf_paramdesc_limit' => 'أقصى عدد من الصفحات للاستعلام',
 	'srf_printername_timeline' => 'خط زمني',
 	'srf_printername_eventline' => 'خط الأحداث',
@@ -190,7 +220,7 @@ $messages['arz'] = array(
 	'srf_paramdesc_chartwidth' => 'عرض الرسم بالبكسل',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -213,8 +243,8 @@ $messages['be-tarask'] = array(
 	'srf_paramdesc_outlineproperties' => 'Сьпіс уласьцівасьцяў для паказу ў якасьці загалоўкаў, падзеленых коскамі',
 	'srf_printername_sum' => 'Сума лікаў',
 	'srf_printername_average' => 'Сярэдняе значэньне лікаў',
-	'srf_printername_min' => 'Максымальны лік',
-	'srf_printername_max' => 'Мінімальны лік',
+	'srf_printername_max' => 'Максымальны лік',
+	'srf_printername_min' => 'Мінімальны лік',
 	'srf_paramdesc_limit' => 'Максымальная колькасьць старонак для запыту',
 	'srf_printername_timeline' => 'Храналёгія',
 	'srf_printername_eventline' => 'Храналёгія падзеяў',
@@ -228,8 +258,16 @@ $messages['be-tarask'] = array(
 	'srf_paramdesc_lens' => 'Назва шаблёну для паказу ўласьцівасьцяў старонкі',
 	'srf_printername_googlebar' => 'Слупковая дыяграма Google',
 	'srf_printername_googlepie' => 'Кругавая дыяграма Google',
+	'srf_printername_jqplotbar' => 'Слупковая дыяграма jqPlot',
+	'srf_printername_jqplotpie' => 'Кругавая дыяграма jqPlot',
 	'srf_paramdesc_chartheight' => 'Вышыня дыяграмы ў піксэлях',
 	'srf_paramdesc_chartwidth' => 'Шырыня дыяграмы ў піксэлях',
+	'srf_paramdesc_charttitle' => 'Назва дыяграмы',
+	'srf_paramdesc_barcolor' => 'Колер слупкоў',
+	'srf_paramdesc_bardirection' => 'Накіраваньне слупкоў дыяграмы',
+	'srf_paramdesc_barnumbersaxislabel' => 'Надпісы для лічбавых восяў',
+	'srf_printername_gallery' => 'Галерэя',
+	'srf_printername_tagcloud' => 'Воблака тэгаў',
 );
 
 /** Bulgarian (Български)
@@ -253,13 +291,15 @@ $messages['bn'] = array(
 	'srf_outline_novalue' => 'কোনো মান নাই',
 	'srf_printername_sum' => 'সমষ্টি',
 	'srf_printername_average' => 'গড়',
-	'srf_printername_min' => 'সর্বোচ্চ',
-	'srf_printername_max' => 'সর্বোনিম্ন',
+	'srf_printername_max' => 'সর্বোচ্চ',
+	'srf_printername_min' => 'সর্বোনিম্ন',
 );
 
 /** Breton (Brezhoneg)
  * @author Fohanno
  * @author Fulup
+ * @author Gwendal
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -278,22 +318,33 @@ $messages['br'] = array(
 	'srf_printername_bibtex' => 'Enporzh e BibTeX',
 	'srf_outline_novalue' => 'Talvoud ebet',
 	'srf_printername_outline' => 'Trolinenn',
+	'srf_paramdesc_outlineproperties' => 'Roll ar perzhioù da ziskwel evel talbennoù, dispartiet gant skejoù.',
 	'srf_printername_sum' => 'Sammad niveroù',
 	'srf_printername_average' => 'Keitad an niveroù',
-	'srf_printername_min' => 'Niver uhelañ',
-	'srf_printername_max' => 'Niver izelañ',
-	'srf_paramdesc_limit' => "Niver uhelañ a bajennoù da gerc'hat",
+	'srf_printername_max' => 'Niver uhelañ',
+	'srf_printername_min' => 'Niver izelañ',
+	'srf_paramdesc_limit' => "Niver brasañ a bajennoù da gerc'hat",
 	'srf_printername_timeline' => 'Kronologiezh',
 	'srf_printername_eventline' => 'Kronologiezh an darvoudoù',
+	'srf_paramdesc_timelinebands' => "a zielfenn peseurt strolladoù zo diskwelet en disoc'hoù.",
+	'srf_paramdesc_timelineposition' => 'a zielfenn takad ar frizenn a oa kreizennet da gentañ.',
 	'srf_paramdesc_timelinestart' => "Un anv perzh implijet da dermeniñ ur poent loc'hañ en amzer",
 	'srf_paramdesc_timelineend' => 'Un anv perzh implijet da dermeniñ un eil poent en amzer',
 	'srf_paramdesc_timelinesize' => 'Uhelder ar frizenn (300px dre ziouer)',
 	'srf_paramdesc_views' => 'Ar gweladennoù da ziskouez',
 	'srf_paramdesc_facets' => 'An hollad perzhioù da ziskwel evit pep pajenn',
+	'srf_paramdesc_lens' => 'Anv ar patrom implijet evit diskouez perzhioù ar bajenn',
 	'srf_printername_googlebar' => 'Grafik barrennek Google',
 	'srf_printername_googlepie' => 'Grafik dre lodennoù Google',
+	'srf_printername_jqplotbar' => 'Grafik e barrennoù jqPlot',
+	'srf_printername_jqplotpie' => 'Grafik kouign jqPlot',
 	'srf_paramdesc_chartheight' => 'Uhelder an diagramm, e piksel',
 	'srf_paramdesc_chartwidth' => 'Ledander an diagramm, e piksel',
+	'srf_paramdesc_charttitle' => 'Titl ar grafik',
+	'srf_paramdesc_barcolor' => 'Liv ar barrennoù',
+	'srf_paramdesc_bardirection' => "Durc'hadur ar grafik e barrennoù",
+	'srf_paramdesc_barnumbersaxislabel' => 'Tikedenn ahel an niveroù',
+	'srf_printername_gallery' => 'Skeudennaoueg',
 );
 
 /** Bosnian (Bosanski)
@@ -315,8 +366,8 @@ $messages['bs'] = array(
 	'srf_printername_outline' => 'Kontura',
 	'srf_printername_sum' => 'Zbir brojeva',
 	'srf_printername_average' => 'Prosjek brojeva',
-	'srf_printername_min' => 'Najveći broj',
-	'srf_printername_max' => 'Najmanji broj',
+	'srf_printername_max' => 'Najveći broj',
+	'srf_printername_min' => 'Najmanji broj',
 	'srf_paramdesc_limit' => 'Najveći broj stranica za upit',
 	'srf_printername_timeline' => 'Vremenska linija',
 	'srf_printername_eventline' => 'Linija događaja',
@@ -324,42 +375,59 @@ $messages['bs'] = array(
 );
 
 /** Catalan (Català)
+ * @author Dvdgmz
  * @author Paucabot
+ * @author Toniher
  */
 $messages['ca'] = array(
+	'srf-desc' => 'Formats addicionals per a les consultes en línia del Semantic MediaWiki.',
 	'srfc_previousmonth' => 'Mes anterior',
 	'srfc_nextmonth' => 'Mes posterior',
 	'srfc_today' => 'Avui',
 	'srfc_gotomonth' => 'Vés al mes',
 	'srf_printername_calendar' => 'Calendari mensual',
+	'srf_paramdesc_calendarlang' => 'El codi de la llengua en què es mostrarà el calendari',
+	'srf_paramdesc_icalendartitle' => 'El títol del fitxer del calendari',
+	'srf_paramdesc_icalendardescription' => 'La descripció del fitxer del calendari',
+	'srf_printername_sum' => 'Suma dels nombres',
+	'srf_printername_average' => 'Mitjana dels nombres',
+	'srf_printername_max' => 'Nombre màxim',
+	'srf_printername_min' => 'Nombre mínim',
+	'srf_paramdesc_limit' => 'El nombre màxim de pàgines on fer la consulta',
+	'srf_paramdesc_timelinesize' => 'La llargada de la línia de temps (per defecte són 300px)',
+	'srf_printername_gallery' => 'Galeria',
 );
 
 /** German (Deutsch)
  * @author DaSch
  * @author Imre
+ * @author Kghbln
  * @author Krabina
  * @author Purodha
+ * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['de'] = array(
-	'srf-desc' => 'Ergänzende Formate für Inline-Abfragen in „Semantic MediaWiki“',
-	'srf-name' => 'Semantische Ergebnis-Formate',
+	'srf-desc' => 'Stellt Semantic MediaWiki zusätzliche Ausgabeformate für eingebettete Abfragen zur Verfügung',
+	'srf-name' => 'Semantische Ergebnisformate',
 	'srfc_previousmonth' => 'Voriger Monat',
 	'srfc_nextmonth' => 'Nächster Monat',
 	'srfc_today' => 'Heute',
 	'srfc_gotomonth' => 'Gehe zu Monat',
 	'srf_printername_calendar' => 'Monatlicher Kalendar',
-	'srf_printername_vcard' => 'vCard Export',
-	'srf_printername_icalendar' => 'iCalendar Export',
-	'srf_paramdesc_icalendartitle' => 'Titel der Kalender-Datei',
-	'srf_paramdesc_icalendardescription' => 'Beschreibung der Kalender-Datei',
+	'srf_paramdesc_calendarlang' => 'Der Code der Sprache in der der Kalender angezeigt werden soll',
+	'srf_printername_vcard' => 'vCard-Export',
+	'srf_printername_icalendar' => 'iCalendar-Export',
+	'srf_paramdesc_icalendartitle' => 'Titel der Kalenderdatei',
+	'srf_paramdesc_icalendardescription' => 'Beschreibung der Kalenderdatei',
 	'srf_printername_bibtex' => 'BibTeX Export',
 	'srf_outline_novalue' => 'Kein Wert',
 	'srf_printername_outline' => 'Gliederung',
+	'srf_paramdesc_outlineproperties' => 'Liste der mit Kommas voneinander getrennten Attribute, die in der Kopfzeile der Übersicht angezeigt werden sollen.',
 	'srf_printername_sum' => 'Summe der Zahlen',
 	'srf_printername_average' => 'Durchschnittliche Zahl',
-	'srf_printername_min' => 'Maximale Zahl',
-	'srf_printername_max' => 'Minimale Zahl',
+	'srf_printername_max' => 'Maximale Zahl',
+	'srf_printername_min' => 'Minimale Zahl',
 	'srf_paramdesc_limit' => 'Die maximale Anzahl der abfragbaren Seiten',
 	'srf_printername_timeline' => 'Zeitlinie',
 	'srf_printername_eventline' => 'Eventlinie',
@@ -373,8 +441,16 @@ $messages['de'] = array(
 	'srf_paramdesc_lens' => 'Der Name einer Vorlage um Seiteneigenschaften anzuzeigen',
 	'srf_printername_googlebar' => 'Google Säulen-Diagramm',
 	'srf_printername_googlepie' => 'Google Torten-Diagramm',
-	'srf_paramdesc_chartheight' => 'Höhe des Charts, in Pixeln',
-	'srf_paramdesc_chartwidth' => 'Breite des Charts, in Pixeln',
+	'srf_printername_jqplotbar' => 'jqPlot Säulen- oder Balkendiagramm',
+	'srf_printername_jqplotpie' => 'jqPlot Kreisdiagramm',
+	'srf_paramdesc_chartheight' => 'Höhe des Diagramms (in Pixeln)',
+	'srf_paramdesc_chartwidth' => 'Breite des Diagramms (in Pixeln)',
+	'srf_paramdesc_charttitle' => 'Der Titel des Diagramms',
+	'srf_paramdesc_barcolor' => 'Die Farbe der Balken',
+	'srf_paramdesc_bardirection' => 'Ein Säulen- (vertikale Ausrichtung) oder Balkendiagramm (horizontale Ausrichtung)',
+	'srf_paramdesc_barnumbersaxislabel' => 'Die Beschriftung der y-Achse',
+	'srf_printername_gallery' => 'Galerie',
+	'srf_printername_tagcloud' => 'Schlagwortwolke',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -399,8 +475,8 @@ $messages['dsb'] = array(
 	'srf_paramdesc_outlineproperties' => 'Lisćina atributow, kótarež maju se ako rozrědowańske nadpisma zwobrazniś, pśez komy źělone',
 	'srf_printername_sum' => 'Suma licbow',
 	'srf_printername_average' => 'Pśerězk licbow',
-	'srf_printername_min' => 'Maksimalna licba',
-	'srf_printername_max' => 'Minimalna licba',
+	'srf_printername_max' => 'Maksimalna licba',
+	'srf_printername_min' => 'Minimalna licba',
 	'srf_paramdesc_limit' => 'Maksimalna licba bokow za napšašowanje',
 	'srf_printername_timeline' => 'Casowy wótběg',
 	'srf_printername_eventline' => 'Wótběg tšojenjow',
@@ -414,8 +490,16 @@ $messages['dsb'] = array(
 	'srf_paramdesc_lens' => 'Mě pśedłogi, z kótarejuž maju se bokowe atributy zwobrazniś',
 	'srf_printername_googlebar' => 'Google słupowy diagram',
 	'srf_printername_googlepie' => 'Google tortowy diagram',
+	'srf_printername_jqplotbar' => 'jqPlot słupowy diagram',
+	'srf_printername_jqplotpie' => 'jqPlot tortowy diagram',
 	'srf_paramdesc_chartheight' => 'Wusokosć diagrama, w pikselach',
 	'srf_paramdesc_chartwidth' => 'Šyrokosć diagrama, w pikselach',
+	'srf_paramdesc_charttitle' => 'Titel diagrama',
+	'srf_paramdesc_barcolor' => 'Barwa słupow',
+	'srf_paramdesc_bardirection' => 'Směr słupowego diagrama',
+	'srf_paramdesc_barnumbersaxislabel' => 'Pópisanje za y-wósku',
+	'srf_printername_gallery' => 'Galerija',
+	'srf_printername_tagcloud' => 'Tafličkowa mróčel',
 );
 
 /** Greek (Ελληνικά)
@@ -438,8 +522,8 @@ $messages['el'] = array(
 	'srf_printername_outline' => 'Περίγραμμα',
 	'srf_printername_sum' => 'Σύνοψη αριθμών',
 	'srf_printername_average' => 'Μέσος όρος αριθμών',
-	'srf_printername_min' => 'Μέγιστος αριθμός',
-	'srf_printername_max' => 'Ελάχιστος αριθμός',
+	'srf_printername_max' => 'Μέγιστος αριθμός',
+	'srf_printername_min' => 'Ελάχιστος αριθμός',
 	'srf_printername_timeline' => 'Ζώνη ώρας',
 	'srf_printername_eventline' => 'Ζώνη γεγονότων',
 );
@@ -457,10 +541,11 @@ $messages['eo'] = array(
 	'srf_outline_novalue' => 'Sen valoro',
 	'srf_printername_sum' => 'Sumo de nombroj',
 	'srf_printername_average' => 'Averaĝo de nombroj',
-	'srf_printername_min' => 'Maksimuma nombro',
-	'srf_printername_max' => 'Minimuma nombro',
+	'srf_printername_max' => 'Maksimuma nombro',
+	'srf_printername_min' => 'Minimuma nombro',
 	'srf_printername_timeline' => 'Templinio',
 	'srf_printername_eventline' => 'Eventlinio',
+	'srf_printername_gallery' => 'Galerio',
 );
 
 /** Spanish (Español)
@@ -489,8 +574,8 @@ $messages['es'] = array(
 	'srf_paramdesc_outlineproperties' => 'La lista de propiedades que se mostrará como encabezados de esquema, separadas por comas',
 	'srf_printername_sum' => 'Suma de números',
 	'srf_printername_average' => 'Promedio de números',
-	'srf_printername_min' => 'Número máximo',
-	'srf_printername_max' => 'Número mínimo',
+	'srf_printername_max' => 'Número máximo',
+	'srf_printername_min' => 'Número mínimo',
 	'srf_paramdesc_limit' => 'La cantidad máxima de páginas a consultar',
 	'srf_printername_timeline' => 'Línea de tiempo',
 	'srf_printername_eventline' => 'Línea de eventos',
@@ -504,8 +589,15 @@ $messages['es'] = array(
 	'srf_paramdesc_lens' => 'El nombre de una plantilla con la que se muestra la propiedades de la página',
 	'srf_printername_googlebar' => 'Gráfico de barras de Google',
 	'srf_printername_googlepie' => 'Gráfica circular de Google',
+	'srf_printername_jqplotbar' => 'Gráfico de barras jqPlot',
+	'srf_printername_jqplotpie' => 'Gráfico circular jqPlot',
 	'srf_paramdesc_chartheight' => 'La altura del gráfico, en píxeles',
 	'srf_paramdesc_chartwidth' => 'La anchura del gráfico, en píxeles',
+	'srf_paramdesc_charttitle' => 'El título del gráfico',
+	'srf_paramdesc_barcolor' => 'El color de las barras',
+	'srf_paramdesc_bardirection' => 'La dirección del gráfico de barras',
+	'srf_paramdesc_barnumbersaxislabel' => 'La etiqueta del eje de los números',
+	'srf_printername_gallery' => 'Galería',
 );
 
 /** Basque (Euskara)
@@ -547,8 +639,8 @@ $messages['fi'] = array(
 	'srf_outline_novalue' => 'Ei arvoa',
 	'srf_printername_sum' => 'Lukujen summa',
 	'srf_printername_average' => 'Lukujen keskiarvo',
-	'srf_printername_min' => 'Korkein luku',
-	'srf_printername_max' => 'Pienin luku',
+	'srf_printername_max' => 'Korkein luku',
+	'srf_printername_min' => 'Pienin luku',
 	'srf_printername_timeline' => 'Aikajana',
 	'srf_printername_eventline' => 'Tapahtumajana',
 	'srf_paramdesc_views' => 'Näytettävät näkymät',
@@ -562,13 +654,14 @@ $messages['fi'] = array(
  * @author Crochet.david
  * @author Grondin
  * @author IAlex
+ * @author Iluvalar
  * @author Peter17
  * @author PieRRoMaN
  * @author Urhixidur
  */
 $messages['fr'] = array(
 	'srf-desc' => 'Formats additionnels pour les requêtes de Semantic MediaWiki',
-	'srf-name' => 'Formattage des résultats sémantiques',
+	'srf-name' => 'Formatage des résultats sémantiques',
 	'srfc_previousmonth' => 'Mois précédent',
 	'srfc_nextmonth' => 'Mois suivant',
 	'srfc_today' => 'Aujourd’hui',
@@ -587,8 +680,8 @@ $messages['fr'] = array(
 	'srf_paramdesc_outlineproperties' => 'La liste des propriétés à afficher comme en-têtes, séparées par des virgules',
 	'srf_printername_sum' => 'Somme de nombres',
 	'srf_printername_average' => 'Moyenne des nombres',
-	'srf_printername_min' => 'Nombre maximal',
-	'srf_printername_max' => 'Nombre minimal',
+	'srf_printername_max' => 'Nombre maximal',
+	'srf_printername_min' => 'Nombre minimal',
 	'srf_paramdesc_limit' => 'Le nombre maximum de pages à rechercher',
 	'srf_printername_timeline' => 'Chronologie',
 	'srf_printername_eventline' => 'Chronologie des événements',
@@ -598,12 +691,42 @@ $messages['fr'] = array(
 	'srf_paramdesc_timelineend' => 'Un nom de propriété utilisé pour définir un point de seconde date',
 	'srf_paramdesc_timelinesize' => 'La hauteur de la frise (300px par défaut)',
 	'srf_paramdesc_views' => 'Les vues à afficher',
-	'srf_paramdesc_facets' => "L'ensemble des propriétés à afficher pour chaque page",
+	'srf_paramdesc_facets' => 'L’ensemble des propriétés à afficher pour chaque page',
 	'srf_paramdesc_lens' => 'Le nom du modèle utilisé pour afficher les propriétés de la page',
 	'srf_printername_googlebar' => 'Diagramme à barres de Google',
 	'srf_printername_googlepie' => 'Diagramme en camembert de Google',
+	'srf_printername_jqplotbar' => 'Diagramme en barres jqPlot',
+	'srf_printername_jqplotpie' => 'Diagramme camembert jqPlot',
 	'srf_paramdesc_chartheight' => 'La hauteur du diagramme, en pixels',
 	'srf_paramdesc_chartwidth' => 'La largeur du diagramme, en pixels',
+	'srf_paramdesc_charttitle' => 'Le titre du graphique',
+	'srf_paramdesc_barcolor' => 'La couleur des barres',
+	'srf_paramdesc_bardirection' => 'Direction du diagramme en barres',
+	'srf_paramdesc_barnumbersaxislabel' => 'Étiquette pour l’axe numérique',
+	'srf_printername_gallery' => 'Galerie',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'srfc_previousmonth' => 'Mês devant',
+	'srfc_nextmonth' => 'Mês aprés',
+	'srfc_today' => 'Houé',
+	'srfc_gotomonth' => 'Alar vers lo mês',
+	'srf_printername_calendar' => 'Calendriér du mês',
+	'srf_printername_vcard' => 'èxportacion en vCard',
+	'srf_printername_icalendar' => 'èxportacion en iCalendar',
+	'srf_paramdesc_icalendartitle' => 'Lo titro du fichiér calendriér',
+	'srf_paramdesc_icalendardescription' => 'La dèscripcion du fichiér calendriér',
+	'srf_printername_bibtex' => 'èxportacion en BibTeX',
+	'srf_outline_novalue' => 'Gins de valor',
+	'srf_printername_outline' => 'Començon',
+	'srf_printername_sum' => 'Soma de nombros',
+	'srf_printername_average' => 'Moyena des nombros',
+	'srf_printername_timeline' => 'Diagramo cronologico',
+	'srf_printername_eventline' => 'Diagramo cronologico des èvènements',
+	'srf_printername_gallery' => 'Galerie',
 );
 
 /** Galician (Galego)
@@ -631,8 +754,8 @@ $messages['gl'] = array(
 	'srf_paramdesc_outlineproperties' => 'A lista de propiedades a mostrar como cabeceiras de contorno, separadas por comas',
 	'srf_printername_sum' => 'Suma dos números',
 	'srf_printername_average' => 'Media dos números',
-	'srf_printername_min' => 'Número máximo',
-	'srf_printername_max' => 'Número mínimo',
+	'srf_printername_max' => 'Número máximo',
+	'srf_printername_min' => 'Número mínimo',
 	'srf_paramdesc_limit' => 'O número máximo de páxinas a pescudar',
 	'srf_printername_timeline' => 'Liña do tempo',
 	'srf_printername_eventline' => 'Liña do evento',
@@ -646,8 +769,15 @@ $messages['gl'] = array(
 	'srf_paramdesc_lens' => 'O nome dun modelo co que mostrar as propiedades da páxina',
 	'srf_printername_googlebar' => 'Gráfico de barras do Google',
 	'srf_printername_googlepie' => 'Gráfico circular do Google',
+	'srf_printername_jqplotbar' => 'Gráfico de barras jqPlot',
+	'srf_printername_jqplotpie' => 'Gráfico circular jqPlot',
 	'srf_paramdesc_chartheight' => 'A altura do gráfico, en píxeles',
 	'srf_paramdesc_chartwidth' => 'O largo do gráfico, en píxeles',
+	'srf_paramdesc_charttitle' => 'O título do gráfico',
+	'srf_paramdesc_barcolor' => 'A cor das barras',
+	'srf_paramdesc_bardirection' => 'A orientación do gráfico de barras',
+	'srf_paramdesc_barnumbersaxislabel' => 'A etiqueta para o eixe numérico',
+	'srf_printername_gallery' => 'Galería',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -680,8 +810,8 @@ $messages['gsw'] = array(
 	'srf_paramdesc_outlineproperties' => 'D Lischt vu dr Eigeschafte, wu as Ibersichts-Chopftext aazeigt wird, dur Komma trännt',
 	'srf_printername_sum' => 'Zahl vu Nummere',
 	'srf_printername_average' => 'Durschnitt vu Nummere',
-	'srf_printername_min' => 'Hegschti Nummere',
-	'srf_printername_max' => 'Niderschti Nummere',
+	'srf_printername_max' => 'Hegschti Nummere',
+	'srf_printername_min' => 'Niderschti Nummere',
 	'srf_paramdesc_limit' => 'Di maximal Sytezahl, wu abgfrogt wird',
 	'srf_printername_timeline' => 'Zytlyschte',
 	'srf_printername_eventline' => 'Ereignislyschte',
@@ -695,8 +825,16 @@ $messages['gsw'] = array(
 	'srf_paramdesc_lens' => 'Dr Name vu dr Vorlag, wu Syteneigeschafte dermit aazeigt wäre',
 	'srf_printername_googlebar' => 'Google-Syylediagramm',
 	'srf_printername_googlepie' => 'Google-Kreisdiagramm',
+	'srf_printername_jqplotbar' => 'jqPlot Balkediagramm',
+	'srf_printername_jqplotpie' => 'jqPlot Chreisdiagramm',
 	'srf_paramdesc_chartheight' => 'D Hechi vum Diagramm, in Pixel',
 	'srf_paramdesc_chartwidth' => 'D Breiti vum Diagramm, in Pixel',
+	'srf_paramdesc_charttitle' => 'Dr Titel vum Diagramm',
+	'srf_paramdesc_barcolor' => 'D Farb vu dr Balke',
+	'srf_paramdesc_bardirection' => 'E Syyle- (sänkrächti Uusrichtig) oder Balkediagramm (woogrächti Uusrichtig)',
+	'srf_paramdesc_barnumbersaxislabel' => 'D Bschryftig vu dr Zahle-Achs',
+	'srf_printername_gallery' => 'Galeri',
+	'srf_printername_tagcloud' => 'Schlagwortwulche',
 );
 
 /** Manx (Gaelg)
@@ -726,8 +864,8 @@ $messages['he'] = array(
 	'srf_outline_novalue' => 'אין ערך',
 	'srf_printername_sum' => 'סכום של מספרים',
 	'srf_printername_average' => 'ממוצע של מספרים',
-	'srf_printername_min' => 'המספר המירבי',
-	'srf_printername_max' => 'מספר מינימלי',
+	'srf_printername_max' => 'המספר המירבי',
+	'srf_printername_min' => 'מספר מינימלי',
 	'srf_paramdesc_limit' => 'מספר הדפים המרבי לתשאול',
 	'srf_printername_timeline' => 'ציר זמן',
 	'srf_printername_eventline' => 'ציר אירועים',
@@ -738,6 +876,9 @@ $messages['he'] = array(
 	'srf_printername_googlepie' => 'דיאגרמת עוגה של גוגל',
 	'srf_paramdesc_chartheight' => 'גובה התרשים, בפיקסלים',
 	'srf_paramdesc_chartwidth' => 'רוחב התרשים, בפיקסלים',
+	'srf_paramdesc_charttitle' => 'כותרת התרשים',
+	'srf_paramdesc_barcolor' => 'צבע הפסים',
+	'srf_printername_gallery' => 'גלריה',
 );
 
 /** Hindi (हिन्दी)
@@ -773,8 +914,8 @@ $messages['hsb'] = array(
 	'srf_paramdesc_outlineproperties' => 'Lisćina kajkosćow, kotryž maja so jako rozrjadowanske nadpisma, přez komy dźělene',
 	'srf_printername_sum' => 'Suma ličbow',
 	'srf_printername_average' => 'Přerězk ličbow',
-	'srf_printername_min' => 'Maksimalna ličba',
-	'srf_printername_max' => 'Minimalna ličba',
+	'srf_printername_max' => 'Maksimalna ličba',
+	'srf_printername_min' => 'Minimalna ličba',
 	'srf_paramdesc_limit' => 'Maksimalna ličba stronow za naprašowanje',
 	'srf_printername_timeline' => 'Časowa wotběh',
 	'srf_printername_eventline' => 'Wotběh podawkow',
@@ -788,8 +929,16 @@ $messages['hsb'] = array(
 	'srf_paramdesc_lens' => 'Mjeno předłohi, z kotrejž atributy strony maja so zwobraznić',
 	'srf_printername_googlebar' => 'Google hrjadowy diagram',
 	'srf_printername_googlepie' => 'Google tortowy diagram',
+	'srf_printername_jqplotbar' => 'Stołpowy abo hrjadowy diagram jgPlot',
+	'srf_printername_jqplotpie' => 'Kružny diagram jqPlot',
 	'srf_paramdesc_chartheight' => 'Wysokosć diagrama, w pikselach',
 	'srf_paramdesc_chartwidth' => 'Šěrokosć diagrama, w pikselach',
+	'srf_paramdesc_charttitle' => 'Titul diagrama',
+	'srf_paramdesc_barcolor' => 'Barba hrjadow/stołpow',
+	'srf_paramdesc_bardirection' => 'Stołpowy diagram abo hrjadowy diagram',
+	'srf_paramdesc_barnumbersaxislabel' => 'Popisanje y-wóski',
+	'srf_printername_gallery' => 'Galerija',
+	'srf_printername_tagcloud' => 'Tafličkowa mróčel',
 );
 
 /** Haitian (Kreyòl ayisyen)
@@ -814,15 +963,30 @@ $messages['hu'] = array(
 	'srf_printername_calendar' => 'Havi naptár',
 	'srf_printername_vcard' => 'vCard exportálás',
 	'srf_printername_icalendar' => 'iCalendar exportálás',
+	'srf_paramdesc_icalendartitle' => 'A naptárfájl címe',
+	'srf_paramdesc_icalendardescription' => 'A naptárfájl leírása',
 	'srf_printername_bibtex' => 'BibTeX exportálás',
 	'srf_outline_novalue' => 'Nincs érték',
 	'srf_printername_outline' => 'Tagolt',
 	'srf_printername_sum' => 'A számok összege',
 	'srf_printername_average' => 'A számok átlaga',
-	'srf_printername_min' => 'Legnagyobb szám',
-	'srf_printername_max' => 'Legkisebb szám',
+	'srf_printername_max' => 'Legnagyobb szám',
+	'srf_printername_min' => 'Legkisebb szám',
 	'srf_printername_timeline' => 'Idővonal',
 	'srf_printername_eventline' => 'Eseményvonal',
+	'srf_paramdesc_timelinesize' => 'Az idővonal magassága (alapértelmezetten 300 képpont)',
+	'srf_paramdesc_views' => 'Megjelenített nézetek',
+	'srf_printername_googlebar' => 'Google oszlopdiagram',
+	'srf_printername_googlepie' => 'Google tortadiagram',
+	'srf_printername_jqplotbar' => 'jpPlot oszlopdiagram',
+	'srf_printername_jqplotpie' => 'jqPlot kördiagram',
+	'srf_paramdesc_chartheight' => 'A diagram magassága, pixelben',
+	'srf_paramdesc_chartwidth' => 'A diagram szélessége, pixelben',
+	'srf_paramdesc_charttitle' => 'A diagram címe',
+	'srf_paramdesc_barcolor' => 'Az oszlopok színe',
+	'srf_paramdesc_bardirection' => 'Az oszlopdiagram iránya',
+	'srf_paramdesc_barnumbersaxislabel' => 'A számtengely felirata',
+	'srf_printername_gallery' => 'Galéria',
 );
 
 /** Interlingua (Interlingua)
@@ -847,8 +1011,8 @@ $messages['ia'] = array(
 	'srf_paramdesc_outlineproperties' => 'Le lista de proprietates a presentar como capites de structura, separate per commas',
 	'srf_printername_sum' => 'Total del numeros',
 	'srf_printername_average' => 'Media del numeros',
-	'srf_printername_min' => 'Numero maxime',
-	'srf_printername_max' => 'Numeros minime',
+	'srf_printername_max' => 'Numero maxime',
+	'srf_printername_min' => 'Numeros minime',
 	'srf_paramdesc_limit' => 'Le numero maxime de paginas a consultar',
 	'srf_printername_timeline' => 'Chronologia',
 	'srf_printername_eventline' => 'Chronologia de eventos',
@@ -862,13 +1026,22 @@ $messages['ia'] = array(
 	'srf_paramdesc_lens' => 'Le nomine de un patrono con le qual monstrar le proprietates de pagina',
 	'srf_printername_googlebar' => 'Diagramma a barras de Google',
 	'srf_printername_googlepie' => 'Diagramma circular de Google',
+	'srf_printername_jqplotbar' => 'Diagramma de barras jqPlot',
+	'srf_printername_jqplotpie' => 'Diagramma circular jqPlot',
 	'srf_paramdesc_chartheight' => 'Le altitude del diagramma, in pixeles',
 	'srf_paramdesc_chartwidth' => 'Le latitude del diagramma, in pixeles',
+	'srf_paramdesc_charttitle' => 'Le titulo del diagramma',
+	'srf_paramdesc_barcolor' => 'Le color del barras',
+	'srf_paramdesc_bardirection' => 'Le orientation del diagramma de barras',
+	'srf_paramdesc_barnumbersaxislabel' => 'Le etiquetta pro le axe de numeros',
+	'srf_printername_gallery' => 'Galeria',
+	'srf_printername_tagcloud' => 'Etiquettario',
 );
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
  * @author Farras
+ * @author Kenrick95
  */
 $messages['id'] = array(
 	'srf-desc' => 'Format tambahan untuk kueri Semantik MediaWiki',
@@ -878,6 +1051,7 @@ $messages['id'] = array(
 	'srfc_today' => 'Hari ini',
 	'srfc_gotomonth' => 'Pergi ke bulan',
 	'srf_printername_calendar' => 'Kalender bulanan',
+	'srf_paramdesc_calendarlang' => 'Kode untuk bahasa yang digunakan untuk menampilkan kalender',
 	'srf_printername_vcard' => 'Ekspor vCard',
 	'srf_printername_icalendar' => 'Ekspor iCalendar',
 	'srf_paramdesc_icalendartitle' => 'Judul berkas kalender',
@@ -888,8 +1062,8 @@ $messages['id'] = array(
 	'srf_paramdesc_outlineproperties' => 'Daftar properti yang akan ditampilkan sebagai kepala luar, dipisah oleh koma',
 	'srf_printername_sum' => 'Jumlah angka',
 	'srf_printername_average' => 'Angka rata-rata',
-	'srf_printername_min' => 'Angka maksimum',
-	'srf_printername_max' => 'Angka minimum',
+	'srf_printername_max' => 'Angka maksimum',
+	'srf_printername_min' => 'Angka minimum',
 	'srf_paramdesc_limit' => 'Jumlah maksimal halaman yang dicari',
 	'srf_printername_timeline' => 'Garis waktu',
 	'srf_printername_eventline' => 'Garis kejadian',
@@ -903,8 +1077,15 @@ $messages['id'] = array(
 	'srf_paramdesc_lens' => 'Nama templat untuk menampilkan properti halaman',
 	'srf_printername_googlebar' => 'Grafik batang Google',
 	'srf_printername_googlepie' => 'Grafik pai Google',
+	'srf_printername_jqplotbar' => 'Grafik batang jqPlot',
+	'srf_printername_jqplotpie' => 'Grafik pai jqPlot',
 	'srf_paramdesc_chartheight' => 'Tinggi grafik, dalam piksel',
 	'srf_paramdesc_chartwidth' => 'Lebar grafik, dalam piksel',
+	'srf_paramdesc_charttitle' => 'Judul grafik',
+	'srf_paramdesc_barcolor' => 'Warna batang',
+	'srf_paramdesc_bardirection' => 'Arah grafik batang',
+	'srf_paramdesc_barnumbersaxislabel' => 'Label untuk poros nomor',
+	'srf_printername_gallery' => 'Galeri',
 );
 
 /** Igbo (Igbo)
@@ -921,19 +1102,54 @@ $messages['ig'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Civvì
  * @author Darth Kule
  */
 $messages['it'] = array(
+	'srf-desc' => 'Formati addizionali per le query di Semantic Mediawiki',
+	'srf-name' => 'Formati di risultato semantici',
 	'srfc_previousmonth' => 'Mese precedente',
 	'srfc_nextmonth' => 'Mese successivo',
 	'srfc_today' => 'Oggi',
 	'srfc_gotomonth' => 'Vai al mese',
+	'srf_printername_calendar' => 'Calendario mensile',
+	'srf_paramdesc_calendarlang' => 'Il codice per la lingua in cui visualizzare il calendario',
+	'srf_printername_vcard' => 'esportazione vCard',
+	'srf_printername_icalendar' => 'esportazione iCalendar',
+	'srf_paramdesc_icalendartitle' => 'Il titolo del file di calendario',
+	'srf_paramdesc_icalendardescription' => 'La descrizione del file di calendario',
+	'srf_printername_bibtex' => 'esportazione BibTeX',
+	'srf_outline_novalue' => 'Nessun valore',
+	'srf_printername_outline' => 'Contorno',
+	'srf_paramdesc_outlineproperties' => "L'elenco delle proprietà, separate da virgola, da visualizzare come intestazioni di contorno",
+	'srf_printername_sum' => 'Somma di numeri',
+	'srf_printername_average' => 'Media dei numeri',
+	'srf_printername_max' => 'Numero massimo',
+	'srf_printername_min' => 'Numero minimo',
+	'srf_paramdesc_limit' => 'Il numero massimo di pagine per eseguire una query',
+	'srf_printername_timeline' => 'Linea del tempo (timeline)',
+	'srf_printername_eventline' => 'Linea degli eventi',
+	'srf_paramdesc_timelinebands' => 'Definisce quali bande temporali vengono visualizzati nel risultato',
+	'srf_paramdesc_timelineposition' => 'Definisce in quale punto inizia la linea del tempo',
+	'srf_paramdesc_timelinestart' => 'Il nome della proprietà usata per definire il primo punto temporale',
+	'srf_paramdesc_timelineend' => 'Il nome della proprietà usata per definire il secondo punto temporale',
+	'srf_paramdesc_timelinesize' => "L'altezza della linea temporale (il default è 300px)",
+	'srf_paramdesc_views' => 'Le visualizzazioni da mostrare',
+	'srf_paramdesc_facets' => "L'insieme di proprietà da visualizzare per ogni pagina",
+	'srf_paramdesc_lens' => 'Il nome di un template con cui mostrare le proprietà della pagina',
+	'srf_printername_googlebar' => 'Google bar chart',
+	'srf_printername_googlepie' => 'Google grafico a torta',
+	'srf_paramdesc_chartheight' => "L'altezza del grafico, in pixel",
+	'srf_paramdesc_chartwidth' => 'La larghezza del grafico, in pixel',
+	'srf_printername_gallery' => 'Galleria',
 );
 
 /** Japanese (日本語)
  * @author Fryed-peach
  * @author Hosiryuhosi
  * @author JtFuruhata
+ * @author Naohiro19
+ * @author Whym
  * @author 青子守歌
  */
 $messages['ja'] = array(
@@ -955,9 +1171,9 @@ $messages['ja'] = array(
 	'srf_paramdesc_outlineproperties' => 'アウトラインの見出しとして表示されるプロパティーのリスト。コンマ区切り',
 	'srf_printername_sum' => '数の合計',
 	'srf_printername_average' => '数の平均',
-	'srf_printername_min' => '最大数',
-	'srf_printername_max' => '最小数',
-	'srf_paramdesc_limit' => '問い合わせする最大のページ数',
+	'srf_printername_max' => '最大数',
+	'srf_printername_min' => '最小数',
+	'srf_paramdesc_limit' => '問い合わせするページの最大数',
 	'srf_printername_timeline' => '時系列',
 	'srf_printername_eventline' => '事象系列',
 	'srf_paramdesc_timelinebands' => '出力結果にどの時間単位を表示するか定義する。',
@@ -970,8 +1186,16 @@ $messages['ja'] = array(
 	'srf_paramdesc_lens' => 'ページのプロパティーとともに表示するテンプレートの名前',
 	'srf_printername_googlebar' => 'Google 棒グラフ',
 	'srf_printername_googlepie' => 'Google 円グラフ',
+	'srf_printername_jqplotbar' => 'jqPlot棒グラフ',
+	'srf_printername_jqplotpie' => 'jqPlot円グラフ',
 	'srf_paramdesc_chartheight' => 'グラフの縦幅 (ピクセル単位)',
 	'srf_paramdesc_chartwidth' => 'グラフの横幅 (ピクセル単位)',
+	'srf_paramdesc_charttitle' => '図のタイトル',
+	'srf_paramdesc_barcolor' => '棒の色',
+	'srf_paramdesc_bardirection' => '棒グラフの方向',
+	'srf_paramdesc_barnumbersaxislabel' => '数値軸のラベル',
+	'srf_printername_gallery' => 'ギャラリー',
+	'srf_printername_tagcloud' => 'タグクラウド',
 );
 
 /** Javanese (Basa Jawa)
@@ -996,7 +1220,7 @@ $messages['km'] = array(
 	'srfc_gotomonth' => 'ទៅកាន់ខែ',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -1019,8 +1243,8 @@ $messages['ksh'] = array(
 	'srf_paramdesc_outlineproperties' => 'De Leß met Eijeschaffte, di als Övverschreffte för en Jlidderung aanjezeijsch wääde sulle, met Kommas dozwesche',
 	'srf_printername_sum' => 'De Zahle zosammejetrocke',
 	'srf_printername_average' => 'Der Schnett vun dä Zahle',
-	'srf_printername_min' => 'De kleinßte Nommer',
-	'srf_printername_max' => 'De jüüßte Nommer',
+	'srf_printername_max' => 'De kleinßte Nommer',
+	'srf_printername_min' => 'De jüüßte Nommer',
 	'srf_paramdesc_limit' => 'De jrüüßte Zahl Sigge för dren ze söhke',
 	'srf_printername_timeline' => 'De Reih noh de Zigk',
 	'srf_printername_eventline' => 'De Reih noh dämm, wat vörjekumme es',
@@ -1038,31 +1262,52 @@ $messages['ksh'] = array(
 	'srf_paramdesc_chartwidth' => 'Dämm Dijajramm sing Breedt en Pixelle',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'srfc_today' => 'Îro',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
+	'srf-name' => 'Formate vu semantesche Resultater',
 	'srfc_previousmonth' => 'Mount virdrun',
 	'srfc_nextmonth' => 'Nächste Mount',
 	'srfc_today' => 'Haut',
 	'srfc_gotomonth' => 'Géi op de Mount',
 	'srf_printername_calendar' => 'Monatleche Kalenner',
+	'srf_paramdesc_calendarlang' => 'De Code vun der Sprooch an där de Kalenner gewise gëtt',
 	'srf_printername_vcard' => 'Export als vCard',
 	'srf_icalendar_link' => 'iKalenner',
 	'srf_printername_icalendar' => 'Export als iCalendar',
+	'srf_paramdesc_icalendartitle' => 'Den Titel vum Kalenner-Fichier',
+	'srf_paramdesc_icalendardescription' => "D'Beschreiwung vum Kalenner-Fichier",
 	'srf_printername_bibtex' => 'Export als BibTeX',
-	'srf_outline_novalue' => 'Kee Wert',
+	'srf_outline_novalue' => 'Kee Wäert',
 	'srf_printername_sum' => 'Total vun den Zuelen',
 	'srf_printername_average' => 'Duerchschnëtt vun den Zuelen',
-	'srf_printername_min' => 'Maximal Zuel',
-	'srf_printername_max' => 'Minimal Zuel',
+	'srf_printername_max' => 'Maximal Zuel',
+	'srf_printername_min' => 'Minimal Zuel',
 	'srf_paramdesc_limit' => "D'Maximal Zuel vu Säite fir ofzefroen",
 	'srf_printername_timeline' => 'Chronologie',
 	'srf_printername_eventline' => 'Chronologie vun den Evenementer',
+	'srf_paramdesc_timelinesize' => "D'Héicht vun der Zäitläischt (Standard ass 300px)",
+	'srf_paramdesc_views' => 'Déi Usiichten déi gewise solle ginn',
+	'srf_paramdesc_lens' => 'Den Numm vun enger Schabloun mat där Säiteneegeschafte gewise  ginn',
 	'srf_printername_googlebar' => 'Google-Sailen-Diagramm',
 	'srf_printername_googlepie' => 'Google-Taarten-Diagramm',
+	'srf_printername_jqplotbar' => 'jqPlot Sailen- oder Balkendiagramm',
+	'srf_printername_jqplotpie' => 'jqPlot Taartendiagramm',
 	'srf_paramdesc_chartheight' => "D'Héicht vun der Grafik, a Pixel",
 	'srf_paramdesc_chartwidth' => "D'Breet vun der Grafik, a Pixel",
+	'srf_paramdesc_charttitle' => 'Den Titel vum Diagramm',
+	'srf_paramdesc_barcolor' => "D'Faarf vun de Balken",
+	'srf_paramdesc_bardirection' => "D'Ausriichtung vum Balken-Diagramm",
+	'srf_paramdesc_barnumbersaxislabel' => "D'Etiquette fir d'Achs vun den Zuelen",
+	'srf_printername_gallery' => 'Gallerie',
 );
 
 /** Lithuanian (Lietuvių)
@@ -1088,17 +1333,18 @@ $messages['mk'] = array(
 	'srf_printername_calendar' => 'Месечен календар',
 	'srf_paramdesc_calendarlang' => 'Кодот на јазикот на кој ќе се прикажува календарот',
 	'srf_printername_vcard' => 'Извоз на vCard',
+	'srf_icalendar_link' => 'iКалендар',
 	'srf_printername_icalendar' => 'Извоз на iCalendar',
 	'srf_paramdesc_icalendartitle' => 'Насловот на податотеката на календарот',
 	'srf_paramdesc_icalendardescription' => 'Описот на податотеката на календарот',
 	'srf_printername_bibtex' => 'Извоз на BibTeX',
 	'srf_outline_novalue' => 'Нема вредност',
 	'srf_printername_outline' => 'Преглед',
-	'srf_paramdesc_outlineproperties' => 'Листа на својствата за прикажување како заглавија, разделени со запирки',
+	'srf_paramdesc_outlineproperties' => 'Список на својствата за прикажување како заглавија, одделени со запирки',
 	'srf_printername_sum' => 'Збир од броевите',
 	'srf_printername_average' => 'Просек од броевите',
-	'srf_printername_min' => 'Максимален број',
-	'srf_printername_max' => 'Минимален број',
+	'srf_printername_max' => 'Максимален број',
+	'srf_printername_min' => 'Минимален број',
 	'srf_paramdesc_limit' => 'Максимален број на страници кои можат да се пребараат',
 	'srf_printername_timeline' => 'Хронологија',
 	'srf_printername_eventline' => 'Преглед на настани',
@@ -1112,8 +1358,16 @@ $messages['mk'] = array(
 	'srf_paramdesc_lens' => 'Името на шаблонот со кој ќе се прикажат својствата на страницата',
 	'srf_printername_googlebar' => 'Столбен дијаграм од Google',
 	'srf_printername_googlepie' => 'Кружен дијаграм од Google',
+	'srf_printername_jqplotbar' => 'Столбен графикон jqPlot',
+	'srf_printername_jqplotpie' => 'Кружен графикон jqPlot',
 	'srf_paramdesc_chartheight' => 'Висината на дијаграмот, во пиксели',
 	'srf_paramdesc_chartwidth' => 'Ширината на дијаграмот, во пиксели',
+	'srf_paramdesc_charttitle' => 'Насловот на графиконот',
+	'srf_paramdesc_barcolor' => 'Бојата на столбовите',
+	'srf_paramdesc_bardirection' => 'Насока на столбниот графикон',
+	'srf_paramdesc_barnumbersaxislabel' => 'Натпис за бројната оска',
+	'srf_printername_gallery' => 'Галерија',
+	'srf_printername_tagcloud' => 'Облак со ознаки',
 );
 
 /** Malayalam (മലയാളം)
@@ -1124,7 +1378,7 @@ $messages['ml'] = array(
 	'srfc_nextmonth' => 'അടുത്ത മാസം',
 	'srfc_today' => 'ഇന്ന്',
 	'srfc_gotomonth' => 'മാസത്തിലേക്ക് പോവുക',
-	'srf_icalendar_link' => 'iകലണ്ടര്‍',
+	'srf_icalendar_link' => 'iകലണ്ടർ',
 );
 
 /** Marathi (मराठी)
@@ -1181,8 +1435,8 @@ $messages['nl'] = array(
 	'srf_paramdesc_outlineproperties' => 'De koomagescheiden lijst met eigenschappen die weergegeven moet worden als overzichtskoptekst',
 	'srf_printername_sum' => 'Som van getallen',
 	'srf_printername_average' => 'Gemiddelde van getallen',
-	'srf_printername_min' => 'Hoogste getal',
-	'srf_printername_max' => 'Laagste getal',
+	'srf_printername_max' => 'Hoogste getal',
+	'srf_printername_min' => 'Laagste getal',
 	'srf_paramdesc_limit' => "Het maximaal aantal op te vragen pagina's",
 	'srf_printername_timeline' => 'Tijdlijn',
 	'srf_printername_eventline' => 'Gebeurtenissenlijn',
@@ -1196,8 +1450,15 @@ $messages['nl'] = array(
 	'srf_paramdesc_lens' => 'De naam van het sjabloon waarmee de paginaeigenschappen weergegeven moeten worden',
 	'srf_printername_googlebar' => 'Google staafgrafiek',
 	'srf_printername_googlepie' => 'Google taartgrafiek',
+	'srf_printername_jqplotbar' => 'jqPlot-staafdiagram',
+	'srf_printername_jqplotpie' => 'jqPlot-circeldiagram',
 	'srf_paramdesc_chartheight' => 'De hoogte van de grafiek (in pixels)',
 	'srf_paramdesc_chartwidth' => 'De breedte van de grafiek (in pixels)',
+	'srf_paramdesc_charttitle' => 'Grafiektitel',
+	'srf_paramdesc_barcolor' => 'De kleur van de balken',
+	'srf_paramdesc_bardirection' => 'De richting van de grafielbalken',
+	'srf_paramdesc_barnumbersaxislabel' => 'Het lavel van de Y-as',
+	'srf_printername_gallery' => 'Galerij',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -1218,24 +1479,26 @@ $messages['nn'] = array(
 	'srf_outline_novalue' => 'Ingen verdi',
 	'srf_printername_sum' => 'Sum av tal',
 	'srf_printername_average' => 'Gjennomsnitt av tal',
-	'srf_printername_min' => 'Største tal',
-	'srf_printername_max' => 'Minste tal',
+	'srf_printername_max' => 'Største tal',
+	'srf_printername_min' => 'Minste tal',
 	'srf_printername_timeline' => 'Tidsline',
 	'srf_printername_eventline' => 'Tidsline for hendingar',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Event
  * @author Jon Harald Søby
  * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'srf-desc' => 'Ytterligere format for Semantic MediaWiki «inline»-spørringer',
-	'srf-name' => 'Semantic resultatformat',
+	'srf-name' => 'Semantisk resultatformat',
 	'srfc_previousmonth' => 'Forrige måned',
 	'srfc_nextmonth' => 'Neste måned',
 	'srfc_today' => 'I dag',
 	'srfc_gotomonth' => 'Gå til måned',
 	'srf_printername_calendar' => 'Månedlig kalender',
+	'srf_paramdesc_calendarlang' => 'Språkkoden for språket som kalenderen skal vises i',
 	'srf_printername_vcard' => 'vCard-eksport',
 	'srf_icalendar_link' => 'iKalender',
 	'srf_printername_icalendar' => 'iCalendar-eksport',
@@ -1243,12 +1506,16 @@ $messages['no'] = array(
 	'srf_paramdesc_icalendardescription' => 'Beskrivelsen av kalenderfilen',
 	'srf_printername_bibtex' => 'BibTeX-eksport',
 	'srf_outline_novalue' => 'Ingen verdi',
+	'srf_printername_outline' => 'Disposisjon',
+	'srf_paramdesc_outlineproperties' => 'Listen over egenskaper som skal vises som disposisjonsoverskrifter, adskilt med komma',
 	'srf_printername_sum' => 'Sum av tall',
 	'srf_printername_average' => 'Gjennomsnitt av tall',
-	'srf_printername_min' => 'Største tall',
-	'srf_printername_max' => 'Minste tall',
+	'srf_printername_max' => 'Største tall',
+	'srf_printername_min' => 'Minste tall',
+	'srf_paramdesc_limit' => 'Maks antall sider å etterspørre',
 	'srf_printername_timeline' => 'Tidslinje',
 	'srf_printername_eventline' => 'Hendelseslinje',
+	'srf_paramdesc_timelinebands' => 'Definerer hvilke bånd som vises i resultatet.',
 	'srf_paramdesc_timelineposition' => 'Definerer hvor tidslinjen først fokuseres rundt.',
 	'srf_paramdesc_timelinestart' => 'Et egenskapsnavn brukt for å definere et første tidspunkt',
 	'srf_paramdesc_timelineend' => 'Et egenskapsnavn brukt for å definere et andre tidspunkt',
@@ -1258,8 +1525,16 @@ $messages['no'] = array(
 	'srf_paramdesc_lens' => 'Navnet på malen som skal vise frem sideegenskapene',
 	'srf_printername_googlebar' => 'Google stolpediagram',
 	'srf_printername_googlepie' => 'Google kakediagram',
+	'srf_printername_jqplotbar' => 'jqPlot stolpediagram',
+	'srf_printername_jqplotpie' => 'jqPlot sektordiagram',
 	'srf_paramdesc_chartheight' => 'Høyden til diagrammet, i pixler',
 	'srf_paramdesc_chartwidth' => 'Bredden til diagrammet, i pixler',
+	'srf_paramdesc_charttitle' => 'Tittelen på diagrammet',
+	'srf_paramdesc_barcolor' => 'Fargen på stolpene',
+	'srf_paramdesc_bardirection' => 'Retningen på stolpediagrammet',
+	'srf_paramdesc_barnumbersaxislabel' => 'Etiketten for tallaksen',
+	'srf_printername_gallery' => 'Galleri',
+	'srf_printername_tagcloud' => 'Tagg-sky',
 );
 
 /** Occitan (Occitan)
@@ -1282,8 +1557,8 @@ $messages['oc'] = array(
 	'srf_printername_outline' => 'Esbòs',
 	'srf_printername_sum' => 'Soma de nombres',
 	'srf_printername_average' => 'Mejana dels nombres',
-	'srf_printername_min' => 'Nombre maximal',
-	'srf_printername_max' => 'Nombre minimal',
+	'srf_printername_max' => 'Nombre maximal',
+	'srf_printername_min' => 'Nombre minimal',
 	'srf_printername_timeline' => 'Cronologia',
 	'srf_printername_eventline' => 'Cronologia dels eveniments',
 );
@@ -1310,17 +1585,41 @@ $messages['pl'] = array(
 	'srfc_today' => 'Dzisiaj',
 	'srfc_gotomonth' => 'Idź do miesiąca',
 	'srf_printername_calendar' => 'Kalendarz na miesiąc',
+	'srf_paramdesc_calendarlang' => 'Kod języka, w którym jest wyświetlany kalendarz',
 	'srf_printername_vcard' => 'eksport vCard',
 	'srf_printername_icalendar' => 'eksport iCalendar',
+	'srf_paramdesc_icalendartitle' => 'Nazwa pliku kalendarza',
+	'srf_paramdesc_icalendardescription' => 'Opis pliku kalendarza',
 	'srf_printername_bibtex' => 'eksport BibTeX',
 	'srf_outline_novalue' => 'Brak wartości',
 	'srf_printername_outline' => 'Szkic',
+	'srf_paramdesc_outlineproperties' => 'Spis właściwości, które zostaną wyświetlone jako nagłówki konspektu, rozdzielone przecinkami',
 	'srf_printername_sum' => 'Suma liczb',
 	'srf_printername_average' => 'Średnia liczb',
-	'srf_printername_min' => 'Maksymalna liczba',
-	'srf_printername_max' => 'Minimalna liczba',
+	'srf_printername_max' => 'Maksymalna liczba',
+	'srf_printername_min' => 'Minimalna liczba',
+	'srf_paramdesc_limit' => 'Maksymalna liczba stron dla zapytania',
 	'srf_printername_timeline' => 'Oś czasu',
 	'srf_printername_eventline' => 'Oś wydarzeń',
+	'srf_paramdesc_timelinebands' => 'Określa, które okresy są wyświetlane w wynikach.',
+	'srf_paramdesc_timelineposition' => 'Określa, gdzie początkowo zaczyna się oś czasu.',
+	'srf_paramdesc_timelinestart' => 'Nazwa własności używana do określenia pierwszego punktu w czasie.',
+	'srf_paramdesc_timelineend' => 'Nazwa własności używana do określenia drugiego punktu w czasie.',
+	'srf_paramdesc_timelinesize' => 'Wysokość osi czasu (domyślnie 300 pikseli)',
+	'srf_paramdesc_views' => 'Widoki do wyświetlenia',
+	'srf_paramdesc_facets' => 'Zestaw właściwości do wyświetlenia na każdej stronie',
+	'srf_paramdesc_lens' => 'Nazwa szablonu, który zostanie użyty do wyświetlenia właściwości strony',
+	'srf_printername_googlebar' => 'wykres słupkowy Google',
+	'srf_printername_googlepie' => 'wykres kołowy Google',
+	'srf_printername_jqplotbar' => 'wykres słupkowy jqPlot',
+	'srf_printername_jqplotpie' => 'wykres kołowy jqPlot',
+	'srf_paramdesc_chartheight' => 'Wysokość wykresu w pikselach',
+	'srf_paramdesc_chartwidth' => 'Szerokość wykresu w pikselach',
+	'srf_paramdesc_charttitle' => 'Tytuł wykresu',
+	'srf_paramdesc_barcolor' => 'Kolory słupków',
+	'srf_paramdesc_bardirection' => 'Ułożenie słupków',
+	'srf_paramdesc_barnumbersaxislabel' => 'Etykieta wartości osi',
+	'srf_printername_gallery' => 'Galeria',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1346,8 +1645,8 @@ $messages['pms'] = array(
 	'srf_paramdesc_outlineproperties' => 'La lista ëd proprietà da visualisé com antestassion, separà da vìrgole',
 	'srf_printername_sum' => 'Total dij nùmer',
 	'srf_printername_average' => 'Media dij nùmer',
-	'srf_printername_min' => 'Nùmer pì gròss',
-	'srf_printername_max' => 'Nùmer pì cit',
+	'srf_printername_max' => 'Nùmer pì gròss',
+	'srf_printername_min' => 'Nùmer pì cit',
 	'srf_paramdesc_limit' => 'Ël nùmer màssim ëd pàgine da ciamé',
 	'srf_printername_timeline' => 'Cronologìa',
 	'srf_printername_eventline' => "Cronologìa dj'event",
@@ -1361,8 +1660,15 @@ $messages['pms'] = array(
 	'srf_paramdesc_lens' => 'Ël nòm ëd në stamp con ël qual visualisé le proprietà dle pàgine',
 	'srf_printername_googlebar' => 'Ël diagrama a bare ëd Google',
 	'srf_printername_googlepie' => 'Ël diagrama a torta ëd Google',
+	'srf_printername_jqplotbar' => 'gràfich a bare jqPlot',
+	'srf_printername_jqplotpie' => 'gràfich a torta jqPlot',
 	'srf_paramdesc_chartheight' => "L'autëssa dël diagrama, an pontin",
 	'srf_paramdesc_chartwidth' => 'La larghëssa dël diagrama, an pontin',
+	'srf_paramdesc_charttitle' => 'Ël tìtol dël gràfich',
+	'srf_paramdesc_barcolor' => 'Ël color ëd le bare',
+	'srf_paramdesc_bardirection' => 'La diression dël gràfich a bare',
+	'srf_paramdesc_barnumbersaxislabel' => "La tichëtta për l'ass dij nùmer",
+	'srf_printername_gallery' => 'Galarìa',
 );
 
 /** Pashto (پښتو)
@@ -1373,6 +1679,7 @@ $messages['ps'] = array(
 	'srfc_nextmonth' => 'راتلونکې مياشت',
 	'srfc_today' => 'نن',
 	'srfc_gotomonth' => 'مياشت ته ورځه',
+	'srf_printername_gallery' => 'نندارتون',
 );
 
 /** Portuguese (Português)
@@ -1381,7 +1688,7 @@ $messages['ps'] = array(
  * @author Waldir
  */
 $messages['pt'] = array(
-	'srf-desc' => "Formatos adicionais para consultas de incorporação dinâmica ''(inline queries)'' do Semantic MediaWiki",
+	'srf-desc' => "Formatos adicionais para consultas de incorporação dinâmica ''(inline queries)'' do MediaWiki Semântico",
 	'srf-name' => 'Formatos dos Resultados Semânticos',
 	'srfc_previousmonth' => 'Mês anterior',
 	'srfc_nextmonth' => 'Mês seguinte',
@@ -1400,14 +1707,14 @@ $messages['pt'] = array(
 	'srf_paramdesc_outlineproperties' => 'A lista das propriedades apresentadas como cabeçalhos das listas estruturadas, separadas por vírgulas',
 	'srf_printername_sum' => 'Soma dos números',
 	'srf_printername_average' => 'Média dos números',
-	'srf_printername_min' => 'Número máximo',
-	'srf_printername_max' => 'Número mínimo',
+	'srf_printername_max' => 'Número máximo',
+	'srf_printername_min' => 'Número mínimo',
 	'srf_paramdesc_limit' => 'O número máximo de páginas a consultar',
 	'srf_printername_timeline' => 'Cronograma',
 	'srf_printername_eventline' => 'Cronograma de eventos',
 	'srf_paramdesc_timelinebands' => 'Define que bandas são apresentadas no resultado.',
 	'srf_paramdesc_timelineposition' => 'Define onde é que o cronograma inicialmente está focado.',
-	'srf_paramdesc_timelinestart' => 'Um nome de propriedade, usado para definir um primeiro ponto no tempo.',
+	'srf_paramdesc_timelinestart' => 'Um nome de propriedade, usado para definir um primeiro ponto no tempo',
 	'srf_paramdesc_timelineend' => 'Um nome de propriedade, usado para definir um segundo ponto no tempo',
 	'srf_paramdesc_timelinesize' => 'A altura do cronograma (por omissão, 300 px)',
 	'srf_paramdesc_views' => 'As vistas que serão apresentadas',
@@ -1415,13 +1722,22 @@ $messages['pt'] = array(
 	'srf_paramdesc_lens' => 'O nome de uma predefinição usada para apresentar as propriedades das páginas',
 	'srf_printername_googlebar' => 'Gráfico de barras Google',
 	'srf_printername_googlepie' => 'Gráfico circular Google',
+	'srf_printername_jqplotbar' => 'Gráfico de barras jqPlot',
+	'srf_printername_jqplotpie' => 'Gráfico circular jqPlot',
 	'srf_paramdesc_chartheight' => 'A altura do gráfico, em pixels',
 	'srf_paramdesc_chartwidth' => 'A largura do gráfico, em pixels',
+	'srf_paramdesc_charttitle' => 'O título do gráfico',
+	'srf_paramdesc_barcolor' => 'A cor das barras',
+	'srf_paramdesc_bardirection' => 'A orientação do gráfico de barras',
+	'srf_paramdesc_barnumbersaxislabel' => 'A legenda para o eixo dos números',
+	'srf_printername_gallery' => 'Galeria',
+	'srf_printername_tagcloud' => 'Nuvem de tags',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
  * @author GKnedo
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'srf-desc' => 'Formatos adicionais para consultas embutidas do Semantic MediaWiki',
@@ -1431,17 +1747,41 @@ $messages['pt-br'] = array(
 	'srfc_today' => 'Hoje',
 	'srfc_gotomonth' => 'Ir para mês',
 	'srf_printername_calendar' => 'Calendário mensal',
+	'srf_paramdesc_calendarlang' => 'O código da língua em que será apresentado o calendário',
 	'srf_printername_vcard' => 'Exportar vCard',
 	'srf_printername_icalendar' => 'Exportar iCalendar',
+	'srf_paramdesc_icalendartitle' => 'O título do arquivo do calendário',
+	'srf_paramdesc_icalendardescription' => 'A descrição do arquivo do calendário',
 	'srf_printername_bibtex' => 'Exportar BibTeX',
 	'srf_outline_novalue' => 'Nenhum valor',
 	'srf_printername_outline' => 'Outline',
+	'srf_paramdesc_outlineproperties' => 'A lista das propriedades apresentadas como cabeçalhos das listas estruturadas, separadas por vírgulas',
 	'srf_printername_sum' => 'Soma dos Números',
 	'srf_printername_average' => 'Média dos números',
-	'srf_printername_min' => 'Número máximo',
-	'srf_printername_max' => 'Número mínimo',
+	'srf_printername_max' => 'Número máximo',
+	'srf_printername_min' => 'Número mínimo',
+	'srf_paramdesc_limit' => 'O número máximo de páginas a consultar',
 	'srf_printername_timeline' => 'Linha do Tempo',
 	'srf_printername_eventline' => 'Linha de Eventos',
+	'srf_paramdesc_timelinebands' => 'Define quais grupos são apresentadas nos resultados.',
+	'srf_paramdesc_timelineposition' => 'Define onde é que o cronograma inicialmente está focado.',
+	'srf_paramdesc_timelinestart' => 'Um nome de propriedade, usado para definir um primeiro ponto no tempo.',
+	'srf_paramdesc_timelineend' => 'Um nome de propriedade, usado para definir um segundo ponto no tempo',
+	'srf_paramdesc_timelinesize' => 'A altura do cronograma (por padrão, 300 px)',
+	'srf_paramdesc_views' => 'As vistas que serão apresentadas',
+	'srf_paramdesc_facets' => 'O conjunto de propriedades que serão apresentadas para cada página',
+	'srf_paramdesc_lens' => 'O nome de uma predefinição usada para apresentar as propriedades das páginas',
+	'srf_printername_googlebar' => 'Gráfico de barras Google',
+	'srf_printername_googlepie' => 'Gráfico de pizza Google',
+	'srf_printername_jqplotbar' => 'Gráfico de barras jqPlot',
+	'srf_printername_jqplotpie' => 'Gráfico circular jqPlot',
+	'srf_paramdesc_chartheight' => 'A altura do gráfico, em pixels',
+	'srf_paramdesc_chartwidth' => 'A largura do gráfico, em pixels',
+	'srf_paramdesc_charttitle' => 'O título do gráfico',
+	'srf_paramdesc_barcolor' => 'A cor das barras',
+	'srf_paramdesc_bardirection' => 'A orientação do gráfico de barras',
+	'srf_paramdesc_barnumbersaxislabel' => 'A legenda para o eixo dos números',
+	'srf_printername_gallery' => 'Galeria',
 );
 
 /** Romanian (Română)
@@ -1456,8 +1796,8 @@ $messages['ro'] = array(
 	'srf_outline_novalue' => 'Nici o valoare',
 	'srf_printername_sum' => 'Suma numerelor',
 	'srf_printername_average' => 'Media numerelor',
-	'srf_printername_min' => 'Numărul maxim',
-	'srf_printername_max' => 'Numărul minim',
+	'srf_printername_max' => 'Numărul maxim',
+	'srf_printername_min' => 'Numărul minim',
 );
 
 /** Tarandíne (Tarandíne)
@@ -1495,8 +1835,8 @@ $messages['ru'] = array(
 	'srf_paramdesc_outlineproperties' => 'Список свойств, отображающихся в виде заголовков, разделяется запятыми',
 	'srf_printername_sum' => 'Сумма чисел',
 	'srf_printername_average' => 'Среднее число',
-	'srf_printername_min' => 'Максимальное число',
-	'srf_printername_max' => 'Минимальное число',
+	'srf_printername_max' => 'Максимальное число',
+	'srf_printername_min' => 'Минимальное число',
 	'srf_paramdesc_limit' => 'Максимальное количество страниц для выборки',
 	'srf_printername_timeline' => 'Хронология',
 	'srf_printername_eventline' => 'Список событий',
@@ -1510,8 +1850,26 @@ $messages['ru'] = array(
 	'srf_paramdesc_lens' => 'Название шаблона для отображения свойств страницы',
 	'srf_printername_googlebar' => 'Столбчатая диаграмма Google',
 	'srf_printername_googlepie' => 'Круговая диаграмма Google',
+	'srf_printername_jqplotbar' => 'Столбчатая диаграмма jqPlot',
+	'srf_printername_jqplotpie' => 'Круговая диаграмма jqPlot',
 	'srf_paramdesc_chartheight' => 'Высота диаграммы в пикселях',
 	'srf_paramdesc_chartwidth' => 'Ширина диаграммы в пикселях',
+	'srf_paramdesc_charttitle' => 'Название диаграммы',
+	'srf_paramdesc_barcolor' => 'Цвет столбцов',
+	'srf_paramdesc_bardirection' => 'Направление столбцов',
+	'srf_paramdesc_barnumbersaxislabel' => 'Надпись для числовых осей',
+	'srf_printername_gallery' => 'Галерея',
+	'srf_printername_tagcloud' => 'Облако меток',
+);
+
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'srfc_previousmonth' => 'Минулый місяць',
+	'srfc_nextmonth' => 'Далшый місяць',
+	'srfc_today' => 'Днесь',
+	'srf_printername_gallery' => 'Ґалерія',
 );
 
 /** Slovak (Slovenčina)
@@ -1532,13 +1890,13 @@ $messages['sk'] = array(
 	'srf_printername_outline' => 'Náčrt',
 	'srf_printername_sum' => 'Suma čísiel',
 	'srf_printername_average' => 'Priemer čísiel',
-	'srf_printername_min' => 'Maximálne číslo',
-	'srf_printername_max' => 'Minimálne číslo',
+	'srf_printername_max' => 'Maximálne číslo',
+	'srf_printername_min' => 'Minimálne číslo',
 	'srf_printername_timeline' => 'Časová os',
 	'srf_printername_eventline' => 'Os udalostí',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
@@ -1547,13 +1905,15 @@ $messages['sr-ec'] = array(
 	'srfc_today' => 'Данас',
 	'srfc_gotomonth' => 'Пређи на месец',
 	'srf_printername_calendar' => 'Месечни календар',
+	'srf_outline_novalue' => 'Нема вредности',
 	'srf_printername_sum' => 'Сума бројева',
 	'srf_printername_average' => 'Средња вредност бројева',
-	'srf_printername_min' => 'Највећи број',
-	'srf_printername_max' => 'Најмањи број',
+	'srf_printername_max' => 'Највећи број',
+	'srf_printername_min' => 'Најмањи број',
+	'srf_printername_gallery' => 'Галерија',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian Latin ekavian (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -1562,13 +1922,16 @@ $messages['sr-el'] = array(
 	'srfc_today' => 'Danas',
 	'srfc_gotomonth' => 'Pređi na mesec',
 	'srf_printername_calendar' => 'Mesečni kalendar',
+	'srf_outline_novalue' => 'Nema vrednosti',
 	'srf_printername_sum' => 'Suma brojeva',
 	'srf_printername_average' => 'Srednja vrednost brojeva',
-	'srf_printername_min' => 'Najveći broj',
-	'srf_printername_max' => 'Najmanji broj',
+	'srf_printername_max' => 'Najveći broj',
+	'srf_printername_min' => 'Najmanji broj',
+	'srf_printername_gallery' => 'Galerija',
 );
 
 /** Swedish (Svenska)
+ * @author Dafer45
  * @author M.M.S.
  * @author Per
  */
@@ -1588,8 +1951,10 @@ $messages['sv'] = array(
 	'srf_outline_novalue' => 'Inget värde',
 	'srf_printername_sum' => 'Summa av tal',
 	'srf_printername_average' => 'Genomsnitt av tal',
-	'srf_printername_min' => 'Största nummer',
-	'srf_printername_max' => 'Minsta nummer',
+	'srf_printername_max' => 'Största nummer',
+	'srf_printername_min' => 'Minsta nummer',
+	'srf_printername_timeline' => 'Tidslinje',
+	'srf_printername_eventline' => 'Händelselinje',
 	'srf_printername_googlebar' => 'Google stapeldiagram',
 	'srf_printername_googlepie' => 'Google tårtdiagram',
 	'srf_paramdesc_chartheight' => 'Höjden på diagrammet i pixlar',
@@ -1607,8 +1972,8 @@ $messages['te'] = array(
 	'srf_outline_novalue' => 'విలువ లేదు',
 	'srf_printername_sum' => 'సంఖ్యల మొత్తం',
 	'srf_printername_average' => 'సంఖ్యల సగటు',
-	'srf_printername_min' => 'గరిష్ఠ సంఖ్య',
-	'srf_printername_max' => 'కనిష్ఠ సంఖ్య',
+	'srf_printername_max' => 'గరిష్ఠ సంఖ్య',
+	'srf_printername_min' => 'కనిష్ఠ సంఖ్య',
 	'srf_printername_timeline' => 'కాలరేఖ',
 	'srf_paramdesc_chartheight' => 'చార్టు యొక్క ఎత్తు, పిక్సెళ్ళలో',
 	'srf_paramdesc_chartwidth' => 'చార్టు యొక్క వెడల్పు, పిక్సెళ్ళలో',
@@ -1638,15 +2003,48 @@ $messages['tg-latn'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'srf-desc' => 'Dagdag na mga anyo para sa nasa loob ng guhit na mga pagtatanong na pang-Semantikong MediaWiki',
+	'srf-name' => 'Mga Anyo ng Resultang Semantiko',
 	'srfc_previousmonth' => 'Nakaraang buwan',
 	'srfc_nextmonth' => 'Susunod na buwan',
 	'srfc_today' => 'Ngayong araw na ito',
 	'srfc_gotomonth' => 'Pumunta sa buwan',
+	'srf_printername_calendar' => 'Buwanang kalendaryo',
+	'srf_paramdesc_calendarlang' => 'Ang kodigo para sa wika na pagpapakitaan ng kalendaryo',
 	'srf_printername_vcard' => 'Luwas ng vCard',
 	'srf_printername_icalendar' => 'Luwas ng iCalendar',
+	'srf_paramdesc_icalendartitle' => 'Ang pamagat ng talaksan ng kalendaryo',
+	'srf_paramdesc_icalendardescription' => 'Ang paglalarawan ng talaksan ng kalendaryo',
 	'srf_printername_bibtex' => 'Luwas ng BibTeX',
+	'srf_outline_novalue' => 'Walang halaga',
+	'srf_printername_outline' => 'Banghay',
+	'srf_paramdesc_outlineproperties' => 'Ang talaan ng mga pag-aaring ipapakita bilang mga paulong banghay, na pinaghihiwalay ng mga kuwit',
+	'srf_printername_sum' => 'kabuuan ng mga bilang',
+	'srf_printername_average' => 'Pinatakang halaga ng mga bilang',
+	'srf_printername_max' => 'Pinakamataas na bilang',
+	'srf_printername_min' => 'Pinakamababang bilang',
+	'srf_paramdesc_limit' => 'Ang pinakamaraming bilang ng mga pahinang ipagtatanong',
 	'srf_printername_timeline' => 'Guhit ng panahon',
 	'srf_printername_eventline' => 'Guhit ng kaganapan',
+	'srf_paramdesc_timelinebands' => 'Tumutukoy kung aling mga sintas ang ipapakita sa loob ng resulta.',
+	'srf_paramdesc_timelineposition' => 'Tumutukoy kung saan unang tutuon ang guhit ng panahon.',
+	'srf_paramdesc_timelinestart' => 'Isang pangalan ng pag-aaring ginamit upang tukuyin ang isang unang punto ng oras',
+	'srf_paramdesc_timelineend' => 'Isang pangalan ng pag-aaring ginamit upang tukuyin ang isang pangalawang punto ng oras',
+	'srf_paramdesc_timelinesize' => 'Ang taas ng guhit ng panahon (likas na nakatakda ay 300px)',
+	'srf_paramdesc_views' => 'Mga tanawing ipapakita',
+	'srf_paramdesc_facets' => 'Ang pangkat ng mga pag-aaring ipapakita para sa bawat pahina',
+	'srf_paramdesc_lens' => 'Ang pangalan ng isang suleras na pagpapakitaan ng mga pag-aari ng pahina',
+	'srf_printername_googlebar' => 'Baretang tsart ng Google',
+	'srf_printername_googlepie' => 'Kakaning-tsart ng Google',
+	'srf_printername_jqplotbar' => 'baretang talangguhit ng jqPlot',
+	'srf_printername_jqplotpie' => 'kakaning-talangguhit ng jgPlot',
+	'srf_paramdesc_chartheight' => 'Ang taas ng tsart, nasa mga piksel',
+	'srf_paramdesc_chartwidth' => 'Ang lapad ng tsart, nasa mga piksel',
+	'srf_paramdesc_charttitle' => 'Ang pamagat ng talangguhit',
+	'srf_paramdesc_barcolor' => 'Ang kulay ng mga bareta',
+	'srf_paramdesc_bardirection' => 'Ang kapupuntahan ng baretang talangguhit',
+	'srf_paramdesc_barnumbersaxislabel' => 'Ang tatak para sa painugan ng mga bilang',
+	'srf_printername_gallery' => 'Galerya',
 );
 
 /** Turkish (Türkçe)
@@ -1668,8 +2066,8 @@ $messages['tr'] = array(
 	'srf_outline_novalue' => 'Değer yok',
 	'srf_printername_sum' => 'Sayıların toplamı',
 	'srf_printername_average' => 'Sayılan ortalaması',
-	'srf_printername_min' => 'Azami sayı',
-	'srf_printername_max' => 'Asgari sayı',
+	'srf_printername_max' => 'Azami sayı',
+	'srf_printername_min' => 'Asgari sayı',
 	'srf_paramdesc_limit' => 'Sorgulanacak azami sayfa sayısı',
 	'srf_printername_timeline' => 'Zaman çizgisi',
 	'srf_paramdesc_views' => 'Görüntülenecek görünümler',
@@ -1716,8 +2114,8 @@ $messages['vi'] = array(
 	'srf_printername_outline' => 'Khái quát',
 	'srf_printername_sum' => 'Tổng số',
 	'srf_printername_average' => 'Trung bình số',
-	'srf_printername_min' => 'Số lớn nhất',
-	'srf_printername_max' => 'Số nhỏ nhất',
+	'srf_printername_max' => 'Số lớn nhất',
+	'srf_printername_min' => 'Số nhỏ nhất',
 	'srf_printername_timeline' => 'Thời gian biểu',
 	'srf_printername_eventline' => 'Sự kiện biểu',
 );
@@ -1751,8 +2149,9 @@ $messages['zh-hans'] = array(
 	'srfc_nextmonth' => '下月',
 	'srfc_today' => '今天',
 	'srfc_gotomonth' => '跳至月份',
-	'srf_printername_min' => '最大数目',
-	'srf_printername_max' => '最小数目',
+	'srf_printername_max' => '最大数目',
+	'srf_printername_min' => '最小数目',
+	'srf_printername_gallery' => '图库',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
@@ -1763,8 +2162,8 @@ $messages['zh-hant'] = array(
 	'srfc_nextmonth' => '下月',
 	'srfc_today' => '今天',
 	'srfc_gotomonth' => '跳至月份',
-	'srf_printername_min' => '最大數目',
-	'srf_printername_max' => '最小數目',
+	'srf_printername_max' => '最大數目',
+	'srf_printername_min' => '最小數目',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)

@@ -1,14 +1,51 @@
 For a documentation of all features, see
 http://semantic-mediawiki.org/wiki/Semantic_Result_Formats
 
-== SRF 1.5 ==
 
-Released on ?
+== SRF 1.5.3 ==
+
+Released on February 9, 2011.
 
 Changes in this version:
-* the functions getName() and getParameters() were added to most formats, for
-  use in Special:Ask
+* Support for images specified by properties in the gallery format.
+* Fixes to the calendar and jqplot formats.
+* Improvents to the timeline and eventline formats.
+
+New formats in this version are:
+* tagcloud (written by Jeroen De Dauw)
+
+== SRF 1.5.2 ==
+
+Released on January 11 2011.
+
+Changes in this version:
+* Handling for ResourceLoader in MediaWiki 1.17+ added for
+  'timeline', 'eventline', 'jqplotbar' and 'jqplotpie' formats.
+* Visualization improvments for 'process' format.
+
+== SRF 1.5.1 ==
+
+Released on August 26 2010.
+
+New formats in this version are:
+* jqplotbar (written by Sanyam Goyal and Yaron Koren)
+* jqplotpie (written by Sanyam Goyal and Yaron Koren)
+
+Other changes:
+* Added support for 'semantic' extension type, added by SMW 1.5.2 and above.
+
+== SRF 1.5 ==
+
+Released on June 22 2010.
+
+New formats in this version are:
+* gallery (written by Rowan Rodrik van der Molen)
+
+Changes in this version:
+* the functions getName() and getParameters() were added to most formats, for use in Special:Ask
 * a 'lang' parameter was added to the 'calendar' format
+* improvements in 'exhibit' result format
+** new facet styles (slider and search)
 
 == SRF 1.4.5 ==
 

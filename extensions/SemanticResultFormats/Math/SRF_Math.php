@@ -9,21 +9,21 @@
  * @author Nathan Yergler
  */
 
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 class SRFMath extends SMWResultPrinter {
 
 	public function getName() {
-		wfLoadExtensionMessages('SemanticResultFormats');
-		return wfMsg('srf_printername_' . $this->mFormat);
+		return wfMsg( 'srf_printername_' . $this->mFormat );
 	}
 
-	public function getResult($results, $params, $outputmode) {
-		$this->readParameters($params, $outputmode);
-		return $this->getResultText($results, SMW_OUTPUT_HTML);
+	public function getResult( $results, $params, $outputmode ) {
+		$this->readParameters( $params, $outputmode );
+		global $wgLang;
+		return $wgLang->formatNum( $this->getResultText( $results, SMW_OUTPUT_HTML ) );
 	}
 
-	protected function getResultText($res, $outputmode) {
+	protected function getResultText( $res, $outputmode ) {
 		global $smwgIQRunningNumber, $wgUser;
 		$skin = $wgUser->getSkin();
 
@@ -34,11 +34,16 @@ class SRFMath extends SMWResultPrinter {
 		$max = '';
 
 		while ( $row = $res->getNext() ) {
-			$last_col = array_pop($row);
+			$last_col = array_pop( $row );
 			foreach ( $last_col->getContent() as $value ) {
 				// handle each value only if it's of type Number or NAry
 				if ( $value instanceof SMWNumberValue ) {
-					$num = $value->getNumericValue();
+					if ( method_exists( $value, 'getValueKey' ) ) {
+						$num = $value->getValueKey();
+					}
+					else {
+						$num = $value->getNumericValue();
+					}
 				} elseif ( $value instanceof SMWNAryValue ) {
 					$inner_values = $value->getDVs();
 					// find the first inner value that's of
@@ -47,7 +52,12 @@ class SRFMath extends SMWResultPrinter {
 					$num = null;
 					foreach ( $inner_values as $inner_value ) {
 						if ( $inner_value instanceof SMWNumberValue ) {
-							$num = $inner_value->getNumericValue();
+							if ( method_exists( $inner_value, 'getValueKey' ) ) {
+								$num = $inner_value->getValueKey();
+							}
+							else {
+								$num = $inner_value->getNumericValue();
+							}
 							break;
 						}
 					}
@@ -57,27 +67,29 @@ class SRFMath extends SMWResultPrinter {
 					continue;
 				}
 				$count++;
-				if ($this->mFormat == 'sum' || $this->mFormat == 'average') {
+				if ( $this->mFormat == 'sum' || $this->mFormat == 'average' ) {
 					$sum += $num;
-				} elseif ($this->mFormat == 'min') {
-					if ($min == '' || $num < $min)
+				} elseif ( $this->mFormat == 'min' ) {
+					if ( $min === '' || $num < $min ) {
 						$min = $num;
-				} elseif ($this->mFormat == 'max') {
-					if ($max == '' || $num > $max)
+					}
+				} elseif ( $this->mFormat == 'max' ) {
+					if ( $max === '' || $num > $max ) {
 						$max = $num;
+					}
 				}
 			}
 		}
 		// if there were no results, display a blank
-		if ($count == 0) {
+		if ( $count == 0 ) {
 			$result = '';
-		} elseif ($this->mFormat == 'sum') {
+		} elseif ( $this->mFormat == 'sum' ) {
 			$result = $sum;
-		} elseif ($this->mFormat == 'average') {
+		} elseif ( $this->mFormat == 'average' ) {
 			$result = $sum / $count;
-		} elseif ($this->mFormat == 'min') {
+		} elseif ( $this->mFormat == 'min' ) {
 			$result = $min;
-		} elseif ($this->mFormat == 'max') {
+		} elseif ( $this->mFormat == 'max' ) {
 			$result = $max;
 		} else {
 			$result = '';
@@ -88,7 +100,7 @@ class SRFMath extends SMWResultPrinter {
 
         public function getParameters() {
                 return array(
-                        array('name' => 'limit', 'type' => 'int', 'description' => wfMsg('srf_paramdesc_limit')),
+                        array( 'name' => 'limit', 'type' => 'int', 'description' => wfMsg( 'srf_paramdesc_limit' ) ),
 		);
 	}
 
