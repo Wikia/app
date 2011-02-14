@@ -6,10 +6,13 @@ import static org.testng.AssertJUnit.assertEquals;
 
 import java.math.BigInteger;
 import java.util.Random;
+import java.util.Date;
 
 import org.testng.annotations.Test;
 
 public class CreateWikiTest extends BaseTest {
+	public static final String TEST_USER_PREFIX = "WikiaTestAccount";
+	public static final String TEST_EMAIL_FORMAT = "WikiaTestAccount%s@wikia-inc.com";
 	private static String wikiName;
 
 	private static String getWikiName() {
@@ -85,7 +88,7 @@ public class CreateWikiTest extends BaseTest {
 	}
 
 	@Test(groups={"envProduction"},dependsOnMethods={"cleanupTestCreateWikiAsLoggedInUser"})
-	public void testCreateWikiAsLoggedOutUser() throws Exception {
+	public void testCreateWikiAsLoggedOutUserLoginWhileCreating() throws Exception {
 		session().open("");
 		session().waitForPageToLoad(this.getTimeout());
 		clickAndWait("link=Start a wiki");
@@ -113,8 +116,48 @@ public class CreateWikiTest extends BaseTest {
 		assertEquals("http://pl." + getWikiName() + ".wikia.com/wiki/Specjalna:WikiActivity", session().getLocation());
 	}
 
-	@Test(groups={"envProduction"},dependsOnMethods={"testCreateWikiAsLoggedOutUser"},alwaysRun=true)
-	public void cleanupTestCreateWikiAsLoggedOutUser() throws Exception {
+	@Test(groups={"envProduction"},dependsOnMethods={"testCreateWikiAsLoggedOutUserLoginWhileCreating"},alwaysRun=true)
+	public void cleanupTestCreateWikiAsLoggedOutUserLoginWhileCreating() throws Exception {
+		loginAsStaff();
+		deleteWiki("pl");
+
+		wikiName = null;
+	}
+
+	@Test(groups={"envProduction"},dependsOnMethods={"cleanupTestCreateWikiAsLoggedOutUserLoginWhileCreating"})
+	public void testCreateWikiAsLoggedOutUserRegisterWhileCreating() throws Exception {
+		session().open("");
+		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("link=Start a wiki");
+
+		session().type("wiki-name", getWikiName());
+		session().type("wiki-domain", getWikiName());
+		session().select("wiki-category", "label=regexp:^.*Other");
+		session().select("wiki-language", "label=regexp:^.*Polski");
+
+		String time = Long.toString((new Date()).getTime());
+		String password = Long.toString(Math.abs(new Random().nextLong()), 36).toLowerCase();
+		String captchaWord = getWordFromCaptchaId(session().getValue("wpCaptchaId"));
+
+		session().type("wiki-username", TEST_USER_PREFIX + time);
+		session().type("wiki-email", String.format(TEST_EMAIL_FORMAT, time));
+		session().type("wiki-password", password);
+		session().type("wiki-retype-password", password);
+		session().select("wiki-user-year", "1900");
+		session().select("wiki-user-month", "1");
+		session().select("wiki-user-day", "1");
+		session().type("wpCaptchaWord", captchaWord);
+
+		clickAndWait("wiki-submit");
+		waitForTextPresent("Your wiki has been created!");
+
+		clickAndWait("//div[@class='awc-domain']/a");
+
+		assertEquals("http://pl." + getWikiName() + ".wikia.com/wiki/Specjalna:WikiActivity", session().getLocation());
+	}
+
+	@Test(groups={"envProduction"},dependsOnMethods={"testCreateWikiAsLoggedOutUserRegisterWhileCreating"},alwaysRun=true)
+	public void cleanupTestCreateWikiAsLoggedOutUserRegisterWhileCreating() throws Exception {
 		loginAsStaff();
 		deleteWiki("pl");
 
