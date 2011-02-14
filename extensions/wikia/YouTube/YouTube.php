@@ -76,6 +76,7 @@ function wfYouTube()
 	$wgParser->setHook('nicovideo', 'embedNicovideo');
 	$wgParser->setHook('ggtube', 'embedGoGreenTube');
 	$wgParser->setHook('cgamer', 'embedCrispyGamer');
+	$wgParser->setHook('longtail', 'embedLongtailVideo');
 	
 	$wgParser->setFunctionHook( 'youtube', 'wfParserFunction_youTube' );
 
@@ -533,3 +534,12 @@ function embedCrispyGamer($input, $argv, &$parser)
 	}
 }
 
+// Embed longtail video, given its key (as 'vid' attribute of <longtail> tag).
+// example: <longtail vid='8YVNhJJj'/>
+function embedLongtailVideo($input, $argv, &$parser)
+{
+	if (!empty($argv['vid'])){
+		$vid = $argv['vid'];
+		return "<script type=\"text/javascript\" src=\"http://content.bitsontherun.com/players/{$vid}-McXqFI4P.js\"></script>";
+	}
+}
