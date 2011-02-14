@@ -7,6 +7,7 @@ AdConfig = {
 	quantcastSegmentCookieName: 'qcseg',
 
 	isHighValueCountry: function(country) {
+		country = country.toUpperCase();
 		switch (country) {
 			case 'CA':
 			case 'DE':
