@@ -19,6 +19,45 @@
 
 class ScavengerHunt {
 
+	const HASH_SALT = 'ScavengerHuntSalt';
+	const CACHE_TTL = 7200;
+
+	protected $parser = null;
+	protected $parserOptions = null;
+	protected $fakeTitle = null;
+
+	protected function getCache() {
+		return WF::build('App')->getGlobal('wgMemc');
+	}
+	protected function getMemcKey( $arguments = null ) {
+		$args = func_get_args();
+		array_unshift($args, 'wfMemcKey');
+		return call_user_func_array(array(WF::build('App'),'runFunction'),$args);
+	}
+
+	public function parse( $text ) {
+		if (empty($this->parser)) {
+			$this->parser = WF::build('Parser');
+			$this->parser->setOutputType(OT_HTML);
+			$this->parserOptions = WF::build('ParserOptions');
+			$this->fakeTitle = WF::build('FakeTitle',array(''));
+		}
+
+		return $this->parser->parse($text, $this->fakeTitle, $this->parserOptions, false)->getText();
+	}
+
+	public function parseCached( $text ) {
+		$hash = md5(self::HASH_SALT . $text);
+		$key = $this->getMemcKey(__CLASS__,'parse-text-cache',$hash);
+		$cache = $this->getCache();
+		$parsed = $cache->get($key);
+		if (!is_string($parsed)) {
+			$parsed = $this->parse($text);
+			$cache->set($key,$parsed,self::CACHE_TTL);
+		}
+		return $parsed;
+	}
+
 	protected function getStyleForImageOffset( $offset ) {
 		return sprintf("left: %dpx; top: %dpx;",
 			intval(@$offset['left']), intval(@$offset['top']));
@@ -28,7 +67,7 @@ class ScavengerHunt {
 		// build entry form html
 		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
 		$template->set_vars(array(
-			'text' => $game->getStartingClueText(),
+			'text' => $this->parseCached( $game->getStartingClueText() ),
 			'buttonText' => $game->getStartingClueButtonText(),
 			'buttonTarget' => $game->getStartingClueButtonTarget(),
 			'imageSrc' => $game->getStartingClueImage(),
@@ -41,7 +80,7 @@ class ScavengerHunt {
 		// build entry form html
 		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
 		$template->set_vars(array(
-			'text' => $article->getClueText(),
+			'text' => $this->parseCached( $article->getClueText() ),
 			'buttonText' => $article->getClueButtonText(),
 			'buttonTarget' => $article->getClueButtonTarget(),
 			'imageSrc' => $article->getClueImage(),
@@ -55,8 +94,8 @@ class ScavengerHunt {
 		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
 		$template->set_vars(array(
 			'title' => $game->getEntryFormTitle(),
-			'text' => $game->getEntryFormText(),
-			'question' => $game->getEntryFormQuestion(),
+			'text' => $this->parseCached( $game->getEntryFormText() ),
+			'question' => $this->parseCached( $game->getEntryFormQuestion() ),
 			'imageSrc' => $game->getEntryFormImage(),
 			'imageOffset' => $game->getEntryFormImageOffset(),
 		));
@@ -68,7 +107,7 @@ class ScavengerHunt {
 		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
 		$template->set_vars(array(
 			'title' => $game->getGoodbyeTitle(),
-			'text' => $game->getGoodbyeText(),
+			'text' => $this->parseCached( $game->getGoodbyeText() ),
 			'buttonText' => wfMsg('scavengerhunt-goodbye-button-text'),
 			'buttonTarget' => '',
 			'imageSrc' => $game->getEntryFormImage(),

@@ -163,7 +163,7 @@ class SpecialScavengerHunt extends SpecialPage {
 		}
 
 
-		$game->setData(array(
+		$game->setAll(array(
 			'name' => $this->request->getVal('name'),
 			'landingTitle' => $this->request->getVal('landingTitle'),
 			'landingButtonText' => $this->request->getVal('landingButtonText'),

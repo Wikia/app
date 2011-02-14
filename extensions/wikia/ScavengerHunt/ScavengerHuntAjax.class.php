@@ -100,27 +100,33 @@ class ScavengerHuntAjax {
 				$email = $request->getVal('email','');
 				$answer = $request->getVal('answer','');
 
-				// XXX: validate data
+				if (!empty($name) && !empty($email) && !empty($answer)) {
+					$user = $app->getGlobal('wgUser');
 
-				$user = $app->getGlobal('wgUser');
+					$entry = $games->getEntries()->newEntry();
+					$entry->setUserId($user->getId());
+					$entry->setName($name);
+					$entry->setEmail($email);
+					$entry->setAnswer($answer);
 
-				$entry = $games->getEntries()->newEntry();
-				$entry->setUserId($user->getId());
-				$entry->setName($name);
-				$entry->setEmail($email);
-				$entry->setAnswer($answer);
-
-				if ($game->addEntry($entry)) {
-					$result = array(
-						'status' => true,
-						'goodbyeTitle' => $game->getGoodbyeTitle(),
-						'goodbyeContent' => $helper->getGoodbyeHtml($game),
-					);
+					if ($game->addEntry($entry)) {
+						$result = array(
+							'status' => true,
+							'goodbyeTitle' => $game->getGoodbyeTitle(),
+							'goodbyeContent' => $helper->getGoodbyeHtml($game),
+						);
+					} else {
+						// entry could not be added
+						$result = array(
+							'status' => false,
+							'error' => 'entry-save-error',
+						);
+					}
 				} else {
-					// entry could not be added
+					// validation failed
 					$result = array(
 						'status' => false,
-						'error' => 'entry-save-error',
+						'error' => 'validation-failed',
 					);
 				}
 			} else {
@@ -150,6 +156,7 @@ class ScavengerHuntAjax {
 		wfProfileIn(__METHOD__);
 
 		$app = WF::build('App');
+		$helper = WF::build('ScavengerHunt');
 		$request = $app->getGlobal('wgRequest');
 		$type = $request->getVal('type');
 		$data = json_decode($request->getVal('formData'), true);
@@ -161,7 +168,7 @@ class ScavengerHuntAjax {
 				$tmplName = 'modal-clue';
 				$title = $data['startingClueTitle'];
 				$template->set_vars(array(
-					'text' => $data['startingClueText'],
+					'text' => $helper->parse( $data['startingClueText'] ),
 					'buttonText' => $data['startingClueButtonText'],
 					'buttonTarget' => $data['startingClueButtonTarget'],
 					'imageSrc' => $data['startingClueImage'],
@@ -176,7 +183,7 @@ class ScavengerHuntAjax {
 				$tmplName = 'modal-clue';
 				$title = $data['articleClueTitle[]'];
 				$template->set_vars(array(
-					'text' => $data['articleClueText[]'],
+					'text' => $helper->parse( $data['articleClueText[]'] ),
 					'buttonText' => $data['articleClueButtonText[]'],
 					'buttonTarget' => $data['articleClueButtonTarget[]'],
 					'imageSrc' => $data['articleClueImage[]'],
@@ -191,8 +198,8 @@ class ScavengerHuntAjax {
 				$tmplName = 'modal-form';
 				$title = $data['entryFormTitle'];
 				$template->set_vars(array(
-					'text' => $data['entryFormText'],
-					'question' => $data['entryFormQuestion'],
+					'text' => $helper->parse( $data['entryFormText'] ),
+					'question' => $helper->parse( $data['entryFormQuestion'] ),
 					'imageSrc' => $data['entryFormImage'],
 					'imageOffset' => array(
 						'top' => $data['entryFormImageTopOffset'],
@@ -205,7 +212,7 @@ class ScavengerHuntAjax {
 				$tmplName = 'modal-clue';
 				$title = $data['goodbyeTitle'];
 				$template->set_vars(array(
-					'text' => $data['goodbyeText'],
+					'text' => $helper->parse( $data['goodbyeText'] ),
 					'imageSrc' => $data['goodbyeImage'],
 					'imageOffset' => array(
 						'top' => $data['goodbyeImageTopOffset'],
