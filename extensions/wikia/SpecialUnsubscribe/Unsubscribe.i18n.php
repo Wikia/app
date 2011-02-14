@@ -45,6 +45,25 @@ $messages['br'] = array(
 	'unsubscribe-working-done' => 'Graet.',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'unsubscribe' => 'Odhlásit',
+	'unsubscribe-badaccess' => 'Tuto stránku nelze použít přímo. Prosím klepněte na odkaz v e-mailu.',
+	'unsubscribe-badtoken' => 'Je nám líto, ale došlo k potížím se zabezpečením.',
+	'unsubscribe-bademail' => 'Je nám líto, ale došlo k potížím s e-mailem.',
+	'unsubscribe-badtime' => 'Je nám líto, ale odkaz vypršel. Použijte prosím odkaz, který je čerstvější než 7 dní.',
+	'unsubscribe-nousers' => 'Žádní uživatelé s danou e-mailovou adresu nebyli nalezeni.',
+	'unsubscribe-noconfusers' => 'Žádní potvrzení uživatelé s danou e-mailovou adresou nebyli nalezeni.',
+	'unsubscribe-confirm-legend' => 'Potvrdit',
+	'unsubscribe-confirm-text' => 'Odhlásit všechny účty s <code>$1</code>?',
+	'unsubscribe-confirm-button' => 'Ano, jsem si jistý',
+	'unsubscribe-working' => 'Odhlašování $1 {{PLURAL:$1|účtu|účtů}} pro $2',
+	'unsubscribe-working-problem' => 'problém načítání informací uživatele pro: $1',
+	'unsubscribe-working-done' => 'Hotovo.',
+);
+
 /** Spanish (Español)
  * @author Bola
  */
@@ -82,6 +101,15 @@ Per favor seque le ligamine ab tu e-mail.',
 	'unsubscribe-working' => 'Cancella subscription de $1 {{PLURAL:$1|conto|contos}} pro $2',
 	'unsubscribe-working-problem' => 'problema de cargamento del information de usator pro: $1',
 	'unsubscribe-working-done' => 'Complete.',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'unsubscribe-confirm-legend' => 'Confirméieren',
+	'unsubscribe-confirm-button' => 'Jo, ech si sécher',
+	'unsubscribe-working-done' => 'Fäerdeg.',
 );
 
 /** Macedonian (Македонски)
@@ -139,6 +167,17 @@ $messages['no'] = array(
 	'unsubscribe-working' => 'Avbryter abonnement for $1 {{PLURAL:$1|konto|kontoer}} for $2',
 	'unsubscribe-working-problem' => 'problem med å laste brukerinformasjon for: $1',
 	'unsubscribe-working-done' => 'Fullført.',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'unsubscribe' => 'Одјави ме',
+	'unsubscribe-nousers' => 'Корисник с том е-адресом није пронађен.',
+	'unsubscribe-confirm-legend' => 'Потврди',
+	'unsubscribe-confirm-button' => 'Да, сигуран/-на сам',
+	'unsubscribe-working-done' => 'Завршено.',
 );
 
 /** Swedish (Svenska)

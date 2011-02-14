@@ -46,6 +46,20 @@ $messages['br'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fazi : rekis eo korf ar bajenn',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'contentfeeds-desc' => 'Nabízí bohaté a aktuální informace skrze různé značky nebo kanály',
+	'contentfeeds-newimages-rss-title' => 'Informační kanál RSS pro {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Kanál z $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Vytvořte Vaše první stránky!',
+	'contentfeeds-firstfewarticles-tag-title' => 'Název stránky',
+	'contentfeeds-firstfewarticles-tag-next' => 'Další',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Chyba: Název stránky je požadován',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Chyba: Tělo stránky je požadováno',
+);
+
 /** Welsh (Cymraeg) */
 $messages['cy'] = array(
 	'contentfeeds-desc' => 'Yn darparu gwybodaeth gyfoethog gyfamserol drwy dagiau neu "borthiant" gwahanol',
@@ -56,6 +70,13 @@ $messages['cy'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Nesaf',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Gwall: Mae angen teitl ar y dudalen',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Gwall: Mae angen cynnwys ar y dudalen',
+);
+
+/** German (Deutsch)
+ * @author George Animal
+ */
+$messages['de'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Titel',
 );
 
 /** Spanish (Español) */

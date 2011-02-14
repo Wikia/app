@@ -1774,6 +1774,15 @@ $messages['kn'] = array(
 	'blog-comment-delete' => 'ಅಳಿಸು',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'blog-added' => 'dobei jedonn',
+	'blog-edited' => 'verändert',
+	'blog-comment-history' => 'Ällder Versione',
+);
+
 /** Kurdish (Latin) (Kurdî (Latin))
  * @author George Animal
  */
@@ -2877,7 +2886,7 @@ $messages['sr-ec'] = array(
 	'blog-comments-anonymous' => 'Анониман корисник',
 	'blog-comment-delete' => 'обриши',
 	'blog-comment-hide' => 'сакриј',
-	'blog-comment-unhide' => 'прикажи',
+	'blog-comment-unhide' => 'откриј',
 	'blog-comment-history' => 'историјат',
 	'blog-comment-edit' => 'уреди',
 	'blog-avatar-preferences-title' => 'Корисничка сличица',

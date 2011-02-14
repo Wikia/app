@@ -73,21 +73,18 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
 );
 
+/** Message documentation (Message documentation) */
 $messages['qqq'] = array(
-	// general messages
 	'cnw-next' => 'Text for "Next" Button',
 	'cnw-back' => 'Text for "Back" Button',
 	'cnw-or' => 'Division for login or Facebook login',
 	'cnw-title' => 'General Title for this feature',
-	// step1 - create a wiki
 	'cnw-name-wiki-headline' => 'H1 for this step',
 	'cnw-name-wiki-creative' => 'Creative or instruction for this step following H1',
 	'cnw-name-wiki-label' => 'Label for wiki name field',
 	'cnw-name-wiki-wiki' => '"Wiki"',
 	'cnw-name-wiki-domain-label' => 'Label for wiki domain field',
-	'cnw-name-wiki-language' => 'Language domain code',
 	'cnw-name-wiki-submit-error' => 'Error message to display when the there are errors in the fields',
-	// step2 - signup/login
 	'cnw-login' => 'Text for "Log In" Button',
 	'cnw-signup' => 'Text for "Create account" Button',
 	'cnw-signup-prompt' => 'ask if user needs to create an account',
@@ -97,7 +94,6 @@ $messages['qqq'] = array(
 	'cnw-auth-headline' => 'H1 for this step',
 	'cnw-auth-creative' => 'Creative or instruction for this step following H1 for login',
 	'cnw-auth-signup-creative' => 'Creative or instruction for this step following H1 for signup',
-	// step3 - wiki description
 	'cnw-desc-headline' => 'H1 for this step',
 	'cnw-desc-creative' => 'Creative or instruction for this step following H1',
 	'cnw-desc-placeholder' => 'Placeholder for the textarea',
@@ -113,19 +109,26 @@ $messages['qqq'] = array(
 	'cnw-desc-change-lang' => 'Call to action to change the language',
 	'cnw-desc-lang' => 'Label for language',
 	'cnw-desc-wiki-submit-error' => 'General error message for not selecting category',
-	// step4 - select theme
 	'cnw-theme-headline' => 'H1 for this step',
 	'cnw-theme-creative' => 'Creative or instruction for this step following H1',
 	'cnw-theme-instruction' => 'Details on how Toolbar can be used as an alternative later',
-	// step5 - upgrade (this is pretty much for en only for now.  may expand to other languages in the future)
 	'cnw-upgrade-headline' => 'H1 for this step',
 	'cnw-upgrade-creative' => 'Creative for this step.  leave the span in there for wiki name',
 	'cnw-upgrade-marketing' => 'Marketing Pitch for Wikia plus upgrade',
 	'cnw-upgrade-now' => 'Call to action button to upgrade to Wikia plus',
 	'cnw-upgrade-decline' => 'Wikia plus rejection',
-	// wiki welcome message (this is the modal dialong on the main page when wiki-welcome=1)
 	'cnw-welcome-headline' => 'Headliner for modal. $1 is wikiname',
 	'cnw-welcome-instruction1' => 'First line of instruction to add a page',
 	'cnw-welcome-instruction2' => 'Second line of instruction to add a page after the button',
 	'cnw-welcome-help' => 'Message to Community central with embedded anchor. (leave blank if community does not exist)',
 );
+
+/** German (Deutsch)
+ * @author George Animal
+ */
+$messages['de'] = array(
+	'cnw-or' => 'oder',
+	'cnw-desc-choose' => 'Eine Kategorie auswählen',
+	'cnw-desc-lang' => 'Sprache',
+);
+

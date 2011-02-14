@@ -41,6 +41,17 @@ $messages['bs'] = array(
 	'stafflog-piggybacklogoutmsg' => '$1 nosilac - korisnik $2 odjava sa $3 računa',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'stafflog-desc' => 'Centralizované protokolování pro zaměstnance',
+	'stafflog' => 'Protokol zaměstnanců',
+	'stafflog-blockmsg' => '$1 $2 se pokusil zablokovat zaměstnance $3 na wiki $4. Důvod: $5',
+	'stafflog-piggybackloginmsg' => '$1 Piggyback - uživatel $2 se přihlašuje jako $3',
+	'stafflog-piggybacklogoutmsg' => '$1 Piggyback - uživatel $2 se odhlašuje z účtu $3',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'stafflog-desc' => 'Zentralisiertes Mitarbeiter-Logbuch',

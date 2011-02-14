@@ -806,6 +806,7 @@ $messages['ckb'] = array(
 );
 
 /** Czech (Česky)
+ * @author Dontlietome7
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
@@ -823,16 +824,25 @@ $messages['cs'] = array(
 	'wf_cc_name' => 'Kategorie',
 	'wikifactory_removevariable' => 'Odstranit wikidata z cache',
 	'wikifactory_removeconfirm' => 'Wikidata byla z cache odstraněna!',
+	'wikifactory-label-info' => 'Info',
 	'wikifactory-label-variables' => 'Proměnné',
+	'wikifactory-label-variables2' => 'Obecné',
 	'wikifactory-label-hubs' => 'Hubs',
 	'wikifactory-label-domains' => 'Domény',
 	'wikifactory-label-return' => 'Zpět na seznam',
 	'wikifactory-label-clog' => 'Záznam změn',
 	'wikifactory-label-actions' => 'Akce',
+	'wikifactory-label-google' => 'Nástroje Google',
 	'wikifactory-label-close' => 'Zavřít',
 	'wikifactory-label-tags' => 'Tagy',
+	'wikifactory-label-tags2' => 'Tagy',
+	'wikifactory-label-masstags' => 'Hromadné tagy',
+	'wikifactory-label-findtags' => 'Vyhledat tagy',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'right-wikifactory' => 'Změnit vnitřní nastavení pro wiki',
+	'wikifactory-domain-edit' => 'editovat tuto URL',
+	'wikifactory-domain-remove' => 'odstranit tuto adresu URL z wiki',
+	'wikifactory-domain-setmain' => 'vložit toto URL do wgServer',
 	'closewiki-check-and-confirm' => 'Zkontrolovat wiki a potvrdit operaci',
 	'closewiki-redirect-to' => 'Přesměrovat na',
 	'closewiki-message' => 'Název domény $1',
@@ -877,10 +887,11 @@ $messages['cs'] = array(
 	'awc-metrics-db-size' => 'Velikost databáze',
 	'awc-metrics-images' => 'Obrázky',
 	'awc-metrics-all-users' => 'Registrovaní<br />uživatelé',
-	'awc-metrics-all-users-edit-main-ns' => 'Registrovaní uživatelé<br />(NS_MAIN)',
+	'awc-metrics-all-users-edit-main-ns' => 'Registrovaní uživatelé<br />(Content NS)',
 	'awc-metrics-pageviews' => 'Zobrazení<br />stránky',
 	'awc-metrics-statistics' => 'Statistiky (průměr za všechny měsíce)',
 	'awc-metrics-close' => 'Zavřít',
+	'awc-metrics-close-action' => 'zavřít',
 	'awc-metrics-active' => 'aktivní',
 	'awc-metrics-closed' => 'zavřeno',
 	'awc-metrics-redirected' => 'zavřeno a přesměrováno',
@@ -897,6 +908,7 @@ $messages['cs'] = array(
 	'awc-metrics-close-listed' => 'Zavřít všechny wiki na seznamu',
 	'awc-metrics-close-checked' => 'Zavřít zkontrolované',
 	'awc-metrics-exact-match' => 'přesná shoda',
+	'awc-metrics-recordspager' => 'Zobrazeny záznamy $1 až $2 ze $3 záznamů',
 	'closed-wiki' => 'Uzavřená wiki',
 	'closed-wiki-info' => 'Tato wiki byla uzavřena',
 	'disabled-wiki-info' => 'Tato wiki byla odpojena',
@@ -908,6 +920,7 @@ $messages['cs'] = array(
 	'closed-create-image-archive' => 'Vytvořit archiv obrázků',
 	'closed-delete-database-images' => 'Smazat databázi a obrázky',
 	'closed-delete-images' => 'Smazat obrázky',
+	'closed-free-url' => 'Uvolnit URL pro nového zakladatele',
 	'closed-hide-dumps' => 'Skrýt výstup z databáze a databáze obrázků',
 	'closed-redirect-url' => 'Přesměrování URL',
 	'closed-confirm-btn' => 'Potvrdit zavření',
@@ -2305,6 +2318,7 @@ $messages['krc'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
+	'wf_city_title' => 'Tittel',
 	'closed-wiki-dump-exists' => 'Do kanns der [$1 Ennhald vun däm Wiki afroofe].',
 	'closed-wiki-dump-noexists' => 'Dat Wiki heh es zohjemaat woode. Däm singe Enhalld sullt innerhallf vun 24 Shtunde als e Aschiiv paraat shtonn. Bes esu joot, un loor spääder noch end donoh.',
 	'closed-wiki-create-wiki' => 'E neu Wiki opmaache',
@@ -3241,11 +3255,11 @@ $messages['pt'] = array(
 	'awc-metrics-images' => 'Ficheiros',
 	'awc-metrics-all-users' => 'Utiliz.<br />
 regist.',
-	'awc-metrics-all-users-edit-main-ns' => 'Utiliz. reg.<br />
-(PRINCIPAL)',
+	'awc-metrics-all-users-edit-main-ns' => 'Utiliz. reg.<br />(EN Principal)',
 	'awc-metrics-pageviews' => 'Visitas<br />a págs.',
 	'awc-metrics-statistics' => 'Estatísticas (média de todos os meses)',
 	'awc-metrics-close' => 'Fechar',
+	'awc-metrics-close-action' => 'fechar',
 	'awc-metrics-active' => 'activas',
 	'awc-metrics-closed' => 'fechadas',
 	'awc-metrics-redirected' => 'fechadas e redireccionadas',
@@ -3262,6 +3276,7 @@ regist.',
 	'awc-metrics-close-listed' => 'Fechar todas as listadas',
 	'awc-metrics-close-checked' => 'Fechar as marcadas',
 	'awc-metrics-exact-match' => 'correspondência exacta',
+	'awc-metrics-recordspager' => "A apresentar os registos '''$1''' a '''$2''' de '''$3'''",
 	'closed-wiki' => 'Wiki fechada',
 	'closed-wiki-info' => 'Esta wiki foi fechada',
 	'disabled-wiki-info' => 'Esta wiki foi desactivada',

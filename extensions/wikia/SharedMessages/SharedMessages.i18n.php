@@ -16,6 +16,13 @@ $messages['bs'] = array(
 	'sharedmessages-desc' => 'Omogućava korištenje poruka iz zajedničke baze podataka',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'sharedmessages-desc' => 'Umožňuje použití zpráv ze sdílené databáze',
+);
+
 /** Spanish (Español) */
 $messages['es'] = array(
 	'sharedmessages-desc' => 'Posibilita el uso de mensajes desde la base de datos compartida',

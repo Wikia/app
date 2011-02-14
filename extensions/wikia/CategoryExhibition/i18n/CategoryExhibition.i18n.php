@@ -47,6 +47,22 @@ $messages['br'] = array(
 	'category-exhibition-display-new' => 'Gwel diskouez ar rummad',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'category-exhibition-sorttype' => 'Typ řazení:',
+	'category-exhibition-alphabetical' => 'Abecední',
+	'category-exhibition-mostvisited' => 'Nejvíce navštěvované',
+	'category-exhibition-recentedits' => 'Nedávno editované',
+	'category-exhibition-page-header' => 'Stránky v kategorii „$1"',
+	'category-exhibition-subcategories-header' => 'Podkategorie',
+	'category-exhibition-media-header' => 'Média v kategorii "$1"',
+	'category-exhibition-blogs-header' => 'Příspěvky do blogu',
+	'category-exhibition-display-old' => 'Zobrazení seznamu kategorií',
+	'category-exhibition-display-new' => 'Zobrazení výstavy kategorií',
+);
+
 /** Welsh (Cymraeg) */
 $messages['cy'] = array(
 	'category-exhibition-sorttype' => 'Trefnu yn ôl:',
@@ -61,9 +77,12 @@ $messages['cy'] = array(
 	'category-exhibition-display-new' => 'dangos y categori ar ffurf arddangosfa',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author George Animal
+ */
 $messages['de'] = array(
 	'category-exhibition-alphabetical' => 'Alphabetisch',
+	'category-exhibition-subcategories-header' => 'Unterkategorien',
 );
 
 /** Spanish (Español) */

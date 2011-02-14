@@ -94,3 +94,14 @@ $messages['en'] = array(
 	'sponsorship-dashboard-empty-chart' => 'Sorry. No data for this chart.',
 	'sponsorship-dashboard-cityname-and-familiarity' => '$1 - <i>$2 % user match</i>',
 );
+
+/** German (Deutsch)
+ * @author George Animal
+ */
+$messages['de'] = array(
+	'sponsorship-dashboard-report-content' => 'Inhalt',
+	'sponsorship-dashboard-day' => 'Tag',
+	'sponsorship-dashboard-month' => 'Monat',
+	'sponsorship-dashboard-year' => 'Jahr',
+);
+

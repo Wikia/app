@@ -57,6 +57,24 @@ $messages['bs'] = array(
 	'batchuserrights-userload-error' => "Nisam mogao učitati korisnika \"'''\$1'''\".",
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'batchuserrights' => 'Dávkové přidělení uživatelských práv',
+	'batchuserrights-desc' => 'Umožňuje přidání jednoho nebo více uživatelů najednou do skupiny',
+	'batchuserrights-names' => 'Uživatelská jména k přidání do této skupiny (1 na řádek):',
+	'batchuserrights-intro' => 'Tato stránka vám umožní přidat skupinu pro více uživatelů najednou.
+Z bezpečnostních důvodů seznam přidatelných skupin je nastaven v konfiguraci rozšíření a nelze jej měnit v rámci wiki.
+Požádejte správce systému, pokud potřebujete povolit dávkové přidáním dalších skupin.',
+	'batchuserrights-single-progress-update' => 'Přidána {{PLURAL:$1|skupina|skupiy|skupin}} do <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'Přidávání {{PLURAL:$1|jednoho uževatele|$1 uživatelů}} do následující{{PLURAL:$2| skupiny|ch skupin}}: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "Nelze načíst uživatele \"'''\$1'''\".",
+	'batchuserrights-no-groups' => 'Neurčili jste žádné skupiny.
+Neprovede se žádná akce.
+Zbývající část stránky bude možné spustit tak, že lze snadno zobrazit, pokud některého z uživatelů nelze načíst.',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author The Evil IP address

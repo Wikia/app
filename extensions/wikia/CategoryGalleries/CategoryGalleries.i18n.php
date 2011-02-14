@@ -23,6 +23,13 @@ $messages['bs'] = array(
 	'categorygalleries-desc' => 'Prikazuje galeriju na stranici kategorije',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'categorygalleries-desc' => 'Zobrazuje galerii stránek na stránkách kategorií',
+);
+
 /** Spanish (Español)
  * @author Bola
  */
@@ -49,6 +56,13 @@ $messages['gl'] = array(
  */
 $messages['ia'] = array(
 	'categorygalleries-desc' => 'Monstra un galeria de paginas in paginas de categoria',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'categorygalleries-desc' => 'Weist eng Galerie vu Säiten op de Kategoriesäiten',
 );
 
 /** Macedonian (Македонски)

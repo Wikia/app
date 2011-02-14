@@ -39,6 +39,19 @@ $messages['br'] = array(
 	'interstitial-default-campaign-code' => "Wikia a gar ac'hanoc'h !",
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'interstitial-default-campaign-code' => 'Wikia Vás miluje!',
+	'interstitial-skip-ad' => 'Přeskočit tuto reklamu',
+	'interstitial-already-logged-in-no-link' => 'Jste již přihlášeni a není nastaven žádný cíl.',
+	'interstitial-disabled-no-link' => 'Není nastavena destinace a interstitials nejsou na této wiki povoleny.',
+	'interstitial-link-away' => 'Není tu nic k vidění!<br /><br />Chcete jít na [[{{MediaWiki:Mainpage}}|hlavní stránku]] nebo na [[Special:Random|náhodnou stránku]]?',
+	'exitstitial-register' => '<a href="#" class="register">Registrujte se</a> nebo <a href="#" class="login">se přihlašte</a> pro přeskočení reklam.',
+	'exitstitial-button' => 'Přeskočit tuto reklamu',
+);
+
 /** Spanish (Español)
  * @author Bola
  */

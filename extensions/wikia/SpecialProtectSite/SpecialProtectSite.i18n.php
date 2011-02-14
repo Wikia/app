@@ -112,6 +112,33 @@ $messages['br'] = array(
 	'protectsite-unprotect' => 'Diwareziñ',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'specialprotectsite-desc' => 'Umožňuje administrátorům [[Special:ProtectSite|dočasně zablokovat editaci dané stránky]]',
+	'protectsite' => 'Zamknout stránku',
+	'protectsite-text-protect' => '<!-- Pokyny/Připomínky/Zásady používání -->',
+	'protectsite-text-unprotect' => '<!-- Pokyny/Komentáře při ocraně -->',
+	'protectsite-title' => 'Nastavení ochrany stránky',
+	'protectsite-allowall' => 'Všichni uživatelé',
+	'protectsite-allowusersysop' => 'Registrovaní uživatelé a administrátoři',
+	'protectsite-allowsysop' => 'Pouze administrátoři',
+	'protectsite-createaccount' => 'Povolit vytváření nových účtů od',
+	'protectsite-createpage' => 'Povolit vytváření nových stránek od',
+	'protectsite-edit' => 'Povolit úpravu stránek od',
+	'protectsite-move' => 'Povolit přemístění stránek od',
+	'protectsite-upload' => 'Povolit načítání souborů od',
+	'protectsite-timeout' => 'Časový limit:',
+	'protectsite-timeout-error' => "'''neplatný časový limit.'''",
+	'protectsite-maxtimeout' => 'Maximum:',
+	'protectsite-comment' => 'Komentář:',
+	'protectsite-ucomment' => 'Odemknout komentář:',
+	'protectsite-until' => 'Zamknuto do:',
+	'protectsite-protect' => 'Zamknout',
+	'protectsite-unprotect' => 'Odemknout',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author The Evil IP address

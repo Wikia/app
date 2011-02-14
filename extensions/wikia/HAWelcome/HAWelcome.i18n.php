@@ -97,6 +97,52 @@ M'ho peus ezhomm skoazell ha ma n'eus merour ebet amañ e c'hallit gweladenniñ 
 	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'welcome-user-page' => "==O mně==
+
+''Toto je Vaše uživatelská stránka. Upravte ji, aby o Vás komunita věděla!''
+
+==Mé příspěvky==
+
+* [[Special:Contributions/{{PAGENAME}}|Příspěvky uživatele]]
+
+==Mé oblíbené stránky==
+
+* Přidejte sem odkazy na své oblíbené stránky
+* Odkaz #2
+* Odkaz #3",
+	'welcome-message-user' => 'Vítejte na {{SITENAME}}! Děkujeme za Vaší úpravu stránky [[:$1]].
+
+Prosím nechejte vzkaz na [[$2|mé diskuzní stránce]], pokud potřebujete s čímkoliv pomoci! $3',
+	'welcome-message-anon' => "Vítejte na {{SITENAME}}! Děkujeme za Vaší úpravu stránky [[:$1]].
+
+'''[[Special:Userlogin|Prosím, zaregistrujte se]]'''.
+Je to snadný způsob, jak sledovat své příspěvky a komunikovat s komunitou.
+
+Prosím nechejte vzkaz na [[$2|mé diskuzní stránce]], pokud potřebujete s čímkoliv pomoci! $3",
+	'welcome-message-log' => 'přivítání nového přispěvatele',
+	'welcome-message-user-staff' => '==Vítejte==
+
+Vítejte na {{SITENAME}}! Děkujeme za Vaší úpravu stránky [[:$1]].
+
+Pokud potřebujete pomoci a nejsou zde žádní administrátoři, můžete navštívit [[wikia:Forum:Community Central Forum|fórum na Community
+Central Wiki]] $3',
+	'welcome-message-anon-staff' => "==Vítejte==
+
+Vítejte na {{SITENAME}}! Děkujeme za Vaší úpravu stránky [[:$1]].
+
+'''[[Special:UserLogin|Prosím, zaregistrujte se]]'''.
+Je to snadný způsob, jak sledovat své příspěvky a komunikovat s komunitou.
+
+Pokud potřebujete pomoci a nejsou zde žádní administrátoři, můžete navštívit [[wikia:Forum:Community Central Forum|fórum na Community
+Central Wiki]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|fórum podpory]] | [[w:sblog|blog]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author The Evil IP address
@@ -317,13 +363,14 @@ Bonjour et bienvenue sur {{SITENAME}} ! Merci d'avoir modifié la page [[:$1]].
 
 Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:fr:Forum:Vue d'ensemble|forums du Wiki Central de la Communauté]] $3",
 	'welcome-message-anon-staff' => "==Bienvenue==
+
 Bonjour et bienvenue sur {{SITENAME}}.
 Merci d'avoir modifié la page [[:$1]].
 
 '''[[Special:UserLogin|Merci de bien vouloir vous enregistrer et créer un nom d'utilisateur]]'''.
 C'est un moyen simple pour garder la trace de vos contributions et qui vous aidera à communiquer avec le reste de la communauté.
 
-Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:fr:Forum:Vue d'ensemble|forums du Wiki Central de la Communauté]] $3",
+Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:Forum:Community Central Forum|forums du Wiki Central de la Communauté]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum d’aide]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 );

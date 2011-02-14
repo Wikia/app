@@ -89,6 +89,16 @@ $messages['en'] = array(
 	'scavengerhunt-goodbye-button-text' => 'Bye',
 );
 
+/** Message documentation (Message documentation) */
 $messages['qqq'] = array(
 	'scavengerhunt-desc' => '{{desc}}',
 );
+
+/** German (Deutsch)
+ * @author George Animal
+ */
+$messages['de'] = array(
+	'scavengerhunt-label-name' => 'Name:',
+	'scavengerhunt-entry-form-name' => 'Dein Name:',
+);
+

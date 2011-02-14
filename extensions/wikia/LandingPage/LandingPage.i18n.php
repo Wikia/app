@@ -36,6 +36,18 @@ $messages['br'] = array(
 	'landingpage-buttons-learn-more' => "Gouzout hiroc'h &gt;",
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'landingpage' => 'Vítejte na Wikii',
+	'landingpage-start-exploring' => 'Jste připraveni zahájit prohlídku?',
+	'landingpage-start-exploring-text' => 'Hledejte své oblíbené téma nebo procházejte oblíbence komunity.',
+	'landingpage-readfaq' => 'Otázky? Přečtěte si naše FAQ &gt;',
+	'landingpage-text' => 'Na Wikia se můžete <strong>spojit s lidmi</strong>, kteří sdílejí své <strong>zájmy a záliby</strong>. Vyhledejte svou skupinu, napište komentáře a editujte, nebo <strong>založte svůj vlastní web</strong>.',
+	'landingpage-buttons-learn-more' => 'Zjistit více &gt;',
+);
+
 /** German (Deutsch)
  * @author Diebuche
  */
@@ -69,7 +81,7 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'landingpage' => 'Bienvenue sur Wikia',
-	'landingpage-start-exploring' => "Prêt à commencer l'exploration ?",
+	'landingpage-start-exploring' => 'Prêt à explorer ?',
 	'landingpage-start-exploring-text' => 'Recherchez le sujet qui vous intéresse ou parcourez les favoris de la communauté ci-dessous.',
 	'landingpage-readfaq' => 'Des questions ? Lisez notre FAQ &gt;',
 	'landingpage-text' => "Chez Wikia vous pouvez <strong>communiquer avec des gens</strong> qui partagent vos <strong>centres d'intérêt</strong>. Trouvez votre groupe, commentez et éditez, vous pouvez même <strong>démarrer votre propre site</strong> et communauté.",

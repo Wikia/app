@@ -21,6 +21,15 @@ $messages['br'] = array(
 	'scribeeventsrecords' => 'Enrolladennoù',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Nástroj]] na hledání konkrétního názvu stránky na všech wiki',
+	'scribeevents' => 'Nedávné události',
+	'scribeeventsrecords' => 'Záznamy',
+);
+
 /** Spanish (Español) */
 $messages['es'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Herramienta]] para buscar el título de una página específica a través de las wikis',
@@ -96,5 +105,13 @@ $messages['ru'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Инструмент]] для поиска определённых страниц по заголовку в вики',
 	'scribeevents' => 'Недавние события',
 	'scribeeventsrecords' => 'Записи',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'scribeevents' => 'Скорашњи догађаји',
+	'scribeeventsrecords' => 'Белешке',
 );
 

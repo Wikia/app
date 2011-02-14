@@ -212,6 +212,57 @@ $messages['bs'] = array(
 	'themedesigner-large' => 'Veliko',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'themedesigner-desc' => 'Umožňuje administrátorům wiki změnit motiv wiki',
+	'themedesigner-title' => 'Návrhář motivů Wikia',
+	'themedesigner-background' => 'Pozadí',
+	'themedesigner-page' => 'Stránka',
+	'themedesigner-color' => 'barva',
+	'themedesigner-graphic' => 'grafika',
+	'themedesigner-buttons' => 'tlačítka',
+	'themedesigner-links' => 'odkazy',
+	'themedesigner-header' => 'hlavička',
+	'themedesigner-text-wordmark' => 'Textové logo',
+	'themedesigner-graphic-wordmark' => 'Grafické logo',
+	'themedesigner-small' => 'Malé',
+	'themedesigner-medium' => 'Střední',
+	'themedesigner-large' => 'Velké',
+	'themedesigner-tile-background' => 'opakovat pozadí',
+	'themedesigner-tab-theme' => 'Motiv',
+	'themedesigner-tab-customize' => 'Upravit',
+	'themedesigner-tab-wordmark' => 'Logo',
+	'themedesigner-preview-mode' => 'Náhledový mód...',
+	'themedesigner-previous-versions' => 'Předchozí verze',
+	'themedesigner-button-save-im-done' => 'Uložit, jsem hotový.',
+	'themedesigner-button-cancel' => 'Storno',
+	'themedesigner-pick-a-color' => 'Zvolte barvu',
+	'themedesigner-enter-your-own' => 'Zadejte svou vlastní',
+	'themedesigner-color-name-or-hex-code' => 'Název barvy nebo HEX kód',
+	'themedesigner-button-ok' => 'OK',
+	'themedesigner-pick-an-image' => 'Zvolte obrázek',
+	'themedesigner-dont-use-a-background' => 'Nepoužívat pozadí',
+	'themedesigner-upload-your-own' => 'Nahrát své vlastní',
+	'themedesigner-button-upload' => 'Nahrát',
+	'themedesigner-rules-background' => 'jpg, gif nebo png. Limit 100 kilobyte',
+	'themedesigner-default' => 'Standartní',
+	'themedesigner-font' => 'písmo',
+	'themedesigner-size' => 'velikost',
+	'themedesigner-button-save' => 'Uložit',
+	'themedesigner-upload-a-graphic' => 'nahrát grafiku',
+	'themedesigner-rules-wordmark' => 'až do 250x65 pixelů (pouze soubory .png)',
+	'themedesigner-dont-use-a-graphic' => 'Nepoužívat grafiku',
+	'themedesigner-history-item' => '$1 - $2',
+	'themedesigner-button-change-text' => 'Změnit text',
+	'themedesigner-reason' => 'Návrhář motivů - uložil $1',
+	'themedesigner-size-error' => 'Špatná velikost souboru',
+	'themedesigner-dimensions-error' => 'Obrázek je příliš veliký',
+	'themedesigner-type-error' => 'Špatný typ souboru',
+	'themedesugber-uknown-error' => 'Nastala neidentifikovaná chyba, prosím opakujte akci.',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author The Evil IP address
@@ -929,6 +980,48 @@ $messages['ru'] = array(
 	'themedesigner-dont-use-a-graphic' => 'Не использовать изображение',
 	'themedesigner-history-item' => '$1 — $2',
 	'themedesigner-button-change-text' => 'Изменить текст',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'themedesigner-title' => 'Прављење тема',
+	'themedesigner-background' => 'Позадина',
+	'themedesigner-page' => 'Страница',
+	'themedesigner-color' => 'боја',
+	'themedesigner-graphic' => 'графика',
+	'themedesigner-buttons' => 'дугмићи',
+	'themedesigner-links' => 'везе',
+	'themedesigner-header' => 'заглавље',
+	'themedesigner-small' => 'Мало',
+	'themedesigner-medium' => 'Средње',
+	'themedesigner-large' => 'Велико',
+	'themedesigner-tab-theme' => 'Тема',
+	'themedesigner-tab-customize' => 'Прилагоди',
+	'themedesigner-preview-mode' => 'Претпреглед...',
+	'themedesigner-previous-versions' => 'Претходна издања',
+	'themedesigner-button-save-im-done' => 'Сачувај',
+	'themedesigner-button-cancel' => 'Откажи',
+	'themedesigner-color-name-or-hex-code' => 'Назив боје или хекс кôд',
+	'themedesigner-button-ok' => 'У реду',
+	'themedesigner-pick-an-image' => 'Изаберите слику',
+	'themedesigner-dont-use-a-background' => 'Не користите позадину',
+	'themedesigner-upload-your-own' => 'Отпремите',
+	'themedesigner-button-upload' => 'Отпреми',
+	'themedesigner-rules-background' => 'JPG, GIF или PNG. Ограничење је 100 килобајта',
+	'themedesigner-default' => 'Подразумевано',
+	'themedesigner-font' => 'фонт',
+	'themedesigner-size' => 'величина',
+	'themedesigner-button-save' => 'Величина',
+	'themedesigner-upload-a-graphic' => 'отпреми графику',
+	'themedesigner-rules-wordmark' => 'до 250×65 тачака (само PNG датотеке)',
+	'themedesigner-dont-use-a-graphic' => 'Не користи графику',
+	'themedesigner-history-item' => '$1 од $2',
+	'themedesigner-button-change-text' => 'Промени текст',
+	'themedesigner-size-error' => 'Неисправна величина датотеке',
+	'themedesigner-dimensions-error' => 'Слика прелази ограничење величине',
+	'themedesigner-type-error' => 'Неисправна врста датотеке',
 );
 
 /** Swedish (Svenska)

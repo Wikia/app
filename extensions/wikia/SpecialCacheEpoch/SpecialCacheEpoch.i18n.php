@@ -20,6 +20,21 @@ $messages['qqq'] = array(
 	'cacheepoch-wf-reason' => 'Log message for administrators only. Do not change "Special:CacheEpoch"',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'cacheepoch-desc' => 'Poskytuje rozhraní pro změnu wgCacheEpoch na wiki',
+	'cacheepoch' => 'Mezipaměť rozhraní Epoch',
+	'cacheepoch-header' => 'Zvýšit wgCacheEpoch',
+	'cacheepoch-value' => 'Aktuální hodnota wgCacheEpoch je „$1". Stisknutím tlačítka nastavte aktuální časové razítko.',
+	'cacheepoch-submit' => 'Aktualizovat hodnotu',
+	'cacheepoch-updated' => 'wgCacheEpoch aktualizováno na „$1".',
+	'cacheepoch-not-updated' => 'Nepodařilo se aktualizovat wgCacheEpoch.',
+	'cacheepoch-wf-reason' => 'Hodnota aktualizována přes Special:CacheEpoch',
+	'cacheepoch-no-wf' => 'WikiFactory na této wiki není povoleno. Nelze měnit wgCacheEpoch.',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */

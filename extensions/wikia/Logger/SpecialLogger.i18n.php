@@ -23,6 +23,28 @@ $messages['br'] = array(
 	'loggernoresult' => "N'eus bet kavet disoc'h ebet",
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'logger-desc' => 'Protokolovač pro serverové části skriptů',
+	'logger' => 'Protokolovač serverové části',
+	'loggertitle' => 'Protokolovač serverové části',
+	'loggerselectlogname' => 'Vyberte název protokolu:',
+	'loggerrecordswithpercent' => "'''$1''' záznamů ('''$2''' procent dokončeno)",
+	'loggerrecords' => '$1 záznamů',
+	'loggergo' => 'Zobrazit',
+	'loggernoresult' => 'Nebyly nalezeny žádné výsledky',
+);
+
+/** German (Deutsch)
+ * @author George Animal
+ */
+$messages['de'] = array(
+	'loggergo' => 'Einblenden',
+	'loggernoresult' => 'Keine Ergebnisse gefunden',
+);
+
 /** Spanish (Español)
  * @author Bola
  */

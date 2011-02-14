@@ -35,6 +35,17 @@ $messages['br'] = array(
 Ne vez ''ket'' kemeret e kont an oberezhioù war ar pajennoù priziañ gant ar pajenn-mañ.",
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'graceexpired' => 'Vypršela lhůta',
+	'graceexpired-row' => '$1 (v $2, naposledy změněno v $3)',
+	'graceexpired-header' => "Na této stránce jsou uvedeny všechny verze, které jsou buď [[:Category:Abandoned|opuštěné]], [[:Category:Trash_builds|odpad]], [[:Category:Build stubs|pahýly]] nebo [[:Category:Trial Builds|zkušebníl]] a nebyly upraveny nejméně dva týdny.
+
+Činnost v oblasti hodnocení stránek zde ''není'' zohledněna.",
+);
+
 /** German (Deutsch)
  * @author LWChris
  */

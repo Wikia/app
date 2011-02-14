@@ -656,6 +656,12 @@ $messages['sr-ec'] = array(
 	'multilookupnoresultfound' => 'Нема резултата!',
 	'multilookupwiki' => 'Вики',
 	'multilookupdetails' => 'Прикажи детаље',
+	'multilookuplastedit' => 'Последња измена с ове IP адресе:',
+	'multilookupwikidbname' => 'Име базе',
+	'multilookupwikiurl' => 'URL адреса',
+	'multilookupwikititle' => 'Наслов',
+	'multilookupwikioptions' => 'Поставке',
+	'multilookuplastedithdr' => 'Последња измена',
 );
 
 /** Swahili (Kiswahili)

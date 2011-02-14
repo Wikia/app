@@ -21,6 +21,13 @@ $messages['bs'] = array(
 	'imageserving-desc' => 'Odabira slike iz određenog niza stranica zasnovanog na vizuelnim zahtjevima',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'imageserving-desc' => 'Vybere obrázky ze zadaného pole stránek na základě vizuálních požadavků',
+);
+
 /** Spanish (Español) */
 $messages['es'] = array(
 	'imageserving-desc' => 'Selecciona las imágenes de un conjunto especificado de páginas basados en necesidades visuales',

@@ -144,7 +144,7 @@ $messages['be'] = array(
 	'rte-ck-templateDropDown-label' => 'Шаблон',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -1168,9 +1168,11 @@ $messages['nl'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Deze reservering voor een video verwijderen?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Dit is een reservering voor een video.',
 	'rte-ck-widescreen-toggle' => 'Breedbeeld in- of uitschakelen',
+	'rte-ck-poll-confirmDelete' => 'Weet u zeker dat u de peiling van deze pagina wilt verwijderen?',
+	'rte-ck-poll-confirmDeleteTitle' => 'Deze peiling verwijderen?',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1732,7 +1734,7 @@ $messages['ru'] = array(
 	'rte-ck-widescreen-toggle' => 'Широкоэкранный режим',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1742,6 +1744,7 @@ $messages['sr-ec'] = array(
 	'rte-ck-commentEditor-title' => 'Уређивач коментара',
 	'rte-ck-errorPopupTitle' => 'Грешка!',
 	'rte-ck-hoverPreview-codedElement-intro' => 'Промените на изворни режим како бисте уређивали текст!',
+	'rte-ck-hoverPreview-codedElement-title' => 'Шифровани елемент',
 	'rte-ck-hoverPreview-comment-title' => 'Коментар',
 	'rte-ck-hoverPreview-delete' => 'обриши',
 	'rte-ck-hoverPreview-edit' => 'уреди',
@@ -1751,11 +1754,25 @@ $messages['sr-ec'] = array(
 	'rte-ck-hoverPreview-video-notExisting' => 'Овај видео снимак не постоји!',
 	'rte-ck-image-add' => 'Додај слику',
 	'rte-ck-image-confirmDeleteTitle' => 'Обрисати ову слику?',
+	'rte-ck-imagePlaceholder-confirmDeleteTitle' => 'Уклонити овај чувар места за слику?',
+	'rte-ck-link-add' => 'Додај везу',
 	'rte-ck-link-error-badPageTitle' => 'Унесите наслов странице.',
 	'rte-ck-link-error-title' => 'Грешка',
+	'rte-ck-link-external-tab' => 'Спољашња веза',
+	'rte-ck-link-internal-linkText' => 'Текст везе',
+	'rte-ck-link-internal-pageName' => 'Назив странице',
+	'rte-ck-link-internal-tab' => 'Унутрашња веза',
+	'rte-ck-link-label-display' => 'Текст за приказ',
+	'rte-ck-link-status-checking' => 'Проверавање статуса',
+	'rte-ck-link-status-exists' => 'Страница постоји',
+	'rte-ck-link-status-notexists' => 'Страница не постоји',
+	'rte-ck-link-status-external' => 'Спољашња веза',
+	'rte-ck-media-delete' => 'уклони',
+	'rte-ck-media-edit' => 'измени',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Обрисати ову галерију?',
 	'rte-ck-photoGallery-tooltip' => 'Ово је галерија.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Ово је покретни приказ.',
+	'rte-ck-poll-add' => 'Додај анкету',
 	'rte-ck-signature-add' => 'Додај свој потпис',
 	'rte-ck-signature-label' => 'Потпис',
 	'rte-ck-table-alignNotSet' => 'Није постављено',
@@ -1773,6 +1790,7 @@ $messages['sr-ec'] = array(
 	'rte-ck-templateEditor-title' => 'Уређивач шаблона',
 	'rte-ck-unlink' => 'Уклони везу',
 	'rte-ck-video-add' => 'Додај видео запис',
+	'rte-ck-video-confirmDeleteTitle' => 'Уклонити овај видео снимак?',
 );
 
 /** Swedish (Svenska)
@@ -2096,7 +2114,7 @@ $messages['vi'] = array(
 	'rte-ck-modeSwitch-toWysiwyg' => 'Chuyển sang chế độ WYSIWYG',
 );
 
-/** Chinese (Taiwan) (中文(台灣))
+/** Chinese (Taiwan) (‪中文(台灣)‬)
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(

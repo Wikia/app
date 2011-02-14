@@ -58,9 +58,11 @@ $messages['br'] = array(
 
 /** German (Deutsch)
  * @author Diebuche
+ * @author George Animal
  * @author ✓
  */
 $messages['de'] = array(
+	'partner-feed-recent-changes' => 'Letzte Änderungen',
 	'error-no-article' => 'Fehler: Kein "article"-Parameter übergeben',
 	'feed-title-blogposts' => 'Neueste Blogeinträge',
 	'feed-title-recent-images' => 'Neueste Bilder',
@@ -109,6 +111,7 @@ $messages['fr'] = array(
 	'partner-feed-latest-images' => 'Galerie des dernières images importées',
 	'partner-feed-hotcontent' => 'Centre des contenus actifs classés par nombre d’éditeurs',
 	'partner-feed-recent-blog-comments' => 'Commentaires récents liés au billet de blog spécifié.',
+	'partner-feed-recent-changes' => 'Modifications récentes',
 	'partnerfeed' => 'Partenaire de flux',
 	'error-no-article' => 'Erreur : paramètre « article » non passé',
 	'feed-title-blogposts' => 'Billets récents',
@@ -120,6 +123,7 @@ $messages['fr'] = array(
 	'blog-posts-from-listing' => 'depuis la liste : $1',
 	'feed-title-hot-content' => 'Contenu à l’actualité — $1',
 	'feed-title-blogcomments' => 'Commentaires à $1',
+	'feed-title-recentchanges' => 'Modifications récentes',
 );
 
 /** Galician (Galego)
@@ -158,6 +162,15 @@ $messages['ia'] = array(
 	'feed-title-hot-content' => 'Contento popular - $1',
 	'feed-title-blogcomments' => 'Commentos a $1',
 	'feed-title-recentchanges' => 'Modificationes recente',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'partner-feed-recent-changes' => 'Guherandinên dawî',
+	'feed-title-recent-images' => 'Wêneyên dawî',
+	'feed-title-recentchanges' => 'Guherandinên dawî',
 );
 
 /** Macedonian (Македонски)
@@ -316,6 +329,13 @@ $messages['ru'] = array(
 	'feed-title-blogposts' => 'Последние записи в блоге',
 	'feed-title-recent-badges' => 'Последние значки',
 	'feed-title-recent-images' => 'Последние изображения',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'partner-feed-recent-changes' => 'Скорашње измене',
 );
 
 /** Swedish (Svenska)

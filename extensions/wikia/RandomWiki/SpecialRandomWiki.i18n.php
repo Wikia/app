@@ -146,6 +146,13 @@ $messages['mk'] = array(
 	'randomwiki' => 'Случајно вики',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'randomwiki' => 'ကျပန်း ဝီကီ',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -207,6 +214,13 @@ $messages['pt-br'] = array(
 $messages['ru'] = array(
 	'randomwiki-desc' => 'Позволяет пользователям просматривать случайные вики',
 	'randomwiki' => 'Случайные Wiki',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'randomwiki' => 'Насумична викија',
 );
 
 /** Swedish (Svenska)

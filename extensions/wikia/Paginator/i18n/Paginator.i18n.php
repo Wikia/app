@@ -29,6 +29,14 @@ $messages['br'] = array(
 	'paginator-back' => 'Distreiñ',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'paginator-next' => 'Další',
+	'paginator-back' => 'Zpět',
+);
+
 /** Welsh (Cymraeg) */
 $messages['cy'] = array(
 	'paginator-next' => 'Nesaf',
@@ -134,6 +142,14 @@ $messages['pt-br'] = array(
 /** Russian (Русский) */
 $messages['ru'] = array(
 	'paginator-next' => 'Далее',
+	'paginator-back' => 'Назад',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'paginator-next' => 'Следеће',
 	'paginator-back' => 'Назад',
 );
 

@@ -95,6 +95,28 @@ $messages['br'] = array(
 	'sponsorpage-save' => 'Enrollañ',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'sponsorpage-desc' => 'Umožňuje uživatelům koupit sponzoring pro stránky',
+	'sponsor-header' => '<h2>Externí sponzorovací odkazy</h2>',
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Sponzorujte tuto stránku</a></li>',
+	'sponsor-preview-prompt' => 'Takto bude Váš odkaz vypadat - klikněte na "Editovat", pokud chcete udělat změny, nebo "Uložit" a přejdete na PayPal',
+	'sponsor-preview-errors' => 'Ve Vašem požadavku jsou chyby:',
+	'sponsor-form-url' => 'URL sponzorující stránky (Vaší webové stránky):',
+	'sponsor-form-linktext' => 'Text, který chcete zobrazit v odkazu:',
+	'sponsor-form-additionaltext' => 'Text, který chcete zobrazit pod odkazem:',
+	'sponsor-form-page' => 'Stránka na sponzorování:',
+	'sponsor-form-price' => 'Cena sponzoringu:',
+	'sponsor-form-email' => 'Vaše e-mailová adresa:',
+	'sponsor-form-thanks' => 'Děkujeme za sponzorování!',
+	'sponsor-price-45yr' => '$45 ročně',
+	'sponsor-price-5mo' => '$5 měsíčně',
+	'sponsorpage-edit' => 'Editovat',
+	'sponsorpage-save' => 'Uložit',
+);
+
 /** German (Deutsch)
  * @author The Evil IP address
  * @author Wikifan
@@ -251,6 +273,15 @@ $messages['ig'] = array(
  */
 $messages['ksh'] = array(
 	'sponsor-template' => '<li><a href="http://$1" rel="nofollow">$2</a><br />$3</li>',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'sponsor-header' => '<h2>Lînkên sponsorên derve</h2>',
+	'sponsorpage-edit' => 'Biguherîne',
+	'sponsorpage-save' => 'Qeyd bike',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -445,6 +476,17 @@ $messages['ru'] = array(
  */
 $messages['sl'] = array(
 	'sponsorpage-save' => 'Shrani',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'sponsor-form-email' => 'Е-адреса:',
+	'sponsor-price-45yr' => '$45 по години',
+	'sponsor-price-5mo' => '$5 по месецу',
+	'sponsorpage-edit' => 'Уреди',
+	'sponsorpage-save' => 'Сачувај',
 );
 
 /** Swedish (Svenska)

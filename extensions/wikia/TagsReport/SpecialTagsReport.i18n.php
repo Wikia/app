@@ -83,6 +83,22 @@ $messages['ca'] = array(
 	'tagsreportgenerated' => 'Generat el $1 $2',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'tagsreport' => 'Hlášení o značkách',
+	'tagsreporttitle' => 'Hlášení o značkách',
+	'tagsreportselecttag' => 'Vyberte značku:',
+	'tagsreportgo' => 'Zobrazit',
+	'tagsreportnotspecify' => 'Zatím jste nevybrali žádnou zvláštní značku.',
+	'tagsreportnoresults' => 'Nebyly nalezeny žádné výsledky.',
+	'tagsreportmainnspace' => 'Hlavní',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|stránka|stránky|stránek}})',
+	'tagsreportpagesfound' => '{{PLURAL:$1|Nalezena|Nalezeny|Nalezeno}} <strong>$1</strong> {{PLURAL:$1|stránka, která obsahuje|stránky, které obsahují|stránek, které obsahují}}, speciální značku (DPL, YouTube, apod.)',
+	'tagsreportgenerated' => 'Vygenerováno $1 v $2',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -359,8 +375,8 @@ $messages['pt'] = array(
 	'tagsreportnoresults' => 'Não foi encontrado nenhum resultado',
 	'tagsreportmainnspace' => 'Principal',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
-	'tagsreportpagesfound' => 'Foram encontradas <strong>$1</strong> páginas que contêm um elemento especial (dpl, youtube, etc)',
-	'tagsreportgenerated' => 'Gerado em $1 $2',
+	'tagsreportpagesfound' => '{{PLURAL:$1|Foi encontrada <strong>$1</strong> página que contém|Foram encontradas <strong>$1</strong> páginas que contêm}} um elemento especial (DPL, YouTube, etc.)',
+	'tagsreportgenerated' => 'Gerado a $1 às $2',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

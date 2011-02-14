@@ -51,6 +51,14 @@ $messages['br'] = array(
 	'interwikidispatcher-desc' => 'Diskoulmañ a ra al liammoù etrewiki evit reduiñ an adkasoù Apache',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'interwikidispatcher' => 'Dispečer Interwiki',
+	'interwikidispatcher-desc' => 'Řeší interwiki odkazy, aby se snížilo zatížení Apache.',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */

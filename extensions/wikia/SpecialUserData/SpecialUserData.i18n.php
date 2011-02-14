@@ -16,7 +16,8 @@ $messages['en'] = array(
 	'userdata-no-wf' => 'WikiFactory is not enabled on this wiki. Unable to alter wgUserData.',
 );
 
+/** Message documentation (Message documentation) */
 $messages['qqq'] = array(
-	'userdata-desc' => '{{desc}}',
 	'userdata-wf-reason' => 'Log message for administrators only. Do not change "Special:UserData."',
 );
+

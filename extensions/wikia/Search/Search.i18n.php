@@ -67,6 +67,18 @@ $messages['br'] = array(
 	'wikiasearch-image-results' => 'Disoc\'hoù skeudenn evit "$1"',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'search-desc' => 'Vyhledávací engine Wikia používající Solr',
+	'wikiasearch-titles-only' => 'Hledat pouze v názvech stránek',
+	'wikiasearch-system-error-msg' => 'Kvůli systémové chybě nelze dokončit vyhledávání',
+	'wikiasearch-search-this-wiki' => 'Prohledávat pouze Wikia Central',
+	'wikiasearch-search-wikia' => 'Prohledat Wkii',
+	'wikiasearch-image-results' => 'Výsledky obrázků pro "$1"',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author Reinhard Kraasch

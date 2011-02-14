@@ -112,6 +112,92 @@ $messages['br'] = array(
 	'owb-status-saving' => "Oc'h enrollañ",
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Průvodce vytvořením Wiki]]',
+	'owb-title' => 'Wiki Stavitel',
+	'owb-headline' => 'Ahoj, $1',
+	'owb-button-skip' => 'Přeskočit',
+	'owb-button-save-intro' => 'Uložit úvod',
+	'owb-button-save-theme' => 'Uložit motiv',
+	'owb-button-save-pages' => 'Uložit stránky',
+	'owb-button-done' => 'Pokračovat na Vaši wiki',
+	'owb-button-plus' => 'Vybrat Wikia+Plus',
+	'owb-step1' => 'Krok 1',
+	'owb-step1-label' => 'Co to je?',
+	'owb-step1-label-formatted' => 'Co to je?',
+	'owb-step1-instruction' => 'Napište krátký úvod pro vaši domovskou stránku. Ať je to elegantní a zábavné, abyste nadchnuli ostatní pro přispívání do projektu.',
+	'owb-step1-sample' => 'Ukázková domovská stránka wiki',
+	'owb-step2' => 'Krok 2',
+	'owb-step2-label' => 'Zvolte motiv',
+	'owb-step2-label-formatted' => 'Zvolte<br />motiv',
+	'owb-step2-instruction1' => 'Je to snadné, aby se vaše wiki vypadala jedinečně. Stačí si vybrat téma, které zapadá do projektu.',
+	'owb-step2-instruction2' => 'Můžete kdykoliv změnit svůj motiv nebo navrhnout vlastní.',
+	'owb-step2-gallery' => 'Galerie motivů',
+	'owb-step3' => 'Krok 3',
+	'owb-step3-label' => 'Začněte nějaké stránky',
+	'owb-step3-label-formatted' => 'Založte<br />několik stránek',
+	'owb-step3-instruction' => 'Chcete-li začít vaší wiki, potřebujete přidat nějaké stránky. Kdykoliv můžete přidat další.',
+	'owb-step3-your-pages' => 'Názvy vašich stránek',
+	'owb-step3-examples1-title' => 'Ukázka: názvy stránek o filmech s monstry',
+	'owb-step3-examples1' => '<li> Frankensteinův netvor </li>
+<li> The Wolfman </li>
+<li> The Howling </li>
+<li> Mumie </li>
+<li> Dům voskových figurín </li>
+<li> Věc bažiny </li>',
+	'owb-step3-examples2-title' => 'Vzorku: názvy stránek o deskových hrách',
+	'owb-step3-examples2' => '<li>Monopoly</li>
+<li>Risk</li><li>Scrabble</li>
+<li>Trivial Pursuit</li>
+<li>Carcassonne</li>
+<li>Člověče, nezlob se</li>',
+	'owb-step4' => 'Krok 4',
+	'owb-step4-label-formatted' => 'Prémiová<br />služba',
+	'owb-step4-label' => 'Přidat prémiovou službu',
+	'owb-step4-instruction' => 'Vyberte, zda chcete odstranit reklamy s Wikia+Plus nebo pokračovat s Wikia Basic.',
+	'owb-step4-basic-price' => '<strong>$0</strong> měsíčně',
+	'owb-step4-basic-details' => '<ul><li> Reklamy Wikia pro uživatele, kteří nejsou přihlášeni </li>
+<li> Neomezené stránky a obrázky </li>
+<li> Snadné wiki nástroje na editaci wiki</li>
+<li> Připojte se a používejte "to se mi líbí" na Facebooku </li>
+<li> Žádné omezení přenosových rychlostí </li></ul>',
+	'owb-step4-plus-price' => '<strong>$$1</strong> měsíčně',
+	'owb-step4-plus-details' => '<ul><li><strong>Źádné reklamy!<small><em>(kromě velkých wiki)</em></small></strong></li>
+<li>Neomezené stránky a obrázky</li>
+<li>Snadná editace</li>
+<li>Připojení přes Facebook a "to se mi líbí"</li>
+<li>Žádné omezení přenosové rychlosti</li></ul>',
+	'owb-step4-error-caption' => 'Chyba',
+	'owb-step4-error-upgrade-content' => 'Tuto wiki není možné upgradovat na Plus.',
+	'owb-step4-error-token-content' => 'Nepodařilo se získat správná data z PayPal.',
+	'owb-status-saving' => 'Ukládání',
+	'owb-unable-to-edit-description' => 'Popis je nezměnitelný přes Wiki Stavitele',
+	'owb-readonly-try-again' => 'Wiki je v současné době v módu pro čtení. Prosím zkuste to znovu za chvíli',
+	'owb-error-saving-articles' => 'Chyba při ukládání stránky',
+	'owb-api-error-title' => 'Chyba při zpracování požadavku',
+	'owb-api-error' => 'Zkuste to prosím znovu nebo přeskočte tento krok',
+	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
+Zde napište první odstavec.
+
+==Nadpis sekce==
+
+Zde napište první sekci stánky. Nezapommeňte na odkazy!
+
+==Nadpis sekce==
+
+Zde napište druhou sekci. Nezapomeňte stránku kategorizovat!',
+);
+
+/** German (Deutsch)
+ * @author George Animal
+ */
+$messages['de'] = array(
+	'owb-step4-error-caption' => 'Fehler',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -189,6 +275,87 @@ Escribe la primera sección de tu página aquí. Recuerda incluir enlaces a otra
 ==Sección de encabezado==
 
 Escribe la segunda sección de tu página aquí. No olvides añadir una categoría para ayudar a las personas a encontrar la página.',
+);
+
+/** French (Français)
+ * @author Wyz
+ */
+$messages['fr'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Assistant de création de wiki]]',
+	'owb-title' => 'Générateur de wiki',
+	'owb-headline' => 'Bonjour $1',
+	'owb-button-skip' => 'Passer',
+	'owb-button-save-intro' => 'Enregistrer l’introduction',
+	'owb-button-save-theme' => 'Enregistrer le thème',
+	'owb-button-save-pages' => 'Enregistrer les pages',
+	'owb-button-done' => 'Continuer vers votre wiki',
+	'owb-button-plus' => 'Sélectionner Wikia+Plus',
+	'owb-step1' => 'Étape 1',
+	'owb-step1-label' => 'Quel est le sujet ?',
+	'owb-step1-label-formatted' => 'Quel est<br />le sujet ?',
+	'owb-step1-instruction' => 'Écrivez une brève introduction pour votre page d’accueil. Assurez-vous qu’elle soit accrocheuse et amusante pour donner envie aux autres de contribuer à votre projet.',
+	'owb-step1-sample' => 'Exemple de page d’accueil',
+	'owb-step2' => 'Étape 2',
+	'owb-step2-label' => 'Choisissez un thème',
+	'owb-step2-label-formatted' => 'Choisissez<br />un thème',
+	'owb-step2-instruction1' => 'Il est facile de donner une apparence unique à votre wiki. Il suffit de choisir un thème qui correspond à votre projet.',
+	'owb-step2-instruction2' => "Vous pouvez changer le thème ou créer le votre n'importe quand.",
+	'owb-step2-gallery' => 'Galerie de thèmes',
+	'owb-step3' => 'Étape 3',
+	'owb-step3-label' => 'Commencer avec quelques pages',
+	'owb-step3-label-formatted' => 'Commencer avec<br />
+quelques pages',
+	'owb-step3-instruction' => 'Pour commencer votre wiki, vous devez ajouter quelques pages. Vous pouvez en ajouter d’autres quand vous le souhaitez.',
+	'owb-step3-your-pages' => 'Les noms des pages',
+	'owb-step3-examples1-title' => 'Exemple : Noms des pages de films de monstres',
+	'owb-step3-examples1' => "<li>''Frankenstein''</li>
+<li>''Le Loup-garou''</li>
+<li>''Hurlements''</li>
+<li>''La Momie''</li>
+<li>''La Maison de cire''</li>
+<li>''La Créature du marais''</li>",
+	'owb-step3-examples2-title' => 'Exemple : Noms des pages de jeux de société',
+	'owb-step3-examples2' => '<li>Monopoly</li>
+<li>Risk</li>
+<li>Scrabble</li>
+<li>Trivial Pursuit</li>
+<li>Pictionary</li>
+<li>Taboo</li>',
+	'owb-step4' => 'Étape 4',
+	'owb-step4-label-formatted' => 'Plan<br />premium',
+	'owb-step4-label' => 'Ajouter un plan premium',
+	'owb-step4-instruction' => 'Choisissez de retirer les annonces avec Wikia+Plus ou continuez avec Wikia Basic.',
+	'owb-step4-basic-price' => '<strong>$0</strong> / mois',
+	'owb-step4-basic-details' => "<ul><li>Annonces Wikia pour les utilisateurs qui ne sont pas connectés</li>
+<li>Pages et images illimitées</li>
+<li>Outils d’édition pour un wiki facile</li>
+<li>Connexion et « J'aime » sur Facebook</li>
+<li>Pas de limite de bande passante</li></ul>",
+	'owb-step4-plus-price' => '<strong>$1 $</strong> / mois',
+	'owb-step4-plus-details' => "<ul><li><strong>Pas de publicité !<small><em>(des limites s'appliquent aux gros wikis)</em></small></strong></li>
+<li>Pages et images illimitées</li>
+<li>Outils d’édition pour un wiki facile</li>
+<li>Connexion et « J'aime » sur Facebook</li>
+<li>Pas de limite de bande passante</li></ul>",
+	'owb-step4-error-caption' => 'Erreur',
+	'owb-step4-error-upgrade-content' => 'Ce wiki ne peut pas être mis à niveau en Plus.',
+	'owb-step4-error-token-content' => 'Impossible d’obtenir un jeton approprié de Paypal.',
+	'owb-status-saving' => 'Enregistrement',
+	'owb-unable-to-edit-description' => 'La description ne peut pas être modifiée avec le Générateur de wiki',
+	'owb-readonly-try-again' => 'Le wiki est actuellement en mode lecture seule. Veuillez réessayer dans quelques instants.',
+	'owb-error-saving-articles' => 'Erreur lors de l’enregistrement des pages',
+	'owb-api-error-title' => 'Erreur lors du traitement de votre demande',
+	'owb-api-error' => 'Veuillez essayer à nouveau ou passez cette étape',
+	'owb-new-pages-text' => "[[File:Placeholder|right|300px]]
+Écrivez le premier paragraphe de votre page ici.
+
+==En-tête de section==
+
+Écrivez la première section de la page ici. Pensez à inclure des liens vers d’autres page du wiki.
+
+==En-tête de section==
+
+Écrivez la deuxième section de la page ici. N'oubliez pas d’ajouter une catégorie pour aider les gens à trouver la page.",
 );
 
 /** Interlingua (Interlingua)
@@ -532,6 +699,26 @@ Skriv sidens første seksjon her. Husk å inkludere lenker til andre sider på w
 Skriv sidens andre seksjon her. Ikke glem å legge til en kategori for å hjelpe folk med å finne siden.',
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Assistente para criação de wikis]]',
+	'owb-title' => 'Criador de Wikis',
+	'owb-headline' => 'Olá, $1',
+	'owb-button-skip' => 'Saltar',
+	'owb-button-save-intro' => 'Guardar Introdução',
+	'owb-button-save-theme' => 'Gravar Variante do Tema',
+	'owb-button-save-pages' => 'Gravar Páginas',
+	'owb-button-done' => 'Prosseguir para a wiki',
+	'owb-button-plus' => 'Seleccionar Wikia+Plus',
+	'owb-step1' => '1º Passo',
+	'owb-step1-label' => 'É sobre o quê?',
+	'owb-step1-label-formatted' => 'É sobre<br />o quê?',
+	'owb-step1-instruction' => 'Escreva uma introdução breve para a sua página principal. Torne-a animada e engraçada para suscitar nas outras pessoas interesse em contribuir para o seu projecto.',
+	'owb-step1-sample' => 'Exemplo de Página Principal da Wiki',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
@@ -543,13 +730,24 @@ $messages['sr-ec'] = array(
 	'owb-button-save-intro' => 'Сачувај увод',
 	'owb-button-save-theme' => 'Сачувај пресвлаку',
 	'owb-button-save-pages' => 'Сачувај странице',
+	'owb-button-done' => 'Пређи на викију',
 	'owb-button-plus' => 'Изаберите Викију Плус',
 	'owb-step1' => 'Корак 1',
+	'owb-step1-label' => 'О чему се овде ради?',
+	'owb-step1-label-formatted' => 'О чему се<br />овде ради?',
+	'owb-step1-sample' => 'Пример насловне странице',
+	'owb-step2' => 'Корак 2',
 	'owb-step2-label' => 'Изаберите пресвлаку',
+	'owb-step2-label-formatted' => 'Изаберите<br />тему',
+	'owb-step2-instruction2' => 'Тему или изглед можете променити било када.',
 	'owb-step2-gallery' => 'Галерија пресвлака',
 	'owb-step3' => 'Корак 3',
-	'owb-step3-label' => 'Покрените странице',
+	'owb-step3-label' => 'Почните с писањем страница',
+	'owb-step3-label-formatted' => 'Почните<br />с писањем страница',
+	'owb-step3-instruction' => 'Да бисте покренули викију, морате да почнете с писањем страница.',
+	'owb-step3-your-pages' => 'Називи страница',
 	'owb-step4' => 'Корак 4',
+	'owb-step4-label-formatted' => 'Премијум<br />план',
 	'owb-step4-label' => 'Додај премијум план',
 	'owb-step4-instruction' => 'Уклоните огласе с Викијом Плус или наставите са основном Викијом.',
 	'owb-step4-basic-price' => '<strong>0</strong>долара/месец',
