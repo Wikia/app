@@ -2,9 +2,12 @@
 
 class WikiaResponse {
 
+	const RESPONSE_CODE_OK = 200;
+	const RESPONSE_CODE_ERROR = 501;
+
 	private $printer = null;
 	private $body = null;
-	private $code = 200;
+	private $code;
 	private $headers = array();
 	private $format = null;
 	protected $data = array();
@@ -12,6 +15,7 @@ class WikiaResponse {
 	protected $templatePath = null;
 
 	public function __construct( $format ) {
+		$this->setCode( self::RESPONSE_CODE_OK );
 		$this->setFormat( $format );
 	}
 
