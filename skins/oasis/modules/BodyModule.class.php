@@ -193,8 +193,8 @@ class BodyModule extends Module {
 			);
 		}
 
-		// Content, category and forum namespaces
-		if(	in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM, NS_PROJECT)) ||
+		// Content, category and forum namespaces.  FB:1280 Added file,video,mw,template
+		if(	in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM, NS_PROJECT, NS_FILE, NS_VIDEO, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP)) ||
 			in_array($subjectNamespace, $wgContentNamespaces) ||
 			array_key_exists( $subjectNamespace, $wgExtraNamespaces ) ) {
 			// add any content page related rail modules here
@@ -230,18 +230,16 @@ class BodyModule extends Module {
 			}
 		}
 
-		// A/B test
+		// A/B testing leftovers, leave for now because we will do another one
 		$useTestBoxad = false;
-		if (in_array('leaderboard', $wgABTests)) {
-			$useTestBoxad = true;
-		}
-		// Corporate Skin
+
+		// Special case rail modules for Corporate Skin
 		if ($wgEnableCorporatePageExt) {
 			$railModuleList = array (
 				1500 => array('Search', 'Index', null),
 			);
 			// No rail on main page or edit page for corporate skin
-			if ( in_array($subjectNamespace, array(NS_FILE, NS_VIDEO, NS_MEDIAWIKI, NS_TEMPLATE)) || BodyModule::isEditPage() || ArticleAdLogic::isMainPage() ) {
+			if ( BodyModule::isEditPage() || ArticleAdLogic::isMainPage() ) {
 				$railModuleList = array();
 			}
 			else if (self::isHubPage()) {
@@ -261,8 +259,8 @@ class BodyModule extends Module {
 			wfProfileOut(__METHOD__);
 			return $railModuleList;
 		}
-		// we don't want any modules on these namespaces including talk namespaces (even ad modules) and on edit pages and main pages
-		if (in_array($subjectNamespace, array(NS_FILE, NS_VIDEO, NS_MEDIAWIKI, NS_TEMPLATE)) || BodyModule::isEditPage() || ArticleAdLogic::isMainPage()) {
+		//  No rail on main page or edit page for oasis skin
+		if ( BodyModule::isEditPage() || ArticleAdLogic::isMainPage() ) {
 			wfProfileOut(__METHOD__);
 			return array();
 		}
