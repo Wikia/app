@@ -45,6 +45,10 @@ abstract class WikiaController {
 		$this->response = $response;
 	}
 
+	/**
+	 * get response object
+	 * @return WikiaResponse
+	 */
 	public function getResponse() {
 		return $this->response;
 	}
@@ -106,6 +110,9 @@ abstract class WikiaController {
 
 		$this->getResponse()->setVal('class', substr($reflection->name, 0, -10));
 		$this->getResponse()->setVal('methods', $help);
+		if($this->getResponse()->getFormat() == 'html') {
+			$this->getResponse()->setTemplatePath( dirname( __FILE__ ) .'/templates/Wikia_help.php' );
+		}
 	}
 
 	public function init() {}

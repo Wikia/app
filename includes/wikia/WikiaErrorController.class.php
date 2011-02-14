@@ -10,7 +10,7 @@ class WikiaErrorController extends WikiaController {
 		$code = $this->getResponse()->getException()->getCode();
 
 		if( empty($code) ) {
-			$code = 501;
+			$code = WikiaResponse::RESPONSE_CODE_ERROR;
 		}
 
 		$this->getResponse()->setCode( $code );
