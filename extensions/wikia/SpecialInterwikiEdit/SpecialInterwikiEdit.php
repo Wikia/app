@@ -501,11 +501,17 @@ function wfSIWELinkWikisCommit () {
 }
 
 function wfSIWEMakeInterlanguageUrl($wikiaID) {
+	global $wgArticlePath;
 
-    $link_url = WikiFactory::getVarValueByName( 'wgServer', $wikiaID );
-	$link_url .= WikiFactory::getVarValueByName( 'wgArticlePath', $wikiaID );
+	$server = WikiFactory::getVarValueByName( 'wgServer', $wikiaID );
+	$path = WikiFactory::getVarValueByName( 'wgArticlePath', $wikiaID );
+	if ( empty( $path ) ) {
+		// if not defined per-wiki, assume default
+		// note: this is not a true default, but a value from the current wiki, will do for now
+		$path = $wgArticlePath;
+	}
 
-	return $link_url;
+	return $server . $path;
 }
 
 function wfSIWELinkWikisCommitProper ($linker, $linkee) {
