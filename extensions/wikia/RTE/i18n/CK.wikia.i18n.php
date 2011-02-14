@@ -56,6 +56,7 @@ $messages['en'] = array(
 	'rte-ck-media-edit' => 'modify',
 	'rte-ck-modeSwitch-toSource' => 'Switch to source mode',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Switch to WYSIWYG mode',
+	'rte-ck-modeSwitch-error' => 'An error has occured during mode switch. Please try again.',
 	'rte-ck-photoGallery-add' => 'Add a photo gallery or slideshow',
 	'rte-ck-photoGallery-confirmDelete' => 'Are you sure you wish to remove the gallery from this page?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Remove this gallery?',
@@ -93,7 +94,7 @@ $messages['en'] = array(
 	'rte-ck-widescreen-toggle' => 'Toggle widescreen',
 	'rte-ck-poll-confirmDelete' => 'Are you sure you wish to remove the poll from this page?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Remove this poll?',
-	
+	'rte-ck-spellchecker-moreSuggestions' => 'More suggestions',
 );
 
 /** Message documentation (Message documentation)
@@ -1354,6 +1355,7 @@ $messages['pl'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Usunąć symbol zastępczy filmu?',
 	'rte-ck-videoPlaceholder-tooltip' => 'To jest symbol zastępczy filmu.',
 	'rte-ck-widescreen-toggle' => 'Przełącz pomiędzy szerokim a wąskim ekranem',
+	'rte-ck-spellchecker-moreSuggestions' => 'Więcej sugestii',
 );
 
 /** Piedmontese (Piemontèis)

@@ -140,16 +140,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 .cke_skin_wikia .cke_menuarrow
 {
-	/* arrowright.gif*/
-	background-image: url(images/sprites.png);
-	_background-image: url(images/sprites_ie6.png);
-	background-position: 0 -1411px;
-	background-repeat: no-repeat;
 	height: 5px;
 	width: 3px;
 	float: right;
 	margin-right: 2px;
-	margin-top: 3px;
 }
 
 .cke_rtl .cke_skin_wikia .cke_menuarrow
@@ -157,11 +151,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	float: left;
 	margin-right: 0;
 	margin-left: 2px;
-	/* arrowleft.gif*/
-	background-image: url(images/sprites.png);
-	_background-image: url(images/sprites_ie6.png);
-	background-position: 0px -1390px;
-	background-repeat: no-repeat;
 }
 
 /* #3766 In the context menu, long labels with second level menu get wrapped */

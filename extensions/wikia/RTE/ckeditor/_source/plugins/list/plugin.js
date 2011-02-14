@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -112,6 +112,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				else if ( item.indent == Math.max( indentLevel, 0 ) + 1 )
 				{
 					var listData = CKEDITOR.plugins.list.arrayToList( listArray, null, currentIndex, paragraphMode );
+
+					// If the next block is an <li> with another list tree as the first
+					// child, we'll need to append a filler (<br>/NBSP) or the list item
+					// wouldn't be editable. (#6724)
+					if ( !currentListItem.getChildCount() && CKEDITOR.env.ie && !( doc.$.documentMode > 7 ))
+						currentListItem.append( doc.createText( '\xa0' ) );
 					currentListItem.append( listData.listNode );
 					currentIndex = listData.nextIndex;
 				}
@@ -123,12 +129,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					else
 					{
 						// Create completely new blocks here.
-						if ( dir || item.element.hasAttributes() ||
-							( paragraphMode != CKEDITOR.ENTER_BR && item.grandparent.getName() != 'td' ) )
+						if ( dir || item.element.hasAttributes() || paragraphMode != CKEDITOR.ENTER_BR )
 						{
 							currentListItem = doc.createElement( paragraphName );
 							item.element.copyAttributes( currentListItem, { type:1, value:1 } );
-							dir && currentListItem.setAttribute( 'dir', dir );
+							var itemDir = item.element.getDirection() || dir;
+							itemDir &&
+								currentListItem.setAttribute( 'dir', itemDir );
 
 							// There might be a case where there are no attributes in the element after all
 							// (i.e. when "type" or "value" are the only attributes set). In this case, if enterMode = BR,
@@ -205,39 +212,32 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		}
 	};
 
-	function setState( editor, state )
-	{
-		editor.getCommand( this.name ).setState( state );
-	}
-
 	function onSelectionChange( evt )
 	{
 		var path = evt.data.path,
 			blockLimit = path.blockLimit,
 			elements = path.elements,
-			element;
+			element,
+			i;
 
 		// Wikia - start
 		// disable lists buttons when inside a heading
 		var nodeName = path.block ? path.block.getName() : '';
 
 		if ( (/h\d/).test(nodeName) ) {
-			return setState.call( this, evt.editor, CKEDITOR.TRISTATE_DISABLED );
+			return this.setState( CKEDITOR.TRISTATE_DISABLED );
 		}
 		// Wikia - end
 
 		// Grouping should only happen under blockLimit.(#3940).
-		for ( var i = 0 ; i < elements.length && ( element = elements[ i ] )
+		for ( i = 0 ; i < elements.length && ( element = elements[ i ] )
 			  && !element.equals( blockLimit ); i++ )
 		{
 			if ( listNodeNames[ elements[i].getName() ] )
-			{
-				return setState.call( this, evt.editor,
-						this.type == elements[i].getName() ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF );
-			}
+				return this.setState( this.type == elements[i].getName() ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF );
 		}
 
-		return setState.call( this, evt.editor, CKEDITOR.TRISTATE_OFF );
+		return this.setState( CKEDITOR.TRISTATE_OFF );
 	}
 
 	function changeListType( editor, groupObj, database, listsCreated )
@@ -507,7 +507,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						enclosedNode = range && range.getEnclosedNode();
 					if ( enclosedNode && enclosedNode.is
 						&& this.type == enclosedNode.getName() )
-							setState.call( this, editor, CKEDITOR.TRISTATE_ON );
+							this.setState( CKEDITOR.TRISTATE_ON );
 				}
 			}
 
@@ -708,10 +708,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		init : function( editor )
 		{
 			// Register commands.
-			var numberedListCommand = new listCommand( 'numberedlist', 'ol' ),
-				bulletedListCommand = new listCommand( 'bulletedlist', 'ul' );
-			editor.addCommand( 'numberedlist', numberedListCommand );
-			editor.addCommand( 'bulletedlist', bulletedListCommand );
+			var numberedListCommand = editor.addCommand( 'numberedlist', new listCommand( 'numberedlist', 'ol' ) ),
+				bulletedListCommand = editor.addCommand( 'bulletedlist', new listCommand( 'bulletedlist', 'ul' ) );
 
 			// Register the toolbar button.
 			editor.ui.addButton( 'NumberedList',

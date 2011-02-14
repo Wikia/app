@@ -338,3 +338,41 @@ window.RTE.tools = {
 		});
 	}
 }
+
+// helper class for highlighting given parts of editor's HTML
+CKEDITOR.nodeRunner = function() {
+	// "Beep, Beep"
+};
+
+CKEDITOR.nodeRunner.prototype = {
+	// recursively call provided function for child nodes (skip read only nodes)
+	walk: function(node, callback) {
+		if ((node.type != CKEDITOR.NODE_ELEMENT) || node.isReadOnly() || this.isSkipped(node)) {
+			return;
+		}
+
+		var childNode,
+			childNodes = node.getChildren(),
+			n;
+
+		for (n=0; n < childNodes.count(); n++) {
+			childNode = childNodes.getItem(n);
+			callback.call(callback, childNode);
+			this.walk(childNode, callback);
+		}
+	},
+
+	// recursively call provided function for child text nodes
+	walkTextNodes: function(node, callback) {
+		this.walk(node, function(node) {
+			if (node.type == CKEDITOR.NODE_TEXT) {
+				callback(node);
+			}
+		});
+	},
+
+	// override this function when you create an object of class CKEDITOR.nodeRunner
+	isSkipped: function(node) {
+		return false;
+	}
+};

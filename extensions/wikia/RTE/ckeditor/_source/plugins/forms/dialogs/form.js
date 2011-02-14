@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 CKEDITOR.dialog.add( 'form', function( editor )
@@ -39,7 +39,7 @@ CKEDITOR.dialog.add( 'form', function( editor )
 			{
 				editor = this.getParentEditor();
 				element = editor.document.createElement( 'form' );
-				element.append( editor.document.createElement( 'br' ) );
+				!CKEDITOR.env.ie && element.append( editor.document.createElement( 'br' ) );
 			}
 
 			if ( isInsertMode )

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -43,23 +43,25 @@ CKEDITOR.skins.add( 'v2', (function()
 				setTimeout( function()
 					{
 						var innerDialog = dialog.parts.dialog.getChild( [ 0, 0, 0 ] ),
-							body = innerDialog.getChild( 0 );
+							body = innerDialog.getChild( 0 ),
+							bodyWidth = body.getSize( 'width' );
+						height += body.getChild( 0 ).getSize( 'height' ) + 1;
 
 						// tc
 						var el = innerDialog.getChild( 2 );
-						el.setStyle( 'width', ( body.$.offsetWidth ) + 'px' );
+						el.setSize( 'width', bodyWidth );
 
 						// bc
 						el = innerDialog.getChild( 7 );
-						el.setStyle( 'width', ( body.$.offsetWidth - 28 ) + 'px' );
+						el.setSize( 'width', bodyWidth - 28 );
 
 						// ml
 						el = innerDialog.getChild( 4 );
-						el.setStyle( 'height', ( height + body.getChild(0).$.offsetHeight ) + 'px' );
+						el.setSize( 'height', height );
 
 						// mr
 						el = innerDialog.getChild( 5 );
-						el.setStyle( 'height', ( height + body.getChild(0).$.offsetHeight ) + 'px' );
+						el.setSize( 'height', height );
 					},
 					100 );
 			});

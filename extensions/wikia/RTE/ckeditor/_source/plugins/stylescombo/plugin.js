@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -106,12 +106,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 						var elementPath = new CKEDITOR.dom.elementPath( selection.getStartElement() );
 
-						if ( style.type == CKEDITOR.STYLE_INLINE && style.checkActive( elementPath ) )
-							style.remove( editor.document );
-						else if ( style.type == CKEDITOR.STYLE_OBJECT && style.checkActive( elementPath ) )
-							style.remove( editor.document );
-						else
-							style.apply( editor.document );
+						style[ style.checkActive( elementPath ) ? 'remove' : 'apply' ]( editor.document );
 
 						editor.fire( 'saveSnapshot' );
 					},

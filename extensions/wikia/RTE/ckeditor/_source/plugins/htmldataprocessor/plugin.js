@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -103,7 +103,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	delete blockLikeTags.pre;
 	var defaultDataFilterRules =
 	{
-		elements : {},
+		elements : {
+			a : function( element )
+			{
+				var attrs = element.attributes;
+				if ( attrs && attrs[ 'data-cke-saved-name' ] )
+					attrs[ 'class' ] = ( attrs[ 'class' ] ? attrs[ 'class' ] + ' ' : '' ) + 'cke_anchor';
+			}
+		},
 		attributeNames :
 		[
 			// Event attributes (onXYZ) must not be directly set. They can become
@@ -133,8 +140,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				// Attributes saved for changes and protected attributes.
 				[ ( /^data-cke-(saved|pa)-/ ), '' ],
 
-				// All "data-cke" attributes are to be ignored.
-				[ ( /^data-cke.*/ ), '' ],
+				// All "data-cke-" attributes are to be ignored.
+				[ ( /^data-cke-.*/ ), '' ],
 
 				[ 'hidefocus', '' ]
 			],
@@ -204,6 +211,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						delete element.name;
 				},
 
+				// Empty <pre> in IE is reported with filler node (&nbsp;).
+				pre : function( element ) { CKEDITOR.env.ie && trimFillers( element ); },
+
 				html : function( element )
 				{
 					delete element.attributes.contenteditable;
@@ -262,20 +272,35 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	if ( CKEDITOR.env.ie )
 	{
 		// IE outputs style attribute in capital letters. We should convert
-		// them back to lower case.
+		// them back to lower case, while not hurting the values (#5930)
 		defaultHtmlFilterRules.attributes.style = function( value, element )
 		{
-			return value.toLowerCase();
+			return value.replace( /(^|;)([^\:]+)/g, function( match )
+				{
+					return match.toLowerCase();
+				});
 		};
 	}
 
 	function protectReadOnly( element )
 	{
-		element.attributes.contenteditable = "false";
+		var attrs = element.attributes;
+
+		// We should flag that the element was locked by our code so
+		// it'll be editable by the editor functions (#6046).
+		if ( attrs.contenteditable != "false" )
+			attrs[ 'data-cke-editable' ] = attrs.contenteditable ? 'true' : 1;
+
+		attrs.contenteditable = "false";
 	}
 	function unprotectReadyOnly( element )
 	{
-		delete element.attributes.contenteditable;
+		var attrs = element.attributes;
+		switch( attrs[ 'data-cke-editable' ] )
+		{
+			case 'true':	attrs.contenteditable = 'true';	break;
+			case '1':		delete attrs.contenteditable;	break;
+		}
 	}
 	// Disable form elements editing mode provided by some browers. (#5746)
 	for ( i in { input : 1, textarea : 1 } )
@@ -284,8 +309,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		defaultHtmlFilterRules.elements[ i ] = unprotectReadyOnly;
 	}
 
-	var protectAttributeRegex = /<((?:a|area|img|input)\b[\s\S]*?\s)((href|src|name)\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|(?:[^ "'>]+)))([^>]*)>/gi,
-		findSavedSrcRegex = /\sdata-cke-saved-src\s*=/;
+	var protectElementRegex = /<(a|area|img|input)\b([^>]*)>/gi,
+		protectAttributeRegex = /\b(href|src|name)\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|(?:[^ "'>]+))/gi;
 
 	var protectElementsRegex = /(?:<style(?=[ >])[^>]*>[\s\S]*<\/style>)|(?:<(:?link|meta|base)[^>]*>)/gi,
 		encodedElementsRegex = /<cke:encoded>([^<]*)<\/cke:encoded>/gi;
@@ -297,14 +322,17 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 	function protectAttributes( html )
 	{
-		return html.replace( protectAttributeRegex, function( tag, beginning, fullAttr, attrName, end )
+		return html.replace( protectElementRegex, function( element, tag, attributes )
+		{
+			return '<' +  tag + attributes.replace( protectAttributeRegex, function( fullAttr, attrName )
 			{
-				// We should not rewrite the _cke_saved_src attribute (#5218)
-				if ( attrName == 'src' && findSavedSrcRegex.test( tag ) )
-					return tag;
-				else
-					return '<' + beginning + fullAttr + ' data-cke-saved-' + fullAttr + end + '>';
-			});
+				// We should not rewrite the existed protected attributes, e.g. clipboard content from editor. (#5218)
+				if ( attributes.indexOf( 'data-cke-saved-' + attrName ) == -1 )
+					return ' data-cke-saved-' + fullAttr + ' ' + fullAttr;
+
+				return fullAttr;
+			}) + '>';
+		});
 	}
 
 	function protectElements( html )

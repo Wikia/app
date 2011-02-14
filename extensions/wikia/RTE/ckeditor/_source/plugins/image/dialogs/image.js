@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -262,9 +262,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			previewImageId = numbering( 'previewImage' );
 
 		return {
-			title : ( dialogType == 'image' ) ? editor.lang.image.title : editor.lang.image.titleButton,
+			title : editor.lang.image[ dialogType == 'image' ? 'title' : 'titleButton' ],
 			minWidth : 420,
-			minHeight : CKEDITOR.env.ie && CKEDITOR.env.quirks?  360: 310,
+			minHeight : 360,
 			onShow : function()
 			{
 				this.imageElement = false;
@@ -547,8 +547,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 											{
 												if ( type == IMAGE && ( this.getValue() || this.isChanged() ) )
 												{
-													element.data( 'cke-saved-src', decodeURI( this.getValue() ) );
-													element.setAttribute( 'src', decodeURI( this.getValue() ) );
+													element.data( 'cke-saved-src', this.getValue() );
+													element.setAttribute( 'src', this.getValue() );
 												}
 												else if ( type == CLEANUP )
 												{
@@ -1102,9 +1102,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								{
 									if ( this.getValue() || this.isChanged() )
 									{
-										element.data( 'cke-saved-href', decodeURI( this.getValue() ) );
-										element.setAttribute( 'href', 'javascript:void(0)/*' +
-											CKEDITOR.tools.getNextNumber() + '*/' );
+										var url = decodeURI( this.getValue() );
+										element.data( 'cke-saved-href', url );
+										element.setAttribute( 'href', url );
 
 										if ( this.getValue() || !editor.config.image_removeLinkByEmptyURL )
 											this.getDialog().addLink = true;

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -25,7 +25,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						if ( undoManager.undo() )
 						{
 							editor.selectionChange();
-							editor.fire( 'afterUndo' );
+							this.fire( 'afterUndo' );
 						}
 					},
 					state : CKEDITOR.TRISTATE_DISABLED,
@@ -39,7 +39,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						if ( undoManager.redo() )
 						{
 							editor.selectionChange();
-							editor.fire( 'afterRedo' );
+							this.fire( 'afterRedo' );
 						}
 					},
 					state : CKEDITOR.TRISTATE_DISABLED,
@@ -148,11 +148,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	var Image = CKEDITOR.plugins.undo.Image = function( editor )
 	{
 		this.editor = editor;
-		
+
 		// Wikia - start
 		editor.fire('beforeCreateUndoSnapshot');
 		// Wikia - end
-		
+
 		var contents = editor.getSnapshot(),
 			selection	= contents && editor.getSelection();
 
@@ -161,7 +161,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 		this.contents	= contents;
 		this.bookmarks	= selection && selection.createBookmarks2( true );
-		
+
 		// Wikia - start
 		editor.fire('afterCreateUndoSnapshot');
 		// Wikia - end
@@ -385,6 +385,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		{
 			var snapshots = this.snapshots;
 
+			RTE.log('undo save');
+
 			// Get a content image.
 			if ( !image )
 				image = new Image( this.editor );
@@ -437,6 +439,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			// the original snapshot due to dom change. (#4622)
 			this.update();
 			this.fireChange();
+
+			// Wikia - start
+			this.editor.fire('wysiwygModeReady');
+			// Wikia - end
 		},
 
 		// Get the closest available image.

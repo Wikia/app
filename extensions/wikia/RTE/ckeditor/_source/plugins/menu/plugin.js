@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -49,7 +49,7 @@ CKEDITOR.plugins.add( 'menu',
 		$ : function( editor, definition )
 		{
 			definition = this._.definition = definition || {};
-			this.id = 'cke_' + CKEDITOR.tools.getNextNumber();
+			this.id = CKEDITOR.tools.getNextId();
 
 			this.editor = editor;
 			this.items = [];
@@ -411,7 +411,7 @@ CKEDITOR.plugins.add( 'menu',
 			var hasSubMenu = this.getItems;
 
 			output.push(
-				'<span class="cke_menuitem">' +
+				'<span class="cke_menuitem' + ( this.icon && this.icon.indexOf( '.png' ) == -1 ? ' cke_noalphafix' : '' ) + '">' +
 				'<a id="', id, '"' +
 					' class="', classes, '" href="javascript:void(\'', ( this.label || '' ).replace( "'", '' ), '\')"' +
 					' title="', this.label, '"' +

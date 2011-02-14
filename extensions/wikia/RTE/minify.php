@@ -14,13 +14,8 @@ function minify($type, $files, $target) {
 	$count = count($files);
 	echo "Packaging {$target} ({$count} files)...";
 
-	$chute = new StaticChute($type);
-	$chute->compress = false;
-	$chute->httpCache = false;
-
 	$revision = SpecialVersion::getSvnRevision(dirname(__FILE__));
 	$build = date('Ymd');
-
 	$year = date('Y');
 
 	$header = <<<HEAD
@@ -42,7 +37,6 @@ HEAD;
 			// remove @import url("foo") lines
 			$res = preg_replace('#^@import url.*$#m', '', $res);
 
-			//$res = $chute->minifyCSSData($res);
 			$res = MinifyService::minifyCSS($res);
 			break;
 
@@ -51,18 +45,23 @@ HEAD;
 			$res = preg_replace('#^.*@Packager\\.RemoveLine.*$#m', '', $res);
 
 			// minify
-			//$res = $chute->minifyJSData($res);
 			$res = MinifyService::minifyJS($res);
 
-			// add date and revision data
-			$res = str_replace('%REV%', "r{$revision} build {$build}", $res);
-			$res = str_replace('%VERSION%', CKEditor::version, $res);
 			break;
 	}
 
-	file_put_contents($target, $header.$res);
+	if (!empty($res)) {
+		// add date and revision data
+		$res = str_replace('%REV%', "r{$revision} build {$build}", $res);
+		$res = str_replace('%VERSION%', CKEditor::version, $res);
 
-	echo " done!\n";
+		file_put_contents($target, $header.$res);
+
+		echo " done!\n";
+	}
+	else {
+		echo " failed!\n";
+	}
 }
 
 

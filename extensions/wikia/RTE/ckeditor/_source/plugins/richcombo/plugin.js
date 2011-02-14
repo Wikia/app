@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -131,6 +131,7 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 			editor.on( 'mode', function()
 				{
 					this.setState( this.modes[ editor.mode ] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED );
+					this.setValue( '' );
 				},
 				this );
 
@@ -305,16 +306,18 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 			this._.value = value;
 
 			var textElement = this.document.getById( 'cke_' + this.id + '_text' );
-
-			if ( !( value || text ) )
+			if ( textElement )
 			{
-				text = this.label;
-				textElement.addClass( 'cke_inline_label' );
-			}
-			else
-				textElement.removeClass( 'cke_inline_label' );
+				if ( !( value || text ) )
+				{
+					text = this.label;
+					textElement.addClass( 'cke_inline_label' );
+				}
+				else
+					textElement.removeClass( 'cke_inline_label' );
 
-			textElement.setHtml( typeof text != 'undefined' ? text : value );
+				textElement.setHtml( typeof text != 'undefined' ? text : value );
+			}
 		},
 
 		getValue : function()

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -73,7 +73,7 @@ CKEDITOR.plugins.add( 'colorbutton',
 						{
 							color = block && block.getComputedStyle( type == 'back' ? 'background-color' : 'color' ) || 'transparent';
 						}
-						while ( type == 'back' && color == 'transparent' && ( block = block.getParent() ) );
+						while ( type == 'back' && color == 'transparent' && block && ( block = block.getParent() ) );
 
 						// The box should never be transparent.
 						if ( !color || color == 'transparent' )
@@ -220,7 +220,7 @@ CKEDITOR.plugins.add( 'colorbutton',
 
 		function isUnstylable( ele )
 		{
-			return ( ele.getAttribute( 'contentEditable' ) == 'false' ) || ele.getAttribute( 'data-cke-nostyle' );
+			return ( ele.getAttribute( 'contentEditable' ) == 'false' ) || ele.getAttribute( 'data-nostyle' );
 		}
 	}
 });

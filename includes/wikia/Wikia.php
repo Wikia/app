@@ -1571,6 +1571,28 @@ class Wikia {
 		return $result;
 	}
 	
+
+	/**
+	 * Parse given message containing a wikitext list of items and return array of items
+	 *
+	 * @author macbre
+	 */
+	static public function parseMessageToArray($msgName, $forContent = false) {
+		wfProfileIn( __METHOD__ );
+		$items = array();
+		$message = $forContent ? wfMsgForContent($msgName) : wfMsg($msgName);
+
+		if (!wfEmptyMsg($msgName, $message)) {
+			$parsed = explode("\n", $message);
+
+			foreach($parsed as $item) {
+				$items[] = trim($item, ' *');
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $items;
+	}
 	/**
 	 * check user authentication key
 	 * @static

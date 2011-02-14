@@ -115,9 +115,9 @@ RTE.templateEditor = {
 
 		// "parse" current wikitext
 		var wikitextParts = currentData.wikitext.
-			replace(/\[\[(.*)\|(.*)\]\]/g, '[[$1\x7f$2]]'). // mark pipes inside internal links syntax [[Foo|Bar]]
-			substring(2, currentData.wikitext.length - 2).	// remove {{ and }}
-			split('|');										// split by pipe
+			replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, '[[$1\x7f$2]]').	// mark pipes inside internal links syntax [[Foo|Bar]] (BugID: 2264)
+			substring(2, currentData.wikitext.length - 2).				// remove {{ and }}
+			split('|');													// split by pipe
 
 		//RTE.log(currentData.wikitext); RTE.log(wikitextParts); RTE.log(params);
 
@@ -152,14 +152,14 @@ RTE.templateEditor = {
 				}
 
 				// update this part with new value
-				if (params[partName] != '') {
+				if (typeof params[partName] != 'undefined') {
 					partsStack.push(parsedPart[1] + partSeparator + params[partName] + partTail);
 					delete params[partName];
 				}
 			}
 			// foo bar (unnamed parameter)
 			else {
-				parsedPart = part.match(/(.*)(\n?)/); //RTE.log(parsedPart);
+				parsedPart = part.match(/(.*)(\n?)/); //RTE.log(part); RTE.log(parsedPart);
 
 				var partName = ++unnamedCounter;
 				var partValue = parsedPart[1];
@@ -169,9 +169,12 @@ RTE.templateEditor = {
 					lineBreakInTail = true;
 				}
 
-				// update this part with new value
-				if (params[partName] != '') {
+				// update this part with new value (numbered param)
+				if (typeof params[partName] != 'undefined') {
 					partsStack.push(params[partName] + partTail);
+				}
+				else if ($.trim(partValue)) {
+					partsStack.push(partValue + partTail);
 				}
 				else {
 					// add empty unnamed param to stack, don't add line break (RT #93340)
@@ -184,6 +187,10 @@ RTE.templateEditor = {
 
 		// add new params
 		$.each(params, function(key, value) {
+			if (typeof value == 'undefined') {
+				return;
+			}
+
 			// unnamed param (add even if empty)
 			if (parseInt(key) && parseInt(key) == key) {
 				// for unnamed params don't add line break (RT #93340)

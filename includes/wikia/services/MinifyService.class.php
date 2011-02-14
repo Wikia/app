@@ -9,21 +9,23 @@
 
 class MinifyService extends Service {
 
+	const RESULT_OK = 0;
+
 	/**
 	 * Store given content in temporary file and return its name
 	 */
 	private static function storeInTempFile($content) {
-		$tmp = tempnam(sys_get_temp_dir(), 'minify');
-        file_put_contents($tmp, $content);
+		$tmpName = tempnam(sys_get_temp_dir(), 'minify');
+		file_put_contents($tmpName, $content);
 
-		return $tmp;
+		return $tmpName;
 	}
 
 	/**
 	 * Removes given temporary file
 	 */
-	private static function removeTempFile($tmp) {
-		unlink($tmp);
+	private static function removeTempFile($tmpName) {
+		unlink($tmpName);
 	}
 
 	/**
@@ -50,7 +52,7 @@ class MinifyService extends Service {
 	}
 
 	/**
-	 * Minify given JavaScript code
+	 * Return minified version of given JavaScript code (or false in case of an error)
 	 */
 	public static function minifyJS($code) {
 		global $IP;
@@ -59,38 +61,22 @@ class MinifyService extends Service {
 		wfDebug(__METHOD__ . ": starting...\n");
 
 		// store code in temporary file
-		$tmp = self::storeInTempFile($code);
-
-		// minify (output is written to stdout)
-		// Google Closure
-		//$code = shell_exec("java -jar {$IP}/lib/closure/compiler.jar --js {$tmp} --charset UTF-8 --compilation_level SIMPLE_OPTIMIZATIONS --warning_level QUIET");
+		$tmpName = self::storeInTempFile($code);
 
 		// YUI compressor
-		$code = shell_exec("java -jar {$IP}/lib/yuicompressor-2.4.2.jar {$tmp} --charset utf-8 --type js");
-
-		// Google Closure REST API
-		/*
-		$code = Http::post('http://closure-compiler.appspot.com/compile', array(
-			'postData' => array(
-				'js_code' => $code,
-				'compilation_level' => 'SIMPLE_OPTIMIZATIONS',
-				'output_format' => 'text',
-				'output_info' => 'compiled_code',
-			)
-		));
-		*/
+		$code = exec("java -jar {$IP}/lib/yuicompressor-2.4.2.jar {$tmpName} --charset utf-8 --type js", $out, $res);
 
 		// clean up
-		self::removeTempFile($tmp);
+		self::removeTempFile($tmpName);
 
 		wfDebug(__METHOD__ . ": done!\n");
 
 		wfProfileOut(__METHOD__);
-		return $code;
+		return ($res == self::RESULT_OK) ? $code : false;
 	}
 
 	/**
-	 * Minify given CSS code
+	 * Return minified version of given CSS (or false in case of an error)
 	 */
 	public static function minifyCSS($code) {
 		global $IP;
@@ -99,17 +85,17 @@ class MinifyService extends Service {
 		wfDebug(__METHOD__ . ": starting...\n");
 
 		// store code in temporary file
-		$tmp = self::storeInTempFile($code);
+		$tmpName = self::storeInTempFile($code);
 
 		// minify (output is written to stdout)
-		$code = shell_exec("java -jar {$IP}/lib/yuicompressor-2.4.2.jar {$tmp} --charset utf-8 --type css");
+		$code = exec("java -jar {$IP}/lib/yuicompressor-2.4.2.jar {$tmpName} --charset utf-8 --type css", $out, $res);
 
 		// clean up
-		self::removeTempFile($tmp);
+		self::removeTempFile($tmpName);
 
 		wfDebug(__METHOD__ . ": done!\n");
 
 		wfProfileOut(__METHOD__);
-		return $code;
+		return ($res == self::RESULT_OK) ? $code : false;
 	}
 }

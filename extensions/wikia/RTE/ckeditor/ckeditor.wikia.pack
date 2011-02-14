@@ -4,7 +4,7 @@
 
 header :
 	'/*'																			+ '\n' +
-	'Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.'	+ '\n' +
+	'Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.'	+ '\n' +
 	'For licensing, see LICENSE.html or http://ckeditor.com/license'				+ '\n' +
 	'*/'																			+ '\n' +
 	'\n',
@@ -202,7 +202,6 @@ packages :
 					'../js/plugins/dragdrop/plugin.js',
 					'../js/plugins/edit-buttons/plugin.js',
 					'../js/plugins/entities/plugin.js',
-					'../js/plugins/first-run-notice/plugin.js',
 					'../js/plugins/gallery/plugin.js',
 					'../js/plugins/justify/plugin.js',
 					'../js/plugins/link/plugin.js',
@@ -214,6 +213,7 @@ packages :
 					'../js/plugins/paste/plugin.js',
 					'../js/plugins/placeholder/plugin.js',
 					'../js/plugins/signature/plugin.js',
+					'../js/plugins/spellchecker/plugin.js',
 					'../js/plugins/template/plugin.js',
 					'../js/plugins/template/dialogs/template.js',
 					'../js/plugins/temporary-save/plugin.js',

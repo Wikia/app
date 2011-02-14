@@ -35,8 +35,11 @@ class EditPageModule extends Module {
 	 * Loads YUI on edit pages
 	 */
 	public static function onShowEditFormInitial($editPage) {
-		global $wgOut, $wgJsMimeType;
+		global $wgOut, $wgHooks, $wgJsMimeType;
 		wfProfileIn(__METHOD__);
+
+		// BugId:2435 - add wgIsEditPage global JS variable on edit pages to simplify checks
+		$wgHooks['MakeGlobalVariablesScript'][] = 'EditPageModule::onMakeGlobalVariablesScript';
 
 		// macbre: load YUI on edit page (it's always loaded using $.loadYUI)
 		// PLB has problems with $.loadYUI not working correctly in Firefox (callback is fired to early)
@@ -46,6 +49,14 @@ class EditPageModule extends Module {
 		$wgOut->addScript($staticChute->getChuteHtmlForPackage('yui'));
 
 		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Add wgIsEditPage global JS variable on edit pages
+	 */
+	public static function onMakeGlobalVariablesScript($vars) {
+		$vars['wgIsEditPage'] = true;
 		return true;
 	}
 }

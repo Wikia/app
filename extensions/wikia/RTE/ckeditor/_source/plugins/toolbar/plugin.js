@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -345,6 +345,25 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						event.data.html += output.join( '' );
 					}
 				});
+
+			editor.on( 'destroy', function()
+			{
+				var toolbars, index = 0, i,
+						items, instance;
+				toolbars = this.toolbox.toolbars;
+				for ( ; index < toolbars.length; index++ )
+				{
+					items = toolbars[ index ].items;
+					for ( i = 0; i < items.length; i++ )
+					{
+						instance = items[ i ];
+						if ( instance.clickFn ) CKEDITOR.tools.removeFunction( instance.clickFn );
+						if ( instance.keyDownFn ) CKEDITOR.tools.removeFunction( instance.keyDownFn );
+
+						if ( instance.index ) CKEDITOR.ui.button._.instances[ instance.index ] = null;
+					}
+				}
+			});
 
 			editor.addCommand( 'toolbarFocus', commands.toolbarFocus );
 		}
