@@ -1,15 +1,15 @@
 function createExhibit() {//overload Exhibit's autoCreate-functionality
-  	
+
   /*
    * This javascript bases on the Wibbit startup procedure and was modified for the use in Semantic MediaWiki
    * Data: We're using the HTML table importer to get the data for the exhibit.
   */
- 	
+
 	window.database = Exhibit.Database.create();
 	window.exhibit = Exhibit.create(window.database);
 
 	if(!remote){
-	
+
 	for (var id in ex_sources) {
 		var source = ex_sources[id];
 		var dataTable = document.getElementById(source.id);
@@ -28,7 +28,7 @@ function createExhibit() {//overload Exhibit's autoCreate-functionality
 					ths[c].setAttribute('ex:valueType', valueType);
 				} else { var name = columns[c]; }
 				ths[c].setAttribute('ex:name', name);
-			}				
+			}
 		} else {
 			ths[0].setAttribute('ex:name', 'label');
 			for (var c = 1; c < ths.length; c++) {
@@ -39,16 +39,16 @@ function createExhibit() {//overload Exhibit's autoCreate-functionality
 				ths[c].setAttribute('ex:name', label);
 			}
 		}
-		Exhibit.HtmlTableImporter.loadTable(dataTable, window.database); 
+		Exhibit.HtmlTableImporter.loadTable(dataTable, window.database);
 	}}
 
     window.database.loadDataLinks(); //load JSON files in addition
-	
+
     var exhibitDiv = document.getElementById('exhibitLocation');
-    exhibitDiv.innerHTML = "<div id='top-facets'></div><table width='100%' style='clear: both'><tr id='exhibit-content' valign='top'><td id='left-facets' width='0%'></td><td id='view-content'><div id='view'></div></td><td id='right-facets' width='0%'></td></tr></table><div id='bottom-facets'></div>";//<div ex:role='exhibit-collection' ex:itemTypes='Item'/>"; 
-		
+    exhibitDiv.innerHTML = "<div id='top-facets'></div><table width='100%' style='clear: both'><tr id='exhibit-content' valign='top'><td id='left-facets' width='0%'></td><td id='view-content'><div id='view'></div></td><td id='right-facets' width='0%'></td></tr></table><div id='bottom-facets'></div>";//<div ex:role='exhibit-collection' ex:itemTypes='Item'/>";
+
     /*
-     * Configuration: We're creating HTML strings that specify the configurations, 
+     * Configuration: We're creating HTML strings that specify the configurations,
      * formatted in the same form as specifications in the HTML of a regular exhibit.
      */
     if (ex_facets) {//facets
@@ -67,16 +67,16 @@ function createExhibit() {//overload Exhibit's autoCreate-functionality
 		  if (position == "left") {
 			  var facetTd = document.getElementById('left-facets');
 			  facetTd.innerHTML = facetTd.innerHTML + innerHTML;
-			  facetTd.setAttribute('width', '20%');
+			  facetTd.setAttribute('width', '24%');
 		  }
 		  if (position == "right") {
 			  var facetTd = document.getElementById('right-facets');
 			  facetTd.innerHTML = facetTd.innerHTML + innerHTML;
-			  facetTd.setAttribute('width', '20%');
+			  facetTd.setAttribute('width', '24%');
 		  }
 		}
     }
-	
+
     if (ex_views && (ex_views[0] !== "")) {//views
 		var viewHTML = '<div '+formats+' id="exhibit-view-panel" ex:role="viewPanel"><div ex:role="lens">'+ex_lens+'</div>';
 		for (var i = 0; i < ex_views.length; i++) {
@@ -87,7 +87,7 @@ function createExhibit() {//overload Exhibit's autoCreate-functionality
     } else {
 		document.getElementById("view").innerHTML = '<div ex:role="view"></div>';
     }
-    
+
     for(var i = 0; i < ex_lenscounter; i++){ //lenses
 		var test = document.getElementById("lenscontent"+i);
 		if(test.innerHTML.indexOf('|')>=0){
@@ -96,14 +96,13 @@ function createExhibit() {//overload Exhibit's autoCreate-functionality
 			test.innerHTML = commands[0];
 		}
 		test.setAttribute('ex:content','.' + test.innerHTML.replace(' ','_').toLowerCase());
-		//test.setAttribute('ex:content','.' + test.innerHTML);
 		test.setAttribute('class',"inlines");
 		test.innerHTML = '';
     }
     for(var i = 0; i < ex_linkcounter; i++){ //lenses
 		var test = document.getElementById("linkcontent"+i);
 		var newlink = document.createElement('a');
-		newlink.setAttribute('ex:href-subcontent',wgServer + wgScript + '?title={{.' + test.innerHTML + '}}');
+		newlink.setAttribute('ex:href-subcontent',wgServer + wgScript + '?title={{urlenc(.' + test.innerHTML + ')}}');
 		newlink.setAttribute('ex:content','.' + test.innerHTML);
 		test.innerHTML = '';
 		test.appendChild(newlink);
@@ -115,8 +114,8 @@ function createExhibit() {//overload Exhibit's autoCreate-functionality
                 newimage.setAttribute('height','100');
 		test.innerHTML = '';
                 test.appendChild(newimage);
-    }    
-   	
+    }
+
     window.exhibit.configureFromDOM();
 }
 

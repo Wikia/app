@@ -16,27 +16,27 @@ Timeline._defaultTheme = null;
 
 Timeline.createBandInfo = function(params) {
     var theme = ("theme" in params) ? params.theme : Timeline.getDefaultTheme();
-    
+
     var eventSource = ("eventSource" in params) ? params.eventSource : null;
-    
-    var ether = new Timeline.LinearEther({ 
+
+    var ether = new Timeline.LinearEther({
         centersOn:          ("date" in params) ? params.date : new Date(),
         interval:           Timeline.DateTime.gregorianUnitLengths[params.intervalUnit],
         pixelsPerInterval:  params.intervalPixels
     });
-    
+
     var etherPainter = new Timeline.GregorianEtherPainter({
-        unit:       params.intervalUnit, 
-        theme:      theme 
+        unit:       params.intervalUnit,
+        theme:      theme
     });
-    
+
     var layout = new Timeline.StaticTrackBasedLayout({
         eventSource:    eventSource,
         ether:          ether,
         showText:       ("showEventText" in params) ? params.showEventText : true,
         theme:          theme
     });
-    
+
     var eventPainterParams = {
         showText:   ("showEventText" in params) ? params.showEventText : true,
         layout:     layout,
@@ -49,8 +49,8 @@ Timeline.createBandInfo = function(params) {
         eventPainterParams.trackGap = params.trackGap;
     }
     var eventPainter = new Timeline.DurationEventPainter(eventPainterParams);
-    
-    return {   
+
+    return {
         width:          params.width,
         eventSource:    eventSource,
         timeZone:       ("timeZone" in params) ? params.timeZone : 0,
@@ -62,28 +62,28 @@ Timeline.createBandInfo = function(params) {
 
 Timeline.createHotZoneBandInfo = function(params) {
     var theme = ("theme" in params) ? params.theme : Timeline.getDefaultTheme();
-    
+
     var eventSource = ("eventSource" in params) ? params.eventSource : null;
-    
-    var ether = new Timeline.HotZoneEther({ 
+
+    var ether = new Timeline.HotZoneEther({
         centersOn:          ("date" in params) ? params.date : new Date(),
         interval:           Timeline.DateTime.gregorianUnitLengths[params.intervalUnit],
         pixelsPerInterval:  params.intervalPixels,
         zones:              params.zones
     });
-    
+
     var etherPainter = new Timeline.HotZoneGregorianEtherPainter({
-        unit:       params.intervalUnit, 
+        unit:       params.intervalUnit,
         zones:      params.zones,
-        theme:      theme 
+        theme:      theme
     });
-    
+
     var layout = new Timeline.StaticTrackBasedLayout({
         eventSource:    eventSource,
         ether:          ether,
         theme:          theme
     });
-    
+
     var eventPainterParams = {
         showText:   ("showEventText" in params) ? params.showEventText : true,
         layout:     layout,
@@ -96,8 +96,8 @@ Timeline.createHotZoneBandInfo = function(params) {
         eventPainterParams.trackGap = params.trackGap;
     }
     var eventPainter = new Timeline.DurationEventPainter(eventPainterParams);
-    
-    return {   
+
+    return {
         width:          params.width,
         eventSource:    eventSource,
         timeZone:       ("timeZone" in params) ? params.timeZone : 0,
@@ -126,7 +126,7 @@ Timeline.loadXML = function(url, f) {
         var xml = xmlhttp.responseXML;
         if (!xml.documentElement && xmlhttp.responseStream) {
             xml.load(xmlhttp.responseStream);
-        } 
+        }
         f(xml, url);
     };
     Timeline.XmlHttp.get(url, fError, fDone);
@@ -146,11 +146,11 @@ Timeline.loadJSON = function(url, f) {
 
 Timeline._Impl = function(elmt, bandInfos, orientation, unit) {
     this._containerDiv = elmt;
-    
+
     this._bandInfos = bandInfos;
     this._orientation = orientation == null ? Timeline.HORIZONTAL : orientation;
     this._unit = (unit != null) ? unit : Timeline.NativeDateUnit;
-    
+
     this._initialize();
 };
 
@@ -202,12 +202,12 @@ Timeline._Impl.prototype.isVertical = function() {
 };
 
 Timeline._Impl.prototype.getPixelLength = function() {
-    return this._orientation == Timeline.HORIZONTAL ? 
+    return this._orientation == Timeline.HORIZONTAL ?
         this._containerDiv.offsetWidth : this._containerDiv.offsetHeight;
 };
 
 Timeline._Impl.prototype.getPixelWidth = function() {
-    return this._orientation == Timeline.VERTICAL ? 
+    return this._orientation == Timeline.VERTICAL ?
         this._containerDiv.offsetWidth : this._containerDiv.offsetHeight;
 };
 
@@ -217,8 +217,8 @@ Timeline._Impl.prototype.getUnit = function() {
 
 Timeline._Impl.prototype.loadXML = function(url, f) {
     var tl = this;
-    
-    
+
+
     var fError = function(statusText, status, xmlhttp) {
         alert("Failed to load data xml from " + url + "\n" + statusText);
         tl.hideLoadingMessage();
@@ -228,21 +228,21 @@ Timeline._Impl.prototype.loadXML = function(url, f) {
             var xml = xmlhttp.responseXML;
             if (!xml.documentElement && xmlhttp.responseStream) {
                 xml.load(xmlhttp.responseStream);
-            } 
+            }
             f(xml, url);
         } finally {
             tl.hideLoadingMessage();
         }
     };
-    
+
     this.showLoadingMessage();
     window.setTimeout(function() { Timeline.XmlHttp.get(url, fError, fDone); }, 0);
 };
 
 Timeline._Impl.prototype.loadJSON = function(url, f) {
     var tl = this;
-    
-    
+
+
     var fError = function(statusText, status, xmlhttp) {
         alert("Failed to load json data from " + url + "\n" + statusText);
         tl.hideLoadingMessage();
@@ -254,7 +254,7 @@ Timeline._Impl.prototype.loadJSON = function(url, f) {
             tl.hideLoadingMessage();
         }
     };
-    
+
     this.showLoadingMessage();
     window.setTimeout(function() { Timeline.XmlHttp.get(url, fError, fDone); }, 0);
 };
@@ -262,14 +262,14 @@ Timeline._Impl.prototype.loadJSON = function(url, f) {
 Timeline._Impl.prototype._initialize = function() {
     var containerDiv = this._containerDiv;
     var doc = containerDiv.ownerDocument;
-    
-    containerDiv.className = 
+
+    containerDiv.className =
         containerDiv.className.split(" ").concat("timeline-container").join(" ");
-        
+
     while (containerDiv.firstChild) {
         containerDiv.removeChild(containerDiv.firstChild);
     }
-    
+
     /*
      *  inserting copyright and link to simile
      */
@@ -278,7 +278,7 @@ Timeline._Impl.prototype._initialize = function() {
     elmtCopyright.title = "Timeline (c) SIMILE - http://simile.mit.edu/timeline/";
     Timeline.DOM.registerEvent(elmtCopyright, "click", function() { window.location = "http://simile.mit.edu/timeline/"; });
     containerDiv.appendChild(elmtCopyright);
-    
+
     /*
      *  creating bands
      */
@@ -288,7 +288,7 @@ Timeline._Impl.prototype._initialize = function() {
         this._bands.push(band);
     }
     this._distributeWidths();
-    
+
     /*
      *  sync'ing bands
      */
@@ -296,22 +296,22 @@ Timeline._Impl.prototype._initialize = function() {
         var bandInfo = this._bandInfos[i];
         if ("syncWith" in bandInfo) {
             this._bands[i].setSyncWithBand(
-                this._bands[bandInfo.syncWith], 
+                this._bands[bandInfo.syncWith],
                 ("highlight" in bandInfo) ? bandInfo.highlight : false
             );
         }
     }
-    
+
     /*
      *  creating loading UI
      */
     var message = Timeline.Graphics.createMessageBubble(doc);
     message.containerDiv.className = "timeline-message-container";
     containerDiv.appendChild(message.containerDiv);
-    
+
     message.contentDiv.className = "timeline-message";
     message.contentDiv.innerHTML = "<img src='" + Timeline.urlPrefix + "images/progress-running.gif' /> Loading...";
-    
+
     this.showLoadingMessage = function() { message.containerDiv.style.display = "block"; };
     this.hideLoadingMessage = function() { message.containerDiv.style.display = "none"; };
 };
@@ -320,12 +320,12 @@ Timeline._Impl.prototype._distributeWidths = function() {
     var length = this.getPixelLength();
     var width = this.getPixelWidth();
     var cumulativeWidth = 0;
-    
+
     for (var i = 0; i < this._bands.length; i++) {
         var band = this._bands[i];
         var bandInfos = this._bandInfos[i];
         var widthString = bandInfos.width;
-        
+
         var x = widthString.indexOf("%");
         if (x > 0) {
             var percent = parseInt(widthString.substr(0, x));
@@ -333,10 +333,10 @@ Timeline._Impl.prototype._distributeWidths = function() {
         } else {
             var bandWidth = parseInt(widthString);
         }
-        
+
         band.setBandShiftAndWidth(cumulativeWidth, bandWidth);
         band.setViewLength(length);
-        
+
         cumulativeWidth += bandWidth;
     }
 };
@@ -349,18 +349,18 @@ Timeline._Band = function(timeline, bandInfo, index) {
     this._timeline = timeline;
     this._bandInfo = bandInfo;
     this._index = index;
-    
+
     this._locale = ("locale" in bandInfo) ? bandInfo.locale : Timeline.Platform.getDefaultLocale();
     this._timeZone = ("timeZone" in bandInfo) ? bandInfo.timeZone : 0;
-    this._labeller = ("labeller" in bandInfo) ? bandInfo.labeller : 
+    this._labeller = ("labeller" in bandInfo) ? bandInfo.labeller :
         timeline.getUnit().createLabeller(this._locale, this._timeZone);
-    
+
     this._dragging = false;
     this._changing = false;
     this._originalScrollSpeed = 5; // pixels
     this._scrollSpeed = this._originalScrollSpeed;
     this._onScrollListeners = [];
-    
+
     var b = this;
     this._syncWithBand = null;
     this._syncWithBandHandler = function(band) {
@@ -369,49 +369,49 @@ Timeline._Band = function(timeline, bandInfo, index) {
     this._selectorListener = function(band) {
         b._onHighlightBandScroll();
     };
-    
+
     /*
      *  Install a textbox to capture keyboard events
      */
     var inputDiv = this._timeline.getDocument().createElement("div");
     inputDiv.className = "timeline-band-input";
     this._timeline.addDiv(inputDiv);
-    
+
     this._keyboardInput = document.createElement("input");
     this._keyboardInput.type = "text";
     inputDiv.appendChild(this._keyboardInput);
     Timeline.DOM.registerEventWithObject(this._keyboardInput, "keydown", this, this._onKeyDown);
     Timeline.DOM.registerEventWithObject(this._keyboardInput, "keyup", this, this._onKeyUp);
-    
+
     /*
      *  The band's outer most div that slides with respect to the timeline's div
      */
     this._div = this._timeline.getDocument().createElement("div");
     this._div.className = "timeline-band";
     this._timeline.addDiv(this._div);
-    
+
     Timeline.DOM.registerEventWithObject(this._div, "mousedown", this, this._onMouseDown);
     Timeline.DOM.registerEventWithObject(this._div, "mousemove", this, this._onMouseMove);
     Timeline.DOM.registerEventWithObject(this._div, "mouseup", this, this._onMouseUp);
     Timeline.DOM.registerEventWithObject(this._div, "mouseout", this, this._onMouseOut);
     Timeline.DOM.registerEventWithObject(this._div, "dblclick", this, this._onDblClick);
-    
+
     /*
      *  The inner div that contains layers
      */
     this._innerDiv = this._timeline.getDocument().createElement("div");
     this._innerDiv.className = "timeline-band-inner";
     this._div.appendChild(this._innerDiv);
-    
+
     /*
      *  Initialize parts of the band
      */
     this._ether = bandInfo.ether;
     bandInfo.ether.initialize(timeline);
-        
+
     this._etherPainter = bandInfo.etherPainter;
     bandInfo.etherPainter.initialize(this, timeline);
-    
+
     this._eventSource = bandInfo.eventSource;
     if (this._eventSource) {
         this._eventListener = {
@@ -420,15 +420,15 @@ Timeline._Band = function(timeline, bandInfo, index) {
         }
         this._eventSource.addListener(this._eventListener);
     }
-        
+
     this._eventPainter = bandInfo.eventPainter;
     bandInfo.eventPainter.initialize(this, timeline);
-    
+
     this._decorators = ("decorators" in bandInfo) ? bandInfo.decorators : [];
     for (var i = 0; i < this._decorators.length; i++) {
         this._decorators[i].initialize(this, timeline);
     }
-        
+
     this._bubble = null;
 };
 
@@ -436,26 +436,26 @@ Timeline._Band.SCROLL_MULTIPLES = 5;
 
 Timeline._Band.prototype.dispose = function() {
     this.closeBubble();
-    
+
     if (this._eventSource) {
         this._eventSource.removeListener(this._eventListener);
         this._eventListener = null;
         this._eventSource = null;
     }
-    
+
     this._timeline = null;
     this._bandInfo = null;
-    
+
     this._labeller = null;
     this._ether = null;
     this._etherPainter = null;
     this._eventPainter = null;
     this._decorators = null;
-    
+
     this._onScrollListeners = null;
     this._syncWithBandHandler = null;
     this._selectorListener = null;
-    
+
     this._div = null;
     this._innerDiv = null;
     this._keyboardInput = null;
@@ -479,7 +479,7 @@ Timeline._Band.prototype.setSyncWithBand = function(band, highlight) {
     if (this._syncWithBand) {
         this._syncWithBand.removeOnScrollListener(this._syncWithBandHandler);
     }
-    
+
     this._syncWithBand = band;
     this._syncWithBand.addOnScrollListener(this._syncWithBandHandler);
     this._highlight = highlight;
@@ -544,13 +544,13 @@ Timeline._Band.prototype.setBandShiftAndWidth = function(shift, width) {
     if (this._timeline.isHorizontal()) {
         this._div.style.top = shift + "px";
         this._div.style.height = width + "px";
-        
+
         inputDiv.style.top = middle + "px";
         inputDiv.style.left = "-1em";
     } else {
         this._div.style.left = shift + "px";
         this._div.style.width = width + "px";
-        
+
         inputDiv.style.left = middle + "px";
         inputDiv.style.top = "-1em";
     }
@@ -633,7 +633,7 @@ Timeline._Band.prototype.createLayerDiv = function(zIndex) {
     div.className = "timeline-band-layer";
     div.style.zIndex = zIndex;
     this._innerDiv.appendChild(div);
-    
+
     var innerDiv = this._timeline.getDocument().createElement("div");
     innerDiv.className = "timeline-band-layer-inner";
     if (Timeline.Platform.browser.isIE) {
@@ -642,7 +642,7 @@ Timeline._Band.prototype.createLayerDiv = function(zIndex) {
         innerDiv.style.cursor = "-moz-grab";
     }
     div.appendChild(innerDiv);
-    
+
     return innerDiv;
 };
 
@@ -659,10 +659,10 @@ Timeline._Band.prototype.closeBubble = function() {
 
 Timeline._Band.prototype.openBubbleForPoint = function(pageX, pageY, width, height) {
     this.closeBubble();
-    
+
     this._bubble = Timeline.Graphics.createBubbleForPoint(
         this._timeline.getDocument(), pageX, pageY, width, height);
-        
+
     return this._bubble.content;
 };
 
@@ -678,7 +678,7 @@ Timeline._Band.prototype.scrollToCenter = function(date) {
 
 Timeline._Band.prototype._onMouseDown = function(innerFrame, evt, target) {
     this.closeBubble();
-    
+
     this._dragging = true;
     this._dragX = evt.clientX;
     this._dragY = evt.clientY;
@@ -688,10 +688,10 @@ Timeline._Band.prototype._onMouseMove = function(innerFrame, evt, target) {
     if (this._dragging) {
         var diffX = evt.clientX - this._dragX;
         var diffY = evt.clientY - this._dragY;
-        
+
         this._dragX = evt.clientX;
         this._dragY = evt.clientY;
-        
+
         this._moveEther(this._timeline.isHorizontal() ? diffX : diffY);
         this._positionHighlight();
     }
@@ -714,7 +714,7 @@ Timeline._Band.prototype._onMouseOut = function(innerFrame, evt, target) {
 Timeline._Band.prototype._onDblClick = function(innerFrame, evt, target) {
     var coords = Timeline.DOM.getEventRelativeCoordinates(evt, innerFrame);
     var distance = coords.x - (this._viewLength / 2 - this._viewOffset);
-    
+
     this._autoScroll(-distance);
 };
 
@@ -737,7 +737,7 @@ Timeline._Band.prototype._onKeyDown = function(keyboardInput, evt, target) {
             return true;
         }
         this.closeBubble();
-        
+
         Timeline.DOM.cancelEvent(evt);
         return false;
     }
@@ -747,7 +747,7 @@ Timeline._Band.prototype._onKeyDown = function(keyboardInput, evt, target) {
 Timeline._Band.prototype._onKeyUp = function(keyboardInput, evt, target) {
     if (!this._dragging) {
         this._scrollSpeed = this._originalScrollSpeed;
-        
+
         switch (evt.keyCode) {
         case 35: // end
             this.setCenterVisibleDate(this._eventSource.getLatestDate());
@@ -764,9 +764,9 @@ Timeline._Band.prototype._onKeyUp = function(keyboardInput, evt, target) {
         default:
             return true;
         }
-        
+
         this.closeBubble();
-        
+
         Timeline.DOM.cancelEvent(evt);
         return false;
     }
@@ -783,7 +783,7 @@ Timeline._Band.prototype._autoScroll = function(distance) {
 
 Timeline._Band.prototype._moveEther = function(shift) {
     this.closeBubble();
-    
+
     this._viewOffset += shift;
     this._ether.shiftPixels(-shift);
     if (this._timeline.isHorizontal()) {
@@ -791,15 +791,15 @@ Timeline._Band.prototype._moveEther = function(shift) {
     } else {
         this._div.style.top = this._viewOffset + "px";
     }
-    
+
     if (this._viewOffset > -this._viewLength * 0.5 ||
         this._viewOffset < -this._viewLength * (Timeline._Band.SCROLL_MULTIPLES - 1.5)) {
-        
+
         this._recenterDiv();
     } else {
         this.softLayout();
     }
-    
+
     this._onChanging();
 }
 
@@ -808,7 +808,7 @@ Timeline._Band.prototype._onChanging = function() {
 
     this._fireOnScroll();
     this._setSyncWithBandDate();
-    
+
     this._changing = false;
 };
 
@@ -829,12 +829,12 @@ Timeline._Band.prototype._onHighlightBandScroll = function() {
     if (this._syncWithBand) {
         var centerDate = this._syncWithBand.getCenterVisibleDate();
         var centerPixelOffset = this._ether.dateToPixelOffset(centerDate);
-        
+
         this._moveEther(Math.round(this._viewLength / 2 - centerPixelOffset));
-        
+
         if (this._highlight) {
             this._etherPainter.setHighlight(
-                this._syncWithBand.getMinVisibleDate(), 
+                this._syncWithBand.getMinVisibleDate(),
                 this._syncWithBand.getMaxVisibleDate());
         }
     }
@@ -852,7 +852,7 @@ Timeline._Band.prototype._positionHighlight = function() {
     if (this._syncWithBand) {
         var startDate = this._syncWithBand.getMinVisibleDate();
         var endDate = this._syncWithBand.getMaxVisibleDate();
-        
+
         if (this._highlight) {
             this._etherPainter.setHighlight(startDate, endDate);
         }

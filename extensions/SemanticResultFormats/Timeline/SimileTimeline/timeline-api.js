@@ -15,6 +15,7 @@
 var Timeline_urlPrefix = wgScriptPath+"/extensions/SemanticResultFormats/Timeline/SimileTimeline/";
  
 var Timeline = new Object();
+window.Timeline = Timeline; // Added to make this RL compatible.
 Timeline.Platform = new Object();
     /*
         HACK: We need these 2 things here because we cannot simply append
