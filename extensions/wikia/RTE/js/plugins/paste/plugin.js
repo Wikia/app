@@ -19,24 +19,24 @@ CKEDITOR.plugins.add('rte-paste',
 			if (editor.mode != 'wysiwyg') {
 				return;
 			}
+		});
 
-			// @see clipboard CK core plugin
-			var body = this.document.getBody();
+		// @see clipboard CK core plugin
+		editor.on('beforepaste', function(ev) {
+			// store HTML before paste
+			self.htmlBeforePaste = self.getHtml();
 
-			body.on('beforepaste', function(ev) {
-				// store HTML before paste
-				self.htmlBeforePaste = self.getHtml();
-
-				// handle pasted HTML (mainly for tracking stuff)
-				setTimeout(function() {self.handlePaste.call(self, editor)}, 250);
-			});
+			// handle pasted HTML (mainly for tracking stuff)
+			setTimeout(function() {
+				self.handlePaste(editor);
+			}, 250);
 		});
 	},
 
 	// get pasted HTML
 	handlePaste: function(editor) {
 		RTE.log('paste detected');
-		
+
 		var afterPasteScheduled = false;
 
 		// get HTML after paste
@@ -88,7 +88,7 @@ CKEDITOR.plugins.add('rte-paste',
 				editor.setData(html,function(){
 					editor.fire('afterPaste');
 				});
-				afterPasteScheduled = true; 
+				afterPasteScheduled = true;
 			}
 		}
 

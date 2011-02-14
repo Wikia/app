@@ -1,0 +1,114 @@
+<?php
+
+class SpellCheckerInfoSpecial extends SpecialPage {
+
+	protected $app = null;
+
+	private $out;
+	private $request;
+	private $title;
+
+	function __construct() {
+		parent::__construct('SpellCheckerInfo');
+
+		$this->app = WF::build( 'App' );
+
+		$this->out = $this->app->getGlobal('wgOut');
+		$this->request = $this->app->getGlobal('wgRequest');
+		$this->title = $this->app->getGlobal('wgTitle');
+	}
+
+	function execute() {
+		$this->out->setPageTitle( $this->app->runFunction('wfMsg', 'spellchecker-info') );
+
+		// get information about enchant
+		$dict = new SpellCheckerDictionary();
+
+		// show list of all supported lanuages
+		$languages = $dict->getLanguages();
+		$rows = array();
+
+		foreach($languages as $lang) {
+			$rows[] = array($lang);
+		}
+
+		$this->out->addHtml( Xml::buildTable($rows, array('class' => 'wikitable'), array(
+			$this->app->runFunction('wfMsg', 'spellchecker-info-languages'),
+		)) );
+
+		// list providers
+		$providers = $dict->getProviders();
+		$rows = array();
+		foreach ($providers as $provider => $dictionaries) {
+			sort($dictionaries);
+			$count = count($dictionaries);
+
+			$rows[] = array(
+				$provider,
+				implode(', ', $dictionaries) . " ({$count})"
+			);
+		}
+
+		$this->out->addHtml( Xml::buildTable($rows, array('class' => 'wikitable'), array(
+			$this->app->runFunction('wfMsg', 'spellchecker-info-provider'),
+			$this->app->runFunction('wfMsg', 'spellchecker-info-dictionaries'),
+		)) );
+
+		// spell checking demo
+		$this->out->addHtml( Xml::element('hr') );
+
+		$this->spellCheckingForm($languages);
+	}
+
+	/**
+	 * Display form for testing spell checking feature
+	 */
+	function spellCheckingForm($languages) {
+		$fields = array(
+			'text' => array(
+				'class' => 'HTMLTextField',
+				'label-message' => 'spellchecker-info-spellcheck-text',
+			),
+			'lang' => array(
+				'class' => 'HTMLSelectField',
+				'label-message' => 'spellchecker-info-spellcheck-languages',
+				'options' => array_combine($languages, $languages),
+			),
+		);
+
+		$form = new HTMLForm($fields);
+		$form->setTitle($this->title);
+		$form->setSubmitText($this->app->runFunction('wfMsg', 'spellchecker-info-spellcheck-submit'));
+		$form->loadData();
+		$form->displayForm('');
+
+		// page was POSTed, perform spell cheking
+		if ($this->request->wasPosted()) {
+			$text = $this->request->getText('wptext');
+			$langCode = $this->request->getText('wplang');
+
+			// load dictionary
+			$dict = new SpellCheckerDictionary($langCode);
+			$info = $dict->describe();
+
+			// check the spelling
+			$isCorrect = $dict->check($text);
+
+			// suggest correct spelling
+			if (!$isCorrect) {
+				$suggestions = $dict->suggest($text);
+			}
+
+			// print out results
+			if ($isCorrect) {
+				$result = $this->app->runFunction('wfMsg', 'spellchecker-info-spellcheck-is-correct', $text);
+			}
+			else {
+				$result = $this->app->runFunction('wfMsg', 'spellchecker-info-spellcheck-suggestions', $text, implode(', ', $suggestions));
+			}
+
+			$this->out->addHtml("<p>{$result}</p>");
+			$this->out->addHtml("<p><small>{$info['desc']} / {$info['lang']}</small></p>");
+		}
+	}
+}

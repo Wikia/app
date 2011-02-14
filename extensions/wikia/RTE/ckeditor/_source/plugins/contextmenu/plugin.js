@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -94,6 +94,11 @@ CKEDITOR.plugins.add( 'contextmenu',
 								 ( CKEDITOR.env.webkit ? holdCtrlKey : ( CKEDITOR.env.mac ? domEvent.$.metaKey : domEvent.$.ctrlKey ) ) )
 								return;
 
+
+							// Wikia - start
+							// store node contextmenu is shown for (fix for Chrome)
+							this.originalEvent = new CKEDITOR.dom.event(domEvent.$);
+							// Wikia - end
 
 							// Cancel the browser context menu.
 							domEvent.preventDefault();

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 CKEDITOR.dialog.add( 'radio', function( editor )
@@ -103,7 +103,7 @@ CKEDITOR.dialog.add( 'radio', function( editor )
 						{
 							var element = data.element;
 
-							if ( !CKEDITOR.env.ie )
+							if ( !( CKEDITOR.env.ie || CKEDITOR.env.opera ) )
 							{
 								if ( this.getValue() )
 									element.setAttribute( 'checked', 'checked' );

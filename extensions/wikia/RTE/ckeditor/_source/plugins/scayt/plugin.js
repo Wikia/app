@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -626,7 +626,7 @@ CKEDITOR.plugins.scayt =
 				editor.contextMenu.addListener( function( element, selection )
 					{
 						if ( !plugin.isScaytEnabled( editor )
-								|| selection.getCommonAncestor().isReadOnly() )
+								|| selection.getRanges()[ 0 ].checkReadOnly() )
 							return null;
 
 						var scayt_control = plugin.getScayt( editor ),

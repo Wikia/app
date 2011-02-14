@@ -388,7 +388,7 @@ class Parser
 				|| $wgDisableTitleConversion
 				|| isset( $this->mDoubleUnderscores['nocontentconvert'] )
 				|| isset( $this->mDoubleUnderscores['notitleconvert'] )
-				|| $this->mOutput->getDisplayTitle() !== false ) ) 
+				|| $this->mOutput->getDisplayTitle() !== false ) )
 		{
 			$convruletitle = $wgContLang->getConvRuleTitle();
 			if ( $convruletitle ) {
@@ -2011,9 +2011,20 @@ class Parser
 			# NS_MEDIA is a pseudo-namespace for linking directly to a file
 			# FIXME: Should do batch file existence checks, see comment below
 			if( $ns == NS_MEDIA ) {
+				# RTE (Rich Text Editor) - begin
+				# @author: macbre
+				# BugId:1694 - handle [[Media:xxx]] as placeholders
+				if(!empty($wgRTEParserEnabled)) {
+					$dataIdx = RTEData::put('placeholder', array('type' => 'media', 'wikitextIdx' => $RTE_wikitextIdx));
+					$s .= $prefix . RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx) . $trail;
+					continue;
+				}
+				# RTE - end
+
 				wfProfileIn( __METHOD__."-media" );
 				# Give extensions a chance to select the file revision for us
 				$skip = $time = false;
+
 				wfRunHooks( 'BeforeParserMakeImageLinkObj', array( &$this, &$nt, &$skip, &$time ) );
 				if ( $skip ) {
 					$link = $sk->link( $nt );
@@ -2915,7 +2926,7 @@ class Parser
 	}
 
 	/**
-	 * initialise the magic variables (like CURRENTMONTHNAME) and substitution modifiers 
+	 * initialise the magic variables (like CURRENTMONTHNAME) and substitution modifiers
 	 *
 	 * @private
 	 */
@@ -3641,7 +3652,7 @@ class Parser
 		global $wgRTEParserEnabled;
 		if(!empty($wgRTEParserEnabled)) {
 
-			
+
 			$wikitextIdx = RTEMarker::getDataIdx(RTEMarker::EXT_WIKITEXT, $content);
 
 			# Allow parser extensions to generate their own placeholders (instead of default one from RTE)
@@ -3678,12 +3689,12 @@ class Parser
 		}
 		if ( $this->ot['html'] || $isFunctionTag ) {
 			$name = strtolower( $name );
-			
+
 			# PLB - begin
 			# @author: Tomasz Odrobny
 			$this->mCurrentTagName = $name;
 			# PLB - end
-			
+
 			$attributes = Sanitizer::decodeTagAttributes( $attrText );
 			if ( isset( $params['attributes'] ) ) {
 				$attributes = $attributes + $params['attributes'];

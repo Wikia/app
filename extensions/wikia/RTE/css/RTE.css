@@ -30,12 +30,12 @@
 	left: -10000px;
 }
 
-.RTEloading.rte_wysiwyg #cke_toolbar,
+.RTEloading.rte_wysiwyg .cke_toolbar_tab,
 .RTEloading.rte_source #mw-toolbar {
 	visibility: hidden !important;
 }
 
-.RTEloading.rte_wysiwyg #cke_toolbar .cke_button_source {
+.RTEloading.rte_wysiwyg .cke_toolbar_tab .cke_button_source {
 	visibility: visible;
 }
 
@@ -89,7 +89,6 @@
 
 /* div for placeholder previews / image menus */
 #RTEStuff {
-	color: #000;
 	position: absolute;
 	z-index: 100;
 }

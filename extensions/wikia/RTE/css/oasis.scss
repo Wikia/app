@@ -5,6 +5,13 @@ body {
 	color: $color-text;
 }
 
+/**
+ * Spell Checker
+ */
+.spellchecker-misspell {
+	background: transparent url("data:image/gif;base64,R0lGODlhBAADAIABAP8NDQAAACH5BAEAAAEALAAAAAAEAAMAAAIFRB5mGQUAOw==") repeat-x center bottom !important;
+}
+
 // RTEcontent.css
 /**
  * images

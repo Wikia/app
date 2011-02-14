@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -393,3 +393,10 @@ CKEDITOR.ui.panel.block = CKEDITOR.tools.createClass(
 		}
 	}
 });
+
+/**
+ * Fired when a panel is added to the document
+ * @name CKEDITOR#ariaWidget
+ * @event
+ * @param {Object} holder The element wrapping the panel
+ */

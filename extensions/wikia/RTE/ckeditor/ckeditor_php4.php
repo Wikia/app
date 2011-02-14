@@ -1,6 +1,6 @@
 <?php
 /*
-* Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+* Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 * For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -21,12 +21,12 @@ class CKEditor
 	 * The version of %CKEditor.
 	 * \private
 	 */
-	var $version = '3.5';
+	var $version = '3.5.1';
 	/**
 	 * A constant string unique for each release of %CKEditor.
 	 * \private
 	 */
-	var $_timestamp = '20101221';
+	var $_timestamp = '20110203';
 
 	/**
 	 * URL to the %CKEditor installation directory (absolute or relative to document root).
@@ -80,7 +80,7 @@ class CKEditor
 	 * A string indicating the creation date of %CKEditor.
 	 * Do not change it unless you want to force browsers to not use previously cached version of %CKEditor.
 	 */
-	var $timestamp = "20101221";
+	var $timestamp = "20110203";
 	/**
 	 * An array that holds event listeners.
 	 * \private
@@ -469,7 +469,7 @@ class CKEditor
 
 		$extraCode = "";
 		// CKReleaser %REMOVE_START%
-		if ($this->version == '3.5') {
+		if ($this->version == '3.5.1') {
 			$extraCode .= ($extraCode ? "\n" : "") . "if (typeof(CKEDITOR) == 'undefined') { alert('The CKEDITOR object was not found. Please make sure that the ckeditor.js file is available in your installation.'); }";
 		}
 		// %REMOVE_END%
@@ -505,7 +505,7 @@ class CKEditor
 		}
 		else {
 			/**
-			 * realpath — Returns canonicalized absolute pathname
+			 * realpath - Returns canonicalized absolute pathname
 			 */
 			$realPath = realpath( './' ) ;
 		}
@@ -524,7 +524,7 @@ class CKEditor
 
 		$documentRoot = substr($realPath, 0, strlen($realPath) - strlen($selfPath));
 		$fileUrl = substr($file, strlen($documentRoot));
-		$ckeditorUrl = str_replace("ckeditor_php5.php", "", $fileUrl);
+		$ckeditorUrl = str_replace("ckeditor_php4.php", "", $fileUrl);
 
 		return $ckeditorUrl;
 	}
@@ -570,6 +570,9 @@ class CKEditor
 				array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'));
 
 				$val = str_replace($jsonReplaces[0], $jsonReplaces[1], $val);
+				if (strtoupper(substr($val, 0, 9)) == 'CKEDITOR.') {
+					return $val;
+				}
 
 				return '"' . $val . '"';
 			}

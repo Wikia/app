@@ -265,7 +265,11 @@ class RTE {
 
 		// constants for regexp checking in links editor
 		$vars['RTEUrlProtocols'] = wfUrlProtocols();
-		$vars['RTEValidTitleChars'] = $wgLegalTitleChars;
+
+		// BugID: 2138 - generate utf-8 friendly regexp pattern
+		$legalChars = substr($wgLegalTitleChars, 0, -10);
+		$legalChars .= '\u00A1-\uFFFF';
+		$vars['RTEValidTitleChars'] = $legalChars;
 
 		// list of templates to be shown in dropdown on toolbar
 		$vars['RTETemplatesDropdown'] = self::getTemplateDropdownList();
@@ -297,8 +301,10 @@ class RTE {
 		$vars['RTECookieDomain'] = $wgCookieDomain;
 		$vars['RTECookiePath'] = $wgCookiePath;
 
-		wfProfileOut(__METHOD__);
+		// allow other extensions to add extra global JS variables to edit form
+		wfRunHooks('RTEAddGlobalVariablesScript', array(&$vars));
 
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -592,27 +598,32 @@ HTML
 
 	public static function getTemplateParams($titleObj, $parser) {
 		global $wgRTETemplateParams;
-
 		wfProfileIn(__METHOD__);
-
-		$wgRTETemplateParams = true;
 
 		$params = array();
 
+		$wgRTETemplateParams = true;
 		$templateDom = $parser->getTemplateDom($titleObj);
+		$wgRTETemplateParams = false;
+
 		if($templateDom[0]) {
-			$templateArgs = $templateDom[0]->getChildrenOfType('tplarg')->node;
-			for($i = 0; $i < $templateArgs->length; $i++) {
-				$params[] = $templateArgs->item($i)->firstChild->textContent;
+			// BugId:982 - use xpath to find all <tplarg> nodes
+			$xpath = $templateDom[0]->xpath;
+
+			// <tplarg><title>foo</title></tplarg>
+			$nodes = $xpath->query('//tplarg/title');
+
+			foreach($nodes as $node) {
+				// skip nested <tplarg> tags
+				if ($node->childNodes->length == 1) {
+					$params[$node->textContent] = 1;
+				}
 			}
 		}
 
-		$wgRTETemplateParams = false;
-
-		$ret = array_values(array_unique($params));
+		$ret = array_keys($params);
 
 		wfProfileOut(__METHOD__);
-
 		return $ret;
 	}
 

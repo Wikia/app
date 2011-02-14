@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -601,8 +601,8 @@ CKEDITOR.lang['he'] =
 
 	iframe :
 	{
-		title		: 'מאפייני חלון פנימי (iFrame)',
-		toolbar		: 'חלון פנימי (iFrame)',
+		title		: 'מאפייני חלון פנימי (iframe)',
+		toolbar		: 'חלון פנימי (iframe)',
 		noUrl		: 'יש להכניס כתובת לחלון.',
 		scrolling	: 'אפשר פסי גלילה',
 		border		: 'הראה מסגרת לחלון'
@@ -725,7 +725,7 @@ CKEDITOR.lang['he'] =
 	{
 		anchor		: 'עוגן',
 		flash		: 'סרטון פלאש',
-		iframe		: 'חלון פנימי (iFrame)',
+		iframe		: 'חלון פנימי (iframe)',
 		hiddenfield	: 'שדה חבוי',
 		unknown		: 'אובייקט לא ידוע'
 	},

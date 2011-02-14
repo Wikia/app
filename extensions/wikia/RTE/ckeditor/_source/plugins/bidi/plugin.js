@@ -1,11 +1,11 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 (function()
 {
-	var guardElements = { table:1, tbody: 1, ul:1, ol:1, blockquote:1, div:1, tr: 1 },
+	var guardElements = { table:1, ul:1, ol:1, blockquote:1, div:1 },
 		directSelectionGuardElements = {},
 		// All guard elements which can have a direction applied on them.
 		allGuardElements = {};
@@ -33,7 +33,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 		selectedElement = selectedElement || path.block || path.blockLimit;
 
-		if ( !selectedElement || selectedElement.getName() == 'body' )
+		// If we're having BODY here, user probably done CTRL+A, let's try to get the enclosed node, if any.
+		selectedElement.is( 'body' ) &&
+			( selectedElement = editor.getSelection().getRanges()[ 0 ].getEnclosedNode() );
+
+		if ( !selectedElement )
 			return;
 
 		var selectionDir = useComputedState ?
@@ -138,11 +142,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		return null;
 	}
 
-	function getFullySelected( range, elements )
+	function getFullySelected( range, elements, enterMode )
 	{
 		var ancestor = range.getCommonAncestor( false, true );
 
-		range.enlarge( CKEDITOR.ENLARGE_BLOCK_CONTENTS );
+		range = range.clone();
+		range.enlarge( enterMode == CKEDITOR.ENTER_BR ?
+				CKEDITOR.ENLARGE_LIST_ITEM_CONTENTS
+				: CKEDITOR.ENLARGE_BLOCK_CONTENTS );
 
 		if ( range.checkBoundaryOfElement( ancestor, CKEDITOR.START )
 				&& range.checkBoundaryOfElement( ancestor, CKEDITOR.END ) )
@@ -151,8 +158,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			while ( ancestor && ancestor.type == CKEDITOR.NODE_ELEMENT
 					&& ( parent = ancestor.getParent() )
 					&& parent.getChildCount() == 1
-					&& ( !( ancestor.getName() in elements ) || ( parent.getName() in elements ) )
-					)
+					&& !( ancestor.getName() in elements ) )
 				ancestor = parent;
 
 			return ancestor.type == CKEDITOR.NODE_ELEMENT
@@ -189,7 +195,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					if ( !selectedElement || selectedElement
 							&& !( selectedElement.type == CKEDITOR.NODE_ELEMENT && selectedElement.getName() in directSelectionGuardElements )
 						)
-						selectedElement = getFullySelected( range, guardElements );
+						selectedElement = getFullySelected( range, guardElements, enterMode );
 
 					if ( selectedElement && !selectedElement.isReadOnly() )
 						switchDir( selectedElement, dir, editor, database );
@@ -207,7 +213,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					{
 						return !! ( node.type == CKEDITOR.NODE_ELEMENT
 								&& node.getName() in guardElements
-								&& !( node.getName() == ( enterMode == CKEDITOR.ENTER_P ) ? 'p' : 'div'
+								&& !( node.getName() == ( enterMode == CKEDITOR.ENTER_P ? 'p' : 'div' )
 									&& node.getParent().type == CKEDITOR.NODE_ELEMENT
 									&& node.getParent().getName() == 'blockquote' )
 								// Element must be fully included in the range as well. (#6485).
@@ -223,7 +229,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 					while ( ( block = iterator.getNextParagraph( enterMode == CKEDITOR.ENTER_P ? 'p' : 'div' ) ) )
 						!block.isReadOnly() && switchDir( block, dir, editor, database );
-				}
+					}
 
 				CKEDITOR.dom.element.clearAllMarkers( database );
 
@@ -265,3 +271,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	});
 
 })();
+
+/**
+ * Fired when the language direction of an element is changed
+ * @name CKEDITOR.editor#dirChanged
+ * @event
+ * @param {CKEDITOR.editor} editor This editor instance.
+ * @param {Object} eventData.node The element that is being changed.
+ * @param {String} eventData.dir The new direction.
+ */

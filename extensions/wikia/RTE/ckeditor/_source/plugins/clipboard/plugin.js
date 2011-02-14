@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -61,7 +61,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	var cutCopyCmd = function( type )
 	{
 		this.type = type;
-		this.canUndo = ( this.type == 'cut' );		// We can't undo copy to clipboard.
+		this.canUndo = this.type == 'cut';		// We can't undo copy to clipboard.
+		this.startDisabled = true;
 	};
 
 	cutCopyCmd.prototype =
@@ -218,10 +219,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				evt.data.preventDefault();
 			}
 			else
-			{
-				doc.$.designMode = 'off';
 				pastebin.$.focus();
-			}
 		}
 		else
 		{
@@ -230,10 +228,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			range.select( true );
 		}
 
+		var editor  = this;
 		// Wait a while and grab the pasted contents
 		window.setTimeout( function()
 		{
-			mode == 'text' && !CKEDITOR.env.ie && ( doc.$.designMode = 'on' );
+			mode == 'text' && CKEDITOR.env.gecko && editor.focusGrabber.focus();
 			pastebin.remove();
 
 			// Grab the HTML contents.
@@ -281,6 +280,32 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		}
 	}
 
+	var depressBeforeEvent;
+	function stateFromNamedCommand( command, editor )
+	{
+		// IE Bug: queryCommandEnabled('paste') fires also 'beforepaste(copy/cut)',
+		// guard to distinguish from the ordinary sources( either
+		// keyboard paste or execCommand ) (#4874).
+		CKEDITOR.env.ie && ( depressBeforeEvent = 1 );
+
+		var retval = editor.document.$.queryCommandEnabled( command ) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED;
+		depressBeforeEvent = 0;
+		return retval;
+	}
+
+	var inReadOnly;
+	function setToolbarStates()
+	{
+		if ( this.mode != 'wysiwyg' )
+			return;
+
+		this.getCommand( 'cut' ).setState( inReadOnly ? CKEDITOR.TRISTATE_DISABLED : stateFromNamedCommand( 'Cut', this ) );
+		this.getCommand( 'copy' ).setState( stateFromNamedCommand( 'Copy', this ) );
+		var pasteState = inReadOnly ? CKEDITOR.TRISTATE_DISABLED :
+						CKEDITOR.env.webkit ? CKEDITOR.TRISTATE_OFF : stateFromNamedCommand( 'Paste', this );
+		this.fire( 'pasteState', pasteState );
+	}
+
 	// Register the plugin.
 	CKEDITOR.plugins.add( 'clipboard',
 		{
@@ -306,6 +331,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							// Open default paste dialog.
 							editor.openDialog( 'paste' );
 						}, 0 );
+					});
+
+				editor.on( 'pasteState', function( evt )
+					{
+						editor.getCommand( 'paste' ).setState( evt.data );
 					});
 
 				function addButtonCommand( buttonName, commandName, command, ctxMenuOrder )
@@ -352,7 +382,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				editor.on( 'contentDom', function()
 				{
 					var body = editor.document.getBody();
-					body.on( ( (mode == 'text' && CKEDITOR.env.ie ) || CKEDITOR.env.webkit ) ? 'paste' : 'beforepaste',
+					body.on( ( ( mode == 'text' && CKEDITOR.env.ie ) || CKEDITOR.env.webkit ) ? 'paste' : 'beforepaste',
 						function( evt )
 						{
 							if ( depressBeforeEvent )
@@ -372,35 +402,47 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						});
 
 					body.on( 'beforecut', function() { !depressBeforeEvent && fixCut( editor ); } );
+					body.on( 'mouseup', function(){ setTimeout( function(){ setToolbarStates.call( editor ); }, 0 ); }, editor );
+					body.on( 'keyup', setToolbarStates, editor );
 				});
 				*/
+
+				// macbre: Trigger custom CK event when beforepaste DOM event is triggered
+				editor.on( 'contentDom', function()	{
+					var body = editor.document.getBody();
+
+					body.on('beforepaste', function(ev) {
+						// IE Bug: queryCommandEnabled('paste') fires also 'beforepaste(copy/cut)',
+						// guard to distinguish from the ordinary sources( either
+						// keyboard paste or execCommand ) (#4874).
+						if (depressBeforeEvent) {
+							return;
+						}
+
+						editor.fire('beforepaste', {originalEvent: ev});
+					});
+				});
 				// Wikia - end
+
+				// For improved performance, we're checking the readOnly state on selectionChange instead of hooking a key event for that.
+				editor.on( 'selectionChange', function( evt )
+				{
+					inReadOnly = evt.data.selection.getRanges()[ 0 ].checkReadOnly();
+					setToolbarStates.call( editor );
+				});
 
 				// If the "contextmenu" plugin is loaded, register the listeners.
 				if ( editor.contextMenu )
 				{
-					var depressBeforeEvent;
-					function stateFromNamedCommand( command )
-					{
-						// IE Bug: queryCommandEnabled('paste') fires also 'beforepaste(copy/cut)',
-						// guard to distinguish from the ordinary sources( either
-						// keyboard paste or execCommand ) (#4874).
-						CKEDITOR.env.ie && ( depressBeforeEvent = 1 );
-
-						var retval = editor.document.$.queryCommandEnabled( command ) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED;
-						depressBeforeEvent = 0;
-						return retval;
-					}
-
 					editor.contextMenu.addListener( function( element, selection )
-						{
-							var readOnly = selection.getCommonAncestor().isReadOnly();
-							return {
-								cut : !readOnly && stateFromNamedCommand( 'Cut' ),
-								copy : stateFromNamedCommand( 'Copy' ),
-								paste : !readOnly && ( CKEDITOR.env.webkit ? CKEDITOR.TRISTATE_OFF : stateFromNamedCommand( 'Paste' ) )
-							};
-						});
+							{
+								var readOnly = selection.getRanges()[ 0 ].checkReadOnly();
+								return {
+									cut : !readOnly && stateFromNamedCommand( 'Cut', editor ),
+									copy : stateFromNamedCommand( 'Copy', editor ),
+									paste : !readOnly && ( CKEDITOR.env.webkit ? CKEDITOR.TRISTATE_OFF : stateFromNamedCommand( 'Paste', editor ) )
+								};
+							});
 				}
 			}
 		});
@@ -415,4 +457,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  * @event
  * @param {String} [data.html] The HTML data to be pasted. If not available, e.data.text will be defined.
  * @param {String} [data.text] The plain text data to be pasted, available when plain text operations are to used. If not available, e.data.html will be defined.
+ */
+
+/**
+ * Internal event to open the Paste dialog
+ * @name CKEDITOR.editor#pasteDialog
+ * @event
  */

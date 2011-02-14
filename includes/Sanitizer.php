@@ -675,7 +675,7 @@ class Sanitizer {
 			}
 
 			//RDFa and microdata properties allow URLs, URIs and/or CURIs. check them for sanity
-			if ( $attribute === 'rel' || $attribute === 'rev' || 
+			if ( $attribute === 'rel' || $attribute === 'rev' ||
 				$attribute === 'about' || $attribute === 'property' || $attribute === 'resource' || #RDFa
 				$attribute === 'datatype' || $attribute === 'typeof' ||                             #RDFa
 				$attribute === 'itemid' || $attribute === 'itemprop' || $attribute === 'itemref' || #HTML5 microdata
@@ -683,7 +683,7 @@ class Sanitizer {
 
 				//Paranoia. Allow "simple" values but suppress javascript
 				if ( preg_match( MW_EVIL_URI_PATTERN, $value ) ) {
-					continue; 
+					continue;
 				}
 			}
 
@@ -850,15 +850,18 @@ class Sanitizer {
 			$encAttribute = htmlspecialchars( $attribute );
 			$encValue = Sanitizer::safeEncodeAttribute( $value );
 
-			$attribs[] = "$encAttribute=\"$encValue\"";
-
 			# RTE (Rich Text Editor) - begin
-			# @author: Inez Korczyński
+			# @author: Inez Korczyński, macbre
 			global $wgRTEParserEnabled;
 			if(!empty($wgRTEParserEnabled) && $encAttribute == 'style') {
+				// BugId:2462 - remove apostrophes from style attribute
+				$encValue = str_replace('&#039;', '', $encValue);
+
 				$attribs[] = "data-rte-style=\"$encValue\"";
 			}
 			# RTE - end
+
+			$attribs[] = "$encAttribute=\"$encValue\"";
 		}
 
 		# RTE (Rich Text Editor) - begin
@@ -1314,7 +1317,7 @@ class Sanitizer {
 		if ( $wgAllowRdfaAttributes ) {
 			#RDFa attributes as specified in section 9 of http://www.w3.org/TR/2008/REC-rdfa-syntax-20081014
 			$common = array_merge( $common, array(
-			    'about', 'property', 'resource', 'datatype', 'typeof', 
+			    'about', 'property', 'resource', 'datatype', 'typeof',
 			) );
 		}
 
@@ -1433,7 +1436,7 @@ class Sanitizer {
 			'th'         => array_merge( $common, $tablecell, $tablealign ),
 
 			# 12.2 # NOTE: <a> is not allowed directly, but the attrib whitelist is used from the Parser object
-			'a'          => array_merge( $common, array( 'href', 'rel', 'rev' ) ), # rel/rev esp. for RDFa 
+			'a'          => array_merge( $common, array( 'href', 'rel', 'rev' ) ), # rel/rev esp. for RDFa
 
 			# 13.2
 			# Not usually allowed, but may be used for extension-style hooks

@@ -1,6 +1,6 @@
 <?php
 /*
-* Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+* Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 * For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -20,11 +20,11 @@ class CKEditor
 	/**
 	 * The version of %CKEditor.
 	 */
-	const version = '3.5';
+	const version = '3.5.1';
 	/**
 	 * A constant string unique for each release of %CKEditor.
 	 */
-	const timestamp = '20101221';
+	const timestamp = '20110203';
 
 	/**
 	 * URL to the %CKEditor installation directory (absolute or relative to document root).
@@ -78,7 +78,7 @@ class CKEditor
 	 * A string indicating the creation date of %CKEditor.
 	 * Do not change it unless you want to force browsers to not use previously cached version of %CKEditor.
 	 */
-	public $timestamp = "20101221";
+	public $timestamp = "20110203";
 	/**
 	 * An array that holds event listeners.
 	 */
@@ -461,7 +461,7 @@ class CKEditor
 
 		$extraCode = "";
 		// CKReleaser %REMOVE_START%
-		if (self::version == '3.5') {
+		if (self::version == '3.5.1') {
 			$extraCode .= ($extraCode ? "\n" : "") . "if (typeof(CKEDITOR) == 'undefined') { alert('The CKEDITOR object was not found. Please make sure that the ckeditor.js file is available in your installation.'); }";
 		}
 		// %REMOVE_END%
@@ -496,7 +496,7 @@ class CKEditor
 		}
 		else {
 			/**
-			 * realpath — Returns canonicalized absolute pathname
+			 * realpath - Returns canonicalized absolute pathname
 			 */
 			$realPath = realpath( './' ) ;
 		}
@@ -560,6 +560,9 @@ class CKEditor
 				array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'));
 
 				$val = str_replace($jsonReplaces[0], $jsonReplaces[1], $val);
+				if (strtoupper(substr($val, 0, 9)) == 'CKEDITOR.') {
+					return $val;
+				}
 
 				return '"' . $val . '"';
 			}

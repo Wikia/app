@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -9,15 +9,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 (function()
 {
-	var listNodeNames = { ol : 1, ul : 1 };
-
-	var isNotWhitespaces = CKEDITOR.dom.walker.whitespaces( true ),
+	var listNodeNames = { ol : 1, ul : 1 },
+		isNotWhitespaces = CKEDITOR.dom.walker.whitespaces( true ),
 		isNotBookmark = CKEDITOR.dom.walker.bookmark( false, true );
-
-	function setState( editor, state )
-	{
-		editor.getCommand( this.name ).setState( state );
-	}
 
 	function onSelectionChange( evt )
 	{
@@ -29,7 +23,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 		// disable indent buttons when inside a heading
 		if ( (/h\d/).test(nodeName) ) {
-			return setState.call(this, editor, CKEDITOR.TRISTATE_DISABLED);
+			return this.setState(CKEDITOR.TRISTATE_DISABLED);
 		}
 
 		// disable indent button for centre / right aligned paragraphs
@@ -37,7 +31,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			var align = path.block.getStyle('text-align');
 
 			if ( (align == 'center') || (align == 'right') ) {
-				return setState.call(this, editor, CKEDITOR.TRISTATE_DISABLED);
+				return this.setState(CKEDITOR.TRISTATE_DISABLED);
 			}
 		}
 		// Wikia - end
@@ -46,15 +40,15 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				list = elementPath && elementPath.contains( listNodeNames );
 
 		if ( list )
-				return setState.call( this, editor, CKEDITOR.TRISTATE_OFF );
+				return this.setState( CKEDITOR.TRISTATE_OFF );
 
 		if ( !this.useIndentClasses && this.name == 'indent' )
-			return setState.call( this, editor, CKEDITOR.TRISTATE_OFF );
+			return this.setState( CKEDITOR.TRISTATE_OFF );
 
 		var path = evt.data.path,
 			firstBlock = path.block || path.blockLimit;
 		if ( !firstBlock )
-			return setState.call( this, editor, CKEDITOR.TRISTATE_DISABLED );
+			return this.setState( CKEDITOR.TRISTATE_DISABLED );
 
 		if ( this.useIndentClasses )
 		{
@@ -67,8 +61,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			}
 			if ( ( this.name == 'outdent' && !indentStep ) ||
 					( this.name == 'indent' && indentStep == editor.config.indentClasses.length ) )
-				return setState.call( this, editor, CKEDITOR.TRISTATE_DISABLED );
-			return setState.call( this, editor, CKEDITOR.TRISTATE_OFF );
+				return this.setState( CKEDITOR.TRISTATE_DISABLED );
+			return this.setState( CKEDITOR.TRISTATE_OFF );
 		}
 		else
 		{
@@ -76,8 +70,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			if ( isNaN( indent ) )
 				indent = 0;
 			if ( indent <= 0 )
-				return setState.call( this, editor, CKEDITOR.TRISTATE_DISABLED );
-			return setState.call( this, editor, CKEDITOR.TRISTATE_OFF );
+				return this.setState( CKEDITOR.TRISTATE_DISABLED );
+			return this.setState( CKEDITOR.TRISTATE_OFF );
 		}
 	}
 
@@ -239,7 +233,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			   iterator.enforceRealBlocks = true;
 			   iterator.enlargeBr = enterMode != CKEDITOR.ENTER_BR;
 			   var block;
-			   while ( ( block = iterator.getNextParagraph() ) )
+			   while ( ( block = iterator.getNextParagraph( enterMode == CKEDITOR.ENTER_P ? 'p' : 'div' ) ) )
 				   indentElement( block );
 		   }
 
@@ -378,10 +372,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		init : function( editor )
 		{
 			// Register commands.
-			var indent = new indentCommand( editor, 'indent' ),
-				outdent = new indentCommand( editor, 'outdent' );
-			editor.addCommand( 'indent', indent );
-			editor.addCommand( 'outdent', outdent );
+			var indent = editor.addCommand( 'indent', new indentCommand( editor, 'indent' ) ),
+				outdent = editor.addCommand( 'outdent', new indentCommand( editor, 'outdent' ) );
 
 			// Register the toolbar buttons.
 			editor.ui.addButton( 'Indent',

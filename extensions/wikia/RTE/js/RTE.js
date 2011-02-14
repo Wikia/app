@@ -48,7 +48,6 @@ window.RTE = {
 		'dragdrop',
 		'edit-buttons',
 		'entities',
-		'first-run-notice',
 		'gallery',
 		'justify',
 		'link',
@@ -59,14 +58,15 @@ window.RTE = {
 		'paste',
 		'placeholder',
 		'signature',
+		'spellchecker',
 		'plbelement',
 		'template',
 		'temporary-save',
 		'toolbar',
 		'tools',
 		'track',
-		'widescreen',
-		'poll'
+		'widescreen'
+		//'poll' // temp
 	],
 
 	// use firebug / opera console to log events / dump objects
@@ -169,14 +169,6 @@ window.RTE = {
 		});
 
 		RTE.instance.on('wysiwygModeReady', RTE.onWysiwygModeReady);
-
-		// regenerate placeholders after each redo/undo
-		RTE.instance.on('afterUndo', function() {
-			RTE.instance.fire('wysiwygModeReady');
-		});
-		RTE.instance.on('afterRedo', function() {
-			RTE.instance.fire('wysiwygModeReady');
-		});
 
 		// event fired when Widescreen button in pressed
 		RTE.instance.on('widescreen', RTE.onWidescreen);
@@ -349,9 +341,25 @@ window.RTE = {
 	modeSwitch: function(mode) {
 		RTE.log('switching from "' + mode +'" mode');
 
-		// get HTML / wikitext
-		var content = RTE.instance.getData();
-		//RTE.log(content);
+		var editor = RTE.instance,
+			content = editor.getData();
+
+		// BugId:1852 - error handling
+		var onError = function() {
+			RTE.log('error occured during mode switch');
+
+			// remove loading indicator, don't switch mode
+			RTE.loading(false);
+
+			// enable "Source" button
+			editor.getCommand('source').setState(mode == 'wysiwyg' ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_ON);
+
+			// track errors
+			RTE.track('switchMode', 'error');
+
+			// modal with a message
+			$.showModal(editor.lang.errorPopupTitle, editor.lang.modeSwitch.error, {width: 400});
+		};
 
 		// show loading indicator
 		RTE.loading(true);
@@ -359,8 +367,13 @@ window.RTE = {
 		switch (mode) {
 			case 'wysiwyg':
 				RTE.ajax('html2wiki', {html: content, title: window.wgPageName}, function(data) {
-					RTE.instance.setMode('source');
-					RTE.instance.setData(data.wikitext);
+					if (!data) {
+						onError();
+						return;
+					}
+
+					editor.setMode('source');
+					editor.setData(data.wikitext);
 
 					RTE.track('switchMode', 'wysiwyg2source');
 				});
@@ -368,6 +381,10 @@ window.RTE = {
 
 			case 'source':
 				RTE.ajax('wiki2html', {wikitext: content, title: window.wgPageName}, function(data) {
+					if (!data) {
+						onError();
+						return;
+					}
 
 					// RT #36073 - don't allow mode switch when __NOWYSIWYG__ is found in another article section
 					if ( (typeof window.RTEEdgeCase != 'undefined') && (window.RTEEdgeCase == 'nowysiwyg') ) {
@@ -387,7 +404,7 @@ window.RTE = {
 						RTE.tools.alert(data.edgecase.info.title, data.edgecase.info.content);
 
 						// stay in source mode
-						RTE.instance.getCommand('source').setState(CKEDITOR.TRISTATE_ON);
+						editor.getCommand('source').setState(CKEDITOR.TRISTATE_ON);
 						RTE.loading(false);
 
 						// tracking
@@ -395,8 +412,8 @@ window.RTE = {
 						return;
 					}
 
-					RTE.instance.setMode('wysiwyg');
-					RTE.instance.setData(data.html);
+					editor.setMode('wysiwyg');
+					editor.setData(data.html);
 
 					// RT #84586: update instanceId
 					RTE.instanceId = data.instanceId;

@@ -66,6 +66,10 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 		RTE.log('opening link dialog');
 
+		// reset our dirty value
+		// Bug:2376 - by default update link description when link target changes
+		linkTextDirty = false;
+
 		// get link' meta data
 		var data = element ? $(element.$).getData() : null;
 
@@ -142,6 +146,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					setMode('external');
 					tab = 'external';
 				}
+
+				// Bug:2376 - don't update link description when link target changes
+				linkTextDirty = true;
 
 				setValues(tab, selectionContent, selectionContent);
 				setTimeout(checkStatus,200);
@@ -324,9 +331,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 			// tracking
 			var self = this;
-
-			// reset our dirty value
-			linkTextDirty = false;
 
 			// setup dialog tracking code (close / cancel)
 			this.setupTracking('link');

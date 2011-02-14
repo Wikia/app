@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -216,30 +216,6 @@ CKEDITOR.skins.add( 'kama', (function()
 						width : width + 'px',
 						height : height + 'px'
 					});
-
-				// Fix the size of the elements which have flexible lengths.
-				setTimeout( function()
-					{
-						var innerDialog = dialog.parts.dialog.getChild( [ 0, 0, 0 ] ),
-							body = innerDialog.getChild( 0 );
-
-						// tc
-						var el = innerDialog.getChild( 2 );
-						el.setStyle( 'width', ( body.$.offsetWidth ) + 'px' );
-
-						// bc
-						el = innerDialog.getChild( 7 );
-						el.setStyle( 'width', ( body.$.offsetWidth - 28 ) + 'px' );
-
-						// ml
-						el = innerDialog.getChild( 4 );
-						el.setStyle( 'height', ( height + body.getChild(0).$.offsetHeight ) + 'px' );
-
-						// mr
-						el = innerDialog.getChild( 5 );
-						el.setStyle( 'height', ( height + body.getChild(0).$.offsetHeight ) + 'px' );
-					},
-					100 );
 			});
 	}
 })();

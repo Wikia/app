@@ -558,4 +558,13 @@ var initTracker = function() {
 			$.tracker.byStr('pageheader/post');
 		});
 	}
+
+	// BugId:2435 - track MW editor view
+	if (window.wgIsEditPage && (typeof RTE == 'undefined')) {
+		$.tracker.byStr('mweditor/init');
+
+		$('#wpSave').bind('click', function(ev) {
+			$.tracker.byStr('mweditor/save');
+		});
+	}
 }

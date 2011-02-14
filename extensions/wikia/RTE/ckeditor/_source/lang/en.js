@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -601,9 +601,9 @@ CKEDITOR.lang['en'] =
 
 	iframe :
 	{
-		title		: 'iFrame Properties',
-		toolbar		: 'iFrame',
-		noUrl		: 'Please type the iFrame URL',
+		title		: 'IFrame Properties',
+		toolbar		: 'IFrame',
+		noUrl		: 'Please type the iframe URL',
 		scrolling	: 'Enable scrollbars',
 		border		: 'Show frame border'
 	},
@@ -725,7 +725,7 @@ CKEDITOR.lang['en'] =
 	{
 		anchor		: 'Anchor',
 		flash		: 'Flash Animation',
-		iframe		: 'iFrame',
+		iframe		: 'IFrame',
 		hiddenfield	: 'Hidden Field',
 		unknown		: 'Unknown Object'
 	},

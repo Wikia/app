@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -186,6 +186,7 @@ CKEDITOR.dialog.on( 'resize', function( evt )
 		var content = dialog.getContentElement( 'general', 'content' ).getElement(),
 			iframe = content && content.getChild( 2 );
 
-		iframe && iframe.setStyle( 'height', data.height + 'px' );
+		iframe && iframe.setSize( 'height', data.height );
+		iframe && iframe.setSize( 'width', data.width );
 	}
 });
