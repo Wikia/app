@@ -98,13 +98,13 @@ FOOTER;
 					<input id="mobile-search-btn" type="image" src="<?= $wgBlankImgUrl ?>">
 				</form>
 				<?= View::specialPageLink('Random', 'oasis-button-random-page', array('accesskey' => 'x', 'class' => 'wikia-button secondary', 'data-id' => 'randompage'), 'blank.gif', null, 'sprite random') ?>
-			</div>*/?>
+			</div>
 			<h1 class="mobile-wikiname">
 				<a href="<?= $this->mainPageURL ?>">
 				<?= $this->wordmarkText ?>
 				</a>
 			</h1>
-<?php
+<?php*/
 	}
 	
 	/*public static function onMakeGlobalVariablesScript( $vars ) {

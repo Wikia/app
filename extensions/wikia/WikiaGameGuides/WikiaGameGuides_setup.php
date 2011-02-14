@@ -27,8 +27,11 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname( __FILE__ ) . '/';
 
+// classes
+$wgAutoloadClasses[ 'WikiaGameGuidesWikisModel' ] = "{$dir}models/WikiaGameGuidesWikisModel.class.php";
+
 // i18n
 $wgExtensionMessagesFiles[ 'WikiaGameGuides' ] = "{$dir}WikiaGameGuides.i18n.php";
 
 //EzAPI modules
-wfRegisterEzApiModule( 'WikiaGameGuidesEzApiModule', "{$dir}ezapi/WikiaGameGuidesEzApiModule.class.php");
+wfRegisterEzApiModule( 'WikiaGameGuidesEzApiModule', "{$dir}ezapi/WikiaGameGuidesEzApiModule.class.php" );
