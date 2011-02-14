@@ -13,6 +13,7 @@ var AdDriver = {
 	cookieNameNumDARTCall: 'adDriverNumDARTCall',
 	cookieNameLastDARTCallNoAd: 'adDriverLastDARTCallNoAd',
 	minNumDARTCall: 3,
+	paramLiftiumTag: 'liftium_tag',
 	standardLeaderboardMinHeight: 90,
 	standardLeaderboardMaxHeight: 95,
 
@@ -300,7 +301,32 @@ AdDriver.canCallLiftium = function(slotname) {
 	return true;
 }
 
+AdDriver.doesUrlParameterExist = function(param) {
+	var querystring = window.location.search.substring(1);
+	if (querystring.indexOf(param+'=') > -1) {
+		return true;
+	}
+
+	return false;
+}
+
+AdDriver.isForceLiftium = function() {
+	var forceLiftiumParams = new Array(AdDriver.paramLiftiumTag);
+
+	for (var i=0; i<forceLiftiumParams.length; i++) {
+		if (AdDriver.doesUrlParameterExist(forceLiftiumParams[i])) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 AdDriver.getAdProvider = function(slotname, size, defaultAdProvider) {
+	if (AdDriver.isForceLiftium()) {
+		return AdDriver.adProviderLiftium;
+	}
+
 	var specialCaseAdProvider = AdDriver.getAdProviderForSpecialCase(slotname);
 	if (specialCaseAdProvider) {
 		return specialCaseAdProvider;
