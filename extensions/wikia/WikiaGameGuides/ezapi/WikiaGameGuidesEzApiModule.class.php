@@ -5,16 +5,21 @@
  */
 
 class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
-	const WF_WIKI_RECOMMEND_VAR = 'wgWikiaGameGuidesRecommend';
+	const API_VERSION = 1;
+	const API_REVISION = 0;
+	
+	private $mModel = null;
 	
 	function __construct( WebRequest $request ) {
 		global $wgDevelEnvironment;
 		
 		if( !$wgDevelEnvironment ) {
-			$this->setRequiresPost( true ); //only POST requests allowed
+			$this->setRequiresPost( true );//only POST requests allowed
 		}
 		
 		parent::__construct( $request );
+		
+		$this->mModel = new WikiaGameGuidesWikisModel();
 	}
 	
 	/*
@@ -25,7 +30,7 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 	public function listWikis(){
 		wfProfileIn( __METHOD__ );
 		
-		$ret = $this->getWikisList();
+		$ret = $this->mModel->getWikisList();
 		
 		$this->setContentType( EzApiContentTypes::JSON );
 		$this->setResponseContent( Wikia::json_encode( $ret ) );
@@ -43,159 +48,46 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 	public function listWikiContents(){
 		wfProfileIn( __METHOD__ );
 		
-		$ret = $this->getWikiContents();
-		$limit = $this->getRequest()->getInt('limit', null);
+		$ret = $this->mModel->getWikiContents();
 		
 		$this->setContentType( EzApiContentTypes::JSON );
-		$this->setResponseContent( Wikia::json_encode( $this->getWikiContents($limit) ) );
+		$this->setResponseContent( Wikia::json_encode( $ret ) );
 		
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 	
 	/*
-	 * Gets a list of recommended wikis through WikiFactory
+	 * Returns all the contents associated to an entry for the current wiki
 	 * 
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 */
-	private function getWikisList(){
+	public function listEntryContents(){
 		wfProfileIn( __METHOD__ );
 		
-		$ret = Array();
+		$ret = $this->mModel->getCategoryContents( $this->getRequest()->getText('entry') );
 		
-		$wikiFactoryRecommendVar = WikiFactory::getVarByName( self::WF_WIKI_RECOMMEND_VAR, null );
-		
-		if ( !empty( $wikiFactoryRecommendVar ) ) {
-			$recommendedIds = WikiFactory::getCityIDsFromVarValue( $wikiFactoryRecommendVar->cv_variable_id, true, '=' );
-			
-			foreach( $recommendedIds as $wikiId ) {
-				//TODO: check if optimizable with one query via Ops
-				$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
-				$wikiUrl = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
-				//$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
-				$wikiThemeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
-				
-				$ret[] = Array(
-					'wikiName' => ( !empty( $wikiThemeSettings[ 'wordmark-text' ] ) ) ? $wikiThemeSettings[ 'wordmark-text' ] : $wikiName,
-					'wordmarkColor' => ( !empty( $wikiThemeSettings[ 'wordmark-color' ] ) ) ? $wikiThemeSettings[ 'wordmark-color' ] : '#0049C6',
-					'wordmarkBackgroundColor' => ( !empty( $wikiThemeSettings[ 'color-page' ] ) ) ? $wikiThemeSettings[ 'color-page' ] : '#FFFFFF',
-					'wikiUrl' => $wikiUrl,
-					'wordmarkUrl'=> ( !empty( $wikiThemeSettings[ 'wordmark-image-url' ] ) ) ? $wikiThemeSettings[ 'wordmark-image-url' ] : null
-					//,'data' => var_dump( $wikiThemeSettings, true )//debug only
-				);
-			}
-		} else {
-			wfProfileOut( __METHOD__ );
-			throw new EzApiException( 'WikiFactory variable \'' . self::WF_WIKI_RECOMMEND_VAR . '\' not found' );
-		}
+		$this->setContentType( EzApiContentTypes::JSON );
+		$this->setResponseContent( Wikia::json_encode( $ret ) );
 		
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 	
 	/*
-	 * Returns a structure representing application-related content on for the current wiki
+	 * Returns the results from a local wiki search for the passed in term
 	 * 
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 */
-	private function getWikiContents($limit = null){
+	public function listLocalSearchResults(){
 		wfProfileIn( __METHOD__ );
 		
-		$ret = Array();
+		$ret = $this->mModel->getLocalSearchResults( $this->getRequest()->getText('term') );
 		
-		foreach ( $this->getTabsLabels() as $tab ) {
-			$ret[] = $this->getCategoryInfo( $tab, $limit );
-		}
-		
-		$ret[] = $this->getMoreCategoriesInfo();
-		
-		return $ret;
+		$this->setContentType( EzApiContentTypes::JSON );
+		$this->setResponseContent( Wikia::json_encode( $ret ) );
 		
 		wfProfileOut( __METHOD__ );
-	}
-	
-	/*
-	 * Gets the values of the tab messages which are names for real categories, except the last one
-	 * 
-	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
-	 */
-	private function getTabsLabels(){
-		wfLoadExtensionMessages( 'WikiaGameGuides' );
-		
-		return array(
-			wfMsgForContent( 'wikiagameguides-tab-1' ),
-			wfMsgForContent( 'wikiagameguides-tab-2' ),
-			wfMsgForContent( 'wikiagameguides-tab-3' ),
-		);
-	}
-	
-	/*
-	 * Gets data for the per-category tabs
-	 * 
-	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
-	 */
-	private function getCategoryInfo( $categoryName, $limit = null ) {
-		$categoryName = trim( $categoryName );
-		$category = Category::newFromName( $categoryName );
-		
-		$ret = Array(
-			'name' => $categoryName,
-			'items' => Array()
-		);
-		
-		if ( $category ) {
-			$ret[ 'name' ] = $category->getTitle()->getText();
-			$titles = $category->getMembers($limit);
-			
-			foreach( $titles as $title ) {
-				$ret[ 'items' ][] = Array(
-					'name' => $title->getText(),
-					//TODO: replace temporary solution to reach the App skin
-					'url' => $title->getLocalUrl( array( 'useskin' => 'wikiaapp' ) )
-				);
-			}
-		}
-		
 		return $ret;
-	}
-	
-	/*
-	 * Gets data for the "More" tab
-	 * 
-	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
-	 */
-	private function getMoreCategoriesInfo(){
-		wfLoadExtensionMessages( 'WikiaGameGuides' );
-		
-		$ret = Array(
-			'name' => wfMsgForContent( 'wikiagameguides-tab-more' ),
-			'items' => Array()
-		);
-		
-		$categories = array_filter(
-			explode( "\n", wfMsgForContent( 'wikiagameguides-tab-more-content' ) ),
-			array( __CLASS__, 'verifyElement')
-		);
-		
-		foreach ( $categories as $categoryName ) {
-			$category = Category::newFromName( $categoryName );
-			
-			if ( $category ) {
-				$title = $category->getTitle();
-				
-				$ret[ 'items' ][] = Array(
-					'name' => $title->getText(),
-					//TODO: replace temporary solution to reach the App skin
-					'url' => $title->getLocalUrl( array( 'useskin' => 'wikiaapp' ) )
-				);
-			}
-		}
-		
-		return $ret;
-	}
-	
-	public static function verifyElement( $elem ){
-		$elem = trim( $elem );
-		return !empty( $elem );
 	}
 }
