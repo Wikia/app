@@ -26,7 +26,7 @@ $wgExtensionMessagesFiles['UserData'] = dirname(__FILE__) . '/SpecialUserData.i1
 $wgExtensionCredits['special'][] = array(
 	'name' => 'SpecialUserData',
 	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
-	'description-msg' => 'userdata-desc',
+	'description-msg' => 'specialuserdata-desc',
 );
 
 class SpecialUserData extends SpecialPage {
