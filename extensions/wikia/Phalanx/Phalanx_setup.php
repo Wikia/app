@@ -3,7 +3,7 @@
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Phalanx',
 	'description' => 'Integrated spam control mechanism',
-	'description-msg' => 'phalanx-description',
+	'descriptionmsg' => 'phalanx-desc',
 	'author' => array(
 		'[http://community.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
 		'[http://community.wikia.com/wiki/User:Macbre Maciej Brencz]',

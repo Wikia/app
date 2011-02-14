@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'phalanx-desc' => 'Phalanx is an Integrated Spam Defense Mechanism',
 	'phalanx' => 'Phalanx',
 	'phalanx-title' => 'Phalanx - Integrated Spam Defense Mechanism',
 	'phalanx-type-content' => 'page content',
@@ -100,7 +101,7 @@ Please create an alternate user name or [[Special:Contact|contact Wikia]] about 
 	'phalanx-rule-log-edit' => 'Phalanx rule edited: $1',
 	'phalanx-rule-log-delete' => 'Phalanx rule deleted: $1',
 	'phalanx-rule-log-details' => 'Filter: "$1", type: "$2", reason: "$3"',
-	
+
 	'phalanx-stats-table-wiki-id' => 'Wiki ID',
 	'phalanx-stats-table-wiki-name' => 'Wiki Name',
 	'phalanx-stats-table-wiki-url' => 'Wiki Url',
