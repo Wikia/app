@@ -4,11 +4,24 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/core/color";
 
-.scavenger-clue-button {
-}
-
 .scavenger-clue-image {
 	position: absolute;
+}
+
+.scavenger-hidden-image {
+	left: -40px;
+	position: absolute;
+	top: 150px;
+	z-index: 999;
+}
+
+.scavenger-start-button {
+	float: right;
+	input {
+		font-size: 18px;
+		height: auto;
+		padding: 10px;
+	}
 }
 
 #scavengerClueModal, #scavengerEntryFormModal, #scavengerGoodbyeModal {

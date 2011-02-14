@@ -10,7 +10,6 @@ var SpecialScavengerHunt = {
 		$('.scavenger-form').delegate('.scavenger-dialog-check', 'click', SpecialScavengerHunt.onDialogCheckClick);
 	},
 
-	// console logging
 	log: function(msg) {
 		$().log(msg, 'SpecialScavengerHunt');
 	},

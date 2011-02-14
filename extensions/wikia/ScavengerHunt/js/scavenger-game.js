@@ -2,7 +2,9 @@ var ScavengerHunt = {
 	articleData: null,
 	goodbyeData: null,
 
-	// console logging
+	MODAL_WIDTH: 588,
+
+	//console logging
 	log: function(msg) {
 		$().log(msg, 'ScavengerHunt');
 	},
@@ -29,11 +31,12 @@ var ScavengerHunt = {
 			return;
 		}
 
-		$('<input type="button">')
-			.val(ScavengerHuntStartMsg)
-			.click(ScavengerHunt.onStartClick)
-			.wrap('<div>')
-			.appendTo('#WikiaArticle');
+		$('<div class="scavenger-start-button" />').append(
+			$('<input type="button">')
+				.val(ScavengerHuntStartMsg)
+				.click(ScavengerHunt.onStartClick)
+			)
+			.prependTo('#WikiaArticle');
 	},
 
 	//init article page
@@ -68,10 +71,8 @@ var ScavengerHunt = {
 				$('<img>')
 					.attr('src', json.hiddenImage)
 					.click(ScavengerHunt.onHiddenImgClick)
-					//TODO: use ScavengerHuntArticleImgOffset and move rest to CSS
-					.css({position:'absolute', top: '150px', left: '10px', 'z-index': 999})
-					.appendTo('body');
-
+					.addClass('scavenger-hidden-image')
+					.appendTo('#WikiaPage');
 			});
 		}
 	},
@@ -87,7 +88,7 @@ var ScavengerHunt = {
 			{
 				id: 'scavengerClueModal',
 				showCloseButton: false,
-				width: 588
+				width: ScavengerHunt.MODAL_WIDTH
 			}
 		);
 	},
@@ -115,7 +116,7 @@ var ScavengerHunt = {
 			{
 				id: 'scavengerClueModal',
 				showCloseButton: false,
-				width: 588,
+				width: ScavengerHunt.MODAL_WIDTH,
 				callback: function() {
 					var button = $('#scavengerClueModal').find('a.button');
 					if (!button.attr('href')) {
@@ -137,7 +138,7 @@ var ScavengerHunt = {
 				id: 'scavengerEntryFormModal',
 				showCloseButton: false,
 				closeOnBlackoutClick: false,
-				width: 588,
+				width: ScavengerHunt.MODAL_WIDTH,
 				callback: function() {
 					var w = $('#scavengerEntryFormModal').closest('.modalWrapper');
 					var b = w.find('.scavenger-clue-button input[type=submit]');
@@ -175,7 +176,6 @@ var ScavengerHunt = {
 
 	showGoodbyeForm: function() {
 		$.cookies.del('ScavengerHuntArticlesFound');
-		//TODO: do not delete - mark as completed to not show 'start' button again
 		$.cookies.del('ScavengerHuntInProgress');
 		if (!ScavengerHunt.goodbyeData) {
 			ScavengerHunt.log('cannot show goodbye popup - no data available');
@@ -187,7 +187,7 @@ var ScavengerHunt = {
 			ScavengerHunt.goodbyeData.goodbyeContent,
 			{
 				id: 'scavengerGoodbyeModal',
-				width: 588,
+				width: ScavengerHunt.MODAL_WIDTH,
 				callback: function() {
 					var w = $('#scavengerEntryFormModal').closest('.modalWrapper');
 					w.find('.scavenger-clue-button a').click(function(e){
