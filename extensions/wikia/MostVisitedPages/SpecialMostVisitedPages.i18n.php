@@ -66,10 +66,16 @@ $messages['br'] = array(
 );
 
 /** Czech (Česky)
+ * @author Dontlietome7
  * @author Reaperman
  */
 $messages['cs'] = array(
 	'mostvisitedpages' => 'Nejnavštěvovanější stránky',
+	'mostvisitedpagessearchtext' => 'Název článku:',
+	'mostvisitedpagessearchbtn' => 'hledat',
+	'mostvisitedpageslatest' => 'v posledních $1 minutách',
+	'mostvisitedpageslatestlink' => 'Viz poslední navštívené stránky',
+	'mostvisitedpagesalllink' => 'Viz nejnavštěvovanější stránky',
 );
 
 /** German (Deutsch)

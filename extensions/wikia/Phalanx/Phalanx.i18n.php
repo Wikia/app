@@ -107,3 +107,14 @@ Please create an alternate user name or [[Special:Contact|contact Wikia]] about 
 	'phalanx-stats-table-wiki-url' => 'Wiki Url',
 	'phalanx-stats-table-wiki-last-edited' => 'Last edited',
 );
+
+/** German (Deutsch)
+ * @author George Animal
+ */
+$messages['de'] = array(
+	'phalanx-label-reason' => 'Grund:',
+	'phalanx-label-lang' => 'Sprache:',
+	'phalanx-stats-table-language' => 'Sprache',
+	'phalanx-stats-table-reason' => 'Grund',
+);
+

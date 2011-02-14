@@ -31,6 +31,23 @@ $messages['br'] = array(
 	'piggyback-wronguser' => "N'eo ket $1 ho anv implijer",
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'piggybac-desc' => 'Umožňuje přihlásit se jako jiný uživatel',
+	'piggyback' => 'Piggyback',
+	'piggyback-otherusername' => 'Uživatelské jméno cílového účtu:',
+	'piggyback-nosuchuser' => 'Neexistuje žádný uživatel „$1".
+Uživatelská jména jsou citlivá na velká a malá písmena.
+Zkontrolujte správné zadání jména.',
+	'piggyback-wronguser' => '$1 není vaše uživatelské jméno',
+	'piggyback-loginprompt' => 'Zadejte znovu své uživatelské jméno a heslo.',
+	'piggyback-firstlogout' => 'Odhlaste nejdříve zpět na váš účet.',
+	'piggyback-itisyou' => 'Nemůžete provést piggyback sobě.',
+	'piggyback-issysopto' => 'Nemůžete provést piggyback uživateli s právem piggyback.',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */

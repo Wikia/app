@@ -150,9 +150,28 @@ $messages['ckb'] = array(
 
 /** Czech (Česky)
  * @author Darth Daron
+ * @author Dontlietome7
  */
 $messages['cs'] = array(
+	'categoryselect-desc' => 'Poskytuje rozhraní pro správu kategorií v článku bez úprav celého článku',
+	'categoryselect-code-view' => 'Zobrazení kódu',
+	'categoryselect-visual-view' => 'Vizuální zobrazení',
+	'categoryselect-infobox-caption' => 'Možnosti kategorie',
+	'categoryselect-infobox-category' => 'Uveďte název kategorie:',
+	'categoryselect-infobox-sortkey' => 'Abecedně seřadit tento článek na stránce kategorie „$1" pod názvem:',
 	'categoryselect-addcategory-button' => 'Přidat kategorii',
+	'categoryselect-suggest-hint' => 'Po dokončení stiskněte Enter',
+	'categoryselect-tooltip' => "'''Novinka!''' Lišta na tagování kategorií. Vyzkoušejte ji nebo si přečtěte [[Help:CategorySelect|nápovědu]]",
+	'categoryselect-unhandled-syntax' => 'Zjištěna neošetřená syntaxe - přepnutí zpět do vizuálního zobrazení není možné.',
+	'categoryselect-edit-summary' => 'Přidávání kategorií',
+	'categoryselect-empty-name' => 'Zadejte název kategorie (část před |)',
+	'categoryselect-button-save' => 'Uložit',
+	'categoryselect-button-cancel' => 'Storno',
+	'categoryselect-error-not-exist' => 'Článek [id=$1] neexistuje.',
+	'categoryselect-error-user-rights' => 'Chyba uživatelských práv.',
+	'categoryselect-error-db-locked' => 'Databáze je uzamčena.',
+	'categoryselect-edit-abort' => 'Změna, o kterou jste se pokusili, byla zrušena rozšířením.',
+	'tog-disablecategoryselect' => 'Zakázat značení kategorií',
 );
 
 /** German (Deutsch)

@@ -26,6 +26,17 @@ $messages['br'] = array(
 	'wikiagameguides-tab-more' => "Muioc'h",
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'wikiagameguides-desc' => 'Moduly mobilní aplikace Wikia Herní manuály',
+	'wikiagameguides-tab-1' => 'Panel 1',
+	'wikiagameguides-tab-2' => 'Panel 2',
+	'wikiagameguides-tab-3' => 'Panel 3',
+	'wikiagameguides-tab-more' => 'Více',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -86,6 +97,17 @@ $messages['no'] = array(
 	'wikiagameguides-tab-2' => 'Fane 2',
 	'wikiagameguides-tab-3' => 'Fane 3',
 	'wikiagameguides-tab-more' => 'Mer',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'wikiagameguides-desc' => 'Módulos de aplicações móveis dos Guias de Jogos da Wikia',
+	'wikiagameguides-tab-1' => 'Separador 1',
+	'wikiagameguides-tab-2' => 'Separador 2',
+	'wikiagameguides-tab-3' => 'Separador 3',
+	'wikiagameguides-tab-more' => 'Mais',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)

@@ -440,11 +440,99 @@ Ma'z oc'h diazezer ar wiki-mañ pe unan eus merourien anezhañ e c'hallit kemma�
 	'activityfeed' => 'Gwazh obererezh',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'myhome-user-contributions-feed' => 'Къинхьегам',
+);
+
 /** Czech (Česky)
  * @author Darth Daron
+ * @author Dontlietome7
  */
 $messages['cs'] = array(
+	'myhome-desc' => 'Soukromá domovská stránka pro registrované uživatele',
+	'myhome' => 'Moje domovská stránka',
 	'wikiactivity' => 'Wiki Aktivita',
+	'myhome-activity-more' => 'zobrazit další nedávnou aktivitu',
+	'myhome-activity-feed' => 'Informační kanál aktivity',
+	'myhome-activity-feed-empty' => "Tato wiki čeká na Vaše zapojení.
+Klikněte na '''[[Special:CreatePage|New page]]''' a začněte psát!",
+	'myhome-watchlist-feed' => 'Seznam sledovaných stránek',
+	'myhome-watchlist-feed-empty' => 'Můžete přidat stránky na svůj seznam sledovaných stránek kliknutím na odkaz {{int:watch}} v panelu na horní části stránky.
+Svůj seznam sledovaných stránek můžete použít pro zobrazení změn na stránkách, o které se staráte.',
+	'myhome-user-contributions-feed' => 'Příspěvky',
+	'myhome-hot-spots-feed' => 'Žhavé body',
+	'myhome-hot-spots-feed-empty' => "Tato wiki čeká, až se zapojíte.
+Klepněte na '''[[Special:CreatePage|Nová stránka]]''' a začněte psát!",
+	'myhome-hot-spots-newest' => 'Nové stránky na wiki',
+	'myhome-hot-spots-brandnew' => 'Toto je nová wiki. Klikněte na [[Special:CreatePage|Nová stránky]] a začněte psát!',
+	'tog-myhomedisableredirect' => 'Zakázat mé přesměrování na činnost na Wiki',
+	'prefs-myhome' => 'Moje domovská stránka',
+	'myhome-feed-newpage' => 'nová stránka',
+	'myhome-feed-edit' => 'editovat',
+	'myhome-feed-move' => 'stránka přesunuta',
+	'myhome-feed-talkpage' => 'diskuzní stránka',
+	'myhome-feed-blogcomment' => 'komentář blogu',
+	'myhome-feed-delete' => 'odstraněno',
+	'myhome-feed-image' => 'přidán obrázek',
+	'myhome-feed-video' => 'přidáno video',
+	'myhome-feed-categorization' => 'kategorizace',
+	'myhome-feed-created-by' => 'vytvořil $1',
+	'myhome-feed-added-by' => 'přidal $1',
+	'myhome-feed-edited-by' => 'editoval $1',
+	'myhome-feed-posted-by' => 'zveřejnil $1',
+	'myhome-feed-comment-by' => 'komentář od $1',
+	'myhome-feed-deleted-by' => 'smazal $1',
+	'myhome-feed-moved-by' => 'přesunul $1',
+	'myhome-feed-article-comment-created-by' => 'nový komentář od $1',
+	'myhome-feed-article-comment-edited-by' => 'upraven komentář od $1',
+	'myhome-feed-by' => 'od $1',
+	'myhome-feed-diff-alt' => 'zobrazit změny na této stránce',
+	'myhome-feed-new-page-details' => 'Nová stránka',
+	'myhome-feed-summary-details' => 'Shrnutí',
+	'myhome-feed-section-edit-details' => 'Upravena sekce',
+	'myhome-feed-new-blog-post-details' => 'Nový blog',
+	'myhome-feed-new-blog-comment-details' => 'Komentář',
+	'myhome-feed-new-article-comment-details' => 'Komentář',
+	'myhome-feed-move-details' => 'Přejmenováno',
+	'myhome-feed-redirect-details' => 'Přesměrování',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Přidána fotografie|Přidány fotografie}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Přidáno video|Přidána videa}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Přidána kategorie|Přidány kategorie}}',
+	'myhome-user-contributions-empty' => 'Můžete se zůčastnit dění na této wiki kliknutím na "{{int:editthispage}}" na libovolné stránce a přidáním toho, co víte.
+Každý můe provádět změny, přidávat informace nebo opravovat chyby.
+Wiki je stavěna komunitou, a jakmile kliknete na tlačítko {{int:editthispage}}, stanete se její součástí.
+Zkuste to!',
+	'myhome-hot-spots-number-of-editors' => 'editorů',
+	'myhome-log-in' => "<center>Funkce Moje domovská stránka je k dispozici jen přihlášeným uživatelům.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Přihlašte se!]'''</big></center>",
+	'myhome-switch-to-monaco' => 'Aktivita na Wiki je zobrazena pouze v případě, že používáte motiv Wikia.
+Změnu můžete provést v [[Special:Preferences|nastavení]].',
+	'myhome-namespace-blog' => 'Blog',
+	'myhome-community-corner-header' => 'Zprávy komunitě',
+	'oasis-myhome-community-corner-edit' => 'editovat zprávu &gt;',
+	'myhome-community-corner-edit' => 'editovat zprávu',
+	'community-corner' => "'''Vítejte na Mé domovské stránce!'''
+
+Tato stránk pomáhá zůstat v obraze, co se děje na wiki.
+
+Administrátoři do ní mohou psát:
+
+* Organizovat projekt výstavby části wiki
+
+* Ukázat nové stránky, které by měl každý vidět
+
+* Pozvat lidi do diskuze
+
+* Popřát editorovi, který udělal pro wiki něco extra
+
+* Nebo jen povzbuzující slova!",
+	'myhome-hot-spots-definition' => 'Stránky s nejvíce editory v posledn{{PLURAL:$1|ím dni|ích $1 dnech}}.',
+	'myhome-default-view-checkbox' => 'Nastavit $1 jamo mé výchozí zobrazení',
+	'myhome-default-view-success' => 'OK, nyní je to Vaše výchozí zobrazení',
+	'tooltip-pt-myhome' => 'Jít na Mou domovskou stránku',
+	'activityfeed' => 'Informační kanál aktivity',
 );
 
 /** Welsh (Cymraeg)
@@ -888,7 +976,8 @@ Le wiki est construit par la communauté, et une fois que vous aurez cliqué sur
 Essayez donc !",
 	'myhome-hot-spots-number-of-editors' => 'contributeurs',
 	'myhome-log-in' => "<center>La fonction Mon Accueil n'est disponible que si vous êtes connecté{{GENDER:||e|}}.<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Veuillez vous connecter pour voir cette page !]</span>'''</big></center>",
-	'myhome-switch-to-monaco' => "La fonction Mon Accueil n'est disponible que si vous utilisez l'habillage Monaco. Si vous voulez accéder à Mon Accueil, veuillez modifier '''[[Special:Preferences|vos Préférences]]''' pour changer votre habillage.",
+	'myhome-switch-to-monaco' => "La fonction « Activité du wiki » n'est disponible que si vous utilisez l'apparence Wikia.
+Si vous voulez accéder à Mon Accueil, veuillez modifier '''[[Special:Preferences|vos Préférences]]''' pour changer l'apparence.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Messages de la communauté',
 	'oasis-myhome-community-corner-edit' => 'modifier le message &gt;',
@@ -1007,6 +1096,7 @@ $messages['ha'] = array(
 
 /** Hebrew (עברית)
  * @author 0ftal
+ * @author Amire80
  */
 $messages['he'] = array(
 	'myhome-desc' => 'דף בית פרטי למשתמשים שנכנסים',
@@ -1058,9 +1148,9 @@ $messages['he'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|הוסיף תמונה|הוסיף תמונות}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|הוסיף סרטון|הוסיף סרטונים}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|הוסיף קטגוריה|הוסיף קטגוריות}}',
-	'myhome-user-contributions-empty' => 'ניתן לגלות מעורבות באתר ויקי זה על ידי לחיצה על "{{int:editthispage}}" בכל דף שהוא, וכתיבת הפרטים הידועים לך.
+	'myhome-user-contributions-empty' => 'ניתן לגלות מעורבות באתר ויקי זה על ידי לחיצה על "{{int:editthispage}}" בכל דף, וכתיבת הפרטים הידועים לך.
 כולם יכולים לערוך שינויים, להוסיף מידע או לתקן טעויות.
-אתר ויקי זה נבנה על ידי הקהילה, ובעת לחיצה על לחצן העריכה, תרומתך מהווה חלק מהקהילה.
+אתר ויקי זה נבנה על ידי הקהילה, וברגע הלחיצה על "עריכה", תהפוך לחלק מהקהילה.
 מאוד מומלץ לנסות!',
 	'myhome-hot-spots-number-of-editors' => 'עורכים',
 	'myhome-log-in' => "<center>הבית שלי זמין רק אם אתה מחובר.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} אנא התחבר כדי לראות את העמוד!]'''</big></center>",
@@ -1170,7 +1260,8 @@ $messages['ia'] = array(
 	'myhome-user-contributions-empty' => 'Tu pote participar in iste wiki per cliccar super "{{int:editthispage}}" in omne pagina de articulo, e adder lo que tu sape. Tote le mundo pote facer modificationes, adder informationes o corriger errores. Le wiki es construite per le communitate, e un vice que tu clicca super le button de modification, tu face parte del communitate. Proba lo!',
 	'myhome-hot-spots-number-of-editors' => 'contributores',
 	'myhome-log-in' => "<center>Tu pagina initial es solmente disponibile si tu es authenticate.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Aperi un session pro vider iste pagina!]'''</big></center>",
-	'myhome-switch-to-monaco' => "Le pagina initial es solmente disponibile si tu usa le apparentia Monaco. Si tu vole vider tu pagina initial, visita le '''[[Special:Preferences|preferentias]]''' pro cambiar de apparentia.",
+	'myhome-switch-to-monaco' => "Le function WikiActivity es solmente disponibile si tu usa le apparentia \"Wikia\".
+Si tu vole vider \"Mi pagina initial\", visita le '''[[Special:Preferences|preferentias]]''' pro cambiar de apparentia.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Messages del communitate',
 	'oasis-myhome-community-corner-edit' => 'modificar message &gt;',
@@ -1428,14 +1519,23 @@ $messages['ja'] = array(
 	'activityfeed' => 'アクティビティフィード',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'myhome-feed-redirect-details' => 'Ömleidung',
+);
+
 /** Kurdish (Latin) (Kurdî (Latin))
  * @author George Animal
  */
 $messages['ku-latn'] = array(
 	'myhome' => 'Mala min',
 	'myhome-feed-newpage' => 'rûpela nû',
+	'myhome-feed-edit' => 'biguherîne',
 	'myhome-feed-new-page-details' => 'Rûpela nû',
 	'myhome-feed-summary-details' => 'Kurte',
+	'myhome-feed-redirect-details' => 'Redirect',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -2015,8 +2115,8 @@ Esta wiki é criada pela comunidade e, ao clicar o botão para editar, torna-se 
 Experimente!',
 	'myhome-hot-spots-number-of-editors' => 'editores',
 	'myhome-log-in' => "<center>A funcionalidade A Minha Casa só fica disponível se estiver autenticado.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Autentique-se para ver esta página!]'''</big></center>",
-	'myhome-switch-to-monaco' => "A funcionalidade A Minha Casa só fica disponível se estiver a usar o tema Mónaco.
-Se quer ver A Minha Casa, visite '''[[Special:Preferences|as suas Preferências]]''' para mudar de tema.",
+	'myhome-switch-to-monaco' => "A funcionalidade Actividade na Wiki só fica disponível se estiver a usar o tema da Wikia.
+Se quer ver A Minha Casa, visite '''[[Special:Preferences|as suas Preferências]]''' para mudar de tema, por favor.",
 	'myhome-namespace-blog' => 'Blogue',
 	'myhome-community-corner-header' => 'Mensagens Comunitárias',
 	'oasis-myhome-community-corner-edit' => 'editar mensagem &gt;',

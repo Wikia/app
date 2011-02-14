@@ -208,6 +208,13 @@ $messages['sl'] = array(
 	'tog-watchlistsubpages' => 'Sledi podstranem',
 );
 
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'tog-watchlistsubpages' => 'Надгледај подстранице',
+);
+
 /** Swedish (Svenska)
  * @author Tobulos1
  */

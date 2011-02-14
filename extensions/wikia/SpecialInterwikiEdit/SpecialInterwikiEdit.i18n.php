@@ -68,6 +68,18 @@ $messages['br'] = array(
 	'iwedit-success' => '<p>Liamm krouet gant berzh.</p>',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'iwedit-title' => 'Editor Interwiki',
+	'iwedit-language-interwikis' => 'pouze jazyková interwiki',
+	'iwedit-all-interwikis' => 'všechna interwiki',
+	'iwedit-update' => 'Aktualizovat',
+	'iwedit-error' => '<p>Nastala chyba.</p>',
+	'iwedit-success' => '<p>Odkaz byl úspěšně vytvořen.</p>',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */

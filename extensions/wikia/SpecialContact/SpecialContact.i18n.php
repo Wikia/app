@@ -44,3 +44,23 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 	/* after */
 	'specialcontact-submitcomplete' => 'Thank you for contacting Wikia.',
 );
+
+/** German (Deutsch)
+ * @author George Animal
+ */
+$messages['de'] = array(
+	'specialcontact-realname' => 'Dein Name',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'specialcontact-username' => 'Benotzernumm',
+	'specialcontact-realname' => 'Ären Numm',
+	'specialcontact-problem' => 'Sujet',
+	'specialcontact-problemdesc' => 'Message',
+	'specialcontact-notyou' => 'Net Dir?',
+	'specialcontact-submitcomplete' => 'Merci datt dir Wikia kontaktéiert hutt.',
+);
+

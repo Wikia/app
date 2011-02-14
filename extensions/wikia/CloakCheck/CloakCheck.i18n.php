@@ -48,6 +48,7 @@ $messages['br'] = array(
 
 /** German (Deutsch)
  * @author Diebuche
+ * @author George Animal
  */
 $messages['de'] = array(
 	'cloakcheck' => 'Prüfung der Anspruchsberechtigung auf einen IRC Cloak',
@@ -55,8 +56,13 @@ $messages['de'] = array(
 	'cloakcheck-form-username' => 'Benutzername:',
 	'cloakcheck-form-check' => 'Benutzernamen überprüfen',
 	'cloakcheck-process-empty' => 'Bitte einen Benutzernamen angeben.',
+	'cloakcheck-process-notexist' => 'Benutzername existiert nicht.',
+	'cloakcheck-process-username' => 'Benutzername:$1',
+	'cloakcheck-process-accountage-yes' => 'Konto ist alt genug.',
+	'cloakcheck-process-accountage-no' => 'Konto ist zu neu.',
 	'cloakcheck-process-emailconf-yes' => 'E-Mail-Adresse bestätigt.',
 	'cloakcheck-process-emailconf-no' => 'E-Mail-Adresse nicht bestätigt.',
+	'cloakcheck-process-edits-yes' => 'Benutzer hat genug Bearbeitungen.',
 );
 
 /** Spanish (Español)

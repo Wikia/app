@@ -103,6 +103,38 @@ $messages['ce'] = array(
 	'blog-avatar-getuser' => 'Лаха',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'blog-avatar-removeavatar' => 'Odebrat avatar',
+	'blog-avatar-goto-userpage' => 'Přejít na stránku uživatele',
+	'blog-avatar-edit' => 'Změnit',
+	'blog-avatar-delete' => 'Odstranit',
+	'prefs-avatarupload' => 'Avatar',
+	'blog-avatar-choose-avatar' => 'Zvolte nový avatar',
+	'blog-avatar-upload-avatar' => 'Nahrajte nový avatar',
+	'blog-avatar-nouser' => 'Nelze najít tohoto uživatele!',
+	'blog-avatar-cannot-remove' => 'Nelze odebrat avatar vybraného uživatele!',
+	'blog-avatar-remove-info' => 'Tato stránka umožňuje odstranit uživatelův avatar.
+Napište přesné jméno účtu a stiskněte "{{int:blog-avatar-getuser}}".<br />
+Pamatujte, avatary jsou globální - odstranění proběhne na celé Wikii.',
+	'blog-avatar-getuser' => 'Hledat',
+	'blog-avatar-remove-confirm' => 'Opravdu chcete odebrat avatar?',
+	'blog-avatar-error-nofile' => 'Prosím vyberte soubor z počítače',
+	'blog-avatar-error-size' => 'Importovaný soubor je příliš velký, povolená velikost je $1 KB.',
+	'blog-avatar-error-cantwrite' => 'Nelze uložit soubor',
+	'blog-avatar-error-type' => 'Neplatný typ MIME. Poskytnuto: $1 - Povoleno: $2',
+	'blog-avatar-changed-log' => 'Přidán nebo změněn avatar',
+	'blog-avatar-removed-log' => 'Odstraněn avatar uživatele $1',
+	'blog-avatar-save-info' => 'Pro uložení změn <a href="#prefcontrol">sjeďte dolů</a> a stiskněte tlačítko "{{int:saveprefs}}"',
+	'masthead-edits-since' => 'úprav od',
+	'useravatar-log' => 'Protokol avatarů uživatele',
+	'blog-avatar-alt' => 'Protokoly přidáni nebo odstranění uživatelova avataru',
+	'removeuseravatar' => 'Odebrat avatar uživatele',
+	'right-removeavatar' => 'Odebírat avatary uživatelů',
+);
+
 /** German (Deutsch)
  * @author The Evil IP address
  */

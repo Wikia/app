@@ -61,6 +61,19 @@ $messages['br'] = array(
 	'ajaxpoll-submitting' => 'Gortozit mar plij, emeur o kas ho vot...',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;ze všech hlasů',
+	'ajaxpoll-thankyou' => 'Děkujeme za Váš hlas!',
+	'ajaxpoll-error' => 'Došlo k potížím se zpracováním Vašeho hlasu, zkuste to prosím znovu.',
+	'ajaxpoll-summary' => 'Anketa byla vytvořena $2 v $1. Zatím hlasovalo $3 lidí.',
+	'ajaxpoll-submit' => 'Hlasovat!',
+	'ajaxpoll-closed' => 'Anketa je nyní uzavřena. Můžete si přečíst výsledky.',
+	'ajaxpoll-submitting' => 'Prosím čekejte, Váš hlas se zpracovává...',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -402,6 +415,13 @@ $messages['ru'] = array(
 	'ajaxpoll-submit' => 'Проголосовать!',
 	'ajaxpoll-closed' => 'Опрос закрыт. Наслаждайтесь результатами.',
 	'ajaxpoll-submitting' => 'Пожалуйста, подождите, передаётся информация о вашем голосе…',
+);
+
+/** Sinhala (සිංහල)
+ * @author බිඟුවා
+ */
+$messages['si'] = array(
+	'ajaxpoll-submit' => 'ඡන්දය',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)

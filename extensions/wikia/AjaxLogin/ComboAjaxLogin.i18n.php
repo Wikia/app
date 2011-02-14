@@ -89,6 +89,40 @@ Ur wezh graet e c'hallot kevreañ aes en ur ober gant ne vern pe vouton Facebook
 Klaskit en-dro pe [[Special:Contact|kasit keloù]].',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'comboajaxlogin-desc' => 'Dynamické pole, které umožňuje uživatelům přihlášení, připomenutí hesla a registraci uživatelů',
+	'comboajaxlogin-createlog' => 'Přihlásit se nebo vytvořit účet',
+	'comboajaxlogin-actionmsg' => 'Chcete-li provést tuto akci, je nejprve nutné se přihlásit nebo vytvořit účet',
+	'comboajaxlogin-actionmsg-protected' => 'Chcete-li provést tuto akci, je nejprve nutné přihlásit se nebo vytvořit účet.',
+	'comboajaxlogin-connectmarketing' => '<h1>Propojte své účty</h1>
+<ul>
+<li>Ponechejte si svoje uživatelské jméno, editace, vše ... kromě toho, jak se přihlašujete</li>
+<li>Sdílejte svou aktivitu z Wikia na Facebooku</li>
+<li>Kompletní kontrola nad tím, co je zveřejněno</li>
+</ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Přihlásit se pomocí Facebook Connect</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Propojte svůj účet Wikia s Facebookem</h1>
+<ul>
+<li>Ponechejte si svoje uživatelské jméno, editace, vše ... kromě toho, jak se přihlašujete</li>
+<li>Sdílejte svou aktivitu z Wikia na Facebooku s kompletní kontrolou nad tím, co je zveřejněno</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Zpět',
+	'comboajaxlogin-connectmarketing-forward' => 'Začínáme &raquo;',
+	'comboajaxlogin-connectdirections' => 'Zadejte zde své uživatelské jméno a heslo Wikia - propojíme Vaše účty na pozadí automaticky.
+
+Poté se budete moci přihlásit libovolným tlačítkem Facebook Connect.',
+	'comboajaxlogin-post-not-understood' => 'Nastala chyba ve způsobu konstrukce tohoto formuláře.
+Zkuste to znova nebo [[Special:Contact|nás kontaktujte]].',
+	'comboajaxlogin-readonlytext' => '<h2>Omlouváme se!</h2>
+<p>V tuto chvíli nemůžete vytvořit nový účet - tato služba bude zanedlouho opět v provozu.<br /><em>$1</em></p>
+<p>Více informací: <a href="http://twitter.com/wikia">Twitter</a> nebo <a href="http://facebook.com/wikia">Facebook</a>
+<br />
+(pokud již máte účet, můžete se <a href="#">přihlásit</a> jako obvykle, ale nebudete moci editovat)</p>',
+);
+
 /** German (Deutsch)
  * @author Diebuche
  * @author LWChris

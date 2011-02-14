@@ -166,6 +166,13 @@ $messages['br'] = array(
 	'lookupcontribsall' => 'pep tra',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'lookupcontribscontribs' => 'къинхьегам',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author SVG
@@ -544,6 +551,7 @@ $messages['ku-latn'] = array(
 	'lookupcontribsgo' => 'Biçe',
 	'lookupcontribswikititle' => 'Sernav',
 	'lookupcontribscontent' => 'naverrok',
+	'lookupcontribsnormal' => 'niha',
 	'lookupcontribsall' => 'hemû',
 );
 

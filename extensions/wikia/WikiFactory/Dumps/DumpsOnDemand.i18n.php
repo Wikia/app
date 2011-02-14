@@ -123,6 +123,7 @@ $messages['bs'] = array(
 );
 
 /** Czech (Česky)
+ * @author Dontlietome7
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
@@ -132,11 +133,12 @@ $messages['cs'] = array(
 	'dump-database-curr-pages-info' => '(Tato verze je obvykle nejlepší pro použití bota)',
 	'dump-database-full-pages' => 'Aktuální stránky a historie',
 	'dump-database-full-pages-info' => '(Upozornění: tento soubor může být velmi velký)',
-	'dump-database-request' => 'Vyžadována aktualizace',
+	'dump-database-request' => 'Požádat o aktualizaci',
 	'dump-database-request-info' => '(Výstupy jsou obvykle generovány každý týden)',
 	'dump-database-request-submit' => 'Odeslat požadavek',
+	'dump-database-request-already-submitted' => 'O výstup z databáze bylo požádáno nedávno (před méně než 7 dny)',
 	'dump-database-request-requested' => 'Žádost o výstup z databáze odeslána',
-	'dump-database-info-more' => 'Prosím vizte <a href="http://community.wikia.com/wiki/Help:Database_download">zde</a> pro více informací',
+	'dump-database-info-more' => 'Více informací <a href="http://community.wikia.com/wiki/Help:Database_download">zde</a>',
 );
 
 /** Danish (Dansk)

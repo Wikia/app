@@ -30,6 +30,17 @@ Ha fellout a rafe deoc'h mont da welet ar [[{{MediaWiki:Mainpage}}|bajenn degeme
 	'outbound-screen-you-are-leaving' => "Emaoc'h o kuitaat Wikia.",
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Zaregistrujte se]] nebo [[Special:UserLogin|se přihlašte]], abyste mohli přeskakovat reklamy.',
+	'outbound-screen-already-logged-in-no-link' => 'Není nastavena destinace.
+Není tu nic k vidění!
+Chcete jít na [[{{MediaWiki:Mainpage}}|hlavní stranu]] nebo na [[Special:Random|náhodnou stránku]]?',
+	'outbound-screen-you-are-leaving' => 'Nyní opouštíte Wikii.',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */

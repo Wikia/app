@@ -364,6 +364,75 @@ $messages['ce'] = array(
 	'swm-label-mode-users-active' => 'Жигар декъашхой',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'sitewidemessages' => 'Celostránkové zprávy',
+	'swm-page-title-editor' => 'Celostránkové zprávy :: Editor',
+	'swm-page-title-preview' => 'Celostránkové zprávy:: Náhled',
+	'swm-page-title-send' => 'Celostránkové zprávy:: Poslat',
+	'swm-page-title-sent' => 'Celostránkové zprávy :: Odesláno',
+	'swm-page-title-dismiss' => 'Celostránkové zprávy :: Zrušit',
+	'swm-page-title-list' => 'Celostránkové zprávy :: Seznam',
+	'swm-label-preview' => 'Náhled',
+	'swm-label-edit' => 'Editovat',
+	'swm-label-remove' => 'Odstranit',
+	'swm-label-sent' => 'Odesláno',
+	'swm-label-list' => 'Seznam',
+	'swm-label-recipient' => 'Příjemci',
+	'swm-label-recipient-wikis' => 'Wiki',
+	'swm-label-recipient-users' => 'Uživatelé',
+	'swm-label-expiration' => 'Expirační čas',
+	'swm-label-mode-wikis-all' => 'Všechny wiki',
+	'swm-label-mode-wikis-hub' => 'Vybraná síť',
+	'swm-label-mode-wikis-wiki' => 'Vybraná wiki',
+	'swm-label-mode-users-all' => 'Všichni uživatelé',
+	'swm-label-mode-users-active' => 'Aktivní uživatelé',
+	'swm-label-mode-users-group' => 'Uživatelé patřící do skupiny',
+	'swm-label-mode-users-group-hint' => '<i>Vyberte skupinu z rozbalovacího menu nebo napište jméno ručně.</i>',
+	'swm-label-mode-users-user' => 'Vybraný uživatel',
+	'swm-label-mode-users-user-hint' => '<i>Tato volba ignoruje volbu ve skupině "Wiki".</i>',
+	'swm-label-content' => 'Obsah',
+	'swm-label-comment' => 'Komentář',
+	'swm-label-dismissed' => 'Zrušeno',
+	'swm-label-language' => 'Jazyk',
+	'swm-button-lang-checkall' => '[ Vybrat vše ]',
+	'swm-button-lang-checknone' => '[ Nevybrat nic ]',
+	'swm-taskmanager-hint' => '<i>Poznámka: Některé volby jsou časově náročné a budou zpracovány Správcem úkolů.</i>',
+	'swm-button-preview' => '[ Náhled ]',
+	'swm-button-send' => '[ Odeslat ]',
+	'swm-button-save' => '[ Uložit ]',
+	'swm-button-new' => '[ Nové ]',
+	'swm-msg-sent-ok' => '<h3>Zpráva byla odeslána.</h3>',
+	'swm-msg-sent-err' => '<h3>Zpráva NEBYLA odeslána.</h3>Zkontrolujte chybový protokol pro více informací.',
+	'swm-msg-remove' => 'Jste si jisti, že chcete odstranit tuto zprávu? Tato akceje nevratná!',
+	'swm-days' => 'Nikdy,hodina,hodiny,den,dny',
+	'swm-expire-info' => 'Tato zpráva expiruje $1.',
+	'swm-link-dismiss' => 'zrušit tuto zprávu',
+	'swm-dismiss-content' => '<p>Zpráva byla zrušena.</p><p>%s</p>',
+	'swm-list-no-messages' => 'Žádné zprávy.',
+	'swm-list-table-id' => 'ID',
+	'swm-list-table-sender' => 'Odesílatel',
+	'swm-list-table-wiki' => 'Wiki',
+	'swm-list-table-recipient' => 'Příjemce',
+	'swm-list-table-group' => 'Skupina',
+	'swm-list-table-expire' => 'Expiruje',
+	'swm-list-table-date' => 'Datum odeslání',
+	'swm-list-table-removed' => 'Odstraněno',
+	'swm-list-table-content' => 'Obsah',
+	'swm-list-table-tools' => 'Nástroje',
+	'swm-list-table-lang' => 'Jazyky',
+	'swm-yes' => 'Ano',
+	'swm-no' => 'Ne',
+	'swm-error-no-such-wiki' => 'Taková wiki neexistuje!',
+	'swm-error-no-such-user' => 'Vybraný uživatel neexistuje.',
+	'swm-error-empty-message' => 'Vložte obsah zprávy',
+	'swm-error-long-message' => 'Zprávy jsou omezeny na 500 znaků.',
+	'swm-error-empty-group' => 'Vložte název skupiny',
+	'swm-lang-other' => 'všechny zbývající jazyky',
+);
+
 /** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  * @author ОйЛ
  */
@@ -995,6 +1064,27 @@ $messages['ja'] = array(
  */
 $messages['kn'] = array(
 	'swm-list-table-lang' => 'ಭಾಷೆಗಳು',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'swm-button-new' => '[ Neu ]',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'swm-label-list' => 'Lîste',
+	'swm-label-content' => 'Naverrok',
+	'swm-label-language' => 'Ziman',
+	'swm-list-no-messages' => 'Mesaj tune ne.',
+	'swm-list-table-group' => 'Grûp',
+	'swm-list-table-content' => 'Naverrok',
+	'swm-yes' => 'Erê',
+	'swm-no' => 'Na',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

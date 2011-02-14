@@ -735,6 +735,7 @@ $messages['sl'] = array(
  * @author Charmed94
  * @author Rancher
  * @author Verlor
+ * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'wikiavideo-reverted' => 'Видео снимак $1 је успешно враћен. Вратите се на $2.',
@@ -748,7 +749,7 @@ $messages['sr-ec'] = array(
 	'wikiavideo-placeholder' => 'Чувар места',
 	'wikiavideo-gallery-template' => 'Ова видео галерија је унутар шаблона, тако да се не може уредити из режима приказа. Измените одређени шаблон.',
 	'wikiavideo-not-supported' => 'Ова пресвлака не подржава убацивање видео снимака из режима приказа у галерије.',
-	'wikiavideo-pixel' => 'тачка',
+	'wikiavideo-pixel' => 'пиксел',
 	'wikiavideo-deleted-old' => "Издање '''[$1 $2]''', као и $4, $3 је обрисано.",
 	'wikiavideo-intro-old' => "Управо ћете да обришете '''[$1 $5]''' издање, као и [$4 $3, $2].",
 );

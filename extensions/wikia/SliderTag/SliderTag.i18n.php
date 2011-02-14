@@ -23,6 +23,14 @@ $messages['br'] = array(
 	'slidertag-featured-wikis' => 'Wikioù dibar',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'slidertag-desc' => 'Nabízí uživatelům rychlou možnost přidat posuvník',
+	'slidertag-featured-wikis' => 'Doporučené wiki',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */

@@ -54,6 +54,14 @@ $messages['bs'] = array(
 	'wikiarelatedpages-heading' => 'Pročitaj više',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'wikiarelatedpages-desc' => 'Přidá na stránky seznam souvisejících stránek',
+	'wikiarelatedpages-heading' => 'Číst více',
+);
+
 /** German (Deutsch)
  * @author Kjell
  * @author The Evil IP address
@@ -205,6 +213,13 @@ $messages['pt-br'] = array(
 $messages['ru'] = array(
 	'wikiarelatedpages-desc' => 'Добавляет на страницы список связанных страниц',
 	'wikiarelatedpages-heading' => 'Читать больше',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'wikiarelatedpages-heading' => 'Прочитајте више',
 );
 
 /** Swedish (Svenska)

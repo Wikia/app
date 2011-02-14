@@ -305,6 +305,18 @@ $messages['ce'] = array(
 	'recipes-template-user-gender-hint' => 'Ву/Йу',
 );
 
+/** German (Deutsch)
+ * @author George Animal
+ */
+$messages['de'] = array(
+	'userprofilepage-user-group-bureaucrat' => 'Bürokrat',
+	'userprofilepage-user-group-helper' => 'Helfer',
+	'recipes-template-user-birthdate-label' => 'Geburtsdatum:',
+	'recipes-template-user-gender-label' => 'Geschlecht',
+	'recipes-template-user-gender-hint' => 'Geschlecht',
+	'recipes-template-user-affiliation-label' => 'Zugehörigkeit',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -531,6 +543,19 @@ $messages['ia'] = array(
 	'recipes-template-user-gender-hint' => 'Sexo',
 	'recipes-template-user-affiliation-label' => 'Affiliation',
 	'recipes-template-user-affiliation-hint' => 'Affiliation',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'userprofilepage-user-group-bot' => 'Bot',
+	'userprofilepage-user-group-bureaucrat' => 'Bûrokrat',
+	'userprofilepage-top-wikis-unhide-label' => 'nîşan bide',
+	'userprofilepage-top-wikis-hide-label' => 'veşêre',
+	'userprofilepage-top-page-unhide-label' => 'nîşan bide',
+	'recipes-template-user-gender-label' => 'Zayend',
+	'recipes-template-user-gender-hint' => 'Zayend',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -877,6 +902,58 @@ $messages['ru'] = array(
 $messages['shi'] = array(
 	'userprofilepage-edit-button' => '↓ Ẓreg (bddel)',
 	'userprofilepage-about-article-title' => '↓ F',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'userprofilepage-edit-avatar-label' => 'Уређивање слике',
+	'userprofilepage-users-notes-title' => 'О мени',
+	'userprofilepage-about-section-title' => '$1 интервју',
+	'userprofilepage-leave-message' => 'Постави поруку',
+	'userprofilepage-user-last-action-delete' => '{{GENDER:$1|је обрисао|је обрисала|обриса}} <a href="$2">$3</a> страницу',
+	'userprofilepage-user-group-sysop' => 'Администратор',
+	'userprofilepage-user-group-staff' => 'Уредник',
+	'userprofilepage-user-group-bot' => 'Бот',
+	'userprofilepage-user-group-bureaucrat' => 'Бирократа',
+	'userprofilepage-user-group-helper' => 'Помоћник',
+	'userprofilepage-user-group-vstf' => 'VSTF',
+	'userprofilepage-user-group-sysop-tooltip' => 'Овај корисник је администратор викије',
+	'userprofilepage-user-group-staff-tooltip' => 'Овај корисник је уредник Викије',
+	'userprofilepage-user-group-bot-tooltip' => 'Овај корисник је бот',
+	'userprofilepage-user-group-bureaucrat-tooltip' => 'Овај корисник је бирократа викије',
+	'userprofilepage-user-group-helper-tooltip' => 'Овај корисник је помоћник',
+	'userprofilepage-user-group-vstf-tooltip' => 'Овај корисник је члан Борбе против непожељних порука',
+	'userprofilepage-top-wikis-title' => 'Топ викије члана $1',
+	'userprofilepage-top-wikis-edit-count' => 'Број измена',
+	'userprofilepage-top-wikis-hidden-see-more' => 'Сакрили сте {{PLURAL:$1|$1 викију|$1 викије|$1 викија}}',
+	'userprofilepage-top-wikis-unhide-label' => 'откриј',
+	'userprofilepage-top-wikis-hide-label' => 'сакриј',
+	'userprofilepage-top-wikis-locked-label' => 'Ова викија се не може сакрити',
+	'userprofilepage-recent-activity-title' => 'Скорашња активност члана $1',
+	'userprofilepage-activity-edit' => 'измени $1 страницу',
+	'userprofilepage-activity-new' => 'направи $1',
+	'userprofilepage-activity-image' => 'отпреми видео снимак на $1',
+	'userprofilepage-activity-video' => 'отпреми видео снимак на $1',
+	'userprofilepage-activity-delete' => 'обриса $1 страницу',
+	'userprofilepage-activity-talk' => 'постави поруку на корисничкој страници члана $1',
+	'userprofilepage-recent-activity-default' => '$1 се придружи викији',
+	'userprofilepage-top-recent-activity-see-more' => 'Прикажи све &gt;',
+	'userprofilepage-top-pages-title' => '$1 топ $2 страница',
+	'userprofilepage-top-page-unhide-label' => 'откриј',
+	'recipes-template-user-description-label' => 'Опис',
+	'recipes-template-user-description-hint' => 'Подаци о кориснику',
+	'recipes-template-user-birthdate-label' => 'Датум рођења',
+	'recipes-template-user-birthdate-hint' => 'Датум рођења',
+	'recipes-template-user-species-label' => 'Врста',
+	'recipes-template-user-species-hint' => 'Врста',
+	'recipes-template-user-abilities-label' => 'Могућности',
+	'recipes-template-user-abilities-hint' => 'Могућности',
+	'recipes-template-user-gender-label' => 'Пол',
+	'recipes-template-user-gender-hint' => 'Пол',
+	'recipes-template-user-affiliation-label' => 'Удружење',
+	'recipes-template-user-affiliation-hint' => 'Удружење',
 );
 
 /** Swedish (Svenska)

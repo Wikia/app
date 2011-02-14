@@ -26,6 +26,16 @@ $messages['br'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'showperformancestats-desc' => 'Vrací statistiky výkonu čitelné pro člověka',
+	'performancestat-total' => 'Celkem: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
+);
+
 /** Spanish (Español)
  * @author Bola
  * @author VegaDark
@@ -83,6 +93,25 @@ $messages['no'] = array(
 	'performancestat-total' => 'Totalt: $1s',
 	'performancestat-apache' => 'Apache: $1s',
 	'performancestat-cpu' => 'CPU: $1s',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'showperformancestats-desc' => 'Fornece estatísticas de desempenho',
+	'performancestat-total' => 'Total: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'performancestat-total' => 'Укупно: $1s',
+	'performancestat-apache' => 'Апаш: $1s',
+	'performancestat-cpu' => 'Процесор: $1s',
 );
 
 /** Swedish (Svenska)

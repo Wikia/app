@@ -37,6 +37,16 @@ $messages['br'] = array(
 	'imgplc-notinhistory' => "Ne c'helloc'h ket ouzhpennañ poltriji er mod istor.",
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'imgplc-create' => 'Přidat obrázek',
+	'imgplc-placeholder' => 'Zástupný symbol',
+	'imgplc-image' => 'Obrázek',
+	'imgplc-notinhistory' => 'Nemůžete přidat obrázek v režimu historie.',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */

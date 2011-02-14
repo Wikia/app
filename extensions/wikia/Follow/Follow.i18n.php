@@ -283,9 +283,87 @@ $messages['ce'] = array(
 
 /** Czech (Česky)
  * @author Darth Daron
+ * @author Dontlietome7
  */
 $messages['cs'] = array(
+	'follow-desc' => 'Vylepšení funkce seznamu sledovaných stránek',
+	'prefs-basic' => 'Základní možnosti',
+	'wikiafollowedpages-special-heading-category' => 'Kategorie ($1)',
+	'wikiafollowedpages-special-heading-article' => 'Články ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Blogy a příspěvky ($1)',
+	'wikiafollowedpages-special-heading-forum' => 'Vlákna fóra ($1)',
+	'wikiafollowedpages-special-heading-project' => 'Stránky projektu ($1)',
+	'wikiafollowedpages-special-heading-user' => 'Uživatelské stránky ($1)',
+	'wikiafollowedpages-special-heading-templates' => 'Stránky šablon ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'Stránky MediaWiki ($1)',
+	'wikiafollowedpages-special-heading-media' => 'Obrázky a videa ($1)',
+	'wikiafollowedpages-special-namespace' => '($1 stránka)',
+	'wikiafollowedpages-special-empty' => 'Seznam sledovaných stránek tohoto uživatele je prázdný.
+Přidejte stránky do tohoto seznamu klepnutím na tlačítko "{{int:watch}}" v horní části stránky.',
+	'wikiafollowedpages-special-anon' => 'Chcete-li vytvořit nebo zobrazit seznam sledovaných stránek, [[Special:Signup|přihlašte se]].',
+	'oasis-wikiafollowedpages-special-seeall' => 'Zobrazit vše >',
+	'wikiafollowedpages-special-seeall' => 'Zobrazit vše >',
+	'wikiafollowedpages-special-showall' => 'Zobrazit vše >',
+	'wikiafollowedpages-special-showmore' => 'Zobrazit více',
+	'wikiafollowedpages-special-title' => 'Sledované stránky',
+	'wikiafollowedpages-special-delete-tooltip' => 'Odstranit tuto stránku',
+	'wikiafollowedpages-special-hidden' => 'Tento uživatel se rozhodl nezobrazit veřejně {{GENDER:$1|s|s|s}}vůj seznam stránek.',
+	'wikiafollowedpages-special-hidden-unhide' => 'Zobrazit tento seznam.',
+	'wikiafollowedpages-special-blog-by' => 'od $1',
+	'wikiafollowedpages-masthead' => 'Sledované stránky',
+	'wikiafollowedpages-following' => 'Sledováno',
 	'wikiafollowedpages-special-title-userbar' => 'Sledované stránky',
+	'tog-enotiffollowedpages' => 'Poslat mi e-mail, pokud je změněna sledovaná stránky',
+	'tog-enotiffollowedminoredits' => 'Poslat mi e-mail, i pokud je editace sledované stránky drobná',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Pokročilé možnosti',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Pouze seznam sledovaných stránek',
+	'tog-hidefollowedpages' => 'Udělat můj seznam sledovaných stránek soukromý',
+	'follow-categoryadd-summary' => 'Stránka přidána do kategorie',
+	'follow-bloglisting-summary' => 'Blog přidán na stránku blogu',
+	'wikiafollowedpages-userpage-heading' => 'Stránky, které sleduji',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'Skrýt sledované stránky z veřejného zobrazení',
+	'wikiafollowedpages-userpage-more' => 'Více',
+	'wikiafollowedpages-userpage-hide' => 'Skrýt',
+	'wikiafollowedpages-userpage-empty' => 'Seznam sledovaných stránek tohoto uživatele je prázdný.
+Přidejte do tohoto seznamu kliknutím na "{{int:watch}} na vrcholu stránky.',
+	'enotif_subject_categoryadd' => '{{SITENAME}} stránka $PAGETITLE byla přidána do $CATEGORYNAME uživatelem $PAGEEDITOR',
+	'enotif_body_categoryadd' => 'Drahý(á) $WATCHINGUSERNAME,
+
+Do kategorie, kterou sledujete, byla přidána stránka na {{SITENAME}}.
+
+Viz "$PAGETITLE_URL".
+
+{{SITENAME}}
+
+___________________________________________
+* Koukněte se na dobré wiki! http://www.wikia.com
+
+* Chcete nastavit, jaké e-maily dostanete? Jděte na: {{fullurl:{{ns:special}}:Preferences}}.',
+	'enotif_body_categoryadd-html' => '<p>Drahý(á) $WATCHINGUSERNAME,<br /><br />
+Do kategorie, kterou sledujete, byla přidána stránka na {{SITENAME}}.<br /> <br />
+Viz <a href="$PAGETITLE_URL">$PAGETITLE</a>.<br /><br />
+{{SITENAME}}<br /><hr />
+<li><a href="http://www.wikia.com">Koukněte se na dobré wiki!</a></li>
+<li>Chcete nastavit, jaké e-maily dostanete? Jděte do <a href="{{fullurl:{{ns:special}}:Preferences}}">Nastavení</a></li></ul></p>',
+	'enotif_subject_blogpost' => '{{SITENAME}} stránka $PAGETITLE byla vložena do $BLOGLISTINGNAME uživatelem $PAGEEDITOR',
+	'enotif_body_blogpost' => 'Drahý $WATCHINGUSERNAME,
+
+Byla vytvořena nová stránka na seznamu blogů, který sledujete, na {{SITENAME}}.
+
+Viz "$PAGETITLE_URL".
+
+{{SITENAME}}
+
+___________________________________________
+* Koukněte se na dobré wiki! http://www.wikia.com
+
+* Chcete nastavit, jaké e-maily dostanete? Jděte na: {{fullurl:{{ns:special}}:Preferences}}.',
+	'enotif_body_blogpost-HTML' => '<p>Drahý(á) $WATCHINGUSERNAME,<br /><br />
+Seznam blogů na {{SITENAME}}, který sledujete, byl upraven.<br /> <br />
+Viz <a href="$PAGETITLE_URL">$PAGETITLE</a>.<br /><br />
+{{SITENAME}}<br /><hr />
+<li><a href="http://www.wikia.com">Koukněte se na dobré wiki!</a></li>
+<li>Chcete nastavit, jaké e-maily dostanete? Jděte do <a href="{{fullurl:{{ns:special}}:Preferences}}">Nastavení</a></li></ul></p>',
 );
 
 /** German (Deutsch)

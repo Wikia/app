@@ -161,6 +161,51 @@ $messages['ca'] = array(
 	'right-editaccount' => 'Edita les preferències dels altres usuaris',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'editaccount' => 'Upravit účet',
+	'editaccount-desc' => 'Umožňuje zaměstnancům spravovat informace v uživatelských účtech',
+	'editaccount-title' => 'Special:EditAccount',
+	'editaccount-frame-manage' => 'Upravit účet',
+	'editaccount-frame-usage' => 'Poznámka',
+	'editaccount-usage' => 'Uživatelská data jsou uložena do mezipaměti samostatně pro každou wiki. Při obnovení hesla nebo e-mailu bude mezipaměť smazána jen pro tuto wiki. Sdělte uživateli této wiki, aby se přihlašoval pomocí nově nastaveného hesla k zamezení problémů s mezipamětí.',
+	'editaccount-label-select' => 'Vyberte uživatelský účet',
+	'editaccount-submit-account' => 'Sprqvovat účet',
+	'editaccount-frame-account' => 'Editace uživatelského účtu: $1',
+	'editaccount-frame-close' => 'Zakázání uživatelského účtu: $1',
+	'editaccount-label-email' => 'Nastavit novou e-mailovou adresu',
+	'editaccount-label-pass' => 'Nastavit nové heslo',
+	'editaccount-label-realname' => 'Nastavit novoé skutečné jméno',
+	'editaccount-submit-email' => 'Uložit e-mailovou adresu',
+	'editaccount-submit-pass' => 'Uložit heslo',
+	'editaccount-submit-realname' => 'Uložit skutečné jméno',
+	'editaccount-submit-close' => 'Zavřít účet',
+	'editaccount-usage-close' => 'Uživatelský účet můžete také zakázat vytvořením náhodného hesla a odebíráním e-mailové adresy. Data však budou nevratně ztracena.',
+	'editaccount-warning-close' => '<b>Pozor!</b> Chystáte se trvale zakázat účet uživatele <b>$1</b>. To nelze vrátit. Jste si jisti, že to chcete udělat?',
+	'editaccount-status' => 'Zpráva o stavu',
+	'editaccount-success-email' => 'Úspěšně změněna e-mailová adresa pro účet $1 na $2.',
+	'editaccount-success-email-blank' => 'Úspěšně odstraněna e-mailová adresa účtu $1.',
+	'editaccount-success-pass' => 'Úspěšně změněno heslo účtu $1.',
+	'editaccount-success-realname' => 'Úspěšně změnil skutečné jméno pro účet $1.',
+	'editaccount-success-close' => 'Úspěšně zakázan účet $1.',
+	'editaccount-error-email' => 'E-mail nebyl změněn. Zkuste to znovu nebo kontaktujte technický tým.',
+	'editaccount-error-pass' => 'Heslo nebylo změněno. Zkuste to znovu nebo kontaktujte technický tým.',
+	'editaccount-error-realname' => 'Skutečné jméno nebylo změněno. Zkuste to znovu nebo kontaktujte technický tým.',
+	'editaccount-error-close' => 'Došlo k potížím při zavírání účtu. Zopakujte akci nebo se obraťte na technický tým.',
+	'editaccount-invalid-email' => '"$1" není platná e-mailová adresa!',
+	'editaccount-nouser' => 'Účet "$1" neexistuje!',
+	'editaccount-log' => 'Protokol uživatelských účtů',
+	'editaccount-log-header' => 'Tato stránka obsahuje seznam změn provedených v uživatelských předvoleb zaměstnanci Wikia.',
+	'editaccount-log-entry-email' => 'změněn e-mail uživatele $2',
+	'editaccount-log-entry-pass' => 'změněno heslo uživatele $2',
+	'editaccount-log-entry-realname' => 'změněno skutečné jméno uživatele $2',
+	'editaccount-log-entry-close' => 'zakázán účet $2',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Tento účet byl zakázán.</div>',
+	'right-editaccount' => 'Upravit předvolby ostatních uživatelů',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author The Evil IP address

@@ -52,6 +52,17 @@ $messages['ca'] = array(
 	'taskmanager_tasklist' => 'Torna a la Llista de Tasques',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'taskmanager' => 'Zobrazit a spravovat úlohy na pozadí',
+	'taskmanager_title' => 'Zobrazit a spravovat úlohy na pozadí',
+	'taskmanager_tasklist' => 'Návrat do seznamu úkolů',
+	'right-taskmanager' => 'Lze zobrazit úlohy na pozadí',
+	'right-taskmanager-action' => 'Lze spravovat úlohy na pozadí',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'taskmanager' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
@@ -238,6 +249,8 @@ $messages['pt'] = array(
 	'taskmanager' => 'Ver e administrar as tarefas de segundo plano',
 	'taskmanager_title' => 'Ver e administrar as tarefas de segundo plano',
 	'taskmanager_tasklist' => 'Voltar à Lista de Tarefas',
+	'right-taskmanager' => 'Pode mostrar tarefas de segundo plano',
+	'right-taskmanager-action' => 'Pode administrar tarefas de segundo plano',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

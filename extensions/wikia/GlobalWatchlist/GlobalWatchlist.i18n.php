@@ -79,6 +79,36 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => "N'eo bet kavet pajenn blog ebet.",
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'globalwatchlist-desc' => 'Posílá týdně přehled e-mailů se seznamem sledovaných stránek na všech wiki',
+	'tog-watchlistdigest' => 'Posílat mi týdenní výtah seznamu sledovaných stránek',
+	'tog-watchlistdigestclear' => 'Označit všechny stránky z mého výtahu sledovaných stránek jako navštívené',
+	'globalwatchlist-see-more' => 'Prosím zkontrolujte Vaše místní seznamy sledovaných stránek pro další změny.',
+	'globalwatchlist-digest-email-subject' => 'Týdenní výtah',
+	'globalwatchlist-digest-email-body' => 'Milý $1,
+
+toto je Váš seznam sledovaných stránek na Wikia, které byly upraveny poté, co jste naposledy navštívili.
+
+$2
+
+
+Toto Váš seznam sledovaných blogů na Wikia, které byly upraveny nebo komentovány poté, co jste je naposledy navštívili.
+
+$3
+
+Často navštěvujte a editujte...
+
+Wikia
+
+* Chtete-li změnit předvolby seznamu sledovaných stránek, prosím navštivte http://www.wikia.com/wiki/Special:Preferences',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|komentář|komentáře|komentářů}})',
+	'globalwatchlist-no-page-found' => 'Žádná stránka nalezena.',
+	'globalwatchlist-no-blog-page-found' => 'Žádný blog nenalezen.',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author The Evil IP address

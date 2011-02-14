@@ -20,6 +20,16 @@ $messages['br'] = array(
 	'new-look' => 'Neuz nevez Wikia',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'skinchooser-desc' => 'Umnožňuje uživatelům zvolit vzhled v předvolbách',
+	'skinchooser-customcss' => 'Pro vlastní motivy vzhledu zvolte v menu volbu Vlastní a zadejte vlastní CSS do [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Nový vzhled Wikia',
+	'site-layout' => 'Rozložení webu',
+);
+
 /** Spanish (Español)
  * @author Bola
  */
@@ -68,6 +78,32 @@ $messages['no'] = array(
 	'skinchooser-customcss' => 'For egendefinerte temaer, velg egendefinert-alternativet i menyen ovenfor og spesifiser egendefinert CDD i [[MediaWiki:Monaco.css]].',
 	'new-look' => 'Wikias nye utseende',
 	'site-layout' => 'Sideoppsett',
+);
+
+/** Polish (Polski)
+ * @author Cloudissimo
+ */
+$messages['pl'] = array(
+	'skinchooser-desc' => 'Pozwala użytkownikom wybrać skórkę w swoich preferencjach',
+	'new-look' => 'Nowy wygląd Wikii',
+	'site-layout' => 'Skórka',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'skinchooser-desc' => 'Permite que os utilizadores escolham temas nas suas preferências',
+	'skinchooser-customcss' => 'Para variantes personalizadas do tema, seleccione a opção de personalização no menu acima e coloque o CSS de personalização em [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Novo Visual da Wikia',
+	'site-layout' => 'Composições do Site',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'site-layout' => 'Изглед',
 );
 
 /** Swedish (Svenska)

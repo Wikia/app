@@ -717,6 +717,7 @@ Tu pote <a href="$4">cancellar le subscription</a> al cambios in iste lista.',
  */
 $messages['ku-latn'] = array(
 	'toplists-editor-title-label' => 'Navê lîstê',
+	'toplists-cancel-button' => 'Betal bike',
 );
 
 /** Macedonian (Македонски)
@@ -1194,6 +1195,60 @@ $messages['ru'] = array(
 	'toplists-hours' => '$1 {{PLURAL:$1|час|часа|часов}}',
 	'toplists-weeks' => '$1 {{PLURAL:$1|неделя|недели|недель}}',
 	'toplists-create-button-msg' => 'Создать список',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'edittoplist' => 'Уреди топ 10 листу',
+	'toplists-category' => 'Топ 10 листе',
+	'toplists-error-invalid-title' => 'Наведени текст није исправан.',
+	'toplists-error-invalid-picture' => 'Наведена слика није исправна.',
+	'toplists-error-empty-item-name' => 'Назив ставке не сме остати празан.',
+	'toplists-item-cannot-delete' => 'Брисање ставке није успело.',
+	'toplists-error-image-already-exists' => 'Слика с истим називом већ постоји.',
+	'toplists-error-add-item-list-not-exists' => '„$1“ топ 10 листа не постоји.',
+	'toplists-error-backslash-not-allowed' => 'Коса црта је забрањена у називу топ 10 листе.',
+	'toplists-editor-title-label' => 'Назив списка',
+	'toplists-editor-title-placeholder' => 'Унесите назив списка',
+	'toplists-editor-related-article-label' => 'Сродна страница <small>(необавезно)</small>',
+	'toplists-editor-related-article-placeholder' => 'Унесите назив странице',
+	'toplists-editor-image-browser-tooltip' => 'Додајте слику',
+	'toplists-editor-remove-item-tooltip' => 'Уклоните ставку',
+	'toplists-create-button' => 'Направи списак',
+	'toplists-update-button' => 'Сачувај списак',
+	'toplists-cancel-button' => 'Откажи',
+	'toplists-items-removed' => '$1 {{PLURAL:$1|ставка је уклоњена|ставке су уклоњене|ставки је уклоњено}}',
+	'toplists-items-created' => '$1 {{PLURAL:$1|ставка је направљена|ставке су направљене|ставки је направљено}}',
+	'toplists-items-updated' => '$1 {{PLURAL:$1|ставка је ажурирана|ставке су ажуриране|ставки је ажурирано}}',
+	'toplists-items-nochange' => 'Нема измењених ставки',
+	'toplits-image-browser-no-picture-selected' => 'Нема изабраних слика',
+	'toplits-image-browser-clear-picture' => 'Очисти слику',
+	'toplits-image-browser-selected-picture' => 'Изабрано: $1',
+	'toplists-image-browser-upload-btn' => 'Изабери',
+	'toplists-image-browser-upload-label' => 'Отпремање',
+	'toplists-list-creation-summary' => 'Прављење списка, $1',
+	'toplists-item-creation-summary' => 'Прављење списка ставки',
+	'toplists-item-update-summary' => 'Ажурирање списка ставки',
+	'toplists-item-remove-summary' => 'Ставка је уклоњена са списка',
+	'toplists-item-restored' => 'Ставка је враћена',
+	'toplists-list-related-to' => 'У вези са:',
+	'toplists-list-created-by' => 'од члана [[User:$1|$1]]',
+	'toplists-list-vote-up' => 'Гласај',
+	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|глас|гласа|гласова}} у $2',
+	'toplists-list-add-item-label' => 'Додај ставку',
+	'toplists-list-add-item-name-label' => 'Настави са списком...',
+	'toplists-list-item-voted' => 'Гласано',
+	'toplists-createpage-dialog-label' => 'Топ 10 листа',
+	'toplists-email-subject' => 'Топ 10 листа је промењена',
+	'toplists-seconds' => '$1 {{PLURAL:$1|секунда|секунде|секунди}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|минут|минута|минута}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|сат|сата|сати}}',
+	'toplists-days' => '$1 {{PLURAL:$1|дан|дана|дана}}',
+	'toplists-weeks' => '$1 {{PLURAL:$1|недеља|недеље|недеља}}',
+	'toplists-create-heading' => '<em>Ново!</em> Направите топ 10',
+	'toplists-create-button-msg' => 'Направи списак',
 );
 
 /** Swedish (Svenska)

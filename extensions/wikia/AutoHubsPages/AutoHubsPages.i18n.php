@@ -68,11 +68,35 @@ $messages['br'] = array(
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|oberour|oberour}}</span>',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'unhide' => 'Odkrýt',
+	'hub-blog-header' => 'Vrchních $1 příspěvků',
+	'hub-hotspot-header' => 'Žhavé body',
+	'hub-topusers-header' => 'Vrchních $1 uživatelů',
+	'hub-featured' => 'Vrchních $1 wiki',
+	'hub-header' => '$1 Wiki',
+	'hub-hotspot-info' => 'Tyto stránky jsou tento týden nejžhavější (dle počtu editorů)',
+	'hub-blog-comments' => '{{PLURAL:$1|jeden komentář|$1 komentáře|$1 komentářů}}',
+	'hub-blog-continue' => 'Pokračovat ve čtení',
+	'hub-blog-showarticle' => 'Zobrazit stránku',
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">editační{{PLURAL:$1| bod| body|ch bodů}}</span>',
+	'hub-hotspot-from' => 'od',
+	'hub-hide-feed' => 'Skrýt informační kanál',
+	'hub-show-feed' => 'Zobrazit informační kanál',
+	'hub-contributors-info' => 'Toto jsou nejaktivnější uživatelé tento týden, dle počtu editací,',
+	'hub-editors' => '<strong>$1</strong><span> {{PLURAL:$1|editor|editoři|editorů}}</span>',
+);
+
 /** German (Deutsch)
  * @author Diebuche
+ * @author George Animal
  */
 $messages['de'] = array(
 	'unhide' => 'Einblenden���',
+	'hub-hotspot-from' => 'von',
 );
 
 /** Spanish (Español)
@@ -176,9 +200,19 @@ $messages['ku-latn'] = array(
 	'hub-hotspot-from' => 'ji',
 );
 
-/** Luxembourgish (Lëtzebuergesch) */
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
 $messages['lb'] = array(
 	'unhide' => 'Nees weisen',
+	'hub-topusers-header' => 'Top $1-Benotzer',
+	'hub-header' => '$1 Wikien',
+	'hub-blog-comments' => '{{PLURAL:$1|eng Bemierkung|$1 Bemierkungen}}',
+	'hub-blog-continue' => 'Weider liesen',
+	'hub-blog-showarticle' => 'Säit weisen',
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span> <span class="txt">Ännerungs-{{PLURAL:$1|Punkt|Punkten}}</span>',
+	'hub-hotspot-from' => 'vu(n)',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|Auteur|Auteuren}}</span>',
 );
 
 /** Macedonian (Македонски)
@@ -337,6 +371,7 @@ $messages['ta'] = array(
  * @author Тест
  */
 $messages['uk'] = array(
+	'unhide' => 'Показати',
 	'hub-blog-showarticle' => 'Показати сторінку',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|редактор|редактори|редакторів}}</span>',
 );

@@ -18,6 +18,13 @@ $messages['af'] = array(
 	'ezapi-desc' => 'Ongekompliseerde AJAX API module ontwikkeling',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'ezapi-desc' => 'Nekomplikovaný vývoj modulu AJAX API',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */

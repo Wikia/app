@@ -55,6 +55,14 @@ $messages['ce'] = array(
 	'quickcreate' => 'дlадахьийта хьай дарб',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'quickcreate-desc' => 'Přidá tlačítko Vytvořit novou stránku s možností přihlášení anonymních uživatelů',
+	'quickcreate' => 'obeslat Váš recept',
+);
+
 /** German (Deutsch)
  * @author Kghbln
  * @author LWChris

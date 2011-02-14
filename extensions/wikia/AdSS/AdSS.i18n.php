@@ -283,6 +283,136 @@ Distreiñ da [[Special:AdSS|{{int:Adss}}]].",
 	'adss-welcome-subject' => '[AdSS] Trugarez evit ho paeroniañ !',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'adss-desc' => 'Reklamová samoobslužná služba',
+	'adss' => 'AdSS',
+	'adss-sponsor-links' => 'Sponzorované odkazy na Wikii',
+	'adss-ad-header' => '<h2>Externí sponzorovací odkazy</h2>',
+	'adss-ad-default-text' => 'Klikněte zde!',
+	'adss-ad-default-desc' => 'Koupit sponzorovaný odkaz a popis Vaší webové stránky na této stránce. Jednejte rychle, sponzorovací sloty se vyprodají rychle!',
+	'adss-form-header' => 'Navrhněte svou reklamu',
+	'adss-form-url' => 'URL sponzorující stránky (Vaší webové stránky):',
+	'adss-form-linktext' => 'Text, který chcete zobrazit v odkazu:',
+	'adss-form-additionaltext' => 'Text, který se zobrazí pod odkazem:',
+	'adss-form-type' => 'Typ sponzorování:',
+	'adss-form-page' => 'Stránka ke sponzorování:',
+	'adss-form-banner' => 'Zde nahrajte svůj banner:',
+	'adss-form-price' => 'Cena sponzoringu:',
+	'adss-form-shares' => 'Počet reklam:',
+	'adss-form-email' => 'Váš e-mail:',
+	'adss-form-password' => 'Vaše heslo:',
+	'adss-form-login-link' => 'Přihlašte se',
+	'adss-form-login-desc' => 'Máte heslo? $1 a ušetřete čas, kupte si inzerát pouhým jedním kliknutím!',
+	'adss-form-usd-per-day' => '$$1 na den',
+	'adss-form-usd-per-week' => '$$1 za týden',
+	'adss-form-usd-per-month' => '$$1 za měsíc',
+	'adss-form-auth-errormsg' => 'Vaše e-mailová adresa nebo heslo není správné.',
+	'adss-form-field-empty-errormsg' => 'Toto pole nesmí být prázdné',
+	'adss-form-non-existent-title-errormsg' => 'Tato stránka neexistuje',
+	'adss-form-banner-upload-errormsg' => 'Musíte vybrat obrázek pro nahrání',
+	'adss-form-pick-plan-errormsg' => 'Musíte vybrat plán',
+	'adss-form-pick-plan' => 'Vyberte si reklamní balíček',
+	'adss-form-site-plan-header' => 'Koupit sponzorovaný odkaz na celé wiki',
+	'adss-form-site-plan-description' => 'Získejte sponzorované odkazy na {{SITENAME}} za jednu nízkou cenu. 
+
+1 sada je v současné době $1% sponzorovaných odkazů na {{SITENAME}} a stojí jen $2. Můžete to kdykoliv zrušit.',
+	'adss-form-site-plan-price' => '$1 za 1 sadu',
+	'adss-form-site-premium-plan-header' => 'Koupit 4 sady za cenu 3',
+	'adss-form-site-premium-plan-description' => 'Získejte sponzorované odkazy na {{SITENAME}} a získejte ještě větší vystavení koupí v balíku. 
+
+1 sada je v současné době $1% sponzorovaných odkazů na {{SITENAME}}. Takto koupíte 4 sady za cenu 3. Můžete to kdykoliv zrušit.',
+	'adss-form-site-premium-plan-price' => 'Pouze $1 za 4 sady!',
+	'adss-form-page-plan-header' => 'Koupit odkaz jen na jedné stránce',
+	'adss-form-page-plan-description' => 'Toto Vám umožní zacílit vlastní zprávu na nejlepší stránku pro Váš produkt pouze za $1, a můžete to kdykoliv zrušit.',
+	'adss-form-page-plan-price' => '$1 za odkaz',
+	'adss-form-banner-plan-header' => 'Koupit sadu grafických bannerů 728x90 na vrchu wiki',
+	'adss-form-banner-plan-description' => 'Získejte sadu bannerů na celé stránce za 1 nízkou cenu.',
+	'adss-form-banner-plan-price' => '$1 za 1 sadu bannerů',
+	'adss-form-or' => '- nebo -',
+	'adss-form-thanks' => 'Děkujeme vám za sponzorství! Vaše reklama byla zakoupena a bude vystavena ručním schválení (do 48 hodin). 
+
+[[Special:AdSS|Koupit]] další reklamu!',
+	'adss-button-preview' => 'Náhled',
+	'adss-button-edit' => 'Editovat',
+	'adss-button-login' => 'Přihlásit se',
+	'adss-button-login-buy' => 'Přihlaste se a koupit NYNÍ',
+	'adss-button-save-pay' => 'Uložit a zaplatit',
+	'adss-button-pay-paypal' => 'Platit přes PayPal',
+	'adss-button-select' => 'Vybrat',
+	'adss-button-buy-now' => 'Kup teď',
+	'adss-button-save' => 'Uložit',
+	'adss-button-cancel' => 'Storno',
+	'adss-button-yes' => 'Ano',
+	'adss-button-no' => 'Ne',
+	'adss-buy-another' => 'Koupit další reklamu!',
+	'adss-edit-thanks' => 'Změny na Vaší reklamě byly uloženy a budou použity po ručním schválení (do 48 hodin).',
+	'adss-preview-header' => 'Náhled',
+	'adss-preview-prompt' => 'Takhle bude Vaše reklama vypadat - klikněte na "{{int:adss-button-edit}}", pokud chcete provést změny, nebo "{{int:adss-button-save-pay}}" pro uložení a přechod na PayPal.',
+	'adss-click-here' => 'Klikněte zde',
+	'adss-paypal-redirect' => '$1, pokud nejste přesměrováni na PayPal do 5 sekund.',
+	'adss-paypal-error' => 'Nepovedlo se vytvořit platbu PayPal. Zkuste to prosím později.
+
+Návrat na [[Special:AdSS|{{int:Adss}}]].',
+	'adss-error' => 'Došlo k chybě. Zkuste to prosím později. 
+
+Návrat na [[Special:AdSS|{{int:Adss}}]].',
+	'adss-per-site' => 'Všechny stránky',
+	'adss-per-page' => 'Pouze jedna stránka',
+	'adss-close' => 'Zavřít',
+	'adss-cancel' => 'Zrušit',
+	'adss-manager-tab-adList' => 'Vaše reklamy',
+	'adss-manager-tab-billing' => 'Fakturace',
+	'adss-admin-tab-adList' => 'Seznam reklam',
+	'adss-admin-tab-billing' => 'Fakturace',
+	'adss-admin-tab-reports' => 'Hlášení',
+	'adss-not-logged-in' => 'Musíte se přihlásit.',
+	'adss-wrong-id' => 'Špatné ID',
+	'adss-no-permission' => 'Žádné povolení',
+	'adss-canceled' => 'Zrušeno',
+	'adss-rejected' => 'Odmítnuto',
+	'adss-approved' => 'Schváleno',
+	'adss-pending' => 'Zatím neurčeno',
+	'adss-wikia' => 'Wikia',
+	'adss-type' => 'Typ',
+	'adss-no-shares' => '# sdílení',
+	'adss-price' => 'Cena',
+	'adss-ad' => 'Reklama',
+	'adss-status' => 'Stav',
+	'adss-created' => 'Vytvořeno',
+	'adss-your-balance' => 'Nedoplatek:',
+	'adss-your-billing-agreement' => 'SOuhlas účtování PayPal:',
+	'adss-no-billing-agreement' => 'Není platné povolení k fakturaci přes PayPal. Prosím, vytvořte jej znovu.',
+	'adss-create-billing-agreement' => 'Vytvořit svolení k fakturaci',
+	'adss-cancel-billing-agreement-confirmation' => 'Jste si jisti, že chcete zrušit svolení k fakturaci? Bez toho nebudou Vaše reklamy v provozu.',
+	'adss-billing-agreement-created' => 'Fakturační svolení bylo vytvořeno (BAID=$1). Vrátit se na [[Special:AdSS/manager/billing|přehled]].',
+	'adss-billing-agreement-canceled' => 'Vaše fakturační svolení bylo úspěšně zrušeno. Návrat na [[Special:AdSS/manager/billing|přehled]].',
+	'adss-paypal-payment' => 'Platba PayPal',
+	'adss-adss-fee' => 'AdSS poplatek',
+	'adss-adss-refund' => 'Vrácení poplatku za AdSS',
+	'adss-fee' => 'Poplatek',
+	'adss-paid' => 'Zaplaceno',
+	'adss-timestamp' => 'Časové razítko',
+	'adss-description' => 'Popis',
+	'adss-amount' => '$$1',
+	'adss-cancel-confirmation' => 'Jste si jisti, že chcete smazat tuto reklamu?',
+	'adss-welcome-subject' => '[AdSS] Děkujeme za sponzorství!',
+	'adss-welcome-body' => 'Dobrý den, 
+
+Gratulujeme, váš účet je nastaven a vaše reklamy se začnou zobrazovat do 48 hodin. Můžete se přihlásit pomocí údajů níže, pokud chcete překontrolovat svůj reklamní text, nakoupit další reklamy, nebo zkontrolovat platbu. Faktury Wikia jsou posílány přes PayPal pokaždé, když utratíte $$4 a více. 
+
+URL: $1 
+Uživatelské jméno: $2 
+Heslo: $3 
+
+Uložte heslo na bezpečném místě. Pokud jej ztratíte, můžete kontaktujte zákaznickou podporu na adrese: http://www.wikia.com/wiki/Special:Contact a my vám pošleme heslo na Vaši e-mailovou adresu. 
+
+-- 
+Wikia tým',
+);
+
 /** German (Deutsch)
  * @author Diebuche
  * @author LWChris
@@ -1185,6 +1315,11 @@ U kunt op ieder moment opzeggen.',
 	'adss-form-banner-plan-header' => 'Koop een aandeel van de grafische banners van 728x90 bovenaan de wiki',
 	'adss-form-banner-plan-description' => 'Koop een aandeel in de banners die in de hele wiki worden weergeven voor één lage prijs.',
 	'adss-form-banner-plan-price' => '$1 voor één aandeel van de banners',
+	'adss-form-hub-plan-header' => "Koop een gesponsorde verwijzing in alle $1 wiki's",
+	'adss-form-hub-plan-description' => "Koop gesponsorde verwijzingen op alle (meer dan $2) $1 wiki's voor één lage prijs.
+
+Hiermee bereikt u meer publiek doordat uw advertentie op andere wiki's van dezelfde hub wordt weergegeven.",
+	'adss-form-hub-plan-price' => '$1 voor één aandeel',
 	'adss-form-or' => '- of -',
 	'adss-form-thanks' => 'Dank u wel voor uw sponsoring! Uw advertentie is aangekocht en wordt weergegeven na handmatige goedkeuring (binnen 48 uur).
 
@@ -1214,6 +1349,7 @@ Terugkeren naar [[Special:AdSS|{{int:Adss}}]].',
 
 Terug naar [[Special:AdSS|{{int:Adss}}]].',
 	'adss-per-site' => "Alle pagina's",
+	'adss-per-hub' => 'Hub',
 	'adss-per-page' => 'Slechts één pagina',
 	'adss-close' => 'Sluiten',
 	'adss-cancel' => 'Annuleren',

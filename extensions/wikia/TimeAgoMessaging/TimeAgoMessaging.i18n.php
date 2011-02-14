@@ -31,6 +31,17 @@ $messages['br'] = array(
 	'timeago-second' => 'ur vunutenn zo',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'timeagomessaging-desc' => 'Poskytuje i18n pro zásuvný modul jquery.timeago.js',
+	'timeago-day' => 'před {{PLURAL:$1|dnem|$1 dny}}',
+	'timeago-hour' => 'před {{PLURAL:$1|hodinou|$1 hodinami}}',
+	'timeago-minute' => 'před {{PLURAL:$1|1 minutou|$1 minutami}}',
+	'timeago-second' => 'před 1 minutou',
+);
+
 /** Spanish (Español)
  * @author Bola
  */
@@ -104,6 +115,27 @@ $messages['pl'] = array(
 	'timeago-hour' => '{{PLURAL:$1|godzinę|$1 godziny|$1 godzin}} temu',
 	'timeago-minute' => '{{PLURAL:$1|minutę|$1 minuty|$1 minut}} temu',
 	'timeago-second' => 'minutę temu',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'timeagomessaging-desc' => 'Fornece a internacionalização do plugin jquery.timeago.js',
+	'timeago-day' => 'há {{PLURAL:$1|um dia|$1 dias}}',
+	'timeago-hour' => 'há {{PLURAL:$1|uma hora|$1 horas}}',
+	'timeago-minute' => 'há {{PLURAL:$1|um minuto|$1 minutos}}',
+	'timeago-second' => 'há um minuto',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'timeagomessaging-desc' => 'Пружа i18n за jquery.timeago.js додатак',
+	'timeago-day' => 'Пре {{PLURAL:$1|један дан|$1 дана|$1 дана}}',
+	'timeago-hour' => 'Пре {{PLURAL:$1|сат времена|$1 сата|$1 сати}}',
+	'timeago-second' => 'пре минут',
 );
 
 /** Swedish (Svenska)

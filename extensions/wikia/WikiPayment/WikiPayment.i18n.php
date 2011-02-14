@@ -23,6 +23,18 @@ $messages['br'] = array(
 	'wikipayment-paypal-return-cancel' => 'Paeamant dre PayPal nullet',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'wikipayment-desc' => 'Umožňuje zaplatit za wiki, aby byly vypnuty reklamy.',
+	'wikipayment-paypal-redirect' => 'Přesměrování na PayPal, počkejte prosím...',
+	'wikipayment-paypal-error' => 'Chyba platby PayPal (kód: $1)',
+	'wikipayment-paypal-return-ok' => 'Platba na PayPal úspěšná',
+	'wikipayment-paypal-return-cancel' => 'Platba na PayPal zrušena',
+	'wikipayment-paypal-profile-name' => 'Wiki je zaplacena',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -88,6 +100,18 @@ $messages['no'] = array(
 	'wikipayment-paypal-return-ok' => 'PayPal-betaling vellykket',
 	'wikipayment-paypal-return-cancel' => 'PayPal-betaling avbrutt',
 	'wikipayment-paypal-profile-name' => 'Betalt Wiki',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'wikipayment-desc' => 'Омогућава плаћање по викији за уклањање огласа.',
+	'wikipayment-paypal-redirect' => 'Преусмеравање на Пејпал...',
+	'wikipayment-paypal-error' => 'Пејпал грешка (број: $1)',
+	'wikipayment-paypal-return-ok' => 'Пејпал плаћање је извршено',
+	'wikipayment-paypal-return-cancel' => 'Пејпал плаћање је обустављено',
+	'wikipayment-paypal-profile-name' => 'Плаћена викија',
 );
 
 /** Swedish (Svenska)

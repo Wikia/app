@@ -24,6 +24,14 @@ $messages['bs'] = array(
 	'signup' => 'Prijava',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'signup-desc' => 'Přidá alias [[{{#Special:Signup}}]] pro [[{{#Special:UserLogin}}/signup]]',
+	'signup' => 'Registrace',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'signup-desc' => 'Fügt einen Alias [[{{#Special:Signup}}]] für die Seite [[{{#Special:UserLogin}}/signup]] hinzu.',

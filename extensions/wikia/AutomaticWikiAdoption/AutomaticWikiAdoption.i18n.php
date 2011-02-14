@@ -568,6 +568,13 @@ $messages['te'] = array(
 	'automaticwikiadoption-know-more-header' => 'మరింత తెలుసుకోవాలనుకుంటున్నారా?',
 );
 
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'automaticwikiadoption-know-more-header' => 'Хочете знати більше?',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  */

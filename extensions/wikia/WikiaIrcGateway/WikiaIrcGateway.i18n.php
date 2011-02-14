@@ -233,6 +233,13 @@ $messages['kn'] = array(
 	'ircgate-channel' => 'ಚಾನೆಲ್:',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'ircgate-username' => 'Metmaachername:',
+);
+
 /** Lingala (Lingála)
  * @author Eruedin
  */

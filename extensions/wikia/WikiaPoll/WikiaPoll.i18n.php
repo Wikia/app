@@ -30,8 +30,8 @@ $messages['qqq'] = array(
 	'wikiapoll-vote' => 'Button text to vote in a poll.',
 	'wikiapoll-votes' => 'Parameter:
 * $1 is the number of votes cast.',
-	'wikiapoll-createpoll-headline' => "Headline for Create Poll Special Page",
-	'wikiapoll-editpoll-headline' => "Headline for Edit Poll Special Page",
+	'wikiapoll-createpoll-headline' => 'Headline for Create Poll Special Page',
+	'wikiapoll-editpoll-headline' => 'Headline for Edit Poll Special Page',
 	'wikiapoll-question-label' => 'Form Label for Special Page',
 	'wikiapoll-addnewitem-label' => 'Special Page text next to button for a new item to a poll',
 	'wikiapoll-cancel-label' => 'Cancel button label',
@@ -48,6 +48,18 @@ $messages['br'] = array(
 	'wikiapoll-votes' => '({{PLURAL:$1|$1 vouezh|$1 mouezh}})',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'wikiapoll-desc' => 'Nabízí snadný způsob, jak vytvářet a spravovat ankety',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 člověk hlasoval|$1 lidí hlasovalo}}',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Děkujeme!',
+	'wikiapoll-vote' => 'Hlasovat!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 hlas|$1 hlasů}}',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -60,6 +72,18 @@ $messages['es'] = array(
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 voto|$1 votos}}',
 );
 
+/** French (Français)
+ * @author IAlex
+ */
+$messages['fr'] = array(
+	'wikiapoll-desc' => 'Fournit un moyen facile de créer et de gérer des sondages',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 personne a|$1 personnes ont}} voté',
+	'wikiapoll-question' => '$1 ?',
+	'wikiapoll-thanks-for-vote' => 'Merci !',
+	'wikiapoll-vote' => 'Votez !',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 vote|$1 votes}}',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -70,6 +94,17 @@ $messages['ia'] = array(
 	'wikiapoll-thanks-for-vote' => 'Gratias!',
 	'wikiapoll-vote' => 'Votar!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 voto|$1 votos}}',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wikiapoll-people-voted' => '{{PLURAL:$1|Eng Persoun huet|$1 Persounen hunn}} ofgestëmmt',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Merci!',
+	'wikiapoll-vote' => 'Ofstëmmen!',
+	'wikiapoll-votes' => '({{PLURAL:$1|1 Stëmm|$1 Stëmmen}})',
 );
 
 /** Macedonian (Македонски)
@@ -94,6 +129,12 @@ $messages['nl'] = array(
 	'wikiapoll-thanks-for-vote' => 'Dank u wel!',
 	'wikiapoll-vote' => 'Stemmen',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 stem|$1 stemmen}}',
+	'wikiapoll-createpoll-headline' => 'Peiling aanmaken',
+	'wikiapoll-editpoll-headline' => 'Peiling bewerken',
+	'wikiapoll-question-label' => 'Vraag',
+	'wikiapoll-addnewitem-label' => 'Nieuw item toevoegen',
+	'wikiapoll-cancel-label' => 'Annuleren',
+	'wikiapoll-publish-label' => 'Publiceren',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -106,6 +147,30 @@ $messages['no'] = array(
 	'wikiapoll-thanks-for-vote' => 'Takk!',
 	'wikiapoll-vote' => 'Stem!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 stemme|$1 stemmer}}',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'wikiapoll-desc' => 'Fornece uma forma fácil de criar e administrar inquéritos',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 pessoa votou|$1 pessoas votaram}}',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Obrigado!',
+	'wikiapoll-vote' => 'Vote!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 voto|$1 votos}}',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'wikiapoll-desc' => 'Једноставан начин за стварање и управљање анкетама',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 особа је гласала|$1 особе су гласале|$1 особа је гласало}}',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Хвала!',
+	'wikiapoll-vote' => 'Гласај!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 глас|$1 гласа|$1 гласова}}',
 );
 
 /** Swedish (Svenska)

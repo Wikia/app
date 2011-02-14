@@ -3240,6 +3240,11 @@ $messages['ksh'] = array(
 	'achievements-badge-name-blogpost-1' => 'Hät fönef Saache ze saare',
 	'achievements-badge-name-blogpost-3' => 'Et Häz vun de Pattei',
 	'achievements-badge-name-blogpost-4' => 'Öffentlesch Reddeschwenger',
+	'achievements-badge-to-get-pounce' => 'flöck sin',
+	'achievements-badge-hover-desc-edit' => 'för {{PLURAL:$1|ein Änderong|$1 Änderonge|kein Änderong}}<br />
+op {{PLURAL:$1|eine Sigg|$1 Sigge|keine Sigg}}!',
+	'achievements-badge-hover-desc-welcome' => 'för en et Wiki ze kumme!',
+	'achievements-badge-hover-desc-creator' => 'för et Wiki opzemaache!',
 );
 
 /** Kurdish (Latin) (Kurdî (Latin))
@@ -3247,8 +3252,12 @@ $messages['ksh'] = array(
  */
 $messages['ku-latn'] = array(
 	'achievements-gold' => 'Zêr',
+	'achievements-silver' => 'Zîv',
+	'achievements-bronze' => 'Bronz',
 	'leaderboard-intro-hide' => 'veşêre',
 	'achievements-leaderboard-member-label' => 'Endam',
+	'achievements-send' => 'Wêneyê qeyd bike',
+	'achievements-save' => 'Guherandina qeyd bike',
 	'achievements-about-title' => 'der barê vê rûpelê...',
 	'achievements-community-platinum-edit' => 'biguherîne',
 	'achievements-community-platinum-save' => 'qeyd bike',
@@ -3583,6 +3592,18 @@ $5',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|На $1 место]]<br />на ова вики',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'achievements-gold' => 'ရွှေ',
+	'achievements-silver' => 'ငွေထည်',
+	'achievements-points' => 'တည်းဖြတ်မှု $1 {{PLURAL:$1|ခု|ခု}}',
+	'achievements-viewless' => 'ပိတ်ရန်',
+	'leaderboard-intro-hide' => 'ဝှက်',
+	'leaderboard-intro-open' => 'ဖွင့်ရန်',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
@@ -3633,6 +3654,7 @@ Kies dan een ander plaatje.',
 	'achievements-profile-title-oasis' => 'punten',
 	'achievements-ranked-oasis' => '$1 staat op [[Special:Leaderboard|plaats $2]] voor deze wiki',
 	'achievements-viewall-oasis' => 'Allemaal bekijken',
+	'achievements-toggle-hide' => 'Punten, speldjes en rang niet weergeven op mijn profielpagina',
 	'leaderboard-intro-hide' => 'verbergen',
 	'leaderboard-intro-open' => 'openen',
 	'leaderboard-intro-headline' => 'Wat zijn speldjes?',
@@ -4590,6 +4612,7 @@ Tente outra imagem, por favor!',
 	'achievements-track-name-blogpost' => 'Trajecto de Publicações em Blogues',
 	'achievements-track-name-blogcomment' => 'Trajecto de Comentários em Blogues',
 	'achievements-track-name-love' => 'Trajecto de Paixão Pela Wiki',
+	'achievements-track-name-sharing' => 'Trajecto de partilha',
 	'achievements-notification-title' => 'Muito bem, $1!',
 	'achievements-notification-subtitle' => 'Acaba de receber a medalha "$1" $2',
 	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Veja mais medalhas que pode ganhar]]!</big></strong>',
@@ -4621,6 +4644,7 @@ Tente outra imagem, por favor!',
 	'achievements-leaderboard-rank-label' => 'Posição',
 	'achievements-leaderboard-member-label' => 'Membro',
 	'achievements-leaderboard-points-label' => 'Pontos',
+	'achievements-leaderboard-points' => '{{PLURAL:$1|ponto|pontos}}',
 	'achievements-leaderboard-most-recently-earned-label' => 'Ganhas mais recentemente',
 	'achievements-send' => 'Gravar imagem',
 	'achievements-save' => 'Gravar alterações',
@@ -4738,6 +4762,11 @@ Pode ver a medalha nova na sua <a href="$5">página de perfil do utilizador</a>.
 	'achievements-badge-name-love-4' => 'Viciado',
 	'achievements-badge-name-love-5' => 'Uma Vida na Wiki',
 	'achievements-badge-name-love-6' => 'Herói da Wiki!',
+	'achievements-badge-name-sharing-0' => 'Partilhador',
+	'achievements-badge-name-sharing-1' => 'Trazer de volta',
+	'achievements-badge-name-sharing-2' => 'Porta-voz',
+	'achievements-badge-name-sharing-3' => 'Anunciador',
+	'achievements-badge-name-sharing-4' => 'Evangelizador',
 	'achievements-badge-name-welcome' => 'Bem-vindo(a) à Wiki',
 	'achievements-badge-name-introduction' => 'Introdução',
 	'achievements-badge-name-sayhi' => 'Parar Para Dizer Olá',
@@ -4745,6 +4774,7 @@ Pode ver a medalha nova na sua <a href="$5">página de perfil do utilizador</a>.
 	'achievements-badge-name-pounce' => 'Atacar!',
 	'achievements-badge-name-caffeinated' => 'Com cafeína',
 	'achievements-badge-name-luckyedit' => 'Edição afortunada',
+	'achievements-badge-to-get-sharing' => '{{#ifeq:$1|0|partilhar link|conseguir que {{PLURAL:$1|uma pessoa|$1 pessoas}} cliquem o link que partilhou}}',
 	'achievements-badge-to-get-edit' => 'fazer $1 {{PLURAL:$1|edição|edições}} {{PLURAL:$1|numa página|de páginas}}',
 	'achievements-badge-to-get-edit-plus-category' => 'fazer {{PLURAL:$1|uma edição de uma página|$1 edições de páginas}} $2',
 	'achievements-badge-to-get-picture' => 'acrescentar $1 {{PLURAL:$1|imagem|imagens}} a {{PLURAL:$1|uma página|páginas}}',
@@ -4759,6 +4789,7 @@ Pode ver a medalha nova na sua <a href="$5">página de perfil do utilizador</a>.
 	'achievements-badge-to-get-pounce' => 'ser rápido',
 	'achievements-badge-to-get-caffeinated' => 'fazer {{PLURAL:$1|uma edição|$1 edições}} num único dia',
 	'achievements-badge-to-get-luckyedit' => 'ter sorte',
+	'achievements-badge-to-get-sharing-details' => 'Partilhe links e consiga que outros os cliquem!',
 	'achievements-badge-to-get-edit-details' => 'Falta alguma coisa?
 Existe um erro?
 Não se acanhe.
@@ -4789,6 +4820,7 @@ Continue a editar!',
 	'achievements-badge-to-get-luckyedit-details' => 'Para ganhar esta medalha é preciso ter sorte.
 Continue a editar!',
 	'achievements-badge-to-get-community-platinum-details' => 'Esta é uma medalha especial de Platina, só disponível por um período limitado!',
+	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|por partilhar um link|por conseguir que {{PLURAL:$1|uma pessoa clicasse|$1 pessoas clicassem}} links partilhados}}',
 	'achievements-badge-hover-desc-edit' => 'por fazer $1 {{PLURAL:$1|edição|edições}}<br />
 {{PLURAL:$1|a uma página|de páginas}}!',
 	'achievements-badge-hover-desc-edit-plus-category' => 'por fazer $1 {{PLURAL:$1|edição|edições}}<br />
@@ -4811,6 +4843,7 @@ página de discussão de outro utilizador!',
 	'achievements-badge-hover-desc-caffeinated' => 'por fazer 100 edições num único dia!',
 	'achievements-badge-hover-desc-luckyedit' => 'por fazer a Edição Afortunada Nº$1 na wiki!',
 	'achievements-badge-hover-desc-community-platinum' => 'Esta é uma medalha especial de Platina, só disponível por um período limitado!',
+	'achievements-badge-your-desc-sharing' => '{{#ifeq:$1|0|por partilhar um link|por conseguir que {{PLURAL:$1|uma pessoa clicasse|$1 pessoas clicassem}} links partilhados}}',
 	'achievements-badge-your-desc-edit' => 'por fazer {{PLURAL:$1|a sua primeira edição|$1 edições}} de {{PLURAL:$1|uma página|páginas}}!',
 	'achievements-badge-your-desc-edit-plus-category' => 'por fazer {{PLURAL:$1|a sua primeira edição|$1 edições}} de {{PLURAL:$1|uma página $2|páginas $2}}!',
 	'achievements-badge-your-desc-picture' => 'por acrescentar {{PLURAL:$1|a sua primeira imagem|$1 imagens}} a {{PLURAL:$1|uma página|páginas}}!',
@@ -4825,6 +4858,7 @@ página de discussão de outro utilizador!',
 	'achievements-badge-your-desc-pounce' => 'por fazer edições em 100 páginas menos de uma hora após serem criadas!',
 	'achievements-badge-your-desc-caffeinated' => 'por fazer 100 edições num único dia!',
 	'achievements-badge-your-desc-luckyedit' => 'por fazer a Edição Afortunada Nº$1 na wiki!',
+	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|por partilhar um link|por conseguir que {{PLURAL:$1|uma pessoa clicasse|$1 pessoas clicassem}} links partilhados}}',
 	'achievements-badge-desc-edit' => 'por fazer $1 {{PLURAL:$1|edição|edições}} de {{PLURAL:$1|uma página|páginas}}!',
 	'achievements-badge-desc-edit-plus-category' => 'por fazer $1 {{PLURAL:$1|edição|edições}} de {{PLURAL:$1|uma página $2|páginas $2}}!',
 	'achievements-badge-desc-picture' => 'por acrescentar $1 {{PLURAL:$1|imagem|imagens}} a {{PLURAL:$1|uma página|páginas}}!',
@@ -5233,6 +5267,14 @@ $5',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|оценен в #$1]] в этой вики',
 );
 
+/** Sinhala (සිංහල)
+ * @author බිඟුවා
+ */
+$messages['si'] = array(
+	'achievements-viewless' => 'වසන්න',
+	'leaderboard-intro-hide' => 'සඟවන්න',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
@@ -5407,6 +5449,7 @@ $messages['te'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author 82-145
  * @author Emperyan
  */
 $messages['tr'] = array(
@@ -5416,9 +5459,32 @@ Bu resim çalışmıyor.
 .jpg ya da .png dosyası olduğundan emin olun.
 Eğer hala çalışmazsa, resim çok büyük olabilir.
 Lütfen bir başkasını deneyin.',
+	'achievements-platinum' => 'Altın',
 	'achievements-gold' => 'Altın',
+	'achievements-silver' => 'Gümüş',
+	'achievements-bronze' => 'Bronz',
+	'leaderboard-intro-hide' => 'gizle',
+	'achievements-leaderboard-member-label' => 'Üye',
+	'achievements-leaderboard-most-recently-earned-label' => 'Son kazanılanlar',
+	'achievements-save' => 'Değişiklikleri kaydet',
+	'platinum' => 'Altın',
+	'achievements-community-platinum-edit' => 'değiştir',
+	'achievements-community-platinum-save' => 'kaydet',
+	'achievements-community-platinum-cancel' => 'iptal et',
+	'achievements-badge-name-edit-0' => 'Bir Fark Yaratmak',
+	'achievements-badge-name-edit-1' => 'Sadece Başlangıç',
 	'achievements-badge-name-edit-3' => 'Viki Dost',
 	'achievements-badge-name-edit-4' => 'İşbirlikçi',
+	'achievements-badge-name-picture-6' => 'Tasarımcı',
+	'achievements-badge-name-love-5' => 'Bir Viki yaşamı',
+	'achievements-badge-name-love-6' => 'Viki Kahramanı!',
+	'achievements-badge-name-sharing-0' => 'Paylaşımcı',
+	'achievements-badge-name-welcome' => "Viki'ye hoşgeldiniz",
+	'achievements-badge-to-get-welcome' => "Viki'ye katıl",
+	'achievements-badge-to-get-pounce' => 'hızlı ol',
+	'achievements-badge-to-get-luckyedit' => 'şanslı ol',
+	'achievements-badge-hover-desc-welcome' => "Viki'ye katılmak için!",
+	'achievements-badge-hover-desc-creator' => "Viki'yi yaratmak için!",
 );
 
 /** Ukrainian (Українська)

@@ -270,6 +270,13 @@ $messages['ja'] = array(
 	'rte-edgecase-info' => '記事に含まれるコードが複雑なため、リッチテキストモードによる編集は無効にされています。',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'rte-edgecase-redirect' => 'en Ömleidung',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -472,8 +479,11 @@ $messages['ru'] = array(
  * @author Rancher
  */
 $messages['sr-ec'] = array(
+	'rte-desc' => 'CKeditor проширење за Медијавикију',
 	'rte-edgecase-info-title' => 'Потребан је изворни режим',
 	'rte-edgecase-comment' => 'HTML коментари',
+	'rte-edgecase-triplecurls' => 'параметри шаблона',
+	'rte-edgecase-syntax' => 'забрањена синтакса',
 	'rte-edgecase-redirect' => 'преусмери',
 	'rte-edgecase-unclosed-tags' => 'отворене HTML ознаке',
 );

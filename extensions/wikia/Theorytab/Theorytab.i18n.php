@@ -56,6 +56,14 @@ $messages['ce'] = array(
 	'theorytab-parent-title' => 'Коьртехь йолу яззам',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'theorytab-title' => 'Teorie',
+	'theorytab-parent-title' => 'Nadřazený článek',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */

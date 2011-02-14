@@ -129,6 +129,23 @@ $messages['ckb'] = array(
 	'whereisextension-submit' => 'گەڕان',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'whereisextension' => 'Rozšíření Kde je',
+	'whereisextension-submit' => 'Hledání',
+	'whereisextension-list' => 'Seznam wiki s odpovídajícími kritérii',
+	'whereisextension-isset' => 'je nastaveno na',
+	'whereisextension-filter' => 'Filtr',
+	'whereisextension-all-groups' => 'Všechny skupiny',
+	'whereisextension-name-contains' => 'název proměnné obsahuje',
+	'whereisextension-search-like-value' => 'Jako:',
+	'whereisextension-search-type' => 'Typ:',
+	'whereisextension-search-type-bool' => 'Logická hodnota',
+	'whereisextension-search-type-full' => 'Jako',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author Laximilian scoken
@@ -331,6 +348,14 @@ $messages['kl'] = array(
  */
 $messages['kn'] = array(
 	'whereisextension-submit' => 'ಹುಡುಕು',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'whereisextension-filter' => 'Fîltre',
+	'whereisextension-search-type' => 'Cure:',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -543,6 +568,7 @@ $messages['sr-ec'] = array(
 	'whereisextension-filter' => 'Филтар',
 	'whereisextension-all-groups' => 'Све групе',
 	'whereisextension-name-contains' => 'име променљиве садржи',
+	'whereisextension-search-type' => 'Врста:',
 );
 
 /** Swedish (Svenska)

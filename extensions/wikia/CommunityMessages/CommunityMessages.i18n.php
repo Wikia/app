@@ -31,6 +31,14 @@ $messages['br'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Hizivaet eo bet kemennadennoù ar gumuniezh]].',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'communitymessages-desc' => 'Rozšíření Nápověda pro Zprávy komunitě',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Zprávy komunitě byly aktualizovány]].',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */

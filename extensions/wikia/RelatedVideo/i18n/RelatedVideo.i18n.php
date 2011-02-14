@@ -35,6 +35,15 @@ $messages['bs'] = array(
 	'relatedvideo' => 'Slični video snimci',
 );
 
+/** Czech (Česky)
+ * @author Dontlietome7
+ */
+$messages['cs'] = array(
+	'related-video-random-video' => 'Náhodné video',
+	'related-video-related' => 'Související videa',
+	'relatedvideo' => 'Související videa',
+);
+
 /** German (Deutsch)
  * @author Kghbln
  */
@@ -142,6 +151,15 @@ $messages['ru'] = array(
 	'related-video-random-video' => 'Случайное видео',
 	'related-video-related' => 'Похожие видео',
 	'relatedvideo' => 'Похожие видео',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'related-video-random-video' => 'Насумичан видео снимак',
+	'related-video-related' => 'Сродни видео снимци',
+	'relatedvideo' => 'Сродни видео снимци',
 );
 
 /** Swedish (Svenska)
