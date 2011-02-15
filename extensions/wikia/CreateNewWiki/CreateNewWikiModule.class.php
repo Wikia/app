@@ -131,6 +131,7 @@ class CreateNewWikiModule extends Module {
 	/**
 	 * Saves anything in the data in the request into session.
 	 * It overwrites any existing values if the keys are the same.
+	 * NOTE: calling this while a wiki is being created does not seem to work.  Currently, JS will handle the concurrency issues.
 	 */
 	public function executeSaveState() {
 		wfProfileIn(__METHOD__);
