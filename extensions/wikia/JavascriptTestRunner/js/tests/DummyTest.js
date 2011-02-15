@@ -1,4 +1,5 @@
 var test = {
+	suiteName: 'DummyTest',
 	setUp: function () {
 		console.log('test: setUp()');
 	},

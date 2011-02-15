@@ -53,6 +53,32 @@
 		console.log('JTR: testSuite result = ',data);
 	}
 	JTR.outputs.console = consoleOutput;
+
+	/**
+	 * Firebug/console output
+	 */
+	var mwarticleOutput = function() {}
+	mwarticleOutput.prototype.handle = function( data ) {
+		var html = '';
+		for (var suiteName in data.suites) {
+			var suite = data.suites[suiteName];
+			var ok = true;
+			var testsHtml = '';
+			for (var testName in suite.tests) {
+				var test = suite.tests[testName];
+				var color = test.status == "success" ? "green" : "red";
+				var text = test.status == "success" ? "[SUCCESS]" : "[FAILED]";
+				ok = ok && test.status == "success";
+				testsHtml += "<div style=\"margin-left: 20px\"><code style=\"color:"+color+"\">"+text+"</code> "+testName+"</div>";
+			}
+			var color2 = ok ? "green" : "red";
+			html += "<div style=\"color:"+color2+"\">"+suiteName+"</div>";
+			html += testsHtml;
+		}
+		var e = document.getElementById('WikiaArticle');
+		e.innerHTML = html;
+	}
+	JTR.outputs.mwarticle = mwarticleOutput;
 	
 	/**
 	 * Selenium output
@@ -70,13 +96,14 @@
 	var jsUnityFramework = function() {}
 	jsUnityFramework.prototype.run = function() {
 		var args = Array.prototype.slice.call(arguments,0);
+		var self = this;
 		
 		this.data = {
 			suites: {},
 			errors: 0
 		};
 		var oldLogger = jsUnity.logger;
-		jsUnity.logger = this;
+		jsUnity.logger = {log:function(){ self.log.apply(self,arguments);}};
 		jsUnity.run.apply(jsUnity,args);
 		jsUnity.logger = oldLogger;
 		
@@ -100,9 +127,9 @@
 			break;
 		case 'suite-start':
 			this.suiteName = this.findName(this.data.suites,name);
-			this.suiteStarted = new Data();
-			this.data.suites[name] = {
-				time: 0;
+			this.suiteStarted = new Date();
+			this.data.suites[this.suiteName] = {
+				time: 0,
 				tests: {}
 			};
 			break;
