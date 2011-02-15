@@ -73,7 +73,7 @@ $messages['en'] = array(
 	'scavengerhunt-form-invalid-landing-title' => 'Please enter an existing title as landing page.',
 	'scavengerhunt-form-no-final-form-text' => 'Please enter a final form text.',
 	'scavengerhunt-form-invalid-article-title' => 'Please enter existing titles as game pages.',
-	'scavengerhunt-form-no-hidden-image' => 'Please enter hidden images addresses for every game pages.',
+	'scavengerhunt-form-no-hidden-image' => 'Please enter hidden images addresses for every game page.',
 	'scavengerhunt-form-no-clue-text' => 'Please enter clue texts for every game page.',
 
 	'scavengerhunt-game-has-been-created' => 'New Scavenger Hunt game has been created.',
