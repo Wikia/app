@@ -8,6 +8,7 @@ var SpecialScavengerHunt = {
 		$('.scavenger-form').delegate('.scavenger-page-title', 'blur', SpecialScavengerHunt.onPageTitleBlur);
 		$('input[name=delete]').bind('click.sumbit', SpecialScavengerHunt.onDeleteClick);
 		$('.scavenger-form').delegate('.scavenger-dialog-check', 'click', SpecialScavengerHunt.onDialogCheckClick);
+		$('.scavenger-form').delegate('input[type=text], textarea', 'change', SpecialScavengerHunt.onDataChange);
 	},
 
 	log: function(msg) {
@@ -38,6 +39,10 @@ var SpecialScavengerHunt = {
 				button.unbind('.sumbit').click();
 			}
 		});
+	},
+	
+	onDataChange: function(e) {
+		$('.scavenger-form .buttons input[type=submit]').not('[name=save]').attr('disabled','disabled');
 	},
 
 	onDialogCheckClick: function(e) {
