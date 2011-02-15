@@ -4494,6 +4494,7 @@ class Parser
 		if ( !$parsing ) {
 			global $wgTitle;
 			$this->clearState();
+			$this->clearTagHooks();
 			$this->setTitle( $wgTitle );
 			$this->mOptions = new ParserOptions;
 			$this->setOutputType = self::OT_PREPROCESS;
