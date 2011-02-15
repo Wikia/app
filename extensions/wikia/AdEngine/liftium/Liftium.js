@@ -1281,8 +1281,8 @@ Liftium.luc = {name: luc_name, value: luc_value};
 		return false;
 	}
 
-	Liftium.pullConfig();
 	Liftium.pullGeo();
+	Liftium.pullConfig();
 	
 	Liftium.addEventListener(window, "load", Liftium.onLoadHandler);
 
@@ -1676,7 +1676,8 @@ Liftium.pullConfig = function (){
 
 	var p = {
 		"pubid" : LiftiumOptions.pubid,
-		"v": 1.2 // versioning for config
+		"v": 1.2, // versioning for config
+		"country": Liftium.getCountry()
 	};
 
 	// Simulate a small delay (used by unit tests)
