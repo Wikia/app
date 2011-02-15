@@ -18,7 +18,7 @@ $messages['en'] = array(
 
 	Additional information on how to report problems to Wikia can be found [[w:project:Report_a_problem|here]], or you can post on [[w:Forum:Index|Wikia Community Forums]] for user support.
 
-If you prefer to use regular e-mail or have attachments, you can contact us at [mailto:community@wikia.com community@wikia.com]',
+If you prefer to use regular e-mail or have attachments, you can contact us at [mailto:community@wikia.com community@wikia.com].',
 	'specialcontact-username' => 'Username',
 	'specialcontact-wikiname' => 'Which wiki',
 	'specialcontact-realname' => 'Your name',
@@ -28,10 +28,10 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 	'specialcontact-mail' => 'Send to Wikia',
 	'specialcontact-filledin' => 'This information has been filled in from your account preferences',
 	'specialcontact-ccme' => 'Send me a copy of this message',
-	'specialcontact-ccdisabled' => 'DISABLED: Please validate your e-mail address to use this function',
+	'specialcontact-ccdisabled' => 'Disabled: Please validate your e-mail address to use this function',
 	'specialcontact-notyou' => 'Not you?',
 	'specialcontact-captchainfo' => 'Please enter the text in the image.',
-	'specialcontact-captchatitle' => 'Blurry Word',
+	'specialcontact-captchatitle' => 'Blurry word',
 	'specialcontact-formtitle' => 'Contact Wikia Support Staff',
 	/* errors */
 	'specialcontact-nomessage' => 'Please fill in a message',
