@@ -87,18 +87,6 @@ var CategoryExhibition = {
 		return CategoryExhibition.paginatorClick($('#mw-blogs'), 'axGetBlogsPage', $(this), 'blogs');
 	},
 
-	getUrlVars: function(e){
-	    var vars = [], hash;
-	    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-	    for(var i = 0; i < hashes.length; i++)
-	    {
-		hash = hashes[i].split('=');
-		vars.push(hash[0]);
-		vars[hash[0]] = hash[1];
-	    }
-	    return vars;
-	},
-
 	paginatorClick : function(pageSection, axMethod, clickedObj, name ){
 
 		if ( CategoryExhibition.lockTable[ name ] == clickedObj.attr('data-page') ){
@@ -118,7 +106,7 @@ var CategoryExhibition = {
 		
 		CategoryExhibition.log('begin: paginatorClick');
 		CategoryExhibition.showThrobber(pageSection.find('div.category-gallery-holder'));
-		var UrlVars = CategoryExhibition.getUrlVars();
+		var UrlVars = $.getUrlVars();
 		var data = {
 			action: 'ajax',
 			articleId: wgArticleId,
