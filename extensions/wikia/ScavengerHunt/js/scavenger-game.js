@@ -162,6 +162,15 @@ var ScavengerHunt = {
 				callback: function() {
 					var w = $('#scavengerEntryFormModal').closest('.modalWrapper');
 					var b = w.find('.scavenger-clue-button input[type=submit]');
+					var inputs = w.find('.scavenger-entry-form').find('input, textarea').not('input[type=submit]')
+					var inputsChange = function() {
+						var ok = true;
+						inputs.each(function(i,v){ if (!$(v).val()) ok = false; });
+						b.attr('disabled',ok?'':'disabled');
+					};
+					inputs.blur(inputsChange);
+					inputs.keyup(inputsChange);
+					b.attr('disabled','disabled');
 					b.click(function(e) {
 						ScavengerHunt.track('game/modalEntryForm/clickButton');
 						e.preventDefault();

@@ -41,12 +41,6 @@ class SpecialScavengerHunt extends SpecialPage {
 
 		$this->games = WF::build('ScavengerHuntGames');
 
-		@list( $action, $id ) = explode('/',$subpage);
-		$action = !empty($action) ? $action : 'list';
-		$id = (int)$id;
-		$game = $this->games->findById($id);
-		if (empty($game)) $game = $this->games->newGame();
-
 		$this->setHeaders();
 		$this->mTitle = SpecialPage::getTitleFor('scavengerhunt');
 
@@ -55,10 +49,28 @@ class SpecialScavengerHunt extends SpecialPage {
 			return;
 		}
 
+		@list( $action, $id ) = explode('/',$subpage);
+		$action = !empty($action) ? $action : 'list';
+		$id = (int)$id;
+		$game = $this->games->findById($id);
+		if (empty($game)) $game = $this->games->newGame();
+
+		// check edit tokens
+		if ($this->request->wasPosted() && !$this->user->matchEditToken($this->request->getVal('wpEditToken'))) {
+			NotificationsModule::addConfirmation(
+				wfMsg('scavengerhunt-edit-token-mismatch'),
+				NotificationsModule::CONFIRMATION_ERROR
+			);
+			$this->out->redirect( $this->mTitle->getFullUrl() );
+			return;
+		}
+
+
 		$this->out->addStyle($this->app->runFunction('wfGetSassUrl', 'extensions/wikia/ScavengerHunt/css/scavenger-special.scss'));
 		$this->out->addScriptFile($this->app->getGlobal('wgScriptPath') . '/extensions/wikia/ScavengerHunt/js/scavenger-special.js');
 		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
 
+		$errors = array();
 		switch ($action) {
 			case 'list':
 				$button = "<a class='wikia-button scavengerhunt-add-button' href='".$this->mTitle->getFullUrl()."/add'>".
@@ -79,17 +91,22 @@ class SpecialScavengerHunt extends SpecialPage {
 				if ($this->request->wasPosted()) {
 					if ($this->request->getVal('enable')) {
 						$enabled = !$this->request->getVal('prevEnabled');
+
 						$game->setEnabled($enabled);
-						$game->save();
+						$errors = $this->validateGame($game);
 
-						NotificationsModule::addConfirmation(
-							$enabled
-							? wfMsg('scavengerhunt-game-has-been-enabled')
-							: wfMsg('scavengerhunt-game-has-been-disabled')
-						);
+						if (empty($errors)) {
+							$game->save();
 
-						$this->out->redirect( $this->mTitle->getFullUrl() . "/edit/$id" );
-						return;
+							NotificationsModule::addConfirmation(
+								$enabled
+								? wfMsg('scavengerhunt-game-has-been-enabled')
+								: wfMsg('scavengerhunt-game-has-been-disabled')
+							);
+
+							$this->out->redirect( $this->mTitle->getFullUrl() . "/edit/$id" );
+							return;
+						}
 					} else if ($this->request->getVal('delete')) {
 
 						$game->delete();
@@ -114,7 +131,6 @@ class SpecialScavengerHunt extends SpecialPage {
 				}
 				// no "break" on purpose
 			case 'add':
-				$errors = array();
 				if ($this->request->wasPosted()) {
 					if ($this->request->getVal('save')) {
 						$game = $this->updatePostedGame($game);
@@ -139,6 +155,7 @@ class SpecialScavengerHunt extends SpecialPage {
 					}
 				}
 				$template->set('errors', $errors);
+				$template->set('editToken', $this->user->editToken());
 				$template->set_vars($this->getTemplateVarsFromGame($game));
 				$this->out->addHTML($template->render('form'));
 				break;
@@ -190,6 +207,8 @@ class SpecialScavengerHunt extends SpecialPage {
 		//create list of articles
 		$articleTitles = $this->request->getArray('articleTitle');
 		$articleHiddenImages = $this->request->getArray('articleHiddenImage');
+		$articleHiddenImageTopOffsets = $this->request->getArray('articleHiddenImageTopOffset');
+		$articleHiddenImageLeftOffsets = $this->request->getArray('articleHiddenImageLeftOffset');
 		$articleClueTitles = $this->request->getArray('articleClueTitle');
 		$articleClueTexts = $this->request->getArray('articleClueText');
 		$articleClueImages = $this->request->getArray('articleClueImage');
@@ -208,6 +227,8 @@ class SpecialScavengerHunt extends SpecialPage {
 			$article->setAll(array(
 				'title' => $articleTitles[$i],
 				'hiddenImage' => $articleHiddenImages[$i],
+				'hiddenImageTopOffset' => $articleHiddenImageTopOffsets[$i],
+				'hiddenImageLeftOffset' => $articleHiddenImageLeftOffsets[$i],
 				'clueTitle' => $articleClueTitles[$i],
 				'clueText' => $articleClueTexts[$i],
 				'clueImage' => $articleClueImages[$i],
@@ -229,32 +250,49 @@ class SpecialScavengerHunt extends SpecialPage {
 
 		$errors = array();
 
-		$landingTitle = $game->getLandingTitle();
-		$landingArticleId = $game->getLandingArticleId();
-		if (!empty($landingTitle) && empty($landingArticleId)) {
-			$errors[] = wfMsg( 'scavengerhunt-form-invalid-landing-title' );
-		}
-		$entryFormText = $game->getEntryFormQuestion();
-		if (empty($entryFormText)) {
-			$errors[] =	wfMsg( 'scavengerhunt-form-no-final-form-text' );
+		$data = $game->getAll();
+		if (empty($data['name'])) {
+			$errors[] = wfMsg( 'scavengerhunt-form-error-name' );
 		}
 
-		$articles = $game->getArticles();
-		foreach ($articles as $n => $article) {
-			$articleId = $article->getArticleId();
-			$hiddenImage = $article->getHiddenImage();
-			$clueText = $article->getClueText();
-			if (empty($articleId)) {
-				$errors[] = wfMsg( 'scavengerhunt-form-invalid-article-title' );
+		if (!$game->isEnabled()) {
+			return;
+		}
+
+		if ( empty($data['landingTitle']) ) {
+			$errors[] = wfMsg( 'scavengerhunt-form-error-no-landing-title' );
+		} else if ( empty($data['landingArticleId']) ) {
+			$errors[] = wfMsg( 'scavengerhunt-form-error-invalid-title', $data['landingTitle'] );
+		}
+		if (empty($data['landingButtonText'])) {
+			$errors[] = wfMsg( 'scavengerhunt-form-error-landing-button-text' );
+		}
+		if (empty($data['startingClueTitle']) || empty($data['startingClueText']) || empty($data['startingClueImage'])
+				|| empty($data['startingClueButtonText']) || empty($data['startingClueButtonTarget']) ) {
+			$errors[] = wfMsg( 'scavengerhunt-form-error-starting-clue' );
+		}
+		if (empty($data['entryFormTitle']) || empty($data['entryFormText']) || empty($data['entryFormImage'])
+				|| empty($data['entryFormQuestion']) ) {
+			$errors[] = wfMsg( 'scavengerhunt-form-error-entry-form' );
+		}
+		if (empty($data['goodbyeTitle']) || empty($data['goodbyeText']) || empty($data['goodbyeImage']) ) {
+			$errors[] = wfMsg( 'scavengerhunt-form-error-goodbye' );
+		}
+
+		foreach ($data['articles'] as $article) {
+			$article = $article->getAll();
+			if ( empty($article['title']) ) {
+				$errors[] = wfMsg( 'scavengerhunt-form-error-no-article-title' );
+			} else if ( empty($article['articleId']) ) {
+				$errors[] = wfMsg( 'scavengerhunt-form-error-invalid-title', $article['title'] );
 			}
-			/*
-			if (empty($hiddenImage)) {
-				$errors[] = wfMsg( 'scavengerhunt-form-no-hidden-image' );
+			if ( empty($article['hiddenImage']) ) {
+				$errors[] = wfMsg( 'scavengerhunt-form-error-article-hidden-image' );
 			}
-			if (empty($clueText)) {
-				$errors[] = wfmsg( 'scavengerhunt-form-no-clue-text' );
+			if ( empty($article['clueTitle']) || empty($article['clueText']) || empty($article['clueImage'])
+					|| empty($article['clueButtonText']) || empty($article['clueButtonTarget']) ) {
+				$errors[] = wfMsg( 'scavengerhunt-form-error-article-clue', $article['title'] );
 			}
-			*/
 		}
 
 		wfProfileOut(__METHOD__);

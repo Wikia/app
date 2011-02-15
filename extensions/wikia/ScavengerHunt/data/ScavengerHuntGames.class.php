@@ -110,6 +110,14 @@
 			$game = $this->newGame();
 
 			$data = unserialize( $row->game_data );
+			foreach($data['articles'] as $k => $v) {
+				if (! ($v instanceof ScavengerHuntGameArticle)) {
+					$article = $this->newGameArticle();
+					$article->setAll($v);
+					$data['articles'][$k] = $article;
+				}
+			}
+
 			$game->setId( $row->game_id );
 			$game->setWikiId( $row->wiki_id );
 			$game->setName( $row->game_name );
@@ -120,11 +128,15 @@
 		}
 
 		public function save( ScavengerHuntGame $game ) {
+			$data = $game->getData();
+			foreach ($data['articles'] as $k => $v)
+				$data['articles'][$k] = $v->getAll();
+
 			$fields = array(
 				'wiki_id' => $game->getWikiId(),
 				'game_name' => $game->getName(),
 				'game_is_enabled' => $game->isEnabled(),
-				'game_data' => serialize( $game->getData() ),
+				'game_data' => serialize( $data ),
 			);
 
 			$oldGame = null;

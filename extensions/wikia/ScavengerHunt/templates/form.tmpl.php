@@ -88,8 +88,10 @@
 			<label>
 				<?= wfMsg('scavengerhunt-label-article-hidden-image') ?>
 				<br>
-				<input type="text" name="articleHiddenImage[]" value="<?= $article['hiddenImage'] ?>">
+				<input class="scavenger-image" type="text" name="articleHiddenImage[]" value="<?= $article['hiddenImage'] ?>">
 			</label>
+			<input class="scavenger-image-offset" type="text" name="articleHiddenImageTopOffset[]" title="top offset" value="<?= $article['hiddenImageTopOffset'] ?>">
+			<input class="scavenger-image-offset" type="text" name="articleHiddenImageLeftOffset[]" title="left offset" value="<?= $article['hiddenImageLeftOffset'] ?>">
 		</div>
 		<div>
 			<label>
@@ -187,12 +189,12 @@
 				<a href="#" class="scavenger-dialog-check"><?= wfMsg('scavengerhunt-label-dialog-check') ?></a>
 				<br>
 				<input class="scavenger-image" type="text" name="goodbyeImage" value="<?= $goodbyeImage ?>">
-				<input class="scavenger-image-offset" type="text" name="goodbyeImageTopOffset" title="top offset" value="<?= $goodbyeImageTopOffset ?>">
-				<input class="scavenger-image-offset" type="text" name="goodbyeImageLeftOffset" title="left offset" value="<?= $goodbyeImageLeftOffset ?>">
 			</label>
+			<input class="scavenger-image-offset" type="text" name="goodbyeImageTopOffset" title="top offset" value="<?= $goodbyeImageTopOffset ?>">
+			<input class="scavenger-image-offset" type="text" name="goodbyeImageLeftOffset" title="left offset" value="<?= $goodbyeImageLeftOffset ?>">
 		</div>
 	</fieldset>
-	<div>
+	<div class="buttons">
 		<input type="submit" name="save" value="<?= wfMsg('scavengerhunt-button-save') ?>">
 		<?php
 		if ($gameId) {
@@ -205,5 +207,6 @@
 		}
 		?>
 		<input type="hidden" name="gameId" value="<?= $gameId ?>">
+		<input type="hidden" name="wpEditToken" value="<?= $editToken ?>">
 	</div>
 </form>
