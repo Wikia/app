@@ -59,8 +59,6 @@ class SpecialWikiPayment extends UnlistedSpecialPage {
 		switch( $action ) {
 			case 'returnOk':
 				$this->returnPayment( $token, $cityId );
-				global $wgOut;
-				$wgOut->redirect(wfMsgForContent( 'mainpage' ).'?wiki-welcome=1');
 				break;
 			case 'returnCancel':
 				$this->cancelPayment( $token );
@@ -91,7 +89,8 @@ class SpecialWikiPayment extends UnlistedSpecialPage {
 	}
 
 	private function returnPayment( $token, $cityId = null ) {
-		global $wgOut, $wgWikiPaymentAdsFreePrice;
+		global $wgOut, $wgWikiPaymentAdsFreePrice, $wgCityId;
+		$cityId = empty($cityId) ? $wgCityId : $cityId;
 
 		wfProfileIn( __METHOD__ );
 
@@ -124,7 +123,8 @@ class SpecialWikiPayment extends UnlistedSpecialPage {
 					}
 				}
 			}
-			$wgOut->addHTML( wfMsg( 'wikipayment-paypal-return-ok' ) );
+			$finishCreateTitle = GlobalTitle::newFromText("FinishCreate", NS_SPECIAL, $cityId);
+			$wgOut->redirect($finishCreateTitle->getFullURL());
 		}
 		else {
 			$wgOut->addHTML( wfMsg( 'wikipayment-paypal-error', array( 'RP04') ) );
@@ -136,10 +136,10 @@ class SpecialWikiPayment extends UnlistedSpecialPage {
 	}
 
 	private function cancelPayment( $token ) {
-		global $wgOut;
+		global $wgOut, $wgCityId;
 		wfProfileIn( __METHOD__ );
-
-		$wgOut->addHTML( wfMsg( 'wikipayment-paypal-return-cancel' ) );
+		$finishCreateTitle = GlobalTitle::newFromText("FinishCreate", NS_SPECIAL, $wgCityId);
+		$wgOut->redirect($finishCreateTitle->getFullURL());
 		wfProfileOut( __METHOD__ );
 	}
 
