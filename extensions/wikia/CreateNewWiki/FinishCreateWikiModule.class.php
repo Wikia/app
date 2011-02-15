@@ -14,6 +14,8 @@ class FinishCreateWikiModule extends Module {
 		wfProfileIn(__METHOD__);
 		if(!empty($_SESSION['wsCreateNewWikiParams'])) {
 			$this->params =  $_SESSION['wsCreateNewWikiParams'];
+		} else {
+			$this->params = array();
 		}
 		wfProfileOut(__METHOD__);
 	}
