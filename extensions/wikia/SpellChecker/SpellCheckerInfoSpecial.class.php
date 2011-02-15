@@ -33,7 +33,7 @@ class SpellCheckerInfoSpecial extends SpecialPage {
 		}
 
 		$this->out->addHtml( Xml::buildTable($rows, array('class' => 'wikitable'), array(
-			$this->app->runFunction('wfMsg', 'spellchecker-info-languages'),
+			$this->app->runFunction('wfMsg', 'spellchecker-info-languages', count($languages)),
 		)) );
 
 		// list providers
@@ -87,24 +87,19 @@ class SpellCheckerInfoSpecial extends SpecialPage {
 			$text = $this->request->getText('wptext');
 			$langCode = $this->request->getText('wplang');
 
-			// load dictionary
-			$dict = new SpellCheckerDictionary($langCode);
-			$info = $dict->describe();
+			// create spell checking service
+			$service = new SpellCheckerService($langCode);
+			$info = $service->getInfo();
 
-			// check the spelling
-			$isCorrect = $dict->check($text);
-
-			// suggest correct spelling
-			if (!$isCorrect) {
-				$suggestions = $dict->suggest($text);
-			}
+			// check the spelling (returns true or array of spelling suggestions)
+			$data = $service->checkWord($text);
 
 			// print out results
-			if ($isCorrect) {
+			if ($data === true) {
 				$result = $this->app->runFunction('wfMsg', 'spellchecker-info-spellcheck-is-correct', $text);
 			}
 			else {
-				$result = $this->app->runFunction('wfMsg', 'spellchecker-info-spellcheck-suggestions', $text, implode(', ', $suggestions));
+				$result = $this->app->runFunction('wfMsg', 'spellchecker-info-spellcheck-suggestions', $text, implode(', ', $data));
 			}
 
 			$this->out->addHtml("<p>{$result}</p>");
