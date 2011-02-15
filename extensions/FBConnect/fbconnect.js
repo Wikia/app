@@ -108,10 +108,11 @@ $(document).ready(function() {
 		ev.preventDefault();
 	});
 
-	if( $.getUrlVal( "ref" ) == "fbfeed" ) {
+	if( $.getUrlVar( "ref" ) == "fbfeed" ) {
 		var suffix = "";
-		if( $.getUrlVal( "fbtype" ) != "" ) {
-			suffix = "/" + $.getUrlVal("fbtype");
+		var type = $.getUrlVar( 'fbtype' );
+		if( type != "" ) {
+			suffix = "/" + type;
 		}
 		WET.byStr( 'FBconnect/userfromfb' + suffix );
 	}

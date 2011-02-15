@@ -24,7 +24,7 @@
 			?>
 			
 			// If the URL params indicate that this should be a login-and-connect form, set it up for that.
-			if( $.getUrlVal( "showLoginAndConnect" ) == "true" ) {
+			if( $.getUrlVar( "showLoginAndConnect" ) == "true" ) {
 				AjaxLogin.slideToLoginAndConnect();
 				AjaxLogin.LoginAndConnectHideBack();
 			}
