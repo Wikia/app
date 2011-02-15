@@ -46,12 +46,14 @@
 				'goodbyeImageTopOffset' => '30',
 				'goodbyeImageLeftOffset' => '-30',
 			);
+			$dataToSerialize = $data;
+			$dataToSerialize['articles'] = array( $article->getAll() );
 
 			$fields = array(
 				'wiki_id' => 412,
 				'game_name' => 'asd',
 				'game_is_enabled' => true,
-				'game_data' => serialize( $data ),
+				'game_data' => serialize( $dataToSerialize ),
 			);
 
 			$db = $this->getMock('DatabaseBase');
