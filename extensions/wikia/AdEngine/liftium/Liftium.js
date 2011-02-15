@@ -1269,7 +1269,7 @@ if (Liftium.e(Liftium.cookie(luc_name))) {
 }
 luc_value++;
 var domain = document.domain.match(/wikia(-dev)?\.com$/);
-if (!Liftiume.e(domain)) {
+if (!Liftium.e(domain)) {
 	Liftium.cookie(luc_name, luc_value, {domain: domain[0], path: "/", expires: 30 * 86400 * 1000});
 } else {
 	luc_value = 9999999;
