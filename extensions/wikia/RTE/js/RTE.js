@@ -57,16 +57,16 @@ window.RTE = {
 		'overlay',
 		'paste',
 		'placeholder',
+		'plbelement',
+		'poll',
 		'signature',
 		'spellchecker',
-		'plbelement',
 		'template',
 		'temporary-save',
 		'toolbar',
 		'tools',
 		'track',
 		'widescreen'
-		//'poll' // temp
 	],
 
 	// use firebug / opera console to log events / dump objects
