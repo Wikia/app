@@ -99,6 +99,10 @@ class ArticleComment {
 			} else {
 				$this->mFirstRevId = $this->getFirstRevID( DB_SLAVE );
 				$this->mLastRevId = $this->mTitle->getLatestRevID();
+				// if first rev does not exist on slave then fall back to master anyway
+				if ( !$this->mFirstRevId ) {
+					$this->mFirstRevId = $this->getFirstRevID( DB_MASTER );
+				}
 				// if last rev does not exist on slave then fall back to master anyway
 				if ( !$this->mLastRevId ) {
 					$this->mLastRevId = $this->mTitle->getLatestRevID( GAID_FOR_UPDATE );
