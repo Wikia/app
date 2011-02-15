@@ -573,6 +573,8 @@ class GlobalWatchlistBot {
 		$sEmailSubject = $this->getLocalizedMsg( 'globalwatchlist-digest-email-subject', $oUser->getOption( 'language' ) );
 		list( $sEmailBody, $sEmailBodyHTML ) = $this->composeMail( $oUser, $aDigestData, $isDigestLimited );
 
+		wfRunHooks('ComposeMail', array( $oUser, &$sEmailBody, &$sEmailBodyHTML, &$sEmailSubject ));
+
 		$sFrom = 'Wikia <community@wikia.com>';
 		// yes this needs to be a MA object, not string (the docs for sendMail are wrong)
 		$oReply = new MailAddress( 'noreply@wikia.com' );
