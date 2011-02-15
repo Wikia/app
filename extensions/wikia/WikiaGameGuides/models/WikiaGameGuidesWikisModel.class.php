@@ -11,6 +11,7 @@ class WikiaGameGuidesWikisModel{
 	const MEMCHACHE_KEY_PREFIX = 'WikiaGameGuides';
 	const CACHE_DURATION = 86400;//24h
 	const SEARCH_RESULTS_LIMIT = 50;
+	const CATEGORY_RESULTS_LIMIT = 0;//no limits for now
 	
 	/*
 	 * Gets a list of recommended wikis through WikiFactory
@@ -65,7 +66,7 @@ class WikiaGameGuidesWikisModel{
 	 */
 	public function getWikiContents($limit = null){
 		wfProfileIn( __METHOD__ );
-		$cacheKey = $this->generateCacheKey( __METHOD__ . "::limit({$limit})" );
+		$cacheKey = $this->generateCacheKey( __METHOD__ . ":limit-{$limit}" );
 		$ret = $this->loadFromCache( $cacheKey );
 		
 		if ( empty( $ret ) ) {
@@ -105,7 +106,7 @@ class WikiaGameGuidesWikisModel{
 	 * 
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 */
-	public function getCategoryContents( $categoryName, $limit = 0 ) {
+	public function getCategoryContents( $categoryName, $limit = self::CATEGORY_RESULTS_LIMIT ) {
 		wfProfileIn( __METHOD__ );
 		$categoryName = trim( $categoryName );
 		$category = Category::newFromName( $categoryName );
@@ -113,9 +114,8 @@ class WikiaGameGuidesWikisModel{
 		if ( $category ) {
 			$cacheKey = $this->generateCacheKey(
 				__METHOD__ .
-				'::category(' .
-				str_replace(' ', '_', $categoryName) .//MemCache doesn't like spaces in keys
-				")::limit({$limit})"
+				":category-{$category->getID()}" .
+				":limit-{$limit}"
 			);
 			$ret = $this->loadFromCache( $cacheKey );
 			
@@ -158,9 +158,9 @@ class WikiaGameGuidesWikisModel{
 			wfLoadExtensionMessages( 'WikiaGameGuides' );
 			$cacheKey = $this->generateCacheKey(
 				__METHOD__ .
-				'::term(' .
-				str_replace( ' ',  '_', $term ) .
-				")::limit({$limit})"
+				':term-' .
+				str_replace( ' ',  '_', $term ) ./* no spaces in memcache keys */
+				":limit-{$limit}"
 			);
 			$ret = $this->loadFromCache( $cacheKey );
 			
