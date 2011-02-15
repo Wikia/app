@@ -92,53 +92,38 @@ class ArticleComment {
 		$result = true;
 
 		if ( $this->mTitle ) {
-			/**
-			 * if we lucky we got only one revision, we check slave first
-			 * then if no answer we check master
-			 */
-			$this->mFirstRevId = $this->getFirstRevID( $master ? DB_MASTER : DB_SLAVE );
-			if ( !$this->mFirstRevId && !$master ) {
-				 $this->mFirstRevId = $this->getFirstRevID( DB_MASTER );
-			}
-			if ( !$this->mLastRevId ) {
-				$this->mLastRevId = $this->mTitle->getLatestRevID();
-			}
-			/**
-			 * still not defined?
-			 */
-			if ( !$this->mLastRevId ) {
+			// get revision ids
+			if ($master) {
+				$this->mFirstRevId = $this->getFirstRevID( DB_MASTER );
 				$this->mLastRevId = $this->mTitle->getLatestRevID( GAID_FOR_UPDATE );
-			}
-			if ( $this->mLastRevId != $this->mFirstRevId ) {
-				if ( $this->mLastRevId && $this->mFirstRevId ) {
-					$this->mLastRevision = Revision::newFromTitle( $this->mTitle );
-					$this->mFirstRevision = Revision::newFromId( $this->mFirstRevId );
+			} else {
+				$this->mFirstRevId = $this->getFirstRevID( DB_SLAVE );
+				$this->mLastRevId = $this->mTitle->getLatestRevID();
+				// if last rev does not exist on slave then fall back to master anyway
+				if ( !$this->mLastRevId ) {
+					$this->mLastRevId = $this->mTitle->getLatestRevID( GAID_FOR_UPDATE );
 				}
-				else {
-					$this->mFirstRevision = Revision::newFromId( $this->mFirstRevId );
+			}
+			// get revision objects
+			if ( $this->mFirstRevId ) {
+				$this->mFirstRevision = Revision::newFromId( $this->mFirstRevId );
+				if ($this->mLastRevId == $this->mFirstRevId) {
+					// save one db query by just setting them to the same revision object
 					$this->mLastRevision = $this->mFirstRevision;
-					$this->mLastRevId = $this->mFirstRevId;
+				} else {
+					$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
 				}
+			} else {
+				$result = false;
 			}
-			else {
-				if ( $this->mFirstRevId ) {
-					$this->mFirstRevision = Revision::newFromId( $this->mFirstRevId );
-					$this->mLastRevision = $this->mFirstRevision;
-				}
-				else {
-					$result = false;
-				}
-			}
-
+			// get user that created this comment
 			if ( $this->mFirstRevision ) {
 				$this->mUser = User::newFromId( $this->mFirstRevision->getUser() );
 				$this->mUser->setName( $this->mFirstRevision->getUserText() );
-			}
-			else {
+			} else {
 				$result = false;
 			}
-		}
-		else {
+		} else { // null title
 			$result = false;
 		}
 		wfProfileOut( __METHOD__ );
