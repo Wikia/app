@@ -145,7 +145,6 @@ var WikiBuilder = {
 		// Theme event handlers
 		$('#ThemeWiki nav .next').click(function() {
 			$.tracker.byStr('createnewwiki/themewiki/next');
-			ThemeDesigner.save();
 			if(WikiBuilderCfg.skipwikiaplus) {
 				WikiBuilder.gotoMainPage();
 			} else {
@@ -342,7 +341,9 @@ var WikiBuilder = {
 		WikiBuilder.nextButtons.attr('disabled', true);
 		if(WikiBuilder.finishCreateUrl) {
 			$.tracker.byStr('createnewwiki/complete');
-			location.href = WikiBuilder.finishCreateUrl;
+			WikiBuilder.saveState(ThemeDesigner.settings, function(){
+				location.href = WikiBuilder.finishCreateUrl;
+			});
 		} else if (WikiBuilder.retryGoto < 300) {
 			if(!WikiBuilder.finishSpinner.data('spinning')) {
 				WikiBuilder.finishSpinner.data('spinning', 'true');
