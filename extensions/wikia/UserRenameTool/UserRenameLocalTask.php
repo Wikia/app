@@ -56,6 +56,7 @@ class UserRenameLocalTask extends BatchTask {
 		$oldUsername = $this->mParams['rename_old_name'];
 		$newUsername = $this->mParams['rename_new_name'];
 		$requestorID = (int)$this->mParams['requestor_id'];
+		$notifyRenamed = $this->mParams['notify_renamed'];
 
 		foreach($this->mParams as $key => &$param){
 			if($key == 'city_ids') continue;
@@ -102,24 +103,32 @@ class UserRenameLocalTask extends BatchTask {
 		$process->addLog("Cleaning up pre-process setup.");
 		$process->cleanup();
 
-		$process->addLog("Fetching email address for notification of completed process.");
+		$process->addLog("Fetching email addresses for notification of completed process.");
 
 		$requestorUser = User::newFromId($requestorID);
 		
 		//send e-mail to the user that rename process has finished
-		if($requestorUser->getEmail() != null){
-			$requestorUser->sendMail(
-				wfMsgForContent('userrenametool-finished-email-subject', $oldUsername),
-				wfMsgForContent('userrenametool-finished-email-body-text', $oldUsername, $newUsername),
-				null, //from
-				null, //replyto
-				'UserRenameProcessFinishedNotification',
-				wfMsgForContent('userrenametool-finished-email-body-html', $oldUsername, $newUsername)
-			);
-			$process->addLog("Notification sent.");
+		$notify = array( $requestorUser );
+		if ( $notifyRenamed ) {
+			$renamedUser = User::newFromName( $newUsername );
+			$notify[] = $renamedUser;
 		}
-		else{
-			$process->addLog("Cannot send email, requestor user has no email address.");
+
+		foreach ( $notify as $notifyUser ) {
+			if($notifyUser->getEmail() != null){
+				$notifyUser->sendMail(
+					wfMsgForContent('userrenametool-finished-email-subject', $oldUsername),
+					wfMsgForContent('userrenametool-finished-email-body-text', $oldUsername, $newUsername),
+					null, //from
+					null, //replyto
+					'UserRenameProcessFinishedNotification',
+					wfMsgForContent('userrenametool-finished-email-body-html', $oldUsername, $newUsername)
+				);
+				$process->addLog("Notification sent.");
+			}
+			else{
+				$process->addLog("Cannot send email, requestor user has no email address.");
+			}
 		}
 
 		$process->addLog("User rename local task end.");

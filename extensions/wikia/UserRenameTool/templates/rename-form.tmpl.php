@@ -33,6 +33,14 @@
 					<?if($warnings):?><input type="hidden" name="reason" value="<?=$reason;?>"/><?endif?>
 				</td>
 			</tr>
+			<tr>
+				<td class='mw-label'>
+					<label for='notify_renamed'><?=wfMsg( 'userrenametool-notify-renamed' )?></label>
+				</td>
+				<td class="mw-input">
+					<input type="checkbox" name="notify_renamed" checked="<?= ($notify_renamed) ? '' : "checked"; ?>" />
+				</td>
+			</tr>
 			<?if($warnings):?>
 				<tr>
 					<td class='mw-label'><?= wfMsgWikiHtml( 'userrenametool-warnings' ); ?></td>
