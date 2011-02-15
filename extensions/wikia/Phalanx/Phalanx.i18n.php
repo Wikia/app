@@ -63,11 +63,11 @@ Clicking "{{int:phalanx-add-block}}" will save your changes!',
 	'phalanx-help-type-wiki-creation' => 'This filter prevents a wiki from being created, if its name or URL matches any blacklisted phrase.',
 	'phalanx-help-type-answers-question-title' => 'This filter blocks a question (page) from being created, if its title matches any of the blacklisted phrases.
 
-	 Note: only works on Answers-type wikis',
+Note: only works on Answers-type wikis.',
 	'phalanx-help-type-answers-recent-questions' => 'This filter prevents questions (pages) from being displayed in a number of outputs (widgets, lists, tag-generated listings).
 It does not prevent those pages from being created.
 
-Note: works only on Answers-type wiks',
+Note: works only on Answers-type wiks.',
 
 	'phalanx-user-block-reason-ip' => 'This IP address is prevented from editing due to vandalism or other disruption by you or by someone who shares your IP address.
 If you believe this is in error, please [[Special:Contact|contact Wikia]].',
@@ -104,7 +104,7 @@ Please create an alternate user name or [[Special:Contact|contact Wikia]] about 
 
 	'phalanx-stats-table-wiki-id' => 'Wiki ID',
 	'phalanx-stats-table-wiki-name' => 'Wiki Name',
-	'phalanx-stats-table-wiki-url' => 'Wiki Url',
+	'phalanx-stats-table-wiki-url' => 'Wiki URL',
 	'phalanx-stats-table-wiki-last-edited' => 'Last edited',
 );
 
