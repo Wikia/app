@@ -32,11 +32,14 @@ import org.apache.commons.configuration.XMLConfiguration;
  * Base class for all tests in Selenium Grid Java examples.
  */
 public class BaseTest {
-
-	private String timeout;
-	private String webSite;
+	protected static final String DEFAULT_UPLOAD_IMAGE_URL = "http://images.wikia.com/wikiaglobal/images/b/bc/Wiki.png";
+	protected String seleniumHost;
+	protected int    seleniumPort;
+	protected String browser;
+	protected String webSite;
+	protected String timeout;
+	protected String noCloseAfterFail;
 	private XMLConfiguration testConfig;
-	private String noCloseAfterFail;
 
 	public XMLConfiguration getTestConfig() throws Exception{
 		if (null == this.testConfig) {
@@ -52,6 +55,9 @@ public class BaseTest {
 	@Parameters( { "seleniumHost", "seleniumPort", "browser", "webSite", "timeout", "noCloseAfterFail" })
 	protected void startSession(String seleniumHost, int seleniumPort,
 			String browser, String webSite, String timeout, String noCloseAfterFail) throws Exception {
+		this.seleniumHost = seleniumHost;
+		this.seleniumPort = seleniumPort;
+		this.browser = browser;
 		this.webSite = webSite;
 		this.noCloseAfterFail = noCloseAfterFail;
 		this.setTimeout(timeout);
@@ -480,18 +486,23 @@ public class BaseTest {
 		doSave();
 	}
 
+	protected void uploadImage() throws Exception {
+		uploadImage(DEFAULT_UPLOAD_IMAGE_URL);
+	}
+
 	protected void uploadImage(String imageUrl) throws Exception {
-		if (imageUrl.equals("")) {
-			imageUrl = "http://images.wikia.com/wikiaglobal/images/b/bc/Wiki.png";
-		}
 		// keep file extensions consistent (uploaded image can be either PNG or JPG)
-		String fileNameExtenstion = imageUrl.substring(imageUrl.length() - 3, imageUrl.length());
-		String destinationFileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+		// String fileNameExtenstion = imageUrl.substring(imageUrl.length() - 3, imageUrl.length());
+		String destinationFilename = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
 		
+		uploadImage(imageUrl, destinationFilename);
+	}
+
+	protected void uploadImage(String imageUrl, String destinationFilename) throws Exception {
 		session().open("index.php?title=Special:Upload");
 		session().waitForPageToLoad(this.getTimeout());
 		session().attachFile("wpUploadFile", imageUrl);
-		session().type("wpDestFile", destinationFileName);
+		session().type("wpDestFile", destinationFilename);
 		session().type("wpUploadDescription", "WikiaBot automated test.");
 		session().uncheck("wpWatchthis");
 		clickAndWait("wpUpload");
@@ -500,9 +511,10 @@ public class BaseTest {
 
 		// upload warning - duplicate ...
 		if (session().isTextPresent("Upload warning")) {
-			clickAndWait("wpUpload");
+			session().type("wpUploadDescription", "WikiaBot automated test.");
+			clickAndWait("wpUploadIgnoreWarning");
 		}
-		assertTrue(session().isTextPresent("Image:" + destinationFileName)
-			|| session().isTextPresent("File:" + destinationFileName));
+		assertTrue(session().isTextPresent("Image:" + destinationFilename)
+			|| session().isTextPresent("File:" + destinationFilename));
 	}
 }

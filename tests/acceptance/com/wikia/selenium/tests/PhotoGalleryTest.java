@@ -52,7 +52,7 @@ public class PhotoGalleryTest extends BaseTest {
 	@Test(groups={"CI"})
 	public void testSlideshowInViewMode() throws Exception {
 		loginAsStaff();
-        uploadImage();
+		uploadImage();
 		prepareTestArticle();
 
 		// open editor's dialog
@@ -385,26 +385,5 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// check for image added from view mode
 		assertTrue(session().isElementPresent("//div[contains(@class, 'wikia-slideshow')]/div/div/ul/li/span[@class='wikia-slideshow-link-overlay']"));
-	}
-
-	private void uploadImage() throws Exception {
-		String fileNameExtenstion = uploadFileUrl.substring(uploadFileUrl.length() - 3, uploadFileUrl.length());
-		String destinationFileName = uploadFileUrl.substring(uploadFileUrl.lastIndexOf("/") + 1);
-		session().open("index.php?title=Special:Upload");
-		session().waitForPageToLoad(this.getTimeout());
-		session().attachFile("wpUploadFile", uploadFileUrl);
-		session().type("wpDestFile", destinationFileName);
-		session().type("wpUploadDescription", "WikiaBot automated test.");
-		session().uncheck("wpWatchthis");
-		clickAndWait("wpUpload");
-
-		assertFalse(session().isTextPresent("Upload error"));
-
-		// upload warning - duplicate ...
-		if (session().isTextPresent("Upload warning")) {
-			clickAndWait("wpUpload");
-		}
-		assertTrue(session().isTextPresent("Image:" + destinationFileName)
-				|| session().isTextPresent("File:" + destinationFileName));
 	}
 }

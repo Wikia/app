@@ -1,8 +1,11 @@
 package com.wikia.selenium.tests;
 
+import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.closeSeleniumSession;
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.session;
 import static org.testng.AssertJUnit.assertTrue;
 import static org.testng.AssertJUnit.assertEquals;
+
+import org.testng.annotations.BeforeMethod;
 
 import java.math.BigInteger;
 import java.util.Random;
@@ -15,6 +18,12 @@ public class CreateWikiTest extends BaseTest {
 	public static final String TEST_EMAIL_FORMAT = "WikiaTestAccount%s@wikia-inc.com";
 	private static String wikiName;
 
+	@BeforeMethod(alwaysRun=true)
+	public void enforceMainWebsite() throws Exception {
+		closeSeleniumSession();
+		startSession(this.seleniumHost, this.seleniumPort, this.browser, "http://www.wikia.com", this.timeout, this.noCloseAfterFail);
+	}
+	
 	private static String getWikiName() {
 		if (null == wikiName) {
 			wikiName = "testwiki" + Long.toString(Math.abs(new Random().nextLong()), 36).toLowerCase();
@@ -24,7 +33,7 @@ public class CreateWikiTest extends BaseTest {
 	}
 
 	private void waitForStep(Integer stepNum) throws Exception {
-			waitForElementVisible("//*[@class='step" + Integer.toString(stepNum) + "' or @id='WikiBuilderError']");
+			waitForElementVisible("//div[@class='dialog']/div[@class='step" + Integer.toString(stepNum) + "' or @id='WikiBuilderError']");
 
 			// skip first step, if API request failed (BugID 1702)
 			if (session().isElementPresent("//*[@id='WikiBuilderError']")) {
