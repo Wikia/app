@@ -54,6 +54,7 @@ class SpecialRenameuser extends SpecialPage {
 		$newusername = $wgRequest->getText( 'newusername' );
 		$reason = $wgRequest->getText( 'reason' );
 		$token = $wgUser->editToken();
+		$nonotifyRenamed = $wgReuqest->getBool( 'notify_renamed', false );
 		$confirmaction = false;
 		
 		if ($wgRequest->wasPosted() && $wgRequest->getInt('confirmaction')){
@@ -69,7 +70,7 @@ class SpecialRenameuser extends SpecialPage {
 			$wgRequest->getText( 'token' ) !== '' &&
 			$wgUser->matchEditToken($wgRequest->getVal('token'))
 		){
-			$process = new RenameUserProcess($oldusername, $newusername, $confirmaction, $reason);
+			$process = new RenameUserProcess( $oldusername, $newusername, $confirmaction, $reason, $notifyRenamed );
 			$status = $process->run();
 			$warnings = $process->getWarnings();
 			$errors = $process->getErrors();
@@ -91,6 +92,7 @@ class SpecialRenameuser extends SpecialPage {
 				"errors"        => $errors,
 				"infos"         => $infos,
 				"token"         => $token,
+				"notify_renamed" => $notifyRenamed,
 			)
 		);
 
