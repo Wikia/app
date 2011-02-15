@@ -17,8 +17,8 @@
 ini_set('memory_limit', '2048M'); // this script balloons when making redirects
 
 ///// CONFIGURATION /////
-$titleFilename = "lw_pageIdsToTitles";
-$redirFilename = "lw_redirs";
+$titleFilename = "/home/sean/lw_pageIdsToTitles";
+$redirFilename = "/home/sean/lw_redirs";
 $DO_REDIRECTS_FILE = true;
 
 // Max number of rows to fetch at a given time for the big query (actual number will be a little lower since not all pages are in namespace 0).
