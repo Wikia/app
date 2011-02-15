@@ -44,9 +44,11 @@ $checkNames = array('glbdns - http', 'glbdns - ping');
 
 foreach($checkNames as $checkName) {
 	$date = date('Y-m-d', strtotime('-1 day'));
-	
-	$responseTime = $pingdom->getResponseTime($date, $checkName);
 
-	$dbw = wfGetDB(DB_MASTER, array(), 'performance_stats');
-	$dbw->replace('responsetime', array(), array('checkName' => $checkName, 'responseTime' => $responseTime, 'date' => $date));
+	try {
+		$responseTime = $pingdom->getResponseTime($date, $checkName);
+		$dbw = wfGetDB(DB_MASTER, array(), 'performance_stats');
+		$dbw->replace('responsetime', array(), array('checkName' => $checkName, 'responseTime' => $responseTime, 'date' => $date));
+	} catch(Exception $e) {
+	}
 }
