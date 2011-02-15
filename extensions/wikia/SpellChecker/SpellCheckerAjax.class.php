@@ -12,6 +12,9 @@ class SpellCheckerAjax {
 		$lang = $request->getVal('lang', false);
 		$words = explode(',', $request->getVal('words', ''));
 
+		// benchmark
+		$time = wfTime();
+
 		$service = new SpellCheckerService($lang);
 		$ret = $service->checkWords($words);
 
@@ -19,10 +22,14 @@ class SpellCheckerAjax {
 		$wordsCount = count($words);
 		$suggestionsCount = count($ret['suggestions']);
 
-		$now = wfTime();
-		$elapsed = round($now - $app->getGlobal('wgRequestTime'), 4);
+		// finish the benchmark
+		$time = round(wfTime() - $time, 4);
 
-		Wikia::log(__METHOD__, __LINE__, "{$wordsCount} words checked / {$suggestionsCount} suggestions / done in {$elapsed} sec.", true);
+		if (!empty($ret)) {
+			$ret['info']['time'] = $time;
+		}
+
+		Wikia::log(__METHOD__, __LINE__, "{$wordsCount} words checked / {$suggestionsCount} suggestions / done in {$time} sec.", true);
 
 		wfProfileOut(__METHOD__);
 		return $ret;
