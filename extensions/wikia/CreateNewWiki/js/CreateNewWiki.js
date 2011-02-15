@@ -373,6 +373,7 @@ var WikiBuilder = {
 				WikiBuilder.cityId = res.cityId;
 				WikiBuilder.finishCreateUrl = res.finishCreateUrl;
 				WikiBuilder.createStatus = res.status;
+				$('#UpgradeWiki .wiki-name').html(res.siteName);
 			}
 		);
 	}
