@@ -9,6 +9,11 @@ var ScavengerHunt = {
 		$().log(msg, 'ScavengerHunt');
 	},
 
+	//track events
+	track: function(fakeUrl) {
+		window.jQuery.tracker.byStr('scavengerhunt/' + fakeUrl);
+	},
+
 	//global init
 	init: function() {
 		//check if there is a need to initialize JS for start page
@@ -31,6 +36,8 @@ var ScavengerHunt = {
 			return;
 		}
 
+		ScavengerHunt.track('start/showButton');
+
 		$('<div class="scavenger-start-button" />').append(
 			$('<input type="button">')
 				.val(ScavengerHuntStartMsg)
@@ -50,6 +57,7 @@ var ScavengerHunt = {
 					return;
 				}
 			}
+
 			//prepare data to show immediately when user click image
 			var data = {
 				action: 'ajax',
@@ -67,6 +75,8 @@ var ScavengerHunt = {
 					return;
 				}
 
+				ScavengerHunt.track('game/hiddenImage/show/' + wgPageName);
+
 				//display image and attach handler to it
 				$('<img>')
 					.attr('src', json.hiddenImage)
@@ -80,6 +90,7 @@ var ScavengerHunt = {
 	//handler start button
 	onStartClick: function(e) {
 		$(this).remove();
+		ScavengerHunt.track('start/clickButton');
 
 		$.cookies.set('ScavengerHuntInProgress', window.ScavengerHuntStart, {hoursToLive:24*7});
 		$.showModal(
@@ -88,7 +99,15 @@ var ScavengerHunt = {
 			{
 				id: 'scavengerClueModal',
 				showCloseButton: false,
-				width: ScavengerHunt.MODAL_WIDTH
+				width: ScavengerHunt.MODAL_WIDTH,
+				callback: function() {
+					$('#scavengerClueModal').find('a.button').click(function(e) {
+						ScavengerHunt.track('start/modalClue/clickButton');
+						if (!$(this).attr('href')) {
+							$('#scavengerClueModal').closest('.modalWrapper').closeModal();
+						}
+					});
+				}
 			}
 		);
 	},
@@ -96,6 +115,7 @@ var ScavengerHunt = {
 	//handler hidden article image
 	onHiddenImgClick: function(e) {
 		$(this).remove();
+		ScavengerHunt.track('game/hiddenImage/click');
 
 		ScavengerHunt.log(ScavengerHunt.articleData.visitedIds);
 		if (!ScavengerHunt.articleData.completed) {
@@ -109,7 +129,7 @@ var ScavengerHunt = {
 
 	showClue: function() {
 		$.cookies.set('ScavengerHuntArticlesFound', ScavengerHunt.articleData.visitedIds, {hoursToLive:24*7});
-
+		ScavengerHunt.track('game/modalClue/show');
 		$.showModal(
 			ScavengerHunt.articleData.clueTitle,
 			ScavengerHunt.articleData.clueContent,
@@ -118,19 +138,19 @@ var ScavengerHunt = {
 				showCloseButton: false,
 				width: ScavengerHunt.MODAL_WIDTH,
 				callback: function() {
-					var button = $('#scavengerClueModal').find('a.button');
-					if (!button.attr('href')) {
-						button.click(function(e){
-							e.preventDefault();
+					$('#scavengerClueModal').find('a.button').click(function(e) {
+						ScavengerHunt.track('game/modalClue/clickButton');
+						if (!$(this).attr('href')) {
 							$('#scavengerClueModal').closest('.modalWrapper').closeModal();
-						});
-					}
+						}
+					});
 				}
 			}
 		);
 	},
 
 	showEntryForm: function() {
+		ScavengerHunt.track('game/modalEntryForm/show');
 		$.showModal(
 			ScavengerHunt.articleData.entryFormTitle,
 			ScavengerHunt.articleData.entryFormContent,
@@ -142,7 +162,8 @@ var ScavengerHunt = {
 				callback: function() {
 					var w = $('#scavengerEntryFormModal').closest('.modalWrapper');
 					var b = w.find('.scavenger-clue-button input[type=submit]');
-					b.click(function(e){
+					b.click(function(e) {
+						ScavengerHunt.track('game/modalEntryForm/clickButton');
 						e.preventDefault();
 						b.attr('disabled','disabled');
 						var ids = $.cookies.get('ScavengerHuntArticlesFound');
@@ -160,12 +181,14 @@ var ScavengerHunt = {
 						$.getJSON(wgScript, formdata, function(json) {
 							ScavengerHunt.goodbyeData = json;
 							if (json.status) {
+								ScavengerHunt.track('game/modalEntryForm/saveOk');
 								w.closeModal();
 								// XXX: clear game cookies if entry is saved
 								ScavengerHunt.showGoodbyeForm();
 							} else {
+								ScavengerHunt.track('game/modalEntryForm/saveError');
 								ScavengerHunt.log('entryForm error: ' + json.error);
-								b.attr('disabled','');
+								b.attr('disabled', '');
 							}
 						});
 					});
@@ -182,6 +205,7 @@ var ScavengerHunt = {
 			return false;
 		}
 
+		ScavengerHunt.track('game/modalGoodbye/show');
 		$.showModal(
 			ScavengerHunt.goodbyeData.goodbyeTitle,
 			ScavengerHunt.goodbyeData.goodbyeContent,
@@ -190,7 +214,8 @@ var ScavengerHunt = {
 				width: ScavengerHunt.MODAL_WIDTH,
 				callback: function() {
 					var w = $('#scavengerEntryFormModal').closest('.modalWrapper');
-					w.find('.scavenger-clue-button a').click(function(e){
+					w.find('.scavenger-clue-button a').click(function(e) {
+						ScavengerHunt.track('game/modalGoodbye/clickButton');
 						e.preventDefault();
 						w.closeModal();
 					});
