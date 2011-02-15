@@ -25,7 +25,7 @@ class CreateNewWikiModule extends Module {
 	var $skipWikiaPlus;
 
 	public function executeIndex() {
-		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $fbOnLoginJsOverride, $wgRequest, $wgPageQuery;
+		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgPageQuery;
 		wfProfileIn( __METHOD__ );
 		
 		// hide some default oasis UI things
@@ -33,6 +33,7 @@ class CreateNewWikiModule extends Module {
 		$wgSuppressPageHeader = true;
 		$wgSuppressFooter = false;
 		$wgSuppressAds = true;
+		$wgSuppressToolbar = true;
 		
 		// fbconnected means user has gone through step 2 to login via facebook.  
 		// Therefore, we need to reload some values and start at the step after signup/login
@@ -120,6 +121,7 @@ class CreateNewWikiModule extends Module {
 			$createWiki->create();
 			$this->status = 'ok';
 			$this->cityId = $createWiki->getWikiInfo('city_id');
+			$this->siteName = $createWiki->getWikiInfo('sitename');
 			$finishCreateTitle = GlobalTitle::newFromText("FinishCreate", NS_SPECIAL, $this->cityId);
 			$this->finishCreateUrl = empty($wgDevelDomains) ? $finishCreateTitle->getFullURL() : str_replace('.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL());
 		}
