@@ -195,11 +195,11 @@ class UserMailer {
 			// Create the mail object using the Mail::factory method
 			// Wikia: for now, if the email is to us, use the new system.
 			global $wgForceSendgridEmail, $wgForceSchwartzEmail;
-			$isToUs = ((strpos($headers['To'], "@wikia-inc.com") !== false)
+			$useSendgrid = ((strpos($headers['To'], "@wikia-inc.com") !== false)
 					|| (strpos($headers['To'], "@wikia.com") !== false)
 					|| (strpos($headers['To'], "@hotmail.com") !== false));
 
-			if ($wgForceSendgridEmail || (!$wgForceSchwartzEmail && $isToUs)) {
+			if ($wgForceSendgridEmail || (!$wgForceSchwartzEmail && $useSendgrid)) {
 				$mail_object =& Mail::factory('wikiadb');
 			} else if ($wgForceSchwartzEmail || is_array($wgSchwartzMailer)) {
 				$mail_object =& Mail::factory('theschwartzhttp', $wgSchwartzMailer);
@@ -373,11 +373,11 @@ class UserMailer {
 		// Create the mail object using the Mail::factory method
 		// Wikia: for now, if the email is to us, use the new system.
 		global $wgForceSendgridEmail, $wgForceSchwartzEmail;
-		$isToUs = ((strpos($headers['To'], "@wikia-inc.com") !== false)
+		$useSendgrid = ((strpos($headers['To'], "@wikia-inc.com") !== false)
 				|| (strpos($headers['To'], "@wikia.com") !== false)
 				|| (strpos($headers['To'], "@hotmail.com") !== false));
 
-		if ($wgForceSendgridEmail || (!$wgForceSchwartzEmail && $isToUs)){
+		if ($wgForceSendgridEmail || (!$wgForceSchwartzEmail && $useSendgrid)){
 			$mail_object =& Mail::factory('wikiadb');
 		} else if ($wgForceSchwartzEmail || is_array( $wgSchwartzMailer )) {
 			$mail_object =& Mail::factory('theschwartzhttp', $wgSchwartzMailer);
