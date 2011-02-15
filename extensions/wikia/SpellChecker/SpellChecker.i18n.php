@@ -6,7 +6,7 @@ $messages['en'] = array(
 	'spellchecker-desc' => 'Provides spell checking interface for enchant PHP module',
 	'enablespellchecker' => 'Enable spellchecker',
 	'spellchecker-info' => 'Spell checker information',
-	'spellchecker-info-languages' => 'Available languages',
+	'spellchecker-info-languages' => 'Available languages ($1)',
 	'spellchecker-info-provider' => 'Provider',
 	'spellchecker-info-dictionaries' => 'Available dictionaries',
 

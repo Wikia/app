@@ -17,6 +17,20 @@ class SpellCheckerService extends Service {
 	}
 
 	/**
+	 * Check whether dictionary is loaded
+	 */
+	public function isLoaded() {
+		return $this->dict->isLoaded();
+	}
+
+	/**
+	 * Return information about currently used dictionary
+	 */
+	public function getInfo() {
+		return $this->dict->isLoaded() ? $this->dict->describe() : false;
+	}
+
+	/**
 	 * Add words from:
 	 *   * $wgSpellCheckerExtraWordsGlobal
 	 *   * $wgSpellCheckerExtraWords(langcode)
@@ -91,5 +105,12 @@ class SpellCheckerService extends Service {
 
 		wfProfileOut(__METHOD__);
 		return $ret;
+	}
+
+	/**
+	 * Perform spell checking for a single word
+	 */
+	public function checkWord($word) {
+		return $this->dict->isLoaded() ? $this->dict->quickCheck($word) : null;
 	}
 }
