@@ -433,15 +433,18 @@ $.getEvent = function(e, boundEl) {
 
 //see http://jquery-howto.blogspot.com/2009/09/get-url-parameters-values-with-jquery.html
 $.extend({
+	_urlVars: null,
 	getUrlVars: function() {
-		var vars = [], hash;
-		var hashes = window.location.search.slice(window.location.search.indexOf('?') + 1).split('&');
-		for (var i = 0; i < hashes.length; i++) {
-			hash = hashes[i].split('=');
-			vars.push(hash[0]);
-			vars[hash[0]] = hash[1];
+		if($._urlVars === null){
+			var hash,
+			hashes = window.location.search.slice(window.location.search.indexOf('?') + 1).split('&');
+			$._urlVars = {};
+			for (var i = 0, j = hashes.length; i < j; i++) {
+				hash = hashes[i].split('=');
+				$._urlVars[hash[0]] = hash[1];
+			}
 		}
-		return vars;
+		return $._urlVars;
 	},
 	getUrlVar: function(name) {
 		return $.getUrlVars()[name];

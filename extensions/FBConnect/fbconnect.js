@@ -108,13 +108,13 @@ $(document).ready(function() {
 		ev.preventDefault();
 	});
 
-	if( $.getUrlVar( "ref" ) == "fbfeed" ) {
-		var suffix = "";
-		var type = $.getUrlVar( 'fbtype' );
-		if( type != "" ) {
-			suffix = "/" + type;
+	if( $.getUrlVar( 'ref' ) === 'fbfeed' ) {
+		var suffix = '',
+		type = $.getUrlVar( 'fbtype' );
+		if( type !== '' ) {
+			suffix = ['/', type].join('');
 		}
-		WET.byStr( 'FBconnect/userfromfb' + suffix );
+		WET.byStr( ['FBconnect/userfromfb', suffix].join('') );
 	}
 });
 
