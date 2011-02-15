@@ -112,9 +112,9 @@ $(document).ready(function() {
 		var suffix = '',
 		type = $.getUrlVar( 'fbtype' );
 		if( type !== '' ) {
-			suffix = ['/', type].join('');
+			suffix = '/' + type;
 		}
-		WET.byStr( ['FBconnect/userfromfb', suffix].join('') );
+		WET.byStr( 'FBconnect/userfromfb' + suffix );
 	}
 });
 
