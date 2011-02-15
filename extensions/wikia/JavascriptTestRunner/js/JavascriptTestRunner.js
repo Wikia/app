@@ -84,9 +84,49 @@
 	 * Selenium output
 	 */
 	var seleniumOutput = function() {}
+	seleniumOutput.prototype.getXml = function( data ) {
+		var Xml = window.WikiaXml;
+		var xml = '';
+		var suiteId = 0;
+		for (var suiteName in data.suites) {
+			var suite = data.suites[suiteName];
+			var errors = 0, failures = 0, skipped = 0, tests = 0;
+			
+			var suiteXml = '';
+			for (var testName in suite.tests) {
+				var test = suite.tests[testName];
+				var testContent = '';
+				tests++;
+				if (test.status != 'success') {
+					testContent += Xml.element('failure',Xml.cdata(test.info||''));
+					failures++;
+				}
+				suiteXml += Xml.element('testcase',testContent,{
+					name: testName
+				});
+			};
+			
+			suiteXml = Xml.element('properties') + suiteXml;
+			xml += Xml.element('testsuite',suiteXml,{
+				name: suiteName,
+				'package': 'com.wikia.javascript.tests',
+				errors: errors,
+				failures: failures,
+				skipped: skipped,
+				tests: tests,
+				id: suiteId,
+				time: suite.time
+			});
+			suiteId++;
+		}
+		xml = Xml.intro() + Xml.element('testsuites',xml);
+		return xml;
+	};
 	seleniumOutput.prototype.handle = function( data ) {
-		
-	}
+		var xml = this.getXml(data);
+		window.jtr_xml = xml;
+		console.log(xml);
+	};
 	JTR.outputs.selenium = seleniumOutput;
 	
 	
