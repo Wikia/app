@@ -1268,7 +1268,12 @@ if (Liftium.e(Liftium.cookie(luc_name))) {
 	Liftium.d("LUC is " + luc_value, 1);
 }
 luc_value++;
-Liftium.cookie(luc_name, luc_value, {domain: ".wikia.com", path: "/", expires: 30 * 86400 * 1000});
+var domain = document.domain.match(/wikia(-dev)?\.com$/);
+if (!Liftiume.e(domain)) {
+	Liftium.cookie(luc_name, luc_value, {domain: domain[0], path: "/", expires: 30 * 86400 * 1000});
+} else {
+	luc_value = 9999999;
+}
 Liftium.luc = {name: luc_name, value: luc_value};
 
 	if (Liftium.e(LiftiumOptions.pubid)){
@@ -1498,12 +1503,14 @@ Liftium.isValidCriteria = function (t, slotname){
 
 if (t.tag_id == 844) {
 	Liftium.d("it's 844", 1, t);
+	if (document.domain.match(/wikia(-dev)?\.com$/)) {
 	if (!Liftium.e(Liftium.luc)) {
 		Liftium.d("luc is...", 1, Liftium.luc);
 		if (Liftium.luc.value > 3) {
 			Liftium.d("luc_value > 3, bailing out", 1);
 			return false;
 		}
+	}
 	}
 }
 
