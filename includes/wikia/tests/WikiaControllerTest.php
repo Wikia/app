@@ -7,7 +7,7 @@ require_once dirname(__FILE__) . '/_fixtures/TestController.php';
  */
 class WikiaControllerTest extends PHPUnit_Framework_TestCase {
 
-	public function testGeneratingHelpDataProvider() {
+	public function generatingHelpDataProvider() {
 		return array(
 			array( 'json', '{' ),
 			array( 'html', '<' )
@@ -15,7 +15,7 @@ class WikiaControllerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @dataProvider testGeneratingHelpDataProvider
+	 * @dataProvider generatingHelpDataProvider
 	 */
 	public function testGeneratingHelp( $format, $prefix ) {
 		$response = F::build( 'App' )->dispatch( array( 'controller' => 'Test', 'method' => 'help', 'format' => $format ));
@@ -25,7 +25,7 @@ class WikiaControllerTest extends PHPUnit_Framework_TestCase {
 		$this->assertStringStartsWith( $prefix, $response->toString() );
 	}
 
-	public function testRedirectingDataProvider() {
+	public function redirectingDataProvider() {
 		return array(
 			array( true ),
 			array( false )
@@ -33,7 +33,7 @@ class WikiaControllerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @dataProvider testRedirectingDataProvider
+	 * @dataProvider redirectingDataProvider
 	 */
 	public function testRedirecting( $resetResponse ) {
 		$response = F::build( 'App' )->dispatch( array( 'controller' => 'Test', 'method' => 'redirectTest', 'resetResponse' => $resetResponse ));
