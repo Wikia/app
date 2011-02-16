@@ -30,6 +30,7 @@ $messages['en'] = array(
 	'scavengerhunt-list-edit' => 'edit',
 
 	'scavengerhunt-label-dialog-check' => '(show dialog)',
+	'scavengerhunt-label-image-check' => '(show image)',
 	'scavengerhunt-label-general' => 'General',
 	'scavengerhunt-label-name' => 'Name:',
 	'scavengerhunt-label-landing-title' => 'Landing page name (article title on this wiki):',

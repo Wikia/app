@@ -87,6 +87,7 @@
 		<div>
 			<label>
 				<?= wfMsg('scavengerhunt-label-article-hidden-image') ?>
+				<a href="#" class="scavenger-image-check"><?= wfMsg('scavengerhunt-label-image-check') ?></a>
 				<br>
 				<input class="scavenger-image" type="text" name="articleHiddenImage[]" value="<?= $article['hiddenImage'] ?>">
 			</label>

@@ -16,26 +16,21 @@ var ScavengerHunt = {
 
 	//global init
 	init: function() {
+		var gameId = $.cookies.get('ScavengerHuntInProgress');
+
 		//check if there is a need to initialize JS for start page
-		if (typeof window.ScavengerHuntStart != 'undefined') {
+		if (typeof window.ScavengerHuntStart != 'undefined' && ('-' + window.ScavengerHuntStart) != gameId) {
 			ScavengerHunt.initStart();
 		}
 
 		//check if there is a need to initialize JS for game
-		var gameId = $.cookies.get('ScavengerHuntInProgress');
-		if (gameId) {
+		if (gameId && gameId.indexOf('-') != 0) {
 			ScavengerHunt.initGame(gameId);
 		}
 	},
 
 	//init starting page
 	initStart: function() {
-		//check if user haven't already started this game - do not show start button again
-		var gameInProgress = $.cookies.get('ScavengerHuntInProgress');
-		if (window.ScavengerHuntStart == gameInProgress) {
-			return;
-		}
-
 		ScavengerHunt.track('start/showButton');
 
 		$('<div class="scavenger-start-button" />').append(
@@ -50,14 +45,6 @@ var ScavengerHunt = {
 	initGame: function(gameId) {
 		//current article is taking part in the game that user is playing atm
 		if (gameId == window.ScavengerHuntArticleGameId) {
-			//check if user haven't already found this page - do not show it again
-			var found = $.cookies.get('ScavengerHuntArticlesFound');
-			if (found) {
-				if ($.inArray(''+wgArticleId, found.split(',')) != -1) {
-					return;
-				}
-			}
-
 			//prepare data to show immediately when user click image
 			var data = {
 				action: 'ajax',
@@ -68,7 +55,6 @@ var ScavengerHunt = {
 			};
 			$.getJSON(wgScript, data, function(json) {
 				ScavengerHunt.articleData = json;
-				//TODO: check `ScavengerHuntArticlesFound` cookie and return confirmed articles + update the cookie
 
 				if (!json.status) {
 					ScavengerHunt.log('cannot show hidden image - got broken data from server');
@@ -82,6 +68,7 @@ var ScavengerHunt = {
 					.attr('src', json.hiddenImage)
 					.click(ScavengerHunt.onHiddenImgClick)
 					.addClass('scavenger-hidden-image')
+					.css({left: json.hiddenImageOffset.left + 'px', top: json.hiddenImageOffset.top + 'px'})
 					.appendTo('#WikiaPage');
 			});
 		}
@@ -89,7 +76,6 @@ var ScavengerHunt = {
 
 	//handler start button
 	onStartClick: function(e) {
-		$(this).remove();
 		ScavengerHunt.track('start/clickButton');
 
 		$.cookies.set('ScavengerHuntInProgress', window.ScavengerHuntStart, {hoursToLive:24*7});
@@ -208,7 +194,7 @@ var ScavengerHunt = {
 
 	showGoodbyeForm: function() {
 		$.cookies.del('ScavengerHuntArticlesFound');
-		$.cookies.del('ScavengerHuntInProgress');
+		$.cookies.set('ScavengerHuntInProgress', '-' + $.cookies.get('ScavengerHuntInProgress'), {hoursToLive:24*7});
 		if (!ScavengerHunt.goodbyeData) {
 			ScavengerHunt.log('cannot show goodbye popup - no data available');
 			return false;
