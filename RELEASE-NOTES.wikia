@@ -1,3 +1,6 @@
+== Changes since release-008 ==
+* fb#2466: Sometimes comments didn't add or update properly (owen)
+
 == Changes since release-007 ==
 * fb#2524: RTE: image caption shows in black  (macbre)
 * fb#2462: RTE: apostrophes in nodes attributes are not handled correctly (macbre)
