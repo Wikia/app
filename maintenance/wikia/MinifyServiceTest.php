@@ -35,7 +35,7 @@ $minifiedSize = strlen($minified);
 $gzippedSize = strlen(gzcompress($minified));
 
 // results
-echo 'Merged code size:   ' . round($minifiedSize / 1024, 2). " kB\n";
+echo 'Minified code size: ' . round($minifiedSize / 1024, 2). " kB\n";
 echo 'Gzipped code size:  ' . round($gzippedSize / 1024, 2). " kB\n";
 
 echo "\nMinified in " . round($time * 1000) . " ms\n\n";
