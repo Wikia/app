@@ -40,10 +40,25 @@ class LookupUserPage extends SpecialPage {
 			$target = $wgRequest->getText( 'target' );
 		}
 
-		$this->showForm( $target );
+		$id = '';
+		if( $wgRequest->getText( 'mode' ) == 'by_id' ) {
+			$id = $target; #back up the number
+			$u = User::newFromId($id); #create
+			if( $u->loadFromId() ) { #test
+				$target = $u->getName(); #overwrite text
+			}
+		}
+
+		$emailUser = $wgRequest->getText( 'email_user' );
+		if($emailUser) {
+			$this->showForm( $emailUser, $id, $target );
+		}
+		else
+		{
+			$this->showForm( $target, $id );
+		}
 
 		if ( $target ) {
-			$emailUser = $wgRequest->getText( 'email_user' );
 			$this->showInfo( $target, $emailUser );
 		}
 	}
@@ -52,27 +67,57 @@ class LookupUserPage extends SpecialPage {
 	 * Show the LookupUser form
 	 * @param $target Mixed: user whose info we're about to look up
 	 */
-	function showForm( $target ) {
+	function showForm( $target, $id = '', $email = '' ) {
 		global $wgScript, $wgOut;
 		$title = htmlspecialchars( $this->getTitle()->getPrefixedText() );
 		$action = htmlspecialchars( $wgScript );
 		$target = htmlspecialchars( $target );
 		$ok = wfMsg( 'go' );
-		$username = wfMsg( 'username' );
+		$username_label = wfMsg( 'username' );
+		$email_label = wfMsg( 'email' ) ;
 		$inputformtop = wfMsg( 'lookupuser' );
 
 		$wgOut->addWikiMsg('lookupuser-intro');
 
 		$wgOut->addHTML( <<<EOT
 <fieldset>
-<legend>$inputformtop</legend>
+<legend>{$inputformtop}</legend>
 <form method="get" action="$action">
 <input type="hidden" name="title" value="{$title}" />
 <table border="0">
 <tr>
-<td align="right">$username</td>
-<td align="left"><input type="text" size="50" name="target" value="$target" />
-<td colspan="2" align="center"><input type="submit" value="$ok" /></td>
+<td align="right">$username_label</td>
+<td align="left"><input type="text" size="50" name="target" value="$target" /></td>
+<td align="center"><input type="submit" value="$ok" /></td>
+</tr>
+</table>
+</form>
+EOT
+		);
+
+		$wgOut->addHTML( <<<EOT
+<form method="get" action="$action">
+<input type="hidden" name="title" value="{$title}" />
+<table border="0">
+<tr>
+<td align="right">$email_label</td>
+<td align="left"><input type="text" size="50" name="target" value="{$email}" /></td>
+<td align="center"><input type="submit" value="$ok" /></td>
+</tr>
+</table>
+</form>
+EOT
+		);
+
+		$wgOut->addHTML( <<<EOT
+<form method="get" action="$action">
+<input type="hidden" name="title" value="{$title}" />
+<input type="hidden" name="mode" value="by_id" />
+<table border="0">
+<tr>
+<td align="right">ID</td>
+<td align="left"><input type="text" size="10" name="target" value="$id" /></td>
+<td align="center"><input type="submit" value="$ok" /></td>
 </tr>
 </table>
 </form>
@@ -133,6 +178,7 @@ EOT
 				$selectForm = Xml::openElement( 'select', array( 'id' => 'email_user', 'name' => "email_user" ) );
 				$selectForm .= "\n" . implode( "\n", $options ) . "\n";
 				$selectForm .= Xml::closeElement( 'select' );
+				$selectForm .= "({$count})";
 			
 				$wgOut->addHTML( <<<EOT
 <fieldset>
@@ -180,10 +226,10 @@ EOT
 			$wgOut->addWikiText( '*' . wfMsgForContent( 'lookupuser-toollinks', $name, urlencode($name) ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-id', $user->getId() ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-email', $email, $name ) );
+			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-info-authenticated', $authenticated ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-realname', $user->getRealName() ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-registration', $registration ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched ) ) );
-			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-info-authenticated', $authenticated ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-useroptions' ) . '<br />' . $optionsString );
 		}
 	}
