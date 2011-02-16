@@ -18,7 +18,10 @@ class View {
 		}
 
 		ob_start();
-		require $this->templatePath;
+		// BugId:2549
+		if (file_exists($this->templatePath)) {
+			require $this->templatePath;
+		}
 		$out = ob_get_clean();
 
 		wfProfileOut(__METHOD__ . " (" . substr(strrchr($this->templatePath, "/"), 1, -4) .")");
