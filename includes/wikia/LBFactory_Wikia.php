@@ -29,7 +29,7 @@ class LBFactory_Wikia extends LBFactory_Multi {
 			} else {
 				$section = 'DEFAULT';
 			}
-		} elseif( $smwgUseExternalDB && substr($dbName, 0, 4 ) == "smw+" && isset( $this->sectionsByDB[ "smw+" ] ) ) {
+		} elseif( $this->isSMWClusterActive ) {
 			$section = "smw";
 			wfDebugLog( "connect", __METHOD__ . ": section smw choosen for $wiki\n" );
 		} else {
@@ -45,6 +45,40 @@ class LBFactory_Wikia extends LBFactory_Multi {
 		wfDebugLog( "connect", __METHOD__ . ": section {$this->lastSection}, wiki {$this->lastWiki}\n" );
 
 		return $section;
+	}
+
+	/**
+	 * Get the database name and prefix based on the wiki ID
+	 *
+	 * Handle SMW database split info
+	 *
+	 * @author Krzysztof Krzyżaniak (eloy)
+	 */
+	function getDBNameAndPrefix( $wiki = false ) {
+		global $smwgUseExternalDB;
+		$this->isSMWClusterActive = false;
+
+		if ( $wiki === false ) {
+			global $wgDBname, $wgDBprefix;
+			return array( $wgDBname, $wgDBprefix );
+		} else {
+			list( $dbName, $prefix ) = wfSplitWikiID( $wiki );
+			/**
+			 * check for smw cluster thingy
+			 */
+			if( $smwgUseExternalDB ) {
+				/**
+				 * set flag, strip database name
+				 */
+				if( substr($dbName, 0, 4 ) == "smw+" && isset( $this->sectionsByDB[ "smw+" ] ) ) {
+					$this->isSMWClusterActive = true;
+					$dbName = substr( $dbName, 4 );
+					wfDebugLog( "connect", __METHOD__ . ": smw+ cluster is active, dbname changed to $dbName\n", true );
+				}
+			}
+
+			return array( $dbName, $prefix );
+		}
 	}
 
 }
