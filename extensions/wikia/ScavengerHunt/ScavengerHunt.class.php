@@ -32,7 +32,7 @@ class ScavengerHunt {
 	protected function getMemcKey( $arguments = null ) {
 		$args = func_get_args();
 		array_unshift($args, 'wfMemcKey');
-		return call_user_func_array(array(WF::build('App'),'runFunction'),$args);
+		return call_user_func_array(array(WF::build('App'), 'runFunction'), $args);
 	}
 
 	public function parse( $text ) {
@@ -40,7 +40,7 @@ class ScavengerHunt {
 			$this->parser = WF::build('Parser');
 			$this->parser->setOutputType(OT_HTML);
 			$this->parserOptions = WF::build('ParserOptions');
-			$this->fakeTitle = WF::build('FakeTitle',array(''));
+			$this->fakeTitle = WF::build('FakeTitle', array(''));
 		}
 
 		return $this->parser->parse($text, $this->fakeTitle, $this->parserOptions, false)->getText();
@@ -48,12 +48,12 @@ class ScavengerHunt {
 
 	public function parseCached( $text ) {
 		$hash = md5(self::HASH_SALT . $text);
-		$key = $this->getMemcKey(__CLASS__,'parse-text-cache',$hash);
+		$key = $this->getMemcKey(__CLASS__, 'parse-text-cache', $hash);
 		$cache = $this->getCache();
 		$parsed = $cache->get($key);
 		if (!is_string($parsed)) {
 			$parsed = $this->parse($text);
-			$cache->set($key,$parsed,self::CACHE_TTL);
+			$cache->set($key, $parsed, self::CACHE_TTL);
 		}
 		return $parsed;
 	}
@@ -104,12 +104,14 @@ class ScavengerHunt {
 
 	public function getGoodbyeHtml( ScavengerHuntGame $game ) {
 		// build entry form html
+		$landingTitle = WF::build('Title', array($game->getLandingTitle()), 'newFromText');
+		$landingTitle = empty($landingTitle) ? null : $landingTitle->getFullURL();
+
 		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
 		$template->set_vars(array(
 			'title' => $game->getGoodbyeTitle(),
 			'text' => $this->parseCached( $game->getGoodbyeText() ),
-			'buttonText' => wfMsg('scavengerhunt-goodbye-button-text'),
-			'buttonTarget' => '',
+			'shareUrl' => $landingTitle,
 			'imageSrc' => $game->getEntryFormImage(),
 			'imageOffset' => $game->getEntryFormImageOffset(),
 		));
