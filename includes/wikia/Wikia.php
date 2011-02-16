@@ -1371,7 +1371,7 @@ class Wikia {
 	/**
 	 * Returns true. Replace UNSUBSCRIBEURL with message and link to Special::Unsubscribe page
 	 */
-	static public function ComposeMail( $user, $body, $bodyHTML, $subject ) {
+	static public function ComposeMail( $user, &$body, &$bodyHTML, &$subject ) {
 		global $wgCityId;
 
 		if ( !$user instanceof User ) {
@@ -1396,13 +1396,13 @@ class Wikia {
 		$ts = time();
 		# unsubscribe params
 		$hash_url = Wikia::buildUserSecretKey( $user->getName(), 'sha256' );
-		
+
 		$url = ( $hash_url ) ? $oTitle->getFullURL( array( 'key' => $hash_url ) ) : '';
 		$body = str_replace( '$UNSUBSCRIBEURL', $url, $body );
 		if ( $bodyHTML ) {
 			$bodyHTML = str_replace( '$UNSUBSCRIBEURL', $url, $bodyHTML );
 		}
-		
+
 		return true;
 	}
 
@@ -1531,24 +1531,24 @@ class Wikia {
 	static public function buildUserSecretKey( $username, $hash_algorithm = 'sha256' ) {
 		global $wgWikiaAuthTokenKeys;
 		wfProfileIn( __METHOD__ );
-		
+
 		$oUser = User::newFromName( $username );
 		if ( !is_object($oUser) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		
+
 		if ( 0 == $oUser->getId() ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-			 
+
 		$email = $oUser->getEmail();
 		if ( empty($email) ) {
 			wfProfileOut( __METHOD__ );
-			return false;			
+			return false;
 		}
-		
+
 		$ts = time();
 		$params = array(
 			'user' 			=> (string) $username,
@@ -1557,20 +1557,20 @@ class Wikia {
 		);
 
 		// Generate content verification signature
-		$data = serialize( $params );  
+		$data = serialize( $params );
 
 		// signature to compare
-		$signature = hash_hmac( $hash_algorithm, $data, $wgWikiaAuthTokenKeys[ 'private' ] );  
-		
+		$signature = hash_hmac( $hash_algorithm, $data, $wgWikiaAuthTokenKeys[ 'private' ] );
+
 		// encode public information
 		$public_information = array( $username, $ts, $signature, $wgWikiaAuthTokenKeys[ 'public' ] );
-		$result = strtr( base64_encode( implode( "|", $public_information ) ), '+/=', '-_,' );  
-		
+		$result = strtr( base64_encode( implode( "|", $public_information ) ), '+/=', '-_,' );
+
 		wfProfileOut( __METHOD__ );
-		
+
 		return $result;
 	}
-	
+
 
 	/**
 	 * Parse given message containing a wikitext list of items and return array of items
@@ -1602,22 +1602,22 @@ class Wikia {
 	static public function verifyUserSecretKey( $url, $hash_algorithm = 'sha256' ) {
 		global $wgWikiaAuthTokenKeys;
 		wfProfileIn( __METHOD__ );
-		
+
 		@list( $user, $signature1, $signature2, $public_key ) = explode("|", base64_decode( strtr($url, '-_,', '+/=') ));
-		
+
 		if ( empty( $user ) || empty( $signature1 ) || empty( $signature2 ) || empty ( $public_key) ) {
 			wfProfileOut( __METHOD__ );
-			return false;			
-		}		
+			return false;
+		}
 
 		# verification public key
 		if ( $wgWikiaAuthTokenKeys['public'] == $public_key ) {
-			$private_key = $wgWikiaAuthTokenKeys['private'];  
+			$private_key = $wgWikiaAuthTokenKeys['private'];
 		} else {
 			wfProfileOut( __METHOD__ );
-			return false;			
+			return false;
 		}
-		
+
 		$oUser = User::newFromName( $user );
 		if ( !is_object($oUser) ) {
 			wfProfileOut( __METHOD__ );
@@ -1628,29 +1628,29 @@ class Wikia {
 		$email = $oUser->getEmail();
 		$params = array(
 			'user'			=> (string) $user,
-			'signature1'	=> (string) $signature1, 
+			'signature1'	=> (string) $signature1,
 			'token'			=> (string) wfGenerateUnsubToken( $email, $signature1 )
 		);
-		
+
 		// message to hash
 		$message = serialize( $params );
-		
+
 		// computed signature
-		$hash = hash_hmac( $hash_algorithm, $message, $private_key ); 
+		$hash = hash_hmac( $hash_algorithm, $message, $private_key );
 
 		// compare values
 		if ( $hash != $signature2 ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $params;
-	}	
-	
+	}
+
 
 	/**
-	 * Sleep until wgDBLightMode is enable. This variable is used to disable (sleep) all 
+	 * Sleep until wgDBLightMode is enable. This variable is used to disable (sleep) all
 	 * maintanance scripts while something is wrong with performance
 	 *
 	 * @author Piotr Molski (moli) <moli at wikia-inc.com>
