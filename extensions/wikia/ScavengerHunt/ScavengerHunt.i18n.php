@@ -93,8 +93,6 @@ $messages['en'] = array(
 	'scavengerhunt-entry-form-name' => 'Your name:',
 	'scavengerhunt-entry-form-email' => 'Your e-mail address:',
 	'scavengerhunt-entry-form-submit' => 'Submit entry',
-
-	'scavengerhunt-goodbye-button-text' => 'Bye',
 );
 
 /** Message documentation (Message documentation) */
@@ -109,4 +107,3 @@ $messages['de'] = array(
 	'scavengerhunt-label-name' => 'Name:',
 	'scavengerhunt-entry-form-name' => 'Dein Name:',
 );
-
