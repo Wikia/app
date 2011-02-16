@@ -103,7 +103,17 @@ class CorporateSiteModule extends Module {
 		}
 
 		$this->posts = $posts;
+	}
 
+	public function executeSalesSupport () {
+
+		global $wgUser;
+		wfProfileIn(__METHOD__);
+
+		// add CSS for this module
+		$this->isAdmin = $wgUser->isAllowed('editinterface');
+
+		wfProfileOut(__METHOD__);
 	}
 
 	public function executePopularStaffPosts () {
