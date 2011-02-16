@@ -10,10 +10,10 @@ public class LatestPhotosTest extends BaseTest {
 	@Test(groups={"oasis","CI"})
 	public void testLatestPhotos() throws Exception {
 		loginAsRegular();
-		uploadImage(DEFAULT_UPLOAD_IMAGE_URL, "LatestPhotos1.png");
-		uploadImage(DEFAULT_UPLOAD_IMAGE_URL, "LatestPhotos2.png");
-		uploadImage(DEFAULT_UPLOAD_IMAGE_URL, "LatestPhotos3.png");
-		uploadImage(DEFAULT_UPLOAD_IMAGE_URL, "LatestPhotos4.png");
+		uploadImage(DEFAULT_UPLOAD_IMAGE_URL, "LatestPhotos1.gif");
+		uploadImage(DEFAULT_UPLOAD_IMAGE_URL, "LatestPhotos2.gif");
+		uploadImage(DEFAULT_UPLOAD_IMAGE_URL, "LatestPhotos3.gif");
+		uploadImage(DEFAULT_UPLOAD_IMAGE_URL, "LatestPhotos4.gif");
 
 		session().open("index.php?title=Special:Random");
 		session().waitForPageToLoad(this.getTimeout());

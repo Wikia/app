@@ -32,7 +32,8 @@ import org.apache.commons.configuration.XMLConfiguration;
  * Base class for all tests in Selenium Grid Java examples.
  */
 public class BaseTest {
-	protected static final String DEFAULT_UPLOAD_IMAGE_URL = "http://images.wikia.com/wikiaglobal/images/b/bc/Wiki.png";
+	// can not be PNG and must be larger than 2kB
+	protected static final String DEFAULT_UPLOAD_IMAGE_URL = "http://www.google.com/logos/chopin10-hp.gif";
 	protected String seleniumHost;
 	protected int    seleniumPort;
 	protected String browser;

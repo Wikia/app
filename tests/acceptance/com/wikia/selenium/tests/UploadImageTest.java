@@ -9,7 +9,7 @@ import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class UploadImageTest extends BaseTest {
-    private String uploadFileUrl = "http://images.wikia.com/wikiaglobal/images/b/bc/Wiki.png";
+	private String uploadFileUrl = "http://images.wikia.com/wikiaglobal/images/b/bc/Wiki.png";
 
 	@Test(groups={"CI"})
 	public void testNormalUploadImage() throws Exception {
