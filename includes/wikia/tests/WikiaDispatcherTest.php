@@ -1,0 +1,60 @@
+<?php
+
+require_once dirname(__FILE__) . '/_fixtures/TestController.php';
+
+/**
+ * @group mwabstract
+ */
+class WikiaDispatcherTest extends PHPUnit_Framework_TestCase {
+
+	/**
+	 * @var WikiaDispatcher
+	 */
+	protected $object = null;
+
+	protected function setUp() {
+		$this->object = new WikiaDispatcher();
+	}
+
+	public function testDispatchUnknownOrEmptyController() {
+		$app = $this->getMock( 'WikiaApp' );
+
+		$response = $this->object->dispatch( $app );
+		$this->assertTrue($response->hasException());
+		$this->assertInstanceOf( 'WikiaException', $response->getException());
+		$this->assertEquals(WikiaResponse::RESPONSE_CODE_ERROR, $response->getCode());
+
+		$response = $this->object->dispatch( $app, new WikiaHTTPRequest( array( 'controller' => 'nonExistentController' ) ) );
+		$this->assertTrue($response->hasException());
+		$this->assertInstanceOf( 'ReflectionException', $response->getException());
+		$this->assertEquals(WikiaResponse::RESPONSE_CODE_ERROR, $response->getCode());
+	}
+
+	public function testDispatchUnknownMethod() {
+		$app = $this->getMock( 'WikiaApp' );
+
+		$response = $this->object->dispatch( $app, new WikiaHTTPRequest( array( 'controller' => 'Test', 'method' => 'nonExistentMethod' ) ) );
+		$this->assertTrue($response->hasException());
+		$this->assertInstanceOf( 'WikiaException', $response->getException());
+		$this->assertEquals(WikiaResponse::RESPONSE_CODE_ERROR, $response->getCode());
+	}
+
+	public function testDispatchForbiddenMethod() {
+		$app = $this->getMock( 'WikiaApp' );
+
+		$response = $this->object->dispatch( $app, new WikiaHTTPRequest( array( 'controller' => 'Test', 'method' => 'jsonOnly' ) ) );
+		$this->assertTrue($response->hasException());
+		$this->assertInstanceOf( 'WikiaException', $response->getException());
+		$this->assertEquals(WikiaResponse::RESPONSE_CODE_FORBIDDEN, $response->getCode());
+	}
+
+	public function testDispatchInternal() {
+		//$app = $this->getMock( 'WikiaApp' );
+
+		$response = $this->object->dispatch( F::build('App'), new WikiaHTTPRequest( array( 'controller' => 'Test', 'method' => 'sendTest' ) ) );
+
+		$this->assertTrue($response->hasException());
+		$this->assertInstanceOf( 'ReflectionException', $response->getException());
+		$this->assertEquals(WikiaResponse::RESPONSE_CODE_ERROR, $response->getCode());
+	}
+}

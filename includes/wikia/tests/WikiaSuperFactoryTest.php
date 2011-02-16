@@ -11,9 +11,10 @@ class WikiaSuperFactoryTest extends PHPUnit_Framework_TestCase {
 	const TEST_TYPE = '-x-TestType-x-';
 	const TEST_DEFAULT_TYPE = '-x-TestDefaultType-x-';
 	const TEST_BAR = '-x-TestBar-x-';
+	const TEST_HELLO_WORLD = 'Hell0W0rld!';
 
 	protected function setUp() {
-		WikiaSuperFactory::addClassConstructor('WikiaSuperFactoryTestClass');
+		//WikiaSuperFactory::addClassConstructor('WikiaSuperFactoryTestClass');
 		WikiaSuperFactory::addClassConstructor('WikiaSuperFactoryTestClass', array( 'type' => self::TEST_DEFAULT_TYPE), 'newFromTypeAndBar');
 	}
 
@@ -55,6 +56,13 @@ class WikiaSuperFactoryTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(0, $object->id);
 		$this->assertEquals(self::TEST_DEFAULT_TYPE, $object->type);
 		$this->assertEquals(self::TEST_BAR, $object->bar);
+
+		// call factory constructor that isn't configured in factory
+		$object= WikiaSuperFactory::build('WikiaSuperFactoryTestClass', array( 'type' => self::TEST_TYPE ), 'newFromType');
+
+		$this->assertInstanceOf('WikiaSuperFactoryTestClass', $object);
+		$this->assertEquals(0, $object->id);
+		$this->assertEquals(self::TEST_TYPE, $object->type);
 	}
 
 	public function testBuildWithClassSetters() {
@@ -109,6 +117,11 @@ class WikiaSuperFactoryTest extends PHPUnit_Framework_TestCase {
 
 		$this->setExpectedException('WikiaException');
 		WikiaSuperFactory::addClassConstructor('WikiaSuperFactoryTestClass');
+	}
+
+	public function testNoArgsConstructor() {
+		$bar = WikiaSuperFactory::build('WikiaSuperFactoryTestClass2');
+		$this->assertEquals(self::TEST_HELLO_WORLD, $bar->helloWorld());
 	}
 
 	public function testUnsettingInstanceDoesNotResetConstructors() {
