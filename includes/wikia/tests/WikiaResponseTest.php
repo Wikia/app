@@ -169,7 +169,7 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 		        ->with( $this->equalTo( 'wgAutoloadClasses' ) )
 		        ->will( $classExists ? $this->returnValue( array( __CLASS__ . 'Controller' => __FILE__ ) ) : $this->returnValue( array() ) );
 
-		WF::setInstance( 'App', $appMock );
+		F::setInstance( 'App', $appMock );
 
 		if( !$classExists ) {
 			$this->setExpectedException( 'WikiaException' );
@@ -180,7 +180,7 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( (dirname( __FILE__ ) . '/templates/' . __CLASS__ . '_hello.php'), $this->object->getTemplatePath() );
 		}
 
-		WF::setInstance( 'App', $app );
+		F::setInstance( 'App', $app );
 	}
 
 }
