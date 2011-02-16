@@ -40,7 +40,7 @@ class AjaxPollClass {
 	 * @param array $params: atrributions
 	 * @param Object $parser: Wiki Parser object
 	 */
-	static public function renderFromTag( $input, $params, &$parser ) {
+	static public function renderFromTag( $input, $params, $parser ) {
 		global $wgOut;
 
 		/**
@@ -406,12 +406,12 @@ JS;
 			"total" => $total,
 			"status" => $status
 		);
-		
+
 		// Purge the vote stats.
 		global $wgMemc;
 		$memcKey = wfMemcKey(self::MEMC_PREFIX_GETVOTES, $this->mId);
 		$wgMemc->delete($memcKey);
-		
+
 		wfProfileOut( __METHOD__ );
 		return $response;
 	}
