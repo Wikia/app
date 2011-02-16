@@ -11,13 +11,20 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 	const TEST_VAL_NAME = 'testMsg';
 	const TEST_VAL_VALUE = 'This is a test value!';
 
+	protected $app = null;
+
 	/**
 	 * @var WikiaResponse
 	 */
 	protected $object = null;
 
 	protected function setUp() {
+		$this->app = F::build( 'App' );
 		$this->object = $this->getMock( 'WikiaResponse', array( 'sendHeader' ), array( 'html' ) );
+	}
+
+	protected function tearDown() {
+		F::setInstance( 'App', $this->app );
 	}
 
 	public function settingHeadersDataProvider() {
@@ -161,8 +168,6 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider buildingTemplatePathDataProvider
 	 */
 	public function testBuildingTemplatePath( $classExists ) {
-		$app = F::build( 'App' );
-
 		$appMock = $this->getMock( 'WikiaApp', array( 'getGlobal' ) );
 		$appMock->expects( $this->once() )
 		        ->method( 'getGlobal' )
@@ -179,8 +184,6 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 		if( $classExists ) {
 			$this->assertEquals( (dirname( __FILE__ ) . '/templates/' . __CLASS__ . '_hello.php'), $this->object->getTemplatePath() );
 		}
-
-		F::setInstance( 'App', $app );
 	}
 
 }
