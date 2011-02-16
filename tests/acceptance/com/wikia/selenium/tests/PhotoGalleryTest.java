@@ -11,12 +11,12 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class PhotoGalleryTest extends BaseTest {
-    private String uploadFileUrl = "http://images.wikia.com/wikiaglobal/images/b/bc/Wiki.png";
+	private String uploadFileUrl = "http://www.google.com/logos/chopin10-hp.gif";
 	private static final String testArticleName = "WikiaPhotoGalleryTest";
 
 	// let's create an article on which view mode tests will be performed
 	private void prepareTestArticle() throws Exception {
-		editArticle(PhotoGalleryTest.testArticleName, "Wikia automated test for PhotoGallery\n\n===Gallery===\n\n<gallery>\nWiki.png\n</gallery>\n\n===Slideshow===\n\n<gallery type=\"slideshow\">\nWiki.png|'''Caption'''\n</gallery>\n\n[[Category:Wikia tests]]");
+		editArticle(PhotoGalleryTest.testArticleName, "Wikia automated test for PhotoGallery\n\n===Gallery===\n\n<gallery>\nchopin10-hp.gif\n</gallery>\n\n===Slideshow===\n\n<gallery type=\"slideshow\">\nWiki.png|'''Caption'''\n</gallery>\n\n[[Category:Wikia tests]]");
 		session().waitForPageToLoad(this.getTimeout());
 	}
 
