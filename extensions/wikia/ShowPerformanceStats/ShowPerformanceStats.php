@@ -40,7 +40,7 @@ function wfGetPerformanceStats(){
 
 	$COOKIE_NAME = "loadtime";
 	if(isset($_COOKIE[$COOKIE_NAME])){
-		$data = split(",", $_COOKIE[$COOKIE_NAME]);
+		$data = explode(",", $_COOKIE[$COOKIE_NAME]);
 		$metrics = array(); // associative array of metric-name (all uppercase) to its value.
 		foreach($data as $dataPair){
 			$matches = array();
