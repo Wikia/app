@@ -27,7 +27,7 @@ class imageServing{
 				$this->articles[] = $article_id;
 			}
 		}
-		
+
 		$this->width = $width;
 		$this->proportion = $proportion;
 		$this->deltaY = (round($proportion['w']/$proportion['h']) - 1)*0.1;
@@ -38,7 +38,7 @@ class imageServing{
 	 * getImages - get array with list of top images for all article pass to construct
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 * @param $n \type{\arrayof{\int}} number of images get of each of article
@@ -49,12 +49,12 @@ class imageServing{
 
 	public function getImages( $n = 5, $article_lp = 0 ) {
 		global $wgMemc;
-		
+
 		wfProfileIn( __METHOD__ );
 
 		$out = array();
 		$articles = $this->articles;
-		
+
 		if( !empty( $articles ) ) {
 			$cache_return = array();
 
@@ -95,12 +95,14 @@ class imageServing{
 			/* build list of images to get info about it */
 			while ($row =  $db->fetchRow( $res ) ) {
 				$props = unserialize( $row['props'] );
-				foreach ( $props as $key => $value ) {
-					if ( !isset($image_list[$value][$row['page_id']]) ) {
-						if ( empty($image_list[$value]) ) {
-							$images_name[] = $value;
+				if ( is_array( $props ) && count( $props ) ) {
+					foreach ( $props as $key => $value ) {
+						if ( !isset($image_list[$value][$row['page_id']]) ) {
+							if ( empty($image_list[$value]) ) {
+								$images_name[] = $value;
+							}
+							$image_list[$value][$row['page_id']] = $key;
 						}
-						$image_list[$value][$row['page_id']] = $key;
 					}
 				}
 			}
@@ -127,7 +129,7 @@ class imageServing{
 
 					# skip images which are too popular
 					if ($result->numRows() > $this->maxCount ) continue;
-					# check image table 
+					# check image table
 					$oRowImg = $db->selectRow(
 						array( 'image' ),
 						array( 'img_name', 'img_height', 'img_width', 'img_minor_mime' ),
@@ -136,11 +138,11 @@ class imageServing{
 						),
 						__METHOD__
 					);
-						
+
 					if ( empty ( $oRowImg ) ) {
 						continue;
 					}
-						
+
 					if ( $oRowImg->img_height > $this->minSize && $oRowImg->img_width > $this->minSize ) {
 						if ( !in_array( $oRowImg->img_minor_mime, array( "svg+xml","svg") ) ) {
 							$db_out[ $oRowImg->img_name ] = array(
@@ -151,12 +153,12 @@ class imageServing{
 								'img_minor_mime' => $oRowImg->img_minor_mime
 							);
 						}
-					} 
+					}
 				}
 			}
 
 			$etime = time();
-			
+
 			if (count($db_out) == 0) {
 				wfProfileOut(__METHOD__);
 				return $cache_return;
@@ -198,21 +200,21 @@ class imageServing{
 		wfProfileIn( __METHOD__ );
 
 		$ret = array();
-		
+
 		if( !empty( $fileNames ) ) {
 			foreach ( $fileNames as $fileName ) {
 				if(!($fileName instanceof LocalFile)) {
-					$title = Title::newFromText( $fileName, NS_FILE );	
+					$title = Title::newFromText( $fileName, NS_FILE );
 				} else {
 					$img = $fileName;
 				}
-						
+
 				if( !empty($img) || $img = wfFindFile( $title ) ) {
 					$fileName = $img->getTitle()->getDBkey();
 					$issvg = false;
 					$mime = strtolower($img->getMimeType());
 					if( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
-						$issvg = true;	
+						$issvg = true;
 					}
 
 					$ret[ $fileName ] =  array(
@@ -226,7 +228,7 @@ class imageServing{
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
-	
+
 	/**
 	 * getUrl - generate url for cut images
 	 *
@@ -246,7 +248,7 @@ class imageServing{
 		if( $img == null ) {
 			return "";
 		}
-		
+
 		return wfReplaceImageServer( $img->getThumbUrl( $this->getCut( $width, $height ) . "-" . $img->getName() ) );
 	}
 
@@ -275,8 +277,8 @@ class imageServing{
 		if($issvg) {
 			$height = round((512 * $height) / $width);
 			$width = 512;
-		} 
-		
+		}
+
 		$pHeight = round(($width)*($this->proportion['h']/$this->proportion['w']));
 
 		if($pHeight >= $height) {
