@@ -20,10 +20,10 @@ function getABtestJSandCSS() {
 		return true;
 	}
 
-	// If a user logs in add them back to the current control group
+	// If a user logs in add them back to a special group so they are not part of the test
 	if ($wgUser->isLoggedIn()) {
 		$expire = time() + 12*60*60;  // 12 hours
-		setrawcookie("wikia-ab", 'v5/name=control/UA=UA-19473076-23/', $expire, "/", 'wikia.com');
+		setrawcookie("wikia-ab", 'v5/name=loggedin/UA=UA-19473076-29/', $expire, "/", 'wikia.com');
 		return true;
 	}
 	
