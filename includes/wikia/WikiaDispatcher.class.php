@@ -51,7 +51,7 @@ class WikiaDispatcher {
 				}
 
 				if( !$request->isInternal() && !$controller->canDispatch( $method, $response->getFormat()) ) {
-					throw new WikiaException( sprintf('Access denied %s::%s', $controllerClassName, $method), 403 );
+					throw new WikiaException( sprintf('Access denied %s::%s (format: "%s")', $controllerClassName, $method, $response->getFormat()), WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 				}
 
 				$controller->setRequest($request);

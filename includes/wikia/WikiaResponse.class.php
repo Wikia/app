@@ -4,6 +4,7 @@ class WikiaResponse {
 
 	const RESPONSE_CODE_OK = 200;
 	const RESPONSE_CODE_ERROR = 501;
+	const RESPONSE_CODE_FORBIDDEN = 403;
 
 	private $printer = null;
 	private $body = null;
@@ -23,14 +24,18 @@ class WikiaResponse {
 		$this->exception = $exception;
 	}
 
+	/**
+	 * get printer
+	 * @return WikiaResponsePrinter
+	 */
 	public function getPrinter() {
-		if (null === $this->printer) {
-			$this->printer = WF::build('WikiaResponsePrinter');
-		}
-
 		return $this->printer;
 	}
 
+	/**
+	 * set printer
+	 * @param WikiaResponsePrinter $printer
+	 */
 	public function setPrinter( WikiaResponsePrinter $printer ) {
 		$this->printer = $printer;
 	}
@@ -39,7 +44,7 @@ class WikiaResponse {
 		return $this->data;
 	}
 
-	public function setData( $data ) {
+	public function setData( Array $data ) {
 		$this->data = $data;
 	}
 
@@ -137,13 +142,13 @@ class WikiaResponse {
 	}
 
 	public function getVal( $key, $default = null ) {
-		if( isset($this->params[$key]) ) {
-			return $this->params[$key];
+		if( isset( $this->data[$key] ) ) {
+			return $this->data[$key];
 		}
 		return $default;
 	}
 
-	public function isException() {
+	public function hasException() {
 		return ($this->exception == null) ? false : true;
 	}
 
