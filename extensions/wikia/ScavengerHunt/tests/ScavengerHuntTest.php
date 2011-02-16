@@ -5,9 +5,6 @@
 	class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 
 		public function testAddingHunt() {
-//			$this->markTestIncomplete();
-//			return;
-
 			$app = WF::build('App');
 			$games = WF::build('ScavengerHuntGames');
 
@@ -142,9 +139,6 @@
 		}
 
 		public function testLoadingHunt() {
-//			$this->markTestIncomplete();
-//			return;
-
 			$app = WF::build('App');
 
 			$fakeRow = $this->getFakeRow();
@@ -313,6 +307,45 @@
 				->method('getTitleDbKey');
 
 			$this->assertEquals($cacheData,$games->getIndexCache());
+		}
+
+		public function testSavingEntry() {
+			$app = WF::build('App');
+
+			$fields = array(
+				'game_id' => 1001,
+				'user_id' => 123123,
+				'entry_name' => 'asd',
+				'entry_email' => 'ema',
+				'entry_answer' => 'ans',
+			);
+
+			$db = $this->getMock('DatabaseBase');
+			$db->expects($this->once())
+				->method('insert')
+				->with($this->anything(),$this->equalTo($fields),$this->anything());
+
+			$entries = $this->getMock('ScavengerHuntEntries',array('getDb'),array($app));
+			$entries->expects($this->once())
+				->method('getDb')
+				->will($this->returnValue($db));
+
+			$games = $this->getMock('ScavengerHuntGames',array('getEntries'),array($app));
+			$games->expects($this->any())
+				->method('getEntries')
+				->will($this->returnValue($entries));
+
+			$game = $games->newGame();
+			$game->setId(1001);
+
+			$entry = $entries->newEntry();
+			$entry->setUserId(123123);
+			$entry->setName('asd');
+			$entry->setEmail('ema');
+			$entry->setAnswer('ans');
+
+			$this->assertTrue($game->addEntry($entry));
+
 		}
 
 	}
