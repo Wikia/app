@@ -6,7 +6,7 @@
 
 class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 	const API_VERSION = 1;
-	const API_REVISION = 0;
+	const API_REVISION = 1;
 	
 	private $mModel = null;
 	
