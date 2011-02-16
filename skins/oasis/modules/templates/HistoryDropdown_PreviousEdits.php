@@ -1,5 +1,6 @@
 <?php
-	foreach($revisions as $entry) {
+if( is_array( $revisions ) && count( $revisions ) ) {
+	foreach( $revisions as $entry ) {
 ?>
 <li>
 	<img src="<?= $entry['avatarUrl'] ?>" width="20" height="20" class="avatar">
@@ -7,4 +8,4 @@
 </li>
 <?php
 	}
-?>
+};
