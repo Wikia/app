@@ -1414,10 +1414,10 @@ class Wikia {
 	 * add entries to software info
 	 */
 	static public function softwareInfo( &$software ) {
-		global $wgCityId, $wgDBcluster;
+		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter;
 
 		if( !empty( $wgCityId ) ) {
-			$info = "Wikia id: {$wgCityId}";
+			$info = "city_id: {$wgCityId}";
 		}
 		if( empty( $wgDBcluster ) ) {
 			$info .= ", cluster: c1";
@@ -1425,8 +1425,11 @@ class Wikia {
 		else {
 			$info .= ", cluster: $wgDBcluster";
 		}
+		if( !empty( $wgWikiaDatacenter ) ) {
+			$info .= ", dc: $wgWikiaDatacenter";
+		}
 
-		$software[ "Wikia internals" ] = $info;
+		$software[ "Internals" ] = $info;
 
 		/**
 		 * obligatory hook return value
