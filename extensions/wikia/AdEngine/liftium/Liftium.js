@@ -1676,9 +1676,12 @@ Liftium.pullConfig = function (){
 
 	var p = {
 		"pubid" : LiftiumOptions.pubid,
-		"v": 1.2, // versioning for config
-		"country": Liftium.getCountry()
+		"v": 1.2 // versioning for config
+		//"country": Liftium.getCountry()
 	};
+	if (Liftium.getCountry() == 'gb' || Liftium.getCountry() == 'uk') {
+		p.country = Liftium.getCountry();
+	}
 
 	// Simulate a small delay (used by unit tests)
 	if (!Liftium.e(LiftiumOptions.config_delay)){
