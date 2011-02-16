@@ -107,6 +107,10 @@ class ArticleComment {
 				if ( !$this->mLastRevId ) {
 					$this->mLastRevId = $this->mTitle->getLatestRevID( GAID_FOR_UPDATE );
 				}
+				// if last rev STILL does not exist, give up and set it to first rev
+				if ( !$this->mLastRevId ) {
+					$this->mLastRevId = $this->mFirstRevId;
+				}
 			}
 			// get revision objects
 			if ( $this->mFirstRevId ) {
