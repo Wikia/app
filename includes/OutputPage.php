@@ -1109,6 +1109,12 @@ class OutputPage {
 		$this->mNewSectionLink = $parserOutput->getNewSection();
 		$this->mHideNewSectionLink = $parserOutput->getHideNewSection();
 
+		/* Wikia change start
+		 * @author tor
+		 * re-added default keywords
+		 */
+		$this->addKeywords( $parserOutput );
+		/* Wikia change end */
 		$this->mParseWarnings = $parserOutput->getWarnings();
 		if ( $parserOutput->getCacheTime() == -1 ) {
 			$this->enableClientCache( false );
