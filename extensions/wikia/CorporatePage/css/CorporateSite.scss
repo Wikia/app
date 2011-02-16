@@ -675,4 +675,20 @@
 	 	 
 #wikia-search-submit { 
 	outline:none\9; 
-} 
+}
+
+// /** Sales menu **/
+
+section.SalesSupportModule {
+	padding: 0;
+	ul {
+	   margin: 0;
+	}
+	li {
+	   padding: 5px;
+	}
+	li.selected {
+	   background: #EEE;
+	   color: #000;
+	}
+}
