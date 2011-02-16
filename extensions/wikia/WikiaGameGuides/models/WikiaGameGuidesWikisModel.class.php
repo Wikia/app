@@ -10,7 +10,7 @@ class WikiaGameGuidesWikisModel{
 	const WF_WIKI_RECOMMEND_VAR = 'wgWikiaGameGuidesRecommend';
 	const MEMCHACHE_KEY_PREFIX = 'WikiaGameGuides';
 	const CACHE_DURATION = 86400;//24h
-	const SEARCH_RESULTS_LIMIT = 50;
+	const SEARCH_RESULTS_LIMIT = 100;
 	const CATEGORY_RESULTS_LIMIT = 0;//no limits for now
 	
 	/*
@@ -245,21 +245,20 @@ class WikiaGameGuidesWikisModel{
 		if ( $matches ) {
 			if ( $matches->numRows() ) {
 				global $wgContLang;
-				$terms = $wgContLang->convertForSearchResult(
+				/*$terms = $wgContLang->convertForSearchResult(
 					$matches->termMatches()
-				);
+				);*/
 				
 				$output[ "{$type}MatchesInfo" ] = $matches->getInfo();
 				$output[ "{$type}Matches" ] = Array();
 				
 				while ( $result = $matches->next() ) {
 					if ( !$result->isBrokenTitle() && !$result->isMissingRevision() ) {
-						
-						
+						$title = $result->getTitle();
 						$output[ "{$type}Matches" ][] = Array(
-							'title' => $result->getTitle()->getText(),
-							'link' => $result->getUrl(),
-							'terms' => $terms
+							'title' => $title->getText(),
+							'link' => $title->getLocalUrl( array( 'useskin' => 'wikiaapp' ) )
+							//'terms' => $terms
 						);
 					}
 				}

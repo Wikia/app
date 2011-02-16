@@ -29,13 +29,31 @@ $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'SkinWikiaApp::onSkinTemplateOu
  * @ingroup Skins
  */
 class SkinWikiaApp extends SkinTemplate {
+	const COOKIE_NAME = 'mobileapp';
+	const COOKIE_DURATION = 86400;/*24h*/
+	
 	function __construct() {
 		parent::__construct();
 		$this->mRenderColumnOne = false;
 	}
 	
 	function initPage( OutputPage $out ) {
-		global $wgHooks, $wgUseSiteCss;
+		global $wgHooks, $wgUseSiteCss, $wgRequest, $wgCookiePrefix;
+		
+		//this will force the skin after the first visit, only for selected mobile platforms
+		if( empty( $_COOKIE[ $wgCookiePrefix . self::COOKIE_NAME ] ) ) {
+			$user_agent = $_SERVER['HTTP_USER_AGENT'];
+			
+			if (
+				/*preg_match('/ipad/i',$user_agent) ||*/
+				preg_match( '/ipod/i', $user_agent ) ||
+				preg_match( '/iphone/i', $user_agent ) ||
+				preg_match( '/android/i', $user_agent )
+			) {
+				$wgRequest->response()->setcookie( self::COOKIE_NAME, 1, time() + self::COOKIE_DURATION );
+			}
+		}
+		
 		SkinTemplate::initPage( $out );
 		$this->skinname  = 'wikiaapp';
 		$this->stylename = 'wikiaapp';
