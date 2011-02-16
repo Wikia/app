@@ -146,8 +146,9 @@ class CreateNewWikiModule extends Module {
 		foreach ($data as $key => $value ) {
 			$params[$key] = $value;
 		}
-
-		$_SESSION['wsCreateNewWikiParams'] = $params;
+		
+		$this->params = $params;
+		$_SESSION['wsCreateNewWikiParams'] = $this->params;
 
 		wfProfileOut(__METHOD__);
 	}
