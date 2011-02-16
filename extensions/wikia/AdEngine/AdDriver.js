@@ -302,8 +302,7 @@ AdDriver.canCallLiftium = function(slotname) {
 }
 
 AdDriver.doesUrlParameterExist = function(param) {
-	var querystring = window.location.search.substring(1);
-	if (querystring.indexOf(param+'=') > -1) {
+	if ($.getUrlVar(param) != null) {
 		return true;
 	}
 
