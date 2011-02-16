@@ -1,6 +1,9 @@
 <?php
 /**
- * Blogs extension message file
+ * Article Comments extension message file
+ *
+ * Also be aware that many oasis specific i18n messages for comments
+ * reside in extensions/wikia/Oasis/Oasis.i18n.php
  */
 
 $messages = array();
@@ -20,7 +23,6 @@ $messages['en'] = array(
 	'article-comments-rc-blog-comment' => 'Blog comment ([[$1]])',
 	'article-comments-rc-blog-comments' => 'Blog comments ([[$1]])',
 	'article-comments-login' => 'Please <a href="$1">log in</a> to post a comment on this wiki.',
-	'article-comments-zero-comments' => 'No comments yet!',
 	'article-comments-toc-item' => 'Comments',
 	'article-comments-comment-cannot-add' => 'You cannot add a comment to the article.',
 	'article-comments-reply' => 'Reply',
@@ -59,7 +61,6 @@ Please visit and edit often...
 );
 
 $messages['fi'] = array(
-	'article-comments-zero-comments' => "Ei kommentteja vielä!",
 	'article-comments-post' => "Lähetä kommentti",
 	'article-comments-comments' => "Kommentit ($1)",
 	'article-comments-login' => "<a href=\"$1\">Kirjaudu sisään</a> kommetoidaksesi",
@@ -70,7 +71,6 @@ $messages['fi'] = array(
 );
 
 $messages['de'] = array(
-	'article-comments-zero-comments' => 'Noch keine Kommentare!',
 	'article-comments-post' => 'Kommentieren',
 	'article-comments-comments' => 'Kommentare ($1)',
 	'article-comments-login' => 'Zum Kommentieren <a href="$1">anmelden</a>.',
@@ -80,7 +80,6 @@ $messages['de'] = array(
 );
 
 $messages['es'] = array(
-	'article-comments-zero-comments' => '¡No hay comentarios aún!',
 	'article-comments-post' => 'Dejar comentario',
 	'article-comments-comments' => 'Comentarios ($1)',
 	'article-comments-login' => '<a href="$1">Identifícate</a> para dejar un comentario',
@@ -92,7 +91,6 @@ $messages['es'] = array(
 );
 
 $messages['ja'] = array(
-	'article-comments-zero-comments' => 'まだコメントはありません',
 	'article-comments-post' => 'コメントを投稿',
 	'article-comments-comments' => 'コメント ($1)',
 	'article-comments-login' => 'コメントするには<a href="$1">ログイン</a>する必要があります',
@@ -103,7 +101,6 @@ $messages['ja'] = array(
 );
 
 $messages['fa'] = array(
-	'article-comments-zero-comments' => 'هیچ نظری نوشته نشده است!',
 	'article-comments-post' => 'ارسال نظر',
 	'article-comments-comments' => 'نظرات',
 	'article-comments-login' => 'برای نظر دادن <a href="$1">وارد سیستم شوید</a>.',
@@ -114,7 +111,6 @@ $messages['fa'] = array(
 );
 
 $messages['fr'] = array(
-	'article-comments-zero-comments' => 'Encore aucun commentaire.',
 	'article-comments-post' => 'Ajouter un commentaire',
 	'article-comments-comments' => 'Commentaires ($1)',
 	'article-comments-login' => '<a href="$1">Indentifiez-vous</a> pour faire un commenaire',
@@ -124,7 +120,6 @@ $messages['fr'] = array(
 );
 
 $messages['it'] = array(
-	'article-comments-zero-comments' => 'Nessun commento!',
 	'article-comments-post' => 'Lascia un commento',
 	'article-comments-comments' => 'Commenti ($1)',
 	'article-comments-login' => '<a href="$1">Accedi per lasciare un commenti</a>',
@@ -134,7 +129,6 @@ $messages['it'] = array(
 );
 
 $messages['pl'] = array(
-	'article-comments-zero-comments' => 'Nikt jeszcze nie skomentował!',
 	'article-comments-post' => 'Wyślij komentarz',
 	'article-comments-comments' => 'Komentarze ($1)',
 	'article-comments-login' => '<a href="$1">Zaloguj się</a>, aby komentować',
