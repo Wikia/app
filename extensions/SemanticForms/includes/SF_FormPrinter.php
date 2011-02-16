@@ -175,7 +175,7 @@ class SFFormPrinter {
     $new_text = "";
     // flag for placing "<onlyinclude>" tags in form output
     $onlyinclude_free_text = false;
-    
+
     // if we have existing content and we're not in an active replacement
     // situation, preserve the original content. We do this because we want
     // to pass the original content on IF this is a partial form
@@ -260,7 +260,7 @@ class SFFormPrinter {
     $got_form_def_from_cache = false;
     global $sfgCacheFormDefinitions;
     if ( $sfgCacheFormDefinitions && ! is_null( $form_id ) ) {
-      $db = wfGetDB( DB_MASTER );
+      $db = wfGetDB( DB_MASTER, 'smw' );
       $res = $db->select( 'page_props', 'pp_value', "pp_propname = 'formdefinition' AND pp_page = '$form_id'" );
       if ( $res->numRows() >  0 ) {
         $form_def = $res->fetchObject()->pp_value;
@@ -272,7 +272,7 @@ class SFFormPrinter {
       $form_def = $wgParser->parse( $form_def, $this->mPageTitle, $wgParser->mOptions )->getText();
     }
     $wgParser->mStripState = $old_strip_state;
-    
+
     // turn form definition file into an array of sections, one for each
     // template definition (plus the first section)
     $form_def_sections = array();
@@ -522,7 +522,7 @@ class SFFormPrinter {
           $instance_num = 0;
         // =====================================================
         // field processing
-        // =====================================================  
+        // =====================================================
         } elseif ( $tag_title == 'field' ) {
           $field_name = trim( $tag_components[1] );
           // cycle through the other components
@@ -992,7 +992,7 @@ END;
           $input_name = $tag_components[1];
           $input_label = null;
           $attr = array();
-          
+
           // if it's a query, ignore all standard inputs except run query
           if ( ( $is_query && $input_name != 'run query' ) || ( !$is_query && $input_name == 'run query' ) ) {
             $new_text = "";
@@ -1276,7 +1276,7 @@ END;
     if ( $form_submitted ) {
       $javascript_text = '';
     }
-    
+
     return array( $form_text, $javascript_text, $data_text, $new_text, $generated_page_name );
   }
 
