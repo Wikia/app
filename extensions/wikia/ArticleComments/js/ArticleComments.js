@@ -192,9 +192,7 @@ var ArticleComments = {
 		var throbber = $(this).next('.throbber').css('visibility', 'visible');
 		$.postJSON(wgScript, data, function(json) {
 			throbber.css('visibility', 'hidden');
-			if (!json.error) {
-				//remove zero comments div
-				$('#article-comments-zero').remove();
+			if (!json.error) {				
 				//FIXME: this is dangerous to do without checking for existence of element
 				var topE = $('#' + $(json.text).find('li:first').attr('id'));
 				if(!topE.exists()) {

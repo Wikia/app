@@ -1,10 +1,6 @@
 <ul id="article-comments-ul" class="comments">
 	<?php
-	if (!count($commentListRaw)) {
-		echo '<li>';
-		echo '<div id="article-comments-zero"></div>';
-		echo '</li>';
-	} else {
+	if (count($commentListRaw)) {
 		$odd = true;
 		foreach ($commentListRaw as $commentId => $commentArr) {
 			$rowClass = $odd ? 'odd' : 'even';
