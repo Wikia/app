@@ -27,7 +27,7 @@ class TopListParser {
 	 *
 	 * Implementation of a parser function
 	 */
-	static public function parseTag( $input, $args, &$parser ) {
+	static public function parseTag( $input, $args, $parser ) {
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgUser;
 
 		wfLoadExtensionMessages( 'TopLists' );
@@ -63,14 +63,14 @@ class TopListParser {
 				}
 			}
 		}
-		
+
 		if( !empty( self::$mList ) ) {
 			$list = self::$mList;
 			self::$mList = null;
 		} else {
 			$list = TopList::newFromTitle( $parser->mTitle );
 		}
-		
+
 		if ( !empty( $list ) ) {
 			$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$template->set_vars(
@@ -84,7 +84,7 @@ class TopListParser {
 			);
 
 			self::$mOutput = $template->execute( 'list' );
-			
+
 			//Test code for PerSkinParserCache
 			if( in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaphone', 'SkinMonoBook' ) ) ) {
 				self::$mOutput .= '<!--// SPECIAL RENDERING FOR MOBILE/MONOBOOK //-->';
@@ -96,7 +96,7 @@ class TopListParser {
 		else {
 			self::$mOutput = '';
 		}
-		
+
 		return self::$mOutput;
 	}
 
@@ -120,10 +120,10 @@ class TopListParser {
 		global $wgParser;
 		$parserOptions = new ParserOptions();
 		self::$mList = $list;
-		
+
 		$parsedText = $wgParser->parse($list->getArticle()->getContent(), $list->getTitle(), $parserOptions)->getText();
 		$list->invalidateCache();
-		
+
 		return $parsedText;
 	}
 }
