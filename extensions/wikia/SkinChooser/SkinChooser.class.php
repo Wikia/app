@@ -343,11 +343,6 @@ class SkinChooser {
 		if( $userSkin == 'smartphone' ){
 			$userSkin = 'wikiaphone';
 		}
-		
-		//WikiaApp skin is ment to be available only on DevBoxes ATM
-		if( $userSkin == 'wikiaapp' && !$wgDevelEnvironment ){
-			$userSkin = 'wikiaphone';
-		}
 
 		$user->mSkin = &Skin::newFromKey($userSkin);
 
