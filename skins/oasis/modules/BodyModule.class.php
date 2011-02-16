@@ -127,7 +127,8 @@ class BodyModule extends Module {
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
 			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail,
-			$wgEnableUserProfilePagesExt, $wgABTests;
+			$wgEnableUserProfilePagesExt, $wgABTests,
+			$wgSalesTitles;
 
 		$railModuleList = array();
 
@@ -252,7 +253,9 @@ class BodyModule extends Module {
 				$railModuleList[1480] = array('CorporateSite', 'HotSpots', null);
 			//	$railModuleList[1470] = array('CorporateSite', 'PopularHubPosts', null);  // temp disabled - data not updating
 				$railModuleList[1460] = array('CorporateSite', 'TopHubUsers', null);
-			} else {  // content pages
+			} else if ( is_array( $wgSalesTitles ) && in_array( $wgTitle->getText(), $wgSalesTitles ) ){
+				$railModuleList[1470] = array('CorporateSite', 'SalesSupport', null);
+			} else { // content pages
 				$railModuleList[1470] = array('CorporateSite', 'PopularStaffPosts', null);
 			}
 			if ($wgTitle->isSpecial('Search')) $railModuleList = array();
