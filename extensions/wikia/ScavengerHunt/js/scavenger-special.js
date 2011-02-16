@@ -8,6 +8,7 @@ var SpecialScavengerHunt = {
 		$('.scavenger-form').delegate('.scavenger-page-title', 'blur', SpecialScavengerHunt.onPageTitleBlur);
 		$('input[name=delete]').bind('click.sumbit', SpecialScavengerHunt.onDeleteClick);
 		$('.scavenger-form').delegate('.scavenger-dialog-check', 'click', SpecialScavengerHunt.onDialogCheckClick);
+		$('.scavenger-form').delegate('.scavenger-image-check', 'click', SpecialScavengerHunt.onImageCheckClick);
 		$('.scavenger-form').delegate('input[type=text], textarea', 'change', SpecialScavengerHunt.onDataChange);
 	},
 
@@ -42,7 +43,7 @@ var SpecialScavengerHunt = {
 	},
 	
 	onDataChange: function(e) {
-		$('.scavenger-form .buttons input[type=submit]').not('[name=save]').attr('disabled','disabled');
+		$('.scavenger-form input[name=enable]').attr('disabled','disabled');
 	},
 
 	onDialogCheckClick: function(e) {
@@ -74,6 +75,23 @@ var SpecialScavengerHunt = {
 				}
 			);
 		});
+	},
+
+	onImageCheckClick: function(e) {
+		e.preventDefault();
+
+		var fieldset = $(this).closest('fieldset');
+		var image = fieldset.find('[name="articleHiddenImage[]"]').val();
+		var top = fieldset.find('[name="articleHiddenImageTopOffset[]"]').val();
+		var left = fieldset.find('[name="articleHiddenImageLeftOffset[]"]').val();
+		SpecialScavengerHunt.log('displaying image at top:' + top + 'px, left:' + left + 'px');
+		$('.scavenger-hidden-image').remove();
+		$('<img>')
+			.attr('src', image)
+			.click(function() {$(this).remove();})
+			.addClass('scavenger-hidden-image')
+			.css({left: left + 'px', top: top + 'px'})
+			.appendTo('#WikiaPage');
 	}
 };
 
