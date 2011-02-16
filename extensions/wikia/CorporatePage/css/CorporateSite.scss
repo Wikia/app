@@ -110,7 +110,7 @@
 		}
 		
 		.spotlight-slider-image {
-			background: url(/skins/corporate/images/bg.homepage.feature.png) center bottom no-repeat;  /* $wgCdnStylePath */
+			background: url(/extensions/wikia/CorporatePage/images/bg.homepage.feature.png) center bottom no-repeat;  /* $wgCdnStylePath */
 			position: absolute;
 			top: 0;
 			overflow: hidden;
@@ -217,7 +217,7 @@
 			top: 369px;
 			
 			&.selected {
-				background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -13px -56px;  /* $wgCdnStylePath */
+				background: url(/extensions/wikia/CorporatePage/images/misc.wikiaglobal.sprite.png) no-repeat -13px -56px;  /* $wgCdnStylePath */
 
 				img {
 					opacity: 1 !important;
@@ -253,7 +253,7 @@
 		margin-top: 3px;
 		
 		li {
-			background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat;  /* $wgCdnStylePath */
+			background: url(/extensions/wikia/CorporatePage/images/misc.wikiaglobal.sprite.png) no-repeat;  /* $wgCdnStylePath */
 			float: left;
 			margin-right: 2px;
 			display: inline-block;
