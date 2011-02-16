@@ -2,7 +2,7 @@
 
 	class CsvService extends Service {
 
-		protected $delimiter = ';';
+		protected $delimiter = ',';
 		protected $enclosure = '"';
 
 		public function setDelimiter( $delimiter ) {
