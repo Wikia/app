@@ -64,6 +64,7 @@ class FinishCreateWikiModule extends Module {
 			$themeSettings->saveSettings($this->params);
 		}
 		
+		$wgOut->enableClientCache(false);
 		$wgOut->redirect($mainPage.'?wiki-welcome=1');
 	}
 
