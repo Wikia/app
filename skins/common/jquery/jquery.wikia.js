@@ -627,7 +627,7 @@ Observable = $.createClass(Object,{
 				this.bind(e,cb[i],scope);
 			}
 		} else {
-			scope == scope || this;
+			scope = scope || this;
 			this.events[e] = this.events[e] || [];
 			this.events[e].push({
 				fn: cb,
@@ -657,7 +657,7 @@ Observable = $.createClass(Object,{
 			if (!this.events[e]) {
 				return false;
 			}
-			scope == scope || this;
+			scope = scope || this;
 			for (var i in this.events[e]) {
 				if (this.events[e][i].fn == cb && this.events[e][i].scope == scope) {
 					delete this.events[e][i];
