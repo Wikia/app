@@ -41,7 +41,11 @@ abstract class Module {
 
 		if(wfRunHooks($name.$action.'BeforeExecute', array(&$moduleObject, &$params))) {
 			$actionName = 'execute'.$action;
-			$moduleObject->$actionName($params);
+
+			// BugId:2649
+			if (method_exists($moduleObject, $actionName)) {
+				$moduleObject->$actionName($params);
+			}
 		}
 		wfRunHooks($name.$action.'AfterExecute', array(&$moduleObject, &$params));
 
