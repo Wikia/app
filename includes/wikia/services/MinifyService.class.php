@@ -37,7 +37,7 @@ class MinifyService extends Service {
 
 		foreach($files as $file) {
 			if (file_exists($file)) {
-				$content .= file_get_contents($file);
+				$content .= file_get_contents($file) . "\n";
 			}
 			else {
 				wfDebug(__METHOD__ . ": file {$file} does not exist!\n");
@@ -64,7 +64,13 @@ class MinifyService extends Service {
 		$tmpName = self::storeInTempFile($code);
 
 		// YUI compressor
-		$code = exec("java -jar {$IP}/lib/yuicompressor-2.4.2.jar {$tmpName} --charset utf-8 --type js", $out, $res);
+		exec("java -jar {$IP}/lib/yuicompressor-2.4.2.jar {$tmpName} --charset utf-8 --type js", $out, $res);
+
+		// Google Closure
+		//exec("java -jar {$IP}/lib/compiler.jar --js {$tmpName} --compilation_level SIMPLE_OPTIMIZATIONS --charset UTF-8 --warning_level QUIET", $out, $res);
+
+		// concat lines from the output
+		$code = implode("\n", $out);
 
 		// clean up
 		self::removeTempFile($tmpName);
