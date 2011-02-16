@@ -15,7 +15,7 @@ CreatePage.checkTitle = function( title, enterWasHit ) {
 				if(response.result == 'ok') {
 					var action = (enterWasHit) ? 'enter' : 'create';
 
-					CreatePage.track(action + '/' + CreatePage.options[CreatePage.pageLayout]['trackingId']);					
+					CreatePage.track(action + '/' + CreatePage.options[CreatePage.pageLayout]['trackingId']);
 					location.href = CreatePage.options[CreatePage.pageLayout]['submitUrl'].replace('$1', encodeURIComponent( title ));
 				}
 				else {
@@ -57,7 +57,7 @@ CreatePage.openDialog = function(e, titleText) {
 						CreatePage.setPageLayout( data.defaultOption );
 
 						$('#wpCreatePageDialogTitle').focus();
-						
+
 						$('#CreatePageDialogButton .createpage').click(function(e) {
 							e.preventDefault();
 							CreatePage.submitDialog(false);
@@ -82,7 +82,7 @@ CreatePage.displayError = function( errorMsg ) {
 	var box = $( '#CreatePageDialogTitleErrorMsg' );
 	box.html( '<span id="createPageErrorMsg">' + errorMsg + '</span>' );
 	box.removeClass('hiddenStructure');
-};alert
+};
 
 CreatePage.setPageLayout = function( layout ) {
 	CreatePage.pageLayout = layout;
@@ -137,7 +137,7 @@ $(function() {
 		$().log('init', 'CreatePage');
 
 		if( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
-			$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click( function(e) {CreatePage.openDialog(e, null);});			
+			$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click( function(e) {CreatePage.openDialog(e, null);});
 			$('.noarticletext a').click( function(e) {CreatePage.openDialog(e, wgPageName); return false; });
 		}
 
