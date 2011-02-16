@@ -80,18 +80,6 @@
 #AjaxLoginConnectMarketing .forward {
 	float: right;
 }
-#AjaxLoginBox .neutral_ajaxLogin{
-	background-color:#EEEEEE;
-	border-color:#AAAAAA;
-	color:#000000;
-}
-.skin-oasis #AjaxLoginBox .neutral_ajaxLogin{
-	background-color:#fff;
-	border-color:#fff;
-}
-#AjaxLoginBox .neutral_ajaxLogin h1 {
-	padding:0px;
-}
 .skin-oasis #AjaxLoginFBStart{
 	display:none;
 }

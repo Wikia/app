@@ -1,5 +1,5 @@
 <div class="ajax-login-slider-panel" id="AjaxLoginConnectMarketing">
-	<div class="neutral_ajaxLogin clearfix">
+	<div class="clearfix">
 		<?php
 			if(Wikia::isOasis()){
 				// add FB login button (RT #68846)
