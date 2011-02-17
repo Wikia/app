@@ -7,6 +7,8 @@
 class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 	const API_VERSION = 1;
 	const API_REVISION = 1;
+	const SCRIBE_KEY = 'mobile_apps';
+	const APP_NAME = 'GameGuides';
 	
 	private $mModel = null;
 	
@@ -30,6 +32,8 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 	public function listWikis(){
 		wfProfileIn( __METHOD__ );
 		
+		$this->track(array( 'list_games' ));
+		
 		$ret = $this->mModel->getWikisList();
 		
 		$this->setContentType( EzApiContentTypes::JSON );
@@ -47,6 +51,9 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 	 */
 	public function listWikiContents(){
 		wfProfileIn( __METHOD__ );
+		global $wgDBname;
+		
+		$this->track(array( 'list_wiki_contents', $wgDBname ));
 		
 		$ret = $this->mModel->getWikiContents();
 		
@@ -64,6 +71,10 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 	 */
 	public function listEntryContents(){
 		wfProfileIn( __METHOD__ );
+		global $wgDBname;
+		$entry = $this->getRequest()->getText('entry');
+		
+		$this->track(array( 'list_category_contents', $wgDBname, $entry ));
 		
 		$ret = $this->mModel->getCategoryContents( $this->getRequest()->getText('entry') );
 		
@@ -74,13 +85,16 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 		return $ret;
 	}
 	
-	/*
+	/**
 	 * Returns the results from a local wiki search for the passed in term
 	 * 
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 */
 	public function listLocalSearchResults(){
 		wfProfileIn( __METHOD__ );
+		global $wgDBname;
+		
+		$this->track(array( 'local_search', $wgDBname ));
 		
 		$ret = $this->mModel->getLocalSearchResults( $this->getRequest()->getText('term') );
 		
@@ -89,5 +103,30 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 		
 		wfProfileOut( __METHOD__ );
 		return $ret;
+	}
+	
+	/**
+	 * Tracks API requests via Scribe
+	 *
+	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+	 * @param $trackingData Array Required, a set of strings/numbers that will be concatenated with '/'
+	 */
+	private function track( $trackingData ){
+		global $wgDevelEnvironment;
+		
+		if( !$wgDevelEnvironment ) {
+			try {
+				$data = Wikia::json_encode( array(
+					'app' => self::APP_NAME,
+					'uri' => implode('/', $trackingData),
+					'time' => time(),
+				));
+				
+				WScribeClient::singleton( self::SCRIBE_KEY )->send( $data );
+			}
+			catch( TException $e ) {
+				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
+			}
+		}
 	}
 }
