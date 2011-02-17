@@ -11,6 +11,7 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 	const APP_NAME = 'GameGuides';
 	
 	private $mModel = null;
+	private $mOS = null;
 	
 	function __construct( WebRequest $request ) {
 		global $wgDevelEnvironment;
@@ -22,6 +23,7 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 		parent::__construct( $request );
 		
 		$this->mModel = new WikiaGameGuidesWikisModel();
+		$this->mOS = $request->getText( 'os', 'undefined' );
 	}
 	
 	/*
@@ -118,6 +120,7 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 			try {
 				$params = array(
 					'app' => self::APP_NAME,
+					'os' => $this->mOS,
 					'uri' => implode('/', $trackingData),
 					'time' => time(),
 				);
@@ -126,6 +129,9 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 					'method' => self::SCRIBE_KEY,
 					'params' => $params
 				) );
+				
+				die($data);
+				exit;
 				
 				WScribeClient::singleton( 'trigger' )->send( $data );
 			}
