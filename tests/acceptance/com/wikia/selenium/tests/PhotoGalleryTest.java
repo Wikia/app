@@ -187,6 +187,7 @@ public class PhotoGalleryTest extends BaseTest {
 	@Test(groups={"CI","envProduction"})
 	public void testImageSearch() throws Exception {
 		loginAsStaff();
+		uploadImage();
 
 		// go to edit page
 		session().open("index.php?title=" + PhotoGalleryTest.testArticleName + "&action=edit&useeditor=mediawiki");
@@ -212,7 +213,7 @@ public class PhotoGalleryTest extends BaseTest {
 		waitForElementVisible("WikiaPhotoGallerySearchResults");
 
 		// search for images on wiki's main page
-		session().type("//form[@id='WikiaPhotoGallerySearch']//input[@type='text']", "logo");
+		session().type("//form[@id='WikiaPhotoGallerySearch']//input[@type='text']", "Chopin10-hp.gif");
 		session().click("//form[@id='WikiaPhotoGallerySearch']//button");
 		waitForElement("//ul[@type='results']//li");
 
