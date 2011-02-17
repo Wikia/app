@@ -43,8 +43,7 @@ $PAGETITLE_URL
 Please visit and edit often...
 
 Wikia',
-	'enotif_body_article_comment-HTML' => '<p>
-Dear $WATCHINGUSERNAME,
+	'enotif_body_article_comment-HTML' => '<p>Dear $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR made a comment on "$PAGETITLE".
 <br /><br />
@@ -52,10 +51,10 @@ To see the comment thread, follow this link: <a href="$PAGETITLE_URL">$PAGETITLE
 <br /><br />
 Please visit and edit often...
 <br /><br />
-{{SITENAME}}
-<br /><hr />
+Wikia
+<br /><hr>
 <ul>
-<li>Want to control which emails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">{{ns:special}}:Preferences<a>.</li>
+<li>Want to control which emails you receive? <a href="{{fullurl:Special:Preferences}}">Update your Preferences<a>.</li>
 </ul>
 </p>',
 );
