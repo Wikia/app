@@ -55,6 +55,10 @@ var SpecialScavengerHunt = {
 		fieldset.find('input, textarea').each(function(i, el){
 			formData[$(el).attr('name')] = $(el).val();
 		});
+		//add landing page for goodbye form
+		if (type == 'scavenger-goodbye') {
+			formData['landingTitle'] = fieldset.parent().find('.scavenger-general input[name=landingTitle]').val();
+		}
 
 		var data = {
 			action: 'ajax',
