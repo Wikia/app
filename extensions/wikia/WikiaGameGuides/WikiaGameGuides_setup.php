@@ -28,6 +28,7 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname( __FILE__ ) . '/';
 
 // classes
+$wgAutoloadClasses[ 'WikiaGameGuidesWrongAPIVersionException' ] = "{$dir}exceptions/WikiaGameGuidesWrongAPIVersionException.class.php";
 $wgAutoloadClasses[ 'WikiaGameGuidesWikisModel' ] = "{$dir}models/WikiaGameGuidesWikisModel.class.php";
 
 // i18n
