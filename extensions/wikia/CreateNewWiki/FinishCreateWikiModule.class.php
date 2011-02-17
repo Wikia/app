@@ -41,6 +41,12 @@ class FinishCreateWikiModule extends Module {
 		
 		$mainPage = wfMsgForContent( 'mainpage' );
 		
+		// set theme
+		if(!empty($this->params['color-body'])) {
+			$themeSettings = new ThemeSettings();
+			$themeSettings->saveSettings($this->params);
+		}
+		
 		// set description on main page
 		if(!empty($this->params['wikiDescription'])) {
 			$mainTitle = Title::newFromText($mainPage);
@@ -56,12 +62,6 @@ class FinishCreateWikiModule extends Module {
 				}
 				$mainArticle->updateArticle($newSectionText, '', false, false);
 			}
-		}
-		
-		// set theme
-		if(!empty($this->params['color-body'])) {
-			$themeSettings = new ThemeSettings();
-			$themeSettings->saveSettings($this->params);
 		}
 		
 		$wgOut->enableClientCache(false);
