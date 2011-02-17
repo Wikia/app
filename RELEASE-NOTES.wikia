@@ -1,5 +1,6 @@
 == Changes since release-008 ==
 * fb#2466: Sometimes comments didn't add or update properly (owen)
+* fb#2182: Moved Summary in User_talk pages (Jakub)
 
 == Changes since release-007 ==
 * fb#2524: RTE: image caption shows in black  (macbre)
