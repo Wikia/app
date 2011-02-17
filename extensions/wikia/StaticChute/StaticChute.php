@@ -447,7 +447,7 @@ class StaticChute {
 	}
 
 	private function generateConfigSkinWikiaApp() {
-		// JS for monobook (both anons/logged-in)
+		//CSS for Mobile app skin, both anon and user
 		$this->config['wikiaapp_css'] = array(
 			'wikiaapp/main.css',
 			'wikiaapp/skin.css'
