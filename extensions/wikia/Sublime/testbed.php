@@ -10,8 +10,8 @@
  *
  * To get this to work, add a symlink like this:
  * ln -s /usr/wikia/source/wiki/extensions/wikia/Sublime/testbed.php /usr/wikia/docroot/wiki.factory/testbed.php
- 
- 
+
+
  * The Javascript MediaWiki API needs:
  * - inclusion of Mediawiki.js
  * - setting of var wgScriptPath prior to including Mediawiki.js
@@ -20,11 +20,11 @@
  * html2wiki needs:
  * - Set window.wgScript ("/index.php" is probably good).
  * - the html2wiki() js function in this file.
- 
- 
+
+
  */
- 
- 
+
+
 $wikiHost = "http://sean.wikia-dev.com";
 //$wikiHost = "http://lyrics.wikia.com";
 
@@ -55,11 +55,11 @@ $wikiHost = "http://sean.wikia-dev.com";
 	<h1>Testbed for Sublime</h1>
 	<article id='sendMeToWikia'>
 		This is the content which should be sent to wikia.
-		
+
 		Here is some more content a few lines down.
-		
+
 		Sublime, isn't it?
-		
+
 		This tests reverse-parsing.  <strong>This should be strong!</strong>
 	</article>
 	<br/>
@@ -81,19 +81,19 @@ $wikiHost = "http://sean.wikia-dev.com";
 			<button onclick='return sublimeLogout()'>Log out</button>
 		</form>
 	</div>
-	
+
 	<!-- Make the Mediawiki status bar appear lower -->
 	<br/><br/>
 
 	<!-- Javascript at the bottom - don't anger Artur! -->
-	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery-1.4.2.js?1284232976"></script>
+	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery-1.5.js?1284232976"></script>
 	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery.json-1.3.js?1284232976"></script>
 	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery.wikia.js?1284232976"></script>
 	<script type='text/javascript'>
 		// Setup for Mediawiki.js
 	// TODO: REMOVE - MOVED TO IFRAME
 	//	var wgScriptPath = "<?= $wikiHost ?>"; // this should be the endpoint.
-		
+
 	// TODO: REMOVE - MOVED TO IFRAME
 	//	// For html2wiki conversion.
 	//	window.wgScript = "<?= $wikiHost ?>/index.php";
@@ -128,7 +128,7 @@ $wikiHost = "http://sean.wikia-dev.com";
 			});
 			return false;
 		}
-		
+
 
 /* INTEGRATE THIS!!!!
 $(function() {
@@ -140,16 +140,16 @@ $(function() {
 			var iframe = document.getElementById("sublimeFrame").contentWindow;
 
 			console.log("phonehome: postMessage to iframe");
-			iframe.postMessage(JSON.stringify(data), "*");  
+			iframe.postMessage(JSON.stringify(data), "*");
 		 }
-	*/	
-		
-		
+	*/
+
+
 // PROBABLY TO BE PUT INTO EXTENSION (WITH MODIFICATIONS) //
 
 		// Login the user.
 		function sublimeLogin(wikiUsername, wikiPass){
-			try { 
+			try {
 				if (Mediawiki.isLoggedIn()){
 					Mediawiki.updateStatus("Already logged in.");
 					loginWorked();
@@ -157,7 +157,7 @@ $(function() {
 				Mediawiki.updateStatus("Logging in...");
 				Mediawiki.login(wikiUsername, wikiPass, loginWorked, apiFailed);
 			} catch (e) {
-				Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));	
+				Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));
 			}
 		}
 		function loginWorked (){

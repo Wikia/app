@@ -22,7 +22,7 @@
 		var themes = <?= Wikia::json_encode($wgOasisThemes) ?>;
 	</script>
 
-	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.4.2.js"></script>
+	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.5.js"></script>
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.js"></script>
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.tracker.js"></script>
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery.json-1.3.js"></script>
