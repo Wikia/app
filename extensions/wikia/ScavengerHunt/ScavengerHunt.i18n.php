@@ -79,7 +79,7 @@ $messages['en'] = array(
 	'scavengerhunt-form-error-entry-form' => 'Please fill in all fields in the entry form section.',
 	'scavengerhunt-form-error-goodbye' => 'Please fill in all fields in goodbye popup section.',
 	'scavengerhunt-form-error-no-article-title' => 'Please enter all article titles.',
-	'scavengerhunt-form-error-article-hidden-image' => 'Please enter image addresses for hidden.',
+	'scavengerhunt-form-error-article-hidden-image' => 'Please enter all addresses for hidden images.',
 	'scavengerhunt-form-error-article-clue' => 'Please fill in all information about article clues.',
 
 	'scavengerhunt-game-has-been-created' => 'New Scavenger Hunt game has been created.',
