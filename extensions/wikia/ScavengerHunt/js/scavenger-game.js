@@ -214,6 +214,12 @@ var ScavengerHunt = {
 						e.preventDefault();
 						w.closeModal();
 					});
+					if (typeof FB == "object") {
+						var share = $('.scavenger-share-button');
+						if (share.exists()) {
+							FB.XFBML.parse(share.get(0));
+						}
+					}
 				}
 			}
 		);
