@@ -49,11 +49,13 @@ class WikiaPoll {
 	/**
 	 * Load poll data (try to use cache layer)
 	 */
-	private function load() {
+	private function load($master = false) {
 		global $wgMemc;
 		wfProfileIn(__METHOD__);
 
-		$this->mData = $wgMemc->get($this->mMemcacheKey);
+		if (!$master) {
+			$this->mData = $wgMemc->get($this->mMemcacheKey);
+		}
 
 		if (empty($this->mData)) {
 			$article = Article::newFromID($this->mPollId);
@@ -89,7 +91,8 @@ class WikiaPoll {
 
 			// query for votes
 			$votes = 0;
-			$dbr = wfGetDB(DB_SLAVE);
+			$whichDB = $master ? DB_MASTER : DB_SLAVE;
+			$dbr = wfGetDB($whichDB);
 			$res = $dbr->select(
 				array('poll_vote'),
 				array('poll_answer as answer', 'COUNT(*) as cnt'),
@@ -219,6 +222,9 @@ class WikiaPoll {
 		$dbw->commit();
 
 		$this->purge();
+
+		// forces reload of memcache object from master before anyone else can get to it. :)
+		$this->load(true);
 
 		wfProfileOut(__METHOD__);
 	}
