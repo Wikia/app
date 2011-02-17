@@ -16,15 +16,14 @@ var ScavengerHunt = {
 
 	//global init
 	init: function() {
-		var gameId = $.cookies.get('ScavengerHuntInProgress');
-
 		//check if there is a need to initialize JS for start page
-		if (typeof window.ScavengerHuntStart != 'undefined' && ('-' + window.ScavengerHuntStart) != gameId) {
+		if (typeof window.ScavengerHuntStart != 'undefined') {
 			ScavengerHunt.initStart();
 		}
 
 		//check if there is a need to initialize JS for game
-		if (gameId && gameId.indexOf('-') != 0) {
+		var gameId = $.cookies.get('ScavengerHuntInProgress');
+		if (gameId) {
 			ScavengerHunt.initGame(gameId);
 		}
 	},
@@ -194,7 +193,7 @@ var ScavengerHunt = {
 
 	showGoodbyeForm: function() {
 		$.cookies.del('ScavengerHuntArticlesFound');
-		$.cookies.set('ScavengerHuntInProgress', '-' + $.cookies.get('ScavengerHuntInProgress'), {hoursToLive:24*7});
+		$.cookies.del('ScavengerHuntInProgress');
 		if (!ScavengerHunt.goodbyeData) {
 			ScavengerHunt.log('cannot show goodbye popup - no data available');
 			return false;
