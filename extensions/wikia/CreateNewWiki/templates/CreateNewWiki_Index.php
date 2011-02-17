@@ -70,7 +70,8 @@
 	if (!$wgUser->isLoggedIn()) {
 ?>
 		<li id="Auth" class="step">
-			<h2><?= wfMsg('cnw-auth-headline') ?></h2>
+			<h2 class="headline login"><?= wfMsg('cnw-auth-headline') ?></h2>
+			<h2 class="headline signup"><?= wfMsg('cnw-auth-headline2') ?></h2>
 			<p class="creative login"><?= wfMsg('cnw-auth-creative') ?></p>
 			<p class="creative signup"><?= wfMsg('cnw-auth-signup-creative') ?></p>
 			<?= AjaxLoginForm::getTemplateForCombinedForms()->execute('ComboAjaxLogin') ?>

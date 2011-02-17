@@ -54,9 +54,9 @@ $messages['en'] = array(
 	"autocreatewiki-bad-name" => "The name cannot contain special characters (like $ or @) and must be a single lower-case word without spaces.",
 	"autocreatewiki-invalid-wikiname" => "The name cannot contain special characters (like $ or @) and cannot be empty",
 	"autocreatewiki-violate-policy" => "This wiki name contains a word that violates our naming policy",
-	"autocreatewiki-name-taken" => "A wiki with this name already exists. You are welcome to join us at <a href=\"http://$1.wikia.com\">http://$1.wikia.com</a>",
-	"autocreatewiki-name-too-short" => "This name is too short. Please choose a name with at least 3 characters.",
-	"autocreatewiki-name-too-long" => "This name is too long. Please choose a name with maximum 50 characters.",
+	"autocreatewiki-name-taken" => "There’s already a wiki with this address. Start editing at <a href=\"http://$1.wikia.com\">http://$1.wikia.com</a> or choose another address.",
+	"autocreatewiki-name-too-short" => "This address is too short, choose an address with at least 3 characters.",
+	"autocreatewiki-name-too-long" => "This address is too long. Please choose an address with maximum 50 characters.",
 	"autocreatewiki-similar-wikis" => "Below are the wikis already created on this topic. We suggest editing one of them.",
 	"autocreatewiki-invalid-username" => "This username is invalid.",
 	"autocreatewiki-busy-username" => "This username is already taken.",
@@ -286,7 +286,7 @@ $messages['ar'] = array(
 	'autocreatewiki-subname-answers' => 'إجابات',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author Wizardist
  */
 $messages['be-tarask'] = array(
@@ -624,7 +624,7 @@ indem du <a href="$2">$2</a> besuchst.</p>
 	'autocreatewiki-subname-answers' => 'Antworten',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form))
  * @author LWChris
  * @author The Evil IP address
  */
@@ -2211,7 +2211,7 @@ Dit is een volledig nieuw project, dus laat het ons weten als u met vragen zit.
 	'autocreatewiki-subname-answers' => 'Antwoorden',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
@@ -3181,7 +3181,7 @@ $3
 	'autocreatewiki-subname-answers' => 'Ответы',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
@@ -3549,13 +3549,13 @@ $messages['zh'] = array(
 Wikia 社群團隊',
 );
 
-/** Chinese (China) (‪中文(中国大陆)‬) */
+/** Chinese (China) (中文(中国大陆)) */
 $messages['zh-cn'] = array(
 	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申请wiki',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -3584,25 +3584,25 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-success-get-started' => '开始',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬) */
+/** Traditional Chinese (中文(繁體)) */
 $messages['zh-hant'] = array(
 	'autocreatewiki-page-title-default' => '申請wiki',
 	'createwiki' => '申請wiki',
 );
 
-/** Chinese (Hong Kong) (‪中文(香港)‬) */
+/** Chinese (Hong Kong) (中文(香港)) */
 $messages['zh-hk'] = array(
 	'autocreatewiki-page-title-default' => '申請wiki',
 	'createwiki' => '申請wiki',
 );
 
-/** Chinese (Singapore) (‪中文(新加坡)‬) */
+/** Chinese (Singapore) (中文(新加坡)) */
 $messages['zh-sg'] = array(
 	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申请wiki',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬) */
+/** Chinese (Taiwan) (中文(台灣)) */
 $messages['zh-tw'] = array(
 	'autocreatewiki-page-title-default' => '申請wiki',
 	'createwiki' => '申請wiki',
