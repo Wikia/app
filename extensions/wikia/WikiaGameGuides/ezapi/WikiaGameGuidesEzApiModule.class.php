@@ -116,13 +116,18 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 		
 		if( !$wgDevelEnvironment ) {
 			try {
-				$data = Wikia::json_encode( array(
+				$params = array(
 					'app' => self::APP_NAME,
 					'uri' => implode('/', $trackingData),
 					'time' => time(),
-				));
+				);
+								
+				$data = Wikia::json_encode( array(
+					'method' => self::SCRIBE_KEY,
+					'params' => $params
+				) );
 				
-				WScribeClient::singleton( self::SCRIBE_KEY )->send( $data );
+				WScribeClient::singleton( 'trigger' )->send( $data );
 			}
 			catch( TException $e ) {
 				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
