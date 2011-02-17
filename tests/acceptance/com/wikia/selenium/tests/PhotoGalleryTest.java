@@ -2,6 +2,8 @@ package com.wikia.selenium.tests;
 
 import java.io.File;
 
+import java.util.Date;
+
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.session;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
@@ -11,16 +13,16 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class PhotoGalleryTest extends BaseTest {
-	private String uploadFileUrl = "http://www.google.com/logos/chopin10-hp.gif";
 	private static final String testArticleName = "WikiaPhotoGalleryTest";
 
 	// let's create an article on which view mode tests will be performed
 	private void prepareTestArticle() throws Exception {
-		editArticle(PhotoGalleryTest.testArticleName, "Wikia automated test for PhotoGallery\n\n===Gallery===\n\n<gallery>\nchopin10-hp.gif\n</gallery>\n\n===Slideshow===\n\n<gallery type=\"slideshow\">\nWiki.png|'''Caption'''\n</gallery>\n\n[[Category:Wikia tests]]");
+		uploadImage();
+		editArticle(PhotoGalleryTest.testArticleName, (new Date()).toString() + " Wikia automated test for PhotoGallery\n\n===Gallery===\n\n<gallery>\nchopin10-hp.gif\n</gallery>\n\n===Slideshow===\n\n<gallery type=\"slideshow\">\nchopin10-hp.gif|'''Caption'''\n</gallery>");
 		session().waitForPageToLoad(this.getTimeout());
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI","envProduction"})
 	public void testSlideshowPopOut() throws Exception {
 		loginAsStaff();
 		prepareTestArticle();
@@ -49,10 +51,9 @@ public class PhotoGalleryTest extends BaseTest {
 		assertFalse(session().isElementPresent("//div[@class='wikia-slideshow-popout-images-wrapper']"));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI","envProduction"})
 	public void testSlideshowInViewMode() throws Exception {
 		loginAsStaff();
-		uploadImage();
 		prepareTestArticle();
 
 		// open editor's dialog
@@ -88,7 +89,7 @@ public class PhotoGalleryTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@class='wikia-slideshow clearfix floatright']/div/div/ul/li/span[@class='wikia-slideshow-link-overlay']"));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI","envProduction"})
 	public void testGalleryInViewMode() throws Exception {
 		loginAsStaff();
 		prepareTestArticle();
@@ -123,7 +124,7 @@ public class PhotoGalleryTest extends BaseTest {
 		assertTrue(session().isElementPresent("//span[2 and @class='wikia-gallery-item']//img[contains(@title,'Test link')]"));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI","envProduction"})
 	public void testImageUpload() throws Exception {
 		loginAsStaff();
 
@@ -151,12 +152,11 @@ public class PhotoGalleryTest extends BaseTest {
 		waitForElementVisible("WikiaPhotoGallerySearchResults");
 
 		// upload form
-		session().attachFile("WikiaPhotoGalleryImageUpload", uploadFileUrl);
-		//session().type("WikiaPhotoGalleryImageUpload", uploadFileName);
+		session().attachFile("WikiaPhotoGalleryImageUpload", DEFAULT_UPLOAD_IMAGE_URL);
 		session().submit("WikiaPhotoGalleryImageUploadForm");
 
 		// wait for upload to be completed (either conflict screen or photo options screen)
-		session().waitForCondition("window.WikiaPhotoGallery.editor.currentPage > window.WikiaPhotoGallery.UPLOAD_FIND_PAGE", "7500");
+		session().waitForCondition("window.WikiaPhotoGallery.editor.currentPage > window.WikiaPhotoGallery.UPLOAD_FIND_PAGE", this.getTimeout());
 
 		// conflict screen? (if so, reuse existing one)
 		if (session().isElementPresent("WikiaPhotoGalleryEditorConflictReuse")) {
@@ -184,7 +184,7 @@ public class PhotoGalleryTest extends BaseTest {
 		assertTrue(wikitext.indexOf(pattern) > -1);
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI","envProduction"})
 	public void testImageSearch() throws Exception {
 		loginAsStaff();
 
@@ -240,7 +240,7 @@ public class PhotoGalleryTest extends BaseTest {
 		assertTrue(session().isElementPresent("//span[@class='wikia-gallery-item']//img[contains(@title,'Image search test')]"));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI","envProduction"})
 	public void testEditInRTE() throws Exception {
 		loginAsStaff();
 
@@ -253,7 +253,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// switch to wysiwyg mode
 		session().runScript("window.RTE.instance.switchMode('wysiwyg')");
-		session().waitForCondition("window.RTE.instance.mode == 'wysiwyg'", "7500");
+		session().waitForCondition("window.RTE.instance.mode == 'wysiwyg'", this.getTimeout());
 
 		// check if button in toolbar exists
 		assertTrue(session().isElementPresent("//a[contains(@class, 'RTEGalleryButton')]"));
@@ -296,7 +296,7 @@ public class PhotoGalleryTest extends BaseTest {
 	}
 
 	//@author Marooned
-	@Test(groups={"CI"})
+	@Test(groups={"CI","envProduction"})
 	public void testFeedGallery() throws Exception {
 		loginAsStaff();
 
@@ -308,7 +308,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// switch to wysiwyg mode
 		session().runScript("window.RTE.instance.switchMode('wysiwyg')");
-		session().waitForCondition("window.RTE.instance.mode == 'wysiwyg'", "7500");
+		session().waitForCondition("window.RTE.instance.mode == 'wysiwyg'", this.getTimeout());
 
 		// check if button in toolbar exists
 		assertTrue(session().isElementPresent("//a[contains(@class, 'RTEGalleryButton')]"));
@@ -342,7 +342,7 @@ public class PhotoGalleryTest extends BaseTest {
 	}
 
 	//@author Marooned
-	@Test(groups={"CI"})
+	@Test(groups={"CI","envProduction"})
 	public void testFeedSlideshow() throws Exception {
 		loginAsStaff();
 
@@ -354,7 +354,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// switch to wysiwyg mode
 		session().runScript("window.RTE.instance.switchMode('wysiwyg')");
-		session().waitForCondition("window.RTE.instance.mode == 'wysiwyg'", "7500");
+		session().waitForCondition("window.RTE.instance.mode == 'wysiwyg'", this.getTimeout());
 
 		// check if button in toolbar exists
 		assertTrue(session().isElementPresent("//a[contains(@class, 'RTEGalleryButton')]"));
