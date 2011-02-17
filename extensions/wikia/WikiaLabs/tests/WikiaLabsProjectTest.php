@@ -214,13 +214,13 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 			$this->object->updateRating( self::TEST_USER_ID1, $testRating1 );
 			$this->object->updateRating( self::TEST_USER_ID2, $testRating2 );
 
-			$this->assertEquals( (($testRating1+$testRating2)/2), $this->object->getRating() );
+			$this->assertEquals( 2, $this->object->getRating() );
 			$this->assertEquals( $testRating1, $this->object->getRatingByUser( self::TEST_USER_ID1 ) );
 			$this->assertEquals( $testRating2, $this->object->getRatingByUser( self::TEST_USER_ID2 ) );
 
 			$this->object->updateRating( self::TEST_USER_ID2, $testRating1 );
 
-			$this->assertEquals( (($testRating1+$testRating1)/2), $this->object->getRating() );
+			$this->assertEquals( 2, $this->object->getRating() );
 			$this->assertEquals( $testRating1, $this->object->getRatingByUser( self::TEST_USER_ID1, DB_MASTER ) );
 			$this->assertEquals( $testRating1, $this->object->getRatingByUser( self::TEST_USER_ID2, DB_MASTER ) );
 		}
