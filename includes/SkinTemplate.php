@@ -344,7 +344,10 @@ class SkinTemplate extends Skin {
 		$newtalks = $wgUser->getNewMessageLinks();
 		$ntl = '';
 
-		if( count( $newtalks ) == 1 && $newtalks[0]['wiki'] === wfWikiID() ) {
+		/* Wikia change begin - @author: tor */
+		global $wgSitename;
+		if( count( $newtalks ) == 1 && $newtalks[0]['wiki'] === $wgSitename ) {
+		/* Wikia change end */
 			$usertitle = $this->mUser->getUserPage();
 			$usertalktitle = $usertitle->getTalkPage();
 
