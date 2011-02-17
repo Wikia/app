@@ -130,9 +130,6 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 					'params' => $params
 				) );
 				
-				die($data);
-				exit;
-				
 				WScribeClient::singleton( 'trigger' )->send( $data );
 			}
 			catch( TException $e ) {
