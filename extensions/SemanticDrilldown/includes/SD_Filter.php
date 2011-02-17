@@ -225,7 +225,7 @@ END;
 
 		if( $type == DB_MASTER ) {
 			if( !$this->dbw ) {
-				$this->dbw = wfGetDB( DB_MASTER );
+				$this->dbw = wfGetDB( DB_MASTER, 'smw' );
 			}
 		}
 		else {
