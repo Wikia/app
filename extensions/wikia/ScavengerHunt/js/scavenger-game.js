@@ -206,7 +206,7 @@ var ScavengerHunt = {
 				id: 'scavengerGoodbyeModal',
 				width: ScavengerHunt.MODAL_WIDTH,
 				callback: function() {
-					var w = $('#scavengerEntryFormModal').closest('.modalWrapper');
+					var w = $('#scavengerGoodbyeModal');
 					w.find('.scavenger-clue-button a').click(function(e) {
 						ScavengerHunt.track('game/modalGoodbye/clickButton');
 						e.preventDefault();

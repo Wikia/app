@@ -52,7 +52,7 @@ class SpecialScavengerHunt extends SpecialPage {
 		@list( $action, $id ) = explode('/', $subpage);
 		$action = !empty($action) ? $action : 'list';
 		$id = (int)$id;
-		$game = $this->games->findById($id);
+		$game = $this->games->findHereById($id);
 		if (empty($game)) $game = $this->games->newGame();
 
 		// check edit tokens
@@ -169,7 +169,7 @@ class SpecialScavengerHunt extends SpecialPage {
 
 		if (empty($game)) {
 			$gameId = (int)$this->request->getVal('gameId');
-			$game = $this->games->findById($gameId, true);
+			$game = $this->games->findHereById($gameId, true);
 			if (empty($game)) {
 				throw new WikiaException("Could not retrieve specified game");
 			}
@@ -388,9 +388,13 @@ class ScavengerHuntGamesPager extends AlphabeticPager {
 	}
 
 	public function getQueryInfo() {
+		$wikiId = WF::build('App')->getGlobal('wgCityId');
 		return array(
 			'tables' => ScavengerHuntGames::GAMES_TABLE_NAME,
 			'fields' => '*',
+			'conds' => array(
+				'wiki_id' => $wikiId,
+			),
 		);
 	}
 

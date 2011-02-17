@@ -28,7 +28,7 @@ class ScavengerHuntAjax {
 
 		$games = WF::build('ScavengerHuntGames');
 		$gameId = $request->getVal('gameId', false);
-		$game = $games->findEnabledById((int)$gameId);
+		$game = $games->findHereEnabledById((int)$gameId);
 
 		$articleId = $request->getInt('articleId', false);
 		$article = $game->findArticleById($articleId);
@@ -89,7 +89,7 @@ class ScavengerHuntAjax {
 
 		$games = WF::build('ScavengerHuntGames');
 		$gameId = $request->getVal('gameId', false);
-		$game = $games->findEnabledById((int)$gameId);
+		$game = $games->findHereEnabledById((int)$gameId);
 
 		if (!empty($game)) {
 			$visitedIds = $request->getVal('visitedIds');
