@@ -21,7 +21,6 @@
 					<span class="percentage"><?= $answer['percentage'] ?>%</span>
 					<span class="votes">
 <?php
-	global $wgLang;
 	echo wfMsgExt('wikiapoll-votes', array('parsemag'), $wgLang->formatNum( $answer['votes']) );
 ?>
 					</span>

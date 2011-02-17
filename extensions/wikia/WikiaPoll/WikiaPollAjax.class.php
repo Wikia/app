@@ -21,11 +21,15 @@ class WikiaPollAjax {
 		$title_object = Title::newFromText ($title, NS_WIKIA_POLL) ;
 
 		if (is_object ($title_object) && $title_object->exists() ) {
-			// TODO msg this
 			$res = array (
 				'success' => false,
-				'error' => wfRenderModule('Error', 'Index', 'A poll with that name already exists.')				
+				'error' => wfRenderModule('Error', 'Index', wfMsg('wikiapoll-error-duplicate'))
 				);
+		} else if ($title_object == null) {
+			$res = array (
+				'success' => false,
+				'error' => wfRenderModule('Error', 'Index', wfMsg('wikiapoll-error-invalid-title'))
+				);			
 		} else {
 
 			$content = "";
