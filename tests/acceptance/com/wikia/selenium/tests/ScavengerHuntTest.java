@@ -23,6 +23,17 @@ import static org.testng.AssertJUnit.*;
 import org.testng.annotations.Test;
 
 public class ScavengerHuntTest extends BaseTest {
+	private boolean waitForElementBool(String xpath) throws Exception {
+		for (int second = 0;; second++) {
+			if (second >= 60) return false;
+			try {
+				if (session().isElementPresent(xpath)) return true;
+			}
+			catch (Exception e) {}
+			Thread.sleep(500);
+		}
+	}
+
 	@Test(groups={"oasis", "CI"})
 	public void testGame() throws Exception {
 		//prepare some data
@@ -42,21 +53,30 @@ public class ScavengerHuntTest extends BaseTest {
 		String startingButtonTarget = "http://wikia.com/?target=starting&date=" + date;
 		//article
 		String articleTitle = "Main Page";	//this title MUST exist
+		String articleTitle2 = "Test";	//this title MUST exist
 		String articleHiddenImage = "http://images2.wikia.nocookie.net/__cb20101125134214/lukasztest/pl/images/f/f6/Test_picture_2.png";
+		String articleHiddenImage2 = "http://images3.wikia.nocookie.net/__cb20101125134215/lukasztest/pl/images/4/44/Test_picture_6.png";
 		String articleClueTitle = "Article clue title " + date;
 		String articleClueText = "Article clue text " + date;
 		String articleClueImage = "http://images4.wikia.nocookie.net/__cb20101125134214/lukasztest/pl/images/d/da/Test_picture_3.png";
 		String articleButtonText = "Article clue button " + date;
-		String articleButtonTarget = "http://wikia.com/?target=article&date=" + date;
+		String articleButtonTarget = "http://wikia.com/?target=article1&date=" + date;
+		String articleButtonTarget2 = "http://wikia.com/?target=article2&date=" + date;
 		//entry form
 		String entryModalTitle = "Entry title " + date;
 		String entryModalText = "Entry modal text " + date;
 		String entryModalImage = "http://images1.wikia.nocookie.net/__cb20101125134214/lukasztest/pl/images/8/8c/Test_picture_4.png";
 		String entryQuestion = "Entry question " + date;
+		//entry form data
+		String entryFormQuestion = "Entry form question " + date;
+		String entryFormName = "Entry form name " + date;
+		String entryFormEmail = date + "@EntryFormMail.pl";
 		//goodbye
 		String goodbyeModalTitle = "Goodbye title " + date;
 		String goodbyeModalText = "Goodbye text " + date;
 		String goodbyeModalImage = "http://images1.wikia.nocookie.net/__cb20101125134214/lukasztest/pl/images/8/88/Test_picture_5.png";
+
+		loginAsStaff();
 
 		//go to the list
 		session().open("index.php?title=Special:ScavengerHunt");
@@ -90,7 +110,17 @@ public class ScavengerHuntTest extends BaseTest {
 		session().type("//input[@name='articleClueImageLeftOffset[]']", imageLeft);
 		session().type("//input[@name='articleClueButtonText[]']", articleButtonText);
 		session().type("//input[@name='articleClueButtonTarget[]']", articleButtonTarget);
-		//TODO: add article #2 (invoke onblur() on articleTitle)
+		//add article #2 (invoke onblur() on articleTitle)
+		session().getEval("window.$('input[name=\"articleTitle[]\"]').blur()");
+		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleTitle[]']", articleTitle2);
+		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleHiddenImage[]']", articleHiddenImage2);
+		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleClueTitle[]']", articleClueTitle);
+		session().type("//fieldset[@class='scavenger-article'][2]//textarea[@name='articleClueText[]']", articleClueText);
+		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleClueImage[]']", articleClueImage);
+		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleClueImageTopOffset[]']", imageTop);
+		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleClueImageLeftOffset[]']", imageLeft);
+		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleClueButtonText[]']", articleButtonText);
+		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleClueButtonTarget[]']", articleButtonTarget2);
 		//entry
 		session().type("//input[@name='entryFormTitle']", entryModalTitle);
 		session().type("//textarea[@name='entryFormText']", entryModalText);
@@ -109,34 +139,70 @@ public class ScavengerHuntTest extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 
 		//check confirmation (Oasis only)
-		assertTrue(session().isElementPresent("//section[@id='WikiaPage']/div[@class='WikiaConfirmation']"));
+//		assertTrue(session().isElementPresent("//section[@id='WikiaPage']/div[@class='WikiaConfirmation']"));
 		//check if new game is on the list
 		assertTrue(session().isElementPresent("//div[@id='WikiaArticle']/table/tbody/tr/td[contains(text(), '" + generalGameName + "')]"));
 		//click edit
 		session().click("//div[@id='WikiaArticle']/table/tbody/tr[td[contains(text(), '" + generalGameName + "')]]/td[3]/a");
+		session().waitForPageToLoad(this.getTimeout());
 		//enable the game
 		session().click("//form[@class='scavenger-form']//input[@name='enable']");
 		session().waitForPageToLoad(this.getTimeout());
 
-		//go to article with game data
+		//go to article with game data (starting point)
 		session().open("index.php?title=" + generalLanding);
 		session().waitForPageToLoad(this.getTimeout());
 		//check presence of start button
-		assertTrue(session().isElementPresent("//div[@id='WikiaArticle']/input[@value='" + generalButton + "']"));
+		assertTrue(session().isElementPresent("//div[@id='WikiaArticle']//input[@value='" + generalButton + "']"));
 		//click it
-		session().click("//div[@id='WikiaArticle']/input[@value='" + generalButton + "']");
+		session().click("//div[@id='WikiaArticle']//input[@value='" + generalButton + "']");
 		//wait for modal and check presence of the button
-		assertTrue(waitForModal("//div[@class='scavenger-clue-button']/a[@href='" + startingButtonTarget + "']"));
-	}
+		assertTrue(waitForElementBool("//div[@class='scavenger-clue-button']/a[@href='" + startingButtonTarget + "']"));
 
-	private boolean waitForModal(String xpath) throws Exception {
-		for (int second = 0;; second++) {
-			if (second >= 60) return false;
-			try {
-				if (session().isElementPresent(xpath)) return true;
-			}
-			catch (Exception e) {}
-			Thread.sleep(500);
-		}
+		//go to article with game data (1st article)
+		session().open("index.php?title=" + articleTitle);
+		session().waitForPageToLoad(this.getTimeout());
+		//wait for hidden image
+		assertTrue(waitForElementBool("//img[@class='scavenger-hidden-image' and @src='" + articleHiddenImage + "']"));
+		//click on it
+		session().click("//img[@class='scavenger-hidden-image' and @src='" + articleHiddenImage + "']");
+		//wait for modal and check presence of the button
+		assertTrue(waitForElementBool("//div[@class='scavenger-clue-button']/a[@href='" + articleButtonTarget + "']"));
+
+		//go to article with game data (2st article)
+		session().open("index.php?title=" + articleTitle2);
+		session().waitForPageToLoad(this.getTimeout());
+		//wait for hidden image
+		assertTrue(waitForElementBool("//img[@class='scavenger-hidden-image' and @src='" + articleHiddenImage2 + "']"));
+		//click on it
+		session().click("//img[@class='scavenger-hidden-image' and @src='" + articleHiddenImage2 + "']");
+		//wait for modal - it's the last article so we should get entry form
+		assertTrue(waitForElementBool("//form[@class='scavenger-entry-form']"));
+		//fill in the form
+		session().type("//form[@class='scavenger-entry-form']/textarea[@name='answer']", entryFormQuestion);
+		session().type("//form[@class='scavenger-entry-form']/input[@name='name']", entryFormName);
+		session().type("//form[@class='scavenger-entry-form']/input[@name='email']", entryFormEmail);
+		//unblock submit button
+		session().getEval("window.$('#scavengerEntryFormModal').find('.scavenger-clue-button input[type=submit]').attr('disabled', '');");
+		//send it
+		session().click("//form[@class='scavenger-entry-form']//input[@type='submit']");
+
+		//wait for goodbye form
+		assertTrue(waitForElementBool("//section[@id='scavengerGoodbyeModal']"));
+
+		//clear after test - delete the game
+		//go to the list
+		session().open("index.php?title=Special:ScavengerHunt");
+		session().waitForPageToLoad(this.getTimeout());
+		//click edit
+		session().click("//div[@id='WikiaArticle']/table/tbody/tr[td[contains(text(), '" + generalGameName + "')]]/td[3]/a");
+		session().waitForPageToLoad(this.getTimeout());
+		//click delete
+		session().click("//form[@class='scavenger-form']//input[@name='delete']");
+		//wait for confirm modal
+		assertTrue(waitForElementBool("//section[@id='WikiaConfirm']"));
+		//click ok
+		session().click("//a[@id='WikiaConfirmOk']");
+		session().waitForPageToLoad(this.getTimeout());
 	}
 }
