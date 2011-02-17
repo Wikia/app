@@ -367,6 +367,7 @@ class SkinTemplate extends Skin {
 					)
 				);
 
+				/* Wikia change begin - @author: tor
 				$newmessagesdifflink = $this->link(
 					$usertalktitle,
 					wfMsgHtml( 'newmessagesdifflink' ),
@@ -380,6 +381,7 @@ class SkinTemplate extends Skin {
 					$newmessageslink,
 					$newmessagesdifflink
 				);
+				  Wikia change end */
 				# Disable Cache
 				$out->setSquidMaxage( 0 );
 			}
