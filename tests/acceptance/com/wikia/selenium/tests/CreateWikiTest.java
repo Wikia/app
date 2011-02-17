@@ -87,14 +87,16 @@ public class CreateWikiTest extends BaseTest {
 				assertTrue(session().getLocation().contains("http://" + languages[i] + "." + getWikiName() + ".wikia.com/"));
 				assertTrue(session().getLocation().contains(":WikiActivity"));
 				
-				enforceWebsite("http://" + languages[i] + "." + getWikiName() + ".wikia.com/wiki/");
+				enforceWebsite("http://" + languages[i] + "." + getWikiName() + ".wikia.com/");
 			}
 			
 			editArticle("A new article", "Lorem ipsum dolor sit amet");
 			session().open("index.php?title=A_new_article");
+			session().waitForPageToLoad(this.getTimeout());
 			assertTrue(session().isTextPresent("Lorem ipsum dolor sit amet"));
 			editArticle("A new article", "consectetur adipiscing elit");
 			session().open("index.php?title=A_new_article");
+			session().waitForPageToLoad(this.getTimeout());
 			assertFalse(session().isTextPresent("Lorem ipsum dolor sit amet"));
 			assertTrue(session().isTextPresent("consectetur adipiscing elit"));
 		}
