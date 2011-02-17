@@ -15,8 +15,14 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 	
 	function __construct( WebRequest $request ) {
 		global $wgDevelEnvironment;
+		$requestedVersion = $request->getInt( 'ver', self::API_VERSION );
+		$requestedRevision = $request->getInt( 'rev', self::API_REVISION );
 		
-		if( !$wgDevelEnvironment ) {
+		if ( $requestedVersion != self::API_VERSION || $requestedRevision != self::API_REVISION ) {
+			throw new WikiaGameGuidesWrongAPIVersionException();
+		}
+		
+		if ( !$wgDevelEnvironment ) {
 			$this->setRequiresPost( true );//only POST requests allowed
 		}
 		
