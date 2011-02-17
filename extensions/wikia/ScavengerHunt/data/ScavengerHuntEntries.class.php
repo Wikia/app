@@ -40,7 +40,7 @@ class ScavengerHuntEntries {
 	public function findAllByGameId( $gameId, $startEntryId = 0, $limit = -1 ) {
 		$where = array(
 			'game_id' => (int)$gameId,
-			'entry_id >= '.(int)$startEntryId,
+			'entry_id >= ' . (int)$startEntryId,
 		);
 		$options = array();
 		if ($limit > 0) {

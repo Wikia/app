@@ -288,4 +288,3 @@ $messages['te'] = array(
 	'scavengerhunt-entry-form-name' => 'మీ పేరు:',
 	'scavengerhunt-entry-form-email' => 'మీ ఈ-మెయిలు చిరునామా:',
 );
-

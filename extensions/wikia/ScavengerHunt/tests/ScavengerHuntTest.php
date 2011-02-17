@@ -9,7 +9,7 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 		$games = WF::build('ScavengerHuntGames');
 
 		$article = WF::build('ScavengerHuntGames')->newGameArticle();
-		$article->setTitleAndId('bnm',333);
+		$article->setTitleAndId('bnm', 333);
 		$article->setHiddenImage('him');
 		$article->setClueTitle('clt');
 		$article->setClueText('cly');
@@ -56,9 +56,9 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 		$db = $this->getMock('DatabaseBase');
 		$db->expects($this->once())
 			->method('insert')
-			->with($this->anything(),$this->equalTo($fields),$this->anything());
+			->with($this->anything(), $this->equalTo($fields), $this->anything());
 
-		$games = $this->getMock('ScavengerHuntGames',array('getDb','clearCache'),array($app));
+		$games = $this->getMock('ScavengerHuntGames', array('getDb', 'clearCache'), array($app));
 		$games->expects($this->once())
 			->method('getDb')
 			->will($this->returnValue($db));
@@ -72,7 +72,7 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 
 		$articles = array();
 		$article = $game->newGameArticle();
-		$article->setTitleAndId('bnm',333);
+		$article->setTitleAndId('bnm', 333);
 		$article->setHiddenImage('him');
 		$article->setClueTitle('clt');
 		$article->setClueText('cly');
@@ -95,7 +95,7 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 		$app = WF::build('App');
 
 		$article = WF::build('ScavengerHuntGames')->newGameArticle();
-		$article->setTitleAndId('bnm',333);
+		$article->setTitleAndId('bnm', 333);
 		$article->setHiddenImage('him');
 		$article->setClueTitle('clt');
 		$article->setClueText('cly');
@@ -149,10 +149,10 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 		$db = $this->getMock('DatabaseBase');
 		$db->expects($this->once())
 			->method('selectRow')
-			->with($this->anything(),$this->anything(),$this->equalTo($where),$this->anything(),$this->anything())
+			->with($this->anything(), $this->anything(), $this->equalTo($where), $this->anything(), $this->anything())
 			->will($this->returnValue($fakeRow));
 
-		$games = $this->getMock('ScavengerHuntGames',array('getDb','clearCache'),array($app));
+		$games = $this->getMock('ScavengerHuntGames', array('getDb', 'clearCache'), array($app));
 		$games->expects($this->once())
 			->method('getDb')
 			->will($this->returnValue($db));
@@ -163,10 +163,10 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 		$game = $games->findById(1001);
 		$this->assertNotEmpty($game);
 
-		$this->assertEquals($fakeRow->game_id,$game->getId());
-		$this->assertEquals($fakeRow->wiki_id,$game->getWikiId());
-		$this->assertEquals($fakeRow->game_name,$game->getName());
-		$this->assertEquals($fakeRow->game_is_enabled,$game->isEnabled());
+		$this->assertEquals($fakeRow->game_id, $game->getId());
+		$this->assertEquals($fakeRow->wiki_id, $game->getWikiId());
+		$this->assertEquals($fakeRow->game_name, $game->getName());
+		$this->assertEquals($fakeRow->game_is_enabled, $game->isEnabled());
 		$this->assertEquals(unserialize($fakeRow->game_data), $game->getData());
 	}
 
@@ -180,10 +180,10 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 		$db = $this->getMock('DatabaseBase');
 		$db->expects($this->once())
 			->method('delete')
-			->with($this->anything(),$this->equalTo($where))
+			->with($this->anything(), $this->equalTo($where))
 			->will($this->returnValue(true));
 
-		$games = $this->getMock('ScavengerHuntGames',array('getDb','clearCache'),array($app));
+		$games = $this->getMock('ScavengerHuntGames', array('getDb', 'clearCache'), array($app));
 		$games->expects($this->once())
 			->method('getDb')
 			->will($this->returnValue($db));
@@ -217,13 +217,13 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 			),
 		);
 
-		$cache = $this->getMock('stdClass',array('get','set'));
+		$cache = $this->getMock('stdClass', array('get', 'set'));
 		$cache->expects($this->once())
 			->method('get')
 			->will($this->returnValue(null));
 		$cache->expects($this->once())
 			->method('set')
-			->with($this->anything(),$this->equalTo($cacheData),$this->anything());
+			->with($this->anything(), $this->equalTo($cacheData), $this->anything());
 
 		$article1 = WF::build('ScavengerHuntGameArticle');
 		$article1->setAll(array(
@@ -259,7 +259,7 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 		));
 		$gamesData = array( $game1, $game2 );
 
-		$games = $this->getMock('ScavengerHuntGames',array('getCache','findAllEnabledByWikiId','getTitleDbKey'),array($app));
+		$games = $this->getMock('ScavengerHuntGames', array('getCache', 'findAllEnabledByWikiId', 'getTitleDbKey'), array($app));
 		$games->expects($this->exactly(2))
 			->method('getCache')
 			->will($this->returnValue($cache));
@@ -268,9 +268,9 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 			->will($this->returnValue($gamesData));
 		$games->expects($this->any())
 			->method('getTitleDbKey')
-			->will($this->returnCallback(array($this,'mock_Games_getTitleDbKey')));
+			->will($this->returnCallback(array($this, 'mock_Games_getTitleDbKey')));
 
-		$this->assertEquals($cacheData,$games->getIndexCache());
+		$this->assertEquals($cacheData, $games->getIndexCache());
 	}
 
 	public function testIndexCacheReading() {
@@ -290,14 +290,14 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 			),
 		);
 
-		$cache = $this->getMock('stdClass',array('get','set'));
+		$cache = $this->getMock('stdClass', array('get', 'set'));
 		$cache->expects($this->once())
 			->method('get')
 			->will($this->returnValue($cacheData));
 		$cache->expects($this->never())
 			->method('set');
 
-		$games = $this->getMock('ScavengerHuntGames',array('getCache','findAllEnabledByWikiId','getTitleDbKey'),array($app));
+		$games = $this->getMock('ScavengerHuntGames', array('getCache', 'findAllEnabledByWikiId', 'getTitleDbKey'), array($app));
 		$games->expects($this->once())
 			->method('getCache')
 			->will($this->returnValue($cache));
@@ -306,7 +306,7 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 		$games->expects($this->never())
 			->method('getTitleDbKey');
 
-		$this->assertEquals($cacheData,$games->getIndexCache());
+		$this->assertEquals($cacheData, $games->getIndexCache());
 	}
 
 	public function testSavingEntry() {
@@ -323,14 +323,14 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 		$db = $this->getMock('DatabaseBase');
 		$db->expects($this->once())
 			->method('insert')
-			->with($this->anything(),$this->equalTo($fields),$this->anything());
+			->with($this->anything(), $this->equalTo($fields), $this->anything());
 
-		$entries = $this->getMock('ScavengerHuntEntries',array('getDb'),array($app));
+		$entries = $this->getMock('ScavengerHuntEntries', array('getDb'), array($app));
 		$entries->expects($this->once())
 			->method('getDb')
 			->will($this->returnValue($db));
 
-		$games = $this->getMock('ScavengerHuntGames',array('getEntries'),array($app));
+		$games = $this->getMock('ScavengerHuntGames', array('getEntries'), array($app));
 		$games->expects($this->any())
 			->method('getEntries')
 			->will($this->returnValue($entries));

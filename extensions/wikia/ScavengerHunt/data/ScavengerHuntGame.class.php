@@ -50,7 +50,7 @@ class ScavengerHuntGame {
 	/** GETTERS AND SETTERS **/
 	public function setLandingTitle( $landingTitle ) {
 		$this->landingTitle = $landingTitle;
-		$titleObj = WF::build('Title',array($this->landingTitle),'newFromText');
+		$titleObj = WF::build('Title', array($this->landingTitle), 'newFromText');
 		$this->landingArticleId = $titleObj ? $titleObj->getArticleId() : 0;
 	}
 
@@ -154,7 +154,7 @@ class ScavengerHuntGame {
 			if (array_key_exists($varName, $data))
 				$this->$varName = $data[$varName];
 		// special cases
-		if (array_key_exists('landingTitle',$data) && !array_key_exists('landingArticleId',$data))
+		if (array_key_exists('landingTitle', $data) && !array_key_exists('landingArticleId', $data))
 			$this->setLandingTitle($data['landingTitle']);
 	}
 
@@ -179,7 +179,7 @@ class ScavengerHuntGame {
 			if (array_key_exists($varName, $data))
 				$this->$varName = $data[$varName];
 		// special cases
-		if (array_key_exists('landingTitle',$data) && !array_key_exists('landingArticleId',$data))
+		if (array_key_exists('landingTitle', $data) && !array_key_exists('landingArticleId', $data))
 			$this->setLandingTitle($data['landingTitle']);
 	}
 
@@ -249,6 +249,6 @@ class ScavengerHuntGame {
 		}
 
 		$entries = $this->getEntries();
-		return $entries->findAllByGameId($this->getId(),$startId,$limit);
+		return $entries->findAllByGameId($this->getId(), $startId, $limit);
 	}
 }
