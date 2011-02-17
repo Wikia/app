@@ -9,9 +9,15 @@ class ScavengerHuntGames {
 		$this->app = $app;
 	}
 
+
 	public function getEntries() {
 		return WF::build('ScavengerHuntEntries');
 	}
+
+	public function getCurrentWikiId() {
+		return $this->app->getGlobal('wgCityId');
+	}
+
 
 	public function newGameArticle() {
 		return WF::build('ScavengerHuntGameArticle');
@@ -58,10 +64,22 @@ class ScavengerHuntGames {
 		return $game;
 	}
 
-	public function findEnabledById( $id, $readWrite = false ) {
-		return $this->findById($id, $readWrite, array(
+	public function findEnabledById( $id, $readWrite = false, $where = array() ) {
+		return $this->findById($id, $readWrite, array_merge(array(
 			'game_is_enabled' => 1,
-		));
+		)));
+	}
+
+	public function findHereById( $id, $readWrite = false, $where = array() ) {
+		return $this->findById($id, $readWrite, array_merge(array(
+			'wiki_id' => $this->getCurrentWikiId(),
+		)));
+	}
+
+	public function findHereEnabledById( $id, $readWrite = false, $where = array() ) {
+		return $this->findEnabledById($id, $readWrite, array_merge(array(
+			'wiki_id' => $this->getCurrentWikiId(),
+		)));
 	}
 
 	public function findAllByWikiId( $wikiId, $where = array() ) {

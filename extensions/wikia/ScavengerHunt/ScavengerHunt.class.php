@@ -112,8 +112,8 @@ class ScavengerHunt {
 			'title' => $game->getGoodbyeTitle(),
 			'text' => $this->parseCached( $game->getGoodbyeText() ),
 			'shareUrl' => $landingTitle,
-			'imageSrc' => $game->getEntryFormImage(),
-			'imageOffset' => $game->getEntryFormImageOffset(),
+			'imageSrc' => $game->getGoodbyeImage(),
+			'imageOffset' => $game->getGoodbyeImageOffset(),
 		));
 		return $template->render('modal-clue');
 	}
@@ -152,7 +152,7 @@ class ScavengerHunt {
 		$triggers = $games->getTitleTriggers($title);
 		if (!empty($triggers)) {
 			if (!empty($triggers['start'])) {
-				$game = $games->findEnabledById(reset($triggers['start']));
+				$game = $games->findHereEnabledById(reset($triggers['start']));
 				if (!empty($game)) {
 					//variables for starting page
 					$vars['ScavengerHuntStart'] = (int)$game->getId();
@@ -162,7 +162,7 @@ class ScavengerHunt {
 				}
 			}
 			if (!empty($triggers['article'])) {
-				$game = $games->findEnabledById(reset($triggers['article']));
+				$game = $games->findHereEnabledById(reset($triggers['article']));
 				if (!empty($game)) {
 					$article = $game->findArticleById($articleId);
 					if (!empty($article)) {
