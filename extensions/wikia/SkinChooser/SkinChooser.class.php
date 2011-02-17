@@ -183,7 +183,7 @@ class SkinChooser {
 		 */
 		if( function_exists( 'apache_request_headers' ) ) {
 			$headers = apache_request_headers();
-			if( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "wikia", "wikiaphone" ) ) ) {
+			if( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "wikia", "wikiaphone", "wikiaapp" ) ) ) {
 				$user->mSkin = &Skin::newFromKey( $headers[ "X-Skin" ] );
 				wfProfileOut(__METHOD__);
 				return false;
