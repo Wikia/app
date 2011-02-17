@@ -6,6 +6,7 @@ class WikiaPollModule extends Module {
 	var $embedded;
 	var $poll;
 	var $wgBlankImgUrl;
+	var $wgLang;
 
 	/**
 	 * Render HTML Poll namespace pages

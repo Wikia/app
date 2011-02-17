@@ -17,6 +17,8 @@ $messages['en'] = array(
 	'wikiapoll-addnewitem-label' => 'Add new item',
 	'wikiapoll-cancel-label' => 'Cancel',
 	'wikiapoll-publish-label' => 'Publish',
+	'wikiapoll-error-duplicate' => 'A poll with that name already exists.',
+	'wikiapoll-error-invalid-title' => 'Question text is invalid.'
 );
 
 /** Message documentation (Message documentation) */
@@ -36,6 +38,8 @@ $messages['qqq'] = array(
 	'wikiapoll-addnewitem-label' => 'Special Page text next to button for a new item to a poll',
 	'wikiapoll-cancel-label' => 'Cancel button label',
 	'wikiapoll-publish-label' => 'Create/Edit Poll button label for confirming changes',
+	'wikiapoll-error-duplicate' => 'Error message when user tries to create a poll that already exists',
+	'wikiapoll-error-invalid-title' => 'Error message when title of poll is invalid/empty'
 );
 
 /** Breton (Brezhoneg)
