@@ -211,13 +211,22 @@ class ScavengerHuntAjax {
 			case 'scavenger-goodbye':
 				$tmplName = 'modal-clue';
 				$title = $data['goodbyeTitle'];
+
+				$landingTitle = null;
+				if (isset($data['landingTitle'])) {
+					if ($landingTitle = WF::build('Title', array($data['landingTitle']), 'newFromText')) {
+						$landingTitle = $landingTitle->getFullURL();
+					}
+				}
+
 				$template->set_vars(array(
 					'text' => $helper->parse( $data['goodbyeText'] ),
 					'imageSrc' => $data['goodbyeImage'],
 					'imageOffset' => array(
 						'top' => $data['goodbyeImageTopOffset'],
 						'left' => $data['goodbyeImageLeftOffset']
-					)
+					),
+					'shareUrl' => $landingTitle
 				));
 				break;
 		}
