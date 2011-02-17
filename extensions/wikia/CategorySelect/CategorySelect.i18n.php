@@ -670,6 +670,7 @@ $messages['sl'] = array(
 $messages['sr-ec'] = array(
 	'categoryselect-code-view' => 'Кодни преглед',
 	'categoryselect-visual-view' => 'Визуални преглед',
+	'categoryselect-infobox-caption' => 'Поставке категорије',
 	'categoryselect-infobox-category' => 'Унесите име категорије:',
 	'categoryselect-addcategory-button' => 'Додај категорију',
 	'categoryselect-suggest-hint' => 'Притисните Enter када завршите.',

@@ -178,6 +178,13 @@ $messages['ksh'] = array(
 	'theorytab-parent-title' => 'De Sigg drövver',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'theorytab-title' => 'Bîrdoz',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

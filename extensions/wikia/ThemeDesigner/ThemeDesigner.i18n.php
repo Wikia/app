@@ -1003,6 +1003,7 @@ $messages['sr-ec'] = array(
 	'themedesigner-previous-versions' => 'Претходна издања',
 	'themedesigner-button-save-im-done' => 'Сачувај',
 	'themedesigner-button-cancel' => 'Откажи',
+	'themedesigner-pick-a-color' => 'Изаберите боју',
 	'themedesigner-color-name-or-hex-code' => 'Назив боје или хекс кôд',
 	'themedesigner-button-ok' => 'У реду',
 	'themedesigner-pick-an-image' => 'Изаберите слику',

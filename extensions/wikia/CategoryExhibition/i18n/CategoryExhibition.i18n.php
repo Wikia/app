@@ -244,6 +244,16 @@ $messages['ru'] = array(
 	'category-exhibition-blogs-header' => 'Сообщения блога',
 );
 
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'category-exhibition-sorttype' => 'Тип сврставања:',
+	'category-exhibition-mostvisited' => 'Најпосећеније',
+	'category-exhibition-subcategories-header' => 'Поткатегорије',
+	'category-exhibition-blogs-header' => 'Поруке на блогу',
+);
+
 /** Swedish (Svenska)
  * @author Tobulos1
  */

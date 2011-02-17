@@ -336,6 +336,8 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'partner-feed-recent-changes' => 'Скорашње измене',
+	'feed-title-recent-badges' => 'Скорашње значке',
+	'feed-title-recent-images' => 'Скорашње слике',
 );
 
 /** Swedish (Svenska)

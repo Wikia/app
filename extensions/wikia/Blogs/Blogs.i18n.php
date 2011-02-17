@@ -1787,9 +1787,13 @@ $messages['ksh'] = array(
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'create-blog-save' => 'Rûpelê tomar bike',
+	'create-blog-preview' => 'Pêşdîtin',
+	'blog-comment-delete' => 'jê bibe',
 	'blog-comment-hide' => 'veşêre',
 	'blog-comment-unhide' => 'nîşan bide',
 	'blog-comment-history' => 'dîrok',
+	'blog-comment-edit' => 'biguherîne',
 	'blog-fromsitename' => 'Ji $1',
 );
 
@@ -2856,6 +2860,7 @@ $messages['sl'] = array(
 $messages['sr-ec'] = array(
 	'createblogpage' => 'Напиши блог',
 	'create-blog-post-recent-listing' => 'Скорашње поруке',
+	'create-blog-form-post-text' => 'Текст блога',
 	'create-blog-empty-title-error' => 'Потребан је наслов',
 	'create-blog-invalid-title-error' => 'Неисправан наслов',
 	'create-blog-categories-textinput' => 'Додај нову категорију',
@@ -2868,8 +2873,15 @@ $messages['sr-ec'] = array(
 	'create-blog-listing-sortby' => 'Поређај по',
 	'create-blog-listing-sortby-date' => 'Најновије',
 	'create-blog-listing-sortby-author' => 'Аутор',
+	'blog-emptyparam' => 'Назив параметра не може остати празно.',
+	'blog-defaulttitle' => 'Блогови',
+	'blog-readfullpost' => 'Прочитај више',
+	'blog-olderposts' => 'Старије поруке',
+	'blog-newerposts' => 'Новије поруке',
+	'blog-nbrcomments' => '{{PLURAL:$1|Један коментар|$1 коментара|$1 коментара}}',
 	'blog-nopostfound' => 'Нема порука.',
 	'blog-writeone' => 'Напиши!',
+	'blog-empty-user-blog' => 'Овај члан нема порука на блогу!',
 	'blog-added' => 'додата',
 	'blog-edited' => 'измењена',
 	'blog-page' => 'Блог',
@@ -2889,6 +2901,7 @@ $messages['sr-ec'] = array(
 	'blog-comment-unhide' => 'откриј',
 	'blog-comment-history' => 'историјат',
 	'blog-comment-edit' => 'уреди',
+	'blog-comment-error' => 'Коментар није сачуван.',
 	'blog-avatar-preferences-title' => 'Корисничка сличица',
 	'blog-page-rate' => 'Оцени овај чланак:',
 	'blog-create-post-label' => 'Напиши поруку на блогу',
@@ -2896,9 +2909,18 @@ $messages['sr-ec'] = array(
 	'blog-create-next-label' => 'Започни нови чланак на блогу',
 	'blog-refresh-label' => 'Освежи',
 	'blog-widgets-label' => 'Табла с алаткама',
+	'blog-userblog' => 'Блог члана $1',
 	'blog-fromsitename' => 'Од $1',
 	'blogs-reportproblem' => 'Пријави проблем',
 	'blogs-comment-hidden' => 'Коментар је сакривен.',
+	'right-blog-comments-toggle' => 'уређивање коментара на чланцима блога',
+	'right-blog-comments-delete' => 'брисање коментара на чланцима блога',
+	'right-blog-articles-edit' => 'уређивање чланака блога',
+	'right-blog-articles-move' => 'премештање чланака блога',
+	'blogs-recent-url-text' => 'Скорашње поруке на блогу',
+	'blog-desc' => 'Чланци блога',
+	'blog-comment-sending' => 'Слање...',
+	'blog-by' => '$1 од $2',
 );
 
 /** Swedish (Svenska)

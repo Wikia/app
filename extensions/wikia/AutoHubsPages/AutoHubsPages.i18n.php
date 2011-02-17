@@ -343,6 +343,24 @@ $messages['ru'] = array(
 	'hub-blog-comments' => '{{PLURAL:$1|один комментарий|$1 комментария|$1 комментариев}}',
 );
 
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'unhide' => 'Откриј',
+	'hub-hotspot-header' => 'Вруће тачке',
+	'hub-topusers-header' => 'Топ $1 корисника',
+	'hub-featured' => 'Топ $1 викија',
+	'hub-header' => '$1 викије',
+	'hub-blog-comments' => '{{PLURAL:$1|један коментар|$1 коментара|$1 коментара}}',
+	'hub-blog-continue' => 'Настави читање',
+	'hub-blog-showarticle' => 'Прикажи страницу',
+	'hub-hotspot-from' => 'из',
+	'hub-hide-feed' => 'Сакриј довод',
+	'hub-show-feed' => 'Прикажи довод',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|уређивач|уређивачи}}</span>',
+);
+
 /** Swedish (Svenska)
  * @author Tobulos1
  */

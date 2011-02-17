@@ -110,6 +110,13 @@ Verifica le orthographia.',
 	'piggyback-issysopto' => 'Non es possibile portar le conto de un usator con le derecto al portacontos.',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'piggyback-otherusername' => 'Navê bikarhêner ê din:',
+);
+
 /** Macedonian (Македонски) */
 $messages['mk'] = array(
 	'piggybac-desc' => 'Овозможува да се најавите како друг корисник („на ушка“)',

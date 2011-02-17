@@ -2238,6 +2238,13 @@ $messages['uk'] = array(
 	'wmu-gallery' => 'Галерея',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'wmu-license' => 'ליצענץ',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gaoxuewei
  * @author Hydra

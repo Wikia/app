@@ -1533,8 +1533,11 @@ $messages['ku-latn'] = array(
 	'myhome' => 'Mala min',
 	'myhome-feed-newpage' => 'rûpela nû',
 	'myhome-feed-edit' => 'biguherîne',
+	'myhome-feed-delete' => 'hate jêbirin',
 	'myhome-feed-new-page-details' => 'Rûpela nû',
 	'myhome-feed-summary-details' => 'Kurte',
+	'myhome-feed-new-blog-comment-details' => 'Şîrove',
+	'myhome-feed-new-article-comment-details' => 'Şîrove',
 	'myhome-feed-redirect-details' => 'Redirect',
 );
 
@@ -2362,6 +2365,7 @@ $messages['sl'] = array(
  */
 $messages['sr-ec'] = array(
 	'myhome' => 'Моја страница',
+	'wikiactivity' => 'Активност на викији',
 	'myhome-activity-more' => 'прикажи скорашњу активност',
 	'myhome-activity-feed' => 'Активности',
 	'myhome-activity-feed-empty' => "Ова викија чека да се ви укључите.
@@ -2426,6 +2430,7 @@ $messages['sr-ec'] = array(
 	'myhome-hot-spots-definition' => 'Странице с највише уређивача {{PLURAL:$1|протеклог дана|протекла $1 дана|протеклих $1 дана}}.',
 	'myhome-default-view-checkbox' => 'Начини $1 као подразумевани приказ',
 	'tooltip-pt-myhome' => 'Пређи на Моју страницу',
+	'activityfeed' => 'Довод активности',
 );
 
 /** Swedish (Svenska)

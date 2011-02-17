@@ -2137,3 +2137,10 @@ $messages['uk'] = array(
 	'vet-close' => 'Закрити',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'vet-license' => 'ליצענץ',
+);
+

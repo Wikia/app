@@ -223,6 +223,13 @@ $messages['ru'] = array(
 	'landingpage-buttons-learn-more' => 'Подробнее &gt;',
 );
 
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'landingpage' => 'Добро дошли на Викију',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

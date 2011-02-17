@@ -1045,6 +1045,7 @@ $messages['mk'] = array(
 	'rte-ck-media-edit' => 'измени',
 	'rte-ck-modeSwitch-toSource' => 'Префрли на изворен режим',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Префрли на режим „директен преглед“',
+	'rte-ck-modeSwitch-error' => 'Се појави грешка при префрлувањето на режимот. Обидете се повторно.',
 	'rte-ck-photoGallery-add' => 'Вметни обична или подвижна галерија со слики',
 	'rte-ck-photoGallery-confirmDelete' => 'Дали сте сигурни дека сакате да ја отстраните галеријата од страницава?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Да ја отстранам галеријава?',
@@ -1080,6 +1081,9 @@ $messages['mk'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Да го отстранам пополнувачов?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Ова е пополнувач за видеоснимка.',
 	'rte-ck-widescreen-toggle' => 'Префрли на широк екран',
+	'rte-ck-poll-confirmDelete' => 'Дали сте сигурни дека сакате да ја анкетата од страницава?',
+	'rte-ck-poll-confirmDeleteTitle' => 'Да ја отстранам анкетава?',
+	'rte-ck-spellchecker-moreSuggestions' => 'Повеќе предлози',
 );
 
 /** Dutch (Nederlands)
@@ -1133,6 +1137,7 @@ $messages['nl'] = array(
 	'rte-ck-media-edit' => 'wijzigen',
 	'rte-ck-modeSwitch-toSource' => 'Naar de broncodemodus schakelen',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Wisselen naar WYSIWYG-modus',
+	'rte-ck-modeSwitch-error' => 'Er is een fout opgetreden tijdens het wisselen van modus. Probeer het opnieuw.',
 	'rte-ck-photoGallery-add' => 'Afbeeldingengalerij of diavoorstelling toevoegen',
 	'rte-ck-photoGallery-confirmDelete' => 'Weet u zeker dat u de galerij van deze pagina wilt verwijderen?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Deze galerij verwijderen?',
@@ -1170,6 +1175,7 @@ $messages['nl'] = array(
 	'rte-ck-widescreen-toggle' => 'Breedbeeld in- of uitschakelen',
 	'rte-ck-poll-confirmDelete' => 'Weet u zeker dat u de peiling van deze pagina wilt verwijderen?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Deze peiling verwijderen?',
+	'rte-ck-spellchecker-moreSuggestions' => 'Meer suggesties',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -1759,6 +1765,7 @@ $messages['sr-ec'] = array(
 	'rte-ck-link-error-badPageTitle' => 'Унесите наслов странице.',
 	'rte-ck-link-error-title' => 'Грешка',
 	'rte-ck-link-external-tab' => 'Спољашња веза',
+	'rte-ck-link-external-url' => 'URL адреса',
 	'rte-ck-link-internal-linkText' => 'Текст везе',
 	'rte-ck-link-internal-pageName' => 'Назив странице',
 	'rte-ck-link-internal-tab' => 'Унутрашња веза',
@@ -1785,7 +1792,7 @@ $messages['sr-ec'] = array(
 	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Најчешће коришћено',
 	'rte-ck-templateEditor-dialog-search' => 'Претражите шаблон',
 	'rte-ck-templateEditor-editor-parameters' => 'Параметри',
-	'rte-ck-templateEditor-editor-previewButton' => 'Претпреглед',
+	'rte-ck-templateEditor-editor-previewButton' => 'Прегледај',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Претпреглед',
 	'rte-ck-templateEditor-title' => 'Уређивач шаблона',
 	'rte-ck-unlink' => 'Уклони везу',

@@ -280,6 +280,9 @@ $messages['ksh'] = array(
  */
 $messages['ku-latn'] = array(
 	'sponsor-header' => '<h2>Lînkên sponsorên derve</h2>',
+	'sponsor-form-email' => 'Navnîşana e-nameya te:',
+	'sponsor-price-45yr' => 'salê $45',
+	'sponsor-price-5mo' => 'mehê $5',
 	'sponsorpage-edit' => 'Biguherîne',
 	'sponsorpage-save' => 'Qeyd bike',
 );

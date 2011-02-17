@@ -2506,10 +2506,22 @@ $messages['ja'] = array(
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'wikiaPhotoGallery-error-caption' => 'Çewtî',
+	'wikiaPhotoGallery-photooptions-done' => 'Çêbû',
+	'wikiaPhotoGallery-preview-hover-delete' => 'jê bibe',
+	'wikiaPhotoGallery-preview-px' => 'px',
+	'wikiaPhotoGallery-preview-position-left' => 'Çep',
 	'wikiaPhotoGallery-preview-position-right' => 'Rast',
 	'wikiaPhotoGallery-preview-spacing-small' => ' Biçûk',
+	'wikiaPhotoGallery-preview-captionalignment-left' => 'Çep',
+	'wikiaPhotoGallery-preview-captionalignment-right' => 'Rast',
+	'wikiaPhotoGallery-preview-captionsize-small' => 'Biçûk',
 	'wikiaPhotoGallery-preview-bordersize-small' => 'Biçûk',
+	'wikiaPhotoGallery-preview-captions-left' => 'Çep',
 	'wikiaPhotoGallery-preview-captions-right' => 'Rast',
+	'wikiaPhotoGallery-slideshowpreview-position-left' => 'Çep',
+	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Rast',
+	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'vê rûpelê',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

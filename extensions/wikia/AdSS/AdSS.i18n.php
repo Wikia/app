@@ -222,6 +222,7 @@ $messages['br'] = array(
 	'adss-form-page-plan-header' => 'Prenañ ul liamm war ur bajenn hepken',
 	'adss-form-page-plan-price' => '$1 eo koust ul liamm',
 	'adss-form-banner-plan-price' => '$1 evit un tamm eus ar bannieloù',
+	'adss-form-hub-plan-price' => '$1 eo an tamm',
 	'adss-form-or' => '- pe -',
 	'adss-form-thanks' => 'Trugarez evit ho paeroniañ !',
 	'adss-button-preview' => 'Rakwelet',
@@ -274,6 +275,7 @@ Distreiñ da [[Special:AdSS|{{int:Adss}}]].",
 	'adss-create-billing-agreement' => 'Krouiñ un emglev fakturenniñ',
 	'adss-paypal-payment' => 'Paeamant PayPal',
 	'adss-adss-fee' => 'Frejoù AdSS',
+	'adss-adss-refund' => 'Daskor AdSS',
 	'adss-fee' => 'Frejoù',
 	'adss-paid' => 'Paet',
 	'adss-timestamp' => 'Merker amzer',
@@ -1096,7 +1098,23 @@ $messages['ig'] = array(
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'adss-form-password' => 'Şîfreya te:',
+	'adss-form-usd-per-day' => 'rojê $$1',
+	'adss-form-usd-per-week' => 'hefteyê $$1',
+	'adss-form-usd-per-month' => 'mehê $$1',
+	'adss-form-or' => '-an-',
+	'adss-button-preview' => 'Pêşdîtin',
+	'adss-button-edit' => 'Biguherîne',
+	'adss-button-login' => 'Têkeve',
+	'adss-button-login-buy' => 'Têkeve û NIHA bikirre',
+	'adss-button-select' => 'Bijêre',
+	'adss-button-save' => 'Qeyd bike',
+	'adss-button-cancel' => 'Betal bike',
 	'adss-button-yes' => 'Erê',
+	'adss-button-no' => 'Na',
+	'adss-preview-header' => 'Pêşdîtin',
+	'adss-per-site' => 'Hêmû rûpel',
+	'adss-cancel' => 'Betal bike',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1174,6 +1192,11 @@ $messages['mk'] = array(
 	'adss-form-banner-plan-header' => 'Купете акции за графичките плакати со 728x90 пикс. во најгорниот дел на викито',
 	'adss-form-banner-plan-description' => 'Купете акции за плакатите што се истакнуваат на целото вики за една ниска цена.',
 	'adss-form-banner-plan-price' => '$1 по акција',
+	'adss-form-hub-plan-header' => 'Купи спонзорирана врска низ сите викија на $1',
+	'adss-form-hub-plan-description' => 'Купете спонзорирани врски на сите (над $2) викија на $1 по една ниска цена.
+
+Ова ви овозможува поголема изложеност бидејќи рекламата се прикажува на сите викија од истото собиралиште.',
+	'adss-form-hub-plan-price' => '$1 за една акција',
 	'adss-form-or' => '- или -',
 	'adss-form-thanks' => 'Ви благодариме за спонзорството! Рекламата е успешно купена, и истата ќе оди во живо откако ќе биде рачно одобрена (макс. во рок од 48 часа).
 
@@ -1203,6 +1226,7 @@ $messages['mk'] = array(
 
 Назад кон [[Special:AdSS|{{int:Adss}}]].',
 	'adss-per-site' => 'Сите страници',
+	'adss-per-hub' => 'Собиралиште',
 	'adss-per-page' => 'Само една страница',
 	'adss-close' => 'Затвори',
 	'adss-cancel' => 'Откажи',
@@ -1233,9 +1257,9 @@ $messages['mk'] = array(
 	'adss-billing-agreement-created' => 'Договорот за наплата е успешно направен (BAID=$1). Назад кон [[Special:AdSS/manager/billing|таблата]].',
 	'adss-billing-agreement-canceled' => 'Договорот за наплата е успешно откажан. Назад кон [[Special:AdSS/manager/billing|таблата]].',
 	'adss-paypal-payment' => 'Плаќање со PayPal',
-	'adss-adss-fee' => 'Наплата за AdSS',
+	'adss-adss-fee' => 'Провизија за AdSS',
 	'adss-adss-refund' => 'AdSS - Повраток',
-	'adss-fee' => 'Наплата',
+	'adss-fee' => 'Провизија',
 	'adss-paid' => 'Платено',
 	'adss-timestamp' => 'Датум и време',
 	'adss-description' => 'Опис',
@@ -1888,6 +1912,28 @@ $messages['ru'] = array(
  */
 $messages['sl'] = array(
 	'adss-button-save-pay' => 'Shrani',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'adss-form-email' => 'Е-адреса:',
+	'adss-button-preview' => 'Прегледај',
+	'adss-button-edit' => 'Уреди',
+	'adss-button-login' => 'Пријави ме',
+	'adss-button-login-buy' => 'Пријави ме и купи',
+	'adss-button-save-pay' => 'Уштеди и плати',
+	'adss-button-pay-paypal' => 'Купи преко Пејпала',
+	'adss-button-select' => 'Изабери',
+	'adss-button-buy-now' => 'Купи',
+	'adss-button-save' => 'Сачувај',
+	'adss-button-cancel' => 'Откажи',
+	'adss-button-yes' => 'Да',
+	'adss-button-no' => 'Не',
+	'adss-buy-another' => 'Купи још један оглас!',
+	'adss-preview-header' => 'Претпреглед',
+	'adss-click-here' => 'Кликните овде',
 );
 
 /** Swedish (Svenska)

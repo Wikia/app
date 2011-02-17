@@ -123,12 +123,271 @@ $messages['qqq'] = array(
 	'cnw-welcome-help' => 'Message to Community central with embedded anchor. (leave blank if community does not exist)',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ */
+$messages['br'] = array(
+	'cnw-next' => "War-lerc'h",
+	'cnw-back' => 'A-raok',
+	'cnw-title' => 'Krouiñ ur wiki nevez',
+	'cnw-name-wiki-headline' => 'Kregiñ gant ur wiki',
+	'cnw-name-wiki-label' => "Roit un anv d'ho wiki",
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-name-wiki-domain-label' => "Roit ur chomlec'h d'ho wiki",
+	'cnw-login' => 'Kevreañ',
+	'cnw-signup' => 'Krouiñ ur gont',
+	'cnw-signup-prompt' => "Ezhomm hoc'h eus ur gont ?",
+	'cnw-call-to-signup' => 'Sinit amañ',
+	'cnw-login-prompt' => "Ur gont hoc'h eus dija ?",
+	'cnw-call-to-login' => 'Kevreit amañ',
+	'cnw-auth-headline' => 'Kregiñ gant ur wiki',
+	'cnw-auth-creative' => "Kevreit ouzh ho kont evit kenderc'hel da sevel ho wiki.",
+	'cnw-desc-headline' => 'Eus petra zo kaoz en ho wiki ?',
+	'cnw-desc-creative' => 'Deskrivit ho sujed',
+	'cnw-desc-placeholder' => 'Dont a ray war wel war bajenn bennañ ho wiki.',
+	'cnw-desc-tip1' => 'Tun 1',
+	'cnw-desc-tip1-creative' => "Lavarit d'an dud eus petra zo kaoz en ho wiki",
+	'cnw-desc-tip2' => 'Tun 2',
+	'cnw-desc-tip2-creative' => 'Ouzhpennit munudoù',
+	'cnw-desc-tip3' => 'Tun 3',
+	'cnw-desc-choose' => 'Dibabit ur rummad',
+	'cnw-desc-select-one' => 'Diuzañ unan',
+	'cnw-desc-default-lang' => 'E brezhoneg e vo ho wiki',
+	'cnw-desc-change-lang' => 'kemmañ',
+	'cnw-desc-lang' => 'Yezh',
+	'cnw-desc-wiki-submit-error' => 'Dibabit ur rummad, mar plij',
+	'cnw-theme-headline' => 'Krouit ho wiki',
+	'cnw-theme-creative' => 'Dibabit un tem a zere ouzh ho wiki.',
+	'cnw-upgrade-headline' => "C'hoant hoc'h eus da lakaat a-live ?",
+	'cnw-upgrade-now' => 'Lakaat a-live bremañ',
+	'cnw-welcome-headline' => "Gourc'hemennoù, krouet hoc'h eus $1",
+	'cnw-welcome-instruction1' => 'Klikit bremañ war ar bouton amañ dindan evit kregiñ da leuniañ ho wiki gant titouroù :',
+);
+
 /** German (Deutsch)
  * @author George Animal
  */
 $messages['de'] = array(
+	'cnw-next' => 'Nächste',
+	'cnw-back' => 'Zurück',
 	'cnw-or' => 'oder',
 	'cnw-desc-choose' => 'Eine Kategorie auswählen',
 	'cnw-desc-lang' => 'Sprache',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'cnw-or' => 'an',
+	'cnw-signup' => 'Hesabekî çêke',
+	'cnw-desc-lang' => 'Ziman',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|Помошник за создавање на вики]]',
+	'cnw-next' => 'Следно',
+	'cnw-back' => 'Назад',
+	'cnw-or' => 'или',
+	'cnw-title' => 'Создај ново вики',
+	'cnw-name-wiki-headline' => 'Започнете вики',
+	'cnw-name-wiki-creative' => 'Викија е најдоброто место за да изработите мрежно место и да создадете растечка заедница што се темели на она што го сакате.',
+	'cnw-name-wiki-label' => 'Именувајте го викито',
+	'cnw-name-wiki-wiki' => 'Вики',
+	'cnw-name-wiki-domain-label' => 'Дајте му адреса на викито',
+	'cnw-name-wiki-submit-error' => 'Проверете дали ги имате правилно пополнето сите горенаведени полиња.',
+	'cnw-login' => 'Најава',
+	'cnw-signup' => 'Создај сметка',
+	'cnw-signup-prompt' => 'Ви треба сметка?',
+	'cnw-call-to-signup' => 'Регистрирајте се тука',
+	'cnw-login-prompt' => 'Веќе имате сметка?',
+	'cnw-call-to-login' => 'Најавете се тука',
+	'cnw-auth-headline' => 'Започнете вики',
+	'cnw-auth-creative' => 'Најавете се на вашата сметка за да продолжите со изработка на викито.',
+	'cnw-auth-signup-creative' => 'Ќе ви треба сметка за да продолжите со изработка на викито.<br />Регистрацијата ќе ви одземе само минутка!',
+	'cnw-desc-headline' => 'Која е тематиката на викито?',
+	'cnw-desc-creative' => 'Опишете ја вашата тема',
+	'cnw-desc-placeholder' => 'Ова ќе се прикажува на главната страница на викито',
+	'cnw-desc-tip1' => 'Совет 1',
+	'cnw-desc-tip1-creative' => 'Известете ги корисниците каква тематика обработува викито',
+	'cnw-desc-tip2' => 'Совет 2',
+	'cnw-desc-tip2-creative' => 'Наведете што повеќе подробности',
+	'cnw-desc-tip3' => 'Совет 3',
+	'cnw-desc-tip3-creative' => 'Поканете ги корисниците да учествуваат во уредувањето',
+	'cnw-desc-choose' => 'Одберете категорија',
+	'cnw-desc-select-one' => 'Одберете една категорија',
+	'cnw-desc-default-lang' => 'Викито ќе биде на македонски јазик',
+	'cnw-desc-change-lang' => 'измени',
+	'cnw-desc-lang' => 'Јазик',
+	'cnw-desc-wiki-submit-error' => 'Одберете категорија',
+	'cnw-theme-headline' => 'Уредете го изгледот на викито',
+	'cnw-theme-creative' => 'Одберете изглед што одговара на викито.',
+	'cnw-theme-instruction' => 'Можете да го смените изгледот или да изработите свој во секое време преку „Мои алатки“ во алатникот на дното од страницата.',
+	'cnw-upgrade-headline' => 'Сакате да се надградите?',
+	'cnw-upgrade-creative' => 'Надградуваќи се на Викија Плус добивате можност да ги отстраните рекламите од <span class="wiki-name"></span> - еднократна понуда само за нови основачи',
+	'cnw-upgrade-marketing' => 'Викија Плус е одлично решение за:<ul>
+<li>Стручни деловни викија</li>
+<li>Непрофитни организации</li>
+<li>Семејства</li>
+<li>Училишта</li>
+<li>Лични проекти</li>
+</ul>
+Надградете се преку PayPal и вашето вики ќе биде без реклами за само $4,95 месечно!',
+	'cnw-upgrade-now' => 'Надгради веднаш',
+	'cnw-upgrade-decline' => 'Не, благодарам. Однеси ме на викито.',
+	'cnw-welcome-headline' => 'Честитаме! Го создадовте $1',
+	'cnw-welcome-instruction1' => 'Сега стиснете на копчето подолу за да го пополните викито со информации:',
+	'cnw-welcome-instruction2' => 'Ова копче ќе се прикажува насекаде на викито.<br />Користете го секогаш кога дакате да додадете нова страница.',
+	'cnw-welcome-help' => 'Одговори на прашања, совети и друго ќе добиете на <a href="http://community.wikia.com">Центарот на заедницата</a>.',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki Wizard wiki aanmaken]]',
+	'cnw-next' => 'Volgende',
+	'cnw-back' => 'Vorige',
+	'cnw-or' => 'of',
+	'cnw-title' => 'Nieuwe wiki aanmaken',
+	'cnw-name-wiki-headline' => 'Wiki oprichten',
+	'cnw-name-wiki-creative' => 'Wikia is de beste plaats om een website te bouwen en een gemeenschap te laten groeien om het onderwerp dat u aan het hart gaat.',
+	'cnw-name-wiki-label' => 'Geef uw wiki een naam',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-name-wiki-domain-label' => 'Geef uw wiki een adres',
+	'cnw-name-wiki-submit-error' => 'Zorg dat alle velden hierboven een geldige waarde hebben.',
+	'cnw-login' => 'Aanmelden',
+	'cnw-signup' => 'Registreren',
+	'cnw-signup-prompt' => 'Wilt u zich registreren?',
+	'cnw-call-to-signup' => 'Hier aanmelden',
+	'cnw-login-prompt' => 'Hebt u al een gebruiker?',
+	'cnw-call-to-login' => 'Hier aanmelden',
+	'cnw-auth-headline' => 'Wiki oprichten',
+	'cnw-auth-creative' => 'Meld u aan om door te gaan met het opbouwen van uw wiki.',
+	'cnw-auth-signup-creative' => 'U hebt een gebruiker nodig om door te kunnen gaan met het bouwen van uw wiki.<br />Registreren kost maar een minuutje van uw tijd!',
+	'cnw-desc-headline' => 'Waar gaat uw wiki over?',
+	'cnw-desc-creative' => 'Beschrijf uw onderwerp',
+	'cnw-desc-placeholder' => 'Dit wordt weergegeven op de hoofdpagina van uw wiki.',
+	'cnw-desc-tip1' => 'Tip 1',
+	'cnw-desc-tip1-creative' => 'Laat mensen weten waar uw wiki over gaat',
+	'cnw-desc-tip2' => 'Tip 2',
+	'cnw-desc-tip2-creative' => 'Zorg ervoor dat u details toevoegt',
+	'cnw-desc-tip3' => 'Tip 3',
+	'cnw-desc-tip3-creative' => 'Nodig mensen uit om mee te helpen met bewerken',
+	'cnw-desc-choose' => 'Kies een categorie',
+	'cnw-desc-select-one' => 'Maak een keuze',
+	'cnw-desc-default-lang' => 'Uw wiki wordt in het Engels geschreven',
+	'cnw-desc-change-lang' => 'wijzigen',
+	'cnw-desc-lang' => 'Taal',
+	'cnw-desc-wiki-submit-error' => 'Kies een categorie',
+	'cnw-theme-headline' => 'Ontwerp uw wiki',
+	'cnw-theme-creative' => 'Kies een vormgeving die bij uw wiki past.',
+	'cnw-theme-instruction' => 'U kunt uw thema of ontwerp altijd aanpassen via "Mijn hulpmiddelen" in de werkbalk onderaan de pagina.',
+	'cnw-upgrade-headline' => 'Wilt u upgraden?',
+	'cnw-upgrade-creative' => 'Upgraden naar Wikia Plus maakt het mogelijk om advertenties te verwijderen van <span class="wiki-name"></span>. Deze aanbieding is alleen beschikbaar voor nieuwe oprichters.',
+	'cnw-upgrade-marketing' => "Wikia Plus is prima oplossing voor:<ul>
+<li>Professionele wiki's</li>
+<li>Organisaties zonder winstoogmerk</li>
+<li>Families</li>
+<li>Scholen</li>
+<li>Persoonlijke projecten</li>
+</ul>
+Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
+	'cnw-upgrade-now' => 'Nu upgraden',
+	'cnw-upgrade-decline' => 'Nee, bedankt. Ik wil naar mijn wiki',
+	'cnw-welcome-headline' => 'Gefeliciteerd. U hebt de wiki $1 aangemaakt',
+	'cnw-welcome-instruction1' => 'Klik nu op de onderstaande knop om gegevens over uw wiki in te voeren:',
+	'cnw-welcome-instruction2' => 'Deze knop is overal in uw wiki te zien.<br />Gebruik deze knop als u een nieuwe pagina wilt toevoegen.',
+	'cnw-welcome-help' => 'Antwoorden, advies en meer op <a href="http://community.wikia.com">Community Central</a>.',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'cnw-or' => 'يا',
+	'cnw-title' => 'يو نوی ويکي جوړول',
+	'cnw-name-wiki-headline' => 'يو ويکي پيلول',
+	'cnw-name-wiki-label' => 'خپله ويکي نومول',
+	'cnw-name-wiki-wiki' => 'ويکي',
+	'cnw-name-wiki-domain-label' => 'خپل ويکي ته يوه پته ورکول',
+	'cnw-login' => 'ننوتل',
+	'cnw-signup' => 'ګڼون جوړول',
+	'cnw-signup-prompt' => 'آيا يو ګڼون غواړۍ؟',
+	'cnw-call-to-signup' => 'نومليکل دلته ترسره کېږي',
+	'cnw-login-prompt' => 'آيا وار دمخې يو ګڼون لرۍ؟',
+	'cnw-call-to-login' => 'دلته ننوتل',
+	'cnw-auth-headline' => 'يو ويکي پيلول',
+	'cnw-desc-headline' => 'ستاسې ويکي د څه په اړه دی؟',
+	'cnw-desc-placeholder' => 'دا به ستاسې د ويکي په لومړي مخ ښکاره شي.',
+	'cnw-desc-tip1-creative' => 'خلکو ته ووايۍ چې ستاسې ويکي د څه په اړه دی',
+	'cnw-desc-choose' => 'يوه وېشنيزه ټاکل',
+	'cnw-desc-select-one' => 'يو وټاکۍ',
+	'cnw-desc-default-lang' => 'ستاسې ويکي به په انګرېزي ژبه وي',
+	'cnw-desc-change-lang' => 'بدلول',
+	'cnw-desc-lang' => 'ژبه',
+	'cnw-desc-wiki-submit-error' => 'يوه وېشنيزه وټاکۍ',
+	'cnw-theme-headline' => 'خپل ويکي سکښتل',
+	'cnw-welcome-headline' => 'بختور مو شه، د $1 ويکي جوړ شو',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'cnw-next' => 'Напред',
+	'cnw-back' => 'Назад',
+	'cnw-or' => 'или',
+	'cnw-title' => 'Прављење нове викије',
+	'cnw-name-wiki-headline' => 'Започињање викије',
+	'cnw-name-wiki-label' => 'Дајте назив викији',
+	'cnw-name-wiki-wiki' => 'Викија',
+	'cnw-login' => 'Пријави ме',
+	'cnw-signup' => 'Отвори налог',
+	'cnw-signup-prompt' => 'Немате налог?',
+	'cnw-call-to-signup' => 'Отворите налог овде',
+	'cnw-call-to-login' => 'Пријавите се овде',
+	'cnw-auth-headline' => 'Започните викију',
+	'cnw-desc-headline' => 'Шта се ради на овој викији?',
+	'cnw-desc-creative' => 'Опишите тему',
+	'cnw-desc-tip1' => 'Први савет',
+	'cnw-desc-tip2' => 'Други савет',
+	'cnw-desc-tip2-creative' => 'Не заборавите да додате детаље',
+	'cnw-desc-tip3' => 'Трећи савет',
+	'cnw-desc-choose' => 'Изаберите категорију',
+	'cnw-desc-change-lang' => 'промени',
+	'cnw-desc-lang' => 'Језик',
+	'cnw-desc-wiki-submit-error' => 'Изаберите категорију',
+	'cnw-upgrade-headline' => 'Желите ли да доградите?',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'cnw-next' => 'తదుపరి',
+	'cnw-back' => 'వెనుకకు',
+	'cnw-or' => 'లేదా',
+	'cnw-name-wiki-label' => 'మీ వికీ పేరు',
+	'cnw-name-wiki-wiki' => 'వికీ',
+	'cnw-name-wiki-domain-label' => 'వికీ చిరునామా',
+	'cnw-signup-prompt' => 'ఖాతా కావాలా?',
+	'cnw-call-to-signup' => 'ఇక్కడ నమోదు చేసుకోండి',
+	'cnw-login-prompt' => 'ఇప్పటికే మీకు ఖాతా ఉందా?',
+	'cnw-call-to-login' => 'ఇక్కడ ప్రవేశించండి',
+	'cnw-auth-headline' => 'వికీని మొదలుపెట్టడం',
+	'cnw-desc-tip1' => 'చిట్కా 1',
+	'cnw-desc-tip1-creative' => 'మీ వికీ దేని గురించో ప్రజలకు చెప్పండి',
+	'cnw-desc-tip2' => 'చిట్కా 2',
+	'cnw-desc-tip2-creative' => 'వివరాలను చేర్చడం మర్చిపోకండి',
+	'cnw-desc-tip3' => 'చిట్కా 3',
+	'cnw-desc-tip3-creative' => 'తోడ్పడమని ప్రజలని ఆహ్వానించండి',
+	'cnw-desc-choose' => 'వర్గాన్ని ఎంచుకోండి',
+	'cnw-desc-default-lang' => 'మీ వికీ ఆంగ్లంలో ఉంటుంది',
+	'cnw-desc-change-lang' => 'మార్చండి',
+	'cnw-desc-lang' => 'భాష',
 );
 

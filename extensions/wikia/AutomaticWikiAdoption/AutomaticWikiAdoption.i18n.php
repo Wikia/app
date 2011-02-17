@@ -91,12 +91,14 @@ $messages['af'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
 	'automaticwikiadoption-header' => 'Degemer ar wiki-mañ',
 	'automaticwikiadoption-button-adopt' => 'Degemer bremañ',
 	'automaticwikiadoption-know-more-header' => "C'hoant gouzout hiroc'h ?",
+	'automaticwikiadoption-know-more-description' => "Sellit ouzh al liammoù-se evit gouzout hiroc'h. Ha deuit hardizh e darempred ganimp m'ho peus goulenn pe c'houlenn !",
 	'automaticwikiadoption-adoption-successed' => "Gourc'hemennoù ! Merour oc'h bremañ war ar wiki-mañ !",
 	'automaticwikiadoption-adoption-failed' => "Digarezit ac'hanomp. Klasket on eus lakaat ac'hanoc'h da verour, met ne ya ket en-dro. Mar plij [http://community.wikia.com/Special:Contact deuit e darempred ganeomp], hag e klaskimp skoazellañ ac'hanoc'h.",
 	'automaticwikiadoption-not-allowed' => "Digarezit ac'hanomp. Ne c'hellit ket degemer ar wiki-mañ bremañ.",
@@ -511,6 +513,17 @@ $messages['ru'] = array(
 Команда Викии
 
 Кликните по ссылке, чтобы отписаться от изменений в этом списке: $3.',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'automaticwikiadoption' => 'Самоприсвајање викије',
+	'automaticwikiadoption-header' => 'Присвоји ову викију',
+	'automaticwikiadoption-button-adopt' => 'Присвоји одмах',
+	'automaticwikiadoption-know-more-header' => 'Желите да знате више?',
+	'automaticwikiadoption-adoption-successed' => 'Честитамо! Постали сте администратор ове викије!',
 );
 
 /** Swedish (Svenska)

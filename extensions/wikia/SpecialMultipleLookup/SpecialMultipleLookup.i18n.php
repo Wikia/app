@@ -149,6 +149,13 @@ $messages['bs'] = array(
 	'right-multilookup' => 'Potraži informacije o korisnicima na više wikija',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'multilookuplink' => 'Къинхьегаме хьажориг',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author The Evil IP address
@@ -648,6 +655,7 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'multilookupgo' => 'Пређи',
 	'multilookupnotspecify' => 'Још увек нисте унели IP адресу.',
 	'multilookupnext' => 'следеће',
 	'multilookupprevious' => 'претходно',

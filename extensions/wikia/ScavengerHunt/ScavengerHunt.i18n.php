@@ -100,6 +100,29 @@ $messages['qqq'] = array(
 	'scavengerhunt-desc' => '{{desc}}',
 );
 
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'scavengerhunt-list-header-name' => "Anv ar c'hoari",
+	'scavengerhunt-list-header-is-enabled' => 'Gweredekaet ?',
+	'scavengerhunt-list-header-actions' => 'Oberoù',
+	'scavengerhunt-list-enabled' => 'Gweredekaet',
+	'scavengerhunt-list-disabled' => 'Diweredekaet',
+	'scavengerhunt-list-edit' => 'kemmañ',
+	'scavengerhunt-label-general' => 'Hollek',
+	'scavengerhunt-label-name' => 'Anv :',
+	'scavengerhunt-label-article-title' => 'Titl ar bajenn :',
+	'scavengerhunt-label-article-hidden-image' => 'Skeudenn kuzhet :',
+	'scavengerhunt-button-add' => "Ouzhpennañ ur c'hoari",
+	'scavengerhunt-button-save' => 'Enrollañ',
+	'scavengerhunt-button-disable' => 'Diweredekaat',
+	'scavengerhunt-button-enable' => 'Gweredekaat',
+	'scavengerhunt-button-delete' => 'Dilemel',
+	'scavengerhunt-entry-form-name' => "Hoc'h anv :",
+	'scavengerhunt-entry-form-email' => "Ho chomlec'h postel :",
+);
+
 /** German (Deutsch)
  * @author George Animal
  */
@@ -107,3 +130,162 @@ $messages['de'] = array(
 	'scavengerhunt-label-name' => 'Name:',
 	'scavengerhunt-entry-form-name' => 'Dein Name:',
 );
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'scavengerhunt-desc' => 'Овозможува создавање на игра „Потрага“ на вики',
+	'scavengerhunt' => 'Посредник за „Потрага“',
+	'scavengerhunt-list-header-name' => 'Име на играта',
+	'scavengerhunt-list-header-is-enabled' => 'Овозможено?',
+	'scavengerhunt-list-header-actions' => 'Дејства',
+	'scavengerhunt-list-enabled' => 'Овозможено',
+	'scavengerhunt-list-disabled' => 'Оневозможено',
+	'scavengerhunt-list-edit' => 'уреди',
+	'scavengerhunt-label-dialog-check' => '(прикажи дијалог)',
+	'scavengerhunt-label-general' => 'Општо',
+	'scavengerhunt-label-name' => 'Име:',
+	'scavengerhunt-label-landing-title' => 'Име на целната страница:',
+	'scavengerhunt-label-landing-button-text' => 'Текст на копчето на целната страница:',
+	'scavengerhunt-label-starting-clue' => 'Скокачки прозорец за потсетки при почнување:',
+	'scavengerhunt-label-starting-clue-title' => 'Наслов на скокачкиот прозорец:',
+	'scavengerhunt-label-starting-clue-text' => 'Текст на скокачкиот прозорец: <i>(текстот во &lt;span&gt; ќе ја има бојата на врските)</i>',
+	'scavengerhunt-label-starting-clue-image' => 'Слика за скокачкиот прозорец:',
+	'scavengerhunt-label-starting-clue-button-text' => 'Текст на копчето на скокачкиот прозорец:',
+	'scavengerhunt-label-starting-clue-button-target' => 'Одредница на копчето на скокачкиот процорец:',
+	'scavengerhunt-label-article' => 'Страница во текот на играта',
+	'scavengerhunt-label-article-title' => 'Наслов на страницата:',
+	'scavengerhunt-label-article-hidden-image' => 'Скриена слика:',
+	'scavengerhunt-label-article-clue-title' => 'Наслов на скокачкиот прозорец за потсетка:',
+	'scavengerhunt-label-article-clue-text' => 'Текст на скокачкиот прозорец за потсетка:',
+	'scavengerhunt-label-article-clue-image' => 'Слика на скокачкиот прозорец за потсетка:',
+	'scavengerhunt-label-article-clue-button-text' => 'Текст на копчето на сокачкиот прозорец за потсетка:',
+	'scavengerhunt-label-article-clue-button-target' => 'Одредница на копчето на скокачкиот прозорец за потсетка:',
+	'scavengerhunt-label-entry-form' => 'Пријава',
+	'scavengerhunt-label-entry-form-title' => 'Наслов на скокачкиот прозорец:',
+	'scavengerhunt-label-entry-form-text' => 'Текст на скокачкиот прозорец:',
+	'scavengerhunt-label-entry-form-image' => 'Слика за скокачкиот прозорец:',
+	'scavengerhunt-label-entry-form-question' => 'Прашање за скокачкиот прозорец:',
+	'scavengerhunt-label-goodbye' => 'Скокачки прозорец за догледање',
+	'scavengerhunt-label-goodbye-title' => 'Наслов за догледање:',
+	'scavengerhunt-label-goodbye-text' => 'Порака на скокачкиот прозорец:',
+	'scavengerhunt-label-goodbye-image' => 'Слика за скокачкиот прозорец:',
+	'scavengerhunt-button-add' => 'Додај игра',
+	'scavengerhunt-button-save' => 'Зачувај',
+	'scavengerhunt-button-disable' => 'Оневозможи',
+	'scavengerhunt-button-enable' => 'Овозможи',
+	'scavengerhunt-button-delete' => 'Избриши',
+	'scavengerhunt-button-export' => 'Извези во CSV',
+	'scavengerhunt-form-error' => 'Исправете ги следниве грешки:',
+	'scavengerhunt-game-has-been-created' => 'Создадена е нова игра „Потрага“.',
+	'scavengerhunt-game-has-been-saved' => 'Оваа „Потрага“ е зачувана.',
+	'scavengerhunt-game-has-been-enabled' => 'Одбраната „Потрага“ е овозможена.',
+	'scavengerhunt-game-has-been-disabled' => 'Одбраната „Потрага“ е оневозможена.',
+	'scavengerhunt-game-has-not-been-saved' => 'Оваа „Потрага“ не е зачувана.',
+	'scavengerhunt-entry-form-name' => 'Вашето име:',
+	'scavengerhunt-entry-form-email' => 'Ваша е-пошта:',
+	'scavengerhunt-entry-form-submit' => 'Поднеси',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'scavengerhunt-desc' => 'Maakt het mogelijk een speurtocht uit te zetten in een wiki',
+	'scavengerhunt' => 'Speurtochtinterface',
+	'scavengerhunt-list-header-name' => 'Spelnaam',
+	'scavengerhunt-list-header-is-enabled' => 'Ingeschakeld?',
+	'scavengerhunt-list-header-actions' => 'Handelingen',
+	'scavengerhunt-list-enabled' => 'Ingeschakeld',
+	'scavengerhunt-list-disabled' => 'Uitgeschakeld',
+	'scavengerhunt-list-edit' => 'bewerken',
+	'scavengerhunt-label-dialog-check' => '(dialoog weergeven)',
+	'scavengerhunt-label-image-check' => '(afbeelding weergeven)',
+	'scavengerhunt-label-general' => 'Algemeen',
+	'scavengerhunt-label-name' => 'Naam:',
+	'scavengerhunt-label-landing-title' => 'Landingspagina (paginanaam in deze wiki):',
+	'scavengerhunt-label-landing-button-text' => 'Knoptekst voor landingspagina:',
+	'scavengerhunt-label-starting-clue' => 'Popup voor eerste aanwijzing',
+	'scavengerhunt-label-starting-clue-title' => 'Popupnaam:',
+	'scavengerhunt-label-starting-clue-text' => 'Popuptekst: <i>(tekst in een &lt;span&gt; krijg de kleur van verwijzingen)</i>',
+	'scavengerhunt-label-starting-clue-image' => 'Popupafbeelding (URL):',
+	'scavengerhunt-label-starting-clue-button-text' => 'Popupknoptekst:',
+	'scavengerhunt-label-starting-clue-button-target' => 'Popupknopdoelpagina (URL):',
+	'scavengerhunt-label-article' => 'In-gamepagina',
+	'scavengerhunt-label-article-title' => 'Paginanaam (op deze wiki):',
+	'scavengerhunt-label-article-hidden-image' => 'Verborgen afbeelding:',
+	'scavengerhunt-label-article-clue-title' => 'Naam voor aanwijzingspopup:',
+	'scavengerhunt-label-article-clue-text' => 'Tekst voor aanwijzingspopup:',
+	'scavengerhunt-label-article-clue-image' => 'Afbeelding voor aanwijzingspopup (URL):',
+	'scavengerhunt-label-article-clue-button-text' => 'Knoptekst voor aanwijzingspopup:',
+	'scavengerhunt-label-article-clue-button-target' => 'Knopdoelpagina voor aanwijzingspopup (URL):',
+	'scavengerhunt-label-entry-form' => 'Inschrijfformulier',
+	'scavengerhunt-label-entry-form-title' => 'Popupnaam:',
+	'scavengerhunt-label-entry-form-text' => 'Popuptekst:',
+	'scavengerhunt-label-entry-form-image' => 'Popupafbeelding (URL):',
+	'scavengerhunt-label-entry-form-question' => 'Popupvraag:',
+	'scavengerhunt-label-goodbye' => 'Popup voor tot ziens',
+	'scavengerhunt-label-goodbye-title' => 'Popupnaam:',
+	'scavengerhunt-label-goodbye-text' => 'Popupbericht:',
+	'scavengerhunt-label-goodbye-image' => 'Popupafbeelding (URL):',
+	'scavengerhunt-button-add' => 'Spel toevoegen',
+	'scavengerhunt-button-save' => 'Opslaan',
+	'scavengerhunt-button-disable' => 'Uitschakelen',
+	'scavengerhunt-button-enable' => 'Inschakelen',
+	'scavengerhunt-button-delete' => 'Verwijderen',
+	'scavengerhunt-button-export' => 'Exporteren naar CSV',
+	'scavengerhunt-form-error' => 'Corrigeer de volgende fouten:',
+	'scavengerhunt-form-error-no-landing-title' => 'Voer de naam in van de beginpagina.',
+	'scavengerhunt-form-error-invalid-title' => 'De volgende pagina bestaat niet: "$1".',
+	'scavengerhunt-form-error-landing-button-text' => 'Voer tekst in voor de beginknop.',
+	'scavengerhunt-form-error-starting-clue' => 'Voer alle velden in voor de eerste aanwijzing.',
+	'scavengerhunt-form-error-entry-form' => 'Voer alle velden in voor het deelnameformulier.',
+	'scavengerhunt-form-error-goodbye' => 'Voer alle velden in voor het de "Tot ziens" popup.',
+	'scavengerhunt-form-error-no-article-title' => 'Voer alle paginanamen in.',
+	'scavengerhunt-form-error-article-hidden-image' => "Voer de afbeeldingsadressen (URL's) in voor verborgen.",
+	'scavengerhunt-form-error-article-clue' => 'Voer alle gegevens in over pagina-aanwijzingen.',
+	'scavengerhunt-game-has-been-created' => 'Er is een nieuwe speurtocht aangemaakt.',
+	'scavengerhunt-game-has-been-saved' => 'De speurtocht is opgeslagen.',
+	'scavengerhunt-game-has-been-enabled' => 'De aangegeven speurtocht is ingeschakeld.',
+	'scavengerhunt-game-has-been-disabled' => 'De aangegeven speurtocht is uitgeschakeld.',
+	'scavengerhunt-game-has-not-been-saved' => 'De speurtocht is niet opgeslagen.',
+	'scavengerhunt-edit-token-mismatch' => 'Er is een probleem opgetreden met uw bewerkingstoken. Probeer het opnieuw.',
+	'scavengerhunt-entry-form-name' => 'Uw naam:',
+	'scavengerhunt-entry-form-email' => 'Uw e-mailadres:',
+	'scavengerhunt-entry-form-submit' => 'Inschrijvingsformulier opslaan',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'scavengerhunt-list-enabled' => 'Омогућено',
+	'scavengerhunt-list-disabled' => 'Онемогућено',
+	'scavengerhunt-list-edit' => 'уреди',
+	'scavengerhunt-label-dialog-check' => '(прикажи прозорче)',
+	'scavengerhunt-label-general' => 'Опште',
+	'scavengerhunt-label-name' => 'Име:',
+	'scavengerhunt-label-starting-clue-image' => 'Искачућа слика:',
+	'scavengerhunt-label-article-title' => 'Наслов странице:',
+	'scavengerhunt-label-article-hidden-image' => 'Сакривена слика:',
+	'scavengerhunt-button-save' => 'Сачувај',
+	'scavengerhunt-button-disable' => 'Онемогући',
+	'scavengerhunt-button-enable' => 'Омогући',
+	'scavengerhunt-button-delete' => 'Обриши',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'scavengerhunt-list-header-name' => 'ఆట పేరు',
+	'scavengerhunt-list-header-actions' => 'చర్యలు',
+	'scavengerhunt-label-name' => 'పేరు:',
+	'scavengerhunt-label-article-title' => 'పుట శీర్షిక:',
+	'scavengerhunt-button-save' => 'భద్రపరచు',
+	'scavengerhunt-button-delete' => 'తొలగించు',
+	'scavengerhunt-entry-form-name' => 'మీ పేరు:',
+	'scavengerhunt-entry-form-email' => 'మీ ఈ-మెయిలు చిరునామా:',
+);
+
