@@ -75,7 +75,15 @@ var SpecialScavengerHunt = {
 				{
 					id: 'scavengerClueModal',
 					showCloseButton: false,
-					width: 588
+					width: 588,
+					callback: function() {
+						if (typeof FB == "object") {
+							var share = $('.scavenger-share-button');
+							if (share.exists()) {
+								FB.XFBML.parse(share.get(0));
+							}
+						}
+					}
 				}
 			);
 		});
