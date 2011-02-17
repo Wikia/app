@@ -303,18 +303,17 @@ var WikiBuilder = {
 	},
 	
 	saveState: function (data, callback) {
-		$.post(wgScript, {
-			action: 'ajax',
-			rs: 'moduleProxy',
-			moduleName: 'CreateNewWiki',
-			actionName: 'SaveState',
-			outputType: 'data',
-			data: data
-		}, function(res) {
-			if(callback) {
-				callback();
-			}
-		});
+		var c = $.parseJSON($.cookies.get('createnewwiki'));
+		if (!c) {
+			c = {};
+		}
+		for(var key in data) {
+			c[key] = data[key];
+		}
+		$.cookies.set('createnewwiki', JSON.stringify(c), {hoursToLive: 0, domain: wgCookieDomain, path: wgCookiePath});
+		if(callback) {
+			callback();
+		}
 	},
 	
 	upgradeToWikiaPlus: function() {

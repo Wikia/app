@@ -131,35 +131,14 @@ class CreateNewWikiModule extends Module {
 	}
 	
 	/**
-	 * Saves anything in the data in the request into session.
-	 * It overwrites any existing values if the keys are the same.
-	 * NOTE: calling this while a wiki is being created does not seem to work.  Currently, JS will handle the concurrency issues.
-	 */
-	public function executeSaveState() {
-		wfProfileIn(__METHOD__);
-		global $wgRequest, $wgCookieDomain;
-		
-		$params = empty($_SESSION['wsCreateNewWikiParams']) ? array() : $_SESSION['wsCreateNewWikiParams'];
-		
-		$data = $wgRequest->getArray('data');
-		
-		foreach ($data as $key => $value ) {
-			$params[$key] = $value;
-		}
-		
-		$this->params = $params;
-		$_SESSION['wsCreateNewWikiParams'] = $this->params;
-
-		wfProfileOut(__METHOD__);
-	}
-	
-	/**
-	 * Loads params from session.
+	 * Loads params from cookie.
 	 */
 	public function executeLoadState() {
 		wfProfileIn(__METHOD__);
-		if(!empty($_SESSION['wsCreateNewWikiParams'])) {
-			$this->params =  $_SESSION['wsCreateNewWikiParams'];
+		if(!empty($_COOKIE['createnewwiki'])) {
+			$this->params = json_decode($_COOKIE['createnewwiki'], true);
+		} else {
+			$this->params = array();
 		}
 		wfProfileOut(__METHOD__);
 	}

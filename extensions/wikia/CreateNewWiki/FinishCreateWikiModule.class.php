@@ -8,12 +8,12 @@ class FinishCreateWikiModule extends Module {
 	var $params;
 
 	/**
-	 * Loads params from session.
+	 * Loads params from cookie.
 	 */
 	public function executeLoadState() {
 		wfProfileIn(__METHOD__);
-		if(!empty($_SESSION['wsCreateNewWikiParams'])) {
-			$this->params =  $_SESSION['wsCreateNewWikiParams'];
+		if(!empty($_COOKIE['createnewwiki'])) {
+			$this->params = json_decode($_COOKIE['createnewwiki'], true);
 		} else {
 			$this->params = array();
 		}
