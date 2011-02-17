@@ -52,7 +52,7 @@ To see the comment thread, follow this link: <a href="$PAGETITLE_URL">$PAGETITLE
 Please visit and edit often...
 <br /><br />
 Wikia
-<br /><hr>
+<br /><hr />
 <ul>
 <li>Want to control which emails you receive? <a href="{{fullurl:Special:Preferences}}">Update your Preferences<a>.</li>
 </ul>
