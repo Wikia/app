@@ -18,10 +18,13 @@ var EditEnhancements = {
 		$('<div id="edit_enhancements_toolbar"><ul>').insertBefore("#editpage-copywarn");
 		/* List of elements to reposition */
 		var elements = ["#wpSave", "#wpPreview", /* plb */ "#wpDraft", "#wpPreviewform", "#wpPreviewarticle" ];
+
+		// Commented according to BugID:2182 - Jakub
+		// 
 		// NS_3 is User_Talk and shouldn't have the summary field and label repositioned.
-		if (wgNamespaceNumber != 3) {
+		// if (wgNamespaceNumber != 3) {
 			elements.unshift("#wpSummaryLabel", "#wpSummary");
-		}
+		// }
 		
 		$(elements.join(",")).each(function() {
 			$(this).wrap("<li>").parent().appendTo("#edit_enhancements_toolbar ul");
