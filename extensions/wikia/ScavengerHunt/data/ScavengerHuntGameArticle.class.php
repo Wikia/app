@@ -18,7 +18,7 @@ class ScavengerHuntGameArticle {
 
 	public function setTitle( $title ) {
 		$this->title = $title;
-		$titleObj = WF::build('Title',array($this->title),'newFromText');
+		$titleObj = WF::build('Title', array($this->title), 'newFromText');
 		$this->articleId = $titleObj ? $titleObj->getArticleId() : 0;
 	}
 
@@ -83,7 +83,7 @@ class ScavengerHuntGameArticle {
 			if (array_key_exists($varName, $data))
 				$this->$varName = $data[$varName];
 		// special cases
-		if (array_key_exists('title',$data) && !array_key_exists('articleId',$data))
+		if (array_key_exists('title', $data) && !array_key_exists('articleId', $data))
 			$this->setTitle($data['title']);
 	}
 }

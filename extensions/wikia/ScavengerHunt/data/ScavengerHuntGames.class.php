@@ -36,7 +36,7 @@ class ScavengerHuntGames {
 			$db = $this->getDb();
 		}
 
-		$where = array_merge($where,array(
+		$where = array_merge($where, array(
 			'game_id' => (int)$id,
 		));
 
@@ -65,7 +65,7 @@ class ScavengerHuntGames {
 	}
 
 	public function findAllByWikiId( $wikiId, $where = array() ) {
-		$where = array_merge($where,array(
+		$where = array_merge($where, array(
 			'wiki_id' => (int)$wikiId,
 		));
 
@@ -159,7 +159,7 @@ class ScavengerHuntGames {
 		}
 		$db->commit();
 
-		$this->clearCache($oldGame,$game);
+		$this->clearCache($oldGame, $game);
 
 		return true;
 	}
@@ -176,7 +176,7 @@ class ScavengerHuntGames {
 		$db->commit();
 		$game->setId(0);
 
-		$this->clearCache($game,null);
+		$this->clearCache($game, null);
 
 		return true;
 	}
@@ -185,11 +185,11 @@ class ScavengerHuntGames {
 	const CACHE_TTL = 3600;
 
 	protected function getIndexMemcKey() {
-		return $this->app->runFunction('wfMemcKey',__CLASS__,'index');
+		return $this->app->runFunction('wfMemcKey', __CLASS__, 'index');
 	}
 
 	protected function getTitleDbKey( $text ) {
-		$title = WF::build('Title',array($text),'newFromText');
+		$title = WF::build('Title', array($text), 'newFromText');
 		return $title ? $title->getPrefixedDBkey() : false;
 	}
 
@@ -213,7 +213,7 @@ class ScavengerHuntGames {
 					}
 				}
 			}
-			$this->getCache()->set($this->getIndexMemcKey(),$data,self::CACHE_TTL);
+			$this->getCache()->set($this->getIndexMemcKey(), $data, self::CACHE_TTL);
 		}
 		return $data;
 	}
@@ -228,18 +228,18 @@ class ScavengerHuntGames {
 
 		$titles = array();
 		if ($oldGame) {
-			$title = WF::build('Title',array($oldGame->getLandingTitle()),'newFromText');
+			$title = WF::build('Title', array($oldGame->getLandingTitle()), 'newFromText');
 			if ($title) $titles[$title->getPrefixedDBkey()] = $title;
 			foreach ($oldGame->getArticles() as $article) {
-				$title = WF::build('Title',array($article->getTitle()),'newFromText');
+				$title = WF::build('Title', array($article->getTitle()), 'newFromText');
 				if ($title) $titles[$title->getPrefixedDBkey()] = $title;
 			}
 		}
 		if ($newGame) {
-			$title = WF::build('Title',array($newGame->getLandingTitle()),'newFromText');
+			$title = WF::build('Title', array($newGame->getLandingTitle()), 'newFromText');
 			if ($title) $titles[$title->getPrefixedDBkey()] = $title;
 			foreach ($newGame->getArticles() as $article) {
-				$title = WF::build('Title',array($article->getTitle()),'newFromText');
+				$title = WF::build('Title', array($article->getTitle()), 'newFromText');
 				if ($title) $titles[$title->getPrefixedDBkey()] = $title;
 			}
 		}

@@ -34,10 +34,10 @@ class ScavengerHuntAjax {
 		$article = $game->findArticleById($articleId);
 
 		if (!empty($game) && !empty($article)) {
-			$visitedIds = isset($_COOKIE['ScavengerHuntArticlesFound']) ? explode(',',(string)$_COOKIE['ScavengerHuntArticlesFound']) : array();
+			$visitedIds = isset($_COOKIE['ScavengerHuntArticlesFound']) ? explode(',', (string)$_COOKIE['ScavengerHuntArticlesFound']) : array();
 			$visitedIds[] = $articleId;
-			$completed = $helper->updateVisitedIds($game,$visitedIds);
-			$visitedIds = implode(',',$visitedIds);
+			$completed = $helper->updateVisitedIds($game, $visitedIds);
+			$visitedIds = implode(',', $visitedIds);
 
 			if ($completed) {
 				$result = array(
@@ -93,12 +93,12 @@ class ScavengerHuntAjax {
 
 		if (!empty($game)) {
 			$visitedIds = $request->getVal('visitedIds');
-			$visitedIds = $visitedIds ? explode(',',(string)$visitedIds) : array();
-			$completed = $helper->updateVisitedIds($game,$visitedIds);
+			$visitedIds = $visitedIds ? explode(',', (string)$visitedIds) : array();
+			$completed = $helper->updateVisitedIds($game, $visitedIds);
 			if ($completed) {
-				$name = $request->getVal('name','');
-				$email = $request->getVal('email','');
-				$answer = $request->getVal('answer','');
+				$name = $request->getVal('name', '');
+				$email = $request->getVal('email', '');
+				$answer = $request->getVal('answer', '');
 
 				if (!empty($name) && !empty($email) && !empty($answer)) {
 					$user = $app->getGlobal('wgUser');

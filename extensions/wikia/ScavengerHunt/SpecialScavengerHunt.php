@@ -49,7 +49,7 @@ class SpecialScavengerHunt extends SpecialPage {
 			return;
 		}
 
-		@list( $action, $id ) = explode('/',$subpage);
+		@list( $action, $id ) = explode('/', $subpage);
 		$action = !empty($action) ? $action : 'list';
 		$id = (int)$id;
 		$game = $this->games->findById($id);
@@ -73,14 +73,14 @@ class SpecialScavengerHunt extends SpecialPage {
 		$errors = array();
 		switch ($action) {
 			case 'list':
-				$button = "<a class='wikia-button scavengerhunt-add-button' href='".$this->mTitle->getFullUrl()."/add'>".
-					XML::element("img",array( "class" => "sprite new", "src" => $this->app->getGlobal('wgBlankImgUrl'))).wfMsg('scavengerhunt-button-add')."</a>";
+				$button = "<a class='wikia-button scavengerhunt-add-button' href='" . $this->mTitle->getFullUrl() . "/add'>".
+					XML::element("img", array( "class" => "sprite new", "src" => $this->app->getGlobal('wgBlankImgUrl'))) . wfMsg('scavengerhunt-button-add') . "</a>";
 
 				$this->out->mPagetitle .= $button;
 				$this->out->mPageLinkTitle = true;
 
 				// Games list
-				$pager = WF::build('ScavengerHuntGamesPager',array($this->games,$this->mTitle->getFullUrl(),$template));
+				$pager = WF::build('ScavengerHuntGamesPager', array($this->games, $this->mTitle->getFullUrl(), $template));
 				$this->out->addHTML(
 					$pager->getBody() .
 					$pager->getNavigationBar()
@@ -169,7 +169,7 @@ class SpecialScavengerHunt extends SpecialPage {
 
 		if (empty($game)) {
 			$gameId = (int)$this->request->getVal('gameId');
-			$game = $this->games->findById($gameId,true);
+			$game = $this->games->findById($gameId, true);
 			if (empty($game)) {
 				throw new WikiaException("Could not retrieve specified game");
 			}
@@ -328,9 +328,9 @@ class SpecialScavengerHunt extends SpecialPage {
 
 		$startId = 0;
 		$limit = 501;
-		while ($entries = $game->listEntries($startId,$limit)) {
+		while ($entries = $game->listEntries($startId, $limit)) {
 			$rows = array();
-			$entriesInLoop = min(count($entries),$limit-1);
+			$entriesInLoop = min(count($entries), $limit-1);
 			for ($i=0;$i<$entriesInLoop;$i++) {
 				$entry = $entries[$i];
 				$rows[] = array(
