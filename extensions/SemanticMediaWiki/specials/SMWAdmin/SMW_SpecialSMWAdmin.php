@@ -85,7 +85,7 @@ class SMWAdmin extends SpecialPage {
 					$wgOut->addHTML( '<p>' . wfMsg( 'smw_smwadmin_updatenotstarted' ) . '</p>' );
 				}
 			} elseif ( $sure == 'stop' ) {
-				$dbw = wfGetDB( DB_MASTER );
+				$dbw = wfGetDB( DB_MASTER, 'smw' );
 				// delete (all) existing iteration jobs
 				$dbw->delete( 'job', array( 'job_cmd' => 'SMWRefreshJob' ), __METHOD__ );
 				$wgOut->addHTML( '<p>' . wfMsg( 'smw_smwadmin_updatestopped' ) . '</p>' );
