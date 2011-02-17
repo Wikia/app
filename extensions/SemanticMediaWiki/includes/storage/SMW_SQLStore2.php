@@ -580,10 +580,10 @@ class SMWSQLStore2 extends SMWStore {
 
 	/**
 	 * @see SMWStore::getAllPropertySubjects
-	 * 
+	 *
 	 * @param SMWPropertyValue $property
 	 * @param SMWRequestOptions $requestoptions
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getAllPropertySubjects( SMWPropertyValue $property, $requestoptions = null ) {
@@ -596,7 +596,7 @@ class SMWSQLStore2 extends SMWStore {
 
 	/**
 	 * @see SMWStore::getProperties
-	 * 
+	 *
 	 * TODO: Restrict this function to SMWWikiPageValue subjects.
 	 *
 	 * @param $subject
@@ -662,9 +662,9 @@ class SMWSQLStore2 extends SMWStore {
 	/**
 	 * Implementation of SMWStore::getInProperties(). This function is meant to
 	 * be used for finding properties that link to wiki pages.
-	 * 
+	 *
 	 * @see SMWStore::getInProperties
-	 * 
+	 *
 	 * TODO: When used for other datatypes, the function may return too many
 	 * properties since it selects results by comparing the stored information
 	 * (DB keys) only, while not currently comparing the type of the returned
@@ -674,7 +674,7 @@ class SMWSQLStore2 extends SMWStore {
 	 *
 	 * @param SMWDataValue $value
 	 * @param SMWRequestOptions $requestoptions
-	 * 
+	 *
 	 * @return array of SMWWikiPageValue
 	 */
 	public function getInProperties( SMWDataValue $value, $requestoptions = null ) {
@@ -730,7 +730,7 @@ class SMWSQLStore2 extends SMWStore {
 
 	/**
 	 * @see SMWStore::deleteSubject
-	 * 
+	 *
 	 * @param Title $subject
 	 */
 	public function deleteSubject( Title $subject ) {
@@ -741,7 +741,7 @@ class SMWSQLStore2 extends SMWStore {
 		$this->updateRedirects( $subject->getDBkey(), $subject->getNamespace() ); // also delete redirects, may trigger update jobs!
 
 		if ( $subject->getNamespace() == SMW_NS_CONCEPT ) { // make sure to clear caches
-			$db = wfGetDB( DB_MASTER );
+			$db = wfGetDB( DB_MASTER, 'smw' );
 			$id = $this->getSMWPageID( $subject->getDBkey(), $subject->getNamespace(), $subject->getInterwiki(), false );
 			$db->delete( 'smw_conc2', array( 's_id' => $id ), 'SMW::deleteSubject::Conc2' );
 			$db->delete( 'smw_conccache', array( 'o_id' => $id ), 'SMW::deleteSubject::Conccache' );
@@ -757,7 +757,7 @@ class SMWSQLStore2 extends SMWStore {
 
 	/**
 	 * @see SMWStore::updateData
-	 * 
+	 *
 	 * @param SMWSemanticData $data
 	 */
 	public function updateData( SMWSemanticData $data ) {
@@ -782,7 +782,7 @@ class SMWSQLStore2 extends SMWStore {
 		$updates = array(); // collect data for bulk updates; format: tableid => updatearray
 		$this->prepareDBUpdates( $updates, $data, $sid );
 
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 		foreach ( $updates as $tablename => $uvals ) {
  			$db->insert( $tablename, $uvals, "SMW::updateData$tablename" );
 		}
@@ -830,9 +830,9 @@ class SMWSQLStore2 extends SMWStore {
 		$this->m_semdata[$sid] = clone $data;
 		// Everything that one can know.
 		$this->m_sdstate[$sid] = array_keys( self::getPropertyTables() );
-		
+
 		wfRunHooks( 'SMWSQLStore2::updateDataAfter', array( $this, $data ) );
-		
+
 		wfProfileOut( "SMWSQLStore2::updateData (SMW)" );
 	}
 
@@ -871,7 +871,7 @@ class SMWSQLStore2 extends SMWStore {
 
 			foreach ( $data->getPropertyValues( $property ) as $dv ) {
 				if ( !$dv->isValid() || ( $tableid == 'smw_redi2' ) ) continue;
-				
+
 				// errors are already recorded separately, no need to store them here;
 				// redirects were treated above
 				///TODO check needed if subject is null (would happen if a user defined proptable with !idsubject was used on an internal object -- currently this is not possible
@@ -912,7 +912,7 @@ class SMWSQLStore2 extends SMWStore {
 				$updates[$proptable->name][] = $uvals;
 			}
 		}
-		
+
 		return $sid;
 	}
 
@@ -951,7 +951,7 @@ class SMWSQLStore2 extends SMWStore {
 		// get IDs but do not resolve redirects:
 		$sid = $this->getSMWPageID( $oldtitle->getDBkey(), $oldtitle->getNamespace(), '', false );
 		$tid = $this->getSMWPageID( $newtitle->getDBkey(), $newtitle->getNamespace(), '', false );
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 
 		if ( ( $tid == 0 ) && ( $smwgQEqualitySupport != SMW_EQ_NONE ) ) { // target not used anywhere yet, just hijack its title for our current id
 			// This condition may not hold even if $newtitle is currently unused/non-existing since we keep old IDs.
@@ -997,9 +997,9 @@ class SMWSQLStore2 extends SMWStore {
 
 	/**
 	 * @see SMWStore::getQueryResult
-	 * 
+	 *
 	 * @param $query SMWQuery
-	 * 
+	 *
 	 * @return mixed: depends on $query->querymode
 	 */
 	public function getQueryResult( SMWQuery $query ) {
@@ -1228,7 +1228,7 @@ class SMWSQLStore2 extends SMWStore {
 		$this->reportProgress( "Setting up standard database configuration for SMW ...\n\n", $verbose );
 		$this->reportProgress( "Selected storage engine is \"SMWSQLStore2\" (or an extension thereof)\n\n", $verbose );
 
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 
 		$this->setupTables( $verbose, $db );
 		$this->setupPredefinedProperties( $verbose, $db );
@@ -1459,7 +1459,7 @@ class SMWSQLStore2 extends SMWStore {
 		global $wgDBtype;
 
 		$this->reportProgress( "Deleting all database content and tables generated by SMW ...\n\n", $verbose );
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 		$tables = array( 'smw_ids', 'smw_conc2', 'smw_conccache' );
 
 		foreach ( self::getPropertyTables() as $proptable ) {
@@ -1479,12 +1479,12 @@ class SMWSQLStore2 extends SMWStore {
 
 	/**
 	 * @see SMWStore::refreshData
-	 * 
+	 *
 	 * @param integer $index
 	 * @param integer $count
 	 * @param mixed $namespaces Array or false
 	 * @param boolean $usejobs
-	 * 
+	 *
 	 * @return decimal between 0 and 1 to indicate the overall progress of the refreshing
 	 */
 	public function refreshData( &$index, $count, $namespaces = false, $usejobs = true ) {
@@ -1495,7 +1495,7 @@ class SMWSQLStore2 extends SMWStore {
 		$tids = array();
 
 		// Array of ids
-		for ( $i = $index; $i < $index + $count; $i++ ) { 
+		for ( $i = $index; $i < $index + $count; $i++ ) {
 			$tids[] = $i;
 		}
 
@@ -1563,7 +1563,7 @@ class SMWSQLStore2 extends SMWStore {
 	 * Refresh the concept cache for the given concept.
 	 *
 	 * @param $concept Title
-	 * 
+	 *
 	 * @return array
 	 */
 	public function refreshConceptCache( Title $concept ) {
@@ -1572,7 +1572,7 @@ class SMWSQLStore2 extends SMWStore {
 
 		include_once( "$smwgIP/includes/storage/SMW_SQLStore2_Queries.php" );
 
-		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_MASTER ) );
+		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_MASTER, 'smw' ) );
 		$result = $qe->refreshConceptCache( $concept );
 
 		wfProfileOut( 'SMWSQLStore2::refreshConceptCache (SMW)' );
@@ -1591,7 +1591,7 @@ class SMWSQLStore2 extends SMWStore {
 
 		include_once( "$smwgIP/includes/storage/SMW_SQLStore2_Queries.php" );
 
-		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_MASTER ) );
+		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_MASTER, 'smw' ) );
 		$result = $qe->deleteConceptCache( $concept );
 
 		wfProfileOut( 'SMWSQLStore2::deleteConceptCache (SMW)' );
@@ -2029,7 +2029,7 @@ class SMWSQLStore2 extends SMWStore {
 		$id = $this->getSMWPageIDandSort( $title, $namespace, $iw, $oldsort, $canonical );
 
 		if ( $id == 0 ) {
-			$db = wfGetDB( DB_MASTER );
+			$db = wfGetDB( DB_MASTER, 'smw' );
 			$sortkey = $sortkey ? $sortkey:( str_replace( '_', ' ', $title ) );
 
 			$db->insert(
@@ -2046,13 +2046,13 @@ class SMWSQLStore2 extends SMWStore {
 
 			$id = $db->insertId();
 			$this->m_ids["$iw $namespace $title -"] = $id; // fill that cache, even if canonical was given
-			
+
 			// This ID is also authorative for the canonical version.
 			// This is always the case: if $canonical===false and $id===0, then there is no redi-entry in
 			// smw_ids either, hence the object just did not exist at all.
 			$this->m_ids["$iw $namespace $title C"] = $id;
 		} elseif ( ( $sortkey != '' ) && ( $sortkey != $oldsort ) ) {
-			$db = wfGetDB( DB_MASTER );
+			$db = wfGetDB( DB_MASTER, 'smw' );
 			$db->update( 'smw_ids', array( 'smw_sortkey' => $sortkey ), array( 'smw_id' => $id ), 'SMW::makeSMWPageID' );
 		}
 
@@ -2133,7 +2133,7 @@ class SMWSQLStore2 extends SMWStore {
 	 * used, returns a new bnode id!
 	 */
 	protected function makeSMWBnodeID( $sid ) {
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 
 		// check if there is an unused bnode to take:
 		$res = $db->select(
@@ -2188,8 +2188,8 @@ class SMWSQLStore2 extends SMWStore {
 	 * be effected by the caller.
 	 */
 	protected function moveSMWPageID( $curid, $targetid = 0 ) {
-		$db = wfGetDB( DB_MASTER );
-		
+		$db = wfGetDB( DB_MASTER, 'smw' );
+
 		$row = $db->selectRow(
 			'smw_ids',
 			array( 'smw_id', 'smw_namespace', 'smw_title', 'smw_iw', 'smw_sortkey' ),
@@ -2247,7 +2247,7 @@ class SMWSQLStore2 extends SMWStore {
 	 */
 	protected function changeSMWPageID( $oldid, $newid, $oldnamespace = -1, $newnamespace = -1, $sdata = true, $podata = true ) {
 		$fname = 'SMW::changeSMWPageID';
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 
 		// Update bnode references that use namespace field to store ids:
 		if ( $sdata ) { // bnodes are part of the data of a subject
@@ -2281,7 +2281,7 @@ class SMWSQLStore2 extends SMWStore {
 				}
 			}
 		}
-		
+
 		// Change id entries in concept-related tables:
 		if ( $sdata && ( ( $oldnamespace == -1 ) || ( $oldnamespace == SMW_NS_CONCEPT ) ) ) {
 			if ( ( $newnamespace == -1 ) || ( $newnamespace == SMW_NS_CONCEPT ) ) {
@@ -2292,7 +2292,7 @@ class SMWSQLStore2 extends SMWStore {
 				$db->delete( 'smw_conccache', array( 's_id' => $oldid ), $fname );
 			}
 		}
-		
+
 		if ( $podata ) {
 			$db->update( 'smw_conccache', array( 'o_id' => $newid ), array( 'o_id' => $oldid ), $fname );
 		}
@@ -2301,11 +2301,11 @@ class SMWSQLStore2 extends SMWStore {
 	/**
 	 * Delete all semantic data stored for the given subject. Used for update
 	 * purposes.
-	 * 
+	 *
 	 * @param SMWWikiPageValue $subject
 	 */
 	protected function deleteSemanticData( SMWWikiPageValue $subject ) {
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 
 		$fname = 'SMW::deleteSemanticData';
 		$id = $this->getSMWPageID( $subject->getDBkey(), $subject->getNamespace(), $subject->getInterwiki(), false );
@@ -2380,7 +2380,7 @@ class SMWSQLStore2 extends SMWStore {
 		} // note that this means $old_tid!=$new_tid in all cases below
 
 		// *** Make relevant changes in property tables (don't write the new redirect yet) ***//
-		$db = wfGetDB( DB_MASTER ); // now we need to write something
+		$db = wfGetDB( DB_MASTER, 'smw' ); // now we need to write something
 
 		if ( ( $old_tid == 0 ) && ( $sid != 0 ) && ( $smwgQEqualitySupport != SMW_EQ_NONE ) ) { // new redirect
 			// $smwgQEqualitySupport requires us to change all tables' page references from $sid to $new_tid.
@@ -2426,7 +2426,7 @@ class SMWSQLStore2 extends SMWStore {
 						}
 					}
 				}
-				
+
 				/// NOTE: we do not update the concept cache here; this remains an offline task
 				Job::batchInsert( $jobs ); ///NOTE: this only happens if $smwgEnableUpdateJobs was true above
 			}
@@ -2496,46 +2496,46 @@ class SMWSQLStore2 extends SMWStore {
 			array( 'o_id' => 'p' ),
 			array( 'o_id' )
 		);
-		
+
 		self::$prop_tables['smw_atts2'] = new SMWSQLStore2Table(
 			'smw_atts2',
 			array( 'value_xsd' => 't', 'value_num' => 'f', 'value_unit' => 'u' ),
 			array( 'value_num', 'value_xsd' )
 		);
-		
+
 		self::$prop_tables['smw_text2'] = new SMWSQLStore2Table(
 			'smw_text2',
 			array( 'value_blob' => 'l' )
 		);
-		
+
 		self::$prop_tables['smw_spec2'] = new SMWSQLStore2Table(
 			'smw_spec2',
 			array( 'value_string' => 't' ),
 			array( 's_id,p_id' )
 		);
 		self::$prop_tables['smw_spec2']->specpropsonly = true;
-		
+
 		self::$prop_tables['smw_subs2'] = new SMWSQLStore2Table(
 			'smw_subs2',
 			array( 'o_id' => 'p' ),
 			array( 'o_id' ),
 			'_SUBC'
 		);
-		
+
 		self::$prop_tables['smw_subp2'] = new SMWSQLStore2Table(
 			'smw_subp2',
 		    array( 'o_id' => 'p' ),
 			array( 'o_id' ),
 			'_SUBP'
 		);
-		
+
 		self::$prop_tables['smw_inst2'] = new SMWSQLStore2Table(
 			'smw_inst2',
 		    array( 'o_id' => 'p' ),
 			array( 'o_id' ),
 			'_INST'
 		);
-		
+
 		self::$prop_tables['smw_redi2'] = new SMWSQLStore2Table(
 			'smw_redi2',
 			array( 'o_id' => 'p' ),
