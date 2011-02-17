@@ -2006,6 +2006,7 @@ ___________________________________________
  * @author Rancher
  */
 $messages['sr-ec'] = array(
+	'prefs-basic' => 'Основне поставке',
 	'wikiafollowedpages-special-heading-category' => 'Категорије ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Чланци ($1)',
 	'wikiafollowedpages-special-heading-blogs' => 'Блогови и поруке ($1)',
@@ -2016,11 +2017,19 @@ $messages['sr-ec'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'Медијавики странице ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Слике и видео записи ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 страна)',
+	'oasis-wikiafollowedpages-special-seeall' => 'Прикажи све >',
+	'wikiafollowedpages-special-seeall' => 'Прикажи све >',
 	'wikiafollowedpages-special-showall' => 'Прикажи све >',
 	'wikiafollowedpages-special-showmore' => 'Прикажи више',
 	'wikiafollowedpages-special-title' => 'Надгледане странице',
 	'wikiafollowedpages-special-delete-tooltip' => 'Уклони ову страницу',
+	'wikiafollowedpages-special-hidden-unhide' => 'Откриј овај списак.',
 	'wikiafollowedpages-special-blog-by' => 'од $1',
+	'wikiafollowedpages-masthead' => 'Праћене странице',
+	'wikiafollowedpages-following' => 'Праћење',
+	'wikiafollowedpages-special-title-userbar' => 'Праћене странице',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Напредне поставке',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Само списак надгледања',
 	'wikiafollowedpages-userpage-more' => 'Више',
 	'wikiafollowedpages-userpage-hide' => 'сакриј',
 );

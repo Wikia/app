@@ -263,9 +263,18 @@ $messages['br'] = array(
  */
 $messages['de'] = array(
 	'plb-special-form-summary' => 'Zusammenfassung:',
+	'plb-form-desc' => 'Beschreibung:',
 	'plb-list-desc' => 'Beschreibung',
+	'plb-list-action-edit' => 'Bearbeiten',
+	'plb-list-action-delete' => 'Löschen',
+	'plb-list-action-publish' => 'Veröffentlichen',
+	'plb-parser-preview-image-username' => 'Benutzername',
+	'plb-editor-edit' => 'Bearbeiten',
 	'plb-widget-name-plb_image' => 'Bild',
+	'plb-property-editor-width' => 'Breite',
 	'plb-property-editor-spacing-small' => 'Klein',
+	'plb-property-editor-save' => 'Spiechern',
+	'plb-property-editor-cancel' => 'Abbrechen',
 );
 
 /** Spanish (Español)
@@ -824,7 +833,7 @@ $messages['mk'] = array(
 	'plb-form-desc-instructions' => 'Внесете опис',
 	'plb-list-confirm-delete' => 'Дали сте сигурни дека сакате да го избришете распоредов?',
 	'plb-list-confirm-publish' => 'Дали сте сигурни дека сакате да го објавите распоредов?',
-	'plb-list-name' => 'Име',
+	'plb-list-name' => 'Име на распоредот',
 	'plb-list-desc' => 'Опис',
 	'plb-list-last-editor' => 'Последен уредник',
 	'plb-list-count' => '#Страници',
@@ -871,7 +880,7 @@ $messages['mk'] = array(
 	'plb-editor-preview-info' => 'Инфо',
 	'plb-editor-overlay-edit' => 'уреди',
 	'plb-editor-enter-caption' => 'Внесете прашање за образецот.',
-	'plb-editor-left-sidebar-tutorial' => '<br /><b>Добредојдовте на Распоредувачот!</b><br /><br />За да почнете да додавате елементи, стиснете на копчето <em>Додај елемент</em> погоре и одберете го саканиот тип.<br /><br />Како што додавате елементи, ќе се додаваат и нови прашања и ќе се создаде нова страница согласно елементите што сте ги ставиле во распоредот.',
+	'plb-editor-left-sidebar-tutorial' => '<br /><b>Добредојдовте на Распоредувачот!</b><br /><br />За да почнете да додавате елементи, стиснете на копчето <em>Додај елемент</em> погоре и одберете го саканиот тип.<br /><br />Како што тука додавате елементи, ќе се појавуваат и нови прашања за постапката на создавање на страницата.',
 	'plb-widget-name-plb_input' => 'Поле за текст',
 	'plb-widget-name-plb_mlinput' => 'Пасус',
 	'plb-widget-name-plb_image' => 'Слика',
@@ -925,6 +934,9 @@ $messages['mk'] = array(
 	'plb-helpbox-checkboxinfo2' => 'Повеќе не го прикажувај воведов.',
 	'plb-helpbox-help-desc' => 'Сепак треба помош?',
 	'plb-helpbox-help-link' => 'Прочитајте го водичот низ Распоредувачот.',
+	'plb-helpbox-help-link-title' => 'Распоредувач',
+	'plb-parser-error-not-on-plb-article' => 'Распоредните елементи можат да се користат само на страници за распоред',
+	'plb-parser-error-use-on-template' => 'Не можете да користите распоредни елементи во шаблони',
 );
 
 /** Dutch (Nederlands)
@@ -1439,9 +1451,11 @@ $messages['sr-ec'] = array(
 	'plb-editor-edit' => 'Уреди',
 	'plb-editor-toolbar-formatting' => 'Обликовање',
 	'plb-editor-toolbar-static' => 'Статичко',
-	'plb-editor-preview' => 'Претпреглед',
+	'plb-editor-rte-caption' => 'Додавање ставке',
+	'plb-editor-preview' => 'Прегледај',
 	'plb-editor-preview-info' => 'Подаци',
 	'plb-editor-overlay-edit' => 'уреди',
+	'plb-widget-name-plb_mlinput' => 'Пасус',
 	'plb-widget-name-plb_image' => 'Слика',
 	'plb-widget-name-plb_sinput' => 'Падајући списак',
 	'plb-widget-name-plb_gallery' => 'Галерија',

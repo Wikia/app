@@ -433,7 +433,7 @@ Skipailh Kumuniezh Wikia
 
 <http://www.wikia.com/wiki/User:$4>",
 	'autocreatewiki-welcometalk' => "== Degemer mat ! ==
-<div style=\"font-size:120%; line-height:1.2em;\">Bonjour \$1 -- lorc'h zo ennomp oc'h herberc'hiañ ho lec'hienn '''\$4''' er gumuniezh  Wiki!
+<div style=\"font-size:120%; line-height:1.2em;\">Demat deoc'h \$1 -- lorc'h zo ennomp oc'h herberc'hiañ ho lec'hienn '''\$4''' er gumuniezh  Wiki!
 
 Bremañ ho peus ul lec'hienn Genrouedad a vo ret kargañ gant titouroù, skeudennoù ha videoioù. Goullo eo  bremañ avat ha gortoz a ra ac'hanout... Aon ho peus rak se ? Setu un nebeud alioù evit kregiñ mat ganti.
 
@@ -1875,6 +1875,7 @@ $3
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'autocreatewiki-done' => 'çêbû',
 	'autocreatewiki-category-label' => 'Kategorî:',
 	'autocreatewiki-subname-answers' => 'Bersivan',
 );
@@ -3235,6 +3236,7 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-step2-error' => 'База података постоји!',
 	'autocreatewiki-protect-reason' => 'Део званичног сучеља',
 	'autocreatewiki-welcomesubject' => '$1 је направљена!',
+	'newwikis' => 'Нове викије',
 	'autocreatewiki-reminder-body' => 'Драги $1:
 
 Честитамо вам на прављењу нове викије, {{SITENAME}}! Много тога можете додати кликом на $2.

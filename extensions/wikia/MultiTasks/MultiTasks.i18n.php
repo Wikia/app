@@ -1348,9 +1348,16 @@ $messages['kn'] = array(
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'multiwikiedit_button' => 'BIGUHERÎNE',
+	'multiwikiedit_confirm' => 'BISEDIQÎNE',
+	'multiwikiedit_or' => '<b>AN</b>',
+	'multiwikiedit_on' => 'li ser',
 	'multiwikiedit_minoredit_caption' => 'Guhertina biçûk',
 	'multiwikiedit_success_subtitle' => 'ji bo $',
 	'multiwikiedit_select_yourself' => 'tu',
+	'multidelete_button' => 'JÊ BIBE',
+	'multidelete_or' => '<b>AN</b>',
+	'multidelete_reason' => 'Sedema jêbirinê',
 	'multidelete_success_subtitle' => 'ji bo $1',
 );
 

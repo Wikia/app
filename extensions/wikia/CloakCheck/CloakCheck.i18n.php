@@ -329,6 +329,23 @@ $messages['ru'] = array(
 	'cloakcheck-process-edits-no' => 'Участником не сделано необходимого числа правок.',
 );
 
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'cloakcheck-form-username' => 'Корисничко име:',
+	'cloakcheck-form-check' => 'Провери корисничко име',
+	'cloakcheck-process-empty' => 'Корисничко име не може остати празно.',
+	'cloakcheck-process-notexist' => 'Корисничко име не постоји.',
+	'cloakcheck-process-username' => 'Корисничко име: $1',
+	'cloakcheck-process-accountage-yes' => 'Налог је довољно стар.',
+	'cloakcheck-process-accountage-no' => 'Налог је превише нов.',
+	'cloakcheck-process-emailconf-yes' => 'Е-адреса је потврђена.',
+	'cloakcheck-process-emailconf-no' => 'Е-адреса није потврђена.',
+	'cloakcheck-process-edits-yes' => 'Корисник има довољно измена.',
+	'cloakcheck-process-edits-no' => 'Корисник нема довољно измена.',
+);
+
 /** Swedish (Svenska)
  * @author Tobulos1
  */

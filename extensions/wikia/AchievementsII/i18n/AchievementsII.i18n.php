@@ -766,6 +766,13 @@ $messages['bg'] = array(
 	'achievements-community-platinum-cancel' => 'отказване',
 );
 
+/** Bengali (বাংলা)
+ * @author RIPENDIL
+ */
+$messages['bn'] = array(
+	'achievements-non-existing-category' => 'উল্লেখিত শ্রেনীটির কোন অস্তিত্ব নেই।',
+);
+
 /** Breton (Brezhoneg)
  * @author Fohanno
  * @author Fulup
@@ -1009,6 +1016,7 @@ war pajenn kaozeal unan bennak all !',
 	'achievements-badge-your-desc-pounce' => 'evit bezañ degaset kemmoù war 100 pajenn en eurvezh goude krouidigezh ar bajenn !',
 	'achievements-badge-your-desc-caffeinated' => 'evit bezañ degaset 100 kemm e pajennoù en un devezh !',
 	'achievements-badge-your-desc-luckyedit' => 'evit bezañ degaset ar $1vet kemm gant chañs war ar wiki !',
+	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|evit bezañ rannet ul liamm|evit bezañ lakaet {{PLURAL:$1|un den|$1 den}} da glikañ war liammoù rannet}}',
 	'achievements-badge-desc-edit' => "evit bezañ degaset $1 {{PLURAL:$1|c'hemm|kemm}} war {{PLURAL:$1|ur bajenn|pajennoù}} !",
 	'achievements-badge-desc-edit-plus-category' => 'evit bezañ degaset $1 kemm war {{PLURAL:$1|ur bajenn|$2 pajenn}}!',
 	'achievements-badge-desc-picture' => 'evit bezañ ouzhpennet $1 {{PLURAL:$1|skeudenn|skeudenn}} war {{PLURAL:$1ur bajenn|pajennoù}} !',
@@ -1866,6 +1874,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Crt
  * @author Nike
  * @author Tofu II
  */
@@ -1878,6 +1887,7 @@ Kokeile toista kuvaa.',
 	'achievements-gold' => 'Kulta',
 	'achievements-viewall-oasis' => 'Näytä kaikki',
 	'achievements-community-platinum-cancel' => 'peruuta',
+	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Napsauta saadaksesi lisätietoja',
 	'achievements-badge-name-love-1' => 'Kaksi viikkoa wikissä',
 	'achievements-badge-to-get-welcome' => 'liity wikiin',
 	'achievements-badge-hover-desc-creator' => 'wikin luomisesta!',
@@ -3254,6 +3264,7 @@ $messages['ku-latn'] = array(
 	'achievements-gold' => 'Zêr',
 	'achievements-silver' => 'Zîv',
 	'achievements-bronze' => 'Bronz',
+	'achievements-gold-points' => '100<br />pts',
 	'leaderboard-intro-hide' => 'veşêre',
 	'achievements-leaderboard-member-label' => 'Endam',
 	'achievements-send' => 'Wêneyê qeyd bike',
@@ -3262,6 +3273,7 @@ $messages['ku-latn'] = array(
 	'achievements-community-platinum-edit' => 'biguherîne',
 	'achievements-community-platinum-save' => 'qeyd bike',
 	'achievements-community-platinum-cancel' => 'betal bike',
+	'achievements-badge-name-category-2' => 'Explorer',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -3351,6 +3363,7 @@ $messages['mk'] = array(
 	'achievements-profile-title-oasis' => 'наградни <br /> бодови',
 	'achievements-ranked-oasis' => '$1 се [[Special:Leaderboard|котира на $2 место]] на ова вики',
 	'achievements-viewall-oasis' => 'Сите',
+	'achievements-toggle-hide' => 'Не прикажувај бодови, значки и пласман во мојата профилна страница',
 	'leaderboard-intro-hide' => 'скриј',
 	'leaderboard-intro-open' => 'отвори',
 	'leaderboard-intro-headline' => 'Што се достигнувања?',
@@ -5294,7 +5307,9 @@ $messages['sr-ec'] = array(
 	'leaderboard-intro-hide' => 'сакриј',
 	'leaderboard-intro-open' => 'отвори',
 	'leaderboard-intro-headline' => 'Шта су Достигнућа?',
+	'leaderboard' => 'Табела најбољих',
 	'achievements-title' => 'Достигнућа',
+	'leaderboard-title' => 'Табела најбољих',
 	'achievements-leaderboard-rank-label' => 'Ранг',
 	'achievements-leaderboard-member-label' => 'Члан',
 	'achievements-leaderboard-points-label' => 'Бодови',

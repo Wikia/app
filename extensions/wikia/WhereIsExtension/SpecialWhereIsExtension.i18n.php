@@ -561,7 +561,7 @@ $messages['sl'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'whereisextension' => 'Где је прикључак',
+	'whereisextension' => 'Где је проширење',
 	'whereisextension-submit' => 'Претражи',
 	'whereisextension-list' => 'Списак викија са поклапањима',
 	'whereisextension-isset' => 'је подешена на',

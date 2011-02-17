@@ -272,6 +272,14 @@ $messages['ja'] = array(
 	'tagsreportgenerated' => '$1 $2 に生成',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'tagsreportnoresults' => 'Tu encam nehate dîtin',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|page|pages}})',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

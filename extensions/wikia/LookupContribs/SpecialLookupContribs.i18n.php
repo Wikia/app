@@ -170,6 +170,9 @@ $messages['br'] = array(
  * @author Sasan700
  */
 $messages['ce'] = array(
+	'lookupcontribs' => 'Къинхьегаме хьажа',
+	'lookupcontribslinks' => 'къинхьегаме хьажориг',
+	'lookupcontribscontribslink' => 'Къинхьегаме хьажориг',
 	'lookupcontribscontribs' => 'къинхьегам',
 );
 
@@ -984,6 +987,7 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'lookupcontribsselectuser' => 'Избор корисника:',
+	'lookupcontribsgo' => 'Пређи',
 	'lookupcontribsnoresultfound' => 'Нема резултата!',
 	'lookupcontribsinvalidresults' => 'Неисправни резултати!',
 	'lookupcontribswiki' => 'Вики',
@@ -1101,5 +1105,12 @@ $messages['uk'] = array(
 	'lookupcontribslog' => 'журнал',
 	'lookupcontribshist' => 'історія',
 	'lookupcontribsdiff' => 'різн.',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'lookupcontribscontent' => 'אינהאַלט',
 );
 

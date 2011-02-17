@@ -86,6 +86,7 @@ $messages['qqq'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -97,6 +98,8 @@ $messages['br'] = array(
 	'owb-button-done' => "Kenderc'hel d'ho wiki",
 	'owb-button-plus' => 'Diuzañ Wikia+Plus',
 	'owb-step1' => 'Pazenn 1',
+	'owb-step1-label' => 'Eus petra zo kaoz ?',
+	'owb-step1-label-formatted' => 'Eus<br />petra zo kaoz ?',
 	'owb-step2' => 'Pazenn 2',
 	'owb-step2-label' => 'Dibab un tem',
 	'owb-step3' => 'Pazenn 3',

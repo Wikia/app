@@ -115,6 +115,14 @@ $messages['ia'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: Texto de pagina es requirite',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Sernav',
+	'contentfeeds-firstfewarticles-tag-next' => 'Nivîs',
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $messages['lb'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Titel',
@@ -191,6 +199,15 @@ $messages['ru'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Заголовок',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Ошибка: Требуется заголовок страницы',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Ошибка: Требуется тело страницы',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'contentfeeds-newimages-rss-desc' => 'Довод из $1',
+	'contentfeeds-firstfewarticles-tag-title' => 'Наслов',
+	'contentfeeds-firstfewarticles-tag-next' => 'Следеће',
 );
 
 /** Swedish (Svenska)

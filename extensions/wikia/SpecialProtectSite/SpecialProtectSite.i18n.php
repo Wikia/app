@@ -629,6 +629,7 @@ $messages['ru'] = array(
  * @author Жељко Тодоровић
  */
 $messages['sr-ec'] = array(
+	'protectsite' => 'Заштити сајт',
 	'protectsite-allowall' => 'Сви корисници',
 	'protectsite-allowusersysop' => 'Уписани корисници и администратори',
 	'protectsite-allowsysop' => 'Само администратори',

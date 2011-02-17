@@ -621,6 +621,14 @@ $messages['ru'] = array(
 (Если у вас уже есть учётная запись, вы можете <a href="#">войти</a> как обычно, но вы не сможете редактировать.)</p>',
 );
 
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'comboajaxlogin-createlog' => 'Пријавите се или направите налог',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Назад',
+);
+
 /** Swedish (Svenska)
  * @author Tobulos1
  */

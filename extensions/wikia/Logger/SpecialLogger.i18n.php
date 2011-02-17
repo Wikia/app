@@ -122,3 +122,10 @@ $messages['no'] = array(
 	'loggernoresult' => 'Ingen resultater funnet',
 );
 
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'loggerrecords' => '$1 белешки',
+);
+

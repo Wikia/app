@@ -39,6 +39,7 @@ $messages['qqq'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -46,6 +47,8 @@ $messages['br'] = array(
 	'wikiapoll-thanks-for-vote' => 'Trugarez !',
 	'wikiapoll-vote' => 'Votiñ !',
 	'wikiapoll-votes' => '({{PLURAL:$1|$1 vouezh|$1 mouezh}})',
+	'wikiapoll-cancel-label' => 'Nullañ',
+	'wikiapoll-publish-label' => 'Embann',
 );
 
 /** Czech (Česky)
@@ -117,6 +120,12 @@ $messages['mk'] = array(
 	'wikiapoll-thanks-for-vote' => 'Благодариме!',
 	'wikiapoll-vote' => 'Гласај!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 глас|$1 гласа}}',
+	'wikiapoll-createpoll-headline' => 'Создај анкета',
+	'wikiapoll-editpoll-headline' => 'Уреди анкета',
+	'wikiapoll-question-label' => 'Прашање',
+	'wikiapoll-addnewitem-label' => 'Додај нова ставка',
+	'wikiapoll-cancel-label' => 'Откажи',
+	'wikiapoll-publish-label' => 'Објави',
 );
 
 /** Dutch (Nederlands)
@@ -171,6 +180,11 @@ $messages['sr-ec'] = array(
 	'wikiapoll-thanks-for-vote' => 'Хвала!',
 	'wikiapoll-vote' => 'Гласај!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 глас|$1 гласа|$1 гласова}}',
+	'wikiapoll-createpoll-headline' => 'Прављење анкете',
+	'wikiapoll-question-label' => 'Питање',
+	'wikiapoll-addnewitem-label' => 'Додај нову ставку',
+	'wikiapoll-cancel-label' => 'Откажи',
+	'wikiapoll-publish-label' => 'Објави',
 );
 
 /** Swedish (Svenska)

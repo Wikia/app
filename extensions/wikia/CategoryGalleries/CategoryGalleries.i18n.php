@@ -16,6 +16,13 @@ $messages['af'] = array(
 	'categorygalleries-desc' => "Wys 'n galery met bladsye op kategoriebladsye",
 );
 
+/** Breton (Brezhoneg)
+ * @author Fohanno
+ */
+$messages['br'] = array(
+	'categorygalleries-desc' => 'Diskouez ur palier pajennoù war bajennoù ar rummadoù',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */

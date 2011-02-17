@@ -117,3 +117,12 @@ $messages['no'] = array(
 	'exitstitial-button' => 'Hopp over annonse',
 );
 
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'interstitial-default-campaign-code' => 'Викија вас воли!',
+	'interstitial-skip-ad' => 'Прескочи оглас',
+	'exitstitial-button' => 'Прескочи оглас',
+);
+
