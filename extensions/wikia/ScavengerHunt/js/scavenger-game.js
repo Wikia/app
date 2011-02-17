@@ -145,13 +145,13 @@ var ScavengerHunt = {
 				closeOnBlackoutClick: false,
 				width: ScavengerHunt.MODAL_WIDTH,
 				callback: function() {
-					var w = $('#scavengerEntryFormModal').closest('.modalWrapper');
+					var w = $('#scavengerEntryFormModal');
 					var b = w.find('.scavenger-clue-button input[type=submit]');
 					var inputs = w.find('.scavenger-entry-form').find('input, textarea').not('input[type=submit]')
 					var inputsChange = function() {
 						var ok = true;
-						inputs.each(function(i,v){ if (!$(v).val()) ok = false; });
-						b.attr('disabled',ok?'':'disabled');
+						inputs.each(function(i,v) { if (!$(v).val()) ok = false; });
+						b.attr('disabled', ok ? '' : 'disabled');
 					};
 					inputs.blur(inputsChange);
 					inputs.keyup(inputsChange);
@@ -177,7 +177,6 @@ var ScavengerHunt = {
 							if (json.status) {
 								ScavengerHunt.track('game/modalEntryForm/saveOk');
 								w.closeModal();
-								// XXX: clear game cookies if entry is saved
 								ScavengerHunt.showGoodbyeForm();
 							} else {
 								ScavengerHunt.track('game/modalEntryForm/saveError');
