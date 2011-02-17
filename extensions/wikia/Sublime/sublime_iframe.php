@@ -14,7 +14,7 @@ $wikiHost = ""; // the API target is the same server
 ?><!doctype html>
 <html lang="en">
 <head>
-	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery-1.4.2.js?1284232976"></script>
+	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery-1.5.js?1284232976"></script>
 	<?php // TODO: REVIEW WHICH OF THESE JQUERY FILES ARE NEEDED ?>
 	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery.json-1.3.js?1284232976"></script>
 	<!-- <script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery.wikia.js?1284232976"></script> -->

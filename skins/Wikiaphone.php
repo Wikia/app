@@ -33,7 +33,7 @@ class SkinWikiaphone extends SkinTemplate {
 		$this->mRenderColumnOne = false;
 		$this->useHeadElement = true;
 	}
-	
+
 	function initPage( OutputPage $out ) {
 		global $wgHooks, $wgUseSiteCss;
 		SkinTemplate::initPage( $out );
@@ -41,19 +41,19 @@ class SkinWikiaphone extends SkinTemplate {
 		$this->stylename = 'wikiaphone';
 		$this->template  = 'MonoBookTemplate';
 	}
-	
+
 	public static function onSkinTemplateOutputPageBeforeExec( &$obj, &$tpl ){
 		$tpl->set('skipColumnOne', true);
 		$tpl->set('skipFooter', true);
 		return true;
 	}
-	
+
 	function setupSkinUserCss( OutputPage $out ){
 		global $wgRequest;
 		$out->addMeta("viewport", "width=320");
 		$out->addStyle( 'wikiaphone/main.css', 'screen,handheld' );
 		$out->addStyle( 'wikiaphone/skin.css', 'screen,handheld' );
-		$out->addScriptFile( '../common/jquery/jquery-1.4.4.min.js' );
+		$out->addScriptFile( '../common/jquery/jquery-1.5.min.js' );
 		$out->addScriptFile( '../wikiaphone/main.js' );
 	}
 
@@ -62,9 +62,9 @@ class SkinWikiaphone extends SkinTemplate {
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 		$this->wordmarkText = $settings["wordmark-text"];
-		
+
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
-		
+
 		echo AdEngine::getInstance()->getAd('MOBILE_TOP_LEADERBOARD');
 ?>
 			<div class="mobile-header">
@@ -81,36 +81,36 @@ class SkinWikiaphone extends SkinTemplate {
 				</a>
 			</h1>
 <?php
-		
+
 	}
-	
+
 	public static function onMakeGlobalVariablesScript( $vars ) {
 		global $wgContLang;
-		
+
 		$vars['CategoryNamespaceMessage'] = $wgContLang->getNsText(NS_CATEGORY);
 		$vars['SpecialNamespaceMessage'] = $wgContLang->getNsText(NS_SPECIAL);
-		
+
 		return true;
 	}
-	
+
 	protected function afterContentHook () {
 		global $wgCityId, $wgRightsUrl;
-		
+
 		$data = '';
-		
+
 		$data .= '<div id="mw-data-after-content"><div id="fullsite"><a href="#" class="fullsite" rel="nofollow">'.wfMsg('mobile-full-site').'</a> | '.$this->getCopyright().'</div>';
-		
+
 		$data .= '<script>var MobileSkinData = {showtext: "'.wfMsg("mobile-show").'", hidetext:"'.wfMsg("mobile-hide").'"};</script>';
-		
+
 		// load Google Analytics code
 		$data .= AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
 
 		// onewiki GA
 		$data .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
-		
+
 		return $data;
 	}
-	
+
 	/**
 	 * empty stub for compatibility with MonoBook.php wikiaBox()
 	 */
