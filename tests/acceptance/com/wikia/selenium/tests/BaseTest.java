@@ -495,6 +495,7 @@ public class BaseTest {
 		// keep file extensions consistent (uploaded image can be either PNG or JPG)
 		// String fileNameExtenstion = imageUrl.substring(imageUrl.length() - 3, imageUrl.length());
 		String destinationFilename = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+		destinationFilename = destinationFilename.substring(0,1).toUpperCase() + destinationFilename.substring(1);
 		
 		uploadImage(imageUrl, destinationFilename);
 	}
