@@ -19,14 +19,14 @@ public class BlogArticleTest extends BaseTest {
 
 	String title = new String();
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "envProduction"})
 	public void testEnsureLoggedInUserCanCreateBlogPosts() throws Exception {
-		login();
-		session().open("index.php?title=Special:CreateBlogPage");
-
 		// random article title
 		String date  = (new Date()).toString();
 		title = "Test Blog Article no. " + date;
+
+		login();
+		session().open("index.php?title=Special:CreateBlogPage");
 
 		session().type( "blogPostTitle", title );
 
@@ -40,18 +40,21 @@ public class BlogArticleTest extends BaseTest {
 		assertEquals(title, session().getText("//div[@id='WikiaUserPagesHeader']/h1"));
 
 		logout();
-
-		// login as different user and type comment
-		// NOTE: These are now powered by article comments extension.
-		// TODO: FIXME: Possibly remove this part of
-		// the test if it is redundant with what is in ArticleCommentTest. 
+	}
+	
+	@Test(groups={"CI", "envProduction"},dependsOnMethods={"testEnsureLoggedInUserCanCreateBlogPosts"})
+	public void testEnsureUserCanPostCommentsOnBlogPosts() throws Exception {
 		loginAsRegular();
 		session().open( "index.php?title=User_blog:" + getTestConfig().getString("ci.user.wikiabot.username") + "/" + title.replace( " ", "_" ) );
 		assertTrue( session().isTextPresent( "blogtest by bot" ) );
 
-		session().type("article-comm", "comment test by bot");
+		String date  = (new Date()).toString();
+		String comment = "comment test by bot " + date;
+		
+		session().type("article-comm", comment);
 		session().click("//input[@id='article-comm-submit']");
 		waitForElement("//div[@class='article-comm-text']");
+		assertTrue(session().isTextPresent(comment));
 		logout();
 	}
 }
