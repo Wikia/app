@@ -131,6 +131,15 @@ class UserChangesHistory {
 			 * caanot use "insert from select" because we got two different db
 			 * clusters. But we should have all user data already loaded.
 			 */
+			$options = $wgUser->getOptions();
+			$a = array();
+			if ( !empty($options) ) {
+				foreach ( $options as $oname => $oval ) {
+					array_push( $a, $oname.'='.$oval );
+				}
+			}
+			$user_options = implode( "\n", $a );	
+			 
 			$params = array(
 				"user_id"          => $id,
 				"user_name"        => $wgUser->mName,
@@ -138,7 +147,7 @@ class UserChangesHistory {
 				"user_password"    => $wgUser->mPassword,
 				"user_newpassword" => $wgUser->mNewpassword,
 				"user_email"       => $wgUser->mEmail,
-				"user_options"     => $wgUser->encodeOptions(),
+				"user_options"     => $user_options,
 				"user_touched"     => $wgUser->mTouched,
 				"user_token"       => $wgUser->mToken
 			);
