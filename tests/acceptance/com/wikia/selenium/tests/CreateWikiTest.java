@@ -3,6 +3,7 @@ package com.wikia.selenium.tests;
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.closeSeleniumSession;
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.session;
 import static org.testng.AssertJUnit.assertTrue;
+import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertEquals;
 
 import org.testng.annotations.BeforeMethod;
@@ -20,8 +21,12 @@ public class CreateWikiTest extends BaseTest {
 
 	@BeforeMethod(alwaysRun=true)
 	public void enforceMainWebsite() throws Exception {
+		enforceWebsite("http://www.wikia.com");
+	}
+	
+	public void enforceWebsite(String website) throws Exception {
 		closeSeleniumSession();
-		startSession(this.seleniumHost, this.seleniumPort, this.browser, "http://www.wikia.com", this.timeout, this.noCloseAfterFail);
+		startSession(this.seleniumHost, this.seleniumPort, this.browser, website, this.timeout, this.noCloseAfterFail);
 	}
 	
 	private static String getWikiName() {
@@ -73,13 +78,25 @@ public class CreateWikiTest extends BaseTest {
 
 				waitForTextPresent("Welcome to the Wiki", this.getTimeout(), "Wiki has not been created, language: " + languages[i]);
 				assertTrue(session().getLocation().contains("http://" + getWikiName() + ".wikia.com/wiki/"));
+				
+				enforceWebsite("http://" + getWikiName() + ".wikia.com/");
 			} else {
 				waitForTextPresent("Your wiki has been created!", this.getTimeout(), "Wiki has not been created, language: " + languages[i]);
 				clickAndWait("//div[@class='awc-domain']/a");
 
-				assertTrue(session().getLocation().contains("http://" + languages[i] + "." + getWikiName() + ".wikia.com/wiki/"));
+				assertTrue(session().getLocation().contains("http://" + languages[i] + "." + getWikiName() + ".wikia.com/"));
 				assertTrue(session().getLocation().contains(":WikiActivity"));
+				
+				enforceWebsite("http://" + languages[i] + "." + getWikiName() + ".wikia.com/wiki/");
 			}
+			
+			editArticle("A new article", "Lorem ipsum dolor sit amet");
+			session().open("index.php?title=A_new_article");
+			assertTrue(session().isTextPresent("Lorem ipsum dolor sit amet"));
+			editArticle("A new article", "consectetur adipiscing elit");
+			session().open("index.php?title=A_new_article");
+			assertFalse(session().isTextPresent("Lorem ipsum dolor sit amet"));
+			assertTrue(session().isTextPresent("consectetur adipiscing elit"));
 		}
 	}
 
