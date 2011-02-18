@@ -49,22 +49,22 @@ if ( !function_exists( 'mb_substr' ) ) {
 			$split = mb_substr_split_unicode( $str, intval( $start ) );
 			$str = substr( $str, $split );
 		}
-		
+
 		if( $count !== 'end' ) {
 			$split = mb_substr_split_unicode( $str, intval( $count ) );
 			$str = substr( $str, 0, $split );
 		}
-		
+
 		return $str;
 	}
-	
+
 	function mb_substr_split_unicode( $str, $splitPos ) {
 		if( $splitPos == 0 ) {
 			return 0;
 		}
-		
+
 		$byteLen = strlen( $str );
-		
+
 		if( $splitPos > 0 ) {
 			if( $splitPos > 256 ) {
 				// Optimize large string offsets by skipping ahead N bytes.
@@ -78,7 +78,7 @@ if ( !function_exists( 'mb_substr' ) ) {
 				$charPos = 0;
 				$bytePos = 0;
 			}
-			
+
 			while( $charPos++ < $splitPos ) {
 				++$bytePos;
 				// Move past any tail bytes
@@ -96,7 +96,7 @@ if ( !function_exists( 'mb_substr' ) ) {
 					--$bytePos;
 			}
 		}
-		
+
 		return $bytePos;
 	}
 }
@@ -164,12 +164,12 @@ if( !function_exists( 'mb_strrpos' ) ) {
 		$ar = array();
 		preg_match_all( '/'.$needle.'/u', $haystack, $ar, PREG_OFFSET_CAPTURE, $offset );
 
-		if( isset( $ar[0] ) && count( $ar[0] ) > 0 && 
+		if( isset( $ar[0] ) && count( $ar[0] ) > 0 &&
 		    isset( $ar[0][count($ar[0])-1][1] ) ) {
 			return $ar[0][count($ar[0])-1][1];
 		} else {
 			return false;
-		} 
+		}
 	}
 }
 
@@ -1567,7 +1567,7 @@ function wfDiff( $before, $after, $params = '-u' ) {
 	if ($before == $after) {
 		return '';
 	}
-	
+
 	global $wgDiff;
 
 	# This check may also protect against code injection in
@@ -2402,8 +2402,8 @@ function wfShellExec( $cmd, &$retval=null ) {
 				$cmd = escapeshellarg( $script ) . " $time $mem $filesize " . escapeshellarg( $cmd );
 			}
 		}
-	} elseif ( php_uname( 's' ) == 'Windows NT' && 
-		version_compare( PHP_VERSION, '5.3.0', '<' ) ) 
+	} elseif ( php_uname( 's' ) == 'Windows NT' &&
+		version_compare( PHP_VERSION, '5.3.0', '<' ) )
 	{
 		# This is a hack to work around PHP's flawed invocation of cmd.exe
 		# http://news.php.net/php.internals/21796
@@ -2856,7 +2856,7 @@ function wfHttpOnlySafe() {
  * Initialise php session
  */
 function wfSetupSession() {
-	global $wgSessionsInMemcached, $wgCookiePath, $wgCookieDomain, 
+	global $wgSessionsInMemcached, $wgCookiePath, $wgCookieDomain,
 			$wgCookieSecure, $wgCookieHttpOnly, $wgSessionHandler;
 	global $wgSessionsInRiak;
 
@@ -2998,6 +2998,16 @@ function wfSplitWikiID( $wiki ) {
  * @return Databases
  */
 function &wfGetDB( $db, $groups = array(), $wiki = false ) {
+
+	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)
+	global $smwgUseExternalDB;
+	if( $smwgUseExternalDB === true ) {
+		if( ( is_array( $groups ) && in_array( 'smw', $groups ) ) || $groups === 'smw' ) {
+			$wiki = "smw+" . $wiki;
+		}
+	}
+	// wikia change end
+
 	return wfGetLB( $wiki )->getConnection( $db, $groups, $wiki );
 }
 
@@ -3029,7 +3039,7 @@ function &wfGetLBFactory() {
  *
  *     ignoreRedirect: If true, do not follow file redirects
  *
- *     private:        If true, return restricted (deleted) files if the current 
+ *     private:        If true, return restricted (deleted) files if the current
  *                     user is allowed to view them. Otherwise, such files will not
  *                     be found.
  *
@@ -3242,14 +3252,14 @@ function wfOut( $s ) {
 }
 
 /**
- * Count down from $n to zero on the terminal, with a one-second pause 
+ * Count down from $n to zero on the terminal, with a one-second pause
  * between showing each number. For use in command-line scripts.
  */
 function wfCountDown( $n ) {
 	for ( $i = $n; $i >= 0; $i-- ) {
 		if ( $i != $n ) {
 			echo str_repeat( "\x08", strlen( $i + 1 ) );
-		} 
+		}
 		echo $i;
 		flush();
 		if ( $i ) {
@@ -3290,15 +3300,15 @@ function wfArrayInsertAfter( $array, $insert, $after ) {
 	// Find the offset of the element to insert after.
 	$keys = array_keys($array);
 	$offsetByKey = array_flip( $keys );
-	
+
 	$offset = $offsetByKey[$after];
-	
+
 	// Insert at the specified offset
 	$before = array_slice( $array, 0, $offset + 1, true );
 	$after = array_slice( $array, $offset + 1, count($array)-$offset, true );
-	
+
 	$output = $before + $insert + $after;
-	
+
 	return $output;
 }
 
@@ -3309,10 +3319,10 @@ function wfObjectToArray( $object, $recursive = true ) {
 		if ( is_object($value) && $recursive ) {
 			$value = wfObjectToArray( $value );
 		}
-		
+
 		$array[$key] = $value;
 	}
-	
+
 	return $array;
 }
 
@@ -3320,7 +3330,7 @@ function wfObjectToArray( $object, $recursive = true ) {
  * Set PHP's memory limit to the larger of php.ini or $wgMemoryLimit;
  * @return Integer value memory was set to.
  */
- 
+
 function wfMemoryLimit () {
 	global $wgMemoryLimit;
 	$memlimit = wfShorthandToInteger( ini_get( "memory_limit" ) );
@@ -3390,4 +3400,3 @@ function wfBCP47( $code ) {
 	$langCode = implode ( '-' , $codeBCP );
 	return $langCode;
 }
-
