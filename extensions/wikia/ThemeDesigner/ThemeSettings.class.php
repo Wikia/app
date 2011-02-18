@@ -63,7 +63,15 @@ class ThemeSettings {
 
 	public function getSettings() {
 		if(!empty($GLOBALS[self::WikiFactorySettings])) {
-			return array_merge($this->defaultSettings, $GLOBALS[self::WikiFactorySettings]);
+			$settings = array_merge($this->defaultSettings, $GLOBALS[self::WikiFactorySettings]);
+			$colorKeys = array( "color-body", "color-page", "color-buttons", "color-links", "color-header" );
+			foreach ($colorKeys as $colorKey) {
+				if (!ThemeDesignerHelper::isValidColor($settings[$colorKey])) {
+					$settings = $this->defaultSettings;
+					break;
+				}
+			}
+			return $settings;
 		} else {
 			return $this->defaultSettings;
 		}
@@ -142,8 +150,8 @@ class ThemeSettings {
 		}
 
 		// update WF variable with current theme settings
-		WikiFactory::setVarByName(self::WikiFactorySettings, $cityId, $settings, $reason);		
-		
+		WikiFactory::setVarByName(self::WikiFactorySettings, $cityId, $settings, $reason);
+
 		// add entry
 		$history[] = array(
 			'settings' => $settings,
@@ -168,6 +176,6 @@ class ThemeSettings {
 
 		WikiFactory::setVarByName(self::WikiFactoryHistory, $cityId, $history, $reason);
 
-	}		
+	}
 
 }
