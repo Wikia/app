@@ -311,7 +311,8 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		wfProfileIn( __METHOD__ );
 		if ($cache == null) {
 			global $wgMemc;
-			$cache = $wgMemc->get( $this->getCacheKey() );
+			$memkey = $this->getCacheKey();
+			$cache = ( !empty($memkey) ) ? $wgMemc->get( $memkey ) : null;
 			wfDebug( __METHOD__ . ": Load user data from cache \n" );
 			$fromMaster = true;
 		}
@@ -377,7 +378,10 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 
 	 	$obj = $this->getCacheObject();
 	 	wfDebug( __METHOD__ . ": Saving user {$this->mName} to cache. \n" );
-	 	$wgMemc->set( $this->getCacheKey(), $obj, 86400 );
+	 	$memkey = $this->getCacheKey();
+	 	if ( !empty($memkey) ) {
+			$wgMemc->set( $memkey, $obj, 86400 );
+		}
 	}
 
 	/**
@@ -397,7 +401,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		if ( isset($this->mGlobalId) ) {
 			$memcKey = wfMemcKey( 'user', 'id', $this->mGlobalId );
 		} else {
-			$memcKey = wfMemcKey($wgWikiaCentralAuthMemcPrefix . md5( $this->mName ));
+			$memcKey = null;
 		}
 
 		return $memcKey;
@@ -1100,7 +1104,10 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	public function quickInvalidateCache() {
 		global $wgMemc;
 		wfDebug( __METHOD__ . ": Quick cache invalidation for global user {$this->mName} \n" );
-		$wgMemc->delete( $this->getCacheKey() );
+		$memkey = $this->getCacheKey();
+		if ( !empty($memkey) ) {
+			$wgMemc->delete( $memkey );
+		}
 	}
 
 	/**
