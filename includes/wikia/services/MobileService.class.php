@@ -6,8 +6,6 @@
  * @author Federico "Lox" Lucignano
  */
 class MobileService extends Service {
-	const USER_AGENT_REGEX = "Windows CE|Kindle|Opera Mini|IEMobile|Android|Symbian|Danger|BlackBerry|iPod|iPhone|Googlebot-Mobile";
-	
 	private $mUserAgent;
 	private $mAgents;
 	private $mIsMobile;
