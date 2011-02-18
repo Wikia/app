@@ -370,7 +370,7 @@ var WikiBuilder = {
 			},
 			function(res) {
 				WikiBuilder.cityId = res.cityId;
-				WikiBuilder.finishCreateUrl = res.finishCreateUrl;
+				WikiBuilder.finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ? res.finishCreateUrl.replace('.com/','.com/wiki/') : res.finishCreateUrl);
 				WikiBuilder.createStatus = res.status;
 				$('#UpgradeWiki .wiki-name').html(res.siteName);
 			}
