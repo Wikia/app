@@ -20,6 +20,9 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	/*private*/ var $mStateDirty = false;
 	/*private*/ var $mDelayInvalidation = 0;
 
+	private $mOptions;
+
+
 	static $mCacheVars = array(
 		'mGlobalId',
 		'mIsAttached',
@@ -43,17 +46,17 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		'mGroups',
 		'mOptionOverrides'
 	);
-	
+
 	function __construct( $username ) {
 		$this->mName = $username;
 		wfDebug( __METHOD__ . ": Create object : {$username} \n" );
 		$this->resetState();
 	}
-	
+
 	function WikiaCentralAuthUser( $oUser ) {
 		$this->mName = $oUser->getName();
-		wfDebug( __METHOD__ . ": Create object : {$this->mName} \n" );				
-		$this->resetState();	
+		wfDebug( __METHOD__ . ": Create object : {$this->mName} \n" );
+		$this->resetState();
 	}
 
 	/**
@@ -62,24 +65,24 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * @param User $user
 	 */
 	static function getInstance( $user ) {
-		$name = $user->getName();		
+		$name = $user->getName();
 		if ( !isset( $user->centralAuth ) ) {
-			wfDebug( __METHOD__ . ": New instance : {$name} \n" );						
+			wfDebug( __METHOD__ . ": New instance : {$name} \n" );
 			$user->centralAuth = new self( $name );
 		}
-		wfDebug( __METHOD__ . ": Instance exists : {$name} \n" );				
+		wfDebug( __METHOD__ . ": Instance exists : {$name} \n" );
 		return $user->centralAuth;
 	}
 
 	public static function getCentralDB() {
 		global $wgWikiaCentralAuthDatabase;
-		wfDebug( __METHOD__ . ": wgWikiaCentralAuthDatabase : {$wgWikiaCentralAuthDatabase} \n" );					
+		wfDebug( __METHOD__ . ": wgWikiaCentralAuthDatabase : {$wgWikiaCentralAuthDatabase} \n" );
 		return wfGetDB(DB_MASTER, array(), $wgWikiaCentralAuthDatabase);
 	}
 
 	public static function getCentralSlaveDB() {
 		global $wgWikiaCentralAuthDatabase;
-		wfDebug( __METHOD__ . ": wgWikiaCentralAuthDatabase : {$wgWikiaCentralAuthDatabase} \n" );			
+		wfDebug( __METHOD__ . ": wgWikiaCentralAuthDatabase : {$wgWikiaCentralAuthDatabase} \n" );
 		return wfGetDB(DB_SLAVE, array(), $wgWikiaCentralAuthDatabase);
 	}
 
@@ -102,10 +105,10 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 */
 	public static function newFromRow( $row, $fromMaster = false ) {
 		if ( !is_object( $row ) ) {
-			wfDebug( __METHOD__ . ": invalid row \n" );		
+			wfDebug( __METHOD__ . ": invalid row \n" );
 			$caUser = null;
 		} else {
-			wfDebug( __METHOD__ . ": row: {$row->user_name} \n" );					
+			wfDebug( __METHOD__ . ": row: {$row->user_name} \n" );
 			$caUser = new self( $row->user_name );
 			$caUser->loadFromRow( $row, $fromMaster );
 		}
@@ -117,7 +120,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * Does not clear $this->mName, so the state information can be reloaded with loadState()
 	 */
 	protected function resetState() {
-		wfDebug( __METHOD__ . ": reset globalId \n" );			
+		wfDebug( __METHOD__ . ": reset globalId \n" );
 		unset( $this->mGlobalId );
 		unset( $this->mGroups );
 	}
@@ -126,7 +129,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * Load up state information, but don't use the cache
 	*/
 	protected function loadStateNoCache() {
-		wfDebug( __METHOD__ . ": reload all data from DB \n" );		
+		wfDebug( __METHOD__ . ": reload all data from DB \n" );
 		$this->loadState( true );
 	}
 
@@ -135,7 +138,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 */
 	static function loadFromDatabaseByName($userName) {
 		$dbr = self::getCentralDB();
-		wfDebug( __METHOD__ . ": userName = $userName \n" );		
+		wfDebug( __METHOD__ . ": userName = $userName \n" );
 		$oRow = $dbr->selectRow( array( '`user`' ), array( '*' ), array( 'user_name' => $userName ), __METHOD__ );
 		return $oRow;
 	}
@@ -145,7 +148,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 */
 	static function loadFromDatabaseById($userId) {
 		$dbr = self::getCentralDB();
-		wfDebug( __METHOD__ . ": userId = $userId \n" );		
+		wfDebug( __METHOD__ . ": userId = $userId \n" );
 		$oRow = $dbr->selectRow( array( '`user`' ), array( '*' ), array( 'user_id' => $userId ), __METHOD__ );
 		return $oRow;
 	}
@@ -154,14 +157,14 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * load row by id
 	 */
 	private function loadOptions( ) {
-		wfDebug( __METHOD__ . ": mOptions = " . ( ( isset($this->mOptions) ) ? count($this->mOptions) : 0 ) . " \n" );		
-				
+		wfDebug( __METHOD__ . ": mOptions = " . ( ( isset($this->mOptions) ) ? count($this->mOptions) : 0 ) . " \n" );
+
 		if ( isset($this->mOptions) && !empty($this->mOptions) ) {
-			# options loaded 
+			# options loaded
 			return false;
 		}
-		
-		$dbr = self::getCentralDB();		
+
+		$dbr = self::getCentralDB();
 		$res = $dbr->select(
 			'`user_properties`',
 			'*',
@@ -173,7 +176,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			$this->mOptionOverrides[$row->up_property] = $row->up_value;
 			$this->mOptions[$row->up_property] = $row->up_value;
 		}
-		
+
 		wfDebug( __METHOD__ . ": number of mOptions = " . count($this->mOptions) . " \n" );
 	}
 
@@ -182,7 +185,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * @param boolean $recache Force a load from the database then save back to the cache
 	 */
 	protected function loadState( $recache = false ) {
-		wfDebug( __METHOD__ . ": id = " . @$this->mGlobalId . ", name : " . @$this->mName . " \n" );		
+		wfDebug( __METHOD__ . ": id = " . @$this->mGlobalId . ", name : " . @$this->mName . " \n" );
 		if ( $recache ) {
 			wfDebug( __METHOD__ . ": Reset state so take data from DB \n" );
 			$this->resetState();
@@ -298,7 +301,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			$this->mEmail = '';
 			$this->mEmailAuthenticated = false;
 		}
-		
+
 		wfDebug( __METHOD__ . ": loadFromRow: {$this->mGlobalId} \n" );
 	}
 
@@ -322,8 +325,8 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			return false;
 		}
 		$this->loadFromCacheObject( $cache, $fromMaster );
-		
-		wfDebug( __METHOD__ . ": cache: " . print_r($cache, true) . " , fromMaster: {$fromMaster} \n" );			
+
+		wfDebug( __METHOD__ . ": cache: " . print_r($cache, true) . " , fromMaster: {$fromMaster} \n" );
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -391,11 +394,11 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 */
 	protected function getCacheKey() {
 		global $wgWikiaCentralAuthMemcPrefix;
-		
+
 		if ( isset($this->mGlobalId) ) {
 			$memcKey = wfMemcKey( 'user', 'id', $this->mGlobalId );
-		} else {		
-			$memcKey = wfMemcKey($wgWikiaCentralAuthMemcPrefix . md5( $this->mName )); 
+		} else {
+			$memcKey = wfMemcKey($wgWikiaCentralAuthMemcPrefix . md5( $this->mName ));
 		}
 
 		return $memcKey;
@@ -485,7 +488,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * @private
 	 */
 	function decodeOptions( $str ) {
-		
+
 		if ( !empty($this->mOptionOverrides) ) {
 			# already loaded
 			//return true;
@@ -493,10 +496,10 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 
 		$this->mOptionOverrides = array();
 		$this->mOptions = array();
-		
+
 		# use user_preferences table
 		$this->loadOptions();
-		
+
 		# preferences not found - use user_options
 		if ( empty( $this->mOptions ) ) {
 			$a = explode( "\n", $str );
