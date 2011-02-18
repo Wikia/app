@@ -12,18 +12,21 @@ $("a.close").click( function(e) {
 	e.preventDefault();
 	var id = $(this).parent().attr("id");
 	$.confirm( {content:'<?php echo wfMsg('adss-cancel-confirmation'); ?>', width:300, onOk:function() {
-		$.getJSON( wgScript, {
-			'action': 'ajax',
-			'rs': 'AdSS_ManagerController::closeAdAjax',
-			'rsargs[0]': id
-			}, function( response ) {
+		$.post( wgScript,
+			{
+				'action': 'ajax',
+				'rs': 'AdSS_ManagerController::closeAdAjax',
+				'rsargs[0]': id
+			},
+			function( response ) {
 				if( response.result == "success" ) {
 					var cur = $('span#'+response.id);
 					cur.closest("tr").remove();
 				} else {
 					alert(response.respmsg);
 				}
-			}
+			},
+			"json"
 		);
 	} } );
 } );
@@ -31,11 +34,13 @@ $("a.close").click( function(e) {
 $("a.edit").click( function(e) {
 	e.preventDefault();
 	var id = $(this).parent().attr("id");
-	$.getJSON( wgScript, {
-		'action': 'ajax',
-		'rs': 'AdSS_ManagerController::getAdAjax',
-		'rsargs[0]': id,
-		}, function( response ) {
+	$.post( wgScript,
+		{
+			'action': 'ajax',
+			'rs': 'AdSS_ManagerController::getAdAjax',
+			'rsargs[0]': id,
+		},
+		function( response ) {
 			var json = response.ad;
 			var dialog = $(".ad-edit-form").clone().show().makeModal({persistent: false, width:600});
 			var url = dialog.find("input[name='url']");
@@ -65,7 +70,8 @@ $("a.edit").click( function(e) {
 			dialog.find(".cancel, .ok").click(function(evt){
 				dialog.closeModal();
 			});
-		}
+		},
+		"json"
 	);
 } );
 
