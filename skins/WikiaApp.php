@@ -42,15 +42,11 @@ class SkinWikiaApp extends SkinTemplate {
 		global $wgHooks, $wgUseSiteCss, $wgRequest, $wgCookiePrefix;
 		
 		//this will force the skin after the first visit, only for selected mobile platforms
-		if( empty( $_COOKIE[ $wgCookiePrefix . self::COOKIE_NAME ] ) ) {
-			$user_agent = $_SERVER['HTTP_USER_AGENT'];
-			
-			if (
-				/*preg_match('/ipad/i',$user_agent) ||*/
-				preg_match( '/ipod/i', $user_agent ) ||
-				preg_match( '/iphone/i', $user_agent ) ||
-				preg_match( '/android/i', $user_agent )
-			) {
+		if( empty( $_COOKIE[ $wgCookiePrefix . self::COOKIE_NAME ] ) ) {	
+			$mobServ = MobileService::getInstance();
+		
+			//iPad should be served the default skin, not the mobile one
+			if ( $mobServ->isMobile() && !$mobServ->isIPad() ) {
 				$wgRequest->response()->setcookie( self::COOKIE_NAME, 1, time() + self::COOKIE_DURATION );
 			}
 		}
