@@ -144,7 +144,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 */
 	public function execute( $subpage ) {
 		global $wgRequest, $wgAuth, $wgUser, $wgOut, $wgDevelEnvironment,
-			$wgContLanguageCode, $wgContLang;
+			$wgContLanguageCode, $wgContLang, $wgABTests;
 
 		wfLoadExtensionMessages( "AutoCreateWiki" );
 
@@ -156,6 +156,13 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mPosted       = $wgRequest->wasPosted();
 		$this->mPostedErrors = array();
 		$this->mErrors       = 0;
+		
+		// if creation is in english and it's in ABTest, redirect to the new one
+		if($this->mLang == 'en' && isset($wgABTests) && in_array('createnewwiki', $wgABTests)) {
+			$cnwTitle = Title::newFromText("CreateNewWiki", NS_SPECIAL);
+			$wgOut->redirect($cnwTitle->getFullURL());
+			return;
+		}
 
 		$this->setHeaders();
 
