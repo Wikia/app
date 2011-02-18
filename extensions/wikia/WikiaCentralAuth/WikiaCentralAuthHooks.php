@@ -396,6 +396,12 @@ class WikiaCentralAuthHooks {
 		return true;
 	}
 
+	/**
+	 * hook definition for 'UserLoadFromSessionInfo'
+	 *
+	 * @static
+	 * @access public
+	 */
 	static function onUserLoadFromSessionInfo( $oUser, $from ) {
 		wfDebug( __METHOD__ . " load from session data for user: {$oUser->getName()} \n");
 
