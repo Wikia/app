@@ -40,7 +40,7 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 	public function listWikis(){
 		wfProfileIn( __METHOD__ );
 		
-		$this->track(array( 'list_games' ));
+		$this->track( array( 'list_games' ) );
 		
 		$ret = $this->mModel->getWikisList();
 		
@@ -61,7 +61,7 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 		wfProfileIn( __METHOD__ );
 		global $wgDBname;
 		
-		$this->track(array( 'list_wiki_contents', $wgDBname ));
+		$this->track( array( 'list_wiki_contents', $wgDBname ) );
 		
 		$ret = $this->mModel->getWikiContents();
 		
@@ -82,7 +82,7 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 		global $wgDBname;
 		$entry = $this->getRequest()->getText('entry');
 		
-		$this->track(array( 'list_category_contents', $wgDBname, $entry ));
+		$this->track( array( 'list_category_contents', $wgDBname, $entry ) );
 		
 		$ret = $this->mModel->getCategoryContents( $this->getRequest()->getText('entry') );
 		
@@ -102,7 +102,7 @@ class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 		wfProfileIn( __METHOD__ );
 		global $wgDBname;
 		
-		$this->track(array( 'local_search', $wgDBname ));
+		$this->track( array( 'local_search', $wgDBname ) );
 		
 		$ret = $this->mModel->getLocalSearchResults( $this->getRequest()->getText('term') );
 		
