@@ -243,12 +243,15 @@ CKEDITOR.plugins.add('rte-media',
 			$(this).css('backgroundPosition', '5px ' + parseInt($(this).attr('height') + 10)  + 'px');
 		});
 
-		// images / videos specific setup
+		// images / videos / poll specific setup
 		var image = media.filter('img.image');
 		self.setupImage(image);
 
 		var video = media.filter('img.video');
 		self.setupVideo(video);
+
+		var poll = media.filter('img.placeholder-poll');
+		self.setupPoll(poll);
 
 		// RT #69635
 		if (RTE.config.disableDragDrop) {
@@ -273,6 +276,15 @@ CKEDITOR.plugins.add('rte-media',
 
 			// call VideoEmbedTool and provide VET with video clicked
 			RTE.tools.callFunction(window.VET_show,$(this));
+		});
+	},
+
+	// poll specific setup
+	setupPoll: function(poll) {
+		poll.bind('edit.media', function(ev) {
+			RTE.log('poll clicked');
+
+			CreateWikiaPoll.showEditor(ev);
 		});
 	},
 
