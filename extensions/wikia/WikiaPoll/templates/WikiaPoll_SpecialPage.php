@@ -1,4 +1,4 @@
-<section class="CreateWikiaPoll" id="CreateWikiaPoll">
+<div class="CreateWikiaPoll" id="CreateWikiaPoll">
 
 	<h1><?= wfMsg('wikiapoll-createpoll-headline') ?></h1>
 	
@@ -48,4 +48,4 @@
 	</div>
 	
 	</form>
-</section>
+</div>
