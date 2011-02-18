@@ -1,6 +1,9 @@
-<div class='warningBox' >
-	<img src="/extensions/wikia/WikiaLabs/images/cross-16-ns.png">	
-	<?php echo wfMsg('wikialabs-list-project-warning-box'); ?>
+<div class='warningBox' >	
+	<?php if($isAdmin): ?>
+		<?php echo wfMsg('wikialabs-list-project-warning-box'); ?>
+	<?php else: ?>
+		<?php echo wfMsg('wikialabs-list-project-warning-box-no-admin'); ?>
+	<?php endif; ?>
 </div>
 <ul class="wikiaLabsMainView">
 	<?php foreach($projects as $value):   $data = $value->getData();  ?>
@@ -11,23 +14,24 @@
 			 	<?php echo $data['description']; ?>
 			</span>
 			<span class='buttons'>
-				<span data-id="<?php echo $value->getId(); ?>" class='slider <?php echo $value->isEnabled($cityId) ? "on":""; ?>'>
-					<span class='button  <?php echo $value->isEnabled($cityId) ? "on":""; ?>'>
-					</span> 
-					<span class="textoff  <?php echo $value->isEnabled($cityId) ? "on":""; ?>"><?php echo wfMsg('wikialabs-list-project-inactive'); ?></span>
-					<span class="texton  <?php echo $value->isEnabled($cityId) ? "on":""; ?>" ><?php echo wfMsg('wikialabs-list-project-active'); ?></span>
-					<?php if($data['enablewarning']): ?>
-						<div class="warning" style="display:none" >
-						<h1><?php echo wfMsg( 'wikialabs-list-project-warning' ); ?></h2>
-							<?php echo $data['warning']; ?>
-							<div class="buttons">
-								<button type="button" class="secondary cancelbutton" id="cancelProject"><?php echo wfMsg('wikialabs-list-project-warning-cancel'); ?></button>
-								<button class="okbutton" ><?php echo wfMsg('wikialabs-list-project-warning-ok'); ?></button>
+				<?php if($isAdmin): ?>
+					<span data-id="<?php echo $value->getId(); ?>" class='slider <?php echo $value->isEnabled($cityId) ? "on":""; ?>'>
+						<span class='button  <?php echo $value->isEnabled($cityId) ? "on":""; ?>'>
+						</span> 
+						<span class="textoff  <?php echo $value->isEnabled($cityId) ? "on":""; ?>"><?php echo wfMsg('wikialabs-list-project-inactive'); ?></span>
+						<span class="texton  <?php echo $value->isEnabled($cityId) ? "on":""; ?>" ><?php echo wfMsg('wikialabs-list-project-active'); ?></span>
+						<?php if($data['enablewarning']): ?>
+							<div class="warning" style="display:none" >
+							<h1><?php echo wfMsg( 'wikialabs-list-project-warning' ); ?></h2>
+								<?php echo $data['warning']; ?>
+								<div class="buttons">
+									<button type="button" class="secondary cancelbutton" id="cancelProject"><?php echo wfMsg('wikialabs-list-project-warning-cancel'); ?></button>
+									<button class="okbutton" ><?php echo wfMsg('wikialabs-list-project-warning-ok'); ?></button>
+								</div>
 							</div>
-						</div>
-					<?php endif;?>
-				</span>
-	
+						<?php endif;?>
+					</span>
+				<?php endif; ?>
 				<a class="wikia-button secondary feedback" data-user-feedback="<?php echo $value->getRatingByUser( $userId ); ?>"  data-id="<?php echo $value->getId(); ?>" >
 					<img src="/extensions/wikia/WikiaLabs/images/star-inactive.png">
 					<?php echo wfMsg('wikialabs-list-project-add-give-feedback'); ?>

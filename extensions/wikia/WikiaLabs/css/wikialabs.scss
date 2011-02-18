@@ -69,12 +69,13 @@ $margin-images: 10px;
     				padding: 0;
     				width: 20px;
 				}
-    		}
+    		} 
     		.active {
     		    display: block;
     			font-size: 11px;
     			.wikia-button{ 
     			    padding-left: 3px;
+    			    cursor :default;
     				padding-right: 3px;
     				margin-right: 6px;
     			}

@@ -9,15 +9,17 @@ class WikiaLabsSpecial extends SpecialPage {
 		$this->app = WF::build( 'App' );
 		$this->out = $this->app->getGlobal('wgOut');
 		$this->user = $this->app->getGlobal('wgUser');
-		parent::__construct( 'WikiaLabs', 'wikialabsuser' );
+		parent::__construct( 'WikiaLabs' );
 	}
-	
+
 	function execute( $par ) {
-		if ( !$this->userCanExecute( $this->user ) ) {
+
+		if ( $this->user->getId() == 0 ) {
 			$this->displayRestrictionError($this->user);
 			return ;
 		}
 		
+		//wikialabs-list-project-warning-box-no-admin
 		$oTmpl = WF::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
 		$projects = WF::build( 'WikiaLabsProject')->getList(array("graduated" => false, "active" => true  )  );
 		$userId = $this->user->getId();
@@ -36,11 +38,18 @@ class WikiaLabsSpecial extends SpecialPage {
 				$value->update();
 			} 
 		} 
-
+		
+		$this->isAdmin = false;
+		
+		if( $this->user->isAllowed( 'wikialabsuser' ) ) {
+			$this->isAdmin = true;
+		}
+		
 		$oTmpl->set_vars( array(
 			'projects' => $projects,
 			'cityId' => $this->app->getGlobal( 'wgCityId' ),
 			'userId' => $userId,
+			'isAdmin' => $this->isAdmin,
 			'contLang' => $this->app->getGlobal( 'wgContLang' ),
 		) );
 		
