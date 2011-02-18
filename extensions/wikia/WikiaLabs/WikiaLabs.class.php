@@ -76,7 +76,8 @@ class WikiaLabs {
 	}
 
 	public function saveFeedback( $projectId, User $user, $rating, $message ) {
-		if(!$user->isAllowed( 'wikialabsuser' )) {
+		
+		if ( $this->user->getId() == 0 ) {
 			return array();
 		}
 

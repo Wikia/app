@@ -32,7 +32,9 @@ $messages['en'] = array(
 	'wikialabs-list-project-warning-ok' => 'Yes, deactivate',
 	'wikialabs-list-project-warning-cancel' => 'Cancel',
 	'wikialabs-list-project-currently-active' => 'active',
-	'wikialabs-list-project-warning-box' => 'Projects in Wikia Labs are experimental and should no be used for mission critical features on any wiki.<br>They may <b>change</b>, <b>break</b>, or <b>disappear</b> at any time.',
+	'wikialabs-list-project-warning-box' => "Try out some ideas we're playing with and share your feedback with us. <br><br> Keep in mind that we're still working on these. You may find glitches and bugs and features may <b>change</b>, <b>break</b> or <b>disappear</b>. It's all in good fun! ",
+	'wikialabs-list-project-warning-box-no-admin' => "WikiaLabs allows Admins to try out beta features on the wiki. <br><br> Keep in mind that we're still working on these features. You may find glitches and bugs and features may <b>change</b>, <b>break</b> or <b>disappear</b>.<br><br> If you have any feedback for the team please let us know by clicking the 'Give Feedback' Button.  Thanks.",
+
 	'wikialabs-graduates-tile' => 'Graduates of Wikia Labs',
 	
 	'wikialabs-staff-title' => 'Labs Staff Control',
