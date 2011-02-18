@@ -103,9 +103,9 @@ class AutoCreateWikiLocalJob extends Job {
 		$this->sendRevisionToScribe();
 		$this->addStarterImagesToUploadLog();
 
-		if(class_exists(AchProcessor)) {
-			$ap = new AchProcessor();
-			$ap->giveCustomBadge($this->mFounder, BADGE_CREATOR);
+		if(class_exists(AchAwardingService)) {
+			$achService = new AchAwardingService();
+			$achService->awardCustomNotInTrackBadge( $this->mFounder, BADGE_CREATOR );
 		}
 
 		/**
