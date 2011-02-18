@@ -1,4 +1,5 @@
 == Changes since release-008 ==
+* fb#2647: Update jQuery to v1.5 and remove old versions from our repo (macbre)
 * fb#2466: Sometimes comments didn't add or update properly (owen)
 * fb#2182: Moved Summary in User_talk pages (Jakub)
 
