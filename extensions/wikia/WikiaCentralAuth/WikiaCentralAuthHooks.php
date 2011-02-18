@@ -84,7 +84,7 @@ class WikiaCentralAuthHooks {
 		}
 
 		wfDebug( __METHOD__ . ": User from session: $sName \n " );
-		
+
 		if ( empty( $sName ) ) {
 			wfDebug( __METHOD__ .": username doesn't exists \n" );
 			wfProfileOut( __METHOD__ );
@@ -97,7 +97,7 @@ class WikiaCentralAuthHooks {
 		if ( empty($localId) ) {
 			$localId = $oCUser->idFromName();
 		}
-		
+
 		if ( empty($_SESSION['wsUserId']) && !empty($localId) ) {
 			$_SESSION['wsUserId'] = $localId;
 		}
@@ -396,7 +396,7 @@ class WikiaCentralAuthHooks {
 		return true;
 	}
 
-	static function onUserLoadFromSessionInfo( &$oUser, $from ) {
+	static function onUserLoadFromSessionInfo( $oUser, $from ) {
 		wfDebug( __METHOD__ . " load from session data for user: {$oUser->getName()} \n");
 
         if ( wfReadOnly() ) {
@@ -468,7 +468,7 @@ class WikiaCentralAuthHooks {
 		if ( !$oUser instanceof User ) {
 			return true;
 		}
-		
+
 		wfDebug( __METHOD__ . ": Load from central database user: {$oUser->getName()} \n" );
 		$userName = $oUser->mName;
 		if ( User::isValidUserName($userName) ) {
