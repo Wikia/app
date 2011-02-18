@@ -154,9 +154,9 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * load row by id
 	 */
 	private function loadOptions( ) {
-		wfDebug( __METHOD__ . ": mOptions = " . count($this->mOptions) . " \n" );		
+		wfDebug( __METHOD__ . ": mOptions = " . ( ( isset($this->mOptions) ) ? count($this->mOptions) : 0 ) . " \n" );		
 				
-		if ( !empty($this->mOptions) ) {
+		if ( isset($this->mOptions) && !empty($this->mOptions) ) {
 			# options loaded 
 			return false;
 		}
@@ -392,7 +392,11 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	protected function getCacheKey() {
 		global $wgWikiaCentralAuthMemcPrefix;
 		
-		$memcKey = wfMemcKey($wgWikiaCentralAuthMemcPrefix . md5( $this->mName )); 
+		if ( isset($this->mGlobalId) ) {
+			$memcKey = wfMemcKey( 'user', 'id', $this->mGlobalId );
+		} else {		
+			$memcKey = wfMemcKey($wgWikiaCentralAuthMemcPrefix . md5( $this->mName )); 
+		}
 
 		return $memcKey;
 	}
