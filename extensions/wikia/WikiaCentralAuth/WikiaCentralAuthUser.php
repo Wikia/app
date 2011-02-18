@@ -491,7 +491,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		$this->mOptions = array();
 		
 		# use user_preferences table
-		//$this->loadOptions();
+		$this->loadOptions();
 		
 		# preferences not found - use user_options
 		if ( empty( $this->mOptions ) ) {
@@ -538,7 +538,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		#---
 		list( $salt, $password ) = $this->saltedPassword( $password, $this->mGlobalId );
 		#---
-		$user_options = $this->encodeOptions($options);
+		$user_options = ''; #$this->encodeOptions($options);
 		#---
 		$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
 		#---
@@ -587,7 +587,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			'user_password' => $this->mPassword,
 			'user_newpassword' => $this->mNewpassword,
 			'user_email' => $this->mEmail,
-			'user_options' => $this->encodeOptions($this->mOptions),
+			'user_options' => '', #$this->encodeOptions($this->mOptions),
 			'user_token' => $this->mToken,
 			'user_email_authenticated' => $dbw->timestampOrNull( $this->mEmailAuthenticated ),
 			'user_email_token' => $this->mEmailToken,
@@ -1000,7 +1000,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		 		'user_email' => $this->mEmail,
 		 		'user_email_authenticated' => $dbw->timestampOrNull( $this->mEmailAuthenticated ),
 				//'user_options' => $this->encodeOptions($this->mOptionOverrides),
-				'user_options' => $this->encodeOptions($this->mOptions),
+				'user_options' => '', #$this->encodeOptions($this->mOptions),
 				'user_touched' => $dbw->timestamp($this->mTouched),
 				'user_token' => $this->mToken,
 				'user_email_token' => $this->mEmailToken,
