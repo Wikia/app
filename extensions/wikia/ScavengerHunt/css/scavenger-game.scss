@@ -5,6 +5,7 @@
 }
 
 .scavenger-hidden-image {
+	cursor: pointer;
 	position: absolute;
 	z-index: 1100;
 }
@@ -22,35 +23,46 @@
 	text-align: right;
 }
 
-#scavengerClueModal, #scavengerEntryFormModal, #scavengerGoodbyeModal {
+.scavenger-clue-text {
+	font-size: 18px;
+	span {
+		color: $color-links;
+		display: inline-block;
+		margin-bottom: 16px;
+	}
+}
+
+.scavenger-clue-button {
+	padding-top: 20px;
+	text-align: right;
+
+	a.button, input.wikia-button {
+		font-size: 18px;
+		height: auto;
+		padding: 10px;
+	}
+}
+
+#scavengerClueModal, #scavengerGoodbyeModal {
 	h1, .modalContent {
 		border: none;
 		margin-left: 100px;
+		padding: 10px;
+	}
+}
+
+#scavengerEntryFormModal {
+	h1, .modalContent {
+		border: none;
+		padding: 10px;
 	}
 
-	.scavenger-clue-text {
-		font-size: 18px;
-
-		span {
-			color: $color-links;
-			display: inline-block;
-			margin-bottom: 16px;
-		}
-	}
-
-	.scavenger-clue-button {
-		padding-top: 20px;
-		text-align: right;
-
-		a.button, input.wikia-button {
-			font-size: 18px;
-			height: auto;
-			padding: 10px;
-		}
+	.scavenger-clue-question, label {
+		font-size: 16px;
+		margin-bottom: 4px;
 	}
 
 	.scavenger-entry-form {
-		margin-top: 10px;
 		&>textarea, &>input, &>label {
 			display: block;
 		}
@@ -62,11 +74,5 @@
 				border-color: $color-links;
 			}
 		}
-	}
-}
-
-#scavengerEntryFormModal {
-	.scavenger-clue-text {
-		color: $color-links;
 	}
 }
