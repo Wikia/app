@@ -9,12 +9,14 @@ $("a.accept").click( function(e) {
 	e.preventDefault();
 	var id = $(this).parent().attr("id");
 	$.confirm( {content:'Are you sure you want to accept this ad?', width:300, onOk:function() {
-		$.getJSON( wgScript, {
-			'action': 'ajax',
-			'rs': 'AdSS_AdminController::acceptAdAjax',
-			'rsargs[0]': id,
-			'rsargs[1]': token
-			}, function( response ) {
+		$.post( wgScript,
+			{
+				'action': 'ajax',
+				'rs': 'AdSS_AdminController::acceptAdAjax',
+				'rsargs[0]': id,
+				'rsargs[1]': token
+			},
+			function( response ) {
 				if( response.result == "success" ) {
 					var cur = $('span#'+response.id);
 					cur.closest('tr').find('td.TablePager_col_ad_expires').html(response.expires);
@@ -22,7 +24,8 @@ $("a.accept").click( function(e) {
 				} else {
 					alert(response.respmsg);
 				}
-			}
+			},
+			"json"
 		);
 	} } );
 } );
