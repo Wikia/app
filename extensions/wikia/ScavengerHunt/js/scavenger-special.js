@@ -41,7 +41,7 @@ var SpecialScavengerHunt = {
 			}
 		});
 	},
-	
+
 	onDataChange: function(e) {
 		$('.scavenger-form input[name=enable]').attr('disabled','disabled');
 	},
@@ -68,13 +68,28 @@ var SpecialScavengerHunt = {
 			type: type
 		};
 
+		var id, showCloseButton;
+		switch (type) {
+			case 'scavenger-entry':
+				id = 'scavengerEntryFormModal';
+				showCloseButton = false;
+				break;
+			case 'scavenger-goodbye':
+				id = 'scavengerGoodbyeModal';
+				showCloseButton = true;
+				break;
+			default:
+				id = 'scavengerClueModal';
+				showCloseButton = false;
+		}
+
 		$.getJSON(wgScript, data, function(json) {
 			$.showModal(
 				json.title,
 				json.content,
 				{
-					id: 'scavengerClueModal',
-					showCloseButton: false,
+					id: id,
+					showCloseButton: showCloseButton,
 					width: 588,
 					callback: function() {
 						if (typeof FB == "object") {
