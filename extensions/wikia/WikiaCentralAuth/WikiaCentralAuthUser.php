@@ -348,7 +348,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	protected function getCacheObject() {
 		$this->loadState();
 		$this->loadGroups();
-		//$this->loadOptions();
+		$this->loadOptions();
 
 		$obj = array();
 		foreach( self::$mCacheVars as $var ) {
