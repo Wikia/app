@@ -122,6 +122,7 @@ class User {
 		'mGroups',
 		// user_properties table
 		'mOptionOverrides',
+		'mOptions',
 	);
 
 	/**
@@ -287,7 +288,7 @@ class User {
 		}
 
 		# Try cache
-		$key = wfMemcKey( 'user', 'id', $this->mId );
+		$key = wfMemcKey( 'uuser', 'id', $this->mId );
 		$data = $wgMemc->get( $key );
 		if ( !is_array( $data ) || $data['mVersion'] < MW_USER_VERSION ) {
 			# Object is expired, load from DB
@@ -349,7 +350,7 @@ class User {
 			$data[$name] = $this->$name;
 		}
 		$data['mVersion'] = MW_USER_VERSION;
-		$key = wfMemcKey( 'user', 'id', $this->mId );
+		$key = wfMemcKey( 'uuser', 'id', $this->mId );
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
 	}
@@ -1823,7 +1824,7 @@ class User {
 		$this->load();
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
-			$wgMemc->delete( wfMemcKey( 'user', 'id', $this->mId ) );
+			$wgMemc->delete( wfMemcKey( 'uuser', 'id', $this->mId ) );
 			# not uncyclo
 			if( !empty( $wgSharedDB ) ) $wgMemc->delete( wfSharedMemcKey( "user_touched", $this->mId ) ); # Wikia
 		}
@@ -2685,7 +2686,7 @@ class User {
 				'user_real_name' => $this->mRealName,
 		 		'user_email' => $this->mEmail,
 		 		'user_email_authenticated' => $dbw->timestampOrNull( $this->mEmailAuthenticated ),
-				'user_options' => '',
+				'user_options' => $this->encodeOptions(),
 				'user_touched' => $dbw->timestamp( $this->mTouched ),
 				'user_token' => $this->mToken,
 				'user_email_token' => $this->mEmailToken,
@@ -2760,7 +2761,7 @@ class User {
 			'user_email' => $user->mEmail,
 			'user_email_authenticated' => $dbw->timestampOrNull( $user->mEmailAuthenticated ),
 			'user_real_name' => $user->mRealName,
-			'user_options' => '',
+			'user_options' => $user->encodeOptions(),
 			'user_token' => $user->mToken,
 			'user_registration' => $dbw->timestamp( $user->mRegistration ),
 			'user_editcount' => 0,
@@ -2801,7 +2802,7 @@ class User {
 				'user_email' => $this->mEmail,
 				'user_email_authenticated' => $dbw->timestampOrNull( $this->mEmailAuthenticated ),
 				'user_real_name' => $this->mRealName,
-				'user_options' => '',
+				'user_options' => $this->encodeOptions(),
 				'user_token' => $this->mToken,
 				'user_registration' => $dbw->timestamp( $this->mRegistration ),
 				'user_editcount' => 0,
@@ -3917,19 +3918,10 @@ class User {
 		} else {
 			wfDebug( "Loading options for user " . $this->getId() . " from database.\n" );
 			// Load from database
-			// wikia change, load always from first cluster when we use
-			// shared users database
-			// @author Krzysztof Krzyżaniak (eloy)
-			global $wgExternalSharedDB, $wgSharedDB;
-			if( isset( $wgSharedDB ) ) {
-				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-			}
-			else {
-				$dbr = wfGetDB( DB_SLAVE );
-			}
+			$dbr = wfGetDB( DB_SLAVE );
 
 			$res = $dbr->select(
-				'`user_properties`',
+				'user_properties',
 				'*',
 				array( 'up_user' => $this->getId() ),
 				__METHOD__
@@ -3952,14 +3944,7 @@ class User {
 		$extuser = ExternalUser::newFromUser( $this );
 
 		$this->loadOptions();
-		// wikia change
-		global $wgExternalSharedDB, $wgSharedDB;
-		if( isset( $wgSharedDB ) ) {
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-		}
-		else {
-			$dbw = wfGetDB( DB_MASTER );
-		}
+		$dbw = wfGetDB( DB_MASTER );
 
 		$insert_rows = array();
 
@@ -3994,8 +3979,8 @@ class User {
 		}
 
 		$dbw->begin();
-		$dbw->delete( '`user_properties`', array( 'up_user' => $this->getId() ), __METHOD__ );
-		$dbw->insert( '`user_properties`', $insert_rows, __METHOD__ );
+		$dbw->delete( 'user_properties', array( 'up_user' => $this->getId() ), __METHOD__ );
+		$dbw->insert( 'user_properties', $insert_rows, __METHOD__ );
 		$dbw->commit();
 	}
 
