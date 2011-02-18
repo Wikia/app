@@ -20,9 +20,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	/*private*/ var $mStateDirty = false;
 	/*private*/ var $mDelayInvalidation = 0;
 
-	private $mOptions;
-
-
 	static $mCacheVars = array(
 		'mGlobalId',
 		'mIsAttached',
@@ -164,6 +161,8 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			return false;
 		}
 
+		$this->mOptions = User::getDefaultOptions();
+
 		$dbr = self::getCentralDB();
 		$res = $dbr->select(
 			'`user_properties`',
@@ -177,7 +176,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			$this->mOptions[$row->up_property] = $row->up_value;
 		}
 
-		wfDebug( __METHOD__ . ": number of mOptions = " . count($this->mOptions) . " \n" );
+		wfDebug( __METHOD__ . ": number of mOptions = " . ( ( isset($this->mOptions) ) ? count($this->mOptions) : 0 ) . " \n" );
 	}
 
 	/**
