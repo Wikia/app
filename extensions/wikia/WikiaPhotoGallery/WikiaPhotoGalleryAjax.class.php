@@ -115,8 +115,8 @@ class WikiaPhotoGalleryAjax {
 	 * Return HTML with search results
 	 */
 	static public function getSearchResult() {
+		global $wgRequest;
 		wfProfileIn(__METHOD__);
-		global $wgRequest, $wgContentNamespaces;
 
 		$query = $wgRequest->getVal('query');
 		$results = WikiaPhotoGalleryHelper::getSearchResultThumbs($query);
