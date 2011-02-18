@@ -85,11 +85,6 @@ class TopListParser {
 
 			self::$mOutput = $template->execute( 'list' );
 
-			//Test code for PerSkinParserCache
-			if( in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaphone', 'SkinMonoBook' ) ) ) {
-				self::$mOutput .= '<!--// SPECIAL RENDERING FOR MOBILE/MONOBOOK //-->';
-			}
-
 			// remove whitespaces to avoid extra <p> tags
 			self::$mOutput = preg_replace("#[\n\t]+#", '', self::$mOutput);
 		}
