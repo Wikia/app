@@ -173,15 +173,19 @@ class ArticleComment {
 	}
 
 	public function getData($master = false) {
-		global $wgLang, $wgContLang, $wgUser, $wgParser, $wgOut, $wgTitle, $wgBlankImgUrl;
+		global $wgLang, $wgContLang, $wgUser, $wgParser, $wgOut, $wgTitle, $wgBlankImgUrl, $wgMemc;
 
 		wfProfileIn( __METHOD__ );
 
 		$comment = false;
 		if ( $this->load($master) ) {
 			$canDelete = $wgUser->isAllowed( 'delete' );
-
-			$text = $wgOut->parse( $this->mLastRevision->getText() );
+			$memckey = wfMemcKey( 'articlecomment', 'text', $this->mLastRevId );
+			$text = $wgMemc->get($memckey);
+			if (empty($text)) {
+				$text = $wgOut->parse( $this->mLastRevision->getText() );
+				$wgMemc->set($memckey, $text, 3600);
+			} 
 			$sig = ( $this->mUser->isAnon() )
 				? AvatarService::renderLink( $this->mUser->getName() )
 				: Xml::element( 'a', array ( 'href' => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
