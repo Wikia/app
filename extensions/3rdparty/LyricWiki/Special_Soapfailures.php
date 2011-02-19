@@ -223,7 +223,7 @@ function wfSoapFailures(){
 			$totFailures = 0;
 			if(!empty($data)){
 				$wgOut->addHTML("<table class='soapfailures'>\n");
-				$wgOut->addHTML("<tr><th nowrap='nowrap'>Requests</th><th>Artist</th><th>Song</th><th>Titles looked for</th><th>Fixed</th></tr>\n");
+				$wgOut->addHTML("<tr><th nowrap='nowrap'>".wfMsg('soapfailures-header-requests')."</th><th>".wfMsg('soapfailures-header-artist')."</th><th>".wfMsg('soapfailures-header-song')."</th><th>".wfMsg('soapfailures-header-looked-for')."</th><th>".wfMsg('soapfailures-header-fixed')."</th></tr>\n");
 				$REQUEST_URI = $_SERVER['REQUEST_URI'];
 				$rowIndex=0;
 				foreach($data as $row){
