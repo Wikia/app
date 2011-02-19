@@ -5,6 +5,7 @@ $(function() {
 var ThemeDesigner = {
 	slideByDefaultWidth: 760,
 	slideByItems: 5,
+	isSliding: false,
 
 	track: function(url) {
 		$.tracker.byStr('themedesigner/' + url);
@@ -64,35 +65,40 @@ var ThemeDesigner = {
 		// click handler for next and previous arrows in theme slider
 		$("#ThemeTab .previous, #ThemeTab .next").click(function(event) {
 			event.preventDefault();
-			var list = $("#ThemeTab .slider ul");
-			var arrow = $(this);
-			var slideTo = null;
-
-			// prevent disabled clicks
-			if(arrow.hasClass("disabled")) {
-				return;
+			if (!ThemeDesigner.isSliding) {
+				ThemeDesigner.isSliding = true;
+				var list = $("#ThemeTab .slider ul");
+				var arrow = $(this);
+				var slideTo = null;
+	
+				// prevent disabled clicks
+				if(arrow.hasClass("disabled")) {
+					return;
+				}
+	
+				// slide
+				if (arrow.hasClass("previous")) {
+					slideTo = parseInt(list.css("margin-left")) + slideBy;
+				} else {
+					slideTo = parseInt(list.css("margin-left")) - slideBy;
+				}
+				list.animate({marginLeft: slideTo}, "slow", function() {
+					ThemeDesigner.isSliding = false;
+				});
+	
+				// calculate which buttons should be enabled
+				if (slideTo == slideMax) {
+					$("#ThemeTab .next").addClass("disabled");
+					$("#ThemeTab .previous").removeClass("disabled");
+				} else if (slideTo == 0) {
+					$("#ThemeTab .next").removeClass("disabled");
+					$("#ThemeTab .previous").addClass("disabled");
+				} else {
+					$("#ThemeTab .next, #ThemeTab .previous").removeClass("disabled");
+				}
+	
+				ThemeDesigner.track('theme/arrow');
 			}
-
-			// slide
-			if (arrow.hasClass("previous")) {
-				slideTo = parseInt(list.css("margin-left")) + slideBy;
-			} else {
-				slideTo = parseInt(list.css("margin-left")) - slideBy;
-			}
-			list.animate({marginLeft: slideTo}, "slow");
-
-			// calculate which buttons should be enabled
-			if (slideTo == slideMax) {
-				$("#ThemeTab .next").addClass("disabled");
-				$("#ThemeTab .previous").removeClass("disabled");
-			} else if (slideTo == 0) {
-				$("#ThemeTab .next").removeClass("disabled");
-				$("#ThemeTab .previous").addClass("disabled");
-			} else {
-				$("#ThemeTab .next, #ThemeTab .previous").removeClass("disabled");
-			}
-
-			ThemeDesigner.track('theme/arrow');
 		});
 
 		// click handler for themes thumbnails
