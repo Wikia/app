@@ -228,6 +228,16 @@ class EditAccount extends SpecialPage {
 			$this->mUser->setRealName( CLOSED_ACCOUNT_FLAG );
 		}
 
+		// remove users avatar
+		if ( class_exists( WikiAvatar ) ) {
+			$avatar = new WikiaAvatar($this->mUser->getID());
+			if ( !$avatar->removeAllAvatarFile( $this->mUser->getID(), false ) ) {
+				$this->mStatusMsg = wfMsg( 'editaccount-error-close', $this->mUser->mName );
+				// Quit early on error, no use going forward
+				return false;
+			}
+		}
+
 		// Remove e-mail address
 		$this->mUser->setEmail( '' );
 		$this->mUser->invalidateEmail();

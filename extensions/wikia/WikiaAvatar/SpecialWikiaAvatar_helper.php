@@ -203,7 +203,7 @@ class WikiaAvatar {
 		return false;
 	}
 
-	public function removeAllAvatarFile($mUserID)
+	public function removeAllAvatarFile($mUserID, $logAction = true )
 	{
 		global $wgLogTypes, $wgUser;
 
@@ -226,12 +226,15 @@ class WikiaAvatar {
 			$wgLogTypes[] = 'avatar';
 		}
 
-		$aUser = User::newFromId($mUserID);
-		$userText =  $aUser->getName();
-		$userProfilePage = Title::newFromText( $userText, 207 );
-		$logPage = new LogPage( 'avatar' );
-		$logComment = "Remove {$userText}'s avatars by {$wgUser->getName()}";
-		$logPage->addEntry( 'avatar', $userProfilePage, $logComment);
+		if ( $logAction ) {
+			$aUser = User::newFromId($mUserID);
+			$userText =  $aUser->getName();
+			$userProfilePage = Title::newFromText( $userText, 207 );
+			$logPage = new LogPage( 'avatar' );
+			$logComment = "Remove {$userText}'s avatars by {$wgUser->getName()}";
+			$logPage->addEntry( 'avatar', $userProfilePage, $logComment);
+		}
+
 		return true;
 	}
 
