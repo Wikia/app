@@ -17,7 +17,7 @@
 					<input type="radio" value="<?= $n ?>" name="wpAnswer" />
 					<?= htmlspecialchars($answer['text']) ?>
 				</label>
-				<span class="bar" style="width: <?= $answer['bar-width'] ?>%">
+				<span class="bar" style="width: <?= $answer['percentage'] ?>%">
 					<span class="percentage"><?= $answer['percentage'] ?>%</span>
 					<span class="votes">
 <?php
