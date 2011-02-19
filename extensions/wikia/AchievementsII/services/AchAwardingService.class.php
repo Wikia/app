@@ -22,6 +22,12 @@ class AchAwardingService {
 		wfProfileOut(__METHOD__);
 	}
 
+	/*
+	 * awardCustomNotInTracBadge
+	 *
+	 * @param User $user
+	 * @param Int $badge_type_id
+	 */
 	public function awardCustomNotInTrackBadge($user, $badge_type_id) {
 		wfProfileIn(__METHOD__);
 
