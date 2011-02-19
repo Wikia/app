@@ -10,6 +10,12 @@ $messages['en'] = array(
 	'soapfailures-stats-period-today' => 'Today',
 	'soapfailures-stats-period-thisweek' => 'This week',
 	'soapfailures-stats-period-thismonth' => 'This month',
+	
+	'soapfailures-header-requests' => 'Requests',
+	'soapfailures-header-artist' => 'Artist',
+	'soapfailures-header-song' => 'Song',
+	'soapfailures-header-looked-for' => 'Titles looked for',
+	'soapfailures-header-fixed' => 'Fixed',
 
 	'soapfailures-mark-as-fixed' => 'Mark a song as fixed (does a test first):',
 	'soapfailures-fixed' => 'Fixed',
