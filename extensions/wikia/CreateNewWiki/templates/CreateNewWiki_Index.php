@@ -183,7 +183,8 @@
 		'name-wiki-submit-error':'<?= wfMsg('cnw-name-wiki-submit-error') ?>',
 		'desc-wiki-submit-error':'<?= wfMsg('cnw-desc-wiki-submit-error') ?>',
 		'currentstep':'<?= $currentStep ?>',
-		'skipwikiaplus':'<?= $skipWikiaPlus ?>'
+		'skipwikiaplus':'<?= $skipWikiaPlus ?>',
+		'descriptionplaceholder':'<?= wfMsg('cnw-desc-placeholder') ?>'
 	};
 	var themes = <?= Wikia::json_encode($wgOasisThemes) ?>;
 </script>

@@ -16,7 +16,7 @@ $messages['en'] = array(
 	'cnw-title' => 'Create New Wiki',
 	// step1 - create a wiki
 	'cnw-name-wiki-headline' => 'Start a Wiki',
-	'cnw-name-wiki-creative' => 'Wiki is the best place to build a website and grow a community around what you love.',
+	'cnw-name-wiki-creative' => 'Wikia is the best place to build a website and grow a community around what you love.',
 	'cnw-name-wiki-label' => 'Name your wiki',
 	'cnw-name-wiki-wiki' => 'Wiki',
 	'cnw-name-wiki-domain-label' => 'Give your wiki an address',
@@ -51,12 +51,12 @@ $messages['en'] = array(
 	'cnw-desc-lang' => 'Language',
 	'cnw-desc-wiki-submit-error' => 'Please choose a category',
 	// step4 - select theme
-	'cnw-theme-headline' => 'Design your wiki',
+	'cnw-theme-headline' => 'Choose a theme',
 	'cnw-theme-creative' => 'Choose a theme below, you\'ll be able to see a preview of each theme as you select it.',
 	'cnw-theme-instruction' => 'You can also design your own theme later by going to "My Tools".',
 	// step5 - upgrade
 	'cnw-upgrade-headline' => 'Do you want to upgrade?',
-	'cnw-upgrade-creative' => 'Upgrading to Wikia Plus allows you to remove ads from <span class="wiki-name"></span>, a one time offer only available to new founders',
+	'cnw-upgrade-creative' => 'Upgrading to Wikia Plus allows you to remove ads from <span class="wiki-name"></span>, a one time offer only available to new founders.',
 	'cnw-upgrade-marketing' => 'Wikia Plus is a great solution for:<ul>
 			<li>Professional Wikis</li>
 			<li>Non-profits</li>
@@ -68,9 +68,9 @@ $messages['en'] = array(
 	'cnw-upgrade-now' => 'Upgrade Now',
 	'cnw-upgrade-decline' => 'No thanks, continue to my wiki',
 	// wiki welcome message
-	'cnw-welcome-headline' => 'Congratulations, you\'ve created $1',
-	'cnw-welcome-instruction1' => 'Now click the button below to start filling your wiki with info:',
-	'cnw-welcome-instruction2' => 'You will see this button throughout your wiki.<br>Use it any time you want to add a new page.',
+	'cnw-welcome-headline' => 'Congratulations!  $1 has been created',
+	'cnw-welcome-instruction1' => 'Click the button below to start adding pages to your wiki.',
+	'cnw-welcome-instruction2' => 'You\'ll see this button throughout your wiki, use it any time you want to add a new page.',
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
 );
 
