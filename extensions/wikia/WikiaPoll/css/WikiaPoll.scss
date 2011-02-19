@@ -47,6 +47,7 @@ $color-poll-odd: mix($color-text, $color-page, 10%);
 			}
 			.bar {
 				display: inline-block;
+				min-width: 10%;
 			}
 		}
 	}
