@@ -273,6 +273,9 @@ div#userloginErrorBox3 {
 		padding: 0;
 		resize: none;
 		width: 425px;
+		&.placeholder {
+			color: #aaa;
+		}
 	}
 	label {
 		margin-top: 10px;

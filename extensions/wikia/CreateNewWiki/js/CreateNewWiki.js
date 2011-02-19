@@ -141,6 +141,7 @@ var WikiBuilder = {
 				WikiBuilder.descWikiSubmitError.show().html(WikiBuilderCfg['desc-wiki-submit-error']).delay(3000).fadeOut();
 			}
 		});
+		$('#Description').placeholder();
 		
 		// Theme event handlers
 		$('#ThemeWiki nav .next').click(function() {
