@@ -132,7 +132,7 @@ var WikiBuilder = {
 			if(val) {
 				// call create wiki ajax
 				WikiBuilder.saveState({
-					wikiDescription: $('#Description').val()
+					wikiDescription: ($('#Description').val() == WikiBuilderCfg.descriptionplaceholder ? '' : $('#Description').val())
 				}, function() {
 					WikiBuilder.createWiki();
 					WikiBuilder.transition('DescWiki', true, '+');
