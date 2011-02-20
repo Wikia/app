@@ -153,7 +153,7 @@ $wgAdSS_pricingConf['low'] = array(
 				),
 			),
 		'site' => array(
-			'price'     => '5.00',
+			'price'     => '10.00',
 			'period'    => 'm', //monthly
 			'min-slots' => 5,
 			),
