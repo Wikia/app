@@ -46,7 +46,7 @@ class Wikify extends SpecialPage
 		foreach( $lines as $line )
 		{
 			$m = array();
-			if( 0 < preg_match("/^[0-9].*?\t([^\t]+?)( \([0-9]+:[0-9]+\)|$)/",$line,$m) )
+			if( 0 < preg_match("/^[0-9]*\s*([^\t]+?)\s*([0-9]+:[0-9]+|$)/",$line,$m) )
 			{
 				$result .= $this->formatTrack($m[1]);
 			}
@@ -260,5 +260,3 @@ function mb_ucwords($str) {
 	$str = mb_convert_case($str, MB_CASE_TITLE, "UTF-8");
 	return ($str);
 }
-
-?>
