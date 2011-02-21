@@ -9,12 +9,33 @@ import org.testng.annotations.Test;
 public class LatestPhotosTest extends BaseTest {
 	@Test(groups={"oasis","CI"})
 	public void testLatestPhotos() throws Exception {
-		loginAsRegular();
-		uploadImage(DEFAULT_UPLOAD_IMAGE_URL, "LatestPhotos1.gif");
-		uploadImage(DEFAULT_UPLOAD_IMAGE_URL, "LatestPhotos2.gif");
-		uploadImage(DEFAULT_UPLOAD_IMAGE_URL, "LatestPhotos3.gif");
-		uploadImage(DEFAULT_UPLOAD_IMAGE_URL, "LatestPhotos4.gif");
-
+		loginAsStaff();
+		
+		session().open("index.php?title=File:LatestPhotos1.png");
+		session().waitForPageToLoad(this.getTimeout());
+		doDeleteIfAllowed("SeleniumTest", "SeleniumTest");
+		uploadImage( "http://images.wikia.com/common/__cb33534/extensions/wikia/AchievementsII/images/badges/90/edit-1.png", "LatestPhotos1.png");
+		
+		session().open("index.php?title=File:LatestPhotos2.png");
+		session().waitForPageToLoad(this.getTimeout());
+		doDeleteIfAllowed("SeleniumTest", "SeleniumTest");
+		uploadImage( "http://images.wikia.com/common/__cb33534/extensions/wikia/AchievementsII/images/badges/90/edit-2.png", "LatestPhotos2.png");
+		
+		session().open("index.php?title=File:LatestPhotos3.png");
+		session().waitForPageToLoad(this.getTimeout());
+		doDeleteIfAllowed("SeleniumTest", "SeleniumTest");
+		uploadImage( "http://images.wikia.com/common/__cb33534/extensions/wikia/AchievementsII/images/badges/90/edit-3.png", "LatestPhotos3.png");
+		
+		session().open("index.php?title=File:LatestPhotos4.png");
+		session().waitForPageToLoad(this.getTimeout());
+		doDeleteIfAllowed("SeleniumTest", "SeleniumTest");
+		uploadImage( "http://images.wikia.com/common/__cb33534/extensions/wikia/AchievementsII/images/badges/90/edit-4.png", "LatestPhotos4.png");
+		
+		session().open("index.php?title=File:LatestPhotos5.png");
+		session().waitForPageToLoad(this.getTimeout());
+		doDeleteIfAllowed("SeleniumTest", "SeleniumTest");
+		uploadImage( "http://images.wikia.com/common/__cb33534/extensions/wikia/AchievementsII/images/badges/90/edit-5.png", "LatestPhotos5.png");
+		
 		session().open("index.php?title=Special:Random");
 		session().waitForPageToLoad(this.getTimeout());
 
