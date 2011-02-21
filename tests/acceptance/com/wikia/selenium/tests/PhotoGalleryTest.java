@@ -14,6 +14,8 @@ import org.testng.annotations.Test;
 
 public class PhotoGalleryTest extends BaseTest {
 	private static final String testArticleName = "WikiaPhotoGalleryTest";
+	private static final String protectedArticleName = "ProtectedArticle";
+	private static final String protectedImageName = "ProtectedImage.gif";
 
 	// let's create an article on which view mode tests will be performed
 	private void prepareTestArticle() throws Exception {
@@ -187,7 +189,25 @@ public class PhotoGalleryTest extends BaseTest {
 	@Test(groups={"CI","envProduction"})
 	public void testImageSearch() throws Exception {
 		loginAsStaff();
-		uploadImage();
+		
+		// prepare test data
+		uploadImage(DEFAULT_UPLOAD_IMAGE_URL, protectedImageName);
+		session().open("index.php?title=File:" + protectedImageName + "&action=protect");
+		session().waitForPageToLoad(this.getTimeout());
+		session().select("mwProtect-level-edit", "label=Administrators only");
+		session().type("mwProtect-reason", "Test");
+		session().uncheck("mwProtectWatch");
+		session().click("mw-Protect-submit");
+		session().waitForPageToLoad(this.getTimeout());
+
+		editArticle(protectedArticleName, "[[File:" + protectedImageName + "|thumb]]");
+		session().open("index.php?title=" + protectedArticleName + "&action=protect");
+		session().waitForPageToLoad(this.getTimeout());
+		session().select("mwProtect-level-edit", "label=Administrators only");
+		session().type("mwProtect-reason", "Test");
+		session().uncheck("mwProtectWatch");
+		session().click("mw-Protect-submit");
+		session().waitForPageToLoad(this.getTimeout());
 
 		// go to edit page
 		session().open("index.php?title=" + PhotoGalleryTest.testArticleName + "&action=edit&useeditor=mediawiki");
@@ -213,7 +233,7 @@ public class PhotoGalleryTest extends BaseTest {
 		waitForElementVisible("WikiaPhotoGallerySearchResults");
 
 		// search for images on wiki's main page
-		session().type("//form[@id='WikiaPhotoGallerySearch']//input[@type='text']", "Chopin10-hp.gif");
+		session().type("//form[@id='WikiaPhotoGallerySearch']//input[@type='text']", protectedArticleName);
 		session().click("//form[@id='WikiaPhotoGallerySearch']//button");
 		waitForElement("//ul[@type='results']//li");
 

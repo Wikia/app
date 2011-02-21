@@ -418,10 +418,14 @@ public class BaseTest {
 		if(session().isElementPresent(xpath)){
 			session().click(xpath);
 			session().waitForPageToLoad(this.getTimeout());
-			session().select("wpDeleteReasonList", reasonGroup);
+			session().select("wpDeleteReasonList", "label=regexp:.*"+reasonGroup);
 			session().type("wpReason", reason);
 			session().uncheck("wpWatch");
-			session().click("wpConfirmB");
+			if (session().isElementPresent("wpConfirmB")) {
+				session().click("wpConfirmB");
+			} else {
+				session().click("mw-filedelete-submit");
+			}
 			session().waitForPageToLoad(this.getTimeout());
 		}
 	}

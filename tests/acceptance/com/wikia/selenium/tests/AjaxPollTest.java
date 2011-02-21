@@ -9,7 +9,7 @@ import static org.testng.AssertJUnit.assertEquals;
 
 public class AjaxPollTest extends BaseTest {
 
-	@Test(groups={"oasis"})
+	@Test(groups={"oasis", "CI"})
 	public void testAjaxPoll() throws Exception {
 		String uniqId = "Wikia test poll #" + UUID.randomUUID();
 		String pollContent = "\n" + uniqId + "\nAnswer 1\nAnswer 2\nAnswer n\n";
@@ -33,6 +33,6 @@ public class AjaxPollTest extends BaseTest {
 		assertEquals("1", session().getText("wpPollTotal" + pollId));
 
 		// clean up
-		doDeleteIfAllowed("label=regexp:.*Author request", "Clean up after test");
+		doDeleteIfAllowed("Author request", "Clean up after test");
 	}
 }
