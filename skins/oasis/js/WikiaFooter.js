@@ -170,7 +170,7 @@ WikiaFooterApp = {
 		initialize: function() {
 			this.el.find('.tools-customize').click($.proxy(this.openConfiguration,this));
 			this.menuGroup.add(this.el.find('li.menu'));
-			this.handleMore();
+			this.handleOverflowMenu();
 		},
 		
 		openConfiguration: function( evt ) {
@@ -179,20 +179,14 @@ WikiaFooterApp = {
 			conf.show();
 		},
 		
-		createMore: function () {
-			var caption = this.el.attr('data-more-caption') || 'more ...';
-			return $(
-				'<li class="menu disable-more more-menu">'
-				+'<span class="arrow-icon-ctr"><span class="arrow-icon arrow-icon-top"></span><span class="arrow-icon arrow-icon-bottom"></span></span>'
-				+'<a href="#">'+caption+'</a>'
-				+'<ul class="tools-menu"></ul>'
-				+'</li>'); 
+		buildOveflowItem: function () {
+			return this.el.find('.overflow-menu').css('display','');
 		},
 		
-		handleMore: function () {
+		handleOverflowMenu: function () {
 			var all = this.el.children('li');
-			var moreable = all.not('.disable-more');
-			var where = all.filter('.menu').last();
+			var moreable = all.filter('.overflow');
+			var where = moreable.last().next();
 			
 			var width = 0, mwidth = 0, fwidth = this.el.width();
 			all.each(function(i,v){width += $(v).outerWidth(true);});
@@ -202,7 +196,7 @@ WikiaFooterApp = {
 				return;
 			}
 			
-			var li_more = this.createMore();
+			var li_more = this.buildOveflowItem();
 			
 			if (where.exists()) where.before(li_more)
 			else this.el.append(li_more);
@@ -226,7 +220,7 @@ WikiaFooterApp = {
 		
 		load: function(html) {
 			this.el.children('li').not('.loadtime').remove();
-			this.el.append($(html));
+			this.el.prepend($(html));
 			this.initialize();
 		}
 		

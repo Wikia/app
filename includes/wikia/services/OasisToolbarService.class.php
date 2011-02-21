@@ -1,16 +1,16 @@
 <?php
 
 	abstract class ToolbarService {
-		
+
 		const PROMOTIONS_UPDATE_TTL = 1800;
-		
+
 		protected $name = '';
-		
+
 		public function __construct( $name ) {
 			$this->name = $name;
 		}
-		
-		
+
+
 		public function buildListItem( $id, $data = array() ) {
 			return array(
 				'type' => 'item',
@@ -18,7 +18,7 @@
 				'data' => $data,
 			);
 		}
-		
+
 		public function buildMenuListItem( $name, $items, $data = array() ) {
 			return array(
 				'type' => 'menu',
@@ -27,8 +27,8 @@
 				'items' => $items,
 			);
 		}
-		
-		
+
+
 		public function jsonToList( $json ) {
 			$result = array();
 			foreach ($json as $k => $v) {
@@ -48,7 +48,7 @@
 			}
 			return array_values($result);
 		}
-		
+
 		public function stringsToList( $data ) {
 			foreach ($data as $k => $v) {
 				if (!is_array($v)) {
@@ -60,7 +60,7 @@
 			}
 			return $data;
 		}
-		
+
 		public function instanceToJson( $data ) {
 			foreach ($data as $k => $v) {
 				$v = $v->getInfo();
@@ -69,14 +69,23 @@
 			}
 			return array_values($data);
 		}
-		
+
+		public function instanceToRenderData( $data ) {
+			foreach ($data as $k => $v) {
+				$v = $v->getRenderData();
+				if ($v) $data[$k] = $v;
+				else unset($data[$k]);
+			}
+			return array_values($data);
+		}
+
 		public function listToJson( $data ) {
 			$data = $this->stringsToList($data);
 			$data = $this->listToInstance($data);
 			$data = $this->instanceToJson($data);
 			return $data;
 		}
-		
+
 		public function listToInstance( $data ) {
 			$result = array();
 			foreach ($data as $k => $v) {
@@ -87,7 +96,7 @@
 					case 'menu':
 						$menu = $this->getUserCommandsService()->createMenu($v['id'],wfMsg('oasis-mytools'),array(
 							'imageSprite' => 'mytools',
-							'listItemClass' => 'disable-more mytools menu', 
+							'listItemClass' => 'mytools menu',
 						));
 						$submenu = $this->listToInstance($v['items']);
 						foreach ($submenu as $item)
@@ -96,9 +105,9 @@
 						break;
 				}
 			}
-			return $result;	
+			return $result;
 		}
-		
+
 		public function sortJsonByCaption( $data ) {
 			$assoc = array();
 			foreach ($data as $v)
@@ -106,8 +115,8 @@
 			ksort($assoc);
 			return array_values($assoc);
 		}
-		
-		
+
+
 		public function cleanList( $list ) {
 			foreach ($list as $k => $v) {
 				if (isset($v['items'])) {
@@ -117,21 +126,21 @@
 			return array_values($list);
 		}
 
-		
-		
+
+
 		static protected $navigationUrls = null;
-		
+
 		protected function getNavigationUrls() {
 			global $wgUser;
-			
+
 			if (is_null(self::$navigationUrls)) {
 				$skin = $wgUser->getSkin();
-				
+
 				if (!isset($skin->iscontent)) {
 					/* safe and slow version - possible side-efectes */
 					/*
 					global $wgForceSkin, $wgOut;
-	
+
 					$wgForceSkin = 'oasis';
 					ob_start();
 					$skin->outputPage($wgOut);
@@ -142,70 +151,70 @@
 					$skin->thispage = $skin->mTitle->getPrefixedDBkey();
 					$skin->loggedin = $wgUser->isLoggedIn();
 				}
-				
+
 				self::$navigationUrls = array(
 					'content_actions' => $skin->buildContentActionUrls(),
 					'nav_urls' => $skin->buildNavUrls(),
 				);
 			}
-			
+
 			return self::$navigationUrls;
 		}
 
 		protected $userCommandsService = null;
-		
+
 		protected function getUserCommandsService() {
 			if (empty($this->userCommandsService)) {
 				$this->userCommandsService = new UserCommandsService($this->getNavigationUrls());
 			}
 			return $this->userCommandsService;
 		}
-		
-		
+
+
 		protected function getToolbarOptionName() {
 			return $this->name.'-toolbar-contents';
 		}
 		protected function getPromotionsOptionName() {
 			return $this->name.'-toolbar-promotions';
 		}
-		
+
 		protected function getUpdatePromotionsKey() {
 			global $wgUser;
 			return wfMemcKey($this->name.'-toolbar','update-promotions',$wgUser->getId());
 		}
-		
+
 		public function getSeenPromotions() {
 			global $wgUser;
 			if ($wgUser->isAnon()) {
 				return array();
 			}
-			
+
 			$seenPromotions = $wgUser->getOption( $this->getPromotionsOptionName(), false );
 			$seenPromotions = $seenPromotions ? unserialize($seenPromotions) : array();
 			$promotionsDiff = array_intersect( $this->getPromotions(), $seenPromotions );
-			
+
 			return $promotionsDiff;
 		}
-		
+
 		protected function setSeenPromotions( $list ) {
 			global $wgUser;
-			
+
 			$wgUser->setOption( $this->getPromotionsOptionName(), serialize($list) );
 			$wgUser->saveSettings();
 			return true;
 		}
-		
+
 		protected function updatePromotions( $forceUpdate = false ) {
 			global $wgUser, $wgMemc;
 			if ($wgUser->isAnon()) {
 				return;
 			}
-			
+
 			$updated = $wgMemc->get($this->getUpdatePromotionsKey(),false);
 			if ($forceUpdate || empty($updated)) {
 				$seenPromotions = $this->getSeenPromotions();
 				$unseenPromotions = array_diff($this->getPromotions(),$seenPromotions);
-				
+
 				$list = $unseenPromotions;
 				$list = $this->stringsToList($list);
 				$list = $this->listToInstance($list);
@@ -214,7 +223,7 @@
 						unset($list[$k]);
 					}
 				}
-				
+
 				// User has unseen promoted tools
 				if (!empty($list)) {
 					$newItems = array();
@@ -225,12 +234,12 @@
 					$this->addItemsAndSave($newItems);
 					$this->setSeenPromotions($seenPromotions);
 				}
-				
+
 				$wgMemc->set($this->getUpdatePromotionsKey(),true,self::PROMOTIONS_UPDATE_TTL);
 			}
 		}
-		
-		
+
+
 		protected function addItemsAndSave( $items ) {
 			$items = $this->jsonToList( $this->instanceToJson($items) );
 			$data = $this->getCurrentList();
@@ -239,10 +248,10 @@
 			$data[$myToolsId]['items'] = array_merge($data[$myToolsId]['items'],$items);
 			$this->saveToolbarList($data);
 		}
-		
-		
+
+
 		protected $toolbarCache = null;
-		
+
 		protected function loadToolbarList() {
 			global $wgUser;
 			if (!$wgUser->isAnon()) {
@@ -255,57 +264,57 @@
 					}
 				}
 			}
-			
+
 			return false;
 		}
-		
+
 		protected function saveToolbarList( $list ) {
 			global $wgUser;
 			if ($wgUser->isAnon()) {
 				return false;
 			}
-			
+
 //			$list = $this->cleanList($list);
-			
+
 			$wgUser->setOption($this->getToolbarOptionName(),serialize($list));
 			$wgUser->saveSettings();
 			return true;
 		}
-		
+
 		public function load() {
 			return $this->loadToolbarList();
 		}
-		
+
 		public function save( $list ) {
 			return $this->saveToolbarList($list);
 		}
-		
+
 		public function clear() {
 			global $wgUser, $wgMemc;
 			$wgUser->setOption( $this->getPromotionsOptionName(), null );
 			$wgUser->setOption( $this->getToolbarOptionName(), null );
 			$wgUser->saveSettings();;
-			
+
 			$wgMemc->delete( $this->getUpdatePromotionsKey() );
 		}
-		
-		
-		
-		
+
+
+
+
 		abstract public function getCurrentList();
 		abstract public function getDefaultList();
-		
-		
+
+
 		abstract public function getPromotions();
 		abstract public function getAllOptionNames();
 		abstract public function getPopularOptionNames();
-		
+
 	}
-	
+
 	class OasisToolbarService extends ToolbarService {
-		
+
 		static protected $recursiveBarrier = 0;
-		
+
 		public function __construct() {
 			self::$recursiveBarrier++;
 			parent::__construct('oasis');
@@ -314,7 +323,7 @@
 			}
 			self::$recursiveBarrier--;
 		}
-		
+
 		public function getVisibleList() {
 			$list = $this->getCurrentList();
 			$list[] = $this->buildListItem('Action:CustomizeToolbar');
@@ -323,7 +332,7 @@
 
 		public function getCurrentList() {
 			global $wgUser;
-			
+
 			$data = $this->loadToolbarList();
 			if ($data == false) {
 				$data = $this->getDefaultList();
@@ -331,20 +340,20 @@
 					$data['my-tools']['items'] = array_merge($this->importMyTools(),$data['my-tools']['items']);
 				}
 			}
-			
+
 			$data = $this->stringsToList($data);
-			
+
 			return $data;
 		}
-		
+
 		public function getDefaultList() {
 			global $wgUser;
-			
+
 			$data = array(
 				$this->buildListItem( 'PageAction:Share' ),
 				$this->buildListItem( 'PageAction:Follow' ),
 			);
-			 
+
 			if (!$wgUser->isAnon()) {
 				$data['my-tools'] = $this->buildMenuListItem( 'my-tools', array_merge(
 					array(
@@ -354,29 +363,29 @@
 					$this->stringsToList($this->getSeenPromotions())
 				));
 			}
-			
+
 			$data = $this->stringsToList($data);
-			
+
 			return $data;
 		}
-		
+
 		public function getPopularList() {
 			return $this->stringsToList(array_merge($this->getPopularOptionNames(),$this->getSeenPromotions()));
 		}
-		
+
 		public function getAllList() {
 			return $this->stringsToList($this->getAllOptionNames());
 		}
-		
-		
+
+
 		public function getPromotions() {
-			return array( 
-				'SpecialPage:ThemeDesigner', 
+			return array(
+				'SpecialPage:ThemeDesigner',
 				'SpecialPage:LayoutBuilder',
 				'SpecialPage:WikiaLabs',
 			);
 		}
-		
+
 		public function getAllOptionNames() {
 			return array(
 				'PageAction:Follow',
@@ -385,6 +394,7 @@
 				'PageAction:Move',
 				'PageAction:Delete',
 				'PageAction:Edit',
+				'PageAction:Protect',
 				'PageAction:Whatlinkshere',
 				'SpecialPage:AllPages',
 				'SpecialPage:PrefixIndex',
@@ -464,7 +474,7 @@
 				'SpecialPage:WikiaLabs',
 			);
 		}
-		
+
 		public function getPopularOptionNames() {
 			return array(
 				'SpecialPage:CreatePage',
@@ -482,10 +492,10 @@
 				'SpecialPage:WikiActivity',
 			);
 		}
-		
+
 		protected function importMyTools() {
 			global $wgUser;
-			
+
 			$list = array();
 			$data = $wgUser->getOption('myTools',false);
 			if (is_string($data)) {
@@ -493,9 +503,8 @@
 				foreach ($data as $specialPage)
 					$list[] = $this->buildListItem("SpecialPage:{$specialPage}");
 			}
-			
+
 			return $list;
 		}
-		
+
 	}
-	
