@@ -497,6 +497,11 @@ class ArticleComment {
 			$commentTitle = sprintf('%s/%s%s-%s', $title->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow());
 		} else {
 			$parentArticle = Article::newFromID($parentId);
+			//FB#2875 (log data for further debugging)
+			if (is_null($parentArticle)) {
+				Wikia::log(__FUNCTION__, __LINE__, "Failed to create Article object, ID=$parentId, title={$title->getText()}, user={$user->getName()}", true);
+				return false;
+			}
 			$parentTitle = $parentArticle->getTitle();
 			//nested comment
 			$commentTitle = sprintf('%s/%s%s-%s', $parentTitle->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow());
