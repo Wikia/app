@@ -27,6 +27,7 @@ public class BlogArticleTest extends BaseTest {
 
 		login();
 		session().open("index.php?title=Special:CreateBlogPage");
+		session().waitForPageToLoad( this.getTimeout() );
 
 		session().type( "blogPostTitle", title );
 
@@ -46,6 +47,7 @@ public class BlogArticleTest extends BaseTest {
 	public void testEnsureUserCanPostCommentsOnBlogPosts() throws Exception {
 		loginAsRegular();
 		session().open( "index.php?title=User_blog:" + getTestConfig().getString("ci.user.wikiabot.username") + "/" + title.replace( " ", "_" ) );
+		session().waitForPageToLoad( this.getTimeout() );
 		assertTrue( session().isTextPresent( "blogtest by bot" ) );
 
 		String date  = (new Date()).toString();
