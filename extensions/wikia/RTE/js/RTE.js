@@ -20,7 +20,7 @@ window.RTE = {
 		'removePlugins': 'about,elementspath,filebrowser,flash,forms,horizontalrule,image,justify,link,liststyle,maximize,newpage,pagebreak,toolbar,save,scayt,smiley,wsc',
 		'resize_enabled': false,
 		'skin': 'wikia',
-		'startupFocus': CKEDITOR.env.gecko ? false : true,
+		'startupFocus': false, // CKEDITOR.env.gecko ? false : true, // BugId:2700
 		'theme': 'wikia',
 		'toolbar': 'Wikia',
 		'toolbarCanCollapse': false
@@ -274,8 +274,11 @@ window.RTE = {
 		RTE.repositionRTEStuff();
 		$(window).bind('resize', RTE.repositionRTEStuff);
 
+		// BugId:2700 - don't focus when in preview/diff mode
 		if(!RTE.config.startupFocus) {
-			setTimeout(function() {RTE.instance.focus(); }, 100);
+			if (wgEditFormType != 'preview' && wgEditFormType != 'diff') {
+				setTimeout(function() {RTE.instance.focus(); }, 100);
+			}
 		}
 	},
 
