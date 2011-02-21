@@ -32,9 +32,11 @@ public class LatestPhotosTest extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 
 		// browse through gallery
-		String firstPhotoSrc = session().getAttribute("//section[contains(@class,'LatestPhotosModule')]//ul[@class='carousel']/li/a/img@src");
+		String firstPhotoSrc = session().getAttribute("//section[contains(@class,'LatestPhotosModule')]//ul[@class='carousel']/li/a@href");
 		session().click("//div[@id='WikiaRail']/section[contains(@class,'LatestPhotosModule')]/a[@class='next']/img");
-		waitForAttributeNotEquals("//section[contains(@class,'LatestPhotosModule')]//ul[@class='carousel']/li/a/img@src", firstPhotoSrc, this.getTimeout());
+		String secondPhotoSrc = session().getAttribute("//section[contains(@class,'LatestPhotosModule')]//ul[@class='carousel']/li/a@href");
+		
+		assertTrue ( firstPhotoSrc != secondPhotoSrc );
 
 		//view all photos
 		session().click("//section[contains(@class,'LatestPhotosModule')]/a[@class='more']");
