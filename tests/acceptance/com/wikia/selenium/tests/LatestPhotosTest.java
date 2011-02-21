@@ -11,30 +11,30 @@ public class LatestPhotosTest extends BaseTest {
 	public void testLatestPhotos() throws Exception {
 		loginAsStaff();
 		
-		session().open("index.php?title=File:LatestPhotos1.png");
+		session().open("index.php?title=File:LatestPhotos1.gif");
 		session().waitForPageToLoad(this.getTimeout());
-		doDeleteIfAllowed("SeleniumTest", "SeleniumTest");
-		uploadImage( "http://images.wikia.com/common/__cb33534/extensions/wikia/AchievementsII/images/badges/90/edit-1.png", "LatestPhotos1.png");
+		doDeleteIfAllowed("Other reason", "SeleniumTest");
+		uploadImage( "http://www.google.com/logos/pl_independence08.gif", "LatestPhotos1.gif");
 		
-		session().open("index.php?title=File:LatestPhotos2.png");
+		session().open("index.php?title=File:LatestPhotos2.gif");
 		session().waitForPageToLoad(this.getTimeout());
-		doDeleteIfAllowed("SeleniumTest", "SeleniumTest");
-		uploadImage( "http://images.wikia.com/common/__cb33534/extensions/wikia/AchievementsII/images/badges/90/edit-2.png", "LatestPhotos2.png");
+		doDeleteIfAllowed("Other reason", "SeleniumTest");
+		uploadImage( "http://www.google.com/logos/polishind09.gif", "LatestPhotos2.gif");
 		
-		session().open("index.php?title=File:LatestPhotos3.png");
+		session().open("index.php?title=File:LatestPhotos3.gif");
 		session().waitForPageToLoad(this.getTimeout());
-		doDeleteIfAllowed("SeleniumTest", "SeleniumTest");
-		uploadImage( "http://images.wikia.com/common/__cb33534/extensions/wikia/AchievementsII/images/badges/90/edit-3.png", "LatestPhotos3.png");
+		doDeleteIfAllowed("Other reason", "SeleniumTest");
+		uploadImage( "http://www.google.com/logos/2010/firstdayofschool10-hp.gif", "LatestPhotos3.gif");
 		
-		session().open("index.php?title=File:LatestPhotos4.png");
+		session().open("index.php?title=File:LatestPhotos4.gif");
 		session().waitForPageToLoad(this.getTimeout());
-		doDeleteIfAllowed("SeleniumTest", "SeleniumTest");
-		uploadImage( "http://images.wikia.com/common/__cb33534/extensions/wikia/AchievementsII/images/badges/90/edit-4.png", "LatestPhotos4.png");
+		doDeleteIfAllowed("Other reason", "SeleniumTest");
+		uploadImage( "http://www.google.com/logos/childrens_day08_2.gif", "LatestPhotos4.gif");
 		
-		session().open("index.php?title=File:LatestPhotos5.png");
+		session().open("index.php?title=File:LatestPhotos5.gif");
 		session().waitForPageToLoad(this.getTimeout());
-		doDeleteIfAllowed("SeleniumTest", "SeleniumTest");
-		uploadImage( "http://images.wikia.com/common/__cb33534/extensions/wikia/AchievementsII/images/badges/90/edit-5.png", "LatestPhotos5.png");
+		doDeleteIfAllowed("Other reason", "SeleniumTest");
+		uploadImage( "http://www.google.com/logos/grandparents09.gif", "LatestPhotos5.gif");
 		
 		session().open("index.php?title=Special:Random");
 		session().waitForPageToLoad(this.getTimeout());
