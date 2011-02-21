@@ -100,7 +100,8 @@ class CreateWiki {
 				"fr" => "frstarter",
 				"nl" => "nlstarter",
 				"es" => "esstarter",
-				"pl" => "plstarter"
+				"pl" => "plstarter",
+				"ru" => "rustarter",
 			),
 			"answers" => array(
 				"*"  => "genericstarteranswers",
