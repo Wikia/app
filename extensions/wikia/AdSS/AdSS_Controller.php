@@ -112,6 +112,16 @@ class AdSS_Controller extends SpecialPage {
 		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/adform.scss' ) );
 	}
 
+	function displayUpsellForm( $ad ) {
+		global $wgOut, $wgAdSS_templatesDir, $wgLang;
+
+		$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
+		$tmpl->set( 'adId', $ad->id );
+		$tmpl->set( 'token', AdSS_Util::getToken() );
+		$wgOut->addHTML( $tmpl->render( 'upsellForm' ) );
+		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/upsell.scss' ) );
+	}
+
 	function save( $adForm ) {
 		global $wgOut, $wgPayPalUrl, $wgRequest, $wgUser;
 
@@ -244,32 +254,93 @@ class AdSS_Controller extends SpecialPage {
 
 		if( $wgUser->isAllowed( 'adss-admin' ) ) {
 			AdSS_Util::flushCache( $ad->pageId, $ad->wikiId );
-		} elseif( !empty( $wgAdSS_contactEmail ) ) {
-			$to = array();
-			foreach( $wgAdSS_contactEmail as $a ) {
-				$to[] = new MailAddress( $a );
-			}
-			//FIXME move it to a template
-			$subject = '[AdSS] new ad pending approval';
+		} else {
+			$this->displayUpsellForm( $ad );
 
-			$body = "New ad has been just created and it's waiting your approval:\n";
-			$body .= SpecialPage::getTitleFor( 'AdSS/admin' )->getFullURL();
-			$body .= "\n\n";
-			$body .= "Created by: {$ad->getUser()->toString()}\n";
-			$body .= "Ad URL: http://{$ad->url}\n";
-			switch( $ad->type ) {
-				case 't':
-					$body .= "Ad link text: {$ad->text}\n";
-					$body .= "Ad description: {$ad->desc}\n";
-					break;
-				case 'b':
-					$downloadUrl = Title::makeTitle( NS_SPECIAL, "AdSS/admin/download/".$ad->id )->getFullURL();
-					$body .= "Banner: {$downloadUrl}\n";
-					break;
-			}
+			if( !empty( $wgAdSS_contactEmail ) ) {
+				$to = array();
+				foreach( $wgAdSS_contactEmail as $a ) {
+					$to[] = new MailAddress( $a );
+				}
+				//FIXME move it to a template
+				$subject = '[AdSS] new ad pending approval';
 
-			UserMailer::send( $to, new MailAddress( $wgNoReplyAddress ), $subject, $body );
+				$body = "New ad has been just created and it's waiting your approval:\n";
+				$body .= SpecialPage::getTitleFor( 'AdSS/admin' )->getFullURL();
+				$body .= "\n\n";
+				$body .= "Created by: {$ad->getUser()->toString()}\n";
+				$body .= "Ad URL: http://{$ad->url}\n";
+				switch( $ad->type ) {
+					case 't':
+						$body .= "Ad link text: {$ad->text}\n";
+						$body .= "Ad description: {$ad->desc}\n";
+						break;
+					case 'b':
+						$downloadUrl = Title::makeTitle( NS_SPECIAL, "AdSS/admin/download/".$ad->id )->getFullURL();
+						$body .= "Banner: {$downloadUrl}\n";
+						break;
+				}
+
+				UserMailer::send( $to, new MailAddress( $wgNoReplyAddress ), $subject, $body );
+			}
 		}
+	}
+
+	static function upsellAjax( $id, $token ) {
+		global $wgUser, $wgAdSS_DBname, $wgAdSS_ReadOnly;
+
+		wfLoadExtensionMessages( 'AdSS' );
+
+		$response = new AjaxResponse();
+		$response->setContentType( 'application/json; charset=utf-8' );
+
+		if ( wfReadOnly() || !empty( $wgAdSS_ReadOnly ) ) {
+			$r = array( 'result' => 'error', 'respmsg' => wfMsgWikiHtml( 'readonlytext', wfReadOnlyReason() ) );
+			$response->addText( Wikia::json_encode( $r ) );
+			return $response;
+		}
+
+		if( !AdSS_Util::matchToken( $token ) ) {
+			$r = array( 'result' => 'error', 'respmsg' => 'token mismatch' );
+		} else {
+			$ad = AdSS_AdFactory::createFromId( $id );
+			if( ( $ad->id != $id ) || ( $ad->closed != null ) || ( $ad->expires != null ) || ( $ad->price['period'] == 'y' ) ) {
+				$r = array( 'result' => 'error', 'respmsg' => 'wrong ad' );
+			} else {
+				if( $ad->pageId > 0 ) {
+					$title = Title::newFromID( $ad->pageId );
+					if( !$title || !$title->exists() ) {
+						$r = array( 'result' => 'error', 'respmsg' => 'no such article' );
+					}
+				}
+
+				if( empty( $r ) ) {
+					switch( $ad->price['period'] ) {
+						case 'd':
+							$regularPrice = 365 * $ad->price['price'];
+							break;
+						case 'w':
+							$regularPrice = 52 * $ad->price['price'];
+							break;
+						case 'm':
+							$regularPrice = 12 * $ad->price['price'];
+							break;
+					}
+					$promoPrice = intval( round( $regularPrice*2/3 ) );
+					$ad->price['price'] = $promoPrice;
+					$ad->price['period'] = 'y';
+					$ad->save();
+					AdSS_Util::commitAjaxChanges();
+					$r = array(
+							'result'  => 'success',
+							'id'      => $ad->id,
+						  );
+				}
+			}
+		}
+		$response->addText( Wikia::json_encode( $r ) );
+
+		return $response;
 	}
 
 }

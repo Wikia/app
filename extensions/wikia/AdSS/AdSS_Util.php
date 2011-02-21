@@ -83,6 +83,7 @@ class AdSS_Util {
 			case 'd': return wfMsgHtml( 'adss-form-usd-per-day', $wgLang->formatNum( $price ) );
 			case 'w': return wfMsgHtml( 'adss-form-usd-per-week', $wgLang->formatNum( $price ) );
 			case 'm': return wfMsgHtml( 'adss-form-usd-per-month', $wgLang->formatNum( $price ) );
+			case 'y': return wfMsgHtml( 'adss-form-usd-per-year', $wgLang->formatNum( $price ) );
 		}
 	}
 
@@ -174,7 +175,7 @@ class AdSS_Util {
 	static function matchToken( $token ) {
 		$sessionToken = self::getToken();
 		if( $sessionToken != $token ) {
-			wfDebug( __METHOD__ . ": broken session data\n" );
+			wfDebug( __METHOD__ . ": token mismatch( $sessionToken vs. $token )\n" );
 		}
 		unset( $_SESSION['wsAdSSToken'] );
 		return $sessionToken == $token;

@@ -117,6 +117,7 @@ abstract class AdSS_Ad {
 			case 'd': $period = "+1 day"; break;
 			case 'w': $period = "+1 week"; break;
 			case 'm': $period = "+1 month"; break;
+			case 'y': $period = "+1 year"; break;
 		}
 		$this->expires = strtotime( $period, $this->expires );
 		$this->save();
