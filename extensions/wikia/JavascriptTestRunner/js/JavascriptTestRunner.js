@@ -1,32 +1,45 @@
 (function() {
+
 	
 	var JTR = {
+		status: {
+			SUCCESS: 'success',
+			FAILURE: 'failure',
+			ERROR: 'error',
+			SKIPPED: 'skipped',
+			UNKNOWN: 'unknown'
+		},
+		statusList: {},
 		frameworks: {},
-		filters: {},
+		tools: {},
 		outputs: {},
 		TestRunner: null
 	};
 	
+	for (var i in JTR.status) {
+		JTR.statusList[JTR.status[i]] = true;
+	}
+	
 	/**
 	 * TestRunner - main testing class
 	 */
-	var TestRunner = function( filters, outputs ) {
-		this.configure(filters,outputs);
+	var TestRunner = function( outputs ) {
+		this.configure(outputs);
 	}
-	TestRunner.prototype.configure = function( filters, outputs ) {
-		this.filters = filters;
+	TestRunner.prototype.configure = function( outputs ) {
 		this.outputs = outputs;
 	}
 	TestRunner.prototype.run = function( frameworkName, testSuites ) {
-		var framework = new JTR.frameworks[frameworkName];
+		var framework = new JTR.frameworks[frameworkName](this);
 		var args = Array.prototype.slice.call(arguments,1);
-		var data = framework.run.apply(framework,args);
+		framework.run.apply(framework,args);
+		//var data = framework.run.apply(framework,args);
+		//this.dispatch(data);
+	}
+	TestRunner.prototype.end = function( data ) {
 		this.dispatch(data);
 	}
 	TestRunner.prototype.dispatch = function( data ) {
-		for (var i=0;i<this.filters.length;i++) {
-			data = this.filters[i].filter(data);
-		}
 		for (var i=0;i<this.outputs.length;i++) {
 			this.outputs[i].handle(data);
 		}
@@ -35,14 +48,130 @@
 	
 	
 	/**
-	 * CruiseControl xml report generator
+	 * TestResult - results storage class
 	 */
-	var ccXmlFilter = function() {}
-	ccXmlFilter.prototype.filter = function( data ) {
-		// convert json data to xml...
+	var TestResult = function() {
+		this.suiteFailures = 0;
+		this.suites = {};
+	};
+	TestResult.prototype.findName = function( o, name ) {
+		name = name || 'unnamed';
+		if (typeof o[name] == 'undefined')
+			return name;
+		for (var i=1;i<5000;i++) {
+			if (typeof o[name+'_'+i] == 'undefined') {
+				return name+'_'+i;
+			}
+		}
+		return 'unnamed';
+	};
+	TestResult.prototype.errorSuite = function() {
+		if (this.currentSuite)
+			delete this.suites[this.currentSuite.name];
+		this.suiteFailures++;
+		this.currentSuite = false;
+	};
+	TestResult.prototype.startSuite = function(name,extra) {
+		name = this.findName(this.suites,name);
+		this.currentSuite = this.suites[name] = {
+			name: name,
+			tests: {},
+			extra: extra || {},
+			stats: {
+				time: 0,
+				total: 0,
+				success: 0,
+				failure: 0,
+				error: 0,
+				skipped: 0,
+				unknown: 0,
+				assertions: 0
+			},
+			started: new Date()
+		}
+	};
+	TestResult.prototype.stopSuite = function() {
+		var suite = this.currentSuite;
+		suite.stats.time = (new Date()) - suite.started;
+		delete suite.started;
+		this.currentSuite = false;
+	};
+	TestResult.prototype.startTest = function(name,extra) {
+		name = this.findName(this.currentSuite.tests,name);
+		this.currentTest = this.currentSuite.tests[name] = {
+			name: name,
+			status: JTR.status.UNKNOWN,
+			time: 0,
+			assertions: 0,
+			messages: false,
+			log: [],
+			extra: extra || {},
+			started: new Date()
+		};
+	};
+	TestResult.prototype.stopTest = function(status,assertions,messages) {
+		var suite = this.currentSuite;
+		var test = this.currentTest;
+
+		if (!(status in JTR.statusList))
+			status = JTR.status.UNKNOWN;
+		test.time = (new Date()) - test.started;
+		delete test.started;
+		test.status = status;
+		if (typeof messages != 'undefined') 
+			test.messages = messages;
+		if (typeof assertions != 'undefined')
+			test.assertions = assertions;
+		suite.stats[test.status]++;
+		suite.stats.total++;
+		suite.stats.assertions += test.assertions;
+		this.currentTest = false;
+	};
+	TestResult.prototype.logTest = function(text) {
+		this.currentTest.log.push(text);
+	};
+	
+	
+	/**
+	 * JUnit report toolkit
+	 */
+	var JUnitReport = {};
+	JUnitReport.getXml = function( testResult ) {
+		var Xml = window.WikiaXml;
+		var xml = '';
+		var suiteId = 0;
+		for (var suiteName in testResult.suites) {
+			var suite = testResult.suites[suiteName];
+			
+			var suiteXml = '';
+			for (var testName in suite.tests) {
+				var test = suite.tests[testName];
+				var testContent = '';
+				if (test.status != JTR.status.SUCCESS) {
+					testContent += Xml.element('failure',Xml.cdata(test.messages||''));
+				}
+				suiteXml += Xml.element('testcase',testContent,{
+					name: testName
+				});
+			};
+			
+			suiteXml = Xml.element('properties') + suiteXml;
+			xml += Xml.element('testsuite',suiteXml,{
+				name: suiteName,
+				'package': 'com.wikia.javascript.tests',
+				errors: suite.stats[JTR.status.ERROR],
+				failures: suite.stats[JTR.status.FAILURE],
+				skipped: suite.stats[JTR.status.SKIPPED],
+				tests: suite.stats.total,
+				id: suiteId,
+				time: suite.stats.time
+			});
+			suiteId++;
+		}
+		xml = Xml.intro() + Xml.element('testsuites',xml);
 		return xml;
-	}
-	JTR.filters.ccXml = ccXmlFilter;
+	};
+	JTR.tools.JUnitReport = JUnitReport;
 	
 	
 	/**
@@ -66,10 +195,13 @@
 			var testsHtml = '';
 			for (var testName in suite.tests) {
 				var test = suite.tests[testName];
-				var color = test.status == "success" ? "green" : "red";
-				var text = test.status == "success" ? "[SUCCESS]" : "[FAILED]";
-				ok = ok && test.status == "success";
+				var testok = test.status == JTR.status.SUCCESS;
+				var color = testok ? "green" : "red";
+				var text = testok ? "[SUCCESS]" : "[FAILED]";
+				ok = ok && testok;
 				testsHtml += "<div style=\"margin-left: 20px\"><code style=\"color:"+color+"\">"+text+"</code> "+testName+"</div>";
+				if (!testok)
+					testsHtml += "<div style=\"margin-left: 40px\"> "+test.messages+"</div>";;
 			}
 			var color2 = ok ? "green" : "red";
 			html += "<div style=\"color:"+color2+"\">"+suiteName+"</div>";
@@ -84,119 +216,52 @@
 	 * Selenium output
 	 */
 	var seleniumOutput = function() {}
-	seleniumOutput.prototype.getXml = function( data ) {
-		var Xml = window.WikiaXml;
-		var xml = '';
-		var suiteId = 0;
-		for (var suiteName in data.suites) {
-			var suite = data.suites[suiteName];
-			var errors = 0, failures = 0, skipped = 0, tests = 0;
-			
-			var suiteXml = '';
-			for (var testName in suite.tests) {
-				var test = suite.tests[testName];
-				var testContent = '';
-				tests++;
-				if (test.status != 'success') {
-					testContent += Xml.element('failure',Xml.cdata(test.info||''));
-					failures++;
-				}
-				suiteXml += Xml.element('testcase',testContent,{
-					name: testName
-				});
-			};
-			
-			suiteXml = Xml.element('properties') + suiteXml;
-			xml += Xml.element('testsuite',suiteXml,{
-				name: suiteName,
-				'package': 'com.wikia.javascript.tests',
-				errors: errors,
-				failures: failures,
-				skipped: skipped,
-				tests: tests,
-				id: suiteId,
-				time: suite.time
-			});
-			suiteId++;
-		}
-		xml = Xml.intro() + Xml.element('testsuites',xml);
-		return xml;
-	};
 	seleniumOutput.prototype.handle = function( data ) {
-		var xml = this.getXml(data);
+		var xml = JUnitReport.getXml(data);
 		window.jtr_xml = xml;
 		console.log(xml);
 	};
 	JTR.outputs.selenium = seleniumOutput;
-	
+
 	
 	/**
-	 * jsUnity framwork adapter
+	 * jsUnity framework adapter
 	 */
-	var jsUnityFramework = function() {}
+	var jsUnityFramework = function( runner ) {
+		this.testRunner = runner;
+	}
 	jsUnityFramework.prototype.run = function() {
 		var args = Array.prototype.slice.call(arguments,0);
 		var self = this;
 		
-		this.data = {
-			suites: {},
-			errors: 0
-		};
+		this.result = new TestResult();
+		
 		var oldLogger = jsUnity.logger;
 		jsUnity.logger = {log:function(){ self.log.apply(self,arguments);}};
 		jsUnity.run.apply(jsUnity,args);
 		jsUnity.logger = oldLogger;
 		
-		return this.data;
-	}
-	jsUnityFramework.prototype.findName = function( o, name ) {
-		if (!name) name = 'unnamed';
-		if (typeof o[name] == 'undefined')
-			return name;
-		for (var i=1;i<5000;i++) {
-			if (typeof o[name+'_'+i] == 'undefined') {
-				return name+'_'+i;
-			}
-		}
-		return 'unnamed';
+		this.testRunner.end(this.result);
 	}
 	jsUnityFramework.prototype.log = function( action, name, error ) {
 		switch(action) {
 		case 'suite-error':
-			this.data.errors++;
+			this.result.errorSuite();
 			break;
 		case 'suite-start':
-			this.suiteName = this.findName(this.data.suites,name);
-			this.suiteStarted = new Date();
-			this.data.suites[this.suiteName] = {
-				time: 0,
-				tests: {}
-			};
+			this.result.startSuite(name);
 			break;
 		case 'suite-end':
-			var suite = this.data.suites[this.suiteName];
-			suite.time = new Date() - this.suiteStarted; 
+			this.result.stopSuite(); 
 			break;
 		case 'test-start':
-			var suite = this.data.suites[this.suiteName];
-			this.testName = this.findName(suite.tests,name);
-			this.testStarted = new Date();
-			suite.tests[this.testName] = {
-				time: 0,
-				status: 'unknown',
-				info: ''
-			};
+			this.result.startTest(name);
 			break;
 		case 'test-success':
-			var test = this.data.suites[this.suiteName].tests[this.testName];
-			test.time = new Date() - this.testStarted;
-			test.status = 'success';
+			this.result.stopTest(JTR.status.SUCCESS);
 			break;
 		case 'test-failure':
-			var test = this.data.suites[this.suiteName].tests[this.testName];
-			test.time = new Date() - this.testStarted;
-			test.status = 'failure';
-			test.info = "" + error;
+			this.result.stopTest(JTR.status.FAILURE,0,error+'');
 			break;
 		}
 	}
@@ -207,16 +272,10 @@
 	 * Mediawiki extension handler
 	 */
 	JTR.run = function() {
-		var filterNames = window.jtr_filters;
 		var outputNames = window.jtr_outputs;
 		var frameworkName = window.jtr_framework;
 		var testSuite = window.jtr_testsuite;
 		
-		/*
-		if (!outputNames || outputNames.length == 0) {
-			throw new Exception("No output specified for test suite");
-		}
-		*/
 		if (!frameworkName) {
 			throw new Exception("No framework name specified for test suite");
 		}
@@ -224,13 +283,7 @@
 			throw new Exception("No tests specified as a test suite");
 		}
 		
-		var filters = [], outputs = [];
-		for (var i in filterNames) {
-			if (typeof JTR.filters[filterNames[i]] != 'function') {
-				throw new Exception("Filter \""+filterNames[i]+"\" does not exist");
-			}
-			filters.push(new JTR.filters[filterNames[i]]);
-		}
+		var outputs = [];
 		for (var i in outputNames) {
 			if (typeof JTR.outputs[outputNames[i]] != 'function') {
 				throw new Exception("Filter \""+outputNames[i]+"\" does not exist");
@@ -239,7 +292,7 @@
 		}
 		
 		var jtr = new JTR.TestRunner();
-		jtr.configure(filters,outputs);
+		jtr.configure(outputs);
 		jtr.run(frameworkName,testSuite);
 	}
 	JTR.autorun = function() {
@@ -248,6 +301,11 @@
 			return;
 		}
 		JTR.run();
+	}
+	
+	JTR.test = function(frameworkName,testSuite) {
+		window.jtr_framework = frameworkName;
+		window.jtr_testsuite = testSuite;
 	}
 	
 	

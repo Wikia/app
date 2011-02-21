@@ -1,6 +1,10 @@
+/*
+@test-require-file extensions/wikia/includetest.js
+*/
 var test = {
 	suiteName: 'DummyTest',
 	setUp: function () {
+		jsUnity.attachAssertions(this);
 		console.log('test: setUp()');
 	},
     tearDown: function () {
@@ -11,7 +15,13 @@ var test = {
 	},
 	test2: function () {
 		console.log('test: test2()');
+		this.fail('testing failure');
+	},
+	test3: function () {
+		console.log('test: test3()');
+		this.assertTrue(false,'custom assertTrue');
 	}
+
 }
 window.jtr_framework = "jsUnity";
 window.jtr_testsuite = test;
