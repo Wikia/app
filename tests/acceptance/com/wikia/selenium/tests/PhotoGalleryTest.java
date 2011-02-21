@@ -186,7 +186,11 @@ public class PhotoGalleryTest extends BaseTest {
 		assertTrue(wikitext.indexOf(pattern) > -1);
 	}
 
-	@Test(groups={"CI","envProduction"})
+	//this test requires an image to be added to an article and indexed,
+	//so that it can be found; because indexing takes a lot time
+	//test has been disabled for the moment
+	//@Test(groups={"CI","envProduction"})
+	@Test(groups={"broken"})
 	public void testImageSearch() throws Exception {
 		loginAsStaff();
 		
@@ -323,6 +327,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// go to edit page (RTE, but start in source mode)
 		session().open("index.php?title=" + PhotoGalleryTest.testArticleName + "&action=edit&useeditor=source");
+		session().waitForPageToLoad(this.getTimeout());
 
 		// clear wikitext
 		session().runScript("window.RTE.instance.setData('');");
