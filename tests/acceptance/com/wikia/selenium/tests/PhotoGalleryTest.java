@@ -369,6 +369,7 @@ public class PhotoGalleryTest extends BaseTest {
 
 		// go to edit page (RTE, but start in source mode)
 		session().open("index.php?title=" + PhotoGalleryTest.testArticleName + "&action=edit&useeditor=source");
+		session().waitForPageToLoad(this.getTimeout());
 
 		// clear wikitext
 		session().runScript("window.RTE.instance.setData('');");
