@@ -365,16 +365,16 @@ jsUnity = (function () {
     
                     logger.log('test-start',test.name);
                     try {
-                        suite.setUp && suite.setUp();
+                        suite.setUp && suite.setUp.call(suite.scope,suite);
                         test.fn.call(suite.scope);
-                        suite.tearDown && suite.tearDown();
+                        suite.tearDown && suite.tearDown.call(suite.scope,suite);
 
                         results.passed++;
 
                         this.log("[PASSED] " + test.name);
                         logger.log('test-success',test.name);
                     } catch (e) {
-                        suite.tearDown && suite.tearDown();
+                        suite.tearDown && suite.tearDown.call(suite.scope,suite);
 
                         this.log("[FAILED] " + test.name + ": " + e);
                         logger.log('test-failure',test.name,e);
