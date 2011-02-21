@@ -177,21 +177,6 @@ class SkinChooser {
 		
 		wfProfileIn(__METHOD__);
 		
-		//Mobile (removed from Varnish as per FB#2852)
-		$mobServ = MobileService::getInstance();
-		
-		//iPad should be served the default skin, not the mobile one
-		if ( $mobServ->isMobile() && !$mobServ->isIPad() ) {
-			if ( $wgRequest->getText( 'useskin' ) == 'wikiaapp' || !empty( $_COOKIE[ "{$wgCookiePrefix}mobileapp" ] ) ) {
-				$user->mSkin = &Skin::newFromKey( 'wikiaapp' );
-			} elseif( empty( $_COOKIE[ 'mobilefullsite' ] ) && ( stripos($_SERVER['SERVER_NAME'], 'answers.wikia.com') === false ) ) {
-				$user->mSkin = &Skin::newFromKey( 'wikiaphone' );
-			}
-			
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-		
 		/**
 		 * check headers sent by varnish, if X-Skin is send force skin
 		 * @author eloy, requested by artur
