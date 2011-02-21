@@ -7,6 +7,8 @@
 
 class EditPageModule extends Module {
 
+	private static $editFormType = '';
+
 	/**
 	 * Disables edit form when in read-only mode (RT #85688)
 	 */
@@ -41,6 +43,9 @@ class EditPageModule extends Module {
 		// BugId:2435 - add wgIsEditPage global JS variable on edit pages to simplify checks
 		$wgHooks['MakeGlobalVariablesScript'][] = 'EditPageModule::onMakeGlobalVariablesScript';
 
+		// BugId:2700 - detect edit form type
+		self::$editFormType = $editPage->formtype;
+
 		// macbre: load YUI on edit page (it's always loaded using $.loadYUI)
 		// PLB has problems with $.loadYUI not working correctly in Firefox (callback is fired to early)
 		$staticChute = new StaticChute('js');
@@ -57,6 +62,7 @@ class EditPageModule extends Module {
 	 */
 	public static function onMakeGlobalVariablesScript($vars) {
 		$vars['wgIsEditPage'] = true;
+		$vars['wgEditFormType'] = self::$editFormType;
 		return true;
 	}
 }
