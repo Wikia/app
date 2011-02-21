@@ -5,10 +5,10 @@
 		<?php if ($showNotifications) {
 	 		echo wfRenderModule('Notifications');
 	 	} ?>
-		<ul class="tools" data-more-caption="<?= htmlspecialchars(wfMsg('oasis-toolbar-more')); ?>">
+		<ul class="tools">
 			<?php echo wfRenderModule('Footer','Toolbar'); ?>
 <?php if($showLoadTime) { ?>
-			<li class="loadtime disable-more">
+			<li class="loadtime">
 				<?= $loadTimeStats ?>
 			</li>
 <?php } ?>
