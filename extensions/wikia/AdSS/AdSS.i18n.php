@@ -30,6 +30,7 @@ $messages['en'] = array(
 	'adss-form-usd-per-day' => '$$1 per day',
 	'adss-form-usd-per-week' => '$$1 per week',
 	'adss-form-usd-per-month' => '$$1 per month',
+	'adss-form-usd-per-year' => '$$1 per year',
 	'adss-form-auth-errormsg' => 'Either your e-mail address or password is incorrect.',
 	'adss-form-field-empty-errormsg' => 'This field must not be empty',
 	'adss-form-non-existent-title-errormsg' => 'This page does not exist',
@@ -58,9 +59,15 @@ $messages['en'] = array(
 This lets you reach more audience by showing your ad on others wikis from the same hub.',
 	'adss-form-hub-plan-price' => '$1 for one share',
 	'adss-form-or' => '- or -',
-	'adss-form-thanks' => "Thank you for your sponsorship! Your ad has been purchased and will go live after manual approval (within 48 hours).
-
-	 Go and [[Special:AdSS|buy]] another ad!",
+	'adss-form-thanks' => 'You completed your purchase.  Your ad will go live after being approved (within 48 hours, usually less).',
+	'adss-form-buy-another' => 'Want to purchase a 2nd ad now?  [[Special:AdSS|Click here]]',
+	'adss-upsell-header' => 'Special One-time Offer',
+	'adss-upsell-text' => 'Get your first 4 months free on the ad you just bought.<br>
+Convert your ad to an annual subscription now.',
+	'adss-upsell-yes' => 'Yes, I want it!',
+	'adss-upsell-no' => 'No, thanks',
+	'adss-upsell-thanks' => 'Thank you for choosing the offer!',
+	'adss-upsell-error' => 'An error occurred!',
 	'adss-button-preview' => 'Preview',
 	'adss-button-edit' => 'Edit',
 	'adss-button-login' => 'Log in',

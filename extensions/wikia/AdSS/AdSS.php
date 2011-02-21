@@ -76,6 +76,8 @@ if( empty( $wgAdSS_OnlyAdmin ) ) {
 	$wgAjaxExportList[] = 'AdSS_ManagerController::closeAdAjax';
 	$wgAjaxExportList[] = 'AdSS_ManagerController::editAdAjax';
 	$wgAjaxExportList[] = 'AdSS_ManagerController::getAdAjax';
+
+	$wgAjaxExportList[] = 'AdSS_Controller::upsellAjax';
 }
 
 $wgAdSS_DBname = 'adss';
