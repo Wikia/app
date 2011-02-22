@@ -7,21 +7,17 @@ class PageStatsService extends Service {
 	private $pageId;
 
 	/**
-	 * @param mixed identifier ID of article or Title object
-	 *
-	 * Title object support added to display number of talk page revisions on deleted pages
-	 * (which have ID of 0).
+	 * Pass page ID of an article you want to get data about
 	 */
-	function __construct( $identifier ) {
-		if ( is_int( $identifier ) ) {
-			$this->pageId = intval( $identifier );
-			$this->mTitle = Title::newFromId( $this->pageId );
-		} elseif ( $identifier instanceof Title ) {
-			$this->mTitle = $identifier;
-			$this->pageId = $this->mTitle->getArticleID();
-		}
+	function __construct($pageId) {
+		$this->pageId = intval($pageId);
+	}
 
-		return null;
+	public static function newFromTitle( $title ) {
+		$service = new self( $title->getArticleId() );
+		$service->mTitle = $title;
+
+		return $service;
 	}
 
 	/**
