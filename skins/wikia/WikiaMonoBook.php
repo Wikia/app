@@ -115,9 +115,9 @@ class WikiaSkinMonoBook extends SkinTemplate {
 				'<div id="wikia_header" style="display:none"></div>' . // Hack because ads have code that references this. Awful.
 				'<div id="column-google-right">'.AdEngine::getInstance()->getAd('RIGHT_SKYSCRAPER_1').'</div></div>'."\n".
 				'<table id="spotlight_container"><tr>' .
-				'<td><div>'.AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_LEFT').'</div></td>' .
-				'<td><div>'.AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_MIDDLE').'</div></td>' .
-				'<td><div>'.AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_RIGHT').'</div></td>'.
+				'<td><div>'.AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_FOOTER_1').'</div></td>' .
+				'<td><div>'.AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_FOOTER_2').'</div></td>' .
+				'<td><div>'.AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_FOOTER_3').'</div></td>'.
 				"</tr></table>\n".
 				AdEngine::getInstance()->getDelayedIframeLoadingCode();
 		}
