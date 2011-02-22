@@ -27,7 +27,7 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 		WF::unsetInstance( 'LogPage' );
 	}
 
-	protected function getUserMock() {
+	protected function getUserMock(  ) {
 		$user = $this->getMock( 'User' );
 		$user->expects( $this->once() )
 		     ->method( 'isAllowed' )
@@ -110,10 +110,10 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 		}
 
 		WF::setInstance( 'WikiaLabsProject', $project );
-
-		$user = $this->getUserMock();
+		
+		$user = $this->getMock( 'User' );
 		if($statusOk) {
-			$user->expects( $this->once() )
+			$user->expects( $this->atLeastOnce() )
 			     ->method( 'getId' )
 			     ->will( $this->returnValue( self::TEST_USER_ID ) );
 			$user->expects( $this->once() )
