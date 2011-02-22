@@ -78,11 +78,11 @@ public class BaseTest {
 	protected boolean isOasis() throws Exception {
 		return session().getEval("window.skin").equals("oasis");
 	}
-	
+
 	protected void setTimeout(String timeout) {
 		this.timeout = timeout;
 	}
-	
+
 	protected String getTimeout() {
 		return this.timeout;
 	}
@@ -356,8 +356,9 @@ public class BaseTest {
 
 	protected void editArticle(String articleName, String content)
 			throws Exception {
-		session().open("index.php?title=" + articleName + "&action=edit&useeditor=source");
+		session().open("index.php?title=" + articleName + "&action=edit&useeditor=mediawiki");
 		session().waitForPageToLoad(this.getTimeout());
+		waitForElement("wpTextbox1");
 		doEdit(content);
 		doSave();
 	}
@@ -368,7 +369,7 @@ public class BaseTest {
 			// switch to source mode (if needed)
 			if (session().getEval("window.RTE.instance.mode").equals("wysiwyg")) {
 				session().runScript("window.RTE.instance.switchMode('source')");
-				session().waitForCondition("window.RTE.instance.mode == 'source'", "7500");
+				session().waitForCondition("window.RTE.instance.mode == 'source'", this.getTimeout());
 			}
 			session().type("//td[@id='cke_contents_wpTextbox1']/textarea", content);
 		} else {
@@ -500,7 +501,7 @@ public class BaseTest {
 		// String fileNameExtenstion = imageUrl.substring(imageUrl.length() - 3, imageUrl.length());
 		String destinationFilename = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
 		destinationFilename = destinationFilename.substring(0,1).toUpperCase() + destinationFilename.substring(1);
-		
+
 		uploadImage(imageUrl, destinationFilename);
 	}
 
@@ -512,7 +513,7 @@ public class BaseTest {
 		session().type("wpUploadDescription", "WikiaBot automated test.");
 		session().uncheck("wpWatchthis");
 		clickAndWait("wpUpload");
-		
+
 		assertFalse(session().isTextPresent("Upload error"));
 
 		// upload warning - duplicate ...
