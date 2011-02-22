@@ -127,7 +127,7 @@ class Skin extends Linker {
 		} elseif( isset( $skinNames[$wgDefaultSkin] ) ) {
 			return $wgDefaultSkin;
 		} else {
-			return 'monaco';
+			return 'oasis';
 		}
 	}
 
