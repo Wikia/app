@@ -422,7 +422,7 @@ public class PhalanxTest extends BaseTest {
 		Random randomGenerator = new Random();
 		String articleNameSuffix = Integer.toString(randomGenerator.nextInt(99999));
 
-		loginAsSysop();
+		loginAsStaff();
 
 		session().open("index.php?title=Special:WikiBuilder");
 		session().waitForPageToLoad(this.getTimeout());
@@ -449,13 +449,15 @@ public class PhalanxTest extends BaseTest {
 		assertFalse(session().isTextPresent("This page needs content"));
 		try {
 			session().open("index.php?title=" + this.testArticleName + this.badWord + articleNameSuffix);
-			assertTrue(false); // this page shouldn't be created, should be blocked by Phalanx
+
+			// this page shouldn't be created, should be blocked by Phalanx
+			this.log(" Page " + this.testArticleName + this.badWord + articleNameSuffix +  " should not be created");
+			assertTrue(false);
 		} catch (Exception e) {
 			// catch 404
 		}
 
 		// cleanup
-		loginAsStaff();
 		this.deleteArticle(this.testArticleName + articleNameSuffix);
 		this.deleteArticle(this.testArticleName + articleNameSuffix + "Foo");
 	}
@@ -630,6 +632,9 @@ public class PhalanxTest extends BaseTest {
 			this.deleteArticle(this.testArticleName + this.badWord + "New");
 
 			this.run = true;
+		}
+		else {
+			this.log("");
 		}
 	}
 }
