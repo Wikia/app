@@ -7,10 +7,13 @@ import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertEquals;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 
 import java.math.BigInteger;
 import java.util.Random;
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.testng.annotations.Test;
 
@@ -45,61 +48,67 @@ public class CreateWikiTest extends BaseTest {
 				session().click("//div[@class='step" + Integer.toString(stepNum - 1)  + "']//input[contains(@class, 'skip')]");
 			}
 	}
+	
+	@DataProvider(name = "wikiLanguages")
+	public Iterator<Object[]> wikiLanguages() throws Exception {
+		String[] languages = getTestConfig().getStringArray("ci.extension.wikia.AutoCreateWiki.lang");
+		ArrayList al = new ArrayList();
+		for (int i = languages.length - 1; i >= 0; i--) {
+			al.add(new Object[] { languages[i] });
+		}
+		return al.iterator();
+	}
 
-	@Test(groups={"envProduction"})
-	public void testCreateWikiAsLoggedInUser() throws Exception {
+	@Test(groups={"envProduction"},dataProvider="wikiLanguages")
+	public void testCreateWikiAsLoggedInUser(String language) throws Exception {
 		loginAsStaff();
 		session().open("");
 		session().waitForPageToLoad(this.getTimeout());
 
-		String[] languages = getTestConfig().getStringArray("ci.extension.wikia.AutoCreateWiki.lang");
+		clickAndWait("link=Start a wiki");
 
-		for (int i = languages.length - 1; i >= 0; i--) {
-			clickAndWait("link=Start a wiki");
+		session().type("wiki-name", getWikiName());
+		session().type("wiki-domain", getWikiName());
+		session().select("wiki-category", "label=regexp:^.*Other");
+		session().select("wiki-language", "label=regexp:^" + language + ":.*$");
+		clickAndWait("wiki-submit");
 
-			session().type("wiki-name", getWikiName());
-			session().type("wiki-domain", getWikiName());
-			session().select("wiki-category", "label=regexp:^.*Other");
-			session().select("wiki-language", "label=regexp:^" + languages[i] + ":.*$");
-			clickAndWait("wiki-submit");
+		if (language.equals("en")) {
+			waitForTextPresent("Write a brief intro for your home page.", this.getTimeout(), "Wiki has not been created, language: " + language);
+			session().click("//input[@value='Save Intro']");
+			waitForStep(2);
 
-			if (languages[i].equals("en")) {
-				waitForTextPresent("Write a brief intro for your home page.", this.getTimeout(), "Wiki has not been created, language: " + languages[i]);
-				session().click("//input[@value='Save Intro']");
-				waitForStep(2);
+			session().click("//input[@value='Save Theme']");
+			waitForStep(3);
 
-				session().click("//input[@value='Save Theme']");
-				waitForStep(3);
+			session().click("//input[@value='Save Pages']");
+			waitForStep(4);
 
-				session().click("//input[@value='Save Pages']");
-				waitForStep(4);
+			session().click("//input[@value='Continue to your wiki']");
 
-				session().click("//input[@value='Continue to your wiki']");
-
-				waitForTextPresent("Welcome to the Wiki", this.getTimeout(), "Wiki has not been created, language: " + languages[i]);
-				assertTrue(session().getLocation().contains("http://" + getWikiName() + ".wikia.com/wiki/"));
-				
-				enforceWebsite("http://" + getWikiName() + ".wikia.com/");
-			} else {
-				waitForTextPresent("Your wiki has been created!", this.getTimeout(), "Wiki has not been created, language: " + languages[i]);
-				clickAndWait("//div[@class='awc-domain']/a");
-
-				assertTrue(session().getLocation().contains("http://" + languages[i] + "." + getWikiName() + ".wikia.com/"));
-				assertTrue(session().getLocation().contains(":WikiActivity"));
-				
-				enforceWebsite("http://" + languages[i] + "." + getWikiName() + ".wikia.com/");
-			}
+			waitForTextPresent("Welcome to the Wiki", this.getTimeout(), "Wiki has not been created, language: " + language);
+			assertTrue(session().getLocation().contains("http://" + getWikiName() + ".wikia.com/wiki/"));
 			
-			editArticle("A new article", "Lorem ipsum dolor sit amet");
-			session().open("index.php?title=A_new_article");
-			session().waitForPageToLoad(this.getTimeout());
-			assertTrue(session().isTextPresent("Lorem ipsum dolor sit amet"));
-			editArticle("A new article", "consectetur adipiscing elit");
-			session().open("index.php?title=A_new_article");
-			session().waitForPageToLoad(this.getTimeout());
-			assertFalse(session().isTextPresent("Lorem ipsum dolor sit amet"));
-			assertTrue(session().isTextPresent("consectetur adipiscing elit"));
+			enforceWebsite("http://" + getWikiName() + ".wikia.com/");
+		} else {
+			waitForTextPresent("Your wiki has been created!", this.getTimeout(), "Wiki has not been created, language: " + language);
+			clickAndWait("//div[@class='awc-domain']/a");
+
+			assertTrue(session().getLocation().contains("http://" + language + "." + getWikiName() + ".wikia.com/"));
+			assertTrue(session().getLocation().contains(":WikiActivity"));
+				
+			enforceWebsite("http://" + language + "." + getWikiName() + ".wikia.com/");
 		}
+			
+		editArticle("A new article", "Lorem ipsum dolor sit amet");
+		session().open("index.php?title=A_new_article");
+		session().waitForPageToLoad(this.getTimeout());
+		assertTrue(session().isTextPresent("Lorem ipsum dolor sit amet"));
+		editArticle("A new article", "consectetur adipiscing elit");
+		session().open("index.php?title=A_new_article");
+		session().waitForPageToLoad(this.getTimeout());
+		assertFalse(session().isTextPresent("Lorem ipsum dolor sit amet"));
+		assertTrue(session().isTextPresent("consectetur adipiscing elit"));
 	}
 
 	@Test(groups={"envProduction"},dependsOnMethods={"testCreateWikiAsLoggedInUser"},alwaysRun=true)
