@@ -800,16 +800,17 @@ class ArticleCommentList {
 			$permalink = $wgRequest->getInt( 'permalink', 0 );
 			if (($redirect != 'no') && empty($diff) && empty($oldid) && ($action != 'history')) {
 				$parts = ArticleComment::explode($title->getText());
-				$redirect = Title::newFromText($parts['title'], MWNamespace::getSubject($title->getNamespace()));
-				if ($redirect) {
+				$redirectTitle = Title::newFromText($parts['title'], MWNamespace::getSubject($title->getNamespace()));
+				if ($redirectTitle) {
 					$query = array();
 					if ( $permalink ) {
-						$page = self::getPageForComment( $redirect, $permalink );
+						$redirectTitle->setFragment("#comm-$permalink");
+						$page = self::getPageForComment( $redirectTitle, $permalink );
 						if ( $page > 1 ) {
 							$query = array( 'page' => $page );
 						}
 					}
-					$wgOut->redirect($redirect->getFullUrl( $query ));
+					$wgOut->redirect($redirectTitle->getFullUrl( $query ));
 				}
 			}
 		}
@@ -821,10 +822,17 @@ class ArticleCommentList {
 
 		$page = 0;
 
-		$list = ArticleCommentList::newFromTitle( $title );
-		$comments = $list->getCommentPages( false, false );
-		$keys = array_keys( $comments );
-		$found = array_search( $id, $keys );
+		$commentList = ArticleCommentList::newFromTitle( $title )->getCommentList();
+		$commentIDs = array();
+		foreach ($commentList as $id => $comment) {
+			$commentIDs[] = $id;
+			if (isset($comment['level2'])) {
+				foreach ($comment['level2'] as $sub_id => $sub_comment ) {
+					$commentIDs[] = $sub_id;
+				}
+			}
+		}
+		$found = array_search( $id, $commentIDs );
 		if ( $found !== false ) {
 			$page = ceil( ( $found + 1 ) / $wgArticleCommentsMaxPerPage );
 		}
