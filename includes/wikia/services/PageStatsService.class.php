@@ -3,7 +3,7 @@ class PageStatsService extends Service {
 
 	const CACHE_TTL = 86400;
 
-	private $mTitle;
+	private $mTitle = null;
 	private $pageId;
 
 	/**
@@ -201,7 +201,11 @@ class PageStatsService extends Service {
 
 		global $wgMemc;
 
-		$title = $this->mTitle;
+		if ( !is_null( $this->mTitle ) ) {
+			$title = $this->mTitle;
+		} else {
+			$title = Title::newFromId( $this->pageId );
+		}
 
 		// don't perform for talk pages
 		if (empty($title) || $title->isTalkPage()) {
