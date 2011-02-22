@@ -240,19 +240,11 @@ public class PhalanxTest extends BaseTest {
 
 		// check whether move was correct
 		if (session().isTextPresent("\"" + oldName + "\" has been moved to \"" + newName + "\"")) {
-			// cleanup
-			loginAsStaff();
-			deleteArticle(newName);
-
 			return true;
 		}
 
 		assertTrue(session().isTextPresent("Spam protection filter"));
 		this.log(" Move has been blocked");
-
-		// cleanup
-		loginAsStaff();
-		deleteArticle(oldName);
 
 		return false;
 	}
