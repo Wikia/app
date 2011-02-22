@@ -193,12 +193,13 @@ class PageHeaderModule extends Module {
 			$this->title = $wgOut->getPageTitle();
 		}
 
-		if ($this->pageExists) {
-			// use service to get data
-			$service = new PageStatsService($wgTitle->getArticleId());
+		// use service to get data
+		$service = new PageStatsService( $wgTitle );
 
-			// comments
-			$this->comments = $service->getCommentsCount();
+		// comments - moved here to display comments even on deleted/non-existant pages
+		$this->comments = $service->getCommentsCount();
+
+		if ($this->pageExists) {
 
 			// show likes
 			$this->likes = true;

@@ -3,13 +3,25 @@ class PageStatsService extends Service {
 
 	const CACHE_TTL = 86400;
 
+	private $mTitle;
 	private $pageId;
 
 	/**
-	 * Pass page ID of an article you want to get data about
+	 * @param mixed identifier ID of article or Title object
+	 *
+	 * Title object support added to display number of talk page revisions on deleted pages
+	 * (which have ID of 0).
 	 */
-	function __construct($pageId) {
-		$this->pageId = intval($pageId);
+	function __construct( $identifier ) {
+		if ( is_int( $identifier ) ) {
+			$this->pageId = intval( $identifier );
+			$this->mTitle = Title::newFromId( $this->pageId );
+		} elseif ( $identifier instanceof Title ) {
+			$this->mTitle = $identifier;
+			$this->pageId = $this->mTitle->getArticleID();
+		}
+
+		return null;
 	}
 
 	/**
@@ -193,13 +205,7 @@ class PageStatsService extends Service {
 
 		global $wgMemc;
 
-		// handle not existing pages
-		if ($this->pageId == 0) {
-			wfProfileOut(__METHOD__);
-			return false;
-		}
-
-		$title = Title::newFromId($this->pageId);
+		$title = $this->mTitle;
 
 		// don't perform for talk pages
 		if (empty($title) || $title->isTalkPage()) {
