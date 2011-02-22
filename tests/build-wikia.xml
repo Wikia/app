@@ -154,6 +154,8 @@
                 listeners="org.testng.reporters.DotTestListener,org.uncommons.reportng.JUnitXMLReporter"
                 parallel="methods"
                 threadCount="1"
+                groups="${groups}"
+                excludedgroups="${excludegroups}"
                 failureProperty="test.failed"
                 verbose="2">
             <classfileset file="${build.bin}/com/wikia/selenium/tests/${testClass}.class" />
