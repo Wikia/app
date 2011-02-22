@@ -25,6 +25,8 @@ public class UploadImageTest extends BaseTest {
 		session().type("wpDestFile", destinationFileName);
 		session().type("wpUploadDescription", "WikiaBot automated test.");
 		session().uncheck("wpWatchthis");
+		session().check("wpIgnoreWarning");
+
 		clickAndWait("wpUpload");
 
 		assertFalse(session().isTextPresent("Upload error"));
