@@ -10,6 +10,7 @@ import static org.testng.AssertJUnit.assertFalse;
 
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import org.testng.annotations.BeforeMethod;
 
 public class PhalanxTest extends BaseTest {
 
@@ -33,6 +34,9 @@ public class PhalanxTest extends BaseTest {
 	// MW message with whitelist
 	private static final String whitelistMessage = "MediaWiki:Spam-whitelist";
 
+	// did cleanup method have been run?
+	private static boolean run = false;
+
 	/**
 	 * Login on selected testing account
 	 *
@@ -46,7 +50,7 @@ public class PhalanxTest extends BaseTest {
  	 * Console logging
  	 */
 	private void log(String message) {
-		//System.out.println(message);
+		System.out.println(message);
 	}
 
 	/**
@@ -116,6 +120,7 @@ public class PhalanxTest extends BaseTest {
 		// return true if article creation was successful
 		if (this.isArticleViewMode(question)) {
 			// cleanup - remove article
+			loginAsStaff();
 			this.deleteArticle(question);
 			return true;
 		}
@@ -144,6 +149,7 @@ public class PhalanxTest extends BaseTest {
 		boolean result = this.isQuestionOnListOfRecentlyAsked(question);
 
 		// cleanup
+		loginAsStaff();
 		this.deleteArticle(question);
 
 		return result;
@@ -193,6 +199,7 @@ public class PhalanxTest extends BaseTest {
 		}
 
 		// cleanup - remove article
+		loginAsStaff();
 		this.deleteArticle(articleName);
 
 		return true;
@@ -221,7 +228,7 @@ public class PhalanxTest extends BaseTest {
 		session().uncheck("watch");
 
 		clickAndWait("wpMove");
-		
+
 		if (session().isElementPresent("wpConfirm")) {
 			if (session().isElementPresent("wpLeaveRedirect")) {
 				session().uncheck("wpLeaveRedirect");
@@ -234,6 +241,7 @@ public class PhalanxTest extends BaseTest {
 		// check whether move was correct
 		if (session().isTextPresent("\"" + oldName + "\" has been moved to \"" + newName + "\"")) {
 			// cleanup
+			loginAsStaff();
 			deleteArticle(newName);
 
 			return true;
@@ -243,6 +251,7 @@ public class PhalanxTest extends BaseTest {
 		this.log(" Move has been blocked");
 
 		// cleanup
+		loginAsStaff();
 		deleteArticle(oldName);
 
 		return false;
@@ -266,7 +275,7 @@ public class PhalanxTest extends BaseTest {
 		session().type("wpUploadDescription", "Phalanx test");
 		session().uncheck("wpWatchthis");
 		clickAndWait("//input[@name='wpUpload']");
-		
+
 		if (session().isTextPresent("Upload warning")) {
 			clickAndWait("//input[@name='wpUpload']");
 		}
@@ -446,6 +455,7 @@ public class PhalanxTest extends BaseTest {
 		}
 
 		// cleanup
+		loginAsStaff();
 		this.deleteArticle(this.testArticleName + articleNameSuffix);
 		this.deleteArticle(this.testArticleName + articleNameSuffix + "Foo");
 	}
@@ -603,5 +613,23 @@ public class PhalanxTest extends BaseTest {
 		login();
 		assertTrue(this.createArticle(this.testArticleName, this.goodWords + " " + blockFilter));
 	}
-}
 
+	/**
+	 * Cleanup
+	 */
+	@BeforeMethod(alwaysRun = true)
+	public void cleanupAfter() throws Exception {
+		if (!this.run) {
+			this.log("Cleanup");
+
+			loginAsStaff();
+
+			this.deleteArticle(this.testArticleName);
+			this.deleteArticle(this.testArticleName + "New");
+			this.deleteArticle(this.testArticleName + this.badWord);
+			this.deleteArticle(this.testArticleName + this.badWord + "New");
+
+			this.run = true;
+		}
+	}
+}
