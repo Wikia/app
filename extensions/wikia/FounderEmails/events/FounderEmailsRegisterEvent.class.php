@@ -7,7 +7,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 	}
 
 	public function process( Array $events ) {
-		global $wgEnableAnswers;
+		global $wgEnableAnswers, $wgSitename;
 		wfProfileIn( __METHOD__ );
 
 		if ( $this->isThresholdMet( count( $events ) ) ) {
@@ -20,7 +20,8 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 				'$USERNAME' => $eventData['data']['userName'],
 				'$USERPAGEURL' => $eventData['data']['userPageUrl'],
 				'$USERTALKPAGEURL' => $eventData['data']['userTalkPageUrl'],
-				'$UNSUBSCRIBEURL' => $eventData['data']['unsubscribeUrl']
+				'$UNSUBSCRIBEURL' => $eventData['data']['unsubscribeUrl'],
+				'$WIKINAME' => $wgSitename,
 			);
 
 			$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';

@@ -7,7 +7,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	}
 
 	public function process( Array $events ) {
-		global $wgCityId, $wgEnableAnswers;
+		global $wgCityId, $wgEnableAnswers, $wgSitename;
 		wfProfileIn( __METHOD__ );
 
 		if ( $this->isThresholdMet( count( $events ) ) ) {
@@ -21,7 +21,8 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				'$USERPAGEURL' => $eventData['data']['editorPageUrl'],
 				'$USERTALKPAGEURL' => $eventData['data']['editorTalkPageUrl'],
 				'$UNSUBSCRIBEURL' => $eventData['data']['unsubscribeUrl'],
-				'$MYHOMEURL' => $eventData['data']['myHomeUrl']
+				'$MYHOMEURL' => $eventData['data']['myHomeUrl'],
+				'$WIKINAME' => $wgSitename,
 			);
 
 			$msgKeys = array();
