@@ -59,7 +59,7 @@ class RelatedPages {
 	 * @param int $limit limit
 	 */
 	public function get( $articleId, $limit = 3 ) {
-		global $wgContentNamespaces, $wgEnableRelatedPagesUnionSelectQueries;
+		global $wgContentNamespaces, $wgEnableRelatedPagesUnionSelectQueries, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		// prevent from calling this function more than one, use reset() to omit
@@ -84,8 +84,12 @@ class RelatedPages {
 
 			// limit * 2 - get more pages (some can be filtered out - RT #72703)
 			$pages = $this->getPagesForCategories($articleId, $limit * 2, $categories);
-
-			if( class_exists('imageServing') ) {
+			
+			//use text snippets for mobile skins
+			if(
+				class_exists('imageServing') &&
+				!in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaphone', 'SkinWikiaApp' ) )
+			){
 				// ImageServing extension enabled, get images
 				$imageServing = new imageServing( array_keys($pages), 200, array( 'w' => 2, 'h' => 1 ) );
 				$images = $imageServing->getImages(1); // get just one image per article
