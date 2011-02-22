@@ -220,7 +220,8 @@ class AutoCreateWikiPage extends SpecialPage {
 						}
 					}
 
-					$this->log (" session: " . print_r($_SESSION, true). "\n");
+					//$this->log (" session: " . print_r($_SESSION, true). "\n"); // this prints passwords in plaintext, avoid except on devboxes.
+
 					#--- restriction
 					if ( $wgUser->isAnon() ) {
 						$this->displayRestrictionError();
