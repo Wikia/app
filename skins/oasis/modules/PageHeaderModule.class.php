@@ -194,7 +194,7 @@ class PageHeaderModule extends Module {
 		}
 
 		// use service to get data
-		$service = new PageStatsService( $wgTitle );
+		$service = PageStatsService::newFromTitle( $wgTitle );
 
 		// comments - moved here to display comments even on deleted/non-existant pages
 		$this->comments = $service->getCommentsCount();
