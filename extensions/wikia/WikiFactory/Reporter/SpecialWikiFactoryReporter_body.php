@@ -50,7 +50,8 @@ class WikiFactoryReporter extends SpecialPage
 			$select->addOption( "{$variable->cv_name} ({$variable->cv_id})", $variable->cv_id );
 		}
 
-		$wgOut->addHTML( "<form action='' method='get'>\n" );
+		$action = self::getTitle()->getLocalURL();
+		$wgOut->addHTML( "<form action='{$action}' method='get'>\n" );
 		$wgOut->addHTML( $select->getHTML() );
 		$wgOut->addHTML( "<input type='submit'>\n" );
 		$wgOut->addHTML( "</form>\n" );
