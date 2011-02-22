@@ -1,6 +1,6 @@
 <section class="SpecialOffer">
 <h3><?php echo wfMsgHtml('adss-upsell-header'); ?></h3>
-<?php echo wfMsgWikiHtml('adss-upsell-text'); ?>
+<?php echo wfMsgWikiHtml('adss-upsell-text', $promoPrice, $regularPrice); ?>
 <div id="SpecialOfferButtons"><a class="wikia-button" id="wpSpecialOfferYes" href="#"><?php echo wfMsgHtml('adss-upsell-yes'); ?></a> <a id="wpSpecialOfferNo" href="#"><?php echo wfMsgHtml('adss-upsell-no'); ?></a></div>
 <div id="SpecialOfferConfirmation" style="display:none"><b><?php echo wfMsgHtml('adss-upsell-thanks'); ?></b></div>
 <div id="SpecialOfferError" style="display:none"><b><?php echo wfMsgHtml('adss-upsell-error'); ?></b></div>

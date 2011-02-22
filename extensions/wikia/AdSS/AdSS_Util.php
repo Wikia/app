@@ -83,6 +83,7 @@ class AdSS_Util {
 			case 'd': return wfMsgHtml( 'adss-form-usd-per-day', $wgLang->formatNum( $price ) );
 			case 'w': return wfMsgHtml( 'adss-form-usd-per-week', $wgLang->formatNum( $price ) );
 			case 'm': return wfMsgHtml( 'adss-form-usd-per-month', $wgLang->formatNum( $price ) );
+			case 'q': return wfMsgHtml( 'adss-form-usd-per-quarter', $wgLang->formatNum( $price ) );
 			case 'y': return wfMsgHtml( 'adss-form-usd-per-year', $wgLang->formatNum( $price ) );
 		}
 	}

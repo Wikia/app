@@ -116,6 +116,21 @@ class AdSS_Controller extends SpecialPage {
 		global $wgOut, $wgAdSS_templatesDir, $wgLang;
 
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
+		switch( $ad->price['period'] ) {
+			case 'd':
+				$regularPrice = 365 * $ad->price['price'];
+				break;
+			case 'w':
+				$regularPrice = 52 * $ad->price['price'];
+				break;
+			case 'm':
+				$regularPrice = 12 * $ad->price['price'];
+				break;
+		}
+		$regularPrice = round( $regularPrice / 4 );
+		$promoPrice = intval( round( $regularPrice*2/3 ) );
+		$tmpl->set( 'regularPrice', $wgLang->formatNum($regularPrice) );
+		$tmpl->set( 'promoPrice', $wgLang->formatNum($promoPrice) );
 		$tmpl->set( 'adId', $ad->id );
 		$tmpl->set( 'token', AdSS_Util::getToken() );
 		$wgOut->addHTML( $tmpl->render( 'upsellForm' ) );
@@ -326,9 +341,10 @@ class AdSS_Controller extends SpecialPage {
 							$regularPrice = 12 * $ad->price['price'];
 							break;
 					}
+					$regularPrice = round( $regularPrice / 4 );
 					$promoPrice = intval( round( $regularPrice*2/3 ) );
 					$ad->price['price'] = $promoPrice;
-					$ad->price['period'] = 'y';
+					$ad->price['period'] = 'q';
 					$ad->save();
 					AdSS_Util::commitAjaxChanges();
 					$r = array(
