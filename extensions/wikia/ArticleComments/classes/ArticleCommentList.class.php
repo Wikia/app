@@ -798,7 +798,7 @@ class ArticleCommentList {
 			$oldid = $wgRequest->getText('oldid', '');
 			$action = $wgRequest->getText('action', '');
 			$permalink = $wgRequest->getInt( 'permalink', 0 );
-			if (($redirect != 'no') && empty($diff) && empty($oldid) && ($action != 'history')) {
+			if (($redirect != 'no') && empty($diff) && empty($oldid) && ($action != 'history') && ($action != 'delete')) {
 				$parts = ArticleComment::explode($title->getText());
 				$redirectTitle = Title::newFromText($parts['title'], MWNamespace::getSubject($title->getNamespace()));
 				if ($redirectTitle) {
@@ -822,7 +822,7 @@ class ArticleCommentList {
 
 		$page = 0;
 
-		$commentList = ArticleCommentList::newFromTitle( $title )->getCommentList();
+		$commentList = ArticleCommentList::newFromTitle( $title )->getCommentList( false );
 		$commentIDs = array();
 		foreach ($commentList as $id => $comment) {
 			$commentIDs[] = $id;
