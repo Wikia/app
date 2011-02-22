@@ -156,7 +156,8 @@ class ContactForm extends SpecialPage {
 		/********************************************************/
 		#sending done, show message
 
-		$wgOut->addHTML(wfMsg( 'specialcontact-submitcomplete' ));
+		#parse this message to allow wiki links (BugId: 1048)
+		$wgOut->addHTML( wfMsgExt('specialcontact-submitcomplete', array('parse')) );
 
 		$mp = Title::newMainPage();
 		$link = Xml::element('a', array('href'=>$mp->getLocalURL()), $mp->getPrefixedText());
