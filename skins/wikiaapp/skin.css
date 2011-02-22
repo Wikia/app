@@ -1,3 +1,47 @@
+/* Start: avoid custom colors in templates (like infoboxes), important is required  */
+* {
+	color: #000000;
+	background: transparent !important;
+}
+
+/* override stile for thumbs and tables (including infoboxes and user-defined templates), important is required  */
+#bodyContent div.thumb, table {
+	background: #EFEFEF !important;
+	border: 1px solid #AAAAAA !important;
+	border-collapse: separate !important;
+	padding: 0.3em;
+	border-radius: 0.3em !important;
+	-webkit-border-radius: 0.3em !important;
+}
+
+table {
+	float: none !important;
+	width: 100% !important;
+	margin: 5px 0 5px 0 !important;
+}
+
+table * {
+	border: none !important;
+}
+
+#bodyContent div.thumbinner{
+	border: none;
+	background-color: transparent;
+}
+
+#bodyContent div.thumbinner img.thumbimage{
+	border: none;
+	margin-bottom: 0.5em;
+}
+
+#bodyContent div.thumbinner div.thumbcaption{
+	padding-top: 1em;
+	font-size: 80%;
+	font-style: italic;
+	line-height: 1.2em;
+}
+/* End */
+
 body.mainpage h1#firstHeading,
 #content .printfooter,
 #column-one,
@@ -55,6 +99,7 @@ h1 {
 }
 
 .wikia-gallery .wikia-gallery-item {
+	margin: 5px;
 	display: inline-block;
 	text-align: left;
 	vertical-align: top;
@@ -93,39 +138,15 @@ a:visited {
 }
 
 div.floatright, 
-table.floatright,
+/*table.floatright,*/
 div.tright{
 	margin-left: 0.7em;
 }
 
 div.floatleft, 
-table.floatleft,
+/*table.floatleft,*/
 div.tleft {
 	margin-right: 0.7em;
-}
-
-#bodyContent div.thumb {
-	background: -webkit-gradient(linear, left bottom, left top, color-stop(0.10, rgb(255,255,255)), color-stop(0.51, rgb(240,232,240)), color-stop(0.76, rgb(214,211,214)));
-	padding: 0.3em;
-	border-radius: 0.3em;
-	-webkit-border-radius: 0.3em;
-}
-
-#bodyContent div.thumbinner{
-	border: none;
-	background-color: transparent;
-}
-
-#bodyContent div.thumbinner img.thumbimage{
-	border: none;
-	margin-bottom: 0.5em;
-}
-
-#bodyContent div.thumbinner div.thumbcaption{
-	padding-top: 1em;
-	font-size: 80%;
-	font-style: italic;
-	line-height: 1.2em;
 }
 
 #bodyContent .wikia-gallery{
