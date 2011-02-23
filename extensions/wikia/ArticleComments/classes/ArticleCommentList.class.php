@@ -823,15 +823,7 @@ class ArticleCommentList {
 		$page = 0;
 
 		$commentList = ArticleCommentList::newFromTitle( $title )->getCommentList( false );
-		$commentIDs = array();
-		foreach ($commentList as $id => $comment) {
-			$commentIDs[] = $id;
-			if (isset($comment['level2'])) {
-				foreach ($comment['level2'] as $sub_id => $sub_comment ) {
-					$commentIDs[] = $sub_id;
-				}
-			}
-		}
+		$commentIDs = array_keys($commentList);
 		$found = array_search( $id, $commentIDs );
 		if ( $found !== false ) {
 			$page = ceil( ( $found + 1 ) / $wgArticleCommentsMaxPerPage );
