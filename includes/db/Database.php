@@ -483,15 +483,14 @@ abstract class DatabaseBase {
 			} else {
 				$userName = '';
 			}
-			// wikia change, add url as well
-			global $wgTitle;
-			$title = '';
-			if( $wgTitle instanceof Title ) {
-				$title = $wgTitle->getFullURL();
-				// @todo escape url
-			}
-			// end of wikia change
-			$commentedSql = preg_replace('/\s/', " /* $fname $userName */ ", $sql, 1);
+
+			/* Wikia change begin - @author: Marooned */
+			/* add URL to log, DO NOT use wgTitle here! */
+			global $wgRequest;
+			$url = str_replace('*/', '%2a/', $wgRequest->getFullRequestURL());
+
+			$commentedSql = preg_replace('/\s/', " /* $fname $userName URL:$url */ ", $sql, 1);
+			/* Wikia change end */
 		#} else {
 		#	$commentedSql = $sql;
 		#}
