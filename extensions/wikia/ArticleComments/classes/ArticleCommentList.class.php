@@ -823,10 +823,22 @@ class ArticleCommentList {
 		$page = 0;
 
 		$commentList = ArticleCommentList::newFromTitle( $title )->getCommentList( false );
-		$commentIDs = array_keys($commentList);
-		$found = array_search( $id, $commentIDs );
+		$topLevel = array_keys($commentList);
+		$found = array_search( $id, $topLevel );
 		if ( $found !== false ) {
 			$page = ceil( ( $found + 1 ) / $wgArticleCommentsMaxPerPage );
+		} else {
+			// not found in top level comments so we have to search 2nd level comments
+			$index = 0;
+			foreach ($commentList as $comment) {
+				$index ++;
+				if (isset($comment['level2'])) {
+					$found = array_search($id, $comment['level2']);
+					if ($found !== false) {
+						$page = ceil ( $index / $wgArticleCommentsMaxPerPage );
+					}
+				}
+			}
 		}
 
 		return $page;
