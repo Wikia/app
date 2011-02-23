@@ -372,7 +372,7 @@ class CreateWiki {
 		 * modify variables
 		 */
 		global $wgUniversalCreationVariables;
-		if(!empty($wgUniversalCreationVariables) && !empty($wiki_type)) {
+		if ( !empty($wgUniversalCreationVariables) && !empty($wiki_type) && isset( $wgUniversalCreationVariables[$wiki_type] ) ) {
 			$this->addCustomSettings( 0, $wgUniversalCreationVariables[$wiki_type], "universal" );
 			wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wiki_type} \n", true );		
 		}
