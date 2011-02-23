@@ -5,6 +5,7 @@ $('#highlightform').submit(function(e){e.preventDefault()});
 
 $(function () {
 	canAcceptForm()
+	$.tracker.byStr('autocreatewiki/view');
 });
 
 ACWikiRequest.NameCallback = function( res ) {
@@ -217,6 +218,7 @@ ACWikiRequest.resetForm = function(e) {
 };
 
 ACWikiRequest.submitForm = function(e) {
+	$.tracker.byStr('autocreatewiki/submit');
 	$( "#wiki-submit" ).disabled = true;
 	document.forms['highlightform'].submit();
 	return true;
