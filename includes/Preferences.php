@@ -171,15 +171,16 @@ class Preferences {
 					'section' => 'personal/info',
 				);
 
-		if( $user->getRegistration() ) {
+		$user_registration = $user->getRegistration();
+		if( $user_registration ) {
 			$defaultPreferences['registrationdate'] =
 					array(
 						'type' => 'info',
 						'label-message' => 'prefs-registration',
 						'default' => wfMsgExt( 'prefs-registration-date-time', 'parsemag',
-							$wgLang->timeanddate( $user->getRegistration(), true ),
-							$wgLang->date( $user->getRegistration(), true ),
-							$wgLang->time( $user->getRegistration(), true ) ),
+							$wgLang->timeanddate( $user_registration, true ),
+							$wgLang->date( $user_registration, true ),
+							$wgLang->time( $user_registration, true ) ),
 						'section' => 'personal/info',
 					);
 		}
@@ -330,11 +331,12 @@ class Preferences {
 		if ($wgEnableEmail) {
 
 			global $wgEmailConfirmToEdit;
+			$user_email = $user->getEmail();			
 
 			$defaultPreferences['emailaddress'] =
 					array(
 						'type' => $wgAuth->allowPropChange( 'emailaddress' ) ? 'email' : 'info',
-						'default' => $user->getEmail(),
+						'default' => $user_email,
 						'section' => 'personal/email',
 						'label-message' => 'youremail',
 						'help-message' => $wgEmailConfirmToEdit
@@ -348,14 +350,15 @@ class Preferences {
 			$disableEmailPrefs = false;
 
 			if ( $wgEmailAuthentication ) {
-				if ( $user->getEmail() ) {
-					if( $user->getEmailAuthenticationTimestamp() ) {
+				if ( $user_email ) {
+					$user_emailauthts = $user->getEmailAuthenticationTimestamp();
+					if( $user_emailauthts ) {
 						// date and time are separate parameters to facilitate localisation.
 						// $time is kept for backward compat reasons.
 						// 'emailauthenticated' is also used in SpecialConfirmemail.php
-						$time = $wgLang->timeAndDate( $user->getEmailAuthenticationTimestamp(), true );
-						$d = $wgLang->date( $user->getEmailAuthenticationTimestamp(), true );
-						$t = $wgLang->time( $user->getEmailAuthenticationTimestamp(), true );
+						$time = $wgLang->timeAndDate( $user_emailauthts, true );
+						$d = $wgLang->date( $user_emailauthts, true );
+						$t = $wgLang->time( $user_emailauthts, true );
 						$emailauthenticated = wfMsgExt( 'emailauthenticated', 'parseinline',
 												array($time, $d, $t ) ) . '<br />';
 						$disableEmailPrefs = false;
