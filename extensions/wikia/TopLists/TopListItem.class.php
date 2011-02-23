@@ -326,7 +326,7 @@ class TopListItem extends TopListBase {
 			$errors = array();
 		}
 
-		$title = Title::newFromText( $this->mTitle->getBaseText(), NS_TOPLIST );
+		$title = Title::newFromText( $this->mTitle->getText(), NS_TOPLIST );
 
 		if( !( ( $title instanceof Title ) && $title->exists() ) && $listMode == TOPLISTS_SAVE_UPDATE ) {
 			$errors [] = array(
@@ -351,7 +351,7 @@ class TopListItem extends TopListBase {
 	public function save( $mode = TOPLISTS_SAVE_AUTODETECT ) {
 		$errors = array();
 		$mode = $this->_detectProcessingMode( $mode );
-		$checkResult = $this->checkForProcessing( $mode );
+		$checkResult = $this->checkForProcessing( $mode, null, $mode );
 
 		if ( $checkResult === true ) {
 			$summaryMsg = null;
