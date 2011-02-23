@@ -97,7 +97,7 @@ class HealthCheck extends UnlistedSpecialPage {
 				$options[ "noProxy" ] = true;
 			}
 
-			$content = Http::get( $url, 'default', $options );
+			$content = Http::get( $riakPing, 'default', $options );
 			if( $content === false ) {
 				$statusCode = 503;
 				$statusMsg = "Server status is: NOT OK - Riak is down";
