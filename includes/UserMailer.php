@@ -197,6 +197,7 @@ class UserMailer {
 			global $wgForceSendgridEmail, $wgForceSchwartzEmail;
 			$useSendgrid = ((strpos($headers['To'], "@wikia-inc.com") !== false)
 					|| (strpos($headers['To'], "@wikia.com") !== false)
+					|| (strpos($headers['To'], "@gmail.com") !== false)
 					|| (strpos($headers['To'], "@hotmail.com") !== false));
 
 			if ($wgForceSendgridEmail || (!$wgForceSchwartzEmail && $useSendgrid)) {
@@ -375,6 +376,7 @@ class UserMailer {
 		global $wgForceSendgridEmail, $wgForceSchwartzEmail;
 		$useSendgrid = ((strpos($headers['To'], "@wikia-inc.com") !== false)
 				|| (strpos($headers['To'], "@wikia.com") !== false)
+				|| (strpos($headers['To'], "@gmail.com") !== false)
 				|| (strpos($headers['To'], "@hotmail.com") !== false));
 
 		if ($wgForceSendgridEmail || (!$wgForceSchwartzEmail && $useSendgrid)){
