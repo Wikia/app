@@ -169,9 +169,8 @@ div.searchresult {
 }
 
 .mw-search-formheader {
-	background-color: #f3f3f3;
 	margin-top: 1em;
-	border: 1px solid silver;
+	border: 1px solid;
 }
 .mw-search-formheader div.search-types {
 	float:left;
@@ -195,7 +194,7 @@ div.searchresult {
 	padding: 0.5em;
 }
 .mw-search-formheader div.search-types ul li.current a {
-	color: #333333;
+	color: inherit;
 	cursor: default;
 }
 .mw-search-formheader div.search-types ul li.current a:hover {
@@ -223,8 +222,7 @@ fieldset#mw-searchoptions {
 	padding-bottom: 0.5em !important;
 	padding-top: 0.5em !important;
 	border: none;
-	background-color: #f9f9f9;
-	border: 1px solid silver !important;
+	border: 1px solid !important;
 	border-top-width: 0 !important;
 }
 fieldset#mw-searchoptions legend {
