@@ -487,7 +487,7 @@ abstract class DatabaseBase {
 			/* Wikia change begin - @author: Marooned */
 			/* add URL to log, DO NOT use wgTitle here! */
 			global $wgRequest;
-			$url = str_replace('*/', '%2a/', $wgRequest->getFullRequestURL());
+			$url = empty($wgRequest) ? '' : str_replace('*/', '%2a/', $wgRequest->getFullRequestURL());
 
 			$commentedSql = preg_replace('/\s/', " /* $fname $userName URL:$url */ ", $sql, 1);
 			/* Wikia change end */
