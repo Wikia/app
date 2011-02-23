@@ -21,7 +21,7 @@ var ImageLightbox = {
 		}
 
 		if (window.skin == 'oasis') {
-			var article = $('#WikiaArticle, .LatestPhotosModule');
+			var article = $('#WikiaArticle, .LatestPhotosModule, #article-comments');
 		}
 		else {
 			var article = $('#bodyContent');
