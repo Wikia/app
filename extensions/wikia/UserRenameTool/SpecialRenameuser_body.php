@@ -54,7 +54,7 @@ class SpecialRenameuser extends SpecialPage {
 		$newusername = $wgRequest->getText( 'newusername' );
 		$reason = $wgRequest->getText( 'reason' );
 		$token = $wgUser->editToken();
-		$nonotifyRenamed = $wgReuqest->getBool( 'notify_renamed', false );
+		$nonotifyRenamed = $wgRequest->getBool( 'notify_renamed', false );
 		$confirmaction = false;
 		
 		if ($wgRequest->wasPosted() && $wgRequest->getInt('confirmaction')){
