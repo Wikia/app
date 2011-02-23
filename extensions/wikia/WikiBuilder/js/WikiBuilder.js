@@ -69,6 +69,8 @@ var WikiBuilder = {
 		});
 
 		$('.dialog .step3 input[type=text]').blur(WikiBuilder.pageNameExpansion);
+		
+		$.tracker.byStr('wikibuilder/view');
 	},
 
 	pageNameExpansion: function() {

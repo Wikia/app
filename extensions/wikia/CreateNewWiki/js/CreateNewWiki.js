@@ -80,6 +80,12 @@ var WikiBuilder = {
 			var selected = WikiBuilder.wikiLanguage.find('option:selected').val();
 			WikiBuilder.wikiDomainCountry.html((selected && selected !== 'en') ? selected + '.' : '');
 		});
+		$('#ChangeLang').click(function(e) {
+			e.preventDefault();
+			$.tracker.byStr('createnewwiki/namewiki/changelanguage');
+			$('#NameWiki .language-default').hide();
+			$('#NameWiki .language-choice').show();
+		});
 		$('#CreateNewWiki nav .back').bind('click', function() {
 			var id = $(this).closest('.step').attr('id');
 			$.tracker.byStr('createnewwiki/' + id.toLowerCase() + '/back');
@@ -118,11 +124,6 @@ var WikiBuilder = {
 		$('#Auth nav input.login').click(function(e) {
 			$.tracker.byStr('createnewwiki/auth/login');
 			AjaxLogin.form.submit();
-		});
-		$('#ChangeLang').click(function(e) {
-			e.preventDefault();
-			$('#NameWiki .language-default').hide();
-			$('#NameWiki .language-choice').show();
 		});
 		
 		// Description event handlers
