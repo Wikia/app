@@ -16,6 +16,8 @@ class WikiaCentralAuthHooks {
             return true;
         }
 
+		wfDebug( __METHOD__ .": add new user to the local DB\n" );
+		
 		wfProfileIn( __METHOD__ );
 		if ( $addByEmail === false) {
 			$oCUser = WikiaCentralAuthUser::getInstance( $oUser );
@@ -27,6 +29,7 @@ class WikiaCentralAuthHooks {
 
 	static function onAbortNewAccount( User $oUser, &$abortError ) {
 		wfProfileIn( __METHOD__ );
+		wfDebug( __METHOD__ .": abort user creation \n" );		
 		$centralUserId = WikiaCentralAuthUser::idFromUser( $oUser );
 		$res = true;
 		if ( $centralUserId !=0 ) {
@@ -84,18 +87,31 @@ class WikiaCentralAuthHooks {
 		}
 
 		wfDebug( __METHOD__ . ": User from session: $sName \n " );
-		
+
 		if ( empty( $sName ) ) {
 			wfDebug( __METHOD__ .": username doesn't exists \n" );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		$oCUser = new WikiaCentralAuthUser( $sName );
+		/*$oCUser = new WikiaCentralAuthUser( $sName );*/
+		$oCUser = WikiaCentralAuthUser::newFromId ( $sId );
+		if ( empty( $oCUser ) ) {
+			wfDebug( __METHOD__ .": user doesn't exists (id: $sId ) \n" );
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+		
 		$localId = User::idFromName( $sName );
 
 		if ( empty($localId) ) {
 			$localId = $oCUser->idFromName();
+		}
+
+		if ( $localId != $sId ) {
+			wfDebug( __METHOD__ .": invalid user (id: $sId, localId = $sId ) \n" );
+			wfProfileOut( __METHOD__ );
+			return true;			
 		}
 		
 		if ( empty($_SESSION['wsUserId']) && !empty($localId) ) {
@@ -133,6 +149,8 @@ class WikiaCentralAuthHooks {
             return true;
         }
 
+		wfDebug( __METHOD__ .": logout user: " . $oUser->getName() . " \n" );		
+		
 		wfProfileIn( __METHOD__ );
 		if( !$wgWikiaCentralAuthCookies ) {
 			// Use local sessions only.
@@ -162,6 +180,7 @@ class WikiaCentralAuthHooks {
 	}
 
 	static function onUserArrayFromResult( &$userArray, $res ) {
+		wfDebug( __METHOD__ . ": number of elements: " . count($userArray) . "\n" );
 		wfProfileIn( __METHOD__ );
 		$userArray = WikiaCentralAuthUserArray::newFromResult( $res );
 		wfProfileOut( __METHOD__ );
@@ -205,6 +224,7 @@ class WikiaCentralAuthHooks {
             return false;
         }
 
+		wfDebug( __METHOD__ . ": user: " . $userName . "\n" );
 		wfProfileIn( __METHOD__ );
 		// Denied by configuration?
 		if ( !$wgAuth->autoCreate() ) {
@@ -265,6 +285,7 @@ class WikiaCentralAuthHooks {
 
 	static function onUserGetEmail( User $oUser, &$email ) {
 		wfProfileIn( __METHOD__ );
+		wfDebug( __METHOD__ . ": user: " . $oUser->getName() . ", email: $email \n" );
 		if ( empty($email) ) {
 			$ca = WikiaCentralAuthUser::getInstance( $oUser );
 			if ( $ca->isAttached() ) {
@@ -277,6 +298,7 @@ class WikiaCentralAuthHooks {
 
 	static function onUserGetEmailAuthenticationTimestamp( User $oUser, &$timestamp ) {
 		wfProfileIn( __METHOD__ );
+		wfDebug( __METHOD__ . ": user: " . $oUser->getName() . ", ts: $timestamp \n" );		
 		$ca = WikiaCentralAuthUser::getInstance( $oUser );
 		if ( $ca->isAttached() ) {
 			$timestamp = $ca->getEmailAuthenticationTimestamp();
@@ -287,6 +309,7 @@ class WikiaCentralAuthHooks {
 
 	static function onUserSetEmail( User $oUser, &$email ) {
 		wfProfileIn( __METHOD__ );
+		wfDebug( __METHOD__ . ": user: " . $oUser->getName() . ", email: $email \n" );			
 		$ca = WikiaCentralAuthUser::getInstance( $oUser );
 		if ( $ca->isAttached() ) {
 			$ca->setEmail( $email );
@@ -297,6 +320,7 @@ class WikiaCentralAuthHooks {
 
 	static function onUserSaveSettings( User $oUser ) {
 		wfProfileIn( __METHOD__ );
+		wfDebug( __METHOD__ . ": user: " . $oUser->getName() ." \n" );			
 		$ca = WikiaCentralAuthUser::getInstance( $oUser );
 		if ( $ca->isAttached() ) {
 			wfDebug( __METHOD__ . ": save settings of user: {$oUser->getName()} \n" );
@@ -308,8 +332,24 @@ class WikiaCentralAuthHooks {
 		return true;
 	}
 
+	static function onUserSaveOptions( User $oUser, $options ) {
+		wfProfileIn( __METHOD__ );
+		wfDebug( __METHOD__ . ": user: " . $oUser->getName() ." \n" );			
+		$ca = WikiaCentralAuthUser::getInstance( $oUser );
+		/*if ( $ca->isAttached() ) {
+			wfDebug( __METHOD__ . ": save settings of user: {$oUser->getName()} \n" );
+			$ca->invalidateCentralUser( $oUser );
+			$ca->resetAuthToken($oUser->mToken);
+			$ca->invalidateCache();
+		}*/
+		wfDebug (__METHOD__ . " options = " . print_r($options, true) );
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	
 	static function onUserSetEmailAuthenticationTimestamp( User $oUser, &$timestamp ) {
 		wfProfileIn( __METHOD__ );
+		wfDebug( __METHOD__ . ": user: " . $oUser->getName() .", ts: $timestamp \n" );			
 		$ca = WikiaCentralAuthUser::getInstance( $oUser );
 		if ( $ca->isAttached() ) {
 			wfDebug( __METHOD__ . ": set email authentication timestamp of user: {$oUser->getName()} \n" );
@@ -324,6 +364,7 @@ class WikiaCentralAuthHooks {
 	 */
 	static function onUserSetCookies( User $oUser, &$session, &$cookies ) {
 		global $wgWikiaCentralAuthCookies, $wgWikiaCentralAuthCookieDomain;
+		wfDebug( __METHOD__ . ": user: " . $oUser->getName() .", session = $session \n" );			
 		wfProfileIn( __METHOD__ );
 		if ( !$wgWikiaCentralAuthCookies || $oUser->isAnon() ) {
 			wfDebug( __METHOD__ . ": central cookies authentication is disabled \n" );
@@ -354,6 +395,9 @@ class WikiaCentralAuthHooks {
 	 */
 	static function onUserLoadDefaults( $oUser, $name ) {
 		global $wgWikiaCentralAuthCookiePrefix;
+		
+		wfDebug( __METHOD__ . ": user: " . $oUser->getName() .", name: $name \n" );	
+		
 		wfProfileIn( __METHOD__ );
 		if ( !empty($name) ) {
 			$oCUser = WikiaCentralAuthUser::getInstance( $oUser );
@@ -369,9 +413,11 @@ class WikiaCentralAuthHooks {
 		return true;
 	}
 
-	static function onGetUserPermissionsErrorsExpensive( $title, User $oUser, $action, &$result ) {
+	static function onGetUserPermissionsErrorsExpensive( $title, User $oUser, $action, $result ) {
 		wfProfileIn( __METHOD__ );
 
+		wfDebug( __METHOD__ . ": user: " . $oUser->getName() ." \n" );
+		
         if ( wfReadOnly() ) {
 			wfDebug( __METHOD__ . ": DB is running with the --read-only option " );
 			wfProfileOut( __METHOD__ );
@@ -396,7 +442,13 @@ class WikiaCentralAuthHooks {
 		return true;
 	}
 
-	static function onUserLoadFromSessionInfo( &$oUser, $from ) {
+	/**
+	 * hook definition for 'UserLoadFromSessionInfo'
+	 *
+	 * @static
+	 * @access public
+	 */
+	static function onUserLoadFromSessionInfo( $oUser, $from ) {
 		wfDebug( __METHOD__ . " load from session data for user: {$oUser->getName()} \n");
 
         if ( wfReadOnly() ) {
@@ -468,7 +520,7 @@ class WikiaCentralAuthHooks {
 		if ( !$oUser instanceof User ) {
 			return true;
 		}
-		
+
 		wfDebug( __METHOD__ . ": Load from central database user: {$oUser->getName()} \n" );
 		$userName = $oUser->mName;
 		if ( User::isValidUserName($userName) ) {
@@ -492,6 +544,7 @@ class WikiaCentralAuthHooks {
             return true;
         }
 
+		wfDebug( __METHOD__ . ": user: $user_name \n" );
 		if ( User::isValidUserName($user_name) ) {
 			$oRow2 = WikiaCentralAuthUser::loadFromDatabaseByName($user_name);
 			if ( $oRow2 ) {
