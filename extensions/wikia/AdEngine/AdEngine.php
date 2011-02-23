@@ -191,12 +191,13 @@ class AdEngine {
 		}
 
 		$this->slots = $wgAdSlots[$skin_name];
-		foreach ($this->slots as $slot=>&$slotdata) {
-			// set provider (for information only)
-			$slotdata['provider'] = isset($this->providers[$slotdata['provider_id']]) ? $this->providers[$slotdata['provider_id']] : 'null';
+		if (is_array($this->slots)) {
+			foreach ($this->slots as $slot=>&$slotdata) {
+				// set provider (for information only)
+				$slotdata['provider'] = isset($this->providers[$slotdata['provider_id']]) ? $this->providers[$slotdata['provider_id']] : 'null';
+			}
+			$this->applyWikiOverrides();
 		}
-
-		$this->applyWikiOverrides();
 
 		global $wgDartCustomKeyValues;
 		if (!empty($wgDartCustomKeyValues)) {
@@ -221,7 +222,7 @@ class AdEngine {
 		}
 
 		global $wgShowAds;
-		if( empty( $wgShowAds ) ) {
+		if( empty( $wgShowAds ) && is_array($this->slots) ) {
 			// clear out all slots except OpenX slots. RT #68545
 			foreach ($this->slots as $slotname=>$slot) {
 				if ($slot['provider_id'] != 2) {
