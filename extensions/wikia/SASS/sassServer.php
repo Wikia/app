@@ -57,7 +57,7 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 	$inputFile = getFromUrlAndUnset("file"); // Get the path & file that the user is actually looking for.
 	$requestedStyleVersion = getFromUrlAndUnset("styleVersion", $wgStyleVersion); // Get style version to use for keys (don't just use wgStyleVersion).
 	$hashFromUrl = getFromUrlAndUnset("hash");
-	$nameOfFile = getFileAlphanumeric($inputFile); // Build a reasonable name for the tmp file.
+	$nameOfFile = md5(getFileAlphanumeric($inputFile)); // Build a reasonable name for the tmp file. (use md5 to keep key/filename <255 bytes)
 
 	$idString = ""; // will be filled with a filename-safe string unique to this set of sass parameters.
 	$sassParamsForHashChecking = "";
@@ -240,7 +240,7 @@ function readThenDeleteFile($tmpFile, &$errorStr=""){
 	$cssContent = @file_get_contents($tmpFile);
 	if($cssContent === false){
 		$errorStr .= "Could not open tmp file \"$tmpFile\".  Make sure the apache process still has the right permissions to write to this directory.\n";
-		
+
 		// TODO: Should we detect the error-case where 'tmpFile' doesn't exist?  What this would imply to me was that there was a race-condition and another
 		// process was creating the file slightly before this one, and it managed to delete the file before we got to read it.  In this case, the result would be in memcached either now or
 		// in a few miliseconds.
@@ -261,7 +261,7 @@ function outputHeadersAndCss($cssContent, $errorStr=""){
 
 	// Since this emits a header, it needs to be done before printing content.
 	$timeToGenerate = "/* ".wfReportTime()." */";
-	
+
 	if(trim($cssContent) == ""){
 		header('HTTP/1.0 503 Temporary Error');
 	} else {
@@ -280,7 +280,7 @@ function outputHeadersAndCss($cssContent, $errorStr=""){
 		print "\n/*\n   sassServer ERROR: $errorStr */\n";
 		// TODO: Should we also output some really subtle marking in CSS (a red dot somewhere?) to indicate to us when we're browsing that we should look at the css code to see the error (like the thin-red-line on Pedlr).
 		// NOTE: If we wanted to, we could output this data above only when on devel environments (is the var called $wgDevelEnvironment?)
-		
+
 		// On devel environments at least, we output something if xdebug is enabled.  In case that happens, we need to wrap the trigger-error in comments.
 		print "/* error logged to php error-log --------------------------------------------------------\n";
 		trigger_error($errorStr, E_USER_WARNING);
