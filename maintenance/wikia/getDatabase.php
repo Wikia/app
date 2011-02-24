@@ -24,7 +24,6 @@ $USAGE =
 	"\t\t-i          Import a downloaded file to dev db\n";
 
 $opts = getopt ("i:f:c:?::");
-var_dump( $opts );
 
 if( count($opts) == 0 || in_array( 'help', $opts )) die( $USAGE );
 // Grind through s3 for a bit and figure out what the most recent dump is
