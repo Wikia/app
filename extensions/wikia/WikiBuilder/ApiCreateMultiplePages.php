@@ -95,7 +95,9 @@ class ApiCreateMultiplePages extends ApiBase {
 		//this function calls Article::onArticleCreate which clears cache for article and it's talk page
 		$status = $editPage->internalAttemptSave( $result, $bot );
 		if ( $status == EditPage::AS_SUCCESS_UPDATE || $status == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
-			return $editPage->getContent();
+			$newArticle = new Article( $titleObj );
+			$newRevId = $newArticle->getRevIdFetched();
+			return $newArticle->getContent();
 		} else {
 			return false;
 		}
