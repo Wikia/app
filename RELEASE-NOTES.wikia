@@ -1,4 +1,5 @@
 == Changes since release-008 ==
+* fb#2015: Background for list of images in image categories does not match the colour scheme defined by ThemeDesigner (Marooned)
 * fb#2643: Follow: kill fatal (macbre)
 * fb#2646: ArticleComments: kill fatal (macbre)
 * fb#3042: Wikia footer is not appearing anymore (Marooned)
