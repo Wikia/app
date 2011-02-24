@@ -23,7 +23,8 @@ $USAGE =
 	"\t\t-f          Fetch a new database dump from s3\n" .
 	"\t\t-i          Import a downloaded file to dev db\n";
 
-$opts = getopt ("?::i:f:c:");
+$opts = getopt ("i:f:c:?::");
+var_dump( $opts );
 
 if( count($opts) == 0 || in_array( 'help', $opts )) die( $USAGE );
 // Grind through s3 for a bit and figure out what the most recent dump is
@@ -64,7 +65,7 @@ if (array_key_exists( 'f', $opts )) {
 				exit ("this does not look like a database directory: $dir\n");
 			}
 			// order of date in filenames changed in 2011 from DMY to YMD
-			list($unused, $day, $month, $year) = $matches;  
+			list($unused, $day, $month, $year) = $matches;
 			if ($day > 2000) {
 				list ($unused, $year, $month, $day) = $matches;
 				$day_of_year = date('z', mktime('0','0','0', $month, $day, $year));
