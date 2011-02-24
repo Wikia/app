@@ -58,17 +58,17 @@ $messages['en'] = array(
 	'cnw-upgrade-headline' => 'Do you want to upgrade?',
 	'cnw-upgrade-creative' => 'Upgrading to Wikia Plus allows you to remove ads from <span class="wiki-name"></span>, a one time offer only available to new founders.',
 	'cnw-upgrade-marketing' => 'Wikia Plus is a great solution for:<ul>
-			<li>Professional Wikis</li>
-			<li>Non-profits</li>
-			<li>Families</li>
-			<li>Schools</li>
-			<li>Personal projects</li>
-		</ul>
-		Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
+<li>Professional Wikis</li>
+<li>Non-profits</li>
+<li>Families</li>
+<li>Schools</li>
+<li>Personal projects</li>
+</ul>
+Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-upgrade-now' => 'Upgrade Now',
 	'cnw-upgrade-decline' => 'No thanks, continue to my wiki',
 	// wiki welcome message
-	'cnw-welcome-headline' => 'Congratulations!  $1 has been created',
+	'cnw-welcome-headline' => 'Congratulations! $1 has been created',
 	'cnw-welcome-instruction1' => 'Click the button below to start adding pages to your wiki.',
 	'cnw-welcome-instruction2' => 'You\'ll see this button throughout your wiki, use it any time you want to add a new page.',
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
@@ -118,9 +118,9 @@ $messages['qqq'] = array(
 	'cnw-theme-headline' => 'H1 for this step',
 	'cnw-theme-creative' => 'Creative or instruction for this step following H1',
 	'cnw-theme-instruction' => 'Details on how Toolbar can be used as an alternative later',
-	// step5 - upgrade (this is pretty much for en only for now.  may expand to other languages in the future)
+	// step5 - upgrade (this is pretty much for en only for now. May expand to other languages in the future)
 	'cnw-upgrade-headline' => 'H1 for this step',
-	'cnw-upgrade-creative' => 'Creative for this step.  leave the span in there for wiki name',
+	'cnw-upgrade-creative' => 'Creative for this step. Leave the span in there for wiki name',
 	'cnw-upgrade-marketing' => 'Marketing Pitch for Wikia plus upgrade',
 	'cnw-upgrade-now' => 'Call to action button to upgrade to Wikia plus',
 	'cnw-upgrade-decline' => 'Wikia plus rejection',
@@ -131,7 +131,7 @@ $messages['qqq'] = array(
 	'cnw-welcome-help' => 'Message to Community central with embedded anchor. (leave blank if community does not exist)',
 );
 
-/* this is fake spanish for testing reason.  A real one is needed */
+/* this is fake spanish for testing reason. A real one is needed */
 $messages['es'] = array(
 	// general messages
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki creation wizard]]',
