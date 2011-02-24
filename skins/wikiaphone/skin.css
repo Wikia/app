@@ -30,7 +30,7 @@ div.magnify,
 	padding: 0.2em;
 }
 #column-content .mobile-header >img {
-	background: url(sprite.png) no-repeat 0 0;
+	background: url(/skins/wikiaphone/sprite.png) no-repeat 0 0; /* $wgCdnStylePath */
 	height: 18px;
 	margin: 0.1em 0 0.2em 0.3em;
 	width: 72px;
@@ -76,7 +76,7 @@ div.magnify,
 	border-radius: 0;
 }
 #column-content .mobile-header input[type=image] {
-	background: url(sprite.png) no-repeat -75px -1px white;
+	background: url(/skins/wikiaphone/sprite.png) no-repeat -75px -1px white; /* $wgCdnStylePath */
 	border-left: 1px solid #A5CBE3;
 	height: 12px;
 	padding: 0.2em 0;

@@ -51,10 +51,16 @@ class SkinWikiaphone extends SkinTemplate {
 	function setupSkinUserCss( OutputPage $out ){
 		global $wgRequest;
 		$out->addMeta("viewport", "width=320");
-		$out->addStyle( 'wikiaphone/main.css', 'screen,handheld' );
-		$out->addStyle( 'wikiaphone/skin.css', 'screen,handheld' );
+		$staticChuteCSS = new StaticChute('css');
+		$staticChuteCSS->useLocalChuteUrl();
+		$out->addStyle($staticChuteCSS->getChuteUrlForPackage('wikiaphone_css'));
+		$staticChuteJS = new StaticChute('js');
+		$staticChuteJS->useLocalChuteUrl();
+		$out->addScriptFile($staticChuteJS->getChuteUrlForPackage('wikiaphone_js'));
+		/*
 		$out->addScriptFile( '../common/jquery/jquery-1.5.min.js' );
 		$out->addScriptFile( '../wikiaphone/main.js' );
+		*/
 	}
 
 	function printTopHtml() {

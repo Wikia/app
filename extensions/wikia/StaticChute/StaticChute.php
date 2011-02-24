@@ -73,6 +73,7 @@ class StaticChute {
 		$this->generateConfigSkinOasis();
 		$this->generateConfigSkinCorporate();
 		$this->generateConfigSkinWikiaApp();
+		$this->generateConfigSkinWikiaPhone();
 	}
 
 	private function generateConfigSkinMonobook() {
@@ -446,11 +447,26 @@ class StaticChute {
 
 	}
 
+	// For rich-client mobile apps
 	private function generateConfigSkinWikiaApp() {
 		//CSS for Mobile app skin, both anon and user
 		$this->config['wikiaapp_css'] = array(
 			'wikiaapp/main.css',
 			'wikiaapp/skin.css'
+		);
+	}
+	
+	// For thin-client mobile apps
+	private function generateConfigSkinWikiaPhone() {
+		//CSS
+		$this->config['wikiaphone_css'] = array(
+			'wikiaphone/main.css',
+			'wikiaphone/skin.css'
+		);
+		//JS
+		$this->config['wikiaphone_js'] = array(
+			'common/jquery/jquery-1.5.js',
+			'wikiaphone/main.js'
 		);
 	}
 
