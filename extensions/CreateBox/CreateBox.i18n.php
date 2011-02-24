@@ -44,6 +44,13 @@ U kan nie hierdie bladsy skep nie, maar u kan dit wel [{{fullurl:{{FULLPAGENAME}
 <createbox>break=no</createbox>",
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'createbox-create' => 'Creyar',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  * @author OsamaK
@@ -78,7 +85,18 @@ $messages['arz'] = array(
 <createbox>break=no</createbox>",
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'createbox-exists' => "„'''{{FULLPAGENAME}}'''“ existiard beraits.
+
+Du kååst de Saiten ned åleeng, ower du kååstas [{{fullurl:{{FULLPAGENAME}}|action=edit}} beorwaiten], [{{fullurl:{{FULLPAGENAME}}}} leesen] oder a åndre Seiten mid da Hüif vom untensteehaten Aigobföidl åleeng.
+
+<createbox>break=no</createbox>",
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Zedlik
@@ -138,6 +156,19 @@ $messages['co'] = array(
 	'createbox-create' => 'Creà',
 );
 
+/** Czech (Česky)
+ * @author Jkjk
+ */
+$messages['cs'] = array(
+	'createbox-desc' => 'Speciální vkládací pole pro vytváření stránek',
+	'createbox-create' => 'Vytvořit',
+	'createbox-exists' => "Omlouváme se, \"'''{{FULLPAGENAME}}'''\" již existuje.
+
+Nemůžete vytvořit tuto stránku, ale můžete jí [{{fullurl:{{FULLPAGENAME}}|action=edit}} editovat], [{{fullurl:{{FULLPAGENAME}}}} zobrazit], nebo vytvořit jinou stránku pomocí následujícího pole.
+
+<createbox>break=no</createbox>",
+);
+
 /** Welsh (Cymraeg)
  * @author Lloffiwr
  */
@@ -153,19 +184,20 @@ Ni ellwch ddechrau'r dudalen o'r newydd, ond gallwch [{{fullurl:{{FULLPAGENAME}}
 
 /** German (Deutsch)
  * @author ChrisiPK
+ * @author Kghbln
  * @author Revolus
  */
 $messages['de'] = array(
-	'createbox-desc' => 'Spezielles Eingabefeld zur Seitenerstellung',
+	'createbox-desc' => 'Ermöglicht ein spezielles Eingabefeld zur Seitenerstellung',
 	'createbox-create' => 'Erstellen',
-	'createbox-exists' => "„'''{{FULLPAGENAME}}'''“ existiert bereits.
+	'createbox-exists' => "„'''{{FULLPAGENAME}}'''“ ist bereits vorhanden.
 
-Du kannst diese Seite nicht anlegen, aber du kannst sie [{{fullurl:{{FULLPAGENAME}}|action=edit}} bearbeiten], [{{fullurl:{{FULLPAGENAME}}}} lesen] oder eine andere Seite mithilfe des untenstehenden Eingabefeldes anlegen.
+Du kannst diese Seite daher nicht anlegen, sie aber [{{fullurl:{{FULLPAGENAME}}|action=edit}} bearbeiten], [{{fullurl:{{FULLPAGENAME}}}} lesen] oder eine Seite anderen Namens mithilfe des untenstehenden Eingabefeldes anlegen.
 
 <createbox>break=no</createbox>",
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Imre
  */
 $messages['de-formal'] = array(
@@ -188,6 +220,17 @@ Njamóžoš tós ten bok napóraś, ale móžoš jen [{{fullurl:{{FULLPAGENAME}}
 [{{fullurl:{{FULLPAGENAME}}}} cytaś] abo wubraś, aby drugi bok z pomocu slědujucego kašćika napórał.
 
 <createbox>break=no</createbox>",
+);
+
+/** Ewe (Eʋegbe)
+ * @author Natsubee
+ */
+$messages['ee'] = array(
+	'createbox-desc' => 'Go tɔxɛ na axa gɔmedzedze',
+	'createbox-create' => 'Dze egɔme',
+	'createbox-exists' => "Taflatse, woŋlɔ \"'''{{FULLPAGENAME}}'''\" xoxo.
+
+Wòmateŋu adze axa sia gɔme o, ke boŋ wòateŋu [{{fullurl:{{FULLPAGENAME}}|action=edit}} atrɔ asi le eŋu], [{{fullurl:{{FULLPAGENAME}}}} alo axlẽ], alo wòateŋu adze axa bubu gɔme kple go si le afisia ɖome.",
 );
 
 /** Greek (Ελληνικά)
@@ -309,6 +352,11 @@ $messages['gu'] = array(
 <createbox>break=no</createbox>",
 );
 
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'createbox-create' => 'Ƙirƙira',
+);
+
 /** Hakka (Hak-kâ-fa)
  * @author Hakka
  */
@@ -387,6 +435,11 @@ Anda tidak dapat membuat halaman ini, namun Anda dapat [{{fullurl:{{FULLPAGENAME
 $messages['ig'] = array(
 	'createbox-desc' => 'Ntiyéntiyé di mkpà maka éké ihü',
 	'createbox-create' => 'Ké',
+	'createbox-exists' => "Ndó, \"'''{{FULLPAGENAME}}'''\" di kwà.
+
+Í nweríkí ké ihü á, mànà Í nwẹríkí [{{fullurl:{{FULLPAGENAME}}|action=edit}} rüo élú yá], [{{fullurl:{{FULLPAGENAME}}}} gwuó ya], ma Í jí ngwa nor nà àlà ngá Í kpátá ihü nke òzór.
+
+<createbox>gbàjié=mbạ</createbox>",
 );
 
 /** Italian (Italiano)
@@ -451,7 +504,7 @@ $messages['kri'] = array(
 	'createbox-create' => 'Mek sohmtin',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -477,6 +530,14 @@ $messages['lb'] = array(
 Dir kënnt dës Säit net uleeën, awer Dir kënnt [{{fullurl:{{FULLPAGENAME}}|action=edit}} s'änneren], [{{fullurl:{{FULLPAGENAME}}}} liest] oder wielt fir eng aner Säit unzeleeë mat Hëllef vun der Këscht ënnendrënner.",
 );
 
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'createbox-desc' => "Boaty fampidirana teny natokana ho an'ny famoronana pejy",
+	'createbox-create' => 'Amboary',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -488,6 +549,13 @@ $messages['mk'] = array(
 Не можете да ја создадете оваа страница, но можете да ја [{{fullurl:{{FULLPAGENAME}}|action=edit}} уредите], [{{fullurl:{{FULLPAGENAME}}}} прочитате], или да изберете да создадете друга страница со помош на кутијата подолу.
 
 <createbox>break=no</createbox>",
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'createbox-create' => 'സൃഷ്ടിക്കുക',
 );
 
 /** Marathi (मराठी)
@@ -569,6 +637,13 @@ Podètz pas crear aquesta pagina, mas la podètz [{{fullurl:{{FULLPAGENAME}}|act
 <createbox>break=no</createbox>",
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'createbox-create' => 'Schtaerte',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  * @author Wpedzich
@@ -618,7 +693,7 @@ $messages['pt'] = array(
 	'createbox-create' => 'Criar',
 	'createbox-exists' => "Desculpe, \"'''{{FULLPAGENAME}}'''\" já existe.
 
-Você não pode criar esta página, mas pode [{{fullurl:{{FULLPAGENAME}}|action=edit}} editá-la], 
+Não pode criar esta página, mas pode [{{fullurl:{{FULLPAGENAME}}|action=edit}} editá-la], 
 [{{fullurl:{{FULLPAGENAME}}}} lê-la], ou optar por criar uma página diferente usando a caixa abaixo.
 
 <createbox>break=no</createbox>",
@@ -673,6 +748,13 @@ $messages['ru'] = array(
 <createbox>break=no</createbox>",
 );
 
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'createbox-create' => 'Створити',
+);
+
 /** Yakut (Саха тыла)
  * @author HalanTul
  */
@@ -694,10 +776,17 @@ Túto stránku nemôžete vytvoriť, ale môžete ju [{{fullurl:{{FULLPAGENAME}}
 <createbox>break=no</createbox>",
 );
 
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬) */
+$messages['sr-ec'] = array(
+	'createbox-create' => 'Направи',
+);
+
 /** Sundanese (Basa Sunda)
  * @author Irwangatot
+ * @author Kandar
  */
 $messages['su'] = array(
+	'createbox-desc' => 'Kotak asupan husus pikeun nyieun kaca',
 	'createbox-create' => 'Jieun',
 );
 
@@ -723,6 +812,13 @@ $messages['sw'] = array(
 	'createbox-exists' => "Kumradhi, \"'''{{FULLPAGENAME}}'''\" inapatikana tayari.
 
 Huwezi kuanzisha ukurasa, lakini unaweza [{{fullurl:{{FULLPAGENAME}}|action=edit}} kuuhariri] au [{{fullurl:{{FULLPAGENAME}}}} kuusoma], au kuanzisha ukurasa mwingine kwa kutumia sanduku iliyopo chini.",
+);
+
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'createbox-create' => 'உருவாக்கவும்',
 );
 
 /** Telugu (తెలుగు)
@@ -857,13 +953,27 @@ $messages['yi'] = array(
  * @author Gzdavidwong
  */
 $messages['zh-hans'] = array(
+	'createbox-desc' => '于Wiki中包含创建页面的输入框',
 	'createbox-create' => '建立',
+	'createbox-exists' => "抱歉，'''{{FULLPAGENAME}}'''已经存在于{{SITENAME}}。
+
+你不能创建本页，但你可以[{{fullurl:{{FULLPAGENAME}}|action=edit}} 编辑本页]、[{{fullurl:{{FULLPAGENAME}}}} 阅读本页]或在下方输入另一个名字继续创建页面：
+
+<createbox>break=no</createbox>",
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'createbox-desc' => '於Wiki中包含建立頁面的輸入框',
 	'createbox-create' => '建立',
+	'createbox-exists' => "抱歉，'''{{FULLPAGENAME}}'''已經存在於{{SITENAME}}。
+
+你不能建立本頁，但你可以[{{fullurl:{{FULLPAGENAME}}|action=edit}} 編輯本頁]、[{{fullurl:{{FULLPAGENAME}}}} 閱讀本頁]或在下方輸入另一個名字繼續建立頁面：
+
+<createbox>break=no</createbox>",
 );
 

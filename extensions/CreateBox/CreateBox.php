@@ -20,7 +20,7 @@
 
  You should have received a copy of the GNU General Public License along
  with this program; if not, write to the Free Software Foundation, Inc.,
- 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  http://www.gnu.org/copyleft/gpl.html
 
  To install, add following to LocalSettings.php
@@ -40,22 +40,22 @@ $wgExtensionCredits['parserhook'][] = array(
 	'author' => 'Ross McClure',
 	'version' => '1.6',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CreateBox',
-	'description' => 'Specialized inputbox for page creation',
 	'descriptionmsg' => 'createbox-desc',
 );
 
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['CreateBox'] = $dir . 'CreateBox.i18n.php';
 
-function wfCreateBox( &$parser ) {
+function wfCreateBox( $parser ) {
 	$parser->setHook( 'createbox', 'acMakeBox' );
 	return true;
 }
 
 function actionCreate( $action, $article ) {
 	wfLoadExtensionMessages( 'CreateBox' );
-	if( $action != 'create' )
+	if( $action != 'create' ) {
 		return true;
+	}
 
 	global $wgRequest;
 	$prefix = $wgRequest->getVal( 'prefix' );
@@ -64,12 +64,13 @@ function actionCreate( $action, $article ) {
 		$title = Title::newFromText( $prefix . $text );
 		if( is_null( $title ) ) {
 			global $wgTitle;
-			$wgTitle = Title::makeTitle( NS_SPECIAL, 'Badtitle' );
+			$wgTitle = SpecialPage::getTitleFor( 'Badtitle' );
 			throw new ErrorPageError( 'badtitle', 'badtitletext' );
-		} elseif( $title->getArticleID() == 0 )
+		} elseif( $title->getArticleID() == 0 ) {
 			acRedirect( $title, 'edit' );
-		else
+		} else {
 			acRedirect( $title, 'create' );
+		}
 	} elseif( $wgRequest->getVal( 'section' ) == 'new' || $article->getID() == 0 ) {
 		acRedirect( $article->getTitle(), 'edit' );
 	} else {
@@ -82,17 +83,18 @@ function actionCreate( $action, $article ) {
 	return false;
 }
 
-function acGetOption( &$input, $name, $value = null ) {
+function acGetOption( $input, $name, $value = null ) {
 	if( preg_match( "/^\s*$name\s*=\s*(.*)/mi", $input, $matches ) ) {
-		if( is_int( $value ) )
+		if( is_int( $value ) ) {
 			return intval( $matches[1] );
-		else
+		} else {
 			return htmlspecialchars( $matches[1] );
+		}
 	}
 	return $value;
 }
 
-function acMakeBox( $input, $argv, &$parser ) {
+function acMakeBox( $input, $argv, $parser ) {
 	wfLoadExtensionMessages( 'CreateBox' );
 	global $wgRequest, $wgScript;
 	if( $wgRequest->getVal( 'action' ) == 'create' ) {
@@ -100,8 +102,9 @@ function acMakeBox( $input, $argv, &$parser ) {
 		$preload = $wgRequest->getVal( 'preload' );
 		$editintro = $wgRequest->getVal( 'editintro' );
 		$text = $parser->getTitle()->getPrefixedText();
-		if( $prefix && strpos( $text, $prefix ) === 0 )
+		if( $prefix && strpos( $text, $prefix ) === 0 ) {
 			$text = substr( $text, strlen( $prefix ) );
+		}
 	} else {
 		$prefix = acGetOption( $input, 'prefix' );
 		$preload = acGetOption( $input, 'preload' );
