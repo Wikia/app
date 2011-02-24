@@ -596,18 +596,18 @@ var ThemeDesigner = {
 
 			$().log('applySettings, reloadCSS');
 
-			var sass = "/skins/oasis/css/oasis.scss/" + wgStyleVersion + "/";
-			sass += "color-body=" + escape(ThemeDesigner.settings["color-body"]);
-			sass += "&color-page=" + escape(ThemeDesigner.settings["color-page"]);
-			sass += "&color-buttons=" + escape(ThemeDesigner.settings["color-buttons"]);
-			sass += "&color-links=" + escape(ThemeDesigner.settings["color-links"]);
-			sass += "&color-header=" + escape(ThemeDesigner.settings["color-header"]);
-			sass += "&background-image=" + encodeURIComponent(ThemeDesigner.settings["background-image"]);
-			sass += "&background-align=" + escape(ThemeDesigner.settings["background-align"]);
-			sass += "&background-tiled=" + escape(ThemeDesigner.settings["background-tiled"]);
-			sass += "&wordmark-font=" + escape(ThemeDesigner.settings["wordmark-font"]);
-			sass = wfGetSassUrl(sass);
-			document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(sass);
+			var file = '/skins/oasis/css/oasis.scss';
+			var params = 'color-body=' + escape(ThemeDesigner.settings['color-body']);
+			params += '&color-page=' + escape(ThemeDesigner.settings['color-page']);
+			params += '&color-buttons=' + escape(ThemeDesigner.settings['color-buttons']);
+			params += '&color-links=' + escape(ThemeDesigner.settings['color-links']);
+			params += '&color-header=' + escape(ThemeDesigner.settings['color-header']);
+			params += '&background-image=' + encodeURIComponent(ThemeDesigner.settings['background-image']);
+			params += '&background-align=' + escape(ThemeDesigner.settings['background-align']);
+			params += '&background-tiled=' + escape(ThemeDesigner.settings['background-tiled']);
+			params += '&wordmark-font=' + escape(ThemeDesigner.settings['wordmark-font']);
+			var sassUrl = wfGetSassUrl(file, params);
+			document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(sassUrl);
 		}
 
 		if(updateSkinPreview) {
