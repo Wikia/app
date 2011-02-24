@@ -11,6 +11,7 @@ import static org.testng.AssertJUnit.assertFalse;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
+import org.testng.SkipException;
 
 public class PhalanxTest extends BaseTest {
 
@@ -36,6 +37,10 @@ public class PhalanxTest extends BaseTest {
 
 	// did cleanup method have been run?
 	private static boolean run = false;
+
+	// used by contentBlockTest tests
+	private String blockId;
+	private String blockFilter;
 
 	/**
 	 * Login on selected testing account
@@ -118,15 +123,7 @@ public class PhalanxTest extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 
 		// return true if article creation was successful
-		if (this.isArticleViewMode(question)) {
-			// cleanup - remove article
-			loginAsStaff();
-			this.deleteArticle(question);
-			return true;
-		}
-		else {
-			return false;
-		}
+		return this.isArticleViewMode(question);
 	}
 
 	/**
@@ -146,13 +143,7 @@ public class PhalanxTest extends BaseTest {
 		assertTrue(this.isArticleViewMode(question));
 
 		// check HomePageList
-		boolean result = this.isQuestionOnListOfRecentlyAsked(question);
-
-		// cleanup
-		loginAsStaff();
-		this.deleteArticle(question);
-
-		return result;
+		return this.isQuestionOnListOfRecentlyAsked(question);
 	}
 
 	/**
@@ -197,10 +188,6 @@ public class PhalanxTest extends BaseTest {
 			this.log(" Edit has been blocked");
 			return false;
 		}
-
-		// cleanup - remove article
-		loginAsStaff();
-		this.deleteArticle(articleName);
 
 		return true;
 	}
@@ -257,7 +244,7 @@ public class PhalanxTest extends BaseTest {
 		String srcNameExtension = srcName.substring(srcName.length() - 3, srcName.length());
 		destName += "." + srcNameExtension;
 
-		this.log(" Uploading an image: '" + srcName + " as " + destName + "'");
+		this.log(" Uploading an image: '" + srcName + "' as '" + destName + "'");
 
 		session().open("index.php?title=Special:Upload");
 		session().waitForPageToLoad(this.getTimeout());
@@ -281,11 +268,41 @@ public class PhalanxTest extends BaseTest {
 
 		assertTrue(session().isTextPresent("Image:" + destName) || session().isTextPresent("File:" + destName));
 
-		// cleanup - delete uploaded file
-		this.deleteImage(destName);
-
 		return true;
 	}
+
+	/**
+	 * Perform cleanup tasks before running test methods
+	 *
+	 * FIXME
+	@BeforeMethod
+	@Test(groups={"CI"})
+	public void cleanupBeforeTest() throws Exception {
+		// run only once
+		if (!this.run) {
+			loginAsStaff();
+
+			this.log("Cleanup - removing articles");
+			this.deleteArticle(this.testArticleName);
+			this.deleteArticle(this.testArticleName + "New");
+			this.deleteArticle(this.testArticleName + this.badWord);
+			this.deleteArticle(this.testArticleName + this.badWord + "New");
+
+			this.log("Cleanup - removing questions");
+			this.deleteArticle(this.goodQuestion);
+			this.deleteArticle(this.badQuestion);
+
+			this.log("Cleanup - removing images");
+			this.deleteImage(this.testArticleName + "Image");
+			this.deleteImage(this.testArticleName + this.badWord + "Image");
+
+			this.run = true;
+		}
+		else {
+			this.log("");
+		}
+	}
+	**/
 
 	/**
 	 * Test answers creation on answers site
@@ -344,6 +361,15 @@ public class PhalanxTest extends BaseTest {
 		assertFalse(this.moveArticle(this.testArticleName, this.testArticleName + this.badWord + "New"));
 	}
 
+	@Test(groups={"CI"}, dependsOnMethods={"articleMoveTest"}, alwaysRun=true)
+    public void articleMoveCleanupTest() throws Exception {
+		this.log("Test article move - cleanup");
+
+		loginAsStaff();
+
+		this.deleteArticle(this.testArticleName + "New");
+	}
+
 	/**
 	 * Test article edit (scan title)
 	 *
@@ -380,6 +406,9 @@ public class PhalanxTest extends BaseTest {
 
 		// try creating an article with "bad" content
 		assertFalse(this.createArticle(this.testArticleName, this.badWords));
+
+		// perform edit with blocked word in the URL
+		assertFalse(this.createArticle(this.testArticleName, "http://www." + this.badWord + ".net"));
 	}
 
 	/**
@@ -498,13 +527,13 @@ public class PhalanxTest extends BaseTest {
 	/**
 	 * Test whitelist
 	 *
-	 * Tests blocks from ContentBlock group
+	 * Tests blocks from ContentBlock group (maintain the execution order of tests below)
 	 */
 	@Test(groups={"CI"})
-	public void whitelistTest() throws Exception {
-		this.log("Test whitelist");
+	public void beforeWhitelistTest() throws Exception {
+		this.log("Test whitelist - prepare");
 
-		loginAsSysop();
+		loginAsStaff();
 
 		// edit whitelist - allow "fuck" word
 		String whitelist = " #<!-- Phalanx whitelist text --> <pre>\n" +
@@ -514,19 +543,28 @@ public class PhalanxTest extends BaseTest {
 		this.log(" Adding whitelist entry");
 
 		editArticle(this.whitelistMessage, whitelist);
+	}
+
+	@Test(groups={"CI"}, dependsOnMethods={"beforeWhitelistTest"})
+    public void whitelistTest() throws Exception {
+		this.log("Test whitelist - check");
+
+		login();
 
 		// perform edits with whitelisted domain in URL
 		assertTrue(this.createArticle(this.testArticleName, "http://www." + this.badWord + ".net"));
 		assertFalse(this.createArticle(this.testArticleName, "https://www.foo.net/" + this.badWord + ".html"));
 		assertFalse(this.createArticle(this.testArticleName, this.goodWords + " " + this.badWord));
+	}
 
-		this.log(" Removing whitelist entry");
+	@Test(groups={"CI"}, dependsOnMethods={"whitelistTest"})
+	public void afterWhitelistTest() throws Exception {
+		this.log("Test whitelist - reverting");
+
+		loginAsStaff();
 
 		// revert last change to whitelist message
 		undoLastEdit(this.whitelistMessage, "Cleanup after Phalanx test");
-
-		// perform edit with blocked word in the URL
-		assertFalse(this.createArticle(this.testArticleName, "http://www." + this.badWord + ".net"));
 	}
 
 	/**
@@ -536,14 +574,19 @@ public class PhalanxTest extends BaseTest {
 	public void contentBlockTest() throws Exception {
 		this.log("Test adding, applying and removing content block via Special:Phalanx");
 
+		//FIXME This test needs to be run on community wiki (Special:Phalanx is enabled only there)
+		throw new SkipException("Skip");
+
+		/**
+
 		loginAsStaff();
 
 		// let's create block which will be applied to article content
 		Random randomGenerator = new Random();
-		String blockFilter = "<big>Test / \\ Block" + Integer.toString(randomGenerator.nextInt(666)) + "</big>";
+		this.blockFilter = "<big>Test / \\ Block" + Integer.toString(randomGenerator.nextInt(666)) + "</big>";
 		String blockReason = "Phalanx test block";
 
-		this.log(" Adding content block for '" + blockFilter + "'");
+		this.log(" 1) Adding content block for '" + this.blockFilter + "'");
 
 		// add new block via special page
 		session().open("index.php?title=Special:Phalanx");
@@ -552,7 +595,7 @@ public class PhalanxTest extends BaseTest {
 		assertTrue(session().isElementPresent("wpPhalanxFilter"));
 
 		// fill-in the form
-		session().type("wpPhalanxFilter", blockFilter);
+		session().type("wpPhalanxFilter", this.blockFilter);
 		session().check("wpPhalanxTypeContent");
 		session().type("wpPhalanxReason", blockReason);
 		session().click("wpPhalanxSubmit");
@@ -563,35 +606,45 @@ public class PhalanxTest extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 
 		// get ID of added block
-		String blockId = session().getAttribute("//li[contains(@id, 'phalanx-block-')]/b[text() = '" + blockFilter + "']/..@id");
-		blockId = blockId.substring(14, blockId.length());
+		this.blockId = session().getAttribute("//li[contains(@id, 'phalanx-block-')]/b[text() = '" + this.blockFilter + "']/..@id");
+		this.blockId = this.blockId.substring(14, this.blockId.length());
 
-		this.log(" Block #" + blockId + " added");
+		this.log(" Block #" + this.blockId + " added");
 
 		// check whether new block is on the list
-		assertTrue(session().isTextPresent(blockFilter));
+		assertTrue(session().isTextPresent(this.blockFilter));
+		**/
+	}
 
+	@Test(groups={"CI"}, dependsOnMethods={"contentBlockTest"})
+    public void contentBlockApplyTest() throws Exception {
 		// test edit blocking
-		this.log(" Testing article edit blocking");
+		this.log(" 2) Testing article edit blocking");
 
 		login();
-		assertFalse(this.createArticle(this.testArticleName, this.goodWords + " " + blockFilter));
 
+		assertFalse(this.createArticle(this.testArticleName, this.goodWords + " " + this.blockFilter));
+	}
+
+	@Test(groups={"CI"}, dependsOnMethods={"contentBlockApplyTest"})
+    public void contentBlockStatsTest() throws Exception {
 		// test stats page
-		this.log(" Testing stats page");
+		this.log(" 3) Testing stats page");
+
 		loginAsStaff();
-		session().open("index.php?title=Special:PhalanxStats/" + blockId);
+
+		session().open("index.php?title=Special:PhalanxStats/" + this.blockId);
 		session().waitForPageToLoad(this.getTimeout());
 
-		assertTrue(session().isElementPresent("phalanx-block-" + blockId + "-stats"));
+		assertTrue(session().isElementPresent("phalanx-block-" + this.blockId + "-stats"));
 
 		// remove the block (assume it's the first one on the list)
-		this.log(" Removing content block for '" + blockFilter + "' (#" + blockId + ")");
+		this.log(" 4) Removing content block for '" + this.blockFilter + "' (#" + this.blockId + ")");
 
 		session().open("index.php?title=Special:Phalanx");
 		session().waitForPageToLoad(this.getTimeout());
 
-		session().click("//li[@id='phalanx-block-" + blockId + "']/a[@class='unblock']");
+		session().click("//li[@id='phalanx-block-" + this.blockId + "']/a[@class='unblock']");
 		Thread.sleep(2000);
 
 		// refresh the page
@@ -599,34 +652,16 @@ public class PhalanxTest extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 
 		// check whether block is not on the list
-		assertFalse(session().isTextPresent(blockFilter));
-
-		// test edit blocking
-		this.log(" Testing article edit blocking");
-
-		login();
-		assertTrue(this.createArticle(this.testArticleName, this.goodWords + " " + blockFilter));
+		assertFalse(session().isTextPresent(this.blockFilter));
 	}
 
-	/**
-	 * Cleanup
-	 */
-	@BeforeMethod(alwaysRun = true)
-	public void cleanupAfter() throws Exception {
-		if (!this.run) {
-			this.log("Cleanup");
+	@Test(groups={"CI"}, dependsOnMethods={"contentBlockStatsTest"})
+    public void contentBlockAfterRemovalTest() throws Exception {
+		// test edit blocking
+		this.log(" 5) Testing article edit blocking");
 
-			loginAsStaff();
+		login();
 
-			this.deleteArticle(this.testArticleName);
-			this.deleteArticle(this.testArticleName + "New");
-			this.deleteArticle(this.testArticleName + this.badWord);
-			this.deleteArticle(this.testArticleName + this.badWord + "New");
-
-			this.run = true;
-		}
-		else {
-			this.log("");
-		}
+		assertTrue(this.createArticle(this.testArticleName, this.goodWords + " " + this.blockFilter));
 	}
 }
