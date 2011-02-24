@@ -66,7 +66,6 @@ var ThemeDesigner = {
 		$("#ThemeTab .previous, #ThemeTab .next").click(function(event) {
 			event.preventDefault();
 			if (!ThemeDesigner.isSliding) {
-				ThemeDesigner.isSliding = true;
 				var list = $("#ThemeTab .slider ul");
 				var arrow = $(this);
 				var slideTo = null;
@@ -75,7 +74,8 @@ var ThemeDesigner = {
 				if(arrow.hasClass("disabled")) {
 					return;
 				}
-	
+				
+				ThemeDesigner.isSliding = true;
 				// slide
 				if (arrow.hasClass("previous")) {
 					slideTo = parseInt(list.css("margin-left")) + slideBy;
