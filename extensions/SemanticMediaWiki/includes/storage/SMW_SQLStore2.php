@@ -1543,13 +1543,15 @@ class SMWSQLStore2 extends SMWStore {
 
 		$nextpos = $index + $count;
 
+		$dbr = wfGetDB( DB_SLAVE ); // wikia change, handler to local database
+
 		if ( $emptyrange ) { // nothing found, check if there will be more pages later on
-			$next1 = $db->selectField( 'page', 'page_id', "page_id >= $nextpos", __METHOD__, array( 'ORDER BY' => "page_id ASC" ) );
+			$next1 = $dbr->selectField( 'page', 'page_id', "page_id >= $nextpos", __METHOD__, array( 'ORDER BY' => "page_id ASC" ) );
 			$next2 = $db->selectField( 'smw_ids', 'smw_id', "smw_id >= $nextpos", __METHOD__, array( 'ORDER BY' => "smw_id ASC" ) );
 			$nextpos = ( ( $next2 != 0 ) && ( $next2 < $next1 ) ) ? $next2:$next1;
 		}
 
-		$max1 = $db->selectField( 'page', 'MAX(page_id)', '', __METHOD__ );
+		$max1 = $dbr->selectField( 'page', 'MAX(page_id)', '', __METHOD__ );
 		$max2 = $db->selectField( 'smw_ids', 'MAX(smw_id)', '', __METHOD__ );
 		$index = $nextpos ? $nextpos: - 1;
 
