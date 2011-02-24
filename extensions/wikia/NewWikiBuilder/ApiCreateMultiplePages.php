@@ -7,16 +7,16 @@
 class ApiCreateMultiplePages extends ApiBase {
 	protected $maxpages = 100;
 
-        public function __construct($main, $action) {
-                parent :: __construct($main, $action);
-        }
+	public function __construct($main, $action) {
+		parent :: __construct($main, $action);
+	}
 
 	public function execute() {
-                $this->getMain()->requestWriteMode();
-		
-                $params = $this->extractRequestParams();
-		if (empty($params['pagelist'])){
-                        $this->dieUsageMsg(array('missingparam', 'pagelist'));
+		$this->getMain()->requestWriteMode();
+
+		$params = $this->extractRequestParams();
+		if (empty($params['pagelist'])) {
+			$this->dieUsageMsg(array('missingparam', 'pagelist'));
 		}
 
 		$r = array();
@@ -28,10 +28,10 @@ class ApiCreateMultiplePages extends ApiBase {
 		}
 
 		$createType = 'createPage';
-                if ($params['type'] == 'answers') {
-                        $createType .= $params['type'];
+		if ($params['type'] == 'answers') {
+			$createType .= $params['type'];
 			$pagetexts = explode( '|', $params['pagetext'] );
-                }
+		}
 
 		$categories = explode('|', $params['category']);
 		for ($i = 0; $i< sizeof($pages); $i++){
@@ -59,7 +59,7 @@ class ApiCreateMultiplePages extends ApiBase {
 		$title = preg_replace('/\?+$/', '', $title);
 	
 		$titleObj = Title::newFromText($title);
-		if(!$titleObj) {
+		if (!$titleObj) {
 			// Invalid title
 			return false;
 		}
@@ -70,14 +70,14 @@ class ApiCreateMultiplePages extends ApiBase {
 		}
 
 		// Does the page already exist?
-		if ($titleObj->exists()){
+		if ($titleObj->exists()) {
 			return false;
 		}
 
-                // Now let's check whether we're even allowed to do this
-                $errors = $titleObj->getUserPermissionsErrors('createpage', $wgUser);
-                if(count($errors)) {
-                        $this->dieUsageMsg($errors[0]);
+		// Now let's check whether we're even allowed to do this
+		$errors = $titleObj->getUserPermissionsErrors('createpage', $wgUser);
+		if(count($errors)) {
+			$this->dieUsageMsg($errors[0]);
 		}
 
 		if (!empty($category)){
@@ -85,14 +85,27 @@ class ApiCreateMultiplePages extends ApiBase {
 		}
 
 		$summary = '';
-
+		$result   = null;
+		$article  = new Article( $titleObj );
+		$editPage = new EditPage( $article );
+		$editPage->edittime = $article->getTimestamp();
+		$editPage->textbox1 = $text;
+		$bot = $wgUser->isAllowed('bot');
+		//this function calls Article::onArticleCreate which clears cache for article and it's talk page
+		$status = $editPage->internalAttemptSave( $result, $bot );
+		if ( $status == EditPage::AS_SUCCESS_UPDATE || $status == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
+			return $editPage->getContent();
+		} else {
+			return false;
+		}
+/*
 		$articleObj = new Article($titleObj);
 		$status = $articleObj->doEdit($text, $summary, EDIT_NEW);
 		if ($status->ok == 1){
 			return $status->value['revision']->getTitle()->getText();
 		} else {
 			return false;
-		}
+		}*/
 	}
 
 	private function createPageAnswers( $page, $category = null, $text = null ) {
@@ -144,6 +157,6 @@ class ApiCreateMultiplePages extends ApiBase {
 		);
 	}
 
-        public function getVersion() { return __CLASS__ . ': $Id: '.__CLASS__.'.php '.filesize(dirname(__FILE__)."/".__CLASS__.".php").' '.strftime("%Y-%m-%d %H:%M:%S", time()).'Z wikia $'; }
+	public function getVersion() { return __CLASS__ . ': $Id: '.__CLASS__.'.php '.filesize(dirname(__FILE__)."/".__CLASS__.".php").' '.strftime("%Y-%m-%d %H:%M:%S", time()).'Z wikia $'; }
 
 }
