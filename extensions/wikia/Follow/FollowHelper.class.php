@@ -597,13 +597,22 @@ class FollowHelper {
 			$data = array_slice($data, 0, 5);
 		} */
 
+		// BugId:2643
+		$moreUrl = null;
+		if ($wgUser->getId() == $user->getId()) {
+			$specialPage = SpecialPage::getSafeTitleFor('Following', $user->getName());
+			if (!empty($specialPage)) {
+				$moreUrl = $specialPage->getLocalUrl();
+			}
+		}
+
 		$template->set_vars(
-			array (
+			array(
 				"isLogin" => ($wgUser->getId() == $user->getId() ),
 				"hideUrl" => $wgTitle->getFullUrl( "hide_followed=1" ),
 				"data" 	=> $data,
 				// show "more" only if wathing own user page
-				"moreUrl" => $wgUser->getId() == $user->getId() ? Skin::makeSpecialUrlSubpage('following', $user->getName()) : null,
+				"moreUrl" => $moreUrl,
 			)
 		);
 		wfProfileOut(__METHOD__);
