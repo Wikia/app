@@ -574,12 +574,17 @@ public class PhalanxTest extends BaseTest {
 	public void contentBlockTest() throws Exception {
 		this.log("Test adding, applying and removing content block via Special:Phalanx");
 
-		//FIXME This test needs to be run on community wiki (Special:Phalanx is enabled only there)
-		throw new SkipException("Skip");
-
-		/**
-
 		loginAsStaff();
+
+		try {
+			session().open("index.php?title=Special:Phalanx");
+		} catch(Exception e) {
+			this.log("Special:Phalanx not enabled on this wiki - skipping this test");
+			throw new SkipException("Skip");
+		};
+
+		session().waitForPageToLoad(this.getTimeout());
+		assertTrue(session().isElementPresent("wpPhalanxFilter"));
 
 		// let's create block which will be applied to article content
 		Random randomGenerator = new Random();
@@ -587,12 +592,6 @@ public class PhalanxTest extends BaseTest {
 		String blockReason = "Phalanx test block";
 
 		this.log(" 1) Adding content block for '" + this.blockFilter + "'");
-
-		// add new block via special page
-		session().open("index.php?title=Special:Phalanx");
-		session().waitForPageToLoad(this.getTimeout());
-
-		assertTrue(session().isElementPresent("wpPhalanxFilter"));
 
 		// fill-in the form
 		session().type("wpPhalanxFilter", this.blockFilter);
@@ -613,7 +612,6 @@ public class PhalanxTest extends BaseTest {
 
 		// check whether new block is on the list
 		assertTrue(session().isTextPresent(this.blockFilter));
-		**/
 	}
 
 	@Test(groups={"CI"}, dependsOnMethods={"contentBlockTest"})
