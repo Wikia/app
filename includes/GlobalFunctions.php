@@ -3000,10 +3000,14 @@ function wfSplitWikiID( $wiki ) {
 function &wfGetDB( $db, $groups = array(), $wiki = false ) {
 
 	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)
-	global $smwgUseExternalDB;
+	global $smwgUseExternalDB, $wgDBname;
 	if( $smwgUseExternalDB === true ) {
 		if( ( is_array( $groups ) && in_array( 'smw', $groups ) ) || $groups === 'smw' ) {
+			if( $wiki === false ) {
+				$wiki = $wgDBname;
+			}
 			$wiki = "smw+" . $wiki;
+			wfDebugLog( "connect", __METHOD__ . ": smw+ cluster is active, requesting $wiki\n", true );
 		}
 	}
 	// wikia change end

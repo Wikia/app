@@ -90,7 +90,7 @@ class SMWSQLHelpers {
 	protected static function createTable( $tableName, array $fields, $db, $reportTo ) {
 		global $wgDBtype, $wgDBTableOptions, $wgDBname;
 		
-		$sql = 'CREATE TABLE ' . ( $wgDBtype == 'postgres' ? '' : "`$wgDBname`." ) . $tableName . ' (';
+		$sql = 'CREATE TABLE ' . ( $wgDBtype == 'postgres' ? '' : "" ) . $tableName . ' (';
 		
 		$fieldSql = array();
 		
