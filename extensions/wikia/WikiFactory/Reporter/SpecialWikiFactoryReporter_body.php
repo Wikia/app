@@ -148,7 +148,29 @@ class WikiFactoryReporter extends SpecialPage
 		asort($acv);
 		unset($values);
 
-		$gt = GlobalTitle::newFromText('WikiFactory', NS_SPECIAL, 177);
+		global $wgCityId;
+		if($wgCityId == 177)
+		{
+			#we're on central (or are faking it), so link locallly
+			$WF_title =  SpecialPage::getTitleFor('WikiFactory');
+			$wie_title = SpecialPage::getTitleFor('WhereIsExtension');
+		}
+		else
+		{
+			#we're away from home, so make sure the links link back right
+			$WF_title  = GlobalTitle::newFromText('WikiFactory',      NS_SPECIAL, 177);
+			$wie_title = GlobalTitle::newFromText('WhereIsExtension', NS_SPECIAL, 177);
+		}
+
+		$wie_query = array(
+					'var'        => $variable->cv_variable_id,
+					'searchType' => 'full',
+					'val'        => 0,
+					);
+					#likeValue is appended manually inside the template;
+		$wie_base = $wie_title->getFullURL( http_build_query($wie_query) );
+		unset($wie_query);
+		unset($wie_title);
 
 		$limit_message = '';
 		if( $this->over_limit ) {
@@ -159,16 +181,24 @@ class WikiFactoryReporter extends SpecialPage
 
 		$groups = WikiFactory::getGroups();
 		$variable->var_group = $groups[$variable->cv_variable_group];
+		unset($groups);
+
+		$sprites = array(
+			'search' => "<img src='". wfBlankImgUrl() ."' class='sprite search' alt='search' height='16' width='22'>",
+			'edit' => "<img src='". wfBlankImgUrl() ."' class='sprite edit-pencil' alt='edit'>",
+		);
 
 		$tmpl = new EasyTemplate(dirname(__FILE__) . '/templates/');
 		$tmpl->set_vars(array
 		(
-			'th'       => array($variable->cv_name, 'wiki', 'city_id'),
-			'data'     => $data,
-			'variable' => $variable,
-			'acv'      => $acv,
-			'wf_base'  => $gt->getFullUrl(),
-			'limit_message'  => $limit_message,
+			'th'            => array($variable->cv_name, 'wiki', 'city_id'),
+			'data'          => $data,
+			'variable'      => $variable,
+			'acv'           => $acv,
+			'wf_base'       => $WF_title->getFullUrl(),
+			'limit_message' => $limit_message,
+			'sprites'       => $sprites,
+			'wie_base'      => $wie_base,
 		));
 
 		$out = $tmpl->execute('reporter');

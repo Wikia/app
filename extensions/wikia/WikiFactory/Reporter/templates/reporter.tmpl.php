@@ -3,7 +3,7 @@
 	<table class="wikitable">
 		<tr>
 			<th>id</th>
-			<th>variable</th>
+			<th>name</th>
 			<th>group</th>
 			<th>type</th>
 		</tr>
@@ -20,9 +20,13 @@
 </div>
 <div>
 <h2>Summary</h2>
-	<ul><?php foreach ($acv as $var=>$value): ?>
-		<li><?php print "{$var}: {$value}"; ?></li>
+	<div style="max-height: 300px; overflow: auto;">
+	<ul><?php foreach ($acv as $var=>$num): ?>
+		<li><?php $wie_url = $wie_base . "&likeValue=". rawurlencode($var);
+			print "<a href=\"{$wie_url}\" title='search wikis with this value'>{$sprites['search']}</a>";
+			print " {$num}: {$var}"; ?></li>
 	<?php endforeach; ?></ul>
+	</div>
 </div>
 
 <div>
@@ -44,7 +48,7 @@
 			<?php foreach ($row as $field): ?>
 				<td><?php print htmlspecialchars($field); ?></td>
 			<?php endforeach; ?>
-				<td><a href="<?php print "{$wf_base}/{$row['city']}/variables/{$variable->cv_name}"; ?>">[edit]</a></td>
+				<td><a href="<?php print "{$wf_base}/{$row['city']}/variables/{$variable->cv_name}"; ?>" title='edit'><?php print $sprites['edit']; ?></a></td>
 		</tr>
 	<?php endforeach; ?>
 	</table>
