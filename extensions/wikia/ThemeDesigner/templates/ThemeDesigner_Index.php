@@ -28,6 +28,7 @@
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery.json-1.3.js"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/js/ThemeDesigner.js"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/js/aim.js"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/SASS/sassUtil.js"></script>
 
 </head>
 <body>
