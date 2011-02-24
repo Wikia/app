@@ -1,9 +1,9 @@
 (function(){
 	window.ToolbarCustomize = window.ToolbarCustomize || {};
 	var TC = window.ToolbarCustomize;
-	
+
 	TC.OptionsTree = $.createClass(Observable,{
-	
+
 		constructor: function(el) {
 			TC.OptionsTree.superclass.constructor.call(this);
 			this.el = el;
@@ -14,7 +14,7 @@
 				update: $.proxy(this.updateLevels,this)
 			});
 		},
-		
+
 		/* assumes one my tools menu */
 		updateLevels: function() {
 			var all = this.el.children('li');
@@ -27,21 +27,21 @@
 					$(v).addClass('list-item-indent-'+level);
 				}
 			});
-			
+
 			this.el.find('.tree-visual').remove();
 			var ind = this.el.children('li.list-item-indent-1');
 			ind.prepend('<span class="tree-visual tree-line"></span><span class="tree-visual tree-dash"></span>');
 			ind.last().find('.tree-visual').remove();
 			ind.last().prepend('<span class="tree-visual tree-line-last"></span><span class="tree-visual tree-dash"></span>');
-			
+
 			this.fire('update',this);
 		},
-		
+
 		buildItem: function( item, level ) {
 			var type = (item.id.substr(0,5) == "Menu:") ? 'menu' : 'item';
 			var cl = level ? 'list-item-indent-'+level : '';
 			if (type == 'menu') cl += ' list-item-menu';
-			var html = 
+			var html =
 				'<li'
 				+' data-tool-id="'+$.htmlentities(item.id)+'"'
 				+' data-default-caption="'+$.htmlentities(item.defaultCaption)+'"'
@@ -62,7 +62,7 @@
 			this.fire('itembuild',this,item,itemEl);
 			return itemEl;
 		},
-		
+
 		loadLevel: function(els,level) {
 			for (var i=0;i<els.length;i++) {
 				this.el.append(this.buildItem(els[i],level));
@@ -71,13 +71,13 @@
 				}
 			}
 		},
-		
+
 		load: function(data) {
 			this.el.empty();
 			this.loadLevel(data,0);
 			this.updateLevels();
 		},
-		
+
 		save: function() {
 			var all = this.el.children('li');
 			var stack = [[]];
@@ -95,11 +95,11 @@
 			});
 			return stack[0];
 		},
-		
+
 		update: function() {
 			this.updateLevels();
 		},
-		
+
 		add: function(item,level) {
 			// add to my tools
 			var itemEl = this.buildItem(item,level || 0);
@@ -113,7 +113,7 @@
 			this.scrollToItem(itemEl);
 			this.updateLevels();
 		},
-		
+
 		scrollToItem: function(itemEl) {
 			var scroll = this.el.scrollTop();
 			var delta = itemEl.offset().top - this.el.offset().top;
@@ -129,24 +129,24 @@
 				this.el.scrollTop(scroll+move);
 			}
 		}
-		
+
 	});
-	
+
 	TC.OptionLinks = $.createClass(Observable,{
-		
+
 		constructor: function(el) {
 			TC.OptionLinks.superclass.constructor.call(this);
 			this.el = el;
 		},
-		
+
 		onItemClick: function(evt) {
 			evt.preventDefault();
 			this.fire('itemclick',this,$(evt.target).attr('data-tool-id'));
 			return false;
 		},
-		
+
 		buildItem: function(item) {
-			var html = 
+			var html =
 				'<li>'
 				+ '<a href="#" data-tool-id="'+$.htmlentities(item.id)+'">'
 				+ $.htmlentities(item.defaultCaption)
@@ -155,16 +155,16 @@
 			itemEl.find('a').click($.proxy(this.onItemClick,this));
 			return itemEl;
 		},
-		
+
 		load: function(els) {
 			this.el.empty();
 			for (var i=0;i<els.length;i++) {
 				this.el.append(this.buildItem(els[i]));
 			}
 		}
-		
+
 	});
-	
+
 	TC.Toggle = $.createClass(Object,{
 		constructor: function(target,buttons,cls) {
 			this.target = target;
@@ -175,103 +175,103 @@
 			this.hide();
 			this.buttons.bind('click.toggle',$.proxy(this.toggle,this));
 		},
-		
+
 		hide: function() {
 			this.target.hide();
 			this.buttons.hide();
 			this.buttons.filter('.'+this.cls).show();
 		},
-		
+
 		show: function() {
 			this.target.show();
 			this.buttons.hide();
 			this.buttons.not('.'+this.cls).show();
 		},
-		
+
 		toggle: function( evt ) {
 			this[ $(evt.currentTarget).hasClass(this.cls) ? "show" : "hide" ]();
 		}
-		
+
 	});
-	
+
 	TC.ModalBox = $.createClass(Observable,{
-	
-		w: false, 
+
+		w: false,
 		options: false,
-		
+
 		constructor: function(html,options) {
 			TC.ModalBox.superclass.constructor.call(this);
 			this.html = html;
 			this.options = options || {};
 		},
-		
+
 		show: function() {
 			if (this.w != false)
 				return;
 			this.w = $(this.html).makeModal(this.options);
 		},
-		
+
 		close: function() {
 			this.w.closeModal();
 			this.w = false;
 		}
-		
+
 	});
-	
+
 	TC.InputModalBox = $.createClass(TC.ModalBox,{
-	
+
 		constructor: function(html,options) {
 			TC.InputModalBox.superclass.constructor.call(this,html,options);
 		},
-		
+
 		show: function() {
 			TC.InputModalBox.superclass.show.call(this);
 			this.w.find('.input-box').val(this.options.value);
 			this.w.find('.save-button').click($.proxy(this.save,this));
 			this.w.find('.cancel-button').click($.proxy(this.close,this));
 		},
-		
+
 		save: function() {
 			var value = this.w.find('.input-box').val();
 			this.fire('save',this,value);
 			this.close();
 		}
-		
+
 	});
-	
+
 	TC.Configuration = $.createClass(Object,{
-	
+
 		toolbar: false,
 		data: false,
-		
+
 		w: false,
 		tree: false,
 		popular: false,
 		toggle: false,
-		
+
 		constructor: function(toolbar) {
 			TC.Configuration.superclass.constructor.call(this);
 			this.toolbar = toolbar;
 		},
-		
+
 		show: function() {
 			importStylesheetURI(wfGetSassUrl("skins/oasis/css/core/_ToolbarCustomize.scss"));
-			
+
 			$.bulkLoad(['autocomplete','jquery-ui','modal',{
 				type: "GET",
-				url: "/index.php?action=ajax&rs=moduleProxy&moduleName=Footer&actionName=ToolbarConfiguration&outputType=data",
+				url: wgScript + "?action=ajax&rs=moduleProxy&moduleName=Footer&actionName=ToolbarConfiguration&outputType=data",
 				success: $.proxy(this.onDataLoaded,this),
 				dataType: 'json'
 			}],$.proxy(this.checkLoad,this),$.proxy(this.onLoadFailure,this));
 		},
-		
+
 		onDataLoaded: function(data,textStatus,req) {
 			this.data = data;
 		},
-		
+
 		onLoadFailure: function(req,textStatus,errorThrown) {
 		},
-		
+
 		checkLoad: function() {
 			// Code copy from $.getModal() :-(
 			var insertionPoint = (window.skin == "oasis") ? "body" : "#positioned_elements";
@@ -281,19 +281,19 @@
 				closeOnBlackoutClick: false
 			});
 			// End of copy
-			
+
 			this.w.find('form')
 				// Disable submitting
 				.submit(function(){return false;})
 				// Disable submission after pressing enter key
 				.keypress(function(e){if (e.which == 13) {return false;}});
-			
+
 			// Toolbar list
 			this.tree = new TC.OptionsTree(this.w.find('.options-list'));
 			this.tree.on('itembuild',$.proxy(this.initItem,this));
 			this.tree.load(this.data.options);
 			this.w.find('.reset-defaults a').click($.proxy(this.loadDefaults,this));
-			
+
 			// Find a tool
 			this.w.find('.search').placeholder();
 			this.w.find('.search').autocomplete({
@@ -304,7 +304,7 @@
 				width: '300px'
 			});
 			this.w.find('.advanced-tools').find('a').attr('target','_blank');
-			
+
 			// Popular tools
 			this.popular = new TC.OptionLinks(this.w.find('.popular-list'));
 			this.popular.load(this.data.popularOptions);
@@ -312,12 +312,12 @@
 			var group = this.w.find('.popular-tools-group');
 			this.toggle = new TC.Toggle(group.children('.popular-list'),group.children('.popular-toggle'),'toggle-1');
 			this.w.find('.popular-toggle').click($.proxy(this.togglePopular,this));
-			
+
 			// Save and cancel
 			this.w.find('input[type=submit]').click($.proxy(this.save,this));
 			this.w.find('input.cancel-button').click($.proxy(this.close,this));
 		},
-		
+
 		getAutocompleteData: function() {
 			var suggestions = [];
 			var data = [];
@@ -330,7 +330,7 @@
 				data: data
 			};
 		},
-		
+
 		findOptionByName: function( id ) {
 			for (var i=0;i<this.data.allOptions.length;i++) {
 				if (this.data.allOptions[i].id == id) {
@@ -339,7 +339,7 @@
 			}
 			return false;
 		},
-		
+
 		findOptionByCaption: function( caption ) {
 			for (var i=0;i<this.data.allOptions.length;i++) {
 				if (this.data.allOptions[i].caption == caption) {
@@ -348,7 +348,7 @@
 			}
 			return false;
 		},
-		
+
 		addItemFromSearch: function(value, data) {
 			var item = this.findOptionByName(data);
 			if (item) {
@@ -356,30 +356,30 @@
 			}
 			this.w.find('.search').val('');
 		},
-		
+
 		addPopularOption: function( popular, id ) {
 			var item = this.findOptionByName(id);
 			if (item) this.tree.add(item,0);
 			return false;
 		},
-		
+
 		loadDefaults: function() {
 			this.tree.load(this.data.defaultOptions);
 			return false;
 		},
-		
+
 		initItem: function( tree, item, el ) {
 			el.find('.edit-pencil').click($.proxy(this.renameItem,this));
 			el.find('.trash').click($.proxy(this.deleteItem,this));
 		},
-		
+
 		renameItem: function( evt ) {
 			var item = $(evt.currentTarget).closest('li');
 			var d = new TC.InputModalBox(this.data.renameItemHtml,{
 				width: 360,
 				topOffset: 100,
 				value: item.attr('data-caption')
-			}); 
+			});
 			d.bind('save',$.proxy(function(dialog,value){
 				item.attr('data-caption',value);
 				item.find('.name').text(value);
@@ -387,14 +387,14 @@
 			d.show();
 			return false;
 		},
-		
+
 		deleteItem: function( evt ) {
 			$(evt.currentTarget).closest('li').remove();
 			this.tree.update();
 			return false;
 		},
-		
-		
+
+
 		save: function() {
 			var toolbar = this.tree.save();
 			$.post(window.wgServer + window.wgScript + '?action=ajax&rs=moduleProxy&moduleName=Footer&actionName=ToolbarSave&outputType=data',
@@ -404,7 +404,7 @@
 				},
 				$.proxy(this.afterSave,this));
 		},
-		
+
 		afterSave: function(data,status,req) {
 			if (status == "success" && data.status) {
 				this.toolbar.load(data.toolbar);
@@ -413,12 +413,12 @@
 				// show error to the user
 			}
 		},
-		
+
 		close: function() {
 			this.w.closeModal();
 		}
-		
+
 	});
-	
+
 	window.ToolbarCustomize = TC;
 })();
