@@ -687,6 +687,20 @@ Liftium.getContainingDivId = function(element){
 };
 
 
+Liftium.getCookieDomain = function () {
+	var domain = document.domain;
+
+	var d = domain.match(/wikia(-dev)?\.com$/);
+	if (!Liftium.e(d)) {
+		domain = d[0];
+	} else {
+		Liftium.trackEvent(["cookie_domain", domain]);
+	}
+
+	Liftium.d("cookie domain is " + domain, 7);
+	return domain;
+};
+
 Liftium.getPageVar = function(name, defaultVal){
 	return LiftiumOptions['kv_' + name] || defaultVal || '';
 };
@@ -2049,8 +2063,7 @@ Liftium.setTagStat = function (tag_id, type){
 Liftium.storeTagStats = function (){
 	Liftium.d("Stored Tag Stats = " + Liftium.tagStats, 6);
 	Liftium.cookie("LTS", Liftium.tagStats, {
-		  // FIXME for Wikia
-		  //domain: Liftium.getCookieDomain(),
+		  domain: Liftium.getCookieDomain(),
 		  path: "/",
 		  expires: 86400 * 1000 // one day from now, in milliseconds
 		 }
