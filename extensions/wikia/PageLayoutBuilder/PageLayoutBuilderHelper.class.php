@@ -46,4 +46,25 @@ class PageLayoutBuilderHelper {
 		return true;
 	}
 
+	/**
+	 * Redirects user to page layout builder special page
+	 * if the supplied argument is valid layout id
+	 *
+	 * @param string $text
+	 * @author wladek
+	 */
+	static public function onCreatePageSubpage( $text ) {
+		if (is_numeric($text)) {
+			$id = intval($text);
+			$title = Title::newFromID($id);
+			if ( $title && $title->getNamespace() == NS_PLB_LAYOUT ) {
+				global $wgOut;
+				$wgOut->redirect( SpecialPage::getTitleFor('PageLayoutBuilder')->getFullUrl("pldId={$id}") );
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 }
