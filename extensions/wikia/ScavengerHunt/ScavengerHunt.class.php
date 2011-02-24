@@ -127,6 +127,18 @@ class ScavengerHunt {
 		return count($articleIds) == count($visitedIds);
 	}
 
+
+	protected function getTriggersFor( $title, $games = null ) {
+		if ( !$title || !$title->getArticleID() ) {
+			return false;
+		}
+		if ( empty($games) ) {
+			$games = WF::build('ScavengerHuntGames');
+		}
+		$triggers = $games->getTitleTriggers($title);
+		return $triggers ? $triggers : false;
+	}
+
 	/*
 	 * hook handler
 	 *
@@ -138,18 +150,12 @@ class ScavengerHunt {
 
 		$app = WF::build('App');
 		$out = $app->getGlobal('wgOut');
+		$games = WF::build('ScavengerHuntGames');
 		$title = $app->getGlobal('wgTitle');
 		$articleId = $title->getArticleId();
 
-		// skip the rest if the title does not have article id
-		if (!$articleId) {
-			return true;
-		}
+		$triggers = $this->getTriggersFor($title,$games);
 
-		$games = WF::build('ScavengerHuntGames');
-
-		//TODO: limit below code to content namespaces?
-		$triggers = $games->getTitleTriggers($title);
 		if (!empty($triggers)) {
 			if (!empty($triggers['start'])) {
 				$game = $games->findHereEnabledById(reset($triggers['start']));
@@ -187,11 +193,14 @@ class ScavengerHunt {
 	 * @author wladek
 	 */
 	public function onBeforePageDisplay($out, $skin) {
+		global $wgTitle;
+
 		wfProfileIn(__METHOD__);
 
-		//TODO: check if page from game
-		$app = WF::build('App');
-		$out->addStyle($app->runFunction('wfGetSassUrl', 'extensions/wikia/ScavengerHunt/css/scavenger-game.scss'));
+		if ( $this->getTriggersFor($wgTitle) ) {
+			$app = WF::build('App');
+			$out->addStyle($app->runFunction('wfGetSassUrl', 'extensions/wikia/ScavengerHunt/css/scavenger-game.scss'));
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;
