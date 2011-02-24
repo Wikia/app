@@ -185,7 +185,7 @@ class ArticleComment {
 			if (empty($text)) {
 				$text = $wgOut->parse( $this->mLastRevision->getText() );
 				$wgMemc->set($memckey, $text, 3600);
-			} 
+			}
 			$sig = ( $this->mUser->isAnon() )
 				? AvatarService::renderLink( $this->mUser->getName() )
 				: Xml::element( 'a', array ( 'href' => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
@@ -499,7 +499,9 @@ class ArticleComment {
 			$parentArticle = Article::newFromID($parentId);
 			//FB#2875 (log data for further debugging)
 			if (is_null($parentArticle)) {
-				Wikia::log(__FUNCTION__, __LINE__, "Failed to create Article object, ID=$parentId, title={$title->getText()}, user={$user->getName()}", true);
+				$debugTitle = !empty($title) ? $title->getText() : '--EMPTY--'; // BugId:2646
+				Wikia::log(__FUNCTION__, __LINE__, "Failed to create Article object, ID=$parentId, title={$debugTitle}, user={$user->getName()}", true);
+				wfProfileOut( __METHOD__ );
 				return false;
 			}
 			$parentTitle = $parentArticle->getTitle();
