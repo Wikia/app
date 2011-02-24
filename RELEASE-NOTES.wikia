@@ -1,7 +1,9 @@
-== Changes since release-008 ==
+== Changes since release-010 ==
 * fb#2015: Background for list of images in image categories does not match the colour scheme defined by ThemeDesigner (Marooned)
 * fb#2643: Follow: kill fatal (macbre)
 * fb#2646: ArticleComments: kill fatal (macbre)
+
+== Changes since release-008 ==
 * fb#3042: Wikia footer is not appearing anymore (Marooned)
 * fb#2923: Lightbox should also apply in blog/article comments (Marooned)
 * fb#2700: Preview shouldn't take you to the open edit window (macbre)
