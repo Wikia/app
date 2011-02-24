@@ -443,7 +443,7 @@ public class PhalanxTest extends BaseTest {
 		Random randomGenerator = new Random();
 		String articleNameSuffix = Integer.toString(randomGenerator.nextInt(99999));
 
-		loginAsStaff();
+		loginAsSysop();
 
 		session().open("index.php?title=Special:WikiBuilder");
 		session().waitForPageToLoad(this.getTimeout());
