@@ -435,8 +435,11 @@ define('NS_VIDEO', '400');
  * register job class
  */
 $wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
-//$wgAutoloadClasses[ "AutoCreateWikiLocalJob" ] = $IP . "/extensions/wikia/AutoCreateWiki/AutoCreateWikiLocalJob.php";
 include_once( "$IP/extensions/wikia/AutoCreateWiki/AutoCreateWikiLocalJob.php" );
+
+// new version
+$wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
+include_once( "$IP/extensions/wikia/AutoCreateWiki/CreateWikiLocalJob.php" );
 
 $wgReportTimeViaStomp = false;
 $wgPurgeSquidViaStomp = false;

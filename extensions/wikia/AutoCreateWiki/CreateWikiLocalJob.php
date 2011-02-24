@@ -23,7 +23,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * sometimes class Job is uknown in this point
  */
 include_once( $GLOBALS[ "IP" ] . "/includes/JobQueue.php" );
-$wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
 
 /**
  * maintenance script from CheckUser
@@ -572,9 +571,9 @@ class CreateWikiLocalJob extends Job {
 
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	/**
-	 * log starter images to upload_log table 
+	 * log starter images to upload_log table
 	 *
 	 * @access private
 	 * @author Piotr Molski (moli)
@@ -583,10 +582,10 @@ class CreateWikiLocalJob extends Job {
 	private function addStarterImagesToUploadLog( ) {
 		global $wgEnableUploadInfoExt;
 		wfProfileIn( __METHOD__ );
-	
+
 		if ( empty($wgEnableUploadInfoExt) ) {
-			wfProfileOut( __METHOD__ );		
-			return;	
+			wfProfileOut( __METHOD__ );
+			return;
 		}
 
 		$files = array("Wiki.png", "Favicon.ico");
@@ -603,7 +602,7 @@ class CreateWikiLocalJob extends Job {
 			}
 		}
 		$dbr->freeResult( $oRes );
-				
+
 		$loop = 0;
 		foreach ( $files as $image ) {
 			$oTitle = Title::newFromText($image, NS_IMAGE);
@@ -618,5 +617,5 @@ class CreateWikiLocalJob extends Job {
 		Wikia::log( __METHOD__, "info", "added {$loop} images to upload_log table" );
 
 		wfProfileOut( __METHOD__ );
-	}	
+	}
 }
