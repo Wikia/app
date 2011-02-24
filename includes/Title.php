@@ -821,7 +821,15 @@ class Title {
 					if ( $query == '-' ) {
 						$query = '';
 					}
-					$url = "{$wgScript}?title={$dbkey}&{$query}";
+					/* Wikia change begin - @author: Marooned */
+					/* Output nicer URLs with query */
+					global $wgPrettyUrlWithTitleAndQuery;
+					if (empty($wgPrettyUrlWithTitleAndQuery)) {
+						$url = "{$wgScript}?title={$dbkey}&{$query}";
+					} else {
+						$url = wfAppendQuery(str_replace( '$1', $dbkey, $wgArticlePath ), $query);
+					}
+					/* Wikia change end */
 				}
 			}
 
