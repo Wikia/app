@@ -5,20 +5,20 @@ var test = {
 	suiteName: 'DummyTest',
 	setUp: function () {
 		jsUnity.attachAssertions(this);
-		console.log('test: setUp()');
+		window.console && console.log && console.log('test: setUp()');
 	},
     tearDown: function () {
-		console.log('test: tearDown()');
+		window.console && console.log && console.log('test: tearDown()');
 	},
 	test1: function () {
-		console.log('test: test1()');
+		window.console && console.log && console.log('test: test1()');
 	},
 	test2: function () {
-		console.log('test: test2()');
+		window.console && console.log && console.log('test: test2()');
 		this.fail('testing failure');
 	},
 	test3: function () {
-		console.log('test: test3()');
+		window.console && console.log && console.log('test: test3()');
 		this.assertTrue(false,'custom assertTrue');
 	}
 
