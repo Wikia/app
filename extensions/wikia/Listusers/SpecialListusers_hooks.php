@@ -40,11 +40,13 @@ class ListusersHooks {
 	 * @param       Array   $removegroup - disabled groups for user
 	 */
 	static public function updateUserRights( &$user, $addgroup, $removegroup ) {
-		global $wgCityId;
-		wfProfileIn( __METHOD__ );		
-		$data = new ListusersData($wgCityId, 0);
-		if ( is_object($data) ) {
-			$data->updateUserGroups( $user, $addgroup, $removegroup );
+		global $wgCityId, $wgDevelEnvironment;		
+		wfProfileIn( __METHOD__ );			
+		if ( empty($wgDevelEnvironment) ) {
+			$data = new ListusersData($wgCityId, 0);
+			if ( is_object($data) ) {
+				$data->updateUserGroups( $user, $addgroup, $removegroup );
+			}
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
