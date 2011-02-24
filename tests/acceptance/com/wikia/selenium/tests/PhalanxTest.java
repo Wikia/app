@@ -546,7 +546,7 @@ public class PhalanxTest extends BaseTest {
 	}
 
 	@Test(groups={"CI"}, dependsOnMethods={"beforeWhitelistTest"})
-    public void whitelistTest() throws Exception {
+	public void whitelistTest() throws Exception {
 		this.log("Test whitelist - check");
 
 		login();
