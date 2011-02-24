@@ -2,7 +2,7 @@
 @test-require-module rte-test
 */
 var test = {
-	suiteName: 'DummyTest',
+	suiteName: 'RTETest',
 	setUp: function () {
 		jsUnity.attachAssertions(this);
 	},

@@ -90,6 +90,13 @@
 			started: new Date()
 		}
 	};
+	TestResult.prototype.getStatus = function() {
+		for (var i in this.suites) {
+			if (this.suites[i].stats.total != this.suites[i].stats.success)
+				return false;
+		}
+		return true;
+	};
 	TestResult.prototype.stopSuite = function() {
 		var suite = this.currentSuite;
 		suite.stats.time = (new Date()) - suite.started;
@@ -151,7 +158,8 @@
 					testContent += Xml.element('failure',Xml.cdata(test.messages||''));
 				}
 				suiteXml += Xml.element('testcase',testContent,{
-					name: testName
+					name: testName,
+					time: test.time
 				});
 			};
 			
@@ -219,6 +227,7 @@
 	seleniumOutput.prototype.handle = function( data ) {
 		var xml = JUnitReport.getXml(data);
 		window.jtr_xml = xml;
+		window.jtr_status = data.getStatus() ? "OK" : "FAIL";
 		window.console && console.log && console.log(xml);
 	};
 	JTR.outputs.selenium = seleniumOutput;
