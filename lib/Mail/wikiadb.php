@@ -46,11 +46,15 @@ class Mail_wikiadb extends Mail {
 					'city_id' => $wgCityId,
 				)
 			);
+			
+			if(!empty($_SERVER)) {
+				$textHeaders .= "\n";
+			}
 
 			// Add postback token so that we can verify that any postback actually comes from SendGrid.
 			$emailId = $dbw->insertId();
 			$postbackToken = wfGetEmailPostbackToken($emailId, $recipient);
-			$textHeaders .= "\nX-CallbackToken: ".$postbackToken;
+			$textHeaders .= "X-CallbackToken: ".$postbackToken;
 			$dbw->update(
 				self::$MAIL_TABLE_NAME,
 				array( /* SET */'hdr' => $textHeaders ),
