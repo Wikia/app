@@ -63,8 +63,8 @@ This lets you reach more audience by showing your ad on others wikis from the sa
 	'adss-form-thanks' => 'You completed your purchase.  Your ad will go live after being approved (within 48 hours, usually less).',
 	'adss-form-buy-another' => 'Want to purchase a 2nd ad now?  [[Special:AdSS|Click here]]',
 	'adss-upsell-header' => 'Special One-time Offer',
-	'adss-upsell-text' => 'Get your first month free on the ad you just bought!<br>
-Convert your ad to a quarterly subscription now<br>and pay $$1 instead of $$2 (33% off)!',
+	'adss-upsell-text' => 'Get your first month free on the ad you just bought!<br />
+Convert your ad to a quarterly subscription now<br />and pay $$1 instead of $$2 (33% off)!',
 	'adss-upsell-yes' => 'Yes, I want it!',
 	'adss-upsell-no' => 'No, thanks',
 	'adss-upsell-thanks' => 'Thank you for choosing the offer!',
