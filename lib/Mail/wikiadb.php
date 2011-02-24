@@ -31,7 +31,9 @@ class Mail_wikiadb extends Mail {
 			if((strlen($textHeaders) > 0) && (substr($textHeaders, -1) != "\n")){
 				$textHeaders .= "\n";
 			}
-			$textHeaders .= "X-ServerName: ".$_SERVER['SERVER_NAME'];
+			if(!empty($_SERVER)) {
+				$textHeaders .= "X-ServerName: ".$_SERVER['SERVER_NAME'];
+			}
 
 			$dbw->insert(
 				self::$MAIL_TABLE_NAME,

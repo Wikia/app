@@ -245,6 +245,7 @@ class CreateWikiLocalJob extends Job {
 		$source = wfMsgForContent('Mainpage');
 		$target = $wgSitename;
 
+		$sourceTitle = Title::newFromText($source);
 		if( !$sourceTitle ) {
 			$sourceTitle = Title::newFromText( "Main_Page" );
 			if( !$sourceTitle ) {
