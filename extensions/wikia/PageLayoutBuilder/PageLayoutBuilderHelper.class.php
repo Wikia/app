@@ -59,7 +59,7 @@ class PageLayoutBuilderHelper {
 			$title = Title::newFromID($id);
 			if ( $title && $title->getNamespace() == NS_PLB_LAYOUT ) {
 				global $wgOut;
-				$wgOut->redirect( SpecialPage::getTitleFor('PageLayoutBuilder')->getFullUrl("pldId={$id}") );
+				$wgOut->redirect( SpecialPage::getTitleFor('PageLayoutBuilderForm')->getFullUrl("plbId={$id}") );
 				return false;
 			}
 		}
