@@ -83,7 +83,7 @@
 
 	<?= wfRenderModule('ThemeDesigner', 'Picker') ?>
 
-	<iframe frameborder=0 id="PreviewFrame" class="PreviewFrame" src="<?= $wgServer ?>/wiki/Special:ThemeDesignerPreview"></iframe>
+	<iframe frameborder=0 id="PreviewFrame" class="PreviewFrame" src="<?= str_replace('$1', 'Special:ThemeDesignerPreview', $wgArticlePath) ?>"></iframe>
 
 <?= $analytics ?>
 
