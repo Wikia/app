@@ -81,7 +81,7 @@ $wgHooks['RTEcustomHandleTag'][] = 'PageLayoutBuilderParser::reverseParser';
 
 $wgHooks['ParserAfterTidy'][] = 'PageLayoutBuilderParser::replaceTags';
 $wgHooks['ParserAfterStrip'][] = 'PageLayoutBuilderParser::removeGalleryAndIPHook';
-$wgHooks['Parser::FetchTemplateAndTitle'][] =  'PageLayoutBuilderParser::fetchTemplateAndTitleHook'; 
+$wgHooks['Parser::FetchTemplateAndTitle'][] =  'PageLayoutBuilderParser::fetchTemplateAndTitleHook';
 
 $wgHooks['ArticleRollbackComplete'][] = 'PageLayoutBuilderSpecialPage::rollbackHook';
 $wgHooks['EditPageBeforeEditButtons'][] = 'PageLayoutBuilderForm::addFormButton';
@@ -96,7 +96,9 @@ $wgHooks['CreatePage::FetchOptions'][] = 'PageLayoutBuilderSpecialPage::createPa
 $wgHooks['MyTools::getDefaultTools'][] = 'PageLayoutBuilderSpecialPage::myTools';
 $wgHooks['UserCommand::SpecialPage::PageLayoutBuilder'][] = 'PageLayoutBuilderSpecialPage::myTools2';
 
-$wgHooks['BeforeEditEnhancements'][] = 'PageLayoutBuilderSpecialPage::onBeforeEditEnhancements'; 
+$wgHooks['BeforeEditEnhancements'][] = 'PageLayoutBuilderSpecialPage::onBeforeEditEnhancements';
 //$wgHooks['GetRailModuleList'][] = 'PageLayoutBuilderSpecialPage::onGetRailModuleSpecialPageList';
+
+$wgHooks['SpecialCreatePage::Subpage'][] = 'PageLayoutBuilderHelper::onCreatePageSubpage';
 
 $wgAjaxExportList[] = 'PageLayoutBuilderEditor::getPLBEditorData';

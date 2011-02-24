@@ -16,8 +16,14 @@ class CreatePage extends SpecialEditPage {
 		parent::__construct( 'CreatePage'  /*class*/, '' /*restriction*/, true );
 	}
 
-	public function execute() {
+	public function execute( $subpage ) {
 		global $wgUser, $wgOut, $wgRequest, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+
+		if ( !empty( $subpage ) ) {
+			if ( !wfRunHooks('SpecialCreatePage::Subpage', array( $subpage )) ) {
+				return;
+			}
+		}
 
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CreatePage/js/focus.js?{$wgStyleVersion}\" ></script>\n" );
 
