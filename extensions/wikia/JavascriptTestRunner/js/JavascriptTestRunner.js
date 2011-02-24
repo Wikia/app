@@ -179,7 +179,7 @@
 	 */
 	var consoleOutput = function() {}
 	consoleOutput.prototype.handle = function( data ) {
-		console.log('JTR: testSuite result = ',data);
+		window.console && console.log && console.log('JTR: testSuite result = ',data);
 	}
 	JTR.outputs.console = consoleOutput;
 
@@ -219,7 +219,7 @@
 	seleniumOutput.prototype.handle = function( data ) {
 		var xml = JUnitReport.getXml(data);
 		window.jtr_xml = xml;
-		console.log(xml);
+		window.console && console.log && console.log(xml);
 	};
 	JTR.outputs.selenium = seleniumOutput;
 
