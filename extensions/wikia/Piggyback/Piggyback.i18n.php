@@ -162,16 +162,18 @@ Sjekk stavemåten.',
 	'piggyback-issysopto' => 'Du kan ikke operere som en bruker med rett til å operere som andre brukere.',
 );
 
-/** Piedmontese (Piemontèis) */
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
 $messages['pms'] = array(
-	'piggybac-desc' => "A përmëtt d'intré com n'àutr utent",
-	'piggyback' => 'Piggyback',
-	'piggyback-otherusername' => 'Autr nòm utent:',
-	'piggyback-nosuchuser' => 'A-i é pa gnun utent con ël nòm "$1".
-Ij nòm utent a fan cas a minùscol/maiùscol.
-Contròla tò scrit.',
+	'piggybac-desc' => "A përmët d'intré com n'àutr utent",
+	'piggyback' => 'Acess mùltipl',
+	'piggyback-otherusername' => 'Àutr ëstranòm:',
+	'piggyback-nosuchuser' => 'A-i é gnun utent con lë stranòm "$1".
+Ij nòm utent a fan cas a minùscol/majùscol.
+Ch\'a contròla l\'ortografìa.',
 	'piggyback-wronguser' => "$1 a l'é pa tò nòm utent",
-	'piggyback-loginprompt' => 'Për piasì torna anserì tò nòm utent e ciav.',
+	'piggyback-loginprompt' => "Për piasì, ch'a buta torna sò stranòm e soa ciav.",
 	'piggyback-firstlogout' => 'Për piasì prima torna intré an tò cont.',
 	'piggyback-itisyou' => 'It peule pa piggyback ti midem.',
 	'piggyback-issysopto' => "It peule pa piggyback n'utent con ël drit ëd piggyback.",

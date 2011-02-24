@@ -388,11 +388,17 @@ $messages['es'] = array(
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Nike
+ * @author Tofu II
  */
 $messages['fi'] = array(
 	'userprofilepage-edit-avatar-label' => 'Muokkaa kuvaa',
 	'userprofilepage-edit-button' => 'Muokkaa',
+	'userprofilepage-user-group-bot' => 'Botti',
 	'userprofilepage-user-group-helper' => 'Apulainen',
+	'userprofilepage-user-group-sysop-tooltip' => 'Tämä käyttäjä on ylläpitäjä tässä wikissä',
+	'userprofilepage-user-group-bot-tooltip' => 'Tämä käyttäjä on botti',
+	'userprofilepage-top-wikis-edit-count' => 'Muokkausten määrä',
+	'userprofilepage-top-wikis-hidden-see-more' => 'Olet piilottanut {{PLURAL:$1|$1 wikin|$1 wikiä}}',
 	'userprofilepage-top-wikis-unhide-label' => 'näytä',
 	'userprofilepage-top-wikis-hide-label' => 'piilota',
 	'userprofilepage-activity-edit' => 'muokkasi sivua $1',
@@ -446,7 +452,7 @@ $messages['fr'] = array(
 	'userprofilepage-top-wikis-title' => 'Les meilleurs wikis de $1',
 	'userprofilepage-top-wikis-edit-count' => 'Nombre de modifications',
 	'userprofilepage-top-wikis-hidden-see-more' => 'Vous avez masqué $1 wiki{{PLURAL:$1||s}}',
-	'userprofilepage-top-wikis-unhide-label' => 'montrer',
+	'userprofilepage-top-wikis-unhide-label' => 'afficher',
 	'userprofilepage-top-wikis-hide-label' => 'masquer',
 	'userprofilepage-top-wikis-locked-label' => 'Le wiki actuel ne peut pas être masqué',
 	'userprofilepage-recent-activity-title' => 'Activité récente de $1',
@@ -460,7 +466,7 @@ $messages['fr'] = array(
 	'userprofilepage-recent-activity-default' => '$1 a rejoint Wikia',
 	'userprofilepage-top-recent-activity-see-more' => 'Tout voir',
 	'userprofilepage-top-pages-title' => 'Les meilleures pages de $1 sur $2',
-	'userprofilepage-top-page-unhide-label' => 'montrer',
+	'userprofilepage-top-page-unhide-label' => 'afficher',
 	'userprofilepage-top-pages-hidden-see-more' => 'Vous avez masqué $1 page{{PLURAL:$1||s}}',
 	'userprofilepage-top-pages-default' => 'Vous n’avez pas encore de classement de pages. Pourquoi ne pas vérifier certaines <a href="$1">pages au hasard</a> sur le wiki ?',
 	'recipes-template-user-description-label' => 'Description',

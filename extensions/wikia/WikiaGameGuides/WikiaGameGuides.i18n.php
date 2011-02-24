@@ -12,6 +12,13 @@ $messages['qqq'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides is the name of a product, do not translate on a per-word basis',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'wikiagameguides-desc' => 'Wikia Game Guides evit modulennoù arloadoù pellgomzerioù hezoug',
+);
+
 /** Czech (Česky)
  * @author Dontlietome7
  */

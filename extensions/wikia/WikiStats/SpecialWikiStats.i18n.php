@@ -1516,6 +1516,7 @@ $messages['eu'] = array(
  * @author Centerlink
  * @author Crt
  * @author Silvonen
+ * @author Tofu II
  */
 $messages['fi'] = array(
 	'wikistats' => 'Wikia-tilastot',
@@ -1560,6 +1561,8 @@ $messages['fi'] = array(
 	'wikistats_wikilang' => 'Kieli:',
 	'wikistats_xls_cancel' => 'Peruuta',
 	'wikistats_other_statistics_legend' => 'Muut tilastot',
+	'wikistats_article_edits' => 'Artikkelin muutokset',
+	'wikistats_video_new' => 'Uudet videot',
 	'wikistats_mediawiki_stats' => 'MediaWiki-tilastot:',
 );
 
@@ -1590,7 +1593,7 @@ $messages['fr'] = array(
 	'wikistats_pviews_notfound' => 'Aucune page vue trouvée',
 	'wikistats_invalid_date' => 'Plage de dates invalide',
 	'wikistats_distrib_article' => 'Répartition de l’activité des contributeurs',
-	'wikistats_breakdown_editors' => 'Activité des contributeurs',
+	'wikistats_breakdown_editors' => 'Activité contributeurs',
 	'wikistats_breakdown_anons' => 'Activité anonymes',
 	'wikistats_active_absent_wikians' => "Limite d'activité pour les contributeurs actifs",
 	'wikistats_anon_wikians' => "Limite d'activité pour les contributeurs anonymes",
@@ -1656,7 +1659,7 @@ $messages['fr'] = array(
 	'wikistats_largerthan' => 'plus grand que',
 	'wikistats_username' => 'Utilisateur',
 	'wikistats_usernames' => 'Utilisateurs',
-	'wikistats_edits' => 'modifications',
+	'wikistats_edits' => 'modifs',
 	'wikistats_bytes' => 'octets',
 	'wikistats_size' => 'taille',
 	'wikistats_words' => 'mots',
@@ -1750,7 +1753,7 @@ de contenu',
 	'wikistats_generate_stats_msg' => 'Veuillez patienter ... génération ...',
 	'wikistats_generate_XLS_file_title' => 'Générer un fichier XLS à télécharger',
 	'wikistats_language_stats' => 'Statistiques des langues',
-	'wikistats_main_statistics_legend' => 'Statistiques principales',
+	'wikistats_main_statistics_legend' => 'Principales',
 	'wikistats_ns_statistics_legend' => 'Espaces de noms',
 	'wikistats_other_statistics_legend' => 'Autres statistiques',
 	'wikistats_statistics_legend' => 'Définitions des colonnes',
@@ -5650,6 +5653,15 @@ $messages['uk'] = array(
 /** Urdu (اردو) */
 $messages['ur'] = array(
 	'wikistats_xls_cancel' => 'منسوخ',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Nglekhoi
+ */
+$messages['vi'] = array(
+	'wikistats_content' => 'nội dung',
+	'wikistats_userns' => 'thành viên',
+	'wikistats_current_month' => 'Tháng hiện tại',
 );
 
 /** Wu (吴语) */

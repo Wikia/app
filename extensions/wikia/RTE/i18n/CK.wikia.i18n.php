@@ -608,7 +608,9 @@ $messages['fa'] = array(
 $messages['fi'] = array(
 	'rte-ck-errorPopupTitle' => 'Virhe!',
 	'rte-ck-media-delete' => 'poista',
+	'rte-ck-photoGallery-add' => 'Lisää kuvagalleria tai diaesitys',
 	'rte-ck-photoGallery-tooltip' => 'Tämä on galleria.',
+	'rte-ck-signature-add' => 'Lisää allekirjoituksesi',
 	'rte-ck-video-add' => 'Lisää video',
 );
 
@@ -841,6 +843,7 @@ $messages['ia'] = array(
 	'rte-ck-media-edit' => 'modificar',
 	'rte-ck-modeSwitch-toSource' => 'Cambiar al modo codice-fonte',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Cambiar al modo WYSIWYG',
+	'rte-ck-modeSwitch-error' => 'Un error ha occurrite durante le cambio de modo. Per favor reproba.',
 	'rte-ck-photoGallery-add' => 'Adder un galeria de photos o presentation de diapositivas',
 	'rte-ck-photoGallery-confirmDelete' => 'Es tu secur de voler remover le galeria de iste pagina?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Remover iste galeria?',
@@ -876,6 +879,9 @@ $messages['ia'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Remover iste spatio reservate pro un video?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Isto es un spatio reservate pro un video.',
 	'rte-ck-widescreen-toggle' => 'Alternar schermo large',
+	'rte-ck-poll-confirmDelete' => 'Es tu secur de voler remover le sondage de iste pagina?',
+	'rte-ck-poll-confirmDeleteTitle' => 'Remover iste sondage?',
+	'rte-ck-spellchecker-moreSuggestions' => 'Plus suggestiones',
 );
 
 /** Japanese (日本語)
@@ -1529,6 +1535,7 @@ $messages['pt'] = array(
 	'rte-ck-media-edit' => 'modificar',
 	'rte-ck-modeSwitch-toSource' => 'Mudar para o modo fonte',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Mudar para o modo WYSIWYG',
+	'rte-ck-modeSwitch-error' => 'Ocorreu um erro durante a mudança de modo. Tente novamente, por favor.',
 	'rte-ck-photoGallery-add' => 'Inserir uma galeria de fotos ou uma apresentação de slides',
 	'rte-ck-photoGallery-confirmDelete' => 'Tem a certeza que deseja remover a galeria desta página?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Remover esta galeria?',
@@ -1564,6 +1571,9 @@ $messages['pt'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Remover este espaço reservado para um vídeo?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Este é um espaço reservado para um vídeo.',
 	'rte-ck-widescreen-toggle' => 'Activar ou desactivar o modo panorâmico',
+	'rte-ck-poll-confirmDelete' => 'Tem a certeza de que pretende remover a votação desta página?',
+	'rte-ck-poll-confirmDeleteTitle' => 'Remover esta votação?',
+	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

@@ -1362,6 +1362,7 @@ Describe esta imagen.",
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author Tofu II
  */
 $messages['fi'] = array(
 	'wikiaphotogallery-desc' => 'Tarjoaa käyttöliittymän galleriahallintaan sivuilla',
@@ -1404,6 +1405,7 @@ Mitä haluaisit tehdä?',
 	'wikiaPhotoGallery-preview-hover-delete' => 'poista',
 	'wikiaPhotoGallery-preview-add-photo' => 'Lisää kuva',
 	'wikiaPhotoGallery-preview-add-caption' => 'Lisää kuvateksti',
+	'wikiaPhotoGallery-preview-add-link' => 'Lisää linkki',
 	'wikiaPhotoGallery-preview-link-tooltip' => 'Kuvalinkit kohteeseen "$1"',
 	'wikiaPhotoGallery-preview-size' => 'Valokuvan koko',
 	'wikiaPhotoGallery-preview-captions' => 'Kuvatekstit',
@@ -1425,12 +1427,20 @@ Vaihtoehtoisesti voit napsauttaa "$2" ja nähdä sivun päivitetyssä muodossa.'
 	'wikiaPhotoGallery-quit-savequit' => 'Tallenna ja poistu',
 	'wikiaPhotoGallery-quit-quitonly' => 'Hylkää muutokset ja poistu',
 	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'Seuraava kuva',
+	'wikiaPhotoGallery-slideshow-view-prev-tooltip' => 'Edellinen kuva
+�',
+	'wikiaPhotoGallery-slideshow-view-title' => 'Diaesitys',
+	'wikiaPhotoGallery-choice-title' => 'Lisää diaesitys tai galleria',
+	'wikiaPhotoGallery-choice-slideshow' => 'Luo diaesitys',
+	'wikiaPhotoGallery-choice-gallery' => 'Luo galleria',
+	'wikiaPhotoGallery-slideshowpreview-optionstitle' => 'Diaesityksen asetukset',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Valitse',
 	'wikiaPhotoGallery-photooptions-captiontitle' => 'Kuvateksti',
 	'wikiaPhotoGallery-photooptions-captionsub' => "'''Valinnainen.'''
 Kuvaile tämä kuva.",
 	'wikiaPhotoGallery-photooptions-linktitle' => 'Linkki sivulle',
 	'wikiaPhotoGallery-photooptions-linksub' => "'''Valinnainen.''' Kun tätä kuvaa napsautetaan, siirry tälle sivulle.",
+	'wikiaPhotoGallery-search-tooltip' => 'Etsi kuvia tästä wikistä',
 );
 
 /** French (Français)

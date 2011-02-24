@@ -118,6 +118,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -129,9 +130,9 @@ $messages['br'] = array(
 	'categoryselect-infobox-category' => 'Roit anv ar rummad :',
 	'categoryselect-infobox-sortkey' => 'Lakaat ar pennad-mañ er rummad "$1" dindan an anv da-heul :',
 	'categoryselect-addcategory-button' => 'Ouzhpennañ rummadoù',
-	'categoryselect-suggest-hint' => 'Pouezit war "Enter" evit echuiñ',
-	'categoryselect-tooltip' => "'''Nevez!''' Barenn ostilhoù evit diuzañ rummadoù. Amprouit anezhi pe lennit [[Help:CategorySelect|ar sikour]] evit gouzout hiroc'h",
-	'categoryselect-unhandled-syntax' => "Ur gudenn ereadurezh dianav zo. Ne c'haller ket kemmañ  e gwel grafek.",
+	'categoryselect-suggest-hint' => 'Pouezañ war "Kas" evit echuiñ',
+	'categoryselect-tooltip' => "'''Nevez !''' Barrenn ostilhoù evit diuzañ rummadoù. Amprouit anezhi pe lennit [[Help:CategorySelect|ar skoazell]] evit gouzout hiroc'h",
+	'categoryselect-unhandled-syntax' => "Ur gudenn ereadurezh dianav zo. N'haller ket lakaat ar mod gwelet.",
 	'categoryselect-edit-summary' => 'Ouzhpennañ ur rummad',
 	'categoryselect-empty-name' => 'Reiñ a ra anv ar rummad (al lodenn skrivet a-raok |)',
 	'categoryselect-button-save' => 'Enrollañ',
@@ -139,7 +140,7 @@ $messages['br'] = array(
 	'categoryselect-error-not-exist' => "N'eus ket eus ar pennad [id=$1].",
 	'categoryselect-error-user-rights' => 'Fazi en aotreoù implijerien.',
 	'categoryselect-error-db-locked' => 'Stanket eo ar bank roadennoù',
-	'categoryselect-edit-abort' => "Ar c'hemm ho peus klask ober zo bet ehanet gant ur c'hrog astenn.",
+	'categoryselect-edit-abort' => "Ar c'hemm hoc'h eus klasket degas zo bet harzet gant ur c'hrog astenn.",
 	'tog-disablecategoryselect' => 'Diweredekaat balizadur ar rummadoù',
 );
 

@@ -170,16 +170,18 @@ $messages['pl'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Następny',
 );
 
-/** Piedmontese (Piemontèis) */
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
 $messages['pms'] = array(
-	'contentfeeds-desc' => 'A dà anformassion riche e agiornà con vàire tichëtte o "feed"',
-	'contentfeeds-newimages-rss-title' => 'Feed RSS për {{#Special:NewFiles}}',
-	'contentfeeds-newimages-rss-desc' => 'Feed da $1',
+	'contentfeeds-desc' => 'A dà d\'anformassion riche e agiornà mersì a vàire tichëtte o "fluss"',
+	'contentfeeds-newimages-rss-title' => 'Fluss RSS për {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Fluss da $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'Crea toe prime pòche pàgine!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Tìtol',
 	'contentfeeds-firstfewarticles-tag-next' => 'Apress',
-	'contentfeeds-firstfewarticles-tag-empty-title-error' => "Eror: Ël tìtol ëd pàgina a l'é ciamà",
-	'contentfeeds-firstfewarticles-tag-empty-body-error' => "Eror: Ël còrp ëd pàgina a l'é ciamà",
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => "Eror: Ël tìtol ëd pàgina a l'é obligatòri",
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => "Eror: Ël còrp ëd la pàgina a l'é obligatòri",
 );
 
 /** Portuguese (Português) */

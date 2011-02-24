@@ -39,7 +39,25 @@ $messages['qqq'] = array(
 	'wikiapoll-cancel-label' => 'Cancel button label',
 	'wikiapoll-publish-label' => 'Create/Edit Poll button label for confirming changes',
 	'wikiapoll-error-duplicate' => 'Error message when user tries to create a poll that already exists',
-	'wikiapoll-error-invalid-title' => 'Error message when title of poll is invalid/empty'
+	'wikiapoll-error-invalid-title' => 'Error message when title of poll is invalid/empty',
+);
+
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'wikiapoll-desc' => "Bied 'n eenvoudige manier om opiniepeilings te skep en te beheer",
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 gebruiker|$1 gebruikers}} het gestem',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Dankie!',
+	'wikiapoll-vote' => 'Stem!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 stem|$1 stemme}}',
+	'wikiapoll-createpoll-headline' => 'Skep peiling',
+	'wikiapoll-editpoll-headline' => 'Wysig peiling',
+	'wikiapoll-question-label' => 'Vraag',
+	'wikiapoll-addnewitem-label' => 'Voeg nuwe item by',
+	'wikiapoll-cancel-label' => 'Kanselleer',
+	'wikiapoll-publish-label' => 'Publiseer',
 );
 
 /** Breton (Brezhoneg)
@@ -77,18 +95,40 @@ $messages['es'] = array(
 	'wikiapoll-thanks-for-vote' => '¡Gracias!',
 	'wikiapoll-vote' => '¡Vota!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 voto|$1 votos}}',
+	'wikiapoll-createpoll-headline' => 'Crear encuesta',
+	'wikiapoll-editpoll-headline' => 'Editar encuesta',
+	'wikiapoll-question-label' => 'Pregunta',
+	'wikiapoll-addnewitem-label' => 'Agregar nuevo elemento',
+	'wikiapoll-cancel-label' => 'Cancelar',
+	'wikiapoll-publish-label' => 'Publicar',
+);
+
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 ääni|$1 ääntä}}',
+	'wikiapoll-question-label' => 'Kysely',
 );
 
 /** French (Français)
  * @author IAlex
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'wikiapoll-desc' => 'Fournit un moyen facile de créer et de gérer des sondages',
 	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 personne a|$1 personnes ont}} voté',
 	'wikiapoll-question' => '$1 ?',
 	'wikiapoll-thanks-for-vote' => 'Merci !',
-	'wikiapoll-vote' => 'Votez !',
+	'wikiapoll-vote' => 'Voter !',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 vote|$1 votes}}',
+	'wikiapoll-createpoll-headline' => 'Créer un sondage',
+	'wikiapoll-editpoll-headline' => 'Modifier le sondage',
+	'wikiapoll-question-label' => 'Question',
+	'wikiapoll-addnewitem-label' => 'Ajouter un nouvel élément',
+	'wikiapoll-cancel-label' => 'Annuler',
+	'wikiapoll-publish-label' => 'Publier',
 );
 
 /** Interlingua (Interlingua)
@@ -101,6 +141,12 @@ $messages['ia'] = array(
 	'wikiapoll-thanks-for-vote' => 'Gratias!',
 	'wikiapoll-vote' => 'Votar!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 voto|$1 votos}}',
+	'wikiapoll-createpoll-headline' => 'Crear sondage',
+	'wikiapoll-editpoll-headline' => 'Modificar sondage',
+	'wikiapoll-question-label' => 'Question',
+	'wikiapoll-addnewitem-label' => 'Adder nove elemento',
+	'wikiapoll-cancel-label' => 'Cancellar',
+	'wikiapoll-publish-label' => 'Publicar',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -148,6 +194,8 @@ $messages['nl'] = array(
 	'wikiapoll-addnewitem-label' => 'Nieuw item toevoegen',
 	'wikiapoll-cancel-label' => 'Annuleren',
 	'wikiapoll-publish-label' => 'Publiceren',
+	'wikiapoll-error-duplicate' => 'Er bestaat al een peiling met die naam.',
+	'wikiapoll-error-invalid-title' => 'De vraagtekst is ongeldig.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -164,6 +212,7 @@ $messages['no'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'wikiapoll-desc' => 'Fornece uma forma fácil de criar e administrar inquéritos',
@@ -172,6 +221,12 @@ $messages['pt'] = array(
 	'wikiapoll-thanks-for-vote' => 'Obrigado!',
 	'wikiapoll-vote' => 'Vote!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 voto|$1 votos}}',
+	'wikiapoll-createpoll-headline' => 'Criar Votação',
+	'wikiapoll-editpoll-headline' => 'Editar Votação',
+	'wikiapoll-question-label' => 'Pergunta',
+	'wikiapoll-addnewitem-label' => 'Adicionar novo item',
+	'wikiapoll-cancel-label' => 'Cancelar',
+	'wikiapoll-publish-label' => 'Publicar',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)

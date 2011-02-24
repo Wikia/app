@@ -927,6 +927,7 @@ Bonvolu retroigi kaj reprovi.',
  * @author Remember the dot
  * @author Sanbec
  * @author Spacebirdy
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'userrenametool' => 'Cambiar el nombre de un usuario',
@@ -938,6 +939,7 @@ $messages['es'] = array(
 	'userrenametool-reason' => 'Motivo:',
 	'userrenametool-move' => 'Trasladar las páginas de usuario y de discusión (y sus subpáginas) al nuevo nombre',
 	'userrenametool-reserve' => 'Bloquea el antiguo nombre de usuario para evitar usarlo en el futuro',
+	'userrenametool-notify-renamed' => 'Enviar un correo electrónico al usuario renombrado al finalizar',
 	'userrenametool-warnings' => 'Avisos:',
 	'userrenametool-confirm' => 'Sí, renombrar el usuario',
 	'userrenametool-submit' => 'Enviar',
@@ -1079,6 +1081,7 @@ $messages['fa'] = array(
  * @author Crt
  * @author Nike
  * @author Str4nd
+ * @author Tofu II
  */
 $messages['fi'] = array(
 	'renameuser' => 'Käyttäjätunnuksen vaihto',
@@ -1098,6 +1101,7 @@ $messages['fi'] = array(
 	'userrenametool-error-request' => 'Pyynnön vastaanottamisessa oli ongelma. Ole hyvä ja yritä uudelleen.',
 	'userrenametool-error-same-user' => 'Et voi nimetä käyttäjää uudelleen samaksi kuin hän jo on.',
 	'userrenametool-success' => 'Käyttäjän ”<nowiki>$1</nowiki>” tunnus on nyt ”<nowiki>$2</nowiki>”.',
+	'userrenametool-confirm-intro' => 'Haluatko todella tehdä tämän?',
 	'userrenametool-confirm-yes' => 'Kyllä',
 	'userrenametool-confirm-no' => 'Ei',
 	'userrenametool-page-exists' => 'Sivu $1 on jo olemassa eikä sitä korvattu.',
@@ -1555,6 +1559,7 @@ Consulta le [[Special:Stafflog|registro del personal]] pro detalios.',
 	'userrenametool-reason' => 'Motivo del renomination:',
 	'userrenametool-move' => 'Renominar etiam le paginas de usator e de discussion (e lor subpaginas) verso le nove nomine',
 	'userrenametool-reserve' => 'Blocar le ancian nomine de usator de esser usate in le futuro',
+	'userrenametool-notify-renamed' => 'Inviar e-mail al usator renominate quando finite',
 	'userrenametool-warnings' => 'Advertimentos:',
 	'userrenametool-confirm' => 'Si, renomina le usator',
 	'userrenametool-submit' => 'Submitter',
@@ -2227,6 +2232,7 @@ $messages['mk'] = array(
 	'userrenametool-reason' => 'Образложение за преименување:',
 	'userrenametool-move' => 'Премести корисничка страница и страници за разговор (и нивните подстраници) под новото име',
 	'userrenametool-reserve' => 'Блокирање на старото корисничко име, да не може да се користи во иднина',
+	'userrenametool-notify-renamed' => 'Со завршувањето, испрати е-пошта на преименуваниот корисник',
 	'userrenametool-warnings' => 'Предупредувања:',
 	'userrenametool-confirm' => 'Да, преименувај го корисникот',
 	'userrenametool-submit' => 'Смени корисничко име',
@@ -2796,6 +2802,7 @@ Pode ver os registos no [[Special:Stafflog|Registo da equipa]].',
 	'userrenametool-reason' => 'Motivo da alteração do nome:',
 	'userrenametool-move' => 'Mover as páginas de utilizador e de discussão do utilizador (e as respectivas subpáginas) para o novo nome',
 	'userrenametool-reserve' => 'Impedir o reuso do antigo nome de utilizador',
+	'userrenametool-notify-renamed' => 'Quando terminar, notificar o utilizador por correio electrónico',
 	'userrenametool-warnings' => 'Alertas:',
 	'userrenametool-confirm' => 'Sim, alterar o nome do utilizador',
 	'userrenametool-submit' => 'Alterar o nome do utilizador',

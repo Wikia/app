@@ -83,6 +83,13 @@ $messages['es'] = array(
 	'unsubscribe-working-done' => 'Completado.',
 );
 
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'unsubscribe-working-done' => 'Valmis.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

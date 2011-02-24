@@ -122,10 +122,32 @@ $messages['no'] = array(
 	'loggernoresult' => 'Ingen resultater funnet',
 );
 
+/** Portuguese (Português)
+ * @author Waldir
+ */
+$messages['pt'] = array(
+	'logger-desc' => 'Agente de registo para scripts de back-end',
+	'logger' => 'Agente de registo de back-end',
+	'loggertitle' => 'Agente de registo de back-end',
+	'loggerselectlogname' => 'Selecione o nome do registo:',
+	'loggerrecordswithpercent' => "'''$1''' registos ('''$2'''% concluído)",
+	'loggerrecords' => '$1 registos',
+	'loggergo' => 'Mostrar',
+	'loggernoresult' => 'Nenhum resultado foi encontrado',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
 	'loggerrecords' => '$1 белешки',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'loggergo' => 'Visa',
+	'loggernoresult' => 'Inga resultat hittades',
 );
 

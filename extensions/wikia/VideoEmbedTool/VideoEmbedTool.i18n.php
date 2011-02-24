@@ -304,6 +304,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -373,7 +374,7 @@ $messages['br'] = array(
 	'vet-see-all' => 'gwelet pep tra',
 	'vet-bad-search' => "Ur fazi zo bet pa'z eo bet pellgarget ar reked",
 	'vet-no-preview' => "Ne c'hallit ket ouzhpennañ videoioù er mod rakwelet",
-	'vet-single-success' => 'Lakaet eo bet ar video gant berzh er pennad',
+	'vet-single-success' => 'Lakaet eo bet ar video er pennad ervat.',
 	'vet-gallery-create-success' => 'Ur videaoueg a oa bet ouzhpennet er pennad-mañ',
 	'vet-gallery-add-success' => 'Ur video zo bet ouzhpennet e videaoueg ar pennad-mañ',
 	'vet-left' => 'Kleiz',
@@ -615,6 +616,7 @@ $messages['eu'] = array(
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'vet-find' => 'Etsi video',
 	'vet-thiswiki' => 'Tämä wiki',
 	'vet-flickr' => 'Flickr',
 	'vet-upload-btn' => 'Siirry',

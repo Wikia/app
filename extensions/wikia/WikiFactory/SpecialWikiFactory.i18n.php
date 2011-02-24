@@ -1363,6 +1363,7 @@ $messages['eu'] = array(
  * @author Ilkea
  * @author Nike
  * @author Silvonen
+ * @author Tofu II
  */
 $messages['fi'] = array(
 	'closewiki' => 'Sulje wiki',
@@ -1402,6 +1403,8 @@ $messages['fi'] = array(
 	'awc-metrics-close' => 'Sulje',
 	'awc-metrics-closed' => 'suljettu',
 	'awc-metrics-removed' => 'poistettu',
+	'awc-metrics-hubs' => 'Uudet wikit (kuukausittain)',
+	'awc-metrics-news-day' => 'Uudet wikit (päivittäin)',
 	'awc-metrics-this-month' => 'tämä kuukausi',
 	'closed-wiki' => 'Suljettu wiki',
 	'closed-wiki-info' => 'Tämä wiki on suljettu',
@@ -1821,7 +1824,7 @@ $messages['ia'] = array(
 	'wikifactory-label-info' => 'Info',
 	'wikifactory-label-variables' => 'Variabiles',
 	'wikifactory-label-variables2' => 'General',
-	'wikifactory-label-hubs' => 'Hubs',
+	'wikifactory-label-hubs' => 'Centrales',
 	'wikifactory-label-domains' => 'Dominios',
 	'wikifactory-label-return' => 'Retornar al lista',
 	'wikifactory-label-clog' => 'Lista de modificationes',

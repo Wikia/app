@@ -59,6 +59,61 @@ Wikia
 </p>',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'article-comments-anonymous' => 'Implijer dizanv',
+	'article-comments-comments' => 'Evezhiadennoù - $1',
+	'article-comments-post' => 'Lakaat un evezhiadenn',
+	'article-comments-delete' => 'diverkañ',
+	'article-comments-edit' => 'kemmañ',
+	'article-comments-history' => 'istor',
+	'article-comments-error' => "N'eus ket bet gellet enrollañ an evezhiadenn",
+	'article-comments-undeleted-comment' => 'Diziverket eo bet an evezhiadenn evit pajenn ar blog $1',
+	'article-comments-rc-comment' => 'Evezhiadenn war pajenn ([[$1]])',
+	'article-comments-rc-comments' => 'Evezhiadennoù war pajenn ([[$1]])',
+	'article-comments-fblogin' => '<a href="$1">Kevreañ dre Facebook ha bezañ liammet outañ</a> evit lakaat un evezhiadenn war ar wiki-mañ !',
+	'article-comments-fbconnect' => '<a href="$1">Liammit ar gont-mañ ouzh Facebook</a> evit lakaat evezhiadennoù !',
+	'article-comments-rc-blog-comment' => 'Evezhiadenn war ar blog ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Evezhiadennoù war ar blog ([[$1]])',
+	'article-comments-login' => '<a href="$1">Ret eo kevreañ</a> evit lezel ur gemennadenn war ar wiki-mañ.',
+	'article-comments-toc-item' => 'Evezhiadennoù',
+	'article-comments-comment-cannot-add' => "N'hallit ket lakaat un evezhiadenn war ar pennad-mañ.",
+	'article-comments-reply' => 'Respont',
+	'article-comments-show-all' => 'Diskouez an holl evezhiadennoù',
+	'article-comments-prev-page' => 'Kent',
+	'article-comments-next-page' => "War-lerc'h",
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Diverket eo bet ar bajenn kar / an evezhiadenn kar.',
+	'article-comments-empty-comment' => "N'hallit ket degas un evezhiadenn c'houllo. <a href='$1'>Diverkañ anezhi ?</a>",
+	'enotif_subject_article_comment' => 'Un evezhiadenn zo bet graet gant $PAGEEDITOR diwar-benn "$PAGETITLE" war {{SITENAME}}',
+	'enotif_body_article_comment' => '$WATCHINGUSERNAME ker,
+
+Graet ez eus bet un evezhiadenn gant $PAGEEDITOR war "$PAGETITLE". 
+
+Evit sellet ouzh an neudennad, klikit war al liamm a-is :
+$PAGETITLE_URL 
+
+Trugarez da vont d\'ober un tro ha da gemer perzh ingal...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>$WATCHINGUSERNAME ker,
+<br /><br />
+Graet ez eus bet un evezhiadenn gant $PAGEEDITOR war "$PAGETITLE".
+<br /><br />
+Evit sellet ouzh an neudennad, klikit war al liamm-mañ : <a href="$PAGETITLE_URL">$PAGETITLE</a> 
+<br /><br />
+Trugarez da vont d\'ober un tamm tro ha da gemer perzh ingal...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>Ha c\'hoant hoc\'h eus da chom mestr war ar posteloù a resevit ? <a href="{{fullurl:Special:Preferences}}">Cheñchit ho penndibaboù<a>.</li>
+</ul>
+</p>',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'article-comments-anonymous' => 'Unangemeldeter Benutzer',
@@ -69,7 +124,9 @@ $messages['de'] = array(
 	'article-comments-login' => 'Zum Kommentieren <a href="$1">anmelden</a>.',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author VegaDark
+ */
 $messages['es'] = array(
 	'article-comments-anonymous' => 'Usuario anónimo',
 	'article-comments-comments' => 'Comentarios ($1)',
@@ -77,8 +134,48 @@ $messages['es'] = array(
 	'article-comments-delete' => '(borrar)',
 	'article-comments-edit' => '(editar)',
 	'article-comments-history' => '(Historial)',
+	'article-comments-error' => 'El comentario no pudo ser guardado',
 	'article-comments-undeleted-comment' => 'Comentario no borrado para la página del blog $1',
+	'article-comments-rc-comment' => 'Comentario de artículo ([[$1]])',
+	'article-comments-rc-comments' => 'Comentarios de artículo ([[$1]])',
+	'article-comments-fblogin' => 'Por favor, <a href="$1">identifícate y conéctate con Facebook</a> para dejar un comentario en este wiki.',
+	'article-comments-fbconnect' => 'Por favor, <a href="$1">conecta esta cuenta con Facebook</a> para dejar un comentario.',
+	'article-comments-rc-blog-comment' => 'Comentario de blog ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Comentarios de blog ([[$1]])',
 	'article-comments-login' => '<a href="$1">Identifícate</a> para dejar un comentario',
+	'article-comments-toc-item' => 'Comentarios',
+	'article-comments-comment-cannot-add' => 'No puedes añadir comentarios aquí',
+	'article-comments-reply' => 'Responder',
+	'article-comments-show-all' => 'Mostrar todos los comentarios',
+	'article-comments-prev-page' => 'Anterior',
+	'article-comments-next-page' => 'Siguiente',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'El artículo raíz / comentario raíz ha sido borrado.',
+	'article-comments-empty-comment' => "No puedes dejar un comentario en blanco. <a href='$1'>¿Quieres borrarlo?</a>",
+	'enotif_subject_article_comment' => '$PAGEEDITOR ha comentado en "$PAGETITLE" en {{SITENAME}}',
+	'enotif_body_article_comment' => 'Estimado $WATCHINGUSERNAME,
+
+$PAGEEDITOR realizó un comentario en "$PAGETITLE".
+
+Para ver el comentario, sigue el enlace: $PAGETITLE_URL
+
+Por favor visita y edita con frecuencia...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>Estimado $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR realizó un comentario en "$PAGETITLE".
+<br /><br />
+Para ver el comentario, sigue el enlace: <a href="$PAGETITLE_URL">$PAGETITLE</a> 
+<br /><br />
+Por favor, visita y edita con frecuencia...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>¿Quieres controlar qué mensajes recibir? <a href="{{fullurl:Special:Preferences}}">Actualiza tus preferencias<a>.</li>
+</ul>
+</p>',
 );
 
 /** Persian (فارسی) */
@@ -92,7 +189,9 @@ $messages['fa'] = array(
 	'article-comments-login' => 'برای نظر دادن <a href="$1">وارد سیستم شوید</a>.',
 );
 
-/** Finnish (Suomi) */
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
 $messages['fi'] = array(
 	'article-comments-anonymous' => 'Anonyymi käyttäjä',
 	'article-comments-comments' => 'Kommentit ($1)',
@@ -100,17 +199,121 @@ $messages['fi'] = array(
 	'article-comments-delete' => 'poista',
 	'article-comments-history' => 'historiasta',
 	'article-comments-undeleted-comment' => 'Kommenttia ei poistettu blogisivulta $1',
+	'article-comments-rc-comment' => 'Artikkelin kommentti ([[$1]])',
+	'article-comments-rc-comments' => 'Artikkelin kommentit ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Blogin kommentit ([[$1]])',
 	'article-comments-login' => '<a href="$1">Kirjaudu sisään</a> kommetoidaksesi',
+	'article-comments-show-all' => 'Näytä kaikki kommentit',
 );
 
-/** French (Français) */
+/** French (Français)
+ * @author Wyz
+ */
 $messages['fr'] = array(
 	'article-comments-anonymous' => 'Utilisateur anonyme',
 	'article-comments-comments' => 'Commentaires ($1)',
 	'article-comments-post' => 'Ajouter un commentaire',
 	'article-comments-delete' => 'Supprimer',
+	'article-comments-edit' => 'modifier',
+	'article-comments-history' => 'historique',
+	'article-comments-error' => 'Le commentaire n’a pas pu être enregistré',
 	'article-comments-undeleted-comment' => "Commentaire de l'article de blog $1 restauré",
+	'article-comments-rc-comment' => 'Commentaire de page ([[$1]])',
+	'article-comments-rc-comments' => 'Commentaires de page ([[$1]])',
+	'article-comments-fblogin' => 'Veuillez <a href="$1">vous connecter et lier avec Facebook</a> pour poster un commentaire sur ce wiki !',
+	'article-comments-fbconnect' => 'Veuillez <a href="$1">lier ce compte avec Facebook</a> pour commenter !',
+	'article-comments-rc-blog-comment' => 'Commentaire de blog ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Commentaires de blog ([[$1]])',
 	'article-comments-login' => '<a href="$1">Indentifiez-vous</a> pour faire un commenaire',
+	'article-comments-toc-item' => 'Commentaires',
+	'article-comments-comment-cannot-add' => 'Vous ne pouvez pas ajouter un commentaire à cette page.',
+	'article-comments-reply' => 'Répondre',
+	'article-comments-show-all' => 'Afficher tous les commentaires',
+	'article-comments-prev-page' => 'Préc',
+	'article-comments-next-page' => 'Suiv',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'La page ou le commentaire parent a été effacé.',
+	'article-comments-empty-comment' => "Vous ne pouvez pas poster un commentaire vide. <a href='$1'>Le supprimer ?</a>",
+	'enotif_subject_article_comment' => '$PAGEEDITOR a commenté « $PAGETITLE » sur {{SITENAME}}',
+	'enotif_body_article_comment' => '$WATCHINGUSERNAME,
+
+$PAGEEDITOR a laissé un commentaire sur « $PAGETITLE ». 
+
+Pour voir le fil de commentaire, cliquez sur le lien ci-dessous :
+$PAGETITLE_URL 
+
+Merci de revenir et de contribuer régulièrement...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>$WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR a laissé un commentaire sur « $PAGETITLE ». 
+<br /><br />
+Pour voir le fil de commentaire, cliquez sur le lien suivant : <a href="$PAGETITLE_URL">$PAGETITLE</a>  
+<br /><br />
+Merci de revenir et de contribuer régulièrement...
+<br /><br />
+Wikia
+<hr />
+<ul>
+<li>Vous souhaitez définir les courriels que vous désirez recevoir ? <a href="{{fullurl:Special:Preferences}}">Mettez à jour vos préférences<a>.</li>
+</ul>
+</p>',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'article-comments-anonymous' => 'Usator anonyme',
+	'article-comments-comments' => 'Commentos ($1)',
+	'article-comments-post' => 'Adjunger commento',
+	'article-comments-delete' => 'deler',
+	'article-comments-edit' => 'modificar',
+	'article-comments-history' => 'historia',
+	'article-comments-error' => 'Le commento non poteva esser salveguardate',
+	'article-comments-undeleted-comment' => 'Commento in pagina de blog $1 restaurate',
+	'article-comments-rc-comment' => 'Commentario de articulo ([[$1]])',
+	'article-comments-rc-comments' => 'Commentarios de articulo ([[$1]])',
+	'article-comments-fblogin' => 'Per favor <a href="$1">aperi session e connecte con Facebook</a> pro publicar un commento in iste wiki!',
+	'article-comments-fbconnect' => 'Per favor <a href="$1">connecte iste conto con Facebook</a> pro commentar!',
+	'article-comments-rc-blog-comment' => 'Commento de blog ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Commentos de blog ([[$1]])',
+	'article-comments-login' => 'Per favor <a href="$1">aperi session</a> pro publicar un commento in iste wiki.',
+	'article-comments-toc-item' => 'Commentos',
+	'article-comments-comment-cannot-add' => 'Tu non pote adjunger un commento a iste articulo.',
+	'article-comments-reply' => 'Responder',
+	'article-comments-show-all' => 'Monstrar tote le commentos',
+	'article-comments-prev-page' => 'Previe',
+	'article-comments-next-page' => 'Proxime',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Le commento/articulo genitor ha essite delite.',
+	'article-comments-empty-comment' => "Non es possibile publicar un commento vacue. <a href='$1'>Deler lo?</a>",
+	'enotif_subject_article_comment' => '$PAGEEDITOR ha commentate "$PAGETITLE" sur {{SITENAME}}',
+	'enotif_body_article_comment' => 'Car $WATCHINGUSERNAME,
+
+$PAGEEDITOR lassava un commento sur "$PAGETITLE". 
+
+Pro vider le filo de commentos, seque le ligamine sequente:
+$PAGETITLE_URL 
+
+Per favor visita e modifica sovente...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>Car $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR lassava un commento in "$PAGETITLE".
+<br /><br />
+Pro vider le filo de commentos, seque iste ligamine: <a href="$PAGETITLE_URL">$PAGETITLE</a> 
+<br /><br />
+Per favor visita e modifica sovente...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>Vole determinar qual emails tu recipe? <a href="{{fullurl:Special:Preferences}}">Actualisa tu preferentias<a>.</li>
+</ul>
+</p>',
 );
 
 /** Italian (Italiano) */
@@ -132,6 +335,61 @@ $messages['ja'] = array(
 	'article-comments-history' => '履歴',
 	'article-comments-undeleted-comment' => 'ブログの記事 $1 へのコメントを復帰',
 	'article-comments-login' => 'コメントするには<a href="$1">ログイン</a>する必要があります',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'article-comments-anonymous' => 'Анонимен корисник',
+	'article-comments-comments' => 'Коментари ($1)',
+	'article-comments-post' => 'Објави коментар',
+	'article-comments-delete' => 'избриши',
+	'article-comments-edit' => 'уреди',
+	'article-comments-history' => 'историја',
+	'article-comments-error' => 'Коментарот не може да се зачува',
+	'article-comments-undeleted-comment' => 'Вратен избришаниот коментар на блоговската страница $1',
+	'article-comments-rc-comment' => 'Коментар на статија ([[$1]])',
+	'article-comments-rc-comments' => 'Коментари на статија ([[$1]])',
+	'article-comments-fblogin' => '<a href="$1">Најавете се и поврзете се со Facebook</a> за да коментирате на ова вики!',
+	'article-comments-fbconnect' => '<a href="$1">Поврзете ја сметката со Facebook</a> за да коментирате!',
+	'article-comments-rc-blog-comment' => 'Блоговски коментар ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Блоговски коментари ([[$1]])',
+	'article-comments-login' => '<a href="$1">Најавете се</a> за да коментирате на ова вики.',
+	'article-comments-toc-item' => 'Коментари',
+	'article-comments-comment-cannot-add' => 'Не можете да додавате комнтари во статијата.',
+	'article-comments-reply' => 'Одговори',
+	'article-comments-show-all' => 'Сите коментари',
+	'article-comments-prev-page' => 'Претходна',
+	'article-comments-next-page' => 'Следна',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Матичната статија / матичниот коментар е избришан.',
+	'article-comments-empty-comment' => "Не можете да објавите празен коментар. <a href='$1'>Да го избришам?</a>",
+	'enotif_subject_article_comment' => '$PAGEEDITOR коментираше на „$PAGETITLE“ на {{SITENAME}}',
+	'enotif_body_article_comment' => 'Почитуван/а $WATCHINGUSERNAME,
+
+$PAGEEDITOR коментираше на „$PAGETITLE“. 
+
+Коментарот можете да го проследите на следнава врска:
+$PAGETITLE_URL 
+
+Посетувајте нè и уредувајте често...
+
+Викија',
+	'enotif_body_article_comment-HTML' => '<p>Почитуван/а $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR коментираше на „$PAGETITLE“.
+<br /><br />
+Коментарот може да го проследите на следнава врска: <a href="$PAGETITLE_URL">$PAGETITLE</a> 
+<br /><br />
+Посетувајте нè и уредувајте често...
+<br /><br />
+Викија
+<br /><hr />
+<ul>
+<li>Сакате да определите кои пораки да ги добивате? <a href="{{fullurl:Special:Preferences}}">Изменете си ги нагодувањата<a>.</li>
+</ul>
+</p>',
 );
 
 /** Dutch (Nederlands)
@@ -199,5 +457,35 @@ $messages['pl'] = array(
 	'article-comments-history' => 'historia',
 	'article-comments-undeleted-comment' => 'Usunięcie komentarza na stronie $1 blogu.',
 	'article-comments-login' => '<a href="$1">Zaloguj się</a>, aby komentować',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'article-comments-delete' => 'radera',
+	'article-comments-edit' => 'redigera',
+	'article-comments-history' => 'historik',
+	'article-comments-error' => 'Kommentaren kunde inte sparas',
+	'article-comments-toc-item' => 'Kommentarer',
+	'article-comments-comment-cannot-add' => 'Du kan inte lägga till en kommentar till artikeln.',
+	'article-comments-reply' => 'Svara',
+	'article-comments-show-all' => 'Visa alla kommentarer',
+	'article-comments-prev-page' => 'Föreg',
+	'article-comments-next-page' => 'Nästa',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'article-comments-anonymous' => 'అజ్ఞాత వాడుకరి',
+	'article-comments-comments' => 'వ్యాఖ్యలు ($1)',
+	'article-comments-delete' => 'తొలగించు',
+	'article-comments-history' => 'చరిత్ర',
+	'article-comments-rc-blog-comments' => 'బ్లాగు వ్యాఖ్యలు ([[$1]])',
+	'article-comments-toc-item' => 'వ్యాఖ్యలు',
+	'article-comments-comment-cannot-add' => 'ఈ వ్యాసానికి మీరు వ్యాఖ్యని చేర్చలేరు.',
+	'article-comments-page-spacer' => '&#160...&#160',
 );
 

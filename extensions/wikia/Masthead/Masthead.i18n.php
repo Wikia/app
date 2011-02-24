@@ -739,8 +739,13 @@ $messages['sr-ec'] = array(
 	'right-removeavatar' => 'брисање корисничких сличица',
 );
 
-/** Swedish (Svenska) */
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
 $messages['sv'] = array(
+	'blog-avatar-edit' => 'Ändra',
+	'blog-avatar-delete' => 'Radera',
+	'blog-avatar-getuser' => 'Sök',
 	'masthead-edits-since' => 'redigeringar sedan',
 );
 

@@ -199,8 +199,10 @@ $messages['es'] = array(
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author Tofu II
  */
 $messages['fi'] = array(
+	'protectsite' => 'Suojaa sivu',
 	'protectsite-title' => 'Sivuston suojausasetukset',
 	'protectsite-allowall' => 'Kaikki käyttäjät',
 	'protectsite-createaccount' => 'Salli uusien tilien luonti:',

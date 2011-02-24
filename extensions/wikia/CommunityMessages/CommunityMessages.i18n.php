@@ -63,6 +63,13 @@ $messages['eu'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Komunitateko Mezuak eguneratu dira]].',
 );
 
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Yhteisön viestejä on päivitetty]].',
+);
+
 /** French (Français)
  * @author IAlex
  */

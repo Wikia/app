@@ -28,6 +28,22 @@ $messages['br'] = array(
 	'userdata-submit' => 'Tapout roadennoù',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'userdata' => 'Obtener datos de usator',
+	'userdata-userid-label' => 'Entra ID del usator:',
+	'userdata-submit' => 'Obtener datos',
+	'specialuserdata-desc' => 'Forni un interfacie pro cambiar wgUserData per wiki.',
+	'userdata-header' => 'Augmentar wgUserData',
+	'userdata-value' => 'Le valor actual de wgUserData es "$1". Preme le button pro cambiar lo al data e hora actual.',
+	'userdata-updated' => 'wgUserData actualisate a "$1".',
+	'userdata-not-updated' => 'Actualisation de wgUserData fallite.',
+	'userdata-wf-reason' => 'Valor actualisate via [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory non es activate in iste wiki. Impossibile alterar wgUserData.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

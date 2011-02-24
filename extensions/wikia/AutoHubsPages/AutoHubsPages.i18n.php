@@ -52,7 +52,7 @@ $messages['qqq'] = array(
 $messages['br'] = array(
 	'unhide' => 'Diskouez',
 	'hub-blog-header' => 'Kemennadennoù pennañ $1',
-	'hub-hotspot-header' => 'Pajennoù ar muiañ oberiant',
+	'hub-hotspot-header' => 'Pajennoù buhezekañ',
 	'hub-topusers-header' => 'Implijerien pennañ eus $1',
 	'hub-featured' => 'Wikioù pennañ eus $1',
 	'hub-header' => 'Wikioù $1',
@@ -121,8 +121,12 @@ $messages['es'] = array(
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|editor|editores}}</span>',
 );
 
-/** Finnish (Suomi) */
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
 $messages['fi'] = array(
+	'hub-topusers-header' => '$1 huippukäyttäjää',
+	'hub-blog-continue' => 'Jatka lukemista',
 	'hub-blog-showarticle' => 'Näytä sivu',
 );
 

@@ -149,7 +149,7 @@ $messages['qqq'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
-	'founderemails-desc' => "Skoazellañ a ra an diazezerien en ur ditouriñ anezho pe 'vez kemmoù en o wikioù",
+	'founderemails-desc' => 'Skoazellañ a ra da gelaouiñ ar grouerien pa vez degaset kemmoù en o wikioù',
 	'tog-founderemailsenabled' => 'Kas din hizivadennoù eus ar pezh a ra an dud all (diazezerien hepken)',
 	'founderemails-email-user-registered-subject' => 'Unan bennak en deus krouet ur gont war ho wiki !',
 	'founderemails-email-user-registered-body' => 'Ac\'hanta $FOUNDERNAME,
@@ -161,7 +161,7 @@ Evit doare eo bet an implijer $USERNAME oc\'h en em enrollañ war ho wiki ! Pera
 Evit doare eo bet an implijer $USERNAME oc\'h en em enrollañ war ho wiki ! Perak ned afec\'h ket da saludi anezhañ war <a href="$USERTALKPAGEURL">e bajenn kaozeal</a> ?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Skipailh Wikia</div>',
 	'founderemails-email-0-days-passed-subject' => "Deuet mat oc'h war Wikia !",
-	'founderemails-email-0-days-passed-body' => "Gourc'hemennoù evit bezañ krouet \$WIKINAME - er gumuniezh Wkia emaoc'h bremañ !
+	'founderemails-email-0-days-passed-body' => "Gourc'hemennoù evit bezañ krouet \$WIKINAME - e kumuniezh Wikia emaoc'h bremañ !
 
 -- Skipailh Wikia",
 	'founderemails-email-0-days-passed-body-HTML' => 'Gourc\'hemennoù evit bezañ krouet <strong>$WIKINAME</strong> - er gumuniezh Wkia emaoc\'h bremañ !<br /><br />
@@ -677,6 +677,7 @@ Parece que alguien ha editado tu wiki! Por qué no <a href="$MYHOMEURL">verifica
 
 /** Finnish (Suomi)
  * @author Nike
+ * @author Tofu II
  */
 $messages['fi'] = array(
 	'founderemails-email-page-edited-reg-user-body' => 'Hei $FOUNDERNAME,
@@ -684,6 +685,11 @@ $messages['fi'] = array(
 Näyttää siltä, että rekisteröitynyt käyttäjä $USERNAME on muokannut wikiäsi! Miksi et sano hänelle ($USERTALKPAGEURL) hei?
 
 -- The Wikia Team',
+	'founderemails-answers-email-page-edited-reg-user-body' => 'Hei $FOUNDERNAME,
+
+Näyttää siltä, että rekisteröitynyt käyttäjä $USERNAME on muokannut wikiäsi! Miksi et sano hänen keskustelusivullaan ($USERTALKPAGEURL) hei?
+
+-- Wikia Team�',
 );
 
 /** French (Français)
@@ -2071,6 +2077,7 @@ $messages['ru'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'founderemails-email-user-registered-subject' => 'Någon registrerade ett konto på din wiki!',
@@ -2079,6 +2086,7 @@ $messages['sv'] = array(
 Det ser ut som $USERNAME har registrerat ett konto på din wiki! Varför går du inte och besöker dem på deras diskussionssida $USERTALKPAGEURL och säger hej?
 
 -- The Wikia Team',
+	'founderemails-email-0-days-passed-subject' => 'Välkommen till Wikia!',
 );
 
 /** Tamil (தமிழ்)

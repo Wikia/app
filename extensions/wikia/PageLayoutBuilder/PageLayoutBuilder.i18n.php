@@ -260,6 +260,7 @@ $messages['br'] = array(
 
 /** German (Deutsch)
  * @author George Animal
+ * @author Pill
  */
 $messages['de'] = array(
 	'plb-special-form-summary' => 'Zusammenfassung:',
@@ -273,7 +274,7 @@ $messages['de'] = array(
 	'plb-widget-name-plb_image' => 'Bild',
 	'plb-property-editor-width' => 'Breite',
 	'plb-property-editor-spacing-small' => 'Klein',
-	'plb-property-editor-save' => 'Spiechern',
+	'plb-property-editor-save' => 'Speichern',
 	'plb-property-editor-cancel' => 'Abbrechen',
 );
 
@@ -438,6 +439,16 @@ $messages['es'] = array(
 	'plb-helpbox-help-link' => 'Lee la guía del Creador de diseños.',
 );
 
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'plb-special-form-create-new' => 'Luo uusi "$1" sivu',
+	'plb-special-form-edit-article' => 'Muokkaa sivua: $1',
+	'plb-create-edit-title' => '<strong>Muokataan:</strong> $1',
+	'plb-helpbox-checkboxinfo1' => 'Älä näytä tätä harjoitusta uudelleen.',
+);
+
 /** French (Français)
  * @author Wyz
  */
@@ -497,7 +508,7 @@ $messages['fr'] = array(
 	'plb-form-desc-instructions' => 'Veuillez saisir une description',
 	'plb-list-confirm-delete' => 'Êtes-vous sûr{{GENDER:||e|(e)}} de vouloir supprimer ce gabarit ?',
 	'plb-list-confirm-publish' => 'Êtes-vous sûr{{GENDER:||e|(e)}} de vouloir publier ce gabarit ?',
-	'plb-list-name' => 'Nom',
+	'plb-list-name' => 'Nom de la mise en page',
 	'plb-list-desc' => 'Description',
 	'plb-list-last-editor' => 'Dernier contributeur',
 	'plb-list-count' => 'Nb pages',
@@ -544,7 +555,7 @@ $messages['fr'] = array(
 	'plb-editor-preview-info' => 'Info',
 	'plb-editor-overlay-edit' => 'modifier',
 	'plb-editor-enter-caption' => 'Saisissez la question pour le formulaire.',
-	'plb-editor-left-sidebar-tutorial' => '<br /><b>Bienvenue sur le Générateur de mise en page !</b><br /><br />Pour commencer à ajouter des éléments, cliquez sur le bouton <em>Ajouter un élément</em> ci-dessous et choisissez le type souhaité.<br /><br />Au fur et à mesure que vous ajoutez des éléments, de nouvelles questions seront ajoutées. Les nouvelles pages seront automatiquement générées en se basant sur les éléments que vous avez mis dans le gabarit.',
+	'plb-editor-left-sidebar-tutorial' => '<br /><b>Bienvenue sur le Générateur de mise en page !</b><br /><br />Pour commencer à ajouter des éléments, cliquez sur le bouton <em>Ajouter un élément</em> ci-dessous et choisissez le type souhaité.<br /><br />Au fur et à mesure que vous ajoutez des éléments, de nouvelles questions seront ajoutées au processus de création de la page.',
 	'plb-widget-name-plb_input' => 'Zone de saisie',
 	'plb-widget-name-plb_mlinput' => 'Paragraphe',
 	'plb-widget-name-plb_image' => 'Image',
@@ -598,6 +609,8 @@ $messages['fr'] = array(
 	'plb-helpbox-checkboxinfo2' => 'Ne plus afficher ce tutoriel.',
 	'plb-helpbox-help-desc' => 'Vous avez encore des questions ?',
 	'plb-helpbox-help-link' => 'Consultez le guide du Générateur de mise en page.',
+	'plb-parser-error-not-on-plb-article' => 'Les éléments de mise en page ne peuvent être utilisés que sur les pages de mise en page',
+	'plb-parser-error-use-on-template' => 'Impossible d’utiliser des éléments de mise en page dans les modèles',
 );
 
 /** Interlingua (Interlingua)
@@ -659,7 +672,7 @@ $messages['ia'] = array(
 	'plb-form-desc-instructions' => 'Per favor entra un description',
 	'plb-list-confirm-delete' => 'Es vos secur de voler deler iste designo?',
 	'plb-list-confirm-publish' => 'Es vos secur de voler publicar iste designo?',
-	'plb-list-name' => 'Nomine',
+	'plb-list-name' => 'Nomine del disposition',
 	'plb-list-desc' => 'Description',
 	'plb-list-last-editor' => 'Ultime contributor',
 	'plb-list-count' => '№ de paginas',
@@ -706,7 +719,7 @@ $messages['ia'] = array(
 	'plb-editor-preview-info' => 'Info',
 	'plb-editor-overlay-edit' => 'modificar',
 	'plb-editor-enter-caption' => 'Entra un question de formulario.',
-	'plb-editor-left-sidebar-tutorial' => '<br /><b>Benvenite al constructor de designos!</b><br /><br />Pro comenciar a adder elementos, clicca sur le button <em>Adder elemento</em> hic supra e selige le typo desirate.<br /><br />Como tu adde elementos, nove questiones essera addite. Le nove pagina essera generate automaticamente a base de tote le elementos que tu insere in le designo.',
+	'plb-editor-left-sidebar-tutorial' => '<br /><b>Benvenite al constructor de designos!</b><br /><br />Pro comenciar a adder elementos, clicca sur le button <em>Adder elemento</em> hic supra e selige le typo desirate.<br /><br />Como tu adde elementos, nove questiones essera addite al processo de creation pro le pagina.',
 	'plb-widget-name-plb_input' => 'Quadro de entrata',
 	'plb-widget-name-plb_mlinput' => 'Paragrapho',
 	'plb-widget-name-plb_image' => 'Imagine',
@@ -760,6 +773,8 @@ $messages['ia'] = array(
 	'plb-helpbox-checkboxinfo2' => 'Non plus monstrar iste tutorial.',
 	'plb-helpbox-help-desc' => 'Tu ha ancora questiones?',
 	'plb-helpbox-help-link' => 'Lege le guida del constructor de designos.',
+	'plb-parser-error-not-on-plb-article' => 'Elementos de disposition pote solmente esser usate in paginas de disposition',
+	'plb-parser-error-use-on-template' => 'Non es possibile usar elementos de disposition in patronos',
 );
 
 /** Kurdish (Latin) (Kurdî (Latin))
@@ -772,6 +787,28 @@ $messages['ku-latn'] = array(
 	'plb-widget-name-plb_image' => 'Wêne',
 	'plb-property-editor-spacing-small' => 'Biçûk',
 	'plb-property-editor-alignment-left' => 'Çep',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'plb-special-form-required' => '*Obligatoresch',
+	'plb-special-form-unknow-error' => 'Et gouf en onbekannte Feeler.',
+	'plb-special-form-cant-edit' => 'Dir kënnt dës Säit net änneren.',
+	'plb-special-form-new' => 'Neie Layout',
+	'plb-empty-page' => 'Ouni Numm',
+	'plb-special-form-submit-button' => 'Säit späicheren',
+	'plb-special-form-summary' => 'Resumé:',
+	'plb-form-title' => 'Titel:',
+	'plb-form-desc' => 'Beschreiwung:',
+	'plb-list-desc' => 'Beschreiwung',
+	'plb-list-count' => '#Artikelen',
+	'plb-list-action-delete' => 'Läschen',
+	'plb-parser-preview-image-username' => 'Benotzernumm',
+	'plb-widget-name-plb_image' => 'Bild',
+	'plb-property-editor-thumbnail' => 'Miniaturbild',
+	'plb-property-editor-save' => 'Späicheren',
 );
 
 /** Macedonian (Македонски)

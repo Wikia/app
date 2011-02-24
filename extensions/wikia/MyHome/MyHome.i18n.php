@@ -759,6 +759,7 @@ $messages['el'] = array(
  * @author Danke7
  * @author Locos epraix
  * @author Peter17
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'myhome-desc' => 'Una página de inicio privada para usuarios registrados',
@@ -810,7 +811,7 @@ $messages['es'] = array(
 	'myhome-user-contributions-empty' => 'Puedes participar en este wiki haciendo clic en el botón "{{int:editthispage}}" de cualquier artículo, y añadiendo lo que sepas acerca del mismo. Todos podemos hacer cambios, añadir información o corregir un error. El wiki se construye gracias a la comunidad, y una vez hagas clic en el botón de editar, serás parte de la comunidad. ¡Anímate a intentarlo!',
 	'myhome-hot-spots-number-of-editors' => 'editores',
 	'myhome-log-in' => "<center>La página de inicio solo está disponible si estás idenfiticado<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:UserLogin|\$1}} Por favor, ¡identifícate para ver esta página!]</span>'''</big></center>",
-	'myhome-switch-to-monaco' => "\"Mi página de inicio\" solo está disponible si usas la apariencia Monaco. Si quieres ver \"Mi página de inicio\", por favor, entra en tus '''[[Special:Preferences|tus preferencias]]''' para cambiar la apariencia.",
+	'myhome-switch-to-monaco' => "La función Wiki Actividad solo está disponible si usas la piel Wikia. Si quieres ver \"Mi página de inicio\", por favor, entra en tus '''[[Special:Preferences|tus preferencias]]''' para cambiar la apariencia.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Rincón de la comunidad',
 	'oasis-myhome-community-corner-edit' => 'editar mensaje &gt;',
@@ -849,6 +850,7 @@ $messages['fa'] = array(
  * @author Centerlink
  * @author Crt
  * @author Nike
+ * @author Tofu II
  * @author Varusmies
  */
 $messages['fi'] = array(
@@ -871,6 +873,7 @@ Aloita kirjoittaminen luomalla '''[[Special:CreatePage|uusi sivu]]'''.",
 	'myhome-feed-delete' => 'poistettu',
 	'myhome-feed-image' => 'kuva lisätty',
 	'myhome-feed-video' => 'video lisätty',
+	'myhome-feed-categorization' => 'luokittelu',
 	'myhome-feed-created-by' => 'luonut käyttäjä $1',
 	'myhome-feed-added-by' => 'lisännyt käyttäjä $1',
 	'myhome-feed-edited-by' => 'muokannut käyttäjä $1',
@@ -888,6 +891,9 @@ Aloita kirjoittaminen luomalla '''[[Special:CreatePage|uusi sivu]]'''.",
 	'myhome-feed-new-article-comment-details' => 'Kommentti',
 	'myhome-feed-move-details' => 'uudelleen nimetty',
 	'myhome-feed-redirect-details' => 'Ohjaus',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Lisätty kuva|Lisätty kuvia}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Lisätty video|Lisätty videoita}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Lisätty luokka|Lisätty luokkia}}',
 	'myhome-hot-spots-number-of-editors' => 'muokkaajaa',
 	'myhome-namespace-blog' => 'Blogi',
 	'myhome-community-corner-header' => 'Yhteisönurkka',
@@ -2364,7 +2370,7 @@ $messages['sl'] = array(
  * @author Жељко Тодоровић
  */
 $messages['sr-ec'] = array(
-	'myhome' => 'Моја страница',
+	'myhome' => 'Мој Дом',
 	'wikiactivity' => 'Активност на викији',
 	'myhome-activity-more' => 'прикажи скорашњу активност',
 	'myhome-activity-feed' => 'Активности',
@@ -2397,25 +2403,32 @@ $messages['sr-ec'] = array(
 	'myhome-feed-diff-alt' => 'прикажи измене на овој страници',
 	'myhome-feed-new-page-details' => 'Нова страница',
 	'myhome-feed-summary-details' => 'Сажетак',
-	'myhome-feed-section-edit-details' => 'уредио/-ла одељак',
+	'myhome-feed-section-edit-details' => 'Измена одељка',
 	'myhome-feed-new-blog-post-details' => 'Нови блог',
 	'myhome-feed-new-blog-comment-details' => 'Коментар',
 	'myhome-feed-new-article-comment-details' => 'Коментар',
 	'myhome-feed-move-details' => 'Преименовано',
-	'myhome-feed-redirect-details' => 'Преусмери',
+	'myhome-feed-redirect-details' => 'Преусмерење',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Додата слика|Додате слике}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Додат видео снимак|Додати видео снимци}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Додата категорија|Додате категорије}}',
+	'myhome-user-contributions-empty' => 'Можете се укључити овој викији кликом на дугме „{{int:editthispage}}“ на било којој страници.
+Свако може да прави измене, додаје податке или исправља грешке.
+Викија се гради од стране заједнице. Чим кликнете на дугме за уређивање, постаћете део ње.
+Придружите нам се!',
 	'myhome-hot-spots-number-of-editors' => 'уређивачи',
-	'myhome-log-in' => "<center>Моја страница је доступна само пријављеним корисницима.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Пријавите се да бисте видели ову страницу!]'''</big></center>",
+	'myhome-log-in' => "<center>Мој Дом је доступан само пријављеним корисницима.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Пријавите се да бисте видели ову страницу!]'''</big></center>",
+	'myhome-switch-to-monaco' => "Активност на викији је доступна само ако користите пресвлаку Викија.
+Ако желите да погледајте Мој Дом, посетите '''[[Special:Preferences|подешавања]]''' и промените пресвлаку.",
 	'myhome-namespace-blog' => 'Блог',
 	'myhome-community-corner-header' => 'Заједничке поруке',
+	'oasis-myhome-community-corner-edit' => 'уреди поруку &gt;',
 	'myhome-community-corner-edit' => 'уреди поруку',
-	'community-corner' => "'''Добро дошли на Моју страницу!'''
+	'community-corner' => "'''Добро дошли у Мој Дом!'''
 
 На овој страници можете пратити дешавања на викији.
 
-Ако сте оснивач или администратор, можете да измените ову поруку да бисте разговарали са заједницом о важним стварима које се дешавају на енциклопедији.
+Ако сте оснивач или администратор, можете да измените ову поруку да бисте разговарали са заједницом о важним стварима које се дешавају на викији.
 На пример, можете да:
 
 * организујете пројекат за изградњу подручја викије
@@ -2429,7 +2442,8 @@ $messages['sr-ec'] = array(
 * поставите неколико речи охрабрења!",
 	'myhome-hot-spots-definition' => 'Странице с највише уређивача {{PLURAL:$1|протеклог дана|протекла $1 дана|протеклих $1 дана}}.',
 	'myhome-default-view-checkbox' => 'Начини $1 као подразумевани приказ',
-	'tooltip-pt-myhome' => 'Пређи на Моју страницу',
+	'myhome-default-view-success' => 'Ово је сада ваш подразумевани приказ.',
+	'tooltip-pt-myhome' => 'Пређите у Мој Дом',
 	'activityfeed' => 'Довод активности',
 );
 
