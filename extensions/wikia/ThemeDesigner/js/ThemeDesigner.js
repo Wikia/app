@@ -596,7 +596,7 @@ var ThemeDesigner = {
 
 			$().log('applySettings, reloadCSS');
 
-			var sass = "/__sass/skins/oasis/css/oasis.scss/" + wgStyleVersion + "/";
+			var sass = "/skins/oasis/css/oasis.scss/" + wgStyleVersion + "/";
 			sass += "color-body=" + escape(ThemeDesigner.settings["color-body"]);
 			sass += "&color-page=" + escape(ThemeDesigner.settings["color-page"]);
 			sass += "&color-buttons=" + escape(ThemeDesigner.settings["color-buttons"]);
@@ -606,6 +606,7 @@ var ThemeDesigner = {
 			sass += "&background-align=" + escape(ThemeDesigner.settings["background-align"]);
 			sass += "&background-tiled=" + escape(ThemeDesigner.settings["background-tiled"]);
 			sass += "&wordmark-font=" + escape(ThemeDesigner.settings["wordmark-font"]);
+			sass = wfGetSassUrl(sass);
 			document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(sass);
 		}
 

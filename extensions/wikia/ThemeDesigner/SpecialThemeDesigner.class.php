@@ -20,8 +20,6 @@ class SpecialThemeDesigner extends UnlistedSpecialPage {
 
 		Wikia::setVar( 'OasisEntryModuleName', 'ThemeDesigner' );
 
-		wfLoadExtensionMessages( 'ThemeDesigner' );
-
 		wfProfileOut( __METHOD__ );
 	}
 }
