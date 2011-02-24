@@ -141,6 +141,105 @@ $messages['de'] = array(
 	'phalanx-stats-table-reason' => 'Grund',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'phalanx-desc' => 'Phalanx es un systema anti-spam integrate',
+	'phalanx' => 'Phalanx',
+	'phalanx-title' => 'Phalanx - Systema anti-spam integrate',
+	'phalanx-type-content' => 'contento de pagina',
+	'phalanx-type-summary' => 'summario de pagina',
+	'phalanx-type-title' => 'titulo de pagina',
+	'phalanx-type-user' => 'usator',
+	'phalanx-type-answers-question-title' => 'titulo de question',
+	'phalanx-type-answers-recent-questions' => 'questiones recente',
+	'phalanx-type-wiki-creation' => 'creation de wiki',
+	'phalanx-add-block' => 'Applicar blocada',
+	'phalanx-edit-block' => 'Salveguardar blocada',
+	'phalanx-label-filter' => 'Filtro:',
+	'phalanx-label-reason' => 'Motivo:',
+	'phalanx-label-expiry' => 'Expiration:',
+	'phalanx-label-type' => 'Typo:',
+	'phalanx-label-lang' => 'Lingua:',
+	'phalanx-view-type' => 'Typo de blocada...',
+	'phalanx-view-blocker' => 'Cercar per texto de filtro:',
+	'phalanx-view-blocks' => 'Cercar in filtros',
+	'phalanx-view-id' => 'Cercar filtro per ID:',
+	'phalanx-view-id-submit' => 'Obtener filtro',
+	'phalanx-format-text' => 'texto simple',
+	'phalanx-format-regex' => 'expression regular',
+	'phalanx-format-case' => 'sensibile al majusculas',
+	'phalanx-format-exact' => 'exacte',
+	'phalanx-tab-main' => 'Gerer filtros',
+	'phalanx-tab-secondary' => 'Testar filtros',
+	'phalanx-block-success' => 'Le blocada ha essite addite con successo',
+	'phalanx-block-failure' => 'Un error occurreva durante le addition del blocada',
+	'phalanx-modify-success' => 'Le blocada ha essite modificate con successo',
+	'phalanx-modify-failure' => 'Un error occurreva durante le modification del blocada',
+	'phalanx-modify-warning' => 'Tu modifica le blocada con ID #$1.
+Un clic sur "{{int:phalanx-add-block}}" salveguardara le cambios!',
+	'phalanx-test-description' => 'Verificar le texto fornite contra le blocadas actual.',
+	'phalanx-test-submit' => 'Testar',
+	'phalanx-test-results-legend' => 'Resultatos del test',
+	'phalanx-display-row-blocks' => 'blocadas: $1',
+	'phalanx-display-row-created' => "create per '''$1''' le $2",
+	'phalanx-link-unblock' => 'disblocar',
+	'phalanx-link-modify' => 'modificar',
+	'phalanx-link-stats' => 'statisticas',
+	'phalanx-reset-form' => 'Reinitialisar formulario',
+	'phalanx-legend-input' => 'Crear o modificar filtro',
+	'phalanx-legend-listing' => 'Filtros actualmente applicate',
+	'phalanx-unblock-message' => 'Le blocada con ID #$1 ha essite removite con successo',
+	'phalanx-help-type-content' => 'Iste filtro impedi le salveguarda de un modification si su contento corresponde a un phrase presente in le lista nigre.',
+	'phalanx-help-type-summary' => 'Iste filtro impedi le salveguarda de un modification si le summario specificate corresponde a un phrase presente in le lista nigre.',
+	'phalanx-help-type-title' => 'Iste filtro impedi le salveguarda de un modification si su titulo corresponde a un phrase presente in le lista nigre.
+
+Illo non impedi le modification de un pagina pre-existente.',
+	'phalanx-help-type-user' => 'Iste filtro bloca un usator (exactemente como un blocada local in MediaWiki), si le nomine o adresse IP es presente in le lista nigre de nomines o de adresses IP.',
+	'phalanx-help-type-wiki-creation' => 'Iste filtro impedi le creation de un wiki si su nomine o URL es presente in le lista nigre.',
+	'phalanx-help-type-answers-question-title' => 'Iste filtro bloca le creation de un question (pagina), si su titulo es presente in le lista nigre.
+
+Nota: functiona solmente in wikis del typo Responsas.',
+	'phalanx-help-type-answers-recent-questions' => 'Iste filtro impedi le visualisation de questiones (paginas) in un numero de formatos (widgets, listas, listages a base de etiquettas).
+Illo non impedi le creation de tal paginas.
+
+Nota: functiona solmente in wikis del typo Answers.',
+	'phalanx-user-block-reason-ip' => 'Iste adresse IP es impedite de facer modificationes pro causa de vandalismo o de altere disruption per te o per alcuno altere qui usa un adresse IP in commun con te.
+Si tu crede que isto sia un error, per favor [[Special:Contact|contacta Wikia]].',
+	'phalanx-user-block-reason-exact' => 'Iste nomine de usator es impedite de facer modificationes pro causa de vandalismo o de altere disruption.
+Si tu crede que isto sia un error, per favor [[Special:Contact|contacta Wikia]].',
+	'phalanx-user-block-reason-similar' => 'Iste nomine de usator es impedite de facer modificationes pro causa de vandalismo o de altere disruption per un usator con un nomine similar.
+Per favor crea un nomine de usator alternative o [[Special:Contact|contacta Wikia]] a proposito de iste problema.',
+	'phalanx-title-move-summary' => 'Le motivo que tu entrava contineva un phrase blocate.',
+	'phalanx-content-spam-summary' => 'Le texto esseva trovate in le summario del pagina.',
+	'phalanx-stats-title' => 'Statisticas de Phalanx',
+	'phalanx-stats-block-notfound' => 'ID de blocada non trovate',
+	'phalanx-stats-table-id' => 'ID de blocada',
+	'phalanx-stats-table-user' => 'Addite per',
+	'phalanx-stats-table-type' => 'Typo',
+	'phalanx-stats-table-create' => 'Create',
+	'phalanx-stats-table-expire' => 'Expira',
+	'phalanx-stats-table-exact' => 'Exacte',
+	'phalanx-stats-table-regex' => 'Expression regular',
+	'phalanx-stats-table-case' => 'Litteras',
+	'phalanx-stats-table-language' => 'Lingua',
+	'phalanx-stats-table-text' => 'Texto',
+	'phalanx-stats-table-reason' => 'Motivo',
+	'phalanx-stats-row' => "a $4, le typo de filtro ''$1''' blocava '''$2''' in $3",
+	'phalanx-stats-row-per-wiki' => "le usator '''$2''' esseva blocate a '''$4''' per le filtro con ID '''$3''' ($5) (typo: '''$1''')",
+	'phalanx-rule-log-name' => 'Registro de regulas Phalanx',
+	'phalanx-rule-log-header' => 'Isto es un registro de modificationes in le regulas de Phalanx.',
+	'phalanx-rule-log-add' => 'Regula de Phalanx addite: $1',
+	'phalanx-rule-log-edit' => 'Regula de Phalanx modificate: $1',
+	'phalanx-rule-log-delete' => 'Regula de Phalanx delite: $1',
+	'phalanx-rule-log-details' => 'Filtro: "$1", typo: "$2", motivo: "$3"',
+	'phalanx-stats-table-wiki-id' => 'ID del wiki',
+	'phalanx-stats-table-wiki-name' => 'Nomine del wiki',
+	'phalanx-stats-table-wiki-url' => 'URL del wiki',
+	'phalanx-stats-table-wiki-last-edited' => 'Ultime modification',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -392,5 +491,13 @@ $messages['te'] = array(
 	'phalanx-stats-table-language' => 'భాష',
 	'phalanx-stats-table-text' => 'పాఠ్యం',
 	'phalanx-stats-table-reason' => 'కారణం',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'phalanx-label-reason' => 'Причина:',
+	'phalanx-label-lang' => 'Мова:',
 );
 

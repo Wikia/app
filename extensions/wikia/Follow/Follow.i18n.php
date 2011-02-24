@@ -674,6 +674,19 @@ Por favor visita y edita frecuentemente...
 </p>',
 );
 
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'wikiafollowedpages-special-heading-article' => 'Artikkelit ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Blogit ja viestit ($1)',
+	'wikiafollowedpages-special-heading-user' => 'Käyttäjä sivut ($1)',
+	'wikiafollowedpages-special-heading-media' => 'Kuvat ja videot ($1)',
+	'wikiafollowedpages-special-namespace' => '($1 sivu)',
+	'wikiafollowedpages-special-title' => 'Seuratut sivut
+�',
+);
+
 /** French (Français)
  * @author Peter17
  * @author Sherbrooke

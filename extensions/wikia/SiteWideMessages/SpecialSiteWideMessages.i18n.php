@@ -627,6 +627,7 @@ $messages['eu'] = array(
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author Tofu II
  */
 $messages['fi'] = array(
 	'swm-label-preview' => 'Esikatselu',
@@ -681,6 +682,7 @@ $messages['fi'] = array(
 	'swm-error-no-such-wiki' => 'Kyseistä wikiä ei ole.',
 	'swm-error-no-such-user' => 'Määritettyä käyttäjää ei ole.',
 	'swm-error-empty-message' => 'Kirjoita viestin sisältö.',
+	'swm-error-long-message' => 'Viestit on rajoitettu 500 merkille.',
 	'swm-error-empty-group' => 'Kirjoita ryhmän nimi.',
 	'swm-lang-other' => 'kaikki jäljellä olevat kielet',
 );

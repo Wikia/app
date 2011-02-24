@@ -99,6 +99,13 @@ $messages['es'] = array(
 	'category-exhibition-display-new' => 'Vista de exposición de la categoría',
 );
 
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'category-exhibition-page-header' => 'Sivut kategoriassa "$1"',
+);
+
 /** French (Français) */
 $messages['fr'] = array(
 	'category-exhibition-sorttype' => 'Type de tri :',

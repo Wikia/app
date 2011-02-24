@@ -65,6 +65,13 @@ $messages['es'] = array(
 	'exitstitial-button' => 'Omitir este anuncio',
 );
 
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'interstitial-default-campaign-code' => 'Wikia rakastaa sinua!',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -117,6 +124,19 @@ $messages['no'] = array(
 	'exitstitial-button' => 'Hopp over annonse',
 );
 
+/** Portuguese (Português)
+ * @author Waldir
+ */
+$messages['pt'] = array(
+	'interstitial-default-campaign-code' => 'O Wikia ama-te!',
+	'interstitial-skip-ad' => 'Ignorar este anúncio',
+	'interstitial-already-logged-in-no-link' => 'Você já está autenticado e não há nenhum destino especificado.',
+	'interstitial-disabled-no-link' => 'Nenhum destino foi especificado e intersticiais não estão ativadas neste wiki.',
+	'interstitial-link-away' => 'Não há nada para ver aqui!<br /><br />Deseja ir para a [[{{MediaWiki:Mainpage}}|Página principal]] ou talvez para uma [[Special:Random|página aleatória]]?',
+	'exitstitial-register' => '<a href="#" class="register">Registe-se</a> ou <a href="#" class="login">Autentique-se</a> para ignorar anúncios.',
+	'exitstitial-button' => 'Ignorar este anúncio',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
@@ -124,5 +144,14 @@ $messages['sr-ec'] = array(
 	'interstitial-default-campaign-code' => 'Викија вас воли!',
 	'interstitial-skip-ad' => 'Прескочи оглас',
 	'exitstitial-button' => 'Прескочи оглас',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'interstitial-default-campaign-code' => 'Wikia älskar dig!',
+	'interstitial-skip-ad' => 'Hoppa över denna annons',
+	'exitstitial-button' => 'Hoppa över denna annons',
 );
 

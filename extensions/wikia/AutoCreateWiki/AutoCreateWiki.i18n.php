@@ -286,7 +286,7 @@ $messages['ar'] = array(
 	'autocreatewiki-subname-answers' => 'إجابات',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Wizardist
  */
 $messages['be-tarask'] = array(
@@ -348,7 +348,7 @@ $messages['br'] = array(
 	'autocreatewiki-haveaccount-question' => 'Hag ur gont Wikia ho peus dija ?',
 	'autocreatewiki-success-title-default' => 'Krouet eo bet ho wiki !',
 	'autocreatewiki-success-title-answers' => "Krouet eo bet ho lec'hienn respontoù.",
-	'autocreatewiki-success-subtitle' => 'Gellout a rit kregiñ da labourat war ho wiki en ur weladenniñ :',
+	'autocreatewiki-success-subtitle' => 'Gallout a rit kregiñ da labourat war ho wiki en ur weladenniñ :',
 	'autocreatewiki-success-has-been-created' => 'a zo bet krouet !',
 	'autocreatewiki-success-get-started' => 'Kregiñ',
 	'autocreatewiki-info-domain' => "Ar gwellañ zo implijout ur ger a vo, evit doare, ur ger-alc'hwez evit klask diwar-benn ho tanvez.",
@@ -391,7 +391,7 @@ $messages['br'] = array(
 	'autocreatewiki-invalid-retype-passwd' => 'Skrivit ar ger-tremen amañ a-us, mar plij.',
 	'autocreatewiki-invalid-birthday' => 'Deiziad ganedigezh direizh',
 	'autocreatewiki-limit-birthday' => "Ne c'haller ket krouiñ an enrolladenn.",
-	'autocreatewiki-log-title' => 'Dindan krouiñ eo ho wiki.',
+	'autocreatewiki-log-title' => 'Emeur o krouiñ ho wiki',
 	'autocreatewiki-step0' => 'Adderaouekaat...',
 	'autocreatewiki-stepdefault' => 'An argerzh zo dindan seveniñ , gortozit...',
 	'autocreatewiki-errordefault' => "N'eo ket echu an argerzh...",
@@ -410,21 +410,21 @@ $messages['br'] = array(
 	'autocreatewiki-congratulation' => "Gourc'hemennoù !",
 	'autocreatewiki-welcometalk-log' => 'Kemenadenn Degemer',
 	'autocreatewiki-regex-error-comment' => 'implijet er wiki $1 (skrid  klok : $2)',
-	'autocreatewiki-step2-error' => 'Bez ez eus eus an diaz roadennoù-se !',
+	'autocreatewiki-step2-error' => "Bez' ez eus c'hoazh eus an diaz roadennoù-se !",
 	'autocreatewiki-step3-error' => "Ne c'haller ket ouzhpennañ an titouroù dre ziouer en diaz roadennoù !",
 	'autocreatewiki-step6-error' => "Ne c'haller ket ouzhpennañ an taolennoù dre ziouer en diaz roadennoù !",
-	'autocreatewiki-step7-error' => "Ne c'haller ket  eilañ an diaz roadenneoù diazez evit ar ar yezh-mañ !",
+	'autocreatewiki-step7-error' => "N'haller ket eilañ an diaz roadennoù diazez evit ar ar yezh-mañ !",
 	'autocreatewiki-protect-reason' => 'Darn eus an etrefas ofisiel',
-	'autocreatewiki-welcomesubject' => 'Krouet eo bet $1 !',
+	'autocreatewiki-welcomesubject' => 'Krouet eo bet ar $1 !',
 	'autocreatewiki-welcomebody' => "Demat, $2,
 
-Ar Wikia zo bet goulennet ganeoc'h a c'haller kaout bremañ war <$1> Emichañ ez adkavimp ac'hanoc'h er c'hemmoù a-benn nebeut !
+Ar Wikia zo bet savet ganeoc'h a gaver bremañ war <$1> Emichañs e kemerot perzh ennañ a-zevri evit e lakaat da vevañ !
 
-Ouzhpennet hon eus un nebeut titouroù war ho pajenn eskemm (<$5>) evit sikour ac'hanoc'h da gregiñ.
+Degaset hon eus un nebeud titouroù war ho pajenn gaozeal (<$5>) evit sikour ac'hanoc'h da gregiñ ganti.
 
 M'hoc'h eus goulennoù c'hoazh e c'hallit goulenn sikour ouzh ar gumuniezh war ar wiki <http://www.wikia.com /wiki/Forum:Help_desk>, pe dre bostel d'ar chomlec'h community@wikia.com. Gallout a rit respont pe sellet ouzh hor pajennoù skoazell : <http://irc.wikia.com>.
 
-Grit berzh en hor raktres .
+Chañs vat deoc'h en ho raktres .
 
 
 $3
@@ -624,7 +624,7 @@ indem du <a href="$2">$2</a> besuchst.</p>
 	'autocreatewiki-subname-answers' => 'Antworten',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  * @author The Evil IP address
  */
@@ -979,6 +979,7 @@ $3
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author Tofu II
  */
 $messages['fi'] = array(
 	'autocreatewiki' => 'Luo uusi wiki',
@@ -995,6 +996,9 @@ $messages['fi'] = array(
 	'autocreatewiki-error' => 'virhe',
 	'autocreatewiki-haveaccount-question' => 'Onko sinulla jo Wikia-tili?',
 	'autocreatewiki-info-terms-agree' => 'Luomalla wikin ja käyttäjätunnuksen hyväksyt <a href="http://www.wikia.com/wiki/Terms_of_use">Wikian käyttösäännöt</a>.',
+	'autocreatewiki-invalid-wikiname' => 'Nimi ei voi sisältää erikoismerkkejä (kuten $ tai @) ja se ei voi olla tyhjä',
+	'autocreatewiki-name-too-long' => 'Tämä nimi on liian pitkä. Valitse nimi, jossa on enintään 50 merkkiä.',
+	'autocreatewiki-invalid-username' => 'Tämä käyttäjätunnus on virheellinen.',
 	'autocreatewiki-busy-username' => 'Tämä käyttäjätunnus on jo varattu.',
 	'autocreatewiki-empty-category' => 'Valitse yksi luokista.',
 	'autocreatewiki-empty-wikiname' => 'Wikinimi ei voi olla tyhjä.',
@@ -1008,7 +1012,9 @@ $messages['fi'] = array(
 	'autocreatewiki-step2' => 'Luodaan tietokanta...',
 	'autocreatewiki-step3' => 'Asetetaan oletustiedot tietokantaan...',
 	'autocreatewiki-step4' => 'Kopioidaan oletuskuvat ja logo...',
+	'autocreatewiki-step11' => 'Lähetetään sähköpostia käyttäjälle ...',
 	'autocreatewiki-redirect' => 'Ohjataan uuteen wikiin: $1...',
+	'autocreatewiki-congratulation' => 'Onnittelut!',
 	'autocreatewiki-welcometalk-log' => 'Tervetuloviesti',
 	'autocreatewiki-step2-error' => 'Tietokanta on olemassa!',
 	'autocreatewiki-protect-reason' => 'Osa virallista käyttöliittymää',
@@ -2108,12 +2114,12 @@ $messages['nl'] = array(
 	'autocreatewiki-bad-name' => 'De naam kan geen speciale tekens bevatten (zoals $ of @) en moet bestaan uit één woord, zonder hoofdletters en zonder spaties.',
 	'autocreatewiki-invalid-wikiname' => 'De naam kan geen speciale tekens (zoals $ of @) bevatten en kan niet leeg zijn.',
 	'autocreatewiki-violate-policy' => 'Deze wiki bevat een naam dat ons beleid voor namen overschrijdt.',
-	'autocreatewiki-name-taken' => 'Een wiki met deze naam bestaat al.
-U kunt meehelpen op <a href="http://$1.wikia.com">http://$1.wikia.com</a>',
-	'autocreatewiki-name-too-short' => 'Deze naam is te kort.
-Kies alstublieft een naam met tenminste drie tekens.',
-	'autocreatewiki-name-too-long' => 'Deze naam is te lang.
-Kies een naam met hoogstens zestig tekens.',
+	'autocreatewiki-name-taken' => 'Er bestaat al een wiki met dit adres.
+U kunt meehelpen op <a href="http://$1.wikia.com">http://$1.wikia.com</a> of een ander adres kiezen.',
+	'autocreatewiki-name-too-short' => 'Dit adres is te kort.
+Kies alstublieft een adres met tenminste drie tekens.',
+	'autocreatewiki-name-too-long' => 'Het adres is te lang.
+Kies een naam met hoogstens vijftig tekens.',
 	'autocreatewiki-similar-wikis' => "Hieronder staan de wiki's die al aangemaakt zijn met voor onderwerp.
 We raden u aan aan een van wiki's te gaan werken.",
 	'autocreatewiki-invalid-username' => 'Deze gebruikersnaam is ongeldig.',
@@ -2211,7 +2217,7 @@ Dit is een volledig nieuw project, dus laat het ons weten als u met vragen zit.
 	'autocreatewiki-subname-answers' => 'Antwoorden',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -3181,7 +3187,7 @@ $3
 	'autocreatewiki-subname-answers' => 'Ответы',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
@@ -3196,7 +3202,7 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-birthdate' => 'Датум рођења:',
 	'autocreatewiki-blurry-word' => 'Мутна реч:',
 	'autocreatewiki-remember' => 'Запамти ме',
-	'autocreatewiki-create-account' => 'Направи налог',
+	'autocreatewiki-create-account' => 'Отвори налог',
 	'autocreatewiki-done' => 'готово',
 	'autocreatewiki-error' => 'грешка',
 	'autocreatewiki-haveaccount-question' => 'Имате ли налог на Викији?',
@@ -3549,13 +3555,13 @@ $messages['zh'] = array(
 Wikia 社群團隊',
 );
 
-/** Chinese (China) (中文(中国大陆)) */
+/** Chinese (China) (‪中文(中国大陆)‬) */
 $messages['zh-cn'] = array(
 	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申请wiki',
 );
 
-/** Simplified Chinese (中文(简体))
+/** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -3584,25 +3590,25 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-success-get-started' => '开始',
 );
 
-/** Traditional Chinese (中文(繁體)) */
+/** Traditional Chinese (‪中文(繁體)‬) */
 $messages['zh-hant'] = array(
 	'autocreatewiki-page-title-default' => '申請wiki',
 	'createwiki' => '申請wiki',
 );
 
-/** Chinese (Hong Kong) (中文(香港)) */
+/** Chinese (Hong Kong) (‪中文(香港)‬) */
 $messages['zh-hk'] = array(
 	'autocreatewiki-page-title-default' => '申請wiki',
 	'createwiki' => '申請wiki',
 );
 
-/** Chinese (Singapore) (中文(新加坡)) */
+/** Chinese (Singapore) (‪中文(新加坡)‬) */
 $messages['zh-sg'] = array(
 	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申请wiki',
 );
 
-/** Chinese (Taiwan) (中文(台灣)) */
+/** Chinese (Taiwan) (‪中文(台灣)‬) */
 $messages['zh-tw'] = array(
 	'autocreatewiki-page-title-default' => '申請wiki',
 	'createwiki' => '申請wiki',

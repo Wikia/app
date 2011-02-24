@@ -151,8 +151,8 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
-	'themedesigner-desc' => 'Aotreañ a ra merourien ar wiki da grouiñ un dodenn evit ur wiki',
-	'themedesigner-title' => 'Empenter dodennoù Wikia',
+	'themedesigner-desc' => "Aotren a ra merourien ar wiki da sevel un tres d'ar wiki",
+	'themedesigner-title' => 'Empenter tresoù Wikia',
 	'themedesigner-background' => 'Drekleur',
 	'themedesigner-page' => 'Pajenn',
 	'themedesigner-color' => 'liv',
@@ -171,7 +171,7 @@ $messages['br'] = array(
 	'themedesigner-tab-wordmark' => 'Arouez',
 	'themedesigner-preview-mode' => 'Mod ar rakweladenn...',
 	'themedesigner-previous-versions' => 'Stummoù kent',
-	'themedesigner-button-save-im-done' => "Enrollañ, echu 'm eus",
+	'themedesigner-button-save-im-done' => 'Enrollañ, echuet em eus',
 	'themedesigner-button-cancel' => 'Nullañ',
 	'themedesigner-pick-a-color' => 'Dibab ul liv',
 	'themedesigner-enter-your-own' => "Merkit hoc'h hini",

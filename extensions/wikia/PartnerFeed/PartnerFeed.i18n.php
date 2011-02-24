@@ -99,6 +99,13 @@ $messages['fa'] = array(
 	'feed-title-recent-images' => 'تصاویر اخیر',
 );
 
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'all-blog-posts' => 'kaikki kategoriat',
+);
+
 /** French (Français)
  * @author Peter17
  * @author Verdy p
@@ -289,19 +296,19 @@ $messages['pt'] = array(
 	'partner-feed-recent-blog-posts' => 'Entradas recentes em blogues, relacionadas com uma promoção',
 	'partner-feed-latest-images' => 'Galeria das últimas imagens enviadas',
 	'partner-feed-hotcontent' => '"Pontos Quentes" dos portais, de acordo com o número de editores',
-	'partner-feed-recent-blog-comments' => 'Comentários recentes relacionados com a entrada de blogue especificada.',
+	'partner-feed-recent-blog-comments' => 'Comentários recentes relacionados com uma entrada de blogue especificada.',
 	'partner-feed-recent-changes' => 'Mudanças recentes',
-	'partnerfeed' => 'Feed de um parceiro',
+	'partnerfeed' => 'Feeds adicionais',
 	'error-no-article' => 'Erro: Não foi passado o parâmetro "article"',
 	'feed-title-blogposts' => 'Entradas recentes em blogues',
-	'feed-title-recent-badges' => 'Distintivos recentes',
+	'feed-title-recent-badges' => 'Medalhas recentes',
 	'feed-title-recent-images' => 'Imagens recentes',
 	'feed-title-leaderboard' => 'Liderança de medalhas',
-	'feed-main-title' => 'Feed de um parceiro da Wikia',
+	'feed-main-title' => 'Feeds adicionais da Wikia',
 	'all-blog-posts' => 'todas as categorias',
 	'blog-posts-from-listing' => 'da listagem: $1',
 	'feed-title-hot-content' => 'Conteúdo popular - $1',
-	'feed-title-blogcomments' => 'Comentários em $1',
+	'feed-title-blogcomments' => 'Comentários a $1',
 	'feed-title-recentchanges' => 'Mudanças recentes',
 );
 

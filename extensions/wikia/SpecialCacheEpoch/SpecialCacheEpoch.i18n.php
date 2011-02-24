@@ -117,6 +117,21 @@ $messages['no'] = array(
 	'cacheepoch-no-wf' => 'WikiFactory er ikke aktivert på denne wikien. Kunne ikke endre wgCacheEpoch.',
 );
 
+/** Portuguese (Português)
+ * @author Waldir
+ */
+$messages['pt'] = array(
+	'cacheepoch-desc' => 'Fornece uma interface para alterar a wgCacheEpoch por wiki',
+	'cacheepoch' => 'Interface de época de cache',
+	'cacheepoch-header' => 'Aumentar a wgCacheEpoch',
+	'cacheepoch-value' => 'O valor atual da wgCacheEpoch é "$1". Pressione o botão para configurá-lo para a timestamp atual.',
+	'cacheepoch-submit' => 'Atualizar o valor',
+	'cacheepoch-updated' => 'wgCacheEpoch atualizada para "$1".',
+	'cacheepoch-not-updated' => 'Erro ao actualizar a wgCacheEpoch.',
+	'cacheepoch-wf-reason' => 'Valor atualizado via Especial:CacheEpoch',
+	'cacheepoch-no-wf' => 'O WikiFactory não está ativado neste wiki. Não é possível alterar a wgCacheEpoch.',
+);
+
 /** Ukrainian (Українська)
  * @author Тест
  */

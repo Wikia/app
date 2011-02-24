@@ -95,6 +95,33 @@ $messages['en'] = array(
 	'sponsorship-dashboard-cityname-and-familiarity' => '$1 - <i>$2 % user match</i>',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'sponsorship-dashboard-serie-organic' => 'Soekenjins',
+	'sponsorship-dashboard-serie-content-article' => 'bladsye',
+	'sponsorship-dashboard-report-activity' => 'Aktiwiteit',
+	'sponsorship-dashboard-report-participation' => 'Deelname',
+	'sponsorship-dashboard-report-competitors' => 'Mededingers',
+	'sponsorship-dashboard-report-interests' => 'Belange',
+	'sponsorship-dashboard-report-keywords' => 'Trefwoorde',
+	'sponsorship-dashboard-report-visitors' => 'Besoekers',
+	'sponsorship-dashboard-report-traffic' => 'Verkeer',
+	'sponsorship-dashboard-report-content' => 'Inhoud',
+	'sponsorship-dashboard-variables' => 'Veranderlikes',
+	'sponsorship-dashboard-overview-label' => 'Vinnige Keuse',
+	'sponsorship-dashboard-overview-enddate' => 'Vinnige Keuse',
+	'sponsorship-dashboard-overview-startdate' => 'Vinnige Keuse',
+	'sponsorship-dashboard-day' => 'Dag',
+	'sponsorship-dashboard-month' => 'Maand',
+	'sponsorship-dashboard-year' => 'Jaar',
+	'sponsorship-dashboard-from-label' => 'Begindatum',
+	'sponsorship-dashboard-to-label' => 'Einddatum',
+	'show' => 'Wys:',
+	'clicks' => 'Klieks',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -123,6 +150,96 @@ $messages['de'] = array(
 	'sponsorship-dashboard-day' => 'Tag',
 	'sponsorship-dashboard-month' => 'Monat',
 	'sponsorship-dashboard-year' => 'Jahr',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Pagina special]] pro mesurationes concernente le sponsorisation',
+	'serie-1' => 'Total del contributores registrate in le mense actual (tote le spatios de nomines)',
+	'serie-2' => 'Total del contributores registrate in le mense actual (spatios de nomines a contento)',
+	'serie-3' => 'Numero de contributores registrate qui faceva minus de 5 modificationes in le mense actual (spatios de nomines a contento)',
+	'serie-4' => 'Numero de contributores registrate qui faceva plus de 5 modificationes in le mense actual (spatios de nomines a contento)',
+	'serie-5' => 'Numero de contributores registrate qui faceva plus de 100 modificationes in le mense actual (spatios de nomines a contento)',
+	'serie-6' => 'Numero total de paginas in spatios de nomines a contento',
+	'serie-7' => 'Nove paginas per die in le mense actual',
+	'serie-8' => 'Numero de modificationes in paginas in spatios de nomines a contento',
+	'serie-9' => 'Numero total de ligamines a imagines in paginas in spatios de nomines a contento',
+	'serie-10' => 'Numero total de imagines incargate',
+	'serie-11' => 'Numero total de videos incorporate in paginas in spatios de nomines a contento',
+	'serie-12' => 'Numero total de videos incargate',
+	'serie-13' => 'Numero total de commentos in articulos de blog',
+	'serie-14' => 'Numero total de listas top',
+	'sponsorship-dashboard-serie-new-pages-content-namespace' => 'Augmento in paginas',
+	'sponsorship-dashboard-serie-organic' => 'Motores de recerca',
+	'sponsorship-dashboard-serie-referral' => 'Sitos referente',
+	'sponsorship-dashboard-serie-direct' => 'Directe',
+	'sponsorship-dashboard-serie-content-article' => 'paginas',
+	'sponsorship-dashboard-serie-image-linked' => 'Imagines - Ligate',
+	'sponsorship-dashboard-serie-image-uploaded' => 'Imagines - Incargate',
+	'sponsorship-dashboard-serie-video-embeded' => 'Videos - Incorporate',
+	'sponsorship-dashboard-serie-video-uploaded' => 'Videos - Incargate',
+	'sponsorship-dashboard-serie-toplists' => 'Listas top',
+	'sponsorship-dashboard-serie-blog-comments' => 'Commentos in blogs',
+	'sponsorship-dashboard-serie-general-edits' => '1+ modificationes general',
+	'sponsorship-dashboard-serie-article-edits-1' => '1+ modificationes in paginas',
+	'sponsorship-dashboard-serie-article-edits-5' => '5+ modificationes in paginas',
+	'sponsorship-dashboard-serie-article-edits-10' => '100+ modificationes in paginas',
+	'sponsorship-dashboard-serie-pageviews' => 'Total del visitas de paginas',
+	'sponsorship-dashboard-description-activity' => 'Activitate de contributores per mense',
+	'sponsorship-dashboard-description-engagement' => 'Total del horas consecrate per die',
+	'sponsorship-dashboard-description-participation' => 'Contributores unic per mense',
+	'sponsorship-dashboard-description-source' => 'Como tu usatores te trova',
+	'sponsorship-dashboard-description-competitors' => 'Traffico del concurrentia',
+	'sponsorship-dashboard-description-interests' => 'Wikis que tu usatores visita tamben',
+	'sponsorship-dashboard-description-keywords' => 'Parolas-clave usate in motores de recerca',
+	'sponsorship-dashboard-description-visitors' => 'Visitatores nove e retornante',
+	'sponsorship-dashboard-description-traffic' => 'Visitas de paginas',
+	'sponsorship-dashboard-description-content' => 'Contributiones per typo',
+	'sponsorship-dashboard-report-activity' => 'Activitate',
+	'sponsorship-dashboard-report-engagement' => 'Ingagiamento',
+	'sponsorship-dashboard-report-participation' => 'Participation',
+	'sponsorship-dashboard-report-source' => 'Origine',
+	'sponsorship-dashboard-report-competitors' => 'Concurrentes',
+	'sponsorship-dashboard-report-interests' => 'Interesses',
+	'sponsorship-dashboard-report-keywords' => 'Parolas-clave',
+	'sponsorship-dashboard-report-visitors' => 'Visitatores',
+	'sponsorship-dashboard-report-traffic' => 'Traffico',
+	'sponsorship-dashboard-report-content' => 'Contento',
+	'sponsorship-dashboard-tab-marketresearch' => 'Investigation de mercato',
+	'sponsorship-dashboard-tab-userengagement' => 'Ingagiamento del usatores',
+	'sponsorship-dashboard-tab-growthmetrics' => 'Mesurationes del crescimento',
+	'sponsorship-dashboard-variables' => 'Variabiles',
+	'sponsorship-dashboard-overview-label' => 'Selection rapide',
+	'sponsorship-dashboard-overview-enddate' => 'Selection rapide',
+	'sponsorship-dashboard-overview-startdate' => 'Selection rapide',
+	'sponsorship-dashboard-day' => 'Die',
+	'sponsorship-dashboard-month' => 'Mense',
+	'sponsorship-dashboard-year' => 'Anno',
+	'sponsorship-dashboard-from-label' => 'Data de initio',
+	'sponsorship-dashboard-to-label' => 'Data de fin',
+	'sponsorship-dashboard-error-nodataforcurrentweek' => 'Error: Nulle datos pro le septimana actual',
+	'not-allowed' => 'Pardono, tu non ha le permission de vider iste pagina',
+	'pv-ranking' => 'rangiate per visitas de pagina:',
+	'show' => 'Monstrar:',
+	'hub-position' => '<strong>$1</strong> sur le centro <strong>$2</strong>',
+	'no-hub-position' => 'Nulle datos sur le position de pagina, infelicemente',
+	'sponsorshipdashboard' => 'Tabuliero de sponsorisation',
+	'sponsorship-dashboard-city-select' => 'Selige centro de Wikia:',
+	'sponsorship-dashboard-report-01' => 'Ingagiamento del usatores',
+	'sponsorship-dashboard-report-02' => 'Mesurationes del crescimento',
+	'sponsorship-dashboard-report-03' => 'Investigation de mercato',
+	'sponsorship-dasboard-specialpage' => 'WikiMesurationes',
+	'pageviews' => 'Visitas de paginas',
+	'clicks' => 'Clics',
+	'visits' => 'Total de visitas',
+	'timeOnSite' => 'Horas consecrate',
+	'newVisits' => 'Nove visitas',
+	'newVisitsTimeOnSite' => 'Horas consecrate per nove visitatores',
+	'sponsorship-dashboard-overwiev-label' => 'selige area pro facer zoom avante',
+	'sponsorship-dashboard-empty-chart' => 'Pardono. Nulle datos pro iste graphico.',
+	'sponsorship-dashboard-cityname-and-familiarity' => '$1 - <i>$2 % correspondentia de usator</i>',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -230,6 +347,7 @@ $messages['mk'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author McDutchie
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -275,7 +393,7 @@ $messages['nl'] = array(
 	'sponsorship-dashboard-description-traffic' => "Bekeken pagina's",
 	'sponsorship-dashboard-description-content' => 'Bijdragen per type',
 	'sponsorship-dashboard-report-activity' => 'Activiteit',
-	'sponsorship-dashboard-report-engagement' => 'Betrokkeheid',
+	'sponsorship-dashboard-report-engagement' => 'Betrokkenheid',
 	'sponsorship-dashboard-report-participation' => 'Deelname',
 	'sponsorship-dashboard-report-source' => 'Bron',
 	'sponsorship-dashboard-report-competitors' => 'Concurrenten',

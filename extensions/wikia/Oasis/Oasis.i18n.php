@@ -474,6 +474,7 @@ $messages['cs'] = array(
  * @author Diebuche
  * @author George Animal
  * @author LWChris
+ * @author Pill
  * @author SVG
  */
 $messages['de'] = array(
@@ -487,7 +488,7 @@ $messages['de'] = array(
 	'oasis-page-header-talk' => 'Diskussion',
 	'oasis-page-header-subtitle-special' => 'Spezialseite',
 	'oasis-member-since' => 'Mitglied seit $1',
-	'oasis-toolbar-edit-save' => 'Spiechern',
+	'oasis-toolbar-edit-save' => 'Speichern',
 	'oasis-toolbar-edit-cancel' => 'Abbrechen',
 	'oasis-section-edit' => 'Bearbeiten',
 	'themedesigner' => 'Theme Designer',
@@ -572,6 +573,17 @@ $messages['es'] = array(
 	'oasis-toolbar-edit-toolbar-list' => 'Lista de la barra de herramientas',
 	'oasis-toolbar-edit-reset-defaults' => 'restablecer',
 	'oasis-toolbar-edit-find-a-tool' => 'Buscar una herramienta',
+	'oasis-toolbar-edit-advanced-tools' => '[[Help:Mis Herramientas|lista de herramientas avanzadas]]',
+	'oasis-toolbar-edit-search-for-tool' => 'Buscar herramientas',
+	'oasis-toolbar-edit-popular-tools' => 'Herramientas populares',
+	'oasis-toolbar-edit-hide-tools' => 'Esconder herramientas',
+	'oasis-toolbar-edit-save' => 'Guardar',
+	'oasis-toolbar-edit-cancel' => 'Cancelar',
+	'oasis-toolbar-edit-rename-item' => 'Renombrar ítem',
+	'oasis-toolbar-for-admins-only' => 'Esta herramienta puede ser usada por los administradores del wiki.',
+	'oasis-toolbar-not-enabled-here' => 'Esta herramienta no está disponible en este wiki.',
+	'oasis-toolbar-more' => 'más&hellip;',
+	'oasis-toolbar-customize' => 'Personalizar',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|comentario|comentarios}}',
 	'oasis-comments-showing-most-recent' => 'Mostrando $1 más reciente',
 	'oasis-comments-anonymous-prompt' => 'Usuario anónimo<br /> <a href="#">¿Registrado?</a>',
@@ -604,6 +616,7 @@ $messages['es'] = array(
 	'oasis-upload-photos-fewer-options' => 'Menos Opciones',
 	'oasis-upload-photos-force' => 'Subir igualmente',
 	'oasis-upload-photos-caption' => 'Comentario',
+	'oasis-modal-error-headline' => 'Por favor, corrige los siguientes errores',
 );
 
 /** Persian (فارسی) */
@@ -611,10 +624,19 @@ $messages['fa'] = array(
 	'oasis-interlang-languages' => 'زبان‌ها:',
 );
 
-/** Finnish (Suomi) */
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
 $messages['fi'] = array(
 	'oasis-mytools' => 'Omat työkalut',
+	'oasis-edit-protected-article' => 'Kirjaudu sisään muokataksesi',
+	'oasis-button-random-page' => 'Satunnainen artikkeli',
+	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|kuva tässä wikissä|kuvat tässä wikissä}}</span>',
 	'oasis-global-nav-create-wiki' => 'Perusta wiki',
+	'oasis-page-header-back-to-file' => 'Takaisin tiedostoon',
+	'oasis-page-header-preview' => '<strong>Esikatselu:</strong> $1',
+	'oasis-confirmation-comment-deleted' => 'Kommentti on poistettu.',
+	'oasis-add-page' => 'Lisää sivu',
 );
 
 /** French (Français)
@@ -1920,15 +1942,29 @@ $messages['ru'] = array(
  * @author Rancher
  */
 $messages['sr-ec'] = array(
+	'oasis-home' => 'Почетна',
+	'oasis-more' => 'Прикажи више >',
 	'oasis-mytools' => 'Алатке',
+	'oasis-follow' => 'Прати',
 	'oasis-share' => 'Подели',
-	'oasis-button-random-page' => 'Насумична страница',
-	'oasis-button-random-wiki' => 'Насумична викија',
+	'oasis-like' => 'Свиђа ми се',
+	'oasis-edit-protected-article' => 'Пријавите се да уређујете',
+	'oasis-button-random-page' => 'Случајна страница',
+	'oasis-button-random-wiki' => 'Случајна викија',
 	'oasis-button-wiki-activity' => 'Активност на викији',
+	'oasis-button-wiki-activity-feed' => 'Прикажи целу активност >',
+	'oasis-button-wiki-activity-watchlist' => 'Само праћене странице',
+	'oasis-activity-watchlist-login' => 'Морате бити пријављени да бисте видели праћене странице.',
+	'oasis-activity-header' => 'Скорашња активност на викији',
 	'oasis-related-video-header' => 'Сродни видео снимци',
+	'oasis-related-video-by-5min' => 'од 5мин видео',
+	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|страница на викији|странице на викији|страница на викији}}</span>',
+	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|слика на викији|слике на викији|слика на викији}}</span>',
 	'oasis-latest-photos-more' => 'Прикажи више >',
 	'oasis-latest-photos-inner-message' => 'Прикажи све слике',
+	'oasis-latest-photos-empty' => 'Свако може да помогне да улепшамо ову викију<br /><span>Додајте слику!</span>',
 	'oasis-latest-photos-by' => 'од',
+	'oasis-latest-photos-posted-in' => 'Постављено у',
 	'oasis-latest-photos-more-dotdotdot' => 'више...',
 	'oasis-global-nav-create-wiki' => 'Започни викију',
 	'oasis-page-header-comments' => '{{PLURAL:$1|Коментар|Коментари}}',
@@ -1957,10 +1993,11 @@ $messages['sr-ec'] = array(
 	'oasis-page-header-subtitle-template' => 'Шаблон',
 	'oasis-page-header-subtitle-category' => 'Категорија',
 	'oasis-page-header-subtitle-forum' => 'Форум',
-	'oasis-page-header-subtitle-special-wikiactivity' => 'Прикажи сву активност >',
+	'oasis-page-header-subtitle-special-wikiactivity' => 'Прикажи целу активност >',
 	'oasis-search-results-from' => 'Приказивање резултата из: $1',
 	'oasis-user-page-change-avatar' => 'Промени корисничку сличицу',
 	'oasis-content-picture-added-by' => '{{GENDER:$1|Додао|Додала|Додао/-ла}} $1',
+	'oasis-confirmation-page-deleted' => '„$1“ је обрисано. ([[Special:Undelete/$1|врати]])',
 	'oasis-confirmation-comment-deleted' => 'Коментар је обрисан.',
 	'oasis-confirmation-page-undeleted' => 'Ова страница је враћена.',
 	'oasis-confirmation-user-logout' => 'Одјавили смо вас.',
@@ -1983,13 +2020,14 @@ $messages['sr-ec'] = array(
 	'oasis-section-edit' => 'Уреди',
 	'oasis-section-edit-alt' => 'Уреди $1 одељак',
 	'oasis-spotlights-rail-title' => 'Више од',
+	'oasis-pages-on-wiki-header' => 'Странице на $1',
 	'oasis-interlang-show-all' => '... прикажи све >',
 	'oasis-interlang-languages' => 'Језици:',
 	'imageseo-featured-more' => 'више...',
 	'oasis-upload-photos-title' => 'Слање слика на викију',
 	'oasis-upload-photos-more-options' => 'Више поставки',
 	'oasis-upload-photos-fewer-options' => 'Мање поставки',
-	'oasis-upload-photos-caption' => 'Наслов',
+	'oasis-upload-photos-caption' => 'Натпис',
 	'oasis-modal-error-headline' => 'Исправите следеће грешке',
 );
 

@@ -91,6 +91,10 @@ $messages['es'] = array(
  */
 $messages['fi'] = array(
 	'cloakcheck-process-username' => 'Käyttäjätunnus: $1',
+	'cloakcheck-process-accountage-yes' => 'Käyttäjätunnus on tarpeeksi vanha.',
+	'cloakcheck-process-accountage-no' => 'Käyttäjätunnus on liian uusi.',
+	'cloakcheck-process-emailconf-yes' => 'Sähköpostiosoite osoite on vahvistettu.',
+	'cloakcheck-process-emailconf-no' => 'Sähköpostiosoitetta ei ole vahvistettu.',
 );
 
 /** French (Français)

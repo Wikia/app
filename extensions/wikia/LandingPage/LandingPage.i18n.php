@@ -230,6 +230,16 @@ $messages['sr-ec'] = array(
 	'landingpage' => 'Добро дошли на Викију',
 );
 
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'landingpage' => 'Välkommen till Wikia',
+	'landingpage-start-exploring' => 'Redo att börja utforska?',
+	'landingpage-readfaq' => 'Frågor? Se vår FAQ &gt;',
+	'landingpage-buttons-learn-more' => 'Läs mer &gt;',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

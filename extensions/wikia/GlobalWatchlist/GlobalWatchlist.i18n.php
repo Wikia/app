@@ -667,6 +667,14 @@ $3
 	'globalwatchlist-no-blog-page-found' => 'Страница на блогу није пронађена.',
 );
 
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'globalwatchlist-no-page-found' => 'Ingen sida hittades.',
+	'globalwatchlist-no-blog-page-found' => 'Ingen bloggsida hittades.',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

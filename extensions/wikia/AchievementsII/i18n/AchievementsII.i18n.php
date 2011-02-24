@@ -453,6 +453,7 @@ All messages for the triggers: {{msg-mw|achievements-badge-your-desc-blogcomment
 * $2 is the user's position on the leaderboard
 Example:
 * John is Ranked #3 on this wiki",
+	'leaderboard-intro-hide' => '{{Identical|Hide}}',
 	'achievements-recent-earned-badges' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
 	'achievements-recent-info' => 'Parameters:
 * $1 is a link to a user page
@@ -620,6 +621,9 @@ $messages['be-tarask'] = array(
 	'achievements-gold' => 'Золата',
 	'achievements-silver' => 'Срэбра',
 	'achievements-bronze' => 'Бронза',
+	'achievements-gold-points' => '100<br />пунктаў',
+	'achievements-silver-points' => '50<br />пунктаў',
+	'achievements-bronze-points' => '10<br />пунктаў',
 	'achievements-you-must' => 'Вам неабходна $1, каб атрымаць гэтую ўзнагароду.',
 	'leaderboard-button' => 'Дошка гонару',
 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|ачко|ачкі|ачкоў}}</small>',
@@ -646,6 +650,9 @@ $messages['be-tarask'] = array(
 	'achievements-profile-title-oasis' => 'дасягненьні <br /> ачкоў',
 	'achievements-ranked-oasis' => '$1 займае [[Special:Leaderboard|$2 месца]] ў {{GRAMMAR:месны|{{SITENAME}}}}',
 	'achievements-viewall-oasis' => 'Паказаць усё',
+	'achievements-toggle-hide' => 'Не паказваць пункты, ўзнагароды і ўзровень у маім профілі',
+	'leaderboard-intro-hide' => 'схаваць',
+	'leaderboard-intro-open' => 'адкрыць',
 	'leaderboard-intro' => "'''«Што такое дасягненьні?»'''
 Вы можаце атрымаць спэцыяльныя ўзнагароды за ўдзел у {{GRAMMAR:месны|{{SITENAME}}}}!
 Кожная ўзнагарода, якую Вы атрымаеце, дадае ачкі да Вашага агульнага ліку:
@@ -1883,14 +1890,35 @@ $messages['fi'] = array(
 Varmista, että se on tyypiltään jpg tai png. 
 Jos se ei vieläkään toimi, niin kuva voi olla liian suuri. 
 Kokeile toista kuvaa.',
+	'right-platinum' => 'Luo ja muokkaa platina kunniamerkkejä',
 	'achievements-platinum' => 'Platina',
 	'achievements-gold' => 'Kulta',
+	'achievements-bronze' => 'Pronssi',
+	'achievements-you-must' => 'Sinä tarvitset $1 ansaitaksesi tämän kunniamerkin.',
+	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|piste|pistettä}}</small>',
+	'achievements-profile-title-no' => "$1'n kunniamerkit",
+	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Katso kuinka monta kunniamerkkiä voit saada]]!</big></strong>',
+	'achievements-earned' => 'Tämän kunniamerkin on ansainnut {{PLURAL:$1|1 käyttäjä|$1 käyttäjää}}.',
+	'achievements-ranked' => 'Sijalla #$1 tässä wikissä',
+	'achievements-ranked-oasis' => '$1 on [[Special:Leaderboard|sijalla #$2]] tässä wikissä',
 	'achievements-viewall-oasis' => 'Näytä kaikki',
+	'achievements-toggle-hide' => 'Älä näytä pisteitä, kunniamerkkejä ja sijoitusta profiilisivullani',
+	'platinum' => 'Platina',
+	'achievements-community-platinum-badge-image' => 'Kunniamerkin kuva:',
+	'achievements-community-platinum-create-badge' => 'Luo kunniamerkki',
 	'achievements-community-platinum-cancel' => 'peruuta',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Napsauta saadaksesi lisätietoja',
 	'achievements-badge-name-love-1' => 'Kaksi viikkoa wikissä',
+	'achievements-badge-name-love-4' => 'Addiktoitunut',
+	'achievements-badge-name-sharing-4' => 'Evankelista',
+	'achievements-badge-to-get-edit' => 'tee $1 {{PLURAL:$1|muokkaus|muokkausta}}, {{PLURAL:$1|sivulla|sivulla}}',
+	'achievements-badge-to-get-picture' => 'lisää $1 {{PLURAL:$1|kuva|kuvaa}}, {{PLURAL:$1|sivulle|sivulle}}',
 	'achievements-badge-to-get-welcome' => 'liity wikiin',
+	'achievements-badge-to-get-introduction-details' => 'Onko käyttäjä sivusi tyhjä?
+Klikkaa käyttäjä nimeäsi näytön yläosassa nähdäksesi.
+Klikkaa "{{int:edit}}" lisätäksesi tietoa itsestäsi!�!',
 	'achievements-badge-hover-desc-creator' => 'wikin luomisesta!',
+	'achievements-userprofile-title-no' => "$1'n ansaitsemat kunniamerkit",
 );
 
 /** French (Français)
@@ -2550,6 +2578,7 @@ Per favor essaya un altere!',
 	'achievements-profile-title-oasis' => 'punctos <br /> de merito',
 	'achievements-ranked-oasis' => '$1 ha le [[Special:Leaderboard|rango №$2]] in iste wiki',
 	'achievements-viewall-oasis' => 'Vider totes',
+	'achievements-toggle-hide' => 'Non monstrar punctos, insignias e rango in mi pagina de profilo',
 	'leaderboard-intro-hide' => 'celar',
 	'leaderboard-intro-open' => 'aperir',
 	'leaderboard-intro-headline' => 'Que es Successos?',
@@ -3605,6 +3634,21 @@ $5',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|На $1 место]]<br />на ова вики',
 );
 
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'achievements-upload-error' => "Jiddispjaċina!
+Din l-istampa ma taħdimx.
+Kun żgur li hija fajl .jpg jew .png.
+Jekk xorta ma taħdimx, allura jista' jkun li l-istampa hi wisq kbira.
+Jekk jogħġbok, ipprova oħra!",
+	'achievements-non-existing-category' => 'Il-kategorija speċifikata ma teżistix.',
+	'achievements-gold-points' => '100<br />punt',
+	'achievements-silver-points' => '50<br />punt',
+	'achievements-bronze-points' => '10<br />punti',
+);
+
 /** Burmese (မြန်မာဘာသာ)
  * @author Erikoo
  */
@@ -4641,6 +4685,7 @@ Tente outra imagem, por favor!',
 	'achievements-profile-title-oasis' => 'pontos <br /> obtidos',
 	'achievements-ranked-oasis' => '$1 está na [[Special:Leaderboard|Posição #$2]] nesta wiki',
 	'achievements-viewall-oasis' => 'Ver tudo',
+	'achievements-toggle-hide' => 'Não mostrar pontos, medalhas ou posição no meu perfil',
 	'leaderboard-intro-hide' => 'esconder',
 	'leaderboard-intro-open' => 'abrir',
 	'leaderboard-intro-headline' => 'O que são as Medalhas?',
@@ -5370,6 +5415,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'achievements-upload-error' => 'Tyvärr!
@@ -5386,26 +5432,98 @@ Försök med en annan!',
 	'achievements-silver-points' => '50<br />poäng',
 	'achievements-bronze-points' => '10<br />poäng',
 	'achievements-you-must' => 'Du måste tjäna $1 för att få detta märke.',
+	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|poäng|poäng}}</small>',
+	'achievements-profile-title-no' => '$1s emblem',
+	'achievements-no-badges' => 'Kolla in listan nedan för att se de emblem som du kan tjäna på denna wiki!',
+	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Se fler emblem du kan tjäna]]!</big></strong>',
+	'achievements-points' => '$1 {{PLURAL:$1|poäng|poäng}}',
+	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|poäng|poäng}}',
+	'achievements-earned' => 'Detta emblem har tjänats av {{PLURAL:$1|1 användare|$1 användare}}.',
+	'achievements-profile-title-challenges' => 'Fler emblem som du kan tjäna!',
+	'achievements-profile-customize' => 'Anpassa emblem >',
+	'achievements-ranked' => 'Rankad #$1 på denna wiki',
 	'achievements-viewall' => 'Visa alla',
 	'achievements-viewless' => 'Stäng',
+	'achievements-profile-title-oasis' => 'utmärkelse- <br /> poäng',
+	'achievements-ranked-oasis' => '$1 är [[Special:Leaderboard|Rankad #$2]] på denna wiki',
 	'achievements-viewall-oasis' => 'Se alla',
+	'achievements-toggle-hide' => 'Visa inte poäng, emblem och rankning på min profilsida',
 	'leaderboard-intro-hide' => 'göm',
 	'leaderboard-intro-open' => 'öppna',
+	'leaderboard-intro-headline' => 'Vad är Utmärkelser?',
+	'leaderboard-intro' => "Du kan tjäna emblem genom att ändra sidor på denna wiki, ladda upp foton och lämna kommentarer. För varje emblem kan du tjäna poäng - desto mer poäng du får, desto högre upp på topplistan går du! Du kan hitta alla intjänade emblem på din [[$1|användarsida]].
+
+	'''Vad är emblem värda?'''",
+	'leaderboard' => 'Topplistan för Utmärkelser',
+	'achievements-title' => 'Utmärkelser',
+	'leaderboard-title' => 'Topplista',
+	'achievements-recent-earned-badges' => 'Senaste Emblem Tjänade',
+	'achievements-leaderboard-disclaimer' => 'Topplistan visar ändringar sedan igår',
+	'achievements-leaderboard-rank-label' => 'Rank',
+	'achievements-leaderboard-member-label' => 'Medlem',
+	'achievements-leaderboard-points-label' => 'Poäng',
 	'achievements-leaderboard-points' => '{{PLURAL:$1|poäng|poäng}}',
+	'achievements-leaderboard-most-recently-earned-label' => 'Senaste tjänade',
 	'achievements-send' => 'Spara bild',
 	'achievements-save' => 'Spara ändringar',
+	'achievements-reverted' => 'Emblem återgick till orginalet.',
 	'achievements-customize' => 'Anpassa bild',
 	'achievements-enable-track' => 'aktiverad',
 	'achievements-revert' => 'Återgå till standard',
 	'achievements-special-saved' => 'Ändringar sparade.',
+	'achievements-special' => 'Speciella utmärkelser',
+	'achievements-secret' => 'Hemliga utmärkelser',
+	'achievementscustomize' => 'Anpassa emblem',
 	'achievements-about-title' => 'Om den här sidan...',
+	'platinum' => 'Platina',
+	'achievements-community-platinum-badge-image' => 'Emblembild:',
+	'achievements-community-platinum-awarded-to' => 'Tilldelats till:',
+	'achievements-community-platinum-create-badge' => 'Skapa emblem',
 	'achievements-community-platinum-enabled' => 'aktiverad',
+	'achievements-community-platinum-show-recents' => 'visa de senaste emblem',
 	'achievements-community-platinum-edit' => 'redigera',
 	'achievements-community-platinum-save' => 'spara',
 	'achievements-community-platinum-cancel' => 'avbryt',
+	'achievements-community-platinum-sponsored-label' => 'Sponsrade utmärkelser',
+	'achievements-community-platinum-sponsored-hover-content-label' => 'Bild <small>(minsta storlek: 270px x 100px)</small>:',
+	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Klicka för mer information',
+	'achievements-badge-name-edit-1' => 'Bara början',
+	'achievements-badge-name-edit-3' => 'Vän till Wikin',
+	'achievements-badge-name-edit-4' => 'Medarbetare',
+	'achievements-badge-name-edit-5' => 'Wiki-byggare',
+	'achievements-badge-name-edit-6' => 'Wiki-Ledare',
+	'achievements-badge-name-edit-7' => 'Wiki-expert',
+	'achievements-badge-name-picture-0' => 'Ögonblicksbild',
+	'achievements-badge-name-picture-1' => 'Paparazzi',
+	'achievements-badge-name-picture-2' => 'Illustratör',
+	'achievements-badge-name-picture-3' => 'Samlare',
+	'achievements-badge-name-picture-4' => 'Konstälskare',
+	'achievements-badge-name-picture-5' => 'Dekoratör',
+	'achievements-badge-name-picture-6' => 'Designer',
+	'achievements-badge-name-picture-7' => 'Kurator',
+	'achievements-badge-name-category-2' => 'Utforskare',
+	'achievements-badge-name-category-3' => 'Turguide',
+	'achievements-badge-name-category-4' => 'Navigatör',
+	'achievements-badge-name-category-5' => 'Brobyggare',
+	'achievements-badge-name-category-6' => 'Wiki-Planerare',
+	'achievements-badge-name-blogpost-0' => 'Någonting att säga',
+	'achievements-badge-name-blogpost-1' => 'Fem saker att säga',
+	'achievements-badge-name-blogpost-2' => 'Pratshow',
+	'achievements-badge-name-blogpost-3' => 'Festens medelpunkt',
+	'achievements-badge-name-blogpost-4' => 'Folktalare',
 	'achievements-badge-name-blogcomment-1' => 'Och en sak till',
+	'achievements-badge-name-love-0' => 'Nyckeln till Wikin!',
+	'achievements-badge-name-love-1' => 'Två veckor på wikin',
+	'achievements-badge-name-love-2' => 'Hängiven',
+	'achievements-badge-name-love-3' => 'Målmedveten',
+	'achievements-badge-name-love-5' => 'Ett Wiki-liv',
+	'achievements-badge-name-love-6' => 'Wiki-hjälte!',
+	'achievements-badge-name-sharing-2' => 'Talare',
+	'achievements-badge-name-sharing-4' => 'Evangelist',
 	'achievements-badge-name-welcome' => 'Välkommen till Wikin',
 	'achievements-badge-name-introduction' => 'Introduktion',
+	'achievements-badge-name-creator' => 'Skaparen',
+	'achievements-badge-name-caffeinated' => 'Koffeinerad',
 	'achievements-badge-to-get-introduction-details' => 'Är din användarsida tom?
 Klicka på ditt användarnamn längst upp på skärmen för att se.
 Klicka sedan på "{{int:edit}}" för att lägga till lite information om dig själv!',
@@ -5502,6 +5620,13 @@ Lütfen bir başkasını deneyin.',
 	'achievements-badge-hover-desc-creator' => "Viki'yi yaratmak için!",
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Рашат Якупов
+ */
+$messages['tt-cyrl'] = array(
+	'achievements-community-platinum-cancel' => 'Кире кагу',
+);
+
 /** Ukrainian (Українська)
  * @author Тест
  */
@@ -5513,6 +5638,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Nglekhoi
  * @author Thanhtai2009
  * @author Trần Nguyễn Minh Huy
  */
@@ -5528,6 +5654,13 @@ $messages['vi'] = array(
 	'achievements-track-name-picture' => 'Theo dõi hình ảnh',
 	'achievements-track-name-category' => 'Cây thể loại',
 	'achievements-track-name-blogpost' => 'Theo dõi Blog Post',
+	'leaderboard-intro-hide' => 'ẩn',
+	'achievements-leaderboard-rank-label' => 'Cấp bậc',
+	'achievements-save' => 'Lưu các thay đổi',
+	'achievements-enable-track' => 'đã kích hoạt',
+	'achievements-revert' => 'Trở lại mặc định',
+	'achievements-community-platinum-edit' => 'sửa',
+	'achievements-badge-name-picture-1' => 'Tay săn ảnh',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
@@ -5640,13 +5773,73 @@ $messages['zh-hans'] = array(
 	'platinum' => '铂',
 	'achievements-community-platinum-awarded-for' => '批出：',
 	'achievements-community-platinum-how-to-earn' => '如何获得：',
+	'achievements-community-platinum-badge-image' => '标记图像：',
+	'achievements-community-platinum-awarded-to' => '授予：',
+	'achievements-community-platinum-current-badges' => '当前白金徽章',
+	'achievements-community-platinum-create-badge' => '创建标记',
+	'achievements-community-platinum-enabled' => '已启用',
+	'achievements-community-platinum-show-recents' => '在最近的徽章中显示',
 	'achievements-community-platinum-edit' => '编辑',
 	'achievements-community-platinum-save' => '保存',
 	'achievements-community-platinum-cancel' => '取消',
+	'achievements-community-platinum-sponsored-label' => '赞助商的成就',
+	'achievements-community-platinum-sponsored-hover-content-label' => '悬停图片 <small>（悬停的最小大小：270px x 100px）</small>：',
+	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => '跟踪标记的印象的 URL：',
+	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => '悬停印象的跟踪 URL：',
+	'achievements-community-platinum-sponsored-badge-click-tooltip' => '点击查看详细信息',
+	'achievements-badge-name-edit-0' => '制作一个差异',
+	'achievements-badge-name-edit-1' => '仅仅是个开始',
+	'achievements-badge-name-edit-2' => '使您的标记',
+	'achievements-badge-name-edit-3' => '维基的朋友',
+	'achievements-badge-name-edit-4' => '合作者',
+	'achievements-badge-name-edit-5' => '维基生成器',
+	'achievements-badge-name-edit-6' => '维基的领导者',
+	'achievements-badge-name-edit-7' => '维基专家',
+	'achievements-badge-name-picture-0' => '快照',
+	'achievements-badge-name-picture-1' => '狗仔队',
+	'achievements-badge-name-picture-3' => '收集器',
+	'achievements-badge-name-picture-4' => '艺术爱好者',
+	'achievements-badge-name-picture-5' => '装饰',
+	'achievements-badge-name-picture-6' => '设计器',
+	'achievements-badge-name-picture-7' => '策展人',
+	'achievements-badge-name-category-0' => '建立连接',
+	'achievements-badge-name-category-1' => '跟踪运动夹克',
+	'achievements-badge-name-category-2' => '资源管理器',
+	'achievements-badge-name-category-3' => '旅游指南',
+	'achievements-badge-name-category-4' => '导航',
+	'achievements-badge-name-category-5' => '造桥',
+	'achievements-badge-name-category-6' => '维基规划师',
+	'achievements-badge-name-blogpost-0' => '话要说',
+	'achievements-badge-name-blogpost-1' => '说的五件事',
+	'achievements-badge-name-blogpost-2' => '脱口秀',
+	'achievements-badge-name-blogpost-3' => '党的生活',
+	'achievements-badge-name-blogpost-4' => '在公众场合讲话',
+	'achievements-badge-name-blogcomment-1' => '还有一件事',
+	'achievements-badge-name-love-0' => '维基的关键 ！',
+	'achievements-badge-name-love-1' => '维基上两个星期',
+	'achievements-badge-name-love-2' => '专门讨论',
+	'achievements-badge-name-love-3' => '专用',
+	'achievements-badge-name-love-4' => '成瘾',
+	'achievements-badge-name-love-5' => '一个维基生活',
+	'achievements-badge-name-love-6' => '维基英雄 ！',
+	'achievements-badge-name-sharing-0' => '共享资源人',
+	'achievements-badge-name-sharing-1' => '把它带回来',
+	'achievements-badge-name-sharing-2' => '扬声人',
+	'achievements-badge-name-sharing-3' => '播音员',
+	'achievements-badge-name-sharing-4' => '传播者',
+	'achievements-badge-name-welcome' => '欢迎使用维基',
+	'achievements-badge-name-introduction' => '介绍',
+	'achievements-badge-name-sayhi' => '停下来问好',
+	'achievements-badge-name-creator' => '创建者',
+	'achievements-badge-name-pounce' => '印花！',
+	'achievements-badge-name-caffeinated' => '含有咖啡因',
 	'achievements-badge-name-luckyedit' => '幸运更改',
 	'achievements-badge-to-get-welcome' => '加入维基',
 	'achievements-badge-to-get-pounce' => '要快',
 	'achievements-badge-to-get-luckyedit' => '要幸运',
+	'achievements-badge-hover-desc-creator' => '用于创建维基！',
+	'achievements-badge-hover-desc-pounce' => '为 100 页上进行编辑，在页的创作的一个小时内 ！',
+	'achievements-badge-hover-desc-caffeinated' => '在一天之内作出 100 编辑页！',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬) */

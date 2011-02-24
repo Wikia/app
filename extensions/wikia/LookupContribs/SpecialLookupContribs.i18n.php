@@ -1009,13 +1009,19 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Per
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'lookupcontribsnoresultfound' => 'Inga resultat hittades',
+	'lookupcontribsinvalidresults' => 'Ogiltiga resultat!',
+	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikidbname' => 'DB namn',
+	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Titel',
 	'lookupcontribsnext' => 'nästa',
 	'lookupcontribsprevious' => 'föregående',
 	'lookupcontribsrestore' => 'återställ',
+	'lookupcontribscontent' => 'innehåll',
 );
 
 /** Swahili (Kiswahili) */

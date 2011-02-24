@@ -280,6 +280,13 @@ Escribe la primera sección de tu página aquí. Recuerda incluir enlaces a otra
 Escribe la segunda sección de tu página aquí. No olvides añadir una categoría para ayudar a las personas a encontrar la página.',
 );
 
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'owb-button-save-pages' => 'Tallenna sivut',
+);
+
 /** French (Français)
  * @author Wyz
  */

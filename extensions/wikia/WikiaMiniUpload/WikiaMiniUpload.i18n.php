@@ -334,15 +334,16 @@ $messages['bjn'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
 	'wmu-upload-image' => 'Enporzhiañ ur skeudenn',
 	'wmu-upload' => 'Enporzhiañ',
-	'wmu-notlogged' => "Keveit pe kroutit ur gont evit enporzhiañ skeudennoù adal hoc'h urzhiataeer",
+	'wmu-notlogged' => "Kevreit pe krouit ur gont evit enporzhiañ skeudennoù adal hoc'h urzhiataeer",
 	'wmu-find' => 'Klask',
-	'wmu-thiswiki' => 'Ar Wiki-se',
+	'wmu-thiswiki' => 'Ar Wiki-mañ',
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Enporzhiañ',
 	'wmu-find-btn' => 'Klask',
@@ -393,8 +394,8 @@ $messages['br'] = array(
 	'wmu-readonly' => "Ne c'hallit ket enporzhiañ skeudennoù, e mod lenn hepken emañ ar Wiki-mañ",
 	'wmu-placeholder' => "Lec'hier",
 	'wmu-gallery' => 'Skeudennaoueg',
-	'wmu-columns' => '$1 golonenn{{PLURAL:$1||}}',
-	'wmu-column' => 'Kolonennoù',
+	'wmu-columns' => '$1 {{PLURAL:$1|bann|bann}}',
+	'wmu-column' => 'Bannoù',
 	'wmu-added-from-plc' => "Restr ouzhpennet dre ul lec'hier skeudennoù",
 	'wmu-uploaddisabled' => 'Diweredekaet eo bet ezporzhiañ ar restr war ar Wiki-mañ',
 	'wmu-gallery-success' => "Ouzhpennet ho peus ur skeudenn d'ur skeudennaoueg nevez. Klikit amañ dindan evit ouzhpennañ muioc'h a skeudennoù pe evit ensoc'hañ ar skeudennaoueg",
@@ -405,6 +406,9 @@ $messages['br'] = array(
 	'wmu-no-rights' => "N'och ket aotreet da ouzhpennañ skeudennoù d'ar bajenn-mañ",
 	'wmu-more-options' => 'Dibarzhioù ouzhpenn',
 	'wmu-fewer-options' => "Nebeutoc'h a zibarzhioù",
+	'wmu-replace-default-caption' => "Erlec'hiañ an notenn dre ziouer",
+	'wmu-appearance-in-article' => 'Tres er pennad',
+	'wmu-alignment' => 'Linennadur',
 );
 
 /** Catalan (Català)

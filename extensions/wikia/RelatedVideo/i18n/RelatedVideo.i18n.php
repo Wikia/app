@@ -67,6 +67,13 @@ $messages['es'] = array(
 	'relatedvideo' => 'Vídeos relacionados',
 );
 
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'related-video-random-video' => 'Satunnainen video',
+);
+
 /** French (Français) */
 $messages['fr'] = array(
 	'related-video-random-video' => 'Vidéo aléatoire',

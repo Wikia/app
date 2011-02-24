@@ -738,12 +738,14 @@ $messages['fa'] = array(
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author Tofu II
  */
 $messages['fi'] = array(
 	'multiwikiedit_button' => 'Muokkaa',
 	'multiwikiedit_confirm' => 'Vahvista',
 	'multiwikiedit_or' => '<b>TAI</b>',
 	'multiwikiedit_page_text' => 'Tallennettava teksti',
+	'multiwikiedit_select_yourself' => 'Sinä',
 	'multiwikiedit_edit_options' => 'Muokkausvalitsimet',
 	'multidelete_button' => 'Poista',
 	'multidelete_reason' => 'Syy poistolle',
@@ -2226,9 +2228,14 @@ $messages['sr-ec'] = array(
 /** Swedish (Svenska)
  * @author Per
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'multitasks-link-back-label' => 'här',
 	'multiwikiedit_or' => '<b>ELLER</b>',
+	'multiwikiedit_minoredit_caption' => 'Mindre redigering',
+	'multiwikiedit_all_wikis' => 'alla wikis',
+	'multiwikiedit_selected_wikis' => 'valda wikis',
 	'multidelete_button' => 'RADERA',
 	'multidelete_or' => '<b>ELLER</b>',
 	'multidelete_success_subtitle' => 'för $1',
