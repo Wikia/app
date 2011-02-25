@@ -91,7 +91,6 @@ class Paginator extends Service{
 	public function hasContent(){
 
 		return ( $this->pagesCount >= 1 );
-
 	}
 
 	public function setActivePage( $iPageNumber ){
@@ -103,7 +102,7 @@ class Paginator extends Service{
 
 		$iPageNumber = (int) $iPageNumber;
 		$iPageNumber --;
-		if ( $iPageNumber <= $this->pagesCount && $iPageNumber >= 0 ){
+		if ( $iPageNumber < $this->pagesCount && $iPageNumber >= 0 ){
 			if ( !empty($bSetToActive) ){
 				$this->setActivePage( $iPageNumber );
 			}
@@ -111,7 +110,8 @@ class Paginator extends Service{
 		} elseif( $iPageNumber < 0 ) {
 			return $this->paginatedData[0];
 		} else {
-			return $this->paginatedData[$this->pagesCount];
+			$this->setActivePage( $this->pagesCount-1 );
+			return $this->paginatedData[ $this->pagesCount-1 ];
 		}
 	}
 
