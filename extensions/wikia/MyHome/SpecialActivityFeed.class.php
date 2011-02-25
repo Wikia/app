@@ -109,7 +109,7 @@ class SpecialActivityFeed extends SpecialPage {
 	 * called before any RCs have been recorded, then a serialized copy of the badge is stored
 	 * and can be inserted later (when the RC actually does get saved).
 	 */
-	public static function attachAchievementToRc(&$user, &$badge ){
+	public static function attachAchievementToRc($user, &$badge ){
 		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt, $wgWikiaForceAIAFdebug;
 		wfProfileIn( __METHOD__ );
 
