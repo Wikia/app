@@ -56,7 +56,7 @@ class SFUtils {
 	 */
 	static function getCategoriesForPage( $title = NULL ) {
 		$categories = array();
-		$db = wfGetDB( DB_SLAVE, 'smw' );
+		$db = wfGetDB( DB_SLAVE );
 		$conditions = null;
 		if ( !is_null( $title ) ) {
 			$titlekey = $title->getArticleId();
