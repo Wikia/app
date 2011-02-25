@@ -42,7 +42,7 @@ class WikiaPollHooks {
 	 * Override the edit button to point to the special page instead of the normal editor
 	 */
 
-	public static function onAlternateEdit( &$editPage ) {
+	public static function onAlternateEdit( $editPage ) {
 		global $wgOut;
 
 		$title = $editPage->getArticle()->getTitle();
@@ -122,7 +122,7 @@ JS;
 	/**
 	 * Purge poll after an edit
 	 */
-	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, &$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		wfProfileIn(__METHOD__);
 
 		wfDebug(__METHOD__ . "\n");

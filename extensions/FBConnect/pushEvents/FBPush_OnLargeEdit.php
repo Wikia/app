@@ -41,7 +41,7 @@ class FBPush_OnLargeEdit extends FBConnectPushEvent {
 	 * Author: Tomek Odrobny
 	 * hook 
 	 */
-	public static function articleCountWordDiff(&$article,&$user,&$newText, $summary,$flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId){
+	public static function articleCountWordDiff(&$article,&$user,$newText, $summary,$flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId){
 		global $wgContentNamespaces, $wgSitename;
 		wfProfileIn(__METHOD__);
 		
