@@ -32,17 +32,18 @@ class WikiaGameGuidesWikisModel{
 				
 				foreach( $recommendedIds as $wikiId ) {
 					$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
+					$wikiGames = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
 					$wikiDomain = str_replace('http://', '', WikiFactory::getVarValueByName( 'wgServer', $wikiId ));
-					//$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
 					$wikiThemeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
+					//$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
 					
 					$ret[] = Array(
 						'wikiName' => ( !empty( $wikiThemeSettings[ 'wordmark-text' ] ) ) ? $wikiThemeSettings[ 'wordmark-text' ] : $wikiName,
+						'wikiGames' => ( !empty( $wikiGames ) ) ? $wikiGames : '',
 						'wordmarkColor' => ( !empty( $wikiThemeSettings[ 'wordmark-color' ] ) ) ? $wikiThemeSettings[ 'wordmark-color' ] : '#0049C6',
 						'wordmarkBackgroundColor' => ( !empty( $wikiThemeSettings[ 'color-page' ] ) ) ? $wikiThemeSettings[ 'color-page' ] : '#FFFFFF',
 						'wikiDomain' => $wikiDomain,
 						'wordmarkUrl'=> ( !empty( $wikiThemeSettings[ 'wordmark-image-url' ] ) ) ? $wikiThemeSettings[ 'wordmark-image-url' ] : null
-						//,'data' => var_dump( $wikiThemeSettings, true )//debug only
 					);
 				}
 			} else {
