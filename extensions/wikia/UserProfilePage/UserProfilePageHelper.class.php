@@ -129,7 +129,7 @@ class UserProfilePageHelper {
 		return $out;
 	}
 
-	public static function onAlternateEdit( &$oEditPage ) {
+	public static function onAlternateEdit( $oEditPage ) {
 		wfProfileIn(__METHOD__);
 		global $wgOut, $wgUser;
 		$title = $oEditPage->mTitle;
