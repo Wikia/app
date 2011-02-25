@@ -35,7 +35,7 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 		case 'sexpositive':
 		case 'wswiki':
 		case 'valuewiki':
-			return AdProvider.adProviderLiftium;
+			return AdDriver.adProviderLiftium;
 			break;
 		case 'glee':
 		case 'lyricwiki':
@@ -45,7 +45,7 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 				case 'TEST_HOME_TOP_RIGHT_BOXAD':
 				case 'TEST_TOP_RIGHT_BOXAD':
 				case 'TOP_RIGHT_BOXAD':
-					return AdProvider.adProviderLiftium;
+					return AdDriver.adProviderLiftium;
 					break;
 				default:
 			}
@@ -58,7 +58,7 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 					return 'NO-AD';
 					break;	
 				default:
-					return AdProvider.adProviderLiftium;
+					return AdDriver.adProviderLiftium;
 			}
 			break;
 		case 'cookbook_import':
