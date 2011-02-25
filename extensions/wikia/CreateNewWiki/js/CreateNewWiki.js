@@ -50,7 +50,8 @@ var WikiBuilder = {
 					wikiLang: WikiBuilder.wikiLanguage.find('option:selected').val()
 				});
 				if ($('#Auth')) {
-					AjaxLogin.init($('#AjaxLoginLoginForm form:first'));
+					//AjaxLogin.init($('#AjaxLoginLoginForm form:first'));
+					WikiBuilder.handleRegister();
 				}
 				if(onFBloaded) {  // FB hax
 					onFBloaded();
@@ -74,7 +75,6 @@ var WikiBuilder = {
 			WikiBuilder.wntimer = setTimeout(WikiBuilder.checkWikiName, 500);
 		});
 		WikiBuilder.wikiLanguage.bind('change', function () {
-			//WikiBuilder.wikiName.add(WikiBuilder.wikiDomain).trigger('keyup');
 			WikiBuilder.checkWikiName();
 			WikiBuilder.checkDomain();
 			var selected = WikiBuilder.wikiLanguage.find('option:selected').val();
@@ -91,8 +91,7 @@ var WikiBuilder = {
 			$.tracker.byStr('createnewwiki/' + id.toLowerCase() + '/back');
 			if (id === 'DescWiki') {
 				WikiBuilder.transition('DescWiki', false, '-');
-				AjaxLogin.showLogin();
-				AjaxLogin.init($('#AjaxLoginLoginForm form:first'));
+				WikiBuilder.handleRegister();
 			} else {
 				WikiBuilder.transition(id, false, '-');
 			}
@@ -100,26 +99,10 @@ var WikiBuilder = {
 		
 		// Login/Signup event handlers
 		$('#Auth .signup-msg a').click(function() {
-			AjaxLogin.showRegister();
-			if(!WikiBuilder.registerInit) {
-				$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, 
-					function() {
-						$('#Auth nav input.signup').click(function(){
-							$.tracker.byStr('createnewwiki/auth/signup');
-							UserRegistration.submitForm2('normal');
-						});
-				});
-			}
-			$('#Auth, #CreateNewWiki').width(700);
-			WikiBuilder.signupEntities.hide();
-			WikiBuilder.loginEntities.show();
+			WikiBuilder.handleRegister();
 		});
 		$('#Auth .login-msg a').click(function() {
-			AjaxLogin.showLogin();
-			AjaxLogin.init($('#AjaxLoginLoginForm form:first'));
-			$('#Auth, #CreateNewWiki').width(600);
-			WikiBuilder.signupEntities.show();
-			WikiBuilder.loginEntities.hide();
+			WikiBuilder.handleLogin();
 		});
 		$('#Auth nav input.login').click(function(e) {
 			$.tracker.byStr('createnewwiki/auth/login');
@@ -175,6 +158,30 @@ var WikiBuilder = {
 		} else {
 			$.tracker.byStr('createnewwiki/view');
 		}
+	},
+	
+	handleRegister: function() {
+		AjaxLogin.showRegister();
+		if(!WikiBuilder.registerInit) {
+			$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, 
+				function() {
+					$('#Auth nav input.signup').click(function(){
+						$.tracker.byStr('createnewwiki/auth/signup');
+						UserRegistration.submitForm2('normal');
+					});
+			});
+		}
+		$('#Auth, #CreateNewWiki').width(700);
+		WikiBuilder.signupEntities.hide();
+		WikiBuilder.loginEntities.show();
+	},
+	
+	handleLogin: function() {
+		AjaxLogin.showLogin();
+		AjaxLogin.init($('#AjaxLoginLoginForm form:first'));
+		$('#Auth, #CreateNewWiki').width(600);
+		WikiBuilder.signupEntities.show();
+		WikiBuilder.loginEntities.hide();
 	},
 	
 	checkWikiName: function(e) {
