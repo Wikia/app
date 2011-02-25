@@ -81,11 +81,11 @@
 			<p class="login-msg">
 				<?= wfMsg('cnw-login-prompt') ?> <a href="#"><?= wfMsg('cnw-call-to-login') ?></a>
 				<br>
-				<?php print '<fb:login-button id="fbAjaxSignupConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'>Login with Facebook</fb:login-button>'; ?>
+				<?php print '<fb:login-button id="fbAjaxSignupConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'>'.wfMsg('cnw-auth-facebook-signup').'</fb:login-button>'; ?>
 			</p>
 			<div class="facebook login">
 				<span>- <?= wfMsg('cnw-or') ?> -</span>
-				<?php print '<fb:login-button id="fbAjaxLoginConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'>Login with Facebook</fb:login-button>'; ?>
+				<?php print '<fb:login-button id="fbAjaxLoginConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'>'.wfMsg('cnw-auth-facebook-login').'</fb:login-button>'; ?>
 			</div>
 			<nav class="back-controls">
 				<input type="button" value="<?= wfMsg('cnw-back') ?>" class="secondary back">
