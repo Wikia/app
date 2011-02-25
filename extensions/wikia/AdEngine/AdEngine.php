@@ -1,6 +1,7 @@
 <?php
 
 require_once dirname(__FILE__) . '/ArticleAdLogic.php';
+require_once dirname(__FILE__) . '/PartnerWidget.php';
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AdEngine',
@@ -191,13 +192,14 @@ class AdEngine {
 		}
 
 		$this->slots = $wgAdSlots[$skin_name];
-		if (is_array($this->slots)) {
-			foreach ($this->slots as $slot=>&$slotdata) {
-				// set provider (for information only)
-				$slotdata['provider'] = isset($this->providers[$slotdata['provider_id']]) ? $this->providers[$slotdata['provider_id']] : 'null';
-			}
-			$this->applyWikiOverrides();
+		if (empty($this->slots) || !is_array($this->slots)) {
+			$this->slots = array();
 		}
+		foreach ($this->slots as $slot=>&$slotdata) {
+			// set provider (for information only)
+			$slotdata['provider'] = isset($this->providers[$slotdata['provider_id']]) ? $this->providers[$slotdata['provider_id']] : 'null';
+		}
+		$this->applyWikiOverrides();
 
 		global $wgDartCustomKeyValues;
 		if (!empty($wgDartCustomKeyValues)) {
@@ -222,7 +224,7 @@ class AdEngine {
 		}
 
 		global $wgShowAds;
-		if( empty( $wgShowAds ) && is_array($this->slots) ) {
+		if( empty( $wgShowAds ) ) {
 			// clear out all slots except OpenX slots. RT #68545
 			foreach ($this->slots as $slotname=>$slot) {
 				if ($slot['provider_id'] != 2) {
