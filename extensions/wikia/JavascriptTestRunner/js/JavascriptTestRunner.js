@@ -159,7 +159,7 @@
 				}
 				suiteXml += Xml.element('testcase',testContent,{
 					name: testName,
-					time: test.time
+					time: test.time / 1000
 				});
 			};
 			
@@ -172,7 +172,7 @@
 				skipped: suite.stats[JTR.status.SKIPPED],
 				tests: suite.stats.total,
 				id: suiteId,
-				time: suite.stats.time
+				time: suite.stats.time / 1000
 			});
 			suiteId++;
 		}
