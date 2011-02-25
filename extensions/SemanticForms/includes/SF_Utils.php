@@ -428,7 +428,7 @@ END;
 		// names of all the pages in that namespace to $names_array
 		global $wgContLang;
 		$namespaces = $wgContLang->getNamespaces();
-		$db = wfGetDB( DB_SLAVE, 'smw' );
+		$db = wfGetDB( DB_SLAVE );
 		$pages = array();
 		foreach ( $namespaces as $ns_code => $ns_name ) {
 			if ( $ns_name == $namespace_name ) {
