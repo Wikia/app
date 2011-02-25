@@ -34,6 +34,8 @@ $messages['en'] = array(
 	'cnw-auth-headline2' => 'Sign Up',
 	'cnw-auth-creative' => 'Log in to your account to continue building your wiki.',
 	'cnw-auth-signup-creative' => 'You\'ll need an account to continue building your wiki.<br>It only takes a minute to sign up!',
+	'cnw-auth-facebook-signup' => 'Sign up with Facebook',
+	'cnw-auth-facebook-login' => 'Login with Facebook',
 	// step3 - wiki description
 	'cnw-desc-headline' => 'What\'s your wiki about?',
 	'cnw-desc-creative' => 'Describe your topic',
@@ -95,6 +97,8 @@ $messages['qqq'] = array(
 	'cnw-auth-headline' => 'H1 for this step',
 	'cnw-auth-creative' => 'Creative or instruction for this step following H1 for login',
 	'cnw-auth-signup-creative' => 'Creative or instruction for this step following H1 for signup',
+	'cnw-auth-facebook-signup' => '"Sign up with Facebook" Button',
+	'cnw-auth-facebook-login' => '"Login with Facebook" Button',
 	'cnw-desc-headline' => 'H1 for this step',
 	'cnw-desc-creative' => 'Creative or instruction for this step following H1',
 	'cnw-desc-placeholder' => 'Placeholder for the textarea',
@@ -495,7 +499,7 @@ $messages['ps'] = array(
 	'cnw-welcome-headline' => 'بختور مو شه، د $1 ويکي جوړ شو',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -602,7 +606,7 @@ $messages['te'] = array(
 	'cnw-desc-lang' => 'భాష',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Hydra
  */
 $messages['zh-hans'] = array(
