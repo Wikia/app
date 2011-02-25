@@ -66,7 +66,7 @@ abstract class SpecialEditPage extends SpecialPage {
 		// Allow extensions to modify edit form
 		global $wgEnableRTEExt, $wgRequest;
 		if ( !empty( $wgEnableRTEExt ) ) {
-			wfRunHooks( 'AlternateEdit', array( &$this->mEditPage ) );
+			wfRunHooks( 'AlternateEdit', array( $this->mEditPage ) );
 			$this->mEditPage->textbox1 = $wgRequest->getVal( 'wpTextbox1' );
 
 			RTE::log( __METHOD__ . '::wikitext', $this->mEditPage->textbox1 );
