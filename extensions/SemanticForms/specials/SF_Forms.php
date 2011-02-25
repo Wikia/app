@@ -64,7 +64,7 @@ class FormsPage extends QueryPage {
 
 	function getSQL() {
 		$NSform = SF_NS_FORM;
-		$dbr = wfGetDB( DB_SLAVE, 'smw' );
+		$dbr = wfGetDB( DB_SLAVE );
 		$page = $dbr->tableName( 'page' );
 		// QueryPage uses the value from this SQL in an ORDER clause,
 		// so return page_title as title.
