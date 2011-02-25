@@ -34,7 +34,7 @@ class TopListHelper {
 	 *
 	 * Callback for the AlternateEdit hook
 	 */
-	public static function onAlternateEdit( &$editPage ) {
+	public static function onAlternateEdit( $editPage ) {
 		global $wgOut;
 
 		$title = $editPage->getArticle()->getTitle();
@@ -112,22 +112,22 @@ class TopListHelper {
 
 		return true;
 	}
-	
+
 	/**
 	 * @author Federico "Lox" Lucignano
-	 * 
+	 *
 	 * Callback for the ArticleSaveComplete hook
 	 */
 	public static function onArticleSaveComplete( &$article, &$user, $text, $summary, $flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId ) {
 		$title = $article->getTitle();
-		
+
 		if( ( $title->getNamespace() == NS_TOPLIST ) && !$title->isSubpage() ) {
 			self::fixCategorySortKey( $title );
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * callback for UnwatchArticleComplete hook
 	 *
@@ -461,24 +461,24 @@ class TopListHelper {
 
 		if ( $wgRequest->wasPosted() ) {
 			wfLoadExtensionMessages( 'TopLists' );
-			
+
 			$ret = array();
 			$upload = new UploadFromFile();
-			
+
 	                $upload->initializeFromRequest( $wgRequest );
 			$permErrors = $upload->verifyPermissions( $wgUser );
-			
+
 			if ( $permErrors !== true ) {
 				$ret[ 'error' ] = true;
 				$ret[ 'message' ] = wfMsg( 'badaccess' );
 			} else {
 				$details = $upload->verifyUpload();
-				
+
 				if ( $details[ 'status' ] != UploadBase::OK ) {
 					$ret[ 'error' ] = true;
-					
+
 					switch( $details[ 'status' ] ) {
-	
+
 						/** Statuses that only require name changing **/
 						case UploadBase::MIN_LENGTH_PARTNAME:
 							$ret[ 'message' ] = wfMsgHtml( 'minlength1' );
@@ -507,7 +507,7 @@ class TopListHelper {
 							break;
 						case UploadBase::FILETYPE_BADTYPE:
 							$finalExt = $details['finalExt'];
-							
+
 							$ret[ 'message' ] = wfMsgExt(
 								'filetype-banned-type',
 								array( 'parseinline' ),
@@ -539,7 +539,7 @@ class TopListHelper {
 								$error = $details['error'];
 								$args = null;
 							}
-	
+
 							$ret[ 'message' ] = wfMsgExt( $error, 'parseinline', $args );
 							break;
 						default:
@@ -547,7 +547,7 @@ class TopListHelper {
 					}
 				} else {
 					$warnings = $upload->checkWarnings();
-					
+
 					if ( $warnings ) {
 						if (
 							!empty( $warnings[ 'exists' ] ) ||
@@ -559,26 +559,26 @@ class TopListHelper {
 						} else {
 							$ret[ 'error' ] = true;
 							$ret[ 'message' ] = '';
-							
+
 							foreach( $warnings as $warning => $args ) {
 								if ( $args === true ) {
 									$args = array();
 								} elseif ( !is_array( $args ) ) {
 									$args = array( $args );
 								}
-	
+
 								$ret[ 'message' ] .= wfMsgExt( $warning, 'parseinline', $args ) . "/n";
 							}
 						}
 					} else {
 						$status = $upload->performUpload('/* comment */', '/* page text */', false, $wgUser);
-						
+
 						if ( !$status->isGood() ) {
 							$ret[ 'error' ] = true;
 							$ret[ 'message' ] = wfMsg( 'toplists-upload-error-unknown' );
 						} else {
 							$ret[ 'success' ] = true;
-							
+
 							$source = new imageServing(
 								null,
 								120,
@@ -587,10 +587,10 @@ class TopListHelper {
 									"h" => 2
 								)
 							);
-	
+
 							$thumbs = $source->getThumbnails( array( $upload->getLocalFile() ) );
 							$pictureName = $upload->getTitle()->getText();
-	
+
 							if( !empty( $thumbs[ $pictureName ] ) ) {
 								$ret[ 'name' ] = $thumbs[ $pictureName ][ 'name' ];
 								$ret[ 'url' ] = $thumbs[ $pictureName ][ 'url' ];
@@ -599,7 +599,7 @@ class TopListHelper {
 					}
 				}
 			}
-			
+
 			$response = new AjaxResponse('<script type="text/javascript">window.document.responseContent = ' . json_encode( $ret ) . ';</script>');
 			$response->setContentType('text/html; charset=utf-8');
 			return $response;
@@ -780,9 +780,9 @@ class TopListHelper {
 
 		return $response;
 	}
-	
+
 	static public function fixCategorySortKey( Title $title ) {
-		
+
 		if( $title->exists() ) {
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->update(
@@ -796,4 +796,3 @@ class TopListHelper {
 		}
 	}
 }
-
