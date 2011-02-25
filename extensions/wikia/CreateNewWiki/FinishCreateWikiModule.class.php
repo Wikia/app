@@ -36,6 +36,12 @@ class FinishCreateWikiModule extends Module {
 	 * The values are read from the session and only accessible by the admin.
 	 */
 	public function executeFinishCreate() {
+		global $wgUser;
+		
+		if ( !$wgUser->isAllowed( 'finishcreate' ) ) {
+			return false;
+		}
+
 		global $wgOut;
 		$this->executeLoadState();
 		
