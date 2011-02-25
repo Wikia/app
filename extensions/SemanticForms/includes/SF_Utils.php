@@ -265,7 +265,7 @@ END;
 	 * Return an array of all form names on this wiki
  	*/
 	static function getAllForms() {
-		$dbr = wfGetDB( DB_SLAVE, 'smw' );
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select( 'page',
 			'page_title',
 			array( 'page_namespace' => SF_NS_FORM,
@@ -329,7 +329,7 @@ END;
 		if ( 0 == $num_levels ) return $top_category;
 		global $sfgMaxAutocompleteValues;
 
-		$db = wfGetDB( DB_SLAVE, 'smw' );
+		$db = wfGetDB( DB_SLAVE );
 		$top_category = str_replace( ' ', '_', $top_category );
 		$categories = array( $top_category );
 		$checkcategories = array( $top_category );
