@@ -48,6 +48,12 @@ class FBPush_OnLargeEdit extends FBConnectPushEvent {
 		if( !in_array($article->getTitle()->getNamespace(), $wgContentNamespaces) ) {
 			return true;	
 		}
+
+		// do not push reverts
+		$baseRevision = Revision::newFromId( $baseRevId );
+		if ( $baseRevision && $revision->getTextId() == $baseRevision->getTextId() ) {
+			return true;
+		}
 		
 		$diff = 0;
 		$wNewCount = strlen( $newText );
