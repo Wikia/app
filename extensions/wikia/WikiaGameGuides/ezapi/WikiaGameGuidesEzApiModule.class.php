@@ -6,7 +6,7 @@
 
 class WikiaGameGuidesEzApiModule extends EzApiModuleBase {
 	const API_VERSION = 1;
-	const API_REVISION = 1;
+	const API_REVISION = 2;
 	const SCRIBE_KEY = 'mobile_apps';
 	const APP_NAME = 'GameGuides';
 	
