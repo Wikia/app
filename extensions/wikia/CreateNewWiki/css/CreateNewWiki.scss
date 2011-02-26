@@ -198,6 +198,15 @@ $color-borders: #CECECE;
 	.plain {
 		font-size: 12px;
 	}
+	.captcha {
+		p:first-child {
+			height: 0;
+			float: right;
+			img {
+				margin-right: 67px;
+			}
+		}
+	}
 }
 
 div#userloginErrorBox3 {
