@@ -36,7 +36,7 @@ class FinishCreateWikiModule extends Module {
 	 * The values are read from the session and only accessible by the admin.
 	 */
 	public function executeFinishCreate() {
-		global $wgUser;
+		global $wgUser, $wgSitename;
 		
 		if ( !$wgUser->isAllowed( 'finishcreate' ) ) {
 			return false;
@@ -62,7 +62,8 @@ class FinishCreateWikiModule extends Module {
 				$firstSectionText = $mainArticle->getSection($mainArticle->getRawText(), 1);
 				$matches = array();
 				if(preg_match('/={2,3}[^=]+={2,3}/', $firstSectionText, $matches)) {
-					$newSectionText = $mainArticle->replaceSection(1, "{$matches[0]}\n{$this->params['wikiDescription']}");
+					$newSectionTitle = str_replace('Wiki', $wgSitename, $matches[0]);
+					$newSectionText = $mainArticle->replaceSection(1, "{$newSectionTitle}\n{$this->params['wikiDescription']}");
 				} else {
 					$newSectionText = $mainArticle->replaceSection(1, $this->params['wikiDescription']);
 				}
