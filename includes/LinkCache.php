@@ -5,11 +5,8 @@
  * @ingroup Cache
  */
 class LinkCache {
-	// Increment $mClassVer whenever old serialized versions of this class
-	// becomes incompatible with the new version.
-	/* private */ var $mClassVer = 4;
 
-	/* private */ var $mGoodLinks, $mBadLinks;
+	/* private */ var $mGoodLinks, $mBadLinks, $mGoodLinkFields;
 	/* private */ var $mForUpdate;
 
 	/**
@@ -37,12 +34,20 @@ class LinkCache {
 		return wfSetVar( $this->mForUpdate, $update );
 	}
 
+	/*
+	 * Get ID for Title from cache.
+	 * @param String $title
+	 */
 	public function getGoodLinkID( $title ) {
+		global $wgMemc, $wgEnableFastLinkCache;
 		if ( array_key_exists( $title, $this->mGoodLinks ) ) {
 			return $this->mGoodLinks[$title];
-		} else {
-			return 0;
 		}
+		if ( $wgEnableFastLinkCache ) {
+			$id = $wgMemc->get("linkcache:good:$title");
+			return $id ? $id : 0;
+		}
+		return 0;
 	}
 
 	/**
@@ -53,16 +58,28 @@ class LinkCache {
 	 * @return mixed
 	 */
 	public function getGoodLinkFieldObj( $title, $field ) {
+		global $wgMemc, $wgEnableFastLinkCache;
 		$dbkey = $title->getPrefixedDbKey();
 		if ( array_key_exists( $dbkey, $this->mGoodLinkFields ) ) {
 			return $this->mGoodLinkFields[$dbkey][$field];
-		} else {
-			return null;
 		}
+		if ( $wgEnableFastLinkCache ) {
+			$fields = $wgMemc->get("linkcache:fields:$dbkey");
+			return $fields ? $fields[$field] : null;
+		}
+		return null;
 	}
 
+	/* boolean isBadLink
+	 * @param String title
+	 */
 	public function isBadLink( $title ) {
-		return array_key_exists( $title, $this->mBadLinks );
+		global $wgMemc, $wgEnableFastLinkCache;
+		if ( array_key_exists( $title, $this->mBadLinks ) ) return true;
+		if ( $wgEnableFastLinkCache ) {
+			return $wgMemc->get("linkcache:bad:$title") ? true : false;
+		}
+		return false;
 	}
 
 	/**
@@ -73,25 +90,40 @@ class LinkCache {
 	 * @param int $redir
 	 */
 	public function addGoodLinkObj( $id, $title, $len = -1, $redir = null ) {
+		global $wgMemc, $wgEnableFastLinkCache;
 		$dbkey = $title->getPrefixedDbKey();
 		$this->mGoodLinks[$dbkey] = intval( $id );
-		$this->mGoodLinkFields[$dbkey] = array(
+		$fields = array(
 			'length' => intval( $len ),
 			'redirect' => intval( $redir ) );
+		$this->mGoodLinkFields[$dbkey] = $fields;
+		if ( $wgEnableFastLinkCache ) {
+			$wgMemc->set("linkcache:good:$dbkey", intval( $id ), 3600);
+			$wgMemc->set("linkcache:fields:$dbkey", $fields, 3600);
+		}
 	}
 
 	public function addBadLinkObj( $title ) {
+		global $wgMemc, $wgEnableFastLinkCache;
 		$dbkey = $title->getPrefixedDbKey();
 		if ( !$this->isBadLink( $dbkey ) ) {
 			$this->mBadLinks[$dbkey] = 1;
+			if ( $wgEnableFastLinkCache ) {
+				$wgMemc->set("linkcache:bad:$dbkey", 1, 3600);
+			}
 		}
 	}
 
 	public function clearBadLink( $title ) {
+		global $wgMemc, $wgEnableFastLinkCache;
 		unset( $this->mBadLinks[$title] );
+		if ( $wgEnableFastLinkCache ) {
+			$wgMemc->delete("linkcache:bad:$title");
+		}
 	}
 
 	public function clearLink( $title ) {
+		global $wgMemc, $wgEnableFastLinkCache;
 		$dbkey = $title->getPrefixedDbKey();
 		if( isset($this->mBadLinks[$dbkey]) ) {
 			unset($this->mBadLinks[$dbkey]);
@@ -102,8 +134,14 @@ class LinkCache {
 		if( isset($this->mGoodLinkFields[$dbkey]) ) {
 			unset($this->mGoodLinkFields[$dbkey]);
 		}
+		if ( $wgEnableFastLinkCache ) {
+			$wgMemc->delete("linkcache:good:$dbkey");
+			$wgMemc->delete("linkcache:fields:$dbkey");
+			$wgMemc->delete("linkcache:bad:$dbkey");
+		}
 	}
 
+	// These are deliberately not in memcache
 	public function getGoodLinks() { return $this->mGoodLinks; }
 	public function getBadLinks() { return array_keys( $this->mBadLinks ); }
 
