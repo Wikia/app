@@ -44,8 +44,7 @@ class LinkCache {
 			return $this->mGoodLinks[$title];
 		}
 		if ( $wgEnableFastLinkCache ) {
-			$id = $wgMemc->get("linkcache:good:$title");
-			return $id ? $id : 0;
+			return (int) $wgMemc->get(wfMemcKey("linkcache:good:$title"));
 		}
 		return 0;
 	}
@@ -64,7 +63,7 @@ class LinkCache {
 			return $this->mGoodLinkFields[$dbkey][$field];
 		}
 		if ( $wgEnableFastLinkCache ) {
-			$fields = $wgMemc->get("linkcache:fields:$dbkey");
+			$fields = $wgMemc->get(wfMemcKey("linkcache:fields:$dbkey"));
 			return $fields ? $fields[$field] : null;
 		}
 		return null;
@@ -77,7 +76,7 @@ class LinkCache {
 		global $wgMemc, $wgEnableFastLinkCache;
 		if ( array_key_exists( $title, $this->mBadLinks ) ) return true;
 		if ( $wgEnableFastLinkCache ) {
-			return $wgMemc->get("linkcache:bad:$title") ? true : false;
+			return $wgMemc->get(wfMemcKey("linkcache:bad:$title")) ? true : false;
 		}
 		return false;
 	}
@@ -98,8 +97,8 @@ class LinkCache {
 			'redirect' => intval( $redir ) );
 		$this->mGoodLinkFields[$dbkey] = $fields;
 		if ( $wgEnableFastLinkCache ) {
-			$wgMemc->set("linkcache:good:$dbkey", intval( $id ), 3600);
-			$wgMemc->set("linkcache:fields:$dbkey", $fields, 3600);
+			$wgMemc->set(wfMemcKey("linkcache:good:$dbkey"), intval( $id ), 3600);
+			$wgMemc->set(wfMemcKey("linkcache:fields:$dbkey"), $fields, 3600);
 		}
 	}
 
@@ -109,7 +108,7 @@ class LinkCache {
 		if ( !$this->isBadLink( $dbkey ) ) {
 			$this->mBadLinks[$dbkey] = 1;
 			if ( $wgEnableFastLinkCache ) {
-				$wgMemc->set("linkcache:bad:$dbkey", 1, 3600);
+				$wgMemc->set(wfMemcKey("linkcache:bad:$dbkey"), 1, 3600);
 			}
 		}
 	}
@@ -118,7 +117,7 @@ class LinkCache {
 		global $wgMemc, $wgEnableFastLinkCache;
 		unset( $this->mBadLinks[$title] );
 		if ( $wgEnableFastLinkCache ) {
-			$wgMemc->delete("linkcache:bad:$title");
+			$wgMemc->delete(wfMemcKey("linkcache:bad:$title"));
 		}
 	}
 
@@ -135,9 +134,9 @@ class LinkCache {
 			unset($this->mGoodLinkFields[$dbkey]);
 		}
 		if ( $wgEnableFastLinkCache ) {
-			$wgMemc->delete("linkcache:good:$dbkey");
-			$wgMemc->delete("linkcache:fields:$dbkey");
-			$wgMemc->delete("linkcache:bad:$dbkey");
+			$wgMemc->delete(wfMemcKey("linkcache:good:$dbkey"));
+			$wgMemc->delete(wfMemcKey("linkcache:fields:$dbkey"));
+			$wgMemc->delete(wfMemcKey("linkcache:bad:$dbkey"));
 		}
 	}
 
