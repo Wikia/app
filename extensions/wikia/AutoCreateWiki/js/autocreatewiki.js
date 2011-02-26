@@ -122,9 +122,7 @@ ACWikiRequest.wikiDomainKeyUp = function(e) {
 	var func = function() {
 		if (id) {
 			if ( !allowAction(e) ) {
-				e.preventDefault();
 				if (id == 'wiki-name') {
-					//isTextCorrect(id);
 					ACWikiRequest.checkWikiName(e);
 				} else {
 					ACWikiRequest.checkDomain(e);
