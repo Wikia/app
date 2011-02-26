@@ -33,7 +33,7 @@ $messages['en'] = array(
 	'cnw-auth-headline' => 'Log In',
 	'cnw-auth-headline2' => 'Sign Up',
 	'cnw-auth-creative' => 'Log in to your account to continue building your wiki.',
-	'cnw-auth-signup-creative' => 'You\'ll need an account to continue building your wiki.<br>It only takes a minute to sign up!',
+	'cnw-auth-signup-creative' => 'You\'ll need an account to continue building your wiki.<br />It only takes a minute to sign up!',
 	'cnw-auth-facebook-signup' => 'Sign up with Facebook',
 	'cnw-auth-facebook-login' => 'Login with Facebook',
 	// step3 - wiki description
