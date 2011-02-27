@@ -353,7 +353,7 @@ function wfSIWEEditInterwiki(){
 
 	$ret .= "<p>Editing interwiki table for <a href='$wikiaURL'>$wikiaURL</a><br />\n";
     $ret .= "<form id='settings' action='' method='POST'>
-	<label for='from'>Show from: <label><input type='text' id='from' name='from' value= ". $db->addQuotes($from). " />
+	<label for='from'>Show from: </label><input type='text' id='from' name='from' value= ". $db->addQuotes($from). " />
 	<input type='submit' value='". wfMsg('iwedit-update') ."' />
 	<input type='hidden' name='wikia_id' value='$wikiaID' />
 	<input type='hidden' name='action' value='Edit interwiki' />
