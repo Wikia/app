@@ -360,7 +360,8 @@ class CloseWikiPage extends SpecialPage {
 			return;
 		}
 
-		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
+		//commented by ubrfzy. nothing in the current template seems to be using anything from this sheet, but its causing bugs with the new floating toolbar because of poor scope and conflicting specificity
+		//$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
 
 		$dbDumpUrl = sprintf("%s/%s/%s/%s/",
 			$this->mUrlDump,
