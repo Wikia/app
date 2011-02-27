@@ -13,7 +13,7 @@ class WikiaLabs {
 	protected $user = null;
 	protected $fogbugzAPIConfig = null;
 	protected $fogbugzService = null;
-
+	
 	public function __construct() {
 		$this->app = WF::build( 'App' );
 		$this->setUser( $this->app->getGlobal( 'wgUser' ) );
@@ -83,18 +83,20 @@ class WikiaLabs {
 
 		$project = WF::build( 'WikiaLabsProject', array( 'id' => (int) $projectId ) );
 
-		$mulitvalidator = new WikiaValidatorArray(array(
-			'validators'  => array(
-				'message' => new WikiaValidatorString(array("min" => 1, "max" => 255),
-					array('too_short' => wfMsg('wikialabs-feedback-validator-message-too-short'),
-						  'too_long' => wfMsg('wikialabs-feedback-validator-message-too-long'),
-				)),
-				'projectId' => new WikiaValidatorInteger(array("min" => 1)),
-				'rating' => new WikiaValidatorInteger(array("min" => 1, "max" => 5),
-					array(
-						'too_small' => wfMsg('wikialabs-feedback-validator-rating')
-				)),
+		$mulitvalidator = new WikiaValidatorsSet();
+		
+		$mulitvalidator->addValidator( 'message', new WikiaValidatorString(
+					array("min" => 10, "max" => 255),
+					array('too_short' => 'wikialabs-feedback-validator-message-too-short',
+						  'too_long' => 'wikialabs-feedback-validator-message-too-long' 
 		)));
+		
+		$mulitvalidator->addValidator( 'projectId', new WikiaValidatorInteger(array("min" => 1)) );
+		
+		$mulitvalidator->addValidator( 'rating', new WikiaValidatorInteger(array("min" => 1, "max" => 5),
+					array(
+						'too_small' => 'wikialabs-feedback-validator-rating'
+				)) );
 
 		$in = array(
 			'message' => $message,
@@ -105,11 +107,9 @@ class WikiaLabs {
 		$out = array();
 		$out['status'] = self::STATUS_OK;
 		if( !$mulitvalidator->isValid( $in ) ) {
-			$errors = $mulitvalidator->getErrors();
-			foreach($errors as  $val1) {
-				foreach($val1 as $val2) {
-					$out['errors'][] = $val2;
-				}
+			$errors = $mulitvalidator->getErrorsFlat();
+			foreach($errors as  $val) {
+				$out['errors'][] = $val->getMsg();
 			}
 			$out['in'] = $in;
 			$out['status'] = self::STATUS_ERROR;
@@ -117,7 +117,9 @@ class WikiaLabs {
 		}
 
 		$project->updateRating( $user->getId(), $rating );
-		$this->saveFeedbackInFogbugz( $project, $message, $user->getEmail() );
+		if(!empty($message)) {
+			$this->saveFeedbackInFogbugz( $project, $message, $user->getEmail() );	
+		}
 		return $out;
 	}
 
@@ -139,13 +141,14 @@ class WikiaLabs {
 		$project['graduates'] = isset($project['graduates']);
 
 		$validateResult = $this->validateProjectForm($project);
+
 		if( !$validateResult->isValid($project) ) {
 			$out['status'] = self::STATUS_ERROR;
 			$out['errors'] = array();
 			$errors = $validateResult->getErrors();
 			foreach($errors as  $val1) {
 				foreach($val1 as $val2) {
-					$out['errors'][] = $val2;
+					$out['errors'][] = $val2->getMsg();
 				}
 			}
 			return $out;
@@ -190,20 +193,26 @@ class WikiaLabs {
 		$status = array_keys($wikiaLabsProject->getStatusDict());
 		$projects = $wikiaLabsProject->getExtensionsDict();
 
-		$mulitvalidator = new WikiaValidatorArray(array(
-			'validators'  => array(
-				'description' => new WikiaValidatorString(array("min" => 1),
-					array('too_short' => wfMsg('wikialabs-add-project-validator-description') ) ),
-				'name' => new WikiaValidatorString(array("min" => 1),
-					array('too_short' => wfMsg('wikialabs-add-project-validator-name') )),
-				'link' => new WikiaValidatorString(array("min" => 0)),
-				'prjscreen' => new WikiaValidatorString(array("min" => 3),
-					array('too_short' => wfMsg('wikialabs-add-project-validator-prjscreen') )),
-				'warning' => new WikiaValidatorString(array("min" => 0) ),
-				'status' => new WikiaValidatorInArray(array("allowed" => $status)),
-				'area' =>  new WikiaValidatorInArray(array("allowed" => $areas)),
-				'extension' => new WikiaValidatorInArray(array("allowed" => $projects)),
-		)));
+		$mulitvalidator = new WikiaValidatorsSet();
+		
+		$mulitvalidator->addValidator( 'name', new WikiaValidatorString(array( "required" => true, "min" => 1 ),
+					array('too_short' => 'wikialabs-add-project-validator-name' )) );
+					
+		$mulitvalidator->addValidator( 'description', new WikiaValidatorString(array( "required" => true, "min" => 1 ),
+					array('too_short' => 'wikialabs-add-project-validator-description' )) ); 
+		
+		$mulitvalidator->addValidator( 'link', new WikiaValidatorString(array("max" => 1024)) );
+
+		$mulitvalidator->addValidator( 'prjscreen',  new WikiaValidatorString(array( "required" => true, "min" => 5 ),
+					array('too_short' => 'wikialabs-add-project-validator-prjscreen' )) );
+
+		$mulitvalidator->addValidator( 'warning', new WikiaValidatorString(array( "required" => true, "min" => 0) ) );
+		
+		$mulitvalidator->addValidator( 'status',  new WikiaValidatorSelect(array( "required" => true, "allowed" => $status)) );
+		
+		$mulitvalidator->addValidator( 'area',  new WikiaValidatorSelect(array( "required" => true, "allowed" => $areas)) );
+		
+		$mulitvalidator->addValidator( 'extension', new WikiaValidatorSelect(array( "required" => true, "allowed" => $projects)) );
 
 		return $mulitvalidator;
 	}

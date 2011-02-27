@@ -2,27 +2,24 @@
 
 class WikiaValidatorString extends WikiaValidator {
 	
-	function __construct(array $options = array(), array $msg = array()) {
-		$this->msg = array( 
-			'too_short' => "wikia-validator-string-short",
-			'too_long'  => "wikia-validator-string-long",  
-		);
-		$this->options = array(
-			'min' => 0, 
-			'max' => 0 
-		);
-		parent::__construct($options, $msg);
+	protected function config( array $options = array() ) {
+		$this->setOption('min', 0);
+		$this->setOption('max', 0);			
 	}
 	
-	public function isValid($value = null) {
-		$this->errors = array();
-		if(strlen($value) < $this->options['min']) {
-			$this->errors['too_short'] = $this->msg['too_short'];
+	protected function configMsgs( array $msgs = array() ) {
+		$this->setMsg( 'too_short', 'wikia-validator-string-short' );
+		$this->setMsg( 'too_long', 'wikia-validator-string-long' );		
+	}
+	
+	public function isValidInternal($value = null) {		
+		if(strlen($value) < $this->getOption('min') ) {
+			$this->createError( 'too_short' );
 			return false;
 		}
 		
-		if((!empty($this->options['max'])) && (strlen($value) > $this->options['max'])) {
-			$this->errors['too_long'] = $this->msg['too_long'];
+		if(( $this->getOption('max') != 0 ) && (strlen($value) >  $this->getOption('max') )) {
+			$this->createError( 'too_long' );
 			return false;
 		}
 		return true;

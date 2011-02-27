@@ -236,15 +236,31 @@ if( $wgUseFakeExternalStoreDB !== true ) {
  */
 
 $wgAutoloadClasses["WikiaValidator"] = "includes/wikia/validators/WikiaValidator.class.php";
-$wgAutoloadClasses["WikiaValidatorArray"] = "includes/wikia/validators/WikiaValidatorArray.class.php";
-$wgAutoloadClasses["WikiaValidatorInteger"] = "includes/wikia/validators/WikiaValidatorInteger.class.php";
+$wgAutoloadClasses["WikiaValidationError"] = "includes/wikia/validators/WikiaValidationError.class.php";
 $wgAutoloadClasses["WikiaValidatorString"] = "includes/wikia/validators/WikiaValidatorString.class.php";
-$wgAutoloadClasses["WikiaValidatorInArray"] = "includes/wikia/validators/WikiaValidatorInArray.class.php";
+$wgAutoloadClasses["WikiaValidatorNumeric"] = "includes/wikia/validators/WikiaValidatorNumeric.class.php";
+$wgAutoloadClasses["WikiaValidatorInteger"] = "includes/wikia/validators/WikiaValidatorInteger.class.php";
+$wgAutoloadClasses["WikiaValidatorRegex"] = "includes/wikia/validators/WikiaValidatorRegex.class.php";
+$wgAutoloadClasses["WikiaValidatorSelect"] = "includes/wikia/validators/WikiaValidatorSelect.class.php";
+$wgAutoloadClasses["WikiaValidatorMail"] = "includes/wikia/validators/WikiaValidatorMail.class.php";
+$wgAutoloadClasses["WikiaValidatorsSet"] = "includes/wikia/validators/WikiaValidatorsSet.class.php";
+$wgAutoloadClasses["WikiaValidatorsAnd"] = "includes/wikia/validators/WikiaValidatorsAnd.class.php";
 
+$wgAutoloadClasses["WikiaValidatorListBase"] = "includes/wikia/validators/WikiaValidatorListBase.class.php";
+$wgAutoloadClasses["WikiaValidatorListValue"] = "includes/wikia/validators/WikiaValidatorListValue.class.php";
+$wgAutoloadClasses["WikiaValidatorListUnique"] = "includes/wikia/validators/WikiaValidatorListUnique.class.php";
+
+$wgAutoloadClasses["WikiaValidatorCompare"] = "includes/wikia/validators/WikiaValidatorCompare.class.php";
+$wgAutoloadClasses["WikiaValidatorCompareValueIF"] = "includes/wikia/validators/WikiaValidatorCompareValueIF.class.php";
+
+/*
+$wgAutoloadClasses["WikiaValidationError"] = "includes/wikia/validators/WikiaValidationError.class.php";
+*/
 
 /**
  * registered API methods
  */
+
 global $wgAPIListModules;
 $wgAPIListModules[ "wkconfgroups" ] = "WikiaApiQueryConfGroups";
 $wgAPIListModules[ "wkdomains"    ] = "WikiaApiQueryDomains";

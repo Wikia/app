@@ -12,9 +12,9 @@ class WikiaValidatorInArray extends  WikiaValidator {
 	
 	
 	public function isValid($value = null) {
-		$this->errors = array();
+		$this->error = array();
 		if(!in_array ( $value , $this->options['allowed'] )) {
-			$this->errors['not_allowed_value'] = $this->msg['not_allowed_value'];
+			$this->error['not_allowed_value'] = $this->msg['not_allowed_value'];
 			return false;
 		}
 		return true;

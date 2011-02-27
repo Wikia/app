@@ -1,10 +1,10 @@
 <?php 
 
-class WikiaValidatorArray extends  WikiaValidator 
+class WikiaValidatorsGroups extends  WikiaValidator 
 {	
 	function __construct(array $options = array(), array $msg = array()) {
 		$this->msg = array( 
-			'no_element'  => "wikia-validator-array-no-element",  
+			'no_element'  => wfMsg("wikia-validator-array-no-element"),  
 		);
 		$this->options = array(
 			'validators' => array()
@@ -13,7 +13,7 @@ class WikiaValidatorArray extends  WikiaValidator
 	}
 	
 	public function isValid($value = null) {
-		$this->errors = array();
+		$this->error = array();
 		if(!is_array($value)) {
 			throw new Exception('WikiaValidatorArray: $value is not array' );
 			return false;
@@ -26,10 +26,9 @@ class WikiaValidatorArray extends  WikiaValidator
 	
 			$validator_value = isset($value[$key]) ? $value[$key]:'';	
 			if(!$validator->isValid($validator_value)) {
-				$this->errors[$key] = $validator->getErrors($validator_value);				
+				$this->error[$key] = $validator->getErrors($validator_value);				
 			}
 		}
-		return empty($this->errors);
+		return empty($this->error);
 	}
 }
-
