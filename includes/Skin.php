@@ -1644,9 +1644,10 @@ CSS;
 	}
 
 	function deliciousLink() {
-		global $wgDelicious, $wgGraphicalDelicious;
-		$delicious = ($wgGraphicalDelicious) ? '<img src="http://images.wikia.com/common/skins/common/images/OPmydel.gif" alt="del.icio.us" />' : wfMsgForContent('deliciouslink');
-		//return ( $wgDelicious ) ? "<a href=\"http://del.icio.us/post\" onclick=\"location.href='http://del.icio.us/post?v=4&amp;noui&amp;jump=close&amp;url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title); return false;\">".$delicious."</a>" : '';
+		global $wgDelicious, $wgGraphicalDelicious, $wgStylePath;
+		$delicious = ($wgGraphicalDelicious)
+			? Xml::element( "img", array( "src" => "$wgStylePath/common/images/OPmydel.gif",  "alt" => "del.icio.us" ) )
+			: wfMsgForContent('deliciouslink');
 		return ( $wgDelicious ) ? "<a href=\"http://del.icio.us/post\" onclick=\"location.href='https://api.del.icio.us/v1/posts/add?description='+encodeURIComponent(document.title)+'&amp;url='+encodeURIComponent(location.href); return false;\">".$delicious."</a>" : '';
 	}
 
