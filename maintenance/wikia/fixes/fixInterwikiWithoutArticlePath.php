@@ -17,7 +17,6 @@ while ( $row = $dbr->fetchObject( $res ) ) {
 			echo "Got no $1\n";
 			if ( strstr( $url, 'wikia.com' ) !== false ) {
 				echo "updating...\n";
-				die( 'foo' );
 				$dbw->update(
 						'interwiki',
 						array( 'iw_url' => $url . $wgArticlePath ),
