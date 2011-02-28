@@ -24,6 +24,7 @@ $messages['en'] = array(
 	'protectsite-until' => 'Protected until:',
 	'protectsite-protect' => 'Protect',
 	'protectsite-unprotect' => 'Unprotect',
+	'protectsite-nologs' => 'do not show in logs',
 );
 
 /** Message documentation (Message documentation)
