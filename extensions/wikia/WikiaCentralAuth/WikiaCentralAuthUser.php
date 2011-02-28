@@ -77,7 +77,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * cache it in the User object.
 	 * @param User $user
 	 */
-	static function getInstance( $user ) {
+	static function getInstance( $user, $append = false ) {
 		$name = $user->getName();
 		if ( !isset( $user->centralAuth ) ) {
 			wfDebug( __METHOD__ . ": New instance : {$name} \n" );
@@ -226,6 +226,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		//---
 		$oRow = self::loadFromDatabaseByName($this->mName);
 		$this->loadFromRow( $oRow, true );
+		$this->mStateDirty = false;
 		$this->saveToCache();
 
 		wfProfileOut( __METHOD__ );
@@ -810,7 +811,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 
 	function setOptions( $options ) {
 		$this->loadState();
-		error_log ( __METHOD__ . ", options = " . print_r( $options, true ) );
 		if ( !empty($options) ) {
 			foreach ( $options as $id => $val ) {
 				$this->mOptions[ $id ] = $val;
