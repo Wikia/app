@@ -482,6 +482,11 @@ class WikiaCentralAuthHooks {
 			wfDebug( __METHOD__ . ": User exists so load from cache (or DB) {$userName} \n" );
 			$oUser->loadFromId();
 		}*/
+		wfDebug( __METHOD__ . ": update on local cluster if needed \n" );
+		if ( !$oCUser->idFromName() ) {
+			$oCUser->addToLocalDB();
+		}		
+		
 		wfDebug( __METHOD__ . ": Move central user data to wgUser {$userName} \n" );
 		$oCUser->invalidateLocalUser($oUser, true);
 		#---
