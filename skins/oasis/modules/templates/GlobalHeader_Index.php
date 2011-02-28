@@ -28,11 +28,14 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 								<a href="<?= $menuNodes[$level1]['href'] ?>"><?= $menuNodes[$level1]['text'] ?></a>
 								<ul class="catnav">
 <?php
-			foreach($menuNodes[$level1]['children'] as $level2) {
+			if( is_array( $menuNodes[$level1]['children'] ) ):
+				foreach( $menuNodes[$level1]['children'] as $level2):
 ?>
-									<li><a href="<?= $menuNodes[$level2]['href'] ?>"><?= $menuNodes[$level2]['text'] ?></a></li>
+									<li><a href="<?php echo $menuNodes[$level2]['href'] ?>"><?php echo $menuNodes[$level2]['text'] ?></a></li>
 <?php
-			}
+				endforeach;
+			endif;
+
 ?>
 								</ul>
 							</li>
