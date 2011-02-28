@@ -40,7 +40,8 @@ var Liftium = {
 	hopRegister	: [],
 	maxLoadDelay : LiftiumOptions.maxLoadDelay || 2500,
 	isCalledAfterOnload : LiftiumOptions.isCalledAfterOnload || 0,
-	hasMoreCalls : LiftiumOptions.hasMoreCalls || 0
+	hasMoreCalls : LiftiumOptions.hasMoreCalls || 0,
+	slotnames	: []
 };
 
 
