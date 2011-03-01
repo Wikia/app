@@ -202,7 +202,7 @@ class UserProfilePageHelper {
 		$wgMemc->delete( self::getTopWikisCacheKey( $user ) );
 	}
 
-	static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, &$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		self::invalidateTopPagesCache( $user );
 		self::invalidateTopWikisCache( $user );
 		return true;
