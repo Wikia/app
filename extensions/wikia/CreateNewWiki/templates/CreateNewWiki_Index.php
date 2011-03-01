@@ -1,3 +1,6 @@
+<?php
+	$selectedLang = empty($params['wikiLanguage']) ? $wgLanguageCode : $params['wikiLanguage'];
+?>
 <section id="CreateNewWiki">
 	<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
 	<h1><?= wfMsg('cnw-title') ?></h1>
@@ -13,13 +16,13 @@
 				<label for="wiki-domain"><?= wfMsg('cnw-name-wiki-domain-label') ?></label>
 				<div class="wiki-domain-container">
 					<span class="domain-status-icon status-icon"></span>
-					<span class="domain-country"></span>
+					<span class="domain-country"><?= empty($selectedLang) || $selectedLang === 'en' ? '' : $selectedLang.'.' ?></span>
 					<?= wfMsg('cnw-name-wiki-language') ?>
 					<input type="text" name="wiki-domain" value="<?= empty($params['wikiDomain']) ? '' : $params['wikiDomain'] ?>"> <?= wfMsg('cnw-name-wiki-domain') ?>
 				</div>
 				<div class="wiki-domain-error error-msg"></div>
 				<div class="language-default">
-					<?= wfMsg('cnw-desc-default-lang') ?> - <a href="#" id="ChangeLang"><?= wfMsg('cnw-desc-change-lang') ?></a>
+					<?= wfMsg('cnw-desc-default-lang', Language::getLanguageName($selectedLang) ) ?> - <a href="#" id="ChangeLang"><?= wfMsg('cnw-desc-change-lang') ?></a>
 				</div>
 				<div class="language-choice">
 					<label for="wiki-language"><?= wfMsg('cnw-desc-lang') ?></label>
@@ -27,7 +30,6 @@
 					
 					<?php
 		$isSelected = false;
-		$selectedLang = empty($params['wikiLanguage']) ? $wgLanguageCode : $params['wikiLanguage'];
 		if (!empty($aTopLanguages) && is_array($aTopLanguages)) :
 	?>
 					<optgroup label="<?= wfMsg('autocreatewiki-language-top', count($aTopLanguages)) ?>">
