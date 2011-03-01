@@ -4,6 +4,7 @@ class DummyExtensionController extends WikiaController {
 
 	public function __construct() {
 		$this->allowedRequests[ 'helloWorld' ] = array( 'html', 'json' );
+		$this->allowedRequests[ 'errorTest' ] = array( 'html', 'json' );
 	}
 
 	public function helloWorld() {
