@@ -158,8 +158,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mPostedErrors = array();
 		$this->mErrors       = 0;
 		
-		// if creation is in english and it's in ABTest, redirect to the new one
-		if($this->mLang == 'en' && isset($wgABTests) && in_array('createnewwiki', $wgABTests)) {
+		// if creation is in english, redirect to the new one
+		if($this->mLang == 'en') {
 			$cnwTitle = Title::newFromText("CreateNewWiki", NS_SPECIAL);
 			$wgOut->redirect($cnwTitle->getFullURL());
 			return;
