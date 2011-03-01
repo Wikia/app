@@ -38,7 +38,7 @@
 		<?php echo $catHtml; ?>
 	</div>	
 	<ul class="plb-form-actions" >
-		<li> 
+		<li class="summary" > 
 			<span><?php echo wfMsg('plb-special-form-summary'); ?></span><input tabindex="1" maxlength="200" id="wpFormSummary" value="" size="50" name="wpSummary"> 
 		</li>
 		<li>

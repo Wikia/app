@@ -24,6 +24,9 @@ ul.plb-form-actions {
 		float: left;
 		padding-left:1px;
 		padding-right:1px;
+		&.summary {
+			float: none;
+		}
 		span {
 			margin-right:8px;
 		}
@@ -99,6 +102,9 @@ ul.plb-form-actions {
 	}
 	&.plb-pe-window-preview {
 		min-height: 0px;
+	}
+	#editpage-copywarn {
+    	margin-top: 60px;
 	}
 }
 

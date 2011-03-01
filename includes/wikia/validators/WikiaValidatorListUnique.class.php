@@ -1,6 +1,6 @@
 <?php
 
-class WikiaValidatorListUnique extends  WikiaValidatorList
+class WikiaValidatorListUnique extends  WikiaValidatorListBase
 {
 	protected function config( array $options = array() ) {
 		$this->setOption( 'required', true );
