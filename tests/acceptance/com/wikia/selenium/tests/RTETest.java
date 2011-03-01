@@ -1,12 +1,19 @@
 package com.wikia.selenium.tests;
 
 import org.testng.annotations.Test;
+import org.testng.annotations.DataProvider;
+
+import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.closeSeleniumSession;
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.session;
 import static org.testng.AssertJUnit.assertEquals;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+
 public class RTETest extends BaseTest {
 
-	private String[] wikitexts;
+	private static final int WIKI_TEXTS_PER_CYCLE = 10;
 
 	static public String[] createWikitexts() {
 		return new String[] {
@@ -227,32 +234,46 @@ public class RTETest extends BaseTest {
 		};
 	}
 
-	public RTETest() {
-		this.wikitexts = RTETest.createWikitexts();
-	}
-
 	// change RTE edit mode and wait for switch to complete
 	private void setRTEMode(String mode) throws Exception {
 		session().runScript("window.RTE.instance.switchMode('" + mode + "')");
 		session().waitForCondition("window.RTE.instance.mode == '"+mode+"'", this.getTimeout());
 	}
 
-	@Test(groups={"RTE", "CI"})
-	public void testRTE() throws Exception {
+	@DataProvider(parallel = true, name="wikiTextsProvider")
+	public Iterator<Object[]> wikiTextsProvider() throws Exception {
+		String[] wikiTexts = RTETest.createWikitexts();
+		ArrayList al = new ArrayList();
+		int startPos = 0;
+		int endPos = WIKI_TEXTS_PER_CYCLE;
+		while (endPos <= wikiTexts.length) {
+			al.add(new Object[] { Arrays.copyOfRange(wikiTexts, startPos, endPos) } );
+			startPos = endPos;
+			endPos += WIKI_TEXTS_PER_CYCLE;
+		}
+		if (startPos < wikiTexts.length) {
+			al.add(new Object[] { Arrays.copyOfRange(wikiTexts, startPos, wikiTexts.length) } );
+		}
+		
+		return al.iterator();
+	}
+	
+	// Notice: threadPoolSize IS data provider's number of threads
+	//         these threads are independent of suite/class/method threads
+	//         if number of suite/class/method threads plus number of data provider's threads
+	//         is greater than number of available Selenium RC session
+	//         there's risk of test failure due to timeout (waiting for free session)
+	@Test(groups={"RTE", "CI"}, dataProvider="wikiTextsProvider", threadPoolSize=1, invocationCount=1)
+	public void testRTE(String[] wikiTexts) throws Exception {
 		Integer testCaseId = 1;
 
-		// System.out.println("Preparing test page...");
-
 		session().open("index.php?title=RTE_test_page&action=edit&useeditor=wysiwyg");
+		session().waitForPageToLoad(this.getTimeout());
 
 		// go to source mode
 		this.setRTEMode("source");
 
-		for(String wikitext : wikitexts) {
-			// logging
-			System.out.println("Test case " + testCaseId + "/" + Integer.toString(wikitexts.length));
-			testCaseId++;
-
+		for(String wikitext : wikiTexts) {
 			// set text in source mode
 			session().runScript("window.RTE.instance.setData(\"" + wikitext.replace("\n", "\\n").replace("\"", "\\\"") + "\");");
 
