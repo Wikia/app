@@ -2,7 +2,7 @@
 class SpecialCreateTopList extends SpecialPage {
 	function __construct() {
 		wfLoadExtensionMessages( 'TopLists' );
-		parent::__construct( 'CreateTopList', 'toplists-create-edit-list', false /* not listed */ );
+		parent::__construct( 'CreateTopList', 'toplists-create-edit-list' );
 	}
 
 	function execute( $par ) {
