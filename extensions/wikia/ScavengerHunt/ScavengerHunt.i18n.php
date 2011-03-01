@@ -100,6 +100,20 @@ $messages['qqq'] = array(
 	'scavengerhunt-desc' => '{{desc}}',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'scavengerhunt-button-save' => 'Stoor',
+	'scavengerhunt-button-disable' => 'Afskakel',
+	'scavengerhunt-button-enable' => 'Aanskakel',
+	'scavengerhunt-button-delete' => 'Verwyder',
+	'scavengerhunt-button-export' => 'Uitvoer na CSV',
+	'scavengerhunt-entry-form-name' => 'U naam:',
+	'scavengerhunt-entry-form-email' => 'U e-posadres:',
+	'scavengerhunt-entry-form-submit' => 'Stuur inskrywing',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -129,6 +143,13 @@ $messages['br'] = array(
 $messages['de'] = array(
 	'scavengerhunt-label-name' => 'Name:',
 	'scavengerhunt-entry-form-name' => 'Dein Name:',
+);
+
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'scavengerhunt-label-image-check' => '(näytä kuva)',
 );
 
 /** Interlingua (Interlingua)

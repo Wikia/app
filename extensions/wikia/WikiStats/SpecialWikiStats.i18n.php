@@ -1479,7 +1479,7 @@ $messages['eu'] = array(
 	'wikistats_wikiname' => 'Izena:',
 	'wikistats_wikicategory' => 'Kategoria:',
 	'wikistats_username' => 'Lankide',
-	'wikistats_usernames' => 'Lankideak',
+	'wikistats_usernames' => 'Erabiltzaileak',
 	'wikistats_edits' => 'aldaketa',
 	'wikistats_bytes' => 'byte',
 	'wikistats_size' => 'tamaina',
@@ -1529,6 +1529,7 @@ $messages['fi'] = array(
 	'wikistats_active_month' => 'kuukausi',
 	'wikistats_active_year' => 'vuosi',
 	'wikistats_active_months' => 'kuukausia',
+	'wikistats_number_editors' => 'muokkaajien määrä',
 	'wikistats_articles_text' => 'Artikkelit',
 	'wikistats_database' => 'Tietokanta',
 	'wikistats_links' => 'Linkit',
@@ -1562,8 +1563,12 @@ $messages['fi'] = array(
 	'wikistats_xls_cancel' => 'Peruuta',
 	'wikistats_other_statistics_legend' => 'Muut tilastot',
 	'wikistats_article_edits' => 'Artikkelin muutokset',
+	'wikistats_article_talk' => 'Artikkeli:Keskustelu',
+	'wikistats_photo_new' => 'Uudet kuvat',
 	'wikistats_video_new' => 'Uudet videot',
+	'wikistats_months_edits' => 'Muokkaajat tässä kuussa',
 	'wikistats_mediawiki_stats' => 'MediaWiki-tilastot:',
+	'wikistats_namespaces_top10list' => 'Top 10-lista',
 );
 
 /** French (Français)
@@ -4462,6 +4467,7 @@ Precisa de estar autenticado para ver as Estatísticas da Wikia.
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Jesielt
  * @author Luckas Blade
  */
@@ -4476,9 +4482,15 @@ $messages['pt-br'] = array(
 	'wikistats_showstats_btn' => 'Mostrar estatísticas',
 	'wikistats_wikia_information' => 'Wikia informação',
 	'wikiastast_refresh_data' => 'Atualizar dados',
+	'wikistats_showcharts' => 'Mostrar gráficos',
+	'wikistats_export_xls' => 'Exportar para XLS',
 	'wikistats_panel_close_btn' => 'Fechar',
 	'wikistats_daterange_from' => 'De:',
 	'wikistats_daterange_to' => 'Para:',
+	'wikistats_nostats_found' => 'Não foram encontrados dados estatísticos para a Wikia seleccionada',
+	'wikistats_pviews_notfound' => 'Sem exibições de páginas encontradas',
+	'wikistats_distrib_article' => 'Distribuição da atividade dos editores',
+	'wikistats_breakdown_editors' => 'Atividades de edição',
 	'wikistats_article_one_link' => 'Artigos que contêm ao menos uma ligação interna',
 	'wikistats_distrib_article_subtext' => 'somente as edições em artigos são contadas, não as edições em páginas de discussão, etc',
 	'wikistats_active_day' => 'dia',

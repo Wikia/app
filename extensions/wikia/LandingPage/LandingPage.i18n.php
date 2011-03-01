@@ -50,10 +50,15 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author Diebuche
+ * @author LWChris
  */
 $messages['de'] = array(
 	'landingpage' => 'Willkommen bei Wikia',
-	'landingpage-buttons-learn-more' => 'Mehr erfahren',
+	'landingpage-start-exploring' => 'Bereit zu erkunden?',
+	'landingpage-start-exploring-text' => 'Suche dein Lieblings-Thema oder durchstöbere unten einige Favoriten der Community.',
+	'landingpage-readfaq' => 'Fragen? Lies unsere FAQ &gt;',
+	'landingpage-text' => 'Bei Wikia kannst du dich <strong>mit den Menschen treffen</strong>, die deine <strong>Leidenschaften und Interessen</strong> teilen. Finde deine Gruppe, kommentiere und bearbeite, <strong>starte sogar deine eigene Website</strong> und Community.',
+	'landingpage-buttons-learn-more' => 'Mehr erfahren &gt;',
 );
 
 /** Spanish (Español)
@@ -207,10 +212,16 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Giro720
  */
 $messages['pt-br'] = array(
 	'landingpage' => 'Bem-vindo à Wikia',
+	'landingpage-start-exploring' => 'Preparado para começar a explorar?',
+	'landingpage-start-exploring-text' => 'Pesquise o seu tema preferido ou visite alguns dos preferidos pela comunidade, abaixo.',
+	'landingpage-readfaq' => 'Perguntas? Leia a nossa FAQ &gt;',
+	'landingpage-text' => 'Na Wikia pode <strong>ligar-se a pessoas</strong> que partilham as suas <strong>paixões e interesses</strong>. Descubra o seu grupo, faça comentários e edições, ou <strong>crie o seu site</strong> e uma comunidade de utilizadores.',
+	'landingpage-buttons-learn-more' => 'Saiba mais &gt;',
 );
 
 /** Russian (Русский)

@@ -52,6 +52,19 @@ $messages['cs'] = array(
 	'exitstitial-button' => 'Přeskočit tuto reklamu',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'interstitial-default-campaign-code' => 'Wikia Liebt Dich!',
+	'interstitial-skip-ad' => 'Anzeige überspringen',
+	'interstitial-already-logged-in-no-link' => 'Du bist bereits angemeldet und es wurde kein Ziel angegeben.',
+	'interstitial-disabled-no-link' => 'Es wurde kein Ziel angegeben und Interstitials sind in diesem Wiki nicht aktiviert.',
+	'interstitial-link-away' => 'Es gibt hier nichts zu sehen!<br /><br />Möchtest du zur [[{{MediaWiki:Mainpage}}|Hauptseite]] oder vielleicht auf eine [[Special:Random|zufällige Seite]]?',
+	'exitstitial-register' => '<a href="#" class="register">Registrieren</a> oder <a href="#" class="login">Anmelden</a> um Anzeigen zu überspringen.',
+	'exitstitial-button' => 'Diese Anzeige Überspringen',
+);
+
 /** Spanish (Español)
  * @author Bola
  */
@@ -135,6 +148,19 @@ $messages['pt'] = array(
 	'interstitial-link-away' => 'Não há nada para ver aqui!<br /><br />Deseja ir para a [[{{MediaWiki:Mainpage}}|Página principal]] ou talvez para uma [[Special:Random|página aleatória]]?',
 	'exitstitial-register' => '<a href="#" class="register">Registe-se</a> ou <a href="#" class="login">Autentique-se</a> para ignorar anúncios.',
 	'exitstitial-button' => 'Ignorar este anúncio',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'interstitial-default-campaign-code' => 'A Wikia ama você!',
+	'interstitial-skip-ad' => 'Ignore este anúncio',
+	'interstitial-already-logged-in-no-link' => 'Você já está autenticado e não há nenhum destino especificado.',
+	'interstitial-disabled-no-link' => 'Nenhum destino foi especificado e as intersticiais não estão ativadas neste wiki.',
+	'interstitial-link-away' => 'Não há nada para ver aqui!<br /><br />Deseja ir para a [[{{MediaWiki:Mainpage}}|Página principal]] ou talvez para uma [[Special:Random|página aleatória]]?',
+	'exitstitial-register' => '<a href="#" class="register">Registre-se</a> ou <a href="#" class="login">Autentique-se</a> para ignorar anúncios.',
+	'exitstitial-button' => 'Ignore este anúncio',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)

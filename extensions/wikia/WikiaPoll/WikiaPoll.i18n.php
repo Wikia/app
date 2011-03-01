@@ -103,6 +103,26 @@ $messages['es'] = array(
 	'wikiapoll-publish-label' => 'Publicar',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'wikiapoll-desc' => 'Bozketak sortzeko eta kudeatzeko erraztasuna ahalbidetzen du',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|pertsona $1-ek bozkatu du|$1 pertsonak bozkatu dute}}',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Eskerrikasko!',
+	'wikiapoll-vote' => 'Bozkatu!',
+	'wikiapoll-votes' => '({{PLURAL:$1|bozka $1|$1 bozka}})',
+	'wikiapoll-createpoll-headline' => 'Bozketa sortu',
+	'wikiapoll-editpoll-headline' => 'Bozketa aldatu',
+	'wikiapoll-question-label' => 'Galdera',
+	'wikiapoll-addnewitem-label' => 'Gai berria gehitu',
+	'wikiapoll-cancel-label' => 'Utzi',
+	'wikiapoll-publish-label' => 'Argitaratu',
+	'wikiapoll-error-duplicate' => 'Izen hori duen bozketa existitzen da.',
+	'wikiapoll-error-invalid-title' => 'Galderaren testua ez da onartzen.',
+);
+
 /** Finnish (Suomi)
  * @author Tofu II
  */
@@ -129,6 +149,8 @@ $messages['fr'] = array(
 	'wikiapoll-addnewitem-label' => 'Ajouter un nouvel élément',
 	'wikiapoll-cancel-label' => 'Annuler',
 	'wikiapoll-publish-label' => 'Publier',
+	'wikiapoll-error-duplicate' => 'Un sondage portant ce nom existe déjà.',
+	'wikiapoll-error-invalid-title' => 'L’intitulé de la question n’est pas valide.',
 );
 
 /** Interlingua (Interlingua)
@@ -147,6 +169,8 @@ $messages['ia'] = array(
 	'wikiapoll-addnewitem-label' => 'Adder nove elemento',
 	'wikiapoll-cancel-label' => 'Cancellar',
 	'wikiapoll-publish-label' => 'Publicar',
+	'wikiapoll-error-duplicate' => 'Existe ja un sondage con iste nomine.',
+	'wikiapoll-error-invalid-title' => 'Le texto del question es invalide.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -176,6 +200,8 @@ $messages['mk'] = array(
 	'wikiapoll-addnewitem-label' => 'Додај нова ставка',
 	'wikiapoll-cancel-label' => 'Откажи',
 	'wikiapoll-publish-label' => 'Објави',
+	'wikiapoll-error-duplicate' => 'Веќе постои анкета со тоа име.',
+	'wikiapoll-error-invalid-title' => 'Текстот за прашањето е неважечки.',
 );
 
 /** Dutch (Nederlands)
@@ -227,6 +253,26 @@ $messages['pt'] = array(
 	'wikiapoll-addnewitem-label' => 'Adicionar novo item',
 	'wikiapoll-cancel-label' => 'Cancelar',
 	'wikiapoll-publish-label' => 'Publicar',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'wikiapoll-desc' => 'Fornece uma forma fácil de criar e administrar enquetes',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 pessoa votou|$1 pessoas votaram}}',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Obrigado!',
+	'wikiapoll-vote' => 'Vote!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 voto|$1 votos}}',
+	'wikiapoll-createpoll-headline' => 'Criar Votação',
+	'wikiapoll-editpoll-headline' => 'Editar Votação',
+	'wikiapoll-question-label' => 'Pergunta',
+	'wikiapoll-addnewitem-label' => 'Adicionar novo item',
+	'wikiapoll-cancel-label' => 'Cancelar',
+	'wikiapoll-publish-label' => 'Publicar',
+	'wikiapoll-error-duplicate' => 'Uma enquete com esse nome já existe.',
+	'wikiapoll-error-invalid-title' => 'Pergunta inválida.',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)

@@ -79,10 +79,19 @@ $messages['cy'] = array(
 
 /** German (Deutsch)
  * @author George Animal
+ * @author LWChris
  */
 $messages['de'] = array(
+	'category-exhibition-sorttype' => 'Sortierung:',
 	'category-exhibition-alphabetical' => 'Alphabetisch',
+	'category-exhibition-mostvisited' => 'Meistbesucht',
+	'category-exhibition-recentedits' => 'Zuletzt bearbeitet',
+	'category-exhibition-page-header' => 'Seiten in der Kategorie „$1“',
 	'category-exhibition-subcategories-header' => 'Unterkategorien',
+	'category-exhibition-media-header' => 'Medien in der Kategorie „$1“',
+	'category-exhibition-blogs-header' => 'Blogeinträge',
+	'category-exhibition-display-old' => 'Kategorie-Listenansicht',
+	'category-exhibition-display-new' => 'Kategorie Ausstellungsansicht',
 );
 
 /** Spanish (Español) */
@@ -239,6 +248,22 @@ $messages['pt'] = array(
 	'category-exhibition-subcategories-header' => 'Subcategorias',
 	'category-exhibition-media-header' => 'Multimédia na categoria "$1"',
 	'category-exhibition-blogs-header' => 'Entradas em blogues',
+	'category-exhibition-display-old' => 'Vista de Lista de Categorias',
+	'category-exhibition-display-new' => 'Vista de Exibição de Categorias',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'category-exhibition-sorttype' => 'Tipo de ordenação:',
+	'category-exhibition-alphabetical' => 'Alfabética',
+	'category-exhibition-mostvisited' => 'Mais visitas',
+	'category-exhibition-recentedits' => 'Editadas recentemente',
+	'category-exhibition-page-header' => 'Páginas na categoria "$1"',
+	'category-exhibition-subcategories-header' => 'Subcategorias',
+	'category-exhibition-media-header' => 'Multimídia na categoria "$1"',
+	'category-exhibition-blogs-header' => 'Posts em blogues',
 	'category-exhibition-display-old' => 'Vista de Lista de Categorias',
 	'category-exhibition-display-new' => 'Vista de Exibição de Categorias',
 );

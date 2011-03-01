@@ -1098,6 +1098,7 @@ $messages['fi'] = array(
 	'userrenametool-errorexists' => 'Tunnus ”<nowiki>$1</nowiki>” on jo olemassa',
 	'userrenametool-errorinvalid' => 'Tunnus ”<nowiki>$1</nowiki>” ei ole kelvollinen',
 	'userrenametool-errortoomany' => 'Tunnuksella ”<nowiki>$1</nowiki>” on $2 {{PLURAL:$2|muokkaus|muokkausta}}. Tunnuksen, jolla on yli $3 {{PLURAL:$3|muokkaus|muokkausta}}, vaihtaminen voi haitata sivuston suorituskykyä.',
+	'userrenametool-errorbot' => 'Käyttäjä <nowiki>$1</nowiki> on botti.',
 	'userrenametool-error-request' => 'Pyynnön vastaanottamisessa oli ongelma. Ole hyvä ja yritä uudelleen.',
 	'userrenametool-error-same-user' => 'Et voi nimetä käyttäjää uudelleen samaksi kuin hän jo on.',
 	'userrenametool-success' => 'Käyttäjän ”<nowiki>$1</nowiki>” tunnus on nyt ”<nowiki>$2</nowiki>”.',
@@ -1131,6 +1132,7 @@ $messages['fo'] = array(
  * @author PieRRoMaN
  * @author Urhixidur
  * @author Verdy p
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'userrenametool' => 'Changer le nom d’un utilisateur',
@@ -1143,6 +1145,7 @@ Consulter le [[Special:Stafflog|journal du personnel]] pour les historiques.',
 	'userrenametool-reason' => 'Motif du renommage :',
 	'userrenametool-move' => 'Renommer toutes les pages de l’utilisateur vers le nouveau nom',
 	'userrenametool-reserve' => "Réserver l'ancien nom pour un usage futur",
+	'userrenametool-notify-renamed' => "Envoyer un courriel à l’utilisateur renommé une fois l'opération effectuée",
 	'userrenametool-warnings' => 'Avertissements :',
 	'userrenametool-confirm' => 'Oui, renommer l’utilisateur',
 	'userrenametool-submit' => 'Soumettre',

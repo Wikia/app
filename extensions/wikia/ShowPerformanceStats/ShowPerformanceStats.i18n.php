@@ -105,6 +105,16 @@ $messages['pt'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'showperformancestats-desc' => 'Fornece estatísticas de desempenho',
+	'performancestat-total' => 'Total: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */

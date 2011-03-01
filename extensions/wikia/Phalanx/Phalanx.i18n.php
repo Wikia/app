@@ -141,6 +141,14 @@ $messages['de'] = array(
 	'phalanx-stats-table-reason' => 'Grund',
 );
 
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'phalanx-user-block-reason-exact' => 'Tämä käyttäjätunnus tai IP-osoite on estetty ilkivallan tai muunlaisen häiriköinnin vuoksi.
+Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wikiaan]].�',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -449,6 +457,25 @@ Kies een andere gebruikersnaam of [[Special:Contact|neem contact op met Wikia]] 
 	'phalanx-stats-table-wiki-last-edited' => 'Laatste bewerking',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'phalanx-modify-warning' => 'Du redigerer blokk ID #$1.
+Å trykke «{{int:phalanx-add-block}}» vil lagre endringene!',
+	'phalanx-help-type-title' => 'Dette filteret hindrer en side fra å bli opprettet hvis tittelen samsvarer med noen av de svartelistede setningene.
+
+Det hindrer ikke en allerede eksisterende side i å redigeres.',
+	'phalanx-help-type-user' => 'Dette filteret blokkerer en bruker (nøyaktig det samme som en lokal MediaWiki-blokkering) dersom navnet eller IP-adressen samsvarer et av de svartelistede navnene eller IP-adressene.',
+	'phalanx-help-type-answers-question-title' => 'Dette filteret blokkerer et spørsmål (en side) fra å opprettes dersom tittelen samsvarer med noen av de svartelistede setningene.
+
+Note: fungerer kun på Svar-wikier.',
+	'phalanx-help-type-answers-recent-questions' => 'Dette filteret hindrer spørsmål (sider) fra å vises i en rekke kanaler (skjermelementer, lister, tag-genererte lister).
+Det hindrer ikke disse sidene i å opprettes.
+
+Note: fungerer kun på Svar-wikier.',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
@@ -488,9 +515,11 @@ $messages['te'] = array(
 	'phalanx-label-type' => 'రకం:',
 	'phalanx-label-lang' => 'భాష:',
 	'phalanx-test-results-legend' => 'పరీక్షా ఫలితాలు',
+	'phalanx-link-stats' => 'గణాంకాలు',
 	'phalanx-stats-table-language' => 'భాష',
 	'phalanx-stats-table-text' => 'పాఠ్యం',
 	'phalanx-stats-table-reason' => 'కారణం',
+	'phalanx-stats-table-wiki-name' => 'వికీ పేరు',
 );
 
 /** Ukrainian (Українська)

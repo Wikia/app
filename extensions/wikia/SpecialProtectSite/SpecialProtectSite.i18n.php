@@ -450,6 +450,7 @@ $messages['nl'] = array(
 	'protectsite-until' => 'Beveiligen tot:',
 	'protectsite-protect' => 'Beveiligen',
 	'protectsite-unprotect' => 'Beveiliging opheffen',
+	'protectsite-nologs' => 'niet weergeven in logboeken',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)

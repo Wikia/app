@@ -28,6 +28,13 @@ $messages['cs'] = array(
 	'imageserving-desc' => 'Vybere obrázky ze zadaného pole stránek na základě vizuálních požadavků',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'imageserving-desc' => 'Wählt Bilder von einer Auswahl von Seiten entsprechend der visuellen Anforderungen aus',
+);
+
 /** Spanish (Español) */
 $messages['es'] = array(
 	'imageserving-desc' => 'Selecciona las imágenes de un conjunto especificado de páginas basados en necesidades visuales',

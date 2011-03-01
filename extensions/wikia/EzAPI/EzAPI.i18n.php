@@ -25,6 +25,13 @@ $messages['cs'] = array(
 	'ezapi-desc' => 'Nekomplikovaný vývoj modulu AJAX API',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'ezapi-desc' => 'Unkomplizierte AJAX API-Modul-Entwicklung',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -71,6 +78,13 @@ $messages['no'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
+	'ezapi-desc' => 'Módulo de desenvolvimento simplificado com a API AJAX',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
 	'ezapi-desc' => 'Módulo de desenvolvimento simplificado com a API AJAX',
 );
 

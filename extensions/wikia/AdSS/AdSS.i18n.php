@@ -453,6 +453,8 @@ $messages['de'] = array(
 	'adss-form-usd-per-day' => '$$1 pro Tag',
 	'adss-form-usd-per-week' => '$$1 pro Woche',
 	'adss-form-usd-per-month' => '$$1 pro Monat',
+	'adss-form-usd-per-quarter' => '$$1 pro Quartal',
+	'adss-form-usd-per-year' => '$$1 pro Jahr',
 	'adss-form-auth-errormsg' => 'Entweder ist die E-Mail-Adresse oder das Passwort falsch.',
 	'adss-form-field-empty-errormsg' => 'Dieses Feld darf nicht leer sein',
 	'adss-form-non-existent-title-errormsg' => 'Die Seite existiert nicht!',
@@ -475,8 +477,21 @@ $messages['de'] = array(
 	'adss-form-banner-plan-header' => 'Einen Bereich vom 728x90 Grafikbanner oben im Wiki kaufen',
 	'adss-form-banner-plan-description' => 'Hol dir einen Anteil an den quer über die Webseite verteilten Bannern zu einem einzigen niedrigen Preis.',
 	'adss-form-banner-plan-price' => '$1 für eine Aktie der Banner',
+	'adss-form-hub-plan-header' => 'Kaufe einen Gesponserten Link in allen $1 Wikis',
+	'adss-form-hub-plan-description' => 'Gesponserte Links auf allen (über $2) $1 Wikis zu einem niedrigen Preis.
+
+So kannst du mehr Publikum zu erreichen, indem deine Anzeige in anderen Wikis aus demselben Hub geschaltet wird.',
+	'adss-form-hub-plan-price' => '$1 für eine Aktie',
 	'adss-form-or' => '- oder -',
-	'adss-form-thanks' => 'Vielen Dank für dein Sponsoring!',
+	'adss-form-thanks' => 'Der Kaufvorgang wurde abgeschlossen. Die Anzeige wird geschaltet, sobald sie genehmigt ist (innerhalb von 48 Stunden, meist schneller).',
+	'adss-form-buy-another' => 'Willst du eine zweite Anzeige kaufen? [[Special:AdSS|Klicke hier]]',
+	'adss-upsell-header' => 'Einmaliges Sonderangebot',
+	'adss-upsell-text' => 'Hol dir für deine gerade gekaufte Anzeige den ersten Monat kostenlos!<br />
+Konvertiere deine Anzeige jetzt in ein vierteljährliches Abo<br />und zahle $$1 statt $$2 (33% Ersparnis)!',
+	'adss-upsell-yes' => 'Ja, das will ich!',
+	'adss-upsell-no' => 'Nein, danke',
+	'adss-upsell-thanks' => 'Vielen Dank, dass du dich für das Angebot entschieden hast!',
+	'adss-upsell-error' => 'Ein Fehler ist aufgetreten!',
 	'adss-button-preview' => 'Vorschau',
 	'adss-button-edit' => 'Bearbeiten',
 	'adss-button-login' => 'Anmelden',
@@ -502,6 +517,7 @@ Zurück zu [[Special:AdSS|{{int:Adss}}]].',
 
 Zurück zu [[Special:AdSS|{{int:Adss}}]].',
 	'adss-per-site' => 'Alle Seiten',
+	'adss-per-hub' => 'Hub',
 	'adss-per-page' => 'Nur eine Seite',
 	'adss-close' => 'Schließen',
 	'adss-cancel' => 'Abbrechen',
@@ -728,6 +744,44 @@ y te enviaremos la contraseña a tu correo electrónico en un archivo.
 Equipo de Wikia',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'adss' => 'AdSS',
+	'adss-ad-default-text' => 'Klikatu hemen!',
+	'adss-form-email' => 'Zure e-posta helbidea:',
+	'adss-form-password' => 'Zure pasahitza:',
+	'adss-form-login-link' => 'Saioa hasi',
+	'adss-form-usd-per-week' => '$$1 asteko',
+	'adss-form-usd-per-month' => '$$1 hileko',
+	'adss-form-usd-per-year' => '$$1 urteko',
+	'adss-form-or' => '- edo -',
+	'adss-upsell-yes' => 'Bai, nahi dut!',
+	'adss-upsell-no' => 'Ez, milesker',
+	'adss-upsell-error' => 'Errore bat gertatu da!',
+	'adss-button-preview' => 'Aurrebista',
+	'adss-button-edit' => 'Aldatu',
+	'adss-button-login' => 'Saioa hasi',
+	'adss-button-login-buy' => 'Saioa hasi eta erosi ORAIN',
+	'adss-button-save-pay' => 'Gorde eta ordaindu',
+	'adss-button-pay-paypal' => 'PayPal bitartez ordaindu',
+	'adss-button-select' => 'Aukeratu',
+	'adss-button-buy-now' => 'Erosi ORAIN',
+	'adss-button-save' => 'Gorde',
+	'adss-button-cancel' => 'Utzi',
+	'adss-button-yes' => 'Bai',
+	'adss-button-no' => 'Ez',
+	'adss-preview-header' => 'Aurrebista',
+	'adss-close' => 'Itxi',
+	'adss-cancel' => 'Utzi',
+	'adss-wikia' => 'Wikia',
+	'adss-type' => 'Mota',
+	'adss-price' => 'Prezioa',
+	'adss-status' => 'Egoera',
+	'adss-description' => 'Deskribapena',
+);
+
 /** Finnish (Suomi)
  * @author Tofu II
  */
@@ -737,6 +791,7 @@ $messages['fi'] = array(
 	'adss-form-usd-per-day' => '$$1 päivässä',
 	'adss-form-usd-per-week' => '$$1 viikossa',
 	'adss-form-usd-per-month' => '$$1 kuukaudessa',
+	'adss-form-usd-per-year' => '$$1 vuodessa',
 	'adss-button-login-buy' => 'Kirjaudu sisään ja osta NYT',
 	'adss-button-buy-now' => 'Osta NYT',
 	'adss-wikia' => 'Wikia',
@@ -998,6 +1053,8 @@ $messages['ia'] = array(
 	'adss-form-usd-per-day' => '$1$ per die',
 	'adss-form-usd-per-week' => '$1$ per septimana',
 	'adss-form-usd-per-month' => '$1$ per mense',
+	'adss-form-usd-per-quarter' => '$$1 per tres menses',
+	'adss-form-usd-per-year' => '$$1 per anno',
 	'adss-form-auth-errormsg' => 'Le adresse de e-mail o le contrasigno es incorrecte.',
 	'adss-form-field-empty-errormsg' => 'Iste campo non debe esser vacue',
 	'adss-form-non-existent-title-errormsg' => 'Iste pagina non existe',
@@ -1026,9 +1083,15 @@ $messages['ia'] = array(
 Isto permitte attinger un audientia plus ample per circular vostre annuncio in altere wikis del mesme centro.',
 	'adss-form-hub-plan-price' => '$1 per parte',
 	'adss-form-or' => '- o -',
-	'adss-form-thanks' => 'Gratias pro le sponsorisation! Le acquisition del annuncio ha succedite e illo entrara in circulation post approbation manual (intra 48 horas).
-
-	 Ora tu pote [[Special:AdSS|comprar]] un altere annuncio!',
+	'adss-form-thanks' => 'Le acquisition ha succedite. Le annuncio entrara in circulation post approbation (intra 48 horas, usualmente minus).',
+	'adss-form-buy-another' => 'Vole acquirer un altere annuncio ora? [[Special:AdSS|Clicca hic]]',
+	'adss-upsell-header' => 'Offerta special e unic',
+	'adss-upsell-text' => 'Recipe gratuitemente le prime mense del annuncio que vos justo acquireva!<br />
+Converte ora vostre annuncio in un subscription trimestral<br />e paga $$1 in loco de $$2 (un rebatto de 33%)!',
+	'adss-upsell-yes' => 'Si, io lo vole!',
+	'adss-upsell-no' => 'No, gratias',
+	'adss-upsell-thanks' => 'Gratias pro eliger le offerta!',
+	'adss-upsell-error' => 'Un error ha occurrite!',
 	'adss-button-preview' => 'Previsualisar',
 	'adss-button-edit' => 'Modificar',
 	'adss-button-login' => 'Aperir session',
@@ -1199,6 +1262,8 @@ $messages['mk'] = array(
 	'adss-form-usd-per-day' => '$1 USD дневно',
 	'adss-form-usd-per-week' => '$1 USD неделно',
 	'adss-form-usd-per-month' => '$1 USD месечно',
+	'adss-form-usd-per-quarter' => '$$1 за едно тромесечие',
+	'adss-form-usd-per-year' => '$$1 годишно',
 	'adss-form-auth-errormsg' => 'Погрешна е-пошта или лозинка.',
 	'adss-form-field-empty-errormsg' => 'Полето не смее да стои празно',
 	'adss-form-non-existent-title-errormsg' => 'Оваа страница не постои',
@@ -1227,9 +1292,15 @@ $messages['mk'] = array(
 Ова ви овозможува поголема изложеност бидејќи рекламата се прикажува на сите викија од истото собиралиште.',
 	'adss-form-hub-plan-price' => '$1 за една акција',
 	'adss-form-or' => '- или -',
-	'adss-form-thanks' => 'Ви благодариме за спонзорството! Рекламата е успешно купена, и истата ќе оди во живо откако ќе биде рачно одобрена (макс. во рок од 48 часа).
-
-[[Special:AdSS|Купете]] уште една реклама!',
+	'adss-form-thanks' => 'Купувањето е завршено.  Вашата реклама ќе оди во живо откако ќе биде одобрена (во рок од 48 часа, обично поскоро).',
+	'adss-form-buy-another' => 'Дали би сакале да купите втора реклама сега?  [[Special:AdSS|Стиснете тука]]',
+	'adss-upsell-header' => 'Посебна еднократна понуда',
+	'adss-upsell-text' => 'Првиот месец бесплатно на рекламата што ја купивте!<br />
+Претворете ја во тримесечна претплата сега<br />и платете $$1 наместо $$2 (попуст од 33%)!',
+	'adss-upsell-yes' => 'Да, сакам!',
+	'adss-upsell-no' => 'Не, благодарам',
+	'adss-upsell-thanks' => 'Ви благодариме што ја прифативте понудата!',
+	'adss-upsell-error' => 'Се појави грешка!',
 	'adss-button-preview' => 'Преглед',
 	'adss-button-edit' => 'Уреди',
 	'adss-button-login' => 'Најава',
@@ -1521,10 +1592,16 @@ $messages['no'] = array(
 	'adss-form-banner-plan-header' => 'Kjøp en andel av 728x90-bannerene på toppen av denne wikien',
 	'adss-form-banner-plan-description' => 'Få en andel av bannerene over hele wikien for én lav pris.',
 	'adss-form-banner-plan-price' => '$1 for en banner-aksje',
-	'adss-form-or' => '- eller -',
-	'adss-form-thanks' => 'Takk for sponsingen din! Annonsen din har blitt kjøpt og vil offentliggjøres etter manuell godkjenning (innen 48 timer).
+	'adss-form-hub-plan-description' => 'Få sponsede lenker på alle (over $2) $1-wikier til en lav pris.
 
-Gå og [[Special:AdSS|kjøp]] enda en annonse!',
+Dette lar deg nå et større publikum ved å vise annonsene dine på andre wikier fra samme hub.',
+	'adss-form-or' => '- eller -',
+	'adss-form-thanks' => 'Du har fullført kjøpet. Annonsen din vil offentliggjøres etter å ha blitt godkjent (innen 48 timer, vanligvis mindre).',
+	'adss-upsell-text' => 'Få den første måneden gratis for annonsen du nettopp kjøpte!<br />
+Gjør om annonsen til et kvartalsvis abonnement nå<br />og betal $$1 istedenfor $$2 (33 % rabatt)!',
+	'adss-upsell-no' => 'Nei takk',
+	'adss-upsell-thanks' => 'Takk for at du valgte tilbudet!',
+	'adss-upsell-error' => 'En feil har oppstått!',
 	'adss-button-preview' => 'Forhåndsvis',
 	'adss-button-edit' => 'Rediger',
 	'adss-button-login' => 'Logg inn',
@@ -1550,6 +1627,7 @@ Tilbake til [[Special:AdSS|{{int:Adss}}]].',
 
 Tilbake til [[Special:AdSS|{{int:Adss}}]].',
 	'adss-per-site' => 'Alle sider',
+	'adss-per-hub' => 'Hub',
 	'adss-per-page' => 'Kun én side',
 	'adss-close' => 'Lukk',
 	'adss-cancel' => 'Avbryt',
@@ -1847,6 +1925,7 @@ A Equipa da Wikia',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Giro720
  */
 $messages['pt-br'] = array(
@@ -1861,6 +1940,7 @@ $messages['pt-br'] = array(
 	'adss-button-edit' => 'Editar',
 	'adss-button-save-pay' => 'Salvar',
 	'adss-preview-prompt' => 'O aspecto do seu patrocínio será este - clique "editar" para voltar atrás e fazer alterações, ou "salvar" para salvar e ir para o PayPal.',
+	'adss-close' => 'Fechar',
 );
 
 /** Russian (Русский)
@@ -2173,8 +2253,10 @@ $messages['zh-hans'] = array(
 	'adss-form-email' => '您的电邮地址：',
 	'adss-form-password' => '您的密码：',
 	'adss-form-login-link' => '登入',
+	'adss-button-preview' => '预览',
 	'adss-button-edit' => '编辑',
 	'adss-button-login' => '登入',
+	'adss-button-login-buy' => '登录并立即购买',
 	'adss-button-save-pay' => '保存于还钱',
 	'adss-button-pay-paypal' => '用 PayPal 来还钱',
 	'adss-button-select' => '选择',
@@ -2183,13 +2265,43 @@ $messages['zh-hans'] = array(
 	'adss-button-cancel' => '取消',
 	'adss-button-yes' => '是',
 	'adss-button-no' => '不是',
+	'adss-buy-another' => '购买另一个广告！',
+	'adss-edit-thanks' => '您的广告更改已被保存和手动批准后将投入（在 48 小时内）。',
+	'adss-preview-header' => '预览',
 	'adss-click-here' => '点击这里',
 	'adss-per-site' => '所有页面',
+	'adss-per-hub' => '集线器',
 	'adss-per-page' => '一页而已',
 	'adss-close' => '关闭',
 	'adss-cancel' => '取消',
 	'adss-manager-tab-adList' => '您的广告',
+	'adss-manager-tab-billing' => '计费',
+	'adss-admin-tab-adList' => '广告列表',
+	'adss-admin-tab-billing' => '计费',
+	'adss-admin-tab-reports' => '报告',
+	'adss-not-logged-in' => '您必须登录',
+	'adss-wrong-id' => '错误 id',
+	'adss-no-permission' => '没有权限',
 	'adss-canceled' => '已取消',
+	'adss-rejected' => '拒绝',
+	'adss-approved' => '批准',
+	'adss-pending' => '挂起',
+	'adss-wikia' => 'Wikia',
+	'adss-type' => '类型',
+	'adss-price' => '价格',
+	'adss-ad' => '广告',
+	'adss-status' => '状态',
+	'adss-created' => '创建',
+	'adss-paypal-payment' => 'PayPal 付款',
+	'adss-adss-fee' => 'AdSS 费',
+	'adss-adss-refund' => 'AdSS 退款',
+	'adss-fee' => '费用',
+	'adss-paid' => '支付',
+	'adss-timestamp' => '时间戳',
+	'adss-description' => '说明',
+	'adss-amount' => '$$1',
+	'adss-cancel-confirmation' => '确实要删除此广告吗？',
+	'adss-welcome-subject' => '[AdSS] 感谢您的赞助！',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬) */

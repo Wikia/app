@@ -114,6 +114,18 @@ $messages['pt'] = array(
 	'wikipayment-paypal-profile-name' => 'Wiki pago',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'wikipayment-desc' => 'Permite o pagamento por wiki para desativar anúncios.',
+	'wikipayment-paypal-redirect' => 'Redirecionando para o PayPal, por favor aguarde...',
+	'wikipayment-paypal-error' => 'Erro de pagamento PayPal (código: $1)',
+	'wikipayment-paypal-return-ok' => 'Pagamento PayPal bem-sucedido',
+	'wikipayment-paypal-return-cancel' => 'Pagamento PayPal cancelado',
+	'wikipayment-paypal-profile-name' => 'Wiki paga',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */

@@ -121,6 +121,13 @@ $messages['es'] = array(
 	'ajaxpoll-submitting' => 'Por favor, espera, procesando tu voto...',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'ajaxpoll-submit' => 'Bozkatu!',
+);
+
 /** Persian (فارسی) */
 $messages['fa'] = array(
 	'ajaxpoll-submit' => 'ثبت رای!',
@@ -477,6 +484,7 @@ $messages['uk'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
  * @author Wilsonmess
  */
 $messages['zh-hans'] = array(
@@ -485,6 +493,7 @@ $messages['zh-hans'] = array(
 	'ajaxpoll-error' => '在处理您的投票信息时出现了问题，请再试一次。',
 	'ajaxpoll-summary' => '该投票由 $1 于 $2 发起，目前为止有 $3 人参与了投票。',
 	'ajaxpoll-submit' => '投票！',
+	'ajaxpoll-closed' => '调查现已封闭。享受结果。',
 	'ajaxpoll-submitting' => '请稍候，正在递交您的投票……',
 );
 

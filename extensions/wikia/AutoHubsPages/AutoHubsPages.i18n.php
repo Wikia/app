@@ -93,10 +93,25 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Diebuche
  * @author George Animal
+ * @author LWChris
  */
 $messages['de'] = array(
 	'unhide' => 'Einblenden���',
+	'hub-blog-header' => 'Top $1 Beiträge',
+	'hub-hotspot-header' => 'Angesagte Seiten',
+	'hub-topusers-header' => 'Top $1 Benutzer',
+	'hub-featured' => 'Top $1 Wikis',
+	'hub-header' => '$1 Wikis',
+	'hub-hotspot-info' => 'Dies sind die angesagtesten Seiten dieser Woche, gerankt nach den meisten Bearbeitern.',
+	'hub-blog-comments' => '{{PLURAL:$1|ein Kommentar|$1 Kommentare}}',
+	'hub-blog-continue' => 'Weiterlesen',
+	'hub-blog-showarticle' => 'Seite anzeigen',
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">Bearbeitungs{{PLURAL:$1|punkt|punkte}}</span>',
 	'hub-hotspot-from' => 'von',
+	'hub-hide-feed' => 'Feed ausblenden',
+	'hub-show-feed' => 'Feed anzeigen',
+	'hub-contributors-info' => 'Dies sind die Top-Benutzer dieser Woche, gerankt nach den meisten Bearbeitungen.',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|Bearbeiter|Bearbeiter}}</span>',
 );
 
 /** Spanish (Español)
@@ -339,6 +354,28 @@ $messages['pt'] = array(
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|editor|editores}}</span>',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'unhide' => 'Reexibir',
+	'hub-blog-header' => 'Publicações Populares em $1',
+	'hub-hotspot-header' => 'Pontos Quentes',
+	'hub-topusers-header' => 'Maiores Editores em $1',
+	'hub-featured' => 'Wikis de Topo em $1',
+	'hub-header' => 'Wikis do Portal $1',
+	'hub-hotspot-info' => 'Estas são as páginas mais populares da semana, ordenadas pelo número de editores.',
+	'hub-blog-comments' => '{{PLURAL:$1|um comentário|$1 comentários}}',
+	'hub-blog-continue' => 'Continuar lendo',
+	'hub-blog-showarticle' => 'Mostrar página',
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">{{PLURAL:$1|ponto|pontos}} de edições</span>',
+	'hub-hotspot-from' => 'da',
+	'hub-hide-feed' => 'Esconder feed',
+	'hub-show-feed' => 'Mostrar feed',
+	'hub-contributors-info' => 'Estes são os melhores editores da semana, ordenados pelo número de edições.',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|editor|editores}}</span>',
+);
+
 /** Russian (Русский)
  * @author Eleferen
  */
@@ -396,5 +433,12 @@ $messages['uk'] = array(
 	'unhide' => 'Показати',
 	'hub-blog-showarticle' => 'Показати сторінку',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|редактор|редактори|редакторів}}</span>',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'unhide' => '取消隐藏',
 );
 

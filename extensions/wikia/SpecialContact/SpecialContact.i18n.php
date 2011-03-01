@@ -246,6 +246,40 @@ Als u liever gebruik maakt van e-mail of bijlagen wilt meesturen, stuur dan een 
 	'specialcontact-submitcomplete' => 'Dank u wel voor het contact opnemen met Wikia.',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'contact' => 'Contato Wikia',
+	'specialcontact-wikia' => 'Contato Wikia',
+	'specialcontact-pagetitle' => 'Contato Wikia',
+	'specialcontact-intro' => 'Você pode entrar em contato com a[[w:projeto:Staff |Wikia Staff]] usando este formulário. Administradores desta wiki podem ser encontrados [[Special:Listadmins|aqui]]. 
+
+Informações adicionais sobre como reportar problemas a Wikia podem ser encontrados  [[w:projeto:Report a problem|aqui]], ou você pode postar em algum [[w:Fórum:Índice|Fórum da Wikia]] para suporte ao usuário. 
+
+Se você preferir utilizar o correio electrónico regular ou anexos, você pode nos contatar em [mailto:community@wikia.com community@wikia.com].',
+	'specialcontact-username' => 'Nome do Usuário',
+	'specialcontact-wikiname' => 'Wiki',
+	'specialcontact-realname' => 'Seu nome',
+	'specialcontact-yourmail' => 'Endereço de e-mail',
+	'specialcontact-problem' => 'Assunto',
+	'specialcontact-problemdesc' => 'Mensagem',
+	'specialcontact-mail' => 'Enviar a Wikia',
+	'specialcontact-filledin' => 'Esta informação foi preenchida a partir de suas preferências de conta',
+	'specialcontact-ccme' => 'Envie-me uma cópia dessa mensagem',
+	'specialcontact-ccdisabled' => 'Erro: Valide seu endereço de e-mail para utilizar esta função',
+	'specialcontact-notyou' => 'Não é você?',
+	'specialcontact-captchainfo' => 'Por favor, digite o texto da imagem.',
+	'specialcontact-captchatitle' => 'Palavra errada',
+	'specialcontact-formtitle' => 'Contato Equipe de Apoio Wikia',
+	'specialcontact-nomessage' => 'Por favor, preencha a mensagem',
+	'specialcontact-captchafail' => 'Código de confirmação incorreto ou não preenchido.',
+	'specialcontact-mailsub' => 'Email de contato Wikia',
+	'specialcontact-mailsubcc' => 'Cópia do Email de contato Wikia',
+	'specialcontact-ccheader' => 'Esta é uma cópia da mensagem que foi enviada para o Apoio Wikia',
+	'specialcontact-submitcomplete' => 'Obrigado por contactar a Wikia.',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */

@@ -393,6 +393,9 @@ $messages['es'] = array(
 $messages['fi'] = array(
 	'userprofilepage-edit-avatar-label' => 'Muokkaa kuvaa',
 	'userprofilepage-edit-button' => 'Muokkaa',
+	'userprofilepage-leave-message' => 'Jätä viesti',
+	'userprofilepage-user-last-action-edit' => '$1 muokkasi <a href="$2">$3</a> sivua',
+	'userprofilepage-user-last-action-delete' => '$1 poisti <a href="$2">$3</a>-sivun',
 	'userprofilepage-user-group-bot' => 'Botti',
 	'userprofilepage-user-group-helper' => 'Apulainen',
 	'userprofilepage-user-group-sysop-tooltip' => 'Tämä käyttäjä on ylläpitäjä tässä wikissä',

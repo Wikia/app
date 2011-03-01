@@ -114,14 +114,59 @@ Wikia
 </p>',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'article-comments-anonymous' => 'Unangemeldeter Benutzer',
 	'article-comments-comments' => 'Kommentare ($1)',
 	'article-comments-post' => 'Kommentieren',
 	'article-comments-delete' => 'löschen',
+	'article-comments-edit' => 'bearbeiten',
+	'article-comments-history' => 'Versionen',
+	'article-comments-error' => 'Kommentar konnte nicht gespeichert werden',
 	'article-comments-undeleted-comment' => 'Kommentar zu Blog-Beitrag $1 wiederhergestellt.',
+	'article-comments-rc-comment' => 'Artikel Kommentar ([[$1]])',
+	'article-comments-rc-comments' => 'Artikel Kommentare ([[$1]])',
+	'article-comments-fblogin' => 'Bitte <a href="$1">logge dich ein und verbinde dich mit Facebook</a> um einen Kommentar in diesem Wiki zu schreiben!',
+	'article-comments-fbconnect' => 'Bitte <a href="$1">verknüpfe dieses Konto mit Facebook</a> um zu kommentieren!',
+	'article-comments-rc-blog-comment' => 'Blog-Kommentar ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Blog-Kommentare ([[$1]])',
 	'article-comments-login' => 'Zum Kommentieren <a href="$1">anmelden</a>.',
+	'article-comments-toc-item' => 'Kommentare',
+	'article-comments-comment-cannot-add' => 'Du kannst keinen Kommentar zum Artikel hinzufügen.',
+	'article-comments-reply' => 'Antworten',
+	'article-comments-show-all' => 'Alle Kommentare anzeigen',
+	'article-comments-prev-page' => 'Vorherige',
+	'article-comments-next-page' => 'Nächste',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Der übergeordnete Artikel / übergeordnete Kommentar wurde gelöscht.',
+	'article-comments-empty-comment' => 'Du darfst keinen leeren Kommentar posten. <a href="$1">Stattdessen löschen?</a>',
+	'enotif_subject_article_comment' => '$PAGEEDITOR hat "$PAGETITLE" auf {{SITENAME}} kommentiert',
+	'enotif_body_article_comment' => 'Hallo $WATCHINGUSERNAME,
+
+$PAGEEDITOR hat einen Kommentar zu "$PAGETITLE" abgegeben.
+
+Um den Kommentar-Thread anzusehen, folge dem unten stehenden Link:
+$PAGETITLE_URL
+
+Bitte komm vorbei und bearbeite viel...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>Hallo $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR hat einen Kommentar zu "$PAGETITLE" abgegeben.
+<br /><br />
+Um den Kommentar-Thread anzusehen, folge diesem Link: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+<br /><br />
+Bitte komm vorbei und bearbeite viel...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>Willst du kontrollieren, welche E-Mails du erhältst? <a href="{{fullurl:Special:Preferences}}">Pass deine Einstellungen an<a>.</li>
+</ul>
+</p>',
 );
 
 /** Spanish (Español)
@@ -178,6 +223,23 @@ Wikia
 </p>',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'article-comments-anonymous' => 'Lankide anonimoa',
+	'article-comments-comments' => 'Iruzkinak ($1)',
+	'article-comments-post' => 'Iruzkina idatzi',
+	'article-comments-delete' => 'ezabatu',
+	'article-comments-edit' => 'aldatu',
+	'article-comments-history' => 'historia',
+	'article-comments-reply' => 'Erantzun',
+	'article-comments-show-all' => 'Iruzkin guztiak erakutsi',
+	'article-comments-prev-page' => 'Aurrekoa',
+	'article-comments-next-page' => 'Hurrengoa',
+	'article-comments-page-spacer' => '&#160...&#160',
+);
+
 /** Persian (فارسی) */
 $messages['fa'] = array(
 	'article-comments-anonymous' => 'کاربر گمنام',
@@ -203,6 +265,7 @@ $messages['fi'] = array(
 	'article-comments-rc-comments' => 'Artikkelin kommentit ([[$1]])',
 	'article-comments-rc-blog-comments' => 'Blogin kommentit ([[$1]])',
 	'article-comments-login' => '<a href="$1">Kirjaudu sisään</a> kommetoidaksesi',
+	'article-comments-comment-cannot-add' => 'Et voi lisätä kommenttia tähän artikkeliin.',
 	'article-comments-show-all' => 'Näytä kaikki kommentit',
 );
 
@@ -337,6 +400,25 @@ $messages['ja'] = array(
 	'article-comments-login' => 'コメントするには<a href="$1">ログイン</a>する必要があります',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'article-comments-anonymous' => 'Anonyme Benotzer',
+	'article-comments-comments' => 'Bemierkungen ($1)',
+	'article-comments-post' => 'Bemierkung derbäisetzen',
+	'article-comments-delete' => 'läschen',
+	'article-comments-edit' => 'änneren',
+	'article-comments-history' => 'Historique',
+	'article-comments-error' => "D'Bemierkung konnt net gespäichert ginn",
+	'article-comments-undeleted-comment' => "Restauréiert Bemierkung dir d'Blog-Säit $1",
+	'article-comments-rc-comment' => 'Bemierkung vum Artikel ([[$1]])',
+	'article-comments-rc-comments' => 'Bemierkunge vum Artikel ([[$1]])',
+	'article-comments-fblogin' => '<a href="$1">Loggt Iech an a verbannt mat Facebook</a> fir eng Bemierkung op dëser Wiki ze schreiwen!',
+	'article-comments-toc-item' => 'Bemierkungen',
+	'article-comments-reply' => 'Äntwerten',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -447,6 +529,45 @@ Wikia
 </p>',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'article-comments-comments' => 'Kommentarer ($1)',
+	'article-comments-delete' => 'slett',
+	'article-comments-edit' => 'rediger',
+	'article-comments-history' => 'historikk',
+	'article-comments-error' => 'Kommentaren kunne ikke lagres',
+	'article-comments-undeleted-comment' => 'Angret slettning av kommetar for bloggsiden $1',
+	'article-comments-rc-blog-comment' => 'Bloggkommentar ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Bloggkommentarer ([[$1]])',
+	'article-comments-comment-cannot-add' => 'Du kan ikke legge en kommentar til artikkelen.',
+	'enotif_body_article_comment' => 'Kjære $WATCHINGUSERNAME,
+
+$PAGEEDITOR har kommentert «$PAGETITLE». 
+
+For å se kommentartråden, følg lenken under:
+$PAGETITLE_URL 
+
+Vennligst kom på besøk og rediger ofte...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>Kjære $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR har kommentert «$PAGETITLE». 
+<br /><br />
+For å se kommentartråden, følg denne lenken: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+<br /><br />
+Vennligst kom på besøk og rediger ofte...
+<br /><br />
+Wikia
+<br /><br />
+<ul>
+<li>Vil du kontrollere hva slags e-post du mottar? <a href="{{fullurl:Special:Preferences}}">Oppdater innstillingene dine<a>.</li>
+</ul>
+</p>',
+);
+
 /** Polish (Polski) */
 $messages['pl'] = array(
 	'article-comments-anonymous' => 'Anonimowy użytkownik',
@@ -487,5 +608,24 @@ $messages['te'] = array(
 	'article-comments-toc-item' => 'వ్యాఖ్యలు',
 	'article-comments-comment-cannot-add' => 'ఈ వ్యాసానికి మీరు వ్యాఖ్యని చేర్చలేరు.',
 	'article-comments-page-spacer' => '&#160...&#160',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'article-comments-anonymous' => '匿名用户',
+	'article-comments-comments' => '评论（$1）',
+	'article-comments-post' => '发表评论',
+	'article-comments-delete' => '删除',
+	'article-comments-edit' => '编辑',
+	'article-comments-history' => '历史',
+	'article-comments-error' => '无法保存注释',
+	'article-comments-toc-item' => '评论',
+	'article-comments-comment-cannot-add' => '不能将注释添加到文章中。',
+	'article-comments-reply' => '答复',
+	'article-comments-show-all' => '显示所有注释',
+	'article-comments-prev-page' => '上一页',
+	'article-comments-next-page' => '下一页',
 );
 

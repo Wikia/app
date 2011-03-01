@@ -53,6 +53,16 @@ $messages['es'] = array(
 	'timeago-second' => 'hace un minuto',
 );
 
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'timeago-day' => '{{PLURAL:$1|päivä|$1 päivää}} sitten',
+	'timeago-hour' => '{{PLURAL:$1|tunti|$1 tuntia}} sitten',
+	'timeago-minute' => '{{PLURAL:$1|minuutti|$1 minuuttia}} sitten',
+	'timeago-second' => 'minuutti sitten',
+);
+
 /** French (Français)
  * @author Wyz
  */
@@ -121,6 +131,17 @@ $messages['pl'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
+	'timeagomessaging-desc' => 'Fornece a internacionalização do plugin jquery.timeago.js',
+	'timeago-day' => 'há {{PLURAL:$1|um dia|$1 dias}}',
+	'timeago-hour' => 'há {{PLURAL:$1|uma hora|$1 horas}}',
+	'timeago-minute' => 'há {{PLURAL:$1|um minuto|$1 minutos}}',
+	'timeago-second' => 'há um minuto',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
 	'timeagomessaging-desc' => 'Fornece a internacionalização do plugin jquery.timeago.js',
 	'timeago-day' => 'há {{PLURAL:$1|um dia|$1 dias}}',
 	'timeago-hour' => 'há {{PLURAL:$1|uma hora|$1 horas}}',

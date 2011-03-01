@@ -680,11 +680,19 @@ Parece que alguien ha editado tu wiki! Por qué no <a href="$MYHOMEURL">verifica
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'founderemails-email-user-registered-body' => 'Hei $FOUNDERNAME,
+
+Näyttää siltä että $USERNAME on rekisteröitynyt wikiisi! Miksi et sano hänen keskustelusivullaan $USERTALKPAGEURL hei?
+
+-- The Wikia Team�',
 	'founderemails-email-page-edited-reg-user-body' => 'Hei $FOUNDERNAME,
 
 Näyttää siltä, että rekisteröitynyt käyttäjä $USERNAME on muokannut wikiäsi! Miksi et sano hänelle ($USERTALKPAGEURL) hei?
 
 -- The Wikia Team',
+	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hei $FOUNDERNAME,<br /><br />
+Näyttää siltä että rekisteröitynyt käyttäjä $USERNAME on muokannut wikiäsi! Miksi et sano hänen <a href="$USERTALKPAGEURL">keskustelusivullaan</a> hei?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>�>',
 	'founderemails-answers-email-page-edited-reg-user-body' => 'Hei $FOUNDERNAME,
 
 Näyttää siltä, että rekisteröitynyt käyttäjä $USERNAME on muokannut wikiäsi! Miksi et sano hänen keskustelusivullaan ($USERTALKPAGEURL) hei?
@@ -1173,6 +1181,18 @@ $messages['lb'] = array(
 	'founderemails-desc' => "Hëlleft d'Grënner vun den Ännerungen op hirer Wiki z'informéieren",
 	'founderemails-email-page-edited-anon-subject' => 'Et huet een Är Wiki geännert!',
 	'founderemails-answers-email-0-days-passed-subject' => 'Wëllkomm op der QA Wikia!',
+);
+
+/** Basa Banyumasan (Basa Banyumasan)
+ * @author StefanusRA
+ */
+$messages['map-bms'] = array(
+	'founderemails-email-0-days-passed-subject' => 'Sugeng rawuh nang Wikia!',
+	'founderemails-email-0-days-passed-body' => 'Slamet ya, wis gawe $WIKINAME - Panjenengan siki dadi bagiane komunitas Wikia!
+
+-- Tim Wikia',
+	'founderemails-email-0-days-passed-body-HTML' => 'Slamet ya, wis nggawe <strong>$WIKINAME</strong> - Panjenengan siki dadi bagiane komunitas Wikia !<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Tim Wikia</div>',
 );
 
 /** Macedonian (Македонски)

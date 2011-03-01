@@ -610,6 +610,7 @@ $messages['de'] = array(
 	'blog-desc' => 'Blogeinträge',
 	'blog-movepage-badtitle' => 'Ungültiger Blogeintrags-Titel.',
 	'blog-comment-sending' => 'Sende...',
+	'blog-by' => '$1 von $2',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -770,6 +771,15 @@ Crea páginas de listas de blogs para categorías como "Obama", "Humor", o varia
  */
 $messages['eu'] = array(
 	'createblogpage' => 'Bloga sortu',
+	'create-blog-categories-submit' => 'Bidali',
+	'create-blog-listing-preview' => 'Aurrebista',
+	'create-blog-listing-matches-calculate' => 'Kalkulatu',
+	'create-blog-listing-sortby-author' => 'Egilea',
+	'blog-defaulttitle' => 'Blogak',
+	'blog-page' => 'Bloga',
+	'blog-comments' => 'Iruzkinak',
+	'blog-refresh-label' => 'Eguneratu',
+	'blog-comment-sending' => 'Bidaltzen...',
 );
 
 /** Persian (فارسی)
@@ -2610,6 +2620,7 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author 555
+ * @author Aristóbulo
  * @author Giro720
  * @author Jesielt
  */
@@ -2660,6 +2671,7 @@ Crie uma lista de blogs para categorias como "Barack Obama", "Humor" ou, até me
 	'create-blog-listing-sortby' => 'Ordenar por',
 	'create-blog-listing-sortby-date' => 'Mais rcente',
 	'create-blog-listing-sortby-author' => 'Autor',
+	'create-blog-listing-sortby-comments' => 'Contagem de comentários',
 	'create-blog-listing-output-as-box' => 'Gerar um código para copiar e colar',
 	'create-blog-listing-output-as-page' => 'Criar lista em uma nova página',
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Etiqueta de lista de blogs não reconhecida',
@@ -2724,6 +2736,7 @@ Crie uma lista de blogs para categorias como "Barack Obama", "Humor" ou, até me
 	'blog-desc' => 'Artigos de blog',
 	'blog-movepage-badtitle' => 'Título de post inválido.',
 	'blog-comment-sending' => 'Enviando...',
+	'blog-by' => '$1 de $2',
 );
 
 /** Russian (Русский)
@@ -3322,9 +3335,36 @@ $messages['uk'] = array(
  */
 $messages['zh-hans'] = array(
 	'createblogpage' => '创建博客',
+	'createbloglistingpage' => '创建博客列表',
+	'create-blog-spam' => '看起来像垃圾邮件',
 	'create-blog-cant-edit' => '无法执行编辑',
+	'create-blog-post-category' => '博客张贴内容',
+	'create-blog-post-category-body' => '这是一个自动生成的博客张贴内容列表',
+	'create-blog-post-category-log' => '博客张贴内容的创建的类别条',
+	'create-blog-post-recent-listing' => '最新文章',
+	'create-blog-post-recent-listing-title' => '最新文章',
+	'create-blog-post-recent-listing-log' => '最新博客文章创建的文章',
+	'create-blog-post-title' => '创建新的博客',
+	'create-blog-form-title' => '博客张贴内容是什么？',
+	'create-blog-form-post-text' => '博客的文本',
+	'create-blog-form-info' => '博客张贴内容与社区分享新闻意见和建议创意件的好方法。',
+	'create-blog-form-post-title' => '博客文章标题',
+	'create-blog-empty-title-error' => '所需的标题',
+	'create-blog-empty-post-error' => '后身体为空',
+	'create-blog-empty-article-log' => '博客列表创建的文章',
+	'create-blog-invalid-title-error' => '无效的标题',
+	'create-listing-confirm-info' => '复制并粘贴以下代码：',
+	'create-blog-no-login' => '未登录',
+	'create-blog-categories-title' => '将这篇文章添加到这些类别（单击可选择）',
+	'create-blog-categories-textinput' => '添加新的类别',
 	'create-blog-categories-submit' => '提交',
 	'create-blog-save' => '保存页面',
+	'create-blog-preview' => '显示预览',
+	'create-blog-updated' => '创建或更新的博客。',
+	'create-blog-permission-denied' => '保存博客页面时出现错误：权限被拒绝',
+	'create-blog-article-already-exists' => '博客张贴内容具有该名称已存在，请选择不同的名称',
+	'create-blog-listing-title' => '创建新的博客列表页面',
+	'create-blog-listing-form-title' => '什么是博客列表页面？',
 	'blog-defaulttitle' => '博客',
 	'blog-writeone' => '写一个！',
 	'blog-comment-delete' => '删除',

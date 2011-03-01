@@ -242,6 +242,14 @@ $messages['es'] = array(
 	'tog-disablecategoryselect' => 'Desactivar el Etiquetador de Categorías (Category Tagging)',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'categoryselect-button-save' => 'Gorde',
+	'categoryselect-button-cancel' => 'Utzi',
+);
+
 /** Persian (فارسی) */
 $messages['fa'] = array(
 	'categoryselect-addcategory-button' => 'افزودن رده',

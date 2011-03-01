@@ -83,3 +83,19 @@ $messages['nl'] = array(
 	'userdata-no-wf' => 'WikiFactory is niet ingeschakeld voor deze wiki. Het is niet mogelijk wgUserData aan te passen.',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'userdata' => 'Obter dados de usuário',
+	'userdata-userid-label' => 'Fornecer ID do usuário:',
+	'userdata-submit' => 'Obter dados',
+	'specialuserdata-desc' => 'Fornece uma interface para alterar wgUserData por wiki.',
+	'userdata-header' => 'Aumento wgUserData',
+	'userdata-value' => 'O valor atual de wgUserData é "$ 1". Pressione o botão para configurá-lo para timestamp atual.',
+	'userdata-updated' => 'wgUserData atualizado para "$ 1".',
+	'userdata-not-updated' => 'Falha ao atualizar wgUserData.',
+	'userdata-wf-reason' => 'Valor atualizado via [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory não é permitido nesta wiki. Não é possível alterar wgUserData.',
+);
+

@@ -610,7 +610,9 @@ $messages['fi'] = array(
 	'rte-ck-media-delete' => 'poista',
 	'rte-ck-photoGallery-add' => 'Lisää kuvagalleria tai diaesitys',
 	'rte-ck-photoGallery-tooltip' => 'Tämä on galleria.',
+	'rte-ck-photoGallery-tooltipSlideshow' => 'Tämä on diaesitys.',
 	'rte-ck-signature-add' => 'Lisää allekirjoituksesi',
+	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:Taikasanat',
 	'rte-ck-video-add' => 'Lisää video',
 );
 
@@ -670,6 +672,7 @@ $messages['fr'] = array(
 	'rte-ck-media-edit' => 'modifier',
 	'rte-ck-modeSwitch-toSource' => 'Basculer en mode source',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Basculer en mode wysiwyg',
+	'rte-ck-modeSwitch-error' => 'Une erreur s’est produite lors du changement de mode. Veuillez réessayer.',
 	'rte-ck-photoGallery-add' => 'Ajouter une galerie photo ou un diaporama',
 	'rte-ck-photoGallery-confirmDelete' => 'Souhaitez-vous vraiment supprimer la galerie photo de cette page ?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Supprimer cette galerie ?',
@@ -705,6 +708,9 @@ $messages['fr'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Supprimer cet espace réservé pour une vidéo ?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Cet espace est réservé pour une vidéo.',
 	'rte-ck-widescreen-toggle' => 'Activer/désactiver le plein écran',
+	'rte-ck-poll-confirmDelete' => 'Êtes-vous sûr{{GENDER:||e|(e)}} de vouloir retirer le sondage de la page ?',
+	'rte-ck-poll-confirmDeleteTitle' => 'Retirer ce sondage ?',
+	'rte-ck-spellchecker-moreSuggestions' => 'Plus de suggestions',
 );
 
 /** Galician (Galego)
@@ -1577,6 +1583,7 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Giro720
  */
 $messages['pt-br'] = array(
@@ -1626,11 +1633,13 @@ $messages['pt-br'] = array(
 	'rte-ck-media-edit' => 'modificar',
 	'rte-ck-modeSwitch-toSource' => 'Mudar para o modo fonte',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Mudar para o modo WYSIWYG',
+	'rte-ck-modeSwitch-error' => 'Ocorreu um erro durante a mudança de modo. Tente novamente, por favor.',
 	'rte-ck-photoGallery-add' => 'Inserir uma galeria de fotos ou uma apresentação de slides',
 	'rte-ck-photoGallery-confirmDelete' => 'Tem certeza de que deseja remover a galeria desta página?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Remover esta galeria?',
 	'rte-ck-photoGallery-tooltip' => 'Isto é uma galeria.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Isto é uma apresentação de slides.',
+	'rte-ck-poll-add' => 'Adicionar uma enquete',
 	'rte-ck-signature-add' => 'Adicionar a sua assinatura',
 	'rte-ck-signature-label' => 'Assinatura',
 	'rte-ck-table-alignNotSet' => 'Não definido',
@@ -1660,6 +1669,9 @@ $messages['pt-br'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Remover este espaço reservado para um vídeo?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Este é um espaço reservado para um vídeo.',
 	'rte-ck-widescreen-toggle' => 'Ativar ou desativar o modo panorâmico',
+	'rte-ck-poll-confirmDelete' => 'Tem a certeza de que pretende remover a enquete desta página?',
+	'rte-ck-poll-confirmDeleteTitle' => 'Remover esta enquete?',
+	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',
 );
 
 /** Russian (Русский)

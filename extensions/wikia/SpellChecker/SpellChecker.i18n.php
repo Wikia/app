@@ -119,8 +119,10 @@ $messages['ia'] = array(
  */
 $messages['lb'] = array(
 	'enablespellchecker' => 'Spellchecker aschalten',
+	'spellchecker-info' => 'Informatiounen iwwer de Spellchecker',
 	'spellchecker-info-languages' => 'Disponibel Sproochen ($1)',
 	'spellchecker-info-dictionaries' => 'Disponibel Dictionnairen',
+	'spellchecker-info-spellcheck-text' => 'Text fir nozekucken',
 	'spellchecker-info-spellcheck-languages' => 'Sprooch',
 	'spellchecker-info-spellcheck-is-correct' => 'D\'Wuert "$1" ass net richteg geschriwwen',
 );
@@ -159,6 +161,23 @@ $messages['nl'] = array(
 	'spellchecker-info-spellcheck-submit' => 'Spelling controleren',
 	'spellchecker-info-spellcheck-is-correct' => 'Het woord "$1" is correct gespeld',
 	'spellchecker-info-spellcheck-suggestions' => 'Spellingsuggesties voor "$1": $2',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'spellchecker-desc' => 'Fornece interface de verificação ortográfica para encantar módulo PHP',
+	'enablespellchecker' => 'Habilitar corretor ortográfico',
+	'spellchecker-info' => 'Informação da verificação ortográfica',
+	'spellchecker-info-languages' => 'Os idiomas disponíveis ($1)',
+	'spellchecker-info-provider' => 'Operadora',
+	'spellchecker-info-dictionaries' => 'Dicionários disponíveis',
+	'spellchecker-info-spellcheck-text' => 'Texto a ser verificado',
+	'spellchecker-info-spellcheck-languages' => 'Idioma',
+	'spellchecker-info-spellcheck-submit' => 'Verificar ortografia',
+	'spellchecker-info-spellcheck-is-correct' => 'A palavra "$1" está escrita corretamente',
+	'spellchecker-info-spellcheck-suggestions' => 'Sugestões de ortografia para "$1": $2',
 );
 
 /** Telugu (తెలుగు)

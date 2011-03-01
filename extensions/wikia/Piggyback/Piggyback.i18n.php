@@ -175,8 +175,8 @@ Ch\'a contròla l\'ortografìa.',
 	'piggyback-wronguser' => "$1 a l'é pa tò nòm utent",
 	'piggyback-loginprompt' => "Për piasì, ch'a buta torna sò stranòm e soa ciav.",
 	'piggyback-firstlogout' => 'Për piasì prima torna intré an tò cont.',
-	'piggyback-itisyou' => 'It peule pa piggyback ti midem.',
-	'piggyback-issysopto' => "It peule pa piggyback n'utent con ël drit ëd piggyback.",
+	'piggyback-itisyou' => 'A peul pa fé na conession mùltipla con sò pròpi cont.',
+	'piggyback-issysopto' => "A peul pa fé na conession mùltipla ansima al cont ëd n'utent con ël drit ëd fé dle conession mùltiple.",
 );
 
 /** Portuguese (Português) */
@@ -189,6 +189,23 @@ Os nomes de utilizador são sensíveis a maiúsculas e minúsculas.
 Verifique a soletração.',
 	'piggyback-wronguser' => '$1 não é o seu nome de utilizador',
 	'piggyback-loginprompt' => 'Reintroduza o seu nome de utilizador e a palavra-chave.',
+	'piggyback-firstlogout' => 'Saia primeiro de volta à sua conta, por favor.',
+	'piggyback-itisyou' => 'Não se pode personificar a si mesmo.',
+	'piggyback-issysopto' => 'Não pode personificar um utilizador que tem o direito de personificação.',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'piggybac-desc' => 'Permite a autenticação em nome de outro utilizador',
+	'piggyback' => 'Personificação',
+	'piggyback-otherusername' => 'Nome de outro utilizador:',
+	'piggyback-nosuchuser' => 'Não existe um utilizador com o nome "$1".
+Os nomes de utilizador são sensíveis a maiúsculas e minúsculas.
+Verifique a ortografia.',
+	'piggyback-wronguser' => '$1 não é o seu nome de utilizador',
+	'piggyback-loginprompt' => 'Reintroduza o seu nome de utilizador e a senha.',
 	'piggyback-firstlogout' => 'Saia primeiro de volta à sua conta, por favor.',
 	'piggyback-itisyou' => 'Não se pode personificar a si mesmo.',
 	'piggyback-issysopto' => 'Não pode personificar um utilizador que tem o direito de personificação.',

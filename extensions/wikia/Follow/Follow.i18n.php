@@ -375,6 +375,7 @@ Viz <a href="$PAGETITLE_URL">$PAGETITLE</a>.<br /><br />
  */
 $messages['de'] = array(
 	'follow-desc' => 'Verbesserungen an der Beobachtungsliste',
+	'prefs-basic' => 'Grundlegende Optionen',
 	'wikiafollowedpages-special-heading-category' => 'Kategorien ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Artikel ($1)',
 	'wikiafollowedpages-special-heading-blogs' => 'Blogs und Einträge ($1)',
@@ -402,6 +403,8 @@ Du kannst durch Klicken des {{int:watch}}-Buttons Seiten dieser Liste hinzufüge
 	'wikiafollowedpages-special-title-userbar' => 'Beobachtete Seiten',
 	'tog-enotiffollowedpages' => 'Bei Änderungen an beobachteten Seiten E-Mails senden',
 	'tog-enotiffollowedminoredits' => 'Auch bei kleinen Änderungen an beobachteten Seiten E-Mails senden',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Erweiterte Optionen',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Nur Beobachtungsliste',
 	'tog-hidefollowedpages' => 'Halte meine Beobachtungsliste privat',
 	'follow-categoryadd-summary' => 'Seite zu Kategorie hinzugefügt',
 	'follow-bloglisting-summary' => 'Blog auf Blogseite gepostet',
@@ -674,13 +677,24 @@ Por favor visita y edita frecuentemente...
 </p>',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'wikiafollowedpages-userpage-more' => 'Gehiago',
+	'wikiafollowedpages-userpage-hide' => 'ezkutatu',
+);
+
 /** Finnish (Suomi)
+ * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'wikiafollowedpages-special-heading-category' => 'Luokat ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Artikkelit ($1)',
 	'wikiafollowedpages-special-heading-blogs' => 'Blogit ja viestit ($1)',
-	'wikiafollowedpages-special-heading-user' => 'Käyttäjä sivut ($1)',
+	'wikiafollowedpages-special-heading-user' => 'Käyttäjäsivut ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'MediaWiki sivut ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Kuvat ja videot ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 sivu)',
 	'wikiafollowedpages-special-title' => 'Seuratut sivut

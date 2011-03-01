@@ -598,6 +598,7 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Giro720
  * @author Luckas Blade
  */
@@ -619,6 +620,12 @@ $messages['pt-br'] = array(
 	'multilookuplistwikiainfo' => 'Lista das wikis com artigos editados por usuários com o IP: <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">O IP "<b>$1</b>" não existe. Verifique se você se enganou ao escrever o endereço.</p>',
 	'multilookuplastedit' => 'Última edição deste IP:',
+	'multilookupwikidbname' => 'Nome da base de dados',
+	'multilookupwikiurl' => 'Site',
+	'multilookupwikititle' => 'Título',
+	'multilookupwikioptions' => 'Opções',
+	'multilookuplastedithdr' => 'Última edição',
+	'multilookuprecordspager' => "Mostrando os registos '''$1''' a '''$2''' de '''$3'''.",
 	'right-multilookup' => 'Procure informação de usuários em várias wikis',
 );
 

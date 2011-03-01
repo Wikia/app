@@ -1953,3 +1953,10 @@ $messages['vo'] = array(
 	'swm-no' => 'Nö!',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'swm-yes' => 'יא',
+);
+

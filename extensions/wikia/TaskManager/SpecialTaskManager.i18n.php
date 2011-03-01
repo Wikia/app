@@ -254,12 +254,15 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Giro720
  */
 $messages['pt-br'] = array(
 	'taskmanager' => 'Ver e administrar as tarefas de segundo plano',
 	'taskmanager_title' => 'Ver e administrar as tarefas de segundo plano',
 	'taskmanager_tasklist' => 'Voltar à Lista de Tarefas',
+	'right-taskmanager' => 'Pode mostrar tarefas de segundo plano',
+	'right-taskmanager-action' => 'Pode administrar tarefas de segundo plano',
 );
 
 /** Russian (Русский)
