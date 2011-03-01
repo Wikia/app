@@ -32,7 +32,7 @@ WF::build('App')->registerSpecialPage('DummyExtension', 'DummyExtensionSpecialPa
 /**
  * setup functions
  */
-WF::build('App')->registerExtensionFunction('wfDummyExtensionInit');
+//WF::build('App')->registerExtensionFunction('wfDummyExtensionInit');
 
 function wfDummyExtensionInit() {
 	// place extension init stuff heere
