@@ -189,7 +189,7 @@ class PageHeaderModule extends Module {
 
 		// default title "settings" (RT #145371), don't touch special pages
 		if ($ns != NS_SPECIAL) {
-			$this->displaytitle = false;
+			$this->displaytitle = true;
 			$this->title = $wgOut->getPageTitle();
 		}
 
@@ -244,6 +244,7 @@ class PageHeaderModule extends Module {
 		}
 		if ( in_array($ns, array_merge( $namespaces, $wgSuppressNamespacePrefix ) ) ) {
 			$this->title = $wgTitle->getText();
+			$this->displaytitle = false;
 		}
 
 		// talk pages
@@ -300,6 +301,7 @@ class PageHeaderModule extends Module {
 
 			// remove namespace prefix
 			$this->title = $wgTitle->getText();
+			$this->displaytitle = false;
 		}
 
 		// mainpage
