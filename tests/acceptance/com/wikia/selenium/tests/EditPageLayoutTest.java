@@ -31,6 +31,25 @@ public class EditPageLayoutTest extends BaseTest {
 
 		assertTrue(session().isElementPresent("//td[@id='cke_toolbar_wpTextbox1']"));
 		assertTrue(session().isElementPresent("//td[@id='cke_rail_wpTextbox1']"));
+		assertTrue(session().isElementPresent("//td[@id='cke_space_wpTextbox1']"));
 		assertTrue(session().isElementPresent("//td[@id='cke_contents_wpTextbox1']"));
+
+		// toolbars
+		assertTrue(session().isElementPresent("//td[@id='cke_toolbar_wpTextbox1']/div[contains(@class, 'cke_toolbar_format')]"));
+		assertTrue(session().isElementPresent("//td[@id='cke_toolbar_wpTextbox1']/div[contains(@class, 'cke_toolbar_templates')]"));
+		assertTrue(session().isElementPresent("//td[@id='cke_toolbar_wpTextbox1']/div[contains(@class, 'cke_toolbar_insert')]"));
+
+		assertTrue(session().isElementPresent("//td[@id='cke_toolbar_wpTextbox1']/div[contains(@class, 'cke_buttons')]"));
+		assertTrue(session().isElementPresent("//td[@id='cke_toolbar_wpTextbox1']//span[contains(@class, 'cke_button_bold')]"));
+		assertTrue(session().isElementPresent("//td[@id='cke_toolbar_wpTextbox1']/div[contains(@class, 'cke_toolbar_insert')]/span[contains(@class,'cke_button_big')]"));
+
+		// right rail modules
+		assertTrue(session().isElementPresent("//td[@id='cke_rail_wpTextbox1']/div[contains(@class, 'cke_module_page_controls')]"));
+		assertTrue(session().isElementPresent("//td[@id='cke_rail_wpTextbox1']/div[contains(@class, 'cke_module_rail_insert')]"));
+		assertTrue(session().isElementPresent("//td[@id='cke_rail_wpTextbox1']/div[contains(@class, 'cke_module_rail_templates')]"));
+		assertTrue(session().isElementPresent("//td[@id='cke_rail_wpTextbox1']/div[contains(@class, 'cke_module_license')]"));
+
+		assertTrue(session().isElementPresent("//td[@id='cke_rail_wpTextbox1']/div[contains(@class, 'cke_module_page_controls')]//textarea[@id='wpSummary']"));
+		assertTrue(session().isElementPresent("//td[@id='cke_rail_wpTextbox1']/div[contains(@class, 'cke_module_page_controls')]//input[@id='wpSave']"));
 	}
 }
