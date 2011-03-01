@@ -186,7 +186,7 @@ $color-borders: #CECECE;
 	.facebook.login {
 		@include clearfix;
 		float: left;
-		margin: -25px 0 0 67px;
+		margin: -40px 0 0 67px;
 		padding-bottom: 10px;
 		text-align: center;
 		>span {
@@ -207,6 +207,10 @@ $color-borders: #CECECE;
 			}
 		}
 	}
+}
+
+#AjaxLoginBox {
+	margin-bottom: 20px;
 }
 
 div#userloginErrorBox3 {
