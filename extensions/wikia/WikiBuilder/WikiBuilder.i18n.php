@@ -284,6 +284,7 @@ Escribe la segunda sección de tu página aquí. No olvides añadir una categor�
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'owb-headline' => 'Hei, $1',
 	'owb-button-save-pages' => 'Tallenna sivut',
 );
 

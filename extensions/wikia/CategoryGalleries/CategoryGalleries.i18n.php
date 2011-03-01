@@ -37,6 +37,13 @@ $messages['cs'] = array(
 	'categorygalleries-desc' => 'Zobrazuje galerii stránek na stránkách kategorií',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'categorygalleries-desc' => 'Zeigt eine Seiten-Galerie auf Kategorieseiten',
+);
+
 /** Spanish (Español)
  * @author Bola
  */
@@ -97,6 +104,13 @@ $messages['no'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
+	'categorygalleries-desc' => 'Mostra uma galeria de páginas nas páginas das categorias',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
 	'categorygalleries-desc' => 'Mostra uma galeria de páginas nas páginas das categorias',
 );
 

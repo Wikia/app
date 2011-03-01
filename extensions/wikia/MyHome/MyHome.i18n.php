@@ -554,6 +554,7 @@ $messages['cy'] = array(
  * @author Umherirrender
  */
 $messages['de'] = array(
+	'myhome-desc' => 'Eine private Homepage für angemeldete Benutzer',
 	'myhome' => 'Startseite',
 	'wikiactivity' => 'Wiki-Aktivität',
 	'myhome-activity-more' => 'mehr kürzliche Änderungen',
@@ -570,6 +571,7 @@ Klicke auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu begin
 	'myhome-hot-spots-newest' => 'Neue Seiten im Wiki',
 	'myhome-hot-spots-brandnew' => 'Dies ist ein nagelneues Wiki. Klicke auf [[Special:CreatePage|Neue Seite]] um mit dem Schreiben zu beginnen!',
 	'tog-myhomedisableredirect' => 'Weiterleitung zu Wiki Activity unterbinden',
+	'prefs-myhome' => 'Startseite',
 	'myhome-feed-newpage' => 'neue Seite',
 	'myhome-feed-edit' => 'bearbeiten',
 	'myhome-feed-move' => 'Seite verschoben',
@@ -607,7 +609,7 @@ Das Wiki wird durch die Gemeinschaft der Nutzer erstellt, und durch den Klick au
 Probier es einfach aus!',
 	'myhome-hot-spots-number-of-editors' => 'Bearbeiter',
 	'myhome-log-in' => "<center>Die Startseiten-Funktion ist nur verfügbar wenn du eingeloggt bist.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Bitte melde dich an um diese Seite zu sehen!]'''</big></center>",
-	'myhome-switch-to-monaco' => "Die Startseiten-Funktion ist nur für das Monaco-Design verfügbar.
+	'myhome-switch-to-monaco' => "Die Startseiten-Funktion ist nur für das Wikia Design verfügbar.
 Wenn du die Startseite sehen möchtest, gehe bitte zu '''[[Special:Preferences|deinen Einstellungen]]''' um dein Design zu wechseln.",
 	'myhome-namespace-blog' => 'Benutzer-Blog',
 	'myhome-community-corner-header' => 'Gemeinschafts-Nachrichten',
@@ -2154,6 +2156,7 @@ Pode, por exemplo:
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Giro720
  * @author Jesielt
  */
@@ -2173,6 +2176,7 @@ Use a lista de páginas vigiadas para monitorar alterações das páginas pelas 
 	'myhome-hot-spots-newest' => 'Páginas novas na wiki',
 	'myhome-hot-spots-brandnew' => 'Esta é um wiki nova. Clique em [[Special:CreatePage|Nova página]] para começar a escrever!',
 	'tog-myhomedisableredirect' => 'Desativar redirecionamento para Minha Página Inicial',
+	'prefs-myhome' => 'Minha página inicial',
 	'myhome-feed-newpage' => 'nova página',
 	'myhome-feed-edit' => 'editar',
 	'myhome-feed-move' => 'página movida',
@@ -2210,7 +2214,7 @@ Esta wiki é criada pela comunidade e, ao clicar o botão para editar, você tor
 Experimente!',
 	'myhome-hot-spots-number-of-editors' => 'editores',
 	'myhome-log-in' => "<center>As opções da Minha Página Inícial estão disponíveis apenas quando você está logado.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Por favor, faça o login para visualizar essa página!]'''</big></center>",
-	'myhome-switch-to-monaco' => "As opções da Minha Página Incial estão disponíveis apenas se você estiver usando a estilo (skin) Monaco. Se você deseja visualizar a Minha Página Inicial, por favor visite '''[[Special:Preferences|suas preferências]]''' e mude o seu estilo (skin).",
+	'myhome-switch-to-monaco' => "As opções da Minha Página Inicial estão disponíveis apenas se você estiver usando a estilo (skin) Monaco. Se você deseja visualizar a Minha Página Inicial, por favor visite '''[[Special:Preferences|suas preferências]]''' e mude o seu estilo (skin).",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Mensagens Comunitárias',
 	'oasis-myhome-community-corner-edit' => 'editar mensagem &gt;',

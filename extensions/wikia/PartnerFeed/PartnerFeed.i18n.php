@@ -103,6 +103,7 @@ $messages['fa'] = array(
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'partner-feed-recent-changes' => 'Viimeisimmät muutokset',
 	'all-blog-posts' => 'kaikki kategoriat',
 );
 
@@ -313,9 +314,17 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Giro720
  */
 $messages['pt-br'] = array(
+	'partner-feed-achievements-leaderboard' => 'Liderança de medalhas das wikis',
+	'partner-feed-earned-badges' => 'Medalhas ganhas recentemente numa wiki específica',
+	'partner-feed-recent-blog-posts' => 'Posts recentes em blogues, relacionadas com uma promoção',
+	'partner-feed-latest-images' => 'Galeria das últimas imagens enviadas',
+	'partner-feed-hotcontent' => '"Pontos Quentes" dos portais, de acordo com o número de editores',
+	'partner-feed-recent-blog-comments' => 'Comentários recentes relacionados com um post de blogue especificado.',
+	'partner-feed-recent-changes' => 'Mudanças recentes',
 	'partnerfeed' => 'Feed de um parceiro',
 	'error-no-article' => 'Erro: Não foi passado o parâmetro "article"',
 	'feed-title-blogposts' => 'Entradas recentes em blogues',
@@ -327,6 +336,7 @@ $messages['pt-br'] = array(
 	'blog-posts-from-listing' => 'da listagem: $1',
 	'feed-title-hot-content' => 'Conteúdo popular - $1',
 	'feed-title-blogcomments' => 'Comentários em $1',
+	'feed-title-recentchanges' => 'Mudanças recentes',
 );
 
 /** Russian (Русский)

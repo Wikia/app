@@ -3300,6 +3300,7 @@ regist.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Daemorris
  * @author Giro720
  * @author Jesielt
@@ -3383,10 +3384,11 @@ $messages['pt-br'] = array(
 	'awc-metrics-db-size' => 'tamanho da BD',
 	'awc-metrics-images' => 'Imagens',
 	'awc-metrics-all-users' => 'Usuários<br />registrados',
-	'awc-metrics-all-users-edit-main-ns' => 'Usuários registrados<br />(NS_MAIN)',
+	'awc-metrics-all-users-edit-main-ns' => 'Usuários registrados<br />(EN Principal)',
 	'awc-metrics-pageviews' => 'Visitas na<br />página',
 	'awc-metrics-statistics' => 'Estatísticas (média de todos os meses)',
 	'awc-metrics-close' => 'Fechar',
+	'awc-metrics-close-action' => 'fechar',
 	'awc-metrics-active' => 'ativo',
 	'awc-metrics-closed' => 'fechado',
 	'awc-metrics-redirected' => 'fechado e redirecionado',
@@ -3403,6 +3405,7 @@ $messages['pt-br'] = array(
 	'awc-metrics-close-listed' => 'Fechar tudo listado',
 	'awc-metrics-close-checked' => 'Fechar revisados',
 	'awc-metrics-exact-match' => 'coincidência exata',
+	'awc-metrics-recordspager' => "Mostrando os registos '''$1''' a '''$2''' de '''$3'''",
 	'closed-wiki' => 'Wiki fechada',
 	'closed-wiki-info' => 'Essa wiki foi fechada',
 	'disabled-wiki-info' => 'Essa wiki foi desativada',

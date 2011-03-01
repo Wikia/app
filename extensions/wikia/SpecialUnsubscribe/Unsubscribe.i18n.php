@@ -176,6 +176,25 @@ $messages['no'] = array(
 	'unsubscribe-working-done' => 'Fullført.',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'unsubscribe' => 'Cancelar inscrição',
+	'unsubscribe-badaccess' => 'Desculpe, esta página não pode ser usada diretamente. Por favor, siga o link de seu e-mail.',
+	'unsubscribe-badtoken' => 'Desculpe, ocorreu um problema com o token de segurança.',
+	'unsubscribe-bademail' => 'Desculpe, ocorreu um problema com o e-mail.',
+	'unsubscribe-badtime' => 'Desculpe, o link expirou. Por favor, use um link com menos de 7 dias.',
+	'unsubscribe-nousers' => 'Nenhum usuário encontrado com esse endereço de e-mail.',
+	'unsubscribe-noconfusers' => 'Nenhum usuário confirmado foi encontrado com esse endereço de e-mail.',
+	'unsubscribe-confirm-legend' => 'Confirmar',
+	'unsubscribe-confirm-text' => 'Cancelar todas as contas com <code>$1</code>?',
+	'unsubscribe-confirm-button' => 'Sim, eu tenho certeza',
+	'unsubscribe-working' => 'Cancelamento de $1 {{PLURAL:$ 1|account|accounts}} para $2',
+	'unsubscribe-working-problem' => 'problema de carregamento de informação de usuário: $1',
+	'unsubscribe-working-done' => 'Completo.',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */

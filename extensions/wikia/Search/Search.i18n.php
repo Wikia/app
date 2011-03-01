@@ -290,6 +290,16 @@ $messages['lg'] = array(
 	'wikiasearch-search-wikia' => 'Noonyeza mu Wikia',
 );
 
+/** Basa Banyumasan (Basa Banyumasan)
+ * @author StefanusRA
+ */
+$messages['map-bms'] = array(
+	'wikiasearch-titles-only' => 'Goleti nang judul kaca thok',
+	'wikiasearch-system-error-msg' => 'Jalaran kesalahan sistem, panggoletane panjenengan ora bisa dirampungna',
+	'wikiasearch-search-this-wiki' => 'Goleti nang Wikia Central thok',
+	'wikiasearch-image-results' => 'Hasil gambar nggo "$1"',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -384,10 +394,12 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Daemorris
  * @author Giro720
  */
 $messages['pt-br'] = array(
+	'search-desc' => 'Motor de pesquisa em toda a Wikia, usando o backend Solr',
 	'wikiasearch-titles-only' => 'Pesquisar apenas nos títulos de páginas',
 	'wikiasearch-system-error-msg' => 'Devido a um erro de sistema, sua pesquisa não pôde ser efetuada',
 	'wikiasearch-search-this-wiki' => 'Pesquisar apenas na wikia Central',

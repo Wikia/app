@@ -195,6 +195,7 @@ $messages['fa'] = array(
  * @author Centerlink
  * @author Crt
  * @author Silvonen
+ * @author Tofu II
  */
 $messages['fi'] = array(
 	'wva-success' => 'Videosivun $1 lisääminen onnistui.',
@@ -206,6 +207,7 @@ $messages['fi'] = array(
 	'wva-title' => 'Lisää nopeasti video verkko-osoitteesta',
 	'wva-notlogged' => 'Sinun täytyy kirjautua sisään tai rekisteröityä, jotta voit lisätä videoita.',
 	'wva-notallowed' => 'Et voi lisätä videoita tälle wikisivulle.',
+	'wva-protected' => 'Tämä video on suojattu.',
 );
 
 /** French (Français)

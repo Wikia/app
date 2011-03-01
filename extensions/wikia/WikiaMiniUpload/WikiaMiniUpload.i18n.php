@@ -841,10 +841,12 @@ $messages['fa'] = array(
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Silvonen
+ * @author Tofu II
  */
 $messages['fi'] = array(
 	'wmu-name' => 'Nimi',
 	'wmu-license' => 'Lisenssi',
+	'wmu-licensing' => 'Lisensointi',
 	'wmu-details-inf2' => '<h1>Artikkelivalitsimet</h1>Valitse miten haluat tämän tiedoston näkyvän sivullasi.',
 	'wmu-size' => 'Koko',
 	'wmu-thumbnail' => 'Pienoiskuva',

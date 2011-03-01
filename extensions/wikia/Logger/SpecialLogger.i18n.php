@@ -39,8 +39,15 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author George Animal
+ * @author LWChris
  */
 $messages['de'] = array(
+	'logger-desc' => 'Logger für Backend-Skripte',
+	'logger' => 'Backend-Logger',
+	'loggertitle' => 'Backend-Logger',
+	'loggerselectlogname' => 'Log-Namen wählen:',
+	'loggerrecordswithpercent' => "'''$1''' Einträge ('''$2''' Prozent abgeschlossen)",
+	'loggerrecords' => '$1 Einträge',
 	'loggergo' => 'Einblenden',
 	'loggernoresult' => 'Keine Ergebnisse gefunden',
 );
@@ -57,6 +64,13 @@ $messages['es'] = array(
 	'loggerrecords' => '$1 registros',
 	'loggergo' => 'Mostrar',
 	'loggernoresult' => 'No se encontraron resultados',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'loggergo' => 'Erakutsi',
 );
 
 /** Interlingua (Interlingua)
@@ -134,6 +148,21 @@ $messages['pt'] = array(
 	'loggerrecords' => '$1 registos',
 	'loggergo' => 'Mostrar',
 	'loggernoresult' => 'Nenhum resultado foi encontrado',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'logger-desc' => 'Agente de registo para scripts de back-end',
+	'logger' => 'Agente de registo de back-end',
+	'loggertitle' => 'Agente de registo de back-end',
+	'loggerselectlogname' => 'Selecione o nome do registo:',
+	'loggerrecordswithpercent' => "português (pt)
+'''$1''' registos ('''$2'''% concluído)",
+	'loggerrecords' => '$1 registos',
+	'loggergo' => 'Mostrar',
+	'loggernoresult' => 'Nenhum resultado encontrado',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)

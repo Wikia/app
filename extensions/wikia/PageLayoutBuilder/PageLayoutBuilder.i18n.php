@@ -446,6 +446,9 @@ $messages['fi'] = array(
 	'plb-special-form-create-new' => 'Luo uusi "$1" sivu',
 	'plb-special-form-edit-article' => 'Muokkaa sivua: $1',
 	'plb-create-edit-title' => '<strong>Muokataan:</strong> $1',
+	'plb-create-button-layout-title' => 'Tallenna muutokset [ctrl-s]',
+	'plb-special-form-preview-button' => 'Esikatsele sivua',
+	'plb-list-count' => '#Artikkelit',
 	'plb-helpbox-checkboxinfo1' => 'Älä näytä tätä harjoitusta uudelleen.',
 );
 
@@ -1200,7 +1203,7 @@ $messages['no'] = array(
 	'plb-form-desc-instructions' => 'Vennligst oppgi en beskrivelse',
 	'plb-list-confirm-delete' => 'Er du sikker på at du vil slette dette oppsettet?',
 	'plb-list-confirm-publish' => 'Er du sikker på at du vil publisere dette oppsettet?',
-	'plb-list-name' => 'Navn',
+	'plb-list-name' => 'Navn på oppsett',
 	'plb-list-desc' => 'Beskrivelse',
 	'plb-list-last-editor' => 'Siste redaktør',
 	'plb-list-count' => '#Sider',
@@ -1247,7 +1250,7 @@ $messages['no'] = array(
 	'plb-editor-preview-info' => 'Info',
 	'plb-editor-overlay-edit' => 'rediger',
 	'plb-editor-enter-caption' => 'Angi spørsmål til skjemaet.',
-	'plb-editor-left-sidebar-tutorial' => '<br /><b>Velkommen til oppsett-byggeren!</b><br /><br />For å begynne å legge til elementer, trykk på <em>Legg til element</em>-knappen over og velg ønsket type.<br /><br />Ettersom du legger til elementer, vil nye spørsmål legges til og nye sider vil automatisk genereres basert på alle elementene du bruker i oppsettet.',
+	'plb-editor-left-sidebar-tutorial' => '<br /><b>Velkommen til oppsett-byggeren!</b><br /><br />For å begynne å legge til elementer, trykk på <em>Legg til element</em>-knappen over og velg ønsket type.<br /><br />Ettersom du legger til elementer, vil nye spørsmål legges til etableringsprosessen for siden.',
 	'plb-widget-name-plb_input' => 'Boks',
 	'plb-widget-name-plb_mlinput' => 'Avsnitt',
 	'plb-widget-name-plb_image' => 'Bilde',

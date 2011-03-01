@@ -99,6 +99,16 @@ $messages['pt'] = array(
 	'site-layout' => 'Composições do Site',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'skinchooser-desc' => 'Permite que os utilizadores escolham temas nas suas preferências',
+	'skinchooser-customcss' => 'Para compositor de temas visuais, selecione a opção de personalização no menu acima e coloque o CSS de personalização em [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Novo Visual da Wikia',
+	'site-layout' => 'Composições do Site',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */

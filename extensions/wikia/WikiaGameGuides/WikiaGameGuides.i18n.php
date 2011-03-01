@@ -33,6 +33,13 @@ $messages['es'] = array(
 	'wikiagameguides-desc' => 'Guías de Juego de Wikia para módulos de aplicaciones móviles',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'wikiagameguides-desc' => 'Wikia Game Guides mugikorrerako app modukuak',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -72,6 +79,13 @@ $messages['no'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
+	'wikiagameguides-desc' => 'Módulos de aplicações móveis dos Guias de Jogos da Wikia',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
 	'wikiagameguides-desc' => 'Módulos de aplicações móveis dos Guias de Jogos da Wikia',
 );
 

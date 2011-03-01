@@ -523,9 +523,9 @@ $messages['de'] = array(
 	'autocreatewiki-bad-name' => 'Der Name darf keine Sonderzeichen (wie $ oder @) enthalten und muss ein einzelnes Wort in Kleinbuchstaben ohne Leerzeichen sein.',
 	'autocreatewiki-invalid-wikiname' => 'Der Name darf keine Sonderzeichen (wie $ oder @) enthalten und darf nicht leer sein',
 	'autocreatewiki-violate-policy' => 'Im Wiki-Namen ist ein Wort enthalten, dass unseren Namens-Regeln nicht entspricht',
-	'autocreatewiki-name-taken' => 'Ein Wiki mit diesem Namen existiert bereits. Du bist herzlich eingeladen, dich unter <a href="http://$1.wikia.com">http://$1.wikia.com</a> zu beteiligen',
-	'autocreatewiki-name-too-short' => 'Dieser Name ist zu kurz, bitte wähle einen mit mindestens 3 Buchstaben.',
-	'autocreatewiki-name-too-long' => 'Dieser Name ist zu lang. Bitte wähle einen Namen mit maximal 50 Zeichen.',
+	'autocreatewiki-name-taken' => 'Es gibt bereits ein Wiki mit dieser Adresse. Beteilige dich unter <a href="http://$1.wikia.com">http://$1.wikia.com</a> oder wähle eine andere Adresse.',
+	'autocreatewiki-name-too-short' => 'Diese Adresse ist zu kurz, bitte wähle eine Adresse mit mindestens 3 Buchstaben.',
+	'autocreatewiki-name-too-long' => 'Diese Adresse ist zu lang. Bitte wähle eine Adresse mit maximal 50 Zeichen.',
 	'autocreatewiki-similar-wikis' => 'Unten sind die Wikis zu diesem Thema, die bereits erstellt wurden. Wir schlagen vor, dass du dich dort beteiligst.',
 	'autocreatewiki-invalid-username' => 'Dieser Benutzername ist ungültig.',
 	'autocreatewiki-busy-username' => 'Dieser Benutzername existiert bereits.',
@@ -904,6 +904,23 @@ Esto es un nuevo proyecto de wiki, así que por favor, ¡escríbenos si tienes c
 	'autocreatewiki-subname-answers' => 'Respuestas',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'autocreatewiki' => 'Wiki berria sortu',
+	'autocreatewiki-category-select' => 'Bat aukeratu',
+	'autocreatewiki-language-all' => 'Hizkuntza guztiak',
+	'autocreatewiki-birthdate' => 'Jaiotza data:',
+	'autocreatewiki-remember' => 'Gogora nazazu',
+	'autocreatewiki-create-account' => 'Kontua sortu',
+	'autocreatewiki-done' => 'egina',
+	'autocreatewiki-error' => 'errorea',
+	'autocreatewiki-category-label' => 'Kategoria:',
+	'autocreatewiki-congratulation' => 'Zorionak!',
+	'autocreatewiki-subname-answers' => 'Erantzunak',
+);
+
 /** Persian (فارسی)
  * @author Huji
  */
@@ -979,6 +996,7 @@ $3
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
@@ -995,9 +1013,12 @@ $messages['fi'] = array(
 	'autocreatewiki-done' => 'tehty',
 	'autocreatewiki-error' => 'virhe',
 	'autocreatewiki-haveaccount-question' => 'Onko sinulla jo Wikia-tili?',
+	'autocreatewiki-info-category-default' => 'Tämä auttaisi löytämään wikisi.',
 	'autocreatewiki-info-terms-agree' => 'Luomalla wikin ja käyttäjätunnuksen hyväksyt <a href="http://www.wikia.com/wiki/Terms_of_use">Wikian käyttösäännöt</a>.',
+	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-invalid-wikiname' => 'Nimi ei voi sisältää erikoismerkkejä (kuten $ tai @) ja se ei voi olla tyhjä',
-	'autocreatewiki-name-too-long' => 'Tämä nimi on liian pitkä. Valitse nimi, jossa on enintään 50 merkkiä.',
+	'autocreatewiki-name-too-short' => 'Tämä nimi on liian lyhyt, valitse nimi jossa on vähintään 3 merkkiä.',
+	'autocreatewiki-name-too-long' => 'Tämä osoite on liian pitkä. Valitse osoite, jossa on enintään 50 merkkiä.',
 	'autocreatewiki-invalid-username' => 'Tämä käyttäjätunnus on virheellinen.',
 	'autocreatewiki-busy-username' => 'Tämä käyttäjätunnus on jo varattu.',
 	'autocreatewiki-empty-category' => 'Valitse yksi luokista.',
@@ -1028,6 +1049,7 @@ $messages['fi'] = array(
  * @author Jean-Frédéric
  * @author McDutchie
  * @author Peter17
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'autocreatewiki' => 'Créer un nouveau Wiki',
@@ -1072,9 +1094,9 @@ $messages['fr'] = array(
 	'autocreatewiki-bad-name' => 'Le nom ne doit pas contenir de caractères spéciaux (comme $ et @) et doit être un simple mot en minuscules sans espaces.',
 	'autocreatewiki-invalid-wikiname' => 'Le nom ne doit pas contenir de caractères spéciaux (comme $ et @) et ne peut pas être vide',
 	'autocreatewiki-violate-policy' => 'Ce wiki contient un nom qui viole notre politique de nommage',
-	'autocreatewiki-name-taken' => 'Un wiki avec le même nom existe déjà. Vous êtes encouragé à le rejoindre sur <a href="http://$1.wikia.com">http://$1.wikia.com</a>',
-	'autocreatewiki-name-too-short' => 'Le nom est trop court, il doit contenir au moins 3 caractères.',
-	'autocreatewiki-name-too-long' => 'Le nom est trop long, il doit contenir au plus 50 caractères.',
+	'autocreatewiki-name-taken' => 'Il y a déjà un wiki à cette adresse. Participez sur <a href="http://$1.wikia.com">http://$1.wikia.com</a> ou choisissez une autre adresse.',
+	'autocreatewiki-name-too-short' => 'L’adresse est trop courte, choisissez une adresse avec au moins 3 caractères.',
+	'autocreatewiki-name-too-long' => 'L’adresse est trop longue, choisissez une adresse avec au maximum 50 caractères.',
 	'autocreatewiki-similar-wikis' => "Une liste des wikis créés sur le même sujet est affichée ci-dessous. Nous vous suggérons d'aller sur un de ceux-là.",
 	'autocreatewiki-invalid-username' => "Le nom d'utilisateur est invalide.",
 	'autocreatewiki-busy-username' => "Le nom d'utilisateur est déjà pris.",
@@ -1434,9 +1456,9 @@ $messages['ia'] = array(
 	'autocreatewiki-bad-name' => 'Le nomine non pote continer characteres special (como $ o @) e debe esser un sol parola in minusculas e sin spatios.',
 	'autocreatewiki-invalid-wikiname' => 'Le nomine non pote continer characteres special (como $ o @) e non pote esser vacue.',
 	'autocreatewiki-violate-policy' => 'Iste nomine de wiki contine un parola que viola nostre politica de nomines.',
-	'autocreatewiki-name-taken' => 'Un wiki con iste nomine ja existe. Tu es benvenite a participar in illo a <a href="http://$1.wikia.com">http://$1.wikia.com</a>.',
-	'autocreatewiki-name-too-short' => 'Iste nomine es troppo curte. Per favor entra un nomine con al minus 3 characteres.',
-	'autocreatewiki-name-too-long' => 'Iste nomine es troppo longe. Per favor entra un nomine con al plus 50 characteres.',
+	'autocreatewiki-name-taken' => 'Un wiki con iste adresse ja existe. Participa in illo a <a href="http://$1.wikia.com">http://$1.wikia.com</a> o selige un altere adresse.',
+	'autocreatewiki-name-too-short' => 'Iste adresse es troppo curte. Selige un adresse con al minus 3 characteres.',
+	'autocreatewiki-name-too-long' => 'Iste addresse es troppo longe. Per favor selige un addresse con al plus 50 characteres.',
 	'autocreatewiki-similar-wikis' => 'Ecce le wikis ja existente super iste thema. Nos suggere participar in un de illos.',
 	'autocreatewiki-invalid-username' => 'Iste nomine de usator es invalide.',
 	'autocreatewiki-busy-username' => 'Iste nomine de usator es ja in uso.',
@@ -1960,9 +1982,9 @@ $messages['mk'] = array(
 	'autocreatewiki-bad-name' => 'Името не може да содржи специјални знаци (како $ или @) и мора да еден збор составен од мали букви, без празни места помеѓу нив.',
 	'autocreatewiki-invalid-wikiname' => 'Името не може да содржи специјални знаци (како $ или @) и не може да стои празно',
 	'autocreatewiki-violate-policy' => 'Името на ова вики содржи збор што ги прекршува нашите правила за именување',
-	'autocreatewiki-name-taken' => 'Веќе постои вики со тоа име. Добредојдени сте да ни се придружите на <a href="http://$1.wikia.com">http://$1.wikia.com</a>',
-	'autocreatewiki-name-too-short' => 'Името е прекратко. Одберете име со барем 3 знаци.',
-	'autocreatewiki-name-too-long' => 'Името е предолго. Одберете име со највеќе 50 знаци.',
+	'autocreatewiki-name-taken' => 'Веќе постои вики со тоа име. Почнете да уредувате на <a href="http://$1.wikia.com">http://$1.wikia.com</a> или пак одберете друга адреса.',
+	'autocreatewiki-name-too-short' => 'Адресата е прекратка. Одберете адреса со барем 3 знаци.',
+	'autocreatewiki-name-too-long' => 'Адресата е предолга. Одберете адреса со највеќе 50 знаци.',
 	'autocreatewiki-similar-wikis' => 'Подолу се наведени веќе создадените викија на оваа тема. Ви предлагаме да уредувате некое од нив.',
 	'autocreatewiki-invalid-username' => 'Ова корисничко име е неважечко.',
 	'autocreatewiki-busy-username' => 'Ова корисничко име е веќе зафатено.',
@@ -2264,9 +2286,9 @@ $messages['no'] = array(
 	'autocreatewiki-bad-name' => 'Navnet kan ikke innholde spesialtegn (som $ eller @) og må være kun ett ord skrevet med små bokstaver uten mellomrom.',
 	'autocreatewiki-invalid-wikiname' => 'Navnet kan ikke inneholder spesialtegn (som $ eller @) og kan ikke være tomt',
 	'autocreatewiki-violate-policy' => 'Dette wikinavnet inneholder et ord som bryter med våre retningslinjer for navngivning',
-	'autocreatewiki-name-taken' => 'En wiki med dette navnet finnes allerede. Du er velkommen til å bli med oss på <a href="http://$1.wikia.com">http://$1.wikia.com</a>',
-	'autocreatewiki-name-too-short' => 'Dette navnet er for kort, vennligst velg et navn med minst 3 tegn.',
-	'autocreatewiki-name-too-long' => 'Dette navnet er for langt, vennligst velg et navn med maks 50 tegn.',
+	'autocreatewiki-name-taken' => 'Det er allerede en wiki med denne adressen. Begynn å redigere på <a href="http://$1.wikia.com">http://$1.wikia.com</a> eller velg en annen adresse.',
+	'autocreatewiki-name-too-short' => 'Denne adressen er for kort, velg en adresse med minst 3 tegn.',
+	'autocreatewiki-name-too-long' => 'Denne adressen er for lang. Vennligst velg en adresse med maksimalt 50 tegn.',
 	'autocreatewiki-similar-wikis' => 'Nedenfor er wikiene som allerede er opprettet om temaet. Vi foreslår å redigere en av dem.',
 	'autocreatewiki-invalid-username' => 'Brukernavnet er ugyldig.',
 	'autocreatewiki-busy-username' => 'Brukernavnet er allerede tatt.',
@@ -2845,6 +2867,7 @@ Este é um projecto acabado de estrear, por isso contacte-nos se tiver qualquer 
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Giro720
  * @author Jesielt
  * @author Luckas Blade
@@ -2891,7 +2914,7 @@ $messages['pt-br'] = array(
 	'autocreatewiki-bad-name' => 'O nome não pode conter caracteres especiais (como $ ou @) nem espaços e precisa estar todo em minúsculo.',
 	'autocreatewiki-invalid-wikiname' => 'O nome não pode conter caracteres especiais (como $ ou @) e não pode estar vazio.',
 	'autocreatewiki-violate-policy' => 'Esse nome de wiki contém uma palavra que viola as nossas políticas de nomeação.',
-	'autocreatewiki-name-taken' => 'Já existe uma wiki com esse nome. Você é bem-vindo a partipar dela em <a href="http://$1.wikia.com">http://$1.wikia.com</a> .',
+	'autocreatewiki-name-taken' => 'Já existe uma wiki com esse nome. Você é bem-vindo a partipar dela em <ahref="http://$1.wikia.com">http://$1.wikia.com</a> ou escolher outro endereço.',
 	'autocreatewiki-name-too-short' => 'Esse nome é muito curto, por favor escolha um nome com no mímino 3 caracteres.',
 	'autocreatewiki-name-too-long' => 'Esse nome é muito longo, por favor escolha um nome com no máximo 50 caracteres.',
 	'autocreatewiki-similar-wikis' => 'Abaixo estão as wikis já criadas nesse tópico. Nós sugerimos que você edite uma delas.',
@@ -3521,8 +3544,8 @@ $messages['uk'] = array(
 	'autocreatewiki-info-topic' => 'Додайте короткий опис, наприклад, "Зоряні війни" або "ТВ-шоу".',
 	'autocreatewiki-info-category-default' => 'Це допоможе відвідувачам знайти вашу вікі.',
 	'autocreatewiki-empty-field' => 'Будь ласка, заповніть це поле.',
-	'autocreatewiki-name-too-short' => 'Ця назва занадто коротка. Будь ласка, виберіть назву з щонайменше 3 символів.',
-	'autocreatewiki-name-too-long' => 'Ця назва занадто довга. Будь ласка, виберіть назву з максимум 50 символів.',
+	'autocreatewiki-name-too-short' => 'Ця адреса занадто коротка. Будь ласка, виберіть адресу з щонайменше 3 символів.',
+	'autocreatewiki-name-too-long' => 'Ця адреса занадто довга. Будь ласка, виберіть адресу з максимум 50 символів.',
 	'autocreatewiki-busy-username' => "Це ім'я користувача вже зайнято.",
 	'autocreatewiki-blocked-username' => 'Ви не можете створити обліковий запис.',
 	'autocreatewiki-empty-language' => 'Будь ласка, виберіть мову для вікі.',
@@ -3588,6 +3611,57 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-success-subtitle' => '您可以开始在您的新维基开工。请点击：',
 	'autocreatewiki-success-has-been-created' => '已创建！',
 	'autocreatewiki-success-get-started' => '开始',
+	'autocreatewiki-info-domain' => '最好使用一个词可能是你的主题的搜索关键字。',
+	'autocreatewiki-info-topic' => '添加一个短的描述，如"星球大战"或"的电视节目。',
+	'autocreatewiki-info-category-default' => '这将有助于找到你的维基访客。',
+	'autocreatewiki-info-category-answers' => '这将有助于找到您的答案的网站的访问者。',
+	'autocreatewiki-info-language' => '这将是你的维基访客的默认语言。',
+	'autocreatewiki-info-realname' => '如果提供这将用于为您提供了归因你的工作。',
+	'autocreatewiki-invalid-username' => '此用户名无效。',
+	'autocreatewiki-busy-username' => '已采取此用户名。',
+	'autocreatewiki-blocked-username' => '您不能创建帐户。',
+	'autocreatewiki-user-notloggedin' => '您的帐户已创建，但未登录 ！',
+	'autocreatewiki-empty-language' => '请选择维基语言。',
+	'autocreatewiki-empty-category' => '请选择一个类别。',
+	'autocreatewiki-empty-wikiname' => '维基的名称不能为空。',
+	'autocreatewiki-empty-username' => '用户名不能为空。',
+	'autocreatewiki-empty-password' => '密码不能为空。',
+	'autocreatewiki-empty-retype-password' => '重新键入密码不能为空。',
+	'autocreatewiki-category-label' => '类别：',
+	'autocreatewiki-category-other' => '其他',
+	'autocreatewiki-invalid-category' => '类别的值无效。
+请从下拉列表中适当的选择。',
+	'autocreatewiki-invalid-language' => '语言的值无效。
+请从下拉列表中适当的选择。',
+	'autocreatewiki-invalid-retype-passwd' => '请重新输入上面相同的密码',
+	'autocreatewiki-invalid-birthday' => '无效的出生日期',
+	'autocreatewiki-limit-birthday' => '无法创建注册。',
+	'autocreatewiki-log-title' => '您维基已被创建了',
+	'autocreatewiki-step0' => '正在初始化过程...',
+	'autocreatewiki-stepdefault' => '进程正在运行，请稍候...',
+	'autocreatewiki-errordefault' => '过程还没结束 …',
+	'autocreatewiki-step1' => '正在创建的图像文件夹...',
+	'autocreatewiki-step2' => '创建数据库...',
+	'autocreatewiki-step3' => '在数据库中设置的默认信息...',
+	'autocreatewiki-step4' => '正在复制的徽标和默认图像...',
+	'autocreatewiki-step5' => '在数据库中设置默认变量...',
+	'autocreatewiki-step6' => '在数据库中设置默认表...',
+	'autocreatewiki-step7' => '设置语言起动器...',
+	'autocreatewiki-step8' => '设置用户群体和类别...',
+	'autocreatewiki-step9' => '新的维基的设置变量...',
+	'autocreatewiki-step10' => '中央维基上设置页...',
+	'autocreatewiki-step11' => '将电子邮件发送到用户...',
+	'autocreatewiki-redirect' => '将重定向到新的维基： $1...',
+	'autocreatewiki-congratulation' => '恭喜！',
+	'autocreatewiki-welcometalk-log' => '欢迎留言',
+	'autocreatewiki-step2-error' => '数据库存在！',
+	'autocreatewiki-step3-error' => '不能在数据库中设置的默认信息！',
+	'autocreatewiki-step6-error' => '不能在数据库中设置默认表！',
+	'autocreatewiki-step7-error' => '不能将复制起动器数据库语言！',
+	'autocreatewiki-protect-reason' => '官方界面的一部分',
+	'autocreatewiki-welcomesubject' => '$1 已创建！',
+	'newwikis' => '新的维基',
+	'autocreatewiki-subname-answers' => '答案网站',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬) */

@@ -214,6 +214,7 @@ Bitte überprüfe den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
 	'lookupcontribscontribslink' => 'Link zu Beiträgen',
 	'lookupcontribsdetails' => 'Weitere Details für:',
 	'lookupcontribslastedited' => 'Zuletzt bearbeitet',
+	'lookupcontribsrecordspager' => "Zeige '''$1''' bis '''$2''' von '''$3''' Einträgen.",
 	'lookupcontribscontribs' => 'Beiträge',
 	'lookupcontribsnbrresult' => 'Anzahl der Ergebnisse:',
 	'lookupcontribsnext' => 'Nächste',
@@ -227,6 +228,8 @@ Bitte überprüfe den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
 	'lookupcontribsshowpages' => 'Alle Seiten ($1 Namensräume)',
 	'lookupcontribscontent' => 'Inhalt',
 	'lookupcontribscontribtitleforuser' => 'Bearbeitungen für Benutzer:',
+	'lookupcontribsnormal' => 'kürzlich',
+	'lookupcontribsfinal' => 'letzte',
 	'lookupcontribsall' => 'alle',
 );
 
@@ -293,6 +296,14 @@ $messages['es'] = array(
 	'lookupcontribsnormal' => 'reciente',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'todo',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Izenburua',
 );
 
 /** Finnish (Suomi)

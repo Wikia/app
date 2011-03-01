@@ -142,11 +142,13 @@ $messages['es'] = array(
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author Tofu II
  */
 $messages['fi'] = array(
 	'tagsreportgo' => 'Näytä',
 	'tagsreportnotspecify' => 'Et ole vielä valinnut mitään erityismerkintää',
 	'tagsreportnoresults' => 'Tuloksia ei löytynyt',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|sivu|sivut}})',
 );
 
 /** French (Français)
@@ -388,6 +390,7 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Giro720
  * @author Luckas Blade
  */
@@ -400,8 +403,8 @@ $messages['pt-br'] = array(
 	'tagsreportnoresults' => 'Nenhum resultado encontrado',
 	'tagsreportmainnspace' => 'Principal',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
-	'tagsreportpagesfound' => 'Foram encontradas <strong>$1</strong> páginas que contêm uma etiqueta especial (dpl, youtube, etc)',
-	'tagsreportgenerated' => 'Gerado em $1 $2',
+	'tagsreportpagesfound' => '{{PLURAL:$1|Foi encontrada <strong>$1</strong> página que contém|Foram encontradas <strong>$1</strong> páginas que contêm}} um elemento especial (DPL, YouTube, etc.)',
+	'tagsreportgenerated' => 'Gerado a $1 às $2',
 );
 
 /** Russian (Русский)

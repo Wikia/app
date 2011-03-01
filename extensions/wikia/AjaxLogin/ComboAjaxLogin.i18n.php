@@ -152,6 +152,11 @@ $messages['de'] = array(
 Sobald du fertig bist, kannst du dich einfach über einen Facebook-Button einloggen.',
 	'comboajaxlogin-post-not-understood' => 'Es gab einen Fehler beim Aufbau dieses Formulars.
 Bitte versuche es erneut oder [[Special:Contact|melde es]].',
+	'comboajaxlogin-readonlytext' => '<h2>Sorry!</h2>
+<p>Du kannst momentan kein Benutzerkonto erstellen - wir sollten in Kürze wieder erreichbar sein. Sieh nach was los ist:<br /><em>$1</em></p>
+<p>Bitte schau bei <a href="http://twitter.com/wikia">Twitter</a> oder <a href="http://facebook.com/wikia">Facebook</a> für weitere Informationen. 
+<br />
+ (Wenn du bereits ein Benutzerkonto hast, kannst du dich <a href="#">einloggen</a> wie sonst auch, wirst aber nichts bearbeiten können.)</p>',
 );
 
 /** Spanish (Español)

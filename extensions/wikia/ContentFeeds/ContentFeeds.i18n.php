@@ -74,9 +74,17 @@ $messages['cy'] = array(
 
 /** German (Deutsch)
  * @author George Animal
+ * @author LWChris
  */
 $messages['de'] = array(
+	'contentfeeds-desc' => 'Bietet reichhaltige und aktuelle Informationen über verschiedene Tags oder "Feeds"',
+	'contentfeeds-newimages-rss-title' => 'RSS-Feed für {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Feed von $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Erstelle deine ersten Seiten!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Titel',
+	'contentfeeds-firstfewarticles-tag-next' => 'Nächste',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Fehler: Seitentitel ist erforderlich',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fehler: Seiteninhalt ist erforderlich',
 );
 
 /** Spanish (Español) */
@@ -89,6 +97,14 @@ $messages['es'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Siguiente',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Error: Se requiere el título de la página',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: Se requiere el cuerpo de la página',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Izenburua',
+	'contentfeeds-firstfewarticles-tag-next' => 'Hurrengoa',
 );
 
 /** French (Français) */
@@ -194,6 +210,20 @@ $messages['pt'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Seguinte',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Erro: O título da página é necessário',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Erro: O corpo da página é necessário',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'contentfeeds-desc' => 'Fornece informação atualizada através de vários elementos ou "feeds"',
+	'contentfeeds-newimages-rss-title' => 'Feed RSS para {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Feed de $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Crie as suas primeiras páginas!',
+	'contentfeeds-firstfewarticles-tag-title' => 'Título',
+	'contentfeeds-firstfewarticles-tag-next' => 'Proximo',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Erro: O título da página é necessário',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Erro: O conteúdo da página é necessário',
 );
 
 /** Russian (Русский) */

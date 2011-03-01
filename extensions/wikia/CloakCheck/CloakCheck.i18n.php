@@ -49,12 +49,14 @@ $messages['br'] = array(
 /** German (Deutsch)
  * @author Diebuche
  * @author George Animal
+ * @author LWChris
  */
 $messages['de'] = array(
 	'cloakcheck' => 'Prüfung der Anspruchsberechtigung auf einen IRC Cloak',
 	'cloakcheck-desc' => 'Stellt eine ganzheitliche Schnittstelle zur Verfügung, die der Prüfung der Voraussetzungen für einen IRC Cloak dient',
 	'cloakcheck-form-username' => 'Benutzername:',
 	'cloakcheck-form-check' => 'Benutzernamen überprüfen',
+	'cloakcheck-form-check-self' => 'IRC-Mantel-Berechtigung überprüfen',
 	'cloakcheck-process-empty' => 'Bitte einen Benutzernamen angeben.',
 	'cloakcheck-process-notexist' => 'Benutzername existiert nicht.',
 	'cloakcheck-process-username' => 'Benutzername:$1',
@@ -63,6 +65,7 @@ $messages['de'] = array(
 	'cloakcheck-process-emailconf-yes' => 'E-Mail-Adresse bestätigt.',
 	'cloakcheck-process-emailconf-no' => 'E-Mail-Adresse nicht bestätigt.',
 	'cloakcheck-process-edits-yes' => 'Benutzer hat genug Bearbeitungen.',
+	'cloakcheck-process-edits-no' => 'Benutzer hat nicht genügend Bearbeitungen.',
 );
 
 /** Spanish (Español)
@@ -84,6 +87,13 @@ $messages['es'] = array(
 	'cloakcheck-process-emailconf-no' => 'Dirección de correo electrónico no confirmada.',
 	'cloakcheck-process-edits-yes' => 'El usuario tiene suficiente ediciones.',
 	'cloakcheck-process-edits-no' => 'El usuario no tiene suficiente ediciones.',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'cloakcheck-form-username' => 'Erabiltzaile izena',
 );
 
 /** Finnish (Suomi)
@@ -313,6 +323,26 @@ $messages['pt'] = array(
 	'cloakcheck-process-accountage-no' => 'A conta é demasiado recente.',
 	'cloakcheck-process-emailconf-yes' => 'Endereço e-mail confirmado.',
 	'cloakcheck-process-emailconf-no' => 'Endereço e-mail não confirmado.',
+	'cloakcheck-process-edits-yes' => 'O utilizador tem edições suficientes.',
+	'cloakcheck-process-edits-no' => 'O utilizador não tem edições suficientes.',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'cloakcheck' => 'Verificação de eligibilidade para um cloak IRC',
+	'cloakcheck-desc' => 'Fornece uma interface única para verificação dos requisitos de um cloak IRC',
+	'cloakcheck-form-username' => 'Nome de usuário:',
+	'cloakcheck-form-check' => 'Verificar nome de usuário',
+	'cloakcheck-form-check-self' => 'Verificar a eligibilidade para um cloak IRC',
+	'cloakcheck-process-empty' => 'O nome do usuário não pode estar vazio.',
+	'cloakcheck-process-notexist' => 'O nome de usuário não existe.',
+	'cloakcheck-process-username' => 'Nome de usuário: $1',
+	'cloakcheck-process-accountage-yes' => 'A conta é suficientemente antiga.',
+	'cloakcheck-process-accountage-no' => 'A conta é recente.',
+	'cloakcheck-process-emailconf-yes' => 'Endereço de e-mail confirmado.',
+	'cloakcheck-process-emailconf-no' => 'Endereço de e-mail não confirmado.',
 	'cloakcheck-process-edits-yes' => 'O utilizador tem edições suficientes.',
 	'cloakcheck-process-edits-no' => 'O utilizador não tem edições suficientes.',
 );

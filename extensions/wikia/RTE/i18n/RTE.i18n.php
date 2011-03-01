@@ -426,6 +426,7 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Daemorris
  * @author Giro720
  */
@@ -447,6 +448,7 @@ $messages['pt-br'] = array(
 	'enablerichtexteditor' => 'Ativar Editor de Texto Rico',
 	'rte-enablerichtexteditormessage' => 'O Editor de Texto Enriquecido foi ativado!',
 	'rte-first-run-notice' => 'Fizemos algumas melhorias no editor. Para saber mais, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news leia o anúncio].',
+	'prefs-rte' => 'Editor de Texto Enriquecido',
 );
 
 /** Russian (Русский)

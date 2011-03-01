@@ -184,6 +184,7 @@ Hi, Willkommen bei {{SITENAME}}! Danke für deine Bearbeitung der Seite „[[:$1
 
 Wenn du Hilfe brauchst, und kein Admin von hier in der Nähe ist, möchtest du vielleicht die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|Hilfe]] | [[w:sblog|Blog]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -945,6 +946,7 @@ Se necessita de ajuda e não encontra administradores locais, talvez queira visi
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Daemorris
  * @author Giro720
  * @author Jesielt
@@ -987,6 +989,7 @@ Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]
 
 Se você necessita de ajuda e não encontra administradores locais, talvez queira visitar os [[wikia:Forum:Community Central Forum|fóruns na Wiki Community Central]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|fórum de ajuda]] | [[w:sblog|blogue]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 /** Russian (Русский)
@@ -1040,11 +1043,11 @@ $messages['ru'] = array(
 $messages['sr-ec'] = array(
 	'welcome-user-page' => "== О мени ==
 
-''Ово је ваша корисничка страница. Помените је да бисте рекли нешто о себи!''
+''Ово је ваша корисничка страница. Измените је да бисте рекли нешто о себи!''
 
-== Доприноси ==
+== Прилози ==
 
-* [[Special:Contributions/{{PAGENAME}}|Доприноси корисника]]
+* [[Special:Contributions/{{PAGENAME}}|Прилози корисника]]
 
 == Омиљене странице ==
 
