@@ -346,7 +346,7 @@ class CreateWiki {
 		 * add local job
 		 */
 		$job_params = new stdClass();
-		foreach ( $params as $id => $value ) {
+		foreach ( $this->mNewWiki as $id => $value ) {
 			if ( !is_object($value) ) {
 				$job_params->$id = $value;
 			}
