@@ -248,7 +248,7 @@ $wgAutoloadClasses["WikiaValidatorsAnd"] = "includes/wikia/validators/WikiaValid
 
 $wgAutoloadClasses["WikiaValidatorListBase"] = "includes/wikia/validators/WikiaValidatorListBase.class.php";
 $wgAutoloadClasses["WikiaValidatorListValue"] = "includes/wikia/validators/WikiaValidatorListValue.class.php";
-$wgAutoloadClasses["WikiaValidatorListUnique"] = "includes/wikia/validators/WikiaValidatorListUnique.class.php";
+//$wgAutoloadClasses["WikiaValidatorListUnique"] = "includes/wikia/validators/WikiaValidatorListUnique.class.php";
 
 $wgAutoloadClasses["WikiaValidatorCompare"] = "includes/wikia/validators/WikiaValidatorCompare.class.php";
 $wgAutoloadClasses["WikiaValidatorCompareValueIF"] = "includes/wikia/validators/WikiaValidatorCompareValueIF.class.php";
