@@ -1,4 +1,5 @@
 /*
+@test-framework jsUnity
 @test-require-module rte-test
 */
 var test = {
@@ -12,5 +13,4 @@ var test = {
 		this.assertNotUndefined(window.CKEDITOR);
 	}
 }
-window.jtr_framework = "jsUnity";
 window.jtr_testsuite = test;
