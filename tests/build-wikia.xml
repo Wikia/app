@@ -24,7 +24,12 @@
 
     <property name="noCloseAfterFail" value="0" />
 
-    <target name="phpunit">
+    <target name="setup">
+        <copy file="${basedir}/phpunit.xml.dist" tofile="${basedir}/phpunit.xml" />
+        <copy file="${basedir}/config.xml.dist" tofile="${basedir}/config.xml" />
+    </target>
+
+    <target name="phpunit" depends="setup">
         <exec executable="php" dir="${basedir}" failonerror="true">
             <env key="SERVER_ID" value="177" />
             <arg line="run-test.php
@@ -34,7 +39,7 @@
         </exec>
     </target>
 
-    <target name="phpunit-single">
+    <target name="phpunit-single" depends="setup">
         <exec executable="php" dir="${basedir}" failonerror="true">
             <env key="SERVER_ID" value="177" />
             <arg line="run-test.php
@@ -45,7 +50,7 @@
         </exec>
     </target>
 
-    <target name="phpunit-coverage">
+    <target name="phpunit-coverage" depends="setup">
         <exec executable="php" dir="${basedir}" failonerror="true">
             <env key="SERVER_ID" value="177" />
             <arg line="run-test.php
@@ -56,7 +61,7 @@
         </exec>
     </target>
 
-    <target name="phpunit-single-coverage">
+    <target name="phpunit-single-coverage" depends="setup">
         <exec executable="php" dir="${basedir}" failonerror="true">
             <env key="SERVER_ID" value="177" />
             <arg line="run-test.php
