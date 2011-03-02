@@ -68,6 +68,8 @@ class SpecialEditTopList extends SpecialPage {
 		$listName = $title->getText();
 		$listUrl = $title->getFullURL();
 		$listItems = $list->getItems();
+		$userCanEditItems = $list->checkUserItemsRight( 'edit' );
+		$userCanDeleteItems = $list->checkUserItemsRight( 'delete' );
 
 		if ( $wgRequest->wasPosted() ) {
 			TopListHelper::clearSessionItemsErrors();
@@ -75,7 +77,7 @@ class SpecialEditTopList extends SpecialPage {
 			$relatedArticleName = $wgRequest->getText( 'related_article_name' );
 			$selectedPictureName = $wgRequest->getText( 'selected_picture_name' );
 			$itemsNames = $wgRequest->getArray( 'items_names', array() );
-			$removedItems = $wgRequest->getArray( 'removed_items', array() );
+			$removedItems = ( $userCanDeleteItems ) ? $wgRequest->getArray( 'removed_items', array() ) : array();
 
 			//handle related article
 			$title = $list->getRelatedArticle();
@@ -165,7 +167,10 @@ class SpecialEditTopList extends SpecialPage {
 
 					if ( empty( $itemsNames[ $counter ] ) ) {
 						$errors[ 'item_' . ( $counter + 1 ) ][] = wfMsg( 'toplists-error-empty-item-name' );
-					} elseif ( $listItems[ $index ]->getArticle()->getContent() != $itemsNames[ $counter ] ) {
+					} elseif (
+						$userCanEditItems &&
+						$listItems[ $index ]->getArticle()->getContent() != $itemsNames[ $counter ]
+					) {
 						$listItems[ $index ]->setNewContent( $itemsNames[ $counter ] );
 						$items[ $counter ][ 'object' ] = $listItems[ $index ];
 						$items[ $counter ][ 'changed' ] = true;
@@ -362,7 +367,9 @@ class SpecialEditTopList extends SpecialPage {
 				) ),
 				$items
 			),
-			'removedItems' => $removedItems
+			'removedItems' => $removedItems,
+			'userCanEditItems' => $userCanEditItems,
+			'userCanDeleteItems' => $userCanDeleteItems
 		) );
 
 		// render template

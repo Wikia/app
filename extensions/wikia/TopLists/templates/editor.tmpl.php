@@ -63,7 +63,7 @@
 
 	<ul class="ItemsList">
 		<? foreach( $items as $position => $item ): ?>
-			<? $isDraggable = ( in_array( $item['type'], array( 'new', 'template' ) ) ) ;?>
+			<?$isDraggable = $isDeletable = $isEditable = ( in_array( $item['type'], array( 'new', 'template' ) ) ) ;?>
 			<li class="ListItem<?= ( $isDraggable )  ? ' NewItem' : null ;?><?= ( $item['type'] == 'template' ) ? ' ItemTemplate' : null ;?>">
 				<? if ( $item['type'] == 'existing' && isset( $item['index'] ) ) :?>
 					<input type="hidden" value="<?= $item['index'] ;?>" />
@@ -72,18 +72,26 @@
 				<div class="ItemNumber">#<?= ( $item['type'] != 'template' ) ? $position : null ;?></div>
 
 				<div class="ItemName">
-					<input type="text" name="items_names[]" value="<?= htmlspecialchars($item['value']) ;?>"
-						<?= ( $item['type'] == 'template' ) ? ' disabled' : null ;?>
-						<?= ( !empty( $errors[ "item_{$position}" ] ) ) ? ' class="error"' : null ;?> />
+					<? if ( $userCanEditItems || $isEditable ) :?>
+						<input type="text" name="items_names[]" value="<?= htmlspecialchars($item['value']) ;?>"
+							<?= ( $item['type'] == 'template' ) ? ' disabled' : null ;?>
+							<?= ( !empty( $errors[ "item_{$position}" ] ) ) ? ' class="error"' : null ;?> />
+					<? else :?>
+						<div class="InputDisabled"><?= htmlspecialchars($item['value']) ;?></div>
+						<input type="hidden" name="items_names[]" value="<?= htmlspecialchars($item['value']) ;?>" />
+					<? endif ;?>
+					
 				</div>
-
-				<div class="ItemRemove">
-					<a title="<?= wfMsg( 'toplists-editor-remove-item-tooltip' ) ;?>" rel="nofollow">
-						<img class="sprite remove"
-						     alt="<?= wfMsg( 'toplists-editor-remove-item-tooltip' ) ;?>"
-						     src="<?= wfBlankImgUrl() ;?>" />
-					</a>
-				</div>
+				
+				<? if ( $userCanDeleteItems || $isDeletable ) :?>
+					<div class="ItemRemove">
+						<a title="<?= wfMsg( 'toplists-editor-remove-item-tooltip' ) ;?>" rel="nofollow">
+							<img class="sprite remove"
+							     alt="<?= wfMsg( 'toplists-editor-remove-item-tooltip' ) ;?>"
+							     src="<?= wfBlankImgUrl() ;?>" />
+						</a>
+					</div>
+				<? endif ;?>
 
 				<? if ( $isDraggable ) :?>
 					<div class="ItemDrag">
