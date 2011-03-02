@@ -89,12 +89,12 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 
 	public function savingFeedbackDataProvider() {
 		return array(
-			array( 0, 1, 'Foo', false ), // invalid projectId
-			array( 1, 1, 'Bar', true ),
-			array( 0, 0, '', false ), // all wrong
-			array( 1, 2, 'Baz', true ),
-			array( 1, 10, 'FooFoo', false ), // rating > max
-			array( 1, 0, 'Foo', false ) // rating < min
+			array( 0, 1, 'AtLeast10CharLongMsg', false ), // invalid projectId
+			array( 1, 1, 'AtLeast10CharLongMsg', true ),
+			array( 0, 0, 'TooShort', false ), // all wrong
+			array( 1, 2, 'AtLeast10CharLongMsg', true ),
+			array( 1, 10, 'AtLeast10CharLongMsg', false ), // rating > max
+			array( 1, 0, 'AtLeast10CharLongMsg', false ) // rating < min
 		);
 	}
 
@@ -168,7 +168,7 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 		if( !$validationOk ) {
 			$validator->expects( $this->once() )
 			          ->method( 'getErrors' )
-			          ->will( $this->returnValue( array( array( 'err1' => 'foo' ) ) ) );
+			          ->will( $this->returnValue( array( array( 'err1' => new WikiaValidationError('foo', 'bar') ) ) ) );
 		}
 		else {
 			$project = $this->getMock( 'WikiaLabsProject', array(), array( $this->app ) );
