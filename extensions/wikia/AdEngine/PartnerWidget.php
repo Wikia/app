@@ -3,7 +3,10 @@
 $wgHooks["MakeGlobalVariablesScript"][] = "wfPartnerWidgetJSVars";
 
 function wfPartnerWidgetJSVars($vars) {
-	$vars['partnerKeywords'] = getPartnerWidgetKeywords();
+	global $wgEnablePartnerWidget;
+	if ($wgEnablePartnerWidget) {
+		$vars['partnerKeywords'] = getPartnerWidgetKeywords();
+	}
 
 	return true;
 }
