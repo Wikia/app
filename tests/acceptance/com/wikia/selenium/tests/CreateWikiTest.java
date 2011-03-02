@@ -59,7 +59,7 @@ public class CreateWikiTest extends BaseTest {
 		return al.iterator();
 	}
 
-	@Test(groups={"envProduction"},dataProvider="wikiLanguages")
+	@Test(groups={"envProduction","broken"},dataProvider="wikiLanguages")
 	public void testCreateWikiAsLoggedInUser(String language) throws Exception {
 		loginAsStaff();
 		session().open("");
@@ -111,7 +111,7 @@ public class CreateWikiTest extends BaseTest {
 		assertTrue(session().isTextPresent("consectetur adipiscing elit"));
 	}
 
-	@Test(groups={"envProduction"},dependsOnMethods={"testCreateWikiAsLoggedInUser"},alwaysRun=true)
+	@Test(groups={"envProduction","broken"},dependsOnMethods={"testCreateWikiAsLoggedInUser"},alwaysRun=true)
 	public void cleanupTestCreateWikiAsLoggedInUser() throws Exception {
 		loginAsStaff();
 
@@ -124,7 +124,7 @@ public class CreateWikiTest extends BaseTest {
 		wikiName = null;
 	}
 
-	@Test(groups={"envProduction"},dependsOnMethods={"cleanupTestCreateWikiAsLoggedInUser"})
+	@Test(groups={"envProduction","broken"},dependsOnMethods={"cleanupTestCreateWikiAsLoggedInUser"})
 	public void testCreateWikiAsLoggedOutUserLoginWhileCreating() throws Exception {
 		session().open("");
 		session().waitForPageToLoad(this.getTimeout());
@@ -153,7 +153,7 @@ public class CreateWikiTest extends BaseTest {
 		assertEquals("http://pl." + getWikiName() + ".wikia.com/wiki/Specjalna:WikiActivity", session().getLocation());
 	}
 
-	@Test(groups={"envProduction"},dependsOnMethods={"testCreateWikiAsLoggedOutUserLoginWhileCreating"},alwaysRun=true)
+	@Test(groups={"envProduction","broken"},dependsOnMethods={"testCreateWikiAsLoggedOutUserLoginWhileCreating"},alwaysRun=true)
 	public void cleanupTestCreateWikiAsLoggedOutUserLoginWhileCreating() throws Exception {
 		loginAsStaff();
 		deleteWiki("pl");
@@ -161,7 +161,7 @@ public class CreateWikiTest extends BaseTest {
 		wikiName = null;
 	}
 
-	@Test(groups={"envProduction"},dependsOnMethods={"cleanupTestCreateWikiAsLoggedOutUserLoginWhileCreating"})
+	@Test(groups={"envProduction","broken"},dependsOnMethods={"cleanupTestCreateWikiAsLoggedOutUserLoginWhileCreating"})
 	public void testCreateWikiAsLoggedOutUserRegisterWhileCreating() throws Exception {
 		session().open("");
 		session().waitForPageToLoad(this.getTimeout());
@@ -193,7 +193,7 @@ public class CreateWikiTest extends BaseTest {
 		assertEquals("http://pl." + getWikiName() + ".wikia.com/wiki/Specjalna:WikiActivity", session().getLocation());
 	}
 
-	@Test(groups={"envProduction"},dependsOnMethods={"testCreateWikiAsLoggedOutUserRegisterWhileCreating"},alwaysRun=true)
+	@Test(groups={"envProduction","broken"},dependsOnMethods={"testCreateWikiAsLoggedOutUserRegisterWhileCreating"},alwaysRun=true)
 	public void cleanupTestCreateWikiAsLoggedOutUserRegisterWhileCreating() throws Exception {
 		loginAsStaff();
 		deleteWiki("pl");
