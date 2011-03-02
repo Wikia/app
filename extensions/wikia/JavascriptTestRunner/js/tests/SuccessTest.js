@@ -1,3 +1,6 @@
+/*
+@test-framework jsUnity
+*/
 var test = {
 	suiteName: 'SuccessTest',
 	testOk: function () {
@@ -5,5 +8,4 @@ var test = {
 		this.assertTrue(true);
 	}
 }
-window.jtr_framework = "jsUnity";
 window.jtr_testsuite = test;

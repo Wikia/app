@@ -278,6 +278,65 @@
 	
 	
 	/**
+	 * QUnit framework adapter
+	 */
+	var QUnitFramework = function( runner ) {
+		this.testRunner = runner;
+	}
+	QUnitFramework.prototype.run = function() {
+		var args = Array.prototype.slice.call(arguments,0);
+		var self = this;
+		
+		this.result = new TestResult();
+		
+		/*
+		var oldLogger = jsUnity.logger;
+		jsUnity.logger = {log:function(){ self.log.apply(self,arguments);}};
+		jsUnity.run.apply(jsUnity,args);
+		jsUnity.logger = oldLogger;
+		*/
+		this.setupLogging();
+		window.start();
+		
+		//this.testRunner.end(this.result);
+	}
+	QUnitFramework.prototype.setupLogging = function() {
+		var self = this;
+		var messages = [], assertions = 0;
+		var result = this.result;
+		QUnit.begin = function() {};
+		QUnit.moduleStart = function(module) {
+		    $().log('moduleStart','QUnit');
+		    result.startSuite(module.name);
+		}
+		QUnit.moduleDone = function(module) {
+		    $().log('moduleDone','QUnit');
+		    result.stopSuite();
+		}
+		QUnit.testStart = function(test) {
+		    $().log('testStart','QUnit');
+		    result.startTest(test.name);
+		    messages = [];
+		    assertions = 0;
+		}
+		QUnit.log = function(assertion) {
+		    $().log('log','QUnit');
+		    assertions++;
+		    if (!assertion.result) messages.push(assertion.message);
+		}
+		QUnit.testDone = function(test) {
+		    $().log('testDone','QUnit');
+		    var status = JTR.status[ test.failed == 0 ? 'SUCCESS' : 'FAILURE' ];
+		    result.stopTest(status,assertions,messages.join('\n'));
+		}
+		QUnit.done = function(summary) {
+		    self.testRunner.end(result);
+		}
+	}
+	JTR.frameworks.QUnit = QUnitFramework;
+	
+	
+	/**
 	 * Mediawiki extension handler
 	 */
 	JTR.run = function() {
@@ -288,9 +347,11 @@
 		if (!frameworkName) {
 			throw new Exception("No framework name specified for test suite");
 		}
+		/*
 		if (!testSuite) {
 			throw new Exception("No tests specified as a test suite");
 		}
+		*/
 		
 		var outputs = [];
 		for (var i in outputNames) {

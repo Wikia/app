@@ -1,5 +1,6 @@
 /*
 @test-require-file extensions/wikia/includetest.js
+@test-framework jsUnity
 */
 var test = {
 	suiteName: 'DummyTest',
@@ -23,5 +24,4 @@ var test = {
 	}
 
 }
-window.jtr_framework = "jsUnity";
 window.jtr_testsuite = test;
