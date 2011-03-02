@@ -345,7 +345,13 @@ class CreateWiki {
 		/**
 		 * add local job
 		 */
-		$localJob = new CreateWikiLocalJob(	Title::newFromText( NS_MAIN, "Main" ), $this->mNewWiki );
+		$job_params = new stdClass();
+		foreach ( $params as $id => $value ) {
+			if ( !is_object($value) ) {
+				$job_params->$id = $value;
+			}
+		}
+		$localJob = new CreateWikiLocalJob(	Title::newFromText( NS_MAIN, "Main" ), $job_params );
 		$localJob->WFinsert( $this->mNewWiki->city_id, $this->mNewWiki->dbname );
 		wfDebugLog( "createwiki", __METHOD__ . ": New createWiki local job created \n", true );
 
