@@ -35,6 +35,7 @@ AdConfig = {
 			case 'HOME_TOP_RIGHT_BUTTON':
 			case 'INVISIBLE_1':		// footer
 			case 'INVISIBLE_TOP':	// skin
+			case 'MIDDLE_RIGHT_BOXAD':
 			case 'TEST_HOME_TOP_RIGHT_BOXAD':
 			case 'TEST_TOP_RIGHT_BOXAD':
 			case 'TOP_LEADERBOARD':
@@ -163,6 +164,7 @@ AdConfig.DART = {
 	   'LEFT_SKYSCRAPER_1': {'tile': 3, 'loc': "top"},
 	   'LEFT_SKYSCRAPER_2': {'tile': 3, 'loc': "middle"},
 	   'LEFT_SKYSCRAPER_3': {'tile': 6, 'loc': "middle"},
+	   'MIDDLE_RIGHT_BOXAD': {'tile': 1, 'loc': "middle"},
 	   'PREFOOTER_BIG': {'tile': 5, 'loc': "footer"},
 	   'PREFOOTER_LEFT_BOXAD': {'tile': 5, 'loc': "footer"},
 	   'PREFOOTER_RIGHT_BOXAD': {'tile': 5, 'loc': "footer"},
@@ -216,6 +218,7 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 		AdConfig.DART.getPrefooterStatus() +
 		AdConfig.DART.getQuantcastSegmentKV() +
 		AdConfig.DART.getImpressionCount(slotname) +
+		AdConfig.DART.getPartnerKeywords() +
 		AdConfig.DART.getLocKV(slotname) +
 		AdConfig.DART.getDcoptKV(slotname) +
 		mtfIFPath +
@@ -474,6 +477,17 @@ AdConfig.DART.getImpressionCount = function (slotname) {
 
 	return '';
 }
+
+AdConfig.DART.getPartnerKeywords = function() {
+	var kw = '';
+	if (typeof window.partnerKeywords == 'undefined' || !window.partnerKeywords) {
+		return kw;
+	}
+
+	kw = 'pkw=' + escape(window.partnerKeywords) + ';';
+
+	return kw;
+};
 
 AdConfig.DART.getLocKV = function (slotname){
 	if (AdConfig.DART.slotMap[slotname] && AdConfig.DART.slotMap[slotname].loc){

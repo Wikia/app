@@ -97,6 +97,18 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 		default:
 	}
 
+	switch (slotname) {
+		case 'MIDDLE_RIGHT_BOXAD':
+			// currently MIDDLE_RIGHT_BOXAD is reserved for partner widgets
+			// (e.g. eBay search). Don't make ad call if prerequisites aren't
+			// met
+			if (typeof window.partnerKeywords == 'undefined' || !window.partnerKeywords) {
+				return 'NO-AD'
+			}
+			break;
+		default:
+	}
+
 	return '';
 }
 
@@ -294,6 +306,7 @@ AdDriver.canCallLiftium = function(slotname) {
 		case 'HOME_INVISIBLE_TOP':
 		case 'INVISIBLE_TOP':
 		case 'INVISIBLE_1':
+		case 'MIDDLE_RIGHT_BOXAD':
 			return false;
 			break;
 	}
