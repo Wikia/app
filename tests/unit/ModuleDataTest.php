@@ -41,7 +41,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		global $wgSitename, $wgSearchDefaultFulltext;
 
 		$moduleData = Module::get('Search')->getData();
-	
+
 		$this->assertEquals(
 			wfMsg('Tooltip-search', $wgSitename),
 			$moduleData['placeholder']
@@ -570,7 +570,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$moduleData = Module::get('PageHeader')->getData();
 
 		$this->assertRegExp('/Main&amp;Bar/', $moduleData['title']);
-		$this->assertFalse($moduleData['displaytitle']);
+		$this->assertTrue($moduleData['displaytitle']);
 
 		// talk page
 		$wgTitle = Title::newFromText('Foo&Bar', NS_TALK);
