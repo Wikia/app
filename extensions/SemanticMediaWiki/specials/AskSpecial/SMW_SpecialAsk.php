@@ -26,7 +26,7 @@ class SMWAskPage extends SpecialPage {
 	 * Constructor.
 	 */
 	public function __construct() {
-		parent::__construct( 'Ask' );
+		parent::__construct( 'Ask', 'smwallowaskpage' );
 		smwfLoadExtensionMessages( 'SemanticMediaWiki' );
 	}
 
@@ -36,7 +36,12 @@ class SMWAskPage extends SpecialPage {
 	 * @param string $p
 	 */
 	public function execute( $p ) {
-		global $wgOut, $wgRequest, $smwgQEnabled;
+		global $wgOut, $wgRequest, $smwgQEnabled, $wgUser;
+		
+		if(!$wgUser->isAllowed( 'smwallowaskpage' )) {
+			$wgOut->permissionRequired( 'smwallowaskpage' );
+			return true;
+		}
 		
 		$this->setHeaders();
 		wfProfileIn( 'doSpecialAsk (SMW)' );
