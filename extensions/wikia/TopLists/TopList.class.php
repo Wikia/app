@@ -170,7 +170,36 @@ class TopList extends TopListBase {
 		$this->mPicture = $picture;
 		return true;
 	}
-
+	
+	/**
+	 * @author Federico "Lox" Lucignano
+	 *
+	 * Checks if a user can perform an action on the items in this list
+	 *
+	 * @param action String Required, the name of the action (e.g. delete, edit)
+	 * @param user User Optional, the user object to check, will default to current user
+	 * @param forceReload Boolean Optional, true will force the list object
+	 * to be reloaded from the DB
+	 *
+	 * @returns Boolean true if the user can perform the action, false otherwise
+	 */
+	public function checkUserItemsRight( $action, $user = null, $forceReload = false ){
+		global $wgUser;
+		$can = false;
+		
+		if ( !( $user instanceof User ) ) {
+			$user = $wgUser;
+		}
+		
+		$can =  $user->isAllowed( "toplists-{$action}-item" );
+	
+		if ( !$can && in_array( $action, array( 'edit', 'delete' ) ) ) {
+			$can = ( $this->getAuthor( $forceReload )->getId() === $user->getId() );
+		}
+		
+		return $can;
+	}
+	
 	/**
 	 * @author Federico "Lox" Lucignano
 	 *

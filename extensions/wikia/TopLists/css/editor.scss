@@ -84,9 +84,12 @@ $icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30
 			font-size: 9px;
 		}
 	}
-
+	
 	input[type="text"] {
 		@include input-field;
+	}
+	
+	input[type="text"], div.InputDisabled {
 		width: $input-width;
 		height: $input-height;
 		line-height: $input-height;
