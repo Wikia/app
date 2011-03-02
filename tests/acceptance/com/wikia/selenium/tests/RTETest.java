@@ -240,6 +240,14 @@ public class RTETest extends BaseTest {
 		session().waitForCondition("window.RTE.instance.mode == '"+mode+"'", this.getTimeout());
 	}
 
+	// switch current mode
+	private void switchMode(String mode) throws Exception {
+		session().click("//a[contains(@class,'cke_button_source')]");
+		waitForElement("//body[contains(@class,'rte_" + mode + "')]");
+
+		assertEquals(mode, session().getEval("window.RTE.instance.mode"));
+	}
+
 	@DataProvider(parallel = false, name="wikiTextsProvider")
 	public Iterator<Object[]> wikiTextsProvider() throws Exception {
 		String[] wikiTexts = RTETest.createWikitexts();
@@ -254,29 +262,25 @@ public class RTETest extends BaseTest {
 		if (startPos < wikiTexts.length) {
 			al.add(new Object[] { Arrays.copyOfRange(wikiTexts, startPos, wikiTexts.length) } );
 		}
-		
+
 		return al.iterator();
 	}
-	
+
 	@Test(groups={"RTE", "CI"}, dataProvider="wikiTextsProvider")
 	public void testRTE(String[] wikiTexts) throws Exception {
-		Integer testCaseId = 1;
-
-		session().open("index.php?title=RTE_test_page&action=edit&useeditor=wysiwyg");
+		// open RTE editor in source mode
+		session().open("index.php?title=RTE_test_page&action=edit&useeditor=source");
 		session().waitForPageToLoad(this.getTimeout());
-
-		// go to source mode
-		this.setRTEMode("source");
 
 		for(String wikitext : wikiTexts) {
 			// set text in source mode
 			session().runScript("window.RTE.instance.setData(\"" + wikitext.replace("\n", "\\n").replace("\"", "\\\"") + "\");");
 
 			// go to wysiwyg mode
-			this.setRTEMode("wysiwyg");
+			this.switchMode("wysiwyg");
 
 			// go back to source mode
-			this.setRTEMode("source");
+			this.switchMode("source");
 
 			assertEquals(wikitext, session().getEval("window.RTE.instance.getData();").replace("\r", ""));
 		}
