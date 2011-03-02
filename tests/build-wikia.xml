@@ -19,6 +19,8 @@
 
     <property name="groups" value="" />
     <property name="excludegroups" value="destructive,broken,answers,central" />
+    <property name="phpunitgroups" value="" />
+    <property name="phpunitexcludegroups" value="" />
     <property name="threadCount" value="1" />
     <property name="timeout" value="120000" />
 
@@ -35,6 +37,7 @@
             <arg line="run-test.php
                        --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
                        --configuration ${basedir}/phpunit.xml
+					   --exclude-group ${phpunitexcludegroups}
                        " />
         </exec>
     </target>
