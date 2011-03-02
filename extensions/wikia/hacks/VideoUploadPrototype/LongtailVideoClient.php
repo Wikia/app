@@ -9,6 +9,9 @@
  *
  * NOTE: This requires the $wgLongtailVideo_apiKey and $wgLongtailVideo_apiSecret globals
  * to be set in the site-configuration files (LocalSettings.php, CommonSettnigs.php, WikiFactory, whatever).
+ *
+ * NOTE: For playback of this video, Wikia's "youtube" extension must be installed an enabled for the <longtail/>
+ * parser-tag to work.
  */
 
 class LongtailVideoClient {
