@@ -23,6 +23,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * sometimes class Job is uknown in this point
  */
 include_once( $GLOBALS[ "IP" ] . "/includes/JobQueue.php" );
+$wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
+
 
 /**
  * maintenance script from CheckUser
