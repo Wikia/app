@@ -11,10 +11,15 @@ AdConfig = {
 		switch (country) {
 			case 'CA':
 			case 'DE':
+			case 'DK':
 			case 'ES':
+			case 'FI':
 			case 'FR':
 			case 'GB':
+			case 'GR':
+			case 'HU':
 			case 'IT':
+			case 'SE':
 			case 'UK':
 			case 'US':
 				return true;
