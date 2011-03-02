@@ -211,7 +211,11 @@ class SpecialEditTopList extends SpecialPage {
 				}
 
 				if ( $item[ 'changed' ] && !empty( $item[ 'object' ] ) ) {
-					$checkResult = $item[ 'object' ]->checkForProcessing();
+					if ( $item['type'] == 'new' ) {
+						$checkResult = $item[ 'object' ]->checkForProcessing(TOPLISTS_SAVE_AUTODETECT, null, TOPLISTS_SAVE_CREATE );
+					} else {
+						$checkResult = $item[ 'object' ]->checkForProcessing();
+					}
 
 					if ( $checkResult !== true ) {
 						foreach ( $checkResult as $errorTuple ) {
