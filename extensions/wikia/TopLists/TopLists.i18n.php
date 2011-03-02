@@ -12,6 +12,7 @@ $messages['en'] = array(
 	//rights
 	'right-toplists-create-edit-list' => 'Create and edit Top 10 list pages',
 	'right-toplists-create-item' => 'Create and add items to a Top 10 list page',
+	'right-toplists-delete-item' => 'Delete items from a Top 10 list page',
 
 	//special pages
 	'createtoplist' => 'Create a new Top 10 list',

@@ -68,9 +68,17 @@ $wgGroupPermissions[ '*' ][ 'toplists-create-edit-list' ] = false;
 $wgGroupPermissions[ 'user' ][ 'toplists-create-edit-list' ] = true;
 $wgGroupPermissions[ 'bot' ][ 'toplists-create-edit-list' ] = true;
 
+$wgAvailableRights[] = 'toplists-create-item';
+
 $wgGroupPermissions[ '*' ][ 'toplists-create-item' ] = false;
 $wgGroupPermissions[ 'user' ][ 'toplists-create-item' ] = true;
 $wgGroupPermissions[ 'bot' ][ 'toplists-create-item' ] = true;
+
+$wgAvailableRights[] = 'toplists-delete-item';
+
+$wgGroupPermissions[ '*' ][ 'toplists-delete-item' ] = false;
+$wgGroupPermissions[ 'staff' ][ 'toplists-delete-item' ] = true;
+$wgGroupPermissions[ 'sysop' ][ 'toplists-delete-item' ] = true;
 
 //special pages
 global $wgSpecialPages;
