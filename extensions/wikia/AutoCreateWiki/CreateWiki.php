@@ -40,7 +40,7 @@ class CreateWiki {
 	const DEFAULT_STAFF        = "Angela";
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
-	const ACTIVE_CLUSTER       = "";
+	const ACTIVE_CLUSTER       = "c3";
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
