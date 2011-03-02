@@ -5,6 +5,7 @@ import org.testng.annotations.DataProvider;
 
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.closeSeleniumSession;
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.session;
+import static org.testng.AssertJUnit.assertTrue;
 import static org.testng.AssertJUnit.assertEquals;
 
 import java.util.ArrayList;
@@ -234,17 +235,12 @@ public class RTETest extends BaseTest {
 		};
 	}
 
-	// change RTE edit mode and wait for switch to complete
-	private void setRTEMode(String mode) throws Exception {
-		session().runScript("window.RTE.instance.switchMode('" + mode + "')");
-		session().waitForCondition("window.RTE.instance.mode == '"+mode+"'", this.getTimeout());
-	}
-
 	// switch current mode
 	private void switchMode(String mode) throws Exception {
 		session().click("//a[contains(@class,'cke_button_source')]");
 		waitForElement("//body[contains(@class,'rte_" + mode + "')]");
 
+		// additional check for foo.qa wikis on devbox
 		assertEquals(mode, session().getEval("window.RTE.instance.mode"));
 	}
 
