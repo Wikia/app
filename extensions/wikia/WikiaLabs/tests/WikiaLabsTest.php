@@ -161,7 +161,7 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 			'extension' => 'fooextension'
 		);
 
-		$validator = $this->getMock( 'WikiaValidatorArray' );
+		$validator = $this->getMock( 'WikiaValidatorsSet' );
 		$validator->expects( $this->once() )
 		          ->method( 'isValid' )
 		          ->will( $this->returnValue( $validationOk ));
