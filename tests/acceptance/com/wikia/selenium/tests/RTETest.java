@@ -240,7 +240,7 @@ public class RTETest extends BaseTest {
 		session().waitForCondition("window.RTE.instance.mode == '"+mode+"'", this.getTimeout());
 	}
 
-	@DataProvider(parallel = true, name="wikiTextsProvider")
+	@DataProvider(parallel = false, name="wikiTextsProvider")
 	public Iterator<Object[]> wikiTextsProvider() throws Exception {
 		String[] wikiTexts = RTETest.createWikitexts();
 		ArrayList al = new ArrayList();
@@ -258,12 +258,7 @@ public class RTETest extends BaseTest {
 		return al.iterator();
 	}
 	
-	// Notice: threadPoolSize IS data provider's number of threads
-	//         these threads are independent of suite/class/method threads
-	//         if number of suite/class/method threads plus number of data provider's threads
-	//         is greater than number of available Selenium RC session
-	//         there's risk of test failure due to timeout (waiting for free session)
-	@Test(groups={"RTE", "CI"}, dataProvider="wikiTextsProvider", threadPoolSize=1, invocationCount=1)
+	@Test(groups={"RTE", "CI"}, dataProvider="wikiTextsProvider")
 	public void testRTE(String[] wikiTexts) throws Exception {
 		Integer testCaseId = 1;
 
