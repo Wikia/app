@@ -437,6 +437,16 @@ $messages['nl'] = array(
 	'sponsorship-dashboard-cityname-and-familiarity' => '$1 - <i>$2% gebruikersovereenkomst</i>',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Spesialside]] for sponsorrelaterte beregninger',
+	'sponsorship-dashboard-serie-new-pages-content-namespace' => 'Økning i sider',
+	'sponsorship-dashboard-tab-userengagement' => 'Brukerengasjement',
+	'sponsorship-dashboard-empty-chart' => 'Beklager. Ingen data for denne oversikten.',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */

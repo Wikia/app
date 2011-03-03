@@ -5510,6 +5510,7 @@ Mangyaring [[Special:UserLogin|lumagda o lumikha ng isang akawnt]] kung wala ka 
 
 /** Turkish (Türkçe)
  * @author Emperyan
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
 	'wikistats' => 'Wikia İstatistikleri',
@@ -5566,7 +5567,7 @@ $messages['tr'] = array(
 	'wikistats_interwiki' => 'interviki',
 	'wikistats_image' => 'resim',
 	'wikistats_external' => 'dış',
-	'wikistats_namespaces' => 'Alan adları',
+	'wikistats_namespaces' => 'isim alanları',
 	'wikistats_redirects' => 'yönlendirmeler',
 	'wikistats_edited_in_namespace' => 'Alanadını değiştir',
 	'wikistats_main_namespace' => 'içerik<br />alanadı',

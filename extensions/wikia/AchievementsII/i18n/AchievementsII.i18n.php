@@ -1139,6 +1139,69 @@ $messages['ce'] = array(
 	'achievements-leaderboard-member-label' => 'Декъашхо',
 );
 
+/** Czech (Česky)
+ * @author Darth Daron
+ */
+$messages['cs'] = array(
+	'achievementsii-desc' => 'Systém odznaků úspěchů pro uživatele wiki',
+	'achievements-upload-error' => 'Omlouváme se!
+Tento obrázek nefunguje.
+Ujistěte se, že se jedná o soubor .jpg nebo .png.
+Pokud stále nefunguje, pak obrázek může být příliš velký.
+Prosím zkuste jiný!',
+	'achievements-upload-not-allowed' => 'Administrátoři mohou změnit názvy a obrázky odznaků úspěchů navštívením stránky [[Special:AchievementsCustomize|úpravy úspěchů]].',
+	'achievements-non-existing-category' => 'Zadaná kategorie neexistuje.',
+	'achievements-edit-plus-category-track-exists' => 'Zadaná kategorie má již <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Jdi na stopu">přiřazenou stopu</a>.',
+	'achievements-no-stub-category' => ' Nevytvářejte prosím stopy pro pahýly.',
+	'right-platinum' => ' Vytvořit a upravit platinové odznaky',
+	'right-sponsored-achievements' => 'Spravovat sponzorované úspěchy',
+	'achievements-platinum' => 'Platina',
+	'achievements-gold' => 'Zlato',
+	'achievements-silver' => 'Stříbro',
+	'achievements-bronze' => 'Bronz',
+	'achievements-gold-points' => '100<br />bodů',
+	'achievements-silver-points' => '50<br />bodů',
+	'achievements-bronze-points' => '10<br />bodů',
+	'achievements-you-must' => 'K získání tohoto odznaku je potřeba $1',
+	'leaderboard-button' => 'Žebříček úspěchů',
+	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|bod|bodů}}</small>',
+	'achievements-profile-title-no' => 'Odznaky uživatele $1',
+	'achievements-no-badges' => 'Prohlédněte si seznam odznaků, které můžete získat na této wiki.',
+	'achievements-track-name-edit' => 'Stopa úprav',
+	'achievements-track-name-picture' => 'Stopa obrázků',
+	'achievements-track-name-category' => 'Stopa kategorie',
+	'achievements-track-name-blogpost' => 'Stopa příspěvků na blogu',
+	'achievements-track-name-blogcomment' => 'Stopa komentářů na blogu',
+	'achievements-track-name-love' => 'Stopa Wiki Love',
+	'achievements-track-name-sharing' => 'Stopa sdílení',
+	'achievements-notification-title' => 'Jen tak dál, $1!',
+	'achievements-notification-subtitle' => 'Právě jsi získal "$1" odznak za $2',
+	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Zjisti, jaké další odznaky můžeš získat]]!</big></strong>',
+	'achievements-points' => '$1 {{PLURAL:$1|bod|body|bodů}}',
+	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|bod|body|bodů}}',
+	'achievements-earned' => 'Tento odznak vlastní již {{PLURAL:$1|1 uživatel|$1 uživatelé|$1 uživatelů}}',
+	'achievements-profile-title' => 'Uživatel $1 získal $2 {{PLURAL:$2|odznak|odznaky|odznaků}}',
+	'achievements-profile-title-challenges' => 'Další odznaky, které můžeš získat.',
+	'achievements-profile-customize' => 'Upravit odznaky >',
+	'achievements-ranked' => 'Na místě #$1 na této wiki',
+	'achievements-viewall' => 'Zobrazit vše',
+	'achievements-viewless' => 'Zavřít',
+	'achievements-profile-title-oasis' => 'úspěch  <br /> body',
+	'achievements-ranked-oasis' => '$1 je v žebříčku na [[Special:Leaderboard|místě číslo #$2]] na této wiki',
+	'achievements-viewall-oasis' => 'Zobrazit vše',
+	'achievements-toggle-hide' => 'Nezobrazovat body, odznaky a pořadí na mém profilu.',
+	'leaderboard-intro-hide' => 'skrýt',
+	'leaderboard-intro-open' => 'otevřít',
+	'leaderboard-intro-headline' => 'Co jsou úspěchy?',
+	'leaderboard-intro' => "Odznaky na této wiki můžete získat za editování stránek, nahrávání obrázků a komentováním příspěvků. Za každý odznak získáváte body - čím více bodů máte, tím výše jste v pořadí. Získané odznaky můžete najít na [[$1|uživatelské stránce]].
+
+'''Jaký mají odznaky smysl?'''",
+	'leaderboard' => 'Žebříček úspěchů',
+	'achievements-title' => 'Úspěchy',
+	'leaderboard-title' => 'Žebříček',
+	'achievements-recent-earned-badges' => 'Nedávno získané odznaky',
+);
+
 /** German (Deutsch)
  * @author Avatar
  * @author ChrisiPK
@@ -1941,9 +2004,9 @@ Kokeile toista kuvaa.',
 	'achievements-platinum' => 'Platina',
 	'achievements-gold' => 'Kulta',
 	'achievements-bronze' => 'Pronssi',
-	'achievements-you-must' => 'Sinä tarvitset $1 ansaitaksesi tämän kunniamerkin.',
+	'achievements-you-must' => 'Ansaitaksesi tämän kunniamerkin sinun täytyy $1.',
 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|piste|pistettä}}</small>',
-	'achievements-profile-title-no' => "$1'n kunniamerkit",
+	'achievements-profile-title-no' => 'Käyttäjän $1 kunniamerkit',
 	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Katso kuinka monta kunniamerkkiä voit saada]]!</big></strong>',
 	'achievements-earned' => 'Tämän kunniamerkin on ansainnut {{PLURAL:$1|1 käyttäjä|$1 käyttäjää}}.',
 	'achievements-ranked' => 'Sijalla #$1 tässä wikissä',
@@ -1965,9 +2028,9 @@ Kokeile toista kuvaa.',
 	'achievements-badge-name-love-1' => 'Kaksi viikkoa wikissä',
 	'achievements-badge-name-love-4' => 'Addiktoitunut',
 	'achievements-badge-name-sharing-4' => 'Evankelista',
-	'achievements-badge-to-get-edit' => 'tee $1 {{PLURAL:$1|muokkaus|muokkausta}}, {{PLURAL:$1|sivulla|sivulla}}',
-	'achievements-badge-to-get-picture' => 'lisää $1 {{PLURAL:$1|kuva|kuvaa}}, {{PLURAL:$1|sivulle|sivulle}}',
-	'achievements-badge-to-get-welcome' => 'liity wikiin',
+	'achievements-badge-to-get-edit' => 'tehdä $1 {{PLURAL:$1|muokkaus|muokkausta}} {{PLURAL:$1|sivuun}}',
+	'achievements-badge-to-get-picture' => 'lisätä $1 {{PLURAL:$1|kuva|kuvaa}} {{PLURAL:$1|sivulle}}',
+	'achievements-badge-to-get-welcome' => 'liittyä wikiin',
 	'achievements-badge-to-get-introduction-details' => 'Onko käyttäjäsivusi tyhjä?
 Omalle sivullesi pääset napsauttamalla omaa nimeäsi sivun yläosassa.
 Napsauta "{{int:edit}}" ja lisää tietoa itsestäsi.',
@@ -1976,7 +2039,7 @@ oman käyttäjä sivusi!�',
 	'achievements-badge-hover-desc-sayhi' => 'jättämällä viestin<br />
 jonkun toisen henkilön keskustelusivulle!�',
 	'achievements-badge-hover-desc-creator' => 'wikin luomisesta!',
-	'achievements-userprofile-title-no' => "$1'n ansaitsemat kunniamerkit",
+	'achievements-userprofile-title-no' => 'Käyttäjän $1 ansaitsemat kunniamerkit',
 );
 
 /** French (Français)

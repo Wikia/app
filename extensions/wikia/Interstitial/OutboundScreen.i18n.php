@@ -82,7 +82,7 @@ Desearías ir a la [[{{MediaWiki:Mainpage}}|Página principal]] o tal vez a una 
  * @author Tofu II
  */
 $messages['fi'] = array(
-	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Luo uusi tunnus]] tai [[Special:UserLogin|kirjaudu sisään]] ohittaaksesi tämän sivun vastaisuudessa.',
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Luo uusi tunnus]] tai [[Special:UserLogin|kirjaudu sisään]] niin ohitat tämän sivun vastaisuudessa.',
 	'outbound-screen-you-are-leaving' => 'Olet poistumassa Wikiasta.',
 );
 

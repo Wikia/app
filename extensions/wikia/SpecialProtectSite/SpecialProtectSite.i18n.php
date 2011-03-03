@@ -172,6 +172,7 @@ $messages['de'] = array(
  * @author Crazymadlover
  * @author Peter17
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'specialprotectsite-desc' => 'Permite un administrador de sitio [[Special:ProtectSite|bloquear temporalmente varias modificaciones de sitio]]',
@@ -195,6 +196,7 @@ $messages['es'] = array(
 	'protectsite-until' => 'Protegido hasta:',
 	'protectsite-protect' => 'Proteger',
 	'protectsite-unprotect' => 'Desproteger',
+	'protectsite-nologs' => 'no mostrar en los registros',
 );
 
 /** Finnish (Suomi)
@@ -322,6 +324,7 @@ $messages['ia'] = array(
 	'protectsite-until' => 'Protegite usque a:',
 	'protectsite-protect' => 'Proteger',
 	'protectsite-unprotect' => 'Disproteger',
+	'protectsite-nologs' => 'non monstrar in registros',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -423,6 +426,7 @@ $messages['mk'] = array(
 	'protectsite-until' => 'Заштитено до:',
 	'protectsite-protect' => 'Заштити',
 	'protectsite-unprotect' => 'Тргни заштита',
+	'protectsite-nologs' => 'не прикажувај во дневници',
 );
 
 /** Dutch (Nederlands)
@@ -546,6 +550,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'specialprotectsite-desc' => 'Permite que um administrador [[Special:ProtectSite|bloqueie temporariamente várias modificações do site]]',
@@ -569,6 +574,7 @@ $messages['pt'] = array(
 	'protectsite-until' => 'Sob protecção até:',
 	'protectsite-protect' => 'Proteger',
 	'protectsite-unprotect' => 'Desproteger',
+	'protectsite-nologs' => 'não mostrar nos registos',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

@@ -101,6 +101,8 @@ $messages['es'] = array(
 	'wikiapoll-addnewitem-label' => 'Agregar nuevo elemento',
 	'wikiapoll-cancel-label' => 'Cancelar',
 	'wikiapoll-publish-label' => 'Publicar',
+	'wikiapoll-error-duplicate' => 'Ya existe una encuesta con ese nombre.',
+	'wikiapoll-error-invalid-title' => 'El texto de la pregunta es inválido.',
 );
 
 /** Basque (Euskara)
@@ -247,12 +249,14 @@ $messages['pt'] = array(
 	'wikiapoll-thanks-for-vote' => 'Obrigado!',
 	'wikiapoll-vote' => 'Vote!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 voto|$1 votos}}',
-	'wikiapoll-createpoll-headline' => 'Criar Votação',
-	'wikiapoll-editpoll-headline' => 'Editar Votação',
+	'wikiapoll-createpoll-headline' => 'Criar Inquérito',
+	'wikiapoll-editpoll-headline' => 'Editar Inquérito',
 	'wikiapoll-question-label' => 'Pergunta',
 	'wikiapoll-addnewitem-label' => 'Adicionar novo item',
 	'wikiapoll-cancel-label' => 'Cancelar',
 	'wikiapoll-publish-label' => 'Publicar',
+	'wikiapoll-error-duplicate' => 'Já existe um inquérito com esse nome.',
+	'wikiapoll-error-invalid-title' => 'O texto da pergunta é inválido.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

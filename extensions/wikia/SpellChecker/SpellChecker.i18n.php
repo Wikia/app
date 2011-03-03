@@ -163,6 +163,36 @@ $messages['nl'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Spellingsuggesties voor "$1": $2',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'spellchecker-desc' => 'Tilbyr et grensesnitt for korrekturlesning for enchant PHP-modulen',
+	'enablespellchecker' => 'Aktiver korrekturleser',
+	'spellchecker-info-languages' => 'Tilgjengelige språk ($1)',
+	'spellchecker-info-dictionaries' => 'Tilgjengelige ordlister',
+	'spellchecker-info-spellcheck-text' => 'Tekst som skal kontrolleres',
+	'spellchecker-info-spellcheck-languages' => 'Språk',
+	'spellchecker-info-spellcheck-submit' => 'Sjekk staving',
+);
+
+/** Portuguese (Português)
+ * @author Waldir
+ */
+$messages['pt'] = array(
+	'spellchecker-desc' => 'Fornece interface de verificação ortográfica para o módulo PHP enchant',
+	'enablespellchecker' => 'Ativar o corretor ortográfico',
+	'spellchecker-info' => 'Informação do corretor ortográfico',
+	'spellchecker-info-languages' => 'Línguas disponíveis ($1)',
+	'spellchecker-info-provider' => 'Fornecedor',
+	'spellchecker-info-dictionaries' => 'Dicionários disponíveis',
+	'spellchecker-info-spellcheck-text' => 'Texto a ser verificado',
+	'spellchecker-info-spellcheck-languages' => 'Língua',
+	'spellchecker-info-spellcheck-submit' => 'Verificar ortografia',
+	'spellchecker-info-spellcheck-is-correct' => 'A palavra "$1" está escrita corretamente',
+	'spellchecker-info-spellcheck-suggestions' => 'Sugestões de ortografia para "$1": $2',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Aristóbulo
  */

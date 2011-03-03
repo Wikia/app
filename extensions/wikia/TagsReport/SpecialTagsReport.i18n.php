@@ -142,13 +142,14 @@ $messages['es'] = array(
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'tagsreportgo' => 'Näytä',
 	'tagsreportnotspecify' => 'Et ole vielä valinnut mitään erityismerkintää',
 	'tagsreportnoresults' => 'Tuloksia ei löytynyt',
-	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|sivu|sivut}})',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|sivu|sivua}})',
 );
 
 /** French (Français)

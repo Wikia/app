@@ -103,15 +103,16 @@ $messages['no'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Waldir
  */
 $messages['pt'] = array(
 	'wikipayment-desc' => 'Permite o pagamento por wiki para desativar anúncios.',
-	'wikipayment-paypal-redirect' => 'Redirecionando para o PayPal, por favor aguarde...',
+	'wikipayment-paypal-redirect' => 'A redireccionar para o PayPal; aguarde, por favor...',
 	'wikipayment-paypal-error' => 'Erro de pagamento PayPal (código: $1)',
-	'wikipayment-paypal-return-ok' => 'Pagamento PayPal bem-sucedido',
+	'wikipayment-paypal-return-ok' => 'Pagamento PayPal efectuado com sucesso',
 	'wikipayment-paypal-return-cancel' => 'Pagamento PayPal cancelado',
-	'wikipayment-paypal-profile-name' => 'Wiki pago',
+	'wikipayment-paypal-profile-name' => 'Wiki Paga',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

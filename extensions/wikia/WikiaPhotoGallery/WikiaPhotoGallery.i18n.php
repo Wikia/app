@@ -3934,6 +3934,7 @@ O que pretende fazer?',
 /** Russian (Русский)
  * @author Eleferen
  * @author G0rn
+ * @author Kaganer
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -3993,7 +3994,7 @@ $messages['ru'] = array(
 	'wikiaPhotoGallery-preview-feed-label' => 'Из ссылки RSS-канала:',
 	'wikiaPhotoGallery-preview-tab-layout' => 'Макет',
 	'wikiaPhotoGallery-preview-size' => 'Размер фотографии',
-	'wikiaPhotoGallery-preview-px' => 'пикселей',
+	'wikiaPhotoGallery-preview-px' => 'пикс.',
 	'wikiaPhotoGallery-preview-size-smaller' => 'меньше',
 	'wikiaPhotoGallery-preview-size-larger' => 'больше',
 	'wikiaPhotoGallery-preview-columns' => 'Кол-во столбцов',

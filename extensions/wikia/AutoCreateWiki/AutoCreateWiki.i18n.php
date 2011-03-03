@@ -762,6 +762,7 @@ $messages['el'] = array(
  * @author Pertile
  * @author Peter17
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'autocreatewiki' => 'Crear nuevo Wiki',
@@ -806,9 +807,9 @@ $messages['es'] = array(
 	'autocreatewiki-bad-name' => 'El nombre no puede contener caracteres especiales (como $ o @) y deben ser palabras simples y sin espacios.',
 	'autocreatewiki-invalid-wikiname' => 'El nombre no puede contener caracteres especiales (como $ o @) y el campo no puede estar vacío.',
 	'autocreatewiki-violate-policy' => 'El nombre del wiki contiene una palabra que viola nuestra política de nombres',
-	'autocreatewiki-name-taken' => 'Ya existe un wiki con ese nombre. Eres bienvenido a participar con nosotros en <a href="http://$1.wikia.com">http://$1.wikia.com</a>',
-	'autocreatewiki-name-too-short' => 'Este nombre es demasiado corto, por favor, elige un nombre con al menos 3 caracteres.',
-	'autocreatewiki-name-too-long' => 'Este nombre es demasiado largo, por favor, elige un nombre con un máximo de 50 caracteres.',
+	'autocreatewiki-name-taken' => 'Ya existe un wiki con esa dirección. Eres bienvenido a participar con nosotros en <a href="http://$1.wikia.com">http://$1.wikia.com</a> o escoge otra dirección.',
+	'autocreatewiki-name-too-short' => 'Esta dirección es demasiado corta, por favor, elige una dirección con al menos 3 caracteres.',
+	'autocreatewiki-name-too-long' => 'Esta dirección es demasiado larga, por favor, elige una dirección con un máximo de 50 caracteres.',
 	'autocreatewiki-similar-wikis' => 'Debajo están los wikis ya creados sobre este tema. Te sugerimos editar en alguno de ellos.',
 	'autocreatewiki-invalid-username' => 'Este nombre de usuario no es válido',
 	'autocreatewiki-busy-username' => 'Este nombre de usuario ya está en uso.',
@@ -2247,7 +2248,7 @@ $messages['no'] = array(
 	'autocreatewiki' => 'Opprett en ny Wiki',
 	'autocreatewiki-desc' => 'Opprett wiki i WikiFactory etter forespørsel fra bruker',
 	'autocreatewiki-page-title-default' => 'Opprett en ny Wiki',
-	'autocreatewiki-page-title-answers' => 'Opprett et nytt svar-nettsted',
+	'autocreatewiki-page-title-answers' => 'Opprett en ny Svar-side',
 	'createwiki' => 'Opprett en ny Wiki',
 	'autocreatewiki-chooseone' => 'Velg en',
 	'autocreatewiki-required' => '$1 = påkrevd',
@@ -2264,15 +2265,15 @@ $messages['no'] = array(
 	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 	'autocreatewiki-haveaccount-question' => 'Har du allerede en Wikia-konto?',
 	'autocreatewiki-success-title-default' => 'Din wiki har blitt opprettet!',
-	'autocreatewiki-success-title-answers' => 'Ditt svar-nettsted har blitt opprettet.',
+	'autocreatewiki-success-title-answers' => 'Svar-siden din har blitt opprettet!',
 	'autocreatewiki-success-subtitle' => 'Du kan nå begynne å jobbe med din wiki ved å besøke:',
 	'autocreatewiki-success-has-been-created' => 'har blitt opprettet!',
 	'autocreatewiki-success-get-started' => 'Sett igang',
-	'autocreatewiki-info-domain' => 'Det er best å bruke et ord som mest synlig vil bli brukt som et søkeord for emnet ditt.',
+	'autocreatewiki-info-domain' => 'Det er best å bruke ord som trolig vil bli brukt som søkeord etter emnet ditt.',
 	'autocreatewiki-info-topic' => 'Legg til en kort beskrivelse som «Star Wars» eller «TV-program».',
-	'autocreatewiki-info-category-default' => 'Dette vil hjelpe besøkende å finne din wiki.',
-	'autocreatewiki-info-category-answers' => 'Dette vil hjelpe besøkende å finne ditt svar-nettsted.',
-	'autocreatewiki-info-language' => 'Dette blir standardspråket for besøkende til din wiki.',
+	'autocreatewiki-info-category-default' => 'Dette vil hjelpe besøkende å finne wikien din.',
+	'autocreatewiki-info-category-answers' => 'Dette vil hjelpe besøkende å finne Svar-siden din.',
+	'autocreatewiki-info-language' => 'Dette blir standardspråket for besøkende på wikien din.',
 	'autocreatewiki-info-email-address' => 'Din e-postadresse vil aldri bli vist til noen på Wikia.',
 	'autocreatewiki-info-realname' => 'Om du velger å oppgi dette vil det bli brukt til å kreditere deg for ditt arbeid.',
 	'autocreatewiki-info-birthdate' => 'Wikia krever at alle brukere oppgir deres virkelige fødselsdato, både som et sikkerhetsforetak og som et middel for å bevare integriteten til nettstedet, og samtidig etterkomme føderale bestemmelser.',
@@ -2720,6 +2721,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'autocreatewiki' => 'Criar uma wiki nova',
@@ -2763,9 +2765,9 @@ $messages['pt'] = array(
 	'autocreatewiki-bad-name' => 'O nome não pode conter caracteres especiais (como $ ou @) e tem de ser uma só palavra, em minúsculas e sem espaços.',
 	'autocreatewiki-invalid-wikiname' => 'O nome não pode conter caracteres especiais (como $ ou @) e não pode ficar vazio',
 	'autocreatewiki-violate-policy' => 'O nome da wiki contém uma palavra que viola as nossas normas de nomenclatura',
-	'autocreatewiki-name-taken' => 'Já existe uma wiki com este nome. Se quiser, pode juntar-se a nós em <a href="http://$1.wikia.com">http://$1.wikia.com</a>',
-	'autocreatewiki-name-too-short' => 'Este nome é demasiado curto. Escolha um nome com um mínimo de 3 caracteres, por favor.',
-	'autocreatewiki-name-too-long' => 'Este nome é demasiado longo. Escolha um nome com um máximo de 50 caracteres, por favor.',
+	'autocreatewiki-name-taken' => 'Já existe uma wiki com este endereço. Comece a editar em <a href="http://$1.wikia.com">http://$1.wikia.com</a> ou escolha outro endereço.',
+	'autocreatewiki-name-too-short' => 'Este endereço é demasiado curto. Escolha um endereço com no mínimo 3 caracteres.',
+	'autocreatewiki-name-too-long' => 'Este endereço é demasiado longo. Escolha um endereço com no máximo 50 caracteres, por favor.',
 	'autocreatewiki-similar-wikis' => 'Encontra abaixo as wikis já criadas sobre este tópico. Sugerimos que edite uma delas.',
 	'autocreatewiki-invalid-username' => 'Este nome de utilizador é inválido.',
 	'autocreatewiki-busy-username' => 'Este nome de utilizador já existe.',
@@ -3525,6 +3527,7 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author Ahonc
  * @author NickK
  * @author Prima klasy4na
  * @author Тест
@@ -3544,8 +3547,8 @@ $messages['uk'] = array(
 	'autocreatewiki-info-topic' => 'Додайте короткий опис, наприклад, "Зоряні війни" або "ТВ-шоу".',
 	'autocreatewiki-info-category-default' => 'Це допоможе відвідувачам знайти вашу вікі.',
 	'autocreatewiki-empty-field' => 'Будь ласка, заповніть це поле.',
-	'autocreatewiki-name-too-short' => 'Ця адреса занадто коротка. Будь ласка, виберіть адресу з щонайменше 3 символів.',
-	'autocreatewiki-name-too-long' => 'Ця адреса занадто довга. Будь ласка, виберіть адресу з максимум 50 символів.',
+	'autocreatewiki-name-too-short' => 'Ця адреса занадто коротка. Будь ласка, оберіть адресу, що містить щонайменше 3 символи.',
+	'autocreatewiki-name-too-long' => 'Ця адреса занадто довга. Будь ласка, оберіть адресу, яка має не більше 50 символів.',
 	'autocreatewiki-busy-username' => "Це ім'я користувача вже зайнято.",
 	'autocreatewiki-blocked-username' => 'Ви не можете створити обліковий запис.',
 	'autocreatewiki-empty-language' => 'Будь ласка, виберіть мову для вікі.',

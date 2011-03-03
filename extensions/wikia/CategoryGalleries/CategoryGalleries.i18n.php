@@ -16,6 +16,13 @@ $messages['af'] = array(
 	'categorygalleries-desc' => "Wys 'n galery met bladsye op kategoriebladsye",
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'categorygalleries-desc' => 'Amuesa una galería de páxines nes páxines de categoría',
+);
+
 /** Breton (Brezhoneg)
  * @author Fohanno
  */

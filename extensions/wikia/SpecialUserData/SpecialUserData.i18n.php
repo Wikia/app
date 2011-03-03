@@ -28,6 +28,22 @@ $messages['br'] = array(
 	'userdata-submit' => 'Tapout roadennoù',
 );
 
+/** Spanish (Español)
+ * @author VegaDark
+ */
+$messages['es'] = array(
+	'userdata' => 'Obtener datos de usuario',
+	'userdata-userid-label' => 'Proporciona el ID de usuario:',
+	'userdata-submit' => 'Obtener datos',
+	'specialuserdata-desc' => 'Proporciona una interfaz para cambiar wgUserData por wiki.',
+	'userdata-header' => 'Aumentar wgUserData',
+	'userdata-value' => 'El valor actual de wgUserData is "$1". Presiona el botón para definirlo a la hora y fecha actuales.',
+	'userdata-updated' => 'wgUserData actualizado a "$1".',
+	'userdata-not-updated' => 'Error al actualizar wgUserData.',
+	'userdata-wf-reason' => 'Valor actualizado a través de [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory no está habilitado en esta wiki. No se puede alterar wgUserData.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -81,6 +97,22 @@ $messages['nl'] = array(
 	'userdata-not-updated' => 'Het bijwerken van wgUserData is mislukt.',
 	'userdata-wf-reason' => 'Waarde bijgewerkt via [[Special:UserData|Gebruikersgegevens]]',
 	'userdata-no-wf' => 'WikiFactory is niet ingeschakeld voor deze wiki. Het is niet mogelijk wgUserData aan te passen.',
+);
+
+/** Portuguese (Português)
+ * @author Waldir
+ */
+$messages['pt'] = array(
+	'userdata' => 'Obter dados de utilizador',
+	'userdata-userid-label' => 'Fornecer ID do utilizador:',
+	'userdata-submit' => 'Obter dados',
+	'specialuserdata-desc' => 'Fornece uma interface para alterar wgUserData por wiki.',
+	'userdata-header' => 'Aumentar wgUserData',
+	'userdata-value' => 'O valor atual de wgUserData é "$1". Carregue o botão para configurá-lo para a data e hora atuais.',
+	'userdata-updated' => 'wgUserData atualizado para "$1".',
+	'userdata-not-updated' => 'Erro na atualização do wgUserData.',
+	'userdata-wf-reason' => 'Valor atualizado via [[Special:UserData|Dados de Utilizador]]',
+	'userdata-no-wf' => 'O WikiFactory não está ativado nesta wiki. Não é possível alterar o wgUserData.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

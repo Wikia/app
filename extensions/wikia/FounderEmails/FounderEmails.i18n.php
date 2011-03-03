@@ -682,17 +682,17 @@ Parece que alguien ha editado tu wiki! Por qué no <a href="$MYHOMEURL">verifica
 $messages['fi'] = array(
 	'founderemails-email-user-registered-body' => 'Hei $FOUNDERNAME,
 
-Näyttää siltä että $USERNAME on rekisteröitynyt wikiisi! Miksi et sano hänen keskustelusivullaan $USERTALKPAGEURL hei?
+Näyttää siltä, että $USERNAME on rekisteröitynyt wikiisi! Miksi et sano hänen keskustelusivullaan $USERTALKPAGEURL hei?
 
--- The Wikia Team�',
+-- The Wikia Team',
 	'founderemails-email-page-edited-reg-user-body' => 'Hei $FOUNDERNAME,
 
 Näyttää siltä, että rekisteröitynyt käyttäjä $USERNAME on muokannut wikiäsi! Miksi et sano hänelle ($USERTALKPAGEURL) hei?
 
 -- The Wikia Team',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hei $FOUNDERNAME,<br /><br />
-Näyttää siltä että rekisteröitynyt käyttäjä $USERNAME on muokannut wikiäsi! Miksi et sano hänen <a href="$USERTALKPAGEURL">keskustelusivullaan</a> hei?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>�>',
+Näyttää siltä, että rekisteröitynyt käyttäjä $USERNAME on muokannut wikiäsi! Miksi et sano hänen <a href="$USERTALKPAGEURL">keskustelusivullaan</a> hei?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 	'founderemails-answers-email-page-edited-reg-user-body' => 'Hei $FOUNDERNAME,
 
 Näyttää siltä, että rekisteröitynyt käyttäjä $USERNAME on muokannut wikiäsi! Miksi et sano hänen keskustelusivullaan ($USERTALKPAGEURL) hei?

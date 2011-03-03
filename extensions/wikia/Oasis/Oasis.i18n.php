@@ -296,6 +296,7 @@ $messages['br'] = array(
 	'oasis-toolbar-edit-save' => 'Enrollañ',
 	'oasis-toolbar-edit-cancel' => 'Nullañ',
 	'oasis-toolbar-edit-rename-item' => 'Adenvel an objed',
+	'oasis-toolbar-customize' => 'Personelaat',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|evezhiadenn|evezhiadenn}}',
 	'oasis-comments-showing-most-recent' => 'O tiskouez an $1 diwezhañ',
 	'oasis-comments-anonymous-prompt' => 'Implijer dianav<br /> <a href="#">Kevreañ ?</a>',
@@ -349,6 +350,7 @@ $messages['ckb'] = array(
 );
 
 /** Czech (Česky)
+ * @author Darth Daron
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -361,7 +363,7 @@ $messages['cs'] = array(
 	'oasis-edit-protected-article' => 'Přihlašte se, chcete-li editovat.',
 	'oasis-button-random-page' => 'Náhodná stránka',
 	'oasis-button-random-wiki' => 'Náhodná Wiki',
-	'oasis-button-wiki-activity' => 'Aktivita na Wiki',
+	'oasis-button-wiki-activity' => 'Wiki aktivita',
 	'oasis-button-wiki-activity-feed' => 'Zobrazit všechnu aktivitu >',
 	'oasis-button-wiki-activity-watchlist' => 'Pouze sledované stránky',
 	'oasis-activity-watchlist-login' => 'Musíte se přihlásit, pokud chcete vidět Vaše sledované stránky.',
@@ -586,6 +588,15 @@ $messages['de'] = array(
 	'oasis-interlang-languages' => 'Sprachen:',
 	'imageseo-featured-on' => 'Verwendet auf:',
 	'imageseo-featured-more' => 'mehr...',
+	'oasis-editpage-readonlywarning' => '<h2>Sorry!</h2>
+<p>Du kannst diese Seite momentan nicht bearbeiten - wir sollten in Kürze wieder erreichbar sein. Sieh nach was los ist:<br /><em>$1</em></p>
+<p>Bitte schau bei <a href="http://twitter.com/wikia">Twitter</a> oder <a href="http://facebook.com/wikia">Facebook</a> für weitere Informationen.</p>',
+	'oasis-upload-photos-title' => 'Ein Foto ins Wiki hochladen',
+	'oasis-upload-photos-more-options' => 'Weitere Optionen',
+	'oasis-upload-photos-fewer-options' => 'Weniger Optionen',
+	'oasis-upload-photos-force' => 'Trotzdem hochladen',
+	'oasis-upload-photos-caption' => 'Bildunterschrift',
+	'oasis-modal-error-headline' => 'Bitte korrigiere die folgenden Fehler',
 );
 
 /** Spanish (Español)
@@ -665,7 +676,7 @@ $messages['es'] = array(
 	'oasis-toolbar-edit-toolbar-list' => 'Lista de la barra de herramientas',
 	'oasis-toolbar-edit-reset-defaults' => 'restablecer',
 	'oasis-toolbar-edit-find-a-tool' => 'Buscar una herramienta',
-	'oasis-toolbar-edit-advanced-tools' => '[[Help:Mis Herramientas|lista de herramientas avanzadas]]',
+	'oasis-toolbar-edit-advanced-tools' => '[[Help:MyTools|lista de herramientas avanzadas]]',
 	'oasis-toolbar-edit-search-for-tool' => 'Buscar herramientas',
 	'oasis-toolbar-edit-popular-tools' => 'Herramientas populares',
 	'oasis-toolbar-edit-hide-tools' => 'Esconder herramientas',
@@ -766,7 +777,7 @@ $messages['fr'] = array(
 	'oasis-latest-photos-by' => 'par',
 	'oasis-latest-photos-posted-in' => 'Posté dans',
 	'oasis-latest-photos-more-dotdotdot' => 'plus...',
-	'oasis-global-nav-create-wiki' => 'Créer un wiki',
+	'oasis-global-nav-create-wiki' => 'Démarrer un wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Soyez le premier à discuter de cette page',
 	'oasis-page-header-comments' => 'Commentaire{{PLURAL:$1||s}}',
 	'oasis-page-header-comments-k' => '$1k',

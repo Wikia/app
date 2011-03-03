@@ -217,6 +217,7 @@ $messages['br'] = array(
 	'adss-form-usd-per-day' => '$1 USD dre zevezh',
 	'adss-form-usd-per-week' => '$1 USD dre sizhun',
 	'adss-form-usd-per-month' => '$1 USD dre miz',
+	'adss-form-usd-per-year' => '$$1 dre vloaz',
 	'adss-form-auth-errormsg' => "Direizh eo ho chomlec'h postel pe ho ker-tremen.",
 	'adss-form-field-empty-errormsg' => 'Ar vaezienn-se ne rank ket bezañ goullo !',
 	'adss-form-non-existent-title-errormsg' => "N'eus ket eus ar bajenn-se",
@@ -233,6 +234,9 @@ $messages['br'] = array(
 	'adss-form-hub-plan-price' => '$1 eo an tamm',
 	'adss-form-or' => '- pe -',
 	'adss-form-thanks' => 'Trugarez evit ho paeroniañ !',
+	'adss-upsell-yes' => "Ya, bez' am bo !",
+	'adss-upsell-no' => "N'em bo ket",
+	'adss-upsell-error' => 'Ur fazi zo bet !',
 	'adss-button-preview' => 'Rakwelet',
 	'adss-button-edit' => 'Kemmañ',
 	'adss-button-login' => 'Kevreañ',
@@ -1836,9 +1840,7 @@ $messages['pt'] = array(
 Isto permite-lhe atingir um público maior, apresentando o seu anúncio noutras wikis do mesmo portal.',
 	'adss-form-hub-plan-price' => '$1 por uma quota',
 	'adss-form-or' => '- ou -',
-	'adss-form-thanks' => 'Obrigado pelo seu patrocínio! O seu anúncio foi comprado e ficará visível após aprovação manual (dentro de 48 horas).
-
-Agora [[Special:AdSS|compre]] outro anúncio!',
+	'adss-form-thanks' => 'Completou a sua compra.  O seu anúncio irá ao ar após aprovação (dentro de 48 horas, geralmente menos).',
 	'adss-button-preview' => 'Antevisão',
 	'adss-button-edit' => 'Editar',
 	'adss-button-login' => 'Autenticação',

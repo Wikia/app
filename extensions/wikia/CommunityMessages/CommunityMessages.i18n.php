@@ -23,6 +23,14 @@ $messages['en'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Community Messages has been updated]].'
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'communitymessages-desc' => "Estensión d'ayuda pa Mensaxes a la Comunidá",
+	'communitymessages-notice-msg' => "[[Special:ActivityFeed|S'anovó Mensaxes a la Comunidá]].",
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */

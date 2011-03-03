@@ -137,6 +137,7 @@ $messages['no'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -147,19 +148,19 @@ $messages['pt'] = array(
 	'loggerrecordswithpercent' => "'''$1''' registos ('''$2'''% concluído)",
 	'loggerrecords' => '$1 registos',
 	'loggergo' => 'Mostrar',
-	'loggernoresult' => 'Nenhum resultado foi encontrado',
+	'loggernoresult' => 'Não foi encontrado nenhum resultado',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Aristóbulo
+ * @author Hamilton Abreu
  */
 $messages['pt-br'] = array(
 	'logger-desc' => 'Agente de registo para scripts de back-end',
 	'logger' => 'Agente de registo de back-end',
 	'loggertitle' => 'Agente de registo de back-end',
 	'loggerselectlogname' => 'Selecione o nome do registo:',
-	'loggerrecordswithpercent' => "português (pt)
-'''$1''' registos ('''$2'''% concluído)",
+	'loggerrecordswithpercent' => "'''$1''' registos ('''$2'''% concluído)",
 	'loggerrecords' => '$1 registos',
 	'loggergo' => 'Mostrar',
 	'loggernoresult' => 'Nenhum resultado encontrado',

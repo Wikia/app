@@ -533,6 +533,7 @@ Wikia
  * @author Audun
  */
 $messages['no'] = array(
+	'article-comments-anonymous' => 'Anonym bruker',
 	'article-comments-comments' => 'Kommentarer ($1)',
 	'article-comments-delete' => 'slett',
 	'article-comments-edit' => 'rediger',
@@ -578,6 +579,61 @@ $messages['pl'] = array(
 	'article-comments-history' => 'historia',
 	'article-comments-undeleted-comment' => 'Usunięcie komentarza na stronie $1 blogu.',
 	'article-comments-login' => '<a href="$1">Zaloguj się</a>, aby komentować',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'article-comments-anonymous' => 'Usuário anônimo',
+	'article-comments-comments' => 'Comentários ($ 1)',
+	'article-comments-post' => 'Postar comentário',
+	'article-comments-delete' => 'apagar',
+	'article-comments-edit' => 'editar',
+	'article-comments-history' => 'histórico',
+	'article-comments-error' => 'O comentário não pôde ser salvo.',
+	'article-comments-undeleted-comment' => 'Comentário não deletado para a página do blog $1',
+	'article-comments-rc-comment' => 'Comentário do artigo ([[$1]])',
+	'article-comments-rc-comments' => 'Comentário do artigo ([[$1]])',
+	'article-comments-fblogin' => 'Por favor, <a href="$1">efetue o login e conecte-se com o Facebook</a> para postar um comentário sobre esta wiki!',
+	'article-comments-fbconnect' => 'Por favor <a href="$1">ligue essa conta com o Facebook</a> para comentar!',
+	'article-comments-rc-blog-comment' => 'Comentário de blog ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Comentário de blog ([[$1]])',
+	'article-comments-login' => 'Por favor, <a href="$1">efetue o login</a> para postar um comentário sobre este wiki.',
+	'article-comments-toc-item' => 'Comentários',
+	'article-comments-comment-cannot-add' => 'Você não pode adicionar um comentário ao artigo.',
+	'article-comments-reply' => 'Responder',
+	'article-comments-show-all' => 'Mostrar todos os comentários',
+	'article-comments-prev-page' => 'Anterior',
+	'article-comments-next-page' => 'Próximo',
+	'article-comments-page-spacer' => '& # 160... & # 160',
+	'article-comments-delete-reason' => '',
+	'article-comments-empty-comment' => 'Você não pode postar um comentário vazio. <a href="$1">Excluí-lo em vez disso?</a>',
+	'enotif_subject_article_comment' => 'Comentou sobre "$ PAGETITLE" em {{SITENAME}} $PAGEEDITOR',
+	'enotif_body_article_comment' => 'Caro $ WATCHINGUSERNAME, 
+
+ $ PAGEEDITOR fez um comentário sobre "$ PAGETITLE". 
+
+ Para ver a lista de discussão do comentário, clique no link abaixo: 
+ $ PAGETITLE_URL 
+
+ Visite e edite muitas vezes ... 
+
+ Wikia',
+	'enotif_body_article_comment-HTML' => '<p> Caro $ WATCHINGUSERNAME, 
+<br /><br />
+ $ PAGEEDITOR fez um comentário sobre "$ PAGETITLE". 
+<br /><br />
+ Para ver a lista de discussão do comentário, siga este link: <a href="$PAGETITLE_URL">$ PAGETITLE</a> 
+<br /><br />
+ Visite e edite muitas vezes ... 
+<br /><br />
+ Wikia 
+<br /><hr />
+<ul>
+<li> Quer controlar os emails que você recebe? <a href="{{fullurl:Special:Preferences}}">atualize suas preferências</a> <a>.</a> </li>
+</ul>
+</p>',
 );
 
 /** Swedish (Svenska)
