@@ -18,7 +18,7 @@ class VideoUploadPrototype extends SpecialPage
 		global $wgRequest, $wgOut;
 
 		$wgOut->setPageTitle("Video Upload Prototype");
-	
+
 		$vidUploadAction = $wgRequest->getVal('vidUploadAction');
 		switch($vidUploadAction){
 			case "longtailStep1":
@@ -32,29 +32,29 @@ class VideoUploadPrototype extends SpecialPage
 				break;
 		}
 	}
-	
+
 	// Embed one of our previously-uploaded videos.
 	function showVideo_longtail(){
 		global $wgOut;
 		wfProfileIn( __METHOD__ );
-		
+
 		$wgOut->addHTML("<h1>Playback of an already-uploaded video</h1>");
 		$wgOut->addWikitext("<longtail vid='8YVNhJJj'/>");
 
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	// Upload form for using Brightcove API.
 	function showForm_brightcove(){
 		global $wgOut;
 		wfProfileIn( __METHOD__ );
-	
+
 		$wgOut->addHTML("<h1>Brightcove Upload Form</h1>");
-		
+
 		$wgOut->addHTML("Can brightcove do uploads via API?  I don't see how from the docs.");
 		// TODO: IMPLEMENT
 		// TODO: IMPLEMENT
-	
+
 		wfProfileOut( __METHOD__ );
 	} // end showForm_brightcove()
 
@@ -64,7 +64,7 @@ class VideoUploadPrototype extends SpecialPage
 		wfProfileIn( __METHOD__ );
 
 		$wgOut->addHTML("<h1>Longtail Video Upload Form</h1>");
-		
+
 		$wgOut->addHTML("<form method='post' action=''>
 			<input type='hidden' name='vidUploadAction' value='longtailStep1'/>
 			Title: <input type='text' name='videoTitle' value='What Do You Love?'/><br/>
@@ -73,10 +73,10 @@ class VideoUploadPrototype extends SpecialPage
 			<textarea name='description'>Wikia staff telling you what they love!  What do you love? What would you do if we gave you $300 to do what you love?</textarea><br/>
 			<input type='submit' name='submit' value='Go to upload panel...'/>
 		</form>");
-	
+
 		wfProfileOut( __METHOD__ );
 	} // end showForm_longtail()
-	
+
 	function showForm_longtail_step2(){
 		global $wgRequest, $wgOut;
 		wfProfileIn( __METHOD__ );
@@ -86,7 +86,7 @@ class VideoUploadPrototype extends SpecialPage
 		$description = $wgRequest->getVal('description', "Wikia staff telling you what they love!  What do you love? What would you do if we gave you $300 to do what you love?");
 
 		$wgOut->addHTML("<h1>Upload file for \"$title\" using Longtail Video</h1>");
-		
+
 		$longtail = new LongtailVideoClient();
 		$result = $longtail->videos_create($title, $tags, $description);
 
@@ -105,5 +105,3 @@ class VideoUploadPrototype extends SpecialPage
 	} // end showForm_longtail_step2()
 
 } // end class VideoUploadPrototype
-
-?>
