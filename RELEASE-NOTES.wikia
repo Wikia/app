@@ -1,3 +1,6 @@
+== Changes since release-011 ==
+* fb#972: Community box text styling killed by something (macbre)
+
 == Changes since release-010 ==
 * fb#2015: Background for list of images in image categories does not match the colour scheme defined by ThemeDesigner (Marooned)
 * fb#2643: Follow: kill fatal (macbre)
