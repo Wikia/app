@@ -118,18 +118,19 @@ $messages['no'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Waldir
  */
 $messages['pt'] = array(
 	'cacheepoch-desc' => 'Fornece uma interface para alterar a wgCacheEpoch por wiki',
-	'cacheepoch' => 'Interface de época de cache',
+	'cacheepoch' => 'Interface da Cache Epoch',
 	'cacheepoch-header' => 'Aumentar a wgCacheEpoch',
-	'cacheepoch-value' => 'O valor atual da wgCacheEpoch é "$1". Pressione o botão para configurá-lo para a timestamp atual.',
+	'cacheepoch-value' => 'O valor atual da wgCacheEpoch é "$1". Carregue o botão para configurá-lo para a data e hora atuais.',
 	'cacheepoch-submit' => 'Atualizar o valor',
 	'cacheepoch-updated' => 'wgCacheEpoch atualizada para "$1".',
 	'cacheepoch-not-updated' => 'Erro ao actualizar a wgCacheEpoch.',
 	'cacheepoch-wf-reason' => 'Valor atualizado via Especial:CacheEpoch',
-	'cacheepoch-no-wf' => 'O WikiFactory não está ativado neste wiki. Não é possível alterar a wgCacheEpoch.',
+	'cacheepoch-no-wf' => 'O WikiFactory não está ativado nesta wiki. Não é possível alterar a wgCacheEpoch.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

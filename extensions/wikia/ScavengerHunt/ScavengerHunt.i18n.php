@@ -366,6 +366,19 @@ $messages['nl'] = array(
 	'scavengerhunt-entry-form-submit' => 'Inschrijvingsformulier opslaan',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'scavengerhunt' => 'Grensesnitt for Åtseleterjakt',
+	'scavengerhunt-label-goodbye-image' => 'Popup-bilde (URL-adresse):',
+	'scavengerhunt-game-has-been-created' => 'Nytt Åtseleterjakt-spill har blitt opprettet.',
+	'scavengerhunt-game-has-been-saved' => 'Åtseleterjakt-spillet har blitt lagret.',
+	'scavengerhunt-game-has-been-enabled' => 'Valgte Åtseleterjakt-spill har blitt aktivert.',
+	'scavengerhunt-game-has-been-disabled' => 'Valgte Åtseleterjakt-spill har blitt deaktivert.',
+	'scavengerhunt-game-has-not-been-saved' => 'Åtseleterjakt-spill har ikke blitt lagret.',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */

@@ -112,6 +112,7 @@ Please create an alternate user name or [[Special:Contact|contact Wikia]] about 
  * @author Y-M D
  */
 $messages['br'] = array(
+	'phalanx-type-title' => 'anv ar bajenn',
 	'phalanx-type-user' => 'implijer',
 	'phalanx-label-filter' => 'Sil :',
 	'phalanx-label-reason' => 'Abeg :',
@@ -142,11 +143,12 @@ $messages['de'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'phalanx-user-block-reason-exact' => 'Tämä käyttäjätunnus tai IP-osoite on estetty ilkivallan tai muunlaisen häiriköinnin vuoksi.
-Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wikiaan]].�',
+Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wikiaan]].',
 );
 
 /** Interlingua (Interlingua)
@@ -474,6 +476,12 @@ Note: fungerer kun på Svar-wikier.',
 Det hindrer ikke disse sidene i å opprettes.
 
 Note: fungerer kun på Svar-wikier.',
+	'phalanx-user-block-reason-ip' => 'Denne IP-adressen er forhindret i å redigere grunnet vandalisme eller annt hærverk fra deg eller noen som deler din IP-adresse.
+Om du mener dette er en feil, vennligst [[Special:Contact|kontakt Wikia]].',
+	'phalanx-user-block-reason-exact' => 'Dette brukernavnet eller IP-adressen er forhindret i år redigere grunnet vandalisme eller annet hærverk. 
+Om du mener dette er en feil, vennligst [[Special:Contact|kontakt Wikia]].',
+	'phalanx-user-block-reason-similar' => 'Dette brukernavnet er forhindret i å redigere grunnet vandalisme eller annet hærverk av en bruker med lignende navn.
+Vennligst opprett et alternativt brukernavn eller [[Special:Contact|kontakt Wikia]] om problemet.',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)

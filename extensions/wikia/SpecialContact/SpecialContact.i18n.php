@@ -246,6 +246,51 @@ Als u liever gebruik maakt van e-mail of bijlagen wilt meesturen, stuur dan een 
 	'specialcontact-submitcomplete' => 'Dank u wel voor het contact opnemen met Wikia.',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'specialcontact-intro' => 'Du kan kontakte [[w:project:Staff|Wikia-ledelsen]] ved hjelp av dette skjemaet. Administratorer på denne wikien kan bli funnet [[Special:ListAdmins|her]].
+
+Ytterligere informasjon om hvordan man rapporterer problemer til Wikia finnes [[w:project:Report_a_problem|her]], eventuelt kan du poste på [[w:Forum:Index|Wikias fellesskapsforum]] for brukerstøtte.
+
+Hvis du foretrekker å benytte deg av vanlig e-post eller har vedlegg, kan du kontakte oss på [mailto:community@wikia.com community@wikia.com].',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'contact' => 'Contactar a Wikia',
+	'specialcontact-wikia' => 'Contactar a Wikia',
+	'specialcontact-pagetitle' => 'Contactar a Wikia',
+	'specialcontact-intro' => 'Pode contactar a [[w:project:Staff|Equipa da Wikia]] usando este formulário. Encontra uma lista dos administradores desta wiki [[Special:ListAdmins|aqui]].
+
+Para mais informações sobre como relatar problemas à Wikia visite [[w:project:Report_a_problem|esta página]], ou pode colocar um pedido de suporte no [[w:Forum:Index|Wikia Community Forums]]
+
+Se prefere usar o correio electrónico ou precisa de enviar ficheiros anexos, pode contactar-nos em [mailto:community@wikia.com community@wikia.com].',
+	'specialcontact-username' => 'Nome de utilizador',
+	'specialcontact-wikiname' => 'Qual é a wiki?',
+	'specialcontact-realname' => 'O seu nome',
+	'specialcontact-yourmail' => 'Correio electrónico',
+	'specialcontact-problem' => 'Assunto',
+	'specialcontact-problemdesc' => 'Mensagem',
+	'specialcontact-mail' => 'Enviar à Wikia',
+	'specialcontact-filledin' => 'Esta informação foi preenchida de acordo com as preferências da sua conta',
+	'specialcontact-ccme' => 'Enviar-me uma cópia desta mensagem',
+	'specialcontact-ccdisabled' => 'Impossibilitado: Valide o seu endereço de correio electrónico para usar esta funcionalidade',
+	'specialcontact-notyou' => 'Não é você?',
+	'specialcontact-captchainfo' => 'Introduza o texto que está na imagem, por favor.',
+	'specialcontact-captchatitle' => 'Palavra distorcida',
+	'specialcontact-formtitle' => 'Contactar a Equipa de Suporte da Wikia',
+	'specialcontact-nomessage' => 'Introduza uma mensagem, por favor',
+	'specialcontact-captchafail' => 'Código de confirmação incorrecto ou não preenchido.',
+	'specialcontact-mailsub' => 'Correio de Contacto da Wikia',
+	'specialcontact-mailsubcc' => 'Cópia do Correio de Contacto da Wikia',
+	'specialcontact-ccheader' => 'Esta é uma cópia da mensagem que foi enviada à Equipa de Suporte da Wikia',
+	'specialcontact-submitcomplete' => 'Obrigado por ter contactado a Wikia.',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Aristóbulo
  */

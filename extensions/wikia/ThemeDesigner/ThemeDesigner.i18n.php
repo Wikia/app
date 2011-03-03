@@ -938,6 +938,7 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Kaganer
  */
 $messages['ru'] = array(
 	'themedesigner-desc' => 'Позволяет администраторам разрабатывать темы для Wiki',
@@ -976,7 +977,7 @@ $messages['ru'] = array(
 	'themedesigner-size' => 'размер',
 	'themedesigner-button-save' => 'Сохранить',
 	'themedesigner-upload-a-graphic' => 'загрузить',
-	'themedesigner-rules-wordmark' => '250x65 пикселей (только .png файлы)',
+	'themedesigner-rules-wordmark' => 'не более 250x65 пикселов (только .png файлы)',
 	'themedesigner-dont-use-a-graphic' => 'Не использовать изображение',
 	'themedesigner-history-item' => '$1 — $2',
 	'themedesigner-button-change-text' => 'Изменить текст',

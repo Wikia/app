@@ -697,8 +697,7 @@ $messages['fi'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'MediaWiki sivut ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Kuvat ja videot ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 sivu)',
-	'wikiafollowedpages-special-title' => 'Seuratut sivut
-�',
+	'wikiafollowedpages-special-title' => 'Seuratut sivut',
 );
 
 /** French (Français)
