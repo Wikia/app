@@ -588,7 +588,7 @@ class WikiFactoryPage extends SpecialPage {
 			$db = ltrim($dart_parts[1], '_');
 
 			$wkid = WikiFactory::DBtoID( $db );
-			$wgOut->addHTML("id={$wkid}<br/>");
+			// $wgOut->addHTML("id={$wkid}<br/>"); #debug
 
 			$added++;
 			$oTag = new WikiFactoryTags( $wkid );
@@ -600,7 +600,6 @@ class WikiFactoryPage extends SpecialPage {
 		$oTQ->clearCache();
 
 		$msg = "Added '{$this->mMassTag}' to {$added} wikis";
-		$msg .= " (maybe)";
 		wfProfileOut( __METHOD__ );
 
 		return Wikia::successbox( $msg );
