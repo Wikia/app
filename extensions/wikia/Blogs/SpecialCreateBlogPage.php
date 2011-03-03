@@ -52,8 +52,17 @@ class CreateBlogPage extends SpecialBlogPage {
 		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
 
 		if($wgRequest->wasPosted()) {
+			// BugId:954 - check for "show changes"
+			$isShowDiff = !is_null($wgRequest->getVal('wpDiff'));
+
 			$this->parseFormData();
 			if(count($this->mFormErrors) > 0 || !empty($this->mPreviewTitle)) {
+				$this->renderForm();
+			}
+			else if ($isShowDiff) {
+				// watch out! there be dragons (temporary workaround)
+				$this->mEditPage->diff = true;
+				$this->mEditPage->edittime = null;
 				$this->renderForm();
 			}
 			else {
@@ -188,6 +197,11 @@ class CreateBlogPage extends SpecialBlogPage {
 		//create EditPage object
 		$this->createEditPage( $this->mFormData['postBody'] );
 
+		// BugId:954 - show changes
+		if (!empty($this->mPostArticle)) {
+			$this->mEditPage->mArticle = $this->mPostArticle;
+		}
+
 		if(!count($this->mFormErrors) && $wgRequest->getVal('wpPreview')) {
 			// preview mode
 			$this->mEditPage->formtype = 'preview';
@@ -249,6 +263,12 @@ class CreateBlogPage extends SpecialBlogPage {
 		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
 		$wgOut->addHTML( $oTmpl->render("createBlogFormHeader") );
+
+		// BugId:954 - show changes
+		if ($this->mEditPage->diff) {
+			$this->mEditPage->mArticle->loadContent();
+			$this->mEditPage->showDiff();
+		}
 	}
 
 	private function parseArticle($sTitle) {
