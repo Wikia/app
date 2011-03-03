@@ -19,10 +19,10 @@ class Listusers extends SpecialPage {
 	var $mFilterStart;
 	var $mContribs;
 	var $mData;
-	
+
 	var $mDefContrib = null;
 	var $mUserStart = '';
-	
+
 	const TITLE 			= 'Listusers';
 	const DEF_GROUP_NAME 	= 'all';
 	const DEF_EDITS 		= 5;
@@ -34,16 +34,16 @@ class Listusers extends SpecialPage {
 	 */
 	function  __construct() {
 		parent::__construct( self::TITLE  /*class*/ );
-		wfLoadExtensionMessages( self::TITLE );	
+		wfLoadExtensionMessages( self::TITLE );
 	}
-	
+
 	/*
 	 * main function - check request params and set defaults
 	 * 
 	 * @access public
 	 * 
 	 * show form 
-	 */		
+	 */
 	public function execute( $subpage ) {
 		global $wgUser, $wgOut, $wgRequest, $wgCityId;
 
@@ -51,13 +51,13 @@ class Listusers extends SpecialPage {
 			$wgOut->readOnlyPage();
 			return;
 		}
-		
+
 		/**
 		 * defaults
 		 */
 		$this->mCityId = $wgCityId;
-		$this->mDefGroups = array( self::DEF_GROUP_NAME, 'bot', 'sysop', 'rollback', 'bureaucrat' );					
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, self::TITLE );		
+		$this->mDefGroups = array( self::DEF_GROUP_NAME, 'bot', 'sysop', 'rollback', 'bureaucrat', 'fb-user' );
+		$this->mTitle = Title::makeTitle( NS_SPECIAL, self::TITLE );
 		$this->mAction = $this->mTitle->escapeLocalURL("");	 
 		$this->mContribs = array( 
 			0 	=> wfMsg('listusersallusers'),
@@ -68,7 +68,7 @@ class Listusers extends SpecialPage {
 			50 	=> wfMsg('listusers-50contributions'),
 			100 => wfMsg('listusers-100contributions')
 		);
-		
+
 		/**
 		 * initial output
 		 */
@@ -97,13 +97,13 @@ class Listusers extends SpecialPage {
 				$this->mDefGroups = array( $subpage );
 			}
 		}
-		
+
 		$this->mDefContrib = is_null($this->mDefContrib) ? self::DEF_EDITS : $this->mDefContrib;
 
 		/* listusersHelper */
 		$this->mData = new ListusersData($this->mCityId);
 		$this->mData->setFilterGroup( $this->mDefGroups );
-		$this->mGroups = $this->mData->getGroups();	
+		$this->mGroups = $this->mData->getGroups();
 
 		/**
 		 * show form
@@ -118,15 +118,15 @@ class Listusers extends SpecialPage {
 	 * @access public
 	 * 
 	 * show form 
-	 */		
+	 */
 	function showForm ( $error = "" ) {
 		global $wgOut, $wgContLang, $wgExtensionsPath, $wgJsMimeType, $wgStyleVersion, $wgStylePath, $wgUser;
-		
+
 		wfProfileIn( __METHOD__ );
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Listusers/js/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/Listusers/css/table.scss' ) );
-		
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"error"				=> $error,
