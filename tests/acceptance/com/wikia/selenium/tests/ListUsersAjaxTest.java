@@ -8,7 +8,7 @@ public class ListUsersAjaxTest extends BaseTest {
 
 	@Test(groups={"CI"})
 	public void testListUsersAjax() throws Exception {
-		session().open("index.php?title=Special:ListUsers&group=bot");
+		session().open("index.php?title=Special:ListUsers");
 		session().waitForPageToLoad(this.getTimeout());
 		session().type("lu_search", getTestConfig().getString("ci.user.wikiabot.username"));
 		session().select("lu_contributed", "label=all users");

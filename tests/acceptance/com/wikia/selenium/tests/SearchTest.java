@@ -38,6 +38,10 @@ public class SearchTest extends BaseTest {
 		
 		// check what page you land on
 		assertTrue(session().getLocation().contains("wiki/Main_Page"));
-		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h1"), "Main Page");
+		System.out.println(session().getText("//header[@id='WikiaPageHeader']/h1"));
+		System.out.println(session().getEval("window.wgSitename"));
+		assertTrue(session().getText("//header[@id='WikiaPageHeader']/h1").equals("Main Page")
+			|| session().getText("//header[@id='WikiaPageHeader']/h1").equals(session().getEval("window.wgSitename"))
+		);
 	}
 }

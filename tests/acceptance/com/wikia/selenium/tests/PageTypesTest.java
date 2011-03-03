@@ -178,8 +178,12 @@ public class PageTypesTest extends BaseTest {
 		// user subpage (catch HTTP 404)
 		try {
 			session().open("index.php?title=User:" + getTestConfig().getString("ci.user.regular.username") + "/Subpage");
-		} catch(Exception e) {};
-		session().waitForPageToLoad(this.getTimeout());
+			session().waitForPageToLoad(this.getTimeout());
+		} catch(Exception e) {
+			loginAsRegular();
+			editArticle("User:" + getTestConfig().getString("ci.user.regular.username") + "/Subpage", "Lorem ipsum");
+			logout();
+		};
 
 		// page title
 		assertTrue(session().isElementPresent("//h1[text()='" + getTestConfig().getString("ci.user.regular.username") + "/Subpage']"));
