@@ -42,7 +42,7 @@ class SMWAdmin extends SpecialPage {
 		$this->setHeaders();
 
 		/**** Get status of refresh job, if any ****/
-		$dbr = wfGetDB( DB_SLAVE, 'smw' );
+		$dbr = wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow( 'job', '*', array( 'job_cmd' => 'SMWRefreshJob' ), __METHOD__ );
 		if ( $row !== false ) { // similar to Job::pop_type, but without deleting the job
 			$title = Title::makeTitleSafe( $row->job_namespace, $row->job_title );
@@ -85,7 +85,7 @@ class SMWAdmin extends SpecialPage {
 					$wgOut->addHTML( '<p>' . wfMsg( 'smw_smwadmin_updatenotstarted' ) . '</p>' );
 				}
 			} elseif ( $sure == 'stop' ) {
-				$dbw = wfGetDB( DB_MASTER, 'smw' );
+				$dbw = wfGetDB( DB_MASTER );
 				// delete (all) existing iteration jobs
 				$dbw->delete( 'job', array( 'job_cmd' => 'SMWRefreshJob' ), __METHOD__ );
 				$wgOut->addHTML( '<p>' . wfMsg( 'smw_smwadmin_updatestopped' ) . '</p>' );
@@ -152,4 +152,3 @@ class SMWAdmin extends SpecialPage {
 	}
 
 }
-
