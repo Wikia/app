@@ -60,6 +60,7 @@ $(function () {
 
 				if (isEnd > 0) {
 					//window.location.href = domain + 'wiki/Special:WikiBuilder';
+					ifr.remove();
 				} else if ( !(isError > 0) ) {
 					if (loop < 100) {
 						setTimeout(checkProcess, 2000);
