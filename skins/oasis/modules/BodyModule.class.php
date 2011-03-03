@@ -199,11 +199,11 @@ class BodyModule extends Module {
 			in_array($subjectNamespace, $wgContentNamespaces) ||
 			array_key_exists( $subjectNamespace, $wgExtraNamespaces ) ) {
 			// add any content page related rail modules here
-			
+
 			$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 			$railModuleList[1300] = array('LatestActivity', 'Index', null);
 			$railModuleList[1250] = array('LatestPhotos', 'Index', null);
-			
+
 			if($wgEnableSpotlightsV2_Rail) {
 				$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
 			}
@@ -246,7 +246,7 @@ class BodyModule extends Module {
 			else if (self::isHubPage()) {
 				if ($useTestBoxad) {
 					$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'TEST_TOP_RIGHT_BOXAD'));
-				} 
+				}
 				else {
 					$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'CORP_TOP_RIGHT_BOXAD'));
 				}
@@ -285,12 +285,12 @@ class BodyModule extends Module {
 			$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'));
 		}
 		$railModuleList[1430] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BUTTON'));
-		$railModuleList[1290] = array('Ad', 'Index', array('slotname' => 'MIDDLE_RIGHT_BOXAD'));
+		$railModuleList[1291] = array('Ad', 'Index', array('slotname' => 'MIDDLE_RIGHT_BOXAD'));
 		$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));
 		$railModuleList[1050] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_3'));
-		
+
 		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
-		
+
 		wfProfileOut(__METHOD__);
 
 		return $railModuleList;
@@ -314,7 +314,7 @@ class BodyModule extends Module {
 
 		$this->headerModuleAction = 'Index';
 		$this->headerModuleParams = array ('showSearchBox' => false);
-		
+
 		// Display comments on content and blog pages
 		if ( class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck() ) {
 			$this->displayComments = true;
