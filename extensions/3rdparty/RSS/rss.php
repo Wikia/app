@@ -36,18 +36,12 @@ $wgExtensionMessagesFiles['rss'] = dirname(__FILE__) . '/rss.i18n.php';
 require_once(dirname(__FILE__) . '/magpierss/rss_fetch.inc');
 
 // Avoid unstubbing $wgParser too early on modern (1.12+) MW versions, as per r35980
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	$wgHooks['ParserFirstCallInit'][] = 'wfRssExtension';
-} else {
-	$wgExtensionFunctions[] = 'wfRssExtension';
-}
+$wgHooks['ParserFirstCallInit'][] = 'wfRssExtension';
 
 #Extension hook callback function
-function wfRssExtension() {
-	global $wgParser;
-
+function wfRssExtension( $parser ) {
 	#Install parser hook for <rss> tags
-	$wgParser->setHook( 'rss', 'renderRss' );
+	$parser->setHook( 'rss', 'renderRss' );
 	return true;
 }
 
