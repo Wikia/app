@@ -33,6 +33,29 @@ function getPartnerWidgetKeywords() {
 			}
 
 			break;
+		case 'ipod': // apple.wikia.com
+			$cats = $wgOut->getCategories();
+			foreach ($cats as $cat) {
+				switch (strtolower($cat)) {
+					case 'apple hardware':
+					case 'apple lineup':
+					case 'macintosh ii':
+					case 'macintosh lc':
+					case 'mac models':
+					case 'modular macs':
+					case 'old stuff':
+					case 'portable computers':
+					case 'portable macs':
+					case 'powerbook g4':
+					case 'power macintosh':
+					case 'power macintosh g3':
+					case 'power macintosh g4':
+						$keywords = $wgTitle->getText();
+						break 2; // break out of foreach
+					default:
+				}
+			}
+			break;
 		//case 'vintagepatterns':
 			//if ($wgTitle->getNamespace() == NS_CATEGORY) {
 				//$keywords = $wgTitle->getText();
