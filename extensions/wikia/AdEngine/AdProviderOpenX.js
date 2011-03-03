@@ -16,6 +16,7 @@ AdProviderOpenX.getUrl = function (baseUrl, slotname, zoneId, affiliateId, hub, 
 	url += "&skin_name=" + skin;
 	url += "&cont_lang=" + wgContentLanguage;
 	url += "&user_lang=" + wgUserLanguage;
+	url += "&browser_lang=" + AdProviderOpenX.getBrowserLang();
 	url += "&dbname=" + wgDB;
 	url += "&tags=" + wgWikiFactoryTagNames.join(",");
 	url += additionalParams;
@@ -42,6 +43,7 @@ AdProviderOpenX.getUrl2 = function() {
 	url += "&skin_name=" + skin;
 	url += "&cont_lang=" + wgContentLanguage;
 	url += "&user_lang=" + wgUserLanguage;
+	url += "&browser_lang=" + AdProviderOpenX.getBrowserLang();
 	url += "&dbname=" + wgDB;
 	url += "&tags=" + escape(wgWikiFactoryTagNames.join(","));
 	url += "&block=1";
@@ -51,6 +53,13 @@ AdProviderOpenX.getUrl2 = function() {
 
 	return AdProviderOpenX.url2;
 }
+
+// stolen from liftium
+AdProviderOpenX.getBrowserLang = function () {
+	var n = window.navigator;
+	var l = n.language || n.systemLanguage || n.browserLanguage || n.userLanguage || "xx_unknown";
+	return l.substring(0,2);
+};
 
 if (!wgNoExternals && wgEnableOpenXSPC) {
 	setTimeout(function() {
