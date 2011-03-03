@@ -38,11 +38,7 @@ if (!defined('MEDIAWIKI'))
 }
 
 //Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	$wgHooks['ParserFirstCallInit'][] = 'wfYouTube';
-} else {
-	$wgExtensionFunctions[] = 'wfYouTube';
-}
+$wgHooks['ParserFirstCallInit'][] = 'wfYouTube';
 
 // Initialize magic word for the parserfunction(s).
 $wgHooks['LanguageGetMagic'][] = 'wfParserFunction_magic';
@@ -62,23 +58,21 @@ function wfParserFunction_magic(&$magicWords, $langCode){
 	return true;
 }
 
-function wfYouTube()
+function wfYouTube( $parser )
 {
-	global $wgParser;
+	$parser->setHook('youtube', 'embedYouTube');
+	$parser->setHook('gvideo',  'embedGoogleVideo');
+	$parser->setHook('aovideo', 'embedArchiveOrgVideo');
+	$parser->setHook('aoaudio', 'embedArchiveOrgAudio');
+	$parser->setHook('wegame', 'embedWeGame');
+	$parser->setHook('tangler', 'embedTangler');
+	$parser->setHook('gtrailer', 'embedGametrailers');
+	$parser->setHook('nicovideo', 'embedNicovideo');
+	$parser->setHook('ggtube', 'embedGoGreenTube');
+	$parser->setHook('cgamer', 'embedCrispyGamer');
+	$parser->setHook('longtail', 'embedLongtailVideo');
 
-	$wgParser->setHook('youtube', 'embedYouTube');
-	$wgParser->setHook('gvideo',  'embedGoogleVideo');
-	$wgParser->setHook('aovideo', 'embedArchiveOrgVideo');
-	$wgParser->setHook('aoaudio', 'embedArchiveOrgAudio');
-	$wgParser->setHook('wegame', 'embedWeGame');
-	$wgParser->setHook('tangler', 'embedTangler');
-	$wgParser->setHook('gtrailer', 'embedGametrailers');
-	$wgParser->setHook('nicovideo', 'embedNicovideo');
-	$wgParser->setHook('ggtube', 'embedGoGreenTube');
-	$wgParser->setHook('cgamer', 'embedCrispyGamer');
-	$wgParser->setHook('longtail', 'embedLongtailVideo');
-	
-	$wgParser->setFunctionHook( 'youtube', 'wfParserFunction_youTube' );
+	$parser->setFunctionHook( 'youtube', 'wfParserFunction_youTube' );
 
 	return true;
 }
