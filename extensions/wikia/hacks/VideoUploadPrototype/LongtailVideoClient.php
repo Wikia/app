@@ -4,7 +4,7 @@
  * Date: 20110211
  *
  * Client to use BitsOnTheRun by LongtailVideo.
- * 
+ *
  * For now this is being hacked together for a demo, so it is by no means complete.
  *
  * NOTE: This requires the $wgLongtailVideo_apiKey and $wgLongtailVideo_apiSecret globals
@@ -23,30 +23,29 @@ class LongtailVideoClient {
 
 	var $LV_API_URL;
 
-	public function __construct(){
-		$this->LV_API_PROTOCOL = "http";
-		$this->LV_API_SERVER = "api.bitsontherun.com";
-		$this->LV_API_VERSION = "v1";
-		$this->LV_API_FORMAT = "php";
-		//$this->LV_API_FORMAT = "xml";
+	public function __construct() {
+		$this->LV_API_PROTOCOL = 'http';
+		$this->LV_API_SERVER = 'api.bitsontherun.com';
+		$this->LV_API_VERSION = 'v1';
+		$this->LV_API_FORMAT = 'php';
 
-		$this->LV_API_URL = $this->LV_API_PROTOCOL . "://" . $this->LV_API_SERVER . "/" . $this->LV_API_VERSION;
+		$this->LV_API_URL = $this->LV_API_PROTOCOL . '://' . $this->LV_API_SERVER . '/' . $this->LV_API_VERSION;
 	} // end constructor
 
 	/**
 	 * Wrapper for the /videos/create call which returns data which can then be used in an upload form (or a post)
 	 * to send the actual video-file to Longtail.
 	 */
-	public function videos_create($title="", $tags="", $description=""){
+	public function videos_create($title='', $tags='', $description=''){
 		wfProfileIn( __METHOD__ );
 
 		$data = array(
-			"title" => $title,
-			"tags" => $tags,
-			"description" => $description
+			'title' => $title,
+			'tags' => $tags,
+			'description' => $description
 		);
-		
-		$result = $this->makeCall("/videos/create", $data);
+
+		$result = $this->makeCall('/videos/create', $data);
 
 		wfProfileOut( __METHOD__ );
 		return $result;
@@ -59,34 +58,36 @@ class LongtailVideoClient {
 	private function makeCall($callPath, $data=array()){
 		global $wgLongtailVideo_apiKey;
 		wfProfileIn( __METHOD__ );
-	
-		$data["api_key"] = $wgLongtailVideo_apiKey;
-		$data["api_timestamp"] = time();
-		$data["api_nonce"] = $this->getNonce();
-		$data["api_format"] = $this->LV_API_FORMAT;
+
+		$data['api_key'] = $wgLongtailVideo_apiKey;
+		$data['api_timestamp'] = time();
+		$data['api_nonce'] = $this->getNonce();
+		$data['api_format'] = $this->LV_API_FORMAT;
 
 		// This must be done after all other data has been set.
 		$this->signRequest($data);
-		
+
 		// Make the call and turn the response into a value.
-		$url = $this->LV_API_URL . $callPath . "?" . http_build_query($data);
+		$url = $this->LV_API_URL . $callPath . '?' . http_build_query($data);
+
 		$result = Http::get( $url );
-// TODO: Error-handling.
-		if($result === false){
+
+		//TODO: Error-handling.
+		if ($result === false){
 		} else {
 			$result = unserialize( $result );
 		}
-		
-		
+
+
 		wfProfileOut( __METHOD__ );
 		return $result;
 	} // end makeCall()
-	
+
 	/**
 	 * Return an 8-digit random number to be used as the API-nonce (helps prevent replay-attacks).
 	 */
 	private function getNonce(){
-		return sprintf("%08d", mt_rand(0, 99999999));
+		return sprintf('%08d', mt_rand(0, 99999999));
 	}
 
 	/**
@@ -99,7 +100,7 @@ class LongtailVideoClient {
 	private function signRequest(&$data){
 		global $wgLongtailVideo_apiSecret;
 		wfProfileIn( __METHOD__ );
-		
+
 		// Urlencode all params
 		foreach($data as $key => $val){
 			if($key != urlencode($key)){
@@ -119,7 +120,7 @@ class LongtailVideoClient {
 		// Calculate the sha1() of the string and the API shared secret.
 		$signature = sha1($queryString . $wgLongtailVideo_apiSecret);
 
-		$data["api_signature"] = $signature;
+		$data['api_signature'] = $signature;
 
 		wfProfileOut( __METHOD__ );
 	} // end getSignature()
