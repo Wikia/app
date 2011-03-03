@@ -12,13 +12,13 @@ class CorporatePageHelper{
 	*/
 	static function clearMessageCache(&$article){
 		global $wgMemc;
-		
-		$title = strtolower($article->getTitle()); 
+
+		$title = strtolower($article->getTitle());
 		if (! (strpos($title, "mediawiki:") === 0 )){
 			return true;
 		}
-		
-		$CorporatePageMessageList = 
+
+		$CorporatePageMessageList =
 			array(	'corporatepage-footer-middlecolumn',
 					'corporatepage-footer-bottom',
 					'corporatepage-footer-rightcolumn',
@@ -28,9 +28,9 @@ class CorporatePageHelper{
 					'corporatepage-sidebar',
 					'corporatepage-wikia-whats-up',
 					'corporatepage-test-msg' );
-	
 
-		wfRunHooks( 'CorporateBeforeMsgCacheClear', array( &$CorporatePageMessageList ) ); 
+
+		wfRunHooks( 'CorporateBeforeMsgCacheClear', array( &$CorporatePageMessageList ) );
 
 		foreach ($CorporatePageMessageList as $value) {
 			$value = wfMemcKey( "hp_msg_parser", strtolower(  $value  ) ) ;
@@ -38,7 +38,7 @@ class CorporatePageHelper{
 		}
 		return true;
 	}
-	
+
 
 	static function jsVars($vars){
 		global $wgUser;
@@ -75,8 +75,8 @@ class CorporatePageHelper{
 		$dbw->commit();
 		return $response;
 	}
-	
-		
+
+
 
 	/*
 	 * parseMsg
@@ -85,7 +85,7 @@ class CorporatePageHelper{
 	 *
 	 * @author Tomek
 	 */
-	
+
 	static public function parseMsg($msg,$isFavicon = false){
 		global $wgMemc, $wgArticlePath;
 		$mcKey = wfMemcKey( "hp_msg_parser", strtolower( $msg ) );
@@ -93,21 +93,21 @@ class CorporatePageHelper{
 		if ( is_array($out) ){
 			return $out;
 		}
-        wfProfileIn( __METHOD__ );     
+        wfProfileIn( __METHOD__ );
 		$message = wfMsgForContent($msg);
 		$lines = explode("\n",$message);
 		$out = array();
 		foreach($lines as $v){
 			if (preg_match("/^([\*]+)([^|]+)\|(((.*)\|(.*))|(.*))$/",trim($v),$matches)){
 				$param = "";
-				
+
 				if (!empty($matches[5])){
 					$param = $matches[6];
 					$title = trim($matches[5]);
 				} else {
 					$title = trim($matches[3]);
 				}
-					
+
 				if (strlen($matches[1]) == 1){
 					$matches[2] = trim($matches[2]);
 					if (preg_match('/^(?:' . wfUrlProtocols() . ')/', $matches[2])) {
@@ -117,7 +117,7 @@ class CorporatePageHelper{
 					}
 					$out[] = array("title" => $title, 'href' => $href, 'sub' => array());
 				}
-			
+
 				if (strlen($matches[1]) == 2){
 					if (count($out) > 0){
 						if ($isFavicon){
@@ -137,22 +137,22 @@ class CorporatePageHelper{
 			$out[count($out)-1]['islast'] = true;
 		}
 		$wgMemc->set( $mcKey, $out, 60*60*12);
-        wfProfileOut( __METHOD__ );     
+        wfProfileOut( __METHOD__ );
 		return $out;
 	}
-	
+
 	/*
 	 *
-	 * message parsers for menu and etc., with images  
+	 * message parsers for menu and etc., with images
 	 *
 	 * @author Tomek
 	 */
-	
+
 	static public function parseMsgImg($msg, $descThumb = false){
 		global $wgMemc, $wgLang;
 
 		$lang = $wgLang->getCode();
-		$mcKey = wfMemcKey( "hp_msg_parser", strtolower( $msg ), $lang );
+		$mcKey = wfMemcKey( "hp_msg_parser", strtolower( $msg ) );
 		$out = $wgMemc->get( $mcKey );
 		if ( is_array( $out ) ){
 			return $out;
@@ -160,7 +160,7 @@ class CorporatePageHelper{
 
 		wfProfileIn( __METHOD__ );
 
-		$message = wfMsg($msg);
+		$message = wfMsgForContent($msg);
 		$lines = explode("\n",$message);
 		$out = array();
 		foreach($lines as $v){
@@ -169,7 +169,7 @@ class CorporatePageHelper{
 			} else {
 				$str = "/^([\*]+)([^|]+)\|([^|]+)\|(((.*)\|(.*))|(.*))$/";
 			}
-				
+
 			if (preg_match($str,trim($v),$matches)){
 				if (strlen($matches[1]) == 1){
 					if ($descThumb){
@@ -192,18 +192,18 @@ class CorporatePageHelper{
 		}
 		$wgMemc->set( $mcKey, $out, 60*60*12);
 
-		wfProfileOut( __METHOD__ );         
+		wfProfileOut( __METHOD__ );
 		return $out;
 	}
 
 	/*
 	 * getImageName
 	 *
-	 * find media wiki image path 
+	 * find media wiki image path
 	 *
 	 * @author Tomek
 	 */
-	
+
 	private static function getImageName($name){
 		global $wgStylePath;
 		$image = Title::newFromText($name);
@@ -214,24 +214,24 @@ class CorporatePageHelper{
 		}
 		return $imageName;
 	}
-	
+
 	/*
 	 * ArticleFromTitle
 	 *
-	 * force page reload 
+	 * force page reload
 	 *
 	 * @author Tomek
-	 */	
-	
+	 */
+
 	public static function forcePageReload($modifiedTimes){
-		global $wgTitle; 
+		global $wgTitle;
 		$mainPage =  Title::newMainPage();
-		
+
 		if ($mainPage->getText() == $wgTitle->getText()){
-			$modifiedTimes['page'] = wfTimestamp( TS_MW );	
+			$modifiedTimes['page'] = wfTimestamp( TS_MW );
 		}
-		
-		return true;	
+
+		return true;
 	}
 
 	/*
@@ -249,7 +249,7 @@ class CorporatePageHelper{
 		}
 		wfProfileIn(__METHOD__);
 
-		
+
 		switch ($title->getNamespace()) {
 			case NS_USER:
 			case NS_USER_TALK:
@@ -302,7 +302,7 @@ class CorporatePageHelper{
 			wfProfileOut(__METHOD__);
 			return true;
 		}
-		
+
 		if (!empty($redirect)) {
 			header("Location: $redirect");
 			wfProfileOut(__METHOD__);
