@@ -147,6 +147,5 @@ var CreateWikiaPoll = {
 
 	track: function(fakeUrl) {
 		window.jQuery.tracker.byStr('poll' + fakeUrl);
-	},
-
+	}
 };
