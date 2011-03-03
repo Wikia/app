@@ -33,7 +33,7 @@ public class CreateNewWikiTest extends BaseTest {
 		return wikiName;
 	}
 	
-	@Test(groups="oasis")
+	@Test(groups="envProduction")
 	public void testCreateWikiAsLoggedInUser() throws Exception {
 		loginAsStaff();
 		session().open("/wiki/Special:CreateNewWiki");
@@ -51,7 +51,7 @@ public class CreateNewWikiTest extends BaseTest {
 		waitForElementVisible("WikiWelcome", 60000);
 	}
 	
-	@Test(groups="oasis",dependsOnMethods={"testCreateWikiAsLoggedInUser"},alwaysRun=true)
+	@Test(groups="envProduction",dependsOnMethods={"testCreateWikiAsLoggedInUser"},alwaysRun=true)
 	public void testDeleteCreateWikiAsLoggedInUser() throws Exception {
 		loginAsStaff();
 		
@@ -60,7 +60,7 @@ public class CreateNewWikiTest extends BaseTest {
 		wikiName = null;
 	}
 
-	@Test(groups="oasis")
+	@Test(groups="envProduction")
 	public void testCreateWikiAsLoggedOutUser() throws Exception {
 		session().open("/wiki/Special:CreateNewWiki");
 		waitForElement("//input[@name='wiki-name']");
@@ -83,7 +83,7 @@ public class CreateNewWikiTest extends BaseTest {
 		waitForElementVisible("WikiWelcome", 60000);
 	}
 	
-	@Test(groups="oasis",dependsOnMethods={"testCreateWikiAsLoggedOutUser"},alwaysRun=true)
+	@Test(groups="envProduction",dependsOnMethods={"testCreateWikiAsLoggedOutUser"},alwaysRun=true)
 	public void testDeleteCreateWikiAsLoggedOutUser() throws Exception {
 		loginAsStaff();
 		
@@ -92,7 +92,7 @@ public class CreateNewWikiTest extends BaseTest {
 		wikiName = null;
 	}
 	
-	@Test(groups="oasis")
+	@Test(groups="envProduction")
 	public void testCreateWikiAsNewUser() throws Exception {
 		session().open("/wiki/Special:CreateNewWiki");
 		waitForElement("//input[@name='wiki-name']");
@@ -126,7 +126,7 @@ public class CreateNewWikiTest extends BaseTest {
 		waitForElementVisible("WikiWelcome", 60000);
 	}
 	
-	@Test(groups="oasis",dependsOnMethods={"testCreateWikiAsNewUser"},alwaysRun=true)
+	@Test(groups="envProduction",dependsOnMethods={"testCreateWikiAsNewUser"},alwaysRun=true)
 	public void testDeleteCreateWikiAsNewUser() throws Exception {
 		loginAsStaff();
 		
