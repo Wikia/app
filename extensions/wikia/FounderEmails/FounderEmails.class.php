@@ -42,7 +42,9 @@ class FounderEmails {
 	public function notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $wikiId = 0 ) {
 		global $wgPasswordSender;
 		$from = new MailAddress( $wgPasswordSender, 'Wikia' );
-		return $this->getWikiFounder( $wikiId )->sendMail( $mailSubject, $mailBody, $from, null, 'FounderEmails', $mailBodyHTML );
+ 		if ( $this->getWikiFounder( $wikiId )->getOption( 'founderemailsenabled' ) ) {
+			return $this->getWikiFounder( $wikiId )->sendMail( $mailSubject, $mailBody, $from, null, 'FounderEmails', $mailBodyHTML );
+		}
 	}
 
 	/**
@@ -54,9 +56,7 @@ class FounderEmails {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 
-		// Backward compatibility for opposite option ([..]disabled) prior to rt#44284 - SWC
-		if ( !$this->getWikiFounder()->getOption( 'founderemailsdisabled', false )
-			&& $this->getWikiFounder()->getOption( 'founderemailsenabled', true ) ) {
+ 		if ( $this->getWikiFounder()->getOption( 'founderemailsenabled' ) ) {
 			$event->create();
 			if ( $doProcess ) {
 				$this->processEvents( $event->getType(), true, $wgCityId );

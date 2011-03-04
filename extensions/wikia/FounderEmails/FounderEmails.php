@@ -52,7 +52,7 @@ $wgFounderEmailsExtensionConfig = array(
 $wgExtensionFunctions[] = 'wfFounderEmailsInit';
 
 function wfFounderEmailsInit() {
-	global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgAutoloadClasses, $wgFounderEmailsExtensionConfig;
+	global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgAutoloadClasses, $wgFounderEmailsExtensionConfig, $wgDefaultUserOptions;
 
 	$dir = dirname( __FILE__ ) . '/';
 
