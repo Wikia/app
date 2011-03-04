@@ -119,11 +119,16 @@ class CreateNewWikiModule extends Module {
 		} else {
 			$createWiki = new CreateWiki($params['wikiName'], $params['wikiDomain'], $params['wikiLanguage'], $params['wikiCategory']);
 			$createWiki->create();
-			$this->status = 'ok';
 			$this->cityId = $createWiki->getWikiInfo('city_id');
-			$this->siteName = $createWiki->getWikiInfo('sitename');
-			$finishCreateTitle = GlobalTitle::newFromText("FinishCreate", NS_SPECIAL, $this->cityId);
-			$this->finishCreateUrl = empty($wgDevelDomains) ? $finishCreateTitle->getFullURL() : str_replace('.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL());
+			if(empty($this->cityId)) {
+				$this->status = 'backenderror';
+				$this->statusMsg = wfMsg('databaseerror');
+			} else {
+				$this->status = 'ok';
+				$this->siteName = $createWiki->getWikiInfo('sitename');
+				$finishCreateTitle = GlobalTitle::newFromText("FinishCreate", NS_SPECIAL, $this->cityId);
+				$this->finishCreateUrl = empty($wgDevelDomains) ? $finishCreateTitle->getFullURL() : str_replace('.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL());
+			}
 		}
 		
 		

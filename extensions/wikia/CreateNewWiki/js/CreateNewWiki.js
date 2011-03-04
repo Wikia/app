@@ -14,6 +14,7 @@ var WikiBuilder = {
 	wntimer: false,
 	wdtimer: false,
 	createStatus: false,
+	createStatusMessage: false,
 	themestate: false,
 	cityId: false,
 	finishCreateUrl: false,
@@ -349,9 +350,11 @@ var WikiBuilder = {
 	
 	gotoMainPage: function() {
 		WikiBuilder.nextButtons.attr('disabled', true);
-		if(WikiBuilder.finishCreateUrl) {
+		if(WikiBuilder.createStatus && WikiBuilder.createStatus == 'ok' && WikiBuilder.finishCreateUrl) {
 			$.tracker.byStr('createnewwiki/complete');
 			location.href = WikiBuilder.finishCreateUrl;
+		} else if(WikiBuilder.createStatus && WikiBuilder.createStatus == 'backenderror') {
+			$.showModal(WikiBuilder.createStatusMessage, WikiBuilder.createStatusMessage);
 		} else if (WikiBuilder.retryGoto < 300) {
 			if(!WikiBuilder.finishSpinner.data('spinning')) {
 				WikiBuilder.finishSpinner.data('spinning', 'true');
@@ -378,9 +381,10 @@ var WikiBuilder = {
 				}
 			},
 			function(res) {
+				WikiBuilder.createStatus = res.status;
+				WikiBuilder.createStatusMessage = res.statusMsg;
 				WikiBuilder.cityId = res.cityId;
 				WikiBuilder.finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ? res.finishCreateUrl.replace('.com/','.com/wiki/') : res.finishCreateUrl);
-				WikiBuilder.createStatus = res.status;
 				$('#UpgradeWiki .wiki-name').html(res.siteName);
 			}
 		);
