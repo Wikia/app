@@ -12,6 +12,7 @@ class UADController extends WikiaController {
 	 * @var UAD
 	 */
 	protected $UAD = null;
+	protected $cookie = null;
 
 	public function __construct(WikiaApp $app, UAD $uad) {
 		$this->allowedRequests[ 'store' ] = array( 'json' );
@@ -25,32 +26,32 @@ class UADController extends WikiaController {
 		$this->store();
 	}
 
-	protected function fetchEventsFromCookie( $token ) {
-		$cookie = array( 'token' => null, 'date', 'events' => array( 1 => array( 'type' => 'VISIT', 'date' => '2011-03-02 12:00:00' ) ) );
-
+	protected function fetchCookie() {
+		$this->cookie = array( 'token' => null, 'date' => date('Y-m-d'), 'events' => array( 1 => array( 'type' => 'VISIT' ) ) );
 		// @todo disabled until fronted will be ready
-		//$cookie = $this->app->getCookie( self::COOKIE_NAME );
-		if(empty($cookie)) {
+		//$this->cookie = $this->app->getCookie( self::COOKIE_NAME );
+		if( empty($this->cookie) ) {
 			throw new WikiaException('UAD Cookie not found');
-		}
-		else {
-			$events = $cookie[ 'events' ];
-			$date = $cookie[ 'date' ];
-			$this->UAD->storeEvents( $token, $date, $events );
-			$this->purgeEventsFromCookie( $cookie );
-
-			return $events;
 		}
 	}
 
-	protected function purgeEventsFromCookie( $cookie ) {
-		$cookie[ 'events' ] = array();
+	protected function fetchEventsFromCookie( $token ) {
+		$events = $this->cookie[ 'events' ];
+		$date = $this->cookie[ 'date' ];
+		$this->UAD->storeEvents( $token, $date, $events );
+		$this->purgeEventsFromCookie();
+	}
+
+	protected function purgeEventsFromCookie() {
+		$this->cookie[ 'events' ] = array();
 		// @todo disabled until fronted will be ready
-		//$this->app->setCookie( self::COOKIE_NAME, $cookie );
+		//$this->app->setCookie( self::COOKIE_NAME, $this->cookie );
 	}
 
 	public function store() {
-		$token = $this->getRequest()->getVal('token');
+		$this->fetchCookie();
+
+		$token = $this->cookie['token'];
 		if(empty($token)) {
 			$token = $this->UAD->createToken();
 		}
