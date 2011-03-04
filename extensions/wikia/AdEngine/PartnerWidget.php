@@ -19,13 +19,20 @@ function getPartnerWidgetKeywords() {
 	switch ($wgDBname) {
 		case 'hotwheels':
 			$HOTWHEELS = 'Hot Wheels';
+			$LIST_OF = 'List of ';
 			$CATEGORY_PREFIX_HOTWHEELSBY = 'Hot Wheels by';
 			$CATEGORY_PREFIX_HOTWHEELSBY = 'Hot Wheels by';
 
 			$keywords = $wgTitle->getText();
-			$hotwheelsbyPos = stripos($keywords, $CATEGORY_PREFIX_HOTWHEELSBY);
-			if ($hotwheelsbyPos !== FALSE) {
-				$keywords = substr($keywords, $hotwheelsbyPos+strlen($CATEGORY_PREFIX_HOTWHEELSBY));
+
+			if (stripos($keywords, $LIST_OF) === 0) {
+				$keywords = substr($keywords, strlen($LIST_OF));
+			}
+			else {
+				$hotwheelsbyPos = stripos($keywords, $CATEGORY_PREFIX_HOTWHEELSBY);
+				if ($hotwheelsbyPos !== FALSE) {
+					$keywords = substr($keywords, $hotwheelsbyPos+strlen($CATEGORY_PREFIX_HOTWHEELSBY));
+				}
 			}
 
 			if (stripos($keywords, $HOTWHEELS) === FALSE) {
