@@ -166,6 +166,15 @@ class WikiaApp {
 	}
 
 	/**
+	 * get cookie
+	 * @param string $key
+	 * @return mixed
+	 */
+	public function getCookie( $key ) {
+		return $this->isCookie( $key ) ? $_COOKIE[ $key ] : null;
+	}
+
+	/**
 	 * set cookie
 	 * @deprecated
 	 * @param string $key
