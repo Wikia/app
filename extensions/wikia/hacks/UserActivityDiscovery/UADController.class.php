@@ -25,13 +25,17 @@ class UADController extends WikiaController {
 		$this->store();
 	}
 
-	protected function fetchEventsFromCookie() {
-		$cookie = $this->app->getCookie( self::COOKIE_NAME );
+	protected function fetchEventsFromCookie( $token ) {
+		$cookie = array( 'token' => null, 'events' => array( 1 => array( 'type' => 'VISIT', 'date' => '2011-03-02 12:00:00' ) ) );
+
+		// @todo disabled until fronted will be ready
+		//$cookie = $this->app->getCookie( self::COOKIE_NAME );
 		if(empty($cookie)) {
 			throw new WikiaException('UAD Cookie not found');
 		}
 		else {
 			$events = $cookie[ 'events' ];
+			$this->UAD->storeEvents( $token, $events );
 			$this->purgeEventsFromCookie( $cookie );
 
 			return $events;
@@ -40,7 +44,8 @@ class UADController extends WikiaController {
 
 	protected function purgeEventsFromCookie( $cookie ) {
 		$cookie[ 'events' ] = array();
-		$this->app->setCookie( self::COOKIE_NAME, $cookie );
+		// @todo disabled until fronted will be ready
+		//$this->app->setCookie( self::COOKIE_NAME, $cookie );
 	}
 
 	public function store() {
@@ -49,7 +54,7 @@ class UADController extends WikiaController {
 			$token = $this->UAD->createToken();
 		}
 
-		$events = $this->fetchEventsFromCookie();
+		$events = $this->fetchEventsFromCookie( $token );
 
 		$this->getResponse()->setVal( 'token', $token );
 	}
