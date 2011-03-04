@@ -37,21 +37,19 @@ function printWikiaIrcGatewayLoginForm( $input, $argv ) {
 	wfLoadExtensionMessages('WikiaIrcGateway');
 
 	$output = '<div id="ircform_container">
-<form id="ircform" method="post" action="http://irc.wikia.com/irc.cgi" name="loginform">
-	<input type="hidden" name="interface" value="nonjs">
-	<input type="hidden" name="Server" value="irc.freenode.net" disabled="1">
+<form id="ircform" method="get" action="http://irc.wikia.com/" name="loginform">
 	<table>
 		<tr>
 			<td> ' . wfMsg('ircgate-username') . '</td>
 			<td>
-				<input type="text" name="Nickname" value="">
+				<input type="text" name="nick" value="">
 				<input type="submit" value="Login">
 			</td>
 		</tr>
 		<tr>
 			<td>' . wfMsg('ircgate-channel') . '</td>
 			<td>
-				<select name="Channel">';
+				<select name="channels">';
 
 	$array = explode( "\n*", wfMsgForContent('ircgate-channellist') );
 
