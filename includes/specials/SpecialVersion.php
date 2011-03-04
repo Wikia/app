@@ -161,9 +161,14 @@ class SpecialVersion extends SpecialPage {
 		} else {
 			$wikia_release = '';
 		}
-		$wikia_revision = substr(substr('$Revision$', 11), 0, -2);
+		
+		if (preg_match('/\/(svn\/)?tags\/wikia-conf\/([^\/]+)/', $wgWikiaConfRevision, $matches)) {
+			$conf_release = $matches[2];
+		} else {
+			$conf_release = 'trunk';
+		}
 
-		return "$wikia_release (code r$wikia_revision, configuration r$wgWikiaConfRevision)";
+		return "Code: $wikia_release, Config: $conf_release";
 	}
 	
 	/**
