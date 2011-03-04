@@ -42,7 +42,7 @@ class CreateWiki {
 	const DEFAULT_DOMAIN       = "wikia.com";
 	const ACTIVE_CLUSTER       = "c3";
 	const DEFAULT_NAME         = "Wiki";
-	const DEFAULT_WIKI_TYPE    = "default";
+	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
 	const DEFAULT_WIKI_FAVICON = '$wgUploadPath/6/64/Favicon.ico';
 
@@ -372,7 +372,7 @@ class CreateWiki {
 		/**
 		 * define wiki type
 		 */
-		$wiki_type = ( !empty($this->mType) ) ? $this->mType : self::DEFAULT_WIKI_TYPE;
+		$wiki_type = ( !empty($this->mType) ) ? $this->mType : 'default';
 
 		/**
 		 * modify variables
@@ -1167,11 +1167,11 @@ class CreateWiki {
 			$wgUser = User::newFromName( 'CreateWiki script' );
 
 			foreach( $settings[$match] as $key => $value ) {
-				$success = WikiFactory::setVarById( $key, $this->mWikiId, $value );
+				$success = WikiFactory::setVarById( $key, $this->mNewWiki->city_id, $value );
 				if( $success ) {
-					wfDebugLog( "createwiki", __METHOD__ . ": Successfully added setting for {$this->mWikiId}: {$key} = {$value}\n", true );
+					wfDebugLog( "createwiki", __METHOD__ . ": Successfully added setting for {$this->mNewWiki->city_id}: {$key} = {$value}\n", true );
 				} else {
-					wfDebugLog( "createwiki", __METHOD__ . ": Failed to add setting for {$this->mWikiId}: {$key} = {$value}\n", true );
+					wfDebugLog( "createwiki", __METHOD__ . ": Failed to add setting for {$this->mNewWiki->city_id}: {$key} = {$value}\n", true );
 				}
 			}
 			$wgUser = $oldUser;
