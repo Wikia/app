@@ -36,7 +36,7 @@ function printWikiaIrcGatewayLoginForm( $input, $argv ) {
 
 	#only do this once per page;
 	global $GatewayOnPage;
-	if( !empty($GatewayOnPage) {
+	if( !empty($GatewayOnPage) ) {
 		return '';
 	}
 	$GatewayOnPage = true;
