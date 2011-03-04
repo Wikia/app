@@ -42,7 +42,7 @@ class CreateWiki {
 	const DEFAULT_DOMAIN       = "wikia.com";
 	const ACTIVE_CLUSTER       = "c3";
 	const DEFAULT_NAME         = "Wiki";
-	const DEFAULT_WIKI_TYPE    = "";
+	const DEFAULT_WIKI_TYPE    = "default";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
 	const DEFAULT_WIKI_FAVICON = '$wgUploadPath/6/64/Favicon.ico';
 
