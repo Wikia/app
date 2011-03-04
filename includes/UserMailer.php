@@ -114,8 +114,8 @@ class UserMailer {
 	 * @return mixed True on success, a WikiError object on failure.
 	 */
 	static function send( $to, $from, $subject, $body, $replyto=null, $contentType=null, $category='unknown' ) {
-		global $wgSMTP, $wgOutputEncoding, $wgErrorString, $wgEnotifImpersonal, $wgSchwartzMailer;
-		global $wgEnotifMaxRecips;
+		global $wgSMTP, $wgOutputEncoding, $wgErrorString, $wgEnotifImpersonal;
+		global $wgEnotifMaxRecips, $wgForceSendgridEmail, $wgForceSchwartzEmail;
 
 		if ( is_array( $to ) ) {
 			wfDebug( __METHOD__.': sending mail to ' . implode( ',', $to ) . "\n" );
@@ -151,7 +151,7 @@ class UserMailer {
 		}
 		/* Wikia change end */
 
-		if (is_array( $wgSMTP ) || is_array($wgSchwartzMailer )) {
+		if (is_array( $wgSMTP ) || $wgForceSendgridEmail || $wgForceSchwartzEmail) {
 			require_once( 'Mail.php' );
 
 			$msgid = str_replace(" ", "_", microtime());
@@ -194,16 +194,11 @@ class UserMailer {
 			/* Wikia change begin - @author: Sean Colombo */
 			// Create the mail object using the Mail::factory method
 			// Wikia: for now, if the email is to us, use the new system.
-			global $wgForceSendgridEmail, $wgForceSchwartzEmail;
-			$useSendgrid = ((strpos($headers['To'], "@wikia-inc.com") !== false)
-					|| (strpos($headers['To'], "@wikia.com") !== false)
-					|| (strpos($headers['To'], "@gmail.com") !== false)
-					|| (strpos($headers['To'], "@hotmail.com") !== false));
 
-			if ($wgForceSendgridEmail || (!$wgForceSchwartzEmail && $useSendgrid)) {
+			if ( $wgForceSendgridEmail ) {
 				$mail_object =& Mail::factory('wikiadb');
-			} else if ($wgForceSchwartzEmail || is_array($wgSchwartzMailer)) {
-				$mail_object =& Mail::factory('theschwartzhttp', $wgSchwartzMailer);
+			} else if ( $wgForceSchwartzEmail ) {
+				$mail_object =& Mail::factory('theschwartzhttp');
 			} else {
 				$mail_object =& Mail::factory('smtp', $wgSMTP);
 			}
@@ -300,15 +295,15 @@ class UserMailer {
 	 * @return mixed True on success, a WikiError object on failure.
 	 */
 	static function sendHTML( $to, $from, $subject, $body, $bodyHTML, $replyto=null, $category='unknown' ) {
-		global $wgSMTP, $wgSchwartzMailer;
+		global $wgSMTP, $wgForceSendgridEmail, $wgForceSchwartzEmail;
 
 		//unlike mail(), this function takes only one recipient at the time
 		if (is_array($to)) {
 			return new WikiError('Parameter $to can not be an array.');
 		}
 
-		if (!is_array($wgSMTP) && !is_array($wgSchwartzMailer)) {
-			return new WikiError('Sending via PHP mail() is not supported.');
+		if (!is_array($wgSMTP) && !$wgForceSendgridEmail && !$wgForceSchwartzEmail) {
+			return new WikiError('Sending HTML via PHP mail() is not supported.');
 		}
 
 		/* Send a message to the MQ */
@@ -373,16 +368,11 @@ class UserMailer {
 		/* Wikia change begin - @author: Sean Colombo */
 		// Create the mail object using the Mail::factory method
 		// Wikia: for now, if the email is to us, use the new system.
-		global $wgForceSendgridEmail, $wgForceSchwartzEmail;
-		$useSendgrid = ((strpos($headers['To'], "@wikia-inc.com") !== false)
-				|| (strpos($headers['To'], "@wikia.com") !== false)
-				|| (strpos($headers['To'], "@gmail.com") !== false)
-				|| (strpos($headers['To'], "@hotmail.com") !== false));
 
-		if ($wgForceSendgridEmail || (!$wgForceSchwartzEmail && $useSendgrid)){
+		if ( $wgForceSendgridEmail ){
 			$mail_object =& Mail::factory('wikiadb');
-		} else if ($wgForceSchwartzEmail || is_array( $wgSchwartzMailer )) {
-			$mail_object =& Mail::factory('theschwartzhttp', $wgSchwartzMailer);
+		} else if ( $wgForceSchwartzEmail ) {
+			$mail_object =& Mail::factory('theschwartzhttp');
 		} else {
 			$mail_object =& Mail::factory('smtp', $wgSMTP);
 		}
