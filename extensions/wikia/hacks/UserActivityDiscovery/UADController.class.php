@@ -26,7 +26,7 @@ class UADController extends WikiaController {
 	}
 
 	protected function fetchEventsFromCookie( $token ) {
-		$cookie = array( 'token' => null, 'events' => array( 1 => array( 'type' => 'VISIT', 'date' => '2011-03-02 12:00:00' ) ) );
+		$cookie = array( 'token' => null, 'date', 'events' => array( 1 => array( 'type' => 'VISIT', 'date' => '2011-03-02 12:00:00' ) ) );
 
 		// @todo disabled until fronted will be ready
 		//$cookie = $this->app->getCookie( self::COOKIE_NAME );
@@ -35,7 +35,8 @@ class UADController extends WikiaController {
 		}
 		else {
 			$events = $cookie[ 'events' ];
-			$this->UAD->storeEvents( $token, $events );
+			$date = $cookie[ 'date' ];
+			$this->UAD->storeEvents( $token, $date, $events );
 			$this->purgeEventsFromCookie( $cookie );
 
 			return $events;

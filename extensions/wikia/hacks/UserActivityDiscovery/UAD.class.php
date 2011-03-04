@@ -44,10 +44,10 @@ class UAD {
 	/**
 	 * @todo use scribe
 	 */
-	public function storeEvents( $token, Array $events ) {
+	public function storeEvents( $token, $date, Array $events ) {
 		$db = $this->getDb();
 		foreach( $events as $event ) {
-			$db->insert( self::EVENT_DB_NAME, array( 'uev_token' => $token, 'uev_type' => $event['type'], 'uev_date' => $event['date'] ), __METHOD__ );
+			$db->insert( self::EVENT_DB_NAME, array( 'uev_token' => $token, 'uev_type' => $event['type'], 'uev_date' => $date ), __METHOD__ );
 		}
 		$db->commit();
 	}
