@@ -34,6 +34,13 @@ function wfWikiaIrcGateway() {
 
 function printWikiaIrcGatewayLoginForm( $input, $argv ) {
 
+	#only do this once per page;
+	global $GatewayOnPage;
+	if( !empty($GatewayOnPage) {
+		return '';
+	}
+	$GatewayOnPage = true;
+	
 	wfLoadExtensionMessages('WikiaIrcGateway');
 
 	$output = '<div id="ircform_container">
