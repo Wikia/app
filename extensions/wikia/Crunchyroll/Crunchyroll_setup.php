@@ -47,7 +47,7 @@ $wgAutoloadClasses['CrunchyrollRSS']		= $dir . 'CrunchyrollRSS.class.php';
 $wgAutoloadClasses['CrunchyrollVideo']		= $dir . 'CrunchyrollVideo.class.php';
 $wgAutoloadClasses['CrunchyrollHelpers']	= $dir . 'CrunchyrollHelpers.class.php';
 $wgAutoloadClasses['CrunchyrollAjax']		= $dir . 'CrunchyrollAjax.class.php';
-$wgExtensionMessagesFiles['Crunchyroll']	= $dir . 'i18/Crunchyroll.i18n.php';
+$wgExtensionMessagesFiles['Crunchyroll']	= $dir . 'i18n/Crunchyroll.i18n.php';
 
 $wgSpecialPages['Crunchyroll']			= 'Crunchyroll';
 $wgSpecialPageGroups['Crunchyroll']		= 'wikia';
