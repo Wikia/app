@@ -28,7 +28,7 @@ function wfSetupMobileSearches(){
 	global $IP;
 	wfLoadExtensionMessages('SpecialMobileSearches');
 	require_once($IP . '/includes/SpecialPage.php');
-	SpecialPage::addPage(new SpecialPage('mobilesearches', 'mobilesearches', true, 'wfMobileSearches', false));
+	SpecialPage::addPage(new SpecialPage('MobileSearches', 'mobilesearches', true, 'wfMobileSearches', false));
 }
 
 function wfMobileSearches(){
