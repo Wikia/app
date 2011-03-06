@@ -29,5 +29,3 @@ $messages['en'] = array(
 			Discuss the [[LyricWiki_talk:SOAP|SOAP webservice]].\n
 			<br/><br/>\n"
 );
-
-?>
