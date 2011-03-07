@@ -159,7 +159,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mErrors       = 0;
 		
 		// redirect to the new create wiki.  use action or type query params to bypass.
-		if(empty($this->mAction) && empty($this->mType)) {
+		if(!($wgRequest->wasPosted()) && empty($this->mAction) && empty($this->mType)) {
 			$cnwTitle = Title::newFromText("CreateNewWiki", NS_SPECIAL);
 			$wgOut->redirect($cnwTitle->getFullURL().'?uselang='.$this->mLang);
 			return;
@@ -627,7 +627,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$wgDBadminpassword,
 				$this->mWikiData[ "dbname"]
 			);
-			$this->log("run mysql dump");
+			$this->log($cmd);
 			wfShellExec( $cmd );
 
 			$error = $dbwTarget->sourceFile( "{$IP}/maintenance/cleanupStarter.sql" );
