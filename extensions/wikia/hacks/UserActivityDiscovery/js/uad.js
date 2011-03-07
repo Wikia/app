@@ -1,3 +1,4 @@
+var wgUADTreshold = 0;
 
 var UADtracker = {
 
@@ -14,11 +15,13 @@ var UADtracker = {
 		var UADTag = UADtracker.getCookie();
 		$().log( UADTag, UADTag );
 		if ( UADTag.date ){
-			if ( UADTag.date == UADtracker.getCurrentDate() ){
-				UADtracker.addVisit();
-				UADtracker.addVisitedWikis();
-			} else {
-				UADtracker.update();
+			if ( wgUADTreshold < UADTag.priority ){
+				if ( UADTag.date == UADtracker.getCurrentDate() ){
+					UADtracker.addVisit();
+					UADtracker.addVisitedWikis();
+				} else {
+					UADtracker.update();
+				}
 			}
 		} else {
 			UADtracker.createCookie();
@@ -89,6 +92,7 @@ var UADtracker = {
 
 		var UADTag = UADtracker.getCookie();
 		UADTag.events.visitedWikis.push( wgCityId );
+		UADTag.events.visitedWikis = $.unique( UADTag.events.visitedWikis );
 		UADtracker.setCookieData( UADTag );
 	},
 
@@ -103,11 +107,13 @@ var UADtracker = {
 
 	getCookie: function(){
 
-		return jQuery.parseJSON( 
-			$.cookies.get( 
-				UADtracker.COOKIE_NAME
-			)
-		);
+		var cookieData = $.cookies.get( UADtracker.COOKIE_NAME );
+		
+		if ( cookieData !== "undefined" ){
+			return jQuery.parseJSON ( cookieData );
+		} else {
+			return false;
+		}
 	},
 
 	events: function( ev ){
