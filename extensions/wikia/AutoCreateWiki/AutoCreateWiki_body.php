@@ -627,7 +627,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$wgDBadminpassword,
 				$this->mWikiData[ "dbname"]
 			);
-			$this->log($cmd);
+			$this->log("run mysql dump");
 			wfShellExec( $cmd );
 
 			$error = $dbwTarget->sourceFile( "{$IP}/maintenance/cleanupStarter.sql" );
