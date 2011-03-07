@@ -158,10 +158,10 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mPostedErrors = array();
 		$this->mErrors       = 0;
 		
-		// if creation is in english, redirect to the new one
-		if($this->mLang == 'en') {
+		// redirect to the new create wiki.  use action or type query params to bypass.
+		if(empty($this->mAction) && empty($this->mType)) {
 			$cnwTitle = Title::newFromText("CreateNewWiki", NS_SPECIAL);
-			$wgOut->redirect($cnwTitle->getFullURL());
+			$wgOut->redirect($cnwTitle->getFullURL().'?uselang='.$this->mLang);
 			return;
 		}
 
