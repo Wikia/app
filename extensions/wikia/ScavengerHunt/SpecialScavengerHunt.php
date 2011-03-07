@@ -67,6 +67,7 @@ class SpecialScavengerHunt extends SpecialPage {
 
 
 		$this->out->addStyle($this->app->runFunction('wfGetSassUrl', 'extensions/wikia/ScavengerHunt/css/scavenger-special.scss'));
+		$this->out->addStyle($this->app->runFunction('wfGetSassUrl', 'extensions/wikia/ScavengerHunt/css/scavenger-game.scss'));
 		$this->out->addScriptFile($this->app->getGlobal('wgScriptPath') . '/extensions/wikia/ScavengerHunt/js/scavenger-special.js');
 		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
 
