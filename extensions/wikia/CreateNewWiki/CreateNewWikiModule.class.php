@@ -25,7 +25,7 @@ class CreateNewWikiModule extends Module {
 	var $skipWikiaPlus;
 
 	public function executeIndex() {
-		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgPageQuery;
+		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgPageQuery, $wgUser;
 		wfProfileIn( __METHOD__ );
 		
 		// hide some default oasis UI things
@@ -50,7 +50,7 @@ class CreateNewWikiModule extends Module {
 		// form field values
 		$hubs = WikiFactoryHub::getInstance();
 		$this->aCategories = $hubs->getCategories();
-		$useLang = $wgRequest->getVal('uselang');
+		$useLang = $wgRequest->getVal('uselang', $wgUser->getOption( 'language' ));
 		$this->params['wikiLanguage'] = empty($this->params['wikiLanguage']) ? $useLang: $this->params['wikiLanguage'];
 		$this->params['wikiLanguage'] = empty($useLang) ? $this->wgLanguageCode : $useLang;  // precedence: selected form field, uselang, default wiki lang
 		
