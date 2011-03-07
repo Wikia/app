@@ -10,7 +10,7 @@
 			</form>
 
 			<form method="post" enctype="multipart/form-data" id="VideoUploadFormFile">
-				<label><span>File:</span><input type="file" name="file"></label>
+				<label><span>File:</span><input type="file" name="file"><img src="<?= $wgStylePath ?>/common/images/ajax.gif" class="throbber" style="display:none"></label>
 				<label><span>Progress:</span><span class="progress-outer"><span id="progressInner">&nbsp;</span></span></label>
 			</form>
 
