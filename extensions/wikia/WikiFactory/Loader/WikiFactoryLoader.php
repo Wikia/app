@@ -709,6 +709,14 @@ class WikiFactoryLoader {
 						$this->LocalToGlobalArray( $tValue, $GLOBALS["wgTrustedMediaFormats"] );
 						break;
 				}
+				
+				if ($key == 'wgServer') {
+					$headers = getallheaders();
+					if (array_key_exists('X-Original-Host', $headers) &&
+						!empty($headers['X-Original-Host'])) {
+						$tValue = 'http://'.$headers['X-Original-Host'];
+					}
+				}
 
 				try {
 					if ( $this->mSaveDefaults ) {
