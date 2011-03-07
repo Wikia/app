@@ -7,8 +7,16 @@ class WikiaSpecialPageController extends WikiaController {
 	}
 
 	public function execute() {
-		$response = F::build('App')->dispatch( ( array( 'controller' => substr( get_class( $this ), 0, -10 ) ) + $_POST + $_GET ) );
-		F::build( 'App' )->getGlobal( 'wgOut' )->addHTML( (string) $response );
+		$app = F::build( 'App' );
+		$response = $app->dispatch( ( array( 'controller' => substr( get_class( $this ), 0, -10 ) ) + $_POST + $_GET ) );
+		if( $response->getFormat() == 'html' ) {
+			$app->getGlobal( 'wgOut' )->addHTML( (string) $response );
+		}
+		else {
+			$response->sendHeaders();
+			$response->printText();
+			exit;
+		}
 	}
 
 	public function __call( $method, $args ) {
