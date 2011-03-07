@@ -16,7 +16,7 @@ AdProviderOpenX.getUrl = function (baseUrl, slotname, zoneId, affiliateId, hub, 
 	url += "&skin_name=" + skin;
 	url += "&cont_lang=" + wgContentLanguage;
 	url += "&user_lang=" + wgUserLanguage;
-	url += "&browser_lang=X-BROWSER";
+	// varnish handles this url += "&browser_lang=X-BROWSER";
 	url += "&dbname=" + wgDB;
 	url += "&tags=" + wgWikiFactoryTagNames.join(",");
 	url += additionalParams;
@@ -43,7 +43,7 @@ AdProviderOpenX.getUrl2 = function() {
 	url += "&skin_name=" + skin;
 	url += "&cont_lang=" + wgContentLanguage;
 	url += "&user_lang=" + wgUserLanguage;
-	url += "&browser_lang=X-BROWSER";
+	// varnish handles this url += "&browser_lang=X-BROWSER";
 	url += "&dbname=" + wgDB;
 	url += "&tags=" + escape(wgWikiFactoryTagNames.join(","));
 	url += "&block=1";
