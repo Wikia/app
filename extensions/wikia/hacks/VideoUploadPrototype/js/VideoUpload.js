@@ -102,12 +102,7 @@ var VideoUpload = {
 						$('#VideoUploadEditorLoader').remove();
 
 						// mark editor dialog title node
-						if (skin == 'oasis') {
-							$('#VideoUploadEditor').children('h1').attr('id', 'VideoUploadEditorTitle');
-						} else {
-							$('#VideoUploadEditor').children('.modalTitle').
-								append('<span id="VideoUploadEditorTitle"></span>');
-						}
+						$('#VideoUploadEditor').children('h1').attr('id', 'VideoUploadEditorTitle');
 
 						VideoUpload.setupEditor(params);
 					},
@@ -143,7 +138,8 @@ var VideoUpload = {
 	onUpload: function() {
 		VideoUpload.log('onUpload');
 
-		//TODO: display throbber
+		// show throbber
+		$('#VideoUploadEditorPagesWrapper .throbber').show();
 
 		//grab info from 1st form
 		//TODO: add validation
@@ -164,13 +160,15 @@ var VideoUpload = {
 				if (formFile.find('input[name=file]').val()) {
 					VideoUpload.log('submitting file to ' + json.postUrl);
 					formFile.submit();
-					//TODO: call API to check and show upload progress
-					//http://developer.longtailvideo.com/botr/system-api/uploads.html#upload-progress-tracking-responses
 					VideoUpload.editor.timer = setTimeout('VideoUpload.checkProgressOfUpload("' + json.token + '")', 1000);
 				} else {
+					// show throbber
+					$('#VideoUploadEditorPagesWrapper .throbber').hide();
 					$.showModal('Error', 'Pick a file!');
 				}
 			} else {
+				// show throbber
+				$('#VideoUploadEditorPagesWrapper .throbber').hide();
 				$.showModal('Error', json.errorMsg);
 			}
 		});
@@ -202,6 +200,7 @@ var VideoUpload = {
 		);
 	},
 
+	// called from Special:VideoUploadHelper
 	uploadFinished: function(videoKey) {
 		clearTimeout(VideoUpload.editor.timer);
 		VideoUpload.log('Upload finished, videoKey:' + videoKey);

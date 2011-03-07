@@ -24,14 +24,15 @@ class VideoUploadAjax {
 	 * @author Marooned
 	 */
 	static public function getEditorDialog() {
-		global $wgExtensionMessagesFiles, $wgTitle, $wgRequest, $wgExtensionsPath;
+		global $wgExtensionMessagesFiles, $wgTitle, $wgRequest, $wgExtensionsPath, $wgStylePath;
 
 		wfProfileIn(__METHOD__);
 
 		// render dialog
 		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
 		$template->set_vars(array(
-			'wgExtensionsPath' => $wgExtensionsPath
+			'wgExtensionsPath' => $wgExtensionsPath,
+			'wgStylePath' => $wgStylePath
 		));
 		$html = $template->render('editorDialog');
 
