@@ -18,7 +18,7 @@ class UADTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCreatingToken() {
-		$dbMock = $this->getMock( 'DatabaseBase', array( 'insert', 'insertId', 'update', 'commit' ) );
+		$dbMock = $this->getMock( 'DatabaseMysql', array( 'insert', 'insertId', 'update', 'commit' ) );
 
 		$dbMock->expects( $this->once() )
 		       ->method( 'insert' )
@@ -48,7 +48,7 @@ class UADTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException WikiaException
 	 */
 	public function testCreatingTokenException() {
-		$dbMock = $this->getMock( 'DatabaseBase', array( 'insert', 'insertId', 'update', 'commit' ) );
+		$dbMock = $this->getMock( 'DatabaseMysql', array( 'insert', 'insertId', 'update', 'commit' ) );
 
 		$dbMock->expects( $this->once() )
 		       ->method( 'insert' )
@@ -88,7 +88,7 @@ class UADTest extends PHPUnit_Framework_TestCase {
 		$token = md5( self::TEST_TOKEN_ID);
 		$insertsNum = ( $events->visit > 0 ? 1 : 0 ) + count( $events->visitedWikis );
 
-		$dbMock = $this->getMock( 'DatabaseBase', array( 'insert', 'commit' ) );
+		$dbMock = $this->getMock( 'DatabaseMysql', array( 'insert', 'commit' ) );
 		if( $insertsNum > 0 ) {
 			$dbMock->expects( $this->exactly( $insertsNum ) )
 			       ->method( 'insert' )
