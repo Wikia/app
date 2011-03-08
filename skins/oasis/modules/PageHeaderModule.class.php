@@ -326,6 +326,9 @@ class PageHeaderModule extends Module {
 			case NS_SPECIAL:
 				$this->pageType = wfMsg('oasis-page-header-subtitle-special');
 
+				// remove comments button (fix FB#3404 - Marooned)
+				$this->comments = false;
+
 				// FIXME: use PageHeaderIndexAfterExecute hook or $wgSupressPageSubtitle instead
 				if($wgTitle->isSpecial('PageLayoutBuilderForm') || $wgTitle->isSpecial('PageLayoutBuilder') ) {
 					$this->displaytitle = true;
