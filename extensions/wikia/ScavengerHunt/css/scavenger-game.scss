@@ -75,5 +75,11 @@
 				border-color: $color-links;
 			}
 		}
+		&>textarea {
+			height: 60px;
+		}
+		&>input {
+			height: 22px;
+		}
 	}
 }
