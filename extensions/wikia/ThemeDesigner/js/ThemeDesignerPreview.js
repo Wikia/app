@@ -3,6 +3,8 @@ $(function() {
 });
 
 var ThemeDesignerPreview = {
+	link: null,
+
 	init: function() {
 		$("#WikiaArticle .thumbinner")
 			.first()
@@ -26,14 +28,11 @@ var ThemeDesignerPreview = {
 	loadSASS: function(url) {
 		//fade out
 		$("#clickmask").animate({"opacity": .65}, "fast", function() {
-			//mark old stylesheet(s) for removal
-			$(".ThemeDesignerPreviewSASS").addClass("remove");
-			//ajax request for new stylesheet
-			$.get(url, function(data) {
-				//add new stylesheet to head
-				$('<style class="ThemeDesignerPreviewSASS">' + data + '</style>').appendTo("head");
-				//remove marked stylesheets
-				$(".ThemeDesignerPreviewSASS.remove").remove();
+			$.getCSS(url, function(link) {
+				//remove old <link>
+				$(ThemeDesignerPreview.link).remove();
+				//save current <link>
+				ThemeDesignerPreview.link = link;
 				//fade in
 				$("#clickmask").animate({"opacity": 0}, "fast");
 			});
