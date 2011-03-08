@@ -235,7 +235,7 @@ class PageLayoutBuilderForm extends SpecialPage {
 				$formValue[$key] = $reqVal;
 			}
 		}
-
+		
 		$parser->forceFormValue($formValue);
 		$parser->forceFormErrors($this->formErrorsList);
 		if( empty( $this->pageId ) ) {
@@ -269,7 +269,12 @@ class PageLayoutBuilderForm extends SpecialPage {
 		}
 
 		
-		if( !empty( $this->pageId ) ) {
+		$this->isPreview = false;
+		if( $wgRequest->getVal("wpPreview", "") != "" ) {
+			$this->isPreview = true;
+		}
+		
+		if( !empty( $this->pageId ) && !$this->isPreview ) {
 			$pageTitle = Title::newFromID($this->pageId);
 			$oldValues = $parser->loadForm($pageTitle, $this->layoutTitle->getArticleId() );
 			
@@ -283,9 +288,7 @@ class PageLayoutBuilderForm extends SpecialPage {
 		$attribs = $tagValues + array("layout_id" => $this->layoutTitle->getArticleID(), 'cswikitext' => $wgRequest->getVal('csWikitext', '') );
 		$mwText = Xml::element("plb_layout", $attribs, '', false);
 
-		$this->isPreview = false;
-		if( $wgRequest->getVal("wpPreview", "") != "" ) {
-			$this->isPreview = true;
+		if( $this->isPreview ) {
 			$previewParser = new PageLayoutBuilderParser();
 			$parserOut = $previewParser->parseForArticlePreview($mwText, $this->mArticle->getTitle() );
 			$this->previewData = $parserOut->getText();
