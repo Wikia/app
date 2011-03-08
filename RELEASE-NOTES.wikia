@@ -1,4 +1,6 @@
 == Changes since release-011 ==
+* fb#3444: Theme Designer preview function broken (Marooned)
+* fb#3338: Scavenger hunt previews aren't working (Marooned)
 * fb#972: Community box text styling killed by something (macbre)
 * fb#954: Blogs: clicking "Show Changes" When Editing a Blog Saves Page (macbre)
 
