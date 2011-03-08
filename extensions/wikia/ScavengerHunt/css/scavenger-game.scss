@@ -24,7 +24,8 @@
 }
 
 .scavenger-clue-text {
-	font-size: 18px;
+	font-size: 16px;
+	line-height: 22px;
 	span {
 		color: $color-links;
 		display: inline-block;
@@ -35,7 +36,6 @@
 .scavenger-clue-button {
 	padding-top: 20px;
 	text-align: right;
-
 	a.button, input.wikia-button {
 		font-size: 18px;
 		height: auto;
@@ -46,6 +46,7 @@
 #scavengerClueModal, #scavengerGoodbyeModal {
 	h1, .modalContent {
 		border: none;
+		margin-bottom: 0;
 		margin-left: 100px;
 		padding: 10px;
 	}
