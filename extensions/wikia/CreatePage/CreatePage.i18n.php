@@ -881,7 +881,7 @@ Du kan gå til <a href="$1">$2</a> eller gi siden din et nytt navn',
 Vennligst bruk en annen tittel.',
 	'createpage-error-article-blocked' => 'Beklager, du kan ikke opprettet artikler akkurat nå.',
 	'tog-createpagedefaultblank' => 'Bruk en blank side som standard for å opprette en ny side',
-	'tog-createpagepopupdisabled' => 'Deaktiver sprett-oppvindu for opprettelse av side',
+	'tog-createpagepopupdisabled' => 'Deaktiver popup-vindu for opprettelse av side',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Skriv det første avsnittet i artikkelen din her.
 

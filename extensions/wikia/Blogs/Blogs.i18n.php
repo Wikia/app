@@ -2502,6 +2502,7 @@ $messages['ps'] = array(
  * @author Giro720
  * @author Hamilton Abreu
  * @author Luckas Blade
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'createblogpage' => 'Criar blogue',
@@ -2610,7 +2611,7 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 	'right-blog-comments-delete' => 'Eliminar comentários dos artigos dos blogues',
 	'right-blog-articles-edit' => 'Editar artigos dos blogues',
 	'right-blog-articles-move' => 'Mover artigos dos blogues',
-	'blogs-undeleted-comment' => 'Comentário recuperado da página de blogue $1',
+	'blogs-undeleted-comment' => 'Comentário recuperado para a página de blogue $1',
 	'blogs-recent-url-text' => 'Entradas recentes em blogues',
 	'blog-desc' => 'Entradas em blogues',
 	'blog-movepage-badtitle' => 'O título da entrada é inválido.',

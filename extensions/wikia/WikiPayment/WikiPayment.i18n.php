@@ -35,6 +35,18 @@ $messages['cs'] = array(
 	'wikipayment-paypal-profile-name' => 'Wiki je zaplacena',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'wikipayment-desc' => 'Ermöglicht die Zahlung pro Wiki um Anzeigen zu deaktivieren.',
+	'wikipayment-paypal-redirect' => 'Weiterleitung zu PayPal, bitte warten...',
+	'wikipayment-paypal-error' => 'PayPal-Zahlungsfehler (Code: $1)',
+	'wikipayment-paypal-return-ok' => 'PayPal-Zahlung erfolgreich',
+	'wikipayment-paypal-return-cancel' => 'PayPal-Zahlung storniert',
+	'wikipayment-paypal-profile-name' => 'Bezahltes Wiki',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */

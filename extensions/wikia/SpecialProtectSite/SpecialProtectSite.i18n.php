@@ -166,6 +166,7 @@ $messages['de'] = array(
 	'protectsite-until' => 'Geschützt bis:',
 	'protectsite-protect' => 'Schützen',
 	'protectsite-unprotect' => 'Freigeben',
+	'protectsite-nologs' => 'nicht in den Logs anzeigen',
 );
 
 /** Spanish (Español)
@@ -483,6 +484,7 @@ $messages['no'] = array(
 	'protectsite-until' => 'Beskyttet til:',
 	'protectsite-protect' => 'Beskytt',
 	'protectsite-unprotect' => 'Opphev beskyttelse',
+	'protectsite-nologs' => 'ikke vis i logger',
 );
 
 /** Deitsch (Deitsch)
@@ -578,6 +580,7 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Giro720
  * @author Luckas Blade
  */
@@ -603,6 +606,7 @@ $messages['pt-br'] = array(
 	'protectsite-until' => 'Sob proteção até:',
 	'protectsite-protect' => 'Proteger',
 	'protectsite-unprotect' => 'Desproteger',
+	'protectsite-nologs' => 'não mostrar nos registos',
 );
 
 /** Russian (Русский)

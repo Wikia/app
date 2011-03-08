@@ -85,6 +85,7 @@ $messages['cs'] = array(
  * @author The Evil IP address
  */
 $messages['de'] = array(
+	'search-desc' => 'Wikia-weite Suchengine, verwendet das Solr Backend',
 	'wikiasearch-titles-only' => 'Suche nur in Seitentiteln',
 	'wikiasearch-system-error-msg' => 'Aufgrund eines Systemfehlers konnte deine Suche nicht abgeschlossen werden',
 	'wikiasearch-search-this-wiki' => 'Nur Wikia Zentrale durchsuchen',

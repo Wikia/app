@@ -42,6 +42,17 @@ $messages['cs'] = array(
 	'timeago-second' => 'před 1 minutou',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'timeagomessaging-desc' => 'Stellt i18n für das jquery.timeago.js Plugin bereit',
+	'timeago-day' => 'vor {{PLURAL:$1|einem Tag|$1 Tagen}}',
+	'timeago-hour' => 'vor {{PLURAL:$1|einer Stunde|$1 Stunden}}',
+	'timeago-minute' => 'vor {{PLURAL:$1|einer Minute|$1 Minuten}}',
+	'timeago-second' => 'vor einer Minute',
+);
+
 /** Spanish (Español)
  * @author Bola
  */

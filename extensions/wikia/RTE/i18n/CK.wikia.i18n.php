@@ -464,11 +464,13 @@ $messages['de'] = array(
 	'rte-ck-media-edit' => 'ändern',
 	'rte-ck-modeSwitch-toSource' => 'Zum Quelltext-Modus wechseln',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Zum WYSIWYG-Modus wechseln',
+	'rte-ck-modeSwitch-error' => 'Es ist ein Fehler während des Moduswechsels aufgetreten. Bitte versuche es nochmal.',
 	'rte-ck-photoGallery-add' => 'Füge eine Foto-Galerie oder Diashow hinzu',
 	'rte-ck-photoGallery-confirmDelete' => 'Willst du diese Galerie wirklich von dieser Seite entfernen?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Diese Galerie entfernen?',
 	'rte-ck-photoGallery-tooltip' => 'Dies ist eine Galerie.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Dies ist eine Diashow.',
+	'rte-ck-poll-add' => 'Eine Umfrage hinzufügen',
 	'rte-ck-signature-add' => 'Deine Signatur hinzufügen',
 	'rte-ck-signature-label' => 'Signatur',
 	'rte-ck-table-alignNotSet' => 'Nicht festgelegt',
@@ -498,6 +500,9 @@ $messages['de'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Diesen Video-Platzhalter entfernen?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Dies ist ein Video-Platzhalter.',
 	'rte-ck-widescreen-toggle' => 'Breitbildformat umschalten',
+	'rte-ck-poll-confirmDelete' => 'Willst du diese Umfrage wirklich von dieser Seite entfernen?',
+	'rte-ck-poll-confirmDeleteTitle' => 'Diese Umfrage entfernen?',
+	'rte-ck-spellchecker-moreSuggestions' => 'Weitere Vorschläge',
 );
 
 /** Spanish (Español)
@@ -1241,6 +1246,7 @@ $messages['no'] = array(
 	'rte-ck-media-edit' => 'endre',
 	'rte-ck-modeSwitch-toSource' => 'Bytt til kildemodus',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Bytt til WYSIWYG-modus',
+	'rte-ck-modeSwitch-error' => 'En feil har oppstått under modusbyttet. Vennligst prøv igjen.',
 	'rte-ck-photoGallery-add' => 'Sett inn et billedgalleri eller en lysbildeserie',
 	'rte-ck-photoGallery-confirmDelete' => 'Er du sikker på at du vil fjerne galleriet fra denne siden?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Fjern dette galleriet?',
@@ -1276,6 +1282,9 @@ $messages['no'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Fjern denne videoplassholderen?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Dette er en videoplassholder.',
 	'rte-ck-widescreen-toggle' => 'Skru på fullskjermsmodus',
+	'rte-ck-poll-confirmDelete' => 'Er du sikker på at du vil fjerne denne avstemningen fra denne siden?',
+	'rte-ck-poll-confirmDeleteTitle' => 'Fjern denne avstemningen?',
+	'rte-ck-spellchecker-moreSuggestions' => 'Flere forslag',
 );
 
 /** Deitsch (Deitsch)

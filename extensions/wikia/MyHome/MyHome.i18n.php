@@ -1808,7 +1808,7 @@ Prøv det!',
 	'myhome-hot-spots-number-of-editors' => 'bidragsytere',
 	'myhome-log-in' => "<center>Mitt hjem-funksjonen er kun tilgjengelig om du er logget inn.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Logg inn for å se denne siden.]'''</big></center>",
 	'myhome-switch-to-monaco' => "WikiAktivitet-funksjonen er bare tilgjengelig om du bruker Wikia-utseendet.
-Hvis du vil se Mitt hjem, vennligst gå til '''[[Special:Preferences|instillingene dine]]''' for å endre utseendet.",
+Hvis du vil se Mitt hjem, vennligst gå til '''[[Special:Preferences|innstillingene dine]]''' for å endre utseendet.",
 	'myhome-namespace-blog' => 'Blogg',
 	'myhome-community-corner-header' => 'Fellesskapsbeskjeder',
 	'oasis-myhome-community-corner-edit' => 'rediger melding &gt;',

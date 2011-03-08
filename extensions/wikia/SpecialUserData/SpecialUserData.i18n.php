@@ -28,6 +28,22 @@ $messages['br'] = array(
 	'userdata-submit' => 'Tapout roadennoù',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'userdata' => 'Hole Benutzerdaten',
+	'userdata-userid-label' => 'Benutzer ID angeben:',
+	'userdata-submit' => 'Daten holen',
+	'specialuserdata-desc' => 'Stellt eine Schnittstelle zur Änderung von wgUserData pro Wiki bereit.',
+	'userdata-header' => 'wgUserData erhöhen',
+	'userdata-value' => 'Aktueller Wert von wgUserData ist "$1". Klick auf den Button, um sie auf den aktuellen Zeitstempel zu setzen.',
+	'userdata-updated' => 'wgUserData auf "$1" aktualisiert.',
+	'userdata-not-updated' => 'Aktualisieren von wgUserData fehlgeschlagen.',
+	'userdata-wf-reason' => 'Wert mit [[Special:UserData|UserData]] aktualisiert',
+	'userdata-no-wf' => 'WikiFactory ist in diesem Wiki nicht aktiviert. Kann wgUserData nicht verändern.',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -99,7 +115,24 @@ $messages['nl'] = array(
 	'userdata-no-wf' => 'WikiFactory is niet ingeschakeld voor deze wiki. Het is niet mogelijk wgUserData aan te passen.',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'userdata' => 'Hent brukerdata',
+	'userdata-userid-label' => 'Oppgi bruker-ID:',
+	'userdata-submit' => 'Hent data',
+	'specialuserdata-desc' => 'Gir et grensesnitt for endring av wgUserData per wiki.',
+	'userdata-header' => 'Øk wgUserData',
+	'userdata-value' => 'Nåværende verdi av wgUserData er «$1». Trykk på knappen for å sette den til gjeldende dato.',
+	'userdata-updated' => 'wgUserData oppdatert til «$1».',
+	'userdata-not-updated' => 'Kunne ikke oppdatere wgBrukerData.',
+	'userdata-wf-reason' => 'Verdi oppdatert via [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory er ikke aktivert på denne wikien. Kunne ikke endre wgUserData.',
+);
+
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -108,7 +141,7 @@ $messages['pt'] = array(
 	'userdata-submit' => 'Obter dados',
 	'specialuserdata-desc' => 'Fornece uma interface para alterar wgUserData por wiki.',
 	'userdata-header' => 'Aumentar wgUserData',
-	'userdata-value' => 'O valor atual de wgUserData é "$1". Carregue o botão para configurá-lo para a data e hora atuais.',
+	'userdata-value' => 'O valor atual de wgUserData é "$1". Clique o botão para configurá-lo para a data e hora atuais.',
 	'userdata-updated' => 'wgUserData atualizado para "$1".',
 	'userdata-not-updated' => 'Erro na atualização do wgUserData.',
 	'userdata-wf-reason' => 'Valor atualizado via [[Special:UserData|Dados de Utilizador]]',
@@ -124,8 +157,8 @@ $messages['pt-br'] = array(
 	'userdata-submit' => 'Obter dados',
 	'specialuserdata-desc' => 'Fornece uma interface para alterar wgUserData por wiki.',
 	'userdata-header' => 'Aumento wgUserData',
-	'userdata-value' => 'O valor atual de wgUserData é "$ 1". Pressione o botão para configurá-lo para timestamp atual.',
-	'userdata-updated' => 'wgUserData atualizado para "$ 1".',
+	'userdata-value' => 'O valor atual de wgUserData é "$1". Pressione o botão para configurá-lo para timestamp atual.',
+	'userdata-updated' => 'wgUserData atualizado para "$1".',
 	'userdata-not-updated' => 'Falha ao atualizar wgUserData.',
 	'userdata-wf-reason' => 'Valor atualizado via [[Special:UserData|UserData]]',
 	'userdata-no-wf' => 'WikiFactory não é permitido nesta wiki. Não é possível alterar wgUserData.',

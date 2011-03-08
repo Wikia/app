@@ -111,8 +111,8 @@ $messages['de'] = array(
 	'tagsreportnoresults' => 'Keine Ergebnisse gefunden',
 	'tagsreportmainnspace' => 'Seiten',
 	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|Seite|Seiten}})',
-	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|Seite|Seiten}} gefunden, die besondere Tags enthalten (dpl, youtube, etc.)',
-	'tagsreportgenerated' => 'Erzeugt am $1 $2',
+	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|Seite|Seiten}} gefunden, die einen besonderen Tag enthalten (DPL, YouTube, usw.)',
+	'tagsreportgenerated' => 'Erstellt am $1 um $2',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)

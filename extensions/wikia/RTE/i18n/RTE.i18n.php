@@ -142,6 +142,7 @@ $messages['de'] = array(
 * Probiere den neuen Editor doch aus, indem du deine [{{fullurl:Special:MyPage|action=edit}} Benutzerseite bearbeitest].
 * Falls du zurück zum alten Editor wechseln möchtest, kannst du das im ''Bearbeiten''-Reiter in deinen [[Special:Preferences#prefsection-4|Einstellungen]] tun.",
 	'rte-first-run-notice' => 'Wir haben einige Verbesserungen am Editor vorgenommen. [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news Lies die Mitteilung] um mehr zu erfahren.',
+	'prefs-rte' => 'Rich Text Editor',
 );
 
 /** Greek (Ελληνικά)
@@ -332,7 +333,7 @@ $messages['nl'] = array(
  */
 $messages['no'] = array(
 	'rte-desc' => 'CKeditor-integrering for MediaWiki',
-	'rte-no-js-fallback' => 'Den rike tekstredaktøren virker ikke når JavaScript er slått av. Vennligst enten slå det på i nettleseralternativene dine, eller besøk [[Special:Preferences|instillinger]] for å bytte til den gamle MediaWiki-redaktøren.',
+	'rte-no-js-fallback' => 'Den rike tekstredaktøren virker ikke når JavaScript er slått av. Vennligst enten slå det på i nettleseralternativene dine, eller besøk [[Special:Preferences|innstillinger]] for å bytte til den gamle MediaWiki-redaktøren.',
 	'rte-edgecase-info-title' => 'Kildemodus påkrevd',
 	'rte-edgecase-info' => 'Rik tekstredigering har blitt deaktivert fordi siden inneholder kompleks kode.',
 	'rte-edgecase-comment' => 'HTML-kommentarer',

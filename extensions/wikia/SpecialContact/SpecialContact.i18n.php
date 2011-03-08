@@ -59,9 +59,37 @@ $messages['br'] = array(
 
 /** German (Deutsch)
  * @author George Animal
+ * @author LWChris
  */
 $messages['de'] = array(
+	'contact' => 'Kontaktiere Wikia',
+	'specialcontact-wikia' => 'Kontaktiere Wikia',
+	'specialcontact-pagetitle' => 'Kontaktiere Wikia',
+	'specialcontact-intro' => 'Du kannst [[w:project:Staff|Wikia Personal]] über dieses Formular kontaktieren. Admins dieses Wikis kannst du [[Special:ListAdmins|hier]] finden.
+
+Zusätzliche Informationen über das Melden von Problemen auf Wikia findest du [[w:project:Report_a_problem|hier]], oder du kannst in den [[w:Forum:Index|Wikia-Community-Foren]] posten und um Hilfe bitten.
+
+Wenn du gewöhnliche E-Mails bevorzugst oder Anhänge hast, kannst du uns unter [mailto:community@wikia.com community@wikia.com] kontaktieren.',
+	'specialcontact-username' => 'Benutzername',
+	'specialcontact-wikiname' => 'Welches Wiki',
 	'specialcontact-realname' => 'Dein Name',
+	'specialcontact-yourmail' => 'E-Mail-Adresse',
+	'specialcontact-problem' => 'Betreff',
+	'specialcontact-problemdesc' => 'Nachricht',
+	'specialcontact-mail' => 'An Wikia senden',
+	'specialcontact-filledin' => 'Diese Informationen wurde deinen Konten-Einstellungen entnommen',
+	'specialcontact-ccme' => 'Schicke mir eine Kopie dieser Nachricht',
+	'specialcontact-ccdisabled' => 'Deaktiviert: Überprüfe bitte deine E-Mail-Adresse, um diese Funktion zu verwenden',
+	'specialcontact-notyou' => 'Nicht du?',
+	'specialcontact-captchainfo' => 'Bitte gib den Text auf dem Bild ein.',
+	'specialcontact-captchatitle' => 'Verschwommenes Wort',
+	'specialcontact-formtitle' => 'Wikia-Support-Mitarbeiter kontaktieren',
+	'specialcontact-nomessage' => 'Bitte gib eine Nachricht ein',
+	'specialcontact-captchafail' => 'Falscher oder fehlender Bestätigungscode.',
+	'specialcontact-mailsub' => 'Wikia-Kontakt-Mail',
+	'specialcontact-mailsubcc' => 'Kopie der Wikia-Kontakt-Mail',
+	'specialcontact-ccheader' => 'Dies ist eine Kopie deiner Nachricht, die an Wikia-Support gesendet wurde',
+	'specialcontact-submitcomplete' => 'Vielen Dank für die Kontaktaufnahme mit Wikia.',
 );
 
 /** Spanish (Español)
@@ -250,11 +278,34 @@ Als u liever gebruik maakt van e-mail of bijlagen wilt meesturen, stuur dan een 
  * @author Audun
  */
 $messages['no'] = array(
+	'contact' => 'Kontakt Wikia',
+	'specialcontact-wikia' => 'Kontakt Wikia',
+	'specialcontact-pagetitle' => 'Kontakt Wikia',
 	'specialcontact-intro' => 'Du kan kontakte [[w:project:Staff|Wikia-ledelsen]] ved hjelp av dette skjemaet. Administratorer på denne wikien kan bli funnet [[Special:ListAdmins|her]].
 
 Ytterligere informasjon om hvordan man rapporterer problemer til Wikia finnes [[w:project:Report_a_problem|her]], eventuelt kan du poste på [[w:Forum:Index|Wikias fellesskapsforum]] for brukerstøtte.
 
 Hvis du foretrekker å benytte deg av vanlig e-post eller har vedlegg, kan du kontakte oss på [mailto:community@wikia.com community@wikia.com].',
+	'specialcontact-username' => 'Brukernavn',
+	'specialcontact-wikiname' => 'Hvilke wiki',
+	'specialcontact-realname' => 'Ditt navn',
+	'specialcontact-yourmail' => 'E-postadresse',
+	'specialcontact-problem' => 'Emne',
+	'specialcontact-problemdesc' => 'Melding',
+	'specialcontact-mail' => 'Send til Wikia',
+	'specialcontact-filledin' => 'Denne informasjonen har blitt fylt ut fra kontoinnstillingene dine',
+	'specialcontact-ccme' => 'Send meg en kopi av denne meldingen',
+	'specialcontact-ccdisabled' => 'Deaktivert: Vennligst bekreft e-postadressen din for å bruke denne funksjonen',
+	'specialcontact-notyou' => 'Ikke deg?',
+	'specialcontact-captchainfo' => 'Vennligst skriv inn teksten i bildet.',
+	'specialcontact-captchatitle' => 'Uklart ord',
+	'specialcontact-formtitle' => 'Kontakt Wikias støttepersonell',
+	'specialcontact-nomessage' => 'Vennligst fyll ut en melding',
+	'specialcontact-captchafail' => 'Feil eller manglende bekreftelseskode.',
+	'specialcontact-mailsub' => 'Wikia kontakt-e-post',
+	'specialcontact-mailsubcc' => 'Kopi av Wikia kontakt-e-post',
+	'specialcontact-ccheader' => 'Dette er en kopi av meldingen som ble sendt til Wikias støttepersonell',
+	'specialcontact-submitcomplete' => 'Takk for at du kontaktet Wikia.',
 );
 
 /** Portuguese (Português)
@@ -298,9 +349,9 @@ $messages['pt-br'] = array(
 	'contact' => 'Contato Wikia',
 	'specialcontact-wikia' => 'Contato Wikia',
 	'specialcontact-pagetitle' => 'Contato Wikia',
-	'specialcontact-intro' => 'Você pode entrar em contato com a[[w:projeto:Staff |Wikia Staff]] usando este formulário. Administradores desta wiki podem ser encontrados [[Special:Listadmins|aqui]]. 
+	'specialcontact-intro' => 'Você pode entrar em contato com a [[w:project:Staff|Wikia Staff]] usando este formulário. Administradores desta wiki podem ser encontrados [[Special:ListAdmins|aqui]]. 
 
-Informações adicionais sobre como reportar problemas a Wikia podem ser encontrados  [[w:projeto:Report a problem|aqui]], ou você pode postar em algum [[w:Fórum:Índice|Fórum da Wikia]] para suporte ao usuário. 
+Informações adicionais sobre como reportar problemas a Wikia podem ser encontrados  [[w:project:Report_a_problem|aqui]], ou você pode postar em algum [[w:Forum:Index|Wikia Community Forums]] para suporte ao usuário. 
 
 Se você preferir utilizar o correio electrónico regular ou anexos, você pode nos contatar em [mailto:community@wikia.com community@wikia.com].',
 	'specialcontact-username' => 'Nome do Usuário',

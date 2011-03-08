@@ -79,10 +79,11 @@ Write the second section of your page here. Do not forget to add a category to h
 );
 
 /** Message documentation (Message documentation)
+ * @author Hamilton Abreu
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'owb-step4-plus-price' => '{{doc-important|The "double dollar sign" is correct. The first is for currency, the second is the parameter "$1" for the cost.}}',
+	'owb-step4-plus-price' => '{{doc-important|The "double dollar sign" is correct in the English message. The first is for currency, the second is the parameter "$1" for the cost.}}',
 );
 
 /** Breton (Brezhoneg)
@@ -196,9 +197,82 @@ Zde napište druhou sekci. Nezapomeňte stránku kategorizovat!',
 
 /** German (Deutsch)
  * @author George Animal
+ * @author LWChris
  */
 $messages['de'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Assistent zur Wiki-Erstellung]]',
+	'owb-title' => 'Wiki-Generator',
+	'owb-headline' => 'Hallo, $1',
+	'owb-button-skip' => 'Überspringen',
+	'owb-button-save-intro' => 'Intro speichern',
+	'owb-button-save-theme' => 'Design speichern',
+	'owb-button-save-pages' => 'Seiten speichern',
+	'owb-button-done' => 'Weiter zu deinem Wiki',
+	'owb-button-plus' => 'Wikia+Plus wählen',
+	'owb-step1' => 'Schritt 1',
+	'owb-step1-label' => 'Worum geht es?',
+	'owb-step1-label-formatted' => 'Worum<br />geht es?',
+	'owb-step1-instruction' => 'Schreibe eine kurze Einführung für deine Startseite. Formulier es bissig und lustig um andere zum Beitrag an deinem Projekt zu begeistern.',
+	'owb-step1-sample' => 'Beispiel Wiki-Startseite',
+	'owb-step2' => 'Schritt 2',
+	'owb-step2-label' => 'Wähle ein Design',
+	'owb-step2-label-formatted' => 'Wähle<br />ein Design',
+	'owb-step2-instruction1' => 'Es ist einfach, deinem Wiki ein einzigartiges Aussehen zu geben. Wähle einfach ein Design, das zu deinem Projekt passt.',
+	'owb-step2-instruction2' => 'Du kannst das Design jederzeit verändern oder selbst eins erstellen.',
+	'owb-step2-gallery' => 'Designkatalog',
+	'owb-step3' => 'Schritt 3',
+	'owb-step3-label' => 'Starte einige Seiten',
+	'owb-step3-label-formatted' => 'Starte<br />einige Seiten',
+	'owb-step3-instruction' => 'Um dein Wiki zu starten, musst du einige Seiten hinzufügen. Du kannst weitere hinzufügen wann immer du willst.',
+	'owb-step3-your-pages' => 'Deine Seitennamen',
+	'owb-step3-examples1-title' => 'Beispiel: Monster-Filme Seitenamen',
+	'owb-step3-examples1' => '<li>Frankenstein</li>
+<li>Der Wolfsmensch</li>
+<li>Das Tier</li>
+<li>Die Mumie</li>
+<li>House of Wax</li>
+<li>Das Ding aus dem Sumpf</li>',
+	'owb-step3-examples2-title' => 'Beispiel: Brettspiele Seitennamen',
+	'owb-step3-examples2' => '<li>Monopol</li>
+<li>Risiko</li><li>Scrabble</li>
+<li>Trivial Pursuit</li>
+<li>Pictionary</li>
+<li>Tabu</li>',
+	'owb-step4' => 'Schritt 4',
+	'owb-step4-label-formatted' => 'Premium<br />plan',
+	'owb-step4-label' => 'Einen Premiumplan hinzufügen',
+	'owb-step4-instruction' => 'Wählen, mit Wikia+Plus Anzeigen zu entfernen, oder mit Wikia Basic fortsetzen.',
+	'owb-step4-basic-price' => '<strong>$0</strong>/Monat',
+	'owb-step4-basic-details' => '<ul><li>Wikia-Anzeigen für Benutzer, die nicht eingeloggt sind</li>
+<li>Unbegrenzte Seiten und Bilder</li>
+<li>Einfache Wiki-Bearbeitungswerkzeuge</li>
+<li>Verbinden und Mögen auf Facebook</li>
+<li>Keine Bandbreitenbegrenzung</li></ul>',
+	'owb-step4-plus-price' => '<strong>$1 $</strong>/Monat',
+	'owb-step4-plus-details' => '<ul><li><strong>Keine anzeigen!<small><em>(Grenzwerte gelten für große Wikis)</em></small></strong></li>
+<li>Unbegrenzte Seiten und Bilder</li>
+<li>Einfache Wiki-Bearbeitungswerkzeuge</li>
+<li>Verbinden und Mögen auf Facebook</li>
+<li>Keine Bandbreitenbegrenzung</li></ul>',
 	'owb-step4-error-caption' => 'Fehler',
+	'owb-step4-error-upgrade-content' => 'Dieses Wiki kann nicht auf Plus umgestellt werden.',
+	'owb-step4-error-token-content' => 'Fehler beim Abrufen des richtigen Token von PayPal.',
+	'owb-status-saving' => 'Speichern',
+	'owb-unable-to-edit-description' => 'Die Beschreibung kann nicht mit dem Wiki-Generator bearbeitet werden',
+	'owb-readonly-try-again' => 'Das Wiki ist derzeit im Nur-Lesen-Modus. Bitte versuche es gleich erneut',
+	'owb-error-saving-articles' => 'Fehler beim Speichern der Seiten',
+	'owb-api-error-title' => 'Fehler bei der Verarbeitung deiner Anfrage',
+	'owb-api-error' => 'Bitte versuche es noch einmal oder überspringe diesen Schritt',
+	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
+Schreibe den ersten Absatz deiner Seite hier.
+
+==Abschnittsüberschrift==
+
+Schreibe den ersten Abschnitt deiner Seite hier. Denk daran, Links zu anderen Seiten im Wiki einzubauen.
+
+==Abschnittsüberschrift==
+
+Schreibe den zweiten Abschnitt deiner Seite hier. Vergiss nicht eine Kategorie hinzuzufügen damit andere die Seite finden können.',
 );
 
 /** Spanish (Español)
@@ -712,13 +786,14 @@ Skriv sidens andre seksjon her. Ikke glem å legge til en kategori for å hjelpe
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author SandroHc
  */
 $messages['pt'] = array(
 	'wikibuilder-desc' => '[[Special:WikiBuilder|Assistente para criação de wikis]]',
 	'owb-title' => 'Criador de Wikis',
 	'owb-headline' => 'Olá, $1',
 	'owb-button-skip' => 'Saltar',
-	'owb-button-save-intro' => 'Guardar Introdução',
+	'owb-button-save-intro' => 'Gravar Introdução',
 	'owb-button-save-theme' => 'Gravar Variante do Tema',
 	'owb-button-save-pages' => 'Gravar Páginas',
 	'owb-button-done' => 'Prosseguir para a wiki',
@@ -728,6 +803,66 @@ $messages['pt'] = array(
 	'owb-step1-label-formatted' => 'É sobre<br />o quê?',
 	'owb-step1-instruction' => 'Escreva uma introdução breve para a sua página principal. Torne-a animada e engraçada para suscitar nas outras pessoas interesse em contribuir para o seu projecto.',
 	'owb-step1-sample' => 'Exemplo de Página Principal da Wiki',
+	'owb-step2' => '2º Passo',
+	'owb-step2-label' => 'Escolher uma variante do tema',
+	'owb-step2-label-formatted' => 'Escolher uma<br />variante',
+	'owb-step2-instruction1' => 'É fácil dar à sua wiki um aspecto exclusivo. Basta escolher uma variante que se enquadre no seu projecto.',
+	'owb-step2-instruction2' => 'Pode mudar a variante ou criar uma variante personalizada em qualquer altura.',
+	'owb-step2-gallery' => 'Galeria de Variantes',
+	'owb-step3' => '3º Passo',
+	'owb-step3-label' => 'Criar algumas páginas',
+	'owb-step3-label-formatted' => 'Criar algumas<br />páginas',
+	'owb-step3-instruction' => 'Para iniciar a sua wiki, deve criar algumas páginas. Poderá acrescentar mais páginas sempre que quiser.',
+	'owb-step3-your-pages' => 'Os Seus Nomes de Páginas',
+	'owb-step3-examples1-title' => 'Exemplo: Nomes de Páginas de Filmes de Monstros',
+	'owb-step3-examples1' => '<li>Frankenstein</li>
+<li>The Wolfman</li>
+<li>The Howling</li>
+<li>A Múmia</li>
+<li>A Casa de Cera</li>
+<li>Monstro do Pântano</li>',
+	'owb-step3-examples2-title' => 'Exemplo: Nomes Para Páginas de Jogos de Mesa',
+	'owb-step3-examples2' => '<li>Monopólio</li>
+<li>Risk</li>
+<li>Scrabble</li>
+<li>Trivial Pursuit</li>
+<li>Pictionary</li>
+<li>Taboo</li>',
+	'owb-step4' => '4º Passo',
+	'owb-step4-label-formatted' => 'Plano<br />especial',
+	'owb-step4-label' => 'Acrescentar um plano especial',
+	'owb-step4-instruction' => 'Opte por remover os anúncios com o Wikia+Plus ou continuar com o Wikia Básico.',
+	'owb-step4-basic-price' => ' <strong>$0</strong>/mês',
+	'owb-step4-basic-details' => '<ul><li>Anúncios da Wikia para utilizadores anónimos</li>
+<li>Páginas e imagens ilimitadas</li>
+<li>Ferramentas para facilitar a edição da wiki</li>
+<li>Ligar e gostar no Facebook</li>
+<li>Sem limite de largura de banda</li></ul>',
+	'owb-step4-plus-price' => '<strong>$1$</strong>/mês',
+	'owb-step4-plus-details' => '<ul><li><strong>Sem Anúncios!<small><em> (limite aplicável para wikis de grande dimensão)</em></small></strong></li>
+<li>Páginas e imagens ilimitadas</li>
+<li>Ferramentas para facilitar a edição da wiki</li>
+<li>Ligar e gostar no Facebook</li>
+<li>Sem limite de largura de banda</li></ul>',
+	'owb-step4-error-caption' => 'Erro',
+	'owb-step4-error-upgrade-content' => 'Não é possível aplicar o plano Wikia+Plus a esta wiki.',
+	'owb-step4-error-token-content' => 'Não foi possível obter a chave adequada do PayPal.',
+	'owb-status-saving' => 'A gravar',
+	'owb-unable-to-edit-description' => 'Esta descrição não pode ser editada com o Criador de Wikis',
+	'owb-readonly-try-again' => 'A wiki está em modo exclusivo de leitura. Tente novamente dentro de momentos.',
+	'owb-error-saving-articles' => 'Erro na Gravação das Páginas',
+	'owb-api-error-title' => 'Erro no processamento do pedido',
+	'owb-api-error' => 'Tente mais uma vez, por favor, ou salte este passo',
+	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
+Escreva aqui o primeiro parágrafo da sua página.
+
+==Cabeçalho de secção==
+
+Escreva aqui a primeira secção da sua página. Lembre-se de incluir links para outras páginas da wiki.
+
+==Cabeçalho de secção==
+
+Escreva aqui a segunda secção da sua página. Não se esqueça de acrescentar uma categoria, para ajudar os outros a encontrar a página.',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)

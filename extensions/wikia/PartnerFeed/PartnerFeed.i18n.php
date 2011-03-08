@@ -59,14 +59,29 @@ $messages['br'] = array(
 /** German (Deutsch)
  * @author Diebuche
  * @author George Animal
+ * @author LWChris
  * @author ✓
  */
 $messages['de'] = array(
+	'partner-feed-achievements-leaderboard' => 'Wiki Rangliste',
+	'partner-feed-earned-badges' => 'Kürzlich verdiente Abzeichen für ein bestimmtes Wiki',
+	'partner-feed-recent-blog-posts' => 'Letzte Blog-Beiträge in Verbindung mit einer Förderung',
+	'partner-feed-latest-images' => 'Galerie der neuesten Bilder, die hochgeladen wurden',
+	'partner-feed-hotcontent' => 'Hub / vertikaler "Hot Content" geordnet nach Anzahl der Bearbeiter',
+	'partner-feed-recent-blog-comments' => 'Neueste Kommentare zu einem bestimmten Blog-Post.',
 	'partner-feed-recent-changes' => 'Letzte Änderungen',
+	'partnerfeed' => 'Partner-Feed',
 	'error-no-article' => 'Fehler: Kein "article"-Parameter übergeben',
 	'feed-title-blogposts' => 'Neueste Blogeinträge',
+	'feed-title-recent-badges' => 'Kürzlich vergebene Abzeichen',
 	'feed-title-recent-images' => 'Neueste Bilder',
+	'feed-title-leaderboard' => 'Rangliste',
+	'feed-main-title' => 'Wikia Partner-Feed',
 	'all-blog-posts' => 'alle Kategorien',
+	'blog-posts-from-listing' => 'von der Liste: $1',
+	'feed-title-hot-content' => 'Hot Content - $1',
+	'feed-title-blogcomments' => 'Kommentare zu $1',
+	'feed-title-recentchanges' => 'Letzte Änderungen',
 );
 
 /** Spanish (Español)

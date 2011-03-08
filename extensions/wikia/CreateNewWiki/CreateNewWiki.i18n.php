@@ -244,7 +244,7 @@ $messages['de'] = array(
 	'cnw-desc-tip3-creative' => 'Lass die Leute wissen, dass sie deinem Wiki durch Bearbeiten und Hinzufügen von Seiten dabei helfen können zu wachsen',
 	'cnw-desc-choose' => 'Eine Kategorie auswählen',
 	'cnw-desc-select-one' => 'Bitte wählen',
-	'cnw-desc-default-lang' => 'Dein Wiki wird in englischer Sprache sein',
+	'cnw-desc-default-lang' => 'Die Sprache deines Wikis wird $1',
 	'cnw-desc-change-lang' => 'ändern',
 	'cnw-desc-lang' => 'Sprache',
 	'cnw-desc-wiki-submit-error' => 'Bitte wähle eine Kategorie',
@@ -390,7 +390,7 @@ $messages['fr'] = array(
 	'cnw-desc-tip3-creative' => 'Faites savoir aux gens qu’ils peuvent aider à faire grandir votre wiki en modifiant ou en ajoutant des pages',
 	'cnw-desc-choose' => 'Choisissez une catégorie',
 	'cnw-desc-select-one' => 'Sélectionnez-en une',
-	'cnw-desc-default-lang' => 'Votre wiki sera en anglais',
+	'cnw-desc-default-lang' => 'Votre wiki sera en $1',
 	'cnw-desc-change-lang' => 'modifier',
 	'cnw-desc-lang' => 'Langue',
 	'cnw-desc-wiki-submit-error' => 'Veuillez choisir une catégorie',
@@ -548,6 +548,13 @@ $messages['ku-latn'] = array(
 	'cnw-desc-lang' => 'Ziman',
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Vpovilaitis
+ */
+$messages['lt'] = array(
+	'cnw-name-wiki-headline' => 'Sukurti naują Wiki',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -678,9 +685,49 @@ Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
  * @author Audun
  */
 $messages['no'] = array(
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|Veiviser for opprettelse av wiki]]',
+	'cnw-next' => 'Neste',
+	'cnw-back' => 'Tilbake',
+	'cnw-or' => 'eller',
+	'cnw-title' => 'Opprett ny wiki',
+	'cnw-name-wiki-headline' => 'Start en wiki',
+	'cnw-name-wiki-creative' => 'Wikia er det beste stedet å bygge et nettsted og lage en fellesskap rundt det du elsker.',
+	'cnw-name-wiki-label' => 'Navngi wikien din',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-name-wiki-domain-label' => 'Gi wikien din en adresse',
+	'cnw-name-wiki-submit-error' => 'Ops! Du må fylle ut begge boksene over for å fortsette.',
+	'cnw-login' => 'Logg inn',
+	'cnw-signup' => 'Opprett konto',
+	'cnw-signup-prompt' => 'Trenger du en konto?',
+	'cnw-call-to-signup' => 'Registrer deg her',
+	'cnw-login-prompt' => 'Har du allerede en konto?',
+	'cnw-call-to-login' => 'Logg inn her',
+	'cnw-auth-headline' => 'Logg inn',
+	'cnw-auth-headline2' => 'Registrer deg',
+	'cnw-auth-creative' => 'Logg inn på kontoen din og fortsett å bygge wikien din.',
+	'cnw-auth-signup-creative' => 'Du vil trenge en konto for å fortsette å bygge wikien din.<br />Det tar bare et øyeblikk å registrere seg!',
+	'cnw-auth-facebook-signup' => 'Registrer deg med Facebook',
+	'cnw-auth-facebook-login' => 'Logg inn med Facebook',
+	'cnw-desc-headline' => 'Hva handler wikien din om?',
+	'cnw-desc-creative' => 'Beskriv emnet ditt',
+	'cnw-desc-placeholder' => 'Dette vil vises på hovedsiden til wikien din.',
 	'cnw-desc-tip1' => 'Hint',
+	'cnw-desc-tip1-creative' => 'Bruk denne plassen til å fortelle folk om wikien din med en setning eller to',
 	'cnw-desc-tip2' => 'Psst',
+	'cnw-desc-tip2-creative' => 'Gi dine besøkende noen spesifikke detaljer om feltet ditt',
+	'cnw-desc-tip3' => 'Eksperttips',
+	'cnw-desc-tip3-creative' => 'La folk få vite at de kan hjelpe wikien din med å vokse ved å redigere og legge til sider',
+	'cnw-desc-choose' => 'Velg kategori',
+	'cnw-desc-select-one' => 'Velg en',
+	'cnw-desc-default-lang' => 'Wikien din vil være på $1',
+	'cnw-desc-change-lang' => 'endre',
 	'cnw-desc-lang' => 'Språk',
+	'cnw-desc-wiki-submit-error' => 'Vennligst velg en kategori',
+	'cnw-theme-headline' => 'Velg et tema',
+	'cnw-theme-creative' => 'Velg et tema under. Du vil kunne se en forhåndsvisning av hvert tema når du markerer det.',
+	'cnw-theme-instruction' => 'Du kan også utforme ditt eget tema senere ved å gå til «Mine verktøy».',
+	'cnw-upgrade-headline' => 'Vil du oppgradere?',
+	'cnw-upgrade-creative' => 'Å oppgradere til Wikia Pluss lar deg fjerne annonser fra <span class="wiki-name"></span>. Et engangstilbud er tilgjengelig kun for nye grunnleggere.',
 	'cnw-upgrade-marketing' => 'Wikia Pluss er en flott løsning for:<ul>
 <li>Profesjonelle wikier</li>
 <li>Ideelle prosjekter</li>
@@ -689,6 +736,12 @@ $messages['no'] = array(
 <li>Personlige prosjekter</li>
 </ul>
 Oppgrader gjennom PayPal for å få en reklamefri wiki til kun $4,95 per måned!',
+	'cnw-upgrade-now' => 'Oppgrader nå',
+	'cnw-upgrade-decline' => 'Nei takk, fortsett til wikien min',
+	'cnw-welcome-headline' => 'Gratulerer! $1 har blitt opprettet',
+	'cnw-welcome-instruction1' => 'Trykk på knappen under for å begynne å legge til siden på wikien din.',
+	'cnw-welcome-instruction2' => 'Du vil se denne knappen på wikien din, bruk den når du vil legge til en ny side.',
+	'cnw-welcome-help' => 'Finn svar, råd, og mer på <a href="http://community.wikia.com">Community Central</a>.',
 );
 
 /** Pashto (پښتو)
@@ -776,6 +829,69 @@ $messages['pt'] = array(
 <li>Projectos Pessoais</li>
 </ul>
 Adopte esta versão através do PayPal para ter uma wiki livre de anúncios por apenas $4.95 por mês!',
+	'cnw-upgrade-now' => 'Usar a Versão Melhorada',
+	'cnw-upgrade-decline' => 'Não obrigado, continuar para a minha wiki',
+	'cnw-welcome-headline' => 'Parabéns! A $1 foi criada',
+	'cnw-welcome-instruction1' => 'Clique o botão abaixo para começar a criar páginas na sua wiki.',
+	'cnw-welcome-instruction2' => 'Verá este botão em toda a wiki; use-o em qualquer altura para criar uma página nova.',
+	'cnw-welcome-help' => 'Encontrará respostas, conselhos e mais na <a href="http://pt.wikia.com">Comunidade Central</a>.',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistente de criação de wikis]]',
+	'cnw-next' => 'Seguinte',
+	'cnw-back' => 'Anterior',
+	'cnw-or' => 'ou',
+	'cnw-title' => 'Criar uma Wiki Nova',
+	'cnw-name-wiki-headline' => 'Iniciar uma Wiki',
+	'cnw-name-wiki-creative' => 'A Wikia é o melhor lugar para criar um site e desenvolver uma comunidade em torno de um tema do seu agrado.',
+	'cnw-name-wiki-label' => 'Nome da sua wiki',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-name-wiki-domain-label' => 'Dê um endereço à sua wiki',
+	'cnw-name-wiki-submit-error' => 'Para continuar tem de preencher ambas as caixas acima.',
+	'cnw-login' => 'Iniciar Sessão',
+	'cnw-signup' => 'Criar Conta',
+	'cnw-signup-prompt' => 'Precisa de uma conta?',
+	'cnw-call-to-signup' => 'Registe-se aqui',
+	'cnw-login-prompt' => 'Já tem uma conta?',
+	'cnw-call-to-login' => 'Inicie uma sessão aqui',
+	'cnw-auth-headline' => 'Iniciar Sessão',
+	'cnw-auth-headline2' => 'Registar',
+	'cnw-auth-creative' => 'Entre na sua conta para continuar a criar a wiki',
+	'cnw-auth-signup-creative' => 'Precisa de ter uma conta para continuar a construir a sua wiki.<br />Só leva um minuto para registrar-se!',
+	'cnw-auth-facebook-signup' => 'Registre-se pelo Facebook',
+	'cnw-auth-facebook-login' => 'Entrar pelo Facebook',
+	'cnw-desc-headline' => 'Qual é o assunto da sua wiki?',
+	'cnw-desc-creative' => 'Descreva o seu assunto',
+	'cnw-desc-placeholder' => 'Isto irá aparecer na página principal da sua wiki.',
+	'cnw-desc-tip1' => 'Sugestão',
+	'cnw-desc-tip1-creative' => 'Use este espaço para descrever a sua wiki aos visitantes numa frase ou duas',
+	'cnw-desc-tip2' => 'Ei',
+	'cnw-desc-tip2-creative' => 'Dê aos visitantes alguns detalhes específicos sobre o assunto',
+	'cnw-desc-tip3' => 'Sugestão Para Profissionais',
+	'cnw-desc-tip3-creative' => 'Informe as pessoas de que podem ajudar a desenvolver a wiki editando e acrescentando páginas',
+	'cnw-desc-choose' => 'Escolher uma categoria',
+	'cnw-desc-select-one' => 'Selecione uma',
+	'cnw-desc-default-lang' => 'A sua wiki será em $1',
+	'cnw-desc-change-lang' => 'alterar',
+	'cnw-desc-lang' => 'Língua',
+	'cnw-desc-wiki-submit-error' => 'Escolha uma categoria, por favor',
+	'cnw-theme-headline' => 'Escolha um Compositor de temas',
+	'cnw-theme-creative' => 'Escolha uma compositor de temas abaixo; verá uma antevisão de cada compositor à medida que a escolher.',
+	'cnw-theme-instruction' => 'Tambem poderá criar um compositor personalizado mais tarde, usando "As Minhas Ferramentas".',
+	'cnw-upgrade-headline' => 'Pretende a versão melhorada?',
+	'cnw-upgrade-creative' => 'A versão Wikia Plus permite-lhe remover os anúncios da <span class="wiki-name"></span>, uma oferta única só disponível para novos fundadores.',
+	'cnw-upgrade-marketing' => 'A versão Wikia Plus é excelente para:<ul>
+<li>Wikis Profissionais</li>
+<li>Organizações sem Fins Lucrativos</li>
+<li>Famílias</li>
+<li>Escolas</li>
+<li>Projetos Pessoais</li>
+</ul>
+Adote esta versão através do PayPal para ter uma wiki livre de anúncios por apenas $4.95 por mês!',
 	'cnw-upgrade-now' => 'Usar a Versão Melhorada',
 	'cnw-upgrade-decline' => 'Não obrigado, continuar para a minha wiki',
 	'cnw-welcome-headline' => 'Parabéns! A $1 foi criada',

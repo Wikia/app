@@ -85,6 +85,26 @@ $messages['cs'] = array(
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 hlas|$1 hlasů}}',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'wikiapoll-desc' => 'Bietet eine einfache Möglichkeit zum Erstellen und Verwalten von Umfragen',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 Person hat|$1 Leute haben}} abgestimmt',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Danke!',
+	'wikiapoll-vote' => 'Abstimmen!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 Stimme|$1 Stimmen}}',
+	'wikiapoll-createpoll-headline' => 'Umfrage erstellen',
+	'wikiapoll-editpoll-headline' => 'Umfrage bearbeiten',
+	'wikiapoll-question-label' => 'Frage',
+	'wikiapoll-addnewitem-label' => 'Neuen Eintrag hinzufügen',
+	'wikiapoll-cancel-label' => 'Abbrechen',
+	'wikiapoll-publish-label' => 'Veröffentlichen',
+	'wikiapoll-error-duplicate' => 'Eine Umfrage mit diesem Namen ist bereits vorhanden.',
+	'wikiapoll-error-invalid-title' => 'Der Fragetext ist ungültig.',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -236,6 +256,14 @@ $messages['no'] = array(
 	'wikiapoll-thanks-for-vote' => 'Takk!',
 	'wikiapoll-vote' => 'Stem!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 stemme|$1 stemmer}}',
+	'wikiapoll-createpoll-headline' => 'Opprett avstemning',
+	'wikiapoll-editpoll-headline' => 'Rediger avstemning',
+	'wikiapoll-question-label' => 'Spørsmål',
+	'wikiapoll-addnewitem-label' => 'Legg til element',
+	'wikiapoll-cancel-label' => 'Avbryt',
+	'wikiapoll-publish-label' => 'Publiser',
+	'wikiapoll-error-duplicate' => 'En avstemning med det navnet eksisterer allerede.',
+	'wikiapoll-error-invalid-title' => 'Spørsmålsteksten er ugyldig.',
 );
 
 /** Portuguese (Português)

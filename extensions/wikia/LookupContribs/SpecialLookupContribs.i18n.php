@@ -309,6 +309,7 @@ $messages['eu'] = array(
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author Tofu II
  */
 $messages['fi'] = array(
 	'lookupcontribsselectuser' => 'Valitse käyttäjä:',
@@ -317,6 +318,7 @@ $messages['fi'] = array(
 	'lookupcontribsgo' => 'Siirry',
 	'lookupcontribsnoresultfound' => 'Tulosta ei löytynyt!',
 	'lookupcontribswikiurl' => 'Verkko-osoite',
+	'lookupcontribslastedited' => 'Viimeksi muokattu',
 	'lookupcontribsnext' => 'seuraava',
 	'lookupcontribsprevious' => 'edellinen',
 	'lookupcontribscontent' => 'sisältö',
@@ -917,15 +919,59 @@ Verifique se se enganou no nome do utilizador.</p>',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'lookupcontribs' => 'Procurar Contribuições',
+	'lookupcontribstitle' => 'Procurar Contribuições',
+	'lookupcontribsrecentcontributions' => 'Contribuições recentes de $1',
+	'lookupcontribsfinalcontributions' => 'Contribuições finais de $1',
+	'lookupcontribshelp' => 'Esta página especial pode ser usada para apresentar as contribuições de um utilizador em várias Wikias.
+Para apresentar a lista, forneça abaixo o nome do utilizador.',
 	'lookupcontribusernotspecify' => 'Você ainda não especificou um usuário',
 	'lookupcontribsselectuser' => 'Selecionar usuário:',
+	'lookupcontribsselectfor' => 'Selecionar:',
+	'lookupcontribsdisplaymode' => 'Modo de visionamento:',
+	'lookupcontribsselectmodenormal' => 'contribuições recentes do utilizador',
+	'lookupcontribsselectmodefinal' => 'contribuições finais do utilizador',
+	'lookupcontribsselectmodeall' => 'todas as contribuições do utilizador',
+	'lookupcontribsfullurls' => 'URLs completas',
+	'lookupcontribslinks' => 'links para as contribuições',
+	'lookupcontribsgo' => 'Mostrar',
+	'lookupcontribsinvaliduser' => '<p class="error">O utilizador "<b>$1</b>" não existe.
+Verifique se se enganou com o nome do utilizador.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" não é um modo de visionamento válido.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" não é um modo válido.</p>',
 	'lookupcontribsselectwikis' => 'Selecionar wikis:',
+	'lookupcontribslistwikiainfo' => 'Lista de wikis com páginas editadas por <b>$1</b>',
 	'lookupcontribsnoresultfound' => 'Nenhum resultado encontrado!',
+	'lookupcontribsinvalidresults' => 'Resultados são inválidos!',
 	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Base de Dados',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Título',
+	'lookupcontribswikioptions' => 'Opções',
+	'lookupcontribscontribslink' => 'Link para contribuições',
+	'lookupcontribsdetails' => 'Ver detalhes de:',
+	'lookupcontribslastedited' => 'Última edição',
+	'lookupcontribsrecordspager' => "A mostrar os registos '''$1''' a '''$2''' de '''$3'''.",
 	'lookupcontribscontribs' => 'contribuições',
+	'lookupcontribsnbrresult' => 'Nº do resultado:',
+	'lookupcontribsnext' => 'seguintes',
+	'lookupcontribsprevious' => 'anteriores',
+	'lookupcontribspageremoved' => 'Removidas:',
+	'lookupcontribsrestore' => 'recuperar',
+	'lookupcontribslog' => 'registo',
+	'lookupcontribshist' => 'histórico',
+	'lookupcontribsdiff' => 'diferenças',
+	'right-lookupcontribs' => 'Ver as edições globais do utilizador',
+	'lookupcontribsshowpages' => 'Todas as páginas ($1 espaços nominais)',
+	'lookupcontribscontent' => 'conteúdo',
+	'lookupcontribscontribtitleforuser' => 'Contribuições do utilizador:',
+	'lookupcontribsnormal' => 'recentes',
+	'lookupcontribsfinal' => 'finais',
+	'lookupcontribsall' => 'todas',
 );
 
 /** Tarandíne (Tarandíne)

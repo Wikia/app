@@ -765,6 +765,7 @@ $messages['da'] = array(
 );
 
 /** German (Deutsch)
+ * @author LWChris
  * @author Lyzzy
  * @author Raimond Spekking
  * @author Spacebirdy
@@ -774,12 +775,15 @@ $messages['da'] = array(
 $messages['de'] = array(
 	'userrenametool' => 'Umbenennen',
 	'renameuser' => 'Benutzer umbenennen',
+	'userrenametool-warning' => 'Stelle bitte vor der Umbenennung eines Benutzers sicher, dass alle Informationen korrekt sind, und dass der Benutzer weiß, dass es bis zur Fertigstellung einige Zeit dauern kann.
+Siehe [[Special:Stafflog|Mitarbeiterlog]] für Logs.',
 	'userrenametool-desc' => "Ergänzt eine [[Special:Renameuser|Spezialseite]] zur Umbenennung eines Benutzers (erfordert das ''renameuser''-Recht)",
 	'userrenametool-old' => 'Bisheriger Benutzername:',
 	'userrenametool-new' => 'Neuer Benutzername:',
 	'userrenametool-reason' => 'Grund:',
 	'userrenametool-move' => 'Benutzer-/Diskussionsseite (inkl. Unterseiten) auf den neuen Benutzernamen verschieben',
 	'userrenametool-reserve' => 'Alten Benutzernamen für eine Neuregistrierung blockieren',
+	'userrenametool-notify-renamed' => 'Sende umbenannten Benutzer nach Fertigstellung eine E-Mail',
 	'userrenametool-warnings' => 'Warnungen:',
 	'userrenametool-confirm' => 'Ja, Benutzer umbenennen',
 	'userrenametool-submit' => 'Umbenennen',
@@ -795,10 +799,21 @@ $messages['de'] = array(
 	'userrenametool-error-request' => 'Es gab ein Problem beim Empfang der Anfrage. Bitte nochmal versuchen.',
 	'userrenametool-error-same-user' => 'Alter und neuer Benutzername sind identisch.',
 	'userrenametool-error-extension-abort' => 'Eine Erweiterung verhinderte den Umbenennungsprozess.',
+	'userrenametool-error-cannot-rename-account' => 'Die Umbenennung des Benutzerkontos in der gemeinsamen globalen Datenbank ist fehlgeschlagen.',
 	'userrenametool-error-cannot-create-block' => 'Fehler beim Erstellen eines Protokolls im Logbuch.',
 	'userrenametool-warn-repeat' => 'Achtung! Der Benutzer "<nowiki> $1 </nowiki>" wurde bereits umbenannt in "<nowiki> $2 </nowiki>". 
 Setze den Prozess nur fort, wenn du fehlende Informationen hinzufügen musst.',
 	'userrenametool-warn-table-missing' => 'Die Tabelle "<nowiki>$2</nowiki>" existiert nicht in der Datenbank "<nowiki>$1</nowiki>".',
+	'userrenametool-info-started' => '$1 hat Umbenennung begonnen: $2 in $3 (Logs: $4).
+Grund: "$5".',
+	'userrenametool-info-finished' => '$1 hat Umbenennung vollzogen: $2 in $3 (Logs: $4).
+Grund: "$5".',
+	'userrenametool-info-failed' => '$1 ist bei Umbenennung GESCHEITERT: $2 in $3 (Logs: $4).
+Grund: "$5".',
+	'userrenametool-info-wiki-finished' => '$1 hat im $4 $2 in $3 umbenannt.
+Grund: "$5".',
+	'userrenametool-info-wiki-finished-problems' => '$1 hat im $4 $2 in $3 mit Fehlern umbenannt.
+Grund: "$5".',
 	'userrenametool-info-in-progress' => 'Der Umbenennungsprozess läuft.
 Der Rest erfolgt im Hintergrund.
 Du wirst per E-Mail benachrichtigt, wenn alles abgeschlossen ist.',
@@ -2581,6 +2596,7 @@ Se [[Special:Stafflog|Ledelsesloggen]] for logger.',
 	'userrenametool-reason' => 'Grunn for omdøping:',
 	'userrenametool-move' => 'Flytt bruker- og brukerdiskusjonssider (og deres undersider) til nytt navn',
 	'userrenametool-reserve' => 'Reserver det gamle brukernavnet mot framtidig bruk',
+	'userrenametool-notify-renamed' => 'Send en e-post til den omdøpte brukeren når du er ferdig',
 	'userrenametool-warnings' => 'Advarsler:',
 	'userrenametool-confirm' => 'Ja, endre navn på brukeren',
 	'userrenametool-submit' => 'Døp om',

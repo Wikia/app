@@ -738,6 +738,7 @@ $messages['fa'] = array(
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
@@ -772,6 +773,7 @@ $messages['fi'] = array(
 	'multidelete_french_wikis' => 'kaikki ranskankieliset wikit',
 	'multidelete_swedish_wikis' => 'kaikki ruotsinkieliset wikit',
 	'multidelete_german_wikis' => 'kaikki saksankieliset wikit',
+	'multiwikirecords' => '$1 wiki löytyi',
 );
 
 /** French (Français)

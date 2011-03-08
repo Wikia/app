@@ -30,6 +30,16 @@ $messages['cs'] = array(
 	'site-layout' => 'Rozložení webu',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'skinchooser-desc' => 'Ermöglicht Benutzern in ihren Einstellungen Skins zu wählen',
+	'skinchooser-customcss' => 'Für benutzerdefinierte Designs, wähle die Option "Benutzerdefiniert" im Menü oben und platziere benutzerdefinierte CSS in [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Wikias neuer Look',
+	'site-layout' => 'Seitenlayouts',
+);
+
 /** Spanish (Español)
  * @author Bola
  */

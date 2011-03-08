@@ -56,6 +56,23 @@ $messages['br'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Kinnigoù reizhskrivañ evit "$1" : $2',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'spellchecker-desc' => 'Stellt Rechtschreibprüfung Schnittstelle für bezauberndes PHP-Modul bereit',
+	'enablespellchecker' => 'Rechtschreibprüfung aktivieren',
+	'spellchecker-info' => 'Rechtschreibprüfung Informationen',
+	'spellchecker-info-languages' => 'Verfügbare Sprachen ($1)',
+	'spellchecker-info-provider' => 'Anbieter',
+	'spellchecker-info-dictionaries' => 'Verfügbare Wörterbücher',
+	'spellchecker-info-spellcheck-text' => 'Zu prüfender Text',
+	'spellchecker-info-spellcheck-languages' => 'Sprache',
+	'spellchecker-info-spellcheck-submit' => 'Rechtschreibung prüfen',
+	'spellchecker-info-spellcheck-is-correct' => 'Das Wort "$1" ist richtig geschrieben',
+	'spellchecker-info-spellcheck-suggestions' => 'Vorschläge für "$1": $2',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -169,11 +186,15 @@ $messages['nl'] = array(
 $messages['no'] = array(
 	'spellchecker-desc' => 'Tilbyr et grensesnitt for korrekturlesning for enchant PHP-modulen',
 	'enablespellchecker' => 'Aktiver korrekturleser',
+	'spellchecker-info' => 'Informasjon om korrekturleseren',
 	'spellchecker-info-languages' => 'Tilgjengelige språk ($1)',
+	'spellchecker-info-provider' => 'Leverandør',
 	'spellchecker-info-dictionaries' => 'Tilgjengelige ordlister',
 	'spellchecker-info-spellcheck-text' => 'Tekst som skal kontrolleres',
 	'spellchecker-info-spellcheck-languages' => 'Språk',
 	'spellchecker-info-spellcheck-submit' => 'Sjekk staving',
+	'spellchecker-info-spellcheck-is-correct' => 'Ordet «$1» er riktig stavet',
+	'spellchecker-info-spellcheck-suggestions' => 'Forslag til stavemåte for «$1»: $2',
 );
 
 /** Portuguese (Português)
