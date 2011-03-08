@@ -46,6 +46,7 @@ class SpecialCreateTopList extends SpecialPage {
 		$selectedImage = null;
 		$imageTitle = null;
 		$items = null;
+		$userCanEditItems = $userCanDeleteItems = true;
 
 		if( $wgRequest->wasPosted() ) {
 			$listName = $wgRequest->getText( 'list_name' );
@@ -240,7 +241,9 @@ class SpecialCreateTopList extends SpecialPage {
 					'value' => null
 				) ),
 				$items
-			)
+			),
+			'userCanEditItems' => $userCanEditItems,
+			'userCanDeleteItems' => $userCanDeleteItems
 		) );
 
 		// render template
