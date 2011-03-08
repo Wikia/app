@@ -35,6 +35,8 @@ $wgAjaxExportList[] = "ListusersAjax::axShowUsers";
 #--- hooks file
 require_once( dirname(__FILE__) . '/SpecialListusers_hooks.php' );
 $wgHooks['SpecialPage_initList'][]	= 'ListusersHooks::Activeusers';
-$wgHooks['UserRights'][] 			= 'ListusersHooks::updateUserRights';
+if( empty($wgDevelEnvironment) ){ // This tries to write to a database that the devboxes don't have write-permission for.
+	$wgHooks['UserRights'][] 			= 'ListusersHooks::updateUserRights';
+}
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialListusers_body.php', 'Listusers', 'Listusers' );
