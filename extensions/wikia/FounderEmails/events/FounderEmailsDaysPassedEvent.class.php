@@ -24,7 +24,10 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 					'$WIKINAME' => $event['data']['wikiName'],
 					'$WIKIURL' => $event['data']['wikiUrl'],
 					'$WIKIMAINPAGEURL' => $event['data']['wikiMainpageUrl'],
-					'$UNSUBSCRIBEURL' => $event['data']['unsubscribeUrl']
+					'$UNSUBSCRIBEURL' => $event['data']['unsubscribeUrl'],
+					'$ADDAPAGEURL' => $event['data']['addapageUrl'],
+					'$ADDAPHOTOURL' => $event['data']['addaphotoUrl'],
+					'$CUSTOMIZETHEMEURL' => $event['data']['customizethemeUrl'],
 				);
 
 				$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';
@@ -35,6 +38,11 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				$mailSubject = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-subject', $langCode, array() );
 				$mailBody = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body', $langCode, $emailParams );
 				$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body-HTML', $langCode, $emailParams );
+
+				/*
+				$mailBodyHTML = wfRenderModule("FounderEmails", $event['data']['dayName'], array('language' => 'en'));
+				$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
+				*/
 
 				$founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $wikiId );
 
@@ -64,15 +72,19 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 			switch( $daysToActivate ) {
 				case 0:
 					$ctcUnsubscribe = 'FE03';
+					$dayName = 'DayZero';
 					break;
 				case 3:
 					$ctcUnsubscribe = 'FE08';
+					$dayName = 'DayThree';
 					break;
 				case 10:
 					$ctcUnsubscribe = 'FE09';
+					$dayName = 'DayTen';
 					break;
 				default:
 					$ctcUnsubscribe = 'FE03';
+					$dayName = 'DayZero';
 			}
 			// Build unsubscribe url
 			$hash_url = Wikia::buildUserSecretKey( $wikiFounder->getName(), 'sha256' );
@@ -86,7 +98,11 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				'wikiMainpageUrl' => $mainpageTitle->getFullUrl(),
 				'founderUsername' => $wikiFounder->getName(),
 				'founderUserpageEditUrl' => $wikiFounder->getUserPage()->getFullUrl( 'action=edit' ),
-				'unsubscribeUrl' => $unsubscribe_url
+				'unsubscribeUrl' => $unsubscribe_url,
+				'addapageUrl' => Title::newFromText( 'Createpage', NS_SPECIAL )->getFullUrl(),
+				'addaphotoUrl' => Title::newFromText( 'NewFiles', NS_SPECIAL )->getFullUrl(),
+				'customizethemeUrl' => Title::newFromText('ThemeDesigner', NS_SPECIAL)->getFullUrl(),
+				'dayName' => $dayName,
 			);
 
 			if ( $debugMode ) {

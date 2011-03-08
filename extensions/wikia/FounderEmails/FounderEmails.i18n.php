@@ -134,6 +134,24 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-lot-happening-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s been going on.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
+// New Founder email messages
+	'founderemails-email-0-day-heading' => 'Nice to meet you $FOUNDERNAME,',
+	'founderemails-email-0-day-congratulations' => 'Congratulations on creating $WIKINAME!',
+	'founderemails-email-0-day-tips-heading' => 'Here are a few helpful tips to get you started:',
+	'founderemails-email-0-day-addpages-heading' => 'Add pages.',
+	'founderemails-email-0-day-addpages-content' => 'A wiki is all about sharing information about your unique topic.  Create pages by clicking on <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPAGEURL">"Add a Page"</a> and fill out more specific information about your topic.',
+	'founderemails-email-0-day-addpages-button' => 'Add a Page',
+	'founderemails-email-0-day-addphotos-heading' => 'Add photos.',
+	'founderemails-email-0-day-addphotos-content' => 'Pages are always better when they have visuals!  Add images to your pages and to your main page.  You can click <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPHOTOURL">"Add a Photo"</a> to add a photo, a photo gallery, or a slideshow.',
+	'founderemails-email-0-day-addphotos-button' => 'Add a Photo',
+	'founderemails-email-0-day-customizetheme-heading' => 'Customize your theme.',
+	'founderemails-email-0-day-customizetheme-content' => 'Customize your wiki\'s theme and wordmark to make your wiki stand out!  Use the <a style="color:#2a87d5;text-decoration:none;" href="$CUSTOMIZETHEMEURL">Theme Designer</a> to add custom colors to your wiki and make it unique to your topic.',
+	'founderemails-email-0-day-customizetheme-button' => 'Customize',
+	'founderemails-email-0-day-wikiahelps-text' => '<span style="color:#2a87d5">We won\'t leave you out in the cold.</span>  We\'re here to help you make $WIKINAME successful every step of the way.  Visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> for forums, advice, and help, or to <a style="color:#2a87d5;text-decoration:none;" href="http://www.wikia.com/Special:Contact">email us</a> your questions!',
+	'founderemails-email-0-day-wikiahelps-signature' => 'Happy wiki building!<br>The Wikia Team',
+	'founderemails-email-0-day-footer-line1' => 'To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'founderemails-email-0-day-footer-line2' => 'Want to control which emails you receive? Go to: <a href="http://messaging.wikia.com/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">http://messaging.wikia.com/wiki/Special:Preferences</a>',
+	'founderemails-email-0-day-footer-line3' => 'Click the following link to unsubscribe from all Wikia emails: <a href="" style="color:#2a87d5;text-decoration:none;">$UNSUBSCRIBEURL</a>',
 );
 
 /** Message documentation (Message documentation)
@@ -420,7 +438,7 @@ Eine Menge passiert auf deiner Seite heute! Schau mal auf $MYHOMEURL vorbei, um 
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form))
  * @author LWChris
  * @author The Evil IP address
  * @author Umherirrender
@@ -1476,7 +1494,7 @@ Er gebeurt veel op uw wiki vandaag! Kom naar $MYHOMEURL om te kijken wat er alle
 <div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
