@@ -179,9 +179,10 @@ class WikiaApp {
 	 * @deprecated
 	 * @param string $key
 	 * @param mixed $value
+	 * @param int $expire
 	 */
-	public function setCookie( $key, $value ) {
-		$_COOKIE[ $key ] = $value;
+	public function setCookie( $key, $value, $expire ) {
+		setcookie( $key, $value, $expire );
 	}
 
 	/**
