@@ -33,7 +33,7 @@
 
     <target name="phpunit" depends="setup">
         <exec executable="php" dir="${basedir}" failonerror="true">
-            <env key="SERVER_ID" value="177" />
+            <env key="SERVER_ID" value="165" />
             <arg line="run-test.php
                        --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
                        --configuration ${basedir}/phpunit.xml
@@ -44,7 +44,7 @@
 
     <target name="phpunit-single" depends="setup">
         <exec executable="php" dir="${basedir}" failonerror="true">
-            <env key="SERVER_ID" value="177" />
+            <env key="SERVER_ID" value="165" />
             <arg line="run-test.php
                        --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
                        --configuration ${basedir}/phpunit.xml
@@ -55,7 +55,7 @@
 
     <target name="phpunit-coverage" depends="setup">
         <exec executable="php" dir="${basedir}" failonerror="true">
-            <env key="SERVER_ID" value="177" />
+            <env key="SERVER_ID" value="165" />
             <arg line="run-test.php
                        --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
                        --configuration ${basedir}/phpunit.xml
@@ -66,7 +66,7 @@
 
     <target name="phpunit-single-coverage" depends="setup">
         <exec executable="php" dir="${basedir}" failonerror="true">
-            <env key="SERVER_ID" value="177" />
+            <env key="SERVER_ID" value="165" />
             <arg line="run-test.php
                        --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
                        --configuration ${basedir}/phpunit.xml
