@@ -49,7 +49,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 	}
 
 	public static function register( $wikiParams, $debugMode = false ) {
-		global $wgFounderEmailsExtensionConfig;
+		global $wgFounderEmailsExtensionConfig, $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		$founderEmails = FounderEmails::getInstance();
@@ -74,6 +74,9 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				default:
 					$ctcUnsubscribe = 'FE03';
 			}
+			// Build unsubscribe url
+			$hash_url = Wikia::buildUserSecretKey( $wikiFounder->getName(), 'sha256' );
+			$unsubscribe_url = Title::newFromText('Unsubscribe', NS_SPECIAL)->getFullURL( array( 'key' => $hash_url, 'ctc' => $ctcUnsubscribe ) );
 
 			$eventData = array(
 				'activateDays' => $daysToActivate,
@@ -83,7 +86,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				'wikiMainpageUrl' => $mainpageTitle->getFullUrl(),
 				'founderUsername' => $wikiFounder->getName(),
 				'founderUserpageEditUrl' => $wikiFounder->getUserPage()->getFullUrl( 'action=edit' ),
-				'unsubscribeUrl' => Title::newFromText( 'Preferences', NS_SPECIAL )->getFullUrl( 'ctc=' . $ctcUnsubscribe )
+				'unsubscribeUrl' => $unsubscribe_url
 			);
 
 			if ( $debugMode ) {

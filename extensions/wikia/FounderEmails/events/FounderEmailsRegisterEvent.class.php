@@ -41,11 +41,16 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 	public static function register( $user ) {
 		wfProfileIn( __METHOD__ );
 
+		// Build unsubscribe url
+		$wikiFounder = FounderEmails::getInstance()->getWikiFounder();
+		$hash_url = Wikia::buildUserSecretKey( $wikiFounder->getName(), 'sha256' );
+		$unsubscribe_url = Title::newFromText('Unsubscribe', NS_SPECIAL)->getFullURL( array( 'key' => $hash_url, 'ctc' => 'FE04' ) );
+
 		$eventData = array(
 			'userName' => $user->getName(),
 			'userPageUrl' => $user->getUserPage()->getFullUrl( 'ctc=FE01' ),
 			'userTalkPageUrl' => $user->getTalkPage()->getFullUrl( 'ctc=FE01' ),
-			'unsubscribeUrl' => Title::newFromText( 'Preferences', NS_SPECIAL )->getFullUrl( 'ctc=FE04' )
+			'unsubscribeUrl' => $unsubscribe_url
 		);
 
 		FounderEmails::getInstance()->registerEvent( new FounderEmailsRegisterEvent( $eventData ) );
