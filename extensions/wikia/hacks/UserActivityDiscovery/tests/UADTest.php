@@ -1,4 +1,7 @@
 <?php
+require_once dirname(__FILE__) . '/../UAD.php';
+//wfLoadAllExtensions();
+
 class UADTest extends PHPUnit_Framework_TestCase {
 
 	const TEST_TOKEN_ID = 10;
