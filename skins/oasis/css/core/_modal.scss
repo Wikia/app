@@ -5,7 +5,7 @@
 	@include box-shadow(0, 10px, 60px, mix($color-page, #000));
 	background: $color-page;
 	border: 5px solid $color-body;
-	padding: 25px 15px;
+	padding: 26px 18px 18px 18px;
 	position: absolute;
 	>h1 {
 		color: $color-links;
@@ -16,8 +16,8 @@
 	}
 	.close {
 		position: absolute;
-		right: 15px;
-		top: 15px;
+		right: 18px;
+		top: 18px;
 	}
 	.neutral {
 		background: transparent;
@@ -30,15 +30,17 @@
 		}
 	}
 	.modal-tabs {
-		border-bottom: none;
-	}	
+		border-bottom: 1px solid $color-page-border;
+	}
+	.buttons-group {
+		display: block;
+		text-align: right;
+	}
 }
 
 .modalContent {
 	@include clearfix;
-	border: 1px solid $color-page-border;
 	display: block;
-	padding: 10px;
 }
 
 .blackout {
