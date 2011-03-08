@@ -3,7 +3,7 @@ var wgUADTreshold = 0;
 var UADtracker = {
 
 	COOKIE_NAME: 'UADtracker',
-	COOKIE_LIFESPAWN: 2400,
+	COOKIE_LIFESPAN: 7776000,
 	
 	init: function() {
 		UADtracker.check();
@@ -29,7 +29,7 @@ var UADtracker = {
 	},
 
 	update: function(){
-		$.get( "wikia.php", {controller: "UAD"} );
+		$.get( "/wikia.php", {controller: "UAD"} );
 	},
 
 	getCurrentDate: function(){
