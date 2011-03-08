@@ -37,7 +37,7 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 
 	function trackEvent($event, $eventDetails=array()){
 		switch ($event){
-		  case AnalyticsEngine::EVENT_PAGEVIEW : return '<script type="text/javascript">quantserve();</script>';
+		  case AnalyticsEngine::EVENT_PAGEVIEW : return '<script type="text/javascript">if (typeof quantserve == "function") quantserve();</script>';
                   default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
 		}
 	}
