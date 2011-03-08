@@ -36,6 +36,16 @@ $messages['cs'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'showperformancestats-desc' => 'Gibt lesbare Performance-Statistiken zurück',
+	'performancestat-total' => 'Insgesamt: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
+);
+
 /** Spanish (Español)
  * @author Bola
  * @author VegaDark

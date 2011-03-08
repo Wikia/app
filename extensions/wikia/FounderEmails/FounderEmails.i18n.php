@@ -438,7 +438,7 @@ Eine Menge passiert auf deiner Seite heute! Schau mal auf $MYHOMEURL vorbei, um 
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  * @author The Evil IP address
  * @author Umherirrender
@@ -1492,9 +1492,26 @@ Er gebeurt veel op uw wiki vandaag. Kom naar $MYHOMEURL om te kijken wat er alle
 	'founderemails-lot-happening-body-HTML' => 'Hallo $FOUNDERNAME,<br /><br />
 Er gebeurt veel op uw wiki vandaag! Kom naar $MYHOMEURL om te kijken wat er allemaal gebeurt.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
+	'founderemails-email-0-day-heading' => 'Goed u te ontmoeten, $FOUNDERNAME.',
+	'founderemails-email-0-day-congratulations' => 'Gefeliciteerd met het aanmaken van $WIKINAME!',
+	'founderemails-email-0-day-tips-heading' => 'Hier zijn een paar nuttige tips om u snel op weg te helpen:',
+	'founderemails-email-0-day-addpages-heading' => "Pagina's toevoegen.",
+	'founderemails-email-0-day-addpages-content' => 'In een wiki draait alles om het delen van informatie; in dit geval over uw unieke onderwerp. Maak pagina\'s aan door te klikken op "<a style="color:#2a87d5;text-decoration:none;" href="$ADDAPAGEURL">Pagina toevoegen</a>" en voeg nog meer gegevens over uw onderwerp toe.',
+	'founderemails-email-0-day-addpages-button' => 'Pagina toevoegen',
+	'founderemails-email-0-day-addphotos-heading' => 'Afbeeldingen toevoegen.',
+	'founderemails-email-0-day-addphotos-content' => 'Pagina\'s zien er altijd beter uit als ze visueel zijn! Voeg afbeeldingen toe aan uw pagina\'s en aan uw hoofdpagina. U kunt klikken op "<a style="color:#2a87d5;text-decoration:none;" href="$ADDAPHOTOURL">Afbeelding toevoegen</a>" om een afbeelding, galerij of diavoorstelling toe te voegen.',
+	'founderemails-email-0-day-addphotos-button' => 'Afbeelding toevoegen',
+	'founderemails-email-0-day-customizetheme-heading' => 'Pas het siteuiterlijk aan.',
+	'founderemails-email-0-day-customizetheme-content' => 'Pas het uiterlijk en het woordmerk van uw wiki aan om op te vallen! Gebruik de <a style="color:#2a87d5;text-decoration:none;" href="$CUSTOMIZETHEMEURL">Wizard uiterlijk aanpassen</a> om aangepaste kleuren toe te voegen aan uw wiki en de site precies aan te passen aan uw onderwerp.',
+	'founderemails-email-0-day-customizetheme-button' => 'Aanpassen',
+	'founderemails-email-0-day-wikiahelps-text' => '<span style="color:#2a87d5">We laten u niet in de kou staan.</span> We zijn hier om u te helpen $WIKINAME succesvol te maken, stap voor stap. Kom langs op <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> voor forums, advies en hulp of <a style="color:#2a87d5;text-decoration:none;" href="http://www.wikia.com/Special:Contact">e-mail ons</a> uw vragen!',
+	'founderemails-email-0-day-wikiahelps-signature' => 'Veel plezier met wikibouwen!<br />Het Wikia-team',
+	'founderemails-email-0-day-footer-line1' => 'Kom langs op <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> om het laatste nieuws oevr Wikia te volgen',
+	'founderemails-email-0-day-footer-line2' => 'Wilt u bepalen welke e-mails u krijgt? Pas dan <a href="http://messaging.wikia.com/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">uw voorkeuren</a> aan',
+	'founderemails-email-0-day-footer-line3' => 'Klik op de volgende verwijzing om u afmelden voor alle e-mails van Wikia: <a href="" style="color:#2a87d5;text-decoration:none;">$ UNSUBSCRIBEURL</a>',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */

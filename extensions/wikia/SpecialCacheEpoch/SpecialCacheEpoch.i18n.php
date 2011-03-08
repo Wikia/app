@@ -35,6 +35,21 @@ $messages['cs'] = array(
 	'cacheepoch-no-wf' => 'WikiFactory na této wiki není povoleno. Nelze měnit wgCacheEpoch.',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'cacheepoch-desc' => 'Stellt eine Schnittstelle zur Änderung von wgCacheEpoch pro Wiki bereit',
+	'cacheepoch' => 'Cache Epoch Schnittstelle',
+	'cacheepoch-header' => 'wgCacheEpoch erhöhen',
+	'cacheepoch-value' => 'Aktueller Wert von wgCacheEpoch ist "$1". Klick auf den Button, um sie auf den aktuellen Zeitstempel zu setzen.',
+	'cacheepoch-submit' => 'Den Wert aktualiseren',
+	'cacheepoch-updated' => 'wgCacheEpoch auf "$1" aktualisiert.',
+	'cacheepoch-not-updated' => 'Aktualisieren von wgCacheEpoch fehlgeschlagen.',
+	'cacheepoch-wf-reason' => 'Wert mit Special:CacheEpoch aktualisiert',
+	'cacheepoch-no-wf' => 'WikiFactory ist in diesem Wiki nicht aktiviert. Kann wgCacheEpoch nicht verändern.',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */

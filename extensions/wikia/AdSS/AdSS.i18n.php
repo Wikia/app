@@ -802,6 +802,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Coyau
  * @author Peter17
  * @author Verdy p
  * @author Wyz
@@ -855,6 +856,7 @@ $messages['fr'] = array(
 	'adss-form-thanks' => 'Merci pour votre parrainage ! Votre annonce a été achetée et sera effective après une approbation manuelle (dans les 48 heures).
 
 Allez [[Special:AdSS|acheter]] une autre annonce !',
+	'adss-upsell-no' => 'Non merci',
 	'adss-button-preview' => 'Prévisualisation',
 	'adss-button-edit' => 'Modifier',
 	'adss-button-login' => 'Connexion',
@@ -1556,7 +1558,7 @@ $messages['no'] = array(
 	'adss' => 'AdSS',
 	'adss-sponsor-links' => 'Sponsede lenker på Wikia',
 	'adss-ad-header' => '<h2>Eksterne sponsorlenker</h2>',
-	'adss-ad-default-text' => 'Klikk her.',
+	'adss-ad-default-text' => 'Trykk her!',
 	'adss-ad-default-desc' => 'Kjøp en sponset lenke og beskrivelse for ditt nettsted på denne siden. Vær rask, de få sponsorplassene blir fort utsolgt!',
 	'adss-form-header' => 'Utform annonsen din',
 	'adss-form-url' => 'URL for det sponsende nettstedet (ditt nettsted):',
@@ -1574,6 +1576,8 @@ $messages['no'] = array(
 	'adss-form-usd-per-day' => '$$1 per dag',
 	'adss-form-usd-per-week' => '$$1 per uke',
 	'adss-form-usd-per-month' => '$$1 per måned',
+	'adss-form-usd-per-quarter' => '$$1 per kvartal',
+	'adss-form-usd-per-year' => '$$1 per år',
 	'adss-form-auth-errormsg' => 'Enten e-postadressen din eller passordet ditt er feil.',
 	'adss-form-field-empty-errormsg' => 'Dette feltet kan ikke være tomt',
 	'adss-form-non-existent-title-errormsg' => 'Denne siden finnes ikke',
@@ -1596,13 +1600,18 @@ $messages['no'] = array(
 	'adss-form-banner-plan-header' => 'Kjøp en andel av 728x90-bannerene på toppen av denne wikien',
 	'adss-form-banner-plan-description' => 'Få en andel av bannerene over hele wikien for én lav pris.',
 	'adss-form-banner-plan-price' => '$1 for en banner-aksje',
+	'adss-form-hub-plan-header' => 'Kjøp en sponset lenke over alle $1-wikier',
 	'adss-form-hub-plan-description' => 'Få sponsede lenker på alle (over $2) $1-wikier til en lav pris.
 
 Dette lar deg nå et større publikum ved å vise annonsene dine på andre wikier fra samme hub.',
+	'adss-form-hub-plan-price' => '$1 for én aksje',
 	'adss-form-or' => '- eller -',
 	'adss-form-thanks' => 'Du har fullført kjøpet. Annonsen din vil offentliggjøres etter å ha blitt godkjent (innen 48 timer, vanligvis mindre).',
+	'adss-form-buy-another' => 'Vil du kjøpe en andre annonse nå? [[Special:AdSS|Trykk her]]',
+	'adss-upsell-header' => 'Spesielt engangstilbud',
 	'adss-upsell-text' => 'Få den første måneden gratis for annonsen du nettopp kjøpte!<br />
 Gjør om annonsen til et kvartalsvis abonnement nå<br />og betal $$1 istedenfor $$2 (33 % rabatt)!',
+	'adss-upsell-yes' => 'Ja, jeg vil ha det!',
 	'adss-upsell-no' => 'Nei takk',
 	'adss-upsell-thanks' => 'Takk for at du valgte tilbudet!',
 	'adss-upsell-error' => 'En feil har oppstått!',
@@ -1812,6 +1821,8 @@ $messages['pt'] = array(
 	'adss-form-usd-per-day' => '$1$ por dia',
 	'adss-form-usd-per-week' => '$1$ por semana',
 	'adss-form-usd-per-month' => '$1$ por mês',
+	'adss-form-usd-per-quarter' => '$1$ por trimestre',
+	'adss-form-usd-per-year' => '$1$ por ano',
 	'adss-form-auth-errormsg' => 'O seu correio electrónico ou a palavra-chave estão incorrectos.',
 	'adss-form-field-empty-errormsg' => 'Este campo não pode estar vazio',
 	'adss-form-non-existent-title-errormsg' => 'Esta página não existe',
@@ -1840,7 +1851,15 @@ $messages['pt'] = array(
 Isto permite-lhe atingir um público maior, apresentando o seu anúncio noutras wikis do mesmo portal.',
 	'adss-form-hub-plan-price' => '$1 por uma quota',
 	'adss-form-or' => '- ou -',
-	'adss-form-thanks' => 'Completou a sua compra.  O seu anúncio irá ao ar após aprovação (dentro de 48 horas, geralmente menos).',
+	'adss-form-thanks' => 'Completou a sua compra.  O seu anúncio ficará visível após aprovação (dentro de 48 horas, geralmente menos).',
+	'adss-form-buy-another' => 'Quer comprar um segundo anúncio agora?  [[Special:AdSS|Clique aqui]]',
+	'adss-upsell-header' => 'Oferta Única Especial',
+	'adss-upsell-text' => 'Obtenha o primeiro mês grátis no anúncio que acabou de comprar!<br />
+Converta o seu anúncio para uma assinatura trimestral agora<br />e pague $1$ em vez de $2$ (33% de desconto)!',
+	'adss-upsell-yes' => 'Sim, converter!',
+	'adss-upsell-no' => 'Não, obrigado',
+	'adss-upsell-thanks' => 'Obrigado por ter escolhido a oferta!',
+	'adss-upsell-error' => 'Ocorreu um erro!',
 	'adss-button-preview' => 'Antevisão',
 	'adss-button-edit' => 'Editar',
 	'adss-button-login' => 'Autenticação',
@@ -1931,18 +1950,150 @@ A Equipa da Wikia',
  * @author Giro720
  */
 $messages['pt-br'] = array(
+	'adss-desc' => 'Anúncios em Self-service',
+	'adss' => 'Anúncios Self-service',
+	'adss-sponsor-links' => 'Links patrocinados na Wikia',
 	'adss-ad-header' => '<h2>Links de Patrocinadores Externos</h2>',
+	'adss-ad-default-text' => 'Clique aqui!',
+	'adss-ad-default-desc' => 'Compre nesta página um link e uma descrição patrocinados para o seu site. Faça-o depressa, os poucos lotes de patrocínio esgotam-se rapidamente!',
+	'adss-form-header' => 'Componha o seu anúncio',
 	'adss-form-url' => 'URL do site patrocinador (o seu site na internet):',
 	'adss-form-linktext' => 'Texto que pretende que seja apresentado no link:',
 	'adss-form-additionaltext' => 'Texto para ser apresentado abaixo do link:',
+	'adss-form-type' => 'Tipo de patrocínio:',
 	'adss-form-page' => 'Página a patrocinar:',
+	'adss-form-banner' => 'Faça o upload do seu anúncio aqui:',
 	'adss-form-price' => 'Montante do patrocínio:',
+	'adss-form-shares' => 'Número de quotas:',
 	'adss-form-email' => 'Endereço de e-mail:',
-	'adss-form-thanks' => 'Obrigado por seu patrocínio!',
+	'adss-form-password' => 'Sua senha:',
+	'adss-form-login-link' => 'Autentique-se',
+	'adss-form-login-desc' => 'Tem uma senha? $1 para poupar tempo e compre o anúncio com um só clique!',
+	'adss-form-usd-per-day' => '$1$ por dia',
+	'adss-form-usd-per-week' => '$1$ por semana',
+	'adss-form-usd-per-month' => '$1$ por mês',
+	'adss-form-usd-per-quarter' => '$1$ por trimestre',
+	'adss-form-usd-per-year' => '$1$ por ano',
+	'adss-form-auth-errormsg' => 'O seu e-mail ou a senha estão incorrectos.',
+	'adss-form-field-empty-errormsg' => 'Este campo não pode estar vazio',
+	'adss-form-non-existent-title-errormsg' => 'Esta página não existe',
+	'adss-form-banner-upload-errormsg' => 'Tem de selecionar uma imagem para enviar',
+	'adss-form-pick-plan-errormsg' => 'Tem de selecionar um plano',
+	'adss-form-pick-plan' => 'Escolha um pacote de anúncios',
+	'adss-form-site-plan-header' => 'Compre um Link Patrocinado para a wiki toda',
+	'adss-form-site-plan-description' => 'Tenha Links Patrocinados na {{SITENAME}} toda por baixo custo.
+
+1 quota é, neste momento, igual a $1% dos links patrocinados da {{SITENAME}} e só custa $2. Pode cancelar em qualquer altura.',
+	'adss-form-site-plan-price' => '$1 por uma quota',
+	'adss-form-site-premium-plan-header' => 'Compre 4 Links Patrocinados pelo preço de 3',
+	'adss-form-site-premium-plan-description' => 'Tenha Links Patrocinados na {{SITENAME}} toda e obtenha ainda mais exposição comprando a grosso.
+
+1 quota é, neste momento, igual a $1% dos links patrocinados da {{SITENAME}}. Com esta opção está a comprar quatro quotas pelo preço de três! Pode cancelar em qualquer altura.',
+	'adss-form-site-premium-plan-price' => 'Só $1 por quatro quotas!',
+	'adss-form-page-plan-header' => 'Comprar um link só numa página',
+	'adss-form-page-plan-description' => 'Isto permite-lhe concentrar uma mensagem personalizada na melhor página para o seu produto por apenas $1 e pode cancelar em qualquer altura.',
+	'adss-form-page-plan-price' => '1 link custa $1',
+	'adss-form-banner-plan-header' => 'Compre uma quota dos anúncios gráficos 728x90 no topo da wiki',
+	'adss-form-banner-plan-description' => 'Obtenha uma quota dos anúncios de toda a wiki por um preço baixo.',
+	'adss-form-banner-plan-price' => '$1 por uma quota dos anúncios',
+	'adss-form-hub-plan-header' => 'Compre um Link Patrocinado em todas as wikis do portal $1',
+	'adss-form-hub-plan-description' => 'Tenha Links Patrocinados em todas (mais de $2) as wikis $1 por baixo custo.
+
+Isto permite-lhe atingir um público maior, apresentando o seu anúncio noutras wikis do mesmo portal.',
+	'adss-form-hub-plan-price' => '$1 por uma quota',
+	'adss-form-or' => '- ou -',
+	'adss-form-thanks' => 'Completou a sua compra.  O seu anúncio irá ao ar após aprovação (dentro de 48 horas ou menos).',
+	'adss-form-buy-another' => 'Quer comprar um segundo anúncio agora? [[Special:AdSS|Clique aqui]]',
+	'adss-upsell-header' => 'Oferta de tempo especial',
+	'adss-upsell-text' => 'Obtenha seu primeiro mês grátis no anúncio que você acabou de comprar! <br />
+Converta o seu anúncio a uma assinatura trimestral agora <br /> e pague $$1, em vez de $$2 (33% de desconto)!',
+	'adss-upsell-yes' => 'Sim, eu quero!',
+	'adss-upsell-no' => 'Não, obrigado',
+	'adss-upsell-thanks' => 'Obrigado por escolher a oferta!',
+	'adss-upsell-error' => 'Ocorreu um erro!',
+	'adss-button-preview' => 'Antevisão',
 	'adss-button-edit' => 'Editar',
+	'adss-button-login' => 'Autenticação',
+	'adss-button-login-buy' => 'Autentique-se e compre AGORA',
 	'adss-button-save-pay' => 'Salvar',
+	'adss-button-pay-paypal' => 'Pagar com PayPal',
+	'adss-button-select' => 'Selecionar',
+	'adss-button-buy-now' => 'Comprar AGORA',
+	'adss-button-save' => 'Salvar',
+	'adss-button-cancel' => 'Cancelar',
+	'adss-button-yes' => 'Sim',
+	'adss-button-no' => 'Não',
+	'adss-buy-another' => 'Comprar outro anúncio!',
+	'adss-edit-thanks' => 'As suas alterações ao anúncio foram gravadas e ficarão visíveis após aprovação manual (dentro de 48 horas)',
+	'adss-preview-header' => 'Antevisão',
 	'adss-preview-prompt' => 'O aspecto do seu patrocínio será este - clique "editar" para voltar atrás e fazer alterações, ou "salvar" para salvar e ir para o PayPal.',
+	'adss-click-here' => 'Clique aqui',
+	'adss-paypal-redirect' => '$1 se não for redirecionado para o PayPal nos próximos 5 segundos.',
+	'adss-paypal-error' => 'Não foi possível criar o pagamento PayPal neste momento. Tente novamente mais tarde, por favor. 
+
+Voltar para [[Special:AdSS|{{int:AdSS}}]].',
+	'adss-error' => 'Ocorreu um erro. Tente novamente mais tarde, por favor. 
+
+Voltar para [[Special:AdSS|{{int:Adss}}]].',
+	'adss-per-site' => 'Todas as páginas',
+	'adss-per-hub' => 'Portal',
+	'adss-per-page' => 'Apenas uma página',
 	'adss-close' => 'Fechar',
+	'adss-cancel' => 'Cancelar',
+	'adss-manager-tab-adList' => 'Os seus anúncios',
+	'adss-manager-tab-billing' => 'Faturação',
+	'adss-admin-tab-adList' => 'Lista de anúncios',
+	'adss-admin-tab-billing' => 'Faturação',
+	'adss-admin-tab-reports' => 'Relatórios',
+	'adss-not-logged-in' => 'Tem de estar autenticado',
+	'adss-wrong-id' => 'Identificação errada',
+	'adss-no-permission' => 'Não tem permissões',
+	'adss-canceled' => 'Cancelado',
+	'adss-rejected' => 'Rejeitado',
+	'adss-approved' => 'Aprovado',
+	'adss-pending' => 'Pendente',
+	'adss-wikia' => 'Wikia',
+	'adss-type' => 'Tipo',
+	'adss-no-shares' => 'Nº quotas',
+	'adss-price' => 'Preço',
+	'adss-ad' => 'Anúncio',
+	'adss-status' => 'Estado',
+	'adss-created' => 'Criado',
+	'adss-your-balance' => 'Saldo devido:',
+	'adss-your-billing-agreement' => 'Acordo de cobrança do PayPal:',
+	'adss-no-billing-agreement' => 'Não existe um acordo de cobrança válido. Volte a criar o acordo de cobrança para manter os seus anúncios.',
+	'adss-create-billing-agreement' => 'Criar um acordo de cobrança',
+	'adss-cancel-billing-agreement-confirmation' => 'Tem a certeza de que pretende cancelar o seu acordo de cobrança? Os seus anúncios deixarão de ser apresentados sem um acordo válido de cobrança Paypal.',
+	'adss-billing-agreement-created' => 'O acordo de cobrança foi criado (BAID=$1). Voltar para [[Special:AdSS/manager/billing|a tabela]].',
+	'adss-billing-agreement-canceled' => 'O seu acordo de cobrança foi cancelado. Voltar para [[Special:AdSS/manager/billing|a tabela]].',
+	'adss-paypal-payment' => 'Pagamento PayPal',
+	'adss-adss-fee' => 'Taxa Anúncios Self-service',
+	'adss-adss-refund' => 'Reembolso Anúncios Self-service',
+	'adss-fee' => 'Taxa',
+	'adss-paid' => 'Pago',
+	'adss-timestamp' => 'Data e hora',
+	'adss-description' => 'Descrição',
+	'adss-amount' => '$1$',
+	'adss-cancel-confirmation' => 'Tem a certeza de que pretende eliminar este anúncio?',
+	'adss-welcome-subject' => '[Anúncios Self-service] Obrigado pelo seu patrocínio!',
+	'adss-welcome-body' => 'Olá,
+
+Parabéns, a sua conta está configurada e os seus anúncios começarão a
+ser apresentados nas próximas 48 horas. Pode autenticar-se usando os
+detalhes abaixo para verificar o texto do anúncio, comprar mais anúncios
+ou ver os seus gastos. As contas da Wikia são enviadas através do Paypal
+sempre que gastar $4$ ou mais.
+
+URL: $1
+Nome de utilizador: $2
+Senha: $3
+
+Guarde a sua senha em um local seguro, por favor. Se a perder pode
+contatar o apoio a clientes em: http://www.wikia.com/wiki/Special:Contact
+e enviaremos a senha para o seu e-mail.
+
+--
+A Equipa da Wikia',
 );
 
 /** Russian (Русский)

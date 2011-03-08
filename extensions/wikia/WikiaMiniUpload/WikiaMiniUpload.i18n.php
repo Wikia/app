@@ -591,6 +591,7 @@ $messages['cy'] = array(
  * @author LWChris
  */
 $messages['de'] = array(
+	'wmu-upload-image' => 'Bild hochladen',
 	'wmu-upload' => 'Hochladen',
 	'wmu-notlogged' => 'Melde dich an oder registriere dich, um Bilder von deinem Rechner hochzuladen',
 	'wmu-find' => 'Suchen',
@@ -607,6 +608,7 @@ $messages['de'] = array(
 	'wmu-details-inf' => '<h1>Dateiname</h1>Bitte gib einen möglichst aussagekräftigen Namen für diese Datei an.',
 	'wmu-name' => 'Name',
 	'wmu-license' => 'Lizenz',
+	'wmu-licensing' => 'Lizenz',
 	'wmu-details-inf2' => '<h1>Artikeloptionen</h1>Wähle, wie diese Datei im Artikel angezeigt werden soll.',
 	'wmu-size' => 'Größe',
 	'wmu-thumbnail' => 'Vorschau',
@@ -654,6 +656,11 @@ $messages['de'] = array(
 	'wmu-no-preview' => 'Du kannst aus dem Vorschaumodus kein Bild hinzufügen',
 	'wmu-no-protect' => 'Diese Seite ist geschützt, du kannst ihr kein Bild hinzufügen',
 	'wmu-no-rights' => 'Du bist nicht berechtigt Bilder auf dieser Seite hinzuzufügen',
+	'wmu-more-options' => 'Weitere Optionen',
+	'wmu-fewer-options' => 'Weniger Optionen',
+	'wmu-replace-default-caption' => 'Standard-Bildunterschrift ersetzen',
+	'wmu-appearance-in-article' => 'Aussehen im Artikel',
+	'wmu-alignment' => 'Ausrichtung',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -1857,10 +1864,12 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Giro720
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'wmu-upload-image' => 'Enviar Imagem',
 	'wmu-upload' => 'Carregar',
 	'wmu-notlogged' => 'Autentique-se ou registre-se para importar imagens do seu computador',
 	'wmu-find' => 'Procurar',
@@ -1869,28 +1878,67 @@ $messages['pt-br'] = array(
 	'wmu-upload-btn' => 'Carregar',
 	'wmu-find-btn' => 'Procurar',
 	'wmu-flickr-inf' => 'Pesquise imagens grátis devidamente licenciadas no Flickr e importe-as para a sua wiki.',
+	'wmu-conflict-inf' => '<h1>Já existe um ficheiro com esse nome.</h1>O que é que quer fazer com o <b>$1</b>?',
+	'wmu-rename' => 'Alterar nome da imagem',
 	'wmu-existing' => 'Usar imagem existente',
+	'wmu-overwrite' => 'Substituir a imagem existente pela sua',
 	'wmu-insert' => 'Inserir',
+	'wmu-details-inf' => '<h1>Detalhes do ficheiro</h1>Especifique um nome descritivo para este ficheiro.',
 	'wmu-name' => 'Nome',
 	'wmu-license' => 'Licença',
+	'wmu-licensing' => 'Licenciamento',
+	'wmu-details-inf2' => '<h1>Opções do artigo</h1>Escolha o aspecto deste ficheiro na página.',
 	'wmu-size' => 'Tamanho',
+	'wmu-thumbnail' => 'Miniatura',
+	'wmu-fullsize' => 'Tamanho original ($1x$2px)',
 	'wmu-width' => 'Largura',
+	'wmu-layout' => 'Disposição',
+	'wmu-caption' => 'Legenda',
+	'wmu-link' => 'Link',
+	'wmu-optional' => '(opcional)',
 	'wmu-insert2' => 'Inserir arquivo',
+	'wmu-prev' => '8 anteriores',
+	'wmu-next' => '8 seguintes',
+	'wmu-flickr2' => 'Imagens do Flickr ($1 {{PLURAL:$1|resultado|resultados}})',
 	'wmu-insert3' => 'Inserir esta imagem',
 	'wmu-recent-inf' => 'Imagens recentemente carregadas',
+	'wmu-thiswiki2' => 'Imagens desta wiki ($1 {{PLURAL:$1|resultado|resultados}})',
+	'wmu-success' => '<h1>Sucesso</h1>A sua imagem foi inserida.',
+	'wmu-success-placeholder' => '<h1>Sucesso</h1>',
+	'wmu-return' => 'Voltar à edição',
 	'wmu-back' => 'voltar',
 	'wmu-close' => 'fechar',
+	'wmu-warn1' => 'Antes tem de especificar a consulta!',
+	'wmu-warn2' => 'Antes tem de selecionar o ficheiro!',
 	'wmu-warn3' => 'Você precisa especificar o nome do arquivo antes!',
+	'wmu-imagelink' => '<b>Novo!</b> Adicionar imagens',
 	'wmu-imagebutton' => 'Adicionar imagens',
+	'wmu-license-cc' => 'Protegida pela licença Atribuição e Partilha nos Mesmos Termos 3.0, da Creative Commons',
+	'wmu-bad-extension' => 'Tentou importar um tipo de ficheiro não permitido. Tente novamente, por favor.',
 	'wmu-filetype-missing' => 'Este carregamento está sem uma extensão de arquivo',
 	'wmu-filetype-incorrect' => 'Este carregamento tem uma extensão de arquivo incorreta',
+	'wmu-hide-license-msg' => 'esconder texto da licença',
+	'wmu-show-license-msg' => 'mostrar texto da licença',
+	'wmu-max-thumb' => 'foi excedido o tamanho máximo para miniaturas; a reverter para o original',
+	'wmu-notallowed' => 'Não pode importar imagens nesta wiki',
+	'wmu-readonly' => 'Não pode importar imagens; a wiki está em modo exclusivo de leitura',
+	'wmu-placeholder' => 'Espaço reservado',
 	'wmu-gallery' => 'Galeria',
 	'wmu-columns' => '$1 {{PLURAL:$1|coluna|colunas}}',
 	'wmu-column' => 'Colunas',
+	'wmu-added-from-plc' => 'Ficheiro adicionado via uma reserva de espaço para imagem',
+	'wmu-uploaddisabled' => 'A importação de ficheiros foi impossibilitada nesta wiki',
+	'wmu-gallery-success' => 'Adicionou uma imagem a uma galeria nova. Clique abaixo para adicionar mais imagens ou inserir a galeria',
 	'wmu-gallery-btn1' => 'Adicionar outra imagem',
 	'wmu-gallery-btn2' => 'Inserir galeria no artigo',
+	'wmu-no-preview' => 'Não pode adicionar imagem desde uma página em modo de antevisão',
 	'wmu-no-protect' => 'Esta página está protegida, você não pode adicionar imagens a ela',
 	'wmu-no-rights' => 'Você não está autorizado a adicionar imagens nesta página',
+	'wmu-more-options' => 'Mais opções',
+	'wmu-fewer-options' => 'Menos opções',
+	'wmu-replace-default-caption' => 'substituir legenda padrão',
+	'wmu-appearance-in-article' => 'Aspecto no Artigo',
+	'wmu-alignment' => 'Alinhamento',
 );
 
 /** Russian (Русский)

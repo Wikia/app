@@ -735,7 +735,7 @@ Ajoutez des pages à cette liste en cliquant sur « {{int:watch}} » en bas d’
 	'wikiafollowedpages-following' => 'Suivi',
 	'wikiafollowedpages-special-title-userbar' => 'Pages suivies',
 	'tog-enotiffollowedpages' => 'M’avertir par courriel lorsqu’une page de ma liste de suivi est modifiée',
-	'tog-enotiffollowedminoredits' => 'M’avertir par courrier électronique lors des modifications mineures des pages que je suis',
+	'tog-enotiffollowedminoredits' => 'M’avertir par courriel lorsque des modifications mineures sont effectuées sur des pages que je suis',
 	'prefs-wikiafollowedpages-prefs-advanced' => 'Préférences avancées',
 	'prefs-wikiafollowedpages-prefs-watchlist' => 'Liste de suivi uniquement',
 	'tog-hidefollowedpages' => 'Rendre privée ma liste de suivi',
@@ -1909,15 +1909,114 @@ Visite-nos sempre e edite muito...
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'follow-desc' => 'Melhorias da funcionalidade de páginas vigiadas',
+	'prefs-basic' => 'Opções básicas',
 	'wikiafollowedpages-special-heading-category' => 'Categorias ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Artigos ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Blogues e publicações ($1)',
+	'wikiafollowedpages-special-heading-forum' => 'Tópicos de fóruns ($1)',
+	'wikiafollowedpages-special-heading-project' => 'Páginas de projeto ($1)',
 	'wikiafollowedpages-special-heading-user' => 'Páginas de usuário ($1)',
+	'wikiafollowedpages-special-heading-templates' => 'Páginas de predefinições ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'Páginas MediaWiki ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Imagens e vídeos ($1)',
+	'wikiafollowedpages-special-namespace' => '(página $1)',
+	'wikiafollowedpages-special-empty' => 'A lista de páginas seguidas por este utilizador está vazia.
+Adicione páginas à lista clicando "{{int:watch}}" no topo de uma página.',
+	'wikiafollowedpages-special-anon' => '[[Special:Signup|Autentique-se]] para criar ou ver a sua lista de páginas seguidas, por favor.',
+	'oasis-wikiafollowedpages-special-seeall' => 'Ver todas >',
+	'wikiafollowedpages-special-seeall' => 'Ver todas >',
+	'wikiafollowedpages-special-showall' => 'Mostrar todas >',
+	'wikiafollowedpages-special-showmore' => 'Mostrar mais',
+	'wikiafollowedpages-special-title' => 'Páginas seguidas',
 	'wikiafollowedpages-special-delete-tooltip' => 'Remover esta página',
+	'wikiafollowedpages-special-hidden' => '{{GENDER:$1|Este utilizador|Esta utilizadora|Este utilizador}} escondeu a sua lista de páginas seguidas do visionamento público.',
+	'wikiafollowedpages-special-hidden-unhide' => 'Deixar de esconder esta lista.',
+	'wikiafollowedpages-special-blog-by' => 'por $1',
+	'wikiafollowedpages-masthead' => 'Páginas seguidas',
+	'wikiafollowedpages-following' => 'A seguir',
+	'wikiafollowedpages-special-title-userbar' => 'Páginas seguidas',
+	'tog-enotiffollowedpages' => 'Notificar-me por e-mail quando uma página seguida for alterada',
+	'tog-enotiffollowedminoredits' => 'Notificar-me por e-mail quando uma página seguida sofrer uma edição menor',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Opções avançadas',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Só a lista de páginas vigiadas',
+	'tog-hidefollowedpages' => 'Tornar privada a minha lista de páginas seguidas',
+	'follow-categoryadd-summary' => 'Página adicionada à categoria',
+	'follow-bloglisting-summary' => 'Mensagem publicada numa página de blogue',
+	'wikiafollowedpages-userpage-heading' => 'Páginas que estou a seguir',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'Esconder a sua lista de páginas seguidas do visionamento público',
 	'wikiafollowedpages-userpage-more' => 'Mais',
+	'wikiafollowedpages-userpage-hide' => 'esconder',
+	'wikiafollowedpages-userpage-empty' => 'A lista de páginas seguidas por este utilizador está vazia.
+Adicione páginas à lista clicando "{{int:watch}}" no topo de uma página.',
+	'enotif_subject_categoryadd' => 'Página $PAGETITLE do site {{SITENAME}} adicionada à categoria $CATEGORYNAME por $PAGEEDITOR',
+	'enotif_body_categoryadd' => 'Caro(a) $WATCHINGUSERNAME,
+
+Foi adicionada uma página a uma categoria que está a seguir no site {{SITENAME}}.
+
+A página nova é "$PAGETITLE_URL".
+
+Visite-nos sempre e edite muito...
+
+{{SITENAME}}
+
+___________________________________________
+* Visite as wikis em destaque! http://www.wikia.com
+
+* Quer definir que notificações deseja receber?
+Visite: {{fullurl:{{ns:special}}:Preferências}}.',
+	'enotif_body_categoryadd-html' => '<p>
+Caro(a) $WATCHINGUSERNAME,
+<br /><br />
+Foi adicionada uma página a uma categoria que está a seguir no site {{SITENAME}}.
+<br /><br />
+A página nova é <a href="$PAGETITLE_URL">$PAGETITLE</a>.
+<br /><br />
+Visite-nos sempre e edite muito...
+<br /><br />
+{{SITENAME}}
+<br /><hr />
+<ul>
+<li><a href="http://www.wikia.com">Visite as wikis em destaque!</a></li>
+<li>Quer definir que notificações deseja receber? Visite <a href="{{fullurl:{{ns:special}}:Preferences}}">Preferências do utilizador</a></li>
+</ul>
+</p>',
+	'enotif_subject_blogpost' => 'A página $PAGETITLE da {{SITENAME}} foi publicada no blogue $BLOGLISTINGNAME por $PAGEEDITOR',
+	'enotif_body_blogpost' => 'Caro(a) $WATCHINGUSERNAME,
+
+Foi editada uma página de listagem de blogues que está a seguir no site {{SITENAME}}.
+
+A mensagem nova é "$PAGETITLE_URL".
+
+Visite-nos sempre e edite muito...
+
+{{SITENAME}}
+
+___________________________________________
+* Visite as wikis em destaque! http://www.wikia.com
+
+* Quer definir que notificações deseja receber?
+Visite: {{fullurl:{{ns:special}}:Preferências}}.',
+	'enotif_body_blogpost-HTML' => '<p>
+Caro(a) $WATCHINGUSERNAME,
+<br /><br />
+Foi editada uma página de listagem de blogues que está a seguir no site {{SITENAME}}.
+<br /><br />
+A mensagem nova é <a href="$PAGETITLE_URL">$PAGETITLE</a>.
+<br /><br />
+Visite-nos sempre e edite muito...
+<br /><br />
+{{SITENAME}}
+<br /><hr />
+<ul>
+<li><a href="http://www.wikia.com">Visite as wikis em destaque!</a></li>
+<li>Quer definir que notificações deseja receber? Visite <a href="{{fullurl:{{ns:special}}:Preferences}}">Preferências do utilizador</a></li>
+</ul>
+</p>',
 );
 
 /** Russian (Русский)

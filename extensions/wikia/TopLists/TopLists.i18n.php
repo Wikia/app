@@ -208,11 +208,14 @@ Gellout a rit <a href="$4">paouez da resevout</a> kemmoù ar roll-mañ.',
 
 /** German (Deutsch)
  * @author Avatar
+ * @author LWChris
  */
 $messages['de'] = array(
 	'toplists-desc' => 'Top 10 Listen',
 	'right-toplists-create-edit-list' => 'Erstelle und bearbeite Top 10 Listen',
 	'right-toplists-create-item' => 'Erstelle und füge Einträge zu einer Top 10 Liste hinzu',
+	'right-toplists-edit-item' => 'Elemente in einer Top 10 Liste bearbeiten',
+	'right-toplists-delete-item' => 'Elemente aus einer Top 10 Liste löschen',
 	'createtoplist' => 'Erstelle eine neue Top 10 Liste',
 	'edittoplist' => 'Top 10 Liste bearbeiten',
 	'toplists-category' => 'Top 10 Listen',
@@ -231,6 +234,7 @@ $messages['de'] = array(
 	'toplists-error-add-item-permission' => 'Keine ausreichenden Rechte: Mit deinem Benutzerkonto kannst du keine neuen Einträge erstellen.',
 	'toplists-error-add-item-list-not-exists' => 'Die Top 10 Liste "$1" existiert nicht.',
 	'toplists-error-backslash-not-allowed' => 'Das Zeichen "/" ist im Titel von Top 10 Listen nicht erlaubt.',
+	'toplists-upload-error-unknown' => 'Beim Verarbeiten der Upload Anfrage ist ein Fehler aufgetreten. Bitte versuche es erneut.',
 	'toplists-editor-title-label' => 'Name der Liste',
 	'toplists-editor-title-placeholder' => 'Gib der Liste einen Namen',
 	'toplists-editor-related-article-label' => 'Verwandte Seite <small>(optional, aber wählt ein Bild)</small>',
@@ -261,8 +265,10 @@ $messages['de'] = array(
 	'toplists-list-related-to' => 'Verwandt zu:',
 	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />Stimme|$1<br />Stimmen}}',
 	'toplists-list-created-by' => 'von [[User:$1|$1]]',
+	'toplists-list-vote-up' => 'Zustimmen',
 	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|Stimme|Stimmen}} in $2',
 	'toplists-list-add-item-label' => 'Eintrag hinzufügen',
+	'toplists-list-add-item-name-label' => 'Führe die Liste fort...',
 	'toplists-list-item-voted' => 'Abgestimmt',
 	'toplists-createpage-dialog-label' => 'Top 10 Liste',
 	'toplists-email-subject' => 'Eine Top 10 Liste wurde geändert',
@@ -283,6 +289,8 @@ Du kannst die Änderungsbenachrichtigungen zu dieser Liste <a href="$4">abbestel
 	'toplists-days' => '$1 {{PLURAL:$1|Tag|Tage}}',
 	'toplists-weeks' => '$1 {{PLURAL:$1|Woche|Wochen}}',
 	'toplists-msg-fb-OnRateArticle-short' => 'hat bei einer Top 10 Liste abgestimmt ($WIKINAME)!',
+	'toplists-create-heading' => '<em>Neu!</em> Erstelle deine eigene Top 10 Liste',
+	'toplists-create-button-msg' => 'Liste erstellen',
 );
 
 /** Spanish (Español)
@@ -470,6 +478,8 @@ $messages['fr'] = array(
 	'toplists-desc' => 'Listes de top 10',
 	'right-toplists-create-edit-list' => 'Créer et modifier des pages de liste de top 10',
 	'right-toplists-create-item' => 'Créer et ajouter des éléments à une page de liste de top 10',
+	'right-toplists-edit-item' => 'Modifier les éléments dans une page de liste de top 10',
+	'right-toplists-delete-item' => 'Supprimer les éléments dans une page de liste de top 10',
 	'createtoplist' => 'Créer une nouvelle liste de top 10',
 	'edittoplist' => 'Modifier une liste de top 10',
 	'toplists-category' => 'Listes de top 10',
@@ -638,6 +648,8 @@ $messages['ia'] = array(
 	'toplists-desc' => 'Listas Top 10',
 	'right-toplists-create-edit-list' => 'Crear e modificar paginas de lista Top 10',
 	'right-toplists-create-item' => 'Crear e adder elementos a un pagina de lista Top 10',
+	'right-toplists-edit-item' => 'Modificar elementos in un pagina con lista Top 10',
+	'right-toplists-delete-item' => 'Deler elementos de un pagina con lista Top 10',
 	'createtoplist' => 'Crear un nove lista Top 10',
 	'edittoplist' => 'Modificar lista Top 10',
 	'toplists-category' => 'Listas Top 10',
@@ -730,6 +742,8 @@ $messages['mk'] = array(
 	'toplists-desc' => 'Списоци на 10 најкотирани',
 	'right-toplists-create-edit-list' => 'Создајте или уредете статии на списокот на 10 најкотирани',
 	'right-toplists-create-item' => 'Создавајте и додавајте ставки на список на 10 најкотирани',
+	'right-toplists-edit-item' => 'Уреди ставки на страницата „10 најкотирани“',
+	'right-toplists-delete-item' => 'Избриши ставки на страницата „10 најкотирани“',
 	'createtoplist' => 'Создај нов список на 10 најкотирани',
 	'edittoplist' => 'Уреди список на 10 најкотирани',
 	'toplists-category' => 'Списоци на 10 најкотирани',
@@ -901,6 +915,8 @@ $messages['no'] = array(
 	'toplists-desc' => 'Topp 10-lister',
 	'right-toplists-create-edit-list' => 'Opprett og rediger Topp 10-listesider.',
 	'right-toplists-create-item' => 'Opprett og legg elementer til en Topp 10-listeside',
+	'right-toplists-edit-item' => 'Rediger elementer i en Topp 10-listeside',
+	'right-toplists-delete-item' => 'Slett elementer fra en Topp 10-listeside',
 	'createtoplist' => 'Opprett en ny Topp 10-liste',
 	'edittoplist' => 'Rediger Topp 10-liste',
 	'toplists-category' => 'Topp 10-lister',
@@ -1091,6 +1107,8 @@ $messages['pt'] = array(
 	'toplists-desc' => 'Listas Top 10',
 	'right-toplists-create-edit-list' => 'Criar e editar páginas de listas Top 10',
 	'right-toplists-create-item' => 'Criar e adicionar elementos à página de uma lista Top 10',
+	'right-toplists-edit-item' => 'Editar itens na página de uma lista Top 10',
+	'right-toplists-delete-item' => 'Eliminar itens da página de uma lista Top 10',
 	'createtoplist' => 'Criar uma lista Top 10',
 	'edittoplist' => 'Editar lista Top 10',
 	'toplists-category' => 'Listas Top 10',

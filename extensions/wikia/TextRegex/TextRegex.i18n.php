@@ -180,6 +180,7 @@ $messages['ca'] = array(
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author LWChris
  * @author The Evil IP address
  */
@@ -206,7 +207,7 @@ Versuche es noch einmal.',
 	'textregex-nodata-found' => 'Keine Daten gefunden',
 	'textregex-stats-record' => "Wort ''$1'' wurde von $2 auf $3 verwendet (''Kommentar: $4'')",
 	'textregex-select-subpage' => 'Wähle eine Liste von Phrasen:',
-	'textregex-select-default' => '-- wählen --',
+	'textregex-select-default' => '-- auswählen --',
 	'textregex-create-subpage' => 'oder neue Liste erstellen:',
 	'textregex-select-regexlist' => 'gehe zur Liste',
 	'textregex-invalid-regexid' => 'Ungültige Phrase.',

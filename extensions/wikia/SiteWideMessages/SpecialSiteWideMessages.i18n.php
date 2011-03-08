@@ -1532,18 +1532,44 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
  * @author Giro720
  * @author Jesielt
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'sitewidemessages' => 'Menssagens globais',
+	'swm-page-title-editor' => 'Menssagens globais :: Editor',
+	'swm-page-title-preview' => 'Menssagens globais :: Antevisão',
+	'swm-page-title-send' => 'Menssagens globais :: Enviar',
+	'swm-page-title-sent' => 'Menssagens globais :: Enviadas',
+	'swm-page-title-dismiss' => 'Menssagens globais :: Descartar',
+	'swm-page-title-list' => 'Menssagens globais :: Lista',
 	'swm-label-preview' => 'Pré-visualizar',
 	'swm-label-edit' => 'Editar',
 	'swm-label-remove' => 'Remover',
+	'swm-label-sent' => 'Enviadas',
+	'swm-label-list' => 'Lista',
+	'swm-label-recipient' => 'Destinatários',
+	'swm-label-recipient-wikis' => 'Wikis',
 	'swm-label-recipient-users' => 'Usuários',
+	'swm-label-expiration' => 'Prazo de expiração',
+	'swm-label-mode-wikis-all' => 'Todas as wikis',
+	'swm-label-mode-wikis-hub' => 'Hub selecionado',
+	'swm-label-mode-wikis-wiki' => 'Wiki selecionada',
+	'swm-label-mode-users-all' => 'Todos os utilizadores',
 	'swm-label-mode-users-active' => 'Usuários ativos',
 	'swm-label-mode-users-group' => 'Usuários pertencentes ao grupo',
+	'swm-label-mode-users-group-hint' => '<i>Escolha um grupo da lista ou escreva o nome do grupo para substituir a selecção da lista.</i>',
+	'swm-label-mode-users-user' => 'Utilizador selecionado',
+	'swm-label-mode-users-user-hint' => '<i>Esta opção ignora a selecção no grupo "Wikis".</i>',
+	'swm-label-content' => 'Conteúdo',
+	'swm-label-comment' => 'Comentário',
+	'swm-label-dismissed' => 'Descartadas',
 	'swm-label-language' => 'Língua',
+	'swm-button-lang-checkall' => '[ Verificar todas ]',
+	'swm-button-lang-checknone' => '[ Não verificar nenhuma ]',
+	'swm-taskmanager-hint' => '<i>Note que algumas opções são demoradas e serão colocadas na fila do TaskManager.</i>',
 	'swm-button-preview' => '[ Previsualizar ]',
 	'swm-button-send' => '[ Enviar ]',
 	'swm-button-save' => '[ Salvar ]',
@@ -1556,7 +1582,9 @@ $messages['pt-br'] = array(
 	'swm-link-dismiss' => 'dispensar essa mensagem',
 	'swm-dismiss-content' => '<p>A mensagem foi dispensada.</p><p>%s</p>',
 	'swm-list-no-messages' => 'Sem mensagens.',
+	'swm-list-table-id' => 'ID',
 	'swm-list-table-sender' => 'Remetente',
+	'swm-list-table-wiki' => 'Wiki',
 	'swm-list-table-recipient' => 'Destinatário',
 	'swm-list-table-group' => 'Grupo',
 	'swm-list-table-expire' => 'Expira',
@@ -1567,6 +1595,12 @@ $messages['pt-br'] = array(
 	'swm-list-table-lang' => 'Idiomas',
 	'swm-yes' => 'Sim',
 	'swm-no' => 'Não',
+	'swm-error-no-such-wiki' => 'Essa wiki não existe!',
+	'swm-error-no-such-user' => 'O utilizador especificado não existe.',
+	'swm-error-empty-message' => 'Introduza o conteúdo da mensagem.',
+	'swm-error-long-message' => 'As mensagens estão limitadas a 500 caracteres.',
+	'swm-error-empty-group' => 'Introduza o nome do grupo.',
+	'swm-lang-other' => 'todas as línguas restantes',
 );
 
 /** Russian (Русский)

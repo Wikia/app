@@ -389,7 +389,9 @@ $messages['it'] = array(
 	'article-comments-login' => '<a href="$1">Accedi per lasciare un commenti</a>',
 );
 
-/** Japanese (日本語) */
+/** Japanese (日本語)
+ * @author Tommy6
+ */
 $messages['ja'] = array(
 	'article-comments-anonymous' => '匿名利用者',
 	'article-comments-comments' => 'コメント ($1)',
@@ -398,6 +400,8 @@ $messages['ja'] = array(
 	'article-comments-history' => '履歴',
 	'article-comments-undeleted-comment' => 'ブログの記事 $1 へのコメントを復帰',
 	'article-comments-login' => 'コメントするには<a href="$1">ログイン</a>する必要があります',
+	'article-comments-comment-cannot-add' => 'この記事にはコメントを追加できません。',
+	'article-comments-delete-reason' => '親記事/親コメントが削除されました',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -535,14 +539,29 @@ Wikia
 $messages['no'] = array(
 	'article-comments-anonymous' => 'Anonym bruker',
 	'article-comments-comments' => 'Kommentarer ($1)',
+	'article-comments-post' => 'Post kommentar',
 	'article-comments-delete' => 'slett',
 	'article-comments-edit' => 'rediger',
 	'article-comments-history' => 'historikk',
 	'article-comments-error' => 'Kommentaren kunne ikke lagres',
 	'article-comments-undeleted-comment' => 'Angret slettning av kommetar for bloggsiden $1',
+	'article-comments-rc-comment' => 'Artikkelkommentar ([[$1]])',
+	'article-comments-rc-comments' => 'Artikkelkommentarer ([[$1]])',
+	'article-comments-fblogin' => 'Vennligst <a href="$1">logg inn og koble deg til Facebook</a> for å poste en kommentar på denne wikien!',
+	'article-comments-fbconnect' => 'Vennligst <a href="$1">koble denne kontoen til Facebook</a> for å kommentere!',
 	'article-comments-rc-blog-comment' => 'Bloggkommentar ([[$1]])',
 	'article-comments-rc-blog-comments' => 'Bloggkommentarer ([[$1]])',
+	'article-comments-login' => 'Vennligst <a href="$1">logg inn</a> for å kommentere på denne wikien.',
+	'article-comments-toc-item' => 'Kommentarer',
 	'article-comments-comment-cannot-add' => 'Du kan ikke legge en kommentar til artikkelen.',
+	'article-comments-reply' => 'Svar',
+	'article-comments-show-all' => 'Vis alle kommentarer',
+	'article-comments-prev-page' => 'Forrige',
+	'article-comments-next-page' => 'Neste',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Overordnet artikkel/overordnet kommentar har blitt slettet.',
+	'article-comments-empty-comment' => "Du kan ikke poste en tom kommentar. <a href='$1'>Slette den istedenfor?</a>",
+	'enotif_subject_article_comment' => '$PAGEEDITOR har kommentert «$PAGETITLE» på {{SITENAME}}',
 	'enotif_body_article_comment' => 'Kjære $WATCHINGUSERNAME,
 
 $PAGEEDITOR har kommentert «$PAGETITLE». 
@@ -581,12 +600,69 @@ $messages['pl'] = array(
 	'article-comments-login' => '<a href="$1">Zaloguj się</a>, aby komentować',
 );
 
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ * @author SandroHc
+ * @author Waldir
+ */
+$messages['pt'] = array(
+	'article-comments-anonymous' => 'Utilizador anónimo',
+	'article-comments-comments' => 'Comentários ($1)',
+	'article-comments-post' => 'Publicar comentário',
+	'article-comments-delete' => 'eliminar',
+	'article-comments-edit' => 'editar',
+	'article-comments-history' => 'histórico',
+	'article-comments-error' => 'Não foi possível gravar o comentário',
+	'article-comments-undeleted-comment' => 'Comentário recuperado para a página de blogue $1',
+	'article-comments-rc-comment' => 'Comentário de artigo ([[$1]])',
+	'article-comments-rc-comments' => 'Comentários de artigo ([[$1]])',
+	'article-comments-fblogin' => 'Por favor, <a href="$1">autentique-se e ligue-se ao Facebook</a> para publicar um comentário nesta wiki!',
+	'article-comments-fbconnect' => 'Por favor <a href="$1">associe esta conta ao Facebook</a> para comentar!',
+	'article-comments-rc-blog-comment' => 'Comentário de blog ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Comentários de blogue ([[$1]])',
+	'article-comments-login' => 'Por favor, <a href="$1">autentique-se</a> para publicar um comentário nesta wiki.',
+	'article-comments-toc-item' => 'Comentários',
+	'article-comments-comment-cannot-add' => 'Não pode adicionar um comentário ao artigo.',
+	'article-comments-reply' => 'Responder',
+	'article-comments-show-all' => 'Mostrar todos os comentários',
+	'article-comments-prev-page' => 'Anterior',
+	'article-comments-next-page' => 'Próximo',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'O artigo raiz / comentário raiz foi apagado.',
+	'article-comments-empty-comment' => "Não pode publicar um comentário vazio. <a href='$1'>Quer apagá-lo?</a>",
+	'enotif_subject_article_comment' => '$PAGEEDITOR comentou "$PAGETITLE" na {{SITENAME}}',
+	'enotif_body_article_comment' => 'Caro $WATCHINGUSERNAME,
+
+$PAGEEDITOR fez um comentário em "$PAGETITLE". 
+
+Para ver o comentário, siga o link abaixo:
+$PAGETITLE_URL 
+
+Por favor, visite-nos e edite muito...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>Caro $WATCHINGUSERNAME, 
+<br /><br />
+$PAGEEDITOR fez um comentário em "$PAGETITLE". 
+<br /><br />
+Para ver a lista de discussão do comentário, siga este link: <a href="$PAGETITLE_URL">$PAGETITLE</a> 
+<br /><br />
+Por favor, visite e edite muitas vezes... 
+<br /><br />
+Wikia 
+<br /><hr />
+<ul>
+<li>Quer controlar os e-mails que recebe? <a href="{{fullurl:Special:Preferences}}">Actualize as suas preferências<a>.</li>
+</ul>
+</p>',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
 	'article-comments-anonymous' => 'Usuário anônimo',
-	'article-comments-comments' => 'Comentários ($ 1)',
+	'article-comments-comments' => 'Comentários ($1)',
 	'article-comments-post' => 'Postar comentário',
 	'article-comments-delete' => 'apagar',
 	'article-comments-edit' => 'editar',
@@ -640,16 +716,37 @@ $messages['pt-br'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'article-comments-anonymous' => 'Anonym användare',
+	'article-comments-comments' => 'Kommentarer ($1)',
 	'article-comments-delete' => 'radera',
 	'article-comments-edit' => 'redigera',
 	'article-comments-history' => 'historik',
 	'article-comments-error' => 'Kommentaren kunde inte sparas',
+	'article-comments-rc-comment' => 'Artikelkommentar ([[$1]])',
+	'article-comments-rc-comments' => 'Artikelkommentarer ([[$1]])',
+	'article-comments-fblogin' => 'Var god <a href="$1">logga in och anslut dig till Facebook</a> för att posta en kommentar på den här wikin!',
+	'article-comments-fbconnect' => 'Var god <a href="$1">anslut detta konto till Facebook</a> för att kommentera!',
+	'article-comments-rc-blog-comment' => 'Bloggkommentar ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Bloggkommentarer ([[$1]])',
+	'article-comments-login' => 'Var god <a href="$1">logga in</a> för att posta en kommentar på den här wikin.',
 	'article-comments-toc-item' => 'Kommentarer',
 	'article-comments-comment-cannot-add' => 'Du kan inte lägga till en kommentar till artikeln.',
 	'article-comments-reply' => 'Svara',
 	'article-comments-show-all' => 'Visa alla kommentarer',
 	'article-comments-prev-page' => 'Föreg',
 	'article-comments-next-page' => 'Nästa',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-empty-comment' => "Du kan inte skriva en tom kommentar. <a href='$1'>Ta bort det istället?</a>",
+	'enotif_body_article_comment' => 'Kära $WATCHINGUSERNAME,
+
+$PAGEEDITOR har lagt in en kommentar på "$PAGETITLE". 
+
+För att se kommentartråden, följ länken nedan:
+$PAGETITLE_URL 
+
+Besök oss och redigera ofta...
+
+Wikia',
 );
 
 /** Telugu (తెలుగు)

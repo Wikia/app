@@ -178,6 +178,12 @@ $messages['de'] = array(
 	'multilookuplistwikiainfo' => 'Liste von Wikis, in denen Artikel von Benutzern mit der IP-Adresse <b>$1</b> bearbeitet wurden',
 	'multilookupinvaliduser' => '<p class="error">IP-Adresse „<b>$1</b>“ existiert nicht. Überprüfe die angegebene IP-Adresse auf mögliche Tippfehler.</p>',
 	'multilookuplastedit' => 'Letzte Bearbeitung mit dieser IP-Adresse:',
+	'multilookupwikidbname' => 'DB-Name',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Titel',
+	'multilookupwikioptions' => 'Optionen',
+	'multilookuplastedithdr' => 'Letzte Bearbeitung',
+	'multilookuprecordspager' => "Zeige '''$1''' bis '''$2''' von '''$3''' Einträgen.",
 	'right-multilookup' => 'Multiaccount-Suche auf mehreren Wikis',
 );
 

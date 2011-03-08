@@ -64,6 +64,25 @@ $messages['cs'] = array(
 	'unsubscribe-working-done' => 'Hotovo.',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'unsubscribe' => 'Abonnement beenden',
+	'unsubscribe-badaccess' => 'Sorry, diese Seite kann leider nicht direkt verwendet werden. Bitte verwende den Link aus deiner E-Mail.',
+	'unsubscribe-badtoken' => 'Sorry, es gab ein Problem mit dem Security Token.',
+	'unsubscribe-bademail' => 'Sorry, es gab ein Problem mit der E-Mail.',
+	'unsubscribe-badtime' => 'Sorry, der Link ist leider nicht mehr gültig. Bitte benutze einen Link, der weniger als 7 Tage alt ist.',
+	'unsubscribe-nousers' => 'Keine Benutzer mit dieser E-Mail-Adresse gefunden.',
+	'unsubscribe-noconfusers' => 'Keine bestätigten Benutzer mit dieser E-Mail-Adresse gefunden.',
+	'unsubscribe-confirm-legend' => 'Bestätigen',
+	'unsubscribe-confirm-text' => 'Alle Konten mit <code>$1</code> abbestellen?',
+	'unsubscribe-confirm-button' => 'Ja, ich bin sicher',
+	'unsubscribe-working' => 'Trage $1 {{PLURAL:$1|Konto|Konten}} für $2 aus',
+	'unsubscribe-working-problem' => 'Problem beim Laden der Benutzer-Informationen für: $1',
+	'unsubscribe-working-done' => 'Fertig.',
+);
+
 /** Spanish (Español)
  * @author Bola
  */
@@ -174,6 +193,25 @@ $messages['no'] = array(
 	'unsubscribe-working' => 'Avbryter abonnement for $1 {{PLURAL:$1|konto|kontoer}} for $2',
 	'unsubscribe-working-problem' => 'problem med å laste brukerinformasjon for: $1',
 	'unsubscribe-working-done' => 'Fullført.',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'unsubscribe' => 'Anular subscrição',
+	'unsubscribe-badaccess' => 'Esta página não pode ser usada directamente. Siga o link no seu correio electrónico, por favor.',
+	'unsubscribe-badtoken' => 'Desculpe, ocorreu um problema com a chave de segurança.',
+	'unsubscribe-bademail' => 'Desculpe, ocorreu um problema com o correio electrónico.',
+	'unsubscribe-badtime' => 'Desculpe, o link expirou. Use um link criado há menos de 7 dias, por favor.',
+	'unsubscribe-nousers' => 'Não foram encontrados utilizadores com esse correio electrónico.',
+	'unsubscribe-noconfusers' => 'Não foram encontrados utilizadores confirmados com esse correio electrónico.',
+	'unsubscribe-confirm-legend' => 'Confirmar',
+	'unsubscribe-confirm-text' => 'Anular a subscrição de todas as contas com <code>$1</code>?',
+	'unsubscribe-confirm-button' => 'Sim, tenho a certeza',
+	'unsubscribe-working' => 'A anular a subscrição de $1 {{PLURAL:$1|conta|contas}} para $2',
+	'unsubscribe-working-problem' => 'problema ao carregar a informação do utilizador: $1',
+	'unsubscribe-working-done' => 'Terminado.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

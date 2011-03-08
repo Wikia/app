@@ -63,11 +63,15 @@ $messages['cs'] = array(
 	'right-taskmanager-action' => 'Lze spravovat úlohy na pozadí',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author LWChris
+ */
 $messages['de'] = array(
 	'taskmanager' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
 	'taskmanager_title' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
 	'taskmanager_tasklist' => 'Zurück zur Aufgaben-Liste',
+	'right-taskmanager' => 'Darf Hintergrund-Tasks anzeigen',
+	'right-taskmanager-action' => 'Darf Hintergrund-Tasks verwalten',
 );
 
 /** Spanish (Español)

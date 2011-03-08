@@ -30,6 +30,15 @@ $messages['cs'] = array(
 	'scribeeventsrecords' => 'Záznamy',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Tool]], um in Wikis nach einem bestimmten Seitennamen zu suchen',
+	'scribeevents' => 'Letzte Ereignisse',
+	'scribeeventsrecords' => 'Datensätze',
+);
+
 /** Spanish (Español) */
 $messages['es'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Herramienta]] para buscar el título de una página específica a través de las wikis',

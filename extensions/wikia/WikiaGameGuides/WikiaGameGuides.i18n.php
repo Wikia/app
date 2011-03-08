@@ -26,6 +26,13 @@ $messages['cs'] = array(
 	'wikiagameguides-desc' => 'Moduly mobilní aplikace Wikia Herní manuály',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'wikiagameguides-desc' => 'Wikia Game Guides Mobile App Module',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */

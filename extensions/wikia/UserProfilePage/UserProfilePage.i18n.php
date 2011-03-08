@@ -131,11 +131,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author LWChris
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'userprofilepage-user-group-vstf' => 'See also {{msg-mw|Userprofilepage-user-group-vstf-tooltip}} as it defines "STF".
-FIXME: What does the "V" initial stands for ?',
+	'userprofilepage-user-group-vstf' => 'Vandalism/Spam Task Force',
 	'userprofilepage-top-pages-title' => 'Parameters:
 * $1 is a username
 * $2 is a wiki name',
@@ -307,14 +307,71 @@ $messages['ce'] = array(
 
 /** German (Deutsch)
  * @author George Animal
+ * @author LWChris
  */
 $messages['de'] = array(
+	'userprofilepage-desc' => 'Stellt eine coole und einfach zu aktualisierende Benutzerseite zur Verfügung',
+	'userprofilepage-edit-avatar-label' => 'Bild bearbeiten',
+	'userprofilepage-users-notes-title' => 'Über mich',
+	'userprofilepage-about-section-title' => 'Mein $1 Interview',
+	'userprofilepage-edit-button' => 'Bearbeiten',
+	'userprofilepage-about-article-title' => 'Über',
+	'userprofilepage-about-empty-section' => 'Dieser Abschnitt ist leer. Klicke auf Bearbeiten, um hier ein paar Sachen hinzufügen!',
+	'userprofilepage-edit-permision-denied' => 'Bearbeitungsberechtigung verweigert',
+	'userprofilepage-edit-permision-denied-info' => 'Du hast keine Berechtigung die Benutzerseite oder Unterseite von jemand anderem zu bearbeiten',
+	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Jeder in diesem Wiki würde gerne mehr über dich erfahren!</div><a href="$1">Bearbeite diesen Abschnitt</a>, um mehr über dich hinzuzufügen und uns von Dingen zu erzählen, die du magst.',
+	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 hat noch keine Informationen hinzugefügt.</div>Du kannst stattdessen <a href="$2">eine Nachricht hinterlassen</a>',
+	'userprofilepage-user-doesnt-exists' => 'Der Benutzer $1 existiert nicht auf Wikia. Schau unter [[Special:WikiActivity|Wiki Activity]] um zu sehen, wer in diesem Wiki aktiv ist.',
+	'userprofilepage-user-anon' => 'Dieser Benutzer hat sich noch nicht bei Wikia registriert. [[Special:Signup|Registrier dich]] um ein Konto und Bearbeitungspunkte, Abzeichen und Anerkennung von deinen Bearbeiter-Kollegen zu erhalten!',
+	'userprofilepage-leave-message' => 'Nachricht hinterlassen',
+	'userprofilepage-edits-since' => 'Bearbeitungen seit Beitritt zu diesem Wiki<br />$1',
+	'userprofilepage-user-last-action-edit' => '$1 hat die <a href="$2">$3</a> Seite bearbeitet',
+	'userprofilepage-user-last-action-new' => '$1 erstellte <a href="$2">$3</a>',
+	'userprofilepage-user-last-action-delete' => '$1 hat die <a href="$2">$3</a> Seite gelöscht',
+	'userprofilepage-user-group-sysop' => 'Admin',
+	'userprofilepage-user-group-staff' => 'Mitarbeiter',
+	'userprofilepage-user-group-bot' => 'Bot',
 	'userprofilepage-user-group-bureaucrat' => 'Bürokrat',
 	'userprofilepage-user-group-helper' => 'Helfer',
+	'userprofilepage-user-group-vstf' => 'VSTF',
+	'userprofilepage-user-group-sysop-tooltip' => 'Dieser Benutzer ist ein Administrator in diesem Wiki',
+	'userprofilepage-user-group-staff-tooltip' => 'Dieser Benutzer ist ein Wikia-Mitarbeiter',
+	'userprofilepage-user-group-bot-tooltip' => 'Dieser Benutzer ist ein Bot',
+	'userprofilepage-user-group-bureaucrat-tooltip' => 'Dieser Benutzer ist ein Bürokrat in diesem Wiki',
+	'userprofilepage-user-group-helper-tooltip' => 'Dieser Benutzer ist ein Helfer',
+	'userprofilepage-user-group-vstf-tooltip' => 'Dieser Benutzer ist ein Mitglied der Spam Task Force',
+	'userprofilepage-top-wikis-title' => '$1s Top Wikis',
+	'userprofilepage-top-wikis-edit-count' => 'Anzahl der Bearbeitungen',
+	'userprofilepage-top-wikis-hidden-see-more' => 'Du hast {{PLURAL:$1|$1 Wiki|$1 Wikis}} versteckt',
+	'userprofilepage-top-wikis-unhide-label' => 'einblenden',
+	'userprofilepage-top-wikis-hide-label' => 'verstecken',
+	'userprofilepage-top-wikis-locked-label' => 'Das aktuelle Wiki kann nicht versteckt werden',
+	'userprofilepage-recent-activity-title' => '$1s letzte Aktivität',
+	'userprofilepage-activity-edit' => 'bearbeitete die $1 Seite',
+	'userprofilepage-activity-new' => 'erstellte $1',
+	'userprofilepage-activity-comment' => 'kommentierte $1',
+	'userprofilepage-activity-image' => 'hat ein Bild hochgeladen für $1',
+	'userprofilepage-activity-video' => 'hat ein Video hochgeladen für $1',
+	'userprofilepage-activity-delete' => 'löschte die $1 Seite',
+	'userprofilepage-activity-talk' => 'hinterließ eine Nachricht auf der Diskussionsseite von $1',
+	'userprofilepage-recent-activity-default' => '$1 ist dem Wiki beigetreten',
+	'userprofilepage-top-recent-activity-see-more' => 'Alle anzeigen &gt;',
+	'userprofilepage-top-pages-title' => '$1s Top $2 Seiten',
+	'userprofilepage-top-page-unhide-label' => 'einblenden',
+	'userprofilepage-top-pages-hidden-see-more' => 'Du hast {{PLURAL:$1|$1 Seite|$1 Seiten}} versteckt',
+	'userprofilepage-top-pages-default' => 'Du hast noch keine Top Seiten. Warum nicht ein paar <a href="$1">zufällige Seiten</a> im Wiki ansehen?',
+	'recipes-template-user-description-label' => 'Beschreibung',
+	'recipes-template-user-description-hint' => 'Kurzinfo über den Benutzer',
 	'recipes-template-user-birthdate-label' => 'Geburtsdatum:',
+	'recipes-template-user-birthdate-hint' => 'Geburtsdatum (in beliebigem Format)',
+	'recipes-template-user-species-label' => 'Art',
+	'recipes-template-user-species-hint' => 'Art',
+	'recipes-template-user-abilities-label' => 'Fähigkeiten',
+	'recipes-template-user-abilities-hint' => 'Fähigkeiten',
 	'recipes-template-user-gender-label' => 'Geschlecht',
 	'recipes-template-user-gender-hint' => 'Geschlecht',
 	'recipes-template-user-affiliation-label' => 'Zugehörigkeit',
+	'recipes-template-user-affiliation-hint' => 'Zugehörigkeit',
 );
 
 /** Spanish (Español)
