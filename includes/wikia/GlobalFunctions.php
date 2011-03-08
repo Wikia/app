@@ -1159,7 +1159,13 @@ function &wfGetSolidCacheStorage( $bucket = false ) {
  * set value of wikia article prop list of type is define in
  */
 
-function wfSetWikiaPageProp($type, $pageID, $value) {
+function wfSetWikiaPageProp($type, $pageID, $value, $dbname = '') {
+	if(empty($dbname)) {
+		$db = wfGetDB(DB_MASTER, array());	
+	} else {
+		$db = wfGetDB(DB_MASTER, array(), $dbname);
+	}
+	
 	$db = wfGetDB(DB_MASTER, array());
 	$db->replace('page_wikia_props','',
 		array(
@@ -1175,8 +1181,13 @@ function wfSetWikiaPageProp($type, $pageID, $value) {
  * get value of wikia article prop list of type is define in
  */
 
-function wfGetWikiaPageProp($type, $pageID, $db = DB_SLAVE) {
-	$db = wfGetDB($db, array());
+function wfGetWikiaPageProp($type, $pageID, $db = DB_SLAVE, $dbname = '') {
+	if(empty($dbname)) {
+		$db = wfGetDB($db, array());	
+	} else {
+		$db = wfGetDB($db, array(), $dbname);
+	}
+	
 	$res = $db->select('page_wikia_props',
 		array('props'),
 		array(
@@ -1198,8 +1209,13 @@ function wfGetWikiaPageProp($type, $pageID, $db = DB_SLAVE) {
  * delete value of wikia article prop
  */
 
-function wfDeleteWikiaPageProp($type, $pageID) {
-	$db = wfGetDB(DB_MASTER, array());
+function wfDeleteWikiaPageProp($type, $pageID, $dbname = '') {
+	if(empty($dbname)) {
+		$db = wfGetDB(DB_MASTER, array());	
+	} else {
+		$db = wfGetDB(DB_MASTER, array(), $dbname);
+	}
+	
 	$res = $db->delete('page_wikia_props',
 		array(
 			'page_id' =>  $pageID,

@@ -73,6 +73,12 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			return true;
 		}
 		
+		
+		if($action == 'layoutCopy') {
+			$this->executeLayoutCopy($wgRequest);
+			return true;
+		}
+		
 		$wgOut->addScriptFile( $wgScriptPath."/extensions/wikia/PageLayoutBuilder/js/editor.js" );
 		$wgOut->addScriptFile( $wgScript . "?action=ajax&rs=PageLayoutBuilderEditor::getPLBEditorData&uselang=" . $wgLang->getCode()
 			. "&cb=" . time() );
@@ -172,6 +178,12 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$wgOut->setPageTitle( $msg );
 		$wgOut->mPagetitle = $msg . $button; //1.16 trick 
 		
+		$allowcopy = false;
+		global $wgDefaultLayoutWiki, $wgCityId;
+		if($wgDefaultLayoutWiki == $wgCityId && $wgUser->isAllowed( 'plbmanagercopy' )) {
+			$allowcopy = true; 
+		}
+		
 		$title = Title::newFromText('LayoutBuilder', NS_SPECIAL);
 		foreach( $out as $key => $value ) {
 			$out[$key]['page_title_escaped'] = htmlspecialchars($out[$key]['page_title']);
@@ -198,20 +210,22 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 				"separator" => 1,
 			);
 
+			if($allowcopy) {
+				$out[$key]['page_actions']['copy'] = array(
+					"link" => $title->getFullURL('action=layoutCopy&plbId='.$value['page_id'] ),
+					"name" => XML::element("img",array("class" => "", "src" => $wgBlankImgUrl)).wfMsg("plb-list-action-copy"), 
+					"separator" => 1,
+					"class" => ""
+				);
+			}			
+			
 			$out[$key]['page_actions']['delete'] = array(
 				"link" => "#plbId-".$value['page_id'],
 				"class" => "delete",
 				"name" => '<img src="'.$wgBlankImgUrl.'" class="sprite trash"/>',
 				"separator" => 0,
 			);
-			/*
-			$out[$key]['page_actions']['delete'] = array(
-				"link" => "#plbId-".$value['page_id'],
-				"name" => "",//wfMsg("plb-list-action-delete"),
-				"class" => "delete",
-				"separator" => 0,
-			);
-*/
+			
 			$out[$key]['profile_name'] = $value['rev_user']->getName();
 			$out[$key]['profile_link'] = AvatarService::getUrl($out[$key]['profile_name']);
 			$out[$key]['profile_avatar'] = AvatarService::renderAvatar($out[$key]['profile_name'], 20);
@@ -219,16 +233,79 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			$out[$key]['page_title'] = str_replace("_", " ", $out[$key]['page_title']);
 		}
 		
-
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(array(
 		    "data" => $out,
+			'allowcopy' => $allowcopy,
 			"newlink" => Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullURL()
 		));
+				
 		$wgOut->addHTML( $oTmpl->render("plb-list") );
 		return true;
 	}
     
+	function executeLayoutCopy($request) {
+		global $wgOut, $wgScriptPath, $wgUser, $wgDefaultLayoutWiki, $wgCityId;
+		
+		if(!($wgDefaultLayoutWiki == $wgCityId && $wgUser->isAllowed( 'plbmanagercopy' ))) {
+			$wgOut->showErrorPage( 'plb-special-no-login', 'plb-login-required', array(wfGetReturntoParam())); 
+		}
+		
+		
+		$wgOut->addScriptFile($wgScriptPath."/extensions/wikia/PageLayoutBuilder/js/copy.js");
+		
+		$hubs = WikiFactoryHub::getInstance();
+		$hubs = $hubs->getCategories();
+		$hubs_select = array( );
+		
+		$selectedCatsWithNames = array();
+		
+		$selectedCats = PageLayoutBuilderModel::getCopyCatIds( (int) $request->getVal('plbId')  );
+		
+		if ( !empty($hubs) ) {
+			foreach ($hubs as $id => $hub_options) {
+				$catsSelect[$hub_options['name']] = $id ;
+				if(in_array( $id, $selectedCats )) {
+					$selectedCatsWithNames[$id] = $hub_options['name'];
+				}
+				
+			}
+		}
+		
+		$fields = array( 'cat_select' => array(
+				'class' => 'HTMLSelectField',
+				'label-message' => 'plb-copy-cat-add',
+				'options' => $catsSelect,
+		));
+			
+		if(!$wgUser->isAllowed( 'plbmanagercopy' )) {
+			$wgOut->permissionRequired( 'plbmanagercopy' );
+			return true;
+		}
+
+		$form = new HTMLForm($fields);	
+		
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars(array(
+		    "cat_select" => $form->getBody(),
+			"selected_cats" =>	$selectedCatsWithNames
+		));
+		
+		
+		$cat_ids = array();
+		if($request->wasPosted()) {
+			$values = $request->getArray('cat_ids');
+			foreach($values as $value) {
+				$cat_ids[$value] = $value;
+			}
+			
+			PageLayoutBuilderModel::setCopyCatIds( (int) $request->getVal('plbId'), array_keys($cat_ids) );
+			$wgOut->redirect( Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullUrl("action=list") );
+		}
+	
+		$wgOut->addHTML( $oTmpl->render("plb-copy-layout") );
+	}
+	
 	 /**
 	 * executeListDelete - mark the layout as removed
 	 *
@@ -610,7 +687,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 				)
 			);
 		}
-
+		
 		$buttons_out['previewform'] = XML::element(
 			"input",
 			array(
