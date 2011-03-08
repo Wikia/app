@@ -82,8 +82,8 @@ class LatestPhotosModule extends Module {
 		$file = $element['file'];
 		// crop the images correctly using extension:imageservice
 		$is = new imageServing(array(), 82);
-		$thumb_url = $is->getThumbnails(array($file)); 
-		$thumb_url = array_pop($thumb_url); 
+		$thumb_url = $is->getThumbnails(array($file));
+		$thumb_url = array_pop($thumb_url);
 		$thumb_url = $thumb_url['url'];
 		$userName = $file->user_text;
 
@@ -191,7 +191,7 @@ class LatestPhotosModule extends Module {
 						__METHOD__,
 						array( 'LIMIT' => 2, 'ORDER BY' => 'page_namespace ASC' )
 				   );
-			
+
 			$data = array() ;
 			// link where this page is used...
 			if ( $s = $res->fetchObject() ) {
@@ -201,27 +201,27 @@ class LatestPhotosModule extends Module {
 			if ( $s = $res->fetchObject() ) {
 				$data[] = array( 'ns' => NS_FILE, 'title' => $name );
 			}
-			
-			$wgMemc->set( $cacheKey, $data, 60*15 );			
+
+			$wgMemc->set( $cacheKey, $data, 60*15 );
 		}
 
 		$links = array();
 		if ( !empty( $data ) ) {
 			$sk = $wgUser->getSkin();
-			
+
 			foreach ( $data as $inx => $row ) {
 				$Title = Title::makeTitle( $row['ns'], $row['title'] );
-				
+
 				if ( $row['title'] == $name && $row['ns'] == NS_FILE ) {
 					$links[] = '<a href="' . $Title->getLocalUrl() .
 							'#filelinks" class="wikia-gallery-item-more">' .
-							wfMsg( 'oasis-latest-photos-more-dotdotdot' ) . '</a>';					
+							wfMsg( 'oasis-latest-photos-more-dotdotdot' ) . '</a>';
 				} else {
 					$links[] = $sk->link( $Title, null, array( 'class' => 'wikia-gallery-item-posted' ) );
 				}
 			}
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return $links;
 	}
@@ -234,13 +234,13 @@ class LatestPhotosModule extends Module {
 		}
 		return $mKey;
 	}
-	
+
 	private static function avoidUpdateRace(){
 		global $wgMemc;
 		// avoid a race in update event propgation by deleting key after 10 seconds
 		// Memcache delete with a timeout is not implemented, but we can use set to fake it
 		$thumbUrls = $wgMemc->get(LatestPhotosModule::memcacheKey());
-		
+
 		if (!empty($thumbUrls))
 			$wgMemc->set(LatestPhotosModule::memcacheKey(), $thumbUrls, 10);
 	}
@@ -249,12 +249,12 @@ class LatestPhotosModule extends Module {
 		self::avoidUpdateRace();
 		return true;
 	}
-	
+
 	public static function onImageUploadComplete( &$image ){
 		self::avoidUpdateRace();
 		return true;
 	}
-	
+
     public static function onImageDelete(&$file, $oldimage, $article, $user, $reason) {
 		global $wgMemc;
 		$wgMemc->delete(LatestPhotosModule::memcacheKey());
