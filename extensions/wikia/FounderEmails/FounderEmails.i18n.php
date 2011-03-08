@@ -148,7 +148,7 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-0-day-customizetheme-content' => 'Customize your wiki\'s theme and wordmark to make your wiki stand out!  Use the <a style="color:#2a87d5;text-decoration:none;" href="$CUSTOMIZETHEMEURL">Theme Designer</a> to add custom colors to your wiki and make it unique to your topic.',
 	'founderemails-email-0-day-customizetheme-button' => 'Customize',
 	'founderemails-email-0-day-wikiahelps-text' => '<span style="color:#2a87d5">We won\'t leave you out in the cold.</span>  We\'re here to help you make $WIKINAME successful every step of the way.  Visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> for forums, advice, and help, or to <a style="color:#2a87d5;text-decoration:none;" href="http://www.wikia.com/Special:Contact">email us</a> your questions!',
-	'founderemails-email-0-day-wikiahelps-signature' => 'Happy wiki building!<br>The Wikia Team',
+	'founderemails-email-0-day-wikiahelps-signature' => 'Happy wiki building!<br />The Wikia Team',
 	'founderemails-email-0-day-footer-line1' => 'To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'founderemails-email-0-day-footer-line2' => 'Want to control which emails you receive? Go to: <a href="http://messaging.wikia.com/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">http://messaging.wikia.com/wiki/Special:Preferences</a>',
 	'founderemails-email-0-day-footer-line3' => 'Click the following link to unsubscribe from all Wikia emails: <a href="" style="color:#2a87d5;text-decoration:none;">$UNSUBSCRIBEURL</a>',
