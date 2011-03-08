@@ -3,6 +3,7 @@
 class UAD {
 	const TOKEN_DB_NAME = 'uad_token';
 	const EVENT_DB_NAME = 'uad_event';
+	const EVENT_VISITEDWIKIS_ID = 'visitedWikis';
 
 	/**
 	 * @var WikiaApp
@@ -44,11 +45,22 @@ class UAD {
 	/**
 	 * @todo use scribe
 	 */
-	public function storeEvents( $token, $date, Array $events ) {
+	public function storeEvents( $token, $date, stdClass $events ) {
 		$db = $this->getDb();
-		foreach( $events as $event ) {
-			$db->insert( self::EVENT_DB_NAME, array( 'uev_token' => $token, 'uev_type' => $event['type'], 'uev_date' => $date ), __METHOD__ );
+		$events = get_object_vars( $events );
+
+		foreach( $events as $eventId => $count ) {
+			if( ( $eventId != self::EVENT_VISITEDWIKIS_ID ) && ( $count > 0 ) ) {
+				$db->insert( self::EVENT_DB_NAME, array( 'uev_token' => $token, 'uev_type' => strtoupper( $eventId ), 'uev_date' => $date, 'uev_value' => $count ), __METHOD__ );
+			}
 		}
+
+		if( isset( $events[ self::EVENT_VISITEDWIKIS_ID ] ) ) {
+			foreach( $events[ self::EVENT_VISITEDWIKIS_ID ] as $wikiId ) {
+				$db->insert( self::EVENT_DB_NAME, array( 'uev_token' => $token, 'uev_type' => strtoupper(  self::EVENT_VISITEDWIKIS_ID ), 'uev_date' => $date, 'uev_value' => $wikiId ), __METHOD__ );
+			}
+		}
+
 		$db->commit();
 	}
 

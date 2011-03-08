@@ -2,7 +2,8 @@
 
 class UADController extends WikiaController {
 
-	const COOKIE_NAME = 'UAD';
+	const COOKIE_NAME = 'UADtracker';
+	const COOKIE_LIFESPAN = 7776000;
 
 	/**
 	 * @var WikiaApp
@@ -27,38 +28,47 @@ class UADController extends WikiaController {
 	}
 
 	protected function fetchCookie() {
-		$this->cookie = array( 'token' => null, 'date' => date('Y-m-d'), 'events' => array( 1 => array( 'type' => 'VISIT' ) ) );
-		// @todo disabled until fronted will be ready
-		//$this->cookie = $this->app->getCookie( self::COOKIE_NAME );
+		//$this->cookie = array( 'token' => null, 'date' => date('Y-m-d'), 'events' => array( 1 => array( 'type' => 'VISIT' ) ) );
+		$this->cookie = json_decode( $this->app->getCookie( self::COOKIE_NAME ) );
 		if( empty($this->cookie) ) {
 			throw new WikiaException('UAD Cookie not found');
 		}
 	}
 
 	protected function fetchEventsFromCookie( $token ) {
-		$events = $this->cookie[ 'events' ];
-		$date = $this->cookie[ 'date' ];
+		$events = $this->cookie->events;
+		$date = $this->cookie->date;
 		$this->UAD->storeEvents( $token, $date, $events );
 		$this->purgeEventsFromCookie();
 	}
 
 	protected function purgeEventsFromCookie() {
-		$this->cookie[ 'events' ] = array();
-		// @todo disabled until fronted will be ready
-		//$this->app->setCookie( self::COOKIE_NAME, $this->cookie );
+		$this->cookie->events = new stdClass();
+	}
+
+	protected function setTokenInCookie( $token ) {
+		$this->cookie->token = $token;
+	}
+
+	protected function updateCookie() {
+		$this->app->setCookie( self::COOKIE_NAME, json_encode( $this->cookie ), ( time() + self::COOKIE_LIFESPAN ) );
 	}
 
 	public function store() {
 		$this->fetchCookie();
 
-		$token = $this->cookie['token'];
-		if(empty($token)) {
+		if( !isset( $this->cookie->token ) ) {
 			$token = $this->UAD->createToken();
+			$this->setTokenInCookie( $token );
+		}
+		else {
+			$token = $this->cookie->token;
 		}
 
 		$events = $this->fetchEventsFromCookie( $token );
 
 		$this->getResponse()->setVal( 'token', $token );
+		$this->updateCookie();
 	}
 
 	public function onOutputPageBeforeHTML( &$out, &$text ) {
