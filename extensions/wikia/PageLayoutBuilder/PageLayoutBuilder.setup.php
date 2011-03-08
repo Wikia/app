@@ -20,6 +20,8 @@ $wgAutoloadClasses['PageLayoutBuilderModel'] = $dir . 'PageLayoutBuilderModel.cl
 $wgAutoloadClasses['PageLayoutBuilderParser'] = $dir . 'PageLayoutBuilderParser.class.php'; # Tell MediaWiki to load the extension body.
 $wgAutoloadClasses['PageLayoutBuilderHelper'] = $dir . 'PageLayoutBuilderHelper.class.php'; # Tell MediaWiki to load the extension body.
 $wgAutoloadClasses['PageLayoutBuilderEditor'] = $dir . 'PageLayoutBuilderEditor.class.php'; # Tell MediaWiki to load the extension body.
+
+
 $wgAutoloadClasses['PageLayoutBuilderFormModule'] = $dir . 'PageLayoutBuilderFormModule.php';
 
 $wgAutoloadClasses['simple_html_dom'] = $dir . '3rdparty/simple_html_dom.php'; # Simple parser to easy replace tags by media wiki text
@@ -96,9 +98,11 @@ $wgHooks['CreatePage::FetchOptions'][] = 'PageLayoutBuilderSpecialPage::createPa
 $wgHooks['MyTools::getDefaultTools'][] = 'PageLayoutBuilderSpecialPage::myTools';
 $wgHooks['UserCommand::SpecialPage::PageLayoutBuilder'][] = 'PageLayoutBuilderSpecialPage::myTools2';
 
+$wgHooks['CreateWikiLocalJob-complete'][] = 'PageLayoutBuilderHelper::copyLayout';
 $wgHooks['BeforeEditEnhancements'][] = 'PageLayoutBuilderSpecialPage::onBeforeEditEnhancements';
-//$wgHooks['GetRailModuleList'][] = 'PageLayoutBuilderSpecialPage::onGetRailModuleSpecialPageList';
 
 $wgHooks['SpecialCreatePage::Subpage'][] = 'PageLayoutBuilderHelper::onCreatePageSubpage';
 
 $wgAjaxExportList[] = 'PageLayoutBuilderEditor::getPLBEditorData';
+
+$wgDefaultLayoutWiki = 177;

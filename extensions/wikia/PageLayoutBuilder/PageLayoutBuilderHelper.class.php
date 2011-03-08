@@ -66,5 +66,38 @@ class PageLayoutBuilderHelper {
 
 		return true;
 	}
+	
+	/*
+	 * copyLayout - use by task to copy layouts from commuinty
+	 * 
+	 * @author Tomasz Odrobny
+	 * @params Title
+	 * @return Parser
+	 */
+	
+	public static function copyLayout() {
+		global $wgCityId;
+		$list = PageLayoutBuilderModel::getLayoutsToCopy();
+		foreach( $list as $layout => $cats ) {
+			$cat = WikiFactory::getCategory( $wgCityId );
+			if(in_array($cat->cat_id, $cats)) {
+				PageLayoutBuilderModel::setLayoutCopy( $layout, $wgCityId );
+				$layoutInfo = PageLayoutBuilderModel::getLayoutCopyInfo( $layout );
+				
+				if($layoutInfo !== false) {
+					$newTitle = Title::newFromText( $layoutInfo['title'], NS_PLB_LAYOUT );
+					if(!$newTitle->exists()){
+						$article = new Article( $newTitle );
+						$article->doEdit( $layoutInfo['text'], '', EDIT_NEW | EDIT_DEFER_UPDATES | EDIT_AUTOSUMMARY );
+						PageLayoutBuilderModel::setProp($article->getId(), array('desc' => $layoutInfo['desc'] ) );
+						
+					}
+				}
+				
+			}		
+		}
+		
+		return true;
+	}
 
 }

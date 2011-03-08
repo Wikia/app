@@ -89,12 +89,12 @@ class PageLayoutBuilderModel {
 		return $status;
 	}
 
-	public static function getProp($id) {
-		return wfGetWikiaPageProp(WPP_PLB_PROPS, $id);
+	public static function getProp($id, $dbname = '') {
+		return wfGetWikiaPageProp(WPP_PLB_PROPS, $id, DB_SLAVE, $dbname);
 	}
 
-	public static function setProp($id, $value = array()) {
-		$out = wfGetWikiaPageProp(WPP_PLB_PROPS, $id);
+	public static function setProp($id, $value = array(), $dbname = '') {
+		$out = wfGetWikiaPageProp(WPP_PLB_PROPS, $id, DB_MASTER, $dbname);
 		if($out) {
 			$value = $value + $out;
 		}
@@ -217,7 +217,103 @@ class PageLayoutBuilderModel {
 		$db = wfGetDB(DB_MASTER, array());
 		$db->delete("plb_page", array('plb_p_layout_id' => (int) $page_id ));
 	}
+	
+	public static function getLayoutForWikiCategory( $cat_ids = array() ) {
+		$db = wfGetDB(DB_MASTER, array() );
+	}
 
+	public static function setCopyCatIds( $layout_id, $cat_ids) {
+		global $wgDefaultLayoutWiki;
+		PageLayoutBuilderModel::setProp( $layout_id, array( 'copy_cat_ids' => $cat_ids ), WikiFactory::IDtoDB( $wgDefaultLayoutWiki ) );	
+	}
+	
+	public static function getCopyCatIds( $layout_id ) {
+		global $wgDefaultLayoutWiki;
+		$prop = PageLayoutBuilderModel::getProp( $layout_id, WikiFactory::IDtoDB( $wgDefaultLayoutWiki ) );
+		if(empty($prop['copy_cat_ids'])) {
+			return array();
+		}
+		return $prop['copy_cat_ids'];
+	}
+	
+	public static function setLayoutCopy( $layout_id, $to_city_id  ) {
+		global $wgSharedDB, $wgDefaultLayoutWiki;
+		
+		$from_city_id = $wgDefaultLayoutWiki;
+	
+		$db = wfGetDB(DB_MASTER, array(), $wgSharedDB);
+		$db->insert("plb_copy_layout",
+					array(
+						'plb_c_layout_id' => (int) $layout_id,
+						'plb_c_from_city_id' => (int) $from_city_id, 
+						'plb_c_to_city_id' => (int) $to_city_id,
+					),
+					__METHOD__,
+					array("IGNORE")
+		);
+		
+		$db->commit();
+	}
+	
+	public static function getLayoutsToCopy() {
+		global $wgDefaultLayoutWiki;
+		
+		$dbname = WikiFactory::IDtoDB( $wgDefaultLayoutWiki );
+		
+		$db = wfGetDB(DB_MASTER, array(), $dbname);
+		$res = $db->select(
+			array('page'),
+			array(
+					'page.page_id',
+				),
+				array(
+					'page_namespace' => NS_PLB_LAYOUT,
+				)
+		);
+
+		$layoutsIds = array();
+		while( $out = $db->fetchRow($res) ) {
+			if( !self::layoutIsDelete($out['page_id']) ) {
+				$toCopy = self::getCopyCatIds($out['page_id']);
+				if(!empty($toCopy)) {
+					$layoutsIds[ $out['page_id'] ] = $toCopy;	
+				}
+			}
+		}
+ 
+		return $layoutsIds;
+	}
+
+	public static function getLayoutCopyInfo($id) {
+		global $wgDefaultLayoutWiki;
+		$dbname = WikiFactory::IDtoDB( $wgDefaultLayoutWiki );
+		
+		if(self::layoutIsDelete( $id, $dbname )) {
+			return false;
+		}
+		
+		$title = GlobalTitle::newFromId( $id, $wgDefaultLayoutWiki );
+		$url = self::getRequestUrl($title->getFullURL("action=raw"));
+		$prop = self::getProp($id, $dbname);
+		
+		return array(
+			"desc" => empty($prop['desc']) ? '':$prop['desc'],
+			"text" => HTTP::get( $url ),
+			"title" => $title->getText()
+		);
+	}
+	
+	
+	private static function getRequestUrl($url) {
+		global $wgDevelEnvironment;
+		
+		if (!empty($wgDevelEnvironment)) {
+			$url = str_replace('wikia.com','tomek.wikia-dev.com',$url);
+		}
+		return $url;
+	}
+		
+	
 	public static function layoutMarkAsDelete($layout_id) {
 		if(self::layoutIsDelete($layout_id)) {
 			return null;
@@ -246,8 +342,8 @@ class PageLayoutBuilderModel {
 		return wfDeleteWikiaPageProp(WPP_PLB_LAYOUT_NOT_PUBLISH, $layout_id);
 	}
 
-	public static function layoutIsDelete($layout_id) {
-		return wfGetWikiaPageProp(WPP_PLB_LAYOUT_DELETE, $layout_id) == 1;
+	public static function layoutIsDelete($layout_id, $dbname = '') {
+		return wfGetWikiaPageProp(WPP_PLB_LAYOUT_DELETE, $layout_id, DB_SLAVE, $dbname) == 1;
 	}
 	
 	public static function layoutIsNoPublish($layout_id) {

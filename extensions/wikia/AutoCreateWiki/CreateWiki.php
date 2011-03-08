@@ -152,7 +152,9 @@ class CreateWiki {
 		$this->mAdditionalTables = array(
 			"{$this->mIP}/extensions/wikia/AjaxPoll/patch-create-poll_info.sql",
 			"{$this->mIP}/extensions/wikia/AjaxPoll/patch-create-poll_vote.sql",
-			"{$this->mIP}/extensions/wikia/ImageServing/sql/table.sql"
+			"{$this->mIP}/extensions/wikia/ImageServing/sql/table.sql",
+			"{$this->mIP}/extensions/wikia/PageLayoutBuilder/sql/plb_field.sql",
+			"{$this->mIP}/extensions/wikia/PageLayoutBuilder/sql/plb_page.sql"
 		);
 
 		/**

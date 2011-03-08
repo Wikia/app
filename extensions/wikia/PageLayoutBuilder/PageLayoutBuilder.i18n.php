@@ -185,7 +185,12 @@ $messages['en'] = array (
 	'plb-helpbox-help-link' => 'Read the layout builder guide.',
 	'plb-helpbox-help-link-title' => 'Layout_builder',  
 	'plb-parser-error-not-on-plb-article' => "Layout elements can only be used on layout pages", 
-	'plb-parser-error-use-on-template' => "Can't use layout elements in templates"
+	'plb-parser-error-use-on-template' => "Can't use layout elements in templates",
+
+	'plb-list-action-copy' => 'New wiki category',
+	'plb-copy-delete-link' => 'Delete',
+	'plb-copy-cat-add' => 'Add:',
+	'plb-copy-submit-link' => 'Save'
 );
 
 /** Message documentation (Message documentation)
