@@ -74,7 +74,7 @@ if ($showShareTools) {
 }
 </style>
 <div id="lightbox-share">
-	<div id="lightbox-share-buttons">
+	<div id="lightbox-share-buttons" class="neutral modalToolbar clearfix">
 		<a class="wikia-button secondary" data-func="email">
 			<img width="0" height="0" class="sprite email" src="<?= $wgBlankImgUrl ?>">
 			<?= wfMsg('lightbox-share-button-email') ?>
