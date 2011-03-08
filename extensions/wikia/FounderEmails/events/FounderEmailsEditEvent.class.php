@@ -90,7 +90,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	}
 
 	public static function register( $oRecentChange ) {
-		global $wgUser;
+		global $wgUser, $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		if ( FounderEmails::getInstance()->getLastEventType() == 'register' ) {
@@ -134,6 +134,10 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			return true;
 		}
 
+		// Build unsubscribe url
+		$hash_url = Wikia::buildUserSecretKey( $wikiFounder->getName(), 'sha256' );
+		$unsubscribe_url = Title::newFromText('Unsubscribe', NS_SPECIAL)->getFullURL( array( 'key' => $hash_url, 'ctc' => $ctcUnsubscribe ) );
+
 		$oTitle = Title::makeTitle( $oRecentChange->getAttribute( 'rc_namespace' ), $oRecentChange->getAttribute( 'rc_title' ) );
 		$eventData = array(
 			'titleText' => $oTitle->getText(),
@@ -143,7 +147,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			'editorTalkPageUrl' => $editor->getTalkPage()->getFullUrl( 'ctc=' . $ctcUserpage ),
 			'registeredUser' => $isRegisteredUser,
 			'registeredUserFirstEdit' => $isRegisteredUserFirstEdit,
-			'unsubscribeUrl' => Title::newFromText( 'Preferences', NS_SPECIAL )->getFullUrl( 'ctc=' . $ctcUnsubscribe ),
+			'unsubscribeUrl' => $unsubscribe_url,
 			'myHomeUrl' => Title::newFromText( 'WikiActivity', NS_SPECIAL )->getFullUrl( 'ctc=FE20' )
 		);
 
