@@ -51,13 +51,50 @@ class UAD {
 
 		foreach( $events as $eventId => $count ) {
 			if( ( $eventId != self::EVENT_VISITEDWIKIS_ID ) && ( $count > 0 ) ) {
-				$db->insert( self::EVENT_DB_NAME, array( 'uev_token' => $token, 'uev_type' => strtoupper( $eventId ), 'uev_date' => $date, 'uev_value' => $count ), __METHOD__ );
+				$params = array(
+				  'uev_token' => $token,
+				  'uev_type' => strtoupper( $eventId ),
+				  'uev_date' => $date,
+				  'uev_value' => $count );
+/*
+				if( $this->app->getGlobal( 'wgEnableScribeReport' ) ) {
+					// use scribe
+					try {
+						$message = array( 'method' => 'uad', 'params' => $params );
+						WScribeClient::singleton('trigger')->send( json_encode( $message ) );
+					}
+					catch( TException $e ) {
+						Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
+					}
+				}
+				else {
+*/
+					$db->insert( self::EVENT_DB_NAME, $params, __METHOD__ );
+				//}
 			}
 		}
 
 		if( isset( $events[ self::EVENT_VISITEDWIKIS_ID ] ) ) {
 			foreach( $events[ self::EVENT_VISITEDWIKIS_ID ] as $wikiId ) {
-				$db->insert( self::EVENT_DB_NAME, array( 'uev_token' => $token, 'uev_type' => strtoupper(  self::EVENT_VISITEDWIKIS_ID ), 'uev_date' => $date, 'uev_value' => $wikiId ), __METHOD__ );
+				$params = array(
+				  'uev_token' => $token,
+				  'uev_type' => strtoupper(  self::EVENT_VISITEDWIKIS_ID ),
+				  'uev_date' => $date,
+				  'uev_value' => $wikiId );
+/*
+				if( $this->app->getGlobal( 'wgEnableScribeReport' ) ) {
+					try {
+						$message = array( 'method' => 'uad', 'params' => $params );
+						WScribeClient::singleton('trigger')->send( json_encode( $message ) );
+					}
+					catch( TException $e ) {
+						Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
+					}
+				}
+				else {
+*/
+					$db->insert( self::EVENT_DB_NAME, $params, __METHOD__ );
+//				}
 			}
 		}
 
