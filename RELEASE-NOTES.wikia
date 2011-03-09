@@ -1,4 +1,5 @@
 == Changes since release-011 ==
+* fb#3446: ScavengerHuntTest fails (Marooned)
 * fb#3444: Theme Designer preview function broken (Marooned)
 * fb#3338: Scavenger hunt previews aren't working (Marooned)
 * fb#3343: Scavenger hunt: Text and line height specs (Marooned)
