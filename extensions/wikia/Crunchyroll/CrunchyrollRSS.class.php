@@ -15,6 +15,8 @@ class CrunchyrollRSS {
 	private $feed;
 	private $maxItems = 0;
 	private $serie;
+	private $allowedCategories = array( 'anime', 'Anime' );
+	private $blacklistedSeries = array();
 
 	public function setSerie( $serie ){
 
@@ -36,6 +38,7 @@ class CrunchyrollRSS {
 		$this->feed->set_raw_data($rssContent);
 		$this->feed->set_cache_duration(0);
 		$this->feed->init();
+		$this->blacklistedSeries = WF::build( 'App' )->getGlobal( 'wgCrunchyrollBlacklistedSeries' );
 	}
 
 	public static function newFromUrl( $url ){
@@ -52,7 +55,7 @@ class CrunchyrollRSS {
 	public function getItems(){
 
 		$aResult = array();
-		foreach(  $this->feed->get_items( 0, $this->maxItems ) as $item ){
+		foreach(  $this->feed->get_items( 0 ) as $item ){
 
 			$link = SpecialPage::getTitleFor('Crunchyroll')->getInternalURL();
 			$link .= '/0';
@@ -79,22 +82,38 @@ class CrunchyrollRSS {
 
 			// if no serie - do not display episodes
 			if ( !empty( $this->serie ) ){
-				
+
+				if ( is_array( $this->blacklistedSeries ) && in_array( $this->serie, $this->blacklistedSeries ) ){
+					continue;
+				}
+
 				$link.= '/'.$this->serie;
 				if ( !empty( $episodeId ) ){
 					$link.= '/'.$episodeId;
 				}
 			}
+			
+			$cat = $item->get_category();
+			if ( is_object( $cat ) && in_array( $cat->term, $this->allowedCategories ) ){
 
-			$enclosure = $item->get_enclosure();
-				$aResult[] = array(
-				'title'		=> $item->get_title(),
-				'thumbnail'	=> $enclosure->get_thumbnail(),
-				'link'		=> $link
-			);
+				$enclosure = $item->get_enclosure();
+				$rating = $enclosure->get_rating();
+				if (!empty( $this->serie ) && $rating->value != 'adult'	){
+
+					$aResult[] = array(
+						'title'		=> $item->get_title(),
+						'thumbnail'	=> $enclosure->get_thumbnail(),
+						'link'		=> $link
+					);
+				}
+			}
+
+			if ( !empty( $this->maxItems) && count( $aResult ) >= $this->maxItems ){
+				break;
+			}
 		}
 
 		return $aResult;
-	}	
+	}
 }
 
