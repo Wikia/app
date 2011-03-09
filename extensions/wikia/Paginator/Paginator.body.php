@@ -108,7 +108,11 @@ class Paginator extends Service{
 			}
 			return $this->paginatedData[$iPageNumber];
 		} elseif( $iPageNumber < 0 ) {
-			return $this->paginatedData[0];
+			if ( isset( $this->paginatedData[0] ) ){
+				return $this->paginatedData[0];
+			} else {
+				return false;
+			}
 		} else {
 			$this->setActivePage( $this->pagesCount-1 );
 			return $this->paginatedData[ $this->pagesCount-1 ];
