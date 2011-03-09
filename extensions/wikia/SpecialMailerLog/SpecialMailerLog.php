@@ -58,7 +58,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 		$num_rows = $dbr->selectField( 'mail', 'COUNT(*)', $filter, __METHOD__ );
 
 		$res = $dbr->select( 'mail',
-							 array( 'id', 'created', 'city_id', 'dst', 'hdr', 'subj', 'msg', 'locked', 'transmitted', 'is_error', 'error_status', 'error_msg', 'opened'),
+							 array( 'id', 'created', 'attempted', 'city_id', 'dst', 'hdr', 'subj', 'msg', 'transmitted', 'is_error', 'error_status', 'error_msg', 'opened'),
 							 $filter,
 							 __METHOD__,
 							 array('ORDER BY' => $sort.' '.$sort_dir,
@@ -80,7 +80,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 									'subject'      => $row->subj,
 									'msg_full'     => $body,
 									'msg_short'    => self::getShortBody($body),
-									'attempted'    => $row->locked,
+									'attempted'    => $row->attempted,
 									'transmitted'  => $row->transmitted,
 									'is_error'     => $row->is_error,
 									'error_status' => $row->error_status,
