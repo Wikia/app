@@ -1,5 +1,5 @@
 <div class="scavenger-clue-text">
-	<span><?= $text ?></span>
+	<div><?= $text ?></div>
 </div>
 <div class="scavenger-clue-question">
 	<?= $question ?>
