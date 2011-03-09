@@ -169,7 +169,7 @@ class WikiaSkinMonoBook extends SkinTemplate {
 		<h5>$toolboxTitle</h5>
 		<div class="pBody">$toolbox
 			<ul>
-				<li><a href=\"http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog\">Wikia messages:</a><br />$wikiaMessages</li>
+				<li><a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog">Wikia messages:</a><br />$wikiaMessages</li>
 			</ul>
 		</div>
 	</div>
