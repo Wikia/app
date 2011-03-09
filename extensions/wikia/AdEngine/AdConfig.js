@@ -395,7 +395,7 @@ AdConfig.DART.getDomainKV = function (hostname){
 
 AdConfig.DART.getTitle = function(){
 	if (typeof wgPageName != 'undefined' && wgPageName) {
-		return "wpage=" + wgPageName + ";";
+		return "wpage=" + escape(wgPageName) + ";";
 	} else {
 		return "";
 	}
@@ -507,14 +507,6 @@ AdConfig.DART.getDcoptKV = function(slotname){
 		return 'dcopt=' + AdConfig.DART.slotMap[slotname].dcopt + ';';
 	} else {
 		return '';
-	}
-};
-
-AdConfig.DART.getTitle = function(){
-	if (typeof wgPageName != 'undefined' && wgPageName) {
-		return "wpage=" + wgPageName + ";";
-	} else {
-		return "";
 	}
 };
 
