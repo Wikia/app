@@ -61,7 +61,7 @@ public class CreateWikiTest extends BaseTest {
 		return al.iterator();
 	}
 
-	@Test(groups={"envProduction"},dataProvider="wikiLanguages")
+	@Test(groups={"deprecated"},dataProvider="wikiLanguages")
 	public void testCreateWikiAsLoggedInUser(String language) throws Exception {
 		loginAsStaff();
 
@@ -95,7 +95,7 @@ public class CreateWikiTest extends BaseTest {
 		languagesTested.add(language);
 	}
 
-	@Test(groups={"envProduction"},dependsOnMethods={"testCreateWikiAsLoggedInUser"},alwaysRun=true)
+	@Test(groups={"deprecated"},dependsOnMethods={"testCreateWikiAsLoggedInUser"},alwaysRun=true)
 	public void cleanupTestCreateWikiAsLoggedInUser() throws Exception {
 		loginAsStaff();
 
@@ -106,7 +106,7 @@ public class CreateWikiTest extends BaseTest {
 		wikiName = null;
 	}
 
-	@Test(groups={"envProduction"})
+	@Test(groups={"deprecated"})
 	public void testCreateWikiAsLoggedOutUserLoginWhileCreating() throws Exception {
 		session().open("/wiki/Special:CreateWiki?uselang=de");
 		session().waitForPageToLoad(this.getTimeout());
@@ -129,7 +129,7 @@ public class CreateWikiTest extends BaseTest {
 		assertEquals("http://pl." + getWikiName() + ".wikia.com/wiki/Specjalna:WikiActivity", session().getLocation());
 	}
 
-	@Test(groups={"envProduction"},dependsOnMethods={"testCreateWikiAsLoggedOutUserLoginWhileCreating"},alwaysRun=true)
+	@Test(groups={"deprecated"},dependsOnMethods={"testCreateWikiAsLoggedOutUserLoginWhileCreating"},alwaysRun=true)
 	public void cleanupTestCreateWikiAsLoggedOutUserLoginWhileCreating() throws Exception {
 		loginAsStaff();
 		deleteWiki("pl");
@@ -137,7 +137,7 @@ public class CreateWikiTest extends BaseTest {
 		wikiName = null;
 	}
 
-	@Test(groups={"envProduction"},dependsOnMethods={"cleanupTestCreateWikiAsLoggedOutUserLoginWhileCreating"})
+	@Test(groups={"deprecated"},dependsOnMethods={"cleanupTestCreateWikiAsLoggedOutUserLoginWhileCreating"})
 	public void testCreateWikiAsLoggedOutUserRegisterWhileCreating() throws Exception {
 		session().open("/wiki/Special:CreateWiki?uselang=de");
 		session().waitForPageToLoad(this.getTimeout());
@@ -168,7 +168,7 @@ public class CreateWikiTest extends BaseTest {
 		assertEquals("http://pl." + getWikiName() + ".wikia.com/wiki/Specjalna:WikiActivity", session().getLocation());
 	}
 
-	@Test(groups={"envProduction"},dependsOnMethods={"testCreateWikiAsLoggedOutUserRegisterWhileCreating"},alwaysRun=true)
+	@Test(groups={"deprecated"},dependsOnMethods={"testCreateWikiAsLoggedOutUserRegisterWhileCreating"},alwaysRun=true)
 	public void cleanupTestCreateWikiAsLoggedOutUserRegisterWhileCreating() throws Exception {
 		loginAsStaff();
 		deleteWiki("pl");
