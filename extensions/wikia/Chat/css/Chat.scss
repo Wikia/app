@@ -1,0 +1,116 @@
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/core/reset";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/buttons";
+
+body {
+	background: $color-body;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	margin: 0;
+}
+
+// Only ChatMods will have this class on body tag. Use it to augment the interface.
+body.chat-mod {
+	.Users li:hover .kickban {
+		display: inline;
+	}
+	// do not show kickban links for chatmods
+	.Users li.chat-mod:hover .kickban {
+		display: none;
+	}
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.WikiaPage {
+	@include border-radius(5px);
+	background-color: $color-page;
+	border: 1px solid $color-page-border;
+	bottom: 10px;
+	color: $color-text;
+	left: 10px;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
+
+.Chat {
+	bottom: 45px;
+	left: 0;
+	line-height: 1.4em;
+	overflow: auto;
+	position: absolute;
+	right: 150px;
+	top: 0;
+	line-height: 1.4em;
+	ul {
+		bottom: 0;
+		padding: 10px;
+	}
+	li {
+		padding: 3px 0;
+		margin-bottom:2px;
+	}
+	.user {
+		font-weight: bold;
+		&:after {
+			content: ":";
+		}
+	}
+	.inline-alert {
+		font-style: italic;
+		text-align: center;
+		&:before {
+			content: "~ ";
+		}
+		&:after {
+			content: " ~";
+		}
+	}	
+	.template {
+		display: none;
+	}
+}
+
+.Write {
+	border-top: 1px solid $color-page-border;
+	bottom: 0;
+	height: 25px;
+	left: 0;
+	padding: 10px;
+	position: absolute;
+	right: 0;
+	input[type="text"] {
+		width: 80%;
+	}
+}
+
+.Users {
+	border-left: 1px solid $color-page-border;
+	bottom: 45px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 150px;
+	li {
+		border-bottom: 1px solid $color-page-border;
+		padding: 10px 5px;
+	}
+	.chat-mod {
+		font-weight: bold;
+		&:before {
+			content: "@";
+		}
+	}
+	.kickban {
+		display: none;
+		font-weight: normal;
+	}
+	.template {
+		display: none;
+	}
+}

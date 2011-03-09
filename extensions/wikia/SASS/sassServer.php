@@ -146,7 +146,7 @@ function runSass($inputFile, $tmpFile, $sassParams, &$errorStr){
 	wfProfileIn( __METHOD__ );
 
 	// Pass the values from the query-string into the sass script (results will go in a tmp file).
-	$commandLine = escapeshellcmd("$FULL_SASS_PATH $IP/$inputFile $tmpFile --style $OUTPUT_STYLE -r $RUBY_MODULE_SCRIPT $sassParams")." 2>&1";
+	$commandLine = escapeshellcmd("$FULL_SASS_PATH $IP/$inputFile $tmpFile --cache-location /tmp/ --style $OUTPUT_STYLE -r $RUBY_MODULE_SCRIPT $sassParams")." 2>&1";
 
 	$sassResult = `$commandLine`;
 	if($sassResult != ""){
