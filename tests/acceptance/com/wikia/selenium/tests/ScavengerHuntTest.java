@@ -140,6 +140,13 @@ public class ScavengerHuntTest extends BaseTest {
 
 		//check confirmation (Oasis only)
 //		assertTrue(session().isElementPresent("//section[@id='WikiaPage']/div[@class='WikiaConfirmation']"));
+
+		//go to the last page if we have more than one
+		if (session().isElementPresent("//div[@id='WikiaArticle']/a[@class='mw-lastlink']")) {
+			session().click("//div[@id='WikiaArticle']/a[@class='mw-lastlink']");
+			session().waitForPageToLoad(this.getTimeout());
+		}
+
 		//check if new game is on the list
 		assertTrue(session().isElementPresent("//div[@id='WikiaArticle']/table/tbody/tr/td[contains(text(), '" + generalGameName + "')]"));
 		//click edit
