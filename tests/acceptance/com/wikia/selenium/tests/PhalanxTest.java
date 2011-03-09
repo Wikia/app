@@ -436,7 +436,7 @@ public class PhalanxTest extends BaseTest {
 	 * Hook triggered: ApiCreateMultiplePagesBeforeCreation
 	 * Tests blocks: TitleBlackList
 	 */
-	@Test(groups={"CI"})
+	@Test(groups={"deprecated"})
 	public void articlesCreationNewWikiBuilderTest() throws Exception {
 		this.log("Test articles creation (via WikiBuilder)");
 
