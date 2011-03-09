@@ -711,7 +711,7 @@ class WikiFactoryLoader {
 				}
 				
 				if ($key == 'wgServer') {
-					$headers = getallheaders();
+					$headers = Wikia::getAllHeaders();
 					if (array_key_exists('X-Original-Host', $headers) &&
 						!empty($headers['X-Original-Host'])) {
 						$tValue = 'http://'.$headers['X-Original-Host'];

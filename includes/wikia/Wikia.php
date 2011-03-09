@@ -1668,4 +1668,13 @@ class Wikia {
 		}
 		return true;
 	}
+	
+	function getAllHeaders() {
+		if ( function_exists( 'getallheaders' ) ) {
+			$headers = getallheaders();
+		} else {
+			$headers = $_SERVER;
+		}
+		return $headers;	
+	}
 }
