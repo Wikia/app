@@ -21,16 +21,6 @@ class CrunchyrollVideo {
 	private $currentPage;
 	private $defaultNumber = 0;
 	private $allowedSeries = array(
-				    'bleach'	=> 27,
-				    'naruto1'	=> 17050,
-				    'naruto2'	=> 19024,
-				    'naruto3'	=> 19026,
-				    'naruto4'	=> 19028,
-				    'naruto5'	=> 19030,
-				    'naruto6'	=> 19032,
-				    'naruto7'	=> 19034,
-				    'naruto8'	=> 19036,
-				    'naruto9'	=> 19038,
 				    'gundam'	=> 18329,
 				    'digimon'	=> 788
 				);
@@ -113,7 +103,6 @@ class CrunchyrollVideo {
 	}
 
 	public function getBarHTML(){
-		
 		$cachedData = $this->getFromCache();
 		if ( !empty($cachedData) && is_array($cachedData) && isset( $cachedData['toolbar'] ) ){
 			return $cachedData['toolbar'];
@@ -147,7 +136,7 @@ class CrunchyrollVideo {
 				)
 			);
 		}
-		
+
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Crunchyroll/js/Crunchyroll.js?{$wgStyleVersion}\" ></script>\n");
 
 		if ( is_array( $aTmpData ) && count( $aTmpData ) > 0 ){
@@ -167,7 +156,7 @@ class CrunchyrollVideo {
 			}
 		} else {
 			return '';
-		}
+		}	
 	}
 
 	private function getURLFromSerie(){
@@ -185,7 +174,7 @@ class CrunchyrollVideo {
 		global $wgCityId;
 
 		return wfSharedMemcKey(
-			'CrunchyrollVideo',
+			'CrunchyrollVideoFromRSS',
 			$this->getSerie(),
 			$this->number,
 			$this->currentPage,

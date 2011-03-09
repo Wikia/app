@@ -28,6 +28,7 @@ class CrunchyrollHelpers {
 		} else {
 			$crunchyRollVideo->setNumber( 6 );
 		}
+		
 		return $crunchyRollVideo->getGallery();
 
 	}
