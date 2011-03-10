@@ -1031,6 +1031,7 @@ class LoginForm {
 		} else {
 			$template = new UserloginTemplate();
 			$q = 'action=submitlogin&type=login';
+			$q2 = 'action=submitlogin&type=login';
 			$linkq = 'type=signup';
 			$linkmsg = 'nologin';
 		}
