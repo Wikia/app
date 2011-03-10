@@ -70,7 +70,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 		$mail_records = array();
 		while ($row = $dbr->fetchObject($res)) {
 			$body = self::getBody($row->msg);
-			
+
 			$mail_records[] = array('id'           => $row->id,
 									'created'      => $row->created,
 									'city_id'      => $row->city_id,
@@ -78,8 +78,9 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 									'to'           => $row->dst,
 									'user_url'     => self::getUserURL($row->dst),
 									'subject'      => $row->subj,
+									'subj_short'   => self::shortenStr($row->subj),
 									'msg_full'     => $body,
-									'msg_short'    => self::getShortBody($body),
+									'msg_short'    => self::shortenStr($body),
 									'attempted'    => $row->attempted,
 									'transmitted'  => $row->transmitted,
 									'is_error'     => $row->is_error,
@@ -128,7 +129,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 		return $body;
 	}
 	
-	private function getShortBody ( $body ) {
+	private function shortenStr ( $body ) {
 
 		// Match 70 chars plus any remaining non-whitespace (to finish any words)
 		if (preg_match('/^(.{70}\S*)/s', $body, $matches)) {
@@ -139,7 +140,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 
 		return $body_short;
 	}
-
+	
 	private function getUserURL ( $email ) {
 		$dbr_user = wfGetDB( DB_SLAVE );
 
