@@ -503,7 +503,10 @@ AdConfig.DART.getLocKV = function (slotname){
 };
 
 AdConfig.DART.getDcoptKV = function(slotname){
-	if (AdConfig.DART.slotMap[slotname] && AdConfig.DART.slotMap[slotname].dcopt){
+	if (wgUserName && !wgUserShowAds) {
+		return '';
+	}
+	else if (AdConfig.DART.slotMap[slotname] && AdConfig.DART.slotMap[slotname].dcopt){
 		return 'dcopt=' + AdConfig.DART.slotMap[slotname].dcopt + ';';
 	} else {
 		return '';
