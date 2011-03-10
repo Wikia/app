@@ -31,20 +31,19 @@ class Chat {
 
 		// Get or create the chat.
 		$dbr =& wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
+		$row = $dbr->selectRow(
 			"chat",
 			array("chat_id", "chat_name", "chat_topic"),
 			array("city_id" => $wgCityId),
 			__METHOD__,
 			array("ORDER BY" => "chat_id") // get the oldest chat for now... that will be the canonical chat for the wiki to start
 		);
-		if( empty($res) ){
+		if( empty($row) || empty($row->chat_id) ){
 			global $wgSitename;
 			$chatName = $wgSitename;
 			$chatTopic = wfMsg('chat-default-topic', $wgSitename);
 			$chatId = Chat::create($chatName, $chatTopic);
 		} else {
-			$row = $dbr->fetchObject( $res );
 			$chatId = $row->chat_id;
 			$chatName = $row->chat_name;
 			$chatTopic = $row->chat_topic;
