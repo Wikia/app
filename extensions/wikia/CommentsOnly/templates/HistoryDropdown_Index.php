@@ -1,6 +1,8 @@
+		<?php if (!empty($forumHome)): ?>
 		<span>
 			<a href="/wiki/Forum:Index"><?php echo wfMsgHtml('comments-only-forum-home'); ?></a>
 		</span>
+		<?php endif; ?>
 
 		<ul class="history">
 			<li>
