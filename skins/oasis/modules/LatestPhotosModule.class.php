@@ -26,7 +26,8 @@ class LatestPhotosModule extends Module {
 
 		// Pull the list of images from memcache first
 		// FIXME: create and use service (see RT #79288)
-		$this->thumbUrls = $wgMemc->get(LatestPhotosModule::memcacheKey());
+
+		$this->thumbUrls = $wgMemc->get( LatestPhotosModule::memcacheKey() );
 		if (empty($this->thumbUrls)) {
 			// api service
 			$params = array(
@@ -50,6 +51,7 @@ class LatestPhotosModule extends Module {
 			// make sure the list of images is unique and limited to 11 images (12 including the see all image)
 			$shaList = array();
 			$uniqueList = array();
+
 			foreach ($fileList as $data) {
 				$sha = $data['file']->sha1;
 				if (! array_key_exists($sha, $shaList)) {
@@ -60,13 +62,12 @@ class LatestPhotosModule extends Module {
 			}
 
 			$this->thumbUrls = array_map(array($this, 'getTemplateData'), $uniqueList);
-			$wgMemc->set(LatestPhotosModule::memcacheKey(), $this->thumbUrls);
+			$wgMemc->set( LatestPhotosModule::memcacheKey(), $this->thumbUrls);
 		}
 
 		if (count($this->thumbUrls) < 3) {
 			$this->enableScroll = false;
-		}
-		else {
+		} else {
 			$this->enableScroll = true;
 		}
 
