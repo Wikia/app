@@ -29,20 +29,23 @@ $wgAutoloadClasses['SpecialNewCommentsOnlyQuestion'] = $dir . 'SpecialNewComment
 // show/hide article comments
 $wgArticleCommentsNamespaces[] = NS_FORUM;
 function wfCOArticleCommentCheck( $title ) {
-	if( ( $title->getNamespace() == NS_FORUM ) && ( $title->getText() == 'Index' ) ) {
+	global $wgArticleCommentsNamespaces;
+	if( ( in_array( $title->getNamespace(), $wgArticleCommentsNamespaces ) )
+	 && ( ( $title->getText() == 'Index' ) || $title->equals( Title::newMainPage() ) ) ) {
 		return false;
 	}
 	return true;
 }
 
 function wfCOCheck( $title=null ) {
-	global $wgTitle;
+	global $wgTitle, $wgArticleCommentsNamespaces;
 	if( $title===null ) {
 		$title = $wgTitle;
 	}
-	return $title->getNamespace() == NS_FORUM
+	return in_array( $title->getNamespace(), $wgArticleCommentsNamespaces )
 		&& $title->exists()
-		&& $title->getText() != "Index";
+		&& $title->getText() != "Index"
+		&& !$title->equals( Title::newMainPage() );
 }
 
 // show/hide article body
@@ -96,6 +99,10 @@ ENDFORM;
 
 function wfCOHistoryDropdownIndexAfterExecute( &$moduleObject, &$params ) {
 	if( wfCOCheck() ) {
+		global $wgTitle;
+		if( $wgTitle->getNamespace() == NS_FORUM ) {
+			$moduleObject->forumHome = true;
+		}
 		$moduleObject->templatePath = dirname(__FILE__).'/templates/HistoryDropdown_Index.php';
 		wfLoadExtensionMessages('CommentsOnly');
 	}
