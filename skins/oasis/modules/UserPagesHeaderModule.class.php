@@ -224,7 +224,7 @@ class UserPagesHeaderModule extends Module {
 				if( !self::isItMe( $this->userName ) ) {
 					$title = Title::newFromText( $this->userName, NS_USER_TALK );
 					$this->actionMenu['action'] = array(
-						'href' => $title->getLocalUrl( 'action=edit' ),
+						'href' => $title->getLocalUrl( 'action=edit&section=new' ),
 						'text' => wfMsg('userprofilepage-leave-message'),
 					);
 
