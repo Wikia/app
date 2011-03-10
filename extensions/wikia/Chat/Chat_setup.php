@@ -54,12 +54,16 @@ function ChatAjax() {
 	if (method_exists('ChatAjax', $method)) {
 		wfProfileIn(__METHOD__);
 
+		// Don't let Varnish cache this.
+		header("X-Pass-Cache-Control: max-age=0");
+		
 		wfLoadExtensionMessages('Chat');
 		$data = ChatAjax::$method();
 
 		// send array as JSON
 		$json = Wikia::json_encode($data);
 		$response = new AjaxResponse($json);
+		$response->setCacheDuration(0); // don't cache any of these requests
 		$response->setContentType('application/json; charset=utf-8');
 
 		wfProfileOut(__METHOD__);
