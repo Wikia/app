@@ -195,7 +195,7 @@ class CreateWiki {
 		$status = $this->checkDomain();
 		if( $status != 0 ) {
 			wfProfileOut( __METHOD__ );
-			return 0;
+			return $status;
 		}
 
 		// prepare all values needed for creating wiki
