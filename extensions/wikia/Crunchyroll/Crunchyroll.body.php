@@ -38,7 +38,7 @@ class Crunchyroll extends SpecialPage {
 		$params = explode( '/', $param );
 		$this->episodeId = ( isset( $params[ 2 ] ) ) ? (int)$params[ 2 ]: 0;
 		$this->serieId = ( isset( $params[ 1 ] ) ) ? (int)$params[ 1 ]: 0;
-		$this->page = ( isset( $params[ 0 ] ) ) ? (int)$params[ 0 ]: 0;
+		$this->page = ( isset( $params[ 0 ] ) ) ? (int)$params[ 0 ]: 1;
 		
 		$this->showSerie();
 	}

@@ -49,7 +49,6 @@ class CrunchyrollRSS {
 	public function getTitle(){
 		
 		return $this->feed->get_title();
-
 	}
 
 	public function getItems(){
