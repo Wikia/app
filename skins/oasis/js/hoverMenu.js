@@ -105,7 +105,10 @@ HoverMenu.prototype.mouseout = function(event) {
 		//Start mouseoutTimer
 		this.mouseoutTimer = setTimeout(function() {
 			$(event.currentTarget).children("ul").removeClass("show");
-			$.showAds();
+			if (!$(".modalWrapper:visible").length) {
+				//no modals are visible. show ads.
+				$.showAds();
+			}
 		}, this.settings.mouseoutDelay);
 
 	} else {
