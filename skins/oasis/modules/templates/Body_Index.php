@@ -43,6 +43,9 @@
 		}
 	?>
 
+	<?php
+		echo wfRenderModule('WikiAnswers', 'QuestionBox');
+	?>
 	<article id="WikiaMainContent" class="WikiaMainContent">
 		<?php
 			// render UserPagesHeader or PageHeader or nothing...
