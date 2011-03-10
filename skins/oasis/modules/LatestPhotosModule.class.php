@@ -256,11 +256,18 @@ class LatestPhotosModule extends Module {
 		return true;
 	}
 
-    public static function onImageDelete(&$file, $oldimage, $article, $user, $reason) {
+	public static function onImageRenameCompleated( &$this , &$ot , &$nt ){
+		if ( $nt->getNamespace() == NS_FILE ){
+			self::avoidUpdateRace();
+		}
+		return true;
+	}
+
+	public static function onImageDelete(&$file, $oldimage, $article, $user, $reason) {
 		global $wgMemc;
 		$wgMemc->delete(LatestPhotosModule::memcacheKey());
 		return true;
-    }
+	}
 
 
 	public static function onMessageCacheReplace($title, $text) {
