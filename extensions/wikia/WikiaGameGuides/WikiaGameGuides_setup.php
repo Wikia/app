@@ -12,7 +12,7 @@
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-	echo "This is a MediaWiki extension named WikiaGamgeGuides.\n";
+	echo "This is a MediaWiki extension named WikiaGameGuides.\n";
 	exit ( 1 );
 }
 
