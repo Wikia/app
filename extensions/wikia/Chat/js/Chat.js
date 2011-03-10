@@ -3,6 +3,7 @@ $(function() {
 });
 
 var Chat = {
+	getCb: function() { return "&cb=" + Math.floor(Math.random()*99999); },
 	init: function() {
 		$(window)
 			.load(function() {
@@ -12,7 +13,7 @@ var Chat = {
 			.unload(function() {
 				// user parts the chat
 				$.ajax({
-					url: wgScript + '?action=ajax&rs=ChatAjax&method=part&chatId=' + chatId,
+					url: wgScript + '?action=ajax&rs=ChatAjax&method=part&chatId=' + chatId + Chat.getCb(),
 					async: false
 				});
 			})
@@ -57,7 +58,7 @@ var Chat = {
 			chatId: chatId,
 			userToBan: userToBan
 		};
-		$.get(wgScript + '?action=ajax&rs=ChatAjax&method=kickBan', requestObj , function(data) {
+		$.get(wgScript + '?action=ajax&rs=ChatAjax&method=kickBan' + Chat.getCb(), requestObj , function(data) {
 			//console.log("kickban response");
 			if (data.error) {
 				// Show attempted kickbanned user in user list
@@ -93,7 +94,7 @@ var Chat = {
 			'chatId': chatId,
 			'message': message
 		};
-		$.get(wgScript + '?action=ajax&rs=ChatAjax&method=postMessage', requestObj, function(data) {
+		$.get(wgScript + '?action=ajax&rs=ChatAjax&method=postMessage' + Chat.getCb(), requestObj, function(data) {
 			if (data.error) {
 				alert(data.error);
 				chatElement.remove();
@@ -105,7 +106,7 @@ var Chat = {
 		var requestObj = {
 			'chatId': chatId
 		};
-		$.get(wgScript + '?action=ajax&rs=ChatAjax&method=rejoin', requestObj, function(data) {
+		$.get(wgScript + '?action=ajax&rs=ChatAjax&method=rejoin' + Chat.getCb(), requestObj, function(data) {
 			// Now that we're in the chatroom agian... start to longPoll again
 			Chat.longPoll();
 		});
@@ -115,7 +116,7 @@ var Chat = {
 		var requestObj = {
 			'chatId': chatId
 		};
-		$.get(wgScript + '?action=ajax&rs=ChatAjax&method=longPoll', requestObj, function(data) {
+		$.get(wgScript + '?action=ajax&rs=ChatAjax&method=longPoll' + Chat.getCb(), requestObj, function(data) {
 			if(data.rejoinNeeded){
 				Chat.rejoin();
 			} else {
