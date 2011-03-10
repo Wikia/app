@@ -681,7 +681,7 @@ Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
 	'cnw-welcome-help' => 'Antwoorden, advies en meer op <a href="http://community.wikia.com">Community Central</a>.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
@@ -900,7 +900,7 @@ Adote esta versão através do PayPal para ter uma wiki livre de anúncios por a
 	'cnw-welcome-help' => 'Encontrará respostas, conselhos e mais na <a href="http://pt.wikia.com">Comunidade Central</a>.',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1007,7 +1007,7 @@ $messages['te'] = array(
 	'cnw-desc-lang' => 'భాష',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -1019,3 +1019,75 @@ $messages['zh-hans'] = array(
 	'cnw-login' => '登录',
 );
 
+/**
+ * Chinese placeholder
+ * replace this with real chinese later
+ */
+$messages['zh'] = array(
+	// general messages
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki creation wizard]]',
+	'cnw-next' => 'Next',
+	'cnw-back' => 'Back',
+	'cnw-or' => 'or',
+	'cnw-title' => 'Create New Wiki',
+	// step1 - create a wiki
+	'cnw-name-wiki-headline' => 'Start a Wiki',
+	'cnw-name-wiki-creative' => 'Wikia is the best place to build a website and grow a community around what you love.',
+	'cnw-name-wiki-label' => 'Name your wiki',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-name-wiki-domain-label' => 'Give your wiki an address',
+	'cnw-name-wiki-language' => '',
+	'cnw-name-wiki-domain' => '.wikia.com',
+	'cnw-name-wiki-submit-error' => 'Oops! You need to fill in both of the boxes above to keep going.',
+	// step2 - signup/login
+	'cnw-login' => 'Log In',
+	'cnw-signup' => 'Create Account',
+	'cnw-signup-prompt' => 'Need an account?',
+	'cnw-call-to-signup' => 'Sign up here',
+	'cnw-login-prompt' => 'Already have an account?',
+	'cnw-call-to-login' => 'Log in here',
+	'cnw-auth-headline' => 'Log In',
+	'cnw-auth-headline2' => 'Sign Up',
+	'cnw-auth-creative' => 'Log in to your account to continue building your wiki.',
+	'cnw-auth-signup-creative' => 'You\'ll need an account to continue building your wiki.<br />It only takes a minute to sign up!',
+	'cnw-auth-facebook-signup' => 'Sign up with Facebook',
+	'cnw-auth-facebook-login' => 'Login with Facebook',
+	// step3 - wiki description
+	'cnw-desc-headline' => 'What\'s your wiki about?',
+	'cnw-desc-creative' => 'Describe your topic',
+	'cnw-desc-placeholder' => 'This will appear on the main page of your wiki.',
+	'cnw-desc-tip1' => 'Hint',
+	'cnw-desc-tip1-creative' => 'Use this space to tell people about your wiki in a sentence or two',
+	'cnw-desc-tip2' => 'Psst',
+	'cnw-desc-tip2-creative' => 'Give your visitors some specific details about your subject',
+	'cnw-desc-tip3' => 'Pro Tip',
+	'cnw-desc-tip3-creative' => 'Let people know they can help your wiki grow by editing and adding pages',
+	'cnw-desc-choose' => 'Choose a category',
+	'cnw-desc-select-one' => 'Select one',
+	'cnw-desc-default-lang' => 'Your wiki will be in $1',
+	'cnw-desc-change-lang' => 'change',
+	'cnw-desc-lang' => 'Language',
+	'cnw-desc-wiki-submit-error' => 'Please choose a category',
+	// step4 - select theme
+	'cnw-theme-headline' => 'Choose a theme',
+	'cnw-theme-creative' => 'Choose a theme below, you\'ll be able to see a preview of each theme as you select it.',
+	'cnw-theme-instruction' => 'You can also design your own theme later by going to "My Tools".',
+	// step5 - upgrade
+	'cnw-upgrade-headline' => 'Do you want to upgrade?',
+	'cnw-upgrade-creative' => 'Upgrading to Wikia Plus allows you to remove ads from <span class="wiki-name"></span>, a one time offer only available to new founders.',
+	'cnw-upgrade-marketing' => 'Wikia Plus is a great solution for:<ul>
+<li>Professional Wikis</li>
+<li>Non-profits</li>
+<li>Families</li>
+<li>Schools</li>
+<li>Personal projects</li>
+</ul>
+Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
+	'cnw-upgrade-now' => 'Upgrade Now',
+	'cnw-upgrade-decline' => 'No thanks, continue to my wiki',
+	// wiki welcome message
+	'cnw-welcome-headline' => 'Congratulations! $1 has been created',
+	'cnw-welcome-instruction1' => 'Click the button below to start adding pages to your wiki.',
+	'cnw-welcome-instruction2' => 'You\'ll see this button throughout your wiki, use it any time you want to add a new page.',
+	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
+);
