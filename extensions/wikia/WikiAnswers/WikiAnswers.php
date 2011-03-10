@@ -2,7 +2,7 @@
 
 // override some variables
 $wgDefaultSkin = 'oasis';
-unset( $wgForceSkin );
+$wgForceSkin = 'oasis';
 $wgUseNewAnswersSkin = false;
 
 // ask a question box
