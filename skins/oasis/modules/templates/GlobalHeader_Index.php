@@ -6,7 +6,7 @@
 				<a href="<?= htmlspecialchars($centralUrl) ?>" rel="nofollow"><img src="<?= $wgBlankImgUrl ?>" class="sprite logo" height="23" width="91" alt="Wikia"></a>
 			</li>
 			<li>
-				<a href="<?= htmlspecialchars($createWikiUrl) ?>" class="wikia-button"><?= wfMsg('oasis-global-nav-create-wiki') ?></a>
+				<a href="<?= htmlspecialchars($createWikiUrl) ?>" class="wikia-button"><?= $createWikiText ?></a>
 			</li>
 			<li>
 				<ul id="GlobalNavigation" class="GlobalNavigation">

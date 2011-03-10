@@ -10,6 +10,7 @@ class GlobalHeaderModule extends Module {
 
 	var $centralUrl;
 	var $createWikiUrl;
+	var $createWikiText;
 	var $menuNodes;
 
 	public function executeIndex() {
@@ -25,6 +26,7 @@ class GlobalHeaderModule extends Module {
 		// generate link to AutoWikiCreate
 		$userlang = ($wikiLang == 'en') ? '' : "?uselang=$wikiLang";
 		$this->createWikiUrl = "http://www.wikia.com/Special:CreateWiki{$userlang}";
+		$this->createWikiText = wfMsgHtml('oasis-global-nav-create-wiki');
 
 
 		// global navigation menu
