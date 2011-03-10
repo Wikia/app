@@ -1149,7 +1149,18 @@ class EditPage {
 	 */
 	function initialiseForm() {
 		global $wgUser;
-		$this->edittime = $this->mArticle->getTimestamp();
+		
+		
+		//Wikia Change
+		//https://wikia.fogbugz.com/default.asp?3319#21795
+		if ( $this->mArticle->mRevision->isCurrent() ) {
+			$this->edittime = $this->mArticle->getTimestamp();	
+		} else {
+			$rev = Revision::newFromTitle( $this->mTitle );
+			$this->edittime = $rev->getTimestamp();
+		}
+		//
+		
 		$this->textbox1 = $this->getContent( false );
 		// activate checkboxes if user wants them to be always active
 		# Sort out the "watch" checkbox
