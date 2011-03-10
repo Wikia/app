@@ -192,7 +192,7 @@ table.TablePager { border: 1px solid gray;}
 		<?php foreach ($records as $row): ?>
 		<tr class="mailer-log-row-top">
 			<td><?= $row['id'] ?></td>
-			<td><?= $row['created'] ?></td>
+			<td style="white-space: nowrap"><?= $row['created'] ?></td>
 			<td><a href="<?= $scriptURL ?>?<?= $query_string ?>&new_filter_wiki_id=<?= $row['city_id'] ?>"><?= $row['wiki_name'] ?></a></td>
 			<td><a href="<?= $scriptURL ?>?<?= $query_string ?>&new_filter_dst=<?= $row['to'] ?>"><?= $row['to'] ?></a></td>
 			<td><?= $row['attempted'] ?></td>
@@ -202,7 +202,7 @@ table.TablePager { border: 1px solid gray;}
 		<tr>
 			<td>&nbsp;</td>
 			<td style="background-color: #DDDDDD"><b>Subject:</b></td>
-			<td style="background-color: #DDDDDD" colspan="5"><?= $row['subject'] ?></td>
+			<td style="background-color: #DDDDDD" colspan="5"><?= $row['subj_short'] ?></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
