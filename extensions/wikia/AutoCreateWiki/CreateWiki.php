@@ -508,7 +508,7 @@ class CreateWiki {
 			}
 		}
 
-		return 0;
+		return $status;
 	}
 
 	/**
