@@ -28,9 +28,12 @@ $wgAutoloadClasses['SpecialNewCommentsOnlyQuestion'] = $dir . 'SpecialNewComment
 
 // show/hide article comments
 $wgArticleCommentsNamespaces[] = NS_FORUM;
+
+// where to hide article contents and show only comments
+$wgCommentsOnlyNamespaces[] = NS_FORUM;
 function wfCOArticleCommentCheck( $title ) {
-	global $wgArticleCommentsNamespaces;
-	if( ( in_array( $title->getNamespace(), $wgArticleCommentsNamespaces ) )
+	global $wgCommentsOnlyNamespaces;
+	if( ( in_array( $title->getNamespace(), $wgCommentsOnlyNamespaces ) )
 	 && ( ( $title->getText() == 'Index' ) || $title->equals( Title::newMainPage() ) ) ) {
 		return false;
 	}
@@ -38,11 +41,11 @@ function wfCOArticleCommentCheck( $title ) {
 }
 
 function wfCOCheck( $title=null ) {
-	global $wgTitle, $wgArticleCommentsNamespaces;
+	global $wgTitle, $wgCommentsOnlyNamespaces;
 	if( $title===null ) {
 		$title = $wgTitle;
 	}
-	return in_array( $title->getNamespace(), $wgArticleCommentsNamespaces )
+	return in_array( $title->getNamespace(), $wgCommentsOnlyNamespaces )
 		&& $title->exists()
 		&& $title->getText() != "Index"
 		&& !$title->equals( Title::newMainPage() );
