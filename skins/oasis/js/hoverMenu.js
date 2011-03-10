@@ -1,7 +1,6 @@
 $(function() {
 	//Create instances of HoverMenu
 	new HoverMenu("#GlobalNavigation");
-	new HoverMenu("#AccountNavigation");
 	//Accessbility
 	$("div.skiplinkcontainer a").focus(function(evt) {
 		$("body").data("accessible", "true");
