@@ -24,8 +24,8 @@
 </td>
 </tr>
 </table>
-<h1 style="color:#fa5c1f;font-size:19px;font-weight:normal"><?= FounderEmailsModule::localMsg('founderemails-email-0-day-heading') ?></h1>
-<h2 style="color:#fa5c1f;font-size:22px;font-weight:bold"><?= FounderEmailsModule::localMsg('founderemails-email-0-day-congratulations') ?></h2>
+<h1 style="color:#fa5c1f;font-size:19px;font-weight:normal"><?= FounderEmailsModule::localMsg('founderemails-email-10-day-heading') ?></h1>
+<h2 style="color:#fa5c1f;font-size:22px;font-weight:bold"><?= FounderEmailsModule::localMsg('founderemails-email-10-day-congratulations') ?></h2>
 </td>
 <td width="30">
 &nbsp;
@@ -38,9 +38,12 @@
 <td colspan="3" height="20">&nbsp;</td>
 </tr>
 <tr>
-<td width="30" height="40">&nbsp;</td>
-<td style="color:#2c85d5;font-size:17px;font-weight:bold" valign="top"><?= FounderEmailsModule::localMsg('founderemails-email-0-day-tips-heading') ?></td>
 <td width="30">&nbsp;</td>
+<td style="color:#2c85d5;font-size:17px;font-weight:bold" valign="top"><?= FounderEmailsModule::localMsg('founderemails-email-10-day-tips-heading') ?></td>
+<td width="30">&nbsp;</td>
+</tr>
+<tr>
+<td colspan="3" height="20">&nbsp;</td>
 </tr>
 </table>
 
@@ -51,20 +54,10 @@
 	<tr>
 		<td width="30">&nbsp;</td>
 		<td>
-			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= FounderEmailsModule::localMsg('founderemails-email-0-day-addpages-heading') ?></h2>
+			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= FounderEmailsModule::localMsg('founderemails-email-10-day-share-heading') ?></h2>
 			<span style="color:#3a3a3a;font-size:14px;line-height:20px">
-				<?= FounderEmailsModule::localMsg('founderemails-email-0-day-addpages-content') ?>
+				<?= FounderEmailsModule::localMsg('founderemails-email-10-day-share-content') ?>
 			</span>
-		</td>
-		<td width="15">&nbsp;</td>
-		<td valign="middle">
-			<a href="$ADDAPAGEURL" style="text-decoration:none">
-			<table cellpadding="0" cellspacing="0" background="http://images1.wikia.nocookie.net/wikianewsletter/images/9/9e/Founder_emails_button2.png" width="102" height="40">
-				<tr valign="middle" align="center">
-					<td style="color:#fff;font-size:14px"><?= FounderEmailsModule::localMsg('founderemails-email-0-day-addpages-button') ?></td>
-				</tr>
-			</table>
-			</a>
 		</td>
 		<td width="30">&nbsp;</td>
 	</tr>
@@ -80,20 +73,10 @@
 	<tr>
 		<td width="30">&nbsp;</td>
 		<td>
-			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= FounderEmailsModule::localMsg('founderemails-email-0-day-addphotos-heading') ?></h2>
+			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= FounderEmailsModule::localMsg('founderemails-email-10-day-email-heading') ?></h2>
 			<span style="color:#3a3a3a;font-size:14px;line-height:20px">
-				<?= FounderEmailsModule::localMsg('founderemails-email-0-day-addphotos-content') ?>
+				<?= FounderEmailsModule::localMsg('founderemails-email-10-day-email-content') ?>
 			</span>
-		</td>
-		<td width="15">&nbsp;</td>
-		<td valign="middle">
-			<a href="$ADDAPHOTOURL" style="text-decoration:none">
-			<table cellpadding="0" cellspacing="0" background="http://images1.wikia.nocookie.net/wikianewsletter/images/9/9e/Founder_emails_button2.png" width="102" height="40">
-				<tr valign="middle" align="center">
-					<td style="color:#fff;font-size:14px"><?= FounderEmailsModule::localMsg('founderemails-email-0-day-addphotos-button') ?></td>
-				</tr>
-			</table>
-			</a>
 		</td>
 		<td width="30">&nbsp;</td>
 	</tr>
@@ -109,20 +92,10 @@
 	<tr>
 		<td width="30">&nbsp;</td>
 		<td>
-			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= FounderEmailsModule::localMsg('founderemails-email-0-day-customizetheme-heading') ?></h2>
+			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= FounderEmailsModule::localMsg('founderemails-email-10-day-join-heading') ?></h2>
 			<span style="color:#3a3a3a;font-size:14px;line-height:20px">
-				<?= FounderEmailsModule::localMsg('founderemails-email-0-day-customizetheme-content') ?>
+				<?= FounderEmailsModule::localMsg('founderemails-email-10-day-join-content') ?>
 			</span>
-		</td>
-		<td width="15">&nbsp;</td>
-		<td valign="middle">
-			<a href="$CUSTOMIZETHEMEURL" style="text-decoration:none">
-			<table cellpadding="0" cellspacing="0" background="http://images1.wikia.nocookie.net/wikianewsletter/images/9/9e/Founder_emails_button2.png" width="102" height="40">
-				<tr valign="middle" align="center">
-					<td style="color:#fff;font-size:14px"><?= FounderEmailsModule::localMsg('founderemails-email-0-day-customizetheme-button') ?></td>
-				</tr>
-			</table>
-			</a>
 		</td>
 		<td width="30">&nbsp;</td>
 	</tr>
@@ -139,7 +112,7 @@
 		<td width="30">&nbsp;</td>
 		<td colspan="2">
 			<span style="color:#3a3a3a;font-size:14px;line-height:20px">
-				<?= FounderEmailsModule::localMsg('founderemails-email-0-day-wikiahelps-text') ?>
+				<?= FounderEmailsModule::localMsg('founderemails-email-10-day-wikiahelps-text') ?>
 			</span>
 		</td>
 		<td width="30">&nbsp;</td>
@@ -150,7 +123,7 @@
 	<tr>
 		<td width="30">&nbsp;</td>
 		<td style="color:#3a3a3a;font-size:14px;line-height:20px">
-			<?= FounderEmailsModule::localMsg('founderemails-email-0-day-wikiahelps-signature') ?>
+			<?= FounderEmailsModule::localMsg('founderemails-email-10-day-wikiahelps-signature') ?>
 		</td>
 		<td valign="bottom" align="right">
 			<img alt="Wikia" src="http://images3.wikia.nocookie.net/wikianewsletter/images/2/28/Wikialogo.png">
@@ -168,9 +141,9 @@
 </tr>
 <tr>
 <td align="center" style="font-size:11px;color:#3a3a3a;line-height:16px">
-<?= FounderEmailsModule::localMsg('founderemails-email-0-day-footer-line1') ?>
+<?= FounderEmailsModule::localMsg('founderemails-email-10-day-footer-line1') ?>
 <br>
-<?= FounderEmailsModule::localMsg('founderemails-email-0-day-footer-line2') ?>
+<?= FounderEmailsModule::localMsg('founderemails-email-10-day-footer-line2') ?>
 </td>
 </tr>
 <tr>
