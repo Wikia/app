@@ -16,7 +16,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 			$activateTime = $event['data']['activateTime'];
 			$activateDays = $event['data']['activateDays'];
 
-			if ( time() >= $activateTime ) {
+			//if ( time() >= $activateTime ) {
 
 				$emailParams = array(
 					'$FOUNDERNAME' => $event['data']['founderUsername'],
@@ -28,6 +28,8 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 					'$ADDAPAGEURL' => $event['data']['addapageUrl'],
 					'$ADDAPHOTOURL' => $event['data']['addaphotoUrl'],
 					'$CUSTOMIZETHEMEURL' => $event['data']['customizethemeUrl'],
+					'$EDITMAINPAGEURL' => $event['data']['editmainpageUrl'],
+					'$EXPLOREURL' => $event['data']['exploreUrl'],
 				);
 
 				$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';
@@ -37,18 +39,18 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 				$mailSubject = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-subject', $langCode, array() );
 				$mailBody = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body', $langCode, $emailParams );
-				$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body-HTML', $langCode, $emailParams );
-
-				/*
-				$mailBodyHTML = wfRenderModule("FounderEmails", $event['data']['dayName'], array('language' => 'en'));
-				$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
-				*/
-
+				if ($langCode == 'en') {
+					$mailBodyHTML = wfRenderModule("FounderEmails", $event['data']['dayName'], array('language' => 'en'));
+					$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
+				} else {
+					$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body-HTML', $langCode, $emailParams );
+				}
+				
 				$founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $wikiId );
 
 				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 				$dbw->delete( 'founder_emails_event', array( 'feev_id' => $event['id'] ) );
-			}
+			//}
 		}
 
 		// always return false to prevent deleting from FounderEmails::processEvent
@@ -89,6 +91,8 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 			// Build unsubscribe url
 			$hash_url = Wikia::buildUserSecretKey( $wikiFounder->getName(), 'sha256' );
 			$unsubscribe_url = Title::newFromText('Unsubscribe', NS_SPECIAL)->getFullURL( array( 'key' => $hash_url, 'ctc' => $ctcUnsubscribe ) );
+			
+			$mainPage = wfMsgForContent( 'mainpage' );
 
 			$eventData = array(
 				'activateDays' => $daysToActivate,
@@ -97,11 +101,13 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				'wikiUrl' => $wikiParams['url'],
 				'wikiMainpageUrl' => $mainpageTitle->getFullUrl(),
 				'founderUsername' => $wikiFounder->getName(),
-				'founderUserpageEditUrl' => $wikiFounder->getUserPage()->getFullUrl( 'action=edit' ),
+				'founderUserpageEditUrl' => $wikiFounder->getUserPage()->getFullUrl( array('action' => 'edit') ),
 				'unsubscribeUrl' => $unsubscribe_url,
-				'addapageUrl' => Title::newFromText( 'Createpage', NS_SPECIAL )->getFullUrl(),
-				'addaphotoUrl' => Title::newFromText( 'NewFiles', NS_SPECIAL )->getFullUrl(),
-				'customizethemeUrl' => Title::newFromText('ThemeDesigner', NS_SPECIAL)->getFullUrl(),
+				'addapageUrl' => Title::newFromText( 'Createpage', NS_SPECIAL )->getFullUrl( array('modal' => 'AddPage') ),
+				'addaphotoUrl' => Title::newFromText( 'NewFiles', NS_SPECIAL )->getFullUrl( array('modal' => 'UploadImage') ),
+				'customizethemeUrl' => Title::newFromText('ThemeDesigner', NS_SPECIAL)->getFullUrl( array('modal' => 'Login') ),
+				'editmainpageUrl' => Title::newFromText($mainPage)->getFullUrl( array('action' => 'edit', 'modal' => 'Login') ),
+				'exploreUrl' => 'http://www.wikia.com',
 				'dayName' => $dayName,
 			);
 
