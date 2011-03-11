@@ -77,8 +77,8 @@ class WikiaLabs {
 
 	public function saveFeedback( $projectId, User $user, $rating, $message ) {
 
-		if ( $this->user->getId() == 0 ) {
-			return array();
+		if ( $user->getId() == 0 ) {
+			return array( 'status' => self::STATUS_ERROR );
 		}
 
 		$project = WF::build( 'WikiaLabsProject', array( 'id' => (int) $projectId ) );
@@ -127,7 +127,7 @@ class WikiaLabs {
 		$areaId = $project->getFogbugzProject();
 		$title = self::FOGBUGZ_CASE_TITLE . $project->getName();
 
-		$this->getFogbugzService()->logon()->createCase( $areaId, $title, self::FOGBUGZ_CASE_PRIORITY, $message, array( self::FOGBUGZ_CASE_TAG ), $userEmail );
+		$this->getFogbugzService()->logon()->createCase( $areaId, $title, self::FOGBUGZ_CASE_PRIORITY, $message, array( self::FOGBUGZ_CASE_TAG ), $userEmail, self::FOGBUGZ_PROJECT_ID );
 	}
 
 	public function saveProject( $project ) {

@@ -110,12 +110,13 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 		}
 
 		WF::setInstance( 'WikiaLabsProject', $project );
-		
+
 		$user = $this->getMock( 'User' );
+		$user->expects( $this->atLeastOnce() )
+		     ->method( 'getId' )
+		     ->will( $this->returnValue( self::TEST_USER_ID ) );
+
 		if($statusOk) {
-			$user->expects( $this->atLeastOnce() )
-			     ->method( 'getId' )
-			     ->will( $this->returnValue( self::TEST_USER_ID ) );
 			$user->expects( $this->once() )
 			     ->method( 'getEmail' )
 			     ->will( $this->returnValue( self::TEST_USER_EMAIL ) );
