@@ -30,7 +30,7 @@ class Chat {
 		wfProfileIn(__METHOD__);
 
 		// Get or create the chat.
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr =& wfGetDB( DB_MASTER ); // DB_SLAVE: slave-lag makes this bad.  Don't use it for our test
 		$row = $dbr->selectRow(
 			"chat",
 			array("chat_id", "chat_name", "chat_topic"),
@@ -119,6 +119,7 @@ class Chat {
 			'chat_recent_parts_timestamp < NOW() - INTERVAL '.Chat::MINUTES_TO_KEEP_MESSAGES_FOR.' MINUTE'
 		));
 		//if(!$result){print "DB ERROR: ".$dbw->lastError();}
+		$dbw->commit(); // need to do this before the insert because they have colliding locks of some sort, it appears
 
 		// Remember that this user parted (so that other users can be updated about it).
 		$wasKicked = ($wasKicked?"1":"0");
@@ -191,7 +192,7 @@ class Chat {
 		wfProfileIn( __METHOD__ );
 
 		// If anyone has timed out, record them as a recent parting and remove them from the room.
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr =& wfGetDB( DB_MASTER ); // DB_SLAVE: slave-lag makes this bad.  Don't use it for our test
 		$res = $dbr->select(
 			"chat_user",
 			array("chat_user_name"),
@@ -225,7 +226,7 @@ class Chat {
 		$this->lookForTimedOutUsers();
 
 		// Now, get the list of users who are still here.
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr =& wfGetDB( DB_MASTER ); // DB_SLAVE: slave-lag makes this bad.  Don't use it for our test
 		$userList = array();
 		$res = $dbr->select(
 			"chat_user",
@@ -266,7 +267,7 @@ class Chat {
 		// NOTE: We don't need to purge expired messages here (that is done during long-polling).
 
 		$messages = array();
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr =& wfGetDB( DB_MASTER ); // DB_SLAVE: slave-lag makes this bad.  Don't use it for our test
 		$res = $dbr->select(
 			'chat_message',
 			array('chat_user_name', 'chat_message_body'),
@@ -276,7 +277,12 @@ class Chat {
 		);
 		if($res !== false){
 			while ($row = $dbr->fetchObject( $res )){
-				$messages[] = array($row->chat_user_name => $row->chat_message_body);
+				// Escape angle-brackets to prevent simple HTML/JS/XSS vulnerabilities.
+				$message = $row->chat_message_body;
+				$message = str_replace("<", "&lt;", $message);
+				$message = str_replace(">", "&gt;", $message);
+			
+				$messages[] = array($row->chat_user_name => $message);
 			}
 		}
 
