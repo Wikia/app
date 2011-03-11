@@ -211,6 +211,13 @@ class ArticleCommentsAjax {
 			$wgMemc->set( wfMemcKey( 'articlecomment', 'comm', $title->getArticleId(), 'v1' ), null);
 			// make sure our comment list is refreshed from the master RT#141861
 			$listing->getCommentList(true);
+
+			// BugID: 2483 purge the parent article when new comment is posted
+			$parts = explode( '/', $wgTitle->getText() );
+			$parentTitle = Title::newFromText($parts[0]);
+			if ($parentTitle) {
+				$parentTitle->purgeSquid();
+			}
 			
 			$addedComment = ArticleComment::newFromArticle($response[1]);
 			
