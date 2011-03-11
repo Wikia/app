@@ -35,7 +35,8 @@ class GlobalWatchlistBot {
 	 */
 	public function getGlobalWatchlisters( $sFlag = 'watchlistdigest' ) {
 		$aUsers = array();
-
+	
+		$sWhereClause = "";
 		if ( count( $this->mUsers ) ) {
 			// get only users passed by --users argument
 			$sUserNames = "";
@@ -43,9 +44,6 @@ class GlobalWatchlistBot {
 				$sUserNames .= ( $sUserNames ? "," : "" ) . "'" . addslashes( $sUserName ) . "'";
 			}
 			$sWhereClause = "user_name IN ($sUserNames)";
-		}
-		else {
-			$sWhereClause = "user_options LIKE '%" . addslashes( $sFlag ) . "=1%'";
 		}
 
 		global $wgWikiaCentralAuthDatabase;
@@ -72,11 +70,15 @@ class GlobalWatchlistBot {
 			$iWatchlisters = 0;
 
 			while ( $oResultRow = $dbr->fetchObject( $oResource ) ) {
-				$iWatchlisters++;
-				$aUsers[$oResultRow->user_id] = array (
-					'name' => $oResultRow->user_name,
-					'email' => $oResultRow->user_email
-				);
+				$oUser = User::newFromId( $oResultRow->user_id );
+				
+				if ( is_object( $oUser ) && ( $oUser->getBoolOption( $sFlag ) ) ) {
+					$iWatchlisters++;
+					$aUsers[$oResultRow->user_id] = array (
+						'name' => $oResultRow->user_name,
+						'email' => $oResultRow->user_email
+					);
+				}
 			}
 			$dbr->freeResult( $oResource );
 			$this->printDebug( "$iWatchlisters global watchilster(s) found. (time: " . $this->calculateDuration( time() - $this->mStartTime ) . ")" );
