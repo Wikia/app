@@ -135,6 +135,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		}
 
 		// Build unsubscribe url
+		$wikiFounder = FounderEmails::getInstance()->getWikiFounder();
 		$hash_url = Wikia::buildUserSecretKey( $wikiFounder->getName(), 'sha256' );
 		$unsubscribe_url = Title::newFromText('Unsubscribe', NS_SPECIAL)->getFullURL( array( 'key' => $hash_url, 'ctc' => $ctcUnsubscribe ) );
 
