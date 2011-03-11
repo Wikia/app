@@ -25,6 +25,11 @@ class ChatAjax {
 		} else {
 			$chatId = $wgRequest->getVal('chatId');
 			$message = $wgRequest->getVal('message');
+			
+			// Prevent simple HTML/JS vulnerabilities.
+			$message = str_replace("<", "&lt;", $message);
+			$message = str_replace(">", "&gt;", $message);
+			
 			if(empty($chatId)){
 				$retVal["error"] = "'chatId' is required but was not found in the request.";
 			} else {
@@ -71,8 +76,9 @@ class ChatAjax {
 		   && (time() < $expirationTime)){
 			// Take this opportunity to purge old messages if it hasn't been done.
 			if( !$hasPurged){
-				$dbw =& wfGetDB( DB_MASTER );
-				$dbw->query("DELETE FROM chat_message WHERE chat_message_timestamp < NOW() - INTERVAL ".Chat::MINUTES_TO_KEEP_MESSAGES_FOR." MINUTE");
+				// This is creating crazy locks.  Either do this WAYYYYY less often (doesn't have to be done very often) or not at all.
+				//$dbw =& wfGetDB( DB_MASTER );
+				//$dbw->query("DELETE FROM chat_message WHERE chat_message_timestamp < NOW() - INTERVAL ".Chat::MINUTES_TO_KEEP_MESSAGES_FOR." MINUTE");
 			}
 
 			// Wait before checking again for more messages
@@ -150,8 +156,11 @@ class ChatAjax {
 
 		$chatId = $wgRequest->getVal('chatId');
 		
-		$dbr =& wfGetDB( DB_SLAVE );
-		
+		$dbr =& wfGetDB( DB_MASTER ); // DB_SLAVE: slave-lag makes this bad.  Don't use it for our test
+
+		// Turn off read-transactions... that would make our longPolling always use the state at the beginning of the polling.
+		$dbr->clearFlag( DBO_TRX );
+
 		$res = $dbr->query("SELECT NOW() - INTERVAL 1 SECOND AS updateTime"); // the interval prevents us from missing things that happen in the same second as our queries, but a fraction of a second after them.
 		$row = $dbr->fetchObject( $res );
 		$updateTime = $row->updateTime;
@@ -197,28 +206,30 @@ class ChatAjax {
 
 			// Find message updates
 			$res = $dbr->select(
-				array("chat_message", "chat_user"),
-				array("chat_message.chat_user_name as chat_user_name", "chat_message_body"),
+				array("chat_message"),
+				array("chat_user_name", "chat_message_body"),
 				array(
-					"chat_user.chat_id" => $chatId,
-					"chat_message.chat_id = chat_user.chat_id",
-					"chat_user.chat_user_name" => $wgUser->getName(),
+					"chat_id" => $chatId,
+					"chat_user_name != '".$wgUser->getName()."'",
 					"chat_message_timestamp > '$lastUpdated'",
 					"chat_message_timestamp < '$updateTime'"
 				),
 				__METHOD__,
 				array("ORDER BY" => "chat_message_timestamp")
 			);
+			$dbr->commit();
+			
 			if($res !== false){
 				while ($row = $dbr->fetchObject( $res )){
-					// Don't add the user's own messages to the array.
-	// TODO: FIXME: BUILD THIS INTO THE QUERY INSTEAD AND REMOVE THE JOIN WHILE YOU'RE AT IT... JUST USE $lastUpdated INSTEAD.
-					if($row->chat_user_name != $wgUser->getName()){
-						$retVal["messages"][] = array(
-							"user" => $row->chat_user_name,
-							"message" => $row->chat_message_body
-						);
-					}
+					// Escape angle-brackets to prevent simple HTML/JS/XSS vulnerabilities.
+					$message = $row->chat_message_body;
+					$message = str_replace("<", "&lt;", $message);
+					$message = str_replace(">", "&gt;", $message);
+
+					$retVal["messages"][] = array(
+						"user" => $row->chat_user_name,
+						"message" => $message
+					);
 				} 
 			}
 

@@ -50,5 +50,7 @@ CREATE TABLE chat_message(
 	chat_user_name VARCHAR(255), # the person who sent the message
 
 	chat_message_timestamp TIMESTAMP, # when the message was recorded
-	chat_message_body VARCHAR(255) # easy enough to crank up to BLOB if we decide that's better later.
+	chat_message_body VARCHAR(255), # easy enough to crank up to BLOB if we decide that's better later.
+	
+	KEY(chat_id, chat_message_timestamp)
 );
