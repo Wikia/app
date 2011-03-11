@@ -43,6 +43,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 		if ( !empty( $hash_key ) ) {
 			#$hask_key = urldecode ( $hash_key );
 			$data = Wikia::verifyUserSecretKey( $hash_key, 'sha256' );
+			error_log( "data = " . print_r($data, true) );
 			if ( !empty( $data ) ) {
 				$username 	= ( isset( $data['user'] ) ) ? $data['user'] : null;
 				$token 		= ( isset( $data['token'] ) ) ? $data['token'] : null;
@@ -172,12 +173,12 @@ class UnsubscribePage extends UnlistedSpecialPage {
 					continue;
 				}
 
-
 				#this shouldnt need to be checked, but we will anyway
-				if( $user->getBoolOption($this->mPrefname) ) {
+				# we don't need it now
+				/*if( $user->getBoolOption($this->mPrefname) ) {
 					unset($this->mUsers[$uid]);
 					continue;
-				}
+				}*/
 
 				#if hit this point, the name will be printed, and later processed
 			}
@@ -256,7 +257,6 @@ EOT
 					continue;
 				}
 
-
 				#our new flag
 				$user->setOption( $this->mPrefname, 1);
 
@@ -280,14 +280,16 @@ EOT
 	}
 
 	static public function isEmailConfirmedHook( &$user, &$confirmed ) {
-		#if this opt is set, fake their conf status to OFF, and stop here.
-		
-		/*
-			this depends on EVERYONE checking isConfirmed status before sending mail.
-			this depends on EVERYONE using the user->isEmailConfirmed() function to do so,
-				as it calls this hook.
-		*/
-		if( $user->getBoolOption('unsubscribed') ) {
+		#if this opt is set, fake their conf status to OFF, and stop here.	
+		if ( 
+			$user->getBoolOption( 'enotiffollowedpages') ||
+			$user->getBoolOption( 'enotifusertalkpages') ||
+			$user->getBoolOption( 'enotifwatchlistpages' ) ||
+			$user->getBoolOption( 'enotifminoredits' ) ||
+			$user->getBoolOption( 'watchlistdigest' ) ||
+			$user->getBoolOption( 'marketingallowed' ) ||
+			$user->getBoolOption( 'disablemail' ) 
+		) {
 			$confirmed = false;
 			return false;
 		}
