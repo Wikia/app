@@ -1153,7 +1153,7 @@ class EditPage {
 		
 		//Wikia Change
 		//https://wikia.fogbugz.com/default.asp?3319#21795
-		if ( ( !empty( $this->mArticle->mRevision ) && $this->mArticle->mRevision->isCurrent() ) ||  empty( $this->mArticle->mRevision )  ) {
+		if ( ( !empty( $this->mArticle->mRevision ) && $this->mArticle->mRevision->isCurrent() ) || empty( $this->mArticle->mRevision ) ) {
 			$this->edittime = $this->mArticle->getTimestamp();	
 		} else {
 			$rev = Revision::newFromTitle( $this->mTitle );
