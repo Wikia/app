@@ -82,6 +82,7 @@ class Preferences {
 			} elseif( $field->validate( $globalDefault, $user->mOptions ) === true ) {
 				$info['default'] = $globalDefault;
 			} else {
+				Wikia::log( __METHOD__, 'JKU', "Global default '$globalDefault' is invalid for field $name" );
 				throw new MWException( "Global default '$globalDefault' is invalid for field $name" );
 			}
 		}
@@ -365,14 +366,14 @@ class Preferences {
 					} else {
 						$disableEmailPrefs = true;
 						$skin = $wgUser->getSkin();
-						$emailauthenticated = wfMsgExt( 'emailnotauthenticated', 'parseinline' ) . '<br />' .
-							$skin->link(
-								SpecialPage::getTitleFor( 'Confirmemail' ),
-								wfMsg( 'emailconfirmlink' ),
-								array(),
-								array(),
-								array( 'known', 'noclasses' )
-							) . '<br />';
+						$emailauthenticated = '<span class="error" >'.wfMsgExt( 'emailnotauthenticated', 'parseinline' ).'</span><br />' .
+						$skin->link(
+							SpecialPage::getTitleFor( 'Confirmemail' ),
+							wfMsg( 'emailconfirmlink' ),
+							array(),
+							array(),
+							array( 'known', 'noclasses' )
+						) . '<br />';
 					}
 				} else {
 					$disableEmailPrefs = true;
@@ -473,9 +474,10 @@ class Preferences {
 					'label' => '&nbsp;',
 					'section' => 'rendering/skin',
 				);
-
 		$selectedSkin = $user->getOption( 'skin' );
-		if ( in_array( $selectedSkin, array( 'cologneblue', 'standard' ) ) ) {
+		$selectedSkin = 'standard';
+//		var_dump($user); exit;
+		if ( in_array( $selectedSkin, array( 'cologneblue', 'standard', 'monaco', 'oasis' ) ) ) {
 			global $wgLang;
 			$settings = array_flip( $wgLang->getQuickbarSettings() );
 
