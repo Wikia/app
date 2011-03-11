@@ -1169,12 +1169,17 @@ class Wikia {
 	 * @param       Array   $removegroup - disabled groups for user
 	 */
 	static public function notifyUserOnRightsChange ( &$user, $addgroup, $removegroup ) {
-		global $wgUsersNotifiedOnAllChanges, $wgUsersNotifiedOfRightsChanges;
+		global $wgUsersNotifiedOnAllChanges, $wgUsersNotifiedOfRightsChanges, $wgUser;
 
-			# rt#66961: rights change email sent to !emailconfirmed users
+		# rt#66961: rights change email sent to !emailconfirmed users
 		if( !$user->isEmailConfirmed() ) {
 			#if your not confirmed, no email for you, so dont bother adding to On* lists
 			return false; #i said no, so stop here
+		}
+
+		# FB: 1085 Don't send notif to myself on user rights change
+		if ($user->getID() == $wgUser->getID()) {
+			return true;
 		}
 
 		// Using wgUsersNotifiedOnAllChanges is a hack to get the UserMailer to notify these users.  The use
