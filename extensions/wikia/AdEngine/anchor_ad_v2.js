@@ -6,6 +6,7 @@ var displayAnchorAd = function(){
 					xoffset: 0,
 					yoffset: 0
 				},
+				delay: 0,
 				speed: 500,
 			},
 
@@ -94,7 +95,7 @@ var displayAnchorAd = function(){
 				WET.byStr("anchor_ad/started");
 				setTimeout(function() {
 					$(".wikia_anchor_ad").animate({"top": 0}, AnchorAd.settings.speed);
-				}, 2000);
+				}, AnchorAd.settings.delay);
 			}
 
 		}
