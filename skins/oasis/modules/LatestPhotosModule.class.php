@@ -257,8 +257,10 @@ class LatestPhotosModule extends Module {
 	}
 
 	public static function onImageRenameCompleated( &$this , &$ot , &$nt ){
-		if ( $nt->getNamespace() == NS_FILE ){
-			self::avoidUpdateRace();
+		global $wgMemc;
+		if ( $nt->getNamespace() == NS_FILE ) {
+			wfDebug(__METHOD__ . ": photo renamed\n");
+			$wgMemc->delete( LatestPhotosModule::memcacheKey() );
 		}
 		return true;
 	}
