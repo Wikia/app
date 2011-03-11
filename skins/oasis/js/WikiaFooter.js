@@ -22,18 +22,18 @@ WikiaFooterApp = {
 					line = footer.offset().top + toolbar.outerHeight();
 				}
 
-				if (scroll > line && toolbar.hasClass("float")) {
-					toolbar.removeClass("float");
+				if (scroll > line && footer.hasClass("float")) {
+					footer.removeClass("float");
 					windowObj.centerBar();
-				} else if (scroll < line && !toolbar.hasClass("float")) {
-					toolbar.addClass("float");
+				} else if (scroll < line && !footer.hasClass("float")) {
+					footer.addClass("float");
 					windowObj.centerBar();
 				}
 			};
 
 			windowObj.centerBar = function() {
 				var w = windowObj.width();
-				if(w < originalWidth && toolbar.hasClass('float')) {
+				if(w < originalWidth && footer.hasClass('float')) {
 					toolbar.css('width', w+10);
 					if(!toolbar.hasClass('small')){
 						toolbar.addClass('small');
