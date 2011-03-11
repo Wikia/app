@@ -16,7 +16,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 			$activateTime = $event['data']['activateTime'];
 			$activateDays = $event['data']['activateDays'];
 
-			//if ( time() >= $activateTime ) {
+			if ( time() >= $activateTime ) {
 
 				$emailParams = array(
 					'$FOUNDERNAME' => $event['data']['founderUsername'],
@@ -50,7 +50,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 				$dbw->delete( 'founder_emails_event', array( 'feev_id' => $event['id'] ) );
-			//}
+			}
 		}
 
 		// always return false to prevent deleting from FounderEmails::processEvent
