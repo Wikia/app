@@ -86,7 +86,7 @@ var Chat = {
 		// Immediately add message to chat
 		var chatElement = Chat.addMessage({
 				user: wgUserName, 
-				message: message
+				message: message.replace("<", "&lt;")
 			});
 				
 		// Send message to server
