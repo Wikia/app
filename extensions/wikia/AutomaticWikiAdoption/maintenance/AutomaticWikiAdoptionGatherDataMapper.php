@@ -52,6 +52,11 @@ class AutomaticWikiAdoptionGatherDataMapper {
 		);
 
 		while ($row = $dbrStats->fetchObject($res)) {
+			if (WikiFactory::IDtoDB($row->wiki_id) === false) {
+				//check if wiki exists in city_list
+				continue;
+			}
+
 			$res2 = $dbrStats->query(
 				"select user_id, max(editdate) as lastedit from specials.events_local_users where wiki_id = {$row->wiki_id} and all_groups like '%sysop%' group by 1 order by null;",
 				__METHOD__
