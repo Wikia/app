@@ -38,6 +38,7 @@ $messages['en'] = array(
 	"wikifactory-label-findtags" => "FindTags",
 	"wikifactory-label-ezsharedupload" => "EZSharedUpload",
 	"wikifactory-label-eznamespace" => "EZNamespace",
+	"wikifactory-label-compare" => "Compare",
 	"right-wikifactory" => "Change internal settings for wikis",
 	'wikifactory-domain-edit' => 'edit this URL',
 	'wikifactory-domain-remove' => 'remove this URL from wiki',
