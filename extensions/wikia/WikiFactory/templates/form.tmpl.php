@@ -580,7 +580,7 @@ $(function() {
 	</div>
 	<div id="wiki-factory-panel">
 		<?php
-			$subVariables = in_array($tab, array("variables", "ezsharedupload", "eznamespace") );
+			$subVariables = in_array($tab, array("variables", "ezsharedupload", "eznamespace", 'compare') );
 			$subTags = in_array($tab, array('tags', 'masstags', 'findtags') );
 		?>
 		<ul class="tabs" id="wiki-factory-tabs">
@@ -613,6 +613,9 @@ $(function() {
 	if( $subVariables ) {
 ?>
 		<ul class="tabs second-row" id="wiki-factory-tabs-second">
+			<li <?php echo ( $tab === "compare" ) ? 'class="selected"' : 'class="inactive"' ?> >
+				<?php echo WikiFactoryPage::showTab( "compare", $tab, $wiki->city_id ); ?>
+			</li>
 			<li <?php echo ( $tab === "variables" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "variables", $tab, $wiki->city_id, 'variables2' ); ?>
 			</li>
@@ -642,13 +645,19 @@ $(function() {
 	}
 
 	switch( $tab ):
-		case "info":
-			include_once( "form-info.tmpl.php" );
-			break;
+		# INFO
+			case "info":
+				include_once( "form-info.tmpl.php" );
+				break;
 
-		case "variables":
-			include_once( "form-variables.tmpl.php" );
-			break;
+		# VARIABLES
+			case "compare":
+				include_once( "form-variables-compare.tmpl.php" );
+				break;
+
+			case "variables":
+				include_once( "form-variables.tmpl.php" );
+				break;
 
 			case "ezsharedupload":
 				include_once( "form-shared-upload.tmpl.php" );
@@ -658,21 +667,25 @@ $(function() {
 				include_once( "form-namespace.tmpl.php" );
 				break;
 
-		case "domains":
-			include_once( "form-domains.tmpl.php" );
-			break;
+		# DOMAINS
+			case "domains":
+				include_once( "form-domains.tmpl.php" );
+				break;
 
-		case "hubs":
-			include_once( "form-hubs.tmpl.php" );
-			break;
+		# HUBS
+			case "hubs":
+				include_once( "form-hubs.tmpl.php" );
+				break;
 
-		case "clog":
-			include_once( "form-clog.tmpl.php" );
-			break;
+		# LOGS
+			case "clog":
+				include_once( "form-clog.tmpl.php" );
+				break;
 
-		case "tags":
-			include_once( "form-tags.tmpl.php" );
-			break;
+		# TAGS
+			case "tags":
+				include_once( "form-tags.tmpl.php" );
+				break;
 
 			case "masstags":
 				include_once( "form-tags-mass.tmpl.php" );
@@ -682,13 +695,18 @@ $(function() {
 				include_once( "form-tags-find.tmpl.php" );
 				break;
 
-		case "google":
-			include_once( "form-google.tmpl.php" );
-			break;
+		# GOOGLE
+			case "google":
+				include_once( "form-google.tmpl.php" );
+				break;
 
-		case "close":
-			include_once( "form-close.tmpl.php" );
-			break;
+		# CLOSE
+			case "close":
+				include_once( "form-close.tmpl.php" );
+				break;
+
+		default:
+			print "unknown tab value [{$tab}]\n";
 
 	endswitch;
 ?>
