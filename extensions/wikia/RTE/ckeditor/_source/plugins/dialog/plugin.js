@@ -2998,7 +2998,10 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 					return dialog;
 				}
 				else if ( dialogDefinitions == 'failed' )
+				{
+					hideCover();
 					throw new Error( '[CKEDITOR.dialog.openDialog] Dialog "' + dialogName + '" failed when loading definition.' );
+				}
 
 				var me = this;
 
