@@ -69,12 +69,12 @@ var ThemeDesigner = {
 				var list = $("#ThemeTab .slider ul");
 				var arrow = $(this);
 				var slideTo = null;
-	
+
 				// prevent disabled clicks
 				if(arrow.hasClass("disabled")) {
 					return;
 				}
-				
+
 				ThemeDesigner.isSliding = true;
 				// slide
 				if (arrow.hasClass("previous")) {
@@ -85,7 +85,7 @@ var ThemeDesigner = {
 				list.animate({marginLeft: slideTo}, "slow", function() {
 					ThemeDesigner.isSliding = false;
 				});
-	
+
 				// calculate which buttons should be enabled
 				if (slideTo == slideMax) {
 					$("#ThemeTab .next").addClass("disabled");
@@ -96,7 +96,7 @@ var ThemeDesigner = {
 				} else {
 					$("#ThemeTab .next, #ThemeTab .previous").removeClass("disabled");
 				}
-	
+
 				ThemeDesigner.track('theme/arrow');
 			}
 		});
@@ -151,7 +151,7 @@ var ThemeDesigner = {
 		$("#wordmark-edit").find("button").click(function(event) {
 			event.preventDefault();
 			ThemeDesigner.set("wordmark-text", $("#wordmark-edit").find('input[type="text"]').val());
-			
+
 			ThemeDesigner.track('wordmark/save');
 		});
 
@@ -490,9 +490,12 @@ var ThemeDesigner = {
 		$.post(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=SaveSettings&outputType=data',
 			{'settings': ThemeDesigner.settings},
 			function(data) {
-				if (returnTo) {
-					document.location = returnTo; // redirect to article from which ThemeDesigner was triggered
-				}
+				// BugId:1349
+				ThemeDesigner.purgeReturnToPage(function() {
+					if (returnTo) {
+						document.location = returnTo; // redirect to article from which ThemeDesigner was triggered
+					}
+				});
 			},
 			'json');
 	},
@@ -629,6 +632,25 @@ var ThemeDesigner = {
 						.append('<img src="' + ThemeDesigner.settings["wordmark-image-url"] + '">');
 			}
 		}
+	},
+
+	/**
+	 * Purges the page from which user has triggered Theme Designer
+	 */
+	purgeReturnToPage: function(callback) {
+		if (!window.returnTo) {
+			return;
+		}
+
+		$.post(returnTo, {
+			action:'purge'
+		}, function() {
+			$().log('URL "' + returnTo + '" has been purged', 'ThemeDesigner');
+
+			if (typeof callback == 'function') {
+				callback();
+			}
+		});
 	},
 
 	/**
