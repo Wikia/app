@@ -307,6 +307,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 
 		/**
 		 * Moves the selection focus to this element.
+		 * @function
 		 * @param  {Boolean} defer Whether to asynchronously defer the
 		 * 		execution by 100 ms.
 		 * @example
@@ -816,14 +817,15 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 		},
 
 		/**
-		 * Indicates that the element has defined attributes.
+		 * Checks if the element has any defined attributes.
+		 * @function
 		 * @returns {Boolean} True if the element has attributes.
 		 * @example
-		 * var element = CKEDITOR.dom.element.createFromHtml( '<div title="Test">Example</div>' );
-		 * alert( <b>element.hasAttributes()</b> );  "true"
+		 * var element = CKEDITOR.dom.element.createFromHtml( '&lt;div title="Test"&gt;Example&lt;/div&gt;' );
+		 * alert( <b>element.hasAttributes()</b> );  // "true"
 		 * @example
-		 * var element = CKEDITOR.dom.element.createFromHtml( '<div>Example</div>' );
-		 * alert( <b>element.hasAttributes()</b> );  "false"
+		 * var element = CKEDITOR.dom.element.createFromHtml( '&lt;div&gt;Example&lt;/div&gt;' );
+		 * alert( <b>element.hasAttributes()</b> );  // "false"
 		 */
 		hasAttributes :
 			CKEDITOR.env.ie && ( CKEDITOR.env.ie7Compat || CKEDITOR.env.ie6Compat ) ?
@@ -877,9 +879,9 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 				},
 
 		/**
-		 * Indicates whether a specified attribute is defined for this element.
+		 * Checks if the specified attribute is defined for this element.
 		 * @returns {Boolean} True if the specified attribute is defined.
-		 * @param (String) name The attribute name.
+		 * @param {String} name The attribute name.
 		 * @example
 		 */
 		hasAttribute : function( name )
@@ -922,7 +924,12 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 		},
 
 		/**
-		 * @param {Boolean} [inlineOnly=true] Allow only inline elements to be merged.
+		 * Merges sibling elements that are identical to this one.<br>
+		 * <br>
+		 * Identical child elements are also merged. For example:<br>
+		 * &lt;b&gt;&lt;i&gt;&lt;/i&gt;&lt;/b&gt;&lt;b&gt;&lt;i&gt;&lt;/i&gt;&lt;/b&gt; =&gt; &lt;b&gt;&lt;i&gt;&lt;/i&gt;&lt;/b&gt;
+		 * @function
+		 * @param {Boolean} [inlineOnly] Allow only inline elements to be merged. Defaults to "true".
 		 */
 		mergeSiblings : ( function()
 		{
@@ -1554,9 +1561,12 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 
 		/**
 		 * Gets, sets and removes custom data to be stored as HTML5 data-* attributes.
-		 * @name CKEDITOR.dom.element.data
-		 * @param {String} name The name of the attribute, execluding the 'data-' part.
+		 * @param {String} name The name of the attribute, excluding the 'data-' part.
 		 * @param {String} [value] The value to set. If set to false, the attribute will be removed.
+		 * @example
+		 * element.data( 'extra-info', 'test' );   // appended the attribute data-extra-info="test" to the element
+		 * alert( element.data( 'extra-info' ) );  // "test"
+		 * element.data( 'extra-info', false );    // remove the data-extra-info attribute from the element
 		 */
 		data : function ( name, value )
 		{
@@ -1588,11 +1598,12 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 	}
 
 	/**
-	 * Update the element's size with box model awareness.
-	 * @name CKEDITOR.dom.element.setSize
-	 * @param {String} type [width|height]
+	 * Sets the element size considering the box model.
+	 * @name CKEDITOR.dom.element.prototype.setSize
+	 * @function
+	 * @param {String} type The dimension to set. It accepts "width" and "height".
 	 * @param {Number} size The length unit in px.
-	 * @param isBorderBox Apply the {@param width} and {@param height} based on border box model.
+	 * @param {Boolean} isBorderBox Apply the size based on the border box model.
 	 */
 	CKEDITOR.dom.element.prototype.setSize = function( type, size, isBorderBox )
 		{
@@ -1606,17 +1617,18 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 		};
 
 	/**
-	 * Get the element's size, possibly with box model awareness.
-	 * @name CKEDITOR.dom.element.getSize
-	 * @param {String} type [width|height]
-	 * @param {Boolean} contentSize Get the {@param width} or {@param height} based on border box model.
+	 * Gets the element size, possibly considering the box model.
+	 * @name CKEDITOR.dom.element.prototype.getSize
+	 * @function
+	 * @param {String} type The dimension to get. It accepts "width" and "height".
+	 * @param {Boolean} isBorderBox Get the size based on the border box model.
 	 */
-	CKEDITOR.dom.element.prototype.getSize = function( type, contentSize )
+	CKEDITOR.dom.element.prototype.getSize = function( type, isBorderBox )
 		{
 			var size = Math.max( this.$[ 'offset' + CKEDITOR.tools.capitalize( type )  ],
 				this.$[ 'client' + CKEDITOR.tools.capitalize( type )  ] ) || 0;
 
-			if ( contentSize )
+			if ( isBorderBox )
 				size -= marginAndPaddingSize.call( this, type );
 
 			return size;
