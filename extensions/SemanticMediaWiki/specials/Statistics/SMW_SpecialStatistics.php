@@ -1,10 +1,10 @@
 <?php
 
 /**
- * File holding the SMWSpecialSemanticStatistics class for the Special:SemanticStatistics page. 
+ * File holding the SMWSpecialSemanticStatistics class for the Special:SemanticStatistics page.
  *
  * @file SMW_SpecialStatistics.php
- * 
+ *
  * @ingroup SMWSpecialPage
  * @ingroup SpecialPage
  *
@@ -25,13 +25,13 @@ class SMWSpecialSemanticStatistics extends SpecialPage {
 
 	public function execute( $param ) {
 		global $wgOut, $wgLang;
-		
+
 		$wgOut->setPageTitle( wfMsg( 'semanticstatistics' ) );
-		
+
 		$semanticStatistics = smwfGetStore()->getStatistics();
-	
-		$dbr = wfGetDB( DB_SLAVE, 'smw' );
-		
+
+		$dbr = wfGetDB( DB_SLAVE );
+
 		$propertyPageAmount = $dbr->estimateRowCount(
 			'page',
 			'*',
@@ -39,13 +39,13 @@ class SMWSpecialSemanticStatistics extends SpecialPage {
 				'page_namespace' => SMW_NS_PROPERTY
 			)
 		);
-	
+
 		$out = wfMsgExt( 'smw_semstats_text', array( 'parse' ),
 			$wgLang->formatNum( $semanticStatistics['PROPUSES'] ), $wgLang->formatNum( $semanticStatistics['USEDPROPS'] ),
 			$wgLang->formatNum( $propertyPageAmount ), $wgLang->formatNum( $semanticStatistics['DECLPROPS'] )
 		);
-	
+
 		$wgOut->addHTML( $out );
 	}
-	
+
 }
