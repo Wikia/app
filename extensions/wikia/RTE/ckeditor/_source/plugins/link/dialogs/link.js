@@ -237,6 +237,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			advAttr( 'advCSSClasses', 'class' );
 			advAttr( 'advCharset', 'charset' );
 			advAttr( 'advStyles', 'style' );
+			advAttr( 'advRel', 'rel' );
 		}
 
 		// Find out whether we have any anchors in the editor.
@@ -1121,8 +1122,17 @@ CKEDITOR.dialog.add( 'link', function( editor )
 							},
 							{
 								type : 'hbox',
+								widths : [ '45%', '55%' ],
 								children :
 								[
+									{
+										type : 'text',
+										label : linkLang.rel,
+										'default' : '',
+										id : 'advRel',
+										setup : setupAdvParams,
+										commit : commitAdvParams
+									},
 									{
 										type : 'text',
 										label : linkLang.styles,
@@ -1130,7 +1140,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 										id : 'advStyles',
 										setup : setupAdvParams,
 										commit : commitAdvParams
-
 									}
 								]
 							}
@@ -1306,6 +1315,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				advAttr( 'advCSSClasses', 'class' );
 				advAttr( 'advCharset', 'charset' );
 				advAttr( 'advStyles', 'style' );
+				advAttr( 'advRel', 'rel' );
 			}
 
 

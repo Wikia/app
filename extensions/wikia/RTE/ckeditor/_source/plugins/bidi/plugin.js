@@ -50,16 +50,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 	function handleMixedDirContent( evt )
 	{
-		var editor = evt.editor,
-			chromeRoot = editor.container.getChild( 1 ),
-			directionNode = evt.data.path.block || evt.data.path.blockLimit;
+                var editor = evt.editor,
+                        directionNode = evt.data.path.block || evt.data.path.blockLimit;
 
-		if (chromeRoot) {
-			if ( directionNode && editor.lang.dir != directionNode.getComputedStyle( 'direction' ) )
-				chromeRoot.addClass( 'cke_mixed_dir_content' );
-			else
-				chromeRoot.removeClass( 'cke_mixed_dir_content' );
-		}
+                editor.fire( 'contentDirChanged', directionNode ? directionNode.getComputedStyle( 'direction' ) : editor.lang.dir );
 	}
 
 	/**
@@ -279,4 +273,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  * @param {CKEDITOR.editor} editor This editor instance.
  * @param {Object} eventData.node The element that is being changed.
  * @param {String} eventData.dir The new direction.
+ */
+
+/**
+ * Fired when the language direction in the specific cursor position is changed
+ * @name CKEDITOR.editor#contentDirChanged
+ * @event
+ * @param {String} eventData The direction in the current position.
  */

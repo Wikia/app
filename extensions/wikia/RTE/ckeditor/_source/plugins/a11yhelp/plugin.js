@@ -32,7 +32,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								CKEDITOR.getUrl( plugin.path + 'lang/' + langCode + '.js' ),
 								function()
 								{
-									CKEDITOR.tools.extend( editor.lang, plugin.lang[ langCode ] );
+									CKEDITOR.tools.extend( editor.lang, plugin.langEntries[ langCode ] );
 									editor.openDialog( commandName );
 								});
 					},

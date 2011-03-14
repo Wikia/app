@@ -21,12 +21,12 @@ class CKEditor
 	 * The version of %CKEditor.
 	 * \private
 	 */
-	var $version = '3.5.1';
+	var $version = '3.5.2';
 	/**
 	 * A constant string unique for each release of %CKEditor.
 	 * \private
 	 */
-	var $_timestamp = '20110203';
+	var $_timestamp = '20110314';
 
 	/**
 	 * URL to the %CKEditor installation directory (absolute or relative to document root).
@@ -80,7 +80,7 @@ class CKEditor
 	 * A string indicating the creation date of %CKEditor.
 	 * Do not change it unless you want to force browsers to not use previously cached version of %CKEditor.
 	 */
-	var $timestamp = "20110203";
+	var $timestamp = "20110314";
 	/**
 	 * An array that holds event listeners.
 	 * \private
@@ -469,7 +469,7 @@ class CKEditor
 
 		$extraCode = "";
 		// CKReleaser %REMOVE_START%
-		if ($this->version == '3.5.1') {
+		if ($this->version == '3.5.2') {
 			$extraCode .= ($extraCode ? "\n" : "") . "if (typeof(CKEDITOR) == 'undefined') { alert('The CKEDITOR object was not found. Please make sure that the ckeditor.js file is available in your installation.'); }";
 		}
 		// %REMOVE_END%
