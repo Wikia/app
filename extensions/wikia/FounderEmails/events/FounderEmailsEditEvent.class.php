@@ -31,6 +31,11 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 			$oFounder = $founderEmails->getWikiFounder();
 
+			// BugID: 1961 Quit if the founder email is not confirmed
+			if ( !$oFounder->isEmailConfirmed() ) {
+				return true;
+			}
+
 			$aAllCounter = unserialize( $oFounder->getOption( 'founderemails-counter' ) );
 			if ( empty( $aAllCounter ) ) {
 				$aAllCounter = array();

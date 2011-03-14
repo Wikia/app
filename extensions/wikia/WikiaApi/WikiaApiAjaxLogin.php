@@ -119,6 +119,9 @@ class WikiaApiAjaxLogin extends ApiBase {
 				} else if ( 0 == $u->getID() ) {
 					$result['result'] = 'nosuchuser';
 					$result['text'] = wfMsg( 'nosuchuser', $u->getName() );
+				} else if ( !$u->isEmailConfirmed() ) {
+					$result['result'] = 'emailnotauthenticated';
+					$result['text'] = wfMsg('emailnotauthenticated');
 				} else if ( $u->isPasswordReminderThrottled() ) {
 					global $wgPasswordReminderResendTime;
 					$result['result'] = 'throttled-mailpassword';
