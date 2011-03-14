@@ -63,7 +63,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 			$eventType = $wgRequest->getVal('event');
 			switch ($eventType) {
 			case 'click':
-				$this->handleClick($emailId, $emailAddr);
+				$this->handleClick($emailId, $emailAddr, $wgRequest->getVal('url'), $wgRequest->getVal('category'));
 				break;
 			case 'open':
 				$this->handleOpen($emailId, $emailAddr);
@@ -91,7 +91,8 @@ class SendGridPostback extends UnlistedSpecialPage {
 		wfProfileOut(__METHOD__);
 	}
 
-	private function handleClick ($id, $email, $url) {
+	// Fixme: URL and Category are not currently saved anywhere
+	private function handleClick ($id, $email, $url, $category) {
 		Wikia::log(__METHOD__, false, "<postback>" . $email . "</postback>\n", true);
 
 		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
