@@ -55,10 +55,11 @@ class CategorySelect {
 		$dom->loadXML($xml);
 		//get everything under main node
 		$root = $dom->getElementsByTagName('root')->item(0);
-		//grab categories into variable $categories and remove them from $root
-		$categories = self::parseNode($root);
 
 		self::$frame = $wgParser->getPreprocessor()->newFrame();
+		
+		$categories = self::parseNode($root);
+
 		//make wikitext from DOM tree
 		$modifiedWikitext = self::$frame->expand( $root, PPFrame::NO_TEMPLATES | PPFrame::RECOVER_COMMENTS);
 		//replace markers back to wikitext
@@ -131,7 +132,7 @@ class CategorySelect {
 								if ($previous->nodeType == XML_ELEMENT_NODE) {
 									switch ($previous->nodeName) {
 										case 'template':
-											$nodeContent = $previous->getElementsByTagName('originalCall')->item(0)->textContent;
+											$nodeContent = self::$frame->expand($previous, PPFrame::NO_TEMPLATES );
 											break;
 										case 'ext':
 											$tmpTagName = $previous->getElementsByTagName('name')->item(0)->textContent;
