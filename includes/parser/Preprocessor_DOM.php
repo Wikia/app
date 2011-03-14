@@ -657,18 +657,6 @@ class Preprocessor_DOM implements Preprocessor {
 					$element = "<$name$attr>";
 					$element .= "<title>$title</title>";
 
-					//Wysiwyg + CategorySelect: add original wikitext for template call to XML
-					if($flags == 0 && ($wgCategorySelectEnabled) && $count == 2 && $curChar == '}') {
-						$closeAt[] = $i;
-						if(count($closeAt) == count($openAt)) {
-							$openIdx = $openAt[0];
-							$closeIdx = $closeAt[count($closeAt)-1];
-							$originalCall = htmlspecialchars(substr($text, $openIdx, $closeIdx-$openIdx+2));
-							$element .= "<originalCall><![CDATA[$originalCall]]></originalCall>";
-							$openAt = $closeAt = array();
-						}
-					}
-
 					$argIndex = 1;
 					foreach ( $parts as $partIndex => $part ) {
 						if ( isset( $part->eqpos ) ) {
