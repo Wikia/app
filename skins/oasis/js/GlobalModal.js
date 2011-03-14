@@ -8,7 +8,6 @@ GlobalModal = {
 		var modal = $.getUrlVar('modal');
 		if (modal) {
 			var f = GlobalModal['show'+modal];
-			$().log(f);
 			if(typeof f === 'function') {
 				f();
 			}
