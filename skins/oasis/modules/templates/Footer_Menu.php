@@ -27,7 +27,7 @@
 <?php case 'customize': ?>
 <li>
 	<img height="16" width="16" class="gear-icon" src="<?= $wgBlankImgUrl; ?>">
-	<a class="tools-customize" href="#" data-name="customize">Customize</a>
+	<a class="tools-customize" href="#" data-name="customize"><?= wfMsg( 'oasis-toolbar-customize' ); ?></a>
 </li>
 <?php     break; ?>
 <?php case 'disabled': ?>
