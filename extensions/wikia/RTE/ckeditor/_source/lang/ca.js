@@ -56,7 +56,7 @@ CKEDITOR.lang['ca'] =
 	superscript		: 'Superíndex',
 	horizontalrule	: 'Insereix línia horitzontal',
 	pagebreak		: 'Insereix salt de pàgina',
-	pagebreakAlt		: 'Salt de pàgina',
+	pagebreakAlt		: 'Page Break', // MISSING
 	unlink			: 'Elimina l\'enllaç',
 	undo			: 'Desfés',
 	redo			: 'Refés',
@@ -106,19 +106,19 @@ CKEDITOR.lang['ca'] =
 		targetTop		: 'Finestra major (_top)',
 		targetSelf		: 'Mateixa finestra (_self)',
 		targetParent	: 'Finestra pare (_parent)',
-		langDirLTR		: 'D\'esquerra a dreta (LTR)',
-		langDirRTL		: 'De dreta a esquerra (RTL)',
-		styles			: 'Estil',
-		cssClasses		: 'Classes del full d\'estil',
+		langDirLTR		: 'Left to Right (LTR)', // MISSING
+		langDirRTL		: 'Right to Left (RTL)', // MISSING
+		styles			: 'Style', // MISSING
+		cssClasses		: 'Stylesheet Classes', // MISSING
 		width			: 'Amplada',
 		height			: 'Alçada',
 		align			: 'Alineació',
 		alignLeft		: 'Ajusta a l\'esquerra',
 		alignRight		: 'Ajusta a la dreta',
 		alignCenter		: 'Centre',
-		alignTop		: 'Superior',
-		alignMiddle		: 'Centre',
-		alignBottom		: 'Inferior',
+		alignTop		: 'Top', // MISSING
+		alignMiddle		: 'Middle', // MISSING
+		alignBottom		: 'Bottom', // MISSING
 		invalidHeight	: 'L\'alçada ha de ser un nombre.',
 		invalidWidth	: 'L\'amplada ha de ser un nombre.',
 
@@ -128,7 +128,7 @@ CKEDITOR.lang['ca'] =
 
 	contextmenu :
 	{
-		options : 'Opcions del menú contextual'
+		options : 'Context Menu Options' // MISSING
 	},
 
 	// Special char dialog.
@@ -136,7 +136,7 @@ CKEDITOR.lang['ca'] =
 	{
 		toolbar		: 'Insereix caràcter especial',
 		title		: 'Selecciona el caràcter especial',
-		options : 'Opcions de caràcters especials'
+		options : 'Special Character Options' // MISSING
 	},
 
 	// Link dialog.
@@ -175,19 +175,18 @@ CKEDITOR.lang['ca'] =
 		langDirRTL		: 'De dreta a esquerra (RTL)',
 		acccessKey		: 'Clau d\'accés',
 		name			: 'Nom',
-		langCode			: 'Direcció de l\'idioma',
-		tabIndex			: 'Index de Tab',
-		advisoryTitle		: 'Títol consultiu',
+		langCode		: 'Direcció de l\'idioma',
+		tabIndex		: 'Index de Tab',
+		advisoryTitle	: 'Títol consultiu',
 		advisoryContentType	: 'Tipus de contingut consultiu',
 		cssClasses		: 'Classes del full d\'estil',
 		charset			: 'Conjunt de caràcters font enllaçat',
 		styles			: 'Estil',
-		rel			: 'Relationship', // MISSING
-		selectAnchor		: 'Selecciona una àncora',
+		selectAnchor	: 'Selecciona una àncora',
 		anchorName		: 'Per nom d\'àncora',
-		anchorId			: 'Per Id d\'element',
-		emailAddress		: 'Adreça de correu electrònic',
-		emailSubject		: 'Assumpte del missatge',
+		anchorId		: 'Per Id d\'element',
+		emailAddress	: 'Adreça de correu electrònic',
+		emailSubject	: 'Assumpte del missatge',
 		emailBody		: 'Cos del missatge',
 		noAnchors		: '(No hi ha àncores disponibles en aquest document)',
 		noUrl			: 'Si us plau, escrigui l\'enllaç URL',
@@ -207,25 +206,25 @@ CKEDITOR.lang['ca'] =
 	// List style dialog
 	list:
 	{
-		numberedTitle		: 'Numbered List Properties',
-		bulletedTitle		: 'Bulleted List Properties',
-		type				: 'Type',
-		start				: 'Start',
-		validateStartNumber				:'List start number must be a whole number.',
-		circle				: 'Circle',
-		disc				: 'Disc',
-		square				: 'Square',
-		none				: 'None',
-		notset				: '<not set>',
-		armenian			: 'Armenian numbering',
-		georgian			: 'Georgian numbering (an, ban, gan, etc.)',
-		lowerRoman			: 'Lower Roman (i, ii, iii, iv, v, etc.)',
-		upperRoman			: 'Upper Roman (I, II, III, IV, V, etc.)',
-		lowerAlpha			: 'Lower Alpha (a, b, c, d, e, etc.)',
-		upperAlpha			: 'Upper Alpha (A, B, C, D, E, etc.)',
-		lowerGreek			: 'Lower Greek (alpha, beta, gamma, etc.)',
-		decimal				: 'Decimal (1, 2, 3, etc.)',
-		decimalLeadingZero	: 'Decimal leading zero (01, 02, 03, etc.)'
+		numberedTitle		: 'Numbered List Properties', // MISSING
+		bulletedTitle		: 'Bulleted List Properties', // MISSING
+		type				: 'Type', // MISSING
+		start				: 'Start', // MISSING
+		validateStartNumber				:'List start number must be a whole number.', // MISSING
+		circle				: 'Circle', // MISSING
+		disc				: 'Disc', // MISSING
+		square				: 'Square', // MISSING
+		none				: 'None', // MISSING
+		notset				: '<not set>', // MISSING
+		armenian			: 'Armenian numbering', // MISSING
+		georgian			: 'Georgian numbering (an, ban, gan, etc.)', // MISSING
+		lowerRoman			: 'Lower Roman (i, ii, iii, iv, v, etc.)', // MISSING
+		upperRoman			: 'Upper Roman (I, II, III, IV, V, etc.)', // MISSING
+		lowerAlpha			: 'Lower Alpha (a, b, c, d, e, etc.)', // MISSING
+		upperAlpha			: 'Upper Alpha (A, B, C, D, E, etc.)', // MISSING
+		lowerGreek			: 'Lower Greek (alpha, beta, gamma, etc.)', // MISSING
+		decimal				: 'Decimal (1, 2, 3, etc.)', // MISSING
+		decimalLeadingZero	: 'Decimal leading zero (01, 02, 03, etc.)' // MISSING
 	},
 
 	// Find And Replace Dialog
@@ -277,25 +276,25 @@ CKEDITOR.lang['ca'] =
 		cell :
 		{
 			menu			: 'Cel·la',
-			insertBefore	: 'Insereix abans',
-			insertAfter		: 'Insereix després',
-			deleteCell		: 'Suprimeix',
-			merge			: 'Fusiona',
-			mergeRight		: 'Fusiona a la dreta',
-			mergeDown		: 'Fusiona avall',
-			splitHorizontal	: 'Divideix horitzontalment',
-			splitVertical	: 'Divideix verticalment',
-			title			: 'Propietats de la cel·la',
+			insertBefore	: 'Insereix cel·la abans de',
+			insertAfter		: 'Insereix cel·la darrera',
+			deleteCell		: 'Suprimeix les cel·les',
+			merge			: 'Fusiona les cel·les',
+			mergeRight		: 'Fusiona cap a la dreta',
+			mergeDown		: 'Fusiona cap avall',
+			splitHorizontal	: 'Divideix la cel·la horitzontalment',
+			splitVertical	: 'Divideix la cel·la verticalment',
+			title			: 'Propertiat de la cel·la',
 			cellType		: 'Tipus de cel·la',
 			rowSpan			: 'Expansió de files',
 			colSpan			: 'Expansió de columnes',
 			wordWrap		: 'Ajustar al contingut',
-			hAlign			: 'Alineació Horizontal',
-			vAlign			: 'Alineació Vertical',
+			hAlign			: 'Aliniació Horizontal',
+			vAlign			: 'Aliniació Vertical',
 			alignBaseline	: 'A la línia base',
 			bgColor			: 'Color de fons',
 			borderColor		: 'Color de la vora',
-			data			: 'Dades',
+			data			: 'Data',
 			header			: 'Capçalera',
 			yes				: 'Sí',
 			no				: 'No',
@@ -497,7 +496,7 @@ CKEDITOR.lang['ca'] =
 	{
 		toolbar	: 'Icona',
 		title	: 'Insereix una icona',
-		options : 'Opcions d\'emoticones'
+		options : 'Smiley Options' // MISSING
 	},
 
 	elementsPath :
@@ -513,9 +512,9 @@ CKEDITOR.lang['ca'] =
 
 	justify :
 	{
-		left	: 'Alinea a l\'esquerra',
+		left	: 'Alinia a l\'esquerra',
 		center	: 'Centrat',
-		right	: 'Alinea a la dreta',
+		right	: 'Alinia a la dreta',
 		block	: 'Justificat'
 	},
 
@@ -548,10 +547,10 @@ CKEDITOR.lang['ca'] =
 	templates :
 	{
 		button			: 'Plantilles',
-		title			: 'Plantilles de contingut',
-		options : 'Opcions de plantilla',
+		title			: 'Contingut plantilles',
+		options : 'Template Options', // MISSING
 		insertOption	: 'Reemplaça el contingut actual',
-		selectPromptMsg	: 'Seleccioneu una plantilla per usar a l\'editor<br>(per defecte s\'elimina el contingut actual):',
+		selectPromptMsg	: 'Si us plau, seleccioneu la plantilla per obrir a l\'editor<br>(el contingut actual no serà enregistrat):',
 		emptyListMsg	: '(No hi ha plantilles definides)'
 	},
 
@@ -602,11 +601,11 @@ CKEDITOR.lang['ca'] =
 
 	iframe :
 	{
-		title		: 'Propietats IFrame',
-		toolbar		: 'IFrame',
-		noUrl		: 'Si us plau, introduïu la URL de l\'iframe URL',
-		scrolling	: 'Activa les barrres de desplaçament',
-		border		: 'Mostra la vora del marc'
+		title		: 'IFrame Properties', // MISSING
+		toolbar		: 'IFrame', // MISSING
+		noUrl		: 'Please type the iframe URL', // MISSING
+		scrolling	: 'Enable scrollbars', // MISSING
+		border		: 'Show frame border' // MISSING
 	},
 
 	font :
@@ -679,7 +678,7 @@ CKEDITOR.lang['ca'] =
 	scayt :
 	{
 		title			: 'Spell Check As You Type',
-		opera_title		: 'No és compatible amb l\'Opera',
+		opera_title		: 'Not supported by Opera', // MISSING
 		enable			: 'Habilitat l\'SCAYT',
 		disable			: 'Deshabilita SCAYT',
 		about			: 'Quant a l\'SCAYT',
@@ -693,30 +692,30 @@ CKEDITOR.lang['ca'] =
 		emptyDic		: 'El nom del diccionari no hauria d\'estar buit.',
 
 		optionsTab		: 'Opcions',
-		allCaps			: 'Ignora paraules en majúscules',
-		ignoreDomainNames : 'Ignora els noms de domini',
-		mixedCase		: 'Ignora paraules amb majúscules i minúscules',
-		mixedWithDigits	: 'Ignora paraules amb números ',
+		allCaps			: 'Ignore All-Caps Words', // MISSING
+		ignoreDomainNames : 'Ignore Domain Names', // MISSING
+		mixedCase		: 'Ignore Words with Mixed Case', // MISSING
+		mixedWithDigits	: 'Ignore Words with Numbers', // MISSING
 
 		languagesTab	: 'Idiomes',
 
 		dictionariesTab	: 'Diccionaris',
-		dic_field_name	: 'Nom del diccionari',
-		dic_create		: 'Crea',
-		dic_restore		: 'Restaura',
-		dic_delete		: 'Elimina',
-		dic_rename		: 'Canvia el nom',
-		dic_info		: 'Inicialment el diccionari d\'usuari s\'emmagatzema en una galeta. De totes maneres, les galetes tenen la mida limitada. Quan el diccionari creix massa, llavors el diccionari es pot emmagatzemar al nostre servidor. Per desar el vostre diccionari personal al nostre servidor heu d.\'especificar un nom pel diccionari. Si ja heu desat un diccionari, teclegeu si us plau el seu nom i cliqueu el botó de restauració.',
+		dic_field_name	: 'Dictionary name', // MISSING
+		dic_create		: 'Create', // MISSING
+		dic_restore		: 'Restore', // MISSING
+		dic_delete		: 'Delete', // MISSING
+		dic_rename		: 'Rename', // MISSING
+		dic_info		: 'Initially the User Dictionary is stored in a Cookie. However, Cookies are limited in size. When the User Dictionary grows to a point where it cannot be stored in a Cookie, then the dictionary may be stored on our server. To store your personal dictionary on our server you should specify a name for your dictionary. If you already have a stored dictionary, please type its name and click the Restore button.', // MISSING
 
 		aboutTab		: 'Quant a'
 	},
 
 	about :
 	{
-		title		: 'Quant al CKEditor',
-		dlgTitle	: 'Quant al CKEditor',
+		title		: 'Quan al CKEditor',
+		dlgTitle	: 'Quan al CKEditor',
 		moreInfo	: 'Per informació sobre llicències visiteu el web:',
-		copy		: 'Copyright &copy; $1. Tots els drets reservats.'
+		copy		: 'Copyright &copy; $1. All rights reserved.'
 	},
 
 	maximize : 'Maximitza',
@@ -726,8 +725,8 @@ CKEDITOR.lang['ca'] =
 	{
 		anchor		: 'Àncora',
 		flash		: 'Animació Flash',
-		iframe		: 'IFrame',
-		hiddenfield	: 'Camp ocult',
+		iframe		: 'IFrame', // MISSING
+		hiddenfield	: 'Hidden Field', // MISSING
 		unknown		: 'Objecte desconegut'
 	},
 
@@ -736,7 +735,7 @@ CKEDITOR.lang['ca'] =
 	colordialog :
 	{
 		title		: 'Selecciona el color',
-		options	:	'Opcions del color',
+		options	:	'Color Options', // MISSING
 		highlight	: 'Destacat',
 		selected	: 'Seleccionat',
 		clear		: 'Neteja'
@@ -747,7 +746,7 @@ CKEDITOR.lang['ca'] =
 
 	bidi :
 	{
-		ltr : 'Direcció del text d\'esquerra a dreta',
-		rtl : 'Direcció del text de dreta a esquerra'
+		ltr : 'Text direction from left to right', // MISSING
+		rtl : 'Text direction from right to left' // MISSING
 	}
 };

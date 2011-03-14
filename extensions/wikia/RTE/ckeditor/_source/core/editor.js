@@ -272,7 +272,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						// is not available, get the first one (default one).
 						lang = ( CKEDITOR.tools.indexOf( pluginLangs, editor.langCode ) >= 0 ? editor.langCode : pluginLangs[ 0 ] );
 
-						if ( !plugin.langEntries || !plugin.langEntries[ lang ] )
+						if ( !plugin.lang[ lang ] )
 						{
 							// Put the language file URL into the list of files to
 							// get downloaded.
@@ -280,7 +280,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						}
 						else
 						{
-							CKEDITOR.tools.extend( editor.lang, plugin.langEntries[ lang ] );
+							CKEDITOR.tools.extend( editor.lang, plugin.lang[ lang ] );
 							lang = null;
 						}
 					}
@@ -305,7 +305,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 								// Uses the first loop to update the language entries also.
 								if ( m === 0 && languageCodes[ i ] && plugin.lang )
-									CKEDITOR.tools.extend( editor.lang, plugin.langEntries[ languageCodes[ i ] ] );
+									CKEDITOR.tools.extend( editor.lang, plugin.lang[ languageCodes[ i ] ] );
 
 								// Call the plugin method (beforeInit and init).
 								if ( plugin[ methods[ m ] ] )
@@ -547,9 +547,9 @@ CKEDITOR.tools.extend( CKEDITOR.editor.prototype,
 			if ( !noUpdate )
 				this.updateElement();
 
-			this.fire( 'destroy' );
 			this.theme && this.theme.destroy( this );
 
+			this.fire( 'destroy' );
 			CKEDITOR.remove( this );
 			CKEDITOR.fire( 'instanceDestroyed', null, this );
 		},
@@ -684,7 +684,6 @@ CKEDITOR.tools.extend( CKEDITOR.editor.prototype,
 		 *		editor.
 		 * @param {Function} callback Function to be called after the setData
 		 *		is completed.
-		 *@param {Boolean} internal Whether suppress  any event firing when copying data internally inside editor.
 		 * @example
 		 * CKEDITOR.instances.editor1.<b>setData</b>( '&lt;p&gt;This is the editor data.&lt;/p&gt;' );
 		 * @example
@@ -693,7 +692,7 @@ CKEDITOR.tools.extend( CKEDITOR.editor.prototype,
 		 *         this.checkDirty();    // true
 		 *     });
 		 */
-		setData : function( data , callback, internal )
+		setData : function( data , callback )
 		{
 			if( callback )
 			{
@@ -706,11 +705,11 @@ CKEDITOR.tools.extend( CKEDITOR.editor.prototype,
 
 			// Fire "setData" so data manipulation may happen.
 			var eventData = { dataValue : data };
-			!internal && this.fire( 'setData', eventData );
+			this.fire( 'setData', eventData );
 
 			this._.data = eventData.dataValue;
 
-			!internal && this.fire( 'afterSetData', eventData );
+			this.fire( 'afterSetData', eventData );
 		},
 
 		/**
