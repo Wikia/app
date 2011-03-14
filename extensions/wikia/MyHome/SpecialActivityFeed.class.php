@@ -31,7 +31,7 @@ class SpecialActivityFeed extends SpecialPage {
 		$feedProvider = new DataFeedProvider($feedProxy);
 
 		$data = $feedProvider->get(60);
-		
+
 		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
 		if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
 			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css?{$wgStyleVersion}");
@@ -73,7 +73,7 @@ class SpecialActivityFeed extends SpecialPage {
 
 	/**
 	 * A helper function for doing page-edits automatically to help bump things onto the ActivityFeed
-	 * or allow the automatic earning of achievements. 
+	 * or allow the automatic earning of achievements.
 	 *
 	 * To force a user to get an achievement on a devbox, connect to DEV-DB-A1 (not production!) wikicities
 	 * and run this pair of queries (with the user's user_id filled in).
@@ -147,7 +147,7 @@ class SpecialActivityFeed extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 		return true;
 	} // end attachAchievementToRc()
-	
+
 	/**
 	 * Hook that's called when a RecentChange is saved.  This prevents any problems from race-conditions between
 	 * the creation of a RecentChange and the awarding of its corresponding Achievement (they occur on the same
@@ -156,7 +156,7 @@ class SpecialActivityFeed extends SpecialPage {
 	public static function savingAnRc(&$rc){
 		global $wgAchievementToAddToRc, $wgWikiaForceAIAFdebug;
 		wfProfileIn( __METHOD__ );
-		
+
 		// If an achievement is spooled from earlier in the pageload, stuff it into this RecentChange.
 		Wikia::log(__METHOD__, "", "RecentChange has arrived.", $wgWikiaForceAIAFdebug);
 		if(!empty($wgAchievementToAddToRc)){
@@ -169,7 +169,7 @@ class SpecialActivityFeed extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 		return true;
 	} // end savingAnRc()
-	
+
 	/**
 	 * Called upon the successful save of a RecentChange.
 	 */
@@ -180,7 +180,7 @@ class SpecialActivityFeed extends SpecialPage {
 		// Mark the global indicating that an RC has been saved on this pageload (and which RC it was).
 		// Due to slave-lag, instead of storing the rc_id and looking it up (which didn't always work, even with a retry-loop), store entire RC.
 		$wgARecentChangeHasBeenSaved = $rc;
-		Wikia::log(__METHOD__, "", "RecentChange has been saved (presumably no achievement yet). RC: ".print_r($wgARecentChangeHasBeenSaved, true), $wgWikiaForceAIAFdebug);
+		wfDebugLog( "activityfeed", __METHOD__ . ": RecentChange has been saved (presumably no achievement yet). RC: ".print_r($wgARecentChangeHasBeenSaved, true), $wgWikiaForceAIAFdebug );
 
 		wfProfileOut( __METHOD__ );
 		return true;
