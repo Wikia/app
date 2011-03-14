@@ -8,7 +8,7 @@ GlobalModal = {
 		var modal = $.getUrlVar('modal');
 		if (modal) {
 			var f = GlobalModal['show'+modal];
-			console.log(f);
+			$().log(f);
 			if(typeof f === 'function') {
 				f();
 			}
@@ -22,7 +22,7 @@ GlobalModal = {
 			$('.upphotos').trigger('click');
 		}
 	},
-	
+
 	showAddPage: function() {
 		if (!wgUserName) {
 			$('.ajaxLogin').trigger('click');
@@ -30,7 +30,7 @@ GlobalModal = {
 			$('.createpage').trigger('click');
 		}
 	},
-	
+
 	showLogin: function() {
 		if (!wgUserName) {
 			$('.ajaxLogin').trigger('click');
