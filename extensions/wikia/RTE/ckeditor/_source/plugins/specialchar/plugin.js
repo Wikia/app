@@ -31,7 +31,7 @@ CKEDITOR.plugins.add( 'specialchar',
 							CKEDITOR.getUrl( plugin.path + 'lang/' + langCode + '.js' ),
 							function()
 							{
-								CKEDITOR.tools.extend( editor.lang.specialChar, plugin.langEntries[ langCode ] );
+								CKEDITOR.tools.extend( editor.lang.specialChar, plugin.lang[ langCode ] );
 								editor.openDialog( pluginName );
 							});
 				},

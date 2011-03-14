@@ -1122,9 +1122,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					editor.document.$.title = frameLabel;
 				});
 
-			// IE>=8 stricts mode doesn't have 'contentEditable' in effect
+			// IE8 stricts mode doesn't have 'contentEditable' in effect
 			// on element unless it has layout. (#5562)
-			if ( CKEDITOR.document.$.documentMode >= 8 )
+			if ( CKEDITOR.env.ie8Compat )
 			{
 				editor.addCss( 'html.CSS1Compat [contenteditable=false]{ min-height:0 !important;}' );
 
