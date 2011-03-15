@@ -26,10 +26,11 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 			}
 		}
 
-		// TODO: for RTE only
-		$this->mContent = preg_replace('#^.*@Packager\\.RemoveLine.*$#m', '', $this->mContent);
-
-		$this->mContent = str_replace("\xEF\xBB\xBF", '', $this->mContent);
+		// For RTE only
+		if($this->mOid == 'rte') {
+			$this->mContent = preg_replace('#^.*@Packager\\.RemoveLine.*$#m', '', $this->mContent);
+			$this->mContent = str_replace("\xEF\xBB\xBF", '', $this->mContent);
+		}
 
 	}
 

@@ -136,17 +136,25 @@ class RTE {
 
 		// used for load time reports
 		$wgOut->addInlineScript('var wgRTEStart = new Date();');
-
-		// load JS code
-		self::$devMode = $wgRequest->getVal('source', false);
-		if (!empty(self::$devMode)) {
-			// load development version
-			$wgOut->addScript("<script src=\"$wgExtensionsPath/wikia/RTE/ckeditor/ckeditor_source.js?$wgStyleVersion\" type=\"$wgJsMimeType\"></script>");
-			$wgOut->addScript("<script src=\"$wgExtensionsPath/wikia/RTE/js/RTE.js?$wgStyleVersion\" type=\"$wgJsMimeType\"></script>");
-		}
-		else {
-			// load minified version
-			$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgExtensionsPath/wikia/RTE/ckeditor/ckeditor.js?$wgStyleVersion\"></script>");
+		
+		global $wgUseAssetsManager;
+		if(!empty($wgUseAssetsManager)) {
+			$srcs = F::build('AssetsManager')->getGroupCommonURL('rte');
+			foreach($srcs as $src) {
+				$wgOut->addScript("<script src=\"$src\" type=\"$wgJsMimeType\"></script>");
+			}	
+		} else {	
+			// load JS code
+			self::$devMode = $wgRequest->getVal('source', false);
+			if (!empty(self::$devMode)) {
+				// load development version
+				$wgOut->addScript("<script src=\"$wgExtensionsPath/wikia/RTE/ckeditor/ckeditor_source.js?$wgStyleVersion\" type=\"$wgJsMimeType\"></script>");
+				$wgOut->addScript("<script src=\"$wgExtensionsPath/wikia/RTE/js/RTE.js?$wgStyleVersion\" type=\"$wgJsMimeType\"></script>");
+			}
+			else {
+				// load minified version
+				$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgExtensionsPath/wikia/RTE/ckeditor/ckeditor.js?$wgStyleVersion\"></script>");
+			}
 		}
 
 		$wgOut->addExtensionStyle("$wgExtensionsPath/wikia/RTE/css/RTE.css?$wgStyleVersion");
@@ -284,6 +292,8 @@ class RTE {
 		// this MUST point to local domain
 		$vars['RTELocalPath'] = $wgServer .  $wgScriptPath . '/extensions/wikia/RTE';
 
+		$vars['CKEDITOR_BASEPATH'] = $wgServer .  $wgScriptPath . '/extensions/wikia/RTE/ckeditor/';
+		
 		// link to raw version of MediaWiki:Common.css
 		global $wgSquidMaxage;
 		$query = wfArrayToCGI(array(

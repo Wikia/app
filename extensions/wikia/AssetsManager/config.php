@@ -2,5 +2,5 @@
 $config = array();
 
 $config['rte'] = array(
-	'#function_RTE_kurwa',
+	'#function_AssetsConfig::getRTEAssets',
 );

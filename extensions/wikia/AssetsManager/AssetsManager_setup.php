@@ -23,13 +23,17 @@ $wgExtensionFunctions[] = 'AssetsManagerEntrySetup';
 
 function AssetsManagerEntrySetup() {
 	$app = F::build('App');
-	F::setInstance('AssetsManager', new AssetsManager($app->getGlobal('wgAssetsManagerCommonHost'), $app->getGlobal('wgStyleVersion'), true, true /* $app->getGlobal('wgAllInOne'), $app->getGlobal('wgAllInOne') */));
+	F::setInstance('AssetsManager', new AssetsManager($app->getGlobal('wgCdnRootUrl'), $app->getGlobal('wgStyleVersion'), $app->getGlobal('wgAllInOne'), $app->getGlobal('wgAllInOne')));
 }
 
 function AssetsManagerEntryPoint() {
 	global $wgRequest, $wgAutoloadClasses;
 
 	$dir = dirname(__FILE__).'/';
+
+	// Temporary log
+	global $wgRequest;
+	error_log("Temp log - #1 - AssetsManagerEntryPoint: " . $wgRequest->getFullRequestURL());
 
 	$wgAutoloadClasses['AssetsManagerBaseBuilder'] = $dir.'builders/AssetsManagerBaseBuilder.class.php';
 	$wgAutoloadClasses['AssetsManagerOneBuilder'] = $dir.'builders/AssetsManagerOneBuilder.class.php';
