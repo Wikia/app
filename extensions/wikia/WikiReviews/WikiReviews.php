@@ -21,36 +21,52 @@ $wgHooks['BodyIndexAfterExecute'][] = 'wfWikiReviewsReplaceBodyTemplate';
 $wgHooks['HistoryDropdownIndexBeforeExecute'][] = 'wfWikiReviewsHideHistoryDropdown';
 $wgHooks['PageHeaderIndexAfterExecute'][] = 'wfWikiReviewsRemoveEditButton';
 
+function wfWikiReviewsTitleCheck() {
+	global $wgTitle;
+	return ( $wgTitle->getNamespace() == NS_MAIN )
+		&& !$wgTitle->equals( Title::newMainPage() );
+}
+
 // add CSS
 function wfWikiReviewsAddStyle( &$out, &$sk ) {
 	global $wgExtensionsPath, $wgStyleVersion;
-	$out->addExtensionStyle( "$wgExtensionsPath/wikia/WikiReviews/WikiReviews.css?$wgStyleVersion" );
+	if( wfWikiReviewsTitleCheck() ) {
+		$out->addExtensionStyle( "$wgExtensionsPath/wikia/WikiReviews/WikiReviews.css?$wgStyleVersion" );
+	}
 	return true;
 }
 
 // display comments before categories
 function wfWikiReviewsReplaceBodyTemplate( &$moduleObject, &$params ) {
-	$moduleObject->templatePath = dirname(__FILE__).'/templates/WikiReviewsBody_Index.php';
+	if( wfWikiReviewsTitleCheck() ) {
+		$moduleObject->templatePath = dirname(__FILE__).'/templates/WikiReviewsBody_Index.php';
+	}
 	return true;
 }
 
 // hide history dropdown
 function wfWikiReviewsHideHistoryDropdown( &$moduleObject, &$params ) {
-	$moduleObject->templatePath = dirname(__FILE__).'/templates/Empty.php';
-	return false;
+	if( wfWikiReviewsTitleCheck() ) {
+		$moduleObject->templatePath = dirname(__FILE__).'/templates/Empty.php';
+		return false;
+	} else {
+		return true;
+	}
 }
 
 // remove edit button
 function wfWikiReviewsRemoveEditButton( &$moduleObject, &$params ) {
-	wfLoadExtensionMessages('WikiReviews');
-	if( isset( $moduleObject->content_actions['delete'] ) ) {
-		$moduleObject->action = $moduleObject->content_actions['delete'];
-		$moduleObject->action['text'] = wfMsgHtml('wiki-reviews-delete');
-		$moduleObject->actionName = 'delete';
-	} else {
-		$moduleObject->action = null;
-		$moduleObject->actionName = '';
+	if( wfWikiReviewsTitleCheck() ) {
+		wfLoadExtensionMessages('WikiReviews');
+		if( isset( $moduleObject->content_actions['delete'] ) ) {
+			$moduleObject->action = $moduleObject->content_actions['delete'];
+			$moduleObject->action['text'] = wfMsgHtml('wiki-reviews-delete');
+			$moduleObject->actionName = 'delete';
+		} else {
+			$moduleObject->action = null;
+			$moduleObject->actionName = '';
+		}
+		$moduleObject->dropdown = array();
 	}
-	$moduleObject->dropdown = array();
 	return true;
 }
