@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 public class EditPageLayoutTest extends BaseTest {
 
-	@Test(groups={"oasis", "CI"})
+	//@Test(groups={"oasis", "CI"})
 	public void testEditPageLayout() throws Exception {
 		// go to random article
 		session().open("index.php?title=Special:Random");
