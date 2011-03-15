@@ -49,17 +49,6 @@ class MultiMoveTask extends BatchTask {
 			return true;
 		}
 		
-		$oOldArticle = new Article( $oOldTitle );
-		if( !is_object($oOldArticle) ) {
-			$this->log("Article " . @$data['page'] . " is invalid - task was terminated ");
-			return true;
-		}		
-		
-		if( !$oOldArticle->exists() ) {
-			$this->log("Page " . @$data['page'] . " doesn't exist - task was terminated ");
-			return true;
-		}
-		
 		$this->namespace = $oOldTitle->getNamespace();
 		$this->title = str_replace( ' ', '_', $oOldTitle->getText() );
 		$resultTitle = $oOldTitle->getFullText();
@@ -70,10 +59,7 @@ class MultiMoveTask extends BatchTask {
 			$this->log("Page to move: " . @$data['newpage'] . " is invalid - task was terminated ");
 			return true;
 		}
-		if( $oNewTitle->exists() ) {
-			$this->log("Page to move: " . @$data['newpage'] . " exists - task was terminated ");
-			return true;
-		}
+
 		$this->newnamespace = $oNewTitle->getNamespace();
 		$this->newtitle = str_replace( ' ', '_', $oNewTitle->getText() );
 		$newResultTitle = $oNewTitle->getFullText();
