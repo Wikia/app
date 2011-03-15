@@ -278,23 +278,4 @@ EOT
 		}
 		$wgOut->addWikimsg('unsubscribe-working-done');
 	}
-
-	static public function isEmailConfirmedHook( &$user, &$confirmed ) {
-		#if this opt is set, fake their conf status to OFF, and stop here.	
-		if ( 
-			$user->getBoolOption( 'enotiffollowedpages') ||
-			$user->getBoolOption( 'enotifusertalkpages') ||
-			$user->getBoolOption( 'enotifwatchlistpages' ) ||
-			$user->getBoolOption( 'enotifminoredits' ) ||
-			$user->getBoolOption( 'watchlistdigest' ) ||
-			$user->getBoolOption( 'marketingallowed' ) ||
-			$user->getBoolOption( 'disablemail' ) 
-		) {
-			$confirmed = false;
-			return false;
-		}
-
-		#true, because it a hook, keep looping other hooks
-		return true;
-	}
 }

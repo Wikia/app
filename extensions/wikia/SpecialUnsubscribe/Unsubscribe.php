@@ -34,5 +34,3 @@ $wgSpecialPages['Unsubscribe'] = 'UnsubscribePage';
 // Special page group for MW 1.13+
 $wgSpecialPageGroups['Unsubscribe'] = 'users';
 
-// BugID: 2763 This hook is causing mail notifications to fail, and I don't think it is needed any more
-//$wgHooks['EmailConfirmed'][] = 'UnsubscribePage::isEmailConfirmedHook';
