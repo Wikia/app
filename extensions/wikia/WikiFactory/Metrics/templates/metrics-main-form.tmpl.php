@@ -59,7 +59,7 @@ $(document).ready(function() {
 			{ "bVisible": false,  "aTargets": [ 2 ], "bSortable" : false },
 			{ "fnRender": function ( oObj ) {
 				var active = ( !oObj.aData[1] ) ? ' style="color:#FF0000" ' : '';
-				var row = '<a target="new" href="' + oObj.aData[4] + '" ' + active + '>' + oObj.aData[3] + '</a>';
+				var row = '<a target="_blank" href="' + oObj.aData[4] + '" ' + active + '>' + oObj.aData[3] + '</a>';
 				return row;
 				},
 				"bUseRendered": true,
