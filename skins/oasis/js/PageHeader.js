@@ -94,23 +94,3 @@ var PageHeader = {
 		});
 	}
 };
-
-
-
-
-$(function() {
-	ProfileSyncButton.init();
-});
-
-var ProfileSyncButton = {
-	init: function() {
-		ProfileSyncButton.attachEventListeners();
-	},
-	
-	attachEventListeners: function() {
-		$('a[data-id=syncprofile]').click(function() {
-			window.location.href = $(this).attr('data-href');
-			return false;
-		});
-	}
-}

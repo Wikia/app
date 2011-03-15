@@ -130,7 +130,6 @@ $messages['en'] = array(
     'prefs-fbconnect-status-prefstext' => 'Status',
 
 	'fbconnect-connect-msg' => "Congratulations! Your Wikia and Facebook accounts are now connected. <br/> Check your <a href='$1'>preferences</a> to control which events appear in Facebook feed.",
-		'fbconnect-connect-msg-sync-profile' => "Congratulations! Your Wikia and Facebook accounts are now connected. <br/> Check your <a href='$1'>preferences</a> to control which events appear in Facebook feed. Sync your <a href='$2'>Wikia profile</a> with Facebook.",	
     'fbconnect-connect-error-msg' => "We're sorry, we couldn't complete your connection without permission to post to your Facebook account. After setup you have [[w:c:help:Help:Facebook_Connect#Sharing_with_your_Facebook_activity_feed|full control]] of what's posted to your news feed. Please try again.",
 
 	'fbconnect-disconnect-link' => "You can also <a id='fbConnectDisconnect' href='#'> disconnect your Wikia account from Facebook.</a> You will able continue using your Wikia account as normal, with your history (edits, points, achievements ) intact.",

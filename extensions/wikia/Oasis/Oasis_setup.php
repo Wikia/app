@@ -50,8 +50,6 @@ function wfOasisSetup() {
 
 	$wgHooks['UploadVerification'][] = 'Oasis_UploadVerification';
 
-	$wgHooks['ArticleViewHeader'][]  = 'UserPagesHeaderModule::saveFacebookConnectProfile';
-
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
