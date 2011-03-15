@@ -990,7 +990,7 @@ function getArtist($artist){
 		}
 	}
 
-	$artist = rawurldecode($artist);
+	$artist = trim(rawurldecode($artist));
 	$isUTF = utf8_compliant("$artist");
 	$title = lw_getTitle($artist, '', (!$isUTF)); // if isUTF, skips the utf8 encoding (that is only for the values from the db... from the URL they should be fine already).
 
@@ -1859,6 +1859,8 @@ function lw_fLetter($input){
 // If allowAllCaps is true, the ARTIST name will be kept as all-capitals if that is how it was passed in.
 ////
 function lw_getTitle($artist, $song='', $applyUnicode=true, $allowAllCaps=true){
+	$artist = trim($artist);
+	$song = trim($song);
 	if(!$allowAllCaps){
 		$artist = strtolower($artist); // if left as all caps, ucwords won't change it
 	}
