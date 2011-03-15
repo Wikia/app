@@ -216,6 +216,7 @@ class ArticleCommentsAjax {
 			$parts = explode( '/', $wgTitle->getText() );
 			$parentTitle = Title::newFromText($parts[0]);
 			if ($parentTitle) {
+				$parentTitle->invalidateCache();
 				$parentTitle->purgeSquid();
 			}
 			
