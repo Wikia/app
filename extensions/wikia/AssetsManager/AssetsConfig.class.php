@@ -10,6 +10,34 @@
 
 class AssetsConfig {
 	
+	public static function getRTEAssets($combine) {
+		global $IP;
+
+		$files = array();
+		
+		if($combine) {
+			$input = file_get_contents($IP . '/extensions/wikia/RTE/ckeditor/ckeditor.wikia.pack');
+			$input = substr($input, strpos($input, 'files :') + 7);
+			$input = trim($input, " \n\t[]{}");
+			
+			// CK core files
+			$files[] = 'extensions/wikia/RTE/ckeditor/_source/core/ckeditor_base.js';
+			
+			// get all *.js files
+			if (preg_match_all('%[^/]\'([^\']+).js%', $input, $matches, PREG_SET_ORDER)) {
+				foreach($matches as $match) {
+					$name = $match[1] . '.js';
+					$files[] = 'extensions/wikia/RTE/ckeditor/' . $name;
+				}
+			}
+		} else {
+			$files[] = 'extensions/wikia/RTE/ckeditor/ckeditor_source.js';
+			$files[] = 'extensions/wikia/RTE/js/RTE.js';
+		}
+		
+		return $files;		
+	}
+	
 	private /* array */ $mConfig;
 	
 	/**

@@ -25,29 +25,42 @@ class AssetsManagerBaseBuilder {
 	}
 	
 	public function getContent() {
-		global $IP;
+		global $IP, $wgRequest;
 
 		if(!empty($this->mContentType) && (!isset($this->mParams['minify']) || $this->mParams['minify'] == true)) {
-			$tempInFile = tempnam(sys_get_temp_dir(), 'AssetsManager');
-			$tempOutFile = tempnam(sys_get_temp_dir(), 'AssetsManager');
+			
+			$tempInFile = tempnam(sys_get_temp_dir(), 'AMIn');
+			$tempOutFile = tempnam(sys_get_temp_dir(), 'AMOut');
+			
 			file_put_contents($tempInFile, $this->mContent);
 			
 			$start = microtime(true);
 			
 			if($this->mContentType == AssetsManagerBaseBuilder::TYPE_JS) {
-//				shell_exec("java -jar {$IP}/extensions/wikia/AssetsManager/compiler.jar --compilation_level SIMPLE_OPTIMIZATIONS --js {$tempInFile} --js_output_file {$tempOutFile}");
-				shell_exec("java -jar {$IP}/extensions/wikia/AssetsManager/yuicompressor-2.4.2/build/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile} ");
+				shell_exec("java -jar {$IP}/lib/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile}");
 			} else {
-				shell_exec("java -jar {$IP}/extensions/wikia/AssetsManager/yuicompressor-2.4.2/build/yuicompressor-2.4.2.jar --type css -o {$tempOutFile} {$tempInFile} ");
+				shell_exec("java -jar {$IP}/lib/yuicompressor-2.4.2.jar --type css -o {$tempOutFile} {$tempInFile}");
 			}
 			
 			$stop = microtime(true);
 			
 			$total = $stop - $start;
 			
-			$this->mContent = "/* Minify took {$total} */\n\n\n";
+			$out = file_get_contents($tempOutFile);
 			
-			$this->mContent .= file_get_contents($tempOutFile);
+			if($total > 5) {
+				// Temporary log
+				error_log("Temp log - #3 - Minifier took over 5 seconds: " . $wgRequest->getFullRequestURL());
+			}
+
+			if(!empty($out)) {
+				$this->mContent = "/* Minify took {$total} */\n\n";
+				$this->mContent .= $out;
+			} else {
+				// Temporary log
+				error_log("Temp log - #2 - Empty output from minifier: " . $wgRequest->getFullRequestURL());
+			}
+			
 			unlink($tempInFile);
 			unlink($tempOutFile);
 		}
