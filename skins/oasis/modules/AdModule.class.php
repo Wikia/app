@@ -31,7 +31,7 @@ class AdModule extends Module {
 		if(ArticleAdLogic::isMainPage()) {
 			// main page
 			self::$config['HOME_TOP_LEADERBOARD'] = true;
-			//self::$config['INVISIBLE_1'] = true;
+			self::$config['INVISIBLE_1'] = true;
 			self::$config['INVISIBLE_2'] = true;
 			self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 			self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
@@ -50,7 +50,7 @@ class AdModule extends Module {
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 				self::$config['MIDDLE_RIGHT_BOXAD'] = true;
-				//self::$config['INVISIBLE_1'] = true;
+				self::$config['INVISIBLE_1'] = true;
 				self::$config['INVISIBLE_2'] = true;
 				self::$config['LEFT_SKYSCRAPER_2'] = true;
 				self::$config['LEFT_SKYSCRAPER_3'] = true;
