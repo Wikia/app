@@ -65,7 +65,6 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 
 	// The filename gets impractically long... so we'll hash the idString in the filename.
 	$tmpFile = "$TMP_DIR/$nameOfFile"."_$requestedStyleVersion"."_".md5($idString).".css";
-	$tmpFile = "$TMP_DIR/$nameOfFile.css";
 
 	$cssContent = "";
 	if(!securityHashIsOkay($requestedStyleVersion, $sassParamsForHashChecking, $hashFromUrl)){
@@ -74,7 +73,7 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
 	} else {
 		// Use memcache to see if we should process now, used stored value, or wait and check back (because another process is already working on it).
 		$memcKey = wfMemcKey($MEMC_KEY_PREFIX, $nameOfFile, $requestedStyleVersion, md5($idString));
-//		$cachedResult = $wgMemc->get($memcKey);
+		$cachedResult = $wgMemc->get($memcKey);
 		if(empty($cachedResult)){
 			// Add a placeholder to memcached so that other processes with the same parameters just wait for this result instead of generating their own.
 			$wgMemc->set($memcKey, $CHECK_BACK_LATER_MESSAGE, $CHECK_BACK_CACHE_DURATION);
@@ -147,7 +146,7 @@ function runSass($inputFile, $tmpFile, $sassParams, &$errorStr){
 	wfProfileIn( __METHOD__ );
 
 	// Pass the values from the query-string into the sass script (results will go in a tmp file).
-	$commandLine = escapeshellcmd("$FULL_SASS_PATH $IP/$inputFile $tmpFile --cache-location /tmp/  --style $OUTPUT_STYLE -r $RUBY_MODULE_SCRIPT $sassParams")." 2>&1";
+	$commandLine = escapeshellcmd("$FULL_SASS_PATH $IP/$inputFile $tmpFile --style $OUTPUT_STYLE -r $RUBY_MODULE_SCRIPT $sassParams")." 2>&1";
 
 	$sassResult = `$commandLine`;
 	if($sassResult != ""){
