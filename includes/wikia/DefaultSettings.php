@@ -783,4 +783,4 @@ $wgEzApiModules = array();
  */
 $wgFogbugzAPIConfig = array();
 
-$wgAssetsManagerQuery = '/index.php?action=ajax&rs=AssetsManagerEntryPoint&type=%1$s&oid=%2$s&params=%3$s&cb=%4$d';
+$wgAssetsManagerQuery = '/_am_/%4$d/%1$s/%3$s/%2$s';
