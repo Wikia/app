@@ -280,7 +280,6 @@ class NotificationsModule extends Module {
 		wfProfileIn(__METHOD__);
 		global $wgRequest, $wgUser;
 
-
 		// FBConnect messages
 		if (Wikia::isOasis() && class_exists('FBConnectHooks')) {
 			wfLoadExtensionMessages('FBConnect');
@@ -293,15 +292,7 @@ class NotificationsModule extends Module {
 				case 1:
 					$id = FBConnectDB::getFacebookIDs($wgUser, DB_MASTER);
 					if (count($id) > 0) {
-						
-						global $wgEnableFacebookSync;
-						if ($wgEnableFacebookSync == true) {
-							$userURL = AvatarService::getUrl($wgUser->mName);
-							self::addConfirmation(wfMsg('fbconnect-connect-msg-sync-profile', $preferencesUrl, $userURL));	
-						}
-						else {
-							self::addConfirmation(wfMsg('fbconnect-connect-msg', $preferencesUrl));	
-						}
+						self::addConfirmation(wfMsg('fbconnect-connect-msg', $preferencesUrl));
 					}
 					break;
 

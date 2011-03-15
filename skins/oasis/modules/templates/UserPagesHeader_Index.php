@@ -1,11 +1,5 @@
 <div id="WikiaUserPagesHeader" class="WikiaUserPagesHeader">
 
-
-<?php if ($fbAccessRequestURL) { ?>
-<a data-href="<?= $fbAccessRequestURL?>" data-id="syncprofile" class="wikia-button sync-profile-button" accesskey="s">
-	<img src="<?= $wgStylePath ?>/oasis/images/icon_fb_sync.png" class="popout"><?=wfMsg('fb-sync-button')?></a>
-<?php } ?>
-
 <?php if ( empty( $isUserProfilePageExt ) ) { ?>
 	<ul class="wikia-avatar<?= !empty($avatarMenu) ? ' wikia-avatar-menu' : '' ?>">
 		<li>
@@ -48,7 +42,6 @@
 	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
 	<?= wfRenderModule('CommentsLikes', 'Index', array('likes' => $likes)); ?>
 
-
 	<?php
 		if (!empty($stats)) {
 	?>
@@ -62,11 +55,6 @@
 	<?= wfRenderModule( 'UserProfilePage', 'Masthead', array( 'userName' => $userName, 'userPage' => $userPage, 'avatarMenu' => $avatarMenu, 'displayTitle' => $displaytitle, 'title' => $title, 'actionButton' => $actionButton, 'actionImage' => $actionImage, 'actionName' => $actionName, 'actionMenu' => $actionMenu, 'likes' => $likes, 'stats' => $stats ) ); ?>
 	<!-- UserProfilePage Extension /END -->
 <?php } // isUserProfilePageExt ?>
-
-
-
-
-
 
 	<div class="tabs-container">
 		<ul class="tabs">
@@ -94,8 +82,3 @@
 	}
 ?>
 	<a name="EditPage"></a>
-	
-	
-<?php if ($fbData) {?>
-	<?= $fbData ?>
-<?php } ?>
