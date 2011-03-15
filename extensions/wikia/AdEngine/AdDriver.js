@@ -305,7 +305,6 @@ AdDriver.canCallLiftium = function(slotname) {
 		case 'TOP_RIGHT_BUTTON':
 		case 'HOME_INVISIBLE_TOP':
 		case 'INVISIBLE_TOP':
-		case 'INVISIBLE_1':
 		case 'MIDDLE_RIGHT_BOXAD':
 			return false;
 			break;

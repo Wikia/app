@@ -39,7 +39,6 @@ AdConfig = {
 			case 'HOME_TOP_LEADERBOARD':
 			case 'HOME_TOP_RIGHT_BOXAD':
 			case 'HOME_TOP_RIGHT_BUTTON':
-			case 'INVISIBLE_1':		// footer
 			case 'INVISIBLE_TOP':	// skin
 			case 'MIDDLE_RIGHT_BOXAD':
 			case 'TEST_HOME_TOP_RIGHT_BOXAD':
