@@ -7,7 +7,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  * @fileOverview Defines the {@link CKEDITOR.env} object, which constains
  *		environment and browser information.
  */
-
 if ( !CKEDITOR.env )
 {
 	/**
@@ -116,9 +115,13 @@ if ( !CKEDITOR.env )
 		 *     alert( "I'm riding a gecko!" );
 		 */
 		env.gecko = ( navigator.product == 'Gecko' && !env.webkit && !env.opera );
+		
+		if(!env.ie) {
+			eval('env.ie  = /*@cc_on!@*/false;');	
+		}
 
 		var version = 0;
-
+		
 		// Internet Explorer 6.0+
 		if ( env.ie )
 		{
@@ -224,6 +227,8 @@ if ( !CKEDITOR.env )
 		 * if ( CKEDITOR.env.isCompatible )
 		 *     alert( "Your browser is pretty cool!" );
 		 */
+		$().log( env.ie );
+		
 		env.isCompatible =
 			!env.mobile && (
 			( env.ie && version >= 6 ) ||
