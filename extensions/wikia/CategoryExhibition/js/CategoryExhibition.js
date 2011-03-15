@@ -109,7 +109,7 @@ var CategoryExhibition = {
 		var UrlVars = $.getUrlVars();
 		var data = {
 			action: 'ajax',
-			articleId: wgArticleId,
+			articleId: wgTitle,
 			method: axMethod,
 			rs: 'CategoryExhibitionAjax',
 			page: clickedObj.attr('data-page'),
