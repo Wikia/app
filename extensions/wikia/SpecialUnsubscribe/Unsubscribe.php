@@ -34,3 +34,4 @@ $wgSpecialPages['Unsubscribe'] = 'UnsubscribePage';
 // Special page group for MW 1.13+
 $wgSpecialPageGroups['Unsubscribe'] = 'users';
 
+$wgHooks['EmailConfirmed'][] = 'UnsubscribePage::isEmailConfirmedHook';
