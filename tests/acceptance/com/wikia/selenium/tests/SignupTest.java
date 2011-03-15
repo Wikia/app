@@ -24,11 +24,19 @@ public class SignupTest extends BaseTest {
 	}
 
 	@Test(groups={"CI"})
-	public void testReLogin() throws Exception {
+	public void testReLoginPart1() throws Exception {
 		login();
 		logout();
+	}
+
+	@Test(groups={"CI"},dependsOnMethods={"testReLoginPart1"})
+	public void testReLoginPart2() throws Exception {
 		loginAsStaff();
 		logout();
+	}
+
+	@Test(groups={"CI"},dependsOnMethods={"testReLoginPart2"})
+	public void testReLoginPart3() throws Exception {
 		loginAsSysop();
 		logout();
 	}

@@ -10,7 +10,7 @@ public class ImageOneBoxForSearchTest extends BaseTest {
 	public void testImageSearchResults() throws Exception {
 		session().open("/");
 		waitForElement("WikiaSearch", this.getTimeout()); 
-		session().type("search", "logo logo");
+		session().type("search", "test test");
 		session().click("//form[@id='WikiaSearch']//button/img[contains(@class, 'search')]");
 
 		session().waitForPageToLoad(this.getTimeout());

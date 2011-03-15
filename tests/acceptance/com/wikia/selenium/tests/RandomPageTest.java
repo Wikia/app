@@ -10,6 +10,7 @@ public class RandomPageTest extends BaseTest {
 	public void testHitRandom() throws Exception {
 		for (int i = 1; i <= 5; i++) {
 			session().open("index.php?title=Special:Random");
+			session().waitForPageToLoad(this.getTimeout());
 			assertTrue(session().isTextPresent(isOasis() ? "Wiki Activity" : "Latest activity"));
 		}
 	}
