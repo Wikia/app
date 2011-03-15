@@ -9,9 +9,6 @@ EOT;
         exit( 1 );
 }
 
-// WikiAnswers is required
-$wgEnableWikiAnswers = true;
-
 $dir = dirname(__FILE__) . '/';
 
 $wgExtensionMessagesFiles['WikiReviews'] = $dir . 'WikiReviews.i18n.php';
