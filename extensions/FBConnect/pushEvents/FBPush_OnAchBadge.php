@@ -29,7 +29,7 @@ class FBPush_OnAchBadge extends FBConnectPushEvent {
 		wfProfileOut(__METHOD__);
 	}
 	
-	public static function onAchievementsBadgesGiven(&$user, &$badg ){
+	public static function onAchievementsBadgesGiven($user, &$badg ){
 		global $wgContentNamespaces, $wgSitename, $wgUser, $wgServer;
 		wfProfileIn(__METHOD__);
 
