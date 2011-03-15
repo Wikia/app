@@ -558,7 +558,24 @@ var initTracker = function() {
 			$.tracker.byStr('pageheader/post');
 		});
 	}
+	
+	// sync profile with Facebook
+	$('#FacebookProfileSyncSave').trackClick('facebookprofilesync/save');
 
+	$('#FacebookProfileSyncRemoveName').trackClick('facebookprofilesync/remove/name');
+	$('#FacebookProfileSyncRemoveBirthday').trackClick('facebookprofilesync/remove/birthday');
+	$('#FacebookProfileSyncRemoveHometown').trackClick('facebookprofilesync/remove/hometown');
+	$('#FacebookProfileSyncRemoveLocation').trackClick('facebookprofilesync/remove/location');
+	$('#FacebookProfileSyncRemoveEducation').trackClick('facebookprofilesync/remove/education');
+	$('#FacebookProfileSyncRemoveGender').trackClick('facebookprofilesync/remove/gender');
+	$('#FacebookProfileSyncRemoveReligion').trackClick('facebookprofilesync/remove/religion');
+	$('#FacebookProfileSyncRemovePolitical').trackClick('facebookprofilesync/remove/political');
+	$('#FacebookProfileSyncRemoveWebsite').trackClick('facebookprofilesync/remove/website');
+	$('#FacebookProfileSyncRemoveInterests').trackClick('facebookprofilesync/remove/interests');
+	
+	
+	
+	
 	// BugId:2435 - track MW editor view
 	if (window.wgIsEditPage && (typeof RTE == 'undefined')) {
 		$.tracker.byStr('mweditor/init');

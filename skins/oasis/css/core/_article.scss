@@ -338,6 +338,24 @@
 
 	}
 
+	.fbconnect-synced-profile {
+		border-bottom: solid 1px $color-page-border;
+		margin-bottom: 5px;
+		padding-bottom: 5px;
+		
+		th {
+			width: 25%;
+			text-align: right;
+			padding-right: 10px;
+			vertical-align: top;
+		}
+		
+		td {
+			margin-left: 8px;
+			padding-right: 10px;
+		}
+	}
+
 	.wikia-infobox {
 		$cell-width: 225px;
 
