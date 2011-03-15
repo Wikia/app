@@ -21,6 +21,11 @@ class ProtectsiteForm extends SpecialPage
 			return;
 		}
 
+		if ( !$this->userCanExecute( $wgUser ) ) {
+			$this->displayRestrictionError();
+			return;
+		}
+
 		# If user is blocked, s/he doesn't need to access this page
 		if ( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
