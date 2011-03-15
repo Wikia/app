@@ -41,9 +41,9 @@ class CategoryExhibitionAjax {
 	static private function getSection( $class ){
 		global $wgRequest, $wgUser, $wgTitle;
 		
-		$pageId = (int)$wgRequest->getVal('articleId');
-		$iPaginatorPosition = (int)$wgRequest->getVal('page');
-		$oCategoryTitle = Title::newFromID( $pageId );
+		$pageText = $wgRequest->getVal( 'articleId' );
+		$iPaginatorPosition = (int)$wgRequest->getVal( 'page' );
+		$oCategoryTitle = Title::newFromText( $pageText, NS_CATEGORY );
 		$oSection = new $class( $oCategoryTitle );
 		$sUrl = $oCategoryTitle->getFullURL();
 		$result = $oSection->getSectionAxHTML( $iPaginatorPosition, $sUrl );
@@ -57,25 +57,25 @@ class CategoryExhibitionAjax {
 	 */
 
 	public static function axGetVideoPlayer() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		global $wgTitle;
 
 		$video = new VideoPage($wgTitle);
 		$video->load();
 
 		// get default video dimensions
-		$dimensions = explode('x', $video->getTextRatio());
-		$width = intval($dimensions[0]);
-		$height = intval($dimensions[1]);
+		$dimensions = explode( 'x', $video->getTextRatio() );
+		$width = intval( $dimensions[0] );
+		$height = intval( $dimensions[1] );
 
 		$return = array(
 			'width' => $width,
 			'height' => $height,
-			'html' => $video->getEmbedCode($width, true),
+			'html' => $video->getEmbedCode( $width, true ),
 			'title' => $wgTitle->getText(),
 		);
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $return;
 	}
 }

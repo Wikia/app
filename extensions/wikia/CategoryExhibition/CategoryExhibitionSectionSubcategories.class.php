@@ -97,12 +97,14 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 				$imageServing = new imageServing( array($item['page_id']), $this->thumbWidth , array( "w" => $this->thumbWidth, "h" => $this->thumbHeight ) );
 				$itemTitle = Title::newFromID($item['page_id']);
 				$image = wfFindFile( $itemTitle );
-				$imageSrc = wfReplaceImageServer(
-					$image->getThumbUrl(
-						$imageServing->getCut($image->width,$image->height)."-".$image->getName()
-					)
-				);
-				return array('imageUrl' => (string)$imageSrc, 'snippetText' => '');
+				if ( !empty( $image ) ){
+					$imageSrc = wfReplaceImageServer(
+						$image->getThumbUrl(
+							$imageServing->getCut($image->width,$image->height)."-".$image->getName()
+						)
+					);
+					return array('imageUrl' => (string)$imageSrc, 'snippetText' => '');
+				}
 			}
 		}
 
