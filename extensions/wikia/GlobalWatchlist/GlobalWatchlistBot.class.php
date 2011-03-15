@@ -36,14 +36,14 @@ class GlobalWatchlistBot {
 	public function getGlobalWatchlisters( $sFlag = 'watchlistdigest' ) {
 		$aUsers = array();
 	
-		$sWhereClause = "";
+		$aWhereClause = array( "user_email_authenticated IS NOT NULL" );
 		if ( count( $this->mUsers ) ) {
 			// get only users passed by --users argument
 			$sUserNames = "";
 			foreach ( $this->mUsers as $sUserName ) {
 				$sUserNames .= ( $sUserNames ? "," : "" ) . "'" . addslashes( $sUserName ) . "'";
 			}
-			$sWhereClause = "user_name IN ($sUserNames)";
+			$aWhereClause[] = "user_name IN ($sUserNames)";
 		}
 
 		global $wgWikiaCentralAuthDatabase;
@@ -58,10 +58,7 @@ class GlobalWatchlistBot {
 		$oResource = $dbr->select(
 			$userTbl,
 			array( "user_id", "user_name", "user_email" ),
-			array(
-				"user_email_authenticated IS NOT NULL",
-				$sWhereClause
-			),
+			$aWhereClause,
 			__METHOD__,
 			array( "ORDER BY" => "user_id" )
 		);
