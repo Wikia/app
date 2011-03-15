@@ -441,6 +441,7 @@ $wgHooks['ComposeMail']              [] = "Wikia::ComposeMail";
 $wgHooks['SoftwareInfo']             [] = "Wikia::softwareInfo";
 $wgHooks['AddNewAccount']            [] = "Wikia::ignoreUser";
 $wgHooks['WikiFactory::execute']     [] = "Wikia::switchDBToLightMode";
+$wgHooks['EmailConfirmed']           [] = "Wikia::isEmailConfirmedHook";
 //$wgHooks['IsTrustedProxy']           [] = "Wikia::trustInternalIps";
 //$wgHooks['RawPageViewBeforeOutput']  [] = 'Wikia::rawPageViewBeforeOutput';
 
@@ -1681,5 +1682,20 @@ class Wikia {
 			$headers = $_SERVER;
 		}
 		return $headers;	
+	}
+	
+	static public function isEmailConfirmedHook( &$user, &$confirmed ) { 
+		# Hook moved from SpecialUnsubscribe extension
+		#if this opt is set, fake their conf status to OFF, and stop here. 
+		$result = true;
+		/*
+		 * this depends on EVERYONE checking isConfirmed status before sending mail. 
+		 * this depends on EVERYONE using the user->isEmailConfirmed() function to do so, as it calls this hook. 
+		 */ 
+		if( $user->getBoolOption('unsubscribed') ) {
+			$confirmed = false; 
+			$result = false;
+		}
+		return $result; 
 	}
 }

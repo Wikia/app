@@ -278,18 +278,4 @@ EOT
 		}
 		$wgOut->addWikimsg('unsubscribe-working-done');
 	}
-	
-	static public function isEmailConfirmedHook( &$user, &$confirmed ) { 
-		#if this opt is set, fake their conf status to OFF, and stop here. 
-		$result = true;
-		/*
-		 * this depends on EVERYONE checking isConfirmed status before sending mail. 
-		 * this depends on EVERYONE using the user->isEmailConfirmed() function to do so, as it calls this hook. 
-		 */ 
-		if( $user->getBoolOption('unsubscribed') ) {
-			$confirmed = false; 
-			$result = false;
-		}
-		return $result; 
-	}
 }
