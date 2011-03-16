@@ -104,27 +104,23 @@ class ContactForm extends SpecialPage {
 
 
 		//start wikia debug info, sent only to the internal email, not cc'd
-		$info = array();
-		$info[] = 'wkID: ' . $wgCityId;
-		$info[] = 'wkLang: ' . $wgLanguageCode;
-
-		#global $wgAdminSkin, $wgDefaultSkin, $wgDefaultTheme;
-		#$nominalSkin = ( !empty($wgAdminSkin) )?( $wgAdminSkin ):( ( !empty($wgDefaultTheme) )?("{$wgDefaultSkin}-{$wgDefaultTheme}"):($wgDefaultSkin) );
-		#$info[] = 'Skin: ' . $nominalSkin;
+		$items = array();
+		$items[] = 'wkID: ' . $wgCityId;
+		$items[] = 'wkLang: ' . $wgLanguageCode;
 
 		//always add the IP
-		$info[] = 'IP:' . wfGetIP();
+		$items[] = 'IP:' . wfGetIP();
 		
 		//if they are logged in, add the ID(and name) and their lang
 		$uid = $wgUser->getID();
 		if( !empty($uid) ) {
-			$info[] = 'uID: ' . $uid . " (User:". $wgUser->getName() .")";
-			$info[] = 'uLang: ' . $wgUser->getOption('language');
+			$items[] = 'uID: ' . $uid . " (User:". $wgUser->getName() .")";
+			$items[] = 'uLang: ' . $wgUser->getOption('language');
 		}
 
 		//smush it all together
 		$info = $this->mBrowser . "\n";
-		$info .= implode("; ", $info) . "\n";
+		$info .= implode("; ", $items) . "\n";
 		//end wikia debug data
 
 		$body = "\n{$this->mProblemDesc}\n\n----\n" . $m_shared . $info;
