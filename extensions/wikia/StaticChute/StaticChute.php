@@ -119,7 +119,7 @@ class StaticChute {
 			'common/jquery/jquery.dump.js',
 			'common/jquery/jquery.getcss.js',
 			'common/jquery/jquery.wikia.js',
-			'common/jquery/jquery-ui-1.7.2.custom.js',
+			'common/jquery/jquery-ui-1.8.10.custom.js',
 			'common/jquery/jquery.timeago.js',
 
 			'common/ajax.js',
@@ -162,7 +162,7 @@ class StaticChute {
 			'common/jquery/jquery.dump.js',
 			'common/jquery/jquery.getcss.js',
 			'common/jquery/jquery.wikia.js',
-			'common/jquery/jquery-ui-1.7.2.custom.js',
+			'common/jquery/jquery-ui-1.8.10.custom.js',
 			'common/jquery/jquery.timeago.js',
 
 			'common/ajax.js',
@@ -204,7 +204,7 @@ class StaticChute {
 			'common/jquery/jquery.dump.js',
 			'common/jquery/jquery.getcss.js',
 			'common/jquery/jquery.wikia.js',
-			'common/jquery/jquery-ui-1.7.2.custom.js',
+			'common/jquery/jquery-ui-1.8.10.custom.js',
 			'common/jquery/jquery.timeago.js',
 
 			'common/ajax.js',
