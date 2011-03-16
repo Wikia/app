@@ -252,7 +252,7 @@ $.loadYUI = function(callback) {
 // load various jQuery libraries (if not yet loaded)
 $.loadJQueryUI = function(callback) {
 	$.loadLibrary('jQueryUI',
-		stylepath + '/common/jquery/jquery-ui-1.7.2.custom.js?' + wgStyleVersion,
+		stylepath + '/common/jquery/jquery-ui-1.8.10.custom.js?' + wgStyleVersion,
 		typeof jQuery.ui,
 		callback
 	);
