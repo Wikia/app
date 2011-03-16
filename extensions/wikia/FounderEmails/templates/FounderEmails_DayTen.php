@@ -141,9 +141,9 @@
 </tr>
 <tr>
 <td align="center" style="font-size:11px;color:#3a3a3a;line-height:16px">
-<?= FounderEmailsModule::localMsg('founderemails-email-10-day-footer-line1') ?>
+<?= FounderEmailsModule::localMsg('founderemails-email-footer-line1') ?>
 <br>
-<?= FounderEmailsModule::localMsg('founderemails-email-10-day-footer-line2') ?>
+<?= FounderEmailsModule::localMsg('founderemails-email-footer-line2') ?>
 </td>
 </tr>
 <tr>
