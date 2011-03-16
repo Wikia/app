@@ -105,7 +105,6 @@ class ContactForm extends SpecialPage {
 
 		//start wikia debug info, sent only to the internal email, not cc'd
 		$info = array();
-		$info[] = '' . $this->mBrowser . "\n";
 		$info[] = 'wkID: ' . $wgCityId;
 		$info[] = 'wkLang: ' . $wgLanguageCode;
 
@@ -124,10 +123,11 @@ class ContactForm extends SpecialPage {
 		}
 
 		//smush it all together
-		$info = implode("; ", $info) . "\n";
+		$info = $this->mBrowser . "\n";
+		$info .= implode("; ", $info) . "\n";
 		//end wikia debug data
 
-		$m = $m_shared . $info . "\n{$this->mProblemDesc}\n";
+		$body = "\n{$this->mProblemDesc}\n\n----\n" . $m_shared . $info;
 
 		if($this->mCCme) {
 			$mcc = wfMsg('specialcontact-ccheader') . "\n\n";
@@ -141,7 +141,7 @@ class ContactForm extends SpecialPage {
 
 		#to us, from user
 		$subject = wfMsg('specialcontact-mailsub') . (( !empty($this->mProblem) )? ' - ' . $this->mProblem : '');
-		$error = UserMailer::send( $mail_community, $mail_user, $subject, $m, $mail_user, null, 'SpecialContact' );
+		$error = UserMailer::send( $mail_community, $mail_user, $subject, $body, $mail_user, null, 'SpecialContact' );
 		if (WikiError::isError($error)) {
 			$errors .= "\n" . $error->getMessage();
 		}
