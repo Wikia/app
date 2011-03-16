@@ -1101,8 +1101,14 @@ class SMWSQLStore2 extends SMWStore {
 			array( "page_namespace" => SMW_NS_PROPERTY ),
 			$fname
 		);
+		$titles = array();
 		while( $row = $dbl->fetchObject( $sth ) ) {
-			$db->insert( $smw_tmp_unusedprops, array( "title" => $row->page_title ), $fname );
+			$titles[] = array( "title" => $row->page_title );
+		}
+		// multi insert is faster
+		$chunks = array_chunk( $titles, 300 );
+		foreach( $chunks as $chunk ) {
+			$db->insert( $smw_tmp_unusedprops, $chunk, $fname );
 		}
 
 		$smw_ids = $db->tableName( 'smw_ids' );
