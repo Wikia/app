@@ -1067,7 +1067,7 @@ class SMWSQLStore2 extends SMWStore {
 		global $wgDBtype;
 
 		wfProfileIn( "SMWSQLStore2::getUnusedPropertiesSpecial (SMW)" );
-		$db = wfGetDB( DB_SLAVE, 'smw' );
+		$db = wfGetDB( DB_SLAVE );
 		$fname = 'SMW::getUnusedPropertySubjects';
 
 		// we use a temporary table for executing this costly operation on the DB side
@@ -1094,7 +1094,8 @@ class SMWSQLStore2 extends SMWStore {
 		$db->insertSelect( $smw_tmp_unusedprops, 'page', array( 'title' => 'page_title' ),
 		                  array( "page_namespace" => SMW_NS_PROPERTY ),  $fname );
 
-		$smw_ids = $db->tableName( 'smw_ids' );
+		$dbs = wfGetDB( DB_MASTER, 'smw' );
+		$smw_ids = $dbs->tableName( 'smw_ids' );
 
 		// all predefined properties are assumed to be used:
 		$db->deleteJoin( $smw_tmp_unusedprops, $smw_ids, 'title', 'smw_title', array( 'smw_iw' => SMW_SQL2_SMWPREDEFIW ), $fname );

@@ -178,7 +178,7 @@ class SDBrowseDataPage extends QueryPage {
 		$this->applied_filters = $applied_filters;
 		$this->remaining_filters = $remaining_filters;
 
-		$dbr = wfGetDB( DB_SLAVE, 'smw' );
+		$dbr = wfGetDB( DB_SLAVE );
 		$categorylinks = $dbr->tableName( 'categorylinks' );
 		$page = $dbr->tableName( 'page' );
 		$cat_ns = NS_CATEGORY;
