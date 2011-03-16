@@ -1044,7 +1044,7 @@ class LoginForm {
 			$q .= $returnto;
 			$linkq .= $returnto;
 			$q2 .= $returnto;
-			$linkq2 .= $returnto;
+			//$linkq2 .= $returnto; // not used anywhere else... FIXME: REMOVE
 		}
 
 		# Pass any language selection on to the mode switch link
