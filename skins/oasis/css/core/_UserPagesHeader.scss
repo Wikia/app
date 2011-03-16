@@ -16,6 +16,21 @@
 		line-height: 26px;
 		vertical-align: top;
 	}
+	
+	.sync-profile-button {
+		position: absolute;
+		top: 28px;
+		right: 25px;
+		padding-left: 5px !important;
+		
+		img {
+			position: relative;
+			top: 1px;
+			padding-right: 3px;
+		}
+	}
+
+	
 	.wikia-avatar {
 		border: 2px solid $color-page;
 		float: left;
