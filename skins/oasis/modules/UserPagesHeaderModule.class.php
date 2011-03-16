@@ -480,7 +480,7 @@ class UserPagesHeaderModule extends Module {
 			
 			// save updated profile
 			$summary = "Synced profile with Facebook.";
-			NotificationsModule::addConfirmation(wfMsg('fb-sync-success-message'), NotificationsModule::CONFIRMATION_PREVIEW);
+			NotificationsModule::addConfirmation(wfMsg('fb-sync-success-message'));
 			
 			$status = $wgArticle->doEdit($newUserProfileContent, $summary, 
 					( 0 ) |
