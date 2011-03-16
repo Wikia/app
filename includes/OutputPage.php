@@ -1902,12 +1902,19 @@ class OutputPage {
 		$this->setRobotPolicy( 'noindex,nofollow' );
 		$this->setArticleFlag( false );
 
+		$returnToQueryValues = $_GET;
+		if(isset($returnToQueryValues['title'])){
+			unset($returnToQueryValues['title']);
+		}
 		$loginTitle = SpecialPage::getTitleFor( 'Userlogin' );
 		$loginLink = $skin->link(
 			$loginTitle,
 			wfMsgHtml( 'loginreqlink' ),
 			array(),
-			array( 'returnto' => $this->getTitle()->getPrefixedText() ),
+			array(
+				'returnto' => $this->getTitle()->getPrefixedText(),
+				'returntoquery' => wfArrayToCGI( $returnToQueryValues )
+			),
 			array( 'known', 'noclasses' )
 		);
 		$this->addHTML( wfMsgWikiHtml( 'loginreqpagetext', $loginLink ) );
