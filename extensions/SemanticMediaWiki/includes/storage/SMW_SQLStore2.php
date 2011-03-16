@@ -1102,7 +1102,7 @@ class SMWSQLStore2 extends SMWStore {
 			$fname
 		);
 		while( $row = $dbl->fetchObject( $sth ) ) {
-			$db->insert( $smw_tmp_unusedprops, $row->page_title, $fname );
+			$db->insert( $smw_tmp_unusedprops, array( "title" => $row->page_title ), $fname );
 		}
 
 		$smw_ids = $db->tableName( 'smw_ids' );
