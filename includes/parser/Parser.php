@@ -1901,7 +1901,6 @@ class Parser
 						( 0 === strpos( $text, $vid_tag ) ) ? $in_template = true : $in_template = false;
 
 						# RTE (Rich Text Editor) - begin
-						global $wgRTEParserEnabled;
 						if (!empty($wgRTEParserEnabled)) {
 							$wikitext = RTEData::get('wikitext', $RTE_wikitextIdx);
 							$videoOut = WikiaVideo_makeVideo($nt, $text, $sk, $wikitext, false, $holders /* needed by RT #90616 */);
@@ -1937,7 +1936,6 @@ class Parser
 						}
 						# RTE (Rich Text Editor) - begin
 						# @author: Inez Korczyński
-						global $wgRTEParserEnabled;
 						if (!empty($wgRTEParserEnabled)) {
 							$text = RTEMarker::generate(RTEMarker::IMAGE_DATA, $RTE_wikitextIdx).$text;
 						}
@@ -1993,6 +1991,26 @@ class Parser
 					wfProfileOut( __METHOD__."-category" );
 					continue;
 				}
+
+				/* Wikia change begin - @author: Owen Davis */
+				/* Support for [[Poll:...]] */
+
+				if (defined ( "NS_WIKIA_POLL" ) && ($ns == NS_WIKIA_POLL)) {
+					$poll = WikiaPoll::newFromTitle($nt);
+					if ($poll instanceof WikiaPoll) {
+						# RTE (Rich Text Editor) - begin
+						# @author: Owen Davis
+						if (!empty($wgRTEParserEnabled)) {
+							$s .= $prefix . WikiaPollHooks::generateRTE($poll, $nt, $RTE_wikitextIdx) . $trail;
+						} else {
+							$s .= $prefix . WikiaPollHooks::generate($poll, $nt) . $trail;
+						}
+						# RTE - end
+						continue;
+					}
+				}
+				/* Wikia change end */
+
 			}
 
 			# Self-link checking
