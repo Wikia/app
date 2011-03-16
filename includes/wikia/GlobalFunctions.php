@@ -550,9 +550,11 @@ function wfWaitForSlavesExt( $maxLag, $cluster = null ) {
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  * @access public
  *
+ * @param boolean as_string default false -- return url as string not array
+ *
  * @return array	parts of current url
  */
-function wfGetCurrentUrl() {
+function wfGetCurrentUrl( $as_string = false ) {
 	$arr = array();
 	$uri = $_SERVER['REQUEST_URI'];
 
@@ -583,7 +585,7 @@ function wfGetCurrentUrl() {
 	$arr[ "url" ] = $arr[ "scheme" ] . '://' . $arr[ "host" ] . $arr[ "path" ];
 	$arr[ "url" ] = isset( $arr[ "query" ] ) ? $arr[ "url" ] . "?" . $arr[ "query" ] : $arr[ "url" ];
 
-	return $arr;
+	return ( $as_string ) ? $arr[ "url" ]: $arr ;
 }
 
 global $wgAjaxExportList;
@@ -1161,11 +1163,11 @@ function &wfGetSolidCacheStorage( $bucket = false ) {
 
 function wfSetWikiaPageProp($type, $pageID, $value, $dbname = '') {
 	if(empty($dbname)) {
-		$db = wfGetDB(DB_MASTER, array());	
+		$db = wfGetDB(DB_MASTER, array());
 	} else {
 		$db = wfGetDB(DB_MASTER, array(), $dbname);
 	}
-	
+
 	$db = wfGetDB(DB_MASTER, array());
 	$db->replace('page_wikia_props','',
 		array(
@@ -1183,11 +1185,11 @@ function wfSetWikiaPageProp($type, $pageID, $value, $dbname = '') {
 
 function wfGetWikiaPageProp($type, $pageID, $db = DB_SLAVE, $dbname = '') {
 	if(empty($dbname)) {
-		$db = wfGetDB($db, array());	
+		$db = wfGetDB($db, array());
 	} else {
 		$db = wfGetDB($db, array(), $dbname);
 	}
-	
+
 	$res = $db->select('page_wikia_props',
 		array('props'),
 		array(
@@ -1211,11 +1213,11 @@ function wfGetWikiaPageProp($type, $pageID, $db = DB_SLAVE, $dbname = '') {
 
 function wfDeleteWikiaPageProp($type, $pageID, $dbname = '') {
 	if(empty($dbname)) {
-		$db = wfGetDB(DB_MASTER, array());	
+		$db = wfGetDB(DB_MASTER, array());
 	} else {
 		$db = wfGetDB(DB_MASTER, array(), $dbname);
 	}
-	
+
 	$res = $db->delete('page_wikia_props',
 		array(
 			'page_id' =>  $pageID,
@@ -1390,15 +1392,15 @@ if (!function_exists('http_build_url')) {
 
 /**
  * Registers an EzAPI module, the module must be a subclass of EzApiModuleBase
- * 
+ *
  * @author Federico "Lox" Lucignano
  * @global Array $wgEzApiModules Stores the list of available modules
  * @param string The defined class name of the module to register
- * @param string The absolute path of the file containing the module class definition 
+ * @param string The absolute path of the file containing the module class definition
  */
 function wfRegisterEzApiModule( $moduleClass, $moduleSource ){
 	global $wgEzApiModules;
-	
+
 	if( !empty( $moduleClass ) && !empty( $moduleSource ) ) {
 		$wgEzApiModules[ $moduleClass ] = $moduleSource;
 	} else {
@@ -1407,7 +1409,7 @@ function wfRegisterEzApiModule( $moduleClass, $moduleSource ){
 }
 
 /**
- * Sleep until wgDBLightMode is enable. This variable is used to disable (sleep) all 
+ * Sleep until wgDBLightMode is enable. This variable is used to disable (sleep) all
  * maintanance scripts while something is wrong with performance
  *
  * @author Piotr Molski (moli) <moli at wikia-inc.com>
@@ -1416,14 +1418,14 @@ function wfRegisterEzApiModule( $moduleClass, $moduleSource ){
  */
 function wfDBLightMode( $maxSleep ) {
 	global $wgExternalSharedDB;
-	
+
 	if ( !$maxSleep ) return false;
 
 	while ( WikiFactory::getVarValueByName( 'wgDBLightMode', WikiFactory::DBToId( $wgExternalSharedDB ), true ) ) {
 		Wikia::log( __METHOD__, "info", "All crons works in DBLightMode ( sleep $maxSleep ) ..." );
 		sleep($maxSleep);
 	}
-	
+
 	return true;
 }
 
@@ -1432,7 +1434,7 @@ function wfDBLightMode( $maxSleep ) {
  *
  * @author Piotr Molski (moli) <moli at wikia-inc.com>
  * @param
- * @return exit 
+ * @return exit
  */
 function wfDBReadOnlyFailed( ) {
 	global $wgOut, $wgDBReadOnlyStatusCode;
