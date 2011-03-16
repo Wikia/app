@@ -66,33 +66,9 @@ class RTE {
 	 * @author: Macbre
 	 */
 	public static function renderPlaceholder($label, $data) {
-
+		// this is placeholder
 		$data['placeholder'] = 1;
-		$cssClass = "placeholder placeholder-{$data['type']}";
 
-		// Special case for WikiaPoll placeholder
-		// If we do more of these, refactor
-		if (defined ( "NS_WIKIA_POLL" )) {
-			global $wgContLang;
-			$pollNamespace = $wgContLang->getNsText( NS_WIKIA_POLL );
-			// Check for both canonical Poll and localized version of Poll
-			if (isset($data['title']) && (stripos($data['title'], 'Poll') === 0) || (stripos($data['title'], $pollNamespace) === 0)) {
-				$data['type'] = 'poll';
-				$cssClass = "media-placeholder placeholder-poll";
-				$title = Title::newFromText($data['title'], NS_WIKIA_POLL);
-				if ($title->exists()) {
-					$data['pollId'] = $title->getArticleId();
-					$poll = WikiaPoll::newFromTitle($title);
-					$pollData = $poll->getData();
-					$data['question'] = $pollData['question'];
-					if (isset($pollData['answers'])) {
-						foreach ($pollData["answers"] as $answer ) {
-							$data['answers'][] = $answer['text'];
-						}
-					}
-				}
-			}
-		}
 		// store data
 		$dataIdx = RTEData::put('data', $data);
 
@@ -100,7 +76,7 @@ class RTE {
 		global $wgBlankImgUrl;
 		return Xml::element('img', array(
 			'_rte_dataidx' => sprintf('%04d', $dataIdx),
-			'class' => $cssClass,
+			'class' => "placeholder placeholder-{$data['type']}",
 			'src' => $wgBlankImgUrl,
 			'type' => $data['type'],
 		));
