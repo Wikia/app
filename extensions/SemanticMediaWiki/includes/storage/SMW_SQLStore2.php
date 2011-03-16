@@ -1067,7 +1067,7 @@ class SMWSQLStore2 extends SMWStore {
 		global $wgDBtype;
 
 		wfProfileIn( "SMWSQLStore2::getUnusedPropertiesSpecial (SMW)" );
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$fname = 'SMW::getUnusedPropertySubjects';
 
 		// we use a temporary table for executing this costly operation on the DB side
@@ -1086,16 +1086,26 @@ class SMWSQLStore2 extends SMWStore {
 				   . "LANGUAGE 'plpgsql'; "
 				   . "SELECT create_" . $smw_tmp_unusedprops . "(); ";
 		} else { // MySQL: use temporary in-memory table
-			$sql = "CREATE TEMPORARY TABLE " . $smw_tmp_unusedprops . "( title VARCHAR(255) ) TYPE=MEMORY";
+			$sql = "CREATE TEMPORARY TABLE " . $smw_tmp_unusedprops . "( title VARCHAR(255) ) ENGINE=MEMORY";
 		}
 
 		$db->query( $sql, $fname );
 
-		$db->insertSelect( $smw_tmp_unusedprops, 'page', array( 'title' => 'page_title' ),
-		                  array( "page_namespace" => SMW_NS_PROPERTY ),  $fname );
+		// fill table with data, eloy's change for smw+ separation
+		// $db->insertSelect( $smw_tmp_unusedprops, 'page', array( 'title' => 'page_title' ),
+		//                  array( "page_namespace" => SMW_NS_PROPERTY ),  $fname );
+		$dbl = wfGetDB( DB_SLAVE );
+		$sth = $dbl->select(
+			array( "page" ),
+			array( "pg_title" ),
+			array( "page_namespace" => SMW_NS_PROPERTY ),
+			$fname
+		);
+		while( $row = $dbl->fetchObject( $sth ) ) {
+			$db->insert( $smw_tmp_unusedprops, $row->pg_title, $fname );
+		}
 
-		$dbs = wfGetDB( DB_MASTER, 'smw' );
-		$smw_ids = $dbs->tableName( 'smw_ids' );
+		$smw_ids = $db->tableName( 'smw_ids' );
 
 		// all predefined properties are assumed to be used:
 		$db->deleteJoin( $smw_tmp_unusedprops, $smw_ids, 'title', 'smw_title', array( 'smw_iw' => SMW_SQL2_SMWPREDEFIW ), $fname );
