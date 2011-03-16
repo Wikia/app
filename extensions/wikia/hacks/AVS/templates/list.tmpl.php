@@ -1,16 +1,14 @@
-<table>
-	<tr>
-		<td><?php echo wfMsg('avs-season') ?> </td>
-		<td><?php echo wfMsg('avs-episode') ?> </td>
-		<td><?php echo wfMsg('avs-video-widget') ?> </td>
-		<td><?php echo wfMsg('avs-image-link-widget') ?> </td
-	</tr>
-	<tr>
-		<?php foreach($data as $value): ?>
-			<td><?php echo $value['season'] ?></td>
-			<td><?php echo $value['episode'] ?></td>
-			<td><?php echo $value['video-widget'] ?></td>
-			<td><?php echo $value['image-link-widget'] ?></td>
-		<?php endif; ?>
-	</tr>
-</table>
+<?php foreach($data as $value): ?>
+	<div>
+		<strong>S<?php echo $value['season'] ?> E<?php echo $value['episode'] ?> - <?php echo $value['title'] ?> </strong>
+		<div style="width:510px;height:425px">
+			<?php echo $value['video-widget'] ?> 
+		</div>
+		<br>
+		<strong><?php echo wfMsg('avs-code-for-widget'); ?></strong>
+		<div style="margin-left:30px;margin-bottom: 35px;" >
+			<?php echo wfMsg('avs-code-for-video-widget'); ?><span style="color:red;"><?php echo $value['video-widget-code'] ?> </span> <br>
+			<?php echo wfMsg('avs-code-for-image-widget'); ?><span style="color:red;"><?php echo $value['image-widget-code'] ?> </span>
+		</div>
+	</div>
+<?php endforeach; ?>

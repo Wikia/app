@@ -20,6 +20,17 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 
+
+require_once $dir.'Amazon/DataMapper.php';
+require_once $dir.'Amazon/Item.php';
+require_once $dir.'Amazon/CustomerReview.php';
+require_once $dir.'Amazon/EditorialReview.php';
+require_once $dir.'Amazon/Image.php';
+require_once $dir.'Amazon/ListmaniaList.php';
+require_once $dir.'Amazon/AApiClient.php';
+require_once $dir.'Amazon/ApiClient/Soap.php';
+
+
 $wgAutoloadClasses['AVS'] = $dir . 'AVS.body.php'; # Tell MediaWiki to load the extension body.
 $wgAutoloadClasses['AVSSpecialPage'] = $dir . 'AVS.body.php'; # Tell MediaWiki to load the extension body.
 
