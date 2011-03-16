@@ -87,6 +87,7 @@ class ContactForm extends SpecialPage {
 	 */
 	function processCreation() {
 		global $wgUser, $wgOut, $wgCityId, $wgSpecialContactEmail;
+		global $wgLanguageCode;
 
 		// If not configured, fall back to a default just in case.
 		$wgSpecialContactEmail = (empty($wgSpecialContactEmail)?"community@wikia.com":$wgSpecialContactEmail);
@@ -100,24 +101,29 @@ class ContactForm extends SpecialPage {
 		$m_shared .= ( !empty($this->mRealName) )?( $this->mRealName ): ( (( !empty($this->mName) )?( $this->mName ): ('--')) );
 		$m_shared .= " ({$this->mEmail})";
 		$m_shared .= " ". (( !empty($this->mName) ) ? $this->mWhichWiki . "/wiki/User:" . urlencode(str_replace(" ", "_", $this->mName)) : $this->mWhichWiki) . "\n";
-		$m_shared .= ( ( !empty($this->mProblem) ) ? "contacted Wikia about {$this->mProblem}.\n" : '' ). "";
 
 
 		//start wikia debug info, sent only to the internal email, not cc'd
 		$info = array();
-		$info[] = '' . $this->mBrowser;
-		$info[] = "\n" . 'IP:' . wfGetIP();
+		$info[] = '' . $this->mBrowser . "\n";
 		$info[] = 'wkID: ' . $wgCityId;
+		$info[] = 'wkLang: ' . $wgLanguageCode;
 
 		#global $wgAdminSkin, $wgDefaultSkin, $wgDefaultTheme;
 		#$nominalSkin = ( !empty($wgAdminSkin) )?( $wgAdminSkin ):( ( !empty($wgDefaultTheme) )?("{$wgDefaultSkin}-{$wgDefaultTheme}"):($wgDefaultSkin) );
 		#$info[] = 'Skin: ' . $nominalSkin;
 
+		//always add the IP
+		$info[] = 'IP:' . wfGetIP();
+		
+		//if they are logged in, add the ID(and name) and their lang
 		$uid = $wgUser->getID();
 		if( !empty($uid) ) {
 			$info[] = 'uID: ' . $uid . " (User:". $wgUser->getName() .")";
 			$info[] = 'uLang: ' . $wgUser->getOption('language');
 		}
+
+		//smush it all together
 		$info = implode("; ", $info) . "\n";
 		//end wikia debug data
 
@@ -150,7 +156,6 @@ class ContactForm extends SpecialPage {
 
 		if ( !empty($errors) ) {
 			$this->addError( $this->err );
-			//$wgOut->addHTML( Wikia::errorbox($errors) );
 		}
 
 		/********************************************************/
