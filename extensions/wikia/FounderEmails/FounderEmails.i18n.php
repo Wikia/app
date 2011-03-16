@@ -135,6 +135,8 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s been going on.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 // New Founder email messages
+	'founderemails-email-footer-line1' => 'To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'founderemails-email-footer-line2' => 'Want to control which emails you receive? Go to: <a href="$WIKIURL/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">$WIKIURL/wiki/Special:Preferences</a>',
 // day 0
 	'founderemails-email-0-day-heading' => 'Nice to meet you $FOUNDERNAME,',
 	'founderemails-email-0-day-congratulations' => 'Congratulations on creating $WIKINAME!',
@@ -150,8 +152,6 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-0-day-customizetheme-button' => 'Customize',
 	'founderemails-email-0-day-wikiahelps-text' => '<span style="color:#2a87d5;font-weight:bold">We won\'t leave you out in the cold.</span>  We\'re here to help you make $WIKINAME successful every step of the way.  Visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> for forums, advice, and help, or to <a style="color:#2a87d5;text-decoration:none;" href="http://www.wikia.com/Special:Contact">email us</a> your questions!',
 	'founderemails-email-0-day-wikiahelps-signature' => 'Happy wiki building!<br>The Wikia Team',
-	'founderemails-email-0-day-footer-line1' => 'To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
-	'founderemails-email-0-day-footer-line2' => 'Want to control which emails you receive? Go to: <a href="http://messaging.wikia.com/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">http://messaging.wikia.com/wiki/Special:Preferences</a>',
 // day 3
 	'founderemails-email-3-day-heading' => 'Hi there $FOUNDERNAME,',
 	'founderemails-email-3-day-congratulations' => 'We wanted to check in and see how things are going at $WIKINAME.',
@@ -167,8 +167,6 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-3-day-explore-button' => 'Explore',
 	'founderemails-email-3-day-wikiahelps-text' => 'Need help figuring out how something works?  We\'re always here for you!  Come ask us for help and advice at <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>.',
 	'founderemails-email-3-day-wikiahelps-signature' => 'Keep up the great work!<br>The Wikia Team',
-	'founderemails-email-3-day-footer-line1' => 'To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
-	'founderemails-email-3-day-footer-line2' => 'Want to control which emails you receive? Go to: <a href="http://messaging.wikia.com/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">http://messaging.wikia.com/wiki/Special:Preferences</a>',
 // day 10
 	'founderemails-email-10-day-heading' => 'How\'s it going $FOUNDERNAME?',
 	'founderemails-email-10-day-congratulations' => 'Whoa, time flies!  It\'s already been 10 days since you started $WIKINAME.',
@@ -181,10 +179,6 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-10-day-join-content' => 'Ask people on other forums or websites that are about your topic for help by posting in their forums or comments.  If possible, contact the administrator and see if they\'re interested in link-sharing &mdash; they\'ll put your wiki link on their website if you put their link on your wiki.',
 	'founderemails-email-10-day-wikiahelps-text' => 'You can also ask other Wikians to help out on your wiki by posting in the forums on <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>.',
 	'founderemails-email-10-day-wikiahelps-signature' => 'Keep up the good work!<br>The Wikia Team',
-	'founderemails-email-10-day-footer-line1' => 'To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
-	'founderemails-email-10-day-footer-line2' => 'Want to control which emails you receive? Go to: <a href="http://messaging.wikia.com/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">http://messaging.wikia.com/wiki/Special:Preferences</a>',
-	'founderemails-email-footer-line1' => 'To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
-	'founderemails-email-footer-line2' => 'Want to control which emails you receive? Go to: <a href="http://messaging.wikia.com/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">http://messaging.wikia.com/wiki/Special:Preferences</a>',
 );
 
 /** Message documentation (Message documentation)
