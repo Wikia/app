@@ -3,6 +3,7 @@
 class WikiaPollHooks {
 
 	private static $pollMarkers = array();
+	private static $alreadyAddedCSSJS = false;
 
 	/**
 	 * Use WikiaPollArticle class to render Poll namespace pages
@@ -57,67 +58,79 @@ class WikiaPollHooks {
 	}
 
 	/**
-	 * Return HTML to be used when embedding polls using {{Poll:foo}} wikisyntax
+	 * Return HTML to be used when embedding polls from inside parser
+	 * TODO: replace all this with a hook inside parser
+	 * 
+	 * @param WikiaPoll $poll
+	 * @param Title $finalTitle 
 	 */
-	public static function onFetchTemplateAndTitle(&$text, &$finalTitle) {
-		global $wgParser;
-		wfProfileIn(__METHOD__);
 
-		if ($finalTitle instanceof Title) {
-			if ($finalTitle->exists() && $finalTitle->getNamespace() == NS_WIKIA_POLL) {
-				wfLoadExtensionMessages('WikiaPoll');
-
-				$poll = WikiaPoll::newFromTitle($finalTitle);
-				$html = $poll->renderEmbedded();
-
-				// wrap marker inside <pre> tag - parser will close pararaphs and lists which are before poll inclusion
-				$marker = '<pre>' .$wgParser->uniqPrefix() . '-WIKIA-POLL-' . $poll->getId() . '</pre>';
-				self::$pollMarkers[$marker] = $html;
-
-				// return marker instead of poll's HTML to bypass MW sanitizer
-				$text = $marker;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
-	/**
-	 * Replace markers added by onFetchTemplateAndTitle() method when embedding polls and load CSS / JS for polls
-	 */
-	public static function onParserAfterTidy(&$parser, &$text) {
+	public static function generate($poll, $finalTitle) {
 		global $wgJsMimeType;
 		wfProfileIn(__METHOD__);
 
-		if (!empty(self::$pollMarkers)) {
-			$text = strtr($text, self::$pollMarkers);
+		if ($finalTitle instanceof Title && $finalTitle->exists() && $finalTitle->getNamespace() == NS_WIKIA_POLL) {
+			wfLoadExtensionMessages('WikiaPoll');
+			$css = $js = "";
+			if (self::$alreadyAddedCSSJS == false) {
+				// make sure we don't include twice if there are multiple polls on one page
+				self::$alreadyAddedCSSJS = true;
+				// add CSS & JS and Poll HTML together
+				$sassUrl = wfGetSassUrl('/extensions/wikia/WikiaPoll/css/WikiaPoll.scss');
+				$css = '<link rel="stylesheet" type="text/css" href="' . htmlspecialchars($sassUrl) . ' " />';
 
-			// remove markers to aboid multiple CSS/JS requests
-			self::$pollMarkers = array();
+				$js = "<!-- Wikia Polls -->
+		<script type=\"$wgJsMimeType\">
+		wgAfterContentAndJS.push(function() {
+			$.getScript(wgExtensionsPath + '/wikia/WikiaPoll/js/WikiaPoll.js', function() {
+				WikiaPoll.init();
+			});
+		});
+		</script>";
+			}
 
-			// add CSS & JS
-			$sassUrl = wfGetSassUrl('/extensions/wikia/WikiaPoll/css/WikiaPoll.scss');
-			$css = '<link rel="stylesheet" type="text/css" href="' . htmlspecialchars($sassUrl) . ' " />';
-
-			$js = <<<JS
-<!-- Wikia Polls -->
-<script type="$wgJsMimeType">
-wgAfterContentAndJS.push(function() {
-	$.getScript(wgExtensionsPath + '/wikia/WikiaPoll/js/WikiaPoll.js', function() {
-		WikiaPoll.init();
-	});
-});
-</script>
-JS;
-
-			// CSS at the bottom, JS at the bottom
-			$text = "{$css}\n{$text}\n{$js}\n";
+			return "{$css}\n{$poll->renderEmbedded()}\n{$js}\n";
 		}
-
+		
 		wfProfileOut(__METHOD__);
-		return true;
 	}
+
+	/**
+	 * Return XML object for parser when RTE enabled
+	 * called from Parser::replaceInternalLinks2
+	 */
+	public static function generateRTE($poll, $nt, $RTE_wikitextIdx) {
+		global $wgBlankImgUrl;
+
+		$data = array();
+		$data['type'] = 'poll';
+		$data['pollId'] = $nt->getArticleId();
+		$data['wikitext'] = RTEData::get('wikitext', $RTE_wikitextIdx);
+
+		$pollData = $poll->getData();
+		if (isset($pollData['question'])) {
+			$data['question'] = $pollData['question'];
+		}
+		if (isset($pollData['answers'])) {
+			foreach ($pollData["answers"] as $answer ) {
+				$data['answers'][] = $answer['text'];
+			}
+		}
+		// store data and mark HTML
+		$dataIdx = RTEData::put('data', $data);
+
+		// render poll placeholder
+		$tag = Xml::element('img', array(
+			'_rte_dataidx' => sprintf('%04d', $dataIdx),
+			'class' => "media-placeholder placeholder-poll",
+			'src' => $wgBlankImgUrl,
+			'type' => 'poll'
+		));
+		return RTEData::addIdxToTag($dataIdx, $tag);
+
+	}
+
+
 
 	/**
 	 * Purge poll after an edit
@@ -136,26 +149,6 @@ JS;
 
 		wfProfileOut(__METHOD__);
 		return true;
-	}
-
-	/**
-	 *  transform [[Poll:name]] into {{Poll:name}} in parser before template expansion
-	 */
-
-	public static function onInternalParseBeforeLinks(&$parser, &$text, &$stripState) {
-		global $wgContLang;
-		$pollNamespace = $wgContLang->getNsText( NS_WIKIA_POLL );
-		$newtext = preg_replace_callback( "/\[\[Poll|$pollNamespace\:([^\]]*)\]\]/", "WikiaPollHooks::parseLinkCallback", $text, -1, $count );
-		if ($count > 0)
-			$text = $parser->recursiveTagParse($newtext);
-		return true;
-	}
-
-	/**
-	 * Helper callback for onInternalParseBeforeLinks
-	 */
-	public static function parseLinkCallback ($link) {
-		return str_replace(array("[[", "]]"), array("{{", "}}"), $link[0]);
 	}
 
 }
