@@ -2,6 +2,8 @@
 if ($fbAccess == true) {	
 ?>
 <form action="<?= $fbSelectFormURL ?>" method="post">
+<input type="hidden" id="FacebookProfileSyncUserNameWiki" value="<?= $fbUserNameWiki ?>" />
+
 
 <table class="fbconnect-preview-synced-profile">
 	<?php if (isset($fbUser->name)) { 
