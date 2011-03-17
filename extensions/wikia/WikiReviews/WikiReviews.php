@@ -19,8 +19,10 @@ $wgHooks['HistoryDropdownIndexBeforeExecute'][] = 'wfWikiReviewsHideHistoryDropd
 $wgHooks['PageHeaderIndexAfterExecute'][] = 'wfWikiReviewsRemoveEditButton';
 
 function wfWikiReviewsTitleCheck() {
-	global $wgTitle;
-	return ( $wgTitle->getNamespace() == NS_MAIN )
+	global $wgTitle, $wgRequest;
+	$action = $wgRequest->getVal( 'action', 'view' );
+	return ( $action == 'view' ) 
+		&& ( $wgTitle->getNamespace() == NS_MAIN )
 		&& !$wgTitle->equals( Title::newMainPage() );
 }
 
