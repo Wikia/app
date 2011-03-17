@@ -382,7 +382,7 @@ class UserPagesHeaderModule extends Module {
 	 * @param bool $arg Users has granted access (true or false)*
 	 */
 	public function executeFacebookConnect($arg) {
-		global $wgRequest, $wgTitle, $wgUser, $wgFacebookSyncAppID, $wgFacebookSyncAppSecret;
+		global $wgRequest, $wgTitle, $wgUser, $wgCityId, $wgFacebookSyncAppID, $wgFacebookSyncAppSecret;
 		
 		if ($arg['fbAccess'] == true) {
 			include('extensions/FBConnect/facebook-sdk/facebook.php');
@@ -406,6 +406,10 @@ class UserPagesHeaderModule extends Module {
 			$this->fbUserLikes = $likes;
 			$this->fbUserInterests = $interests;
 			$this->fbAccess = true;
+
+			$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wgCityId );
+			$this->fbUserNameWiki = $this->getUserURL() . "|Wiki:'" .$wikiName ."'";
+			
 		}
 		else {
 			// error message - no access granted
