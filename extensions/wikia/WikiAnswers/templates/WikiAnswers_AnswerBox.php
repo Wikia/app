@@ -3,7 +3,7 @@ global $wgBlankImgUrl, $wgTitle, $wgStylePath, $wgUser;
 ?>
 			<div id="answer_level">
 			<div id="answer_box" class="accent">
-			<span id="answer_heading" class="dark_text_1"><?php echo wfMsg('answer_this_question')?></span>
+			<h1 id="answer_heading"><?php echo wfMsg('answer_this_question')?></h1>
 			<?php
 			$title = $wgTitle;
 		// check whether current user is blocked (RT #48058)

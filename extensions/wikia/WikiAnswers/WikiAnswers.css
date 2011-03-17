@@ -86,13 +86,6 @@
 	line-height:1.4em;
 }
 
-#answer_heading {
-	color: firebrick;
-	font-size: 15pt;
-	font-weight: bold;
-	letter-spacing: -1px;
-}
-
 #question_box {
 	-moz-border-radius: 10px 10px 0px 0px;
 	-webkit-border-radius: 10px 10px 0px 0px;
@@ -481,11 +474,6 @@ div.article-comm-input-text textarea {
 	margin-bottom: 12px;
 }
 
-.activityfeed a:link,
-.activityfeed a:visited { 
-	color: #369; 
-}
-
 /* === ATTRIBUTION === */
 
 #question_attribution, #answer_attribution {
@@ -856,14 +844,6 @@ div.userInfoNoAvatar .userPoints {
 }
 .interactive-questions li:hover {
 	background-color: #F5F5F5;
-}
-span.answered_questions a, 
-span.unanswered_questions a {
-	color: #00C;
-	font-size: 1.2em;
-}
-span.unanswered_questions a {
-	padding-right: 75px;
 }
 .cathub-asked {
 	color: #707070;

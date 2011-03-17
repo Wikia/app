@@ -127,7 +127,7 @@ class BodyModule extends Module {
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
 			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail,
-			$wgEnableUserProfilePagesExt, $wgABTests,
+			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers,
 			$wgSalesTitles;
 
 		$railModuleList = array();
@@ -142,8 +142,11 @@ class BodyModule extends Module {
 				$railModuleList = array(
 					1450 => array('PagesOnWiki', 'Index', null),
 					1300 => array('LatestActivity', 'Index', null),
-					1250 => array('LatestPhotos', 'Index', null),
 				);
+
+				if( empty( $wgEnableWikiAnswers ) ) {
+					$railModuleList[1250] = array('LatestPhotos', 'Index', null);
+				}
 
 				if($wgEnableSpotlightsV2_Rail) {
 					$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
@@ -168,8 +171,10 @@ class BodyModule extends Module {
 					1500 => array('Search', 'Index', null),
 					1450 => array('PagesOnWiki', 'Index', null),
 					1300 => array('LatestActivity', 'Index', null),
-					1250 => array('LatestPhotos', 'Index', null),
 				);
+				if( empty( $wgEnableWikiAnswers ) ) {
+					$railModuleList[1250] = array('LatestPhotos', 'Index', null);
+				}
 				if($wgEnableSpotlightsV2_Rail) {
 					$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
 				}
@@ -202,7 +207,9 @@ class BodyModule extends Module {
 
 			$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 			$railModuleList[1300] = array('LatestActivity', 'Index', null);
-			$railModuleList[1250] = array('LatestPhotos', 'Index', null);
+			if( empty( $wgEnableWikiAnswers ) ) {
+				$railModuleList[1250] = array('LatestPhotos', 'Index', null);
+			}
 
 			if($wgEnableSpotlightsV2_Rail) {
 				$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
