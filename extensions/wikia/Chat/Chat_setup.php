@@ -1,5 +1,4 @@
 <?php
- 
 /**
  * Chat
  *
@@ -10,6 +9,13 @@
  * @package MediaWiki
  *
  */
+
+$wgExtensionCredits['specialpage'][] = array(
+	'name' => 'Chat',
+	'author' => array( 'Christian Williams', 'Sean Colombo' ),
+	'url' => 'http://www.wikia.com',
+	'descriptionmsg' => 'chat-desc',
+);
 
 $dir = dirname(__FILE__);
 
@@ -56,7 +62,7 @@ function ChatAjax() {
 
 		// Don't let Varnish cache this.
 		header("X-Pass-Cache-Control: max-age=0");
-		
+
 		wfLoadExtensionMessages('Chat');
 		$data = ChatAjax::$method();
 
