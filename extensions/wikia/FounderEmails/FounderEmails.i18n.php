@@ -151,7 +151,7 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-0-day-customizetheme-content' => 'Customize your wiki\'s theme and wordmark to make your wiki stand out!  Use the <a style="color:#2a87d5;text-decoration:none;" href="$CUSTOMIZETHEMEURL">Theme Designer</a> to add custom colors to your wiki and make it unique to your topic.',
 	'founderemails-email-0-day-customizetheme-button' => 'Customize',
 	'founderemails-email-0-day-wikiahelps-text' => '<span style="color:#2a87d5;font-weight:bold">We won\'t leave you out in the cold.</span>  We\'re here to help you make $WIKINAME successful every step of the way.  Visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> for forums, advice, and help, or to <a style="color:#2a87d5;text-decoration:none;" href="http://www.wikia.com/Special:Contact">email us</a> your questions!',
-	'founderemails-email-0-day-wikiahelps-signature' => 'Happy wiki building!<br>The Wikia Team',
+	'founderemails-email-0-day-wikiahelps-signature' => 'Happy wiki building!<br />The Wikia Team',
 // day 3
 	'founderemails-email-3-day-heading' => 'Hi there $FOUNDERNAME,',
 	'founderemails-email-3-day-congratulations' => 'We wanted to check in and see how things are going at $WIKINAME.',
@@ -166,7 +166,7 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-3-day-explore-content' => 'Don\'t be afraid to check out other wikis to see how they\'ve worked out their main pag, articles pages and more.  Here are some of our favorites: <a style="color:#2a87d5;text-decoration:none;" href="http://muppets.wikia.com">Muppet Wiki</a>, <a style="color:#2a87d5;text-decoration:none;" href="http://poptarts.wikia.com">Pop Tarts Wiki</a>, <a style="color:#2a87d5;text-decoration:none;" href="http://monsterhigh.wikia.com">Monster High Wiki</a>.',
 	'founderemails-email-3-day-explore-button' => 'Explore',
 	'founderemails-email-3-day-wikiahelps-text' => 'Need help figuring out how something works?  We\'re always here for you!  Come ask us for help and advice at <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>.',
-	'founderemails-email-3-day-wikiahelps-signature' => 'Keep up the great work!<br>The Wikia Team',
+	'founderemails-email-3-day-wikiahelps-signature' => 'Keep up the great work!<br />The Wikia Team',
 // day 10
 	'founderemails-email-10-day-heading' => 'How\'s it going $FOUNDERNAME?',
 	'founderemails-email-10-day-congratulations' => 'Whoa, time flies!  It\'s already been 10 days since you started $WIKINAME.',
@@ -178,7 +178,7 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-10-day-join-heading' => 'Join up with similar websites.',
 	'founderemails-email-10-day-join-content' => 'Ask people on other forums or websites that are about your topic for help by posting in their forums or comments.  If possible, contact the administrator and see if they\'re interested in link-sharing &mdash; they\'ll put your wiki link on their website if you put their link on your wiki.',
 	'founderemails-email-10-day-wikiahelps-text' => 'You can also ask other Wikians to help out on your wiki by posting in the forums on <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>.',
-	'founderemails-email-10-day-wikiahelps-signature' => 'Keep up the good work!<br>The Wikia Team',
+	'founderemails-email-10-day-wikiahelps-signature' => 'Keep up the good work!<br />The Wikia Team',
 );
 
 /** Message documentation (Message documentation)
