@@ -50,7 +50,7 @@
 		ksort($aLanguages);
 		foreach ($aLanguages as $sLang => $sLangName) :
 			$selected = "";
-			if ( empty($isSelected) && ( ( isset($params['wiki-language'] ) && ( $sLang == $params['wiki-language'] ) ) || ( !isset($params['wiki-language']) && ( $sLang == $mLanguage ) ) ) ) :
+			if ( empty($isSelected) && ( ( isset($params['wiki-language'] ) && ( $sLang == $params['wiki-language'] ) ) || ( !isset($params['wiki-language']) && ( $sLang == $selectedLang ) ) ) ) :
 				$isSelected = true;
 				$selected = ' selected="selected"';
 			endif;
