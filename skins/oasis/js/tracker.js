@@ -559,6 +559,7 @@ var initTracker = function() {
 		});
 	}
 	
+	/*
 	// sync profile with Facebook
 	$('#FacebookProfileSyncSave').trackClick('facebookprofilesync/save');
 
@@ -572,6 +573,7 @@ var initTracker = function() {
 	$('#FacebookProfileSyncRemovePolitical').trackClick('facebookprofilesync/remove/political');
 	$('#FacebookProfileSyncRemoveWebsite').trackClick('facebookprofilesync/remove/website');
 	$('#FacebookProfileSyncRemoveInterests').trackClick('facebookprofilesync/remove/interests');
+	*/
 	
 	
 	
