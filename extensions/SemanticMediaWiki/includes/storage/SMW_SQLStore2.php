@@ -1067,89 +1067,107 @@ class SMWSQLStore2 extends SMWStore {
 		global $wgDBtype;
 
 		wfProfileIn( "SMWSQLStore2::getUnusedPropertiesSpecial (SMW)" );
+
 		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$fname = 'SMW::getUnusedPropertySubjects';
 
-		// we use a temporary table for executing this costly operation on the DB side
-		$smw_tmp_unusedprops = $db->tableName( 'smw_tmp_unusedprops' );
-		if ( $wgDBtype == 'postgres' ) { // PostgresQL: no in-memory tables available
-			$sql = "CREATE OR REPLACE FUNCTION create_" . $smw_tmp_unusedprops . "() RETURNS void AS "
-				   . "$$ "
-				   . "BEGIN "
-				   . " IF EXISTS(SELECT NULL FROM pg_tables WHERE tablename='" . $smw_tmp_unusedprops . "' AND schemaname = ANY (current_schemas(true))) "
-				   . " THEN DELETE FROM " . $smw_tmp_unusedprops . "; "
-				   . " ELSE "
-				   . "  CREATE TEMPORARY TABLE " . $smw_tmp_unusedprops . " ( title text ); "
-				   . " END IF; "
-				   . "END; "
-				   . "$$ "
-				   . "LANGUAGE 'plpgsql'; "
-				   . "SELECT create_" . $smw_tmp_unusedprops . "(); ";
-		} else { // MySQL: use temporary in-memory table
-			$sql = "CREATE TEMPORARY TABLE " . $smw_tmp_unusedprops . "( title VARCHAR(255) ) ENGINE=MEMORY";
+		// locking added by eloy
+		global $wgMemc;
+		$lock = $wgMemc->get( wfMemcKey( $fname ) );
+		if( !$lock ) {
+
+			$wgMemc->set( wfMemcKey( $fname ), true, 60 );
+
+			// we use a temporary table for executing this costly operation on the DB side
+			$smw_tmp_unusedprops = $db->tableName( 'smw_tmp_unusedprops' );
+			if ( $wgDBtype == 'postgres' ) { // PostgresQL: no in-memory tables available
+				$sql = "CREATE OR REPLACE FUNCTION create_" . $smw_tmp_unusedprops . "() RETURNS void AS "
+					   . "$$ "
+					   . "BEGIN "
+					   . " IF EXISTS(SELECT NULL FROM pg_tables WHERE tablename='" . $smw_tmp_unusedprops . "' AND schemaname = ANY (current_schemas(true))) "
+					   . " THEN DELETE FROM " . $smw_tmp_unusedprops . "; "
+					   . " ELSE "
+					   . "  CREATE TEMPORARY TABLE " . $smw_tmp_unusedprops . " ( title text ); "
+					   . " END IF; "
+					   . "END; "
+					   . "$$ "
+					   . "LANGUAGE 'plpgsql'; "
+					   . "SELECT create_" . $smw_tmp_unusedprops . "(); ";
+			} else { // MySQL: use temporary in-memory table
+				$sql = "CREATE TEMPORARY TABLE " . $smw_tmp_unusedprops . "( title VARCHAR(255) ) ENGINE=MEMORY";
+			}
+
+			$db->query( $sql, $fname );
+
+			// fill table with data, eloy's change for smw+ separation
+			// $db->insertSelect( $smw_tmp_unusedprops, 'page', array( 'title' => 'page_title' ),
+			//                  array( "page_namespace" => SMW_NS_PROPERTY ),  $fname );
+			$dbl = wfGetDB( DB_SLAVE );
+			$sth = $dbl->select(
+				array( "page" ),
+				array( "page_title" ),
+				array( "page_namespace" => SMW_NS_PROPERTY ),
+				$fname
+			);
+			$titles = array();
+			while( $row = $dbl->fetchObject( $sth ) ) {
+				$titles[] = array( "title" => $row->page_title );
+			}
+			// multi insert is faster
+			$chunks = array_chunk( $titles, 300 );
+			foreach( $chunks as $chunk ) {
+				$db->insert( $smw_tmp_unusedprops, $chunk, $fname );
+			}
+
+			$smw_ids = $db->tableName( 'smw_ids' );
+
+			// all predefined properties are assumed to be used:
+			$db->deleteJoin( $smw_tmp_unusedprops, $smw_ids, 'title', 'smw_title', array( 'smw_iw' => SMW_SQL2_SMWPREDEFIW ), $fname );
+
+			// all tables occurring in some property table are used:
+			foreach ( self::getPropertyTables() as $proptable ) {
+				if ( $proptable->fixedproperty == false ) { // MW does not seem to have a suitable wrapper for this
+					$db->query( "DELETE FROM $smw_tmp_unusedprops USING $smw_tmp_unusedprops INNER JOIN " . $db->tableName( $proptable->name ) .
+					" INNER JOIN $smw_ids ON p_id=smw_id AND title=smw_title AND smw_iw=" . $db->addQuotes( '' ), $fname );
+				} // else: todo
+			}
+
+			// properties that have subproperties are considered to be used
+			$proptables = self::getPropertyTables();
+			$subtable = $proptables[self::findTypeTableID( '__sup' )]; // find the subproperty table, but consider its signature to be known
+
+			// (again we have no fitting MW wrapper here:)
+			$db->query( "DELETE $smw_tmp_unusedprops.* FROM $smw_tmp_unusedprops," . $db->tableName( $subtable->name ) .
+					   " INNER JOIN $smw_ids ON o_id=smw_id WHERE title=smw_title", $fname );
+			// properties that are redirects are considered to be used:
+			//   (a stricter and more costy approach would be to delete only redirects to used properties;
+			//    this would need to be done with an addtional query in the above loop)
+			// The redirect table is a fixed part of this store, no need to find its name.
+			$db->deleteJoin( $smw_tmp_unusedprops, 'smw_redi2', 'title', 's_title', array( 's_namespace' => SMW_NS_PROPERTY ), $fname );
+
+			$options = $this->getSQLOptions( $requestoptions, 'title' );
+			$options['ORDER BY'] = 'title';
+			$res = $db->select( $smw_tmp_unusedprops, 'title', '', $fname, $options );
+
+			$result = array();
+
+			while ( $row = $db->fetchObject( $res ) ) {
+				$result[] = SMWPropertyValue::makeProperty( $row->title );
+			}
+
+			$db->freeResult( $res );
+
+			$db->query( "DROP TEMPORARY table $smw_tmp_unusedprops", $fname );
+
+			$wgMemc->set( wfMemcKey( $fname, "result" ), $result, 60*10 );
+			$wgMemc->delete( wfMemcKey( $fname ) );
+		}
+		else {
+			// eloy, hack for locking
+			$result = $wgMemc->get( wfMemcKey( $fname, "result" ) );
+			$result = is_array( $result ) ? $result : array();
 		}
 
-		$db->query( $sql, $fname );
-
-		// fill table with data, eloy's change for smw+ separation
-		// $db->insertSelect( $smw_tmp_unusedprops, 'page', array( 'title' => 'page_title' ),
-		//                  array( "page_namespace" => SMW_NS_PROPERTY ),  $fname );
-		$dbl = wfGetDB( DB_SLAVE );
-		$sth = $dbl->select(
-			array( "page" ),
-			array( "page_title" ),
-			array( "page_namespace" => SMW_NS_PROPERTY ),
-			$fname
-		);
-		$titles = array();
-		while( $row = $dbl->fetchObject( $sth ) ) {
-			$titles[] = array( "title" => $row->page_title );
-		}
-		// multi insert is faster
-		$chunks = array_chunk( $titles, 300 );
-		foreach( $chunks as $chunk ) {
-			$db->insert( $smw_tmp_unusedprops, $chunk, $fname );
-		}
-
-		$smw_ids = $db->tableName( 'smw_ids' );
-
-		// all predefined properties are assumed to be used:
-		$db->deleteJoin( $smw_tmp_unusedprops, $smw_ids, 'title', 'smw_title', array( 'smw_iw' => SMW_SQL2_SMWPREDEFIW ), $fname );
-
-		// all tables occurring in some property table are used:
-		foreach ( self::getPropertyTables() as $proptable ) {
-			if ( $proptable->fixedproperty == false ) { // MW does not seem to have a suitable wrapper for this
-				$db->query( "DELETE FROM $smw_tmp_unusedprops USING $smw_tmp_unusedprops INNER JOIN " . $db->tableName( $proptable->name ) .
-				" INNER JOIN $smw_ids ON p_id=smw_id AND title=smw_title AND smw_iw=" . $db->addQuotes( '' ), $fname );
-			} // else: todo
-		}
-
-		// properties that have subproperties are considered to be used
-		$proptables = self::getPropertyTables();
-		$subtable = $proptables[self::findTypeTableID( '__sup' )]; // find the subproperty table, but consider its signature to be known
-
-		// (again we have no fitting MW wrapper here:)
-		$db->query( "DELETE $smw_tmp_unusedprops.* FROM $smw_tmp_unusedprops," . $db->tableName( $subtable->name ) .
-		           " INNER JOIN $smw_ids ON o_id=smw_id WHERE title=smw_title", $fname );
-		// properties that are redirects are considered to be used:
-		//   (a stricter and more costy approach would be to delete only redirects to used properties;
-		//    this would need to be done with an addtional query in the above loop)
-		// The redirect table is a fixed part of this store, no need to find its name.
-		$db->deleteJoin( $smw_tmp_unusedprops, 'smw_redi2', 'title', 's_title', array( 's_namespace' => SMW_NS_PROPERTY ), $fname );
-
-		$options = $this->getSQLOptions( $requestoptions, 'title' );
-		$options['ORDER BY'] = 'title';
-		$res = $db->select( $smw_tmp_unusedprops, 'title', '', $fname, $options );
-
-		$result = array();
-
-		while ( $row = $db->fetchObject( $res ) ) {
-			$result[] = SMWPropertyValue::makeProperty( $row->title );
-		}
-
-		$db->freeResult( $res );
-
-		$db->query( "DROP TEMPORARY table $smw_tmp_unusedprops", $fname );
 		wfProfileOut( "SMWSQLStore2::getUnusedPropertiesSpecial (SMW)" );
 
 		return $result;
