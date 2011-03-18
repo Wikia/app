@@ -546,6 +546,9 @@ class CreateWiki {
 		// name
 		$this->mNewWiki->name = strtolower( trim( $this->mDomain ) );
 
+		// umbrella
+		$this->mNewWiki->umbrella = $this->mNewWiki->name;
+
 		switch( $this->mType ) {
 			case "answers":
 				$this->mNewWiki->sitename = $fixedTitle . " " . $this->mDefSitename;
@@ -830,6 +833,7 @@ class CreateWiki {
 			'city_description'    => $this->mNewWiki->sitename,
 			'city_lang'           => $this->mNewWiki->language,
 			'city_created'        => wfTimestamp( TS_DB, time() ),
+			'city_umbrella'       => $this->mNewWiki->umbrella,
 		);
 		if ( self::ACTIVE_CLUSTER ) {
 			$insertFields[ "city_cluster" ] = self::ACTIVE_CLUSTER;
