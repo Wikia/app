@@ -21,7 +21,8 @@ abstract class Module {
 		}
 		wfProfileIn(__METHOD__ . " (" . $name.'_'.$action .")");
 
-		$moduleObject = new $moduleClassName();
+		//$moduleObject = new $moduleClassName();
+		$moduleObject = F::build($moduleClassName);
 		$moduleObject->templatePath = dirname($wgAutoloadClasses[$moduleClassName]).'/templates/'.$name.'_'.$action.'.php';
 
 		// auto-initialize any module variables which match variables in skinTemplate->data or _GLOBALS
