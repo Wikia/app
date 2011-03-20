@@ -41,7 +41,7 @@ var AdSS = {
 
 		var slot;
 		var showedAds = [];
-		for (slot=1; slot < response.length/100 + 1; slot++) {
+		for (slot=1; slot < response.length/50 + 1; slot++) {
 			var rand_no = Math.random() * response.length;
 			rand_no = Math.floor(rand_no+1);
 			var rand_ad = response[rand_no-1];
