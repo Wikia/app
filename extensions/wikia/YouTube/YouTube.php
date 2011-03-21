@@ -120,8 +120,10 @@ function embedYouTube($input, $argv, $parser )
 	//$parser->disableCache();
 
 	$ytid   = '';
-	$width  = $width_max  = 425;
-	$height = $height_max = 355;
+	$width_max  = 640;
+	$height_max = 360;
+	$width  = 425;
+	$height = 355;
 
 	if (!empty($argv['ytid']))
 	{
