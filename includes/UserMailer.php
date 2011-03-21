@@ -189,6 +189,10 @@ class UserMailer {
 			/* Wikia change begin - @author: Marooned */
 			/* Add category to header to allow easier data gathering */
 			$headers['X-Msg-Category'] = $category;
+			// Add a header for the server-name (helps us route where SendGrid will send bounces).
+			if(!empty($_SERVER)) {
+				$headers["X-ServerName"] = $_SERVER['SERVER_NAME'];
+			}
 			/* Wikia change end */
 
 			/* Wikia change begin - @author: Sean Colombo */
@@ -353,6 +357,11 @@ class UserMailer {
 
 		/* Add category to header to allow easier data gathering */
 		$headers['X-Msg-Category'] = $category;
+
+		// Add a header for the server-name (helps us route where SendGrid will send bounces).
+		if(!empty($_SERVER)) {
+			$headers["X-ServerName"] = $_SERVER['SERVER_NAME'];
+		}
 
 		$mime = new Mail_mime();
 
