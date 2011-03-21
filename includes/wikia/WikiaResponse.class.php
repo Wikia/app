@@ -185,6 +185,7 @@ class WikiaResponse {
 		}
 	}
 
+	// @codeCoverageIgnoreStart
 	protected function sendHeader( $header, $replace, $responseCode = null ) {
 		if( !empty( $responseCode ) ) {
 			header( $header, $replace, $responseCode );
@@ -193,6 +194,7 @@ class WikiaResponse {
 			header( $header, $replace );
 		}
 	}
+	// @codeCoverageIgnoreEnd
 
 	public function __toString() {
 		return $this->toString();
