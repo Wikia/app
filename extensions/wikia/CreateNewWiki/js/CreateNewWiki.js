@@ -19,6 +19,8 @@ var WikiBuilder = {
 	cityId: false,
 	finishCreateUrl: false,
 	retryGoto: 0,
+	nameAjax: false,
+	domainAjax: false,
 	init: function() {
 		// pre-cache
 		WikiBuilder.wb = $('#CreateNewWiki');
@@ -42,7 +44,7 @@ var WikiBuilder = {
 		// Name Wiki event handlers
 		$('#NameWiki input.next').click(function() {
 			$.tracker.byStr('createnewwiki/namewiki/next');
-			if (!WikiBuilder.wikiDomain.val() || !WikiBuilder.wikiName.val() || $('#NameWiki .wiki-name-error').html() || $('#NameWiki .wiki-domain-error').html()) {
+			if (!WikiBuilder.wikiDomain.val() || !WikiBuilder.wikiName.val() || $('#NameWiki .wiki-name-error').html() || $('#NameWiki .wiki-domain-error').html() || WikiBuilder.nameAjax || WikiBuilder.domainAjax) {
 				WikiBuilder.nameWikiSubmitError.show().html(WikiBuilderCfg['name-wiki-submit-error']).delay(3000).fadeOut();
 			} else {
 				WikiBuilder.saveState({
@@ -61,12 +63,14 @@ var WikiBuilder = {
 			}
 		});
 		WikiBuilder.wikiDomain.keyup(function() {
+			WikiBuilder.domainAjax = true;
 			if(WikiBuilder.wdtimer) {
 				clearTimeout(WikiBuilder.wdtimer);
 			}
 			WikiBuilder.wdtimer = setTimeout(WikiBuilder.checkDomain, 500);
 		});
 		WikiBuilder.wikiName.keyup(function() {
+			WikiBuilder.nameAjax = true;
 			var name = $(this).val();
 			name = name.replace(/[^a-zA-Z0-9]+/g, '').replace(/ /g, '');
 			WikiBuilder.wikiDomain.val(name.toLowerCase()).trigger('keyup');
@@ -189,6 +193,7 @@ var WikiBuilder = {
 		var name = WikiBuilder.wikiName.val();
 		var lang = WikiBuilder.wikiLanguage.val();
 		if(name) {
+			WikiBuilder.nameAjax = true;
 			$.post(wgScript, {
 				action: 'ajax',
 				rs: 'moduleProxy',
@@ -206,6 +211,7 @@ var WikiBuilder = {
 					} else {
 						WikiBuilder.wikiNameError.html('');
 					}
+					WikiBuilder.nameAjax = false;
 				}
 			});
 		} else {
@@ -221,6 +227,7 @@ var WikiBuilder = {
 			wd = wd.toLowerCase();
 			WikiBuilder.wikiDomain.val(wd);
 			WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, 'spinner');
+			WikiBuilder.domainAjax = true;
 			$.post(wgScript, {
 				action: 'ajax',
 				rs: 'moduleProxy',
@@ -241,6 +248,7 @@ var WikiBuilder = {
 						WikiBuilder.wikiDomainError.html('');
 						WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, 'ok');
 					}
+					WikiBuilder.domainAjax = false;
 				}
 			});
 		} else {
