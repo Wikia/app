@@ -268,7 +268,7 @@ EOT
 				$user->setOption( 'enotifminoredits', 0);
 				$user->setOption( 'watchlistdigest', 0);
 				$user->setOption( 'marketingallowed', 0);
-				$user->setOption( 'disablemail', 0);
+				$user->setOption( 'disablemail', 1);
 
 				#super important, dont forget to save the bits back to metal
 				$user->saveSettings();
