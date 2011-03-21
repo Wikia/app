@@ -104,14 +104,42 @@ abstract class ExternalUser {
 			# kills me
 			return false;
 		}
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$id = $dbr->selectField( 'external_user', 'eu_external_id',
-			array( 'eu_local_id' => $user->getId() ), __METHOD__ );
-		if ( $id === false ) {
+		
+		if ( method_exists( $wgExternalAuthType, 'initFromUser' ) ) {
+			$obj = new $wgExternalAuthType;
+			if ( !$obj->initFromUser( $user ) ) {
+				return false;
+			}
+		} else {
+			$dbr = wfGetDB( DB_SLAVE );
+			$id = $dbr->selectField( 'external_user', 'eu_external_id',
+				array( 'eu_local_id' => $user->getId() ), __METHOD__ );
+			if ( $id === false ) {
+				return false;
+			}
+			$obj = self::newFromId( $id );
+		}
+		
+		return $obj;
+	}
+	
+	/**
+	 * add new User object to database
+	 * 
+	 * @param $user User
+	 * @return mixed User or false
+	 */
+	public static function addUser( &$User, $password, $email, $realname ) {
+		global $wgExternalAuthType;
+		if ( is_null( $wgExternalAuthType ) ) {
 			return false;
 		}
-		return self::newFromId( $id );
+
+		$obj = new $wgExternalAuthType;
+		if ( !$obj->addToDatabase( $User, $password, $email, $realname ) ) {
+			return false;
+		}
+		return $User;
 	}
 
 	/**
@@ -136,6 +164,15 @@ abstract class ExternalUser {
 	protected abstract function initFromId( $id );
 
 	/**
+	 * Given a User object. Return true if successful, otherwise
+	 * false.
+	 *
+	 * @param $user object
+	 * @return bool Success?
+	 */
+	protected abstract function initFromUser( $User );
+	
+	/**
 	 * Try to magically initialize the user from cookies or similar information
 	 * so he or she can be logged in on just viewing the wiki.  If this is
 	 * impossible to do, just return false.
@@ -148,6 +185,14 @@ abstract class ExternalUser {
 		return false;
 	}
 
+	/**
+	 * Add user to the central database
+	 *
+	 * @param $user object
+	 * @return bool
+	 */
+	protected abstract function addToDatabase( $User, $password, $email, $realname );
+	
 	/**
 	 * This must return some identifier that stably, uniquely identifies the
 	 * user.  In a typical web application, this could be an integer
@@ -185,7 +230,7 @@ abstract class ExternalUser {
 	 * @return bool
 	 */
 	abstract public function authenticate( $password );
-
+	
 	/**
 	 * Retrieve the value corresponding to the given preference key.  The most
 	 * important values are:
@@ -275,7 +320,7 @@ abstract class ExternalUser {
 	 *
 	 * @param $id int user_id
 	 */
-	public final function linkToLocal( $id ) {
+	protected function linkToLocal( $id ) {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->replace( 'external_user',
 			array( 'eu_local_id', 'eu_external_id' ),
@@ -289,7 +334,7 @@ abstract class ExternalUser {
 	 * a local user.
 	 * @return Mixed User if the account is linked, Null otherwise.
 	 */
-	public final function getLocalUser(){
+	protected function getLocalUser(){
 		$dbr = wfGetDb( DB_SLAVE );
 		$row = $dbr->selectRow(
 			'external_user',
@@ -301,4 +346,10 @@ abstract class ExternalUser {
 			: null;
 	}
 	
+	/**
+	 * set global user object in externalUser 
+	 */	
+	public function updateUser() {
+		return false;
+	}
 }
