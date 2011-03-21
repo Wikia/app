@@ -581,8 +581,6 @@ class EmailNotification {
 					wfDebug( __METHOD__.": user talk page edited, but user does not exist\n" );
 				} elseif ( $targetUser->getId() == $editor->getId() ) {
 					wfDebug( __METHOD__.": user edited their own talk page, no notification sent\n" );
-				} elseif ( !$targetUser->canReceiveEmail() ) {
-					wfDebug( __METHOD__.": user doesn't have confirmed e-mail or has disabled e-mail notification in his options\n" );
 				} elseif( $targetUser->getOption( 'enotifusertalkpages' ) ) {
 					if( $targetUser->isEmailConfirmed() ) {
 						wfDebug( __METHOD__.": sending talk page update notification\n" );
