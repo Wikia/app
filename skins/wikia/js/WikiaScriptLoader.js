@@ -1,9 +1,9 @@
 // @see http://www.stevesouders.com/blog/2009/04/27/loading-scripts-without-blocking/
 var WikiaScriptLoader = function() {
-	// detect Firefox (ignore Fx4.0 beta - RT #91718) / Opera and use script DOM node injection for them
+	// detect Firefox 3.x (ignore Fx4.0 beta - RT #91718/BugId:3622) / Opera and use script DOM node injection for them
 	var userAgent = navigator.userAgent.toLowerCase();
 	this.useDOMInjection = (userAgent.indexOf('opera') != -1) ||
-		(userAgent.indexOf('firefox') != -1 && document.createElement("script").async != true);
+		(userAgent.indexOf('firefox/3.') != -1);
 
 	// detect IE
 	this.isIE = (userAgent.indexOf('opera') == -1) && (userAgent.indexOf('msie') != -1);
