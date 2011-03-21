@@ -10,7 +10,7 @@ class GlobalWatchlistBot {
 	private $mWikiData = array();
 	private $iEmailsSent;
 
-	const MAX_LAG = 30;
+	const MAX_LAG = 10;
 	const RECORDS_SLEEP = 350;
 	const EMAILS = 100;
 	const TIME_SLEEP = 60;
@@ -35,7 +35,9 @@ class GlobalWatchlistBot {
 	 */
 	public function getGlobalWatchlisters( $sFlag = 'watchlistdigest' ) {
 		$aUsers = array();
-	
+		
+		$defaultValue = User::getDefaultOption( $sFlag );
+		
 		$aWhereClause = array( "user_email_authenticated IS NOT NULL" );
 		if ( count( $this->mUsers ) ) {
 			// get only users passed by --users argument
@@ -44,38 +46,47 @@ class GlobalWatchlistBot {
 				$sUserNames .= ( $sUserNames ? "," : "" ) . "'" . addslashes( $sUserName ) . "'";
 			}
 			$aWhereClause[] = "user_name IN ($sUserNames)";
-		}
+		} 
 
 		global $wgWikiaCentralAuthDatabase;
 		if ( empty( $wgWikiaCentralAuthDatabase ) ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$userTbl = $dbr->tableName( 'user' );
+			$userPropTbl = $dbr->tableName( 'user_properties' );
 		} else {
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgWikiaCentralAuthDatabase );
 			$userTbl = 'user';
+			$userPropTbl = 'user_properties';
 		}
 
 		$oResource = $dbr->select(
-			$userTbl,
-			array( "user_id", "user_name", "user_email" ),
+			array( $userTbl, $userPropTbl ),
+			array( "user_id", "user_name", "user_email", "up_value * 1 as prop_value" ),
 			$aWhereClause,
 			__METHOD__,
-			array( "ORDER BY" => "user_id" )
+			array( "ORDER BY" => "user_id" ),
+			array( $userPropTbl => array( 'LEFT JOIN', "up_user = user_id and up_property = '$sFlag'" ) )
 		);
+
+		echo print_r($dbr->lastQuery(), true);
 
 		if ( $oResource ) {
 			$iWatchlisters = 0;
 
 			while ( $oResultRow = $dbr->fetchObject( $oResource ) ) {
-				$oUser = User::newFromId( $oResultRow->user_id );
+
+				if ( is_null( $oResultRow->prop_value ) ) {
+					$oResultRow->prop_value = $defaultValue;
+				}
 				
-				if ( is_object( $oUser ) && ( $oUser->getBoolOption( $sFlag ) ) ) {
+				if ( $oResultRow->prop_value != $defaultValue ) {
 					$iWatchlisters++;
 					$aUsers[$oResultRow->user_id] = array (
 						'name' => $oResultRow->user_name,
 						'email' => $oResultRow->user_email
 					);
 				}
+
 			}
 			$dbr->freeResult( $oResource );
 			$this->printDebug( "$iWatchlisters global watchilster(s) found. (time: " . $this->calculateDuration( time() - $this->mStartTime ) . ")" );
@@ -94,12 +105,11 @@ class GlobalWatchlistBot {
 	private function getUsersPagesFromWatchlist( $sWikiDb ) {
 		$aPages = array();
 
-		$dbr = wfGetDB( DB_SLAVE, 'stats', $sWikiDb );
+		$dbr_wiki = wfGetDB( DB_SLAVE, 'stats', $sWikiDb );
 		wfWaitForSlaves( 5 );
 
-		if ( $dbr->tableExists( 'watchlist' ) ) {
-
-			$oResource = $dbr->select(
+		if ( $dbr_wiki->tableExists( 'watchlist' ) ) {
+			$oResource = $dbr_wiki->select(
 				array ( "watchlist", "page" ),
 				array (
 					"wl_user",
@@ -119,14 +129,16 @@ class GlobalWatchlistBot {
 			);
 
 			if ( $oResource ) {
-				while ( $oResultRow = $dbr->fetchObject( $oResource ) ) {
+				while ( $oResultRow = $dbr_wiki->fetchObject( $oResource ) ) {
 					$aPages[ $oResultRow->wl_user ][] = $oResultRow;
 				}
-				$dbr->freeResult( $oResource );
+				$dbr_wiki->freeResult( $oResource );
 			}
 		}
-
-		$dbr->close();
+		
+		if ( $sWikiDb != 'wikicities' ) {
+			$dbr_wiki->close();
+		}
 
 		return $aPages;
 	}
@@ -203,11 +215,11 @@ class GlobalWatchlistBot {
 						} // foreach $aWatchLists
 					} // if !empty $aWatchLists
 				} // foreach
+				if ( ( $wlNbr % self::RECORDS_SLEEP ) == 0 ) {
+					sleep( self::MAX_LAG );
+				}
 			} // !empty
 			$this->printDebug( "Gathering watchlist data for: {$oResultRow->city_dbname} ({$oResultRow->city_id}) and " . count( $this->mUsers ) . " users ... done! (time: " . $this->calculateDuration( time() - $localTime ) . ")" );
-			if ( ( $wlNbr % self::RECORDS_SLEEP ) == 0 ) {
-				sleep( self::TIME_SLEEP );
-			}
 		} // while
 		$dbr->freeResult( $oResource );
 
@@ -463,6 +475,7 @@ class GlobalWatchlistBot {
 				while ( $oResultRow = $dbr->fetchObject( $oResource ) ) {
 					# ---
 					if ( $iWikiId != $oResultRow->gwa_city_id ) {
+						$this->printDebug( "Prepare email for Wiki: " . $oResultRow->gwa_city_id );
 
 						if ( count( $aWikiDigest['pages'] ) ) {
 							$aDigestData[ $iWikiId ] = $aWikiDigest;
@@ -505,6 +518,7 @@ class GlobalWatchlistBot {
 
 				if ( count( $aDigestData ) ) {
 					$iEmailsSent++;
+					$this->printDebug( "Sending email with " . count( $aDigestData ) . " records " );		
 					$this->sendMail( $iUserId, $aDigestData, $bTooManyPages );
 				}
 			} // foreach
@@ -532,7 +546,6 @@ class GlobalWatchlistBot {
 			$wikiDB = WikiFactory::IDtoDB( $oResultRow->gwa_city_id );
 			if ( $wikiDB ) {
 				$db_wiki = wfGetDB( DB_SLAVE, 'stats', $wikiDB );
-				$db_wiki->ping();
 				$oRow = $db_wiki->selectRow(
 					array( "watchlist" ),
 					array( "count(*) as cnt" ),
@@ -550,7 +563,6 @@ class GlobalWatchlistBot {
 					'blogpage' => GlobalTitle::newFromText( $blogTitle, NS_BLOG_ARTICLE, $iWikiId ),
 					'own_comments' => 0
 				);
-				$db_wiki->close();
 			}
 		}
 
