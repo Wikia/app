@@ -353,7 +353,10 @@ var WikiBuilder = {
 					$.showModal(res.caption, res.content);
 				}
 			}
-		);
+		)
+		.error(function() {
+			WikiBuilder.generateAjaxErrorMsg();
+		});
 	}, 
 	
 	gotoMainPage: function() {
@@ -391,11 +394,22 @@ var WikiBuilder = {
 			function(res) {
 				WikiBuilder.createStatus = res.status;
 				WikiBuilder.createStatusMessage = res.statusMsg;
-				WikiBuilder.cityId = res.cityId;
-				WikiBuilder.finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ? res.finishCreateUrl.replace('.com/','.com/wiki/') : res.finishCreateUrl);
-				$('#UpgradeWiki .wiki-name').html(res.siteName);
+				if(WikiBuilder.createStatus && WikiBuilder.createStatus == 'ok') {
+					WikiBuilder.cityId = res.cityId;
+					WikiBuilder.finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ? res.finishCreateUrl.replace('.com/','.com/wiki/') : res.finishCreateUrl);
+					$('#UpgradeWiki .wiki-name').html(res.siteName);
+				} else {
+					$.showModal(res.statusHeader, WikiBuilder.createStatusMessage);
+				}
 			}
-		);
+		)
+		.error(function() {
+			WikiBuilder.generateAjaxErrorMsg();
+		});
+	},
+	
+	generateAjaxErrorMsg: function() {
+		$.showModal(WikiBuilderCfg['cnw-error-general-heading'], WikiBuilderCfg['cnw-error-general']);
 	}
 }
 

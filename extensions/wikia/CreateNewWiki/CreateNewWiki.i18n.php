@@ -74,6 +74,9 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-welcome-instruction1' => 'Click the button below to start adding pages to your wiki.',
 	'cnw-welcome-instruction2' => 'You\'ll see this button throughout your wiki, use it any time you want to add a new page.',
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
+	// error messages
+	'cnw-error-general' => 'Something went wrong while creating your wiki.  Please try again later.',
+	'cnw-error-general-heading' => 'Create New Wiki Error',
 );
 
 /** Message documentation (Message documentation) */
@@ -126,6 +129,8 @@ $messages['qqq'] = array(
 	'cnw-welcome-instruction1' => 'First line of instruction to add a page',
 	'cnw-welcome-instruction2' => 'Second line of instruction to add a page after the button',
 	'cnw-welcome-help' => 'Message to Community central with embedded anchor. (leave blank if community does not exist)',
+	'cnw-error-general' => 'Generic error message to alert users that something went wrong while creating wiki',
+	'cnw-error-general-heading' => 'Heading for generic error in modal dialog',
 );
 
 /** Afrikaans (Afrikaans)
