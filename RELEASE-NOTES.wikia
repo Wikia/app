@@ -1,3 +1,6 @@
+== Changes since release-012 ==
+* fb#3622: Firefox 4 has JS issues - some JS doesn't run (macbre)
+
 == Changes since release-011 ==
 * fb#1349: ThemeDesigner: changing logo doesn't take effect until page refresh (macbre)
 * fb#3446: ScavengerHuntTest fails (Marooned)
