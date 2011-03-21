@@ -68,7 +68,7 @@ class GlobalWatchlistBot {
 			array( $userPropTbl => array( 'LEFT JOIN', "up_user = user_id and up_property = '$sFlag'" ) )
 		);
 
-		echo print_r($dbr->lastQuery(), true);
+		//echo print_r($dbr->lastQuery(), true);
 
 		if ( $oResource ) {
 			$iWatchlisters = 0;
@@ -79,7 +79,7 @@ class GlobalWatchlistBot {
 					$oResultRow->prop_value = $defaultValue;
 				}
 				
-				if ( $oResultRow->prop_value != $defaultValue ) {
+				if ( $oResultRow->prop_value == $defaultValue ) {
 					$iWatchlisters++;
 					$aUsers[$oResultRow->user_id] = array (
 						'name' => $oResultRow->user_name,
