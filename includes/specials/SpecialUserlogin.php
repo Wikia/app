@@ -332,7 +332,12 @@ class LoginForm {
 			return false;
 		}
 
-		if ( 0 != $u->idForName() ) {
+		$this->mExtUser = ExternalUser::newFromName( $this->mName );
+		
+		if ( is_object( $this->mExtUser ) && ( 0 != $this->mExtUser->getId() ) ) {
+			$this->mainLoginForm( wfMsg( 'userexists' ) );
+			return false;			
+		} elseif ( 0 != $u->idForName() ) {
 			$this->mainLoginForm( wfMsg( 'userexists' ) );
 			return false;
 		}
@@ -398,7 +403,8 @@ class LoginForm {
 			return false;
 		}
 
-		self::clearCreateaccountToken();		
+		self::clearCreateaccountToken();
+		$u->mBirthDate = date('Y-m-d', $userBirthDay);	
 		$u = $this->initUser( $u, false );
 		$user_id = $u->getID();
 		if(!empty($user_id)) {
@@ -423,10 +429,17 @@ class LoginForm {
 	 * @private
 	 */
 	function initUser( $u, $autocreate ) {
-		global $wgAuth;
+		global $wgAuth, $wgExternalAuthType;
 
-		$u->addToDatabase();
-
+		if ( $wgExternalAuthType ) {			
+			$u = ExternalUser::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName );
+			if ( is_object( $u ) ) {
+				$this->mExtUser = ExternalUser::newFromName( $this->mName );	
+			}	
+		} else{
+			$u->addToDatabase();
+		}
+		
 		if ( $wgAuth->allowPasswordChange() ) {
 			$u->setPassword( $this->mPassword );
 		}
@@ -437,7 +450,7 @@ class LoginForm {
 
 		$wgAuth->initUser( $u, $autocreate );
 
-		if ( $this->mExtUser ) {
+		if ( is_object( $this->mExtUser ) ) {
 			$this->mExtUser->linkToLocal( $u->getId() );
 			$email = $this->mExtUser->getPref( 'emailaddress' );
 			if ( $email && !$this->mEmail ) {
