@@ -121,8 +121,10 @@ abstract class WikiaSuperFactory {
 			unset(self::$setters[$className]);
 		}
 		else {
+			// @codeCoverageIgnoreStart
 			self::$constructors = array();
 			self::$setters = array();
+			// @codeCoverageIgnoreEnd
 		}
 	}
 }
