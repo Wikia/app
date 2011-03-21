@@ -501,8 +501,34 @@ class PageHeaderModule extends Module {
 		$this->subtitle = View::link($wgTitle, wfMsg('oasis-page-header-back-to-article'), array('accesskey' => 'c'), array(), 'known');
 	}
 
+	/**
+	 * Called instead of executeIndex when the CorporatePage extension is enabled.
+	 */
 	public function executeCorporate() {
-		global $wgTitle;
+		global $wgTitle, $wgOut, $wgSuppressNamespacePrefix;
+		wfProfileIn( __METHOD__ );
+		
+		// page namespace
+		$ns = $wgTitle->getNamespace();
+
+		// default title "settings" (RT #145371), don't touch special pages
+		if ($ns == NS_FORUM) {
+			$this->title = $wgTitle->getText();
+			$this->displaytitle = false;
+		} else if ($ns != NS_SPECIAL) {
+			$this->displaytitle = true;
+			$this->title = $wgOut->getPageTitle();
+		}
+
+		// remove namespaces prefix from title
+		$namespaces = array(NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY, NS_FILE);
+		if (defined('NS_VIDEO')) {
+			$namespaces[] = NS_VIDEO;
+		}
+		if ( in_array($ns, array_merge( $namespaces, $wgSuppressNamespacePrefix ) ) ) {
+			$this->title = $wgTitle->getText();
+			$this->displaytitle = false;
+		}
 
 		if (ArticleAdLogic::isMainPage()) {
 			$this->title = '';
@@ -513,6 +539,8 @@ class PageHeaderModule extends Module {
 			global $wgOut;
 			$wgOut->addScriptFile('../oasis/js/CorporateHub.js');
 		}
+		
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
