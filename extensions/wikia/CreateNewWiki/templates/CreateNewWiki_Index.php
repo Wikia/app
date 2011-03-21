@@ -186,7 +186,9 @@
 		'desc-wiki-submit-error':'<?= wfMsg('cnw-desc-wiki-submit-error') ?>',
 		'currentstep':'<?= $currentStep ?>',
 		'skipwikiaplus':'<?= $skipWikiaPlus ?>',
-		'descriptionplaceholder':'<?= wfMsg('cnw-desc-placeholder') ?>'
+		'descriptionplaceholder':'<?= wfMsg('cnw-desc-placeholder') ?>',
+		'cnw-error-general':'<?= wfMsg('cnw-error-general') ?>',
+		'cnw-error-general-heading':'<?= wfMsg('cnw-error-general-heading') ?>'
 	};
 	var themes = <?= Wikia::json_encode($wgOasisThemes) ?>;
 </script>

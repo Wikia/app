@@ -116,13 +116,16 @@ class CreateNewWikiModule extends Module {
 		{
 			// do nothing
 			$this->status = 'error';
+			$this->statusMsg = wfMsg('cnw-error-general');
+			$this->statusHeader = wfMsg('cnw-error-general-heading');
 		} else {
 			$createWiki = new CreateWiki($params['wikiName'], $params['wikiDomain'], $params['wikiLanguage'], $params['wikiCategory']);
 			$createWiki->create();
 			$this->cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($this->cityId)) {
 				$this->status = 'backenderror';
-				$this->statusMsg = wfMsg('databaseerror');
+				$this->statusMsg = wfMsg('databaseerror').'<br>'.wfMsg('cnw-error-general');
+				$this->statusHeader = wfMsg('cnw-error-general-heading');
 			} else {
 				$this->status = 'ok';
 				$this->siteName = $createWiki->getWikiInfo('sitename');
