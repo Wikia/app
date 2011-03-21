@@ -7,6 +7,7 @@
 abstract class WikiaSuperFactory {
 	protected static $constructors = array();
 	protected static $setters = array();
+	protected static $reflections = array();
 
 	/**
 	 * add class constructor
@@ -83,17 +84,19 @@ abstract class WikiaSuperFactory {
 
 		$object = null;
 		$buildParams = $params;
-		if (isset(self::$constructors[$className][$constructorMethod])) {
+		if(isset(self::$constructors[$className][$constructorMethod])) {
 			$buildParams = array_merge(self::$constructors[$className][$constructorMethod], $params);
 		}
 
 		if($constructorMethod == '__construct') {
-			$reflectionObject = new ReflectionClass($className);
+			if(empty(self::$reflections[$className])) {
+				self::$reflections[$className] = new ReflectionClass($className);
+			}
 			if(!empty($buildParams)) {
-				$object = $reflectionObject->newInstanceArgs($buildParams);
+				$object = self::$reflections[$className]->newInstanceArgs($buildParams);
 			}
 			else {
-				$object = $reflectionObject->newInstanceArgs();
+				$object = self::$reflections[$className]->newInstanceArgs();
 			}
 		}
 		else {
