@@ -1,6 +1,6 @@
 <div id="WikiaPageHeader" class="WikiaPageHeader">
 	<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
-	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
+	<h1><?= !empty($displaytitle) ? $title : htmlspecialchars($title) ?></h1>
 <?php
 	// edit button
 	if (!empty($action)) {
