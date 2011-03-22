@@ -55,7 +55,7 @@ class ExternalUser_Wikia extends ExternalUser {
             return false;
         }
 
-		$uid = $_SESSION['wsUserID'];
+		$uid = @$_SESSION['wsUserID'];
 		wfDebug( __METHOD__ . ": user from session: $uid \n" );
 		if ( empty($uid) ) {
 			return false;
