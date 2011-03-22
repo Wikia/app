@@ -62,8 +62,8 @@ class CreateNewWikiModule extends Module {
 		// facebook callback overwrite on login.  CreateNewWiki re-uses current login stuff.
 		$fbOnLoginJsOverride = 'WikiBuilder.fbLoginCallback();';
 
-		// If not english, skip Wikia Plus signup step
-		$this->skipWikiaPlus = $this->params['wikiLanguage'] != 'en';
+		// remove wikia plus for now for all languages
+		$this->skipWikiaPlus = true;
 
 		wfProfileOut( __METHOD__ );
 	}
