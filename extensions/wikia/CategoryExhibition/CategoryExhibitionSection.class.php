@@ -43,7 +43,7 @@ class CategoryExhibitionSection {
 	protected function fetchSectionItems( $mNamespace = NS_MAIN ) {
 
 		global $wgDevelEnvironment;
-		$sCategoryDBKey = mysql_real_escape_string( $this->categoryTitle->getDBkey() );
+		$sCategoryDBKey = $this->categoryTitle->getDBkey();
 		if (!is_array($mNamespace)){
 			$mNamespace = (int)$mNamespace;
 		} else {
