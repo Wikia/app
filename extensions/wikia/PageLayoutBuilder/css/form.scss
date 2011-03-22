@@ -129,7 +129,7 @@ ul.plb-form-actions {
 .plb-form-template-toolbar {
 	top: -24px;
 	img {
-		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/toolbar_sprite.png); /* $--wgCdnStylePath */
+		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/toolbar_sprite.png); /* $wgCdnStylePath */
 		border: solid 1px #a2a2a2;
 		cursor: pointer;
 		&.toolbar-bold {
@@ -165,7 +165,7 @@ div#WikiaPhotoGalleryOptionsTabs {
 
 .WikiaPhotoGalleryEditorPage {
 	h1{
-	
+
 	}
 }
 

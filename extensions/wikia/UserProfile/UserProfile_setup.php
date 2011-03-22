@@ -5,7 +5,7 @@ $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UserProfile_handler';
 function UserProfile_handler(&$skin, &$tpl) {
 	wfProfileIn(__METHOD__);
 
-	global $wgTitle, $wgOut, $wgRequest, $wgScriptPath, $wgUser;
+	global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath, $wgUser;
 
 	// don't output on Oasis
 	if (get_class($wgUser->getSkin()) == 'SkinOasis') {
@@ -41,8 +41,7 @@ function UserProfile_handler(&$skin, &$tpl) {
 	wfRunHooks( 'AddToUserProfile', array(&$out, $user) );
 
 	if(count($out) > 0) {
-
-    $wgOut->addStyle( '../..' . $wgScriptPath . '/extensions/wikia/UserProfile/userprofile.css' );
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/UserProfile/userprofile.css");
 
 		$html .= "<div id='profile-content'>";
 		$html .= "<div id='profile-content-inner'>";

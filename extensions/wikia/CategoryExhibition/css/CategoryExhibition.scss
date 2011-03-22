@@ -10,7 +10,7 @@ $thumb-border-top: 4px;
 $thumb-border-bottom: 5px;
 $thumb-border-left: 5px;
 $thumb-border-right: 6px;
-$details-fg-color: $color-button-text;  
+$details-fg-color: $color-button-text;
 $details-bg-color: $color-buttons;
 
 $color-inctive-button: mix($color-page, #000, 60%);
@@ -49,7 +49,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		position: relative;
 		width: 14px;
 		height: 14px;
-		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-inactive.png');
+		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-inactive.png'); /* $wgCdnStylePath */
 		background-repeat: no-repeat;
 		background-position: center;
 
@@ -61,12 +61,12 @@ $color-inctive-button: mix($color-page, #000, 60%);
 			margin: 0px;
 			padding: 0px;
 		}
-		
+
 		&.active {
 			div {
 				background-color: $color-buttons;
 			}
-			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-active.png');
+			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-active.png'); /* $wgCdnStylePath */
 		}
 
 		#cat-exh-new-one {
@@ -93,7 +93,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		position: relative;
 		width: 14px;
 		height: 14px;
-		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-inactive.png');
+		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-inactive.png'); /* $wgCdnStylePath */
 		background-repeat: no-repeat;
 		background-position: center;
 
@@ -110,7 +110,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 			div {
 				background-color: $color-buttons;
 			}
-			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-active.png');
+			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-active.png'); /* $wgCdnStylePath */
 		}
 
 		#cat-exh-old-one {
@@ -142,7 +142,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 	margin: 6px auto;
 	padding: 0;
 	overflow: hidden;
-	
+
 
 	.category-gallery-holder {
 
@@ -163,7 +163,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		}
 
 	}
-	
+
 	br {
 		position: relative;
 		float: left;
@@ -171,7 +171,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		width: 100%;
 		clear: both;
 	}
-	
+
 	hr {
 		$color: a3a3a3;
 		@include clearfix;
@@ -194,7 +194,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 	margin: 10px;
 	height: $thumb-size-height + $thumb-border-top + $thumb-border-bottom + 16px;
 	vertical-align: top;
-	
+
 	a, a:hover, a:visited {
 		color: $color-text;
 		text-decoration:none;
@@ -206,31 +206,31 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
 		width: $thumb-size-width;
 		height: $thumb-size-height;
-		background-image: url('/extensions/wikia/CategoryExhibition/img/Icon_category_content.png');
+		background-image: url('/extensions/wikia/CategoryExhibition/img/Icon_category_content.png'); /* $wgCdnStylePath */
 		background-repeat: no-repeat;
 		background-position: center;
 	}
 
 	img {
 		@include box-shadow(0, 0, 20px, mix($color-page, #000, 60%));
-		
+
 		position: absolute;
 		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
 		width: $thumb-size-width;
 		height: $thumb-size-height;
 		background-color: $color-page;
 	}
-	
+
 	.snippet {
 		@include box-shadow(0, 0, 20px, mix($color-page, #000, 60%));
-		
+
 		position: absolute;
 		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
 		width: $thumb-size-width;
 		height: $thumb-size-height;
 		overflow: hidden;
 		background-color: $color-page;
-		
+
 		.quote {
 			font-style: normal;
 			font-weight: bold;
@@ -242,7 +242,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 			top: 17px;
 			padding: 0;
 		}
-		
+
 		.text {
 			font-family: Helvetica,Arial,sans-serif; /* overriden in Monaco */
 			font-style: normal;
@@ -281,7 +281,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 }
 
 .category-gallery-media {
-	
+
 	list-style: none;
 	position: relative;
 	display: inline-block;
@@ -310,7 +310,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		position: absolute;
 		width: 100%;
 		height: 100%;
-		background: transparent url(http://images.wikia.com/common/extensions/wikia/MyHome/images/play.png) no-repeat 50% 50%;
+		background: transparent url(http://images.wikia.com/common/extensions/wikia/MyHome/images/play.png) no-repeat 50% 50%; /* $wgCdnStylePath */
 		z-index: 100;
 		top: $thumb-border-top - 30px ;
 	}
@@ -329,13 +329,13 @@ $color-inctive-button: mix($color-page, #000, 60%);
 	}
 
 	details.bigger {
-		
+
 		max-height: 24px;
 		height: 24px;
-		
+
 		a {
 			display: inline;
-			
+
 		}
 	}
 
@@ -345,11 +345,11 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
 		width: $thumb-size-width;
 		height: $thumb-size-height;
-		background-image: url('/extensions/wikia/CategoryExhibition/img/Icon_category_content.png');
+		background-image: url('/extensions/wikia/CategoryExhibition/img/Icon_category_content.png'); /* $wgCdnStylePath */
 		background-repeat: no-repeat;
 		background-position: center;
 	}
-	
+
 }
 category-gallery-paginator{
 	position: relative;

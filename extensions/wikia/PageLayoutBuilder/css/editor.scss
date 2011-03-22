@@ -12,18 +12,18 @@ td.plb-toolbox {
 	width: $toolbox-width;
 	max-width: $toolbox-width;
 	vertical-align: top;
-	
+
 	a, a:hover, a:active, a:visited {
 		cursor: auto;
 	}
-	
+
 	.plb-manager {
 		height: $manager-height;
-		
+
 		a:hover { /* ck override */
 			text-decoration: none;
 		}
-		
+
 		.wikia-menu-button {
 			margin-top: 12px;
 			margin-left: 9px;
@@ -39,11 +39,11 @@ td.plb-toolbox {
 		margin: 6px;
 		margin-left: 0;
 		padding: 0 6px;
-		
+
 		& > * {
 			width: 100%;
 		}
-		
+
 		.plb-widgets-summary {
 			padding: ( $item-outer-height - 32px ) / 2 0;
 			height: $item-outer-height;
@@ -70,7 +70,7 @@ td.plb-toolbox {
 			.plb-brick {
 				width: 32px;
 				height: 32px;
-				background: url(/extensions/wikia/PageLayoutBuilder/images/brick-icon.png);
+				background: url(/extensions/wikia/PageLayoutBuilder/images/brick-icon.png); /* $wgCdnStylePath */
 			}
 			.plb-widgets-count-text {
 				margin-left: 9px;
@@ -79,7 +79,7 @@ td.plb-toolbox {
 				display: block;
 			}
 		}
-	
+
 		ul.plb-widget-list {
 			overflow-x: hidden;
 			overflow-y: auto;
@@ -105,24 +105,24 @@ td.plb-toolbox {
 				vertical-align: middle;
 				overflow: hidden;
 			}
-			
+
 			li > * {
 				line-height: normal;
 				vertical-align: middle;
 			}
-			
+
 			li > span.details {
 				display: inline;
 				zoom: 1;
 				display: inline-block;
 				margin-left: 3px;
 			}
-			
+
 			li span.type {
 				font-weight: bold;
 				display: block;
 			}
-			
+
 			li > .buttons {
 				position: absolute;
 				display: block;
@@ -133,32 +133,32 @@ td.plb-toolbox {
 				width: auto;
 				height: 22px;
 				line-height: 22px;
-				
+
 				>input[type=button], >a {
 					float: left;
 					display: block;
 					cursor: pointer;
 					margin-left: 6px;
 				}
-				
+
 				>.delete {
 					width: 16px;  // width and height must be repeated from the .sprite.delete class
 					height: 16px; // because they get overriden by ck css rules
 				}
 			}
-	
+
 	/*
 			.plb-widget-list-entry.selected {
 				background-color: lighten($color-list-background,10%);
 			}
-			
+
 			.plb-widget-list-entry.hover {
 				background-color: lighten($color-list-background,20%);
 			}
 	*/
 		}
 	}
-	
+
 	.plb-widgets-tutorial {
 		margin: 6px;
 		margin-left: 0;
@@ -166,19 +166,19 @@ td.plb-toolbox {
 		white-space: normal;
 	}
 }
-	
+
 $plb-window-width: 400px;
 $plb-window-items-margin: 6px;
 $plb-window-items-space: 2px;
 .plb-pe-window {
 	width: $plb-window-width;
 	height: auto;
-	
-	
+
+
 	.plb-pe-left-column, .plb-pe-right-column {
 		display: inline-block;
 	}
-	
+
 	.plb-pe-left-column {
 		width: $plb-window-width / 2 - $plb-window-items-margin - $plb-window-items-space;
 		padding-right: $plb-window-items-margin;
@@ -187,52 +187,52 @@ $plb-window-items-space: 2px;
 		width: $plb-window-width / 2 - $plb-window-items-margin - $plb-window-items-space;
 		padding-left: $plb-window-items-margin;
 	}
-	
+
 	.plb-pe-main {
-	
+
 		.label {
 			margin-top: 6px;
 		}
-		
+
 		.input {
 			margin-bottom: 12px;
 		}
-		
+
 		input, select, textarea {
 			width: 100%;
 		}
-		
+
 		input[type=checkbox] {
 			width: auto;
 		}
-		
+
 	}
-	
+
 	.helpicon {
 		display: inline;
 		zoom: 1;
 		display: inline-block;
 		position: relative;
-		background-image: url(/skins/common/images/icon_help.png);
+		background-image: url(/skins/common/images/icon_help.png); /* $wgCdnStylePath */
 		width: 16px;
 		height: 16px;
 	}
-	
+
 	.helpicon-text {
 		display: none;
-		
+
 		border: 2px solid mix($color-body,$color-buttons,70%);
 		background: $color-page;
 		width: 300px;
 		padding: 3px 6px;
 	}
-	
+
 	.plb-pe-validation-status {
 		background-color: #FFFFCC;
 		border: 1px solid #AAAAAA;
 		padding: 6px;
 	}
-	
+
 	.plb-pe-field-error {
 //		border: 1px solid red;
 		border-color: red;
@@ -250,17 +250,17 @@ $plb-window-items-space: 2px;
     	padding-top: 10px;
 	}
 	.plb-pe-buttons {
-	
+
 		text-align: center;
 		margin-top: 12px;
 		margin-bottom: 3px;
-	
+
 		.plb-pe-button-save {
 		}
-		
+
 		.plb-pe-button-cancel {
 		}
-		
+
 	}
 	.plb-pe-preview-title {
 		@include linear-gradient(#cfe1ed, top, #cfe1ed, 0%, #a6c4dc, 100%);
@@ -328,7 +328,7 @@ span.plb-editor-element-list{
 		cursor: pointer;
 		margin-right:80px;
 		vertical-align:middle;
-				
+
 		a:hover {
 			text-decoration: none;
 		}
@@ -410,28 +410,28 @@ span.plb-editor-element-list{
 		height:100px;
 		h1 {
 			font-weight: bold;
-		}	
+		}
 	}
-	
+
 	.checkboxinfo {
 	    font-size: 10px;
 	}
-	
+
 	.info2 {
 		font-size:1.2em;
 	}
-	
+
 	.bodyCaption {
 		@include clearfix;
 		padding-top:32px;
 		padding-bottom:9px;
 		font-weight:bold;
 	}
-	
+
 	.infoAdmin, .infoForm {
 		border-right:1px dashed;
 	}
-	
+
 	input {
 		margin-left:0px;
 	}
@@ -439,24 +439,24 @@ span.plb-editor-element-list{
 		text-align:center;
 		min-height:570px;
 		width:33%;
-		float:left;	
+		float:left;
 		> img {
 			border:4px solid #DCDCDC;
 			width:270px;
-		}		
+		}
 	}
-	
+
 	.footerclearfix {
 		@include clearfix;
 		clear:both;
 		padding-top:30px;
-	}	
+	}
 
 	.footer1, .footer2, .footer3 {
 		width:33%;
-		float:left;	
+		float:left;
 	}
-	
+
 	.footer2 {
 		text-align:center;
 		position:relative;
@@ -470,8 +470,8 @@ span.plb-editor-element-list{
 			text-align:left;
 		}
 	}
-	
-	
+
+
 	.footer3 {
 		margin-left:50px;
 		width:250px;
@@ -480,7 +480,7 @@ span.plb-editor-element-list{
 			zoom: 1;
 			display: inline-block;
 			position: relative;
-			background-image: url(/skins/common/images/icon_help.png);
+			background-image: url(/skins/common/images/icon_help.png); /* $wgCdnStylePath */
 			height: 16px;
 			background-repeat: no-repeat;
     		margin-right: 4px;
@@ -494,7 +494,7 @@ span.plb-editor-element-list{
 			padding-top:5px;
 		}
 	}
-	
+
 	.blueBox {
 		padding-left:7px;
 		padding-right:7px;

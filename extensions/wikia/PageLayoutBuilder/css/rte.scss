@@ -14,14 +14,14 @@ $widget-margin-block-hover: 12px 3px 12px 9px;
 .plb-rte-widget {
 	position: relative;
 	cursor: pointer;
-	
+
 	// inline/block specification
 	display: inline;
 	zoom: 1;
 	display: inline-block;
 	&.plb-rte-widget-plb_mlinput {
 		display: block;
-	
+
 		.plb-rte-widget-sample-text {
 			display: block;
 		}
@@ -33,7 +33,7 @@ $widget-margin-block-hover: 12px 3px 12px 9px;
 			zoom: 1;
 		}
 	}
-	
+
 	// padding
 	padding: 5px 5px 5px 12px;
 	&.plb-rte-widget-plb_mlinput { padding: 12px 5px 12px 15px; }
@@ -42,12 +42,12 @@ $widget-margin-block-hover: 12px 3px 12px 9px;
 	// margin
 	margin: $widget-margin-std;
 	&.plb-rte-widget-plb_mlinput { margin: $widget-margin-block-std; }
-	&.plb-rte-widget-plb_image.plb-rte-widget-align-center { 
+	&.plb-rte-widget-plb_image.plb-rte-widget-align-center {
 		margin: $widget-margin-block-std;
 		margin-left: auto;
-		margin-right: auto; 
+		margin-right: auto;
 	}
-	
+
 	// border and background on hover
 	border-style: solid;
 	border-width: 1px;
@@ -64,20 +64,20 @@ $widget-margin-block-hover: 12px 3px 12px 9px;
 	&.hover, &.selected {
 //		border-width: 1px;
 //		margin: $widget-margin-hover;
-		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-hover-background.png);
+		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-hover-background.png); /* $wgCdnStylePath */
 		background-repeat: repeat;
 //		background-color: transparent;
 		background-color: $color-background-hover;
-		
-		&.plb-rte-widget-plb_mlinput, .WikiaArticle p + &.plb-rte-widget-plb_mlinput { 
+
+		&.plb-rte-widget-plb_mlinput, .WikiaArticle p + &.plb-rte-widget-plb_mlinput {
 //			margin: $widget-margin-block-hover;
 		}
 	}
-	
+
 	&.selected {
 		background-color: $color-background-selected;
 	}
-	
+
 	// z-index trick
 	&.hover {
 		z-index: 10;
@@ -92,7 +92,7 @@ $widget-margin-block-hover: 12px 3px 12px 9px;
 		left: 15px;
 		top: -8px;
 		padding: 0 4px 1px;
-		
+
 		height: 12px;
 		line-height: 12px;
 		font-size: 10px;
@@ -120,7 +120,7 @@ $widget-margin-block-hover: 12px 3px 12px 9px;
 		position: absolute;
 		right: 3px;
 		top: 2px;
-		
+
 		background-color: transparent;
 		display: none;
 		z-index: 1;
@@ -145,7 +145,7 @@ $widget-margin-block-hover: 12px 3px 12px 9px;
 		z-index: 1;
 	}
 }
-	
+
 // visual elements - common
 .plb-rte-widget-horiz-line, .plb-rte-widget-box-icon {
 	.plb-rte-widget & {
@@ -155,7 +155,7 @@ $widget-margin-block-hover: 12px 3px 12px 9px;
 		border-width: 0px;
 	}
 }
-	
+
 // visual elements - box icon
 .plb-rte-widget-box-icon {
 	.plb-rte-widget & {
@@ -168,21 +168,21 @@ $widget-margin-block-hover: 12px 3px 12px 9px;
 		top: 50%;
 		left: 0;
 	}
-	
+
 	.plb-rte-widget-plb_input & {
-		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-box-plb_input.png);
+		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-box-plb_input.png); /* $wgCdnStylePath */
 	}
 	.plb-rte-widget-plb_mlinput & {
-		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-box-plb_mlinput.png);
+		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-box-plb_mlinput.png); /* $wgCdnStylePath */
 	}
 	.plb-rte-widget-plb_sinput & {
-		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-box-plb_sinput.png);
+		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-box-plb_sinput.png); /* $wgCdnStylePath */
 	}
 	.plb-rte-widget-plb_image & {
-		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-box-plb_image.png);
+		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-box-plb_image.png); /* $wgCdnStylePath */
 	}
 }
-	
+
 // visual elements - horizontal lines
 .plb-rte-widget-horiz-line {
 	.plb-rte-widget & {
@@ -199,22 +199,22 @@ $widget-margin-block-hover: 12px 3px 12px 9px;
 			bottom: -1px;
 		}
 	}
-	
+
 	.plb-rte-widget-plb_input & {
 		border-color: #5ba70d;
-		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_input.png);
+		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_input.png); /* $wgCdnStylePath */
 	}
 	.plb-rte-widget-plb_mlinput & {
 		border-color: #a33e17;
-		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_mlinput.png);
+		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_mlinput.png); /* $wgCdnStylePath */
 	}
 	.plb-rte-widget-plb_sinput & {
 		border-color: #7f36ae;
-		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_sinput.png);
+		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_sinput.png); /* $wgCdnStylePath */
 	}
 	.plb-rte-widget-plb_image & {
 		border-color: #0043ad;
-		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_image.png);
+		background-image: url(/extensions/wikia/PageLayoutBuilder/widget/images/widget-line-plb_image.png); /* $wgCdnStylePath */
 	}
 }
 

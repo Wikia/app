@@ -125,7 +125,7 @@ class WikiaSearch extends SpecialPage {
 	}
 
 	function execute($par) {
-		global $wgRequest, $wgOut, $wgUser, $wgDefaultSearch, $wgDefaultSearchTab;
+		global $wgRequest, $wgOut, $wgUser, $wgDefaultSearch, $wgDefaultSearchTab, $wgExtensionsPath;
 
 		if ( ! is_int ( $wgDefaultSearch ) ) {
 			$wgDefaultSearch = 0;
@@ -216,7 +216,7 @@ class WikiaSearch extends SpecialPage {
 
 			$wgOut->addHTML( $form );
 
-			$wgOut->addScript ( '<link rel="stylesheet" type="text/css" href="/extensions/wikia/WikiaSearch/search.css" />' );
+			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiaSearch/search.css");
 
 			if( $this->useTabsSearch == true ) {
 				$wgOut->addHTML( $this->printTabs() );

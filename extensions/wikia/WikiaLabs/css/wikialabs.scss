@@ -15,9 +15,9 @@ $margin-images: 10px;
 	width: 100%;
 	img {
 	    margin-top: -4px;
-	}	
+	}
 }
-	
+
 .WikiaArticle ul.wikiaLabsMainView {
 	list-style: none outside none;
 	margin-left: 2px;
@@ -39,10 +39,10 @@ $margin-images: 10px;
 	    }
 		.details{
 			vertical-align: top;
-			padding-right: $toolbox-button + $margin-images; 
+			padding-right: $toolbox-button + $margin-images;
 			display: block;
 			.prjname {
-				display: block; 
+				display: block;
 				font-size: 20px;
 				.data {
 				    font-size: 10px;
@@ -54,7 +54,7 @@ $margin-images: 10px;
 		.buttons {
 	    	position: absolute;
 	    	right: 0;
-	    	vertical-align: top;	
+	    	vertical-align: top;
 	    	border: medium solid;
     		top: 0;
     		width: $toolbox-button;
@@ -69,11 +69,11 @@ $margin-images: 10px;
     				padding: 0;
     				width: 20px;
 				}
-    		} 
+    		}
     		.active {
     		    display: block;
     			font-size: 11px;
-    			.wikia-button{ 
+    			.wikia-button{
     			    padding-left: 3px;
     			    cursor :default;
     				padding-right: 3px;
@@ -86,13 +86,13 @@ $margin-images: 10px;
     			display: block;
     			margin-top: -5px;
     			img {
-    			    background: url("/extensions/wikia/WikiaLabs/images/star-inactive.png") repeat scroll 0 0 transparent;
+    			    background: url("/extensions/wikia/WikiaLabs/images/star-inactive.png") repeat scroll 0 0 transparent; /* $wgCdnStylePath */
     				height: 32px;
     				width: 32px;
     				margin-right: -10px;
     				margin-left: -10px;
     				&.staractive{
-    					background: url("/extensions/wikia/WikiaLabs/images/star-active.png") repeat scroll 0 0 transparent;
+    					background: url("/extensions/wikia/WikiaLabs/images/star-active.png") repeat scroll 0 0 transparent; /* $wgCdnStylePath */
     				}
     			}
     			.ratings{
@@ -108,7 +108,7 @@ $margin-images: 10px;
     			}
     		}
     		.slider{
-    			background: url(/extensions/wikia/WikiaLabs/images/toggle-bkg-inactive.png);
+    			background: url(/extensions/wikia/WikiaLabs/images/toggle-bkg-inactive.png); /* $wgCdnStylePath */
     		    border: medium solid;
     			display: block;
     			height: 27px;
@@ -116,7 +116,7 @@ $margin-images: 10px;
     			border: none;
     			cursor:pointer;
     			&.on {
-    				background: url(/extensions/wikia/WikiaLabs/images/toggle-bkg-active.png);
+    				background: url(/extensions/wikia/WikiaLabs/images/toggle-bkg-active.png); /* $wgCdnStylePath */
     			}
     			.texton {
     			   	margin-left: 18px;
@@ -140,7 +140,7 @@ $margin-images: 10px;
     				}
     			}
     			.button {
-    				background: url(/extensions/wikia/WikiaLabs/images/toggle-switch.png);
+    				background: url(/extensions/wikia/WikiaLabs/images/toggle-switch.png); /* $wgCdnStylePath */
 					border: none;
     				display: block;
     				height: 27px;
@@ -148,17 +148,17 @@ $margin-images: 10px;
     				width: 42px;
     				position: absolute;
     				z-index: 1;
-    				&.on { 
+    				&.on {
     					left: 67px;
     				}
     			}
     		}
-		}	
+		}
 	}
 }
 
 .WikiaLabsGraduates {
-	h1{ 
+	h1{
 		width: 100%;
 		img{
 			float: left;
@@ -178,7 +178,7 @@ $margin-images: 10px;
 	    	height: 80px;
 	    	width: 80px;
 	    }
-	    div {	
+	    div {
 	    	padding-left: 92px;
 	    	.title {
 	    	    display: block;
@@ -191,18 +191,18 @@ $margin-images: 10px;
 
 .WikiaLabsStaff{
 	h1.title {
-		display: block; 
+		display: block;
 		position: relative;
 		margin-bottom: 0;
 	}
 	#addProject {
     	float: right;
     	width: 115px;
-	}	
+	}
 	.redinfo {
 	    color: red;
     	font-size: 11px;
-    	display: block;	
+    	display: block;
 	}
 	.editinfo {
 	 	display: block;
@@ -211,7 +211,7 @@ $margin-images: 10px;
 	}
 	.prjselect {
 	    margin-bottom: 20px;
-    	width: 150px;	
+    	width: 150px;
 	}
 	.appScreen {
 		width: 80px;
@@ -242,7 +242,7 @@ $margin-images: 10px;
 	.input input.checkbox {
 		width: 20px;
 		margin-left: 0;
-	} 
+	}
 	.buttons {
 		 padding-top: 24px;
 		 button {
@@ -275,7 +275,7 @@ $margin-images: 10px;
     	height: 20px;
     	padding-bottom: 30px;
     	padding-left: 30px;
-		background: url("/extensions/wikia/WikiaLabs/images/cross-24-ns.png") no-repeat scroll 0 0 transparent;
+		background: url("/extensions/wikia/WikiaLabs/images/cross-24-ns.png") no-repeat scroll 0 0 transparent; /* $wgCdnStylePath */
 	}
 	.buttons {
 		padding-top:20px;
@@ -292,7 +292,7 @@ $margin-images: 10px;
 
 #WikiaPageHeader {
 	h1 {
-	    background: url("/extensions/wikia/WikiaLabs/images/labs.png") no-repeat scroll 0 0 transparent;
+	    background: url("/extensions/wikia/WikiaLabs/images/labs.png") no-repeat scroll 0 0 transparent; /* $wgCdnStylePath */
     	padding-bottom: 12px;
     	padding-left: 44px;
     	padding-top: 12px;
@@ -309,65 +309,65 @@ $margin-images: 10px;
     	width: 400px;
  	 	display: block;
  	}
- 	
+
  	.clearfix {
 		@include clearfix;
 		margin-top: 18px;
  	}
- 	
+
  	.stars {
  	    margin-left: 3px;
  	    img {
-		    background: url("/extensions/wikia/WikiaLabs/images/star-inactive.png") transparent;
+		    background: url("/extensions/wikia/WikiaLabs/images/star-inactive.png") transparent; /* $wgCdnStylePath */
 			height: 18px;
 			width: 15px;
 			margin-left: -3px;
 			background-position: -8px -8px;
 			&.staractive {
-				background: url("/extensions/wikia/WikiaLabs/images/star-active.png") transparent;
+				background: url("/extensions/wikia/WikiaLabs/images/star-active.png") transparent; /* $wgCdnStylePath */
 				background-position: -8px -8px;
 			}
     		margin-top: -4px;
     		vertical-align: middle;
     	}
  	}
- 	
+
 	.comments{
-    	display: block;	
+    	display: block;
     	padding-bottom: 2px;
     	padding-top: 6px;
 	}
-	
+
 	.title {
 		display: block;
 		clear: both;
 	    font-size: 21px;
 	    margin-top: 10px;
-    	margin-bottom: 10px;	
+    	margin-bottom: 10px;
 	}
-	
+
 	.appScreen {
     	float: left;
 		margin-right: $margin-images;
 		border-color: $color-text;
-		border: 1px solid;	
+		border: 1px solid;
 	}
-	
+
 	.prjname {
 	    margin-bottom: 6px;
-		display: block; 
+		display: block;
 		font-size: 20px;
 	}
-	
+
 	.data{
 		display:none;
 	}
-	
+
 	.errorBox {
 	    background-color: #FFFFCC;
     	border: 1px solid #AAAAAA;
     	display: none;
     	margin: 1em 3em 1em 0;
     	padding: 6px;
-	}	
+	}
 }
