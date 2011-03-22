@@ -8,15 +8,15 @@
 <?php
 global $wgExtensionsPath, $wgStyleVersion, $wgSitename, $wgAdminSkin, $wgContLang, $wgServer, $wgUser, $NWBmessages;
 ?>
-<link rel="stylesheet" type="text/css" href="<?= $wgExtensionsPath ?>/wikia/NewWikiBuilder/main.css?<?= $wgStyleVersion ?>a1"/>
+<link rel="stylesheet" type="text/css" href="<?= $wgExtensionsPath ?>/wikia/NewWikiBuilder/main.css?<?= $wgStyleVersion ?>"/>
 <?php echo Skin::makeGlobalVariablesScript( @$this->data ); ?>
 <?php
 $StaticChute = new StaticChute('js');
 $StaticChute->useLocalChuteUrl();
 echo $StaticChute->getChuteHtmlForPackage('monaco_loggedin_js');
 ?>
-<script type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/JavascriptAPI/Mediawiki.js?<?= $wgStyleVersion ?>a1"></script>
-<script type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/NewWikiBuilder/main.js?<?= $wgStyleVersion ?>a1"></script>
+<script type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/JavascriptAPI/Mediawiki.js?<?= $wgStyleVersion ?>"></script>
+<script type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/NewWikiBuilder/main.js?<?= $wgStyleVersion ?>"></script>
 <script type="text/javascript">
 // Set up the cookie prefix, which is set in Mediawiki as $wgCookiePrefix
 Mediawiki.cookiePrefix = "wikicities";
