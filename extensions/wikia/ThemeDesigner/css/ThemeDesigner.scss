@@ -133,7 +133,7 @@ body {
 						margin-right: 3px;
 						vertical-align: middle;
 						img {
-							background: url(/extensions/wikia/ThemeDesigner/images/icon-return.png) top left transparent no-repeat;
+							background: url(/extensions/wikia/ThemeDesigner/images/icon-return.png) top left transparent no-repeat; /* $wgCdnStylePath */
 							height: 12px;
 							left: 3px;
 							position: relative;

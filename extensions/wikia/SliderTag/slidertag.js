@@ -1,6 +1,6 @@
 wgAfterContentAndJS.push(function() {
 
-$("head").append("<link rel=\"stylesheet\" href=\""+wgScriptPath+"/extensions/wikia/SliderTag/slidertag.css?"+wgStyleVersion+"\" type=\"text/css\" />");
+$("head").append("<link rel=\"stylesheet\" href=\""+wgExtensionsPath+"/wikia/SliderTag/slidertag.css?"+wgStyleVersion+"\" type=\"text/css\" />");
 
 function spotlightSlider_setup() {
 	//timer for automatic spotlight slideshow

@@ -63,7 +63,7 @@ NWB.gotostep = function(step) {
 };
 
 
-/* 1. Change the stylesheet on the current page 
+/* 1. Change the stylesheet on the current page
  * 2. Save the value using the API
  */
 NWB.changeTheme = function (theme, changeData){
@@ -73,9 +73,9 @@ NWB.changeTheme = function (theme, changeData){
 		Mediawiki.waiting();
                 Mediawiki.apiCall({
                         "action" : "foundersettings",
-                        "changesetting" : "wgAdminSkin", 
+                        "changesetting" : "wgAdminSkin",
                         "value" : theme},
-			function(result) { 
+			function(result) {
 				Mediawiki.waitingDone();
 				var cresult = Mediawiki.checkResult(result);
 				if (cresult !== true) {
@@ -87,10 +87,10 @@ NWB.changeTheme = function (theme, changeData){
 				}
 			}, NWB.apiFailed, "POST");
                 window.wgAdminSkin = theme;
-        } 
+        }
 
         // Create a link object for the stylesheet
-	var href = "/extensions/wikia/NewWikiBuilder/themes/" + theme.replace(/monaco-/, '').toLowerCase() + ".css";
+	var href = wgExtensionsPath + "/wikia/NewWikiBuilder/themes/" + theme.replace(/monaco-/, '').toLowerCase() + ".css";
 	// Heh. Head first.
 	$("head:first").append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
 
@@ -161,7 +161,7 @@ NWB.handleDescriptionForm = function (event){
                   "title": mainPageEnd,
                   "summary": "",
                   "section": 1,
-                  "text": text}, 
+                  "text": text},
                   function(result){
 	     		  Mediawiki.waitingDone();
         		  var cresult = Mediawiki.checkResult(result);
@@ -319,7 +319,7 @@ NWB.iframeFormUpload = function(iframe){
 		Mediawiki.updateStatus(NWB.msg("nwb-error-saving-logo") + " " + error, true);
 		Mediawiki.d("Upload error: " + error);
 		return;
-	} 
+	}
 
 	Mediawiki.updateStatus(NWB.msg("nwb-logo-uploaded"), false, NWB.statusTimeout);
 
@@ -338,7 +338,7 @@ NWB.iframeFormUpload = function(iframe){
 
      } catch (e) {
          Mediawiki.updateStatus(NWB.msg("nwb-error-saving-logo"), true);
-         Mediawiki.debug(Mediawiki.print_r(e)); 
+         Mediawiki.debug(Mediawiki.print_r(e));
      }
 };
 
@@ -353,14 +353,14 @@ NWB.iframeFormInit = function (f){
    	Mediawiki.waiting();
 	return true;
 };
-        
+
 
 NWB.pullWikiDescriptionCallback = function (result){
         var rg = new RegExp("={2,3}[^=]+={2,3}");
 
 	var match = result.match(rg);
 	if (match === null){
-		$("#desc_textarea").attr("disabled", true); 
+		$("#desc_textarea").attr("disabled", true);
 		NWB.updateStatus(NWB.msg("nwb-unable-to-edit-description"), true);
 	} else {
 		// Preserve the existing heading (=== blah ===) , we will tack it on when saving
@@ -371,7 +371,7 @@ NWB.pullWikiDescriptionCallback = function (result){
 };
 
 NWB.parseXml = function (xml) {
-	if( window.ActiveXObject && window.GetObject ) { 
+	if( window.ActiveXObject && window.GetObject ) {
 		// MS
 		var dom = new window.ActiveXObject( 'Microsoft.XMLDOM' );
 		dom.loadXML( xml );
@@ -380,7 +380,7 @@ NWB.parseXml = function (xml) {
 		// W3C
 		return new window.DOMParser().parseFromString( xml, 'text/xml' );
 	} else {
-		throw ( 'No XML parser available' ); 
+		throw ( 'No XML parser available' );
 	}
 };
 
