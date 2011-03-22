@@ -31,7 +31,7 @@ function wfSliderTag( &$parser ) {
 }
 
 function wfSlider( $input, $args, $parser ) {
-	global $wgOut, $wgScriptPath, $wgStyleVersion, $wgTitle;
+	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgTitle;
 
 	$article = $args['id'];
 
@@ -65,7 +65,7 @@ function wfSlider( $input, $args, $parser ) {
 
 	if ( $data ) {
 		wfLoadExtensionMessages( 'SliderTag' );
-		$html = "<script type=\"text/javascript\" src=\"{$wgScriptPath}/extensions/wikia/SliderTag/slidertag.js?{$wgStyleVersion}\"></script>";
+		$html = "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/SliderTag/slidertag.js?{$wgStyleVersion}\"></script>";
 
 		$html .= '<div id="spotlight-slider"><ul>';
 

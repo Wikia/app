@@ -251,7 +251,6 @@ class CreateBlogPage extends SpecialBlogPage {
 	 * EditPage::showEditForm callback - need to be public
 	 */
 	public function renderFormHeader($wgOut) {
-		global $wgScriptPath;
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		$oTmpl->set_vars( array(
@@ -261,7 +260,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		) );
 
 		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
-		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
+		$wgOut->addScriptFile('edit.js');
 		$wgOut->addHTML( $oTmpl->render("createBlogFormHeader") );
 
 		// BugId:954 - show changes

@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Tomek Odrobny
- * The party responsible for building the layout and management of it 
+ * The party responsible for building the layout and management of it
  */
 
 class PageLayoutBuilderSpecialPage extends SpecialPage {
@@ -34,14 +34,14 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	 * execute - rendering of editor
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-    
+
     function execute($article_id = null, $limit = "", $offset = "", $show = true) {
-		global $wgRequest, $wgOut, $wgTitle, $wgUser, $wgExtensionsPath, $wgScriptPath, $wgScript, $wgLang;
-		
+		global $wgRequest, $wgOut, $wgTitle, $wgUser, $wgExtensionsPath, $wgScript, $wgLang;
+
 		if( !$wgUser->isLoggedIn() ) {
 			$wgOut->showErrorPage( 'plb-special-no-login', 'plb-login-required', array(wfGetReturntoParam()));
 			return;
@@ -64,25 +64,25 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 
 		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/editor.scss' )  );
 		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/form.scss' ) );
-		
+
 		$action = $wgRequest->getVal("action");
 		if($action == 'list') {
-			$wgOut->addScriptFile($wgScriptPath."/extensions/wikia/PageLayoutBuilder/js/list.js");
-			$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/list.scss' ) );	
+			$wgOut->addScriptFile($wgExtensionsPath."/wikia/PageLayoutBuilder/js/list.js");
+			$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/list.scss' ) );
 			$this->executeList();
 			return true;
 		}
-		
-		
+
+
 		if($action == 'layoutCopy') {
 			$this->executeLayoutCopy($wgRequest);
 			return true;
 		}
-		
-		$wgOut->addScriptFile( $wgScriptPath."/extensions/wikia/PageLayoutBuilder/js/editor.js" );
+
+		$wgOut->addScriptFile( $wgExtensionsPath."/wikia/PageLayoutBuilder/js/editor.js" );
 		$wgOut->addScriptFile( $wgScript . "?action=ajax&rs=PageLayoutBuilderEditor::getPLBEditorData&uselang=" . $wgLang->getCode()
 			. "&cb=" . time() );
-		$wgOut->addScriptFile( $wgScriptPath."/extensions/wikia/PageLayoutBuilder/widget/allWidgets.js" );
+		$wgOut->addScriptFile( $wgExtensionsPath."/wikia/PageLayoutBuilder/widget/allWidgets.js" );
 
 		if($wgRequest->wasPosted() && ($wgRequest->getVal("action") == "submit") ) {
 			if($this->parseForm()) {
@@ -130,11 +130,11 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			CategorySelectInit(true);
 			CategorySelectInitializeHooks(null, null, $this->mTitle, null, null, null, true);
 		}
-		
+
 		$this->renderCreatePage();
 		return true;
     }
-    
+
     /**
 	 * execute - View a list of layouts
 	 *
@@ -142,9 +142,9 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	 * @access public
 	 *
 	 */
-    
+
 	function executeList() {
-		global $wgRequest, $wgOut, $wgTitle, $wgUser, $wgExtensionsPath, $wgBlankImgUrl, $wgContLang;
+		global $wgRequest, $wgOut, $wgTitle, $wgUser, $wgBlankImgUrl, $wgContLang;
 
 		$jsMsg = array(
 			'plb_list_confirm_delete' => wfMsg('plb-list-confirm-delete'),
@@ -155,7 +155,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		foreach ($jsMsg as $key => $value) {
 			$script .= "var ".$key." = ".Xml::encodeJsVar($value).";\n";
 		}
-		$wgOut->addScript("<script 'type' = 'text/javascript'>".$script."</script>" );
+		$wgOut->addScript("<script type='text/javascript'>".$script."</script>" );
 
 		if($wgRequest->wasPosted()) {
 			if($wgRequest->getVal("subaction") == "publish") {
@@ -172,24 +172,24 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 
 		$button = "<a id='plbNewButton' class='wikia-button' href='".Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullURL()."'>".
 			XML::element("img",array( "class" => "sprite new", "src" => $wgBlankImgUrl)).wfMsg('plb-special-form-new')."</a>";
-		
+
 		$msg = wfMsg("plb-list-title", array("$1" => count($out) ) );
-		
+
 		$wgOut->setPageTitle( $msg );
-		$wgOut->mPagetitle = $msg . $button; //1.16 trick 
-		
+		$wgOut->mPagetitle = $msg . $button; //1.16 trick
+
 		$allowcopy = false;
 		global $wgDefaultLayoutWiki, $wgCityId;
 		if($wgDefaultLayoutWiki == $wgCityId && $wgUser->isAllowed( 'plbmanagercopy' )) {
-			$allowcopy = true; 
+			$allowcopy = true;
 		}
-		
+
 		$title = Title::newFromText('LayoutBuilder', NS_SPECIAL);
 		foreach( $out as $key => $value ) {
 			$out[$key]['page_title_escaped'] = htmlspecialchars($out[$key]['page_title']);
 			$out[$key]['page_actions']['edit'] = array(
 				"link" => $title->getFullURL('plbId='.$value['page_id'] ),
-				"name" => XML::element("img",array( "class" => "sprite edit-pencil", "src" => $wgBlankImgUrl)).wfMsg("plb-list-action-edit"), 
+				"name" => XML::element("img",array( "class" => "sprite edit-pencil", "src" => $wgBlankImgUrl)).wfMsg("plb-list-action-edit"),
 				"class" => "edit wikia-button secondary",
 				"separator" => 1,
 			);
@@ -202,7 +202,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 					"separator" => 1,
 				);
 			}
-			
+
 			$out[$key]['page_actions']['create'] = array(
 				"link" => Title::newFromText('LayoutBuilderForm', NS_SPECIAL)->getFullURL("plbId=".$value['page_id']),
 				"name" => wfMsg("plb-list-action-create"),
@@ -213,108 +213,108 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			if($allowcopy) {
 				$out[$key]['page_actions']['copy'] = array(
 					"link" => $title->getFullURL('action=layoutCopy&plbId='.$value['page_id'] ),
-					"name" => XML::element("img",array("class" => "", "src" => $wgBlankImgUrl)).wfMsg("plb-list-action-copy"), 
+					"name" => XML::element("img",array("class" => "", "src" => $wgBlankImgUrl)).wfMsg("plb-list-action-copy"),
 					"separator" => 1,
 					"class" => ""
 				);
-			}			
-			
+			}
+
 			$out[$key]['page_actions']['delete'] = array(
 				"link" => "#plbId-".$value['page_id'],
 				"class" => "delete",
 				"name" => '<img src="'.$wgBlankImgUrl.'" class="sprite trash"/>',
 				"separator" => 0,
 			);
-			
+
 			$out[$key]['profile_name'] = $value['rev_user']->getName();
 			$out[$key]['profile_link'] = AvatarService::getUrl($out[$key]['profile_name']);
 			$out[$key]['profile_avatar'] = AvatarService::renderAvatar($out[$key]['profile_name'], 20);
 			$out[$key]['edit_date'] = $wgContLang->date( $out[$key]['rev_timestamp'] );
 			$out[$key]['page_title'] = str_replace("_", " ", $out[$key]['page_title']);
 		}
-		
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(array(
 		    "data" => $out,
 			'allowcopy' => $allowcopy,
 			"newlink" => Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullURL()
 		));
-				
+
 		$wgOut->addHTML( $oTmpl->render("plb-list") );
 		return true;
 	}
-    
+
 	function executeLayoutCopy($request) {
-		global $wgOut, $wgScriptPath, $wgUser, $wgDefaultLayoutWiki, $wgCityId;
-		
+		global $wgOut, $wgExtensionsPath, $wgUser, $wgDefaultLayoutWiki, $wgCityId;
+
 		if(!($wgDefaultLayoutWiki == $wgCityId && $wgUser->isAllowed( 'plbmanagercopy' ))) {
-			$wgOut->showErrorPage( 'plb-special-no-login', 'plb-login-required', array(wfGetReturntoParam())); 
+			$wgOut->showErrorPage( 'plb-special-no-login', 'plb-login-required', array(wfGetReturntoParam()));
 		}
-		
-		
-		$wgOut->addScriptFile($wgScriptPath."/extensions/wikia/PageLayoutBuilder/js/copy.js");
-		
+
+
+		$wgOut->addScriptFile($wgExtensionsPath."/wikia/PageLayoutBuilder/js/copy.js");
+
 		$hubs = WikiFactoryHub::getInstance();
 		$hubs = $hubs->getCategories();
 		$hubs_select = array( );
-		
+
 		$selectedCatsWithNames = array();
-		
+
 		$selectedCats = PageLayoutBuilderModel::getCopyCatIds( (int) $request->getVal('plbId')  );
-		
+
 		if ( !empty($hubs) ) {
 			foreach ($hubs as $id => $hub_options) {
 				$catsSelect[$hub_options['name']] = $id ;
 				if(in_array( $id, $selectedCats )) {
 					$selectedCatsWithNames[$id] = $hub_options['name'];
 				}
-				
+
 			}
 		}
-		
+
 		$fields = array( 'cat_select' => array(
 				'class' => 'HTMLSelectField',
 				'label-message' => 'plb-copy-cat-add',
 				'options' => $catsSelect,
 		));
-			
+
 		if(!$wgUser->isAllowed( 'plbmanagercopy' )) {
 			$wgOut->permissionRequired( 'plbmanagercopy' );
 			return true;
 		}
 
-		$form = new HTMLForm($fields);	
-		
+		$form = new HTMLForm($fields);
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(array(
 		    "cat_select" => $form->getBody(),
 			"selected_cats" =>	$selectedCatsWithNames
 		));
-		
-		
+
+
 		$cat_ids = array();
 		if($request->wasPosted()) {
 			$values = $request->getArray('cat_ids');
 			foreach($values as $value) {
 				$cat_ids[$value] = $value;
 			}
-			
+
 			PageLayoutBuilderModel::setCopyCatIds( (int) $request->getVal('plbId'), array_keys($cat_ids) );
 			$wgOut->redirect( Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullUrl("action=list") );
 		}
-	
+
 		$wgOut->addHTML( $oTmpl->render("plb-copy-layout") );
 	}
-	
+
 	 /**
 	 * executeListDelete - mark the layout as removed
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	function executeListDelete($request) {
 		$plbId = (int) $request->getVal('plbId');
 		PageLayoutBuilderModel::layoutMarkAsDelete($plbId);
@@ -324,11 +324,11 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	 * executeListpublish - mark the layout as publish
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	function executeListpublish($request) {
 		$plbId = (int) $request->getVal('plbId');
 		PageLayoutBuilderModel::layoutUnMarkAsNoPublish($plbId);
@@ -338,36 +338,36 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	 * renderFormHeader - mark the layout as publish
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	public function renderFormHeader() {
-		global $wgOut, $wgScriptPath;
+		global $wgOut;
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		$this->editTitle2 = "";
 		if(isset($this->previewOut)) {
-			$this->editTitle1 = wfMsg('plb-create-preview-title', array("$1" => $this->mTitle->getText() )); 
+			$this->editTitle1 = wfMsg('plb-create-preview-title', array("$1" => $this->mTitle->getText() ));
 			$this->editTitle2 = wfMsg('plb-create-edit-title', array("$1" => $this->mTitle->getText() ));
 		} else {
 			if(!$this->isFromDb) {
-				$this->editTitle1 = wfMsg( 'plb-create-new-title' );				
+				$this->editTitle1 = wfMsg( 'plb-create-new-title' );
 			} else {
 				$this->editTitle1 = wfMsg('plb-create-edit-title', array("$1" => $this->mTitle->getText() ));
 			}
 		}
 
 
-		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
+		$wgOut->addScriptFile('edit.js');
 
 		$this->mFormData['emptytitle'] = empty($this->mFormData['title']);
 		$this->mFormData['emptydesc'] = empty($this->mFormData['desc']);
 		$this->mFormData['title'] = $this->mFormData['emptytitle'] ? wfMsg("plb-form-title-instructions"):$this->mFormData['title'];
 		$this->mFormData['desc'] = $this->mFormData['emptydesc']  ? wfMsg("plb-form-desc-instructions"):$this->mFormData['desc'];
-		
+
 		$oTmpl->set_vars( array(
 		    "data" => $this->mFormData,
 			"iserror" => (count($this->mFormErrors) > 0),
@@ -378,70 +378,70 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		) );
 		$wgOut->addHTML( $oTmpl->render("create-form") );
 	}
-	
+
 	/**
 	 * renderPreview - render Preview of the layout
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
 
 	private function renderPreview($type = 'form' ) {
-		global  $wgOut, $wgExtensionsPath, $wgScriptPath;
+		global  $wgOut;
 
 		$title = $this->mArticle->getTitle();
 		$parser = new PageLayoutBuilderParser();
 		$parserOut = $parser->parseForLayoutPreview( $this->mEditPage->textbox1, $title, $type);
 		$this->previewOut =  $parserOut->getText();
-		
+
 		if($type == "form") {
 			if(strlen(trim($this->previewOut)) == 0) {
 				$this->previewOut = XML::element("div",array(
 					"class" => "plb-form-errorbox" ),
 					wfMsg('plb-special-form-emptyformpreview')
 				);
-			}		
+			}
 		}
 	}
-	
+
 	/**
 	 * renderPreview - render create page for layout
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	private function renderCreatePage() {
 		global $wgOut;
 		if( $this->isCategorySelect() ) {
 			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
 		}
-	
+
 		if(isset($this->previewOut)) {
-			$wgOut->addHTML( '<div class="plb-preview-div">'.$this->previewOut.'</div>');	
+			$wgOut->addHTML( '<div class="plb-preview-div">'.$this->previewOut.'</div>');
 		}
-		
+
 		$this->mEditPage->showEditForm( array($this, 'renderFormHeader') );
-		
+
 		$wgOut->setPageTitle( $this->editTitle1 );;
 		$wgOut->setHTMLTitle(  strip_tags($this->editTitle1) );
 		$wgOut->mPageLinkTitle = true;
 	}
 
-		
+
 	/**
 	 * getEmptyArticle - render create page for layout
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	private function getEmptyArticle() {
 		global $wgRequest;
 
@@ -470,11 +470,11 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	 * loadFromDB - load layout from DB
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	private function loadFromDB(Title $title) {
 		$this->mArticle = new Article( $title );
 		$this->mEditPage = new EditPage($this->mArticle);
@@ -488,16 +488,16 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 
 		$this->isFromDb = true;
 	}
-	
+
 	/**
 	 * getPostType - read action type from request
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	private function getPostType() {
 		global $wgRequest;
 
@@ -516,12 +516,12 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		}
 	}
 
-	
+
 	/**
-	 * parseForm - Validation of request params  
+	 * parseForm - Validation of request params
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
@@ -534,7 +534,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		}
 
 		$this->mFormErrors = array();
-		
+
 		$this->mTitle = empty($this->mFormData['plbId']) ? null:Title::newFromID($this->mFormData['plbId']);
 		if( ($this->mTitle instanceof Title) && ($this->mTitle->getNamespace() == NS_PLB_LAYOUT) ) {
 			$this->mArticle = new Article($this->mTitle);
@@ -596,16 +596,16 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 
 		return true;
 	}
-	
+
 	/**
 	 * save - just do it !
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	private function save() {
 		global $wgUser, $wgParser, $wgRequest;
 
@@ -647,12 +647,12 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 				break;
 		}
 	}
-	
+
 	/**
-	 * parseForm - Validation of request params  
+	 * parseForm - Validation of request params
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
@@ -674,7 +674,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 					"title" => wfMsg('plb-create-button-layout-title')
 				)
 			);
-		
+
 		if(PageLayoutBuilderSpecialPage::isDraft($self->mArticle)) {
 			$buttons_out['draft'] = XML::element(
 				"input",
@@ -687,7 +687,7 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 				)
 			);
 		}
-		
+
 		$buttons_out['previewform'] = XML::element(
 			"input",
 			array(
@@ -714,12 +714,12 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$buttons = $buttons_out;
 		return true;
 	}
-	
+
 	/**
-	 * addNewButtonForArtilce - adding button allows you to make a layout of the article  
+	 * addNewButtonForArtilce - adding button allows you to make a layout of the article
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
@@ -746,14 +746,14 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	}
 
 	/**
-	 * isDraft - checks whether this layout is a draft   
+	 * isDraft - checks whether this layout is a draft
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	public static function isDraft($article) {
 		return ($article->getId() == 0 || PageLayoutBuilderModel::layoutIsNoPublish($article->getId()));
 	}
@@ -762,17 +762,17 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	 * alternateEditHook - redirect to edit  LayoutBuilder if article is in layout namespace
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	public static function alternateEditHook($oEditPage) {
 		global $wgOut, $wgRequest;
 		if(empty($oEditPage->mTitle) || empty($oEditPage)) {
 			return true;
 		}
-		
+
 		if(isset($oEditPage->isRTEhook) && $oEditPage->isRTEhook) {
 			return true;
 		}
@@ -785,19 +785,19 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			}
 			$wgOut->redirect($oSpecialPageTitle->getFullUrl("plbId=" . $oEditPage->mTitle->getArticleId() ));
 		}
-		return true; 
+		return true;
 	}
 
-	
+
 	/**
 	 * getUserPermissionsErrors -  control access to articles in the namespace layout
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	public static function getUserPermissionsErrors( &$title, &$user, $action, &$result ) {
 		if( $title->getNamespace() == NS_PLB_LAYOUT ) {
 			$result = array();
@@ -813,12 +813,12 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		$result = null;
 		return true;
 	}
-	
+
 	/**
-	 * beforeCategoryData - hide layout namespace from category page 
+	 * beforeCategoryData - hide layout namespace from category page
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
@@ -829,14 +829,14 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	}
 
 	/**
-	 * beforeCategorySelect - edit page hook adding info between edit page and cat select  
+	 * beforeCategorySelect - edit page hook adding info between edit page and cat select
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	public static function beforeCategorySelect(&$text) {
 		global $wgTitle;
 
@@ -844,20 +844,20 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			$text = wfMsg("plb-special-form-cat-info");
 			return true;
 		}
-		
+
 		return true;
 	}
 
-	
+
 	/**
-	 * createPageOptions - There are prepared for lists of bytes  
+	 * createPageOptions - There are prepared for lists of bytes
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	public static function createPageOptions(&$options, &$listtype) {
 		global $wgCdnStylePath, $wgScript;
 		$listtype = "long";
@@ -876,16 +876,16 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		return true;
 	}
 
-		
+
 	/**
-	 * rollbackHook 
+	 * rollbackHook
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	public function rollbackHook($self, $wgUser, $target, $current){
 		if($target->getTitle()->getNamespace() != NS_PLB_LAYOUT) {
 			return true;
@@ -897,14 +897,14 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	}
 
 	/**
-	 * isCategorySelect check for catselect  
+	 * isCategorySelect check for catselect
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access private
 	 *
 	 */
-	
+
 	private function isCategorySelect() {
 		if(function_exists('CategorySelectInitializeHooks')) {
 			return true;
@@ -913,46 +913,46 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 	}
 
 	/**
-	 * myTools add link to mytools   
+	 * myTools add link to mytools
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	public static function myTools(&$list) {
 		global $wgUser;
-		
+
 		wfLoadExtensionMessages( 'PageLayoutBuilder' );
-		
+
 		if($wgUser->isAllowed( 'plbmanager' )) {
 			$list[] = array(
-				'text' => wfMsg( 'plb-mytools-link' ), 
+				'text' => wfMsg( 'plb-mytools-link' ),
 				'name' => 'plbmanager',
 				'href' => Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullUrl("action=list")
 			);
 		}
-		
+
 		return true;
 	}
-	
+
 	public static function myTools2( $userCommand, &$options ) {
 		$options['caption'] = wfMsg('plb-mytools-link');
 		$options['href'] = Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullUrl("action=list");
-		
+
 		return true;
 	}
-	
+
 	/**
-	 * myTools add link to mytools   
+	 * myTools add link to mytools
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	private function getTextFromRTEHTML($text) {
 		global $wgEnableRTEExt, $wgRequest;
 		if (!empty($wgEnableRTEExt)) {
@@ -961,16 +961,16 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 		return $text;
 	}
 
-	
+
 	/**
-	 * fixRTE runhook to rever parse article    
+	 * fixRTE runhook to rever parse article
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	private function fixRTE() {
 		global $wgEnableRTEExt, $wgRequest;
 		if (!empty($wgEnableRTEExt)) {
@@ -978,34 +978,34 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			wfRunHooks('AlternateEdit', array(&$this->mEditPage));
 		}
 	}
-	
-	
+
+
 	/**
-	 * 	onBeforeEditEnhancements    
+	 * 	onBeforeEditEnhancements
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 	 */
-	
+
 	function onBeforeEditEnhancements(&$self) {
 		global $wgTitle;
 		if($wgTitle->isSpecial('PageLayoutBuilder') && empty($self->action) ) {
 			$self->action = 'edit';
 		}
-		return true;	
+		return true;
 	}
-	
+
 	/**
-	 * onGetRailModuleSpecialPageList    
+	 * onGetRailModuleSpecialPageList
 	 *
 	 * @author Tomek Odrobny
-	 * 
+	 *
 	 * @access public
 	 *
 
-		
+
 	public function onGetRailModuleList(&$railModuleList) {
 		global $wgTitle, $wgRequest;
 		$action = $wgRequest->getVal("action");

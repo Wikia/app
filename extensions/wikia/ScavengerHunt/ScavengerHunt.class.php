@@ -179,7 +179,7 @@ class ScavengerHunt {
 			}
 
 			//include JS and CSS when on any page connected to the game
-			$out->addScriptFile($app->getGlobal('wgScriptPath') . '/extensions/wikia/ScavengerHunt/js/scavenger-game.js');
+			$out->addScriptFile($app->getGlobal('wgExtensionsPath') . '/wikia/ScavengerHunt/js/scavenger-game.js');
 		}
 
 		wfProfileOut(__METHOD__);
