@@ -919,14 +919,6 @@ class User {
 			return $result;
 		}
 
-		if ( $wgExternalAuthType && $wgAutocreatePolicy == 'view' ) {
-			$extUser = ExternalUser::newFromCookie();
-			if ( $extUser ) {
-				# TODO: Automatically create the user here (or probably a bit
-				# lower down, in fact)
-			}
-		}
-
 		if ( isset( $_COOKIE["{$wgCookiePrefix}UserID"] ) ) {
 			$sId = intval( $_COOKIE["{$wgCookiePrefix}UserID"] );
 			if( isset( $_SESSION['wsUserID'] ) && $sId != $_SESSION['wsUserID'] ) {
@@ -958,6 +950,14 @@ class User {
 			return false;
 		}
 
+		// move it lower down
+		if ( $wgExternalAuthType && $wgAutocreatePolicy == 'view' ) {
+			$extUser = ExternalUser::newFromCookie();
+			if ( $extUser ) {
+				$extUser->linkToLocal( $sId );
+			}
+		} 
+		
 		$passwordCorrect = FALSE;
 		$this->mId = $sId;
 		if ( !$this->loadFromId() ) {
