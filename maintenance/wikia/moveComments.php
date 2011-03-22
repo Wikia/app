@@ -19,8 +19,8 @@ $dbr = wfGetDB(DB_SLAVE);
 echo "read all articles for '$oldtitle/%' \n";
 $data = $dbr->select(
 	array('page'),
-	array("page_id", "page_namespace", "page_title", "concat('$newtitle/', SUBSTRING_INDEX(page_title, '/', -1)) as new_page_title"),
-	array("page_title like '$oldtitle/%'"),
+	array("page_id", "page_namespace", "page_title", "concat('$newtitle', SUBSTRING(page_title, length('$oldtitle') + 1)) as new_page_title"),
+	array("page_title like '$oldtitle/%'", "page_title like '%@comment%'"),
 	__METHOD__
 );
 $pages = array();
