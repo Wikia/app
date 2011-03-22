@@ -4,8 +4,10 @@
  * @subpackage TabView
  *
  * @author Inez Korczynski <lastname at gmail dot com>
+ * @author Jakub 'Szeryf' Kurcek <jakub@wikia.com>
+ * 
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
- * @version 0.3
+ * @version 0.4
  */
 
 if (!defined('MEDIAWIKI')) {
@@ -29,7 +31,7 @@ function wfSetupTabView() {
 }
 
 function tabviewRender($input, $params, &$parser ) {
-	global $tabsCount;
+	global $tabsCount, $wgStylePath, $wgJsMimeType;
 
 	if(isset($params['title']) && $params['title'] != '' && strpos($params['title'], '<') === false && strpos($params['title'], '>') === false) {
 		$title = $params['title'];
@@ -44,15 +46,6 @@ function tabviewRender($input, $params, &$parser ) {
 		$id = $tabsCount++;
 	}
 
-	// HTML wrapper
-	$out = '<div id="tabview_'.$id.'">';
-	if(!empty($title)) {
-		$out .= $title;
-	}
-
-	$out .= '<div class="yui-navset yui-navset-top"><ul id="flytabs_'.$id.'" class="yui-nav"></ul></div>';
-	$out .= '</div>';
-
 	// remove empty lines
 	$tabs = array_filter(explode("\n",$input));
 
@@ -66,13 +59,14 @@ function tabviewRender($input, $params, &$parser ) {
 	// prepeare tabs options array
 	$optins = array();
 
+	$optionsIndex = $index = 0;
 	foreach($tabs as $tab) {
 		$onetab = explode('|', trim($tab));
 
 		if(isset($onetab[0]) && strpos($onetab[0], '<') === false && strpos($onetab[0], '>') === false) {
 			$titleObj = Title::newFromText($onetab[0]);
 			if(is_object($titleObj) && $titleObj->exists()) {
-				$url = $titleObj->getLocalURL('action=render');
+				$url = $titleObj->getFullURL('action=render');
 				$text = $titleObj->getFullText();
 				if(isset($onetab[1]) && strpos($onetab[1], '<') === false && strpos($onetab[1], '>') === false) {
 					if($onetab[1] != '') {
@@ -84,7 +78,7 @@ function tabviewRender($input, $params, &$parser ) {
 						}
 						if(isset($onetab[3])) {
 							if($onetab[3] != '') {
-								$active = (strtolower($onetab[3]) == 'true');
+								if ( strtolower($onetab[3]) == 'true' ) $optionsIndex = $index;
 							}
 						}
 					}
@@ -93,23 +87,23 @@ function tabviewRender($input, $params, &$parser ) {
 				// prepare flytab options array
 				$options[] = array(
 					'caption' => $text,
-					'cache' => !empty($noCache) ? false : true,
-					'status' => !empty($active) ? 'pinned' : 'off',
 					'url' => $url,
 				);
-
 			}
 		}
+		$index++;
 		unset($url, $text, $noCache, $active);
 	}
 
-	// tabview config
-	$tab = array(
-		'id' => $id,
-		'options' => $options,
-	);
+	
+	$out = '<script>wgAfterContentAndJS.push(function() { $.loadJQueryUI(function(){ $("#flytabs_'.$id.'").tabs({ cache: true, selected: '.$optionsIndex.' }); });});</script>';
 
-	$outJS = '<script type="text/javascript">if (typeof window.__FlyTabs == "undefined") window.__FlyTabs = []; window.__FlyTabs.push(' . Wikia::json_encode($tab) . ');</script>';
+	// $out = '<script> $.loadJQueryUI(function(){ $("#flytabs_'.$id.'").tabs(); });</script>';
+	$out .= '<div id="flytabs_'.$id.'"><ul>';
+	foreach( $options as $option ){
+			$out .= '<li><a href="'.$option['url'].'"><span>'.$option['caption'].'</span></a></li>';
+	}
+	$out .= '</ul></div>';
 
-	return $out . $outJS;
+	return $out;
 }
