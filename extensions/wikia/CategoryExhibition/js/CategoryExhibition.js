@@ -139,7 +139,7 @@ var CategoryExhibition = {
 				room2.html(axData.page);
 				room1.animate( { 'margin-left' : (-1 * room1.width() ) }, 500);
 				room1.queue(function () {
-					room1.html(axData.page);
+					room1.html( axData.page );
 					room1.css( 'margin-left', 0 );
 					room2.html('');
 					$.dequeue( this );
