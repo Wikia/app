@@ -39,6 +39,8 @@ class WikiaLabs {
 	}
 
 	public function getProjectModal( $projectId = 0 ) {
+		global $wgExtensionsPath;
+
 		if(!$this->getUser()->isAllowed( 'wikialabsuser' )) {
 			return array();
 		}
@@ -51,7 +53,8 @@ class WikiaLabs {
 			'projectdata' => $project->getData(),
 			'status' => $project->getStatusDict(),
 			'extensions' => $project->getExtensionsDict(),
-			'areas' => $this->getFogbugzAreas()
+			'areas' => $this->getFogbugzAreas(),
+			'wgExtensionsPath' => $wgExtensionsPath,
 		));
 
 		return $oTmpl->render( self::TEMPLATE_NAME_ADDPROJECT );

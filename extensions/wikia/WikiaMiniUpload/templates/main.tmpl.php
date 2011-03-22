@@ -6,7 +6,7 @@
 		<td><h1><?= wfMsg('wmu-upload') ?></h1></td>
 		<td>
 <?php
-global $wgStylePath, $wgUser, $wgScriptPath, $wgEnableUploads, $wgDisableUploads;
+global $wgScript, $wgStylePath, $wgExtensionsPath, $wgUser, $wgEnableUploads, $wgDisableUploads;
 
 // macbre: check wgDisableUploads too (RT #53714)
 if (!$wgEnableUploads || !empty($wgDisableUploads)) {
@@ -26,7 +26,7 @@ if (!$wgEnableUploads || !empty($wgDisableUploads)) {
 			<?php
 	}
 	?>
-			<form onsubmit="return AIM.submit(this, WMU_uploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=WMU&method=uploadImage" id="ImageUploadForm" method="POST" enctype="multipart/form-data">
+			<form onsubmit="return AIM.submit(this, WMU_uploadCallback)" action="<?= $wgScript ?>?action=ajax&rs=WMU&method=uploadImage" id="ImageUploadForm" method="POST" enctype="multipart/form-data">
 				<input id="ImageUploadFile" name="wpUploadFile" type="file" size="32" />
 				<input type="submit" value="<?= wfMsg('wmu-upload-btn') ?>" onclick="return WMU_upload(event);" />
 			</form>
@@ -51,7 +51,7 @@ if( $wgUser->isLoggedIn() && $wgUser->isAllowed('upload') && $wgEnableUploads &&
 ?>
 			<input onkeydown="WMU_trySendQuery(event);" type="text" id="ImageQuery" />
 			<input onclick="WMU_trySendQuery(event);" type="button" value="<?= wfMsg('wmu-find-btn') ?>" />
-			<img src="<?= $wgStylePath; ?>/common/images/ajax.gif" id="ImageUploadProgress2" style="visibility: hidden;"/>
+			<img src="<?= $wgStylePath ?>/common/images/ajax.gif" id="ImageUploadProgress2" style="visibility: hidden;"/>
 		</td>
 	</tr>
 </table>
@@ -63,7 +63,7 @@ if( $wgUser->isLoggedIn() && $wgUser->isAllowed('upload') && $wgEnableUploads &&
 <div id="WMU_results_1" style="display: none;">
 	<br/><br/><br/><br/><br/>
 	<div style="text-align: center;">
-		<img src="<?= $wgStylePath ?>/../extensions/wikia/WikiaMiniUpload/images/flickr_logo.gif" />
+		<img src="<?= $wgExtensionsPath ?>/wikia/WikiaMiniUpload/images/flickr_logo.gif" />
 		<div class="ImageUploadSourceNote"><?= wfMsg('wmu-flickr-inf') ?></div>
 	</div>
 </div>

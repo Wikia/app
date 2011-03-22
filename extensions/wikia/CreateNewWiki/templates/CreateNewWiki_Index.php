@@ -27,7 +27,7 @@
 				<div class="language-choice">
 					<label for="wiki-language"><?= wfMsg('cnw-desc-lang') ?></label>
 					<select name="wiki-language">
-					
+
 					<?php
 		$isSelected = false;
 		if (!empty($aTopLanguages) && is_array($aTopLanguages)) :
@@ -59,7 +59,7 @@
 	<?php endforeach ?>
 					</optgroup>
 	<?php endif ?>
-					
+
 					</select>
 				</div>
 				<nav class="next-controls">
@@ -178,7 +178,7 @@
 			}
 		?>
 	</ul>
-	<img class="awesome-box" src="/extensions/wikia/CreateNewWiki/images/box_art.png">
+	<img class="awesome-box" src="<?= $wgExtensionsPath ?>/wikia/CreateNewWiki/images/box_art.png">
 </section>
 <script>
 	WikiBuilderCfg = {

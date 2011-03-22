@@ -1,5 +1,5 @@
 <?php
-global $wgAdminSkin, $wgSkinTheme, $wgSkipThemes, $wgCdnStylePath;
+global $wgAdminSkin, $wgSkinTheme, $wgSkipThemes, $wgExtensionsPath, $wgStylePath;
 $skinName = 'monaco';
 $numSteps = 5;
 require dirname(__FILE__) . '/header.php';
@@ -56,7 +56,7 @@ require dirname(__FILE__) . '/header.php';
 
 	</div><!--float-->
 	<div class="accent note">
-		<img src="/extensions/wikia/NewWikiBuilder/sample_logo.jpg" id="sample_logo" /><br />
+		<img src="<?= $wgExtensionsPath ?>/wikia/NewWikiBuilder/sample_logo.jpg" id="sample_logo" /><br />
 		<?php echo wfMsgForContent("nwb-step2-example")?>
 	</div>
 </div>
@@ -82,7 +82,7 @@ require dirname(__FILE__) . '/header.php';
 						<?if( $theme == 'custom' || in_array( $theme, $wgSkipThemes[$skinName] ) ) continue;?>
 						<td>
 							<label for="theme_radio_<?= $theme ;?>">
-								<img id="theme_preview_image_<?= $theme ;?>" src="<?= $wgCdnStylePath ;?>/skins/<?= $skinName ;?>/<?= $theme ;?>/images/preview.png"/>
+								<img id="theme_preview_image_<?= $theme ;?>" src="<?= $wgStylePath ?>/<?= $skinName ;?>/<?= $theme ;?>/images/preview.png"/>
 							</label>
 							<input onclick="NWB.changeTheme('<?= $skinName ;?>-<?= $theme ;?>', false)" type="radio" name="theme" value="<?= $skinName ;?>-<?= $theme ;?>" id="theme_radio_<?= $theme ;?>"<?= ($wgAdminSkin == "{$skinName}-{$theme}") ? 'checked' : null ;?>>
 							<label for="theme_radio_<?= $theme ;?>"><?= ucfirst($theme) ;?></label>
@@ -143,8 +143,8 @@ require dirname(__FILE__) . '/header.php';
 <div class="wrapper clearfix">
 	<?php echo wfMsgForContent("nwb-step5-text")?>
 	<div id="wiki_army_container">
-		<img src="/extensions/wikia/NewWikiBuilder/wiki_army.gif" id="wiki_army" />
-		<img src="/extensions/wikia/NewWikiBuilder/wiki_army_logo.png" id ="wiki_army_logo" />
+		<img src="<?= $wgExtensionsPath ?>/wikia/NewWikiBuilder/wiki_army.gif" id="wiki_army" />
+		<img src="<?= $wgExtensionsPath ?>/wikia/NewWikiBuilder/wiki_army_logo.png" id ="wiki_army_logo" />
 	</div>
 </div>
 <div class="nav">
