@@ -3957,7 +3957,7 @@ class User {
 
 		$this->loadOptions();
 		// wikia change
-		global $wgExternalSharedDB, $wgSharedDB;
+		global $wgExternalSharedDB, $wgSharedDB, $wgGlobalUserProperties;
 		if( isset( $wgSharedDB ) ) {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		}
@@ -3976,14 +3976,21 @@ class User {
 
 		foreach( $saveOptions as $key => $value ) {
 			# Don't bother storing default values
-			if ( ( is_null( self::getDefaultOption( $key ) ) &&
-					!( $value === false || is_null($value) ) ) ||
-					$value != self::getDefaultOption( $key ) ) {
-				$insert_rows[] = array(
-						'up_user' => $this->getId(),
-						'up_property' => $key,
-						'up_value' => $value,
-					);
+			# <Wikia>
+			if ( is_array( $wgGlobalUserProperties ) && in_array( $key, $wgGlobalUserProperties ) ) {
+				$insert_rows[] = array( 'up_user' => $this->getId(), 'up_property' => $key, 'up_value' => $value );				
+			}
+			# </Wikia>
+			else {
+				if ( ( is_null( self::getDefaultOption( $key ) ) &&
+						!( $value === false || is_null($value) ) ) ||
+						$value != self::getDefaultOption( $key ) ) {
+					$insert_rows[] = array(
+							'up_user' => $this->getId(),
+							'up_property' => $key,
+							'up_value' => $value,
+						);
+				}
 			}
 			if ( $extuser && isset( $wgAllowPrefChange[$key] ) ) {
 				switch ( $wgAllowPrefChange[$key] ) {

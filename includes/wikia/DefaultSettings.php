@@ -785,3 +785,8 @@ $wgEzApiModules = array();
 $wgFogbugzAPIConfig = array();
 
 $wgAssetsManagerQuery = '/_am_/%4$d/%1$s/%3$s/%2$s';
+
+/**
+ * global user_options
+ */
+$wgGlobalUserProperties = array('language');
