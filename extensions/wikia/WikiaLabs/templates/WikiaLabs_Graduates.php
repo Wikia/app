@@ -2,7 +2,7 @@
 	<section class="FormCornerModule module WikiaLabsGraduates">
 		<div class="size" ></div>
 		<h1 class='title'>
-			<img src="/extensions/wikia/WikiaLabs/images/graduated.png"/>
+			<img src="<?= $wgExtensionsPath ?>/wikia/WikiaLabs/images/graduated.png"/>
 			<?php echo wfMsg( 'wikialabs-graduates-tile' ); ?>	
 		</h1>
 		<ul>

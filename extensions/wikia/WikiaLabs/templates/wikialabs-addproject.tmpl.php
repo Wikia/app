@@ -7,7 +7,7 @@
 	</div>
 	<div class="image" >
 		<button class="prjscreen" ><?php echo wfMsg('wikialabs-add-project-add-image'); ?> </button>
-		<img class="prjscreen" id="projectPrjscreen" src="<?php echo isset($projectdata['prjscreenurl']) ? $projectdata['prjscreenurl']:'/extensions/wikia/WikiaLabs/images/picture-placeholder.png' ?>" /> <br>
+		<img class="prjscreen" id="projectPrjscreen" src="<?php echo isset($projectdata['prjscreenurl']) ? $projectdata['prjscreenurl']:($wgExtensionsPath . '/wikia/WikiaLabs/images/picture-placeholder.png') ?>" /> <br>
 		<input class="prjscreen" name="project[prjscreen]" value="<?php echo isset($projectdata['prjscreen']) ? $projectdata['prjscreen']:'' ?>"  type="hidden" />
 		<span><?php echo wfMsg('wikialabs-add-project-add-image-info'); ?></span>
 	</div>
@@ -35,7 +35,7 @@
 	<div class="label"><?php echo wfMsg('wikialabs-add-project-fogbugz-area') ?></div>
 	<div class="input">
 		<select name="project[area]" id="projectArea" >
-			<?php foreach($areas as $area): ?> 
+			<?php foreach($areas as $area): ?>
 				<option <?php echo ($project->getFogbugzProject() == $area['id'] ? 'selected':'')  ?> value="<?php echo $area['id']; ?>" ><?php echo $area['name']; ?></option>
 			<?php endforeach;?>
 		</select>
@@ -58,7 +58,7 @@
 		<br>
 		<textarea name="project[warning]" id="projectWarning" ><?php echo isset($projectdata['warning']) ? $projectdata['warning']:'' ?></textarea>
 	</div>
-	
+
 	<div class="buttons">
 		<button id="saveProject" ><?php echo wfMsg('wikialabs-add-project-add-save'); ?> </button>
 		<button id="cancelProject" class="secondary" type="button"><?php echo wfMsg('wikialabs-add-project-add-cancel'); ?> </button>

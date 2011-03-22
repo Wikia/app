@@ -6,7 +6,7 @@
 ?>
 
 <?php
-	global $wgStylePath, $wgUser, $wgScriptPath, $wgExtensionsPath;
+	global $wgStylePath, $wgUser, $wgScript, $wgExtensionsPath;
 ?>
 
 <table cellspacing="0" style="width: 100%;" id="VideoEmbedInputTable">
@@ -25,7 +25,7 @@
 			<a href="http://www.gametrailers.com/" class="image" title="GameTrailers" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/GameTrailers_logo.png" width="60" border="0"></a>
 			<a href="http://blip.tv" class="image" title="blip.tv" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/blip-tv1.png" width="60" border="0"></a>
 			<a href="http://www.viddler.com" class="image" title="Viddler" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/viddler_logo.png" width="60" border="0"></a>
-			<p>	<a href="http://help.wikia.com/wiki/Help:Video_Embed_Tool" target="_blank"><?= wfMsg( 'vet-see-all' ) ?></a></p>	
+			<p>	<a href="http://help.wikia.com/wiki/Help:Video_Embed_Tool" target="_blank"><?= wfMsg( 'vet-see-all' ) ?></a></p>
 		<td>
 	</tr>
 
@@ -37,7 +37,7 @@
 				if( !$wgUser->isLoggedIn() ) {
 					echo '<a id="VideoEmbedLoginMsg">' .wfMsg( 'vet-notlogged' ) . '</a>';
 				} else {
-					echo wfMsg( 'vet-notallowed' ); 
+					echo wfMsg( 'vet-notallowed' );
 				}
 			} else {
 				if ($error) {
@@ -46,7 +46,7 @@
 						<?php
 				}
 				?>
-					<form action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=VET&method=insertVideo" id="VideoEmbedForm" method="POST">
+					<form action="<?= $wgScript ?>?action=ajax&rs=VET&method=insertVideo" id="VideoEmbedForm" method="POST">
 					<input id="VideoEmbedUrl" name="wpVideoEmbedUrl" type="text" size="32" />
 					<input id="VideoEmbedUrlSubmit" type="submit" value="<?= wfMsg('vet-upload-btn') ?>" onclick="return VET_preQuery(event);" />
 					</form>
@@ -64,7 +64,7 @@
 <div id="VET_results_1" style="display: none;">
 <br/><br/><br/><br/><br/>
 	<div style="text-align: center;">
-		<img src="<?= $wgStylePath ?>/../extensions/wikia/VideoEmbedTool/images/flickr_logo.gif" />
+		<img src="<?= $wgExtensionsPath ?>/wikia/VideoEmbedTool/images/flickr_logo.gif" />
 		<div class="VideoEmbedSourceNote"><?= wfMsg('vet-flickr-inf') ?></div>
 	</div>
 </div>

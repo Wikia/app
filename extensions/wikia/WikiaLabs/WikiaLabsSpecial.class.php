@@ -13,6 +13,7 @@ class WikiaLabsSpecial extends SpecialPage {
 	}
 
 	function execute( $par ) {
+		global $wgExtensionsPath;
 
 		if ( $this->user->getId() == 0 ) {
 			$this->displayRestrictionError($this->user);
@@ -51,6 +52,7 @@ class WikiaLabsSpecial extends SpecialPage {
 			'userId' => $userId,
 			'isAdmin' => $this->isAdmin,
 			'contLang' => $this->app->getGlobal( 'wgContLang' ),
+			'wgExtensionsPath' => $wgExtensionsPath,
 		) );
 
 		$this->out->addStyle( $this->app->runFunction( 'wfGetSassUrl' , 'extensions/wikia/WikiaLabs/css/wikialabs.scss' ) );

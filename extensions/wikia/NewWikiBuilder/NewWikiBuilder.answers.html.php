@@ -1,4 +1,4 @@
-<?php 
+<?php
 $numSteps = 4;
 require dirname(__FILE__) . '/header.php';
 ?>
@@ -31,7 +31,7 @@ NWB.changeTheme("Sapphire", false);
 
 	<script type="text/javascript">
 	// Pull in existing tagline
-        Mediawiki.apiCall({action: "query", meta: "allmessages", ammessages: "tagline"}, 
+        Mediawiki.apiCall({action: "query", meta: "allmessages", ammessages: "tagline"},
 		function (result){
 			$("#tagline_textarea").val(result.query.allmessages[0]['*']);
 		}
@@ -71,25 +71,25 @@ NWB.changeTheme("Sapphire", false);
 <li id="step2" class="step">
 <h1 class="headline"><?php echo wfMsgForContent("nwb-step2-headline")?></h1>
 <div class="wrapper clearfix">
-	<?php echo wfMsgForContent("anwb-step2-text")?>	
+	<?php echo wfMsgForContent("anwb-step2-text")?>
 	<!-- Hidden iframe to handle the file upload -->
 	<iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NWB.iframeFormUpload(this)"></iframe>
 
 	<div>
 	<form action="/api.php" method="post" enctype="multipart/form-data" target="hidden_iframe" onSubmit='return NWB.iframeFormInit(this)' id="logo_form">
-		<input type="hidden" name="action" value="uploadlogo">	
-		<input type="hidden" name="format" value="xml">	
-		<input id="logo_article" type="hidden" name="title" value="Wiki.png">	
+		<input type="hidden" name="action" value="uploadlogo">
+		<input type="hidden" name="format" value="xml">
+		<input id="logo_article" type="hidden" name="title" value="Wiki.png">
 		<label><?php echo wfMsgForContent("anwb-choose-logo")?></label><input type="file" name="logo_file" id="logo_file" onclick="WET.byStr('anwb/step2browse');"/> <input type="submit" value="<?php echo wfMsgForContent("nwb-preview")?>" onclick="WET.byStr('anwb/step2preview');this.form.title.value='Wiki-Preview.png'"/>
 	</form>
 	<div id="logo_preview_wrapper">
 		<label><?php echo wfMsgForContent("anwb-logo-preview")?>:</label>
 		<div id="logo_preview"></div>
 	</div>
-	
+
 	</div>
 	<div class="accent note">
-		<img src="/extensions/wikia/NewWikiBuilder/sample_logo.jpg" id="sample_logo" /><br />
+		<img src="<?= $wgExtensionsPath ?>/wikia/NewWikiBuilder/sample_logo.jpg" id="sample_logo" /><br />
 		<?php echo wfMsgForContent("anwb-step2-example")?>
 	</div>
 </div>
@@ -109,11 +109,11 @@ NWB.changeTheme("Sapphire", false);
   <div class="accent note">
 	<?php echo wfMsgForContent("anwb-fp-text")?>
 	<?php /* Yes, I tried to do this with CSS/divs/float. Gave up after 30 minutes. If you know how to get it to
-		work and still display properly after more than 5 pages are added dynamically, go for it (and tell me how 
-		you did it. :) 
+		work and still display properly after more than 5 pages are added dynamically, go for it (and tell me how
+		you did it. :)
 		-Nick */
 	?>
-	<table> 
+	<table>
 	  <tr valign="top">
 	     <td>
 		<div id="all_fp" class="bullets">
@@ -142,7 +142,7 @@ NWB.changeTheme("Sapphire", false);
 	    <td style="padding-left: 10px"><?php echo wfMsgForContent("anwb-fp-example")?></td>
 	  </tr>
 	</table>
-	
+
    </div>
 </div>
 <div class="nav">
@@ -161,8 +161,8 @@ NWB.changeTheme("Sapphire", false);
 <div class="wrapper clearfix">
 	<?php echo wfMsgForContent("anwb-thatisall-text")?>
 	<div id="wiki_army_container">
-		<img src="/extensions/wikia/NewWikiBuilder/wiki_army.gif" id="wiki_army" />
-		<img src="/extensions/wikia/NewWikiBuilder/wiki_army_logo.png" id ="wiki_army_logo" />
+		<img src="<?= $wgExtensionsPath ?>/wikia/NewWikiBuilder/wiki_army.gif" id="wiki_army" />
+		<img src="<?= $wgExtensionsPath ?>/wikia/NewWikiBuilder/wiki_army_logo.png" id ="wiki_army_logo" />
 	</div>
 </div>
 <div class="nav">

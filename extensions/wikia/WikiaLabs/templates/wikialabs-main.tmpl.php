@@ -1,4 +1,4 @@
-<div class='warningBox' >	
+<div class='warningBox' >
 	<?php if($isAdmin): ?>
 		<?php echo wfMsg('wikialabs-list-project-warning-box'); ?>
 	<?php else: ?>
@@ -17,7 +17,7 @@
 				<?php if($isAdmin): ?>
 					<span data-id="<?php echo $value->getId(); ?>" class='slider <?php echo $value->isEnabled($cityId) ? "on":""; ?>'>
 						<span class='button  <?php echo $value->isEnabled($cityId) ? "on":""; ?>'>
-						</span> 
+						</span>
 						<span class="textoff  <?php echo $value->isEnabled($cityId) ? "on":""; ?>"><?php echo wfMsg('wikialabs-list-project-inactive'); ?></span>
 						<span class="texton  <?php echo $value->isEnabled($cityId) ? "on":""; ?>" ><?php echo wfMsg('wikialabs-list-project-active'); ?></span>
 						<?php if($data['enablewarning']): ?>
@@ -33,16 +33,16 @@
 					</span>
 				<?php endif; ?>
 				<a class="wikia-button secondary feedback" data-user-feedback="<?php echo $value->getRatingByUser( $userId ); ?>"  data-id="<?php echo $value->getId(); ?>" >
-					<img src="/extensions/wikia/WikiaLabs/images/star-inactive.png">
+					<img src="<?= $wgExtensionsPath ?>/wikia/WikiaLabs/images/star-inactive.png">
 					<?php echo wfMsg('wikialabs-list-project-add-give-feedback'); ?>
 				</a>
-				
+
 				<span class="active" >
 					<a href="#" class="wikia-button secondary" ><?php echo $value->getActivationsNum(); ?></a><?php echo wfMsg('wikialabs-list-project-currently-active'); ?>
 				</span>
-				
+
 				<span class="stars" >
-					<?php for($i = 1; $i < 6; $i ++): ?> 
+					<?php for($i = 1; $i < 6; $i ++): ?>
 						<?php if(round($value->getRating()) >= $i): ?>
 							<img class="staractive" data-index="<?php echo $i; ?>" src="<?= wfBlankImgUrl() ;?>"/>
 						<?php else: ?>
@@ -65,13 +65,13 @@
 			<div id="wpError"></div>
 		</div>
 		<span class="title" ><?php echo wfMsg( 'wikialabs-feedback-title' ); ?></span>
-		<span class="project" ><?php echo wfMsg( 'wikialabs-feedback-rating' ); ?></span>		
-				
+		<span class="project" ><?php echo wfMsg( 'wikialabs-feedback-rating' ); ?></span>
+
 		<span class="stars" >
-			<?php for($i = 1; $i < 6; $i ++): ?> 
+			<?php for($i = 1; $i < 6; $i ++): ?>
 				<img data-index="<?php echo $i; ?>" src="<?= wfBlankImgUrl() ;?>"/>
 			<?php endfor; ?>
-		</span>		
+		</span>
 		<span class="comments" ><?php echo wfMsg( 'wikialabs-feedback-comments' ); ?></span>
 		<textarea name="feedbacktext" class="feedbacktext" ></textarea>
 		<button class="okbutton" ><?php echo wfMsg('wikialabs-feedback-submit'); ?></button>
