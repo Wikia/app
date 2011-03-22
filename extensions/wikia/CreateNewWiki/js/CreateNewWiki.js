@@ -119,12 +119,28 @@ var WikiBuilder = {
 			$.tracker.byStr('createnewwiki/descwiki/next');
 			var val = WikiBuilder.wikiCategory.find('option:selected').val();
 			if(val) {
-				// call create wiki ajax
-				WikiBuilder.saveState({
-					wikiDescription: ($('#Description').val() == WikiBuilderCfg.descriptionplaceholder ? '' : $('#Description').val())
-				}, function() {
-					WikiBuilder.createWiki();
-					WikiBuilder.transition('DescWiki', true, '+');
+				$.post(wgScript,
+					{
+						action: 'ajax',
+						rs: 'moduleProxy',
+						moduleName: 'CreateNewWiki',
+						actionName: 'Phalanx',
+						outputType: 'data',
+						text: $('#Description').val()
+					},
+					function(res) {
+						// check phalanx result
+						if (res.result && res.result.length > 0) {
+							$.showModal(res.msgHeader, res.msgBody);
+						} else {
+							// call create wiki ajax
+							WikiBuilder.saveState({
+								wikiDescription: ($('#Description').val() == WikiBuilderCfg.descriptionplaceholder ? '' : $('#Description').val())
+							}, function() {
+								WikiBuilder.createWiki();
+								WikiBuilder.transition('DescWiki', true, '+');
+							});
+						}
 				});
 			} else {
 				WikiBuilder.descWikiSubmitError.show().html(WikiBuilderCfg['desc-wiki-submit-error']).delay(3000).fadeOut();

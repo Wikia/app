@@ -181,5 +181,28 @@ class CreateNewWikiModule extends Module {
 
 		wfProfileOut( __METHOD__ );
 	}
+	
+	public function executePhalanx() {
+		global $wgRequest;
+		wfProfileIn( __METHOD__ );
+		
+		$text = $wgRequest->getVal('text','');
+		$this->result = array();
+		
+		$filters = Phalanx::getFromFilter( Phalanx::TYPE_WIKI_CREATION );
+		foreach( $filters as $filter ) {
+			$result = Phalanx::isBlocked( $text, $filter );
+			if($result['blocked']) {
+				$this->result[] = $filter;
+			}
+		}
+		
+		if(count($this->result) > 0) {
+			$this->msgHeader = wfMsg('cnw-badword-header');
+			$this->msgBody = wfMsg('cnw-badword-msg');
+		}
+		
+		wfProfileOut( __METHOD__ );
+	}
 
 }
