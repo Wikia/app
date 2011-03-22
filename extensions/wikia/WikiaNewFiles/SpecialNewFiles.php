@@ -9,10 +9,10 @@
 
 function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	global $wgUser, $wgOut, $wgLang, $wgRequest, $wgMiserMode, $wgUseWikiaNewFiles;
-	global $wgJsMimeType, $wgScriptPath, $wgStyleVersion;
+	global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 	global $wmu;
 
-	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgScriptPath/extensions/wikia/WikiaNewFiles/js/WikiaNewFiles.js?$wgStyleVersion\"></script>\n" );
+	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/WikiaNewFiles/js/WikiaNewFiles.js?$wgStyleVersion\"></script>\n" );
 
 	$wpIlMatch = $wgRequest->getText( 'wpIlMatch' );
 	$dbr = wfGetDB( DB_SLAVE );
@@ -258,17 +258,17 @@ function getLinkedFiles ( $image ) {
 			__METHOD__,
 			array( 'LIMIT' => 2, 'ORDER BY' => 'page_namespace ASC' )
 	   );
-			   
+
 		while ( $s = $res->fetchObject() ) {
 			$data[] = array( 'ns' => $s->page_namespace, 'title' => $s->page_title );
-		}	
+		}
 		$dbr->freeResult($res);
-		
+
 		$wgMemc->set( $cacheKey, $data, 60*15 );
-	}		   
+	}
 
 	$links = array();
-	
+
 	if ( !empty($data) ) {
 		$sk = $wgUser->getSkin();
 		foreach ( $data as $row ) {
@@ -276,8 +276,8 @@ function getLinkedFiles ( $image ) {
 			$links[] = $sk->link( $name, null, array( 'class' => 'wikia-gallery-item-posted' ) );
 		}
 	}
-	
+
 	wfProfileOut( __METHOD__ );
-	
+
 	return $links;
 }

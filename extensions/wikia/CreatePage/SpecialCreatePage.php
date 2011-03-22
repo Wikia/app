@@ -115,7 +115,7 @@ class CreatePage extends SpecialEditPage {
 
 	// print extra field for 'title'
 	public function renderFormHeader( $wgOut ) {
-		global $wgScriptPath, $wgRequest;
+		global $wgRequest;
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
@@ -128,7 +128,7 @@ class CreatePage extends SpecialEditPage {
 		) );
 
 		$wgOut->setPageTitle( wfMsg( "createpage" ) );
-		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>' );
+		$wgOut->addScriptFile('edit.js');
 		if ( $this->mPreviewTitle == null ) {
 			$wgOut->addHTML ( '<div id="custom_createpagetext">' ) ;
 			$wgOut->addWikiText ( wfMsgForContent ( 'newarticletext' ) ) ;

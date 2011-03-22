@@ -30,11 +30,11 @@
 
 		static protected function checkEnabled() {
 			global $wgUser;
-			
+
 			// Enable in Oasis
 			if (get_class($wgUser->getSkin()) == 'SkinOasis')
 				return true;
-			
+
 			return false;
 		}
 
@@ -43,11 +43,11 @@
 		 */
 		static public function setupScripts() {
 			if (!self::$initialized) {
-				global $wgOut, $wgExtensionsPath, $wgScriptPath;
+				global $wgOut, $wgExtensionsPath;
 				$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/CategoryGalleries/css/CategoryGalleries.scss' ) /*. "?cb=".(int)time()*/ );
 				$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/CategoryGalleries/css/CategoryGalleries.IE.scss' ) /*. "?cb=".(int)time()*/,
 					'', /*condition*/ 'lte IE 8' );
-				$wgOut->addScriptFile("$wgScriptPath/extensions/wikia/CategoryGalleries/js/CategoryGalleries.js");
+				$wgOut->addScriptFile("{$wgExtensionsPath}/wikia/CategoryGalleries/js/CategoryGalleries.js");
 				self::$initialized = true;
 			}
 		}
