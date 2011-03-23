@@ -70,7 +70,11 @@ class ExternalUser_Wikia extends ExternalUser {
 			$memkey = sprintf("extuser:%d:%s", $this->getId(), $wgDBcluster);
 			$user_touched = $wgMemc->get( $memkey );
 			if ( $user_touched != $this->getUserTouched() ) {
+				$_key = wfSharedMemcKey( "user_touched", $this->getId() );
+				wfDebug ( __METHOD__ . ": user touched is different on central and $wgDBcluster \n" );
+				wfDebug ( __METHOD__ . ": clear $_key \n" );
 				$wgMemc->set( $memkey, $this->getUserTouched() );
+				$wgMemc->delete( $_key );
 			} else {
 				$User = $this->getLocalUser();
 			}
