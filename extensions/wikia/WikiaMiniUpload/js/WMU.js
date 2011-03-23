@@ -35,6 +35,8 @@ var WMU_widthChanges = 1;
 var WMU_inGalleryPosition = false;
 var WMU_skipDetails = false;
 
+if (typeof WMU_box_filled == 'undefined') WMU_box_filled = [];
+
 if( 'view' == wgAction ) {
 	var wmu_back = '';
 	var wmu_imagebutton = '';
@@ -931,6 +933,7 @@ function WMU_displayDetails(responseText) {
 }
 
 function WMU_insertPlaceholder( box ) {
+	WMU_box_filled.push(box);
 	var to_update = $G( 'WikiaImagePlaceholder' + box );
 	to_update.innerHTML = $G( 'ImageUploadCode' ).innerHTML;
 	//the class would need to be different if we had here the full-size...
@@ -1004,7 +1007,7 @@ function WMU_insertImage(e, type) {
 
 	if( -1 != WMU_gallery ) {
 		params.push( 'gallery=' + WMU_gallery );
-		params.push( 'box=' + WMU_box );
+		params.push( 'box=' + WMU_box_in_article() );
 		params.push( 'article='+encodeURIComponent( wgTitle ) );
 		params.push( 'ns='+wgNamespaceNumber );
 		if( WMU_refid != null ) {
@@ -1120,6 +1123,15 @@ function WMU_insertImage(e, type) {
 	WMU_indicator(1, true);
 	YAHOO.util.Connect.abort(WMU_asyncTransaction);
 	WMU_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=insertImage&' + params.join('&'), callback);
+}
+
+function WMU_box_in_article() {
+	var box = WMU_box;
+	for (var i=0;i<WMU_box_filled.length;i++) {
+	    if (WMU_box>WMU_box_filled[i])
+		box--;
+	}
+	return box;
 }
 
 function MWU_imageWidthChanged(changes) {

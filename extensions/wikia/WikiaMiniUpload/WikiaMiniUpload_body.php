@@ -604,8 +604,10 @@ class WikiaMiniUpload {
 			$transl_v_t = '\[\[' . $ns_vid . ':' . $placeholder_msg . '[^\]]*\]\]';
 			$transl_i_t = '\[\[' . $ns_img . ':' . $placeholder_msg . '[^\]]*\]\]';
 
+			$success = false;
+			
 			preg_match_all( '/' . $transl_v_t . '|' . $transl_i_t . '/si', $text, $matches, PREG_OFFSET_CAPTURE );
-			if( is_array( $matches ) ) {
+			if( is_array( $matches ) && $box < count($matches[0]) ) {
 				$our_gallery = $matches[0][$box][0];
 				$gallery_split = explode( ':', $our_gallery );
 				$thumb = false;
@@ -636,12 +638,13 @@ class WikiaMiniUpload {
 				// return the proper embed code with all fancies around it
 				$embed_code = $this->generateImage( $file, $name, $title_obj, $thumb, (int)str_replace( 'px', '', $width ), $layout, $caption );
 				$message = wfMsg( 'wmu-success' );
+
+				Wikia::setVar('EditFromViewMode', true);
+
+				$summary = wfMsg( 'wmu-added-from-plc' ) ;
+				$success = $article_obj->doEdit( $text, $summary);
 			}
 
-			Wikia::setVar('EditFromViewMode', true);
-
-			$summary = wfMsg( 'wmu-added-from-plc' ) ;
-			$success = $article_obj->doEdit( $text, $summary);
 			if ( $success ) {
 				header('X-screen-type: summary');
 			} else {
