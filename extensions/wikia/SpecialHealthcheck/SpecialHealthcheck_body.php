@@ -63,7 +63,8 @@ class HealthCheck extends UnlistedSpecialPage {
 		}
 
 
-		if ( file_exists( "/usr/wikia/conf/current/host_disabled" ) ) {
+		if ( file_exists( "/usr/wikia/conf/current/host_disabled" ) ||
+			 file_exists( "/etc/apache2/host_disabled" ) ) {
 			# failure!
   			$statusCode = 503;
 			$statusMsg  = 'Server status is: NOT OK - Disabled';
