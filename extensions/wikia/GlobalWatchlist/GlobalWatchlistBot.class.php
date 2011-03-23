@@ -136,7 +136,7 @@ class GlobalWatchlistBot {
 			}
 		}
 		
-		if ( $sWikiDb != 'wikicities' ) {
+		if ( !in_array($sWikiDb, array( 'wikicities', 'messaging' ) ) ) {
 			$dbr_wiki->close();
 		}
 
@@ -563,7 +563,11 @@ class GlobalWatchlistBot {
 					'blogpage' => GlobalTitle::newFromText( $blogTitle, NS_BLOG_ARTICLE, $iWikiId ),
 					'own_comments' => 0
 				);
-			}
+				
+				if ( !in_array( $wikiDB, array( 'wikicities', 'messaging' ) ) ) {
+					$db_wiki->close();
+				}			
+			}		
 		}
 
 		if (
