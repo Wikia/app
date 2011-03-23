@@ -22,6 +22,18 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		wfRestoreWarnings();
 	}
 
+	protected function setUp() {
+		global $wgUser;
+		$this->wgUser = $wgUser;
+	}
+
+	protected function tearDown() {
+		global $wgUser;
+		$wgUser = $this->wgUser;
+
+		F::unsetInstance('User');
+	}
+
 	function testLatestActivityModule() {
 		global $wgSitename, $wgMemc;
 
@@ -379,8 +391,20 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testAchievementsModule() {
-		global $wgTitle, $wgEnableAchievementsExt;
+		global $wgUser, $wgTitle, $wgEnableAchievementsExt;
 		if (!$wgEnableAchievementsExt) $this->markTestSkipped();
+
+		$wgUser = $this->getMock('User', array('isBlocked', 'isLoggedIn'));
+		$wgUser->mName = 'WikiaStaff';
+		$wgUser->mFrom = 'name';
+		$wgUser->expects($this->any())
+			   ->method('isBlocked')
+			   ->will($this->returnValue(false));
+		$wgUser->expects($this->any())
+			   ->method('isLoggedIn')
+			   ->will($this->returnValue(true));
+
+		F::setInstance( 'User', $wgUser );
 
 		$wgTitle = Title::newFromText('User:WikiaStaff');
 

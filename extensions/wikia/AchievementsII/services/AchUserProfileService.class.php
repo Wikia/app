@@ -17,8 +17,8 @@ class AchUserProfileService {
 
     	global $wgTitle, $wgUser, $wgWikiaBotLikeUsers;
 	
-	//fix #10881, get correct username from user namespace subpages
-    	$this->mUserOwner = User::newFromName( UserPagesHeaderModule::getUserName( $wgTitle, BodyModule::getUserPagesNamespaces() ) );
+		//fix #10881, get correct username from user namespace subpages
+    	$this->mUserOwner = F::build('User', array( UserPagesHeaderModule::getUserName( $wgTitle, BodyModule::getUserPagesNamespaces() ) ), 'newFromName');
 
     	if(
 		in_array( strtolower( $wgUser->getSkin()->getSkinName() ), array( 'monaco', 'oasis' ) ) &&
