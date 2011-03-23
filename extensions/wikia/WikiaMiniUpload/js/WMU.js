@@ -1279,12 +1279,6 @@ AIM = {
 		f.setAttribute('target', name);
 	},
 	submit : function(f, c) {
-
-		// macbre: allow cross-domain
-		if(document.domain != 'localhost' && typeof FCK != 'undefined') {
-			f.action += ((f.action.indexOf('?') > 0) ? '&' : '?') + 'domain=' + escape(document.domain);
-		}
-
 		AIM.form(f, AIM.frame(c));
 		if (c && typeof(c.onStart) == 'function') {
 			return c.onStart();

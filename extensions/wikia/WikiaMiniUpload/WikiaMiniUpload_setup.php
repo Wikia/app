@@ -78,10 +78,6 @@ function WMU() {
 	$wmu = new WikiaMiniUpload();
 
 	$html = $wmu->$method();
-	$domain = $wgRequest->getVal('domain', null);
-	if(!empty($domain)) {
-		$html .= '<script type="text/javascript">document.domain = "' . $domain  . '"</script>';
-	}
 	$ar = new AjaxResponse($html);
 	$ar->setContentType('text/html; charset=utf-8');
 	return $ar;
