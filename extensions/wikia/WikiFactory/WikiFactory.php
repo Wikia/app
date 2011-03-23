@@ -198,7 +198,7 @@ class WikiFactory {
 				$domains[] = strtolower( $oRow->city_domain );
 			}
 			$dbr->freeResult( $oRes );
-			
+
 			$SECONDS_IN_DAY = 60*60*24;
 			$wgMemc->set( $key, $domains, $SECONDS_IN_DAY );
 		}
@@ -1224,14 +1224,14 @@ class WikiFactory {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		$domains = self::getDomains( $city_id, true ); 
-		if( is_array( $domains ) ) { 
-			foreach( $domains as $domain ) { 
-				$wgMemc->delete( self::getDomainKey( $domain ) ); 
-				Wikia::log( __METHOD__, "", "Remove {$domain} from wikifactory cache" ); 
-			} 
+		$domains = self::getDomains( $city_id, true );
+		if( is_array( $domains ) ) {
+			foreach( $domains as $domain ) {
+				$wgMemc->delete( self::getDomainKey( $domain ) );
+				wfDebugLog( "wikifactory", __METHOD__ . ": Remove {$domain} from wikifactory cache.\n", true );
+			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 	} // end clearDomainCache()
 
@@ -1249,7 +1249,7 @@ class WikiFactory {
 	static public function getGroups() {
 
 		if( ! self::isUsed() ) {
-			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			wfDebugLog( "wikifactory", __METHOD__ . ": WikiFactory is not used.\n", true );
 			return array();
 		}
 
@@ -1811,7 +1811,7 @@ class WikiFactory {
 				}
 			}
 		}
-		
+
 		self::clearDomainCache( $city_id );
 		self::clearDomainCache( $new_city_id );
 
@@ -1931,7 +1931,7 @@ class WikiFactory {
 					),
 					__METHOD__
 				);
-				
+
 				self::clearDomainCache( $row->city_id );
 			}
 			$dbw->freeResult( $sth );
