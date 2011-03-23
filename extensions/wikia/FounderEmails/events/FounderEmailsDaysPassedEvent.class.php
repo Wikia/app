@@ -39,14 +39,25 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 				$mailSubject = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-subject', $langCode, array() );
 				$mailBody = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body', $langCode, $emailParams );
+				$mailCategory = FounderEmailsEvent::CATEGORY_DEFAULT;
+				if($activateDays == 3) {
+					$mailCategory = FounderEmailsEvent::CATEGORY_3_DAY;
+				} else if($activateDays == 10) {
+					$mailCategory = FounderEmailsEvent::CATEGORY_10_DAY;
+				} else if($activateDays == 0) {
+					$mailCategory = FounderEmailsEvent::CATEGORY_0_DAY;
+				}
+				
 				if ($langCode == 'en') {
 					$mailBodyHTML = wfRenderModule("FounderEmails", $event['data']['dayName'], array('language' => 'en'));
 					$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
+					$mailCategory .= 'EN';
 				} else {
 					$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body-HTML', $langCode, $emailParams );
+					$mailCategory .= 'INT';
 				}
 				
-				$founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $wikiId );
+				$founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $wikiId, $mailCategory );
 
 				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 				$dbw->delete( 'founder_emails_event', array( 'feev_id' => $event['id'] ) );
