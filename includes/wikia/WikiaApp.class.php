@@ -72,6 +72,22 @@ class WikiaApp {
 	}
 
 	/**
+	 * get MediaWiki registry (global)
+	 * @return WikiaGlobalsRegistry
+	 */
+	public function getMWRegistry() {
+		return $this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI);
+	}
+
+	/**
+	 * get Wikia registry (local
+	 * @return WikiaLocalRegistry
+	 */
+	public function getWikiaRegistry() {
+		return $this->getRegistry()->getRegistry(self::REGISTRY_WIKIA);
+	}
+
+	/**
 	 * get dispatcher object
 	 * @return WikiaDispatcher
 	 */
@@ -91,7 +107,7 @@ class WikiaApp {
 	 * @param bool $alwaysRebuild
 	 */
 	public function registerHook($hookName, $className, $methodName, array $options = array(), $alwaysRebuild = false) {
-		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->append('wgHooks', $this->hookDispatcher->registerHook($className, $methodName, $options, $alwaysRebuild), $hookName);
+		$this->getMWRegistry()->append('wgHooks', $this->hookDispatcher->registerHook($className, $methodName, $options, $alwaysRebuild), $hookName);
 	}
 
 	/**
@@ -100,7 +116,7 @@ class WikiaApp {
 	 * @param string $filePath
 	 */
 	public function registerClass($className, $filePath) {
-		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set('wgAutoloadClasses', $filePath, $className);
+		$this->getMWRegistry()->set('wgAutoloadClasses', $filePath, $className);
 	}
 
 	/**
@@ -108,7 +124,7 @@ class WikiaApp {
 	 * @param string $functionName
 	 */
 	public function registerExtensionFunction($functionName) {
-		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->append('wgExtensionFunctions', $functionName);
+		$this->getMWRegistry()->append('wgExtensionFunctions', $functionName);
 	}
 
 	/**
@@ -117,7 +133,7 @@ class WikiaApp {
 	 * @param string $filePath
 	 */
 	public function registerExtensionMessageFile($name, $filePath) {
-		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set('wgExtensionMessagesFiles', $filePath, $name);
+		$this->getMWRegistry()->set('wgExtensionMessagesFiles', $filePath, $name);
 	}
 
 	/**
@@ -126,7 +142,7 @@ class WikiaApp {
 	 * @param string $filePath
 	 */
 	public function registerExtensionAliasFile($name, $filePath) {
-		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set('wgExtensionAliasesFiles', $filePath, $name);
+		$this->getMWRegistry()->set('wgExtensionAliasesFiles', $filePath, $name);
 	}
 
 	/**
@@ -135,7 +151,7 @@ class WikiaApp {
 	 * @param string $className class name
 	 */
 	public function registerSpecialPage($name, $className) {
-		$this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set('wgSpecialPages', $className, $name);
+		$this->getMWRegistry()->set('wgSpecialPages', $className, $name);
 	}
 
 	/**
@@ -143,7 +159,7 @@ class WikiaApp {
 	 * @param string $globalVarName
 	 */
 	public function getGlobal($globalVarName) {
-		return $this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->get($globalVarName);
+		return $this->getMWRegistry()->get($globalVarName);
 	}
 
 	/**
@@ -153,7 +169,7 @@ class WikiaApp {
 	 * @param string $key key (optional)
 	 */
 	public function setGlobal($globalVarName, $value, $key = null) {
-		return $this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI)->set($globalVarName, $value, $key);
+		return $this->getMWRegistry()->set($globalVarName, $value, $key);
 	}
 
 	/**
