@@ -1230,8 +1230,8 @@ class Wikia {
 	 */
 	static public function setupAfterCache() {
 		global $wgTTCache;
-		$wgTTCache = wfGetMainTTCache();
-		
+		$wgTTCache = wfGetSolidCacheStorage();
+
 		# setup externalAuth
 		global $wgExternalAuthType, $wgAutocreatePolicy;
 		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
@@ -1680,28 +1680,28 @@ class Wikia {
 		}
 		return true;
 	}
-	
+
 	function getAllHeaders() {
 		if ( function_exists( 'getallheaders' ) ) {
 			$headers = getallheaders();
 		} else {
 			$headers = $_SERVER;
 		}
-		return $headers;	
+		return $headers;
 	}
-	
-	static public function isEmailConfirmedHook( &$user, &$confirmed ) { 
+
+	static public function isEmailConfirmedHook( &$user, &$confirmed ) {
 		# Hook moved from SpecialUnsubscribe extension
-		#if this opt is set, fake their conf status to OFF, and stop here. 
+		#if this opt is set, fake their conf status to OFF, and stop here.
 		$result = true;
 		/*
-		 * this depends on EVERYONE checking isConfirmed status before sending mail. 
-		 * this depends on EVERYONE using the user->isEmailConfirmed() function to do so, as it calls this hook. 
-		 */ 
+		 * this depends on EVERYONE checking isConfirmed status before sending mail.
+		 * this depends on EVERYONE using the user->isEmailConfirmed() function to do so, as it calls this hook.
+		 */
 		if( $user->getBoolOption('unsubscribed') ) {
-			$confirmed = false; 
+			$confirmed = false;
 			$result = false;
 		}
-		return $result; 
+		return $result;
 	}
 }
