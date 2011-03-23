@@ -1,6 +1,18 @@
 <?php
 
 abstract class FounderEmailsEvent {
+
+	const CATEGORY_DEFAULT = 'FounderEmails';
+	const CATEGORY_0_DAY = 'FounderEmails0Day';
+	const CATEGORY_3_DAY = 'FounderEmails3Day';
+	const CATEGORY_10_DAY = 'FounderEmails10Day';
+	const CATEGORY_REGISTERED = 'FounderEmailsRegisterd';
+	const CATEGORY_FIRST_EDIT_USER = 'FounderEmailsFirstEditUser';
+	const CATEGORY_FIRST_EDIT_ANON = 'FounderEmailsFirstEditAnon';
+	const CATEGORY_EDIT_USER = 'FounderEmailsEditUser';
+	const CATEGORY_EDIT_ANON = 'FounderEmailsEditAnon';
+	const CATEGORY_EDIT_HIGH_ACTIVITY = 'FounderEmailsHighActivity';
+
 	private $id = 0;
 	protected $mType = null;
 	protected $mData = array();

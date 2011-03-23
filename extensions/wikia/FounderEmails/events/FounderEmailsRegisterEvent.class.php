@@ -29,9 +29,11 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 			$mailSubject = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-user-registered-subject', $langCode, array() );
 			$mailBody = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-user-registered-body', $langCode, $emailParams );
 			$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-user-registered-body-HTML', $langCode, $emailParams );
+			
+			$mailCategory = FounderEmailsEvent::CATEGORY_REGISTERED.(!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
 
 			wfProfileOut( __METHOD__ );
-			return $founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML );
+			return $founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $mailCategory );
 		}
 
 		wfProfileOut( __METHOD__ );

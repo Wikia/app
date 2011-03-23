@@ -53,24 +53,29 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				$aWikiCounter[0] = $today;
 				$aWikiCounter[1] = 0;
 			}
-
+			
+			$mailCategory = FounderEmailsEvent::CATEGORY_DEFAULT;
 			// @FIXME magic number, move to config
 			if ( $aWikiCounter[1] === 9 ) {
 				$msgKeys['subject'] = 'founderemails-lot-happening-subject';
 				$msgKeys['body'] = 'founderemails-lot-happening-body';
 				$msgKeys['body-html'] = 'founderemails-lot-happening-body-HTML';
+				$mailCategory = FounderEmailsEvent::CATEGORY_EDIT_HIGH_ACTIVITY;
 			} elseif ( $eventData['data']['registeredUserFirstEdit'] ) {
 				$msgKeys['subject'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-first-edit-subject';
 				$msgKeys['body'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-first-edit-body';
 				$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-first-edit-body-HTML';
+				$mailCategory = FounderEmailsEvent::CATEGORY_FIRST_EDIT_USER;
 			} elseif ( $eventData['data']['registeredUser'] ) {
 				$msgKeys['subject'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-subject';
 				$msgKeys['body'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-body';
 				$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-body-HTML';
+				$mailCategory = FounderEmailsEvent::CATEGORY_EDIT_USER;
 			} else {
 				$msgKeys['subject'] = 'founderemails' . $wikiType . '-email-page-edited-anon-subject';
 				$msgKeys['body'] = 'founderemails' . $wikiType . '-email-page-edited-anon-body';
 				$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-anon-body-HTML';
+				$mailCategory = FounderEmailsEvent::CATEGORY_EDIT_ANON;
 			}
 
 			$aWikiCounter[1] = ( $aWikiCounter[1] === 9 ) ? 'full' : $aWikiCounter[1] + 1;
@@ -80,13 +85,14 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$oFounder->saveSettings();
 
 			$langCode = $oFounder->getOption( 'language' );
+			$mailCategory .= (!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
 
 			$mailSubject = $this->getLocalizedMsgBody( $msgKeys['subject'], $langCode, array() );
 			$mailBody = $this->getLocalizedMsgBody( $msgKeys['body'], $langCode, $emailParams );
 			$mailBodyHTML = $this->getLocalizedMsgBody( $msgKeys['body-html'], $langCode, $emailParams );
 
 			wfProfileOut( __METHOD__ );
-			return $founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML );
+			return $founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $mailCategory );
 			
 		}
 
