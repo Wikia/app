@@ -160,8 +160,8 @@ function wfCreatePagePrefCustomHtml ($prefsForm) {
         return true ;
 }
 
-function wfCreatePageToggle ($toggles) {
-        $toggles ['create-page-redlinks'] = 'createpage-redlinks' ;
+function wfCreatePageToggle (&$toggles) {
+        $toggles[] = 'createpage-redlinks' ;
         return true ;
 }
 
