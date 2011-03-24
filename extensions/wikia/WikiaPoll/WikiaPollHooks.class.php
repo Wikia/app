@@ -88,8 +88,7 @@ class WikiaPollHooks {
 		});
 		</script>";
 			}
-
-			return "{$css}\n{$poll->renderEmbedded()}\n{$js}\n";
+			return str_replace("\n", ' ', "{$css} {$poll->renderEmbedded()} {$js}");
 		}
 		
 		wfProfileOut(__METHOD__);
