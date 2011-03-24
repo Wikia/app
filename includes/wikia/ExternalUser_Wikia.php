@@ -248,6 +248,7 @@ class ExternalUser_Wikia extends ExternalUser {
 		wfDebug( __METHOD__ . ": update central user data \n" );
 		
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+		$this->mUser->mTouched = User::newTouchedTimestamp();
 		$dbw->update( '`user`',
 			array( /* SET */
 				'user_name' => $this->mUser->mName,
