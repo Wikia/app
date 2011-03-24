@@ -41,13 +41,21 @@ class AssetsConfig {
 	private /* array */ $mConfig;
 	
 	/**
-	 * Initialize object and loads configuration from config.php file
+	 * Returns configuration array for particular group. If group does not exists in config then returns empty array
 	 * 
 	 * @author Inez Korczyński <korczynski@gmail.com>
  	 */
-	public function __construct() {
-		include('config.php');
-		$this->mConfig = $config;
+	protected function getGroupConfig($groupName) {
+		if(empty($this->mConfig)) {
+			include('config.php');
+			$this->mConfig = $config;
+		}
+		
+		if(isset($this->mConfig[$groupName])) {
+			return $this->mConfig[$groupName];
+		} else {
+			return array();
+		}
 	}
 
 	/**
@@ -56,10 +64,7 @@ class AssetsConfig {
 	 * @author Inez Korczyński <korczynski@gmail.com>
  	 */
 	public function resolve(/* string */ $groupName, /* boolean */ $combine = true, /* boolean */ $minify = true, /* array */ $params = array()) {
-		if(!isset($this->mConfig[$groupName])) {
-			return array();
-		}
-		return $this->resolveItemsToAssets($this->mConfig[$groupName], $combine, $minify, $params);
+		return $this->resolveItemsToAssets($this->getGroupConfig($groupName), $combine, $minify, $params);
 	}
 
 	/**
