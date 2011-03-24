@@ -7,7 +7,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 	}
 
 	public function process( Array $events ) {
-		global $wgEnableAnswers, $wgSitename;
+		global $wgEnableAnswers, $wgSitename, $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		if ( $this->isThresholdMet( count( $events ) ) ) {
@@ -33,7 +33,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 			$mailCategory = FounderEmailsEvent::CATEGORY_REGISTERED.(!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
 
 			wfProfileOut( __METHOD__ );
-			return $founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $mailCategory );
+			return $founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $wgCityId, $mailCategory );
 		}
 
 		wfProfileOut( __METHOD__ );
