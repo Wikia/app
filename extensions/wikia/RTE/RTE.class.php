@@ -112,28 +112,15 @@ class RTE {
 
 		// used for load time reports
 		$wgOut->addInlineScript('var wgRTEStart = new Date();');
-		
-		global $wgUseAssetsManager;
-		if(!empty($wgUseAssetsManager)) {
-			$srcs = F::build('AssetsManager')->getGroupCommonURL('rte');
-			foreach($srcs as $src) {
-				$wgOut->addScript("<script src=\"$src\" type=\"$wgJsMimeType\"></script>");
-			}	
-		} else {	
-			// load JS code
-			self::$devMode = $wgRequest->getVal('source', false);
-			if (!empty(self::$devMode)) {
-				// load development version
-				$wgOut->addScript("<script src=\"$wgExtensionsPath/wikia/RTE/ckeditor/ckeditor_source.js?$wgStyleVersion\" type=\"$wgJsMimeType\"></script>");
-				$wgOut->addScript("<script src=\"$wgExtensionsPath/wikia/RTE/js/RTE.js?$wgStyleVersion\" type=\"$wgJsMimeType\"></script>");
-			}
-			else {
-				// load minified version
-				$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgExtensionsPath/wikia/RTE/ckeditor/ckeditor.js?$wgStyleVersion\"></script>");
-			}
-		}
 
-		$wgOut->addExtensionStyle("$wgExtensionsPath/wikia/RTE/css/RTE.css?$wgStyleVersion");
+		// add RTE javascript files
+		$srcs = F::app()->getAssetsManager()->getGroupCommonURL('rte');
+		foreach($srcs as $src) {
+			$wgOut->addScript("<script src=\"$src\" type=\"$wgJsMimeType\"></script>");
+		}
+		
+		// add RTE css file
+		$wgOut->addExtensionStyle(F::app()->getAssetsManager()->getOneCommonURL("extensions/wikia/RTE/css/RTE.css"));
 
 		// parse wikitext of edited page and add extra fields to editform
 		$wgHooks['EditPage::showEditForm:fields'][] = 'RTE::init2';

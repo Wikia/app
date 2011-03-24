@@ -83,6 +83,14 @@ class WikiaApp {
 	}
 
 	/**
+	 * get AssetsManager
+	 * @return AssetsManager
+	 */
+	public function getAssetsManager() {
+		return $this->assetsManager;
+	}
+	
+	/**
 	 * set registry
 	 * @param WikiaCompositeRegistry $registry
 	 */
