@@ -1,8 +1,9 @@
 $height-designer: 240px;
 $height-toolbar: 45px;
-
 $color-borders: #CECECE;
 
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/globalelements";
 @import "../../../../skins/oasis/css/core/reset";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/clearfix";
@@ -103,9 +104,6 @@ body {
 			}
 			.chevron {
 				border-color: #2070AD transparent transparent;
-				border-style: solid;
-				border-width: 3px;
-				width: 0;
 			}
 			ul {
 				@include box-shadow(0, 4px, 6px, #999);
