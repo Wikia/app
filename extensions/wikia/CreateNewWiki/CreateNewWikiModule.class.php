@@ -24,6 +24,12 @@ class CreateNewWikiModule extends Module {
 	// state variables
 	var $currentStep;
 	var $skipWikiaPlus;
+	
+	var $app;
+	
+	public function __construct($app) {
+		$this->app = $app;
+	}
 
 	public function executeIndex() {
 		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgPageQuery, $wgUser;
@@ -90,12 +96,13 @@ class CreateNewWikiModule extends Module {
 	 */
 	public function executeCheckWikiName() {
 		wfProfileIn(__METHOD__);
-		global $wgRequest;
+		
+		$wgRequest = $this->app->getGlobal('wgRequest');
 
 		$name = $wgRequest->getVal('name');
 		$lang = $wgRequest->getVal('lang');
 
-		$this->response = AutoCreateWiki::checkWikiNameIsCorrect($name, $lang);
+		$this->response = $this->app->runFunction('AutoCreateWiki::checkWikiNameIsCorrect', $name, $lang);
 
 		wfProfileOut(__METHOD__);
 	}
@@ -105,7 +112,8 @@ class CreateNewWikiModule extends Module {
 	 */
 	public function executeCreateWiki() {
 		wfProfileIn(__METHOD__);
-		global $wgRequest, $wgDevelDomains;
+		$wgRequest = $this->app->getGlobal('wgRequest');
+		$wgDevelDomains = $this->app->getGlobal('wgDevelDomains');
 
 		$params = $wgRequest->getArray('data');
 
@@ -117,20 +125,22 @@ class CreateNewWikiModule extends Module {
 		{
 			// do nothing
 			$this->status = 'error';
-			$this->statusMsg = wfMsg('cnw-error-general');
-			$this->statusHeader = wfMsg('cnw-error-general-heading');
+			$this->statusMsg = $this->app->runFunction('wfMsg', 'cnw-error-general');
+			$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
 		} else {
-			$createWiki = new CreateWiki($params['wikiName'], $params['wikiDomain'], $params['wikiLanguage'], $params['wikiCategory']);
+			$createWiki = F::build('CreateWiki', array($params['wikiName'], $params['wikiDomain'], $params['wikiLanguage'], $params['wikiCategory']));
 			$createWiki->create();
 			$this->cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($this->cityId)) {
 				$this->status = 'backenderror';
-				$this->statusMsg = wfMsg('databaseerror').'<br>'.wfMsg('cnw-error-general');
-				$this->statusHeader = wfMsg('cnw-error-general-heading');
+				$this->statusMsg = $this->app->runFunction('wfMsg', 'databaseerror').
+					'<br>'.
+					$this->app->runFunction('wfMsg', 'cnw-error-general');
+				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
 			} else {
 				$this->status = 'ok';
 				$this->siteName = $createWiki->getWikiInfo('sitename');
-				$finishCreateTitle = GlobalTitle::newFromText("FinishCreate", NS_SPECIAL, $this->cityId);
+				$finishCreateTitle = F::build('GlobalTitle', array("FinishCreate", NS_SPECIAL, $this->cityId), 'newFromText');
 				$this->finishCreateUrl = empty($wgDevelDomains) ? $finishCreateTitle->getFullURL() : str_replace('.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL());
 			}
 		}
