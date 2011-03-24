@@ -92,7 +92,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$mailBodyHTML = $this->getLocalizedMsgBody( $msgKeys['body-html'], $langCode, $emailParams );
 
 			wfProfileOut( __METHOD__ );
-			return $founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $mailCategory );
+			return $founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $wgCityId, $mailCategory );
 			
 		}
 
