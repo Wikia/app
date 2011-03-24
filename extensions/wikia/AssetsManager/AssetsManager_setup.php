@@ -13,18 +13,7 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Inez Korczyński'
 );
 
-$dir = dirname(__FILE__).'/';
-
-$wgAutoloadClasses['AssetsConfig'] = $dir.'AssetsConfig.class.php';
-$wgAutoloadClasses['AssetsManager'] = $dir.'AssetsManager.class.php';
-
 $wgAjaxExportList[] = 'AssetsManagerEntryPoint';
-$wgExtensionFunctions[] = 'AssetsManagerEntrySetup';
-
-function AssetsManagerEntrySetup() {
-	$app = F::build('App');
-	F::setInstance('AssetsManager', new AssetsManager($app->getGlobal('wgCdnRootUrl'), $app->getGlobal('wgStyleVersion'), $app->getGlobal('wgAllInOne'), $app->getGlobal('wgAllInOne')));
-}
 
 function AssetsManagerEntryPoint() {
 	global $wgRequest, $wgAutoloadClasses;
