@@ -128,7 +128,7 @@ var CreateWikiaPoll = {
 			$.get(wgScript + '?action=ajax&rs=WikiaPollAjax&method=create', $("#CreateWikiaPoll").find("form").serialize(), function(data) {
 				if ($("#CreateWikiaPoll").closest(".modalWrapper").exists()) { // in modal
 					if (data.success) {
-						RTE.mediaEditor._add("{{" + data.question + "}}");
+						RTE.mediaEditor._add("[[" + data.question + "]]");
 						$("#CreateWikiaPoll").closest(".modalWrapper").closeModal();
 						CreateWikiaPoll.track('/insertNewPoll');
 					} else if (data.error) {
