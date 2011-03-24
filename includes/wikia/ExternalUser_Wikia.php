@@ -15,27 +15,27 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	protected function initFromId( $id ) {
-		wfDebug( __METHOD__ . ": init User from id: $id \n" );		
+		wfDebug( __METHOD__ . ": init User from id: $id \n" );
 		return $this->initFromCond( array( 'user_id' => $id ) );
 	}
 
 	protected function initFromUser( $user ) {
-		wfDebug( __METHOD__ . ": init User from object: " . print_r($user, true) ." \n" );		
+		wfDebug( __METHOD__ . ": init User from object: " . print_r($user, true) ." \n" );
 		$this->mUser = $user;
 		return $this->initFromCond( array( 'user_id' => $user->getId() ) );
 	}
-	
+
 	private function initFromCond( $cond ) {
 		global $wgExternalSharedDB;
 
 		wfDebug( __METHOD__ . ": init User from cond: " . print_r($cond, true) . " \n" );
-		
-		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-		$row = $this->mDb->selectRow( 
-			'`user`', 
-			array( '*' ), 
-			$cond, 
+		$this->mDb = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+
+		$row = $this->mDb->selectRow(
+			'`user`',
+			array( '*' ),
+			$cond,
 			__METHOD__
 		);
 		if ( !$row ) {
@@ -45,11 +45,11 @@ class ExternalUser_Wikia extends ExternalUser {
 
 		return true;
 	}
-	
+
 	public function initFromCookie() {
-		global $wgMemc,$wgDBcluster;		
+		global $wgMemc,$wgDBcluster;
 		wfDebug( __METHOD__ . " \n" );
-				
+
         if ( wfReadOnly() ) {
 			wfDebug( __METHOD__ . ": Cannot load from session - DB is running with the --read-only option " );
             return false;
@@ -59,11 +59,11 @@ class ExternalUser_Wikia extends ExternalUser {
 		wfDebug( __METHOD__ . ": user from session: $uid \n" );
 		if ( empty($uid) ) {
 			return false;
-		} 
-		
+		}
+
 		// exists on central
-		$this->initFromId( $uid );	
-		
+		$this->initFromId( $uid );
+
 		// exists on local
 		$User = null;
 		if ( !empty($this->mRow) ) {
@@ -79,115 +79,115 @@ class ExternalUser_Wikia extends ExternalUser {
 				$User = $this->getLocalUser();
 			}
 		}
-		
-		wfDebug( __METHOD__ . ": return user object \n" );		
+
+		wfDebug( __METHOD__ . ": return user object \n" );
 		return is_null( $User );
-	}	
+	}
 
 	public function getId() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_id . " \n" );			
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_id . " \n" );
 		return $this->mRow->user_id;
 	}
 
 	public function getName() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_name . " \n" );		
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_name . " \n" );
 		return $this->mRow->user_name;
 	}
 
 	public function getEmail() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_email . " \n" );			
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_email . " \n" );
 		return $this->mRow->user_email;
 	}
-	
+
 	public function getEmailAuthentication() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_email_authenticated . " \n" );			
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_email_authenticated . " \n" );
 		return $this->mRow->user_email_authenticated;
 	}
 
 	public function getUserTouched() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_touched . " \n" );			
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_touched . " \n" );
 		return $this->mRow->user_touched;
 	}
-	
+
 	public function getRealName() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_real_name . " \n" );			
-		return $this->mRow->user_real_name;		
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_real_name . " \n" );
+		return $this->mRow->user_real_name;
 	}
-        
+
 	public function getPassword() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_password . " \n" );			
-		return $this->mRow->user_password;		
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_password . " \n" );
+		return $this->mRow->user_password;
 	}
-	             
+
 	public function getNewPassword() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_newpassword . " \n" );			
-		return $this->mRow->user_newpassword;		
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_newpassword . " \n" );
+		return $this->mRow->user_newpassword;
 	}
 
 	public function getOptions() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_options . " \n" );			
-		return $this->mRow->user_options;		
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_options . " \n" );
+		return $this->mRow->user_options;
 	}
 
 	public function getToken() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_token . " \n" );			
-		return $this->mRow->user_token;		
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_token . " \n" );
+		return $this->mRow->user_token;
 	}
-	
+
 	public function getEmailToken() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_email_token . " \n" );			
-		return $this->mRow->user_token;		
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_email_token . " \n" );
+		return $this->mRow->user_token;
 	}
-		
+
 	public function getEmailTokenExpires() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_email_token_expires . " \n" );			
-		return $this->mRow->user_email_token_expires;		
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_email_token_expires . " \n" );
+		return $this->mRow->user_email_token_expires;
 	}
-	
+
 	public function getRegistration() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_registration . " \n" );			
-		return $this->mRow->user_registration;		
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_registration . " \n" );
+		return $this->mRow->user_registration;
 	}
-	
+
 	public function getNewpassTime() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_newpass_time . " \n" );			
-		return $this->mRow->user_newpass_time;		
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_newpass_time . " \n" );
+		return $this->mRow->user_newpass_time;
 	}
 
 	public function getEditCount() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_editcount . " \n" );			
-		return $this->mRow->user_editcount;	
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_editcount . " \n" );
+		return $this->mRow->user_editcount;
 	}
-	
+
 	public function getBirthdate() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_birthdate . " \n" );			
-		return $this->mRow->user_birthdate;		
+		wfDebug( __METHOD__ . ": " . $this->mRow->user_birthdate . " \n" );
+		return $this->mRow->user_birthdate;
 	}
-	
+
 	public function authenticate( $password ) {
-		# This might be wrong if anyone actually uses the UserComparePasswords hook 
+		# This might be wrong if anyone actually uses the UserComparePasswords hook
 		# (on either end), so don't use this if you those are incompatible.
-		wfDebug( __METHOD__ . ": " . $this->getId() . " \n" );				
-		return User::comparePasswords( $this->getPassword(), $password, $this->getId() );	
+		wfDebug( __METHOD__ . ": " . $this->getId() . " \n" );
+		return User::comparePasswords( $this->getPassword(), $password, $this->getId() );
 	}
 
 	public function getPref( $pref ) {
 		# we are using user_properties table - so no action is needed here
-		wfDebug( __METHOD__ . " \n" );			
+		wfDebug( __METHOD__ . " \n" );
 		return null;
 	}
-		
+
 	protected function addToDatabase( $User, $password, $email, $realname ) {
 		global $wgExternalSharedDB;
-				
-		wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " \n" );			
+
+		wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " \n" );
 
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
-		
+
 		$User->setPassword( $password );
 		$User->setToken();
-		
+
 		$dbw->insert( '`user`',
 			array(
 				'user_id' => $seqVal,
@@ -209,31 +209,31 @@ class ExternalUser_Wikia extends ExternalUser {
 
 		// Clear instance cache other than user table data, which is already accurate
 		$User->clearInstanceCache();
-		
+
 		return $User;
 	}
-		
+
 	public function linkToLocal( $id ) {
-		wfDebug( __METHOD__ . ": update local user table: $id \n" );			
+		wfDebug( __METHOD__ . ": update local user table: $id \n" );
 		$dbw = wfGetDB( DB_MASTER );
-		
+
 		$where = array();
 		foreach ( $this->mRow as $field => $value ) {
 			$where[ $field ] = $value;
 		}
 
-		$dbw->replace( 
+		$dbw->replace(
 			'user',
 			array_keys( (array)$this->mRow ),
 			$where,
-			__METHOD__ 
+			__METHOD__
 		);
-	}		
-	
+	}
+
 	public function getLocalUser() {
 		$uid = $this->getId();
 		wfDebug( __METHOD__ . ": get local user: $uid \n" );
-		
+
 		$dbr = wfGetDb( DB_SLAVE );
 		$row = $dbr->selectRow(
 			'user',
@@ -242,11 +242,11 @@ class ExternalUser_Wikia extends ExternalUser {
 		);
 		return $row ? User::newFromId( $row->user_id ) : null;
 	}
-	
+
 	public function updateUser() {
 		global $wgExternalSharedDB;
 		wfDebug( __METHOD__ . ": update central user data \n" );
-		
+
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$this->mUser->mTouched = User::newTouchedTimestamp();
 		$dbw->update( '`user`',
