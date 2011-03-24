@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__FILE__) . '/../CreateNewWiki_setup.php';
+require_once dirname(__FILE__) . '/../CreateNewWikiModule.class.php';
 
 class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
 	
