@@ -1,4 +1,6 @@
 <?php
+require_once dirname(__FILE__) . '/../CreateNewWiki_setup.php';
+
 class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
 	
 	protected function setUp() {
