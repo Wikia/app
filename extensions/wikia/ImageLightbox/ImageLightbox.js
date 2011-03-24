@@ -93,12 +93,34 @@ var ImageLightbox = {
 		// store clicked element
 		this.target = target;
 
+		// get image's caption
+		var caption = this.getCaption(target);
+
+		// handle shared help images (as external images)
+		if (target.attr('data-shared-help')) {
+			var self = this,
+				imageSrc = target.attr('href'),
+				img = new Image();
+
+			this.log('loading shared help image: ' + imageSrc);
+
+			// preload an image so we know its size before lightbox is rendered
+			img.onload = function() {
+				var html = '<div id="lightbox-image" style="text-align: center"><img src="' + imageSrc + '" alt="" /></div>' +
+					'<div id="lightbox-caption-content"></div>';
+				self.showLightbox(target.attr('data-image-name'), html, caption);
+			}
+			img.src = imageSrc;
+
+			// don't follow the link
+			ev.preventDefault();
+			return;
+		}
+
 		// handle lightboxes for external images
 		if (target.hasClass('link-external')) {
-			var caption = this.getCaption(target);
-
-			var image = target.children('img');
-			var html = '<div id="lightbox-image" style="text-align: center"><img src="' + image.attr('src') + '" alt="" /></div>' +
+			var image = target.children('img'),
+				html = '<div id="lightbox-image" style="text-align: center"><img src="' + image.attr('src') + '" alt="" /></div>' +
 				'<div id="lightbox-caption-content"></div>';
 
 			this.showLightbox(target.closest('.wikia-gallery').attr('data-feed-title'), html, caption);
@@ -135,7 +157,6 @@ var ImageLightbox = {
 			imageName = decodeURIComponent(imageName);
 
 			// find caption node and use it in lightbox popup
-			var caption = this.getCaption(target);
 			var showShareTools = target.hasParent('#WikiaArticle') ? 1 : 0;
 			this.fetchLightbox(imageName, caption, showShareTools);
 

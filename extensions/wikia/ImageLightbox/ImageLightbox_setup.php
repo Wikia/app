@@ -1,7 +1,7 @@
 <?php
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Image Lightbox',
-	'version' => '1.2',
+	'version' => '1.21',
 	'description' => 'Add lightbox preview for images within article',
 	'author' => array('Maciej Brencz', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
 );
