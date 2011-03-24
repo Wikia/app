@@ -44,8 +44,12 @@ class CategoryExhibitionAjax {
 		$pageText = $wgRequest->getVal( 'articleId' );
 		$iPaginatorPosition = (int)$wgRequest->getVal( 'page' );
 		$oCategoryTitle = Title::newFromText( $pageText, NS_CATEGORY );
+		if ( !is_object( $oCategoryTitle ) ){
+			return '';
+		}
 		$oSection = new $class( $oCategoryTitle );
 		$sUrl = $oCategoryTitle->getFullURL();
+
 		$result = $oSection->getSectionAxHTML( $iPaginatorPosition, $sUrl );
 		
 		return $result;
