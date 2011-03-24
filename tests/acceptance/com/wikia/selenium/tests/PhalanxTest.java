@@ -34,6 +34,7 @@ public class PhalanxTest extends BaseTest {
 
 	// MW message with whitelist
 	private static final String whitelistMessage = "MediaWiki:Spam-whitelist";
+	private static final String whitelistWord = "WikiaTestBlockDontRemoveMeWhitelisted";
 
 	// did cleanup method have been run?
 	private static boolean run = false;
@@ -44,11 +45,9 @@ public class PhalanxTest extends BaseTest {
 
 	/**
 	 * Login on selected testing account
-	 *
-	 * Important: WikiaSysop user should have admin rights on wiki tests are run
 	 */
 	protected void login() throws Exception {
-		loginAsSysop();
+		loginAsRegular();
 	}
 
 	/**
@@ -440,6 +439,8 @@ public class PhalanxTest extends BaseTest {
 	public void articlesCreationNewWikiBuilderTest() throws Exception {
 		this.log("Test articles creation (via WikiBuilder)");
 
+		/**
+
 		Random randomGenerator = new Random();
 		String articleNameSuffix = Integer.toString(randomGenerator.nextInt(99999));
 
@@ -481,6 +482,8 @@ public class PhalanxTest extends BaseTest {
 		// cleanup
 		this.deleteArticle(this.testArticleName + articleNameSuffix);
 		this.deleteArticle(this.testArticleName + articleNameSuffix + "Foo");
+
+		**/
 	}
 
 	/**
@@ -537,7 +540,7 @@ public class PhalanxTest extends BaseTest {
 
 		// edit whitelist - allow "fuck" word
 		String whitelist = " #<!-- Phalanx whitelist text --> <pre>\n" +
-			this.badWord +
+			this.whitelistWord +
 			"\n #</pre> <!-- Phalanx whitelist text -->";
 
 		this.log(" Adding whitelist entry");
@@ -552,9 +555,9 @@ public class PhalanxTest extends BaseTest {
 		login();
 
 		// perform edits with whitelisted domain in URL
-		assertTrue(this.createArticle(this.testArticleName, "http://www." + this.badWord + ".net"));
-		assertFalse(this.createArticle(this.testArticleName, "https://www.foo.net/" + this.badWord + ".html"));
-		assertFalse(this.createArticle(this.testArticleName, this.goodWords + " " + this.badWord));
+		assertTrue(this.createArticle(this.testArticleName, "http://www." + this.whitelistWord + ".net"));
+		assertFalse(this.createArticle(this.testArticleName, "https://www.foo.net/" + this.whitelistWord + ".html"));
+		assertFalse(this.createArticle(this.testArticleName, this.goodWords + " " + this.whitelistWord));
 	}
 
 	@Test(groups={"CI"}, dependsOnMethods={"whitelistTest"})
