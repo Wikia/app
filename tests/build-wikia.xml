@@ -20,7 +20,7 @@
     <property name="groups" value="" />
     <property name="excludegroups" value="destructive,broken,answers,central" />
     <property name="phpunitgroups" value="" />
-    <property name="phpunitexcludegroups" value="" />
+    <property name="phpunitexcludegroups" value="deprecated" />
     <property name="threadCount" value="1" />
     <property name="timeout" value="120000" />
 
