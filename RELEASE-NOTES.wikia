@@ -1,4 +1,5 @@
 == Changes since release-013 ==
+* fb#981: Image lightbox broken for shared help (macbre)
 * fb#3883: summary/title box moved to below content area on section=new (macbre)
 * fb#3877: Image placeholder doesn't let you upload a new photo (macbre)
 
