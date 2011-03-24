@@ -489,6 +489,9 @@ class LoginForm {
 		// but wrong-token attempts do.
 		
 		// If the user doesn't have a login token yet, set one.
+		error_log ( "token = " . print_r(self::getLoginToken(), true ) );
+		error_log ( "mtoken = " . print_r($this->mToken, true ) );
+		
 		if ( !self::getLoginToken() ) {
 			self::setLoginToken();
 			return self::NEED_TOKEN;
@@ -542,6 +545,15 @@ class LoginForm {
 			return self::ILLEGAL;
 		}
 
+		global $wgExternalAuthType, $wgAutocreatePolicy;
+		if ( $wgExternalAuthType && $wgAutocreatePolicy != 'never'
+		&& is_object( $this->mExtUser )
+		&& $this->mExtUser->authenticate( $this->mPassword ) ) {
+			# The external user and local user have the same name and
+			# password, so we assume they're the same.
+			$this->mExtUser->linkToLocal( $this->mExtUser->getId() );
+		}
+			
 		$isAutoCreated = false;
 		if ( 0 == $u->getID() ) {
 			$status = $this->attemptAutoCreate( $u );
@@ -550,19 +562,8 @@ class LoginForm {
 			} else {
 				$isAutoCreated = true;
 			}
-		} else {
-			global $wgExternalAuthType, $wgAutocreatePolicy;
-			if ( $wgExternalAuthType && $wgAutocreatePolicy != 'never'
-			&& is_object( $this->mExtUser )
-			&& $this->mExtUser->authenticate( $this->mPassword ) ) {
-				# The external user and local user have the same name and
-				# password, so we assume they're the same.
-				$this->mExtUser->linkToLocal( $u->getID() );
-			}
-
-			$u->load();
-		}
-
+		} 
+		
 		// Give general extensions, such as a captcha, a chance to abort logins
 		$abort = self::ABORTED;
 		if( !wfRunHooks( 'AbortLogin', array( $u, $this->mPassword, &$abort ) ) ) {
