@@ -94,6 +94,8 @@ $wgAutoloadClasses['WikiaResponse'] = $IP . '/includes/wikia/WikiaResponse.class
 $wgAutoloadClasses['WikiaResponsePrinter'] = $IP . '/includes/wikia/WikiaResponsePrinter.class.php';
 $wgAutoloadClasses['WikiaResponseJSONPrinter'] = $IP . '/includes/wikia/WikiaResponseJSONPrinter.class.php';
 $wgAutoloadClasses['WikiaResponseHTMLPrinter'] = $IP . '/includes/wikia/WikiaResponseHTMLPrinter.class.php';
+$wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
+$wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
 
 F::setInstance( 'App', new WikiaApp() );
 

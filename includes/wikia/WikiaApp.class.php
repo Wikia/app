@@ -9,16 +9,18 @@ class WikiaApp {
 	const REGISTRY_MEDIAWIKI = WikiaCompositeRegistry::DEFAULT_NAMESPACE;
 	const REGISTRY_WIKIA = 'wikia';
 
-		/**
+	/**
 	 * registry
 	 * @var WikiaCompositeRegistry
 	 */
 	private $registry = null;
+
 	/**
 	 * hook dispatcher
 	 * @var WikiaHookDispatcher
 	 */
 	private $hookDispatcher = null;
+
 	/**
 	 * dispatcher
 	 * @var WikiaDispatcher
@@ -26,22 +28,39 @@ class WikiaApp {
 	private $dispatcher = null;
 
 	/**
+	 * @var AssetsManager
+	 */
+	private $assetsManager = null;
+	
+	/**
 	 * constructor
 	 * @param WikiaRegistry $registry
 	 * @param WikiaHookDispatcher $hookDispatcher
 	 */
-	public function __construct(WikiaCompositeRegistry $registry = null, WikiaHookDispatcher $hookDispatcher = null) {
-		if(is_null($registry)) {
-			F::setInstance( 'WikiaCompositeRegistry', new WikiaCompositeRegistry( array( self::REGISTRY_MEDIAWIKI => new WikiaGlobalsRegistry(), self::REGISTRY_WIKIA => new WikiaLocalRegistry() ) ) );
-			$registry = F::build( 'WikiaCompositeRegistry' );
+	public function __construct(WikiaCompositeRegistry $registry = null, 
+								WikiaHookDispatcher $hookDispatcher = null,
+								AssetsManager $assetsManager = null) {
+
+		if(!is_null($registry)) {
+			$this->registry = $registry;
+		} else {
+			$this->registry = new WikiaCompositeRegistry(array(self::REGISTRY_MEDIAWIKI => new WikiaGlobalsRegistry(), self::REGISTRY_WIKIA => new WikiaLocalRegistry()));
+			F::setInstance('WikiaCompositeRegistry', $this->registry);
 		}
-		if(is_null($hookDispatcher)) {
-			F::setInstance( 'WikiaHookDispatcher', new WikiaHookDispatcher());
-			$hookDispatcher = F::build( 'WikiaHookDispatcher' );
+									
+		if(!is_null($hookDispatcher)) {
+			$this->hookDispatcher = $hookDispatcher;
+		} else {
+			$this->hookDispatcher = new WikiaHookDispatcher();
+			F::setInstance('WikiaHookDispatcher', $this->hookDispatcher);
 		}
 
-		$this->hookDispatcher = $hookDispatcher;
-		$this->registry = $registry;
+		if(!is_null($assetsManager)) {
+			$this->assetsManager = $assetsManager;
+		} else {
+			$this->assetsManager = new AssetsManager($this->getGlobal('wgCdnRootUrl'), $this->getGlobal('wgStyleVersion'), $this->getGlobal('wgAllInOne'), $this->getGlobal('wgAllInOne'));
+			F::setInstance('AssetsManager', $this->assetsManager);
+		}
 
 		// register ajax dispatcher
 		$this->registry->getRegistry(self::REGISTRY_MEDIAWIKI)->append('wgAjaxExportList', 'WikiaApp::ajax');
