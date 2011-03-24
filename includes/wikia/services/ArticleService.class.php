@@ -43,7 +43,6 @@ class ArticleService extends Service {
 			$content = preg_replace($re, '', $content);
 
 			// remove [[Image:...]] and [[File:...]] tags
-			// @FIXME this has hardcoded namespace names and no i18n (yes, NS names are internationalized too)
 			$ns = $wgContLang->getNsText( NS_FILE );
 			$re = strtr( $re_magic, array( 'S' => "\\[", 'E' => "\\]", 'X' => "(Image|$ns):" ));
 			$content = preg_replace($re, '', $content);
