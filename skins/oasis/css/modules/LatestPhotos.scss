@@ -47,16 +47,10 @@
 		display: inline-block;
 		margin: 15px 0 5px;
 		.chevron {
-			border-width: 5px;
 			border-color: $color-text transparent transparent;
-			border-style: solid;
-			height: 0;
-			position: relative;
-			top: .3em;
-			width: 0;
 			&.up {
 				border-color: transparent transparent $color-text;
-				top: -.3em;
+				margin: 0 0 6px 0;
 			}			
 		}
 	}

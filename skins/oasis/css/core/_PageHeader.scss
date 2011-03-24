@@ -90,6 +90,10 @@
 			.no-avatar {
 				margin-left: 6px;
 			}
+			
+			a {
+				margin-right: 2px;
+			}
 		}
 		&.hover {
 			@include menu-regular;
@@ -118,7 +122,6 @@
 		}
 		.chevron {
 			border-top-color: $color-text;
-			vertical-align: middle;
 		}
 	}
 	.categories {

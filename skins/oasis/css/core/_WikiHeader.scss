@@ -58,7 +58,7 @@
 			border-left: 1px solid mix($color-text, $color-page);
 			color: $color-text;
 			display: block;
-			padding: 0 10px;
+			padding: 0 8px;
 			position: relative;
 		}
 	}
@@ -114,7 +114,5 @@
 	}
 	.chevron {
 		border-top-color: $color-text;
-		bottom: .3em;
-		position: absolute;
 	}
 }
