@@ -8,6 +8,7 @@ abstract class WikiaSuperFactory {
 	protected static $constructors = array();
 	protected static $setters = array();
 	protected static $reflections = array();
+	const APP_OBJECT = 'App';
 
 	/**
 	 * add class constructor
@@ -126,6 +127,10 @@ abstract class WikiaSuperFactory {
 			self::$setters = array();
 			// @codeCoverageIgnoreEnd
 		}
+	}
+
+	public static function app() {
+		return self::build( self::APP_OBJECT );
 	}
 }
 
