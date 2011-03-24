@@ -44,10 +44,10 @@ public class PhalanxTest extends BaseTest {
 	private String blockFilter;
 
 	/**
-	 * Login on selected testing account
+	 * Login on selected testing account (with rights to remove articles)
 	 */
 	protected void login() throws Exception {
-		loginAsRegular();
+		loginAsSysop();
 	}
 
 	/**
