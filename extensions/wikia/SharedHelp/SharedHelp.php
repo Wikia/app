@@ -223,10 +223,14 @@ function SharedHelpHook(&$out, &$text) {
 		if (empty($wasRedirected)) {
 			# get rid of editsection links
 			$content = preg_replace("|<span class=\"editsection\">\[<a href=\".*?\" title=\".*?\">.*?<\/a>\]<\/span>|", "", $content);
-			$content = str_replace(
-				array('showTocToggle();', '<table id="toc" class="toc"', '<div id="toctitle">'),
-				array("showTocToggle('sharedtoctitle', 'sharedtoc', 'sharedtogglelink');", '<table id="sharedtoc" class="toc"', '<div id="sharedtoctitle" class="toctitle">'),
-				$content);
+			$content = strtr($content,
+				array(
+					'showTocToggle();' => "showTocToggle('sharedtoctitle', 'sharedtoc', 'sharedtogglelink');",
+					'<table id="toc" class="toc"' => '<table id="sharedtoc" class="toc"',
+					'<div id="toctitle">' => '<div id="sharedtoctitle" class="toctitle">',
+					// BugId:981 - mark images coming from SharedHelp
+					'data-image-name' => 'data-shared-help="true" data-image-name',
+				));
 
 			# namespaces to skip when replacing links
 			$skipNamespaces = array();
