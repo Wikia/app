@@ -1275,7 +1275,8 @@ Liftium.in_array = function (needle, haystack, ignoreCase){
 
 Liftium.init = function () {
 	if (Liftium.e(LiftiumOptions.pubid)){
-		Liftium.reportError("LiftiumOptions.pubid must be set", "publisher"); // TODO: provide a link to documentation
+		// Liftium.reportError("LiftiumOptions.pubid must be set", "publisher"); // TODO: provide a link to documentation
+		// pubid is set only if there are ads on the page - so if it is not set it means there are no ads - so no point of initialising Liftium /Inez
 		return false;
 	}
 
