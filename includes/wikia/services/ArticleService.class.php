@@ -20,7 +20,7 @@ class ArticleService extends Service {
 	 */
 	public function getTextSnippet( $length = 100 ) {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgParser;
+		global $wgTitle, $wgParser, $wgContLang;
 
 		// it may sometimes happen that the aricle is just not there
 		if ( is_null( $this->mArticle ) ) {
@@ -44,7 +44,8 @@ class ArticleService extends Service {
 
 			// remove [[Image:...]] and [[File:...]] tags
 			// @FIXME this has hardcoded namespace names and no i18n (yes, NS names are internationalized too)
-			$re = strtr( $re_magic, array( 'S' => "\\[", 'E' => "\\]", 'X' => "(Image|File):" ));
+			$ns = $wgContLang->getNsText( NS_FILE );
+			$re = strtr( $re_magic, array( 'S' => "\\[", 'E' => "\\]", 'X' => "(Image|$ns):" ));
 			$content = preg_replace($re, '', $content);
 
 			// skip "edit" section and TOC
