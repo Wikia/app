@@ -68,7 +68,7 @@ class AssetsManager {
 		} else {
 			// Lazy loading of AssetsConfig
 			if(empty($this->mAssetsConfig)) {
-				$this->mAssetsConfig = new AssetsConfig();
+				$this->mAssetsConfig = F::build('AssetsConfig');
 			}
 			$assets = $this->mAssetsConfig->resolve($groupName, $this->mCombine, $this->mMinify);
 			$URLs = array();
