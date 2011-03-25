@@ -86,7 +86,7 @@ class ThemeSettings {
 		} else {
 			$history = array();
 		}
-
+		
 		return $history;
 	}
 
@@ -124,7 +124,7 @@ class ThemeSettings {
 
 			$history = $file->getHistory(1);
 			if(count($history) == 1) {
-				$oldFile = array('url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName());
+				$oldBackgroundFile = array('url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName());
 			}
 		}
 
@@ -163,12 +163,18 @@ class ThemeSettings {
 		// limit history size to last 10 changes
 		$history = array_slice($history, -self::HistoryItemsLimit);
 
-		if(count($history) > 1 && isset($oldFile)) {
+		if(count($history) > 1 ) {
 			for($i = 0; $i < count($history) - 1; $i++) {
-				if (isset($history[$i]['settings']['wordmark-image-name'])) {
+				if (isset($oldFile) && isset($history[$i]['settings']['wordmark-image-name'])) {
 					if($history[$i]['settings']['wordmark-image-name'] == self::WordmarkImageName) {
 						$history[$i]['settings']['wordmark-image-name'] = $oldFile['name'];
 						$history[$i]['settings']['wordmark-image-url'] = $oldFile['url'];
+					}
+				}
+				if (isset($oldBackgroundFile) && isset($history[$i]['settings']['background-image-name'])) {
+					if($history[$i]['settings']['background-image-name'] == self::BackgroundImageName) {
+						$history[$i]['settings']['background-image-name'] = $oldBackgroundFile['name'];
+						$history[$i]['settings']['background-image-url'] = $oldBackgroundFile['url'];
 					}
 				}
 			}
