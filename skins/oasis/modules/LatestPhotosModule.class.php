@@ -114,7 +114,8 @@ class LatestPhotosModule extends Module {
 
 		if (isset($file->title)) {
 			// filter by filetype and filesize (RT #42075)
-			$type = $file->minor_mime;
+			$minor_type = $file->minor_mime;
+			$renderable = $file->canRender();
 			$width = $file->width;
 			$height = $file->height;
 			$name = $file->title->getPrefixedText();
@@ -122,7 +123,10 @@ class LatestPhotosModule extends Module {
 			if (get_class($file) == "ForeignAPIFile") {
 				$ret = false;
 			}
-			if ($type == 'ogg') {
+			if ($renderable == false) { #covers all docs, audio, and binaries
+				$ret = false;
+			}
+			if ($minor_type == 'x-bmp') { # exception, because imagemagick is dumb
 				$ret = false;
 			}
 			if ($width < 100) {
@@ -132,10 +136,12 @@ class LatestPhotosModule extends Module {
 				$ret = false;
 			}
 
-			// RT #70016: check blacklist
-			if ($this->isImageBlacklisted($name)) {
-				wfDebug(__METHOD__ . ": {$name} blacklisted\n");
-				$ret = false;
+			if( $ret ) { #only do this semi-expensive check if we're still in the running
+				// RT #70016: check blacklist
+				if ($this->isImageBlacklisted($name)) {
+					wfDebug(__METHOD__ . ": {$name} blacklisted\n");
+					$ret = false;
+				}
 			}
 		} else {
 			$ret = false;
