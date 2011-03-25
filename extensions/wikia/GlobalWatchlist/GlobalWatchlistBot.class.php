@@ -243,7 +243,7 @@ class GlobalWatchlistBot {
 			while ( $oResultRow = $dbs->fetchObject( $oResource ) ) {
 				$sWikiDbName = "";
 				if ( $iCurrentCityId != $oResultRow->gwa_city_id ) {
-					$sWikiDbName = WikiFactory::getVarValueByName( 'wgDBName', $oResultRow->gwa_city_id );
+					$sWikiDbName = WikiFactory::IDtoDB( $oResultRow->gwa_city_id );
 					$iCurrentCityId = $oResultRow->gwa_city_id;
 				}
 				if ( !empty( $sWikiDbName ) ) {
