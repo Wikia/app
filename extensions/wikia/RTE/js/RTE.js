@@ -186,7 +186,7 @@ window.RTE = {
 
 		if (window.skin == 'oasis') {
 			// RT #69159
-			RTE.instance.config.contentsCss = wfGetSassUrl('/extensions/wikia/RTE/css/oasis.scss');
+			RTE.instance.config.contentsCss = $.getSassCommonURL('/extensions/wikia/RTE/css/oasis.scss');
 		}
 		else {
 			css.push(window.stylepath + '/monobook/main.css');
