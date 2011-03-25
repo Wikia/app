@@ -427,7 +427,7 @@ class SMWExportController {
 	public function printAll( $outfile, $ns_restriction = false, $delay, $delayeach ) {
 		global $smwgNamespacesWithSemanticLinks;
 		$linkCache =& LinkCache::singleton();
-		$db = wfGetDB( DB_SLAVE, 'smw' );
+		$db = wfGetDB( DB_SLAVE );
 
 		$this->delay_flush = 10;
 		if ( !$this->prepareSerialization( $outfile ) ) return;
