@@ -7,7 +7,7 @@
 
 	<title><?= $pagetitle ?></title>
 	<!-- SASS-generated CSS file -->
-	<link rel="stylesheet" href="<?= wfGetSassUrl("skins/oasis/css/oasis.scss") ?>">
+	<link rel="stylesheet" href="<?= F::app()->getAssetsManager()->getSassCommonURL('skins/oasis/css/oasis.scss') ?>">
 	<?php
 		// NOTE: CSS files that are needed on every Oasis page should go into the bottom of /skins/oasis/css/oasis.scss
 		// It serves the function that StaticChute formerly served for CSS.
