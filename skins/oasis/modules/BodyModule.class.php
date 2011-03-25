@@ -385,11 +385,5 @@ class BodyModule extends Module {
 		if (!empty($wgTitle) && $wgTitle->isSpecial('Preferences')) {
 			$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('skins/oasis/css/modules/SpecialPreferences.scss'));
 		}
-
-		// load CSS for blogs if enabled
-		if ($wgEnableBlog) {
-			// Imported inside of oasis.scss now to reduce HTTP requests (since most wikis have this enabled).
-			//$wgOut->addStyle(wfGetSassUrl('extensions/wikia/Blogs/css/oasis.scss'));
-		}
 	}
 }

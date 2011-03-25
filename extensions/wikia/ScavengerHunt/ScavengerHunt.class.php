@@ -199,7 +199,7 @@ class ScavengerHunt {
 
 		if ( $this->getTriggersFor($wgTitle) ) {
 			$app = WF::build('App');
-			$out->addStyle($app->runFunction('wfGetSassUrl', 'extensions/wikia/ScavengerHunt/css/scavenger-game.scss'));
+			$out->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/ScavengerHunt/css/scavenger-game.scss'));
 		}
 
 		wfProfileOut(__METHOD__);

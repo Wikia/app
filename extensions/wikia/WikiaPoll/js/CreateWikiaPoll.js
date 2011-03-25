@@ -55,7 +55,7 @@ var CreateWikiaPoll = {
 		// load CSS for editor popup and jQuery UI library (if not loaded yet) via loader function
 		$.getResources([
 			$.loadJQueryUI,
-			wfGetSassUrl('/extensions/wikia/WikiaPoll/css/CreateWikiaPoll.scss'),
+			$.getSassCommonURL('/extensions/wikia/WikiaPoll/css/CreateWikiaPoll.scss'),
 			wgExtensionsPath + '/wikia/WikiaPoll/js/CreateWikiaPoll.js?' + wgStyleVersion
 		], function() {
 			$.get(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=WikiaPoll&actionName=SpecialPage&outputType=html', function(data) {

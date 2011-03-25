@@ -291,7 +291,6 @@ class StaticChute {
 		$this->config['oasis_anon_article_js'] = array(
 			"common/wikibits.js",
 			'common/mwsuggest.js',
-			'../extensions/wikia/SASS/sassUtil.js', // other js files may depend on this, so load it early
 			"oasis/js/tracker.js",
 			//"oasis/js/modal.js",
 			"common/jquery/jquery.wikia.modal.js",
@@ -338,7 +337,6 @@ class StaticChute {
 		$this->config['oasis_loggedin_js'] = array(
 			"common/wikibits.js",
 			'common/mwsuggest.js',
-			'../extensions/wikia/SASS/sassUtil.js', // other js files may depend on this, so load it early
 			"oasis/js/tracker.js",
 			//"oasis/js/modal.js",
 			"common/jquery/jquery.wikia.modal.js",
@@ -389,7 +387,7 @@ class StaticChute {
 
 		// Sometimes we load StaticChute from outside of the MediaWiki stack (eg: /static/404handler), but fortunately
 		// during those times, we don't need the oasis_print_css, so just skip it.
-		if(function_exists('wfGetSassUrl')){
+		if(class_exists('AssetsManager')){
 			$oasisPrintCss = F::app()->getAssetsManager()->getSassCommonURL('skins/oasis/css/print.scss');
 		} else {
 			$oasisPrintCss = "";

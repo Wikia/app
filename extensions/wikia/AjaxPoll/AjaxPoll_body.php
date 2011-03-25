@@ -249,7 +249,7 @@ wgAfterContentAndJS.push(function() {
 		importScriptURI('{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.js?{$wgStyleVersion}');
 		window.AjaxPollLoaded = true;
 		if (skin == 'oasis') {
-			importStylesheetURI(wfGetSassUrl('extensions/wikia/AjaxPoll/oasis.scss'));
+			importStylesheetURI($.getSassCommonURL('extensions/wikia/AjaxPoll/oasis.scss'));
 		}
 	}
 });

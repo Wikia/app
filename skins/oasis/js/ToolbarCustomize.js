@@ -255,7 +255,7 @@
 		},
 
 		show: function() {
-			importStylesheetURI(wfGetSassUrl("skins/oasis/css/core/_ToolbarCustomize.scss"));
+			importStylesheetURI($.getSassCommonURL("skins/oasis/css/core/_ToolbarCustomize.scss"));
 
 			$.bulkLoad(['autocomplete','jquery-ui','modal',{
 				type: "GET",

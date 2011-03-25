@@ -19,16 +19,11 @@ class AchievementsModule extends Module {
 	public function executeIndex() {
 		global $wgTitle, $wgUser, $wgOut, $wgExtensionsPath, $wgStylePath, $wgStyleVersion, $wgJsMimeType;
 
-		// add CSS for this module
+		// add CSS and JS for this module
 		
-		//tooltips
 		$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgStylePath/common/jquery/jquery.wikia.tooltip.js?{$wgStyleVersion}\"></script>");
 		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('skins/oasis/css/modules/WikiaTooltip.scss'));
-		
-		//$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/Achievements.scss"));
 		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL("extensions/wikia/AchievementsII/css/oasis.scss"));
-		// add JS for this module
-		//$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addScript("<script src=\"{$wgStylePath}/oasis/js/Achievements.js?{$wgStyleVersion}\"></script>\n");
 
 		$this->getBadgesData();

@@ -10,25 +10,9 @@
  * expected to be.
  */
 
-$wgHooks['MakeGlobalVariablesScript'][] = 'SassUtil::onMakeGlobalVariablesScript';
-//$wgHooks['BeforePageDisplay'][] = 'SassUtil::BeforePageDisplay'; // not needed right now - js is in StaticChute
-
 class SassUtil {
 
 	const DEFAULT_OASIS_THEME = 'oasis';
-
-	/**
-	 * Creates a hash which serves as a (admittedly weak) cryptographic signature so that
-	 * users can't easily request billions/trillions of permutations of colors to force our
-	 * servers to waste a ton of time running sass parsing.
-	 *
-	 * The hash is just based on the color-combination.
-	 */
-	public static function getSecurityHash($styleVersion, $sassParams){
-		global $wgSassPrivateKey;
-		$wgSassPrivateKey = (isset($wgSassPrivateKey)?$wgSassPrivateKey:"");
-		return sha1("$styleVersion|$sassParams|$wgSassPrivateKey");
-	} // end getSecurityHash()
 
 	/**
 	 * Gets theme settings from following places:
@@ -131,7 +115,7 @@ class SassUtil {
 
 		wfProfileOut( __METHOD__ );
 		return $sassParams;
-	} // end getSassParams()
+	}
 
 	/**
 	 * Calculates whether currently used theme is light or dark
@@ -209,47 +193,8 @@ class SassUtil {
 			if (1 < $H) $H -= 1;
 		}
 
-		//wfDebug(__METHOD__ . ": {$rgbhex} -> {$H}, {$S}, {$L}\n");
-
 		wfProfileOut(__METHOD__);
 		return array($H, $S, $L);
 	}
 
-	/**
-	 * Adds a global JS variable containing the hash which acts as a signature for
-	 * the current color-settings.  This allows for a javascript version of wfGetSassUrl()
-	 * to be safely created & used.
-	 */
-	public static function onMakeGlobalVariablesScript( &$vars ) {
-		global $wgStyleVersion, $wgCdnRootUrl;
-		wfProfileIn( __METHOD__ );
-
-		$sassParams = self::getSassParams();
-		$vars['sassHash'] = self::getSecurityHash($wgStyleVersion, $sassParams);
-		$vars['wgCdnRootUrl'] = $wgCdnRootUrl;
-
-		// Convert to slashed-string.
-		$sassParams = str_replace(" ", "/", $sassParams);
-		$vars['sassParams'] = $sassParams;
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	} // end onMakeGlobalVariablesScript()
-
-	/**
-	 * Makes sure that we include the Sass javascript.
-	 *
-	 * Not needed at the moment since the js file is now in StaticChute (only for Oasis at the time of this writing, but that may change).
-	 */
-	/*public static function BeforePageDisplay( &$out, &$sk ) {
-		wfProfileIn( __METHOD__ );
-		if(Wikia::isOasis()){
-			global $wgScriptPath, $wgStyleVersion;
-			$out->addScriptFile("$wgScriptPath/extensions/wikia/SASS/sassUtil.js?$wgStyleVersion");
-		}
-		wfProfileOut( __METHOD__ );
-		return true;
-	} // end BeforePageDisplay()
-	*/
-
-} // end class SassUtil
+}

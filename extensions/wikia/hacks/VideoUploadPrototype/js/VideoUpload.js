@@ -85,7 +85,7 @@ var VideoUpload = {
 
 		// load CSS for editor popup, wikia-tabs and jQuery UI library (if not loaded yet) via loader function
 		$.getResources([
-			wfGetSassUrl('/extensions/wikia/hacks/VideoUploadPrototype/css/VideoUpload.editor.scss')
+			$.getSassCommonURL('/extensions/wikia/hacks/VideoUploadPrototype/css/VideoUpload.editor.scss')
 		], function() {
 			VideoUpload.ajax('getEditorDialog', {title: wgPageName}, function(data) {
 				// store messages

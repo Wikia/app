@@ -69,12 +69,7 @@ function wfDPLmagic( &$magicWords, $langCode = 'en' ) {
 function parseForum( $input, $argv, &$parser ) {
 	$f = new DPLForum();
 	
-	$js = '<script type="text/javascript">wgAfterContentAndJS.push(function() {if (skin == "oasis") {importStylesheetURI(wfGetSassUrl("extensions/DPLforum/css/oasis.scss"));}});</script>';
+	$js = '<script type="text/javascript">wgAfterContentAndJS.push(function() {if (skin == "oasis") {importStylesheetURI($.getSassCommonURL("extensions/DPLforum/css/oasis.scss"));}});</script>';
 	
-	
-	
-	
-	
-	//$js = '<script>document.write("<link rel=stylesheet href=" + wfGetSassUrl("extensions/DPLforum/css/oasis.scss") + ">")</script><script>if (skin == "oasis") { document.write("<link rel=\"stylesheet\" href=\"" + wfGetSassUrl("extensions/DPLforum/css/oasis.scss") + "\">"); }</script>';
 	return $js . $f->parse( $input, $parser );
 }
