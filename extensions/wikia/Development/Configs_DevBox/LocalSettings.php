@@ -97,7 +97,7 @@ $wgWikiaEnableWikiFactoryExt = true;
 $wgEnableUserChangesHistoryExt = false;
 
 $wgExtensionsPath = "{$wgScriptPath}/extensions";
-//$wgAllInOne = false;
+$wgAllInOne = false;
 $wgEnableFixRecoveredUsersExt = false;
 
 // enable ExternalUsers
