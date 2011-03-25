@@ -44,8 +44,8 @@
 		static public function setupScripts() {
 			if (!self::$initialized) {
 				global $wgOut, $wgExtensionsPath;
-				$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/CategoryGalleries/css/CategoryGalleries.scss' ) /*. "?cb=".(int)time()*/ );
-				$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/CategoryGalleries/css/CategoryGalleries.IE.scss' ) /*. "?cb=".(int)time()*/,
+				$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/CategoryGalleries/css/CategoryGalleries.scss'));
+				$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/CategoryGalleries/css/CategoryGalleries.IE.scss'),
 					'', /*condition*/ 'lte IE 8' );
 				$wgOut->addScriptFile("{$wgExtensionsPath}/wikia/CategoryGalleries/js/CategoryGalleries.js");
 				self::$initialized = true;

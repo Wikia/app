@@ -9,7 +9,7 @@
 	<![endif]-->
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="<?= wfGetSassUrl('/extensions/wikia/Chat/css/Chat.scss') ?>">
+	<link rel="stylesheet" href="<?= F::app()->getAssetsManager()->getSassCommonURL('/extensions/wikia/Chat/css/Chat.scss')?>">
 	
 	<!-- JS -->
 	<?= $globalVariablesScript ?>

@@ -51,7 +51,7 @@ class OasisModule extends Module {
 		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
 		if(!empty($wikiWelcome)) {
 			global $wgExtensionsPath;
-			$wgOut->addStyle(wfGetSassUrl('extensions/wikia/CreateNewWiki/css/WikiWelcome.scss'));
+			$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/CreateNewWiki/css/WikiWelcome.scss'));
 			$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/CreateNewWiki/js/WikiWelcome.js"></script>');
 		}
 

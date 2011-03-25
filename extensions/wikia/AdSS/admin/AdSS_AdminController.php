@@ -25,7 +25,7 @@ class AdSS_AdminController {
 		}
 
 		$this->displayPanel();
-		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/AdSS/css/admin.scss' ) );
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/AdSS/css/admin.scss'));
 	}
 
 	function displayTabs() {

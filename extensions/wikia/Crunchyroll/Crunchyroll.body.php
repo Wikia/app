@@ -47,7 +47,7 @@ class Crunchyroll extends SpecialPage {
 
 		global $wgOut;
 
-		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/Crunchyroll/css/Crunchyroll.scss' ) );
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/Crunchyroll/css/Crunchyroll.scss'));
 		if ( ( $this->episodeId ) > 0 && ( !empty( $this->serieId ) ) ){
 	
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );

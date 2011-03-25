@@ -352,7 +352,7 @@ class BodyModule extends Module {
 				// RT:71681 AutoHubsPages extension is skipped when follow is clicked
 				wfLoadExtensionMessages( 'AutoHubsPages' );
 
-				$wgOut->addStyle(wfGetSassUrl("extensions/wikia/CorporatePage/css/CorporateSite.scss"));
+				$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL("extensions/wikia/CorporatePage/css/CorporateSite.scss"));
 
 				global $wgExtensionsPath, $wgJsMimeType;
 				$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/CorporatePage/js/CorporateSlider.js\" type=\"{$wgJsMimeType}\"></script>");
@@ -376,14 +376,14 @@ class BodyModule extends Module {
 
 		// if we are on a special search page, pull in the css file and don't render a header
 		if($wgTitle && $wgTitle->isSpecial( 'Search' )) {
-			$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/SpecialSearch.scss"));
+			$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL("skins/oasis/css/modules/SpecialSearch.scss"));
 			$this->headerModuleName = null;
 			$this->bodytext = wfRenderModule('Search') . $this->bodytext;
 		}
 
 		// load CSS for Special:Preferences
 		if (!empty($wgTitle) && $wgTitle->isSpecial('Preferences')) {
-			$wgOut->addStyle(wfGetSassUrl('skins/oasis/css/modules/SpecialPreferences.scss'));
+			$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('skins/oasis/css/modules/SpecialPreferences.scss'));
 		}
 
 		// load CSS for blogs if enabled

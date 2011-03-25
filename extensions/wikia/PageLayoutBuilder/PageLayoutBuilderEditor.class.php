@@ -64,7 +64,7 @@
 			$data = array(
 				'toolboxHtml' => $template->render('toolbox'),
 				'editorCss' => array(
-					wfGetSassUrl('extensions/wikia/PageLayoutBuilder/css/rte.scss'),
+					F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/PageLayoutBuilder/css/rte.scss'),
 				)
 			);
 
@@ -93,8 +93,7 @@
 				'helpbox' => Wikia::json_encode($helpbox),
 				'data' => Wikia::json_encode($data),
 				'messages' => Wikia::json_encode($messages),
-				'cssfile' => wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/editor.scss' ) 
-			));
+				'cssfile' => F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/PageLayoutBuilder/css/editor.scss')));
 
 			return $template->render("plb-editor-data-js");
 		}

@@ -12,7 +12,7 @@ class FollowedPagesModule extends Module {
 		global $wgUser, $wgTitle, $wgOut, $wgStylePath;
 
 		// add CSS for this module
-		$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/FollowedPages.scss"));
+		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL("skins/oasis/css/modules/FollowedPages.scss"));
 		
 		// probably need some logic to only display on user pages
     	$page_owner = User::newFromName($wgTitle->getText());

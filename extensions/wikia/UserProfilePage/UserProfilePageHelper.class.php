@@ -71,7 +71,7 @@ class UserProfilePageHelper {
 		}
 
 		// load extension css and js
-		$wgOut->addStyle( wfGetSassUrl( "extensions/wikia/UserProfilePage/css/UserProfilePage.scss" ) );
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL("extensions/wikia/UserProfilePage/css/UserProfilePage.scss"));
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
 
 		wfProfileOut(__METHOD__);

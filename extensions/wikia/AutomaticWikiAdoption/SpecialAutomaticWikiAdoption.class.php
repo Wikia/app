@@ -49,7 +49,7 @@ class SpecialAutomaticWikiAdoption extends UnlistedSpecialPage {
 
 		$this->setHeaders();
 
-		$wgOut->addStyle(wfGetSassUrl('extensions/wikia/AutomaticWikiAdoption/css/AutomaticWikiAdoption.scss'));
+		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/AutomaticWikiAdoption/css/AutomaticWikiAdoption.scss'));
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AutomaticWikiAdoption/js/AutomaticWikiAdoption.js?{$wgStyleVersion}\"></script>\n");
 

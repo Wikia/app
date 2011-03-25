@@ -23,10 +23,10 @@ class AchievementsModule extends Module {
 		
 		//tooltips
 		$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgStylePath/common/jquery/jquery.wikia.tooltip.js?{$wgStyleVersion}\"></script>");
-		$wgOut->addStyle(wfGetSassUrl('skins/oasis/css/modules/WikiaTooltip.scss'));
+		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('skins/oasis/css/modules/WikiaTooltip.scss'));
 		
 		//$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/Achievements.scss"));
-		$wgOut->addStyle(wfGetSassUrl("extensions/wikia/AchievementsII/css/oasis.scss"));
+		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL("extensions/wikia/AchievementsII/css/oasis.scss"));
 		// add JS for this module
 		//$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addScript("<script src=\"{$wgStylePath}/oasis/js/Achievements.js?{$wgStyleVersion}\"></script>\n");
@@ -41,9 +41,9 @@ class AchievementsModule extends Module {
 		
 		//tooltips
 		$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgStylePath/common/jquery/jquery.wikia.tooltip.js?{$wgStyleVersion}\"></script>");
-		$wgOut->addStyle(wfGetSassUrl('skins/oasis/css/modules/WikiaTooltip.scss'));
+		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('skins/oasis/css/modules/WikiaTooltip.scss'));
 		
-		$wgOut->addStyle( wfGetSassUrl( "extensions/wikia/AchievementsII/css/oasis.scss" ) );
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL("extensions/wikia/AchievementsII/css/oasis.scss"));
 		// add JS for this module
 		$wgOut->addScript( "<script src=\"{$wgStylePath}/oasis/js/Achievements.js?{$wgStyleVersion}\"></script>\n" );
 		$this->getBadgesData();

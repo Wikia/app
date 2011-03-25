@@ -23,7 +23,7 @@ class SpecialForceDownloadIndex extends UnlistedSpecialPage {
 		}
 		
 		$wgOut->setPageTitle( 'Test' );
-		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/SpecialContact/SpecialContact.scss' ) );
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/SpecialContact/SpecialContact.scss'));
 		
 		if( $wgRequest->wasPosted() ) {
 			//do some random DB stuff
