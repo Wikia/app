@@ -1,17 +1,10 @@
 <?php
 /**
  * @author Sean Colombo
- *
- * This class is designed to help MediaWiki classes use SASS files.
- *
- * NOTE: This class does the setup necessary for the wfGetSassUrl() JavaScript function
- * to work, but that function is in sassUtil.js.  Also, the wfGetSassUrl() PHP function
- * is in /includes/wikia/GlobalFunctions.php since that is where our 'wf' functions are
- * expected to be.
  */
 
 class SassUtil {
-
+	
 	const DEFAULT_OASIS_THEME = 'oasis';
 
 	/**
@@ -45,8 +38,6 @@ class SassUtil {
 		if (isset($settings["wordmark-font"]) && $settings["wordmark-font"] != "default") {
 			$oasisSettings["wordmark-font"] = $settings["wordmark-font"];
 		}
-		
-		// ABTests
 
 		// RTL
 		if($wgContLang && $wgContLang->isRTL()){
@@ -140,6 +131,7 @@ class SassUtil {
 		wfProfileOut(__METHOD__);
 		return $isDark;
 	}
+	
 	/**
 	 * Convert RGB colors array into HSL array
 	 *
