@@ -616,7 +616,8 @@ class WikiaPhotoGalleryHelper {
 
 			if ( is_object( $img ) && ( $imageTitle->getNamespace() == NS_FILE ) ) {
 				// render thumbnail
-				$image['thumbnailBg'] = self::getThumbnailUrl($imageTitle, self::STRICT_IMG_WIDTH_PREV, self::STRICT_IMG_HEIGHT_PREV);
+				$is = new imageServing(null, self::STRICT_IMG_WIDTH_PREV, array('w' => self::STRICT_IMG_WIDTH_PREV, 'h' => self::STRICT_IMG_HEIGHT_PREV));
+				$image['thumbnailBg'] = $is->getUrl($image['name'],  $img->getWidth(),  $img->getHeight()); 
 			} else {
 				$image[ 'pageTitle' ] = $imageTitle->getText();
 			}

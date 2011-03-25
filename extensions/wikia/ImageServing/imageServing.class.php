@@ -240,8 +240,8 @@ class imageServing{
 	 *
 	 * @return  \string url for image
 	 */
-
-	private function getUrl( $name, $width = 0, $height = 0 ) {
+	
+	public function getUrl( $name, $width = 0, $height = 0 ) {
 		$file_title = Title::newFromText( $name ,NS_FILE );
 		$img = wfFindFile( $file_title  );
 
