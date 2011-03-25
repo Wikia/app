@@ -14,6 +14,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $wgAjaxExportList[] = 'AssetsManagerEntryPoint';
+$wgHooks['MakeGlobalVariablesScript'][] = 'AssetsManager::onMakeGlobalVariablesScript';
 
 function AssetsManagerEntryPoint() {
 	global $wgRequest, $wgAutoloadClasses;

@@ -11,6 +11,22 @@ class AssetsManager {
 	private $mMinify;
 	private $mCommonHost;
 	private $mAssetsConfig;
+	
+	public static function onMakeGlobalVariablesScript(&$vars) {
+		global $wgOasisHD, $wgCdnRootUrl, $wgAssetsManagerQuery;
+		
+		$params = SassUtil::getOasisSettings();
+		if($wgOasisHD) {
+			$params['hd'] = 1;
+		}
+		
+		$vars['sassParams'] = $params;
+		
+		$vars['wgAssetsManagerQuery'] = $wgAssetsManagerQuery;		
+		$vars['wgCdnRootUrl'] = $wgCdnRootUrl;
+
+		return true;
+	}
 
 	public function __construct(/* string */ $commonHost, /* int */ $cacheBuster, /* boolean */ $combine = true, /* boolean */ $minify = true) {
 		$this->mCacheBuster = $cacheBuster;
@@ -22,12 +38,18 @@ class AssetsManager {
 	/**
 	 * @author Inez Korczyński <korczynski@gmail.com>
  	 */
-	public function getSassCommonURL(/* string */ $scssFilePath) {
+	public function getSassCommonURL(/* string */ $scssFilePath, /* boolean */ $minify = null) {
 		global $wgOasisHD;
 		
 		$params = SassUtil::getOasisSettings();
 		if($wgOasisHD) {
 			$params['hd'] = 1;
+		}
+		
+		if($minify != null ? !$minify : !$this->mMinify) {
+			$params['minify'] = false;
+		} else {
+			unset($params['minify']);
 		}
 		
 		return $this->mCommonHost . $this->getAMLocalURL('sass', $scssFilePath, $params);	

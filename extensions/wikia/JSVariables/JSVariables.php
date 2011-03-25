@@ -8,7 +8,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 function wfMakeGlobalVariablesScript($vars) {
 	wfProfileIn(__METHOD__);
 
-	global $wgMemc, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename, $wgWikiFactoryTags, $wgDisableAnonymousEditing, $wgGroupPermissions, $wgBlankImgUrl, $wgDontRewriteSassUrl, $wgEnableGA;
+	global $wgMemc, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename, $wgWikiFactoryTags, $wgDisableAnonymousEditing, $wgGroupPermissions, $wgBlankImgUrl, $wgEnableGA;
 
 	$cats = wfGetBreadCrumb();
 	$idx = count($cats)-2;
@@ -86,11 +86,6 @@ function wfMakeGlobalVariablesScript($vars) {
 		$vars['wgDisableAnonymousEditing'] = false;
 	}
 
-	// make direct requests to sassServer?
-	if (!empty($wgDontRewriteSassUrl)) {
-		$vars['wgDontRewriteSassUrl'] = true;
-	}
-	
 	$vars['wgEnableGA'] = $wgEnableGA;
 	$vars['_gaq'] = array();
 

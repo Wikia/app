@@ -993,57 +993,6 @@ function wfGetEmailPostbackToken($emailId, $emailAddr){
 } // end wfGetEmailPostbackToken()
 
 /**
- * Given the full path to a .scss file, returns the full URL which
- * the HTML should include.  This sends the user's browser through the
- * SASS server.
- *
- * ForceSassParams is an optional parameter.  If it is non-null, then this
- * will be used as the string of parameters that will be passed into sass via
- * the command-line.  This string is expected to be key-value pairs where the
- * key and value are separated by an equals sign and each pair is separated by
- * a space (eg: "fruit=banana vegetable=broccoli pet=dog").
- *
- * WARNING: The forceSassParams parameter is expected to ALREADY BE urlencode()ed.
- */
-function wfGetSassUrl($fileName, $forceSassParams=null){
-	global $wgCdnRootUrl, $wgStyleVersion, $wgDontRewriteSassUrl, $wgOasisHD;
-	wfProfileIn( __METHOD__ );
-
-	$url = $fileName;
-
-	// Make sure that the filename doesn't start with a slash.
-	while((strlen($fileName) > 0) && (substr($fileName, 0, 1) == "/")){
-		$fileName = substr($fileName, 1);
-	}
-
-	// Load the associative array of SASS parameters based on the user/theme.
-	if($forceSassParams !== null){
-		$sassParams = $forceSassParams;
-	} else {
-		$sassParams = SassUtil::getSassParams();
-	}
-
-	if ($wgOasisHD) {
-		$sassParams .= "&hd=1";
-	}
-
-	// Calculate the security-hash.
-	$securityHash = SassUtil::getSecurityHash($wgStyleVersion, $sassParams);
-
-	$sassParams = str_replace(" ", "/", $sassParams);
-	$wgCdnRootUrl = (isset($wgCdnRootUrl)?$wgCdnRootUrl:"");
-	if( !empty( $wgDontRewriteSassUrl ) ) {
-		global $wgScriptPath;
-		$url = "$wgScriptPath/sassServer.php?file=$fileName&styleVersion=$wgStyleVersion&hash=$securityHash&$sassParams";
-	} else {
-		$url = "$wgCdnRootUrl/__sass/$fileName/$wgStyleVersion/$securityHash/$sassParams";
-	}
-
-	wfProfileOut( __METHOD__ );
-	return $url;
-} // end wfGetSassUrl()
-
-/**
  * wfAutomaticReadOnly
  *
  * @author tor

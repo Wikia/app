@@ -128,6 +128,7 @@ require( dirname(__FILE__) . '/../../../includes/WebStart.php' );
  * that is: urlencoded.  This is usually the format that you'll have the sassParams in already.
  */
 function securityHashIsOkay($styleVersion, $sassParams, $hashFromUrl){
+	return true;
 	global $CHECK_SECURITY_HASH;
 	$hashIsOkay = true;
 	if(($CHECK_SECURITY_HASH) && ($hashFromUrl != SassUtil::getSecurityHash($styleVersion, $sassParams))){

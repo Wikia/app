@@ -486,7 +486,7 @@ wgAfterContentAndJS.push(function() {
 			},
 			$.loadYUI,
 			wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.js?' + wgStyleVersion,
-			(window.skin == 'oasis' ? wfGetSassUrl('/extensions/wikia/CategorySelect/oasis.scss') : wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.css?' + wgStyleVersion)
+			(window.skin == 'oasis' ? $.getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss') : wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.css?' + wgStyleVersion)
 		],
 		function() {
 			csTrack('addCategory');

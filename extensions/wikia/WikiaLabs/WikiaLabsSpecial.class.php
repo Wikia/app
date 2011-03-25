@@ -55,7 +55,7 @@ class WikiaLabsSpecial extends SpecialPage {
 			'wgExtensionsPath' => $wgExtensionsPath,
 		) );
 
-		$this->out->addStyle( $this->app->runFunction( 'wfGetSassUrl' , 'extensions/wikia/WikiaLabs/css/wikialabs.scss' ) );
+		$this->out->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/WikiaLabs/css/wikialabs.scss'));
 		$this->out->addHTML( $oTmpl->render("wikialabs-main") );
 		$this->out->addScriptFile( $this->app->getGlobal('wgExtensionsPath')."/wikia/WikiaLabs/js/main.js" );
 		$this->out->setPageTitle( $this->app->runFunction('wfMsg', 'wikialabs-list-project-title') );
