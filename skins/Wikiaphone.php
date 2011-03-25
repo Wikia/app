@@ -71,7 +71,7 @@ class SkinWikiaphone extends SkinTemplate {
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
-		echo AdEngine::getInstance()->getAd('MOBILE_TOP_LEADERBOARD');
+		echo AdEngine::getInstance()->getAd('TOP_LEADERBOARD');
 ?>
 			<div class="mobile-header">
 				<img src="<?= $wgBlankImgUrl ?>">
