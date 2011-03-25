@@ -26,13 +26,13 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	}
 	
 	private function sassProcessing() {
-		global $IP;
+		global $IP, $wgSassExacutable;
 
 		$tempDir = sys_get_temp_dir();
 		$tempOutFile = tempnam($tempDir, 'Sass');
 		$params = urldecode(http_build_query($this->mParams, '', ' '));
 		
-		$cmd = "/var/lib/gems/1.8/bin/sass {$IP}/{$this->mOid} {$tempOutFile} --cache-location {$tempDir} --style compact -r {$IP}/extensions/wikia/SASS/wikia_sass.rb {$params}";
+		$cmd = "{$wgSassExacutable} {$IP}/{$this->mOid} {$tempOutFile} --cache-location {$tempDir} --style compact -r {$IP}/extensions/wikia/SASS/wikia_sass.rb {$params}";
 		$escapedCmd = escapeshellcmd($cmd);
 
 		if(shell_exec($escapedCmd) != '') {
