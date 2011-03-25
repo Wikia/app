@@ -18,6 +18,20 @@ class AssetsManager {
 		$this->mMinify = $minify;
 		$this->mCommonHost = $commonHost;
 	}
+
+	/**
+	 * @author Inez Korczyński <korczynski@gmail.com>
+ 	 */
+	public function getSassCommonURL(/* string */ $scssFilePath) {
+		global $wgOasisHD;
+		
+		$params = SassUtil::getOasisSettings();
+		if($wgOasisHD) {
+			$params['hd'] = 1;
+		}
+		
+		return $this->mCommonHost . $this->getAMLocalURL('sass', $scssFilePath, $params);	
+	}
 	
 	/**
 	 * @author Inez Korczyński <korczynski@gmail.com>
@@ -113,7 +127,7 @@ class AssetsManager {
 		return sprintf($wgAssetsManagerQuery,
 			/* 1 */ $type,
 			/* 2 */ $oid,
-			/* 3 */ (http_build_query($params)),
+			/* 3 */ urlencode(http_build_query($params)),
 			/* 4 */ $this->mCacheBuster);
 	}
 
