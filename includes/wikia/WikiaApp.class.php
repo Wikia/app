@@ -54,10 +54,6 @@ class WikiaApp {
 			$this->hookDispatcher = new WikiaHookDispatcher();
 			F::setInstance('WikiaHookDispatcher', $this->hookDispatcher);
 		}
-global $wgAllInOne;
-var_dump($wgAllInOne);
-var_dump($this->getGlobal('wgAllInOne'));
-exit();
 
 		if(!is_null($assetsManager)) {
 			$this->assetsManager = $assetsManager;
