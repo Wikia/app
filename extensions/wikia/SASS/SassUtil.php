@@ -35,7 +35,7 @@ class SassUtil {
 	 *  - theme designer ($wgOasisThemeSettings)
 	 *  - theme chosen using usetheme URL param
 	 */
-	private static function getOasisSettings() {
+	public static function getOasisSettings() {
 		global $wgOasisThemes, $wgUser, $wgAdminSkin, $wgRequest, $wgOasisThemeSettings, $wgContLang, $wgABTests;
 		wfProfileIn(__METHOD__);
 
