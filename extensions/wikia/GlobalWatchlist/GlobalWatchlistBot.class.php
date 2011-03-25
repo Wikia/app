@@ -231,8 +231,9 @@ class GlobalWatchlistBot {
 	 * mark all pages sent as weekly digest as visited (only for users who requested that in Special:Preferences)
 	 */
 	private function markWeeklyDigestAsVisited() {
-		global $wgExternalDatawareDB, $wgDefaultUserOptions;
+		global $wgExternalDatawareDB, $wgDefaultUserOptions, $wgExternalSharedDB;
 		$dbs = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$wgDefaultUserOptions['watchlistdigestclear'] = 0;
 
 		foreach ( $this->mWatchlisters as $iUserId => $aUserData ) {
@@ -243,12 +244,16 @@ class GlobalWatchlistBot {
 			while ( $oResultRow = $dbs->fetchObject( $oResource ) ) {
 				$sWikiDbName = "";
 				if ( $iCurrentCityId != $oResultRow->gwa_city_id ) {
+					$dbr->ping();
 					$sWikiDbName = WikiFactory::IDtoDB( $oResultRow->gwa_city_id );
 					$iCurrentCityId = $oResultRow->gwa_city_id;
 				}
 				if ( !empty( $sWikiDbName ) ) {
 					$dbw = wfGetDB( DB_MASTER, array(), $sWikiDbName );
 					$dbw->query( "UPDATE watchlist SET wl_notificationtimestamp=NULL WHERE wl_user='" . $iUserId . "' AND wl_namespace='" . $oResultRow->gwa_namespace . "' AND wl_title='" . addslashes( $oResultRow->gwa_title ) . "'" );
+					if ( !in_array($sWikiDbName, array('wikicities', 'messaging') ) ) {
+						$dbw->close();
+					}
 				}
 				else {
 					$this->printDebug( "ERROR: wiki db name not found for city_id=" . $oResultRow->gwa_city_id );
@@ -262,6 +267,8 @@ class GlobalWatchlistBot {
 			$oUser->setOption( 'watchlistdigestclear', false );
 			$oUser->saveSettings();
 		}
+		
+		$dbr->close();
 	}
 
 	/**
