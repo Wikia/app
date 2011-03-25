@@ -556,7 +556,7 @@ class PageHeaderModule extends Module {
 		if ($skinName == 'SkinOasis') {
 			// load CSS for editpage
 			global $wgOut;
-			$wgOut->addStyle(wfGetSassUrl('skins/oasis/css/core/_EditPage.scss'));
+			$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('skins/oasis/css/core/_EditPage.scss'));
 
 			// render preview notice bar
 			if ($editPage->preview) {

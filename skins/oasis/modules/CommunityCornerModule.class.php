@@ -9,7 +9,7 @@ class CommunityCornerModule extends Module {
 		wfProfileIn(__METHOD__);
 
 		// add CSS for this module
-		$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/CommunityCorner.scss"));
+		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL("skins/oasis/css/modules/CommunityCorner.scss"));
 
 		$this->isAdmin = $wgUser->isAllowed('editinterface');
 

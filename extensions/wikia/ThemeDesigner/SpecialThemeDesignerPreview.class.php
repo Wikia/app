@@ -20,7 +20,7 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 		$wgOut->addLink(array(
 				"type" => "text/css",
 				"rel" => "stylesheet",
-				"href" => wfGetSassUrl('/extensions/wikia/ThemeDesigner/css/ThemeDesignerPreview.scss'),
+				"href" => F::app()->getAssetsManager()->getSassCommonURL('/extensions/wikia/ThemeDesigner/css/ThemeDesignerPreview.scss'),
 			)
 		);
 

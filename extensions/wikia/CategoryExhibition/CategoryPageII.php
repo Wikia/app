@@ -21,8 +21,8 @@ class CategoryPageII extends CategoryPage {
 
 	function openShowCategory() {
 		global $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
-		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/CategoryExhibition/css/CategoryExhibition.scss' ) );
-		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/CategoryExhibition/css/CategoryExhibition.IE.scss' ), '', 'lte IE 8' );
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/CategoryExhibition/css/CategoryExhibition.scss'));
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/CategoryExhibition/css/CategoryExhibition.IE.scss'), '', 'lte IE 8' );
 		$this->addScripts();
 		wfLoadExtensionMessages( 'CategoryPageII' );
 		$viewer = new $this->viewerClass( $this->mTitle );

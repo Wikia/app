@@ -4,7 +4,7 @@
 /*<![CDATA[*/
 <?php
         if (Wikia::isOasis()) {
-                $css = wfGetSassUrl('extensions/wikia/WikiFactory/css/oasis.scss');
+                $css = F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/WikiFactory/css/oasis.scss');
                 echo "@import url('{$css}');\n\n";
         }
 

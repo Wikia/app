@@ -26,7 +26,7 @@ class UserAjaxCreateTemplate extends QuickTemplate {
 		global $wgOut, $wgUser, $wgStylePath, $wgStyleVersion, $wgBlankImgUrl;
 		
 		 if (get_class($wgUser->getSkin()) == 'SkinOasis') {
-			$wgOut->addStyle(wfGetSassUrl("skins/oasis/css/modules/SignUp.scss"));	
+			$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL("skins/oasis/css/modules/SignUp.scss"));	
 		}
 		else {
 			$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'. $wgStylePath . '/wikia/common/NewUserRegister.css?' . $wgStyleVersion . "\" />\n");

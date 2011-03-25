@@ -62,13 +62,13 @@ class PageLayoutBuilderSpecialPage extends SpecialPage {
 			return true;
 		}
 
-		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/editor.scss' )  );
-		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/form.scss' ) );
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/PageLayoutBuilder/css/editor.scss'));
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/PageLayoutBuilder/css/form.scss'));
 
 		$action = $wgRequest->getVal("action");
 		if($action == 'list') {
 			$wgOut->addScriptFile($wgExtensionsPath."/wikia/PageLayoutBuilder/js/list.js");
-			$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/PageLayoutBuilder/css/list.scss' ) );
+			$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/PageLayoutBuilder/css/list.scss'));
 			$this->executeList();
 			return true;
 		}

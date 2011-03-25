@@ -29,7 +29,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 		}
 
 		// Setup extra resources
-		$wgOut->addStyle( wfGetSassUrl( 'extensions/wikia/SpecialMailerLog/css/oasis.scss' ) );
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/SpecialMailerLog/css/oasis.scss'));
 
 		// Keep track of the query parameters we need to add back to any URLs we write on this page
 		$query = array();

@@ -76,7 +76,7 @@ class WikiaPollHooks {
 				// make sure we don't include twice if there are multiple polls on one page
 				self::$alreadyAddedCSSJS = true;
 				// add CSS & JS and Poll HTML together
-				$sassUrl = wfGetSassUrl('/extensions/wikia/WikiaPoll/css/WikiaPoll.scss');
+				$sassUrl = F::app()->getAssetsManager()->getSassCommonURL('/extensions/wikia/WikiaPoll/css/WikiaPoll.scss');
 				$css = '<link rel="stylesheet" type="text/css" href="' . htmlspecialchars($sassUrl) . ' " />';
 
 				$js = "<!-- Wikia Polls -->

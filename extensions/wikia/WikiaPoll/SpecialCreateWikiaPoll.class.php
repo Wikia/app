@@ -26,7 +26,7 @@ class SpecialCreateWikiaPoll extends SpecialPage {
 		$wgOut->addScript("<script src=\"{$wgStylePath}/common/jquery/jquery-ui-1.8.10.custom.js\" type=\"{$wgJsMimeType}\"></script>");
 		$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/WikiaPoll/js/CreateWikiaPoll.js\" type=\"{$wgJsMimeType}\"></script>");
 
-		$wgOut->addStyle(wfGetSassUrl('/extensions/wikia/WikiaPoll/css/CreateWikiaPoll.scss'));
+		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('/extensions/wikia/WikiaPoll/css/CreateWikiaPoll.scss'));
 
 		if( $subpage != '' ) {
 			// We came here from the edit link, go into edit mode
