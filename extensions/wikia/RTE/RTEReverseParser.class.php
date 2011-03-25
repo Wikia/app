@@ -497,6 +497,11 @@ class RTEReverseParser {
 			// get ASCII code of entity (&#x5f; / &#58;) and compare it with textContent
 			$code = ($entity{1} == 'x') ? hexdec(substr($entity, 2)) : intval(substr($entity, 1));
 			$matches = $code == ord($textContent);
+
+			// special handling for &nbsp; (#160)
+			if (($code == 160) && ($textContent == '&nbsp;')) {
+				$matches = true;
+			}
 		}
 		else {
 			// &nbsp;
@@ -634,18 +639,23 @@ class RTEReverseParser {
 		// handle paragraphs alignment and indentation
 		// (ignore when paragraph is empty)
 		if ($node->hasAttribute('style') && (trim($textContent) != '')) {
-			// parse "text-align" style attribute
-			$align = self::getCssProperty($node, 'text-align');
+			$style = $node->getAttribute('data-rte-style');
 
-			if (!empty($align)) {
-				// wrap text content inside HTML
-				$textContent = "<p style=\"text-align:{$align}\">{$textContent}</p>";
+			if (empty($style)) {
+				$style = $node->getAttribute('style');
 			}
 
-			// parse "margin-left" style attribute
-			$indentLevel = self::getIndentationLevel($node);
-			if ($indentLevel) {
-				$textContent = str_repeat(':', $indentLevel) . " {$textContent}";
+			// does paragraph has only style=""margin-left:80px;" ? - style added by CKeditor when doing indent/outdent
+			if (preg_match('#^margin\\-left:[\s\d]+px;$#', $style)) {
+				// parse "margin-left" style attribute
+				$indentLevel = self::getIndentationLevel($node);
+				if ($indentLevel) {
+					$textContent = str_repeat(':', $indentLevel) . " {$textContent}";
+				}
+			}
+			else {
+				// wrap text content inside HTML
+				$textContent = "<p style=\"{$style}\">{$textContent}</p>";
 			}
 		}
 
