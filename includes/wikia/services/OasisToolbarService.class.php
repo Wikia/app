@@ -87,11 +87,14 @@
 		}
 
 		public function listToInstance( $data ) {
+			$blacklist = $this->getBlacklist();
 			$result = array();
 			foreach ($data as $k => $v) {
 				switch ($v['type']) {
 					case 'item':
-						$result[] = $this->getUserCommandsService()->get($v['id'],isset($v['data'])?$v['data']:array());
+						if (!in_array($v['id'],$blacklist)) {
+							$result[] = $this->getUserCommandsService()->get($v['id'],isset($v['data'])?$v['data']:array());
+						}
 						break;
 					case 'menu':
 						$menu = $this->getUserCommandsService()->createMenu($v['id'],wfMsg('oasis-mytools'),array(
@@ -308,6 +311,7 @@
 		abstract public function getPromotions();
 		abstract public function getAllOptionNames();
 		abstract public function getPopularOptionNames();
+		abstract public function getBlacklist();
 
 	}
 
@@ -487,6 +491,12 @@
 				'SpecialPage:Upload',
 				'PageAction:Whatlinkshere',
 				'SpecialPage:WikiActivity',
+			);
+		}
+		
+		public function getBlacklist() {
+			return array(
+				'PageAction:Share',
 			);
 		}
 
