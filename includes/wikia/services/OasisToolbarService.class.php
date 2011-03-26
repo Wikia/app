@@ -350,7 +350,6 @@
 			global $wgUser;
 
 			$data = array(
-				$this->buildListItem( 'PageAction:Share' ),
 				$this->buildListItem( 'PageAction:Follow' ),
 			);
 
@@ -389,7 +388,6 @@
 		public function getAllOptionNames() {
 			return array(
 				'PageAction:Follow',
-				'PageAction:Share',
 				'PageAction:History',
 				'PageAction:Move',
 				'PageAction:Delete',
@@ -486,7 +484,6 @@
 				'SpecialPage:MyContributions',
 				'SpecialPage:Random',
 				'SpecialPage:RecentChanges',
-				'PageAction:Share',
 				'SpecialPage:Upload',
 				'PageAction:Whatlinkshere',
 				'SpecialPage:WikiActivity',
