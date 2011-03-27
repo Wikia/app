@@ -71,7 +71,7 @@ class PhalanxStats extends UnlistedSpecialPage {
 
 		$data['timestamp'] = $wgLang->timeanddate( $block['timestamp'] );
 		if ( $block['expire'] == null ) {
-			$data['expire'] = 'infinte';
+			$data['expire'] = 'infinite';
 		} else {
 			$data['expire'] = $wgLang->timeanddate( $block['expire'] );
 		}
