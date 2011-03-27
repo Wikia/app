@@ -1338,24 +1338,25 @@ var WikiaPhotoGallery = {
 		var galleryLinkEditor = $('#WikiaPhotoGalleryLinkEditor');
 		var slideshowLinkEditor = $('#WikiaPhotoSlideshowLinkEditor');
 		var sliderLinkEditor = $('#WikiaPhotoSliderLinkEditor');
-
+		var imageCaption = $('#WikiaPhotoGalleryEditorCaption');
+		
 		galleryLinkEditor.hide();
 		slideshowLinkEditor.hide();
 		sliderLinkEditor.hide();
-
+		imageCaption.removeAttr('maxlength');
+		
 		if (this.isSlideshow()) {
-			slideshowLinkEditor.show();
-
+			slideshowLinkEditor.show();	
 			$('#WikiaPhotoSlideshowLink').val(link);
 			$('#WikiaPhotoSlideshowLinkText').val(linktext);
 		} else if ( this.isSlider() ){
 			sliderLinkEditor.show();
-
+			imageCaption.attr('maxlength', '50');
 			$('#WikiaPhotoSliderLink').val(link);
 			$('#WikiaPhotoSliderLinkText').val(linktext);
 		} else {
 			galleryLinkEditor.show();
-
+			
 			$('#WikiaPhotoGalleryLink').val(link);
 		}
 	},
