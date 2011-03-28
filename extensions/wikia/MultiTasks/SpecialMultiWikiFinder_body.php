@@ -16,10 +16,7 @@ class MultiwikifinderSpecialPage extends SpecialPage {
 			$wgOut->blockedPage();
 			return;
 		}
-		if( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-			return;
-		}
+
 		if( !$wgUser->isAllowed( 'multiwikifinder' ) ) {
 			$this->displayRestrictionError();
 			return;
