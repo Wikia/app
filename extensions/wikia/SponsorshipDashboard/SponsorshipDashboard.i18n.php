@@ -9,7 +9,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Special page]] for sponsorsship related metrics',
+	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Special page]] for sponsorship related metrics',
 	'serie-1' => 'Total registered editors in current month (all namespaces)',
 	'serie-2' => 'Total registered editors in current month (content namespaces)',
 	'serie-3' => 'Number of registered editors who edited less than 5 times in current month (content namespaces)',
