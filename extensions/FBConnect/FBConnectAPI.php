@@ -48,11 +48,13 @@ class FBConnectAPI {
 		global $fbAppId, $fbAppSecret;
 		// Construct a new Facebook object on first time access
 		if ( is_null(self::$__Facebook) && self::isConfigSetup() ) {
-			self::$__Facebook = new Facebook( $fbAppId, $fbAppSecret );
+			self::$__Facebook = F::build('Facebook', array($fbAppId, $fbAppSecret));
+			//Facebook( $fbAppId, $fbAppSecret );
 			if (!self::$__Facebook) {
 				error_log('Could not create facebook client.');
 			}
 		}
+		
 		return self::$__Facebook;
 	}
 	
@@ -62,16 +64,21 @@ class FBConnectAPI {
 	 * followed correctly.
 	 */
 	public static function isConfigSetup() {
-		global $fbAppId, $fbAppSecret;
+		$fbAppId = F::app()->getGlobal('fbAppId');
+		$fbAppSecret = F::app()->getGlobal('fbAppSecret');
+		
 		$isSetup = isset($fbAppId) && $fbAppId != 'YOUR_APP_KEY' &&
 		           isset($fbAppSecret) && $fbAppSecret != 'YOUR_SECRET';
 		if(!$isSetup) {
 			// Check to see if they are using the old variables
-			global $fbApiKey, $fbApiSecret;
+			$fbApiKey = F::app()->getGlobal('fbApiKey');
+			$fbApiSecret = F::app()->getGlobal('fbApiSecret');
+
 			if (isset($fbApiKey) && isset($fbApiSecret)) {
-				$fbAppId = $fbApiKey;
-				$fbAppSecret= $fbApiSecret;
+				F::app()->setGlobal('fbAppId', $fbApiKey);
+				F::app()->setGlobal('fbAppSecret', $fbApiSecret);
 				$isSetup = true;
+				
 			} else {
 				error_log('Please update the $fbAppId in config.php');
 			}
