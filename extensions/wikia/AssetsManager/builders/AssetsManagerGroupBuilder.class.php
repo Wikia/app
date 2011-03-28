@@ -1,16 +1,16 @@
-<?php 
+<?php
 
 /**
  * @author Inez Korczyński <korczynski@gmail.com>
  */
 
 class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
-	
+
 	public function __construct($request) {
 		parent::__construct($request);
-		
+
 		global $IP;
-		
+
 		$ac = new AssetsConfig();
 		$assets = $ac->resolve($this->mOid, true, (!isset($this->mParams['minify']) || $this->mParams['minify'] == true), $this->mParams);
 
@@ -20,7 +20,7 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 			} else {
 				$this->mContent .= file_get_contents($IP . '/' . $asset);
 			}
-			
+
 			if(empty($this->mContentType)) {
 				$this->mContentType = $this->resolveContentType($asset);
 			}

@@ -351,6 +351,7 @@ include_once( "$IP/extensions/wikia/SpecialSignup/SpecialSignup.php" );
 include_once( "$IP/extensions/wikia/TagCloud/TagCloudClass.php" );
 include_once( "$IP/extensions/wikia/MostPopularCategories/SpecialMostPopularCategories.php" );
 include_once( "$IP/extensions/wikia/Scribe/SpecialScribeEvents.php" );
+include_once( "$IP/extensions/wikia/AssetsManager/AssetsManager_setup.php" );
 
 /**
  * onedot is switched off for while
@@ -787,7 +788,7 @@ $wgEzApiModules = array();
 $wgFogbugzAPIConfig = array();
 
 //$wgAssetsManagerQuery = '/_am_/%4$d/%1$s/%3$s/%2$s';
-$wgAssetsManagerQuery = '/index.php?action=ajax&rs=AssetsManagerEntryPoint&type=%1$s&cb=%4$d&params=%3$s&oid=%2$s';
+$wgAssetsManagerQuery = $wgScript . '?action=ajax&rs=AssetsManagerEntryPoint&type=%1$s&cb=%4$d&params=%3$s&oid=%2$s';
 $wgSassExacutable = '/var/lib/gems/1.8/bin/sass';
 
 /**
