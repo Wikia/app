@@ -31,23 +31,20 @@ class WikiaApp {
 	 * @var AssetsManager
 	 */
 	private $assetsManager = null;
-	
+
 	/**
 	 * constructor
 	 * @param WikiaRegistry $registry
 	 * @param WikiaHookDispatcher $hookDispatcher
 	 */
-	public function __construct(WikiaCompositeRegistry $registry = null, 
-								WikiaHookDispatcher $hookDispatcher = null,
-								AssetsManager $assetsManager = null) {
-
+	public function __construct(WikiaCompositeRegistry $registry = null, WikiaHookDispatcher $hookDispatcher = null, AssetsManager $assetsManager = null) {
 		if(!is_null($registry)) {
 			$this->registry = $registry;
 		} else {
 			$this->registry = new WikiaCompositeRegistry(array(self::REGISTRY_MEDIAWIKI => new WikiaGlobalsRegistry(), self::REGISTRY_WIKIA => new WikiaLocalRegistry()));
 			F::setInstance('WikiaCompositeRegistry', $this->registry);
 		}
-									
+
 		if(!is_null($hookDispatcher)) {
 			$this->hookDispatcher = $hookDispatcher;
 		} else {
@@ -89,7 +86,7 @@ class WikiaApp {
 	public function getAssetsManager() {
 		return $this->assetsManager;
 	}
-	
+
 	/**
 	 * set registry
 	 * @param WikiaCompositeRegistry $registry
@@ -107,7 +104,7 @@ class WikiaApp {
 	}
 
 	/**
-	 * get Wikia registry (local
+	 * get Wikia registry (local)
 	 * @return WikiaLocalRegistry
 	 */
 	public function getWikiaRegistry() {
@@ -197,6 +194,26 @@ class WikiaApp {
 	 */
 	public function setGlobal($globalVarName, $value, $key = null) {
 		return $this->getMWRegistry()->set($globalVarName, $value, $key);
+	}
+
+	/**
+	 * get array of globals
+	 *
+	 * how to use:
+	 *  list( $wgTitle, $wgUser ) = $app->getGlobals( 'wgTitle', 'wgUser' );
+	 *
+	 * @param list of global's names, comma separated
+	 * @return array
+	 */
+	public function getGlobals() {
+		$globals = array();
+		$funcArgs = func_get_args();
+
+		foreach( $funcArgs as $globalName ) {
+			$globals[] = $this->getGlobal( $globalName );
+		}
+
+		return $globals;
 	}
 
 	/**
