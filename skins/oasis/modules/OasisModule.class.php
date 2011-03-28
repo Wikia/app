@@ -219,78 +219,20 @@ EOF;
 	} // end delayedPrintCSSdownload()
 
 	private function setupStaticChute() {
-		global $wgUser, $wgOut, $wgJsMimeType, $wgRequest, $wgAllInOne, $wgTitle;
+		global $wgJsMimeType, $wgUser;
+
 		wfProfileIn(__METHOD__);
 
-		$skin = $wgUser->getSkin();
-		$allInOne = $wgRequest->getBool('allinone', $wgAllInOne);
+		$this->jsFiles =  '';
 
-		// Merged JS files via StaticChute
-		// get the right package from StaticChute
-		$staticChute = new StaticChute('js');
-		$staticChute->useLocalChuteUrl();
-
-		// If we decide to use CoreJS, then that will replace the staticChute call as well as the call to "-".
-		$isAnonArticleView = false;
-
-		$packagePrefix = "oasis_";
 		if($wgUser->isLoggedIn()) {
-			$package = $packagePrefix.'loggedin_js';
+			$srcs = F::app()->getAssetsManager()->getGroupLocalURL('oasis_user_js');
 		} else {
-			// list of namespaces and actions on which we should load package with YUI
-			$ns = array(NS_SPECIAL);
-			$actions = array('edit', 'preview', 'submit');
-
-			// add blog namespaces
-			global $wgEnableBlogArticles;
-			if(!empty($wgEnableBlogArticles)) {
-				$ns = array_merge($ns, array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK));
-			}
-
-			if(in_array($wgTitle->getNamespace(), $ns) || in_array($wgRequest->getVal('action', 'view'), $actions)) {
-				// edit mode & special/blog pages (package with YUI)
-				$package = $packagePrefix.'anon_everything_else_js';
-			} else {
-				// view mode (package without YUI)
-				$package = $packagePrefix.'anon_article_js';
-
-				// Use CoreJS via __wikia_combined instead of StaticChute and "-".
-				$isAnonArticleView = true;
-			}
+			$srcs = F::app()->getAssetsManager()->getGroupLocalURL('oasis_anon_js');
 		}
 
-		// If this is an anon on an article-page, we can combine two of the files into one.
-		if($isAnonArticleView && $allInOne){
-			global $parserMemc, $wgStyleVersion;
-			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
-
-			global $wgDevelEnvironment;
-			if(empty($wgDevelEnvironment)){
-				$prefix = "__wikia_combined/";
-			} else {
-				global $wgWikiaCombinedPrefix;
-				$prefix = $wgWikiaCombinedPrefix;
-			}
-			// This would load our JS too late.
-			// $wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS\"><!-- combined anon site js --></script>");
-
-			// Replace the normal StaticChute with the combined call.
-			$this->jsFiles = "<script type=\"$wgJsMimeType\" src=\"/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS&isOasis=true\"><!-- combined anon Core JS (StaticChute and '-') --></script>";
-		} else {
-			// If we use StaticChute right on the page (rather than loaded asynchronously), we'll use this var.
-			$this->jsFiles = $staticChute->getChuteHtmlForPackage($package);
-
-			// add site JS
-			// copied from Skin::getHeadScripts
-			global $wgUseSiteJs;
-			if (!empty($wgUseSiteJs)) {
-				$jsCache = $wgUser->isLoggedIn() ? '&smaxage=0' : '';
-				$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"".
-						htmlspecialchars(Skin::makeUrl('-',
-								"action=raw$jsCache&gen=js&useskin=" .
-								urlencode( $skin->getSkinName() ) ) ) .
-						"\"></script>");
-			}
+		foreach($srcs as $src) {
+			$this->jsFiles .= "<script type=\"$wgJsMimeType\" src=\"$src\"></script>";
 		}
 
 		wfProfileOut(__METHOD__);
