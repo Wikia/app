@@ -2,7 +2,7 @@
 	clear: both;
 	padding-top: 23px;
 	position: relative;
-	
+	z-index: 1;
 	&.float{
 		z-index: $zTop;
 		
@@ -142,6 +142,11 @@
 		}
 		.item-2 {
 			float: right;
+		}
+	}
+	&.notoolbar {
+		section >ul {
+			border-top: 1px solid $color-page-border;
 		}
 	}
 	.banner-corner-left {

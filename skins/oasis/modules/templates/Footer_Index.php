@@ -1,5 +1,6 @@
-<footer id="WikiaFooter" class="WikiaFooter">
+<footer id="WikiaFooter" class="WikiaFooter <?= $showToolbar ? '' : 'notoolbar' ?>">
 
+	<div class="FooterAd"></div>
 <?php if($showToolbar) { ?>
 	<div class="toolbar">
 		<?php if ($showNotifications) {

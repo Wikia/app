@@ -12,7 +12,7 @@ class FooterModule extends Module {
 		global $wgTitle, $wgContentNamespaces, $wgUser, $wgSuppressToolbar, $wgShowMyToolsOnly, $wgEnableShowPerformanceStatsExt;
 
 		// don't show toolbar when wgSuppressToolbar is set (for instance on edit pages)
-		$this->showToolbar = empty($wgSuppressToolbar);
+		$this->showToolbar = empty($wgSuppressToolbar) && !$wgUser->isAnon();
 		if ($this->showToolbar == false) {
 			return;
 		}

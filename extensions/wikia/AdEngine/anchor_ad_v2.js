@@ -7,24 +7,39 @@ var displayAnchorAd = function(){
 					yoffset: 0
 				},
 				delay: 0,
-				speed: 500,
+				speed: 500
 			},
 
 			getCreative: function() {
+				var top = typeof wgUserName != "undefined" && wgUserName ? '-143px' : '-120px';
 				var html = '<style type="text/css">\
+					.FooterAd {\
+						height: 0;\
+						width: 1000px;\
+						z-index: 0;\
+					}\
+					.WikiaFooter.float .FooterAd,\
+					.WikiaFooter.notoolbar .FooterAd {\
+						bottom: 0;\
+						position: fixed;\
+					}\
+					.WikiaFooter.notoolbar .FooterAd {\
+						z-index: 1;\
+					}\
 					.wikia_anchor_wrapper {\
 						height: 120px;\
 						margin: 0 auto;\
 						overflow: hidden;\
 						position: relative;\
 						text-align: center;\
-						top: -141px;\
+						top: ' + top + ';\
 						width: 980px;\
 						z-index: 999;\
 					}\
 					.wikia_anchor_ad {\
 						background: url(' + AnchorAd.settings.creative + ') center center;\
 						height: 120px;\
+						left: 0;\
 						position: absolute;\
 						top: 141px;\
 						width: 980px;\
@@ -78,7 +93,7 @@ var displayAnchorAd = function(){
 					return;
 				}
 
-				$(".toolbar").append(this.getCreative());
+				$("#WikiaFooter .FooterAd").append(this.getCreative());
 
 				if (AnchorAd.settings.url) {
 					$(".wikia_anchor_ad .clickable").click(function() {
