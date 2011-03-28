@@ -177,4 +177,35 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 
 		$this->application->setGlobal($name, $value);
 	}
+
+	public function testGettingListOfGlobalsFromMediaWikiRegistry() {
+		$globals = array(
+					'global1' => new stdClass(),
+					'global2' => new stdClass(),
+					'global3' => 10
+		);
+
+		$registry = $this->getMock('WikiaGlobalsRegistry');
+		$registry->expects($this->exactly(5))
+	         ->method('get')
+	         ->will($this->onConsecutiveCalls(
+	           $globals['global1'],
+	           $globals['global2'],
+	           $globals['global3'],
+	           $globals['global3'],
+	           $globals['global2'] ));
+
+		$this->registry
+		          ->expects($this->exactly(5))
+		          ->method('getRegistry')
+		          ->with($this->equalTo(WikiaApp::REGISTRY_MEDIAWIKI))
+		          ->will($this->returnValue($registry));
+
+		$results = $this->application->getGlobals('global1', 'global2', 'global3');
+		$this->assertEquals( array_values($globals), $results );
+
+		list($global3, $global2) = $this->application->getGlobals('global3', 'global2');
+		$this->assertEquals($globals['global3'], $global3);
+		$this->assertEquals($globals['global2'], $global2);
+	}
 }
