@@ -12,14 +12,16 @@ class WikiaPollAjax {
 	 */
 
 	static public function create() {
-		global $wgRequest, $wgUser;
 		wfProfileIn(__METHOD__);
+
+		$wgRequest = F::app()->getGlobal('wgRequest');
+		$wgUser = F::app()->getGlobal('wgUser');
 
 		$title = $wgRequest->getVal ('question');
 		$answers = $wgRequest->getArray ('answer');  // array
 
-		$title_object = Title::newFromText ($title, NS_WIKIA_POLL) ;
-
+		$title_object = F::build('Title', array($title, NS_WIKIA_POLL), 'newFromText');
+		
 		if (is_object ($title_object) && $title_object->exists() ) {
 			$res = array (
 				'success' => false,
@@ -37,7 +39,7 @@ class WikiaPollAjax {
 				$content .= "*$answer\n";
 			}
 
-			$article = new Article($title_object, NS_WIKIA_POLL);
+			$article = F::build('Article', array($title_object, NS_WIKIA_POLL));
 			$status = $article->doEdit($content, 'Poll Created', EDIT_NEW, false, $wgUser);
 			$title_object = $article->getTitle();
 
@@ -59,13 +61,15 @@ class WikiaPollAjax {
 	 */
 
 	static public function update() {
-		global $wgRequest, $wgUser;
 		wfProfileIn(__METHOD__);
+		$wgRequest = F::app()->getGlobal('wgRequest');
+		$wgUser = F::app()->getGlobal('wgUser');
 
 		$pollId = $wgRequest->getInt ('pollId');
 		$answers = $wgRequest->getArray ('answer');  // array
 		$res = array();
-		$poll = WikiaPoll::newFromId($pollId);
+		$poll = F::build('WikiaPoll', array($pollId), 'newFromId');
+
 		if (!empty($poll) && $poll->exists()) {
 
 			$content = "";
@@ -98,15 +102,15 @@ class WikiaPollAjax {
 	 */
 
 	static public function get() {
-		global $wgRequest ;
 		wfProfileIn(__METHOD__);
+		$wgRequest = F::app()->getGlobal('wgRequest');
 
 		$res = array (
 				'exists' => false ,
 		);
 		$id = $wgRequest->getInt ('pollId', 0);
 		if ($id != 0) {
-			$article_object = Article::newFromID ($id) ;
+			$article_object = F::build('Article', array($id), 'newFromID');
 			$title_object = $article_object->getTitle();
 		}
 
@@ -129,11 +133,13 @@ class WikiaPollAjax {
 	 * @return array {html}
 	 */
 	static public function vote() {
-		global $wgRequest, $wgTitle;
 		wfProfileIn(__METHOD__);
+		$wgRequest = F::app()->getGlobal('wgRequest');
+		$wgTitle = F::app()->getGlobal('wgTitle');
 
 		$pollId = $wgRequest->getInt('pollId');
-		$poll = WikiaPoll::newFromId($pollId);
+		$poll = F::build('WikiaPoll', array($pollId), 'newFromId');
+
 		$html = '';
 		if (!empty($poll) && $poll->exists()) {
 
@@ -164,11 +170,11 @@ class WikiaPollAjax {
 	 * @return array {hasVoted}
 	 */
 	static public function hasVoted() {
-		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
-		$pollId = $wgRequest->getInt('pollId');
-		$poll = WikiaPoll::newFromId($pollId);
+		$pollId = F::app()->getGlobal('wgRequest')->getInt('pollId');
+		$poll = F::build('WikiaPoll', array($pollId), 'newFromId');
+
 		$ret = array();
 
 		if (!empty($poll) && $poll->exists()) {
