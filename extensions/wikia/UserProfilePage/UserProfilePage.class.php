@@ -145,7 +145,7 @@ class UserProfilePage {
 				$sArticleEditUrl = $oTitle->getLocalURL( 'action=edit' );
 			}
 			else {
-				$sArticleBody = wfMsg( 'userprofilepage-about-empty-section' );
+				$sArticleBody = wfMsgExt( 'userprofilepage-about-empty-section', array( 'parsemag' ) );
 				$sArticleEditUrl = $oSpecialPageTitle->getLocalURL( 'type=aboutuser&wpTitle=' . $oTitle->getPrefixedURL() . '&returnto=' . $this->user->getUserPage()->getFullUrl( 'action=purge' ) );
 			}
 

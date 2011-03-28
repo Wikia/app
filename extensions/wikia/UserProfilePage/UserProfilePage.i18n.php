@@ -10,7 +10,7 @@ $messages['en'] = array(
 	'userprofilepage-about-section-title' => 'My $1 interview',
 	'userprofilepage-edit-button' => 'Edit',
 	'userprofilepage-about-article-title' => 'About',
-	'userprofilepage-about-empty-section' => 'This section is empty. Click edit to add some stuff here!',
+	'userprofilepage-about-empty-section' => 'This section is empty. Click {{int:userprofilepage-edit-button}} to add some stuff here!',
 	'userprofilepage-edit-permision-denied' => 'Edit permissions denied',
 	'userprofilepage-edit-permision-denied-info' => 'You do not have permissions to edit somebody\'s user page or subpage',
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Everyone on this wiki would love to know more about you!</div><a href="$1">Edit this section</a> to add more about yourself and tell us about the things you love.',
