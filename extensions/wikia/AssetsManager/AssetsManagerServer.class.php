@@ -26,34 +26,34 @@ class AssetsManagerServer {
 				default:
 					throw new Exception('Unknown type.');
 			}
-			
+
 		} catch (Exception $e) {
-			
+
 			echo $e->getMessage();
 			return;
-			
+
 		}
 
 		$headers = array();
 		$headers['Vary'] = 'Accept-Encoding';
-		
+
 		if($builder->getContentType()) {
 			$headers['Content-Type'] = $builder->getContentType();
 		}
-		
-		$cacheDuration = $builder->getCacheDuration(); 
+
+		$cacheDuration = $builder->getCacheDuration();
 		if($cacheDuration > 0) {
 			$headers['Expires'] = gmdate('D, d M Y H:i:s \G\M\T', strtotime($cacheDuration . ' seconds'));
-			$headers['X-Pass-Cache-Control'] = 'max-age=' . $cacheDuration;	
+			$headers['X-Pass-Cache-Control'] = 'max-age=' . $cacheDuration;
 			$headers['Cache-Control'] = 'max-age=' . $cacheDuration;
 		}
-		
+
 		$headers['Last-Modified'] = gmdate('D, d M Y H:i:s \G\M\T');
-		
+
 		foreach($headers as $k => $v) {
 			header($k . ': ' . $v);
 		}
-		
+
 		echo $builder->getContent();
 	}
 }

@@ -16,7 +16,7 @@ class AssetsConfigTest extends PHPUnit_Framework_TestCase {
 			array('single_url_group', array('http://www.wikia.com'), false, false, array('http://www.wikia.com')),
 		);
 	}
-	
+
 	/**
 	 * @dataProvider resolvePathDataProvider
 	 */
@@ -26,9 +26,9 @@ class AssetsConfigTest extends PHPUnit_Framework_TestCase {
 		   ->method('getGroupConfig')
 		   ->with($this->equalTo($groupName))
 		   ->will($this->returnValue($groupConfig));
-		
+
 		$res = $ac->resolve($groupName, $combine, $minify);
-		$this->assertEquals($expectedResult, $res);		
+		$this->assertEquals($expectedResult, $res);
 	}
 
 }
