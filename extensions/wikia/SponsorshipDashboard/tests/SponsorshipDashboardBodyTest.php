@@ -24,7 +24,7 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		     ->method( 'getRights' )
 		     ->will( $this->returnValue( array( 'wikimetrics' ) ) );
 
-		$app = $this->getMock( 'WikiaApp' );
+		$app = $this->getMock( 'WikiaApp', array('getGlobal') );
 		$app->expects( $this->once() )
 		    ->method( 'getGlobal' )
 		    ->with( $this->equalTo( 'wgUser' ) )
@@ -43,7 +43,7 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		     ->method( 'getRights' )
 		     ->will( $this->returnValue( array( 'test', '' ) ) );
 
-		$app = $this->getMock( 'WikiaApp' );
+		$app = $this->getMock( 'WikiaApp', array('getGlobal') );
 		$app->expects( $this->once() )
 		    ->method( 'getGlobal' )
 		    ->with( $this->equalTo( 'wgUser' ) )
@@ -62,7 +62,7 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		     ->method( 'getRights' )
 		     ->will( $this->returnValue( array( 'wikimetrics' ) ) );
 
-		$app = $this->getMock( 'WikiaApp' );
+		$app = $this->getMock( 'WikiaApp', array('getGlobal') );
 		$app->expects( $this->once() )
 		    ->method( 'getGlobal' )
 		    ->with( $this->equalTo( 'wgUser' ) )
@@ -85,7 +85,7 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		     ->method( 'getRights' )
 		     ->will( $this->returnValue( array( 'FALSE' ) ) );
 
-		$app = $this->getMock( 'WikiaApp' );
+		$app = $this->getMock( 'WikiaApp', array('getGlobal') );
 		$app->expects( $this->once() )
 		    ->method( 'getGlobal' )
 		    ->with( $this->equalTo( 'wgUser' ) )
@@ -107,7 +107,7 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		     ->method( 'getRights' )
 		     ->will( $this->returnValue( array( 'wikimetrics' ) ) );
 
-		$app = $this->getMock( 'WikiaApp' );
+		$app = $this->getMock( 'WikiaApp', array('getGlobal') );
 		$app->expects( $this->once() )
 		    ->method( 'getGlobal' )
 		    ->with( $this->equalTo( 'wgUser' ) )
@@ -136,7 +136,7 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		     ->method( 'getRights' )
 		     ->will( $this->returnValue( array( 'wikimetrics' ) ) );
 
-		$app = $this->getMock( 'WikiaApp' );
+		$app = $this->getMock( 'WikiaApp', array('getGlobal') );
 		$app->expects( $this->once() )
 		    ->method( 'getGlobal' )
 		    ->with( $this->equalTo( 'wgUser' ) )
