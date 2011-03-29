@@ -153,6 +153,7 @@ $messages['qqq'] = array(
 	'right-blog-articles-edit' => '{{doc-right|blog-articles-edit}}',
 	'right-blog-articles-move' => '{{doc-right|blog-articles-move}}',
 	'blog-desc' => '{{desc}}',
+	'blog-avatar-defaults' => 'Take care with the format of this one! Should be one item per line, with a single line break between entries, not a blank line.',
 );
 
 /** Afrikaans (Afrikaans)
