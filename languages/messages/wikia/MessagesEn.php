@@ -999,6 +999,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'hub-Entertainment' => 'Entertainment',
 'hub-Gaming' => 'Gaming',
 'hub-Lifestyle' => 'Lifestyle',
+'hub-Wikia' => 'Wikia',
 
 # Mobile skin (wikiaphone)
 'mobile-full-site' => 'View full site',
