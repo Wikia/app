@@ -176,6 +176,7 @@ $messages['qqq'] = array(
 	'autocreatewiki-create-account' => '{{Identical|Create an account}}',
 	'autocreatewiki-success-has-been-created' => 'Used as a subtitle to complete the page title, which displays the domain name of the created wiki.',
 	'autocreatewiki-info-realname' => '{{Identical|Real name attribution}}',
+	'autocreatewiki-title-template' => 'This will be the Sitename of the wiki, i.e. the text that shows up in the TITLE element as well as in other places on the site.',
 );
 
 /** Afrikaans (Afrikaans)
