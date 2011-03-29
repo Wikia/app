@@ -70,9 +70,14 @@ class CreateWikiLocalJob extends Job {
 		 * setup founder user
 		 */
 		if ( $this->mParams->founderId ) {
+			Wikia::log( __METHOD__, "user", "Loading user with user_id = {$this->mParams->founderId}" );
 			$this->mFounder = User::newFromId( $this->mParams->founderId );
 			$this->mFounder->load();
 		}
+		else {
+			Wikia::log( __METHOD__, "user", "Founder user_id  is unknown {$this->mParams->founderId}" );
+		}
+
 		if ( ! $this->mFounder ) {
 			Wikia::log( __METHOD__, "user", "Cannot load user with user_id = {$this->mParams->founderId}" );
 			if ( !empty( $this->mParams->founderName  ) ) {
