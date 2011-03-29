@@ -24,11 +24,6 @@ class WikiaPollTest extends PHPUnit_Framework_TestCase {
 	public function testWikiaPollAjax() {
 		global $wgUser, $wgTitle;
 
-		if (!class_exists('WikiaPoll')) {
-			$this->markTestSkipped('WikiaPoll extension is disabled');
-			return;
-		}
-
 		$poll = WF::build('WikiaPollAjax');
 
 		// Sometimes the tear down doesn't execute?  Delete any old data before running create...
@@ -140,10 +135,6 @@ class WikiaPollTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testDuplicateCreate() {
-		if (!class_exists('WikiaPoll')) {
-			$this->markTestSkipped('WikiaPoll extension is disabled');
-			return;
-		}
 
 		$poll = WF::build('WikiaPollAjax');
 

@@ -1,7 +1,7 @@
 <?php
+$wgEnableWikiaPoll = true;
 require_once dirname(__FILE__) . '/../maintenance/commandLine.inc';
 ini_set( 'include_path', get_include_path() . PATH_SEPARATOR . /*$_SERVER['PHP_PEAR_INSTALL_DIR']*/ 'C:\php\pear' );
-wfLoadAllExtensions();
 require_once 'Zend/Exception.php';
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Exception.php';
