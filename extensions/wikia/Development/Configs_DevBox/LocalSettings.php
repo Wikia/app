@@ -139,3 +139,6 @@ $wgLocalisationCacheConf[ "manualRecache" ] = false;
 
 // disable irc feed
 $wgRC2UDPEnabled = false;
+
+// macbre: set proper proxy for dev boxes
+$wgHTTPProxy = "squid-proxy.local:3128";
