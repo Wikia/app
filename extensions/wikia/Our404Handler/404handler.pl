@@ -245,6 +245,7 @@ my @tests = qw(
 	/k/kuroshitsuji/images/thumb/c/c8/Snake_Revealed.png/82px-0%2C459%2C0%2C459-Snake_Revealed.png
 	/s/science/ru/images/thumb/2/29/Gtk-redo-ltr.svg/17px-Gtk-redo-ltr.svg.png
 	/b/biologija/lt/images/thumb/7/7d/Eagle_Owl_IMG_9203.JPG/800px-@commons-Eagle_Owl_IMG_9203.JPG
+	/h/half-life/en/images/thumb/1/1c/Eli_proto_physics.jpg/250px-Eli_proto_physics.jpg
 );
 use warnings;
 my @done = ();
@@ -580,6 +581,7 @@ while( $request->Accept() >= 0 || $test ) {
 							print "Connection: keep-alive\r\n";
 							print "Content-type: image/png\r\n\r\n";
 							print $output unless $test;
+
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 							say STDERR "File $thumbnail served, time: $t_elapsed" if $debug;
 							$transformed = 1;
@@ -667,7 +669,7 @@ while( $request->Accept() >= 0 || $test ) {
 						#
 						my $height = scaleHeight( $origw, $origh, $width, $test );
 						if( $width < $origw ) {
-							$image = $image->scale( xpixels => $width, ypixels => $height, qtype => 'mixing' );
+							$image = $image->scale( xpixels => $width, ypixels => $height, qtype => 'mixing', type => 'nonprop' );
 						}
 						if( $cropped ) {
 							#
@@ -712,6 +714,12 @@ while( $request->Accept() >= 0 || $test ) {
 							print "Connection: keep-alive\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
 							print $output unless $test;
+
+							# debug code, remove later
+							# use File::Temp qw/ tempfile tempdir /;
+							# my ( $fh, $fhn ) = tempfile();
+							# say "writting $fhn";
+							# write_file( $fhn, {binmode => ':raw' }, $output );
 
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 							say STDERR "File $thumbnail served, time: $t_elapsed" if $debug;
