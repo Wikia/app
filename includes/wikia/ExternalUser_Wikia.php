@@ -246,7 +246,7 @@ class ExternalUser_Wikia extends ExternalUser {
 		$uid = $this->getId();
 		wfDebug( __METHOD__ . ": get local user: $uid \n" );
 
-		$dbr = wfGetDb( DB_SLAVE );
+		$dbr = wfGetDb( DB_MASTER );
 		$row = $dbr->selectRow(
 			'user',
 			'*',
