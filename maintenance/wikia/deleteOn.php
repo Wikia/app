@@ -15,7 +15,7 @@
 
 $oldCwd = getcwd();
 ini_set( "include_path", dirname(__FILE__)."/.." );
-$optionsWithArgs = array( 'u', 'r', 'i', 't', 'n' );
+$optionsWithArgs = array( 'u', 'r', 'i', 't' );
 require_once( 'commandLine.inc' );
 
 chdir( $oldCwd );
@@ -52,7 +52,7 @@ if ( $wgUser->isAnon() ) {
 
 $dbw = wfGetDB( DB_MASTER );
 
-	$page = Title::newFromText( $options['t'], intval($options['n']) );
+	$page = Title::newFromText( $options['t'] );
 	if ( is_null( $page ) ) {
 		print "Invalid title\n";
 		exit (1) ;
