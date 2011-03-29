@@ -11,18 +11,18 @@ class AssetsManager {
 	private $mMinify;
 	private $mCommonHost;
 	private $mAssetsConfig;
-	
+
 	public static function onMakeGlobalVariablesScript(&$vars) {
 		global $wgOasisHD, $wgCdnRootUrl, $wgAssetsManagerQuery;
-		
+
 		$params = SassUtil::getOasisSettings();
 		if($wgOasisHD) {
 			$params['hd'] = 1;
 		}
-		
+
 		$vars['sassParams'] = $params;
-		
-		$vars['wgAssetsManagerQuery'] = $wgAssetsManagerQuery;		
+
+		$vars['wgAssetsManagerQuery'] = $wgAssetsManagerQuery;
 		$vars['wgCdnRootUrl'] = $wgCdnRootUrl;
 
 		return true;
@@ -40,28 +40,28 @@ class AssetsManager {
  	 */
 	public function getSassCommonURL(/* string */ $scssFilePath, /* boolean */ $minify = null) {
 		global $wgOasisHD;
-		
+
 		$params = SassUtil::getOasisSettings();
 		if($wgOasisHD) {
 			$params['hd'] = 1;
 		}
-		
+
 		if($minify != null ? !$minify : !$this->mMinify) {
 			$params['minify'] = false;
 		} else {
 			unset($params['minify']);
 		}
-		
-		return $this->mCommonHost . $this->getAMLocalURL('sass', $scssFilePath, $params);	
+
+		return $this->mCommonHost . $this->getAMLocalURL('sass', $scssFilePath, $params);
 	}
-	
+
 	/**
 	 * @author Inez Korczyński <korczynski@gmail.com>
 	 * @return string Relative URL to one file
  	 */
 	public function getOneLocalURL(/* string */ $filePath, /* boolean */ $minify = null) {
 		if($minify != null ? $minify : $this->mMinify) {
-			$url = $this->getAMLocalURL('one', $filePath);	
+			$url = $this->getAMLocalURL('one', $filePath);
 		} else {
 			$url = '/' . $filePath . '?cb=' . $this->mCacheBuster;
 		}
@@ -88,7 +88,7 @@ class AssetsManager {
 	/**
 	 * @author Inez Korczyński <korczynski@gmail.com>
 	 * @return array Array of one or many URLs
- 	 */	
+ 	 */
 	private function getGroupURL(/* string */ $groupName, /* array */ $params = array(), /* string */ $prefix, /* boolean */ $combine, /* boolean */ $minify) {
 		if($combine != null ? $combine : $this->mCombine) {
 			// "minify" is a special parameter that can be set only when initialising object and can not be overwritten per request
@@ -100,7 +100,7 @@ class AssetsManager {
 
 			// When AssetsManager works in "combine" mode then only one URL will be returned
 			return array($prefix . $this->getAMLocalURL('group', $groupName, $params));
-			
+
 		} else {
 			// Lazy loading of AssetsConfig
 			if(empty($this->mAssetsConfig)) {
@@ -117,7 +117,7 @@ class AssetsManager {
 			}
 			return $URLs;
 		}
-	}	
+	}
 
 	/**
 	 * @author Inez Korczyński <korczynski@gmail.com>
@@ -133,7 +133,7 @@ class AssetsManager {
  	 */
 	public function getGroupFullURL(/* string */ $groupName, /* array */ $params = array(), /* boolean */ $combine = null, /* boolean */ $minify = null)  {
 		global $wgServer;
-		return $this->getGroupURL($groupName, $params, $wgServer, $combine, $minify);	
+		return $this->getGroupURL($groupName, $params, $wgServer, $combine, $minify);
 	}
 
 	/**
@@ -145,6 +145,11 @@ class AssetsManager {
 	}
 
 	private function getAMLocalURL($type, $oid, $params = array()) {
+
+		// TODO: Add extra cachebuster for those two packages
+		if($oid == 'oasis_user_js' || $oid == 'oasis_anon_js') {
+		}
+
 		global $wgAssetsManagerQuery;
 		return sprintf($wgAssetsManagerQuery,
 			/* 1 */ $type,
