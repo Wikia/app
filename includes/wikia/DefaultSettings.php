@@ -97,9 +97,6 @@ $wgAutoloadClasses['WikiaResponseHTMLPrinter'] = $IP . '/includes/wikia/WikiaRes
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
 
-F::setInstance( 'App', new WikiaApp() );
-
-
 /**
  * custom wikia classes
  */
