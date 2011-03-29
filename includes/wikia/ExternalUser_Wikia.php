@@ -222,27 +222,24 @@ class ExternalUser_Wikia extends ExternalUser {
 	 */
 	public function linkToLocal( $id ) {
 
-		if( is_array( $this->mRow ) ) {
+		wfProfileIn( __METHOD__ );
 
-			wfProfileIn( __METHOD__ );
+		wfDebug( __METHOD__ . ": update local user table: $id \n" );
+		$dbw = wfGetDB( DB_MASTER );
 
-			wfDebug( __METHOD__ . ": update local user table: $id \n" );
-			$dbw = wfGetDB( DB_MASTER );
-
-			$where = array();
-			foreach ( $this->mRow as $field => $value ) {
-				$where[ $field ] = $value;
-			}
-
-			$dbw->replace(
-				'user',
-				array_keys( (array)$this->mRow ),
-				$where,
-				__METHOD__
-			);
-
-			wfProfileOut( __METHOD__ );
+		$where = array();
+		foreach ( ( array )$this->mRow as $field => $value ) {
+			$where[ $field ] = $value;
 		}
+
+		$dbw->replace(
+			'user',
+			array_keys( (array)$this->mRow ),
+			$where,
+			__METHOD__
+		);
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function getLocalUser() {
