@@ -213,21 +213,36 @@ class ExternalUser_Wikia extends ExternalUser {
 		return $User;
 	}
 
+	/**
+	 * linkToLocal -- link central account to local account on every cluster
+	 *
+	 * @param Integer $id -- user identifier in user table on central database
+	 *
+	 * @author Piotr Molski (moli) <moli@wikia-inc.com>
+	 */
 	public function linkToLocal( $id ) {
-		wfDebug( __METHOD__ . ": update local user table: $id \n" );
-		$dbw = wfGetDB( DB_MASTER );
 
-		$where = array();
-		foreach ( $this->mRow as $field => $value ) {
-			$where[ $field ] = $value;
+		if( is_array( $this->mRow ) ) {
+
+			wfProfileIn( __METHOD__ );
+
+			wfDebug( __METHOD__ . ": update local user table: $id \n" );
+			$dbw = wfGetDB( DB_MASTER );
+
+			$where = array();
+			foreach ( $this->mRow as $field => $value ) {
+				$where[ $field ] = $value;
+			}
+
+			$dbw->replace(
+				'user',
+				array_keys( (array)$this->mRow ),
+				$where,
+				__METHOD__
+			);
+
+			wfProfileOut( __METHOD__ );
 		}
-
-		$dbw->replace(
-			'user',
-			array_keys( (array)$this->mRow ),
-			$where,
-			__METHOD__
-		);
 	}
 
 	public function getLocalUser() {
