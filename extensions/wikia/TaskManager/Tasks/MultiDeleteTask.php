@@ -43,7 +43,7 @@ class MultiDeleteTask extends BatchTask {
 			foreach ($articles as $article) {
 				$namespace = $article['namespace'];
 				$reason = $article['reason'] ? ('-r ' . escapeshellarg($article['reason'])) : '';
-				$sCommand = "SERVER_ID=$wikiId php $IP/maintenance/wikia/deleteOn.php -u $username -t " . escapeshellarg($article['title']) . " -n $namespace $reason --conf " . escapeshellarg ($wgWikiaLocalSettingsPath);
+				$sCommand = "SERVER_ID=$wikiId php $IP/maintenance/wikia/deleteOn.php -u $username -t " . escapeshellarg($article['title']) . " $reason --conf " . escapeshellarg ($wgWikiaLocalSettingsPath);
 				$city_url = WikiFactory::getVarValueByName('wgServer', $wikiId);
 				if (empty($city_url)) {
 					$city_url = "wiki id in WikiFactory: $wikiId";
