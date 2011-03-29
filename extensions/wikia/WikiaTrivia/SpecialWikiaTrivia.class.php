@@ -15,7 +15,7 @@ class SpecialWikiaTrivia extends UnlistedSpecialPage {
 
 		//$wgOut->setPageTitle(wfMsg('owb-title'));
 		$wgOut->addHtml(wfRenderModule('WikiaTrivia'));
-		$wgOut->addStyle(wfGetSassUrl('extensions/wikia/WikiaTrivia/css/WikiaTrivia.scss'));
+		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/WikiaTrivia/css/WikiaTrivia.scss'));
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaTrivia/js/WikiaTrivia.js"></script>');
 
 		wfProfileOut( __METHOD__ );
