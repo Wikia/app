@@ -8,7 +8,6 @@ class WikiaPollTest extends PHPUnit_Framework_TestCase {
 	public static function setUpBeforeClass() {
 		$wgUser = User::newFromName('WikiaStaff');
 		F::setInstance( 'User', $wgUser);
-
 	}
 
 	public static function tearDownAfterClass() {
@@ -24,6 +23,11 @@ class WikiaPollTest extends PHPUnit_Framework_TestCase {
 
 	public function testWikiaPollAjax() {
 		global $wgUser, $wgTitle;
+
+		if (!class_exists('WikiaPoll')) {
+			$this->markTestSkipped('WikiaPoll extension is disabled');
+			return;
+		}
 
 		$poll = WF::build('WikiaPollAjax');
 
@@ -115,7 +119,7 @@ class WikiaPollTest extends PHPUnit_Framework_TestCase {
 				->with($this->equalTo('answer'))
 				->will($this->returnValue(2));
 		F::app()->setGlobal('wgRequest', $wgRequest );
-		
+
 		$result = $poll->vote();
 		$this->assertType("array", $result, "Vote result is array");
 		$this->assertType("string", $result["html"], "Vote result[html] is a block of HTML");
@@ -136,6 +140,10 @@ class WikiaPollTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testDuplicateCreate() {
+		if (!class_exists('WikiaPoll')) {
+			$this->markTestSkipped('WikiaPoll extension is disabled');
+			return;
+		}
 
 		$poll = WF::build('WikiaPollAjax');
 
