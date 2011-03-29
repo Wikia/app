@@ -157,7 +157,9 @@ class UserPagesHeaderModule extends Module {
 			
 			if (!empty($stats)) {
 				// date and points formatting
-				$stats['date'] = $wgLang->date(wfTimestamp(TS_MW, $stats['date']));
+				if ( !empty( $stats['date'] ) ) {
+					$stats['date'] = $wgLang->date(wfTimestamp(TS_MW, $stats['date']));
+				}
 				$stats['edits'] = $wgLang->formatNum($stats['edits']);
 			}
 		}
