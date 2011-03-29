@@ -21,6 +21,8 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 				$this->mContent .= file_get_contents($IP . '/' . $asset);
 			}
 
+			$this->mContent .= "\n";
+
 			if(empty($this->mContentType)) {
 				$this->mContentType = $this->resolveContentType($asset);
 			}
