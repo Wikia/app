@@ -114,7 +114,6 @@ if ( defined( 'MW_CONFIG_CALLBACK' ) ) {
 
 	# Include site settings. $IP may be changed (hopefully before the AutoLoader is invoked)
 	require_once( "$IP/LocalSettings.php" );
-	F::setInstance( 'App', new WikiaApp() );
 }
 wfProfileOut( 'WebStart.php-conf' );
 
