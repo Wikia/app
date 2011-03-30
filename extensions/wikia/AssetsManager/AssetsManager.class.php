@@ -148,7 +148,7 @@ class AssetsManager {
 
 		global $wgMemc;
 
-		if($oid == 'oasis_user_js' || $oid == 'oasis_anon_js') {
+		if($oid == 'oasis_user_js' || $oid == 'oasis_anon_js' || $oid == 'site_css') {
 			$cb = $this->mCacheBuster . $wgMemc->get(wfMemcKey('wgMWrevId'));
 		} else {
 			$cb = $this->mCacheBuster;

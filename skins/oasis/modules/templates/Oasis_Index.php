@@ -8,14 +8,14 @@
 	<title><?= $pagetitle ?></title>
 	<!-- SASS-generated CSS file -->
 	<link rel="stylesheet" href="<?= F::app()->getAssetsManager()->getSassCommonURL('skins/oasis/css/oasis.scss') ?>">
-	<?php
-		// NOTE: CSS files that are needed on every Oasis page should go into the bottom of /skins/oasis/css/oasis.scss
-		// It serves the function that StaticChute formerly served for CSS.
-	?>
-
 	<!-- CSS injected by extensions -->
 	<?= $csslinks ?>
-	<?= $anonSiteCss ?>
+	<?php
+		$srcs = F::app()->getAssetsManager()->getGroupLocalURL('site_css');
+		foreach($srcs as $src) {
+			echo '<link rel="stylesheet" href="'.$src.'">';
+		}
+	?>
 	<?php
 		// RT #68514: load global user CSS (and other page specific CSS added via "SkinTemplateSetupPageCss" hook)
 		if ($pagecss != '') {

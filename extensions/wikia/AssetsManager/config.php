@@ -5,6 +5,10 @@ $config['rte'] = array(
 	'#function_AssetsConfig::getRTEAssets',
 );
 
+$config['site_css'] = array(
+	'#function_AssetsConfig::getSiteCSS',
+);
+
 $config['oasis_jquery'] = array(
 	'//skins/common/jquery/jquery-1.5.1.js',
 	'//skins/common/jquery/jquery.json-1.3.js',
