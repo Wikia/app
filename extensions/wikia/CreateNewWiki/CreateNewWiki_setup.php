@@ -25,4 +25,4 @@ $wgAvailableRights[] = 'createnewwiki';
 $wgGroupPermissions['*']['createnewwiki'] = true;
 $wgGroupPermissions['staff']['createnewwiki'] = true;
 
-F::addClassConstructor('CreateNewWikiModule', array(F::build('App')));
+$wgExtensionFunctions[] = 'CreateNewWikiModule::setupCreateNewWiki';

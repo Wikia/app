@@ -214,5 +214,9 @@ class CreateNewWikiModule extends Module {
 		
 		wfProfileOut( __METHOD__ );
 	}
+	
+	public static function setupCreateNewWiki() {
+		//F::addClassConstructor('CreateNewWikiModule', array(F::app()));
+	}
 
 }
