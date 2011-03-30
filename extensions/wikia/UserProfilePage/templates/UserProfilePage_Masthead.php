@@ -40,7 +40,7 @@
 	}
 ?>
 
-<? if (!empty($data['stats']) && !empty( $data['stats']['edits'] ) :?>
+<? if (!empty($data['stats']) && !empty( $data['stats']['edits'] )) :?>
 	<div class="edits-info">
 		<span class="count"><?= $data['stats']['edits']; ?></span>
 		<span class="date"><?= wfMsg( 'userprofilepage-edits-since', $data['stats']['date'] ) ;?></span>
