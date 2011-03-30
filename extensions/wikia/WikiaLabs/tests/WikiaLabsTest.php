@@ -17,6 +17,7 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 
 
 	protected function setUp() {
+		WikiaLabsSetup();
 		$this->object = WF::build( 'WikiaLabs' );
 		$this->app = WF::build( 'App' );
 	}

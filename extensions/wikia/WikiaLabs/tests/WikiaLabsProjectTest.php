@@ -23,7 +23,7 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 	}
 
 	protected function setUp() {
-		//$this->object = F::build( 'WikiaLabsProject' );
+		WikiaLabsSetup();
 		$this->object = new WikiaLabsProject( F::build( 'App' ) );
 	}
 
