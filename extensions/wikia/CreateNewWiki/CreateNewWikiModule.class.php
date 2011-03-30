@@ -216,7 +216,7 @@ class CreateNewWikiModule extends Module {
 	}
 	
 	public static function setupCreateNewWiki() {
-		//F::addClassConstructor('CreateNewWikiModule', array(F::app()));
+		F::addClassConstructor('CreateNewWikiModule', array(F::app()));
 	}
 
 }
