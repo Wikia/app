@@ -76,6 +76,7 @@ global $wgAutoloadClasses;
  * MW Abstraction Layer classes
  */
 $wgAutoloadClasses['F'] = $IP . '/includes/wikia/WikiaSuperFactory.class.php';
+$wgAutoloadClasses['WF'] = $IP . '/includes/wikia/WikiaSuperFactory.class.php';
 $wgAutoloadClasses['WikiaApp'] = $IP . '/includes/wikia/WikiaApp.class.php';
 $wgAutoloadClasses['WikiaHookHandler'] = $IP . '/includes/wikia/WikiaHookHandler.class.php';
 $wgAutoloadClasses['IWikiaHookHandler'] = $IP . '/includes/wikia/IWikiaHookHandler.interface.php';
