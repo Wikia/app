@@ -141,7 +141,7 @@ class SponsorshipDashboard extends SpecialPage {
 
 		wfProfileIn( __METHOD__ );
 
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss'));
+		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss'));
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(
