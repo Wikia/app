@@ -2657,7 +2657,6 @@ class Title {
 		if( $wgUseSiteCss && $this->getNamespace() == NS_MEDIAWIKI ) {
 			global $wgServer;
 			$urls[] = $wgServer.'/__am/';
-print_pre($urls);exit();
 			$urls[] = $wgServer.'/__wikia_combined/';
 			$query = array(
 				'usemsgcache' => 'yes',
