@@ -10,7 +10,8 @@ global $wgBlankImgUrl, $wgTitle, $wgStylePath, $wgUser;
 		$isUserBlocked = $wgUser->isBlockedFrom($title, false);
 
 		if ($isUserBlocked) {
-			echo $this->getBlockedInfo();
+			//FIXME port the code from Answer::getBlockedInfo()
+			//echo $this->getBlockedInfo();
 		} else {
 			?>
 				<script src="<?=$wgStylePath?>/../extensions/wikia/JavascriptAPI/Mediawiki.js"></script>
