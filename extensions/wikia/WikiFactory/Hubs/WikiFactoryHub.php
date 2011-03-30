@@ -249,8 +249,9 @@ class WikiFactoryHub {
      *
      * @param integer   $city_id    identifier from city_list
      * @param integer   $cat_id     category identifier
+	 * @param string    $reason     optional extra reason string for logging
      */
-    public function setCategory( $city_id, $cat_id ) {
+    public function setCategory( $city_id, $cat_id, $reason='' ) {
 		global $wgExternalSharedDB;
         wfProfileIn( __METHOD__ );
 
@@ -260,7 +261,10 @@ class WikiFactoryHub {
         $dbw->insert( "city_cat_mapping", array( "city_id" => $city_id, "cat_id" => $cat_id ), __METHOD__  );
 
 		$categories = $this->getCategories();
-		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Category changed to {$categories[$cat_id]['name']}", $city_id );
+		if( !empty($reason) ) {
+			$reason = " ({$reason})";
+		}
+		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Category changed to {$categories[$cat_id]['name']}".$reason, $city_id );
 
         $dbw->commit();
 
