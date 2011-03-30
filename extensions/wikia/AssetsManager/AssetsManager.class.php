@@ -145,21 +145,12 @@ class AssetsManager {
 	}
 
 	private function getAMLocalURL($type, $oid, $params = array()) {
-
-		global $wgMemc;
-
-		if($oid == 'oasis_user_js' || $oid == 'oasis_anon_js' || $oid == 'site_css') {
-			$cb = $this->mCacheBuster . $wgMemc->get(wfMemcKey('wgMWrevId'));
-		} else {
-			$cb = $this->mCacheBuster;
-		}
-
 		global $wgAssetsManagerQuery;
 		return sprintf($wgAssetsManagerQuery,
 			/* 1 */ $type,
 			/* 2 */ $oid,
 			/* 3 */ urlencode(http_build_query($params)),
-			/* 4 */ $cb);
+			/* 4 */ $this->mCacheBuster);
 	}
 
 }
