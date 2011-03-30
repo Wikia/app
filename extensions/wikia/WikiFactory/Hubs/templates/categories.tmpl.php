@@ -22,6 +22,7 @@
 				</select>
 <?php if( !is_null( $title ) ): ?>
                 <input type="submit" name="wpSubmit" value="Set category" />
+				<br/>Reason: <input type="text" name="wpReason" /><br/>
             </div>
         </fieldset>
     </form>

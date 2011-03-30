@@ -440,14 +440,15 @@ class WikiFactoryPage extends SpecialPage {
 	 */
 	private function doUpdateHubs( &$request ) {
 		$cat_id = $request->getVal( "wpWikiCategory", null );
+		$reason = $request->getVal( "wpReason", null );
 		if( !is_null( $cat_id ) ){
 			$hub = WikiFactoryHub::getInstance();
-			$hub->setCategory( $this->mWiki->city_id, $cat_id );
+			$hub->setCategory( $this->mWiki->city_id, $cat_id, $reason );
 			$categories = $hub->getCategories();
-			return Wikia::successmsg( "Hub is now set to: ". $categories[ $cat_id ]['name'] );
+			return Wikia::successbox( "Hub is now set to: ". $categories[ $cat_id ]['name'] );
 		}
 		else {
-			return Wikia::errormsg( "Hub was not changed.");
+			return Wikia::successbox( "Hub was not changed.");
 		}
 	}
 
