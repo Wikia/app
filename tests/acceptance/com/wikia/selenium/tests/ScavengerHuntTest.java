@@ -41,7 +41,7 @@ public class ScavengerHuntTest extends BaseTest {
 		String date = df.format(new Date());
 		//general
 		String generalGameName = "WikiaScavengerHuntGame " + date;
-		String generalLanding = "Main Page";	//this title MUST exist
+		String generalLanding = "ScavengerTestLanding";
 		String generalButton = "Start a game!";
 		String imageTop = "150";
 		String imageLeft = "-150";
@@ -52,8 +52,8 @@ public class ScavengerHuntTest extends BaseTest {
 		String startingButtonText = "Starting clue button " + date;
 		String startingButtonTarget = "http://wikia.com/?target=starting&date=" + date;
 		//article
-		String articleTitle = "Main Page";	//this title MUST exist
-		String articleTitle2 = "Test";	//this title MUST exist
+		String articleTitle = "ScavengerTest1";
+		String articleTitle2 = "ScavengerTest2";
 		String articleHiddenImage = "http://images2.wikia.nocookie.net/__cb20101125134214/lukasztest/pl/images/f/f6/Test_picture_2.png";
 		String articleHiddenImage2 = "http://images3.wikia.nocookie.net/__cb20101125134215/lukasztest/pl/images/4/44/Test_picture_6.png";
 		String articleClueTitle = "Article clue title " + date;
@@ -77,6 +77,11 @@ public class ScavengerHuntTest extends BaseTest {
 		String goodbyeModalImage = "http://images1.wikia.nocookie.net/__cb20101125134214/lukasztest/pl/images/8/88/Test_picture_5.png";
 
 		loginAsStaff();
+
+		//prepare - create articles
+		editArticle(generalLanding, "some content");
+		editArticle(articleTitle, "some content");
+		editArticle(articleTitle2, "some content");
 
 		//go to the list
 		session().open("index.php?title=Special:ScavengerHunt");
@@ -201,6 +206,11 @@ public class ScavengerHuntTest extends BaseTest {
 		//go to the list
 		session().open("index.php?title=Special:ScavengerHunt");
 		session().waitForPageToLoad(this.getTimeout());
+		//go to the last page if we have more than one
+		if (session().isElementPresent("//div[@id='WikiaArticle']/a[@class='mw-lastlink']")) {
+			session().click("//div[@id='WikiaArticle']/a[@class='mw-lastlink']");
+			session().waitForPageToLoad(this.getTimeout());
+		}
 		//click edit
 		session().click("//div[@id='WikiaArticle']/table/tbody/tr[td[contains(text(), '" + generalGameName + "')]]/td[3]/a");
 		session().waitForPageToLoad(this.getTimeout());
