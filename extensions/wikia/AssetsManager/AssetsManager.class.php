@@ -159,7 +159,7 @@ class AssetsManager {
 			/* 1 */ $type,
 			/* 2 */ $oid,
 			/* 3 */ urlencode(http_build_query($params)),
-			/* 4 */ $this->mCacheBuster);
+			/* 4 */ $cb);
 	}
 
 }
