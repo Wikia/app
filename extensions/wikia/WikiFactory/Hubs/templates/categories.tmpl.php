@@ -10,10 +10,10 @@
 /*]]>*/
 </style>
 <div>
-    <form id="wf-category" action="<?php echo $title->getFullUrl() ?>" method="post">
-        <fieldset>
-            <input type="hidden" name="wpWikiID" value="<?php echo $city_id ?>" />
-            <div>
+	<form id="wf-category" action="<?php echo $title->getFullUrl() ?>" method="post">
+		<fieldset>
+			<input type="hidden" name="wpWikiID" value="<?php echo $city_id ?>" />
+			<div>
 <?php endif ?>
 				<select name="wpWikiCategory">
 				<?php foreach( $categories as $id => $data ): ?>
@@ -21,11 +21,11 @@
 				<?php endforeach ?>
 				</select>
 <?php if( !is_null( $title ) ): ?>
-                <input type="submit" name="wpSubmit" value="Set category" />
+				<input type="submit" name="wpSubmit" value="Set category" />
 				<br/>Reason: <input type="text" name="wpReason" /><br/>
-            </div>
-        </fieldset>
-    </form>
+			</div>
+		</fieldset>
+	</form>
 </div>
 <?php endif ?>
 <!-- e:<?= __FILE__ ?> -->
