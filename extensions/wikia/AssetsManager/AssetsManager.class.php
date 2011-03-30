@@ -146,8 +146,12 @@ class AssetsManager {
 
 	private function getAMLocalURL($type, $oid, $params = array()) {
 
-		// TODO: Add extra cachebuster for those two packages
+		global $wgMemc;
+
 		if($oid == 'oasis_user_js' || $oid == 'oasis_anon_js') {
+			$cb = $this->mCacheBuster . $wgMemc->get(wfMemcKey('wgMWrevId'));
+		} else {
+			$cb = $this->mCacheBuster;
 		}
 
 		global $wgAssetsManagerQuery;

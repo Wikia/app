@@ -61,9 +61,11 @@ $config['oasis_anon_js'] = array(
 	'#group_oasis_shared_js',
 	'//skins/oasis/js/LatestActivity.js',
 	'//extensions/wikia/Interstitial/Exitstitial.js',
+	'#function_AssetsConfig::getSiteJS',
 );
 
 $config['oasis_user_js'] = array(
 	'#group_oasis_shared_js',
 	'//skins/common/ajaxwatch.js',
+	'#function_AssetsConfig::getSiteJS',
 );

@@ -10,6 +10,11 @@
 
 class AssetsConfig {
 
+	public static function getSiteJS($combine) {
+		// Look at OutputPage->getHeadScripts
+		return array(Title::newFromText('-')->getFullURL('action=raw&smaxage=0&gen=js&useskin=oasis'));
+	}
+
 	public static function getRTEAssets($combine) {
 		global $IP;
 
