@@ -9,6 +9,7 @@ class GlobalWatchlistBot {
 	private $mWatchlisters;
 	private $mWikiData = array();
 	private $iEmailsSent;
+	private $mCityList;
 
 	const MAX_LAG = 10;
 	const RECORDS_SLEEP = 350;
@@ -33,7 +34,7 @@ class GlobalWatchlistBot {
 	/**
 	 * get all global watchlist users
 	 */
-	public function getGlobalWatchlisters( $sFlag = 'watchlistdigest' ) {
+	public function getGlobalWatchlisters( $sFlag = 'watchlistdigest', $field = false ) {
 		$aUsers = array();
 		
 		$defaultValue = User::getDefaultOption( $sFlag );
@@ -81,12 +82,16 @@ class GlobalWatchlistBot {
 				
 				if ( $oResultRow->prop_value == $defaultValue ) {
 					$iWatchlisters++;
-					$aUsers[$oResultRow->user_id] = array (
-						'name' => $oResultRow->user_name,
-						'email' => $oResultRow->user_email
-					);
+					
+					if ( !empty($field) ) { 
+						$aUsers[$oResultRow->user_id] = $oResultRow->$field;
+					} else {
+						$aUsers[$oResultRow->user_id] = array (
+							'name' => $oResultRow->user_name,
+							'email' => $oResultRow->user_email
+						);
+					}
 				}
-
 			}
 			$dbr->freeResult( $oResource );
 			$this->printDebug( "$iWatchlisters global watchilster(s) found. (time: " . $this->calculateDuration( time() - $this->mStartTime ) . ")" );
@@ -231,44 +236,92 @@ class GlobalWatchlistBot {
 	 * mark all pages sent as weekly digest as visited (only for users who requested that in Special:Preferences)
 	 */
 	private function markWeeklyDigestAsVisited() {
-		global $wgExternalDatawareDB, $wgDefaultUserOptions, $wgExternalSharedDB;
-		$dbs = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$wgDefaultUserOptions['watchlistdigestclear'] = 0;
+		$this->mCityList = $this->getWikisFromDigestList();
 
-		foreach ( $this->mWatchlisters as $iUserId => $aUserData ) {
-			$this->printDebug( "Markig all digested pages as 'visited' for user: " . $aUserData['name'] );
-
-			$oResource = $dbs->query( "SELECT * FROM global_watchlist WHERE gwa_user_id='" . $iUserId . "' ORDER BY gwa_city_id" );
-			$iCurrentCityId = 0;
-			while ( $oResultRow = $dbs->fetchObject( $oResource ) ) {
-				$sWikiDbName = "";
-				if ( $iCurrentCityId != $oResultRow->gwa_city_id ) {
-					$dbr->ping();
-					$sWikiDbName = WikiFactory::IDtoDB( $oResultRow->gwa_city_id );
-					$iCurrentCityId = $oResultRow->gwa_city_id;
-				}
-				if ( !empty( $sWikiDbName ) ) {
-					$dbw = wfGetDB( DB_MASTER, array(), $sWikiDbName );
-					$dbw->query( "UPDATE watchlist SET wl_notificationtimestamp=NULL WHERE wl_user='" . $iUserId . "' AND wl_namespace='" . $oResultRow->gwa_namespace . "' AND wl_title='" . addslashes( $oResultRow->gwa_title ) . "'" );
-					if ( !in_array($sWikiDbName, array('wikicities', 'messaging') ) ) {
-						$dbw->close();
-					}
-				}
-				else {
-					$this->printDebug( "ERROR: wiki db name not found for city_id=" . $oResultRow->gwa_city_id );
-				}
-			}
-			$dbs->freeResult( $oResource );
-
-			$dbs->query( "DELETE FROM global_watchlist WHERE gwa_user_id='" . $iUserId . "'" );
-
-			$oUser = User::newFromId( $iUserId );
-			$oUser->setOption( 'watchlistdigestclear', false );
-			$oUser->saveSettings();
+		foreach ( $this->mWatchlisters as $iUserId => $user_name ) {
+			$this->printDebug( "Markig all digested pages as 'visited' for user: " . $user_name );
+			$this->updateUserWatchlist ( $iUserId );
 		}
+	}
+
+	/**
+	 * update user watchlist
+	 */
+	private function updateUserWatchlist( $iUserId ) {
+		global $wgExternalDatawareDB, $wgDefaultUserOptions, $wgExternalSharedDB;
 		
-		$dbr->close();
+		$wgDefaultUserOptions['watchlistdigestclear'] = 0;
+		
+		$dbs = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+		$oResource = $dbr->select(
+			'global_watchlist',
+			'gwa_title, gwa_namespace',
+			array( 'gwa_user_id' => $iUserId ),
+			__METHOD__
+		);
+		
+		while ( $oResultRow = $dbs->fetchObject( $oResource ) ) {
+			$sWikiDbName = @$this->mCityList[ $oResource->gwa_city_id ] ;
+			
+			if ( $sWikiDbName ) {
+				$this->updateLocalWatchlistForUserAndWikia( $iUserId, $sWikiDbName, $oResultRow->gwa_title, $oResultRow->gwa_namespace );
+			}
+			else {
+				$this->printDebug( "ERROR: wiki db name not found for city_id=" . $oResultRow->gwa_city_id );
+			}
+		}
+		$dbs->freeResult( $oResource );
+		$dbs->delete( 'global_watchlist', array( 'gwa_user_id' => $iUserId ), __METHOD__ );
+		
+		# update user preferences
+		$oUser = User::newFromId( $iUserId );
+		$oUser->setOption( 'watchlistdigestclear', false );
+		$oUser->saveSettings();
+		
+		$dbs->close();
+	} 
+	 
+
+	/**
+	 * list of Wikis
+	 */
+	private function getWikisFromDigestList() {
+		global $wgExternalDatawareDB, $wgExternalSharedDB;
+		$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+				
+		$oResource = $dbs->query( "SELECT distinct gwa_city_id FROM global_watchlist ORDER BY gwa_city_id" );		
+		$iCurrentCityId = 0;
+		$cityList = array();
+		while ( $oResultRow = $dbs->fetchObject( $oResource ) ) {
+			$this->printDebug( "Put Wikia " . $oResultRow->gwa_city_id . " to list " );
+			$sWikiDbName = WikiFactory::IDtoDB( $oResultRow->gwa_city_id );
+			if ( $sWikiDbName ) {
+				$cityList[ $oResultRow->gwa_city_id ] = $sWikiDbName;
+			}
+		}
+		$dbs->freeResult( $oResource );	
+		$dbs->close();
+		
+		return $cityList;
+	}
+	
+	/**
+	 * update local watchlist 
+	 */
+	private function updateLocalWatchlistForUserAndWikia( $iUserId, $sWikiDbName, $sTitle, $iNamespace ) {
+		$dbw = wfGetDB( DB_MASTER, array(), $sWikiDbName );
+	
+		$dbw->update( 'watchlist',
+			array( 'wl_notificationtimestamp=NULL' ),
+			array( 
+				'wl_user' => $iUserId,
+				'wl_namespace' => $iNamespace,
+				'wl_title' => $sTitle
+			 ),
+			__METHOD__
+		);		
+		
+		$dbw->close();
 	}
 
 	/**
@@ -434,7 +487,7 @@ class GlobalWatchlistBot {
 		$this->mStartTime = time();
 		$this->printDebug( "Script started. (" . date( 'Y-m-d H:i:s' ) . ") - CLEAR MODE" );
 
-		$this->getGlobalWatchlisters( 'watchlistdigestclear' );
+		$this->getGlobalWatchlisters( 'watchlistdigestclear', 'user_name' );
 		$this->markWeeklyDigestAsVisited();
 
 		$this->printDebug( "Script finished. (total time: " . $this->calculateDuration( time() - $this->mStartTime ) . ")" );
