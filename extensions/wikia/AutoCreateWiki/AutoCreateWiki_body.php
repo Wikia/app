@@ -700,8 +700,12 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * set hub/category
 		 */
+			$oldUser = $wgUser;
+			$wgUser = User::newFromName( 'CreateWiki script' );
 		$hub = WikiFactoryHub::getInstance();
-		$hub->setCategory( $this->mWikiId, $this->mWikiData[ "hub" ] );
+		$hub->setCategory( $this->mWikiId, $this->mWikiData[ "hub" ], "ACW Setup" );
+			$wgUser = $oldUser;
+			unset($oldUser);
 		$this->log( "Wiki added to the category hub " . $this->mWikiData[ "hub" ] );
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step8') );
 
