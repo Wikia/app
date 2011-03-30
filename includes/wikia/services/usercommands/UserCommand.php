@@ -62,7 +62,7 @@
 
 		protected function getAbstractCaption() {
 			$this->needData();
-			return $this->caption;
+			return $this->abstractCaption;
 		}
 
 		protected function getAbstractDescription() {
@@ -157,6 +157,7 @@
 		protected function needData() {
 			if (!$this->dataBuilt) {
 				$this->buildData();
+				$this->abstractCaption = $this->caption;
 				if (!empty($this->data['caption']))
 					$this->caption = $this->data['caption'];
 				$this->dataBuilt = true;
