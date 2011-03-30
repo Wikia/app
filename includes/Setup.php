@@ -11,6 +11,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
+
 # The main wiki script and things like database
 # conversion and maintenance scripts all share a
 # common setup of including lots of classes and
@@ -346,6 +347,8 @@ if ( $wgAjaxUploadDestCheck ) $wgAjaxExportList[] = 'SpecialUpload::ajaxGetExist
 $wgTitle = null;
 $wgArticle = null;
 
+F::setInstance( 'App', new WikiaApp() );
+
 wfProfileOut( $fname.'-misc2' );
 wfProfileIn( $fname.'-extensions' );
 
@@ -392,5 +395,3 @@ wfDebug( "Fully initialised\n" );
 $wgFullyInitialised = true;
 wfProfileOut( $fname.'-extensions' );
 wfProfileOut( $fname );
-
-F::setInstance( 'App', new WikiaApp() );
