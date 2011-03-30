@@ -27,7 +27,7 @@ class AssetsManagerBaseBuilder {
 	public function getContent() {
 		global $IP, $wgRequest;
 
-		if(!empty($this->mContentType) && (!isset($this->mParams['minify']) || $this->mParams['minify'] == true)) {
+		if((!empty($this->mContentType) || $this->mOid == 'site_css') && (!isset($this->mParams['minify']) || $this->mParams['minify'] == true)) {
 
 			$tempInFile = tempnam(sys_get_temp_dir(), 'AMIn');
 			$tempOutFile = tempnam(sys_get_temp_dir(), 'AMOut');

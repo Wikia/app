@@ -38,6 +38,8 @@ class WikiaApp {
 	 * @param WikiaHookDispatcher $hookDispatcher
 	 */
 	public function __construct(WikiaCompositeRegistry $registry = null, WikiaHookDispatcher $hookDispatcher = null, AssetsManager $assetsManager = null) {
+		global $wgRequest;
+
 		if(!is_null($registry)) {
 			$this->registry = $registry;
 		} else {
@@ -55,7 +57,7 @@ class WikiaApp {
 		if(!is_null($assetsManager)) {
 			$this->assetsManager = $assetsManager;
 		} else {
-			$this->assetsManager = new AssetsManager($this->getGlobal('wgCdnRootUrl'), $this->getGlobal('wgStyleVersion'), $this->getGlobal('wgAllInOne'), $this->getGlobal('wgAllInOne'));
+			$this->assetsManager = new AssetsManager($this->getGlobal('wgCdnRootUrl'), $this->getGlobal('wgStyleVersion'), $wgRequest->getBool('allinone', $this->getGlobal('wgAllInOne')), $wgRequest->getBool('allinone', $this->getGlobal('wgAllInOne')));
 			F::setInstance('AssetsManager', $this->assetsManager);
 		}
 

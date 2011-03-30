@@ -11,8 +11,6 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-F::setInstance( 'App', new WikiaApp() );
-
 # The main wiki script and things like database
 # conversion and maintenance scripts all share a
 # common setup of including lots of classes and
@@ -394,3 +392,5 @@ wfDebug( "Fully initialised\n" );
 $wgFullyInitialised = true;
 wfProfileOut( $fname.'-extensions' );
 wfProfileOut( $fname );
+
+F::setInstance( 'App', new WikiaApp() );

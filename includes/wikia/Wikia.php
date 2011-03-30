@@ -212,8 +212,16 @@ class WikiaAssets {
 	 * The optional cache-buster can be used to get around the current problems where purges are behind.
 	 */
 	private function GetSiteCSSReferences($themename, $cb = "") {
+		global $wgRequest, $wgSquidMaxage;
+
+		$isOasis = (Wikia::isOasis() || $wgRequest->getBool('isOasis'));
+
 		$cssReferences = array();
-		global $wgSquidMaxage;
+
+		if($isOasis) {
+			return $cssReferences;
+		}
+
 		$siteargs = array(
 			'action' => 'raw',
 			'maxage' => $wgSquidMaxage,
@@ -225,25 +233,16 @@ class WikiaAssets {
 			'cb' => $cb
 		) + $siteargs );
 
-		// Sometimes, this function is called on the page itself, sometimes it's called by the combiner.
-		// The page can use Wikia::isOasis(), but the combiner needs the request param.
-		global $wgRequest;
-		$isOasis = (Wikia::isOasis() || $wgRequest->getBool('isOasis'));
-		if($isOasis){
-			$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Wikia.css', $query, NS_MEDIAWIKI)));
-			$useskin = 'oasis';
-		} else {
-			// We urldecode these now because nginx does not expect them to be URL encoded.
-			$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Common.css', $query, NS_MEDIAWIKI)));
+		// We urldecode these now because nginx does not expect them to be URL encoded.
+		$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Common.css', $query, NS_MEDIAWIKI)));
 
-			if(empty($themename) || $themename == 'custom' ) {
-				$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Monaco.css', $query, NS_MEDIAWIKI)));
-			}
-			$useskin = 'monaco';
+		if(empty($themename) || $themename == 'custom' ) {
+			$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Monaco.css', $query, NS_MEDIAWIKI)));
 		}
 
+		$siteargs['useskin'] = 'monaco';
+
 		$siteargs['gen'] = 'css';
-		$siteargs['useskin'] = $useskin;
 		$cssReferences[] = array('url' => urldecode(Skin::makeUrl( '-', wfArrayToCGI( $siteargs ) )));
 
 		return $cssReferences;

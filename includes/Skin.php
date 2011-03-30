@@ -656,13 +656,7 @@ CSS;
 			// Wikia
 			if( empty($this->themename) || $this->themename == 'custom' || $this->themename == 'oasis' ) {
 				$skinname = $this->getSkinName();
-				if($skinname == 'oasis') {
-					// For anon users, SiteCSS will be added in a combined format in OasisModule in anonSiteCSS.
-					if($wgUser->isLoggedIn()){
-						// Moved into OasisModule.class.php so that this file is AFTER other headscripts.
-						$wgOasisLastCssScripts[] = self::makeNSUrl( 'Wikia.css', $query, NS_MEDIAWIKI );
-					}
-				} else {
+				if($skinname != 'oasis') {
 					$out->addStyle( self::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI ) );
 					$out->addStyle( self::makeNSUrl( $skinname . '.css', $query, NS_MEDIAWIKI ) );
 				}
@@ -682,12 +676,7 @@ CSS;
 		}
 		// Wikia change - start (Sean)
 		$skinname = $this->getSkinName();
-		if($skinname == 'oasis'){
-			// For anon users, SiteCSS will be added in a combined format in OasisModule in anonSiteCSS.
-			if($wgUser->isLoggedIn()){
-				$wgOasisLastCssScripts[] = self::makeUrl( '-', wfArrayToCGI( $siteargs ) );
-			}
-		} else {
+		if($skinname != 'oasis'){
 			$out->addStyle( self::makeUrl( '-', wfArrayToCGI( $siteargs ) ) );
 		}
 		// Wikia change - end (Sean)

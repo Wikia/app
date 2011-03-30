@@ -10,6 +10,28 @@
 
 class AssetsConfig {
 
+	public static function getSiteCSS($combine) {
+		$srcs = array();
+
+		global $wgSquidMaxage;
+		$siteargs = array(
+			'action' => 'raw',
+			'maxage' => $wgSquidMaxage,
+		);
+		$query = wfArrayToCGI( array(
+			'usemsgcache' => 'yes',
+			'ctype' => 'text/css',
+			'smaxage' => $wgSquidMaxage
+		) + $siteargs );
+		$siteargs['gen'] = 'css';
+		$siteargs['useskin'] = 'oasis';
+
+		$srcs[] = Title::newFromText('Wikia.css', NS_MEDIAWIKI)->getFullURL($query);
+		$srcs[] = Title::newFromText('-')->getFullURL(wfArrayToCGI($siteargs));
+
+		return $srcs;
+	}
+
 	public static function getSiteJS($combine) {
 		// Look at OutputPage->getHeadScripts
 		return array(Title::newFromText('-')->getFullURL('action=raw&smaxage=0&gen=js&useskin=oasis'));

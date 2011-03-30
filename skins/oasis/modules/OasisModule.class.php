@@ -15,7 +15,6 @@ class OasisModule extends Module {
 	}
 
 	// template vars
-	var $anonSiteCss;
 	var $body;
 	var $bodyClasses;
 	var $csslinks;
@@ -85,14 +84,6 @@ class OasisModule extends Module {
 			foreach($wgOasisLastCssScripts as $cssScript){
 				$wgOut->addStyle( $cssScript );
 			}
-		}
-
-		// If the user is not logged in, we can combine the Wikia.css and the "-" MediaWiki CSS files.
-		// For logged in users, Wikia.css and "-" files are already be in the wgOut->styles array.
-		if($wgUser->isLoggedIn()){
-			$this->anonSiteCss = "";
-		} else {
-			$this->anonSiteCss = WikiaAssets::GetSiteCSS($skin->themename, $wgContLang->isRTL(), $allInOne); // Wikia.css, "-"
 		}
 
 		// Remove the media="print CSS from the normal array and add it to another so that it can be loaded asynchronously at the bottom of the page.
