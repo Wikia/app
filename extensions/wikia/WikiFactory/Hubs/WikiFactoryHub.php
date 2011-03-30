@@ -262,7 +262,7 @@ class WikiFactoryHub {
 
 		$categories = $this->getCategories();
 		if( !empty($reason) ) {
-			$reason = " ({$reason})";
+			$reason = " (" . (string)$reason . ")";
 		}
 		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Category changed to {$categories[$cat_id]['name']}".$reason, $city_id );
 
