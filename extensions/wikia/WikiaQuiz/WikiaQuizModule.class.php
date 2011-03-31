@@ -9,6 +9,10 @@ class WikiaQuizModule extends Module {
 	 */
 	public function executeIndex() {
 	}
+	
+	public function executeSampleQuiz() {
+		
+	}
 
 	public function executeGetQuizElement() {
 		$wgRequest = F::app()->getGlobal('wgRequest');
