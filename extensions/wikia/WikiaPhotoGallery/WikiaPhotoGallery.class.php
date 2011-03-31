@@ -1203,7 +1203,7 @@ JS;
 
 			$tmpArr[] = $i;
 		}
-		$slidersOnPage = implode( ', ', $tmpArr );
+
 		$html = "<script> if(!allSliders){ var allSliders = new Array(); }; allSliders.push(".$this->mData['id']."); </script>";
 		$html .= "<script> wgAfterContentAndJS.push(function() { $.getScript('{$wgExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallerySlider.js?{$wgStyleVersion}'); }); </script>";
 
