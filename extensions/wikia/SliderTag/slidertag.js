@@ -1,24 +1,22 @@
 wgAfterContentAndJS.push(function() {
 
-$("head").append("<link rel=\"stylesheet\" href=\""+wgExtensionsPath+"/wikia/SliderTag/slidertag.css?"+wgStyleVersion+"\" type=\"text/css\" />");
+// TODO: add this as a dependency
+importStylesheetURI(wgExtensionsPath + "/wikia/SliderTag/slidertag.css?" + wgStyleVersion);
 
 function spotlightSlider_setup() {
 	//timer for automatic spotlight slideshow
 	var spotlightSlider_timer;
 
-	//random integer, 0-3
-	var random = 0; //Math.floor(Math.random() * 4);
-
 	//move spotlights
 	$(".spotlight-slider").each(function() {
-		$(this).css("left", parseInt($(this).css("left")) - (620 * random));
+		$(this).css("left", parseInt($(this).css("left")) - 620);
 	});
 
 	//select nav
-	$("#spotlight-slider-" + random).find(".nav").addClass("selected");
+	$("#spotlight-slider-0").find(".nav").addClass("selected");
 
 	//show description
-	$("#spotlight-slider-" + random).find(".description").show();
+	$("#spotlight-slider-0").find(".description").show();
 
 	//bind events
 	$("#spotlight-slider .nav").click(function() {

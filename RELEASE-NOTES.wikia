@@ -1,6 +1,7 @@
 == Changes since release-014 ==
 * fb#960: Monobook: Global JS not able to load JQuery Library (macbre)
 * fb#1788: Monobook: jQuery data tables fail to load (macbre)
+* fb#1140: Slider broken in IE8 (macbre)
 
 == Changes since release-013 ==
 * fb#3270: RTE: stripping some formatting (macbre)
