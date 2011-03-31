@@ -28,15 +28,10 @@ class WikiaSkinMonoBook extends SkinTemplate {
 			$this->ads = false;
 		}
 
-		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$this, 'addWikiaVars');
-		$wgHooks['SkinTemplateSetupPageCss'][] = array(&$this, 'addWikiaCss');
-		$wgHooks['SkinGetPageClasses'][] = array(&$this, 'addBodyClasses');
-
-		// use StaticChute (RT #17212)
-		$staticChute = new StaticChute('js');
-		$staticChute->useLocalChuteUrl();
-
-		$wgOut->addScript($staticChute->getChuteHtmlForPackage('monobook_js'));
+		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array($this, 'addWikiaVars');
+		$wgHooks['SkinTemplateSetupPageCss'][] = array($this, 'addWikiaCss');
+		$wgHooks['SkinGetPageClasses'][] = array($this, 'addBodyClasses');
+		$wgHooks['SkinGetHeadScripts'][] = array($this, 'onSkinGetHeadScripts');
 	}
 
 	function setupSkinUserCss( OutputPage $out ) {
@@ -86,6 +81,15 @@ class WikiaSkinMonoBook extends SkinTemplate {
 
 	public function addBodyClasses(&$classes) {
 		$classes .= ($this->ads ? ' with-adsense' : ' without-adsense');
+		return true;
+	}
+
+	// load StaticChute before JS files from MW (wikibits, user and site JS) - BugId:960
+	public function onSkinGetHeadScripts(&$scripts) {
+		$staticChute = new StaticChute('js');
+		$staticChute->useLocalChuteUrl();
+
+		$scripts .= "\n" . $staticChute->getChuteHtmlForPackage('monobook_js');
 		return true;
 	}
 
