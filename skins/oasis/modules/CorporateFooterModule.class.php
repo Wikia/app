@@ -51,6 +51,18 @@ class CorporateFooterModule extends Module {
 
 		$message_key = 'shared-Oasis-footer-wikia-links';
 		$nodes = array();
+		$mobServ = MobileService::getInstance();
+		
+		if ( $mobServ->isMobile() && !$mobServ->isIPad() && isset( $_COOKIE[ 'mobilefullsite' ] ) ) {
+			global $wgTitle;
+			
+			$nodes[] = array(
+				'href' => '#',
+				'id' => 'mobileSwitch',
+				'nofollow' => true,
+				'text' => wfMsg( 'oasis-mobile-site' )
+			);
+		}
 
 		if(!isset($catId) || null == ($lines = getMessageAsArray($message_key.'-'.$catId))) {
 			wfDebugLog('monaco', $message_key.'-'.$catId . ' - seems to be empty');

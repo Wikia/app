@@ -1003,6 +1003,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 
 # Mobile skin (wikiaphone)
 'mobile-full-site' => 'View full site',
+'oasis-mobile-site' => 'Mobile site',
 'mobile-show' => 'Show',
 'mobile-hide' => 'Hide',
 

@@ -19,7 +19,7 @@ foreach ($footer_links as $link) {
 			if ($link["text"] == 'GFDL' || (strpos($link["text"], 'LICENSE') > 0) ) {
 				echo $wgUser->getSkin()->getCopyright();
 			} else {?>
-				<a href="<?= $link["href"]; ?>"><?= $link["text"]; ?></a>
+				<a<?= ( !empty( $link[ 'id' ] ) ) ? " id=\"{$link[ 'id' ]}\"" : null ;?> href="<?= $link["href"]; ?>"<?= ( !empty( $link[ 'nofollow' ] ) ) ? ' rel="nofollow"' : null ;?>><?= $link["text"]; ?></a>
 			<?php } ?>
 			</li>
 	<?php
