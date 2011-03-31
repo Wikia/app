@@ -1,8 +1,39 @@
+$canvas-width: 800px;
+$canvas-height: 600px;
+$answer-feedback-width: 350px;
+$answer-feedback-height: 350px;
+$answer-feedback-left: ($canvas-width/2) - ($answer-feedback-width/2);
+$answer-feedback-top: ($canvas-height/2) - ($answer-feedback-height/2);
+
 .trivia {
 	border: 1px solid #CCC;
-	width: 300px;
-	height: 400px;
+	font-family: 'Chewy', arial, serif;
+	height: $canvas-height;
+	margin: 20px auto;
+	padding: 10px;
+	position: relative;
+	overflow: hidden;
+	width: $canvas-width;
+	.info-panel {
+		font-size: 24px;
+		position: relative;
+		.timer {
+			position: absolute;
+			right: 10px;
+			width: 200px;
+			.clock {
+				position: absolute;
+				left: 5em;
+			}
+		}
+		.score-pane {
+			left: 10px;
+			position: absolute;
+		}
+	}
 	.question-sets {
+		margin-top: 20px;
+		z-index: 2;
 		.question-set {
 			display: none;
 			padding: 10px;
@@ -10,18 +41,49 @@
 				display: block;
 			}
 			.question-ui {
+				.question {
+					font-size: 40px;
+					line-height: 55px;
+					text-align: center;
+				}
 				.choices {
+					margin: 0 auto;
+					width: 300px;
 					li {
 						border: 1px solid #ccc;
 						border-radius: 5px;
+						font-size: 26px;
 						list-style: none;
-						margin: 5px;
-						padding: 0 10px;
-						&:hover {
-							background-color: fuchsia;
+						margin-bottom: 20px;
+						padding: 10px;
+						-webkit-transition: all 100ms ease-in-out;
+						text-align: center;
+						&.hover {
+							background-color: #ccc;
+							box-shadow: 3px 3px 3px #000;
+							cursor: pointer;
+							font-size: 32px;
+							-webkit-transform: translate(-3px, -3px);
+						}
+						&.correct {
+							background-color: green;
+						}
+						&.wrong {
+							background-color: red;
 						}
 					}
 				}
+			}
+			.next-button {
+				border: 1px solid #ccc;
+				border-radius: 5px;
+				display: none;
+				cursor: pointer;
+				font-size: 24px;
+				margin: 0 auto;
+				padding: 10px;
+				text-align: center;
+				width: 150px;
 			}
 			.answer-ui {
 				display: none;
@@ -31,5 +93,30 @@
 	ol, ul {
 		padding: 0;
 		margin: 0;
+	}
+	.answer-feedback {
+		display: none;
+		height: $answer-feedback-height;
+		left: $answer-feedback-left + 300px;
+		opacity: 0;
+		position: absolute;
+		top: $answer-feedback-top + 200px;
+		width: $answer-feedback-width;
+		z-index: 1;
+		&.star {
+			background: url(/extensions/wikia/WikiaTrivia/images/smiley-star-clipart.gif);
+			-webkit-transition: all 750ms ease-in;
+			-webkit-transform: scale(3, 3) rotate(-90deg);
+		}
+		&.wrong {
+			background: url(/extensions/wikia/WikiaTrivia/images/x.png);
+			-webkit-transition: all 150ms ease-in;
+			-webkit-transform: scale(3, 3) rotate(0deg);
+		}
+		&.popup {
+			opacity: 1;
+			-webkit-transform: scale(0.5, 0.5) rotate(0deg);
+		}
+
 	}
 }

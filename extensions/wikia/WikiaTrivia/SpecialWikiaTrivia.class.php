@@ -4,7 +4,7 @@ class SpecialWikiaTrivia extends UnlistedSpecialPage {
 
 	public function __construct() {
 		wfLoadExtensionMessages('WikiaTrivia');
-		parent::__construct('WikiaTrivia', 'wikiatrivia');
+		parent::__construct('WikiaTrivia', 'WikiaTrivia');
 	}
 
 	public function execute() {
@@ -16,6 +16,7 @@ class SpecialWikiaTrivia extends UnlistedSpecialPage {
 		//$wgOut->setPageTitle(wfMsg('owb-title'));
 		$wgOut->addHtml(wfRenderModule('WikiaTrivia'));
 		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/WikiaTrivia/css/WikiaTrivia.scss'));
+		$wgOut->addStyle('http://fonts.googleapis.com/css?family=Chewy');
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaTrivia/js/WikiaTrivia.js"></script>');
 
 		wfProfileOut( __METHOD__ );
