@@ -92,6 +92,8 @@ class GlobalWatchlistBot {
 						);
 					}
 				}
+				$oUser = null;
+				unset($oUser);
 			}
 			$dbr->freeResult( $oResource );
 			$this->printDebug( "$iWatchlisters global watchilster(s) found. (time: " . $this->calculateDuration( time() - $this->mStartTime ) . ")" );
@@ -224,6 +226,8 @@ class GlobalWatchlistBot {
 					sleep( self::MAX_LAG );
 				}
 			} // !empty
+			$aUsers = null;
+			unset($aUsers);
 			$this->printDebug( "Gathering watchlist data for: {$oResultRow->city_dbname} ({$oResultRow->city_id}) and " . count( $this->mUsers ) . " users ... done! (time: " . $this->calculateDuration( time() - $localTime ) . ")" );
 		} // while
 		$dbr->freeResult( $oResource );
@@ -253,7 +257,7 @@ class GlobalWatchlistBot {
 		$wgDefaultUserOptions['watchlistdigestclear'] = 0;
 		
 		$dbs = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-		$oResource = $dbr->select(
+		$oResource = $dbs->select(
 			'global_watchlist',
 			'gwa_title, gwa_namespace',
 			array( 'gwa_user_id' => $iUserId ),
