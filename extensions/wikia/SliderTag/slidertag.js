@@ -7,11 +7,6 @@ function spotlightSlider_setup() {
 	//timer for automatic spotlight slideshow
 	var spotlightSlider_timer;
 
-	//move spotlights
-	$(".spotlight-slider").each(function() {
-		$(this).css("left", parseInt($(this).css("left")) - 620);
-	});
-
 	//select nav
 	$("#spotlight-slider-0").find(".nav").addClass("selected");
 
