@@ -3,7 +3,10 @@ require_once dirname(__FILE__) . '/../ScavengerHunt_setup.php';
 wfLoadAllExtensions();
 
 class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
-
+	public static function setUpBeforeClass() {
+		ScavengerHuntSetup();
+	}
+	
 	public function testAddingHunt() {
 		$app = WF::build('App');
 		$games = WF::build('ScavengerHuntGames');
