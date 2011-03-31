@@ -3,29 +3,29 @@
 class WikiaQuizModule extends Module {
 
 	var $data;
-	var $quiz;
 
 	/**
 	 * Render HTML Quiz namespace pages
 	 */
-	public function executeIndex($params) {
-		if (!empty($params['quiz'])) {
-			$this->quiz = $params['quiz'];
-			$this->data = $this->quiz->getData();
-		}
+	public function executeIndex() {
 	}
 
 	public function executeGetQuizElement() {
 		$wgRequest = F::app()->getGlobal('wgRequest');
 		$elementId = $wgRequest->getVal('elementId');
 		if ($elementId) {
-			$this->quizElement = WikiaQuizElement::newFromId($elementId);
-			$this->data = $this->quizElement->getData();
+			$quizElement = WikiaQuizElement::newFromId($elementId);
+			$this->data = $quizElement->getData();
 		}
 	}
 
 	public function executeGetQuiz() {
-
+		$wgRequest = F::app()->getGlobal('wgRequest');
+		$quizName = $wgRequest->getVal('quiz');
+		if ($quizName) {
+			$quiz = WikiaQuiz::newFromName($quizName);
+			$this->data = $quiz->getData();
+		}
 	}
 
 	public function executeSpecialPage() {

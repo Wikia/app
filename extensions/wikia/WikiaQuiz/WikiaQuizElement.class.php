@@ -82,8 +82,9 @@ class WikiaQuizElement {
 						$line = substr($line, strlen($lineHdr));
 						break;
 					default:
-						continue;
+						continue 2;	// switch is a looping structure, want to continue FOREACH
 				}
+
 				// correct answer has another marker
 				$correct = FALSE;
 				if (substr($line, 0, strlen(self::CORRECT_ANSWER_MARKER)) == self::CORRECT_ANSWER_MARKER) {
