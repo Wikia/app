@@ -39,6 +39,7 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 	 * set this as tag
 	 */
 	$tags = new WikiFactoryTags( $row->city_id );
+	wfWaitForSlaves( 5 );
 	$tags->addTagsByName( $lang );
 
 	Wikia::log( "AddLangTag", false, "$hub added as tag in {$row->city_id}" );
