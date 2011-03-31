@@ -22,31 +22,34 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg' => 'spellchecker-desc',
 );
 
-$dir = dirname(__FILE__);
+$wgExtensionFunctions[] = 'SpellCheckerSetup';
 
-// WikiaApp
-$app = WF::build('App');
+function SpellCheckerSetup() {
+        $dir = dirname(__FILE__);
 
-// i18n
-$app->registerExtensionMessageFile('SpellChecker', $dir . '/SpellChecker.i18n.php' );
+	// WikiaApp
+	$app = WF::build('App');
 
-// classes
-$app->registerClass('SpellChecker', $dir . '/SpellChecker.class.php');
-$app->registerClass('SpellCheckerAjax', $dir . '/SpellCheckerAjax.class.php');
-$app->registerClass('SpellCheckerDictionary', $dir . '/SpellCheckerDictionary.class.php');
-$app->registerClass('SpellCheckerInfoSpecial', $dir . '/SpellCheckerInfoSpecial.class.php');
-$app->registerClass('SpellCheckerService', $dir . '/SpellCheckerService.class.php');
+	// i18n
+	$app->registerExtensionMessageFile('SpellChecker', $dir . '/SpellChecker.i18n.php' );
 
-WF::addClassConstructor('SpellChecker', array('app' => $app));
+	// classes
+	$app->registerClass('SpellChecker', $dir . '/SpellChecker.class.php');
+	$app->registerClass('SpellCheckerAjax', $dir . '/SpellCheckerAjax.class.php');
+	$app->registerClass('SpellCheckerDictionary', $dir . '/SpellCheckerDictionary.class.php');
+	$app->registerClass('SpellCheckerInfoSpecial', $dir . '/SpellCheckerInfoSpecial.class.php');
+	$app->registerClass('SpellCheckerService', $dir . '/SpellCheckerService.class.php');
 
-// special page
-$app->registerSpecialPage('SpellCheckerInfo', 'SpellCheckerInfoSpecial');
+	WF::addClassConstructor('SpellChecker', array('app' => $app));
 
-// hooks
-$app->registerHook('RTEAddGlobalVariablesScript', 'SpellChecker', 'onRTEAddGlobalVariablesScript');
-$app->registerHook('GetPreferences', 'SpellChecker', 'onGetPreferences');
+	// special page
+	$app->registerSpecialPage('SpellCheckerInfo', 'SpellCheckerInfoSpecial');
 
-// dispatch ajax requests
+	// hooks
+	$app->registerHook('RTEAddGlobalVariablesScript', 'SpellChecker', 'onRTEAddGlobalVariablesScript');
+	$app->registerHook('GetPreferences', 'SpellChecker', 'onGetPreferences');
+}
+
 $wgAjaxExportList[] = 'SpellCheckerAjax';
 
 function SpellCheckerAjax() {

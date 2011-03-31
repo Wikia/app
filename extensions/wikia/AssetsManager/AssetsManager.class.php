@@ -52,7 +52,8 @@ class AssetsManager {
 			unset($params['minify']);
 		}
 
-		return $this->mCommonHost . $this->getAMLocalURL('sass', $scssFilePath, $params);
+		return $this->getAMLocalURL('sass', $scssFilePath, $params);
+		//return $this->mCommonHost . $this->getAMLocalURL('sass', $scssFilePath, $params);
 	}
 
 	/**
