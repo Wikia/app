@@ -38,7 +38,7 @@ $databases = array();
 $res = $dbr->select(
 	WikiFactory::table('city_list'),
 	array('city_dbname', 'city_id'),
-	array('city_public' => 1, 'city_useshared' => 1, "city_id > 46734"),
+	array('city_public' => 1, 'city_useshared' => 1),
 	__FUNCTION__
 );
 while ($row = $dbr->fetchObject($res)) {
