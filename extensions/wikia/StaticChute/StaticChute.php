@@ -96,6 +96,8 @@ class StaticChute {
 			'common/jquery/jquery.wikia.js',
 
 			'common/wikibits.js',
+			'common/ajax.js',
+			'common/ajaxwatch.js',
 			'monobook/main.js',
 			'monobook/tracker.js',
 			'common/tracker.js',
@@ -455,7 +457,7 @@ class StaticChute {
 			'wikiaapp/skin.css'
 		);
 	}
-	
+
 	// For thin-client mobile apps
 	private function generateConfigSkinWikiaPhone() {
 		//CSS

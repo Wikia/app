@@ -1388,11 +1388,11 @@ class OutputPage {
 	}
 
 	/**
-	 * Set a flag which will cause an X-Frame-Options header appropriate for 
-	 * edit pages to be sent. The header value is controlled by 
+	 * Set a flag which will cause an X-Frame-Options header appropriate for
+	 * edit pages to be sent. The header value is controlled by
 	 * $wgEditPageFrameOptions.
 	 *
-	 * This is the default for special pages. If you display a CSRF-protected 
+	 * This is the default for special pages. If you display a CSRF-protected
 	 * form on an ordinary view page, then you need to call this function.
 	 */
 	public function preventClickjacking( $enable = true ) {
@@ -1409,8 +1409,8 @@ class OutputPage {
 	}
 
 	/**
-	 * Get the X-Frame-Options header value (without the name part), or false 
-	 * if there isn't one. This is used by Skin to determine whether to enable 
+	 * Get the X-Frame-Options header value (without the name part), or false
+	 * if there isn't one. This is used by Skin to determine whether to enable
 	 * JavaScript frame-breaking, for clients that don't support X-Frame-Options.
 	 */
 	public function getFrameOptions() {
@@ -1600,7 +1600,7 @@ class OutputPage {
 		if ( $wgUseAjax ) {
 			// macbre: following files are part of merged JS for following skins - don't load them from here
 			$skinName = get_class($sk);
-			$skipWikiaSkins = array('SkinMonaco', 'SkinAnswers', 'SkinCorporate', 'SkinCorporateHome', 'SkinCorporateHubs', 'SkinLyricsMinimal', 'SkinOasis');
+			$skipWikiaSkins = array('SkinMonoBook', 'SkinUncyclopedia', 'SkinMonaco', 'SkinAnswers', 'SkinCorporate', 'SkinCorporateHome', 'SkinCorporateHubs', 'SkinLyricsMinimal', 'SkinOasis');
 
 			if (!in_array($skinName, $skipWikiaSkins)) {
 				$this->addScriptFile( 'ajax.js' );
@@ -2222,7 +2222,7 @@ class OutputPage {
 		if( $wgMimeType == 'text/xml' || $wgMimeType == 'application/xhtml+xml' || $wgMimeType == 'application/xml' ) {
 			$ret .= "<?xml version=\"1.0\" encoding=\"$wgOutputEncoding\" ?" . ">\n";
 		}
-		
+
 		if ( $this->getHTMLTitle() == '' ) {
 			wfProfileIn( "parsePageTitle" );
 			$this->setHTMLTitle(  $this->getWikiaPageTitle( $this->getPageTitle() ) );
@@ -2325,7 +2325,19 @@ class OutputPage {
 		global $wgStylePath, $wgStyleVersion;
 
 		$scripts = Skin::makeGlobalVariablesScript( $sk->getSkinName() );
-		$scripts .= Html::linkedScript( "{$wgStylePath}/common/wikibits.js?$wgStyleVersion" );
+
+		/* Wikia change begin - @author: Macbre */
+		/* allow old skins to inject JS code before files from MW core (BugId:960) */
+		wfRunHooks('SkinGetHeadScripts', array(&$scripts));
+
+		// wikibits is a part of StaticChute package for monobook - don't load it twice
+		$skinName = get_class($sk);
+		$skipWikiaSkins = array('SkinMonoBook', 'SkinUncyclopedia');
+
+		if (!in_array($skinName, $skipWikiaSkins)) {
+			$scripts .= Html::linkedScript( "{$wgStylePath}/common/wikibits.js?$wgStyleVersion" );
+		}
+		/* Wikia change end */
 
 		//add site JS if enabled:
 		if( $wgUseSiteJs ) {
