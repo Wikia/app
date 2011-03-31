@@ -696,7 +696,8 @@ class Linker {
 
 		/* Wikia change begin - @author: macbre */
 		/* Give extensions ability to add HTML to thumbed / framed images */
-		wfRunHooks('MakeThumbLink2', array($this, $title, $file, $frameParams, $handlerParams, &$s));
+		/* @author: wladek - added outerWidth parameter for BugId: 3734 */
+		wfRunHooks('MakeThumbLink2', array($this, $title, $file, $frameParams, $handlerParams, &$s, $outerWidth));
 		/* Wikia change end */
 
 		return str_replace("\n", ' ', $s);
