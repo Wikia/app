@@ -265,7 +265,7 @@ class GlobalWatchlistBot {
 		);
 		
 		while ( $oResultRow = $dbs->fetchObject( $oResource ) ) {
-			$sWikiDbName = @$this->mCityList[ $oResource->gwa_city_id ] ;
+			$sWikiDbName = @$this->mCityList[ $oResultRow->gwa_city_id ] ;
 			
 			if ( $sWikiDbName ) {
 				$this->printDebug( "Update watchlist for db: $sWikiDbName" );
