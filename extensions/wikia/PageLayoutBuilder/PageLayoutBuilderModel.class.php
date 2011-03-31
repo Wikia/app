@@ -237,11 +237,11 @@ class PageLayoutBuilderModel {
 	}
 	
 	public static function setLayoutCopy( $layout_id, $to_city_id  ) {
-		global $wgSharedDB, $wgDefaultLayoutWiki;
+		global $wgExternalDatawareDB, $wgDefaultLayoutWiki;
 		
 		$from_city_id = $wgDefaultLayoutWiki;
 	
-		$db = wfGetDB(DB_MASTER, array(), $wgSharedDB);
+		$db = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
 		$db->insert("plb_copy_layout",
 					array(
 						'plb_c_layout_id' => (int) $layout_id,
