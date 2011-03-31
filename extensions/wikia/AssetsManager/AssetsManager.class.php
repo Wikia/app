@@ -110,7 +110,7 @@ class AssetsManager {
 			$assets = $this->mAssetsConfig->resolve($groupName, $this->mCombine, $this->mMinify);
 			$URLs = array();
 			foreach($assets as $asset) {
-				if(substr($asset, 0, 7) == 'http://') {
+				if(substr($asset, 0, 7) == 'http://' || substr($item, 0, 8) == 'https://') {
 					$URLs[] = $asset;
 				} else {
 					$URLs[] = $prefix . $this->getOneLocalURL($asset);
