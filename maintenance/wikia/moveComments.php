@@ -23,6 +23,7 @@ $data = $dbr->select(
 	array("page_title like '$oldtitle/%'", "page_title like '%@comment%'"),
 	__METHOD__
 );
+echo $dbr->lastQuery() . " \n";
 $pages = array();
 while ($row = $dbr->fetchObject($data)) {
 	$pages[] = array( 'ns' => $row->page_namespace, 'oldtitle' => $row->page_title, 'newtitle' => $row->new_page_title );
@@ -39,6 +40,7 @@ if ( !empty($pages) ) {
 		$sCommand .= "--nn " . $page['ns'] . " ";
 		$sCommand .= "--conf $wgWikiaLocalSettingsPath";
 
+		echo $sCommand . " \n";	
 		$log = wfShellExec( $sCommand, $retval );
 		if ($retval) {
 			echo "Error code returned: $retval, Error was: $log \n";

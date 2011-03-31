@@ -13,6 +13,8 @@ global $wgMaxShellTime, $wgMaxShellFileSize;
 $wgMaxShellTime = 0;
 $wgMaxShellFileSize = 0;
 
+echo print_r($options, true);
+
 $add = ( isset($options['add']) ) ;
 $TASK_ID = ( isset($options['TASK_ID']) ) ? $options['TASK_ID'] : 0;
 if ( $add ) {
