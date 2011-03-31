@@ -398,6 +398,26 @@ class CreateWiki {
 		wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wiki_type} and language: {$this->mNewWiki->language} \n", true );		
 
 		/**
+		 * set tags per language
+		 * @FIXME the switch is !@#$ creazy, but I didn't find a core function
+		 */
+		$langTag = $this->mNewWiki->language;
+		if ( $langTag !== 'en' ) {
+			switch ( $langTag ) {
+				case 'pt-br':
+					$langTag = 'pt';
+					break;
+				case 'zh-tw':
+				case 'zh-hk':
+					$langTag = 'zh';
+					break;
+			}
+
+			$tags = new WikiFactoryTags( $this->mNewWiki->city_id );
+			$tags->addTagsByName( $langTag );
+		}
+
+		/**
 		 * move main page
 		 */
 		$cmd = sprintf(
