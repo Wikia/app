@@ -15,7 +15,7 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 		$assets = $ac->resolve($this->mOid, true, (!isset($this->mParams['minify']) || $this->mParams['minify'] == true), $this->mParams);
 
 		foreach($assets as $asset) {
-			if(substr($asset, 0, 7) == 'http://' || substr($item, 0, 8) == 'https://') {
+			if(substr($asset, 0, 7) == 'http://' || substr($asset, 0, 8) == 'https://') {
 				$this->mContent .= HTTP::get($asset);
 			} else {
 				$this->mContent .= file_get_contents($IP . '/' . $asset);
