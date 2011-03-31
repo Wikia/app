@@ -8,7 +8,16 @@ WikiaFooterApp = {
 		//Variables
 		var footer = $("#WikiaFooter");
 		var toolbar = footer.children(".toolbar");
-
+		var mobileSwitchLink = $('#mobileSwitch');
+		
+		if(mobileSwitchLink.exists()){
+			mobileSwitchLink.live('click', function(e){
+				e.preventDefault();
+				document.cookie = 'mobilefullsite=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+				location.reload();
+			});
+		}
+		
 		// avoid stack overflow in IE (RT #98938)
 		if (toolbar.exists()) {
 			var windowObj = $(window);
