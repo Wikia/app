@@ -259,7 +259,7 @@ class GlobalWatchlistBot {
 		$dbs = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 		$oResource = $dbs->select(
 			'global_watchlist',
-			'gwa_title, gwa_namespace',
+			'gwa_city_id, gwa_title, gwa_namespace',
 			array( 'gwa_user_id' => $iUserId ),
 			__METHOD__
 		);
@@ -268,6 +268,7 @@ class GlobalWatchlistBot {
 			$sWikiDbName = @$this->mCityList[ $oResource->gwa_city_id ] ;
 			
 			if ( $sWikiDbName ) {
+				$this->printDebug( "Update watchlist for db: $sWikiDbName" );
 				$this->updateLocalWatchlistForUserAndWikia( $iUserId, $sWikiDbName, $oResultRow->gwa_title, $oResultRow->gwa_namespace );
 			}
 			else {
@@ -281,8 +282,6 @@ class GlobalWatchlistBot {
 		$oUser = User::newFromId( $iUserId );
 		$oUser->setOption( 'watchlistdigestclear', false );
 		$oUser->saveSettings();
-		
-		$dbs->close();
 	} 
 	 
 
@@ -304,7 +303,6 @@ class GlobalWatchlistBot {
 			}
 		}
 		$dbs->freeResult( $oResource );	
-		$dbs->close();
 		
 		return $cityList;
 	}
@@ -324,8 +322,6 @@ class GlobalWatchlistBot {
 			 ),
 			__METHOD__
 		);		
-		
-		$dbw->close();
 	}
 
 	/**
