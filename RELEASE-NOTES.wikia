@@ -1,3 +1,7 @@
+== Changes since release-014 ==
+* fb#960: Monobook: Global JS not able to load JQuery Library (macbre)
+* fb#1788: Monobook: jQuery data tables fail to load (macbre)
+
 == Changes since release-013 ==
 * fb#3270: RTE: stripping some formatting (macbre)
 * fb#981: Image lightbox broken for shared help (macbre)
