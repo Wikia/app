@@ -475,9 +475,7 @@ class Preferences {
 					'section' => 'rendering/skin',
 				);
 		$selectedSkin = $user->getOption( 'skin' );
-		$selectedSkin = 'standard';
-//		var_dump($user); exit;
-		if ( in_array( $selectedSkin, array( 'cologneblue', 'standard', 'monaco', 'oasis' ) ) ) {
+		if ( in_array( $selectedSkin, array( 'cologneblue', 'standard' ) ) ) {
 			global $wgLang;
 			$settings = array_flip( $wgLang->getQuickbarSettings() );
 
