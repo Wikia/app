@@ -155,7 +155,7 @@ class CorporatePageHelper{
 		$mcKey = wfMemcKey( "hp_msg_parser", strtolower( $msg ) );
 		$out = $wgMemc->get( $mcKey );
 		if ( is_array( $out ) ){
-			return $out;
+		#	return $out;
 		}
 
 		wfProfileIn( __METHOD__ );

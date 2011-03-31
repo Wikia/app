@@ -65,6 +65,8 @@ function wfSlider( $input, $args, $parser ) {
 
 	if ( $data ) {
 		wfLoadExtensionMessages( 'SliderTag' );
+
+		// TODO: lazy load following JS
 		$html = "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/SliderTag/slidertag.js?{$wgStyleVersion}\"></script>";
 
 		$html .= '<div id="spotlight-slider"><ul>';

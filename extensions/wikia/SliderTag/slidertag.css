@@ -8,7 +8,7 @@
 	z-index: 99;
 }
 #spotlight-slider #spotlight-slider-0 .description{
-  display: block;
+	display: block;
 }
 #spotlight-slider .description h2 {
 	border: 0;
@@ -25,7 +25,7 @@
 	margin: 0 0 .3em;
 }
 #spotlight-slider {
-	background: url(http://images.wikia.com/common/skins/corporate/images/bg.homepage.feature.png) center bottom no-repeat;
+	background: url(/extensions/wikia/CorporatePage/images/bg.homepage.feature.png) center bottom no-repeat;
 	position: relative;
 	height: 290px;
 	width: 620px;
@@ -45,7 +45,7 @@
 	opacity: .5;
 }
 #spotlight-slider .selected {
-	background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -56px;
+	background: url(/extensions/wikia/CorporatePage/images/misc.wikiaglobal.sprite.png) no-repeat -10px -56px;
 }
 #spotlight-slider .selected img {
 	opacity: 1;
