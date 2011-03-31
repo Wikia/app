@@ -14,12 +14,18 @@ class ContentDisplayModule extends Module {
 	 *
 	 * This method is called by MakeThumbLink2 hook
 	 */
-	static function renderPictureAttribution($skin, $title, $file, $frameParams, $handlerParams, &$s) {
+	static function renderPictureAttribution($skin, $title, $file, $frameParams, $handlerParams, &$s, $outerWidth) {
 		global $wgUser;
 		wfProfileIn(__METHOD__);
 
 		// prevent fatal errors
 		if ( empty( $file ) || get_class( $wgUser->getSkin() ) != 'SkinOasis' ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+		
+		// BugId: 3734 Remove picture attribution for thumbnails 99px wide and under
+		if ( $outerWidth < 100 + 2 ) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
