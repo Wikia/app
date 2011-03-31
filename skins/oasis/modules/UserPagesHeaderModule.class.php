@@ -173,7 +173,7 @@ class UserPagesHeaderModule extends Module {
 		global $wgTitle, $wgEnableUserProfilePagesExt, $wgRequest, $wgUser, $wgOut;
 		
 		$namespace = $wgTitle->getNamespace();
-		
+
 		// get user name to display in header
 		$this->userName = self::getUserName($wgTitle, BodyModule::getUserPagesNamespaces());
 		$this->isUserProfilePageExt = ( !empty( $wgEnableUserProfilePagesExt ) && UserProfilePage::isAllowed() );
@@ -211,6 +211,23 @@ class UserPagesHeaderModule extends Module {
 				'action' => array(),
 				'dropdown' => array(),
 				);
+
+		
+
+		global $wgEnableUserInterview;
+		if ($wgEnableUserInterview == true && $wgUser->isLoggedIn() && self::isItMe( $this->userName ) && $namespace == NS_USER && isset($this->content_actions['edit'])) {
+		}
+		
+		if ($wgEnableUserInterview == true && $wgUser->isLoggedIn() && self::isItMe( $this->userName ) && isset($this->content_actions['edit']) && $namespace == NS_USER) {
+			if (count(SpecialUserInterview::getUserQuestions() > 0)) { // if there are questions
+				if ($wgRequest->getVal( 'userinterviewaction' ) == 'sent') { // save the questions
+					SpecialUserInterview::saveUserAnswersHTML();
+				}
+				else { // show the question alert
+					$this->userInterview = SpecialUserInterview::getUserQuestionsHTML();
+				}
+			}
+		}
 
 		
 		// page type specific stuff
@@ -335,6 +352,8 @@ class UserPagesHeaderModule extends Module {
 					break;
 			}
 		}
+
+		
 		
 		global $wgEnableFacebookSync;
 		// Facebook profile Sync
