@@ -215,8 +215,6 @@ class UserPagesHeaderModule extends Module {
 		
 
 		global $wgEnableUserInterview;
-		if ($wgEnableUserInterview == true && $wgUser->isLoggedIn() && self::isItMe( $this->userName ) && $namespace == NS_USER && isset($this->content_actions['edit'])) {
-		}
 		
 		if ($wgEnableUserInterview == true && $wgUser->isLoggedIn() && self::isItMe( $this->userName ) && isset($this->content_actions['edit']) && $namespace == NS_USER) {
 			if (count(SpecialUserInterview::getUserQuestions() > 0)) { // if there are questions
