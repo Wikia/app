@@ -75,7 +75,24 @@ function getPartnerWidgetKeywords() {
 				//}
 			//}
 			//break;
-		default:
+		case 'yugioh':
+			$CATEGORY_WHITELIST_INDICATOR = 'card';
+			$STRIP_SUBSTRING_FIRST_CHAR = '(';
+
+			// show widget only on articles in whitelisted categories
+			$cats = $wgOut->getCategories();
+			foreach ($cats as $cat) {
+				if (stripos($cat, $CATEGORY_WHITELIST_INDICATOR) !== FALSE) {
+					$keywords = $wgDBname . ' ' . $wgTitle->getText();
+					// strip certain text from end of keywords
+					$stripSubstrPos = strpos($keywords, $STRIP_SUBSTRING_FIRST_CHAR);
+					if ($stripSubstrPos !== FALSE) {
+						$keywords = trim(substr($keywords, 0, $stripSubstrPos));
+					}
+				}
+				break;
+			}
+			break;
 	}
 
 	return $keywords;
