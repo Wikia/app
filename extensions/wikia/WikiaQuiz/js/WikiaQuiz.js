@@ -1,56 +1,77 @@
-var WikiaTrivia = {
+var WikiaQuiz = {
 	sets: false,
 	state: {answered: false},
 	answerFeedbackCorrect: false,
 	answerFeedbackWrong: false,
 	cq: false, // cq - CurrentQuestion
-	scorePane: false,
+	cas: false, // cas - CurrentAnswers
+	scoreView: false,
 	score: 0,	// move this to serverside
 	init: function() {
-		$('.choices li').click(WikiaTrivia.handleAnswerClick).mouseenter(function(){
+		WikiaQuiz.cq = $('.question-sets .question-set:first-child');
+		WikiaQuiz.initializeQuestion(WikiaQuiz.cq);
+		Timer.init();
+		$('.next-button').live('click', WikiaQuiz.handleNextClick);
+		WikiaQuiz.answerFeedbackCorrect = $('.answer-feedback.star');
+		WikiaQuiz.answerFeedbackWrong = $('.answer-feedback.wrong');
+		WikiaQuiz.scoreView = $('.score-pane .score');
+	},
+	initializeQuestion: function() {
+		WikiaQuiz.cas = WikiaQuiz.cq.find('.choices li');
+		WikiaQuiz.cas.click(WikiaQuiz.handleAnswerClick).mouseenter(function(){
 			$(this).addClass('hover');
 			MultiAudio.play('sound-menu-hover');
 		}).mouseleave(function(){
 			$(this).removeClass('hover');
 		});
-		Timer.init();
-		$('.next-question').live('click', WikiaTrivia.handleNextClick);
-		WikiaTrivia.answerFeedbackCorrect = $('.answer-feedback.star');
-		WikiaTrivia.answerFeedbackWrong = $('.answer-feedback.wrong');
-		WikiaTrivia.scoreView = $('.score-pane .score');
 	},
 	handleAnswerClick: function(evt) {
 		if(evt){
 			evt.preventDefault();
 		}
-		if(!WikiaTrivia.state['answered']){
-			if($(this).is(':contains("lol")')) {
-				WikiaTrivia.answerFeedbackCorrect.show(0, function(){
-					WikiaTrivia.answerFeedbackCorrect.addClass('popup');
+		if(!WikiaQuiz.state['answered']){
+			if($(this).data('correct')) {
+				WikiaQuiz.answerFeedbackCorrect.show(0, function(){
+					WikiaQuiz.answerFeedbackCorrect.addClass('popup');
 					MultiAudio.play('sound-answer-correct');
 				});
 				$(this).addClass('correct');
-				WikiaTrivia.score++;
-				WikiaTrivia.updateScore();
+				WikiaQuiz.score++;
+				WikiaQuiz.updateScore();
 			} else {
-				WikiaTrivia.answerFeedbackWrong.show(0, function(){
-					WikiaTrivia.answerFeedbackWrong.addClass('popup');
+				WikiaQuiz.answerFeedbackWrong.show(0, function(){
+					WikiaQuiz.answerFeedbackWrong.addClass('popup');
 					MultiAudio.play('sound-answer-wrong');
 				});
 				$(this).addClass('wrong');
-				$('.choices li:nth-child(4)').addClass('correct');
+				WikiaQuiz.cq.find('li[data-correct=1]').addClass('correct');
 			}
-			WikiaTrivia.state['answered'] = true;
+			WikiaQuiz.state['answered'] = true;
 			Timer.stopTimer();
 		}
-		$('.choices li').unbind('mouseenter').unbind('mouseleave');
+		WikiaQuiz.cas.unbind('mouseenter').unbind('mouseleave').unbind('click');
 		$(this).addClass('hover');
+		setTimeout(function() {
+			WikiaQuiz.cq.find('.next-button').fadeIn();
+		}, 1000);
 	},
 	updateScore: function() {
-		WikiaTrivia.scorePane.html(WikiaTrivia.score);
+		WikiaQuiz.scoreView.html(WikiaQuiz.score);
 	},
 	handleNextClick: function(evt) {
-
+		WikiaQuiz.cq.fadeOut(function() {
+			WikiaQuiz.cq = WikiaQuiz.cq.next();
+			WikiaQuiz.cq.fadeIn(function() {
+				WikiaQuiz.initializeQuestion();
+				Timer.startTimer();
+			});
+		});
+		WikiaQuiz.resetFeedback();
+	},
+	resetFeedback: function() {
+		WikiaQuiz.state['answered'] = false;
+		WikiaQuiz.answerFeedbackCorrect.removeClass('popup').hide();
+		WikiaQuiz.answerFeedbackWrong.removeClass('popup').hide();
 	}
 };
 
@@ -121,5 +142,5 @@ $(function() {
 			'sound-answer-correct': document.getElementById('sound-answer-correct'),
 			'sound-answer-wrong': document.getElementById('sound-answer-wrong')};
 	MultiAudio.init(assets);
-	WikiaTrivia.init();
+	WikiaQuiz.init();
 });

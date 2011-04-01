@@ -80,7 +80,7 @@ $answer-feedback-top: ($canvas-height/2) - ($answer-feedback-height/2);
 				display: none;
 				cursor: pointer;
 				font-size: 24px;
-				margin: 0 auto;
+				margin: 50px auto 0 auto;
 				padding: 10px;
 				text-align: center;
 				width: 150px;
@@ -104,12 +104,12 @@ $answer-feedback-top: ($canvas-height/2) - ($answer-feedback-height/2);
 		width: $answer-feedback-width;
 		z-index: 1;
 		&.star {
-			background: url(/extensions/wikia/WikiaTrivia/images/smiley-star-clipart.gif);
+			background: url(/extensions/wikia/WikiaQuiz/images/smiley-star-clipart.gif);
 			-webkit-transition: all 750ms ease-in;
 			-webkit-transform: scale(3, 3) rotate(-90deg);
 		}
 		&.wrong {
-			background: url(/extensions/wikia/WikiaTrivia/images/x.png);
+			background: url(/extensions/wikia/WikiaQuiz/images/x.png);
 			-webkit-transition: all 150ms ease-in;
 			-webkit-transform: scale(3, 3) rotate(0deg);
 		}
