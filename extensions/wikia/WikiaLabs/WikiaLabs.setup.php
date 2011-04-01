@@ -18,39 +18,40 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => '0.0.0',
 );
 
+$dir = dirname(__FILE__) . '/';
+
+/**
+ * classes
+ */
+$wgAutoloadClasses['WikiaLabsSpecial'] = $dir . 'WikiaLabsSpecial.class.php';
+$wgAutoloadClasses['WikiaLabsModule'] = $dir . 'WikiaLabsModule.class.php';
+$wgAutoloadClasses['WikiaLabs'] = $dir . 'WikiaLabs.class.php';
+$wgAutoloadClasses['WikiaLabsProject'] = $dir . 'WikiaLabsProject.class.php';
+$wgAutoloadClasses['WikiaLabsHelper'] = $dir . 'WikiaLabsHelper.class.php';
+
+/**
+ * special pages
+ */
+$wgSpecialPages['WikiaLabs'] = 'WikiaLabsSpecial';
+
+/**
+* message files
+*/
+$wgExtensionMessagesFiles['WikiaLabs'] = $dir . 'WikiaLabs.i18n.php';
+
+/**
+ * alias files
+ */
+$wgExtensionAliasesFiles['WikiaLabs'] = $dir . 'WikiaLabs.alias.php';
+
 $wgExtensionFunctions[] = 'WikiaLabsSetup';
 
 function WikiaLabsSetup() {
-	$dir = dirname(__FILE__) . '/';
 
 	/**
 	 * @var WikiaApp
 	 */
 	$app = F::app();
-
-	/**
-	 * classes
-	 */
-	$app->registerClass('WikiaLabsSpecial', $dir . 'WikiaLabsSpecial.class.php');
-	$app->registerClass('WikiaLabsModule', $dir . 'WikiaLabsModule.class.php');
-	$app->registerClass('WikiaLabs', $dir . 'WikiaLabs.class.php');
-	$app->registerClass('WikiaLabsProject', $dir . 'WikiaLabsProject.class.php');
-	$app->registerClass('WikiaLabsHelper', $dir . 'WikiaLabsHelper.class.php');
-
-	/**
-	 * special pages
-	 */
-	$app->registerSpecialPage('WikiaLabs', 'WikiaLabsSpecial');
-
-	/**
-	* message files
-	*/
-	$app->registerExtensionMessageFile('WikiaLabs', $dir . 'WikiaLabs.i18n.php' );
-
-	/**
-	 * alias files
-	 */
-	$app->registerExtensionAliasFile('WikiaLabs', $dir . 'WikiaLabs.alias.php');
 
 	/**
 	 * Factory config
