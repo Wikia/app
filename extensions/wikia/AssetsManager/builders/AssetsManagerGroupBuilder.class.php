@@ -9,14 +9,22 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 	public function __construct($request) {
 		parent::__construct($request);
 
-		global $IP;
+		global $IP, $wgUser;
 
 		$ac = new AssetsConfig();
 		$assets = $ac->resolve($this->mOid, true, (!isset($this->mParams['minify']) || $this->mParams['minify'] == true), $this->mParams);
 
 		foreach($assets as $asset) {
-			if(substr($asset, 0, 7) == 'http://' || substr($asset, 0, 8) == 'https://') {
-				$this->mContent .= HTTP::get($asset);
+			if(Http::isValidURI($asset)) {
+				if(strpos($asset, 'index.php?title=-&action=raw&smaxage=0&gen=js') !== false) {
+					$this->mContent .= $wgUser->getSkin()->generateUserJs();
+				} else if(strpos($asset, 'Wikia.css') !== false) {
+					$this->mContent .= wfMsg('Wikia.css');
+				} else if(strpos($asset, 'index.php?title=-&action=raw&maxage=86400&gen=css') !== false) {
+					$this->mContent .= $wgUser->getSkin()->generateUserStylesheet();
+				} else {
+					$this->mContent .= HTTP::get($asset);
+				}
 			} else {
 				$this->mContent .= file_get_contents($IP . '/' . $asset);
 			}

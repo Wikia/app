@@ -52,8 +52,8 @@ class AssetsManager {
 			unset($params['minify']);
 		}
 
-		return $this->getAMLocalURL('sass', $scssFilePath, $params);
-		//return $this->mCommonHost . $this->getAMLocalURL('sass', $scssFilePath, $params);
+		//return $this->getAMLocalURL('sass', $scssFilePath, $params);
+		return $this->mCommonHost . $this->getAMLocalURL('sass', $scssFilePath, $params);
 	}
 
 	/**
@@ -110,7 +110,7 @@ class AssetsManager {
 			$assets = $this->mAssetsConfig->resolve($groupName, $this->mCombine, $this->mMinify);
 			$URLs = array();
 			foreach($assets as $asset) {
-				if(substr($asset, 0, 7) == 'http://' || substr($asset, 0, 8) == 'https://') {
+				if(Http::isValidURI($asset)) {
 					$URLs[] = $asset;
 				} else {
 					$URLs[] = $prefix . $this->getOneLocalURL($asset);

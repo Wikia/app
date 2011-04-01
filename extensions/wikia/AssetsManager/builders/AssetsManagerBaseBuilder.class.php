@@ -27,7 +27,9 @@ class AssetsManagerBaseBuilder {
 	public function getContent() {
 		global $IP, $wgRequest;
 
-		if((!empty($this->mContentType) || $this->mOid == 'site_css') && (!isset($this->mParams['minify']) || $this->mParams['minify'] == true)) {
+		if((!empty($this->mContentType) || $this->mOid == 'site_css') && (!isset($this->mParams['minify']) || $this->mParams['minify'] == true) && ($this->mOid == 'site_css' || $this->mOid == 'oasis_anon_js' || $this->mOid == 'oasis_user_js' || $this->mOid == 'skins/oasis/css/oasis.scss' )) {
+
+			/*
 
 			$tempInFile = tempnam(sys_get_temp_dir(), 'AMIn');
 			$tempOutFile = tempnam(sys_get_temp_dir(), 'AMOut');
@@ -37,9 +39,9 @@ class AssetsManagerBaseBuilder {
 			$start = microtime(true);
 
 			if($this->mContentType == AssetsManagerBaseBuilder::TYPE_JS) {
-				shell_exec("java -jar {$IP}/lib/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile}");
+				shell_exec("nice -n 15 java -jar {$IP}/lib/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile}");
 			} else {
-				shell_exec("java -jar {$IP}/lib/yuicompressor-2.4.2.jar --type css -o {$tempOutFile} {$tempInFile}");
+				shell_exec("nice -n 15 java -jar {$IP}/lib/yuicompressor-2.4.2.jar --type css -o {$tempOutFile} {$tempInFile}");
 			}
 
 			$stop = microtime(true);
@@ -53,6 +55,28 @@ class AssetsManagerBaseBuilder {
 				error_log("Temp log - #3 - Minifier took over 5 seconds: " . $wgRequest->getFullRequestURL());
 			}
 
+			*/
+
+			$start = microtime(true);
+
+			if($this->mContentType == AssetsManagerBaseBuilder::TYPE_JS) {
+
+				$jsmin = dirname(__FILE__) . '/../../StaticChute/jsmin';
+				if(is_executable($jsmin)){
+					$tempInFile = tempnam(sys_get_temp_dir(), 'AMIn');
+					file_put_contents($tempInFile, $this->mContent);
+					$out = shell_exec("cat $tempInFile | $jsmin");
+					unlink($tempInFile);
+				}
+
+			} else {
+				require_once dirname(__FILE__) . '/../../StaticChute/Minify_CSS_Compressor.php';
+				$out = Minify_CSS_Compressor::process($this->mContent);
+			}
+
+			$stop = microtime(true);
+			$total = $stop - $start;
+
 			if(!empty($out)) {
 				$this->mContent = "/* Minify took {$total} */\n\n";
 				$this->mContent .= $out;
@@ -61,8 +85,8 @@ class AssetsManagerBaseBuilder {
 				error_log("Temp log - #2 - Empty output from minifier: " . $wgRequest->getFullRequestURL());
 			}
 
-			unlink($tempInFile);
-			unlink($tempOutFile);
+			//unlink($tempInFile);
+			//unlink($tempOutFile);
 		}
 
 		return $this->mContent;
@@ -81,6 +105,7 @@ class AssetsManagerBaseBuilder {
 	public function getCacheDuration() {
 		global $wgStyleVersion;
 		if($this->mCb > $wgStyleVersion) {
+			syslog(LOG_ERR, "InezLog | Log 1 : {$this->mCb} > {$wgStyleVersion}");
 			return 60; // 60 seconds
 		} else {
 			return 7 * 24 * 60 * 60; // 7 days
@@ -90,5 +115,4 @@ class AssetsManagerBaseBuilder {
 	public function getContentType() {
 		return $this->mContentType;
 	}
-
 }
