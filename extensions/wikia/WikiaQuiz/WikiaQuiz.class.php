@@ -38,7 +38,9 @@ class WikiaQuiz {
 	static public function newFromName($name) {
 		$catName = self::QUIZ_CATEGORY_PREFIX . $name;
 
-		$cat = Category::newFromName($catName);
+		//$cat = Category::newFromName($catName);
+		$cat = F::build('Category', array($catName), 'newFromName');
+
 		if (!$cat) {
 			return false;
 		}
