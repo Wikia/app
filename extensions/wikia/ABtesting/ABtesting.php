@@ -14,7 +14,7 @@ function getABtestJSandCSS() {
 	global $wgOut, $wgExtensionsPath, $wgUser, $wgABTests;
 	
 	// For testing
-	$wgABTests[] = 'noHistoryBar';
+	//$wgABTests[] = 'noHistoryBar';
 
 	if (!isset($wgABTests)) {
 		return true;
