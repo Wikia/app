@@ -46,7 +46,7 @@ abstract class WikiaSuperFactory {
 	 * @param string $className
 	 */
 	public static function unsetInstance($className) {
-		if(isset(self::$constructors[$className]['INSTANCE'])) {
+		if(isset(self::$constructors[$className]) && array_key_exists('INSTANCE', self::$constructors[$className])) {
 			unset(self::$constructors[$className]['INSTANCE']);
 		}
 	}
@@ -69,7 +69,7 @@ abstract class WikiaSuperFactory {
 	 * @return object
 	 */
 	public static function build($className, Array $params = array(), $constructorMethod = '__construct') {
-		if(isset(self::$constructors[$className]['INSTANCE'])) {
+		if(isset(self::$constructors[$className]) && array_key_exists('INSTANCE', self::$constructors[$className])) {
 			return self::$constructors[$className]['INSTANCE'];
 		}
 
