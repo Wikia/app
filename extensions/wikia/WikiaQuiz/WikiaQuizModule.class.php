@@ -11,7 +11,7 @@ class WikiaQuizModule extends Module {
 	}
 	
 	public function executeSampleQuiz() {
-		
+		$this->executeGetQuiz();
 	}
 
 	public function executeGetQuizElement() {
