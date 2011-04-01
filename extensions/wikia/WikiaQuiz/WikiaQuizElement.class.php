@@ -188,7 +188,7 @@ class WikiaQuizElement {
 	/**
 	 * Register answer from current user (use IP for anons)
 	 */
-	public function vote($answerId) {
+	public function answer($answerId) {
 		global $wgUser;
 		wfProfileIn(__METHOD__);
 
@@ -260,13 +260,6 @@ class WikiaQuizElement {
 //		return $hasVoted;
                 return false;
 	}
-
-//	/**
-//	 * Render HTML for Quiz page
-//	 */
-//	public function render() {
-//		return wfRenderModule('WikiaQuiz', 'Index', array('quiz' => $this));
-//	}
 
 	/**
 	 * Purges memcache entry
