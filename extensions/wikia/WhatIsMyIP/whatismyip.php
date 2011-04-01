@@ -18,18 +18,18 @@
  */
 
 if (!defined('MEDIAWIKI')) 
-	{
+{
 	echo "This is MediaWiki extension named WhatIsMyIP.\n";
 	exit( 1 ) ;
-	}
+}
 
-  global  $wgAvailableRights, $wgGroupPermissions, $wgMessageCache;
-    $wgAvailableRights[] = 'whatismyip';
-    $wgGroupPermissions['*']['whatismyip'] = true;
-   
-    if (!function_exists('extAddSpecialPage'))
-    {
-    require("$IP/extensions/wikia/whatismyip.php");
-    }
-    extAddSpecialPage( dirname(__FILE__) . '/whatismyip_body.php', 'whatismyip', 'WhatIsMyIP' );
-    $wgSpecialPageGroups['whatismyip'] = 'users';
+global  $wgAvailableRights, $wgGroupPermissions, $wgMessageCache;
+$wgAvailableRights[] = 'whatismyip';
+$wgGroupPermissions['*']['whatismyip'] = true;
+
+if (!function_exists('extAddSpecialPage'))
+{
+	require("$IP/extensions/wikia/whatismyip.php");
+}
+extAddSpecialPage( dirname(__FILE__) . '/whatismyip_body.php', 'whatismyip', 'WhatIsMyIP' );
+$wgSpecialPageGroups['whatismyip'] = 'users';
