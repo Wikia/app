@@ -144,20 +144,16 @@
 
 .user-interview-profile-form-container {
 	text-align: center;
+	margin-bottom: 8px;
 
 	a {
 		&.toggle-user-interview{
 			@include border-radius(5px);			
-
+			
 			font: {
 				size: 14px;
 				font-weight: bold;
 			}
-			marign: {
-				right: 60px;
-				bottom: 10px;
-			}
-
 			padding: 5px 10px;
 			
 			img {
@@ -230,7 +226,7 @@
 			}
 		}
 		
-		blockquote:before {
+		blockquote.answer:before {
 			border-color: transparent $color-page-border $color-page-border transparent;
 			border-style: solid;
 			border-width: 11px;
@@ -241,7 +237,7 @@
 			left: -22px;
 			width: 0px;
 		}
-		blockquote:after {
+		blockquote.answer:after {
 			border-style: solid;
 			border-width: 10px;
 			content: " ";

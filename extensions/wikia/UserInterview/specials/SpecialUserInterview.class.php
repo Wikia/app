@@ -25,7 +25,6 @@ class SpecialUserInterview extends SpecialPage {
 			$formURL = $wgTitle->getFullURL() .'?formaction=sent&action=purge';
 
 			$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/UserInterview/css/UserInterview.scss'));
-			//$wgOut->addStyle(wfGetSassUrl("extensions/wikia/UserInterview/css/UserInterview.scss"));
 			$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/UserInterview/js/UserInterview.js?{$wgStyleVersion}\"></script>\n");
 			
 			$template = new EasyTemplate(dirname(__FILE__).'/templates');
@@ -65,7 +64,7 @@ class SpecialUserInterview extends SpecialPage {
 			}
 		}
 		
-		SpecialUserInterview::saveAdminQuestion($data);				
+		SpecialUserInterview::saveAdminQuestion($data);
 		NotificationsModule::addConfirmation('Your user interview has been saved!');
 	}
 	
@@ -73,21 +72,21 @@ class SpecialUserInterview extends SpecialPage {
 	static function getUserQuestionsHTML() {
 		// user: get the questions
 		global $wgUser, $wgTitle, $wgOut, $wgStylePath, $wgStyleVersion, $wgExtensionsPath;
+		
 		$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/UserInterview/js/UserInterviewAjax.js?{$wgStyleVersion}\"></script>\n");
 
 		$avatarImg = strip_tags(SpecialUserInterview::getAvatarImg($wgUser->getId()), '<img>');
 		$adminQuestion = SpecialUserInterview::getUserQuestions();
 		$userAnswers = SpecialUserInterview::getUserAnswers();
 		
-		
-		foreach($adminQuestion as $question) {
-			if (isset( $userAnswers[$question['id']]['answer'] )) {
-				$answered = $userAnswers[$question['id']]['answer'];
-				$adminQuestion[$question['id']]['answer'] = $answered;
-			}
-		}
-
 		if ($adminQuestion) {
+			foreach($adminQuestion as $question) {
+				if (isset( $userAnswers[$question['id']]['answer'] )) {
+					$answered = $userAnswers[$question['id']]['answer'];
+					$adminQuestion[$question['id']]['answer'] = $answered;
+				}
+			}
+
 			$questionIDs = array();
 			foreach ($adminQuestion as $question) {
 				array_push($questionIDs, $question['id']);	
@@ -159,11 +158,11 @@ class SpecialUserInterview extends SpecialPage {
 			
 			$userName = UserPagesHeaderModule::getUserName($wgTitle, BodyModule::getUserPagesNamespaces());
 			$userId = (User::isIP($userName)) ? 0 : User::newFromName($userName)->getID();
-			//$userId = User::newFromName($userName)->getID();
 
 			$user = User::newFromId($userId);
 			return Masthead::newFromUser( $user )->display( 50, 50 );
-		} else {
+		}
+		else {
 			// Answers
 			$avatar = new wAvatar($user->getId(), 'ml');
 			return $avatar->getAvatarURL();
@@ -172,12 +171,39 @@ class SpecialUserInterview extends SpecialPage {
 	
 	
 	static private function saveAdminQuestion($data) {
+		global $wgCityId;
+
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->query('DELETE FROM user_interview_questions;');
 		
-		if ($data) {
-			foreach ($data as $question) {
-				$sql = "INSERT INTO user_interview_questions (question) VALUES ('$question');";
+		$answered_questions = SpecialUserInterview::getUserQuestions();
+		
+
+		$addedKeys = array();
+		foreach (array_keys($data) as $single) {
+			if (array_key_exists($single, $answered_questions)) { // CHANGE TO $answered_questions
+				$value = $data[$single];
+				$sql = "UPDATE user_interview_questions SET question = '$value', wiki_id = $wgCityId WHERE id = $single;";
+				$dbw->query($sql);
+			}
+			else {
+				$question = $data[$single];
+				$sql = "INSERT INTO user_interview_questions (wiki_id, question) VALUES ($wgCityId, '$question');";	
+				$dbw->query($sql);
+			}
+			array_push($addedKeys,$single);
+			
+		}
+		
+		$oldKeys = array();
+		foreach ($answered_questions as $question) {
+			array_push($oldKeys, $question['id']);
+		}
+		
+		
+		$deleteQuestions = array_diff($oldKeys, $addedKeys);
+		if ($deleteQuestions) {
+			foreach ($deleteQuestions as $deleteQuestion) {
+				$sql = "DELETE FROM user_interview_questions WHERE id = $deleteQuestion;";
 				$dbw->query($sql);
 			}
 		}
@@ -185,8 +211,11 @@ class SpecialUserInterview extends SpecialPage {
 	
 	
 	static function getUserQuestions() {
-		$dbw = wfGetDB( DB_MASTER );
-		$sql = 'SELECT * FROM user_interview_questions ORDER BY id DESC;';
+		global $wgCityId;
+		
+		$dbw = wfGetDB( DB_SLAVE );
+		
+		$sql = "SELECT * FROM user_interview_questions WHERE wiki_id = {$wgCityId} ORDER BY id DESC;";
 		$res = $dbw->query($sql);
 		$data = array();
 		
@@ -204,17 +233,20 @@ class SpecialUserInterview extends SpecialPage {
 	
 	
 	static private function saveUserAnswers($data) {
-		global $wgUser;
+		global $wgUser, $wgCityId;
 		$userId = $wgUser->getId();
 		
 		if ($userId != 0) {
+			
 			$dbw = wfGetDB( DB_MASTER );
-			$query = "DELETE FROM user_interview_answers WHERE user_id = '{$userId}';";
+			
+			
+			$query = "DELETE FROM user_interview_answers WHERE user_id = '{$userId}' AND wiki_id = {$wgCityId};";
 			$dbw->query($query);
 			
 			foreach ($data as $insertRow) {
-				$query = sprintf("INSERT INTO user_interview_answers (question_id, user_id, question, answer) VALUES(%s, %s, '%s', '%s');",
-				$insertRow['question_id'], $userId, $insertRow['question'], $insertRow['answer'] );
+				$query = sprintf("INSERT INTO user_interview_answers (wiki_id, question_id, user_id, question, answer) VALUES(%s, %s, %s, '%s', '%s');",
+				$wgCityId, $insertRow['question_id'], $userId, $insertRow['question'], $insertRow['answer'] );
 				$dbw->query($query);
 			}
 			$dbw->commit();
@@ -223,15 +255,15 @@ class SpecialUserInterview extends SpecialPage {
 	
 	
 	static  private function getUserAnswers() {
-		global $wgUser, $wgTitle;
+		global $wgUser, $wgTitle, $wgCityId;
 		
 		$userName = UserPagesHeaderModule::getUserName($wgTitle, BodyModule::getUserPagesNamespaces());
 		$userId = (User::isIP($userName)) ? 0 : User::newFromName($userName)->getID();
 		
 		if ($userId != 0) {
-			$dbw = wfGetDB( DB_MASTER );
+			$dbw = wfGetDB( DB_SLAVE );
 			
-			$query = "SELECT * FROM user_interview_answers WHERE user_id = {$userId};";
+			$query = "SELECT * FROM user_interview_answers WHERE user_id = {$userId} AND wiki_id = {$wgCityId};";
 			
 			$res = $dbw->query($query);
 			$data = array();
@@ -253,7 +285,6 @@ class SpecialUserInterview extends SpecialPage {
 	static private function saveInUserProfile($html) {
 		if ($html) {
 			global $wgOut, $wgTitle, $wgUser;
-			//$userURL = UserPagesHeaderModule::getUserURL();
 			
 			$userID = $wgUser->getID();
 			$userURL  = User::newFromId($userID)->getUserPage()->getLocalURL();
@@ -262,8 +293,7 @@ class SpecialUserInterview extends SpecialPage {
 			$wgArticle = new Article($articleTitle);
 			$userProfileContent = $wgArticle->getContent(); // reading content
 						
-			// remove already existing sync
-			
+			// remove already existing interview tag
 			$interviewTag = "<userinterview />\n";
 						
 			$regex = '#<userinterview />#i';
@@ -273,7 +303,6 @@ class SpecialUserInterview extends SpecialPage {
 			
 			// save updated profile
 			$summary = "answered a user interview";
-			//NotificationsModule::addConfirmation($summary);
 			
 			$status = $wgArticle->doEdit($newUserProfileContent, $summary, 
 					( 0 ) |
