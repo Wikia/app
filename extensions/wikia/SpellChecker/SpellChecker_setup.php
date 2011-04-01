@@ -13,7 +13,6 @@
  * subdirectory, and add the following line to LocalSettings.php:
  *     require_once("$IP/extensions/wikia/SpellChecker/SpellChecker_setup.php");
  */
-
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Spell Checker',
 	'version' => '0.1',
@@ -22,28 +21,28 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg' => 'spellchecker-desc',
 );
 
+$dir = dirname(__FILE__);
+
+// i18n
+$wgExtensionMessagesFiles['SpellChecker'] = $dir . '/SpellChecker.i18n.php';
+
+// classes
+$wgAutoloadClasses['SpellChecker'] = $dir . '/SpellChecker.class.php';
+$wgAutoloadClasses['SpellCheckerAjax'] = $dir . '/SpellCheckerAjax.class.php';
+$wgAutoloadClasses['SpellCheckerDictionary'] = $dir . '/SpellCheckerDictionary.class.php';
+$wgAutoloadClasses['SpellCheckerInfoSpecial'] = $dir . '/SpellCheckerInfoSpecial.class.php';
+$wgAutoloadClasses['SpellCheckerService'] = $dir . '/SpellCheckerService.class.php';
+
+// special page
+$wgSpecialPages['SpellCheckerInfo'] = 'SpellCheckerInfoSpecial';
+
 $wgExtensionFunctions[] = 'SpellCheckerSetup';
 
 function SpellCheckerSetup() {
-        $dir = dirname(__FILE__);
-
 	// WikiaApp
 	$app = WF::build('App');
 
-	// i18n
-	$app->registerExtensionMessageFile('SpellChecker', $dir . '/SpellChecker.i18n.php' );
-
-	// classes
-	$app->registerClass('SpellChecker', $dir . '/SpellChecker.class.php');
-	$app->registerClass('SpellCheckerAjax', $dir . '/SpellCheckerAjax.class.php');
-	$app->registerClass('SpellCheckerDictionary', $dir . '/SpellCheckerDictionary.class.php');
-	$app->registerClass('SpellCheckerInfoSpecial', $dir . '/SpellCheckerInfoSpecial.class.php');
-	$app->registerClass('SpellCheckerService', $dir . '/SpellCheckerService.class.php');
-
 	WF::addClassConstructor('SpellChecker', array('app' => $app));
-
-	// special page
-	$app->registerSpecialPage('SpellCheckerInfo', 'SpellCheckerInfoSpecial');
 
 	// hooks
 	$app->registerHook('RTEAddGlobalVariablesScript', 'SpellChecker', 'onRTEAddGlobalVariablesScript');
