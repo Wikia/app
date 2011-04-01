@@ -120,9 +120,9 @@ class AssetsConfig {
 				// reference to a function that returns array of URIs
 				$assets = array_merge($assets, call_user_func(substr($item, 10), $combine, $minify, $params));
 
-			} else if(substr($item, 0, 7) == 'http://' || substr($item, 0, 8) == 'https://') {
+			} else if(Http::isValidURI($item)) {
 
-				// reference to remote file (only http, not https)
+				// reference to remote file (http and https)
 				$assets[] = $item;
 
 			}
