@@ -29,9 +29,9 @@ function renderNewpage( $input, $argv, &$parser ) {
     # Put this on the sandbox page:  (works in MediaWiki 1.5.5)
     #   <example argument="foo" argument2="bar">Testing text **example** in between the new tags</example>
 
-    $saneinput = $parser->getTitle()->getText();
-    if($saneinput == "Homepage" || $saneinput == "Suche" || $saneinput == "Neue Seite erstellen")
-      $saneinput = "";
+	$saneinput = $parser->getTitle()->getText();
+	if ( Title::newMainPage()->getText() == $saneinput || $saneinput == "Suche" || $saneinput == "Neue Seite erstellen" )
+		$saneinput = "";
 
     $output = "<p />
       <form action=\"/Spezial:NeueWebsite\" method=\"get\">
