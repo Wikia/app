@@ -474,6 +474,7 @@
 				'SpecialPage:LayoutBuilder',
 				'SpecialPage:MyContributions',
 				'SpecialPage:WikiaLabs',
+				'SpecialPage:Statistics',
 			);
 		}
 
