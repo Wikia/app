@@ -23,13 +23,10 @@ if (!defined('MEDIAWIKI'))
 	exit( 1 ) ;
 }
 
-global  $wgAvailableRights, $wgGroupPermissions, $wgMessageCache;
-$wgAvailableRights[] = 'whatismyip';
-$wgGroupPermissions['*']['whatismyip'] = true;
+$dir = dirname(__FILE__) . '/';
+$wgAutoloadClasses['WhatIsMyIP'] = $dir . 'whatismyip.php'; # Tell MediaWiki to load the extension body.
+$wgExtensionMessagesFiles['WhatIsMyIP'] = $dir . 'whatismyip.i18n.php';
 
-if (!function_exists('extAddSpecialPage'))
-{
-	require("$IP/extensions/wikia/whatismyip.php");
-}
-extAddSpecialPage( dirname(__FILE__) . '/whatismyip_body.php', 'whatismyip', 'WhatIsMyIP' );
-$wgSpecialPageGroups['whatismyip'] = 'users';
+extAddSpecialPage( $dir . 'whatismyip_body.php', 'WhatIsMyIP', 'WhatIsMyIP' );
+
+$wgSpecialPageGroups['WhatIsMyIP'] = 'wikia';

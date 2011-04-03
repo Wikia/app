@@ -6,24 +6,16 @@ if (!defined('MEDIAWIKI'))
 	exit(1) ;
 }
 
-global $wgMessageCache, $wgOut;
-$wgMessageCache->addMessage( "whatismyip", "What is my IP" );
-$wgMessageCache->addMessage( "whatismyip_out", "Your IP: $1" );
-
 class WhatIsMyIP extends SpecialPage 
 {
 	function  __construct() {
 		parent::__construct('WhatIsMyIP' /*class*/);
+		wfLoadExtensionMessages("WhatIsMyIP");
 	} 
-
-	function WhatIsMyIP() 
-	{
-		SpecialPage::SpecialPage( 'WhatIsMyIP', 'whatismyip' );
-	}
 
 	function execute () 
 	{
-		global $wgMessageCache, $wgOut;
+		global $wgOut;
 		$wgOut->SetPageTitle(wfMsg('whatismyip'));
 		$ip = wfGetIP();
 		$wgOut->addWikiMsg( 'whatismyip_out', $ip );
