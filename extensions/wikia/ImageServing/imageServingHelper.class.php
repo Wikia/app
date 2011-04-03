@@ -56,7 +56,7 @@ class imageServingHelper{
 		wfProfileIn(__METHOD__);
 		
 		if( $file instanceof File ||  $file instanceof LocalFile ) {
-			$res = " <image mw='".$file->getTitle()->getDBkey()."' /> ";			
+			$res = " <image mw='".$file->getTitle()->getPartialURL()."' /> ";			
 		}
 		
 		wfProfileOut(__METHOD__); 
@@ -101,10 +101,11 @@ class imageServingHelper{
 	 */
 
 	public static function bulidIndex($articleId, $images, $ignoreEmpty = false) {
-                global $IP;
 		/* 0 and 1 image don't need to be indexed */
 		wfProfileIn(__METHOD__);
 		$db = wfGetDB(DB_MASTER, array());
+
+		array_walk( $images, create_function( '&$n', '$n = urldecode( $n );' ) );
 
 		if( (count($images) < 1) ) {
 			if ($ignoreEmpty) {
