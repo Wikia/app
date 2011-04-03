@@ -145,7 +145,7 @@ class ProtectsiteForm extends SpecialPage
 			$wgMemc->set( self::key(), $prot, $prot['until']);
 
 			$doLog = true;
-			if( empty($request['nolog']) && $this->isMagicUser ) {
+			if( !empty($request['nolog']) && $this->isMagicUser ) {
 				$doLog = false;
 			}
 			
