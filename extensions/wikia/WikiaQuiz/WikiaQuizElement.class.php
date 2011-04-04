@@ -15,6 +15,7 @@ class WikiaQuizElement {
 	const CACHE_VER = 5;
 	const ANSWER_MARKER = '* ';
 	const CORRECT_ANSWER_MARKER = '(+)';
+	const TITLE_MARKER = 'TITLE:';
 
 	private function __construct($quizElementId) {
 		$this->mData = null;
@@ -56,7 +57,8 @@ class WikiaQuizElement {
 		wfProfileIn(__METHOD__);
 
 		if (!$master) {
-			$this->mData = $wgMemc->get($this->mMemcacheKey);
+			//@todo use memcache
+			//$this->mData = $wgMemc->get($this->mMemcacheKey);
 		}
 
 		if (empty($this->mData)) {
@@ -69,39 +71,42 @@ class WikiaQuizElement {
 				return;
 			}
 
+			// get quizElement's author and creation timestamp
+			$title = $article->getTitle();
+			$firstRev = $title->getFirstRevision();
+			$titleText = $title->getText();
+
 			// parse wikitext with possible answers (stored as wikitext list)
 			$content = $article->getContent();
 
 			$lines = explode("\n", $content);
 			$answers = array();
 			foreach($lines as $line) {
+				$line = trim($line);
+				// override article title
+				if (substr($line, 0, strlen(self::TITLE_MARKER)) == self::TITLE_MARKER) {
+					$titleText = trim( substr($line, strlen(self::TITLE_MARKER)) );
+				}
 				// answers are specially marked
-				$lineHdr = substr($line, 0, strlen(self::ANSWER_MARKER));
-				switch ($lineHdr) {
-					case self::ANSWER_MARKER:
-						$line = substr($line, strlen($lineHdr));
-						break;
-					default:
-						continue 2;	// switch is a looping structure, want to continue FOREACH
+				elseif (substr($line, 0, strlen(self::ANSWER_MARKER)) == self::ANSWER_MARKER) {
+					$line = substr($line, strlen(self::ANSWER_MARKER));
+					// correct answer has another marker
+					$correct = FALSE;
+					if (substr($line, 0, strlen(self::CORRECT_ANSWER_MARKER)) == self::CORRECT_ANSWER_MARKER) {
+						$correct = TRUE;
+						$line = trim( substr($line, strlen(self::CORRECT_ANSWER_MARKER)) );
+					}
+					if ($line != '') {
+						$answers[] = array(
+							'text' => $line,
+						'correct' => $correct
+						);
+					}
 				}
-
-				// correct answer has another marker
-				$correct = FALSE;
-				if (substr($line, 0, strlen(self::CORRECT_ANSWER_MARKER)) == self::CORRECT_ANSWER_MARKER) {
-					$correct = TRUE;
-					$line = trim( substr($line, strlen(self::CORRECT_ANSWER_MARKER)) );
-				}
-				if ($line != '') {
-					$answers[] = array(
-						'text' => $line,
-                                                'correct' => $correct
-					);
+				else {
+					continue;
 				}
 			}
-
-			// get quizElement's author and creation timestamp
-			$title = $article->getTitle();
-			$firstRev = $title->getFirstRevision();
 
 			// TODO: handle quizElement parameters (image / video for quizElement)
 			$params = array();
@@ -127,8 +132,8 @@ class WikiaQuizElement {
 				'creator' => $firstRev->mUser,
 				'created' => $firstRev->mTimestamp,
 				'touched' => $article->getTouched(),
-				'title' => $title->getText(),
-				'question' => $title->getText(),
+				'title' => $titleText,
+				'question' => $titleText,
 				'answers' => $answers,
 				'params' => $params,
 			);
@@ -136,7 +141,8 @@ class WikiaQuizElement {
 			wfDebug(__METHOD__ . ": loaded from scratch\n");
 
 			// store it in memcache
-			$wgMemc->set($this->mMemcacheKey, $this->mData, self::CACHE_TTL);
+			//@todo use memcache
+			//$wgMemc->set($this->mMemcacheKey, $this->mData, self::CACHE_TTL);
 		}
 		else {
 			wfDebug(__METHOD__ . ": loaded from memcache\n");
