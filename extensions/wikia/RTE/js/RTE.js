@@ -204,7 +204,7 @@ window.RTE = {
 		GlobalTriggers.fire('rterequestcss',css);
 
 		for (var n=0; n<css.length; n++) {
-			var cb = ( (css[n].indexOf('?') > -1) ? '' : ('?' + CKEDITOR.timestamp) );
+			var cb = ( (css[n].indexOf('?') > -1 || css[n].indexOf('__am') > -1) ? '' : ('?' + CKEDITOR.timestamp) );
 			RTE.instance.addCss('@import url(' + css[n] + cb + ');');
 		}
 
