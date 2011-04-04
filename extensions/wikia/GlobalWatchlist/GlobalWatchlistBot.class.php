@@ -241,10 +241,13 @@ class GlobalWatchlistBot {
 	 */
 	private function markWeeklyDigestAsVisited() {
 		$this->mCityList = $this->getWikisFromDigestList();
-
+		
+		$cnt = count($this->mWatchlisters);
+		$loop = 1;
 		foreach ( $this->mWatchlisters as $iUserId => $user_name ) {
-			$this->printDebug( "Markig all digested pages as 'visited' for user: " . $user_name );
+			$this->printDebug( "Marking all digested pages as 'visited' for user: " . $user_name . " ($iUserId), loop: $loop/$cnt" );
 			$this->updateUserWatchlist ( $iUserId );
+			$loop++;
 		}
 	}
 
