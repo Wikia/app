@@ -15,7 +15,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * Defines the maximum length of a string that string functions are allowed to operate on
  * Prevention against denial of service by string function abuses.
  */
-$wgPFStringLengthLimit = 1000;
+/* Wikia change start */
+if ( empty( $wgPFStringLengthLimit ) ) {
+	$wgPFStringLengthLimit = 1000;
+}
+/* Wikia change end */
 
 /**
  * Enable string functions.
