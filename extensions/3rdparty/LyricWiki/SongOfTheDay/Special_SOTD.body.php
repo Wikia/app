@@ -1,6 +1,6 @@
 <?php
 /**
- * TODO: Make sure to append whitespace after existing noms
+ * TODO: Indicate which fields are optional.
  * TODO: Add comments to SQL queries (so ops ppl and other engineers will know what's going on).
  * TODO: When a user hits the page, automatically display their nominations on it (the token thing can probably go away & we can just use id's instead).
  * TODO: Use our code-conventions for linebreaks (not a huge issue).
