@@ -1000,7 +1000,7 @@ class SpecialSearch {
 		$out .= Html::input( 'search', $term, 'search', array(
 			'id' => $this->searchAdvanced ? 'powerSearchText' : 'searchText',
 			'size' => '50',
-			'autofocus'
+			#'autofocus' // Wikia - commented out due to BugId:4016
 		) ) . "\n";
 		$out .= Html::hidden( 'fulltext', 'Search' ) . "\n";
 		$out .= Xml::submitButton( wfMsg( 'searchbutton' ) ) . "\n";
