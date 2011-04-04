@@ -1,5 +1,6 @@
 <?php
 /**
+ * TODO: Make sure to append whitespace after existing noms
  * TODO: Add comments to SQL queries (so ops ppl and other engineers will know what's going on).
  * TODO: When a user hits the page, automatically display their nominations on it (the token thing can probably go away & we can just use id's instead).
  * TODO: Use our code-conventions for linebreaks (not a huge issue).
@@ -226,7 +227,7 @@ class SOTD extends SpecialPage
 							// Make sure the previous nominations (if there are any) end with two br's in a row.
 							// If there are no previous nominations, there should still be one nomination.
 							$matches = array();
-							while(0 >= preg_match("/(==START==|<br\/?>)\s*<br\/>/is", $content, $matches)){
+							while(0 >= preg_match("/(==START==|<br\/?>)\s*<br\/>\s*$/is", $content, $matches)){
 								$content .= "\n<br/>\n";
 							}
 
