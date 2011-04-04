@@ -1,4 +1,5 @@
 ﻿-- Creates the table for the extension SOTD
+DROP TABLE IF EXISTS sotdnoms;
 CREATE TABLE sotdnoms (
 	sn_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
 
