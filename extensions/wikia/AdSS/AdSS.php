@@ -178,6 +178,20 @@ $wgAdSS_pricingConf['low'] = array(
 			'period' => 'm', //monthly
 			),
 		);
+$wgAdSS_pricingConf['reviews'] = array(
+		'page-day' => array(
+			'price'   => '2.00',
+			'period'  => 'd',
+			),
+		'page-month' => array(
+			'price'   => '30.00',
+			'period'  => 'm',
+			),
+		'page-year' => array(
+			'price'   => '250.00',
+			'period'  => 'y',
+			),
+		);
 if( !isset( $wgAdSS_pricingLevel ) || !isset( $wgAdSS_pricingConf[$wgAdSS_pricingLevel] ) ) {
 	$wgAdSS_pricingLevel = 'low';
 }

@@ -63,7 +63,19 @@ class AdSS_Controller extends SpecialPage {
 			$adForm->loadFromRequest( $wgRequest );
 			$this->save( $adForm );
 		} else {
-			$adForm->set( 'wpType', 'site-premium' );
+			global $wgEnableReviews;
+			if( !empty( $wgEnableReviews ) ) {
+				$page = $wgRequest->getText( 'page' );
+				if( !empty( $page ) ) {
+					$title = Title::newFromText( $page );
+					if( $title && $title->exists() ) {
+						$adForm->set( 'wpPage', $page );
+					}
+				}
+				$adForm->set( 'wpType', 'page-month' );
+			} else {
+				$adForm->set( 'wpType', 'site-premium' );
+			}
 			$wgOut->addInlineScript( '$(function() { $.tracker.byStr("adss/form/view") } )' );
 			$this->displayForm( $adForm );
 		}
@@ -71,6 +83,7 @@ class AdSS_Controller extends SpecialPage {
 
 	function displayForm( $adForm ) {
 		global $wgOut, $wgAdSS_templatesDir, $wgUser, $wgRequest;
+		global $wgEnableReviews;
 
 		$sitePricing = AdSS_Util::getSitePricing();
 
@@ -108,7 +121,11 @@ class AdSS_Controller extends SpecialPage {
 			}
 		}
 
-		$wgOut->addHTML( $tmpl->render( 'adForm' ) );
+		if( !empty( $wgEnableReviews ) ) {
+			$wgOut->addHTML( $tmpl->render( 'adForm-reviews' ) );
+		} else {
+			$wgOut->addHTML( $tmpl->render( 'adForm' ) );
+		}
 		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/AdSS/css/adform.scss'));
 	}
 
@@ -270,7 +287,10 @@ class AdSS_Controller extends SpecialPage {
 		if( $wgUser->isAllowed( 'adss-admin' ) ) {
 			AdSS_Util::flushCache( $ad->pageId, $ad->wikiId );
 		} else {
-			$this->displayUpsellForm( $ad );
+			global $wgEnableReviews;
+			if( empty( $wgEnableReviews ) ) {
+				$this->displayUpsellForm( $ad );
+			}
 
 			if( !empty( $wgAdSS_contactEmail ) ) {
 				$to = array();
