@@ -20,7 +20,7 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 $wgHooks['ParserFirstCallInit'][] = 'wfHiscores';
 $wgExtensionCredits['parserhook'][] = array(
     'name' => 'RSHiscores',
-    'version' => '2.0.6',
+    'version' => '2.0.7',
     'description' => 'A parser function returning raw player data from RuneScape\'s Hiscores Lite',
     'url' => 'http://runescape.wikia.com/wiki/User:Catcrewser/RSHiscores',
     'author' => '[http://runescape.wikia.com/wiki/User_talk:Catcrewser TehKittyCat]'
@@ -55,56 +55,80 @@ function wfHiscores_Magic( &$magicWords ) {
 #Types: 0-Rank, 1-Level(Default), 2-Experience
 
 # Function for the parser function
-function wfHiscores_Render( &$parser, $player = '', $skill = 0, $type = 1 ) {
+function wfHiscores_Render( &$parser, $player = '', $skill = 0, $type = 1, $debug = false ) {
     global $wgRSch, $wgRSHiscoreCache, $wgRSLimit, $wgRSTimes, $wgHTTPTimeout;
-    $player = trim( $player );
-    if( $player == '' ) {
-        return 'A'; # No (display)name entered
-    } elseif( array_key_exists( $player, $wgRSHiscoreCache ) ) {
-        $data = $wgRSHiscoreCache[$player];
-        # Check to see if an error has already occurred, if so then return the error, otherwise will return wrong error and waste a bit of resource.
-        # Checks first char as some errors have integer statuses.
-        if( ctype_alpha ( $data{0} ) ) return $data;
-        $data = explode( "\n", rtrim($data), $skill+2 );
-        if( !array_key_exists( $skill, $data ) ) return 'F'; # Non-existant skill
-        $data = explode( ',', $data[$skill], $type+2 );
-        if( !array_key_exists( $type, $data ) ) return 'G'; # Non-existant type
-        return $data[$type];
-    } elseif( $wgRSTimes < $wgRSLimit || $wgRSLimit == 0 ) {
-        $wgRSTimes++;
-        if( !isset( $wgRSch ) ) {
-            # Setup cURL
-            $wgRSch = curl_init();
-            curl_setopt( $wgRSch, CURLOPT_TIMEOUT, $wgHTTPTimeout );
-            curl_setopt( $wgRSch, CURLOPT_RETURNTRANSFER, TRUE );
-        }
-        # Other known working URL: 'http://hiscore.runescape.com/index_lite.ws?player='
-        curl_setopt( $wgRSch, CURLOPT_URL, 'http://services.runescape.com/m=hiscore/index_lite.ws?player='.urlencode( $player ) );
-        if( $data = curl_exec( $wgRSch ) ) {
-            $wgRSHiscoreCache[$player] = $data;
-            $status = curl_getinfo( $wgRSch, CURLINFO_HTTP_CODE );
-            if( $status == 200 ) {
-                $data = $wgRSHiscoreCache[$player];
-                $data = explode( "\n", $data, $skill+2 );
-                if( !array_key_exists( $skill, $data ) ) return 'F'; # Non-existant skill
-                $data = explode( ',', $data[$skill], $type+2 );
-                if( !array_key_exists( $type, $data ) ) return 'G'; # Non-existant type
-                return $data[$type];
-            } elseif( $status == 404 ) {
-                return $wgRSHiscoreCache[$player] = 'B'; # Non-existant player
-            }
-            # Unexpected HTTP status code
-            return $wgRSHiscoreCache[$player] = 'D'.$status;
-        }
-        # An unhandled curl error occurred, report it.
-        $errno = curl_errno ( $wgRSch );
-        if( $errno ) {
-            return $wgRSHiscoreCache[$player] = 'C'.$errno;
-        }
-        # Should be impossible, but odd things happen, so handle it.
-        return $wgRSHiscoreCache[$player] = 'C';
+    if( $debug != '!' ) {
+	    $player = trim( $player );
+	    if( $player == '' ) {
+	        return 'A'; # No (display)name entered
+	    } elseif( array_key_exists( $player, $wgRSHiscoreCache ) ) {
+	        $data = $wgRSHiscoreCache[$player];
+	        # Check to see if an error has already occurred, if so then return the error, otherwise will return wrong error and waste a bit of resource.
+	        # Checks first char as some errors have integer statuses.
+	        if( ctype_alpha ( $data{0} ) ) return $data;
+	        $data = explode( "\n", rtrim($data), $skill+2 );
+	        if( !array_key_exists( $skill, $data ) ) return 'F'; # Non-existant skill
+	        $data = explode( ',', $data[$skill], $type+2 );
+	        if( !array_key_exists( $type, $data ) ) return 'G'; # Non-existant type
+	        return $data[$type];
+	    } elseif( $wgRSTimes < $wgRSLimit || $wgRSLimit == 0 ) {
+	        $wgRSTimes++;
+	        if( !isset( $wgRSch ) ) {
+	            # Setup cURL
+	            $wgRSch = curl_init();
+	            curl_setopt( $wgRSch, CURLOPT_TIMEOUT, $wgHTTPTimeout );
+	            curl_setopt( $wgRSch, CURLOPT_RETURNTRANSFER, TRUE );
+	        }
+	        # Other known working URL: 'http://hiscore.runescape.com/index_lite.ws?player='
+	        curl_setopt( $wgRSch, CURLOPT_URL, 'http://services.runescape.com/m=hiscore/index_lite.ws?player='.urlencode( $player ) );
+	        if( $data = curl_exec( $wgRSch ) ) {
+	            $wgRSHiscoreCache[$player] = $data;
+	            $status = curl_getinfo( $wgRSch, CURLINFO_HTTP_CODE );
+	            if( $status == 200 ) {
+	                $data = $wgRSHiscoreCache[$player];
+	                $data = explode( "\n", $data, $skill+2 );
+	                if( !array_key_exists( $skill, $data ) ) return 'F'; # Non-existant skill
+	                $data = explode( ',', $data[$skill], $type+2 );
+	                if( !array_key_exists( $type, $data ) ) return 'G'; # Non-existant type
+	                return $data[$type];
+	            } elseif( $status == 404 ) {
+	                return $wgRSHiscoreCache[$player] = 'B'; # Non-existant player
+	            }
+	            # Unexpected HTTP status code
+	            return $wgRSHiscoreCache[$player] = 'D'.$status;
+	        }
+	        # An unhandled curl error occurred, report it.
+	        $errno = curl_errno ( $wgRSch );
+	        if( $errno ) {
+	            return $wgRSHiscoreCache[$player] = 'C'.$errno;
+	        }
+	        # Should be impossible, but odd things happen, so handle it.
+	        return $wgRSHiscoreCache[$player] = 'C';
+	    } else {
+	        return 'E'; # Parser function limit reached.
+	    }
     } else {
-        return 'E'; # Parser function limit reached.
+    	curl_setopt( $wgRSch, CURLOPT_URL, 'http://services.runescape.com/m=hiscore/index_lite.ws?player='.urlencode( $player ) );
+    	if( $data = curl_exec( $wgRSch ) ) {
+    		$ret = 'H'.$data.'D,'.$wgRSLimit.','.$wgHTTPTimeout.','.curl_getinfo( $wgRSch, CURLINFO_HTTP_CODE ).','.curl_getinfo( $wgRSch, CURLINFO_TOTAL_TIME ).
+    		','.curl_getinfo( $wgRSch, CURLINFO_NAMELOOKUP_TIME ).','.curl_getinfo( $wgRSch, CURLINFO_CONNECT_TIME ).','.curl_getinfo( $wgRSch, CURLINFO_PRETRANSFER_TIME ).
+    		','.curl_getinfo( $wgRSch, CURLINFO_STARTTRANSFER_TIME ).','.curl_getinfo( $wgRSch, CURLINFO_SPEED_DOWNLOAD ).','.curl_getinfo( $wgRSch, CURLINFO_SPEED_UPLOAD );
+    	} else {
+    		$ret = 'H'.curl_errno ( $wgRSch ).'E,'.$wgRSLimit.','.$wgHTTPTimeout.','.curl_getinfo( $wgRSch, CURLINFO_HTTP_CODE ).','.curl_getinfo( $wgRSch, CURLINFO_TOTAL_TIME ).
+    		','.curl_getinfo( $wgRSch, CURLINFO_NAMELOOKUP_TIME ).','.curl_getinfo( $wgRSch, CURLINFO_CONNECT_TIME ).','.curl_getinfo( $wgRSch, CURLINFO_PRETRANSFER_TIME ).
+    		','.curl_getinfo( $wgRSch, CURLINFO_STARTTRANSFER_TIME ).','.curl_getinfo( $wgRSch, CURLINFO_SPEED_DOWNLOAD ).','.curl_getinfo( $wgRSch, CURLINFO_SPEED_UPLOAD );
+    	}
+    	curl_setopt( $wgRSch, CURLOPT_URL, 'http://www.google.com/' );
+    	if( curl_exec( $wgRSch ) ) {
+    		$ret .= 'G'.curl_getinfo( $wgRSch, CURLINFO_HTTP_CODE ).','.curl_getinfo( $wgRSch, CURLINFO_TOTAL_TIME ).
+    		','.curl_getinfo( $wgRSch, CURLINFO_NAMELOOKUP_TIME ).','.curl_getinfo( $wgRSch, CURLINFO_CONNECT_TIME ).','.curl_getinfo( $wgRSch, CURLINFO_PRETRANSFER_TIME ).
+    		','.curl_getinfo( $wgRSch, CURLINFO_STARTTRANSFER_TIME ).','.curl_getinfo( $wgRSch, CURLINFO_SPEED_DOWNLOAD ).','.curl_getinfo( $wgRSch, CURLINFO_SPEED_UPLOAD );
+    	} else {
+    		$ret .= 'G'.curl_errno ( $wgRSch ).'E,'.curl_getinfo( $wgRSch, CURLINFO_HTTP_CODE ).','.curl_getinfo( $wgRSch, CURLINFO_TOTAL_TIME ).
+    		','.curl_getinfo( $wgRSch, CURLINFO_NAMELOOKUP_TIME ).','.curl_getinfo( $wgRSch, CURLINFO_CONNECT_TIME ).','.curl_getinfo( $wgRSch, CURLINFO_PRETRANSFER_TIME ).
+    		','.curl_getinfo( $wgRSch, CURLINFO_STARTTRANSFER_TIME ).','.curl_getinfo( $wgRSch, CURLINFO_SPEED_DOWNLOAD ).','.curl_getinfo( $wgRSch, CURLINFO_SPEED_UPLOAD );
+    	}
+    	return $ret;
     }
 }
 ## If A is returned, then no (display)name was entered.(Enter a username!)
@@ -115,4 +139,5 @@ function wfHiscores_Render( &$parser, $player = '', $skill = 0, $type = 1 ) {
 ## If E is returned, then the hiscores parser function limit was reached.(By default one, configurable with $wgRSLimit, limit is not affected by same username used repeatedly)
 ## If F is returned, then the skill does not exist.
 ## If G is returned, then the type does not exist.
+## If H<*> is returned, then this is debug mode.
 ## If anything else if returned, then it worked and that is the hiscores data.(Yay!)
