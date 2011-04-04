@@ -131,8 +131,8 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 	
 	private function shortenStr ( $body ) {
 
-		// Match 70 chars plus any remaining non-whitespace (to finish any words)
-		if (preg_match('/^(.{70}\S*)/s', $body, $matches)) {
+		// Match 70 chars plus up to 10 remaining non-whitespace (to finish any words)
+		if (preg_match('/^(.{70}\S{0,10})/s', $body, $matches)) {
 			$body_short = $matches[1].'...';
 		} else {
 			$body_short = $body;
