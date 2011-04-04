@@ -61,6 +61,11 @@ class AdSS_Util {
 
 	static function getPagePricing( $title=null ) {
 		global $wgAdSS_pricingConf, $wgAdSS_pricingLevel;
+		global $wgEnableReviews;
+
+		if( !empty( $wgEnableReviews ) ) {
+			return $wgAdSS_pricingConf['reviews'];
+		}
 
 		if( $title ) {
 			if( isset( $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['page'][$title->getText()] ) ) {

@@ -40,6 +40,8 @@ abstract class AdSS_Ad {
 	}
 
 	function loadFromForm( $f ) {
+		global $wgEnableReviews;
+
 		$this->userEmail = $f->get( 'wpEmail' );
 		$this->url = $f->get( 'wpUrl' );
 		if( strtolower( mb_substr( $this->url, 0, 7 ) ) == 'http://' ) {
@@ -47,11 +49,17 @@ abstract class AdSS_Ad {
 		}
 		switch( $f->get( 'wpType' ) ) {
 			case 'page':
+			case 'page-day':
+			case 'page-month':
+			case 'page-year':
 				$title = Title::newFromText( $f->get( 'wpPage' ) );
 				if( $title && $title->exists() ) {
 					$this->pageId = $title->getArticleId();
 					$this->weight = 1;
 					$this->price = AdSS_Util::getPagePricing( $title );
+					if( !empty( $wgEnableReviews ) ) {
+						$this->price = $this->price[ $f->get( 'wpType' ) ];
+					}
 				}
 				break;
 			case 'banner':

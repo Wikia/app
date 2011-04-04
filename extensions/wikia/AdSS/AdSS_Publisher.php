@@ -120,13 +120,18 @@ class AdSS_Publisher {
 
 	static function onMakeGlobalVariablesScript( &$vars ) {
 		global $wgTitle, $wgAdSS_templatesDir;
+		global $wgEnableReviews;
 		if( self::canShowAds( $wgTitle ) ) {
 			wfLoadExtensionMessages( 'AdSS' );
 			$ads = self::getPageAds( $wgTitle );
 			$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
 			
 			$selfAd = new AdSS_TextAd();
-			$selfAd->url = str_replace( 'http://', '', SpecialPage::getTitleFor( 'AdSS')->getFullURL() );
+			if( !empty( $wgEnableReviews ) ) {
+				$selfAd->url = str_replace( 'http://', '', SpecialPage::getTitleFor( 'AdSS')->getFullURL( 'page='.$wgTitle->getText() ) );
+			} else {
+				$selfAd->url = str_replace( 'http://', '', SpecialPage::getTitleFor( 'AdSS')->getFullURL() );
+			}
 			$selfAd->text = wfMsg( 'adss-ad-default-text' );
 			$selfAd->desc = wfMsg( 'adss-ad-default-desc' );
 
