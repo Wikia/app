@@ -180,7 +180,7 @@ class CreateWiki {
 	 * @return integer status of operation, 0 for success, non 0 for error
 	 */
 	public function create() {
-		global $wgWikiaLocalSettingsPath, $wgExternalSharedDB, $wgSharedDB;
+		global $wgWikiaLocalSettingsPath, $wgExternalSharedDB, $wgSharedDB, $wgUser;
 
 		wfProfileIn( __METHOD__ );
 
@@ -367,8 +367,8 @@ class CreateWiki {
 		/**
 		 * set hub/category
 		 */
-			$oldUser = $wgUser;
-			$wgUser = User::newFromName( 'CreateWiki script' );
+		$oldUser = $wgUser;
+		$wgUser = User::newFromName( 'CreateWiki script' );
 		$oHub = WikiFactoryHub::getInstance();
 		$oHub->setCategory( $this->mNewWiki->city_id, $this->mNewWiki->hub, "CW Setup" );
 		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category hub: {$this->mNewWiki->hub} \n", true );
@@ -396,26 +396,6 @@ class CreateWiki {
 		$langCreationVar = isset($wgLangCreationVariables[$wiki_type]) ? $wgLangCreationVariables[$wiki_type] : $wgLangCreationVariables;
 		$this->addCustomSettings( $this->mNewWiki->language, $langCreationVar, "language" );
 		wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wiki_type} and language: {$this->mNewWiki->language} \n", true );		
-
-		/**
-		 * set tags per language
-		 * @FIXME the switch is !@#$ creazy, but I didn't find a core function
-		 */
-		$langTag = $this->mNewWiki->language;
-		if ( $langTag !== 'en' ) {
-			switch ( $langTag ) {
-				case 'pt-br':
-					$langTag = 'pt';
-					break;
-				case 'zh-tw':
-				case 'zh-hk':
-					$langTag = 'zh';
-					break;
-			}
-
-			$tags = new WikiFactoryTags( $this->mNewWiki->city_id );
-			$tags->addTagsByName( $langTag );
-		}
 
 		/**
 		 * move main page
