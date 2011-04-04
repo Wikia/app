@@ -1,4 +1,5 @@
 <!-- s:<?= __FILE__ ?> -->
+<small><a href="<?php print $returnURL; ?>">Return</a></small>
 <?php if (!is_null($status)) { ?>
 <fieldset>
 	<legend><?= wfMsg('editaccount-status') ?></legend>
@@ -10,7 +11,6 @@
 	<?= $userEncoded ?><br />
 	ID: <?= $userId; ?><br />
 	Reg: <?= $userReg ; ?><br />
-	<br />
 	<table>
 	<tr>
 		<form method="post" action="">
@@ -51,6 +51,20 @@
 		</td>
 		</form>
 	</tr>
+<?php if( $isUnsub ) { ?>
+	<tr>
+		<form method="post" action="">
+		<td>
+			<?= wfMsg('editaccount-label-clearunsub') ?>
+		</td>
+		<td>
+			<input type="submit" value="<?= wfMsg('editaccount-submit-clearunsub') ?>" />
+			<input type="hidden" name="wpAction" value="clearunsub" />
+			<input type="hidden" name="wpUserName" value="<?= $user ?>" />
+		</td>
+		</form>
+	</tr>
+<?php } //end unsub ?>
 	</table>
 </fieldset>
 <fieldset>
