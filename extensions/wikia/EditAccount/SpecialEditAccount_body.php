@@ -100,6 +100,10 @@ class EditAccount extends SpecialPage {
 				$this->mStatus = $this->closeAccount();
 				$template = $this->mStatus ? 'selectuser' : 'displayuser';
 				break;
+			case 'clearunsub':
+				$this->mStatus = $this->clearUnsubscribe();
+				$template = $this->mStatus ? 'selectuser' : 'displayuser';
+				break;
 			case 'displayuser':
 				$template = 'displayuser';
 				break;
@@ -119,6 +123,8 @@ class EditAccount extends SpecialPage {
 				'userEncoded' => urlencode( $userName ),
 				'userId'  => is_object( $this->mUser ) ? $this->mUser->getID() : null,
 				'userReg' => is_object( $this->mUser ) ? date( 'r', strtotime( $this->mUser->getRegistration() ) ) : null,
+				'isUnsub' => is_object( $this->mUser ) ? ( ($this->mUser->isAllowed('unsubscribed'))?true:false ) : null,
+				'returnURL' => $this->getTitle()->getFullURL(),
 			) );
 		// HTML output
 		$wgOut->addHTML( $oTmpl->execute( $template ) );
@@ -260,5 +266,19 @@ class EditAccount extends SpecialPage {
 			$this->mStatusMsg = wfMsg( 'editaccount-error-close', $this->mUser->mName );
 			return false;
 		}
+	}
+	
+	/**
+	 * Clears the magic unsub bit
+	 *
+	 * @return Boolean: true
+	 */
+	function clearUnsub() {
+		$this->mUser->setOption( 'unsubscribed', 0 );
+		$this->mUser->saveSettings();
+
+		$this->mStatusMsg = wfMsg( 'editaccount-success-unsub', $this->mUser->mName );
+
+		return true;
 	}
 }
