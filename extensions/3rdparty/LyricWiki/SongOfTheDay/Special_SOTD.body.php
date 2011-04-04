@@ -356,7 +356,7 @@ class SOTD extends SpecialPage
 			else
 			{
 				$this->displayRestrictionError();
-				$wgOut->addHTML( wfMsgExt('sotd-thank-you', 'parseinline', $this->getTitle()->getPrefixedText() ) );
+				$wgOut->addHTML( wfMsgExt('sotd-back-to-page', 'parseinline', $this->getTitle()->getPrefixedText() ) );
 			}
 		}
 		elseif ( $par == 'Edit' )
