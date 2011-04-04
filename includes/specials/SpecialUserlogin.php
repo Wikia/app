@@ -487,11 +487,7 @@ class LoginForm {
 		// Handle part of this before incrementing the throttle so
 		// token-less login attempts don't count towards the throttle
 		// but wrong-token attempts do.
-		
-		// If the user doesn't have a login token yet, set one.
-		error_log ( "token = " . print_r(self::getLoginToken(), true ) );
-		error_log ( "mtoken = " . print_r($this->mToken, true ) );
-		
+				
 		if ( !self::getLoginToken() ) {
 			self::setLoginToken();
 			return self::NEED_TOKEN;
