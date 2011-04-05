@@ -32,10 +32,9 @@ $dir = dirname(__FILE__);
 $app = F::app();
 
 // autoloaded classes
-$wgAutoloadClasses['ScavengerHunt'] = "$dir/ScavengerHunt.class.php";
-$wgAutoloadClasses['ScavengerHuntAjax'] = "$dir/ScavengerHuntAjax.class.php";
-$wgAutoloadClasses['SpecialScavengerHunt'] = "$dir/SpecialScavengerHunt.php";
-
+$app->registerClass('ScavengerHunt', "$dir/ScavengerHunt.class.php");
+$app->registerClass('ScavengerHuntAjax', "$dir/ScavengerHuntAjax.class.php");
+$app->registerClass('SpecialScavengerHunt', "$dir/SpecialScavengerHunt.php");
 $app->registerClass('ScavengerHuntGame', "$dir/data/ScavengerHuntGame.class.php");
 $app->registerClass('ScavengerHuntGames', "$dir/data/ScavengerHuntGames.class.php");
 $app->registerClass('ScavengerHuntGameArticle', "$dir/data/ScavengerHuntGameArticle.class.php");
