@@ -270,7 +270,7 @@ class SpecialUserInterview extends SpecialPage {
 		if ($userId != 0) {
 			
 			global $wgExternalSharedDB;
-			$dbw = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			
 			$query = "SELECT * FROM user_interview_answers WHERE user_id = {$userId} AND wiki_id = {$wgCityId};";
 			
