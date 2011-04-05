@@ -17,15 +17,14 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 
 
 	protected function setUp() {
-		WikiaLabsSetup();
-		$this->object = WF::build( 'WikiaLabs' );
-		$this->app = WF::build( 'App' );
+		$this->object = F::build( 'WikiaLabs' );
+		$this->app = F::build( 'App' );
 	}
 
 	protected function tearDown() {
-		WF::setInstance( 'App', $this->app );
-		WF::unsetInstance( 'WikiaLabsProject' );
-		WF::unsetInstance( 'LogPage' );
+		F::setInstance( 'App', $this->app );
+		F::unsetInstance( 'WikiaLabsProject' );
+		F::unsetInstance( 'LogPage' );
 	}
 
 	protected function getUserMock(  ) {
@@ -52,11 +51,11 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 		    ->with( $this->equalTo( 'wgTitle' ) )
 		    ->will( $this->returnValue( $title ) );
 
-		WF::setInstance( 'App', $app );
+		F::setInstance( 'App', $app );
 
 		$moduleList = array();
 
-		$this->object = WF::build( 'WikiaLabs' );
+		$this->object = F::build( 'WikiaLabs' );
 		$this->object->onGetRailModuleSpecialPageList( $moduleList );
 
 		$this->assertTrue( is_array( $moduleList ) );
@@ -77,8 +76,8 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 		$project->expects( $this->once() )
 		        ->method( 'getExtensionsDict' );
 
-		WF::setInstance( 'EasyTemplate', $tmpl );
-		WF::setInstance( 'WikiaLabsProject', $project );
+		F::setInstance( 'EasyTemplate', $tmpl );
+		F::setInstance( 'WikiaLabsProject', $project );
 
 		$object = $this->getMock( 'WikiaLabs', array( 'getFogbugzAreas') );
 		$object->expects( $this->once() )
@@ -110,7 +109,7 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 			        ->with( $this->equalTo( self::TEST_USER_ID ), $this->equalTo( $rating ) );
 		}
 
-		WF::setInstance( 'WikiaLabsProject', $project );
+		F::setInstance( 'WikiaLabsProject', $project );
 
 		$user = $this->getMock( 'User' );
 		$user->expects( $this->atLeastOnce() )
@@ -197,7 +196,7 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 			$project->expects( $this->once() )
 			        ->method( 'update' );
 
-			WF::setInstance( 'WikiaLabsProject', $project );
+			F::setInstance( 'WikiaLabsProject', $project );
 		}
 
 		$object = $this->getMock( 'WikiaLabs', array( 'validateProjectForm', 'getImageUrl' ) );
@@ -266,7 +265,7 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 			*/
 		}
 
-		WF::setInstance( 'App', $app );
+		F::setInstance( 'App', $app );
 
 		$project = $this->getMock( 'WikiaLabsProject', array(), array( $this->app ) );
 		$project->expects( $this->once() )
@@ -278,16 +277,16 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 			$log->expects( $this->once() )
 			    ->method( 'addEntry' );
 
-			WF::setInstance( 'LogPage', $log );
+			F::setInstance( 'LogPage', $log );
 
 			$project->expects( $this->exactly(3) )
 			        ->method( 'getExtension' )
 			        ->will( $this->returnValue( $extension ) );
 		}
 
-		WF::setInstance( 'WikiaLabsProject', $project );
+		F::setInstance( 'WikiaLabsProject', $project );
 
-		$this->object = WF::build( 'WikiaLabs' );
+		$this->object = F::build( 'WikiaLabs' );
 		$this->object->setUser( $this->getUserMock() );
 		$this->object->switchProject( self::TEST_CITY_ID, $projectId, $onOff );
 	}
