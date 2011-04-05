@@ -645,7 +645,7 @@ JS;
 					'type' => 'toggle',
 					'label-message' => 'tog-fbconnect-push-allow-never',
 					'section' => 'fbconnect-prefstext/fbconnect-event-prefstext',
-					'default' => 1);
+			);
 
 			$preferences['fbconnect-connect'] = array(
 					'help' => $html,
