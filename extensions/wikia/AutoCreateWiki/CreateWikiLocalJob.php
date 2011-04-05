@@ -80,6 +80,7 @@ class CreateWikiLocalJob extends Job {
 			Wikia::log( __METHOD__, "user", "Founder user_id  is unknown {$this->mParams->founderId}" );
 		}
 
+		# check user name 
 		if ( ! $this->mFounder || $this->mFounder->isAnon() ) {
 			Wikia::log( __METHOD__, "user", "Cannot load user with user_id = {$this->mParams->founderId}" );
 			if ( !empty( $this->mParams->founderName  ) ) {
@@ -87,6 +88,18 @@ class CreateWikiLocalJob extends Job {
 				$this->mFounder->load();
 			}
 		}
+		
+		# use ExternalUser to check
+		if ( ! $this->mFounder || $this->mFounder->isAnon() ) {
+			global $wgExternalAuthType;
+			if ( $wgExternalAuthType ) {
+				$oExtUser = ExternalUser::newFromName( $this->mParams->founderName );
+				if ( is_object( $oExtUser ) ) {
+					$oExtUser->linkToLocal( $oExtUser->getId() );
+				}
+			}
+		}
+		
 		$wgUser = User::newFromName( "CreateWiki script" );
 
 		/**
