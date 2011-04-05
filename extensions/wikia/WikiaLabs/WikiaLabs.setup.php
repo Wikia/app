@@ -19,45 +19,45 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__) . '/';
 
 /**
+ * @var WikiaApp
+ */
+$app = F::app();
+
+/**
  * classes
  */
-$wgAutoloadClasses['WikiaLabsSpecial'] = $dir . 'WikiaLabsSpecial.class.php';
-$wgAutoloadClasses['WikiaLabsModule'] = $dir . 'WikiaLabsModule.class.php';
-$wgAutoloadClasses['WikiaLabs'] = $dir . 'WikiaLabs.class.php';
-$wgAutoloadClasses['WikiaLabsProject'] = $dir . 'WikiaLabsProject.class.php';
-$wgAutoloadClasses['WikiaLabsHelper'] = $dir . 'WikiaLabsHelper.class.php';
+$app->registerClass('WikiaLabsSpecial', $dir . 'WikiaLabsSpecial.class.php');
+$app->registerClass('WikiaLabsModule', $dir . 'WikiaLabsModule.class.php');
+$app->registerClass('WikiaLabs', $dir . 'WikiaLabs.class.php');
+$app->registerClass('WikiaLabsProject', $dir . 'WikiaLabsProject.class.php');
+$app->registerClass('WikiaLabsHelper', $dir . 'WikiaLabsHelper.class.php');
 
 /**
  * special pages
  */
-$wgSpecialPages['WikiaLabs'] = 'WikiaLabsSpecial';
+$app->registerSpecialPage('WikiaLabs', 'WikiaLabsSpecial');
 
 /**
 * message files
 */
-$wgExtensionMessagesFiles['WikiaLabs'] = $dir . 'WikiaLabs.i18n.php';
+$app->registerExtensionMessageFile('WikiaLabs', $dir . 'WikiaLabs.i18n.php' );
 
 /**
  * alias files
  */
-$wgExtensionAliasesFiles['WikiaLabs'] = $dir . 'WikiaLabs.alias.php';
+$app->registerExtensionAliasFile('WikiaLabs', $dir . 'WikiaLabs.alias.php');
 
-	/**
-	 * @var WikiaApp
-	 */
-	$app = F::app();
+/**
+ * Factory config
+ */
+F::addClassConstructor( 'WikiaLabs', array( 'app' => $app ) );
+F::addClassConstructor( 'WikiaLabsProject', array( 'app' => $app, 'id' => 0 ) );
 
-	/**
-	 * Factory config
-	 */
-	F::addClassConstructor( 'WikiaLabs', array( 'app' => $app ) );
-	F::addClassConstructor( 'WikiaLabsProject', array( 'app' => $app, 'id' => 0 ) );
-
-	/**
-	 * hooks
-	 */
-	$app->registerHook('GetRailModuleSpecialPageList', 'WikiaLabs', 'onGetRailModuleSpecialPageList' );
-	$app->registerHook('MyTools::getDefaultTools', 'WikiaLabs', 'onGetDefaultTools' );
+/**
+ * hooks
+ */
+$app->registerHook('GetRailModuleSpecialPageList', 'WikiaLabs', 'onGetRailModuleSpecialPageList' );
+$app->registerHook('MyTools::getDefaultTools', 'WikiaLabs', 'onGetDefaultTools' );
 
 	/*
 	 * set global
