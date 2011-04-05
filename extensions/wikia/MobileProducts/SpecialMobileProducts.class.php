@@ -68,7 +68,7 @@
 		$data['wgBlankImgUrl'] = $this->mBlankImgUrl;
 		$data['mobile'] = $this->mMobileBrowser;
 		
-		$this->mOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL("extensions/wikia/MobileProducts/css/{$templateName}.scss" ) );
+		$this->mOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("extensions/wikia/MobileProducts/css/{$templateName}.scss" ) );
 		$this->mOut->addScriptFile( "{$this->mExtensionPath}/../skins/common/jquery/jquery-slideshow-0.4.js" );
 		$this->mOut->addScriptFile( "{$this->mExtensionPath}/wikia/MobileProducts/js/MobileProducts.js" );
 		
