@@ -104,8 +104,30 @@ This app is constantly striving to be better - please give us feedback on ways t
 );
 
 $messages['qqq'] = array(
+	'mobileproducts' => 'do not translate, product name',
 	'mobileproducts-language-links' => 'Do not translate',
 	'mobileproducts-slides' => 'Message format: * article title (image in the file namespace)|article title (will be used as the link for the image)',
-	'mobileproducts-product-boxes' => 'Message format: * headline|description|article title (image in the file namespace)|article title (will be used as a link)',
- 	'mobileproducts-market-apps' => 'Message format: * App column name|[google|apple]::[FULL_APPSTORE_URL]'
+	'mobileproducts-product-boxes' => 'Message format: * headline|description|article title (image in the file namespace)|article title (will be used as a link); do not translate "Game Guides" and "LyricWiki", those are product names',
+ 	'mobileproducts-market-apps' => 'Message format: * App column name|[google|apple]::[FULL_APPSTORE_URL]; do not translate "Game Guides" and "LyricWiki", those are product names',
+	
+	//Wikiaphone
+	'mobileproducts-wikiaphone-device' => 'do not translate',
+	'mobileproducts-wikiaphone-slides' => 'do not translate, message format: * article title (image in the file namespace)',
+	'mobileproducts-wikiaphone-title' => 'do not translate, product name',
+	'mobileproducts-wikiaphone-markets' => 'Message format: * [google|apple|web]::[FULL_APPSTORE_URL]|Requirements',
+	'mobileproducts-wikiaphone-description' => 'Accepts wikitext syntax; do not translate "Wikia Moble", is a product name',
+	
+	//LyricWiki
+	'mobileproducts-lyricwiki-device' => 'do not translate',
+	'mobileproducts-lyricwiki-slides' => 'do not translate, message format: * article title (image in the file namespace)',
+	'mobileproducts-lyricwiki-title' => 'do not translate, product name',
+	'mobileproducts-lyricwiki-markets' => 'Message format: * [google|apple|web]::[FULL_APPSTORE_URL]|Requirements',
+	'mobileproducts-lyricwiki-description' => 'Accepts wikitext syntax; do not translate "LyricWiki", is a product name',
+	
+	//Game Guides
+	'mobileproducts-gameguides-device' => 'do not translate',
+	'mobileproducts-gameguides-slides' => 'do not translate, message format: * article title (image in the file namespace)',
+	'mobileproducts-gameguides-title' => 'do not translate, product name',
+	'mobileproducts-gameguides-markets' => 'Message format: * [google|apple|web]::[FULL_APPSTORE_URL]|Requirements',
+	'mobileproducts-gameguides-description' => 'Accepts wikitext syntax; do not translate "Game Guides", is a product name',
 );
