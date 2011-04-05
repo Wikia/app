@@ -115,7 +115,7 @@ HoverMenu.prototype.mouseout = function(event) {
 		//Mouse is still within the nav
 
 		//Hide nav immediately
-		$(event.currentTarget).children("ul").removeClass("show");
+		this.hideNav();
 		$.showAds();
 	}
 
