@@ -58,13 +58,15 @@ class CreateWikiLocalJob extends Job {
 	 */
 	public function run() {
 
-		global $wgUser, $wgErrorLog, $wgExtensionMessagesFiles;
+		global $wgUser, $wgErrorLog, $wgExtensionMessagesFiles, $wgDebugLogFile;
 
 		wfProfileIn( __METHOD__ );
 
 		$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = dirname(__FILE__) . "/AutoCreateWiki.i18n.php";
 		wfLoadExtensionMessages( "AutoCreateWiki" );
 
+		$debugLogFile = $wgDebugLogFile;
+		$wgDebugLogFile = "php://stdout";
 		$wgErrorLog = true;
 		/**
 		 * setup founder user
@@ -131,6 +133,8 @@ class CreateWikiLocalJob extends Job {
 		wfRunHooks( 'CreateWikiLocalJob-complete', array( $params ) );
 
 		wfProfileOut( __METHOD__ );
+
+		$wgDebugLogFile = $debugLogFile;
 
 		return true;
 	}
