@@ -42,10 +42,6 @@ $wgExtensionMessagesFiles['WikiaLabs'] = $dir . 'WikiaLabs.i18n.php';
  */
 $wgExtensionAliasesFiles['WikiaLabs'] = $dir . 'WikiaLabs.alias.php';
 
-$wgExtensionFunctions[] = 'WikiaLabsSetup';
-
-function WikiaLabsSetup() {
-
 	/**
 	 * @var WikiaApp
 	 */
@@ -64,7 +60,7 @@ function WikiaLabsSetup() {
 	$app->registerHook('MyTools::getDefaultTools', 'WikiaLabs', 'onGetDefaultTools' );
 
 	/*
-	 * set global 
+	 * set global
 	*/
 	$logTypes = $app->getGlobal('wgLogTypes');
 	$logTypes[] = 'wikialabs';
@@ -73,7 +69,7 @@ function WikiaLabsSetup() {
 	$logHeaders = $app->getGlobal('wgLogHeaders');
 	$logHeaders['wikialabs'] = 'wikialabs';
 	$app->setGlobal('wgLogHeaders', $logHeaders);
-}
+
 
 /*
  * ajax function
