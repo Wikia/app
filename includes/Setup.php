@@ -162,7 +162,7 @@ wfProfileIn( $fname.'-misc1' );
 wfMemoryLimit();
 
 /**
- * Set up the timezone, suppressing the pseudo-security warning in PHP 5.1+ 
+ * Set up the timezone, suppressing the pseudo-security warning in PHP 5.1+
  * that happens whenever you use a date function without the timezone being
  * explicitly set. Inspired by phpMyAdmin's treatment of the problem.
  */
@@ -346,8 +346,6 @@ if ( $wgAjaxUploadDestCheck ) $wgAjaxExportList[] = 'SpecialUpload::ajaxGetExist
 # Placeholders in case of DB error
 $wgTitle = null;
 $wgArticle = null;
-
-F::setInstance( 'App', new WikiaApp() );
 
 wfProfileOut( $fname.'-misc2' );
 wfProfileIn( $fname.'-extensions' );
