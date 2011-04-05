@@ -52,7 +52,7 @@ class WikiaUUID {
 	}
 	
 	private function getUUIDCookie () {
-		$name = UUID::cookieName();
+		$name = WikiaUUID::cookieName();
 
 		if (array_key_exists($name, $_COOKIE)) {
 			return $_COOKIE[ $name ];
