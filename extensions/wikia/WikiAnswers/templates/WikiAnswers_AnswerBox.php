@@ -18,7 +18,7 @@ global $wgBlankImgUrl, $wgTitle, $wgStylePath, $wgUser;
 				<form onsubmit="return handleEditForm(this)">
 				<textarea name="article" class="answer-input" rows="7" id="article_textarea"></textarea><br />
 				<script>document.getElementById("article_textarea").focus();</script>
-				<span style="float:right"><input type="submit" value="save" id="article_save_button"/></span>
+				<span style="float:right"><input type="submit" value="<?=wfMsgHtml("wiki-answers-save")?>" id="article_save_button"/></span>
 				</form>
 
 				<script>

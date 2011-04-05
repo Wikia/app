@@ -8,6 +8,9 @@ $wgUseNewAnswersSkin = false;
 // ask a question box
 $wgAutoloadClasses['WikiAnswersModule'] = dirname( __FILE__ ) . '/WikiAnswersModule.php';
 
+// i18n
+$wgExtensionMessagesFiles['WikiAnswers'] = dirname( __FILE__ ) . '/WikiAnswers.i18n.php';
+
 // add CSS
 $wgHooks['BeforePageDisplay'][] = 'wfWikiAnswersAddStyle';
 // remove Follow link on the main page
@@ -80,6 +83,7 @@ function wfWikiAnswersAnswerBox( &$out, &$html ) {
 	$answerObj = Answer::newFromTitle( $out->getTitle() );
 	if( $answerObj->isQuestion() && 
 	    in_array( ucfirst(Answer::getSpecialCategory("unanswered")), $out->getCategories() ) ) {
+		wfLoadExtensionMessages('WikiAnswers');
 		$html = wfRenderPartial( 'WikiAnswers', 'AnswerBox' );
 	}
 	return true;
