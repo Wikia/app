@@ -10,7 +10,7 @@ $config['site_css'] = array(
 );
 
 $config['oasis_jquery'] = array(
-	'//skins/common/jquery/jquery-1.5.1.js',
+	'//skins/common/jquery/jquery-1.5.2.js',
 	'//skins/common/jquery/jquery.json-1.3.js',
 	'//skins/common/jquery/jquery.getcss.js',
 	'//skins/common/jquery/jquery.wikia.js',
@@ -58,7 +58,8 @@ $config['oasis_shared_js'] = array(
 	'//extensions/wikia/AdEngine/AdDriver.js',
 	'//extensions/wikia/AdSS/adss.js',
 	'//extensions/wikia/PageLayoutBuilder/js/view.js',
-	'//skins/oasis/js/GlobalModal.js'
+	'//skins/oasis/js/GlobalModal.js',
+	'//skins/oasis/js/FirefoxFindFix.js'
 );
 
 $config['oasis_anon_js'] = array(
