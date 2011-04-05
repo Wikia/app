@@ -1,4 +1,6 @@
 <?php
+require_once dirname(__FILE__) . '/../WikiaQuizModule.class.php';
+wfLoadAllExtensions();
 
 class WikiaQuizModuleTest extends PHPUnit_Framework_TestCase {
 	protected function setUp() {
