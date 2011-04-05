@@ -26,20 +26,21 @@ $wgExtensionCredits['special'][] = array(
 	'description-msg' => 'scavengerhunt-desc'
 );
 
-$wgExtensionFunctions[] = 'ScavengerHuntSetup';
-
 $dir = dirname(__FILE__);
+
+// WikiaApp
+$app = F::app();
 
 // autoloaded classes
 $wgAutoloadClasses['ScavengerHunt'] = "$dir/ScavengerHunt.class.php";
 $wgAutoloadClasses['ScavengerHuntAjax'] = "$dir/ScavengerHuntAjax.class.php";
 $wgAutoloadClasses['SpecialScavengerHunt'] = "$dir/SpecialScavengerHunt.php";
 
-$wgAutoloadClasses['ScavengerHuntGame'] = "$dir/data/ScavengerHuntGame.class.php";
-$wgAutoloadClasses['ScavengerHuntGames'] = "$dir/data/ScavengerHuntGames.class.php";
-$wgAutoloadClasses['ScavengerHuntGameArticle'] = "$dir/data/ScavengerHuntGameArticle.class.php";
-$wgAutoloadClasses['ScavengerHuntEntry'] = "$dir/data/ScavengerHuntEntry.class.php";
-$wgAutoloadClasses['ScavengerHuntEntries'] = "$dir/data/ScavengerHuntEntries.class.php";
+$app->registerClass('ScavengerHuntGame', "$dir/data/ScavengerHuntGame.class.php");
+$app->registerClass('ScavengerHuntGames', "$dir/data/ScavengerHuntGames.class.php");
+$app->registerClass('ScavengerHuntGameArticle', "$dir/data/ScavengerHuntGameArticle.class.php");
+$app->registerClass('ScavengerHuntEntry', "$dir/data/ScavengerHuntEntry.class.php");
+$app->registerClass('ScavengerHuntEntries', "$dir/data/ScavengerHuntEntries.class.php");
 
 // i18n
 $wgExtensionMessagesFiles['ScavengerHunt'] = "$dir/ScavengerHunt.i18n.php";
@@ -47,23 +48,17 @@ $wgExtensionMessagesFiles['ScavengerHunt'] = "$dir/ScavengerHunt.i18n.php";
 // special page
 $wgSpecialPages['ScavengerHunt'] = 'SpecialScavengerHunt';
 
-function ScavengerHuntSetup() {
+// hooks
+$app->registerHook('MakeGlobalVariablesScript', 'ScavengerHunt', 'onMakeGlobalVariablesScript' );
+$app->registerHook('BeforePageDisplay', 'ScavengerHunt', 'onBeforePageDisplay' );
 
-	// WikiaApp
-	$app = WF::build('App');
+// constuctors
+F::addClassConstructor( 'ScavengerHuntGames', array( 'app' => $app ) );
+F::addClassConstructor( 'ScavengerHuntEntries', array( 'app' => $app ) );
+F::addClassConstructor( 'ScavengerHuntGame', array( 'app' => $app, 'id' => 0 ) );
 
-	// hooks
-	$app->registerHook('MakeGlobalVariablesScript', 'ScavengerHunt', 'onMakeGlobalVariablesScript' );
-	$app->registerHook('BeforePageDisplay', 'ScavengerHunt', 'onBeforePageDisplay' );
-
-	// constuctors
-	WF::addClassConstructor( 'ScavengerHuntGames', array( 'app' => $app ) );
-	WF::addClassConstructor( 'ScavengerHuntEntries', array( 'app' => $app ) );
-	WF::addClassConstructor( 'ScavengerHuntGame', array( 'app' => $app, 'id' => 0 ) );
-
-	// XXX: standard MW constructors - needed to be moved to global place
-	WF::addClassConstructor( 'Title', array(), 'newFromText' );
-}
+// XXX: standard MW constructors - needed to be moved to global place
+F::addClassConstructor( 'Title', array(), 'newFromText' );
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'ScavengerHuntAjax';
