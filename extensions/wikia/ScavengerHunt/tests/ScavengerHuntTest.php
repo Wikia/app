@@ -4,9 +4,9 @@ wfLoadAllExtensions();
 
 class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 	public static function setUpBeforeClass() {
-		ScavengerHuntSetup();
+		//ScavengerHuntSetup();
 	}
-	
+
 	public function testAddingHunt() {
 		$app = WF::build('App');
 		$games = WF::build('ScavengerHuntGames');
