@@ -15,7 +15,7 @@ class WikiaLabsSpecial extends SpecialPage {
 	function execute( $par ) {
 		global $wgExtensionsPath;
 
-		if ( $this->user->getId() == 0 ) {
+		if ( $this->user->isAnon() ) {
 			$this->displayRestrictionError($this->user);
 			return ;
 		}

@@ -11,11 +11,9 @@ EOT;
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WikiaLabs',
-	'author' => "Tomasz Odrobny Adrain 'ADi' Wieczorek",
+	'author' => array( "Tomasz Odrobny", "Adrain 'ADi' Wieczorek" ),
 	'url' => '',
 	'description' => '',
-	'descriptionmsg' => 'myextension-desc',
-	'version' => '0.0.0',
 );
 
 $dir = dirname(__FILE__) . '/';
