@@ -114,13 +114,13 @@ class RTE {
 		$wgOut->addInlineScript('var wgRTEStart = new Date();');
 
 		// add RTE javascript files
-		$srcs = F::app()->getAssetsManager()->getGroupCommonURL('rte');
+		$srcs = AssetsManager::getInstance()->getGroupCommonURL('rte');
 		foreach($srcs as $src) {
 			$wgOut->addScript("<script src=\"$src\" type=\"$wgJsMimeType\"></script>");
 		}
 		
 		// add RTE css file
-		$wgOut->addExtensionStyle(F::app()->getAssetsManager()->getOneCommonURL("extensions/wikia/RTE/css/RTE.css"));
+		$wgOut->addExtensionStyle(AssetsManager::getInstance()->getOneCommonURL("extensions/wikia/RTE/css/RTE.css"));
 
 		// parse wikitext of edited page and add extra fields to editform
 		$wgHooks['EditPage::showEditForm:fields'][] = 'RTE::init2';

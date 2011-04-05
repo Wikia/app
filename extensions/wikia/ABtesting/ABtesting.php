@@ -30,31 +30,31 @@ function getABtestJSandCSS() {
 	*/
 	
 	if (in_array('editbutton1', $wgABTests)) {
-		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('/extensions/wikia/ABtesting/css/editbutton1.scss'));
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/ABtesting/css/editbutton1.scss'));
 	}
 
 	if (in_array('editbutton2', $wgABTests)) {
-		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('/extensions/wikia/ABtesting/css/editbutton2.scss'));
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/ABtesting/css/editbutton2.scss'));
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/ABtesting/js/editbutton2.js"></script>');
 	}
 
 	if (in_array('editbutton3', $wgABTests)) {
-		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('/extensions/wikia/ABtesting/css/editbutton3.scss'));
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/ABtesting/css/editbutton3.scss'));
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/ABtesting/js/editbutton3.js"></script>');
 	}
 
 	if (in_array('editbutton4', $wgABTests)) {
-		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('/extensions/wikia/ABtesting/css/editbutton4.scss'));
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/ABtesting/css/editbutton4.scss'));
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/ABtesting/js/editbutton4.js"></script>');
 	}
 
 	if (in_array('editbutton5', $wgABTests)) {
-		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('/extensions/wikia/ABtesting/css/editbutton5.scss'));
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/ABtesting/css/editbutton5.scss'));
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/ABtesting/js/editbutton5.js"></script>');
 	}
 
 	if (in_array('noHistoryBar', $wgABTests)) {
-		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('/extensions/wikia/ABtesting/css/noHistoryBar.scss'));
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/ABtesting/css/noHistoryBar.scss'));
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/ABtesting/js/noHistoryBar.js"></script>');
 	}
 

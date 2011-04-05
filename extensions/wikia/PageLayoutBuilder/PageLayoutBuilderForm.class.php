@@ -32,8 +32,8 @@ class PageLayoutBuilderForm extends SpecialPage {
 
 		$wgOut->addScript($staticChute->getChuteHtmlForPackage('yui'));
 		
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/PageLayoutBuilder/css/form.scss'));
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('skins/oasis/css/core/_EditPage.scss'));
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/PageLayoutBuilder/css/form.scss'));
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/_EditPage.scss'));
 
 		$wgOut->addScript("<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/PageLayoutBuilder/widget/allWidgets.js?$wgStyleVersion\"></script>");
 
@@ -104,7 +104,7 @@ class PageLayoutBuilderForm extends SpecialPage {
 				$wgOut->addScript("<script type=\"text/javascript\">var formId = 0;".CategorySelectGetCategories(true)."</script>");
 				$wgOut->addScript("<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/CategorySelect/CategorySelect.js?$wgStyleVersion\"></script>");
 
-				$cssFile = F::app()->getAssetsManager()->getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss');
+				$cssFile = AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss');
 				$wgOut->addExtensionStyle($cssFile);
 
 				wfLoadExtensionMessages('CategorySelect');

@@ -390,7 +390,7 @@ class StaticChute {
 		// Sometimes we load StaticChute from outside of the MediaWiki stack (eg: /static/404handler), but fortunately
 		// during those times, we don't need the oasis_print_css, so just skip it.
 		if(class_exists('AssetsManager')){
-			$oasisPrintCss = F::app()->getAssetsManager()->getSassCommonURL('skins/oasis/css/print.scss');
+			$oasisPrintCss = AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/print.scss');
 		} else {
 			$oasisPrintCss = "";
 		}

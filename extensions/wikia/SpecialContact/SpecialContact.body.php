@@ -21,7 +21,7 @@ class ContactForm extends SpecialPage {
 		global $wgUser;
 
 		//$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/SpecialContact/SpecialContact.css?{$wgStyleVersion}");
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/SpecialContact/SpecialContact.scss'));
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact/SpecialContact.scss'));
 		$this->mName = null;
 		$this->mRealName = null;
 		$this->mWhichWiki = null;

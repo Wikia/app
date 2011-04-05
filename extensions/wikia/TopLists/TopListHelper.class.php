@@ -188,7 +188,7 @@ class TopListHelper {
 		global $wgTitle, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 
 		if( $wgTitle->getNamespace() == NS_TOPLIST ) {
-			$out->addStyle( F::app()->getAssetsManager()->getSassCommonURL('/extensions/wikia/TopLists/css/list.scss'));
+			$out->addStyle( AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/TopLists/css/list.scss'));
 			$out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/list.js?{$wgStyleVersion}\"></script>\n" );
 		}
 

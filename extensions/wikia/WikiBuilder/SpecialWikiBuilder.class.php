@@ -22,7 +22,7 @@ class SpecialWikiBuilder extends UnlistedSpecialPage {
 
 		$wgOut->setPageTitle(wfMsg('owb-title'));
 		$wgOut->addHtml(wfRenderModule('WikiBuilder'));
-		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/WikiBuilder/css/WikiBuilder.scss'));
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiBuilder/css/WikiBuilder.scss'));
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/JavascriptAPI/Mediawiki.js"></script>');
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/ThemeDesigner/js/ThemeDesigner.js"></script>');
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiBuilder/js/WikiBuilder.js"></script>');

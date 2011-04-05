@@ -37,7 +37,7 @@ class WikiaPollArticle extends Article {
 		$wgOut->setPageTitle($question);
 
 		// add CSS/JS
-		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/WikiaPoll/css/WikiaPoll.scss'));
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaPoll/css/WikiaPoll.scss'));
 		$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgExtensionsPath/wikia/WikiaPoll/js/WikiaPoll.js\"></script>");
 
 		// render poll page

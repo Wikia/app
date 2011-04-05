@@ -534,7 +534,7 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 
 	// use SCSS file for Oasis
 	if (Wikia::isOasis()) {
-		$cssFile = F::app()->getAssetsManager()->getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss');
+		$cssFile = AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss');
 	}
 	else {
 		$cssFile = "{$wgExtensionsPath}/wikia/CategorySelect/CategorySelect.css?{$wgStyleVersion}";

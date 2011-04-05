@@ -25,7 +25,7 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 		}
 
 		$this->setHeaders();
-		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/LandingPage/css/LandingPage.scss'));
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/LandingPage/css/LandingPage.scss'));
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/LandingPage/js/LandingPage.js?{$wgStyleVersion}\" ></script>\n");
 		// hide wiki and page header

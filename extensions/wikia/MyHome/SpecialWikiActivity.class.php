@@ -83,7 +83,7 @@ JS
 		// WikiActivity.js is MyHome.js modified for Oasis
 		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/WikiActivity.js?{$wgStyleVersion}\"></script>\n");
-		$wgOut->addExtensionStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/MyHome/oasis.scss'));
+		$wgOut->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/MyHome/oasis.scss'));
 
 		$data = $feedProvider->get(50);  // this breaks when set to 60...
 

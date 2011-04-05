@@ -7,11 +7,11 @@
 
 	<title><?= $pagetitle ?></title>
 	<!-- SASS-generated CSS file -->
-	<link rel="stylesheet" href="<?= F::app()->getAssetsManager()->getSassCommonURL('skins/oasis/css/oasis.scss') ?>">
+	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/oasis.scss') ?>">
 	<!-- CSS injected by extensions -->
 	<?= $csslinks ?>
 	<?php
-		$srcs = F::app()->getAssetsManager()->getGroupLocalURL('site_css');
+		$srcs = AssetsManager::getInstance()->getGroupLocalURL('site_css');
 		foreach($srcs as $src) {
 			echo '<link rel="stylesheet" href="'.$src.'">';
 		}

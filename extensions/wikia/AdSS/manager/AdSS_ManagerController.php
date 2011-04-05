@@ -17,7 +17,7 @@ class AdSS_ManagerController {
 	function execute( $sub ) {
 		global $wgRequest, $wgOut, $wgAdSS_ReadOnly;
 
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/AdSS/css/manager.scss'));
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AdSS/css/manager.scss'));
 
 		if( isset( $sub[1] ) && in_array( $sub[1], $this->tabs ) ) {
 			$this->selectedTab = $sub[1];

@@ -41,7 +41,7 @@
  *	//loading the script and required stylesheet via PHP
  *	global $wgOut, $wgJsMimeType, $wgStylePath
  *	$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgStylePath/common/jquery/jquery.wikia.tooltip.js\"></script>");
- *	$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('skins/oasis/css/modules/WikiaTooltip.scss'));
+ *	$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/WikiaTooltip.scss'));
  */
 
 if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
