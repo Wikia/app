@@ -17,7 +17,7 @@ class AssetsManagerTest extends PHPUnit_Framework_TestCase {
 
 		F::setInstance('AssetsConfig', $ac);
 
-		$am = new AssetsManager('', 0, false);
+		$am = AssetsManager::getInstance();
 		$res = $am->getGroupLocalURL('not_existing_group');
 
 		$this->assertEquals(array(), $res);
