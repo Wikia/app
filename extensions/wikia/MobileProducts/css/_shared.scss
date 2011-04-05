@@ -1,0 +1,24 @@
+#WikiaMainContent {
+	padding-top: 20px;
+}
+
+.WikiHeader {
+	width: 70px;
+	bottom: 10px;
+	float: right;
+	
+	.chevron {
+		margin: 6px 0 0 3px;
+	}
+	
+	nav {
+		width: auto;
+		position: static;
+		bottom: auto;
+		left: auto;
+		
+		img {
+			float: right;
+		}
+	}
+}
