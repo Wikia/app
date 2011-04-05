@@ -1,23 +1,29 @@
+<style type="text/css">
+.SponsoredLinkDesc { text-align: center; height: 320px; }
+.SponsoredLinkDesc section.box { height: 170px; }
+.SponsoredLinkDesc section.box.selected { height: 200px; }
+.price { font-weight: bold; }
+</style>
 <a name="form"></a>
-<section class="SponsoredLinkDesc">
+<section class="SponsoredLinkDesc" style="text-align: center">
 	<?php echo $adForm->error( 'wpType' ); ?>
 	<div class="chooseheader"><?php echo wfMsgHtml( 'adss-form-pick-plan' ); ?></div>
 		<section class="box">
-			<h3><?php echo wfMsgHtml( 'adss-form-page-plan-header' ); ?></h3>
-			<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-page-plan-price', AdSS_Util::formatPrice( $pagePricing['page-day'] ) ); ?></div>
-			<?php echo wfMsgWikiHtml( 'adss-form-page-plan-description', AdSS_Util::formatPrice( $pagePricing['page-day'] ) ); ?>
+			<h3><?php echo wfMsgHtml( 'adss-form-reviews-page-day-plan-header' ); ?></h3>
+			<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-reviews-page-day-plan-price', AdSS_Util::formatPrice( $pagePricing['page-day'] ) ); ?></div>
+			<?php echo wfMsgWikiHtml( 'adss-form-reviews-page-day-plan-description', AdSS_Util::formatPrice( $pagePricing['page-day'] ) ); ?>
 			<a class="wikia-button" id="wpSelectPageDay" href="#form"><?php echo wfMsgHtml( 'adss-button-select' ); ?></a>
 		</section>
 		<section class="box">
-			<h3><?php echo wfMsgHtml( 'adss-form-page-plan-header' ); ?></h3>
-			<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-page-plan-price', AdSS_Util::formatPrice( $pagePricing['page-month'] ) ); ?></div>
-			<?php echo wfMsgWikiHtml( 'adss-form-page-plan-description', AdSS_Util::formatPrice( $pagePricing['page-month'] ) ); ?>
+			<h3><?php echo wfMsgHtml( 'adss-form-reviews-page-month-plan-header' ); ?></h3>
+			<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-reviews-page-month-plan-price', AdSS_Util::formatPrice( $pagePricing['page-month'] ) ); ?></div>
+			<?php echo wfMsgWikiHtml( 'adss-form-reviews-page-month-plan-description', AdSS_Util::formatPrice( $pagePricing['page-month'] ) ); ?>
 			<a class="wikia-button" id="wpSelectPageMonth" href="#form"><?php echo wfMsgHtml( 'adss-button-select' ); ?></a>
 		</section>
 		<section class="box">
-			<h3><?php echo wfMsgHtml( 'adss-form-page-plan-header' ); ?></h3>
-			<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-page-plan-price', AdSS_Util::formatPrice( $pagePricing['page-year'] ) ); ?></div>
-			<?php echo wfMsgWikiHtml( 'adss-form-page-plan-description', AdSS_Util::formatPrice( $pagePricing['page-year'] ) ); ?>
+			<h3><?php echo wfMsgHtml( 'adss-form-reviews-page-year-plan-header' ); ?></h3>
+			<div class="price"><?php echo wfMsgWikiHtml( 'adss-form-reviews-page-year-plan-price', AdSS_Util::formatPrice( $pagePricing['page-year'] ) ); ?></div>
+			<?php echo wfMsgWikiHtml( 'adss-form-reviews-page-year-plan-description', AdSS_Util::formatPrice( $pagePricing['page-year'] ) ); ?>
 			<a class="wikia-button" id="wpSelectPageYear" href="#form"><?php echo wfMsgHtml( 'adss-button-select' ); ?></a>
 		</section>
 </section>
