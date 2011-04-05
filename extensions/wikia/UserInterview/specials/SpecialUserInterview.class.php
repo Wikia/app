@@ -171,21 +171,27 @@ class SpecialUserInterview extends SpecialPage {
 	
 	
 	static private function saveAdminQuestion($data) {
-		global $wgCityId;
-
-		$dbw = wfGetDB( DB_MASTER );
+		global $wgCityId, $wgExternalSharedDB;
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		
 		$answered_questions = SpecialUserInterview::getUserQuestions();
-		
 
 		$addedKeys = array();
 		foreach (array_keys($data) as $single) {
-			if (array_key_exists($single, $answered_questions)) { // CHANGE TO $answered_questions
-				$value = $data[$single];
-				$sql = "UPDATE user_interview_questions SET question = '$value', wiki_id = $wgCityId WHERE id = $single;";
-				$dbw->query($sql);
+			
+			if (isset($answered_questions)) {
+				if (array_key_exists($single, $answered_questions)) { // CHANGE TO $answered_questions
+					$value = $data[$single];
+					$sql = "UPDATE user_interview_questions SET question = '$value', wiki_id = $wgCityId WHERE id = $single;";
+					$dbw->query($sql);
+				}
+				else {
+					$question = $data[$single];
+					$sql = "INSERT INTO user_interview_questions (wiki_id, question) VALUES ($wgCityId, '$question');";	
+					$dbw->query($sql);
+				}
 			}
-			else {
+			else { // complete empty form
 				$question = $data[$single];
 				$sql = "INSERT INTO user_interview_questions (wiki_id, question) VALUES ($wgCityId, '$question');";	
 				$dbw->query($sql);
@@ -195,8 +201,10 @@ class SpecialUserInterview extends SpecialPage {
 		}
 		
 		$oldKeys = array();
-		foreach ($answered_questions as $question) {
-			array_push($oldKeys, $question['id']);
+		if (isset($answered_questions)) {
+			foreach ($answered_questions as $question) {
+				array_push($oldKeys, $question['id']);
+			}
 		}
 		
 		
@@ -211,10 +219,9 @@ class SpecialUserInterview extends SpecialPage {
 	
 	
 	static function getUserQuestions() {
-		global $wgCityId;
+		global $wgCityId, $wgExternalSharedDB;
 		
-		$dbw = wfGetDB( DB_SLAVE );
-		
+		$dbw = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$sql = "SELECT * FROM user_interview_questions WHERE wiki_id = {$wgCityId} ORDER BY id DESC;";
 		$res = $dbw->query($sql);
 		$data = array();
@@ -238,8 +245,8 @@ class SpecialUserInterview extends SpecialPage {
 		
 		if ($userId != 0) {
 			
-			$dbw = wfGetDB( DB_MASTER );
-			
+			global $wgExternalSharedDB;
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			
 			$query = "DELETE FROM user_interview_answers WHERE user_id = '{$userId}' AND wiki_id = {$wgCityId};";
 			$dbw->query($query);
@@ -261,7 +268,9 @@ class SpecialUserInterview extends SpecialPage {
 		$userId = (User::isIP($userName)) ? 0 : User::newFromName($userName)->getID();
 		
 		if ($userId != 0) {
-			$dbw = wfGetDB( DB_SLAVE );
+			
+			global $wgExternalSharedDB;
+			$dbw = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 			
 			$query = "SELECT * FROM user_interview_answers WHERE user_id = {$userId} AND wiki_id = {$wgCityId};";
 			
