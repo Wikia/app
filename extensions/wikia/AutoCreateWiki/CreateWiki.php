@@ -31,6 +31,7 @@ class CreateWiki {
 	const ERROR_DATABASE_ALREADY_EXISTS                = 9;
 	const ERROR_DATABASE_WIKI_FACTORY_TABLES_BROKEN    = 10;
 	const ERROR_DATABASE_WRITE_TO_CITY_DOMAINS_BROKEN  = 11;
+	const ERROR_USER_IN_ANON                           = 12;
 
 
 	const IMGROOT              = "/images/";
@@ -183,6 +184,12 @@ class CreateWiki {
 		global $wgWikiaLocalSettingsPath, $wgExternalSharedDB, $wgSharedDB, $wgUser;
 
 		wfProfileIn( __METHOD__ );
+
+		// check founder
+		if ( $this->mFounder->isAnon() ) {
+			wfProfileOut( __METHOD__ );
+			return self::ERROR_USER_IN_ANON;
+		}
 
 		// check executables
 		$status = $this->checkExecutables();
@@ -372,8 +379,8 @@ class CreateWiki {
 		$oHub = WikiFactoryHub::getInstance();
 		$oHub->setCategory( $this->mNewWiki->city_id, $this->mNewWiki->hub, "CW Setup" );
 		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category hub: {$this->mNewWiki->hub} \n", true );
-			$wgUser = $oldUser;
-			unset($oldUser);
+		$wgUser = $oldUser;
+		unset($oldUser);
 
 		/**
 		 * define wiki type
