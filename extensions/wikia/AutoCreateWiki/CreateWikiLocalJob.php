@@ -80,7 +80,7 @@ class CreateWikiLocalJob extends Job {
 			Wikia::log( __METHOD__, "user", "Founder user_id  is unknown {$this->mParams->founderId}" );
 		}
 
-		if ( ! $this->mFounder ) {
+		if ( ! $this->mFounder || $this->mFounder->isAnon() ) {
 			Wikia::log( __METHOD__, "user", "Cannot load user with user_id = {$this->mParams->founderId}" );
 			if ( !empty( $this->mParams->founderName  ) ) {
 				$this->mFounder = User::newFromName( $this->mParams->founderName );
