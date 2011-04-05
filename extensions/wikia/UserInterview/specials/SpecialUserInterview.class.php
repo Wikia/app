@@ -24,7 +24,7 @@ class SpecialUserInterview extends SpecialPage {
 		if ($isAdmin) {
 			$formURL = $wgTitle->getFullURL() .'?formaction=sent&action=purge';
 
-			$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/UserInterview/css/UserInterview.scss'));
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/UserInterview/css/UserInterview.scss'));
 			$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/UserInterview/js/UserInterview.js?{$wgStyleVersion}\"></script>\n");
 			
 			$template = new EasyTemplate(dirname(__FILE__).'/templates');

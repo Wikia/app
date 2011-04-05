@@ -126,7 +126,7 @@ class AdSS_Controller extends SpecialPage {
 		} else {
 			$wgOut->addHTML( $tmpl->render( 'adForm' ) );
 		}
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/AdSS/css/adform.scss'));
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AdSS/css/adform.scss'));
 	}
 
 	function displayUpsellForm( $ad ) {
@@ -151,7 +151,7 @@ class AdSS_Controller extends SpecialPage {
 		$tmpl->set( 'adId', $ad->id );
 		$tmpl->set( 'token', AdSS_Util::getToken() );
 		$wgOut->addHTML( $tmpl->render( 'upsellForm' ) );
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/AdSS/css/upsell.scss'));
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AdSS/css/upsell.scss'));
 	}
 
 	function save( $adForm ) {

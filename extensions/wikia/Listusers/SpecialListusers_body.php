@@ -125,7 +125,7 @@ class Listusers extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Listusers/js/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/Listusers/css/table.scss'));
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Listusers/css/table.scss'));
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(

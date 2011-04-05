@@ -21,7 +21,7 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 		
 		$wgOut->setPageTitle(wfMsg('cnw-title'));
 		$wgOut->addHtml(wfRenderModule('CreateNewWiki'));
-		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/CreateNewWiki/css/CreateNewWiki.scss'));
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CreateNewWiki/css/CreateNewWiki.scss'));
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/ThemeDesigner/js/ThemeDesigner.js"></script>');
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/AjaxLogin/AjaxLogin.js"></script>');
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/CreateNewWiki/js/CreateNewWiki.js"></script>');

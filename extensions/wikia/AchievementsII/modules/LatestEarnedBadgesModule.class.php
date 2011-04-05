@@ -12,7 +12,7 @@ class LatestEarnedBadgesModule extends Module {
 
 		// include oasis.css override
 		if (Wikia::isOasis()) {
-			$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/AchievementsII/css/oasis.scss'));
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AchievementsII/css/oasis.scss'));
 		}
 
 		// This code was taken from SpecialLeaderboard so it can be used by both the module and the old Monaco .tmpl

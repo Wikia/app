@@ -50,7 +50,7 @@ class OasisModule extends Module {
 		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
 		if(!empty($wikiWelcome)) {
 			global $wgExtensionsPath;
-			$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/CreateNewWiki/css/WikiWelcome.scss'));
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CreateNewWiki/css/WikiWelcome.scss'));
 			$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/CreateNewWiki/js/WikiWelcome.js"></script>');
 		}
 
@@ -217,9 +217,9 @@ EOF;
 		$this->jsFiles =  '';
 
 		if($wgUser->isLoggedIn()) {
-			$srcs = F::app()->getAssetsManager()->getGroupLocalURL('oasis_user_js');
+			$srcs = AssetsManager::getInstance()->getGroupLocalURL('oasis_user_js');
 		} else {
-			$srcs = F::app()->getAssetsManager()->getGroupLocalURL('oasis_anon_js');
+			$srcs = AssetsManager::getInstance()->getGroupLocalURL('oasis_anon_js');
 		}
 
 		foreach($srcs as $src) {

@@ -9,7 +9,7 @@ class HotSpotsModule extends Module {
 		wfProfileIn(__METHOD__);
 
 		// add CSS for this module
-		$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL("skins/oasis/css/modules/HotSpots.scss"));
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/HotSpots.scss"));
 
 		$hotSpotsProvider = new HotSpotsProvider();
 		$this->data = $hotSpotsProvider->get();

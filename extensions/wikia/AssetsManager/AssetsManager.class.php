@@ -11,6 +11,15 @@ class AssetsManager {
 	private $mMinify;
 	private $mCommonHost;
 	private $mAssetsConfig;
+	private static $mInstance = false;
+
+	public static function getInstance() {
+		if( self::$mInstance == false ) {
+			global $wgCdnRootUrl, $wgStyleVersion, $wgAllInOne, $wgRequest;
+			self::$mInstance = new AssetsManager($wgCdnRootUrl, $wgAllInOne, $wgRequest->getBool('allinone', $wgAllInOne), $wgRequest->getBool('allinone', $wgAllInOne));
+		}
+		return self::$mInstance;
+	}
 
 	public static function onMakeGlobalVariablesScript(&$vars) {
 		global $wgOasisHD, $wgCdnRootUrl, $wgAssetsManagerQuery;
@@ -28,7 +37,7 @@ class AssetsManager {
 		return true;
 	}
 
-	public function __construct(/* string */ $commonHost, /* int */ $cacheBuster, /* boolean */ $combine = true, /* boolean */ $minify = true) {
+	private function __construct(/* string */ $commonHost, /* int */ $cacheBuster, /* boolean */ $combine = true, /* boolean */ $minify = true) {
 		$this->mCacheBuster = $cacheBuster;
 		$this->mCombine = $combine;
 		$this->mMinify = $minify;

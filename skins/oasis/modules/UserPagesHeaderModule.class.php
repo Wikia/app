@@ -360,7 +360,7 @@ class UserPagesHeaderModule extends Module {
 		if ($wgEnableFacebookSync == true && $wgUser->isLoggedIn() && self::isItMe( $this->userName ) && isset($this->content_actions['edit']) && $this->isUserProfilePageExt && $namespace == NS_USER) {
 			global $wgOut, $wgFacebookSyncAppID, $wgFacebookSyncAppSecret;
 						
-			$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL("skins/oasis/css/modules/ProfileSync.scss"));
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/ProfileSync.scss"));
 			$wgOut->addScriptFile('/skins/oasis/js/ProfileSync.js');
 			
 			// Facebook sync info
