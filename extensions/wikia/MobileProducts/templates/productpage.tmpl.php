@@ -15,7 +15,9 @@
 				<ul>
 					<? foreach ( $stores as $store ) :?>
 						<li>
-							<a href="<?= $store['href'] ;?>"><img src="<?= "{$imagesPath}{$store['img']}" ;?>" /></a>
+							<? if( !empty( $store['href'] ) ) :?><a href="<?= $store['href'] ;?>"><? endif ;?>
+							<img src="<?= "{$imagesPath}{$store['img']}" ;?>" />
+							<? if( !empty( $store['href'] ) ) :?></a><? endif ;?>
 							<span class="requires"><?= $store['requires'] ;?></span>
 						</li>
 					<? endforeach ;?>	
