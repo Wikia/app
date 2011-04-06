@@ -197,19 +197,28 @@ class CreateNewWikiModule extends Module {
 		wfProfileIn( __METHOD__ );
 		
 		$text = $wgRequest->getVal('text','');
-		$this->result = array();
+		$blockedKeywords = array();
 		
 		$filters = Phalanx::getFromFilter( Phalanx::TYPE_CONTENT );
 		foreach( $filters as $filter ) {
 			$result = Phalanx::isBlocked( $text, $filter );
 			if($result['blocked']) {
-				$this->result[] = $filter;
+				$blockedKeywords[] = $result['msg'];
 			}
 		}
 		
-		if(count($this->result) > 0) {
+		$this->msgHeader = '';
+		$this->msgBody = '';
+		if(count($blockedKeywords) > 0) {
+			$keywords = '';
+			for ($i = 0; $i < count($blockedKeywords); $i++) {
+				if($i != 0) {
+					$keywords .= ', ';
+				}
+				$keywords .= $blockedKeywords[$i];
+			}
 			$this->msgHeader = wfMsg('cnw-badword-header');
-			$this->msgBody = wfMsg('cnw-badword-msg');
+			$this->msgBody = wfMsg('cnw-badword-msg', $keywords);
 		}
 		
 		wfProfileOut( __METHOD__ );
