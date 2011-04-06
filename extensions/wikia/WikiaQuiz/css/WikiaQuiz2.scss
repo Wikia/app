@@ -1,0 +1,96 @@
+$base-z: 5;
+$question-color: #ddd;
+$panel-width: 800px;
+$panel-height: 600px;
+.quiz-panel {
+	border: 1px solid red;
+	height: $panel-height;
+	margin: 0 auto;
+	overflow: hidden;
+	width: $panel-width;
+	ol, ul {
+		margin: 0;
+		padding: 0;
+	}
+	.question-set {
+		display: none;
+		margin: 0 auto;
+		position: relative;
+		&:first-child {
+			display: block;
+		}
+		.question-label {
+			$logical-height: 140px;
+			$border-radius: 70px;
+			$padding-top: 30px;
+			$height: $logical-height - $padding-top;
+			$width: 140px;
+			background: #999;
+			border-radius: $border-radius;
+			color: white;
+			font-size: 17px;
+			height: $height;
+			left: $panel-width/2 - $width/2;
+			padding-top: $padding-top;
+			position: absolute;
+			text-align: center;
+			text-shadow: 0 1px 3px #333;
+			top: 40px;
+			width: $width;
+			z-index: $base-z - 1;
+			-webkit-transition: all 500ms ease-in-out;
+			.number {
+				display: block;
+				font-size: 48px;
+				line-height: 54px;
+			}
+			&.off-screen {
+				opacity: 0;
+			}
+		}
+		.question-bubble {
+			$logical-width: 630px;
+			$border-radius: 20px;
+			$padding: 30px;
+			$height: 220px - ($padding * 2);
+			$width: $logical-width - ($padding * 2);
+			background: $question-color;
+			border-radius: $border-radius;
+			display: table-cell;
+			font-size: 30px;
+			height: $height;
+			line-height: 36px;
+			left: $panel-width/2 - $logical-width/2;
+			padding: $padding;
+			position: absolute;
+			text-align: center;
+			top: 150px;
+			vertical-align: middle;
+			width: $width;
+			z-index: $base-z;
+			-webkit-transition: all 1s ease-in-out;
+			.tail {
+				$border-width: 20px;
+				$border-top-width: 25px;
+				$left: ($width/2) + ($border-width/2);
+				position: absolute;
+				bottom: -45px;
+				border: $border-width solid transparent;
+				border-top-style: solid;
+				border-top-width: $border-top-width;
+				border-top-color: $question-color;
+				left: $left;
+				height: 0;
+				width: 0;
+			}
+			.question {
+				display: table-cell;
+				vertical-align: middle;
+				height: $height;
+			}
+			&.off-screen {
+				top: -60px;
+			}
+		}
+	}
+}

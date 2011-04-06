@@ -38,11 +38,13 @@ $wgArticleCommentsNamespaces[] = NS_WIKIA_QUIZ;
 // classes
 $wgAutoloadClasses['WikiaQuiz'] = "{$dir}/WikiaQuiz.class.php";
 $wgAutoloadClasses['WikiaQuizElement'] = "{$dir}/WikiaQuizElement.class.php";
+$wgAutoloadClasses['SpecialCreateWikiaQuiz'] = "{$dir}/SpecialCreateWikiaQuiz.class.php";
 $wgAutoloadClasses['SpecialWikiaQuiz'] = "{$dir}/SpecialWikiaQuiz.class.php";
 // modules
 $wgAutoloadClasses['WikiaQuizModule'] = "{$dir}/WikiaQuizModule.class.php";
 
 // Special Page
+$wgSpecialPages['CreateQuiz'] = 'SpecialCreateWikiaQuiz';
 $wgSpecialPages['WikiaQuiz'] = 'SpecialWikiaQuiz';
 
 // hooks

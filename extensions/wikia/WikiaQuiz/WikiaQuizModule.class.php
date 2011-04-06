@@ -13,12 +13,17 @@ class WikiaQuizModule extends Module {
 	public function executeSampleQuiz() {
 		$this->executeGetQuiz();
 	}
+	
+	// 2nd prototype
+	public function executeSampleQuiz2() {
+		$this->executeGetQuiz();
+	}
 
 	public function executeGetQuizElement() {
 		$wgRequest = F::app()->getGlobal('wgRequest');
 		$elementId = $wgRequest->getVal('elementId');
 		if ($elementId) {
-			$quizElement = F::build('WikiaQuizElement', array($elementId), 'newFromId');
+			$quizElement = WikiaQuizElement::newFromId($elementId);
 			$this->data = $quizElement->getData();
 		}
 	}
@@ -32,4 +37,17 @@ class WikiaQuizModule extends Module {
 		}
 	}
 
+	public function executeSpecialPage() {
+
+	}
+
+	public function executeSpecialPageEdit($params) {
+		$title = Title::newFromText ($params['title'], NS_WIKIA_QUIZ) ;
+
+		if (is_object($title) && $title->exists()) {
+			$this->quizElement = WikiaQuizElement::NewFromTitle($title);
+			$this->data = $this->quizElement->getData();
+		}
+	}
+		
 }
