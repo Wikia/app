@@ -183,6 +183,7 @@ var WikiBuilder = {
 	
 	handleRegister: function() {
 		AjaxLogin.showRegister();
+		$('#wpRemember').attr('checked', 'true').hide().siblings().hide();
 		if(!WikiBuilder.registerInit) {
 			$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, 
 				function() {
@@ -444,20 +445,10 @@ ThemeDesigner.init = function() {
 	$('#ThemeTab li label').remove();
 };
 ThemeDesigner.set = function(setting, newValue) {
-	var t = themes[newValue];
-	ThemeDesigner.settings = t;
-	var sass = '/__sass/skins/oasis/css/oasis.scss/' + wgStyleVersion + '/';
-	var params = '';
-	params += 'color-body=' + escape(t['color-body']);
-	params += '&color-page=' + escape(t['color-page']);
-	params += '&color-buttons=' + escape(t['color-buttons']);
-	params += '&color-links=' + escape(t['color-links']);
-	params += "&color-header=" + escape(t["color-header"]);
-	params += '&background-image=' + encodeURIComponent(t['background-image']);
-	params += '&background-align=' + escape(t['background-align']);
-	params += '&background-tiled=' + escape(t['background-tiled']);
+	ThemeDesigner.settings = themes[newValue];
+	var sassUrl = $.getSassCommonURL('/skins/oasis/css/oasis.scss', ThemeDesigner.settings); 
 	$('.ThemeDesignerSASS').addClass('remove');
-	$.get(sass+params, function(data) {
+	$.get(sassUrl, function(data) {
 		$('<style class="ThemeDesignerSASS">' + data + '</style>').appendTo('head');
 		$('.ThemeDesignerSASS.remove').remove();
 	});
