@@ -257,13 +257,6 @@ class GlobalWatchlistBot {
 
 					$this->mUsers[ $iUserId ] = $this->mWatchlisters[ $iUserId ];
 
-					if ( !isset( $this->mWikiData[$oResultRow->city_id] ) ) {
-						$this->mWikiData[$oResultRow->city_id] = array (
-							'wikiName' => $oResultRow->city_title,
-							'wikiLangCode' => $oResultRow->city_lang
-						);
-					}
-
 					if ( !empty( $aWatchLists ) ) {
 						foreach ( $aWatchLists as $oWatchLists ) {
 							$dbext->insert(
@@ -546,7 +539,7 @@ class GlobalWatchlistBot {
 	 * send digest
 	 */
 	private function sendDigests() {
-		global $wgCityId, $IP;
+		global $wgCityId, $IP, $wgWikiaLocalSettingsPath;
 		
 		$this->printDebug( "Sending digest emails ... " );
 
@@ -621,9 +614,10 @@ class GlobalWatchlistBot {
 				if ( isset( $aDigestData[ $iWikiId ] ) ) {
 					$aWikiDigest = $aDigestData[ $iWikiId ];
 				} else {
+					$oWikia = WikiFactory::getWikiByID( $iWikiId );
 					$aWikiDigest = array(
-						'wikiName' => $this->mWikiData[ $iWikiId ]['wikiName'],
-						'wikiLangCode' => $this->mWikiData[ $iWikiId ]['wikiLangCode'],
+						'wikiName' => $oWikia->city_title,
+						'wikiLangCode' => $oWikia->city_lang,
 						'pages' => array()
 					);
 				}
