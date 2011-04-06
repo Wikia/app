@@ -199,7 +199,7 @@ class CreateNewWikiModule extends Module {
 		$text = $wgRequest->getVal('text','');
 		$this->result = array();
 		
-		$filters = Phalanx::getFromFilter( Phalanx::TYPE_WIKI_CREATION );
+		$filters = Phalanx::getFromFilter( Phalanx::TYPE_CONTENT );
 		foreach( $filters as $filter ) {
 			$result = Phalanx::isBlocked( $text, $filter );
 			if($result['blocked']) {
