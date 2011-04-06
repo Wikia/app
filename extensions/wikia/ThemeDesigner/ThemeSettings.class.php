@@ -94,7 +94,7 @@ class ThemeSettings {
 		global $wgCityId, $wgUser;
 		$cityId = empty($cityId) ? $wgCityId : $cityId;
 
-		if(strpos($settings['wordmark-image-name'], 'Temp_file_') === 0) {
+		if(isset($settings['wordmark-image-name']) && strpos($settings['wordmark-image-name'], 'Temp_file_') === 0) {
 			$temp_file = new LocalFile(Title::newFromText($settings['wordmark-image-name'], 6), RepoGroup::singleton()->getLocalRepo());
 			$file = new LocalFile(Title::newFromText(self::WordmarkImageName, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($temp_file->getPath(), '', '');
@@ -109,7 +109,7 @@ class ThemeSettings {
 			}
 		}
 
-		if(strpos($settings['background-image-name'], 'Temp_file_') === 0) {
+		if(isset($settings['background-image-name']) && strpos($settings['background-image-name'], 'Temp_file_') === 0) {
 			$temp_file = new LocalFile(Title::newFromText($settings['background-image-name'], 6), RepoGroup::singleton()->getLocalRepo());
 			$file = new LocalFile(Title::newFromText(self::BackgroundImageName, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($temp_file->getPath(), '', '');
