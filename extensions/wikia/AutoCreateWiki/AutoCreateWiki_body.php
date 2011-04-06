@@ -1340,7 +1340,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * @private
 	 */
 	function initUser( $oUser, $autocreate ) {
-		global $wgAuth;
+		global $wgAuth, $wgExternalAuthType;
 		wfProfileIn( __METHOD__ );
 
 		$oExtUser = null;
