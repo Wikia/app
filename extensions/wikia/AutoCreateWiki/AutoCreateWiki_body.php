@@ -1271,8 +1271,12 @@ class AutoCreateWikiPage extends SpecialPage {
 		$name = trim( $this->mUsername );
 		$oUser = User::newFromName( $name, 'creatable' );
 
+		$oExtUser = ExternalUser::newFromName( $this->mUsername );
+		
 		if ( ! $oUser instanceof User) {
 			$this->makeError( "wiki-username", wfMsg('noname') );
+		} elseif ( is_object( $oExtUser ) && ( 0 != $oExtUser->getId() ) ) {
+			$this->makeError( "wiki-username", wfMsg( 'userexists' ) );
 		} elseif ( 0 != $oUser->idForName() ) {
 			$this->makeError( "wiki-username", wfMsg( 'userexists' ) );
 		} else {
@@ -1339,7 +1343,15 @@ class AutoCreateWikiPage extends SpecialPage {
 		global $wgAuth;
 		wfProfileIn( __METHOD__ );
 
-		$oUser->addToDatabase();
+		$oExtUser = null;
+		if ( $wgExternalAuthType ) {			
+			$oUser = ExternalUser::addUser( $oUser, $this->mPassword, $this->mEmail, "" );
+			if ( is_object( $u ) ) {
+				$oExtUser = ExternalUser::newFromName( $this->mUsername );	
+			}	
+		} else {
+			$oUser->addToDatabase();
+		}
 
 		if ( $wgAuth->allowPasswordChange() ) {
 			$oUser->setPassword( $this->mPassword );
@@ -1349,6 +1361,14 @@ class AutoCreateWikiPage extends SpecialPage {
 		$oUser->setToken();
 
 		$wgAuth->initUser( $oUser, $autocreate );
+
+		if ( is_object( $oExtUser ) ) {
+			$oExtUser->linkToLocal( $oUser->getId() );
+			$email = $oExtUser->getPref( 'emailaddress' );
+			if ( $email && !$this->mEmail ) {
+				$oUser->setEmail( $email );
+			}
+		}
 
 		$oUser->setOption( 'rememberpassword', isset($this->mRemember) ? 1 : 0 );
 		$oUser->setOption( 'marketingallowed', isset($this->mMarketing) ? 1 : 0 );
