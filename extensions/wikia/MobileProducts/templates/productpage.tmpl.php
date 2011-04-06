@@ -11,18 +11,20 @@
 			<section class="description">
 				<?= wfMsgExt( "mobileproducts-{$product}-description", array( 'parse' ) ) ;?>
 			</section>
-			<aside>
-				<ul>
-					<? foreach ( $stores as $store ) :?>
-						<li>
-							<? if( !empty( $store['href'] ) ) :?><a href="<?= $store['href'] ;?>"><? endif ;?>
-							<img src="<?= "{$imagesPath}{$store['img']}" ;?>" />
-							<? if( !empty( $store['href'] ) ) :?></a><? endif ;?>
-							<span class="requires"><?= $store['requires'] ;?></span>
-						</li>
-					<? endforeach ;?>	
-				</ul>
-			</aside>
+			<? if ( !empty ( $stores ) ) :?>
+				<aside>
+					<ul>
+						<? foreach ( $stores as $store ) :?>
+							<li>
+								<? if( !empty( $store['href'] ) ) :?><a href="<?= $store['href'] ;?>"><? endif ;?>
+								<img src="<?= "{$imagesPath}{$store['img']}" ;?>" />
+								<? if( !empty( $store['href'] ) ) :?></a><? endif ;?>
+								<span class="requires"><?= $store['requires'] ;?></span>
+							</li>
+						<? endforeach ;?>	
+					</ul>
+				</aside>
+			<? endif ;?>
 		</article>
 		<footer>
 			<?= wfMsgExt( "mobileproducts-{$product}-footer", array( 'parse' ) ) ;?>

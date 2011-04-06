@@ -18,7 +18,7 @@ $messages['en'] = array(
 	'mobileproducts-wikiaphone-title' => 'Wikia Mobile',
 	'mobileproducts-wikiaphone-subtitle' => 'via the Web',
 	'mobileproducts-wikiaphone-price' => 'Free',
-	'mobileproducts-wikiaphone-markets' => "* web::|Best viewed on iOS and Android",
+	'mobileproducts-wikiaphone-markets' => "",//e.g. * web::|Best viewed on iOS and Android
 	'mobileproducts-wikiaphone-description' => "Wikia Mobile is available on virtually any mobile phone. To browse the content of any Wikia wiki on-the-go, simply poiny your phone's browser to:
 	
 	[http://www.wikia.com www.wikia.com]
