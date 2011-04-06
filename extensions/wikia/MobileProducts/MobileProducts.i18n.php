@@ -10,7 +10,7 @@ $messages['en'] = array(
 	'mobileproducts-slides' => "* Mobile_slide_1.jpg|Special:MobileProducts/wikiaphone\n* Mobile_slide_2.jpg|Special:MobileProducts/lyricwiki\n* Mobile_slide_3.jpg|Special:MobileProducts/gameguides",
 	'mobileproducts-product-boxes' => "* Mobile Web|Browse any Wikia wikia on-the-go|wikiaphone_product.png|Special:MobileProducts/wikiaphone\n* LyricWiki|Lyrics to any song by any artist|Lyricwiki_product.jpg|Special:MobileProducts/lyricwiki\n* Game Guides|Tips for your favourite games|Gameguides_product.jpg|Special:MobileProducts/gameguides\n* Help|Support for your Wikia Mobile apps|Mobilehelp_product.png|http://help.wikia.com/wiki/Help:Mobile",
 	'mobileproducts-more-link' => "Learn more >",
-	'mobileproducts-market-apps' => "* Get LyricWiki now|google::https://market.android.com/details?id=com.wikia.lyricwiki\n* Get Game Guides now|google::https://market.android.com/details?id=com.wikia.app.GameGuides|apple::http://itunes.apple.com/us/app/wikia-game-guides",
+	'mobileproducts-market-apps' => "* Get LyricWiki now|google::https://market.android.com/details?id=com.wikia.lyricwiki\n* Get Game Guides now|google::https://market.android.com/details?id=com.wikia.app.GameGuides|apple::http://itunes.apple.com/us/app/wikia-game-guides/id422467074?mt=8&ls=1",
 	
 	//WikiaPhone
 	'mobileproducts-wikiaphone-device' => 'iphone',
@@ -59,7 +59,7 @@ This app is constantly striving to be better - please give us feedback on ways t
 	'mobileproducts-gameguides-title' => 'Game Guides',
 	'mobileproducts-gameguides-subtitle' => 'Tips for your favorite games',
 	'mobileproducts-gameguides-price' => 'Free',
-	'mobileproducts-gameguides-markets' => "* google::https://market.android.com/details?id=com.wikia.app.GameGuides|Requires Android 2.0 and up\n* apple::http://itunes.apple.com/us/app/wikia-game-guides|Requires iOS 4.0 and up",
+	'mobileproducts-gameguides-markets' => "* google::https://market.android.com/details?id=com.wikia.app.GameGuides|Requires Android 2.0 and up\n* apple::http://itunes.apple.com/us/app/wikia-game-guides/id422467074?mt=8&ls=1|Requires iOS 4.0 and up",
 	'mobileproducts-gameguides-description' => "Welcome to the Wikia Game Guides application. Here, you can find detailed information about your favourite games, all powered by the best source of information available - the fans. This application will let you get the same great information you'll find on Wikia, easily and quickly on your phone. Includes the following game guides and many more:
 *Dragon Age
 *Dragon Age: Origins
