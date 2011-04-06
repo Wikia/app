@@ -33,13 +33,28 @@ function getOneDotURL () {
 }
 
 function wfAddOneDotGlobals ($vars) {
-	$vars['wgOneDotURL']    = getOneDotURL();
-	$vars['wgOneDotCookie'] = WikiaUUID::cookieName();
+	global $wgEnableOneDotPlus;
+
+	if ($wgEnableOneDotPlus) {
+		$vars['wgOneDotURL']    = getOneDotURL();
+		$vars['wgOneDotCookie'] = WikiaUUID::cookieName();
+	}
 
 	return true;
 }
 
 function wfWikiaWebStatsScript($this, $bottomScriptText) {
+	global $wgEnableOneDotPlus;
+	
+	if ($wgEnableOneDotPlus) {
+		ajaxOneDot(&$bottomScriptText);
+	} else {
+		imageOneDot(&$bottomScriptText);
+	}
+	return true;
+}
+
+function ajaxOneDot ($bottomScriptText) {
 	global $wgCityId, $wgDotDisplay, $wgReadOnly, $wgJsMimeType, $wgStyleVersion, $wgExtensionsPath, $wgOut;
 
 	if ( !empty($wgCityId) && !empty($wgDotDisplay) && empty($wgReadOnly) ) {
@@ -49,6 +64,16 @@ function wfWikiaWebStatsScript($this, $bottomScriptText) {
 
 		$bottomScriptText .= '<script type="text/javascript">/*<![CDATA[*/OneDot.track()/*]]>*/</script>';
 		$bottomScriptText .= '<noscript><img src="'.$url.'" width="1" height="1" border="0" alt="" /></noscript>';
+		$bottomScriptText .= "\n";
+	}
+}
+
+function imageOneDot ($bottomScriptText) {
+	global $wgUser, $wgArticle, $wgTitle, $wgCityId, $wgDBname, $wgDBcluster, $wgDotDisplay, $wgAdServerTest, $wgReadOnly, $wgContLanguageCode;
+
+	if ( !empty($wgCityId) && !empty($wgDotDisplay) && empty($wgReadOnly) ) {
+		$url = '/__onedot?c='.$wgCityId.'&amp;lc='.$wgContLanguageCode.'&amp;lid='.WikiFactory::LangCodeToId($wgContLanguageCode).'&amp;x='.$wgDBname.'&amp;y='.$wgDBcluster.'&amp;u='.$wgUser->getID().'&amp;a='.(is_object($wgArticle) ? $wgArticle->getID() : null).'&amp;n='.$wgTitle->getNamespace().(!empty($wgAdServerTest) ? '&amp;db_test=1' : '');
+		$bottomScriptText .= '<script type="text/javascript">/*<![CDATA[*/document.write("<img src=\"'.$url.'"+((typeof document.referrer != "undefined") ? "&amp;r="+escape(document.referrer) : "")+"&amp;cb="+(new Date).valueOf()+"\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" />");/*]]>*/</script><noscript><img src="'.$url.'" width="1" height="1" border="0" alt="" /></noscript>';
 		$bottomScriptText .= "\n";
 	}
 	return true;
