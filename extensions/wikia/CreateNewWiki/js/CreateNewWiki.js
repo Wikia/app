@@ -130,7 +130,7 @@ var WikiBuilder = {
 					},
 					function(res) {
 						// check phalanx result
-						if (res.result && res.result.length > 0) {
+						if (res.msgHeader) {
 							$.showModal(res.msgHeader, res.msgBody);
 						} else {
 							// call create wiki ajax
