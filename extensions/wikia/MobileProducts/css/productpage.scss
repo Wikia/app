@@ -43,6 +43,10 @@ section {
 			article {
 				position: relative;
 				
+				.editsection {
+					display: none;
+				}
+				
 				section {
 					width: 400px;
 					margin-top: 20px;
@@ -68,6 +72,7 @@ section {
 								display: block;
 								font-size: 10px;
 								line-height: 12px;
+								margin-top: 3px;
 							}
 						}
 					}
@@ -86,7 +91,6 @@ section {
 #mobileProductSlideshow {
 	position: relative;
 	left: 20px;
-	overflow: hidden;
 	
 	&.android {
 		background-image: url('/extensions/wikia/MobileProducts/images/android_device.png'); /* wgCdnStylePath */;
@@ -98,11 +102,6 @@ section {
 				top: 56px;
 				left: 18px;
 			}
-		}
-		
-		.slideButton {
-			top: 30px;
-			right: 10px;
 		}
 	}
 	
@@ -116,11 +115,6 @@ section {
 				top: 75px;
 				left: 20px;
 			}
-		}
-		
-		.slideButton {
-			top: 50px;
-			right: 15px;
 		}
 	}
 	
@@ -142,6 +136,8 @@ section {
 		
 		&.slideButton {
 			position: absolute;
+			bottom: -40px;
+			left: 90px;
 			
 			li {
 				float:left;

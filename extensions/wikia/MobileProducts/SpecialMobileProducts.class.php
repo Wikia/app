@@ -74,13 +74,17 @@
 		
 		
 		if( !$this->mMobileBrowser ) {
-			$template = F::build( 'EasyTemplate', array( dirname(__FILE__) . '/templates' ) );
-			$template->set_vars( array(
-				'wgBlankImgUrl' => $this->mBlankImgUrl,
-				'languages' => $this->getLanguagesData(),
-			) );
+			$languages = $this->getLanguagesData();
 			
-			$this->mOut->addHTML( $template->render( 'languagemenu' ) );
+			if ( !empty( $languages ) ) {
+				$template = F::build( 'EasyTemplate', array( dirname(__FILE__) . '/templates' ) );
+				$template->set_vars( array(
+					'wgBlankImgUrl' => $this->mBlankImgUrl,
+					'languages' => $languages,
+				) );
+				
+				$this->mOut->addHTML( $template->render( 'languagemenu' ) );
+			}
 		}
 		
 		$template = F::build( 'EasyTemplate', array( dirname(__FILE__) . '/templates' ) );

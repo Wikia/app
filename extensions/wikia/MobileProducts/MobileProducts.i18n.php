@@ -4,7 +4,7 @@ $messages = array();
 $messages['en'] = array(
 	'mobileproducts' => 'Wikia Mobile',
 	'mobileproducts-language' => 'Language',
-	'mobileproducts-language-links' => "* English|http://www.wikia.com/mobile\n* Español|http://es.wikia.com/mobile\n* Deutsch|http://de.wikia.com/mobile\n* Français|http://fr.wikia.com/mobile\n* Italiano|http://it.wikia.com/mobile",
+	'mobileproducts-language-links' => "",//e.g. * English|http://www.wikia.com/mobile\n* Español|http://es.wikia.com/mobile\n* Deutsch|http://de.wikia.com/mobile\n* Français|http://fr.wikia.com/mobile\n* Italiano|http://it.wikia.com/mobile
 	
 	//Landing page
 	'mobileproducts-slides' => "* Mobile_slide_1.jpg|Special:MobileProducts/wikiaphone\n* Mobile_slide_2.jpg|Special:MobileProducts/lyricwiki\n* Mobile_slide_3.jpg|Special:MobileProducts/gameguides",
@@ -100,7 +100,7 @@ This app is constantly striving to be better - please give us feedback on ways t
 ''\"YES! All my gameguides in the palm of my hand.\"''<br/>
 ''\"Very nice and handy app.\"''<br/>
 ''\"Yay!! I use Wikia for computer games, now I no longer need to constantly tab out when I need info!\"''",
-	'mobileproducts-gameguides-footer' => "Check out the wikis at [http://www.wikia.com/gaming wikia.com/gaming] o your laptop for even more gaming info!"
+	'mobileproducts-gameguides-footer' => "Check out the wikis at [http://www.wikia.com/gaming wikia.com/gaming] on your laptop for even more gaming info!"
 );
 
 $messages['qqq'] = array(
