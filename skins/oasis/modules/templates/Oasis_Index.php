@@ -14,6 +14,10 @@
 		$srcs = AssetsManager::getInstance()->getGroupLocalURL('site_css');
 		foreach($srcs as $src) {
 			echo '<link rel="stylesheet" href="'.$src.'">';
+		}	
+		global $wgUser;
+		if($wgUser->isLoggedIn()) {
+			echo '<style>'.$wgUser->getSkin()->generateUserStylesheet().'</style>';
 		}
 	?>
 	<?php
