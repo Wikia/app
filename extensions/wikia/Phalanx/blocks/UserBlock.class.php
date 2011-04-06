@@ -102,11 +102,18 @@ class UserBlock {
 
 		$user->mBlockedby = $blockData['author_id'];
 
-		//if ($blockData['reason']) {
-			//// a reason was given, display it
-			//$user->mBlockreason = $blockData['reason'];
-		//} else {
-			// display generic reasons
+		if ($blockData['reason']) {
+			// a reason was given
+			$reason = $blockData['reason'];
+			if ($blockData['exact']) {
+				$user->mBlockreason = wfMsg('phalanx-user-block-withreason-exact', $reason);
+			} elseif ($isBlockIP) {
+				$user->mBlockreason = wfMsg('phalanx-user-block-withreason-ip', $reason);
+			} else {
+				$user->mBlockreason = wfMsg('phalanx-user-block-withreason-similar', $reason);
+			}
+		} else {
+			// no reason in block data, so use preexisting no-param worded versions
 			if ($blockData['exact']) {
 				$user->mBlockreason = wfMsg('phalanx-user-block-reason-exact');
 			} elseif ($isBlockIP) {
@@ -114,7 +121,7 @@ class UserBlock {
 			} else {
 				$user->mBlockreason = wfMsg('phalanx-user-block-reason-similar');
 			}
-		//}
+		}
 
 		// set expiry information
 		if ($user->mBlock) {
