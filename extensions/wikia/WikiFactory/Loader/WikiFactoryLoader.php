@@ -285,7 +285,7 @@ class WikiFactoryLoader {
 					array( "city_list.city_id" => $this->mCityID ),
 					__METHOD__
 				);
-				if( $this->mCityID == $oRow->city_id ) {
+				if( isset( $oRow->city_id ) && $this->mCityID == $oRow->city_id ) {
 					preg_match( "/http[s]*\:\/\/(.+)$/", $oRow->city_url, $matches );
 					$host = rtrim( $matches[1],  "/" );
 
