@@ -190,7 +190,7 @@ class UserMailer {
 			/* Add category to header to allow easier data gathering */
 			$headers['X-Msg-Category'] = $category;
 			// Add a header for the server-name (helps us route where SendGrid will send bounces).
-			if(!empty($_SERVER)) {
+			if(!empty($_SERVER) && isset( $_SERVER['SERVER_NAME'] ) ) {
 				$headers["X-ServerName"] = $_SERVER['SERVER_NAME'];
 			}
 			/* Wikia change end */
