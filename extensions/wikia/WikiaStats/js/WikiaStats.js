@@ -41,7 +41,7 @@ var OneDot = {
 	track: function(event, version) {
 		OneDot.init();
 
-		url = OneDot.baseUrl + "&cb="+(new Date).valueOf();
+		var url = OneDot.baseUrl + "&cb="+(new Date).valueOf();
 
 		if (typeof document.referrer != "undefined") url = url + "&r="+escape(document.referrer);
 		if (OneDot.uuid) url = url +  "&uuid=" + OneDot.uuid;
