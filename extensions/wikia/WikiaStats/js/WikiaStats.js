@@ -11,9 +11,9 @@ var OneDot = {
 
 		OneDot.uuid = $.cookies.get(OneDot.cookieName);
 		if (OneDot.uuid) {
-			console.log("Found uuid " + OneDot.uuid);	
+			$().log("Found uuid " + OneDot.uuid);
 		} else {
-			console.log("Requesting new uuid");
+			$().log("Requesting new uuid");
 			OneDot.requestUUID();
 		}
 	},
@@ -26,21 +26,21 @@ var OneDot = {
 					// NOK
 				} else {
 					// OK
-					console.log("Assigned new uuid " + data.uuid);
+					$().log("Assigned new uuid " + data.uuid);
 					$.cookies.set(OneDot.cookieName, data.uuid);
 					OneDot.uuid = data.uuid;
 				}
 				OneDot.requesting = 0;
 
 				return true;
-			  },
-			  "json"
+			},
+			"json"
 		);
 	},
 
 	track: function(event, version) {
 		OneDot.init();
-	
+
 		url = OneDot.baseUrl + "&cb="+(new Date).valueOf();
 
 		if (typeof document.referrer != "undefined") url = url + "&r="+escape(document.referrer);
@@ -48,10 +48,10 @@ var OneDot = {
 		if (event) url = url + "&event=" + event;
 		if (version) url = url + "&version=" + version;
 
-		console.log("OneDot track: " + url);
+		$().log("OneDot track: " + url);
 
 		$.get(url);
-				
+
 		return true;
 	}
 }
