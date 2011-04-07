@@ -465,6 +465,10 @@ class EmailNotification {
 		if ($title->getNamespace() < 0)
 			return;
 
+		if( !wfRunHooks( 'AllowNotifyOnPageChange', array( $editor, $title ) ) ) {
+			return false;
+		}
+			
 		/* Wikia change begin - @author: wladek & tomek */
 		/* RT#55604: Add a timeout to the watchlist email block */
 		$notificationTimeoutSql = 'wl_notificationtimestamp IS NULL';
