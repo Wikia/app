@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -13,7 +13,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		{
 			var specialKeys = editor.specialKeys;
 			specialKeys[ 13 ] = enter;
-			specialKeys[ CKEDITOR.SHIFT + 13 ] = shiftEnter;
+
+			// Wikia - start
+			// BugId:2532
+			specialKeys[ CKEDITOR.SHIFT + 13 ] = enter;
+			// Wikia - end
 		}
 	});
 
@@ -124,7 +128,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				}
 				else if ( nextBlock ) {
 					newBlock = nextBlock.clone();
-					
+
 					if ( nextBlock.isReadOnly() ) newBlock = null; // <- Wikia
 				}
 
@@ -432,7 +436,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	{
 		// Get the selection ranges.
 		var ranges = editor.getSelection().getRanges( true );
-		
+
 		// Wikia - start
 		if (ranges.length == 0) {
 			ranges = editor.getSelection().getRanges( false );
