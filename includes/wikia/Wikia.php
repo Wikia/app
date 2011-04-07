@@ -443,6 +443,7 @@ $wgHooks['WikiFactory::execute']     [] = "Wikia::switchDBToLightMode";
 $wgHooks['EmailConfirmed']           [] = "Wikia::isEmailConfirmedHook";
 //$wgHooks['IsTrustedProxy']           [] = "Wikia::trustInternalIps";
 //$wgHooks['RawPageViewBeforeOutput']  [] = 'Wikia::rawPageViewBeforeOutput';
+$wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -1702,5 +1703,21 @@ class Wikia {
 			$result = false;
 		}
 		return $result;
+	}
+	
+	static public function allowNotifyOnPageChange ( /* User */ $editor, /* Title */ $title ) {
+		global $wgWikiaBotUsers;
+		
+		$allow = true;
+		if ( !empty( $wgWikiaBotUsers ) ) {
+			foreach ( $wgWikiaBotUsers as $type => $user ) {
+				if ( $user["username"] == $editor->getName() ) {
+					$allow = false;
+					break;
+				}
+			}
+		}
+		
+		return $allow;
 	}
 }
