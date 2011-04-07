@@ -9,11 +9,11 @@ class WikiaQuizModule extends Module {
 	 */
 	public function executeIndex() {
 	}
-	
+
 	public function executeSampleQuiz() {
 		$this->executeGetQuiz();
 	}
-	
+
 	// 2nd prototype
 	public function executeSampleQuiz2() {
 		$this->executeGetQuiz();
@@ -23,7 +23,7 @@ class WikiaQuizModule extends Module {
 		$wgRequest = F::app()->getGlobal('wgRequest');
 		$elementId = $wgRequest->getVal('elementId');
 		if ($elementId) {
-			$quizElement = WikiaQuizElement::newFromId($elementId);
+			$quizElement = F::build('WikiaQuizElement', array($elementId), 'newFromId');
 			$this->data = $quizElement->getData();
 		}
 	}
@@ -49,5 +49,5 @@ class WikiaQuizModule extends Module {
 			$this->data = $this->quizElement->getData();
 		}
 	}
-		
+
 }
