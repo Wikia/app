@@ -133,11 +133,11 @@ var WikiaPhotoGallery = {
 		return (this.editor.gallery.type == this.TYPE_SLIDER);
 	},
 
-// setup selected page (change dialog title, render content)
+	// setup selected page (change dialog title, render content)
 	selectPage: function(selectedPage, params) {
 		params = params || {};
 		$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'none');
-		
+
 		// store current and previous page
 		params.source = this.editor.currentPage;
 		this.editor.currentPage = selectedPage;
@@ -686,7 +686,7 @@ var WikiaPhotoGallery = {
 		}
 		this.editor.from = params.from;
 		this.target = params.target;
-		$().log(this.target);
+
 		// setup search field
 		this.setupSearch();
 
@@ -1339,14 +1339,14 @@ var WikiaPhotoGallery = {
 		var slideshowLinkEditor = $('#WikiaPhotoSlideshowLinkEditor');
 		var sliderLinkEditor = $('#WikiaPhotoSliderLinkEditor');
 		var imageCaption = $('#WikiaPhotoGalleryEditorCaption');
-		
+
 		galleryLinkEditor.hide();
 		slideshowLinkEditor.hide();
 		sliderLinkEditor.hide();
 		imageCaption.removeAttr('maxlength');
-		
+
 		if (this.isSlideshow()) {
-			slideshowLinkEditor.show();	
+			slideshowLinkEditor.show();
 			$('#WikiaPhotoSlideshowLink').val(link);
 			$('#WikiaPhotoSlideshowLinkText').val(linktext);
 		} else if ( this.isSlider() ){
@@ -1356,7 +1356,7 @@ var WikiaPhotoGallery = {
 			$('#WikiaPhotoSliderLinkText').val(linktext);
 		} else {
 			galleryLinkEditor.show();
-			
+
 			$('#WikiaPhotoGalleryLink').val(link);
 		}
 	},
@@ -2071,11 +2071,16 @@ var WikiaPhotoGallery = {
 		// set slider width
 		slider.css('width', Math.round((values.max - values.min) / values.ratio));
 
+		// set slider initial value
+		var initialValue = parseInt(params[paramName]) || values['default'];
+		sliderInput.val(initialValue);
+
 		// @see http://docs.jquery.com/UI/API/1.8/Slider
 		slider.slider({
 			animate: true,
 			min: values.min,
 			max: values.max,
+			value: initialValue,
 
 			// fired during sliding
 			slide: function(ev, ui) {
@@ -2120,14 +2125,6 @@ var WikiaPhotoGallery = {
 				}
 			}
 		});
-
-
-
-		// set slider initial value
-		var initialValue = parseInt(params[paramName]) || values['default'];
-
-		sliderInput.val(initialValue);
-		slider.slider('value', initialValue);
 	},
 
 	// setup given color picker
