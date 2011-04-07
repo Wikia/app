@@ -1097,14 +1097,27 @@ class WikiaPhotoGallery extends ImageGallery {
 		$s .= Xml::closeElement('div');
 
 		// render prev/next buttons
+		global $wgBlankImgUrl;
+
 		$top = ($params['height'] >> 1) - 30 /* button height / 2 */ + 5 /* top border of slideshow area */;
 		$s .= Xml::openElement('div', array('class' => 'wikia-slideshow-prev-next'));
-		$s .= Xml::element('a',
-			array('class' => 'wikia-slideshow-sprite wikia-slideshow-prev', 'style' => "top: {$top}px", 'title' => wfMsg('wikiaPhotoGallery-slideshow-view-prev-tooltip')),
-			' ');
-		$s .= Xml::element('a',
-			array('class' => 'wikia-slideshow-sprite wikia-slideshow-next', 'style' => "top: {$top}px", 'title' =>  wfMsg('wikiaPhotoGallery-slideshow-view-next-tooltip')),
-			' ');
+
+		// prev
+		$s .= Xml::openElement('a',
+			array('class' => 'wikia-slideshow-sprite wikia-slideshow-prev', 'style' => "top: {$top}px", 'title' => wfMsg('wikiaPhotoGallery-slideshow-view-prev-tooltip')));
+		$s .= Xml::openElement('span');
+		$s .= Xml::element('img', array('class' => 'chevron', 'src' => $wgBlankImgUrl));
+		$s .= Xml::closeElement('span');
+		$s .= Xml::closeElement('a');
+
+		// next
+		$s .= Xml::openElement('a',
+			array('class' => 'wikia-slideshow-sprite wikia-slideshow-next', 'style' => "top: {$top}px", 'title' =>  wfMsg('wikiaPhotoGallery-slideshow-view-next-tooltip')));
+		$s .= Xml::openElement('span');
+		$s .= Xml::element('img', array('class' => 'chevron', 'src' => $wgBlankImgUrl));
+		$s .= Xml::closeElement('span');
+		$s .= Xml::closeElement('a');
+
 		$s .= Xml::closeElement('div');
 
 		// render slideshow toolbar
