@@ -167,6 +167,7 @@ img.WikiaPhotoGalleryProgress {
 #WikiaPhotoGallerySearchResults {
 	border: solid 1px #aaa;
 	height: 260px;
+	margin-bottom: 10px;
 	overflow: auto;
 	position: relative;
 }
@@ -203,9 +204,7 @@ img.WikiaPhotoGalleryProgress {
 }
 
 #WikiaPhotoGallerySearchResultsSelect {
-	bottom: -37px;
-	position: absolute;
-	right: 15px;
+	float: right;
 }
 
 #WikiaPhotoGallerySearchResults.WikiaPhotoGalleryProgress ul {

@@ -1205,7 +1205,7 @@ var WikiaPhotoGallery = {
 		$('#WikiaPhotoGalleryImageUploadButton').attr('disabled', false);
 
 		// resize images list (RT #55203)
-		var spacing = (skin == 'oasis' ? 155 : 200);
+		var spacing = (skin == 'oasis' ? 169 : 200);
 		$('#WikiaPhotoGallerySearchResults').height(this.editor.height - spacing);
 	},
 
