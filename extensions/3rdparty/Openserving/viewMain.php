@@ -1,15 +1,15 @@
 <?php
 $wgExtensionFunctions[] = "wfViewMain";
 
-function wfViewMain() {
-    global $wgParser;
-    $wgParser->setHook( "viewmain", "viewMain" );
+function wfViewMain( $parser ) {
+    $parser->setHook( "viewmain", "viewMain" );
+    return true;
 }
- 
+
 function viewMain( $input ){
 	global $wgSiteView;
 	require_once ('ListPagesClass.php');
-	
+
 	$CategoriesStr = "";
 	$aCat = explode(",",$wgSiteView->getCategories());
 	foreach($aCat as $sCat){
@@ -20,7 +20,7 @@ function viewMain( $input ){
 			$CategoriesStr .= $sCat . " Opinions";
 		}
 	 }
-		
+
 	$list = new ListPagesView();
 	$list->setCategory($CategoriesStr);
 	$list->setShowCount(6);

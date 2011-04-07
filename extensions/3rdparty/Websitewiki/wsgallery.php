@@ -1,16 +1,16 @@
 <?php
- 
+
 # Define a setup function
-$wgExtensionFunctions[] = 'wfWSGalleryParserFunction_Setup';
+$wgHooks['ParserFirstCallInit'][] = 'wfWSGalleryParserFunction_Setup';
 # Add a hook to initialise the magic word
 $wgHooks['LanguageGetMagic'][]       = 'wfWSGalleryParserFunction_Magic';
 
-function wfWSGalleryParserFunction_Setup() {
-        global $wgParser;
+function wfWSGalleryParserFunction_Setup( $parser ) {
         # Set a function hook associating the "wsgallery" magic word with our function
-        $wgParser->setFunctionHook( 'wsgallery', 'wfWSGallery_Render', 1 );
+        $parser->setFunctionHook( 'wsgallery', 'wfWSGallery_Render', 1 );
+        return true;
 }
- 
+
 function wfWSGalleryParserFunction_Magic( &$magicWords, $langCode ) {
         # Add the magic word
         # The first array element is case sensitive, in this case it is not case sensitive
@@ -19,7 +19,7 @@ function wfWSGalleryParserFunction_Magic( &$magicWords, $langCode ) {
         # unless we return true, other parser functions extensions won't get loaded.
         return true;
 }
- 
+
 function wfWSGallery_Render( &$parser, $param1 = '0') {
         # The parser function itself
         # The input parameters are wikitext with templates expanded
@@ -33,7 +33,7 @@ function wfWSGallery_Render( &$parser, $param1 = '0') {
 
 	// $conn = mysql_connect($dbhost, $dbuser, $dbpass) or die  ('Error connecting to mysql');
 	// mysql_select_db($dbname, $conn);
-	
+
 	srand(time() / 2089);
 	$rand = rand();
 
@@ -64,9 +64,9 @@ function wfWSGallery_Render( &$parser, $param1 = '0') {
 	    continue;
 
 	  $armor = substr(md5($id), 0,16) . 'WsWImG=' . $id . "=none=Ws3ik1Ju5ch=" . substr(md5($id), 16);
-	  $crypt = strtr(trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 'WsImgS33CCrret', $armor, MCRYPT_MODE_ECB, 
+	  $crypt = strtr(trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 'WsImgS33CCrret', $armor, MCRYPT_MODE_ECB,
 			mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)))), '+/', '-!');
-	  
+
 	  $img = "http://thumbs.websitewiki.de/$crypt";
 
 	  $result .= "<td><a href=\"/$ti\"><img src=\"$img\" border=\"0\" alt=\"$ti\" /><br />$ti</a></td>\n";

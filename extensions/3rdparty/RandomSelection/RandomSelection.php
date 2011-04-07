@@ -26,9 +26,8 @@ $wgExtensionCredits['parserhook'][] = array(
 	'description' => 'Displays a random option from the given set.'
 );
 
-function wfRandomSelection() {
-	global $wgParser;
-	$wgParser->setHook( 'choose', 'renderChosen' );
+function wfRandomSelection( $parser ) {
+	$parser->setHook( 'choose', 'renderChosen' );
 	return true;
 }
 

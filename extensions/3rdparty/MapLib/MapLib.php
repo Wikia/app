@@ -6,7 +6,7 @@
 
 # Enjoy!
 
-$wgExtensionFunctions[] = 'callmaplib';
+$wgHooks['ParserFirstCallInit'][] = 'callmaplib';
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'MapLib',
 	'description' => 'Display MapLib iframe',
@@ -14,9 +14,9 @@ $wgExtensionCredits['parserhook'][] = array(
 	'url' => 'http://help.wikia.com/wiki/MapLib'
 );
 
-function callmaplib() {
-	global $wgParser;
-	$wgParser->setHook('MapLib', 'renderMaplib');
+function callmaplib( $parser ) {
+	$parser->setHook('MapLib', 'renderMaplib');
+	return true;
 }
 
 # The callback function for converting the input text to HTML output

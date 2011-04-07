@@ -29,7 +29,7 @@
 //
 
 //install extension hook
-$wgExtensionFunctions[] = "wfDhflashplayerExtension";
+$wgHooks['ParserFirstCallInit'][] = "wfDhflashplayerExtension";
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'dhflashplayer',
 	'author' => 'PatrikRoy',
@@ -38,10 +38,10 @@ $wgExtensionCredits['parserhook'][] = array(
 );
 
 //extension hook callback function
-function wfDhflashplayerExtension() {
-	global $wgParser;
+function wfDhflashplayerExtension( $parser ) {
 	//install parser hook for <dhflashplayer> tags
-	$wgParser->setHook( "dhflashplayer", "renderDhflashplayer" );
+	$parser->setHook( "dhflashplayer", "renderDhflashplayer" );
+	return true;
 }
 
 //parser hook callback function

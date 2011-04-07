@@ -10,15 +10,14 @@
 # To activate the extension, include it from your LocalSettings.php
 # with: include("extensions/YourExtensionName.php");
 
-$wgExtensionFunctions[] = "screenshotExtension";
+$wgHooks['ParserFirstCallInit'][] = "screenshotExtension";
 
-function screenshotExtension() 
-{
-    global $wgParser;
-    $wgParser->setHook( "screenshot", "showScreenshot" );
+function screenshotExtension( $parser ) {
+    $parser->setHook( "screenshot", "showScreenshot" );
+    return true;
 }
 
-function showScreenshot( $input, $argv, &$parser ) 
+function showScreenshot( $input, $argv, &$parser )
 {
   if(!$argv["name"])
     return "";

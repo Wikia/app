@@ -6,20 +6,20 @@
 # Usage:
 # <Chart symbol="MSFT"></Chart>
 #
-# To install it put this file in the extensions directory 
+# To install it put this file in the extensions directory
 # To activate the extension, include it from your LocalSettings.php
 # with: require("extensions/YourExtensionName.php");
 
-$wgExtensionFunctions[] = "wfChart";
+$wgHooks['ParserFirstCallInit'][] = "wfChart";
 
-function wfChart() {
-    global $wgParser;
+function wfChart( $parser ) {
     # registers the <Chart> extension with the WikiText parser
-    $wgParser->setHook( "Chart", "renderChart" );
+    $parser->setHook( "Chart", "renderChart" );
+    return true;
 }
 
 $wgChartSettings = array(
-    'time'  => '1d',        
+    'time'  => '1d',
     'symbol'  => 'MSFT'
 );
 
@@ -30,18 +30,18 @@ function renderChart( $input, $argv ) {
 
 	# FIXME: evil, I know, but needed to lift Read-Only lock ASAP. Needs a rewrite...
 	$wgOut->addHTML( "<script type='text/javascript' src='$wgExtensionsPath/3rdparty/ValueWiki/chart.js'></script>" );
-	
+
 	$domain = 'ichart.finance.yahoo.com';
-#die( var_dump( $input ) );	
+#die( var_dump( $input ) );
 	foreach (array_keys($argv) as $key) {
 		$wgChartSettings[$key] = $argv[$key];
 	}
-		
+
 	$chartCount = $chartCount + 1;
-	
+
 	$output = '';
 	$crlf = chr(10).chr(13);
-	
+
 	$styles = array(
 		'1d'  => 'ch_tab',
 		'5d'  => 'ch_tab',
@@ -52,14 +52,14 @@ function renderChart( $input, $argv ) {
 		'5y'  => 'ch_tab',
 		'my'  => 'ch_tab'
 	);
-	
+
 	if ($wgChartSettings['time'] == '0d') {
 		$output .= '<img src="&#72;ttp://ichart.finance.yahoo.com/t?s=' . $wgChartSettings['symbol'] . '"><br>';
 	} else {
 		$styles[$wgChartSettings['time']] = 'ch_tabactive';
-		
+
 		$output .= '<META HTTP-EQUIV="imagetoolbar" CONTENT="no">'.$crlf;
-		
+
 		$output .= '<table cellpadding="0" cellspacing="0" border="0" class="ch_main" width="360">'.$crlf;
 		$output .= '	<tr>'.$crlf;
 		$output .= '		<td style="text-align: center;" valign="bottom">'.$crlf;
@@ -83,7 +83,7 @@ function renderChart( $input, $argv ) {
 		$output .= '	</tr>'.$crlf;
 		$output .= '</table>'.$crlf;
 	}
-	
+
 	return $output;
 }
 ?>

@@ -1,11 +1,10 @@
 <?php
 
-$wgExtensionFunctions[] = 'registerUserStats';
+$wgHooks['ParserFirstCallInit'][] = 'registerUserStats';
 
-function registerUserStats(){
-    global $wgParser ,$wgOut;
-	//purgePage();
-    $wgParser->setHook('userstats', 'renderUserStats');
+function registerUserStats( $parser ){
+    $parser->setHook('userstats', 'renderUserStats');
+    return true;
 }
 
 function renderUserStats($input){
@@ -31,25 +30,25 @@ class UserStats{
 	var $PromotedOpinions = 0;
 	var $EditsCount = 0;
 	var $UserID=0;
-	var $unix_time_range = 2592000; 
-	var $unix_time_30daysago = 0; //= time() - $unix_time_range; 
+	var $unix_time_range = 2592000;
+	var $unix_time_30daysago = 0; //= time() - $unix_time_range;
 	var $timeFrame = 0;
 
 	function UserStats(){
 		return;
 	}
-	
+
 	function setUsername($usr){
 		$parser = new Parser();
-		$CtgTitle = Title::newFromText( $parser->transformMsg(trim(addslashes ($usr)), null) );	
+		$CtgTitle = Title::newFromText( $parser->transformMsg(trim(addslashes ($usr)), null) );
 		$this->Username = $CtgTitle->getDbKey();
 		$this->Userid = $this->getUserID();
 	}
-	
+
 	function setTimeFrame($time){
 		if(strtoupper($time) == "RECENT")$this->timeFrame = 1;
 	}
-	
+
 	function getEditsCount(){
 		$dbr =& wfGetDB( DB_SLAVE );
 		if($this->timeFrame == 1){
@@ -62,7 +61,7 @@ class UserStats{
 		}
 		return $this->EditsCount;
 	}
-	
+
 	function getUserID(){
 		$dbr =& wfGetDB( DB_SLAVE );
 		$sql = "SELECT user_id FROM {$dbr->tableName( 'user' )} WHERE replace(user_name,' ','_') = " . $dbr->AddQuotes($this->Username);
@@ -72,7 +71,7 @@ class UserStats{
 		}
 		return $this->UserID;
 	}
-	
+
 	function getTotalRank(){
 		$dbr =& wfGetDB( DB_SLAVE );
 		$sql = "SELECT total_rank FROM User_Rankings WHERE rank_user_id = '" . $this->Userid . "' and rank_timeframe=0 ";
@@ -82,7 +81,7 @@ class UserStats{
 		}
 		return $this->UserID;
 	}
-	
+
 	function getVoteCount(){
 		$dbr =& wfGetDB( DB_SLAVE );
 		$sql = "SELECT count(distinct(vote_page_id)) as VoteCount FROM Vote WHERE vote_user_id = " . $this->Userid . " AND vote_value = 1 ";
@@ -92,7 +91,7 @@ class UserStats{
 		}
 		return $this->VoteCount;
 	}
-	
+
 	function getLastVoteDate(){
 		$dbr =& wfGetDB( DB_SLAVE );
 		$sql = "SELECT UNIX_TIMESTAMP(vote_date) as LastDate FROM Vote WHERE vote_user_id = " . $this->Userid . " ORDER BY vote_date DESC LIMIT 0,1 ";
@@ -101,7 +100,7 @@ class UserStats{
  		if($row){
 			return $row->LastDate;
 		}
-	}	
+	}
 
 	function getLastCommentDate(){
 		$dbr =& wfGetDB( DB_SLAVE );
@@ -111,8 +110,8 @@ class UserStats{
  		if($row){
 			return $row->LastDate;
 		}
-	}	
-	
+	}
+
 	function getLastEditDate(){
 		$dbr =& wfGetDB( DB_SLAVE );
 		$sql = "SELECT UNIX_TIMESTAMP(DATE_SUB( `rev_timestamp`, INTERVAL 5 HOUR ) )  as LastDate FROM {$dbr->tableName( 'revision' )} WHERE rev_user = " . $this->Userid . "  ORDER BY rev_timestamp DESC LIMIT 0,1 ";
@@ -122,10 +121,10 @@ class UserStats{
 			return $row->LastDate;
 		}
 	}
-	
+
 	function getLastActivity($ts){
-	
-		
+
+
 					$timeArray =  $this-> dateDiff(time(),$ts  );
 			$timeStr = "";
 			$timeStrD = $this->getTimeOffset($timeArray,"d","day");
@@ -138,10 +137,10 @@ class UserStats{
 				$timeStr.=$timeStrM;
 				if(!$timeStr)$timeStr.=$timeStrS;
 			}
-			
+
 		return $timeStr . " ago ";
 	}
-		
+
 	function getCommentCount(){
 		$dbr =& wfGetDB( DB_SLAVE );
 		if($this->timeFrame == 1){
@@ -154,7 +153,7 @@ class UserStats{
 		}
 		return $this->CommentCount;
 	}
-	
+
 	function getCommentVoteCount($vote){
 		if($this->timeFrame == 1){
 			$timeSQL = " AND UNIX_TIMESTAMP( Comment_Vote_Date ) >  " . $this->unix_time_30daysago ;
@@ -166,40 +165,40 @@ class UserStats{
 		}
 		return $VoteCount;
 	}
-	
+
 	function setCommmentScorePlus(){
 		$this->CommentScorePlus = $this->getCommentVoteCount(1);
 	}
-	
+
 	function setCommmentScoreMinus(){
 		$this->CommentScoreMinus = $this->getCommentVoteCount(-1);
 	}
-	
+
 	function getCommentScorePlus(){
 		return $this->CommentScorePlus;
-	}	
-	
+	}
+
 	function getCommentScoreMinus(){
 		return $this->CommentScoreMinus;
-	}	
-	
+	}
+
 	function getCommentScore(){
 		$this->setCommmentScorePlus();
 		$this->setCommmentScoreMinus();
 		return $this->getCommentScorePlus() - $this->getCommentScoreMinus();
 	}
-	
+
 	function getCreatedOpinions(){
 		$parser = new Parser();
 		$dbr =& wfGetDB( DB_SLAVE );
 		$ctg = "OPINIONS BY USER " . strtoupper($this->Username) ;
-		$CtgTitle = Title::newFromText( $parser->transformMsg(trim($ctg), null) );	
+		$CtgTitle = Title::newFromText( $parser->transformMsg(trim($ctg), null) );
 		$CtgTitle = $CtgTitle->getDbKey();
-		
+
 		if($this->timeFrame == 1){
 			$timeSQL = " AND (select UNIX_TIMESTAMP(rev_timestamp) from {$dbr->tableName( 'revision' )} where rev_page=page_id  order by rev_timestamp asc limit 1)  > " . $this->unix_time_30daysago ;
 		}
-		
+
 		$sql = "SELECT count(*) as CreatedOpinions FROM page INNER JOIN {$dbr->tableName( 'categorylinks' )} ON page_id = cl_from WHERE UPPER(cl_to) = " . $dbr->addQuotes($CtgTitle) . " " . $timeSQL;
 		$res = $dbr->query($sql);
 		while ($row = $dbr->fetchObject( $res ) ) {
@@ -207,12 +206,12 @@ class UserStats{
 		}
 		return $this->CreatedOpinions;
 	}
-	
+
 	function getPromotedOpinions(){
 		$parser = new Parser();
 		$dbr =& wfGetDB( DB_SLAVE );
 		$ctg = "OPINIONS BY USER " . strtoupper($this->Username) ;
-		$CtgTitle = Title::newFromText( $parser->transformMsg(trim($ctg), null) );	
+		$CtgTitle = Title::newFromText( $parser->transformMsg(trim($ctg), null) );
 		$CtgTitle = $CtgTitle->getDbKey();
 		if($this->timeFrame == 1){
 			$timeSQL = " AND (select UNIX_TIMESTAMP(rev_timestamp) from {$dbr->tableName( 'revision' )} where rev_page=page_id  order by rev_timestamp asc limit 1)  > " . $this->unix_time_30daysago ;
@@ -224,7 +223,7 @@ class UserStats{
 		}
 		return $this->PromotedOpinions;
 	}
-	
+
 	function displayUserStats(){
 		$output = "<table cellpadding=3 cellspacing=0 border=0 class=statsTable width=250>";
 		$output .= "<tr bgcolor=#184984>";
@@ -300,7 +299,7 @@ class UserStats{
 		$output .=  $this->getLastActivity($this->getLastCommentDate());
 		$output .="</span></td>";
 		$output .= "</tr>";
-		
+
 				$output .="<tr sbgcolor=#eeeeee>";
 		$output .= "<td width=50% bgcolor=#eeeeee style=\"font-weight:800;border-bottom:1px solid #CED4CA; border-right:1px solid #CED4CA;\"><span style=\"font-size:11px; color:#4F4F4F; text-align:center;\">";
 		$output .= 	"Last Vote";
@@ -309,7 +308,7 @@ class UserStats{
 		$output .=  $this->getLastActivity($this->getLastVoteDate());
 		$output .="</span></td>";
 		$output .= "</tr>";
-				
+
 		$output .="<tr sbgcolor=#eeeeee>";
 		$output .= "<td width=50% bgcolor=#eeeeee style=\"font-weight:800;border-bottom:1px solid #CED4CA; border-right:1px solid #CED4CA;\"><span style=\"font-size:11px; color:#4F4F4F; text-align:center;\">";
 		$output .= 	"Last Edit";
@@ -318,11 +317,11 @@ class UserStats{
 		$output .=  $this->getLastActivity($this->getLastEditDate());
 		$output .="</span></td>";
 		$output .= "</tr>";
-		
+
 		$output .= "</table>";
 		return $output;
 	}
-	
+
 	 function dateDiff($dt1, $dt2) {
    $date1 = (strtotime($dt1) != "") ? strtotime($dt1) : $dt1;
    $date2 = (strtotime($dt2) != "") ? strtotime($dt2) : $dt2;

@@ -2,24 +2,24 @@
 
 #http://quote.yahoo.com/d/quotes.csv?s=IDWD.pk&d=t&f=sl1d1t1c1ohgvj1pp2wern;
 
-$wgExtensionFunctions[] = "wfFundimentals";
+$wgHooks['ParserFirstCallInit'][] = "wfFundimentals";
 
-$wgExtensionCredits['parserhook'][] = array( 
-	'name' => 'Fundimentals', 
-	'url' => 'http://www.valuewiki.com', 
-	'author' => 'Zach' 
+$wgExtensionCredits['parserhook'][] = array(
+	'name' => 'Fundimentals',
+	'url' => 'http://www.valuewiki.com',
+	'author' => 'Zach'
 );
 
 include( "SpecialFundJS.php" );
 
-function wfFundimentals() {
-        global $wgParser;
-        $wgParser->setHook('fundimentals', 'fundimentals');
+function wfFundimentals( $parser ) {
+        $parser->setHook('fundimentals', 'fundimentals');
+        return true;
 }
 
 function fundimentals($input, $argv, $parser) {
 	$parser->disableCache();
-	
+
 	$flag = "sl1d1t1c1ohgvj1pp2wern";
 	$class = "fundimentals";
 	$cols = 2;

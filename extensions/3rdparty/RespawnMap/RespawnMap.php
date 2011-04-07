@@ -12,6 +12,7 @@
 # Free for personal and commercial uses, including derived works, as long as this notice is retained unaltered.
 
 $wgExtensionFunctions[] = "wfRespawnMapExtension";
+$wgHooks['ParserFirstCallInit'][] = "wfRespawnMapExtension_InstallParser";
 $wgExtensionCredits['respawnmap'][] = array(
 	'name' => 'Tavin Respawn Map',
 	'author' =>'Patrick Delancy',
@@ -23,15 +24,19 @@ $wgHooks['LanguageGetMagic'][] = 'wfImageURL_Magic';
 
 function wfRespawnMapExtension() {
 	global $wgParser, $wgMessageCache;
+
+	#add translatable text strings to the message cache
+	$wgMessageCache->addMessage('respawn:noexist', 'The file "$1" does not exist.');
+}
+
+function wfRespawnMapExtension_InstallParser( $parser ) {
 	# register the extension with the WikiText parser
 	# the first parameter is the name of the new tag.
 	# the second parameter is the callback function for
 	# processing the text between the tags
-	$wgParser->setHook( "respawnmap", "renderRespawnMap" );
-	$wgParser->setFunctionHook( "imageurl", "imageURL" );
-
-	#add translatable text strings to the message cache
-	$wgMessageCache->addMessage('respawn:noexist', 'The file "$1" does not exist.');
+	$parser->setHook( "respawnmap", "renderRespawnMap" );
+	$parser->setFunctionHook( "imageurl", "imageURL" );
+	return true;
 }
 
 # The callback function for converting the input text to HTML output

@@ -11,11 +11,11 @@ $wgExtensionCredits['parserhook'][] = array(
 );
 
 // set up MediaWiki to react to the "<yahoo>" tag
-$wgExtensionFunctions[] = "wfYahoo";
+$wgHooks['ParserFirstCallInit'][] = "wfYahoo";
 
-function wfYahoo() {
-	global $wgParser;
-	$wgParser->setHook( "yahoo", "RenderYahoo" );
+function wfYahoo( $parser ) {
+	$parser->setHook( "yahoo", "RenderYahoo" );
+	return true;
 }
 
 

@@ -59,21 +59,23 @@ if(isset($wgScriptPath))
 {
 	#Instruct mediawiki to call LyricExtension to initialise new extension
 	$wgExtensionFunctions[] = "lyricTag";
+	$wgHooks['ParserFirstCallInit'][] = "lyricTag_InstallParser";
 	$wgHooks['BeforePageDisplay'][] = "lyricTagCss";
 }
 
 #Install extension
 function lyricTag()
 {
-	#install hook on the element <lyric>
-	global $wgParser;
-
-	$wgParser->setHook("lyric", "renderLyricTag");
-	$wgParser->setHook("lyrics", "renderLyricTag");
-
 	// Keep track of whether this is the first <lyric> tag on the page - this is to prevent too many Ringtones ad links.
-	GLOBAL $wgFirstLyricTag;
+	global $wgFirstLyricTag;
 	$wgFirstLyricTag = true;
+}
+
+function lyricTag_InstallParser( $parser ) {
+	#install hook on the element <lyric>
+	$parser->setHook("lyric", "renderLyricTag");
+	$parser->setHook("lyrics", "renderLyricTag");
+	return true;
 }
 
 function lyricTagCss($out)
@@ -97,7 +99,7 @@ function renderLyricTag($input, $argv, $parser)
 {
 	#make new lines in wikitext new lines in html
 	$transform=str_replace(array("\r\n", "\r","\n"), "<br/>", trim($input));
-  
+
 	$isInstrumental = (strtolower(trim($transform)) == "{{instrumental}}");
 
 	// If appropriate, build ringtones links.
@@ -135,7 +137,7 @@ function renderLyricTag($input, $argv, $parser)
 		$ringtoneLink.= "</div>";
 		$wgFirstLyricTag = false;
 	}
-	
+
 	$transform = $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
 
 	#parse embedded wikitext

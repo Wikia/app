@@ -2,7 +2,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-$wgExtensionFunctions[] = 'wfRemoveCredits';
+$wgHooks['ParserFirstCallInit'][] = 'wfRemoveCredits';
 $wgExtensionCredits['parserhook'][] = array
 (
 	'name'        => 'RemoveCredits',
@@ -14,11 +14,9 @@ $wgExtensionCredits['parserhook'][] = array
 
 $wgCreditsToRemove = array();
 
-function wfRemoveCredits() 
-{
-	global $wgParser;
-
-	$wgParser->setHook('remove_credits', 'doRemoveCredits');
+function wfRemoveCredits( $parser ) {
+	$parser->setHook('remove_credits', 'doRemoveCredits');
+	return true;
 }
 
 function doRemoveCredits($input, $argv, &$parser)

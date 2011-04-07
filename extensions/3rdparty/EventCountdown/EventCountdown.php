@@ -44,18 +44,18 @@
 # To activate the extension, include it from your LocalSettings.php
 # with: require_once("extensions/EventCountdown.php");
 
-$wgExtensionFunctions[] = 'wfEventCountdownExtension';
+$wgHooks['ParserFirstCallInit'][] = 'wfEventCountdownExtension';
 
 
-function wfEventCountdownExtension() {
-        global $wgParser;
+function wfEventCountdownExtension( $parser ) {
         # register the extension with the WikiText parser
         # the first parameter is the name of the new tag.
         # In this case it defines the tag <example> ... </example>
         # the second parameter is the callback function for
         # processing the text between the tags
-        $wgParser->setHook( 'daysuntil', 'runDaysUntil' );
-        $wgParser->setHook( 'eventcountdown', 'runShowEventCountdown' );
+        $parser->setHook( 'daysuntil', 'runDaysUntil' );
+        $parser->setHook( 'eventcountdown', 'runShowEventCountdown' );
+        return true;
 }
 
 function runDaysUntil( $input, $argv ) {

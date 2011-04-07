@@ -1,7 +1,7 @@
 <?php
 if (!defined('MEDIAWIKI')) die();
 
-$wgExtensionFunctions[] = "wfNewCalendarExtension";
+$wgHooks['ParserFirstCallInit'][] = "wfNewCalendarExtension";
 $wgExtensionCredits['parserhook'][] = array(
         'name' => 'New Calendar',
         'author' => 'David McCabe',
@@ -10,8 +10,8 @@ $wgExtensionCredits['parserhook'][] = array(
 );
 
 function wfNewCalendarExtension() {
-    global $wgParser;
-    $wgParser->setHook( "calendar", "ncCreateCalendar" );
+    $parser->setHook( "calendar", "ncCreateCalendar" );
+    return true;
 }
 
 function ncCreateCalendar($input, $params, &$parser)
@@ -38,31 +38,31 @@ class Event {
 	protected $title;
 	protected $date;
 	protected $description;
-	
+
 	function __construct($title, $date) {
 		$this->title = $title;
 		$this->date = $date;
 	}
-	
+
 	function save() {
 		// it turns out that specialaddevent doesn't even use this class.
 		wfDebug("Event::save() is not implemented.");
 	}
-	
+
 	function title() { return $this->title; }
 	function date() { return $this->date; }
 	function description() { return $this->description; }
-	
+
 	function dateYear()  { $tmp = explode('/', $this->date); return $tmp[0]; }
 	function dateMonth() { $tmp = explode('/', $this->date); return $tmp[1]; }
 	function dateDay()   { $tmp = explode('/', $this->date); return $tmp[2]; }
-	
+
 	static function eventsIn( $category, $onlyAfterToday=false,
 		                      $year='___', $month='__', $day='__' ) {
 		$year = is_numeric( $year ) ? sprintf('%04d', $year) : $year;
 		$month = is_numeric( $month ) ? sprintf('%02d', $month) : $month;
 		$day = is_numeric( $day ) ? sprintf('%02d', $day) : $day;
-	
+
 		$like_string = "'$year/$month/$day'";
 
 		$date_today = date('Y/m/d');
@@ -73,7 +73,7 @@ class Event {
 		$dbr =& wfGetDB( DB_SLAVE );
 		$sPageTable = $dbr->tableName( 'page' );
 		$categorylinks = $dbr->tableName( 'categorylinks' );
-		
+
 		/* Two categories SQL (now we use category plus sort key)
 		$sql =  <<<ENDSQL
 		SELECT page_title, page_namespace, clike1.cl_to catlike1
@@ -100,7 +100,7 @@ ENDSQL;*/
 			WHERE page_is_redirect = 0
 			ORDER BY cat.cl_sortkey ASC
 ENDSQL;
-	
+
 		$res = $dbr->query($sql);
 		$events = array();
 		while ($row = $dbr->fetchObject( $res ))  {
@@ -140,7 +140,7 @@ class ncUpcomingEvents {
 
 	/** Category to which articles belong if they are to belong to this calendar. */
 	var $calendar_category;
-	
+
 	/** How many months to show */
 	var $number_of_months;
 
@@ -149,39 +149,39 @@ class ncUpcomingEvents {
 	                                  "March","April","May","June",
    									  "July","August","September","October",
 									  "November","December");
-	
-	
+
+
 	function __construct( $calendar_category, $number_of_months, $page_title ) {
 		$this->calendar_category = $calendar_category;
 		$this->number_of_months = $number_of_months;
 		$this->page_title = $page_title;
 	}
-	
+
 	protected function elem($kind, $class=null) {
 		if ($class) return "<$kind class=\"upcoming_events_$class\">";
 		else return "<$kind>";
 	}
-	
+
 	function html() {
 		global $wgUser, $wgStylePath, $wgOut;
 		$sk =& $wgUser->getSkin();
-		
+
 		// this breaks the "return some html" model, but what can we do?
 		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\"
 			href=\"{$wgStylePath}/common/calendar_extension.css\" />\n" );
-		
+
 		$output = array(); // to be joined into one string in the end.
-		
+
 		$output[] = '<!-- Upcoming Events -->';
 		$output[] = '<div class="upcoming_events">';
 		$output[] = '<h4>Upcoming Events</h4>';
 		$output[] = $this->elem('ul', 'list');
-		
+
 		foreach( ncUpcomingMonths($this->number_of_months) as $date ) {
 			$y = $date['Y']; $m = $date['m'];
 			$events = Event::eventsIn( $this->calendar_category,
 				true, $y, $m );
-			
+
 			$output[] = $this->elem('li', 'month_name');
 			$output[] = self::$month_names[(int)$m];
 			$output[] = '</li>';
@@ -194,11 +194,11 @@ class ncUpcomingEvents {
 			}
 			/*else*/ foreach( $events as $e ) {
 				$output[] = $this->elem('li', 'event');
-				
+
 				$output[] = $this->elem('strong', 'day') .
 						$e->dateDay() .
 						': </strong>';
-				
+
 				$output[] = $sk->makeKnownLinkObj($e->title(),
 					$e->title()->getText());
 
@@ -206,7 +206,7 @@ class ncUpcomingEvents {
 			}
 			$output[] = '</ul>';
 		}
-		
+
 		$add_event_title = Title::newFromText('Special:AddEvent');
 		$query = 'came_from=' . $this->page_title->getPrefixedURL() .
 		         '&category=' . $this->calendar_category;
@@ -218,7 +218,7 @@ class ncUpcomingEvents {
 		$output[] = '</ul>';
 		$output[] = '</div>';
 		$output[] = '<!-- / Upcoming Events -->';
-	
+
 		return join('', $output);
 	}
 }

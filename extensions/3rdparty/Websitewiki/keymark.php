@@ -10,16 +10,16 @@
 # To activate the extension, include it from your LocalSettings.php
 # with: include("extensions/YourExtensionName.php");
 
-$wgExtensionFunctions[] = "keymarkExtension";
+$wgHooks['ParserFirstCallInit'][] = "keymarkExtension";
 
-function keymarkExtension() {
-    global $wgParser;
+function keymarkExtension( $parser ) {
     # register the extension with the WikiText parser
     # the first parameter is the name of the new tag.
     # In this case it defines the tag <example> ... </example>
     # the second parameter is the callback function for
     # processing the text between the tags
-    $wgParser->setHook( "keywords", "renderKeypage" );
+    $parser->setHook( "keywords", "renderKeypage" );
+    return true;
 }
 
 # The callback function for converting the input text to HTML output

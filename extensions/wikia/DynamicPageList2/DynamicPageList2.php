@@ -27,7 +27,7 @@
  *          addcategories: bug fixed
  *          CATLIST variable defined
  * @version 0.9.3
- *          allow ¦ as an alias for |
+ *          allow ï¿½ as an alias for |
  *          escapelinks= introduced
  * @version 0.9.4
  *          allow "-" with categories =
@@ -254,6 +254,7 @@
 $wgExtensionFunctions[]        = array( 'ExtDynamicPageList2', 'setup' );
                                  // this does not work using
                                  // array( 'ExtDynamicPageList2', 'languageGetMagic' )
+$wgHooks['ParserFirstCallInit'][] = array( 'ExtDynamicPageList2' , 'setupParser' );
 
 // changed back to global function due to trouble with older MW installations, g.s.
 //$wgHooks['LanguageGetMagic'][] = 'ExtDynamicPageList2::languageGetMagic';
@@ -467,7 +468,7 @@ class ExtDynamicPageList2
         /**
          * listseparators is an array of four tags (in html or wiki syntax) which defines the output of DPL2
          * if mode = 'userformat' was specified.
-         *   '\n' or '¶'  in the input will be interpreted as a newline character.
+         *   '\n' or 'ï¿½'  in the input will be interpreted as a newline character.
          *   '%xxx%'      in the input will be replaced by a corresponding value (xxx= PAGE, NR, COUNT etc.)
          * t1 and t4 are the "outer envelope" for the whole result list,
          * t2,t3 form an inner envelope around the article name of each entry.
@@ -744,19 +745,10 @@ class ExtDynamicPageList2
                                  // phase of the MediaWiki parser
 
     public static function setup() {
-        // Page Transclusion, adopted from Steve Sanbeg´s LabeledSectionTransclusion
+        // Page Transclusion, adopted from Steve Sanbegï¿½s LabeledSectionTransclusion
         require_once( 'DynamicPageList2Include.php' );
 
         global $wgParser, $wgMessageCache;
-
-        // register the callback for the user tag <dpl>
-        $wgParser->setHook( "DPL", array( __CLASS__, "dplTag" ) );
-        $wgParser->setHook( "DynamicPageList", array( __CLASS__, "dplTag" ) );
-        $wgParser->setHook( 'section', array( __CLASS__, 'removeSectionMarkers' ) );
-        //------------------------------ parser #function  #dplchapter:
-        $wgParser->setFunctionHook( 'dplchapter', array( __CLASS__, 'dplChapterParserFunction' ) );
-        //------------------------------ variant as a parser #function
-        $wgParser->setFunctionHook( 'dpl', array( __CLASS__, 'dplParserFunction' ) );
 
 		// Error and warning codes.
 		require_once( dirname(__FILE__).'/DynamicPageList2.codes.php' );
@@ -786,6 +778,19 @@ class ExtDynamicPageList2
                 'resetLinks'=> false, 'resetTemplates' => false,
                 'resetCategories' => false, 'resetImages' => false, 'resetdone' => false );
         }
+    }
+
+    public static function setupParser( $parser ) {
+        // register the callback for the user tag <dpl>
+        $parser->setHook( "DPL", array( __CLASS__, "dplTag" ) );
+        $parser->setHook( "DynamicPageList", array( __CLASS__, "dplTag" ) );
+        $parser->setHook( 'section', array( __CLASS__, 'removeSectionMarkers' ) );
+        //------------------------------ parser #function  #dplchapter:
+        $parser->setFunctionHook( 'dplchapter', array( __CLASS__, 'dplChapterParserFunction' ) );
+        //------------------------------ variant as a parser #function
+        $parser->setFunctionHook( 'dpl', array( __CLASS__, 'dplParserFunction' ) );
+		return true;
+
     }
 
     // no longer called; changed back to global function due to troubles, g.s.
@@ -845,7 +850,7 @@ class ExtDynamicPageList2
         $numargs = func_num_args();
         if ($numargs < 2) {
           $input = "#dpl: no arguments specified";
-          return str_replace('§','<','§pre>§nowiki>'.$input.'§/nowiki>§/pre>');
+          return str_replace('ï¿½','<','ï¿½pre>ï¿½nowiki>'.$input.'ï¿½/nowiki>ï¿½/pre>');
         }
 
         // fetch all user-provided arguments (skipping $parser)
@@ -855,7 +860,7 @@ class ExtDynamicPageList2
           $input .= str_replace("\n","",$p1) ."\n";
         }
         // for debugging you may want to uncomment the following statement
-        // return str_replace('§','<','§pre>§nowiki>'.$input.'§/nowiki>§/pre>');
+        // return str_replace('ï¿½','<','ï¿½pre>ï¿½nowiki>'.$input.'ï¿½/nowiki>ï¿½/pre>');
 
 
         // $dump1   = self::dumpParsedRefs($parser,"before DPL func");
@@ -1175,10 +1180,10 @@ class ExtDynamicPageList2
         $input = str_replace('Â»','>',$input);
         $input = str_replace('Â«','<',$input);
 
-        // use the ¦ as a general alias for |
+        // use the ï¿½ as a general alias for |
         $input = str_replace('Â¦','|',$input); // the symbol is utf8-escaped
 
-        // the combination '²{' and '}²'will be translated to double curly braces; this allows postponed template execution
+        // the combination 'ï¿½{' and '}ï¿½'will be translated to double curly braces; this allows postponed template execution
         // which is crucial for DPL queries which call other DPL queries
         $input = str_replace('Â²{','{{',$input);
         $input = str_replace('}Â²','}}',$input);
@@ -2873,7 +2878,7 @@ class ExtDynamicPageList2
 
 					//USER/AUTHOR(S)
 					// because we are going to do a recursive parse at the end of the output phase
-					// we have to generate wiki syntax for linking to a user´s homepage
+					// we have to generate wiki syntax for linking to a userï¿½s homepage
 					if($bAddUser || $bAddAuthor || $bAddLastEditor || $sLastRevisionBefore.$sAllRevisionsBefore.$sFirstRevisionSince.$sAllRevisionsSince != '') {
 						$dplArticle->mUserLink  = '[[User:'.$row->rev_user_text.'|'.$row->rev_user_text.']]';
 						$dplArticle->mUser = $row->rev_user_text;

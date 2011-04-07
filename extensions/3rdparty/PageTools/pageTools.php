@@ -2,12 +2,17 @@
 
 
 $wgExtensionFunctions[] = "wfpageTools";
+$wgHooks['ParserFirstCallInit'][] = "wfpageTools_InstallParser";
 
 
 function wfpageTools() {
         global $wgParser, $wgOut;
 		$wgOut->addScript("<script type=\"text/javascript\" src=\"extensions/pageTools.js\"></script>\n");
-        $wgParser->setHook( "pagetools", "renderpageTools" );
+}
+
+function wfpageTools_InstallParser( $parser ) {
+        $parser->setHook( "pagetools", "renderpageTools" );
+        return true;
 }
 function renderpageTools( $input ) {
 	global $wgUser, $wgTitle, $wgOut, $IP;
@@ -15,7 +20,7 @@ function renderpageTools( $input ) {
 	$parser = new Parser();
 	$list = new ListPages();
 	$list->setBool("ShowCtg","yes");
-	
+
 	$relatedctgArray = explode( "," , strip_tags(  $list->getCategoryLinks($wgTitle->mArticleID,7)  )  );
 	foreach($relatedctgArray as $ctg ){
 		if($ctg!=""){
@@ -27,7 +32,7 @@ function renderpageTools( $input ) {
 			}
 		}
 	}
-	
+
 	$output = "";
 	$output .= '<a href="#pageToolsTop"></a><table cellpadding="0" cellspacing="0" border="0"><tr>';
 	$output .= '<td width="100" id="commentsBtn" class="toptabsOn" onmousedown=\'javascript:$("commentsBtn").className="toptabsOn";$("historyBtn").className="toptabs";$("emailBtn").className="toptabs";$("relatedBtn").className="toptabs";getContent("index.php?title=Special:CommentAction&Action=2","pid=' . $wgTitle->mArticleID . '&shwform=1&ord=0","pageToolsContent")\'>Comments</td>';

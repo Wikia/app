@@ -1,9 +1,9 @@
 <?php
-  $wgExtensionFunctions[] = "wfFieldset";
+  $wgHooks['ParserFirstCallInit'][] = "wfFieldset";
 
- function wfFieldset() {
-     global $wgParser;
-     $wgParser->setHook( "fieldset", "renderFieldset" );
+ function wfFieldset( $parser ) {
+     $parser->setHook( "fieldset", "renderFieldset" );
+     return true;
  }
 
  # The callback function for converting the input text to HTML output

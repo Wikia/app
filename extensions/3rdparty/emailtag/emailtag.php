@@ -25,7 +25,7 @@
 if (!defined('MEDIAWIKI')) die();
 
 $wgEmailImage['size']=4;       /* 1..5 */
-$wgEmailImage['ugly']='*#$*§§%!'; /* some character or string */
+$wgEmailImage['ugly']='*#$*ï¿½ï¿½%!'; /* some character or string */
 
 /* image creation */
 $wgExtensionFunctions[] = "wfEmailSpecialpage";
@@ -37,7 +37,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 /* email tag */
-$wgExtensionFunctions[] = 'wfEmailTag';
+$wgHooks['ParserFirstCallInit'][] = 'wfEmailTag';
 $wgExtensionCredits['parserhook'][] = array(
 	'name'    => 'EmailTag',
 	'author'  => 'Tino Reichardt',
@@ -45,9 +45,9 @@ $wgExtensionCredits['parserhook'][] = array(
 	'url'     => 'http://www.mcmilk.de/wiki/Category:Wiki-EmailTag'
 );
 
-function wfEmailTag() {
-  global $wgParser;
-  $wgParser->setHook( "email", "wfEmailTagDoit" );
+function wfEmailTag( $parser ) {
+  $parser->setHook( "email", "wfEmailTagDoit" );
+  return true;
 }
 
 function wfEmailTagDoit($string="") {
@@ -88,7 +88,7 @@ function wfEmailSpecialpage() {
     function execute() {
       global $wgOut, $wgRequest, $wgEmailImage;
       $size=4;
-      
+
       $text = $wgRequest->getText('img');
 
       /* decode this rubbish */

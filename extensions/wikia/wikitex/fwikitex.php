@@ -21,6 +21,7 @@ settype($objRend, 'object');
 
 // register WikiTeX with parser
 $wgExtensionFunctions[] = 'voidRegister';
+$wgHooks['ParserFirstCallInit'][] = 'objRend::initParser';
 
 // perform registration
 function voidRegister()
@@ -31,14 +32,16 @@ function voidRegister()
 
 class objRend {
 
+	static public function initParser( $parser ) {
+		global $arrRend;
+		foreach ($arrRend as $strKey => $strVal) {
+			$parser->setHook($strKey, $strVal);
+		}
+		return true;
+	}
+
 	// register object with parser
 	function __construct($arr) {
-		global $wgParser;
-		settype($strVal,	'string');
-		settype($strKey,	'string');
-		foreach ($arr as $strKey => $strVal) {
-			$wgParser->setHook($strKey, $strVal);
-		}
 	}
 
 

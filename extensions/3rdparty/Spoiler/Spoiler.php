@@ -5,43 +5,43 @@
 # tags behind a JavaScript spoiler block.
 #
 # (C) Copyright 2006, Brian Enigma <brian@netninja.com>
-# This work is licensed under a Creative Commons Attribution-Noncommercial-Share 
+# This work is licensed under a Creative Commons Attribution-Noncommercial-Share
 # Alike 2.5 License.  Some rights reserved.
 # http://creativecommons.org/licenses/by-nc-sa/2.5/
 
 # Modified February 2007 by Patrick Delancy for use in TibiaWiki ( http://tibia.erig.net/ )
 
-$wgExtensionFunctions[] = "wfSpoilerExtension";
+$wgHooks['ParserFirstCallInit'][] = "wfSpoilerExtension";
 $wgExtensionMessagesFiles['SpoilerExtension'] = dirname(__FILE__) . '/Spoiler.i18n.php';
 $wgHooks['OutputPageBeforeHTML'][] = 'spoilerParserHook' ;
 
-function wfSpoilerExtension() {
-	global $wgParser;
+function wfSpoilerExtension( $parser ) {
 	# register the extension with the WikiText parser
 	# the first parameter is the name of the new tag.
 	# the second parameter is the callback function for
 	# processing the text between the tags
-	$wgParser->setHook( "spoiler", "renderSpoiler" );
+	$parser->setHook( "spoiler", "renderSpoiler" );
+	return true;
 }
 
 function wfSpoilerJavaScript() {
 	return	"<script type=\"text/javascript\" language=\"JavaScript\">\n" .
-				"\n" . 
+				"\n" .
 				"function getStyleObject(objectId) {\n" .
 				"    // checkW3C DOM, then MSIE 4, then NN 4.\n" .
 				"    //\n" .
 				"    if(document.getElementById) {\n" .
 				"      if (document.getElementById(objectId)) {\n" .
 				"	     return document.getElementById(objectId).style;\n" .
-				"      }\n" . 
+				"      }\n" .
 				"    } else if (document.all) {\n" .
 				"      if (document.all(objectId)) {\n" .
 				"	     return document.all(objectId).style;\n" .
-				"      }\n" . 
-				"    } else if (document.layers) { \n" . 
+				"      }\n" .
+				"    } else if (document.layers) { \n" .
 				"      if (document.layers[objectId]) { \n" .
 				"	     return document.layers[objectId];\n" .
-				"      }\n" . 
+				"      }\n" .
 				"    } else {\n" .
 				"	   return false;\n" .
 				"    }\n" .
@@ -70,7 +70,7 @@ function wfSpoilerJavaScript() {
 				"</script>\n";
 }
 
-function spoilerParserHook( &$parser , &$text ) { 
+function spoilerParserHook( &$parser , &$text ) {
 	$text = wfSpoilerJavaScript() . $text;
 	return true;
 }

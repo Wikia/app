@@ -1,9 +1,9 @@
 <?php
-  $wgExtensionFunctions[] = "wfPaper";
+$wgHooks['ParserFirstCallInit'][] = "wfPaper";
 
- function wfPaper() {
-     global $wgParser;
-     $wgParser->setHook( "paper", "renderPaper" );
+ function wfPaper( $parser ) {
+     $parser->setHook( "paper", "renderPaper" );
+     return true;
  }
 
  # The callback function for converting the input text to HTML output

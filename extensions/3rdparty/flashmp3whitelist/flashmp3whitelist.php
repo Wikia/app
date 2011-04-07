@@ -1,5 +1,5 @@
 <?php
- 
+
 /*******************************************************************************
 *                                                                              *
 * flashmp3whitelist Extension by jabrwocky7 to embed a flash player with       *
@@ -22,9 +22,9 @@
 ********************************************************************************/
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This file is a MediaWiki extension, it is not a valid entry point' );
-} 
+}
 
-$wgExtensionFunctions[] = 'wfflashmp3whitelist';
+$wgHooks['ParserFirstCallInit'][] = 'wfflashmp3whitelist';
 $wgExtensionCredits['parserhook'][] = array(
         'name' => 'flashmp3whitelist',
         'description' => 'Plays remote mp3 files in an embedded Flash-player.  Uses a whitelist to allow remote domains.',
@@ -36,22 +36,21 @@ $wgExtensionCredits['parserhook'][] = array(
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['flashmp3whitelist'] = $dir . 'flashmp3whitelist.i18n.php';
 
-function wfflashmp3whitelist() {
-        global $wgParser;
-        $wgParser->setHook('mp3', 'renderflashmp3whitelist');
+function wfflashmp3whitelist( $parser ) {
+        $parser->setHook('mp3', 'renderflashmp3whitelist');
         return true;
 }
- 
+
 // The callback function for converting the input text to HTML output
 function renderflashmp3whitelist($input, $params) {
         global $wgExtensionsPath, $wgStyleVersion;
-        
+
         wfLoadExtensionMessages( 'flashmp3whitelist' );
         $domainwhitelist = explode("\n",trim(wfMsg ( 'flashmp3whitelist-domains' )));
 
         $id = 1;
         $player_path = $wgExtensionsPath.'/3rdparty/flashmp3whitelist/audio-player/';
-	
+
 	$url = htmlspecialchars($params['url']);
         if ($url==null) {
           $output = wfMsg ( 'flashmp3whitelist-no-URL' );
@@ -63,8 +62,8 @@ function renderflashmp3whitelist($input, $params) {
         if (in_array($domain,$domainwhitelist)==FALSE) {
           $output = wfMsg ( 'flashmp3whitelist-not-in-whitelist', $domain );
           return $output;
-        }        
-        
+        }
+
         $output = '<script type="text/javascript" language="JavaScript" src="'.$player_path.'audio-player.js?'.$wgStyleVersion.'"></script>'
                     . '<object type="application/x-shockwave-flash" data="'.$player_path.'player.swf" id="audioplayer'.$id.'" height="24" width="290">'
                     . '<param name="movie" value="'.$player_path.'player.swf">'

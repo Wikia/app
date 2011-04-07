@@ -1,12 +1,18 @@
 <?php
 
 $wgExtensionFunctions[] = 'wfAdTagSetup';
+$wgHooks['ParserFirstCallInit'][] = 'wfAdTagSetup_InstallParser';
 
 function wfAdTagSetup() {
 	global $wgHooks, $wgParser, $wgAdMarkerList;
 	$wgAdMarkerList = array();
-	$wgParser->setHook( 'ad', 'wfAdParserHook' );
+	//$wgParser->setHook( 'ad', 'wfAdParserHook' );
 	$wgHooks['ParserAfterTidy'][] = 'wfAdsAfterTidy';
+}
+
+function wfAdTagSetup_InstallParser( $parser ) {
+	$parser->setHook( 'ad', 'wfAdParserHook' );
+	return true;
 }
 
 

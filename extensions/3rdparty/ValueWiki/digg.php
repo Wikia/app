@@ -6,32 +6,32 @@
 # Usage:
 # <Digg title="" topic=""></Digg>
 
-# To install it put this file in the extensions directory 
+# To install it put this file in the extensions directory
 # To activate the extension, include it from your LocalSettings.php
 # with: require("extensions/YourExtensionName.php");
 
-$wgExtensionFunctions[] = "wfDigg";
+$wgHooks['ParserFirstCallInit'][] = "wfDigg";
 
-function wfDigg() {
-    global $wgParser;
+function wfDigg( $parser ) {
     # registers the <Digg> extension with the WikiText parser
-    $wgParser->setHook( "digg", "renderDigg" );
+    $parser->setHook( "digg", "renderDigg" );
+    return true;
 }
 
 $wgDiggSettings = array(
-    'link'  => '',        
-    'title'  => '',        
+    'link'  => '',
+    'title'  => '',
     'topic'  => ''
 );
 
 # The callback function for converting the input text to HTML output
 function renderDigg( $input, $argv ) {
 	global $wgDiggSettings;
-	
+
 	foreach (array_keys($argv) as $key) {
 		$wgDiggSettings[$key] = $argv[$key];
 	}
-		
+
 	$wgDiggSettings['link'] = str_replace('http://', '', $wgDiggSettings['link']) ;
 
 	$output = '<script type="text/javascript">';
@@ -44,24 +44,24 @@ function renderDigg( $input, $argv ) {
 	if ($wgDiggSettings['topic'] != "") {
 		$output .= "digg_topic = '" . $wgDiggSettings['topic'] . "';";
 	}
-	
+
 	$output .= '</script>';
-	
+
 	$output .= '<script src="&#104;ttp://digg.com/tools/diggthis.js" type="text/javascript"></script>';
-        
+
     return $output;
 }
 
-$wgExtensionFunctions[] = "wfSafeScript";
+$wgHooks['ParserFirstCallInit'][] = "wfSafeScript";
 
-function wfSafeScript() {
-    global $wgParser;
+function wfSafeScript( $parser ) {
     # registers the <Digg> extension with the WikiText parser
-    $wgParser->setHook( "SafeScript", "renderSafeScript" );
+    $parser->setHook( "SafeScript", "renderSafeScript" );
+    return true;
 }
 
 $wgSafeScriptSettings = array(
-    'domain'  => '',        
+    'domain'  => '',
     'path'  => ''
 );
 
@@ -72,11 +72,11 @@ function renderSafeScript( $input, $argv ) {
 	try {
 		global $wgSafeScriptSettings;
 		global $safeDomains;
-		
+
 		foreach (array_keys($argv) as $key) {
 			$wgSafeScriptSettings[$key] = $argv[$key];
 		}
-		
+
 		if (in_array($wgSafeScriptSettings['domain'], $safeDomains)) {
 			$output = '<script type="text/javascript" src="&#104;ttp://'.$wgSafeScriptSettings['domain'].'/'. $wgSafeScriptSettings['path'].'"></script>';
 		}

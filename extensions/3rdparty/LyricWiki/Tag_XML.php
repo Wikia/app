@@ -55,7 +55,7 @@ Version 0.1
 require_once 'extras.php';
 
 $dir = dirname(__FILE__) . '/';
-$wgExtensionFunctions[] = "wfXMLFormatter";
+$wgHooks['ParserFirstCallInit'][] = "wfXMLFormatter";
 $wgExtensionMessagesFiles['XMLParser'] = $dir . 'Tag_XML.i18n.php';
 
 if(isset($wgScriptPath))
@@ -67,11 +67,10 @@ $wgExtensionCredits["parserhook"][]=array(
 'description' => 'Allows expanding XML-based files into wikitext' );
 }
 
-function wfXMLFormatter()
+function wfXMLFormatter( $parser )
 {
-	global $wgParser;
-
-	$wgParser->setHook( "xml", "renderXML" );
+	$parser->setHook( "xml", "renderXML" );
+	return true;
 }
 
 function debugSwitch( $name )
@@ -97,13 +96,13 @@ function renderXML( $input, $argv, &$parser )
 	global $wgOut;
 	$localParser = new Parser();
 	wfLoadExtensionMessages('XMLParser');
-	
+
 	// parameters
 	$feedURL = $argv["feed"];
 	$escapedFeedURL = urlencode($argv["feed"]);
 	$maxItems = (integer)$argv["maxitems"];
 	$addLineFeed = $argv["linefeed"];
-	
+
 	// retrieve the xml source from the cache before trying to fetch it
 	// limits possible stress on other people's servers, reduces chance of DOS attacks
 	GLOBAL $wgMemc;
@@ -154,10 +153,10 @@ function renderXML( $input, $argv, &$parser )
 	{
 		$path = $matches[1][$i];
 		$template = filter(trim(unfilter($matches[2][$i])));
-		
+
 		$items = $feed->getItem( $path );
 		$count = min( count( $items ), $maxItems );
-		
+
 		if( !$items )
 		{
 			$result .= wfMsg("xml-pathnotfound",$path);

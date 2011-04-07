@@ -10,16 +10,16 @@
 # To activate the extension, include it from your LocalSettings.php
 # with: include("extensions/YourExtensionName.php");
 
-$wgExtensionFunctions[] = "crosslinkExtension";
+$wgHooks['ParserFirstCallInit'][] = "crosslinkExtension";
 
-function crosslinkExtension() {
-    global $wgParser;
+function crosslinkExtension( $parser ) {
     # register the extension with the WikiText parser
     # the first parameter is the name of the new tag.
     # In this case it defines the tag <example> ... </example>
     # the second parameter is the callback function for
     # processing the text between the tags
-    $wgParser->setHook( "crosslinks", "renderCrosslinks" );
+    $parser->setHook( "crosslinks", "renderCrosslinks" );
+    return true;
 }
 
 # The callback function for converting the input text to HTML output

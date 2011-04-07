@@ -6,7 +6,7 @@
 
 define('SIMPLECALENDAR_VERSION','1.2.4, 2007-10-18');
 
-$wgExtensionFunctions[]	= 'wfSetupSimpleCalendar';
+$wgHooks['ParserFirstCallInit'][] = 'wfSetupSimpleCalendar';
 $wgHooks['LanguageGetMagic'][] = 'wfCalendarLanguageGetMagic';
 
 $wgExtensionCredits['parserhook'][] = array(
@@ -22,11 +22,10 @@ function wfCalendarLanguageGetMagic(&$magicWords,$langCode = 0) {
 	return true;
 	}
 
-function wfSetupSimpleCalendar() {
-	global $wgParser;
-	$wgParser->setFunctionHook('calendar','wfRenderCalendar');
+function wfSetupSimpleCalendar( $parser ) {
+	$parser->setFunctionHook('calendar','wfRenderCalendar');
 	return true;
-	}
+}
 
 # Renders a table of all the individual month tables
 function wfRenderCalendar(&$parser) {

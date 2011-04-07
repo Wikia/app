@@ -4,7 +4,7 @@
  * @author Jim R. Wilson
  * @version 0.1
  * @copyright Copyright (C) 2007 Jim R. Wilson
- * @license The MIT License - http://www.opensource.org/licenses/mit-license.php 
+ * @license The MIT License - http://www.opensource.org/licenses/mit-license.php
  * -----------------------------------------------------------------------
  * Description:
  *     This is a MediaWiki extension which adds support for injecting <meta> keyword tags
@@ -25,28 +25,28 @@
  *         Initial release.
  * -----------------------------------------------------------------------
  * Copyright (c) 2007 Jim R. Wilson
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy 
- * of this software and associated documentation files (the "Software"), to deal 
- * in the Software without restriction, including without limitation the rights to 
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of 
- * the Software, and to permit persons to whom the Software is furnished to do 
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do
  * so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in all 
+ *
+ * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
- * OTHER DEALINGS IN THE SOFTWARE. 
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
  * -----------------------------------------------------------------------
  */
- 
+
 # Confirm MW environment
 if (defined('MEDIAWIKI')) {
 
@@ -61,17 +61,22 @@ $wgExtensionCredits['parserhook'][] = array(
 
 # Add Extension Function
 $wgExtensionFunctions[] = 'setupMetaKeywordsTagParserHooks';
+$wgHooks['ParserFirstCallInit'][] = 'setupMetaKeywordsTagParserHooks_InstallParser';
 
 /**
  * Sets up the MetaKeywordsTag Parser hook and system messages
  */
 function setupMetaKeywordsTagParserHooks() {
 	global $wgParser, $wgMessageCache;
-	$wgParser->setHook( 'keywords', 'renderMetaKeywordsTag' );
-    $wgMessageCache->addMessage(
-        'metakeywordstag-missing-content', 
+	$wgMessageCache->addMessage(
+        'metakeywordstag-missing-content',
         'Error: &lt;keywords&gt; tag must contain a &quot;content&quot; attribute.'
     );
+}
+
+function setupMetaKeywordsTagParserHooks_InstallParser( $parser ) {
+	$parser->setHook( 'keywords', 'renderMetaKeywordsTag' );
+    return true;
 }
 
 /**
@@ -90,7 +95,7 @@ function renderMetaKeywordsTag( $text, $params = array(), &$parser ) {
             wfMsgForContent('metakeywordstag-missing-content').
             '</div>';
     }
-    
+
     # Return encoded content
     return '<!-- META_KEYWORDS '.base64_encode($params['content']).' -->';
 }
@@ -109,12 +114,12 @@ function insertMetaKeywords( $out, $text ) {
 
     # Extract meta keywords
     if (preg_match_all(
-        '/<!-- META_KEYWORDS ([0-9a-zA-Z\\+\\/]+=*) -->/m', 
-        $text, 
+        '/<!-- META_KEYWORDS ([0-9a-zA-Z\\+\\/]+=*) -->/m',
+        $text,
         $matches)===false
     ) return true;
     $data = $matches[1];
-    
+
     # Merge keyword data into OutputPage as meta tags
     foreach ($data AS $item) {
         $content = @base64_decode($item);
