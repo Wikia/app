@@ -98,7 +98,8 @@ class GlobalWatchlistBot {
 	public function getGlobalWatchlisters( $sFlag = 'watchlistdigest', $field = false ) {
 		$aUsers = array();
 		
-		$defaultValue = User::getDefaultOption( $sFlag );
+		$defaultValue = (int) User::getDefaultOption( $sFlag );
+		$this->printDebug( "Default value for flag $sFlag: $defaultValue" );
 		
 		$aWhereClause = array( "user_email_authenticated IS NOT NULL" );
 		if ( count( $this->mUsers ) ) {
@@ -351,7 +352,7 @@ class GlobalWatchlistBot {
 		
 		# update user preferences
 		$oUser = User::newFromId( $iUserId );
-		$oUser->setOption( 'watchlistdigestclear', false );
+		$oUser->setOption( 'watchlistdigestclear', 0 );
 		$oUser->saveSettings();
 	} 
 	 
