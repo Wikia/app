@@ -7,10 +7,9 @@
 		<?php foreach ($images as $info): ?>
 			<?php $count++; ?>
 			<li class="search-images-result" id="image-one-box-search-result-<?= $count; ?>">
-				<div>
 					<a<?= $info['lightBox'] ? ' class="lightbox"' : '' ?> href="<?= $info['mainImageLink'] ?>">
-						<img class="search-image" src="<?= $info['thumbUrl'] ?>" /></a><br />
-				</div>
+						<img class="search-image" src="<?= $info['thumbUrl'] ?>" width="<?= $info['width'] ?>" height="<?= $info['height'] ?>" />
+					</a>
 			</li>
 		<?php endforeach; ?>
 	</ul>
