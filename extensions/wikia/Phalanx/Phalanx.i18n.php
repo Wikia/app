@@ -115,6 +115,10 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br/>The blocker also
 	'phalanx-stats-table-wiki-name' => 'Wiki Name',
 	'phalanx-stats-table-wiki-url' => 'Wiki URL',
 	'phalanx-stats-table-wiki-last-edited' => 'Last edited',
+	
+	#permissions
+	'right-phalanx' => 'Can manage global blocks and spam filters',
+	'right-phalanxexempt' => 'Exempt from Phalanx rules',
 );
 
 /** Breton (Brezhoneg)
