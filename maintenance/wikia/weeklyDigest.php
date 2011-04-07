@@ -29,7 +29,9 @@ class WeeklyDigest extends Maintenance {
 			// options
 			if( $this->hasOption( 'debug' ) ) {
 				$bDebugMode = true;
-			} elseif ( $this->hasOption( 'clear' ) ) {
+			} 
+			
+			if ( $this->hasOption( 'clear' ) ) {
 				$bClearMode = true;
 			} elseif ( $this->hasOption( 'update' ) ) {
 				$bUpdateMode = true;
