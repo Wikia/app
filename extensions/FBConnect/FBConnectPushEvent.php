@@ -79,7 +79,6 @@ class FBConnectPushEvent {
 						'type' => 'toggle',
 						'label-message' => 'tog-'.$prefName,
 						'section' => self::$PREFERENCES_TAB_NAME,
-						"default" => "1",
 					);
 					
 					/* < v1.16 */ 
