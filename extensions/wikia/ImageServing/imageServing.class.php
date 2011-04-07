@@ -6,6 +6,7 @@
 class imageServing{
 	private $maxCount = 10;
 	private $minSize = 75;
+	private $queryLimit = 50; 
 	private $articles = array();
 	private $width;
 	private $proportion;
@@ -96,8 +97,13 @@ class imageServing{
 			while ($row =  $db->fetchRow( $res ) ) {
 				$props = unserialize( $row['props'] );
 				if ( is_array( $props ) && count( $props ) ) {
+					$count = 0;
 					foreach ( $props as $key => $value ) {
 						if ( !isset($image_list[$value][$row['page_id']]) ) {
+							$count++;
+							if ( $this->queryLimit == $count ) {
+								break;
+							}
 							if ( empty($image_list[$value]) ) {
 								$images_name[] = $value;
 							}
