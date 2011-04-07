@@ -8,6 +8,7 @@ $messages['en'] = array(
 	'stafflog-blockmsg' => '$1 $2 tried to block staff user $3 on wiki $4. Reason: $5',
 	'stafflog-piggybackloginmsg' => '$1 Piggyback - user $2 login as $3', // @todo FIXME: event contains 4 parameters.
 	'stafflog-piggybacklogoutmsg' => '$1 Piggyback - user $2 logout from $3 acount', // @todo FIXME: event contains 4 parameters.
+	'right-stafflog' => 'Can view the stafflog',
 );
 
 /** Message documentation (Message documentation) */
