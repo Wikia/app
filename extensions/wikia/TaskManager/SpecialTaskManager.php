@@ -35,7 +35,7 @@ extAddBatchTask( dirname(__FILE__)."/Tasks/PageGrabberDumpTask.php", "pagegrabbe
 extAddBatchTask( dirname(__FILE__)."/Tasks/PageImporterTask.php", "pageimporter", "PageImporterTask" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/SWMSendToGroupTask.php", "SWMSendToGroup", "SWMSendToGroupTask" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/LocalMaintenanceTask.php", "local-maintenance", "LocalMaintenanceTask" );
-
+extAddBatchTask( dirname(__FILE__)."/Tasks/ClearMessageCacheTask.php", "clear-msg-cache", "ClearMessageCacheTask" );
 
 /**
  * permissions
