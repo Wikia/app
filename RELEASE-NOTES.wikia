@@ -1,4 +1,5 @@
 == Changes since release-015 ==
+* fb#4302: Gallery builder - Select and Back buttons overlap (macbre)
 * fb#4355: Gallery Editing broken in Internet Explorer (macbre)
 
 == Changes since release-014 ==
