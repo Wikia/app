@@ -30,6 +30,10 @@ class AccountNavigationModule extends Module {
 			'data-id' => $id,
 			'href' => $personalUrl['href']
 		);
+		
+		if( in_array( $id, array( 'login', 'register' ) ) ) {
+			$attributes['rel'] = 'nofollow';
+		}
 
 		// add class attribute
 		if (isset($personalUrl['class'])){

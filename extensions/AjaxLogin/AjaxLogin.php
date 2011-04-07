@@ -130,7 +130,7 @@ function GetAjaxLoginForm( &$data ) {
 		}
 		// Originally this used core message 'nologinlink' but it wouldn't work too well for Finnish, so I changed it. --Jack Phoenix
 		$wgOut->addHTML(
-			'<br /><a id="wpAjaxRegister" tabindex="107" href="' . htmlspecialchars( $link ) . '">' . wfMsg( 'ajaxlogin-create' ) . '</a>
+			'<br /><a id="wpAjaxRegister" tabindex="107" href="' . htmlspecialchars( $link ) . '" rel="nofollow">' . wfMsg( 'ajaxlogin-create' ) . '</a>
 		</form>
 	</div>
 	<b class="xbottom"><b class="xb4"></b><b class="xb3"></b><b class="xb2"></b><b class="xb1"></b></b>

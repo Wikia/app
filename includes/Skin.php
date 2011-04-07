@@ -1300,7 +1300,7 @@ CSS;
 				: 'login';
 			$ret .= "\n<br />" . $this->link(
 				SpecialPage::getTitleFor( 'Userlogin' ),
-				wfMsg( $loginlink ), array(), $query
+				wfMsg( $loginlink ), array( 'rel' => 'nofollow' ), $query
 			);
 		} else {
 			$returnTo = $this->mTitle->getPrefixedDBkey();

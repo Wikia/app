@@ -578,7 +578,7 @@ Jemand mit der IP-Adresse $1, wahrscheinlich du selbst, hat ein neues Passwort f
 <br />
 Das automatisch generierte Passwort für Benutzer „$2“ lautet nun: $3<br /><br />
 
-Du solltest dich jetzt anmelden und das Passwort ändern: <a href="{{fullurl:{{ns:special}}:Userlogin}}">{{fullurl:{{ns:special}}:Userlogin}}</a><br />
+Du solltest dich jetzt anmelden und das Passwort ändern: <a href="{{fullurl:{{ns:special}}:Userlogin}}" rel="nofollow">{{fullurl:{{ns:special}}:Userlogin}}</a><br />
 Das neue Passwort ist {{PLURAL:$5|1 Tag|$5 Tage}} gültig.<br />
 <br />
 Bitte ignoriere diese E-Mail, falls du sie nicht selbst angefordert hast. Das alte Passwort bleibt weiterhin gültig.<br />

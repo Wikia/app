@@ -1910,7 +1910,7 @@ class OutputPage {
 		$loginLink = $skin->link(
 			$loginTitle,
 			wfMsgHtml( 'loginreqlink' ),
-			array(),
+			array( 'rel' => 'nofollow' ),
 			array(
 				'returnto' => $this->getTitle()->getPrefixedText(),
 				'returntoquery' => wfArrayToCGI( $returnToQueryValues )

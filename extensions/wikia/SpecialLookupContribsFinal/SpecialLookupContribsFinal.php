@@ -245,7 +245,7 @@ if(in_array( 'createwiki', $wgUser->getRights() )){
 	  global $wgMessageCache;
 	  $wgMessageCache->addMessages( array('createwiki' => 'Request a new wiki',
 					      'createwikipagetitle' => 'Request a new wiki',
-					      'createwikilogin' => 'Please <a href="/index.php?title=Special:Userlogin&returnto=Special:CreateWiki" class="internal" title="create an account or log in">create an account or log in</a> before requesting a wiki.',
+					      'createwikilogin' => 'Please <a href="/index.php?title=Special:Userlogin&returnto=Special:CreateWiki" class="internal" title="create an account or log in" rel="nofollow">create an account or log in</a> before requesting a wiki.',
 					      'createwikistafftext' => 'You are staff, so you can create a new wiki using this page',
 					      'createwikitext' => 'You can request a new wiki be created on this page.  Just fill out the form',
 					      'createwikititle' => 'Title for the wiki',
