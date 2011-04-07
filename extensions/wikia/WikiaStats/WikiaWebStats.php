@@ -47,14 +47,14 @@ function wfWikiaWebStatsScript($this, $bottomScriptText) {
 	global $wgEnableOneDotPlus;
 	
 	if ($wgEnableOneDotPlus) {
-		ajaxOneDot(&$bottomScriptText);
+		ajaxOneDot($bottomScriptText);
 	} else {
-		imageOneDot(&$bottomScriptText);
+		imageOneDot($bottomScriptText);
 	}
 	return true;
 }
 
-function ajaxOneDot ($bottomScriptText) {
+function ajaxOneDot (&$bottomScriptText) {
 	global $wgCityId, $wgDotDisplay, $wgReadOnly, $wgJsMimeType, $wgStyleVersion, $wgExtensionsPath, $wgOut;
 
 	if ( !empty($wgCityId) && !empty($wgDotDisplay) && empty($wgReadOnly) ) {
@@ -68,7 +68,7 @@ function ajaxOneDot ($bottomScriptText) {
 	}
 }
 
-function imageOneDot ($bottomScriptText) {
+function imageOneDot (&$bottomScriptText) {
 	global $wgUser, $wgArticle, $wgTitle, $wgCityId, $wgDBname, $wgDBcluster, $wgDotDisplay, $wgAdServerTest, $wgReadOnly, $wgContLanguageCode;
 
 	if ( !empty($wgCityId) && !empty($wgDotDisplay) && empty($wgReadOnly) ) {
