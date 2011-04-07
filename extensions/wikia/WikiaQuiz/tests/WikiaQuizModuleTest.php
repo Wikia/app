@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../WikiaQuizModule.class.php';
+require_once dirname(__FILE__) . '/../WikiaQuizElement.class.php';
 wfLoadAllExtensions();
 
 class WikiaQuizModuleTest extends PHPUnit_Framework_TestCase {
@@ -20,8 +21,9 @@ class WikiaQuizModuleTest extends PHPUnit_Framework_TestCase {
 			->will($this->returnValue('10001'));
 
 		$app = $this->getMock('WikiaApp', array('getGlobal'), array(), '', false);
-		$app->expects($this->any())
+		$app->expects($this->once())
 			->method('getGlobal')
+			->with($this->equalTo('wgRequest'))
 			->will($this->returnValue($wgRequest));
 
 		F::setInstance('App', $app);
