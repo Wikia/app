@@ -140,7 +140,7 @@ class GlobalWatchlistBot {
 					$oResultRow->prop_value = $defaultValue;
 				}
 				
-				if ( $oResultRow->prop_value == $defaultValue ) {
+				if ( $oResultRow->prop_value == 1 ) {
 					$iWatchlisters++;
 					
 					if ( !empty($field) ) { 
