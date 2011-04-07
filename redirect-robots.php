@@ -9,11 +9,10 @@ require_once( dirname(__FILE__) . '/includes/SpecialPage.php' );
 require_once( dirname(__FILE__) . '/languages/Language.php' );
 
 function newrobots(){
-
-header("Content-Type: text/plain");
-#header("Pragma: no-cache");
-#header("Expires: 0");
-echo <<<EOT
+	header("Content-Type: text/plain");
+	#header("Pragma: no-cache");
+	#header("Expires: 0");
+	echo <<<EOT
 #
 # Please note: There are a lot of pages on this site, and there are
 # some misbehaved spiders out there that go _way_ too fast. If you're
@@ -124,70 +123,65 @@ User-agent: WebReaper
 Disallow: /
 
 EOT;
-echo getDynamicRobots('goog');
-echo getDynamicRobots();
-echo "\n";
-echo getSitemapUrl();
-die;
+	echo getDynamicRobots('goog');
+	echo getDynamicRobots();
+	echo "\n";
+	echo getSitemapUrl();
+	die;
 }
 
 function getDynamicRobots($bot=''){
 	global $wgOut, $wgCat, $wgLanguageNames, $wgContLang;
 
-if($bot == 'goog'){
-	$r = "\n";
-	$r .= "User-agent: Googlebot\n";
-	$r .= "Disallow: /w/\n";
-	$r .= "Disallow: /trap/\n";
-	$r .= "Disallow: /dbdumps/\n";
-	$r .= "Disallow: /wikistats/\n";
-	$r .= "Disallow: /*feed=rss*\n";
-	$r .= "Disallow: /*action=history*\n";
-	$r .= "Disallow: /*action=delete*\n";
-	$r .= "Disallow: /*action=watch*\n";
-	$r .= "Noindex: /w/\n";
-	$r .= "Noindex: /trap/\n";
-	$r .= "Noindex: /dbdumps/\n";
-	$r .= "Noindex: /wikistats/\n";
-	$r .= "Noindex: /*printable=yes*\n";
-	$r .= "Noindex: /*feed=rss*\n";
-	$r .= "Noindex: /*action=edit*\n";
-	$r .= "Noindex: /*action=history*\n";
-	$r .= "Noindex: /*action=delete*\n";
-	$r .= "Noindex: /*action=watch*\n";
-
-}else{
-
-	$r  = "\n";
-	$r .= "User-agent: *\n";
-	$r .= "Disallow: /w/\n";
-	$r .= "Disallow: /trap/\n";
-	$r .= "Disallow: /dbdumps/\n";
-	$r .= "Disallow: /wikistats/\n";
-	$r .= "Disallow: /*feed=rss*\n";
-	$r .= "Disallow: /*action=history*\n";
-	$r .= "Disallow: /*action=delete*\n";
-	$r .= "Disallow: /*action=watch*\n";
-
-}
-
-	$lang = new Language();
-
+	if($bot == 'goog'){
+		$r = "\n";
+		$r .= "User-agent: Googlebot\n";
+		$r .= "Disallow: /w/\n";
+		$r .= "Disallow: /trap/\n";
+		$r .= "Disallow: /dbdumps/\n";
+		$r .= "Disallow: /wikistats/\n";
+		$r .= "Disallow: /*feed=rss*\n";
+		$r .= "Disallow: /*action=history*\n";
+		$r .= "Disallow: /*action=delete*\n";
+		$r .= "Disallow: /*action=watch*\n";
+		$r .= "Noindex: /w/\n";
+		$r .= "Noindex: /trap/\n";
+		$r .= "Noindex: /dbdumps/\n";
+		$r .= "Noindex: /wikistats/\n";
+		$r .= "Noindex: /*printable=yes*\n";
+		$r .= "Noindex: /*feed=rss*\n";
+		$r .= "Noindex: /*action=edit*\n";
+		$r .= "Noindex: /*action=history*\n";
+		$r .= "Noindex: /*action=delete*\n";
+		$r .= "Noindex: /*action=watch*\n";
+	
+	}else{
+	
+		$r  = "\n";
+		$r .= "User-agent: *\n";
+		$r .= "Disallow: /w/\n";
+		$r .= "Disallow: /trap/\n";
+		$r .= "Disallow: /dbdumps/\n";
+		$r .= "Disallow: /wikistats/\n";
+		$r .= "Disallow: /*feed=rss*\n";
+		$r .= "Disallow: /*action=history*\n";
+		$r .= "Disallow: /*action=delete*\n";
+		$r .= "Disallow: /*action=watch*\n";
+	
+	}
+	
 	//process english first
 
-	$code = $wgContLang->getCode();
-
-	if( trim( $code ) != ''){
-		if($code!='en'){
-			$r .= getLangSpecificNamespace( $lang, $code, $bot );
-		}else{
-			$r .= getLangSpecificNamespace( $lang, "en", $bot );
-		}
-	}else{
-		$r .= getLangSpecificNamespace( $lang, "en", $bot );
+	$code = trim( $wgContLang->getCode() );
+	
+	//always add english since its' namespaces are always working as aliases
+	$r .= getLangSpecificNamespace( new Language(), "en", $bot );
+	
+	if ( !empty( $code ) && $code != 'en' ) {
+		$r .= getLangSpecificNamespace( $wgContLang, $code, $bot );
 	}
-
-  return $r;
+	
+	return $r;
 }
 
 function getSitemapUrl(){
@@ -200,12 +194,12 @@ function getSitemapUrl(){
 }
 
 function getLangSpecificNamespace( &$lang, $code, $bot='' ){
-   global $wgSpecialPages, $wgArticleRobotPolicies;
-
-   $r = '';
-
-   $ns = $lang->getNamespaces();
-
+	global $wgSpecialPages, $wgArticleRobotPolicies;
+	
+	$r = '';
+	
+	$ns = $lang->getNamespaces();
+	
 	if($bot == 'goog'){
 		$r .= "# " . $code . "\n" ;
 		if ( $code == "en" && !empty( $wgArticleRobotPolicies['Special:WhatLinksHere'] ) ) {

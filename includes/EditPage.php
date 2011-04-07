@@ -2075,7 +2075,7 @@ INPUTS
 		$loginLink = $skin->link(
 			$loginTitle,
 			wfMsgHtml( 'loginreqlink' ),
-			array(),
+			array( 'rel' => 'nofollow' ),
 			array( 'returnto' => $wgTitle->getPrefixedText() ),
 			array( 'known', 'noclasses' )
 		);

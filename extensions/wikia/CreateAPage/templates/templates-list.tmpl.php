@@ -165,7 +165,7 @@ YWC.UploadCallback = function (oResponse) {
 		}		
 		YD.get ("wpAllLastTimestamp" + oResponse.argument).value = aResponse ["timestamp"] ;
         } else if ( (aResponse ["error"] == 1) && (aResponse ["msg"] == 'cp_no_login') ) {
-                ProgressBar.innerHTML = '<span style="color: red"><?= wfMsg ('createpage_login_required') ?>' + '<a href="' + wgServer + wgScript +'?title=Special:Userlogin&returnto=Special:Createpage" id="createpage_login' + oResponse.argument + '"><?= wfMsg( 'word-separator' ). wfMsg( 'createpage_login_href' ) . wfMsg( 'word-separator' ) ?></a>' + "<?= wfMsg ('createpage_login_required2') ?></span>" ;
+                ProgressBar.innerHTML = '<span style="color: red"><?= wfMsg ('createpage_login_required') ?>' + '<a href="' + wgServer + wgScript +'?title=Special:Userlogin&returnto=Special:Createpage" id="createpage_login' + oResponse.argument + '" rel="nofollow"><?= wfMsg( 'word-separator' ). wfMsg( 'createpage_login_href' ) . wfMsg( 'word-separator' ) ?></a>' + "<?= wfMsg ('createpage_login_required2') ?></span>" ;
 		YE.addListener('createpage_login' + oResponse.argument, 'click', YWC.showWarningLoginPanel) ;		
         } else {
                 ProgressBar.innerHTML = '<span style="color: red">' + aResponse ["msg"] + '</span>' ;
@@ -615,7 +615,7 @@ YWCI.UploadCallback = function (oResponse) {
 		}		
 		YD.get ("wpLastTimestamp" + oResponse.argument).value = aResponse ["timestamp"] ;
 	} else if ( (aResponse ["error"] == 1) && (aResponse ["msg"] == 'cp_no_login') ) {
-		ProgressBar.innerHTML = '<span style="color: red"><?= wfMsg ('createpage_login_required') ?>' + '<a href="' + wgServer + wgScript +'?title=Special:Userlogin&returnto=Special:Createpage" id="createpage_login_infobox' + oResponse.argument + '" ><?= wfMsg( 'word-separator' ) . wfMsg( 'createpage_login_href' . wfMsg( 'word-separator' ) ) ?></a>' + "<?= wfMsg( 'createpage_login_required2' ) . wfMsg( 'word-separator' ) ?></span>" ;		
+		ProgressBar.innerHTML = '<span style="color: red"><?= wfMsg ('createpage_login_required') ?>' + '<a href="' + wgServer + wgScript +'?title=Special:Userlogin&returnto=Special:Createpage" id="createpage_login_infobox' + oResponse.argument + '" rel="nofollow"><?= wfMsg( 'word-separator' ) . wfMsg( 'createpage_login_href' . wfMsg( 'word-separator' ) ) ?></a>' + "<?= wfMsg( 'createpage_login_required2' ) . wfMsg( 'word-separator' ) ?></span>" ;		
 		YE.addListener('createpage_login_infobox' + oResponse.argument, 'click', YWC.showWarningLoginPanel) ;		
 
 	} else {

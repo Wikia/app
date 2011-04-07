@@ -23,7 +23,7 @@
 	                <td id="ajaxlogin_username_cell">
 	                	<input type="text" size="20" tabindex="201" id="wpName2Ajax" name="wpName"> </input>
 	                </td>
-	                <td><a id="wpAjaxRegister" href="<?php print htmlspecialchars($link) ?>" style="font-size: 9pt;display:none;"><?php print wfMsg('nologinlink') ?></a></td>
+	                <td><a id="wpAjaxRegister" href="<?php print htmlspecialchars($link) ?>" style="font-size: 9pt;display:none;" rel="nofollow"><?php print wfMsg('nologinlink') ?></a></td>
 	            </tr>
 	            </table>
 	            <label for="wpPassword2Ajax" style="display: block; font-weight: bold; margin-top: 8px"><?php print wfMsg("yourpassword") ?></label>
