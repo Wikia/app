@@ -71,10 +71,10 @@ class SpecialDevCookie extends UnlistedSpecialPage {
 		$wgOut->addHTML('<br/><br/>');
 
 		// Staging cookie
-		$wgOut->addHTML('<h1>Staging cookie</h1>');
-		$wgOut->addHTML('<p>To use the staging server (code that will be released to production soon), set this cookie to <em>true</em></p>');
-		$this->handlePostForCookie($wgStagingCookieName);
-		$this->showSelectBox($wgStagingCookieName);
+		//$wgOut->addHTML('<h1>Staging cookie</h1>');
+		//$wgOut->addHTML('<p>To use the staging server (code that will be released to production soon), set this cookie to <em>true</em></p>');
+		//$this->handlePostForCookie($wgStagingCookieName);
+		//$this->showSelectBox($wgStagingCookieName);
 
 		wfProfileOut( __METHOD__ );
 	}
