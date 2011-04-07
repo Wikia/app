@@ -1,3 +1,6 @@
+== Changes since release-015 ==
+* fb#4355: Gallery Editing broken in Internet Explorer (macbre)
+
 == Changes since release-014 ==
 * fb#960: Monobook: Global JS not able to load JQuery Library (macbre)
 * fb#1788: Monobook: jQuery data tables fail to load (macbre)
