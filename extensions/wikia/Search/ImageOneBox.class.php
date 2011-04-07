@@ -175,9 +175,16 @@ class ImageOneBox {
 			if( empty($info['url']) ) {
 				$thumb = $img->transform( array( 'width' => 100, 'height' => 100) );
 				$thumbUrl = $thumb->getUrl();
+
+				$data['width'] =$thumb->getWidth();
+				$data['height'] = $thumb->getHeight();
 			}
 			else {
 				$thumbUrl = $info['url'];
+
+				// constant dimensions for images coming from ImageServing
+				$data['width'] = 100;
+				$data['height'] = 100;
 			}
 
 			$fileUrl = $img->getTitle()->getLocalUrl();
