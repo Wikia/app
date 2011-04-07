@@ -274,15 +274,15 @@ EOI;
 ############## Hot Link / Legal
 
 # Define a setup function
-$wgExtensionFunctions[] = 'wfWsWParserFuncHotLink_Setup';
+$wgHooks['ParserFirstCallInit'][] = 'wfWsWParserFuncHotLink_Setup';
 # Add a hook to initialise the magic word
 $wgHooks['LanguageGetMagic'][]       = 'wfWsWParserFuncHotLink_Magic';
 
-function wfWsWParserFuncHotLink_Setup() {
-        global $wgParser;
+function wfWsWParserFuncHotLink_Setup( $parser ) {
         # Set a function hook associating the "hotlink" magic word with our function
-        $wgParser->setFunctionHook( 'hotlink', 'wfWsWParserFuncHotLink_Render', 1 );
-        $wgParser->setFunctionHook( 'legal', 'wfWsWParserFuncLegal_Render', 1 );
+        $parser->setFunctionHook( 'hotlink', 'wfWsWParserFuncHotLink_Render', 1 );
+        $parser->setFunctionHook( 'legal', 'wfWsWParserFuncLegal_Render', 1 );
+        return true;
 }
 
 

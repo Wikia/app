@@ -5,7 +5,7 @@
  *
  * @author Inez Korczynski <lastname at gmail dot com>
  * @author Jakub 'Szeryf' Kurcek <jakub@wikia.com>
- * 
+ *
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @version 0.4
  */
@@ -21,13 +21,13 @@ $wgExtensionCredits['parserhook'][] = array(
 	'url' => 'http://help.wikia.com/wiki/Tabview',
 );
 
-$wgExtensionFunctions[] = 'wfSetupTabView';
+$wgHooks['ParserFirstCallInit'][] = 'wfSetupTabView';
 
 $tabsCount = 0;
 
-function wfSetupTabView() {
-	global $wgParser;
-	$wgParser->setHook( 'tabview', 'tabviewRender' );
+function wfSetupTabView( $parser ) {
+	$parser->setHook( 'tabview', 'tabviewRender' );
+	return true;
 }
 
 function tabviewRender($input, $params, &$parser ) {
@@ -95,7 +95,7 @@ function tabviewRender($input, $params, &$parser ) {
 		unset($url, $text, $noCache, $active);
 	}
 
-	
+
 	$out = '<script>wgAfterContentAndJS.push(function() { $.loadJQueryUI(function(){ $("#flytabs_'.$id.'").tabs({ cache: true, selected: '.$optionsIndex.' }); });});</script>';
 
 	// $out = '<script> $.loadJQueryUI(function(){ $("#flytabs_'.$id.'").tabs(); });</script>';

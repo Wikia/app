@@ -1,6 +1,6 @@
 <?php
 # Define a setup function
-$wgExtensionFunctions[] = 'wfExampleParserASvideo_Setup';
+$wgHooks['ParserFirstCallInit'][] = 'wfExampleParserASvideo_Setup';
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'Adult Swim Video Embedder',
 	'author' => '[[User:CapitalQ|Jon Uleis]]',
@@ -9,10 +9,10 @@ $wgExtensionCredits['parserhook'][] = array(
 # Add a hook to initialise the magic word
 $wgHooks['LanguageGetMagic'][]       = 'wfExampleParserASvideo_Magic';
 
-function wfExampleParserASvideo_Setup() {
-        global $wgParser;
+function wfExampleParserASvideo_Setup( $parser ) {
         # Set a function hook associating the "example" magic word with our function
-        $wgParser->setFunctionHook( 'watch', 'wfExampleParserASvideo_Render');
+        $parser->setFunctionHook( 'watch', 'wfExampleParserASvideo_Render');
+        return true;
 }
 
 function wfExampleParserASvideo_Magic( &$magicWords, $langCode ) {

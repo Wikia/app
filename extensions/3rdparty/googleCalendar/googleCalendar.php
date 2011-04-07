@@ -13,7 +13,7 @@
 #   omitting title will use the calendar's title
 # Enjoy !
 
-$wgExtensionFunctions[] = 'wfGoogleCalendar';
+$wgHooks['ParserFirstCallInit'][] = 'wfGoogleCalendar';
 $wgExtensionCredits['parserhook'][] = array(
         'name' => 'Google Calendar',
         'description' => 'Display Google Calendar',
@@ -22,8 +22,8 @@ $wgExtensionCredits['parserhook'][] = array(
 );
 
 function wfGoogleCalendar() {
-        global $wgParser;
-        $wgParser->setHook('googlecalendar', 'renderGoogleCalendar');
+        $parser->setHook('googlecalendar', 'renderGoogleCalendar');
+        return true;
 }
 
 # The callback function for converting the input text to HTML output
@@ -51,7 +51,7 @@ function renderGoogleCalendar( $contents, $attributes, $parser ) {
 			$title = htmlspecialchars($attributes['title']);
 		}
 
-		
+
         $output = '<iframe src="http://www.google.com/calendar/embed?src='.$contents.'&title='.$title.'&chrome=NAVIGATION&height='.$height.'&epr=4" style=" border-width:0 " width="'.$width.'" frameborder="0" height="'.$height.'"></iframe>';
 
         return $output;

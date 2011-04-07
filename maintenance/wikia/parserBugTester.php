@@ -9,11 +9,11 @@
  * It will be run before and after the fixes are applied.
  */
 
- 
+
 ini_set( "include_path", dirname(__FILE__)."/../" );
 require_once( 'commandLine.inc' );
 
- 
+
 
 //Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
 if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
@@ -22,10 +22,9 @@ if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 	$wgExtensionFunctions[] = 'efSampleParserInit';
 }
 
-function efSampleParserInit() {
-	global $wgParser;
-	$wgParser->setHook( 'stest', 'efSampleRender' );
-	$wgParser->setHook( 'fb:like-box', 'efSampleRender' );
+function efSampleParserInit( $parser ) {
+	$parser->setHook( 'stest', 'efSampleRender' );
+	$parser->setHook( 'fb:like-box', 'efSampleRender' );
 	return true;
 }
 
@@ -69,10 +68,10 @@ $numFailures = 0;
 foreach($inputOutputPairs as $input => $expectedOutput){
 
 	$actualOutput = $wgParser->parse($input, $title, $parserOptions)->getText();
-	
+
 	// The parser wraps the tags in paragraphs.
 	$expectedOutput = "<p>$expectedOutput\n</p>";
-	
+
 	if($actualOutput != $expectedOutput){
 		print "\n------------------------------------------\n";
 		print "                 MISMATCH!\n";

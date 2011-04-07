@@ -1,11 +1,11 @@
 <?php
-  $wgExtensionFunctions[] = "wfLastFm";
- 
- function wfLastFm() {
-     global $wgParser;
-     $wgParser->setHook( "lastfm", "renderLastFm" );
+$wgHooks['ParserFirstCallInit'][] = "wfLastFm";
+
+ function wfLastFm( $parser ) {
+     $parser->setHook( "lastfm", "renderLastFm" );
+     return true;
  }
- 
+
  # The callback function for converting the input text to HTML output
  function renderLastFm( $input, $argv ) {
      # $argv is an array containing any arguments passed to the extension like <example argument="foo" bar>..

@@ -10,16 +10,16 @@
 # To activate the extension, include it from your LocalSettings.php
 # with: include("extensions/YourExtensionName.php");
 
-$wgExtensionFunctions[] = "newpageExtension";
+$wgHooks['ParserFirstCallInit'][] = "newpageExtension";
 
-function newpageExtension() {
-    global $wgParser;
+function newpageExtension( $parser ) {
     # register the extension with the WikiText parser
     # the first parameter is the name of the new tag.
     # In this case it defines the tag <example> ... </example>
     # the second parameter is the callback function for
     # processing the text between the tags
-    $wgParser->setHook( "newpage", "renderNewpage" );
+    $parser->setHook( "newpage", "renderNewpage" );
+    return true;
 }
 
 # The callback function for converting the input text to HTML output
@@ -37,7 +37,7 @@ function renderNewpage( $input, $argv, &$parser ) {
       <form action=\"/Spezial:NeueWebsite\" method=\"get\">
       <b>Neue Website: </b>
       <input type=\"text\" name=\"param\" size=\"40\" maxlength=\"80\" value=\"$saneinput\" />
-      <input type=\"submit\" value=\" anlegen \" /> 
+      <input type=\"submit\" value=\" anlegen \" />
       </form><p />";
 
     return $output;

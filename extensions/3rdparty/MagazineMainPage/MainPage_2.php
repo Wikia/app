@@ -1,12 +1,12 @@
 <?php
 
 
-$wgExtensionFunctions[] = "wfMainPage2";
+$wgHooks['ParserFirstCallInit'][] = "wfMainPage2";
 
 
-function wfMainPage2() {
-    global $wgParser ,$wgOut;
-    $wgParser->setHook( "MainPage2", "renderMainPage2" );
+function wfMainPage2( $parser ) {
+    $parser->setHook( "MainPage2", "renderMainPage2" );
+    return true;
 }
 
 function renderMainPage2( $input ) {

@@ -15,7 +15,7 @@ if (!defined('MEDIAWIKI')){
     echo ('THIS IS NOT VALID ENTRY POINT.'); exit (1);
 }
 
-$wgExtensionFunctions[] = "wfGoogleDocs";
+$wgHooks['ParserFirstCallInit'][] = "wfGoogleDocs";
 
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => "[http://help.wikia.com/wiki/Help:Google_spreadsheets GoogleDocs4MW]",
@@ -23,9 +23,9 @@ $wgExtensionCredits['parserhook'][] = array(
 	'author' => "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]"
 );
 
-function wfGoogleDocs() {
-        global $wgParser;
-        $wgParser->setHook( "googlespreadsheet", "renderGoogleSpreadsheet" );
+function wfGoogleDocs( $parser ) {
+	$parser->setHook( "googlespreadsheet", "renderGoogleSpreadsheet" );
+	return true;
 }
 
 function renderGoogleSpreadsheet( $input, $argv ) {

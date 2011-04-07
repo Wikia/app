@@ -1,17 +1,22 @@
 <?php
 $wgExtensionFunctions[] = "wfListPages";
+$wgHooks['ParserFirstCallInit'][] = "wfListPages_InstallParser";
 
 function wfListPages() {
-    global $wgParser ,$wgOut;
+    global $wgOut;
 	$wgOut->addScript("<script type=\"text/javascript\" src=\"extensions/ListPages/ListPages.js\"></script>\n");
-    $wgParser->setHook( "ListPages", "ListPages" );
+}
+
+function wfListPages_InstallParser( $parser ) {
+    $parser->setHook( "ListPages", "ListPages" );
+    return true;
 }
 
 function ListPages( $input ) {
 	require_once ('ListPagesClass.php');
 	//purgePage();
 	$details = 1;
-	
+
 	getValue($ctg,$input,"category");
 	getValue($count,$input,"count");
 	getValue($order,$input,"sort");
@@ -49,7 +54,7 @@ function ListPages( $input ) {
 	$list->setBlurbFontSize($blurbfontsize);
 	$list->setHash($input);
 	$list->setRatingMin($ratingMin);
-	
+
 	$list->setBool("ShowUser",$showuser);
 	$list->setBool("ShowNav",$nav);
 	$list->setBool("random",$random);

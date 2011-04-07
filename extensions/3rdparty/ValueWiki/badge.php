@@ -6,20 +6,20 @@
 # Usage:
 # <Badge symbol=""></Badge>
 
-# To install it put this file in the extensions directory 
+# To install it put this file in the extensions directory
 # To activate the extension, include it from your LocalSettings.php
 # with: require("extensions/YourExtensionName.php");
 
-$wgExtensionFunctions[] = "wfBadge";
+$wgHooks['ParserFirstCallInit'][] = "wfBadge";
 
 // Set up entry point as special page
 $wgAutoloadClasses['BadgeImage'] = dirname( __FILE__ ) . '/badgeImage.body.php';
 $wgSpecialPages['BadgeImage'] = 'BadgeImage';
 
-function wfBadge() {
-    global $wgParser;
+function wfBadge( $parser ) {
     # registers the <Badge> extension with the WikiText parser
-    $wgParser->setHook( "Badge", "renderBadge" );
+    $parser->setHook( "Badge", "renderBadge" );
+    return true;
 }
 
 $wgBadgeSettings = array('symbol'  => '');
@@ -27,7 +27,7 @@ $wgBadgeSettings = array('symbol'  => '');
 # The callback function for converting the input text to HTML output
 function renderBadge( $input, $argv ) {
 	global $wgBadgeSettings;
-	
+
 	foreach (array_keys($argv) as $key) {
 		$wgBadgeSettings[$key] = $argv[$key];
 	}
@@ -50,7 +50,7 @@ function renderBadge( $input, $argv ) {
 	$output .= "document.write('<img src=\"'+url+'\" border=\"0\"></a></textarea><br>');";
 	$output .= "document.write('<a href=\"javascript: badgeCode();\">Close</a>');";
 	$output .= "document.write('</div>');";
-	
+
 	$output .= "function badgeCode() {";
 	$output .= "	temp = document.getElementById('badgeCodeDiv');";
 	$output .= "	if (temp.style.visibility == 'visible') {";
@@ -61,6 +61,6 @@ function renderBadge( $input, $argv ) {
 	$output .= "}";
 
 	$output .= "</script>";
-	
+
 	return $output;
 }

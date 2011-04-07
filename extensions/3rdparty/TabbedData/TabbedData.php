@@ -33,6 +33,7 @@
  */
 
 $wgExtensionFunctions[] = 'wfSimpleTable';
+$wgHooks['ParserFirstCallInit'][] = 'wfSimpleTable_InstallParser';
 $wgExtensionCredits['parserhook'][] = array(
   'name'=>'SimpleTable',
   'author'=>'Johan the Ghost',
@@ -46,7 +47,13 @@ $wgExtensionCredits['parserhook'][] = array(
  * Sets a parser hook for <tab></tab>.
  */
 function wfSimpleTable() {
-    new SimpleTable();
+    global $wgSimpleTableInstance;
+    $wgSimpleTableInstance = new SimpleTable();
+}
+
+function wfSimpleTable_InstallParser( $parser ) {
+	$parser->setHook('tab', array($wgSimpleTableInstance, 'hookTab'));
+	return true;
 }
 
 
@@ -69,8 +76,8 @@ class SimpleTable {
      * Construct the extension and install it as a parser hook.
      */
     public function __construct() {
-        global $wgParser;
-        $wgParser->setHook('tab', array(&$this, 'hookTab'));
+//        global $wgParser;
+//        $wgParser->setHook('tab', array(&$this, 'hookTab'));
     }
 
 

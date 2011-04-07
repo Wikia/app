@@ -1,17 +1,17 @@
 <?php
 # Copyright (C) 2005 - 2006 Thomas Klein <tkl-online@gmx.de>
 # http://www.mediawiki.org/
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or 
+# the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -81,9 +81,9 @@ if( !defined( 'MEDIAWIKI' ) ) {
 require_once( 'Sanitizer.php' );
 require_once( 'HttpFunctions.php' );
 
-$wgMySQL40Userright = true; 
+$wgMySQL40Userright = true;
 
-$wgExtensionFunctions[] = "wfUserStatistics";
+$wgHooks['ParserFirstCallInit'][] = "wfUserStatistics";
 $wgExtensionCredits['parserhook'][] = array(
                                       'name' => 'UserStatistics',
                                       'author' => 'Thomas Klein',
@@ -91,18 +91,16 @@ $wgExtensionCredits['parserhook'][] = array(
                                       'description' => 'Extension to counting of working article on a user',
                                       'version'=>'1.1.2');
 
-function wfUserStatistics() {
-  global $wgParser;
-  
-  $wgParser->setHook( "useredit" , 'counting_useredit' ) ;
-  $wgParser->setHook( "useredittopten" , 'counting_useredit_topten' ) ;
+function wfUserStatistics( $parser ) {
+  $parser->setHook( "useredit" , 'counting_useredit' ) ;
+  $parser->setHook( "useredittopten" , 'counting_useredit_topten' ) ;
 
-  $wgParser->setHook( "usercreate" , 'counting_usercreate' ) ;
+  $parser->setHook( "usercreate" , 'counting_usercreate' ) ;
 
-  $wgParser->setHook( "usereditfirst" , 'first_useredit' ) ;
-  $wgParser->setHook( "usereditlast" , 'last_useredit' ) ;
+  $parser->setHook( "usereditfirst" , 'first_useredit' ) ;
+  $parser->setHook( "usereditlast" , 'last_useredit' ) ;
 
-  //$wgParser->setHook( "usercreate4_0_x" , 'counting_usercreate_4_0_x' ) ;
+  //$parser->setHook( "usercreate4_0_x" , 'counting_usercreate_4_0_x' ) ;
 
   return true;
 }
@@ -112,7 +110,7 @@ function counting_useredit( $text ) {
   global $wgParser;
 
   $ret = "" ;
-  
+
   if ( version_compare( $wgVersion, '1.5beta4', '<' ) ) {
     $ret = "1.5.x  of MediaWiki required";
     return $ret ;
@@ -123,18 +121,18 @@ function counting_useredit( $text ) {
   $totalall = 0;
   // Parse each parameter
   $params = explode('|', $text);
-  foreach ($params as $param) 
+  foreach ($params as $param)
   {
     list( $username, $namespace ) = extractParamaters( $param );
-  
+
     $username = Title::newFromText( $username );
     $username = is_object( $username ) ? $username->getText() : '';
-  
+
     $uid = User::idFromName( $username );
 
     if ($uid != 0) {
       global $wgLang;
-  
+
       $total = editsByNumber( $uid );
       $totalall = $totalall + $total;
     } else {
@@ -143,18 +141,18 @@ function counting_useredit( $text ) {
       if ($uid != $total) {
         $totalall = $totalall + $total;
       } else {
-        $totalall = -1;  
+        $totalall = -1;
         break;
       }
     }
   }
-  
+
   if ($totalall != -1) {
     global $wgLang;
 
     $ret = $wgLang->formatNum( $totalall );
   } else {
-    $ret = "Benutzer nicht bekannt";  
+    $ret = "Benutzer nicht bekannt";
   }
 
   return $ret ;
@@ -165,7 +163,7 @@ function counting_useredit_topten( $text ) {
   global $wgParser;
 
   $ret = "" ;
-  
+
   if ( version_compare( $wgVersion, '1.5beta4', '<' ) ) {
     $ret = "1.5.x  of MediaWiki required";
     return $ret ;
@@ -174,7 +172,7 @@ function counting_useredit_topten( $text ) {
 //  $wgParser->disableCache();
 
   $skin = $wgUser->getSkin();
-  
+
   $ret  = '<ol>';
   $dbr  =& wfGetDB( DB_SLAVE );
   $rev  = $dbr->tableName( 'revision' );
@@ -195,7 +193,7 @@ function counting_useredit_topten( $text ) {
   # We fetch 11, even though we want 10, because we *don't* want MediaWiki default (and we might get it)
   $sql  = "SELECT COUNT(*) AS count, rev_user FROM $rev GROUP BY rev_user ORDER BY count DESC $limit";
   $res  = $dbr->query( $sql, "UserStatistics::counting_useredit_topten" );
-  
+
   while( $row = $dbr->fetchObject( $res ) ) {
     if( $row->rev_user != 0 ) {
       $upt  = Title::makeTitle( NS_USER, User::whoIs($row->rev_user) );
@@ -208,7 +206,7 @@ function counting_useredit_topten( $text ) {
     }
   }
   $ret .= '</ol>';
-  
+
   return( $ret == '<ul></ul>' ? '' : $ret );
 }
 
@@ -217,7 +215,7 @@ function first_useredit( $text ) {
   global $wgParser;
 
   $ret = "hallo" ;
-  
+
   if ( version_compare( $wgVersion, '1.5beta4', '<' ) ) {
     $ret = "1.5.x  of MediaWiki required";
     return $ret ;
@@ -227,11 +225,11 @@ function first_useredit( $text ) {
 
   $username = Title::newFromText( $username );
   $username = is_object( $username ) ? $username->getText() : '';
-  
+
   $uid = User::idFromName( $username );
 
   if ($uid != 0) {
-    $ret = editFirstDate( $uid ); 
+    $ret = editFirstDate( $uid );
   }
 
   return $ret ;
@@ -242,7 +240,7 @@ function last_useredit( $text ) {
   global $wgParser;
 
   $ret = "" ;
-  
+
   if ( version_compare( $wgVersion, '1.5beta4', '<' ) ) {
     $ret = "1.5.x  of MediaWiki required";
     return $ret ;
@@ -254,11 +252,11 @@ function last_useredit( $text ) {
 
   $username = Title::newFromText( $username );
   $username = is_object( $username ) ? $username->getText() : '';
-  
+
   $uid = User::idFromName( $username );
 
   if ($uid != 0) {
-    $ret = editLastDate( $uid ); 
+    $ret = editLastDate( $uid );
   }
 
   return $ret ;
@@ -270,14 +268,14 @@ function counting_usercreate( $text, $params = array() ) {
   global $wgParser;
 
   $ret = "" ;
-  
+
   if ( version_compare( $wgVersion, '1.5beta4', '<' ) ) {
     $ret = "1.5.x  of MediaWiki required";
     return $ret ;
   }
 
   $dbr =& wfGetDB( DB_SLAVE );
-  
+
   if ( version_compare( $dbr->getServerVersion(), '4.1', '<' ) ) {
     if ( version_compare( $dbr->getServerVersion(), '4.0', '<' ) ) {
       $ret = "4.0 or higher of MySQL required";
@@ -298,12 +296,12 @@ function counting_usercreate( $text, $params = array() ) {
 
   $username = Title::newFromText( $username );
   $username = is_object( $username ) ? $username->getText() : '';
-  
+
   $uid = User::idFromName( $username );
 
   if ($uid != 0) {
     global $wgLang;
-  
+
     if (isset( $params['all'] )) {
       $total = createsByUserAll( $uid );
     }
@@ -313,7 +311,7 @@ function counting_usercreate( $text, $params = array() ) {
 
     $ret = $wgLang->formatNum( $total );
   } else {
-    $ret = "Benutzer nicht bekannt";  
+    $ret = "Benutzer nicht bekannt";
   }
 
   return $ret ;
@@ -345,13 +343,13 @@ function getTotal( $nscount ) {
  */
 function extractParamaters( $par ) {
   global $wgContLang;
-  
+
   @list($user, $namespace) = explode( '/', $par, 2 );
 
   // str*cmp sucks
   if ( isset( $namespace ) )
     $namespace = $wgContLang->getNsIndex( $namespace );
-  
+
   return array( $user, $namespace );
 }
 
@@ -447,7 +445,7 @@ function editsByName( $usName ) {
 }
 
 /**
- * Count the number of creates of a user 
+ * Count the number of creates of a user
  *
  * @param int $uid The user ID to check
  * @return array
@@ -476,7 +474,7 @@ function createsByUser( $uid ) {
 }
 
 /**
- * Count the number of creates of a user 
+ * Count the number of creates of a user
  *
  * @param int $uid The user ID to check
  * @return array

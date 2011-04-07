@@ -3,7 +3,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
   die();
 }
 
-$wgExtensionFunctions[] = 'setupAOIcon';
+$wgHooks['ParserFirstCallInit'][] = 'setupAOIcon';
 
 function AOiconQuery($aoid) {
 	/*
@@ -13,9 +13,9 @@ function AOiconQuery($aoid) {
 		  `ql` char(3) default NULL,
 		  `itemtype` varchar(10) default NULL,
 		  `icon` varchar(10) default NULL
-		); 
+		);
 	 */
-	
+
 	$dbw =& wfGetDB( DB_SLAVE );
 	$obj = $dbw->selectRow( 'aodb',
             array( 'icon','name','itemtype','ql'),
@@ -25,23 +25,23 @@ function AOiconQuery($aoid) {
 
 }
 
-function setupAOIcon() {
-  global $wgParser;
-  $wgParser->setHook( 'aoicon', 'AIIconHandler' );
+function setupAOIcon( $parser ) {
+  $parser->setHook( 'aoicon', 'AIIconHandler' );
+  return true;
 }
 
 function AIIconHandler( $data ) {
 	global $wgUploadPath;
-	
+
 	if(preg_match("/^([0-9]*)$/is",$data,$out)) {
 		$res['AOIDloc'] = "AUNO";
 		$res['AOID'] = $data;
 		unset($data);
 	}
-	
+
 	if($data) {
 		$data = explode( '|', $data );
-	
+
 		if(preg_match("/^([0-9]*)$/is",$data[0],$out)) {
 			$res['ICONID'] = $out[1];
 			$data = $data[1];
@@ -50,19 +50,19 @@ function AIIconHandler( $data ) {
 		}
 		$data = explode(':',$data);
 	   	$i = "0";
-	
+
 	    if(preg_match("/(AUNO|AODB|-)/is",$data[0],$out)) {
 	    	$res['AOIDloc'] = $out[1];
 	    	$i++;
 	    } else {
 	    	$res['AOIDloc'] = "AUNO";
 	    }
-	
+
 		$res['AOID'] = $data[$i];$i++;
 		$res['QL'] = $data[$i];$i++;
 		$res['TEXT'] = $data[$i];$i++;
 	}
-	
+
 	if(strlen($res['AOID']) > 0) {
 		$obj = AOiconQuery($res['AOID']);
     	if(!$res['ICONID']) $res['ICONID'] = $obj->icon;
@@ -82,8 +82,8 @@ function AIIconHandler( $data ) {
   		$image = '<img src="'.$wgUploadPath.'/items/'.$res['ICONID'].'.png"'.$res['SIZE'].' />';
   	} else {
   		$image = 'n/a';
-  	}  
- 	
+  	}
+
   	if($res['AOIDloc']== "AUNO" AND strlen($res['AOID']) > 0) {
   		if($res['QL']) $res['QLURL'] = '&ql='.$res['QL'];
   		$url = '<a href="http://auno.org/ao/db.php?id='.$res['AOID'].$res['QLURL'].'" target="_blank" title="'.$res['TITLE'].'">'.$image.'</a>';
@@ -92,7 +92,7 @@ function AIIconHandler( $data ) {
   	} else {
   		$url = $image;
   	}
-  
+
   return $url;
 }
 

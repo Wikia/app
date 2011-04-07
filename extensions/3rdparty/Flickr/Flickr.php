@@ -12,7 +12,7 @@
 # http://wiki.edsimpson.co.uk/index.php/Flickr_Extension
 #
 
-$wgExtensionFunctions[] = 'wfFlickr';
+$wgHooks['ParserFirstCallInit'][] = 'wfFlickr';
 $wgExtensionCredits['parserhook'][] = array(
         'name' => 'Flickr',
         'description' => 'Display Flickr image and link to photo page on Flickr as per their terms',
@@ -20,9 +20,9 @@ $wgExtensionCredits['parserhook'][] = array(
         'url' => 'http://wiki.edsimpson.co.uk/index.php/Flickr_Extension'
 );
 
-function wfFlickr() {
-        global $wgParser;
-        $wgParser->setHook('flickr', 'renderFlickr');
+function wfFlickr( $parser ) {
+        $parser->setHook('flickr', 'renderFlickr');
+        return true;
 }
 
 # The callback function for converting the input text to HTML output

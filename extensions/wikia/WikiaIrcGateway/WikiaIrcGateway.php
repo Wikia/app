@@ -25,11 +25,11 @@ $wgExtensionCredits['parserhook'][] = array(
 );
 
 $wgExtensionMessagesFiles['WikiaIrcGateway'] = dirname( __FILE__ ) . '/WikiaIrcGateway.i18n.php';
-$wgExtensionFunctions[] = "wfWikiaIrcGateway";
+$wgHooks['ParserFirstCallInit'][] = "wfWikiaIrcGateway";
 
-function wfWikiaIrcGateway() {
-	global $wgParser;
-	$wgParser->setHook( "irclogin", "printWikiaIrcGatewayLoginForm" );
+function wfWikiaIrcGateway( $parser ) {
+	$parser->setHook( "irclogin", "printWikiaIrcGatewayLoginForm" );
+	return true;
 }
 
 function printWikiaIrcGatewayLoginForm( $input, $argv ) {
@@ -40,7 +40,7 @@ function printWikiaIrcGatewayLoginForm( $input, $argv ) {
 		return '';
 	}
 	$GatewayOnPage = true;
-	
+
 	wfLoadExtensionMessages('WikiaIrcGateway');
 
 	$output = '<div id="ircform_container">
@@ -73,7 +73,7 @@ function printWikiaIrcGatewayLoginForm( $input, $argv ) {
 	$output .= '			</select>
 			</td>
 		</tr>
-	</table>   
+	</table>
 </form>
 </div>';
 

@@ -4,7 +4,7 @@
  * @author Jim R. Wilson
  * @version 0.1
  * @copyright Copyright (C) 2007 Jim R. Wilson
- * @license The MIT License - http://www.opensource.org/licenses/mit-license.php 
+ * @license The MIT License - http://www.opensource.org/licenses/mit-license.php
  * -----------------------------------------------------------------------
  * Description:
  *     This is a MediaWiki extension which adds a parser function for performing
@@ -22,31 +22,31 @@
  *         Initial release.
  * -----------------------------------------------------------------------
  * Copyright (c) 2007 Jim R. Wilson
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy 
- * of this software and associated documentation files (the "Software"), to deal 
- * in the Software without restriction, including without limitation the rights to 
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of 
- * the Software, and to permit persons to whom the Software is furnished to do 
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do
  * so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in all 
+ *
+ * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
- * OTHER DEALINGS IN THE SOFTWARE. 
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
  * -----------------------------------------------------------------------
  */
- 
+
 # Confirm MW environment
 if (defined('MEDIAWIKI')) {
- 
+
 # Credits
 $wgExtensionCredits['parserhook'][] = array(
     'name'=>'RegexParserFunctions',
@@ -55,13 +55,13 @@ $wgExtensionCredits['parserhook'][] = array(
     'description'=>'Adds a parser function for search and replace using regular expressions.',
     'version'=>'0.1'
 );
- 
- 
+
+
 /**
  * Wrapper class for encapsulating Regexp related parser methods
  */
 class RegexParserFunctions {
- 
+
     /**
      * Performs regular expression search or replacement.
      * @param Parser $parser Instance of running Parser.
@@ -80,7 +80,7 @@ class RegexParserFunctions {
             return preg_replace($pattern, $replacement, $subject);
         }
     }
-    
+
     /**
      * Adds magic words for parser functions
      * @param Array $magicWords
@@ -92,23 +92,23 @@ class RegexParserFunctions {
         $magicWords['regexp'] = array( 0, 'regexp' );
         return true;
     }
-    
+
     /**
      * Sets up parser functions
      */
-    function regexParserFunctionSetup( ) {
-    	global $wgParser, $wgMessageCache;
-    	$wgParser->setFunctionHook( 'regex', array($this, 'regexParserFunction') );
-    	$wgParser->setFunctionHook( 'regexp', array($this, 'regexParserFunction') );
+    function regexParserFunctionSetup( $parser ) {
+    	global $wgMessageCache;
+    	$parser->setFunctionHook( 'regex', array($this, 'regexParserFunction') );
+    	$parser->setFunctionHook( 'regexp', array($this, 'regexParserFunction') );
         $wgMessageCache->addMessage('regexp-unacceptable', 'The regular expression &quot;<tt><nowiki>$1</nowiki></tt>&quot; is unacceptable.');
- 
+		return true;
     }
-    
+
 }
- 
+
 # Create global instance and wire it up
 $wgRegexParserFunctions = new RegexParserFunctions();
 $wgHooks['LanguageGetMagic'][] = array($wgRegexParserFunctions, 'regexParserFunctionMagic');
-$wgExtensionFunctions[] = array($wgRegexParserFunctions, 'regexParserFunctionSetup');
- 
+$wgHooks['ParserFirstCallInit'][] = array($wgRegexParserFunctions, 'regexParserFunctionSetup');
+
 } # End MW Environment wrapper

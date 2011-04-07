@@ -180,8 +180,19 @@ function wfGoogleMaps_Install() {
 	$wgSpecialPages['GoogleMapsKML'] = array('GoogleMapsKML', 'GoogleMapsKML');
 }
 
+function wfGoogleMaps_InstallParser( $parser ) {
+	global $wgGoogleMaps;
+	// This hook will be called any time the parser encounters a <googlemap>
+	// tag in an article.  This will render the actual Google map code in
+	// the article.
+	$parser->setHook( 'googlemap', array( $wgGoogleMaps, 'render16' ) );
+	$parser->setHook( 'googlemapkml', array( $wgGoogleMaps, 'renderKmlLink' ) );
+	return true;
+}
+
 // add the install extension function
 $wgExtensionFunctions[] = 'wfGoogleMaps_Install'; # array( $wgGoogleMapExtension, 'install' );
+$wgHooks['ParserFirstCallInit'][] = 'wfGoogleMaps_InstallParser';
 
 // extension credits
 $wgExtensionCredits['other'][] = array(

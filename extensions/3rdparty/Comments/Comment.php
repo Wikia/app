@@ -1,19 +1,18 @@
 <?php
-$wgExtensionFunctions[] = "wfComments";
+$wgHooks['ParserFirstCallInit'][] = "wfComments";
 
-function wfComments() {
-    global $wgParser, $wgOut;
-	
-    $wgParser->setHook( "comments", "DisplayComments" );
+function wfComments( $parser ) {
+    $parser->setHook( "comments", "DisplayComments" );
+    return true;
 }
 
 function DisplayComments( $input ){
 	global $wgUser, $wgTitle, $wgOut, $wgVoteDirectory;
 	$wgOut->addScript("<script type=\"text/javascript\" src=\"extensions/Comments/Comment.js\"></script>\n");
- 
+
 	require_once ('CommentClass.php');
 	require_once ("$wgVoteDirectory/VoteClass.php");
-	
+
 	getValue($scorecard,$input,"Scorecard");
 	getValue($allow,$input,"Allow");
 	getValue($voting,$input,"Voting");
@@ -33,18 +32,18 @@ function DisplayComments( $input ){
 		$Comment->delete();
 	 }
 	$output = $Comment->displayOrderForm();
-	
+
 	if($Comment->ShowScoreCard == 1){
 	$output .=   "<div id=\"scorecard\"></div>";
 	}
-	
+
 	$output .=   "<div id=\"allcomments\">" . $Comment->display() . "</div>";
-	
+
 	$output .= $Comment->diplayForm();
-	
+
 	if($Comment->ShowScoreCard == 1){
 	$output .= $Comment->displayCommentScorecard($scorecard);
 	}
-	return $output; 
+	return $output;
 }
 ?>

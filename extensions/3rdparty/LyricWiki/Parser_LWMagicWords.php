@@ -20,7 +20,7 @@ function findFirstLetterOf($fLetterOf)
 {
 	$fLetterOf = strtoupper(trim($fLetterOf));
 	$fLetter = strtoupper((strlen($fLetterOf) == 0)?"":substr($fLetterOf,0,1));
-	
+
 	if(is_numeric($fLetter))
 	{
 		return "0-9";
@@ -59,7 +59,7 @@ function LyricWikiVariableDefaults()
 function parseLyricWikiTitle($titleStr,&$lwVars)
 {
 	$titleStr = preg_replace("/(\s)+/", "\\1", $titleStr); # remove duplicate spaces
-	
+
 	$isTalk = false;
 	if(0 < preg_match("/^Talk:/", $titleStr, $matches)){
 		$isTalk = true;
@@ -153,7 +153,7 @@ function getLyricWikiVariables()
 
 	return $lwVars;
 }
- 
+
 $wgHooks['LanguageGetMagic'][] = 'wfLyricWikiMagicWords';
 function wfLyricWikiMagicWords(&$aWikiWords, $langID)
 {
@@ -165,11 +165,11 @@ function wfLyricWikiMagicWords(&$aWikiWords, $langID)
 	$aWikiWords["sterilizeTitle"] = array(0, "sterilizeTitle"); // this is a parser function, not a variable so we set it up separately - SWC 20080926
 	return true;
 }
- 
+
 #---------------------------------------------------
 # Step 3: assign a value to our variable
 #---------------------------------------------------
- 
+
 $wgHooks['ParserGetVariableValueSwitch'][] = 'wfLyricWikiVariableSwitch';
 function wfLyricWikiVariableSwitch(&$parser, &$cache, &$magicWordId, &$ret)
 {
@@ -188,7 +188,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'LyricMagic',
 	'version' => '0.1'
 	);
- 
+
 $wgHooks['MagicWordwgVariableIDs'][] = 'wfLyricWikiDeclareVarIds';
 function wfLyricWikiDeclareVarIds(&$magicWordIds)
 {
@@ -218,13 +218,13 @@ function wfLyricWikiSterilizeTitle( &$parser, $title = '' )
 		array("'","&"),
 		urldecode($song)
 		);
-	
+
 	require_once 'Special_SOAP.methods.php';
 	$res = sterilizeParameters($artist,$song);
 	return $res[0].":".$res[1];
 }
 
-$wgExtensionFunctions[] = 'wfLyricWikiParserFunctions';
+$wgHooks['ParserFirstCallInit'][] = 'wfLyricWikiParserFunctions';
 $wgHooks['custom_SandboxParse'][] = 'wfSterilizeParse';
 function wfSterilizeParse( &$text )
 {
@@ -240,10 +240,8 @@ function wfSterilizeParse( &$text )
 	return true;
 }
 
-function wfLyricWikiParserFunctions()
-{
-	global $wgParser;
-
-	$wgParser->setFunctionHook( 'sterilizeTitle', 'wfLyricWikiSterilizeTitle' );
+function wfLyricWikiParserFunctions( $parser ) {
+	$parser->setFunctionHook( 'sterilizeTitle', 'wfLyricWikiSterilizeTitle' );
+	return true;
 }
 ?>

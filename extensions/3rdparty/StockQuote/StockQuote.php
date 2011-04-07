@@ -1,10 +1,10 @@
 <?php
 
-$wgExtensionFunctions[] = "wfStockQuote";
+$wgHooks['ParserFirstCallInit'][] = "wfStockQuote";
 $wgExtensionCredits['parserhook'][] = array( 'name' => 'Stock Quote', 'url' => null, 'author' => 'Olipro' );
-function wfStockQuote() {
-  global $wgParser;
-  $wgParser->setHook('stock', 'StockQuote');
+function wfStockQuote( $parser ) {
+  $parser->setHook('stock', 'StockQuote');
+  return true;
 }
 
 function StockQuote($input, $argv, $parser) {
