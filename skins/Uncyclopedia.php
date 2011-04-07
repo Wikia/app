@@ -75,24 +75,26 @@ HTML;
 	public function addWikiaVars(&$obj, &$tpl) {
 		parent::addWikiaVars($obj, $tpl);
 
+		AdEngine::getInstance()->setLoadType('inline');
+
 		$spotlights = AdEngine::getInstance()->getSetupHtml() .
 '<div id="wikia_header" style="display:none"></div>
 <table id="spotlight_container">
 <tr>
 <td>
-<div>' . AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_LEFT') . '</div>
+<div>' . AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_FOOTER_1') . '</div>
 </td>
 <td>
-<div>' . AdEngine::getInstance()->getPlaceHolderIframe('FOOTER_SPOTLIGHT_MIDDLE') . '</div>
+<div>' . AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_FOOTER_2') . '</div>
 </td>
 <td>
-<div>' . AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_RIGHT') . '</div>
+<div>' . AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_FOOTER_3') . '</div>
 </td>
 </tr>
 </table>' .
 AdEngine::getInstance()->getDelayedIframeLoadingCode();
 
-		$tpl->set('ads_columngoogle', $spotlights );
+		$tpl->set('ads-column', $spotlights );
 		return true;
 	}
 }
