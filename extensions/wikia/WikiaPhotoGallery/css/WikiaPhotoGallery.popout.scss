@@ -1,3 +1,5 @@
+@import "slideshow-nav";
+
 /* caption / add image */
 .wikia-slideshow-popout-caption-wrapper {
 	height: 50px;
@@ -80,43 +82,18 @@
 	top: 0;
 }
 
-/* prev / next toolbar */
+/* prev / next buttons */
 .wikia-slideshow-popout-prev-next {
 	display: none;
+	@include slideshow-nav;
+
+	> a {
+		z-index: 10000;
+	}
 }
 
 .wikia-slideshow-popout .hover .wikia-slideshow-popout-prev-next {
 	display: block;
-}
-
-.wikia-slideshow-popout-prev-next a {
-	cursor: pointer;
-	display: block;
-	height: 73px;
-	position: absolute;
-	width: 37px;
-	z-index: 10000;
-}
-
-.wikia-slideshow-popout-prev {
-	background-position: 0 15px;
-	left: 0;
-}
-
-.wikia-slideshow-popout-next {
-	background-position: -40px 15px;
-	right: 0;
-}
-
-/* glow effect */
-.wikia-slideshow-popout-prev:hover {
-	background-position: -80px 15px;
-	left: 0;
-}
-
-.wikia-slideshow-popout-next:hover {
-	background-position: -120px 15px;
-	right: 0;
 }
 
 /* X of X */

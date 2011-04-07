@@ -2772,8 +2772,8 @@ var WikiaPhotoGallery = {
 						// setup slideshow
 						dialog.slideshow({
 							buttonsClass: 'wikia-button',
-							nextClass: 'wikia-slideshow-popout-next',
-							prevClass: 'wikia-slideshow-popout-prev',
+							nextClass: 'wikia-slideshow-next',
+							prevClass: 'wikia-slideshow-prev',
 							slideWidth: slideshow.width + 'px',
 							slidesClass: 'wikia-slideshow-popout-images'
 						});
@@ -2830,7 +2830,7 @@ var WikiaPhotoGallery = {
 		});
 
 		// load CSS for slideshow popout
-		importStylesheetURI(wgExtensionsPath + '/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.popout.css?' + wgStyleVersion);
+		importStylesheetURI($.getSassCommonURL('extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.popout.scss'));
 	},
 
 	// load thumbnail of image into given HTML node

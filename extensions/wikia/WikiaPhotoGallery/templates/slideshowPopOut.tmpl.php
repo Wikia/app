@@ -38,8 +38,16 @@
 	</ul>
 
 	<div class="wikia-slideshow-popout-prev-next">
-		<a class="wikia-slideshow-sprite wikia-slideshow-popout-prev" title="<?= wfMsg('wikiaPhotoGallery-slideshow-view-prev-tooltip') ?>" style="top: <?= ($height >> 1) - 36 ?>px"></a>
-		<a class="wikia-slideshow-sprite wikia-slideshow-popout-next" title="<?= wfMsg('wikiaPhotoGallery-slideshow-view-next-tooltip') ?>" style="top: <?= ($height >> 1) - 36 ?>px"></a>
+		<a class="wikia-slideshow-prev" title="<?= wfMsg('wikiaPhotoGallery-slideshow-view-prev-tooltip') ?>" style="top: <?= ($height >> 1) - 36 ?>px">
+			<span>
+				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
+			</span>
+		</a>
+		<a class="wikia-slideshow-next" title="<?= wfMsg('wikiaPhotoGallery-slideshow-view-next-tooltip') ?>" style="top: <?= ($height >> 1) - 36 ?>px">
+			<span>
+				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
+			</span>
+		</a>
 	</div>
 </div>
 
