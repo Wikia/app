@@ -19,7 +19,7 @@
 				<img src="<?= $box['img'] ;?>"/>
 				<h2><a href="<?= $box['href'] ;?>"><?= $box['title'] ;?></a></h2>
 				<span class="description"><?= $box['description'] ;?></span>
-				<a class="more" href="<?= $box['href'] ;?>"><?= wfMsgHtml('mobileproducts-more-link') ;?></a>
+				<a class="more" href="<?= $box['href'] ;?>"><?= wfMsgExt( 'mobileproducts-more-link', array( 'content', 'escape' ) ) ;?></a>
 			</li>
 		<? endforeach ;?>
 	</ul>

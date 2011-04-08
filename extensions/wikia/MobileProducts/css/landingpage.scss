@@ -46,7 +46,8 @@ section {
 				
 				.description {
 					display: block;
-					height: 55px;
+					height: 57px;
+					line-height: 20px;
 					overflow: hidden;
 				}
 				
@@ -96,6 +97,7 @@ section {
 	width: 940px;
 	height: 318px;
 	overflow: hidden;
+	z-index: 0;
 	
 	.slideClass {
 		list-style:none;
