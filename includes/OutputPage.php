@@ -120,7 +120,8 @@ class OutputPage {
 
 	/**
 	 * Add a new <meta> tag
-	 * To add an http-equiv meta tag, precede the name with "http:"
+	 * To add an http-equiv meta tag, precede the name with "http:".
+	 * To add an Open Graph meta tag, precede the name with "property:".
 	 *
 	 * @param $name tag name
 	 * @param $val tag value
@@ -2421,6 +2422,9 @@ class OutputPage {
 			if ( 0 == strcasecmp( 'http:', substr( $tag[0], 0, 5 ) ) ) {
 				$a = 'http-equiv';
 				$tag[0] = substr( $tag[0], 5 );
+			} else if ( 0 == strcasecmp( 'property:', substr( $tag[0], 0, 9 ) ) ) {
+				$a = 'property';
+				$tag[0] = substr( $tag[0], 9 );
 			} else {
 				$a = 'name';
 			}

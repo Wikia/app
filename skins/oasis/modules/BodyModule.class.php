@@ -32,6 +32,7 @@ class BodyModule extends Module {
 	var $isMainPage;
 
 	private static $onEditPage;
+	public static $CORPORATE_LANDING_PAGE_TITLE_METADATA;
 
 	/**
 	 * This method is called when edit form is rendered
@@ -71,6 +72,17 @@ class BodyModule extends Module {
 		global $wgArticle;
 		return (get_class ($wgArticle) == "AutoHubsPagesArticle");
 	}
+
+	public static function isCorporateLandingPage() {
+		global $wgEnableCorporatePageExt, $wgTitle;
+		return $wgEnableCorporatePageExt && array_key_exists($wgTitle->getText(), self::$CORPORATE_LANDING_PAGE_TITLE_METADATA);
+	}
+
+	public static function getCorporateLandingPageMetadata() {
+		global $wgTitle;
+		return self::$CORPORATE_LANDING_PAGE_TITLE_METADATA[$wgTitle->getText()];
+	}
+
 	/**
 	 * Decide whether to show user pages header on current page
 	 */
@@ -247,7 +259,7 @@ class BodyModule extends Module {
 				1500 => array('Search', 'Index', null),
 			);
 			// No rail on main page or edit page for corporate skin
-			if ( BodyModule::isEditPage() || ArticleAdLogic::isMainPage() ) {
+			if ( BodyModule::isEditPage() || ArticleAdLogic::isMainPage() || BodyModule::isCorporateLandingPage() ) {
 				$railModuleList = array();
 			}
 			else if (self::isHubPage()) {
@@ -305,7 +317,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgRequest;
 
 		// InfoBox - Testing
 		$this->wgEnableInfoBoxTest = $wgEnableInfoBoxTest;
@@ -365,6 +377,17 @@ class BodyModule extends Module {
 				} else {
 					$this->headerModuleAction = 'Corporate';
 				}
+
+				// Facebook Open Graph metadata
+				if (self::isCorporateLandingPage()) {
+					$metadata = BodyModule::getCorporateLandingPageMetadata();
+					$urlChunks = explode('?', $wgRequest->getFullRequestURL());
+					$wgOut->addMeta('property:og:url', $urlChunks[0]);
+					$wgOut->addMeta('property:og:type', $metadata['type']);
+					$wgOut->addMeta('property:og:title', $metadata['title']);
+					$wgOut->addMeta('description', $metadata['description']);
+					$wgOut->addMeta('property:og:image', $metadata['image']);
+				}
 			}
 		}
 
@@ -387,3 +410,8 @@ class BodyModule extends Module {
 		}
 	}
 }
+
+BodyModule::$CORPORATE_LANDING_PAGE_TITLE_METADATA =
+	array(
+	    'Trivia' => array('type'=>'article', 'title'=>wfMsg('corporatelandingpage-trivia-title'), 'description'=>wfMsg('corporatelandingpage-trivia-description'), 'image'=>'http://images.will.wikia-dev.com/wikiaglobal/images/2/2b/Trivia_bug.png')
+	);

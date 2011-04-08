@@ -148,6 +148,10 @@ $messages['en'] = array(
 	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle',
 
 	'oasis-modal-error-headline' => 'Please correct the following errors',
+
+	# Corporate landing pages
+	'corporatelandingpage-trivia-title' => 'Wikia Trivia',
+	'corporatelandingpage-trivia-description' => 'Test your trivia knowledge and win a prize pack from Wikia!',
 );
 
 /** Message documentation (Message documentation)
