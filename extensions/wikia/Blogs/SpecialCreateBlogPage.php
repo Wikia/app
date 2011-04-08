@@ -243,6 +243,7 @@ class CreateBlogPage extends SpecialBlogPage {
 			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
 		}
 
+		$this->mEditPage->initialiseForm(); // this applies user preferences, such as minor and watchlist
 		$this->mEditPage->showEditForm( array($this, 'renderFormHeader') );
 		return true;
 	}
