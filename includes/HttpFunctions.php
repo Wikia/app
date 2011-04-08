@@ -37,6 +37,13 @@ class Http {
 		if ( $status->isOK() ) {
 			return $req->getContent();
 		} else {
+			/* Wikia change - beg (Sean) */
+			$errMsg = "Error getting page with Http class.";
+			$errMsg .= "Requested URL was: " . $req->getFinalUrl() . "\n";
+			$errMsg .= "Errors were: \n";
+			$errMsg .= print_r($req->status->errors, true);
+			trigger_error($errMsg, E_USER_WARNING);
+			/* Wikia change - end (Sean) */
 			return false;
 		}
 	}
