@@ -15,11 +15,11 @@ class SpecialWikiaQuiz extends UnlistedSpecialPage {
 		$wgOut->setPageTitle(wfMsg('Sample Quiz'));
 		if ($wgRequest->getVal('v') == '2') {	
 			$wgOut->addHtml(wfRenderModule('WikiaQuiz', 'SampleQuiz2'));
-			$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/WikiaQuiz/css/WikiaQuiz2.scss'));
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaQuiz/css/WikiaQuiz2.scss'));
 			$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaQuiz/js/WikiaQuiz2.js"></script>');
 		} else {
 			$wgOut->addHtml(wfRenderModule('WikiaQuiz', 'SampleQuiz'));
-			$wgOut->addStyle(F::app()->getAssetsManager()->getSassCommonURL('extensions/wikia/WikiaQuiz/css/WikiaQuiz.scss'));
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaQuiz/css/WikiaQuiz.scss'));
 			$wgOut->addStyle('http://fonts.googleapis.com/css?family=Chewy');
 			$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaQuiz/js/WikiaQuiz.js"></script>');
 		}
