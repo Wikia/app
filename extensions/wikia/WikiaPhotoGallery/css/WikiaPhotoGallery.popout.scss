@@ -84,11 +84,26 @@
 
 /* prev / next buttons */
 .wikia-slideshow-popout-prev-next {
-	display: none;
 	@include slideshow-nav;
+	display: none;
 
 	> a {
+		height: 73px;
+		width: 37px;
 		z-index: 10000;
+
+		// "buttons"
+		> span {
+			height: 41px;
+			line-height: 41px;
+			margin: 16px 0;
+			width: 37px;
+
+			// arrows
+			> .chevron {
+				border-width: 7px 12px;
+			}
+		}
 	}
 }
 
