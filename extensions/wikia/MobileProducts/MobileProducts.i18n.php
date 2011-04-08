@@ -7,8 +7,8 @@ $messages['en'] = array(
 	'mobileproducts-language-links' => "",//e.g. * English|http://www.wikia.com/mobile\n* Español|http://es.wikia.com/mobile\n* Deutsch|http://de.wikia.com/mobile\n* Français|http://fr.wikia.com/mobile\n* Italiano|http://it.wikia.com/mobile
 	
 	//Landing page
-	'mobileproducts-slides' => "* Mobile_slide_1.jpg|Special:MobileProducts/wikiaphone\n* Mobile_slide_2.jpg|Special:MobileProducts/lyricwiki\n* Mobile_slide_3.jpg|Special:MobileProducts/gameguides",
-	'mobileproducts-product-boxes' => "* Mobile Web|Browse any Wikia wikia on-the-go|wikiaphone_product.png|Special:MobileProducts/wikiaphone\n* LyricWiki|Lyrics to any song by any artist|Lyricwiki_product.jpg|Special:MobileProducts/lyricwiki\n* Game Guides|Tips for your favourite games|Gameguides_product.jpg|Special:MobileProducts/gameguides\n* Help|Support for your Wikia Mobile apps|Mobilehelp_product.png|http://help.wikia.com/wiki/Help:Mobile",
+	'mobileproducts-slides' => "* Mobile_slide_1.jpg|mobile/wikiaphone\n* Mobile_slide_2.jpg|mobile/lyricwiki\n* Mobile_slide_3.jpg|mobile/gameguides",
+	'mobileproducts-product-boxes' => "* Mobile Web|More than 200,000 sites, now mobile-friendly|wikiaphone_product.png|mobile/wikiaphone\n* LyricWiki|Instant access to full lyrics for 1.5 million songs|Lyricwiki_product.jpg|mobile/lyricwiki\n* Game Guides|Insider guide to over 30 popular videogames|Gameguides_product.jpg|mobile/gameguides\n* Help|Support for your Wikia Mobile apps|Mobilehelp_product.png|http://help.wikia.com/wiki/Help:Mobile",
 	'mobileproducts-more-link' => "Learn more >",
 	'mobileproducts-market-apps' => "* Get LyricWiki now|google::https://market.android.com/details?id=com.wikia.lyricwiki\n* Get Game Guides now|google::https://market.android.com/details?id=com.wikia.app.GameGuides|apple::http://itunes.apple.com/us/app/wikia-game-guides/id422467074?mt=8&ls=1",
 	
@@ -19,7 +19,7 @@ $messages['en'] = array(
 	'mobileproducts-wikiaphone-subtitle' => 'via the Web',
 	'mobileproducts-wikiaphone-price' => 'Free',
 	'mobileproducts-wikiaphone-markets' => "",//e.g. * web::|Best viewed on iOS and Android
-	'mobileproducts-wikiaphone-description' => "Wikia Mobile is available on virtually any mobile phone. To browse the content of any Wikia wiki on-the-go, simply poiny your phone's browser to:
+	'mobileproducts-wikiaphone-description' => "Wikia Mobile is available on virtually any mobile phone. To browse the content of any Wikia wiki on-the-go, simply point your phone's browser to:
 	
 	[http://www.wikia.com www.wikia.com]
 	
@@ -60,7 +60,9 @@ This app is constantly striving to be better - please give us feedback on ways t
 	'mobileproducts-gameguides-subtitle' => 'Tips for your favorite games',
 	'mobileproducts-gameguides-price' => 'Free',
 	'mobileproducts-gameguides-markets' => "* google::https://market.android.com/details?id=com.wikia.app.GameGuides|Requires Android 2.0 and up\n* apple::http://itunes.apple.com/us/app/wikia-game-guides/id422467074?mt=8&ls=1|Requires iOS 4.0 and up",
-	'mobileproducts-gameguides-description' => "Welcome to the Wikia Game Guides application. Here, you can find detailed information about your favourite games, all powered by the best source of information available - the fans. This application will let you get the same great information you'll find on Wikia, easily and quickly on your phone. Includes the following game guides and many more:
+	'mobileproducts-gameguides-description' => "The Wikia Game Guides application gives you detailed information about your favorite video games, powered by the best source available -- real players, real fans. Get the latest tips, tricks, and cheats from our top gaming wikis right on your mobile device.
+
+Includes the following 30 game guides, with more being added every day:
 *Dragon Age
 *Dragon Age: Origins
 *Dragon Age II

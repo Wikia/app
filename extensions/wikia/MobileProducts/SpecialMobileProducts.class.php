@@ -29,10 +29,10 @@
 			'lyricwiki'
 		);
 		list(
-		     $this->mOut,
-		     $this->mExtensionPath,
-		     $this->mBlankImgUrl,
-		     $this->mUser
+			$this->mOut,
+			$this->mExtensionPath,
+			$this->mBlankImgUrl,
+			$this->mUser
 		) = $this->mApp->getGlobals(
 			'wgOut',
 			'wgExtensionsPath',
@@ -46,7 +46,7 @@
 		$this->setHeaders();
 		
 		$this->mApp->setGlobal( 'wgSuppressWikiHeader', true );
-		$this->mApp->setGlobal( 'wgSupressPageSubtitle', true );
+		$this->mApp->setGlobal( 'wgSuppressPageHeader', true );
 		$this->mApp->setGlobal( 'wgShowMyToolsOnly', true );
 		
 		$templateName = '';
@@ -72,20 +72,15 @@
 		$this->mOut->addScriptFile( "{$this->mExtensionPath}/../skins/common/jquery/jquery-slideshow-0.4.js" );
 		$this->mOut->addScriptFile( "{$this->mExtensionPath}/wikia/MobileProducts/js/MobileProducts.js" );
 		
-		
-		if( !$this->mMobileBrowser ) {
-			$languages = $this->getLanguagesData();
-			
-			if ( !empty( $languages ) ) {
-				$template = F::build( 'EasyTemplate', array( dirname(__FILE__) . '/templates' ) );
-				$template->set_vars( array(
-					'wgBlankImgUrl' => $this->mBlankImgUrl,
-					'languages' => $languages,
-				) );
-				
-				$this->mOut->addHTML( $template->render( 'languagemenu' ) );
-			}
-		}
+		$template = F::build( 'EasyTemplate', array( dirname(__FILE__) . '/templates' ) );
+		$template->set_vars( array(
+			'product' => $product,
+			'languages' => ( !$this->mMobileBrowser ) ? $this->getLanguagesData() : null,
+			'wgBlankImgUrl' => $this->mBlankImgUrl,
+			'wgTitle' => $this->mApp->getGlobal( 'wgTitle' )
+		) );
+
+		$this->mOut->addHTML( $template->render( 'header' ) );
 		
 		$template = F::build( 'EasyTemplate', array( dirname(__FILE__) . '/templates' ) );
 		$template->set_vars( $data );
@@ -97,7 +92,7 @@
 		wfProfileIn( __METHOD__ );
 		
 		$langLinks = array();
-		$items = $this->mApp->runFunction( 'wfStringToArray', $this->mApp->runFunction( 'wfMsg', 'mobileproducts-language-links' ), '*', 5 );
+		$items = $this->mApp->runFunction( 'wfStringToArray', $this->mApp->runFunction( 'wfMsgForContent', 'mobileproducts-language-links' ), '*', 5 );
 		
 		foreach ( $items as $item ) {
 			if( !empty( $item ) ) {
@@ -118,14 +113,13 @@
 		wfProfileIn(__METHOD__);
 		
 		$slides = array();
-		$items = $this->mApp->runFunction( 'wfStringToArray', $this->mApp->runFunction( 'wfMsg', 'mobileproducts-slides' ), '*', 3 );
+		$items = $this->mApp->runFunction( 'wfStringToArray', $this->mApp->runFunction( 'wfMsgForContent', 'mobileproducts-slides' ), '*', 3 );
 		
 		foreach ( $items as $item ) {
 			if( !empty( $item ) ) {
-				list( $img, $titleText ) = explode('|', $item);
+				list( $img, $link ) = explode('|', $item);
 				
 				$title = F::build( 'Title', array( $img, NS_FILE ), 'newFromText' );
-				$titleLink = F::build( 'Title', array( $titleText ), 'newFromText' );
 				
 				if( $title instanceof Title && $title->exists() ) {
 					$file = $this->mApp->runFunction( 'wfFindFile', $title );
@@ -133,7 +127,7 @@
 					if ( is_object( $file ) ) {
 						$slides[] = array(
 							'img' => $this->mApp->runFunction( 'wfReplaceImageServer', $file->getFullUrl() ),
-							'href' => $titleLink->getLinkUrl(),
+							'href' => $link,
 						);
 					}
 				}
@@ -141,21 +135,11 @@
 		}
 		
 		$boxes = array();
-		$items = $this->mApp->runFunction( 'wfStringToArray', $this->mApp->runFunction( 'wfMsg', 'mobileproducts-product-boxes' ), '*', 4 );
+		$items = $this->mApp->runFunction( 'wfStringToArray', $this->mApp->runFunction( 'wfMsgForContent', 'mobileproducts-product-boxes' ), '*', 4 );
 		
 		foreach ( $items as $item ) {
 			if( !empty( $item ) ) {
 				list( $headline, $description, $img, $link ) = explode('|', $item);
-				
-				if ( !Http::isValidURI( $link ) ) {
-					$linkTitle = F::build( 'Title', array( $link ), 'newFromText' );
-					
-					if ( $linkTitle instanceof Title ) {
-						$link = $linkTitle->getLinkUrl();
-					} else {
-						$link = null;
-					}
-				}
 				
 				$title = F::build( 'Title', array( $img, NS_FILE ), 'newFromText' );
 				
@@ -175,7 +159,7 @@
 		}
 		
 		$marketApps = array();
-		$items = $this->mApp->runFunction( 'wfStringToArray', $this->mApp->runFunction( 'wfMsg', 'mobileproducts-market-apps' ), '*', 2 );
+		$items = $this->mApp->runFunction( 'wfStringToArray', $this->mApp->runFunction( 'wfMsgForContent', 'mobileproducts-market-apps' ), '*', 2 );
 		
 		foreach ( $items as $item ) {
 			if( !empty( $item ) ) {
@@ -214,9 +198,9 @@
 	private function getProductData( $product ) {
 		wfProfileIn(__METHOD__);
 		
-		$device = $this->mApp->runFunction( 'wfMsg', "mobileproducts-{$product}-device");
+		$device = $this->mApp->runFunction( 'wfMsgForContent', "mobileproducts-{$product}-device");
 		$slides = array();
-		$items = $this->mApp->runFunction( 'wfStringToArray', $this->mApp->runFunction( 'wfMsg', "mobileproducts-{$product}-slides" ), '*', 5 );
+		$items = $this->mApp->runFunction( 'wfStringToArray', $this->mApp->runFunction( 'wfMsgForContent', "mobileproducts-{$product}-slides" ), '*', 5 );
 		
 		foreach ( $items as $item ) {
 			if( !empty( $item ) ) {
@@ -233,7 +217,7 @@
 		}
 		
 		$marketLinks = array();
-		$items = $this->mApp->runFunction( 'wfStringToArray', $this->mApp->runFunction( 'wfMsg', "mobileproducts-{$product}-markets" ), '*', 3 );
+		$items = $this->mApp->runFunction( 'wfStringToArray', $this->mApp->runFunction( 'wfMsgForContent', "mobileproducts-{$product}-markets" ), '*', 3 );
 		
 		foreach ( $items as $item ) {
 			if( !empty( $item ) ) {

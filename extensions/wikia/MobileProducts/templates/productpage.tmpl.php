@@ -2,14 +2,14 @@
 	<div class="product">
 		<header>
 			<hgroup>
-				<h2><?= wfMsg( "mobileproducts-{$product}-title" ) ;?></h2>
-				<span class="subtitle"><?= wfMsg( "mobileproducts-{$product}-subtitle" ) ;?></span>
+				<h2><?= wfMsgForContent( "mobileproducts-{$product}-title" ) ;?></h2>
+				<span class="subtitle"><?= wfMsgForContent( "mobileproducts-{$product}-subtitle" ) ;?></span>
 			</hgroup>
-			<span class="price"><?= wfMsg( "mobileproducts-{$product}-price" ) ;?></span>
+			<span class="price"><?= wfMsgForContent( "mobileproducts-{$product}-price" ) ;?></span>
 		</header>
 		<article>
 			<section class="description">
-				<?= wfMsgExt( "mobileproducts-{$product}-description", array( 'parse' ) ) ;?>
+				<?= wfMsgExt( "mobileproducts-{$product}-description", array( 'parse', 'content' ) ) ;?>
 			</section>
 			<? if ( !empty ( $stores ) ) :?>
 				<aside>
@@ -27,7 +27,7 @@
 			<? endif ;?>
 		</article>
 		<footer>
-			<?= wfMsgExt( "mobileproducts-{$product}-footer", array( 'parse' ) ) ;?>
+			<?= wfMsgExt( "mobileproducts-{$product}-footer", array( 'parse', 'content' ) ) ;?>
 		</footer>
 	</div>
 	<? if ( !$mobile ) :?>
