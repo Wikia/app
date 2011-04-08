@@ -26,10 +26,7 @@ class WikiHeaderModule extends Module {
 		$this->wordmarkType = $settings["wordmark-type"];
 		$this->wordmarkSize = $settings["wordmark-font-size"];
 
-		if (BodyModule::isCorporateLandingPage()) {
-			$this->wordmarkStyle = 'style="visibility: hidden;"';
-		}
-		else if ($this->wordmarkType == "graphic") {
+		if ($this->wordmarkType == "graphic") {
 			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
 			//$this->wordmarkStyle = 'style="background: url('. $wordmarkUrl .') no-repeat"';
 		} else {
