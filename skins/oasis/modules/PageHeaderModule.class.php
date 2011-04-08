@@ -14,7 +14,6 @@ class PageHeaderModule extends Module {
 	var $displaytitle; // if true - don't encode HTML
 	var $title;
 	var $subtitle;
-	var $hideheader;
 
 	// RT #72366 - line with page type, redirect info, link to subject page and old revision data
 	var $pageType;
@@ -539,9 +538,6 @@ class PageHeaderModule extends Module {
 			$this->title = wfMsg('hub-header', $wgTitle);
 			global $wgOut;
 			$wgOut->addScriptFile('../oasis/js/CorporateHub.js');
-		}
-		else if (BodyModule::isCorporateLandingPage()) {
-			$this->hideheader = true;
 		}
 		
 		wfProfileOut( __METHOD__ );
