@@ -16,15 +16,15 @@ class UploadWordmarkFromFile extends UploadFromFile {
 			
 			if ( $this->checkFileExtension( $this->mFinalExtension, array( 'png' ) ) ) {
 				$imageSize = getimagesize( $this->getTempPath() );
-				
+
 				if($imageSize[0] > 250 || $imageSize[1] > 65) {
-					$details[ 'status' ] == self::FILEDIMENSIONS_ERROR;
+					$details[ 'status' ] = self::FILEDIMENSIONS_ERROR;
 				}
 			} else {
 				$details[ 'status' ] = self::FILETYPE_ERROR;
 			}
 		}
-		
+
 		return $details;
 	}
 	
