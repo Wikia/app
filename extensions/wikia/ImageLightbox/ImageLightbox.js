@@ -1,7 +1,7 @@
 var ImageLightbox = {
 	// store element which was clicked to trigger lightbox - custom event will be fired when lightbox will be shown
 	target: false,
-
+	afterLoadOpened : false,
 	log: function(msg) {
 		$().log(msg, 'ImageLightbox');
 	},
@@ -231,11 +231,20 @@ var ImageLightbox = {
 
 				$('#lightbox-link').click(function() {
 					self.track('/details');
-				});
-
+				});	
 				$('#lightbox-share-buttons').find('a').click(function() {
-					var source = $(this).attr('data-func');
-					self.log(source);
+					var source = $(this).attr('data-func');					
+					if (source == "email") {
+						if (!((typeof wgIsLogin == 'undefined') || (wgIsLogin) || (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) )) {
+							showComboAjaxForPlaceHolder(false, "", function(){
+								AjaxLogin.doSuccess = function() {
+									window.location = $('#lightbox-image-link').val();
+								}
+							});
+							return false;
+						}
+					}
+					
 					$(this).closest('#lightbox-share').find('.lightbox-share-area').each(function() {
 						if (source == $(this).attr('data-func')) {
 							$(this).slideDown();
@@ -247,7 +256,7 @@ var ImageLightbox = {
 						$('#lightbox-share-embed-standard').select();
 					}
 					self.track('/share/' + source);
-				});
+				}); 
 
 				$('#lightbox-share-email-button').click(function() {
 					self.track('/share/email/send');
@@ -298,6 +307,12 @@ var ImageLightbox = {
 					self.target = false;
 				}
 
+				if ( !self.afterLoadOpened && $.getUrlVar('open') == 'email') {
+					self.afterLoadOpened = true;
+					$('#lightbox-share-buttons').find('a[data-func$="email"]').click();
+					$('#lightbox-share-email-text').focus();
+				}
+				
 				// remove lock
 				delete self.lock;
 			}
