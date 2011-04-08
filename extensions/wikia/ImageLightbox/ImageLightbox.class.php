@@ -148,13 +148,11 @@ class ImageLightbox {
 	 * @author Marooned
 	 */
 	static function sendMail() {
-		global $wgRequest, $wgTitle, $wgNoReplyAddress;
+		global $wgRequest, $wgTitle, $wgUser, $wgNoReplyAddress;
 		wfProfileIn(__METHOD__);
 
-		wfLoadExtensionMessages('ImageLightbox');
-
 		$addresses = $wgRequest->getVal('addresses');
-		if (!empty($addresses)) {
+		if (!empty($addresses) && !$wgUser->isBlockedFromEmailuser() ) {
 			$addresses = explode(',', $addresses);
 			$countMails = count($addresses);
 
