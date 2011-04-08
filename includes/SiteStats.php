@@ -261,7 +261,7 @@ class SiteStatsUpdate {
 class SiteStatsInit {
 
 	// Db connection
-	private $db;
+	private $db, $dbshared;
 
 	// Various stats
 	private $mEdits, $mArticles, $mPages, $mUsers, $mViews, $mFiles = 0;
@@ -271,7 +271,9 @@ class SiteStatsInit {
 	 * @param $useMaster bool Whether to use the master db
 	 */
 	public function __construct( $useMaster = false ) {
+		global $wgExternalSharedDB;
 		$this->db = wfGetDB( $useMaster ? DB_MASTER : DB_SLAVE, 'vslow' );
+		$this->dbshared = wfGetDB( $useMaster ? DB_MASTER : DB_SLAVE, 'stats', $wgExternalSharedDB );
 	}
 
 	/**
@@ -316,7 +318,7 @@ class SiteStatsInit {
 		$cache = WF::build( "App" )->getGlobal( "wgMemc" );
 		$this->mUsers = $cache->get( wfSharedMemcKey( "registered-users-number" ) );
 		if( empty( $this->mUsers ) ) {
-			$this->mUsers = $this->db->selectField( 'user', 'COUNT(*)', '', __METHOD__ );
+			$this->mUsers = $this->dbshared->selectField( 'user', 'COUNT(*)', '', __METHOD__ );
 			$cache->set( wfSharedMemcKey( "registered-users-number" ), $this->mUsers, 60*60*12 );
 		}
 		return $this->mUsers;
