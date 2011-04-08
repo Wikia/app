@@ -3,6 +3,7 @@
 * fb#4355: Gallery Editing broken in Internet Explorer (macbre)
 * fb#3689: Misaligned images in ImageOneBox search results (macbre)
 * fb#2532: RTE: remove short+enter shortcut for line breaks (macbre)
+* fb#1296: Gallery: update slideshow arrows (macbre)
 
 == Changes since release-014 ==
 * fb#960: Monobook: Global JS not able to load JQuery Library (macbre)
