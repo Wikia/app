@@ -6,10 +6,9 @@
 		<a id="lightbox-link" href="<?= htmlspecialchars($href) ?>" title="<?= wfMsg('lightbox_details_tooltip') ?>" style="float: right"><img class="sprite details" width="16" height="16" src="<?= $wgBlankImgUrl ?>" alt="" /></a>
 		<div id="lightbox-caption-content" style="line-height: 18px; margin-right: 25px; text-align: left"></div>
 	</div>
+	<input id="lightbox-image-link" type="hidden" value="<?= $linkMail; ?>" />
 </div>
-<?php
-if ($showShareTools) {
-?>
+<?php if ($showShareTools) { ?>
 <style type="text/css">
 #lightbox-share-buttons a {
 	margin-right: 10px;
@@ -97,16 +96,12 @@ if ($showShareTools) {
 	<div class="lightbox-share-area" data-func="www" style="display:none">
 		<fb:like colorscheme="<?= $likeTheme ?>" layout="button_count" href="<?= htmlspecialchars($likeHref) ?>"></fb:like>
 		<ul class="share-links">
-		<?php
-		foreach ($shareButtons as $button) {
-		?>
-			<li><a class="wikia-button secondary" href="<?= $button['url'] ?>" target="_blank" data-func="<?= $button['type'] ?>">
+		<?php foreach ($shareButtons as $button) { ?>
+			<li><a class="wikia-button secondary " href="<?= $button['url'] ?>" target="_blank" data-func="<?= $button['type'] ?>">
 				<img width="16" height="16" class="<?= $button['class'] ?>" src="<?= $wgBlankImgUrl ?>">
 				<?= $button['text'] ?>
 			</a></li>
-		<?php
-		}
-		?>
+		<?php } ?>
 	</div>
 	<div class="lightbox-share-area" data-func="embed" style="display:none">
 		<table class="share-code">

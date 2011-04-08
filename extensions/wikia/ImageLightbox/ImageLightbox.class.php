@@ -84,6 +84,7 @@ class ImageLightbox {
 		$imageTitle = $wgTitle->getText();
 		$imageParam = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($imageTitle));
 		$linkStd = $currentTitle->getFullURL("image=$imageParam");
+		$linkMail = $currentTitle->getFullURL("image=$imageParam&open=email");
 		$linkWWW = "<a href=\"$linkStd\"><img width=\"" . $thumb->getWidth() . "\" height=\"" . $thumb->getHeight() . "\" src=\"$thumbUrl\"/></a>";
 		$linkBBcode = "[url=$linkStd][img]{$thumbUrl}[/img][/url]";
 
@@ -127,7 +128,8 @@ class ImageLightbox {
 			'wgBlankImgUrl' => $wgBlankImgUrl,
 			'wgExtensionsPath' => $wgExtensionsPath,
 			'wrapperHeight' => $wrapperHeight,
-			'wrapperWidth' => $wrapperWidth
+			'wrapperWidth' => $wrapperWidth,
+			'linkMail' => $linkMail,
 		));
 
 		$html = $tmpl->render('ImageLightbox');
@@ -148,9 +150,20 @@ class ImageLightbox {
 	 * @author Marooned
 	 */
 	static function sendMail() {
-		global $wgRequest, $wgTitle, $wgUser, $wgNoReplyAddress;
+		global $wgRequest, $wgTitle, $wgNoReplyAddress, $wgUser, $wgNoReplyAddress;
 		wfProfileIn(__METHOD__);
-
+		$user = $wgUser->getId();
+		
+		if (empty($user)) {
+			$res = array(
+					'result' => 0,
+					'info-caption' => wfMsg('lightbox-share-email-error-caption'),
+					'info-content' => wfMsgExt('lightbox-share-email-error-login')
+			);
+			wfProfileOut(__METHOD__);
+			return $res;
+		}
+		
 		$addresses = $wgRequest->getVal('addresses');
 		if (!empty($addresses) && !$wgUser->isBlockedFromEmailuser() ) {
 			$addresses = explode(',', $addresses);
@@ -182,7 +195,7 @@ class ImageLightbox {
 				$result = UserMailer::send(
 					$to,
 					$sender,
-					wfMsg('lightbox-share-email-subject'),
+					wfMsg('lightbox-share-email-subject', array("$1" => $wgUser->getName())),
 					wfMsg('lightbox-share-email-body', $linkStd),
 					null,
 					null,
