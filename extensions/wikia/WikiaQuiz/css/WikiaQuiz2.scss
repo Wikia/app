@@ -3,19 +3,84 @@ $question-color: #ddd;
 $panel-width: 800px;
 $panel-height: 600px;
 .quiz-panel {
-	border: 1px solid red;
+	border: 1px solid #666;
 	height: $panel-height;
 	margin: 0 auto;
+	position: relative;
 	overflow: hidden;
 	width: $panel-width;
 	ol, ul {
 		margin: 0;
 		padding: 0;
 	}
+	.title-screen {
+		.title {
+			font-size: 48px;
+			left: 100px;
+			line-height: 64px;
+			position: absolute;
+			text-align: center;
+			top: 150px;
+			width: 600px;
+			.splash {
+				display: block;
+				font-size: 64px;
+			}
+		}
+		.start-button {
+			background: #999;
+			border-radius: 75px;
+			color: white;
+			cursor: pointer;
+			font-size: 30px;
+			height: 75px;
+			left: 340px;
+			padding-top: 50px;
+			position: absolute;
+			text-align: center;
+			text-shadow: 0 1px 3px #666;
+			top: 350px;
+			width: 125px;
+		}
+	}
+	.count-down {
+		display: none;
+		font-size: 30px;
+		position: absolute;
+		text-align: center;
+		top: 140px;
+		width: 800px;
+		.cadence {
+			line-height: 40px;
+		}
+		.number {
+			background: #999;
+			border-radius: 100px;
+			height: 155px;
+			margin: 0 auto;
+			width: 200px;
+			font-size: 96px;
+			line-height: 100px;
+			margin-top: 30px;
+			padding-top: 45px;
+			color: white;
+			text-shadow: 0 1px 3px #666;
+		}
+	}
+	.questions {
+		display: none;
+	}
 	.question-set {
 		display: none;
 		margin: 0 auto;
 		position: relative;
+		-webkit-transition: all 500ms ease-in;
+		&.pop-out {
+			opacity: 0;
+		}
+		&.pop-in {
+			opacity: 1;
+		}
 		&:first-child {
 			display: block;
 		}
@@ -38,7 +103,7 @@ $panel-height: 600px;
 			top: 40px;
 			width: $width;
 			z-index: $base-z - 1;
-			-webkit-transition: all 500ms ease-in-out;
+			-webkit-transition: all 250ms ease-in-out;
 			.number {
 				display: block;
 				font-size: 48px;
@@ -48,48 +113,172 @@ $panel-height: 600px;
 				opacity: 0;
 			}
 		}
-		.question-bubble {
-			$logical-width: 630px;
-			$border-radius: 20px;
-			$padding: 30px;
-			$height: 220px - ($padding * 2);
-			$width: $logical-width - ($padding * 2);
-			background: $question-color;
-			border-radius: $border-radius;
-			display: table-cell;
-			font-size: 30px;
-			height: $height;
-			line-height: 36px;
-			left: $panel-width/2 - $logical-width/2;
-			padding: $padding;
+		.answers {
+			font-size: 23px;
+			left: 23px;
+			line-height: 27px;
+			opacity: 0;
 			position: absolute;
-			text-align: center;
-			top: 150px;
-			vertical-align: middle;
-			width: $width;
-			z-index: $base-z;
-			-webkit-transition: all 1s ease-in-out;
-			.tail {
-				$border-width: 20px;
-				$border-top-width: 25px;
-				$left: ($width/2) + ($border-width/2);
-				position: absolute;
-				bottom: -45px;
-				border: $border-width solid transparent;
-				border-top-style: solid;
-				border-top-width: $border-top-width;
-				border-top-color: $question-color;
-				left: $left;
-				height: 0;
-				width: 0;
-			}
-			.question {
-				display: table-cell;
-				vertical-align: middle;
-				height: $height;
+			top: 235px;
+			-webkit-transition: all 500ms ease-out;
+			z-index: $base-z - 1;
+			.answer {
+				cursor: pointer;
+				float: left;
+				list-style: none;
+				margin-right: 10px;
+				position: relative;
+				text-align: center;
+				width: 180px;
+				-webkit-transition: all 500ms ease-out;
+				&:last-child {
+					margin-right: 0;
+				}
+				.answer-pic {
+					height: 180px;
+					width: 180px;
+					-webkit-transition: all 500ms ease-out;
+					&.correct {
+						height: 330px;
+						position: relative;
+						top: -210px;
+						width: 330px;
+					}
+				}
+				&.correct {
+					cursor: default;
+					.answer-pic {
+						height: 330px;
+						position: relative;
+						top: -210px;
+						width: 330px;
+					}
+				}
+				&.wrong {
+					cursor: default;
+					opacity: 0;
+				}
+				p {
+					position: absolute;
+					width: 180px;
+					&.hide {
+						opacity: 0;
+						-webkit-transition: all 500ms ease-out;
+					}
+				}
 			}
 			&.off-screen {
-				top: -60px;
+				opacity: 1;
+			}
+		}
+		.answer-explanation {
+			display: none;
+			font-size: 26px;
+			line-height: 30px;
+			left: 380px;
+			padding-right: 30px;
+			position: absolute;
+			top: 50px;
+			p {
+				&:first-child {
+					font-size: 30px;
+				}
+			}
+		}
+		.answer-label {
+			display: none;
+			font-size: 30px;
+			left: 23px;
+			position: absolute;
+			text-align: center;
+			top: 370px;
+			width: 330px;
+		}
+		.next-button {
+			background: #aaa;
+			border-radius: 50px;
+			color: white;
+			cursor: pointer;
+			display: none;
+			font-size: 30px;
+			height: 60px;
+			padding-top: 40px;
+			position: absolute;
+			right: 60px;
+			text-align: center;
+			text-shadow: 0px 1px 3px #666;
+			top: 460px;
+			width: 100px;
+			z-index: $base-z + 1;
+		}
+	}
+	.question-bubble {
+		$logical-width: 630px;
+		$border-radius: 20px;
+		$padding: 30px;
+		$height: 220px - ($padding * 2);
+		$width: $logical-width - ($padding * 2);
+		background: $question-color;
+		border-radius: $border-radius;
+		display: table-cell;
+		font-size: 30px;
+		height: $height;
+		line-height: 36px;
+		left: $panel-width/2 - $logical-width/2;
+		padding: $padding;
+		position: absolute;
+		text-align: center;
+		top: 150px;
+		vertical-align: middle;
+		width: $width;
+		z-index: $base-z;
+		-webkit-transition: all 500ms ease-out;
+		.tail {
+			$border-width: 20px;
+			$border-top-width: 25px;
+			$left: ($width/2) + ($border-width/2);
+			position: absolute;
+			bottom: -45px;
+			border: $border-width solid transparent;
+			border-top-style: solid;
+			border-top-width: $border-top-width;
+			border-top-color: $question-color;
+			left: $left;
+			height: 0;
+			width: 0;
+		}
+		.question {
+			display: table-cell;
+			vertical-align: middle;
+			height: $height;
+		}
+		&.off-screen {
+			top: -60px;
+		}
+		&.hide {
+			opacity: 0;
+		}
+	}
+	.quiz-result {
+		display: none;
+		.question-bubble {
+			top: -60px;
+		}
+		.score-info {
+			font-size: 22px;
+			position: absolute;
+			top: 230px;
+			text-align: center;
+			width: 800px;
+			div {
+				font-size: 64px;
+				line-height: 70px;
+			}
+			&.points {
+				top: 230px;
+			}
+			&.time {
+				top: 430px;
 			}
 		}
 	}
