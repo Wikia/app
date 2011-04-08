@@ -35,6 +35,14 @@ var WikiHeader = {
 		//Hide when focus out of first and last anchor
 		WikiHeader.nav.children("ul").find("li:first-child a").focusout(WikiHeader.hideNav);
 		WikiHeader.subnav.last().find("li:last-child a").focusout(WikiHeader.hideNav);
+		
+		//Mouse out of browser
+		$(document).mouseout(function(e){
+			var from = e.relatedTarget || e.toElement;
+			if(!from || from.nodeName == 'HTML'){
+				WikiHeader.hideNav();
+			}
+		});
 	},
 
 	mouseover: function(event) {
