@@ -158,7 +158,7 @@ class AssetsManager {
 	 * @return array Array of one or many full common URLs, uses not wiki specific host
  	 */
 	public function getGroupCommonURL(/* string */ $groupName, /* array */ $params = array(), /* boolean */ $combine = null, /* boolean */ $minify = null)  {
-		if ($combine != null ? $combine : $this->mCombine || $minify != null ? $minify : $this->mMinify) {
+		if (($combine != null ? $combine : $this->mCombine) || ($minify != null ? $minify : $this->mMinify)) {
 			return $this->getGroupURL($groupName, $params, $this->mCommonHost, $combine, $minify);
 		} else {
 			return $this->getGroupURL($groupName, $params, '', $combine, $minify);

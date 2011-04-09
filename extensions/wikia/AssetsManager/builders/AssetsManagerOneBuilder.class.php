@@ -15,8 +15,6 @@ class AssetsManagerOneBuilder extends AssetsManagerBaseBuilder {
 			throw new Exception('File path must not contain \'..\'.');
 		}
 
-		$this->mContentType = $this->resolveContentType($this->mOid);
-
 		if(endsWith($this->mOid, '.js', false)) {
 			$this->mContentType = AssetsManager::TYPE_JS;
 		} else if(endsWith($this->mOid, '.css', false)) {
