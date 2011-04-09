@@ -6,6 +6,9 @@
 
 class AssetsManager {
 
+	const TYPE_CSS = 'text/css';
+	const TYPE_JS = 'application/x-javascript';
+
 	private $mCacheBuster;
 	private $mCombine;
 	private $mMinify;

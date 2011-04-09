@@ -33,7 +33,6 @@ class AssetsConfig {
 	}
 
 	public static function getSiteJS($combine) {
-		// Look at OutputPage->getHeadScripts
 		return array(Title::newFromText('-')->getFullURL('action=raw&smaxage=0&gen=js&useskin=oasis'));
 	}
 
@@ -68,18 +67,36 @@ class AssetsConfig {
 	private /* array */ $mConfig;
 
 	/**
-	 * Returns configuration array for particular group. If group does not exists in config then returns empty array
+	 * Returns type of particular group. If group does not exists then return null
 	 *
 	 * @author Inez Korczyński <korczynski@gmail.com>
  	 */
-	protected function getGroupConfig($groupName) {
+	public function getGroupType($groupName) {
 		if(empty($this->mConfig)) {
 			include('config.php');
 			$this->mConfig = $config;
 		}
 
 		if(isset($this->mConfig[$groupName])) {
-			return $this->mConfig[$groupName];
+			return $this->mConfig[$groupName]['type'];
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns assets array for particular group. If group does not exists in config then returns empty array
+	 *
+	 * @author Inez Korczyński <korczynski@gmail.com>
+ 	 */
+	protected function getGroupAssets($groupName) {
+		if(empty($this->mConfig)) {
+			include('config.php');
+			$this->mConfig = $config;
+		}
+
+		if(isset($this->mConfig[$groupName])) {
+			return $this->mConfig[$groupName]['assets'];
 		} else {
 			return array();
 		}
@@ -91,7 +108,7 @@ class AssetsConfig {
 	 * @author Inez Korczyński <korczynski@gmail.com>
  	 */
 	public function resolve(/* string */ $groupName, /* boolean */ $combine = true, /* boolean */ $minify = true, /* array */ $params = array()) {
-		return $this->resolveItemsToAssets($this->getGroupConfig($groupName), $combine, $minify, $params);
+		return $this->resolveItemsToAssets($this->getGroupAssets($groupName), $combine, $minify, $params);
 	}
 
 	/**
