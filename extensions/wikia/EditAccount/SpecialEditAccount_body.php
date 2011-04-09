@@ -118,14 +118,26 @@ class EditAccount extends SpecialPage {
 				'status'	=> $this->mStatus,
 				'statusMsg' => $this->mStatusMsg,
 				'user'	  => $userName,
-				'userEmail' => is_object( $this->mUser ) ? $this->mUser->getEmail() : null,
-				'userRealName' => is_object( $this->mUser ) ? $this->mUser->getRealName() : null,
+				'userEmail' => null,
+				'userRealName' => null,
 				'userEncoded' => urlencode( $userName ),
-				'userId'  => is_object( $this->mUser ) ? $this->mUser->getID() : null,
-				'userReg' => is_object( $this->mUser ) ? date( 'r', strtotime( $this->mUser->getRegistration() ) ) : null,
-				'isUnsub' => is_object( $this->mUser ) ? ( ($this->mUser->isAllowed('unsubscribed'))?true:false ) : null,
+				'userId'  => null,
+				'userReg' => null,
+				'isUnsub' => null,
 				'returnURL' => $this->getTitle()->getFullURL(),
 			) );
+
+		if( is_object( $this->mUser ) ) {
+			$this->mUser->load();
+			$oTmpl->set_Vars( array(
+					'userEmail' => $this->mUser->getEmail(),
+					'userRealName' => $this->mUser->getRealName(),
+					'userId'  => $this->mUser->getID(),
+					'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
+					'isUnsub' => $this->mUser->isAllowed('unsubscribed'),
+				) );
+		}
+		
 		// HTML output
 		$wgOut->addHTML( $oTmpl->execute( $template ) );
 	}
@@ -273,8 +285,8 @@ class EditAccount extends SpecialPage {
 	 *
 	 * @return Boolean: true
 	 */
-	function clearUnsub() {
-		$this->mUser->setOption( 'unsubscribed', 0 );
+	function clearUnsubscribe() {
+		$this->mUser->setOption( 'unsubscribed', null );
 		$this->mUser->saveSettings();
 
 		$this->mStatusMsg = wfMsg( 'editaccount-success-unsub', $this->mUser->mName );
