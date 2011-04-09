@@ -64,7 +64,6 @@ class AssetsManager {
 			unset($params['minify']);
 		}
 
-		//return $this->getAMLocalURL('sass', $scssFilePath, $params);
 		return $this->mCommonHost . $this->getAMLocalURL('sass', $scssFilePath, $params);
 	}
 
@@ -96,7 +95,11 @@ class AssetsManager {
 	 * @return string Full common URL to one file, uses not wiki specific host
  	 */
 	public function getOneCommonURL(/* string */ $filePath, /* boolean */ $minify = null) {
-		return $this->mCommonHost . $this->getOneLocalURL($filePath, $minify);
+		if ($minify != null ? $minify : $this->mMinify) {
+			return $this->mCommonHost . $this->getOneLocalURL($filePath, $minify);
+		} else {
+			return $this->getOneLocalURL($filePath, $minify);
+		}
 	}
 
 	/**
@@ -155,7 +158,11 @@ class AssetsManager {
 	 * @return array Array of one or many full common URLs, uses not wiki specific host
  	 */
 	public function getGroupCommonURL(/* string */ $groupName, /* array */ $params = array(), /* boolean */ $combine = null, /* boolean */ $minify = null)  {
-		return $this->getGroupURL($groupName, $params, $this->mCommonHost, $combine, $minify);
+		if ($combine != null ? $combine : $this->mCombine || $minify != null ? $minify : $this->mMinify) {
+			return $this->getGroupURL($groupName, $params, $this->mCommonHost, $combine, $minify);
+		} else {
+			return $this->getGroupURL($groupName, $params, '', $combine, $minify);
+		}
 	}
 
 	private function getAMLocalURL($type, $oid, $params = array()) {
