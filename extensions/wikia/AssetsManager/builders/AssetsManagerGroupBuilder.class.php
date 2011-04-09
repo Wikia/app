@@ -30,10 +30,6 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 			}
 
 			$this->mContent .= "\n";
-
-			if(empty($this->mContentType)) {
-				$this->mContentType = $this->resolveContentType($asset);
-			}
 		}
 
 		// For RTE only
@@ -42,11 +38,7 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 			$this->mContent = str_replace("\xEF\xBB\xBF", '', $this->mContent);
 		}
 
-		// For site_css only
-		if($this->mOid == 'site_css') {
-			$this->mContentType = AssetsManagerBaseBuilder::TYPE_CSS;
-		}
-
+		$this->mContentType = $ac->getGroupType($this->mOid);
 	}
 
 }

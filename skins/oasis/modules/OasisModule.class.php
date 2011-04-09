@@ -216,11 +216,8 @@ EOF;
 
 		$this->jsFiles =  '';
 
-		if($wgUser->isLoggedIn()) {
-			$srcs = AssetsManager::getInstance()->getGroupLocalURL('oasis_user_js');
-		} else {
-			$srcs = AssetsManager::getInstance()->getGroupLocalURL('oasis_anon_js');
-		}
+		$srcs = AssetsManager::getInstance()->getGroupCommonURL('oasis_shared_js');
+		$srcs = array_merge($srcs, AssetsManager::getInstance()->getGroupLocalURL($wgUser->isLoggedIn() ? 'oasis_user_js' : 'oasis_anon_js'));
 
 		foreach($srcs as $src) {
 			$this->jsFiles .= "<script type=\"$wgJsMimeType\" src=\"$src\"></script>";

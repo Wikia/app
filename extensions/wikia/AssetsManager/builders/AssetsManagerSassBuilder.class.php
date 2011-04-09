@@ -22,7 +22,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		$this->stylePathProcessing();
 		$this->janusProcessing();
 
-		$this->mContentType = AssetsManagerBaseBuilder::TYPE_CSS;
+		$this->mContentType = AssetsManager::TYPE_CSS;
 	}
 
 	private function sassProcessing() {

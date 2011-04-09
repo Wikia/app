@@ -17,7 +17,11 @@ class AssetsManagerOneBuilder extends AssetsManagerBaseBuilder {
 
 		$this->mContentType = $this->resolveContentType($this->mOid);
 
-		if(empty($this->mContentType)) {
+		if(endsWith($this->mOid, '.js', false)) {
+			$this->mContentType = AssetsManager::TYPE_JS;
+		} else if(endsWith($this->mOid, '.css', false)) {
+			$this->mContentType = AssetsManager::TYPE_CSS;
+		} else {
 			throw new Exception('Requested file must be .css or .js.');
 		}
 
