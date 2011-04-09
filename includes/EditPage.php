@@ -2353,8 +2353,9 @@ INPUTS
 			$script .= "addButton($paramList);\n";
 		}
 
+		// wikia change begin
 		$script .= "mwWikiaUploadNamespace = '".$wgContLang->getNsText(NS_IMAGE)."';\nmwWikiaUploadTooltip = '".wfMsg('insertimagetitle')."';\n";
-		$script .= "mwWikiaUploadNamespace = '".$wgContLang->getNsText(NS_IMAGE)."';\nmwWikiaUploadTooltip = '".wfMsg('insertimagetitle')."';\n";
+		// wikia change end
 
 		$toolbar .= Html::inlineScript( "\n$script\n" );
 
