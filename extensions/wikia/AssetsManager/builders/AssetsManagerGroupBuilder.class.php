@@ -19,7 +19,10 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 				if(strpos($asset, 'index.php?title=-&action=raw&smaxage=0&gen=js') !== false) {
 					$this->mContent .= $wgUser->getSkin()->generateUserJs();
 				} else if(strpos($asset, 'Wikia.css') !== false) {
-					$this->mContent .= wfMsg('Wikia.css');
+					$message = wfMsgForContent('Wikia.css');
+					if(!wfEmptyMsg('Wikia.css', $message)) {
+						$this->mContent .= $message;
+					}
 				} else if(strpos($asset, 'index.php?title=-&action=raw&maxage=86400&gen=css') !== false) {
 					$this->mContent .= $wgUser->getSkin()->generateUserStylesheet();
 				} else {
