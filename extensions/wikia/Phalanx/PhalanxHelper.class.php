@@ -91,6 +91,7 @@ class PhalanxHelper {
 
 		$id = $wgRequest->getVal( 'id', false ); // only set for update
 		$filter = $wgRequest->getText( 'wpPhalanxFilter' );
+		$filterbulk = $wgRequest->getText( 'wpPhalanxFilterBulk' );
 		$regex = $wgRequest->getCheck( 'wpPhalanxFormatRegex' ) ? 1 : 0;
 		$exact = $wgRequest->getCheck( 'wpPhalanxFormatExact' ) ? 1 : 0;
 		$case = $wgRequest->getCheck( 'wpPhalanxFormatCase' ) ? 1 : 0;
@@ -105,7 +106,7 @@ class PhalanxHelper {
 		}
 
 		//validation
-		if ( empty( $filter ) || empty( $typemask ) ) {
+		if ( (empty( $filter ) && empty( $filterbulk )) || empty( $typemask ) ) {
 			wfProfileOut( __METHOD__ );
 			return array( 'error' => true, 'text' => wfMsg( 'phalanx-block-failure' ) );
 		}
@@ -138,13 +139,43 @@ class PhalanxHelper {
 			'type' => $typemask
 		);
 
-		if( !$id  ) {
-			$status = PhalanxHelper::save( $data );
-			$reason = $status ? wfMsg( 'phalanx-block-success' ) : wfMsg( 'phalanx-block-failure' );
-		} else {
-			$data['id'] = $id;
-			$status = PhalanxHelper::update( $data );
-			$reason = $status ? wfMsg( 'phalanx-modify-success' ) : wfMsg( 'phalanx-block-failure' );
+		if( empty($filterbulk) ) {
+			//single mode
+			if( !$id  ) {
+				$status = PhalanxHelper::save( $data );
+				$reason = $status ? wfMsg( 'phalanx-block-success' ) : wfMsg( 'phalanx-block-failure' );
+			} else {
+				$data['id'] = $id;
+				$status = PhalanxHelper::update( $data );
+				$reason = $status ? wfMsg( 'phalanx-modify-success' ) : wfMsg( 'phalanx-block-failure' );
+			}
+		}
+		else {
+			// non-empty bulk field
+			$bulkdata = explode("\n", $filterbulk);
+			if( count($bulkdata) ) {
+				$reasons = array('s' => 0, 'f' => 0);
+				foreach($bulkdata as $bulkrow)
+				{
+					$bulkrow = trim($bulkrow);
+					$data['text'] = $bulkrow;
+
+					$bstatus = PhalanxHelper::save( $data );
+					if($bstatus) {
+						$reasons[ 's' ] ++;
+					} else {
+						$reasons[ 'f' ] ++;
+					}
+					
+				}
+				$status = true;
+				$reason = "[" . $reasons['s'] . "] success and [" . $reasons['f'] . "] fails";
+			}
+			else
+			{
+				$status = false;
+				$reason = "nothing to block";
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
