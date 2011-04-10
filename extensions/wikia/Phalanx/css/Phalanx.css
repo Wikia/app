@@ -79,3 +79,7 @@
 	color:#3B7F07;
 	font-size:12px;
 }
+
+#phalanx-mainframe #bulkmode {
+	display: none;
+}

@@ -27,6 +27,13 @@ $(function(){
 			Phalanx.selectTab(id);
 		}
 	}
+	
+	$('#enterbulk').click( function() {
+		$().log('pushed the button');
+		$('div#singlemode').toggle('slow');
+		$('div#bulkmode').toggle('slow');
+	});
+
 });
 
 var Phalanx = {};
@@ -90,6 +97,7 @@ Phalanx.loadBlockData = function( response ) {
 	$( '#phalanx-block' )[0].reset();
 	mesg.html( response.text );
 
+	$('#enterbulk').hide();
 	Phalanx.blockId = response.data['id'];
 	// fill form
 	$( '#wpPhalanxFilter' ).attr( 'value', response.data['text'] );

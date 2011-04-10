@@ -18,9 +18,14 @@
 						<!-- Filter -->
 						<div id="phalanx-block-texts">
 							<div id="phalanx-feedback-msg" class="clearfix"></div>
-							<div class="clearfix">
+							<div class="clearfix singlemode" id="singlemode">
 								<label for="wpPhalanxFilter" class="left"><?php echo wfMsg( 'phalanx-label-filter' ) ?></label>
 								<input type="text" id="wpPhalanxFilter" name="wpPhalanxFilter" class="blue" size="40" value="<?= $data['text'] ?>" />
+								<input type="button" id="enterbulk" value="Bulkmode" />
+							</div>
+							<div class="clearfix bulkmode" id="bulkmode">
+								<label for="wpPhalanxFilterBulk" class="left">Bulk<br/><?php echo wfMsg( 'phalanx-label-filter' ) ?></label>
+								<textarea type="text" id="wpPhalanxFilterBulk" name="wpPhalanxFilterBulk" class="blue" rows="10" cols="40" value="" ></textarea>
 							</div>
 							<div class="clearfix">
 								<div class="left-spacer">&nbsp;</div>
@@ -48,28 +53,28 @@
 							<div class="left-spacer"><?php echo wfMsg( 'phalanx-label-type' ) ?></div>
 							<div id="phalanx-block-types" class="phalanx-block-types">
 								<div>
-									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][1] ), array( 'id' => 'wpPhalanxTypeContent', 'value' => 1 ) ) ?>
+									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][1] ), array( 'id' => 'wpPhalanxTypeContent', 'value' => 1, 'title'=>1 ) ) ?>
 									<label for="wpPhalanxTypeContent"><?php echo wfMsg( 'phalanx-type-content' ) ?></label>
 									
-									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][2] ), array( 'id' => 'wpPhalanxTypeSummary', 'value' => 2 ) ) ?>
+									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][2] ), array( 'id' => 'wpPhalanxTypeSummary', 'value' => 2, 'title'=>2 ) ) ?>
 									<label for="wpPhalanxTypeSummary"><?php echo wfMsg( 'phalanx-type-summary' ) ?></label>
 								</div>
 								<div>
-									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][4] ), array( 'id' => 'wpPhalanxTypeTitle', 'value' => 4 ) ) ?>
+									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][4] ), array( 'id' => 'wpPhalanxTypeTitle', 'value' => 4, 'title'=>4 ) ) ?>
 									<label for="wpPhalanxTypeTitle"><?php echo wfMsg( 'phalanx-type-title' ) ?></label>
 								</div>
 								<div>
-									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][8] ), array( 'id' => 'wpPhalanxTypeUser', 'value' => 8 ) ) ?>
+									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][8] ), array( 'id' => 'wpPhalanxTypeUser', 'value' => 8, 'title'=>8 ) ) ?>
 									<label for="wpPhalanxTypeUser"><?php echo wfMsg( 'phalanx-type-user' ) ?></label>
 									
-									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][64] ), array( 'id' => 'wpPhalanxTypeCreation', 'value' => 64 ) ) ?>
+									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][64] ), array( 'id' => 'wpPhalanxTypeCreation', 'value' => 64, 'title'=>64 ) ) ?>
 									<label for="wpPhalanxTypeCreation"><?php echo wfMsg( 'phalanx-type-wiki-creation' ) ?></label>
 								</div>
 								<div>
-									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][16] ), array( 'id' => 'wpPhalanxTypeQuestion', 'value' => 16 ) ) ?>
+									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][16] ), array( 'id' => 'wpPhalanxTypeQuestion', 'value' => 16, 'title'=>16 ) ) ?>
 									<label for="wpPhalanxTypeQuestion"><?php echo wfMsg( 'phalanx-type-answers-question-title' ) ?></label>
 									
-									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][32] ), array( 'id' => 'wpPhalanxTypeFilterWords', 'value' => 32 ) ) ?>
+									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][32] ), array( 'id' => 'wpPhalanxTypeFilterWords', 'value' => 32, 'title'=>32 ) ) ?>
 									<label for="wpPhalanxTypeFilterWords"><?php echo wfMsg( 'phalanx-type-answers-recent-questions' ) ?></label>
 								</div>
 							</div>
