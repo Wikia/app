@@ -42,7 +42,7 @@ class ChatRailModule extends Module {
 		}
 
 		// Add CSS for rail module
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/Chat/css/ChatRailModule.scss'));	
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat/css/ChatRailModule.scss'));
 
 		wfProfileOut( __METHOD__ );
 	}
