@@ -41,6 +41,7 @@ $wgAutoloadClasses['ChatHelper'] = "$dir/ChatHelper.php";
 $wgAutoloadClasses['ChatModule'] = "$dir/ChatModule.class.php";
 $wgAutoloadClasses['ChatRailModule'] = "$dir/ChatRailModule.class.php";
 $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
+$wgAutoloadClasses['NodeApiClient'] = "$dir/NodeApiClient.class.php";
 
 // special pages
 $wgSpecialPages['Chat'] = 'SpecialChat';

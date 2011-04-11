@@ -1,0 +1,29 @@
+Author: Sean Colombo
+Date: 20110401
+
+Redis doesn't actually require a schema.  This is just here as a reference so that
+other developers will know what is being stored in redis and in what format.
+
+Brackets aren't actually in the keys. They are just there to indicate where there is
+a substitution.
+
+
+
+== The list of all of the rooms on a given wiki (stored as ) ==
+REDIS_PREFIX_ROOMS_ON_WIKI = "rooms_on_wiki"
+KEY: "[REDIS_PREFIX_ROOMS_ON_WIKI]:[wgCityId]"
+VALUE OF EACH ITEM IN LIST: Room id of a room on the given wiki.
+
+== Each room's info (stored as HASH) ==
+REDIS_PREFIX_ROOMS = "room"
+room id is assigned by redis upon creation.
+KEY: "[REDIS_PREFIX_ROOMS]:[room id]"
+VALUE: HASH of the info about the chat room
+	FIELDS IN THE HASH:
+		room_id # i'm not convinced that this is necessary
+		room_name
+		room_topic
+		activeClients
+		wgCityId
+		wgServer
+		wgArticlePath

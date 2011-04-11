@@ -6,69 +6,44 @@ var Chat = {
 	getCb: function() { return "&cb=" + Math.floor(Math.random()*99999); },
 	init: function() {
 		$(window)
-			.load(function() {
-				// Start longPolling
-				setTimeout(Chat.longPoll, 500);
-			})
 			.unload(function() {
 				// user parts the chat
-				$.ajax({
-					url: wgScript + '?action=ajax&rs=ChatAjax&method=part&chatId=' + chatId + Chat.getCb(),
-					async: false
-				});
+			// TODO: 
+			//	$.ajax({
+			//		url: wgScript + '?action=ajax&rs=ChatAjax&method=part&chatId=' + chatId + Chat.getCb(),
+			//		async: false
+			//	});
 			})
 			.focus(function() {
 				// set focus on the text input
 				$("#Write").find('input[type="text"]').focus();
 			});
 		
+		window.isFocused = true;
+		
 		// If this user is a ChatMod, set class on body tag
-		if (wgChatMod) {
-			$("body").addClass("chat-mod");
-		}
+	// Moved to template
+	//	if (wgChatMod) {
+	//		$("body").addClass("chat-mod");
+	//	}
 			
 		// Inline alert the chat topic
 		Chat.inlineAlert({type: 'topic'});
 
-		// Bind submit event handler and focus on input field
-		$("#Write")
-			.submit(Chat.writeSubmit)
-			.find('input[type="text"]').focus();
-		
-		// Remove my ability to kickban myself
-		$("#Users").find('[data-user="' + wgUserName + '"]').find(".kickban").remove();
 
-		// Bind kickban event
-		$(".kickban").click(Chat.kickban);
+		// Make links open in the parent window
+		$("#Chat").find("a").live("click", function(event) {
+			event.preventDefault();
+			window.open($(this).attr("href"));
+		});
+
+		// Store original window title
+		Chat.title = $("title").html();		
 			
 		// Scroll chat
 		Chat.scrollToBottom();		
 	},
 
-	kickban: function(event) {
-		event.preventDefault();
-		
-		var userToBan = $(event.currentTarget).parent().attr("data-user");
-
-		// Remove the user from the userlist immediately.
-		$("#Users").find('[data-user="' + userToBan + '"]').remove();
-
-		// Send kickban to server
-		var requestObj = {
-			chatId: chatId,
-			userToBan: userToBan
-		};
-		$.get(wgScript + '?action=ajax&rs=ChatAjax&method=kickBan' + Chat.getCb(), requestObj , function(data) {
-			//console.log("kickban response");
-			if (data.error) {
-				// Show attempted kickbanned user in user list
-				$("#Users").find('[data-user="' + userToBan + '"]').show();
-
-				alert(data.error);
-			}
-		});
-	},
-	
 	writeSubmit: function(event) {
 		event.preventDefault();
 				
@@ -112,54 +87,6 @@ var Chat = {
 		});
 	},
 
-	longPoll: function() {
-		var requestObj = {
-			'chatId': chatId
-		};
-		$.get(wgScript + '?action=ajax&rs=ChatAjax&method=longPoll' + Chat.getCb(), requestObj, function(data) {
-			if(data.rejoinNeeded){
-				Chat.rejoin();
-			} else {
-				// Add each message to the chat
-				$.each(data.messages, function(index, value) {
-					Chat.addMessage({
-						user: value.user,
-						message: value.message
-					});
-				});
-				
-				// Handle user joins
-				$.each(data.users.join, function(index, value) {
-					Chat.addUser(value);
-				});
-
-				// Handle user parts
-				$.each(data.users.part, function(index, value) {
-					Chat.removeUser(value);
-				});
-
-				// Handle user kickbans
-				var iAmKickbanned = false;
-				$.each(data.users.kick, function(index, value) {
-					Chat.kickbanUser(value);
-					if (value == wgUserName) {
-						iAmKickbanned = true;
-					}
-				});
-				
-				// Do longPoll again
-				if (!iAmKickbanned) {
-					Chat.longPoll();
-				}
-			}
-		}).error(function(){
-			// If there are server problems, it's better not to hammer it every couple of miliseconds.
-			setTimeout(function() {
-				Chat.longPoll(); // might not need to re-join.  If we do, the request will tell us that anyway.
-			}, 3000);
-		});
-	},
-
 	addMessage: function(messageObj) {
 		
 		// Determine if chat view is presently scrolled to the bottom
@@ -173,11 +100,14 @@ var Chat = {
 
 		// Check type of message
 		if (messageObj.user) {
+			// Process message (activate links, etc)
+			var processedMessage = Chat.processMessage(messageObj.message);
+						
 			// Add user message to chat
 			newChatElement = $("#Chat").find("[data-type='user'].template").clone()
 				.removeClass("template")
 				.find(".user").html(messageObj.user).end()
-				.find(".message").html(messageObj.message).end();
+				.find(".message").html(processedMessage).end();
 		} else {
 			// Add alert to chat
 			newChatElement = $("#Chat").find("[data-type='inline-alert'].template").clone()
@@ -197,18 +127,36 @@ var Chat = {
 		return newChatElement;
 	},
 	
+	processMessage: function(message) {
+		// Linkify http://links
+		var exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+		message = message.replace(exp, "<a href='$1'>$1</a>");
+
+		// Linkify [[links]]
+		var exp = /(\[\[[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]*\]\])/ig;
+		message = message.replace(exp, function(match) {			
+			var article = match.substr(2, match.length - 4);
+			var path = wgServer + wgArticlePath;
+			var url = path.replace("$1", article);
+			return '<a href="' + url + '">' + article + '</a>';
+		});
+
+		return message;
+	},
+
 	addUser: function(userData) {
 		// Ensure the user isn't in the list already
 		if ($("#Users").find('[data-user="' + userData.user + '"]').length == 0) {
 			var newUserItem = $("#Users").find(".template").clone()
 				.removeClass("template")
 				.attr("data-user", userData.user)
-				.prepend(userData.user)
+				.find(".user").text(userData.user).end()
 				.appendTo("#Users ul");
 
-			if (userData.chatmod) {
-				newUserItem.addClass("chat-mod");
-			}
+	// Added in the render() in views.js
+	//		if (userData.chatmod) {
+	//			newUserItem.addClass("chat-mod");
+	//		}
 		}
 		Chat.inlineAlert({
 			type: 'join',
@@ -223,24 +171,12 @@ var Chat = {
 			user: user
 		});		
 	},
-	
-	kickbanUser: function(user) {
-		//console.log("kb: " + user);
-		// Remove user from user list
-		$("#Users").find('[data-user="' + user + '"]').remove();
-		
-		// Post alert
-		Chat.inlineAlert({
-			type: 'kickban',
-			user: user
-		});
-	},
-	
+
 	scrollToBottom: function() {
 		var chat = $("#Chat");
 		chat.scrollTop(chat.get(0).scrollHeight);
 	},
-	
+
 	inlineAlert: function(alertObj) {
 		if (alertObj.type == 'topic') {
 			Chat.addMessage({message: $("title").html()});
@@ -252,4 +188,5 @@ var Chat = {
 			Chat.addMessage({message: alertObj.user + " was kickbanned"});
 		}
 	}
+
 };
