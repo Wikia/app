@@ -235,7 +235,7 @@ var ImageLightbox = {
 				$('#lightbox-share-buttons').find('a').click(function() {
 					var source = $(this).attr('data-func');					
 					if (source == "email") {
-						if (!((typeof wgIsLogin == 'undefined') || (wgIsLogin) || (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) )) {
+						if ( !window.wgIsLogin && window.wgComboAjaxLogin ) {
 							showComboAjaxForPlaceHolder(false, "", function(){
 								AjaxLogin.doSuccess = function() {
 									window.location = $('#lightbox-image-link').val();
