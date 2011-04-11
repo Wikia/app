@@ -143,8 +143,7 @@ $(function() {
 		$('.ajaxLoginRequest').click(openLogin);
 		wpAjaxLoginParam = $('.ajaxLoginRequest').attr('ref');
 	}
-
-	if(!((typeof wgIsLogin == 'undefined') || (wgIsLogin) || (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) )) {
+	if ( !window.wgIsLogin && window.wgComboAjaxLogin ) {
 		$(".wikiaPlaceholder .wikia-button").removeAttr("onclick");
 		$(".wikiaPlaceholder .wikia-button").click(function(e){
 			if( e.target.nodeName == "SPAN" ){
