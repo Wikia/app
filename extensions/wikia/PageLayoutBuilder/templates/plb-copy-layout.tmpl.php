@@ -7,11 +7,12 @@
 			</li>		
 		<?php endforeach; ?>
 	</ul>
-	<button name="addCategory" name="addCategory" ><?php echo wfMsg("plb-copy-submit-link"); ?></button>
+	<div id="confirm" style="display:none" ><?php echo wfMsg('plb-copy-confirm'); ?></div>
+	<button name="addCategory" id="addCategory" ><?php echo wfMsg("plb-copy-submit-link"); ?></button>
 </form>
 
 <ul>
 	<li id="emptyElement" style="display:none" >
-		<input type="hidden" name="cat_ids[]" value=""/> <span></span> <a href="#" ><?php echo wfMsg("plb-copy-delete-link"); ?></a>
+		<input type="hidden" name="cat_ids[]" value=""/> <span></span> <a  href="#" ><?php echo wfMsg("plb-copy-delete-link"); ?></a>
 	</li>
 </ul>
