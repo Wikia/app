@@ -189,6 +189,7 @@ $messages['en'] = array (
 	'plb-parser-error-use-on-template' => "Can't use layout elements in templates",
 
 	'plb-list-action-copy' => 'New wiki category',
+	'plb-copy-confirm' => 'Hitting save will add this page layout to every new wiki created in the category(s) you have selected.  Please use care when using this tool.  Are you sure you want to save?',
 	'plb-copy-delete-link' => 'Delete',
 	'plb-copy-cat-add' => 'Add:',
 	'plb-copy-submit-link' => 'Save'

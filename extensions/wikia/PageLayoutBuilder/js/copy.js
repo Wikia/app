@@ -17,4 +17,10 @@ $(function() {
 	    listElement.find('a').click(deleteElement);
 	    $('#PLBCopyLayout ul').append(listElement);
 	});
+	
+	$('#addCategory').click( function() {
+		if(!confirm($('#confirm').text())) {
+			return false;
+		}
+	});
 });
