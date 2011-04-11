@@ -68,7 +68,8 @@ class EditAccount extends SpecialPage {
 		// check if user name is an existing user
 		if ( User::isValidUserName( $userName ) ) {
 			$this->mUser = User::newFromName( $userName );
-			if ( $this->mUser->idFromName( $userName ) === 0 ) {
+			$id = $this->mUser->idFromName( $userName );
+			if ( empty( $id ) ) {
 				$this->mStatus = false;
 				$this->mStatusMsg = wfMsg( 'editaccount-nouser', $userName );
 				$action = '';
