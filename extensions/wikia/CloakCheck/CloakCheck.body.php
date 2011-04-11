@@ -124,19 +124,17 @@ class CloakCheck extends SpecialPage {
 
 		$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 		$res = $dbs->select(
-			array( 'city_user_edits' ),
-			array( 'ue_edit_namespace as namespace', 'ue_edit_count as count' ),
+			array( 'events' ),
+			array( 'count(*) as total' ),
 			array(
-				'ue_user_id' => $uid
+				'user_id' => $uid,
+				' ( event_type = 1 or event_type = 2 ) '
 			),
-			__METHOD__
+			__METHOD__,
+			array ( )
 		);
 
-		$total = 0;
-		while( $row = $dbs->fetchObject( $res ) ) {
-			$total += $row->count;
-		}
-
-		return $total;
+		$row = $dbs->fetchObject( $res );
+		return $row->total;
 	}
 }
