@@ -5,10 +5,29 @@ if(!defined('MEDIAWIKI')) {
 
 $extensions_dir = dirname(dirname(__FILE__));
 
-require_once("$extensions_dir/WikiaUUID/WikiaUUID.php");
-
 $wgHooks['SkinAfterBottomScripts'][] = 'wfWikiaWebStatsScript';
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfAddOneDotGlobals';
+
+function wfWikiaWebStatsScript($this, $bottomScriptText) {
+	global $wgEnableOneDotPlus;
+
+	if ($wgEnableOneDotPlus) {
+		ajaxOneDot($bottomScriptText);
+	} else {
+		imageOneDot($bottomScriptText);
+	}
+	return true;
+}
+
+function wfAddOneDotGlobals ($vars) {
+	global $wgEnableOneDotPlus;
+
+	if ($wgEnableOneDotPlus) {
+		$vars['wgOneDotURL']    = getOneDotURL();
+	}
+
+	return true;
+}
 
 function getOneDotURL () {
 	global $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
@@ -30,28 +49,6 @@ function getOneDotURL () {
 	}
 
 	return $wgOneDotURL;
-}
-
-function wfAddOneDotGlobals ($vars) {
-	global $wgEnableOneDotPlus;
-
-	if ($wgEnableOneDotPlus) {
-		$vars['wgOneDotURL']    = getOneDotURL();
-		$vars['wgOneDotCookie'] = WikiaUUID::cookieName();
-	}
-
-	return true;
-}
-
-function wfWikiaWebStatsScript($this, $bottomScriptText) {
-	global $wgEnableOneDotPlus;
-
-	if ($wgEnableOneDotPlus) {
-		ajaxOneDot($bottomScriptText);
-	} else {
-		imageOneDot($bottomScriptText);
-	}
-	return true;
 }
 
 function ajaxOneDot (&$bottomScriptText) {
