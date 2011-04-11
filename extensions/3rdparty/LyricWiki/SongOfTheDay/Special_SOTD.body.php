@@ -1,10 +1,9 @@
 <?php
 /**
- * TODO: Indicate which fields are optional.
- * TODO: Add comments to SQL queries (so ops ppl and other engineers will know what's going on).
- * TODO: When a user hits the page, automatically display their nominations on it (the token thing can probably go away & we can just use id's instead).
- * TODO: Use our code-conventions for linebreaks (not a huge issue).
- */
+* TODO: Add comments to SQL queries (so ops ppl and other engineers will know what's going on).
+* TODO: When a user hits the page, automatically display their nominations on it (the token thing can probably go away & we can just use id's instead).
+* TODO: Use our code-conventions for linebreaks (not a huge issue).
+*/
 
 class SOTD extends SpecialPage
 {
@@ -12,8 +11,8 @@ class SOTD extends SpecialPage
 	{
 		parent::__construct( 'SOTD' );
 		wfLoadExtensionMessages('SOTD');
-		global $errors, $errorlist, $wgOut, $wgScriptPath, $wgStyleVersion;
-		$wgOut->addStyle( "$wgScriptPath/extensions/SOTD/Special_SOTD.css?$wgStyleVersion" );
+		global $errors, $errorlist, $wgOut, $wgExtensionsPath, $wgStyleVersion;
+		$wgOut->addExtensionStyle( "$wgExtensionsPath/SongOfTheDay/Special_SOTD.css?$wgStyleVersion" );
 		$errors = array ( 'set' => false );
 		$errorlist = '';
 	}
@@ -120,6 +119,18 @@ class SOTD extends SpecialPage
 		}
 	}
 
+	function getYouTubeID( $url )
+	{
+		return preg_replace( '/.*v=(\w+).*/', '$1', $url );
+	}
+
+	function getGoEarID( $url )
+	{
+		$parts = explode( '/listen' , $url );
+		$url = end ( $parts );
+		return preg_replace( '/win\.php\?.*v=|\.php\?.*v=|^\/|\W.*$/', '', $url );
+	}
+
 	function getGoEarLink( $param )
 	{
 		return '<a href="http://www.goear.com/'.$param.'" target="_blank">'.wfMsg('sotd-audio').'</a>';
@@ -129,6 +140,8 @@ class SOTD extends SpecialPage
 	{
 		return '<a href="http://www.youtube.com/'.$param.'" target="_blank">'.wfMsg('sotd-video').'</a>';
 	}
+
+
 
 	function makeUserLink( $userId, $userName )
 	{
@@ -141,8 +154,13 @@ class SOTD extends SpecialPage
 		}
 		else
 		{
-			$userLink = User::newFromName( User::whoIs( $userId ) )->getUserPage()->getPrefixedText();
-			$userText = User::whoIsReal( $userId );
+			$user = User::newFromId( $userId );
+			$userLink = $user->getUserPage()->getPrefixedText();
+			$userText = $user->getOption('nickname');
+			if ( empty ( $userText ) || $user->getOption('fancysig') )
+			{
+				$userText = $user->getName();
+			}
 		}
 		return "[[$userLink|$userText]]";
 	}
@@ -155,6 +173,7 @@ class SOTD extends SpecialPage
 		$canModify = $wgUser->isAllowed('moderatesotd');
 		$action = $wgRequest->getText('action');
 		$mode = $wgRequest->getText('mode');
+		$pagename = $this->getTitle()->getPrefixedText();
 		if ( $par == 'Admin' )
 		{ # Admin mode subpage
 			if ( $canModify )
@@ -223,14 +242,13 @@ class SOTD extends SpecialPage
 							$SOTDTitle = Title::makeTitle( NS_PROJECT, 'SOTD' );
 							$SOTDArticle = new Article( $SOTDTitle , 0 );
 							$content = $SOTDArticle->getContent();
-							
 							// Make sure the previous nominations (if there are any) end with two br's in a row.
 							// If there are no previous nominations, there should still be one nomination.
 							$matches = array();
-							while(0 >= preg_match("/(==START==|<br\/?>)\s*<br\/>\s*$/is", $content, $matches)){
+							while (0 >= preg_match("/(==START==|<br\/?>)\s*<br\/>\s*$/is", $content, $matches))
+							{
 								$content .= "\n<br/>\n";
-							}
-
+							};
 							$content .= $text;
 							$SOTDArticle->doEdit($content , ( $count > 1 ) ? "Accepted $count new nominations" : 'Accepted 1 new nomination' );
 						}
@@ -247,9 +265,9 @@ class SOTD extends SpecialPage
 				if ( $rows )
 				{
 					$source = $wgOut->parseInline('[[' .
-						$this->getTitle() . '|'.wfMsg('sotd-links-addone').']] | [[' .
-						$this->getTitle() . '/Edit|'.wfMsg('sotd-links-view').']] | [[' .
-						$this->getTitle() . '/Admin|'.wfMsg('sotd-links-refresh') . ']]');
+						$pagename . '|'.wfMsg('sotd-links-addone').']] | [[' .
+						$pagename . '/Edit|'.wfMsg('sotd-links-view').']] | [[' .
+						$pagename . '/Admin|'.wfMsg('sotd-links-refresh') . ']]');
 					$wgOut->addHTML( '<span class="sotd-navlinks">
 					' . $source . '
 				</span>
@@ -263,7 +281,7 @@ class SOTD extends SpecialPage
 							<th>'.wfMsg('sotd-manage-links').'</th>
 							<th>'.wfMsg('sotd-manage-prefdate').'</th>
 							<th>'.wfMsg('sotd-manage-status').'</th>
-							<th>'.wfMsg('sotd-manage-token').'</th>
+							<th>&nbsp;</th>
 						</tr>');
 					while( $row = $dbw->fetchRow( $result ) )
 					{
@@ -294,15 +312,25 @@ class SOTD extends SpecialPage
 						}
 						else
 						{
-							$prefDateF = date( 'F j, Y', $prefDate );
+							$color = 'black';
+							if ( $prefDate <= time() )
+							{
+								$color = 'silver';
+							}
+							elseif ( $prefDate <= mktime(0, 0, 0, date("m"), date("d")+7, date("Y")) )
+							{
+								$color = 'red';
+							}
+							$prefDateF = '<b style="color: '.$color.'">' . date( 'F j, Y', $prefDate ) . '</b>';
 							if ( ! empty( $occasion ) )
 							{
 								$prefDateF .= "<br />''($occasion)''";
 							}
 							$prefDateF = $wgOut->parseInline( $prefDateF );
 						};
+						$class = ( $status == 4 ) ? ' class="accepted"' : '';
 						$wgOut->addHTML("
-						<tr>
+						<tr" . $class . ">
 							<td class=\"id\">$id</td>
 							<td class=\"ta-center\">$nomination</td>
 							<td>$nominated</td>
@@ -329,7 +357,9 @@ class SOTD extends SpecialPage
 						}
 						$wgOut->addHTML('
 							</td>
-							<td>'. $row['sn_token'] .'</td>
+							<td>
+								<a href="'.$this->getTitle()->getLocalURL() .'/Edit?token='.$token.'" target="_blank" title="'.$token.'">'.wfMsg('sotd-manage-view').'</a>
+							</td>
 						</tr>');
 					};
 					$wgOut->addHTML('
@@ -347,7 +377,7 @@ class SOTD extends SpecialPage
 				}
 				else
 				{
-					$source = $wgOut->parseInline('[[' . $this->getTitle() . '|'.wfMsg('sotd-links-addone').']]');
+					$source = $wgOut->parseInline('[[' . $pagename . '|'.wfMsg('sotd-links-addone').']]');
 					$wgOut->addHTML( '<p>'.wfMsg('sotd-manage-nonominations')."</p>
 				<p>$source</p>
 			");
@@ -356,14 +386,14 @@ class SOTD extends SpecialPage
 			else
 			{
 				$this->displayRestrictionError();
-				$wgOut->addHTML( wfMsgExt('sotd-back-to-page', 'parseinline', $this->getTitle()->getPrefixedText() ) );
+				$wgOut->addHTML( wfMsgExt('sotd-back-to-page', 'parseinline', $pagename ) );
 			}
 		}
 		elseif ( $par == 'Edit' )
 		{ # Edit mode subpage
 			$token = $wgRequest->getText('token');
-			$source = ( $canModify ) ? $wgOut->parseInline('[[' . $this->getTitle() . '/Admin|'.wfMsg('sotd-links-manage').']] | ') : '' ;
-			$source .= $wgOut->parseInline('[[' . $this->getTitle() . '|'.wfMsg('sotd-links-addone').']]');
+			$source = ( $canModify ) ? $wgOut->parseInline('[[' . $pagename . '/Admin|'.wfMsg('sotd-links-manage').']] | ') : '' ;
+			$source .= $wgOut->parseInline('[[' . $pagename . '|'.wfMsg('sotd-links-addone').']]');
 			$wgOut->addHTML( '<span class="sotd-navlinks">
 				' . $source . '
 			</span>
@@ -541,6 +571,10 @@ class SOTD extends SpecialPage
 								<input type="submit" value="'.wfMsg('sotd-button-refresh').'"/>
 							</form>');
 							}
+							elseif ( $row['sn_status'] == 3 )
+							{ # Display the explanation why the song was likely declined
+								$wgOut->addHTML( wfMsg('sotd-edit-explain') );
+							}
 							else
 							{ # De facto it's impossible to be perform changes to status 4 nominations on a normal way
 								$wgOut->addHTML( wfMsg('sotd-edit-toolate') );
@@ -577,6 +611,15 @@ class SOTD extends SpecialPage
 			$occasion = $wgRequest->getText('occasion');
 			$prefDate = NULL;
 			$token = $wgRequest->getText('token');
+			if ( strlen( $vlink ) > 11 )
+			{
+				$vlink=$this->getYouTubeID( $vlink );
+			}
+			if ( strlen( $alink ) > 7 )
+			{
+				$alink=$this->getGoEarID( $alink );
+			}
+
 			if ( $action == 'save' )
 			{ # Action "save" means the user really tried to submit the nomination/edit. Check values
 				if ( empty ( $artist ) )
@@ -648,7 +691,7 @@ class SOTD extends SpecialPage
 						'sn_nomdate'	=> $now,
 						'sn_token'		=> $token
 					));
-					$wgOut->addHTML( wfMsgExt('sotd-thank-you', 'parseinline', array ( $token , $this->getTitle() )) . '
+					$wgOut->addHTML( wfMsgExt('sotd-thank-you', 'parseinline', array ( $token , $pagename )) . '
 					');
 					$token = ''; # Security
 				}
@@ -675,7 +718,7 @@ class SOTD extends SpecialPage
 									'sn_occasion' => $occasion,
 									'sn_token'		=> $token
 								), array("sn_token='$token'", "sn_status<'4'"));
-								$wgOut->addHTML( $wgOut->parse( wfMsg('sotd-edit-success-review') ) . wfMsgExt('sotd-back-to-page', 'parseinline', $this->getTitle()->getPrefixedText() ) );
+								$wgOut->addHTML( $wgOut->parse( wfMsg('sotd-edit-success-review') ) . wfMsgExt('sotd-back-to-page', 'parseinline', $pagename ) );
 							}
 							elseif ( $status < 3 )
 							{	# Others can perform a usual edit which will set a new submission date etc.
@@ -698,17 +741,17 @@ class SOTD extends SpecialPage
 									'sn_token'		=> $token,
 									'sn_status'   => $status
 								), array("sn_token='$token'", "sn_status<'3'"));
-								$wgOut->addHTML( $wgOut->parse( wfMsg('sotd-edit-success') ) . wfMsgExt('sotd-back-to-page', 'parseinline', $this->getTitle()->getPrefixedText() ) );
+								$wgOut->addHTML( $wgOut->parse( wfMsg('sotd-edit-success') ) . wfMsgExt('sotd-back-to-page', 'parseinline', $pagename ) );
 							}
 							else
 							{	# The nomination was already accepted
-								$wgOut->addHTML( $wgOut->parse( wfMsg('sotd-edit-toolate') ) . wfMsgExt('sotd-back-to-page', 'parseinline', $this->getTitle()->getPrefixedText() ) );
+								$wgOut->addHTML( $wgOut->parse( wfMsg('sotd-edit-toolate') ) . wfMsgExt('sotd-back-to-page', 'parseinline', $pagename ) );
 							}
 						}
 					}
 					else
 					{ # Something went wrong
-						$wgOut->addHTML( $wgOut->parse( wfMsg('sotd-edit-failure') ) . wfMsgExt('sotd-back-to-page', 'parseinline', $this->getTitle()->getPrefixedText() ) );
+						$wgOut->addHTML( $wgOut->parse( wfMsg('sotd-edit-failure') ) . wfMsgExt('sotd-back-to-page', 'parseinline', $pagename ) );
 					}
 				}
 			}
@@ -744,8 +787,8 @@ class SOTD extends SpecialPage
 				{ # Link to YouTube video
 					$video="watch?v=$vlink";
 				}
-				$source = ( $canModify ) ? $wgOut->parseInline('[[' . $this->getTitle() . '/Admin|'.wfMsg('sotd-links-manage').']] | ') : '' ;
-				$source .= $wgOut->parseInline('[[' . $this->getTitle() . '/Edit|'.wfMsg('sotd-links-view').']]');
+				$source = ( $canModify ) ? $wgOut->parseInline('[[' . $pagename . '/Admin|'.wfMsg('sotd-links-manage').']] | ') : '' ;
+				$source .= $wgOut->parseInline('[[' . $pagename . '/Edit|'.wfMsg('sotd-links-view').']]');
 				$wgOut->addHTML( '<span class="sotd-navlinks">
 					' . $source . '
 				</span>

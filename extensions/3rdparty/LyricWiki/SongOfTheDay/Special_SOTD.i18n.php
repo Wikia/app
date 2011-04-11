@@ -46,6 +46,9 @@ $messages['en'] = array(
 	'sotd-edit-success' => 'The nomination was edited successfully.',
 	'sotd-edit-success-review' => 'The nomination was reviewed successfully.',
 	'sotd-edit-failure' => 'The nomination could not be edited.',
+	'sotd-edit-explain' => "Your nomination was declined so far, but that doesn't mean it can't be used later.<br/>
+	Most likely, it was just missing both the GoEar and YouTube link. It'll frequently be rechecked by our managers.<br/>
+	As soon as it is available on one of the two websites it'll be modified by them and then accepted.",
 	'sotd-edit-toolate' => 'The nomination already has been assigned a final status. It cannot be edited or deleted anymore.',
 	'sotd-deletion-success' => 'The nomination was deleted successfully.',
 	'sotd-deletion-failure' => 'The nomination could not be deleted.',
@@ -57,7 +60,7 @@ $messages['en'] = array(
 	'sotd-manage-prefdate' => 'Preferred date',
 	'sotd-manage-noprefdate' => 'None',
 	'sotd-manage-status' => 'Current status',
-	'sotd-manage-token' => 'Token',
+	'sotd-manage-view' => 'View',
 	'sotd-manage-clearold' => 'Clear old entries',
 	'sotd-manage-nonominations' => 'No new nominations have been added.',
 	'sotd-status-0' => 'Pending',
@@ -82,6 +85,8 @@ $messages['de'] = array(
 	'sotd-artist' => 'Künstler',
 	'sotd-song' => 'Titel',
 	'sotd-reason' => 'Grund',
+	# 'sotd-audio' => 'Audio',
+	# 'sotd-video' => 'Video',
 	'sotd-prefdate' => 'Bevorzugtes Datum',
 	'sotd-thisyear' => 'Dieses Jahr',
 	'sotd-nextyear' => 'Nächstes Jahr',
@@ -100,6 +105,7 @@ $messages['de'] = array(
 	'sotd-button-retry' => 'Wiederholen',
 	'sotd-button-refresh' => 'Aktualisieren',
 	'sotd-button-review' => 'Überarbeiten',
+	# 'sotd-button-ok' => 'OK',
 	'sotd-error-title' => 'Bitte behebe zunächst {{PLURAL:$1|diesen|diese}} Fehler:',
 	'sotd-error-artist-undefined' => 'Bitte gib den Namen eines Künstlers ein',
 	'sotd-error-artist-unknown' => 'Die Seite des Künstlers existiert nicht',
@@ -118,16 +124,22 @@ $messages['de'] = array(
 	'sotd-edit-success' => 'Die Nominierung wurde erfolgreich bearbeitet.',
 	'sotd-edit-success-review' => 'Die Nominierung wurde erfolgreich überarbeitet.',
 	'sotd-edit-failure' => 'Die Nominierung konnte nicht bearbeitet werden.',
+	'sotd-edit-explain' => 'Deine Nominierung wurde vorerst abgelehnt, aber das heißt nicht, dass sie nicht doch später verwendet wird.<br/>
+	Höchstwahrscheinlich fehlten nur sowohl der GoEar als auch der YouTube Link. Sie wird daher regelmäßig von unseren Managern überprüft.<br/>
+	Sobald der Song auf einer der beiden Webseiten verfügbar ist, wird die Nominierung von ihnen überarbeitet und dann angenommen.',
 	'sotd-edit-toolate' => 'Die Nominierung hat bereits einen finalen Status. Sie kann nicht mehr bearbeitet oder entfernt werden.',
 	'sotd-deletion-success' => 'Nominierung erfolgreich entfernt.',
 	'sotd-deletion-failure' => 'Die Nominierung konnte nicht entfernt werden.',
-	'sotd-manage-clearold' => 'Alte Einträge entfernen',
+	# 'sotd-manage-id' => 'ID',
 	'sotd-manage-nomination' => 'Nominierung',
 	'sotd-manage-nominatedby' => 'Nominiert von',
 	'sotd-manage-reason' => 'Grund',
+	# 'sotd-manage-links' => 'Links',
 	'sotd-manage-prefdate' => 'Bevorzugtes Datum',
 	'sotd-manage-noprefdate' => 'Keines',
 	'sotd-manage-status' => 'Aktueller Status',
+	'sotd-manage-view' => 'Anzeigen',
+	'sotd-manage-clearold' => 'Alte Einträge entfernen',
 	'sotd-manage-nonominations' => 'Es wurden keine neuen Nominierungen hinzugefügt.',
 	'sotd-status-0' => 'Ausstehend',
 	'sotd-status-1' => 'Geändert',
@@ -138,8 +150,8 @@ $messages['de'] = array(
 	'sotd-back-to-page' => '[[$1|Zurück zur Seite]]',
 	'sotd-thank-you' => "'''Danke!''' Deine Nominierung wurde zu den Vorschlägen für unseren '''[[LyricWiki:Song of the Day|Song des Tages]]''' hinzugefügt.
 
-	Dies ist dein persönliches Token zu deiner Nominierung: '''$1'''<br/>
-	Sie erlaubt es dir, deine Nominierung zu beobachten, bearbeiten oder zurückzuziehen. Bitte bewahre das Token auf, wenn du eine dieser Aktionen ausführen möchtest.<br/>
+	Dies ist dein persönlicher Token zu deiner Nominierung: '''$1'''<br/>
+	Er erlaubt es dir, deine Nominierung zu beobachten, bearbeiten oder zurückzuziehen. Bitte bewahre den Token auf, wenn du eine dieser Aktionen ausführen möchtest.<br/>
 	Denk dran, dass Veränderungen nur möglich sind, bis deine Nominierung gesichtet und zur Warteliste hinzugefügt worden ist.
 
 	[[$2|Eine weitere hinzufügen]]",

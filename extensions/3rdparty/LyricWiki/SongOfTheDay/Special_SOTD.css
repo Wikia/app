@@ -31,7 +31,7 @@ span.sotd-navlinks {
 	border-collapse: collapse;
 }
 #manage-sotd  td, #manage-sotd  th, #edit-sotd td {
-  border-bottom: 1px solid black;
+	border-bottom: 1px solid black;
 	padding: 3px 12px;
 }
 #manage-sotd .submit td {
@@ -43,7 +43,7 @@ span.sotd-navlinks {
 	padding: 3px 8px;
 }
 #edit-sotd td form {
-  display: inline;
+	display: inline;
 }
 td.ta-center {
 	text-align: center;
