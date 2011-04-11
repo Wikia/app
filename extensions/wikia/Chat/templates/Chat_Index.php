@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<title><?= $chatName ?>: <?= $chatTopic ?></title>
+	<title><?= $roomName ?>: <?= $roomTopic ?></title>
 
 	<!-- Make IE recognize HTML5 tags. -->
 	<!--[if IE]>
@@ -14,63 +14,56 @@
 	<!-- JS -->
 	<?= $globalVariablesScript ?>
 	<script>
-		var chatId = <?= $chatId ?>;
+		var roomId = <?= $roomId ?>;
 		var wgChatMod = <?= $isChatMod ?>;
+		var WIKIA_NODE_HOST = '<?= $nodeHostname ?>'; // used in controllers.js to set up the socket connection.
 	</script>
-	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.5.js"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/Chat.js"></script>		
-	
 </head>
-<body>
-	<section id="WikiaPage" class="WikiaPage">
+<body class="<?= $bodyClasses ?>">
+	<div id="content">
+		<script type='text/template' id='message-template'>
+			<img class="avatar" src="<%= avatarSrc %>"/>
+			<span class="user"><%= name %></span>
+			<span class="message"><%= text %></span>
+		</script>
+		<script type='text/template' id='inline-alert-template'>
+			<%= text %>
+		</script>
 
-		<div id="Chat" class="Chat">
-			<ul>
-				<li class="template" data-type="user">
-					<span class="user"></span>
-					<span class="message"></span>
-				</li>
-				<li class="template" data-type="inline-alert"></li>
-				<?php
-					if(!empty($messages)){
-						foreach($messages as $message){
-							$userName = key($message);
-							?><li>
-									<span class="user"><?= $userName ?></span>
-									<span class="message"><?= $message[$userName] ?></span>
-								</li><?php
-						}
-					}
-				?>
-			</ul>
-		</div>
-		
-		<div id="Users" class="Users">
-			<ul>
-				<li data-user="" class="template">
-					<a href="#" class="kickban">k/b</a>
-				</li>
-				<?php
-					if(!empty($userList)){
-						foreach($userList as $userData){
-							$chatModClass = ($userData["chatmod"]) ? "chat-mod" : "";
-				?>
-							<li data-user="<?= $userData["user"] ?>" class="<?= $chatModClass ?>">
-								<?= $userData["user"] ?>
-								<a href="#" class="kickban">k/b</a>
-							</li>
-				<?php
-						}
-					}
-				?>
-			</ul>
-		</div>
-		
-		<form id="Write" class="Write">
-			<input type="text">
-			<input type="submit" value="Submit" class="wikia-button">
-		</form>
-	
-	</section>
+		<section id="WikiaPage" class="WikiaPage">
+
+			<div id="Chat" class="Chat">
+				<ul></ul>
+			</div>
+
+			<script type='text/template' id='user-template'>
+				<img src="<%= avatarSrc %>"/>
+				<span class="user"><%= name %></span>
+				<span class="status"><%= status %></span>
+				<a href="#" class="kickban">k/b</a>
+			</script>
+
+			<div id="Users" class="Users">
+				<ul></ul>
+			</div>
+
+			<form id="Write" class="Write" onsubmit="return false">
+				<input type="text" name="message"/>
+				<input type="submit" value="send" class="wikia-button"/>
+			</form>
+
+		</section>
+	</div>
+
+	<!-- Load these after the DOM is built -->
+	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.5.js"></script>
+	<!--<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/Chat.js"></script>-->
+	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/lib/underscore.js"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/lib/backbone.js"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/socket.io/socket.io.js"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/models/models.js"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/controllers/controllers.js"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/views/views.js"></script>
+
 </body>
 </html>

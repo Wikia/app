@@ -4,6 +4,11 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/core/buttons";
 
+._avatar {
+	border: 1px solid #000;
+	padding: 1px;
+}
+
 body {
 	background: $color-body;
 	font-family: Helvetica, Arial, sans-serif;
@@ -19,6 +24,14 @@ body.chat-mod {
 	// do not show kickban links for chatmods
 	.Users li.chat-mod:hover .kickban {
 		display: none;
+	}
+}
+
+// A visual indication that we're forcing the page to connect to the prod node server.
+body.on-prod{
+	background-color: yellow;
+	&:before {
+		content: "==NOTE: CONNECTED TO PROD NODE SERVER ==";
 	}
 }
 
@@ -49,13 +62,22 @@ a:hover {
 	line-height: 1.4em;
 	ul {
 		bottom: 0;
-		padding: 10px;
+		padding: 10px 15px;
 	}
 	li {
-		padding: 3px 0;
-		margin-bottom:2px;
+		min-height: 32px; //28px image, 1px padding, 1px border
+		padding: 5px 5px 5px 40px;
+		position: relative;
+	}
+	.avatar {
+		@extend ._avatar;
+		height: 28px;
+		left: 0;
+		position: absolute;
+		width: 28px;
 	}
 	.user {
+		display: block;
 		font-weight: bold;
 		&:after {
 			content: ":";
@@ -92,6 +114,8 @@ a:hover {
 .Users {
 	border-left: 1px solid $color-page-border;
 	bottom: 45px;
+	overflow-x: hidden;
+	overflow-y: auto;
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -99,16 +123,19 @@ a:hover {
 	li {
 		border-bottom: 1px solid $color-page-border;
 		padding: 10px 5px;
-	}
-	.chat-mod {
-		font-weight: bold;
-		&:before {
-			content: "@";
+		img {
+			@extend ._avatar;
+			height: 22px;
+			vertical-align: middle;
+			width: 22px;
 		}
-	}
-	.kickban {
-		display: none;
-		font-weight: normal;
+		.kickban {
+			display: none;
+			font-weight: normal;
+		}
+		&.chat-mod {
+			font-weight: bold;
+		}
 	}
 	.template {
 		display: none;
