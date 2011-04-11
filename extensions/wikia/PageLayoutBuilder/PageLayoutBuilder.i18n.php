@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array (
+	'pagelayoutbuilder' => 'Page Layout Builder',
 	'pagelayoutbuilder-desc' => '[[Special:LayoutBuilder|Page layout creation wizard]]',
 	'plb-special-form-article-name' => 'What will this page be called?',
 	'plb-special-form-title-empty' => 'Please enter in a title for this page.',
