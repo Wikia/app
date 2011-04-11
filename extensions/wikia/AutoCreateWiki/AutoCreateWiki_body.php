@@ -1311,6 +1311,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$oUser = null;
 		} else {
 			$userBirthDay = strtotime("{$this->mUser_year}-{$this->mUser_month}-{$this->mUser_day}");
+			$oUser->mBirthDate = $userBirthDay;
 			$oUser = $this->initUser( $oUser, false );
 			$user_id = $oUser->getID();
 			if (!empty($user_id)) {
@@ -1346,7 +1347,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$oExtUser = null;
 		if ( $wgExternalAuthType ) {			
 			$oUser = ExternalUser::addUser( $oUser, $this->mPassword, $this->mEmail, "" );
-			if ( is_object( $u ) ) {
+			if ( is_object( $oUser ) ) {
 				$oExtUser = ExternalUser::newFromName( $this->mUsername );	
 			}	
 		} else {
