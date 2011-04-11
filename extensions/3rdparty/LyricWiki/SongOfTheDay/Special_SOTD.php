@@ -3,13 +3,13 @@
 if ( !defined( 'MEDIAWIKI' ) ) {
         echo <<<EOT
 To install my extension, put the following line in LocalSettings.php:
-require_once( "\$IP/extensions/SOTD/Special_SOTD.php" );
+require_once( "\$IP/extensions/SongOfTheDay/Special_SOTD.php" );
 EOT;
         exit( 1 );
 }
 $wgExtensionCredits['specialpage'][] = array(
   'name' => 'SOTD',
-  'version' => '0.0.1',
+  'version' => '0.0.3',
   'author' => '[http://lyrics.wikia.com/User:LWChris Christoph Engels]',
   'url' => 'http://lyrics.wikia.com/User:LWChris',
   'descriptionmsg' => 'sotd-desc',
