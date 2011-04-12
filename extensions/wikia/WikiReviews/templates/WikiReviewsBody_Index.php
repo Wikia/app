@@ -79,16 +79,22 @@
 				echo wfRenderModule('CorporateSite', 'Slider');
 			} ?>
 
-		</div>
+			<?php
+			if ($displayComments) {
+				echo wfRenderModule('ArticleComments');
+			}
+			if (empty($wgSuppressArticleCategories)) {
+				echo wfRenderModule('ArticleCategories');
+			} ?>
+			<?= wfRenderModule('ArticleInterlang') ?>
 
-		<?php
-		if ($displayComments) {
-			echo wfRenderModule('ArticleComments');
-		}
-		if (empty($wgSuppressArticleCategories)) {
-			echo wfRenderModule('ArticleCategories');
-		} ?>
-		<?= wfRenderModule('ArticleInterlang') ?>
+			<?= wfMsg('sponsor-header'); ?>
+			<div class="sponsormsg">
+			<ul>
+			</ul>
+			</div>
+
+		</div>
 
 		<div id="WikiaArticleBottomAd" class="noprint">
 			<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_LEFT_BOXAD')) ?>
