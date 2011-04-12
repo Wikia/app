@@ -14,17 +14,7 @@
  * @todo document
  */
 function memsess_key( $id ) {
-	global $wgSharedDB, $wgDBname;
-	global $wgWikiaCentralAuthDatabase;
-	if ( !empty( $wgWikiaCentralAuthDatabase ) ) {
-		return "{$wgWikiaCentralAuthDatabase}:session:{$id}";
-	} elseif ( !empty( $wgSharedDB ) ) {
-		return "{$wgSharedDB}:session:{$id}";
-	}
-	else {
-		return "{$wgDBname}:session:{$id}";
-	}
-	//return wfMemcKey( 'session', $id );
+	return wfGetSessionKey($id);
 }
 
 /**

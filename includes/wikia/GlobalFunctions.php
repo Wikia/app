@@ -1388,3 +1388,26 @@ function endsWith($haystack, $needle, $case = true) {
 	}
 	return (strcasecmp(substr($haystack, strlen($haystack) - strlen($needle)),$needle)===0);
 }
+
+/**
+ * generate correct version of session key
+ *
+ * @author Piotr Molski (moli) <moli at wikia-inc.com>
+ * @param
+ * @return String $key
+ */
+function wfGetSessionKey( $id ) {
+	global $wgSharedDB, $wgDBname, $wgWikiaCentralAuthDatabase, $wgExternalUserEnabled, $wgExternalSharedDB;
+	
+	if ( !empty( $wgExternalUserEnabled ) ) {
+		$key = "{$wgExternalSharedDB}:session:{$id}";
+	} elseif ( !empty( $wgWikiaCentralAuthDatabase ) ) {
+		$key = "{$wgWikiaCentralAuthDatabase}:session:{$id}";
+	} elseif ( !empty( $wgSharedDB ) ) {
+		$key = "{$wgSharedDB}:session:{$id}";
+	} else {
+		$key = "{$wgDBname}:session:{$id}";
+	}
+	
+	return $key;	
+}
