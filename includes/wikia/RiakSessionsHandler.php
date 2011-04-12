@@ -28,21 +28,7 @@ class RiakSessionHandler {
 	 * uncyclopedia)
 	 */
 	static public function key( $id ) {
-		global $wgSharedDB, $wgDBname, $wgWikiaCentralAuthDatabase;
-
-		/**
-		 * default key
-		 */
-		$key = sprintf( "%s:session:%s", $wgDBname, $id );
-
-		if( !empty( $wgWikiaCentralAuthDatabase ) ) {
-			$key = sprintf( "%s:session:%s", $wgWikiaCentralAuthDatabase, $id );
-		}
-		elseif( !empty( $wgSharedDB ) ) {
-			$key = sprintf( "%s:session:%s", $wgSharedDB, $id );
-		}
-
-		return $key;
+		return wfGetSessionKey( $id );
 	}
 
 	static public function open() {
