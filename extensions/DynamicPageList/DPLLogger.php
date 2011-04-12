@@ -26,13 +26,13 @@ class DPLLogger {
 			 */
 			 $text = '';
 			if ( ExtDynamicPageList::$behavingLikeIntersection ) {
-				if ( $msgid == DPL_i18n::FATAL_TOOMANYCATS ) {
+				if ( $msgid == ExtDynamicPageList::FATAL_TOOMANYCATS ) {
 					$text = wfMsg( 'intersection_toomanycats', $args );
-				} elseif ( $msgid == DPL_i18n::FATAL_TOOFEWCATS ) {
+				} elseif ( $msgid == ExtDynamicPageList::FATAL_TOOFEWCATS ) {
 					$text = wfMsg( 'intersection_toofewcats', $args );
-				} elseif ( $msgid == DPL_i18n::WARN_NORESULTS ) {
+				} elseif ( $msgid == ExtDynamicPageList::WARN_NORESULTS ) {
 					$text = wfMsg( 'intersection_noresults', $args );
-				} elseif ( $msgid == DPL_i18n::FATAL_NOSELECTION ) {
+				} elseif ( $msgid == ExtDynamicPageList::FATAL_NOSELECTION ) {
 					$text = wfMsg( 'intersection_noincludecats', $args );
 				}
 			}
@@ -63,20 +63,20 @@ class DPLLogger {
 	 */
 	function msgWrongParam( $paramvar, $val ) {
 
-		$msgid = DPL_i18n::WARN_WRONGPARAM;
+		$msgid = ExtDynamicPageList::WARN_WRONGPARAM;
 		switch( $paramvar ) {
 			case 'namespace':
 			case 'notnamespace':
-				$msgid = DPL_i18n::FATAL_WRONGNS;
+				$msgid = ExtDynamicPageList::FATAL_WRONGNS;
 				break;
 			case 'linksto':
 			case 'notlinksto':
 			case 'linksfrom':
-				$msgid = DPL_i18n::FATAL_WRONGLINKSTO;
+				$msgid = ExtDynamicPageList::FATAL_WRONGLINKSTO;
 				break;
 			case 'titlemaxlength':
 			case 'includemaxlength':
-				$msgid = DPL_i18n::WARN_WRONGPARAM_INT;
+				$msgid = ExtDynamicPageList::WARN_WRONGPARAM_INT;
 				break;
 		}
 		$paramoptions = array_unique( ExtDynamicPageList::$options[$paramvar] );
