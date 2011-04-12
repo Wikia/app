@@ -61,7 +61,7 @@ class AdSS_AdForm {
 				}
 			}
 
-			if( $this->fields['wpType'] == 'page' ) {
+			if( substr( $this->fields['wpType'], 0, 4 ) == 'page' ) {
 				if( empty( $this->fields['wpPage'] ) ) {
 					$this->errors['wpPage'] = wfMsgHtml( 'adss-form-field-empty-errormsg' );
 				} else {
