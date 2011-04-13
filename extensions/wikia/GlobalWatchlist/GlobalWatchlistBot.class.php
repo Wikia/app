@@ -96,6 +96,7 @@ class GlobalWatchlistBot {
 	 * get all global watchlist users
 	 */
 	public function getGlobalWatchlisters( $sFlag = 'watchlistdigest', $field = false ) {
+		global $wgExternalSharedDB;
 		$aUsers = array();
 		
 		$defaultValue = (int) User::getDefaultOption( $sFlag );
@@ -111,13 +112,12 @@ class GlobalWatchlistBot {
 			$aWhereClause[] = "user_name IN ($sUserNames)";
 		} 
 
-		global $wgWikiaCentralAuthDatabase;
-		if ( empty( $wgWikiaCentralAuthDatabase ) ) {
+		if ( empty( $wgExternalSharedDB ) ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$userTbl = $dbr->tableName( 'user' );
 			$userPropTbl = $dbr->tableName( 'user_properties' );
 		} else {
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgWikiaCentralAuthDatabase );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 			$userTbl = 'user';
 			$userPropTbl = 'user_properties';
 		}
