@@ -28,7 +28,7 @@ class SponsorshipDashboardOutputTable extends SponsorshipDashboardOutputFormatte
 		wfProfileIn( __METHOD__ );
 
 		$wgOut = $this->App->getGlobal('wgOut');
-		$wgOut->addStyle( $this->App->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
 			
 		$this->report->loadSources();
 		
