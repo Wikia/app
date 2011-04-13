@@ -45,7 +45,7 @@ class SpecialImport extends SpecialPage {
 	 * Execute
 	 */
 	function execute( $par ) {
-		global $wgRequest;
+		global $wgRequest, $wgUser, $wgOut;
 		
 		$this->setHeaders();
 		$this->outputHeader();
@@ -56,6 +56,28 @@ class SpecialImport extends SpecialPage {
 			return;
 		}
 		
+		if( !$wgUser->isAllowed( 'import' ) && !$wgUser->isAllowed( 'importupload' ) )
+			return $wgOut->permissionRequired( 'import' );
+
+		# TODO: allow Title::getUserPermissionsErrors() to take an array
+		# FIXME: Title::checkSpecialsAndNSPermissions() has a very wierd expectation of what
+		# getUserPermissionsErrors() might actually be used for, hence the 'ns-specialprotected'
+		$errors = wfMergeErrorArrays(
+			$this->getTitle()->getUserPermissionsErrors(
+				'import', $wgUser, true,
+				array( 'ns-specialprotected', 'badaccess-group0', 'badaccess-groups' )
+			),
+			$this->getTitle()->getUserPermissionsErrors(
+				'importupload', $wgUser, true,
+				array( 'ns-specialprotected', 'badaccess-group0', 'badaccess-groups' )
+			)
+		);
+
+		if( $errors ){
+			$wgOut->showPermissionsErrorPage( $errors );
+			return;
+		}
+
 		if ( $wgRequest->wasPosted() && $wgRequest->getVal( 'action' ) == 'submit' ) {
 			$this->doImport();
 		}
@@ -84,6 +106,9 @@ class SpecialImport extends SpecialPage {
 				return $wgOut->permissionRequired( 'importupload' );
 			}
 		} elseif ( $sourceName == "interwiki" ) {
+			if( !$wgUser->isAllowed( 'import' ) ){
+				return $wgOut->permissionRequired( 'import' );
+			}
 			$this->interwiki = $wgRequest->getVal( 'interwiki' );
 			if ( !in_array( $this->interwiki, $wgImportSources ) ) {
 				$source = new WikiErrorMsg( "import-invalid-interwiki" );
@@ -143,8 +168,6 @@ class SpecialImport extends SpecialPage {
 
 	private function showForm() {
 		global $wgUser, $wgOut, $wgRequest, $wgImportSources, $wgExportMaxLinkDepth;
-		if( !$wgUser->isAllowed( 'import' ) && !$wgUser->isAllowed( 'importupload' ) )
-			return $wgOut->permissionRequired( 'import' );
 
 		$action = $this->getTitle()->getLocalUrl( array( 'action' => 'submit' ) );
 

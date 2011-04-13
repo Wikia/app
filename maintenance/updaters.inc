@@ -201,9 +201,11 @@ $wgUpdates = array(
 );
 
 /**
- * Wikia-specific updaters
+ * Wikia-specific updaters,
+ * @todo: move this into hooks
  */
 require_once( "$IP/maintenance/wikia/updaters.inc" );
+
 
 # For extensions only, should be populated via hooks
 # $wgDBtype should be checked to specifiy the proper file
@@ -1524,6 +1526,8 @@ function do_postgres_updates() {
 	else {
 		$search_path = $conf['search_path'];
 	}
+
+	$safeuser = $wgDatabase->quote_ident($wgDBuser);
 	if( strpos( $search_path, $wgDBmwschema ) === false ) {
 		wfOut( "Adding in schema \"$wgDBmwschema\" to search_path for user \"$wgDBuser\"\n" );
 		$search_path = "$wgDBmwschema, $search_path";
@@ -1534,7 +1538,7 @@ function do_postgres_updates() {
 	}
 	$search_path = str_replace( ', ,', ',', $search_path);
 	if( array_key_exists( 'search_path', $conf ) === false || $search_path != $conf['search_path'] ) {
-		$wgDatabase->doQuery( "ALTER USER $wgDBuser SET search_path = $search_path" );
+		$wgDatabase->doQuery( "ALTER USER $safeuser SET search_path = $search_path" );
 		$wgDatabase->doQuery( "SET search_path = $search_path" );
 	}
 	else {
@@ -1550,7 +1554,7 @@ function do_postgres_updates() {
 		$value = $goodconf[$key];
 		if( !array_key_exists( $key, $conf ) or $conf[$key] !== $value ) {
 			wfOut( "Setting $key to '$value' for user \"$wgDBuser\"\n" );
-			$wgDatabase->doQuery( "ALTER USER $wgDBuser SET $key = '$value'" );
+			$wgDatabase->doQuery( "ALTER USER $safeuser SET $key = '$value'" );
 			$wgDatabase->doQuery( "SET $key = '$value'" );
 		}
 		else {
@@ -1974,8 +1978,8 @@ function do_postgres_updates() {
 			'ctype' => 'U',
 			'mw_version' => $wgVersion,
 			'pg_version' => $version,
-			'sql_version' => '$LastChangedRevision: 62877 $',
-			'sql_date' => '$LastChangedDate: 2010-02-23 15:13:36 +0100 (wto, 23 lut 2010) $',
+			'sql_version' => '$LastChangedRevision: 84593 $',
+			'sql_date' => '$LastChangedDate: 2011-03-23 23:14:46 +1100 (Wed, 23 Mar 2011) $',
 		) );
 	return;
 }
