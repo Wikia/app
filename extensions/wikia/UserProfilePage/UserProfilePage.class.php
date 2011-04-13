@@ -389,7 +389,7 @@ class UserProfilePage {
 		$wikis = false;
 
 		if ( !$this->getUser()->isAnon() ) {
-			$cachedData = $wgMemc->get( UserProfilePageHelper::getTopWikisCacheKey( $this->getUser() ) );
+			$cachedData = $wgMemc->get( UserProfilePageHelper::getTopWikisCacheKey( $this->getUser() ), $limit );
 			if( !empty( $cachedData) ) {
 				wfProfileOut(__METHOD__);
 				return $cachedData;
