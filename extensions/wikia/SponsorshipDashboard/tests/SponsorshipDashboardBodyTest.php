@@ -63,7 +63,7 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		     ->will( $this->returnValue( array( 'wikimetrics' ) ) );
 
 		$app = $this->getMock( 'WikiaApp', array('getGlobal') );
-		$app->expects( $this->once() )
+		$app->expects( $this->atLeastOnce() )
 		    ->method( 'getGlobal' )
 		    ->with( $this->equalTo( 'wgUser' ) )
 		    ->will( $this->returnValue( $user ) );
@@ -86,7 +86,7 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		     ->will( $this->returnValue( array( 'FALSE' ) ) );
 
 		$app = $this->getMock( 'WikiaApp', array('getGlobal') );
-		$app->expects( $this->once() )
+		$app->expects( $this->atLeastOnce() )
 		    ->method( 'getGlobal' )
 		    ->with( $this->equalTo( 'wgUser' ) )
 		    ->will( $this->returnValue( $user ) );
@@ -108,7 +108,7 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		     ->will( $this->returnValue( array( 'wikimetrics' ) ) );
 
 		$app = $this->getMock( 'WikiaApp', array('getGlobal') );
-		$app->expects( $this->once() )
+		$app->expects( $this->atLeastOnce() )
 		    ->method( 'getGlobal' )
 		    ->with( $this->equalTo( 'wgUser' ) )
 		    ->will( $this->returnValue( $user ) );
@@ -137,7 +137,7 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		     ->will( $this->returnValue( array( 'wikimetrics' ) ) );
 
 		$app = $this->getMock( 'WikiaApp', array('getGlobal') );
-		$app->expects( $this->once() )
+		$app->expects( $this->atLeastOnce() )
 		    ->method( 'getGlobal' )
 		    ->with( $this->equalTo( 'wgUser' ) )
 		    ->will( $this->returnValue( $user ) );
@@ -157,7 +157,7 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		WF::setInstance( 'EasyTemplate', $tmpl );
 
 		$page = $this->getMock('SponsorshipDashboard', array('getChartData'));
-		$page	->expects( $this->atLeastOnce() )
+		$page->expects( $this->atLeastOnce() )
 			->method('getChartData')
 			->will(
 				$this->returnValue(
