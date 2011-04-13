@@ -1,7 +1,7 @@
 <!-- s:<?= __FILE__ ?> -->
 <!-- MAIN-PAGE -->
 
-<? echo wfMsg('sponsorship-dashobard-not-allowed');  ?>
+<?=wfMsgExt('sponsorship-dashboard-info', 'parse');?>
 
 <!-- END OF MAIN-PAGE -->
 <!-- e:<?= __FILE__ ?> -->

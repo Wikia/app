@@ -1,52 +1,28 @@
 <?php
+
 /**
+ * SponsorshipDashboard
+ * @author Jakub "Szeryf" Kurcek
  *
- * @package MediaWiki
- * @subpackage SpecialPage
- * @author Jakub Kurcek
- *
+ * Main switch fo Sponsorship Dashboard
  */
 
 class SponsorshipDashboard extends SpecialPage {
-	
+
 	const TEMPLATE_EMPTY_CHART = 'emptychart';
 	const TEMPLATE_ERROR = 'error';
 	const TEMPLATE_CHART = 'chart';
+	const TEMPLATE_SAVE_SUCCESFUL = 'editor/saveSuccess';
 
-	// important: array key and any array item value cannot be the same
-	protected $reports = array(
-		'marketresearch' => array (
-			'competitors',
-			'interests',
-			'keywords',
-			'source'
-		),
-		'userengagement' => array (
-			'activity',
-			'engagement',
-			'participation',
-		),
-	    	'growthmetrics' => array (
-			'visitors',
-			'traffic',
-			'content',
-		)
-	);
+	const ADMIN = 'admin';
 
-	protected $tagDependentReports = array(
-	    'competitors',
-	    'interests'
-	);
-
-	protected $monthlyReports = array(
-	    'activity',
-	    'engagements',
-	    'participation',
-	    'visitors'
-	);
-
+	protected $adminTabs = array( 'ViewInfo', 'ViewReports', 'ViewGroups', 'ViewUsers' );
 
 	protected $currentReport = '';
+	protected $currentGroup = '';
+	protected $currentReports = '';
+	protected $currentGroups = '';
+
 	protected $popularCityHubs = array();
 	protected $chartCounter = 0;
 	protected $hiddenSeries = array();
@@ -54,90 +30,233 @@ class SponsorshipDashboard extends SpecialPage {
 	protected $tagDependent = false;
 	protected $currentCityHub = false;
 	protected $allowed = false;
-	protected $fromYear = 0;
+	protected $fromYear = 2004;
 
 	function  __construct() {
-
-		global $wgSponsorshipDashboardAllowAdmins;
-		$wgUser = WF::build('App')->getGlobal('wgUser');
-				
-		$this->allowed = ( in_array('wikimetrics', $wgUser->getRights()) );
+		$wgUser = F::app()->getGlobal('wgUser');
+		$this->allowed = in_array('wikimetrics', $wgUser->getRights());
 
 		parent::__construct( 'SponsorshipDashboard', 'sponsorship-dashboard', $this->allowed);
-		wfLoadExtensionMessages("SponsorshipDashboard");
 	}
 
-	public function isAllowed(){
-
+	public function isAllowed() {
 		return $this->allowed;
 	}
 
-	protected function isReportPage( $reportName ){
-
-		foreach ( $this->reports as $reports ){
-			if ( in_array( $reportName, $reports ) ){
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	protected function getReportsTab( $reportName ){
-
-		$firstTab = false;
-		
-		foreach ( $this->reports as $tab => $reports ){
-			if ( in_array( $reportName, $reports ) ){
-				return $tab;
-			} elseif ( empty( $firstTab ) ){
-				$firstTab = $tab;
-			}
-		}
-
-		return $firstTab;
-	}
-
-	protected function getTabsReport( $tabName ){
-
-		// 2DO: add checking user prefences;
-
-		if ( !isset( $this->reports[ $tabName ] ) ){
-			$tabName = key( $this->reports );
-		}
-
-		return $this->reports[ $tabName ][ key( $this->reports[ $tabName ] ) ];
-	}
-
 	function execute( $subpage = false ) {
-
+		
 		global $wgSupressPageSubtitle;
 
-		if ( !empty( $subpage ) && $this->isReportPage( $subpage ) ){
-			$report = $subpage;
-		} else {
-			$report = $this->getTabsReport( $subpage );
-		}
+		$wgOut = F::app()->getGlobal('wgOut');
 
+		$wgOut->setHTMLTitle(wfMsg('sponsorship-dashboard-default-page-title'));
+		$subPageParams = explode( '/', $subpage );
 		$wgSupressPageSubtitle = true;
 
-		if ( $this->isAllowed() ){
-			$this->currentReport = $report;
-			$this->tagDependent = in_array( $report, $this->tagDependentReports );
-			$this->dataMonthly = in_array( $report, $this->monthlyReports );
-			$this->displayChart( $report );
+		// admin panel
+
+		if ( $this->isAllowed() && $subPageParams[0] == self::ADMIN ){
+
+			if (  ( !isset( $subPageParams[1] ) || $subPageParams[1] == 'ViewInfo' )) {
+				$this->HTMLViewInfo();
+				return true;
+			}
+
+			if ( $subPageParams[1] == 'EditReport' ) {
+				$this->HTMLEditReport(
+					( isset( $subPageParams[2] ) ) ? $subPageParams[2] : 0
+				);
+				return true;
+			}
+
+			if ( $subPageParams[1] == 'EditGroup' ) {
+				$this->HTMLEditGroup(
+					( isset( $subPageParams[2] ) ) ? $subPageParams[2] : 0
+				);
+				return true;
+			}
+
+			if ( $subPageParams[1] == 'EditUser' ) {
+				$this->HTMLEditUser(
+					( isset( $subPageParams[2] ) ) ? $subPageParams[2] : 0
+				);
+				return true;
+			}
+
+			if ( $subPageParams[1] == 'ViewReports' ) {
+				$this->HTMLViewReports();
+				return true;
+			}
+
+			if ( $subPageParams[1] == 'ViewUsers' ) {
+				$this->HTMLViewUsers();
+				return true;
+			}
+
+			if ( $subPageParams[1] == 'ViewReport' ) {
+				$this->HTMLViewReport(
+					( isset( $subPageParams[2] ) ) ? $subPageParams[2] : 0
+				);
+				return true;
+			}
+
+			if ( $subPageParams[1] == 'CSVReport' ) {
+				$this->HTMLCSVReport(
+					( isset( $subPageParams[2] ) ) ? $subPageParams[2] : 0
+				);
+				return true;
+			}
+
+			if ( $subPageParams[1] == 'ViewGroups' ) {
+				$this->HTMLViewGroups();
+				return true;
+			}
+
+			$this->HTMLViewInfo();
+			return true;
+		}
+
+		// user panel
+
+		if ( $this->getTabs( $subpage ) ) {
+			
+			$outputType = ( isset( $subPageParams[2] ) ) ? $subPageParams[2] : 'html' ;
+			switch ( $outputType ){
+				case 'csv': $this->CSVReport(); break;
+				default: $this->HTMLReport(); break;
+			}
 		} else {
 			$this->HTMLerror();
 		}
 	}
 
-	/**
-	 * HTMLmain - displays tag selector.
+	protected function getTabs( $tabName ) {
+
+		if ( $this->isAllowed() ) {
+			return $this->getTabsForStaff( $tabName );
+		}
+
+		$wgUser = F::app()->getGlobal( 'wgUser' );
+
+		if ( $wgUser->isAnon() ) {
+			return false;
+		}
+
+		$SDUser = SponsorshipDashboardUser::newFromUserId( $wgUser->getId() );
+		if ( empty( $SDUser ) ) return false;
+
+		$SDUser->loadUserParams();
+
+		$SDGroups = new SponsorshipDashboardGroups();
+		$SDUserGroups = $SDGroups->getUserData( $SDUser->id );
+		$this->currentGroups = $SDUserGroups;
+
+		$exploded = explode( '/', $tabName );
+		$catId = $exploded[0];
+
+		if ( isset( $exploded[1] ) ) {
+			$repId = $exploded[1];
+		} else {
+			$repId = 0;
+		}
+
+		if ( empty( $catId ) ) {
+			$catKeys = array_keys( $this->currentGroups );
+			if ( !isset( $catKeys[0] ) ) {
+				return false;
+			}
+			$catId = $catKeys[0];
+			$repId = 0;
+		} else {
+			if ( !in_array( $catId, array_keys( $this->currentGroups ) ) ) {
+				return false;
+			}
+		}
+
+		$currentGroup = $this->currentGroups[ $catId ];
+
+		if ( empty( $repId ) ) {
+			$aKeys = array_keys( $currentGroup->reports );
+			if ( !isset( $aKeys[0] ) ) {
+				return false;
+			}
+			$repId = $aKeys[0];
+		}
+
+		if( !isset( $currentGroup->reports[ $repId ] ) ) {
+			return false;
+		}
+
+		$this->currentReports = $currentGroup->reports;
+		$this->currentGroup = $catId;
+		$this->currentReport = $currentGroup->reports[ $repId ];
+
+		return true;
+	}
+
+	/*
+	 * Provides all groups with reports.
+	 *
+	 * @param int $tabName group id.
+	 *
+	 * @return boolean. There is no such group / report returns false;
 	 */
 
-	protected function displayHeader(){
+	function getTabsForStaff( $tabName ) {
 
-		global $wgOut, $wgTitle;
+		$SDGroups = new SponsorshipDashboardGroups();
+		$SDGData = $SDGroups->getObjArray( true );
+		$this->currentGroups = $SDGData;
+
+		$exploded = explode( '/', $tabName );
+		$catId = $exploded[0];
+		if ( isset( $exploded[1] ) ) {
+			$repId = $exploded[1];
+		} else {
+			$repId = 0;
+		}
+
+		$SDR = new SponsorshipDashboardGroup( $catId );
+
+		if ( !$SDR->exist() ) {
+			$catId = 0;
+		}
+
+		if ( empty( $catId ) ) {
+			$catKeys = array_keys( $SDGData );
+			if ( !isset( $catKeys[0] ) ) {
+				return false;
+			}
+			$catId = $catKeys[0];
+		}
+
+		$SDGroup = new SponsorshipDashboardGroup( $catId );
+		$SDGroup->loadGroupParams();
+		if( !isset( $SDGroup->reports[ $repId ] ) ) {
+			$aKeys = array_keys( $SDGroup->reports );
+			if ( !isset( $aKeys[0] ) ) {
+				return false;
+			}
+			$repId = $aKeys[0];
+		}
+
+		$this->currentReports = $SDGroup->reports;
+		$this->currentGroup = $catId;
+		$this->currentReport = $SDGroup->reports[ $repId ];
+
+		return true;
+	}
+
+	/*
+	 * Displays user header
+	 *
+	 * @return void
+	 */
+
+	protected function displayHeader() {
+
+		$wgOut = F::app()->getGlobal('wgOut');
+		$wgTitle = F::app()->getGlobal('wgTitle');
 
 		wfProfileIn( __METHOD__ );
 
@@ -146,9 +265,10 @@ class SponsorshipDashboard extends SpecialPage {
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(
 			array(
-				"tab"			=> $this->getReportsTab( $this->currentReport ),
-				"tabs"			=> $this->reports,
+				"groupId"		=> $this->currentGroup,
+				"groups"		=> $this->currentGroups,
 				"path"			=> $wgTitle->getFullURL(),
+				"reports"		=> $this->currentReports,
 				"report"		=> $this->currentReport
 			)
 		);
@@ -157,120 +277,15 @@ class SponsorshipDashboard extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 	}
 
-	protected function getCurrentCityHub(){
-		
-		global $wgRequest;
-
-		if ( !empty( $this->currentCityHub ) ){
-			return  $this->currentCityHub;
-		}
-		
-		$aPopularHubs = $this->getPopularHubs();
-		if ( empty( $aPopularHubs ) ){ 
-			return false;
-		}
-
-		$value = ( int ) $wgRequest->getVal( 'cityHub', 0 );
-		if ( empty( $value ) || !in_array( $value, $aPopularHubs ) ){
-			reset( $aPopularHubs );
-			$iKey = key( $aPopularHubs );
-			$aCurrent = array('id' => $aPopularHubs[ $iKey ], 'name' =>  $iKey );
-		} else {
-			$aCurrent = array('id' => $value, 'name' => array_search( $value , $aPopularHubs ) );
-		}
-
-		return $aCurrent;
-	}
-	
-	protected function getPopularHubs(){
-
-		if ( empty( $this->popularCityHubs ) ){
-			$sponsorshipDashboardService = new SponsorshipDashboardService;
-			$aPopularHubs = $sponsorshipDashboardService->getPopularHubs();
-			$this->popularCityHubs = $aPopularHubs;
-		}
-		return $this->popularCityHubs;
-	}
-
-	/**
-	 * HTMLmain - main function for displaying chart.
+	/*
+	 * Link where to go after saving report
+	 *
+	 * @return string link
 	 */
 
-	protected function getChartData( $title ){
-		
-		if ( !empty( $this->tagDependent ) ){
-			$this->currentCityHub = $this->getCurrentCityHub();
-		}
+	public function reportSaved() {
 
-		$sponsorshipDashboardService = new SponsorshipDashboardService;
-		$method = 'load'.ucfirst( $title ).'Data';
-
-		$aData = array();
-
-		if ( empty( $this->tagDependent ) ) {
-			$aData = $sponsorshipDashboardService->$method();
-		} elseif ( !empty( $this->currentCityHub ) ){
-			$this->getPopularHubs();
-			$aData = $sponsorshipDashboardService->$method( $this->currentCityHub );
-		}
-
-
-		$this->fromYear = $sponsorshipDashboardService->getFromYear();
-
-		return $aData;
-
-	}
-
-	protected function displayChart( $title ){
-
-		global $wgTitle, $wgOut, $wgJsMimeType, $wgStyleVersion, $wgHTTPProxy;
-
-		wfProfileIn( __METHOD__ );
-
-		$aData = $this->getChartData( $title );
-
-		$this->displayHeader();
-
-		$oTmpl = WF::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) );
-
-		if (	!isset ( $aData['ticks'] ) || !isset ( $aData['serie'] ) || !isset ( $aData['fullTicks'] ) ||
-			empty ( $aData['ticks'] ) || empty ( $aData['serie'] ) || empty ( $aData['fullTicks'] ) )
-		{
-			$wgOut->addHTML( $oTmpl->execute( self::TEMPLATE_EMPTY_CHART ) );
-		} else {
-
-			$datasets = $aData['serie'];
-			$ticks = $aData['ticks'];
-			$fullTicks = $aData['fullTicks'];
-			
-			$oTmpl->set_vars(
-				array(
-					"title"			=> wfMsg( 'sponsorship-dashboard-report-'.$title ),
-					"description"		=> wfMsg( 'sponsorship-dashboard-description-'.$title ),
-					"datasets"		=> $datasets,
-					"ticks"			=> $ticks,
-					"fullTicks"		=> $fullTicks,
-					"hiddenSeries"		=> ( !empty( $this->hiddenSeries ) ) ? "['".implode( "', '", $this->hiddenSeries )."']" : "[]",
-					"number"		=> ++$this->chartCounter,
-					"path"			=> $wgTitle->getFullURL().'/'.$this->currentReport,
-					"current"		=> $this->currentCityHub,
-					"selectorItems"		=> $this->popularCityHubs,
-					"monthly"		=> $this->dataMonthly,
-					"fromYear"		=> $this->fromYear
-				)
-			);
-
-			$wgOut->addScript( "<!--[if IE]><script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/excanvas.min.js?{$wgStyleVersion}\"></script><![endif]-->\n" );
-			$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/jquery.flot.js?{$wgStyleVersion}\"></script>\n" );
-			$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/jquery.flot.selection.js?{$wgStyleVersion}\"></script>\n" );
-			$wgOut->addHTML( $oTmpl->execute( self::TEMPLATE_CHART ) );
-		}
-
-
-
-		wfProfileOut( __METHOD__ );
-		
-		return true;
+		return SpecialPage::getTitleFor('SponsorshipDashboard')->getInternalURL()."/".self::ADMIN."/ViewReports/";
 
 	}
 
@@ -278,18 +293,341 @@ class SponsorshipDashboard extends SpecialPage {
 	 * HTMLerror - displays error subpage.
 	 */
 
-	protected function HTMLerror(){
+	public function HTMLerror() {
 
-		global $wgOut;
-
+		$wgOut = F::app()->getGlobal('wgOut');
+		
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$wgOut->addHTML( $oTmpl->execute( self::TEMPLATE_ERROR ) );
 
 		return false;
-
 	}
-	
+
+	/*
+	 * Displays admin header
+	 *
+	 * @return void
+	 */
+
+	protected function HTMLAdminHeader( $subpage ) {
+
+		global $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+
+		$wgOut = F::app()->getGlobal('wgOut');
+		$wgTitle = F::app()->getGlobal('wgTitle');
+		$wgRequest = F::app()->getGlobal('wgRequest');
+
+		$subpage = ( !in_array( $subpage, $this->adminTabs ) ) ? $this->adminTabs[0] : $subpage;
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars(
+			array(
+				"tab"		=> $subpage,
+				"tabs"		=> $this->adminTabs,
+				"path"		=> $wgTitle->getFullURL()
+			)
+		);
+
+		$wgOut->addHTML(
+			$oTmpl->execute( 'admin/adminHeader' )
+		);
+	}
+
+	protected function HTMLEditReport( $id ) {
+
+		global $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+
+		$wgOut = F::app()->getGlobal('wgOut');
+		$wgRequest = F::app()->getGlobal('wgRequest');
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/SponsorshipDashboard/js/SponsorshipDashboardEditor.js?{$wgStyleVersion}\" ></script>\n");
+		$wgOut->addScript( "<!--[if IE]><script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/excanvas.min.js?{$wgStyleVersion}\"></script><![endif]-->\n" );
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/jquery.flot.js?{$wgStyleVersion}\"></script>\n" );
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/jquery.flot.selection.js?{$wgStyleVersion}\"></script>\n" );
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardEditor.scss' ) );
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
+		$this->HTMLAdminHeader( 'ViewReports' );
+
+		$report = new SponsorshipDashboardReport( $id );
+		$report->loadReportParams();
+
+		$menuItems = $report->getMenuItemsHTML();
+		$reportParams = $report->getReportParams();
+
+		$oTmpl->set_vars(
+			array(
+			    'menuItems' => $menuItems,
+			    'reportParams' => $reportParams,
+			    'reportEditorPath' => SpecialPage::getTitleFor('SponsorshipDashboard')->getInternalURL().'/'.self::ADMIN.'/ViewReports'
+			)
+		);
+
+		$wgOut->addHTML(
+			$oTmpl->execute( 'admin/editReport' )
+		);
+
+		return false;
+	}
+
+	protected function HTMLCSVReport( $id ) {
+
+		$id = (int)$id;
+
+		if ( !empty( $id ) ){
+
+			$this->currentReport = new SponsorshipDashboardReport( $id );
+			$this->currentReport->setId( $id );
+			$this->currentReport->loadReportParams();
+			$this->currentReport->loadSources();
+			$this->currentReport;
+			$this->CSVReport();
+		}
+		$this->HTMLerror();
+	}
+
+	protected function HTMLViewReport( $id ) {
+
+		global $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+
+		$wgOut = F::app()->getGlobal('wgOut');
+		$wgRequest = F::app()->getGlobal('wgRequest');
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+		$this->HTMLAdminHeader( 'ViewReports' );
+
+		$report = new SponsorshipDashboardReport( $id );
+		$report->setId( $id );
+
+		$report->loadReportParams();
+		$report->loadSources();
+
+		$chart = SponsorshipDashboardOutputChart::newFromReport( $report );
+		$table = SponsorshipDashboardOutputTable::newFromReport( $report );
+
+		$wgOut->addHTML(
+			$chart->getHTML()
+		);
+		$wgOut->addHTML(
+			$table->getHTML()
+		);
+	}
+
+	protected function HTMLViewInfo() {
+
+		$wgOut = F::app()->getGlobal('wgOut');
+		
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+		$this->HTMLAdminHeader( 'ViewInfo' );
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
+		$wgOut->addHTML(
+			$oTmpl->execute( 'admin/viewInfo' )
+		);
+	}
+
+	protected function HTMLEditGroup( $id ) {
+
+		global $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+
+		$wgOut = F::app()->getGlobal('wgOut');
+		$wgRequest = F::app()->getGlobal('wgRequest');
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+		$this->HTMLAdminHeader( 'ViewGroups' );
+
+		$group = new SponsorshipDashboardGroup( $id );
+		$group->loadGroupParams();
+
+		$aReports = new SponsorshipDashboardReports();
+		$aUsers = new SponsorshipDashboardUsers();
+		$oTmpl->set_vars(
+			array(
+			    'groupParams' => $group->getGroupParams(),
+			    'reports' => $aReports->getData(),
+			    'users' => $aUsers->getData(),
+			    'path' => SpecialPage::getTitleFor('SponsorshipDashboard')->getInternalURL(),
+			    'groupEditorPath' => SpecialPage::getTitleFor('SponsorshipDashboard')->getInternalURL().'/'.self::ADMIN.'/ViewGroups'
+			)
+		);
+
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/SponsorshipDashboard/js/SponsorshipDashboardGroupEditor.js?{$wgStyleVersion}\" ></script>\n");
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardEditor.scss' ) );
+		$wgOut->addHTML(
+			$oTmpl->execute( 'admin/editGroup' )
+		);
+	}
+
+	protected function HTMLEditUser( $id ) {
+
+		global $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+
+		$wgOut = F::app()->getGlobal('wgOut');
+		$wgRequest = F::app()->getGlobal('wgRequest');
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+		$this->HTMLAdminHeader( 'ViewUsers' );
+
+		$oUser = new SponsorshipDashboardUser( $id );
+		$oUser->loadUserParams();
+
+		$aGroups = new SponsorshipDashboardGroups();
+		$aGroupUserData = $aGroups->getUserData( $id );
+
+		$aUserReports = array();
+		foreach ( $aGroupUserData as $group ) {
+			foreach ( $group->reports as $report  ) {
+				$aUserReports[ $report->id ] = $report;
+			}
+		}
+
+		$oTmpl->set_vars(
+			array(
+			    'userParams' => $oUser->getUserParams(),
+			    'groups' => $aGroupUserData,
+			    'reports' => $aUserReports,
+			    'path' => SpecialPage::getTitleFor('SponsorshipDashboard')->getInternalURL(),
+			    'userEditorPath' => SpecialPage::getTitleFor('SponsorshipDashboard')->getInternalURL().'/'.self::ADMIN.'/ViewUsers',
+			    'allowedTypes' => $oUser->allowedTypes
+			)
+		);
+
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/SponsorshipDashboard/js/SponsorshipDashboardUserEditor.js?{$wgStyleVersion}\" ></script>\n");
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardEditor.scss' ) );
+		$wgOut->addHTML(
+			$oTmpl->execute( 'admin/editUser' )
+		);
+	}
+
+	protected function HTMLViewReports() {
+
+		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+
+		$wgOut = F::app()->getGlobal('wgOut');
+		$wgRequest = F::app()->getGlobal('wgRequest');
+		$wgTitle = F::app()->getGlobal('wgTitle');
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/SponsorshipDashboard/js/SponsorshipDashboardList.js?{$wgStyleVersion}\" ></script>\n");
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardList.scss' ) );
+		$this->HTMLAdminHeader( 'ViewReports' );
+
+		$aReports = new SponsorshipDashboardReports();
+		$oTmpl->set_vars(
+			array(
+				"data" => $aReports->getData(),
+				"path" => $wgTitle->getFullURL()
+			)
+		);
+
+		$a = new OutputPage;
+		$wgOut->addHTML(
+			$oTmpl->execute( 'admin/viewReports' )
+		);
+
+		return false;
+	}
+
+	protected function HTMLViewGroups() {
+
+		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+		if ( $wgRequest->getVal( 'action' ) == 'save' ) {
+			$oGroup = new SponsorshipDashboardGroup();
+			$oGroup->fillFromRequest();
+			$oGroup->save();
+		}
+
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/SponsorshipDashboard/js/SponsorshipDashboardList.js?{$wgStyleVersion}\" ></script>\n");
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardList.scss' ) );
+		$this->HTMLAdminHeader( 'ViewGroups' );
+
+		$aGroups = new SponsorshipDashboardGroups();
+		$oTmpl->set_vars(
+			array(
+				"data" => $aGroups->getData(),
+				"path" => $wgTitle->getFullURL()
+			)
+		);
+
+		$wgOut->addHTML(
+			$oTmpl->execute( 'admin/viewGroups' )
+		);
+
+		return false;
+	}
+
+	protected function HTMLViewUsers() {
+
+		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$sMsg = '';
+
+		if ( $wgRequest->getVal( 'action' ) == 'save' ) {
+			$oUser = new SponsorshipDashboardUser();
+			$oUser->fillFromRequest();
+			$bSuccess = $oUser->save();
+			$sMsg = ( $bSuccess ) ? '' : wfMsg('sponsorship-dashboard-users-error', $oUser->name );
+		}
+
+		$a = new OutputPage();
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/SponsorshipDashboard/js/SponsorshipDashboardList.js?{$wgStyleVersion}\" ></script>\n");
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( '/extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardList.scss' ) );
+		$this->HTMLAdminHeader( 'ViewUsers' );
+
+		$aUsers = new SponsorshipDashboardUsers();
+		$oTmpl->set_vars(
+			array(
+				"data" => $aUsers->getData(),
+				"path" => $wgTitle->getFullURL(),
+				"errorMsg" => $sMsg
+			)
+		);
+
+		$wgOut->addHTML(
+			$oTmpl->execute( 'admin/viewUsers' )
+		);
+
+		return false;
+	}
+
+	protected function HTMLReport() {
+
+		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
+		$this->displayHeader();
+
+		$chart = SponsorshipDashboardOutputChart::newFromReport( $this->currentReport, $this->currentGroup );
+		$table = SponsorshipDashboardOutputTable::newFromReport( $this->currentReport );
+
+		$wgOut->addHTML(
+			$chart->getHTML()
+		);
+		$wgOut->addHTML(
+			$table->getHTML()
+		);
+
+		return false;
+	}
+
+	protected function CSVReport() {
+
+		$this->currentReport->loadReportParams();
+		$dataFormatter = SponsorshipDashboardOutputCSV::newFromReport( $this->currentReport );
+		echo $dataFormatter->getHTML();
+		exit;
+	}
 }
-
-
-

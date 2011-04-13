@@ -2,9 +2,9 @@
 	<div class="tabs-container">
 		<ul class="tabs" style="list-style: none">
 
-			<? foreach( $tabs as $tabName => $tabItems ){ ?>
-			<li pane="tab-pane-<?=$tabName; ?>" <? if($tab == $tabName) echo 'class="selected"'; ?> >
-				<a href="<?=$path.'/'.$tabName;?>"><?= wfMsg("sponsorship-dashboard-tab-".$tabName) ?></a>
+			<? foreach( $groups as $oGroup ){ ?>
+			<li<? if( $oGroup->id == $groupId ) echo ' class="selected"'; ?> >
+				<a href="<?=$path.'/'.$oGroup->id;?>"><?=$oGroup->name ?></a>
 			</li>
 			<? } ?>
 			
@@ -13,13 +13,17 @@
 
 	<?
 
-if( isset($tabs[ $tab ]) ){
 	?><ul class="subcats"><?
-		foreach( $tabs[ $tab ] as $subcat ){
-			echo '<li><a href="'.$path.'/'.$subcat.'">'.wfMsg('sponsorship-dashboard-report-'.$subcat).'</a></li>';
+		$first = true;
+		foreach( $reports as $oReport ){
+			echo '<li ';
+			if ( $first ){ 
+				$first = false;
+				echo ' class="first"';
+			}
+			echo '><a href="'.$path.'/'.$groupId.'/'.$oReport->id.'">'.$oReport->name.'</a></li>';
 		}
 	?></ul><?
-}
 	
 	?>
 <!-- e:<?= __FILE__ ?> -->
