@@ -1801,9 +1801,12 @@ class WikiStats {
 					}
 					
 					while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-						$data['res'][$oRow->wiki_id][8] = $oRow->users_all;
-						$data['res'][$oRow->wiki_id][9] = $oRow->articles_edits;
-						$data['res'][$oRow->wiki_id][10] = $oRow->articles;
+						$data['res'][$oRow->wiki_id][8]  = ($oRow->users_all > $data['res'][$oRow->wiki_id][4]) ? 1 :
+														   (($oRow->users_all < $data['res'][$oRow->wiki_id][4]) ? -1 : 0);
+						$data['res'][$oRow->wiki_id][9]  = ($oRow->articles_edits > $data['res'][$oRow->wiki_id][5]) ? 1 :
+														   (($oRow->articles_edits < $data['res'][$oRow->wiki_id][5]) ? -1 : 0);
+						$data['res'][$oRow->wiki_id][10] = ($oRow->articles > $data['res'][$oRow->wiki_id][6]) ? 1 :
+														   (($oRow->articles < $data['res'][$oRow->wiki_id][6]) ? -1 : 0);
 					}
 					$dbr->freeResult( $oRes );						
 				}		
