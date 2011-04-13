@@ -158,7 +158,7 @@ class ImageLightbox {
 			$res = array(
 					'result' => 0,
 					'info-caption' => wfMsg('lightbox-share-email-error-caption'),
-					'info-content' => wfMsgExt('lightbox-share-email-error-login')
+					'info-content' => wfMsg('lightbox-share-email-error-login')
 			);
 			wfProfileOut(__METHOD__);
 			return $res;
