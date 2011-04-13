@@ -7,7 +7,7 @@ class SpecialCreateWikiaPoll extends SpecialPage {
 	}
 
 	public function execute ($subpage) {
-		global $wgOut, $wgUser, $wgBlankImgUrl, $wgJsMimeType, $wgExtensionsPath, $wgStylePath;
+		global $wgOut, $wgUser, $wgBlankImgUrl, $wgJsMimeType, $wgExtensionsPath, $wgStylePath, $wgStyleVersion;
 
 		// Boilerplate special page permissions
 		if ($wgUser->isBlocked()) {
@@ -23,8 +23,8 @@ class SpecialCreateWikiaPoll extends SpecialPage {
 			return;
 		}
 
-		$wgOut->addScript("<script src=\"{$wgStylePath}/common/jquery/jquery-ui-1.8.10.custom.js\" type=\"{$wgJsMimeType}\"></script>");
-		$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/WikiaPoll/js/CreateWikiaPoll.js\" type=\"{$wgJsMimeType}\"></script>");
+		$wgOut->addScript('<script src="'.$wgStylePath.'/common/jquery/jquery-ui-1.8.10.custom.js?'.$wgStyleVersion.'"></script>');
+		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaPoll/js/CreateWikiaPoll.js?'.$wgStyleVersion.'"></script>');
 
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/WikiaPoll/css/CreateWikiaPoll.scss'));
 
