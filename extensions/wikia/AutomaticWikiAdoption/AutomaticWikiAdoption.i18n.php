@@ -80,7 +80,8 @@ Click the following link to unsubscribe from changes to this list: $3.",
 Your wiki has been adopted! This means that someone else has volunteered to help maintain the community and content on the site. Don't worry - you're still an administrator, and you are welcome to come back at any time.<br /><br />
 <b>The Wikia Team</b><br /><br />
 <small>You can <a href=\"$3\">unsubscribe</a> from changes to this list.</small>",
-	'tog-adoptionmails' => 'E-mail me when something changes about wiki administration (administrators only)',
+	'tog-adoptionmails' => 'Email me if $1 will become available for other users to adopt',
+	'automaticwikiadoption-pref-label' => 'Changing these preferences will only affect emails from $1.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -444,7 +445,7 @@ Uw wiki is geadopteerd! Dit betekent dat iemand anders zich heeft opgeworpen om 
 	'tog-adoptionmails' => 'Mij e-mailen als er wijzigingen zijn in het wikibeheer (alleen voor beheerders)',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Jon Harald Søby
  */
 $messages['no'] = array(
@@ -619,7 +620,7 @@ $messages['ru'] = array(
 Кликните по ссылке, чтобы отписаться от изменений в этом списке: $3.',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -692,7 +693,7 @@ $messages['uk'] = array(
 	'automaticwikiadoption-know-more-header' => 'Хочете знати більше?',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Hydra
  */
 $messages['zh-hans'] = array(

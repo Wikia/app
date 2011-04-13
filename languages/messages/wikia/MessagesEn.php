@@ -1009,6 +1009,9 @@ Text should be placed on this page if you wish to explain usage, style and polic
 
 'prefs-layout' => 'Site Layouts',
 
+# Local Wiki Email Preference
+'prefs-wikiemail' => '{{SITENAME}} Email Options',
+
 # Facebook Profile Sync and Connect
 'fb-sync-button' => 'Sync my profile',
 'fb-sync-realname' => 'Real Name',
