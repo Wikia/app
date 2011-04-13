@@ -72,9 +72,9 @@ $(document).ready(function() {
 				"fnRender": function ( oObj ) {
 					var change = '<span></span>';
 					
-					if ( oObj.aData[8] > oObj.aData[4] ) {
+					if ( oObj.aData[8] == 1 ) {
 						change = ' <span style="color:#FF0000;">&#8595;</span> ' ;
-					} else if ( oObj.aData[8] < oObj.aData[4] ) {
+					} else if ( oObj.aData[8] == -1 ) {
 						change = ' <span style="color:#00FF00;">&#8593;</span> ';
 					}
 					var row = '<span class="ws-row">' + oObj.aData[4] + ' ' + change + '</span>';
@@ -87,9 +87,9 @@ $(document).ready(function() {
 				"fnRender": function ( oObj ) {
 					var change = '<span></span>';
 					
-					if ( oObj.aData[9] > oObj.aData[5] ) {
+					if ( oObj.aData[9] == 1 ) {
 						change = ' <span style="color:#FF0000;">&#8595;</span> ' ;
-					} else if ( oObj.aData[9] < oObj.aData[5] ) {
+					} else if ( oObj.aData[9] == -1 ) {
 						change = ' <span style="color:#00FF00;">&#8593;</span> ';
 					}
 					var row = '<span class="ws-row">' + oObj.aData[5] + ' ' + change + '</span>';
@@ -102,9 +102,9 @@ $(document).ready(function() {
 				"fnRender": function ( oObj ) {
 					var change = '<span></span>';
 					
-					if ( oObj.aData[10] > oObj.aData[6] ) {
+					if ( oObj.aData[10] == 1 ) {
 						change = ' <span style="color:#FF0000;">&#8595;</span> ' ;
-					} else if ( oObj.aData[10] < oObj.aData[6] ) {
+					} else if ( oObj.aData[10] == -1 ) {
 						change = ' <span style="color:#00FF00;">&#8593;</span> ';
 					}
 					var row = '<span class="ws-row">' + oObj.aData[6] + ' ' + change + '</span>';
