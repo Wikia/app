@@ -7,18 +7,23 @@
 	<div class="sd-source-title"> <?=wfMsg('sponsorship-dashboard-source-datasource');?> <b>#1</b>: <?=wfMsg('sponsorship-dashboard-source-WikiaStats');?></div>
 	<div style="font-weight:bold"> <?=wfMsg('sponsorship-dashboard-source-Variables');?> </div>
 	<ul class="sd-list">
-		<? $series = explode(',', $data[SponsorshipDashboardSourceStats::SD_PARAMS_STATS_SERIES] );  ?>
-		<li> <input <? if( in_array( 'A', $series ) ) echo 'checked="checked"'; ?> name="<?=SponsorshipDashboardSourceStats::SD_PARAMS_STATS_SERIES ;?>A" type="checkbox" class="sd-checkbox"><input class="sd-very-long" type="text" data-default="<?=wfMsg('sponsorship-dashboard-serie-A'); ?>" value="<?=wfMsg('sponsorship-dashboard-serie-A'); ?>" /></li>
-		<li> <input <? if( in_array( 'B', $series ) ) echo 'checked="checked"'; ?> name="<?=SponsorshipDashboardSourceStats::SD_PARAMS_STATS_SERIES ;?>B" type="checkbox" class="sd-checkbox"><?=wfMsg('sponsorship-dashboard-serie-B'); ?></li>
-		<li> <input <? if( in_array( 'C', $series ) ) echo 'checked="checked"'; ?> name="<?=SponsorshipDashboardSourceStats::SD_PARAMS_STATS_SERIES ;?>C" type="checkbox" class="sd-checkbox"><?=wfMsg('sponsorship-dashboard-serie-C'); ?></li>
-		<li> <input <? if( in_array( 'D', $series ) ) echo 'checked="checked"'; ?> name="<?=SponsorshipDashboardSourceStats::SD_PARAMS_STATS_SERIES ;?>D" type="checkbox" class="sd-checkbox"><?=wfMsg('sponsorship-dashboard-serie-D'); ?></li>
-		<li> <input <? if( in_array( 'E', $series ) ) echo 'checked="checked"'; ?> name="<?=SponsorshipDashboardSourceStats::SD_PARAMS_STATS_SERIES ;?>E" type="checkbox" class="sd-checkbox"><?=wfMsg('sponsorship-dashboard-serie-E'); ?></li>
-		<li> <input <? if( in_array( 'F', $series ) ) echo 'checked="checked"'; ?> name="<?=SponsorshipDashboardSourceStats::SD_PARAMS_STATS_SERIES ;?>F" type="checkbox" class="sd-checkbox"><?=wfMsg('sponsorship-dashboard-serie-F'); ?></li>
-		<li> <input <? if( in_array( 'G', $series ) ) echo 'checked="checked"'; ?> name="<?=SponsorshipDashboardSourceStats::SD_PARAMS_STATS_SERIES ;?>G" type="checkbox" class="sd-checkbox"><?=wfMsg('sponsorship-dashboard-serie-G'); ?></li>
-		<li> <input <? if( in_array( 'H', $series ) ) echo 'checked="checked"'; ?> name="<?=SponsorshipDashboardSourceStats::SD_PARAMS_STATS_SERIES ;?>H" type="checkbox" class="sd-checkbox"><?=wfMsg('sponsorship-dashboard-serie-H'); ?></li>
-		<li> <input <? if( in_array( 'I', $series ) ) echo 'checked="checked"'; ?> name="<?=SponsorshipDashboardSourceStats::SD_PARAMS_STATS_SERIES ;?>I" type="checkbox" class="sd-checkbox"><?=wfMsg('sponsorship-dashboard-serie-I'); ?></li>
-		<li> <input <? if( in_array( 'J', $series ) ) echo 'checked="checked"'; ?> name="<?=SponsorshipDashboardSourceStats::SD_PARAMS_STATS_SERIES ;?>J" type="checkbox" class="sd-checkbox"><?=wfMsg('sponsorship-dashboard-serie-J'); ?></li>
-		<li> <input <? if( in_array( 'K', $series ) ) echo 'checked="checked"'; ?> name="<?=SponsorshipDashboardSourceStats::SD_PARAMS_STATS_SERIES ;?>K" type="checkbox" class="sd-checkbox"><?=wfMsg('sponsorship-dashboard-serie-K'); ?></li>
+		<?
+		$series = explode(',', $data[SponsorshipDashboardSourceStats::SD_PARAMS_STATS_SERIES] );
+		try {
+			$seriesNames = @unserialize( $data[ SponsorshipDashboardSourceStats::SD_PARAMS_STATS_SERIES_NAMES ] );
+		} catch ( MyException $e) {
+			$seriesNames = array();
+		}
+
+		foreach( SponsorshipDashboardSourceStats::$allowedSeries as $baseSerie ){
+			?><li>
+				<input <? if( in_array( $baseSerie, $series ) ) echo 'checked="checked"'; ?> name="<?=SponsorshipDashboardSourceStats::SD_PARAMS_STATS_SERIES ;?><?=$baseSerie; ?>" type="checkbox" class="sd-checkbox">
+				<input name="sourceSerieName-<?=$baseSerie; ?>" class="sd-very-long" type="text" data-default="<?=wfMsg('sponsorship-dashboard-serie-'.$baseSerie); ?>" data-default="<?=wfMsg('sponsorship-dashboard-serie-'.$baseSerie); ?>" value="<?=( isset( $seriesNames[ $baseSerie ] ) ? $seriesNames[ $baseSerie ] : wfMsg('sponsorship-dashboard-serie-'.$baseSerie) ); ?>" />
+				<a class="wikia-button sd-source-reload-default secondary" data-action="bringDefault" data-target="sourceSerieName-<?=$baseSerie; ?>" style="float:right; margin-top:3px">
+					<img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite error">
+				</a>
+			</li><?
+		} ?>
 	</ul>
 	<div>
 		<?=wfMsg('sponsorship-dashboard-source-pageviews-namespaces');?> <input name="<?=SponsorshipDashboardSourceStats::SD_PARAMS_STATS_NAMESPACES ;?>" type="text" value="" class="sd-long" style="left:200px;">
