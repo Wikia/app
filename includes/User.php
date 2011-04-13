@@ -4012,6 +4012,8 @@ class User {
 		if ( $extuser ) {
 			$extuser->updateUser();
 		}
+		// Wikia change -- allow hook to modify properties after save also
+		wfRunHooks( 'UserSaveOptions2', array( $this, &$saveOptions ) );
 	}
 
 	/**
