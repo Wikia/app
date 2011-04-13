@@ -301,16 +301,25 @@ class AutomaticWikiAdoptionHelper {
 	 * Hook handler
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * @author Hyun Lim
 	 */
 	public static function onGetPreferences($user, &$defaultPreferences) {
 		wfProfileIn(__METHOD__);
-
+		global $wgSitename;
+		
 		//for admins only 
 		if (in_array('sysop', $user->getGroups())) {
+			// will need to move this out of adoption extension when this becomes generalized
+			$defaultPreferences['adoptionmails-label'] = array(
+				'type' => 'info',
+				'label' => '',
+				'help' => wfMsg('automaticwikiadoption-pref-label', $wgSitename),
+				'section' => 'personal/wikiemail',
+			);
 			$defaultPreferences['adoptionmails'] = array(
 				'type' => 'toggle',
-				'label-message' => 'tog-adoptionmails',
-				'section' => 'rendering/advancedrendering',
+				'label-message' => array('tog-adoptionmails', $wgSitename),
+				'section' => 'personal/wikiemail',
 			);
 			AutomaticWikiAdoptionHelper::UserLoadOptions($user, $user->mOptions);
 		}
