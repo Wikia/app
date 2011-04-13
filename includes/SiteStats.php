@@ -318,7 +318,7 @@ class SiteStatsInit {
 		$cache = WF::build( "App" )->getGlobal( "wgMemc" );
 		$this->mUsers = $cache->get( wfSharedMemcKey( "registered-users-number" ) );
 		if( empty( $this->mUsers ) ) {
-			$this->mUsers = $this->dbshared->selectField( 'user', 'COUNT(*)', '', __METHOD__ );
+			$this->mUsers = $this->dbshared->selectField( '`user`', 'COUNT(*)', '', __METHOD__ );
 			$cache->set( wfSharedMemcKey( "registered-users-number" ), $this->mUsers, 60*60*12 );
 		}
 		return $this->mUsers;
