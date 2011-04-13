@@ -346,8 +346,8 @@ class SponsorshipDashboard extends SpecialPage {
 		$wgOut->addScript( "<!--[if IE]><script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/excanvas.min.js?{$wgStyleVersion}\"></script><![endif]-->\n" );
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/jquery.flot.js?{$wgStyleVersion}\"></script>\n" );
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/jquery.flot.selection.js?{$wgStyleVersion}\"></script>\n" );
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardEditor.scss' ) );
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardEditor.scss' ) );
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
 		$this->HTMLAdminHeader( 'ViewReports' );
 
 		$report = new SponsorshipDashboardReport( $id );
@@ -422,7 +422,7 @@ class SponsorshipDashboard extends SpecialPage {
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		$this->HTMLAdminHeader( 'ViewInfo' );
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
 		$wgOut->addHTML(
 			$oTmpl->execute( 'admin/viewInfo' )
 		);
@@ -455,8 +455,8 @@ class SponsorshipDashboard extends SpecialPage {
 		);
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/SponsorshipDashboard/js/SponsorshipDashboardGroupEditor.js?{$wgStyleVersion}\" ></script>\n");
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardEditor.scss' ) );
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardEditor.scss' ) );
 		$wgOut->addHTML(
 			$oTmpl->execute( 'admin/editGroup' )
 		);
@@ -498,8 +498,8 @@ class SponsorshipDashboard extends SpecialPage {
 		);
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/SponsorshipDashboard/js/SponsorshipDashboardUserEditor.js?{$wgStyleVersion}\" ></script>\n");
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardEditor.scss' ) );
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardEditor.scss' ) );
 		$wgOut->addHTML(
 			$oTmpl->execute( 'admin/editUser' )
 		);
@@ -516,7 +516,7 @@ class SponsorshipDashboard extends SpecialPage {
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/SponsorshipDashboard/js/SponsorshipDashboardList.js?{$wgStyleVersion}\" ></script>\n");
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardList.scss' ) );
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardList.scss' ) );
 		$this->HTMLAdminHeader( 'ViewReports' );
 
 		$aReports = new SponsorshipDashboardReports();
@@ -548,7 +548,7 @@ class SponsorshipDashboard extends SpecialPage {
 		}
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/SponsorshipDashboard/js/SponsorshipDashboardList.js?{$wgStyleVersion}\" ></script>\n");
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardList.scss' ) );
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardList.scss' ) );
 		$this->HTMLAdminHeader( 'ViewGroups' );
 
 		$aGroups = new SponsorshipDashboardGroups();
@@ -582,7 +582,7 @@ class SponsorshipDashboard extends SpecialPage {
 
 		$a = new OutputPage();
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/SponsorshipDashboard/js/SponsorshipDashboardList.js?{$wgStyleVersion}\" ></script>\n");
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( '/extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardList.scss' ) );
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( '/extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardList.scss' ) );
 		$this->HTMLAdminHeader( 'ViewUsers' );
 
 		$aUsers = new SponsorshipDashboardUsers();
@@ -607,7 +607,7 @@ class SponsorshipDashboard extends SpecialPage {
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
-		$wgOut->addStyle( F::app()->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
 		$this->displayHeader();
 
 		$chart = SponsorshipDashboardOutputChart::newFromReport( $this->currentReport, $this->currentGroup );

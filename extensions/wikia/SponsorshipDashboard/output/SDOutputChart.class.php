@@ -35,7 +35,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 		$aData = $this->getChartData();
 
 		$wgOut->setHTMLTitle( wfMsg( 'sponsorship-dashboard-report-page-title', $this->report->name ) );
-		$wgOut->addStyle( $this->App->getAssetsManager()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
 
 		$oTmpl = F::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) );
 		if ( count( $this->report->reportSources ) == 0  ) {
