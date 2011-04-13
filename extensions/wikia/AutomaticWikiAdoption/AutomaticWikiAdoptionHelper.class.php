@@ -30,6 +30,8 @@ class AutomaticWikiAdoptionHelper {
 	//used as type in user_flags table
 	const USER_FLAGS_AUTOMATIC_WIKI_ADOPTION = 1;
 
+	// static variable to store preferences setting between UserSaveOptions and UserSaveOptions2 hooks
+	static $saveOption;
 	/**
 	 * check if user is allowed to adopt particular wiki
 	 *
@@ -304,14 +306,67 @@ class AutomaticWikiAdoptionHelper {
 		wfProfileIn(__METHOD__);
 
 		//for admins only 
-		if (in_array('sysop', $user->getGroups())) { 
+		if (in_array('sysop', $user->getGroups())) {
 			$defaultPreferences['adoptionmails'] = array(
 				'type' => 'toggle',
 				'label-message' => 'tog-adoptionmails',
 				'section' => 'rendering/advancedrendering',
 			);
+			AutomaticWikiAdoptionHelper::UserLoadOptions($user, $user->mOptions);
 		}
 
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	// force load adoptionmail from local database
+	public static function UserLoadOptions($user, &$options) {
+		wfProfileIn(__METHOD__);
+
+		if (in_array('sysop', $user->getGroups())) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select(
+				'`user_properties`',
+				'*',
+				array( 'up_user' => $user->getId(), 'up_property' =>'adoptionmails' ),
+				__METHOD__
+			);
+			while( $row = $dbr->fetchObject( $res ) ) {
+				$options[$row->up_property] = $row->up_value;
+			}
+		}
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	// remove adoptionmails from global settings so it is not saved in normal Shared DB
+	public static function UserSaveOptions($user, &$options) {
+		if (in_array('sysop', $user->getGroups())) {
+			self::$saveOption = $options['adoptionmails'];
+			unset($options['adoptionmails']);
+		}
+		return true;
+	}
+
+	// save option in local wiki database
+	public static function UserSaveOptions2($user, &$options) {
+		wfProfileIn(__METHOD__);
+
+		if (in_array('sysop', $user->getGroups()) && isset(self::$saveOption)) {
+			$dbw = wfGetDB( DB_MASTER );
+
+			$insert_rows[] = array(
+					'up_user' => $user->getId(),
+					'up_property' => 'adoptionmails',
+					'up_value' => self::$saveOption,
+				);
+			$dbw->begin();
+			$dbw->delete( '`user_properties`', array( 'up_user' => $user->getId() ), __METHOD__ );
+			$dbw->insert( '`user_properties`', $insert_rows, __METHOD__ );
+			$dbw->commit();
+			// restore option value
+			$options['adoptionmails'] = self::$saveOption;
+		}
 		wfProfileOut(__METHOD__);
 		return true;
 	}
