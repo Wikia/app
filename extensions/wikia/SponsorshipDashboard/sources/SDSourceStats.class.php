@@ -24,12 +24,14 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 	
 	protected $namespaces = array();
 	public $series = array();
+	public $seriesNames = array();
+
 
 	var $mStats;
 
 	// ============================
 
-	public function __construct(){
+	public function __construct() {
 
 		$this->iNumberOfXGuideLines = 7;
 		$this->App = WF::build('App');
@@ -42,7 +44,7 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 	 * @return string
 	 */
 
-	public function getSourceKey(){
+	public function getSourceKey() {
 		return 'Stats';
 	}
 
@@ -52,7 +54,7 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 	 * @return string
 	 */
 
-	public function getCacheKey(){
+	public function getCacheKey() {
 
 		$aKey = array();
 
@@ -74,31 +76,39 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 	 *  Setters / Getters / Validators
 	 */
 
-	public function setNamespaces( $aNamespaces = array() ){
+	public function setNamespaces( $aNamespaces = array() ) {
 		
 		$this->namespaces = array();
-		if (is_array( $aNamespaces )){
-			foreach( $aNamespaces as $namespace){
-				if ( MWNamespace::exists( $namespace ) ){
+		if (is_array( $aNamespaces )) {
+			foreach( $aNamespaces as $namespace) {
+				if ( MWNamespace::exists( $namespace ) ) {
 					$this->namespaces[] = $namespace;
 				}
 			}
 		}
 	}
 
-	public function setSeries( $aSeries = array() ){
+	public function setSeries( $aSeries = array() ) {
 
 		$this->namespaces = array();
-		if ( is_array( $aSeries )){
-			foreach( $aSeries as $serie){
-				if ( in_array( $serie, self::$allowedSeries ) ){
+		if ( is_array( $aSeries )) {
+			foreach( $aSeries as $serie) {
+				if ( in_array( $serie, self::$allowedSeries ) ) {
 					$this->series[] = $serie;
 				}
 			}
 		}
 	}
 
-	protected function recalculateDateVariables(){
+	public function setSeriesName( $serie, $serieName ) {
+
+		// we don't want to store default values in DB
+		if ( in_array( $serie, self::$allowedSeries ) && wfMsg( 'sponsorship-dashboard-serie-'.$serie ) != $serieName ) {
+			$this->seriesNames[ $serie ] = $serieName;
+		}
+	}
+
+	protected function recalculateDateVariables() {
 
 		$this->endMonth = date( "m", mktime( 0, 0, 0, date( "m" )-1, 1, date( "Y" )));
 		$this->endYear = date( "Y", mktime( 0, 0, 0, date( "m" )-1, 1, date( "Y" )));
@@ -114,20 +124,20 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 	 * @return void
 	 */
 
-	protected function loadData(){
+	protected function loadData() {
 
-		if ( !$this->dataLoaded ){
+		if ( !$this->dataLoaded ) {
 
 			$this->getResults();
 			$this->dataLoaded = true;
 		}
 	}
 
-	protected function getResults( ){
+	protected function getResults() {
 
 		$this->recalculateDateVariables();
 		
-		if ( !$this->loadDataFromCache() ){
+		if ( !$this->loadDataFromCache() ) {
 
 			$this->mStats = WikiStats::newFromId( $this->getCityId() );
 			$this->mStats->setStatsDate(
@@ -145,19 +155,19 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 			// returns data from the point it begun
 			$aData = $this->mStats->loadStatsFromDB();
 
-			foreach( $aData as $collumns ){
+			foreach( $aData as $collumns ) {
 				$date = date("Y-m", strtotime( "1.".substr( $collumns['date'], 4, 2 ).".".substr( $collumns['date'], 0, 4 ) ) );
 
 				$this->dataAll[ $date ][ self::SD_DATE_CELL ] = $date;
-				foreach ( $this->series as $serie ){
+				foreach ( $this->series as $serie ) {
 					$this->dataAll[ $date ][ 'a'.md5( $this->getCityId().$serie ) ] = $collumns[ $serie ];
 				}
 			};
-			foreach ( $this->series as $serie ){
-				$this->dataTitles[ 'a'.md5( $this->getCityId().$serie ) ] = $this->getCityPrefix().wfMsg( self::SD_MSG_PREFIX.$serie );
+			foreach ( $this->series as $serie ) {
+				$this->dataTitles[ 'a'.md5( $this->getCityId().$serie ) ] = $this->getCityPrefix().$this->getSerieName( $serie );
 			}
 
-			foreach( $this->namespaces as $iNamespace ){
+			foreach( $this->namespaces as $iNamespace ) {
 				$this->pushArticleNumbersFromNamespace( $iNamespace );		
 			}
 
@@ -166,7 +176,15 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 		}
 	}
 
-	protected function pushArticleNumbersFromNamespace( $iNamespace ){
+	public function getSerieName( $serie ) {
+
+		if ( isset( $this->serieNames[ $serie ] ) ) {
+			return $this->serieNames[ $serie ];
+		}
+		return wfMsg( self::SD_MSG_PREFIX.$serie );
+	}
+
+	protected function pushArticleNumbersFromNamespace( $iNamespace ) {
 
 		$this->mStats->mPageNS = array( $iNamespace );
 		$this->mStats->mPageNSList = array( $iNamespace );
@@ -175,8 +193,8 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 
 		$sKey = 'a'.md5( $this->getCityId().'fromNamespace'.$iNamespace );
 
-		if( !empty( $aDataNS )){
-			foreach( $aDataNS as $key => $val){
+		if( !empty( $aDataNS )) {
+			foreach( $aDataNS as $key => $val) {
 				$date = date("Y-m", strtotime( "1.".substr( $key, 4, 2 ).".".substr( $key, 0, 4 ) ) );
 
 				if ( !isset( $this->dataAll[ $date ] ) ) $this->dataAll[ $date ] = array();
@@ -195,7 +213,7 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 	 * @return array 'paramName' => 'paramValue'
 	 */
 
-	protected function getLocalParamsArray(){
+	protected function getLocalParamsArray() {
 
 		$aData = array();
 
@@ -204,16 +222,18 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 		$aData[ self::SD_PARAMS_CITYIDFORCED ] = $this->cityIdForced;
 		$aData[ self::SD_PARAMS_STATS_NAMESPACES ] = implode( ',', $this->namespaces );
 		$aData[ self::SD_PARAMS_STATS_SERIES ] = implode( ',', $this->series );
+		$aData[ self::SD_PARAMS_STATS_SERIES_NAMES ] = serialize( $this->seriesNames );
 		return $aData;
 	}
 
-	public function getMenuTemplateLink(){
+	public function getMenuTemplateLink() {
 
 		return '../../templates/editor/addNewStats';
 	}
 
 	const SD_PARAMS_STATS_NAMESPACES = 'namespaces';
 	const SD_PARAMS_STATS_SERIES = 'series';
+	const SD_PARAMS_STATS_SERIES_NAMES = 'seriesNames';
 	
 	/*
 	 * Fills object from array. Used when creating object from form results.
@@ -221,24 +241,48 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 	 * @return string - url
 	 */
 
-	public function fillFromArray( $aParams ){
+	public function fillFromArray( $aParams ) {
 
 		$sources = array();
-		foreach( self::$allowedSeries as $aSeries ){
-			if ( isset( $aParams[ self::SD_PARAMS_STATS_SERIES.$aSeries ] ) && !empty( $aParams[ self::SD_PARAMS_STATS_SERIES.$aSeries ] ) ){
+		foreach( self::$allowedSeries as $aSeries ) {
+			if ( isset( $aParams[ self::SD_PARAMS_STATS_SERIES.$aSeries ] ) && !empty( $aParams[ self::SD_PARAMS_STATS_SERIES.$aSeries ] ) ) {
 				$sources[] = $aSeries;
 			}
 		}
 
-		if( !empty( $sources ) ){
+		if( !empty( $sources ) ) {
 			$this->setSeries( $sources );
 		} else {
-			if ( isset( $aParams[ self::SD_PARAMS_STATS_SERIES ] ) ){
+			if ( isset( $aParams[ self::SD_PARAMS_STATS_SERIES ] ) ) {
 				$this->setSeries( explode( ',', $aParams[ self::SD_PARAMS_STATS_SERIES ] ) );
 			}
 		}
 
-		if ( isset( $aParams[ self::SD_PARAMS_STATS_NAMESPACES ] ) && !empty( $aParams[ self::SD_PARAMS_STATS_NAMESPACES ] ) ){
+		// Metric's names from form
+		foreach( self::$allowedSeries as $serie ) {
+			if ( isset( $aParams[ 'sourceSerieName-'.$serie ] ) && !empty( $aParams[ 'sourceSerieName-'.$serie ] ) ) {
+				$this->setSeriesName( $serie, $aParams[ 'sourceSerieName-'.$serie ] );
+			}
+		}
+
+		// Metric's names from DB
+		if ( isset( $aParams[ self::SD_PARAMS_STATS_SERIES_NAMES] ) ) {
+
+			try {
+				$tmpSerieNames = @unserialize( $aParams[ self::SD_PARAMS_STATS_SERIES_NAMES ] );
+			} catch ( MyException $e) {
+				$tmpSerieNames = false;
+			}
+
+			if ( is_array( $tmpSerieNames ) ) {
+				foreach( $tmpSerieNames as $key => $val) {
+					$this->setSeriesName( $key, $val );
+				}
+			}
+
+		}
+
+		if ( isset( $aParams[ self::SD_PARAMS_STATS_NAMESPACES ] ) && !empty( $aParams[ self::SD_PARAMS_STATS_NAMESPACES ] ) ) {
 			$aNamespaces = explode( ',', $aParams[ self::SD_PARAMS_STATS_NAMESPACES ] );
 			$this->setNamespaces( $aNamespaces );
 		}
@@ -246,7 +290,7 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 		$this->setGeneralParamsFromArray( $aParams );
 	}
 
-	public function validFrequency( $frequency ){
+	public function validFrequency( $frequency ) {
 
 		return in_array(
 			$frequency,
