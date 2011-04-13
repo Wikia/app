@@ -493,7 +493,6 @@ abstract class SponsorshipDashboardSource {
 
 	protected function loadDataFromCache() {
 
-		return false;
 		$wgMemc = $this->App->getGlobal('wgMemc');
 		$memcData = $wgMemc->get( $this->getCacheKey() );
 
