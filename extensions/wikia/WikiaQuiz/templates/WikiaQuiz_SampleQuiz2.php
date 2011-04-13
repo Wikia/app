@@ -79,3 +79,6 @@
 		</div>
 	</div>
 </div>
+<div class="quiz-ribbon">
+<canvas id="timer" width="76" height="76" class="timer"></canvas>
+</div>

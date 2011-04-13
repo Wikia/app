@@ -8,7 +8,7 @@ var WikiaQuiz = {
 	imageWidth: 190,
 	score: 0,
 	startTime: false,
-	init: function() {
+	init: function() {	
 		$('.start-button').click(function() {
 			$('.title-screen').hide();
 			$('.count-down').show();
@@ -42,7 +42,9 @@ var WikiaQuiz = {
 		setTimeout(WikiaQuiz.initializeAnswers, 2000);
 	},
 	initializeAnswers: function() {
-		WikiaQuiz.cq.find('.question-label, .question-bubble, .answers').addClass('off-screen');
+		WikiaQuiz.cq.find('.answers').fadeIn();
+		WikiaQuiz.cq.find('.question-bubble').animate({'top':'-60px'});
+		WikiaQuiz.cq.find('.question-label').fadeOut();
 		setTimeout(function() {
 			WikiaQuiz.cq.find('.answer').click(WikiaQuiz.handleAnswerClick);
 		}, 1000);
@@ -63,7 +65,13 @@ var WikiaQuiz = {
 		WikiaQuiz.cq.find('.answer-label').html(label.html());
 		//img.css('-webkit-transform', 'matrix(2, 0, 0, 2, ' + translateX + ', -120)');
 		answer.addClass('correct').siblings().addClass('wrong');
-		img.css('left', translateX + 'px');
+		//img.css('left', translateX + 'px');
+		img.animate({
+			height: 330,
+			width: 330,
+			top: -210,
+			left: translateX
+		});
 		WikiaQuiz.cq.find('.question-bubble').addClass('hide');
 		label.addClass('hide');
 		exp.fadeIn(1000, function() {
@@ -94,6 +102,66 @@ var WikiaQuiz = {
 	
 };
 
+var Timer = {
+	p: false, 
+	c: false,
+	ratio: 1,
+	intervalHook: false,
+	startTime: false,
+	maxTime: 120000,
+	r: 50,
+	ir: 5,
+	init: function() {
+		Timer.p = document.getElementById('timer');
+		Timer.r = $(Timer.p).height() / 2;
+		Timer.ir = Timer.r - 5;
+		Timer.c = Timer.p.getContext("2d");
+		Timer.drawBackground();
+		Timer.drawTimeleft();
+		Timer.startTimer();
+	},
+	drawBackground: function() {
+		Timer.c.fillStyle = '#51595c';
+		Timer.c.moveTo(Timer.r, Timer.r);
+		Timer.c.beginPath();
+		Timer.c.arc(Timer.r, Timer.r, Timer.r, 0, Math.PI * 2, false);
+		Timer.c.closePath();
+		Timer.c.fill();
+		Timer.c.fillStyle = '#fa5c20';
+		Timer.c.moveTo(Timer.r, Timer.r);
+		Timer.c.beginPath();
+		Timer.c.arc(Timer.r, Timer.r, Timer.ir, 0, Math.PI * 2, false);
+		Timer.c.closePath();
+		Timer.c.fill();
+	},
+	drawTimeleft: function() {
+		Timer.c.fillStyle = '#a7a7a7';
+		Timer.c.moveTo(Timer.r, Timer.r);
+		Timer.c.beginPath();
+		Timer.c.lineTo(Timer.r, 0);
+		Timer.c.arc(Timer.r, Timer.r, Timer.ir, Math.PI * 1.5, Math.PI * ((2 * Timer.ratio) - 0.5), true);
+		Timer.c.lineTo(Timer.r, Timer.r);
+		Timer.c.closePath();
+		Timer.c.fill();
+	},
+	startTimer: function() {
+		Timer.startTime = (new Date()).getTime();
+		Timer.intervalHook = setInterval(Timer.resolveTimer, 40);
+	},
+	stopTimer: function() {
+		clearInterval(Timer.intervalHook);
+	},
+	resolveTimer: function() {
+		Timer.ratio = 1 - (((new Date()).getTime() - Timer.startTime) / Timer.maxTime);
+		if(Timer.r > 0) {
+			Timer.drawTimeleft();
+		} else {
+			Timer.stopTimer();
+		}
+	}
+};
+
 $(function() {
 	WikiaQuiz.init();
+	Timer.init();
 });
