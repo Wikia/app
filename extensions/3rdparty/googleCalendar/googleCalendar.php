@@ -21,7 +21,7 @@ $wgExtensionCredits['parserhook'][] = array(
         'url' => 'http://www.mediawiki.org/wiki/Extension:GoogleCalendar'
 );
 
-function wfGoogleCalendar() {
+function wfGoogleCalendar( $parser ) {
         $parser->setHook('googlecalendar', 'renderGoogleCalendar');
         return true;
 }

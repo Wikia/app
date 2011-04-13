@@ -686,8 +686,8 @@ function wfSetupArrayExtension( $parser ) {
 
     $parser->setFunctionHook( 'arraydefine', array( &$wgArrayExtension, 'arraydefine' ) );
 
-    if( defined( get_class( $wgParser) . '::SFH_OBJECT_ARGS' ) ) {
-		$parser->setFunctionHook('arrayprint', array( &$wgArrayExtension, 'arrayprintObj' ), SFH_OBJECT_ARGS);
+    if( defined( get_class( $parser) . '::SFH_OBJECT_ARGS' ) ) {
+		$parser->setFunctionHook( 'arrayprint', array( &$wgArrayExtension, 'arrayprintObj' ), SFH_OBJECT_ARGS);
     } else {
 		$parser->setFunctionHook( 'arrayprint', array( &$wgArrayExtension, 'arrayprint' ) );
     }
