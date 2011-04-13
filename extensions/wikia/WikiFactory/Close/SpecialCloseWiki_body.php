@@ -29,7 +29,7 @@ class CloseWikiPage extends SpecialPage {
 		$mRedirects 	= array(),
 		$mRedirect		= "",
 		$mFlags 		= array(),
-		$mUrlDump		= "http://wiki-stats.wikia.com";
+		$mUrlDump		= "http://wikistats.wikia.com";
 
 	/**
 	 * constructor

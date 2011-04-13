@@ -10,7 +10,7 @@ $wgExtensionMessagesFiles[ "DumpsOnDemand" ] =  dirname( __FILE__ ) . '/DumpsOnD
 
 class DumpsOnDemand {
 
-	const BASEURL = "http://wiki-stats.wikia.com";
+	const BASEURL = "http://wikistats.wikia.com";
 
 	/**
 	 * @access public
