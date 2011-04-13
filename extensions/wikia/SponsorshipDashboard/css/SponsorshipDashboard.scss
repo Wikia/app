@@ -8,6 +8,7 @@
 		width: 290px;
 		margin-top: 35px;
 		margin-left: 10px;
+		height: 400px;
 	}
 	&.right {
 		float:left;
@@ -29,7 +30,14 @@
 		}
 
 		.sponsorship-dashboard-panel-body {
-			position: absolute;
+/*			position: absolute;*/
+		}
+
+		.sponsorship-dashboard-panel-cachedate {
+			font-style: italic;
+			font-size: 11px;
+			float: right;
+			
 		}
 	}
 }
@@ -129,12 +137,41 @@ ul.subcats li{
 
 ul.subcats li a{
 	float: left; text-decoration: none;
-	padding: 10px 11px;
-	
+	padding: 5px 11px;
+	margin: 5px 0;
+	border-left: 1px solid #000;
+}
+
+ul.subcats li.first a{
+	border: 0px solid #000;
 }
 
 ul.tabs {
 	margin: 0.4em 0px 0.5em 0;
+}
+
+.sponsorship-dashboard-table {
+
+	font-size: 12px;
+
+	thead {
+		font-weight: bold;
+	}
+	td {
+		padding: 5px;
+		margin: 0px;
+		border-bottom: 1px solid  mix($color-page, $color-text, 70%);
+	}
+	td.sponsorship-dashboard-collumn-date {
+		font-weight: bold;
+		width: 80px;
+	}
+}
+
+.sponsorship-dashboard-error-msg {
+
+	border: 2px solid red;
+	padding: 5px 10px;
 }
 
 
