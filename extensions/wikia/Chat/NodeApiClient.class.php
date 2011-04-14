@@ -10,10 +10,15 @@
  * @author Sean Colombo
  */
 class NodeApiClient {
+	// Internal requests use diff hostnames than requests from the browsers.
 	const HOST_PRODUCTION = "chatserver.wikia-dev.com";
 	const HOST_DEV = "chat.wikia-dev.com";
-	const HOST_AND_PORT_PRODUCTION = "chatserver.wikia-dev.com:8001";
-	const HOST_AND_PORT_DEV = "chat.wikia-dev.com:8001";
+	const API_HOST_AND_PORT_PRODUCTION = "chat:8001";
+	const API_HOST_AND_PORT_DEV = "dev-chat:8001";
+	
+	const HOST_PRODUCTION_FROM_CLIENT = "chatserver.wikia.com";
+	const HOST_DEV_FROM_CLIENT = "chat.wikia-dev.com";
+	const PORT = "8000"; // port of the chat server (as opposed to the Node API)
 
 	/**
 	 * Given a roomId, fetches the wgCityId from redis. This will
@@ -114,10 +119,10 @@ class NodeApiClient {
 
 			// Get the avatar urls for the subset of users which we want avatars for.
 			for($index=0; (($index < count($usersInRoomData)) && ($index < $maxAvatars)); $index++){
-				$data['avatarUrls'][] = AvatarService::getUrl($wgUser->getName(), $avatarSize);
+				$data['avatarUrls'][] = AvatarService::getAvatarUrl($usersInRoomData[$index], $avatarSize);
 			}
 
-			$wgMemc->set($memKey, $data, 60); // only cache for 60 seconds... needs to be pretty fresh (this might even be too long).
+			$wgMemc->set($memKey, $data, 30); // only cache for a short time... needs to be pretty fresh (this might even be too long).
 		}
 
 		// Allow calling code to find the total number of users in the room (by reference).
@@ -149,15 +154,13 @@ class NodeApiClient {
 	 * completely using 'wgNodeHostAndPort'.
 	 */
 	static protected function getHostAndPort(){
-		global $wgDevelEnvironment, $wgNodeHostAndPort;
-		if(!empty($wgNodeHostAndPort)){
-			$hostAndPort = $wgNodeHostAndPort;
-		} else {
-			$hostAndPort = NodeApiClient::HOST_AND_PORT_PRODUCTION;
-			if(!empty($wgDevelEnvironment)){
-				$hostAndPort = NodeApiClient::HOST_AND_PORT_DEV;
-			}
+		global $wgDevelEnvironment;
+
+		$hostAndPort = NodeApiClient::API_HOST_AND_PORT_PRODUCTION;
+		if(!empty($wgDevelEnvironment)){
+			$hostAndPort = NodeApiClient::API_HOST_AND_PORT_DEV;
 		}
+
 		return $hostAndPort;
 	} // end getHostAndPort()
 

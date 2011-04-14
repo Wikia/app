@@ -17,43 +17,75 @@
 		var roomId = <?= $roomId ?>;
 		var wgChatMod = <?= $isChatMod ?>;
 		var WIKIA_NODE_HOST = '<?= $nodeHostname ?>'; // used in controllers.js to set up the socket connection.
+		var WIKIA_NODE_PORT = '<?= $nodePort ?>';
+		var pathToProfilePage = 'http://sean.wikia-dev.com/wiki/User:$1';
+		var pathToContribsPage = 'http://sean.wikia-dev.com/wiki/Special:Contributions/$1';
 	</script>
 </head>
 <body class="<?= $bodyClasses ?>">
-	<div id="content">
-		<script type='text/template' id='message-template'>
-			<img class="avatar" src="<%= avatarSrc %>"/>
-			<span class="user"><%= name %></span>
-			<span class="message"><%= text %></span>
-		</script>
-		<script type='text/template' id='inline-alert-template'>
-			<%= text %>
-		</script>
 
-		<section id="WikiaPage" class="WikiaPage">
+	<header id="ChatHeader" class="ChatHeader">
+		<div class="wordmark">
+			<? if ($themeSettings['wordmark-type'] == 'graphic') { ?>
+			<img src="<?= $themeSettings['wordmark-image-url'] ?>">
+			<? } else { ?>
+			<span class="font-<?= $themeSettings['wordmark-font']?>"><?= $themeSettings['wordmark-text'] ?></span>
+			<? } ?>
+		</div>
+		<div class="User"></div>
+	</header>
 
-			<div id="Chat" class="Chat">
-				<ul></ul>
-			</div>
+	<section id="WikiaPage" class="WikiaPage">
 
-			<script type='text/template' id='user-template'>
+		<div id="Chat" class="Chat">
+			<ul></ul>
+		</div>
+
+		<div id="Users" class="Users">
+			<ul></ul>
+		</div>
+
+		<form id="Write" class="Write" onsubmit="return false">
+			<img src="<?= $avatarUrl ?>">
+			<input type="text" name="message"/>
+			<input type="submit" value="send" class="wikia-button"/>
+		</form>
+
+	</section>
+
+	<div id="UserStatsMenu" class="UserStatsMenu"></div>
+
+	<!-- HTML Templates -->
+	<script type='text/template' id='message-template'>
+		<img class="avatar" src="<%= avatarSrc %>"/>
+		<span class="username"><%= name %></span>
+		<span class="message"><%= text %></span>
+	</script>
+	<script type='text/template' id='inline-alert-template'>
+		<%= text %>
+	</script>
+	<script type='text/template' id='user-template'>
+		<img src="<%= avatarSrc %>"/>
+		<span class="username"><%= name %></span>
+		<div class="details">
+			<span class="chat-mod">ChatMod</span>
+			<span class="status">Away</span>
+		</div>
+		<div class="UserStatsMenu">
+			<div class="info">
 				<img src="<%= avatarSrc %>"/>
-				<span class="user"><%= name %></span>
-				<span class="status"><%= status %></span>
-				<a href="#" class="kickban">k/b</a>
-			</script>
-
-			<div id="Users" class="Users">
-				<ul></ul>
+				<span class="username"><%= name %></span>
+				<span class="edits"><?= $editCountStr ?></span>
+				<span class="since"><?= $memberSinceStr ?></span>
 			</div>
+			<ul class="actions">
+				<li class="profile"><a href="#">User Profile</a></li>
+				<li class="contribs"><a href="#">Contributions</a></li>
+				<li class="kickban"><a href="#">Kickban</a></li>
+			</ul>
+		</div>
+	</script>
 
-			<form id="Write" class="Write" onsubmit="return false">
-				<input type="text" name="message"/>
-				<input type="submit" value="send" class="wikia-button"/>
-			</form>
-
-		</section>
-	</div>
 
 	<!-- Load these after the DOM is built -->
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.5.js"></script>
@@ -64,6 +96,5 @@
 	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/models/models.js"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/controllers/controllers.js"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/views/views.js"></script>
-
 </body>
 </html>

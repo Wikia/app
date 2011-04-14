@@ -3,10 +3,6 @@
 //Views
 //
 
-// TODO: REFACTOR THIS TO BE ONE VIEW FOR CHATS!!!! There can be a template and a template_inline & render can choose based on the model type.  Then remove the clutter of the other View type from everywhere.
-// TODO: REFACTOR THIS TO BE ONE VIEW FOR CHATS!!!! There can be a template and a template_inline & render can choose based on the model type.  Then remove the clutter of the other View type from everywhere.
-
-
 var ChatView = Backbone.View.extend({
 	tagName: 'li',
 	template: _.template( $('#message-template').html() ),
@@ -38,6 +34,7 @@ var ChatView = Backbone.View.extend({
 
 var UserView = Backbone.View.extend({
 	tagName: 'li',
+	className: 'User',
 	template: _.template( $('#user-template').html() ),
 
 	/*
@@ -62,6 +59,21 @@ var UserView = Backbone.View.extend({
 		// If this is a chat moderator, add the chat-mod class so that kick-ban links don't show up, etc.
 		if(this.model.get('isModerator') === true){
 			$(this.el).addClass('chat-mod');
+		}
+		
+		// If the user is away, add a certain class to them, if not, remove the away class.
+		if(this.model.get('statusState') == STATUS_STATE_AWAY){
+			$(this.el).addClass('away');
+		} else {
+			$(this.el).removeClass('away');
+		}
+		
+		// If this is you, render your content on top.
+		if( this.model.get('name') == wgUserName ){
+			NodeChatHelper.log("Attempting to render self. Copying up to other div.");
+			$(this.el).css('display', 'none');
+			$('#ChatHeader .User').html( $(this.el).html() )
+								  .attr('class', $(this.el).attr('class') );
 		}
 
 		return this;
@@ -91,19 +103,19 @@ var NodeChatView = Backbone.View.extend({
 
 	events: {
 		"submit #Write": "sendMessage",
-		"click a.kickban": "kickBan"
+		"click .kickban": "kickBan"
 	},
 	
 	// When the user list changes, make sure it is built the way we want (no duplicates, etc.).
 	beautifyUserList: function(eventName){
 		NodeChatHelper.log("Beautifying the user list...");
 
-		var mylist = $("#Users ul");
+		var mylist = $("#Users > ul");
 		var listitems = mylist.children('li').get();
 
 		listitems.sort(function(a, b) {		
-			var compA = $(a).children(".user").text().toUpperCase();
-			var compB = $(b).children(".user").text().toUpperCase();
+			var compA = $(a).children(".username").text().toUpperCase();
+			var compB = $(b).children(".username").text().toUpperCase();
 			return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
 		})
 
@@ -135,7 +147,7 @@ var NodeChatView = Backbone.View.extend({
 
 	addUser: function(user) {
 		var view = new UserView({model: user});
-		$('#Users ul').append(view.render().el);
+		$('#Users > ul').append(view.render().el);
 	},
 	
 	removeUser: function(user) {
@@ -170,7 +182,7 @@ var NodeChatView = Backbone.View.extend({
 				break;
 			case 'initial':
 				this.model.mport(message.data);
-				this.beautifyUserList();
+				//this.beautifyUserList(); // now attached to all changes
 				break;
 			case 'disableReconnect':
 				this.autoReconnect = false;
@@ -208,6 +220,18 @@ var NodeChatView = Backbone.View.extend({
 					this.model.users.remove(connectedUser);
 				}
 				break;
+			case 'updateUser': // A user in the room changed (eg: their status changed)
+				var updatedUser = new models.User();
+				updatedUser.mport(message.data);
+				var connectedUser = this.model.users.find(function(user){
+										return user.get('name') == updatedUser.get('name');
+									});
+				if(typeof connectedUser != "undefined"){
+					// Is this the right way to do it?
+					this.model.users.remove(connectedUser);
+					this.model.users.add(updatedUser);
+				}
+				break;
 			default:
 				NodeChatHelper.log("UNRECOGNIZED EVENT IN views.js:msgRecieved: " + message.event);
 				break;
@@ -222,14 +246,40 @@ var NodeChatView = Backbone.View.extend({
 			this.socket.send(chatEntry.xport());
 			inputField.val('');
 		}
-		NodeChatHelper.focusTextInput();		
+		NodeChatHelper.focusTextInput();
+	},
+	
+	// Set the current user's status to 'away' and set an away message if provided.
+	setAway: function(){
+		var msg = '';
+		//var msg = $(e.target).parent().find('.user').html();
+		//if(!msg){msg = '';}
+		NodeChatHelper.log("Attempting to go away with message: " + msg);
+		var setStatusCommand = new models.SetStatusCommand({
+			statusState: STATUS_STATE_AWAY,
+			statusMessage: msg
+		});
+		this.socket.send(setStatusCommand.xport());
+	},
+	
+	// Set the user as being back from their "away" state (they are here again) and remove the status message.
+	setBack: function(){
+		NodeChatHelper.log("Attempting to come BACK from away.");
+		var setStatusCommand = new models.SetStatusCommand({
+			statusState: STATUS_STATE_PRESENT,
+			statusMessage: ''
+		});
+		this.socket.send(setStatusCommand.xport());
 	},
 
 	kickBan: function(e){
-		var userToBan = $(e.target).parent().find('.user').html();
+		e.preventDefault();
+		var userToBan = $(e.target).closest('.UserStatsMenu').find('.username').text();
 		NodeChatHelper.log("Attempting to kickban user: " + userToBan);
 		var kickBanCommand = new models.KickBanCommand({userToBan: userToBan});
 		this.socket.send(kickBanCommand.xport());
+
+		$("#UserStatsMenu").hide();
 
 		// TODO: LATER: Some sort of indicator that the ban is underway. 50% opacity on the user's li?
 		// TODO: LATER: Some sort of indicator that the ban is underway. 50% opacity on the user's li?
@@ -243,10 +293,44 @@ NodeChatHelper = {
 			event.preventDefault();
 			window.open($(this).attr("href"));
 		});
+
 		// Focus on the text input
 		NodeChatHelper.focusTextInput();
+
+		// Handle user stats menu
+		NodeChatHelper.userStatsMenuInit();
+		
+		// Handle Away status
+		$(window)
+			.mousemove(NodeChatHelper.resetActivityTimer)
+			.keypress(NodeChatHelper.resetActivityTimer)
+			.focus(NodeChatHelper.resetActivityTimer);
 	},
 	
+	startActivityTimer: function() {
+		NodeChatHelper.activityTimer = setTimeout(NodeChatHelper.setAway, 1 * 60 * 1000);
+	},
+
+	resetActivityTimer: function() {
+		clearTimeout(NodeChatHelper.activityTimer);
+		NodeChatHelper.startActivityTimer();
+		
+		// If user had been set to away, ping server to unset away.
+		if($('#ChatHeader .User').hasClass('away')){
+			NodeChatHelper.setBack();
+		}
+	},
+	
+	setAway: function() {
+		NodeChatHelper.log("Telling the server that I'm away.");
+		NodeChatController.view.setAway();
+	},
+	
+	setBack: function() {
+		NodeChatHelper.log("Telling the server that I'm back.");
+		NodeChatController.view.setBack();
+	},
+
 	scrollToBottom: function() {
 		$("#Chat").scrollTop($("#Chat").get(0).scrollHeight);	
 	},
@@ -264,5 +348,51 @@ NodeChatHelper = {
 
 	focusTextInput: function() {
 		$("#Write").find('input[type="text"]').focus();
-	}	
+	},	
+	
+	userStatsMenuInit: function() {
+		$('#Users li').live('click', function() {
+			var menu = $("#UserStatsMenu");
+			menu
+				.html($(this).find('.UserStatsMenu').html())
+				.css('left', $(this).offset().left - menu.outerWidth() + 10)
+				.css('top', $(this).offset().top);
+			
+			// Is the menu falling below the viewport? If so, move it!				
+			if (parseInt(menu.css('top')) + menu.outerHeight() > $(window).height()) {
+				menu.css('top', $(window).height() - menu.outerHeight());
+			}
+			
+			// Add chat-mod class if necessary
+			($(this).hasClass('chat-mod')) ? menu.addClass('chat-mod') : menu.removeClass('chat-mod');
+			
+			menu.show();
+
+			// Bind event handler to body to close the menu			
+			$('body').bind('click.menuclose', function(event) {
+				if (!$(event.target).closest('#UserStatsMenu').length) {
+					$('#UserStatsMenu').hide();
+					$('body').unbind('.menuclose');
+				};
+			});
+			
+			// Handle clicking the profile and contrib links
+			menu.find('.profile').add('.contribs').click(function(event) {
+				event.preventDefault();
+				var target = $(event.currentTarget);
+				var menu = target.closest('.UserStatsMenu');
+				var username = menu.find('.username').text();
+				var location = '';
+				
+				if (target.hasClass('profile')) {
+					location = pathToProfilePage.replace('$1', username);
+				} else if (target.hasClass('contribs')) {
+					location = pathToContribsPage.replace('$1', username);
+				}
+								
+				window.open(location);
+				menu.hide();
+			});			
+		});
+	}
 };

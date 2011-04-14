@@ -8,7 +8,7 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	.WikiHeader .wordmark {
+	.WikiHeader .wordmark, .font-cpmono {
 		font-family: "CPMono_v07Bold";
 	}
 }
@@ -22,7 +22,7 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	.WikiHeader .wordmark {
+	.WikiHeader .wordmark, .font-fontin {
 		font-family: "FontinSansBold";
 	}
 }
@@ -36,7 +36,7 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	.WikiHeader .wordmark {
+	.WikiHeader .wordmark, .font-garton {
 		font-family: "GartonMedium";
 	}
 }
@@ -50,7 +50,7 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	.WikiHeader .wordmark {
+	.WikiHeader .wordmark, .font-idolwild {
 		font-family: "IdolwildRegular";
 	}
 }
@@ -64,7 +64,7 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	.WikiHeader .wordmark {
+	.WikiHeader .wordmark, .font-imfell {
 		font-family: "IMFELLDWPicaPRORegular";
 	}
 }
@@ -78,7 +78,7 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	.WikiHeader .wordmark {
+	.WikiHeader .wordmark, .font-josefin {
 		font-family: "JosefinSansStdLight";
 	}
 }
@@ -92,7 +92,7 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	.WikiHeader .wordmark {
+	.WikiHeader .wordmark, .font-megalopolis {
 		font-family: "MEgalopolisExtraRegular";
 	}
 }
@@ -106,7 +106,7 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	.WikiHeader .wordmark {
+	.WikiHeader .wordmark, .font-orbitron {
 		font-family: "OrbitronMedium";
 	}
 }
@@ -120,7 +120,7 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	.WikiHeader .wordmark {
+	.WikiHeader .wordmark, .font-pixiefont {
 		font-family: "PixieFontRegular";
 	}
 }
@@ -134,7 +134,7 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	.WikiHeader .wordmark {
+	.WikiHeader .wordmark, .font-prociono {
 		font-family: "ProcionoRegular";
 	}
 }
@@ -148,7 +148,7 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	.WikiHeader .wordmark {
+	.WikiHeader .wordmark, .font-tangerine {
 		font-family: "TangerineRegular";
 	}
 }
@@ -162,7 +162,7 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	.WikiHeader .wordmark {
+	.WikiHeader .wordmark, .font-titillium {
 		font-family: "TitilliumText22LRegular";
 	}
 }
@@ -176,7 +176,7 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	.WikiHeader .wordmark {
+	.WikiHeader .wordmark, .font-veggieburger {
 		font-family: "VeggieburgerBold";
 	}
 }
@@ -190,7 +190,7 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	.WikiHeader .wordmark {
+	.WikiHeader .wordmark, .font-yanone {
 		font-family: "YanoneKaffeesatzRegular";
 	}
 }

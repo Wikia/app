@@ -3,10 +3,12 @@
 @import "../../../../skins/oasis/css/core/reset";
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/core/buttons";
+@import "../../../../skins/oasis/css/core/typography";
+
+$color-chat-gray: mix($color-text, $color-page);
 
 ._avatar {
-	border: 1px solid #000;
-	padding: 1px;
+	border: 1px solid $color-page-border;
 }
 
 body {
@@ -27,8 +29,8 @@ body.chat-mod {
 	}
 }
 
-// A visual indication that we're forcing the page to connect to the prod node server.
-body.on-prod{
+// A visual indication that we are forcing the page to connect to the prod node server.
+body.on-prod {
 	background-color: yellow;
 	&:before {
 		content: "==NOTE: CONNECTED TO PROD NODE SERVER ==";
@@ -39,8 +41,140 @@ a:hover {
 	text-decoration: underline;
 }
 
+.ChatHeader {
+	@include border-radius-ne(5px);
+	@include border-radius-nw(5px);
+	background-color: $color-page;
+	border: 1px solid $color-page-border;
+	height: 40px;
+	margin: 10px;
+	position: relative;
+	.wordmark {
+		color: $color-links;
+		font-size: 20px;
+		line-height: 40px;
+		margin-right: 150px;
+		overflow: hidden;
+		padding-left: 5px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		img {
+			height: 30px;
+			margin-top: 5px;
+		}
+	}
+	.User {
+		border-left: 1px solid $color-page-border;
+		height: 26px;
+		padding-bottom: 2px;
+		padding-top: 2px;
+		position: absolute;
+		right: 0;
+		top: 5px;
+		width: 113px;
+		img {
+			vertical-align: middle;
+		}
+		.username {
+			font-weight: bold;
+		}
+	}
+}
+
+.User {
+	padding: 7px 5px 7px 32px;
+	position: relative;
+	img {
+		@extend ._avatar;
+		height: 22px;
+		position: absolute;
+		left: 5px;
+		vertical-align: middle;
+		width: 22px;
+	}
+	.username {
+		display: block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.details {
+		font-size: 11px;
+	}
+	.chat-mod, .status {
+		display: none;
+	}
+	&.chat-mod .chat-mod {
+		display: inline;
+	}
+	&.away {
+		color: $color-chat-gray;
+		.status {
+			display: inline;
+		}
+	}
+	.UserStatsMenu {
+		display: none;	
+	}
+}	
+
+#UserStatsMenu {
+	position: absolute;
+	z-index: 100;
+}
+.UserStatsMenu {
+	background: $color-page;
+	border: 3px solid $color-buttons;
+	display: none;
+	padding: 5px;
+	&.chat-mod .kickban {
+		display: none;
+	}
+	.info {
+		background: $color-menu-highlight;
+		margin-bottom: 5px;
+		padding: 5px 5px 5px 35px;
+		position: relative;
+		img {
+			@extend ._avatar;
+			height: 24px;
+			position: absolute;
+			left: 5px;
+			top: 5px;
+			width: 24px;
+		}
+		.username {
+			display: block;
+			font-weight: bold;
+		}
+		.edits {
+			display: block;
+		}
+		.since {
+			display: block;
+		}
+	}
+	.actions {
+		li {
+			border-top: 1px solid $color-page-border;
+			&:first-child {
+				border-top: none;
+			}
+			a {
+				display: block;
+				padding: 5px;
+				&:hover {
+					background: $color-menu-highlight;
+					text-decoration: none;
+				}
+			}
+		}
+	}
+}
+
 .WikiaPage {
-	@include border-radius(5px);
+	@include border-radius-se(5px);
+	@include border-radius-sw(5px);
 	background-color: $color-page;
 	border: 1px solid $color-page-border;
 	bottom: 10px;
@@ -48,11 +182,13 @@ a:hover {
 	left: 10px;
 	position: absolute;
 	right: 10px;
-	top: 10px;
+	top: 55px;
 }
 
 .Chat {
-	bottom: 45px;
+	border-right: 1px solid $color-page-border;
+	border-bottom: 1px solid $color-page-border;
+	bottom: 50px;
 	left: 0;
 	line-height: 1.4em;
 	overflow: auto;
@@ -76,7 +212,7 @@ a:hover {
 		position: absolute;
 		width: 28px;
 	}
-	.user {
+	.username {
 		display: block;
 		font-weight: bold;
 		&:after {
@@ -84,7 +220,8 @@ a:hover {
 		}
 	}
 	.inline-alert {
-		font-style: italic;
+		color: $color-chat-gray;
+		font-weight: bold;
 		text-align: center;
 		&:before {
 			content: "~ ";
@@ -99,42 +236,38 @@ a:hover {
 }
 
 .Write {
-	border-top: 1px solid $color-page-border;
 	bottom: 0;
-	height: 25px;
+	height: 30px;
 	left: 0;
-	padding: 10px;
+	line-height: 30px;
+	padding: 10px 0 10px 55px;
 	position: absolute;
-	right: 0;
+	right: 150px;
+	img {
+		@extend ._avatar;
+		height: 28px;
+		left: 15px;
+		position: absolute;
+		vertical-align: middle;
+		width: 28px;
+	}
 	input[type="text"] {
 		width: 80%;
 	}
 }
 
 .Users {
-	border-left: 1px solid $color-page-border;
-	bottom: 45px;
-	overflow-x: hidden;
+	bottom: 0;
 	overflow-y: auto;
 	position: absolute;
 	right: 0;
 	top: 0;
 	width: 150px;
-	li {
-		border-bottom: 1px solid $color-page-border;
-		padding: 10px 5px;
-		img {
-			@extend ._avatar;
-			height: 22px;
-			vertical-align: middle;
-			width: 22px;
-		}
-		.kickban {
-			display: none;
-			font-weight: normal;
-		}
-		&.chat-mod {
-			font-weight: bold;
+	.User {
+		min-height: 22px;
+		&:hover {
+			background: $color-menu-highlight;
+			cursor: pointer;
 		}
 	}
 	.template {

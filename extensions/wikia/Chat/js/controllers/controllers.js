@@ -3,11 +3,11 @@
 //
 var NodeChatController = {
 	init: function() {
-		this.socket = new io.Socket(WIKIA_NODE_HOST, {port: 8000});
+		this.socket = new io.Socket(WIKIA_NODE_HOST, {port: WIKIA_NODE_PORT});
 		var mySocket = this.socket;
 
 		this.model = new models.NodeChatModel();
-		this.view = new NodeChatView({model: this.model, socket: this.socket, el: $('#content')});
+		this.view = new NodeChatView({model: this.model, socket: this.socket, el: $('body')});
 		var view = this.view;
 		this.connected = false;
 		this.announceConnection = false; // we only announce the connection for reconnections

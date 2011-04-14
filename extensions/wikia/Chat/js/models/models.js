@@ -1,3 +1,5 @@
+var STATUS_STATE_PRESENT = 'here'; // strings instead of ints just for easier debugging. always use the vars, don't hardcode strings w/these states elsewhere.
+var STATUS_STATE_AWAY = 'away';
 (function () {
 	var server = false, models;
 	if (typeof exports !== 'undefined') {
@@ -31,8 +33,17 @@
 	models.KickBanCommand = models.Command.extend({
 		initialize: function(options){
 			this.set({
-				userToBan: options.userToBan,
-				command: 'kickban'
+				command: 'kickban',
+				userToBan: options.userToBan
+			});
+		}
+	});
+	models.SetStatusCommand = models.Command.extend({
+		initialize: function(options){
+			this.set({
+				command: 'setstatus',
+				statusState: options.statusState,
+				statusMessage: options.statusMessage
 			});
 		}
 	});
@@ -70,12 +81,19 @@
 	models.User = Backbone.Model.extend({
 		defaults: {
 			'name': '',
-			'status': '',
+			'statusState': STATUS_STATE_PRESENT,
+			'statusMessage': '',
 			'isModerator': false,
-			'avatarSrc': "http://placekitten.com/50/50"
+			'avatarSrc': "http://placekitten.com/50/50",
+			'editCount': '?',
+			'since': ''
 		},
 
 		initialize: function(){
+		},
+
+		isAway: function(){
+			return (this.get('statusState') == STATUS_STATE_AWAY);
 		}
 	});
 
@@ -153,7 +171,18 @@
 			}
 		}
 
-		process(this, JSON.parse(data));
+		try{
+			process(this, JSON.parse(data));
+		} catch (e){
+			if (typeof console != 'undefined') {
+				console.log("Unable to parse message in mport. Data attempted to parse was: ");
+				console.log(data);
+				console.log("Parsing error was: ");
+				console.log(e);
+			} else {
+				throw e;
+			}
+		}
 
 		return this;
 	};
