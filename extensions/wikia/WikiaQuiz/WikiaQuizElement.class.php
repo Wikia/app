@@ -15,6 +15,8 @@ class WikiaQuizElement {
 	const CACHE_VER = 5;
 	const ANSWER_MARKER = '* ';
 	const CORRECT_ANSWER_MARKER = '(+)';
+	const ANSWER_IMAGE_MARKER = '|';
+	const IMAGE_MARKER = 'IMAGE:';
 	const TITLE_MARKER = 'TITLE:';
 
 	private function __construct($quizElementId) {
@@ -75,6 +77,7 @@ class WikiaQuizElement {
 			$title = $article->getTitle();
 			$firstRev = $title->getFirstRevision();
 			$titleText = $title->getText();
+			$imageSrc = '';
 
 			// parse wikitext with possible answers (stored as wikitext list)
 			$content = $article->getContent();
@@ -87,6 +90,10 @@ class WikiaQuizElement {
 				if (substr($line, 0, strlen(self::TITLE_MARKER)) == self::TITLE_MARKER) {
 					$titleText = trim( substr($line, strlen(self::TITLE_MARKER)) );
 				}
+				elseif (substr($line, 0, strlen(self::IMAGE_MARKER)) == self::IMAGE_MARKER) {
+					$filename = trim( substr($line, strlen(self::IMAGE_MARKER)) );
+					$imageSrc = $this->getImageSrc($filename);
+				}
 				// answers are specially marked
 				elseif (substr($line, 0, strlen(self::ANSWER_MARKER)) == self::ANSWER_MARKER) {
 					$line = substr($line, strlen(self::ANSWER_MARKER));
@@ -97,9 +104,11 @@ class WikiaQuizElement {
 						$line = trim( substr($line, strlen(self::CORRECT_ANSWER_MARKER)) );
 					}
 					if ($line != '') {
+						$answerChunks = explode(self::ANSWER_IMAGE_MARKER, $line);
 						$answers[] = array(
 							'text' => $line,
-						'correct' => $correct
+							'correct' => $correct,
+							'image' => isset($answerChunks[1]) ? $this->getImageSrc($answerChunks[1]) : ''
 						);
 					}
 				}
@@ -135,6 +144,7 @@ class WikiaQuizElement {
 				'title' => $titleText,
 				'question' => $titleText,
 				'answers' => $answers,
+				'image' => $imageSrc,
 				'params' => $params,
 			);
 
@@ -152,6 +162,25 @@ class WikiaQuizElement {
 
 		wfProfileOut(__METHOD__);
 		return;
+	}
+
+	private function getImageSrc($filename) {
+		$imageSrc = '';
+		$fileTitle = Title::newFromText($filename, NS_FILE);
+		$image = wfFindFile($fileTitle);
+		if ( !is_object( $image ) || $image->height == 0 || $image->width == 0 ){
+			return $imageSrc;
+		} else {
+			$thumbDim = ($image->height > $image->width) ? $image->width : $image->height;
+			$imageServing = new imageServing( array( $fileTitle->getArticleID() ), $thumbDim, array( "w" => $thumbDim, "h" => $thumbDim ) );
+			$imageSrc = wfReplaceImageServer(
+				$image->getThumbUrl(
+					$imageServing->getCut( $thumbDim, $thumbDim )."-".$image->getName()
+				)
+			);
+		}
+
+		return $imageSrc;
 	}
 
 	public function getId() {
