@@ -32,9 +32,9 @@ $wgPPSEOCustomKeywords = array();
 $wgPPSEOCustomDescriptions = array();
 
 function efPerPageSEO( $out ) {
-	global $wgTitle, $wgPPSEOCustomKeywords, $wgPPSEOCustomDescriptions;
+	global $wgPPSEOCustomKeywords, $wgPPSEOCustomDescriptions;
 
-	$pagename = $wgTitle->getPrefixedText();
+	$pagename = $out->getTitle()->getPrefixedText();
 
 	if ( !empty( $wgPPSEOCustomKeywords[$pagename] ) ) {
 		$out->mKeywords = explode( ',', $wgPPSEOCustomKeywords[$pagename] );
