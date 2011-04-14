@@ -6,6 +6,10 @@
  * This is an extension that replaces default keywords and description based on
  * a per-page list of definitions stored in two arrays. No magic here.
  *
+ * The arrays should look like this:
+ * $wgPPSEOCustomKeywords = array( 'PageTitle' => 'My new description' );
+ * wgPPSEOCustomDescriptions = array( 'PageTitle' => 'my, new, keywords' );
+ *
  * @file
  * @ingroup Extensions
  * @author Łukasz Garczewski (TOR) <tor@wikia-inc.com>
