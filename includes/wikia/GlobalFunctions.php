@@ -374,8 +374,8 @@ function wfEchoIfSet($variable, $return = false)
  * array, additionally checks if number of parts is not bigger than allowed
  * number.
  *
- * @access global
- * @author eloy@wikia
+ * @access public
+ * @author eloy@wikia-inc.com
  *
  * @param string $string: string to be splitted
  * @param string $delimiter default ',': delimiter for string
@@ -1324,7 +1324,7 @@ if (!function_exists('http_build_url')) {
  * Registers an EzAPI module, the module must be a subclass of EzApiModuleBase
  *
  * @author Federico "Lox" Lucignano
- * @global Array $wgEzApiModules Stores the list of available modules
+ * @global Array $GLOBAL[ wgEzApiModules ] Stores the list of available modules
  * @param string The defined class name of the module to register
  * @param string The absolute path of the file containing the module class definition
  */
@@ -1363,8 +1363,7 @@ function wfDBLightMode( $maxSleep ) {
  * return status code if the last failure was due to the database being read-only.
  *
  * @author Piotr Molski (moli) <moli at wikia-inc.com>
- * @param
- * @return exit
+ *
  */
 function wfDBReadOnlyFailed( ) {
 	global $wgOut, $wgDBReadOnlyStatusCode;
@@ -1393,12 +1392,12 @@ function endsWith($haystack, $needle, $case = true) {
  * generate correct version of session key
  *
  * @author Piotr Molski (moli) <moli at wikia-inc.com>
- * @param
+ *
  * @return String $key
  */
 function wfGetSessionKey( $id ) {
 	global $wgSharedDB, $wgDBname, $wgWikiaCentralAuthDatabase, $wgExternalUserEnabled, $wgExternalSharedDB;
-	
+
 	if ( !empty( $wgExternalUserEnabled ) ) {
 		$key = "{$wgExternalSharedDB}:session:{$id}";
 	} elseif ( !empty( $wgWikiaCentralAuthDatabase ) ) {
@@ -1408,6 +1407,6 @@ function wfGetSessionKey( $id ) {
 	} else {
 		$key = "{$wgDBname}:session:{$id}";
 	}
-	
-	return $key;	
+
+	return $key;
 }
