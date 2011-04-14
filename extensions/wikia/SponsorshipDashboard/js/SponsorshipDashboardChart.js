@@ -186,9 +186,11 @@ var SponsorshipDashboard = {
 
 	downloadChart: function(e) {
 		e.preventDefault();
-		var imageData = SponsorshipDashboard.plot.getCanvas().toDataURL();
-		imageData = imageData.replace('image/png', 'image/octet-stream');
-		document.location.href = imageData;
+		var canvas = SponsorshipDashboard.plot.getCanvas();
+		var imageData = canvas.toDataURL();
+		$.showModal('SponsorshipDashboard', '<div style="text-align: center"><img src="' + imageData + '" width="' + canvas.width + '" height="' + canvas.height + '"></div>');
+//		imageData = imageData.replace('image/png', 'image/octet-stream');
+//		document.location.href = imageData;
 	},
 
 	plotAccordingToChoices: function(stopRedrawOverview, borderTicks) {
