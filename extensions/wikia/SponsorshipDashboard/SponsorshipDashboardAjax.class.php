@@ -51,7 +51,7 @@ class SponsorshipDashboardAjax {
 		
 		if ( $SponsorshipDashboard->isAllowed() ){
 			$report = new SponsorshipDashboardReport();
-			$report->fillFromSerializedData( serialize( $_GET['formData'] ) );
+			$report->fillFromSerializedData( serialize( $_POST['formData'] ) );
 			$report->save();
 		}
 		echo $SponsorshipDashboard->reportSaved();
@@ -87,7 +87,7 @@ class SponsorshipDashboardAjax {
 		if ( $SponsorshipDashboard->isAllowed() ){
 
 			$report = new SponsorshipDashboardReport();
-			$report->fillFromSerializedData( serialize( $_GET['formData'] ) );
+			$report->fillFromSerializedData( serialize( $_POST['formData'] ) );
 			$report->lockSources();
 			$dataFormatter = SponsorshipDashboardOutputChart::newFromReport( $report );
 			echo $dataFormatter->getHTML();

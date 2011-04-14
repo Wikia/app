@@ -107,7 +107,7 @@ var SponsorshipDashboardEditor = {
 			formData: SponsorshipDashboardEditor.sourceData
 		};
 		$().log( data, 'test' );
-		$.get( wgScript, data,
+		$.post( wgScript, data,
 		function( axData ){
 			if( save == true ){
 				window.location.href = axData;

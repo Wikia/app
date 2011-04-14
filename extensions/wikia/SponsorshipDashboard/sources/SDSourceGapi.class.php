@@ -92,6 +92,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 	public function getCacheKey() {
 
 		$aKey = $this->getParamsArray( true );
+		$sKey = ( is_array( $aKey ) ) ? md5( implode( ':', $aKey ) ) : '';
 		return
 			self::SD_MC_KEY_PREFIX.':'
 			. self::SD_MC_KEY_PREFIX_GAPI
@@ -99,7 +100,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 			. md5( $this->getGAFilters()
 			. $this->getName()
 			. $this->getAccount())
-			. md5( implode( ':', $aKey ) );
+			. $sKey;
 	}
 
 	/*
@@ -237,7 +238,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 		}
 
 		$ga = WF::build('gapi', array( $wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy ) );
-
+		$a = new gapi();
 		while ( ( $retries > 0 ) && empty( $results ) ) {
 			try {
 				$ga->requestReportData(
@@ -249,7 +250,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 					$this->startDate,
 					$this->endDate,
 					1,
-					360
+					100000
 				);
 				$results = $ga->getResults();
 				break;
@@ -305,6 +306,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 			foreach( $importantKeywordsMap as $key => $val ){
 				$finalKeyword[] = $importantKeywords[$key];
 			}
+
 
 			foreach( $results as $res ) {
 

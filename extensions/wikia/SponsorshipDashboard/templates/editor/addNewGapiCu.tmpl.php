@@ -7,8 +7,9 @@
 	<div class="sd-source-title"> <?=wfMsg('sponsorship-dashboard-source-datasource');?> <b>#1</b>: <?=wfMsg('sponsorship-dashboard-source-GoogleAnalytics');?></div>
 	<div style="font-weight:bold"> <?=wfMsg('sponsorship-dashboard-source-Metrics');?> </div>
 	<ul><?
-		$metrics = explode(',', $data[SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_METRICS] );
-		$metricsNames = unserialize( $data[ SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_METRICS_NAMES ] );
+
+		$metrics = ( isset( $data[ SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_METRICS ] )) ? explode(',', $data[SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_METRICS] ) : array();
+		$metricsNames = ( isset( $data[ SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_METRICS_NAMES ] )) ? unserialize( $data[ SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_METRICS_NAMES ] ) : array();
 		foreach( SponsorshipDashboardSourceGapi::$SD_GAPI_ALLOWED_METRICS as $metric ){
 			?><li>
 				<label>

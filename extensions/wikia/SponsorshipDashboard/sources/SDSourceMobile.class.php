@@ -47,6 +47,7 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 		self::SD_EMPTY
 	);
 
+	protected $frequency;
 	protected $action = '';
 	protected $application = '';
 	protected $operatingsystem = '';
@@ -62,6 +63,8 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 
 		$this->iNumberOfXGuideLines = 7;
 		$this->App = WF::build('App');
+		$this->frequency = SponsorshipDashboardDateProvider::getProvider();
+		
 	}
 
 	/*
@@ -72,6 +75,11 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 
 	public function getSourceKey() {
 		return 'Mobile';
+	}
+
+	public function setFrequency( $frequency ) {
+
+		$this->frequency =  SponsorshipDashboardDateProvider::getProvider( $frequency );
 	}
 
 	/*
@@ -97,10 +105,8 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 
 	protected function recalculateDateVariables() {
 
-		// 2DO: add logic behind
-
-		$this->startDate = 0;
-		$this->enddate = 0;
+		$this->endDate = str_replace( '-', '', $this->frequency->getEndDate() );
+		$this->startDate =  str_replace( '-', '', $this->frequency->getStartDate( $this->lastDateUnits ) );
 	}
 
 	/*
@@ -127,14 +133,17 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 			$wgStatsDB = $this->App->getGlobal('wgStatsDB');
 			$returnArray = array();
 
-			$sql = "SELECT count(url) as number, date(ts) as mobile_date
+			$sql = "SELECT count(url) as number, {$this->frequency->getMobileDateString()} as mobile_date
 				FROM mobile_apps
-				WHERE url like '{$this->getMobileURLforLike()}' ";
+				WHERE
+					{$this->frequency->getMobileDateString( true )} > {$this->startDate}
+					AND {$this->frequency->getMobileDateString( true )} < {$this->endDate}
+					AND url like '{$this->getMobileURLforLike()}' ";
 
 			$sql .= ( !empty( $this->operatingsystem ) ) ? " AND os = '".$this->operatingsystem."'" : '';
 			$sql .= ( !empty( $this->application ) ) ? " AND app = '".$this->application."'" : '';
 
-			$sql .= " GROUP BY date(ts)
+			$sql .= " GROUP BY {$this->frequency->getMobileDateString()}
 				ORDER BY mobile_date";
 
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
@@ -150,6 +159,11 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 
 			$i = 0;
 			$this->saveDataToCache();
+		}
+		$numberOfRecords = count( $this->dataAll );
+		if ( is_array( $this->dataAll ) && !empty( $this->lastDateUnits ) ){
+			sort( $this->dataAll );
+			$this->dataAll = array_slice( $this->dataAll, $numberOfRecords - $this->lastDateUnits );
 		}
 	}
 
@@ -209,6 +223,10 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 		$this->wikiAppId = ( isset( $aParams[ self::SD_WIKI_APP_ID ] ) ) ? $aParams[ self::SD_WIKI_APP_ID ]: '';
 		$this->serieName = ( isset( $aParams[ self::SD_SERIE_NAME ] ) ) ? $aParams[ self::SD_SERIE_NAME ]: '';
 
+		if ( isset( $aParams[ SponsorshipDashboardSource::SD_PARAMS_FREQUENCY ] ) ) {
+			$this->setFrequency( $aParams[ SponsorshipDashboardSource::SD_PARAMS_FREQUENCY ] );
+		}
+
 		$this->setGeneralParamsFromArray( $aParams );
 	}
 
@@ -217,7 +235,8 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 		return in_array(
 			$frequency,
 			array(
-			    SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY
+			    SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY,
+			    SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH
 			)
 		);
 	}
