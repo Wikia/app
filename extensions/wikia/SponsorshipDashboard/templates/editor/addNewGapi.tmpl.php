@@ -26,7 +26,9 @@
 		<select name="<?=SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_EXTRADIM; ?>" style="position:relative; left:0px; width: 100px; margin-right:20px;">
 			<option value=""><?=wfMsg('sponsorship-dashboard-source-none');?></option>
 		<? foreach( SponsorshipDashboardSourceGapi::$SD_GAPI_ALLOWED_DIMENSIONS as $dimension ){
-			?><option value="<?=$dimension;?>"><?=$dimension;?></option><?
+			?><option value="<?=$dimension;?>" <? 
+			echo ( isset( $data[ SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_EXTRADIM ] ) && ( $dimension == $data[ SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_EXTRADIM ] ) ) ? ' selected="selected" ' : ' ';
+			?> ><?=$dimension;?></option><?
 		} ?>
 		</select>
 		<?=wfMsg('sponsorship-dashboard-source-in-case-of-empty');?> <input name="<?=SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_EMPTYRES; ?>" type="text" value="" > <?=wfMsg('sponsorship-dashboard-source-leave-empty');?>
