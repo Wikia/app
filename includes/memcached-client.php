@@ -1079,7 +1079,7 @@ class MWMemcached {
 
 class MemCachedClientforWiki extends MWMemcached {
 	function _debugprint( $text ) {
-		wfDebugLog( "memcached", "memcached: $text", true );
+		error_log( "memcached: $text" );
 	}
 	/* Wikia change begin - @author: garth */
 	public function delete( $key, $time = 0 ) {
