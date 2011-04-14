@@ -203,8 +203,8 @@ function WMU_manualWidthInput( elem ) {
 		return false;
 	}
 
-	if( WMU_orgThumbSize == null ) {
-		var WMU_orgThumbSize = [image.width, image.height];
+	if(!window.WMU_orgThumbSize) {
+		WMU_orgThumbSize = [image.width, image.height];
 	}
 	if ( val > WMU_width ) {
 		if (!WMU_shownMax) {
@@ -223,6 +223,11 @@ function WMU_manualWidthInput( elem ) {
 		$G( 'ImageUploadManualWidth' ).value = val;
 		WMU_readjustSlider( val );
 		WMU_shownMax = false;
+	}
+
+	// BugId:4471
+	if ($("#ImageUploadWidthCheckbox").val() == "false") {
+		$("#ImageUploadWidthCheckbox").val("true").attr('checked', true);
 	}
 }
 
@@ -843,29 +848,28 @@ function WMU_displayDetails(responseText) {
 			return Math.max(2, Math.round(this.getValue() * (thumbSize[0] / 200)));
 		}
 		WMU_slider.subscribe("change", function(offsetFromStart) {
-				if ( 'hidden' == $G( 'ImageUploadSliderThumb' ).style.visibility ) {
+			if ( 'hidden' == $G( 'ImageUploadSliderThumb' ).style.visibility ) {
 				$G( 'ImageUploadSliderThumb' ).style.visibility = 'visible';
-				}
-				if (WMU_slider.initialRound) {
+			}
+			if (WMU_slider.initialRound) {
 				$G('ImageUploadManualWidth').value = '';
 				WMU_slider.initialRound = false;
-				} else {
+			} else {
 				$G('ImageUploadManualWidth').value = WMU_slider.getRealValue();
 
 				if ($("#ImageUploadWidthCheckbox").val() == "false") {
-					$("#ImageUploadWidthCheckbox").val("true");
+					$("#ImageUploadWidthCheckbox").val("true").attr('checked', true);
 				}
-
-				}
-				image.width = WMU_slider.getRealValue();
-				$G('ImageUploadManualWidth').value = image.width;
-				image.height = image.width / (thumbSize[0] / thumbSize[1]);
-				if(WMU_orgThumbSize == null) {
+			}
+			image.width = WMU_slider.getRealValue();
+			$G('ImageUploadManualWidth').value = image.width;
+			image.height = image.width / (thumbSize[0] / thumbSize[1]);
+			if(WMU_orgThumbSize == null) {
 				WMU_orgThumbSize = [image.width, image.height];
 				WMU_ratio = WMU_width / WMU_height;
-				}
-				WMU_thumbSize = [image.width, image.height];
-				});
+			}
+			WMU_thumbSize = [image.width, image.height];
+		});
 
 		if(image.width < 250) {
 			WMU_slider.setValue(200, true);
