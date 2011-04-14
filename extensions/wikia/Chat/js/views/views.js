@@ -308,7 +308,7 @@ NodeChatHelper = {
 	},
 	
 	startActivityTimer: function() {
-		NodeChatHelper.activityTimer = setTimeout(NodeChatHelper.setAway, 1 * 60 * 1000);
+		NodeChatHelper.activityTimer = setTimeout(NodeChatHelper.setAway, 10 * 60 * 1000);
 	},
 
 	resetActivityTimer: function() {
