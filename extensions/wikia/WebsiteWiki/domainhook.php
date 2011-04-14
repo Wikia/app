@@ -244,6 +244,7 @@ EOI;
 EOI;
   }
 ********** end wellness ***/
+/*** fb:3114
   else
   {
     global $wgUser;
@@ -251,6 +252,7 @@ EOI;
       $result .= AdEngine::getInstance()->getAd( 'WEBSITEWIKI_INFOBOX' );
     }
   }
+***/
 
   $result .= "</table>\n";
 
