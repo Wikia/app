@@ -215,9 +215,11 @@ var SponsorshipDashboard = {
 			SponsorshipDashboard.plot = $.plot($("#placeholder" + SponsorshipDashboard.chartId), SponsorshipDashboard.data, localOptions);
 			if (stopRedrawOverview !== true) {
 				SponsorshipDashboard.overview = $.plot($("#overview" + SponsorshipDashboard.chartId), SponsorshipDashboard.data, SponsorshipDashboard.overviewOptions);
-				if (SponsorshipDashboard.selectionRanges != null) {
-					SponsorshipDashboard.overview.setSelection(SponsorshipDashboard.selectionRanges);
+				if (SponsorshipDashboard.selectionRanges == null) {
+					var axisX = SponsorshipDashboard.overview.getXAxes()[0];
+					SponsorshipDashboard.selectionRanges = {x1: axisX.min, x2: axisX.max};
 				}
+				SponsorshipDashboard.overview.setSelection(SponsorshipDashboard.selectionRanges);
 			}
 		}
 	},
