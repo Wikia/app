@@ -11,16 +11,12 @@
 	<!-- CSS injected by extensions -->
 	<?= $csslinks ?>
 	<?php
-		$srcs = AssetsManager::getInstance()->getGroupLocalURL('site_css');
+		global $wgUser;
+		$srcs = AssetsManager::getInstance()->getGroupLocalURL($wgUser->isLoggedIn() ? 'site_user_css' : 'site_anon_css');
 		foreach($srcs as $src) {
 			echo '<link rel="stylesheet" href="'.$src.'">';
-		}	
-		global $wgUser;
-		if($wgUser->isLoggedIn()) {
-			echo '<style>'.$wgUser->getSkin()->generateUserStylesheet().'</style>';
 		}
-	?>
-	<?php
+
 		// RT #68514: load global user CSS (and other page specific CSS added via "SkinTemplateSetupPageCss" hook)
 		if ($pagecss != '') {
 	?>

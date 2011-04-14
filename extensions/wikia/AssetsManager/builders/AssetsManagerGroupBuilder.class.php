@@ -41,6 +41,10 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 			$this->mContent = str_replace("\xEF\xBB\xBF", '', $this->mContent);
 		}
 
+		if($this->mOid == 'site_user_css') {
+			$this->mCacheMode = 'private';
+		}
+
 		$this->mContentType = $ac->getGroupType($this->mOid);
 	}
 
