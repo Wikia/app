@@ -11,7 +11,8 @@ class ChatHelper {
 
 		// Add module only for logged-in users
 		if ($wgUser->isLoggedIn()) {
-			$modules[1] = array('ChatRail', 'ChatEntry', null);
+			// Above spotlights, below everything else. BugzId: 4597.
+			$modules[1175] = array('ChatRail', 'Placeholder', null);
 		}
 		
 		wfProfileOut(__METHOD__);

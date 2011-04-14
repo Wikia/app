@@ -1,7 +1,7 @@
 <?php
 class ChatRailModule extends Module {
 	const MAX_AVATARS_TO_SHOW = 6;
-	const AVATAR_SIZE = 32;
+	const AVATAR_SIZE = 50;
 	var $linkToSpecialChat;
 	var $windowFeatures;
 	var $chatHeadline;
@@ -12,9 +12,19 @@ class ChatRailModule extends Module {
 	var $buttonText;
 
 	/**
-	 * Render module
+	 * Render placeholder. Content will be ajax-loaded for freshness
 	 */
-	public function executeChatEntry(){
+	public function executePlaceholder() {
+		global $wgOut, $wgExtensionsPath;
+		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/Chat/js/ChatRailModule.js"></script>');
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat/css/ChatRailModule.scss'));
+	}
+	
+	
+	/**
+	 * Render module contents - loaded via ajax only for freshness
+	 */
+	public function executeContents(){
 		global $wgUser, $wgSitename, $wgOut, $wgExtensionsPath;
 		wfProfileIn( __METHOD__ );
 
@@ -22,7 +32,7 @@ class ChatRailModule extends Module {
 		$this->linkToSpecialChat = SpecialPage::getTitleFor("Chat")->escapeLocalUrl();
 		$this->windowFeatures = $this->getWindowFeatures();
 		$this->chatHeadline = wfMsg('chat-headline', $wgSitename);
-		$this->profileAvatar = AvatarService::renderAvatar($wgUser->getName(), 32);
+		$this->profileAvatar = AvatarService::renderAvatar($wgUser->getName(), ChatRailModule::AVATAR_SIZE);
 		
 		// List of other people in chat
 		$this->totalInRoom = 0;
@@ -41,8 +51,6 @@ class ChatRailModule extends Module {
 			$this->buttonText = wfMsg('chat-start-a-chat');		
 		}
 
-		// Add CSS for rail module
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat/css/ChatRailModule.scss'));
 
 		wfProfileOut( __METHOD__ );
 	}

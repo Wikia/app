@@ -1,16 +1,54 @@
 
-// TODO: This proxy should be set in a more intelligent way. It's almost certainly going to be different for dev and prod.
-//var WIKIA_PROXY = "varnish-s3";
-var WIKIA_PROXY = "dev-sean";
-// TODO: This proxy should be set in a more intelligent way. It's almost certainly going to be different for dev and prod.
+const NODE_EXIT_USAGE = 1;
+var WIKIA_PROXY_HOST, WIKIA_PROXY_PORT;
+const MAX_MESSAGES_IN_BACKLOG = 50; // how many messages each room will store for now. only longer than NUM_MESSAGES_TO_SHOW_ON_CONNECT for potential debugging.
+const NUM_MESSAGES_TO_SHOW_ON_CONNECT = 10;
 
-// NOTE: WE COULD REPLACE activeClients BY JUST USING rc.scard(getKey_usersInRoom(client.roomId)); ... IT'S O(1)
-// NOTE: WE COULD REPLACE activeClients BY JUST USING rc.scard(getKey_usersInRoom(client.roomId)); ... IT'S O(1)
+// Choose proxy settings based on whether this is development or production.
+if(process.argv.length < 3){
+	console.log("ERROR: You must specify a parameter of which server to run as. Either 'dev' (for development) or 'prod' (for production).");
+	process.exit(NODE_EXIT_USAGE);
+} else {
+	var whichServer = process.argv[2].toLowerCase();
+	switch(whichServer){
+		case "dev":
+		case "development":
+			WIKIA_PROXY_HOST = "dev-sean";
+			WIKIA_PROXY_PORT = 80;
+			console.log("Running as DEVELOPMENT server.");
+			break;
+
+		case "prod":
+		case "production":
+			WIKIA_PROXY_HOST = "127.0.0.1";
+			WIKIA_PROXY_PORT = 6081;
+			console.log("Running as PRODUCTION server.");
+			break;
+
+		default:
+			console.log("ERROR: Environment not recognized: '" + whichServer + "'. Please choose either 'dev' (for development) or 'prod' (for production).");
+			process.exit(NODE_EXIT_USAGE);
+			break;
+	}
+}
+
+// NOTE: WE COULD REPLACE activeClients BY JUST USING rc.scard(getKey_usersInRoom(client.roomId)); ... IT'S O(1) .. alternately, we could keep both as a way to doublecheck.
+// NOTE: WE COULD REPLACE activeClients BY JUST USING rc.scard(getKey_usersInRoom(client.roomId)); ... IT'S O(1) .. alternately, we could keep both as a way to doublecheck.
+
+// TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
+//process.on('uncaughtException', function (err) {
+//  console.log('Caught exception: ' + err);
+//  console.log('Stacktrace: ');
+//	console.log(err.stack);
+//	console.log('Full, raw error: ');
+//	console.log(err);
+//	process.exit(1);
+//	// TODO: is there some way to email us here (if on production) so that we know the server crashed?
+//});
 
 var CHAT_SERVER_PORT = 8000;
 var API_SERVER_PORT = 8001;
 
-var WIKIA_PORT = 80;
 var AUTH_URL = "/?action=ajax&rs=ChatAjax&method=getUserInfo"; // do NOT add hostname into this URL.
 var KICKBAN_URL = "/?action=ajax&rs=ChatAjax&method=kickBan";
 
@@ -122,6 +160,10 @@ function messageDispatcher(client, socket, data){
 							console.log("Kickbanning user: " + dataObj.attrs.userToBan);
 							kickBan(client, socket, data);
 							break;
+						case 'setstatus':
+							console.log("Setting status for " + client.myUser.get('name') + " to " + dataObj.attrs.statusState + " with message '" + dataObj.attrs.statusMessage + "'.");
+							setStatus(client, socket, data);
+							break;
 						default:
 							console.log("Unrecognized command: " + dataObj.attrs.command);
 						break;
@@ -183,7 +225,7 @@ function authConnection(client, socket, authData){
 
 			console.log("Requesting user info from: " + requestUrl);
 
-			var httpClient = http.createClient(WIKIA_PORT, WIKIA_PROXY);
+			var httpClient = http.createClient(WIKIA_PROXY_PORT, WIKIA_PROXY_HOST);
 			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
 			httpRequest.addListener("response", function (response) {
 				//debugObject(client.request.headers);
@@ -205,23 +247,26 @@ function authConnection(client, socket, authData){
 						client.isAuthenticated = true;
 						client.isChatMod = data.isChatMod;
 						client.roomId = roomId;
+						// TODO: REFACTOR THIS TO TAKE ANY FIELDS THAT data GIVES IT.
 						var name = data.username;
 						var avatarSrc = data.avatarSrc;
+						var editCount = data.editCount;
+						var since = data.since;
 						
 						// User has been approved & their data has been set on the client. Put them into the chat.
 
-						// TODO: REFACTOR THESE TO BE STORED IN THE 'chat' OBJ IN REDIS (remove the setting from the ajax request also).
+						// TODO: REFACTOR THESE TO USE THE VALUE STORED IN THE 'chat' OBJ IN REDIS (remove the setting of these client vars from the ajax request also).
 						// Extra wg variables that we'll need.
 						client.wgServer = data.wgServer;
 						client.wgArticlePath = data.wgArticlePath;
-						// TODO: REFACTOR THESE TO BE STORED IN THE 'chat' OBJ IN REDIS (remove the setting from the ajax request also).
+						// TODO: REFACTOR THESE TO USE THE VALUE STORED IN THE 'chat' OBJ IN REDIS (remove the setting of these client vars from the ajax request also).
 
  						rc.hincrby(getKey_room(client.roomId), 'activeClients', 1);
-						
+
 						client.on('disconnect', function(){clientDisconnect(client)});
-						
+
 						var nodeChatModel = new models.NodeChatModel();
-						rc.lrange(getKey_chatEntriesInRoom(client.roomId), -10, -1, function(err, data) {
+						rc.lrange(getKey_chatEntriesInRoom(client.roomId), (-1 * NUM_MESSAGES_TO_SHOW_ON_CONNECT), -1, function(err, data) {
 							if (err) {
 								console.log('Error: ' + err);
 							} else if (data) {
@@ -238,11 +283,12 @@ function authConnection(client, socket, authData){
 
 							// Load the initial userList
 							console.log("Finding members of " + roomId);
-							rc.smembers(getKey_usersInRoom( roomId ), function(err, rawUserData){
+
+							rc.hgetall(getKey_usersInRoom( roomId ), function(err, usernameToData){
 								if (err) {
 									console.log('Error: while trying to find members of room "' + roomId + '": ' + err);
-								} else if(rawUserData){
-									_.each(rawUserData, function(userData){
+								} else if(usernameToData){
+									_.each(usernameToData, function(userData){
 										var userModel = new models.User( JSON.parse(userData) );
 										console.log("Room member of " + roomId + ": ");
 										console.log(userModel);
@@ -264,7 +310,9 @@ function authConnection(client, socket, authData){
 									connectedUser = new models.User({
 										name: name,
 										avatarSrc: avatarSrc,
-										isModerator: client.isChatMod
+										isModerator: client.isChatMod, 
+										editCount: editCount,
+										since: since
 									});
 									nodeChatModel.users.add(connectedUser);
 									console.log('[getConnectedUser] new user: ' + connectedUser.get('name') + ' on client: ' + client.sessionId);
@@ -279,21 +327,22 @@ function authConnection(client, socket, authData){
 									var oldClient = socket.clients[existingId];
 									if(typeof oldClient != "undefined"){
 										// TODO: i18n: how?
-										sendInlineAlertToClient(oldClient, "You have connected from another browser. This connection will be closed.");
+										sendInlineAlertToClient(oldClient, "You have connected from another browser. This connection will be closed.", function(){
+											// Looks like we're kicking ourself, but since we're not in the sessionIdsByKey map yet,
+											// this will only kick the other instance of this same user connected to the room.
+											// This does not remove the name from the room's hash (that would cause race-conditions with the code below which adds the user to the hash).
+											kickUserFromServer(oldClient, socket, client.myUser, client.roomId);
+										});
 									}
-
-									// Looks like we're kicking ourself, but since we're not in the sessionIdsByKey map yet,
-									// this will only kick the other instance of this same user connected to the room.
-									kickUserFromRoom(client, socket, client.myUser, client.roomId);
 								}
 
 								// Add the user to the set of users in the room in redis.
-								var setOfUsersKey = getKey_usersInRoom(client.roomId);
+								var hashOfUsersKey = getKey_usersInRoom(client.roomId);
 								var userData = client.myUser.attributes;
 								delete userData.id;
 
 								sessionIdsByKey[getKey_userInRoom(client.myUser.get('name'), client.roomId)] = client.sessionId;
-								rc.sadd(setOfUsersKey, JSON.stringify(userData), function(err, data){
+								rc.hset(hashOfUsersKey, client.myUser.get('name'), JSON.stringify(userData), function(err, data){
 									// Broadcast the join to all clients.
 									broadcastToRoom(client, socket, {
 										event: 'join',
@@ -329,10 +378,8 @@ function clientDisconnect(client) {
 	delete sessionIdsByKey[getKey_userInRoom(client.myUser.get('name'), client.roomId)];
 
 	// Remove the user from the set of usernames in the current room (in redis).
-	var setOfUsersKey = getKey_usersInRoom(client.roomId);
-	var userData = client.myUser.attributes;
-	delete userData.id;
-	rc.srem(setOfUsersKey, JSON.stringify(userData), function(err, data){
+	var hashOfUsersKey = getKey_usersInRoom(client.roomId);
+	rc.srem(hashOfUsersKey, client.myUser.get('name'), function(err, data){
 		// Decrement the number of active clients in the room.
 		rc.hincrby(getKey_room(client.roomId), 'activeClients', -1);
 
@@ -439,7 +486,7 @@ function kickBan(client, socket, msg){
 			var requestUrl = KICKBAN_URL;
 			requestUrl += "&userToBan=" + encodeURIComponent(userToBan);
 			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching ajax requests (at least on dev boxes) when we don't want it to... so cachebust it.
-			var httpClient = http.createClient(WIKIA_PORT, WIKIA_PROXY);
+			var httpClient = http.createClient(WIKIA_PROXY_PORT, WIKIA_PROXY_HOST);
 			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
 			httpRequest.addListener("response", function (response) {
 				var responseBody = "";
@@ -479,12 +526,26 @@ function kickBan(client, socket, msg){
 } // end kickBan()
 
 /**
- * Given a User model and a room id, disconnect the client if that username has a client connected.
+ * Given a User model and a room id, disconnect the client if that username has a client connected. Also,
+ * remove them from the room hash in redis.
  */
 function kickUserFromRoom(client, socket, userToKick, roomId, callback){
+	// Removing the user from the room.
+	var hashOfUsersKey = getKey_usersInRoom(roomId);
+	rc.hdel(hashOfUsersKey, userToKick.get('name'), function(){
+		kickUserFromServer(client, socket, userToKick, roomId, callback);
+	});
+} // end kickUserFromRoom()
+
+/**
+ * Given a User model and a room id, disconnect the client if that username has a client connected.
+ * This only closes their connection, but does not delete their entry from the room in redis. If you
+ * want to remove the user from the room also, use kickUserFromRoom() instead.
+ */
+function kickUserFromServer(client, socket, userToKick, roomId, callback){
 	// Force-close the kicked user's connection so that they can't interact anymore.
 	console.log("Force-closing connection for kicked user: " + userToKick.get('name'));
-	var kickedClientId = sessionIdsByKey[getKey_userInRoom(userToKick.get('name'), client.roomId)];
+	var kickedClientId = sessionIdsByKey[getKey_userInRoom(userToKick.get('name'), roomId)];
 
 	if(typeof kickedClientId != 'undefined'){
 		// If we're kicking the user (for whatever reason) they shouldn't try to auto-reconnect.
@@ -502,11 +563,39 @@ function kickUserFromRoom(client, socket, userToKick, roomId, callback){
 		//socket.clients[kickedClientId].connection.end();
 		
 	}
+} // end kickUserFromServer()
 
-	if(typeof callback == "function"){
-		callback();
-	}
-} // end kickUserFromRoom()
+/**
+ * Sets the current user's status and broadcasts it out to the other users in the same room.
+ */
+function setStatus(client, socket, setStatusData){
+	var setStatusCommand = new models.KickBanCommand();
+    setStatusCommand.mport(setStatusData);
+
+	var userName = client.myUser.get('name');
+	var roomId = client.roomId;
+	var userJson;
+	rc.hget( getKey_usersInRoom( roomId ), userName, function(err, userData){
+		if (err) {
+			console.log('Error: while trying to load user data for "' + userName + '" in room: "' + roomId + '": ' + err);
+		} else if(userData){
+			// Modify the user's status and store them back in the hash
+			userJson = JSON.parse( userData );
+			userJson.statusState = setStatusCommand.get('statusState');
+			userJson.statusMessage = setStatusCommand.get('statusMessage');
+			rc.hset( getKey_usersInRoom( roomId ), userName, JSON.stringify(userJson), function(){
+				// Broadcast the user as an update to everyone in the room
+				var userToUpdate = new models.User( userJson );
+				broadcastToRoom(client, socket, {
+					event: 'updateUser',
+					data: userToUpdate.xport()
+				});
+			});
+		} else {
+			console.log("Attempted to set status for user '" + userName + "', but that user was not found in room '" + roomId + "'");
+		}
+	});
+} // end setStatus()
 
 
 
@@ -529,12 +618,15 @@ function getKey_chatEntriesInRoom(roomId){ return "chatentries:" + roomId; }
  * Sends some text to the client specified as an InlineAlert but does not store it
  * or persist it anywhere.
  */
-function sendInlineAlertToClient(client, msgText){
+function sendInlineAlertToClient(client, msgText, callback){
 	var inlineAlert = new models.InlineAlert({text: msgText});
 	client.send({
 		event: 'chat:add',
 		data: inlineAlert.xport()
 	});
+	if(typeof callback == "function"){
+		callback();
+	}
 } // end broadcastInlineAlert
 
 /**
@@ -563,22 +655,49 @@ function storeAndBroadcastChatEntry(client, socket, chatEntry, callback){
         var expandedMsg = chatEntry.get('id') + ' ' + chatEntry.get('name') + ': ' + chatEntry.get('text');
         console.log('(' + client.sessionId + ':' + chatEntry.get('name') + ') ' + expandedMsg);
 
-        rc.rpush(getKey_chatEntriesInRoom(client.roomId), chatEntry.xport(), redis.print);
-
-		broadcastChatEntry(client, socket, chatEntry, callback);
+		var chatEntriesInRoomKey = getKey_chatEntriesInRoom(client.roomId);
+        rc.rpush(chatEntriesInRoomKey, chatEntry.xport(), function(){
+			// Keep the list to a defined max length.
+			pruneExtraMessagesFromRoom( chatEntriesInRoomKey );
+		
+			// Send to everyone in the room.
+			broadcastChatEntry(client, socket, chatEntry, callback);
+		});
     });
 } // end chatMessage()
 
 /**
+ * To prevent the messages backlog from expanding indefinitely, we call this (currently when a message is added) to make
+ * sure we're not storing too many messages.
+ */
+function pruneExtraMessagesFromRoom(chatEntriesInRoomKey){
+	rc.llen(chatEntriesInRoomKey, function(err, len){
+		if(err){
+			console.log("Error: while trying to get length of list of messages in '" + chatEntriesInRoomKey + "'. Error msg: " + err);
+		} else if( len > MAX_MESSAGES_IN_BACKLOG + 1 ){
+			console.log("Found a bunch of extra messages in '" + chatEntriesInRoomKey + "'.  Getting rid of the oldest " + (len - MAX_MESSAGES_IN_BACKLOG) + " of them.");
+			rc.ltrim(chatEntriesInRoomKey, (-1 * MAX_MESSAGES_IN_BACKLOG), -1, redis.print);
+		} else if( len == (MAX_MESSAGES_IN_BACKLOG + 1)){
+			// This seems like it'd be faster than ltrim even though ltrim says it's O(N) where N is number to remove and this is O(1).
+			console.log("Trimming extra entry from list of messages in '" + chatEntriesInRoomKey + "'");
+			rc.lpop(chatEntriesInRoomKey, redis.print);
+		}
+	});
+	console.log("Done pruning any old messages in room (if needed).");
+} // end pruneExtraMessagesFromRoom()
+
+/**
  * Send the 'chat:add' update to all clients in the chat room.  This assumes that the caller
  * has already added the chatEntry to the model if it wants the chatEntry to be in the model.
+ *
+ * TODO: RENAME TO broadcastChatEntryToRoom?
  */
 function broadcastChatEntry(client, socket, chatEntry, callback){
 	broadcastToRoom(client, socket, {
 		event: 'chat:add',
 		data:chatEntry.xport()
 	}, callback);
-} // end broadcastChatEntry
+} // end broadcastChatEntry()
 
 /**
  * Broadcasts the 'data' to all of the clients who are in the room specified
@@ -590,15 +709,15 @@ function broadcastToRoom(client, socket, data, callback){
 	var roomId = client.roomId;
 
 	// Get the set of members from redis.
-	rc.smembers(getKey_usersInRoom( roomId ), function(err, rawUserData){
+	rc.hgetall(getKey_usersInRoom( roomId ), function(err, usernameToData){
 		if (err) {
 			console.log('Error: while trying to find members of room "' + roomId + '": ' + err);
 		} else {
 			console.log("Raw data from key " + getKey_usersInRoom( roomId ) + ": ");
-			console.log(rawUserData);
-			_.each(rawUserData, function(userData){
+			console.log(usernameToData);
+			_.each(usernameToData, function(userData){
 				var userModel = new models.User( JSON.parse(userData) );
-
+				
 				console.log("SENDING TO " + userModel.get('name'));
 				var socketId = sessionIdsByKey[ getKey_userInRoom(userModel.get('name'), roomId) ];
 				if(socketId){
@@ -625,19 +744,38 @@ function processText(text, client) {
 	text = text.replace(/</g, "&lt;");
 	text = text.replace(/>/g, "&gt;");
 
-	// Linkify http://links
-	var exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-	text = text.replace(exp, "<a href='$1'>$1</a>");
-
 	// TODO: Use the wgServer and wgArticlePath from the chat room. Maybe the room should be passed into this function? (it seems like it could be called a bunch of times in rapid succession).
 
-	// Linkify [[links]]
-	var exp = /(\[\[[-A-Z0-9+&@#\/%?=~_|!:,.; ]*[-A-Z0-9+&@#\/%=~_|]*\]\])/ig;
-	text = text.replace(exp, function(match) {
-		var article = match.substr(2, match.length - 4);
+	// Linkify local wiki links (eg: http://thiswiki.wikia.com/wiki/Page_Name ) as shortened links (like bracket links)
+	var localWikiLinkReg = client.wgServer + client.wgArticlePath;
+	localWikiLinkReg = localWikiLinkReg.replace(/\$1/, "([-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])");
+	text = text.replace(new RegExp(localWikiLinkReg, "i"), "[[$1]]"); // easy way... will re-write this to a shortened link later in the function.
+
+	// Linkify http://links
+	var exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])/ig;
+	text = text.replace(exp, "<a href='$1'>$1</a>");
+
+	// Linkify [[Pipes|Pipe-notation]] in bracketed links.
+	var exp = /\[\[([ %!\"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\x80-\xFF+]*)\|([^\]\|]*)\]\]/ig;
+	text = text.replace(exp, function(wholeMatch, article, linkText) {
+		article = article.replace(/ /g, "_");
+		linkText = linkText.replace(/_/g, " ");
+
 		var path = client.wgServer + client.wgArticlePath;
 		var url = path.replace("$1", article);
-		return '<a href="' + url + '">' + article + '</a>';
+		return '<a href="' + url + '">' + linkText + '</a>';
+	});
+
+	// Linkify [[links]] - the allowed characters come from http://www.mediawiki.org/wiki/Manual:$wgLegalTitleChars
+	var exp = /(\[\[[ %!\"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\x80-\xFF+]*\]\])/ig;
+	text = text.replace(exp, function(match) {
+		var article = match.substr(2, match.length - 4);
+		article = article.replace(/ /g, "_");
+		var linkText = article.replace(/_/g, " ");
+		var path = client.wgServer + client.wgArticlePath;
+
+		var url = path.replace("$1", article);
+		return '<a href="' + url + '">' + linkText + '</a>';
 	});
 
 	return text;

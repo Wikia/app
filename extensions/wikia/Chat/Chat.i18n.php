@@ -24,4 +24,6 @@ $messages['en'] = array(
 	'chat-start-a-chat' => 'Start a Chat',
 	'chat-whos-here' => "Who's here ($1)",
 	'chat-join-the-chat' => 'Join the Chat',
+	'chat-edit-count' => '$1 Edits',
+	'chat-member-since' => 'Member since $1'
 );

@@ -38,8 +38,10 @@ $color-chat-avatar-border: $color-page-border;
 	
 	.avatar {
 		border: 1px solid $color-chat-avatar-border;
+		height: 32px;
 		margin-right: 10px;
 		vertical-align: middle;
+		width: 32px;
 	}
 	
 	.chat-whos-here {
