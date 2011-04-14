@@ -18,8 +18,8 @@
 		var wgChatMod = <?= $isChatMod ?>;
 		var WIKIA_NODE_HOST = '<?= $nodeHostname ?>'; // used in controllers.js to set up the socket connection.
 		var WIKIA_NODE_PORT = '<?= $nodePort ?>';
-		var pathToProfilePage = 'http://sean.wikia-dev.com/wiki/User:$1';
-		var pathToContribsPage = 'http://sean.wikia-dev.com/wiki/Special:Contributions/$1';
+		var pathToProfilePage = '<?= $pathToProfilePage ?>'; 
+		var pathToContribsPage = '<?= $pathToContribsPage ?>'; 
 	</script>
 </head>
 <body class="<?= $bodyClasses ?>">
