@@ -10,10 +10,17 @@ $config['rte'] = array(
 );
 
 // Site specific CSS
-$config['site_css'] = array(
+$config['site_anon_css'] = array(
 	'type' => AssetsManager::TYPE_CSS,
 	'assets' => array(
 		'#function_AssetsConfig::getSiteCSS'
+	)
+);
+
+$config['site_user_css'] = array(
+	'type' => AssetsManager::TYPE_CSS,
+	'assets' => array(
+		'#group_site_anon_css',
 	)
 );
 

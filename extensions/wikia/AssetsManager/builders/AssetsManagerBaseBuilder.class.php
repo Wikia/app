@@ -13,6 +13,7 @@ class AssetsManagerBaseBuilder {
 
 	protected $mContent;
 	protected $mContentType;
+	protected $mCacheMode = 'public';
 
 	public function __construct($request) {
 		$this->mType = $request->getText('type');
@@ -50,6 +51,10 @@ class AssetsManagerBaseBuilder {
 		} else {
 			return 7 * 24 * 60 * 60; // 7 days
 		}
+	}
+
+	public function getCacheMode() {
+		return $this->mCacheMode;
 	}
 
 	public function getContentType() {
