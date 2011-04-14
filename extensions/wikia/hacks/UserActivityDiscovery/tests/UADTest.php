@@ -48,11 +48,12 @@ class UADTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException WikiaException
 	 */
 	public function testCreatingTokenException() {
-		$dbMock = $this->getMock( 'DatabaseMysql', array( 'insert', 'insertId', 'update', 'commit' ) );
+		$testDate = date('Y-m-d H:i:s');
 
+		$dbMock = $this->getMock( 'DatabaseMysql', array( 'insert', 'insertId', 'update', 'commit' ) );
 		$dbMock->expects( $this->once() )
 		       ->method( 'insert' )
-		       ->with( $this->equalTo( UAD::TOKEN_DB_NAME ), $this->equalTo( array( 'uto_created' => date('Y-m-d H:i:s') ) ), $this->equalTo( 'UAD::createToken' ) );
+		       ->with( $this->equalTo( UAD::TOKEN_DB_NAME ), $this->equalTo( array( 'uto_created' => $testDate ) ), $this->equalTo( 'UAD::createToken' ) );
 
 		$dbMock->expects( $this->once() )
 		       ->method( 'insertId' )
