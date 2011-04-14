@@ -250,7 +250,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 					$this->startDate,
 					$this->endDate,
 					1,
-					100000
+					64000
 				);
 				$results = $ga->getResults();
 				break;
