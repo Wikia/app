@@ -137,7 +137,7 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 	protected function getResults() {
 
 		$this->recalculateDateVariables();
-		
+
 		if ( !$this->loadDataFromCache() ) {
 
 			$this->mStats = WikiStats::newFromId( $this->getCityId() );
@@ -179,8 +179,8 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 
 	public function getSerieName( $serie ) {
 
-		if ( isset( $this->serieNames[ $serie ] ) ) {
-			return $this->serieNames[ $serie ];
+		if ( isset( $this->seriesNames[ $serie ] ) ) {
+			return $this->seriesNames[ $serie ];
 		}
 		return wfMsg( self::SD_MSG_PREFIX.$serie );
 	}
