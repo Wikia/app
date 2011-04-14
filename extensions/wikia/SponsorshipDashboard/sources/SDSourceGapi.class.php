@@ -238,7 +238,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 		}
 
 		$ga = WF::build('gapi', array( $wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy ) );
-		$a = new gapi();
+
 		while ( ( $retries > 0 ) && empty( $results ) ) {
 			try {
 				$ga->requestReportData(
