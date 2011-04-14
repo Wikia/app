@@ -48,7 +48,7 @@
 		<form id="Write" class="Write" onsubmit="return false">
 			<img src="<?= $avatarUrl ?>">
 			<input type="text" name="message"/>
-			<input type="submit" value="send" class="wikia-button"/>
+			<input type="submit" value="Send" class="wikia-button"/>
 		</form>
 
 	</section>
@@ -68,7 +68,6 @@
 		<img src="<%= avatarSrc %>"/>
 		<span class="username"><%= name %></span>
 		<div class="details">
-			<span class="chat-mod">ChatMod</span>
 			<span class="status">Away</span>
 		</div>
 		<div class="UserStatsMenu">

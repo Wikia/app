@@ -101,11 +101,11 @@ a:hover {
 	.details {
 		font-size: 11px;
 	}
-	.chat-mod, .status {
+	.status {
 		display: none;
 	}
-	&.chat-mod .chat-mod {
-		display: inline;
+	&.chat-mod .username {
+		font-weight: bold;
 	}
 	&.away {
 		color: $color-chat-gray;
