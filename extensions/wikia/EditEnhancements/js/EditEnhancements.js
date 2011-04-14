@@ -20,7 +20,7 @@ var EditEnhancements = {
 			section = $.getUrlVar('section');
 
 		// don't move section field when editing user talk or adding new section (BugId:3883)
-		if (wgNamespaceNumber != 3 /* NS_USER_TALK */ && section != 'new') {
+		if (section != 'new') {
 			elements.unshift("#wpSummaryLabel", "#wpSummary");
 		}
 
