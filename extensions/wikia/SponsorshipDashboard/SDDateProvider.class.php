@@ -41,6 +41,19 @@ class SponsorshipDashboardDateProviderMonth {
 		
 		return array( 'month', 'year' );
 	}
+
+	public function getMobileDateString( $forWhere = false ){
+
+		return ( $forWhere ) ? "DATE_FORMAT( ts, '%Y%m' )" : "DATE_FORMAT( ts, '%Y-%m' )";
+	}
+
+	function getEndDate(){
+		return $this->getGapiEndDate();
+	}
+
+	function getStartDate(){
+		return $this->getGapiStartDate();
+	}
 }
 
 class SponsorshipDashboardDateProviderYear {
@@ -76,6 +89,19 @@ class SponsorshipDashboardDateProviderYear {
 
 		return array( 'year' );
 	}
+
+	public function getMobileDateString( $forWhere = false ){
+
+		return ( $forWhere ) ? "DATE_FORMAT( ts, '%Y' )" : "DATE_FORMAT( ts, '%Y' )";
+	}
+
+	function getEndDate(){
+		return $this->getGapiEndDate();
+	}
+
+	function getStartDate(){
+		return $this->getGapiStartDate();
+	}
 }
 
 class SponsorshipDashboardDateProviderDay {
@@ -109,10 +135,25 @@ class SponsorshipDashboardDateProviderDay {
 		return array( '-day', '-month', '-year' );
 	}
 
-	public function getGapiDateDimensionsTable(  ){
+	public function getGapiDateDimensionsTable(){
 
 		return array( 'day', 'month', 'year' );
 	}
+
+	public function getMobileDateString( $forWhere = false ){
+
+		return ( $forWhere ) ? "DATE_FORMAT( ts, '%Y%m%d' )" : "DATE_FORMAT( ts, '%Y-%m-%d' )";
+	}
+
+	function getEndDate(){
+		return $this->getGapiEndDate();
+	}
+
+	function getStartDate(){
+		return $this->getGapiStartDate();
+	}
+
+	
 }
 
 class SponsorshipDashboardDateProvider {

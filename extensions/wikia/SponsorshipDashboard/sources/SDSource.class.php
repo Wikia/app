@@ -15,7 +15,7 @@ abstract class SponsorshipDashboardSource {
 	const SD_GAPI_RETRIES = 4;
 	const SD_DATE_CELL = 'date';
 	const SD_MSG_PREFIX = 'sponsorship-dashboard-serie-';
-	const SD_MC_KEY_PREFIX = 'WikiMetrics1';
+	const SD_MC_KEY_PREFIX = 'WikiMetrics';
 
 	const SD_SOURCE_LIST = 0;
 	const SD_SOURCE_COMPETITORS = 1;
@@ -237,7 +237,7 @@ abstract class SponsorshipDashboardSource {
 	 */
 
 	public function save( $reportId ) {
-
+		Wikia::log( __METHOD__, 'JKU', 'saveMe');
 		$this->setReportId( $reportId );
 
 		if ( $this->saveable && !empty( $this->reportId ) ) {
@@ -271,6 +271,8 @@ abstract class SponsorshipDashboardSource {
 			$db->commit();
 			$this->saveParams();
 		}
+		Wikia::log( __METHOD__, 'JKU', 'saveMeEnd');
+
 	}
 
 	/*
@@ -488,7 +490,7 @@ abstract class SponsorshipDashboardSource {
 		if ( empty( $cityId ) ) {
 			$cityId = WF::build( 'App' )->getGlobal( 'wgCityId' );
 		}
-		return wfSharedMemcKey( 'SponsoredDashboard', $prefix, $cityId );
+		return wfSharedMemcKey( 'WikiaMetrics2', $prefix, $cityId );
 	}
 
 	protected function loadDataFromCache() {

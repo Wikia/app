@@ -63,6 +63,7 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 		$aKey[] = $this->lastDateUnits;
 
 		$aKey[] = implode( ',', $this->series );
+		$aKey[] = serialize( $this->seriesNames );
 		$aKey[] = $this->startMonth;
 		$aKey[] = $this->startYear;
 		$aKey[] = $this->endMonth;
