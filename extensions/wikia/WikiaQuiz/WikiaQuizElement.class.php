@@ -106,7 +106,7 @@ class WikiaQuizElement {
 					if ($line != '') {
 						$answerChunks = explode(self::ANSWER_IMAGE_MARKER, $line);
 						$answers[] = array(
-							'text' => $line,
+							'text' => $answerChunks[0],
 							'correct' => $correct,
 							'image' => isset($answerChunks[1]) ? $this->getImageSrc($answerChunks[1]) : ''
 						);
