@@ -18,6 +18,7 @@ class WikiaQuizElement {
 	const ANSWER_IMAGE_MARKER = '|';
 	const IMAGE_MARKER = 'IMAGE:';
 	const TITLE_MARKER = 'TITLE:';
+	const EXPLANATION_MARKER = 'EXPLANATION:';
 
 	private function __construct($quizElementId) {
 		$this->mData = null;
@@ -78,6 +79,7 @@ class WikiaQuizElement {
 			$firstRev = $title->getFirstRevision();
 			$titleText = $title->getText();
 			$imageSrc = '';
+			$explanation = '';
 
 			// parse wikitext with possible answers (stored as wikitext list)
 			$content = $article->getContent();
@@ -93,6 +95,9 @@ class WikiaQuizElement {
 				elseif (substr($line, 0, strlen(self::IMAGE_MARKER)) == self::IMAGE_MARKER) {
 					$filename = trim( substr($line, strlen(self::IMAGE_MARKER)) );
 					$imageSrc = $this->getImageSrc($filename);
+				}
+				if (substr($line, 0, strlen(self::EXPLANATION_MARKER)) == self::EXPLANATION_MARKER) {
+					$explanation = trim( substr($line, strlen(self::EXPLANATION_MARKER)) );
 				}
 				// answers are specially marked
 				elseif (substr($line, 0, strlen(self::ANSWER_MARKER)) == self::ANSWER_MARKER) {
@@ -145,6 +150,7 @@ class WikiaQuizElement {
 				'question' => $titleText,
 				'answers' => $answers,
 				'image' => $imageSrc,
+				'explanation' => $explanation,
 				'params' => $params,
 			);
 
