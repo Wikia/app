@@ -30,7 +30,7 @@ class AssetsManagerBaseBuilder {
 			} else if($this->mContentType == AssetsManager::TYPE_CSS) {
 				$newContent = $this->minifyCSS($this->mContent);
 			} else if($this->mContentType == AssetsManager::TYPE_JS) {
-				//$newContent = $this->minifyJS($this->mContent);
+				$newContent = $this->minifyJS($this->mContent);
 			}
 
 			$stop = microtime(true);
