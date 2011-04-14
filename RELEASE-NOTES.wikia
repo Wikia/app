@@ -1,3 +1,6 @@
+== Changes since release-016 ==
+* fb#4471: WMU: typing in # of pixels for thumbnail doesn't work (macbre)
+
 == Changes since release-015 ==
 * fb#4302: Gallery builder - Select and Back buttons overlap (macbre)
 * fb#4355: Gallery Editing broken in Internet Explorer (macbre)
