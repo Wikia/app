@@ -14,8 +14,7 @@ class NodeApiClient {
 	const HOST_PRODUCTION = "chatserver.wikia-dev.com";
 	const HOST_DEV = "chat.wikia-dev.com";
 	const API_HOST_AND_PORT_PRODUCTION = "chat:8001";
-	//const API_HOST_AND_PORT_DEV = "dev-chat:8001"; // TODO: RESTORE TO THIS ONCE OPS IS AROUND TO HELP SOLVE THE PROBLEM!
-	const API_HOST_AND_PORT_DEV = "chat.wikia-dev.com:8001";
+	const API_HOST_AND_PORT_DEV = "dev-chat:8001";
 	
 	const HOST_PRODUCTION_FROM_CLIENT = "chatserver.wikia.com";
 	const HOST_DEV_FROM_CLIENT = "chat.wikia-dev.com";
