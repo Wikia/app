@@ -138,6 +138,7 @@ class SponsorshipDashboardReport {
 	 */
 
 	public function save(){
+
 		$wgExternalDatawareDB = $this->App->getGlobal( 'wgExternalDatawareDB' );
 		$db = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
@@ -164,6 +165,7 @@ class SponsorshipDashboardReport {
 	}
 
 	public function delete(){
+		
 		if( !empty( $this->id ) ){
 			$db = wfGetDB( DB_MASTER, array(), F::build('App')->getGlobal('wgExternalDatawareDB') );
 			$db->delete(
@@ -400,6 +402,7 @@ class SponsorshipDashboardReport {
 	 */
 
 	// 2DO: Move to output provider ?
+	// Notice: Never used
 	
 	public function getGeneralHubList(){
 
