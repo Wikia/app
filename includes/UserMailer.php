@@ -213,11 +213,25 @@ class UserMailer {
 			}
 
 			wfDebug( "Sending mail via PEAR::Mail to $dest\n" );
-			$chunks = array_chunk( (array)$dest, $wgEnotifMaxRecips );
-			foreach ($chunks as $chunk) {
-				$e = self::sendWithPear($mail_object, $chunk, $headers, $body);
-				if( WikiError::isError( $e ) )
-					return $e;
+			/* Wikia change here */
+			if ( $wgEnotifImpersonal ) {		
+				$chunks = array_chunk( (array)$dest, $wgEnotifMaxRecips );						
+				foreach ($chunks as $chunk) {
+					$e = self::sendWithPear($mail_object, $chunk, $headers, $body);
+					if( WikiError::isError( $e ) )
+						return $e;
+				}
+			} else {
+				if ( !is_array( $to ) ) {
+					$to = array( $to );
+				}
+				# array of MailAddress objects
+				$chunks = array_chunk( (array)$to, $wgEnotifMaxRecips );	
+				foreach ($chunks as $chunk) {
+					$e = self::sendMail( $mail_object, $chunk, $headers, $headers['Subject'], $body );
+					if( WikiError::isError( $e ) )
+						return $e;					
+				}
 			}
 		} else	{
 			# In the following $headers = expression we removed "Reply-To: {$from}\r\n" , because it is treated differently
@@ -258,10 +272,10 @@ class UserMailer {
 			if (function_exists('mail')) {
 				if (is_array($to)) {
 					foreach ($to as $recip) {
-						$sent = mail( $recip->toString(), wfQuotedPrintable( $subject ), $body, $headers );
+						$sent = self::sendMail( 'mail', $recip, $headers, $subject, $body );
 					}
 				} else {
-					$sent = mail( $to->toString(), wfQuotedPrintable( $subject ), $body, $headers );
+					$sent = self::sendMail( 'mail', $to, $headers, $subject, $body );
 				}
 			} else {
 				$wgErrorString = 'PHP is not configured to send mail';
@@ -392,7 +406,7 @@ class UserMailer {
 		}
 
 		wfDebug( "Sending mail via PEAR::Mail to {$to->address}\n" );
-		$e = self::sendWithPear($mail_object, array($to->address), $headers, $body);
+		$e = self::sendMail( $mail_object, array($to), $headers, $subject, $body );
 		if( WikiError::isError( $e ) ) {
 			return $e;
 		}
@@ -417,6 +431,41 @@ class UserMailer {
 	static function rfc822Phrase( $phrase ) {
 		$phrase = strtr( $phrase, array( "\r" => '', "\n" => '', '"' => '' ) );
 		return '"' . $phrase . '"';
+	}
+	
+	/**
+	 * Wikia changes - @author: moli
+	 * Send email to user
+	 * 
+	 * @param $mail String: mail, Mail ...
+	 * @param $emails Array of MailAddress objects
+	 * @param $headers Array: email's headers
+	 * @param $subject String
+	 * @param $body String
+	 */
+	 static private function sendMail( $mail, $emails, $headers, $subject, $body ) {
+		$res = true;
+
+		if ( !empty( $emails ) && is_array( $emails ) ) {
+			foreach ( $emails as $to ) {
+				
+				wfRunHooks('ComposeMail', array( $to, &$body, &$subject ));
+				
+				if ( $mail == 'mail' ) {
+					$res = mail( $to->toString(), wfQuotedPrintable( $subject ), $body, $headers );
+				} elseif ( is_object( $mail ) ) {
+					$res = self::sendWithPear( $mail, array($to->address), $headers, $body );
+					if ( WikiError::isError( $res ) ) {
+						return $res;
+					}			
+				} else {
+					wfDebug( "Invalid use of " . __METHOD__ . ": mail = $mail \n" );
+					$res = false;	 
+				}
+			}
+		}
+		
+		return $res;
 	}
 }
 
@@ -637,7 +686,7 @@ class EmailNotification {
 			$user = User::newFromName( $name );
 			$this->compose( $user );
 		}
-
+		
 		$this->sendMails();
 		wfProfileOut( __METHOD__ );
 	}
@@ -785,8 +834,6 @@ class EmailNotification {
 
 		if ( !$this->composed_common )
 			$this->composeCommonMailtext();
-
-		wfRunHooks('ComposeMail', array( $user, &$this->body, &$this->bodyHTML, &$this->subject ));
 
 		if ( $wgEnotifImpersonal ) {
 			$this->mailTargets[] = new MailAddress( $user );
