@@ -16,7 +16,7 @@ class CreateWiki {
 
 	private $mName, $mDomain, $mLanguage, $mHub, $mType, $mStarters, $mIP,
 		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder, $mTables,
-		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars, 
+		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables, $mTypeTables,
 		$mStarterTables;
 
@@ -115,7 +115,7 @@ class CreateWiki {
 				"nl" => "nlstarteranswers",
 			)
 		);
-		
+
 		$this->mStarterTables = array(
 			"*" => array(
 				'categorylinks',
@@ -133,7 +133,7 @@ class CreateWiki {
 				'user_profile'
 			)
 		);
-		
+
 		/* default tables */
 		$this->mDefaultTables = array(
 			"{$this->mIP}/maintenance/tables.sql",
@@ -166,12 +166,12 @@ class CreateWiki {
 				"{$this->mIP}/maintenance/answers-additional-tables.sql",
 			)
 		);
-		
+
 		/**
 		 * local job
 		 */
 		$wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
-		$wgAutoloadClasses[ "CreateWikiLocalJob" ] = dirname(__FILE__) . "/CreateWikiLocalJob.php";		 
+		$wgAutoloadClasses[ "CreateWikiLocalJob" ] = dirname(__FILE__) . "/CreateWikiLocalJob.php";
 	}
 
 
@@ -231,7 +231,7 @@ class CreateWiki {
 		//
 		$clusterdb = ( self::ACTIVE_CLUSTER ) ? "wikicities_" . self::ACTIVE_CLUSTER : "wikicities";
 		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $clusterdb ); // database handler, old $dbwTarget
-		
+
 		// check if database is creatable
 		// @todo move all database creation checkers to canCreateDatabase
 		if( !$this->canCreateDatabase() ) {
@@ -254,14 +254,14 @@ class CreateWiki {
 			return self::ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN;
 		}
 
-		// set new city_id 
+		// set new city_id
 		$this->mNewWiki->city_id = $this->mDBw->insertId();
 		if ( empty( $this->mNewWiki->city_id ) ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": Cannot set data in city_list table. city_id is empty after insert\n", true );
 			wfProfileOut( __METHOD__ );
 			return self::ERROR_DATABASE_WIKI_FACTORY_TABLES_BROKEN;
 		}
-		
+
 		wfDebugLog( "createwiki", __METHOD__ . ": Row added added into city_list table, city_id = {$this->mNewWiki->city_id}\n", true );
 
 		/**
@@ -272,7 +272,7 @@ class CreateWiki {
 			wfProfileOut( __METHOD__ );
 			return self::ERROR_DATABASE_WRITE_TO_CITY_DOMAINS_BROKEN;
 		}
-		
+
 		wfDebugLog( "createwiki", __METHOD__ . ": Row added into city_domains table, city_id = {$this->mNewWiki->city_id}\n", true );
 
 		/**
@@ -291,14 +291,14 @@ class CreateWiki {
 			copy( self::CREATEWIKI_LOGO, "{$this->mNewWiki->images_logo}/Wiki.png" );
 			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has been copied\n", true );
 		} else {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has not been copied\n", true );			
+			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has not been copied\n", true );
 		}
-		
+
 		if ( file_exists( self::CREATEWIKI_ICON ) ) {
 			copy( self::CREATEWIKI_ICON, "{$this->mNewWiki->images_icon}/Favicon.ico" );
 			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has been copied\n", true );
 		} else {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has not been copied\n", true );			
+			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has not been copied\n", true );
 		}
 
 		/**
@@ -309,17 +309,17 @@ class CreateWiki {
 
 		$tmpSharedDB = $wgSharedDB;
 		$wgSharedDB = $this->mNewWiki->dbname;
-		
+
 		/**
 		 * we got empty database created, now we have to create tables and
 		 * populate it with some default values
 		 */
-		wfDebugLog( "createwiki", __METHOD__ . ": Creating tables in database\n", true );		
-		
-		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mNewWiki->dbname );			
-		
+		wfDebugLog( "createwiki", __METHOD__ . ": Creating tables in database\n", true );
+
+		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mNewWiki->dbname );
+
 		if ( !$this->createTables() ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Creating tables not finished\n", true );	
+			wfDebugLog( "createwiki", __METHOD__ . ": Creating tables not finished\n", true );
 			wfProfileOut( __METHOD__ );
 			return self::ERROR_SQL_FILE_BROKEN;
 		}
@@ -340,11 +340,6 @@ class CreateWiki {
 			wfDebugLog( "createwiki", __METHOD__ . ": Create user sysop/bureaucrat for user: {$this->mNewWiki->founderId} failed \n", true );
 		}
 
-		/**
-		 * set images timestamp to current date (see: #1687)
-		 */
-		wfDebugLog( "createwiki", __METHOD__ . ": Set images timestamp to current date \n", true );
-		$this->mNewWiki->dbw->update("image", array( "img_timestamp" => date('YmdHis') ), "*", __METHOD__ );
 
 		/**
 		 * init site_stats table (add empty row)
@@ -393,7 +388,7 @@ class CreateWiki {
 		global $wgUniversalCreationVariables;
 		if ( !empty($wgUniversalCreationVariables) && !empty($wiki_type) && isset( $wgUniversalCreationVariables[$wiki_type] ) ) {
 			$this->addCustomSettings( 0, $wgUniversalCreationVariables[$wiki_type], "universal" );
-			wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wiki_type} \n", true );		
+			wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wiki_type} \n", true );
 		}
 
 		/**
@@ -402,7 +397,7 @@ class CreateWiki {
 		global $wgLangCreationVariables;
 		$langCreationVar = isset($wgLangCreationVariables[$wiki_type]) ? $wgLangCreationVariables[$wiki_type] : $wgLangCreationVariables;
 		$this->addCustomSettings( $this->mNewWiki->language, $langCreationVar, "language" );
-		wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wiki_type} and language: {$this->mNewWiki->language} \n", true );		
+		wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wiki_type} and language: {$this->mNewWiki->language} \n", true );
 
 		/**
 		 * move main page
@@ -416,7 +411,7 @@ class CreateWiki {
 			$wgWikiaLocalSettingsPath
 		);
 		$output = wfShellExec( $cmd );
-		wfDebugLog( "createwiki", __METHOD__ . ": Main page moved \n", true );	
+		wfDebugLog( "createwiki", __METHOD__ . ": Main page moved \n", true );
 
 		/**
 		 * show congratulation message
@@ -435,7 +430,7 @@ class CreateWiki {
 			),
 			TASK_QUEUED
 		);
-		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added\n", true );	
+		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added\n", true );
 
 		wfProfileOut( __METHOD__ );
 
@@ -602,7 +597,7 @@ class CreateWiki {
 		$this->mNewWiki->founderEmail = $this->mFounder->getEmail();
 		$this->mNewWiki->founderId = $this->mFounder->getId();
 		$this->mNewWiki->type = $this->mType;
-		
+
 		wfProfileOut( __METHOD__ );
 
 		return $this->mNewWiki;
@@ -822,17 +817,17 @@ class CreateWiki {
 		}
 		return $can;
 	}
-	
+
 	/**
 	 * addToCityList
 	 *
 	 * add record to the city_list table
 	 *
-	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com> 
+	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com>
 	 * @author Piotr Molski <moli@wikia-inc.com>
 	 * @access private
 	 *
-	 */	
+	 */
 	private function addToCityList() {
 		$insertFields = array(
 			'city_title'          => $this->mNewWiki->sitename,
@@ -851,7 +846,7 @@ class CreateWiki {
 		}
 
 		$res = $this->mDBw->insert( "city_list", $insertFields, __METHOD__ );
-		
+
 		return $res;
 	}
 
@@ -860,11 +855,11 @@ class CreateWiki {
 	 *
 	 * add records to the city_domain table
 	 *
-	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com> 
+	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com>
 	 * @author Piotr Molski <moli@wikia-inc.com>
 	 * @access private
 	 *
-	 */	
+	 */
 	private function addToCityDomains() {
 		$res = $this->mDBw->insert(
 			"city_domains",
@@ -880,20 +875,20 @@ class CreateWiki {
 			),
 			__METHOD__
 		);
-		
+
 		return $res;
 	}
-		
+
 	/**
 	 * createTables
 	 *
 	 * create default tables and populate with default values
 	 *
-	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com> 
+	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com>
 	 * @author Piotr Molski <moli@wikia-inc.com>
 	 * @access private
 	 *
-	 */	
+	 */
 	private function createTables() {
 
 		$mSqlFiles = $this->mDefaultTables;
@@ -914,27 +909,27 @@ class CreateWiki {
 				if( is_readable( $file ) ) {
 					$mSqlFiles[] = $file ;
 				}
-			}				
+			}
 		}
 
 		foreach( $mSqlFiles as $file ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": Populating database with {$file}\n", true );
-			
+
 			$error = $this->mNewWiki->dbw->sourceFile( $file );
 			if ( $error !== true ) {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-		
+
 	/**
 	 * setWFVariables
 	 *
 	 * add all default variables into city_variables table
 	 *
-	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com> 
+	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com>
 	 * @author Piotr Molski <moli@wikia-inc.com>
 	 * @access private
 	 *
@@ -1035,31 +1030,31 @@ class CreateWiki {
 			}
 		}
 	}
-		
+
 	/**
 	 * importStarter
 	 *
 	 * get starter data for current parameters
 	 *
-	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com> 
+	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com>
 	 * @author Piotr Molski <moli@wikia-inc.com>
 	 * @access private
 	 *
-	 */	
+	 */
 	private function importStarter() {
 		global $wgDBadminuser, $wgDBadminpassword, $wgWikiaLocalSettingsPath;
 
 		if ( $this->mType && isset( $this->mStarters[$this->mType] ) ) {
-			$dbStarter = 
-				( isset( $this->mStarters[ $this->mType ][ $this->mNewWiki->language ] ) ) 
+			$dbStarter =
+				( isset( $this->mStarters[ $this->mType ][ $this->mNewWiki->language ] ) )
 					? $this->mStarters[ $this->mType ][ $this->mNewWiki->language ]
-					: $this->mStarters[ $this->mType ][ "*" ];		
+					: $this->mStarters[ $this->mType ][ "*" ];
 		} else {
-			$dbStarter = ( isset( $this->mStarters[ "*" ][ $this->mNewWiki->language ] ) ) 
+			$dbStarter = ( isset( $this->mStarters[ "*" ][ $this->mNewWiki->language ] ) )
 						? $this->mStarters[ "*" ][ $this->mNewWiki->language ]
 						: $this->mStarters[ "*" ][ "*" ];
 		}
-			
+
 		/**
 		 * determine if exists
 		 */
@@ -1076,7 +1071,7 @@ class CreateWiki {
 			 */
 			$starter[ "dbStarter" ] = $dbStarter;
 			$starter[ "uploadDir" ] = WikiFactory::getVarValueByName( "wgUploadDirectory", WikiFactory::DBtoID( $dbStarter ) );
-			
+
 			wfDebugLog( "createwiki", __METHOD__ . ": starter $dbStarter exists\n", true );
 		}
 		catch( DBConnectionError $e ) {
@@ -1085,14 +1080,14 @@ class CreateWiki {
 			 */
 			wfDebugLog( "createwiki", __METHOD__ . ": starter $dbStarter doesn't exist\n", true );
 		}
-	
+
 		if ( $starter ) {
 			$tables = $this->mStarterTables[ "*" ];
-			
+
 			if ( $this->mType && isset( $this->mStarterTables[ $this->mType ] ) ) {
 				$tables = array_merge( $tables, $this->mStarterTables[ $this->mType ] ) ;
 			}
-			
+
 			$cmd = sprintf(
 				"%s -h%s -u%s -p%s %s %s | %s -h%s -u%s -p%s %s",
 				$this->mMYSQLdump,
@@ -1136,21 +1131,21 @@ class CreateWiki {
 			wfShellExec( $cmd );
 
 			wfDebugLog( "createwiki", __METHOD__ . ": Starter database copied \n", true );
-		}		
-		
+		}
+
 		return true;
 	}
-	
+
 	/**
 	 * importStarter
 	 *
 	 * get starter data for current parameters
 	 *
-	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com> 
+	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com>
 	 * @author Piotr Molski <moli@wikia-inc.com>
 	 * @access private
 	 *
-	 */	
+	 */
 	private function addUserToGroups() {
 		if ( !$this->mNewWiki->founderId ) {
 			return false;
@@ -1158,10 +1153,10 @@ class CreateWiki {
 
 		$this->mNewWiki->dbw->replace( "user_groups", array( ), array( "ug_user" => $this->mNewWiki->founderId, "ug_group" => "sysop" ) );
 		$this->mNewWiki->dbw->replace( "user_groups", array( ), array( "ug_user" => $this->mNewWiki->founderId, "ug_group" => "bureaucrat" ) );
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * addCustomSettings
 	 *
@@ -1201,7 +1196,7 @@ class CreateWiki {
 		wfProfileOut( __METHOD__ );
 		return 1;
 	}
-	
+
 	public function getWikiInfo($key) {
 		$ret = $this->mNewWiki->$key;
 		return $ret;

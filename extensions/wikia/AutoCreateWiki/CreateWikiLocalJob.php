@@ -80,7 +80,7 @@ class CreateWikiLocalJob extends Job {
 			Wikia::log( __METHOD__, "user", "Founder user_id  is unknown {$this->mParams->founderId}" );
 		}
 
-		# check user name 
+		# check user name
 		if ( ! $this->mFounder || $this->mFounder->isAnon() ) {
 			Wikia::log( __METHOD__, "user", "Cannot load user with user_id = {$this->mParams->founderId}" );
 			if ( !empty( $this->mParams->founderName  ) ) {
@@ -88,7 +88,7 @@ class CreateWikiLocalJob extends Job {
 				$this->mFounder->load();
 			}
 		}
-		
+
 		# use ExternalUser to check
 		if ( ! $this->mFounder || $this->mFounder->isAnon() ) {
 			global $wgExternalAuthType;
@@ -99,7 +99,7 @@ class CreateWikiLocalJob extends Job {
 				}
 			}
 		}
-		
+
 		$wgUser = User::newFromName( "CreateWiki script" );
 
 		/**
@@ -117,6 +117,7 @@ class CreateWikiLocalJob extends Job {
 
 		$this->moveMainPage();
 		$this->changeStarterContributions();
+		$this->changeImagesTimestamps();
 		$this->setWelcomeTalkPage();
 		$this->sendWelcomeMail();
 		$this->populateCheckUserTables();
@@ -498,6 +499,40 @@ class CreateWikiLocalJob extends Job {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * this method updates img_timestamp
+	 * update is performed on local (freshly created) database
+	 *
+	 * @access private
+	 * @author Krzysztof Krzyżaniak (eloy)
+	 *
+	 */
+	private function changeImagesTimestamps( ) {
+
+		wfProfileIn( __METHOD__ );
+		$dbw = wfGetDB( DB_MASTER );
+		$sth = $dbw->select(
+			array( "image" ),
+			array( "img_name" ),
+			false,
+			__METHOD__
+		);
+		$interval = 0;
+		$timestamp = time();
+		while( $row = $dbw->fetchObject( $sth ) ) {
+
+			$ts = date('YmdHis', $timestamp + $interval );
+			$dbw->update(
+				"image",
+				array( "img_timestamp" => $ts ),
+				array( "img_name" => $row->img_name ),
+				__METHOD__
+			);
+			wfDebug( __METHOD__ . ": changing timestamp of {$row->img_name} to {$ts}\n" );
+			$interval++;
+		}
+		wfProfileOut( __METHOD__ );
+	}
 	/**
 	 * send http post to TheSchwartz which queue reminder call for 48hours.
 	 * TheSchwartz will call api.php?method=awcreminder
