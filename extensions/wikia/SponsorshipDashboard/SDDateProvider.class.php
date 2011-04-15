@@ -9,6 +9,9 @@
 
 class SponsorshipDashboardDateProviderMonth {
 
+	const SD_START_DATE = '2010-04';
+
+
 	public function getType(){
 		return SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH;
 	}
@@ -48,11 +51,11 @@ class SponsorshipDashboardDateProviderMonth {
 	}
 
 	function getEndDate(){
-		return $this->getGapiEndDate();
+		return date("Y-m", mktime(0, 0, 0, date( "m" ), 0, date( "Y" )));
 	}
 
 	function getStartDate(){
-		return $this->getGapiStartDate();
+		return ( !empty( $dateUnits ) ) ? date("Y-m", mktime(0, 0, 0, ( date( "m" )-$dateUnits ), 0 , date( "Y" ))) : self::SD_START_DATE;
 	}
 }
 

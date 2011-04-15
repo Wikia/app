@@ -133,11 +133,13 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 			$wgStatsDB = $this->App->getGlobal('wgStatsDB');
 			$returnArray = array();
 
+			$this->recalculateDateVariables();
+			
 			$sql = "SELECT count(url) as number, {$this->frequency->getMobileDateString()} as mobile_date
 				FROM mobile_apps
 				WHERE
-					{$this->frequency->getMobileDateString( true )} > {$this->startDate}
-					AND {$this->frequency->getMobileDateString( true )} < {$this->endDate}
+					{$this->frequency->getMobileDateString( true )} >= {$this->startDate}
+					AND {$this->frequency->getMobileDateString( true )} <= {$this->endDate}
 					AND url like '{$this->getMobileURLforLike()}' ";
 
 			$sql .= ( !empty( $this->operatingsystem ) ) ? " AND os = '".$this->operatingsystem."'" : '';
