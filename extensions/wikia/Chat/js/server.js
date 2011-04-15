@@ -330,28 +330,18 @@ function authConnection(client, socket, authData){
 										sendInlineAlertToClient(oldClient, "You have connected from another browser. This connection will be closed.", function(){
 											// Looks like we're kicking ourself, but since we're not in the sessionIdsByKey map yet,
 											// this will only kick the other instance of this same user connected to the room.
-											// This does not remove the name from the room's hash (that would cause race-conditions with the code below which adds the user to the hash).
-											kickUserFromServer(oldClient, socket, client.myUser, client.roomId);
+											kickUserFromRoom(oldClient, socket, client.myUser, client.roomId, function(){
+												// This needs to be done after the user is removed from the room.  Since clientDisconnect() is called asynchronously,
+												// the user is explicitly removed from the room first, then clientDisconnect() is prevented from attempting to remove
+												// the user (since that may get called at some point after formallyAddClient() adds the user intentionally).
+												formallyAddClient(client, socket, connectedUser);
+											});
 										});
 									}
+								} else {
+									// Put the user info into the room hash in redis, and add the client to the in-memory (not redis) hash of connected sockets.
+									formallyAddClient(client, socket, connectedUser);
 								}
-
-								// Add the user to the set of users in the room in redis.
-								var hashOfUsersKey = getKey_usersInRoom(client.roomId);
-								var userData = client.myUser.attributes;
-								delete userData.id;
-
-								sessionIdsByKey[getKey_userInRoom(client.myUser.get('name'), client.roomId)] = client.sessionId;
-								rc.hset(hashOfUsersKey, client.myUser.get('name'), JSON.stringify(userData), function(err, data){
-									// Broadcast the join to all clients.
-									broadcastToRoom(client, socket, {
-										event: 'join',
-										joinData: connectedUser.xport()
-									});
-
-									// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
-									storeAndBroadcastInlineAlert(client, socket, connectedUser.get('name') + " has joined the chat.");
-								});
 							});
 						});
 
@@ -369,32 +359,74 @@ function authConnection(client, socket, authData){
 	console.log("Started request to get wgServer from redis");
 } // end of socket connection code
 
+/**
+ * Adds the client to their room in redis and adds their sessionId to the hash of sessionIdsByKey.
+ *
+ * This should only be done after any duplicates of this user have been ejected from the room already (in the case
+ * of the same user connecting from multiple browsers).
+ */
+function formallyAddClient(client, socket, connectedUser){
+	// Add the user to the set of users in the room in redis.
+	var hashOfUsersKey = getKey_usersInRoom(client.roomId);
+	var userData = client.myUser.attributes;
+	delete userData.id;
+
+	sessionIdsByKey[getKey_userInRoom(client.myUser.get('name'), client.roomId)] = client.sessionId;
+	rc.hset(hashOfUsersKey, client.myUser.get('name'), JSON.stringify(userData), function(err, data){
+		// Broadcast the join to all clients.
+		broadcastToRoom(client, socket, {
+			event: 'join',
+			joinData: connectedUser.xport()
+		});
+
+		// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
+		storeAndBroadcastInlineAlert(client, socket, connectedUser.get('name') + " has joined the chat.");
+	});
+} // end formallyAddClient()
 
 /**
  * Called when a client disconnects from the server.
+ *
+ * If client has property 'doNotRemoveFromRedis' set to true, then the user will be removed from the room hash in redis (this is used
+ * sometimes to prevent race conditions).
  */
 function clientDisconnect(client) {
 	// Remove the in-memory mapping of this user in this room to their sessionId
 	delete sessionIdsByKey[getKey_userInRoom(client.myUser.get('name'), client.roomId)];
 
 	// Remove the user from the set of usernames in the current room (in redis).
-	var hashOfUsersKey = getKey_usersInRoom(client.roomId);
-	rc.srem(hashOfUsersKey, client.myUser.get('name'), function(err, data){
-		// Decrement the number of active clients in the room.
-		rc.hincrby(getKey_room(client.roomId), 'activeClients', -1);
+	if(client.doNotRemoveFromRedis){
+		console.log("Not removing user from room, just broadcasting their part & the associated inline alert for " + client.myUser.get('name'));
+		broadcastDisconnectionInfo(client, socket);
+	} else {
+		console.log("Disconnected: " + client.myUser.get('name') + " and about to remove them from the room in redis & broadcast the part and InlineAlert...");
+		var hashOfUsersKey = getKey_usersInRoom(client.roomId);
+		rc.hdel(hashOfUsersKey, client.myUser.get('name'), function(err, data){
+			if (err) {
+				console.log('Error: while trying to remove user "' + client.myUser.get('name') + '" from room "' + client.roomId + '": ' + err);
+			} else {
+				// Decrement the number of active clients in the room.
+				rc.hincrby(getKey_room(client.roomId), 'activeClients', -1);
 
-		// Broadcast the 'part' to all clients.
-		broadcastToRoom(client, socket, {
-			event: 'part',
-			data: client.myUser.xport()
+				broadcastDisconnectionInfo(client, socket);
+			}
 		});
-
-		// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
-		storeAndBroadcastInlineAlert(client, socket, client.myUser.get('name') + " has left the chat.");
-	});
+	}
 } // end clientDisconnect()
 
+/**
+ * After a client has been disconnected, broadcast the part and the associated inline-alert to all remaining members of the room.
+ */
+function broadcastDisconnectionInfo(client, socket){
+	// Broadcast the 'part' to all clients.
+	broadcastToRoom(client, socket, {
+		event: 'part',
+		data: client.myUser.xport()
+	});
 
+	// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
+	storeAndBroadcastInlineAlert(client, socket, client.myUser.get('name') + " has left the chat.");
+} // end broadcastDisconnectionInfo()
 
 // Start the main chat server listening.
 app.listen(CHAT_SERVER_PORT);
@@ -533,7 +565,11 @@ function kickUserFromRoom(client, socket, userToKick, roomId, callback){
 	// Removing the user from the room.
 	var hashOfUsersKey = getKey_usersInRoom(roomId);
 	rc.hdel(hashOfUsersKey, userToKick.get('name'), function(){
-		kickUserFromServer(client, socket, userToKick, roomId, callback);
+		kickUserFromServer(client, socket, userToKick, roomId);
+		
+		if(typeof callback == "function"){
+			callback();
+		}
 	});
 } // end kickUserFromRoom()
 
@@ -542,7 +578,7 @@ function kickUserFromRoom(client, socket, userToKick, roomId, callback){
  * This only closes their connection, but does not delete their entry from the room in redis. If you
  * want to remove the user from the room also, use kickUserFromRoom() instead.
  */
-function kickUserFromServer(client, socket, userToKick, roomId, callback){
+function kickUserFromServer(client, socket, userToKick, roomId){
 	// Force-close the kicked user's connection so that they can't interact anymore.
 	console.log("Force-closing connection for kicked user: " + userToKick.get('name'));
 	var kickedClientId = sessionIdsByKey[getKey_userInRoom(userToKick.get('name'), roomId)];
@@ -553,6 +589,11 @@ function kickUserFromServer(client, socket, userToKick, roomId, callback){
 			event: 'disableReconnect',
 		});
 
+		// To prevent race-conditions, we don't have any users kicked by this function get removed from
+		// redis. Setting this variable here lets clientDisconnect() know not to delete the user from the
+		// room in redis.
+		socket.clients[kickedClientId].doNotRemoveFromRedis = true;
+		
 		// This closes the connection (takes a few seconds) after calling the clientDisconnect() handler which will
 		// broadcast the 'part' and delete the session id from the sessionIdsByKey hash.
 // TODO: SWITCH THESE METHODS AND TEST KICKBANS AGAIN.
