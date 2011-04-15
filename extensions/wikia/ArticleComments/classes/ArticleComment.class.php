@@ -215,7 +215,7 @@ class ArticleComment {
 
 			//due to slave lag canEdit() can return false negative - we are hiding it by CSS and force showing by JS
 			if ( $wgUser->isLoggedIn() && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
-				$display = ( $this->canEdit() ) ? '' : ' style="display:none"';
+				$display = $this->canEdit() ? '' : ' style="display:none"';
 				$img = '<img class="edit-pencil sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
 				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $articleId . '" class="article-comm-edit" id="comment' . $articleId . '">' . wfMsg('article-comments-edit') . '</a></span>';
 			}
@@ -351,17 +351,15 @@ class ArticleComment {
 
 		$res = false;
 		if ( $this->mUser ) {
-			$isAuthor = ($this->mUser->getId() == $wgUser->getId()) && (!$wgUser->isAnon());
+			$isAuthor = $this->mUser->getId() == $wgUser->getId() && !$wgUser->isAnon();
 			$canEdit =
 				//prevent infinite loop for blogs - userCan hooked up in BlogLockdown
 				defined('NS_BLOG_ARTICLE_TALK') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE_TALK ||
 				$this->mTitle->userCan( "edit" );
 
-			//TODO: create new permission and remove checking groups below
-			$groups = $wgUser->getEffectiveGroups();
-			$isAdmin = in_array( 'staff', $groups ) || in_array( 'sysop', $groups );
+			$isAllowed = $wgUser->isAllowed('commentedit');
 
-			$res = ( $isAuthor || $isAdmin ) && $canEdit;
+			$res = ( $isAuthor || $isAllowed ) && $canEdit;
 		}
 
 		return $res;
@@ -380,7 +378,7 @@ class ArticleComment {
 
 		$text = '';
 		$this->load(true);
-		if ( $this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) {
+		if ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) {
 			wfLoadExtensionMessages('ArticleComments');
 			$vars = array(
 				'canEdit'		=> $this->canEdit(),

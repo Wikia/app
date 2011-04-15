@@ -50,7 +50,7 @@ var ArticleComments = {
 	showEditLink: function() {
 		//hack to display 'edit' link when slave lag caused it to be hidden
 		if (wgUserName) {
-			$('#article-comments-ul').find('strong').find('a:contains("' + wgUserName + '")').closest('.article-comments').find('.edit-link').show();
+			$('#article-comments-ul details').find('a:contains("' + wgUserName + '")').closest('details').find('.edit-link').show();
 		}
 	},
 
