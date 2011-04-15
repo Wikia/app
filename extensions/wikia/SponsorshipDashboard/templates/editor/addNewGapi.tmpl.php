@@ -6,7 +6,8 @@
 	<a class="wikia-button sd-source-remove" style="float:right; margin-top:3px"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite close"> <?=wfMsg('sponsorship-dashboard-source-discard');?></a>
 	<div class="sd-source-title"> <?=wfMsg('sponsorship-dashboard-source-datasource');?> <b>#1</b>: <?=wfMsg('sponsorship-dashboard-source-GoogleAnalytics');?></div>
 	<div style="font-weight:bold"> <?=wfMsg('sponsorship-dashboard-source-Metrics');?> </div>
-	<ul><? 
+	<? var_dump( $data ); ?>
+	<ul><?
 		$metrics = explode(',', $data[SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_METRICS] );
 		$metricsNames = unserialize( $data[ SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_METRICS_NAMES ] );
 		foreach( SponsorshipDashboardSourceGapi::$SD_GAPI_ALLOWED_METRICS as $metric ){

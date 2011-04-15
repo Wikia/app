@@ -6,6 +6,7 @@
 <h2> <?=wfMsg('sponsorship-dashboard-report-general-ptions'); ?> </h2>
 <span>
 	<a class="wikia-button sd-cancel" data-id="sd-cancel" style="float:right" href="<?=$reportEditorPath; ?>"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite close"> <?=wfMsg('sponsorship-dashboard-cancel');?></a>
+	<a class="wikia-button sd-save-as-new" data-id="sd-save" style="float:right; margin: 0 5px"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite ok"> <?=wfMsg('sponsorship-dashboard-save-as-new');?></a>
 	<a class="wikia-button sd-save" data-id="sd-save" style="float:right; margin: 0 5px"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite ok"> <?=wfMsg('sponsorship-dashboard-save');?></a>
 	<a class="wikia-button sd-preview" data-id="sd-preview" style="float:right; margin: 0 5px"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite details"> <?=wfMsg('sponsorship-dashboard-preview');?></a>
 </span>
@@ -24,6 +25,7 @@
 	<a class="wikia-button sd-addOneDot" data-id="sd-addOneDot"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite new"> <?=wfMsg('sponsorship-dashboard-report-new-source-onedot');?></a>
 	<a class="wikia-button sd-addMobile" data-id="sd-addMobile"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite new"> <?=wfMsg('sponsorship-dashboard-report-new-source-mobile');?></a>
 	<a class="wikia-button sd-cancel" data-id="sd-cancel" style="float:right" href="<?=$reportEditorPath; ?>"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite close"> <?=wfMsg('sponsorship-dashboard-cancel');?></a>
+	<a class="wikia-button sd-save-as-new" data-id="sd-save" style="float:right; margin: 0 5px"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite ok"> <?=wfMsg('sponsorship-dashboard-save-as-new');?></a>
 	<a class="wikia-button sd-save" data-id="sd-save" style="float:right; margin: 0 5px"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite ok"> <?=wfMsg('sponsorship-dashboard-save');?></a>
 	<a class="wikia-button sd-preview" data-id="sd-preview" style="float:right; margin: 0 5px"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite details"> <?=wfMsg('sponsorship-dashboard-preview');?></a>
 </span>
@@ -42,6 +44,7 @@
 	<a class="wikia-button sd-addOneDot" data-id="sd-addOneDot"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite new"> <?=wfMsg('sponsorship-dashboard-report-new-source-onedot');?></a>
 	<a class="wikia-button sd-addMobile" data-id="sd-addMobile"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite new"> <?=wfMsg('sponsorship-dashboard-report-new-source-mobile');?></a>
 	<a class="wikia-button sd-cancel" data-id="sd-cancel" style="float:right"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite close"> <?=wfMsg('sponsorship-dashboard-cancel');?></a>
+	<a class="wikia-button sd-save-as-new" data-id="sd-save" style="float:right; margin: 0 5px"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite ok"> <?=wfMsg('sponsorship-dashboard-save-as-new');?></a>
 	<a class="wikia-button sd-save" data-id="sd-save" style="float:right; margin: 0 5px"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite ok"> <?=wfMsg('sponsorship-dashboard-save');?></a>
 	<a class="wikia-button sd-preview" data-id="sd-preview" style="float:right; margin: 0 5px"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite details"> <?=wfMsg('sponsorship-dashboard-preview');?></a>
 </span>
