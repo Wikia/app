@@ -12,8 +12,9 @@ var SponsorshipDashboardEditor = {
 		$( '.sd-addWikiStats' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetStatsForm' )} );
 		$( '.sd-addOneDot' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetOneDotForm' )} );
 		$( '.sd-addMobile' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetMobileForm' )} );
-		$( '.sd-save' ).click( function(){ SponsorshipDashboardEditor.gatherDataFromAllSources( true ) } );
-		$( '.sd-preview' ).click( function(){ SponsorshipDashboardEditor.gatherDataFromAllSources( false ) } );
+		$( '.sd-save' ).click( function(){ SponsorshipDashboardEditor.gatherDataFromAllSources( true, false ) } );
+		$( '.sd-save-as-new' ).click( function(){ SponsorshipDashboardEditor.gatherDataFromAllSources( true, true ) } );
+		$( '.sd-preview' ).click( function(){ SponsorshipDashboardEditor.gatherDataFromAllSources( false, false ) } );
 
 
 		$( '#sd-source' ).click( function(e){
@@ -73,7 +74,7 @@ var SponsorshipDashboardEditor = {
 		SponsorshipDashboardEditor.sourceCounter = SponsorshipDashboardEditor.sourceCounter + 1;
 	},
 
-	gatherDataFromAllSources: function ( save ){
+	gatherDataFromAllSources: function ( save, asNew ){
 		SponsorshipDashboardEditor.sourceData = [],
 		$( 'form.sd-form' ).each( function( index ){
 			SponsorshipDashboardEditor.sourceData.push( $( this ).serialize() );
@@ -104,7 +105,8 @@ var SponsorshipDashboardEditor = {
 			method: axMethod,
 			rs: 'SponsorshipDashboardAjax',
 			chartCount : SponsorshipDashboardEditor.chartCount,
-			formData: SponsorshipDashboardEditor.sourceData
+			formData: SponsorshipDashboardEditor.sourceData,
+			asNew: asNew
 		};
 		$().log( data, 'test' );
 		$.post( wgScript, data,

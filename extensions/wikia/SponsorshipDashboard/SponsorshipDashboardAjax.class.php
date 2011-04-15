@@ -51,7 +51,10 @@ class SponsorshipDashboardAjax {
 		
 		if ( $SponsorshipDashboard->isAllowed() ){
 			$report = new SponsorshipDashboardReport();
-			$report->fillFromSerializedData( serialize( $_POST['formData'] ) );
+			$report->fillFromSerializedData( serialize( $_POST['formData'] ) );		
+			if ( isset ( $_POST['asNew'] ) && $_POST['asNew'] == 'true' ){
+				$report->setId( 0 );
+			}
 			$report->save();
 		}
 		echo $SponsorshipDashboard->reportSaved();

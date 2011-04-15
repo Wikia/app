@@ -208,6 +208,7 @@ $messages['en'] = array(
 	'sponsorship-dashboard-users-error' => 'User $1 not found. Account not created.',
 	'sponsorship-dashobard-not-allowed' => 'You don\'t have permission to access this page',
 	'sponsorship-dashboard-download-csv' => 'Download CSV file',
+	'sponsorship-dashboard-save-as-new' => 'Save as new'
 );
 
 /** Afrikaans (Afrikaans)
