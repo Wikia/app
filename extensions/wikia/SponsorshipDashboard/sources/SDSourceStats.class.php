@@ -69,7 +69,6 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 		$aKey[] = $this->endMonth;
 		$aKey[] = $this->endYear;
 		$aKey[] = implode( ',', $this->namespaces );
-		
 		return self::SD_MC_KEY_PREFIX.':'.self::SD_SOURCE_TYPE.':'.md5(implode( ':', $aKey ));
 	}
 

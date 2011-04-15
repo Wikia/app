@@ -282,6 +282,9 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 		if ( !empty( $this->extraDimension ) ) {
 			$sDimensionName = 'get'.ucfirst( $this->extraDimension );
 
+			// 2DO: need to find a better way to do this
+			// 2DO: work with gapi limitations.
+
 			$importantKeywords = array();
 			$importantKeywordsMap = array();
 			foreach( $results as $res ) {
@@ -323,8 +326,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 					$sDate = $this->frequency->getGapiDateFromResult( $res );
 					$this->dataAll[ $sDate ][ 'date' ] = $sDate;
 					foreach ( $this->GAPImetrics as $metric ) {
-						$sName = 'get'.ucfirst( $metric );
-						$this->dataAll[ $sDate ][ 'a'.md5( $dimension.$metric.$this->getGAFilters().$this->getAccount().$this->getName() ) ] = $res->$sName();
+						$this->dataAll[ $sDate ][ 'a'.md5( $dimension.$metric.$this->getGAFilters().$this->getAccount().$this->getName() ) ] = $this->getMetricValue( $res, $metric );
 						$this->dataTitles[ 'a'.md5( $dimension.$metric.$this->getGAFilters().$this->getAccount().$this->getName() ) ] = $this->getName().$this->getMetricName( $metric ).': '.$dimension;
 					}
 				}
@@ -335,8 +337,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 				$sDate = $this->frequency->getGapiDateFromResult( $res );
 				$this->dataAll[ $sDate ][ self::SD_DATE_CELL ] = $sDate;
 				foreach ( $this->GAPImetrics as $metric ) {
-					$sName = 'get'.ucfirst( $metric );
-					$this->dataAll[ $sDate ][ 'a'.md5( $metric.$this->getGAFilters().$this->getAccount().$this->getName() ) ] = $res->$sName();
+					$this->dataAll[ $sDate ][ 'a'.md5( $metric.$this->getGAFilters().$this->getAccount().$this->getName() ) ] = $this->getMetricValue( $res, $metric );
 				}
 			}
 			foreach ( $this->GAPImetrics as $metric ) {
@@ -345,8 +346,18 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 		}
 	}
 
+	public function getMetricValue( $res, $metric ){
+
+		$sName = 'get'.ucfirst( $metric );
+
+		// hack for displaying hours insteed of seconds
+		if ( in_array( $metric, array( 'timeOnSite', 'avgTimeOnSite', 'avgTimeOnPage' ) ) ){
+			return floor( $res->$sName() / 360 );
+		}
+		return $res->$sName();
+	}
+
 	public function getMetricName( $metric ){
-		
 		if ( isset( $this->GAPImetricNames[ $metric ] ) ){
 			return $this->GAPImetricNames[ $metric ];
 		}
