@@ -1383,37 +1383,29 @@ class Wikia {
 	/**
 	 * Returns true. Replace UNSUBSCRIBEURL with message and link to Special::Unsubscribe page
 	 */
-	static public function ComposeMail( $user, &$body, &$bodyHTML, &$subject ) {
+	static public function ComposeMail( /*MailAddress*/ $to, /*String*/&$body, /*String*/&$subject ) {
 		global $wgCityId;
 
-		if ( !$user instanceof User ) {
+		if ( !$to instanceof MailAddress ) {
 			return true;
 		}
 
 		# to test MW 1.16
 		$cityId = ( $wgCityId == 1927 ) ? $wgCityId : 177;
-		$name = $user->getName();
-
-		if ( $user->isIP( $name ) ) {
-			# don't do it for anons
-			return true;
-		}
+		$name = $to->name;
 
 		$oTitle = GlobalTitle::newFromText('Unsubscribe', NS_SPECIAL, $cityId);
 		if ( !is_object( $oTitle ) ) {
 			return true;
 		}
 
-		$email = $user->getEmail();
+		$email = $to->address;
 		$ts = time();
 		# unsubscribe params
-		$hash_url = Wikia::buildUserSecretKey( $user->getName(), 'sha256' );
+		$hash_url = Wikia::buildUserSecretKey( $name, 'sha256' );
 
 		$url = ( $hash_url ) ? $oTitle->getFullURL( array( 'key' => $hash_url ) ) : '';
 		$body = str_replace( '$UNSUBSCRIBEURL', $url, $body );
-		if ( $bodyHTML ) {
-			$bodyHTML = str_replace( '$UNSUBSCRIBEURL', $url, $bodyHTML );
-		}
 
 		return true;
 	}
