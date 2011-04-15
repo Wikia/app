@@ -46,7 +46,7 @@ class ChatModule extends Module {
 		// Some i18n'ed strings used inside of templates by Backbone. The <%= stuffInHere % > is intentionally like
 		// that & will end up in the string (substitution occurs later).
 		$this->editCountStr = wfMsg('chat-edit-count', "<%= editCount %>");
-		$this->memberSinceStr = wfMsg('chat-member-since', "<%= since %>");
+		$this->memberSinceStr = "<%= since %>";
 
 		if ($wgUser->isAllowed( 'chatmoderator' )) {
 			$this->isChatMod = 1;

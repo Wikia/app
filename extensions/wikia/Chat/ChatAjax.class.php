@@ -76,11 +76,16 @@ class ChatAjax {
 
 			// NOTE: This is attached to the user so it will be in the wiki's content language instead of wgLang (which it normally will).
 			$stats['edits'] = $wgContLang->formatNum($stats['edits']);
-			//$stats['date'] = $wgContLang->date(wfTimestamp(TS_MW, $stats['date']));
-			$stats['date'] = date("M Y", strtotime($stats['date']));
+			if(empty($stats['date'])){
+				// If the user has not edited on this wiki, don't show anything
+				$retVal['since'] = "";
+			} else {
+				//$stats['date'] = $wgContLang->date(wfTimestamp(TS_MW, $stats['date']));
+				$stats['date'] = date("M Y", strtotime($stats['date']));
+				$retVal['since'] = wfMsg('chat-member-since', $stats['date']);
+			}
 
 			$retVal['editCount'] = $stats['edits'];
-			$retVal['since'] = $stats['date'];
 		}
 
 		wfProfileOut( __METHOD__ );
