@@ -135,7 +135,7 @@ class EditAccount extends SpecialPage {
 					'userRealName' => $this->mUser->getRealName(),
 					'userId'  => $this->mUser->getID(),
 					'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
-					'isUnsub' => $this->mUser->isAllowed('unsubscribed'),
+					'isUnsub' => $this->mUser->getOption('unsubscribed'),
 				) );
 		}
 		
