@@ -446,8 +446,16 @@ class UserMailer {
 	 static private function sendMail( $mail, $emails, $headers, $subject, $body ) {
 		$res = true;
 
-		if ( !empty( $emails ) && is_array( $emails ) ) {
-			foreach ( $emails as $to ) {
+		if ( empty($emails) ) {
+			return $res;
+		}
+		
+		if ( !is_array( $emails ) ) {
+			$emails = array ( $emails );
+		}
+
+		foreach ( $emails as $to ) {
+			if ( $to instanceof MailAddress ) {
 				
 				wfRunHooks('ComposeMail', array( $to, &$body, &$subject ));
 				
