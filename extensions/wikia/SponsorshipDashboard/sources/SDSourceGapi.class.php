@@ -123,7 +123,6 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 				}
 			}
 		}
-		
 		$this->GAPImetrics = $finalMetrics;		
 	}
 
