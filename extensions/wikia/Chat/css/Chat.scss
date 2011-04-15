@@ -20,11 +20,11 @@ body {
 
 // Only ChatMods will have this class on body tag. Use it to augment the interface.
 body.chat-mod {
-	.Users li:hover .kickban {
-		display: inline;
+	.UserStatsMenu .kickban {
+		display: list-item;
 	}
 	// do not show kickban links for chatmods
-	.Users li.chat-mod:hover .kickban {
+	.UserStatsMenu.chat-mod .kickban {
 		display: none;
 	}
 }
@@ -129,6 +129,9 @@ a:hover {
 	padding: 5px;
 	&.chat-mod .kickban {
 		display: none;
+	}
+	.kickban {
+		display: none; // by default, do not display kickban link for anyone - override above for chatmods
 	}
 	.info {
 		background: $color-menu-highlight;
