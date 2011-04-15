@@ -9,8 +9,7 @@
 
 class Mail_wikiadb extends Mail {
 
-	public static $MAIL_DB_NAME = "wikia_mailer";
-	public static $MAIL_TABLE_NAME = "mail";
+	public static $MAIL_TABLE_NAME = "wikia_mailer.mail";
 
 	function Mail_wikiadb($params) {
 	}
@@ -20,9 +19,10 @@ class Mail_wikiadb extends Mail {
 		$headerElements = $this->prepareHeaders($headers);
 		list($from, $textHeaders) = $headerElements;
 
-		global $wgCityId;
+		global $wgCityId, $wgExternalDatawareDB;
 		$wgCityId = ($wgCityId == null?0:$wgCityId); // fake city-id for contractor/staff.
-		$dbw = wfGetDb(DB_MASTER, array(), self::$MAIL_DB_NAME);
+		// FB:4431 Write mail to archive database now
+		$dbw = wfGetDb(DB_MASTER, array(), $wgExternalDatawareDB);
 		$dbw->begin();
 		foreach ($recipients as $recipient) {
 

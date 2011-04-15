@@ -23,7 +23,7 @@ $wgSpecialPages['SendGridPostback'] = 'SendGridPostback';
  */
 class SendGridPostback extends UnlistedSpecialPage {
 
-	public static $POSTBACK_LOG_TABLE_NAME = "postbackLog";
+	public static $POSTBACK_LOG_TABLE_NAME = "wikia_mailer.postbackLog";
 
 	public function __construct() {
 		parent::__construct( 'SendGridPostback' );
@@ -95,7 +95,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 	private function handleClick ($id, $email, $url, $category) {
 		Wikia::log(__METHOD__, false, "<postback>" . $email . "</postback>\n", true);
 
-		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
+		$dbw = wfGetDb(DB_MASTER, array(), $wgExternalDatawareDB);
 		$dbw->update(
 			Mail_wikiadb::$MAIL_TABLE_NAME,
 			array( /* SET */'clicked' => date('Y-m-d H:i:s') ),
@@ -107,7 +107,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 	private function handleOpen ($id, $email) {
 		Wikia::log(__METHOD__, false, "<postback>" . $email . "</postback>\n", true);
 
-		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
+		$dbw = wfGetDb(DB_MASTER, array(), $wgExternalDatawareDB);
 		$dbw->update(
 			Mail_wikiadb::$MAIL_TABLE_NAME,
 			array( /* SET */'opened' => date('Y-m-d H:i:s') ),
@@ -124,7 +124,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 		Wikia::log(__METHOD__, false, "<postback>$email, $status, $reason</postback>\n", true);
 
 		// Update the mail table to include details about the bounce
-		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
+		$dbw = wfGetDb(DB_MASTER, array(), $wgExternalDatawareDB);
 		$dbw->update(
 			Mail_wikiadb::$MAIL_TABLE_NAME,
 			array( /* SET */'is_bounce'    => 1,
@@ -155,7 +155,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 	private function handleSpam ($id, $email) {
 		Wikia::log(__METHOD__, false, "<postback>" . $email . "</postback>\n", true);
 
-		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
+		$dbw = wfGetDb(DB_MASTER, array(), $wgExternalDatawareDB);
 		$dbw->update(
 			Mail_wikiadb::$MAIL_TABLE_NAME,
 			array( /* SET */'is_spam'  => 1 ),
@@ -182,7 +182,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 		$status = $wgRequest->getVal('status', '');
 		$reason = $wgRequest->getVal('reason', '');
 
-		$dbw = wfGetDb(DB_MASTER, array(), Mail_wikiadb::$MAIL_DB_NAME);
+		$dbw = wfGetDb(DB_MASTER, array(), $wgExternalDatawareDB);
 		$dbw->insert(
 			self::$POSTBACK_LOG_TABLE_NAME,
 			array(
