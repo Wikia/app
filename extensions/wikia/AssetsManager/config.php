@@ -80,7 +80,8 @@ $config['oasis_shared_js'] = array(
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdSS/adss.js',
 		'//extensions/wikia/PageLayoutBuilder/js/view.js',
-		'//skins/oasis/js/GlobalModal.js'
+		'//skins/oasis/js/GlobalModal.js',
+		'//skins/oasis/js/FirefoxFindFix.js'
 	)
 );
 
