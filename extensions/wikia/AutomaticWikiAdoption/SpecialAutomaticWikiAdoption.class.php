@@ -53,7 +53,8 @@ class SpecialAutomaticWikiAdoption extends UnlistedSpecialPage {
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AutomaticWikiAdoption/js/AutomaticWikiAdoption.js?{$wgStyleVersion}\"></script>\n");
 
-		if (AutomaticWikiAdoptionHelper::isAllowedToAdopt($wgCityId, $wgUser)) {
+		$canAdopt = AutomaticWikiAdoptionHelper::isAllowedToAdopt($wgCityId, $wgUser);
+		if ($canAdopt == AutomaticWikiAdoptionHelper::USER_ALLOWED) {
 			//allowed to adopt
 			if ($wgRequest->wasPosted()) {
 				//user clicked button to adopt a wiki
@@ -73,7 +74,18 @@ class SpecialAutomaticWikiAdoption extends UnlistedSpecialPage {
 			}
 		} else {
 			//not allowed to adopt
-			$wgOut->addHTML(wfMsgExt('automaticwikiadoption-not-allowed', array('parseinline')));
+			switch ($canAdopt) {
+				case AutomaticWikiAdoptionHelper::REASON_NOT_ENOUGH_EDITS:
+					$msg = wfMsgExt('automaticwikiadoption-not-enough-edits', array('parseinline'));
+					break;
+				case AutomaticWikiAdoptionHelper::REASON_ADOPTED_RECENTLY:
+					$msg = wfMsgExt('automaticwikiadoption-adopted-recently', array('parseinline'));
+					break;
+				default:
+					$msg = wfMsgExt('automaticwikiadoption-not-allowed', array('parseinline'));
+					break;
+			}
+			$wgOut->addHTML($msg);
 		}
 
 		wfProfileOut(__METHOD__);
