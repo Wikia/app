@@ -27,16 +27,23 @@ class AutomaticWikiAdoptionHelper {
 	//used for memcache as true/false/null causes problems
 	const USER_ALLOWED = 1;
 	const USER_NOT_ALLOWED = 2;
+	const REASON_WIKI_NOT_ADOPTABLE = 3;
+	const REASON_INVALID_ADOPTION_GROUPS = 4;
+	const REASON_USER_BLOCKED = 5;
+	const REASON_ADOPTED_RECENTLY = 6;
+	const REASON_NOT_ENOUGH_EDITS = 7;
 	//used as type in user_flags table
 	const USER_FLAGS_AUTOMATIC_WIKI_ADOPTION = 1;
+	
 
 	// static variable to store preferences setting between UserSaveOptions and UserSaveOptions2 hooks
 	static $saveOption;
 	/**
 	 * check if user is allowed to adopt particular wiki
 	 *
-	 * @return boolean success/fail
+	 * @return 1(AutomaticWikiAdoptionHandler::USER_ALLOWED) if user can adopt, non-1 if not
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * @author Hyun Lim
 	 */
 	static function isAllowedToAdopt($wikiId, $user) {
 		global $wgMemc;
@@ -70,7 +77,7 @@ class AutomaticWikiAdoptionHelper {
 		//wiki has more than 1000 pages && admin not active
 		if (!self::isWikiAdoptable($wikiId)) {
 			Wikia::log(__METHOD__, __LINE__, 'not allowed to adopt: wiki not adoptable');
-			$allowed = self::USER_NOT_ALLOWED;
+			$allowed = self::REASON_WIKI_NOT_ADOPTABLE;
 		}
 
 		$groups = $user->getEffectiveGroups();
@@ -83,26 +90,26 @@ class AutomaticWikiAdoptionHelper {
 		//already a sysop or bot
 		if (!isset($allowed) && (in_array('bot', $groups) || in_array('sysop', $groups))) {
 			Wikia::log(__METHOD__, __LINE__, 'not allowed to adopt: bot/sysop');
-			$allowed = self::USER_NOT_ALLOWED;
+			$allowed = self::REASON_INVALID_ADOPTION_GROUPS;
 		}
 
 		//Phalanx - check if user is blocked
 		if (!isset($allowed) && $user->isBlocked()) {
 			Wikia::log(__METHOD__, __LINE__, 'not allowed to adopt: user blocked');
-			$allowed = self::USER_NOT_ALLOWED;
+			$allowed = self::REASON_USER_BLOCKED;
 		}
 
 		//user has adopted other wiki in the last 60 days
 		$lastAdoption = $user->getOption('LastAdoptionDate', false);
 		if (!isset($allowed) && ($lastAdoption !== false && time() - $lastAdoption < self::ADOPTION_DELAY)) {
 			Wikia::log(__METHOD__, __LINE__, 'not allowed to adopt: adopted in 60 days');
-			$allowed = self::USER_NOT_ALLOWED;
+			$allowed = self::REASON_ADOPTED_RECENTLY;
 		}
 
 		//user has less than 10 edits on this wiki
 		if (!isset($allowed) && self::countUserEditsOnWiki($wikiId, $user) <= self::MIN_EDIT_COUNT) {
 			Wikia::log(__METHOD__, __LINE__, 'not allowed to adopt: small contribution');
-			$allowed = self::USER_NOT_ALLOWED;
+			$allowed = self::REASON_NOT_ENOUGH_EDITS;
 		}
 
 		//run out of checks - allowing user to adopt
@@ -115,9 +122,9 @@ class AutomaticWikiAdoptionHelper {
 		$wgMemc->set($memcKey, $allowed, 3600);
 
 		wfProfileOut(__METHOD__);
-		return $allowed == self::USER_ALLOWED;
+		return $allowed;
 	}
-
+	
 	/**
 	 * adopt a wiki - set admin rights for passed user and remove bureacrat rights for current users
 	 *
@@ -285,7 +292,7 @@ class AutomaticWikiAdoptionHelper {
 		global $wgUser, $wgCityId, $wgScript;
 		wfProfileIn(__METHOD__);
 
-		if (Wikia::isOasis() && !self::getDismissNotificationState($wgUser) && self::isAllowedToAdopt($wgCityId, $wgUser)) {
+		if (Wikia::isOasis() && !self::getDismissNotificationState($wgUser) && self::isAllowedToAdopt($wgCityId, $wgUser) == self::USER_ALLOWED) {
 
 			NotificationsModule::addNotification('custom notifiation', array(
 				'name' => 'AutomaticWikiAdoption',
