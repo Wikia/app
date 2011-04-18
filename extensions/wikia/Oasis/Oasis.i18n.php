@@ -146,6 +146,7 @@ $messages['en'] = array(
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming',
 	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle',
+	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes',
 
 	'oasis-modal-error-headline' => 'Please correct the following errors',
 
