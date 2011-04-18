@@ -33,6 +33,13 @@ class SpecialRenameuser extends SpecialPage {
 		global $wgVersion, $wgMaxNameChars, $wgCapitalLinks;
 
 		$this->setHeaders();
+		
+		if( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+
+			wfProfileOut( __METHOD__ );
+			return;
+		}
 
 		if( !$wgUser->isAllowed( 'renameuser' ) ) {
 			$wgOut->permissionRequired( 'renameuser' );
@@ -40,14 +47,6 @@ class SpecialRenameuser extends SpecialPage {
 			wfProfileOut(__METHOD__);
 			return;
 		}
-
-		if( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
 
 		// Get the request data
 		$oldusername = $wgRequest->getText( 'oldusername' );

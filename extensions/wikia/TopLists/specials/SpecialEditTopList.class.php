@@ -23,6 +23,15 @@ class SpecialEditTopList extends SpecialPage {
 
 		global $wgExtensionsPath, $wgStyleVersion, $wgStylePath , $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
 		
+		// set basic headers
+		$this->setHeaders();
+		
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+		
 		//Check blocks
 		if( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
@@ -37,9 +46,6 @@ class SpecialEditTopList extends SpecialPage {
 		if( empty( $editListName ) ) {
 			$this->_redirectToCreateSP();
 		}
-
-		// set basic headers
-		$this->setHeaders();
 
 		// include resources (css and js)
 		//$wgOut->addExtensionStyle( "{$wgExtensionsPath}/wikia/TopLists/css/editor.css?{$wgStyleVersion}\n" );

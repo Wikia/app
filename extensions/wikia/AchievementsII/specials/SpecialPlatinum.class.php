@@ -11,15 +11,22 @@ class SpecialPlatinum extends SpecialPage {
 		wfProfileIn(__METHOD__);
 
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgUser;
-
-		if(!$this->userCanExecute($wgUser)) {
-			$this->displayRestrictionError();
-			return;
-		}
-
+		
 		// set basic headers
 		$this->setHeaders();
-
+		
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+		
+		if(!$this->userCanExecute($wgUser)) {
+			$this->displayRestrictionError();
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+		
 		// include resources (css and js)
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/platinum.css?{$wgStyleVersion}\n");
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AchievementsII/css/oasis.scss'));
