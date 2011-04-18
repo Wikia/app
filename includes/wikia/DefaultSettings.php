@@ -150,6 +150,7 @@ $wgAutoloadClasses['FogbugzService'] = $IP . '/includes/wikia/services/FogbugzSe
 $wgAutoloadClasses['MinifyService'] = $IP . '/includes/wikia/services/MinifyService.class.php';
 $wgAutoloadClasses['CsvService'] = $IP . '/includes/wikia/services/CsvService.class.php';
 $wgAutoloadClasses['MobileService'] = $IP . '/includes/wikia/services/MobileService.class.php';
+$wgAutoloadClasses['HubService'] = $IP . '/includes/wikia/services/HubService.class.php';
 
 // modules
 $wgAutoloadClasses['OasisModule'] = $IP.'/skins/oasis/modules/OasisModule.class.php';
