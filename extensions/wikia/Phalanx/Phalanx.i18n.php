@@ -79,11 +79,11 @@ Please [[Special:Contact|contact Wikia]] about the problem.',
 
 	#block reason overrides, worded to add the block reason
 	'phalanx-user-block-withreason-ip' => 'This IP address is prevented from editing across the entire Wikia network due to vandalism or other disruption by you or by someone who shares your IP address.
-If you believe this is in error, please [[Special:Contact|contact Wikia]].<br/>The blocker also gave this additional reason: $1.',
+If you believe this is in error, please [[Special:Contact|contact Wikia]].<br />The blocker also gave this additional reason: $1.',
 	'phalanx-user-block-withreason-exact' => 'This username or IP address is prevented from editing across the entire Wikia network due to vandalism or other disruption.
-If you believe this is in error, please [[Special:Contact|contact Wikia]].<br/>The blocker also gave this additional reason: $1.',
+If you believe this is in error, please [[Special:Contact|contact Wikia]].<br />The blocker also gave this additional reason: $1.',
 	'phalanx-user-block-withreason-similar' => 'This username is prevented from editing across the entire Wikia network due to vandalism or other disruption by a user with a similar name.
-Please [[Special:Contact|contact Wikia]] about the problem.<br/>The blocker also gave this additional reason: $1.',
+Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker also gave this additional reason: $1.',
 
 	'phalanx-title-move-summary' => 'The reason you entered contained a blocked phrase.',
 	'phalanx-content-spam-summary' => "The text was found in the page's summary.",
