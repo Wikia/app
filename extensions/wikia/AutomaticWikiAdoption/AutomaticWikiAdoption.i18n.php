@@ -22,22 +22,22 @@ $messages['en'] = array(
 	'automaticwikiadoption-desc' => 'An AutomaticWikiAdoption extension for MediaWiki',
 	'automaticwikiadoption-header' => 'Adopt this wiki',
 	'automaticwikiadoption-button-adopt' => 'Adopt now',
-	'automaticwikiadoption-description' => "You've contributed to this wiki, but there's no active administrator. Would you like the job?
+	'automaticwikiadoption-description' => "You have contributed to this wiki, but there is no active administrator. Would you like the job?
 
 Being an administrator means that you will need to keep contributing content, but also encourage anyone else on the wiki directly, and be available to help them out when they need you.
 
-In return, we'll give you the power to block / unblock users, lock pages from editing, and a whole bunch of other features. We'll also send you an email when anyone else edits this wiki.
+In return, we will give you the power to block / unblock users, lock pages from editing, and a whole bunch of other features. We will also send you an e-mail when anyone else edits this wiki.
 
-In short, you'll have ownership, and you can shape this site to whatever you want it to be.
+In short, you will have ownership, and you can shape this site to whatever you want it to be.
 
 Sound like fun?",
 	'automaticwikiadoption-know-more-header' => 'Want to know more?',
 	'automaticwikiadoption-know-more-description' => 'Check out these links for more information. And of course, feel free to contact us if you have any questions!',
 	'automaticwikiadoption-adoption-successed' => 'Congratulations! You are a now an administrator on this wiki!',
-	'automaticwikiadoption-adoption-failed' => "We're sorry. We tried to make you an administrator, but it did not work out. Please [http://community.wikia.com/Special:Contact contact us], and we will try to help you out.",
-	'automaticwikiadoption-not-allowed' => "We're sorry. You cannot adopt this wiki right now.",
+	'automaticwikiadoption-adoption-failed' => "We are sorry. We tried to make you an administrator, but it did not work out. Please [http://community.wikia.com/Special:Contact contact us], and we will try to help you out.",
+	'automaticwikiadoption-not-allowed' => "We are sorry. You cannot adopt this wiki right now.",
 	'automaticwikiadoption-not-enough-edits' => "Oops! You need to have more than 10 edits to adopt this wiki.",
-	'automaticwikiadoption-adopted-recently' => "Oops! You've already adopted another wiki recently. You'll need to wait a while before you can adopt a new wiki.",
+	'automaticwikiadoption-adopted-recently' => "Oops! You have already adopted another wiki recently. You will need to wait a while before you can adopt a new wiki.",
 	'automaticwikiadoption-log-reason' => 'Automatic Wiki Adoption',
 	'automaticwikiadoption-notification' => "$1 is up for adoption! You can become the new owner. '''Adopt now!'''",
 	'automaticwikiadoption-mail-first-subject' => "We have not seen you around in a while",
@@ -73,17 +73,17 @@ It's been a while since we have seen an administrator around on your wiki. It is
 	'automaticwikiadoption-mail-adoption-subject' => 'Your wiki has been adopted',
 	'automaticwikiadoption-mail-adoption-content' => "Hi $1,
 
-Your wiki has been adopted! This means that someone else has volunteered to help maintain the community and content on the site. Don't worry - you are still an administrator, and you are welcome to come back at any time.
+Your wiki has been adopted! This means that someone else has volunteered to help maintain the community and content on the site. Do not worry - you are still an administrator, and you are welcome to come back at any time.
 
 The Wikia Team
 
 Click the following link to unsubscribe from changes to this list: $3.",
 	'automaticwikiadoption-mail-adoption-content-HTML' => "Hi $1,<br /><br />
-Your wiki has been adopted! This means that someone else has volunteered to help maintain the community and content on the site. Don't worry - you're still an administrator, and you are welcome to come back at any time.<br /><br />
+Your wiki has been adopted! This means that someone else has volunteered to help maintain the community and content on the site. Do not worry - you are still an administrator, and you are welcome to come back at any time.<br /><br />
 <b>The Wikia Team</b><br /><br />
 <small>You can <a href=\"$3\">unsubscribe</a> from changes to this list.</small>",
-	'tog-adoptionmails' => 'Email me if $1 will become available for other users to adopt',
-	'automaticwikiadoption-pref-label' => 'Changing these preferences will only affect emails from $1.',
+	'tog-adoptionmails' => 'E-mail me if $1 will become available for other users to adopt',
+	'automaticwikiadoption-pref-label' => 'Changing these preferences will only affect e-mails from $1.',
 );
 
 /** Afrikaans (Afrikaans)
