@@ -16,6 +16,8 @@ class WikiFactoryHub {
     private static $mInstance = false;
 	private static $mCategories = array();
 
+    const CATEGORY_ID_LIFESTYLE = 9;
+
     /**
 	 * private constructor
 	 *
@@ -192,7 +194,13 @@ class WikiFactoryHub {
     	$tmp = array();
     	if( !$wgExternalSharedDB ) {
     		return array();
-		}
+	}
+
+	$oMemc = wfGetCache( CACHE_MEMCACHED );
+	$memkey = sprintf("%s", __METHOD__);
+	$cached = $oMemc->get($memkey);
+	if ( empty($cached) ) {
+
 		wfProfileIn( __METHOD__ );
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		Wikia::log( __METHOD__, "var", $wgExternalSharedDB );
@@ -209,9 +217,14 @@ class WikiFactoryHub {
 		}
 
 		$dbr->freeResult( $oRes );
-		wfProfileOut( __METHOD__ );
-		return $tmp;
+		$oMemc->set($memkey, $tmp, 60*60*24);
+	} else {
+		$tmp = $cached;
 	}
+
+	wfProfileOut( __METHOD__ );
+	return $tmp;
+    }
 
 	/**
 	 * getIdByName
@@ -269,5 +282,14 @@ class WikiFactoryHub {
         $dbw->commit();
 
         wfProfileOut( __METHOD__ );
+    }
+
+    /**
+     *
+     * @param integer $id category id
+     * @return array of category id
+     */
+    public function getCategory($id) {
+	   return self::$mCategories[$id];
     }
 }
