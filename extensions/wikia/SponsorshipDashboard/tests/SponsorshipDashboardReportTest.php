@@ -44,6 +44,52 @@ class SponsorshipDashboardReportTest extends PHPUnit_Framework_TestCase {
 		$this->assertNotEmpty( $return[ SponsorshipDashboardReport::SD_RETURNPARAM_SERIE ] );
 	}
 
+	public function testEmptyReport(){
+
+		$oReport = new SponsorshipDashboardReport();
+		$oReport->name = 'testReport';
+		$oReport->setLastDateUnits( 30 );
+		$oReport->frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH;
+
+		$oFormatter = SponsorshipDashboardOutputChart::newFromReport( $oReport );
+		$return = $oFormatter->getChartData();
+
+		$this->assertEmpty( $return );
+		
+	}
+
+	public function testReportWithAllEmptySeries(){
+
+		$oReport = new SponsorshipDashboardReport();
+		$oReport->name = 'testReport';
+		$oReport->setLastDateUnits( 30 );
+		$oReport->frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH;
+
+		$return = true;
+		
+		$oSource = new SponsorshipDashboardSourceStats();
+		$oReport->addSource( $oSource );
+		$oReport->acceptSource();
+
+		$oSource = new SponsorshipDashboardSourceOneDot();
+		$oReport->addSource( $oSource );
+		$oReport->acceptSource();
+
+		$oSource = new SponsorshipDashboardSourceGapiCu();
+		$oReport->addSource( $oSource );
+		$oReport->acceptSource();
+
+		$oSource = new SponsorshipDashboardSourceGapi();
+		$oReport->addSource( $oSource );
+		$oReport->acceptSource();
+
+		$oFormatter = SponsorshipDashboardOutputChart::newFromReport( $oReport );
+		$return = $oFormatter->getChartData();
+
+		var_dump( $return );
+		$this->assertEmpty( $return );
+	}
+
 /*
 	public function testProperReportExecution() {
 
