@@ -93,6 +93,30 @@ $messages['br'] = array(
 	'rte-first-run-notice' => "Degaset hon eus un nebeut gwelladennoù d'an embanner. Evit gouzout hiroc'h, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lennit ar c'hemenn].",
 );
 
+/** Catalan (Català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'rte-desc' => 'CKeditor integrat per MediaWiki',
+	'rte-no-js-fallback' => "L'editor de text enriquit no funciona si JavaScript està desactivat. Si us plau, deixeu-lo activitat a les opcions del vostre navegador, o visita les teves [[Especial:Preferències|preferències]] per canviar l'antic editor de MediaWiki",
+	'rte-edgecase-info-title' => 'Requereix mode font',
+	'rte-edgecase-info' => "L'editor de text enriquit s'ha desactivat perquè la pàgina conté un codi complex.",
+	'rte-edgecase-comment' => 'Comentaris HTML',
+	'rte-edgecase-triplecurls' => 'Paràmetres de la plantilla',
+	'rte-edgecase-nowysiwyg' => 'El comandament "no WYSIWYG"',
+	'rte-edgecase-complex-description' => "Una adreça URL externa o una plantilla dins de la descripció d'un enllaç",
+	'rte-edgecase-template-with-link' => 'Una plantilla amb un enllaç com a paràmetre',
+	'rte-edgecase-syntax' => 'Sintaxi no permesa',
+	'rte-edgecase-image-with-link' => 'Imatge amb un enllaç en la descripció',
+	'rte-edgecase-redirect' => 'Redirecció',
+	'rte-edgecase-templateintable' => 'Una taula amb una plantilla anomenada en la definició',
+	'rte-edgecase-unclosed-tags' => 'Etiquetes HTML sense tancar',
+	'enablerichtexteditor' => "Habilitar l'Editor de text enriquit",
+	'rte-enablerichtexteditormessage' => 'Editor de text enriquit habilitat!',
+	'rte-first-run-notice' => "Hem fet algunes millores en l'editor. Per obtenir més informació [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news llegir l'anunci].",
+	'prefs-rte' => 'Editor de text enriquit',
+);
+
 /** Czech (Česky)
  * @author Darth Daron
  */
@@ -182,9 +206,11 @@ $messages['es'] = array(
 	'prefs-rte' => 'Editor de Texto Enriquecido',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ * @author Ebraminio
+ */
 $messages['fa'] = array(
-	'rte-edgecase-redirect' => 'تغییرمسیر',
+	'rte-edgecase-redirect' => 'تغییر مسیر',
 	'enablerichtexteditor' => 'فعال کردن ویرایشگر پیشرفته',
 );
 
@@ -300,6 +326,30 @@ $messages['mk'] = array(
 	'rte-enablerichtexteditormessage' => 'Уредникот на збогатен текст е овозможен!',
 	'rte-first-run-notice' => 'Направивме извесни подобрувања во уредникот. За повеќе информации [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news прочитајте го соопштението].',
 	'prefs-rte' => 'Уредник на збогатен текст',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'rte-desc' => 'Penyepaduan CKeditor untuk MediaWiki',
+	'rte-no-js-fallback' => 'Penyunting teks beraneka tidak berfungsi apabila JavaScript dimatikan. Anda perlu menghidupkannya dalam pilihan pelayar anda, atau pergi ke [[Special:Preferences|keutamaan]] untuk beralih ke alat penyunting MediaWiki yang lama',
+	'rte-edgecase-info-title' => 'Mod sumber diperlukan',
+	'rte-edgecase-info' => 'Ciri penyuntingan teks beraneka dimatikan kerana laman mengandungi kod yang rumit.',
+	'rte-edgecase-comment' => 'Ulasan HTML',
+	'rte-edgecase-triplecurls' => 'parameter templat',
+	'rte-edgecase-nowysiwyg' => 'perintah "tiada WYSIWYG"',
+	'rte-edgecase-complex-description' => 'URL luaran atau templat dalam keterangan pautan',
+	'rte-edgecase-template-with-link' => 'templat dengan pautan sebagai parameter',
+	'rte-edgecase-syntax' => 'sintaks tidak dibenarkan',
+	'rte-edgecase-image-with-link' => 'gambar dengan pautan dalam keterangan',
+	'rte-edgecase-redirect' => 'lencong',
+	'rte-edgecase-templateintable' => 'jadual dengan panggilan templat dalam pemerian',
+	'rte-edgecase-unclosed-tags' => 'tag HTML yang tak tertutup',
+	'enablerichtexteditor' => 'Hidupkan Penyunting Teks Beraneka',
+	'rte-enablerichtexteditormessage' => 'Alat Penyunting Teks Beraneka dihidupkan!',
+	'rte-first-run-notice' => 'Kami telah membuat sedikit peningkatan pada alat penyunting. Untuk mengetahui lebih lanjut, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news baca pengumumannya].',
+	'prefs-rte' => 'Alat Penyunting Teks Beraneka',
 );
 
 /** Dutch (Nederlands)

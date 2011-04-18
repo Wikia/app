@@ -159,6 +159,13 @@ $messages['mk'] = array(
 	'tog-disablelinksuggest' => 'Не прикажувај предложени врски',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'tog-disablelinksuggest' => 'Jangan paparkan cadangan pautan',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -239,7 +246,7 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'tog-disablelinksuggest' => 'Не приказуј предложену везу',
+	'tog-disablelinksuggest' => 'Не приказуј предлог везе',
 );
 
 /** Sundanese (Basa Sunda)

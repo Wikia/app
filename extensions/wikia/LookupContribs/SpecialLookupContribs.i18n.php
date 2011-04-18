@@ -111,6 +111,13 @@ $messages['be-tarask'] = array(
 	'lookupcontribscontent' => 'зьмест',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'lookupcontribsall' => 'всички',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
@@ -304,6 +311,16 @@ $messages['es'] = array(
 $messages['eu'] = array(
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Izenburua',
+);
+
+/** Persian (فارسی)
+ * @author BlueDevil
+ * @author Ebraminio
+ */
+$messages['fa'] = array(
+	'lookupcontribscontent' => 'محتوا',
+	'lookupcontribsnormal' => 'اخیر',
+	'lookupcontribsall' => 'همه',
 );
 
 /** Finnish (Suomi)
@@ -588,6 +605,7 @@ Vergewëssert Iech datt Dir Iech beim Benotzernumm net vertippt hutt.</p>',
 	'lookupcontribswikidbname' => 'Numm vun der Datebank',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Titel',
+	'lookupcontribswikioptions' => 'Optiounen',
 	'lookupcontribsnext' => 'nächst',
 	'lookupcontribsprevious' => 'vireg',
 	'right-lookupcontribs' => 'Déi global Ännerunge vu Benotzer weisen',
@@ -646,6 +664,61 @@ $messages['mk'] = array(
 	'lookupcontribsnormal' => 'скорешни',
 	'lookupcontribsfinal' => 'последни',
 	'lookupcontribsall' => 'сите',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'lookupcontribs' => 'Carian Sumbangan',
+	'lookupcontribstitle' => 'Carian Sumbangan',
+	'lookupcontribsrecentcontributions' => 'Sumbangan terkini untuk $1',
+	'lookupcontribsfinalcontributions' => 'Sumbangan terakhir untuk $1',
+	'lookupcontribshelp' => 'Laman khas ini boleh digunakan untuk memaparkan sumbangan pengguna di pelbagai Wikia.
+Untuk memaparkan senarai, nyatakan nama pengguna di bawah.',
+	'lookupcontribusernotspecify' => 'Anda belum menetapkan nama pengguna lagi',
+	'lookupcontribsselectuser' => 'Pilih pengguna:',
+	'lookupcontribsselectfor' => 'Pilih untuk:',
+	'lookupcontribsdisplaymode' => 'Mod paparan:',
+	'lookupcontribsselectmodenormal' => 'sumbangan terkini untuk pengguna itu',
+	'lookupcontribsselectmodefinal' => 'sumbangan terakhir untuk pengguna itu',
+	'lookupcontribsselectmodeall' => 'segala sumbangan untuk pengguna itu',
+	'lookupcontribsfullurls' => 'URL penuh',
+	'lookupcontribslinks' => 'pautan sumbangan',
+	'lookupcontribsgo' => 'Pergi',
+	'lookupcontribsinvaliduser' => '<p class="error">Pengguna "<b>$1</b>" tidak wujud.
+Tolong semak ejaan nama pengguna itu.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" bukan mod tampilan yang sah.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" bukan mod yang sah.</p>',
+	'lookupcontribsselectwikis' => 'Pilih wiki:',
+	'lookupcontribslistwikiainfo' => 'Senarai wiki yang rencananya disunting oleh <b>$1</b>',
+	'lookupcontribsnoresultfound' => 'Tiada hasil carian!',
+	'lookupcontribsinvalidresults' => 'Hasil tidak sah!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Nama pangkalan data',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Tajuk',
+	'lookupcontribswikioptions' => 'Pilihan',
+	'lookupcontribscontribslink' => 'Pautan sumbangan',
+	'lookupcontribsdetails' => 'Lihat butiran untuk:',
+	'lookupcontribslastedited' => 'Suntingan terkini',
+	'lookupcontribsrecordspager' => "Menunjukkan '''$1''' hingga '''$2''' daripada '''$3''' rekod.",
+	'lookupcontribscontribs' => 'sumb.',
+	'lookupcontribsnbrresult' => 'Jumlah hasil:',
+	'lookupcontribsnext' => 'berikutnya',
+	'lookupcontribsprevious' => 'sebelumnya',
+	'lookupcontribspageremoved' => 'Digugurkan:',
+	'lookupcontribsrestore' => 'pulihkan',
+	'lookupcontribslog' => 'log',
+	'lookupcontribshist' => 'sej',
+	'lookupcontribsdiff' => 'beza',
+	'right-lookupcontribs' => 'Lihat suntingan global pengguna',
+	'lookupcontribsshowpages' => 'Semua laman (ruang nama $1)',
+	'lookupcontribscontent' => 'kandungan',
+	'lookupcontribscontribtitleforuser' => 'Sumbangan untuk pengguna:',
+	'lookupcontribsnormal' => 'terkini',
+	'lookupcontribsfinal' => 'akhir',
+	'lookupcontribsall' => 'semua',
 );
 
 /** Dutch (Nederlands)
@@ -1175,5 +1248,25 @@ $messages['uk'] = array(
  */
 $messages['yi'] = array(
 	'lookupcontribscontent' => 'אינהאַלט',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'lookupcontribsselectuser' => '选择用户：',
+	'lookupcontribsgo' => '去',
+	'lookupcontribsselectwikis' => '选择维基：',
+	'lookupcontribswiki' => '维基',
+	'lookupcontribswikititle' => '标题',
+	'lookupcontribswikioptions' => '选择',
+	'lookupcontribscontribs' => '贡献',
+	'lookupcontribsnext' => '下一步',
+	'lookupcontribsprevious' => '前一步',
+	'lookupcontribshist' => '历史',
+	'lookupcontribsdiff' => '不同',
+	'lookupcontribsnormal' => '最近',
+	'lookupcontribsfinal' => '最后',
+	'lookupcontribsall' => '全部',
 );
 

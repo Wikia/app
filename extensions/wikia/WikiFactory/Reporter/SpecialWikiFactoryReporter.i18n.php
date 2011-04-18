@@ -67,6 +67,13 @@ $messages['bs'] = array(
 	'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
+/** Catalan (Català)
+ * @author SMP
+ */
+$messages['ca'] = array(
+	'wikifactoryreporter' => 'Reporter WikiFactory',
+);
+
 /** Chechen (Нохчийн)
  * @author Sasan700
  */
@@ -265,6 +272,13 @@ $messages['li'] = array(
  */
 $messages['mk'] = array(
 	'wikifactoryreporter' => 'WikiFactory пријавувач',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'wikifactoryreporter' => 'Pelapor Kilang Wiki',
 );
 
 /** Nepali (नेपाली)

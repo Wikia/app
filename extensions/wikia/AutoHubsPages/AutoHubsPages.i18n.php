@@ -26,15 +26,17 @@ $messages['en'] = array(
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|editor|editors}}</span>',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ * @author McDutchie
+ */
 $messages['qqq'] = array(
 	'unhide' => 'Toggle link to show what is hidden.',
 	'hub-blog-header' => 'Parameters:
 * $1 is the blog title.',
 	'hub-topusers-header' => 'Parameters:
 * $1 is the list title.',
-	'hub-featured' => 'Parameters:
-* $1 is a page title.',
+	'hub-featured' => 'Heading of a section on the Wikia hub preceding a list of the top wikis in a particular category. For example: [http://www.wikia.com/Entertainment Top Entertainment wikis].
+* $1 is the category. It stays in English even in the translated sentence.',
 	'hub-header' => 'Parameters:
 * $1 is a hub page title.',
 	'hub-blog-comments' => 'Parameters:
@@ -43,6 +45,13 @@ $messages['qqq'] = array(
 * $1 is the number of edit points.',
 	'hub-editors' => 'Parameters:
 * $1 is the number of editors.',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'hub-blog-comments' => '{{PLURAL:$1|един коментар|$1 коментара}}',
 );
 
 /** Breton (Brezhoneg)
@@ -136,17 +145,41 @@ $messages['es'] = array(
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|editor|editores}}</span>',
 );
 
+/** Persian (فارسی)
+ * @author BlueDevil
+ * @author Wayiran
+ */
+$messages['fa'] = array(
+	'unhide' => 'آشکارسازی',
+	'hub-blog-header' => '$1 پست برتر',
+	'hub-hotspot-header' => 'نقاط داغ',
+	'hub-topusers-header' => 'برترین کاربران $1',
+	'hub-featured' => 'برترین ویکی‌های $1',
+	'hub-header' => 'ویکی‌های $1',
+	'hub-hotspot-info' => 'این‌ها داغ‌ترین صفحات این هفته هستند، که توسط بیش‌ترین ویرایش‌گران امتیاز داده شده‌اند.',
+	'hub-blog-comments' => '$1 نظر',
+	'hub-blog-showarticle' => 'نمایش صفحه',
+	'hub-hotspot-from' => 'از',
+	'hub-hide-feed' => 'پنهان‌کردن خوراک',
+	'hub-show-feed' => 'نمایش خوراک',
+	'hub-contributors-info' => 'این‌ها برترین کاربران این هفته هستند، که توسط بیش‌ترین کاربران امتیاز داده شده‌اند.',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|ویرایش‌گر|ویرایش‌گر}}</span>',
+);
+
 /** Finnish (Suomi)
+ * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
-	'hub-topusers-header' => '$1 huippukäyttäjää',
+	'hub-topusers-header' => 'Suurimmat käyttäjät ($1)',
 	'hub-blog-continue' => 'Jatka lukemista',
 	'hub-blog-showarticle' => 'Näytä sivu',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|muokkaaja|muokkaajaa}}</span>',
 );
 
 /** French (Français)
  * @author Peter17
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'unhide' => 'Afficher',
@@ -159,7 +192,7 @@ $messages['fr'] = array(
 	'hub-blog-comments' => '{{PLURAL:$1|un commentaire|$1 commentaires}}',
 	'hub-blog-continue' => 'Continuer la lecture',
 	'hub-blog-showarticle' => 'Afficher la page',
-	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">{{PLURAL:$1|point|points}} de modification</span>',
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">{{PLURAL:$1|point|points}}</span>',
 	'hub-hotspot-from' => 'de',
 	'hub-hide-feed' => 'Masquer le flux',
 	'hub-show-feed' => 'Afficher le flux',
@@ -197,7 +230,7 @@ $messages['ia'] = array(
 	'hub-blog-header' => 'Top $1 de articulos',
 	'hub-hotspot-header' => 'Paginas popular',
 	'hub-topusers-header' => 'Top $1 de usatores',
-	'hub-featured' => 'Top $1 de wikis',
+	'hub-featured' => 'Wikis popular de $1',
 	'hub-header' => 'Wikis de $1',
 	'hub-hotspot-info' => 'Le paginas le plus popular de iste septimana, rangiate per numero de contributores.',
 	'hub-blog-comments' => '{{PLURAL:$1|un commento|$1 commentos}}',
@@ -256,6 +289,28 @@ $messages['mk'] = array(
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|уредник|уредници}}</span>',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'unhide' => 'Dedahkan',
+	'hub-blog-header' => 'Kiriman $1 Teratas',
+	'hub-hotspot-header' => 'Hotspot',
+	'hub-topusers-header' => 'Pengguna $1 Teratas',
+	'hub-featured' => 'Wiki $1 teratas',
+	'hub-header' => 'Wiki $1',
+	'hub-hotspot-info' => 'Inilah laman-laman yang terhangat pada minggu ini, disusun mengikut jumlah penyunting terbanyak.',
+	'hub-blog-comments' => '{{PLURAL:$1|Satu ulasan|$1 ulasan}}',
+	'hub-blog-continue' => 'Teruskan membaca',
+	'hub-blog-showarticle' => 'Paparkan laman',
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span> <span class="txt">{{PLURAL:$1|mata|mata}} suntingan</span>',
+	'hub-hotspot-from' => 'dari',
+	'hub-hide-feed' => 'Sorokkan suapan',
+	'hub-show-feed' => 'Paparkan suapan',
+	'hub-contributors-info' => 'Inilah para penyunting yang paling giat pada minggu ini, disusun mengikut suntingan terbanyak.',
+	'hub-editors' => '<strong>$1</strong><span>orang penyunting</span>',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
@@ -265,7 +320,7 @@ $messages['nl'] = array(
 	'hub-blog-header' => 'Topberichten van $1',
 	'hub-hotspot-header' => "Populaire pagina's",
 	'hub-topusers-header' => 'Topgebruikers van $1',
-	'hub-featured' => "Topwiki's van $1",
+	'hub-featured' => "Topwiki's over $1",
 	'hub-header' => 'Wikia van $1',
 	'hub-hotspot-info' => "Dit zijn de meer populaire pagina's van deze week, gesorteerd op aantal gebruikers met bewerkingen.",
 	'hub-blog-comments' => '$1 {{PLURAL:$1|opmerking|opmerkingen}}',
@@ -440,5 +495,11 @@ $messages['uk'] = array(
  */
 $messages['zh-hans'] = array(
 	'unhide' => '取消隐藏',
+	'hub-topusers-header' => '首 $1 用户',
+	'hub-featured' => '首 $1 维基',
+	'hub-header' => '$1 维基',
+	'hub-blog-continue' => '继续读',
+	'hub-blog-showarticle' => '显示页面',
+	'hub-hotspot-from' => '从',
 );
 

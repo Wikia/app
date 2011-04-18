@@ -86,6 +86,19 @@ $messages['qqq'] = array(
 	'owb-step4-plus-price' => '{{doc-important|The "double dollar sign" is correct in the English message. The first is for currency, the second is the parameter "$1" for the cost.}}',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'owb-step1' => 'Стъпка 1',
+	'owb-step2' => 'Стъпка 2',
+	'owb-step3' => 'Стъпка 3',
+	'owb-step4' => 'Стъпка 4',
+	'owb-step4-plus-price' => '<strong>$1</strong> щ.д./месец',
+	'owb-step4-error-caption' => 'Грешка',
+	'owb-status-saving' => 'Съхраняване',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Y-M D
@@ -355,10 +368,12 @@ Escribe la segunda sección de tu página aquí. No olvides añadir una categor�
 );
 
 /** Finnish (Suomi)
+ * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'owb-headline' => 'Hei, $1',
+	'owb-button-save-theme' => 'Tallenna ulkoasu',
 	'owb-button-save-pages' => 'Tallenna sivut',
 );
 
@@ -530,6 +545,13 @@ $messages['ku-latn'] = array(
 	'owb-step1' => 'Gav 1',
 );
 
+/** Latin (Latina)
+ * @author Rsa23899
+ */
+$messages['la'] = array(
+	'owb-headline' => 'Salvē, $1',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -623,6 +645,85 @@ $messages['mk'] = array(
 ==Поднаслов==
 
 Тука напишете го првиот дел од страницата. Не заборавајте да додадете категорија, за да можат да другите да ви ја најдат страницата.',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Pendeta penciptaan Wiki]]',
+	'owb-title' => 'Pembina Wiki',
+	'owb-headline' => 'Apa khabar, $1',
+	'owb-button-skip' => 'Langkau',
+	'owb-button-save-intro' => 'Simpan Intro',
+	'owb-button-save-theme' => 'Simpan Tema',
+	'owb-button-save-pages' => 'Simpan Laman',
+	'owb-button-done' => 'Teruskan ke wiki anda',
+	'owb-button-plus' => 'Pilih Wikia+Plus',
+	'owb-step1' => 'Langkah 1',
+	'owb-step1-label' => 'Perihal',
+	'owb-step1-label-formatted' => 'Perihal',
+	'owb-step1-instruction' => 'Tuliskan kata-kata pengenalan yang ringkas mengenai laman utama. Pastikan ia menarik dan membuat orang lain teruja untuk menyumbang kepada projek anda.',
+	'owb-step1-sample' => 'Contoh Laman Utama Wiki',
+	'owb-step2' => 'Langkah 2',
+	'owb-step2-label' => 'Pilih tema',
+	'owb-step2-label-formatted' => 'Pilih<br />tema',
+	'owb-step2-instruction1' => 'Sangat mudah untuk membuat wiki anda kelihatan unik, dengan hanya memilih tema yang cocok dengan projek anda.',
+	'owb-step2-instruction2' => 'Anda boleh menukar tema atau rekabentuk anda sendiri pada bila-bila masa.',
+	'owb-step2-gallery' => 'Galeri Tema',
+	'owb-step3' => 'Langkah 3',
+	'owb-step3-label' => 'Buka laman',
+	'owb-step3-label-formatted' => 'Buka<br />laman',
+	'owb-step3-instruction' => 'Untuk memulakan wiki anda, anda perlu menambah beberapa laman. Anda boleh menambahkan banyak lagi laman pada bila-bila masa saja.',
+	'owb-step3-your-pages' => 'Nama Halaman Anda',
+	'owb-step3-examples1-title' => 'Contoh: Nama Laman Filem Raksasa',
+	'owb-step3-examples1' => "<li>Frankenstein's Monster</li>
+<li>The Wolfman</li>
+<li>The Howling</li>
+<li>The Mummy</li>
+<li>House of Wax</li>
+<li>Swamp Thing</li>",
+	'owb-step3-examples2-title' => 'Contoh: Nama Laman Permainan Papan',
+	'owb-step3-examples2' => '<li>Monopoly</li>
+<li>Risk</li><li>Scrabble</li>
+<li>Trivial Pursuit</li>
+<li>Pictionary</li>
+<li>Taboo</li>',
+	'owb-step4' => 'Langkah 4',
+	'owb-step4-label-formatted' => 'Pelan<br />premium',
+	'owb-step4-label' => 'Tambahkan pelan premium',
+	'owb-step4-instruction' => 'Anda boleh memilih Wikia+Plus untuk menggugurkan iklan, atau terus saja ke Wikia Basic.',
+	'owb-step4-basic-price' => '<strong>$0</strong>/bulan',
+	'owb-step4-basic-details' => "<ul><li>Iklan Wikia untuk pengguna yang tidak log masuk</li>
+<li>Jumlah laman dan gambar tanpa had</li>
+<li>Peralatan menyunting wiki yang mudah</li>
+<li>Sambung dan 'suka' di Facebook</li>
+<li>Tiada had lebar jalur</li></ul>",
+	'owb-step4-plus-price' => '<strong>$$1</strong>/bulan',
+	'owb-step4-plus-details' => '<ul><li><strong>Tiada iklan!<small><em>(wiki yang besar dikenakan had)</em></small></strong></li>
+<li>Jumlah laman dan gambar tanpa had</li>
+<li>Peralatan menyunting wiki yang mudah</li>
+<li>Sambung dan suka di Facebook</li>
+<li>Tiada had lebar jalur</li></ul>',
+	'owb-step4-error-caption' => 'Ralat',
+	'owb-step4-error-upgrade-content' => 'Wiki ini tidak boleh dinaik taraf ke Plus.',
+	'owb-step4-error-token-content' => 'Gagal mendapatkan token yang sebetulnya dari PayPal.',
+	'owb-status-saving' => 'Sedang disimpan',
+	'owb-unable-to-edit-description' => 'Keterangan ini tidak boleh disunting dengan Pembina Wiki',
+	'owb-readonly-try-again' => 'Sekarang, Wiki ini berada dalam mod baca sahaja. Sila cuba lagi sebentar lagi',
+	'owb-error-saving-articles' => 'Ralat Ketika Menyimpan Laman',
+	'owb-api-error-title' => 'Ralat ketika memproseskan permohonan anda',
+	'owb-api-error' => 'Sila cuba lagi atau langkaui langkah ini',
+	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
+Tulis perenggan pertama laman anda di sini
+
+==Pengatas bahagian==
+
+Tulis bahagian pertama laman anda di sini. Pastikan anda sisipkan pautan ke laman lain dalam wiki ini.
+
+==Pengatas bahagian==
+
+Tulis bahagian kedua laman anda di sini. Jangan lupa bubuh kategori untuk membantu orang lain mencari laman ini.',
 );
 
 /** Dutch (Nederlands)
@@ -865,6 +966,86 @@ Escreva aqui a primeira secção da sua página. Lembre-se de incluir links para
 Escreva aqui a segunda secção da sua página. Não se esqueça de acrescentar uma categoria, para ajudar os outros a encontrar a página.',
 );
 
+/** Russian (Русский)
+ * @author DCamer
+ */
+$messages['ru'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Мастер создания вики]]',
+	'owb-title' => 'Построитель вики',
+	'owb-headline' => 'Привет, $1',
+	'owb-button-skip' => 'Пропустить',
+	'owb-button-save-intro' => 'Сохранить введение',
+	'owb-button-save-theme' => 'Сохранить тему',
+	'owb-button-save-pages' => 'Записать страницы',
+	'owb-button-done' => 'Перейти к вики',
+	'owb-button-plus' => 'Выбрать Wikia+Плюс',
+	'owb-step1' => 'Шаг 1',
+	'owb-step1-label' => 'Что это?',
+	'owb-step1-label-formatted' => 'Что<br />это?',
+	'owb-step1-instruction' => 'Напишите краткое описание вашей заглавной страницы. Напишите его кратко и весело, чтобы завлечь других внести вклад в Ваш проект.',
+	'owb-step1-sample' => 'Пример заглавной страницы вики',
+	'owb-step2' => 'Шаг 2',
+	'owb-step2-label' => 'Выберите тему',
+	'owb-step2-label-formatted' => 'Выберите<br />тему',
+	'owb-step2-instruction1' => 'Сделать для Вашей вики уникальный вид — легко! Просто выберите тему, которая соответствует Вашему проекту.',
+	'owb-step2-instruction2' => 'Вы можете изменить Вашу тему или создать свою собственную в любой момент.',
+	'owb-step2-gallery' => 'Галерея тем',
+	'owb-step3' => 'Шаг 3',
+	'owb-step3-label' => 'Начните с нескольких страниц',
+	'owb-step3-label-formatted' => 'Начните с<br />нескольких страниц',
+	'owb-step3-instruction' => 'Чтобы запустить вики, вам необходимо добавить несколько страниц. Вы можете добавить больше, когда захотите.',
+	'owb-step3-your-pages' => 'Названия ваших страниц',
+	'owb-step3-examples1-title' => 'Пример: Фильмы о монстрах',
+	'owb-step3-examples1' => '<li>Чудовище Франкенштейна</li>
+<li>Человек-волк</li>
+<li>Вой</li>
+<li>Мумия</li>
+<li>Дом восковых фигур</li>
+<li>Болотная тварь</li>',
+	'owb-step3-examples2-title' => 'Пример: Настольные игры',
+	'owb-step3-examples2' => '<li>Монополия</li>
+<li>Риск</li>
+<li>Эрудит</li>
+<li>Trivial Pursuit</li>
+<li>Pictionary</li>
+<li>Taboo</li>',
+	'owb-step4' => 'Шаг 4',
+	'owb-step4-label-formatted' => 'Премиум<br />план',
+	'owb-step4-label' => 'Добавьте премиум план',
+	'owb-step4-instruction' => 'Чтобы убрать рекламу приобретите Wikia+Плюс или продолжите работу с Wikia Основной.',
+	'owb-step4-basic-price' => '<strong>$0</strong>/месяц',
+	'owb-step4-basic-details' => '<ul><li>Рекламы для не вошедших в систему пользователей</li>
+<li>Неограниченное количество страниц и изображений</li>
+<li>Легкие инструменты для редактирование вики</li>
+<li>Система подключение и кнопка «нравится» на Facebook</li>
+<li>Неограниченная полоса пропускания</li></ul>',
+	'owb-step4-plus-price' => '<strong>$$1</strong>/месяц',
+	'owb-step4-plus-details' => '<ul><li><strong>Нет рекламы!<small><em>(ограничения применяются к большим вики)</em></small></strong></li>
+<li>Неограниченное количество страниц и изображений</li>
+<li>Легкие инструменты для редактирование вики</li>
+<li>Система подключение и кнопка «нравится» на Facebook</li>
+<li>Неограниченная полоса пропускания</li></ul>',
+	'owb-step4-error-caption' => 'Ошибка',
+	'owb-step4-error-upgrade-content' => 'Данная вики не может быть обновлена до «Плюс».',
+	'owb-step4-error-token-content' => 'Не удалось получить правильный ответ от PayPal.',
+	'owb-status-saving' => 'Сохранение',
+	'owb-unable-to-edit-description' => 'Описание нередактируемо в построители вики',
+	'owb-readonly-try-again' => 'Вики в настоящее время находится в режиме только для чтения. Повторите попытку через несколько минут',
+	'owb-error-saving-articles' => 'Ошибка сохранения страниц',
+	'owb-api-error-title' => 'Ошибка при обработке вашего запроса',
+	'owb-api-error' => 'Пожалуйста, попробуйте еще раз или пропустите этот шаг',
+	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
+Напишите что-нибудь здесь, в первом параграфе страницы.
+
+==Заголовок раздела==
+
+Напишите первый раздел вашей страницы. Не забудьте включить ссылки на другие страницы в вики.
+
+==Заголовок раздела==
+
+Напишите второй раздел вашей страницы. Не забудьте добавить категорию, чтобы помочь людям найти эту страницу.',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
@@ -1003,5 +1184,16 @@ Skriv den andra delen av din sida här. Glöm inte att lägga till en kategori f
 $messages['uk'] = array(
 	'owb-button-skip' => 'Пропустити',
 	'owb-step4-error-caption' => 'Помилка',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'owb-headline' => '您好， $1',
+	'owb-button-skip' => '跳过',
+	'owb-button-done' => '继续到您的维基',
+	'owb-step4-error-caption' => '错误',
+	'owb-status-saving' => '正在保存。。。',
 );
 

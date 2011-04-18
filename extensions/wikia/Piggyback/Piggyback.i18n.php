@@ -80,6 +80,13 @@ Verifica tu escritura.',
 	'piggyback-issysopto' => 'No puedes personificar a un usuario con el derecho de personificar.',
 );
 
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'piggyback-wronguser' => '$1 ei ole sinun käyttäjätunnuksesi',
+);
+
 /** French (Français) */
 $messages['fr'] = array(
 	'piggybac-desc' => 'Permet de s’identifier avec le compte d’un autre utilisateur',
@@ -117,6 +124,13 @@ $messages['ku-latn'] = array(
 	'piggyback-otherusername' => 'Navê bikarhêner ê din:',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'piggyback-otherusername' => 'Anere Benotzernumm:',
+);
+
 /** Macedonian (Македонски) */
 $messages['mk'] = array(
 	'piggybac-desc' => 'Овозможува да се најавите како друг корисник („на ушка“)',
@@ -130,6 +144,22 @@ $messages['mk'] = array(
 	'piggyback-firstlogout' => 'Најпрвин одјавете се за да се вратите назад на вашата сметка.',
 	'piggyback-itisyou' => 'Не можете да се качите на ушка самите на себе.',
 	'piggyback-issysopto' => 'Не можете да се качите на ушка на корисник со право за качување на ушка.',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'piggybac-desc' => 'Membenarkan log masuk sebagai pengguna lain',
+	'piggyback' => 'Gendong',
+	'piggyback-otherusername' => 'Nama pengguna lain:',
+	'piggyback-nosuchuser' => 'Tiada pengguna yang bernama "$1".
+Nama pengguna adalah peka kecil besar huruf (case-sensitive).
+Sila semak ejaan anda.',
+	'piggyback-wronguser' => '$1 bukan nama pengguna anda',
+	'piggyback-loginprompt' => 'Sila taipkan semula nama pengguna dan kata laluan anda.',
+	'piggyback-itisyou' => 'Anda tidak boleh menggendong diri sendiri.',
+	'piggyback-issysopto' => 'Anda tidak boleh menggendong pengguna dengan hak menggendong.',
 );
 
 /** Dutch (Nederlands) */
@@ -234,5 +264,13 @@ Kontrollera stavningen.',
 $messages['te'] = array(
 	'piggyback-otherusername' => 'ఇతర వాడుకరిపేరు:',
 	'piggyback-wronguser' => '$1 అన్నది మీ వాడుకరి పేరు కాదు',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'piggyback-otherusername' => '其他用户名：',
+	'piggyback-wronguser' => '$1 不是您的用户名',
 );
 

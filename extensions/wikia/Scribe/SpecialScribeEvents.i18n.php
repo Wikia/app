@@ -65,11 +65,29 @@ $messages['ia'] = array(
 	'scribeeventsrecords' => 'Registros',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Strumento]] per cercare una pagina specifica tra le wiki',
+	'scribeevents' => 'Eventi recenti',
+	'scribeeventsrecords' => 'Resoconti',
+);
+
 /** Macedonian (Македонски) */
 $messages['mk'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Алатка]] за пребарување на поединечен наслов на страница по повеќе викија',
 	'scribeevents' => 'Скорешни настани',
 	'scribeeventsrecords' => 'Евиденција',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Alat]] untuk mencari tajuk laman tertentu secara merentas wiki',
+	'scribeevents' => 'Peristiwa terbaru',
+	'scribeeventsrecords' => 'Rekod',
 );
 
 /** Dutch (Nederlands) */

@@ -156,6 +156,14 @@ $messages['mk'] = array(
 	'interwikidispatcher-desc' => 'Решава интервики-врски за да ги намали пренасочувањата на Apache',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'interwikidispatcher' => 'Penghantar antara wiki',
+	'interwikidispatcher-desc' => 'Membaiki pautan antara wiki untuk mengurangkan pelencongan Apache',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

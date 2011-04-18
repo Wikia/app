@@ -96,14 +96,23 @@ $messages['eu'] = array(
 	'cloakcheck-form-username' => 'Erabiltzaile izena',
 );
 
+/** Persian (فارسی)
+ * @author BlueDevil
+ */
+$messages['fa'] = array(
+	'cloakcheck-form-username' => 'نام کاربری:',
+	'cloakcheck-process-username' => 'نام کاربری: $1',
+);
+
 /** Finnish (Suomi)
+ * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'cloakcheck-process-username' => 'Käyttäjätunnus: $1',
 	'cloakcheck-process-accountage-yes' => 'Käyttäjätunnus on tarpeeksi vanha.',
 	'cloakcheck-process-accountage-no' => 'Käyttäjätunnus on liian uusi.',
-	'cloakcheck-process-emailconf-yes' => 'Sähköpostiosoite osoite on vahvistettu.',
+	'cloakcheck-process-emailconf-yes' => 'Sähköpostiosoite on vahvistettu.',
 	'cloakcheck-process-emailconf-no' => 'Sähköpostiosoitetta ei ole vahvistettu.',
 );
 
@@ -224,6 +233,26 @@ $messages['mk'] = array(
 	'cloakcheck-process-emailconf-no' => 'Е-поштенската адреса не е потврдена.',
 	'cloakcheck-process-edits-yes' => 'Корисникот има доволен број уредувања.',
 	'cloakcheck-process-edits-no' => 'Корисникот нема доволен број уредувања.',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'cloakcheck' => 'Semak kelayakan samaran IRC',
+	'cloakcheck-desc' => 'Menyediakan antara muka semua dalam satu untuk mengesahkan keperluan menerima samaran IRC',
+	'cloakcheck-form-username' => 'Nama pengguna:',
+	'cloakcheck-form-check' => 'Semak nama pengguna',
+	'cloakcheck-form-check-self' => 'Semak kelayakan menerima samaran IRC',
+	'cloakcheck-process-empty' => 'Nama pengguna tidak boleh dibiarkan kosong.',
+	'cloakcheck-process-notexist' => 'Nama pengguna tidak wujud.',
+	'cloakcheck-process-username' => 'Nama pengguna: $1',
+	'cloakcheck-process-accountage-yes' => 'Akaun cukup lama.',
+	'cloakcheck-process-accountage-no' => 'Akaun masih baru lagi.',
+	'cloakcheck-process-emailconf-yes' => 'Alamat e-mel disahkan.',
+	'cloakcheck-process-emailconf-no' => 'Alamat e-mel tidak disahkan.',
+	'cloakcheck-process-edits-yes' => 'Jumlah suntingan pengguna memadai.',
+	'cloakcheck-process-edits-no' => 'Jumlah suntingan pengguna tidak memadai.',
 );
 
 /** Dutch (Nederlands)
@@ -434,5 +463,7 @@ $messages['zh-hans'] = array(
 	'cloakcheck-form-username' => '用户名：',
 	'cloakcheck-form-check' => '检查用户名',
 	'cloakcheck-process-username' => '用户名：$1',
+	'cloakcheck-process-accountage-yes' => '用户够旧',
+	'cloakcheck-process-accountage-no' => '用户太新',
 );
 

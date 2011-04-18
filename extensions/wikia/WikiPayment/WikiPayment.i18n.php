@@ -90,12 +90,24 @@ $messages['mk'] = array(
 	'wikipayment-paypal-profile-name' => 'Платено вики',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'wikipayment-desc' => 'Membenarkan bayaran untuk mematikan iklan dalam satu wiki.',
+	'wikipayment-paypal-redirect' => 'Sila tunggu, anda akan dibawa ke PayPal...',
+	'wikipayment-paypal-error' => 'Ralat pembayaran PayPal (kod: $1)',
+	'wikipayment-paypal-return-ok' => 'Pembayaran PayPal berjaya',
+	'wikipayment-paypal-return-cancel' => 'Pembayaran PayPal dibatalkan',
+	'wikipayment-paypal-profile-name' => 'Wiki Berbayar',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'wikipayment-desc' => 'Maakt het mogelijk per wiki te betalen om advertenties uit te schakelen.',
-	'wikipayment-paypal-redirect' => 'U wordt doorverwezen naar PayPal. Een moment geduld...',
+	'wikipayment-paypal-redirect' => 'U wordt doorverwezen naar PayPal. Een moment geduld…',
 	'wikipayment-paypal-error' => 'Fout bij de PayPal-betaling (code: $1)',
 	'wikipayment-paypal-return-ok' => 'PayPal-betaling afgerond',
 	'wikipayment-paypal-return-cancel' => 'PayPal-betaling geannuleerd',
@@ -134,9 +146,21 @@ $messages['pt-br'] = array(
 	'wikipayment-desc' => 'Permite o pagamento por wiki para desativar anúncios.',
 	'wikipayment-paypal-redirect' => 'Redirecionando para o PayPal, por favor aguarde...',
 	'wikipayment-paypal-error' => 'Erro de pagamento PayPal (código: $1)',
-	'wikipayment-paypal-return-ok' => 'Pagamento PayPal bem-sucedido',
+	'wikipayment-paypal-return-ok' => 'Pagamento PayPal bem sucedido',
 	'wikipayment-paypal-return-cancel' => 'Pagamento PayPal cancelado',
 	'wikipayment-paypal-profile-name' => 'Wiki paga',
+);
+
+/** Russian (Русский)
+ * @author DCamer
+ */
+$messages['ru'] = array(
+	'wikipayment-desc' => 'Позволяет оплатить отключение рекламы.',
+	'wikipayment-paypal-redirect' => 'Перенаправление на PayPal, пожалуйста, подождите ..',
+	'wikipayment-paypal-error' => 'Ошибка оплаты в PayPal (код: $1)',
+	'wikipayment-paypal-return-ok' => 'Платёж в PayPal успешен',
+	'wikipayment-paypal-return-cancel' => 'Платёж PayPal отменён',
+	'wikipayment-paypal-profile-name' => 'Платные вики',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)

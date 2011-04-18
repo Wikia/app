@@ -156,6 +156,20 @@ $messages['mk'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Грешка: Се бара содржина на страницата',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'contentfeeds-desc' => "Menyalurkan maklumat yang padat dan terkini melalui pelbagai tag atau \"suapan\" (''feeds'')",
+	'contentfeeds-newimages-rss-title' => 'Suapan RSS untuk {{#Khas:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Suapan dari $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Cipta laman-laman pertama anda!',
+	'contentfeeds-firstfewarticles-tag-title' => 'Tajuk',
+	'contentfeeds-firstfewarticles-tag-next' => 'Seterusnya',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Perhatian: Tajuk laman diperlukan',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Perhatian: Isi kandungan laman diperlukan',
+);
+
 /** Dutch (Nederlands) */
 $messages['nl'] = array(
 	'contentfeeds-desc' => 'Biedt rijke en bijgewerkte informatie via verschillnde labels of "feeds"',
@@ -265,5 +279,13 @@ $messages['sw'] = array(
 /** Telugu (తెలుగు) */
 $messages['te'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'శీర్షిక',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => '标题',
+	'contentfeeds-firstfewarticles-tag-next' => '下一页',
 );
 

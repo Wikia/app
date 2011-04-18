@@ -86,12 +86,27 @@ $messages['ig'] = array(
 	'slidertag-featured-wikis' => 'Wiki nke di na íhú',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'slidertag-featured-wikis' => 'Wiki in primo piano',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
 	'slidertag-desc' => 'Им дава генерички начин на корисниците да додаваат одбрани лизгачи',
 	'slidertag-featured-wikis' => 'Одбрани викија',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'slidertag-desc' => 'Menyediakan cara yang umum bagi pengguna untuk memaparkan gelangsar bahan-bahan pilihan',
+	'slidertag-featured-wikis' => 'Wiki pilihan',
 );
 
 /** Dutch (Nederlands)

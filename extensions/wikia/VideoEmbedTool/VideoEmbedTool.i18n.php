@@ -878,6 +878,13 @@ $messages['he'] = array(
 	'vet-protected' => 'סרטון זה מוגן.',
 );
 
+/** Croatian (Hrvatski)
+ * @author Anton008
+ */
+$messages['hr'] = array(
+	'vet-left' => 'Lijevo',
+);
+
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
  */
@@ -1213,6 +1220,13 @@ $messages['kn'] = array(
 	'vet-right' => 'ಬಲ',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'vet-upload-btn' => 'Lohß Jonn!',
+);
+
 /** Kurdish (Latin) (Kurdî (Latin))
  * @author George Animal
  */
@@ -1228,14 +1242,28 @@ $messages['ku-latn'] = array(
 	'vet-right' => 'Rast',
 );
 
+/** Latin (Latina)
+ * @author Rsa23899
+ */
+$messages['la'] = array(
+	'vet-name' => 'Nōmen',
+	'vet-left' => 'Sinister',
+	'vet-right' => 'Dexter',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
 	'vet-upload' => 'Komplett URL',
+	'vet-thiswiki' => 'Dës Wiki',
+	'vet-upload-btn' => 'Lass',
+	'vet-name' => 'Numm',
 	'vet-license' => 'Lizenz',
 	'vet-prev' => 'Vireg 8',
 	'vet-next' => 'Nächst 8',
+	'vet-back' => 'Zréck',
+	'vet-close' => 'Zoumaachen',
 	'vet-show-message' => 'Message weisen',
 	'vet-left' => 'Lenks',
 	'vet-right' => 'Riets',
@@ -1325,6 +1353,84 @@ $messages['mk'] = array(
  */
 $messages['mn'] = array(
 	'vet-upload-btn' => 'Явах',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'vet-upload' => 'URL penuh',
+	'vet-notlogged' => 'Log masuk atau berdaftar untuk menyisipkan video',
+	'vet-find' => 'Cari video',
+	'vet-thiswiki' => 'Wiki ini',
+	'vet-flickr' => 'Flickr',
+	'vet-upload-btn' => 'Pergi',
+	'vet-find-btn' => 'Cari',
+	'vet-flickr-inf' => 'Cari gambar-gambar bebas dengan lesen yang sesuai dari Flickr, kemudian import gambar-gambar itu ke dalam wiki anda.',
+	'vet-conflict-inf' => '<h1>Alamak, nama itu sudah dipakai oleh video lain.</h1>Anda nak buat apa dengan <b>$1</b>?',
+	'vet-rename' => 'Tukar nama video',
+	'vet-existing' => 'Gunakan video sedia ada',
+	'vet-overwrite' => 'Tulis ganti video sedia anda dengan gambar anda',
+	'vet-insert' => 'Sisipkan',
+	'vet-details-inf' => '<h1>Butiran fail</h1>Berikan nama yang deskriptif kepada video ini.',
+	'vet-name' => 'Nama',
+	'vet-license' => 'Lesen',
+	'vet-details-inf2' => '<h1>Pilihan paparan video</h1>',
+	'vet-size' => 'Saiz',
+	'vet-thumbnail' => 'Imej ringkas',
+	'vet-fullsize' => 'Saiz penuh ( $1 x $2 px)',
+	'vet-width' => 'Lebar',
+	'vet-layout' => 'Tataletak',
+	'vet-caption' => 'Kapsyen',
+	'vet-optional' => ' (Tidak wajib)',
+	'vet-insert2' => 'Sisipkan video',
+	'vet-update' => 'Kemaskini video',
+	'vet-video-replace-link' => 'Untuk mengganti video ini, sila ke [[:$1]]',
+	'vet-prev' => '8 yang sebelumnya',
+	'vet-next' => '8 yang berikutnya',
+	'vet-metacafe' => 'Video Metacafe ($1 hasil)',
+	'vet-insert3' => 'Sisipkan video ini',
+	'vet-recent-inf' => 'Video yang baru disisipkan',
+	'vet-thiswiki2' => 'Video wiki ini ($1 hasil)',
+	'vet-success' => '<h1>Berjaya</h1>',
+	'vet-return' => 'Kembali menyunting',
+	'vet-back' => 'Kembali',
+	'vet-close' => 'Tutup',
+	'vet-warn1' => 'Anda mesti menyatakan pertanyaan terlebih dahulu!',
+	'vet-warn2' => 'Sila nyatakan URL video yang hendak dibubuh',
+	'vet-warn3' => 'Sila nyatakan nama video yang hendak dibubuh',
+	'vet-imagelink' => '<b>Baru!</b> Sisipkan video',
+	'vet-imagebutton' => 'Sisipkan video',
+	'vet-license-cc' => 'Dilesenkan di bawah Creative Commons Attribution-Share Alike 3.0',
+	'vet-name-incorrect' => 'Nama video ini mengandungi aksara yang tidak boleh diterima',
+	'vet-uploadtext' => "'''Borang ini membolehkan anda memuat naik dan memaparkan fail pada rencana dengan segera.'''
+
+''Lihat juga [[Special:Log/upload|log muat naik]] dan [[Special:ImageList|senarai semua fail yang dimuat naik]].''",
+	'vet-show-message' => 'paparkan pesanan',
+	'vet-hide-message' => 'sorokkan pesanan',
+	'vet-hide-license-msg' => 'sorokkan teks lesen',
+	'vet-show-license-msg' => 'tunjukkan teks lesen',
+	'vet-max-thumb' => 'melebihi had saiz imej ringkas maksimum, dipulihkan ke saiz asal',
+	'vet-notallowed' => 'Anda tidak boleh menyisipkan video di wiki ini.',
+	'vet-title' => 'Sisipkan video pada rencana anda',
+	'vet-supported' => 'Laman video yang disokong:',
+	'vet-preview' => '<i>Pratonton ini tidak mengikut skala</i>',
+	'vet-bad-url' => 'URL yang diberikan tidak sah',
+	'vet-non-existing' => 'Video yang diberikan tidak wujud',
+	'vet-main-info' => '<i>Cari video atau taipkan URL penuh dari mana-mana tapak yang disokong</i>',
+	'vet-page-success' => 'Laman video berjaya dikemaskini. Anda mungkin perlu membersihkan <i>cache</i> laman video untuk melihat perubahannya.',
+	'vet-add-button' => 'Sisipkan video',
+	'vet-added-from-gallery' => 'video disisipkan dari galeri video',
+	'vet-see-all' => 'lihat semua',
+	'vet-bad-search' => 'Ralat ketika memuatkan pertanyaan carian.',
+	'vet-no-preview' => 'Anda tidak boleh menambahkan video daripada rencana dalam mod pratonton.',
+	'vet-single-success' => 'Video berjaya diletakkan dalam rencana ini.',
+	'vet-gallery-create-success' => 'Galeri video disisipkan pada rencana ini.',
+	'vet-gallery-add-success' => 'Video telah dimasukkan ke dalam galeri video dalam rencana ini.',
+	'vet-left' => 'Kiri',
+	'vet-right' => 'Kanan',
+	'vet-gallery' => 'Galeri',
+	'vet-protected' => 'Video ini dilindungi.',
 );
 
 /** Maltese (Malti)
@@ -2144,5 +2250,24 @@ $messages['uk'] = array(
  */
 $messages['yi'] = array(
 	'vet-license' => 'ליצענץ',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'vet-thiswiki' => '这个维基',
+	'vet-upload-btn' => '去',
+	'vet-find-btn' => '寻找',
+	'vet-name' => '名',
+	'vet-size' => '大小',
+	'vet-prev' => '前 8 个',
+	'vet-next' => '后 8 个',
+	'vet-back' => '后退',
+	'vet-close' => '关闭',
+	'vet-show-message' => '显示性息',
+	'vet-see-all' => '查看所有',
+	'vet-left' => '左',
+	'vet-right' => '右',
 );
 

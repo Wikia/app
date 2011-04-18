@@ -194,6 +194,7 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Peter17
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'sponsorpage-desc' => 'Permet aux utilisateurs d’acheter un parrainage pour des pages',
@@ -209,7 +210,7 @@ $messages['fr'] = array(
 	'sponsor-form-price' => 'Montant du parrainage :',
 	'sponsor-form-email' => 'Votre adresse de courriel :',
 	'sponsor-form-thanks' => 'Merci pour votre parrainage !',
-	'sponsor-price-45yr' => '$45 par an',
+	'sponsor-price-45yr' => '45$ par an',
 	'sponsor-price-5mo' => '$5 par mois',
 	'sponsorpage-edit' => 'Modifier',
 	'sponsorpage-save' => 'Sauvegarder',
@@ -323,6 +324,35 @@ $messages['mk'] = array(
 	'sponsor-price-5mo' => '$5 месечно',
 	'sponsorpage-edit' => 'Уреди',
 	'sponsorpage-save' => 'Зачувај',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'sponsorpage-desc' => 'Membenarkan pengguna membeli penajaan untuk laman',
+	'sponsor-header' => '<h2>Pautan Penaja Luar</h2>',
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Taja laman ini</a></li>',
+	'sponsor-preview-prompt' => 'Inilah rupa penajaan anda - klik "Sunting" untuk kembali dan buat perubahan, atau "Simpan" untuk menyimpannya dan terus ke PayPal.',
+	'sponsor-preview-errors' => 'Penyerahan anda ada ralat:',
+	'sponsor-form-url' => 'URL tapak web penaja (tapak web anda):',
+	'sponsor-form-linktext' => 'Teks yang hendak dipaparkan dalam pautan:',
+	'sponsor-form-additionaltext' => 'Teks yang hendak dipaparkan di bawah pautan anda:',
+	'sponsor-form-page' => 'Laman yang hendak ditaja:',
+	'sponsor-form-price' => 'Jumlah tajaan:',
+	'sponsor-form-email' => 'Alamat e-mel anda:',
+	'sponsor-form-thanks' => 'Terima kasih atas tajaan anda!',
+	'sponsor-price-45yr' => '$45 setahun',
+	'sponsor-price-5mo' => '$5 sebulan',
+	'sponsorpage-edit' => 'Sunting',
+	'sponsorpage-save' => 'Simpan',
+);
+
+/** Mazanderani (مازِرونی)
+ * @author محک
+ */
+$messages['mzn'] = array(
+	'sponsorpage-edit' => 'دچی‌ین',
 );
 
 /** Dutch (Nederlands)
@@ -552,5 +582,14 @@ $messages['tl'] = array(
 $messages['uk'] = array(
 	'sponsorpage-edit' => 'Редагувати',
 	'sponsorpage-save' => 'Зберегти',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'sponsor-price-45yr' => '每年 $45',
+	'sponsor-price-5mo' => '每月 $5',
+	'sponsorpage-save' => '保存',
 );
 

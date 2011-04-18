@@ -111,6 +111,19 @@ $messages['mk'] = array(
 	'exitstitial-button' => 'Прескокни ја рекламава',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'interstitial-default-campaign-code' => 'Wikia Sayang Anda!',
+	'interstitial-skip-ad' => 'Langkau iklan ini',
+	'interstitial-already-logged-in-no-link' => 'Anda sudah log masuk tetapi destinasi belum ditetapkan.',
+	'interstitial-disabled-no-link' => 'Destinasi tidak ditetapkan, dan ruang-antara (<i>interstitials</i>) tidak dihidupkan di wiki ini.',
+	'interstitial-link-away' => 'Di sini tiada apa-apa langsung!<br /><br />Adakah anda ingin ke [[{{MediaWiki:Mainpage}}|Laman Utama]] ataupun [[Special:Random|memilih laman secara rawak]]?',
+	'exitstitial-register' => '<a href="#" class="register">Berdaftar</a> atau <a href="#" class="login">Log Masuk</a> untuk melangkaui iklan.',
+	'exitstitial-button' => 'Langkau Iklan Ini',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -135,6 +148,13 @@ $messages['no'] = array(
 	'interstitial-link-away' => 'Det er ingenting å se her!<br /><br />Vil du gå til [[{{MediaWiki:Mainpage}}|hovedsiden]] eller kanskje til en [[Special:Random|tilfeldig side]]?',
 	'exitstitial-register' => '<a href="#" class="register">Registrer deg</a> eller <a href="#" class="login">Logg inn</a> for å hoppe over annonser.',
 	'exitstitial-button' => 'Hopp over annonse',
+);
+
+/** Polish (Polski)
+ * @author Cloudissimo
+ */
+$messages['pl'] = array(
+	'exitstitial-button' => 'Pomiń reklamę',
 );
 
 /** Portuguese (Português)

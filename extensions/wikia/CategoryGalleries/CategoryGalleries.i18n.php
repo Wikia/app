@@ -79,6 +79,13 @@ $messages['ia'] = array(
 	'categorygalleries-desc' => 'Monstra un galeria de paginas in paginas de categoria',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'categorygalleries-desc' => 'Mostra una galleria di pagine sulle pagine delle categorie',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -91,6 +98,13 @@ $messages['lb'] = array(
  */
 $messages['mk'] = array(
 	'categorygalleries-desc' => 'Прикажува галерија на страници во категориите',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'categorygalleries-desc' => 'Menunjukkan galeri laman di laman kategori',
 );
 
 /** Dutch (Nederlands)
@@ -119,6 +133,13 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'categorygalleries-desc' => 'Mostra uma galeria de páginas nas páginas das categorias',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'categorygalleries-desc' => "Face vedè 'na pàgene de gallerie sus a le pàggene de le categorije",
 );
 
 /** Swedish (Svenska)

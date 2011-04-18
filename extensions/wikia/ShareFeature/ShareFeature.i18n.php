@@ -59,8 +59,10 @@ $messages['br'] = array(
 
 /** Catalan (Català)
  * @author Paucabot
+ * @author SMP
  */
 $messages['ca'] = array(
+	'sharefeature-desc' => 'Permet als usuaris enllaçar a pàgines de llocs populars',
 	'sf-link' => 'Comparteix aquest article',
 	'sf-link-popup' => 'Comparteix aquest article',
 	'sf-link-tooltip' => 'Comparteix aquest article amb els teus amics',
@@ -174,6 +176,16 @@ $messages['id'] = array(
 	'sf-link-tooltip' => 'Berbagi artikel ini dengan teman anda',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'sharefeature-desc' => 'Permette agli utenti di linkare le pagine di siti popolari.',
+	'sf-link' => 'Condividi questo articolo',
+	'sf-link-popup' => 'Condividi questo articolo',
+	'sf-link-tooltip' => 'Condividi questo articolo con i tuoi amici',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -192,6 +204,16 @@ $messages['mk'] = array(
 	'sf-link' => 'Сподели ја статијава',
 	'sf-link-popup' => 'Сподели ја статијава',
 	'sf-link-tooltip' => 'Сподели ја статијава со пријателите',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'sharefeature-desc' => 'Membolehkan pengguna membuat pautan (link) kepada laman-laman dari tapak-tapak popular',
+	'sf-link' => 'Kongsikan rencana ini',
+	'sf-link-popup' => 'Kongsikan rencana ini',
+	'sf-link-tooltip' => 'Kongsikan rencana ini dengan rakan-rakan anda',
 );
 
 /** Dutch (Nederlands)
@@ -331,6 +353,15 @@ $messages['tr'] = array(
 	'sf-link' => 'Bu maddeyi paylaş',
 	'sf-link-popup' => 'Bu maddeyi paylaş',
 	'sf-link-tooltip' => 'Bu maddeyi arkadaşlarınızla paylaşın',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'sf-link' => '分享这个条目',
+	'sf-link-popup' => '分享这个条目',
+	'sf-link-tooltip' => '与您的朋友分享这个条目',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

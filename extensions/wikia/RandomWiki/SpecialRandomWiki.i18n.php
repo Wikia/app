@@ -40,6 +40,14 @@ $messages['br'] = array(
 	'randomwiki' => 'Wiki dre zegouezh',
 );
 
+/** Catalan (Català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'randomwiki-desc' => "Permet als usuaris veure un wiki a l'atzar",
+	'randomwiki' => "Wiki a l'atzar",
+);
+
 /** Czech (Česky)
  * @author Mormegil
  */
@@ -64,8 +72,11 @@ $messages['es'] = array(
 	'randomwiki' => 'Wiki aleatorio',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ * @author Wayiran
+ */
 $messages['fa'] = array(
+	'randomwiki-desc' => 'به کاربران امکان مرور یک ویکی تصادفی را می‌دهد',
 	'randomwiki' => 'ویکی تصادفی',
 );
 
@@ -144,6 +155,14 @@ $messages['lb'] = array(
 $messages['mk'] = array(
 	'randomwiki-desc' => 'Им овозможува на корисниците да истражат некое случајно вики',
 	'randomwiki' => 'Случајно вики',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'randomwiki-desc' => 'Membolehkan pengguna menerokai wiki secara rawak',
+	'randomwiki' => 'Wiki Rawak',
 );
 
 /** Burmese (မြန်မာဘာသာ)

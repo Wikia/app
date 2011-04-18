@@ -436,6 +436,37 @@ $3
 	'globalwatchlist-no-blog-page-found' => 'Нема пронајдено блог-страница.',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'globalwatchlist-desc' => 'Menghantar e-mel ikhtisar mingguan dengan laman-laman dalam senarai pantau di semua wiki',
+	'tog-watchlistdigest' => 'E-melkan Ikhtisar Senarai Pantau Mingguan kepada saya',
+	'tog-watchlistdigestclear' => 'Tandai semua laman daripada Ikhtisar Senarai Pantau Mingguan saya sebagai sudah dikunjungi',
+	'globalwatchlist-see-more' => 'Sila semak senarai pantau setempat anda untuk butiran perubahan yang lebih lanjut',
+	'globalwatchlist-digest-email-subject' => 'Ikhtisar Mingguan',
+	'globalwatchlist-digest-email-body' => '$1,
+
+Berikut ialah senarai laman dalam senarai pantau Wikia anda yang telah disunting sejak kali terakhir anda mengunjunginya.
+
+$2
+
+
+Berikut ialah senarai laman blog dalam senarai pantau Wikia anda yang telah disunting atau diulas sejak kali terakhir anda mengunjunginya.
+
+$3
+
+Sila datang selalu untuk menyunting...
+
+Wikia
+
+* Untuk menukar keutamaan pemberitahuan senarai pantau, sila ke http://www.wikia.com/wiki/Special:Preferences
+* Untuk menandai semua laman daripada Ikhtisar Mingguan sebagai sudah dikunjungi, cari pilihannya di tab "Senarai pantau" dalam laman Keutamaan anda',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 ulasan)',
+	'globalwatchlist-no-page-found' => 'Tiada laman dijumpai.',
+	'globalwatchlist-no-blog-page-found' => 'Tiada laman blog dijumpai.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

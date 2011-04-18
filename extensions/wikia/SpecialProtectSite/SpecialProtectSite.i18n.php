@@ -227,6 +227,7 @@ $messages['fi'] = array(
  * @author IAlex
  * @author Peter17
  * @author Slamduck
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'specialprotectsite-desc' => 'Permet à un administrateur du site de [[Special:ProtectSite|bloquer temporairement de nombreuses modifications du site]]',
@@ -250,6 +251,7 @@ $messages['fr'] = array(
 	'protectsite-until' => "Protéger jusqu'à :",
 	'protectsite-protect' => 'Protéger',
 	'protectsite-unprotect' => 'Déprotéger',
+	'protectsite-nologs' => 'ne pas afficher dans les journaux',
 );
 
 /** Galician (Galego)
@@ -371,6 +373,13 @@ $messages['ja'] = array(
 	'protectsite-unprotect' => '保護解除',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'protectsite-comment' => 'Jrond:',
+);
+
 /** Kurdish (Latin) (Kurdî (Latin))
  * @author George Animal
  */
@@ -402,6 +411,14 @@ $messages['lb'] = array(
 	'protectsite-unprotect' => 'Spär ophiewen',
 );
 
+/** Latgalian (Latgaļu)
+ * @author Dark Eagle
+ */
+$messages['ltg'] = array(
+	'protectsite-protect' => 'Apsorguot',
+	'protectsite-unprotect' => 'Nūjimt apsardzeibu',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -428,6 +445,34 @@ $messages['mk'] = array(
 	'protectsite-protect' => 'Заштити',
 	'protectsite-unprotect' => 'Тргни заштита',
 	'protectsite-nologs' => 'не прикажувај во дневници',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'specialprotectsite-desc' => 'Membenarkan pentadbir tapak untuk [[Special:ProtectSite|menyekat pengubahsuaian tapak buat sementara]]',
+	'protectsite' => 'Lindungi laman',
+	'protectsite-text-protect' => '<!-- Arahan/Ulasan/Dasar penggunaan -->',
+	'protectsite-text-unprotect' => '<!-- Arahan/Ulasan apabila dilindungi -->',
+	'protectsite-title' => 'Tetapan perlindungan laman',
+	'protectsite-allowall' => 'Semua pengguna',
+	'protectsite-allowusersysop' => 'Pengguna berdaftar dan pengendali sistem (<i>sysop</i>)',
+	'protectsite-allowsysop' => 'Pengendali sistem (<i>sysop</i>) sahaja',
+	'protectsite-createaccount' => 'Benarkan pembukaan akaun baru oleh',
+	'protectsite-createpage' => 'Benarkan penciptaan laman oleh',
+	'protectsite-edit' => 'Benarkan penyuntingan laman oleh',
+	'protectsite-move' => 'Benarkan pemindahan laman oleh',
+	'protectsite-upload' => 'Benarkan muat naik fail oleh',
+	'protectsite-timeout' => 'Tamat masa:',
+	'protectsite-timeout-error' => "'''Tamat Masa Tidak Sah.'''",
+	'protectsite-maxtimeout' => 'Maksimum:',
+	'protectsite-comment' => 'Ulasan:',
+	'protectsite-ucomment' => 'Nyahlindung ulasan:',
+	'protectsite-until' => 'Dilindungi hingga:',
+	'protectsite-protect' => 'Lindungi',
+	'protectsite-unprotect' => 'Nyahlindung',
+	'protectsite-nologs' => 'jangan tunjukkan dalam log',
 );
 
 /** Dutch (Nederlands)
@@ -516,7 +561,7 @@ $messages['pl'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'specialprotectsite-desc' => "↓ A përmët a n'aministrator d'un sit ëd [[Special:ProtectSite|bloché temporaneament vàire modìfiche dël sit]]",
+	'specialprotectsite-desc' => "A përmët a n'aministrator d'un sit ëd [[Special:ProtectSite|bloché temporaneament vàire modìfiche dël sit]]",
 	'protectsite' => 'Sit protet',
 	'protectsite-text-protect' => '<!-- Istrussion/Coment/Polìtica për dovragi -->',
 	'protectsite-text-unprotect' => '<!-- Istrussion/Coment quand protet -->',
@@ -758,5 +803,16 @@ $messages['uk'] = array(
 	'protectsite-until' => 'Захищено до:',
 	'protectsite-protect' => 'Захистити',
 	'protectsite-unprotect' => 'Зняти захист',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'protectsite-allowall' => '所有用户',
+	'protectsite-allowsysop' => '管理员而已',
+	'protectsite-maxtimeout' => '最多：',
+	'protectsite-protect' => '保护',
+	'protectsite-unprotect' => '不保护',
 );
 

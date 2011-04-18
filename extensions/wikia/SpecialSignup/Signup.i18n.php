@@ -38,6 +38,14 @@ $messages['de'] = array(
 	'signup' => 'Benutzerkonto erstellen',
 );
 
+/** Greek (Ελληνικά)
+ * @author Evropi
+ */
+$messages['el'] = array(
+	'signup-desc' => 'Προσθέτει ψευδώνυμο [[{{#Special:Signup}}]] για [[{{#Special:UserLogin}}/signup]]',
+	'signup' => 'Εγγραφή',
+);
+
 /** Spanish (Español) */
 $messages['es'] = array(
 	'signup-desc' => 'Añade el alias [[{{#Special:Signup}}]] para [[{{#Special:UserLogin}}/signup]]',
@@ -58,10 +66,26 @@ $messages['ia'] = array(
 	'signup' => 'Crear conto',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'signup-desc' => "Aggiunge l'alias [[{{#Special:Signup}}]] per [[{{#Special:UserLogin}}/signup]]",
+	'signup' => 'Registrati',
+);
+
 /** Macedonian (Македонски) */
 $messages['mk'] = array(
 	'signup-desc' => 'Додава алијас на [[{{#Special:Signup}}]] за [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Зачленување',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'signup-desc' => 'Menambahkan alias [[{{#Special:Signup}}]] untuk [[{{#Special:UserLogin}}/signup]]',
+	'signup' => 'Daftar Diri',
 );
 
 /** Dutch (Nederlands) */
@@ -120,5 +144,12 @@ $messages['sv'] = array(
 $messages['te'] = array(
 	'signup-desc' => '[[{{#Special:UserLogin}}/signup]]కి [[{{#Special:Signup}}]] అనే మారుపేరుని చేరుస్తుంది',
 	'signup' => 'నమోదవ్వండి',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'signup' => '注册',
 );
 

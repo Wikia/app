@@ -102,6 +102,21 @@ $messages['mk'] = array(
 	'cacheepoch-no-wf' => 'WikiFactory не е овозможено на ова вики. Не можам да го менувам wgCacheEpoch.',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'cacheepoch-desc' => 'Menyediakan antara muak untuk mengubah wgCacheEpoch per wiki.',
+	'cacheepoch' => 'Antara muka Cache Epoch',
+	'cacheepoch-header' => 'Tingkatkan wgCacheEpoch',
+	'cacheepoch-value' => 'Nilai semasa wgCacheEpoch ialah "$1". Tekan butang ini untuk menetapkannya kepada cop masa sekarang.',
+	'cacheepoch-submit' => 'Kemas kini nilai',
+	'cacheepoch-updated' => 'wgCacheEpoch dikemas kini ke "$1".',
+	'cacheepoch-not-updated' => 'wgCacheEpoch tidak dapat dikemas kini.',
+	'cacheepoch-wf-reason' => 'Nilai dikemas kini melalui Special:CacheEpoch',
+	'cacheepoch-no-wf' => 'WikiFactory (Kilang Wiki) tidak dihidupkan di wiki ini, maka wgCacheEpoch tidak dapat diubah.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

@@ -230,6 +230,13 @@ $messages['be-tarask'] = array(
 	'multidelete_button' => 'ВЫДАЛІЦЬ',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'multiwikiedit_all_wikis' => 'всички уикита',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -746,6 +753,7 @@ $messages['fi'] = array(
 	'multiwikiedit_confirm' => 'Vahvista',
 	'multiwikiedit_or' => '<b>TAI</b>',
 	'multiwikiedit_page_text' => 'Tallennettava teksti',
+	'multiwikiedit_list_caption' => 'Wiki-luettelo',
 	'multiwikiedit_select_yourself' => 'Sinä',
 	'multiwikiedit_edit_options' => 'Muokkausvalitsimet',
 	'multidelete_button' => 'Poista',
@@ -1522,6 +1530,116 @@ $messages['mk'] = array(
 	'multiwikifindpagenames' => 'Пребарај имиња',
 	'multiwikienterpagename' => 'Внесете име на страница:',
 	'multiwikirecords' => 'пронајдено е $1 вики',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'multitasks-link-back-label' => 'sini',
+	'multiwikiedit' => 'Sunting kelompok laman',
+	'multiwikiedit_button' => 'SUNTING',
+	'multiwikiedit_confirm' => 'SAHKAN',
+	'multiwikiedit_help' => 'Sunting satu kelompok laman sekali. Anda boleh menyunting laman-laman yang tersenarai dalam petak teks. Pilih satu pengguna yang akan ditunjukkan dalam log penghapusan. Fail yang dimuat naik harus mengandungi nama laman dan sebab (tak wajib) yang dipisahkan oleh aksara | di setiap baris.',
+	'multiwikiedit_caption' => 'Senarai laman',
+	'multiwikiedit_title' => 'Sunting Berbilang Wiki',
+	'multiwikiedit_as' => 'Jalankan skrip sebagai',
+	'multiwikiedit_both_modes' => 'Sila pilih salah satu laman atau senarai laman yang disediakan',
+	'multiwikiedit_or' => '<b>ATAU</b>',
+	'multiwikiedit_task_added' => 'Tugas menyunting berbilang wiki #$1 ditambahkan.',
+	'multiwikiedit_task_error' => 'Terdapat ralat ketika menambahkan tugas menyunting berbilang wiki.',
+	'multiwikiedit_task_none_selected' => 'Anda belum memilih mana-mana rencana, maka tugas tidak ditambahkan.',
+	'multiwikiedit_task_link' => 'Anda boleh menyemak tugas anda',
+	'multiwikiedit_on' => 'di',
+	'multiwikiedit_page' => 'Laman untuk disunting',
+	'multiwikiedit_page_text' => 'Teks untuk disimpan',
+	'multiwikiedit_reason' => 'Sebab disunting',
+	'multiwikiedit_list_caption' => 'Senarai wiki',
+	'multiwikiedit_minoredit_caption' => 'Suntingan kecil',
+	'multiwikiedit_botedit_caption' => 'Suntingan bot (tersorok)',
+	'multiwikiedit_autosummary_caption' => 'Hidupkan ringkasan automatik',
+	'multiwikiedit_norecentchanges_caption' => 'Jangan paparkan perubahan dalam perubahan terkini',
+	'multiwikiedit_newonly_caption' => 'Langkau rencana yang sedia ada',
+	'multiwikiedit_choose_articles' => 'pilih rencana yang harus disunting',
+	'multiwikiedit_processing' => 'menyunting laman',
+	'multiwikiedit_from_file' => 'daripada senarai fail',
+	'multiwikiedit_from_form' => 'daripada borang',
+	'multiwikiedit_summary_text' => 'Ruangan Ringkasan',
+	'multiwikiedit_this_wiki' => 'wiki ini',
+	'multiwikiedit_inbox_caption' => 'dipisahkan dengan tanda koma',
+	'multiwikiedit_all_wikis' => 'semua wiki',
+	'multiwikiedit_selected_wikis' => 'wiki terpilih',
+	'multiwikiedit_success_subtitle' => 'untuk $1',
+	'multiwikiedit_link_back' => 'Anda boleh kembali ke borang Penyuntingan Berbilang Wiki $1.',
+	'multiwikiedit_omitting_nonexistant' => 'Laman tak wujud $1 tidak diambil kira.',
+	'multiwikiedit_omitting_invalid' => 'Laman tak sah $1 tidak diambil kira.',
+	'multiwikiedit_file_bad_format' => 'Fail ini harus berbentuk teks biasa',
+	'multiwikiedit_file_missing' => 'Fail yang diberi tidak dapat dibaca',
+	'multiwikiedit_select_script' => 'sunting skrip laman',
+	'multiwikiedit_select_yourself' => 'anda',
+	'multiwikiedit_no_page' => 'Sila nyatakan sekurang-kurangnya satu laman untuk disunting ATAU pilih satu fail yang mengandungi senarai laman.',
+	'multiwikiedit_split_results' => "Kiraan rencana anda terlalu tinggi untuk dilakukan dalam satu tugas sahaja. Untuk itu, tugas itu telah dipecahkan kepada '''$1''' tugas, dengan saiz maksimum '''$2''' rencana.",
+	'multiwikiedit_max_display_size' => "Ciri sunting berbilang wiki kini mempunyai bilangan rencana maksimum dalam fasa pengesahan. Pertanyaan anda telah dihadkan pada '''$1''' rencana. Pilih rencana anda dan simpan tugas itu. Selepas itu, sila ulangi proses ini untuk mengerjakan semua rencana yang selebihnya.",
+	'multiwikiedit_add_text' => 'Nyatakan teks rencana terlebih dahulu',
+	'multiwikiedit_supply_wikis' => 'Sila bekalkan senarai wiki terpilih',
+	'multiwikiedit_tasks_list' => 'Senarai tugasan untuk dijalankan',
+	'multiwikiedit_general_options' => 'Pilihan am penyuntingan berbilang wiki',
+	'multiwikiedit_edit_options' => 'Pilihan menyunting',
+	'multidelete' => 'Hapuskan kelompok laman',
+	'multidelete_button' => 'HAPUS',
+	'multidelete_help' => 'Hapuskan kelompok laman melalui tugas latar belakang. Anda boleh melakukannya untuk wiki ini, semua wiki daripada pangkalan data kongsian, wiki-wiki terpilih, atau bahasa-bahasa terpilih. Anda boleh memilih untuk menghapuskannya di bawah nama ANDA atau akaun skrip yang tersedia.',
+	'multidelete_caption' => 'Senarai laman',
+	'multidelete_title' => 'Penghapusan Berbilang Wiki',
+	'multidelete_both_modes' => 'Sila pilih salah satu laman atau senarai laman yang disediakan',
+	'multidelete_or' => '<b>ATAU</b>',
+	'multidelete_reason' => 'Sebab penghapusan',
+	'multidelete_error_empty_selection' => 'Sila bekalkan senarai wiki terpilih',
+	'multidelete_error_empty_pages' => 'Sila pilih salah satu laman atau senarai laman yang disediakan',
+	'multidelete_error_multi_page' => 'Penghapusan berbilang wiki hanya boleh dibuat satu demi satu tajuk.',
+	'multidelete_info_empty_list' => 'Tajuk-tajuk yang diberikan tidak dijumpai di mana-mana wiki yang terpilih.',
+	'multidelete_task_added' => 'Tugas menghapuskan berbilang wiki #$1 ditambahkan.',
+	'multidelete_task_error' => 'Terdapat ralat ketika menambahkan tugas menghapuskan berbilang wiki.',
+	'multidelete_task_none_selected' => 'Anda belum memilih mana-mana rencana, maka tugas tidak ditambahkan.',
+	'multidelete_task_link' => 'Anda boleh menyemak tugas anda',
+	'multidelete_select_all' => 'Pilih semua',
+	'multidelete_page' => 'Laman yang ingin dihapuskan',
+	'multidelete_list_caption' => 'dalam senarai wiki yang dinyatakan',
+	'multidelete_choose_articles' => 'pilih rencana yang harus dihapuskan',
+	'multidelete_processing' => 'menghapuskan laman',
+	'multidelete_this_wiki' => 'wiki ini',
+	'multidelete_inbox_caption' => 'atau dipisahkan dengan tanda koma',
+	'multidelete_all_wikis' => 'semua wiki',
+	'multidelete_selected_wikis' => 'wiki terpilih',
+	'multidelete_success_subtitle' => 'untuk $1',
+	'multidelete_link_back' => 'Anda boleh kembali ke borang Penghapusan Berbilang Wiki, $1.',
+	'multidelete_omitting_nonexistant' => 'Laman tak wujud $1 tidak diambil kira.',
+	'multidelete_omitting_invalid' => 'Laman tak sah $1 tidak diambil kira.',
+	'multidelete_file_bad_format' => 'Fail ini harus berbentuk teks biasa',
+	'multidelete_file_missing' => 'Fail yang diberi tidak dapat dibaca',
+	'multidelete_select_script' => 'akaun skrip yang disediakan',
+	'multidelete_no_page' => 'Sila nyatakan sekurang-kurangnya satu laman untuk dihapuskan ATAU pilih satu fail yang mengandungi senarai laman.',
+	'multidelete_split_results' => "Kiraan rencana anda terlalu tinggi untuk dilakukan dalam satu tugas sahaja. Untuk itu, tugas itu telah dipecahkan kepada '''$1''' tugas, dengan saiz maksimum '''$2''' rencana.",
+	'multidelete_max_display_size' => "Ciri sunting berbilang wiki kini mempunyai bilangan rencana maksimum dalam fasa pengesahan. Pertanyaan anda telah dihadkan pada '''$1''' rencana. Pilih rencana anda dan simpan tugas itu. Selepas itu, sila ulangi proses ini untuk mengerjakan semua rencana yang selebihnya.",
+	'multidelete_brazilian_portuguese_wikis' => 'semua wiki berbahasa Portugis Brazil',
+	'multidelete_hebrew_wikis' => 'semua wiki berbahasa Ibrani',
+	'multidelete_chinese_wikis' => 'semua wiki berbahasa Cina',
+	'multidelete_polish_wikis' => 'semua wiki berbahasa Poland',
+	'multidelete_czech_wikis' => 'semua wiki berbahasa Czech',
+	'multidelete_portuguese_wikis' => 'semua wiki berbahasa Portugis',
+	'multidelete_dutch_wikis' => 'semua wiki berbahasa Belanda',
+	'multidelete_italian_wikis' => 'semua wiki berbahasa Itali',
+	'multidelete_russian_wikis' => 'semua wiki berbahasa Rusia',
+	'multidelete_english_wikis' => 'semua wiki berbahasa Inggeris',
+	'multidelete_japanese_wikis' => 'semua wiki berbahasa Jepun',
+	'multidelete_finnish_wikis' => 'semua wiki berbahasa Finland',
+	'multidelete_spanish_wikis' => 'semua wiki berbahasa Sepanyol',
+	'multidelete_french_wikis' => 'semua wiki berbahasa Perancis',
+	'multidelete_swedish_wikis' => 'semua wiki berbahasa Sweden',
+	'multidelete_german_wikis' => 'semua wiki berbahasa Jerman',
+	'multiwikifinder' => 'Pencari Tajuk Berbilang Wiki',
+	'multiwikifindpagenames' => 'Cari nama laman',
+	'multiwikienterpagename' => 'Isikan nama laman:',
+	'multiwikirecords' => '$1 wiki ditemui',
 );
 
 /** Dutch (Nederlands)
@@ -2369,11 +2487,39 @@ $messages['te'] = array(
 	'multidelete_english_wikis' => 'అన్ని ఆంగ్ల వికీలు',
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'multidelete_title' => 'Күпләп бетерү',
+);
+
 /** Ukrainian (Українська)
  * @author Тест
  */
 $messages['uk'] = array(
 	'multidelete_button' => 'ВИЛУЧИТИ',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'multitasks-link-back-label' => '这里',
+	'multiwikiedit_confirm' => '确定',
+	'multiwikiedit_on' => '在',
+	'multiwikiedit_this_wiki' => '这个维基',
+	'multiwikiedit_all_wikis' => '所有维基',
+	'multiwikiedit_selected_wikis' => '被选中的维基',
+	'multiwikiedit_select_yourself' => '您',
+	'multidelete_button' => '删除',
+	'multidelete_reason' => '删除原因',
+	'multidelete_select_all' => '选择全部',
+	'multidelete_this_wiki' => '这个维基',
+	'multidelete_all_wikis' => '所有维基',
+	'multidelete_chinese_wikis' => '所有华文维基',
+	'multidelete_english_wikis' => '所有英文维基',
+	'multidelete_japanese_wikis' => '所有日文维基',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

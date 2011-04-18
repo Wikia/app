@@ -45,11 +45,14 @@ $messages['br'] = array(
 
 /** Catalan (Català)
  * @author Paucabot
+ * @author SMP
  */
 $messages['ca'] = array(
 	'taskmanager' => 'Mostra i gestiona les tasques en segon pla',
 	'taskmanager_title' => 'Mostra i gestiona les tasques en segon pla',
 	'taskmanager_tasklist' => 'Torna a la Llista de Tasques',
+	'right-taskmanager' => 'Poder mostrar les tasques en segon pla',
+	'right-taskmanager-action' => 'Poder gestionar les tasques en segon pla',
 );
 
 /** Czech (Česky)
@@ -163,11 +166,14 @@ $messages['id'] = array(
 
 /** Italian (Italiano)
  * @author HalphaZ
+ * @author Pietrodn
  */
 $messages['it'] = array(
 	'taskmanager' => 'Visualizza e gestisci i task in background',
 	'taskmanager_title' => 'Visualizza e gestisci i task in background',
 	'taskmanager_tasklist' => 'Ritorna alla lista dei task',
+	'right-taskmanager' => 'Può visualizzare le operazioni in background',
+	'right-taskmanager-action' => 'Può gestire le operazioni in background',
 );
 
 /** Japanese (日本語)
@@ -195,6 +201,17 @@ $messages['mk'] = array(
 	'taskmanager_tasklist' => 'Назад кон Списокот на задачи',
 	'right-taskmanager' => 'Може да прикажува позадински задачи',
 	'right-taskmanager-action' => 'Може да раководи со позадински задачи',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'taskmanager' => 'Paparkan dan uruskan tugas-tugas latar belakang',
+	'taskmanager_title' => 'Paparkan dan uruskan tugas-tugas latar belakang',
+	'taskmanager_tasklist' => 'Kembali ke Senarai Tugas',
+	'right-taskmanager' => 'Boleh memaparkan tugasan latar belakang',
+	'right-taskmanager-action' => 'Boleh menguruskan tugasan latar belakang',
 );
 
 /** Dutch (Nederlands)
@@ -270,12 +287,15 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (Русский)
+ * @author DCamer
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'taskmanager' => 'Просмотр и управление фоновыми заданиями',
 	'taskmanager_title' => 'Просмотр и управление фоновыми заданиями',
 	'taskmanager_tasklist' => 'Вернуться к списку заданий',
+	'right-taskmanager' => 'Может просматривать фоновые задачи',
+	'right-taskmanager-action' => 'Может управлять фоновыми задачами',
 );
 
 /** Sinhala (සිංහල)

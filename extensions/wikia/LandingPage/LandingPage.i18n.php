@@ -74,6 +74,13 @@ $messages['es'] = array(
 	'landingpage-buttons-learn-more' => 'Aprende más &gt;',
 );
 
+/** Persian (فارسی)
+ * @author BlueDevil
+ */
+$messages['fa'] = array(
+	'landingpage' => 'به ویکیا خوش آمدید',
+);
+
 /** Finnish (Suomi) */
 $messages['fi'] = array(
 	'landingpage' => 'Tervetuloa Wikiaan',
@@ -148,6 +155,18 @@ $messages['mk'] = array(
 	'landingpage-readfaq' => 'Имате прашања? Прочитајте ја страницата за ЧПП &gt;',
 	'landingpage-text' => 'На Викија можете да <strong>се поврзете со луѓето</strong> што имаат исти <strong>страсти и интереси</strong> како вас. Пронајдете си група, давајте коментари, правете уредувања; можете дури и да <strong>започнете сопствена страница</strong> и заедница.',
 	'landingpage-buttons-learn-more' => 'Дознајте повеќе &gt;',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'landingpage' => 'Selamat Datang ke Wikia',
+	'landingpage-start-exploring' => 'Bersedia untuk menjelajah?',
+	'landingpage-start-exploring-text' => 'Cari topik kegemaran anda atau layari topik kegemaran komuniti di bawah.',
+	'landingpage-readfaq' => 'Ada apa-apa soalan? Baca FAQ kami &gt;',
+	'landingpage-text' => 'Di Wikia, anda boleh <strong>berhubung sesama insan</strong> yang sama <strong>perkara yang diminati dan digemari</strong> dengan anda. Di sin, anda boleh mencari kumpulan anda, membuat ulasan dan suntingan, ataupun <strong>membuka tapak web dan komuniti sendiri</strong>.',
+	'landingpage-buttons-learn-more' => 'Ketahui lebih lanjut &gt;',
 );
 
 /** Dutch (Nederlands)

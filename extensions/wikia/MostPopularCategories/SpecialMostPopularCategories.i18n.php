@@ -33,6 +33,13 @@ $messages['arn'] = array(
 	'mostpopularcategories' => 'Zoy ayvgelu xokiñ',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'mostpopularcategories' => 'Categoríes más populares',
+);
+
 /** Azerbaijani (Azərbaycanca)
  * @author Sortilegus
  */
@@ -209,6 +216,13 @@ $messages['mk'] = array(
 	'mostpopularcategories' => 'Најпопуларни категории',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'mostpopularcategories' => 'Kategori paling popular',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -288,7 +302,7 @@ $messages['ru'] = array(
 
 /** Tachelhit (Tašlḥiyt) */
 $messages['shi'] = array(
-	'mostpopularcategories' => '↓ Taggayyin lli bahra ttuyssanin',
+	'mostpopularcategories' => 'Taggayyin lli bahra ttuyssanin',
 );
 
 /** Sinhala (සිංහල)

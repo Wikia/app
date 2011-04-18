@@ -144,6 +144,13 @@ $messages['mk'] = array(
 	'sitemap-desc' => 'Создавање нa преглед на содржината на викито по брза постапка',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'sitemap-desc' => 'Segera menjana Peta Tapak untuk wiki ini',
+);
+
 /** Nepali (नेपाली)
  * @author RajeshPandey
  */

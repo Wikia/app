@@ -223,6 +223,13 @@ $messages['mk'] = array(
 	'staffpowers-ipblock-aborted' => 'Не можете да блокирате персонал на Викија. За да пријавите проблеми со програмот или персоналот, одете на [[Special:Contact]]',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'staffpowers-ipblock-aborted' => 'Anda tidak boleh menyekat kakitangan Wikia. Sila gunakan [[Special:Contact]] untuk melaporkan sebarang isu atau masalah berkenaan kakitangan kami.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

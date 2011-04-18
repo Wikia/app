@@ -118,6 +118,14 @@ $messages['id'] = array(
 	'wikiarelatedpages-heading' => 'Baca lebih lanjut',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'wikiarelatedpages-desc' => 'Aggiunge alle pagine un elenco con le pagine correlate',
+	'wikiarelatedpages-heading' => 'Per saperne di più',
+);
+
 /** Korean (한국어) */
 $messages['ko'] = array(
 	'wikiarelatedpages-desc' => '문서 하단에 관련 문서 링크를 추가합니다.',
@@ -146,6 +154,14 @@ $messages['lb'] = array(
 $messages['mk'] = array(
 	'wikiarelatedpages-desc' => 'Во страниците додава список на поврзани страници',
 	'wikiarelatedpages-heading' => 'Прочитајте повеќе',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'wikiarelatedpages-desc' => 'Membubuh senarai laman berkaitan pada laman',
+	'wikiarelatedpages-heading' => 'Bacaan lanjut',
 );
 
 /** Dutch (Nederlands)
@@ -241,5 +257,12 @@ $messages['tl'] = array(
 /** Ukrainian (Українська) */
 $messages['uk'] = array(
 	'wikiarelatedpages-heading' => 'Читати далі',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'wikiarelatedpages-heading' => '读更多',
 );
 

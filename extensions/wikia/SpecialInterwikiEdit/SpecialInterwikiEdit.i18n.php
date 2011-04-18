@@ -55,6 +55,14 @@ $messages['be-tarask'] = array(
 	'iwedit-success' => '<p>Спасылка створаная пасьпяхова.</p>',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'iwedit-all-interwikis' => 'всички междууикита',
+	'iwedit-update' => 'Обновяване',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -224,6 +232,13 @@ $messages['lb'] = array(
 	'iwedit-success' => '<p>De Linkg gouf ugeluecht</p>',
 );
 
+/** Latgalian (Latgaļu)
+ * @author Dark Eagle
+ */
+$messages['ltg'] = array(
+	'iwedit-update' => 'Atjaunynuot',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -234,6 +249,18 @@ $messages['mk'] = array(
 	'iwedit-update' => 'Поднови',
 	'iwedit-error' => '<p>Се појави грешка.</p>',
 	'iwedit-success' => '<p>Врската е успешно создадена.</p>',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'iwedit-title' => 'Penyunting Antara Wiki',
+	'iwedit-language-interwikis' => 'antara wiki bahasa sahaja',
+	'iwedit-all-interwikis' => 'semua antara wiki',
+	'iwedit-update' => 'Kemaskini',
+	'iwedit-error' => '<p>Berlakunya ralat.</p>',
+	'iwedit-success' => '<p>Pautan berjaya dicipta.</p>',
 );
 
 /** Dutch (Nederlands)

@@ -535,6 +535,26 @@ $messages['mk'] = array(
 	'wikiavideo-intro-old' => "Ја бришете верзијата на '''[$1 $5]''' од [$4 $3, $2].",
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'wikiavideo-reverted' => 'Video $1 berjaya dikembalikan ke asal. Kembali ke $2.',
+	'wikiavideo-unreverted' => 'Anda tidak dibenarkan mengembalikan $1 ke asal.',
+	'wikiavideo-added' => 'menambahkan video $1',
+	'wikiavideo-back' => 'kembali',
+	'wikiavideo-create' => 'Tambahkan Video',
+	'wikiavideo-replace' => 'Tukar Video',
+	'wikiavideo-category' => 'Video',
+	'wikiavideo-links' => 'Pautan',
+	'wikiavideo-placeholder' => 'Pemegang tempat',
+	'wikiavideo-gallery-template' => 'Video galeri ini terletak di dalam templat, dan tidak boleh disunting daripada mod papar. Sila sunting templat berkenaan.',
+	'wikiavideo-not-supported' => 'Kulit ini tidak menyokong penyisipan video daripada mod papar ke dalam galeri.',
+	'wikiavideo-pixel' => 'piksel',
+	'wikiavideo-deleted-old' => "Versi '''[$1 $2]''' pada $4, $3 telah dihapuskan.",
+	'wikiavideo-intro-old' => "Anda akan menghapuskan versi '''[$1 $5]''' pada [$4 $3, $2].",
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -825,5 +845,12 @@ $messages['uk'] = array(
 	'wikiavideo-category' => 'Відео',
 	'wikiavideo-links' => 'Посилання',
 	'wikiavideo-intro-old' => "Ви вилучаєте версію '''[$1 $5]''' від [$4 $3, $2].",
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'wikiavideo-back' => '后退',
 );
 

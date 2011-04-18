@@ -33,6 +33,18 @@ $messages['af'] = array(
 	'mostvisitedpagessearchbtn' => 'soek',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'mostvisitedpages' => 'Páxines más vistes',
+	'mostvisitedpagessearchtext' => 'Nome del artículu:',
+	'mostvisitedpagessearchbtn' => 'busca',
+	'mostvisitedpageslatest' => 'nos caberos $1 minutos',
+	'mostvisitedpageslatestlink' => 'Ver les caberes páxines vistes',
+	'mostvisitedpagesalllink' => 'Ver les páxines más vistes',
+);
+
 /** Azerbaijani (Azərbaycanca)
  * @author Sortilegus
  */
@@ -63,6 +75,18 @@ $messages['br'] = array(
 	'mostvisitedpageslatest' => 'e kerzh ar $1 minutenn ziwezhañ',
 	'mostvisitedpageslatestlink' => 'Gwelet ar pajennoù bet gweladennet da ziwezhañ',
 	'mostvisitedpagesalllink' => 'Gwelet ar pajennoù bet gweladennet ar muiañ',
+);
+
+/** Catalan (Català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'mostvisitedpages' => 'Pàgines més visitades',
+	'mostvisitedpagessearchtext' => "Nom de l'article:",
+	'mostvisitedpagessearchbtn' => 'Cerca',
+	'mostvisitedpageslatest' => 'en els darrers $1 minuts',
+	'mostvisitedpageslatestlink' => 'Veure les últimes pàgines visitades',
+	'mostvisitedpagesalllink' => 'Veure les pàgines més visitades',
 );
 
 /** Czech (Česky)
@@ -240,6 +264,18 @@ $messages['ja'] = array(
 	'mostvisitedpagesalllink' => '全期間の結果を見る',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'mostvisitedpages' => 'ಅತ್ಯಂತ ಹೆಚ್ಚು ಭೇಟಿಕೊಟ್ಟ ಪುಟಗಳು',
+	'mostvisitedpagessearchtext' => 'ಲೇಖನದ ಹೆಸರು:',
+	'mostvisitedpagessearchbtn' => 'ಹುಡುಕು',
+	'mostvisitedpageslatest' => 'ಕಳೆದ $1 ನಿಮಿಷದಲ್ಲಿ',
+	'mostvisitedpageslatestlink' => 'ಕೊನೆಯದಾಗಿ ಭೇಟಿಕೊಟ್ಟ ಪುಟಗಳನ್ನು ನೋಡಿ',
+	'mostvisitedpagesalllink' => 'ಅತ್ಯಂತ ಹೆಚ್ಚು ಭೇಟಿಕೊಟ್ಟ ಪುಟಗಳನ್ನು ನೋಡಿ',
+);
+
 /** Kurdish (Latin) (Kurdî (Latin))
  * @author George Animal
  */
@@ -271,6 +307,18 @@ $messages['mk'] = array(
 	'mostvisitedpageslatest' => 'во последните $1 минути',
 	'mostvisitedpageslatestlink' => 'Најскоро посетени страници',
 	'mostvisitedpagesalllink' => 'Најпосетени страници',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'mostvisitedpages' => 'Laman yang paling kerap dikunjungi',
+	'mostvisitedpagessearchtext' => 'Tajuk rencana:',
+	'mostvisitedpagessearchbtn' => 'cari',
+	'mostvisitedpageslatest' => 'pada $1 minit yang lalu',
+	'mostvisitedpageslatestlink' => 'Lihat laman yang paling baru dikunjungi',
+	'mostvisitedpagesalllink' => 'Lihat laman yang paling kerap dikunjungi',
 );
 
 /** Dutch (Nederlands)
@@ -499,6 +547,13 @@ $messages['uk'] = array(
  */
 $messages['vi'] = array(
 	'mostvisitedpages' => 'Các trang được xem nhiều nhất',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'mostvisitedpagessearchbtn' => '搜寻',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)
