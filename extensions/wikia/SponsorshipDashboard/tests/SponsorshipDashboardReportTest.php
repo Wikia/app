@@ -86,7 +86,6 @@ class SponsorshipDashboardReportTest extends PHPUnit_Framework_TestCase {
 		$oFormatter = SponsorshipDashboardOutputChart::newFromReport( $oReport );
 		$return = $oFormatter->getChartData();
 
-		var_dump( $return );
 		$this->assertEmpty( $return );
 	}
 
