@@ -17,11 +17,14 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname( __FILE__ );
 
 // Translations
-$wgExtensionMessagesFiles["WikiaNewFiles"] =  $dir . '/SpecialNewFiles.i18n.php';
+$wgExtensionMessagesFiles["WikiaNewFiles"] =  "{$dir}/SpecialNewFiles.i18n.php";
+
+//Fix BugzId: 4310
+$wgExtensionAliasesFiles ['WikiaNewFiles'] = "{$dir}/SpecialNewFiles.alias.php";
 
 // Autoloaded classes
-$wgAutoloadClasses['WikiaNewFiles'] = "$dir/WikiaNewFiles.class.php";
+$wgAutoloadClasses['WikiaNewFiles'] = "{$dir}/WikiaNewFiles.class.php";
 
-require_once( $dir . '/SpecialNewFiles.php' );
+require_once( "{$dir}/SpecialNewFiles.php" );
 
 $wgSpecialPages['Newimages'] = array( 'WikiaNewFiles', 'Newimages' );
