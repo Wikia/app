@@ -11,7 +11,13 @@ class SpecialAchievementsSharing extends UnlistedSpecialPage {
 		wfProfileIn(__METHOD__);
 		
 		global $wgOut, $wgRequest;
-
+		
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+		
 		$articleID = $wgRequest->getInt('articleid');
 		
 		$title = Title::newFromID($articleID);

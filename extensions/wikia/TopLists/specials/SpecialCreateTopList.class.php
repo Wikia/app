@@ -14,7 +14,16 @@ class SpecialCreateTopList extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		global $wgExtensionsPath, $wgStyleVersion, $wgStylePath , $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
-
+		
+		// set basic headers
+		$this->setHeaders();
+		
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+		
 		//Check blocks
 		if( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
@@ -25,10 +34,7 @@ class SpecialCreateTopList extends SpecialPage {
 			$this->displayRestrictionError();
 			return;
 		}
-
-		// set basic headers
-		$this->setHeaders();
-
+		
 		// include resources (css and js)
 		//$wgOut->addExtensionStyle( "{$wgExtensionsPath}/wikia/TopLists/css/editor.css?{$wgStyleVersion}\n" );
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/TopLists/css/editor.scss'));

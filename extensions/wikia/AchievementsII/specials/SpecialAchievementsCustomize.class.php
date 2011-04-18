@@ -10,7 +10,16 @@ class SpecialAchievementsCustomize extends SpecialPage {
 	function execute($user_id) {
 		wfProfileIn(__METHOD__);
 		global $wgUser, $wgOut, $wgExtensionsPath, $wgStylePath, $wgStyleVersion, $wgSupressPageTitle, $wgRequest, $wgJsMimeType, $wgCityId, $wgExternalSharedDB;
-
+		
+		// set basic headers
+		$this->setHeaders();
+		
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+		
 		if(!$this->userCanExecute($wgUser)) {
 			$this->displayRestrictionError();
 			return;
@@ -86,8 +95,7 @@ class SpecialAchievementsCustomize extends SpecialPage {
 				}
 			}
 		}
-
-		$this->setHeaders();
+		
 		AchConfig::getInstance()->refreshData(true);
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 		$template->set_vars(array(
