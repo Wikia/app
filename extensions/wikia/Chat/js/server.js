@@ -32,8 +32,8 @@ if(process.argv.length < 3){
 	}
 }
 
-// NOTE: WE COULD REPLACE activeClients BY JUST USING rc.scard(getKey_usersInRoom(client.roomId)); ... IT'S O(1) .. alternately, we could keep both as a way to doublecheck.
-// NOTE: WE COULD REPLACE activeClients BY JUST USING rc.scard(getKey_usersInRoom(client.roomId)); ... IT'S O(1) .. alternately, we could keep both as a way to doublecheck.
+// NOTE: WE COULD REPLACE activeClients BY JUST USING rc.hlen(getKey_usersInRoom(client.roomId)); ... IT'S O(1) .. alternately, we could keep both as a way to doublecheck.
+// NOTE: WE COULD REPLACE activeClients BY JUST USING rc.hlen(getKey_usersInRoom(client.roomId)); ... IT'S O(1) .. alternately, we could keep both as a way to doublecheck.
 
 // TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
 //process.on('uncaughtException', function (err) {
@@ -87,7 +87,7 @@ app.get('/', function(req, res){
 
 // TODO: MUST REMOVE THIS WHEN WE HAVE MULTIPLE NODE SERVERS! (and figure out another solution to prune entries who are no longer connected... perhaps prune any time you try to send to them & they're not there?).
 console.log("Pruning old room memberships...");
-rc.keys( getPrefix_usersInRoom()+":*", function(err, data){
+rc.keys( getKeyPrefix_usersInRoom()+":*", function(err, data){
 	if(err){
 		console.log("Error: while trying to get all room membership lists. Error msg: " + err);
 	} else {
@@ -474,6 +474,10 @@ function apiDispatcher(req, res, successCallback, errorCallback){
 			api_getCityIdForRoom(reqData.query.roomId, successCallback, errorCallback);
 		} else if(func == "getusersinroom"){
 			api_getUsersInRoom(reqData.query.roomId, successCallback, errorCallback);
+		} else if(func == "getstats"){
+			api_getStats(successCallback, errorCallback);
+		} else {
+			errorCallback("Function not recognized: " + func);
 		}
 	} else {
 		errorCallback("Must provide a 'func' to execute.");
@@ -565,8 +569,10 @@ function kickUserFromRoom(client, socket, userToKick, roomId, callback){
 	// Removing the user from the room.
 	var hashOfUsersKey = getKey_usersInRoom(roomId);
 	rc.hdel(hashOfUsersKey, userToKick.get('name'), function(){
+		rc.hincrby(getKey_room(client.roomId), 'activeClients', -1);
+
 		kickUserFromServer(client, socket, userToKick, roomId);
-		
+
 		if(typeof callback == "function"){
 			callback();
 		}
@@ -640,20 +646,23 @@ function setStatus(client, socket, setStatusData){
 
 
 
-
-/** HELPER FUNCTIONS **/
+/** KEY BUILDING / ACCESSING FUNCTIONS **/
 
 function getKey_listOfRooms(cityId){ return "rooms_on_wiki:" + cityId; }
 function getKey_nextRoomId(){ return "next.room.id"; }
-function getKey_room(roomId){ return "room:" + roomId; }
+function getKeyPrefix_room(){ return "room"; }
+function getKey_room(roomId){ return getKeyPrefix_room() + ":" + roomId; }
 function getKey_userInRoom(userName, roomId){
 	// Key representing the presence of a single user in a specific room (that user may be in multiple rooms).
 	// used by the in-memory sessionIdByKey hash, not by redis.. so not prefixed.
 	return roomId + ":" + userName;
 }
-function getPrefix_usersInRoom(){ return "users_in_room"; }
-function getKey_usersInRoom(roomId){ return getPrefix_usersInRoom() +":" + roomId; } // key for set of all usernames in the given room
+function getKeyPrefix_usersInRoom(){ return "users_in_room"; }
+function getKey_usersInRoom(roomId){ return getKeyPrefix_usersInRoom() +":" + roomId; } // key for set of all usernames in the given room
 function getKey_chatEntriesInRoom(roomId){ return "chatentries:" + roomId; }
+
+
+/** HELPER FUNCTIONS **/
 
 /**
  * Sends some text to the client specified as an InlineAlert but does not store it
@@ -763,7 +772,14 @@ function broadcastToRoom(client, socket, data, callback){
 				var socketId = sessionIdsByKey[ getKey_userInRoom(userModel.get('name'), roomId) ];
 				if(socketId){
 					console.log("SOCKETID: " + socketId);
-					socket.clients[socketId].send(data);
+					if( typeof socket.clients[socketId] == "undefined"){
+						// This happened once (and before this check was here, crashed the server).  Not sure if this is just a normal side-effect of the concurrency or is a legit
+						// problem. This logging should help in debugging if this becomes an issue.
+						console.log("WARNING: Somehow the client socket for " + userModel.get('name') + " is totally closed but their socketId is still in the hash. Potentially a race-condition?");
+						delete sessionIdsByKey[ getKey_userInRoom(userModel.get('name'), roomId) ];
+					} else {
+						socket.clients[socketId].send(data);
+					}
 				}
 			});
 			
@@ -1002,3 +1018,93 @@ function api_getUsersInRoom(roomId, successCallback, errorCallback){
 		}
 	});
 } // end api_getUsersInRoom()
+
+/**
+ * Returns some JSON of stats about the server (to help judge the usage-level for making scaling estimations).
+ */
+function api_getStats(successCallback, errorCallback){
+
+	console.log("== GETTING DETAILED STATS ABOUT THE STATE OF THE SERVER ==");
+
+	var stats = {
+		totalRooms: 0,
+		roomsWithOccupants: 0,
+		totalConnectedUsers: 0,
+		usersInMostPopularRoom: 0,
+		mostPopularRoom: {} // will contain the hash of data about the most popular room.
+	};
+
+	// Find total number of rooms.
+	console.log("STATS: FINDING NUMBER OF ROOMS...");
+	rc.keys(getKey_room("*"), function(err, roomKeys){
+		if (err) {
+			var errorMsg = 'Error: while getting all rooms: ' + err;
+			console.log(errorMsg);
+			errorCallback(errorMsg);
+		} else {
+			// Count the rooms that have been created on this server (many may be empty).
+			var totalRooms = 0, key;
+			for (key in roomKeys) {
+				if (roomKeys.hasOwnProperty(key)){
+					totalRooms++;
+				}
+			}
+			stats.totalRooms = totalRooms;
+
+			// Iterate through rooms and find number of occupants total (and track number of rooms which have > 0 users in them right now).
+			var roomsWithOccupants = 0;
+			var totalConnectedUsers = 0;
+			var usersInMostPopularRoom = 0;
+			var mostPopularRoomKey = "";
+			console.log("STATS: FINDING OCCUPANTS PER ROOM & RELATED STATS...");
+			rc.keys(getKey_usersInRoom("*"), function(err, usersInRoomKeys){
+				if (err) {
+					var errorMsg = 'Error: while getting all users_in_room keys: ' + err;
+					console.log(errorMsg);
+					errorCallback(errorMsg);
+				} else {
+					for (var index = 0; index < usersInRoomKeys.length; index++){
+						var usersInRoomKey = usersInRoomKeys[index];
+						rc.hlen(usersInRoomKey, function(err, numUsersInRoom){
+							if (err) {
+								var errorMsg = 'Error: while getting number of users in room with key: ' + numUsersInRoom + ' ...error was: '+ err;
+								console.log(errorMsg);
+								errorCallback(errorMsg);
+							} else if(numUsersInRoom && (numUsersInRoom > 0)){
+								roomsWithOccupants++;
+								totalConnectedUsers += numUsersInRoom;
+								if(numUsersInRoom > usersInMostPopularRoom){
+									usersInMostPopularRoom = numUsersInRoom;
+									mostPopularRoomKey = usersInRoomKey;
+								}
+							}
+							
+							// If this is the last key in the array, do the follow-up processing.
+							if(index + 1 >= usersInRoomKeys.length){
+								// Find the info about the most popular room.
+								mostPopularRoomKey = mostPopularRoomKey.replace(new RegExp(getKeyPrefix_usersInRoom()), getKeyPrefix_room()); // convert from users_in_room key to key for info about room.
+								console.log("STATS: FINDING INFO ABOUT THE MOST POPULAR ROOM (" + mostPopularRoomKey + ")...");
+								rc.hgetall(mostPopularRoomKey, function(err, roomData){
+									if (err) {
+										var errorMsg = 'Error: while getting room information about most popular room with key: ' + mostPopularRoomKey + ' ...error was: '+ err;
+										console.log(errorMsg);
+										errorCallback(errorMsg);
+									} else {
+										stats.mostPopularRoom = roomData;
+									}
+									
+									stats.roomsWithOccupants = roomsWithOccupants;
+									stats.totalConnectedUsers = totalConnectedUsers;
+									stats.usersInMostPopularRoom = usersInMostPopularRoom;
+									console.log("STATS: ");
+									console.log(stats);
+									successCallback( stats );
+								});
+							}
+						});
+					}
+				}
+			});
+		}
+	});
+} // end api_getStats()
