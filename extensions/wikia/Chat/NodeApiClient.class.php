@@ -54,25 +54,32 @@ class NodeApiClient {
 	 * @param roomTopic - will be filled with the topic of the chat (a string stored in a blob, so it might be fairly large).
 	 */
 	static public function getDefaultRoomId(&$roomName, &$roomTopic){
-		global $wgCityId, $wgSitename, $wgServer, $wgArticlePath;
+		global $wgCityId, $wgSitename, $wgServer, $wgArticlePath, $wgMemc;
 		wfProfileIn(__METHOD__);
 
-		// Add some extra data that the server will want in order to store it in the room's hash.
-		$extraData = array(
-			'wgServer' => $wgServer,
-			'wgArticlePath' => $wgArticlePath
-		);
-		$extraDataString = json_encode($extraData);
-		
-		$roomId = "";
-		$roomJson = NodeApiClient::makeRequest(array(
-			"func" => "getDefaultRoomId",
-			"wgCityId" => $wgCityId,
-			"defaultRoomName" => $wgSitename,
-			"defaultRoomTopic" => wfMsg('chat-default-topic', $wgSitename),
-			"extraDataString" => $extraDataString
-		));
-		$roomData = json_decode($roomJson);
+		$memcKey = wfMemcKey( "NodeApiClient::getDefaultRoomId", $wgCityId );
+		$roomData = $wgMemc->get($memcKey);
+		if(!$roomData){
+			// Add some extra data that the server will want in order to store it in the room's hash.
+			$extraData = array(
+				'wgServer' => $wgServer,
+				'wgArticlePath' => $wgArticlePath
+			);
+			$extraDataString = json_encode($extraData);
+			
+			$roomId = "";
+			$roomJson = NodeApiClient::makeRequest(array(
+				"func" => "getDefaultRoomId",
+				"wgCityId" => $wgCityId,
+				"defaultRoomName" => $wgSitename,
+				"defaultRoomTopic" => wfMsg('chat-default-topic', $wgSitename),
+				"extraDataString" => $extraDataString
+			));
+			$roomData = json_decode($roomJson);
+
+			$wgMemc->set($memcKey, $roomData, 60 * 60 * 24); // right now, this probably won't be changing at all for a given wiki
+		}
+
 		if(isset($roomData->{'roomId'})){
 			$roomId = $roomData->{'roomId'};
 			$roomName = $roomData->{'roomName'};
