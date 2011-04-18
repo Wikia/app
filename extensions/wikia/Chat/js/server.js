@@ -380,7 +380,7 @@ function formallyAddClient(client, socket, connectedUser){
 		});
 
 		// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
-		storeAndBroadcastInlineAlert(client, socket, connectedUser.get('name') + " has joined the chat.");
+		broadcastInlineAlert(client, socket, connectedUser.get('name') + " has joined the chat.");
 	});
 } // end formallyAddClient()
 
@@ -425,7 +425,7 @@ function broadcastDisconnectionInfo(client, socket){
 	});
 
 	// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
-	storeAndBroadcastInlineAlert(client, socket, client.myUser.get('name') + " has left the chat.");
+	broadcastInlineAlert(client, socket, client.myUser.get('name') + " has left the chat.");
 } // end broadcastDisconnectionInfo()
 
 // Start the main chat server listening.
@@ -549,7 +549,7 @@ function kickBan(client, socket, msg){
 						// Build a user that looks like the one that got banned... then kick them!
 						kickedUser = new models.User({name: userToBan});
 						// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
-						storeAndBroadcastInlineAlert(client, socket, kickedUser.get('name') + " was kickbanned.", function(){
+						broadcastInlineAlert(client, socket, kickedUser.get('name') + " was kickbanned.", function(){
 							// The user has been banned and the ban has been broadcast, now physically remove them from the room.
 							kickUserFromRoom(client, socket, kickedUser, client.roomId);
 						});
@@ -677,10 +677,13 @@ function sendInlineAlertToClient(client, msgText, callback){
 	if(typeof callback == "function"){
 		callback();
 	}
-} // end broadcastInlineAlert
+} // end sendInlineAlertToClient()
 
 /**
  * Given some text, adds the InlineAlert to the model and broadcasts it out to the other clients in the room.
+ *
+ * NOTE: Not using this for join/part/kickbanned anymore because of https://wikia.fogbugz.com/default.asp?4766
+ * Those messages are now transient/ephemeral and are just sent with broadcastInlineAlert
  */
 function storeAndBroadcastInlineAlert(client, socket, text, callback){
 	var inlineAlert = new models.InlineAlert({text: text});
@@ -735,6 +738,15 @@ function pruneExtraMessagesFromRoom(chatEntriesInRoomKey){
 	});
 	console.log("Done pruning any old messages in room (if needed).");
 } // end pruneExtraMessagesFromRoom()
+
+/**
+ * For broadcasting text (as an ephemeral - not persisted - InlineAlert) to all
+ * members of the same room that client is in.
+ */
+function broadcastInlineAlert(client, socket, text, callback){
+	var inlineAlert = new models.InlineAlert({text: text});
+	broadcastChatEntry(client, socket, inlineAlert, callback);
+} // end broadcastInlineAlert()
 
 /**
  * Send the 'chat:add' update to all clients in the chat room.  This assumes that the caller
