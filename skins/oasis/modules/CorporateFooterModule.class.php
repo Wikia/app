@@ -12,10 +12,26 @@ class CorporateFooterModule extends Module {
 		$catId = WikiFactoryHub::getInstance()->getCategoryId($wgCityId);
 		$mKey = wfMemcKey('mOasisFooterLinks', $wgLang->getCode(), $catId);
 		$this->footer_links = $wgMemc->get($mKey);
+		
 		if (empty($this->footer_links)) {
 			$this->footer_links = $this->getWikiaFooterLinks();
 			$wgMemc->set($mKey, $this->footer_links, 86400);
 		}
+		
+		//add a switch link to go back to the mobile skin if the request originated from a mobile device
+		$mobServ = MobileService::getInstance();
+		
+		if ( $mobServ->isMobile() && !$mobServ->isIPad() && isset( $_COOKIE[ 'mobilefullsite' ] ) ) {
+			global $wgTitle;
+			
+			array_unshift($this->footer_links, array(
+				'href' => '#',
+				'id' => 'mobileSwitch',
+				'nofollow' => true,
+				'text' => wfMsg( 'oasis-mobile-site' )
+			));
+		}
+		
 
 		$this->hub = $this->getHub();		
 	}
@@ -51,19 +67,7 @@ class CorporateFooterModule extends Module {
 
 		$message_key = 'shared-Oasis-footer-wikia-links';
 		$nodes = array();
-		$mobServ = MobileService::getInstance();
 		
-		if ( $mobServ->isMobile() && !$mobServ->isIPad() && isset( $_COOKIE[ 'mobilefullsite' ] ) ) {
-			global $wgTitle;
-			
-			$nodes[] = array(
-				'href' => '#',
-				'id' => 'mobileSwitch',
-				'nofollow' => true,
-				'text' => wfMsg( 'oasis-mobile-site' )
-			);
-		}
-
 		if(!isset($catId) || null == ($lines = getMessageAsArray($message_key.'-'.$catId))) {
 			wfDebugLog('monaco', $message_key.'-'.$catId . ' - seems to be empty');
 			if(null == ($lines = getMessageAsArray($message_key))) {
