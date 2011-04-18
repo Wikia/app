@@ -3,259 +3,144 @@
 $messages = array();
 
 $messages['en'] = array(
-	'Autocreatewiki-welcomebody-HTML' => '<p>
-Hello $2,<br />
-<br />
-The Wikia you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br />
-<br />
-We\'ve added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this email or browse our help pages at <a href="http://help.wikia.com/">Wikia Help</a>.<br />
-<br />
-Good luck with the project,<br />
-<br />
+	'Autocreatewiki-welcomebody-HTML' => '<p>Hello $2,<br /><br />
+The Wikia you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
+We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">Wikia Help</a>.<br /><br />
+Good luck with the project,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia Community Team <br />
-</p>',
-	'Confirmemail_body-HTML' => '<p>
-Hello $2,<br />
-<br />
-Thank you for registering with Wikia.<br />
-<br />
-Please activate your new account by <a href="$3">confirming your email address here</a>.<br />
-<br />
-<br />
-We look forward to seeing you soon!<br />
-<br />
+Wikia Community Team<br /></p>',
+	'Confirmemail_body-HTML' => '<p>Hello $2,<br /><br />
+Thank you for registering with Wikia.<br /><br />
+Please activate your new account by <a href="$3">confirming your e-mail address here</a>.<br /><br /><br />
+We look forward to seeing you soon!<br /><br />
 The Wikia Community Team<br />
-<a href="http://community.wikia.com/">community.wikia.com</a><br />
-</p>',
-	'Confirmemailreminder_body-HTML' => '<p>Hello $1,<br />
-<br />
-Last week you joined Wikia, but you still need to confirm your account. Please do so by clicking <a href="$2">here</a>.<br />
-<br />
-We look forward to seeing you soon!<br />
-<br />
+<a href="http://community.wikia.com/">community.wikia.com</a><br /></p>',
+	'Confirmemailreminder_body-HTML' => '<p>Hello $1,<br /><br />
+Last week you joined Wikia, but you still need to confirm your account. Please do so by clicking <a href="$2">here</a>.<br /><br />
+We look forward to seeing you soon!<br /><br />
 The Wikia Community Team<br />
-<a href="http://www.wikia.com/">www.wikia.com</a>
-</p>',
-	'Createaccount-text-HTML' => '<p>
-Someone created an account for your e-mail address on {{SITENAME}} ($4) named "$2", with password "$3".<br />
-You should log in and change your password now.
-<br /><br />
-You may ignore this message if this account was created in error.
-</p>',
-	'Enotif_body-HTML' => '<p>
-Dear $WATCHINGUSERNAME,
-<br /><br />
-There has been an edit to a page you are watching on {{SITENAME}}.
-<br /><br />
-See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.
-<br /><br />
-$NEWPAGEHTML
-<br /><br />
-$PAGESUMMARY
-<br /><br />
-Please visit and edit often...
-<br /><br />
-{{SITENAME}}
-<br /><hr />
+<a href="http://www.wikia.com/">www.wikia.com</a></p>',
+	'Createaccount-text-HTML' => '<p>Someone created an account for your e-mail address on {{SITENAME}} ($4) named "$2", with password "$3".<br />
+You should log in and change your password now.<br /><br />
+You may ignore this message if this account was created in error.</p>',
+	'Enotif_body-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+There has been an edit to a page you are watching on {{SITENAME}}.<br /><br />
+See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.<br /><br />
+$NEWPAGEHTML<br /><br />
+$PAGESUMMARY<br /><br />
+Please visit and edit often...<br /><br />
+{{SITENAME}}<br /><hr />
 <ul>
 <li><a href="http://www.wikia.com">Check out our featured wikis!</a></li>
-<li>Want to control which emails you receive? Go to <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
-</ul>
-</p>',
-	'Enotif_body_article_comment-HTML' => '<p>
-Dear $WATCHINGUSERNAME,
-<br /><br />
-An article you following, $PAGETITLE, has new comments.
-<br /><br />
-To see the comment thread, follow the link below: <a href="$PAGETITLE_URL#article-comments">$PAGETITLE</a> 
-<br /><br />
-Please visit and edit often...
-<br /><br />
-{{SITENAME}}
-<br /><hr />
+<li>Want to control which e-mails you receive? Go to <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
+</ul></p>',
+	'Enotif_body_article_comment-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+An article you following, $PAGETITLE, has new comments.<br /><br />
+To see the comment thread, follow the link below: <a href="$PAGETITLE_URL#article-comments">$PAGETITLE</a> <br /><br />
+Please visit and edit often...<br /><br />
+{{SITENAME}}<br /><hr />
 <ul>
-<li>Want to control which emails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">{{ns:special}}:Preferences<a>.</li>
-</ul>
-</p>',
-	'Enotif_body_blogs_comment-HTML' => '<p>
-Dear $WATCHINGUSERNAME,
-<br /><br />
-$PAGEEDITOR made a comment on the blog post "$BLOGTITLE".
-<br /><br />
-<a href="$PAGETITLE_URL#comments">View the comments</a> 
-<br /><br />
-Please visit and edit often...
-<br /><br />
-{{SITENAME}}
-<br /><hr />
+<li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">{{ns:special}}:Preferences<a>.</li>
+</ul></p>',
+	'Enotif_body_blogs_comment-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+$PAGEEDITOR made a comment on the blog post "$BLOGTITLE".<br /><br />
+<a href="$PAGETITLE_URL#comments">View the comments</a><br /><br />
+Please visit and edit often...<br /><br />
+{{SITENAME}}<br /><hr />
 <ul>
 <li><a href="http://www.wikia.com">Check out our featured wikis!</a></li>
-<li>Want to control which emails you receive? Go to <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
-</ul>
-</p>',
-	'Enotif_body_delete-HTML' => '<p>
-Dear $WATCHINGUSERNAME,
-<br /><br />
-A page you are watching on {{SITENAME}} has been deleted.
-<br /><br />
-The page was at <a href="$PAGETITLE_URL">$PAGETITLE</a> 
-<br /><br />
-$PAGESUMMARY
-<br /><br />
-Please visit and edit often...
-<br /><br />
-{{SITENAME}}
-<br /><hr />
+<li>Want to control which e-mails you receive? Go to <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
+</ul></p>',
+	'Enotif_body_delete-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+A page you are watching on {{SITENAME}} has been deleted.<br /><br />
+The page was at <a href="$PAGETITLE_URL">$PAGETITLE</a> <br /><br />
+$PAGESUMMARY<br /><br />
+Please visit and edit often...<br /><br />
+{{SITENAME}}<br /><hr />
 <ul>
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
-<li>Want to control which emails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}"> User Preferences</a></li>
-</ul>
-</p>',
-	'Enotif_body_move-HTML' => '<p>
-Dear $WATCHINGUSERNAME,
-<br /><br />
-A page you are watching on {{SITENAME}} has been moved.
-<br /><br />
-See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.
-<br /><br />
-$PAGESUMMARY
-<br /><br />
-Please visit and edit often...
-<br /><br />
-{{SITENAME}}
-<br /><hr />
+<li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}"> User Preferences</a></li>
+</ul></p>',
+	'Enotif_body_move-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+A page you are watching on {{SITENAME}} has been moved.<br /><br />
+See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.<br /><br />
+$PAGESUMMARY<br /><br />
+Please visit and edit often...<br /><br />
+{{SITENAME}}<br /><hr />
 <ul>
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
-<li>Want to control which emails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
-</ul>
-</p>',
-	'Enotif_body_prl_chn-HTML' => '<p>
-Dear $WATCHINGUSERNAME,
-<br /><br />
-A problem has been updated for a page you are watching on {{SITENAME}}.
-<br /><br />
-See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the page.
-<br /><br />
-For a list of recent problem reports, see <a href="{{fullurl:{{ns:special}}:ProblemReports}}">{{ns:special}}:ProblemReports</a>
-<br /><br />
-Please visit and edit often...
-<br /><br />
-{{SITENAME}}
-<br /><hr />
+<li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
+</ul></p>',
+	'Enotif_body_prl_chn-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+A problem has been updated for a page you are watching on {{SITENAME}}.<br /><br />
+See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the page.<br /><br />
+For a list of recent problem reports, see <a href="{{fullurl:{{ns:special}}:ProblemReports}}">{{ns:special}}:ProblemReports</a><br /><br />
+Please visit and edit often...<br /><br />
+{{SITENAME}}<br /><hr />
 <ul>
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
-<li>Want to control which emails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
-</ul>
-</p>',
-	'Enotif_body_prl_rep-HTML' => '<p>
-Dear $WATCHINGUSERNAME,
-<br /><br />
-A problem has been reported for a page you are watching on {{SITENAME}}.
-<br /><br />
-See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the page.
-<br /><br />
-For a list of recent problem reports, see <a href="{{fullurl:{{ns:special}}:ProblemReports}}">{{ns:special}}:ProblemReports</a>
-<br /><br />
-Please visit and edit often...
-<br /><br />
-{{SITENAME}}
-<br /><hr />
+<li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
+</ul></p>',
+	'Enotif_body_prl_rep-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+A problem has been reported for a page you are watching on {{SITENAME}}.<br /><br />
+See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the page.<br /><br />
+For a list of recent problem reports, see <a href="{{fullurl:{{ns:special}}:ProblemReports}}">{{ns:special}}:ProblemReports</a><br /><br />
+Please visit and edit often...<br /><br />
+{{SITENAME}}<br /><hr />
 <ul>
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
-<li>Want to control which emails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
-</ul>
-</p>',
-	'Enotif_body_protect-HTML' => '<p>
-Dear $WATCHINGUSERNAME,
-<br /><br />
-A page you are watching on {{SITENAME}} has been protected.
-<br /><br />
-See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.
-<br /><br />
-$PAGESUMMARY
-<br /><br />
-Please visit and edit often...
-<br /><br />
-{{SITENAME}}
-<br /><hr />
+<li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
+</ul></p>',
+	'Enotif_body_protect-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+A page you are watching on {{SITENAME}} has been protected.<br /><br />
+See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.<br /><br />
+$PAGESUMMARY<br /><br />
+Please visit and edit often...<br /><br />
+{{SITENAME}}<br /><hr />
 <ul>
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
-<li>Want to control which emails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
-</ul>
-</p>',
-	'Enotif_body_restore-HTML' => '<p>
-Dear $WATCHINGUSERNAME,<br />
-<br />
-A page you are watching on {{SITENAME}} has been restored from deletion.
-<br /><br />
-See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.
-<br /><br />
-$PAGESUMMARY
-<br /><br />
-Please visit and edit often...
-<br /><br />
-{{SITENAME}}
-<br /><hr />
+<li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
+</ul></p>',
+	'Enotif_body_restore-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+A page you are watching on {{SITENAME}} has been restored from deletion.<br /><br />
+See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.<br /><br />
+$PAGESUMMARY<br /><br />
+Please visit and edit often...<br /><br />
+{{SITENAME}}<br /><hr />
 <ul>
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
-<li>Want to control which emails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}"> User Preferences</a></li>
-</ul>
-</p>',
-	'Enotif_body_rights-HTML' => '<p>
-Dear $WATCHINGUSERNAME,
-<br /><br />
-User rights on {{SITENAME}} have been changed for a person whose user page you are watching. You can see their user page here: <a href="$PAGETITLE_URL">$PAGETITLE</a>
-<br /><br />
-$PAGESUMMARY
-<br /><br />
-<a href="{{fullurl:{{ns:special}}:Log/rights}}">Click here</a> for a log of all recent rights changes. 
-<br /><br />
-Please visit and edit often...
-<br /><br />
-{{SITENAME}}
-<br /><hr />
+<li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}"> User Preferences</a></li>
+</ul></p>',
+	'Enotif_body_rights-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+User rights on {{SITENAME}} have been changed for a person whose user page you are watching. You can see their user page here: <a href="$PAGETITLE_URL">$PAGETITLE</a><br /><br />
+$PAGESUMMARY<br /><br />
+<a href="{{fullurl:{{ns:special}}:Log/rights}}">Click here</a> for a log of all recent rights changes.<br /><br />
+Please visit and edit often...<br /><br />
+{{SITENAME}}<br /><hr />
 <ul>
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
-<li>Want to control which emails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
-</ul>
-</p>',
-	'Enotif_body_unprotect-HTML' => '<p>
-Dear $WATCHINGUSERNAME,
-<br /><br />
-A page you are watching on {{SITENAME}} has been unprotected.
-<br /><br />
-See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.
-<br /><br />
-$PAGESUMMARY
-<br /><br />
-Please visit and edit often...
-<br /><br />
-{{SITENAME}}
-<br /><hr />
+<li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
+</ul></p>',
+	'Enotif_body_unprotect-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+A page you are watching on {{SITENAME}} has been unprotected.<br /><br />
+See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.<br /><br />
+$PAGESUMMARY<br /><br />
+Please visit and edit often...<br /><br />
+{{SITENAME}}<br /><hr />
 <ul>
 <li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
-<li>Want to control which emails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
-</ul>
-</p>',
-	'Enotif_body_upload-HTML' => '<p>
-Dear $WATCHINGUSERNAME,
-<br /><br />
-A file you are watching on {{SITENAME}} has been uploaded.
-<br /><br />
-See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.
-<br /><br />
-$PAGESUMMARY
-<br /><br />
-Please visit and edit often...
-<br /><br />
-{{SITENAME}}
-<br /><hr />
+<li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
+</ul></p>',
+	'Enotif_body_upload-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
+A file you are watching on {{SITENAME}} has been uploaded.<br /><br />
+See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.<br /><br />
+$PAGESUMMARY<br /><br />
+Please visit and edit often...<br /><br />
+{{SITENAME}}<br /><hr />
 <ul>
 <li>Have you checked out our hubs? <a href="http://www.wikia.com/wiki/Category:Hubs">Visit Here!</a></li>
-<li>Want to control which emails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">{{fullurl:{{ns:special}}:Preferences}}<a>.</li>
-</ul>
-</p>',
+<li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">{{fullurl:{{ns:special}}:Preferences}}<a>.</li>
+</ul></p>',
 	'Enotif_lastvisited-HTML' => 'To see all changes to this page since your last visit, <a href="$1">click here</a>',
 	'Founderemails-email-page-edited-body-HTML' => '<strong>Hey $1,</strong><br /><br />
 It looks like $2 has edited your wiki! Why don\'t you drop by their <a href="$3">userpage</a> to say hello?<br /><br />
@@ -263,64 +148,42 @@ It looks like $2 has edited your wiki! Why don\'t you drop by their <a href="$3"
 	'Founderemails-email-user-registered-body-HTML' => '<strong>Hey $1,</strong><br /><br />
 It looks like $2 has registered on your wiki! Why don\'t you drop by their <a href="$3">userpage</a> to say hello?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
-	'Globalwatchlist-digest-email-body-HTML' => '<p>
-Dear $1,
-<br /><br />
-This is a list of pages on your Wikia watchlist that have been edited since you last visited them.
-<br /><br />
-$2
-<br /><br />
-This is a list of blog pages on your Wikia watchlist that have been edited or commented since you last visited them.
-<br /><br />
-$3
-<br /><br />
-Please visit and edit often...
-<br /><br />
-Wikia
-<br /><hr />
+	'Globalwatchlist-digest-email-body-HTML' => '<p>Dear $1,<br /><br />
+This is a list of pages on your Wikia watchlist that have been edited since you last visited them.<br /><br />
+$2<br /><br />
+This is a list of blog pages on your Wikia watchlist that have been edited or commented since you last visited them.<br /><br />
+$3<br /><br />
+Please visit and edit often...<br /><br />
+Wikia<br /><hr />
 <ul>
 <li>To change your preferences for watchlist notifications, please visit <a href="http://community.wikia.com/wiki/Special:Preferences">Your Preferences</a></li>
 <li>To mark all pages from this Weekly Digest as visited, see the option in the "Watchlist" tab of your Preferences page</li>
-</ul>
-</p>',
-	'Passwordremindertext-HTML' => '<p>
-Hi,<br />
-The login password for user "$2" is now "$3".<br />
-If you did not request a new password, don’t worry. The replacement password has been sent only to you at this email address. Your account is secure and you can continue to use your old password.<br />
-<br />
-Thanks,
-<br /><br />
-The Wikia Community Team
-<br /><br />
-www.wikia.com
-<br />
-<hr />
+</ul></p>',
+	'Passwordremindertext-HTML' => '<p>Hi,<br /><br />
+The login password for user "$2" is now "$3".<br /><br />
+If you did not request a new password, don’t worry. The replacement password has been sent only to you at this e-mail address. Your account is secure and you can continue to use your old password.<br /><br />
+Thanks,<br /><br />
+The Wikia Community Team<br /><br />
+www.wikia.com<br /><hr />
 <ul>
 <li>To change your preferences or password, go to: <a href="http://community.wikia.com/wiki/Special:Preferences">User Preferences</a>.</li>
 <li>This password reminder was requested from the following address: $1.</li>
-</ul>
-</p>',
-	'Reconfirmemail_body-HTML' => '<p>Hello $2,<br/>
-<br/>
-Thank you for updating the email address for your Wikia account. Please confirm this is the correct email address by <a href="$3">clicking here</a>.<br/>
-<br/>
-<br/>
-We look forward to seeing you on Wikia!<br/>
-<br/>
-The Wikia Community Team<br/>
-www.wikia.com<br/>
-</p>',
+</ul></p>',
+	'Reconfirmemail_body-HTML' => '<p>Hello $2,<br /><br />
+Thank you for updating the e-mail address for your Wikia account. Please confirm this is the correct e-mail address by <a href="$3">clicking here</a>.<br /><br /><br />
+We look forward to seeing you on Wikia!<br /><br />
+The Wikia Community Team<br />
+www.wikia.com<br /></p>',
 );
 
-
-$messages['nl'] = array(
+$messages['nl-informal'] = array(
 	'autocreatewiki-welcomebody-html' => 'Hallo $2,
 
 
 De Wikia die je gemaakt hebt is nu beschikbaar op <a href="$1">$1</a>. We hopen je daar snel te zien bewerken!
 
 
-We hebben wat informatie en tips toegevoegd op <a href="$5">je overleg pagina</a> om je op gang te helpen komen. Als je enige vragen hebt, reageer dan op deze email of bekijk onze hulp pagina\'s op <a href="http://hulp.wikia.com/">Wikia Hulp</a>.
+We hebben wat informatie en tips toegevoegd op <a href="$5">je overleg pagina</a> om je op gang te helpen komen. Als je enige vragen hebt, reageer dan op deze e-mail of bekijk onze hulp pagina\'s op <a href="http://hulp.wikia.com/">Wikia Hulp</a>.
 Veel succes met je project,
 
 
@@ -353,10 +216,8 @@ Het Wikia Community Team <br />
 <a href="http://community.wikia.com/">community.wikia.com</a>',
 );
 
-
 $messages['de'] = array(
-	'confirmemail_body-html' => '<p>
-Hallo,<br /><br />
+	'confirmemail_body-html' => '<p>Hallo,<br /><br />
 
 dies ist eine automatisch erstellte Nachricht. <br /><br />
 
@@ -373,13 +234,11 @@ Wenn diese E-Mail-Adresse *nicht* zu dem genannten Benutzerkonto gehört, folge 
 <br />
 {{SITENAME}}: <a href="{{fullurl:{{Mediawiki:mainpage}}}}">{{fullurl:{{Mediawiki:mainpage}}}}</a>
 </p>',
-	'createaccount-text-html' => '<p>
-Es wurde für dich ein Benutzerkonto „$2“ auf {{SITENAME}} ($4) erstellt. Das automatisch generierte Passwort für „$2“ ist „$3“. Du solltest dich nun anmelden und das Passwort ändern.<br /><br />
+	'createaccount-text-html' => '<p>Es wurde für dich ein Benutzerkonto „$2“ auf {{SITENAME}} ($4) erstellt. Das automatisch generierte Passwort für „$2“ ist „$3“. Du solltest dich nun anmelden und das Passwort ändern.<br /><br />
 
 Falls das Benutzerkonto irrtümlich angelegt wurde, kannst du diese Nachricht ignorieren.
 <br /></p>',
-	'enotif_body-html' => '<p>
-Hallo $WATCHINGUSERNAME,<br />
+	'enotif_body-html' => '<p>Hallo $WATCHINGUSERNAME,<br />
 <br />
 die {{SITENAME}}-Seite "$PAGETITLE" wurde von $PAGEEDITOR am $PAGEEDITDATE $CHANGEDORCREATED.<br />
 <br />
@@ -399,8 +258,7 @@ Dein freundliches {{SITENAME}}-Benachrichtigungssystem<br />
 <br /><hr />
 Um die Einstellungen Deiner Beobachtungsliste anzupassen, besuche: <a href="{{fullurl:Special:Watchlist/edit}}">{{fullurl:Special:Watchlist/edit}}</a>
 </p>',
-	'enotif_body_delete-html' => '<p>
-Hallo $WATCHINGUSERNAME,<br />
+	'enotif_body_delete-html' => '<p>Hallo $WATCHINGUSERNAME,<br />
 <br />
 die {{SITENAME}}-Seite "$PAGETITLE" wurde von $PAGEEDITOR am $PAGEEDITDATE gelöscht.<br />
 <br />
@@ -420,8 +278,7 @@ Dein freundliches {{SITENAME}}-Benachrichtigungssystem<br />
 <li>Eine Reihe weiterer Wikis findest du in unseren Hubs: <a href="http://de.wikia.com/wiki/Kategorie:Hubs">http://de.wikia.com/wiki/Kategorie:Hubs</a></li>
 </ul>
 </p>',
-	'enotif_body_move-html' => '<p>
-Hallo $WATCHINGUSERNAME,<br />
+	'enotif_body_move-html' => '<p>Hallo $WATCHINGUSERNAME,<br />
 <br />
 die {{SITENAME}}-Seite "$PAGETITLE" wurde von $PAGEEDITOR am $PAGEEDITDATE verschoben.<br />
 <br />
@@ -445,8 +302,7 @@ Dein freundliches {{SITENAME}}-Benachrichtigungssystem<br />
 <li>Eine Reihe weiterer Wikis findest du in unseren Hubs: <a href="http://de.wikia.com/wiki/Kategorie:Hubs">http://de.wikia.com/wiki/Kategorie:Hubs</a>
 </ul>
 </p>',
-	'enotif_body_prl_rep-html' => '<p>
-Hallo $WATCHINGUSERNAME,<br />
+	'enotif_body_prl_rep-html' => '<p>Hallo $WATCHINGUSERNAME,<br />
 <br />
 Ein Benutzer von {{SITENAME}} hat ein Problem auf einer Seite gemeldet, die du beobachtest.<br />
 <br />
@@ -462,8 +318,7 @@ Dein freundliches {{SITENAME}}-Benachrichtigungssystem<br />
 <li>Eine Reihe weiterer Wikis findest du in unseren Hubs: <a href="http://de.wikia.com/wiki/Kategorie:Hubs">http://de.wikia.com/wiki/Kategorie:Hubs</a></li>
 </ul>
 </p>',
-	'enotif_body_protect-html' => '<p>
-Hallo $WATCHINGUSERNAME,<br />
+	'enotif_body_protect-html' => '<p>Hallo $WATCHINGUSERNAME,<br />
 <br />
 die {{SITENAME}}-Seite "$PAGETITLE" wurde von $PAGEEDITOR am $PAGEEDITDATE geschützt.<br />
 <br />
@@ -487,8 +342,7 @@ Dein freundliches {{SITENAME}}-Benachrichtigungssystem<br />
 <li>Eine Reihe weiterer Wikis findest du in unseren Hubs: <a href="http://de.wikia.com/wiki/Kategorie:Hubs">http://de.wikia.com/wiki/Kategorie:Hubs</a></li>
 </ul>
 </p>',
-	'enotif_body_restore-html' => '<p>
-Hallo $WATCHINGUSERNAME,<br />
+	'enotif_body_restore-html' => '<p>Hallo $WATCHINGUSERNAME,<br />
 <br />
 die {{SITENAME}}-Seite "$PAGETITLE" wurde von $PAGEEDITOR am $PAGEEDITDATE wiederhergestellt.<br />
 <br />
@@ -512,8 +366,7 @@ Dein freundliches {{SITENAME}}-Benachrichtigungssystem<br />
 <li>Eine Reihe weiterer Wikis findest du in unseren Hubs: <a href="http://de.wikia.com/wiki/Kategorie:Hubs">http://de.wikia.com/wiki/Kategorie:Hubs</a>
 </ul>
 </p>',
-	'enotif_body_rights-html' => '<p>
-Hallo $WATCHINGUSERNAME,<br />
+	'enotif_body_rights-html' => '<p>Hallo $WATCHINGUSERNAME,<br />
 <br />
 es gab eine Änderung der Benutzerrechte eines {{SITENAME}}-Benutzers, dessen Benutzerseite du beobachtest. Die entsprechende Seite findest du hier: <a href="$PAGETITLE_URL">$PAGETITLE</a><br />
 <br />
@@ -527,8 +380,7 @@ Dein freundliches {{SITENAME}}-Benachrichtigungssystem<br />
 <li>Eine Reihe weiterer Wikis findest du in unseren Hubs: <a href="http://de.wikia.com/wiki/Kategorie:Hubs">http://de.wikia.com/wiki/Kategorie:Hubs</a></li>
 </ul>
 </p>',
-	'enotif_body_unprotect-html' => '<p>
-Hallo $WATCHINGUSERNAME,<br />
+	'enotif_body_unprotect-html' => '<p>Hallo $WATCHINGUSERNAME,<br />
 <br />
 die {{SITENAME}}-Seite "$PAGETITLE" wurde von $PAGEEDITOR am $PAGEEDITDATE entsperrt.<br />
 <br />
@@ -553,8 +405,7 @@ Dein freundliches {{SITENAME}}-Benachrichtigungssystem<br />
 </ul>
 </p>',
 	'enotif_lastvisited-html' => 'Alle Änderungen auf einen Blick, <a href="$1">klicke hier</a>',
-	'globalwatchlist-digest-email-body-html' => '<p>
-Hallo $1,
+	'globalwatchlist-digest-email-body-html' => '<p>Hallo $1,
 <br /><br />
 Das ist eine Liste von Seiten die nach deinem letzten Besuch geändert wurden und seither noch nicht wieder besucht hast.
 <br /><br />
@@ -573,8 +424,7 @@ Wikia
 <li>Um alle Seiten von der wöchentlichen Zusammenfassung als besucht zu markieren, besuche den "Beobachtungsliste"-Tab in deinen Einstellungen</li>
 </ul>
 </p>',
-	'passwordremindertext-html' => '<p>
-Jemand mit der IP-Adresse $1, wahrscheinlich du selbst, hat ein neues Passwort für die Anmeldung bei {{SITENAME}} ($4) angefordert.<br />
+	'passwordremindertext-html' => '<p>Jemand mit der IP-Adresse $1, wahrscheinlich du selbst, hat ein neues Passwort für die Anmeldung bei {{SITENAME}} ($4) angefordert.<br />
 <br />
 Das automatisch generierte Passwort für Benutzer „$2“ lautet nun: $3<br /><br />
 
@@ -585,10 +435,8 @@ Bitte ignoriere diese E-Mail, falls du sie nicht selbst angefordert hast. Das al
 </p>',
 );
 
-
 $messages['es'] = array(
-	'confirmemail_body-html' => '<p>
-Hola $2,
+	'confirmemail_body-html' => '<p>Hola $2,
 <br /><br />
 ¡Te damos la bienvenida a Wikia!
 <br /><br />
@@ -606,14 +454,12 @@ Este enlace de confirmación expirará en $4.
 El equipo comunitario de Wikia<br />
 <a href="http://es.wikia.com>es.wikia.com</a>
 </p>',
-	'createaccount-text-html' => '<p>
-Alguien creó una cuenta para este correo electrónico en  {{SITENAME}} ($4) con el nombre "$2", y la contraseña "$3".<br />
+	'createaccount-text-html' => '<p>Alguien creó una cuenta para este correo electrónico en  {{SITENAME}} ($4) con el nombre "$2", y la contraseña "$3".<br />
 Por favor entra y cambia tu contraseña ahora.<br />
 <br />
 Puedes ignorar este mensaje si esta cuenta fue creada erróneamente.<br />
 </p>',
-	'enotif_body-html' => '<p>
-Estimado/a $WATCHINGUSERNAME,<br />
+	'enotif_body-html' => '<p>Estimado/a $WATCHINGUSERNAME,<br />
 <br />
 Una de las páginas de tu lista de seguimiento en {{SITENAME}} ha tenido cambios.<br />
 <br />
@@ -630,21 +476,19 @@ Esperamos que sigas visitando y editando {{SITENAME}}.<br />
 <li>Para ver los nuevos wikis creados esta semana, puedes visitar <http://www.wikia.com/wiki/New_wikis_this_week>.</li>
 </ul>
 </p>',
-	'enotif_body_blogs_comment-html' => '<p>
-Estimado $WATCHINGUSERNAME,<br />
+	'enotif_body_blogs_comment-html' => '<p>Estimado $WATCHINGUSERNAME,<br />
 <br />
 $PAGEEDITOR puso un comentario en la entrada de blog "$BLOGTITLE". <br />
 <br />
 Para ver el comentario, sigue el enlace de debajo:<br />
-<a href="$PAGETITLE_URL">$PAGETITLE</a><br /> 
+<a href="$PAGETITLE_URL">$PAGETITLE</a><br />
 <br />
 Por favor, visita la entrada y edítala a menudo para seguir los cambios...<br />
 <br />
 Wikia<br />
 </p>',
 	'enotif_lastvisited-html' => '<a href="$1">Visita</a> para ver todos los cambios en esta página desde tu última visita.',
-	'globalwatchlist-digest-email-body-html' => '<p>
-Estimado/a $1,<br />
+	'globalwatchlist-digest-email-body-html' => '<p>Estimado/a $1,<br />
 <br />
 Esta es una lista de las páginas de tu lista de seguimiento de Wikia que han sido editadas desde tu última visita.<br />
 <br />
@@ -659,8 +503,7 @@ Wikia<br />
 <li>Para marcar todas las páginas como visitadas de este Boletín Semanal ve a la pestaña de "Seguimiento"  en tus Preferencias</li>
 </ul>
 </p>',
-	'passwordremindertext-html' => '<p>
-Hola<br />
+	'passwordremindertext-html' => '<p>Hola<br />
 La contraseña para el usuario "$2" es ahora "$3".<br />
 Si no solicitaste una nueva contraseña, no te preocupes. La contraseña de reemplazo ha sido enviada sólo a ti a esta dirección de correo. Tu cuenta seguirá segura y puedes continuar utilizando tu antigua contraseña.<br /><br />
 
@@ -677,10 +520,8 @@ www.wikia.com
 </p>',
 );
 
-
 $messages['fr'] = array(
-	'confirmemail_body-html' => '<p>
-Quelqu’un, probablement vous, à partir de l’adresse IP $1,<br />
+	'confirmemail_body-html' => '<p>Quelqu’un, probablement vous, à partir de l’adresse IP $1,<br />
 a enregistré un compte « $2 » avec cette adresse de courriel<br />
 sur le site {{SITENAME}}.
 <br /><br />
@@ -698,14 +539,12 @@ confirmation de votre adresse courriel :<br />
 <br /><br />
 Ce code de confirmation expirera le $4.
 <br /></p>',
-	'createaccount-text-html' => '<p>
-Quelqu’un a créé un compte pour votre adresse de courriel sur {{SITENAME}} ($4) intitulé « $2 », avec le mot de passe « $3 ».<br />
+	'createaccount-text-html' => '<p>Quelqu’un a créé un compte pour votre adresse de courriel sur {{SITENAME}} ($4) intitulé « $2 », avec le mot de passe « $3 ».<br />
 Vous devriez ouvrir une session et modifier dès à présent votre mot de passe.<br />
 <br />
 Ignorez ce message si ce compte a été créé par erreur.<br />
 </p>',
-	'enotif_body-html' => '<p>
-Cher $WATCHINGUSERNAME,<br />
+	'enotif_body-html' => '<p>Cher $WATCHINGUSERNAME,<br />
 <br />
 la page $PAGETITLE de {{SITENAME}} a été $CHANGEDORCREATED le $PAGEEDITDATE par $PAGEEDITOR, voyez <a href="$PAGETITLE_URL">$PAGETITLE</a> pour la version actuelle.<br />
 <br />
@@ -727,8 +566,7 @@ Pour modifier les paramètres de votre liste de suivi, visitez<br />
 Retour et assistance :<br />
 <a href="{{fullurl:{{MediaWiki:Helppage}}}}">{{fullurl:{{MediaWiki:Helppage}}}}</a>
 </p>',
-	'enotif_body_delete-html' => '<p>
-Bonjour $WATCHINGUSERNAME,<br />
+	'enotif_body_delete-html' => '<p>Bonjour $WATCHINGUSERNAME,<br />
 <br />
 la page « $PAGETITLE » de {{SITENAME}} a été effacé de $PAGEEDITOR le $PAGEEDITDATE.<br />
 <br />
@@ -748,8 +586,7 @@ Votre system gentil de messages de {{SITENAME}}<br />
 <li>Plus des trucs vous trouvez sur : <a href="http://fr.wikia.com">http://fr.wikia.com</a></li>
 </ul>
 </p>',
-	'enotif_body_restore-html' => '<p>
-Bonjour $WATCHINGUSERNAME,<br />
+	'enotif_body_restore-html' => '<p>Bonjour $WATCHINGUSERNAME,<br />
 <br />
 la page « $PAGETITLE » de {{SITENAME}} a été restauré de $PAGEEDITOR le $PAGEEDITDATE.<br />
 <br />
@@ -774,8 +611,7 @@ Votre system gentil de messages de {{SITENAME}}<br />
 </ul>
 </p>',
 	'enotif_lastvisited-html' => 'Pour tous les changements depuis votre dernière visite, voyez <a href="$1">ce lien</a>',
-	'globalwatchlist-digest-email-body-html' => '<p>
-Bonjour $1,<br />
+	'globalwatchlist-digest-email-body-html' => '<p>Bonjour $1,<br />
 <br />
 Au dessous vous trouvez une liste des toutes pages qui étaient modifiés après votre dernière visite.<br />
 <br />
@@ -788,8 +624,7 @@ Wikia<br /><br />
 <li>Vous pouvez modifier vos préférences ici, si vous ne voulez plus recevoir: <a href="http://www.wikia.com/wiki/Special:Preferences">http://www.wikia.com/wiki/Special:Preferences</a></li>
 </ul>
 </p>',
-	'passwordremindertext-html' => '<p>
-Quelqu’un (probablement vous, ayant l’adresse IP $1) a demandé un nouveau mot de<br />
+	'passwordremindertext-html' => '<p>Quelqu’un (probablement vous, ayant l’adresse IP $1) a demandé un nouveau mot de<br />
 passe pour {{SITENAME}} ($4). Un mot de passe temporaire a été créé pour<br />
 l’utilisateur « $2 » et est « $3 ». Si cela était votre intention, vous devrez<br />
 vous connecter et choisir un nouveau mot de passe.<br />
@@ -801,10 +636,8 @@ pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.<br
 </p>',
 );
 
-
 $messages['it'] = array(
-	'confirmemail_body-html' => '<p>
-Qualcuno, probabilmente tu stesso dall\'indirizzo IP $1, ha registrato l\'account "$2" su {{SITENAME}} indicando questo indirizzo e-mail.
+	'confirmemail_body-html' => '<p>Qualcuno, probabilmente tu stesso dall\'indirizzo IP $1, ha registrato l\'account "$2" su {{SITENAME}} indicando questo indirizzo e-mail.
 <br /><br />
 Per confermare che l\'account ti appartiene veramente e attivare le funzioni relative all\'invio di e-mail su {{SITENAME}}, apri il collegamento seguente con il tuo browser:
 <br /><br />
@@ -816,14 +649,12 @@ Se *non* hai registrato tu l\'account, segui questo collegamento per annullare l
 <br /><br />
 Questo codice di conferma scadrà automaticamente alle $4.
 </p>',
-	'createaccount-text-html' => '<p>
-Qualcuno ha creato un accesso a {{SITENAME}} ($4) a nome di $2, associato a questo indirizzo di posta elettronica. La password per l\'utente "$2" è impostata a "$3".<br />
+	'createaccount-text-html' => '<p>Qualcuno ha creato un accesso a {{SITENAME}} ($4) a nome di $2, associato a questo indirizzo di posta elettronica. La password per l\'utente "$2" è impostata a "$3".<br />
 È opportuno eseguire un accesso quanto prima e cambiare la password immediatamente.<br />
 <br /><br />
 Se l\'accesso è stato creato per errore, si può ignorare questo messaggio.<br />
 </p>',
-	'enotif_body-html' => '<p>
-Gentile $WATCHINGUSERNAME,<br />
+	'enotif_body-html' => '<p>Gentile $WATCHINGUSERNAME,<br />
 <br />
 la pagina $PAGETITLE di {{SITENAME}} è stata $CHANGEDORCREATED in data $PAGEEDITDATE da $PAGEEDITOR; la versione attuale si trova all\'indirizzo <a href="$PAGETITLE_URL">$PAGETITLE</a>.<br />
 <br />
@@ -843,8 +674,7 @@ Per modificare le impostazioni della lista degli osservati speciali, visita <a h
 <br />
 Per dare il tuo feedback e ricevere ulteriore assistenza: <a href="{{fullurl:Help:Aiuto}}">{{fullurl:Help:Aiuto}}</a>.<br />
 </p>',
-	'passwordremindertext-html' => '<p>
-Qualcuno (probabilmente tu, con indirizzo IP $1) ha richiesto l\'invio di una nuova password di accesso a {{SITENAME}} ($4).<br />
+	'passwordremindertext-html' => '<p>Qualcuno (probabilmente tu, con indirizzo IP $1) ha richiesto l\'invio di una nuova password di accesso a {{SITENAME}} ($4).<br />
 Una password temporanea per l\'utente "$2" è stata impostata a "$3".<br />
 È opportuno eseguire un accesso quanto prima e cambiare la password immediatamente. La password temporanea scadrà dopo {{PLURAL:$5|un giorno|$5 giorni}}.<br />
 <br />
@@ -852,10 +682,8 @@ Se non sei stato tu a fare la richiesta, oppure hai ritrovato la password e non 
 </p>',
 );
 
-
 $messages['pl'] = array(
-	'confirmemail_body-html' => '<p>
-Ktoś łącząc się z komputera o adresie IP $1<br/ >
+	'confirmemail_body-html' => '<p>Ktoś łącząc się z komputera o adresie IP $1<br/ >
 zarejestrował w {{GRAMMAR:MS.lp|{{SITENAME}}}} konto „$2” podając niniejszy adres e‐mail.<br />
 <br />
 Aby potwierdzić, że to Ty zarejestrowałeś to konto oraz, aby włączyć<br />
@@ -871,14 +699,12 @@ poniższy link, aby anulować potwierdzenie adresu e‐mail:<br />
 <br /><br />
 Kod zawarty w linku straci ważność $4.
 <br /></p>',
-	'createaccount-text-html' => '<p>
-Ktoś utworzył w {{GRAMMAR:MS.lp|{{SITENAME}}}} ($4), podając Twój adres e‐mail, konto „$2”. Aktualnym hasłem jest „$3”.<br />
+	'createaccount-text-html' => '<p>Ktoś utworzył w {{GRAMMAR:MS.lp|{{SITENAME}}}} ($4), podając Twój adres e‐mail, konto „$2”. Aktualnym hasłem jest „$3”.<br />
 Zaloguj się teraz i je zmień.<br />
 <br />
 Możesz zignorować tę wiadomość, jeśli konto zostało utworzone przez pomyłkę.<br />
 </p>',
-	'enotif_body-html' => '<p>
-Drogi (droga) $WATCHINGUSERNAME,<br />
+	'enotif_body-html' => '<p>Drogi (droga) $WATCHINGUSERNAME,<br />
 <br />
 strona $PAGETITLE w {{GRAMMAR:MS.lp|{{SITENAME}}}} została $CHANGEDORCREATED $PAGEEDITDATE przez użytkownika $PAGEEDITOR. Zobacz na stronie <a href="$PAGETITLE_URL">$PAGETITLE</a> aktualną wersję.<br />
 <br />
@@ -902,8 +728,7 @@ W celu zmiany ustawień swojej listy obserwowanych odwiedź<br />
 Pomoc:<br />
 <a href="{{fullurl:{{MediaWiki:Helppage}}}}">{{fullurl:{{MediaWiki:Helppage}}}}</a><br />
 </p>',
-	'passwordremindertext-html' => '<p>
-Ktoś (prawdopodobnie Ty, spod adresu IP $1)<br />
+	'passwordremindertext-html' => '<p>Ktoś (prawdopodobnie Ty, spod adresu IP $1)<br />
 poprosił o przesłanie nowego hasła do {{GRAMMAR:D.lp|{{SITENAME}}}} ($4).<br/ >
 Dla użytkownika „$2” zostało wygenerowane tymczasowe hasło i jest nim „$3”.<br />
 Jeśli było to zamierzone działanie, to po zalogowaniu się, musisz podać nowe hasło. <br />

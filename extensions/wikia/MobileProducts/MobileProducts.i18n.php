@@ -1,17 +1,18 @@
 <?php
+
 $messages = array();
 
 $messages['en'] = array(
 	'mobileproducts' => 'Wikia Mobile',
 	'mobileproducts-language' => 'Language',
-	'mobileproducts-language-links' => "",//e.g. * English|http://www.wikia.com/mobile\n* Español|http://es.wikia.com/mobile\n* Deutsch|http://de.wikia.com/mobile\n* Français|http://fr.wikia.com/mobile\n* Italiano|http://it.wikia.com/mobile
-	
+	'mobileproducts-language-links' => "", //e.g. * English|http://www.wikia.com/mobile\n* Español|http://es.wikia.com/mobile\n* Deutsch|http://de.wikia.com/mobile\n* Français|http://fr.wikia.com/mobile\n* Italiano|http://it.wikia.com/mobile
+
 	//Landing page
 	'mobileproducts-slides' => "* Mobile_slide_1.jpg|mobile/wikiaphone\n* Mobile_slide_2.jpg|mobile/lyricwiki\n* Mobile_slide_3.jpg|mobile/gameguides",
 	'mobileproducts-product-boxes' => "* Mobile Web|More than 200,000 sites, now mobile-friendly|wikiaphone_product.png|mobile/wikiaphone\n* LyricWiki|Instant access to full lyrics for 1.5 million songs|Lyricwiki_product.jpg|mobile/lyricwiki\n* Game Guides|Insider guide to over 30 popular videogames|Gameguides_product.jpg|mobile/gameguides\n* Help|Support for your Wikia Mobile apps|Mobilehelp_product.png|http://help.wikia.com/wiki/Help:Mobile",
 	'mobileproducts-more-link' => "Learn more >",
 	'mobileproducts-market-apps' => "* Get LyricWiki now|google::https://market.android.com/details?id=com.wikia.lyricwiki\n* Get Game Guides now|google::https://market.android.com/details?id=com.wikia.app.GameGuides|apple::http://itunes.apple.com/us/app/wikia-game-guides/id422467074?mt=8&ls=1",
-	
+
 	//WikiaPhone
 	'mobileproducts-wikiaphone-device' => 'iphone',
 	'mobileproducts-wikiaphone-slides' => "* Wikiaphone_screenshot_1.png\n* Wikiaphone_screenshot_2.png\n* Wikiaphone_screenshot_3.png\n* Wikiaphone_screenshot_4.png\n* Wikiaphone_screenshot_5.png",
@@ -20,14 +21,14 @@ $messages['en'] = array(
 	'mobileproducts-wikiaphone-price' => 'Free',
 	'mobileproducts-wikiaphone-markets' => "",//e.g. * web::|Best viewed on iOS and Android
 	'mobileproducts-wikiaphone-description' => "Wikia Mobile is available on virtually any mobile phone. To browse the content of any Wikia wiki on-the-go, simply point your phone's browser to:
-	
+
 	[http://www.wikia.com www.wikia.com]
-	
+
 	This is the same URL as for the desktop visitors. When you connect using your phone, Wikia will automatically detect that you're browsing via mobile, and serve a page with a format optimized for small screens.
-	
+
 	One great feature is that you can easily expand and condense entire sections of content with a single touch - making it equally easy to browse an article and read it in depth.",
 	'mobileproducts-wikiaphone-footer' => '',
-	
+
 	//LyricWiki
 	'mobileproducts-lyricwiki-device' => 'android',
 	'mobileproducts-lyricwiki-slides' => "* Lyricwiki_screenshot_1.png\n* Lyricwiki_screenshot_2.png\n* Lyricwiki_screenshot_3.png\n* Lyricwiki_screenshot_4.png\n* Lyricwiki_screenshot_5.png",
@@ -49,10 +50,10 @@ Type-ahead searching makes it fast to find what you're looking for and get right
 *These lyrics have had 5 years of review and editing from hundreds of thousands of users! This is the single most accurate lyrics collection anywhere.
 
 Available in: English, German, Spanish, French, Italian, Polish, Finnish, and Czech.",
-	'mobileproducts-lyricwiki-footer' => "LyricWiki is part of the Wikia family.<br/>
+	'mobileproducts-lyricwiki-footer' => "LyricWiki is part of the Wikia family.<br />
 Visit [http://lyrics.wikia.com lyrics.wikia.com] for the full wiki.
 This app is constantly striving to be better - please give us feedback on ways to improve it.",
-	
+
 	//Game Guides
 	'mobileproducts-gameguides-device' => 'android',
 	'mobileproducts-gameguides-slides' => "* Gameguides_screenshot_1.png\n* Gameguides_screenshot_2.png\n* Gameguides_screenshot_3.png\n* Gameguides_screenshot_4.png\n* Gameguides_screenshot_5.png",
@@ -99,8 +100,8 @@ Includes the following 30 game guides, with more being added every day:
 *Red Dead: Gunslingers
 
 ===Reviews===
-''\"YES! All my gameguides in the palm of my hand.\"''<br/>
-''\"Very nice and handy app.\"''<br/>
+''\"YES! All my gameguides in the palm of my hand.\"''<br />
+''\"Very nice and handy app.\"''<br />
 ''\"Yay!! I use Wikia for computer games, now I no longer need to constantly tab out when I need info!\"''",
 	'mobileproducts-gameguides-footer' => "Check out the wikis at [http://www.wikia.com/gaming wikia.com/gaming] on your laptop for even more gaming info!"
 );
@@ -111,21 +112,21 @@ $messages['qqq'] = array(
 	'mobileproducts-slides' => 'Message format: * article title (image in the file namespace)|article title (will be used as the link for the image)',
 	'mobileproducts-product-boxes' => 'Message format: * headline|description|article title (image in the file namespace)|article title (will be used as a link); do not translate "Game Guides" and "LyricWiki", those are product names',
  	'mobileproducts-market-apps' => 'Message format: * App column name|[google|apple]::[FULL_APPSTORE_URL]; do not translate "Game Guides" and "LyricWiki", those are product names',
-	
+
 	//Wikiaphone
 	'mobileproducts-wikiaphone-device' => 'do not translate',
 	'mobileproducts-wikiaphone-slides' => 'do not translate, message format: * article title (image in the file namespace)',
 	'mobileproducts-wikiaphone-title' => 'do not translate, product name',
 	'mobileproducts-wikiaphone-markets' => 'Message format: * [google|apple|web]::[FULL_APPSTORE_URL]|Requirements',
 	'mobileproducts-wikiaphone-description' => 'Accepts wikitext syntax; do not translate "Wikia Moble", is a product name',
-	
+
 	//LyricWiki
 	'mobileproducts-lyricwiki-device' => 'do not translate',
 	'mobileproducts-lyricwiki-slides' => 'do not translate, message format: * article title (image in the file namespace)',
 	'mobileproducts-lyricwiki-title' => 'do not translate, product name',
 	'mobileproducts-lyricwiki-markets' => 'Message format: * [google|apple|web]::[FULL_APPSTORE_URL]|Requirements',
 	'mobileproducts-lyricwiki-description' => 'Accepts wikitext syntax; do not translate "LyricWiki", is a product name',
-	
+
 	//Game Guides
 	'mobileproducts-gameguides-device' => 'do not translate',
 	'mobileproducts-gameguides-slides' => 'do not translate, message format: * article title (image in the file namespace)',
