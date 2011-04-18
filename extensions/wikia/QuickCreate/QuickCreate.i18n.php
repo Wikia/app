@@ -175,6 +175,14 @@ $messages['mk'] = array(
 	'quickcreate' => 'поднесете ја вашата рецепта',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'quickcreate-desc' => 'Menambahkan butang cipta laman baru dengan kebolehan log masuk untuk pengguna tanpa nama',
+	'quickcreate' => 'serahkan resipi anda',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

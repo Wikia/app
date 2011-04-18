@@ -81,7 +81,9 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-badword-msg' => 'Hi, please refrain from using these bad words or banned words in your Wiki Description: $1',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ * @author Wyz
+ */
 $messages['qqq'] = array(
 	'cnw-next' => 'Text for "Next" Button',
 	'cnw-back' => 'Text for "Back" Button',
@@ -108,11 +110,14 @@ $messages['qqq'] = array(
 	'cnw-desc-creative' => 'Creative or instruction for this step following H1',
 	'cnw-desc-placeholder' => 'Placeholder for the textarea',
 	'cnw-desc-tip1' => 'First Tip label',
-	'cnw-desc-tip1-creative' => 'The first tip',
+	'cnw-desc-tip1-creative' => 'The first tip<br />
+Be carefull to keep it short as there are 3 successive balloon tips to display in a small space',
 	'cnw-desc-tip2' => 'Second Tip label',
-	'cnw-desc-tip2-creative' => 'The second tip',
+	'cnw-desc-tip2-creative' => 'The second tip<br />
+Be carefull to keep it short as there are 3 successive balloon tips to display in a small space',
 	'cnw-desc-tip3' => 'Third Tip label',
-	'cnw-desc-tip3-creative' => 'The third tip',
+	'cnw-desc-tip3-creative' => 'The third tip<br />
+Be carefull to keep it short as there are 3 successive balloon tips to display in a small space',
 	'cnw-desc-choose' => 'Label for category',
 	'cnw-desc-select-one' => 'Default empty label for category',
 	'cnw-desc-default-lang' => 'Letting user know which language this wiki will be in.  $1 will be wiki language',
@@ -152,6 +157,17 @@ $messages['af'] = array(
 	'cnw-upgrade-now' => 'Opgradeer nou',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'cnw-or' => 'или',
+	'cnw-name-wiki-wiki' => 'Уики',
+	'cnw-auth-facebook-signup' => 'Регистриране чрез Facebook',
+	'cnw-auth-facebook-login' => 'Влизане с Facebook',
+	'cnw-desc-lang' => 'Език',
+);
+
 /** Breton (Brezhoneg)
  * @author Fohanno
  * @author Fulup
@@ -186,10 +202,10 @@ $messages['br'] = array(
 	'cnw-desc-tip1-creative' => "Implijit ar c'horn-mañ da zisplegañ d'an dud krak-ha-berr eus petra zo kaoz en ho wiki",
 	'cnw-desc-tip2' => 'Kuzul 2',
 	'cnw-desc-tip2-creative' => 'Merkit un nebeud displegadurioù war an danvez evit ar weladennerien',
-	'cnw-desc-tip3' => 'Tun 3',
+	'cnw-desc-tip3' => 'Tun digant unan a-vicher',
 	'cnw-desc-choose' => 'Dibabit ur rummad',
 	'cnw-desc-select-one' => 'Diuzañ unan',
-	'cnw-desc-default-lang' => 'E brezhoneg e vo ho wiki',
+	'cnw-desc-default-lang' => 'E $1 e vo ho wiki',
 	'cnw-desc-change-lang' => 'kemmañ',
 	'cnw-desc-lang' => 'Yezh',
 	'cnw-desc-wiki-submit-error' => 'Dibabit ur rummad, mar plij',
@@ -213,6 +229,7 @@ Hizivait dre PayPal evit kaout ur wiki nevez ouzhpenn evit $4.95 ar miz nemetken
 );
 
 /** German (Deutsch)
+ * @author Claudia Hattitten
  * @author George Animal
  * @author LWChris
  */
@@ -274,6 +291,10 @@ Upgrade mit PayPal um ein werbefreies Wiki für nur $4,95 pro Monat zu bekommen!
 	'cnw-welcome-instruction1' => 'Klick auf die Schaltfläche unten, um Seiten zu deinem Wiki hinzufügen.',
 	'cnw-welcome-instruction2' => 'Du wirst diese Schaltfläche in deinem ganzen Wiki sehen, nutze sie jedes Mal wenn du eine neue Seite hinzufügen willst.',
 	'cnw-welcome-help' => 'Finde Antworten, Ratschläge und mehr auf <a href="http://community.wikia.com">Community Central</a>.',
+	'cnw-error-general' => 'Bei der Erstellung deines Wikis ist etwas schief gelaufen. Bitte versuche es später erneut.',
+	'cnw-error-general-heading' => 'Neues Wiki Erstellen Fehler',
+	'cnw-badword-header' => 'Ganz ruhig',
+	'cnw-badword-msg' => 'Hallo, bitte verwende keines der folgenden Schimpfwörter oder unerlaubten Begriffe in deiner Wiki-Beschreibung: $1',
 );
 
 /** Spanish (Español)
@@ -337,6 +358,7 @@ Actualizar a través de PayPal para conseguir una wiki sin publicidad ¡por solo
 	'cnw-welcome-instruction1' => 'Ahora haz clic al botón de abajo para empezar a llenar tu wiki con información.',
 	'cnw-welcome-instruction2' => 'Verás este botón a través de tu wiki. Úsalo en cualquier momento cuando quieras agregar una página nueva.',
 	'cnw-welcome-help' => 'Encuentra respuestas, consejos, y más en la <a href="http://es.wikia.com">Comunidad Central</a>.',
+	'cnw-error-general' => 'Algo salió mal al crear tu wiki. Por favor, inténtalo de nuevo más tarde.',
 );
 
 /** Basque (Euskara)
@@ -350,6 +372,17 @@ $messages['eu'] = array(
 	'cnw-desc-lang' => 'Hizkuntza',
 );
 
+/** Persian (فارسی)
+ * @author BlueDevil
+ */
+$messages['fa'] = array(
+	'cnw-login' => 'ورود به سامانه',
+	'cnw-signup' => 'ایجاد حساب جدید',
+	'cnw-auth-headline' => 'ورود به سامانه',
+	'cnw-auth-headline2' => 'ثبت نام',
+	'cnw-desc-tip1' => 'راهنمایی',
+);
+
 /** Finnish (Suomi)
  * @author Tofu II
  */
@@ -357,6 +390,7 @@ $messages['fi'] = array(
 	'cnw-name-wiki-label' => 'Nimeä wikisi',
 	'cnw-desc-wiki-submit-error' => 'Valitse luokka',
 	'cnw-upgrade-now' => 'Päivitä nyt',
+	'cnw-welcome-headline' => 'Onnittelut! $1 on luotu',
 );
 
 /** French (Français)
@@ -368,7 +402,7 @@ $messages['fr'] = array(
 	'cnw-back' => 'Retour',
 	'cnw-or' => 'ou',
 	'cnw-title' => 'Créer un nouveau wiki',
-	'cnw-name-wiki-headline' => 'Démarrer un wiki',
+	'cnw-name-wiki-headline' => 'Commencer un wiki',
 	'cnw-name-wiki-creative' => 'Wikia est le meilleur endroit pour construire un site Web et monter une communauté autour de ce que vous aimez.',
 	'cnw-name-wiki-label' => 'Nommez votre wiki',
 	'cnw-name-wiki-wiki' => 'Wiki',
@@ -390,9 +424,9 @@ $messages['fr'] = array(
 	'cnw-desc-creative' => 'Décrivez le sujet',
 	'cnw-desc-placeholder' => 'Ceci apparaîtra sur la page d’accueil de votre wiki.',
 	'cnw-desc-tip1' => 'Astuce',
-	'cnw-desc-tip1-creative' => 'Utilisez cet espace pour dire aux gens de quoi parle votre wiki en une phrase ou deux',
+	'cnw-desc-tip1-creative' => 'Utilisez ceci pour indiquer de quoi parle votre wiki en une phrase ou deux',
 	'cnw-desc-tip2' => 'Psst',
-	'cnw-desc-tip2-creative' => 'Donnez à vos visiteurs quelques détails spécifiques à propos de votre sujet',
+	'cnw-desc-tip2-creative' => 'Donnez à vos visiteurs quelques détails spécifiques à propos du sujet',
 	'cnw-desc-tip3' => 'Conseil d’expert',
 	'cnw-desc-tip3-creative' => 'Faites savoir aux gens qu’ils peuvent aider à faire grandir votre wiki en modifiant ou en ajoutant des pages',
 	'cnw-desc-choose' => 'Choisissez une catégorie',
@@ -420,6 +454,10 @@ Mettez à niveau via Paypal pour obtenir un wiki sans publicité pour seulement 
 	'cnw-welcome-instruction1' => 'Cliquez sur le bouton ci-dessous pour commencer à ajouter des pages à votre wiki.',
 	'cnw-welcome-instruction2' => 'Vous verrez ce bouton partout sur votre wiki, utilisez-le chaque fois que vous souhaitez ajouter une nouvelle page.',
 	'cnw-welcome-help' => 'Trouvez des réponses, conseils et plus sur sur <a href="http://community.wikia.com">Community Central</a>.',
+	'cnw-error-general' => 'Quelque chose s’est mal passé lors de la création de votre wiki. Veuillez réessayer plus tard.',
+	'cnw-error-general-heading' => 'Erreur lors de la création d’un nouveau wiki',
+	'cnw-badword-header' => 'Eh Oh',
+	'cnw-badword-msg' => 'Veuillez éviter d’utiliser des mots grossiers ou interdits dans la description de votre wiki',
 );
 
 /** Hebrew (עברית)
@@ -544,6 +582,10 @@ Compra le actualisation per PayPal pro obtener un wiki sin publicitate pro solme
 	'cnw-welcome-instruction1' => 'Clicca sur le button hic infra pro comenciar a adder paginas a tu wiki.',
 	'cnw-welcome-instruction2' => 'Tu videra iste button ubique in tu wiki. Usa lo cata vice que tu vole adder un nove pagina.',
 	'cnw-welcome-help' => 'Trova responsas, consilios e plus in <a href="http://community.wikia.com">le centro del communitate</a>.',
+	'cnw-error-general' => 'Qualcosa errava durante le creation de tu wiki. Per favor reproba plus tarde.',
+	'cnw-error-general-heading' => 'Error de creation de nove wiki',
+	'cnw-badword-header' => 'Stop!',
+	'cnw-badword-msg' => 'Salute, per favor abstine te de usar le sequente parolas improprie o bannite in le description de tu wiki: $1',
 );
 
 /** Kurdish (Latin) (Kurdî (Latin))
@@ -553,6 +595,16 @@ $messages['ku-latn'] = array(
 	'cnw-or' => 'an',
 	'cnw-signup' => 'Hesabekî çêke',
 	'cnw-desc-lang' => 'Ziman',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'cnw-or' => 'oder',
+	'cnw-name-wiki-label' => 'Gitt Ärer Wiki en Numm',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-desc-lang' => 'Sprooch',
 );
 
 /** Lithuanian (Lietuvių)
@@ -623,6 +675,77 @@ $messages['mk'] = array(
 	'cnw-welcome-instruction1' => 'Стиснете на копчето подолу за да почнете да додавате страници на викито.',
 	'cnw-welcome-instruction2' => 'Ова копче ќе биде присутно ширум целото вики. Користете го секогаш кога сакате да додадете нова страница.',
 	'cnw-welcome-help' => 'Одговори на прашања, совети и друго ќе добиете на <a href="http://community.wikia.com">Центарот на заедницата</a>.',
+	'cnw-error-general' => 'Нешто тргна наопаку при создавањето на вашето вики. Обидете се подоцна.',
+	'cnw-error-general-heading' => 'Грешка при создавање на ново вики',
+	'cnw-badword-header' => 'Предупредување',
+	'cnw-badword-msg' => 'Здраво. Ве молиме да се воздржите од употреба на непристојни зборови или забранетите зборови наведени во описот на викито: $1',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|Pendeta penciptaan Wiki]]',
+	'cnw-next' => 'Berikutnya',
+	'cnw-back' => 'Sebelumnya',
+	'cnw-or' => 'atau',
+	'cnw-title' => 'Cipta Wiki Baru',
+	'cnw-name-wiki-headline' => 'Cipta Wiki Baru',
+	'cnw-name-wiki-creative' => 'Wikia ialah tempat terbaik untuk membina sebuah tapak web dan menghimpunkan sebuah komuniti yang berkongsi kegemaran anda.',
+	'cnw-name-wiki-label' => 'Namakan wiki anda',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-name-wiki-domain-label' => 'Berikan alamat wiki anda',
+	'cnw-name-wiki-submit-error' => 'Eh eh! Anda perlu mengisi kedua-dua kotak di atas sebelum menyambung.',
+	'cnw-login' => 'Log masuk',
+	'cnw-signup' => 'Buka Akaun',
+	'cnw-signup-prompt' => 'Perlukan akaun?',
+	'cnw-call-to-signup' => 'Daftar di sini',
+	'cnw-login-prompt' => 'Sudah ada akaun?',
+	'cnw-call-to-login' => 'Log masuk di sini',
+	'cnw-auth-headline' => 'Log masuk',
+	'cnw-auth-headline2' => 'Daftar Diri',
+	'cnw-auth-creative' => 'Log masuk ke dalam akaun anda untuk terus membina wiki anda.',
+	'cnw-auth-signup-creative' => 'Anda perlukan akaun untuk terus membina wiki anda.<br />Pendaftaran hanya mengambil masa seminit!',
+	'cnw-auth-facebook-signup' => 'Berdaftar dengan Facebook',
+	'cnw-auth-facebook-login' => 'Log masuk dengan Facebook',
+	'cnw-desc-headline' => 'Apakah topik wiki anda?',
+	'cnw-desc-creative' => 'Jelaskan topik anda',
+	'cnw-desc-placeholder' => 'Ini akan terpapar pada laman utama wiki anda.',
+	'cnw-desc-tip1' => 'Petua',
+	'cnw-desc-tip1-creative' => 'Gunakan ruangan ini untuk menjelaskan wiki anda secara ringkas.',
+	'cnw-desc-tip2' => 'Psst',
+	'cnw-desc-tip2-creative' => 'Nyatakan perincian tentang subjek anda untuk makluman para pengunjung.',
+	'cnw-desc-tip3' => 'Petua Pro',
+	'cnw-desc-tip3-creative' => 'Jemput orang ramai untuk menyunting dan menambahkan laman supaya wiki anda berkembang',
+	'cnw-desc-choose' => 'Pilih kategori',
+	'cnw-desc-select-one' => 'Pilih satu',
+	'cnw-desc-default-lang' => 'Wiki anda adalah dalam $1',
+	'cnw-desc-change-lang' => 'ubah',
+	'cnw-desc-lang' => 'Bahasa',
+	'cnw-desc-wiki-submit-error' => 'Sila pilih kategori',
+	'cnw-theme-headline' => 'Pilih tema',
+	'cnw-theme-creative' => 'Pilih tema di bawah. Anda boleh melihat pratonton untuk setiap tema yang anda pilih.',
+	'cnw-theme-instruction' => 'Anda boleh mereka tema anda lain kali dengan menggunakan "Alatan Saya".',
+	'cnw-upgrade-headline' => 'Nak naik taraf?',
+	'cnw-upgrade-creative' => 'Jika anda naik taraf ke Wikia Plus, anda boleh gugurkan iklan dari <span class="wiki-name"></span>, tawaran sekali sahaja buat pengasas baru.',
+	'cnw-upgrade-marketing' => 'Wikia Plus merupakan yang terbaik untuk:<ul>
+<li>Wiki Profesional</li>
+<li>Pertubuhan bukan untang</li>
+<li>Keluarga</li>
+<li>Sekolah</li>
+<li>Projek peribadi</li>
+</ul>
+Naik taraf wiki anda kepada wiki tanpa iklan dengan membayar $4.95 (USD) sebulan melalui PayPal!',
+	'cnw-upgrade-now' => 'Naik Taraf Sekarang',
+	'cnw-upgrade-decline' => 'Tak apalah, terus ke wiki saya',
+	'cnw-welcome-headline' => 'Bagus! $1 telah dicipta',
+	'cnw-welcome-instruction1' => 'Klik butang di bawah untuk mulai membuka laman pada wiki anda.',
+	'cnw-welcome-instruction2' => 'Anda akan melihat butang ini di seluruh wiki. Gunakannya pada bila-bila masa anda ingin menambahkan laman baru.',
+	'cnw-welcome-help' => 'Cari jawapan, nasihat, dan banyak lagi di <a href="http://community.wikia.com">Community Central</a>.',
+	'cnw-error-general' => 'Kami menghadapi masalah ketika memproseskan penciptaan wiki anda. Sila cuba lagi lain kali.',
+	'cnw-error-general-heading' => 'Ralat Penciptaan Wiki Baru',
+	'cnw-badword-header' => 'Nanti kejap',
+	'cnw-badword-msg' => 'Hai, sila hindari penggunaan kata-kata kesat/terlarang dalam Penerangan Wiki anda: $1',
 );
 
 /** Dutch (Nederlands)
@@ -686,9 +809,13 @@ Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
 	'cnw-welcome-instruction1' => "Klik op de onderstaande knop om pagina's aan uw wiki toe te voegen.",
 	'cnw-welcome-instruction2' => 'U ziet deze knop overal in uw wiki. Gebruik hem als u een nieuwe pagina wilt toevoegen.',
 	'cnw-welcome-help' => 'Antwoorden, advies en meer op <a href="http://community.wikia.com">Community Central</a>.',
+	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van uw wiki. Probeer het later opnieuw.',
+	'cnw-error-general-heading' => 'Fout bij het aanmaken van een nieuwe wiki',
+	'cnw-badword-header' => 'Pas op!',
+	'cnw-badword-msg' => 'Hallo. Probeer u te onthouden van het gebruiken van ongewenste woorden in uw wikibeschrijving: $1',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
 $messages['no'] = array(
@@ -749,6 +876,10 @@ Oppgrader gjennom PayPal for å få en reklamefri wiki til kun $4,95 per måned!
 	'cnw-welcome-instruction1' => 'Trykk på knappen under for å begynne å legge til siden på wikien din.',
 	'cnw-welcome-instruction2' => 'Du vil se denne knappen på wikien din, bruk den når du vil legge til en ny side.',
 	'cnw-welcome-help' => 'Finn svar, råd, og mer på <a href="http://community.wikia.com">Community Central</a>.',
+	'cnw-error-general' => 'Noe gikk galt under opprettning av wikien din. Vennligst prøv igjen senere.',
+	'cnw-error-general-heading' => 'Opprett ny wiki-feil',
+	'cnw-badword-header' => 'Hei der',
+	'cnw-badword-msg' => 'Hei, vennligst unngå å bruke disse grove eller forbudte ordene i beskrivelsen av wikien: $1',
 );
 
 /** Pashto (پښتو)
@@ -840,8 +971,12 @@ Adopte esta versão através do PayPal para ter uma wiki livre de anúncios por 
 	'cnw-upgrade-decline' => 'Não obrigado, continuar para a minha wiki',
 	'cnw-welcome-headline' => 'Parabéns! A $1 foi criada',
 	'cnw-welcome-instruction1' => 'Clique o botão abaixo para começar a criar páginas na sua wiki.',
-	'cnw-welcome-instruction2' => 'Verá este botão em toda a wiki; use-o em qualquer altura para criar uma página nova.',
+	'cnw-welcome-instruction2' => 'Verá este botão em todas as páginas da wiki; use-o em qualquer altura para criar uma página nova.',
 	'cnw-welcome-help' => 'Encontrará respostas, conselhos e mais na <a href="http://pt.wikia.com">Comunidade Central</a>.',
+	'cnw-error-general' => 'Ocorreu um erro não identificado ao criar a sua wiki. Tente novamente mais tarde, por favor.',
+	'cnw-error-general-heading' => 'Erro ao Criar Wiki Nova',
+	'cnw-badword-header' => 'Atenção',
+	'cnw-badword-msg' => 'Não use estas palavras impróprias ou proibidas na Descrição da Wiki, por favor: $1',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -905,9 +1040,13 @@ Adote esta versão através do PayPal para ter uma wiki livre de anúncios por a
 	'cnw-welcome-instruction1' => 'Clique o botão abaixo para começar a criar páginas na sua wiki.',
 	'cnw-welcome-instruction2' => 'Verá este botão em toda a wiki; use-o em qualquer altura para criar uma página nova.',
 	'cnw-welcome-help' => 'Encontrará respostas, conselhos e mais na <a href="http://pt.wikia.com">Comunidade Central</a>.',
+	'cnw-error-general' => 'Algo deu errado ao criar a sua wiki. Por favor, tente novamente mais tarde.',
+	'cnw-error-general-heading' => 'Erro ao Criar uma Wiki Nova',
+	'cnw-badword-header' => 'Atenção',
+	'cnw-badword-msg' => 'Não use palavras impróprias ou proibidas na Descrição da Wiki, por favor',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -938,6 +1077,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author McDutchie
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -966,7 +1106,7 @@ $messages['sv'] = array(
 	'cnw-desc-tip3' => 'Tips 3',
 	'cnw-desc-choose' => 'Välj en kategori',
 	'cnw-desc-select-one' => 'Välj en',
-	'cnw-desc-default-lang' => 'Din wiki kommer att vara på engelska',
+	'cnw-desc-default-lang' => 'Din wiki kommer att vara på $1',
 	'cnw-desc-change-lang' => 'ändra',
 	'cnw-desc-lang' => 'Språk',
 	'cnw-desc-wiki-submit-error' => 'Välj en kategori',
@@ -1014,39 +1154,82 @@ $messages['te'] = array(
 	'cnw-desc-lang' => 'భాష',
 );
 
-/** Simplified Chinese (中文(简体))
- * @author Hydra
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
  */
-$messages['zh-hans'] = array(
-	'cnw-next' => '下一步',
-	'cnw-back' => '前一步',
-	'cnw-or' => '或',
-	'cnw-title' => '创造一个新的维基',
-	'cnw-name-wiki-headline' => '开始一个维基',
-	'cnw-login' => '登录',
+$messages['tl'] = array(
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|Madyikerong panlikha ng Wiki]]',
+	'cnw-next' => 'Susunod',
+	'cnw-back' => 'Bumalik',
+	'cnw-or' => 'o',
+	'cnw-title' => 'Lumikha ng Bagong Wiki',
+	'cnw-name-wiki-headline' => 'Magsimula ng isang Wiki',
+	'cnw-name-wiki-creative' => 'Ang Wikia ang pinakamahusay na pook upang makapagtatag ng isang websayt at makapagpalaki ng isang pamayanan sa paligid ng minamahal mong bagay.',
+	'cnw-name-wiki-label' => 'Pangalanan ang wiki mo',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-name-wiki-domain-label' => 'Bigyan ang wiki ng isang tirahan',
+	'cnw-name-wiki-submit-error' => 'Naku! Dapat mong kapwa punuan ang mga kahong nasa itaas upang makapagpatuloy.',
+	'cnw-login' => 'Lumagdang Papasok',
+	'cnw-signup' => 'Lumikha ng Akawnt',
+	'cnw-signup-prompt' => 'Kailangan mo ng isang akawnt?',
+	'cnw-call-to-signup' => 'Magpatala rito',
+	'cnw-login-prompt' => 'Mayroon ka nang isang akawnt?',
+	'cnw-call-to-login' => 'Lumagda rito',
+	'cnw-auth-headline' => 'Lumagdang Papasok',
+	'cnw-auth-headline2' => 'Magpatala Na',
+	'cnw-auth-creative' => 'Lumagda papasok sa akawnt mo upang makapagpatuloy sa pagtatayo ng wiki mo.',
+	'cnw-auth-signup-creative' => 'Kakailanganin mo ang isang akawnt upang makapagpatuloy sa pagbubuo ng wiki mo.<br />Isang minuto lang ang kailangan sa pagpapatala!',
+	'cnw-auth-facebook-signup' => 'Magpatalang may Facebook',
+	'cnw-auth-facebook-login' => 'Lumagdang may Facebook',
+	'cnw-desc-headline' => 'Tungkol ba saan ang wiki mo?',
+	'cnw-desc-creative' => 'Ilarawan ang paksa mo',
+	'cnw-desc-placeholder' => 'Lilitaw ito sa pangunahing pahina ng wiki mo.',
+	'cnw-desc-tip1' => 'Pahiwatig',
+	'cnw-desc-tip1-creative' => 'Gamitin ang puwang na ito upang sabihin sa mga tao ang tungkol sa wiki mo sa pamamagitan ng isa o dalawang mga pangungusap',
+	'cnw-desc-tip2' => 'Hoy',
+	'cnw-desc-tip2-creative' => 'Bigyan ang mga panauhin mo ng ilang partikular na mga detalye ukol sa paksa mo',
+	'cnw-desc-tip3' => 'Pahiwatig ng Dalubhasa',
+	'cnw-desc-tip3-creative' => 'Ipaalam sa mga tao na makakatulong sila sa pagpapalaki ng wiki mo sa pamamagitan ng pamamatnugot at pagdaragdag ng mga pahina',
+	'cnw-desc-choose' => 'Pumili ng isang kategorya',
+	'cnw-desc-select-one' => 'Pumili ng isa',
+	'cnw-desc-default-lang' => 'Ang wiki mo ay magiging nasa $1',
+	'cnw-desc-change-lang' => 'baguhin',
+	'cnw-desc-lang' => 'Wika',
+	'cnw-desc-wiki-submit-error' => 'Mangyaring pumili ng isang kategorya',
+	'cnw-theme-headline' => 'Pumili ng isang tema',
+	'cnw-theme-creative' => 'Pumili ng isang temang nasa ibaba, magagawa mong makakita ng isang paunang pagtanaw ng bawat tema habang pinipili mo ito.',
+	'cnw-theme-instruction' => 'Makakapagdisenyo ka rin ng sarili mong tema paglaon sa pamamagitan ng pagpunta sa "Mga Kasangkapan Ko".',
+	'cnw-upgrade-headline' => 'Nais mo bang magpataas ng antas?',
+	'cnw-upgrade-creative' => 'Ang pagpapataas upang maging Wikia Plus ay nagpapahintulot sa iyong matanggal ang mga anunsiyo mula sa <span class="wiki-name"></span>, isang pang-isang ulit lamang na alok na makukuha ng bagong mga tagapagtatag.',
+	'cnw-upgrade-marketing' => 'Ang Wikia Plus ay isang mahusay na tugon para sa:<ul>
+<li>Mga Wiking Pangdalubhasa</li>
+<li>Hindi nakikinabang</li>
+<li>Mga mag-anak</li>
+<li>Mga paaralan</li>
+<li>Mga proyektong pansarili</li>
+</ul>
+Magpataas ng antas sa pamamagitan ng PayPal upang makakuha ng wiking walang anunsiyo sa halagang $4.95 lang bawat buwan!',
+	'cnw-upgrade-now' => 'Itaas na ang Antas Ngayon',
+	'cnw-upgrade-decline' => 'Salamat ngunit ayaw ko, magpatuloy sa aking wiki',
+	'cnw-welcome-headline' => 'Maligayang bati! Nalikha na ang $1',
+	'cnw-welcome-instruction1' => 'Pindutin ang pindutang nasa ibaba upang makapagsimulang magdagdag ng mga pahina sa wiki mo.',
+	'cnw-welcome-instruction2' => 'Makikita mo ang pinduting ito sa kabuuan ng wiki mo, gamitin ito anumang oras na nais mong magdagdag ng isang bagong pahina.',
+	'cnw-welcome-help' => 'Maghanap ng mga sagot, mga payo, at marami pa sa <a href="http://community.wikia.com">Lunduyan ng Pamayanan</a>.',
 );
 
-/**
- * Chinese placeholder
- * replace this with real chinese later
- */
+/** Chinese (中文) */
 $messages['zh'] = array(
-	// general messages
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki creation wizard]]',
 	'cnw-next' => 'Next',
 	'cnw-back' => 'Back',
 	'cnw-or' => 'or',
 	'cnw-title' => 'Create New Wiki',
-	// step1 - create a wiki
 	'cnw-name-wiki-headline' => 'Start a Wiki',
 	'cnw-name-wiki-creative' => 'Wikia is the best place to build a website and grow a community around what you love.',
 	'cnw-name-wiki-label' => 'Name your wiki',
 	'cnw-name-wiki-wiki' => 'Wiki',
 	'cnw-name-wiki-domain-label' => 'Give your wiki an address',
-	'cnw-name-wiki-language' => '',
-	'cnw-name-wiki-domain' => '.wikia.com',
 	'cnw-name-wiki-submit-error' => 'Oops! You need to fill in both of the boxes above to keep going.',
-	// step2 - signup/login
 	'cnw-login' => 'Log In',
 	'cnw-signup' => 'Create Account',
 	'cnw-signup-prompt' => 'Need an account?',
@@ -1056,11 +1239,10 @@ $messages['zh'] = array(
 	'cnw-auth-headline' => 'Log In',
 	'cnw-auth-headline2' => 'Sign Up',
 	'cnw-auth-creative' => 'Log in to your account to continue building your wiki.',
-	'cnw-auth-signup-creative' => 'You\'ll need an account to continue building your wiki.<br />It only takes a minute to sign up!',
+	'cnw-auth-signup-creative' => "You'll need an account to continue building your wiki.<br />It only takes a minute to sign up!",
 	'cnw-auth-facebook-signup' => 'Sign up with Facebook',
 	'cnw-auth-facebook-login' => 'Login with Facebook',
-	// step3 - wiki description
-	'cnw-desc-headline' => 'What\'s your wiki about?',
+	'cnw-desc-headline' => "What's your wiki about?",
 	'cnw-desc-creative' => 'Describe your topic',
 	'cnw-desc-placeholder' => 'This will appear on the main page of your wiki.',
 	'cnw-desc-tip1' => 'Hint',
@@ -1075,11 +1257,9 @@ $messages['zh'] = array(
 	'cnw-desc-change-lang' => 'change',
 	'cnw-desc-lang' => 'Language',
 	'cnw-desc-wiki-submit-error' => 'Please choose a category',
-	// step4 - select theme
 	'cnw-theme-headline' => 'Choose a theme',
-	'cnw-theme-creative' => 'Choose a theme below, you\'ll be able to see a preview of each theme as you select it.',
+	'cnw-theme-creative' => "Choose a theme below, you'll be able to see a preview of each theme as you select it.",
 	'cnw-theme-instruction' => 'You can also design your own theme later by going to "My Tools".',
-	// step5 - upgrade
 	'cnw-upgrade-headline' => 'Do you want to upgrade?',
 	'cnw-upgrade-creative' => 'Upgrading to Wikia Plus allows you to remove ads from <span class="wiki-name"></span>, a one time offer only available to new founders.',
 	'cnw-upgrade-marketing' => 'Wikia Plus is a great solution for:<ul>
@@ -1092,9 +1272,38 @@ $messages['zh'] = array(
 Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-upgrade-now' => 'Upgrade Now',
 	'cnw-upgrade-decline' => 'No thanks, continue to my wiki',
-	// wiki welcome message
 	'cnw-welcome-headline' => 'Congratulations! $1 has been created',
 	'cnw-welcome-instruction1' => 'Click the button below to start adding pages to your wiki.',
-	'cnw-welcome-instruction2' => 'You\'ll see this button throughout your wiki, use it any time you want to add a new page.',
+	'cnw-welcome-instruction2' => "You'll see this button throughout your wiki, use it any time you want to add a new page.",
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
 );
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'cnw-next' => '下一步',
+	'cnw-back' => '前一步',
+	'cnw-or' => '或',
+	'cnw-title' => '创造一个新的维基',
+	'cnw-name-wiki-headline' => '开始一个维基',
+	'cnw-name-wiki-label' => '给您的维基一个名字',
+	'cnw-name-wiki-wiki' => '维基',
+	'cnw-login' => '登录',
+	'cnw-signup' => '创造户口',
+	'cnw-signup-prompt' => '需要一个户口吗？',
+	'cnw-call-to-signup' => '在这里注册',
+	'cnw-login-prompt' => '已经有了户口吗？',
+	'cnw-call-to-login' => '在这里登入',
+	'cnw-auth-headline' => '登入',
+	'cnw-auth-headline2' => '注册',
+	'cnw-desc-tip1' => '暗示',
+	'cnw-desc-choose' => '选择一个分类',
+	'cnw-desc-select-one' => '选一',
+	'cnw-desc-change-lang' => '改变',
+	'cnw-desc-lang' => '语言',
+	'cnw-desc-wiki-submit-error' => '请选一个分类',
+	'cnw-upgrade-decline' => '不了谢谢，请继续到我的维基',
+	'cnw-welcome-headline' => '恭喜！$1 已被创造',
+);
+

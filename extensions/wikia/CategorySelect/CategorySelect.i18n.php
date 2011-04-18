@@ -115,6 +115,7 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'categoryselect-button-save' => 'Съхраняване',
+	'categoryselect-button-cancel' => 'Отказване',
 );
 
 /** Breton (Brezhoneg)
@@ -261,6 +262,7 @@ $messages['fa'] = array(
 
 /** Finnish (Suomi)
  * @author Crt
+ * @author Tofu II
  */
 $messages['fi'] = array(
 	'categoryselect-code-view' => 'Näytä koodi',
@@ -276,6 +278,7 @@ $messages['fi'] = array(
 	'categoryselect-empty-name' => 'Syötä luokan nimi (osa ennen |)',
 	'categoryselect-button-save' => 'Tallenna',
 	'categoryselect-button-cancel' => 'Peruuta',
+	'categoryselect-error-not-exist' => 'Artikkelia [id=$1] ei ole olemassa.',
 	'tog-disablecategoryselect' => 'peru luokkien lisäys',
 );
 
@@ -453,11 +456,13 @@ $messages['kn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'categoryselect-infobox-caption' => 'Optioune vun der Kategorie',
 	'categoryselect-addcategory-button' => 'Kategorie derbäisetzen',
 	'categoryselect-edit-summary' => 'Kategorien derbäisetzen',
 	'categoryselect-button-save' => 'Späicheren',
 	'categoryselect-button-cancel' => 'Ofbriechen',
 	'categoryselect-error-not-exist' => 'Den Artikel [id=$1] gëtt et net.',
+	'categoryselect-error-user-rights' => 'Feeler bäi de Benotzerrechter.',
 	'categoryselect-error-db-locked' => "D'Datebank ass gespaart.",
 );
 
@@ -491,6 +496,31 @@ $messages['mk'] = array(
  */
 $messages['mn'] = array(
 	'categoryselect-button-cancel' => 'Цуцлах',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'categoryselect-desc' => 'Menyediakan antara muka untuk menguruskan kategori dalam laman tanpa menyunting seluruh rencana',
+	'categoryselect-code-view' => 'Paparan kod',
+	'categoryselect-visual-view' => 'Paparan visual',
+	'categoryselect-infobox-caption' => 'Pilihan kategori',
+	'categoryselect-infobox-category' => 'Nyatakan nama kategori:',
+	'categoryselect-infobox-sortkey' => 'Abjadkan rencana ini di laman kategori "$1" di bawah nama',
+	'categoryselect-addcategory-button' => 'Nyatakan kategori',
+	'categoryselect-suggest-hint' => 'Tekan Enter apabila siap',
+	'categoryselect-tooltip' => "'''Baru!''' Bar alat pengetagan kategori. Cubalah atau dapatkan [[Help:CategorySelect|bantuan]] untuk mengetahui lebih lanjut",
+	'categoryselect-unhandled-syntax' => 'Sintaks yang tidak diuruskan dikesan - tidak dapat beralih kembali ke mod visual.',
+	'categoryselect-edit-summary' => 'Menambahkan kategori',
+	'categoryselect-empty-name' => 'Nyatakan nama kategori (bahagian sebelum |)',
+	'categoryselect-button-save' => 'Simpan',
+	'categoryselect-button-cancel' => 'Batalkan',
+	'categoryselect-error-not-exist' => 'Rencana [id=$1] tidak wujud.',
+	'categoryselect-error-user-rights' => 'Ralat hak pengguna.',
+	'categoryselect-error-db-locked' => 'Pangkalan data dikunci.',
+	'categoryselect-edit-abort' => 'Pengubahsuaian yang anda cuba buat telah dipaksa henti oleh cangkuk sambungan',
+	'tog-disablecategoryselect' => 'Matikan Fungsi Tag Kategori',
 );
 
 /** Dutch (Nederlands)

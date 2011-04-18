@@ -43,9 +43,11 @@ $messages['br'] = array(
 
 /** Catalan (Català)
  * @author Paucabot
+ * @author SMP
  */
 $messages['ca'] = array(
 	'theorytab-title' => 'Teoria',
+	'theorytab-parent-title' => 'Article pare',
 );
 
 /** Chechen (Нохчийн)
@@ -207,6 +209,14 @@ $messages['lv'] = array(
 $messages['mk'] = array(
 	'theorytab-title' => 'Теорија',
 	'theorytab-parent-title' => 'Матична статија',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'theorytab-title' => 'Teori',
+	'theorytab-parent-title' => 'Rencana induk',
 );
 
 /** Nepali (नेपाली)

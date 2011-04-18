@@ -39,6 +39,14 @@ Artikel '''$1''' kon nie gevind word nie.
 * Om na die tuisblad van hierdie webwerf te gaan: [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'our404handler' => "Error 404: ¡Nun s'alcuentra la páxina!",
+	'our404handler-oops' => "Estes nun son les páxines que busques. Sal d'equí, por favor.",
+);
+
 /** Azerbaijani (Azərbaycanca) */
 $messages['az'] = array(
 	'our404handler' => 'Xəta 404: Səhifə tapılmadı!',
@@ -166,6 +174,22 @@ El artículo '''$1''' no pudo ser encontrado.
  */
 $messages['et'] = array(
 	'our404handler' => 'Tõrge 404: Lehte ei leitud!',
+);
+
+/** Persian (فارسی)
+ * @author Ebraminio
+ * @author Wayiran
+ */
+$messages['fa'] = array(
+	'our404handler' => 'خطای ۴۰۴: صفحه یافت نشد!',
+	'our404handler-oops' => 'این‌ها صفحاتی که دنبالشان هستید نیستند. لطفاً ادامه دهید.',
+	'message404' => "'''ما واقعاً متأسفیم، اما بنا به دلیلی صفحه‌ای که شما دنبالش هستید وجود ندارد.'''
+
+مقالهٔ '''$1''' پیدا نشد.
+
+*شما می‌توانید مقالهٔ [[$2]] را بیازمایید
+*شما می‌توانید از جعبهٔ جستجو در سمت راست صفحه استفاده کنید
+*برای رفتن به صفحهٔ اصلی این سایت، بر این پیوندها کلیک کنید: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Finnish (Suomi)
@@ -410,6 +434,21 @@ $messages['ml'] = array(
 * [[$2]] എന്ന ലേഖനം താങ്കൾക്ക് പരിശോധിക്കാവുന്നതാണ്.
 * താളിന്റെ ഇടതുവശത്തുള്ള തിരയുവാനുള്ള പെട്ടി താങ്കൾക്കുപയോഗിക്കാവുന്നതാണ്.
 * ഈ സൈറ്റിന്റെ പ്രധാന താളിലേയ്ക്കെത്താൻ, ഈ കണ്ണിയിൽ ഞെക്കുക: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'our404handler' => 'Ralat 404: Laman tidak dijumpai!',
+	'our404handler-oops' => 'Ini bukan laman yang anda cari. Sila teruskan pencarian.',
+	'message404' => "'''Kami minta maaf banyak-banyak, tetapi laman yang anda minta itu tidak wujud atas sebab-sebab tertentu.'''
+
+Rencana '''$1''' tidak dapat dijumpai.
+
+* Anda boleh mencuba rencana [[$2]]
+* Anda boleh menggunakan ruangan carian di sebelah kiri laman
+* Untuk ke laman utama tapak ini, klik pautan ini: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Dutch (Nederlands)

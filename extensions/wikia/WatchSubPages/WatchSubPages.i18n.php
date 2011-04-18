@@ -144,6 +144,14 @@ $messages['mk'] = array(
 	'tog-watchlistsubpages' => 'Следи потстраници',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'wikia-watchsubpages-desc' => 'Pemantauan automatik untuk sublaman',
+	'tog-watchlistsubpages' => 'Pantau sublaman',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

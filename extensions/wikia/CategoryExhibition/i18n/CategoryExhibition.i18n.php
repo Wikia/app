@@ -31,6 +31,13 @@ $messages['af'] = array(
 	'category-exhibition-display-new' => 'Kategorie-uitstal-weergawe',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'category-exhibition-subcategories-header' => 'Подкатегории',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -109,10 +116,11 @@ $messages['es'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
-	'category-exhibition-page-header' => 'Sivut kategoriassa "$1"',
+	'category-exhibition-page-header' => 'Sivut luokassa $1',
 );
 
 /** French (Français) */
@@ -192,6 +200,22 @@ $messages['mk'] = array(
 	'category-exhibition-blogs-header' => 'Блог-записи',
 	'category-exhibition-display-old' => 'Преглед: Список на категории',
 	'category-exhibition-display-new' => 'Преглед: Изложба на категории',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'category-exhibition-sorttype' => 'Jenis turutan:',
+	'category-exhibition-alphabetical' => 'Ikut turutan abjad',
+	'category-exhibition-mostvisited' => 'Paling kerap dikunjungi',
+	'category-exhibition-recentedits' => 'Suntingan terbaru',
+	'category-exhibition-page-header' => 'Laman-laman dalam kategori "$1"',
+	'category-exhibition-subcategories-header' => 'Subkategori',
+	'category-exhibition-media-header' => 'Bahan media dalam kategori "$1"',
+	'category-exhibition-blogs-header' => 'Kiriman blog',
+	'category-exhibition-display-old' => 'Paparan Senarai Kategori',
+	'category-exhibition-display-new' => 'Paparan Pameran Kategori',
 );
 
 /** Dutch (Nederlands)

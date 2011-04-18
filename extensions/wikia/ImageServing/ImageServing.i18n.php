@@ -11,6 +11,13 @@ $messages['en'] = array(
 	'imageserving-desc' => 'Selects images from a specified array of pages based on visual requirements',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'imageserving-desc' => "Esbilla imaxes d'un conxuntu de páxines conseñáu basándose nos requisitos visuales",
+);
+
 /** Breton (Brezhoneg) */
 $messages['br'] = array(
 	'imageserving-desc' => 'Dibab a ra ar skeudennoù en un hollad termenet a bajennoù, hervez an ezhommoù gwelet',
@@ -55,9 +62,23 @@ $messages['ia'] = array(
 	'imageserving-desc' => 'Selige imagines ex un collection specific de paginas a base de criterios visual',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'imageserving-desc' => 'Seleziona le immagini da una lista specificata di pagine basata sulle esigenze visive',
+);
+
 /** Macedonian (Македонски) */
 $messages['mk'] = array(
 	'imageserving-desc' => 'Одбира слики од назначена низа страници зависно од визуелните потреби',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'imageserving-desc' => 'Memilih gambar daripada tatasusunan laman yang terpilih berasaskan keperluan visual',
 );
 
 /** Dutch (Nederlands) */

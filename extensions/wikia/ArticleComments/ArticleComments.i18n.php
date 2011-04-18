@@ -59,6 +59,17 @@ Wikia
 </p>',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'article-comments-anonymous' => 'Анонимен потребител',
+	'article-comments-delete' => 'изтриване',
+	'article-comments-edit' => 'редактиране',
+	'article-comments-history' => 'история',
+	'article-comments-show-all' => 'Показване на всички коментари',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  */
@@ -114,6 +125,24 @@ Wikia
 </p>',
 );
 
+/** Czech (Česky)
+ * @author Mr. Richard Bolla
+ */
+$messages['cs'] = array(
+	'article-comments-anonymous' => 'Anonymní uživatel',
+	'article-comments-comments' => 'Komentáře ($1)',
+	'article-comments-post' => 'Přidat komentář',
+	'article-comments-delete' => 'smazat',
+	'article-comments-edit' => 'upravit',
+	'article-comments-history' => 'Historie',
+	'article-comments-error' => 'Komentář nemohl být uložen',
+	'article-comments-rc-comment' => 'Komentář k článku ([[$1]])',
+	'article-comments-rc-comments' => 'Komentáře k článku ([[$1]])',
+	'article-comments-fblogin' => 'Pro přidávání komentářů na této wiki se prosím <a href="$1">přihlašte a propojte s Facebookem</a>!',
+	'article-comments-reply' => 'Odpovědět',
+	'article-comments-show-all' => 'Zobrazit všechny komentáře',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -167,6 +196,36 @@ Wikia
 <li>Willst du kontrollieren, welche E-Mails du erhältst? <a href="{{fullurl:Special:Preferences}}">Pass deine Einstellungen an<a>.</li>
 </ul>
 </p>',
+);
+
+/** Greek (Ελληνικά)
+ * @author Evropi
+ */
+$messages['el'] = array(
+	'article-comments-comments' => 'Σχόλια ($1)',
+	'article-comments-post' => 'Δημοσίευση σχολίου',
+	'article-comments-delete' => 'διαγραφή',
+	'article-comments-edit' => 'επεξεργασία',
+	'article-comments-history' => 'ιστορικό',
+	'article-comments-error' => 'Δεν ήταν δυνατή η αποθήκευση του σχολίου',
+	'article-comments-rc-comment' => 'Σχόλιο άρθρου ([[$1]])',
+	'article-comments-rc-comments' => 'Σχόλια άρθρου ([[$1]])',
+	'article-comments-toc-item' => 'Σχόλια',
+	'article-comments-comment-cannot-add' => 'Δεν μπορείτε να προσθέσετε σχόλιο για το άρθρο.',
+	'article-comments-reply' => 'Απάντηση',
+	'article-comments-show-all' => 'Εμφάνιση όλων των σχολίων',
+	'article-comments-prev-page' => 'Προηγ',
+	'article-comments-next-page' => 'Επόμενο',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-empty-comment' => "Δεν μπορείτε να δημοσιεύσετε ένα κενό σχόλιο. <a href='$1'>Θέλετε να το διαγράψτε αυτό αντ' αυτού;</a>",
+);
+
+/** Esperanto (Esperanto)
+ * @author Tradukisto
+ */
+$messages['eo'] = array(
+	'article-comments-edit' => 'redakti',
+	'article-comments-toc-item' => 'Komentoj',
 );
 
 /** Spanish (Español)
@@ -240,15 +299,34 @@ $messages['eu'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ * @author BlueDevil
+ * @author Wayiran
+ */
 $messages['fa'] = array(
 	'article-comments-anonymous' => 'کاربر گمنام',
-	'article-comments-comments' => 'نظرات',
+	'article-comments-comments' => '($1) نظرات',
 	'article-comments-post' => 'ارسال نظر',
 	'article-comments-delete' => 'حذف',
+	'article-comments-edit' => 'ویرایش',
 	'article-comments-history' => 'تاریخچه',
+	'article-comments-error' => 'نشد که نظر ذخیره شود',
 	'article-comments-undeleted-comment' => 'نظر برای صفحۀ وبلاگ $1 احیاء شد',
-	'article-comments-login' => 'برای نظر دادن <a href="$1">وارد سیستم شوید</a>.',
+	'article-comments-rc-comment' => 'نظر مقاله ([[$1]])',
+	'article-comments-rc-comments' => 'نظرات مقاله ([[$1]])',
+	'article-comments-fblogin' => 'برای فرستادن نظر در این ویکی لطفاً <a href="$1">به فیس‌بوک وارد و متصل شوید</a>!',
+	'article-comments-rc-blog-comment' => 'نظر وبلاگ ([[$1]])',
+	'article-comments-rc-blog-comments' => 'نظرات وبلاگ ([[$1]])',
+	'article-comments-login' => 'برای نظر دادن <a href="$1">وارد سامانه شوید</a>.',
+	'article-comments-toc-item' => 'نظرات',
+	'article-comments-comment-cannot-add' => 'شما نمی‌توانید به مقاله نظری را اضافه کنید.',
+	'article-comments-reply' => 'پاسخ',
+	'article-comments-show-all' => 'نمایش همهٔ نظرات',
+	'article-comments-prev-page' => 'قبلی',
+	'article-comments-next-page' => 'بعدی',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'مقالهٔ مادر / نظر مادر حذف شده است.',
+	'article-comments-empty-comment' => "شما نمی‌توانید یک نظر خالی بفرستید. <a href='$1'>به‌جایش حذف شود؟</a>",
 );
 
 /** Finnish (Suomi)
@@ -263,6 +341,7 @@ $messages['fi'] = array(
 	'article-comments-undeleted-comment' => 'Kommenttia ei poistettu blogisivulta $1',
 	'article-comments-rc-comment' => 'Artikkelin kommentti ([[$1]])',
 	'article-comments-rc-comments' => 'Artikkelin kommentit ([[$1]])',
+	'article-comments-rc-blog-comment' => 'Blogin kommentti ([[$1]])',
 	'article-comments-rc-blog-comments' => 'Blogin kommentit ([[$1]])',
 	'article-comments-login' => '<a href="$1">Kirjaudu sisään</a> kommetoidaksesi',
 	'article-comments-comment-cannot-add' => 'Et voi lisätä kommenttia tähän artikkeliin.',
@@ -397,11 +476,22 @@ $messages['ja'] = array(
 	'article-comments-comments' => 'コメント ($1)',
 	'article-comments-post' => 'コメントを投稿',
 	'article-comments-delete' => '削除',
+	'article-comments-edit' => '編集',
 	'article-comments-history' => '履歴',
 	'article-comments-undeleted-comment' => 'ブログの記事 $1 へのコメントを復帰',
 	'article-comments-login' => 'コメントするには<a href="$1">ログイン</a>する必要があります',
 	'article-comments-comment-cannot-add' => 'この記事にはコメントを追加できません。',
 	'article-comments-delete-reason' => '親記事/親コメントが削除されました',
+	'article-comments-empty-comment' => "空コメントを投稿することはできません。<a href='$1'>コメントを削除しますか？</a>",
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'article-comments-delete' => 'jê bibe',
+	'article-comments-edit' => 'biguherîne',
+	'article-comments-history' => 'dîrok',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -421,6 +511,7 @@ $messages['lb'] = array(
 	'article-comments-fblogin' => '<a href="$1">Loggt Iech an a verbannt mat Facebook</a> fir eng Bemierkung op dëser Wiki ze schreiwen!',
 	'article-comments-toc-item' => 'Bemierkungen',
 	'article-comments-reply' => 'Äntwerten',
+	'article-comments-show-all' => 'All Bemierkunge weisen',
 );
 
 /** Macedonian (Македонски)
@@ -476,6 +567,70 @@ $PAGEEDITOR коментираше на „$PAGETITLE“.
 <li>Сакате да определите кои пораки да ги добивате? <a href="{{fullurl:Special:Preferences}}">Изменете си ги нагодувањата<a>.</li>
 </ul>
 </p>',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'article-comments-anonymous' => 'Pengguna tanpa nama',
+	'article-comments-comments' => 'Ulasan ($1)',
+	'article-comments-post' => 'Kirim ulasan',
+	'article-comments-delete' => 'hapuskan',
+	'article-comments-edit' => 'sunting',
+	'article-comments-history' => 'sejarah',
+	'article-comments-error' => 'Ulasan tidak dapat disimpan',
+	'article-comments-undeleted-comment' => 'Ulasan yang dinyahhapuskan untuk laman blog $1',
+	'article-comments-rc-comment' => 'Ulasan rencana ([[$1]])',
+	'article-comments-rc-comments' => 'Ulasan rencana ([[$1]])',
+	'article-comments-fblogin' => 'Sila <a href="$1">log masuk dan bersambung dengan Facebook</a> untuk mengirimkan ulasan di wiki ini!',
+	'article-comments-fbconnect' => 'Sila <a href="$1">sambungkan akaun ini dengan Facebook</a> untuk mengulas!',
+	'article-comments-rc-blog-comment' => 'Ulasan blog ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Ulasan blog ([[$1]])',
+	'article-comments-login' => 'Sila <a href="$1">log masuk</a> untuk mengirim ulasan di wiki ini.',
+	'article-comments-toc-item' => 'Ulasan',
+	'article-comments-comment-cannot-add' => 'Anda tidak boleh mengirim ulasan kepada rencana ini.',
+	'article-comments-reply' => 'Balas',
+	'article-comments-show-all' => 'Tunjukkan semua ulasan',
+	'article-comments-prev-page' => 'Sebelumnya',
+	'article-comments-next-page' => 'Seterusnya',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Rencana induk / ulasan induk telah dihapuskan.',
+	'article-comments-empty-comment' => "Anda tidak boleh mengirim ulasan kososng. <a href='$1'>Nak padamkan atau tak?</a>",
+	'enotif_subject_article_comment' => '$PAGEEDITOR telah mengulas "$PAGETITLE" di {{SITENAME}}',
+	'enotif_body_article_comment' => '$WATCHINGUSERNAME,
+
+$PAGEEDITOR telah membuat ulasan di "$PAGETITLE". 
+
+Untuk melihat tred ulasannya, sila ikuti pautan berikut:
+$PAGETITLE_URL 
+
+Sila datang lagi untuk menyunting...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>$WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR membuat ulasan di "$PAGETITLE".
+<br /><br />
+Untuk melihat tred ulasannya, klik di sini: <a href="$PAGETITLE_URL">$PAGETITLE</a> 
+<br /><br />
+Sila lawati kami selalu untuk menyunting...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>Nak kawal emel mana yang anda terima? <a href="{{fullurl:Special:Preferences}}">Kemaskini Keutamaan anda<a>.</li>
+</ul>
+</p>',
+);
+
+/** Mazanderani (مازِرونی)
+ * @author محک
+ */
+$messages['mzn'] = array(
+	'article-comments-edit' => 'دچی‌ین',
+	'article-comments-history' => 'تاریخچه',
+	'article-comments-undeleted-comment' => 'نظر صفحۀ وبلاگ $1 وسّه احیاء بیّه',
 );
 
 /** Dutch (Nederlands)
@@ -761,6 +916,61 @@ $messages['te'] = array(
 	'article-comments-toc-item' => 'వ్యాఖ్యలు',
 	'article-comments-comment-cannot-add' => 'ఈ వ్యాసానికి మీరు వ్యాఖ్యని చేర్చలేరు.',
 	'article-comments-page-spacer' => '&#160...&#160',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'article-comments-anonymous' => 'Hindi nagpapakilalang tagagamit',
+	'article-comments-comments' => 'Mga puna ($1)',
+	'article-comments-post' => 'Magpaskil ng puna',
+	'article-comments-delete' => 'burahin',
+	'article-comments-edit' => 'baguhin',
+	'article-comments-history' => 'kasaysayan',
+	'article-comments-error' => 'Hindi masagip ang puna',
+	'article-comments-undeleted-comment' => 'Hindi naburang puna para sa pahina ng blog na $1',
+	'article-comments-rc-comment' => 'Puna sa artikulo ([[$1]])',
+	'article-comments-rc-comments' => 'Mga puna sa artikulo ([[$1]])',
+	'article-comments-fblogin' => 'Mangyaring <a href="$1">lumagda at umugnay sa Facebook</a> upang makapagpaskil ng isang puna sa wiking ito!',
+	'article-comments-fbconnect' => 'Mangyaring <a href="$1">iugnay ang akawnt na ito sa Facebook</a> upang makapagbigay ng puna!',
+	'article-comments-rc-blog-comment' => 'Puna sa blog ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Mga puna sa blog ([[$1]])',
+	'article-comments-login' => 'Mangyaring <a href="$1">log in</a> upang makapagpaskil ng isang puna sa wiking ito.',
+	'article-comments-toc-item' => 'Mga puna',
+	'article-comments-comment-cannot-add' => 'Hindi ka makapagdaragdag ng isang puna sa artikulo.',
+	'article-comments-reply' => 'Tumugon',
+	'article-comments-show-all' => 'Ipakita ang lahat ng mga puna',
+	'article-comments-prev-page' => 'Nakaraan',
+	'article-comments-next-page' => 'Kasunod',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Nabura ang magulang ng artikulo / magulang ng puna.',
+	'article-comments-empty-comment' => "Hindi ka makapagpapaskil ng puna na walang laman. <a href='$1'>Burahin na lang ito?</a>",
+	'enotif_subject_article_comment' => 'Pumuna ang $PAGEEDITOR sa "$PAGETITLE" sa {{SITENAME}}',
+	'enotif_body_article_comment' => 'Minamahal na $WATCHINGUSERNAME,
+
+Nagbigay ng puna si $PAGEEDITOR sa "$PAGETITLE". 
+
+Upang matingnan ang bagting ng puna, sundan ang kawing na nasa ibaba:
+$PAGETITLE_URL 
+
+Mangyaring dumalaw at mamatnugot ng madalas...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>Minamahal na $WATCHINGUSERNAME,
+<br /><br />
+Nagbigay ng puna si $PAGEEDITOR sa "$PAGETITLE".
+<br /><br />
+Upang matanaw ang sinulid ng puna, sundan ang kawing na ito: <a href="$PAGETITLE_URL">$PAGETITLE</a> 
+<br /><br />
+Mangyaring dumalaw at mamatnugot ng madalas...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>Nais mo bang tabanan kung anong mga e-liham ang tatanggapin? <a href="{{fullurl:Special:Preferences}}">Isapanahon ang mga Nais mo<a>.</li>
+</ul>
+</p>',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

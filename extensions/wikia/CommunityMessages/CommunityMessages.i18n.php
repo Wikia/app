@@ -71,6 +71,14 @@ $messages['eu'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Komunitateko Mezuak eguneratu dira]].',
 );
 
+/** Persian (فارسی)
+ * @author BlueDevil
+ */
+$messages['fa'] = array(
+	'communitymessages-desc' => 'افزونۀ کمکی برای پیغام‌های جامعه',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|پیغام‌های جامعه به روز شده‌است]].',
+);
+
 /** Finnish (Suomi)
  * @author Tofu II
  */
@@ -132,12 +140,28 @@ $messages['id'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Pesan Komunitas telah dimutakhirkan]].',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'communitymessages-desc' => 'Estensione di supporto per i messaggi della comunità',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|I messaggi della comunità sono stati aggiornati]].',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
 	'communitymessages-desc' => 'Помошен додаток за Пораки за заедницата',
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Пораките за заедницата се подновени]].',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'communitymessages-desc' => 'Sambungan pembantu untuk Pesanan Komuniti',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Pesanan Komuniti telah dikemas kini]].',
 );
 
 /** Dutch (Nederlands)

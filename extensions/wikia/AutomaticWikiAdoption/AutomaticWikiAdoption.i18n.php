@@ -219,12 +219,25 @@ Haz clic en el siguiente enlace para cancelar tu suscripción de la lista: $3.',
 	'tog-adoptionmails' => 'Notificarme por correo electrónico sobre cambios a la administración de la wiki (sólo administradores)',
 );
 
+/** Persian (فارسی)
+ * @author Wayiran
+ */
+$messages['fa'] = array(
+	'automaticwikiadoption' => 'اتخاذ خودکار ویکی',
+	'automaticwikiadoption-header' => 'اتخاذ این ویکی',
+	'automaticwikiadoption-button-adopt' => 'هم‌اکنون اتخاذ کن',
+	'automaticwikiadoption-know-more-header' => 'چگونه بیش‌تر بدانیم؟',
+);
+
 /** Finnish (Suomi)
+ * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'automaticwikiadoption-header' => 'Adoptoi tämä wiki',
 	'automaticwikiadoption-button-adopt' => 'Adoptoi nyt',
+	'automaticwikiadoption-know-more-header' => 'Haluatko tietää enemmän?',
+	'automaticwikiadoption-adoption-successed' => 'Onnittelut! Olet nyt ylläpitäjä tässä wikissä!',
 	'automaticwikiadoption-notification' => "$1 on adoptoitavana! Sinusta voi tulla uusi omistaja. '''Adoptoi nyt!'''",
 );
 
@@ -295,6 +308,8 @@ $messages['ia'] = array(
 	'automaticwikiadoption-adoption-successed' => 'Felicitationes! Tu es ora administrator de iste wiki!',
 	'automaticwikiadoption-adoption-failed' => 'Nos lo regretta: nos ha tentate facer te administrator, ma le procedura non ha succedite. Per favor [http://community.wikia.com/Special:Contact contacta nos], e nos tentara adjutar te.',
 	'automaticwikiadoption-not-allowed' => 'Nos regretta que tu non pote adoptar iste wiki justo ora.',
+	'automaticwikiadoption-not-enough-edits' => 'Ups! Tu debe haber facite plus de 10 modificationes pro poter adoptar iste wiki.',
+	'automaticwikiadoption-adopted-recently' => 'Ups! Tu ha jam adoptate un wiki recentemente. Tu debe attender un certe tempore ante que tu pote adoptar un altere wiki.',
 	'automaticwikiadoption-log-reason' => 'Adoption automatic de wikis',
 	'automaticwikiadoption-notification' => "$1 es disponibile pro adoption! Tu pote devenir le nove proprietario. '''Adopta lo ora!'''",
 	'automaticwikiadoption-mail-first-subject' => 'Nos non te ha vidite durante un tempore',
@@ -333,7 +348,8 @@ Tu wiki ha essite adoptate! Isto significa que un altere persona se ha offerite 
 <b>Le equipa de Wikia</b>
 
 <small>Tu pote <nowiki><a href="{{fullurl:{{ns:special}}:Preferences}}">cancellar le subscription</a></nowiki> al modificationes de iste lista.</small>',
-	'tog-adoptionmails' => 'Inviar me e-mail si alique cambia in le administration del wiki (administratores solmente)',
+	'tog-adoptionmails' => 'Inviar me e-mail si $1 devenira disponibile pro adoption per altere usatores',
+	'automaticwikiadoption-pref-label' => 'Modificar iste preferentias influentiara solmente le messages de e-mail ab $1.',
 );
 
 /** Italian (Italiano)
@@ -400,6 +416,56 @@ $messages['mk'] = array(
 	'tog-adoptionmails' => 'Извести ме по е-пошта ако нешто се измени во администрацијата на викито (само за администратори)',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'automaticwikiadoption' => 'Pengambilalihan wiki automatik',
+	'automaticwikiadoption-header' => 'Ambil alih wiki ini',
+	'automaticwikiadoption-button-adopt' => 'Ambil alih sekarang',
+	'automaticwikiadoption-know-more-header' => 'Nak tahu lebih lanjut?',
+	'automaticwikiadoption-know-more-description' => 'Apa kata ikut pautan-pautan ini untuk maklumat lanjut. Seperkara lagi, jangan segan menghubungi kami jika ada apa-apa soalan untuk ditanya!',
+	'automaticwikiadoption-adoption-successed' => 'Syabas! Anda menjadi pentadbir di wiki ini!',
+	'automaticwikiadoption-adoption-failed' => 'Maaf. Kami cuba jadikan anda pentadbir, tetapi tidak menjadi pula. Sila [http://community.wikia.com/Special:Contact hubungi kami], supaya kami boleh membantu anda.',
+	'automaticwikiadoption-not-allowed' => 'Maafkan kami, anda tidak boleh mengambil alih wiki ini sekarang.',
+	'automaticwikiadoption-log-reason' => 'Penerimaan Hakmilik Wiki Automatik',
+	'automaticwikiadoption-notification' => "$1 perlu diambil alih! Mungkin anda pemilik baru yang dicari-cari. '''Ambil alih sekarang!'''",
+	'automaticwikiadoption-mail-first-subject' => 'Sudah sekian lama kami tak berjumpa dengan anda',
+	'automaticwikiadoption-mail-first-content-HTML' => 'Apa khabar $1,<br /><br />
+Sudah dua minggu sejak kami melihat seorang pentadbir yang bertugas di wiki anda. Ingat, komuniti anda akan bergantung pada anda untuk memastikan wiki ini berjalan dengan lancar.<br /><br />
+Jika anda memerlukan bantuan untuk menjaga wiki, anda juga boleh membenarkan ahli komuniti lain untuk menjadi pentadbir dengan menggunakan <a href="$2">Pengurusan hak pengguna</a>.<br /><br />
+<b>Pasukan Wikia</b><br /><br />
+<small>Anda boleh <a href="$3">berhenti melanggan</a> perubahan pada senarai ini.</small>',
+	'automaticwikiadoption-mail-second-subject' => 'Kami akan mencari seseorang untuk mengambil alih wiki anda nanti.',
+	'automaticwikiadoption-mail-second-content' => 'Apa khabar $1,
+
+Sudah sekian lama sejak kali terakhir wujudnya seorang pentadbir yang aktif di wiki anda. Kehadiran pentadbir yang aktif adalah penting kepada komuniti supaya wiki boleh terus berjalan dengan lancar, jadi kami akan mencari pihak lain untuk mengambil alih wiki anda tidak lama lagi supaya ia boleh diselenggara oleh pentadbir yang aktif semula.
+
+Pasukan Wikia
+
+Klik pautan berikut untuk berhenti melanggan perubahan pada senarai ini: $3.',
+	'automaticwikiadoption-mail-second-content-HTML' => 'Apa khabar $1,
+
+Sudah sekian lama sejak kali terakhir wujudnya seorang pentadbir yang aktif di wiki anda. Kehadiran pentadbir yang aktif adalah penting kepada komuniti supaya wiki boleh terus berjalan dengan lancar, jadi kami akan mencari pihak lain untuk mengambil alih wiki anda tidak lama lagi supaya ia boleh diselenggara oleh pentadbir yang aktif semula.
+
+<b>Pasukan Wikia</b>
+
+<small>Anda boleh <a href="$3">berhenti melanggan</a> perubahan pada senarai ini.</small>',
+	'automaticwikiadoption-mail-adoption-subject' => 'Wiki anda telah diterima',
+	'automaticwikiadoption-mail-adoption-content' => 'Apa khabar $1,
+
+Dengan sukacitanya kami maklumkan bahawa wiki anda telah diambil alih, iaitu ada pihak yang menawarkan diri untuk membantu menyelenggara komuniti dan kandungan di tapak itu. Jangan bimbang kerana anda masih seorang pentadbir, dan anda boleh kembali ke situ pada bila-bila masa sahaja.
+
+Pasukan Wikia
+
+Sila klik pautan berikut untuk berhenti melanggan perubahan pada senarai ini: $3.',
+	'automaticwikiadoption-mail-adoption-content-HTML' => 'Apa khabar $1,<br /><br />
+Dengan sukacitanya kami maklumkan bahawa wiki anda telah diambil alih, iaitu ada pihak yang menawarkan diri untuk membantu menyelenggara komuniti dan kandungan di tapak itu. Jangan bimbang kerana anda masih seorang pentadbir, dan anda boleh kembali ke situ pada bila-bila masa sahaja.<br /><br />
+<b>Pasukan Wikia</b><br /><br />
+<small>Anda boleh <a href="$3">berhenti melanggan</a> perubahan pada senarai ini.</small>',
+	'tog-adoptionmails' => 'E-mel kepada saya apabila terdapat perubahan mengenai pentadbiran wiki (pentadbir sahaja)',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -412,6 +478,8 @@ $messages['nl'] = array(
 	'automaticwikiadoption-adoption-successed' => 'Gefeliciteerd! U bent nu beheerder van deze wiki.',
 	'automaticwikiadoption-adoption-failed' => 'We hebben geproberd u bheerder te maken, maar dit lukte helaas niet. [http://community.wikia.com/Special:Contact Neem contact met ons op] zodat we u verder kunnen helpen.',
 	'automaticwikiadoption-not-allowed' => 'U kunt deze wiki nu helaas niet adopteren.',
+	'automaticwikiadoption-not-enough-edits' => 'U moet meer dan 10 bewerkingen gemaakt hebben om deze wiki te kunnen adopteren.',
+	'automaticwikiadoption-adopted-recently' => 'U hebt recentelijk al een wiki geadapteerd. U moet even wachten voordat u nog een wiki kunt adopteren.',
 	'automaticwikiadoption-log-reason' => 'Automatische wikiadoptie',
 	'automaticwikiadoption-notification' => "$1 kan geadopteerd worden. U kunt de nieuwe eigenaar worden. '''Adopteer de wiki nu!'''",
 	'automaticwikiadoption-mail-first-subject' => 'We hebben u al een tijdje niet gezien',
@@ -444,10 +512,11 @@ U kunt zich van wijzigingen op deze lijst uitschrijven: $3.',
 Uw wiki is geadopteerd! Dit betekent dat iemand anders zich heeft opgeworpen om te helpen bij het onderhouden van de gemeenschap en de inhoud van de site. Vrees niet. U bent nog steeds beheerder en u bent nog steeds op ieder moment van harte welkom.<br /><br />
 <b>Het Wikia-team</b><br /><br />
 <small>U kunt zich van wijzigingen op deze lijst <a href="$3">uitschrijven</a>.</small>',
-	'tog-adoptionmails' => 'Mij e-mailen als er wijzigingen zijn in het wikibeheer (alleen voor beheerders)',
+	'tog-adoptionmails' => 'Mij e-mailen als $1 door andere gebruikers geadopteerd kan worden',
+	'automaticwikiadoption-pref-label' => 'Het wijzigen van deze voorkeuren heeft alleen invloed op e-mails van $1.',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
 $messages['no'] = array(
@@ -622,7 +691,7 @@ $messages['ru'] = array(
 Кликните по ссылке, чтобы отписаться от изменений в этом списке: $3.',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -695,7 +764,7 @@ $messages['uk'] = array(
 	'automaticwikiadoption-know-more-header' => 'Хочете знати більше?',
 );
 
-/** Simplified Chinese (中文(简体))
+/** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -703,6 +772,7 @@ $messages['zh-hans'] = array(
 	'automaticwikiadoption-header' => '领养这个维基',
 	'automaticwikiadoption-button-adopt' => '现在领养',
 	'automaticwikiadoption-know-more-header' => '想知道更多吗？',
+	'automaticwikiadoption-adoption-successed' => '恭喜！您现在是这个维基的管理员！',
 	'automaticwikiadoption-log-reason' => '制动维基领养',
 	'automaticwikiadoption-mail-first-subject' => '我们没有看到你在一段时间',
 );

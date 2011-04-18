@@ -317,12 +317,22 @@ $messages['be-tarask'] = array(
 	'wmu-no-rights' => 'Вам не дазволена дадаваць выявы на гэту старонку',
 );
 
-/** Bulgarian (Български) */
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
 $messages['bg'] = array(
 	'wmu-upload' => 'Качване',
+	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Качване',
 	'wmu-name' => 'Име',
 	'wmu-license' => 'Лиценз',
+	'wmu-size' => 'Размер',
+	'wmu-optional' => '(незадължително)',
+	'wmu-prev' => 'Предишни 8',
+	'wmu-next' => 'Следващи 8',
+	'wmu-close' => 'затваряне',
+	'wmu-gallery' => 'Галерия',
+	'wmu-columns' => '$1 {{PLURAL:$1|колона|колони}}',
 );
 
 /** Bahasa Banjar (Bahasa Banjar)
@@ -732,6 +742,13 @@ $messages['de-formal'] = array(
 	'wmu-no-rights' => 'Sie sind nicht berechtigt Bilder auf dieser Seite hinzuzufügen',
 );
 
+/** Esperanto (Esperanto)
+ * @author Tradukisto
+ */
+$messages['eo'] = array(
+	'wmu-imagebutton' => ' Aldoni bildojn',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
  * @author McDutchie
@@ -840,8 +857,12 @@ $messages['eu'] = array(
 	'wmu-column' => 'Zutabeak',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ * @author Ebraminio
+ */
 $messages['fa'] = array(
+	'wmu-upload' => 'بارگذاری',
+	'wmu-upload-btn' => 'بارگذاری',
 	'wmu-added-from-plc' => 'افزودن پروندۀ جدید توسط مکان نگه‏دار تصویر',
 );
 
@@ -1396,6 +1417,38 @@ $messages['ko'] = array(
 	'wmu-added-from-plc' => '플레이스홀더를 통해 삽입된 그림',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'wmu-upload-image' => 'Wêneyê barbike',
+	'wmu-upload' => 'Barbike',
+	'wmu-find' => 'Bibîne',
+	'wmu-thiswiki' => 'Vê wîkîyê',
+	'wmu-flickr' => 'Flickr',
+	'wmu-upload-btn' => 'Barbike',
+	'wmu-find-btn' => 'Bibîne',
+	'wmu-rename' => 'Navê wêneya xwe biguherîne',
+	'wmu-existing' => 'Wêneyên hene bi kar bînê',
+	'wmu-name' => 'Nav',
+	'wmu-license' => 'Lîsans',
+	'wmu-thumbnail' => 'Thumbnail',
+	'wmu-link' => 'Lînk',
+	'wmu-back' => 'paşve biçe',
+	'wmu-imagebutton' => 'Wêneyan zêde bike',
+	'wmu-hide-license-msg' => 'lîsansa nivîsê veşêre',
+	'wmu-show-license-msg' => 'lîsansa nivîsê nîşan bide',
+	'wmu-gallery' => 'Galerî',
+	'wmu-gallery-btn1' => 'Wêneyên din zêde bike',
+);
+
+/** Latin (Latina)
+ * @author Rsa23899
+ */
+$messages['la'] = array(
+	'wmu-name' => 'Nōmen',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -1505,11 +1558,95 @@ $messages['mk'] = array(
 	'wmu-alignment' => 'Порамнување',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'wmu-upload-image' => 'Muat Naik Gambar',
+	'wmu-upload' => 'Muat naik',
+	'wmu-notlogged' => 'Log masuk atau berdaftar untuk memuat naik gambar dari komputer anda',
+	'wmu-find' => 'Cari',
+	'wmu-thiswiki' => 'Wiki ini',
+	'wmu-flickr' => 'Flickr',
+	'wmu-upload-btn' => 'Muat naik',
+	'wmu-find-btn' => 'Cari',
+	'wmu-flickr-inf' => 'Carilah foto kegunaan bebas yang berlesen betul dari Flickr, kemudian import foto-foto yang dicari ke dalam wiki anda.',
+	'wmu-conflict-inf' => '<h1>Alamak, nama itu sudah dipakai oleh fail lain.</h1>Anda nak buat apa dengan <b>$1</b>?',
+	'wmu-rename' => 'Tukar nama imej anda',
+	'wmu-existing' => 'Gunakan gambar yang sedia ada',
+	'wmu-overwrite' => 'Tulis ganti gambar sedia anda dengan anda punya',
+	'wmu-insert' => 'Sisipkan',
+	'wmu-details-inf' => '<h1>Keterangan fail</h1> Tentukan nama yang memerihalkan fail ini.',
+	'wmu-name' => 'Nama',
+	'wmu-license' => 'Lesen',
+	'wmu-licensing' => 'Perlesenan',
+	'wmu-details-inf2' => '<h1>Pilihan rencana</h1>Pilih cara anda membentangkan fail ini dalam laman anda.',
+	'wmu-size' => 'Saiz',
+	'wmu-thumbnail' => 'Imej ringkas',
+	'wmu-fullsize' => 'Saiz penuh ($1x$2px)',
+	'wmu-width' => 'Lebar',
+	'wmu-layout' => 'Bentangan',
+	'wmu-caption' => 'Kapsyen',
+	'wmu-link' => 'Pautan',
+	'wmu-optional' => '(tidak wajib)',
+	'wmu-insert2' => 'Sisipkan fail',
+	'wmu-prev' => '8 sebelumnya',
+	'wmu-next' => '8 seterusnya',
+	'wmu-flickr2' => 'Imej Flickr ($1 hasil)',
+	'wmu-insert3' => 'Sisipkan imej ini',
+	'wmu-recent-inf' => 'Imej yang baru dimuat naik',
+	'wmu-thiswiki2' => 'Imej wiki ini ($1 hasil)',
+	'wmu-success' => '<h1>Berjaya</h1>Imej anda telah disisipkan.',
+	'wmu-success-placeholder' => '<h1>Berjaya</h1>',
+	'wmu-return' => 'Kembali menyunting',
+	'wmu-back' => 'kembali',
+	'wmu-close' => 'tutup',
+	'wmu-warn1' => 'Anda perlu menentukan pertanyaan terlebih dahulu!',
+	'wmu-warn2' => 'Anda perlu memilih fail terlebih dahulu!',
+	'wmu-warn3' => 'Anda perlu menentukan nama fail terlebih dahulu!',
+	'wmu-imagelink' => '<b>Baru!</b> Bubuh gambar',
+	'wmu-imagebutton' => 'Bubuh gambar',
+	'wmu-license-cc' => 'Dilesenkan di bawah Creative Commons Attribution Share-Alike 3.0',
+	'wmu-bad-extension' => 'Anda cuba memuat naik jenis fail yang tidak sah. Sila cuba lagi.',
+	'wmu-filetype-missing' => 'Bahan yang dimuat naik ini tiada sambungan fail',
+	'wmu-filetype-incorrect' => 'Bahan yang dimuat naik ini ada sambungan fail yang tidak betul',
+	'wmu-hide-license-msg' => 'sorokkan teks lesen',
+	'wmu-show-license-msg' => 'paparkan teks lesen',
+	'wmu-max-thumb' => 'melebihi saiz imej ringkas maksimum, kembali ke saiz asalnya',
+	'wmu-notallowed' => 'Anda tidak boleh memuat naik gambar dalam wiki ini',
+	'wmu-readonly' => 'Anda tidak boleh memuat naik gambar, kerana wiki ini berada dalam keadaan baca sahaja.',
+	'wmu-placeholder' => 'Pemegang tempat',
+	'wmu-gallery' => 'Galeri',
+	'wmu-columns' => '$1 lajur',
+	'wmu-column' => 'Lajur',
+	'wmu-added-from-plc' => 'Fail disisipkan melalui gambar pemegang tempat',
+	'wmu-uploaddisabled' => 'Muat naik gambar dimatikan di wiki ini',
+	'wmu-gallery-success' => 'Anda telah membubuh gambar ke dalam galeri baru. Klik di bawah untuk menambahkan lagi gambar atau menyisipkan galeri',
+	'wmu-gallery-btn1' => 'Bubuh gambar lain',
+	'wmu-gallery-btn2' => 'Sisipkan galeri ke dalam laman',
+	'wmu-no-preview' => 'Anda tidak boleh menambahkan imej dari laman dalam mod pratonton',
+	'wmu-no-protect' => 'Laman ini dilindungi, anda tidak boleh menambah gambar ke dalamnya',
+	'wmu-no-rights' => 'Anda tidak dibenarkan membubuh gambar ke dalam laman ini',
+	'wmu-more-options' => 'Lagi pilihan',
+	'wmu-fewer-options' => 'Kurang pilihan',
+	'wmu-replace-default-caption' => 'gantikan kapsyen tersedia',
+	'wmu-appearance-in-article' => 'Penampilan dalam Rencana',
+	'wmu-alignment' => 'Penjajaran',
+);
+
 /** Maltese (Malti)
  * @author Chrisportelli
  */
 $messages['mt'] = array(
 	'wmu-close' => 'agħlaq',
+);
+
+/** Mazanderani (مازِرونی)
+ * @author محک
+ */
+$messages['mzn'] = array(
+	'wmu-upload' => 'باربی‌یشتن',
+	'wmu-upload-btn' => 'باربی‌یشتن',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬) */
@@ -1612,12 +1749,12 @@ $messages['no'] = array(
 	'wmu-upload-btn' => 'Last opp',
 	'wmu-find-btn' => 'Finn',
 	'wmu-flickr-inf' => 'Søk gjennom forsvarlig lisensierte gratisbilder fra Flickr og importer dem til wikien din.',
-	'wmu-conflict-inf' => '<h1>Ojsann, en fil med det navnet finnes allerede.</h1>Hva vil du gjøre med <b>$1</b>?',
+	'wmu-conflict-inf' => '<h1>Oisann, en fil med det navnet finnes allerede.</h1>Hva vil du gjøre med <b>$1</b>?',
 	'wmu-rename' => 'Gi bildet ditt nytt navn',
 	'wmu-existing' => 'Bruke eksisterende bilde',
 	'wmu-overwrite' => 'Overskriv det eksisterende bildet med ditt',
 	'wmu-insert' => 'Sett inn',
-	'wmu-details-inf' => '<h1>Fildetaljer</h1>Angi et navn for denne filen. Gi det noe beskrivende.',
+	'wmu-details-inf' => '<h1>Fildetaljer</h1>Angi et navn for denne filen. Gjør det beskrivende.',
 	'wmu-name' => 'Navn',
 	'wmu-license' => 'Lisens',
 	'wmu-licensing' => 'Lisensiering',
@@ -1629,7 +1766,7 @@ $messages['no'] = array(
 	'wmu-layout' => 'Oppsett',
 	'wmu-caption' => 'Bildetekst',
 	'wmu-link' => 'Lenke',
-	'wmu-optional' => '(Valgfri)',
+	'wmu-optional' => '(valgfri)',
 	'wmu-insert2' => 'Sett inn fil',
 	'wmu-prev' => 'Forrige 8',
 	'wmu-next' => 'Neste 8',
@@ -1942,10 +2079,12 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (Русский)
+ * @author DCamer
  * @author Lockal
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'wmu-upload-image' => 'Загрузка изображений',
 	'wmu-upload' => 'Загрузить',
 	'wmu-notlogged' => 'Представьтесь системе или зарегистрируйтесь, чтобы загружать изображения со своего компьютера',
 	'wmu-find' => 'Поиск',
@@ -1962,6 +2101,7 @@ $messages['ru'] = array(
 	'wmu-details-inf' => '<h1>Имя файла</h1>Укажите имя для этого файла. Постарайтесь описать в нём содержимое файла.',
 	'wmu-name' => 'Имя',
 	'wmu-license' => 'Лицензия',
+	'wmu-licensing' => 'Лицензирование',
 	'wmu-details-inf2' => '<h1>Настройки статьи</h1>Выберите способ отображения файла в вашей статье.',
 	'wmu-size' => 'Размер',
 	'wmu-thumbnail' => 'Миниатюра',
@@ -2009,6 +2149,11 @@ $messages['ru'] = array(
 	'wmu-no-preview' => 'Вы не можете добавить изображение из статьи в режиме предварительного просмотра',
 	'wmu-no-protect' => 'Эта страница защищена, вы не можете добавить в неё изображение',
 	'wmu-no-rights' => 'Вы не можете добавлять изображения на эту страницу',
+	'wmu-more-options' => 'Дополнительные настройки',
+	'wmu-fewer-options' => 'Меньше настроек',
+	'wmu-replace-default-caption' => 'заменить стандартный заголовок',
+	'wmu-appearance-in-article' => 'Внешний вид в статье',
+	'wmu-alignment' => 'Выравнивание',
 );
 
 /** Slovenian (Slovenščina)
@@ -2305,6 +2450,7 @@ $messages['yi'] = array(
  * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
+	'wmu-upload-image' => '上载图片',
 	'wmu-upload' => '上传',
 	'wmu-notlogged' => '登陆或者注册后从您的电脑中上传图片',
 	'wmu-find' => '寻找',

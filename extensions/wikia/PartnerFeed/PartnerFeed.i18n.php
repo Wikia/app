@@ -34,8 +34,11 @@ $messages['en'] = array(
 	'feed-title-recentchanges'		=> 'Recent changes'
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
 $messages['qqq'] = array(
+	'partner-feed-hotcontent' => 'Both terms "Hub" and "verticals" have the same meaning in this context. The meaning is "Portals", i.e. the grouping of wikis by their theme. Examples of portals are "Gaming", "Entertainment", "Education", "Music", etc.',
 	'blog-posts-from-listing' => 'Parameters:
 * $1 is a link to a listing with the listing page title as link description.',
 	'feed-title-hot-content' => 'Parameters:
@@ -109,8 +112,11 @@ $messages['es'] = array(
 	'feed-title-recentchanges' => 'Cambios recientes',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ * @author BlueDevil
+ */
 $messages['fa'] = array(
+	'partner-feed-recent-changes' => 'تغییرات اخیر',
 	'feed-title-recent-images' => 'تصاویر اخیر',
 );
 
@@ -196,6 +202,21 @@ $messages['ku-latn'] = array(
 	'feed-title-recentchanges' => 'Guherandinên dawî',
 );
 
+/** Latin (Latina)
+ * @author Rsa23899
+ */
+$messages['la'] = array(
+	'partner-feed-recent-changes' => 'Nūper mūtāta',
+	'feed-title-recentchanges' => 'Nūper mūtāta',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'partner-feed-recent-changes' => 'Rezent Ännerungen',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -219,6 +240,31 @@ $messages['mk'] = array(
 	'feed-title-hot-content' => 'Актуелна содржина - $1',
 	'feed-title-blogcomments' => 'Коментари на $1',
 	'feed-title-recentchanges' => 'Скорешни промени',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'partner-feed-achievements-leaderboard' => 'Papan teraju pencapaian Wiki',
+	'partner-feed-earned-badges' => 'Lencana-lencana yang baru diraih untuk Wiki tertentu',
+	'partner-feed-recent-blog-posts' => 'Kiriman blog terkini yang berkenaan promosi',
+	'partner-feed-latest-images' => 'Galeri gambar-gambar terbaru yang dimuat naik',
+	'partner-feed-hotcontent' => '"Kandungan Hangat" portal seperti yang dinilai oleh penyunting',
+	'partner-feed-recent-blog-comments' => 'Ulasan terkini berkenaan kiriman blog tertentu.',
+	'partner-feed-recent-changes' => 'Perubahan terkini',
+	'partnerfeed' => 'Suapan rakan kongsi',
+	'error-no-article' => 'Perhatian: Tiada parameter "article" diluluskan',
+	'feed-title-blogposts' => 'Kiriman blog terbaru',
+	'feed-title-recent-badges' => 'Lencana terbaru',
+	'feed-title-recent-images' => 'Gambar terbaru',
+	'feed-title-leaderboard' => 'Papan teraju pencapaian',
+	'feed-main-title' => 'Suapan rakan kongsi Wikia',
+	'all-blog-posts' => 'semua kategori',
+	'blog-posts-from-listing' => 'daripada senarai: $1',
+	'feed-title-hot-content' => 'Kandungan hangat - $1',
+	'feed-title-blogcomments' => 'Ulasan pada $1',
+	'feed-title-recentchanges' => 'Perubahan terkini',
 );
 
 /** Dutch (Nederlands)
@@ -402,5 +448,13 @@ $messages['tl'] = array(
 $messages['uk'] = array(
 	'all-blog-posts' => 'усі категорії',
 	'feed-title-blogcomments' => 'Коментарі до $1',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'partner-feed-recent-changes' => '最新更改',
+	'all-blog-posts' => '全部分类',
 );
 

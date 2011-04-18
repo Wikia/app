@@ -155,6 +155,18 @@ $messages['id'] = array(
 	'outbound-screen-you-are-leaving' => 'Anda sekarang meninggalkan Wikia.',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Crea un nuovo account]] o [[Special:UserLogin|entra nel tuo account esistente]] per saltare questa pagina in futuro.',
+	'outbound-screen-already-logged-in-no-link' => "Non è impostata alcuna destinazione.
+Qui non c'è nulla da vedere!
+
+Vuoi andare sulla [[{{MediaWiki:Mainpage}}|Pagina principale]] o forse su una [[Special:Random|pagina a caso]]?",
+	'outbound-screen-you-are-leaving' => 'Stai ora abbandonando Wikia.',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -176,6 +188,18 @@ $messages['mk'] = array(
 
 Дали би сакале да појдете на [[{{MediaWiki:Mainpage}}|Главната страница]] или пак можеби на некоја [[Special:Random|случајна страница]]?',
 	'outbound-screen-you-are-leaving' => 'Сега ја напуштате Викија.',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Buka akaun baru]] atau [[Special:UserLogin|log masuk ke dalam akaun anda yang sedia anda]] untuk melangkau laman ini pada masa depan.',
+	'outbound-screen-already-logged-in-no-link' => 'Destinasi tidak ditetapkan.
+Di sini tiada apa-apa langsung!
+
+Adakah anda ingin ke [[{{MediaWiki:Mainpage}}|Laman utama]] ataupun [[Special:Random|memilih laman secara rawak]]?',
+	'outbound-screen-you-are-leaving' => 'Anda sekarang meninggalkan Wikia.',
 );
 
 /** Dutch (Nederlands)
@@ -215,8 +239,11 @@ Anatz a la [[{{MediaWiki:Mainpage}}|pagina d'acuèlh]] o benlèu a [[Special:Ran
 	'outbound-screen-you-are-leaving' => 'Ara, sètz a quitar Wikia.',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Cloudissimo
+ */
 $messages['pl'] = array(
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Utwórz nowe konto]] lub [[Special:UserLogin|zaloguj się na swoje istniejące konto]], żeby następnym razem pominąć tę stronę.',
 	'outbound-screen-you-are-leaving' => 'Opuszczasz Wikię.',
 );
 

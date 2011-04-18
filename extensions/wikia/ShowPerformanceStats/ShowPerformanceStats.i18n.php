@@ -57,6 +57,23 @@ $messages['es'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** Finnish (Suomi)
+ * @author Nike
+ */
+$messages['fi'] = array(
+	'performancestat-total' => 'Yhteensä: $1 s',
+);
+
+/** French (Français)
+ * @author Wyz
+ */
+$messages['fr'] = array(
+	'showperformancestats-desc' => 'Retourne des statistiques de performance lisibles pour l’homme',
+	'performancestat-total' => 'Total : $1s',
+	'performancestat-apache' => 'Apache : $1s',
+	'performancestat-cpu' => 'Processeur : $1s',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -65,6 +82,23 @@ $messages['ia'] = array(
 	'performancestat-total' => 'Total: $1s',
 	'performancestat-apache' => 'Apache: $1s',
 	'performancestat-cpu' => 'CPU: $1s',
+);
+
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'showperformancestats-desc' => 'Restituisce statistiche leggibili sulle prestazioni',
+	'performancestat-total' => 'Totale: $1',
+	'performancestat-apache' => 'Apache: $1',
+	'performancestat-cpu' => 'CPU: $1',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'performancestat-total' => 'Hemû: $1s',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -83,6 +117,16 @@ $messages['mk'] = array(
 	'performancestat-total' => 'Вкупно: $1 сек.',
 	'performancestat-apache' => 'Apache: $1 сек.',
 	'performancestat-cpu' => 'ЦОЕ: $1s',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'showperformancestats-desc' => 'Memulangkan statistik prestasi yang boleh dibaca oleh insan',
+	'performancestat-total' => 'Jumlah: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
 );
 
 /** Dutch (Nederlands)
@@ -136,8 +180,12 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'showperformancestats-desc' => 'Returnerar en mänskligt läsbar prestandastatistik',
 	'performancestat-total' => 'Totalt: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
 );
 

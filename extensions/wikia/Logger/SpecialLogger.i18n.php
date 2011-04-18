@@ -13,6 +13,13 @@ $messages['en'] = array(
 	'loggernoresult' => 'No results found',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'loggergo' => 'Показване',
+);
+
 /** Breton (Brezhoneg)
  * @author Fohanno
  * @author Y-M D
@@ -108,6 +115,20 @@ $messages['mk'] = array(
 	'loggernoresult' => 'Нема пронајдено резултати',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'logger-desc' => 'Pengelog skrip bahagian belakang (backend)',
+	'logger' => 'Pengelog backend',
+	'loggertitle' => 'Pengelog backend',
+	'loggerselectlogname' => 'Pilih nama log:',
+	'loggerrecordswithpercent' => "'''$1''' rekod ('''$2''' peratus siap)",
+	'loggerrecords' => '$1 rekod',
+	'loggergo' => 'Paparkan',
+	'loggernoresult' => 'Tiada hasil carian',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -179,5 +200,12 @@ $messages['sr-ec'] = array(
 $messages['sv'] = array(
 	'loggergo' => 'Visa',
 	'loggernoresult' => 'Inga resultat hittades',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'loggergo' => '显示',
 );
 

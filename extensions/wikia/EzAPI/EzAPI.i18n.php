@@ -60,11 +60,25 @@ $messages['ia'] = array(
 	'ezapi-desc' => 'Simplifica le programmation de modulos API in AJAX',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'ezapi-desc' => 'Semplice sviluppo di un modulo API AJAX',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
 	'ezapi-desc' => 'Развој на едноставен модул на основа на AJAX-API',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'ezapi-desc' => 'Pembangunan modul AJAX API yang tidak rumit',
 );
 
 /** Dutch (Nederlands)
@@ -93,5 +107,12 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'ezapi-desc' => 'Módulo de desenvolvimento simplificado com a API AJAX',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'ezapi-desc' => 'Module de sviluppe AJAX API none comblecate',
 );
 

@@ -131,6 +131,17 @@ $messages['mk'] = array(
 Activity on rating pages is ''not'' taken into account here.",
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'graceexpired' => 'Tempoh tamat',
+	'graceexpired-row' => '$1 (di $2, kali terakhir disunting pada $3)',
+	'graceexpired-header' => "Laman ini menyenaraikan semua binaan yang berada dalam keadaan [[:Category:Abandoned|terbengkalai]], [[:Category:Trash_builds|dibuang]], [[:Category:Build stubs|tunas]] atau [[:Category:Trial Builds|percubaan]], dan tidak disunting lagi selama sekurang-kurangnya 2 minggu.
+
+Kegiatan menilai laman ''tidak'' diambil kira di sini.",
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

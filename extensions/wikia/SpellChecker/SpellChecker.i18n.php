@@ -163,6 +163,23 @@ $messages['mk'] = array(
 Правописни предлози за „$1“: $2',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'spellchecker-desc' => 'Menyediakan antara muka menyemakan ejaan untuk modul PHP enchant',
+	'enablespellchecker' => 'Hidupkan penyemak ejaan',
+	'spellchecker-info' => 'Maklumat penyemak ejaan',
+	'spellchecker-info-languages' => 'Bahasa yang ada ($1)',
+	'spellchecker-info-provider' => 'Pembekal',
+	'spellchecker-info-dictionaries' => 'Kamus yang ada',
+	'spellchecker-info-spellcheck-text' => 'Teks yang hendak disemak',
+	'spellchecker-info-spellcheck-languages' => 'Bahasa',
+	'spellchecker-info-spellcheck-submit' => 'Semak ejaan',
+	'spellchecker-info-spellcheck-is-correct' => 'Perkataan "$1" dieja dengan betul',
+	'spellchecker-info-spellcheck-suggestions' => 'Cadangan ejaan untuk "$1": $2',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -231,11 +248,58 @@ $messages['pt-br'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Sugestões de ortografia para "$1": $2',
 );
 
+/** Russian (Русский)
+ * @author DCamer
+ */
+$messages['ru'] = array(
+	'spellchecker-info-languages' => 'Доступные языки ($1)',
+	'spellchecker-info-provider' => 'Поставщик',
+	'spellchecker-info-dictionaries' => 'Доступные словари',
+	'spellchecker-info-spellcheck-text' => 'Текст для проверки',
+	'spellchecker-info-spellcheck-languages' => 'Язык',
+	'spellchecker-info-spellcheck-submit' => 'Проверка правописания',
+	'spellchecker-info-spellcheck-is-correct' => 'Слово "$1" написано правильно',
+	'spellchecker-info-spellcheck-suggestions' => 'Варианты правописания для "$1": $2',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'spellchecker-info-spellcheck-languages' => 'Språk',
+	'spellchecker-info-spellcheck-submit' => 'Kontrollera stavning',
+	'spellchecker-info-spellcheck-is-correct' => 'Ordet "$1" är korrekt stavat',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
 $messages['te'] = array(
 	'spellchecker-info-languages' => 'అందుబాటులో ఉన్న భాషలు ($1)',
 	'spellchecker-info-spellcheck-languages' => 'భాష',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'spellchecker-desc' => 'Nagbibigay ng ugnayang-mukha ng pagsusuri ng pagbabaybay para sa modyul ng gayuma ng PHP',
+	'enablespellchecker' => 'Paganahin ang pangsuri ng pagbabaybay',
+	'spellchecker-info' => 'Kabatiran sa pangsuri ng pagbabaybay',
+	'spellchecker-info-languages' => 'Makukuhang mga wika ($1)',
+	'spellchecker-info-provider' => 'Tagapagbigay',
+	'spellchecker-info-dictionaries' => 'Makukuhang mga talahuluganan',
+	'spellchecker-info-spellcheck-text' => 'Tekstong susuriin',
+	'spellchecker-info-spellcheck-languages' => 'Wika',
+	'spellchecker-info-spellcheck-submit' => 'Suriin ang pagbabaybay',
+	'spellchecker-info-spellcheck-is-correct' => 'Tama ang pagkakabaybay ng salitang "$1"',
+	'spellchecker-info-spellcheck-suggestions' => 'Mga mungkahing pagbabaybay para sa "$1": $2',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'spellchecker-info-spellcheck-languages' => '语言',
 );
 

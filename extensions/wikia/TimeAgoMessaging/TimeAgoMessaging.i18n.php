@@ -107,6 +107,17 @@ $messages['mk'] = array(
 	'timeago-second' => 'пред една минута',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'timeagomessaging-desc' => 'Menyediakan i18n untuk pemalam jqurey.timeago.js',
+	'timeago-day' => '{{PLURAL:$1|sehari|$1 hari}} yang lalu',
+	'timeago-hour' => '{{PLURAL:$1|sejam|$1 jam}} lalu',
+	'timeago-minute' => '{{PLURAL:$1|seminit|$1 minit}} yang lalu',
+	'timeago-second' => 'seminit lalu',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -160,6 +171,17 @@ $messages['pt-br'] = array(
 	'timeago-second' => 'há um minuto',
 );
 
+/** Russian (Русский)
+ * @author DCamer
+ */
+$messages['ru'] = array(
+	'timeagomessaging-desc' => 'Предоставляет i18n для плагина jquery.timeago.js',
+	'timeago-day' => '{{PLURAL:$1|$1 день|$1 дня|$1 дней}} назад',
+	'timeago-hour' => '{{PLURAL:$1|$1 час|$1 часа|$1 часов}} назад',
+	'timeago-minute' => '{{PLURAL:$1|$1 минута|$1 минуты|$1 минут}} назад',
+	'timeago-second' => 'минуту назад',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
@@ -190,5 +212,12 @@ $messages['uk'] = array(
 	'timeago-hour' => '{{PLURAL:$1|годину|$1 години|$1 годин}} тому',
 	'timeago-minute' => '{{PLURAL:$1|хвилину|$1 хвилини|$1 хвилин}} тому',
 	'timeago-second' => 'хвилину тому',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'timeago-second' => '一分钟前',
 );
 

@@ -60,6 +60,16 @@ $messages['ia'] = array(
 	'site-layout' => 'Designos del sito',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'skinchooser-desc' => 'Consente agli utenti di scegliere la skin nelle loro preferenze',
+	'skinchooser-customcss' => "Per i temi personalizzati, selezionare l'opzione personalizzata nel menu sopra e specificare i CSS personalizzati in [[MediaWiki:Monaco.css]].",
+	'new-look' => 'Nuovo look di Wikia',
+	'site-layout' => 'Layout del sito',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -68,6 +78,16 @@ $messages['mk'] = array(
 	'skinchooser-customcss' => 'Ако сакате да направите свој изглед, одберете ја таа можност во менито погоре и назначете пролагодена CSS во [[MediaWiki:Monaco.css]].',
 	'new-look' => 'Нов изглед',
 	'site-layout' => 'Распореди на страницата',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'skinchooser-desc' => 'Membolehkan pengguna memilih kulit pada keutamaan mereka',
+	'skinchooser-customcss' => 'Untuk tema tempahan, pilih opsyen tempahan di menu di atas dan tetapkan CSS tempahan dalam [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Wajah Baru Wikia',
+	'site-layout' => 'Tataletak Tapak',
 );
 
 /** Dutch (Nederlands)

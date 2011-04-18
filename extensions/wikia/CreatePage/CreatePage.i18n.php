@@ -144,6 +144,17 @@ $messages['ba'] = array(
 	'createpage_enter_text' => 'Текст:',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'createpage-sp-title' => 'Създаване на нова страница',
+	'createpage_title' => 'Създаване на нова страница',
+	'createpage_title_caption' => 'Заглавие:',
+	'createpage_enter_text' => 'Текст:',
+	'createpage-dialog-title' => 'Създаване на нова страница',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -364,12 +375,13 @@ Hemen zure artikuluaren bigarren atala idatz ezazu.',
 );
 
 /** Persian (فارسی)
+ * @author BlueDevil
  * @author Mjbmr
  */
 $messages['fa'] = array(
 	'createpage-sp-title' => 'ایجاد صفحهٔ جدید',
 	'createpage_title' => 'ایجاد مقالۀ جدید',
-	'createpage_title_caption' => 'نام',
+	'createpage_title_caption' => 'عنوان:',
 	'createpage_enter_text' => 'متن',
 );
 
@@ -804,6 +816,50 @@ $messages['mk'] = array(
 ==Наслов на заглавие==
 
 Тука напишете го второто заглавие од статијата.',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'createpage-desc' => 'Membolehkan penciptaan laman baru dengan menggunakan alat penyunting WYSIWYG Wikia',
+	'createpage-sp-title' => 'Cipta laman baru',
+	'createpage_title' => 'Cipta laman baru',
+	'createpage_title_caption' => 'Tajuk:',
+	'createpage_enter_text' => 'Teks:',
+	'createpage_empty_title_error' => 'Tajuk diperlukan',
+	'createpage_empty_article_body_error' => 'Teks laman diperlukan',
+	'createpage_invalid_title_error' => 'Tajuk tidak sah',
+	'createpage_article_already_exists' => 'Nama itu sudah dipakai oleh laman lain.
+Sila pilih nama lain.',
+	'createpage_spam' => 'Maaf, suntingan anda tidak boleh disimpan',
+	'createpage_cant_edit' => 'Suntingan tidak boleh dilakukan',
+	'createpage-dialog-title' => 'Cipta laman baru',
+	'createpage-dialog-message1' => 'Syabas, anda telah mencipta satu laman baru!',
+	'createpage-dialog-message2' => 'Apakah nama yang anda ingin berikan kepadanya?',
+	'createpage-dialog-choose' => 'Pilih tataletak laman:',
+	'createpage-dialog-format' => 'Tataletak standard',
+	'createpage-dialog-blank' => 'Laman kosong',
+	'createpage-error-empty-title' => 'Sila tuliskan tajuk laman anda',
+	'createpage-error-invalid-title' => 'Maaf, tajuk laman ini tidak sah.
+Sila gunakan tajuk lain.',
+	'createpage-error-article-exists' => 'Tajuk itu sudah dipakai oleh laman lain.
+Anda boleh pergi ke <a href="$1">$2</a>, atau menukar nama laman anda',
+	'createpage-error-article-spam' => 'Maaf, tajuk laman ini ditolak oleh penapis spam kami.
+Sila gunakan tajuk lain.',
+	'createpage-error-article-blocked' => 'Maaf, anda tidak boleh mencipta laman itu sekarang.',
+	'tog-createpagedefaultblank' => 'Gunakan laman kosong sebagai sediaan untuk mencipta laman baru',
+	'tog-createpagepopupdisabled' => 'Matikan tetimbul Cipta Laman',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Isikan perenggan pertama laman anda di sini.
+
+==Pengatas bahagian==
+
+Isikan bahagian pertama laman anda di sini.
+
+==Pengatas bahagian==
+
+Isikan bahagian kedua laman anda di sini.',
 );
 
 /** Dutch (Nederlands)
@@ -1396,6 +1452,8 @@ $messages['zh-hans'] = array(
 	'createpage_title' => '发表新文章',
 	'createpage_title_caption' => '标题：',
 	'createpage_enter_text' => '输入文字',
+	'createpage-dialog-title' => '创造一个新页面',
+	'createpage-dialog-blank' => '空白页面',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬) */

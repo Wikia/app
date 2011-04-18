@@ -89,6 +89,17 @@ $messages['af'] = array(
 	'editaccount-nouser' => 'Die gebruiker "$1" bestaan nie.',
 );
 
+/** Arabic (العربية)
+ * @author ترجمان05
+ */
+$messages['ar'] = array(
+	'editaccount' => 'عدّل الحساب',
+	'editaccount-title' => 'خاص:EditAccount',
+	'editaccount-label-select' => 'حدّد حساب مستخدم',
+	'editaccount-frame-account' => 'تعديل حساب المستخدم: $1',
+	'editaccount-log-entry-close' => 'الحساب معطّل $2',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
@@ -227,9 +238,11 @@ $messages['de'] = array(
 	'editaccount-label-email' => 'Neue E-Mail-Adresse setzen',
 	'editaccount-label-pass' => 'Neues Passwort setzen',
 	'editaccount-label-realname' => 'Neuen tatsächlichen Namen setzen',
+	'editaccount-label-clearunsub' => 'Abbestellt',
 	'editaccount-submit-email' => 'E-Mail-Adresse speichern',
 	'editaccount-submit-pass' => 'Passwort speichern',
 	'editaccount-submit-realname' => 'Tatsächlichen Namen speichern',
+	'editaccount-submit-clearunsub' => 'Abbestellen aufheben',
 	'editaccount-submit-close' => 'Konto schließen',
 	'editaccount-usage-close' => 'Du kannst ein Konto auch deaktivieren indem du das Passwort zerwürfelst und die E-Mail-Adresse löschst. Beachte, dass diese Daten verloren und nicht wiederherstellbar sind.',
 	'editaccount-warning-close' => '<b>Achtung!</b> Du bist dabei, das Konto von Benutzer <b>$1</b> dauerhaft zu deaktivieren. Dies kann nicht rückgängig gemacht werden. Bist du sicher, dass du das tun möchtest?',
@@ -238,6 +251,7 @@ $messages['de'] = array(
 	'editaccount-success-email-blank' => 'E-Mail-Adresse für Konto $1 erfolgreich entfernt.',
 	'editaccount-success-pass' => 'Passwort für Konto $1 erfolgreich geändert.',
 	'editaccount-success-realname' => 'Tatsächlicher name für Konto $1 erfolgreich geändert.',
+	'editaccount-success-unsub' => 'Abbestellen-Bit für Konto $1 erfolgreich entfernt.',
 	'editaccount-success-close' => 'Konto $1 erfolgreich deaktiviert.',
 	'editaccount-error-email' => 'Die E-Mail-Adresse wurde nicht geändert. Versuche es erneut oder kontaktiere das Tech Team.',
 	'editaccount-error-pass' => 'Das Passwort wurde nicht geändert. Versuche es erneut oder kontaktiere das Tech Team.',
@@ -273,9 +287,23 @@ $messages['de-formal'] = array(
 /** Greek (Ελληνικά)
  * @author Crazymadlover
  * @author Dada
+ * @author Evropi
  */
 $messages['el'] = array(
+	'editaccount' => 'Επεξεργασία λογαριασμού',
+	'editaccount-desc' => 'Επιτρέπει στα μέλη του προσωπικού να διαχειρίζονται τις πληροφορίες λογαριασμού χρήστη',
+	'editaccount-frame-manage' => 'Επεξεργασία ενός λογαριασμού',
+	'editaccount-frame-usage' => 'Σημείωμα',
+	'editaccount-submit-account' => 'Διαχείριση λογαριασμού',
+	'editaccount-frame-account' => 'Επεξεργασία λογαριασμού χρήστη: $1',
+	'editaccount-frame-close' => 'Απενεργοποίηση λογαριασμού χρήστη: $1',
+	'editaccount-label-email' => 'Ορισμός νέα διεύθυνσης ηλεκτρονικού ταχυδρομείου',
+	'editaccount-label-pass' => 'Ορισμός νέου κωδικού πρόσβασης',
+	'editaccount-label-realname' => 'Ορισμός νέου πραγματικού ονόματος',
+	'editaccount-submit-email' => 'Αποθήκευση διεύθυνσης ηλεκτρονικού ταχυδρομείου',
 	'editaccount-submit-pass' => 'Αποθήκευση κωδικού',
+	'editaccount-submit-realname' => 'Αποθήκευση πραγματικού ονόματος',
+	'editaccount-submit-close' => 'Κλείσιμο λογαριασμού',
 	'editaccount-log-entry-pass' => 'Έγινε αλλαγή στον κωδικό πρόσβασης του χρήστη $2',
 );
 
@@ -383,6 +411,7 @@ $messages['fi'] = array(
  * @author IAlex
  * @author Peter17
  * @author Verdy p
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'editaccount' => 'Modifier le compte',
@@ -398,9 +427,11 @@ $messages['fr'] = array(
 	'editaccount-label-email' => 'Définir une nouvelle adresse électronique',
 	'editaccount-label-pass' => 'Définir un nouveau mot de passe',
 	'editaccount-label-realname' => 'Définir un nouveau nom complet',
+	'editaccount-label-clearunsub' => 'Désabonné',
 	'editaccount-submit-email' => "Sauvegarder l'adresse électronique",
 	'editaccount-submit-pass' => 'Sauvegarder le mot de passe',
 	'editaccount-submit-realname' => 'Sauvegarder le nom complet',
+	'editaccount-submit-clearunsub' => 'Effacer le désabonnement',
 	'editaccount-submit-close' => 'Clore le compte',
 	'editaccount-usage-close' => 'Vous pouvez également désactiver un compte utilisateur en cryptant son mot de passe et en supprimant son adresse électronique. Veuillez notez que les données seront perdues et ne seront pas récupérables.',
 	'editaccount-warning-close' => '<b>Attention !</b> Vous êtes sur le point de désactiver le compte utilisateur <b>$1</b> de manière permanente. Ceci ne peut pas être défait. Êtes-vous certain de vouloir effectuer cette opération ?',
@@ -409,6 +440,7 @@ $messages['fr'] = array(
 	'editaccount-success-email-blank' => "L'adresse électronique du compte $1 a été supprimée avec succès.",
 	'editaccount-success-pass' => 'Le mot de passe du compte $1 a été modifié avec succès.',
 	'editaccount-success-realname' => 'Le nom complet du compte $1 a été modifié avec succès.',
+	'editaccount-success-unsub' => 'L’information de désabonnement a été retirée avec succès pour le compte $1.',
 	'editaccount-success-close' => 'Le compte $1 a été désactivé avec succès.',
 	'editaccount-error-email' => "L'adresse électronique n'a pas été modifiée. Essayez de nouveau ou contactez l'équipe technique.",
 	'editaccount-error-pass' => "Le mot de passe n'a pas été modifié. Essayez de nouveau ou contactez l'équipe technique.",
@@ -527,9 +559,11 @@ $messages['ia'] = array(
 	'editaccount-label-email' => 'Definir nove adresse de e-mail',
 	'editaccount-label-pass' => 'Definir nove contrasigno',
 	'editaccount-label-realname' => 'Definir nove nomine real',
+	'editaccount-label-clearunsub' => 'Subscription cancellate',
 	'editaccount-submit-email' => 'Salveguardar e-mail',
 	'editaccount-submit-pass' => 'Salveguardar contrasigno',
 	'editaccount-submit-realname' => 'Salveguardar nomine real',
+	'editaccount-submit-clearunsub' => 'Rader cancellation de subscription',
 	'editaccount-submit-close' => 'Clauder conto',
 	'editaccount-usage-close' => 'Tu pote equalmente disactivar un conto de usator per cryptar le contrasigno e remover le adresse de e-mail. Nota que iste datos essera irrecuperabilemente perdite.',
 	'editaccount-warning-close' => '<b>Attention!</b> Tu es super le puncto de disactivar permanentemente le conto del usator <b>$1</b>. Isto es irreversibile. Es tu secur de voler facer isto?',
@@ -538,6 +572,7 @@ $messages['ia'] = array(
 	'editaccount-success-email-blank' => 'Le e-mail del conto $1 ha essite removite.',
 	'editaccount-success-pass' => 'Contrasigno del conto $1 cambiate con successo.',
 	'editaccount-success-realname' => 'Nomine real del conto $1 cambiate con successo.',
+	'editaccount-success-unsub' => 'Le indicator de cancellation de subscription ha essite radite pro le conto $1.',
 	'editaccount-success-close' => 'Conto $1 disactivate con successo.',
 	'editaccount-error-email' => 'Le adresse de e-mail non ha essite cambiate. Reproba o contacta le equipa technic.',
 	'editaccount-error-pass' => 'Le contrasigno non ha essite cambiate. Reproba o contacta le equipa technic.',
@@ -564,11 +599,15 @@ $messages['id'] = array(
 
 /** Italian (Italiano)
  * @author HalphaZ
+ * @author Pietrodn
  */
 $messages['it'] = array(
 	'editaccount' => 'Modifica account',
+	'editaccount-desc' => 'Consente ai membri dello staff di gestire le informazioni degli utenti',
+	'editaccount-title' => 'Speciale:ModificaAccount',
 	'editaccount-frame-manage' => 'Modifica account',
 	'editaccount-frame-usage' => 'Nota',
+	'editaccount-usage' => "I dati dell'utente vengono memorizzati nella cache separatamente per ogni wiki. Quando si reimposta una password o una e-mail, la cache sarà invalidata solo per questa wiki. Si prega di indirizzare l'utente a questa wiki per accedere con una password appena impostata per evitare problemi di cache.",
 	'editaccount-label-select' => 'Selezionare un account utente',
 	'editaccount-submit-account' => 'Gestisci account',
 	'editaccount-frame-account' => "Modifica dell'account utente $1",
@@ -580,8 +619,10 @@ $messages['it'] = array(
 	'editaccount-submit-pass' => 'Salva password',
 	'editaccount-submit-realname' => 'Salva il nome reale',
 	'editaccount-submit-close' => 'Chiudi account',
+	'editaccount-usage-close' => "È anche possibile disattivare un account utente rimescolando la relativa password e rimuovendo l'indirizzo di posta elettronica. Si noti che questi dati saranno persi e non saranno recuperabili.",
 	'editaccount-warning-close' => "<b>Attenzione:</b> Si sta per disabilitare permanentemente l'account dell'utente <b>$1.</b> Ciò non può essere annullato. Sicuro che sia quello che vuoi fare?",
 	'editaccount-status' => 'Messaggio di stato',
+	'editaccount-success-email' => "L'indirizzo e-mail per l'account $1 è stato cambiato con successo a $2.",
 	'editaccount-success-email-blank' => "E-mail rimossa con successo dall'account $1.",
 	'editaccount-success-pass' => "Password per l'account $1 cambiata con successo.",
 	'editaccount-success-realname' => "Nome reale per l'account $1 cambiato con successo.",
@@ -599,6 +640,7 @@ $messages['it'] = array(
 	'editaccount-log-entry-realname' => "Nome reale dell'utente $2 cambiato",
 	'editaccount-log-entry-close' => 'Account $2 disabilitato',
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em"> Questo account è stato disattivato. </div>',
+	'right-editaccount' => 'Modifica le preferenze degli altri utenti',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -620,6 +662,7 @@ $messages['lb'] = array(
 	'editaccount-nouser' => 'De Kont "$1" gëtt et net!',
 	'editaccount-log' => 'Logbuch vun de Benotzerkonten',
 	'editaccount-log-entry-realname' => 'huet de richtegen Numm vum Benotzer $2 geännert',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Dëse Benotzerkont gouf desaktivéiert.</div>',
 	'right-editaccount' => 'Aner Benotzerastellungen änneren',
 );
 
@@ -640,9 +683,11 @@ $messages['mk'] = array(
 	'editaccount-label-email' => 'Нова е-поштенска адреса',
 	'editaccount-label-pass' => 'Нова лозинка',
 	'editaccount-label-realname' => 'Ново вистинско име',
+	'editaccount-label-clearunsub' => 'Откажани претплати',
 	'editaccount-submit-email' => 'Зачувај е-пошта',
 	'editaccount-submit-pass' => 'Зачувај лозинка',
 	'editaccount-submit-realname' => 'Зачувај вистинско име',
+	'editaccount-submit-clearunsub' => 'Исчисти откажани',
 	'editaccount-submit-close' => 'Затвори сметка',
 	'editaccount-usage-close' => 'Можете да оневозможите корисничка сметка со тоа што ќе ја претворите лозинката во нечитлива и ќе ја отстраните е-поштенската адреса. Имајте на ум дека овие податоци ќе се изгубат и нема да можат да се вратат.',
 	'editaccount-warning-close' => '<b>Внимание!</b> На пат сте засекогаш да ја оневозможите сметката на корисникот <b>$1</b>. Оваа постапка не може да се врати. Дали сте сигурни дека сакате да го направите ова?',
@@ -651,6 +696,7 @@ $messages['mk'] = array(
 	'editaccount-success-email-blank' => 'Е-поштата за сметката $1 е успешно отстранета.',
 	'editaccount-success-pass' => 'Лозинката за сметката $1 е успешно променета.',
 	'editaccount-success-realname' => 'Вистинското име за сметката $1 е успешно променето.',
+	'editaccount-success-unsub' => 'Успешно ги отстранивте откажаните претплати на сметката $1.',
 	'editaccount-success-close' => 'Сметката $1 е успешно оневозможена.',
 	'editaccount-error-email' => 'Е-поштата не е променета. Обидете се повторно или контактирајте ја Екипата за техничка поддршка',
 	'editaccount-error-pass' => 'Лозинката не е променета. Обидете се повторно или контактирајте ја Екипата за техничка поддршка.',
@@ -666,6 +712,54 @@ $messages['mk'] = array(
 	'editaccount-log-entry-close' => 'оневозможена сметка $2',
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Оваа сметка е оневозможена.</div>',
 	'right-editaccount' => 'Уредување на нагодувања на други корисници',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'editaccount' => 'Sunting akaun',
+	'editaccount-desc' => 'Membolehkan kakitangan menguruskan maklumat akaun pengguna',
+	'editaccount-title' => 'Khas:EditAccount',
+	'editaccount-frame-manage' => 'Sunting akaun',
+	'editaccount-frame-usage' => 'Catatan',
+	'editaccount-usage' => 'Data pengguna disimpan dalam cache wiki masing-masing secara berasingan. Apabila anda mereset kata laluan/e-emel, cachenya hanya diubah di wiki ini sahaja. Sila alihkan pengguna ke wiki ini untuk mengelog masuk dengan kata laluan barunya untuk mengelakkan masalah cache.',
+	'editaccount-label-select' => 'Pilih akaun pengguna',
+	'editaccount-submit-account' => 'Uruskan akaun',
+	'editaccount-frame-account' => 'Menyunting akaun pengguna: $1',
+	'editaccount-frame-close' => 'Matikan akaun pengguna: $1',
+	'editaccount-label-email' => 'Tetapkan alamat e-mel baru',
+	'editaccount-label-pass' => 'Tetapkan kata laluan baru',
+	'editaccount-label-realname' => 'Tetapkan nama sebenar baru',
+	'editaccount-label-clearunsub' => 'Langganan dihentikan',
+	'editaccount-submit-email' => 'Simpan alamat e-emel',
+	'editaccount-submit-pass' => 'Simpan kata laluan',
+	'editaccount-submit-realname' => 'Simpan nama sebenar',
+	'editaccount-submit-clearunsub' => 'Padamkan penghentian melanggan',
+	'editaccount-submit-close' => 'Tutup akaun',
+	'editaccount-usage-close' => 'Anda juga boleh mematikan akaun pengguna dengan mengarau kata laluannya serta menggugurkan alamat e-melnya. Ingat, data ini akan hilang dan tidak boleh dipulihkan.',
+	'editaccount-warning-close' => '<b>Perhatian!</b> Anda akan mematikan akaun pengguna <b>$1</b> buat selamanya. Tindakan ini tidak boleh diterbalikkan. Adakah anda pasti mahu berbuat demikian?',
+	'editaccount-status' => 'Mesej status',
+	'editaccount-success-email' => 'Alamat e-mel pemegang akaun $1 berjaya diubah kepada $2.',
+	'editaccount-success-email-blank' => 'Alamat e-mel pemegang akaun $1 berjaya digugurkan.',
+	'editaccount-success-pass' => 'Kata laluan akaun $1 berjaya diubah.',
+	'editaccount-success-realname' => 'Nama sebenar pemegang akaun $1 berjaya diubah.',
+	'editaccount-success-unsub' => 'Butiran nyahlanggan akaun $1 berjaya digugurkan.',
+	'editaccount-success-close' => 'Akaun $1 berjaya dimatikan.',
+	'editaccount-error-email' => 'E-mel tidak diubah. Cuba lagi atau hubungi Pasukan Teknikal (Tech Team).',
+	'editaccount-error-pass' => 'Kata laluan tidak diubah. Cuba lagi atau hubungi Pasukan Teknikal (Tech Team).',
+	'editaccount-error-realname' => 'Nama sebenar tidak diubah. Cuba lagi atau hubungi Pasukan Teknikal (Tech Team).',
+	'editaccount-error-close' => 'Ada masalah dalam cubaan menutup akaun. Cuba lagi atau hubungi Pasukan Teknikal (Tech Team).',
+	'editaccount-invalid-email' => '"$1" bukan alamat e-mel yang sah!',
+	'editaccount-nouser' => 'Akaun "$1" tidak wujud!',
+	'editaccount-log' => 'Log akaun pengguna',
+	'editaccount-log-header' => 'Laman ini menyenaraikan perubahan yang dilakukan oleh Kakitangan Wikia pada keutamaan pengguna.',
+	'editaccount-log-entry-email' => 'mengubah e-mel pengguna $2',
+	'editaccount-log-entry-pass' => 'mengubah kata laluan pengguna $2',
+	'editaccount-log-entry-realname' => 'mengubah nama sebenar pengguna $2',
+	'editaccount-log-entry-close' => 'mematikan akaun $2',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Akaun ini telah dimatikan.</div>',
+	'right-editaccount' => 'Sunting keutamaan pengguna lain',
 );
 
 /** Dutch (Nederlands)
@@ -687,9 +781,11 @@ Laat de gebruiker bij deze wiki aanmelden met een nieuw wachtwoord om problemen 
 	'editaccount-label-email' => 'Nieuwe e-mailadres instellen',
 	'editaccount-label-pass' => 'Nieuw wachtwoord instellen',
 	'editaccount-label-realname' => 'Nieuwe echte naam instellen',
+	'editaccount-label-clearunsub' => 'Uitgeschreven',
 	'editaccount-submit-email' => 'E-mailadres opslaan',
 	'editaccount-submit-pass' => 'Wachtwoord opslaan',
 	'editaccount-submit-realname' => 'Echte naam opslaan',
+	'editaccount-submit-clearunsub' => 'Uitschrijven leegmaken',
 	'editaccount-submit-close' => 'Gebruiker afsluiten',
 	'editaccount-usage-close' => 'U kunt een gebruiker ook uitschakelen door een onbekend wachtwoord in te stellen en het e-mailadres te verwijderen.
 De huidige gegevens gaan dan verloren en zijn niet te herstellen.',
@@ -702,6 +798,7 @@ Weet u zeker dat u dit wilt doen?',
 	'editaccount-success-email-blank' => 'Het e-mailadres voor $1 is verwijderd.',
 	'editaccount-success-pass' => 'Het wachtwoord voor gebruiker $1 is gewijzigd.',
 	'editaccount-success-realname' => 'De echte naam voor gebruiker $1 is gewijzigd.',
+	'editaccount-success-unsub' => 'De gebruiker $1 is niet langer uitgeschreven.',
 	'editaccount-success-close' => 'De gebruiker $1 is uitgeschakeld.',
 	'editaccount-error-email' => 'Het e-mailadres is niet gewijzigd.
 Probeer het opnieuw of neem contact op het met Tech Team.',
@@ -741,9 +838,11 @@ $messages['no'] = array(
 	'editaccount-label-email' => 'Angi ny e-postadresse',
 	'editaccount-label-pass' => 'Angi nytt passord',
 	'editaccount-label-realname' => 'Angi nytt virkelig navn',
+	'editaccount-label-clearunsub' => 'Avsluttet abonnement',
 	'editaccount-submit-email' => 'Lagre e-post',
 	'editaccount-submit-pass' => 'Lagre passord',
 	'editaccount-submit-realname' => 'Lagre virkelig navn',
+	'editaccount-submit-clearunsub' => 'Tøm avslutt abonnement',
 	'editaccount-submit-close' => 'Lukk konto',
 	'editaccount-usage-close' => 'Du kan også deaktivere en brukerkonto ved å tilfeldiggjøre passordet og fjerne e-postadressen. Legg merke til at denne dataen går tapt og ikke vil kunne gjenopprettes.',
 	'editaccount-warning-close' => '<b>Forsiktig!</b> Du er i ferd med å permanent deaktivere kontoen til bruker <b>$1</b>. Dette kan ikke gjenopprettes. Er du sikker på at det er det du vil gjøre?',
@@ -752,6 +851,7 @@ $messages['no'] = array(
 	'editaccount-success-email-blank' => 'Fjernet e-post for kontoen $1.',
 	'editaccount-success-pass' => 'Endret passord for konto $1.',
 	'editaccount-success-realname' => 'Endret virkelig navn for konto $1.',
+	'editaccount-success-unsub' => 'Fjernet avslutt abonnement-delen for kontoen $1.',
 	'editaccount-success-close' => 'Deaktiverte konto $1.',
 	'editaccount-error-email' => 'E-post ble ikke endret. Prøv igjen eller kontakt Tech Team.',
 	'editaccount-error-pass' => 'Passord ble ikke endret. Prøv igjen eller kontakt Tech Team.',
@@ -868,13 +968,15 @@ $messages['pt'] = array(
 	'editaccount-label-select' => 'Seleccione uma conta de utilizador',
 	'editaccount-submit-account' => 'Administrar Conta',
 	'editaccount-frame-account' => 'A editar a conta: $1',
-	'editaccount-frame-close' => 'Deactivar a conta: $1',
+	'editaccount-frame-close' => 'Desactivar a conta: $1',
 	'editaccount-label-email' => 'Definir endereço de correio electrónico novo',
 	'editaccount-label-pass' => 'Definir palavra-chave nova',
 	'editaccount-label-realname' => 'Definir nome verdadeiro novo',
+	'editaccount-label-clearunsub' => 'Não subscrito',
 	'editaccount-submit-email' => 'Gravar Correio Electrónico',
 	'editaccount-submit-pass' => 'Gravar Palavra-chave',
 	'editaccount-submit-realname' => 'Gravar Nome Verdadeiro',
+	'editaccount-submit-clearunsub' => 'Limpar indicação de não subscrito',
 	'editaccount-submit-close' => 'Fechar Conta',
 	'editaccount-usage-close' => 'Também pode desactivar uma conta de utilizador misturando a palavra-chave e removendo o endereço electrónico. Note que estes dados serão perdidos e não podem ser recuperados.',
 	'editaccount-warning-close' => '<b>Cuidado!</b> Está prestes a desactivar definitivamente a conta do utilizador <b>$1</b>. Esta operação não pode ser desfeita. Tem a certeza de que pretende fazê-lo?',
@@ -883,6 +985,7 @@ $messages['pt'] = array(
 	'editaccount-success-email-blank' => 'Removeu com sucesso o endereço electrónico da conta $1.',
 	'editaccount-success-pass' => 'Alterou com sucesso a palavra-chave da conta $1.',
 	'editaccount-success-realname' => 'Alterou com sucesso o nome verdadeiro da conta $1.',
+	'editaccount-success-unsub' => 'O bit de indicação de não subscrito foi removido da conta $1.',
 	'editaccount-success-close' => 'Desactivou com sucesso a conta $1.',
 	'editaccount-error-email' => 'O endereço electrónico não foi alterado. Tente novamente ou contacte o Suporte Técnico.',
 	'editaccount-error-pass' => 'A palavra-chave não foi alterada. Tente novamente ou contacte o Suporte Técnico.',
@@ -1245,6 +1348,12 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'editaccount-frame-usage' => '注意',
+	'editaccount-label-select' => '选择一个用户',
+	'editaccount-submit-account' => '管理用户',
+	'editaccount-submit-email' => '保存电子邮件地址',
+	'editaccount-submit-pass' => '保存密码',
+	'editaccount-submit-realname' => '保存真名',
+	'editaccount-submit-close' => '关闭户口',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

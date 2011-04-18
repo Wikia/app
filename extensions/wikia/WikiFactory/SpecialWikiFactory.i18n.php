@@ -772,6 +772,7 @@ $messages['bs'] = array(
 
 /** Catalan (Català)
  * @author Paucabot
+ * @author SMP
  */
 $messages['ca'] = array(
 	'closewiki' => 'Tanca el wiki',
@@ -785,11 +786,13 @@ $messages['ca'] = array(
 	'wikifactory-label-return' => 'Torna a la llista',
 	'wikifactory-label-close' => 'Tanca',
 	'wikifactory-label-tags' => 'Etiquetes',
+	'right-wikifactory' => 'Canviar la configuració interna dels wikis',
 	'closewiki-unknown' => 'Desconegut',
 	'awc-metrics-select' => 'Mostra Wikis:',
 	'awc-metrics-by-language' => 'per llengua:',
 	'awc-metrics-all' => 'tots els Wikis',
 	'awc-metrics-all-languages' => 'totes les llengües',
+	'closed-reason' => 'Motiu:',
 );
 
 /** Chechen (Нохчийн)
@@ -1044,6 +1047,7 @@ $messages['de'] = array(
 	'wikifactory-label-masstags' => 'MassTags',
 	'wikifactory-label-findtags' => 'Finde Tags',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'Vergleichen',
 	'right-wikifactory' => 'Interne Einstellungen für Wikis ändern',
 	'wikifactory-domain-edit' => 'Bearbeite diese URL',
 	'wikifactory-domain-remove' => 'Entferne diese URL aus dem Wiki',
@@ -1223,6 +1227,7 @@ $messages['es'] = array(
 	'wikifactory-label-masstags' => 'EtiquetasMasivas',
 	'wikifactory-label-findtags' => 'EtiquetasEncontrar',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'Comparar',
 	'right-wikifactory' => 'Cambiar configuración interna de los wikis',
 	'wikifactory-domain-edit' => 'editar esta URL',
 	'wikifactory-domain-remove' => 'eliminar esta URL del wiki',
@@ -1363,6 +1368,13 @@ $messages['eu'] = array(
 	'closed-reason' => 'Arrazoia:',
 );
 
+/** Persian (فارسی)
+ * @author Ebraminio
+ */
+$messages['fa'] = array(
+	'wikifactory-label-actions' => 'عملکردها',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
@@ -1425,6 +1437,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author IAlex
  * @author Jean-Frédéric
  * @author Peter17
@@ -1449,7 +1462,7 @@ $messages['fr'] = array(
 	'wikifactory-label-info' => 'Informations',
 	'wikifactory-label-variables' => 'Variables',
 	'wikifactory-label-variables2' => 'Général',
-	'wikifactory-label-hubs' => 'Hubs',
+	'wikifactory-label-hubs' => 'Thèmes',
 	'wikifactory-label-domains' => 'Domaines',
 	'wikifactory-label-return' => 'Revenir à la liste',
 	'wikifactory-label-clog' => 'Journal des modifications',
@@ -1461,6 +1474,7 @@ $messages['fr'] = array(
 	'wikifactory-label-masstags' => 'MasseÉtiquettes',
 	'wikifactory-label-findtags' => 'RechercheÉtiquettes',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'Comparer',
 	'right-wikifactory' => 'Changer les paramètres internes des wikis',
 	'wikifactory-domain-edit' => 'modifier cette adresse URL',
 	'wikifactory-domain-remove' => 'retirer cette adresse URL du wiki',
@@ -1672,6 +1686,13 @@ $messages['gl'] = array(
 	'closed-reason' => 'Motivo:',
 );
 
+/** Manx (Gaelg)
+ * @author Shimmin Beg
+ */
+$messages['gv'] = array(
+	'closed-reason' => 'Fa:',
+);
+
 /** Hausa (هَوُسَ) */
 $messages['ha'] = array(
 	'wf_cc_name' => 'Rukuni',
@@ -1842,6 +1863,7 @@ $messages['ia'] = array(
 	'wikifactory-label-masstags' => 'MassTags',
 	'wikifactory-label-findtags' => 'FindTags',
 	'wikifactory-label-ezsharedupload' => 'EZIncargamentoCommun',
+	'wikifactory-label-compare' => 'Comparar',
 	'right-wikifactory' => 'Cambiar le configuration interne del wikis',
 	'wikifactory-domain-edit' => 'modificar iste URL',
 	'wikifactory-domain-remove' => 'remover iste URL del wiki',
@@ -2193,6 +2215,13 @@ $messages['ka'] = array(
 	'awc-metrics-images' => 'სურათები',
 );
 
+/** کھوار (کھوار)
+ * @author Rachitrali
+ */
+$messages['khw'] = array(
+	'closed-reason' => 'وجہ',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
@@ -2328,6 +2357,7 @@ $messages['krc'] = array(
  */
 $messages['ksh'] = array(
 	'wf_city_title' => 'Tittel',
+	'awc-metrics-nbr-result' => 'Erus kütt:',
 	'closed-wiki-dump-exists' => 'Do kanns der [$1 Ennhald vun däm Wiki afroofe].',
 	'closed-wiki-dump-noexists' => 'Dat Wiki heh es zohjemaat woode. Däm singe Enhalld sullt innerhallf vun 24 Shtunde als e Aschiiv paraat shtonn. Bes esu joot, un loor spääder noch end donoh.',
 	'closed-wiki-create-wiki' => 'E neu Wiki opmaache',
@@ -2342,6 +2372,13 @@ $messages['ksh'] = array(
 	'closed-confirm-btn' => 'Zohmaache!',
 	'closed-redirect-alert' => 'Jif de neu URL för noh ömzeleide aan!',
 	'closed-reason' => 'Jrond:',
+);
+
+/** Latin (Latina)
+ * @author Rsa23899
+ */
+$messages['la'] = array(
+	'wf_cc_name' => 'Catēgoria',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -2364,6 +2401,7 @@ $messages['lb'] = array(
 	'wikifactory-label-actions' => 'Aktiounen',
 	'wikifactory-label-close' => 'Zoumaachen',
 	'wikifactory-label-tags' => 'Markéierungen',
+	'wikifactory-label-compare' => 'Vergläichen',
 	'closewiki-redirect-to' => 'Viruleeden op',
 	'closewiki-nbr-wiki' => '$1 Wikien',
 	'closewiki-dump-url' => 'Dumpe vun der Datebank: $1',
@@ -2430,6 +2468,7 @@ $messages['mk'] = array(
 	'wikifactory-label-masstags' => 'МасовниОзнаки',
 	'wikifactory-label-findtags' => 'НајдиОзнаки',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'Спореди',
 	'right-wikifactory' => 'Променете ги внатрешните нагодувања на викијата',
 	'wikifactory-domain-edit' => 'уреди ја ова URL-адреса',
 	'wikifactory-domain-remove' => 'отстрани ја оваа URL-адреса од викито',
@@ -2543,6 +2582,129 @@ $messages['mn'] = array(
 	'closed-reason' => 'Шалтгаан:',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'wikifactorypagetitle' => 'Alat Tatarajah Kilang Wiki',
+	'wikifactory' => 'Alat Tatarajah Kilang Wiki',
+	'closewiki' => 'Tutup Wiki',
+	'wf_city_url' => 'Alamat',
+	'wf_city_id' => 'id',
+	'wf_city_title' => 'Tajuk',
+	'wf_city_created' => 'Dicipta',
+	'wf_city_founding_user' => 'Pengasas',
+	'wf_city_founding_email' => 'E-mel pengasas',
+	'wf_city_public' => 'Status',
+	'wf_city_lang' => 'Bahasa',
+	'wf_cc_name' => 'Kategori',
+	'wikifactory_removevariable' => 'Padamkan data wiki dari cache',
+	'wikifactory_removeconfirm' => 'Wiki data dipadam dari cache!',
+	'wikifactory-label-info' => 'Maklumat',
+	'wikifactory-label-variables' => 'Pemboleh ubah',
+	'wikifactory-label-variables2' => 'Umum',
+	'wikifactory-label-hubs' => 'Hab',
+	'wikifactory-label-domains' => 'Domain',
+	'wikifactory-label-return' => 'Kembali ke senarai',
+	'wikifactory-label-clog' => 'Log perubahan',
+	'wikifactory-label-actions' => 'Tindakan',
+	'wikifactory-label-google' => 'Google Tools',
+	'wikifactory-label-close' => 'Tutup',
+	'wikifactory-label-tags' => 'Tag',
+	'wikifactory-label-tags2' => 'Tag',
+	'wikifactory-label-masstags' => 'MassTags',
+	'wikifactory-label-findtags' => 'FindTags',
+	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'Bandingkan',
+	'right-wikifactory' => 'Tukar tetapan dalaman untuk wiki',
+	'wikifactory-domain-edit' => 'edit URL ini',
+	'wikifactory-domain-remove' => 'padamkan URL ini dari wiki',
+	'wikifactory-domain-setmain' => 'letakkan URL ini ke dalam wgServer',
+	'closewiki-check-and-confirm' => 'Semak wiki dan sahkan operasi',
+	'closewiki-redirect-to' => 'Melencong ke',
+	'closewiki-message' => 'nama domain $1',
+	'closewiki-confirm-button' => "Sahkan '$1' daripada $2",
+	'closewiki-nbr-wiki' => '$1 Wiki',
+	'closewiki-wiki-closed' => "'''$1''' ditutup ( $2 )",
+	'closewiki-wiki-closed_removed' => "'''$1''' kini ditutup dan dijadualkan untuk dihapuskan ($2)",
+	'closewiki-wiki-closed_redirect' => "'''$1''' ditutup ($2) dan kini melencong ke: $3",
+	'closewiki-dump-url' => 'Longgokan pangkalan data: $1',
+	'closewiki-images-url' => 'Gambar arkib: $1',
+	'closewiki-unknown' => 'Tidak diketahui',
+	'closewiki-return' => 'Kembali ke $1',
+	'awc-metrics-wikis' => 'Paparkan Wiki',
+	'awc-metrics-select' => 'Paparkan Wiki:',
+	'awc-metrics-by-language' => 'mengikut bahasa:',
+	'awc-metrics-category' => 'dan kategori:',
+	'awc-metrics-all' => 'semua Wiki',
+	'awc-metrics-all-languages' => 'semua bahasa',
+	'awc-metrics-search' => 'Pilihan carian:',
+	'awc-metrics-one-week' => 'dicipta < seminggu lalu',
+	'awc-metrics-two-weeks' => 'dicipta < 2 minggu lalu',
+	'awc-metrics-three-weeks' => 'dicipta < 3 minggu lalu',
+	'awc-metrics-one-months' => 'dicipta < sebulan lalu',
+	'awc-metrics-two-months' => 'dicipta < 2 bulan lalu',
+	'awc-metrics-three-months' => 'dicipta <3 bulan lalu',
+	'awc-metrics-half-year' => 'dicipta < 6 bulan lalu',
+	'awc-metrics-wikis-found' => '$1 Wiki Dicari',
+	'awc-metrics-by-email' => 'atau (e-mel pengguna):',
+	'awc-metrics-by-user' => 'ditemui oleh (nama pengguna):',
+	'awc-metrics-by-dbname' => 'yang mana nama pangkalan data mengandungi:',
+	'awc-metrics-by-title' => 'dan tajuknya bermula dengan:',
+	'awc-metrics-by-domains' => 'dan domainnya mengandungi:',
+	'awc-metrics-not-found' => 'Tiada Wiki dijumpai',
+	'awc-metrics-nbr-result' => 'Hasil:',
+	'awc-metrics-created-between' => 'dicipta antara $1 (YYYY/MM/DD) dan $2 (YYYY/MM/DD)',
+	'awc-metrics-wikians' => 'Ahli Wikia<br />(> 10 suntingan)',
+	'awc-metrics-articles' => 'Rencana',
+	'awc-metrics-articles-per-day' => 'Rencana<br />(purata sehari)',
+	'awc-metrics-revisions-per-page' => 'Semakan<br />(purata selaman)',
+	'awc-metrics-article-avg-size' => 'Purata saiz<br />rencana',
+	'awc-metrics-edits' => 'Suntingan',
+	'awc-metrics-db-size' => 'Saiz pangkalan data',
+	'awc-metrics-images' => 'Imej',
+	'awc-metrics-all-users' => 'Pengguna<br />berdaftar',
+	'awc-metrics-all-users-edit-main-ns' => 'Pengguna berdaftar<br />(NS Kandungan)',
+	'awc-metrics-pageviews' => 'Kunjungan<br />laman',
+	'awc-metrics-statistics' => 'Statistik (purata untuk semua bulan)',
+	'awc-metrics-close' => 'Tutup',
+	'awc-metrics-close-action' => 'tutup',
+	'awc-metrics-active' => 'aktif',
+	'awc-metrics-closed' => 'ditutup',
+	'awc-metrics-redirected' => 'ditutup dan dilencongkan',
+	'awc-metrics-removed' => 'digugurkan',
+	'awc-metrics-hubs' => 'Wiki baru (bulanan)',
+	'awc-metrics-news-day' => 'Wiki baru (harian)',
+	'awc-metrics-sum-month' => 'Kiraan (sebulan)',
+	'awc-metrics-sum-day' => 'Kiraan (setiap hari)',
+	'awc-metrics-fewer-than' => 'yang kurang daripada $1 rencana,',
+	'awc-metrics-edits-label' => '$1 suntingan dalam $2,',
+	'awc-metrics-this-month' => 'bulan ini',
+	'awc-metrics-last-month' => '{{PLURAL:$1|sebulan|$1 bulan}} terkini',
+	'awc-metrics-pageviews-label' => 'dan $1 kunjungan laman dalam {{PLURAL:$2|sehari|$2 hari}} terkini',
+	'awc-metrics-close-listed' => 'Tutup semua yang tersenarai',
+	'awc-metrics-close-checked' => 'Tutup yang disemak',
+	'awc-metrics-exact-match' => 'padanan tepat',
+	'awc-metrics-recordspager' => "Menunjukkan '''$1''' hingga '''$2''' daripada '''$3''' rekod",
+	'closed-wiki' => 'Wiki Ditutup',
+	'closed-wiki-info' => 'Wiki ini telah ditutup',
+	'disabled-wiki-info' => 'Wiki ini telah dimatikan',
+	'closed-wiki-dump-exists' => 'Sila klik [$1 di sini] jika anda ingin mengambil isi kandungan anda',
+	'closed-wiki-dump-noexists' => 'Wiki ini telah ditutup. Longgokan kandungan akan disediakan dalam masa 24 jam. Sila semak semula.',
+	'closed-wiki-create-wiki' => 'Cipta wiki baru',
+	'closed-wiki-policy' => 'Lihat Dasar Penutupan Wikia',
+	'closed-create-dump' => 'Cipta longgokan pangkalan data',
+	'closed-create-image-archive' => 'Cipta arkib gambar',
+	'closed-delete-database-images' => 'Hapuskan pangkalan data dan gambar',
+	'closed-delete-images' => 'Hapuskan gambar',
+	'closed-free-url' => 'Bebaskan URL untuk pengasas baru',
+	'closed-hide-dumps' => 'Sorokkan Pangkalan Data dan Longgokan Gambar',
+	'closed-redirect-url' => 'Lencongkan URL',
+	'closed-confirm-btn' => 'Sahkan penutupan',
+	'closed-redirect-alert' => 'Sila isikan URL baru lencongan!',
+	'closed-reason' => 'Sebab:',
+);
+
 /** Maltese (Malti)
  * @author Chrisportelli
  */
@@ -2605,6 +2767,7 @@ $messages['nl'] = array(
 	'wikifactory-label-masstags' => 'MassTags',
 	'wikifactory-label-findtags' => 'FindTags',
 	'wikifactory-label-ezsharedupload' => 'Eenvoudige gedeelde upload',
+	'wikifactory-label-compare' => 'Vergelijken',
 	'right-wikifactory' => 'Interne instellingen van de wiki wijzigen',
 	'wikifactory-domain-edit' => 'deze URL bewerken',
 	'wikifactory-domain-remove' => 'deze URL van de wiki verwijderen',
@@ -2738,6 +2901,7 @@ $messages['no'] = array(
 	'wikifactory-label-masstags' => 'MasseTagger',
 	'wikifactory-label-findtags' => 'FinnTagger',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'Sammenlign',
 	'right-wikifactory' => 'Endre interne alternativer for wikier',
 	'wikifactory-domain-edit' => 'rediger denne URL-en',
 	'wikifactory-domain-remove' => 'fjern denne URL-en fra wiki',
@@ -3215,6 +3379,7 @@ $messages['pt'] = array(
 	'wikifactory-label-masstags' => 'MassTags',
 	'wikifactory-label-findtags' => 'EncontrarEtiquetas',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'Comparar',
 	'right-wikifactory' => 'Alterar configurações internas das wikis',
 	'wikifactory-domain-edit' => 'editar esta URL',
 	'wikifactory-domain-remove' => 'remover esta URL da wiki',
@@ -3342,6 +3507,7 @@ $messages['pt-br'] = array(
 	'wikifactory-label-masstags' => 'MassTags',
 	'wikifactory-label-findtags' => 'PesquisarEtiquetas',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'Comparar',
 	'right-wikifactory' => 'Alterar configurações internas das wikis',
 	'wikifactory-domain-edit' => 'editar esta URL',
 	'wikifactory-domain-remove' => 'remover esta URL da wiki',
@@ -3569,6 +3735,7 @@ $messages['ru'] = array(
 	'awc-metrics-close-listed' => 'Закрыть все перечисленные',
 	'awc-metrics-close-checked' => 'Закрыть отмеченные',
 	'awc-metrics-exact-match' => 'точное совпадение',
+	'awc-metrics-recordspager' => "Показано от '''$1''' до '''$2''' из '''$3''' записей",
 	'closed-wiki' => 'Закрытая вики',
 	'closed-wiki-info' => 'Эта вики закрыта',
 	'disabled-wiki-info' => 'Эта вики отключена',
@@ -3623,8 +3790,8 @@ $messages['sr-ec'] = array(
 	'wf_city_public' => 'Статус',
 	'wf_city_lang' => 'Језик',
 	'wf_cc_name' => 'Категорија',
-	'wikifactory_removevariable' => 'Обриши вики податке из међуспремника',
-	'wikifactory_removeconfirm' => 'Вики подаци су уклоњени из међуспремника!',
+	'wikifactory_removevariable' => 'Обриши податке викија из оставе',
+	'wikifactory_removeconfirm' => 'Подаци викија су уклоњени из оставе.',
 	'wikifactory-label-info' => 'Подаци',
 	'wikifactory-label-variables' => 'Променљиве',
 	'wikifactory-label-variables2' => 'Опште',
@@ -4138,6 +4305,24 @@ $messages['ur'] = array(
 /** Wu (吴语) */
 $messages['wuu'] = array(
 	'closed-reason' => '理由：',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'closewiki' => '关闭维基',
+	'wf_city_title' => '标题',
+	'wf_city_lang' => '语言',
+	'wf_cc_name' => '分类',
+	'wikifactory-label-close' => '关闭',
+	'closewiki-nbr-wiki' => '$1 维基',
+	'awc-metrics-close' => '关闭',
+	'awc-metrics-close-action' => '关闭',
+	'closed-wiki' => '已关闭的维基',
+	'closed-wiki-create-wiki' => '创造一个新维基',
+	'closed-confirm-btn' => '确定关闭',
+	'closed-reason' => '原因：',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)

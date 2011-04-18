@@ -149,6 +149,13 @@ $messages['bs'] = array(
 	'right-multilookup' => 'Potraži informacije o korisnicima na više wikija',
 );
 
+/** Catalan (Català)
+ * @author SMP
+ */
+$messages['ca'] = array(
+	'right-multilookup' => "Cercar informació d'usuaris en múltiples wikis",
+);
+
 /** Chechen (Нохчийн)
  * @author Sasan700
  */
@@ -433,6 +440,36 @@ $messages['mk'] = array(
 	'right-multilookup' => 'Преглед на информации за корисници во повеќе викија',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'specialmultiplelookup-desc' => 'Menyediakan carian maklumat pengguna di berbilang wiki',
+	'multilookup' => 'Carian berbilang wiki',
+	'multilookupstitle' => 'Carian berbilang wiki',
+	'multilookupselectuser' => 'Cari akaun yang sama alamat IP di berbilang wiki',
+	'multilookupgo' => 'Pergi',
+	'multilookupnotspecify' => 'Anda belum menentukan alamat IP.',
+	'multilookupnext' => 'berikutnya',
+	'multilookupprevious' => 'sebelumnya',
+	'multilookupnbrresult' => 'Jumlah hasil:',
+	'multilookupinvalidresults' => 'Hasil tidak sah!',
+	'multilookupnoresultfound' => 'Tiada hasil carian!',
+	'multilookupwiki' => 'Wii',
+	'multilookuplink' => 'Pautan sumbangan',
+	'multilookupdetails' => 'Lihat butiran',
+	'multilookuplistwikiainfo' => 'Senarai wiki di mana laman disunting oleh pengguna dari alamat IP <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">Alamat IP "<b>$1</b>" tidak wujud. Semak alamat IP yang diberikan seandainya ada kesilapan.</p>',
+	'multilookuplastedit' => 'Suntingan terakhir dari alamat IP ini:',
+	'multilookupwikidbname' => 'Nama pangkalan data',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Tajuk',
+	'multilookupwikioptions' => 'Pilihan',
+	'multilookuplastedithdr' => 'Suntingan terkini',
+	'multilookuprecordspager' => "Menunjukkan '''$1''' hingga '''$2''' daripada '''$3''' rekod.",
+	'right-multilookup' => 'Cari maklumat pengguna di pelbagai wiki',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -685,6 +722,30 @@ $messages['sr-ec'] = array(
 	'multilookuplastedithdr' => 'Последња измена',
 );
 
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'multilookupgo' => 'Gå',
+	'multilookupnotspecify' => 'Du har inte angett en IP-adress ännu.',
+	'multilookupnext' => 'nästa',
+	'multilookupprevious' => 'föregående',
+	'multilookupnbrresult' => 'Antal resultat:',
+	'multilookupinvalidresults' => 'Ogiltiga resultat!',
+	'multilookupnoresultfound' => 'Inga resultat hittades!',
+	'multilookupwiki' => 'Wiki',
+	'multilookupdetails' => 'Se detaljer',
+	'multilookuplistwikiainfo' => 'Lista över wikier där sidor redigerades av användare från IP-adress <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">IP-adressen "<b>$1</b>" finns inte. Kontrollera given IP-adress för eventuella stavfel.</p>',
+	'multilookuplastedit' => 'Senast redigerad från denna IP-adress:',
+	'multilookupwikidbname' => 'DB namn',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Titel',
+	'multilookupwikioptions' => 'Alternativ',
+	'multilookuplastedithdr' => 'Sista redigeringen',
+	'multilookuprecordspager' => "Visar '''$1''' till '''$2''' av '''$3''' poster.",
+);
+
 /** Swahili (Kiswahili)
  * @author Lloffiwr
  */
@@ -737,5 +798,18 @@ $messages['uk'] = array(
 	'multilookupwiki' => 'Вікі',
 	'multilookupwikititle' => 'Назва',
 	'multilookuplastedithdr' => 'Останнє редагування',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'multilookupgo' => '去',
+	'multilookupnext' => '下一步',
+	'multilookupprevious' => '前一步',
+	'multilookupwiki' => '维基',
+	'multilookupdetails' => '查看资讯',
+	'multilookupwikititle' => '标题',
+	'multilookupwikioptions' => '选择',
 );
 

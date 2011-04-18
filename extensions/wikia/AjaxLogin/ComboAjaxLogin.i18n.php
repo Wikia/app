@@ -194,6 +194,13 @@ Por favor intenta de nuevo o [[Special:Contact|reporta esto]].',
 (Si ya tienes una cuenta, puedes <a href="#">iniciar sesión</a> de forma normal, pero no serás capaz de editar.)</p>',
 );
 
+/** Finnish (Suomi)
+ * @author Tofu II
+ */
+$messages['fi'] = array(
+	'comboajaxlogin-createlog' => 'Kirjaudu sisään tai rekisteröidy',
+);
+
 /** French (Français)
  * @author Crochet.david
  * @author IAlex
@@ -377,6 +384,40 @@ $messages['mk'] = array(
 <p>За повеќе информации, погледајте на <a href="http://twitter.com/wikia">Twitter</a> или <a href="http://facebook.com/wikia">Facebook</a>.
 <br />
 (Ако веќе имате сметка, тогаш ќе можете да се <a href="#">најавите</a> како секогаш, но нема да можете да уредувате.)</p>',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'comboajaxlogin-desc' => 'Petak dinamik yang membolehkan pengguna log masuk, ingatkan kata laluan dan daftarkan pengguna',
+	'comboajaxlogin-createlog' => 'Log masuk atau buka akaun',
+	'comboajaxlogin-actionmsg' => 'Untuk melakukan tindakan ini, anda perlu log masuk atau membuka akaun terlebih dahulu.',
+	'comboajaxlogin-actionmsg-protected' => 'Untuk melakukan tindakan ini, anda perlu log masuk atau membuka akaun terlebih dahulu.',
+	'comboajaxlogin-connectmarketing' => '<h1>Sambungkan akaun-akaun anda</h1>
+<ul>
+<li>Simpan nama pengguna semasa, sejarah, suntingan anda dsb... tiada apa yang berubah selain cara anda log masuk</li>
+<li>Kongsikan kegiatan anda di Wikia bersama rakan-rakan di Facebook</li>
+<li>Anda boleh mengawal sepenuhnya apa yang diterbitkan</li>
+</ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Log masuk dengan Facebook Connect</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Sambungkan akaun Wikia anda dengan Facebook</h1>
+<ul>
+<li>Simpan nama pengguna semasa, sejarah, suntingan anda dsb... tiada apa yang berubah selain cara anda log masuk</li>
+<li>Kongsikan kegiatan anda di Wikia dengan rakan-rakan anda Facebook, dengan mengawal sepenuhnya apa yang diterbitkan</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Kembali',
+	'comboajaxlogin-connectmarketing-forward' => 'Mulakan &raquo;',
+	'comboajaxlogin-connectdirections' => 'Taipkan nama pengguna dan kata laluan Wikia anda di sini – kami akan menyambungkan akaun-akaun Wikia dan Facebook secara automatik.
+
+Selepas siap, anda boleh log masuk dengan mudah dengan menekan mana-mana butang Facebook Connect.',
+	'comboajaxlogin-post-not-understood' => 'Terdapat ralat dalam cara borang ini dibentuk.
+Sila cuba lagi atau [[Special:Contact|laporkannya kepada kami]].',
+	'comboajaxlogin-readonlytext' => '<h2>Harap maaf!</h2>
+<p>Anda tidak boleh membuka akaun buat masa ini. Harap bersabar, kami akan kembali berfungsi tidak lama lagi. Sebabnya:<br /><em>$1</em></p>
+<p>Sila rujuk <a href="http://twitter.com/wikia">Twitter</a> atau <a href="http://facebook.com/wikia">Facebook</a> untuk maklumat lanjut.
+<br />
+(Jika anda sudah ada akaun, anda boleh <a href="#">log masuk</a> seperti biasa, tetapi anda tidak boleh menyunting buat masa ini.)</p>',
 );
 
 /** Dutch (Nederlands)
@@ -630,7 +671,7 @@ $messages['ru'] = array(
  * @author Rancher
  */
 $messages['sr-ec'] = array(
-	'comboajaxlogin-createlog' => 'Пријавите се или направите налог',
+	'comboajaxlogin-createlog' => 'Пријавите се или отворите налог',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Назад',
 );
 
@@ -688,8 +729,8 @@ $messages['tl'] = array(
 <li>Ipamahagi ang iyong mga ginagawa sa Wikia sa iyong mga kaibigang nasa Facebook</li>
 <li>Buong pagtaban sa kung ano ang nailathala</li>
 </ul>',
-	'comboajaxlogin-connectmarketing-back' => '↓ &laquo; Bumalik',
-	'comboajaxlogin-connectmarketing-forward' => '↓ Magsimula &raquo;',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Bumalik',
+	'comboajaxlogin-connectmarketing-forward' => 'Magsimula &raquo;',
 	'comboajaxlogin-connectdirections' => 'Ipasok ang iyong pangalan ng tagagamit sa Wikia at hudyat dito - masalamangka naming iuugnay ang iyong mga akawnt na pang-Wikia at pang-Facebook sa likuran.
 
 Kapag natapos ka na, maginhawa kang makakalagda na ginagamit ang anumang pindutan ng Ugnay sa Facebook.',

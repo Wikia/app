@@ -69,6 +69,13 @@ $messages['be-tarask'] = array(
 	'wva-protected' => 'Гэтае відэа абароненае.',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'wva-add' => 'Добавяне',
+);
+
 /** Bahasa Banjar (Bahasa Banjar)
  * @author Ezagren
  */
@@ -312,6 +319,7 @@ $messages['ig'] = array(
 
 /** Italian (Italiano)
  * @author HalphaZ
+ * @author Pietrodn
  */
 $messages['it'] = array(
 	'wva-success' => 'La pagina video $1 è stata aggiunta con successo.',
@@ -323,6 +331,7 @@ $messages['it'] = array(
 	'wva-title' => 'Aggiungi rapidamente video da URL',
 	'wva-notlogged' => 'Devi accedere o registrati per inserire video.',
 	'wva-notallowed' => 'Non puoi inserire video su questo wiki.',
+	'wva-protected' => 'Questo video è protetto.',
 );
 
 /** Japanese (日本語)
@@ -408,6 +417,22 @@ $messages['mk'] = array(
  */
 $messages['mn'] = array(
 	'wva-add' => 'Нэмэх',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'wva-success' => 'Laman video $1 berjaya dibuka.',
+	'wva-success-replaced' => 'Laman video $1 berjaya digantikan.',
+	'wva-failure' => 'Sila nyatakan parameter yang sah.',
+	'wva-name' => 'Isikan nama:',
+	'wva-url' => 'Isikan URL:',
+	'wva-add' => 'Tambahkan',
+	'wva-title' => 'Tambahkan video dengan segera dari URL',
+	'wva-notlogged' => 'Anda perlu log masuk atau berdaftar untuk menyisipkan video.',
+	'wva-notallowed' => 'Anda tidak boleh menyisipkan video ke dalam wiki ini.',
+	'wva-protected' => 'Video ini dilindungi.',
 );
 
 /** Dutch (Nederlands)
@@ -658,5 +683,13 @@ $messages['uk'] = array(
 	'wva-notlogged' => 'Для того, щоб вставити відео, Вам потрібно увійти до системи або зареєструватися.',
 	'wva-notallowed' => 'Ви не можете додавати відео у цю Вікі.',
 	'wva-protected' => 'Це відео захищено.',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'wva-name' => '输入名字：',
+	'wva-add' => '添加',
 );
 

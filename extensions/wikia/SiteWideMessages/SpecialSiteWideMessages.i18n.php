@@ -280,6 +280,23 @@ $messages['be-tarask'] = array(
 	'swm-lang-other' => 'усе астатнія мовы',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'swm-label-edit' => 'Редактиране',
+	'swm-label-remove' => 'Премахване',
+	'swm-label-recipient-wikis' => 'Уикита',
+	'swm-label-recipient-users' => 'Потребители',
+	'swm-label-mode-wikis-all' => 'Всички уикита',
+	'swm-label-mode-wikis-hub' => 'Избраният хъб',
+	'swm-label-mode-wikis-wiki' => 'Избраното уики',
+	'swm-label-mode-users-all' => 'Всички потребители',
+	'swm-label-mode-users-active' => 'Активни потребители',
+	'swm-yes' => 'Да',
+	'swm-no' => 'Не',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
@@ -537,6 +554,36 @@ $messages['ee'] = array(
 	'swm-label-edit' => 'Trɔ asi le eŋu',
 );
 
+/** Greek (Ελληνικά)
+ * @author Evropi
+ */
+$messages['el'] = array(
+	'swm-label-preview' => 'Προεπισκόπηση',
+	'swm-label-edit' => 'Επεξεργασία',
+	'swm-label-remove' => 'Κατάργηση',
+	'swm-label-list' => 'Κατάλογος',
+	'swm-label-recipient-wikis' => 'Τα βίκι',
+	'swm-label-language' => 'Γλώσσα',
+	'swm-button-lang-checkall' => '[Επιλογή όλων]',
+	'swm-button-lang-checknone' => '[ Επιλογή κανενός ]',
+	'swm-button-preview' => '[Προεπισκόπηση]',
+	'swm-button-send' => '[ Αποστολή ]',
+	'swm-button-save' => '[ Αποθήκευση ]',
+	'swm-button-new' => '[ Νέο ]',
+	'swm-msg-sent-ok' => '<h3>Το μήνυμα εστάλη.</h3>',
+	'swm-msg-remove' => 'Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το μήνυμα; Αυτό δεν μπορεί να αναιρεθεί!',
+	'swm-days' => 'ποτέ,ώρα,ώρες,ημέρα,ημέρες',
+	'swm-list-table-wiki' => 'Βίκι',
+	'swm-yes' => 'Ναι',
+	'swm-no' => 'Όχι',
+	'swm-error-no-such-wiki' => 'Δεν υπάρχει κανένα τέτοιο βίκι!',
+	'swm-error-no-such-user' => 'Ο συγκεκριμένος χρήστης δεν υπάρχει.',
+	'swm-error-empty-message' => 'Εισαγάγετε το περιεχόμενο του μηνύματος.',
+	'swm-error-long-message' => 'Τα μηνύματα περιορίζονται σε 500 χαρακτήρες.',
+	'swm-error-empty-group' => 'Εισαγάγετε το όνομα της ομάδας.',
+	'swm-lang-other' => 'όλες οι υπόλοιπες γλώσσες',
+);
+
 /** Spanish (Español)
  * @author Bola
  * @author Crazymadlover
@@ -622,6 +669,14 @@ $messages['eu'] = array(
 	'swm-list-table-tools' => 'Tresnak',
 	'swm-yes' => 'Bai',
 	'swm-no' => 'Ez',
+);
+
+/** Persian (فارسی)
+ * @author Ebraminio
+ */
+$messages['fa'] = array(
+	'swm-label-content' => 'محتوا',
+	'swm-list-table-content' => 'محتوا',
 );
 
 /** Finnish (Suomi)
@@ -1073,6 +1128,7 @@ $messages['kn'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
+	'swm-label-comment' => 'Aanmerkung',
 	'swm-button-new' => '[ Neu ]',
 );
 
@@ -1196,6 +1252,89 @@ $messages['mn'] = array(
 	'swm-list-table-lang' => 'Хэлнүүд',
 	'swm-yes' => 'Тийм',
 	'swm-no' => 'Үгүй',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'sitewidemessages' => 'Pesanan seluruh tapak',
+	'swm-page-title-editor' => 'Pesanan seluruh tapak :: Penyunting',
+	'swm-page-title-preview' => 'Pesanan seluruh tapak :: Pratonton',
+	'swm-page-title-send' => 'Pesanan seluruh tapak :: Hantar',
+	'swm-page-title-sent' => 'Pesanan seluruh tapak :: Dihantar',
+	'swm-page-title-dismiss' => 'Pesanan seluruh tapak :: Buang',
+	'swm-page-title-list' => 'Pesanan seluruh tapak :: Senarai',
+	'swm-label-preview' => 'Pratonton',
+	'swm-label-edit' => 'Sunting',
+	'swm-label-remove' => 'Gugurkan',
+	'swm-label-sent' => 'Dihantar',
+	'swm-label-list' => 'Senarai',
+	'swm-label-recipient' => 'Penerima',
+	'swm-label-recipient-wikis' => 'Wiki',
+	'swm-label-recipient-users' => 'Pengguna',
+	'swm-label-expiration' => 'Waktu luput',
+	'swm-label-mode-wikis-all' => 'Semua wiki',
+	'swm-label-mode-wikis-hub' => 'Hab terpilih',
+	'swm-label-mode-wikis-wiki' => 'Wiki terpilih',
+	'swm-label-mode-users-all' => 'Semua pengguna',
+	'swm-label-mode-users-active' => 'Pengguna aktif',
+	'swm-label-mode-users-group' => 'Pengguna dalam kumpulan',
+	'swm-label-mode-users-group-hint' => '<i>Pilih satu kumpulan daripada menu juntai bawah, atau taipkan nama yang dicari itu sendiri untuk mengatasi pilihan juntai bawah.</i>',
+	'swm-label-mode-users-user' => 'Pengguna terpilih',
+	'swm-label-mode-users-user-hint' => '<i>Pilihan ini mengabaikan pilihan dalam kumpulan "Wiki".</i>',
+	'swm-label-content' => 'Kandungan',
+	'swm-label-comment' => 'Ulasan',
+	'swm-label-dismissed' => 'Dibuang',
+	'swm-label-language' => 'Bahasa',
+	'swm-button-lang-checkall' => '[ Pilih semua ]',
+	'swm-button-lang-checknone' => '[ Gugurkan semua ]',
+	'swm-taskmanager-hint' => '<i>Perhatian: ada sesetengah pilihan yang mengambil masa yang agak lama, oleh itu terpaksa digilirkan dalam Pengurus Tugas.</i>',
+	'swm-button-preview' => '[ Pratonton ]',
+	'swm-button-send' => '[ Hantar ]',
+	'swm-button-save' => '[ Simpan ]',
+	'swm-button-new' => '[ Baru ]',
+	'swm-msg-sent-ok' => '<h3>Pesanan telah dihantar.</h3>',
+	'swm-msg-sent-err' => '<h3>Pesanan BELUM dihantar.</h3>Rujuk log ralat untuk keterangan lanjut.',
+	'swm-msg-remove' => 'Adakah anda benar-benar ingin memadamkan pesanan ini? Pesanan yang terpadam tidak boleh dipulihkan!',
+	'swm-days' => 'tak pernah,jam,jam,hari,hari',
+	'swm-expire-info' => 'Pesanan ini akan luput pada $1.',
+	'swm-link-dismiss' => 'buang pesanan ini',
+	'swm-dismiss-content' => '<p>Pesanan telah dibuang.</p><p>%s</p>',
+	'swm-list-no-messages' => 'Tiada pesanan.',
+	'swm-list-table-id' => 'ID',
+	'swm-list-table-sender' => 'Pengirim',
+	'swm-list-table-wiki' => 'Wiki',
+	'swm-list-table-recipient' => 'Penerima',
+	'swm-list-table-group' => 'Kumpulan',
+	'swm-list-table-expire' => 'Luput',
+	'swm-list-table-date' => 'Tarikh hantar',
+	'swm-list-table-removed' => 'Digugurkan',
+	'swm-list-table-content' => 'Kandungan',
+	'swm-list-table-tools' => 'Alatan',
+	'swm-list-table-lang' => 'Bahasa',
+	'swm-yes' => 'Ya',
+	'swm-no' => 'Tidak',
+	'swm-error-no-such-wiki' => 'Wiki ini tidak wujud!',
+	'swm-error-no-such-user' => 'Pengguna yang dinyatakan tidak wujud.',
+	'swm-error-empty-message' => 'Isikan kandungan pesanan.',
+	'swm-error-long-message' => 'Pesanan terhad kepada 500 aksara.',
+	'swm-error-empty-group' => 'Isikan nama kumpulan.',
+	'swm-lang-other' => 'semua bahasa yang tinggal',
+);
+
+/** Mazanderani (مازِرونی)
+ * @author محک
+ */
+$messages['mzn'] = array(
+	'swm-label-edit' => 'دچی‌ین',
+);
+
+/** Nepali (नेपाली)
+ * @author Bhawani Gautam Rhk
+ */
+$messages['ne'] = array(
+	'swm-button-new' => '[ नयाँ ]',
 );
 
 /** Dutch (Nederlands)
@@ -1993,5 +2132,25 @@ $messages['vo'] = array(
  */
 $messages['yi'] = array(
 	'swm-yes' => 'יא',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'swm-label-sent' => '已发送',
+	'swm-label-mode-wikis-all' => '所有维基',
+	'swm-label-mode-users-all' => '所有用户',
+	'swm-label-content' => '内容',
+	'swm-button-save' => '[ 保存 ]',
+	'swm-button-new' => '[ 新 ]',
+	'swm-list-no-messages' => '没有信息。',
+	'swm-list-table-id' => 'ID',
+	'swm-list-table-sender' => '发送者',
+	'swm-list-table-wiki' => '维基',
+	'swm-list-table-recipient' => '受信者',
+	'swm-yes' => '是',
+	'swm-no' => '不是',
+	'swm-error-no-such-wiki' => '没有这个维基！',
 );
 

@@ -45,9 +45,10 @@ $messages['ang'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author OsamaK
  */
 $messages['ar'] = array(
-	'ircgate-username' => 'إسم المستخدم:',
+	'ircgate-username' => 'اسم المستخدم:',
 	'ircgate-channel' => 'لقناة :',
 );
 
@@ -65,6 +66,13 @@ $messages['ba'] = array(
 $messages['be-tarask'] = array(
 	'ircgate-username' => 'Імя ўдзельніка:',
 	'ircgate-channel' => 'Канал:',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'ircgate-username' => 'Потребителско име:',
 );
 
 /** Bahasa Banjar (Bahasa Banjar)
@@ -240,11 +248,27 @@ $messages['ksh'] = array(
 	'ircgate-username' => 'Metmaachername:',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'ircgate-username' => 'Navê bikarhêner:',
+	'ircgate-channel' => 'Kanal:',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'ircgate-username' => 'Benotzernumm:',
+);
+
 /** Lingala (Lingála)
  * @author Eruedin
+ * @author Moyogo
  */
 $messages['ln'] = array(
-	'ircgate-username' => 'Kómbó ya mosáleli:',
+	'ircgate-username' => 'Nkómbó ya mosáleli :',
 	'ircgate-channel' => 'Lileko:',
 );
 
@@ -269,6 +293,14 @@ $messages['mk'] = array(
  */
 $messages['mn'] = array(
 	'ircgate-username' => 'Хэрэглэгчийн нэр:',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'ircgate-username' => 'Nama pengguna:',
+	'ircgate-channel' => 'Saluran:',
 );
 
 /** Nepali (नेपाली)

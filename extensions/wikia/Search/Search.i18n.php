@@ -11,17 +11,6 @@ $messages['en'] = array(
 	'wikiasearch-image-results' => 'Image Results for "$1"',
 );
 
-/** Jamaican Creole English (Jamaican Creole English)
- * @author Yocahuna
- */
-$messages['jam'] = array(
-	'wikiasearch-titles-only' => 'Saach onggl ina piej taikl',
-	'wikiasearch-system-error-msg' => 'Juu tu sistim era, yu saach kudn kompliit',
-	'wikiasearch-search-this-wiki' => 'Saach Wikia Central onli',
-	'wikiasearch-search-wikia' => 'Saach Wikia',
-	'wikiasearch-image-results' => 'Imij Rizolt fi "$1"',
-);
-
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -102,12 +91,14 @@ $messages['de-formal'] = array(
 
 /** Greek (Ελληνικά)
  * @author Dada
+ * @author Evropi
  */
 $messages['el'] = array(
 	'wikiasearch-titles-only' => 'Αναζήτηση μόνο στους τίτλους των σελίδων',
 	'wikiasearch-system-error-msg' => 'Εξαιτίας ενός σφάλματος του συστήματος, η αναζήτησή σας δεν ολοκληρώθηκε',
 	'wikiasearch-search-this-wiki' => 'Αναζήτηση μόνο στο Wikia Central',
 	'wikiasearch-search-wikia' => 'Αναζήτηση στο Wikia',
+	'wikiasearch-image-results' => 'Αποτελέσματα Εικόνων για "$1"',
 );
 
 /** Spanish (Español)
@@ -251,8 +242,10 @@ $messages['ig'] = array(
 /** Italian (Italiano)
  * @author Beta16
  * @author Gianfranco
+ * @author Pietrodn
  */
 $messages['it'] = array(
+	'search-desc' => 'Motore di ricerca di Wikia che utilizza il backend Solr',
 	'wikiasearch-titles-only' => 'Cerca solo nei titoli delle pagine',
 	'wikiasearch-system-error-msg' => 'A causa di un errore di sistema, la tua ricerca non è stata completata',
 	'wikiasearch-search-this-wiki' => 'Cerca sono in Wikia Central',
@@ -269,6 +262,24 @@ $messages['ja'] = array(
 	'wikiasearch-search-this-wiki' => 'セントラルウィキアのみを検索する',
 	'wikiasearch-search-wikia' => 'ウィキア全体を検索',
 	'wikiasearch-image-results' => '"$1" の画像検索結果',
+);
+
+/** Jamaican Creole English (Patios)
+ * @author Yocahuna
+ */
+$messages['jam'] = array(
+	'wikiasearch-titles-only' => 'Saach onggl ina piej taikl',
+	'wikiasearch-system-error-msg' => 'Juu tu sistim era, yu saach kudn kompliit',
+	'wikiasearch-search-this-wiki' => 'Saach Wikia Central onli',
+	'wikiasearch-search-wikia' => 'Saach Wikia',
+	'wikiasearch-image-results' => 'Imij Rizolt fi "$1"',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'wikiasearch-image-results' => 'Encamên wêneyê ji bo "$1"',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -311,6 +322,18 @@ $messages['mk'] = array(
 	'wikiasearch-search-this-wiki' => 'Пербарувај само по Викија Централата',
 	'wikiasearch-search-wikia' => 'Пребарајте ја Викија',
 	'wikiasearch-image-results' => 'Резултати за слики за „$1“',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'search-desc' => 'Enjin carian rentas Wikia yang menggunakan backend Solr',
+	'wikiasearch-titles-only' => 'Cari tajuk laman sahaja',
+	'wikiasearch-system-error-msg' => 'Carian anda tidak dapat disiapkan kerana ralat sistem',
+	'wikiasearch-search-this-wiki' => 'Cari di Wikia Central sahaja',
+	'wikiasearch-search-wikia' => 'Cari Wikia',
+	'wikiasearch-image-results' => 'Hasil Carian Gambar (Imej) untuk "$1"',
 );
 
 /** Dutch (Nederlands)

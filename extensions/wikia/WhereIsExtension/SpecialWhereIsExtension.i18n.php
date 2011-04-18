@@ -354,6 +354,7 @@ $messages['kn'] = array(
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'whereisextension-submit' => 'Lêbigere',
 	'whereisextension-filter' => 'Fîltre',
 	'whereisextension-search-type' => 'Cure:',
 );
@@ -382,6 +383,23 @@ $messages['mk'] = array(
 	'whereisextension-search-type' => 'Тип:',
 	'whereisextension-search-type-bool' => 'Булов',
 	'whereisextension-search-type-full' => 'Како',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'whereisextension' => 'Sambungan di Mana',
+	'whereisextension-submit' => 'Cari',
+	'whereisextension-list' => 'Senarai wiki yang berpadan kriterianya',
+	'whereisextension-isset' => 'ditetapkan kepada',
+	'whereisextension-filter' => 'Penapis',
+	'whereisextension-all-groups' => 'Semua kumpulan',
+	'whereisextension-name-contains' => 'nama pembolehubah mengandungi',
+	'whereisextension-search-like-value' => 'Seperti:',
+	'whereisextension-search-type' => 'Jenis:',
+	'whereisextension-search-type-bool' => 'Boolean',
+	'whereisextension-search-type-full' => 'Seperti',
 );
 
 /** Dutch (Nederlands)
@@ -616,5 +634,14 @@ $messages['uk'] = array(
 	'whereisextension-filter' => 'Фільтр',
 	'whereisextension-all-groups' => 'Всі групи',
 	'whereisextension-search-type' => 'Тип:',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'whereisextension-submit' => '搜寻',
+	'whereisextension-search-type' => '类型：',
+	'whereisextension-search-type-full' => '喜欢',
 );
 

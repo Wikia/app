@@ -114,6 +114,16 @@ $messages['af'] = array(
 	'scavengerhunt-entry-form-submit' => 'Stuur inskrywing',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'scavengerhunt-list-header-actions' => 'Действия',
+	'scavengerhunt-label-name' => 'Име:',
+	'scavengerhunt-button-save' => 'Съхраняване',
+	'scavengerhunt-button-delete' => 'Изтриване',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -281,6 +291,19 @@ $messages['ia'] = array(
 	'scavengerhunt-entry-form-submit' => 'Submitter entrata',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'scavengerhunt-list-header-name' => 'Navê lîstikê',
+	'scavengerhunt-list-edit' => 'biguherîne',
+	'scavengerhunt-label-name' => 'Nav:',
+	'scavengerhunt-button-save' => 'Qeyd bike',
+	'scavengerhunt-button-delete' => 'Jê bibe',
+	'scavengerhunt-entry-form-name' => 'Navê te:',
+	'scavengerhunt-entry-form-submit' => 'Gotarê qeyd bike',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -357,6 +380,16 @@ $messages['mk'] = array(
 	'scavengerhunt-entry-form-name' => 'Вашето име:',
 	'scavengerhunt-entry-form-email' => 'Ваша е-пошта:',
 	'scavengerhunt-entry-form-submit' => 'Поднеси',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'scavengerhunt-label-article-title' => 'Tajuk laman (tajuk rencana di wiki ini):',
+	'scavengerhunt-form-error-no-article-title' => 'Sila isikan semua tajuk rencana.',
+	'scavengerhunt-entry-form-name' => 'Nama anda:',
+	'scavengerhunt-entry-form-email' => 'Alamat e-mel anda:',
 );
 
 /** Dutch (Nederlands)
@@ -500,6 +533,9 @@ $messages['no'] = array(
  * @author SandroHc
  */
 $messages['pt'] = array(
+	'scavengerhunt-desc' => 'Permite a criação de um jogo de Caça ao Tesouro numa wiki',
+	'scavengerhunt' => 'Interface da Caça ao Tesouro',
+	'scavengerhunt-list-header-name' => 'Nome do jogo',
 	'scavengerhunt-list-header-is-enabled' => 'Activado?',
 	'scavengerhunt-list-header-actions' => 'Acções',
 	'scavengerhunt-list-enabled' => 'Activado',
@@ -509,12 +545,53 @@ $messages['pt'] = array(
 	'scavengerhunt-label-image-check' => '(mostrar imagem)',
 	'scavengerhunt-label-general' => 'Geral',
 	'scavengerhunt-label-name' => 'Nome:',
+	'scavengerhunt-label-landing-title' => 'Nome da página de destino (título do artigo nesta wiki):',
+	'scavengerhunt-label-landing-button-text' => 'Texto do botão da página de destino:',
+	'scavengerhunt-label-starting-clue' => 'Janela da Pista Inicial',
+	'scavengerhunt-label-starting-clue-title' => 'Título da janela:',
+	'scavengerhunt-label-starting-clue-text' => 'Texto da janela <i>(o texto enter &lt;div&gt; terá a cor de um link)</i>',
+	'scavengerhunt-label-starting-clue-image' => 'Imagem da janela (endereço URL):',
+	'scavengerhunt-label-starting-clue-button-text' => 'Texto do botão da janela:',
+	'scavengerhunt-label-starting-clue-button-target' => 'Destino do botão da janela (endereço URL):',
+	'scavengerhunt-label-article' => 'Página incluída no jogo',
+	'scavengerhunt-label-article-title' => 'Título da página (título do artigo nesta wiki):',
 	'scavengerhunt-label-article-hidden-image' => 'Imagem oculta:',
+	'scavengerhunt-label-article-clue-title' => 'Título da janela da pista:',
+	'scavengerhunt-label-article-clue-text' => 'Texto da janela da pista:',
+	'scavengerhunt-label-article-clue-image' => 'Imagem da janela da pista (endereço URL):',
+	'scavengerhunt-label-article-clue-button-text' => 'Texto do botão da janela da pista:',
+	'scavengerhunt-label-article-clue-button-target' => 'Destino do botão da janela da pista (endereço URL):',
+	'scavengerhunt-label-entry-form' => 'Formulário de entrada',
+	'scavengerhunt-label-entry-form-title' => 'Título da janela:',
+	'scavengerhunt-label-entry-form-text' => 'Texto da janela:',
+	'scavengerhunt-label-entry-form-image' => 'Imagem da janela (endereço URL):',
+	'scavengerhunt-label-entry-form-question' => 'Pergunta da janela:',
+	'scavengerhunt-label-goodbye' => 'Janela de despedida',
+	'scavengerhunt-label-goodbye-title' => 'Título da janela:',
+	'scavengerhunt-label-goodbye-text' => 'Mensagem da janela:',
+	'scavengerhunt-label-goodbye-image' => 'Imagem da janela (endereço URL):',
 	'scavengerhunt-button-add' => 'Adicionar um jogo',
 	'scavengerhunt-button-save' => 'Gravar',
 	'scavengerhunt-button-disable' => 'Desactivar',
 	'scavengerhunt-button-enable' => 'Activar',
 	'scavengerhunt-button-delete' => 'Eliminar',
+	'scavengerhunt-button-export' => 'Exportar para CSV',
+	'scavengerhunt-form-error' => 'Corrija os seguintes erros, por favor:',
+	'scavengerhunt-form-error-no-landing-title' => 'Introduza o título da página inicial, por favor.',
+	'scavengerhunt-form-error-invalid-title' => 'O título de página "$1" não foi encontrado.',
+	'scavengerhunt-form-error-landing-button-text' => 'Introduza o texto do botão de início.',
+	'scavengerhunt-form-error-starting-clue' => 'Preencha todos os campos da secção da pista inicial, por favor.',
+	'scavengerhunt-form-error-entry-form' => 'Preencha todos os campos da secção do formulário de entrada.',
+	'scavengerhunt-form-error-goodbye' => 'Preencha todos os campos da secção da janela de despedida, por favor.',
+	'scavengerhunt-form-error-no-article-title' => 'Introduza todos os títulos de artigos, por favor.',
+	'scavengerhunt-form-error-article-hidden-image' => 'Introduza todos os endereços das imagens ocultas, por favor.',
+	'scavengerhunt-form-error-article-clue' => 'Introduza todas as informações sobre as pistas dos artigos, por favor.',
+	'scavengerhunt-game-has-been-created' => 'Foi criado um jogo novo de Caça ao Tesouro.',
+	'scavengerhunt-game-has-been-saved' => 'O jogo da Caça ao Tesouro foi gravado.',
+	'scavengerhunt-game-has-been-enabled' => 'O jogo seleccionado de Caça ao Tesouro foi activado.',
+	'scavengerhunt-game-has-been-disabled' => 'O jogo seleccionado de Caça ao Tesouro foi desactivado.',
+	'scavengerhunt-game-has-not-been-saved' => 'O jogo da Caça ao Tesouro não foi gravado.',
+	'scavengerhunt-edit-token-mismatch' => 'Foi detectada uma incompatibilidade nas etiquetas de edição - tente novamente, por favor.',
 	'scavengerhunt-entry-form-name' => 'O seu nome:',
 	'scavengerhunt-entry-form-email' => 'Correio electrónico:',
 	'scavengerhunt-entry-form-submit' => 'Enviar entrada',
@@ -551,5 +628,86 @@ $messages['te'] = array(
 	'scavengerhunt-button-delete' => 'తొలగించు',
 	'scavengerhunt-entry-form-name' => 'మీ పేరు:',
 	'scavengerhunt-entry-form-email' => 'మీ ఈ-మెయిలు చిరునామా:',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'scavengerhunt-desc' => 'Nagpapahintulot sa paglikha ng isang laro ng tagapaghanap ng mga mapapakinabangan sa isang wiki',
+	'scavengerhunt' => 'Ugnayang mukha ng pangangaso ng tagapaghanap ng mga mapapakinabangan',
+	'scavengerhunt-list-header-name' => 'Pangalan ng laro',
+	'scavengerhunt-list-header-is-enabled' => 'Pinagagana ba?',
+	'scavengerhunt-list-header-actions' => 'Mga galaw',
+	'scavengerhunt-list-enabled' => 'Pinagana na',
+	'scavengerhunt-list-disabled' => 'Hindi pinagagana',
+	'scavengerhunt-list-edit' => 'baguhin',
+	'scavengerhunt-label-dialog-check' => '(ipakita ang diyalogo)',
+	'scavengerhunt-label-image-check' => '(ipakita ang larawan)',
+	'scavengerhunt-label-general' => 'Pangkalahatan',
+	'scavengerhunt-label-name' => 'Pangalan:',
+	'scavengerhunt-label-landing-title' => 'Pangalan ng pahinang lapagan (pamagat ng artikulo sa wiking ito):',
+	'scavengerhunt-label-landing-button-text' => 'Teksto ng pindutan ng pahinang lapagan:',
+	'scavengerhunt-label-starting-clue' => 'Biglang-litaw na Pansimulang Pahiwatig',
+	'scavengerhunt-label-starting-clue-title' => 'Pamagat ng biglang-litaw:',
+	'scavengerhunt-label-starting-clue-text' => 'Teksto ng biglang-litaw: <i>(ang tekstong nasa &lt;div&gt; ay magkakaroon ng kulay ng kawing)</i>',
+	'scavengerhunt-label-starting-clue-image' => 'Larawan ng biglang-litaw (tirahan ng URL):',
+	'scavengerhunt-label-starting-clue-button-text' => 'Teksto ng pindutan ng biglang-litaw:',
+	'scavengerhunt-label-starting-clue-button-target' => 'Puntirya ng pindutan ng biglang-litaw (tirahan ng URL):',
+	'scavengerhunt-label-article' => 'Pahina sa loob ng laro',
+	'scavengerhunt-label-article-title' => 'Pamagat ng pahina (pamagat ng artikulo sa wiking ito):',
+	'scavengerhunt-label-article-hidden-image' => 'Nakatagong larawan:',
+	'scavengerhunt-label-article-clue-title' => 'Biglang-litaw na pamagat ng pahiwatig:',
+	'scavengerhunt-label-article-clue-text' => 'Biglang-litaw na pamagat ng pahiwatig:',
+	'scavengerhunt-label-article-clue-image' => 'Biglang-litaw na larawan ng pahiwatig (tirahan ng URL):',
+	'scavengerhunt-label-article-clue-button-text' => 'Teksto ng biglang-litaw na pahiwatig:',
+	'scavengerhunt-label-article-clue-button-target' => 'Puntirya ng biglang-litaw na pindutan ng pahiwatig (tirahan ng URL):',
+	'scavengerhunt-label-entry-form' => 'Pormularyong pasukan',
+	'scavengerhunt-label-entry-form-title' => 'Pamagat ng biglang-litaw:',
+	'scavengerhunt-label-entry-form-text' => 'Teksto ng biglang-litaw:',
+	'scavengerhunt-label-entry-form-image' => 'Larawan ng biglang-litaaw (tirahan ng URL):',
+	'scavengerhunt-label-entry-form-question' => 'Biglang-litaw na tanong:',
+	'scavengerhunt-label-goodbye' => 'Biglang-litaw na pamamaalam',
+	'scavengerhunt-label-goodbye-title' => 'Pamagat ng biglang-litaw:',
+	'scavengerhunt-label-goodbye-text' => 'Biglang-litaw na mensahe:',
+	'scavengerhunt-label-goodbye-image' => 'Biglang-litaw na larawan (tirahan ng URL):',
+	'scavengerhunt-button-add' => 'Magdagdag ng isang laro',
+	'scavengerhunt-button-save' => 'Sagipin',
+	'scavengerhunt-button-disable' => 'Huwag paganahin',
+	'scavengerhunt-button-enable' => 'Paganahin',
+	'scavengerhunt-button-delete' => 'Burahin',
+	'scavengerhunt-button-export' => 'Iluwas sa CSV',
+	'scavengerhunt-form-error' => 'Pakitama ang sumusunod na mga kamalian:',
+	'scavengerhunt-form-error-no-landing-title' => 'Pakipasok ang pamagat ng pahina ng pagsisimula.',
+	'scavengerhunt-form-error-invalid-title' => 'Hindi natagpuan ang sumusunod na pamagat ng pahina: "$1".',
+	'scavengerhunt-form-error-landing-button-text' => 'Pakipasok ang teksto ng pindutan ng pagsisimula.',
+	'scavengerhunt-form-error-starting-clue' => 'Pakipunuan ang lahat ng mga hanay na nasa loob ng bahagi ng pansimulang pahiwatig.',
+	'scavengerhunt-form-error-entry-form' => 'Pakipunuan ang lahat ng mga hanay na nasa loob ng bahagi ng pormularyong pasukan.',
+	'scavengerhunt-form-error-goodbye' => 'Pakipunuan ang lahat ng mga hanay na nasa bahagi ng biglang-litaw na pamamaalam.',
+	'scavengerhunt-form-error-no-article-title' => 'Pakipasok ang lahat ng mga pamagat ng artikulo.',
+	'scavengerhunt-form-error-article-hidden-image' => 'Pakipasok ang lahat ng mga tirahan para sa nakatagong mga larawan.',
+	'scavengerhunt-form-error-article-clue' => 'Pakipasok ang lahat ng kabatiran tungkol sa mga pahiwatig ng artikulo.',
+	'scavengerhunt-game-has-been-created' => 'Nalikha ang bagong laro ng Paghahanap ng mga Mapapakinabangan.',
+	'scavengerhunt-game-has-been-saved' => 'Nasagip na ang laro ng Paghahanap ng mga Mapapakinabangan.',
+	'scavengerhunt-game-has-been-enabled' => 'Pinagana ang napiling laro ng Paghahanap ng mga Mapapakinabangan.',
+	'scavengerhunt-game-has-been-disabled' => 'Hindi pinagana ang napiling laro ng Paghahanap ng Mapapakinabangan.',
+	'scavengerhunt-game-has-not-been-saved' => 'Hindi pa nasasagip ang laro ng Paghahanap ng Mapapakinabangan.',
+	'scavengerhunt-edit-token-mismatch' => 'Hindi pagtutugma ng kahalip ng pagbago - mangyaring subukan uli.',
+	'scavengerhunt-entry-form-name' => 'Pangalan mo:',
+	'scavengerhunt-entry-form-email' => 'Tirahan ng e-liham mo:',
+	'scavengerhunt-entry-form-submit' => 'Ipasa ang ipinasok',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'scavengerhunt-list-header-name' => '游戏名',
+	'scavengerhunt-label-name' => '名：',
+	'scavengerhunt-button-add' => '添加一个游戏',
+	'scavengerhunt-button-save' => '保存',
+	'scavengerhunt-button-delete' => '删除',
+	'scavengerhunt-entry-form-name' => '您的名字：',
+	'scavengerhunt-entry-form-email' => '您的电子邮件地址：',
 );
 

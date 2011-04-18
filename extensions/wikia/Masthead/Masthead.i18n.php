@@ -58,9 +58,13 @@ $messages['ar'] = array(
 	'useravatar-log' => 'سجل تغييرات الصور الرمزية',
 );
 
-/** Bulgarian (Български) */
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
 $messages['bg'] = array(
+	'blog-avatar-delete' => 'Изтриване',
 	'prefs-avatarupload' => 'Аватар',
+	'blog-avatar-getuser' => 'Търсене',
 );
 
 /** Breton (Brezhoneg)
@@ -307,6 +311,7 @@ Lembre que os avatares son globais, é dicir, a eliminación do avatar dun usuar
 );
 
 /** Armenian (Հայերեն)
+ * @author Chaojoker
  * @author Pandukht
  */
 $messages['hy'] = array(
@@ -320,8 +325,8 @@ $messages['hy'] = array(
 	'blog-avatar-nouser' => 'Չի ստացվում գտնել այդ մասնակցին:',
 	'blog-avatar-cannot-remove' => 'Չի ստացվում ջնջել ավատարները ընտրված մասնակցի համար:',
 	'blog-avatar-getuser' => 'Որոնում',
-	'blog-avatar-error-nofile' => 'Խնդրում ենք, նշեք ֆայլը սկավառակի վրա',
-	'blog-avatar-error-cantwrite' => 'Չի ստացվում հիշել ֆայլը',
+	'blog-avatar-error-nofile' => 'Խնդրում ենք ձեր համակարգչից ընտրել նիշքը',
+	'blog-avatar-error-cantwrite' => 'Չի ստացվում հիշել նիշքը',
 	'blog-avatar-changed-log' => 'ավելացրել է կամ փոխել է ավատարը',
 	'removeuseravatar' => 'Մասնակիցների ավատարների ջնջում',
 	'right-removeavatar' => 'մասնակիցների ավատարների ջնջում',
@@ -436,8 +441,11 @@ $messages['ja'] = array(
 	'right-removeavatar' => '利用者のアバターの削除',
 );
 
-/** Luxembourgish (Lëtzebuergesch) */
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
 $messages['lb'] = array(
+	'blog-avatar-edit' => 'Änneren',
 	'blog-avatar-delete' => 'Läschen',
 	'prefs-avatarupload' => 'Avatar',
 );
@@ -472,6 +480,38 @@ $messages['mk'] = array(
 	'blog-avatar-alt' => 'Дневници на додавања и отстранувања на кориснички аватари',
 	'removeuseravatar' => 'Отстрани кориснички аватар',
 	'right-removeavatar' => 'Отстранување на аватари на корисници',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'blog-avatar-removeavatar' => 'Padam avatar',
+	'blog-avatar-goto-userpage' => 'Pergi ke laman pengguna',
+	'blog-avatar-edit' => 'Tukar',
+	'blog-avatar-delete' => 'Hapus',
+	'prefs-avatarupload' => 'Avatar',
+	'blog-avatar-choose-avatar' => 'Pilih avatar baru',
+	'blog-avatar-upload-avatar' => 'Muat naik avatar baru',
+	'blog-avatar-nouser' => 'Pengguna ini tidak dapat dicari!',
+	'blog-avatar-cannot-remove' => 'Avatar tidak boleh digugurkan daripada pengguna yang dipilih!',
+	'blog-avatar-remove-info' => 'Laman ini membolehkan anda mengugurkan avatar pengguna.
+Taipkan nama pengguna setepatnya dalam ruangan yang disediakan, kemudian tekan "{{int:blog-avatar-getuser}}".<br />
+Tolong ingat, avatar itu global - apabila ia digugurkan, ia digugurkan dari seluruh Wikia.',
+	'blog-avatar-getuser' => 'Cari',
+	'blog-avatar-remove-confirm' => 'Adakah anda benar-benar ingin menggugurkan avatar ini?',
+	'blog-avatar-error-nofile' => 'Sila pilih fail dari komputer anda',
+	'blog-avatar-error-size' => 'Fail yang dimuat naik itu terlalu besar, melebihi had $1 KB.',
+	'blog-avatar-error-cantwrite' => 'Fail tidak dapat disimpan',
+	'blog-avatar-error-type' => 'Jenis MIME tidak sah. Diberikan: $1 - Dibenarkan: $2',
+	'blog-avatar-changed-log' => 'Avatar disisipkan atau ditukar',
+	'blog-avatar-removed-log' => 'Avatar $1 digugurkan',
+	'blog-avatar-save-info' => 'Jika anda ingin menyimpan perubahan, <a href="#prefcontrol">pergi ke bawah</a> dan tekan butang "{{int:saveprefs}}"',
+	'masthead-edits-since' => 'suntingan sejak',
+	'useravatar-log' => 'Log avatar pengguna',
+	'blog-avatar-alt' => 'Log penambahan atau pengguguran avatar pengguna',
+	'removeuseravatar' => 'Gugurkan avatar pengguna',
+	'right-removeavatar' => 'Gugurkan avatar-avatar pengguna',
 );
 
 /** Dutch (Nederlands)
@@ -728,7 +768,7 @@ $messages['sr-ec'] = array(
 	'blog-avatar-delete' => 'Обриши',
 	'prefs-avatarupload' => 'Корисничка сличица',
 	'blog-avatar-choose-avatar' => 'Изабери нову сличицу',
-	'blog-avatar-upload-avatar' => 'Отпреми нову сличицу',
+	'blog-avatar-upload-avatar' => 'Пошаљи нову сличицу',
 	'blog-avatar-nouser' => 'Овај корисник није пронађен!',
 	'blog-avatar-cannot-remove' => 'Корисничке сличице се не могу уклонити с изабраног корисника!',
 	'blog-avatar-getuser' => 'Претражи',
@@ -781,6 +821,15 @@ $messages['uk'] = array(
 	'blog-avatar-edit' => 'Змінити',
 	'blog-avatar-delete' => 'Вилучити',
 	'masthead-edits-since' => 'редагувань з',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'blog-avatar-goto-userpage' => '去到用户页',
+	'blog-avatar-delete' => '删除',
+	'blog-avatar-getuser' => '搜寻',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)

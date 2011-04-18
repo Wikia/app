@@ -292,6 +292,13 @@ $messages['lb'] = array(
 	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|Säit|Säiten}})',
 );
 
+/** Latgalian (Latgaļu)
+ * @author Dark Eagle
+ */
+$messages['ltg'] = array(
+	'tagsreportgo' => 'Paruodeit',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -313,6 +320,22 @@ $messages['mk'] = array(
  */
 $messages['mn'] = array(
 	'tagsreportgo' => 'Үзүүлэх',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'tagsreport' => 'Laporan tag',
+	'tagsreporttitle' => 'Laporan tag',
+	'tagsreportselecttag' => 'Pilih tag:',
+	'tagsreportgo' => 'Paparkan',
+	'tagsreportnotspecify' => 'Anda belum memilih mana-mana tag khas',
+	'tagsreportnoresults' => 'Tiada hasil carian',
+	'tagsreportmainnspace' => 'Utama',
+	'tagsreportpages' => '(<strong>$1</strong> laman)',
+	'tagsreportpagesfound' => '<strong>$1</strong> laman yang mengandungi tag khas (DPL, YouTube, dsb.) dijumpai',
+	'tagsreportgenerated' => 'Dijana pada $1, $2',
 );
 
 /** Dutch (Nederlands)
@@ -409,6 +432,7 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (Русский)
+ * @author DCamer
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -421,8 +445,8 @@ $messages['ru'] = array(
 	'tagsreportnoresults' => 'Ничего не найдено',
 	'tagsreportmainnspace' => 'Основное',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|страница|страницы|страниц}})',
-	'tagsreportpagesfound' => 'Найдено <strong>$1</strong> страниц, содержащих указанную метку (dpl, youtube, и т. д.)',
-	'tagsreportgenerated' => 'Создано $1 $2',
+	'tagsreportpagesfound' => 'Найдено <strong>$1</strong> {{PLURAL:$1|страницы|страниц}}, содержащих указанную метку (DPL, YouTube, и т. д.)',
+	'tagsreportgenerated' => 'Создана $1 в $2',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
@@ -503,6 +527,30 @@ $messages['uk'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|сторінка|сторінки|сторінок}})',
 	'tagsreportpagesfound' => 'Знайдено <strong>$1</strong> {{PLURAL:$1|сторінку|сторінки|сторінок}}, що містять спеціальні теги (DPL, youtube, і т.д.)',
 	'tagsreportgenerated' => 'Створено $1 о $2',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'tagsreport' => 'Satusenladind virgoiš',
+	'tagsreporttitle' => 'Satusenladind virgoiš',
+	'tagsreportselecttag' => 'Valikat virg:',
+	'tagsreportgo' => 'Ozutada',
+	'tagsreportnotspecify' => 'Tö ei ole völ valinuded konkretišt virgad',
+	'tagsreportnoresults' => "Rezul'tatad ei olgoi löutud",
+	'tagsreportmainnspace' => 'Päsüdäimišt',
+	'tagsreportpages' => "(<strong>$1</strong> {{PLURAL:$1|lehtpol'|lehtpol't}})",
+	'tagsreportpagesfound' => "Om löutud <strong>$1</strong> {{PLURAL:$1|lehtpol'|lehtpol't}}, kus om specialižid virgoid (DPL, YouTube, etc.)",
+	'tagsreportgenerated' => 'Om sätud $1 aigal $2',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'tagsreportgo' => '显示',
+	'tagsreportmainnspace' => '主要',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

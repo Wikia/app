@@ -193,6 +193,26 @@ $messages['as'] = array(
 	'userprofilepage-about-article-title' => 'বিষয়ে',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'userprofilepage-edit-button' => 'Редактиране',
+	'userprofilepage-user-group-sysop' => 'Администратор',
+	'userprofilepage-user-group-bot' => 'Бот',
+	'userprofilepage-user-group-bureaucrat' => 'Бюрократ',
+	'userprofilepage-user-group-helper' => 'Помощник',
+	'userprofilepage-user-group-sysop-tooltip' => 'Този потребител е Администратор в това уики',
+	'userprofilepage-user-group-staff-tooltip' => 'Този потребител е от екипа на Уикия',
+	'userprofilepage-user-group-bot-tooltip' => 'Този потребител е Бот',
+	'userprofilepage-user-group-bureaucrat-tooltip' => 'Този потребител е Бюрократ в това уики',
+	'userprofilepage-user-group-helper-tooltip' => 'Този потребител е Помощник',
+	'recipes-template-user-birthdate-label' => 'Дата на раждане',
+	'recipes-template-user-birthdate-hint' => 'Дата на раждане (в какъв да е формат)',
+	'recipes-template-user-gender-label' => 'Пол',
+	'recipes-template-user-gender-hint' => 'Пол',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -262,7 +282,7 @@ $messages['bs'] = array(
 	'userprofilepage-about-section-title' => 'Moj $1 intervju',
 	'userprofilepage-edit-button' => 'Uredi',
 	'userprofilepage-about-article-title' => 'O',
-	'userprofilepage-about-empty-section' => 'Ova sekcija je prazna. Kliknite na uredi da dodate nešto ovdje!',
+	'userprofilepage-about-empty-section' => 'Ova sekcija je prazna. Kliknite na {{int:userprofilepage-edit-button}} da dodate nešto ovdje!',
 	'userprofilepage-edit-permision-denied' => 'Uređivanje dopuštenja nije dozvoljeno',
 	'userprofilepage-edit-permision-denied-info' => 'Nemate dopuštenja da uređujete nečiju korisničku stranicu ili podstranicu',
 	'userprofilepage-leave-message' => 'Ostavite poruku',
@@ -270,6 +290,9 @@ $messages['bs'] = array(
 	'userprofilepage-user-last-action-edit' => '$1 je uredio stranicu <a href="$2">$3</a>',
 	'userprofilepage-user-last-action-new' => '$1 je napravio stranicu <a href="$2">$3</a>',
 	'userprofilepage-user-last-action-delete' => '$1 je obrisao stranicu <a href="$2">$3</a>',
+	'userprofilepage-user-group-sysop' => 'Admin',
+	'userprofilepage-user-group-bureaucrat' => 'Birokrat',
+	'userprofilepage-user-group-helper' => 'Pomagač',
 	'userprofilepage-top-wikis-title' => 'Najbolji wikiji od $1',
 	'userprofilepage-top-wikis-edit-count' => 'Broj izmjena',
 	'userprofilepage-top-wikis-hidden-see-more' => 'Sakrili ste {{PLURAL:$1|$1 wiki|$1 wikija}}',
@@ -316,7 +339,7 @@ $messages['de'] = array(
 	'userprofilepage-about-section-title' => 'Mein $1 Interview',
 	'userprofilepage-edit-button' => 'Bearbeiten',
 	'userprofilepage-about-article-title' => 'Über',
-	'userprofilepage-about-empty-section' => 'Dieser Abschnitt ist leer. Klicke auf Bearbeiten, um hier ein paar Sachen hinzufügen!',
+	'userprofilepage-about-empty-section' => 'Dieser Abschnitt ist leer. Klicke auf {{int:userprofilepage-edit-button}}, um hier ein paar Sachen hinzufügen!',
 	'userprofilepage-edit-permision-denied' => 'Bearbeitungsberechtigung verweigert',
 	'userprofilepage-edit-permision-denied-info' => 'Du hast keine Berechtigung die Benutzerseite oder Unterseite von jemand anderem zu bearbeiten',
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Jeder in diesem Wiki würde gerne mehr über dich erfahren!</div><a href="$1">Bearbeite diesen Abschnitt</a>, um mehr über dich hinzuzufügen und uns von Dingen zu erzählen, die du magst.',
@@ -374,6 +397,37 @@ $messages['de'] = array(
 	'recipes-template-user-affiliation-hint' => 'Zugehörigkeit',
 );
 
+/** Greek (Ελληνικά)
+ * @author Evropi
+ */
+$messages['el'] = array(
+	'userprofilepage-edit-avatar-label' => 'Επεξεργασία εικόνας',
+	'userprofilepage-users-notes-title' => 'Για εμένα',
+	'userprofilepage-edit-button' => 'Επεξεργασία',
+	'userprofilepage-about-article-title' => 'Σχετικά',
+	'userprofilepage-user-group-sysop' => 'Διαχειριστής',
+	'userprofilepage-user-group-staff' => 'Μέλος του προσωπικού',
+	'userprofilepage-user-group-bot' => 'Bot',
+	'userprofilepage-user-group-bureaucrat' => 'Γραφειοκράτης',
+	'userprofilepage-user-group-helper' => 'Βοηθός',
+	'userprofilepage-user-group-sysop-tooltip' => 'Αυτός ο χρήστης είναι διαχειριστής σε αυτό το βίκι',
+	'userprofilepage-user-group-staff-tooltip' => 'Αυτός ο χρήστης είναι Μέλος του προσωπικού της Wikia',
+	'userprofilepage-user-group-bot-tooltip' => 'Αυτός ο χρήστης είναι ένα ρομπότ',
+	'userprofilepage-user-group-bureaucrat-tooltip' => 'Αυτός ο χρήστης είναι Γραφειοκράτης σε αυτό το βίκι',
+	'userprofilepage-top-wikis-edit-count' => 'Αριθμός Επεξεργασιών',
+	'userprofilepage-top-wikis-unhide-label' => 'επανεμφάνιση',
+	'userprofilepage-top-wikis-hide-label' => 'απόκρυψη',
+	'userprofilepage-recent-activity-title' => 'πρόσφατη δραστηριότητα του $1',
+	'userprofilepage-activity-comment' => 'σχολίασε το $1',
+	'recipes-template-user-description-label' => 'Περιγραφή',
+	'recipes-template-user-birthdate-label' => 'Ημερομηνία γέννησης:',
+	'recipes-template-user-birthdate-hint' => 'Ημερομηνία γέννησης (σε οποιαδήποτε μορφή)',
+	'recipes-template-user-abilities-label' => 'Ικανότητες',
+	'recipes-template-user-abilities-hint' => 'Ικανότητες',
+	'recipes-template-user-gender-label' => 'Φύλλο:',
+	'recipes-template-user-gender-hint' => 'Φύλο:',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -384,7 +438,7 @@ $messages['es'] = array(
 	'userprofilepage-about-section-title' => 'Mi $1 entrevista',
 	'userprofilepage-edit-button' => 'Editar',
 	'userprofilepage-about-article-title' => 'Acerca de',
-	'userprofilepage-about-empty-section' => 'Esta sección está vacía. ¡Haz clic en editar para añadir algunas cosas aquí!',
+	'userprofilepage-about-empty-section' => 'Esta sección está vacía. ¡Haz clic en {{int:userprofilepage-edit-button}} para añadir algunas cosas aquí!',
 	'userprofilepage-edit-permision-denied' => 'Permisos de edición denegados',
 	'userprofilepage-edit-permision-denied-info' => 'No tienes los permisos para editar la página o subpágina de otros',
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">¡Toda la comunidad de esta wiki le gustaría saber más de ti!</div><a href="$1">Edita esta sección</a> para añadir más información sobre ti y dinos acerca de las cosas que te gustan.',
@@ -442,6 +496,18 @@ $messages['es'] = array(
 	'recipes-template-user-affiliation-hint' => 'Afiliación',
 );
 
+/** Persian (فارسی)
+ * @author BlueDevil
+ */
+$messages['fa'] = array(
+	'userprofilepage-users-notes-title' => 'دربارهٔ من',
+	'userprofilepage-user-group-sysop' => 'مدیر',
+	'userprofilepage-user-group-bot' => 'ربات',
+	'userprofilepage-user-group-bureaucrat' => 'دیوان‌سالار',
+	'userprofilepage-user-group-helper' => 'یاور',
+	'userprofilepage-activity-new' => '$1 را ایجاد کرد',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Nike
@@ -485,7 +551,7 @@ $messages['fr'] = array(
 	'userprofilepage-about-section-title' => 'Mon profil $1',
 	'userprofilepage-edit-button' => 'Modifier',
 	'userprofilepage-about-article-title' => 'À propos',
-	'userprofilepage-about-empty-section' => 'Cette section est vide. Cliquez sur Modifier pour ajouter du contenu ici !',
+	'userprofilepage-about-empty-section' => 'Cette section est vide. Cliquez sur {{int:userprofilepage-edit-button}} pour ajouter des choses ici !',
 	'userprofilepage-edit-permision-denied' => 'Autorisations de modification refusées',
 	'userprofilepage-edit-permision-denied-info' => 'Vous n’êtes pas autorisé à modifier la page utilisateur de quelqu’un ou une sous-page',
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size:20px">Chacun sur ce wiki aimerait mieux vous connaître !</div><a href="$1">Modifier cette section</a> pour ajouter plus d’informations à votre sujet et nous parler des choses que vous aimez.',
@@ -553,7 +619,7 @@ $messages['ia'] = array(
 	'userprofilepage-about-section-title' => 'Mi interview de $1',
 	'userprofilepage-edit-button' => 'Modificar',
 	'userprofilepage-about-article-title' => 'A proposito',
-	'userprofilepage-about-empty-section' => 'Iste section es vacue. Clicca "Modificar" pro inserer qualcosa!',
+	'userprofilepage-about-empty-section' => 'Iste section es vacue. Clicca super "{{int:userprofilepage-edit-button}}" pro inserer qualcosa!',
 	'userprofilepage-edit-permision-denied' => 'Permission de modification refusate',
 	'userprofilepage-edit-permision-denied-info' => 'Tu non ha le permission de modificar le pagina o subpagina de un altere usator',
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Omnes in iste wiki es curiose de cognoscer te!</div><a href="$1">Modifica iste section</a> pro adder informationes super te e dicer nos lo que tu ama.',
@@ -615,19 +681,38 @@ $messages['ia'] = array(
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'userprofilepage-edit-avatar-label' => 'Wêneyê biguherîne',
+	'userprofilepage-users-notes-title' => 'Derbarê min de',
+	'userprofilepage-edit-button' => 'Biguherîne',
+	'userprofilepage-about-article-title' => 'Derbarê',
 	'userprofilepage-user-group-bot' => 'Bot',
 	'userprofilepage-user-group-bureaucrat' => 'Bûrokrat',
+	'userprofilepage-user-group-helper' => 'Alîkarîder',
 	'userprofilepage-top-wikis-unhide-label' => 'nîşan bide',
 	'userprofilepage-top-wikis-hide-label' => 'veşêre',
 	'userprofilepage-top-page-unhide-label' => 'nîşan bide',
+	'recipes-template-user-birthdate-label' => 'Jidayîkbûn',
 	'recipes-template-user-gender-label' => 'Zayend',
 	'recipes-template-user-gender-hint' => 'Zayend',
+);
+
+/** Latin (Latina)
+ * @author Rsa23899
+ */
+$messages['la'] = array(
+	'recipes-template-user-species-label' => 'Speciēs',
+	'recipes-template-user-species-hint' => 'Speciēs',
+	'recipes-template-user-abilities-label' => 'Facultatēs',
+	'recipes-template-user-abilities-hint' => 'Facultatēs',
+	'recipes-template-user-gender-label' => 'Sexus',
+	'recipes-template-user-gender-hint' => 'Sexus',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
+	'userprofilepage-about-article-title' => 'Iwwer',
 	'userprofilepage-top-wikis-hide-label' => 'verstoppen',
 	'userprofilepage-top-pages-hidden-see-more' => 'Dir hutt {{PLURAL:$1|eng Säit|$1 Säite}} verstoppt',
 	'recipes-template-user-description-label' => 'Beschreiwung',
@@ -646,7 +731,7 @@ $messages['mk'] = array(
 	'userprofilepage-about-section-title' => 'Мое интервју - $1',
 	'userprofilepage-edit-button' => 'Уреди',
 	'userprofilepage-about-article-title' => 'За страницава',
-	'userprofilepage-about-empty-section' => 'Овој пасус е празен. Кликнете тука за да додадете нешто!',
+	'userprofilepage-about-empty-section' => 'Овој пасус е празен. Стиснете на „{{int:userprofilepage-edit-button}}“ за да додадете нешто!',
 	'userprofilepage-edit-permision-denied' => 'Не ви е дозволено да уредувате',
 	'userprofilepage-edit-permision-denied-info' => 'Немате дозволи да уредувате нечија корисничка страница или потстраница',
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Сите на ова вики многу би сакале да дознаат повеќе за вас!</div><a href="$1">Уредете го пасусов</a> - додајте повеќе информации за себе и вашите омилени нешта.',
@@ -705,6 +790,74 @@ $messages['mk'] = array(
 	'recipes-template-user-affiliation-hint' => 'Наклонетост',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'userprofilepage-desc' => 'Menyediakan laman pengguna yang menyenangkan dan mudah untuk dikemas kini',
+	'userprofilepage-edit-avatar-label' => 'Sunting gambar',
+	'userprofilepage-users-notes-title' => 'Perihal',
+	'userprofilepage-about-section-title' => 'Wawancara $1 saya',
+	'userprofilepage-edit-button' => 'Sunting',
+	'userprofilepage-about-article-title' => 'Perihal',
+	'userprofilepage-about-empty-section' => 'Bahagian ini kosong. Klik {{int:userprofilepage-edit-button}} untuk mengisinya!',
+	'userprofilepage-edit-permision-denied' => 'Anda tidak dibenarkan menyunting',
+	'userprofilepage-edit-permision-denied-info' => 'Anda tidak dibenarkan menyunting laman/sublaman pengguna orang lain.',
+	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Semua orang di wiki ini pasti ingin lebih mengenali anda!</div><a href="$1">Sunting bahagian ini</a> untuk menambahkan lagi maklumat perihal diri serta memberitahu kami perkara-perkara yang anda gemari.',
+	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 belum menambahkan apa-apa maklumat.</div>Anda boleh <a href="$2">meninggalkan pesanan</a> kepadanya',
+	'userprofilepage-user-doesnt-exists' => 'Pengguna $1 tidak wujud di Wikia. Sila ke [[Special:WikiActivity|Kegiatan Wiki]] untuk melihat siapa-siapa yang aktif di wiki ini.',
+	'userprofilepage-user-anon' => 'Pengguna ini belum berdaftar di Wikia. [[Special:Signup|Berdaftarlah]] untuk membuka akaun dan menuntut mata suntingan, lencana dan penghargaan daripada penyunting lain!',
+	'userprofilepage-leave-message' => 'Tinggalkan pesanan',
+	'userprofilepage-edits-since' => 'Bil. suntingan sejak menyertai wiki ini<br />$1',
+	'userprofilepage-user-last-action-edit' => '$1 telah menyunting laman <a href="$2">$3</a>',
+	'userprofilepage-user-last-action-new' => '$1 telah mencipta <a href="$2">$3</a>',
+	'userprofilepage-user-last-action-delete' => '$1 telah menghapuskan laman <a href="$2">$3</a>',
+	'userprofilepage-user-group-sysop' => 'Pentadbir',
+	'userprofilepage-user-group-staff' => 'Ahli kakitangan',
+	'userprofilepage-user-group-bot' => 'Bot',
+	'userprofilepage-user-group-bureaucrat' => 'Birokrat',
+	'userprofilepage-user-group-helper' => 'Pembantu',
+	'userprofilepage-user-group-vstf' => 'Ahli PPS',
+	'userprofilepage-user-group-sysop-tooltip' => 'Pengguna ini ialah seorang Pentadbir di wiki ini',
+	'userprofilepage-user-group-staff-tooltip' => 'Pengguna ini ialah seorang ahli Kakitangan Wikia',
+	'userprofilepage-user-group-bot-tooltip' => 'Pengguna ini ialah Bot',
+	'userprofilepage-user-group-bureaucrat-tooltip' => 'Pengguna ini ialah seorang Birokrat di wiki ini',
+	'userprofilepage-user-group-helper-tooltip' => 'Pengguna ini ialah seorang Pembantu',
+	'userprofilepage-user-group-vstf-tooltip' => 'Pengguna ini ialah seorang ahli Pasukan Pembasmi Spam',
+	'userprofilepage-top-wikis-title' => 'Wiki Teratas $1',
+	'userprofilepage-top-wikis-edit-count' => 'Jumlah Suntingan',
+	'userprofilepage-top-wikis-hidden-see-more' => 'Anda telah menyorokkan $1 wiki',
+	'userprofilepage-top-wikis-unhide-label' => 'dedahkan',
+	'userprofilepage-top-wikis-hide-label' => 'sorokkan',
+	'userprofilepage-top-wikis-locked-label' => 'Wiki ini tidak boleh disorokkan',
+	'userprofilepage-recent-activity-title' => 'Kegiatan terkini $1',
+	'userprofilepage-activity-edit' => 'menyunting laman $1',
+	'userprofilepage-activity-new' => 'mencipta $1',
+	'userprofilepage-activity-comment' => 'mengulas $1',
+	'userprofilepage-activity-image' => 'memuat naik laman ke $1',
+	'userprofilepage-activity-video' => 'memuat naik video ke $1',
+	'userprofilepage-activity-delete' => 'menghapuskan laman $1',
+	'userprofilepage-activity-talk' => 'meninggalkan pesanan di laman perbincangan $1',
+	'userprofilepage-recent-activity-default' => '$1 telah menyertai Wikia',
+	'userprofilepage-top-recent-activity-see-more' => 'Lihat semua &gt;',
+	'userprofilepage-top-pages-title' => 'Laman Terbaik $2 oleh $1',
+	'userprofilepage-top-page-unhide-label' => 'dedahkan',
+	'userprofilepage-top-pages-hidden-see-more' => 'Anda telah menyorok $1 laman',
+	'userprofilepage-top-pages-default' => 'Laman-laman teratas belum ada lagi. Apa kata anda <a href="$1">pilih laman secara rawak</a> di wiki ini?',
+	'recipes-template-user-description-label' => 'Keterangan',
+	'recipes-template-user-description-hint' => 'Ringkasan maklumat pengguna',
+	'recipes-template-user-birthdate-label' => 'Tarikh lahir',
+	'recipes-template-user-birthdate-hint' => 'Tarikh lahir (dalam mana-mana format)',
+	'recipes-template-user-species-label' => 'Spesies',
+	'recipes-template-user-species-hint' => 'Spesies',
+	'recipes-template-user-abilities-label' => 'Kebolehan',
+	'recipes-template-user-abilities-hint' => 'Kebolehan',
+	'recipes-template-user-gender-label' => 'Jantina',
+	'recipes-template-user-gender-hint' => 'Jantina',
+	'recipes-template-user-affiliation-label' => 'Sekutu',
+	'recipes-template-user-affiliation-hint' => 'Sekutu',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -715,7 +868,7 @@ $messages['nl'] = array(
 	'userprofilepage-about-section-title' => 'Mijn $1 interview',
 	'userprofilepage-edit-button' => 'Bewerken',
 	'userprofilepage-about-article-title' => 'Over',
-	'userprofilepage-about-empty-section' => 'Deze sectie is leeg. Klik op bewerken om wat toe te voegen.',
+	'userprofilepage-about-empty-section' => 'Deze sectie is leeg. Klik op de knop "{{int:userprofilepage-edit-button}}" om wat toe te voegen.',
 	'userprofilepage-edit-permision-denied' => 'U kunt deze pagina niet bewerken',
 	'userprofilepage-edit-permision-denied-info' => "U kunt gebruikerspagina's of subpagina's van gebruikerspagina van andere gebruikers niet bewerken.",
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Iedereen in deze wiki wil graag meer over u weten.</div><a href="$1">Bewerk deze paragraaf</a> om meer over uzelf toe te voegen en iedereen te laten weten wat u bezig houdt.',
@@ -785,7 +938,7 @@ $messages['no'] = array(
 	'userprofilepage-about-section-title' => 'Mitt $1-intervju',
 	'userprofilepage-edit-button' => 'Rediger',
 	'userprofilepage-about-article-title' => 'Om',
-	'userprofilepage-about-empty-section' => 'Denne seksjonen er tom. Klikk rediger for å legge til ting her!',
+	'userprofilepage-about-empty-section' => 'Denne seksjonen er tom. Trykk på {{int:userprofilepage-edit-button}} for å legge til noe her!',
 	'userprofilepage-edit-permision-denied' => 'Redigeringstillatelse nektet',
 	'userprofilepage-edit-permision-denied-info' => 'Du har ikke tillatelse til å redigere andres brukersider eller undersider',
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Alle på denne wikien vil gjerne vite mer om deg!</div><a href="$1">Rediger denne seksjonen</a> for å legge til mer om deg selv og fortelle oss om tingene du elsker.',
@@ -863,9 +1016,9 @@ $messages['pt'] = array(
 	'userprofilepage-about-section-title' => 'A minha entrevista $1',
 	'userprofilepage-edit-button' => 'Editar',
 	'userprofilepage-about-article-title' => 'Sobre',
-	'userprofilepage-about-empty-section' => 'Esta secção está vazia. Clique editar para acrescentar-lhe coisas!',
+	'userprofilepage-about-empty-section' => 'Esta secção está vazia. Clique {{int:userprofilepage-edit-button}} para acrescentar conteúdo!',
 	'userprofilepage-edit-permision-denied' => 'Permissões de edição negadas',
-	'userprofilepage-edit-permision-denied-info' => 'Não tem permissões para editar a página de utilizador ou subpáginas, de outro utilizador',
+	'userprofilepage-edit-permision-denied-info' => 'Não tem permissões para editar a página de outro utilizador nem subpáginas dela',
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Todos nesta wiki adorariam saber mais sobre si!</div><a href="$1">Edite esta secção</a> para acrescentar pormenores sobre si e sobre as coisas de que gosta.',
 	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 ainda não acrescentou nenhuma informação.</div>Se quiser, pode <a href="$2">deixar-lhe uma mensagem</a>',
 	'userprofilepage-user-doesnt-exists' => 'O utilizador $1 não existe na Wikia. Visite a [[Special:WikiActivity|Actividade na Wiki]] para saber quem está activo nesta wiki.',
@@ -885,14 +1038,14 @@ $messages['pt'] = array(
 	'userprofilepage-user-group-staff-tooltip' => 'Este utilizador é um membro da Equipa da Wikia',
 	'userprofilepage-user-group-bot-tooltip' => 'Este utilizador é um Robô',
 	'userprofilepage-user-group-bureaucrat-tooltip' => 'Este utilizador é um Burocrata nesta wiki',
-	'userprofilepage-user-group-helper-tooltip' => 'Este utilizador é um Auxiliar nesta wiki',
+	'userprofilepage-user-group-helper-tooltip' => 'Este utilizador é um Ajudante nesta wiki',
 	'userprofilepage-user-group-vstf-tooltip' => 'Este utilizador é um membro da Spam Task Force',
 	'userprofilepage-top-wikis-title' => 'As Melhores Wikis, para $1',
 	'userprofilepage-top-wikis-edit-count' => 'Número de edições',
 	'userprofilepage-top-wikis-hidden-see-more' => 'Ocultou {{PLURAL:$1|$1 wiki|$1 wikis}}',
 	'userprofilepage-top-wikis-unhide-label' => 'mostrar',
 	'userprofilepage-top-wikis-hide-label' => 'ocultar',
-	'userprofilepage-top-wikis-locked-label' => 'A wiki corrente não pode ser ocultada',
+	'userprofilepage-top-wikis-locked-label' => 'Não se pode ocultar a wiki actual',
 	'userprofilepage-recent-activity-title' => 'Actividades recentes de $1',
 	'userprofilepage-activity-edit' => 'editou a página $1',
 	'userprofilepage-activity-new' => 'criou $1',
@@ -923,22 +1076,35 @@ $messages['pt'] = array(
 
 /** Russian (Русский)
  * @author Byulent
+ * @author DCamer
  */
 $messages['ru'] = array(
+	'userprofilepage-desc' => 'Предоставляет пользователю страницу, которую легко и весело обновить',
 	'userprofilepage-edit-avatar-label' => 'Изменить картинку',
 	'userprofilepage-users-notes-title' => 'Обо мне',
 	'userprofilepage-about-section-title' => 'Моё $1 интервью',
 	'userprofilepage-edit-button' => 'Редактировать',
+	'userprofilepage-about-article-title' => 'Описание',
+	'userprofilepage-about-empty-section' => 'Этот раздел пуст. Нажмите кнопку «Изменить», чтобы добавить что-нибудь!',
 	'userprofilepage-edit-permision-denied' => 'Редактирование запрещено',
 	'userprofilepage-edit-permision-denied-info' => 'У вас недостаточно прав для редактирования страницы или подстраницы какого-либо пользователя',
-	'userprofilepage-user-doesnt-exists' => 'Участник $1 не существует',
+	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Всем на этой вики хотелось бы знать о вас больше!</div><a href="$1">Изменить этот раздел</a> чтобы добавить побольше информации о себе и рассказать нам о том, что вы любите.',
+	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 еще не добавил никакой информации.</div>Вы можете <a href="$2">оставить ему сообщение</a>',
+	'userprofilepage-user-doesnt-exists' => 'Участник $1 не существует на Викии. Зайдите в «[[Special:WikiActivity|Вики-деятельность]]» чтобы увидеть, кто активен на этой вики.',
+	'userprofilepage-user-anon' => 'Этот пользователь еще не зарегистрирован на Викии. [[Special:Signup|Зарегистрируйте]] учётную запись и начните претендовать на очки правок, значки и благодарности от ваших коллег-редакторов!',
 	'userprofilepage-leave-message' => 'Оставить сообщение',
+	'userprofilepage-edits-since' => 'Правок после вступления в эту вики<br />$1',
+	'userprofilepage-user-last-action-edit' => '$1 отредактировал страницу <a href="$2">$3</a>',
+	'userprofilepage-user-last-action-new' => '$1 создал <a href="$2">$3</a>',
+	'userprofilepage-user-last-action-delete' => '$1 удалил страницу <a href="$2">$3</a>',
 	'userprofilepage-user-group-sysop' => 'Администратор',
+	'userprofilepage-user-group-staff' => 'Сотрудник',
 	'userprofilepage-user-group-bot' => 'Бот',
 	'userprofilepage-user-group-bureaucrat' => 'Бюрократ',
 	'userprofilepage-user-group-helper' => 'Помощник',
 	'userprofilepage-user-group-vstf' => 'VSTF',
 	'userprofilepage-user-group-sysop-tooltip' => 'Этот пользователь является администратором этой вики',
+	'userprofilepage-user-group-staff-tooltip' => 'Этот участник является сотрудником Викии',
 	'userprofilepage-user-group-bot-tooltip' => 'Этот пользователь является ботом',
 	'userprofilepage-user-group-bureaucrat-tooltip' => 'Этот пользователь является бюрократом этой вики',
 	'userprofilepage-user-group-helper-tooltip' => 'Этот пользователь является помощником в этой вики',
@@ -949,16 +1115,28 @@ $messages['ru'] = array(
 	'userprofilepage-top-wikis-unhide-label' => 'показать',
 	'userprofilepage-top-wikis-hide-label' => 'скрыть',
 	'userprofilepage-top-wikis-locked-label' => 'Текущая вики не может быть скрыта',
+	'userprofilepage-recent-activity-title' => 'Последняя активность: $1',
 	'userprofilepage-activity-edit' => 'отредактировал страницу $1',
 	'userprofilepage-activity-new' => 'создал $1',
+	'userprofilepage-activity-comment' => 'прокомментировал $1',
 	'userprofilepage-activity-image' => 'загрузил изображение в $1',
 	'userprofilepage-activity-video' => 'загрузил видео в $1',
 	'userprofilepage-activity-delete' => 'удалил страницу $1',
+	'userprofilepage-activity-talk' => 'оставил сообщение на странице обсуждения $1',
+	'userprofilepage-recent-activity-default' => '$1 присоединился к Викии',
 	'userprofilepage-top-recent-activity-see-more' => 'Смотреть все',
+	'userprofilepage-top-pages-title' => '$1 в топе страниц $2',
+	'userprofilepage-top-page-unhide-label' => 'показать',
+	'userprofilepage-top-pages-hidden-see-more' => 'У вас {{PLURAL:$1|имеется $1 скрытая страница|имеются $1 скрытые страницы|имеются $1 скрытых страниц}}',
+	'userprofilepage-top-pages-default' => 'У вас нет популярных страниц. Почему бы не посмотреть <a href="$1">случайные страницы</a> на вики?',
 	'recipes-template-user-description-label' => 'Описание',
 	'recipes-template-user-description-hint' => 'Краткая информация о пользователе',
 	'recipes-template-user-birthdate-label' => 'Дата рождения',
 	'recipes-template-user-birthdate-hint' => 'Дата рождения (в любом формате)',
+	'recipes-template-user-species-label' => 'Виды',
+	'recipes-template-user-species-hint' => 'Виды',
+	'recipes-template-user-abilities-label' => 'Способности',
+	'recipes-template-user-abilities-hint' => 'Способности',
 	'recipes-template-user-gender-label' => 'Пол',
 	'recipes-template-user-gender-hint' => 'Пол',
 	'recipes-template-user-affiliation-label' => 'Принадлежность',
@@ -967,8 +1145,8 @@ $messages['ru'] = array(
 
 /** Tachelhit (Tašlḥiyt) */
 $messages['shi'] = array(
-	'userprofilepage-edit-button' => '↓ Ẓreg (bddel)',
-	'userprofilepage-about-article-title' => '↓ F',
+	'userprofilepage-edit-button' => 'Ẓreg (bddel)',
+	'userprofilepage-about-article-title' => 'F',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
@@ -1128,5 +1306,17 @@ $messages['uk'] = array(
 	'recipes-template-user-birthdate-hint' => 'Дата народження (в будь-якому форматі)',
 	'recipes-template-user-gender-label' => 'Стать',
 	'recipes-template-user-gender-hint' => 'Стать',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'userprofilepage-users-notes-title' => '关于我',
+	'userprofilepage-about-article-title' => '关于',
+	'userprofilepage-user-group-sysop' => '管理员',
+	'userprofilepage-user-group-bot' => '机器人',
+	'userprofilepage-user-group-sysop-tooltip' => '这个用户是这个维基的管理员',
+	'userprofilepage-user-group-bot-tooltip' => '这个用户是一个机器人',
 );
 

@@ -113,6 +113,14 @@ $messages['id'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Halaman pembicaraan dibuat secara otomatis',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'sharedhelp-desc' => "Prende le pagine dall'[[w:c:Help|aiuto di Wikia]] e le inserisce nel namespace {{ns:help}} su questa wiki",
+	'sharedhelp-autotalkcreate-summary' => 'Pagina di discussione creata automaticamente',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -135,6 +143,13 @@ $messages['ksh'] = array(
 $messages['mk'] = array(
 	'sharedhelp-desc' => 'Презема страници од [[w:c:Help|Помогнете ѝ на Викија]] и ги вметнува во именскиот простор {{ns:help}} на ова вики',
 	'sharedhelp-autotalkcreate-summary' => 'Страницата за разговор е автоматски создадена',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'sharedhelp-desc' => 'Mengambil laman dari [[w:c:Help|Wikia Bantuan]] lalu menyisipkannya ke dalam ruang nama {{ns:help}} di wiki ini',
 );
 
 /** Dutch (Nederlands)

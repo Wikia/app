@@ -339,6 +339,7 @@ $messages['id'] = array(
 
 /** Italian (Italiano)
  * @author OrbiliusMagister
+ * @author Pietrodn
  */
 $messages['it'] = array(
 	'dump-database' => 'i dump del database',
@@ -350,6 +351,7 @@ $messages['it'] = array(
 	'dump-database-request' => 'Richiesta di aggiornamento',
 	'dump-database-request-info' => '(di solito i dump sono generati con cadenza settimanale)',
 	'dump-database-request-submit' => 'Invia una richiesta',
+	'dump-database-request-already-submitted' => 'Il dump è stato richiesto di recente (meno di 7 giorni fa)',
 	'dump-database-request-requested' => 'Richiesta di dump del database inviata',
 	'dump-database-info-more' => 'Si prega di consultare <a href="http://community.wikia.com/wiki/Help:Database_download">questa pagina</a> per maggiori informazioni',
 );
@@ -424,6 +426,24 @@ $messages['mk'] = array(
 	'dump-database-request-already-submitted' => 'Базната резерва е побарана неодамна (пред помалку од 7 дена)',
 	'dump-database-request-requested' => 'Барањето за базната резерва е испратено',
 	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Погледајте тука</a> за повеќе информации',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'dump-database' => 'Longgokan pangkalan data',
+	'dump-database-info' => 'Longgokan pangkalan data (<i>database dumps</i>) boleh digunakan sebagai sistem sandaran peribadi (Wikia menghasilkan sistem sandaran yang berasingan untuk semua wiki secara automatik) atau untuk kegunaan bot penyelenggaraan',
+	'dump-database-curr-pages' => 'Laman-laman semasa',
+	'dump-database-curr-pages-info' => '(Biasanya, versi ini terbaik untuk kegunaan bot)',
+	'dump-database-full-pages' => 'Laman-laman semasa dan sejarah',
+	'dump-database-full-pages-info' => '(Amaran: fail ini mungkin terlalu besar)',
+	'dump-database-request' => 'Pohon kemaskini',
+	'dump-database-request-info' => '(Longgokan biasanya dijana setiap minggu)',
+	'dump-database-request-submit' => 'Hantar permohonan',
+	'dump-database-request-already-submitted' => 'Longgokan telah dipohon baru-baru ini (tidak lebih 7 hari yang lalu)',
+	'dump-database-request-requested' => 'Permohonan longgokan pangkalan data dihantar',
+	'dump-database-info-more' => 'Sila <a href="http://community.wikia.com/wiki/Help:Database_download">rujuk di sini</a> untuk maklumat lanjut',
 );
 
 /** Dutch (Nederlands)

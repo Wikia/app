@@ -274,6 +274,7 @@ Si necesita ayuda y no hay administradores locales aquí, quizás quiera visitar
 );
 
 /** Persian (فارسی)
+ * @author BlueDevil
  * @author Huji
  */
 $messages['fa'] = array(
@@ -282,9 +283,13 @@ $messages['fa'] = array(
 ''
 این صفحۀ کاربری شما است. لطفا این صفحه را ویرایش کنید و کمی دربارۀ خودتان به دیگر کاربران بگویید!''
 
+==مشارکت‌های من==
+
+* [[Special:Contributions/{{PAGENAME}}|مشارکت‌های کاربر]]
+
 ==صفحات محبوب من==
 
-*پیوند صفحات محبوب خود را در اینجا قرار دهید
+*پیوند صفحه‌های محبوب خود را در اینجا قرار دهید!
 * صفحۀ محبوب #۲
 * صفحۀ محبوب #۳",
 	'welcome-message-user' => '==خوش‌آمدید==
@@ -630,6 +635,7 @@ $messages['ja'] = array(
  */
 $messages['lb'] = array(
 	'welcome-message-log' => 'Begréissung vun engem neien Auteur',
+	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 /** Macedonian (Македонски)
@@ -671,6 +677,50 @@ $messages['mk'] = array(
 
 Ако ви треба помош, а нема локални администратори, ви препорачуваме да ги посетите [[wikia:Forum:Community Central Forum|форумите на Центарот на Заедницата]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|форум за помош]] | [[w:sblog|блог]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'welcome-user-page' => "==Tentang saya==
+
+''Inilah laman pengguna anda. Sila sunting laman ini untuk memperkenalkan diri anda kepada seluruh komuniti!''
+
+==Sumbangan saya==
+
+* [[Special:Contributions/{{PAGENAME}}|Sumbangan pengguna]]
+
+==Laman kegemaran saya==
+
+* Bubuh pautan ke laman-lama kegemaran anda dalam wiki ini di sini!
+* Laman kegemaran #2
+* Laman kegemaran #3",
+	'welcome-message-user' => 'Selamat datang ke {{SITENAME}}! Terima kasih kerana menyunting laman [[:$1]].
+
+Sila tinggalkan pesanan di [[$2|laman perbincangan saya]] sekiranya anda perlukan bantuan saya! $3',
+	'welcome-message-anon' => "Selamat datang ke {{SITENAME}}! Terima kasih kerana menyunting laman [[:$1]].
+
+'''[[Special:Userlogin|Sila log masuk dan cipta nama pengguna anda]]'''.
+Dengan ini, anda mudah menjejaki sumbangan anda serta berkomunikasi dengan seluruh komuniti.
+
+Sila tinggalkan pesanan di [[$2|laman perbincangan saya]] jika anda memerlukan bantuan saya! $3",
+	'welcome-message-log' => 'menyambut penyumbang baru',
+	'welcome-message-user-staff' => '==Selamat datang==
+
+Selamat datang ke {{SITENAME}}! Terima kasih kerana menyunting laman [[:$1]].
+
+Jika anda memerlukan bantuan, tetapi tiada admin setempat di sini, anda disaran supaya mengunjungi [[wikia:Forum:Community Central Forum|forum di Community Central Wiki]] $3',
+	'welcome-message-anon-staff' => "==Selamat datang==
+
+Selamat datang ke {{SITENAME}}! Terima kasih kerana menyunting laman [[:$1]].
+
+'''[[Special:UserLogin|Sila log masuk dan cipta nama pengguna anda]]'''.
+Dengan ini, anda mudah menjejaki sumbangan anda serta berkomunikasi dengan seluruh komuniti.
+
+Jika anda memerlukan bantuan, tetapi tiada admin setempat di sini, anda disaran supaya mengunjungi [[wikia:Forum:Community Central Forum|forum di Community Central Wiki]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum bantuan]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
@@ -878,7 +928,7 @@ Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]
 '''[[Special:Userlogin|Për piasì ch'a intra e ch'a crea un nòm utent]]'''. A l'é na manera bel fé ëd ten-e trassa ëd soe contribussion e a-j giuta a comuniché con ël rest ëd la comunità.
 
 S'a l'has dabzògn d'agiut, e a-i é gnun aministrator locaj ambelessì, a peul visité le [[wikia:Forum:Community Central Forum|piasse ëd la Wiki Sentral ëd la Comunità]] $3",
-	'staffsig-text' => "↓ $1<staff /> <small>([[w:forums|piassa d'agiut]] | [[w:sblog|blog]])</small>",
+	'staffsig-text' => "$1<staff /> <small>([[w:forums|piassa d'agiut]] | [[w:sblog|blog]])</small>",
 );
 
 /** Pashto (پښتو)

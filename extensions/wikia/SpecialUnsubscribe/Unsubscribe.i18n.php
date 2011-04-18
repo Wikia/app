@@ -109,6 +109,25 @@ $messages['fi'] = array(
 	'unsubscribe-working-done' => 'Valmis.',
 );
 
+/** French (Français)
+ * @author Wyz
+ */
+$messages['fr'] = array(
+	'unsubscribe' => 'Se désabonner',
+	'unsubscribe-badaccess' => 'Désolé, cette page ne peut pas être utilisée directement. Veuillez suivre le lien qui se trouve dans votre courriel.',
+	'unsubscribe-badtoken' => 'Désolé, il y a eu un problème avec le jeton de sécurité.',
+	'unsubscribe-bademail' => 'Désolé, il y a eu un problème avec le courriel.',
+	'unsubscribe-badtime' => 'Désolé, le lien a expiré. Veuillez utiliser un lien qui date de moins de 7 jours.',
+	'unsubscribe-nousers' => 'Aucun utilisateur trouvé à cette adresse de messagerie.',
+	'unsubscribe-noconfusers' => 'Aucun utilisateur confirmé trouvé à cette adresse de messagerie.',
+	'unsubscribe-confirm-legend' => 'Confirmer',
+	'unsubscribe-confirm-text' => 'Désabonner tous les comptes avec <code>$1</code> ?',
+	'unsubscribe-confirm-button' => 'Oui, j’en suis sûr.',
+	'unsubscribe-working' => 'Désabonnement de $1 {{PLURAL:$1|compte|comptes}} pour $2',
+	'unsubscribe-working-problem' => 'problème au chargement des informations de l’utilisateur : $1',
+	'unsubscribe-working-done' => 'Terminé.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -155,6 +174,25 @@ $messages['mk'] = array(
 	'unsubscribe-working' => 'Отпис од $1 {{PLURAL:$1|сметка|сметки}} за $2',
 	'unsubscribe-working-problem' => 'проблем при вчитувањето на корисничките податоци за: $1',
 	'unsubscribe-working-done' => 'Готово.',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'unsubscribe' => 'Berhenti melanggan',
+	'unsubscribe-badaccess' => 'Maaf, laman ini tidak boleh digunakan secara terus. Sila ikuti pautan dari e-mel anda.',
+	'unsubscribe-badtoken' => 'Maaf, token keselamatan ini ada masalah.',
+	'unsubscribe-bademail' => 'Maaf, e-mel ini ada masalah.',
+	'unsubscribe-badtime' => 'Maaf, pautan telah luput. Sila gunakan pautan yang kurang daripada 7 hari lamanya.',
+	'unsubscribe-nousers' => 'Pengguna yang punya alamat e-mel itu tidak dijumpai.',
+	'unsubscribe-noconfusers' => 'Pengguna yang punya alamat e-mel itu tidak dapat dipastikan.',
+	'unsubscribe-confirm-legend' => 'Sahkan',
+	'unsubscribe-confirm-text' => 'Berhenti melanggan semua akaun dengan <code>$1</code>?',
+	'unsubscribe-confirm-button' => 'Ya, saya pasti',
+	'unsubscribe-working' => 'Berhenti melanggan $1 akaun untuk $2',
+	'unsubscribe-working-problem' => 'masalah memuatkan info pengguna: $1',
+	'unsubscribe-working-done' => 'Selesai.',
 );
 
 /** Dutch (Nederlands)
@@ -233,6 +271,25 @@ $messages['pt-br'] = array(
 	'unsubscribe-working-done' => 'Completo.',
 );
 
+/** Russian (Русский)
+ * @author DCamer
+ */
+$messages['ru'] = array(
+	'unsubscribe' => 'Отписаться',
+	'unsubscribe-badaccess' => 'К сожалению, эта страница не может быть использована напрямую. Пожалуйста, перейдите по ссылке из вашей электронной почты.',
+	'unsubscribe-badtoken' => 'К сожалению, у нас проблема с маркером безопасности.',
+	'unsubscribe-bademail' => 'К сожалению, у нас проблема с электронной почты.',
+	'unsubscribe-badtime' => 'К сожалению, ссылка истекла. Пожалуйста, используйте ссылку, менее 7 дневной давности.',
+	'unsubscribe-nousers' => 'Не найдено пользователей с этим адресом электронной почты.',
+	'unsubscribe-noconfusers' => 'Нет найдено подтвержденных пользователей с этим адресом электронной почты.',
+	'unsubscribe-confirm-legend' => 'Подтвердить',
+	'unsubscribe-confirm-text' => 'Отписать все учетные записи с <code>$1</code>?',
+	'unsubscribe-confirm-button' => 'Да, я уверен',
+	'unsubscribe-working' => 'Отписка $1 {{PLURAL:$1|учётной записи|учётных записей}} для $2',
+	'unsubscribe-working-problem' => 'проблема с загрузкой информации о пользователе: $1',
+	'unsubscribe-working-done' => 'Готово.',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
@@ -268,5 +325,14 @@ $messages['sv'] = array(
  */
 $messages['uk'] = array(
 	'unsubscribe-confirm-button' => 'Так, я впевнений',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'unsubscribe-confirm-legend' => '确定',
+	'unsubscribe-confirm-button' => '是，我很确定',
+	'unsubscribe-working-done' => '完成。',
 );
 

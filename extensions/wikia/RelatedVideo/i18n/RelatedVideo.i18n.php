@@ -99,6 +99,15 @@ $messages['ia'] = array(
 	'relatedvideo' => 'Videos similar',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'related-video-random-video' => 'Video casuale',
+	'related-video-related' => 'Video correlati',
+	'relatedvideo' => 'Video correlati',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -106,6 +115,15 @@ $messages['mk'] = array(
 	'related-video-random-video' => 'Случајна видеоснимка',
 	'related-video-related' => 'Поврзани видеоснимки',
 	'relatedvideo' => 'Поврзани видеоснимки',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'related-video-random-video' => 'Video rawak',
+	'related-video-related' => 'Video berkaitan',
+	'relatedvideo' => 'Video berkaitan',
 );
 
 /** Dutch (Nederlands)

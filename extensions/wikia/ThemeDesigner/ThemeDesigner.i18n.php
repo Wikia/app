@@ -376,6 +376,36 @@ $messages['es'] = array(
 	'themedesugber-uknown-error' => 'Ha ocurrido un error, desafortunadamente no fuimos capaces de identificarlo, por favor, inténtalo de nuevo',
 );
 
+/** Persian (فارسی)
+ * @author BlueDevil
+ * @author Ebraminio
+ */
+$messages['fa'] = array(
+	'themedesigner-title' => 'طراح پوستهٔ ویکیا',
+	'themedesigner-background' => 'پیش‌زمینه',
+	'themedesigner-page' => 'صفحه',
+	'themedesigner-color' => 'رنگ',
+	'themedesigner-graphic' => 'گرافیک',
+	'themedesigner-buttons' => 'دکمه‌ها',
+	'themedesigner-links' => 'پیوندها',
+	'themedesigner-header' => 'سربرگ',
+	'themedesigner-small' => 'کوچک',
+	'themedesigner-medium' => 'متوسط',
+	'themedesigner-large' => 'بزرگ',
+	'themedesigner-tab-theme' => 'پوسته',
+	'themedesigner-tab-customize' => 'سفارشی‌کردن',
+	'themedesigner-button-cancel' => 'لغو',
+	'themedesigner-button-ok' => 'تأیید',
+	'themedesigner-pick-an-image' => 'انتخاب یک تصویر',
+	'themedesigner-button-upload' => 'بارگذاری',
+	'themedesigner-default' => 'پیش‌فرض',
+	'themedesigner-font' => 'فونت',
+	'themedesigner-size' => 'اندازه',
+	'themedesigner-button-save' => 'ذخیره',
+	'themedesigner-history-item' => '$1 توسط $2',
+	'themedesigner-button-change-text' => 'تغییر متن',
+);
+
 /** Finnish (Suomi) */
 $messages['fi'] = array(
 	'themedesigner-desc' => 'Mahdollistaa teeman suunnittelun wikille wikiylläpitäjille.',
@@ -535,15 +565,15 @@ $messages['ia'] = array(
 	'themedesigner-buttons' => 'buttones',
 	'themedesigner-links' => 'ligamines',
 	'themedesigner-header' => 'titulo',
-	'themedesigner-text-wordmark' => 'Texto pro marca de parola',
-	'themedesigner-graphic-wordmark' => 'Graphico pro marca de parola',
+	'themedesigner-text-wordmark' => 'Logotypo textual',
+	'themedesigner-graphic-wordmark' => 'Logotypo graphic',
 	'themedesigner-small' => 'Micre',
 	'themedesigner-medium' => 'Medie',
 	'themedesigner-large' => 'Grande',
 	'themedesigner-tile-background' => 'fundo in tegulas',
 	'themedesigner-tab-theme' => 'Thema',
 	'themedesigner-tab-customize' => 'Personalisar',
-	'themedesigner-tab-wordmark' => 'Marca de parola',
+	'themedesigner-tab-wordmark' => 'Logotypo',
 	'themedesigner-preview-mode' => 'Modo de previsualisation...',
 	'themedesigner-previous-versions' => 'Previe versiones',
 	'themedesigner-button-save-im-done' => 'Salveguardar, io ha finite',
@@ -619,6 +649,29 @@ $messages['ja'] = array(
 	'themedesigner-button-change-text' => 'テキストを変更',
 );
 
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'themedesigner-page' => 'rûpel',
+	'themedesigner-color' => 'reng',
+	'themedesigner-small' => 'Biçûk',
+	'themedesigner-large' => 'Mezin',
+	'themedesigner-button-cancel' => 'Betal bike',
+	'themedesigner-button-ok' => 'Temam',
+	'themedesigner-button-save' => 'Qeyd bike',
+	'themedesigner-button-change-text' => 'Nivîsê biguherîne',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'themedesigner-button-ok' => 'OK',
+	'themedesigner-button-upload' => 'Eroplueden',
+	'themedesigner-button-save' => 'Späicheren',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -675,6 +728,64 @@ $messages['mk'] = array(
  */
 $messages['mn'] = array(
 	'themedesigner-page' => 'Хуудас',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'themedesigner-desc' => 'Membolekan pentadbir wiki mereka bentuk tema untuk wiki',
+	'themedesigner-title' => 'Pereka Tema Wikia',
+	'themedesigner-background' => 'Latar belakang',
+	'themedesigner-page' => 'Laman',
+	'themedesigner-color' => 'warna',
+	'themedesigner-graphic' => 'grafik',
+	'themedesigner-buttons' => 'butang',
+	'themedesigner-links' => 'pautan',
+	'themedesigner-header' => 'pengatas',
+	'themedesigner-text-wordmark' => 'Tanda kata teks',
+	'themedesigner-graphic-wordmark' => 'Tanda kata grafik',
+	'themedesigner-small' => 'Kecil',
+	'themedesigner-medium' => 'Sederhana',
+	'themedesigner-large' => 'Besar',
+	'themedesigner-tile-background' => 'latar belakang berjubin',
+	'themedesigner-tab-theme' => 'Tema',
+	'themedesigner-tab-customize' => 'Ubah suai',
+	'themedesigner-tab-wordmark' => 'Tanda kata',
+	'themedesigner-preview-mode' => 'Mod Pratonton...',
+	'themedesigner-previous-versions' => 'Versi dahulu',
+	'themedesigner-button-save-im-done' => 'Simpan (dah siap)',
+	'themedesigner-button-cancel' => 'Batalkan',
+	'themedesigner-pick-a-color' => 'Pilih warna',
+	'themedesigner-enter-your-own' => 'Taipkan sendiri',
+	'themedesigner-color-name-or-hex-code' => 'Nama atau kod heks wanra',
+	'themedesigner-button-ok' => 'OK',
+	'themedesigner-pick-an-image' => 'Pilih gambar',
+	'themedesigner-dont-use-a-background' => 'Jangan gunakan latar belakang',
+	'themedesigner-upload-your-own' => 'Muat naik gambar sendiri',
+	'themedesigner-button-upload' => 'Muat naik',
+	'themedesigner-rules-background' => 'jpg, gif atau png. Had 100 kilobait',
+	'themedesigner-default' => 'Tersedia',
+	'themedesigner-font' => 'fon',
+	'themedesigner-size' => 'saiz',
+	'themedesigner-button-save' => 'Simpan',
+	'themedesigner-upload-a-graphic' => 'muat naik grafik',
+	'themedesigner-rules-wordmark' => 'maks. 250x65 piksel (fail .png sahaja)',
+	'themedesigner-dont-use-a-graphic' => 'Jangan gunakan grafik',
+	'themedesigner-history-item' => '$1 oleh $2',
+	'themedesigner-button-change-text' => 'Ubah teks',
+	'themedesigner-reason' => 'Pereka Tema – disimpan oleh $1',
+	'themedesigner-size-error' => 'Saiz fail tidak betul',
+	'themedesigner-dimensions-error' => 'Gambar ini melebihi had dimensi',
+	'themedesigner-type-error' => 'Jenis fail tidak betul',
+	'themedesugber-uknown-error' => 'Ada ralat, tetapi kami tidak dapat mengenal pastinya; sila cuba lagi',
+);
+
+/** Mazanderani (مازِرونی)
+ * @author محک
+ */
+$messages['mzn'] = array(
+	'themedesigner-button-upload' => 'باربی‌یشتن',
 );
 
 /** Dutch (Nederlands)
@@ -734,7 +845,7 @@ $messages['nl'] = array(
  */
 $messages['no'] = array(
 	'themedesigner-desc' => 'Lar wiki-administratorer utforme et tema for en wiki',
-	'themedesigner-title' => 'Wikia-temautforming',
+	'themedesigner-title' => 'Wikia-temautformer',
 	'themedesigner-background' => 'Bakgrunn',
 	'themedesigner-page' => 'Side',
 	'themedesigner-color' => 'farge',
@@ -742,15 +853,15 @@ $messages['no'] = array(
 	'themedesigner-buttons' => 'knapper',
 	'themedesigner-links' => 'lenker',
 	'themedesigner-header' => 'topp',
-	'themedesigner-text-wordmark' => 'Tekstlig typografi',
-	'themedesigner-graphic-wordmark' => 'Grafisk typografi',
+	'themedesigner-text-wordmark' => 'Tekstlig logo',
+	'themedesigner-graphic-wordmark' => 'Grafisk logo',
 	'themedesigner-small' => 'Liten',
 	'themedesigner-medium' => 'Medium',
 	'themedesigner-large' => 'Stor',
 	'themedesigner-tile-background' => 'rutenett-bakgrunn',
 	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-tab-customize' => 'Tilpass',
-	'themedesigner-tab-wordmark' => 'Ordmarkør',
+	'themedesigner-tab-wordmark' => 'Logo',
 	'themedesigner-preview-mode' => 'Forhåndsvisning...',
 	'themedesigner-previous-versions' => 'Tidligere versjoner',
 	'themedesigner-button-save-im-done' => 'Lagre, jeg er ferdig',
@@ -1002,6 +1113,7 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (Русский)
+ * @author DCamer
  * @author Eleferen
  * @author Kaganer
  */
@@ -1046,6 +1158,11 @@ $messages['ru'] = array(
 	'themedesigner-dont-use-a-graphic' => 'Не использовать изображение',
 	'themedesigner-history-item' => '$1 — $2',
 	'themedesigner-button-change-text' => 'Изменить текст',
+	'themedesigner-reason' => 'Конструктор тем - сохранить $1',
+	'themedesigner-size-error' => 'Неверный размер файла',
+	'themedesigner-dimensions-error' => 'Изображение превышает предельные размеры',
+	'themedesigner-type-error' => 'Неверный тип файла',
+	'themedesugber-uknown-error' => 'Произошла ошибка, к сожалению мы не смогли идентифицировать его, пожалуйста, попробуйте снова',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
@@ -1187,5 +1304,22 @@ $messages['uk'] = array(
 	'themedesigner-size' => 'розмір',
 	'themedesigner-button-save' => 'Зберегти',
 	'themedesigner-button-change-text' => 'Змінити текст',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'themedesigner-page' => '页面',
+	'themedesigner-color' => '颜色',
+	'themedesigner-small' => '小',
+	'themedesigner-medium' => '中',
+	'themedesigner-large' => '大',
+	'themedesigner-button-save-im-done' => '保存，我做好了',
+	'themedesigner-button-cancel' => '取消',
+	'themedesigner-pick-a-color' => '选一个颜色',
+	'themedesigner-button-ok' => '好',
+	'themedesigner-button-upload' => '上载',
+	'themedesigner-button-save' => '保存',
 );
 

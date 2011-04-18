@@ -468,6 +468,40 @@ $messages['mk'] = array(
 	'textregex-return-mainpage' => '[{{SERVER}}$1 назад кон списокот]',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'textregex' => 'Ungkapan nalar (regex) teks',
+	'textregex-desc' => '[[Special:textregex/XXXX|Tapiskan]] ungkapan-ungkapan yang tidak dikehendaki dalam laman yang disunting, berdasarkan ungkapan nalar',
+	'textregex-page-title' => 'Senarai ungkapan yang tidak diingini',
+	'textregex-error-unblocking' => 'Ralat ketika menyahsekat ($1).
+Sila cuba lagi.',
+	'textregex-currently-blocked' => "'''Ungkapan yang disekat sekarang:'''",
+	'textregex_nocurrently-blocked' => 'Ungkapan yang disekat tidak dijumpai',
+	'textregex-addedby-user' => 'ditambahkan oleh $1 pada $2',
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 gugurkan]',
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 statistik]',
+	'textregex-unblock-succ' => 'Sekatan dapat ditarik balik',
+	'textregex-block-succ' => 'Dapat disekat',
+	'textregex-unblock-message' => "Ungkapan '''$1''' telah digugurkan daripada ungkapan yang tidak diingini.",
+	'textregex-block-message' => "Ungkapan '''$1''' telah ditambahkan ke dalam ungkapan yang tidak diingini.",
+	'textregex-regex-block' => 'Ungkapan untuk disekat:',
+	'textregex-submit-regex' => 'Tambahkan ungkapan',
+	'textregex-empty-regex' => 'Nyatakan ungkapan yang betul untuk disekat.',
+	'textregex-invalid-regex' => 'Ungkapan nalar tidak sah.',
+	'textregex-already-added' => '"$1" sudah ditambahkan',
+	'textregex-nodata-found' => 'Data tidak dijumpai',
+	'textregex-stats-record' => "perkataan ''$1'' digunakan oleh $2 di $3 (''ulasan: $4'')",
+	'textregex-select-subpage' => 'Pilih satu senarai ungkapan:',
+	'textregex-select-default' => '-- pilih --',
+	'textregex-create-subpage' => 'atau cipta senarai baru:',
+	'textregex-select-regexlist' => 'pergi ke senarai',
+	'textregex-invalid-regexid' => 'Ungkapan tidak sah.',
+	'textregex-phrase-statistics' => "Statistik untuk ungkapan \"'''\$1'''\" (bilangan rekod: \$2)",
+	'textregex-return-mainpage' => '[{{SERVER}}$1 kembali ke senarai]',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

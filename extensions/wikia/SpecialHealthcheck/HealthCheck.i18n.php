@@ -13,6 +13,13 @@ $messages['qqq'] = array(
 	'healthcheck-desc' => '{{desc}}',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'healthcheck-desc' => "Una [[Special:HealthCheck|páxina especial]] pa comprobar l'estáu del sirvidor",
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
@@ -142,6 +149,13 @@ $messages['lb'] = array(
  */
 $messages['mk'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Специјална страница]] за проверка на состојбата на опслужувачот',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'healthcheck-desc' => '[[Special:HealthCheck|Laman khas]] untuk memeriksa keadaan pelayan',
 );
 
 /** Dutch (Nederlands)

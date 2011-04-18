@@ -99,6 +99,22 @@ $messages['mk'] = array(
 	'userdata-no-wf' => 'WikiFactory не е овозможено на ова вики. Не можам да ја менувам wgUserData.',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'userdata' => 'Dapatkan data pengguna',
+	'userdata-userid-label' => 'Nyatakan ID pengguna:',
+	'userdata-submit' => 'Dapatkan data',
+	'specialuserdata-desc' => 'Menyediakan antara muak untuk mengubah wgUserData per wiki.',
+	'userdata-header' => 'Tingkatan wgUserData',
+	'userdata-value' => 'Nilai semasa wgUserData ialah "$1". Tekan butang ini untuk menetapkannya kepada cop masa sekarang.',
+	'userdata-updated' => 'wgUserData dikemaskini kepada " $1 ".',
+	'userdata-not-updated' => 'wgUserData tidak dapat dikemaskini.',
+	'userdata-wf-reason' => 'Nilai dikemaskini melalui [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory (Kilang Wiki) tidak dihidupkan di wiki ini, maka wgUserData tidak dapat diubah.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -162,5 +178,30 @@ $messages['pt-br'] = array(
 	'userdata-not-updated' => 'Falha ao atualizar wgUserData.',
 	'userdata-wf-reason' => 'Valor atualizado via [[Special:UserData|UserData]]',
 	'userdata-no-wf' => 'WikiFactory não é permitido nesta wiki. Não é possível alterar wgUserData.',
+);
+
+/** Swedish (Svenska)
+ * @author Tobulos1
+ */
+$messages['sv'] = array(
+	'userdata' => 'Hämta användardata',
+	'userdata-userid-label' => 'Ange användar-ID:',
+	'userdata-submit' => 'Hämta data',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'userdata' => 'Kunin ang dato ng tagagamit',
+	'userdata-userid-label' => 'Ibigay ang ID ng tagagamit:',
+	'userdata-submit' => 'Kunin ang dato',
+	'specialuserdata-desc' => 'Nagbibigay ng isang ugnayang-mukha para sa pagbago ng wgUserData sa bawat wiki.',
+	'userdata-header' => 'Dagdagan ang wgUserData',
+	'userdata-value' => '"$1" ang pangkasalukuyang halaga ng wgUserData. Pindutin ang pindutan upang itakda ito sa pangkasalukuyang tatak ng oras.',
+	'userdata-updated' => 'Isinapanahon ang wgUserData upang maging "$1".',
+	'userdata-not-updated' => 'Nabigong maisapanahon ang wgUserData.',
+	'userdata-wf-reason' => 'Naisapanahon ang halaga sa pamamagitan ng [[Special:UserData|Dato ng Tagagamit]]',
+	'userdata-no-wf' => 'Hindi pinagagana ang WikiFactory sa wiking ito.  Hindi nabago ang wgUserData.',
 );
 

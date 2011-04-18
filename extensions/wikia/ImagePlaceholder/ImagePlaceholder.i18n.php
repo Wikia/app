@@ -17,6 +17,16 @@ $messages['af'] = array(
 	'imgplc-image' => 'Beeld',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'imgplc-create' => 'Amestar imaxe',
+	'imgplc-placeholder' => 'Sitiu acutáu',
+	'imgplc-image' => 'Imaxe',
+	'imgplc-notinhistory' => 'Nun pues amestar una imaxe nel mou historial.',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Wizardist
  */
@@ -162,10 +172,14 @@ $messages['ia'] = array(
 	'imgplc-notinhistory' => 'Non es possibile adder imagines in modo de historia.',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
 $messages['it'] = array(
 	'imgplc-create' => 'Aggiungi immagine',
+	'imgplc-placeholder' => 'Segnaposto',
 	'imgplc-image' => 'Immagine',
+	'imgplc-notinhistory' => "Non puoi aggiungere un'immagine in modalità cronologia.",
 );
 
 /** Japanese (日本語)
@@ -192,8 +206,11 @@ $messages['ku-latn'] = array(
 	'imgplc-image' => 'Wêne',
 );
 
-/** Luxembourgish (Lëtzebuergesch) */
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
 $messages['lb'] = array(
+	'imgplc-create' => 'Bild derbäisetzen',
 	'imgplc-image' => 'Bild',
 );
 
@@ -205,6 +222,16 @@ $messages['mk'] = array(
 	'imgplc-placeholder' => 'Пополнувач',
 	'imgplc-image' => 'Слика',
 	'imgplc-notinhistory' => 'Не можете да додавате слики во историски режим.',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'imgplc-create' => 'Sisipkan Gambar',
+	'imgplc-placeholder' => 'Pemegang tempat',
+	'imgplc-image' => 'Gambar',
+	'imgplc-notinhistory' => 'Anda tidak boleh membubuh gambar dalam mod sejarah.',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬) */
@@ -352,5 +379,13 @@ $messages['tl'] = array(
 $messages['uk'] = array(
 	'imgplc-create' => 'Додати зображення',
 	'imgplc-image' => 'Зображення',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'imgplc-create' => '添加照片',
+	'imgplc-image' => '照片',
 );
 
