@@ -23,6 +23,9 @@ class FounderEmailsModule extends Module {
 		$this->language = $params['language'];
 	}
 	
+	public function executeJoined() {
+	}
+	
 	public static function localMsg($key) {
 		$text = null;
 	
