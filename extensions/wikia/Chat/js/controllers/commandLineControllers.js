@@ -1,5 +1,7 @@
 var WIKIA_NODE_HOST = "http://chatserver.wikia-dev.com";
-var io = require('socket.io');
+var WIKIA_NODE_PORT = 8000;
+io = require('../socket.io/socket.io.js');
+//var io = require('socket.io');
 Backbone = require('backbone');
 var models = require('../models/models.js');
 //var views = require('../views/views.js');
@@ -73,6 +75,6 @@ function inlineAlert(model, msg){
 // Bootstrap the app
 //
 //$(function() {
-	window.app = NodeChatController.init({});
+	var app = NodeChatController.init({});
 	NodeChatHelper.init();
 //});
