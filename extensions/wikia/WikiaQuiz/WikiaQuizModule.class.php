@@ -17,6 +17,7 @@ class WikiaQuizModule extends Module {
 	// 2nd prototype
 	public function executeSampleQuiz2() {
 		$this->executeGetQuiz();
+		hyunbug($this->data);
 	}
 
 	public function executeGetQuizElement() {

@@ -46,11 +46,15 @@ var WikiaQuiz = {
 		WikiaQuiz.cq.find('.question-bubble').animate({'top':'-60px'});
 		WikiaQuiz.cq.find('.question-label').fadeOut();
 		setTimeout(function() {
-			WikiaQuiz.cq.find('.answer').click(WikiaQuiz.handleAnswerClick);
+			WikiaQuiz.cq.find('.answer').hover(function() {
+				$(this).addClass('hover');
+			}, function() {
+				$(this).removeClass('hover');
+			}).click(WikiaQuiz.handleAnswerClick);
 		}, 1000);
 	},
 	handleAnswerClick: function() {
-		WikiaQuiz.cq.find('.answer').unbind('click');
+		WikiaQuiz.cq.find('.answer').unbind('click').unbind('hover').removeClass('hover');
 		var answer = $(this).closest('.answer');
 		var i = WikiaQuiz.cq.find('.answer').index(answer);
 		var img = answer.find('.answer-pic');
@@ -69,7 +73,7 @@ var WikiaQuiz = {
 		img.animate({
 			height: 330,
 			width: 330,
-			top: -210,
+			top: -165,
 			left: translateX
 		});
 		WikiaQuiz.cq.find('.question-bubble').addClass('hide');
@@ -161,7 +165,8 @@ var Timer = {
 	}
 };
 
-$(function() {
+window.onload = function() {
+	console.log('foo');
 	WikiaQuiz.init();
 	Timer.init();
-});
+};
