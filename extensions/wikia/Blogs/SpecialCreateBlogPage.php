@@ -221,8 +221,26 @@ class CreateBlogPage extends SpecialBlogPage {
 
 	protected function createEditPage($sPostBody) {
 		$oArticle = new Article( Title::makeTitle( NS_BLOG_ARTICLE, 'New or Updated Blog Post' ) );
+
 		$this->mEditPage = new EditPage($oArticle);
 		$this->mEditPage->textbox1 = $sPostBody;
+
+		// this applies user preferences, such as minor and watchlist
+		// EditPage::getContent was called twice (causes BugId:4604)
+		// beware: dirty copy&paste of the code (will be replaced by RTE reskin)
+		global $wgUser;
+		# Sort out the "watch" checkbox
+		if ( $wgUser->getOption( 'watchdefault' ) ) {
+			# Watch all edits
+			$this->mEditPage->watchthis = true;
+		} elseif ( $wgUser->getOption( 'watchcreations' ) && !$this->mEditPage->mTitle->exists() ) {
+			# Watch creations
+			$this->mEditPage->watchthis = true;
+		} elseif ( $this->mEditPage->mTitle->userIsWatching() ) {
+			# Already watched
+			$this->mEditPage->watchthis = true;
+		}
+		if ( $wgUser->getOption( 'minordefault' ) ) $this->mEditPage->minoredit = true;
 
 		// fix for RT #33844 - run hook fired by "classical" EditPage
 		// Allow extensions to modify edit form
@@ -238,12 +256,6 @@ class CreateBlogPage extends SpecialBlogPage {
 	}
 
 	protected function renderForm() {
-		// CategorySelect compatibility (restore categories from article body)
-		if($this->mCategorySelectEnabled) {
-			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
-		}
-
-		$this->mEditPage->initialiseForm(); // this applies user preferences, such as minor and watchlist
 		$this->mEditPage->showEditForm( array($this, 'renderFormHeader') );
 		return true;
 	}
@@ -295,7 +307,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		$this->createEditPage( $this->mFormData['postBody'] );
 
 		// CategorySelect compatibility (restore categories from article body)
-		if($this->mCategorySelectEnabled) {
+		if ($this->mCategorySelectEnabled) {
 			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
 		}
 
