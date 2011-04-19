@@ -47,7 +47,7 @@ function AutomaticWikiAdoptionInit() {
 	global $wgHooks, $wgDefaultUserOptions, $wgCityId;
 
 	# 194785 = ID of wiki created on 2010-12-14 so it will work for wikis created after this project has been deployed
-	if ( $wgCityId > 227204 ) { // 194785 ) {
+	if ( $wgCityId > 194785 ) {
 		$wgDefaultUserOptions["adoptionmails-$wgCityId"] = 1;
 	}
 
