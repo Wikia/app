@@ -1,7 +1,7 @@
 <?php
 
 class HubService extends Service {
-//	private static $comscore_prefix = 'comscore_';
+	private static $comscore_prefix = 'comscore_';
 
 	/**
 	 * get proper category to report to Comscore for cityId
@@ -11,39 +11,62 @@ class HubService extends Service {
 	 * @return StdObject ($row->cat_id $row->cat_name) or false
 	 */
 	public static function getComscoreCategory($cityId) {
+		$catInfo = null;
 
-		$catInfo = WikiFactory::getCategory($cityId);
-//		if (empty($catInfo)) {
-//
-//		}
-//		else {
-//			// look for Comscore tag
-//			$wftags = new WikiFactoryTags();
-//			$tags = $wftags->getTags();
-//			if (is_array($tags['byname'])) {
-//				foreach ($tags['byname'] as $tagName) {
-//					if (startsWith($tagName, self::$comscore_prefix, false)) {
-//						$catName = substr($tagName, strlen(self::$comscore_prefix));
-//						//@todo get category by name
-//						break;
-//					}
-//				}
-//			}
-//			switch ($catInfo->cat_id) {
-//				case 2:	// gaming
-//				case 3:	// entertainment
-//				case 4: // corporate
-//					break;
-//				default:
-//			}
-//		}
-		if (empty($catInfo) || ($catInfo->cat_id != 2 && $catInfo->cat_id != 3 && $catInfo->cat_id != 4)) {	// 2: Gaming. 3: Entertainment. 4: Corporate
-			// Force hub to Lifestyle
-			$lifestyleHub = WikiFactoryHub::getInstance()->getCategory(WikiFactoryHub::CATEGORY_ID_LIFESTYLE);
-			$catInfo = null;
-			$catInfo->cat_id = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
-			$catInfo->cat_name = $lifestyleHub['name'];
+		// look for Comscore tag
+		$wftags = new WikiFactoryTags($cityId);
+		$tags = $wftags->getTags();
+		if (is_array($tags)) {
+			foreach ($tags as $id=>$name) {
+				if (startsWith($name, self::$comscore_prefix, false)) {
+					$catName = substr($name, strlen(self::$comscore_prefix));
+					$category = WikiFactoryHub::getInstance()->getCategoryByName($catName);
+					$catInfo = self::initCategoryInfo($category['id'], $category['name']);
+					break;
+				}
+			}
 		}
+
+		if (empty($catInfo)) {
+			$catInfo = WikiFactory::getCategory($cityId);
+			if (empty($catInfo)) {
+				$lifestyleHub = WikiFactoryHub::getInstance()->getCategory(WikiFactoryHub::CATEGORY_ID_LIFESTYLE);
+				$catInfo = self::initCategoryInfo(WikiFactoryHub::CATEGORY_ID_LIFESTYLE, $lifestyleHub['name']);
+			}
+			else {
+				switch ($catInfo->cat_id) {
+					// leave these categories alone
+					case WikiFactoryHub::CATEGORY_ID_GAMING:
+					case WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT:
+					case WikiFactoryHub::CATEGORY_ID_LIFESTYLE:
+					case WikiFactoryHub::CATEGORY_ID_CORPORATE:
+						$catId = $catInfo->cat_id;
+						$catName = $catInfo->cat_name;
+						break;
+					// force category entertainment
+					case WikiFactoryHub::CATEGORY_ID_MUSIC:
+						$entertainmentHub = WikiFactoryHub::getInstance()->getCategory(WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT);
+						$catId = WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT;
+						$catName = $entertainmentHub['name'];
+						break;
+					// force category lifestyle
+					default:
+						$lifestyleHub = WikiFactoryHub::getInstance()->getCategory(WikiFactoryHub::CATEGORY_ID_LIFESTYLE);
+						$catId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
+						$catName = $lifestyleHub['name'];
+				}
+
+				$catInfo = self::initCategoryInfo($catId, $catName);
+			}
+
+		}
+
+		return $catInfo;
+	}
+
+	private static function initCategoryInfo($id, $name) {
+		$catInfo->cat_id = $id;
+		$catInfo->cat_name = $name;
 
 		return $catInfo;
 	}
