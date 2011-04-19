@@ -172,6 +172,7 @@ var NodeChatView = Backbone.View.extend({
 					NodeChatHelper.log(data);
 
 					var authInfo = new models.AuthInfo({
+						'name': wgUserName, // for debugging only
 						'cookie': data,
 						'roomId': roomId // this is set in the js by Chat_Index.php
 					});
