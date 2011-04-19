@@ -149,6 +149,12 @@ function messageDispatcher(client, socket, data){
 				console.log(e);
 				console.log("JSON-string that didn't parse was:\n" + data);
 			}
+			if(typeof dataObj.attrs == 'undefined'){
+				dataObj.attrs = {};
+			}
+			if(typeof dataObj.attrs.msgType == 'undefined'){
+				dataObj.attrs.msgType = "[msgType was undefined]";
+			}
 			switch(dataObj.attrs.msgType){
 				case 'chat':
 					console.log("Dispatching to message handler.");
@@ -170,7 +176,7 @@ function messageDispatcher(client, socket, data){
 					}
 					break;
 				default:
-					console.log("Could not find recognized msgType to handle data: ");
+					console.log("ERROR: Could not find recognized msgType to handle data: ");
 					console.log(data);
 					break;
 			}
