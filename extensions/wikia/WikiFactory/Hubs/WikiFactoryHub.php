@@ -16,7 +16,11 @@ class WikiFactoryHub {
     private static $mInstance = false;
 	private static $mCategories = array();
 
+    const CATEGORY_ID_GAMING = 2;
+    const CATEGORY_ID_ENTERTAINMENT = 3;
+    const CATEGORY_ID_CORPORATE = 4;
     const CATEGORY_ID_LIFESTYLE = 9;
+    const CATEGORY_ID_MUSIC = 16;
 
     /**
 	 * private constructor
@@ -291,5 +295,21 @@ class WikiFactoryHub {
      */
     public function getCategory($id) {
 	   return self::$mCategories[$id];
+    }
+
+    /**
+     * Get category by name. Searches through list of categories.
+     * @param string $name category name
+     * @return array of category data, including id
+     */
+    public function getCategoryByName($name) {
+	    foreach (self::$mCategories as $categoryId=>$category) {
+		    if (strcasecmp($name, $category['name']) == 0) {
+			    $category['id'] = $categoryId;
+			    return $category;
+		    }
+	    }
+
+	    return;
     }
 }
