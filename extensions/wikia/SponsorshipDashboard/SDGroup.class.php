@@ -72,8 +72,7 @@ class SponsorshipDashboardGroup {
 
 	public function save() {
 
-		$wgExternalDatawareDB = $this->App->getGlobal( 'wgExternalDatawareDB' );
-		$db = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+		$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
 
 		if( !empty( $this->id ) ) {
 
@@ -117,7 +116,7 @@ class SponsorshipDashboardGroup {
 
 	public function saveReports() {
 
-		$db = wfGetDB( DB_MASTER, array(), F::build('App')->getGlobal('wgExternalDatawareDB') );
+		$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
 		$db->delete(
 			'specials.wmetrics_group_reports_map',
 			array( 'wmgrm_group_id' => $this->id )

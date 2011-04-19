@@ -139,8 +139,7 @@ class SponsorshipDashboardReport {
 
 	public function save(){
 
-		$wgExternalDatawareDB = $this->App->getGlobal( 'wgExternalDatawareDB' );
-		$db = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+		$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
 
 		if( !empty( $this->id ) ){
 
@@ -167,7 +166,7 @@ class SponsorshipDashboardReport {
 	public function delete(){
 		
 		if( !empty( $this->id ) ){
-			$db = wfGetDB( DB_MASTER, array(), F::build('App')->getGlobal('wgExternalDatawareDB') );
+			$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
 			$db->delete(
 				'specials.wmetrics_report',
 				array( 'wmre_id' => $this->id )
@@ -207,8 +206,7 @@ class SponsorshipDashboardReport {
 
 	public function saveSources(){
 		
-		$wgExternalDatawareDB = $this->App->getGlobal( 'wgExternalDatawareDB' );
-		$db = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+		$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
 		$db->delete(
 			'specials.wmetrics_source',
 			array( 'wmso_report_id' => $this->id )
@@ -259,7 +257,7 @@ class SponsorshipDashboardReport {
 			return false;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE, array(), F::build('App')->getGlobal('wgExternalDatawareDB') );
+		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
 		$res = $dbr->select(
 			'specials.wmetrics_report',
 			array(
@@ -294,7 +292,7 @@ class SponsorshipDashboardReport {
 		}
 
 		$this->sourcesLoaded = true;
-		$dbr = wfGetDB( DB_SLAVE, array(), F::build('App')->getGlobal('wgExternalDatawareDB') );
+		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
 		$res = $dbr->select(
 			'specials.wmetrics_source',
 			array( 'wmso_id as id', 'wmso_type as type' ),
@@ -392,8 +390,6 @@ class SponsorshipDashboardReport {
 
 		$this->tmpSource = null;
 	}
-
-	
 
 	/*
 	 * Returns list of hubs prepared to be used in chart display

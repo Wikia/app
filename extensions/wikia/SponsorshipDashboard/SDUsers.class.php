@@ -18,9 +18,8 @@ class SponsorshipDashboardUsers {
 
 	protected function getFromDatabase(){
 
-		$wgExternalDatawareDB = $this->App->getGlobal( 'wgExternalDatawareDB' );
+		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 		$res = $dbr->select(
 			'specials.wmetrics_user',
 			array( 
