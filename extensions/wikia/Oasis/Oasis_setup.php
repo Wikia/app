@@ -206,8 +206,16 @@ function moduleProxy() {
 
 	} else if($outputType == 'data') {
 
-		$response = new AjaxResponse(json_encode(Module::get($moduleName, $actionName, $moduleParams)->getData()));
+		$response = new AjaxResponse();
+		$text = json_encode(Module::get($moduleName, $actionName, $moduleParams)->getData());
 		$response->setContentType('application/json; charset=utf-8');
+
+		$callback = $wgRequest->getVal('callback');
+		if($callback) {
+			$text = Xml::escapeJsString($callback) . '(' . $text . ')';
+			$response->setContentType('text/javascript; charset=utf-8');
+		}
+		$response->addText($text);
 
 	}
 
