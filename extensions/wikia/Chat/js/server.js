@@ -214,7 +214,10 @@ function authConnection(client, socket, authData){
 				cookieStr += index + "=" + cookieData[index] + ";"
 			}
 			client.cookieStr = cookieStr;
-			console.log("Auth data: " + client.cookieStr);
+			var claimName = auth.get('name');
+			if(!claimName){claimName = "[not set]";}
+			console.log("SessionId '"+ client.sessionId + "' is saying that they are " + claimName);
+			console.log("Auth data for client w/sessionId '" + client.sessionId + "': " + client.cookieStr);
 			// Send auth cookies to apache to make sure this user is authorized & get the user information.
 			var requestHeaders = {
 				'Cookie': client.cookieStr,
@@ -248,6 +251,7 @@ function authConnection(client, socket, authData){
 						client.isChatMod = data.isChatMod;
 						client.roomId = roomId;
 						// TODO: REFACTOR THIS TO TAKE ANY FIELDS THAT data GIVES IT.
+						client.ATTEMPTED_NAME = data.username;
 						var name = data.username;
 						var avatarSrc = data.avatarSrc;
 						var editCount = data.editCount;
@@ -290,8 +294,8 @@ function authConnection(client, socket, authData){
 								} else if(usernameToData){
 									_.each(usernameToData, function(userData){
 										var userModel = new models.User( JSON.parse(userData) );
-										console.log("Room member of " + roomId + ": ");
-										console.log(userModel);
+										//console.log("Room member of " + roomId + ": ");
+										//console.log(userModel);
 										nodeChatModel.users.add(userModel);
 									});
 								}
@@ -319,6 +323,14 @@ function authConnection(client, socket, authData){
 								}
 								client.myUser = connectedUser;
 								
+								if( client.ATTEMPTED_NAME != client.myUser.get('name') ){
+									console.log("\t\t============== POSSIBLE IDENTITY PROBLEM!!!!!! - BEG ==============");
+									console.log("\t\tATTEMPTED NAME:     " + client.ATTEMPTED_NAME + " (probably the correct name)");
+									console.log("\t\tATTACHED TO USR:    " + client.myUser.get('name'));
+									console.log("\t\tAFTER MATCHING FOR: " + name);
+									console.log("\t\t============== POSSIBLE IDENTITY PROBLEM!!!!!! - END ==============");
+								}
+
 								// If this same user is already in the sessionIdsByKey hash, then they must be connected in
 								// another browser. Kick that other instance before continuing (multiple instances cause all kinds of weirdness.
 								var existingId = sessionIdsByKey[getKey_userInRoom(client.myUser.get('name'), client.roomId)];
@@ -919,8 +931,8 @@ function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDa
 							api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, successCallback, errorCallback);
 						} else {
 						
-							console.log("Room data loaded: ");
-							console.log(roomData);
+							console.log("Room data loaded for " + roomData.room_name);
+							//console.log(roomData);
 						
 							var result = {
 								'roomId': roomId,
