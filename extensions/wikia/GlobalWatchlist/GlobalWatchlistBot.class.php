@@ -556,7 +556,7 @@ class GlobalWatchlistBot {
 				// run script with option --send
 				
 				$retval = "";
-				$sCommand  = "SERVER_ID={wgCityId} php $IP/maintenance/wikia/weeklyDigest.php ";
+				$sCommand  = "SERVER_ID={$wgCityId} php $IP/maintenance/wikia/weeklyDigest.php ";
 				$sCommand .= "--send ";
 				$sCommand .= "--users=" . $iUserId . " ";
 				$sCommand .= "--conf " . $wgWikiaLocalSettingsPath ;
