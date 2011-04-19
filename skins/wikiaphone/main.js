@@ -4,7 +4,7 @@ $(document).ready(function(){
 });
 
 var MobileSkin = {
-	uacct: "UA-2871474-1",
+	uacct: "UA-19473076-1",//test related to FB#4768, original value was "UA-2871474-1"
 	username: (wgUserName == null) ? 'anon' : 'user',
 	ct: {},
 	c: null,
