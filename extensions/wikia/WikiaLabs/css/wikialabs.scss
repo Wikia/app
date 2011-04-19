@@ -8,13 +8,13 @@ $toolbox-button: 105px;
 $margin-images: 10px;
 
 .WikiaArticle .warningBox {
-    background-color: #FFFFCC;
+	background-color: #FFFFCC;
 	border: 1px solid #AAAAAA;
 	margin: 1em 3em 1em 0;
 	padding: 6px;
 	width: 100%;
 	img {
-	    margin-top: -4px;
+		margin-top: -4px;
 	}
 }
 
@@ -26,18 +26,18 @@ $margin-images: 10px;
 		@include clearfix;
 		position: relative;
 		padding-bottom: 20px;
-	    margin-top: 20px;
-	    border-bottom: 1px solid;
-    	border-width: 1px;
-    	border-color:$color-headline-border;
-    	min-height: 114px;
-	    .appScreen {
-	    	float: left;
+		margin-top: 20px;
+		border-bottom: 1px solid;
+		border-width: 1px;
+		border-color:$color-headline-border;
+		min-height: 114px;
+		.appScreen {
+			float: left;
 			margin-right: $margin-images;
 			border-color: $color-text;
 			border: 1px solid;
-	    }
-		.details{
+		}
+		.details {
 			vertical-align: top;
 			padding-right: $toolbox-button + $margin-images;
 			display: block;
@@ -45,114 +45,114 @@ $margin-images: 10px;
 				display: block;
 				font-size: 20px;
 				.data {
-				    font-size: 10px;
-    				padding-bottom: 4px;
-    				padding-left: 10px;
+					font-size: 10px;
+					padding-bottom: 4px;
+					padding-left: 10px;
 				}
 			}
 		}
 		.buttons {
-	    	position: absolute;
-	    	right: 0;
-	    	vertical-align: top;
-	    	border: medium solid;
-    		top: 0;
-    		width: $toolbox-button;
-    		border: none;
-    		.feedback {
-				margin-top: 6px;
-				margin-bottom: 6px;
-			    img {
-    			    vertical-align: middle;
-    				margin-left: -3px;
-				    margin-top: -2px;
-    				padding: 0;
-    				width: 20px;
+			position: absolute;
+			right: 0;
+			vertical-align: top;
+			border: medium solid;
+			top: 0;
+			width: $toolbox-button;
+			border: none;
+			.feedback {
+					margin-top: 6px;
+					margin-bottom: 6px;
+				    img {
+				    vertical-align: middle;
+					margin-left: -3px;
+					    margin-top: -2px;
+					padding: 0;
+					width: 20px;
+					}
+			}
+			.active {
+				display: block;
+				font-size: 11px;
+				.wikia-button{
+					padding-left: 3px;
+					cursor :default;
+					padding-right: 3px;
+					margin-right: 6px;
 				}
-    		}
-    		.active {
-    		    display: block;
-    			font-size: 11px;
-    			.wikia-button{
-    			    padding-left: 3px;
-    			    cursor :default;
-    				padding-right: 3px;
-    				margin-right: 6px;
-    			}
-    		}
-    		.stars {
-    			padding-left: 2px;
-    			position: relative;
-    			display: block;
-    			margin-top: -5px;
-    			img {
-    			    background: url("/extensions/wikia/WikiaLabs/images/star-inactive.png") repeat scroll 0 0 transparent; /* $wgCdnStylePath */
-    				height: 32px;
-    				width: 32px;
-    				margin-right: -10px;
-    				margin-left: -10px;
-    				&.staractive{
-    					background: url("/extensions/wikia/WikiaLabs/images/star-active.png") repeat scroll 0 0 transparent; /* $wgCdnStylePath */
-    				}
-    			}
-    			.ratings{
-    			    position: absolute;
-    				right: 0;
-    				top: 0;
-    			   	display: block;
-    				float: right;
-    				font-size: 8px;
-    				line-height: 8px;
-    				padding-top: 8px;
-    				text-align: center;
-    			}
-    		}
-    		.slider{
-    			background: url(/extensions/wikia/WikiaLabs/images/toggle-bkg-inactive.png); /* $wgCdnStylePath */
-    		    border: medium solid;
-    			display: block;
-    			height: 27px;
-    			width: 109px;
-    			border: none;
-    			cursor:pointer;
-    			&.on {
-    				background: url(/extensions/wikia/WikiaLabs/images/toggle-bkg-active.png); /* $wgCdnStylePath */
-    			}
-    			.texton {
-    			   	margin-left: 18px;
-    				position: absolute;
-    				top: 2px;
-    				color: #FFFFFF;
-    				font-weight: bold;
-    				display: none;
-    				&.on {
-    					display: block;
-    				}
-    			}
+			}
+			.stars {
+				padding-left: 2px;
+				position: relative;
+				display: block;
+				margin-top: -5px;
+				img {
+					background: url("/extensions/wikia/WikiaLabs/images/star-inactive.png") repeat scroll 0 0 transparent; /* $wgCdnStylePath */
+					height: 32px;
+					width: 32px;
+					margin-right: -10px;
+					margin-left: -10px;
+					&.staractive{
+						background: url("/extensions/wikia/WikiaLabs/images/star-active.png") repeat scroll 0 0 transparent; /* $wgCdnStylePath */
+					}
+				}
+				.ratings{
+					position: absolute;
+					right: 0;
+					top: 0;
+					display: block;
+					float: right;
+					font-size: 8px;
+					line-height: 8px;
+					padding-top: 8px;
+					text-align: center;
+				}
+			}
+			.slider {
+				background: url(/extensions/wikia/WikiaLabs/images/toggle-bkg-inactive.png); /* $wgCdnStylePath */
+				border: medium solid;
+				display: block;
+				height: 27px;
+				width: 109px;
+				border: none;
+				cursor:pointer;
+				&.on {
+					background: url(/extensions/wikia/WikiaLabs/images/toggle-bkg-active.png); /* $wgCdnStylePath */
+				}
+				.texton {
+					margin-left: 18px;
+					position: absolute;
+					top: 2px;
+					color: #FFFFFF;
+					font-weight: bold;
+					display: none;
+					&.on {
+						display: block;
+					}
+				}
 				.textoff {
-    			   	margin-left: 49px;
-    				position: absolute;
-    				top: 2px;
-    				color: #000;
-    				font-weight: bold;
-    				&.on {
-    					display: none;
-    				}
-    			}
-    			.button {
-    				background: url(/extensions/wikia/WikiaLabs/images/toggle-switch.png); /* $wgCdnStylePath */
+					margin-left: 49px;
+					position: absolute;
+					top: 2px;
+					color: #000;
+					font-weight: bold;
+					&.on {
+						display: none;
+					}
+				}
+				.button {
+					background: url(/extensions/wikia/WikiaLabs/images/toggle-switch.png); /* $wgCdnStylePath */
 					border: none;
-    				display: block;
-    				height: 27px;
-    				padding: 0;
-    				width: 42px;
-    				position: absolute;
-    				z-index: 1;
-    				&.on {
-    					left: 67px;
-    				}
-    			}
-    		}
+					display: block;
+					height: 27px;
+					padding: 0;
+					width: 42px;
+					position: absolute;
+					z-index: 1;
+					&.on {
+						left: 67px;
+					}
+				}
+			}
 		}
 	}
 }
@@ -160,33 +160,33 @@ $margin-images: 10px;
 .WikiaLabsGraduates {
 	h1{
 		width: 100%;
-		img{
+		img {
 			float: left;
-	    	margin-top: -10px;
-	    	width: 32px;
-	    }
-    }
-    .size {
-    	float: right;
-    }
-    li {
-     	@include clearfix;
-     	padding-bottom: 20px;
-	    img {
-	    	float: left;
-	        border: 1px solid;
-	    	height: 80px;
-	    	width: 80px;
-	    }
-	    div {
-	    	padding-left: 92px;
-	    	.title {
-	    	    display: block;
-    			font-size: 20px;
-    			padding-bottom: 3px;
-	    	}
-	    }
-    }
+			margin-top: -10px;
+			width: 32px;
+		}
+	}
+	.size {
+		float: right;
+	}
+	li {
+		@include clearfix;
+		padding-bottom: 20px;
+		img {
+			float: left;
+			border: 1px solid;
+			height: 80px;
+			width: 80px;
+		}
+		div {
+			padding-left: 92px;
+			.title {
+				display: block;
+				font-size: 20px;
+				padding-bottom: 3px;
+			}
+		}
+	}
 }
 
 .WikiaLabsStaff{
@@ -196,22 +196,22 @@ $margin-images: 10px;
 		margin-bottom: 0;
 	}
 	#addProject {
-    	float: right;
-    	width: 115px;
+		float: right;
+		width: 115px;
 	}
 	.redinfo {
-	    color: red;
-    	font-size: 11px;
-    	display: block;
+		color: red;
+		font-size: 11px;
+		display: block;
 	}
 	.editinfo {
 	 	display: block;
-    	font-size: 12px;
-    	margin-top: 23px;
+		font-size: 12px;
+		margin-top: 23px;
 	}
 	.prjselect {
-	    margin-bottom: 20px;
-    	width: 150px;
+		margin-bottom: 20px;
+		width: 150px;
 	}
 	.appScreen {
 		width: 80px;
@@ -221,16 +221,16 @@ $margin-images: 10px;
 
 .addprjmodal {
 	#errorBox {
-	    background-color: #FFFFCC;
-    	border: 1px solid #AAAAAA;
-    	display: none;
-    	margin: 1em 3em 1em 0;
-    	padding: 6px;
+		background-color: #FFFFCC;
+		border: 1px solid #AAAAAA;
+		display: none;
+		margin: 1em 3em 1em 0;
+		padding: 6px;
 	}
 	.label {
-	    font-weight: bold;
+		font-weight: bold;
 		padding-top: 15px;
-    	padding-bottom: 3px;
+		padding-bottom: 3px;
 	}
 	.input input {
 		width:350px;
@@ -251,30 +251,30 @@ $margin-images: 10px;
 	}
 	.image {
 		float: right;
-    	margin-right: 80px;
-    	margin-top: 50px;
-    	position: relative;
-    	img {
-    	    height: 100px;
-    		width: 150px;
-    		border: 1px solid;
-    		border-color: $color-text;
-    	}
-    	button {
-    	    width: 110px;
-    	    left: 24px;
-    		position: absolute;
-    		top: 41px;
-    	}
+		margin-right: 80px;
+		margin-top: 50px;
+		position: relative;
+		img {
+			height: 100px;
+			width: 150px;
+			border: 1px solid;
+			border-color: $color-text;
+		}
+		button {
+			width: 110px;
+			left: 24px;
+			position: absolute;
+			top: 41px;
+		}
 	}
 }
 
 .warning {
 	h2 {
   		font-size: 25px;
-    	height: 20px;
-    	padding-bottom: 30px;
-    	padding-left: 30px;
+		height: 20px;
+		padding-bottom: 30px;
+		padding-left: 30px;
 		background: url("/extensions/wikia/WikiaLabs/images/cross-24-ns.png") no-repeat scroll 0 0 transparent; /* $wgCdnStylePath */
 	}
 	.buttons {
@@ -289,13 +289,12 @@ $margin-images: 10px;
 	}
 }
 
-
 #WikiaPageHeader {
 	h1 {
-	    background: url("/extensions/wikia/WikiaLabs/images/labs.png") no-repeat scroll 0 0 transparent; /* $wgCdnStylePath */
-    	padding-bottom: 12px;
-    	padding-left: 44px;
-    	padding-top: 12px;
+		background: url("/extensions/wikia/WikiaLabs/images/labs.png") no-repeat scroll 0 0 transparent; /* $wgCdnStylePath */
+		padding-bottom: 12px;
+		padding-left: 44px;
+		padding-top: 12px;
 	}
 	h2 {
 		display: none;
@@ -305,8 +304,8 @@ $margin-images: 10px;
 .feedbackmodal {
  	.feedbacktext {
  	 	margin-bottom: 12px;
-    	height: 100px;
-    	width: 400px;
+		height: 100px;
+		width: 675px;
  	 	display: block;
  	}
 
@@ -316,58 +315,70 @@ $margin-images: 10px;
  	}
 
  	.stars {
- 	    margin-left: 3px;
- 	    img {
-		    background: url("/extensions/wikia/WikiaLabs/images/star-inactive.png") transparent; /* $wgCdnStylePath */
+		float: right;
+		margin-left: 3px;
+		img {
+			background: url("/extensions/wikia/WikiaLabs/images/star-inactive.png") transparent; /* $wgCdnStylePath */
 			height: 18px;
 			width: 15px;
 			margin-left: -3px;
 			background-position: -8px -8px;
+			margin-top: -4px;
+			vertical-align: middle;
 			&.staractive {
 				background: url("/extensions/wikia/WikiaLabs/images/star-active.png") transparent; /* $wgCdnStylePath */
 				background-position: -8px -8px;
 			}
-    		margin-top: -4px;
-    		vertical-align: middle;
-    	}
+		}
  	}
 
-	.comments{
-    	display: block;
-    	padding-bottom: 2px;
-    	padding-top: 6px;
+	.project {
+		float: right;
+	}
+
+	.okbutton {
+		float: right;
+	}
+
+	.comments {
+		float: left;
+		display: block;
+		padding-bottom: 2px;
+		padding-top: 6px;
+		margin-bottom: 5px;
 	}
 
 	.title {
 		display: block;
 		clear: both;
-	    font-size: 21px;
-	    margin-top: 10px;
-    	margin-bottom: 10px;
+		font-size: 18px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		border-bottom: 1px solid $color-page-border
 	}
 
 	.appScreen {
-    	float: left;
+		float: left;
 		margin-right: $margin-images;
 		border-color: $color-text;
 		border: 1px solid;
 	}
 
 	.prjname {
-	    margin-bottom: 6px;
+		margin-bottom: 6px;
 		display: block;
 		font-size: 20px;
 	}
 
-	.data{
+	.data {
 		display:none;
 	}
 
 	.errorBox {
-	    background-color: #FFFFCC;
-    	border: 1px solid #AAAAAA;
-    	display: none;
-    	margin: 1em 3em 1em 0;
-    	padding: 6px;
+		background-color: #FFFFCC;
+		border: 1px solid $color-page-border;
+		display: none;
+		margin: 1em 3em 1em 0;
+		padding: 6px;
 	}
 }
