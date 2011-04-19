@@ -44,13 +44,15 @@ $wgSpecialPages['AutomaticWikiAdoption'] = 'SpecialAutomaticWikiAdoption';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function AutomaticWikiAdoptionInit() {
-	global $wgHooks;
+	global $wgHooks, $wgDefaultUserOptions, $wgCityId;
+
+	# 194785 = ID of wiki created on 2010-12-14 so it will work for wikis created after this project has been deployed
+	if ( $wgCityId > 227204 ) { // 194785 ) {
+		$wgDefaultUserOptions["adoptionmails-$wgCityId"] = 1;
+	}
 
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'AutomaticWikiAdoptionHelper::onSkinTemplateOutputPageBeforeExec';
 	$wgHooks['GetPreferences'][] = 'AutomaticWikiAdoptionHelper::onGetPreferences';
-	$wgHooks['UserLoadOptions'][] = 'AutomaticWikiAdoptionHelper::UserLoadOptions';
-	$wgHooks['UserSaveOptions'][] = 'AutomaticWikiAdoptionHelper::UserSaveOptions';
-	$wgHooks['UserSaveOptions2'][] = 'AutomaticWikiAdoptionHelper::UserSaveOptions2';
 }
 
 // Ajax dispatcher
