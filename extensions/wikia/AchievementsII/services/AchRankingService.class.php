@@ -23,21 +23,22 @@ class AchRankingService {
 		$positionCounter = 1;
 		$prevScore = -1;
 		$prevPosition = -1;
-		while($row = $dbr->fetchObject($res)) {
-		    $user = User::newFromId($row->user_id);
-
-		    if($user && !$user->isBlocked() && !in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) {
+		
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			$user = User::newFromId($row->user_id);
+			
+			if ( $user && !$user->isBlocked() && !in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) {
 				// If this user has the same score as previous user, give them the same (lower) rank (RT#67874).
 				$position = (($prevScore == $row->score) && ($prevPosition != -1))? $prevPosition : $positionCounter;
-
+				
 				$ranking[] = new AchRankedUser($user, $row->score, $position, ($rankingSnapshot != null && isset($rankingSnapshot[$user->getId()])) ? $rankingSnapshot[$user->getId()] : null);
-
+				
 				$prevPosition = $position;
 				$prevScore = $row->score;
 				$positionCounter++;
-		    }
-
-		    if($limit > 0 && $positionCounter == $limit) break;
+			}
+			
+			if ( $limit > 0 && $positionCounter == $limit ) break;
 		}
 		
 		$dbr->freeResult($res);

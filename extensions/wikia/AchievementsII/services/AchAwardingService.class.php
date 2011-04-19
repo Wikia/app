@@ -271,6 +271,9 @@ class AchAwardingService {
 			
 			//touch user when badges are given
 			$this->mUser->invalidateCache();
+			
+			//purge the user page to update counters/ranking/badges/score, FB#2872
+			$this->mUser->getUserPage()->purgeSquid();
 		}
 
 		wfProfileOut(__METHOD__);
