@@ -1,3 +1,6 @@
+== Changes since release-017 ==
+* fb#4604: Empty edit field when editing/previewing blog posts (macbre)
+
 == Changes since release-016 ==
 * fb#4471: WMU: typing in # of pixels for thumbnail doesn't work (macbre)
 
