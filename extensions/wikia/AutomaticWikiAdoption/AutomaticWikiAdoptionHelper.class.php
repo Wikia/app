@@ -312,77 +312,22 @@ class AutomaticWikiAdoptionHelper {
 	 */
 	public static function onGetPreferences($user, &$defaultPreferences) {
 		wfProfileIn(__METHOD__);
-		global $wgSitename;
-		
-		//for admins only 
+		global $wgSitename, $wgCityId;
+		// Adoption preference is for wiki sysop group only
 		if (in_array('sysop', $user->getGroups())) {
-			// will need to move this out of adoption extension when this becomes generalized
-			$defaultPreferences['adoptionmails-label'] = array(
+			$defaultPreferences["adoptionmails-label-$wgCityId"] = array(
 				'type' => 'info',
 				'label' => '',
 				'help' => wfMsg('automaticwikiadoption-pref-label', $wgSitename),
 				'section' => 'personal/wikiemail',
 			);
-			$defaultPreferences['adoptionmails'] = array(
+			$defaultPreferences["adoptionmails-$wgCityId"] = array(
 				'type' => 'toggle',
 				'label-message' => array('tog-adoptionmails', $wgSitename),
 				'section' => 'personal/wikiemail',
 			);
-			AutomaticWikiAdoptionHelper::UserLoadOptions($user, $user->mOptions);
 		}
 
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
-	// force load adoptionmail from local database
-	public static function UserLoadOptions($user, &$options) {
-		wfProfileIn(__METHOD__);
-
-		if (in_array('sysop', $user->getGroups())) {
-			$dbr = wfGetDB( DB_SLAVE );
-			$res = $dbr->select(
-				'`user_properties`',
-				'*',
-				array( 'up_user' => $user->getId(), 'up_property' =>'adoptionmails' ),
-				__METHOD__
-			);
-			while( $row = $dbr->fetchObject( $res ) ) {
-				$options[$row->up_property] = $row->up_value;
-			}
-		}
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
-	// remove adoptionmails from global settings so it is not saved in normal Shared DB
-	public static function UserSaveOptions($user, &$options) {
-		if (in_array('sysop', $user->getGroups())) {
-			self::$saveOption = $options['adoptionmails'];
-			unset($options['adoptionmails']);
-		}
-		return true;
-	}
-
-	// save option in local wiki database
-	public static function UserSaveOptions2($user, &$options) {
-		wfProfileIn(__METHOD__);
-
-		if (in_array('sysop', $user->getGroups()) && isset(self::$saveOption)) {
-			$dbw = wfGetDB( DB_MASTER );
-
-			$insert_rows[] = array(
-					'up_user' => $user->getId(),
-					'up_property' => 'adoptionmails',
-					'up_value' => self::$saveOption,
-				);
-			$dbw->begin();
-			$dbw->delete( '`user_properties`', array( 'up_user' => $user->getId() ), __METHOD__ );
-			$dbw->insert( '`user_properties`', $insert_rows, __METHOD__ );
-			$dbw->commit();
-			// restore option value
-			$options['adoptionmails'] = self::$saveOption;
-		}
 		wfProfileOut(__METHOD__);
 		return true;
 	}
