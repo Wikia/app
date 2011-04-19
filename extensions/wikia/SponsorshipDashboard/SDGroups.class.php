@@ -50,8 +50,7 @@ class SponsorshipDashboardGroups {
 		$id = (int) $id;
 		if ( !empty( $id ) ){
 
-			$wgExternalDatawareDB = $this->App->getGlobal( 'wgExternalDatawareDB' );
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+			$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
 			$res = $dbr->select(
 				'specials.wmetrics_user_group_map',
 				array( 'wmgum_group_id as group_id'  ),
@@ -76,9 +75,7 @@ class SponsorshipDashboardGroups {
 
 	protected function getFromDatabase(){
 
-		$wgExternalDatawareDB = $this->App->getGlobal( 'wgExternalDatawareDB' );
-
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
 		$res = $dbr->select(
 			'specials.wmetrics_group',
 			array( 'wmgr_id as id', 'wmgr_name as name', 'wmgr_description as description'  ),

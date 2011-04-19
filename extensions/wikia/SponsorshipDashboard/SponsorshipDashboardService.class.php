@@ -11,6 +11,14 @@ class SponsorshipDashboardService extends Service {
 	const SD_RETURNPARAM_SERIE = 'serie';
 	const SD_GAPI_RETRIES = 4;
 
+	static function getDatabase(){
+
+		$isDevBox = F::app()->getGlobal( 'wgDevEnvironment' );
+		return ( $isDevBox )
+			? F::app()->getGlobal( 'wgExternalDatawareDB' )
+			: F::app()->getGlobal( 'wgStatsDB' );
+	}
+
 //	public function getPopularHubs(){
 //
 //		global $wgHubsPages;

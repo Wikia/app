@@ -242,8 +242,7 @@ abstract class SponsorshipDashboardSource {
 
 		if ( $this->saveable && !empty( $this->reportId ) ) {
 			
-			$wgExternalDatawareDB = $this->App->getGlobal( 'wgExternalDatawareDB' );
-			$db = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+			$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
 
 			$array = array(
 				    'wmso_type' => $this->getSourceKey(),
@@ -285,9 +284,7 @@ abstract class SponsorshipDashboardSource {
 
 	protected function saveParams() {
 
-		$wgExternalDatawareDB = $this->App->getGlobal( 'wgExternalDatawareDB' );
-		
-		$db = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+		$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
 		$db->delete(
 			'specials.wmetrics_source_params',
 			array( 'wmsop_source_id' => $this->sourceId )
@@ -417,7 +414,7 @@ abstract class SponsorshipDashboardSource {
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$aVars = array();
-		//$aVars['hubs'] = $this->getGeneralHubList();
+		$aVars['hubs'] = $this->getGeneralHubList();
 		$aVars['data'] = $this->getParamsArray();
 		$oTmpl->set_vars( $aVars );
 		
@@ -464,7 +461,7 @@ abstract class SponsorshipDashboardSource {
 
 		if ( !empty( $this->sourceId ) ) {
 
-			$dbr = wfGetDB( DB_SLAVE, array(), F::build('App')->getGlobal('wgExternalDatawareDB') );
+			$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
 			$res = $dbr->select(
 				'specials.wmetrics_source_params',
 				array( 'wmsop_value as value', 'wmsop_type as type' ),
