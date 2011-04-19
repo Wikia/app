@@ -32,7 +32,13 @@
 				<ul class="answers">
 					<? foreach ($q['answers'] as $a) { ?>
 						<li class="answer" data-correct="<?= $a['correct'] ?>">
-							<img class="answer-pic" src="http://placekitten.com/360/360" height="180" width="180">
+							<div class="pic-container">
+								<? if (empty($a['image'])) { ?>
+									<img class="answer-pic" src="http://placekitten.com/360/360" height="180" width="180">
+								<? } else { ?>
+									<img class="answer-pic" src="<?= $a['image'] ?>" height="180" width="180">
+								<? } ?>
+							</div>
 							<p><?= $a['text'] ?></p>
 						</li>
 					<? } ?>

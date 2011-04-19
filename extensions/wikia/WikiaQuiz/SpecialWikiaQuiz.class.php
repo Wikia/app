@@ -16,7 +16,7 @@ class SpecialWikiaQuiz extends UnlistedSpecialPage {
 		if ($wgRequest->getVal('v') == '2') {	
 			$wgOut->addHtml(wfRenderModule('WikiaQuiz', 'SampleQuiz2'));
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaQuiz/css/WikiaQuiz2.scss'));
-			$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaQuiz/js/excanvas.compiled.js"></script>');
+			//$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaQuiz/js/excanvas.compiled.js"></script>');
 			$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaQuiz/js/WikiaQuiz2.js"></script>');
 		} else {
 			$wgOut->addHtml(wfRenderModule('WikiaQuiz', 'SampleQuiz'));
