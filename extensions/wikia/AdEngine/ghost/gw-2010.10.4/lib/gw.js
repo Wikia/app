@@ -895,7 +895,7 @@ domelement.prototype={
  */
 
 	,create: (function(){ 
-	var get= IE ? 
+	var get= (IE && !($.browser.msie && $.browser.version == "9.0")) ? 
 		function(a,b){ 
 			var c,d=["<" + a];
 			for(var e in b) 	
