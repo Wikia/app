@@ -792,6 +792,7 @@ Parece que alguien ha editado tu wiki! Por qué no <a href="$MYHOMEURL">verifica
 	'founderemails-email-3-day-tips-heading' => 'Han pasado tres días desde que comenzaste y pensamos que podríamos ofrecer algunos más consejos para la construcción de tu wiki:',
 	'founderemails-email-3-day-editmainpage-heading' => 'Adorna tu página principal.',
 	'founderemails-email-3-day-editmainpage-content' => 'La página principal es una de las primeras cosas que las personas ven cuando visitan <a href="$WIKIURL" style="color:#2a87d5;text-decoration:none;">$WIKINAME</a>. Haz una buena impresión al escribir un resumen detallado sobre lo que trata tu tema y agrega una presentación de diapositivas, una galería o una presentación de imágenes.',
+	'founderemails-email-3-day-editmainpage-button' => 'Hazla atractiva',
 	'founderemails-email-3-day-addphotos-heading' => 'Añadir más imágenes.',
 	'founderemails-email-3-day-addphotos-content' => 'Una de las mejores formas de complementar tus páginas es <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPHOTOURL">"añadiendo algunas imágenes"</a>.',
 	'founderemails-email-3-day-addphotos-button' => 'Añadir imágenes',

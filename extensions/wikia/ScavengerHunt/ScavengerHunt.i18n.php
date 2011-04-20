@@ -216,6 +216,27 @@ $messages['de'] = array(
 	'scavengerhunt-entry-form-submit' => 'Eingabe absenden',
 );
 
+/** Spanish (Español)
+ * @author VegaDark
+ */
+$messages['es'] = array(
+	'scavengerhunt-desc' => 'Permite crear un juego de búsqueda en un wiki',
+	'scavengerhunt-list-header-name' => 'Nombre del juego',
+	'scavengerhunt-list-header-is-enabled' => '¿Habilitado?',
+	'scavengerhunt-list-header-actions' => 'Acciones',
+	'scavengerhunt-list-enabled' => 'Habilitado',
+	'scavengerhunt-list-disabled' => 'Deshabilitado',
+	'scavengerhunt-list-edit' => 'editar',
+	'scavengerhunt-label-dialog-check' => '(mostrar diálogo)',
+	'scavengerhunt-label-image-check' => '(mostrar imagen)',
+	'scavengerhunt-label-general' => 'General',
+	'scavengerhunt-label-name' => 'Nombre:',
+	'scavengerhunt-label-landing-title' => 'Nombre de la página de inicio (título de artículo en este wiki):',
+	'scavengerhunt-label-landing-button-text' => 'Texto del botón de la página de inicio:',
+	'scavengerhunt-label-starting-clue' => 'Comenzar pista emergente',
+	'scavengerhunt-label-starting-clue-title' => 'Título emergente:',
+);
+
 /** Finnish (Suomi)
  * @author Tofu II
  */

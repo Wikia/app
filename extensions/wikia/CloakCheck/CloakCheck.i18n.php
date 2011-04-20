@@ -29,6 +29,23 @@ $messages['en'] = array(
 	'cloakcheck-process-edits-no' => 'User does not have enough edits.',
 );
 
+/** Message documentation (Message documentation)
+ * @author Siebrand
+ */
+$messages['qqq'] = array(
+	'cloakcheck' => "An \"''IRC cloak''\" is a technical measure on an IRC network to hide the IP address of a user.",
+	'cloakcheck-desc' => "An \"''IRC cloak''\" is a technical measure on an IRC network to hide the IP address of a user.",
+	'cloakcheck-form-check-self' => "An \"''IRC cloak''\" is a technical measure on an IRC network to hide the IP address of a user.",
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'cloakcheck-form-username' => 'Потребителско име:',
+	'cloakcheck-process-username' => 'Потребителско име: $1',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */

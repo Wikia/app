@@ -52,6 +52,7 @@ $messages['qqq'] = array(
  */
 $messages['bg'] = array(
 	'hub-blog-comments' => '{{PLURAL:$1|един коментар|$1 коментара}}',
+	'hub-blog-showarticle' => 'Показване на страницата',
 );
 
 /** Breton (Brezhoneg)
@@ -276,7 +277,7 @@ $messages['mk'] = array(
 	'hub-hotspot-header' => 'Најактивни места',
 	'hub-topusers-header' => 'Најкотирани $1 корисници',
 	'hub-featured' => 'Најкотирани $1 викија',
-	'hub-header' => 'Викија од $1',
+	'hub-header' => 'Викија на $1',
 	'hub-hotspot-info' => 'Ова се најактивните страници неделава, рангирани по број на уредници.',
 	'hub-blog-comments' => '{{PLURAL:$1|еден коментар|$1 коментари}}',
 	'hub-blog-continue' => 'Продолжете со читање',

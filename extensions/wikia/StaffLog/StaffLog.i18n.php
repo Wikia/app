@@ -65,13 +65,16 @@ $messages['de'] = array(
 	'right-stafflog' => 'Kann das Staff-Log einsehen',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author VegaDark
+ */
 $messages['es'] = array(
 	'stafflog-desc' => 'Registro centralizado para el personal',
 	'stafflog' => 'Registro del personal',
 	'stafflog-blockmsg' => '$1 $2 intentó bloquear al empleado $3 en el proyecto $4. Motivo: $5',
 	'stafflog-piggybackloginmsg' => '$1 Personificación - usuario $2 inicia como $3',
 	'stafflog-piggybacklogoutmsg' => '$1 Personificación - usuario $2 cierra sesión de la cuenta $3',
+	'right-stafflog' => 'Puede ver el registro del staff',
 );
 
 /** French (Français) */

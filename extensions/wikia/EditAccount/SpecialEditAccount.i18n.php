@@ -311,6 +311,7 @@ $messages['el'] = array(
  * @author Crazymadlover
  * @author Pertile
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'editaccount' => 'Editar Cuenta',
@@ -326,6 +327,7 @@ $messages['es'] = array(
 	'editaccount-label-email' => 'Fijar una nueva dirección de correo electrónico',
 	'editaccount-label-pass' => 'Fijar una nueva contraseña',
 	'editaccount-label-realname' => 'Fijar un nuevo nombre real',
+	'editaccount-label-clearunsub' => 'Desuscrito',
 	'editaccount-submit-email' => 'Guardar correo electrónico',
 	'editaccount-submit-pass' => 'Guardar contraseña',
 	'editaccount-submit-realname' => 'Guardar nombre verdadero',

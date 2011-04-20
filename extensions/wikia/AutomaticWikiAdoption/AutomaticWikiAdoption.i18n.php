@@ -122,6 +122,7 @@ $messages['bs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Claudia Hattitten
  * @author LWChris
  */
 $messages['de'] = array(
@@ -133,6 +134,8 @@ $messages['de'] = array(
 	'automaticwikiadoption-adoption-successed' => 'Herzlichen Glückwunsch! Du bist jetzt ein Administrator in diesem Wiki!',
 	'automaticwikiadoption-adoption-failed' => 'Tut uns leid. Wir haben versucht, dich zu einem Administrator zu machen, aber es hat nicht funktioniert. Bitte [http://community.wikia.com/Special:Contact kontaktiere uns], und wir werden versuchen, dir weiterzuhelfen.',
 	'automaticwikiadoption-not-allowed' => 'Tut uns leid. Du kannst dieses Wiki gerade nicht übernehmen.',
+	'automaticwikiadoption-not-enough-edits' => 'Auweia! Du musst mehr als 10 Bearbeitungen getätigt haben, um dieses Wiki adoptieren zu können.',
+	'automaticwikiadoption-adopted-recently' => 'Auweia! Du hast in letzter Zeit bereits ein anderes Wiki adoptiert. Du musst eine Weile warten, bevor du ein weiteres Wiki adoptieren kannst.',
 	'automaticwikiadoption-log-reason' => 'Automatische Wikiübernahme',
 	'automaticwikiadoption-notification' => "$1 kann übernommen werden! Du kannst der neue Besitzer werden. '''Jetzt übernehmen!'''",
 	'automaticwikiadoption-mail-first-subject' => 'Wir haben dich eine Weile nicht gesehen',
@@ -168,10 +171,13 @@ Klicke auf den folgenden Link, um Änderungen an dieser Liste abzubestellen: $3.
 Dein Wiki wurde übernommen! Das bedeutet, dass jemand anderes freiwillig bei der Aufrechterhaltung der Community und Inhalte auf der Website helfen wird. Mach dir keine Sorgen - du bist immer noch ein Administrator, und du bist jederzeit willkommen zurückzukehren.<br /><br />
 <b>Das Wikia-Team</b><br /><br />
 <small>Du kannst Änderungen an dieser Liste <a href="$3">abbestellen</a>.</small>',
-	'tog-adoptionmails' => 'Mich per E-Mail benachrichtigen sobald sich etwas an der Wiki-Administration ändert (nur Administratoren)',
+	'tog-adoptionmails' => 'Mich per E-Mail benachrichtigen, wenn $1 zur Adoption durch andere Benutzer freigegeben wird',
+	'automaticwikiadoption-pref-label' => 'Eine Änderung dieser Einstellungen wirkt sich nur auf E-Mails von $1 aus.',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author VegaDark
+ */
 $messages['es'] = array(
 	'automaticwikiadoption' => 'Adopción automática de wikis',
 	'automaticwikiadoption-header' => 'Adopta esta wiki',
@@ -181,6 +187,8 @@ $messages['es'] = array(
 	'automaticwikiadoption-adoption-successed' => '¡Felicitaciones! ¡Ahora eres un administrador en esta wiki!',
 	'automaticwikiadoption-adoption-failed' => 'Lo sentimos. Intentamos hacerte administrador, pero no ha funcionado. Por favor [http://community.wikia.com/Special:Contact contáctanos], y trataremos de ayudarte.',
 	'automaticwikiadoption-not-allowed' => 'Lo sentimos. No puedes adoptar esta wiki por ahora.',
+	'automaticwikiadoption-not-enough-edits' => '¡Oops! Necesitas tener más de 10 ediciones para adoptar este wiki.',
+	'automaticwikiadoption-adopted-recently' => '¡Oops! Ya has adoptado otro wiki recientemente. Necesitas esperar un tiempo antes de que puedas adoptar un nuevo wiki.',
 	'automaticwikiadoption-log-reason' => 'Adopción automática de wikis',
 	'automaticwikiadoption-notification' => "¡$1 está disponible para la adopción! Puedes ser el nuevo fundador. '''¡Adóptala ahora!'''",
 	'automaticwikiadoption-mail-first-subject' => 'No te hemos visto desde hace algún tiempo',
@@ -216,7 +224,8 @@ Haz clic en el siguiente enlace para cancelar tu suscripción de la lista: $3.',
 ¡Tu wiki ha sido adoptada! Esto significa que otro usuario a colaborado para ayudar a mantener a la comunidad y el contenido en el sitio. No te preocupes, aún sigues siendo un administrador, y eres bienvenido a regresar en cualquier momento.<br /><br />
 <b>El Equipo de Wikia</b><br /><br />
 <small>Puedes <a href="$3">cancelar</a> tu suscripción de esta lista.</small>',
-	'tog-adoptionmails' => 'Notificarme por correo electrónico sobre cambios a la administración de la wiki (sólo administradores)',
+	'tog-adoptionmails' => 'Notificarme por correo electrónico si $1 está disponible para otros usuarios para adoptar.',
+	'automaticwikiadoption-pref-label' => 'Cambiar estas preferencias solo afectarán los correos electrónicos de $1.',
 );
 
 /** Persian (فارسی)
@@ -379,6 +388,8 @@ $messages['mk'] = array(
 	'automaticwikiadoption-adoption-successed' => 'Честитаме! Сега сте администратор на ова вики!',
 	'automaticwikiadoption-adoption-failed' => 'Нажалост, се обидовме да ве назначиме за администратор, но не успеавме. [http://community.wikia.com/Special:Contact Контактирајте нè], и ќе се обидеме да ви помогнеме.',
 	'automaticwikiadoption-not-allowed' => 'Нажалост, во моментов не можете да го посвоите ова вики.',
+	'automaticwikiadoption-not-enough-edits' => 'Упс! Мора да имате барем 10 уредувања за да можете да го присвоите викито.',
+	'automaticwikiadoption-adopted-recently' => 'Упс! Неодамна имате посвоено друго вики. Ќе треба да почекате пред да можете да посвоите уште едно.',
 	'automaticwikiadoption-log-reason' => 'Автоматско посвојување на вики',
 	'automaticwikiadoption-notification' => "$1 може да се посвои! Имате можност да бидете новиот сопственик. '''Посвојте го веднаш!'''",
 	'automaticwikiadoption-mail-first-subject' => 'Не ве имаме видено во последно време',
@@ -413,7 +424,8 @@ $messages['mk'] = array(
 Вашето вики е посвоено! Ова значи дека некој се пријавил да ја одржува заедницата и содржините на мрежното место. Не грижете се - вие останувате администратор, и добредојдени сте да се вратите во секое време..<br /><br />
 <b>Екипата на Викија</b><br /><br />
 <small>Можете да се <a href="$3">отпишете</a> за повеќе да не добивате известувања за измените на овој список.</small>',
-	'tog-adoptionmails' => 'Извести ме по е-пошта ако нешто се измени во администрацијата на викито (само за администратори)',
+	'tog-adoptionmails' => 'Извести ме по е-пошта ако $1 стане достапно за посвојување',
+	'automaticwikiadoption-pref-label' => 'Измените во овие нагодувања ќе важат само за -пошта од $1.',
 );
 
 /** Malay (Bahasa Melayu)
@@ -592,6 +604,8 @@ $messages['pt'] = array(
 	'automaticwikiadoption-adoption-successed' => 'Parabéns! Agora é administrador desta wiki!',
 	'automaticwikiadoption-adoption-failed' => 'Infelizmente, tentámos torná-lo administrador desta wiki mas não funcionou. [http://community.wikia.com/Special:Contact Contacte-nos] e tentaremos ajudá-lo.',
 	'automaticwikiadoption-not-allowed' => 'Desculpe. Não pode adoptar esta wiki agora.',
+	'automaticwikiadoption-not-enough-edits' => 'Precisa de ter feito mais de 10 edições para adoptar esta wiki.',
+	'automaticwikiadoption-adopted-recently' => 'Já adoptou outra wiki recentemente. Tem de esperar algum tempo até poder adoptar mais uma wiki.',
 	'automaticwikiadoption-log-reason' => 'Adopção Automática de Wikis',
 	'automaticwikiadoption-notification' => "É possível adoptar a wiki $1! Pode tornar-se o novo proprietário. '''Adopte-a agora!'''",
 	'automaticwikiadoption-mail-first-subject' => 'Já não o vemos há algum tempo',
@@ -627,7 +641,8 @@ Para cancelar a subscrição de alterações a esta lista, clique o seguinte lin
 A sua wiki foi adoptada! Isto significa que alguém se voluntariou para manter a comunidade e o conteúdo do site. Não se preocupe - continua a ser administrador e pode voltar à wiki em qualquer altura.<br /><br />
 <b>A Equipa da Wikia</b><br /><br />
 <small>Pode <a href="$3">cancelar a subscrição</a> de alterações a esta lista.</small>',
-	'tog-adoptionmails' => 'Notificar-me por correio electrónico quando houver alterações na administração (só para administradores)',
+	'tog-adoptionmails' => 'Notificar-me por correio electrónico se a $1 ficar disponível para adopção por outros utilizadores',
+	'automaticwikiadoption-pref-label' => 'Alterar estas preferências só afectará correios electrónicos da $1.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

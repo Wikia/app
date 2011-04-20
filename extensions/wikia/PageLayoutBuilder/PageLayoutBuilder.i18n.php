@@ -269,11 +269,13 @@ $messages['br'] = array(
 );
 
 /** German (Deutsch)
+ * @author Claudia Hattitten
  * @author George Animal
  * @author LWChris
  * @author Pill
  */
 $messages['de'] = array(
+	'pagelayoutbuilder' => 'Seiten-Layout-Ersteller',
 	'pagelayoutbuilder-desc' => '[[Special:LayoutBuilder|Seitenlayout-Erstellungsassistent]]',
 	'plb-special-form-article-name' => 'Wie wird diese Seite heißen?',
 	'plb-special-form-title-empty' => 'Bitte gib einen Titel für die Seite an.',
@@ -433,6 +435,7 @@ $messages['de'] = array(
 	'plb-parser-error-not-on-plb-article' => 'Layout-Elemente können nur auf Layout-Seiten verwendet werden',
 	'plb-parser-error-use-on-template' => 'Kann Layout-Elemente nicht in Vorlagen verwenden',
 	'plb-list-action-copy' => 'Neue Wiki-Kategorie',
+	'plb-copy-confirm' => 'Mit dem Speichern wird dieses Seitenlayout zu jedem neuen Wiki hinzugefügt, das in einer der hier gewählten Kategorien erstellt wird. Bitte benutze dieses Tool mit Bedacht! Willst du wirklich speichern?',
 	'plb-copy-delete-link' => 'Löschen',
 	'plb-copy-cat-add' => 'Hinzufügen:',
 	'plb-copy-submit-link' => 'Speichern',
@@ -444,6 +447,7 @@ $messages['de'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'pagelayoutbuilder' => 'Creador de diseños',
 	'pagelayoutbuilder-desc' => '[[Special:LayoutBuilder|Asistente para la creación de páginas]]',
 	'plb-special-form-article-name' => '¿Cómo se llamará esta página?',
 	'plb-special-form-title-empty' => 'Por favor, introduce un título para esta página.',
@@ -603,6 +607,7 @@ $messages['es'] = array(
 	'plb-parser-error-not-on-plb-article' => 'Elementos del creador solo pueden ser usados en páginas del creador.',
 	'plb-parser-error-use-on-template' => 'No se pueden usar elementos del creador en plantillas.',
 	'plb-list-action-copy' => 'Nueva categoría de wiki',
+	'plb-copy-confirm' => 'Al pulsar en guardar, añadirás este diseño a cada nuevo wiki creado en esta categoría(s) que has seleccionado. Por favor, ten cuidado al usar esta herramienta. ¿Estás seguro que quieres guardar?',
 	'plb-copy-delete-link' => 'Borrar',
 	'plb-copy-cat-add' => 'Añadir:',
 	'plb-copy-submit-link' => 'Guardar',
@@ -1006,6 +1011,7 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'pagelayoutbuilder' => 'Распоредувач на страници',
 	'pagelayoutbuilder-desc' => '[[Special:LayoutBuilder|Помошник за правење распоред на страници]]',
 	'plb-special-form-article-name' => 'Како да се нарекува страницава?',
 	'plb-special-form-title-empty' => 'Внесете наслов за страницава.',
@@ -1166,6 +1172,7 @@ $messages['mk'] = array(
 	'plb-parser-error-not-on-plb-article' => 'Распоредните елементи можат да се користат само на страници за распоред',
 	'plb-parser-error-use-on-template' => 'Не можете да користите распоредни елементи во шаблони',
 	'plb-list-action-copy' => 'Нова категорија',
+	'plb-copy-confirm' => 'Овој распоред ќе важи за секое ново вики создадено во одбраните категории. Бидете внимателни со оваа алатка. Дали се сигурни дека сакате да го зачувате?',
 	'plb-copy-delete-link' => 'Избриши',
 	'plb-copy-cat-add' => 'Додај:',
 	'plb-copy-submit-link' => 'Зачувај',
@@ -1840,6 +1847,7 @@ $messages['pl'] = array(
  * @author SandroHc
  */
 $messages['pt'] = array(
+	'pagelayoutbuilder' => 'Criador de Designs de Páginas',
 	'pagelayoutbuilder-desc' => '[[Special:LayoutBuilder|Assistente para a criação de designs de páginas]]',
 	'plb-special-form-article-name' => 'Qual vai ser o título desta página?',
 	'plb-special-form-title-empty' => 'Introduza um título para esta página, por favor.',
@@ -1999,6 +2007,7 @@ $messages['pt'] = array(
 	'plb-parser-error-not-on-plb-article' => 'Os elementos de composição só podem ser usados nas páginas de design',
 	'plb-parser-error-use-on-template' => 'Não é possível usar elementos de composição em predefinições',
 	'plb-list-action-copy' => 'Nova categoria',
+	'plb-copy-confirm' => 'Clicar "gravar" adicionará este design de página a todas as wikis novas criadas na categoria ou categorias que seleccionou. Use esta ferramenta com cuidado. Tem a certeza de que pretende gravar?',
 	'plb-copy-delete-link' => 'Eliminar',
 	'plb-copy-cat-add' => 'Adicionar:',
 	'plb-copy-submit-link' => 'Gravar',

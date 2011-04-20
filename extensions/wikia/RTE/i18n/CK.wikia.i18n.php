@@ -669,6 +669,7 @@ $messages['es'] = array(
 	'rte-ck-media-edit' => 'modificar',
 	'rte-ck-modeSwitch-toSource' => 'Cambiar a modo fuente',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Cambiar a modo WYSIWYG',
+	'rte-ck-modeSwitch-error' => 'Ha ocurrido un error al cambiar de modo. Por favor, inténtalo otra vez.',
 	'rte-ck-photoGallery-add' => 'Agregar una galaría de fotos o diapositiva',
 	'rte-ck-photoGallery-confirmDelete' => 'Estás seguro de remover la galería de esta página?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Remover esta galería?',
@@ -704,6 +705,9 @@ $messages['es'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Remover este marcador de posición de video?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Este es un marcador de posición de video.',
 	'rte-ck-widescreen-toggle' => 'Activar o desactivar pantalla panorámica',
+	'rte-ck-poll-confirmDelete' => '¿Estás seguro que quieres eliminar la encuesta de esta página?',
+	'rte-ck-poll-confirmDeleteTitle' => '¿Eliminar esta encuesta?',
+	'rte-ck-spellchecker-moreSuggestions' => 'Más sugerencias',
 );
 
 /** Persian (فارسی) */

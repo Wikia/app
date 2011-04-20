@@ -750,13 +750,13 @@ $messages['ku-latn'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'toplists-desc' => 'Списоци на 10 најкотирани',
-	'right-toplists-create-edit-list' => 'Создајте или уредете статии на списокот на 10 најкотирани',
-	'right-toplists-create-item' => 'Создавајте и додавајте ставки на список на 10 најкотирани',
+	'toplists-desc' => 'Списоци на 10 предводници',
+	'right-toplists-create-edit-list' => 'Создајте или уредете страници списокот на 10 предводници',
+	'right-toplists-create-item' => 'Создавајте и додавајте ставки на списокот на 10 предводници',
 	'right-toplists-edit-item' => 'Уреди ставки на страницата „10 најкотирани“',
 	'right-toplists-delete-item' => 'Избриши ставки на страницата „10 најкотирани“',
-	'createtoplist' => 'Создај нов список на 10 најкотирани',
-	'edittoplist' => 'Уреди список на 10 најкотирани',
+	'createtoplist' => 'Создај нов список на 10 предводници',
+	'edittoplist' => 'Уреди список на 10 предводници',
 	'toplists-category' => 'Списоци на 10 најкотирани',
 	'toplists-error-invalid-title' => 'Дадениот текст е неважечки',
 	'toplists-error-invalid-picture' => 'Одбраната слика не е важечка',
@@ -771,8 +771,8 @@ $messages['mk'] = array(
 	'toplists-error-image-already-exists' => 'ВБеќе постои слика со истото име',
 	'toplists-error-add-item-anon' => 'Анонимните корисници не можат да додаваат ставки на списокот. <a class="ajaxLogin" id="login" href="$1">Најавете се</a> или <a class="ajaxLogin" id="signup" href="$2">регистрирајте сметка</a>.',
 	'toplists-error-add-item-permission' => 'Грешка во дозволите. Вашата сметка нема добиено право за создавање на нови ставки.',
-	'toplists-error-add-item-list-not-exists' => 'Не постои список на 10 најкотирани со наслов „$1“.',
-	'toplists-error-backslash-not-allowed' => 'Знакот „/“ не е дозволен во наслов на список на 10 најкотирани.',
+	'toplists-error-add-item-list-not-exists' => 'Не постои список на 10 предводници со наслов „$1“.',
+	'toplists-error-backslash-not-allowed' => 'Знакот „/“ не е дозволен во наслов на список на 10 предводници.',
 	'toplists-upload-error-unknown' => 'Се појави грешка при обработката на барањето за подигање. Обидете се повторно.',
 	'toplists-editor-title-label' => 'Презиме',
 	'toplists-editor-title-placeholder' => 'Внесете име на списокот',
@@ -809,7 +809,7 @@ $messages['mk'] = array(
 	'toplists-list-add-item-label' => 'Додај ставка',
 	'toplists-list-add-item-name-label' => 'Продолжете го списокот...',
 	'toplists-list-item-voted' => 'Гласано',
-	'toplists-createpage-dialog-label' => 'Список на 10 најкотирани',
+	'toplists-createpage-dialog-label' => 'Список на 10 предводници',
 	'toplists-email-subject' => 'Списокот на 10 најкотирани е изменет',
 	'toplists-email-body' => 'Здраво од Викија!
 

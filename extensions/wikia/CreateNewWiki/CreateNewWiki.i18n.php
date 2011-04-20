@@ -162,7 +162,12 @@ $messages['af'] = array(
  */
 $messages['bg'] = array(
 	'cnw-or' => 'или',
+	'cnw-title' => 'Създаване на ново уики',
 	'cnw-name-wiki-wiki' => 'Уики',
+	'cnw-login' => 'Влизане',
+	'cnw-signup' => 'Създаване на сметка',
+	'cnw-auth-headline' => 'Влизане',
+	'cnw-auth-headline2' => 'Регистриране',
 	'cnw-auth-facebook-signup' => 'Регистриране чрез Facebook',
 	'cnw-auth-facebook-login' => 'Влизане с Facebook',
 	'cnw-desc-lang' => 'Език',
@@ -359,6 +364,9 @@ Actualizar a través de PayPal para conseguir una wiki sin publicidad ¡por solo
 	'cnw-welcome-instruction2' => 'Verás este botón a través de tu wiki. Úsalo en cualquier momento cuando quieras agregar una página nueva.',
 	'cnw-welcome-help' => 'Encuentra respuestas, consejos, y más en la <a href="http://es.wikia.com">Comunidad Central</a>.',
 	'cnw-error-general' => 'Algo salió mal al crear tu wiki. Por favor, inténtalo de nuevo más tarde.',
+	'cnw-error-general-heading' => 'Error',
+	'cnw-badword-header' => '¡Oops!',
+	'cnw-badword-msg' => 'Hola, por favor abstente de usar estas malas palabras o palabras prohibidas en la descripción de tu wiki: $1',
 );
 
 /** Basque (Euskara)
