@@ -128,7 +128,7 @@ class AccountNavigationModule extends Module {
 			$this->dropdown[] = View::link(Title::newFromText( wfMsgForContent( 'helppage' ) ), wfMsg('help'), array('title' => '', 'data-id' => 'help'), '', array('known'));
 
 			// logout link
-			$this->links[] = $this->renderPersonalUrl('logout');
+			$this->dropdown[] = $this->renderPersonalUrl('logout');
 		}
 
 		#print_pre($this->personal_urls);
