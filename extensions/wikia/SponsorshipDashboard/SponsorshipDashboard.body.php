@@ -402,7 +402,7 @@ class SponsorshipDashboard extends SpecialPage {
 
 		$this->HTMLAdminHeader( 'ViewReports' );
 
-		$report = F::app()->build('SponsorshipDashboardReport' , array( $id ) );
+		$report = F::build('SponsorshipDashboardReport' , array( $id ) );
 		$report->setId( $id );
 
 		$report->loadReportParams();
@@ -445,11 +445,11 @@ class SponsorshipDashboard extends SpecialPage {
 
 		$this->HTMLAdminHeader( 'ViewGroups' );
 
-		$group = F::app()->build('SponsorshipDashboardGroup', array( $id ) );
+		$group = F::build('SponsorshipDashboardGroup', array( $id ) );
 		$group->loadGroupParams();
 
-		$aReports = F::app()-> SponsorshipDashboardReports();
-		$aUsers = F::app()->build('SponsorshipDashboardUsers');
+		$aReports = F::build('SponsorshipDashboardReports');
+		$aUsers = F::build('SponsorshipDashboardUsers');
 		$oTmpl->set_vars(
 			array(
 			    'groupParams' => $group->getGroupParams(),
@@ -479,10 +479,10 @@ class SponsorshipDashboard extends SpecialPage {
 
 		$this->HTMLAdminHeader( 'ViewUsers' );
 
-		$oUser = F::app()->build('SponsorshipDashboardUser', array( $id ));
+		$oUser = F::build('SponsorshipDashboardUser', array( $id ));
 		$oUser->loadUserParams();
 
-		$aGroups = F::app()->build('SponsorshipDashboardGroups');
+		$aGroups = F::build('SponsorshipDashboardGroups');
 		$aGroupUserData = $aGroups->getUserData( $id );
 
 		$aUserReports = array();
@@ -580,7 +580,7 @@ class SponsorshipDashboard extends SpecialPage {
 		$sMsg = '';
 
 		if ( $wgRequest->getVal( 'action' ) == 'save' ) {
-			$oUser = F::app()->build('SponsorshipDashboardUser');
+			$oUser = F::build('SponsorshipDashboardUser');
 			$oUser->fillFromRequest();
 			$bSuccess = $oUser->save();
 			$sMsg = ( $bSuccess ) ? '' : wfMsg('sponsorship-dashboard-users-error', $oUser->name );
@@ -591,7 +591,7 @@ class SponsorshipDashboard extends SpecialPage {
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( '/extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardList.scss' ) );
 		$this->HTMLAdminHeader( 'ViewUsers' );
 
-		$aUsers = F::app()->build('SponsorshipDashboardUsers');
+		$aUsers = F::build('SponsorshipDashboardUsers');
 		$oTmpl->set_vars(
 			array(
 				"data" => $aUsers->getData(),
