@@ -72,28 +72,28 @@ function close_allowToSave() {
 		<ul style="list-style:none;padding:1px 10px">
 		<li>
 			<?php $value = WikiFactory::FLAG_CREATE_DB_DUMP; $id = sprintf("%s_%s", "flag", $value); $checked = isset($flags[$value]) ? "checked=\"checked\"" : ""; ?>
-			<input type="checkbox" name="close_flags[]" id="<?=$id?>" value="<?=$value?>" <?=$checked?>> <?=wfMsg('closed-create-dump')?>
+			<input type="checkbox" name="close_flags[]" id="<?=$id?>" value="<?=$value?>" <?=$checked?> /><label for="<?=$id?>"> <?=wfMsg('closed-create-dump')?> </label>
 		</li>
 		<li>
 			<?php $value = WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE; $id = sprintf("%s_%s", "flag", $value); $checked = isset($flags[$value]) ? "checked=\"checked\"" : ""; ?>
-			<input type="checkbox" name="close_flags[]" id="<?=$id?>" value="<?=$value?>" <?=$checked?>> <?=wfMsg('closed-create-image-archive')?>
+			<input type="checkbox" name="close_flags[]" id="<?=$id?>" value="<?=$value?>" <?=$checked?> /><label for="<?=$id?>"> <?=wfMsg('closed-create-image-archive')?> </label>
 		</li>
 		<li>
 			<?php $value = WikiFactory::FLAG_DELETE_DB_IMAGES; $id = sprintf("%s_%s", "flag", $value); $checked = isset($flags[$value]) ? "checked=\"checked\"" : ""; ?>
-			<input type="checkbox" name="close_flags[]" id="<?=$id?>" value="<?=$value?>" <?=$checked?>> <?=wfMsg('closed-delete-database-images')?>
+			<input type="checkbox" name="close_flags[]" id="<?=$id?>" value="<?=$value?>" <?=$checked?> /><label for="<?=$id?>"> <?=wfMsg('closed-delete-database-images')?> </label>
 		</li>
 		<li>
 			<?php $value = WikiFactory::FLAG_FREE_WIKI_URL; $id = sprintf("%s_%s", "flag", $value); $checked = isset($flags[$value]) ? "checked=\"checked\"" : ""; ?>
-			<input type="checkbox" name="close_flags[]" id="<?=$id?>" value="<?=$value?>" <?=$checked?>> <?=wfMsg('closed-free-url')?>
+			<input type="checkbox" name="close_flags[]" id="<?=$id?>" value="<?=$value?>" <?=$checked?> /><label for="<?=$id?>"> <?=wfMsg('closed-free-url')?> </label>
 		</li>
 		<li>
 			<?php $value = WikiFactory::FLAG_HIDE_DB_IMAGES; $id = sprintf("%s_%s", "flag", $value); $checked = isset($flags[$value]) ? "checked=\"checked\"" : ""; ?>
-			<input type="checkbox" name="close_flags[]" id="<?=$id?>" value="<?=$value?>" <?=$checked?>> <?=wfMsg('closed-hide-dumps')?>
+			<input type="checkbox" name="close_flags[]" id="<?=$id?>" value="<?=$value?>" <?=$checked?> /><label for="<?=$id?>"> <?=wfMsg('closed-hide-dumps')?> </label>
 		</li>
 		<li>
 			<?php $value = WikiFactory::FLAG_REDIRECT; $id = sprintf("%s_%s", "flag", $value); $checked = isset($flags[$value]) ? "checked=\"checked\"" : ""; ?>
-			<input type="checkbox" name="close_flags[]" id="<?=$id?>" value="<?=$value?>" <?=$checked?>> <?=wfMsg('closed-redirect-url')?>
-			<input type="text" name="redirect_url" id="redirect_url" value="<?=$redirect?>"> <i>ex: foo.wikia.com</i>
+			<input type="checkbox" name="close_flags[]" id="<?=$id?>" value="<?=$value?>" <?=$checked?> /><label for="<?=$id?>"> <?=wfMsg('closed-redirect-url')?> </label>
+			<input type="text" name="redirect_url" id="redirect_url" value="<?=$redirect?>" /> <i>ex: foo.wikia.com</i>
 		</li>
 		</ul>
 		<ul style="list-style:none;padding:1px 10px">
@@ -104,7 +104,7 @@ function close_allowToSave() {
 		</ul>
 		<ul style="list-style:none;padding:1px 10px;">
 			<li style="text-align:left;padding-left:200px;">
-				<input type="submit" name="close_saveBtn" value="<?=wfMsg('closed-confirm-btn')?>" onclick="return close_allowToSave();"> 
+				<input type="submit" name="close_saveBtn" value="<?=wfMsg('closed-confirm-btn')?>" onclick="return close_allowToSave();" /> 
 			</li>
 		</ul>
 	</div>	
