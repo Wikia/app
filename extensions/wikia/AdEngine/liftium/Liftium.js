@@ -1820,7 +1820,7 @@ Liftium.reportError = function (msg, type) {
 	
 	if(typeof wgEnableGA != "undefined" && wgEnableGA == true && type == 'onerror') {
 
-		_gaq.push(['_setAccount', 'UA-2871474-1']);
+		_gaq.push(['_setAccount', 'UA-19473076-1'/*test related to FB#4768, original value was "UA-2871474-1"*/]);
 		_gaq.push(['_trackEvent', 'Error', 'JS', msg]);
 
 	} else {

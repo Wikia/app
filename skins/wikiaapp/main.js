@@ -3,7 +3,7 @@ $(document).ready(function(){
 });
 
 var MobileAppSkin = {
-	uacct: "UA-2871474-1",
+	uacct: "UA-19473076-1",//test related to FB#4768, original value was "UA-2871474-1"
 	trackingPrefix: '/1_wikiaapp/',
 	username: (wgUserName == null) ? 'anon' : 'user',
 	

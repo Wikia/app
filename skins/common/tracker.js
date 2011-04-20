@@ -119,7 +119,7 @@ YAHOO.Wikia.Tracker = {
 
 		if(window.skinname) {
 			username = wgUserName == null ? 'anon' : 'user';
-			YAHOO.Wikia.Tracker.trackStr('/1_' + skinname + '/' + username + '/' + fakeurl, 'UA-2871474-1');
+			YAHOO.Wikia.Tracker.trackStr('/1_' + skinname + '/' + username + '/' + fakeurl, 'UA-19473076-1'/*test related to FB#4768, original value was "UA-2871474-1"*/);
 			if(typeof wgPrivateTracker!="undefined") {
 				YAHOO.Wikia.Tracker.trackStr('/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl);
 				

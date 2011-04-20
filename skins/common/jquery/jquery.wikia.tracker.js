@@ -323,7 +323,7 @@ jQuery.tracker.track = function(fakeurl) {
 		return;
 	}
 
-	$.tracker.trackStr('/1_' + skinname + '/' + username + '/' + fakeurl, 'UA-2871474-1');
+	$.tracker.trackStr('/1_' + skinname + '/' + username + '/' + fakeurl, 'UA-19473076-1'/*test related to FB#4768, original value was "UA-2871474-1"*/);
 	if(wgPrivateTracker) {
 		$.tracker.trackStr('/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl);
 	}
