@@ -2,8 +2,8 @@
 /**
  * PageBy renderer for PageBy extension.
  *
- * @file
- * @ingroup Extensions
+ * @package MediaWiki
+ * @subpackage Extensions
  * @author Daniel Kinzler, brightbyte.de
  * @copyright © 2007 Daniel Kinzler
  * @licence GNU General Public Licence 2.0 or later
@@ -27,7 +27,7 @@ class PageByRenderer {
 	var $showfirst;
 	var $showcomments;
 
-	function __construct( $page, $argv, $parser ) {
+	function __construct( $page, $argv, &$parser ) {
 		global $wgTitle;
 
 		$this->parser = $parser;
@@ -150,7 +150,7 @@ class PageByRenderer {
 
 		$html = '<ul class="pageby">';
 
-		
+		wfLoadExtensionMessages( 'PageBy' );
 		#TODO: somehere link the page history. And mention the page name, if it's not the local page.
 
 		if ($this->showfirst) {
