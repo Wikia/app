@@ -9,16 +9,20 @@
 
 class SponsorshipDashboardReport {
 
-	const SD_RETURNPARAM_TICKS = 'ticks';
+	const SD_RETURNPARAM_TICKS	= 'ticks';
 	const SD_RETURNPARAM_FULL_TICKS = 'fullTicks';
-	const SD_RETURNPARAM_SERIE = 'serie';
-	const SD_GAPI_RETRIES = 4;
+	const SD_RETURNPARAM_SERIE	= 'serie';
+	const SD_GAPI_RETRIES		= 4;
 
-	const SD_SOURCE_GAPI = 'SponsorshipDashboardSourceGapi';
-	const SD_SOURCE_GAPI_CUSTOM = 'SponsorshipDashboardSourceGapiCu';
-	const SD_SOURCE_STATS = 'SponsorshipDashboardSourceStats';
-	const SD_SOURCE_ONEDOT = 'SponsorshipDashboardSourceOneDot';
-	const SD_SOURCE_MOBILE = 'SponsorshipDashboardSourceMobile';
+	const SD_SOURCE_GAPI		= 'SponsorshipDashboardSourceGapi';
+	const SD_SOURCE_GAPI_CUSTOM	= 'SponsorshipDashboardSourceGapiCu';
+	const SD_SOURCE_STATS		= 'SponsorshipDashboardSourceStats';
+	const SD_SOURCE_ONEDOT		= 'SponsorshipDashboardSourceOneDot';
+	const SD_SOURCE_MOBILE		= 'SponsorshipDashboardSourceMobile';
+
+	const SD_PARAMS_ID		= 'id';
+	const SD_PARAMS_NAME		= 'name';
+	const SD_PARAMS_DESCRIPTION	= 'description';
 
 	protected $availableSources = array( self::SD_SOURCE_GAPI, self::SD_SOURCE_GAPI_CUSTOM, self::SD_SOURCE_STATS, self::SD_SOURCE_ONEDOT, self::SD_SOURCE_MOBILE );
 	protected $iNumberOfXGuideLines = 7;
@@ -242,10 +246,10 @@ class SponsorshipDashboardReport {
 	public function getReportParams(){
 
 		$aParams = array();
-		$aParams['id'] = $this->id;
+		$aParams[ SponsorshipDashboardReport::SD_PARAMS_ID ] = $this->id;
 		$aParams[ SponsorshipDashboardSource::SD_PARAMS_FREQUENCY ] = $this->frequency;
-		$aParams['name'] = $this->name;
-		$aParams['description'] = $this->description;
+		$aParams[ SponsorshipDashboardReport::SD_PARAMS_NAME ] = $this->name;
+		$aParams[ SponsorshipDashboardReport::SD_PARAMS_DESCRIPTION ] = $this->description;
 		$aParams[ SponsorshipDashboardSource::SD_PARAMS_LASTUNITDATE ] = $this->dateUnits;
 
 		return $aParams;
