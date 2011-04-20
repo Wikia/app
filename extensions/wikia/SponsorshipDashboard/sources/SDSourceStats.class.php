@@ -162,7 +162,8 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 				foreach ( $this->series as $serie ) {
 					$this->dataAll[ $date ][ 'a'.md5( $this->getCityId().$serie ) ] = $collumns[ $serie ];
 				}
-			};
+			}
+			
 			foreach ( $this->series as $serie ) {
 				$this->dataTitles[ 'a'.md5( $this->getCityId().$serie ) ] = $this->getCityPrefix().$this->getSerieName( $serie );
 			}

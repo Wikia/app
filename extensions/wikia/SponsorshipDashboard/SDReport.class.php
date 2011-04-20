@@ -396,38 +396,6 @@ class SponsorshipDashboardReport {
 	}
 
 	/*
-	 * Returns list of hubs prepared to be used in chart display
-	 *
-	 * @return array
-	 */
-
-	// 2DO: Move to output provider ?
-	// Notice: Never used
-	
-	public function getGeneralHubList(){
-
-		$wgExternalSharedDB = $this->App->getGlobal( 'wgExternalSharedDB' );
-		$wgHubsPages = $this->App->getGlobal('wgHubsPages');
-
-		if ( empty( $wgHubsPages ) || !is_array( $wgHubsPages ) || !isset( $wgHubsPages['en'] ) ){
-			return array();
-		}
-		
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$res = $dbr->query( 'SELECT id, name FROM city_tag', __METHOD__);
-		$returnArray = array();
-
-		while ( $row = $res->fetchObject( $res ) ) {
-			foreach ( $wgHubsPages['en'] as $hubPage ){
-				if ( $hubPage['name'] == $row->name ){
-					$returnArray[ $row->id ] = $row->name;
-				}
-			}
-		}
-		return $returnArray;
-	}
-
-	/*
 	 * Sets id for current source. If source has no id it will be considered new.
 	 *
 	 * @param int $number number of neighbours that we want to display.
