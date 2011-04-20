@@ -14,7 +14,6 @@ class GlobalWatchlistBot {
 	const MAX_LAG = 5;
 	const RECORDS_SLEEP = 1000;
 	const EMAILS = 100;
-	const TIME_SLEEP = 60;
 
 	public function __construct( $bDebugMode = false, $aUsers = array(), $useDB = array() ) {
 		global $wgExtensionMessagesFiles;
@@ -732,10 +731,6 @@ class GlobalWatchlistBot {
 			$this->printDebug( "Digest email sent to: " . $this->mDebugMailTo . " (debug mode)" );
 		}
 
-		if ( ( $this->iEmailsSent % self::EMAILS ) == 0 ) {
-			$this->printDebug( "Sent: " . $this->iEmailsSent . ", sleep: " . self::TIME_SLEEP . " sec." );
-			sleep( self::TIME_SLEEP );
-		}
 		$this->iEmailsSent++;
 	}
 
