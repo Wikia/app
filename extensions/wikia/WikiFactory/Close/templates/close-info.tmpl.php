@@ -20,7 +20,7 @@
 <br /><br /><br />
 <table width="90%" align="center" id="closed-urls">
     <tr>
-        <td width="50%" style="text-align:center"><a href="/index.php?title=Special:CreateWiki"><?=wfMsgExt('closed-wiki-create-wiki', "parse")?></a></td>
+        <td width="50%" style="text-align:center"><a href="http://www.wikia.com/Special:CreateWiki"><?=wfMsgExt('closed-wiki-create-wiki', "parse")?></a></td>
         <td width="50%" style="text-align:center"><a href="/wiki/Wikia:Closed_Wikia"><?=wfMsg('closed-wiki-policy')?></a></td>
     </tr>
 </table>
