@@ -90,7 +90,6 @@ class SponsorshipDashboardAjax {
 		if ( $SponsorshipDashboard->isAllowed() ){
 
 			$report = new SponsorshipDashboardReport();
-			var_dump( $_POST['formData'] );
 			$report->fillFromSerializedData( serialize( $_POST['formData'] ) );
 			$report->lockSources();
 			$dataFormatter = SponsorshipDashboardOutputChart::newFromReport( $report );
