@@ -325,6 +325,7 @@ $messages['bg'] = array(
 	'autocreatewiki-congratulation' => 'Поздравления!',
 	'autocreatewiki-step2-error' => 'Базата данни съществува!',
 	'newwikis' => 'Нови уикита',
+	'autocreatewiki-subname-answers' => 'Отговори',
 );
 
 /** Breton (Brezhoneg)

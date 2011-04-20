@@ -366,6 +366,9 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'createblogpage' => 'Създаване на блог',
+	'create-blog-post-recent-listing' => 'Последни публикации',
+	'create-blog-post-recent-listing-title' => 'Последни публикации',
+	'create-blog-invalid-title-error' => 'Невалидно заглавие',
 	'create-blog-categories-textinput' => 'Добавяне на нова категория',
 	'create-blog-listing-sortby-author' => 'Автор',
 	'blog-defaulttitle' => 'Блогове',

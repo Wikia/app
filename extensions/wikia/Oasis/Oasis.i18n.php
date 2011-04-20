@@ -193,6 +193,8 @@ Example:
 	'oasis-anon-user' => 'This message is shown whenever an anonymous user comments on a blog post.
 Example:
 * 7 hours ago by A Wikia contributor',
+	'oasis-section-edit-alt' => 'Parameters:
+* $1 is a section title.',
 	'oasis-pages-on-wiki-header' => 'This message appears on the header of the main page, besides the amount of pages on the wiki
 Parameters:
 * $1 the name of the wiki
@@ -751,6 +753,8 @@ $messages['es'] = array(
 	'oasis-upload-photos-force' => 'Subir igualmente',
 	'oasis-upload-photos-caption' => 'Comentario',
 	'oasis-modal-error-headline' => 'Por favor, corrige los siguientes errores',
+	'corporatelandingpage-trivia-title' => 'Wikia Trivia',
+	'corporatelandingpage-trivia-description' => '¡Prueba tus conocimientos y gana un paquete de premios de Wikia!',
 );
 
 /** Persian (فارسی)
@@ -1608,7 +1612,7 @@ $messages['mk'] = array(
 	'oasis-preview-confirmation' => 'Прегледен режим: промените сè уште не се зачувани! Одете подолу да продолжите со уредување.',
 	'oasis-badge-notification' => 'Штотуку ја заработивте значката „$2“ $3',
 	'oasis-badge-notification-see-more' => 'Погледајте кои други значки можете да ги заработите!',
-	'oasis-page-header-subtitle-mediawiki' => 'Страница за МедијаВики',
+	'oasis-page-header-subtitle-mediawiki' => 'МедијаВики-страница',
 	'oasis-page-header-subtitle-special' => 'Специјална страница',
 	'oasis-page-header-subtitle-template' => 'Страница за шаблон',
 	'oasis-page-header-subtitle-category' => 'Страница на категорија',
@@ -1671,9 +1675,10 @@ $messages['mk'] = array(
 	'oasis-upload-photos-fewer-options' => 'Помалку можности',
 	'oasis-upload-photos-force' => 'Сепак подигни',
 	'oasis-upload-photos-caption' => 'Опис',
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
-	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle',
+	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment?uselang=mk',
+	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming?uselang=mk',
+	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle?uselang=mk',
+	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes?uselang=mk',
 	'oasis-modal-error-headline' => 'Исправете ги следниве грешки',
 	'corporatelandingpage-trivia-title' => 'Занимливости на Викија',
 	'corporatelandingpage-trivia-description' => 'Испобајте си го знаењето на занимливости и освојте пакет-награда од Викија!',
@@ -2328,6 +2333,7 @@ $messages['pt'] = array(
 	'oasis-upload-photos-fewer-options' => 'Menos Opções',
 	'oasis-upload-photos-force' => 'Enviar à mesma',
 	'oasis-upload-photos-caption' => 'Legenda',
+	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes',
 	'oasis-modal-error-headline' => 'Corrija os seguintes erros, por favor',
 	'corporatelandingpage-trivia-title' => 'Trivialidades da Wikia',
 	'corporatelandingpage-trivia-description' => 'Teste os seus conhecimentos de trivialidades e ganhe um pacote prémio da Wikia!',

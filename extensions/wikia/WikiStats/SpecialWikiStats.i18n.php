@@ -3514,7 +3514,7 @@ $messages['mk'] = array(
 	'wikistats_daily' => 'Дневни статистики (месецов)',
 	'wikistats_month' => 'Месечни статистики',
 	'wikistats_current_month' => 'Месецов',
-	'wikistats_help_stats' => 'http://help.wikia.com/wiki/Help:WikiaStats',
+	'wikistats_help_stats' => 'http://help.wikia.com/wiki/Help:WikiaStats?uselang=mk',
 	'wikistats_see_also' => 'Поврзано:',
 	'wikistats_language_top' => 'Најуспешни $1 јазици',
 	'wikistats_language_all' => 'Сите јазици',

@@ -58,6 +58,13 @@ $messages['ar'] = array(
 	'comboajaxlogin-connectmarketing-forward' => 'إبذأ &raquo',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Влизане чрез Facebook Connect</h1>',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Y-M D
