@@ -18,9 +18,7 @@ class SponsorshipDashboardReports {
 	
 	public function getData(){
 		
-		$wgExternalDatawareDB = $this->App->getGlobal( 'wgExternalDatawareDB' );
-
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
 		$res = $dbr->select(
 			'specials.wmetrics_report',
 			array( 'wmre_id as id', 'wmre_name as name', 'wmre_description as description'  ),

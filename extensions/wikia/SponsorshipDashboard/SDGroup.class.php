@@ -132,7 +132,7 @@ class SponsorshipDashboardGroup {
 
 	public function saveUsers() {
 
-		$db = wfGetDB( DB_MASTER, array(), F::build('App')->getGlobal('wgExternalDatawareDB') );
+		$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
 		$db->delete(
 			'specials.wmetrics_user_group_map',
 			array( 'wmgum_group_id' => $this->id )
@@ -152,7 +152,7 @@ class SponsorshipDashboardGroup {
 			return false;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE, array(), F::build('App')->getGlobal('wgExternalDatawareDB') );
+		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
 		$res = $dbr->select(
 			'specials.wmetrics_group',
 			array(
@@ -180,7 +180,7 @@ class SponsorshipDashboardGroup {
 			return false;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE, array(), F::build('App')->getGlobal('wgExternalDatawareDB') );
+		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
 		$res = $dbr->select(
 			'specials.wmetrics_group',
 			array(
@@ -220,7 +220,7 @@ class SponsorshipDashboardGroup {
 			return true;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE, array(), F::build('App')->getGlobal('wgExternalDatawareDB') );
+		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
 		$res = $dbr->select(
 			'specials.wmetrics_group_reports_map',
 			array( 'wmgrm_id as id', 'wmgrm_report_id as report_id', 'wmgrm_group_id as group_id' ),
@@ -247,7 +247,7 @@ class SponsorshipDashboardGroup {
 			return true;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE, array(), F::build('App')->getGlobal('wgExternalDatawareDB') );
+		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
 		$res = $dbr->select(
 			'specials.wmetrics_user_group_map',
 			array( 'wmgum_id as id', 'wmgum_user_id as user_id', 'wmgum_user_id as user_id' ),
@@ -265,7 +265,7 @@ class SponsorshipDashboardGroup {
 	
 	public function delete() {
 		if( !empty( $this->id ) ) {
-			$db = wfGetDB( DB_MASTER, array(), F::build('App')->getGlobal('wgExternalDatawareDB') );
+			$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
 			$db->delete(
 				'specials.wmetrics_group',
 				array( 'wmgr_id' => $this->id )

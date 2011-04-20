@@ -360,7 +360,7 @@ class SponsorshipDashboardReport {
 				$this->tmpSource = $tmpSource;
 				return true;
 			}
-		};
+		}
 		$this->tmpSource = null;
 		return false;
 	}

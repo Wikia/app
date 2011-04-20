@@ -17,6 +17,16 @@ class SponsorshipDashboardServiceTest extends PHPUnit_Framework_TestCase {
 		WF::reset( 'EasyTemplate' );
 	}
 
+	public function useSubpage(){
+		return array(
+		    array( '/ViewInfo' ),
+		    array( '/EditReport' ),
+		    array( '/EditReport/0' ),
+		    array( '/EditGroup' ),
+		    array( '/EditGroup/0' )
+		);
+	}
+
 	public function testStatsSourceReportChartPath(){
 
 		$oReport = new SponsorshipDashboardReport();
@@ -97,7 +107,7 @@ class SponsorshipDashboardServiceTest extends PHPUnit_Framework_TestCase {
 		$oFormatter = SponsorshipDashboardOutputTable::newFromReport( $oReport );
 		$return = $oFormatter->getHTML();
 		$this->assertEmpty( $return );
-		
+
 		$oFormatter = SponsorshipDashboardOutputCSV::newFromReport( $oReport );
 		$return = $oFormatter->getHTML();
 		$this->assertEmpty( $return );
@@ -145,4 +155,5 @@ class SponsorshipDashboardServiceTest extends PHPUnit_Framework_TestCase {
 		$return = $oFormatter->getHTML();
 		$this->assertNotEmpty( $return );
 	}
+
 }
