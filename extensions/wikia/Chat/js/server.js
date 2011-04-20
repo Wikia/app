@@ -5,6 +5,8 @@ const MAX_MESSAGES_IN_BACKLOG = 50; // how many messages each room will store fo
 const NUM_MESSAGES_TO_SHOW_ON_CONNECT = 10;
 
 // Choose proxy settings based on whether this is development or production.
+/*
+// NOTE: NOW THAT THE SAME PROXY IS USED IN BOTH LOCATIONS, WE DON'T NEED THE STARTUP ARGUMENT, IT APPEARS.  IF THIS STAYS LIKE THIS, DELETE THIS SECTION.
 if(process.argv.length < 3){
 	console.log("ERROR: You must specify a parameter of which server to run as. Either 'dev' (for development) or 'prod' (for production).");
 	process.exit(NODE_EXIT_USAGE);
@@ -13,8 +15,8 @@ if(process.argv.length < 3){
 	switch(whichServer){
 		case "dev":
 		case "development":
-			WIKIA_PROXY_HOST = "dev-sean";
-			WIKIA_PROXY_PORT = 80;
+			WIKIA_PROXY_HOST = "127.0.0.1";
+			WIKIA_PROXY_PORT = 6081;
 			console.log("Running as DEVELOPMENT server.");
 			break;
 
@@ -31,6 +33,10 @@ if(process.argv.length < 3){
 			break;
 	}
 }
+*/
+WIKIA_PROXY_HOST = "127.0.0.1";
+WIKIA_PROXY_PORT = 6081;
+
 
 // NOTE: WE COULD REPLACE activeClients BY JUST USING rc.hlen(getKey_usersInRoom(client.roomId)); ... IT'S O(1) .. alternately, we could keep both as a way to doublecheck.
 // NOTE: WE COULD REPLACE activeClients BY JUST USING rc.hlen(getKey_usersInRoom(client.roomId)); ... IT'S O(1) .. alternately, we could keep both as a way to doublecheck.
@@ -371,7 +377,7 @@ function authConnection(client, socket, authData){
 			});
 			httpRequest.end();
 		} else {
-			console.log("Didn't get data, but returned");
+			console.log("Didn't get data for the roomId so it probably doesn't exist anymore: " + auth.get('roomId'));
 		}
 	}); // end of block for getting wgServer from the room's hash in redis.
 	console.log("Started request to get wgServer from redis");
