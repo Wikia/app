@@ -416,6 +416,7 @@ var WikiBuilder = {
 					WikiBuilder.finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ? res.finishCreateUrl.replace('.com/','.com/wiki/') : res.finishCreateUrl);
 					$('#UpgradeWiki .wiki-name').html(res.siteName);
 				} else {
+					$('#ThemeWiki .next-controls input').attr('disabled', 'true');
 					$.showModal(res.statusHeader, WikiBuilder.createStatusMessage);
 				}
 			}

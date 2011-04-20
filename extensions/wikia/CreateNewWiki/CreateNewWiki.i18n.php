@@ -79,6 +79,8 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-error-general-heading' => 'Create New Wiki Error',
 	'cnw-badword-header' => 'Whoa there',
 	'cnw-badword-msg' => 'Hi, please refrain from using these bad words or banned words in your Wiki Description: $1',
+	'cnw-error-wiki-limit-header' => 'Wiki limit reached',
+	'cnw-error-wiki-limit' => 'Hi, you are limited to $1 wiki creation per day.  Wait 24 hours before creating another wiki.',
 );
 
 /** Message documentation (Message documentation)
@@ -823,7 +825,7 @@ Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
 	'cnw-badword-msg' => 'Hallo. Probeer u te onthouden van het gebruiken van ongewenste woorden in uw wikibeschrijving: $1',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
@@ -1054,7 +1056,7 @@ Adote esta versão através do PayPal para ter uma wiki livre de anúncios por a
 	'cnw-badword-msg' => 'Não use palavras impróprias ou proibidas na Descrição da Wiki, por favor',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1286,7 +1288,7 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Hydra
  */
 $messages['zh-hans'] = array(

@@ -27,6 +27,8 @@ class CreateNewWikiModule extends Module {
 	
 	var $app;
 	
+	const DAILY_USER_LIMIT = 5;
+	
 	public function __construct($app) {
 		$this->app = $app;
 	}
@@ -128,6 +130,15 @@ class CreateNewWikiModule extends Module {
 			$this->statusMsg = $this->app->runFunction('wfMsg', 'cnw-error-general');
 			$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
 		} else {
+			$wgUser = $this->app->getGlobal('wgUser');
+			$numWikis = $this->countCreatedWikis($wgUser->getId());
+			if($numWikis > self::DAILY_USER_LIMIT) {
+				$this->status = 'wikilimit';
+				$this->statusMsg = $this->app->runFunction('wfMsg', 'cnw-error-wiki-limit', self::DAILY_USER_LIMIT);
+				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-wiki-limit-header');
+				return;
+			}
+		
 			$createWiki = F::build('CreateWiki', array($params['wikiName'], $params['wikiDomain'], $params['wikiLanguage'], $params['wikiCategory']));
 			$createWiki->create();
 			$this->cityId = $createWiki->getWikiInfo('city_id');
@@ -226,6 +237,30 @@ class CreateNewWikiModule extends Module {
 	
 	public static function setupCreateNewWiki() {
 		F::addClassConstructor('CreateNewWikiModule', array(F::app()));
+	}
+	
+	/**
+	 * get number of created Wikis for current day
+	 * note: copied from autocreatewiki
+	 */
+	private function countCreatedWikis($iUser = 0) {
+		global $wgExternalSharedDB;
+		wfProfileIn( __METHOD__ );
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$where = array( "date_format(city_created, '%Y%m%d') = date_format(now(), '%Y%m%d')" );
+		if ( !empty($iUser) ) {
+			$where[] = "city_founding_user = '{$iUser}' ";
+		}
+		$oRow = $dbr->selectRow(
+			"city_list",
+			array( "count(*) as count" ),
+			$where,
+			__METHOD__
+		);
+
+		wfProfileOut( __METHOD__ );
+		return intval($oRow->count);
 	}
 
 }
