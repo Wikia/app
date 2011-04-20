@@ -34,14 +34,14 @@ function checkFlag(id) {
 <input type="hidden" name="step" value="1" />
 	<div style="padding:0px 10px;">
 		<ul style="list-style:none;padding:1px 10px">
-			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_CREATE_DB_DUMP?>" value="<?=WikiFactory::FLAG_CREATE_DB_DUMP?>" checked="checked"> <?=wfMsg('closed-create-dump')?></li>
-			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE?>" value="<?=WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE?>" checked="checked"> <?=wfMsg('closed-create-image-archive')?></li>
-			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_DELETE_DB_IMAGES?>" onchange="checkFlag(this.id)" value="<?=WikiFactory::FLAG_DELETE_DB_IMAGES?>" checked="checked"> <?=wfMsg('closed-delete-database-images')?></li>
-			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_FREE_WIKI_URL?>" onchange="checkFlag(this.id)" value="<?=WikiFactory::FLAG_FREE_WIKI_URL?>" checked="checked"> <?=wfMsg('closed-free-url')?></li>
-			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_HIDE_DB_IMAGES?>" value="<?=WikiFactory::FLAG_HIDE_DB_IMAGES?>"> <?=wfMsg('closed-hide-dumps')?></li>
+			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_CREATE_DB_DUMP?>" value="<?=WikiFactory::FLAG_CREATE_DB_DUMP?>" checked="checked" /><label for="flag_<?=WikiFactory::FLAG_CREATE_DB_DUMP?>"> <?=wfMsg('closed-create-dump')?> </label></li>
+			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE?>" value="<?=WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE?>" checked="checked" /><label for="flag_<?=WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE?>"> <?=wfMsg('closed-create-image-archive')?> </label></li>
+			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_DELETE_DB_IMAGES?>" onchange="checkFlag(this.id)" value="<?=WikiFactory::FLAG_DELETE_DB_IMAGES?>" checked="checked" /><label for="flag_<?=WikiFactory::FLAG_DELETE_DB_IMAGES?>"> <?=wfMsg('closed-delete-database-images')?> </label></li>
+			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_FREE_WIKI_URL?>" onchange="checkFlag(this.id)" value="<?=WikiFactory::FLAG_FREE_WIKI_URL?>" checked="checked" /><label for="flag_<?=WikiFactory::FLAG_FREE_WIKI_URL?>"> <?=wfMsg('closed-free-url')?> </label></li>
+			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_HIDE_DB_IMAGES?>" value="<?=WikiFactory::FLAG_HIDE_DB_IMAGES?>" /><label for="flag_<?=WikiFactory::FLAG_HIDE_DB_IMAGES?>"> <?=wfMsg('closed-hide-dumps')?> </label></li>
 			<li>
-				<input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_REDIRECT?>" value="<?=WikiFactory::FLAG_REDIRECT?>"> <?=wfMsg('closed-redirect-url')?>
-				<input type="text" name="redirect_url" id="redirect_url" value=""> <i>ex: foo.wikia.com</i>
+				<input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_REDIRECT?>" value="<?=WikiFactory::FLAG_REDIRECT?>" /><label for="flag_<?=WikiFactory::FLAG_REDIRECT?>"> <?=wfMsg('closed-redirect-url')?> </label>
+				<input type="text" name="redirect_url" id="redirect_url" value="" /> <i>ex: foo.wikia.com</i>
 			</li>
 		</ul>
 		<ul style="list-style:none;padding:1px 10px;">
@@ -52,7 +52,7 @@ function checkFlag(id) {
 		</ul>
 		<ul style="list-style:none;padding:1px 10px;">
 			<li style="text-align:left;padding-left:200px;">
-				<input type="submit" name="close_saveBtn" value="<?=wfMsg('closed-confirm-btn')?>" onclick="return close_allowToSave();"> 
+				<input type="submit" name="close_saveBtn" value="<?=wfMsg('closed-confirm-btn')?>" onclick="return close_allowToSave();" /> 
 			</li>
 		</ul>
 	</div>	
