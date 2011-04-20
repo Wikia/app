@@ -495,7 +495,7 @@ class SponsorshipDashboardReport {
 				INNER JOIN wikicities.city_tag_map AS ctm
 					ON ctm.city_id = t2.pv_city_id
 					AND ( ctm.tag_id = {$hubId} )
-				WHERE t1.pv_city_id = {$cityId} AND t1.pv_week = {$week}
+				WHERE t1.pv_city_id = {$currentHub} AND t1.pv_week = {$week}
 				GROUP BY t2.pv_city_id
 				ORDER BY citycommonusers DESC
 				LIMIT ".( $number );

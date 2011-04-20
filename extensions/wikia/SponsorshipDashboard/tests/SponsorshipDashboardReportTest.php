@@ -38,7 +38,6 @@ class SponsorshipDashboardServiceTest extends PHPUnit_Framework_TestCase {
 		$oReport->setId( 0 );
 		$oReport->lockSources();
 
-		
 		$returnChart	= $oReport->returnChartData();
 
 		$this->assertInternalType( 'array', $returnChart );
@@ -66,6 +65,21 @@ class SponsorshipDashboardServiceTest extends PHPUnit_Framework_TestCase {
 		
 		$this->assertInternalType( 'array', $returnParams );
 
+	}
+
+	public function testFillReportFromSerializedData(){
+
+		$aInput = array();
+		$aInput[0] = "mainId=67&mainTitle=Testa'rama&mainDescription=scrap+report'yo&mainFrequency=1&lastDateUnits=30";
+		$aInput[1] = "sourceType=Stats&seriesA=on&sourceSerieName-A=1&seriesB=on&sourceSerieName-B=1&seriesC=on&sourceSerieName-C=2&seriesD=on&sourceSerieName-D=3&seriesE=on&sourceSerieName-E=4&seriesF=on&sourceSerieName-F=5&seriesG=on&sourceSerieName-G=6&seriesH=on&sourceSerieName-H=7&seriesI=on&sourceSerieName-I=8&seriesJ=on&sourceSerieName-J=9&seriesK=on&sourceSerieName-K=0&namespaces=&repCityId=&repeatSourceType=1&repCompTopX=2&repCompCityId=177&repCompHubId=9";
+
+		$report = new SponsorshipDashboardReport();
+		$report->fillFromSerializedData( serialize( $aInput ) );
+		$report->lockSources();
+		
+		$dataFormatter = SponsorshipDashboardOutputChart::newFromReport( $report );
+		$this->assertNotEmpty( $dataFormatter->getHTML() );
+		
 	}
 
 	public function testEmptyReport(){
