@@ -24,24 +24,34 @@ class SponsorshipDashboardServiceTest extends PHPUnit_Framework_TestCase {
 		$oReport->setLastDateUnits( 30 );
 		$oReport->frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH;
 
-		$oSource = new SponsorshipDashboardSourceStats();
-		$oSource->setCityId( 177 );
-		$oSource->setSeries( array( 'A', 'B', 'C', 'D' ) );
-
-		$oReport->addSource( $oSource );
+		$oReport->newSource( SponsorshipDashboardReport::SD_SOURCE_STATS );
+		$oReport->tmpSource->setCityId( 177 );
+		$oReport->tmpSource->setSeries( array( 'A', 'B', 'C', 'D' ) );
 		$oReport->acceptSource();
 		$oReport->lockSources();
+		
+		$returnChart	= $oReport->returnChartData();
 
-		$oFormatter = SponsorshipDashboardOutputChart::newFromReport( $oReport );
-		$return = $oFormatter->getChartData();
+		$this->assertInternalType( 'array', $returnChart );
+		$this->assertArrayHasKey( SponsorshipDashboardReport::SD_RETURNPARAM_TICKS, $returnChart );
+		$this->assertArrayHasKey( SponsorshipDashboardReport::SD_RETURNPARAM_FULL_TICKS, $returnChart );
+		$this->assertArrayHasKey( SponsorshipDashboardReport::SD_RETURNPARAM_SERIE, $returnChart );
+		$this->assertNotEmpty( $returnChart[ SponsorshipDashboardReport::SD_RETURNPARAM_TICKS ] );
+		$this->assertNotEmpty( $returnChart[ SponsorshipDashboardReport::SD_RETURNPARAM_FULL_TICKS ] );
+		$this->assertNotEmpty( $returnChart[ SponsorshipDashboardReport::SD_RETURNPARAM_SERIE ] );
 
-		$this->assertInternalType( 'array', $return );
-		$this->assertArrayHasKey( SponsorshipDashboardReport::SD_RETURNPARAM_TICKS, $return );
-		$this->assertArrayHasKey( SponsorshipDashboardReport::SD_RETURNPARAM_FULL_TICKS, $return );
-		$this->assertArrayHasKey( SponsorshipDashboardReport::SD_RETURNPARAM_SERIE, $return );
-		$this->assertNotEmpty( $return[ SponsorshipDashboardReport::SD_RETURNPARAM_TICKS ] );
-		$this->assertNotEmpty( $return[ SponsorshipDashboardReport::SD_RETURNPARAM_FULL_TICKS ] );
-		$this->assertNotEmpty( $return[ SponsorshipDashboardReport::SD_RETURNPARAM_SERIE ] );
+		$returnArray	= $oReport->getReportParams();
+
+		$this->assertInternalType( 'array', $returnArray );
+		$this->assertArrayHasKey( SponsorshipDashboardReport::SD_PARAMS_ID, $returnArray );
+		$this->assertArrayHasKey( SponsorshipDashboardSource::SD_PARAMS_FREQUENCY, $returnArray );
+		$this->assertArrayHasKey( SponsorshipDashboardReport::SD_PARAMS_NAME, $returnArray );
+		$this->assertArrayHasKey( SponsorshipDashboardReport::SD_PARAMS_DESCRIPTION, $returnArray );
+		$this->assertArrayHasKey( SponsorshipDashboardSource::SD_PARAMS_LASTUNITDATE, $returnArray );
+
+		$returnHtml	= $oReport->getMenuItemsHTML();
+
+		$this->assertInternalType( 'array', $returnHtml );
 	}
 
 	public function testEmptyReport(){
