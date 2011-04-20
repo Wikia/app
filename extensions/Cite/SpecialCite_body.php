@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if (!defined('MEDIAWIKI')) die();
 
 global $wgContLang, $wgContLanguageCode, $wgCiteDefaultText;
 
@@ -9,12 +9,13 @@ $file = file_exists( "${dir}cite_text-$code" ) ? "${dir}cite_text-$code" : "${di
 $wgCiteDefaultText = file_get_contents( $file );
 
 class SpecialCite extends SpecialPage {
-	function __construct() {
-		parent::__construct( 'Cite' );
+	function SpecialCite() {
+		SpecialPage::SpecialPage( 'Cite' );
 	}
 
 	function execute( $par ) {
-		global $wgRequest, $wgUseTidy;
+		global $wgOut, $wgRequest, $wgUseTidy;
+		wfLoadExtensionMessages( 'SpecialCite' );
 
 		// Having tidy on causes whitespace and <pre> tags to
 		// be generated around the output of the CiteOutput
@@ -47,21 +48,22 @@ class SpecialCite extends SpecialPage {
 class CiteForm {
 	var $mTitle;
 
-	function __construct( &$title ) {
+	function CiteForm( &$title ) {
 		$this->mTitle =& $title;
 	}
 
 	function execute() {
-		global $wgOut, $wgScript;
+		global $wgOut, $wgTitle;
 
 		$wgOut->addHTML(
-			Xml::openElement( 'form',
+			Xml::element( 'form',
 				array(
 					'id' => 'specialcite',
 					'method' => 'get',
-					'action' => $wgScript
-				) ) .
-				Html::hidden( 'title', SpecialPage::getTitleFor( 'Cite' )->getPrefixedDBkey() ) .
+					'action' => $wgTitle->escapeLocalUrl()
+				),
+				null
+			) .
 				Xml::openElement( 'label' ) .
 					wfMsgHtml( 'cite_page' ) . ' ' .
 					Xml::element( 'input',
@@ -90,9 +92,9 @@ class CiteForm {
 
 class CiteOutput {
 	var $mTitle, $mArticle, $mId;
-	var $mParser, $mParserOptions, $mSpTitle;
+	var $mParser, $mParserOptions;
 
-	function __construct( &$title, &$article, $id ) {
+	function CiteOutput( &$title, &$article, $id ) {
 		global $wgHooks, $wgParser;
 
 		$this->mTitle =& $title;
@@ -108,12 +110,12 @@ class CiteOutput {
 	}
 
 	function execute() {
-		global $wgOut, $wgParser, $wgHooks, $wgCiteDefaultText;
+		global $wgOut, $wgUser, $wgParser, $wgHooks, $wgCiteDefaultText;
 
 		$wgHooks['ParserGetVariableValueTs'][] = array( $this, 'timestamp' );
 
 		$msg = wfMsgForContentNoTrans( 'cite_text' );
-		if ( $msg == '' ) {
+		if( $msg == '' ) {
 			$msg = $wgCiteDefaultText;
 		}
 		$this->mArticle->fetchContent( $this->mId, false );
@@ -130,11 +132,12 @@ class CiteOutput {
 
 	function genParser() {
 		$this->mParser = new Parser;
-		$this->mSpTitle = SpecialPage::getTitleFor( 'Cite' );
 	}
 
 	function CiteParse( $in, $argv ) {
-		$ret = $this->mParser->parse( $in, $this->mSpTitle, $this->mParserOptions, false );
+		global $wgTitle;
+
+		$ret = $this->mParser->parse( $in, $wgTitle, $this->mParserOptions, false );
 
 		return $ret->getText();
 	}

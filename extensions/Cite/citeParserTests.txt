@@ -110,13 +110,15 @@ Templating<ref>Text<!--comment--></ref>
 !! result
 <p><sup id="cite_ref-0" class="reference"><a href="#cite_note-0">[1]</a></sup>
 </p>
-<ul class="gallery">
-		<li class="gallerybox" style="width: 155px"><div style="width: 155px">
-			<div class="thumb" style="width: 150px;"><div style="margin:66px auto;"><a href="/wiki/File:Foobar.jpg" class="image"><img alt="Foobar.jpg" src="http://example.com/images/3/3a/Foobar.jpg" width="120" height="14" /></a></div></div>
+<table class="gallery" cellspacing="0" cellpadding="0">
+	<tr>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 66px 0; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="/wiki/File:Foobar.jpg" class="image"><img alt="Foobar.jpg" src="http://example.com/images/3/3a/Foobar.jpg" width="120" height="14" /></a></div></div>
 			<div class="gallerytext">
 			</div>
-		</div></li>
-</ul>
+		</div></td>
+	</tr>
+</table>
 <ol class="references"><li id="cite_note-0"><a href="#cite_ref-0">↑</a> one</li></ol>
 
 !! end
@@ -335,21 +337,3 @@ no text was provided for refs named <code>foo</code></strong></li></ol>
 </p>
 !! end
 
-!! article
-MediaWiki:cite_link_label_group-klingon
-!! text
-wa' cha' wej loS vagh jav Soch chorgh Hut wa'maH
-!! endarticle
-
-!! test
-<ref> with custom group link
-!! input
-Wikipedia rocks!<ref group="klingon">Proceeds of Rockology, vol. XXI</ref>
-
-<references group="klingon"/>
-!! result
-<p>Wikipedia rocks!<sup id="cite_ref-0" class="reference"><a href="#cite_note-0">[wa']</a></sup>
-</p>
-<ol class="references"><li id="cite_note-0"><a href="#cite_ref-0">↑</a> Proceeds of Rockology, vol. XXI</li></ol>
-
-!! end

@@ -2,353 +2,323 @@
 /**
  * Aliases for Special:Cite
  *
- * @file
- * @ingroup Extensions
+ * @addtogroup Extensions
  */
 
-$specialPageAliases = array();
+$aliases = array();
 
-/** English (English) */
-$specialPageAliases['en'] = array(
+/** English */
+$aliases['en'] = array(
 	'Cite' => array( 'Cite' ),
 );
 
 /** Arabic (العربية) */
-$specialPageAliases['ar'] = array(
+$aliases['ar'] = array(
 	'Cite' => array( 'استشهاد' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$specialPageAliases['arz'] = array(
+$aliases['arz'] = array(
 	'Cite' => array( 'استشهاد' ),
 );
 
 /** Bikol Central (Bikol Central) */
-$specialPageAliases['bcl'] = array(
+$aliases['bcl'] = array(
 	'Cite' => array( 'Sambitón' ),
 );
 
 /** Bulgarian (Български) */
-$specialPageAliases['bg'] = array(
+$aliases['bg'] = array(
 	'Cite' => array( 'Цитиране' ),
 );
 
 /** Breton (Brezhoneg) */
-$specialPageAliases['br'] = array(
+$aliases['br'] = array(
 	'Cite' => array( 'Menegiñ' ),
 );
 
 /** Bosnian (Bosanski) */
-$specialPageAliases['bs'] = array(
+$aliases['bs'] = array(
 	'Cite' => array( 'Citiraj' ),
 );
 
 /** Catalan (Català) */
-$specialPageAliases['ca'] = array(
+$aliases['ca'] = array(
 	'Cite' => array( 'Citau', 'Citeu' ),
 );
 
 /** Czech (Česky) */
-$specialPageAliases['cs'] = array(
+$aliases['cs'] = array(
 	'Cite' => array( 'Citovat' ),
 );
 
 /** Danish (Dansk) */
-$specialPageAliases['da'] = array(
+$aliases['da'] = array(
 	'Cite' => array( 'Citer' ),
 );
 
 /** German (Deutsch) */
-$specialPageAliases['de'] = array(
+$aliases['de'] = array(
 	'Cite' => array( 'Zitierhilfe' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$specialPageAliases['dsb'] = array(
-	'Cite' => array( 'Citěrowańska_pomoc' ),
+$aliases['dsb'] = array(
+	'Cite' => array( 'Citěrowańska pomoc' ),
 );
 
 /** Greek (Ελληνικά) */
-$specialPageAliases['el'] = array(
+$aliases['el'] = array(
 	'Cite' => array( 'Παραπομπή' ),
 );
 
-/** Esperanto (Esperanto) */
-$specialPageAliases['eo'] = array(
-	'Cite' => array( 'Citi' ),
-);
-
 /** Spanish (Español) */
-$specialPageAliases['es'] = array(
+$aliases['es'] = array(
 	'Cite' => array( 'Citar', 'Cita' ),
 );
 
 /** Estonian (Eesti) */
-$specialPageAliases['et'] = array(
+$aliases['et'] = array(
 	'Cite' => array( 'Tsiteeri' ),
 );
 
 /** Persian (فارسی) */
-$specialPageAliases['fa'] = array(
+$aliases['fa'] = array(
 	'Cite' => array( 'یادکرد' ),
 );
 
 /** Finnish (Suomi) */
-$specialPageAliases['fi'] = array(
+$aliases['fi'] = array(
 	'Cite' => array( 'Viittaus' ),
 );
 
 /** French (Français) */
-$specialPageAliases['fr'] = array(
+$aliases['fr'] = array(
 	'Cite' => array( 'Citer' ),
 );
 
 /** Franco-Provençal (Arpetan) */
-$specialPageAliases['frp'] = array(
+$aliases['frp'] = array(
 	'Cite' => array( 'Citar' ),
 );
 
 /** Galician (Galego) */
-$specialPageAliases['gl'] = array(
+$aliases['gl'] = array(
 	'Cite' => array( 'Cita' ),
 );
 
 /** Swiss German (Alemannisch) */
-$specialPageAliases['gsw'] = array(
+$aliases['gsw'] = array(
 	'Cite' => array( 'Zitierhilf' ),
 );
 
 /** Hebrew (עברית) */
-$specialPageAliases['he'] = array(
+$aliases['he'] = array(
 	'Cite' => array( 'ציטוט' ),
 );
 
 /** Croatian (Hrvatski) */
-$specialPageAliases['hr'] = array(
+$aliases['hr'] = array(
 	'Cite' => array( 'Citiraj' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$specialPageAliases['hsb'] = array(
-	'Cite' => array( 'Citowanska_pomoc' ),
+$aliases['hsb'] = array(
+	'Cite' => array( 'Citowanska pomoc' ),
 );
 
 /** Haitian (Kreyòl ayisyen) */
-$specialPageAliases['ht'] = array(
+$aliases['ht'] = array(
 	'Cite' => array( 'Site' ),
 );
 
 /** Hungarian (Magyar) */
-$specialPageAliases['hu'] = array(
+$aliases['hu'] = array(
 	'Cite' => array( 'Hivatkozás', 'Irodalomjegyzék' ),
 );
 
 /** Interlingua (Interlingua) */
-$specialPageAliases['ia'] = array(
+$aliases['ia'] = array(
 	'Cite' => array( 'Citation' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$specialPageAliases['id'] = array(
+$aliases['id'] = array(
 	'Cite' => array( 'Kutip' ),
 );
 
-/** Igbo (Igbo) */
-$specialPageAliases['ig'] = array(
-	'Cite' => array( 'Dépùtà' ),
-);
-
 /** Ido (Ido) */
-$specialPageAliases['io'] = array(
+$aliases['io'] = array(
 	'Cite' => array( 'Citar' ),
 );
 
 /** Italian (Italiano) */
-$specialPageAliases['it'] = array(
+$aliases['it'] = array(
 	'Cite' => array( 'Cita' ),
 );
 
 /** Japanese (日本語) */
-$specialPageAliases['ja'] = array(
+$aliases['ja'] = array(
 	'Cite' => array( '引用' ),
 );
 
 /** Korean (한국어) */
-$specialPageAliases['ko'] = array(
+$aliases['ko'] = array(
 	'Cite' => array( '인용' ),
 );
 
-/** Colognian (Ripoarisch) */
-$specialPageAliases['ksh'] = array(
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
 	'Cite' => array( 'Zitteere' ),
 );
 
-/** Ladino (Ladino) */
-$specialPageAliases['lad'] = array(
-	'Cite' => array( 'MostrarManaderos' ),
-);
-
 /** Luxembourgish (Lëtzebuergesch) */
-$specialPageAliases['lb'] = array(
+$aliases['lb'] = array(
 	'Cite' => array( 'Zitéierhellëf' ),
 );
 
 /** Macedonian (Македонски) */
-$specialPageAliases['mk'] = array(
+$aliases['mk'] = array(
 	'Cite' => array( 'Цитат' ),
 );
 
 /** Malayalam (മലയാളം) */
-$specialPageAliases['ml'] = array(
+$aliases['ml'] = array(
 	'Cite' => array( 'അവലംബം' ),
 );
 
 /** Marathi (मराठी) */
-$specialPageAliases['mr'] = array(
+$aliases['mr'] = array(
 	'Cite' => array( 'संदर्भद्या' ),
 );
 
 /** Malay (Bahasa Melayu) */
-$specialPageAliases['ms'] = array(
+$aliases['ms'] = array(
 	'Cite' => array( 'Petik' ),
 );
 
 /** Maltese (Malti) */
-$specialPageAliases['mt'] = array(
+$aliases['mt'] = array(
 	'Cite' => array( 'Iċċita' ),
 );
 
 /** Nahuatl (Nāhuatl) */
-$specialPageAliases['nah'] = array(
+$aliases['nah'] = array(
 	'Cite' => array( 'Tlahtoa', 'Citar' ),
 );
 
 /** Low German (Plattdüütsch) */
-$specialPageAliases['nds'] = array(
+$aliases['nds'] = array(
 	'Cite' => array( 'Ziteerhelp' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
-$specialPageAliases['nds-nl'] = array(
+$aliases['nds-nl'] = array(
 	'Cite' => array( 'Citeerhulpe' ),
 );
 
 /** Dutch (Nederlands) */
-$specialPageAliases['nl'] = array(
+$aliases['nl'] = array(
 	'Cite' => array( 'Citeren' ),
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
-$specialPageAliases['nn'] = array(
+$aliases['nn'] = array(
 	'Cite' => array( 'Siter' ),
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$specialPageAliases['no'] = array(
+$aliases['no'] = array(
 	'Cite' => array( 'Siteringshjelp' ),
 );
 
 /** Occitan (Occitan) */
-$specialPageAliases['oc'] = array(
+$aliases['oc'] = array(
 	'Cite' => array( 'Citar' ),
 );
 
 /** Polish (Polski) */
-$specialPageAliases['pl'] = array(
+$aliases['pl'] = array(
 	'Cite' => array( 'Cytuj' ),
 );
 
 /** Pashto (پښتو) */
-$specialPageAliases['ps'] = array(
+$aliases['ps'] = array(
 	'Cite' => array( 'درک' ),
 );
 
 /** Portuguese (Português) */
-$specialPageAliases['pt'] = array(
+$aliases['pt'] = array(
 	'Cite' => array( 'Citar' ),
 );
 
 /** Brazilian Portuguese (Português do Brasil) */
-$specialPageAliases['pt-br'] = array(
+$aliases['pt-br'] = array(
 	'Cite' => array( 'Citar' ),
 );
 
-/** Romanian (Română) */
-$specialPageAliases['ro'] = array(
-	'Cite' => array( 'Citează' ),
-);
-
 /** Sanskrit (संस्कृत) */
-$specialPageAliases['sa'] = array(
+$aliases['sa'] = array(
 	'Cite' => array( 'उद्धृत' ),
 );
 
 /** Slovak (Slovenčina) */
-$specialPageAliases['sk'] = array(
+$aliases['sk'] = array(
 	'Cite' => array( 'Citovať' ),
 );
 
 /** Slovenian (Slovenščina) */
-$specialPageAliases['sl'] = array(
+$aliases['sl'] = array(
 	'Cite' => array( 'Navedi' ),
 );
 
 /** Albanian (Shqip) */
-$specialPageAliases['sq'] = array(
+$aliases['sq'] = array(
 	'Cite' => array( 'Citim' ),
 );
 
 /** Swedish (Svenska) */
-$specialPageAliases['sv'] = array(
+$aliases['sv'] = array(
 	'Cite' => array( 'Citera' ),
 );
 
 /** Swahili (Kiswahili) */
-$specialPageAliases['sw'] = array(
+$aliases['sw'] = array(
 	'Cite' => array( 'Taja', 'Hakikisha' ),
 );
 
 /** Tetum (Tetun) */
-$specialPageAliases['tet'] = array(
+$aliases['tet'] = array(
 	'Cite' => array( 'Sita' ),
 );
 
 /** Thai (ไทย) */
-$specialPageAliases['th'] = array(
+$aliases['th'] = array(
 	'Cite' => array( 'อ้างอิง' ),
 );
 
 /** Tagalog (Tagalog) */
-$specialPageAliases['tl'] = array(
+$aliases['tl'] = array(
 	'Cite' => array( 'Sipiin' ),
 );
 
 /** Turkish (Türkçe) */
-$specialPageAliases['tr'] = array(
+$aliases['tr'] = array(
 	'Cite' => array( 'KaynakGöster' ),
 );
 
 /** Vèneto (Vèneto) */
-$specialPageAliases['vec'] = array(
+$aliases['vec'] = array(
 	'Cite' => array( 'Cita' ),
 );
 
-/** Yiddish (ייִדיש) */
-$specialPageAliases['yi'] = array(
-	'Cite' => array( 'ציטירן' ),
-);
-
 /** Simplified Chinese (‪中文(简体)‬) */
-$specialPageAliases['zh-hans'] = array(
+$aliases['zh-hans'] = array(
 	'Cite' => array( '引用' ),
 );
 
 /** Traditional Chinese (‪中文(繁體)‬) */
-$specialPageAliases['zh-hant'] = array(
+$aliases['zh-hant'] = array(
 	'Cite' => array( '引用' ),
 );
 
-/**
- * For backwards compatibility with MediaWiki 1.15 and earlier.
- */
-$aliases =& $specialPageAliases;

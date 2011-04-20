@@ -5,8 +5,7 @@ if ( ! defined( 'MEDIAWIKI' ) )
  * A parser extension that adds two tags, <ref> and <references> for adding
  * citations to pages
  *
- * @file
- * @ingroup Extensions
+ * @addtogroup Extensions
  *
  * @link http://www.mediawiki.org/wiki/Extension:Cite/Cite.php Documentation
  *
@@ -17,13 +16,18 @@ if ( ! defined( 'MEDIAWIKI' ) )
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-$wgHooks['ParserFirstCallInit'][] = 'wfCite';
+if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
+	$wgHooks['ParserFirstCallInit'][] = 'wfCite';
+} else {
+	$wgExtensionFunctions[] = 'wfCite';
+}
 
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'Cite',
 	'author' => 'Ævar Arnfjörð Bjarmason',
-	'descriptionmsg' => 'cite-desc',
+	'description' => 'Adds <nowiki><ref[ name=id]></nowiki> and <nowiki><references/></nowiki> tags, for citations', // kept for b/c
+	'descriptionmsg' => 'cite_desc',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:Cite/Cite.php'
 );
 $wgParserTestFiles[] = dirname( __FILE__ ) . "/citeParserTests.txt";
@@ -31,25 +35,22 @@ $wgExtensionMessagesFiles['Cite'] = dirname( __FILE__ ) . "/Cite.i18n.php";
 $wgAutoloadClasses['Cite'] = dirname( __FILE__ ) . "/Cite_body.php";
 $wgSpecialPageGroups['Cite'] = 'pagetools';
 
-define( 'CITE_DEFAULT_GROUP', '' );
+define( 'CITE_DEFAULT_GROUP', '');
 /**
  * The emergency shut-off switch.  Override in local settings to disable
  * groups; or remove all references from this file to enable unconditionally
  */
-$wgAllowCiteGroups = true;
+$wgAllowCiteGroups = true; 
 
 /**
  * An emergency optimisation measure for caching cite <references /> output.
  */
 $wgCiteCacheReferences = false;
 
-/**
- * Performs the hook registration.
- * Note that several extensions (and even core!) try to detect if Cite is 
- * installed by looking for wfCite().
- */
-function wfCite( $parser ) {
-	return Cite::setHooks( $parser );
+function wfCite() {
+	new Cite;
+	return true;
 }
 
 /**#@-*/
+
