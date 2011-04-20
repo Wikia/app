@@ -60,8 +60,7 @@ class SponsorshipDashboardUser {
 
 		if ( $this->exist() ) {
 
-			$wgExternalDatawareDB = $this->App->getGlobal( 'wgExternalDatawareDB' );
-			$db = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+			$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
 
 			$aParams = $this->getTableFromParams();
 
@@ -154,7 +153,7 @@ class SponsorshipDashboardUser {
 			return false;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE, array(), F::build('App')->getGlobal('wgExternalDatawareDB') );
+		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
 		$res = $dbr->select(
 			'specials.wmetrics_user',
 			array(
@@ -187,7 +186,7 @@ class SponsorshipDashboardUser {
 
 	public function delete() {
 		if( !empty( $this->id ) ) {
-			$db = wfGetDB( DB_MASTER, array(), F::build('App')->getGlobal('wgExternalDatawareDB') );
+			$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
 			$db->delete(
 				'specials.wmetrics_user',
 				array( 'wmusr_id' => $this->id )
@@ -200,7 +199,7 @@ class SponsorshipDashboardUser {
 
 		$iId = ( int )$iId;
 
-		$dbr = wfGetDB( DB_SLAVE, array(), F::build('App')->getGlobal('wgExternalDatawareDB') );
+		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
 
 		$res = $dbr->select(
 			'specials.wmetrics_user',

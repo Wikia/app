@@ -33,31 +33,33 @@ class SponsorshipDashboard extends SpecialPage {
 	protected $fromYear = 2004;
 
 	function  __construct() {
-		$wgUser = F::app()->getGlobal('wgUser');
-		$this->allowed = in_array('wikimetrics', $wgUser->getRights());
-
+		
+		$oUser = F::app()->getGlobal('wgUser');
+		$this->allowed = $oUser->isAllowed('wikimetrics');
+		
 		parent::__construct( 'SponsorshipDashboard', 'sponsorship-dashboard', $this->allowed);
 	}
 
 	public function isAllowed() {
+		
 		return $this->allowed;
 	}
 
 	function execute( $subpage = false ) {
-		
-		global $wgSupressPageSubtitle;
 
+		global $wgSupressPageSubtitle;
+		
 		$wgOut = F::app()->getGlobal('wgOut');
 
-		$wgOut->setHTMLTitle(wfMsg('sponsorship-dashboard-default-page-title'));
+		$wgOut->setHTMLTitle( wfMsg( 'sponsorship-dashboard-default-page-title' ) );
 		$subPageParams = explode( '/', $subpage );
 		$wgSupressPageSubtitle = true;
-
+		
 		// admin panel
 
 		if ( $this->isAllowed() && $subPageParams[0] == self::ADMIN ){
 
-			if (  ( !isset( $subPageParams[1] ) || $subPageParams[1] == 'ViewInfo' )) {
+			if ( ( !isset( $subPageParams[1] ) || $subPageParams[1] == 'ViewInfo' ) ) {
 				$this->HTMLViewInfo();
 				return true;
 			}
@@ -125,8 +127,10 @@ class SponsorshipDashboard extends SpecialPage {
 				case 'csv': $this->CSVReport(); break;
 				default: $this->HTMLReport(); break;
 			}
+			return true;
 		} else {
 			$this->HTMLerror();
+			return false;
 		}
 	}
 
@@ -135,7 +139,7 @@ class SponsorshipDashboard extends SpecialPage {
 		if ( $this->isAllowed() ) {
 			return $this->getTabsForStaff( $tabName );
 		}
-
+		
 		$wgUser = F::app()->getGlobal( 'wgUser' );
 
 		if ( $wgUser->isAnon() ) {
@@ -147,7 +151,7 @@ class SponsorshipDashboard extends SpecialPage {
 
 		$SDUser->loadUserParams();
 
-		$SDGroups = new SponsorshipDashboardGroups();
+		$SDGroups = F::build( 'SponsorshipDashboardGroups' );
 		$SDUserGroups = $SDGroups->getUserData( $SDUser->id );
 		$this->currentGroups = $SDUserGroups;
 
@@ -204,7 +208,7 @@ class SponsorshipDashboard extends SpecialPage {
 
 	function getTabsForStaff( $tabName ) {
 
-		$SDGroups = new SponsorshipDashboardGroups();
+		$SDGroups = F::build( 'SponsorshipDashboardGroups' );
 		$SDGData = $SDGroups->getObjArray( true );
 		$this->currentGroups = $SDGData;
 
@@ -230,7 +234,7 @@ class SponsorshipDashboard extends SpecialPage {
 			$catId = $catKeys[0];
 		}
 
-		$SDGroup = new SponsorshipDashboardGroup( $catId );
+		$SDGroup = F::build( 'SponsorshipDashboardGroup', array( $catId ) );
 		$SDGroup->loadGroupParams();
 		if( !isset( $SDGroup->reports[ $repId ] ) ) {
 			$aKeys = array_keys( $SDGroup->reports );
@@ -350,7 +354,7 @@ class SponsorshipDashboard extends SpecialPage {
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
 		$this->HTMLAdminHeader( 'ViewReports' );
 
-		$report = new SponsorshipDashboardReport( $id );
+		$report = F::build( 'SponsorshipDashboardReport', array( $id ) );
 		$report->loadReportParams();
 
 		$menuItems = $report->getMenuItemsHTML();
@@ -377,7 +381,7 @@ class SponsorshipDashboard extends SpecialPage {
 
 		if ( !empty( $id ) ){
 
-			$this->currentReport = new SponsorshipDashboardReport( $id );
+			$this->currentReport = F::build( 'SponsorshipDashboardReport', array( $id ) );
 			$this->currentReport->setId( $id );
 			$this->currentReport->loadReportParams();
 			$this->currentReport->loadSources();
@@ -398,7 +402,7 @@ class SponsorshipDashboard extends SpecialPage {
 
 		$this->HTMLAdminHeader( 'ViewReports' );
 
-		$report = new SponsorshipDashboardReport( $id );
+		$report = F::app()->build('SponsorshipDashboardReport' , array( $id ) );
 		$report->setId( $id );
 
 		$report->loadReportParams();
@@ -426,6 +430,8 @@ class SponsorshipDashboard extends SpecialPage {
 		$wgOut->addHTML(
 			$oTmpl->execute( 'admin/viewInfo' )
 		);
+
+		return true;
 	}
 
 	protected function HTMLEditGroup( $id ) {
@@ -439,11 +445,11 @@ class SponsorshipDashboard extends SpecialPage {
 
 		$this->HTMLAdminHeader( 'ViewGroups' );
 
-		$group = new SponsorshipDashboardGroup( $id );
+		$group = F::app()->build('SponsorshipDashboardGroup', array( $id ) );
 		$group->loadGroupParams();
 
-		$aReports = new SponsorshipDashboardReports();
-		$aUsers = new SponsorshipDashboardUsers();
+		$aReports = F::app()-> SponsorshipDashboardReports();
+		$aUsers = F::app()->build('SponsorshipDashboardUsers');
 		$oTmpl->set_vars(
 			array(
 			    'groupParams' => $group->getGroupParams(),
@@ -473,10 +479,10 @@ class SponsorshipDashboard extends SpecialPage {
 
 		$this->HTMLAdminHeader( 'ViewUsers' );
 
-		$oUser = new SponsorshipDashboardUser( $id );
+		$oUser = F::app()->build('SponsorshipDashboardUser', array( $id ));
 		$oUser->loadUserParams();
 
-		$aGroups = new SponsorshipDashboardGroups();
+		$aGroups = F::app()->build('SponsorshipDashboardGroups');
 		$aGroupUserData = $aGroups->getUserData( $id );
 
 		$aUserReports = array();
@@ -519,7 +525,7 @@ class SponsorshipDashboard extends SpecialPage {
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardList.scss' ) );
 		$this->HTMLAdminHeader( 'ViewReports' );
 
-		$aReports = new SponsorshipDashboardReports();
+		$aReports = F::build( 'SponsorshipDashboardReports' );
 		$oTmpl->set_vars(
 			array(
 				"data" => $aReports->getData(),
@@ -542,7 +548,7 @@ class SponsorshipDashboard extends SpecialPage {
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		if ( $wgRequest->getVal( 'action' ) == 'save' ) {
-			$oGroup = new SponsorshipDashboardGroup();
+			$oGroup = F::build( 'SponsorshipDashboardGroup' );
 			$oGroup->fillFromRequest();
 			$oGroup->save();
 		}
@@ -551,7 +557,7 @@ class SponsorshipDashboard extends SpecialPage {
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardList.scss' ) );
 		$this->HTMLAdminHeader( 'ViewGroups' );
 
-		$aGroups = new SponsorshipDashboardGroups();
+		$aGroups = F::build( 'SponsorshipDashboardGroups' );
 		$oTmpl->set_vars(
 			array(
 				"data" => $aGroups->getData(),
@@ -574,7 +580,7 @@ class SponsorshipDashboard extends SpecialPage {
 		$sMsg = '';
 
 		if ( $wgRequest->getVal( 'action' ) == 'save' ) {
-			$oUser = new SponsorshipDashboardUser();
+			$oUser = F::app()->build('SponsorshipDashboardUser');
 			$oUser->fillFromRequest();
 			$bSuccess = $oUser->save();
 			$sMsg = ( $bSuccess ) ? '' : wfMsg('sponsorship-dashboard-users-error', $oUser->name );
@@ -585,7 +591,7 @@ class SponsorshipDashboard extends SpecialPage {
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( '/extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardList.scss' ) );
 		$this->HTMLAdminHeader( 'ViewUsers' );
 
-		$aUsers = new SponsorshipDashboardUsers();
+		$aUsers = F::app()->build('SponsorshipDashboardUsers');
 		$oTmpl->set_vars(
 			array(
 				"data" => $aUsers->getData(),
