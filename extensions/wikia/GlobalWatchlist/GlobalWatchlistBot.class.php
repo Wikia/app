@@ -676,27 +676,30 @@ class GlobalWatchlistBot {
 			$wikiDB = WikiFactory::IDtoDB( $oResultRow->gwa_city_id );
 			if ( $wikiDB ) {
 				$db_wiki = wfGetDB( DB_SLAVE, 'stats', $wikiDB );
-				$oRow = $db_wiki->selectRow(
-					array( "watchlist" ),
-					array( "count(*) as cnt" ),
-					array(
-						"wl_namespace = '" . NS_BLOG_ARTICLE_TALK . "'",
-						"wl_title LIKE '" . $db_wiki->escapeLike( $oResultRow->gwa_title ) . "%'",
-						"wl_notificationtimestamp is not null",
-						"wl_notificationtimestamp >= '" . $oResultRow->gwa_timestamp . "'",
-						"wl_user > 0",
-					),
-					__METHOD__
-				);
-				$aWikiDigest[ 'blogs' ][ $blogTitle ] = array (
-					'comments' => intval( $oRow->cnt ),
-					'blogpage' => GlobalTitle::newFromText( $blogTitle, NS_BLOG_ARTICLE, $iWikiId ),
-					'own_comments' => 0
-				);
-				
-				if ( !in_array( $wikiDB, array( 'wikicities', 'messaging' ) ) ) {
-					$db_wiki->close();
-				}			
+				$title = $db_wiki->escapeLike( $oResultRow->gwa_title ) ;
+				if ( $db_wiki && $title ) {
+					$oRow = $db_wiki->selectRow(
+						array( "watchlist" ),
+						array( "count(*) as cnt" ),
+						array(
+							"wl_namespace = '" . NS_BLOG_ARTICLE_TALK . "'",
+							"wl_title LIKE '" . $title. "%'",
+							"wl_notificationtimestamp is not null",
+							"wl_notificationtimestamp >= '" . $oResultRow->gwa_timestamp . "'",
+							"wl_user > 0",
+						),
+						__METHOD__
+					);
+					$aWikiDigest[ 'blogs' ][ $blogTitle ] = array (
+						'comments' => intval( $oRow->cnt ),
+						'blogpage' => GlobalTitle::newFromText( $blogTitle, NS_BLOG_ARTICLE, $iWikiId ),
+						'own_comments' => 0
+					);
+					
+					if ( !in_array( $wikiDB, array( 'wikicities', 'messaging' ) ) ) {
+						$db_wiki->close();
+					}		
+				}	
 			}		
 		}
 
