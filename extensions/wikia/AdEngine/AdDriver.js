@@ -42,9 +42,11 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 			switch (slotname) {
 				case 'CORP_TOP_RIGHT_BOXAD':
 				case 'HOME_TOP_RIGHT_BOXAD':
+				case 'HOME_TOP_RIGHT_BUTTON':
 				case 'TEST_HOME_TOP_RIGHT_BOXAD':
 				case 'TEST_TOP_RIGHT_BOXAD':
 				case 'TOP_RIGHT_BOXAD':
+				case 'TOP_RIGHT_BUTTON':
 					return AdDriver.adProviderLiftium;
 					break;
 				default:
@@ -98,6 +100,17 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 	}
 
 	switch (slotname) {
+		case 'HOME_TOP_RIGHT_BUTTON':
+		case 'TOP_RIGHT_BUTTON':
+			// special case for Lyrics above
+			// enabled for English gaming wikis only
+			if (typeof window.cityShort == 'undefined' || window.cityShort != 'gaming') {
+				return 'NO-AD'
+			}
+			if (wgContentLanguage != 'en') {
+				return 'NO-AD'
+			}
+			break;
 		case 'MIDDLE_RIGHT_BOXAD':
 			// currently MIDDLE_RIGHT_BOXAD is reserved for partner widgets
 			// (e.g. eBay search). Don't make ad call if prerequisites aren't
@@ -301,8 +314,6 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 
 AdDriver.canCallLiftium = function(slotname) {
 	switch (slotname) {	
-		case 'HOME_TOP_RIGHT_BUTTON':
-		case 'TOP_RIGHT_BUTTON':
 		case 'HOME_INVISIBLE_TOP':
 		case 'INVISIBLE_TOP':
 		case 'MIDDLE_RIGHT_BOXAD':

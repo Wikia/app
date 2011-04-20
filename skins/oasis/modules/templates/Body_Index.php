@@ -7,9 +7,8 @@
 <?= $afterBodyHtml ?>
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
-<?// Skins can be served out of TOP_LEADERBOARD with dcopt=ist option. Turning off INVISIBLE_TOP ?>
-<?//= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')) ?>
-<?//= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')) ?>
+<?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')) ?>
+<?= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')) ?>
 <?= wfRenderModule('GlobalHeader') ?>
 
 <section id="WikiaPage" class="WikiaPage">
@@ -62,9 +61,7 @@
 					echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
 				}
 
-				if(!empty($wgEnableAdTopRightButton)) {
-					echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BUTTON'));
-				}
+				echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BUTTON'));
 			?>
 			</div>
 
