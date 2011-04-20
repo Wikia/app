@@ -27,8 +27,17 @@ class SponsorshipDashboardServiceTest extends PHPUnit_Framework_TestCase {
 		$oReport->newSource( SponsorshipDashboardReport::SD_SOURCE_STATS );
 		$oReport->tmpSource->setCityId( 177 );
 		$oReport->tmpSource->setSeries( array( 'A', 'B', 'C', 'D' ) );
+		$oReport->tmpSource->setSeriesName( 'A', 'something' );
+		$oReport->tmpSource->setNamespaces( array( 500, 501 ) );
 		$oReport->acceptSource();
+
+		$oReport->newSource( SponsorshipDashboardReport::SD_SOURCE_STATS );
+		$oReport->tmpSource->setSeries( array( 'A' ) );
+		$oReport->acceptSource( array( 177 ) );
+
+		$oReport->setId( 0 );
 		$oReport->lockSources();
+
 		
 		$returnChart	= $oReport->returnChartData();
 
@@ -52,13 +61,18 @@ class SponsorshipDashboardServiceTest extends PHPUnit_Framework_TestCase {
 		$returnHtml	= $oReport->getMenuItemsHTML();
 
 		$this->assertInternalType( 'array', $returnHtml );
+
+		$returnParams	= $oReport->getTableFromParams();
+		
+		$this->assertInternalType( 'array', $returnParams );
+
 	}
 
 	public function testEmptyReport(){
 
 		$oReport = new SponsorshipDashboardReport();
 		$oReport->name = 'testReport';
-		$oReport->setLastDateUnits( 30 );
+		$oReport->setLastDateUnits( 0 );
 		$oReport->frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH;
 
 		$oFormatter = SponsorshipDashboardOutputChart::newFromReport( $oReport );
@@ -75,6 +89,8 @@ class SponsorshipDashboardServiceTest extends PHPUnit_Framework_TestCase {
 		$oReport->frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH;
 
 		$return = true;
+
+		$oReport->newSource( 'somethingthatwilltotallynotmatch' );
 
 		$oSource = new SponsorshipDashboardSourceStats();
 		$oReport->addSource( $oSource );
