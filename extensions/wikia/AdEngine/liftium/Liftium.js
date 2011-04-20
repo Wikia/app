@@ -788,7 +788,8 @@ Liftium.getBrowserLang = function () {
 Liftium.getIframeUrl = function(slotname, tag) {
 
 	// Check to see if the tag is already an iframe. 
-	var m = tag.tag.match(/<iframe[\s\S]+src="([^"]+)"/), iframeUrl;
+	var m = tag.tag ? tag.tag.match(/<iframe[\s\S]+src="([^"]+)"/) : null;
+	var iframeUrl;
 
 	if ( m !== null ){
 		iframeUrl = m[1].replace(/&amp;/g, "&");
