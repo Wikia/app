@@ -62,9 +62,7 @@
 					echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
 				}
 
-				if(!empty($wgEnableAdTopRightButton)) {
-					echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BUTTON'));
-				}
+				echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BUTTON'));
 			?>
 			</div>
 
