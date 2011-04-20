@@ -26,7 +26,7 @@ class SponsorshipDashboardServiceTest extends PHPUnit_Framework_TestCase {
 
 		$oReport->newSource( SponsorshipDashboardReport::SD_SOURCE_STATS );
 		$oReport->tmpSource->setCityId( 177 );
-		$oReport->tmpSource->setSeries( array( 'A', 'B', 'C', 'D' ) );
+		$oReport->tmpSource->setSeries( array( 'A', 'B', 'C', 'D', 'E' ) );
 		$oReport->tmpSource->setSeriesName( 'A', 'something' );
 		$oReport->tmpSource->setNamespaces( array( 500, 501 ) );
 		$oReport->acceptSource();
@@ -38,7 +38,9 @@ class SponsorshipDashboardServiceTest extends PHPUnit_Framework_TestCase {
 		$oReport->setId( 0 );
 		$oReport->lockSources();
 
-		$returnChart	= $oReport->returnChartData();
+		// mock returnFunctions
+
+		$returnChart = $oReport->returnChartData();
 
 		$this->assertInternalType( 'array', $returnChart );
 		$this->assertArrayHasKey( SponsorshipDashboardReport::SD_RETURNPARAM_TICKS, $returnChart );
@@ -48,7 +50,7 @@ class SponsorshipDashboardServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertNotEmpty( $returnChart[ SponsorshipDashboardReport::SD_RETURNPARAM_FULL_TICKS ] );
 		$this->assertNotEmpty( $returnChart[ SponsorshipDashboardReport::SD_RETURNPARAM_SERIE ] );
 
-		$returnArray	= $oReport->getReportParams();
+		$returnArray = $oReport->getReportParams();
 
 		$this->assertInternalType( 'array', $returnArray );
 		$this->assertArrayHasKey( SponsorshipDashboardReport::SD_PARAMS_ID, $returnArray );
@@ -57,29 +59,27 @@ class SponsorshipDashboardServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertArrayHasKey( SponsorshipDashboardReport::SD_PARAMS_DESCRIPTION, $returnArray );
 		$this->assertArrayHasKey( SponsorshipDashboardSource::SD_PARAMS_LASTUNITDATE, $returnArray );
 
-		$returnHtml	= $oReport->getMenuItemsHTML();
+		$returnHtml = $oReport->getMenuItemsHTML();
 
 		$this->assertInternalType( 'array', $returnHtml );
 
-		$returnParams	= $oReport->getTableFromParams();
-		
-		$this->assertInternalType( 'array', $returnParams );
+		$returnParams = $oReport->getTableFromParams();
 
+		$this->assertInternalType( 'array', $returnParams );
 	}
 
 	public function testFillReportFromSerializedData(){
 
 		$aInput = array();
 		$aInput[0] = "mainId=67&mainTitle=Testa'rama&mainDescription=scrap+report'yo&mainFrequency=1&lastDateUnits=30";
-		$aInput[1] = "sourceType=Stats&seriesA=on&sourceSerieName-A=1&seriesB=on&sourceSerieName-B=1&seriesC=on&sourceSerieName-C=2&seriesD=on&sourceSerieName-D=3&seriesE=on&sourceSerieName-E=4&seriesF=on&sourceSerieName-F=5&seriesG=on&sourceSerieName-G=6&seriesH=on&sourceSerieName-H=7&seriesI=on&sourceSerieName-I=8&seriesJ=on&sourceSerieName-J=9&seriesK=on&sourceSerieName-K=0&namespaces=&repCityId=&repeatSourceType=1&repCompTopX=2&repCompCityId=177&repCompHubId=9";
+		$aInput[1] = "sourceType=Stats&seriesA=on&sourceSerieName-A=1&seriesB=on&sourceSerieName-B=1&seriesC=on&sourceSerieName-C=2&seriesD=on&sourceSerieName-D=3&seriesE=on&sourceSerieName-E=4&seriesF=on&sourceSerieName-F=5&seriesG=on&sourceSerieName-G=6&seriesH=on&sourceSerieName-H=7&seriesI=on&sourceSerieName-I=8&seriesJ=on&sourceSerieName-J=9&seriesK=on&sourceSerieName-K=0&namespaces=&repCityId=&repeatSourceType=1&repCompTopX=&repCompCityId=&repCompHubId=";
 
-		$report = new SponsorshipDashboardReport();
-		$report->fillFromSerializedData( serialize( $aInput ) );
-		$report->lockSources();
-		
-		$dataFormatter = SponsorshipDashboardOutputChart::newFromReport( $report );
+		$oReport = new SponsorshipDashboardReport();
+		$oReport->fillFromSerializedData( serialize( $aInput ) );
+		$oReport->lockSources();
+
+		$dataFormatter = SponsorshipDashboardOutputChart::newFromReport( $oReport );
 		$this->assertNotEmpty( $dataFormatter->getHTML() );
-		
 	}
 
 	public function testEmptyReport(){
@@ -88,10 +88,18 @@ class SponsorshipDashboardServiceTest extends PHPUnit_Framework_TestCase {
 		$oReport->name = 'testReport';
 		$oReport->setLastDateUnits( 0 );
 		$oReport->frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH;
+		$oReport->lockSources();
 
 		$oFormatter = SponsorshipDashboardOutputChart::newFromReport( $oReport );
 		$return = $oFormatter->getChartData();
+		$this->assertEmpty( $return );
 
+		$oFormatter = SponsorshipDashboardOutputTable::newFromReport( $oReport );
+		$return = $oFormatter->getHTML();
+		$this->assertEmpty( $return );
+		
+		$oFormatter = SponsorshipDashboardOutputCSV::newFromReport( $oReport );
+		$return = $oFormatter->getHTML();
 		$this->assertEmpty( $return );
 	}
 
@@ -122,10 +130,19 @@ class SponsorshipDashboardServiceTest extends PHPUnit_Framework_TestCase {
 		$oReport->addSource( $oSource );
 		$oReport->acceptSource();
 
+		$oReport->lockSources();
+
 		$oFormatter = SponsorshipDashboardOutputChart::newFromReport( $oReport );
 		$return = $oFormatter->getChartData();
 
 		$this->assertEmpty( $return );
+
+		$oFormatter = SponsorshipDashboardOutputTable::newFromReport( $oReport );
+		$return = $oFormatter->getHTML();
+		$this->assertNotEmpty( $return );
+
+		$oFormatter = SponsorshipDashboardOutputCSV::newFromReport( $oReport );
+		$return = $oFormatter->getHTML();
+		$this->assertNotEmpty( $return );
 	}
 }
-

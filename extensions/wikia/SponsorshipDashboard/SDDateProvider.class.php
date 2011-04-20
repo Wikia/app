@@ -11,8 +11,8 @@ class SponsorshipDashboardDateProviderMonth {
 
 	const SD_START_DATE = '2010-04';
 
-
 	public function getType(){
+		
 		return SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH;
 	}
 
@@ -51,10 +51,12 @@ class SponsorshipDashboardDateProviderMonth {
 	}
 
 	function getEndDate(){
+
 		return date("Y-m", mktime(0, 0, 0, date( "m" ), 0, date( "Y" )));
 	}
 
 	function getStartDate(){
+
 		return ( !empty( $dateUnits ) ) ? date("Y-m", mktime(0, 0, 0, ( date( "m" )-$dateUnits ), 0 , date( "Y" ))) : self::SD_START_DATE;
 	}
 }
@@ -62,6 +64,7 @@ class SponsorshipDashboardDateProviderMonth {
 class SponsorshipDashboardDateProviderYear {
 
 	public function getType(){
+
 		return SponsorshipDashboardDateProvider::SD_FREQUENCY_YEAR;
 	}
 
@@ -99,10 +102,12 @@ class SponsorshipDashboardDateProviderYear {
 	}
 
 	function getEndDate(){
+
 		return $this->getGapiEndDate();
 	}
 
 	function getStartDate(){
+
 		return $this->getGapiStartDate();
 	}
 }
@@ -110,17 +115,18 @@ class SponsorshipDashboardDateProviderYear {
 class SponsorshipDashboardDateProviderDay {
 
 	public function getType(){
+
 		return SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY;
 	}
 	
 	public function getGapiEndDate(){
 
-		return date("Y-m-d", mktime(0, 0, 0, date( "m" ), date( "d" )-1, date( "Y" )));
+		return date( "Y-m-d", mktime(0, 0, 0, date( "m" ), date( "d" )-1, date( "Y" )));
 	}
 
 	public function getGapiStartDate( $dateUnits = 0 ){
 
-		return ( !empty( $dateUnits ) ) ? date("Y-m-d", mktime(0, 0, 0, date( "m" ), date( "d" )-1-$dateUnits, date( "Y" ))) : SponsorshipDashboardDateProvider::SD_START_DATE;
+		return ( !empty( $dateUnits ) ) ? date( "Y-m-d", mktime(0, 0, 0, date( "m" ), date( "d" )-1-$dateUnits, date( "Y" ))) : SponsorshipDashboardDateProvider::SD_START_DATE;
 	}
 
 	public function getGapiDateFromResult( $result ){
@@ -149,14 +155,14 @@ class SponsorshipDashboardDateProviderDay {
 	}
 
 	function getEndDate(){
+
 		return $this->getGapiEndDate();
 	}
 
 	function getStartDate(){
-		return $this->getGapiStartDate();
-	}
 
-	
+		return $this->getGapiStartDate();
+	}	
 }
 
 class SponsorshipDashboardDateProvider {
