@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<title><?= $roomName ?>: <?= $roomTopic ?></title>
+	<link rel="shortcut icon" href="<?= $wgFavicon ?>">
 
 	<!-- Make IE recognize HTML5 tags. -->
 	<!--[if IE]>
