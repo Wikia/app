@@ -44,13 +44,13 @@ var UploadPhotos = {
 			UploadPhotos.overrideinput = UploadPhotos.override.find("input");
 			UploadPhotos.ajaxwait = UploadPhotos.d.find(".ajaxwait");
 			UploadPhotos.dfcache = {};
-			
+
 			// event handlers
 			UploadPhotos.filepath.change(UploadPhotos.filePathSet);
 			UploadPhotos.destfile.blur(UploadPhotos.destFileSet);
 			UploadPhotos.advanced.click(function(evt) {
 				evt.preventDefault();
-				
+
 				//set correct text for link and arrow direction
 				if (UploadPhotos.options.is(":visible")) {
 					UploadPhotos.advanced.text(UploadPhotos.advanced.data("more"));
@@ -59,7 +59,7 @@ var UploadPhotos = {
 					UploadPhotos.advanced.text(UploadPhotos.advanced.data("fewer"));
 					UploadPhotos.advancedChevron.addClass("up");
 				}
-				
+
 				UploadPhotos.options.slideToggle("fast");
 			});
 			UploadPhotos.destfile.keyup(function() {
@@ -71,7 +71,7 @@ var UploadPhotos = {
 			$.tracker.byStr('action/uploadphoto/dialog');
 		});
 		if (!UploadPhotos.libinit) {
-			$.getScript("/extensions/wikia/ThemeDesigner/js/aim.js");	// TODO: find a permanent place for aim
+			$.getScript(wgExtensionsPath + "/wikia/ThemeDesigner/js/aim.js");	// TODO: find a permanent place for aim
 			UploadPhotos.libinit = true;
 		}
 	},
@@ -82,7 +82,7 @@ var UploadPhotos = {
 			if(json) {
 				if(json['status'] == 0) {	// 0 is success...
 					$.tracker.byStr('action/uploadphoto/upload');
-					window.location = '/wiki/Special:NewFiles';
+					window.location = wgArticlePath.replace('$1', 'Special:NewFiles');
 				} else if(json['status'] == -2) {	// show conflict dialog
 					UploadPhotos.step1.hide(400, function() {
 						UploadPhotos.conflict.html(json['statusMessage']);
@@ -117,7 +117,7 @@ var UploadPhotos = {
 			var df = UploadPhotos.destfile.val();
 			if (UploadPhotos.dfcache[df]) {
 				UploadPhotos.destFileInputSet(UploadPhotos.dfcache[df]);
-			} else {			
+			} else {
 				$.get(wgScript, {
 					wpDestFile: UploadPhotos.destfile.val(),
 					action: 'ajax',
@@ -144,7 +144,7 @@ var UploadPhotos = {
 			UploadPhotos.overrideinput.attr("checked", false);
 			UploadPhotos.status.removeClass("error").hide(400);
 		}
-	}	
+	}
 }
 
 var LatestPhotos = {
