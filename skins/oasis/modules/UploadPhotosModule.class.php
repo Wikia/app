@@ -44,8 +44,6 @@ class UploadPhotosModule extends Module {
 		$up->initializeFromRequest($wgRequest);
 		$permErrors = $up->verifyPermissions( $wgUser );
 
-		var_dump($this);
-
 		if ( $permErrors !== true ) {
 			$this->status = self::UPLOAD_PERMISSION_ERROR;
 			$this->statusMessage = $this->uploadMessage( $this->status, null );
