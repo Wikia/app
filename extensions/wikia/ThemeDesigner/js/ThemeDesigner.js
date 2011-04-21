@@ -269,7 +269,7 @@ var ThemeDesigner = {
 				$("#ColorTester").remove();
 
 				ThemeDesigner.hidePicker();
-				ThemeDesigner.set(swatch.attr("class"), color);
+				ThemeDesigner.set(swatch.attr("class"), ThemeDesigner.rgb2hex(color));
 				ThemeDesigner.set("theme", "custom");
 
 				ThemeDesigner.track('customize/' + swatchName + '/ok');

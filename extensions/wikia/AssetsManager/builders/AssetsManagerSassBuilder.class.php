@@ -34,9 +34,11 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		$params = urldecode(http_build_query($this->mParams, '', ' '));
 
 		$cmd = "{$wgSassExacutable} {$IP}/{$this->mOid} {$tempOutFile} --cache-location {$tempDir} --style compact -r {$IP}/extensions/wikia/SASS/wikia_sass.rb {$params}";
-		$escapedCmd = escapeshellcmd($cmd);
+		$escapedCmd = escapeshellcmd($cmd) . " 2>&1";
 
-		if (shell_exec($escapedCmd) != '') {
+		$sassResult = shell_exec($escapedCmd);
+		if ($sassResult != '') {
+			error_log("Sass commandline error: " . $sassResult);
 			unlink($tempOutFile);
 			throw new Exception('Problem with SASS processing.');
 		}
