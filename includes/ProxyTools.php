@@ -11,6 +11,14 @@
  * @return string
  */
 function wfGetForwardedFor() {
+	// Wikia - start - @author: wladek
+	// FB#4215 User:Wikia edits being attributed to user's IP and useragent (again)
+	global $wgIP;
+	if ( $wgIP === '127.0.0.1' ) { // Used by User:Wikia
+		return null;
+	}
+	// Wikia - end
+
 	if( function_exists( 'apache_request_headers' ) ) {
 		// More reliable than $_SERVER due to case and -/_ folding
 		$set = array ();
