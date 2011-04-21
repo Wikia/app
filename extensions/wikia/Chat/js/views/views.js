@@ -296,7 +296,7 @@ var NodeChatView = Backbone.View.extend({
 NodeChatHelper = {
 	init: function() {
 		// Make links open in the parent window
-		$("#Chat, .wordmark").find("a").live("click", function(event) {
+		$("#Chat a, .wordmark a").live("click", function(event) {
 			event.preventDefault();
 			window.open($(this).attr("href"));
 		});
