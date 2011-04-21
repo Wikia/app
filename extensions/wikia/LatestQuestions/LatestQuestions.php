@@ -24,7 +24,7 @@ function wfLatestQuestionsJSVariables( &$vars ) {
 	wfLoadExtensionMessages('LatestQuestions');
 	$vars['wgAnswersServer'] = $wgAnswersServer;
 	$vars['wgAnswersScript'] = $wgAnswersScript;
-	$vars['wgLatestQuestionsHeader'] = wfMsgHtml('latest-questions-header');
-	$vars['wgOasisMoreMsg'] = wfMsgHtml('oasis-more');
+	$vars['wgLatestQuestionsHeader'] = wfMsg('latest-questions-header');
+	$vars['wgOasisMoreMsg'] = wfMsg('oasis-more');
 	return true;
 }
