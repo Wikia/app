@@ -19,7 +19,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class WikiFactoryPage extends SpecialPage {
 
 	private $mWiki, $mTitle, $mDomain, $mTab, $mVariableName, $mTags, $mSearchTag;
-	public $mStatuses = array( "disabled", "enabled", "redirected" );
+	public $mStatuses = array(-1=> 'disabled*', "disabled", "enabled", "redirected" );
 	private $mTagWikiIds = array();
 
 	/**
