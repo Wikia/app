@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ArticleComment is listing, basicly it's array of comments
+ * ArticleCommentList is a listing, basicly it's an array of comments
  */
 class ArticleCommentList {
 
