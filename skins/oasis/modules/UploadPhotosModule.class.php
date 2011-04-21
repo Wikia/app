@@ -2,7 +2,7 @@
 /**
  * @author Hyun Lim
  */
- 
+
 class UploadPhotosModule extends Module {
 	const UPLOAD_WARNING = -2;
 	const UPLOAD_PERMISSION_ERROR = -1;
@@ -10,16 +10,16 @@ class UploadPhotosModule extends Module {
 	var $wgScriptPath;
 	var $licensesHtml;
 	var $wgBlankImgUrl;
-	
+
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
-		
+
 		$licenses = new Licenses(array('id' => 'wpLicense', 'name' => 'wpLicense'));
 		$this->licensesHtml = $licenses->getInputHTML(null);
-		
+
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	/**
 	 * This method hacks the normal moduleProxy() chain because of AIM and application/json mimetype incompatibility
 	 * Talk to Hyun or Inez
@@ -27,12 +27,12 @@ class UploadPhotosModule extends Module {
 	public function executeUpload($params) {
 		wfProfileIn(__METHOD__);
 		global $wgRequest, $wgUser;
-		
+
 		if(!$wgUser->isLoggedIn()) {
 			echo 'Not logged in';
 			exit();
 		}
-		
+
 		$this->watchthis = $wgRequest->getBool('wpWatchthis') && $wgUser->isLoggedIn();
 		$this->license = $wgRequest->getText('wpLicense');
 		$this->copyrightstatus = $wgRequest->getText('wpUploadCopyStatus');
@@ -43,16 +43,18 @@ class UploadPhotosModule extends Module {
 		$up = new UploadFromFile();
 		$up->initializeFromRequest($wgRequest);
 		$permErrors = $up->verifyPermissions( $wgUser );
-		
+
+		var_dump($this);
+
 		if ( $permErrors !== true ) {
 			$this->status = self::UPLOAD_PERMISSION_ERROR;
 			$this->statusMessage = $this->uploadMessage( $this->status, null );
 		} else {
 			$details = $up->verifyUpload();
-			
+
 			$this->status = (is_array($details) ? $details['status'] : UploadBase::UPLOAD_VERIFICATION_ERROR);
 			$this->statusMessage = '';
-			
+
 			if ($this->status > 0) {
 				$this->statusMessage = $this->uploadMessage($this->status, $details);
 			} else {
@@ -77,29 +79,29 @@ class UploadPhotosModule extends Module {
 				}
 			}
 		}
-	
+
 		echo json_encode($this->getData());
 		header('content-type: text/plain; charset=utf-8');
-	
+
 		wfProfileOut(__METHOD__);
-		
+
 		exit();	//end hack
 	}
-	
+
 	public function executeExistsWarning($params) {
 		wfProfileIn(__METHOD__);
 		global $wgRequest;
-		
+
 		$this->existsWarning = SpecialUpload::ajaxGetExistsWarning($wgRequest->getVal('wpDestFile'));
 		if(!empty($this->existsWarning) && $this->existsWarning != '&nbsp;') {
 			$this->existsWarning = '<h3>'.wfMsg('uploadwarning').'</h3>'.$this->existsWarning;
 		} else {
 			$this->existsWarning = '';
 		}
-		
+
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	/**
 	 * This is practicaly a copy of UploadForm->processUpload(SpecialUpload.php), but just handles and returns status message
 	 */
@@ -109,7 +111,7 @@ class UploadPhotosModule extends Module {
 		switch($statusCode) {
 			case UploadBase::SUCCESS:
 				break;
-				
+
 			case UploadBase::EMPTY_FILE:
 				$msg = wfMsgHtml( 'emptyfile' );
 				break;
@@ -144,20 +146,20 @@ class UploadPhotosModule extends Module {
 			case UploadBase::VERIFICATION_ERROR:
 				$msg = wfMsgHtml($details['details'][0]);
 				break;
-			
+
 			case self::UPLOAD_PERMISSION_ERROR:
 				$msg = wfMsg( 'badaccess' );
 				break;
 			default:
 				throw new MWException( __METHOD__ . ": Unknown value `{$value}`" );
 	 	}
-	 	
+
 	 	return $msg;
 	}
-	
+
 	private function uploadWarning($warnings) {
 		$msg = '<h2>'.wfMsgHtml('uploadwarning').'</h2><ul class="warning">';
-		
+
 		foreach($warnings as $warning => $args) {
 			if( $warning == 'exists' ) {
 				$msg .= "\t<li>" . SpecialUpload::getExistsWarning( $args ) . "</li>\n";
@@ -175,7 +177,7 @@ class UploadPhotosModule extends Module {
 				$msg .= "\t<li>" . wfMsgExt( $warning, 'parseinline', $args ) . "</li>\n";
 			}
 		}
-		
+
 		$msg .= '</ul>';
 		return $msg;
 	}
