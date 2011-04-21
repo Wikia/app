@@ -356,6 +356,13 @@ Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement){
 	Liftium.trackEvent(Liftium.buildTrackUrl(["slot", sizeOrSlot + "_" + placement]), "UA-17475676-6");
 
 	var t = Liftium.getNextTag(slotname);
+	if (!t) {
+		Liftium.d("no tag found for " + sizeOrSlot + ". Collapsing frame.", 1);
+		iframeElement.width = 0;
+		iframeElement.height = 0;
+		return;
+	}
+
 	var iframeUrl = Liftium.getIframeUrl(slotname, t);
 	iframeElement.src = iframeUrl;
 
