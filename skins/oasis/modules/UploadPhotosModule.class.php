@@ -38,11 +38,12 @@ class UploadPhotosModule extends Module {
 		$this->copyrightstatus = $wgRequest->getText('wpUploadCopyStatus');
 		$this->copyrightsource = $wgRequest->getText('wpUploadSource');
 		$this->ignorewarning = $wgRequest->getCheck('wpIgnoreWarning');
+		$this->overwritefile = $wgRequest->getCheck('wpDestFileWarningAck');
 		$this->defaultcaption = $wgRequest->getText('wpUploadDescription');
 		$details = null;
 		$up = new UploadFromFile();
 		$up->initializeFromRequest($wgRequest);
-		$permErrors = $up->verifyPermissions( $wgUser );
+		$permErrors = $up->verifyPermissions($wgUser);
 
 		if ( $permErrors !== true ) {
 			$this->status = self::UPLOAD_PERMISSION_ERROR;
@@ -59,6 +60,12 @@ class UploadPhotosModule extends Module {
 				$warnings = array();
 				if(!$this->ignorewarning) {
 					$warnings = $up->checkWarnings();
+
+					// BugId:3325 - add handling for "Overwrite File" checkbox
+					if ($this->overwritefile && !empty($warnings['exists'])) {
+						unset($warnings['exists']);
+					}
+
 					if(!empty($warnings)) {
 						$this->status = self::UPLOAD_WARNING;
 						$this->statusMessage .= $this->uploadWarning($warnings);
