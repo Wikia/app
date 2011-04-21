@@ -36,7 +36,9 @@ class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
 			->will($this->returnValue($requestParams));
 		$wgDevelDomains = array();
 		$wgUser = $this->getMock('User');
-
+		$wgUser->expects($this->once())
+			->method('getId')
+			->will($this->returnValue(6));
 		$app = $this->getMock('WikiaApp', array('getGlobal', 'runFunction'));
 		$app->expects($this->exactly(3))
 			->method('getGlobal')
@@ -57,12 +59,15 @@ class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
 		F::setInstance('CreateWiki', $createWiki);
 		F::setInstance('GlobalTitle', $mainPageTitle);
 
-		//$cnwModule = new CreateNewWikiModule($app);
+		$wgUser = $this->getMock('User');
+		
 		$cnwModule = $this->getMock( 'CreateNewWikiModule', array( 'countCreatedWikis' ), array($app) );
+		/*
 		$cnwModule->expects($this->once())
 			->method('countCreatedWikis')
-			->will($this->returnValue(0));
-
+			->with($this->equalTo(6))
+			->will($this->returnValue(1));
+		*/
 		$cnwModule->executeCreateWiki();
 
 		$this->assertEquals("ok", $cnwModule->status);
