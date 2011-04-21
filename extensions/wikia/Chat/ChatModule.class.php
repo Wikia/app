@@ -19,10 +19,14 @@ class ChatModule extends Module {
 	var $pathToProfilePage;
 	var $pathToContribsPage;
 	var $mainPageURL;
+	var $wgFavicon = '';
 
 	public function executeIndex() {
-		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId;
+		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId, $wgFavicon;
 		wfProfileIn( __METHOD__ );
+
+		// String replacement logic taken from includes/Skin.php
+		$this->wgFavicon = str_replace('images.wikia.com', 'images1.wikia.nocookie.net', $wgFavicon);
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
