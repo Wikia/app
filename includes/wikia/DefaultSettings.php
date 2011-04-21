@@ -796,3 +796,8 @@ $wgSassExacutable = '/var/lib/gems/1.8/bin/sass';
  * global user_options
  */
 $wgGlobalUserProperties = array('language');
+
+/**
+ * debug level for memcached
+ */
+$wgMemCachedDebugLevel = 1;
