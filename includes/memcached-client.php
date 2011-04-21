@@ -336,7 +336,7 @@ class MWMemcached {
 		$res = trim( fgets( $sock ) );
 
 		if ( $this->_debug ) {
-			$this->_debugprint( sprintf( "MemCache: delete %s (%s)\n", $key, $res ) );
+			$this->_debugprint( sprintf( "MemCache: delete %s (%s)\n", $key, $res ), 2 );
 		}
 
 		if ( $res == "DELETED" ) {
@@ -395,7 +395,7 @@ class MWMemcached {
 		wfProfileIn( __METHOD__ );
 
 		if ( $this->_debug ) {
-			$this->_debugprint( "get($key)\n" );
+			$this->_debugprint( "get($key)\n", 2 );
 		}
 
 		if ( !$this->_active ) {
@@ -432,7 +432,7 @@ class MWMemcached {
 
 		if ( $this->_debug ) {
 			foreach ( $val as $k => $v ) {
-				$this->_debugprint( sprintf( "MemCache: sock %s got %s\n", serialize( $sock ), $k ) );
+				$this->_debugprint( sprintf( "MemCache: sock %s got %s\n", serialize( $sock ), $k ), 3 );
 			}
 		}
 
@@ -506,7 +506,7 @@ class MWMemcached {
 
 		if ( $this->_debug ) {
 			foreach ( $val as $k => $v ) {
-				$this->_debugprint( sprintf( "MemCache: got %s\n", $k ) );
+				$this->_debugprint( sprintf( "MemCache: got %s\n", $k ), 3 );
 			}
 		}
 
@@ -705,7 +705,7 @@ class MWMemcached {
 		}
 		if ( !$sock ) {
 			if ( $this->_debug ) {
-				$this->_debugprint( "Error connecting to $host: $errstr\n" );
+				$this->_debugprint( "Error connecting to $host: $errstr\n", 1 );
 			}
 			return false;
 		}
@@ -880,7 +880,7 @@ class MWMemcached {
 				if ( $offset != $len + 2 ) {
 					// Something is borked!
 					if ( $this->_debug ) {
-						$this->_debugprint( sprintf( "Something is borked!  key %s expecting %d got %d length\n", $rkey, $len + 2, $offset ) );
+						$this->_debugprint( sprintf( "Something is borked!  key %s expecting %d got %d length\n", $rkey, $len + 2, $offset ), 1 );
 					}
 
 					unset( $ret[$rkey] );
@@ -899,7 +899,7 @@ class MWMemcached {
 				}
 
 			} else {
-				$this->_debugprint( "Error parsing memcached response\n" );
+				$this->_debugprint( "Error parsing memcached response\n", 1 );
 				return 0;
 			}
 		}
@@ -940,7 +940,7 @@ class MWMemcached {
 			$val = serialize( $val );
 			$flags |= self::SERIALIZED;
 			if ( $this->_debug ) {
-				$this->_debugprint( sprintf( "client: serializing data as it is not scalar\n" ) );
+				$this->_debugprint( sprintf( "client: serializing data as it is not scalar\n" ), 1 );
 			}
 		}
 
@@ -954,7 +954,7 @@ class MWMemcached {
 
 			if ( $c_len < $len * ( 1 - self::COMPRESSION_SAVINGS ) ) {
 				if ( $this->_debug ) {
-					$this->_debugprint( sprintf( "client: compressing data; was %d bytes is now %d bytes\n", $len, $c_len ) );
+					$this->_debugprint( sprintf( "client: compressing data; was %d bytes is now %d bytes\n", $len, $c_len ), 3 );
 				}
 				$val = $c_val;
 				$len = $c_len;
@@ -968,7 +968,7 @@ class MWMemcached {
 		$line = trim( fgets( $sock ) );
 
 		if ( $this->_debug ) {
-			$this->_debugprint( sprintf( "%s %s (%s)\n", $cmd, $key, $line ) );
+			$this->_debugprint( sprintf( "%s %s (%s)\n", $cmd, $key, $line ), 3 );
 		}
 		if ( $line == "STORED" ) {
 			return true;
@@ -1013,7 +1013,7 @@ class MWMemcached {
 		return $this->_cache_sock[$host];
 	}
 
-	function _debugprint( $str ) {
+	function _debugprint( $str, $level = 1 ) {
 		print( $str );
 	}
 
@@ -1078,8 +1078,11 @@ class MWMemcached {
 // }}}
 
 class MemCachedClientforWiki extends MWMemcached {
-	function _debugprint( $text ) {
-		error_log( "memcached: $text" );
+	function _debugprint( $text, $level = 1 ) {
+		global $wgMemCachedDebugLevel;
+		if( $level <= $wgMemCachedDebugLevel ) {
+			error_log( "memcached: $text" );
+		}
 	}
 	/* Wikia change begin - @author: garth */
 	public function delete( $key, $time = 0 ) {
