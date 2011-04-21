@@ -940,7 +940,7 @@ class MWMemcached {
 			$val = serialize( $val );
 			$flags |= self::SERIALIZED;
 			if ( $this->_debug ) {
-				$this->_debugprint( sprintf( "client: serializing data as it is not scalar\n" ), 1 );
+				$this->_debugprint( sprintf( "client: serializing data as it is not scalar\n" ), 2 );
 			}
 		}
 
