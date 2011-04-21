@@ -57,7 +57,7 @@ class NodeApiClient {
 		global $wgCityId, $wgSitename, $wgServer, $wgArticlePath, $wgMemc;
 		wfProfileIn(__METHOD__);
 
-		$memcKey = wfMemcKey( "NodeApiClient::getDefaultRoomId", $wgCityId );
+		$memcKey = wfMemcKey( "NodeApiClient::getDefaultRoomId", $wgCityId ). "REMOVE ME.. JUST BUSTING CACHE ON DEVBOXaab";
 		$roomData = $wgMemc->get($memcKey);
 		if(!$roomData){
 			// Add some extra data that the server will want in order to store it in the room's hash.

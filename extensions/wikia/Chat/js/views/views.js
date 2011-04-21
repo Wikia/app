@@ -24,6 +24,12 @@ var ChatView = Backbone.View.extend({
 			$(this.el).html(this.template(this.model.toJSON()));
 		}
 		
+		// Add username as a class in li element
+		if (this.model.get('name') == wgUserName) {
+			$(this.el).addClass('you');
+		}
+		
+		// Inline Alert
 		if(this.model.get('isInlineAlert') === true){
 			$(this.el).addClass('inline-alert');
 		}
