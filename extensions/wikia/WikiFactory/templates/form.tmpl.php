@@ -558,7 +558,7 @@ $(function() {
 					$wgHub = WikiFactory::getCategory( $wiki->city_id );
 					echo "<acronym title=\"id:{$wgHub->cat_id}\">{$wgHub->cat_name}</acronym>";
 				?></td>
-				<td><?php echo $statuses[ $wiki->city_public ] ?></td>
+				<td data-status="<?php echo $wiki->city_public; ?>"><?php echo "<acronym title=\"{$wiki->city_public}\">{$statuses[ $wiki->city_public ]}</acronym>" ?></td>
 			</tr>
 		</table>
 		</td>
