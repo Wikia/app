@@ -47,15 +47,15 @@ class WikiFactory {
 	);
 
 	# city_flags
-	const FLAG_CREATE_DB_DUMP 			= 1;
-	const FLAG_CREATE_IMAGE_ARCHIVE 	= 2;
-	const FLAG_DELETE_DB_IMAGES 		= 4;
-	const FLAG_FREE_WIKI_URL 			= 8;
-	const FLAG_HIDE_DB_IMAGES 			= 16;
-	const FLAG_REDIRECT 				= 32;
-	const FLAG_ADOPTABLE				= 64;	//used by AutomaticWikiAdoption
-	const FLAG_ADOPT_MAIL_FIRST			= 128;	//used by AutomaticWikiAdoption
-	const FLAG_ADOPT_MAIL_SECOND		= 256;	//used by AutomaticWikiAdoption
+	const FLAG_CREATE_DB_DUMP        = 1;
+	const FLAG_CREATE_IMAGE_ARCHIVE  = 2;
+	const FLAG_DELETE_DB_IMAGES      = 4;
+	const FLAG_FREE_WIKI_URL         = 8;
+	const FLAG_HIDE_DB_IMAGES        = 16;
+	const FLAG_REDIRECT              = 32;
+	const FLAG_ADOPTABLE             = 64;  //used by AutomaticWikiAdoption
+	const FLAG_ADOPT_MAIL_FIRST      = 128; //used by AutomaticWikiAdoption
+	const FLAG_ADOPT_MAIL_SECOND     = 256; //used by AutomaticWikiAdoption
 
 	const db            = "wikicities"; // @see $wgExternalSharedDB
 	const DOMAINCACHE   = "/tmp/wikifactory/domains.ser";
