@@ -51,7 +51,7 @@
 		<form id="Write" class="Write" onsubmit="return false">
 			<img src="<?= $avatarUrl ?>">
 			<input type="text" name="message" autocomplete="off">
-			<input type="submit" value="Send" class="wikia-button"/>
+			<input type="submit">
 		</form>
 
 	</section>

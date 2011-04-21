@@ -268,7 +268,10 @@ a {
 		width: 28px;
 	}
 	input[type="text"] {
-		width: 80%;
+		width: 98%;
+	}
+	input[type="submit"] {
+		display: none;
 	}
 }
 
