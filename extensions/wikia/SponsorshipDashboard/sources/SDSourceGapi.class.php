@@ -258,8 +258,6 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 				$retries--;
 				sleep( 1 );
 				Wikia::log( __METHOD__, false, $e->getMessage() );
-				exit;
-				
 			}
 		}
 
