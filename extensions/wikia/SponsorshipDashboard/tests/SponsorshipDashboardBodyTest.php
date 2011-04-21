@@ -27,7 +27,9 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		    array( '/EditGroup/0' ),
 		    array( '/EditUser' ),
 		    array( '/EditUser/0' ),
-		    array( '/ViewReports' )
+		    array( '/ViewReports' ),
+		    array( '/ViewGroups' ),
+		    array( '/ViewUsers' )
 		);
 	}
 
@@ -66,7 +68,7 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $bSuccess );	
 	}
 
-	public function appBodyCallback( $sGlobal ){
+	public function appBodyCallback( $sGlobal ) {
 		
 		switch ( $sGlobal ) {
 
@@ -87,7 +89,7 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		return $return;
 	}
 	
-	public function commonORMReturn(){
+	public function commonORMReturn() {
 		
 		$reportData = array();
 		$tmpArray = array( 'id' => 1, 'name' => 'something', 'description' => 'asdasda ads asdadasd' , 'status' => 'asdasda ads asdadasd' , 'type' => 0 , 'userId' => 123123 );
@@ -97,15 +99,58 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		}
 
 		return $reportData;
-		
 	}
 
-	public function testStaticPage() {
+	public function testStaticPageTrue() {
 
-		$oPage = new SponsorshipDashboard;
-		$this->assertFalse(
-			$oPage->HTMLerror()
-		);	
+		$app = $this->getMock( 'WikiaApp', array('getGlobal') );
+		$app	->expects( $this->atLeastOnce() )
+			->method( 'getGlobal' )
+			->will(  $this->returnCallback( array( $this, 'appServiceCallbackTrue') ) );
+		F::setInstance( 'App', $app );
+
+		$db = $this->app->getGlobal('wgExternalDatawareDB');
+
+		$this->assertEquals(
+			$db,
+			SponsorshipDashboardService::getDatabase()
+		);
+	}
+
+	public function testStaticPageFalse() {
+		
+		$app = $this->getMock( 'WikiaApp', array('getGlobal') );
+		$app	->expects( $this->atLeastOnce() )
+			->method( 'getGlobal' )
+			->will(  $this->returnCallback( array( $this, 'appServiceCallbackFalse') ) );
+		F::setInstance( 'App', $app );
+
+		$db = $this->app->getGlobal('wgStatsDB');
+
+		$this->assertEquals(
+			$db,
+			SponsorshipDashboardService::getDatabase()
+		);
+	}
+
+	public function appServiceCallbackFalse( $sGlobal ) {
+
+		switch ( $sGlobal ) {
+
+			case 'wgDevEnvironment' : return false;	break;
+			default: $return = $this->app->getGlobal( $sGlobal );
+		}
+		return $return;
+	}
+
+	public function appServiceCallbackTrue( $sGlobal ) {
+
+		switch ( $sGlobal ) {
+
+			case 'wgDevEnvironment' : return true;	break;
+			default: $return = $this->app->getGlobal( $sGlobal );
+		}
+		return $return;
 	}
 
 }
