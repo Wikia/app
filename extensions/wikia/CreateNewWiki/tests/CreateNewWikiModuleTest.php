@@ -2,17 +2,17 @@
 require_once dirname(__FILE__) . '/../CreateNewWikiModule.class.php';
 
 class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
-	
+
 	protected function setUp() {
 		$this->originalApp = F::build('App');
 	}
-	
+
 	protected function tearDown() {
 		F::setInstance('App', $this->originalApp);
 		F::unsetInstance('CreateWiki');
 		F::unsetInstance('GlobalTitle');
 	}
-	
+
 	/**
 	 * @group hyun
 	 */
@@ -24,58 +24,63 @@ class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
 		$wikiId = 322389;
 		$siteName = 'asdfasdf';
 		$mainPageUrl = 'muppet.wikia.com/wiki/Main_page';
-		
-		$requestParams = array("wikiName" => $wikiName, 
+
+		$requestParams = array("wikiName" => $wikiName,
 			"wikiDomain" => $wikiDomain,
 			"wikiLanguage" => $wikiLanguage,
 			"wikiCategory" => $wikiCategory);
-		
+
 		$wgRequest = $this->getMock('WebRequest');
 		$wgRequest->expects($this->once())
 			->method('getArray')
 			->will($this->returnValue($requestParams));
 		$wgDevelDomains = array();
-		
+		$wgUser = $this->getMock('User');
+
 		$app = $this->getMock('WikiaApp', array('getGlobal', 'runFunction'));
-		$app->expects($this->exactly(2))
+		$app->expects($this->exactly(3))
 			->method('getGlobal')
-			->will($this->onConsecutiveCalls($wgRequest, $wgDevelDomains));
-		
+			->will($this->onConsecutiveCalls($wgRequest, $wgDevelDomains, $wgUser));
+
 		$createWiki = $this->getMock('CreateWiki', array(), array(), '', false);
 		$createWiki->expects($this->once())
 			->method('create');
 		$createWiki->expects($this->exactly(2))
 			->method('getWikiInfo')
 			->will($this->onConsecutiveCalls($wikiId, $siteName));
-			
+
 		$mainPageTitle = $this->getMock('GlobalTitle', array(), array(), '', false);
 		$mainPageTitle->expects($this->once())
 			->method('getFullURL')
 			->will($this->returnValue($mainPageUrl));
-			
+
 		F::setInstance('CreateWiki', $createWiki);
 		F::setInstance('GlobalTitle', $mainPageTitle);
-		
-		$cnwModule = new CreateNewWikiModule($app);
-		
+
+		//$cnwModule = new CreateNewWikiModule($app);
+		$cnwModule = $this->getMock( 'CreateNewWikiModule', array( 'countCreatedWikis' ), array($app) );
+		$cnwModule->expects($this->once())
+			->method('countCreatedWikis')
+			->will($this->returnValue(0));
+
 		$cnwModule->executeCreateWiki();
-		
+
 		$this->assertEquals("ok", $cnwModule->status);
 		$this->assertEquals($siteName, $cnwModule->siteName);
 		$this->assertEquals($mainPageUrl, $cnwModule->finishCreateUrl);
-		
+
 	}
-	
+
 	public function testCheckWikiNameSuccess() {
-	
+
 		$wikiName = 'muppet';
 		$wikiLang = 'en';
-	
+
 		$wgRequest = $this->getMock('WebRequest');
 		$wgRequest->expects($this->exactly(2))
 			->method('getVal')
 			->will($this->onConsecutiveCalls($wikiName, $wikiLang));
-		
+
 		$app = $this->getMock('WikiaApp', array('getGlobal', 'runFunction'));
 		$app->expects($this->once())
 			->method('getGlobal')
@@ -85,12 +90,12 @@ class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
 			->method('runFunction')
 			->with($this->equalTo('AutoCreateWiki::checkWikiNameIsCorrect'), $this->equalTo($wikiName), $this->equalTo($wikiLang))
 			->will($this->returnValue(""));
-		
+
 		$cnwModule = new CreateNewWikiModule($app);
-		
+
 		$cnwModule->executeCheckWikiName();
-		
+
 		$this->assertEquals("", $cnwModule->response);
 	}
-	
+
 }
