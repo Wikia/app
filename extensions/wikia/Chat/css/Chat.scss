@@ -67,6 +67,9 @@ a {
 			height: 30px;
 			margin-top: 5px;
 		}
+		a:hover {
+			text-decoration: none;
+		}
 	}
 	.User {
 		border-left: 1px solid $color-page-border;
