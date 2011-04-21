@@ -22,7 +22,12 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		return array(
 		    array( '/ViewInfo' ),
 		    array( '/EditReport' ),
-		    array( '/EditReport/0' )
+		    array( '/EditReport/0' ),
+		    array( '/EditGroup' ),
+		    array( '/EditGroup/0' ),
+		    array( '/EditUser' ),
+		    array( '/EditUser/0' ),
+		    array( '/ViewReports' )
 		);
 	}
 
@@ -38,6 +43,23 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 			->will( $this->returnCallback( array( $this, 'appBodyCallback') ) );
 		
 		F::setInstance( 'App', $app );
+		
+		
+		$aMockedClasses = array(
+			'SponsorshipDashboardReports',
+			'SponsorshipDashboardGroups',
+			'SponsorshipDashboardUsers'
+		);
+		
+		foreach( $aMockedClasses as $mockedClassName ){
+
+			$obj = $this->getMock( $mockedClassName, array('getData') );
+			$obj->expects( $this->any() )
+				->method( 'getData' )
+				->will( $this->returnValue( $this->commonORMReturn() ) );
+
+			F::setInstance( $mockedClassName, $obj );
+		}
 
 		$oPage = new SponsorshipDashboard;
 		$bSuccess = $oPage->execute( SponsorshipDashboard::ADMIN.$subpage );
@@ -64,4 +86,26 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 		}
 		return $return;
 	}
+	
+	public function commonORMReturn(){
+		
+		$reportData = array();
+		$tmpArray = array( 'id' => 1, 'name' => 'something', 'description' => 'asdasda ads asdadasd' , 'status' => 'asdasda ads asdadasd' , 'type' => 0 , 'userId' => 123123 );
+		
+		for ($i =0; $i < 10; $i++ ){
+			$reportData[] = $tmpArray;
+		}
+
+		return $reportData;
+		
+	}
+
+	public function testStaticPage() {
+
+		$oPage = new SponsorshipDashboard;
+		$this->assertFalse(
+			$oPage->HTMLerror()
+		);	
+	}
+
 }
