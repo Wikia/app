@@ -26,11 +26,13 @@
 
 	<header id="ChatHeader" class="ChatHeader">
 		<div class="wordmark">
+			<a href="<?= $mainPageURL ?>">
 			<? if ($themeSettings['wordmark-type'] == 'graphic') { ?>
 			<img src="<?= $themeSettings['wordmark-image-url'] ?>">
 			<? } else { ?>
 			<span class="font-<?= $themeSettings['wordmark-font']?>"><?= $themeSettings['wordmark-text'] ?></span>
 			<? } ?>
+			</a>
 		</div>
 		<div class="User"></div>
 	</header>

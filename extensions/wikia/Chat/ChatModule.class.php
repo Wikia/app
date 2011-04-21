@@ -18,11 +18,14 @@ class ChatModule extends Module {
 	var $nodePort;
 	var $pathToProfilePage;
 	var $pathToContribsPage;
+	var $mainPageURL;
 
 	public function executeIndex() {
 		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId;
 		wfProfileIn( __METHOD__ );
-	
+
+		$this->mainPageURL = Title::newMainPage()->getLocalURL();
+
 		// Variables for this user
 		$this->username = $wgUser->getName();
 		$this->avatarUrl = AvatarService::getAvatarUrl($this->username, 50);
