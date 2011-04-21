@@ -65,15 +65,21 @@ class PartnerWidget {
 				}
 				break;
 			case 'muppet':
+				$MUPPET_PREFIX = 'muppet';
+				$SESAME_STREET_PREFIX = 'sesame street';
+
 				$cats = $wgOut->getCategories();
 				foreach ($cats as $cat) {
 					$lowercaseCat = strtolower($cat);
 					switch ($lowercaseCat) {
 						case 'muppet characters':
-						case 'sesame street characters':
-							$keywords = $wgTitle->getText();
+							$keywords = $MUPPET_PREFIX . ' ' . $wgTitle->getText();
 							$keywords = self::stripParentheticalSubstring($keywords);
-							break;
+							break 2; // break out of foreach
+						case 'sesame street characters':
+							$keywords = $SESAME_STREET_PREFIX . ' ' . $wgTitle->getText();
+							$keywords = self::stripParentheticalSubstring($keywords);
+							break 2; // break out of foreach
 						default:
 							if (stripos($lowercaseCat, 'albums') !== FALSE
 							|| stripos($lowercaseCat, 'books') !== FALSE
@@ -81,6 +87,7 @@ class PartnerWidget {
 							|| stripos($lowercaseCat, 'clothing') !== FALSE
 							|| stripos($lowercaseCat, 'collectibles') !== FALSE
 							|| stripos($lowercaseCat, 'figures') !== FALSE
+							|| stripos($lowercaseCat, 'merchandise') !== FALSE
 							|| stripos($lowercaseCat, 'paper products') !== FALSE
 							|| stripos($lowercaseCat, 'pins') !== FALSE
 							|| stripos($lowercaseCat, 'plush') !== FALSE
@@ -92,7 +99,7 @@ class PartnerWidget {
 							) {
 								$keywords = $wgTitle->getText();
 								$keywords = self::stripParentheticalSubstring($keywords);
-								break;
+								break 2; // break out of foreach
 							}
 					}
 				}
