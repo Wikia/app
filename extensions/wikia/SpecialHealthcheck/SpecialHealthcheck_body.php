@@ -81,8 +81,8 @@ class HealthCheck extends UnlistedSpecialPage {
 
 		// check for riak if riak is using as sessions provider
 		// @author Krzysztof Krzyżaniak (eloy)
-		global $wgSessionsInRiak, $wgRiakSessionNode, $wgRiakStorageNodes;
-		if( $wgSessionsInRiak ) {
+		global $wgSessionsInRiak, $wgRiakSessionNode, $wgRiakStorageNodes, $wgSolidCacheType;
+		if( $wgSessionsInRiak || $wgSolidCacheType == CACHE_RIAK ) {
 			// get data for connection
 			$riakNode = $wgRiakStorageNodes[ $wgRiakSessionNode ];
 
