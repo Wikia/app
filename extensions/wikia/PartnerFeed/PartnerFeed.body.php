@@ -480,7 +480,7 @@ class PartnerFeed extends SpecialPage {
  */
 	private function getDataFromApi( $url ){
 
-		global $wgIsDevBoxEnvironment, $wgHTTPProxy;
+		global $wgDevelEnvironment, $wgHTTPProxy;
 
 		$retry = 0;
 
@@ -488,7 +488,7 @@ class PartnerFeed extends SpecialPage {
 
 		while( $retry <= 3 ) {
 
-			if ( !empty( $wgIsDevBoxEnvironment ) ){
+			if ( !empty( $wgDevelEnvironment ) ){
 				$httpResult = Http::get( $url, 15, array(CURLOPT_PROXY => $wgHTTPProxy) );
 			}else{
 				$httpResult = Http::get( $url, 15 );
