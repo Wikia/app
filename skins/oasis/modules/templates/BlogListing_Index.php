@@ -1,10 +1,10 @@
 <section class="<?= $blogListingClass ?>">
 	<?php // only display header block for the BlogListingBox
 	if (strpos($blogListingClass, 'WikiaBlogListingBox') !== false) { ?>
-	<?= View::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'blog-create-post-label', 'sprite blog') ?>
+	<?= Wikia::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'blog-create-post-label', 'sprite blog') ?>
 	<h3>
 		<?= $title ?> 
-		<span class="reload"><?= View::link($wgTitle, "<img src=\"$wgStylePath/oasis/images/reload_button.png\">", array(), array('action' => 'purge')); ?></span>
+		<span class="reload"><?= Wikia::link($wgTitle, "<img src=\"$wgStylePath/oasis/images/reload_button.png\">", array(), array('action' => 'purge')); ?></span>
 	</h3>
 	<?php } // end BlogListingBox header ?>
 	<ul>
@@ -26,7 +26,7 @@
 			<?php
 			// handle proper rendering of "read more"
 			$readMoreLink = Xml::openElement('span', array('class' => 'read-more')) .
-					View::link($title, wfMsg('blog-readfullpost') . ' &gt;') .
+					Wikia::link($title, wfMsg('blog-readfullpost') . ' &gt;') .
 					Xml::closeElement('span');
 
 			// if blog post rendered text ends with </p>
@@ -50,7 +50,7 @@
 	</ul>
 	<?php  // only display more link for the bloglistingbox
 		if (strpos($blogListingClass, 'WikiaBlogListingBox') !== false) {
-			echo View::link(Title::newFromText(wfMsg('blogs-recent-url')), wfMsg('oasis-more'), array('class' => 'more'));
+			echo Wikia::link(Title::newFromText(wfMsg('blogs-recent-url')), wfMsg('oasis-more'), array('class' => 'more'));
 		}
 		if (isset($pager)) {
 			echo "<div id='wk_blogs_loader2' style='float:right;'></div>";

@@ -79,7 +79,7 @@ class SkinWikiaphone extends SkinTemplate {
 					<input type="text" name="search" placeholder="<?= wfMsg('Tooltip-search', $wgSitename) ?>" accesskey="f" size="13">
 					<input id="mobile-search-btn" type="image" src="<?= $wgBlankImgUrl ?>">
 				</form>
-				<?= View::specialPageLink('Random', 'oasis-button-random-page', array('accesskey' => 'x', 'class' => 'wikia-button secondary', 'data-id' => 'randompage'), 'blank.gif', null, 'sprite random') ?>
+				<?= Wikia::specialPageLink('Random', 'oasis-button-random-page', array('accesskey' => 'x', 'class' => 'wikia-button secondary', 'data-id' => 'randompage'), 'blank.gif', null, 'sprite random') ?>
 			</div>
 			<h1 class="mobile-wikiname">
 				<a href="<?= $this->mainPageURL ?>">

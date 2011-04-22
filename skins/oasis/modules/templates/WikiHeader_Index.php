@@ -59,13 +59,13 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 		if (ArticleAdLogic::isMainPage() || BodyModule::isCorporateLandingPage()) echo wfRenderModule('Search');
 		echo wfRenderModule('RandomWiki');
 } else { ?>
-		<?= View::specialPageLink('Random', 'oasis-button-random-page', array('accesskey' => 'x', 'class' => 'wikia-button secondary', 'data-id' => 'randompage'), 'blank.gif', null, 'sprite random') ?>
-		<?= View::specialPageLink('WikiActivity', 'oasis-button-wiki-activity', array('accesskey' => 'g', 'class' => 'wikia-button secondary', 'data-id' => 'wikiactivity'), 'blank.gif', null, 'sprite activity') ?>
+		<?= Wikia::specialPageLink('Random', 'oasis-button-random-page', array('accesskey' => 'x', 'class' => 'wikia-button secondary', 'data-id' => 'randompage'), 'blank.gif', null, 'sprite random') ?>
+		<?= Wikia::specialPageLink('WikiActivity', 'oasis-button-wiki-activity', array('accesskey' => 'g', 'class' => 'wikia-button secondary', 'data-id' => 'wikiactivity'), 'blank.gif', null, 'sprite activity') ?>
 <?php } ?>
 	</div>
 	<div style="position: absolute; top: -1000px">
-		<?= View::specialPageLink('Watchlist', 'watchlist', array('accesskey' => 'l')) ?>
-		<?= View::specialPageLink('RecentChanges', 'recentchanges', array('accesskey' => 'r')) ?>
+		<?= Wikia::specialPageLink('Watchlist', 'watchlist', array('accesskey' => 'l')) ?>
+		<?= Wikia::specialPageLink('RecentChanges', 'recentchanges', array('accesskey' => 'r')) ?>
 	</div>
 	<img class="shadow-mask" src="<?= $wgBlankImgUrl ?>" width="0" height="0">
 </header>

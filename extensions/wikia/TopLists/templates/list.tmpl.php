@@ -107,6 +107,6 @@
 	</ul>
 	<div class="create-new-list">
 		<h5><?= wfMsg('toplists-create-heading') ?></h5>
-		<?= View::specialPageLink('CreateTopList', 'toplists-create-button-msg', 'wikia-button createtoplist', 'blank.gif', 'toplists-create-button-msg', 'sprite new'); ?>
+		<?= Wikia::specialPageLink('CreateTopList', 'toplists-create-button-msg', 'wikia-button createtoplist', 'blank.gif', 'toplists-create-button-msg', 'sprite new'); ?>
 	</div>
 </div>

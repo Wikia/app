@@ -38,10 +38,6 @@ class WikiaHookDispatcher {
 			$handler = $this->hookHandlers[$method]['object'];
 		}
 
-		if($handler instanceof IWikiaHookHandler) {
-			$handler->setHookOptions($this->hookHandlers[$method]['options']);
-		}
-
 		return call_user_func_array( array( $handler, $this->hookHandlers[$method]['method'] ), $args );
 	}
 

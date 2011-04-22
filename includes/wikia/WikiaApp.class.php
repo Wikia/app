@@ -6,14 +6,17 @@
  * @author Wojtek
  */
 class WikiaApp {
-	const REGISTRY_MEDIAWIKI = WikiaCompositeRegistry::DEFAULT_NAMESPACE;
-	const REGISTRY_WIKIA = 'wikia';
 
-		/**
-	 * registry
-	 * @var WikiaCompositeRegistry
+	/**
+	 * globalRegistry
+	 * @var WikiaGlobalRegistry
 	 */
-	private $registry = null;
+	private $globalRegistry = null;
+	/**
+	 * localRegistry
+	 * @var WikiaLocalRegistry
+	 */
+	private $localRegistry = null;
 	/**
 	 * hook dispatcher
 	 * @var WikiaHookDispatcher
@@ -30,21 +33,27 @@ class WikiaApp {
 	 * @param WikiaRegistry $registry
 	 * @param WikiaHookDispatcher $hookDispatcher
 	 */
-	public function __construct(WikiaCompositeRegistry $registry = null, WikiaHookDispatcher $hookDispatcher = null) {
-		if(is_null($registry)) {
-			F::setInstance( 'WikiaCompositeRegistry', new WikiaCompositeRegistry( array( self::REGISTRY_MEDIAWIKI => new WikiaGlobalsRegistry(), self::REGISTRY_WIKIA => new WikiaLocalRegistry() ) ) );
-			$registry = F::build( 'WikiaCompositeRegistry' );
+	public function __construct(WikiaGlobalRegistry $globalRegistry = null, WikiaLocalRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null) {
+
+		if(is_null($globalRegistry)) {
+			F::setInstance('WikiaGlobalRegistry', new WikiaGlobalRegistry());
+			$globalRegistry = F::build('WikiaGlobalRegistry');
+		}
+		if(is_null($localRegistry)) {
+			F::setInstance('WikiaLocalRegistry', new WikiaLocalRegistry());
+			$localRegistry = F::build('WikiaLocalRegistry');
 		}
 		if(is_null($hookDispatcher)) {
 			F::setInstance( 'WikiaHookDispatcher', new WikiaHookDispatcher());
 			$hookDispatcher = F::build( 'WikiaHookDispatcher' );
 		}
 
+		$this->globalRegistry = $globalRegistry;
+		$this->localRegistry = $localRegistry;
 		$this->hookDispatcher = $hookDispatcher;
-		$this->registry = $registry;
 
 		// register ajax dispatcher
-		$this->registry->getRegistry(self::REGISTRY_MEDIAWIKI)->append('wgAjaxExportList', 'WikiaApp::ajax');
+		$this->globalRegistry->append('wgAjaxExportList', 'WikiaApp::ajax');
 	}
 
 	/**
@@ -55,47 +64,42 @@ class WikiaApp {
 		return $this->hookDispatcher;
 	}
 
-	/**
-	 * get registry
-	 * @return WikiaCompositeRegistry
-	 */
-	public function getRegistry() {
-		return $this->registry;
+	public function setGlobalRegistry(WikiaGlobalRegistry $globalRegistry) {
+		$this->globalRegistry = $globalRegistry;
 	}
-
-	/**
-	 * set registry
-	 * @param WikiaCompositeRegistry $registry
-	 */
-	public function setRegistry(WikiaCompositeRegistry $registry) {
-		$this->registry = $registry;
-	}
-
 	/**
 	 * get MediaWiki registry (global)
-	 * @return WikiaGlobalsRegistry
+	 * @return WikiaGlobalRegistry
 	 */
-	public function getMWRegistry() {
-		return $this->getRegistry()->getRegistry(self::REGISTRY_MEDIAWIKI);
+	public function getGlobalRegistry() {
+		return $this->globalRegistry;
+	}
+
+	public function setLocalRegistry(WikiaLocalRegistry $localRegistry) {
+		$this->localRegistry = $localRegistry;
 	}
 
 	/**
 	 * get Wikia registry (local)
 	 * @return WikiaLocalRegistry
 	 */
-	public function getWikiaRegistry() {
-		return $this->getRegistry()->getRegistry(self::REGISTRY_WIKIA);
+	public function getLocalRegistry() {
+		return $this->localRegistry;
 	}
 
 	/**
 	 * get dispatcher object
 	 * @return WikiaDispatcher
 	 */
-	protected function getDispatcher() {
+	public function getDispatcher() {
 		if( $this->dispatcher == null ) {
 			$this->dispatcher = F::build( 'WikiaDispatcher' );
 		}
 		return $this->dispatcher;
+	}
+
+	public function setDispatcher($dispatcher) {
+		$this->dispatcher = $dispatcher;
 	}
 
 	/**
@@ -107,7 +111,7 @@ class WikiaApp {
 	 * @param bool $alwaysRebuild
 	 */
 	public function registerHook($hookName, $className, $methodName, array $options = array(), $alwaysRebuild = false) {
-		$this->getMWRegistry()->append('wgHooks', $this->hookDispatcher->registerHook($className, $methodName, $options, $alwaysRebuild), $hookName);
+		$this->globalRegistry->append('wgHooks', $this->hookDispatcher->registerHook($className, $methodName, $options, $alwaysRebuild), $hookName);
 	}
 
 	/**
@@ -116,7 +120,7 @@ class WikiaApp {
 	 * @param string $filePath
 	 */
 	public function registerClass($className, $filePath) {
-		$this->getMWRegistry()->set('wgAutoloadClasses', $filePath, $className);
+		$this->globalRegistry->set('wgAutoloadClasses', $filePath, $className);
 	}
 
 	/**
@@ -124,7 +128,7 @@ class WikiaApp {
 	 * @param string $functionName
 	 */
 	public function registerExtensionFunction($functionName) {
-		$this->getMWRegistry()->append('wgExtensionFunctions', $functionName);
+		$this->globalRegistry->append('wgExtensionFunctions', $functionName);
 	}
 
 	/**
@@ -133,7 +137,7 @@ class WikiaApp {
 	 * @param string $filePath
 	 */
 	public function registerExtensionMessageFile($name, $filePath) {
-		$this->getMWRegistry()->set('wgExtensionMessagesFiles', $filePath, $name);
+		$this->globalRegistry->set('wgExtensionMessagesFiles', $filePath, $name);
 	}
 
 	/**
@@ -142,7 +146,7 @@ class WikiaApp {
 	 * @param string $filePath
 	 */
 	public function registerExtensionAliasFile($name, $filePath) {
-		$this->getMWRegistry()->set('wgExtensionAliasesFiles', $filePath, $name);
+		$this->globalRegistry->set('wgExtensionAliasesFiles', $filePath, $name);
 	}
 
 	/**
@@ -151,15 +155,15 @@ class WikiaApp {
 	 * @param string $className class name
 	 */
 	public function registerSpecialPage($name, $className) {
-		$this->getMWRegistry()->set('wgSpecialPages', $className, $name);
+		$this->globalRegistry->set('wgSpecialPages', $className, $name);
 	}
 
 	/**
-	 * get global variable (alias: WikiaCompositeRegistry::get(var,'mediawiki'))
+	 * get global variable (alias: WikiaGlobalRegistry::get(var,'mediawiki'))
 	 * @param string $globalVarName
 	 */
 	public function getGlobal($globalVarName) {
-		return $this->getMWRegistry()->get($globalVarName);
+		return $this->globalRegistry->get($globalVarName);
 	}
 
 	/**
@@ -169,7 +173,7 @@ class WikiaApp {
 	 * @param string $key key (optional)
 	 */
 	public function setGlobal($globalVarName, $value, $key = null) {
-		return $this->getMWRegistry()->set($globalVarName, $value, $key);
+		return $this->globalRegistry->set($globalVarName, $value, $key);
 	}
 
 	/**
@@ -252,16 +256,46 @@ class WikiaApp {
 		return call_user_func_array( $funcName, $funcArgs );
 	}
 
-	public function dispatch( $request = null, WikiaResponse $response = null ) {
-		if( is_array( $request ) ) {
-			$request = new WikiaHTTPRequest( $request );
+	public function dispatch( $params = null ) {
+		if( is_array( $params ) ) {
+			$request = new WikiaRequest( $params );
+		}
+		else if( $params instanceof WikiaRequest ) {
+			$request = $params;
+		}
+		else {
+			$request = null;
 		}
 
-		return $this->getDispatcher()->dispatch( $this, $request, $response );
+		return $this->getDispatcher()->dispatch( $this, $request );
+	}
+
+	/**
+	 * get view Object for given controller and method (previously wfRenderPartial)
+	 * @param string $controllerName
+	 * @param string $method
+	 * @param array $data
+	 */
+	public function getView( $controllerName, $method, Array $data = array() ) {
+		return F::build( 'WikiaView', array( $controllerName, $method, $data ), 'newFromControllerAndMethodName' );
+	}
+
+	/**
+	 * Helper function to get output as HTML for controller and method (previously wfRenderModule)
+	 * @param string $name
+	 * @param string $action
+	 * @param array $params
+	 * @return string
+	 */
+	public function renderView($name, $action, $params = null) {
+		$params = array_merge( array( 'controller' => $name, 'method' => $action ), (array) $params );
+
+		$response = $this->dispatch( $params );
+		return $response->toString();
 	}
 
 	public static function ajax() {
-		return F::build( 'App' )->dispatch();
+		return F::app()->dispatch();
 	}
 
 }

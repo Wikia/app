@@ -1,6 +1,6 @@
 <?php
 
-class WikiaGlobalsRegistry extends WikiaRegistry {
+class WikiaGlobalRegistry extends WikiaRegistry {
 
 	public function get($propertyName) {
 		if($this->has($propertyName)) {

@@ -5,11 +5,6 @@ $wgAutoloadClasses['TestController'] = dirname(__FILE__) . '/_fixtures/TestContr
 $wgAutoloadClasses['AnotherTestController'] = dirname(__FILE__) . '/_fixtures/TestController.php';
 
 class TestController extends WikiaController {
-	public function __construct() {
-		$this->allowedRequests['sendTest'] = array('html');
-		$this->allowedRequests['jsonOnly'] = array('json');
-		$this->allowedRequests['redirectTest'] = array('html');
-	}
 
 	/**
 	 * This method does nothing and is available in json context only
@@ -33,9 +28,6 @@ class TestController extends WikiaController {
 }
 
 class AnotherTestController extends WikiaController {
-	public function __construct() {
-		$this->allowedRequests['hello'] = array( 'json', 'html');
-	}
 
 	public function hello() {
 		$this->getResponse()->setVal( 'controller', __CLASS__ );

@@ -15,24 +15,13 @@ class WikiaDispatcher {
 		return !empty( $controllerName ) ? ( $controllerName . 'Controller' ) : null;
 	}
 
-	protected function createRequest() {
-		return F::build( 'WikiaHTTPRequest', array( 'params' => ( $_POST + $_GET ) ) );
-	}
-
-	protected function createResponse( WikiaRequest $request ) {
-		$format = $request->getVal('format', $request->isXmlHttp() ? 'json' : 'html');
-
-		return F::build( 'WikiaResponse', array( 'format' => $format ) );
-	}
-
-	public function dispatch(WikiaApp $app, WikiaRequest $request = null, WikiaResponse $response = null) {
+	public function dispatch(WikiaApp $app, WikiaRequest $request = null) {
 		if (null === $request) {
-			$request = $this->createRequest();
+			$request = F::build( 'WikiaRequest', array( 'params' => ( $_POST + $_GET ) ) );
 		}
 
-		if (null === $response) {
-			$response = $this->createResponse( $request );
-		}
+		$format = $request->getVal('format', $request->isXmlHttp() ? 'json' : 'html');
+		$response = F::build( 'WikiaResponse', array( 'format' => $format ) );
 
 		do {
 			$request->setDispatched(true);
@@ -41,7 +30,28 @@ class WikiaDispatcher {
 				$controllerName = $this->getControllerName( $request );
 				$controllerClassName = $this->getControllerClassName( $controllerName );
 				if( empty($controllerClassName) ) {
-					throw new WikiaException( sprintf('Invalid controller name: %s', $controllerName ) );
+					throw new WikiaException( sprintf('Invalid controller name: %s', $controllerName) );
+				}
+
+				// Work around for module dispatching until modules are renamed
+				if (!class_exists($controllerClassName)) {
+					$controllerClassName = $controllerName . "Module";
+					$method = ucfirst($method);
+					$wgAutoloadClasses = $app->getGlobal( 'wgAutoloadClasses' );
+					if( isset( $wgAutoloadClasses[$controllerClassName] ) ) {
+						$moduleTemplatePath = dirname($wgAutoloadClasses[$controllerClassName]).'/templates/'.$controllerName.'_'.$method.'.php';
+						$response->getView()->setTemplatePath($moduleTemplatePath);
+					}
+					$method = "execute" . $method;
+					$params = $request->getParams();
+				}
+				$app->runFunction( 'wfProfileIn', ( __METHOD__ . " (" . $controllerName.'_'.$method .")" ) );
+
+				$response->setControllerName($controllerName);
+				$response->setMethodName($method);
+
+				if (!class_exists($controllerClassName)) {
+					throw new WikiaException( sprintf('Controller does not exists: %s', $controllerClassName) );
 				}
 
 				$controller = F::build( $controllerClassName );
@@ -50,20 +60,29 @@ class WikiaDispatcher {
 					throw new WikiaException( sprintf('Could not dispatch %s::%s', $controllerClassName, $method) );
 				}
 
-				if( !$request->isInternal() && !$controller->canDispatch( $method, $response->getFormat()) ) {
-					throw new WikiaException( sprintf('Access denied %s::%s (format: "%s")', $controllerClassName, $method, $response->getFormat()), WikiaResponse::RESPONSE_CODE_FORBIDDEN );
-				}
-
 				$controller->setRequest($request);
 				$controller->setResponse($response);
 				$controller->setApp($app);
 				$controller->init();
-				$controller->$method();
+
+				if($app->runFunction( 'wfRunHooks', ( $controllerName . ucfirst( $method ) . 'BeforeExecute' ), array( &$controller, &$params ) )) {
+					$controller->$method($params);
+
+					// Work around for module dispatching until modules are renamed
+					if ($controller instanceof Module) {
+						$response->setData($controller->getData());
+					}
+				}
+				$app->runFunction( 'wfRunHooks', ( $controllerName .ucfirst( $method ) . 'AfterExecute' ), array( &$controller, &$params ) );
 
 			} catch (Exception $e) {
+				$app->runFunction( 'wfProfileOut', ( __METHOD__ . " (" . $controllerName.'_'.$method .")" ) );
 				$response->setException($e);
 
 				if ($controllerClassName != 'WikiaErrorController' && $method != 'error') {
+					// Work around for module dispatching until modules are renamed
+					$response->getView()->setTemplatePath(null);
+
 					$request->setVal('controller', 'WikiaError');
 					$request->setVal('method', 'error');
 					$request->setDispatched(false);
@@ -75,8 +94,7 @@ class WikiaDispatcher {
 			throw $response->getException();
 		}
 
-		$response->buildTemplatePath( $controllerName, $method );
-
+		$app->runFunction( 'wfProfileOut', ( __METHOD__ . " (" . $controllerName.'_'.$method .")" ) );
 		return $response;
 	}
 }

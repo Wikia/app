@@ -4,26 +4,22 @@
  */
 class WikiaAppTest extends PHPUnit_Framework_TestCase {
 	private $application;
-	private $registry;
+	private $globalRegistry;
+	private $localRegistry;
 	private $hookDispatcher;
 
 	protected function setUp() {
-		$this->registry = $this->getMock('WikiaCompositeRegistry');
-
+		$this->globalRegistry = $this->getMock('WikiaGlobalRegistry');
+		$this->localRegistry = $this->getMock('WikiaLocalRegistry');
 		$this->hookDispatcher = $this->getMock('WikiaHookDispatcher');
-		$this->application = new WikiaApp(null, $this->hookDispatcher);
-		$this->application->setRegistry($this->registry);
+		$this->application = new WikiaApp($this->globalRegistry, $this->localRegistry, $this->hookDispatcher);
 	}
 
 	public function testDefaultRegistryAndHookDispatcherInstances() {
 		$application = new WikiaApp();
 		$this->assertInstanceOf('WikiaHookDispatcher', $application->getHookDispatcher());
-		$this->assertInstanceOf('WikiaCompositeRegistry', $application->getRegistry());
-		$this->assertEquals(2, $application->getRegistry()->countRegistries());
-		$this->assertTrue($application->getRegistry()->hasRegistry(WikiaApp::REGISTRY_WIKIA));
-		$this->assertTrue($application->getRegistry()->hasRegistry(WikiaApp::REGISTRY_MEDIAWIKI));
-		$this->assertInstanceOf('WikiaLocalRegistry', $application->getRegistry()->getRegistry(WikiaApp::REGISTRY_WIKIA));
-		$this->assertInstanceOf('WikiaGlobalsRegistry', $application->getRegistry()->getRegistry(WikiaApp::REGISTRY_MEDIAWIKI));
+		$this->assertInstanceOf('WikiaGlobalRegistry', $application->getGlobalRegistry());
+		$this->assertInstanceOf('WikiaLocalRegistry', $application->getLocalRegistry());
 	}
 
 	public function testRegisteringHookProxiesToWikiaHookDispatcherAndMediaWikiRegistry() {
@@ -34,7 +30,7 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 		$rebuild = true;
 		$callback = array();
 
-		$registry = $this->getMock('WikiaGlobalsRegistry');
+		$registry = $this->getMock('WikiaGlobalRegistry');
 		$registry->expects($this->once())
 		         ->method('append')
 		         ->with($this->equalTo('wgHooks'), $this->equalTo($callback), $this->equalTo($hookName));
@@ -45,11 +41,7 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 		     ->with($this->equalTo($class), $this->equalTo($method), $this->equalTo($options), $this->equalTo($rebuild))
 		     ->will($this->returnValue($callback));
 
-		$this->registry
-		     ->expects($this->once())
-		     ->method('getRegistry')
-		     ->with($this->equalTo(WikiaApp::REGISTRY_MEDIAWIKI))
-		     ->will($this->returnValue($registry));
+		$this->application->setGlobalRegistry($registry);
 
 		$this->application->registerHook($hookName, $class, $method, $options, $rebuild);
 	}
@@ -58,34 +50,22 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 		$path = 'filepath';
 		$class = 'HookClass';
 
-		$registry = $this->getMock('WikiaGlobalsRegistry');
+		$registry = $this->getMock('WikiaGlobalRegistry');
 		$registry->expects($this->once())
 		         ->method('set')
 		         ->with($this->equalTo('wgAutoloadClasses'), $this->equalTo($path), $this->equalTo($class));
-
-		$this->registry
-		     ->expects($this->once())
-		     ->method('getRegistry')
-		     ->with($this->equalTo(WikiaApp::REGISTRY_MEDIAWIKI))
-		     ->will($this->returnValue($registry));
-
+		$this->application->setGlobalRegistry($registry);
 		$this->application->registerClass($class, $path);
 	}
 
 	public function testRegisteringExtensionFunctionProxiesToMediaWikiRegistry() {
 		$function = 'extensionFunction';
 
-		$registry = $this->getMock('WikiaGlobalsRegistry');
+		$registry = $this->getMock('WikiaGlobalRegistry');
 		$registry->expects($this->once())
 		         ->method('append')
 		         ->with($this->equalTo('wgExtensionFunctions'), $this->equalTo($function));
-
-		$this->registry
-		     ->expects($this->once())
-		     ->method('getRegistry')
-		     ->with($this->equalTo(WikiaApp::REGISTRY_MEDIAWIKI))
-		     ->will($this->returnValue($registry));
-
+		$this->application->setGlobalRegistry($registry);
 		$this->application->registerExtensionFunction($function);
 	}
 
@@ -93,17 +73,11 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 		$path = 'filepath';
 		$name = 'name';
 
-		$registry = $this->getMock('WikiaGlobalsRegistry');
+		$registry = $this->getMock('WikiaGlobalRegistry');
 		$registry->expects($this->once())
 		         ->method('set')
 		         ->with($this->equalTo('wgExtensionMessagesFiles'), $this->equalTo($path), $this->equalTo($name));
-
-		$this->registry
-		     ->expects($this->once())
-		     ->method('getRegistry')
-		     ->with($this->equalTo(WikiaApp::REGISTRY_MEDIAWIKI))
-		     ->will($this->returnValue($registry));
-
+		$this->application->setGlobalRegistry($registry);
 		$this->application->registerExtensionMessageFile($name, $path);
 	}
 
@@ -111,17 +85,11 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 		$path = 'filepath';
 		$name = 'name';
 
-		$registry = $this->getMock('WikiaGlobalsRegistry');
+		$registry = $this->getMock('WikiaGlobalRegistry');
 		$registry->expects($this->once())
 		         ->method('set')
 		         ->with($this->equalTo('wgExtensionAliasesFiles'), $this->equalTo($path), $this->equalTo($name));
-
-		$this->registry
-		     ->expects($this->once())
-		     ->method('getRegistry')
-		     ->with($this->equalTo(WikiaApp::REGISTRY_MEDIAWIKI))
-		     ->will($this->returnValue($registry));
-
+		$this->application->setGlobalRegistry($registry);
 		$this->application->registerExtensionAliasFile($name, $path);
 	}
 
@@ -129,34 +97,23 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 		$name = 'name';
 		$class = 'SpecialPageClass';
 
-		$registry = $this->getMock('WikiaGlobalsRegistry');
+		$registry = $this->getMock('WikiaGlobalRegistry');
 		$registry->expects($this->once())
 		         ->method('set')
 		         ->with($this->equalTo('wgSpecialPages'), $this->equalTo($class), $this->equalTo($name));
-
-		$this->registry
-		     ->expects($this->once())
-		     ->method('getRegistry')
-		     ->with($this->equalTo(WikiaApp::REGISTRY_MEDIAWIKI))
-		     ->will($this->returnValue($registry));
-
+		$this->application->setGlobalRegistry($registry);
 		$this->application->registerSpecialPage($name, $class);
 	}
 
 	public function testGettingGlobalProxiesToMediaWikiRegistry() {
 		$name = 'name';
 
-		$registry = $this->getMock('WikiaGlobalsRegistry');
+		$registry = $this->getMock('WikiaGlobalRegistry');
 		$registry->expects($this->once())
 		         ->method('get')
 		         ->with($this->equalTo($name));
 
-		$this->registry
-		     ->expects($this->once())
-		     ->method('getRegistry')
-		     ->with($this->equalTo(WikiaApp::REGISTRY_MEDIAWIKI))
-		     ->will($this->returnValue($registry));
-
+		$this->application->setGlobalRegistry($registry);
 		$this->application->getGlobal($name);
 	}
 
@@ -164,17 +121,12 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 		$name = 'name';
 		$value = 'value';
 
-		$registry = $this->getMock('WikiaGlobalsRegistry');
+		$registry = $this->getMock('WikiaGlobalRegistry');
 		$registry->expects($this->once())
 		         ->method('set')
 		         ->with($this->equalTo($name), $this->equalTo($value));
 
-		$this->registry
-		     ->expects($this->once())
-		     ->method('getRegistry')
-		     ->with($this->equalTo(WikiaApp::REGISTRY_MEDIAWIKI))
-		     ->will($this->returnValue($registry));
-
+		$this->application->setGlobalRegistry($registry);
 		$this->application->setGlobal($name, $value);
 	}
 
@@ -185,7 +137,7 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 					'global3' => 10
 		);
 
-		$registry = $this->getMock('WikiaGlobalsRegistry');
+		$registry = $this->getMock('WikiaGlobalRegistry');
 		$registry->expects($this->exactly(5))
 	         ->method('get')
 	         ->will($this->onConsecutiveCalls(
@@ -195,12 +147,7 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 	           $globals['global3'],
 	           $globals['global2'] ));
 
-		$this->registry
-		          ->expects($this->exactly(5))
-		          ->method('getRegistry')
-		          ->with($this->equalTo(WikiaApp::REGISTRY_MEDIAWIKI))
-		          ->will($this->returnValue($registry));
-
+		$this->application->setGlobalRegistry($registry);
 		$results = $this->application->getGlobals('global1', 'global2', 'global3');
 		$this->assertEquals( array_values($globals), $results );
 

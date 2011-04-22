@@ -17,44 +17,42 @@ class WikiaDispatcherTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testDispatchUnknownOrEmptyController() {
-		$app = $this->getMock( 'WikiaApp' );
+		$app = $this->getMock( 'WikiaApp', array( 'runFunction' ) );
+		$app->expects( $this->any() )
+		    ->method( 'runFunction' )
+		    ->will( $this->returnValue( true ) );
 
 		$response = $this->object->dispatch( $app );
+
 		$this->assertTrue($response->hasException());
 		$this->assertInstanceOf( 'WikiaException', $response->getException());
 		$this->assertEquals(WikiaResponse::RESPONSE_CODE_ERROR, $response->getCode());
 
-		$response = $this->object->dispatch( $app, new WikiaHTTPRequest( array( 'controller' => 'nonExistentController' ) ) );
+		$response = $this->object->dispatch( $app, new WikiaRequest( array( 'controller' => 'nonExistentController' ) ) );
 		$this->assertTrue($response->hasException());
-		$this->assertInstanceOf( 'ReflectionException', $response->getException());
+		$this->assertInstanceOf( 'WikiaException', $response->getException());
 		$this->assertEquals(WikiaResponse::RESPONSE_CODE_ERROR, $response->getCode());
 	}
 
 	public function testDispatchUnknownMethod() {
-		$app = $this->getMock( 'WikiaApp' );
+		$app = $this->getMock( 'WikiaApp', array( 'runFunction' ) );
+		$app->expects( $this->any() )
+		    ->method( 'runFunction' )
+		    ->will( $this->returnValue( true ) );
 
-		$response = $this->object->dispatch( $app, new WikiaHTTPRequest( array( 'controller' => 'Test', 'method' => 'nonExistentMethod' ) ) );
+		$response = $this->object->dispatch( $app, new WikiaRequest( array( 'controller' => 'Test', 'method' => 'nonExistentMethod' ) ) );
 		$this->assertTrue($response->hasException());
 		$this->assertInstanceOf( 'WikiaException', $response->getException());
 		$this->assertEquals(WikiaResponse::RESPONSE_CODE_ERROR, $response->getCode());
-	}
-
-	public function testDispatchForbiddenMethod() {
-		$app = $this->getMock( 'WikiaApp' );
-
-		$response = $this->object->dispatch( $app, new WikiaHTTPRequest( array( 'controller' => 'Test', 'method' => 'jsonOnly' ) ) );
-		$this->assertTrue($response->hasException());
-		$this->assertInstanceOf( 'WikiaException', $response->getException());
-		$this->assertEquals(WikiaResponse::RESPONSE_CODE_FORBIDDEN, $response->getCode());
 	}
 
 	public function testDispatchInternal() {
 		//$app = $this->getMock( 'WikiaApp' );
 
-		$response = $this->object->dispatch( F::build('App'), new WikiaHTTPRequest( array( 'controller' => 'Test', 'method' => 'sendTest' ) ) );
+		$response = $this->object->dispatch( F::build('App'), new WikiaRequest( array( 'controller' => 'Test', 'method' => 'sendTest' ) ) );
 
 		$this->assertTrue($response->hasException());
-		$this->assertInstanceOf( 'ReflectionException', $response->getException());
+		$this->assertInstanceOf( 'WikiaException', $response->getException());
 		$this->assertEquals(WikiaResponse::RESPONSE_CODE_ERROR, $response->getCode());
 	}
 }

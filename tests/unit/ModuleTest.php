@@ -24,13 +24,6 @@ class ModuleTest extends PHPUnit_Framework_TestCase {
 		);
 	}
 
-	function testViewPartial() {
-		$this->assertEquals(
-			'Foo',
-			View::partial('Test', 'Index', array('foo' => 'Foo'))->render()
-		);
-	}
-
 	function testRenderPartial() {
 		$this->assertEquals(
 			'Foo',
@@ -41,14 +34,14 @@ class ModuleTest extends PHPUnit_Framework_TestCase {
 	function testViewSpecialPageLink() {
 		$this->assertTag (
 			array("tag" => "a"),
-			View::specialPageLink('CreatePage', 'button-createpage', 'wikia-button')
+			Wikia::specialPageLink('CreatePage', 'button-createpage', 'wikia-button')
 		);
 	}
 
 	function testViewLink() {
 		$this->assertTag (
 			array("tag" => "a"),
-			View::link(Title::newFromText("Test"))
+			Wikia::link(Title::newFromText("Test"))
 		);
 	}
 

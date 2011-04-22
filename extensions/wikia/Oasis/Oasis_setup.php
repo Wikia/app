@@ -187,40 +187,31 @@ $wgOasisThemes = array(
 );
 
 // AJAX dispatcher
+// TODO: Remove this and unify ajax call entry point
 $wgAjaxExportList[] = 'moduleProxy';
 function moduleProxy() {
 	wfProfileIn(__METHOD__);
 
 	global $wgRequest;
 
-	$outputType = $wgRequest->getVal('outputType'); // html or data
+	$outputType = $wgRequest->getVal('outputType'); // html or data for oasis modules
+	if ($outputType == 'data') $outputType = 'json';
 
-	$moduleName = $wgRequest->getVal('moduleName');
-	$actionName = $wgRequest->getVal('actionName', 'Index');
-	$moduleParams = json_decode($wgRequest->getVal('moduleParams'), true);
+	$params = json_decode($wgRequest->getVal('moduleParams'), true);
+	$params ['controller'] = $wgRequest->getVal('moduleName');
+	$params ['method'] = $wgRequest->getVal('actionName', 'Index');
+	$params ['format'] = $outputType;
 
-	if($outputType == 'html') {
-
-		$response = new AjaxResponse(wfRenderModule($moduleName, $actionName, $moduleParams));
-		$response->setContentType('text/html; charset=utf-8');
-
-	} else if($outputType == 'data') {
-
-		$response = new AjaxResponse();
-		$text = json_encode(Module::get($moduleName, $actionName, $moduleParams)->getData());
-		$response->setContentType('application/json; charset=utf-8');
-
-		$callback = $wgRequest->getVal('callback');
-		if($callback) {
-			$text = Xml::escapeJsString($callback) . '(' . $text . ')';
-			$response->setContentType('text/javascript; charset=utf-8');
-		}
-		$response->addText($text);
-
+	/* TODO: remove this
+	$response = F::build( 'App' )->dispatch($params);
+	$callback = $wgRequest->getVal('callback');
+	if($callback) {
+		$text = Xml::escapeJsString($callback) . '(' . $text . ')';
+		$response->appendBody($text);
 	}
-
+	*/
 	wfProfileOut(__METHOD__);
-	return $response;
+	return F::build( 'App' )->dispatch($params);
 }
 
 // Messages

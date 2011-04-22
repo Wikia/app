@@ -14,7 +14,7 @@ class WikiaSpecialPageController extends WikiaController {
 		}
 		else {
 			$response->sendHeaders();
-			$response->printText();
+			$response->render();
 			exit;
 		}
 	}

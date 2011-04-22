@@ -4,7 +4,7 @@
 			// user is not logged in
 			if (!empty( $promptLogin )) {
 ?>
-			<?= View::specialPageLink('SignUp', 'oasis-edit-protected-article', 'wikia-button loginToEditProtectedPage', 'blank.gif', 'oasis-edit-protected-article', 'sprite edit-pencil', $loginURL); ?>
+			<?= Wikia::specialPageLink('SignUp', 'oasis-edit-protected-article', 'wikia-button loginToEditProtectedPage', 'blank.gif', 'oasis-edit-protected-article', 'sprite edit-pencil', $loginURL); ?>
 <?php
 			}
 			// render simple edit button
@@ -22,7 +22,7 @@
 <?php
 			if ( !empty( $promptLogin ) ) {
 ?>
-			<?= View::specialPageLink('SignUp', 'oasis-edit-protected-article', 'wikia-button loginToEditProtectedPage', 'blank.gif', 'oasis-edit-protected-article', 'sprite edit', $loginURL) ?>
+			<?= Wikia::specialPageLink('SignUp', 'oasis-edit-protected-article', 'wikia-button loginToEditProtectedPage', 'blank.gif', 'oasis-edit-protected-article', 'sprite edit', $loginURL) ?>
 <?php
 			} else {
 ?>
