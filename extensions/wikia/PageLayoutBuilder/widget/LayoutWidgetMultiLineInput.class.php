@@ -35,6 +35,10 @@ class LayoutWidgetMultiLineInput extends LayoutWidgetInput {
 	}
 
 	public function renderForResult() {
+		// BugzId: 4892. There might be a better way to do this.
+		$this->value = str_replace("\r", "", $this->value);
+		$this->value = str_replace("\n\n", "</p><p>", $this->value);
+
 		return "<p>\n".$this->value."\n</p>";
 	}
 
