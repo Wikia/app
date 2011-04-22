@@ -24,11 +24,14 @@ class CreateNewWikiModule extends Module {
 	// state variables
 	var $currentStep;
 	var $skipWikiaPlus;
-	
+
+	// ajax call response - previously: 'response' (conflicting name with WikiaController::response)
+	var $res;
+
 	var $app;
-	
+
 	const DAILY_USER_LIMIT = 5;
-	
+
 	public function __construct($app) {
 		$this->app = $app;
 	}
@@ -88,7 +91,7 @@ class CreateNewWikiModule extends Module {
 		$lang = $wgRequest->getVal('lang');
 		$type  = $wgRequest->getVal('type');
 
-		$this->response = AutoCreateWiki::checkDomainIsCorrect($name, $lang, $type);
+		$this->res = AutoCreateWiki::checkDomainIsCorrect($name, $lang, $type);
 
 		wfProfileOut(__METHOD__);
 	}
@@ -98,13 +101,13 @@ class CreateNewWikiModule extends Module {
 	 */
 	public function executeCheckWikiName() {
 		wfProfileIn(__METHOD__);
-		
+
 		$wgRequest = $this->app->getGlobal('wgRequest');
 
 		$name = $wgRequest->getVal('name');
 		$lang = $wgRequest->getVal('lang');
 
-		$this->response = $this->app->runFunction('AutoCreateWiki::checkWikiNameIsCorrect', $name, $lang);
+		$this->res = $this->app->runFunction('AutoCreateWiki::checkWikiNameIsCorrect', $name, $lang);
 
 		wfProfileOut(__METHOD__);
 	}
@@ -138,7 +141,7 @@ class CreateNewWikiModule extends Module {
 				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-wiki-limit-header');
 				return;
 			}
-		
+
 			$createWiki = F::build('CreateWiki', array($params['wikiName'], $params['wikiDomain'], $params['wikiLanguage'], $params['wikiCategory']));
 			$createWiki->create();
 			$this->cityId = $createWiki->getWikiInfo('city_id');
@@ -202,14 +205,14 @@ class CreateNewWikiModule extends Module {
 
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	public function executePhalanx() {
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );
-		
+
 		$text = $wgRequest->getVal('text','');
 		$blockedKeywords = array();
-		
+
 		$filters = Phalanx::getFromFilter( Phalanx::TYPE_CONTENT );
 		foreach( $filters as $filter ) {
 			$result = Phalanx::isBlocked( $text, $filter );
@@ -217,7 +220,7 @@ class CreateNewWikiModule extends Module {
 				$blockedKeywords[] = $result['msg'];
 			}
 		}
-		
+
 		$this->msgHeader = '';
 		$this->msgBody = '';
 		if(count($blockedKeywords) > 0) {
@@ -231,14 +234,14 @@ class CreateNewWikiModule extends Module {
 			$this->msgHeader = wfMsg('cnw-badword-header');
 			$this->msgBody = wfMsg('cnw-badword-msg', $keywords);
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	public static function setupCreateNewWiki() {
 		F::addClassConstructor('CreateNewWikiModule', array(F::app()));
 	}
-	
+
 	/**
 	 * get number of created Wikis for current day
 	 * note: copied from autocreatewiki

@@ -222,7 +222,7 @@ var WikiBuilder = {
 			}, function(res) {
 				if(res) {
 					var json = $.parseJSON(res);
-					var response = res['response'];
+					var response = res['res'];
 					if(response) {
 						WikiBuilder.wikiNameError.html(response);
 					} else {
@@ -257,7 +257,7 @@ var WikiBuilder = {
 			}, function(res) {
 				if(res) {
 					var json = $.parseJSON(res);
-					var response = res['response'];
+					var response = res['res'];
 					if(response) {
 						WikiBuilder.wikiDomainError.html(response);
 						WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, '');
