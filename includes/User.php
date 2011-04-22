@@ -956,8 +956,8 @@ class User {
 			if ( $extUser ) {
 				$extUser->linkToLocal( $sId );
 			}
-		} 
-		
+		}
+
 		$passwordCorrect = FALSE;
 		$this->mId = $sId;
 		if ( !$this->loadFromId() ) {
@@ -2679,6 +2679,29 @@ class User {
 
 		$this->mTouched = self::newTouchedTimestamp();
 
+		/**
+		 * @author Krzysztof Krzyżaniak (eloy)
+		 * trap for BugId: 4013
+		 */
+		// wikia change begin
+		if( $this->mEmail == "devbox@wikia-inc.com" || $this->mEmail == "devbox+test@wikia-inc.com" ) {
+			// gather everything we know about request
+			global $wgCommandLineMode;
+			$log = "MOLI TRAP@devbox: ";
+			if( $wgCommandLineMode ) {
+				$log .= $argv[ 0 ];
+				openlog( "trap", LOG_PID | LOG_PERROR, LOG_LOCAL6 );
+				syslog( LOG_WARNING, "$log");
+				closelog();
+			}
+			else {
+				global $wgTitle;
+				$log .= $wgTitle->getFullUrl();
+				error_log( $log );
+			}
+		}
+		// wikia change end
+
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user',
 			array( /* SET */
@@ -3978,7 +4001,7 @@ class User {
 			# Don't bother storing default values
 			# <Wikia>
 			if ( is_array( $wgGlobalUserProperties ) && in_array( $key, $wgGlobalUserProperties ) ) {
-				$insert_rows[] = array( 'up_user' => $this->getId(), 'up_property' => $key, 'up_value' => $value );				
+				$insert_rows[] = array( 'up_user' => $this->getId(), 'up_property' => $key, 'up_value' => $value );
 			}
 			# </Wikia>
 			else {
@@ -4008,7 +4031,7 @@ class User {
 		$dbw->delete( '`user_properties`', array( 'up_user' => $this->getId() ), __METHOD__ );
 		$dbw->insert( '`user_properties`', $insert_rows, __METHOD__ );
 		$dbw->commit();
-		
+
 		if ( $extuser ) {
 			$extuser->updateUser();
 		}
