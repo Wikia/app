@@ -178,6 +178,7 @@ $messages['qqq'] = array(
 	'adss-preview-header' => 'This is a header',
 	'adss-click-here' => '{{doc-important|Substituted in {{msg-mw|adss-paypal-redirect}} as $1.}}',
 	'adss-paypal-redirect' => '{{doc-important|$1 is substituted from {{msg-mw|adss-click-here}}.}}',
+	'Adss-form-hub-plan-description' => '$1 is hub name (e.g. Gaming), $2 is the number of wikis in that hub',
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
