@@ -470,7 +470,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertRegExp("/User_talk:{$userName}/", $moduleData['dropdown'][0]);
 
 		// logout link
-		$this->assertRegExp('/Log out<\/a>$/', $moduleData['links'][0]);
+		$this->assertRegExp('/Log out<\/a>$/', $moduleData['dropdown'][4]);
 
 		// user data
 		$this->assertFalse($moduleData['isAnon']);
