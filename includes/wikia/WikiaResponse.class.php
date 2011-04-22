@@ -13,6 +13,7 @@ class WikiaResponse {
 	private $view = null;
 	private $body = null;
 	private $code;
+	private $contentType = null;
 	private $headers = array();
 	private $format = null;
 	private $controllerName = null;
@@ -93,6 +94,18 @@ class WikiaResponse {
 
 	public function setCode($value) {
 		$this->code = $value;
+	}
+
+	public function getContentType() {
+		return $this->contentType;
+	}
+
+	public function setContentType($value) {
+		$this->contentType = $value;
+	}
+
+	public function hasContentType() {
+		return (bool) $this->contentType;
 	}
 
 	public function getFormat() {
@@ -189,6 +202,11 @@ class WikiaResponse {
 		if(!$responseCodeSent) {
 			$this->sendHeader( "HTTP/1.1 " . $this->code, false );
 		}
+
+		if($this->contentType != null) {
+			$this->sendHeader( "Content-Type: " . $this->contentType, true );
+		}
+
 	}
 
 	// @codeCoverageIgnoreStart
