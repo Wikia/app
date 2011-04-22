@@ -60,7 +60,7 @@ class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
 		F::setInstance('GlobalTitle', $mainPageTitle);
 
 		$wgUser = $this->getMock('User');
-		
+
 		$cnwModule = $this->getMock( 'CreateNewWikiModule', array( 'countCreatedWikis' ), array($app) );
 		/*
 		$cnwModule->expects($this->once())
@@ -100,7 +100,7 @@ class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
 
 		$cnwModule->executeCheckWikiName();
 
-		$this->assertEquals("", $cnwModule->response);
+		$this->assertEquals("", $cnwModule->res);
 	}
 
 }
