@@ -205,7 +205,7 @@ function moduleProxy() {
 	// TODO: refactor this
 	$response = F::build( 'App' )->dispatch($params);
 	$callback = $wgRequest->getVal('callback');
-	if($callback) {
+	if($callback && ($outputType = 'json')) {
 		$text = Xml::escapeJsString($callback) . '(' . $response->toString() . ')';
 		$response->setBody($text);
 	}
