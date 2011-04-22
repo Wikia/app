@@ -32,7 +32,7 @@ function wfOasisSetup() {
 	$wgHooks['UploadComplete'][] = 'LatestPhotosModule::onImageUploadComplete';
 	$wgHooks['FileUpload'][] = 'LatestPhotosModule::onImageUpload';
 	$wgHooks['SpecialMovepageAfterMove'][] = 'LatestPhotosModule::onImageRenameCompleated';
-	
+
 	// confirmations
 	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsModule::addPageDeletedConfirmation';
 	$wgHooks['ArticleUndelete'][] = 'NotificationsModule::addPageUndeletedConfirmation';
@@ -202,16 +202,16 @@ function moduleProxy() {
 	$params ['method'] = $wgRequest->getVal('actionName', 'Index');
 	$params ['format'] = $outputType;
 
-	/* TODO: remove this
+	// TODO: refactor this
 	$response = F::build( 'App' )->dispatch($params);
 	$callback = $wgRequest->getVal('callback');
 	if($callback) {
 		$text = Xml::escapeJsString($callback) . '(' . $text . ')';
 		$response->appendBody($text);
 	}
-	*/
+
 	wfProfileOut(__METHOD__);
-	return F::build( 'App' )->dispatch($params);
+	return $response;
 }
 
 // Messages
