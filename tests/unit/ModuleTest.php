@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group Broken
+ */
 class ModuleTest extends PHPUnit_Framework_TestCase {
 
 	function setUp() {
@@ -11,14 +14,11 @@ class ModuleTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testModuleGet() {
-		/*
 		$result = F::app()->renderView('Test', 'Index');
 		$this->assertEquals(
 			'Foo',
 			$result
 		);
-		*/
-		$this->markTestSkipped();
 	}
 
 	function testRenderModule() {
