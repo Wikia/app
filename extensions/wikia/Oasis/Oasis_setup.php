@@ -206,8 +206,8 @@ function moduleProxy() {
 	$response = F::build( 'App' )->dispatch($params);
 	$callback = $wgRequest->getVal('callback');
 	if($callback) {
-		$text = Xml::escapeJsString($callback) . '(' . $text . ')';
-		$response->appendBody($text);
+		$text = Xml::escapeJsString($callback) . '(' . $response->toString() . ')';
+		$response->setBody($text);
 	}
 
 	wfProfileOut(__METHOD__);
