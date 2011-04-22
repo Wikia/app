@@ -1,5 +1,7 @@
 <footer id="WikiaFooter" class="WikiaFooter <?= $showToolbar ? '' : 'notoolbar' ?>">
 
+	<?= wfRenderModule('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_3')) ?>
+
 	<div class="FooterAd"></div>
 <?php if($showToolbar) { ?>
 	<div class="toolbar">
