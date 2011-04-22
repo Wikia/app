@@ -320,7 +320,7 @@ var WikiBuilder = {
 		var th = t.height();
 		var tw = t.width();
 		t.css('position', op);
-		wb.height(fh).width(fw);
+//		wb.height(fh).width(fw);
 		wb.animate({height: th, width: tw}, function(){
 			t.animate({'opacity':'show'},{queue:false, duration: 250});
 			if (dot) {
