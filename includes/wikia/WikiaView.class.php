@@ -67,6 +67,9 @@ class WikiaView {
 			// set error header for JSON response (as requested for mobile apps)
 			$response->setHeader( self::ERROR_HEADER_NAME, $response->getException()->getMessage() );
 		}
+		if( ( $response->getFormat() == 'json' ) && !$this->response->hasContentType() ) {
+			$this->response->setContentType( 'application/json; charset=utf-8' );
+		}
 	}
 
 	public function render() {
