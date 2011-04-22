@@ -451,7 +451,7 @@ EOT;
 		$function_name . ' = function() { ' .
 		'if(typeof(AdEngine) != "undefined") { ' .
 			'if(AdEngine.hiddenSlotOnShortPage("' . addslashes($slotname) .'")) { return; }' .
-		'} else { if(hiddenSlotOnShortPage("' . addslashes($slotname) .'")) { return; } } ' .
+		'} ' .
 		"var url = AdConfig.DART.getUrl('$slotname', '{$slot['size']}', true, 'DART');\n" .
 		'if (typeof(QuantcastSegments) !== "undefined") { ' .
 		'var qcsegs = QuantcastSegments.getQcsegAsDARTKeyValues(); ' . "\n" .	// wlee: Quantcast Segments

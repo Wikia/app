@@ -135,7 +135,7 @@ EOT;
                             'function ' . $function_name . '() { ' .
 				'if(typeof(AdEngine) != "undefined") { ' .
 					'if(AdEngine.hiddenSlotOnShortPage("' . addslashes($slotname) .'")) { return; }' .
-				'} else { if(hiddenSlotOnShortPage("' . addslashes($slotname) .'")) { return; } } ' .
+				'} ' .
                             'window.setTimeout(\'' .
                             'LiftiumOptions.placement = "' . $slotname . '";' .
                             'Liftium.callInjectedIframeAd("' . addslashes($slot['size']) .
@@ -148,7 +148,7 @@ EOT;
                             'function ' . $function_name . '() { ' .
 				'if(typeof(AdEngine) != "undefined") { ' .
 					'if(AdEngine.hiddenSlotOnShortPage("' . addslashes($slotname) .'")) { return; }' .
-				'} else { if(hiddenSlotOnShortPage("' . addslashes($slotname) .'")) { return; } } ' .
+				'} ' .
                             'LiftiumOptions.placement = "' . $slotname . '";' . "\n" .
                             'Liftium.callInjectedIframeAd("' . addslashes($slot['size']) .
                             '", document.getElementById("' . addslashes($slotname) .'_iframe")); }</script>';

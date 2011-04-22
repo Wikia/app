@@ -7,9 +7,19 @@ var AdsCB = Math.floor(Math.random()*99999999); // generate random number to use
 var AdEngine = {
 	bodyWrapper : 'bodyContent',
 	adColorsContent : [],
-	hidableSlots: ['PREFOOTER_LEFT_BOXAD', 'PREFOOTER_RIGHT_BOXAD', 'LEFT_SKYSCRAPER_2', 'LEFT_SKYSCRAPER_3'],
-	revealHiddenSlotMinDocHeight: 2400	// If you make a change here, make sure to change AdEngine::getDelayedIframeLoadingCode
+	hidableSlotThreshold1 : 2400,
+	hidableSlotThreshold2 : 4000,
+	hidableSlotsThresholds : {},
+
+	init : function () {
+		AdEngine.hidableSlotsThresholds['LEFT_SKYSCRAPER_2'] = AdEngine.hidableSlotThreshold1;
+		AdEngine.hidableSlotsThresholds['LEFT_SKYSCRAPER_3'] = AdEngine.hidableSlotThreshold2;
+		AdEngine.hidableSlotsThresholds['PREFOOTER_LEFT_BOXAD'] = AdEngine.hidableSlotThreshold1;
+		AdEngine.hidableSlotsThresholds['PREFOOTER_RIGHT_BOXAD'] = AdEngine.hidableSlotThreshold1;
+	}
 };
+
+AdEngine.init();
 
 /**
  * For pages that have divs floated right, clear right so they appear under a box ad
@@ -162,17 +172,13 @@ AdEngine.getMinuteTargeting = function (){
 	return myDate.getMinutes() % 15;
 }; 
 
-/* Note: the logic of the following three functions is duplicated in 
- * AdEngine::getDelayedIframeLoadingCode. If you make a change here, 
- * make sure to change AdEngine::getDelayedIframeLoadingCode
- */
 AdEngine.isSlotHidable = function(slotname) {
-	return $.inArray(slotname, AdEngine.hidableSlots) != -1;
+	return slotname in AdEngine.hidableSlotsThresholds;
 };
 
 AdEngine.isSlotDisplayableOnCurrentPage = function(slotname) {
 	if (AdEngine.isSlotHidable(slotname)) {
-		if($(document).height() >= AdEngine.revealHiddenSlotMinDocHeight) {
+		if($(document).height() >= AdEngine.hidableSlotsThresholds[slotname]) {
 			return true;
 		}
 		else {

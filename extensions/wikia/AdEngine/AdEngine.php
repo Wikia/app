@@ -596,28 +596,6 @@ class AdEngine {
 
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 
-		global $wgCityId;
-		// wlee: this code is duplicated from AdEngine.js. This workaround is necessary
-		// because sometimes StaticChute has not loaded by the time this function is
-		// invoked. Need to make sure that hiddenSlotOnShortPage is available.
-		// See AdProviderDART and AdProviderLiftium for usage.
-		$out .= <<<EOT
-<script type="text/javascript">
-var hiddenSlotOnShortPage = function (slotname) {
-	if(slotname == 'PREFOOTER_LEFT_BOXAD' || slotname == 'PREFOOTER_RIGHT_BOXAD' || slotname == 'LEFT_SKYSCRAPER_2' || slotname == 'LEFT_SKYSCRAPER_3') {
-		if(document.body.offsetHeight >= 2400) {
-			document.getElementById(slotname).style.display = 'block';
-			return false;
-		} else {
-			return true;
-		}
-	} else {
-		return false;
-	}
-}
-</script>
-EOT;
-
 		// Get the setup code for ad providers used on this page. This is for Ad Providers that support multi-call.
 		foreach ($this->placeholders as $slotname => $load_priority){
 	                $AdProvider = $this->getAdProvider($slotname);
