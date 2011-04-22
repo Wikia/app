@@ -31,12 +31,11 @@ class AchAwardingService {
 	public function awardCustomNotInTrackBadge($user, $badge_type_id) {
 		wfProfileIn(__METHOD__);
 
-		global $wgWikiaBotLikeUsers, $wgExternalSharedDB, $wgCityId;
+		global $wgExternalSharedDB, $wgCityId;
 
 		$this->mUser = $user;
 
-		// badges are only for logged in and not bot users
-		if($this->mUser->isLoggedIn() && !$this->mUser->isBot() && !in_array($this->mUser->getName(), $wgWikiaBotLikeUsers)) {
+		if( $this->canEarnBadges() ) {
 
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
@@ -135,12 +134,9 @@ class AchAwardingService {
 	public function processSaveComplete($article, $user, $revision, $status) {
 		wfProfileIn(__METHOD__);
 
-		global $wgWikiaBotLikeUsers;
-
 		$this->mUser = $user;
 
-		// badges are only for logged in and not bot users
-		if($this->mUser->isLoggedIn() && !$this->mUser->isBot() && !in_array($this->mUser->getName(), $wgWikiaBotLikeUsers)) {
+		if( $this->canEarnBadges() ) {
 
 			$this->mArticle = $article;
 			$this->mRevision = $revision;
@@ -664,4 +660,33 @@ class AchAwardingService {
 		wfProfileOut(__METHOD__);
 	}
 
+	/**
+	 * Helper function to check if a user should earn badges at all
+	 *
+	 * @author tor
+	 */
+	private function canEarnBadges() {
+		global $wgWikiaBotLikeUsers;
+
+		if ( $this->mUser->isAnon() ) {
+			return false;
+		}
+
+		if ( $this->mUser->isBot() ) {
+			return false;
+		}
+
+		if ( in_array($this->mUser->getName(), $wgWikiaBotLikeUsers ) ) {
+			return false;
+		}
+
+		// certain users (like staff and helpers) should not earn badges
+		// unless they also belong to a group that explicitly states they should
+		// @see fb#4876
+		if ( $this->mUser->isAllowed( 'achievements-exempt' ) && !$this->mUser->isAllowed( 'achievements-explicit' ) ) {
+			return false;
+		}
+
+		return true;
+	}
 }

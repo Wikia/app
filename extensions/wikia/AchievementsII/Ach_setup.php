@@ -58,6 +58,17 @@ $wgAvailableRights[] = 'sponsored-achievements';
 $wgGroupPermissions['*']['sponsored-achievements'] = false;
 $wgGroupPermissions['staff']['sponsored-achievements'] = true;
 
+$wgAvailableRights[] = 'achievements-exempt';
+$wgGroupPermissions['*']['achievements-exempt'] = false;
+$wgGroupPermissions['helper']['achievements-exempt'] = true;
+$wgGroupPermissions['staff']['achievements-exempt'] = true;
+
+// overrides acievements-exempt
+$wgAvailableRights[] = 'achievements-explicit';
+$wgGroupPermissions['*']['achievements-eplicit'] = false;
+$wgGroupPermissions['sysop']['achievements-exempt'] = true;
+$wgGroupPermissions['bureaucrat']['achievements-exempt'] = true;
+
 // AUTOLOADS
 
 // config
