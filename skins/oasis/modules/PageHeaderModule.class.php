@@ -222,7 +222,7 @@ class PageHeaderModule extends Module {
 			foreach($categories as $category => $cnt) {
 				$title = Title::newFromText($category, NS_CATEGORY);
 				if($title) {
-					$this->categories[] = View::link($title, $title->getText());
+					$this->categories[] = Wikia::link($title, $title->getText());
 				}
 			}
 
@@ -285,7 +285,7 @@ class PageHeaderModule extends Module {
 				$msgKey = 'oasis-page-header-back-to-video';
 			}
 
-			$this->pageTalkSubject = View::link($wgTitle->getSubjectPage(), wfMsg($msgKey), array('accesskey' => 'c'));
+			$this->pageTalkSubject = Wikia::link($wgTitle->getSubjectPage(), wfMsg($msgKey), array('accesskey' => 'c'));
 		}
 
 		// category pages
@@ -453,7 +453,7 @@ class PageHeaderModule extends Module {
 
 		// back to article link
 		if (!$isPreview && !$isShowChanges) {
-			$this->subtitle = View::link($wgTitle, wfMsg('oasis-page-header-back-to-article'), array('accesskey' => 'c'), array(), 'known');
+			$this->subtitle = Wikia::link($wgTitle, wfMsg('oasis-page-header-back-to-article'), array('accesskey' => 'c'), array(), 'known');
 		}
 
 		// add edit button
@@ -498,7 +498,7 @@ class PageHeaderModule extends Module {
 		$this->title = wfMsg($msg, htmlspecialchars($wgTitle->getPrefixedText()));
 
 		// back to article link
-		$this->subtitle = View::link($wgTitle, wfMsg('oasis-page-header-back-to-article'), array('accesskey' => 'c'), array(), 'known');
+		$this->subtitle = Wikia::link($wgTitle, wfMsg('oasis-page-header-back-to-article'), array('accesskey' => 'c'), array(), 'known');
 	}
 
 	/**

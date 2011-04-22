@@ -8,7 +8,7 @@ class SkinOasis extends SkinTemplate {
 		$this->skinname  = 'oasis';
 		$this->stylename = 'oasis';
 		$this->template  = 'OasisTemplate';
-		$this->themename = 'oasis';	
+		$this->themename = 'oasis';
 	}
 
 	function initPage( OutputPage $out ) {
@@ -37,7 +37,14 @@ class OasisTemplate extends QuickTemplate {
 			$entryModuleName = 'Oasis';
 		}
 
-		echo Module::get($entryModuleName)->render();
+		// old way
+		//echo Module::get($entryModuleName)->render();
+
+		// new way
+		$response = F::app()->dispatch( array( 'controller' => 'Oasis', 'method' => 'index' ) );
+
+		$response->sendHeaders();
+		$response->render();
 	}
 
 }

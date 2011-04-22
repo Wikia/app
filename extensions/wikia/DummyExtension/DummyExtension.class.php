@@ -1,6 +1,6 @@
 <?php
 
-class DummyExtension extends WikiaHookHandler {
+class DummyExtension {
 
 	/**
 	 * current page title

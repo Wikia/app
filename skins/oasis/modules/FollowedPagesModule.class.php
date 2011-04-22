@@ -31,7 +31,7 @@ class FollowedPagesModule extends Module {
 			}
 			// only display  your own page
 			if ($page_owner->getId() == $wgUser->getId()) {
-				$this->follow_all_link = View::specialPageLink('Following', 'oasis-wikiafollowedpages-special-seeall', 'more');
+				$this->follow_all_link = Wikia::specialPageLink('Following', 'oasis-wikiafollowedpages-special-seeall', 'more');
 			}
 		}
 		$this->max_followed_pages = min($this->max_followed_pages, count($this->data));

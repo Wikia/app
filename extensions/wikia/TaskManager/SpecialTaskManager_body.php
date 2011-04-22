@@ -75,10 +75,10 @@ class TaskManagerPage extends SpecialPage {
 						#--- get form for this class
 						$wgOut->addHTML( $oObject->getForm( $this->mTitle ));
 					}
-					$wgOut->addHTML(Wikia::link(
+					$wgOut->addHTML(XML::element("a", array( "href"=>
 						$this->mTitle->getLocalUrl(),
 						wfMsg("taskmanager_tasklist")
-					));
+					)));
 
 					break;
 
@@ -99,7 +99,7 @@ class TaskManagerPage extends SpecialPage {
 							$wgOut->addHTML( $oObject->getForm( $this->mTitle, $aFormData ));
 						}
 					}
-					$wgOut->addHTML(Wikia::link(
+					$wgOut->addHTML(Wikia::linkTag(
 						$this->mTitle->getLocalUrl(),
 						wfMsg("taskmanager_tasklist")
 					));

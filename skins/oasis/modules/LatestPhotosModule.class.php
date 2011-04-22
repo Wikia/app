@@ -87,7 +87,7 @@ class LatestPhotosModule extends Module {
 			"image_url" => $file->getUrl(),
 			"thumb_url" => $thumb_url,
 			"image_filename" => $file->getTitle()->getFullText(),
-			"user_href" => View::link(Title::newFromText($userName, NS_USER), $userName),
+			"user_href" => Wikia::link(Title::newFromText($userName, NS_USER), $userName),
 			"links" => $this->getLinkedFiles($file->name),
 			"date" => wfTimeFormatAgo($file->timestamp));
 		return $retval;

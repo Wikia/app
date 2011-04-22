@@ -1,5 +1,5 @@
 <?php
-class TestHookHandler extends WikiaHookHandler {
+class TestHookHandler {
 	public static $instancesCounter = 0;
 	
 	public function __construct() {
@@ -7,6 +7,6 @@ class TestHookHandler extends WikiaHookHandler {
 	}
 	
 	public function onEvent() {
-		$this->getHookOptions();
+		// Do nothing hook
 	}
 }

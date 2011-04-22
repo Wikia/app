@@ -3,9 +3,6 @@
 class ProposalUsersController extends WikiaSpecialPageController  {
 
 	public function __construct() {
-		$this->allowedRequests[ 'get' ] = array( 'html', 'json' );
-		$this->allowedRequests[ 'index' ] = array( 'html', 'json' );
-
 		// standard SpecialPage constructor call
 		parent::__construct( 'ProposalSimple', '', false );
 	}

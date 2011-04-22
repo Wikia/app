@@ -1,6 +1,6 @@
 <section class="LatestPhotosModule module">	
 	<h1>Latest Photos</h1>
-	<?= View::specialPageLink('Upload', 'oasis-add-photo', (!$wgUser->isLoggedIn() ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo', 'sprite photo'); ?>
+	<?= Wikia::specialPageLink('Upload', 'oasis-add-photo', (!$wgUser->isLoggedIn() ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo', 'sprite photo'); ?>
 	<details class="tally counter">
 		<?= wfMsgExt('oasis-latest-photos-header', array( 'parsemag' ), $total, ($total < 100000 ? 'fixedwidth' : '') ) ?>
 	</details>
@@ -9,7 +9,7 @@
 if ($enableEmptyGallery == true) { ?>
 	<details class="empty-photos">
 		<div class="temp-image">
-			 <?= View::specialPageLink('Upload', 'oasis-latest-photos-empty'); ?>
+			 <?= Wikia::specialPageLink('Upload', 'oasis-latest-photos-empty'); ?>
 		</div>
 	</details>
 <?php }
@@ -53,13 +53,13 @@ else {
 	<?php
 	if (count($thumbUrls) > 2) { ?>
 		<li class="see-all">
-			<?= View::specialPageLink('NewFiles', 'oasis-latest-photos-inner-message') ?>
+			<?= Wikia::specialPageLink('NewFiles', 'oasis-latest-photos-inner-message') ?>
 			<img data-src="<?= $wgStylePath ?>/oasis/images/empty_gallery.png" />
 		</li>
 	<?php
 	}
 	else {?>
-		<li class="add-more single-photo"><?= View::specialPageLink('Upload', 'oasis-latest-photos-single') ?></li>
+		<li class="add-more single-photo"><?= Wikia::specialPageLink('Upload', 'oasis-latest-photos-single') ?></li>
 		<?php
 
 	}?>
@@ -67,7 +67,7 @@ else {
 			</ul>
 		</div>
 	</div>
-	<?= View::specialPageLink('NewFiles', 'oasis-latest-photos-more', array('class' => 'more')) ?>
+	<?= Wikia::specialPageLink('NewFiles', 'oasis-latest-photos-more', array('class' => 'more')) ?>
 
 
 <?php }

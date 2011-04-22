@@ -2,10 +2,6 @@
 
 class WikiaErrorController extends WikiaController {
 
-	public function __construct() {
-		$this->allowedRequests[ 'error' ] = array( 'html', 'json' );
-	}
-
 	public function error() {
 		$code = $this->getResponse()->getException()->getCode();
 

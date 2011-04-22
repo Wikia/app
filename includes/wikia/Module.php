@@ -1,7 +1,25 @@
 <?php
-abstract class Module {
+abstract class Module extends WikiaController {
 
 	protected static $skinTemplateObj;
+
+	// Module specific setup here
+	public function init() {
+		// auto-initialize any module variables which match variables in skinTemplate->data or _GLOBALS
+		$objvars = get_object_vars($this);
+		$skindata = array();
+		if (isset(self::$skinTemplateObj) && is_array(self::$skinTemplateObj->data)) {
+			$skindata = self::$skinTemplateObj->data;
+		}
+		foreach ($objvars as $var => $unused) {
+			if (array_key_exists($var, $GLOBALS)) {
+				$this->$var = $GLOBALS[$var];
+			}
+			if (array_key_exists($var, $skindata)) {
+				$this->$var = $skindata[$var];
+			}
+		}
+	}
 
 	public static function setSkinTemplateObj(&$skinTemplate) {
 		self::$skinTemplateObj = $skinTemplate;
@@ -11,6 +29,7 @@ abstract class Module {
 		return self::$skinTemplateObj;
 	}
 
+	// TODO: This function goes away, replaced by Dispatcher::dispatch
 	public static function get($name, $action = 'Index', $params = null) {
 		global $wgAutoloadClasses;
 
@@ -62,7 +81,7 @@ abstract class Module {
 			return isset($vars[$var]) ? $vars[$var] : null;
 		}
 	}
-
+	/*
 	public function getView() {
 		return new View($this->templatePath, $this->getData());
 	}
@@ -70,5 +89,5 @@ abstract class Module {
 	public function render() {
 		return $this->getView()->render();
 	}
-
+	*/
 }

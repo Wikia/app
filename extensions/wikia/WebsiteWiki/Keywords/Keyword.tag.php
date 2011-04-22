@@ -23,7 +23,7 @@ function renderKeypage( $input, $argv, $parser ) {
 	foreach( $tokens as $keyword ) {
 		$keyword = substr( $wgContLang->lc( trim( $keyword ) ), 0, 80 );
 		if( strlen( $keyword ) ) {
-			$keywords[] = Wikia::link(
+			$keywords[] = Wikia::linkTag(
 				Title::makeTitle( NS_SPECIAL, sprintf( "Keyword/%s", $wgContLang->lc( $keyword ) )  )->getLocalURL(),
 				$keyword
 			);

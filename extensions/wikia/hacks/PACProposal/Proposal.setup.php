@@ -8,6 +8,7 @@ $app = F::app();
  */
 $app->registerClass('ProposalController', $dir . 'ProposalController.class.php');
 $app->registerClass('ProposalPagesController', $dir . 'ProposalPagesController.class.php');
+$app->registerClass('TestSpecialPage', $dir . 'TestSpecialPage.class.php');
 
 /**
  * classes (model)
@@ -23,3 +24,4 @@ $app->registerExtensionMessageFile('Proposal', $dir . 'Proposal.i18n.php' );
  * special pages
  */
 $app->registerSpecialPage('Proposal', 'ProposalController');
+$app->registerSpecialPage('Test', 'TestSpecialPage');

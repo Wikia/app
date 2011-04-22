@@ -18,7 +18,7 @@ class WikiaControllerTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider generatingHelpDataProvider
 	 */
 	public function testGeneratingHelp( $format, $prefix ) {
-		$response = F::build( 'App' )->dispatch( array( 'controller' => 'Test', 'method' => 'help', 'format' => $format ));
+		$response = F::app()->dispatch( array( 'controller' => 'Test', 'method' => 'help', 'format' => $format ));
 		//$response->setTemplatePath('non');
 		$this->assertInstanceOf( 'WikiaResponse', $response );
 		$this->assertNull( $response->getException() );
@@ -36,7 +36,7 @@ class WikiaControllerTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider redirectingDataProvider
 	 */
 	public function testRedirecting( $resetResponse ) {
-		$response = F::build( 'App' )->dispatch( array( 'controller' => 'Test', 'method' => 'redirectTest', 'resetResponse' => $resetResponse ));
+		$response = F::app()->dispatch( array( 'controller' => 'Test', 'method' => 'redirectTest', 'resetResponse' => $resetResponse ));
 		$data = $response->getData();
 
 		$this->assertEquals( 'AnotherTestController', $data['controller'] );

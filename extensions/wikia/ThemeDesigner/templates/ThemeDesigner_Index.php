@@ -64,7 +64,7 @@
 					foreach($themeHistory as $themeHistoryItem) {
 					?>
 						<li>
-							<?= View::specialPageLink('#', null, 'wikia-chiclet-button', 'blank.gif', 'recycle'); ?>
+							<?= Wikia::specialPageLink('#', null, 'wikia-chiclet-button', 'blank.gif', 'recycle'); ?>
 							<?= wfMsg( 'themedesigner-history-item', $themeHistoryItem['timeago'], $themeHistoryItem['author'] ) ?>
 						</li>
 					<?php

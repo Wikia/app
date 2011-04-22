@@ -98,27 +98,27 @@ class UserPagesHeaderModule extends Module {
 		
 		// profile
 		$tabs[] = array(
-				'link' => View::link(Title::newFromText($userName, NS_USER), wfMsg('profile')),
+				'link' => Wikia::link(Title::newFromText($userName, NS_USER), wfMsg('profile')),
 				'selected' => ($namespace == NS_USER),
 				);
 		
 		// talk
 		$tabs[] = array(
-				'link' => View::link(Title::newFromText($userName, NS_USER_TALK), wfMsg('talkpage')),
+				'link' => Wikia::link(Title::newFromText($userName, NS_USER_TALK), wfMsg('talkpage')),
 				'selected' => ($namespace == NS_USER_TALK),
 				);
 		
 		// blog
 		if (defined('NS_BLOG_ARTICLE') && !User::isIP($this->userName)) {
 			$tabs[] = array(
-					'link' => View::link(Title::newFromText($userName, NS_BLOG_ARTICLE), wfMsg('blog-page'), array(), array(), 'known'),
+					'link' => Wikia::link(Title::newFromText($userName, NS_BLOG_ARTICLE), wfMsg('blog-page'), array(), array(), 'known'),
 					'selected' => ($namespace == NS_BLOG_ARTICLE),
 					);
 		}
 		
 		// contribs
 		$tabs[] = array(
-				'link' => View::link(SpecialPage::getTitleFor("Contributions/{$userName}"), wfMsg('contris_s')),
+				'link' => Wikia::link(SpecialPage::getTitleFor("Contributions/{$userName}"), wfMsg('contris_s')),
 				'selected' => ($wgTitle->isSpecial( 'Contributions' )),
 				);
 		
@@ -126,14 +126,14 @@ class UserPagesHeaderModule extends Module {
 			// following (only render when user is viewing his own user pages)
 			if (!empty($wgEnableWikiaFollowedPages)) {
 				$tabs[] = array(
-						'link' => View::link(SpecialPage::getTitleFor('Following'), wfMsg('wikiafollowedpages-following')),
+						'link' => Wikia::link(SpecialPage::getTitleFor('Following'), wfMsg('wikiafollowedpages-following')),
 						'selected' => ($wgTitle->isSpecial( 'Following' )),
 						);
 			}
 			
 			// avatar dropdown menu
 			$this->avatarMenu = array(
-					View::link(SpecialPage::getTitleFor('Preferences'), wfMsg('oasis-user-page-change-avatar'))
+					Wikia::link(SpecialPage::getTitleFor('Preferences'), wfMsg('oasis-user-page-change-avatar'))
 					);
 		}
 		
@@ -339,14 +339,14 @@ class UserPagesHeaderModule extends Module {
 					
 					$this->subtitle .= ' | ';
 					$this->subtitle .= $bubble;
-					$this->subtitle .= View::link($talkPage);
+					$this->subtitle .= Wikia::link($talkPage);
 					break;
 				
 				case NS_USER_TALK:
 					$subjectPage = $wgTitle->getSubjectPage();
 					
 					$this->subtitle .= ' | ';
-					$this->subtitle .= View::link($subjectPage);
+					$this->subtitle .= Wikia::link($subjectPage);
 					break;
 			}
 		}

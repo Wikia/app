@@ -1,16 +1,9 @@
 <?php
 class ProposalController extends WikiaSpecialPageController {
 
-	protected $app = null;
-
 	public function __construct() {
-		$this->app = F::app();
-
-		$this->allowedRequests[ 'index' ] = array( 'html' );
-		$this->allowedRequests[ 'renderDashboard' ] = array( 'html' );
-
 		// standard SpecialPage constructor call
-		parent::__construct( 'Proposal', '', false );
+		parent::__construct( 'Proposal', 'proposal', false );
 	}
 
 	/**
@@ -21,16 +14,35 @@ class ProposalController extends WikiaSpecialPageController {
 	}
 
 	public function renderDashboard() {
+		$this->setHeaders();
+
 		$wikiId = $this->request->getVal( 'wikiId' );
 		$userId = $this->request->getVal( 'userId' );
 
 		$usersResponse = $this->sendRequest('ProposalUsers', 'get', array( 'wikiId' => $wikiId ) );
 		$pagesResponse = $this->sendRequest('ProposalPages', 'get', array( 'userId' => $userId ) );
+//var_dump($usersResponse->getException());
+//var_dump($pagesResponse->getException());
+
 
 		$this->response->setVal( 'wikiId', $wikiId );
 		$this->response->setVal( 'userId', $userId );
 		$this->response->setVal( 'users', $usersResponse->getVal( 'users' ) );
 		$this->response->setVal( 'pages', $pagesResponse->getVal( 'pages' ) );
+	}
+
+	public function getUsersView() {
+		$data = array(
+			'wikiId' => 1,
+			'users' => array(
+					array( 'userId' => 11, 'userName' => 'Some User 1' ),
+					array( 'userId' => 12, 'userName' => 'Some User 2' ),
+			)
+		);
+
+		$usersView = $this->app->getView( 'ProposalUsers', 'get', $data );
+
+		$this->response->setBody( $usersView->render() );
 	}
 
 }

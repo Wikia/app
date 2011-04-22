@@ -20,8 +20,8 @@
 	</ul>
 
 	<? if ( $userName && count($changeList) ) :?>
-		<?= View::specialPageLink('Contributions/' . $userName, 'userprofilepage-top-recent-activity-see-more', 'more') ;?>
+		<?= Wikia::specialPageLink('Contributions/' . $userName, 'userprofilepage-top-recent-activity-see-more', 'more') ;?>
 	<? elseif(empty($userName)): ?>
-		<?= View::specialPageLink('WikiActivity', 'oasis-more', 'more') ?>
+		<?= Wikia::specialPageLink('WikiActivity', 'oasis-more', 'more') ?>
 	<? endif ;?>
 </section>

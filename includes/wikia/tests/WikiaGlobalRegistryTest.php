@@ -11,12 +11,12 @@ class WikiaGlobalRegistryTest extends PHPUnit_Framework_TestCase {
 	private $registry;
 	
 	public function setUp() {
-		$this->registry = new WikiaGlobalsRegistry();
+		$this->registry = new WikiaGlobalRegistry();
 		unset($GLOBALS[self::VALID_KEY]);
 		unset($GLOBALS[self::OTHER_VALID_KEY]);
 	}
 	
-	public function teardDown() {
+	public function tearDown() {
 		unset($GLOBALS[self::VALID_KEY]);
 		unset($GLOBALS[self::OTHER_VALID_KEY]);
 	}

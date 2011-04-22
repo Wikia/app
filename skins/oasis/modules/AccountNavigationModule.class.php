@@ -125,7 +125,7 @@ class AccountNavigationModule extends Module {
 			}
 
 			// link to Help:Content (never render as redlink)
-			$this->dropdown[] = View::link(Title::newFromText( wfMsgForContent( 'helppage' ) ), wfMsg('help'), array('title' => '', 'data-id' => 'help'), '', array('known'));
+			$this->dropdown[] = Wikia::link(Title::newFromText( wfMsgForContent( 'helppage' ) ), wfMsg('help'), array('title' => '', 'data-id' => 'help'), '', array('known'));
 
 			// logout link
 			$this->dropdown[] = $this->renderPersonalUrl('logout');

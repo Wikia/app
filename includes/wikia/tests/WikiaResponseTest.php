@@ -1,4 +1,3 @@
-
 <?php
 /**
  * @group mwabstract
@@ -47,7 +46,6 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 *
 	 * @dataProvider settingHeadersDataProvider
 	 */
 	public function testOperatingOnHeaders( $replace, $headerValues ) {
@@ -130,9 +128,9 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @dataProvider formatDataProvider
 	 */
-	public function testPrinters( $format ) {
+	public function testView( $format ) {
 		$this->object->setFormat( $format );
-		$this->object->setTemplatePath( dirname( __FILE__ ) . '/_fixtures/TestTemplate.php' );
+		$this->object->getView()->setTemplatePath( dirname( __FILE__ ) . '/_fixtures/TestTemplate.php' );
 		$this->object->setVal( self::TEST_VAL_NAME, self::TEST_VAL_VALUE );
 		if( $format == 'json' ) {
 			$this->object->setException( new WikiaException('TestException') );
@@ -150,40 +148,13 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
-	public function testDefaultPrinter() {
-		$this->object->setPrinter( F::build( 'WikiaResponsePrinter' ) );
-		$output = $this->object->getPrinter()->render( $this->object );
+	public function testViewDefaultRender() {
+		$this->object->setView( F::build( 'WikiaView' ) );
+		$this->object->setFormat( 'raw' );
+
+		$output = $this->object->getView()->render( $this->object );
 
 		$this->assertStringStartsWith( '<pre>', $output );
-	}
-
-	public function buildingTemplatePathDataProvider() {
-		return array(
-		 array( true ),
-		 array( false )
-		);
-	}
-
-	/**
-	 * @dataProvider buildingTemplatePathDataProvider
-	 */
-	public function testBuildingTemplatePath( $classExists ) {
-		$appMock = $this->getMock( 'WikiaApp', array( 'getGlobal' ) );
-		$appMock->expects( $this->once() )
-		        ->method( 'getGlobal' )
-		        ->with( $this->equalTo( 'wgAutoloadClasses' ) )
-		        ->will( $classExists ? $this->returnValue( array( __CLASS__ . 'Controller' => __FILE__ ) ) : $this->returnValue( array() ) );
-
-		F::setInstance( 'App', $appMock );
-
-		if( !$classExists ) {
-			$this->setExpectedException( 'WikiaException' );
-		}
-		$this->object->buildTemplatePath( __CLASS__, 'hello', true );
-
-		if( $classExists ) {
-			$this->assertEquals( (dirname( __FILE__ ) . '/templates/' . __CLASS__ . '_hello.php'), $this->object->getTemplatePath() );
-		}
 	}
 
 }

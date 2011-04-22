@@ -78,23 +78,17 @@ global $wgAutoloadClasses;
 $wgAutoloadClasses['F'] = $IP . '/includes/wikia/WikiaSuperFactory.class.php';
 $wgAutoloadClasses['WF'] = $IP . '/includes/wikia/WikiaSuperFactory.class.php';
 $wgAutoloadClasses['WikiaApp'] = $IP . '/includes/wikia/WikiaApp.class.php';
-$wgAutoloadClasses['WikiaHookHandler'] = $IP . '/includes/wikia/WikiaHookHandler.class.php';
-$wgAutoloadClasses['IWikiaHookHandler'] = $IP . '/includes/wikia/IWikiaHookHandler.interface.php';
 $wgAutoloadClasses['WikiaHookDispatcher'] = $IP . '/includes/wikia/WikiaHookDispatcher.class.php';
 $wgAutoloadClasses['WikiaRegistry'] = $IP . '/includes/wikia/WikiaRegistry.class.php';
-$wgAutoloadClasses['WikiaGlobalsRegistry'] = $IP . '/includes/wikia/WikiaGlobalsRegistry.class.php';
+$wgAutoloadClasses['WikiaGlobalRegistry'] = $IP . '/includes/wikia/WikiaGlobalRegistry.class.php';
 $wgAutoloadClasses['WikiaLocalRegistry'] = $IP . '/includes/wikia/WikiaLocalRegistry.class.php';
-$wgAutoloadClasses['WikiaCompositeRegistry'] = $IP . '/includes/wikia/WikiaCompositeRegistry.class.php';
 $wgAutoloadClasses['WikiaDispatcher'] = $IP . '/includes/wikia/WikiaDispatcher.class.php';
 $wgAutoloadClasses['WikiaController'] = $IP . '/includes/wikia/WikiaController.class.php';
 $wgAutoloadClasses['WikiaSpecialPageController'] = $IP . '/includes/wikia/WikiaSpecialPageController.class.php';
 $wgAutoloadClasses['WikiaErrorController'] = $IP . '/includes/wikia/WikiaErrorController.class.php';
 $wgAutoloadClasses['WikiaRequest'] = $IP . '/includes/wikia/WikiaRequest.class.php';
-$wgAutoloadClasses['WikiaHTTPRequest'] = $IP . '/includes/wikia/WikiaHTTPRequest.class.php';
 $wgAutoloadClasses['WikiaResponse'] = $IP . '/includes/wikia/WikiaResponse.class.php';
-$wgAutoloadClasses['WikiaResponsePrinter'] = $IP . '/includes/wikia/WikiaResponsePrinter.class.php';
-$wgAutoloadClasses['WikiaResponseJSONPrinter'] = $IP . '/includes/wikia/WikiaResponseJSONPrinter.class.php';
-$wgAutoloadClasses['WikiaResponseHTMLPrinter'] = $IP . '/includes/wikia/WikiaResponseHTMLPrinter.class.php';
+$wgAutoloadClasses['WikiaView'] = $IP . '/includes/wikia/WikiaView.class.php';
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
 
@@ -126,7 +120,7 @@ $wgAutoloadClasses['AutomaticWikiAdoptionJobSetAdoptionFlag']  =  $IP.'/extensio
 $wgAutoloadClasses['AutomaticWikiAdoptionJobFactory']  =  $IP.'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionJobFactory.php';
 
 // core
-$wgAutoloadClasses['View']  =  $IP.'/includes/wikia/View.php';
+//$wgAutoloadClasses['View']  =  $IP.'/includes/wikia/View.php';
 $wgAutoloadClasses['Module']  =  $IP.'/includes/wikia/Module.php';
 
 // services

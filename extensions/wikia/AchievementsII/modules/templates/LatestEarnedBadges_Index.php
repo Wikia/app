@@ -6,5 +6,5 @@
 		<?=	wfRenderPartial('LatestEarnedBadges', 'ListBadges', array('badges'=> $recents, 'displayMode'=> 'LatestBadges')); ?>
 	</ul>
 
-	<?= View::specialPageLink('WikiActivity', 'oasis-more', 'more') ?>
+	<?= Wikia::specialPageLink('WikiActivity', 'oasis-more', 'more') ?>
 </section>

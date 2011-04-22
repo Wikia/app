@@ -968,18 +968,14 @@ function wfMsgWithFallback( $key ) {
 	return $msg;
 }
 
-function wfRenderPartial($name, $action = 'Index', $data = null) {
-	return View::partial($name, $action, $data)->render();
+// TODO: remove this
+function wfRenderPartial($name, $action = 'Index', $data = array()) {
+	return F::app()->getView( $name, $action, $data )->render();
 }
 
+// TODO: remove this
 function wfRenderModule($name, $action = 'Index', $params = null) {
-	$module = Module::get($name, $action, $params);
-	if( is_object($module) ) {
-		return $module->render();
-	}
-	else {
-		return '';
-	}
+	return F::app()->renderView( $name, $action, $params);
 }
 
 /**

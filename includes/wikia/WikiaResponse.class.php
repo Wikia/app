@@ -6,18 +6,24 @@ class WikiaResponse {
 	const RESPONSE_CODE_ERROR = 501;
 	const RESPONSE_CODE_FORBIDDEN = 403;
 
-	private $printer = null;
+	/**
+	 * View object
+	 * @var WikiaView
+	 */
+	private $view = null;
 	private $body = null;
 	private $code;
 	private $headers = array();
 	private $format = null;
+	private $controllerName = null;
+	private $methodName = null;
 	protected $data = array();
 	protected $exception = null;
-	protected $templatePath = null;
 
 	public function __construct( $format ) {
 		$this->setCode( self::RESPONSE_CODE_OK );
 		$this->setFormat( $format );
+		$this->setView( F::build( 'WikiaView' ) );
 	}
 
 	public function setException(Exception $exception) {
@@ -25,19 +31,36 @@ class WikiaResponse {
 	}
 
 	/**
-	 * get printer
-	 * @return WikiaResponsePrinter
+	 * get view
+	 * @return WikiaView
 	 */
-	public function getPrinter() {
-		return $this->printer;
+	public function getView() {
+		return $this->view;
 	}
 
 	/**
-	 * set printer
-	 * @param WikiaResponsePrinter $printer
+	 * set view
+	 * @param WikiaView $view
 	 */
-	public function setPrinter( WikiaResponsePrinter $printer ) {
-		$this->printer = $printer;
+	public function setView( WikiaView $view ) {
+		$this->view = $view;
+		$this->view->setResponse( $this );
+	}
+
+	public function getControllerName() {
+		return $this->controllerName;
+	}
+
+	public function setControllerName( $value ) {
+		$this->controllerName = $value;
+	}
+
+	public function getMethodName() {
+		return $this->methodName;
+	}
+
+	public function setMethodName( $value ) {
+		$this->methodName = $value;
 	}
 
 	public function getData() {
@@ -72,34 +95,12 @@ class WikiaResponse {
 		$this->code = $value;
 	}
 
-	public function getTemplatePath() {
-		return $this->templatePath;
-	}
-
-	public function setTemplatePath( $value ) {
-		$this->templatePath = $value;
-	}
-
-	public function buildTemplatePath( $controllerName, $methodName, $forceRebuild = false ) {
-		if( ( $this->templatePath == null ) || $forceRebuild ) {
-			$autoloadClasses = WF::build( 'App' )->getGlobal( 'wgAutoloadClasses' );
-			$controllerClass = $controllerName . 'Controller';
-
-			if( empty( $autoloadClasses[$controllerClass] ) ) {
-				throw new WikiaException( "Invalid controller name: $controllerName" );
-			}
-
-			$this->setTemplatePath( dirname( $autoloadClasses[$controllerClass] ) . '/templates/' . $controllerName . '_' . $methodName . '.php' );
-		}
-	}
-
 	public function getFormat() {
 		return $this->format;
 	}
 
 	public function setFormat( $value ) {
 		$this->format = $value;
-		$this->setPrinter( WF::build( 'WikiaResponse' . strtoupper( $value ) . 'Printer' ) );
 	}
 
 	public function getHeaders() {
@@ -158,20 +159,25 @@ class WikiaResponse {
 
 	/**
 	 * alias to be compatibile with MW AjaxDispatcher
+	 * @return string
 	 */
 	public function printText() {
 		print $this->toString();
 	}
 
+	public function render() {
+		print $this->toString();
+	}
+
 	public function toString() {
 		if( $this->body === null ) {
-			$this->setBody( $this->getPrinter()->render( $this ) );
+			$this->body = $this->view->render();
 		}
-		return $this->getBody();
+		return $this->body;
 	}
 
 	public function sendHeaders() {
-		$this->getPrinter()->prepareResponse($this);
+		$this->view->prepareResponse($this);
 
 		$responseCodeSent = false;
 
