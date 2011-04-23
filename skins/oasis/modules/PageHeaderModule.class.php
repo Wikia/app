@@ -99,7 +99,7 @@ class PageHeaderModule extends Module {
 		$ret = array();
 
 		// items to be added to "edit" dropdown
-		$actions = array('move', 'protect', 'unprotect', 'delete', 'undelete');
+		$actions = array('history', 'move', 'protect', 'unprotect', 'delete', 'undelete');
 
 		// add "edit" to dropdown (if action button is not an edit)
 		if (!in_array($this->actionName, array('edit', 'source'))) {
