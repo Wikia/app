@@ -22,7 +22,7 @@
 <?php
 			if ( !empty( $promptLogin ) ) {
 ?>
-			<?= Wikia::specialPageLink('SignUp', 'oasis-edit-protected-article', 'wikia-button loginToEditProtectedPage', 'blank.gif', 'oasis-edit-protected-article', 'sprite edit', $loginURL) ?>
+			<?= Wikia::specialPageLink('SignUp', 'oasis-edit-protected-article', 'loginToEditProtectedPage', 'blank.gif', 'oasis-edit-protected-article', 'sprite edit-pencil', $loginURL) ?>
 <?php
 			} else {
 ?>

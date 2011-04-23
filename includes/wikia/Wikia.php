@@ -1769,7 +1769,7 @@ class Wikia {
 			if ($imgclass != '') {
 				$attr['class'] = $imgclass;
 			}
-			$message = Xml::element('img', $attr) . $message;
+			$message = Xml::element('img', $attr) . ' ' . $message;
 		}
 
 		$linker = self::getLinker();
