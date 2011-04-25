@@ -3,8 +3,8 @@
 		<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
 		<?php if( empty( $wgEnableWikiAnswers ) ): ?>
 		<div class="mainpage-add-page">
-			<?= View::specialPageLink('CreatePage', null, 'createpage', 'blank.gif', 'oasis-create-page', 'sprite new'); ?>
-			<?= View::specialPageLink('CreatePage', 'oasis-add-page', 'createpage'); ?>
+			<?= Wikia::specialPageLink('CreatePage', null, 'createpage', 'blank.gif', 'oasis-create-page', 'sprite new'); ?>
+			<?= Wikia::specialPageLink('CreatePage', 'oasis-add-page', 'createpage'); ?>
 		</div>
 		<?php endif; ?>
 		<div class="tally mainpage-tally">
