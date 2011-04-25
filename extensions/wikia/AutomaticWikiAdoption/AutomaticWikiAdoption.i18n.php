@@ -39,7 +39,7 @@ Sound like fun?",
 	'automaticwikiadoption-not-enough-edits' => "Oops! You need to have more than 10 edits to adopt this wiki.",
 	'automaticwikiadoption-adopted-recently' => "Oops! You have already adopted another wiki recently. You will need to wait a while before you can adopt a new wiki.",
 	'automaticwikiadoption-log-reason' => 'Automatic Wiki Adoption',
-	'automaticwikiadoption-notification' => "$1 is up for adoption! You can become the new owner. '''Adopt now!'''",
+	'automaticwikiadoption-notification' => "$1 is up for adoption! You can become the new owner. $2!",
 	'automaticwikiadoption-mail-first-subject' => "We have not seen you around in a while",
 	'automaticwikiadoption-mail-first-content' => "Hi $1,
 
@@ -105,7 +105,7 @@ $messages['br'] = array(
 	'automaticwikiadoption-adoption-successed' => "Gourc'hemennoù ! Merour oc'h bremañ war ar wiki-mañ !",
 	'automaticwikiadoption-adoption-failed' => "Digarezit ac'hanomp. Klasket on eus lakaat ac'hanoc'h da verour, met ne ya ket en-dro. Mar plij [http://community.wikia.com/Special:Contact deuit e darempred ganeomp], hag e klaskimp skoazellañ ac'hanoc'h.",
 	'automaticwikiadoption-not-allowed' => "Digarezit ac'hanomp. Ne c'hellit ket degemer ar wiki-mañ bremañ.",
-	'automaticwikiadoption-notification' => "$1 a zo prest da vezañ degemeret ! Gellout a rit bezañ ar perc'henn nevez. '''Degemer bremañ !'''",
+	'automaticwikiadoption-notification' => "$1 a zo prest da vezañ degemeret ! Gellout a rit bezañ ar perc'henn nevez. $2 !",
 	'automaticwikiadoption-mail-first-subject' => "N'hon eus ket gwelet ac'hanoc'h abaoe pell",
 	'automaticwikiadoption-mail-adoption-subject' => 'Degemeret eo bet ho wiki !',
 	'tog-adoptionmails' => 'Kas din ur postel pa cheñch un dra bennak da geñver merañ ar wiki (merourien hepken)',
@@ -137,7 +137,7 @@ $messages['de'] = array(
 	'automaticwikiadoption-not-enough-edits' => 'Auweia! Du musst mehr als 10 Bearbeitungen getätigt haben, um dieses Wiki adoptieren zu können.',
 	'automaticwikiadoption-adopted-recently' => 'Auweia! Du hast in letzter Zeit bereits ein anderes Wiki adoptiert. Du musst eine Weile warten, bevor du ein weiteres Wiki adoptieren kannst.',
 	'automaticwikiadoption-log-reason' => 'Automatische Wikiübernahme',
-	'automaticwikiadoption-notification' => "$1 kann übernommen werden! Du kannst der neue Besitzer werden. '''Jetzt übernehmen!'''",
+	'automaticwikiadoption-notification' => "$1 kann übernommen werden! Du kannst der neue Besitzer werden. $2!",
 	'automaticwikiadoption-mail-first-subject' => 'Wir haben dich eine Weile nicht gesehen',
 	'automaticwikiadoption-mail-first-content-HTML' => 'Hallo $1, <br /><br />
 Es ist ein paar Wochen her, dass wir ein Administrator in deinem Wiki gesehen haben. Denk daran, deine Community wird von dir erwarten, dass das Wiki reibungslos läuft.<br /><br />
@@ -190,7 +190,7 @@ $messages['es'] = array(
 	'automaticwikiadoption-not-enough-edits' => '¡Oops! Necesitas tener más de 10 ediciones para adoptar este wiki.',
 	'automaticwikiadoption-adopted-recently' => '¡Oops! Ya has adoptado otro wiki recientemente. Necesitas esperar un tiempo antes de que puedas adoptar un nuevo wiki.',
 	'automaticwikiadoption-log-reason' => 'Adopción automática de wikis',
-	'automaticwikiadoption-notification' => "¡$1 está disponible para la adopción! Puedes ser el nuevo fundador. '''¡Adóptala ahora!'''",
+	'automaticwikiadoption-notification' => "¡$1 está disponible para la adopción! Puedes ser el nuevo fundador. $2.",
 	'automaticwikiadoption-mail-first-subject' => 'No te hemos visto desde hace algún tiempo',
 	'automaticwikiadoption-mail-first-content-HTML' => 'Hola $1,<br /><br />
 Han pasado un par de semanas desde que hemos visto a un administrador en tu wiki. Recuerda, tu comunidad te estará buscando para asegurarse que la wiki trabaja sin problemas.<br /><br />
@@ -247,7 +247,7 @@ $messages['fi'] = array(
 	'automaticwikiadoption-button-adopt' => 'Adoptoi nyt',
 	'automaticwikiadoption-know-more-header' => 'Haluatko tietää enemmän?',
 	'automaticwikiadoption-adoption-successed' => 'Onnittelut! Olet nyt ylläpitäjä tässä wikissä!',
-	'automaticwikiadoption-notification' => "$1 on adoptoitavana! Sinusta voi tulla uusi omistaja. '''Adoptoi nyt!'''",
+	'automaticwikiadoption-notification' => "$1 on adoptoitavana! Sinusta voi tulla uusi omistaja. $2!",
 );
 
 /** French (Français) */
@@ -261,7 +261,7 @@ $messages['fr'] = array(
 	'automaticwikiadoption-adoption-failed' => 'Nous sommes désolés. Nous avons essayé de vous nommer administrateur, mais cela n’a pas fonctionné. Veuillez [http://community.wikia.com/Special:Contact nous contacter], et nous allons essayer de vous aider.',
 	'automaticwikiadoption-not-allowed' => 'Nous sommes désolés. Vous ne pouvez pas adopter ce wiki maintenant.',
 	'automaticwikiadoption-log-reason' => 'Adoption de wiki automatique',
-	'automaticwikiadoption-notification' => "$1 est disponible pour l’adoption ! Vous pouvez en devenir le nouveau propriétaire. '''Adoptez maintenant !'''",
+	'automaticwikiadoption-notification' => "$1 est disponible pour l’adoption ! Vous pouvez en devenir le nouveau propriétaire. $2 !",
 	'automaticwikiadoption-mail-first-subject' => 'Nous ne vous avons pas vu depuis un bon moment',
 	'automaticwikiadoption-mail-first-content-HTML' => 'Bonjour $1,<br /><br />
 Cela fait quelques semaines que nous n’avons pas vu d’administrateur sur votre wiki. Rappelez-vous que votre communauté se tournera vers vous pour s’assurer que le wiki fonctionne sans problème.<br /><br />
@@ -320,7 +320,7 @@ $messages['ia'] = array(
 	'automaticwikiadoption-not-enough-edits' => 'Ups! Tu debe haber facite plus de 10 modificationes pro poter adoptar iste wiki.',
 	'automaticwikiadoption-adopted-recently' => 'Ups! Tu ha jam adoptate un wiki recentemente. Tu debe attender un certe tempore ante que tu pote adoptar un altere wiki.',
 	'automaticwikiadoption-log-reason' => 'Adoption automatic de wikis',
-	'automaticwikiadoption-notification' => "$1 es disponibile pro adoption! Tu pote devenir le nove proprietario. '''Adopta lo ora!'''",
+	'automaticwikiadoption-notification' => "$1 es disponibile pro adoption! Tu pote devenir le nove proprietario. $2.",
 	'automaticwikiadoption-mail-first-subject' => 'Nos non te ha vidite durante un tempore',
 	'automaticwikiadoption-mail-first-content-HTML' => 'Salute $1,<br /><br />
 Plure septimanas ha passate depost que nos ha vidite un administrator in tu wiki. Rememora que tu communitate depende de te pro assecurar le bon functionamento del wiki.<br /><br />
@@ -391,7 +391,7 @@ $messages['mk'] = array(
 	'automaticwikiadoption-not-enough-edits' => 'Упс! Мора да имате барем 10 уредувања за да можете да го присвоите викито.',
 	'automaticwikiadoption-adopted-recently' => 'Упс! Неодамна имате посвоено друго вики. Ќе треба да почекате пред да можете да посвоите уште едно.',
 	'automaticwikiadoption-log-reason' => 'Автоматско посвојување на вики',
-	'automaticwikiadoption-notification' => "$1 може да се посвои! Имате можност да бидете новиот сопственик. '''Посвојте го веднаш!'''",
+	'automaticwikiadoption-notification' => "$1 може да се посвои! Имате можност да бидете новиот сопственик. $2.",
 	'automaticwikiadoption-mail-first-subject' => 'Не ве имаме видено во последно време',
 	'automaticwikiadoption-mail-first-content-HTML' => 'Здраво $1,<br /><br />
 Има пар недели како немаме видено администратор на вашето вики. Запомнете дека вашата заедница очекува од вас да се грижите викито да работи правилно.<br /><br />
@@ -441,7 +441,7 @@ $messages['ms'] = array(
 	'automaticwikiadoption-adoption-failed' => 'Maaf. Kami cuba jadikan anda pentadbir, tetapi tidak menjadi pula. Sila [http://community.wikia.com/Special:Contact hubungi kami], supaya kami boleh membantu anda.',
 	'automaticwikiadoption-not-allowed' => 'Maafkan kami, anda tidak boleh mengambil alih wiki ini sekarang.',
 	'automaticwikiadoption-log-reason' => 'Penerimaan Hakmilik Wiki Automatik',
-	'automaticwikiadoption-notification' => "$1 perlu diambil alih! Mungkin anda pemilik baru yang dicari-cari. '''Ambil alih sekarang!'''",
+	'automaticwikiadoption-notification' => "$1 perlu diambil alih! Mungkin anda pemilik baru yang dicari-cari. $2!",
 	'automaticwikiadoption-mail-first-subject' => 'Sudah sekian lama kami tak berjumpa dengan anda',
 	'automaticwikiadoption-mail-first-content-HTML' => 'Apa khabar $1,<br /><br />
 Sudah dua minggu sejak kami melihat seorang pentadbir yang bertugas di wiki anda. Ingat, komuniti anda akan bergantung pada anda untuk memastikan wiki ini berjalan dengan lancar.<br /><br />
@@ -493,7 +493,7 @@ $messages['nl'] = array(
 	'automaticwikiadoption-not-enough-edits' => 'U moet meer dan 10 bewerkingen gemaakt hebben om deze wiki te kunnen adopteren.',
 	'automaticwikiadoption-adopted-recently' => 'U hebt recentelijk al een wiki geadapteerd. U moet even wachten voordat u nog een wiki kunt adopteren.',
 	'automaticwikiadoption-log-reason' => 'Automatische wikiadoptie',
-	'automaticwikiadoption-notification' => "$1 kan geadopteerd worden. U kunt de nieuwe eigenaar worden. '''Adopteer de wiki nu!'''",
+	'automaticwikiadoption-notification' => "$1 kan geadopteerd worden. U kunt de nieuwe eigenaar worden. $2.",
 	'automaticwikiadoption-mail-first-subject' => 'We hebben u al een tijdje niet gezien',
 	'automaticwikiadoption-mail-first-content-HTML' => 'Hallo $1,<br /><br />
 Het is al weer een aantal weken geleden dat er een beheerder actief is geweest op uw wiki. Denk er alstublieft aan dat uw gemeenschap naar u kijkt als het gaat om het soepel laten draaien van de wiki.<br /><br />
@@ -541,7 +541,7 @@ $messages['no'] = array(
 	'automaticwikiadoption-adoption-failed' => 'Beklager. Vi prøvde å gjøre deg til administrator, men det fungerte ikke. [http://community.wikia.com/Special:Contact Kontakt oss], så skal vi prøve å hjelpe deg.',
 	'automaticwikiadoption-not-allowed' => 'Beklager. Du kan ikke adoptere denne wikien akkurat nå.',
 	'automaticwikiadoption-log-reason' => 'Automatisk wikiadopsjon',
-	'automaticwikiadoption-notification' => "$1 kan adopteres! Du kan bli den nye eieren. '''Adopter nå!'''",
+	'automaticwikiadoption-notification' => "$1 kan adopteres! Du kan bli den nye eieren. $2!",
 	'automaticwikiadoption-mail-first-subject' => 'Vi har ikke sett deg på en stund',
 	'automaticwikiadoption-mail-first-content-HTML' => 'Hei $1,<br /><br />
 Det har gått noen uker siden vi har sett en administrator på wikien din. Husk at fellesskapet regner med at du sørger for at wikien går problemfritt.<br /><br />
@@ -607,7 +607,7 @@ $messages['pt'] = array(
 	'automaticwikiadoption-not-enough-edits' => 'Precisa de ter feito mais de 10 edições para adoptar esta wiki.',
 	'automaticwikiadoption-adopted-recently' => 'Já adoptou outra wiki recentemente. Tem de esperar algum tempo até poder adoptar mais uma wiki.',
 	'automaticwikiadoption-log-reason' => 'Adopção Automática de Wikis',
-	'automaticwikiadoption-notification' => "É possível adoptar a wiki $1! Pode tornar-se o novo proprietário. '''Adopte-a agora!'''",
+	'automaticwikiadoption-notification' => "É possível adoptar a wiki $1! Pode tornar-se o novo proprietário. $2.",
 	'automaticwikiadoption-mail-first-subject' => 'Já não o vemos há algum tempo',
 	'automaticwikiadoption-mail-first-content-HTML' => 'Olá $1,<br /><br />
 Há já duas semanas que um administrador não visita a sua wiki. Lembre-se que a comunidade depende de si para garantir que a wiki está a funcionar normalmente.<br /><br />
@@ -658,7 +658,7 @@ $messages['pt-br'] = array(
 	'automaticwikiadoption-adoption-failed' => 'Infelizmente, tentámos torná-lo administrador desta wiki mas não funcionou. [http://community.wikia.com/Special:Contact Contacte-nos] e tentaremos ajudá-lo.',
 	'automaticwikiadoption-not-allowed' => 'Desculpe. Não pode adotar esta wiki agora.',
 	'automaticwikiadoption-log-reason' => 'Adoção Automática de Wikis',
-	'automaticwikiadoption-notification' => "É possível adoptar a wiki $1! Pode tornar-se o novo proprietário. '''Adote-a agora!'''",
+	'automaticwikiadoption-notification' => "É possível adoptar a wiki $1! Pode tornar-se o novo proprietário. $2.",
 	'automaticwikiadoption-mail-first-subject' => 'Já não o vemos há algum tempo',
 	'automaticwikiadoption-mail-first-content-HTML' => 'Olá $1,<br /><br />
 Há já duas semanas que um administrador não visita a sua wiki. Lembre-se que a comunidade depende de si para garantir que a wiki está a funcionar normalmente.<br /><br />
@@ -730,7 +730,7 @@ $messages['sv'] = array(
 	'automaticwikiadoption-adoption-failed' => 'Vi ber om ursäkt. Vi försökte att göra dig till en administratör, men det fungerade inte. Vänligen [http://community.wikia.com/Special:Contact kontakta oss], så ska vi försöka hjälpa dig.',
 	'automaticwikiadoption-not-allowed' => 'Vi ber om ursäkt. Du kan inte adoptera denna wiki just nu.',
 	'automaticwikiadoption-log-reason' => 'Automatisk Wiki-Adoption',
-	'automaticwikiadoption-notification' => "$1 är tillgänglig för adoption! Du kan bli den nya ägaren. '''Adoptera nu!'''",
+	'automaticwikiadoption-notification' => "$1 är tillgänglig för adoption! Du kan bli den nya ägaren. $2!",
 	'automaticwikiadoption-mail-first-subject' => 'Vi har inte sett dig på ett tag',
 	'automaticwikiadoption-mail-first-content-HTML' => 'Hej $1,<br /><br />
 Det har varit ett par veckor sen vi såg en administratör på din wiki. Kom ihåg att din commynity kommer att titta till er för att se om wikin fungerar som den ska.<br /><br />

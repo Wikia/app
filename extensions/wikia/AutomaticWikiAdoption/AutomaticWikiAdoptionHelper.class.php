@@ -289,14 +289,18 @@ class AutomaticWikiAdoptionHelper {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function onSkinTemplateOutputPageBeforeExec(&$skin, &$tpl) {
-		global $wgUser, $wgCityId, $wgScript;
+		global $wgUser, $wgCityId, $wgScript, $wgSitename;
 		wfProfileIn(__METHOD__);
 
 		if (Wikia::isOasis() && !self::getDismissNotificationState($wgUser) && self::isAllowedToAdopt($wgCityId, $wgUser) == self::USER_ALLOWED) {
 
-			NotificationsModule::addNotification('custom notifiation', array(
-				'name' => 'AutomaticWikiAdoption',
-				'dismissUrl' => $wgScript . '?action=ajax&rs=AutomaticWikiAdoptionAjax&method=dismiss',
+			NotificationsModule::addNotification(
+				wfMsg('automaticwikiadoption-notification', 
+						$wgSitename, 
+						Wikia::SpecialPageLink('AutomaticWikiAdoption','automaticwikiadoption-button-adopt')), 
+				array(
+					'name' => 'AutomaticWikiAdoption',
+					'dismissUrl' => $wgScript . '?action=ajax&rs=AutomaticWikiAdoptionAjax&method=dismiss',
 			), NotificationsModule::NOTIFICATION_CUSTOM);
 		}
 
