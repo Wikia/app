@@ -320,7 +320,7 @@ var WikiBuilder = {
 		var th = t.height();
 		var tw = t.width();
 		t.css('position', op);
-		wb.height(fh).width(fw);
+//		wb.height(fh).width(fw);
 		wb.animate({height: th, width: tw}, function(){
 			t.animate({'opacity':'show'},{queue:false, duration: 250});
 			if (dot) {
@@ -446,21 +446,10 @@ ThemeDesigner.init = function() {
 	$('#ThemeTab li label').remove();
 };
 ThemeDesigner.set = function(setting, newValue) {
-	var t = themes[newValue]; 
-	ThemeDesigner.settings = t; 
-	var sass = '/__sass/skins/oasis/css/oasis.scss/' + wgStyleVersion + '/'; 
-	var params = ''; 
-	params += 'color-body=' + escape(t['color-body']); 
-	params += '&color-page=' + escape(t['color-page']); 
-	params += '&color-buttons=' + escape(t['color-buttons']); 
-	params += '&color-links=' + escape(t['color-links']); 
-	params += "&color-header=" + escape(t["color-header"]); 
-	params += '&background-image=' + encodeURIComponent(t['background-image']); 
-	params += '&background-align=' + escape(t['background-align']); 
-	params += '&background-tiled=' + escape(t['background-tiled']);
-
+	ThemeDesigner.settings = themes[newValue];
+	var sassUrl = $.getSassCommonURL('/skins/oasis/css/oasis.scss', ThemeDesigner.settings); 
 	$('.ThemeDesignerSASS').addClass('remove');
-	$.get(sass+params, function(data) {
+	$.get(sassUrl, function(data) {
 		$('<style class="ThemeDesignerSASS">' + data + '</style>').appendTo('head');
 		$('.ThemeDesignerSASS.remove').remove();
 	});
