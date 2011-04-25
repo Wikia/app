@@ -120,6 +120,7 @@ AdConfig = {
 /* DART Configuration */
 AdConfig.DART = {
 	adDriverNumCall: null,
+	categoryStrMaxLength: 300,
 	corporateDbName: 'wikiaglobal',
 	hasPrefooters: null,
 	height: null,
@@ -224,6 +225,7 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 		AdConfig.DART.getQuantcastSegmentKV() +
 		AdConfig.DART.getImpressionCount(slotname) +
 		AdConfig.DART.getPartnerKeywords() +
+		AdConfig.DART.getCategories() +
 		AdConfig.DART.getLocKV(slotname) +
 		AdConfig.DART.getDcoptKV(slotname) +
 		mtfIFPath +
@@ -395,7 +397,7 @@ AdConfig.DART.getDomainKV = function (hostname){
 
 AdConfig.DART.getTitle = function(){
 	if (typeof wgPageName != 'undefined' && wgPageName) {
-		return "wpage=" + escape(wgPageName) + ";";
+		return "wpage=" + encodeURIComponent(wgPageName) + ";";
 	} else {
 		return "";
 	}
@@ -481,7 +483,7 @@ AdConfig.DART.getImpressionCount = function (slotname) {
 	}
 
 	return '';
-}
+};
 
 AdConfig.DART.getPartnerKeywords = function() {
 	var kw = '';
@@ -489,9 +491,26 @@ AdConfig.DART.getPartnerKeywords = function() {
 		return kw;
 	}
 
-	kw = 'pkw=' + escape(window.partnerKeywords) + ';';
+	kw = 'pkw=' + encodeURIComponent(window.partnerKeywords) + ';';
 
 	return kw;
+};
+
+AdConfig.DART.getCategories = function() {
+	var categories = '';
+
+	if (typeof wgCategories != 'object' || !wgCategories) {
+		return categories;
+	}
+
+	for (var i=0; i < wgCategories.length; i++) {
+		categoryStr = 'cat=' + encodeURIComponent(wgCategories[i].toLowerCase()) + ';';
+		if (categories.length + categoryStr.length <= AdConfig.DART.categoryStrMaxLength) {
+			categories += categoryStr;
+		}
+	}
+
+	return categories;
 };
 
 AdConfig.DART.getLocKV = function (slotname){

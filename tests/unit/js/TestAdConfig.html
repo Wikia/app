@@ -271,11 +271,11 @@ test('getDomainKV', function() {
 
 test('getTitle', function() {
   window.wgPageName = 'Muppet_Wiki';
-  equal( AdConfig.DART.getTitle(), 'wpage='+escape(window.wgPageName)+';', window.wgPageName );
+  equal( AdConfig.DART.getTitle(), 'wpage='+encodeURIComponent(window.wgPageName)+';', window.wgPageName );
   window.wgPageName = "Assassin's_Creed_Wiki";
-  equal( AdConfig.DART.getTitle(), 'wpage='+escape(window.wgPageName)+';', window.wgPageName );
+  equal( AdConfig.DART.getTitle(), 'wpage='+encodeURIComponent(window.wgPageName)+';', window.wgPageName );
   window.wgPageName = 'Военная_база_Марипоза';
-  equal( AdConfig.DART.getTitle(), 'wpage='+escape(window.wgPageName)+';', window.wgPageName );
+  equal( AdConfig.DART.getTitle(), 'wpage='+encodeURIComponent(window.wgPageName)+';', window.wgPageName );
   window.wgPageName = null;
   equal( AdConfig.DART.getTitle(), '', 'null' );
 });
@@ -299,9 +299,30 @@ test('getLanguage', function() {
 
 test('getPartnerKeywords', function() {
   window.partnerKeywords = 'Hot Wheels Dodge Concept Car';
-  equal( AdConfig.DART.getPartnerKeywords(), 'pkw='+escape(window.partnerKeywords)+';', window.partnerKeywords );
+  equal( AdConfig.DART.getPartnerKeywords(), 'pkw='+encodeURIComponent(window.partnerKeywords)+';', window.partnerKeywords );
   window.partnerKeywords = null;
   equal( AdConfig.DART.getPartnerKeywords(), '', 'null' );
+});
+
+test('getCategories', function() {
+  window.wgCategories = ['All Businesses', 'Businesses in GTA III', 'Businesses in GTA Liberty City Stories', 'Food'];
+  var expectedResult = '';
+  for (var i=0; i < window.wgCategories.length; i++) {
+  	expectedResult += 'cat='+encodeURIComponent(window.wgCategories[i].toLowerCase())+';';
+  }
+  equal( AdConfig.DART.getCategories(), expectedResult, window.wgCategories);
+
+  window.wgCategories = ['All Businesses', 'Businesses in GTA III', 'Businesses in GTA Liberty City Stories', 'Food', 'blahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblahhhhhhhhhhhhhhhhhhhhhhhhhhhh'];
+  var actualResult = AdConfig.DART.getCategories();
+  window.wgCategories = ['All Businesses', 'Businesses in GTA III', 'Businesses in GTA Liberty City Stories', 'Food'];
+  var expectedResult = '';
+  for (var i=0; i < window.wgCategories.length; i++) {
+  	expectedResult += 'cat='+encodeURIComponent(window.wgCategories[i].toLowerCase())+';';
+  }
+  equal( actualResult, expectedResult, 'over character limit');
+
+  window.wgCategories = null;
+  equal( AdConfig.DART.getCategories(), '', 'null' );
 });
 
 test('getLocKV', function() {
@@ -380,16 +401,17 @@ test('getUrl', function() {
   window.wgContentLanguage = 'en';
   window.wgDartCustomKeyValues="age=adult;age=yadult;egnre=comedy;egnre=comic;egnre=family;media=movie;media=tv;mom=mom;women=women-mom";
   window.partnerKeywords = null;
+  window.wgCategories = ['All Businesses', 'Businesses in GTA III', 'Businesses in GTA Liberty City Stories', 'Food'];
   window.wgUserName = null;
   var expectedResult = 'http://ad.doubleclick.net/adj/wka.ent/_muppet/article;s0=ent;s1=_muppet;s2=article;'
   + window.wgDartCustomKeyValues
   + ';artid=37414;'
   + AdConfig.DART.getDomainKV(window.location.hostname)
   + 'pos=TOP_LEADERBOARD;wpage='
-  + escape(window.wgPageName)
+  + encodeURIComponent(window.wgPageName)
   + ';lang=en;'
   + AdConfig.DART.getResolution() + AdConfig.DART.getPrefooterStatus() + AdConfig.DART.getQuantcastSegmentKV()
-  + AdConfig.DART.getImpressionCount('TOP_LEADERBOARD')
+  + AdConfig.DART.getImpressionCount('TOP_LEADERBOARD') + AdConfig.DART.getCategories()
   + 'loc=top;dcopt=ist;src=driver;sz=728x90,468x60,980x130,980x65;mtfInline=true;tile=1;endtag=$;ord='+AdConfig.DART.ord+'?';
   equal( AdConfig.DART.getUrl('TOP_LEADERBOARD', '728x90', false, 'AdDriver'), expectedResult, 'AdDriver, TOP_LEADERBOARD' );
 
@@ -405,12 +427,13 @@ test('getUrl', function() {
   window.wgContentLanguage = 'en';
   window.wgDartCustomKeyValues = null;
   window.partnerKeywords = null;
+  window.wgCategories = null;
   window.wgUserName = null;
   var expectedResult = 'http://ad-emea.doubleclick.net/adi/wka.life/_healthyrecipes/home;s0=life;s1=_healthyrecipes;s2=home;'
   + 'artid=1461;'
   + AdConfig.DART.getDomainKV(window.location.hostname)
   + 'pos=HOME_TOP_RIGHT_BOXAD;wpage='
-  + escape(window.wgPageName)
+  + encodeURIComponent(window.wgPageName)
   + ';lang=en;'
   + AdConfig.DART.getResolution() + AdConfig.DART.getPrefooterStatus() + AdConfig.DART.getQuantcastSegmentKV()
   + AdConfig.DART.getImpressionCount('HOME_TOP_RIGHT_BOXAD')
@@ -429,13 +452,14 @@ test('getUrl', function() {
   window.wgContentLanguage = 'en';
   window.wgDartCustomKeyValues = "age=13-17;age=18-34;eth=cauc;kids=0-2;hhi=0-30;hhi=30-60;edu=college;age=teen;age=yadult;esrb=teen;gnre=mmo;gnre=rpg;pform=pc;sex=m;volum=l;pub=blizzard;dev=blizzard;sub=wizards;sub=orcs;sub=elves;egnre=fantasy;aff=tech;aff=hardware";
   window.partnerKeywords = null;
+  window.wgCategories = null;
   window.wgUserName = null;
   var expectedResult = 'http://ad-apac.doubleclick.net/adi/wka.gaming/_wowwiki/article;s0=gaming;s1=_wowwiki;s2=article;'
   + window.wgDartCustomKeyValues
   + ';artid=119514;'
   + AdConfig.DART.getDomainKV(window.location.hostname)
   + 'pos=LEFT_SKYSCRAPER_2;wpage='
-  + escape(window.wgPageName)
+  + encodeURIComponent(window.wgPageName)
   + ';lang=en;'
   + AdConfig.DART.getResolution() + AdConfig.DART.getPrefooterStatus() + AdConfig.DART.getQuantcastSegmentKV()
   + AdConfig.DART.getImpressionCount('LEFT_SKYSCRAPER_2')
