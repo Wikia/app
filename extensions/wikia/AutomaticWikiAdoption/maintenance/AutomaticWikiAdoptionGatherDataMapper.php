@@ -15,6 +15,7 @@
  */
 
 class AutomaticWikiAdoptionGatherDataMapper {
+	/*  Not used
 	private $dbwWikicities;
 
 	function getWikicitiesDB() {
@@ -24,6 +25,7 @@ class AutomaticWikiAdoptionGatherDataMapper {
 		}
 		return $this->dbwWikicities;
 	}
+	 */
 
 	function getData() {
 		global $wgStatsDB;
@@ -67,7 +69,7 @@ class AutomaticWikiAdoptionGatherDataMapper {
 				'admins' => array()
 			);
 			while ($row2 = $dbrStats->fetchObject($res2)) {
-				if (($lastedit = wfTimestamp(TS_UNIX, $res2->lastedit)) < $recentAdminEdit[$row->wiki_id]['recentEdit']) {
+				if (($lastedit = wfTimestamp(TS_UNIX, $row2->lastedit)) < $recentAdminEdit[$row->wiki_id]['recentEdit']) {
 					$recentAdminEdit[$row->wiki_id]['recentEdit'] = $lastedit;
 				}
 				$recentAdminEdit[$row->wiki_id]['admins'][] = $row2->user_id;
