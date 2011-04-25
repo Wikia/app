@@ -41,7 +41,7 @@ class OasisTemplate extends QuickTemplate {
 		//echo Module::get($entryModuleName)->render();
 
 		// new way
-		$response = F::app()->dispatch( array( 'controller' => 'Oasis', 'method' => 'index' ) );
+		$response = F::app()->dispatch( array( 'controller' => $entryModuleName, 'method' => 'index' ) );
 
 		$response->sendHeaders();
 		$response->render();
