@@ -120,6 +120,10 @@ function Ach_Setup() {
 	//hooks for user preferences
 	$wgHooks['GetPreferences'][] = 'Ach_UserPreferences';
 	$wgHooks['MonacoSidebarGetMenu'][] = 'Ach_GetMenu';
+	
+	//hook for purging Achievemets-related cache
+	$wgHooks['AchievementsInvalidateCache'][] = 'Ach_InvalidateCache';
+	
 	wfProfileOut(__METHOD__);
 }
 
@@ -384,4 +388,24 @@ function Ach_isBadgeImage($destName, $checkUserRights = false) {
 	}
 
 	return $matches;
+}
+
+function Ach_InvalidateCache( User $user ) {
+	wfProfileIn( __METHOD__ );
+	global $wgMemc;
+	
+	$rankingCacheKeys = array(
+		//used in AchRankingService::getUserRankingPosition()
+		AchRankingService::getRankingCacheKey( 1000, false ),
+		//used in SpecialLeaderboard
+		AchRankingService::getRankingCacheKey(20, true)
+	);
+	
+	foreach( $rankingCacheKeys as $key ) {
+		$wgMemc->delete( $key );
+	}
+	
+	wfProfileOut( __METHOD__ );
+	
+	return true;
 }

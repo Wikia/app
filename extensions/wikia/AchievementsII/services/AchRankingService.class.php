@@ -2,84 +2,94 @@
 
 class AchRankingService {
 	private $mRecentAwardedUsers;
-
+	
 	function __construct() {
 		$this->mRecentAwardedUsers = null;
 	}
-
-	public function getUsersRanking($limit = null, $compareToSnapshot = false) {
+	
+	static public function getRankingCacheKey($limit = null, $compareToSnapshot = null){
+		$params = array( 'Achievements', 'Ranking', 'default' );
+		
+		if ( !empty( $limit ) ) {
+			$params[] = "limit{$limit}";
+		}
+		
+		if ( $compareToSnapshot == true ) {
+			$params[] = "compareToSnapshot";
+		}
+		
+		return call_user_func_array( 'wfMemcKey', $params );
+	}
+	
+	public function getUsersRanking($limit = 1000, $compareToSnapshot = false) {
 		wfProfileIn(__METHOD__);
-
-		global $wgCityId, $wgWikiaBotLikeUsers, $wgExternalSharedDB;
-		$ranking = array();
-		$rules = array('ORDER BY' => 'score desc');
-
-		if($limit > 0)
-			$rules['LIMIT'] = $limit * 2;//bots and blocked users are filtered after the query has been run, let's admit that ratio is 2:1
 		
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-		$res = $dbr->select('ach_user_score', 'user_id, score', array('wiki_id' => $wgCityId), __METHOD__, $rules);
-		$rankingSnapshot = ($compareToSnapshot) ? $this->loadFromSnapshot() : null;
-		$positionCounter = 1;
-		$prevScore = -1;
-		$prevPosition = -1;
+		global $wgMemc;
+		$cacheKey = self::getRankingCacheKey( $limit, $compareToSnapshot );
+		$ranking = $wgMemc->get( $cacheKey );
 		
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			$user = User::newFromId($row->user_id);
+		if( empty( $ranking ) ) {
+			global $wgCityId, $wgWikiaBotLikeUsers, $wgExternalSharedDB;
+			$ranking = array();
+			$rules = array('ORDER BY' => 'score desc');
+	
+			if($limit > 0)
+				$rules['LIMIT'] = $limit * 2;//bots and blocked users are filtered after the query has been run, let's admit that ratio is 2:1
 			
-			if ( $user && !$user->isBlocked() && !in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) {
-				// If this user has the same score as previous user, give them the same (lower) rank (RT#67874).
-				$position = (($prevScore == $row->score) && ($prevPosition != -1))? $prevPosition : $positionCounter;
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+			$res = $dbr->select('ach_user_score', 'user_id, score', array('wiki_id' => $wgCityId), __METHOD__, $rules);
+			$rankingSnapshot = ($compareToSnapshot) ? $this->loadFromSnapshot() : null;
+			$positionCounter = 1;
+			$prevScore = -1;
+			$prevPosition = -1;
+			
+			while ( $row = $dbr->fetchObject( $res ) ) {
+				$user = User::newFromId($row->user_id);
 				
-				$ranking[] = new AchRankedUser($user, $row->score, $position, ($rankingSnapshot != null && isset($rankingSnapshot[$user->getId()])) ? $rankingSnapshot[$user->getId()] : null);
+				if ( $user && AchAwardingService::canEarnBadges( $user ) ) {
+					// If this user has the same score as previous user, give them the same (lower) rank (RT#67874).
+					$position = (($prevScore == $row->score) && ($prevPosition != -1))? $prevPosition : $positionCounter;
+					
+					$ranking[] = new AchRankedUser($user, $row->score, $position, ($rankingSnapshot != null && isset($rankingSnapshot[$user->getId()])) ? $rankingSnapshot[$user->getId()] : null);
+					
+					$prevPosition = $position;
+					$prevScore = $row->score;
+					$positionCounter++;
+				}
 				
-				$prevPosition = $position;
-				$prevScore = $row->score;
-				$positionCounter++;
+				if ( $limit > 0 && $positionCounter == $limit ) break;
 			}
 			
-			if ( $limit > 0 && $positionCounter == $limit ) break;
+			$dbr->freeResult($res);
+			
+			$wgMemc->set($cacheKey, $ranking, 86400 /* 24h */ );
 		}
 		
-		$dbr->freeResult($res);
-
 		wfProfileOut(__METHOD__);
-
+		
 		return $ranking;
-	}
-
-	public function getUserRank($user_id) {
-		global $wgCityId, $wgExternalSharedDB;
-
-		if (! isset($user_id)) return 0;
-
-		// If three people are tied for 3rd place, they all will have a rank of 3 (RT#67874).
-		$sql = "select count(*)+1 as rank from ach_user_score where wiki_id = $wgCityId and score > (select score as s from ach_user_score where user_id = $user_id and wiki_id = $wgCityId)";
-
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-		$res = $dbr->query( $sql, __METHOD__ );
-
-		while($row = $dbr->fetchObject($res)) {
-			$rank = $row->rank;
-		}
-		return $rank;
 	}
 
 	public function getUserScore($user_id) {
 		global $wgCityId, $wgExternalSharedDB;
 
-		if (! isset($user_id)) return 0;
-
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-		$score = $dbr->selectField('ach_user_score', 'score', array('wiki_id' => $wgCityId, 'user_id' => $user_id), __METHOD__);
-
+		if ( empty( $user_id ) ) return 0;
+		
+		$user = User::newFromId( $user_id );
+		$score = false;
+		
+		if ( $user && AchAwardingService::canEarnBadges( $user ) ) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+			$score = $dbr->selectField('ach_user_score', 'score', array('wiki_id' => $wgCityId, 'user_id' => $user_id), __METHOD__);
+		}
+		
 		// if no score found return zero
 		return $score ? $score : 0;
 	}
 
-	public function getUserRankingPosition(User $user) {
+	public function getUserRankingPosition( User $user ) {
 		if($user) {
-			$ranking = $this->getUsersRanking( 20 );
+			$ranking = $this->getUsersRanking();
 
 			foreach($ranking as $position => $rankedUser) {
 				if($rankedUser->getId() == $user->getId()) return ++$position;

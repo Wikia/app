@@ -31,3 +31,18 @@ $wgExtensionMessagesFiles['PartnerFeed'] = $dir . 'PartnerFeed.i18n.php';
 $wgSpecialPages['PartnerFeed']		= 'PartnerFeed';
 $wgSpecialPageGroups['PartnerFeed']	= 'wikia';
 
+//hook for purging Achievemets-related cache
+$wgHooks['AchievementsInvalidateCache'][] = 'OnAchievementsInvalidateCache';
+
+function OnAchievementsInvalidateCache( User $user ){
+	wfProfileIn( __METHOD__ );
+	global $wgMemc;
+	
+	//used in ParterFeed:FeedAchivementsLeaderboard()
+	$rankingCacheKey = AchRankingService::getRankingCacheKey( 20 );
+	$wgMemc->delete( $rankingCacheKey );
+	
+	wfProfileOut( __METHOD__ );
+	
+	return true;
+}

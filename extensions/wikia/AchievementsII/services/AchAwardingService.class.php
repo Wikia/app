@@ -35,7 +35,7 @@ class AchAwardingService {
 
 		$this->mUser = $user;
 
-		if( $this->canEarnBadges() ) {
+		if( self::canEarnBadges( $this->mUser ) ) {
 
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
@@ -136,7 +136,7 @@ class AchAwardingService {
 
 		$this->mUser = $user;
 
-		if( $this->canEarnBadges() ) {
+		if( self::canEarnBadges( $this->mUser ) ) {
 
 			$this->mArticle = $article;
 			$this->mRevision = $revision;
@@ -270,6 +270,9 @@ class AchAwardingService {
 			
 			//purge the user page to update counters/ranking/badges/score, FB#2872
 			$this->mUser->getUserPage()->purgeSquid();
+			
+			//run a hook to let other extensions know when Achievements-related cache should be purged
+			wfRunHooks( 'AchievementsInvalidateCache', array( $this->mUser ) );
 		}
 
 		wfProfileOut(__METHOD__);
@@ -665,28 +668,26 @@ class AchAwardingService {
 	 *
 	 * @author tor
 	 */
-	private function canEarnBadges() {
-		global $wgWikiaBotLikeUsers;
-
-		if ( $this->mUser->isAnon() ) {
+	public static function canEarnBadges( User $user = null ) {
+		global $wgWikiaBotLikeUsers, $wgUser;
+		
+		if ( empty ( $user ) ) {
+			$user = $wgUser;
+		}
+		
+		if (
+			$user->isAnon() ||
+			( $user->isBot() || in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) ||
+			/*
+			 * certain users (like staff and helpers) should not earn badges
+			 * unless they also belong to a group that explicitly states they should
+			 * @see fb#4876
+			 */
+			( $user->isAllowed( 'achievements-exempt' ) && !$user->isAllowed( 'achievements-explicit' ) )
+		) {
 			return false;
 		}
-
-		if ( $this->mUser->isBot() ) {
-			return false;
-		}
-
-		if ( in_array($this->mUser->getName(), $wgWikiaBotLikeUsers ) ) {
-			return false;
-		}
-
-		// certain users (like staff and helpers) should not earn badges
-		// unless they also belong to a group that explicitly states they should
-		// @see fb#4876
-		if ( $this->mUser->isAllowed( 'achievements-exempt' ) && !$this->mUser->isAllowed( 'achievements-explicit' ) ) {
-			return false;
-		}
-
+		
 		return true;
 	}
 }

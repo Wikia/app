@@ -57,7 +57,7 @@ class SpecialLeaderboard extends SpecialPage {
 		$template->set_vars(array(
 			'ranking' => $ranking,
 			'topUserBadges' => $topUserBadges,
-			'userpage' => $wgUser->getUserPage()->getPrefixedURL()			
+			'userpage' => $wgUser->getUserPage()->getPrefixedURL()
 		));
 
 		$wgOut->addHTML($template->render('SpecialLeaderboard'));
