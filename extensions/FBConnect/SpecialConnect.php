@@ -520,7 +520,7 @@ class SpecialConnect extends SpecialPage {
 		//        $u->setPassword( $this->mPassword );
 		//}
 
-		//$u->setEmail( $this->mEmail ); // emails aren't required by FBConnect extension (some customizations such as Wikia require it on their own).
+		$u->setEmail( $this->mEmail ); 
 		//$u->setRealName( $this->mRealName ); // real name isn't required for FBConnect
 		$u->setToken();
 
