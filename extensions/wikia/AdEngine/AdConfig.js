@@ -120,7 +120,8 @@ AdConfig = {
 /* DART Configuration */
 AdConfig.DART = {
 	adDriverNumCall: null,
-	categoryStrMaxLength: 300,
+	categories: null,
+	categoryStrMaxLength: 1000,
 	corporateDbName: 'wikiaglobal',
 	hasPrefooters: null,
 	height: null,
@@ -496,12 +497,13 @@ AdConfig.DART.getPartnerKeywords = function() {
 	return kw;
 };
 
-AdConfig.DART.getCategories = function() {
-	var categories = '';
-
+AdConfig.DART.initCategories = function() {
 	if (typeof wgCategories != 'object' || !wgCategories) {
-		return categories;
+		AdConfig.DART.categories = '';
+		return;
 	}
+
+	var categories = '';
 
 	for (var i=0; i < wgCategories.length; i++) {
 		categoryStr = 'cat=' + encodeURIComponent(wgCategories[i].toLowerCase()) + ';';
@@ -510,7 +512,15 @@ AdConfig.DART.getCategories = function() {
 		}
 	}
 
-	return categories;
+	AdConfig.DART.categories = categories;
+};
+
+AdConfig.DART.getCategories = function() {
+	if (!AdConfig.DART.categories) {
+		AdConfig.DART.initCategories();
+	}
+
+	return AdConfig.DART.categories;
 };
 
 AdConfig.DART.getLocKV = function (slotname){
