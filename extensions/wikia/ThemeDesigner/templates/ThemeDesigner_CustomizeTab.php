@@ -4,11 +4,11 @@
 		<ul>
 			<li>
 				<h2><?= wfMsg('themedesigner-color') ?></h2>
-				<img src="<?= $wgStylePath ?>/common/blank.gif" class="color-body" id="swatch-color-background">
+				<img src="<?= $wgBlankImgUrl ?>" class="color-body" id="swatch-color-background">
 			</li>
 			<li>
 				<h2><?= wfMsg('themedesigner-graphic') ?></h2>
-				<img src="<?= $wgStylePath ?>/common/blank.gif" class="background-image" id="swatch-image-background">
+				<img src="<?= $wgBlankImgUrl ?>" class="background-image" id="swatch-image-background">
 				<input type="checkbox" id="tile-background"> <label for="tile-background"><?= wfMsg('themedesigner-tile-background') ?></label>
 			</li>
 		</ul>
@@ -18,19 +18,19 @@
 		<ul>
 			<li>
 				<h2><?= wfMsg('themedesigner-buttons') ?></h2>
-				<img src="<?= $wgStylePath ?>/common/blank.gif" class="color-buttons" id="swatch-color-buttons">
+				<img src="<?= $wgBlankImgUrl ?>" class="color-buttons" id="swatch-color-buttons">
 			</li>
 			<li>
 				<h2><?= wfMsg('themedesigner-links') ?></h2>
-				<img src="<?= $wgStylePath ?>/common/blank.gif" class="color-links" id="swatch-color-links">
+				<img src="<?= $wgBlankImgUrl ?>" class="color-links" id="swatch-color-links">
 			</li>
 			<li>
 				<h2><?= wfMsg('themedesigner-header') ?></h2>
-				<img src="<?= $wgStylePath ?>/common/blank.gif" class="color-header" id="swatch-color-header">
-			</li>		
+				<img src="<?= $wgBlankImgUrl ?>" class="color-header" id="swatch-color-header">
+			</li>
 			<li>
 				<h2><?= wfMsg('themedesigner-color') ?></h2>
-				<img src="<?= $wgStylePath ?>/common/blank.gif" class="color-page" id="swatch-color-page">
+				<img src="<?= $wgBlankImgUrl ?>" class="color-page" id="swatch-color-page">
 			</li>
 		</ul>
 	</fieldset>
