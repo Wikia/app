@@ -16,6 +16,8 @@
 
 class AutomaticWikiAdoptionJobSendMail {
 	function execute($commandLineOptions, $jobOptions, $wikiId, $wikiData) {
+		global $wgSitename; 
+		$magicwords = array('$WIKINAME' => $wgSitename); 		
 		$flags = $jobOptions['dataMapper']->getFlags($wikiId);
 		$flag = $jobOptions['mailType'] == 'first' ? WikiFactory::FLAG_ADOPT_MAIL_FIRST : WikiFactory::FLAG_ADOPT_MAIL_SECOND;
 		//this kind of e-mail already sent for this wiki
@@ -50,11 +52,11 @@ class AutomaticWikiAdoptionJobSendMail {
 				if (!isset($commandLineOptions['dryrun'])) {
 					$adminUser->sendMail(
 						wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-subject"),
-						wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-content", $adminName, $specialUserRightsUrl, $specialPreferencesUrl),
+						strtr(wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-content", $adminName, $specialUserRightsUrl, $specialPreferencesUrl), $magicwords), 
 						null, //from
 						null, //replyto
 						'AutomaticWikiAdoption',
-						wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-content-HTML", $adminName, $specialUserRightsUrl, $specialPreferencesUrl)
+						strtr(wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-content-HTML", $adminName, $specialUserRightsUrl, $specialPreferencesUrl), $magicwords)
 					);
 				}
 			}
