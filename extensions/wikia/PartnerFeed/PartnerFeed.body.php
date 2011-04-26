@@ -585,7 +585,7 @@ class PartnerFeed extends SpecialPage {
 			$userAvatarSize = 48;
 
 			$rankingService = new AchRankingService();
-			$ranking = $rankingService->getUsersRanking( 20, true );
+			$ranking = $rankingService->getUsersRanking( 20 );
 
 			$levels = array( BADGE_LEVEL_PLATINUM, BADGE_LEVEL_GOLD, BADGE_LEVEL_SILVER, BADGE_LEVEL_BRONZE );
 			$recents = array();

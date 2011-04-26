@@ -56,7 +56,7 @@ class AchievementsModule extends Module {
 		$this->ownerBadges = $userProfileService->mOwnerBadgesSimple;
 		$this->ownerCounters = $userProfileService->mOwnerCounters;
 
-		$this->ownerRank = $rankingService->getUserRank($userProfileService->mUserOwner->getId());
+		$this->ownerRank = $rankingService->getUserRankingPosition($userProfileService->mUserOwner);
 		$this->ownerScore = $rankingService->getUserScore($userProfileService->mUserOwner->getId());
 
 		if($userProfileService->mUserViewer && $userProfileService->mUserViewer->isLoggedIn() && $userProfileService->mUserViewer->getId() == $userProfileService->mUserOwner->getId()) {
