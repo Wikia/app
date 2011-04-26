@@ -436,6 +436,10 @@ class SponsorshipDashboardReport {
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 
+		if ( $hubId == -1 ){
+			$hubId = SponsorshipDashboardService::getPopularHub();
+		}
+
 		if ( empty( $hubId ) ){
 
 			$sql = "SELECT t2.pv_city_id as cityId, count(t1.pv_user_id) AS citycommonusers
@@ -462,8 +466,8 @@ class SponsorshipDashboardReport {
 					AND t1.pv_week = t2.pv_week
 				INNER JOIN wikicities.city_tag_map AS ctm
 					ON ctm.city_id = t2.pv_city_id
-					AND ( ctm.tag_id = {$hubId} )
-				WHERE t1.pv_city_id = {$currentHub} AND t1.pv_week = {$week}
+					AND ( ctm.tag_id = {$currentHub} )
+				WHERE t1.pv_city_id = {$cityId} AND t1.pv_week = {$week}
 				GROUP BY t2.pv_city_id
 				ORDER BY citycommonusers DESC
 				LIMIT ".( $number );
