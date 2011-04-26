@@ -19,6 +19,7 @@ abstract class SponsorshipDashboardSource {
 
 	const SD_SOURCE_LIST = 0;
 	const SD_SOURCE_COMPETITORS = 1;
+	const SD_SOURCE_GLOBAL = 2;
 
 	// containers
 
@@ -176,6 +177,10 @@ abstract class SponsorshipDashboardSource {
 
 	public function getCityId() {
 
+		if ( $this->sourceType == self::SD_SOURCE_GLOBAL ) {
+			return 0;
+		}
+		
 		if ( empty( $this->cityId ) ) {
 			$this->setCityId();
 		}
@@ -202,10 +207,14 @@ abstract class SponsorshipDashboardSource {
 	protected function getCityPrefix() {
 
 		if ( empty( $this->cityPrefix ) ) {
-			$this->cityPrefix =
-				( $this->isCityIdLocal() )
-					? ''
-					: WikiFactory::getWikiByID( $this->getCityId() )->city_title.': ';
+			if ( $this->sourceType == self::SD_SOURCE_GLOBAL ){
+				$this->cityPrefix = wfMsg( 'sponsorship-dashboard-source-global').': ';
+			} else {
+				$this->cityPrefix =
+					( $this->isCityIdLocal() )
+						? ''
+						: WikiFactory::getWikiByID( $this->getCityId() )->city_title.': ';
+			}
 		}
 		return $this->cityPrefix;
 	}

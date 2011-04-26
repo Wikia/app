@@ -61,6 +61,9 @@
 				</div>
 			</label>
 		</li>
+		<li>
+			<input <? if ( $data[ SponsorshipDashboardSource::SD_PARAMS_REP_SOURCE_TYPE ] == SponsorshipDashboardSource::SD_SOURCE_GLOBAL ) echo 'checked="checked"' ?> name="<?=SponsorshipDashboardSource::SD_PARAMS_REP_SOURCE_TYPE; ?>" value="<?=SponsorshipDashboardSource::SD_SOURCE_GLOBAL;?>" type="radio" class="sd-checkbox"> <?=wfMsg('sponsorship-dashboard-source-global');?>
+		</li>
 	</ul>
 </form>
 
