@@ -447,11 +447,10 @@ ThemeDesigner.init = function() {
 };
 ThemeDesigner.set = function(setting, newValue) {
 	ThemeDesigner.settings = themes[newValue];
-	var sassUrl = $.getSassCommonURL('/skins/oasis/css/oasis.scss', ThemeDesigner.settings); 
-	$('.ThemeDesignerSASS').addClass('remove');
-	$.get(sassUrl, function(data) {
-		$('<style class="ThemeDesignerSASS">' + data + '</style>').appendTo('head');
-		$('.ThemeDesignerSASS.remove').remove();
+	var sassUrl = $.getSassCommonURL('/skins/oasis/css/oasis.scss', ThemeDesigner.settings);
+	$.getCSS(sassUrl, function(link) {
+		$(ThemeDesigner.link).remove();
+		ThemeDesigner.link = link;
 	});
 };
 ThemeDesigner.save = function() {
