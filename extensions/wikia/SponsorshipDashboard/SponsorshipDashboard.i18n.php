@@ -167,6 +167,7 @@ $messages['en'] = array(
 	'sponsorship-dashboard-source-Variables' => 'Variables',
 	'sponsorship-dashboard-source-additional-dimension' => 'Additional dimension',
 	'sponsorship-dashboard-source-none' => '-- none --',
+	'sponsorship-dashboard-source-default' => '-- default --',
 	'sponsorship-dashboard-source-in-case-of-empty' => 'in case of empty results display',
 	'sponsorship-dashboard-source-leave-empty' => '(leave empty to hide empty results)',
 	'sponsorship-dashboard-source-wikis' => 'Wikis',

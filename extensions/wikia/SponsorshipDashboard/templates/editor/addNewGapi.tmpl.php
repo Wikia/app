@@ -54,6 +54,7 @@
 					<?=wfMsg('sponsorship-dashboard-source-hub-id');?>
 					<select name="<?=SponsorshipDashboardSource::SD_PARAMS_REP_COMP_HUBID; ?>" style="position:relative; left:0px; width: 100px; margin-right:20px;">
 						<option value=""><?=wfMsg('sponsorship-dashboard-source-none');?></option>
+						<option value="-1" <? if( $data[ SponsorshipDashboardSource::SD_PARAMS_REP_COMP_HUBID ] == -1 ) echo 'selected="selected"' ?>><?=wfMsg('sponsorship-dashboard-source-default');?></option>
 					<? foreach( $hubs as $hubId => $hubName ){
 						?><option value="<?=$hubId;?>" <? if( $data[ SponsorshipDashboardSource::SD_PARAMS_REP_COMP_HUBID ] == $hubId ) echo 'selected="selected"' ?>><?=$hubName;?></option><?
 					} ?>
