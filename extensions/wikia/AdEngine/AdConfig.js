@@ -121,7 +121,7 @@ AdConfig = {
 AdConfig.DART = {
 	adDriverNumCall: null,
 	categories: null,
-	categoryStrMaxLength: 1000,
+	categoryStrMaxLength: 500,
 	corporateDbName: 'wikiaglobal',
 	hasPrefooters: null,
 	height: null,
