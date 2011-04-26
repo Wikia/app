@@ -59,4 +59,4 @@ i18n files:
 Minifying JS/CSS:
 
 * use minify.sh script to generate minified version of JS/CSS
-* add "source=true" to URL of edit page to use development version of RTE (using separated JS/CSS files)
+* add "allinone=0" to URL of edit page to use development version of RTE (using separated JS/CSS files)
