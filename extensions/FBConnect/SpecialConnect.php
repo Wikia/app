@@ -504,31 +504,46 @@ class SpecialConnect extends SpecialPage {
 	 * @private
 	 */
 	function initUser( $u, $autocreate ) {
-		global $wgAuth;
+                global $wgAuth, $wgExternalAuthType;
 
-		$u->addToDatabase();
+                if ( $wgExternalAuthType ) {
+                        $u = ExternalUser::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName );
+                        if ( is_object( $u ) ) {
+                                $this->mExtUser = ExternalUser::newFromName( $this->mName );
+                        }
+                } else{
+                        $u->addToDatabase();
+                }
 
-		// No passwords for FBConnect accounts.
-		//if ( $wgAuth->allowPasswordChange() ) {
-		//	$u->setPassword( $this->mPassword );
-		//}
+		// No passwords for FBConnect accounts
+                //if ( $wgAuth->allowPasswordChange() ) {
+                //        $u->setPassword( $this->mPassword );
+                //}
 
-		//$u->setEmail( $this->mEmail ); // emails aren't required by FBConnect extension (some customizations such as Wikia require it on their own).
-		//$u->setRealName( $this->mRealName ); // real name isn't required for FBConnect
-		$u->setToken();
+                //$u->setEmail( $this->mEmail ); // emails aren't required by FBConnect extension (some customizations such as Wikia require it on their own).
+                //$u->setRealName( $this->mRealName ); // real name isn't required for FBConnect
+                $u->setToken();
 
-		$wgAuth->initUser( $u, $autocreate );
-		$wgAuth->updateUser($u);
+                $wgAuth->initUser( $u, $autocreate );
 
-		//$u->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
-		$u->setOption('skinoverwrite', 1);
-		$u->saveSettings();
+                if ( is_object( $this->mExtUser ) ) {
+                        $this->mExtUser->linkToLocal( $u->getId() );
+                        $email = $this->mExtUser->getPref( 'emailaddress' );
+                        if ( $email && !$this->mEmail ) {
+                                $u->setEmail( $email );
+                        }
+                }
 
-		# Update user count
-		$ssUpdate = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
-		$ssUpdate->doUpdate();
+                //$u->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
+                $u->setOption( 'marketingallowed', $this->mMarketingOptIn ? 1 : 0 );
+                $u->setOption('skinoverwrite', 1);
+                $u->saveSettings();
 
-		return $u;
+                # Update user count
+                $ssUpdate = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
+                $ssUpdate->doUpdate();
+
+                return $u;
 	}
 
 	/**
