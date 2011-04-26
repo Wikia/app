@@ -138,7 +138,7 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 		$this->recalculateDateVariables();
 
 		if ( !$this->loadDataFromCache() ) {
-
+			
 			$this->mStats = WikiStats::newFromId( $this->getCityId() );
 			$this->mStats->setStatsDate(
 				array(

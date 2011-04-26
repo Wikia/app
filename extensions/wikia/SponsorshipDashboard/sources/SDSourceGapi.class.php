@@ -176,6 +176,9 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 
 	public function getName() {
 
+		if ( $this->sourceType == SponsorshipDashboardSource::SD_SOURCE_GLOBAL ) {
+			return wfMsg( 'sponsorship-dashboard-source-global').': ';
+		}
 		if( empty( $this->serieName ) ) {
 			return $this->getCityPrefix();
 		} else {
@@ -369,6 +372,10 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 	 */
 
 	protected function getGAFilters() {
+
+		if ( $this->sourceType == SponsorshipDashboardSource::SD_SOURCE_GLOBAL ){
+			return '';
+		}
 
 		if ( !empty( $this->url ) ) {
 			return $this->url;
