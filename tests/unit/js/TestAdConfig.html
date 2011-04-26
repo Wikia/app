@@ -306,6 +306,7 @@ test('getPartnerKeywords', function() {
 
 test('getCategories', function() {
   window.wgCategories = ['All Businesses', 'Businesses in GTA III', 'Businesses in GTA Liberty City Stories', 'Food'];
+  AdConfig.DART.initCategories();
   var expectedResult = '';
   for (var i=0; i < window.wgCategories.length; i++) {
   	expectedResult += 'cat='+encodeURIComponent(window.wgCategories[i].toLowerCase())+';';
@@ -313,6 +314,7 @@ test('getCategories', function() {
   equal( AdConfig.DART.getCategories(), expectedResult, window.wgCategories);
 
   window.wgCategories = ['All Businesses', 'Businesses in GTA III', 'Businesses in GTA Liberty City Stories', 'Food', 'blahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblahhhhhhhhhhhhhhhhhhhhhhhhhhhh'];
+  AdConfig.DART.initCategories();
   var actualResult = AdConfig.DART.getCategories();
   window.wgCategories = ['All Businesses', 'Businesses in GTA III', 'Businesses in GTA Liberty City Stories', 'Food'];
   var expectedResult = '';
@@ -322,6 +324,7 @@ test('getCategories', function() {
   equal( actualResult, expectedResult, 'over character limit');
 
   window.wgCategories = null;
+  AdConfig.DART.initCategories();
   equal( AdConfig.DART.getCategories(), '', 'null' );
 });
 
@@ -428,6 +431,7 @@ test('getUrl', function() {
   window.wgDartCustomKeyValues = null;
   window.partnerKeywords = null;
   window.wgCategories = null;
+  AdConfig.DART.initCategories();
   window.wgUserName = null;
   var expectedResult = 'http://ad-emea.doubleclick.net/adi/wka.life/_healthyrecipes/home;s0=life;s1=_healthyrecipes;s2=home;'
   + 'artid=1461;'
@@ -453,6 +457,7 @@ test('getUrl', function() {
   window.wgDartCustomKeyValues = "age=13-17;age=18-34;eth=cauc;kids=0-2;hhi=0-30;hhi=30-60;edu=college;age=teen;age=yadult;esrb=teen;gnre=mmo;gnre=rpg;pform=pc;sex=m;volum=l;pub=blizzard;dev=blizzard;sub=wizards;sub=orcs;sub=elves;egnre=fantasy;aff=tech;aff=hardware";
   window.partnerKeywords = null;
   window.wgCategories = null;
+  AdConfig.DART.initCategories();
   window.wgUserName = null;
   var expectedResult = 'http://ad-apac.doubleclick.net/adi/wka.gaming/_wowwiki/article;s0=gaming;s1=_wowwiki;s2=article;'
   + window.wgDartCustomKeyValues
