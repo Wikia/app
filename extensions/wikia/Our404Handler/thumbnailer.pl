@@ -1,5 +1,19 @@
 #!/usr/bin/perl -w
 
+package Wikia::Thumbnailer::Thumbnail;
+
+use Moose;
+
+has width  => ( is => "rw", isa => "Int", "documentation" => "Requested width in pixels" );
+has height => ( is => "rw", isa => "Int", "documentation" => "Requested height in pixes" );
+has data   => ( is => "rw", "documentation" => "Data from original image" );
+has path   => ( is => "rw", isa => "Str" );
+
+__PACKAGE__->meta->make_immutable;
+
+1;
+
+
 package main;
 
 #
@@ -27,7 +41,6 @@ use File::Basename;
 use File::Path;
 use File::Copy;
 use File::Slurp;
-use XML::Simple;
 use Data::Types qw(:all);
 use Math::Round qw(round);
 use Getopt::Long;
@@ -37,6 +50,7 @@ use LWP::UserAgent;
 use DateTime;
 use Cwd;
 use Try::Tiny;
+use XML::Simple;
 
 #
 # constant
@@ -244,7 +258,6 @@ my @tests = qw(
 	/s/sartrans/ru/images/thumb/3/3e/%D0%94%D0%B0%D1%87%D0%BD%D0%B0%D1%8F_%D0%BB%D0%B8%D0%BD%D0%B8%D1%8F.svg/82px-155,900,0,744-%D0%94%D0%B0%D1%87%D0%BD%D0%B0%D1%8F_%D0%BB%D0%B8%D0%BD%D0%B8%D1%8F.svg.png
 	/k/kuroshitsuji/images/thumb/c/c8/Snake_Revealed.png/82px-0%2C459%2C0%2C459-Snake_Revealed.png
 	/s/science/ru/images/thumb/2/29/Gtk-redo-ltr.svg/17px-Gtk-redo-ltr.svg.png
-	/b/biologija/lt/images/thumb/7/7d/Eagle_Owl_IMG_9203.JPG/800px-@commons-Eagle_Owl_IMG_9203.JPG
 	/h/half-life/en/images/thumb/1/1c/Eli_proto_physics.jpg/250px-Eli_proto_physics.jpg
 );
 use warnings;
@@ -425,7 +438,7 @@ while( $request->Accept() >= 0 || $test ) {
 					$content = $response->content;
 					$content_length = length( $content );
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					say STDERR "Reading remote $remote, content-length: $content_length, time: $t_elapsed" if $debug;
+					say STDERR "Reading remote <$remote>, content-length: $content_length, time: $t_elapsed" if $debug;
 				}
 				else {
 					$last_status = $response->code();
