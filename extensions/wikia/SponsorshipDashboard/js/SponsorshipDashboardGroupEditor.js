@@ -11,10 +11,15 @@ var SponsorshipDashboardGroupEditor = {
 		);
 
 		$( 'a.delete' ).click( SponsorshipDashboardGroupEditor.removeReport );
-		$( 'a.sd-save' ).click( SponsorshipDashboardGroupEditor.submit );
+		$( 'input.sd-save-as-new' ).click( SponsorshipDashboardGroupEditor.submitAsNew );
 		$('#groupReportsDisplay').bind('click', SponsorshipDashboardGroupEditor.checkForEvents );
 		$('#groupUsersDisplay').bind('click', SponsorshipDashboardGroupEditor.checkForEvents );
 		SponsorshipDashboardGroupEditor.refreshElementList();
+	},
+	submitAsNew : function(){
+
+		$( '#mainId' ).val( 0 );
+		$( 'form.sd-form-main' ).submit();
 	},
 	addToGroupList : function(){
 

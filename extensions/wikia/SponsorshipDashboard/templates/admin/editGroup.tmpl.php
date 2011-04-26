@@ -5,6 +5,7 @@
 	<h2> <?=wfMsg('sponsorship-dashboard-Group'); ?> </h2>
 	<span>
 		<a class="wikia-button sd-cancel" data-id="sd-cancel" style="float:right" href="<?=$groupEditorPath; ?>"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite close"> <?=wfMsg('sponsorship-dashboard-cancel');?></a>
+		<input class="wikia-button sd-save-as-new" style="float:right; margin-right:5px" id="wpSave" name="wpSave" type="submit" tabindex="3" value="<?=wfMsg('sponsorship-dashboard-save-as-new');?>">
 		<input class="wikia-button sd-save" style="float:right; margin-right:5px" id="wpSave" name="wpSave" type="submit" tabindex="3" value="<?=wfMsg('sponsorship-dashboard-save');?>">
 	<div> 
 		<input id="mainId" name="<?=SponsorshipDashboardGroup::ID; ?>" type="hidden" class="sd-fixedleft sd-long" value="<?=$groupParams['id'];?>">
@@ -61,6 +62,7 @@
 	</div>
 	<div>
 		<a class="wikia-button sd-cancel" data-id="sd-cancel" style="float:right" href="<?=$groupEditorPath; ?>"> <img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite close"> <?=wfMsg('sponsorship-dashboard-cancel');?></a>
+		<input class="wikia-button sd-save-as-new" style="float:right; margin-right:5px" id="wpSave" name="wpSave" type="submit" tabindex="3" value="<?=wfMsg('sponsorship-dashboard-save-as-new');?>">
 		<input class="wikia-button sd-save" style="float:right; margin-right:5px" id="wpSave" name="wpSave" type="submit" tabindex="3" value="<?=wfMsg('sponsorship-dashboard-save');?>">
 	</div>
 </form>
