@@ -2,6 +2,16 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "shared";
 
+#WikiaPageHeader {
+	padding-bottom: 5px;
+	
+	a {
+		&.back {
+			display: block;
+		}
+	}
+}
+
 section {
 	.MobileProduct {
 		padding-top: 20px;

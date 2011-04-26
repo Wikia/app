@@ -1,6 +1,8 @@
 <header id="WikiaPageHeader" class="WikiaPageHeader separator">
 	<h1><?= wfMsgForContent( 'mobileproducts' ) ;?></h1>
-	
+	<? if( !empty( $landingPageUrl ) ) :?>
+		<a class="back" href="<?= $landingPageUrl ;?>" title="<?= wfMsgForContent( 'mobileproducts-back-link-title' ) ;?>"><?= wfMsgForContent( 'mobileproducts-back-link' ) ;?></a>
+	<? endif ;?>
 	<div id="WikiHeader" class="WikiHeader">
 		<? if ( !empty( $languages ) ) :?>
 			<nav>

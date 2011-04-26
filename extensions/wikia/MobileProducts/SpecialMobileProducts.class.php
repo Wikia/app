@@ -60,7 +60,7 @@
 				$data = $this->getProductData( $product );
 				$templateName = 'productpage';
 			} else {
-				$this->redirectToLandingPage();
+				$this->mOut->redirect( $this->getFullUrl() );
 			}
 		}
 		
@@ -74,6 +74,7 @@
 		
 		$template = F::build( 'EasyTemplate', array( dirname(__FILE__) . '/templates' ) );
 		$template->set_vars( array(
+			'landingPageUrl' => ( !empty( $product ) ) ? '.' : null,
 			'product' => $product,
 			'languages' => ( !$this->mMobileBrowser ) ? $this->getLanguagesData() : null,
 			'wgBlankImgUrl' => $this->mBlankImgUrl,
@@ -257,10 +258,7 @@
 		);
 	}
 	
-	private function redirectToLandingPage(){
-		$specialPageTitle = Title::newFromText( 'MobileProducts', NS_SPECIAL );
-		$url = $specialPageTitle->getFullUrl();
-
-		$this->mOut->redirect( $url );
+	private function getFullUrl(){
+		return $this->getTitle()->getFullUrl();
 	}
 }

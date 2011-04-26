@@ -38,7 +38,7 @@
 				<? endforeach ;?>
 			</ul>
 			<ul class="slideButton">
-				<? for ($x = 0; $x < count( $slides ); $x++) :?>
+				<? for ( $x = 0; $x < count( $slides ); $x++ ) :?>
 					<li><a><img src="<?= $wgBlankImgUrl ;?>" /></a></li>
 				<? endfor ;?>
 			</ul>

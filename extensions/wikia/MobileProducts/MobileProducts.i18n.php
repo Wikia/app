@@ -12,7 +12,11 @@ $messages['en'] = array(
 	'mobileproducts-product-boxes' => "* Mobile Web|More than 200,000 sites, now mobile-friendly|wikiaphone_product.png|mobile/wikiaphone\n* LyricWiki|Instant access to full lyrics for 1.5 million songs|Lyricwiki_product.jpg|mobile/lyricwiki\n* Game Guides|Insider guide to over 30 popular videogames|Gameguides_product.jpg|mobile/gameguides\n* Help|Support for your Wikia Mobile apps|Mobilehelp_product.png|http://help.wikia.com/wiki/Help:Mobile",
 	'mobileproducts-more-link' => "Learn more >",
 	'mobileproducts-market-apps' => "* Get LyricWiki now|google::https://market.android.com/details?id=com.wikia.lyricwiki\n* Get Game Guides now|google::https://market.android.com/details?id=com.wikia.app.GameGuides|apple::http://itunes.apple.com/us/app/wikia-game-guides/id422467074?mt=8&ls=1",
-
+	
+	//Generig product page
+	'mobileproducts-back-link' => '< See all Wikia Mobile apps',
+	'mobileproducts-back-link-title' => 'Wikia Mobile apps',
+	
 	//WikiaPhone
 	'mobileproducts-wikiaphone-device' => 'iphone',
 	'mobileproducts-wikiaphone-slides' => "* Wikiaphone_screenshot_1.png\n* Wikiaphone_screenshot_2.png\n* Wikiaphone_screenshot_3.png\n* Wikiaphone_screenshot_4.png\n* Wikiaphone_screenshot_5.png",
@@ -112,7 +116,10 @@ $messages['qqq'] = array(
 	'mobileproducts-slides' => 'Message format: * article title (image in the file namespace)|article title (will be used as the link for the image)',
 	'mobileproducts-product-boxes' => 'Message format: * headline|description|article title (image in the file namespace)|article title (will be used as a link); do not translate "Game Guides" and "LyricWiki", those are product names',
  	'mobileproducts-market-apps' => 'Message format: * App column name|[google|apple]::[FULL_APPSTORE_URL]; do not translate "Game Guides" and "LyricWiki", those are product names',
-
+	
+	//Generic product page
+	'mobileproducts-back-link-title' => 'no HTML here, is part of an actual HTML tag',
+	
 	//Wikiaphone
 	'mobileproducts-wikiaphone-device' => 'do not translate',
 	'mobileproducts-wikiaphone-slides' => 'do not translate, message format: * article title (image in the file namespace)',
