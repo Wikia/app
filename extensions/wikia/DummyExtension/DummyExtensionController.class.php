@@ -13,6 +13,12 @@ class DummyExtensionController extends WikiaController {
 		$this->response->setVal( 'header', 'Hello World!' );
 	}
 
+	public function globalsTest() {
+		//global $wgTitle, $wgOut, $wgUser;
+		list($wgTitle, $wgOut, $wgUser) = F::app()->getGlobals( 'wgTitle', 'wgOut', 'wgUser' );
+
+		$this->response->setData( array( 'title' => $wgTitle, 'user' => $wgUser ) );
+	}
 
 	public function errorTest() {
 		throw new WikiaException( 'Test Exception' );
