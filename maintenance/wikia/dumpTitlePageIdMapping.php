@@ -42,7 +42,8 @@ $dataware_db = &wfGetDB(DB_SLAVE, array(), 'dataware')->getProperty('mConn');
 print "Memory usage before huge loop:    ".memory_get_usage(true)."\n";
 $numPageTitles = 0;
 $redirectCache = array();
-$TITLE_FILE = fopen($titleFilename."_".date("Ymd").".txt", "w");
+$finalTitleFilename = $titleFilename."_".date("Ymd").".txt";
+$TITLE_FILE = fopen($finalTitleFilename, "w");
 $offset = 0;
 $startTime = time();
 $GN_NAMESPACE = 220;
@@ -107,14 +108,25 @@ if($DO_REDIRECTS_FILE){
 print "\n";
 print "Memory usage after freeing result: ".memory_get_usage(true)."\n";
 
+// Sort page title mapping (added 20110426 so that this doesn't have to be done by ÜberBot on every run.
+print "Sorting the id/title mapping by article title...";
+system("sort -k 3 -o \"$finalTitleFilename\" \"$finalTitleFilename\"");
+print "Sorted.\n";
+
 if($DO_REDIRECTS_FILE){
 	$numRedirects = count($redirectCache);
 	print "Non-redirect pages: $numPageTitles\n";
 	print "Redirects found:    $numRedirects\n";
 
+	print "Sorting redirects...\n";
+	sort($redirectCache);
+	print "Redirects sorted.\n";
+	
 	print "Writing out all redirects (after following them to their ends)...\n";
-	$REDIR_FILE = fopen($redirFilename."_".date("Ymd").".txt", "w");
+	$finalRedirFilename = $redirFilename."_".date("Ymd").".txt";
+	$REDIR_FILE = fopen($finalRedirFilename, "w");
 	$startTime = time();
+	$numFailed = 0;
 	for($cnt=0; $cnt < $numRedirects; $cnt++){
 		$title = $redirectCache[$cnt];
 		$redirTo = "NULL";
@@ -136,6 +148,9 @@ if($DO_REDIRECTS_FILE){
 					//$retVal = $article->getRawText(); // don't need the final page text.
 					//unset($article); // hint to garbage collector - doesn't appear to do anything in this case
 					fwrite($REDIR_FILE, formatForUb("$title")."\t\t".formatForUb("$redirTo")."\n");
+				} else {
+					print "WARNING: REDIR DID NOT TERMINATE ON VALID FILE: \"$title\"\n";
+					$numFailed++;
 				}
 			}
 		}
@@ -169,7 +184,11 @@ if($DO_REDIRECTS_FILE){
 		}
 	}
 	fclose($REDIR_FILE);
+	
+	print "Total redirects whose destination couldn't be found: $numFailed\n";
 }
+
+//system("sort -o \"$finalRedirFilename\" \"$finalRedirFilename\""); // shouldn't need to do this since the redirCache has sort() called on it now.
 
 print "Done.\n";
 
