@@ -12,7 +12,7 @@ class WikiaSpecialPageController extends WikiaController {
 		$response = $app->dispatch( ( array( 'controller' => substr( get_class( $this ), 0, -10 ) ) + $_POST + $_GET ) );
 		if( $response->getFormat() == 'html' ) {
 			try {
-				$out->addHTML( $response->render() );
+				$out->addHTML( $response->toString() );
 			} catch( Exception $exception ) {
 				// in case of exception thrown by WikiaView, just render standard error controller response
 				$response->setException( $exception );
