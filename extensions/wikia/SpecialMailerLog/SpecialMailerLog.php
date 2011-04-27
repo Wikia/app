@@ -19,7 +19,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 
 	public function execute( $subpage ) {
 		global $wgOut, $wgUser, $wgCityId, $wgMessageCache, $wgRequest, $wgStyleVersion, $wgStylePath, $wgScriptPath;
-
+		global $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
 
 		if ( !$wgUser || $wgUser->getID() == 0 ) {
@@ -53,11 +53,11 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 		if ($limit) $query[] = "limit=$limit";
 		if ($offset) $query[] = "offset=$offset";
 
-		$dbr = wfGetDB( DB_SLAVE, array(), 'wikia_mailer' );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 
-		$num_rows = $dbr->selectField( 'mail', 'COUNT(*)', $filter, __METHOD__ );
+		$num_rows = $dbr->selectField( 'wikia_mailer.mail', 'COUNT(*)', $filter, __METHOD__ );
 
-		$res = $dbr->select( 'mail',
+		$res = $dbr->select( 'wikia_mailer.mail',
 							 array( 'id', 'created', 'attempted', 'city_id', 'dst', 'hdr', 'subj', 'msg', 'transmitted', 'is_error', 'error_status', 'error_msg', 'opened'),
 							 $filter,
 							 __METHOD__,
