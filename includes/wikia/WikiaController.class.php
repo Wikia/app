@@ -4,7 +4,7 @@ abstract class WikiaController {
 
 	/**
 	 * request object
-	 * @var unknown_type
+	 * @var WikiaRequest
 	 */
 	protected $request = null;
 	/**
