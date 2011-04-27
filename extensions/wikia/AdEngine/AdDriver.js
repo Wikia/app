@@ -126,7 +126,16 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 }
 
 AdDriver.isHighValue = function(slotname) {
-	return AdConfig.isHighValueCountry(AdConfig.geo.country) && AdConfig.isHighValueSlot(slotname);
+	if (AdConfig.isHighValueSlot(slotname)) {
+		if (AdConfig.geo) {
+			return AdConfig.isHighValueCountry(AdConfig.geo.country);
+		}
+		else {
+			Liftium.trackEvent(Liftium.buildTrackUrl(["error", "no_geo"]));
+		}
+	}
+
+	return false;
 }
 
 AdDriver.getNumDARTCall = function(slotname) {
