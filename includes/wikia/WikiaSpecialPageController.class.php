@@ -8,9 +8,16 @@ class WikiaSpecialPageController extends WikiaController {
 
 	public function execute() {
 		$app = F::build( 'App' );
+		$out = $app->getGlobal( 'wgOut' );
 		$response = $app->dispatch( ( array( 'controller' => substr( get_class( $this ), 0, -10 ) ) + $_POST + $_GET ) );
 		if( $response->getFormat() == 'html' ) {
-			$app->getGlobal( 'wgOut' )->addHTML( (string) $response );
+			try {
+				$out->addHTML( $response->render() );
+			} catch( Exception $exception ) {
+				// in case of exception thrown by WikiaView, just render standard error controller response
+				$response->setException( $exception );
+				$out->addHTML( $app->getView( 'WikiaError', 'error', array( 'response' => $response ) )->render() );
+			}
 		}
 		else {
 			$response->sendHeaders();
