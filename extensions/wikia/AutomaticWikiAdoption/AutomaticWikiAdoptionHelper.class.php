@@ -162,12 +162,12 @@ class AutomaticWikiAdoptionHelper {
 					$admin->removeGroup($removedGroup);
 					//sent e-mail
 					$admin->sendMail(
-						wfMsgForContent("automaticwikiadoption-mail-adoption-subject"),
-						wfMsgForContent("automaticwikiadoption-mail-adoption-content"),
+						wfMsgForContent("wikiadoption-mail-adoption-subject"),
+						wfMsgForContent("wikiadoption-mail-adoption-content"),
 						null, //from
 						null, //replyto
 						'AutomaticWikiAdoption',
-						wfMsgForContent("automaticwikiadoption-mail-adoption-content-HTML")
+						wfMsgForContent("wikiadoption-mail-adoption-content-HTML")
 					);
 					//log
 					self::addLogEntry($admin, $oldGroups, $newGroups);
@@ -285,7 +285,7 @@ class AutomaticWikiAdoptionHelper {
 
 		$log->addEntry('rights',
 			$user->getUserPage(),
-			wfMsg('automaticwikiadoption-log-reason'),
+			wfMsg('wikiadoption-log-reason'),
 			array(
 				implode(', ', $oldGroups),
 				implode(', ', $newGroups)
@@ -307,9 +307,9 @@ class AutomaticWikiAdoptionHelper {
 		if (Wikia::isOasis() && !self::getDismissNotificationState($wgUser) && self::isAllowedToAdopt($wgCityId, $wgUser) == self::USER_ALLOWED) {
 
 			NotificationsModule::addNotification(
-				wfMsg('automaticwikiadoption-notification', 
+				wfMsg('wikiadoption-notification', 
 						$wgSitename, 
-						Wikia::SpecialPageLink('AutomaticWikiAdoption','automaticwikiadoption-button-adopt')), 
+						Wikia::SpecialPageLink('AutomaticWikiAdoption','wikiadoption-button-adopt')), 
 				array(
 					'name' => 'AutomaticWikiAdoption',
 					'dismissUrl' => $wgScript . '?action=ajax&rs=AutomaticWikiAdoptionAjax&method=dismiss',
@@ -334,7 +334,7 @@ class AutomaticWikiAdoptionHelper {
 			$defaultPreferences["adoptionmails-label-$wgCityId"] = array(
 				'type' => 'info',
 				'label' => '',
-				'help' => wfMsg('automaticwikiadoption-pref-label', $wgSitename),
+				'help' => wfMsg('wikiadoption-pref-label', $wgSitename),
 				'section' => 'personal/wikiemail',
 			);
 			$defaultPreferences["adoptionmails-$wgCityId"] = array(
