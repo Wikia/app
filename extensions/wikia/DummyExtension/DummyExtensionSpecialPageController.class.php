@@ -10,9 +10,6 @@ class DummyExtensionSpecialPageController extends WikiaSpecialPageController {
 	private $data = array();
 
 	public function __construct() {
-		$this->allowedRequests[ 'index' ] = array( 'html' );
-		$this->allowedRequests[ 'helloWorld' ] = array( 'html' );
-		$this->allowedRequests[ 'getSomeData' ] = array( 'json' );
 
 		$this->data[] = 'foo';
 		$this->data[] = 'bar';
