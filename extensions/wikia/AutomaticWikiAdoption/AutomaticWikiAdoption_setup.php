@@ -35,8 +35,8 @@ $wgAutoloadClasses['AutomaticWikiAdoptionAjax'] = "$dir/AutomaticWikiAdoptionAja
 $wgAutoloadClasses['AutomaticWikiAdoptionHelper'] = "$dir/AutomaticWikiAdoptionHelper.class.php";
 
 //register special page
-$wgAutoloadClasses['SpecialAutomaticWikiAdoption'] = "$dir/SpecialAutomaticWikiAdoption.class.php";
-$wgSpecialPages['AutomaticWikiAdoption'] = 'SpecialAutomaticWikiAdoption';
+$wgAutoloadClasses['SpecialWikiAdoption'] = "$dir/SpecialWikiAdoption.class.php";
+$wgSpecialPages['WikiAdoption'] = 'SpecialWikiAdoption';
 
 /**
  * Initialize hooks

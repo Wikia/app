@@ -16,7 +16,7 @@
  *     require_once("$IP/extensions/wikia/AutomaticWikiAdoption/AutomaticWikiAdoption_setup.php");
  */
 
-class SpecialAutomaticWikiAdoption extends UnlistedSpecialPage {
+class SpecialWikiAdoption extends UnlistedSpecialPage {
 
 	//1000 articles - maximum amount of articles for wiki to allow adoption
 	const MAX_ARTICLE_COUNT = 1000;
@@ -35,7 +35,7 @@ class SpecialAutomaticWikiAdoption extends UnlistedSpecialPage {
 	 */
 	function __construct() {
 		wfLoadExtensionMessages('AutomaticWikiAdoption');
-		parent::__construct('AutomaticWikiAdoption');
+		parent::__construct('WikiAdoption');
 	}
 
 	/**
@@ -59,9 +59,9 @@ class SpecialAutomaticWikiAdoption extends UnlistedSpecialPage {
 			if ($wgRequest->wasPosted()) {
 				//user clicked button to adopt a wiki
 				if (AutomaticWikiAdoptionHelper::adoptWiki($wgCityId, $wgUser)) {
-					$wgOut->addHTML(wfMsgExt('automaticwikiadoption-adoption-successed', array('parseinline')));
+					$wgOut->addHTML(wfMsgExt('wikiadoption-adoption-successed', array('parseinline')));
 				} else {
-					$wgOut->addHTML(wfMsgExt('automaticwikiadoption-adoption-failed', array('parseinline')));
+					$wgOut->addHTML(wfMsgExt('wikiadoption-adoption-failed', array('parseinline')));
 				}
 			} else {
 				//render HTML
@@ -76,13 +76,13 @@ class SpecialAutomaticWikiAdoption extends UnlistedSpecialPage {
 			//not allowed to adopt
 			switch ($canAdopt) {
 				case AutomaticWikiAdoptionHelper::REASON_NOT_ENOUGH_EDITS:
-					$msg = wfMsgExt('automaticwikiadoption-not-enough-edits', array('parseinline'));
+					$msg = wfMsgExt('wikiadoption-not-enough-edits', array('parseinline'));
 					break;
 				case AutomaticWikiAdoptionHelper::REASON_ADOPTED_RECENTLY:
-					$msg = wfMsgExt('automaticwikiadoption-adopted-recently', array('parseinline'));
+					$msg = wfMsgExt('wikiadoption-adopted-recently', array('parseinline'));
 					break;
 				default:
-					$msg = wfMsgExt('automaticwikiadoption-not-allowed', array('parseinline'));
+					$msg = wfMsgExt('wikiadoption-not-allowed', array('parseinline'));
 					break;
 			}
 			$wgOut->addHTML($msg);
