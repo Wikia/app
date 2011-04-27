@@ -23,7 +23,6 @@ class VideoPage extends Article {
 	const V_SOUTHPARKSTUDIOS = 16;
 	const V_DAILYMOTION = 18;
 	const V_VIDDLER	 = 19;
-
 	const K_VIDDLER = "hacouneo6n6o3nysn0em";
 
 	var	$mName,
@@ -599,31 +598,47 @@ EOD;
 				}
 			}
 		}
-		$text = strpos( $fixed_url, "YOUTUBE.COM" );
+
+		$text = strpos( $fixed_url, "YOUTUBE.COM" ) + strpos( $fixed_url, "YOUTU.BE" );
 		if( false !== $text ) { // youtube
 			$provider = self::V_YOUTUBE;
-			// reuse some NY stuff for now
-			$standard_url = strpos( strtoupper( $url ), "WATCH?V=");
 
-			if( $standard_url !== false){
-				$id = substr( $url , $standard_url+8, strlen($url) );
-			} else {
-				return false;
+			$aData = array();
+
+			$id = '';
+			$parsedUrl = parse_url( $url );
+			if ( !empty( $parsedUrl['query'] ) ){
+				parse_str( $parsedUrl['query'], $aData );
+			};
+			if ( isset( $aData['v'] ) ){
+				$id = $aData['v'];
 			}
-			if(!$id){
-				$id_test = str_replace("http://www.youtube.com/v/","",$url);
-				if( $id_test != $url ){
-					$id = $id_test;
+			
+			if( empty( $id ) ){
+				$parsedUrl = parse_url( $url );
+
+				$aExploded = explode( '/', $parsedUrl['path'] );
+				$id = array_pop( $aExploded );
+
+				if ( !empty( $parsedUrl['query'] ) ){
+					parse_str( $parsedUrl['query'], $aData );
 				}
 			}
+
 			if( false !== strpos( $id, "&" ) ){
-				$id = explode("&",$id);
-				$id = $id[0];
+				$parsedId = explode("&",$id);
+				$id = $parsedId[0];
+				if ( isset( $id[1] ) ){
+					$aData = ( isset( $parsedId[1] ) ) ? parse_str( $parsedId[1] ) : array();
+				}
 			}
+
+			$aData[0] = !isset( $aData['hd'] ) ? 0 : $aData['hd'];
 
 			$this->mProvider = $provider;
 			$this->mId = $id;
-			$this->mData = array();
+			$this->mData = $aData;
+
 			return true;
 		}
 
@@ -717,26 +732,26 @@ EOD;
                         }
                 }
 
-		   $text = strpos( $fixed_url, "BLIP.TV" );
-           if( false !== $text ) { // Blip TV
+		$text = strpos( $fixed_url, "BLIP.TV" );
+		if( false !== $text ) { // Blip TV
 
            	$provider = self::V_BLIPTV;
-				$blip = '';
-				$parsed = split( "/", $url );
+		$blip = '';
+		$parsed = split( "/", $url );
                 if( is_array( $parsed ) ) {
                 	$mdata = array_pop( $parsed );
-                	if ( '' != $mdata ) {
-                    	$blip = $mdata;
-                    } else {
-                    	$blip = array_pop( $parsed );
-                    }
+			if ( '' != $mdata ) {
+				$blip = $mdata;
+			} else {
+				$blip = array_pop( $parsed );
+			}
 	                $this->mProvider = $provider;
 	                $this->mData = array();
-					$last = explode( "?", $blip);
-					$this->mId = $last[0];
-					return true;
-           		}
-            }
+			$last = explode( "?", $blip);
+			$this->mId = $last[0];
+			return true;
+           	}
+	}
 
                 $text = strpos( $fixed_url, "WWW.DAILYMOTION" );
                 if( false !== $text ) { // Dailymotion
@@ -1136,6 +1151,8 @@ EOD;
 				$metadata = $this->mProvider . ',' . $this->mId . ',' . $this->mData[0];
 				break;
 			case self::V_YOUTUBE:
+				$metadata = $this->mProvider . ',' . $this->mId . ',' . $this->mData[0];
+				break;
 			case self::V_GAMEVIDEOS:
 			case self::V_VIMEO:
 			case self::V_SOUTHPARKSTUDIOS:
@@ -1479,8 +1496,8 @@ EOD;
 				$embed = '<embed ' . $auto . ' src="' . $url . '" width="' . $width . '" height="' . $height . '" wmode="transparent"" allowFullScreen="true" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"></embed>';
                                 break;
                         case self::V_YOUTUBE:
-				$url = 'http://www.youtube.com/v/' . $this->mId . '&enablejsapi=1&fs=1' . ($autoplay ? '&autoplay=1' : '');
-                                break;
+				$url = 'http://www.youtube.com/v/' . $this->mId . '&enablejsapi=1&fs=1' . ($autoplay ? '&autoplay=1' : '') . ( !empty( $this->mData[0] ) ? '&hd=1' : '');
+				break;
 			case self::V_SEVENLOAD:
 				$code = 'custom';
 				$embed = '<object style="visibility: visible;" id="sevenloadPlayer_' . $this->mId . '" data="http://static.sevenload.com/swf/player/player.swf" type="application/x-shockwave-flash" height="' . $height . '" width="' . $width . '"><param name="wmode" value="transparent"><param value="always" name="allowScriptAccess"><param value="true" name="allowFullscreen"><param value="configPath=http%3A%2F%2Fflash.sevenload.com%2Fplayer%3FportalId%3Den%26autoplay%3D0%26itemId%3D' . $this->mId . '&amp;locale=en_US&amp;autoplay=0&amp;environment=" name="flashvars"></object>';
