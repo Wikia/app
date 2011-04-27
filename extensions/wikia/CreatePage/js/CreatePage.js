@@ -26,6 +26,12 @@ CreatePage.checkTitle = function( title, enterWasHit ) {
 };
 
 CreatePage.openDialog = function(e, titleText) {
+	// BugId:4941
+	if (!!window.WikiaEnableNewCreatepage === false) {
+		// create page popouts are disabled - follow the link
+		return;
+	}
+
 	e.preventDefault();
 	if( false == CreatePageEnabled ) {
 		CreatePageEnabled = true;
