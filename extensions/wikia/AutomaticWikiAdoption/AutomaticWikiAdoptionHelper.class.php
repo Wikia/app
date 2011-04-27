@@ -35,9 +35,6 @@ class AutomaticWikiAdoptionHelper {
 	//used as type in user_flags table
 	const USER_FLAGS_AUTOMATIC_WIKI_ADOPTION = 1;
 	
-
-	// static variable to store preferences setting between UserSaveOptions and UserSaveOptions2 hooks
-	static $saveOption;
 	/**
 	 * check if user is allowed to adopt particular wiki
 	 *
@@ -131,26 +128,26 @@ class AutomaticWikiAdoptionHelper {
 	 * @return boolean success/fail
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function adoptWiki($user) {
+	static function adoptWiki($wikiId, $user) {
 		wfProfileIn(__METHOD__);
-
+		global $wgMemc;
 		$dbr = wfGetDB(DB_SLAVE);
 		//get all current admins of this wiki
 		$res = $dbr->select(
-			array('user', 'user_groups'),
-			'user_id',
-			array('user_id = ug_user', 'ug_group' => 'sysop'),
+			'user_groups',
+			'ug_user',
+			array('ug_group' => 'sysop'),
 			__METHOD__
 		);
 
 		//group to remove
 		$removedGroup = 'bureaucrat';
-		//group to add
-		$addGroup = 'sysop';
+		//groups to add
+		$addGroups = array('sysop', 'bureaucrat');
 
 		//remove bureacrat for current admins
 		while ($row = $dbr->fetchObject($res)) {
-			$admin = User::newFromId($row->user_id);
+			$admin = User::newFromId($row->ug_user);
 			if ($admin) {
 				//get old groups - for log purpose
 				$oldGroups = $admin->getGroups();
@@ -174,6 +171,9 @@ class AutomaticWikiAdoptionHelper {
 					);
 					//log
 					self::addLogEntry($admin, $oldGroups, $newGroups);
+					//Unset preference for receiving future adoption emails
+					$admin->setOption("adoptionmails-$wikiId", 0);
+					$admin->saveSettings();
 				}
 			}
 		}
@@ -181,20 +181,32 @@ class AutomaticWikiAdoptionHelper {
 		//get old groups - for log purpose
 		$oldGroups = $user->getGroups();
 		//create new groups list - for log purpose
-		$newGroups = array_unique(array_merge($oldGroups, array($addGroup)));
+		$newGroups = array_unique(array_merge($oldGroups, $addGroups));
 		if ($oldGroups != $newGroups) {
-			//add new admin - user who just adopted this wiki
-			$user->addGroup($addGroup);
+			//add groups to user who just adopted this wiki
+			foreach ($addGroups as $addGroup) {
+				$user->addGroup($addGroup);
+			}
 			//log
 			self::addLogEntry($user, $oldGroups, $newGroups);
 		}
 		//set date of adoption - this will be used to check when next adoption is possible
 		$user->setOption('LastAdoptionDate', time());
+		//Set preference for receiving future adoption emails
+		$user->setOption("adoptionmails-$wikiId", 1);		
 		$user->saveSettings();
 
-		//TODO: log on central that wiki has been adopted (by who)
-
+		// Block user from seeing the adoption page again or adopting another wiki
+		$memcKey = wfMemcKey($user->getId(), 'AutomaticWikiAdoption-user-allowed-to-adopt');
+		$allowed = self::REASON_ADOPTED_RECENTLY;
+		$wgMemc->set($memcKey, $allowed, 3600);
+		
+		//Reset the flags for this wiki
+		self::dismissNotification();
+		$flags = WikiFactory::FLAG_ADOPTABLE | WikiFactory::FLAG_ADOPT_MAIL_FIRST | WikiFactory::FLAG_ADOPT_MAIL_SECOND;
+		WikiFactory::resetFlags($wikiId, $flags);		
 		wfProfileOut(__METHOD__);
+		//TODO: log on central that wiki has been adopted (by who)
 		//TODO: is there a way to check if user got sysop rights to return true/false as a result?
 		return true;
 	}
@@ -317,8 +329,8 @@ class AutomaticWikiAdoptionHelper {
 	public static function onGetPreferences($user, &$defaultPreferences) {
 		wfProfileIn(__METHOD__);
 		global $wgSitename, $wgCityId;
-		// Adoption preference is for wiki sysop group only
-		if (in_array('sysop', $user->getGroups())) {
+		// Adoption preference is for wiki sysop and bureaucrat groups
+		if (in_array('sysop', $user->getGroups()) || in_array('bureaucrat', $user->getGroups())) {
 			$defaultPreferences["adoptionmails-label-$wgCityId"] = array(
 				'type' => 'info',
 				'label' => '',
