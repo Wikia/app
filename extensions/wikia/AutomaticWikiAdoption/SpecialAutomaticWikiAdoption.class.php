@@ -58,7 +58,7 @@ class SpecialAutomaticWikiAdoption extends UnlistedSpecialPage {
 			//allowed to adopt
 			if ($wgRequest->wasPosted()) {
 				//user clicked button to adopt a wiki
-				if (AutomaticWikiAdoptionHelper::adoptWiki($wgUser)) {
+				if (AutomaticWikiAdoptionHelper::adoptWiki($wgCityId, $wgUser)) {
 					$wgOut->addHTML(wfMsgExt('automaticwikiadoption-adoption-successed', array('parseinline')));
 				} else {
 					$wgOut->addHTML(wfMsgExt('automaticwikiadoption-adoption-failed', array('parseinline')));
