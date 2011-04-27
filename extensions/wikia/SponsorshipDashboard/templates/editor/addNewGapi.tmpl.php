@@ -11,8 +11,8 @@
 		$metricsNames = unserialize( $data[ SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_METRICS_NAMES ] );
 		foreach( SponsorshipDashboardSourceGapi::$SD_GAPI_ALLOWED_METRICS as $metric ){
 			?><li>
-					<input <? if( in_array( $metric, $metrics ) ){ echo 'checked="checked" ';} ?> name="sourceMetric-<?=$metric;?>" type="checkbox" class="sd-checkbox">
-					<input name="sourceMetricName-<?=$metric; ?>" class="sd-oneforty" type="text" data-default="<?=$metric; ?>" value="<?=( isset( $metricsNames[ $metric ] ) ? $metricsNames[ $metric ] : $metric ); ?>">
+				<input <? if( in_array( $metric, $metrics ) ){ echo 'checked="checked" ';} ?> name="sourceMetric-<?=$metric;?>" type="checkbox" class="sd-checkbox">
+				<input name="sourceMetricName-<?=$metric; ?>" class="sd-oneforty" type="text" data-default="<?=$metric; ?>" value="<?=( isset( $metricsNames[ $metric ] ) ? $metricsNames[ $metric ] : $metric ); ?>">
 				<a class="wikia-button sd-source-reload-default secondary" data-action="bringDefault" data-target="sourceMetricName-<?=$metric; ?>" style="float:right; margin-top:3px">
 					<img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite error">
 				</a>
@@ -20,7 +20,7 @@
 		}
 	?></ul>
 	<div class="sd-source-line"></div>
-	<div> <?=wfMsg('sponsorship-dashboard-source-additional-dimension');?>
+	<div><?=wfMsg('sponsorship-dashboard-source-additional-dimension');?>
 		<select name="<?=SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_EXTRADIM; ?>" style="position:relative; left:0px; width: 100px; margin-right:20px;">
 			<option value=""><?=wfMsg('sponsorship-dashboard-source-none');?></option>
 		<? foreach( SponsorshipDashboardSourceGapi::$SD_GAPI_ALLOWED_DIMENSIONS as $dimension ){
@@ -29,7 +29,10 @@
 			?> ><?=$dimension;?></option><?
 		} ?>
 		</select>
-		<?=wfMsg('sponsorship-dashboard-source-in-case-of-empty');?> <input name="<?=SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_EMPTYRES; ?>" type="text" value="" > <?=wfMsg('sponsorship-dashboard-source-leave-empty');?>
+		<?=wfMsg('sponsorship-dashboard-source-max-elements');?> <input name="<?=SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_MAX_ADDITIONAL_DIMENSIONS; ?>" type="text" value="<?=$data[ SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_MAX_ADDITIONAL_DIMENSIONS ]?>" class="validate-number sd-short" >
+	</div>
+	<div>
+		<?=wfMsg('sponsorship-dashboard-source-in-case-of-empty');?> <input name="<?=SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_EMPTYRES; ?>" type="text" value="<?=$data[ SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_EMPTYRES ]?>" > <?=wfMsg('sponsorship-dashboard-source-leave-empty');?>
 	</div>
 	<div class="sd-source-line"></div>
 	<div>
