@@ -277,9 +277,9 @@ jQuery.tracker.byId = function(e) {
 };
 
 jQuery.tracker.trackStr = function(str, account) {
-	if (typeof OneDot != "undefined") {
-		OneDot.track(str);
-	}
+	//if (typeof OneDot != "undefined") {
+	//	OneDot.track(str);
+	//}
 
 	if(typeof wgEnableGA != "undefined" && wgEnableGA == true) {
 		if(typeof account != 'undefined') {
