@@ -11,10 +11,8 @@
 		$metricsNames = unserialize( $data[ SponsorshipDashboardSourceGapi::SD_PARAMS_GAPI_METRICS_NAMES ] );
 		foreach( SponsorshipDashboardSourceGapi::$SD_GAPI_ALLOWED_METRICS as $metric ){
 			?><li>
-				<label>
 					<input <? if( in_array( $metric, $metrics ) ){ echo 'checked="checked" ';} ?> name="sourceMetric-<?=$metric;?>" type="checkbox" class="sd-checkbox">
 					<input name="sourceMetricName-<?=$metric; ?>" class="sd-oneforty" type="text" data-default="<?=$metric; ?>" value="<?=( isset( $metricsNames[ $metric ] ) ? $metricsNames[ $metric ] : $metric ); ?>">
-				</label>
 				<a class="wikia-button sd-source-reload-default secondary" data-action="bringDefault" data-target="sourceMetricName-<?=$metric; ?>" style="float:right; margin-top:3px">
 					<img src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" height="0" width="0" class="sprite error">
 				</a>
@@ -63,7 +61,9 @@
 			</label>
 		</li>
 		<li>
-			<input <? if ( $data[ SponsorshipDashboardSource::SD_PARAMS_REP_SOURCE_TYPE ] == SponsorshipDashboardSource::SD_SOURCE_GLOBAL ) echo 'checked="checked"' ?> name="<?=SponsorshipDashboardSource::SD_PARAMS_REP_SOURCE_TYPE; ?>" value="<?=SponsorshipDashboardSource::SD_SOURCE_GLOBAL;?>" type="radio" class="sd-checkbox"> <?=wfMsg('sponsorship-dashboard-source-global');?>
+			<label>
+				<input <? if ( $data[ SponsorshipDashboardSource::SD_PARAMS_REP_SOURCE_TYPE ] == SponsorshipDashboardSource::SD_SOURCE_GLOBAL ) echo 'checked="checked"' ?> name="<?=SponsorshipDashboardSource::SD_PARAMS_REP_SOURCE_TYPE; ?>" value="<?=SponsorshipDashboardSource::SD_SOURCE_GLOBAL;?>" type="radio" class="sd-checkbox"> <?=wfMsg('sponsorship-dashboard-source-global');?>
+			</label>
 		</li>
 	</ul>
 </form>
