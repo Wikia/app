@@ -49,13 +49,13 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 		'continent',
 		'country',
 		'browser',
-		'dayOfWeek'
 	);
 
-	var $GAPImetrics = array();
-	var $GAPImetricNames = array();
-	var $extraDimension = '';
-	var $inCaseOfEmptyResult = self::SD_GAPI_RESULT_EMPTY;
+	public $GAPImetrics = array();
+	public $GAPImetricNames = array();
+	public $extraDimension = '';
+	public $inCaseOfEmptyResult = self::SD_GAPI_RESULT_EMPTY;
+	public $maxAddDimensions = 10;
 
 	protected $frequency;
 	protected $url = '';
@@ -309,11 +309,11 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 			}
 
 			arsort( $importantKeywordsMap );
-			$importantKeywordsMap = array_slice( $importantKeywordsMap, 0, 10 );
+
+			$importantKeywordsMap = array_slice( $importantKeywordsMap, 0, $this->maxAddDimensions );
 			foreach( $importantKeywordsMap as $key => $val ){
 				$finalKeyword[] = $importantKeywords[$key];
 			}
-
 
 			foreach( $results as $res ) {
 
@@ -427,6 +427,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 		$aData[ SponsorshipDashboardSource::SD_PARAMS_FREQUENCY ] = $this->frequency->getType();
 		$aData[ self::SD_PARAMS_GAPI_EXTRADIM ] = $this->extraDimension;
 		$aData[ self::SD_PARAMS_GAPI_EMPTYRES ] = $this->inCaseOfEmptyResult;
+		$aData[ self::SD_PARAMS_GAPI_MAX_ADDITIONAL_DIMENSIONS ] = $this->maxAddDimensions;
 		$aData[ self::SD_PARAMS_GAPI_METRICS ] = implode( ',', $this->GAPImetrics );
 		$aData[ self::SD_PARAMS_REP_URL ] = $this->url;
 		$aData[ self::SD_PARAMS_REP_FORCE_ACCOUNT ] = $this->account;
@@ -445,6 +446,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 	const SD_PARAMS_GAPI_METRICS_NAMES = 'metricsNames';
 	const SD_PARAMS_GAPI_EMPTYRES = 'inCaseOfEmptyResult';
 	const SD_PARAMS_GAPI_EXTRADIM = 'extraDimension';
+	const SD_PARAMS_GAPI_MAX_ADDITIONAL_DIMENSIONS = 'maxAddDimensions';
 	
 	/*
 	 * Fills object from array. Used when creating object from form results.
@@ -495,6 +497,10 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 
 		if ( isset( $aParams[ self::SD_PARAMS_GAPI_EMPTYRES ] ) ) {
 			$this->setOnEmpty( $aParams[ self::SD_PARAMS_GAPI_EMPTYRES ] );
+		}
+
+		if ( isset( $aParams[ self::SD_PARAMS_GAPI_MAX_ADDITIONAL_DIMENSIONS ] ) ) {
+			$this->maxAddDimensions = (int) $aParams[ self::SD_PARAMS_GAPI_MAX_ADDITIONAL_DIMENSIONS ];
 		}
 
 		if ( isset( $aParams[ self::SD_PARAMS_GAPI_EXTRADIM ] ) ) {
