@@ -153,9 +153,13 @@ class WikiaApp {
 	 * register special page
 	 * @param string $name special page name
 	 * @param string $className class name
+	 * @param string $group special page group
 	 */
-	public function registerSpecialPage($name, $className) {
+	public function registerSpecialPage($name, $className, $group = null) {
 		$this->globalRegistry->set('wgSpecialPages', $className, $name);
+		if( !empty( $group ) ) {
+			$this->globalRegistry->set('wgSpecialPageGroups', $group, $name);
+		}
 	}
 
 	/**
@@ -255,10 +259,10 @@ class WikiaApp {
 		$funcName = array_shift($funcArgs);
 		return call_user_func_array( $funcName, $funcArgs );
 	}
-	
+
 	/**
 	 * simple wfRunHooks wrapper
-	 * 
+	 *
 	 * @param string $hookName The name of the hook to run
 	 * @param array $params An array of the params to pass in the hook call
 	 */
