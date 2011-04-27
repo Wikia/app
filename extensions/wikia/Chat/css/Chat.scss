@@ -217,6 +217,18 @@ a {
 		padding: 18px 15px 16px 55px;
 		position: relative;
 	}
+	.continued {
+		margin-bottom: -15px;
+		min-height: 0;
+		padding-top: 0;
+		top: -15px;
+		.avatar {
+			display: none;
+		}
+		.username {
+			display: none;
+		}
+	}
 	.avatar {
 		@extend ._avatar;
 		height: 28px;

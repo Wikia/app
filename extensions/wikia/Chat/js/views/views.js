@@ -13,7 +13,7 @@ var ChatView = Backbone.View.extend({
 		this.model.bind('all', this.render);
 	},
 
-	render: function(){
+	render: function(type){
 		//NodeChatHelper.log("ABOUT TO RENDER THIS CHAT MESSAGE: " + JSON.stringify(this.model));
 		if(this.model.get('isInlineAlert')){
 			var originalTemplate = this.template;
@@ -25,15 +25,29 @@ var ChatView = Backbone.View.extend({
 		}
 		
 		// Add username as a class in li element
+		if (this.model.get('name')) {
+			$(this.el).attr('data-user', this.model.get('name'));
+		}
+
+		// Add "continued" class if this user also typed the last message (combines in UI)
+		if (type == 'change' || typeof(type) == 'undefined') {
+			var compareTo = (type == 'change') ? $('#Chat li:last').prev().data('user') : $('#Chat li:last').data('user');
+
+			if (this.model.get('name') == compareTo) {
+				$(this.el).addClass('continued');
+			}
+		}
+		
+		// Add a special "you" class for styling your own messages
 		if (this.model.get('name') == wgUserName) {
 			$(this.el).addClass('you');
 		}
-		
+
 		// Inline Alert
 		if(this.model.get('isInlineAlert') === true){
 			$(this.el).addClass('inline-alert');
 		}
-
+		
 		return this;
 	}
 });
@@ -149,6 +163,7 @@ var NodeChatView = Backbone.View.extend({
 		if (chat.attributes.name == wgUserName || isAtBottom) {
 			NodeChatHelper.scrollToBottom();
 		}
+		
 	},
 
 	addUser: function(user) {
@@ -311,7 +326,7 @@ NodeChatHelper = {
 		$(window)
 			.mousemove(NodeChatHelper.resetActivityTimer)
 			.keypress(NodeChatHelper.resetActivityTimer)
-			.focus(NodeChatHelper.resetActivityTimer);
+			.focus(NodeChatHelper.resetActivityTimer);		
 	},
 	
 	startActivityTimer: function() {
