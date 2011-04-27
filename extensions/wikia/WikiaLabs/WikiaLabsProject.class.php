@@ -341,7 +341,8 @@ class WikiaLabsProject {
 			array( 'wikia_labs_project' ),
 			array( 'wlpr_id' ),
 			$whereClause,
-			__METHOD__
+			__METHOD__,
+			array( 'ORDER BY' => 'wlpr_id DESC' )
 		);
 
 		$projects = array();
