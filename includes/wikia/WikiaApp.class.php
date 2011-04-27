@@ -255,6 +255,16 @@ class WikiaApp {
 		$funcName = array_shift($funcArgs);
 		return call_user_func_array( $funcName, $funcArgs );
 	}
+	
+	/**
+	 * simple wfRunHooks wrapper
+	 * 
+	 * @param string $hookName The name of the hook to run
+	 * @param array $params An array of the params to pass in the hook call
+	 */
+	public function runHook( $hookName, $parameters ) {
+		return $this->runFunction( 'wfRunHooks', $hookName, $parameters );
+	}
 
 	public function dispatch( $params = null ) {
 		if( is_array( $params ) ) {
