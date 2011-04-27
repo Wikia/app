@@ -17,7 +17,7 @@ F::build('App')->registerClass('DummyExtensionSpecialPageController', $dir . 'Du
 /**
  * hooks
  */
-F::build('App')->registerHook('OutputPageBeforeHTML', 'DummyExtension', 'onOutputPageBeforeHTML', array( 'foo' => 1, 'bar' => null ) );
+F::build('App')->registerHook('OutputPageBeforeHTML', 'DummyExtension', 'onOutputPageBeforeHTML');
 
 /**
  * controllers

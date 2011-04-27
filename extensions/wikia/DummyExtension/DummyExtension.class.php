@@ -15,7 +15,7 @@ class DummyExtension {
 
 	public function __construct(Title $currentTitle = null) {
 		$this->title = $currentTitle;
-		$this->wikia = WF::build('App');
+		$this->wikia = F::app();
 	}
 
 	/**
@@ -33,7 +33,6 @@ class DummyExtension {
 		$dbr = $this->wikia->runFunction( 'wfGetDB', DB_SLAVE, array(), $this->wikia->getGlobal( 'wgExternalSharedDB' ) );
 
 		//var_dump( $dbr );
-		//var_dump( $this->getHookOptions() );
 
 		return true;
 	}

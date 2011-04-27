@@ -10,7 +10,6 @@ class DummyExtensionSpecialPageController extends WikiaSpecialPageController {
 	private $data = array();
 
 	public function __construct() {
-
 		$this->data[] = 'foo';
 		$this->data[] = 'bar';
 		$this->data[] = 'baz';
@@ -43,9 +42,6 @@ class DummyExtensionSpecialPageController extends WikiaSpecialPageController {
 
 	}
 
-	/**
-	 * example method which ment to be callable only via ajax calls
-	 */
 	public function getSomeData() {
 		$this->response->setVal( 'someData', $this->data );
 	}
