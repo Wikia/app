@@ -49,7 +49,7 @@
 
 
 	<?php
-		if (!empty($stats)) {
+		if (!empty($stats) && !empty($stats['edits'])) {
 	?>
 		<span class="member-since"><?= wfMsg('oasis-member-since', $stats['date']) ?></span>
 		<span class="member-edits"><?= wfMsgExt('oasis-edits-counter', array('parsemag'), $stats['edits']) ?></span>
