@@ -45,7 +45,11 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 
 	static $SD_GAPI_ALLOWED_DIMENSIONS = array(
 		'keyword',
-		'medium'
+		'medium',
+		'continent',
+		'country',
+		'browser',
+		'dayOfWeek'
 	);
 
 	var $GAPImetrics = array();
