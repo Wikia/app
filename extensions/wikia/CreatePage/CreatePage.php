@@ -122,8 +122,10 @@ function wfCreatePageAjaxGetDialog() {
 
 	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$options = array();
-
-	$options['format'] = array(
+	$standardOptions = array();
+	
+	
+	$standardOptions['format'] = array(
 		'namespace' => NS_MAIN,
 		'label' => wfMsg( 'createpage-dialog-format' ),
 		'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_format.png",
@@ -131,17 +133,18 @@ function wfCreatePageAjaxGetDialog() {
 		'submitUrl' => "{$wgScript}?title=$1&action=edit&useFormat=1"
 	);
 
-	$options['blank'] = array(
+	$standardOptions['blank'] = array(
 		'namespace' => NS_MAIN,
 		'label' => wfMsg( 'createpage-dialog-blank' ),
 		'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_blank.png",
 		'trackingId' => 'blankpage',
 		'submitUrl' => "{$wgScript}?title=$1&action=edit"
 	);
-
+	
 	$listtype = "short";
-	wfRunHooks( 'CreatePage::FetchOptions', array( &$options, &$listtype ) );
+	wfRunHooks( 'CreatePage::FetchOptions', array(&$standardOptions, &$options, &$listtype ) );
 
+	$options = $options + $standardOptions; 
 	$optionsCount = count( $options );
 	$detectedWidth = ( $optionsCount * CREATEPAGE_ITEM_WIDTH );
 

@@ -158,7 +158,7 @@ class TopListHelper {
 	 *
 	 * Callback for the CreatePage::FetchOptions hook
 	 */
-	static public function onCreatePageFetchOptions( &$options ) {
+	static public function onCreatePageFetchOptions(&$standardOptions, &$options ) {
 		global $wgCdnStylePath, $wgScript, $wgShowTopListsInCreatePage;
 
 		if( !empty( $wgShowTopListsInCreatePage ) && Wikia::isOasis() ) {
