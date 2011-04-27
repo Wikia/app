@@ -99,5 +99,40 @@ class PageLayoutBuilderHelper {
 		
 		return true;
 	}
+	
+	
+	/**
+	 * createPageOptions - There are prepared for lists of bytes
+	 *
+	 * @author Tomek Odrobny
+	 *
+	 * @access public
+	 *
+	 */
+
+	public static function createPageOptions(&$standardOptions, &$options, &$listtype) {
+		global $wgCdnStylePath, $wgScript;
+		$listtype = "long";
+		$out = PageLayoutBuilderModel::getListOfLayout(DB_SLAVE);
+		$optionsAdd = array();
+		foreach($out as $value) {
+			if( empty($value['not_publish']) ) {
+				$optionsAdd[$value['page_id']] = array(
+					'label' => str_replace("_", " " ,$value['page_title']),
+					'desc' => $value['desc'],
+					'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_format.png",
+					'trackingId' => 'blankpage',
+					'submitUrl' => Title::newFromText( "LayoutBuilderForm", NS_SPECIAL )->getFullUrl("plbId=".$value['page_id']."&default=$1&action=edit")
+				);
+			}
+		}
+		
+		if(!empty($optionsAdd)) {
+			unset($standardOptions['format']);
+		}
+		$options = $optionsAdd + $options;
+		return true;
+	}
+	
 
 }
