@@ -94,6 +94,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 	// Fixme: URL and Category are not currently saved anywhere
 	private function handleClick ($id, $email, $url, $category) {
 		Wikia::log(__METHOD__, false, "<postback>" . $email . "</postback>\n", true);
+		global $wgExternalDatawareDB;
 
 		$dbw = wfGetDb(DB_MASTER, array(), $wgExternalDatawareDB);
 		$dbw->update(
@@ -106,6 +107,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 
 	private function handleOpen ($id, $email) {
 		Wikia::log(__METHOD__, false, "<postback>" . $email . "</postback>\n", true);
+		global $wgExternalDatawareDB;
 
 		$dbw = wfGetDb(DB_MASTER, array(), $wgExternalDatawareDB);
 		$dbw->update(
@@ -122,6 +124,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 
 	private function handleBounce ($id, $email, $status, $reason) {
 		Wikia::log(__METHOD__, false, "<postback>$email, $status, $reason</postback>\n", true);
+		global $wgExternalDatawareDB;
 
 		// Update the mail table to include details about the bounce
 		$dbw = wfGetDb(DB_MASTER, array(), $wgExternalDatawareDB);
@@ -154,6 +157,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 
 	private function handleSpam ($id, $email) {
 		Wikia::log(__METHOD__, false, "<postback>" . $email . "</postback>\n", true);
+		global $wgExternalDatawareDB;
 
 		$dbw = wfGetDb(DB_MASTER, array(), $wgExternalDatawareDB);
 		$dbw->update(
@@ -170,7 +174,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 	 * NOTE: This does not check (or store) the token, so check the token before calling this function.
 	 */
 	private function logPostbackForLater(){
-		global $wgRequest;
+		global $wgRequest, $wgExternalDatawareDB;
 		wfProfileIn(__METHOD__);
 
 		$eventType = $wgRequest->getVal('event');
