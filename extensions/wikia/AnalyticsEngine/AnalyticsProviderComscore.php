@@ -1,6 +1,9 @@
 <?php
 
 class AnalyticsProviderComscore implements iAnalyticsProvider {
+	
+	private static $COMSCORE_KEYWORD_KEYNAME = 'comscorekw';
+	private static $PARTNER_ID = 6177433;
 
 	function getSetupHtml(){
 		return null;
@@ -11,21 +14,21 @@ class AnalyticsProviderComscore implements iAnalyticsProvider {
 		  case AnalyticsEngine::EVENT_PAGEVIEW : return '
 <!-- Begin comScore Tag -->
 <script type="text/javascript">
-document.write(unescape("%3Cscript src=\'" + (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js\' %3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-COMSCORE.beacon({
-  c1:2,
-  c2:6177433,
-  c3:"",
-  c4:"",
-  c5:"",
-  c6:"",
-  c15:""
+var _comscore = _comscore || [];
+_comscore.push({ c1: "2", c2: "'.self::$PARTNER_ID.'",
+	options: {
+		url_append: "'.self::$COMSCORE_KEYWORD_KEYNAME.'='.$this->getC7Value().'"
+	}
 });
+
+(function() {
+	var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+	s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+	el.parentNode.insertBefore(s, el);
+})();
 </script>
 <noscript>
-<img src="http://b.scorecardresearch.com/p?c1=2&amp;c2=6177433&amp;c3=&amp;c4=&amp;c5=&amp;c6=&amp;c15=&amp;cj=1" />
+<img src="http://b.scorecardresearch.com/p?c1=2&c2='.self::$PARTNER_ID.'&c3=&c4=&c5=&c6=&c7='.$this->getC7ParamAndValue().'&c15=&cv=2.0&cj=1" />
 </noscript>
 <!-- End comScore Tag -->';
 			break;
@@ -33,5 +36,19 @@ COMSCORE.beacon({
 		}
 	}
 
+	private function getC7Value() {
+		global $wgCityId;
 
+		$catInfo = HubService::getComscoreCategory($wgCityId);
+
+		return 'wikiacsid_' . strtolower($catInfo->cat_name);
+	}
+	
+	private function getC7ParamAndValue() {
+		global $wgRequest;
+		
+		$requestUrl = $wgRequest->getFullRequestURL();
+		$paramAndValue = $requestUrl . (strpos($requestUrl, '?') !== FALSE ? '&' : '?') . self::$COMSCORE_KEYWORD_KEYNAME . '=' . $this->getC7Value();		
+		return urlencode($paramAndValue);
+	}
 }
