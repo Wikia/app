@@ -4,7 +4,7 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 
 
 	public function getSetupHtml(){
-		global $wgEnableGA;
+		global $wgEnableGA, $wgProto;
 
 		static $called = false;
 		if ($called == true){
@@ -16,27 +16,27 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 		if(!empty($wgEnableGA)) {
 			//return "<script type=\"text/javascript\">(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();urchinTracker = function() {_gaq.push(['_setAccount', 'UA-2871474-1']);_gaq.push(['_trackEvent', 'Error', 'FakeUrchinTrackerCalled']);};</script>";
 			//test related to FB#4768, original value was "UA-2871474-1"
-			return  '<script type="text/javascript" src="http://www.google-analytics.com/ga.js"></script><script type="text/javascript">urchinTracker = function() {_gaq.push([\'_setAccount\', \'UA-19473076-1\']);_gaq.push([\'_trackEvent\', \'Error\', \'FakeUrchinTrackerCalled\']);};</script>' . "\n";
+			return  '<script type="text/javascript" src="' . $wgProto . '://www.google-analytics.com/ga.js"></script><script type="text/javascript">urchinTracker = function() {_gaq.push([\'_setAccount\', \'UA-19473076-1\']);_gaq.push([\'_trackEvent\', \'Error\', \'FakeUrchinTrackerCalled\']);};</script>' . "\n";
 		} else {
-			return  '<script type="text/javascript" src="http://www.google-analytics.com/urchin.js"></script>' . "\n";
+			return  '<script type="text/javascript" src="' . $wgProto . '://www.google-analytics.com/urchin.js"></script>' . "\n";
 		}
 	}
 
 	public function trackEvent($event, $eventDetails=array()){
 		global $wgEnableGA;
-		
+
 		switch ($event){
 			case "lyrics":
 				return $this->lyrics();
 				break;
-				
+
 		  case AnalyticsEngine::EVENT_PAGEVIEW:
 				if(!empty($wgEnableGA)) {
 					return '<script type="text/javascript">_gaq.push([\'_setAccount\', \'UA-288915-1\']);_gaq.push([\'_trackPageview\']);</script>';
 				} else {
 					return '<script type="text/javascript">_uff=0;_uacct="UA-288915-1";urchinTracker();</script>';
 				}
-		  
+
 		  case 'hub':
 				if (empty($eventDetails['name'])){
 					return '<!-- Missing category name  for hub tracking event -->';
@@ -47,19 +47,19 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 				} else {
 					return '<script type="text/javascript">_uff=0;_uacct="UA-288915-2";urchinTracker("' .addslashes($hub).'");</script>';
 				}
-		  
+
 		  case 'onewiki':
 				return $this->onewiki($eventDetails[0]);
 
 		  case 'pagetime':
 				return $this->pagetime($eventDetails[0]);
-			
+
 			case 'noads':
 				return $this->noads();
-			
+
 			case 'female':
 				return $this->female();
-		
+
 			case "varnish-stat":
 				return $this->varnishstat();
 
@@ -94,8 +94,8 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 				var ms = (now.getTime() - window.wgNow.getTime()) / 1000;
      			        var pageTime = Math.floor(ms * 10) / 10; // Round to 1 decimal
 				var slashtime = "/' . $skin . '/" + pageTime.toString().replace(/\./, "/");
-				
-				
+
+
 				if(typeof wgEnableGA != "undefined" && wgEnableGA == true) {
 					_gaq.push([\'_setAccount\', \'UA-288915-42\']);
 					_gaq.push([\'_trackPageview\', slashtime]);
@@ -127,7 +127,7 @@ if(abtest_ua = document.cookie.match(/wikia-ab=[^;]*UA=(.*?)\//)) {
 
 
 	}
-	
+
 	private function noads() {
 		return '<script type="text/javascript">
 if(document.cookie.match(/wikia-test=selected/)) {

@@ -5,6 +5,8 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 	private $account = 'p-8bG6eLqkH6Avk';
 
 	function getSetupHtml(){
+		global $wgProto;
+
 		static $called = false;
 		if ($called == true){
 			return '';
@@ -12,7 +14,7 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 			$called = true;
 		}
 
-		return  '<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>' . "\n" .
+		return  '<script type="text/javascript" src="' . $wgProto . '://edge.quantserve.com/quant.js"></script>' . "\n" .
 			"<script type=\"text/javascript\">/*<![CDATA[*/
 			try {
 				_qoptions = { qacct: '{$this->account}' };
