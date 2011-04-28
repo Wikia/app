@@ -134,5 +134,23 @@ class PageLayoutBuilderHelper {
 		return true;
 	}
 	
-
+	
+	/**
+	 * onArticleSave - prevent save if someone try to save plb article from api,etc. 
+	 *
+	 * @author Tomek Odrobny
+	 *
+	 * @access public
+	 *
+	 */
+	
+	public static function onArticleSave(&$article, &$user, &$text, &$summary, $minor, $watchthis, $sectionanchor, &$flags, &$status) {
+		global $wgTitle;
+		if ( PageLayoutBuilderForm::articleIsFromPLBFull($article->getId(), $article->getContent() ) ) {
+			if ( !$wgTitle->isSpecial('PageLayoutBuilderForm') ) {
+				return false;	
+			}
+		}
+		return true;
+	}
 }

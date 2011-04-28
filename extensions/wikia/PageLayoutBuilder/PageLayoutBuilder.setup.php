@@ -103,6 +103,8 @@ $wgHooks['BeforeEditEnhancements'][] = 'PageLayoutBuilderSpecialPage::onBeforeEd
 
 $wgHooks['SpecialCreatePage::Subpage'][] = 'PageLayoutBuilderHelper::onCreatePageSubpage';
 
+$wgHooks['ArticleSave'][] = 'PageLayoutBuilderHelper::onArticleSave';
+
 $wgAjaxExportList[] = 'PageLayoutBuilderEditor::getPLBEditorData';
 
 $wgDefaultLayoutWiki = 177;
