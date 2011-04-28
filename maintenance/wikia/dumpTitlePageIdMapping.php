@@ -3,6 +3,11 @@
 // Author: Sean Colombo
 // Date: 20081201 - Date of dumpTitles.php creation.
 // Date: 20100113 - Forked to create a mapping from page ids to titles.
+// Date: 20110428 - There have been several changes in the interim, but now changing the output
+//                  format of the pageTitles mapping file to not have isRedirString column because
+//                  none of the rows in that file are redirects anymore.  Recently added sorting of
+//                  the files after creation (prevents the need for the bot code to sort on every
+//                  run which uses the files that this script creates).
 //
 // This script creates a dump file of all of the page titles, page_ids and redirects in the system.
 //
@@ -11,7 +16,7 @@
 // against Gracenote titles).  The redirects file will be created also which should allow processing to occur.
 //
 // Mapping file line format:
-// [page_id]\t[isRedirect{0,1}]\t[page_title]\n
+// [page_id]\t[page_title]\n
 ////
 
 ini_set('memory_limit', '2048M'); // this script balloons when making redirects
@@ -85,11 +90,7 @@ if($result = mysql_query($queryString, $db)){
 						}
 					} else {
 						$numPageTitles++;
-						// TODO: isRedirString is superfluous now that redirects are NOT written to this file.  Can get rid of it if you do the following:
-						// - Change the sort call from -k 3 to -k 2
-						// - Change the loading code in [private svn]/lyricwiki-private/bot_stuff/lib/titleAndRedirectTools.pl to not expect that second column
-						// - Change comment at top of file about the format of the lines
-						fwrite($TITLE_FILE, "$page_id\t$isRedirString\t".formatForUb("$title")."\n");
+						fwrite($TITLE_FILE, "$page_id\t".formatForUb("$title")."\n");
 					}
 				}
 			}
@@ -124,7 +125,7 @@ print "TOTAL PAGE TITLES SEEN: $numPageTitles\n";
 
 // Sort page title mapping (added 20110426 so that this doesn't have to be done by ÜberBot on every run.
 print "Sorting the id/title mapping by article title...";
-system("sort -k 3 -o \"$finalTitleFilename\" \"$finalTitleFilename\"");
+system("sort -k 2 -o \"$finalTitleFilename\" \"$finalTitleFilename\"");
 print "Sorted.\n";
 
 if($DO_REDIRECTS_FILE){
@@ -200,12 +201,13 @@ if($DO_REDIRECTS_FILE){
 	fclose($REDIR_FILE);
 	
 	print "Total redirects whose destination couldn't be found: $numFailed\n";
+	print "(those are typically the pages found on Special:BrokenRedirects)\n";
+	
+	// Even though we call sort($redirectCache) above, this still needs to be done because the values are sorted BEFORE urlencoding, etc.
+	print "Sorting the redirects file...\n";
+	system("sort -o \"$finalRedirFilename\" \"$finalRedirFilename\"");
+	print "Redirects Sorted.\n";
 }
-
-// Even though we call sort($redirectCache) above, this still needs to be done because the values are sorted BEFORE urlencoding, etc.
-print "Sorting the redirects file...\n";
-system("sort -o \"$finalRedirFilename\" \"$finalRedirFilename\"");
-print "Redirects Sorted.\n";
 
 print "Done.\n";
 
