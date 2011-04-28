@@ -246,23 +246,23 @@ class WikiaApp {
 	public function isCookie( $key ) {
 		return (bool) isset( $_COOKIE[ $key ] );
 	}
-	
+
 	/**
 	 * Prepares and sends a request to a Controller
-	 * 
+	 *
 	 * @param $controllerName string the name of the controller, without the 'Controller' or 'Model' suffix
 	 * @param $methodName string the name of the Controller method to call
 	 * @param $params array an array with the parameters to pass to the specified method
 	 * @param $internal boolean wheter it's an internal (PHP to PHP) or external request
-	 * 
+	 *
 	 * @return WikiaResponse a response object with the data produced by the method call
 	 */
 	public function sendRequest( $controllerName, $methodName = null, $params = null, $internal = true ) {
 		$values = array( 'controller' => $controllerName, 'method' => $methodName );
 		$request = new WikiaRequest( array_merge( $values, (array) $params ) );
-		
+
 		$request->setInternal( $internal );
-		
+
 		return $this->getDispatcher()->dispatch( $this, $request );
 	}
 
@@ -286,9 +286,9 @@ class WikiaApp {
 	 * @param array $params An array of the params to pass in the hook call
 	 */
 	public function runHook( $hookName, $parameters ) {
-		return $this->runFunction( 'wfRunHooks', $hookName, $parameters );
+		return wfRunHooks( $hookName, $parameters );
 	}
-	
+
 	/**
 	 * simple wfProfileIn wrapper
 	 * @see wfProfileIn
@@ -296,7 +296,7 @@ class WikiaApp {
 	public function profileIn( $method ){
 		$this->runFunction( 'wfProfileIn', $method );
 	}
-	
+
 	/**
 	 * simple wfProfileOut wrapper
 	 * @see wfProfileOut
@@ -326,7 +326,7 @@ class WikiaApp {
 		$response = $this->sendRequest( $name, $action, (array) $params, false );
 		return $response->toString();
 	}
-	
+
 	//TODO: take a look here
 	public static function ajax() {
 		return F::app()->sendRequest( null, null, null, false );
