@@ -3475,12 +3475,14 @@ function toggleDisplay(id, type) {
 
   protected function convert_xml_to_result($xml, $method, $params) {
 	//temporary solution for http://bugs.developers.facebook.net/show_bug.cgi?id=8833
-	try {
-		$sxml = simplexml_load_string($xml);
-		$result = self::convert_simplexml_to_array($sxml);
-	} catch (Exception $ex) {
-		return array();
+	$sxml = @simplexml_load_string($xml);
+	
+	if(empty($sxml)) {
+		return array();	
 	}
+	
+	$result = self::convert_simplexml_to_array($sxml);
+
 
     if (!empty($GLOBALS['facebook_config']['debug'])) {
       // output the raw xml and its corresponding php object, for debugging:
