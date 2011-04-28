@@ -865,16 +865,17 @@ class LoginForm {
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
 		global $wgEnableRichEmails;
+		$priority = 1;  // Password emails are higher than default priority of 0
 		if (empty($wgEnableRichEmails)) {
 			$userLanguage = $u->getOption( 'language' );
 			$m = wfMsgExt( $emailText, array( 'parsemag', 'language' => $userLanguage ), $ip, $u->getName(), $np,
 					$wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 ) );
-			$result = $u->sendMail( wfMsgExt( $emailTitle, array( 'parsemag', 'language' => $userLanguage ) ), $m, null, null, 'TemporaryPassword' );
+			$result = $u->sendMail( wfMsgExt( $emailTitle, array( 'parsemag', 'language' => $userLanguage ) ), $m, null, null, 'TemporaryPassword', $priority );
 		}
 		else {
 			$wantHTML = $u->isAnon() || $u->getOption('htmlemails');
 			list($m, $mHTML) = wfMsgHTMLwithLanguage($emailText, $u->getOption('language'), array( 'parsemag' ), array($ip, $u->getName(), $np, $wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 )), $wantHTML);
-			$result = $u->sendMail( wfMsg( $emailTitle ), $m, null, null, 'TemporaryPassword', $mHTML );
+			$result = $u->sendMail( wfMsg( $emailTitle ), $m, null, null, 'TemporaryPassword', $mHTML, $priority );
 		}
 
 		return $result;

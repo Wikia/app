@@ -111,9 +111,10 @@ class UserMailer {
 	 * @param $replyto MailAddress: optional reply-to email (default: null).
 	 * @param $contentType String: optional custom Content-Type
 	 * @param $category String: optional category for statistic [added by Wikia]
+	 * @param $priority int: optional priority for email (added by wikia)
 	 * @return mixed True on success, a WikiError object on failure.
 	 */
-	static function send( $to, $from, $subject, $body, $replyto=null, $contentType=null, $category='unknown' ) {
+	static function send( $to, $from, $subject, $body, $replyto=null, $contentType=null, $category='unknown', $priority = 0 ) {
 		global $wgSMTP, $wgOutputEncoding, $wgErrorString, $wgEnotifImpersonal;
 		global $wgEnotifMaxRecips, $wgForceSendgridEmail, $wgForceSchwartzEmail;
 
@@ -189,6 +190,10 @@ class UserMailer {
 			/* Wikia change begin - @author: Marooned */
 			/* Add category to header to allow easier data gathering */
 			$headers['X-Msg-Category'] = $category;
+			// Priority for internal wikia mail queue
+			if ($priority) {
+				$headers['X-Priority'] = $priority;
+			}
 			// Add a header for the server-name (helps us route where SendGrid will send bounces).
 			if(!empty($_SERVER) && isset( $_SERVER['SERVER_NAME'] ) ) {
 				$headers["X-ServerName"] = $_SERVER['SERVER_NAME'];
@@ -312,7 +317,7 @@ class UserMailer {
 	 * @param $category String: optional category for statistic [added by Wikia]
 	 * @return mixed True on success, a WikiError object on failure.
 	 */
-	static function sendHTML( $to, $from, $subject, $body, $bodyHTML, $replyto=null, $category='unknown' ) {
+	static function sendHTML( $to, $from, $subject, $body, $bodyHTML, $replyto=null, $category='unknown', $priority = 0 ) {
 		global $wgSMTP, $wgForceSendgridEmail, $wgForceSchwartzEmail;
 
 		//unlike mail(), this function takes only one recipient at the time
@@ -371,6 +376,10 @@ class UserMailer {
 
 		/* Add category to header to allow easier data gathering */
 		$headers['X-Msg-Category'] = $category;
+		// Priority for internal wikia mail queue
+		if ($priority) {
+			$headers['X-Priority'] = $priority;
+		}
 
 		// Add a header for the server-name (helps us route where SendGrid will send bounces).
 		if(!empty($_SERVER)) {
