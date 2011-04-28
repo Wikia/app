@@ -57,8 +57,8 @@ class FooterModule extends Module {
 	}
 
 	public function executeToolbarConfiguration() {
-		$this->configurationHtml = wfRenderModule('Footer','ToolbarConfigurationPopup');
-		$this->renameItemHtml = wfRenderModule('Footer','ToolbarConfigurationRenameItemPopup');
+		$this->configurationHtml = wfRenderModule('Footer','ToolbarConfigurationPopup',array('format' => 'html'));
+		$this->renameItemHtml = wfRenderModule('Footer','ToolbarConfigurationRenameItemPopup',array('format' => 'html'));
 
 		$service = $this->getToolbarService();
 		$this->defaultOptions = $service->listToJson($service->getDefaultList());
@@ -77,7 +77,7 @@ class FooterModule extends Module {
 				$this->status = $service->save($data);
 			}
 		}
-		$this->toolbar = wfRenderModule('Footer','Toolbar');
+		$this->toolbar = wfRenderModule('Footer','Toolbar',array('format' => 'html'));
 	}
 
 	public function executeToolbarGetList() {

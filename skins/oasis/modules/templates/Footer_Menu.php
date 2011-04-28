@@ -15,7 +15,7 @@
 	<span class="arrow-icon-ctr"><span class="arrow-icon arrow-icon-single"></span></span>
 	<a href="#"><?= $item['caption']; ?></a>
 	<ul id="my-tools-menu" class="tools-menu">
-		<?= wfRenderModule( 'Footer', 'Menu', array( 'items' => $item['items'] ) ); ?>
+		<?= wfRenderModule( 'Footer', 'Menu', array( 'format' => 'html', 'items' => $item['items'] ) ); ?>
 	</ul>
 </li>
 <?php     break; ?>
