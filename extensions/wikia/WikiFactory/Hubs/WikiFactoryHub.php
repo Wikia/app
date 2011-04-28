@@ -12,26 +12,26 @@
  */
 class WikiFactoryHub {
 
-    #--- static variables
-    private static $mInstance = false;
+	#--- static variables
+	private static $mInstance = false;
 	private static $mCategories = array();
 
-    const CATEGORY_ID_GAMING = 2;
-    const CATEGORY_ID_ENTERTAINMENT = 3;
-    const CATEGORY_ID_CORPORATE = 4;
-    const CATEGORY_ID_LIFESTYLE = 9;
-    const CATEGORY_ID_MUSIC = 16;
+	const CATEGORY_ID_GAMING = 2;
+	const CATEGORY_ID_ENTERTAINMENT = 3;
+	const CATEGORY_ID_CORPORATE = 4;
+	const CATEGORY_ID_LIFESTYLE = 9;
+	const CATEGORY_ID_MUSIC = 16;
 
-    /**
+	/**
 	 * private constructor
 	 *
-     * @access private
-     * @author Krzysztof Krzyżaniak <eloy@wikia.com>
-     *
-     */
-    private function __construct( ) {
+	 * @access private
+	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
+	 *
+	 */
+	private function __construct( ) {
 		self::$mCategories = $this->loadCategories();
-    }
+	}
 
 	/**
 	 * getInstance
@@ -92,40 +92,40 @@ class WikiFactoryHub {
 		return $cats;
 	}
 
-    /**
-     * return HTML select for category choosing
-     */
-    public function getForm( $city_id, &$title = null ) {
+	/**
+	 * return HTML select for category choosing
+	 */
+	public function getForm( $city_id, &$title = null ) {
 		global $wgTitle;
 		if( is_null( $title ) ) {
 			$title = $wgTitle;
 		}
 		$cat_id = $this->getCategoryId( $city_id );
-        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
 			"title"			=> $title,
 			"cat_id"		=> $cat_id,
-            "city_id"	 	=> $city_id,
-            "categories" 	=> self::$mCategories
-        ));
+			"city_id"	 	=> $city_id,
+			"categories" 	=> self::$mCategories
+		));
 
-        return $oTmpl->execute("categories");
-    }
+		return $oTmpl->execute("categories");
+	}
 
-    /**
-     * return HTML select for category choosing
-     */
-    public function getSelect( $cat_id ) {
+	/**
+	 * return HTML select for category choosing
+	 */
+	public function getSelect( $cat_id ) {
 
-        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
 			"title"			=> null,
 			"cat_id"		=> $cat_id,
-            "categories" 	=> self::$mCategories
-        ));
+			"categories" 	=> self::$mCategories
+		));
 
-        return $oTmpl->execute("categories");
-    }
+		return $oTmpl->execute("categories");
+	}
 
 	/**
 	 * getCategories
@@ -137,7 +137,7 @@ class WikiFactoryHub {
 	 *
 	 * @return array	category names and ids from
 	 */
-    public function getCategories( ) {
+	public function getCategories( ) {
 		return self::$mCategories;
 	}
 
@@ -151,84 +151,84 @@ class WikiFactoryHub {
 	 *
 	 * @return integer	category id from city_cat_mapping table
 	 */
-    public function getCategoryId( $city_id ) {
+	public function getCategoryId( $city_id ) {
 		global $wgExternalSharedDB;
 
-        wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
-        $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-        $oRow = $dbr->selectRow(
-            array( "city_cat_mapping" ),
-            array( "cat_id" ),
-            array( "city_id" => $city_id ),
-            __METHOD__
-        );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$oRow = $dbr->selectRow(
+			array( "city_cat_mapping" ),
+			array( "cat_id" ),
+			array( "city_id" => $city_id ),
+			__METHOD__
+		);
 
-        wfProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
-        return isset( $oRow->cat_id ) ? $oRow->cat_id : null ;
-    }
+		return isset( $oRow->cat_id ) ? $oRow->cat_id : null ;
+	}
 
-    /**
-     * get category name
-     */
-    public function getCategoryName( $city_id ) {
+	/**
+	 * get category name
+	 */
+	public function getCategoryName( $city_id ) {
 		$cat_id = $this->getCategoryId( $city_id );
 		return isset( self::$mCategories[ $cat_id ] )
 			? self::$mCategories[ $cat_id ]["name"]
 			: null;
-    }
-    public function getCategoryShort( $city_id ) {
+	}
+	public function getCategoryShort( $city_id ) {
 		$cat_id = $this->getCategoryId( $city_id );
 		return isset( self::$mCategories[ $cat_id ] )
 			? self::$mCategories[ $cat_id ]["short"]
 			: null;
-    }
-    /**
+	}
+	/**
 	 * loadCategories
 	 *
-     * load data from database: city_cats (WF)
-     *
-     * @author Krzysztof Krzyżaniak <eloy@wikia.com>
-     *
+	 * load data from database: city_cats (WF)
+	 *
+	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
+	 *
 	 * @return array	array with category maps id => name
-     */
-    private function loadCategories() {
-    	global $wgExternalSharedDB ;
-    	$tmp = array();
-    	if( !$wgExternalSharedDB ) {
-    		return array();
-	}
-
-	$oMemc = wfGetCache( CACHE_MEMCACHED );
-	$memkey = sprintf("%s", __METHOD__);
-	$cached = $oMemc->get($memkey);
-	if ( empty($cached) ) {
-
-		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		Wikia::log( __METHOD__, "var", $wgExternalSharedDB );
-		$oRes = $dbr->select(
-			array( "city_cats" ),
-			array( "*" ),
-			null,
-			__METHOD__,
-			array( "ORDER BY" => "cat_name" )
-		);
-
-		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-			$tmp[ $oRow->cat_id ] = array( "name" => $oRow->cat_name, "short" => $oRow->cat_short );
+	 */
+	private function loadCategories() {
+		global $wgExternalSharedDB ;
+		$tmp = array();
+		if( !$wgExternalSharedDB ) {
+			return array();
 		}
 
-		$dbr->freeResult( $oRes );
-		$oMemc->set($memkey, $tmp, 60*60*24);
-	} else {
-		$tmp = $cached;
-	}
+		$oMemc = wfGetCache( CACHE_MEMCACHED );
+		$memkey = sprintf("%s", __METHOD__);
+		$cached = $oMemc->get($memkey);
+		if ( empty($cached) ) {
 
-	wfProfileOut( __METHOD__ );
-	return $tmp;
-    }
+			wfProfileIn( __METHOD__ );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+			Wikia::log( __METHOD__, "var", $wgExternalSharedDB );
+			$oRes = $dbr->select(
+				array( "city_cats" ),
+				array( "*" ),
+				null,
+				__METHOD__,
+				array( "ORDER BY" => "cat_name" )
+			);
+
+			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+				$tmp[ $oRow->cat_id ] = array( "name" => $oRow->cat_name, "short" => $oRow->cat_short );
+			}
+
+			$dbr->freeResult( $oRes );
+			$oMemc->set($memkey, $tmp, 60*60*24);
+		} else {
+			$tmp = $cached;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $tmp;
+	}
 
 	/**
 	 * getIdByName
@@ -240,42 +240,42 @@ class WikiFactoryHub {
 	 *
 	 * @return integer	category id
 	 */
-    public function getIdByName( $name ) {
+	public function getIdByName( $name ) {
 		global $wgExternalSharedDB;
-        wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
-        $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-        $oRow = $dbr->selectRow(
-            array( "city_cats" ),
-            array( "cat_id" ),
-            array( "cat_name" => htmlspecialchars( $name ) ),
-            __METHOD__
-        );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$oRow = $dbr->selectRow(
+			array( "city_cats" ),
+			array( "cat_id" ),
+			array( "cat_name" => htmlspecialchars( $name ) ),
+			__METHOD__
+		);
 
 		$id = isset( $oRow->cat_id ) ? $oRow->cat_id : false;
 
-        wfProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
-        return $id;
-    }
+		return $id;
+	}
 
-    /**
+	/**
 	 * setCategory
 	 *
-     * remove previous value in database and insert new one
-     *
-     * @param integer   $city_id    identifier from city_list
-     * @param integer   $cat_id     category identifier
+	 * remove previous value in database and insert new one
+	 *
+	 * @param integer   $city_id    identifier from city_list
+	 * @param integer   $cat_id     category identifier
 	 * @param string    $reason     optional extra reason string for logging
-     */
-    public function setCategory( $city_id, $cat_id, $reason='' ) {
+	 */
+	public function setCategory( $city_id, $cat_id, $reason='' ) {
 		global $wgExternalSharedDB;
-        wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
-        $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-        $dbw->begin();
-        $dbw->delete( "city_cat_mapping", array( "city_id" => $city_id ), __METHOD__ );
-        $dbw->insert( "city_cat_mapping", array( "city_id" => $city_id, "cat_id" => $cat_id ), __METHOD__  );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+		$dbw->begin();
+		$dbw->delete( "city_cat_mapping", array( "city_id" => $city_id ), __METHOD__ );
+		$dbw->insert( "city_cat_mapping", array( "city_id" => $city_id, "cat_id" => $cat_id ), __METHOD__  );
 
 		$categories = $this->getCategories();
 		if( !empty($reason) ) {
@@ -283,33 +283,33 @@ class WikiFactoryHub {
 		}
 		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Category changed to {$categories[$cat_id]['name']}".$reason, $city_id );
 
-        $dbw->commit();
+		$dbw->commit();
 
-        wfProfileOut( __METHOD__ );
-    }
+		wfProfileOut( __METHOD__ );
+	}
 
-    /**
-     *
-     * @param integer $id category id
-     * @return array of category id
-     */
-    public function getCategory($id) {
-	   return self::$mCategories[$id];
-    }
+	/**
+	 *
+	 * @param integer $id category id
+	 * @return array of category id
+	 */
+	public function getCategory($id) {
+		return self::$mCategories[$id];
+	}
 
-    /**
-     * Get category by name. Searches through list of categories.
-     * @param string $name category name
-     * @return array of category data, including id
-     */
-    public function getCategoryByName($name) {
-	    foreach (self::$mCategories as $categoryId=>$category) {
-		    if (strcasecmp($name, $category['name']) == 0) {
-			    $category['id'] = $categoryId;
-			    return $category;
-		    }
-	    }
+	/**
+	 * Get category by name. Searches through list of categories.
+	 * @param string $name category name
+	 * @return array of category data, including id
+	 */
+	public function getCategoryByName($name) {
+		foreach (self::$mCategories as $categoryId=>$category) {
+			if (strcasecmp($name, $category['name']) == 0) {
+				$category['id'] = $categoryId;
+				return $category;
+			}
+		}
 
-	    return;
-    }
+		return;
+	}
 }
