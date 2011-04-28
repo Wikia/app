@@ -4,7 +4,7 @@ class SimpleSearchController extends WikiaController {
 	private $mEnableCrossWikiaSearch;
 	private $mDisableTextSearch;
 	
-	function __construct() {
+	public function init() {
 		list(
 			$this->mEnableCrossWikiaSearch,
 			$this->mDisableTextSearch
@@ -22,7 +22,7 @@ class SimpleSearchController extends WikiaController {
 		$limit = $this->getRequest()->getInt( 'limit', 0 );
 		$offset = $this->getRequest()->getInt( 'offset', 0 );
 		$namespaces = (array) $this->getRequest()->getVal( 'namespaces', array() );
-		$showRedirects = $this->getBool( 'redirects', true );
+		$showRedirects = $this->getRequest()->getBool( 'redirects', true );
 		
 		$results = Array();
 		$this->getResponse()->setVal( 'key', $key );
@@ -88,17 +88,14 @@ class SimpleSearchController extends WikiaController {
 										if ( !$result->isBrokenTitle() && !$result->isMissingRevision() ) {
 											$title = $result->getTitle();
 											
-											if ( $title ->exists() ) {
-												$results[] = array(
-													'titleObject' => $title,
-													'titleText' => $title->getText(),
-													'url' => $title->getFulllUrl()
-												);
-											}
+											$results[] = array(
+												'textForm' => $title->getText(),
+												'urlForm' => $title->getFullUrl()
+											);
 										}
 									}
 									
-									$this->getResponse()->setVal( "{$set}Reults", $results );
+									$this->getResponse()->setVal( "{$set}Results", $results );
 								}
 								
 								$matches->free();
@@ -123,7 +120,7 @@ class SimpleSearchController extends WikiaController {
 			throw new SimpleSearchEmptyKeyException();
 		}
 		
-		$this->getResponse()->setValue( 'results', $results );
+		$this->getResponse()->setVal( 'results', $results );
 		
 		$this->getApp()->runFunction( 'wfProfileOut', __METHOD__ );
 	}
