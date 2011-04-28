@@ -207,6 +207,7 @@ function moduleProxy() {
 	$callback = $wgRequest->getVal('callback');
 	if($callback && ($outputType == 'json')) {
 		$text = Xml::escapeJsString($callback) . '(' . $response->toString() . ')';
+		$response->setContentType('text/javascript');
 		$response->setBody($text);
 	}
 
