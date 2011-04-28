@@ -101,8 +101,6 @@ class SimpleSearchController extends WikiaController {
 								$matches->free();
 							}
 						}
-						
-						
 					} else {
 						$this->getApp()->profileOut( __METHOD__ );
 						throw new SimpleSearchTooManyResultsException();
@@ -135,5 +133,29 @@ class SimpleSearchController extends WikiaController {
 		$this->getApp()->setGlobal( 'wgEnableCrossWikiaSearch', true );
 		$this->getResults();
 		$this->getApp()->setGlobal( 'wgEnableCrossWikiaSearch', $this->mEnableCrossWikiaSearch );
+	}
+}
+
+class SimpleSearchTooManyResultsException extends WikiaException {
+	function __construct() {
+		parent::__construct( 'Too many results' );
+	}
+}
+
+class SimpleSearchDisabledException extends WikiaException {
+	function __construct() {
+		parent::__construct( 'Search disabled' );
+	}
+}
+
+class SimpleSearchEngineException extends WikiaException {
+	function __construct( SearchEngine $search ) {
+		parent::__construct( 'Search error: {$search->getError()}' );
+	}
+}
+
+class SimpleSearchEmptyKeyException extends WikiaException {
+	function __construct() {
+		parent::__construct( 'Empty key' );
 	}
 }
