@@ -3,14 +3,36 @@
 package Wikia::Thumbnailer::Dispatcher;
 
 use common::sense;
+use LWP::UserAgent;
 use URI;
+use File::Slurp;
 use Moose;
+
+use constant MAXWIDTH => 3000;
 
 has width  => ( is => "rw", isa => "Int", "documentation" => "Requested width in pixels" );
 has height => ( is => "rw", isa => "Int", "documentation" => "Requested height in pixes" );
-has data   => ( is => "rw", "documentation" => "Data from original image" );
 has path   => ( is => "rw", isa => "Str" );
 has mimetype => ( is => "rw", isa => "Str", default => "text/plain" );
+
+has thumbnail => (
+	is => "rw",
+	isa => "Str",
+	documentation => "Path to created thumbnail"
+);
+
+has content =>(
+	is => "rw",
+	documentation => "Data from original image",
+	lazy_build => 1
+);
+
+has debug=> (
+	is => "rw",
+	isa => "Int",
+	default => sub { 0 },
+	documentation => "Debugging level"
+);
 
 has basepath => (
 	is => "rw",
@@ -31,6 +53,26 @@ has use_http => (
 	isa => "Bool" ,
 	default => sub { 1 },
 	documentation => "Flag, use http connection to read original or look for local file"
+);
+
+has last_modified => (
+	is => "rw",
+	isa => "Str",
+
+);
+
+has status => (
+	is => "rw",
+	isa => "Str",
+	default => sub{ 404 },
+	documentation => "HTTP Status which will be returned by dispatcher"
+);
+
+has content_length => (
+	is => "rw",
+	isa => "Int",
+	default => sub{ 0 },
+	documentation => "Content length for original file"
 );
 
 sub dispatch {
@@ -75,7 +117,112 @@ sub dispatch {
 	( $width ) = $last =~ /^seek=(\d+)\-.+\w$/ unless $width;
 	( $width ) = $last =~ /^(mid)\-.+\w$/ unless $width;
 
+
+	$width = $self::MAXWIDTH if $width =~ /^\d+$/ && $width > $self::MAXWIDTH;
+
+
+	#
+	# guess rest of image, last three parts would be image name and two
+	# subdirectories
+	#
+	# there could be two kinds: current image and archive image,
+	# archive image has '/archive/' part additionaly
+	#
+	my $original = join( "/", splice( @parts, -3, 3 ) );
+
+	#
+	# we match thumbnail path against this name because we don't want to
+	# create false positives (it's not perfect though )
+	#
+	my $origname = pop @{ [ split( "/" , $original ) ] };
+	$origname =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg if $self->use_http;
+	if( index( $last, $origname ) == -1 && index( $thumbnail, "/archive/" ) == -1 ) {
+		$self->status( 404 );
+		$self->stderr( "$origname not found in $last (thumbnail: $thumbnail)" );
+	}
+	else {
+		#
+		# now, last part is thumbnails folder, we skip that too
+		#
+		pop @parts;
+
+		#
+		# if thumbnail is for archived image add /archive/ part
+		#
+		if( index( $thumbnail, "/archive/" ) != -1 ) {
+			$parts[ -1 ] = "archive";
+		}
+
+		#
+		# merge with rest of path
+		#
+		$original = $self->basepath . '/' . join( "/", @parts ) . '/' . $original;
+	}
+	$self->thumbnail( $thumbnail );
+	$self->original( $original );
 	$self->width( $width );
+}
+
+#
+# read original data,
+# use remote file if --http is used
+# use local file otherwise
+#
+sub _build_content {
+	my( $self ) = @_;
+
+	my $datetime = DateTime->now();
+
+	use bytes;
+	if( $self->use_http ) {
+		my $remote = $self->original;
+		my $thumbnail = $self->thumbnail;
+
+		substr( $remote, 0, length( $self->basepath ), $self->baseurl );
+		substr( $thumbnail, 0, length( $self->basepath ), $self->baseurl );
+		my $ua = LWP::UserAgent->new();
+		$ua->timeout( 5 );
+		# @todo
+		# $ua->proxy( "http", "http://127.0.0.1:6081/" ) unless $use_devel;
+
+		my $response = $ua->get( $remote );
+		$self->last_modified(
+			$response->header("Last-Modified")
+				? $response->header("Last-Modified")
+				: $datetime->strftime( "%a, %d %b %Y %T GMT" )
+		);
+		if( $response->is_success ) {
+			$self->content( $response->content );
+			$self->content_length( length( $self->content ) );
+			$self->stderr( "Reading remote <$remote>, content-length: ${ \$self->content_length }", 1 );
+		}
+		else {
+			$self->status( $response->code() );
+			$self->content_length( 0 );
+			$self->last_modified( $datetime->strftime( "%a, %d %b %Y %T GMT" ) );
+		}
+	}
+	else {
+		$self->content( read_file( $self->original, binmode => ":raw" ) );
+		$self->content_length( length( $self->content ) );
+		$self->last_modified( $datetime->strftime( "%a, %d %b %Y %T GMT" ) );
+		$self->stderr( "Reading local ${ \$self->original }, content-length: ${ \$self->content_length }", 1 );
+	}
+	no bytes;
+}
+
+#
+# simply helper for outing debug lines
+#
+sub stderr {
+	my( $self, $info, $level ) = @_;
+
+	 die( "Level not defined" )
+		unless defined $level; # not very gently but I need this reminder for while
+
+	if( $level <= $self->debug ) {
+		say STDERR $info;
+	}
 }
 __PACKAGE__->meta->make_immutable;
 
@@ -107,13 +254,11 @@ use File::LibMagic;
 use File::Basename;
 use File::Path;
 use File::Copy;
-use File::Slurp;
 use Data::Types qw(:all);
 use Math::Round qw(round);
 use Getopt::Long;
 use Time::HiRes qw(gettimeofday tv_interval);
 use Getopt::Long;
-use LWP::UserAgent;
 use DateTime;
 use Cwd;
 use Try::Tiny;
@@ -370,12 +515,10 @@ else {
 }
 
 my $flm            = new File::LibMagic;
-my $maxwidth       = 3000;
 my $transformed    = 0;
 my $mimetype       = "text/plain";
 my $datetime       = undef;
 my $imgtype        = undef;
-my $remote         = undef; # url to remote original when $use_http is true
 my $content        = undef; #
 my $content_length = 0;
 my $last_modified  = undef;
@@ -400,90 +543,17 @@ while( $request->Accept() >= 0 || $test ) {
 	my $dispatcher = Wikia::Thumbnailer::Dispatcher->new(
 		request_uri => $request_uri,
 		use_http => $use_http,
-		basepath => $basepath
+		basepath => $basepath,
+		debug => $debug
 	);
 
 	my $width = $dispatcher->width;
+	my $content = $dispatcher->content;
+	my $content_length = $dispatcher->content_length;
 
 	if( $width ) {
-		$width = $maxwidth if $width =~ /^\d+$/ && $width > $maxwidth;
-		#
-		# guess rest of image, last three parts would be image name and two
-		# subdirectories
-		#
-		# there could be two kinds: current image and archive image,
-		# archive image has '/archive/' part additionaly
-		#
-		my $original = join( "/", splice( @parts, -3, 3 ) );
-
-		#
-		# we match thumbnail path against this name because we don't want to
-		# create false positives (it's not perfect though )
-		#
-		my $origname = pop @{ [ split( "/" , $original ) ] };
-		$origname =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg if $use_http;
-		if( index( $last, $origname ) == -1 && index( $thumbnail, "/archive/" ) == -1 ) {
-			$last_status = 404;
-			say STDERR "$origname not found in $last (thumbnail: $thumbnail)" if $debug;
-		}
-		else {
-			#
-			# now, last part is thumbnails folder, we skip that too
-			#
-			pop @parts;
-
-			#
-			# if thumbnail is for archived image add /archive/ part
-			#
-			if( index( $thumbnail, "/archive/" ) != -1 ) {
-				$parts[ -1 ] = "archive";
-			}
-
-			#
-			# merge with rest of path
-			#
-			$original = $basepath . '/' . join( "/", @parts ) . '/' . $original;
 
 			my $t_elapsed = tv_interval( $t_start, [ gettimeofday() ] ) ;
-
-			#
-			# read original data,
-			# use remote file if --http is used
-			# use local file otherwise
-			#
-			$datetime = DateTime->now();
-			use bytes;
-			if( $use_http ) {
-				$remote = $original;
-				substr( $remote, 0, length( $basepath ), $baseurl );
-				substr( $thumbnail, 0, length( $basepath ), $baseurl );
-				my $ua = LWP::UserAgent->new();
-				$ua->timeout( 5 );
-				$ua->proxy( "http", "http://127.0.0.1:6081/" ) unless $use_devel;
-				my $response = $ua->get( $remote );
-				$last_modified = $response->header("Last-Modified")
-					? $response->header("Last-Modified")
-					: $datetime->strftime( "%a, %d %b %Y %T GMT" );
-				if( $response->is_success ) {
-					$content = $response->content;
-					$content_length = length( $content );
-					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					say STDERR "Reading remote <$remote>, content-length: $content_length, time: $t_elapsed" if $debug;
-				}
-				else {
-					$last_status = $response->code();
-					$content_length = 0;
-					$last_modified = $datetime->strftime( "%a, %d %b %Y %T GMT" );
-				}
-			}
-			else {
-				$content = read_file( $original, binmode => ":raw" ) ;
-				$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-				$content_length = length( $content );
-				$last_modified = $datetime->strftime( "%a, %d %b %Y %T GMT" );
-				print STDERR "Reading local $original, content-length: $content_length, time: $t_elapsed\n" if $debug;
-			}
-			no bytes;
 
 			#
 			# then find proper thumbnailer for file, first check if this is svg
