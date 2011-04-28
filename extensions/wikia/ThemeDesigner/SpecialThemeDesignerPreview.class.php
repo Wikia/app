@@ -9,11 +9,11 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 	public function execute() {
 		wfProfileIn( __METHOD__ );
 		global $wgOut, $wgExtensionsPath, $wgCacheBuster;
-		
+
 		$wgOut->allowClickjacking();
 
 		$this->setHeaders();
-		
+
 		$wgOut->setPageTitle('Example Page Title');
 
 		$wgOut->addScript('<script src="'. $wgExtensionsPath .'/wikia/ThemeDesigner/js/ThemeDesignerPreview.js?'. $wgCacheBuster .'"></script>');
@@ -38,27 +38,29 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 	 *
 	 * @author macbre
 	 */
-	static function modifyHeaderData(&$moduleObject, &$params) {
+	static function modifyHeaderData(&$controller, &$params) {
 		global $wgExtensionsPath;
 		wfProfileIn(__METHOD__);
 
 		// fake static data for ThemeDesignerPreview
-		$moduleObject->revisions = array(
+		$response = $controller->getResponse();
+
+		$response->setVal('revisions', array(
 			'current' => array(
 				'user' => 'foo',
 				'avatarUrl' => "{$wgExtensionsPath}/wikia/ThemeDesigner/images/td-avatar.jpg",
 				'link' => '<a>FunnyBunny</a>',
 				'timestamp' => ''
 			),
-		);
+		));
 
-		$moduleObject->categories = array("<a>More Sample</a>", "<a>Others</a>");
-		$moduleObject->comments = 23;
-		$moduleObject->pageSubtitle = false;
-		$moduleObject->action = array("text" => "Edit this page");
-		$moduleObject->actionImage = '';
-		$moduleObject->actionName = 'edit';
-		$moduleObject->dropdown = array('foo', 'bar');
+		$response->setVal('action', array("text" => "Edit this page"));
+		$response->setVal('actionImage', '');
+		$response->setVal('actionName', 'edit');
+		$response->setVal('categories',array("<a>More Sample</a>", "<a>Others</a>"));
+		$response->setVal('comments', 23);
+		$response->setVal('dropdown',  array('foo', 'bar'));
+		$response->setVal('pageSubtitle', false);
 
 		wfProfileOut(__METHOD__);
 		return true;
