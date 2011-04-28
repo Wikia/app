@@ -153,17 +153,7 @@ class WikiaGameGuidesWikisModel{
 		wfProfileIn( __METHOD__ );
 		
 		/*
-		$request = F::build( 'WikiaRequest', array( 'params' => array(
-				'controller' => 'SimpleSearch',
-				'method' => 'localSearch',
-				'key' => $term,
-				'limit' => $limit
-		) ) );
-		
-		$request->setInternal( true );
-		
-		die(var_dump(F::app()->dispatch( $request )));
-		
+		die(var_dump(F::app()->sendRequest( 'SimpleSearch', 'localSearch', array( 'key' => $term, 'limit' => $limit ) )->getVal('textResults')));
 		exit;
 		*/
 		
