@@ -92,13 +92,7 @@ abstract class WikiaController {
 	}
 
 	public function sendRequest( $controllerName, $methodName, $params = array() ) {
-		$request = F::build( 'WikiaRequest',
-		 array( 'params' => array_merge(
-		                     array( 'controller' => $controllerName, 'method' => $methodName ),
-		                     $params ) ) );
-
-		$request->setInternal(true);
-		return $this->getApp()->dispatch($request);
+		return $this->app->sendRequest( $controllerName, $methodName, $params );
 	}
 
 	/**

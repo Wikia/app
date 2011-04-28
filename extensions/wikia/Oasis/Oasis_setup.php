@@ -198,12 +198,10 @@ function moduleProxy() {
 	if ($outputType == 'data') $outputType = 'json';
 
 	$params = json_decode($wgRequest->getVal('moduleParams'), true);
-	$params ['controller'] = $wgRequest->getVal('moduleName');
-	$params ['method'] = $wgRequest->getVal('actionName', 'Index');
 	$params ['format'] = $outputType;
-
-	// TODO: refactor this
-	$response = F::build( 'App' )->dispatch($params);
+	
+	$response = F::app()->sendRequest( $wgRequest->getVal('moduleName'), $wgRequest->getVal('actionName', 'Index'), $params, false );
+	
 	$callback = $wgRequest->getVal('callback');
 	if($callback && ($outputType == 'json')) {
 		$text = Xml::escapeJsString($callback) . '(' . $response->toString() . ')';

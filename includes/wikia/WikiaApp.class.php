@@ -246,6 +246,25 @@ class WikiaApp {
 	public function isCookie( $key ) {
 		return (bool) isset( $_COOKIE[ $key ] );
 	}
+	
+	/**
+	 * Prepares and sends a request to a Controller
+	 * 
+	 * @param $controllerName string the name of the controller, without the 'Controller' or 'Model' suffix
+	 * @param $methodName string the name of the Controller method to call
+	 * @param $params array an array with the parameters to pass to the specified method
+	 * @param $internal boolean wheter it's an internal (PHP to PHP) or external request
+	 * 
+	 * @return WikiaResponse a response object with the data produced by the method call
+	 */
+	public function sendRequest( $controllerName, $methodName = null, $params = null, $internal = true ) {
+		$values = array( 'controller' => $controllerName, 'method' => $methodName );
+		$request = new WikiaRequest( array_merge( $values, (array) $params ) );
+		
+		$request->setInternal( $internal );
+		
+		return $this->getDispatcher()->dispatch( $this, $request );
+	}
 
 	/**
 	 * simple global function wrapper (most likely it won't work for references)
@@ -268,35 +287,6 @@ class WikiaApp {
 	 */
 	public function runHook( $hookName, $parameters ) {
 		return $this->runFunction( 'wfRunHooks', $hookName, $parameters );
-	}
-	
-	private function prepareRequestToDispatch( $params = null ){
-		if( is_array( $params ) ) {
-			return new WikiaRequest( $params );
-		}
-		else if( $params instanceof WikiaRequest ) {
-			return $params;
-		}
-		
-		return null;
-	}
-	
-	public function dispatch( $params = null ) {
-		return $this->getDispatcher()->dispatch( $this, $this->prepareRequestToDispatch( $params ) );
-	}
-	
-	/**
-	 * simplified method for dispatching internal requests
-	 * @see dispatch
-	 */
-	public function execute( $params = null ){
-		$request = $this->prepareRequestToDispatch( $params );
-		
-		if( !empty( $request ) ) {
-			$request->setInternal( true );
-		}
-		
-		return $this->getDispatcher()->dispatch( $this, $request );
 	}
 	
 	/**
@@ -333,14 +323,13 @@ class WikiaApp {
 	 * @return string
 	 */
 	public function renderView($name, $action, $params = null) {
-		$params = array_merge( array( 'controller' => $name, 'method' => $action ), (array) $params );
-
-		$response = $this->dispatch( $params );
+		$response = $this->sendRequest( $name, $action, (array) $params, false );
 		return $response->toString();
 	}
-
+	
+	//TODO: take a look here
 	public static function ajax() {
-		return F::app()->dispatch();
+		return F::app()->sendRequest( null, null, null, false );
 	}
 
 }
