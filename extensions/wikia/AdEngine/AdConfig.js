@@ -171,7 +171,7 @@ AdConfig.DART = {
 	   'INVISIBLE_TOP': {'tile':13, 'loc': "invisible"},
 	   'LEFT_SKYSCRAPER_1': {'tile': 3, 'loc': "top"},
 	   'LEFT_SKYSCRAPER_2': {'tile': 3, 'loc': "middle"},
-	   'LEFT_SKYSCRAPER_3': {'tile': 6, 'loc': "middle"},
+	   'LEFT_SKYSCRAPER_3': {'tile': 6, 'loc': "footer"},
 	   'MIDDLE_RIGHT_BOXAD': {'tile': 1, 'loc': "middle"},
 	   'PREFOOTER_BIG': {'tile': 5, 'loc': "footer"},
 	   'PREFOOTER_LEFT_BOXAD': {'tile': 5, 'loc': "footer"},
