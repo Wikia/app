@@ -6,10 +6,10 @@ class WikiaSpecialPageController extends WikiaController {
 		$this->specialPage = F::build( 'SpecialPage', array( $name, $restriction, $listed, $function, $file, $includable ) );
 	}
 
-	public function execute() {
+	public function execute( $par ) {
 		$app = F::build( 'App' );
 		$out = $app->getGlobal( 'wgOut' );
-		$response = $app->dispatch( ( array( 'controller' => substr( get_class( $this ), 0, -10 ) ) + $_POST + $_GET ) );
+		$response = $app->dispatch( ( array( 'controller' => substr( get_class( $this ), 0, -10 ), 'par' => $par /* to be compatibile with MW core */ ) + $_POST + $_GET ) );
 		if( $response->getFormat() == 'html' ) {
 			try {
 				$out->addHTML( $response->toString() );
