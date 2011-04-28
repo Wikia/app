@@ -4,7 +4,7 @@ $(window).load(function() {
 
 var LatestQuestions = {
     init: function() {
-        $.getScript(wgAnswersServer + wgAnswersScript + '?action=ajax&rs=moduleProxy&moduleName=LatestActivity&actionName=Index&outputType=data&callback=LatestQuestions.onLoad');
+        $.getScript(wgAnswersServer + wgAnswersScript + '?action=ajax&rs=moduleProxy&moduleName=LatestActivity&actionName=Index&outputType=data&callback=LatestQuestions.onLoad&uselang='+wgUserLanguage);
     },
     onLoad: function(data) {
 	if(data.changeList.length > 0) {
