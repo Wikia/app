@@ -269,18 +269,33 @@ class WikiaApp {
 	public function runHook( $hookName, $parameters ) {
 		return $this->runFunction( 'wfRunHooks', $hookName, $parameters );
 	}
-
-	public function dispatch( $params = null ) {
+	
+	private function prepareRequestToDispatch( $params = null ){
 		if( is_array( $params ) ) {
-			$request = new WikiaRequest( $params );
+			return new WikiaRequest( $params );
 		}
 		else if( $params instanceof WikiaRequest ) {
-			$request = $params;
+			return $params;
 		}
-		else {
-			$request = null;
+		
+		return null;
+	}
+	
+	public function dispatch( $params = null ) {
+		return $this->getDispatcher()->dispatch( $this, $this->prepareRequestToDispatch( $params ) );
+	}
+	
+	/**
+	 * simplified method for dispatching internal requests
+	 * @see dispatch
+	 */
+	public function execute( $params = null ){
+		$request = $this->prepareRequestToDispatch( $params );
+		
+		if( !empty( $request ) ) {
+			$request->setInternal( true );
 		}
-
+		
 		return $this->getDispatcher()->dispatch( $this, $request );
 	}
 
