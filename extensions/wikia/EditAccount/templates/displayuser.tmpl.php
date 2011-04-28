@@ -21,7 +21,7 @@
 			<input type="text" name="wpNewEmail" value="<?= $userEmail ?>" />
 			<input type="submit" value="<?= wfMsg('editaccount-submit-email') ?>" />
 			<input type="hidden" name="wpAction" value="setemail" />
-			<input type="hidden" name="wpUserName" value="<?= $user ?>" />
+			<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
 		</td>
 		</form>
 	</tr>
@@ -34,7 +34,7 @@
 			<input type="text" name="wpNewPass" />
 			<input type="submit" value="<?= wfMsg('editaccount-submit-pass') ?>" />
 			<input type="hidden" name="wpAction" value="setpass" />
-			<input type="hidden" name="wpUserName" value="<?= $user ?>" />
+			<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
 		</td>
 		</form>
 	</tr>
@@ -47,7 +47,7 @@
 			<input type="text" name="wpNewRealName" value="<?= $userRealName ?>" />
 			<input type="submit" value="<?= wfMsg('editaccount-submit-realname') ?>" />
 			<input type="hidden" name="wpAction" value="setrealname" />
-			<input type="hidden" name="wpUserName" value="<?= $user ?>" />
+			<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
 		</td>
 		</form>
 	</tr>
@@ -60,7 +60,7 @@
 		<td>
 			<input type="submit" value="<?= wfMsg('editaccount-submit-clearunsub') ?>" />
 			<input type="hidden" name="wpAction" value="clearunsub" />
-			<input type="hidden" name="wpUserName" value="<?= $user ?>" />
+			<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
 		</td>
 		</form>
 	</tr>
@@ -73,7 +73,7 @@
 	<form method="post" action="">
 		<input type="submit" value="<?= wfMsg('editaccount-submit-close') ?>" />
 		<input type="hidden" name="wpAction" value="closeaccount" />
-		<input type="hidden" name="wpUserName" value="<?= $user ?>" />
+		<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
 	</form>
 </fieldset>
 <!-- e:<?= __FILE__ ?> -->

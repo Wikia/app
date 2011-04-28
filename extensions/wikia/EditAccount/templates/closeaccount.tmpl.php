@@ -10,7 +10,7 @@
 		<legend><?= wfMsg('editaccount-frame-close', $user) ?></legend>
 		<p><?= wfMsg('editaccount-warning-close', $user) ?></p>
 		<input type="submit" value="<?= wfMsg('editaccount-submit-close') ?>" />
-		<input type="hidden" name="wpUserName" value="<?= $user ?>" />
+		<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
 		<input type="hidden" name="wpAction" value="closeaccountconfirm" />
 	</fieldset>
 </form>
