@@ -3218,7 +3218,7 @@ class User {
 	 * @param $bodyHTML \string rich version of $body (added by Marooned @ Wikia)
 	 * @return \types{\bool,\type{WikiError}} True on success, a WikiError object on failure
 	 */
-	function sendMail( $subject, $body, $from = null, $replyto = null, $category = 'unknown', $bodyHTML = null ) {
+	function sendMail( $subject, $body, $from = null, $replyto = null, $category = 'unknown', $bodyHTML = null, $priority = 0 ) {
 		if( is_null( $from ) ) {
 			global $wgPasswordSender;
 			$from = $wgPasswordSender;
@@ -3232,9 +3232,9 @@ class User {
 		global $wgEnableRichEmails;
 		$richMail = !empty($wgEnableRichEmails) && ($this->isAnon() || $this->getOption('htmlemails')) && !empty($bodyHTML);
 		if ($richMail) {
-			return UserMailer::sendHTML( $to, $sender, $subject, $body, $bodyHTML, $replyto, $category );
+			return UserMailer::sendHTML( $to, $sender, $subject, $body, $bodyHTML, $replyto, $category, $priority );
 		} else {
-			return UserMailer::send( $to, $sender, $subject, $body, $replyto, null, $category );
+			return UserMailer::send( $to, $sender, $subject, $body, $replyto, null, $category, $priority );
 		}
 		/* Wikia change end */
 	}

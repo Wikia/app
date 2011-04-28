@@ -16,9 +16,12 @@ class Mail_wikiadb extends Mail {
 
 	function send($recipients, $headers, $body){
 		$this->_sanitizeHeaders($headers);
-		$headerElements = $this->prepareHeaders($headers);
-		list($from, $textHeaders) = $headerElements;
-
+		list($from, $textHeaders) = $this->prepareHeaders($headers);
+		$priority = 0;
+		if (isset($headers['X-Priority'])) {
+			$priority = $headers['X-Priority'];
+		}
+		
 		global $wgCityId, $wgExternalDatawareDB;
 		$wgCityId = ($wgCityId == null?0:$wgCityId); // fake city-id for contractor/staff.
 		// FB:4431 Write mail to archive database now
@@ -36,6 +39,7 @@ class Mail_wikiadb extends Mail {
 					'hdr'     => $textHeaders,
 					'msg'     => $body,
 					'city_id' => $wgCityId,
+					'priority' => $priority,
 				)
 			);
 			
