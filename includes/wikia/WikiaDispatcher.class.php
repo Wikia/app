@@ -20,7 +20,7 @@ class WikiaDispatcher {
 			$request = F::build( 'WikiaRequest', array( 'params' => ( $_POST + $_GET ) ) );
 		}
 
-		$format = $request->getVal('format', $request->isXmlHttp() ? 'json' : 'html');
+		$format = $request->getVal('format', 'html');
 		$response = F::build( 'WikiaResponse', array( 'format' => $format ) );
 
 		do {
