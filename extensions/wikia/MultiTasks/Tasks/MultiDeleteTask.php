@@ -60,6 +60,7 @@ class MultiDeleteTask extends BatchTask {
 			return true;
 		}
 		$this->title = str_replace( ' ', '_', $page->getPrefixedText() );
+		$this->namespace = intval($page->getNamespace());
 		$resultTitle = $page->getFullText();
 
 		$task_params = "";
@@ -88,7 +89,7 @@ class MultiDeleteTask extends BatchTask {
 				$retval = "";
 				$city_url = WikiFactory::getVarValueByName( "wgServer", $city_id );
 				$city_path = WikiFactory::getVarValueByName( "wgScript", $city_id );
-				
+
 				if ( empty($city_url) ) {
 					$city_url = 'wiki id in WikiFactory: ' . $city_id;
 				}
@@ -110,9 +111,9 @@ class MultiDeleteTask extends BatchTask {
 				}
 			}
 		}
-		
+
 		$this->log("Done");
-		
+
 		return true;
 	}
 
@@ -190,7 +191,7 @@ class MultiDeleteTask extends BatchTask {
 		}
 		return $desc;
 	}
-	
+
 	/**
 	 * fetchWikis
 	 *
@@ -221,7 +222,7 @@ class MultiDeleteTask extends BatchTask {
 			}
 			$dbr->freeResult ($oRes) ;
 		}
-		
+
 		$dbr = wfGetDB (DB_SLAVE, 'blobs', $wgExternalDatawareDB);
 		$where = array(
 			"page_title_lower"	=> mb_strtolower($this->title),
@@ -231,7 +232,7 @@ class MultiDeleteTask extends BatchTask {
 		if ( !empty($wikiaId) ) {
 			$where["page_wikia_id"] = $wikiaId;
 		}
-		
+
 		$oRes = $dbr->select(
 			array( "pages" ),
 			array( "page_wikia_id as city_id" ),
@@ -255,14 +256,14 @@ class MultiDeleteTask extends BatchTask {
 				"page_title"		=> $this->title,
 				"page_namespace" 	=> $this->namespace,
 			);
-			
+
 			$oRow = $dbr->selectRow(
 				array( "page" ),
 				array( "page_id" ),
 				$where,
 				__METHOD__
 			);
-			
+
 			if ( !empty($oRow) ) {
 				$wikiArr[$wikiaId] = $wikiaId;
 			}
@@ -283,7 +284,7 @@ class MultiDeleteTask extends BatchTask {
 				}
 
 				$dbc = wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
-				$oRes = $dbc->select ( 
+				$oRes = $dbc->select (
 					array( 'city_list', 'city_cat_mapping' ),
 					array( 'city_list.city_id' ),
 					$where,
@@ -291,12 +292,12 @@ class MultiDeleteTask extends BatchTask {
 					"",
 					array(
 						'city_cat_mapping' => array(
-							'JOIN', 
+							'JOIN',
 							'city_cat_mapping.city_id = city_list.city_id',
 						)
 					)
 				);
-				
+
 				$filteredWikis = array();
 
 				while ($oRow = $dbc->fetchObject($oRes)) {
@@ -313,5 +314,5 @@ class MultiDeleteTask extends BatchTask {
 
 		return $wikiArr;
 	}
-	
+
 }
