@@ -1,14 +1,82 @@
 #!/usr/bin/perl -w
 
-package Wikia::Thumbnailer::Thumbnail;
+package Wikia::Thumbnailer::Dispatcher;
 
+use common::sense;
+use URI;
 use Moose;
 
 has width  => ( is => "rw", isa => "Int", "documentation" => "Requested width in pixels" );
 has height => ( is => "rw", isa => "Int", "documentation" => "Requested height in pixes" );
 has data   => ( is => "rw", "documentation" => "Data from original image" );
 has path   => ( is => "rw", isa => "Str" );
+has mimetype => ( is => "rw", isa => "Str", default => "text/plain" );
 
+has basepath => (
+	is => "rw",
+	isa => "Str",
+	required => 1,
+	documentation => "Base path for all thumbnails"
+);
+
+has request_uri => (
+	is => "rw",
+	isa => "Str",
+	required => 1,
+	documentation => "Original requested URI"
+);
+
+has use_http => (
+	is => "rw",
+	isa => "Bool" ,
+	default => sub { 1 },
+	documentation => "Flag, use http connection to read original or look for local file"
+);
+
+sub dispatch {
+	my( $self ) = @_;
+
+	my $uri = URI->new( $self->request_uri );
+	my $path  = $uri->path;
+	$path =~ s/^\///;
+	$path =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg unless $self->use_http;
+
+	#
+	# if path has single letter on beginning it's already new directory layout
+	#
+	if( $path !~ m!^\w/! ) {
+		$path = substr( $path, 0, 1 ) . '/' . $path;
+	}
+
+	my $thumbnail = $self->basepath . '/' . $path;
+
+
+	my @parts = split( "/", $path );
+	my $last = pop @parts;
+	$last =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg if $self->use_http; # (for cropping);
+
+
+	#
+	# if last part of $request_uri is \d+px-\. it is probably thumbnail
+	#
+	my( $width ) = $last =~ /^(\d+)px\-.+\w$/;
+
+	#
+	# for image service x1,y1,x2,y2
+	#
+	my( $x1, $x2, $y1, $y2 ) = undef;
+	if( $last =~ /^\d+px\-(\d+),(\d+),(\d+),(\d+)/ ) {
+		( $x1, $x2, $y1, $y2 ) = ( $1, $2, $3, $4 );
+	}
+
+	#
+	# but ogghandler thumbnails can have seek=\d+ or mid
+	#
+	( $width ) = $last =~ /^seek=(\d+)\-.+\w$/ unless $width;
+	( $width ) = $last =~ /^(mid)\-.+\w$/ unless $width;
+
+	$self->width( $width );
+}
 __PACKAGE__->meta->make_immutable;
 
 1;
@@ -30,7 +98,6 @@ package main;
 use strict;
 use feature ":5.10";
 
-use URI;
 use FCGI;
 use FCGI::ProcManager;
 use Imager;
@@ -288,7 +355,7 @@ GetOptions( "http" => \$use_http, "devel" => \$use_devel );
 # fastcgi request
 #
 my %env;
-my( $socket, $request, $manager, $request_uri, $referer, $test_uri );
+my( $socket, $request, $manager, $request_uri, $test_uri );
 
 unless( $test ) {
 	$socket     = FCGI::OpenSocket( $listen, 100 ) or die "failed to open FastCGI socket; $!";
@@ -319,7 +386,6 @@ while( $request->Accept() >= 0 || $test ) {
 	$manager->pm_pre_dispatch() unless $test;
 
 	$request_uri = "";
-	$referer     = "";
 
 	if( $test ) {
 		$request_uri = pop @tests || last;
@@ -330,50 +396,14 @@ while( $request->Accept() >= 0 || $test ) {
 	# get last part of uri, remove first slash if exists
 	#
 	$request_uri = $env{"REQUEST_URI"} if $env{"REQUEST_URI"};
-	$referer     = $env{"HTTP_REFERER"} if $env{"HTTP_REFERER"};
 
-	my $uri = URI->new( $request_uri );
-	my $path  = $uri->path;
-	$path =~ s/^\///;
-	$path =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg unless $use_http;
+	my $dispatcher = Wikia::Thumbnailer::Dispatcher->new(
+		request_uri => $request_uri,
+		use_http => $use_http,
+		basepath => $basepath
+	);
 
-	#
-	# if path has single letter on beginning it's already new directory layout
-	#
-	if( $path !~ m!^\w/! ) {
-		$path = substr( $path, 0, 1 ) . '/' . $path;
-	}
-
-	my $thumbnail = $basepath . '/' . $path;
-
-
-	my @parts = split( "/", $path );
-	my $last = pop @parts;
-	$last =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg if $use_http; # (for cropping);
-
-
-	#
-	# if last part of $request_uri is \d+px-\. it is probably thumbnail
-	#
-	my( $width ) = $last =~ /^(\d+)px\-.+\w$/;
-
-	#
-	# for image service x1,y1,x2,y2
-	#
-	my( $x1, $x2, $y1, $y2 ) = undef;
-	if( $last =~ /^\d+px\-(\d+),(\d+),(\d+),(\d+)/ ) {
-		( $x1, $x2, $y1, $y2 ) = ( $1, $2, $3, $4 );
-	}
-
-	#
-	# but ogghandler thumbnails can have seek=\d+ or mid
-	#
-	( $width ) = $last =~ /^seek=(\d+)\-.+\w$/ unless $width;
-	( $width ) = $last =~ /^(mid)\-.+\w$/ unless $width;
-
-	#
-	# instant commons has source in other place
-	#
+	my $width = $dispatcher->width;
 
 	if( $width ) {
 		$width = $maxwidth if $width =~ /^\d+$/ && $width > $maxwidth;
@@ -463,7 +493,7 @@ while( $request->Accept() >= 0 || $test ) {
 				$mimetype = $flm->checktype_contents( $content );
 				( $imgtype ) = $mimetype =~ m![^/+]/(\w+)!;
 				$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-				say STDERR "$original $thumbnail $mimetype $imgtype $request_uri $referer, time: $t_elapsed" if $debug;
+				say STDERR "$original $thumbnail $mimetype $imgtype $request_uri time: $t_elapsed" if $debug;
 
 				#
 				# read original file, thumbnail it, store on disc
