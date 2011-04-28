@@ -71,7 +71,7 @@ class AutomaticWikiAdoptionHelper {
 		}
 		unset($allowed);
 
-		//wiki has more than 1000 pages && admin not active
+		//wiki has more than 1000 pages && admin not active && hasn't been adopted recently
 		if (!self::isWikiAdoptable($wikiId)) {
 			Wikia::log(__METHOD__, __LINE__, 'not allowed to adopt: wiki not adoptable');
 			$allowed = self::REASON_WIKI_NOT_ADOPTABLE;
@@ -200,6 +200,8 @@ class AutomaticWikiAdoptionHelper {
 		$memcKey = wfMemcKey($user->getId(), 'AutomaticWikiAdoption-user-allowed-to-adopt');
 		$allowed = self::REASON_ADOPTED_RECENTLY;
 		$wgMemc->set($memcKey, $allowed, 3600);
+		// Block the wiki from being adopted again for 14 days
+		$wgMemc->set( wfMemcKey("AutomaticWikiAdoption-WikiAdopted"), $allowed, 60*60*24*14 );
 		
 		//Reset the flags for this wiki
 		self::dismissNotification();
@@ -218,11 +220,18 @@ class AutomaticWikiAdoptionHelper {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	private static function isWikiAdoptable($wikiId) {
-		global $wgExternalSharedDB;
+		global $wgMemc, $wgExternalSharedDB;
 		wfProfileIn(__METHOD__);
 
 		$canAdopt = false;
 
+		// Block this wiki from being adopted again for 14 days
+		$recentlyAdopted = $wgMemc->get( wfMemcKey("AutomaticWikiAdoption-WikiAdopted") );
+		if (!empty($recentlyAdopted)) {
+			wfProfileOut(__METHOD__);
+			return false;
+		}
+		
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$row = $dbr->selectRow(
 			'city_list',
