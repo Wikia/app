@@ -82,17 +82,17 @@ class EditAccount extends SpecialPage {
 			case 'setemail':
 				$newEmail = $wgRequest->getVal( 'wpNewEmail' );
 				$this->mStatus = $this->setEmail( $newEmail );
-				$template = $this->mStatus ? 'selectuser' : 'displayuser';
+				$template = 'displayuser';
 				break;
 			case 'setpass':
 				$newPass = $wgRequest->getVal( 'wpNewPass' );
 				$this->mStatus = $this->setPassword( $newPass );
-				$template = $this->mStatus ? 'selectuser' : 'displayuser';
+				$template = 'displayuser';
 				break;
 			case 'setrealname':
 				$newRealName = $wgRequest->getVal( 'wpNewRealName' );
 				$this->mStatus = $this->setRealName( $newRealName );
-				$template = $this->mStatus ? 'selectuser' : 'displayuser';
+				$template = 'displayuser';
 				break;
 			case 'closeaccount':
 				$template = 'closeaccount';
@@ -103,7 +103,7 @@ class EditAccount extends SpecialPage {
 				break;
 			case 'clearunsub':
 				$this->mStatus = $this->clearUnsubscribe();
-				$template = $this->mStatus ? 'selectuser' : 'displayuser';
+				$template = 'displayuser';
 				break;
 			case 'displayuser':
 				$template = 'displayuser';
@@ -122,6 +122,7 @@ class EditAccount extends SpecialPage {
 				'userEmail' => null,
 				'userRealName' => null,
 				'userEncoded' => urlencode( $userName ),
+				'user_hsc' => htmlspecialchars( $userName ),
 				'userId'  => null,
 				'userReg' => null,
 				'isUnsub' => null,
