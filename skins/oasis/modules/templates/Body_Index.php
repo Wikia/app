@@ -43,7 +43,9 @@
 	?>
 
 	<?php
+		if (!empty($wgEnableWikiAnswers)) {
 			echo wfRenderModule('WikiAnswers', 'QuestionBox');
+		}
 	?>
 	<article id="WikiaMainContent" class="WikiaMainContent">
 		<?php
