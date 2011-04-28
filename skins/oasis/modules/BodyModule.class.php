@@ -12,6 +12,7 @@ class BodyModule extends Module {
 	var $wgSuppressFooter;
 	var $wgSuppressArticleCategories;
 	var $wgEnableCorporatePageExt;
+	var $wgEnableWikiAnswers;
 	var $wgABTests;
 
 	// skin vars
@@ -315,7 +316,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgRequest;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest;
 
 		// InfoBox - Testing
 		$this->wgEnableInfoBoxTest = $wgEnableInfoBoxTest;
