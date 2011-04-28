@@ -47,6 +47,8 @@ $TITLE_FILE = fopen($finalTitleFilename, "w");
 $offset = 0;
 $startTime = time();
 $GN_NAMESPACE = 220;
+$numRowsSeen = 0;
+$numRedirsSeen = 0;
 
 // Find the largest id so that we know when to stop looping.
 $queryString = "SELECT MAX(page_id) FROM $pre"."page";
@@ -69,6 +71,7 @@ if($result = mysql_query($queryString, $db)){
 					$title = mysql_result($result, $cnt, "page_title");
 					$isRedirString = mysql_result($result, $cnt, "page_is_redirect");
 					$isRedirect = ($isRedirString != "0");
+					$numRowsSeen++;
 
 					// FIXME: Is there a better way to find the namespace prefix? There is a mapping somewhere.  Find it & use that instead.
 					if($page_ns == $GN_NAMESPACE){
@@ -78,6 +81,7 @@ if($result = mysql_query($queryString, $db)){
 					if($isRedirect){
 						if($DO_REDIRECTS_FILE){
 							$redirectCache[] = $title;
+							$numRedirsSeen++;
 						}
 					} else {
 						$numPageTitles++;
@@ -107,6 +111,12 @@ if($DO_REDIRECTS_FILE){
 }
 print "\n";
 print "Memory usage after freeing result: ".memory_get_usage(true)."\n";
+
+# Some stats to help track down the missing rows.
+print "TOTAL ROWS SEEN:        $numRowsSeen\n";
+print "TOTAL REDIRECTS SEEN:   $numRedirsSeen\n";
+print "TOTAL REDIRECTS CACHED: ".count($redirectCache)."\n";
+print "TOTAL PAGE TITLES SEEN: $numPageTitles\n";
 
 // Sort page title mapping (added 20110426 so that this doesn't have to be done by ÜberBot on every run.
 print "Sorting the id/title mapping by article title...";
@@ -188,7 +198,10 @@ if($DO_REDIRECTS_FILE){
 	print "Total redirects whose destination couldn't be found: $numFailed\n";
 }
 
-//system("sort -o \"$finalRedirFilename\" \"$finalRedirFilename\""); // shouldn't need to do this since the redirCache has sort() called on it now.
+// Even though we call sort($redirectCache) above, this still needs to be done because the values are sorted BEFORE urlencoding, etc.
+print "Sorting the redirects file...\n";
+system("sort -o \"$finalRedirFilename\" \"$finalRedirFilename\"");
+print "Redirects Sorted.\n";
 
 print "Done.\n";
 
