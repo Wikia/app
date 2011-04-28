@@ -14,12 +14,6 @@ $.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 	if( !empty( $info ) ):
 		echo $info;
 	endif;
-
-	// if( !empty( $_POST ) ):
-		// echo "<pre>";
-		// echo var_dump($_POST);
-		// echo "</pre>";
-	// endif;
 ?>
 <form action="<?php echo $title->getFullUrl() ?>" method="post">
 <fieldset>

@@ -46,7 +46,6 @@ class RecentChangeDetail {
 		wfProfileIn(__METHOD__);
 
 		$recentChange = Wikia::getVar( 'rc' );
-		//var_dump( $recentChange );
 
 		switch( $recentChange->getAttribute('rc_type')) {
 			case RC_EDIT:

@@ -198,8 +198,6 @@ function make_related($dbw, $dom, $domdom)
 		$newmatches = array();
 		$matches = Substrings($go, 'http://', '/');
 
-		//      var_dump($matches);
-
 		foreach($matches as $match)
 		{
 			$n = strtolower($match);
