@@ -9,7 +9,8 @@ class WikiaSpecialPageController extends WikiaController {
 	public function execute( $par ) {
 		$app = F::build( 'App' );
 		$out = $app->getGlobal( 'wgOut' );
-		$response = $app->dispatch( ( array( 'controller' => substr( get_class( $this ), 0, -10 ), 'par' => $par /* to be compatibile with MW core */ ) + $_POST + $_GET ) );
+		$response = $app->sendRequest( substr( get_class( $this ), 0, -10 ), null, array( 'par' => $par /* to be compatibile with MW core */ ) + $_POST + $_GET, false );
+		
 		if( $response->getFormat() == 'html' ) {
 			try {
 				$out->addHTML( $response->toString() );
