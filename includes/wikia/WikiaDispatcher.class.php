@@ -68,10 +68,10 @@ class WikiaDispatcher {
 				// BugId:5125 - keep old hooks naming convention
 				$originalMethod = ucfirst($this->getMethodName($request));
 
-				if(wfRunHooks( $controllerName . $originalMethod . 'BeforeExecute', array( &$controller, &$params ) ) ) {
+				if($app->runFunction( 'wfRunHooks', ( $controllerName . $originalMethod . 'BeforeExecute' ), array( &$controller, &$params ) )) {
 					$controller->$method($params);
 				}
-				wfRunHooks( $controllerName . $originalMethod . 'AfterExecute', array( &$controller, &$params ) );
+				$app->runFunction( 'wfRunHooks', ( $controllerName . $originalMethod . 'AfterExecute' ), array( &$controller, &$params ) );
 
 				// Work around for module dispatching until modules are renamed
 				if ($controller instanceof Module) {
