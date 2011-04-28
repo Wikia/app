@@ -12,6 +12,7 @@ class WikiaErrorController extends WikiaController {
 		$this->getResponse()->setCode( $code );
 		$this->getResponse()->setVal('request', $this->request);
 		$this->getResponse()->setVal('response', $this->response);
+		$this->getResponse()->setVal('devel', $this->app->getGlobal( 'wgDevelEnvironment' ) );
 	}
 
 	private function isValidHTTPErrorCode( $code ) {
