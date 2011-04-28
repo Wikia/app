@@ -85,6 +85,10 @@ if($result = mysql_query($queryString, $db)){
 						}
 					} else {
 						$numPageTitles++;
+						// TODO: isRedirString is superfluous now that redirects are NOT written to this file.  Can get rid of it if you do the following:
+						// - Change the sort call from -k 3 to -k 2
+						// - Change the loading code in [private svn]/lyricwiki-private/bot_stuff/lib/titleAndRedirectTools.pl to not expect that second column
+						// - Change comment at top of file about the format of the lines
 						fwrite($TITLE_FILE, "$page_id\t$isRedirString\t".formatForUb("$title")."\n");
 					}
 				}
