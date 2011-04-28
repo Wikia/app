@@ -116,8 +116,6 @@ class MyHome {
 		Wikia::setVar('rc', $rc);
 		Wikia::setVar('rc_data', $data);
 
-		//var_dump($rc); die();
-
 		wfProfileOut(__METHOD__);
 
 		return true;
