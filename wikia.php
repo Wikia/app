@@ -2,7 +2,8 @@
 // Initialise common MW code
 require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 
-$response = F::app()->sendRequest( null, null, null, false );
+$app = F::app();
+$response = $app->getDispatcher()->dispatch( $app, null );
 
 $response->sendHeaders();
 $response->render();
