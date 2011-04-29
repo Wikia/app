@@ -36,7 +36,7 @@ class ExternalStoreDB {
 	 * actually we never should be there but anyway we are handling that case
 	 */
 	function store( $cluster, $data ) {
-		$wgOut = WF::build( "App" )->getGlobal( "wgOut" );
+		$wgOut = F::app()->getGlobal( "wgOut" );
 		$wgOut->setPageTitle( 'DB Error' );
 		$wgOut->setRobotPolicy( "noindex,nofollow" );
 		$wgOut->setStatusCode( 701 );
@@ -50,7 +50,7 @@ class ExternalStoreDB {
 	private function buildUrl( $url ) {
 
 		wfProfileIn( __METHOD__ );
-		$app = WF::build( "App" );
+		$app = F::app();
 
 		$path = explode( '/', $url );
 		$cluster  = $path[2];
