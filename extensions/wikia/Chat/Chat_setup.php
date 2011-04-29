@@ -21,19 +21,19 @@ $dir = dirname(__FILE__);
 
 // rights
 $wgAvailableRights[] = 'chatmoderator';
-$wgGroupPermissions['user']['chatmoderator'] = false;
+$wgGroupPermissions['*']['chatmoderator'] = false;
 $wgGroupPermissions['sysop']['chatmoderator'] = true;
 $wgGroupPermissions['staff']['chatmoderator'] = true;
 $wgGroupPermissions['helper']['chatmoderator'] = true;
 
 $wgAvailableRights[] = 'chat';
-$wgGroupPermissions['*']['chat'] = true;
-$wgGroupPermissions['bannedfromchat']['chat'] = false;
+$wgGroupPermissions['*']['chat'] = false;
+$wgGroupPermissions['user']['chat'] = true;
 
 // Attempt to do the permissions the other way (adding restriction instead of subtracting permission).
-$wgAvailableRights[] = 'bannedfromchat';
-$wgGroupPermissions['*']['bannedfromchat'] = false;
-$wgGroupPermissions['bannedfromchat']['bannedfromchat'] = true;
+// When in 'bannedfromchat' group, the 'chat' permission will be revoked
+// See http://www.mediawiki.org/wiki/Manual:$wgRevokePermissions
+$wgRevokePermissions['bannedfromchat']['chat'] = true;
 
 // autoloaded classes
 $wgAutoloadClasses['Chat'] = "$dir/Chat.class.php";
