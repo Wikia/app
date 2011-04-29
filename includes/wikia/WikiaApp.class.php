@@ -290,22 +290,6 @@ class WikiaApp {
 	}
 
 	/**
-	 * simple wfProfileIn wrapper
-	 * @see wfProfileIn
-	 */
-	public function profileIn( $method ){
-		$this->runFunction( 'wfProfileIn', $method );
-	}
-
-	/**
-	 * simple wfProfileOut wrapper
-	 * @see wfProfileOut
-	 */
-	public function profileOut( $method ){
-		$this->runFunction( 'wfProfileOut', $method );
-	}
-
-	/**
 	 * get view Object for given controller and method (previously wfRenderPartial)
 	 * @param string $controllerName
 	 * @param string $method
