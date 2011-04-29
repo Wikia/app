@@ -15,7 +15,7 @@ class SimpleSearchController extends WikiaController {
 	}
 	
 	private function getResults() {
-		$this->getApp()->profileIn( __METHOD__ );
+		$this->getApp()->runFunction( 'wfProfileIn', __METHOD__ );
 		
 		//parameters
 		$key = trim( $this->getRequest()->getVal( 'key' ) );
@@ -102,25 +102,25 @@ class SimpleSearchController extends WikiaController {
 							}
 						}
 					} else {
-						$this->getApp()->profileOut( __METHOD__ );
+						$this->getApp()->runFunction( 'wfProfileOut', __METHOD__ );
 						throw new SimpleSearchTooManyResultsException();
 					}
 				} else {
-					$this->getApp()->profileOut( __METHOD__ );
+					$this->getApp()->runFunction( 'wfProfileOut', __METHOD__ );
 					throw new SimpleSearchDisabledException();
 				}
 			} else {
-				$this->getApp()->profileOut( __METHOD__ );
+				$this->getApp()->runFunction( 'wfProfileOut', __METHOD__ );
 				throw new SimpleSearchEngineException( $search );
 			}
 		} else {
-			$this->getApp()->profileOut( __METHOD__ );
+			$this->getApp()->runFunction( 'wfProfileOut', __METHOD__ );
 			throw new SimpleSearchEmptyKeyException();
 		}
 		
 		$this->getResponse()->setVal( 'results', $results );
 		
-		$this->getApp()->profileOut( __METHOD__ );
+		$this->getApp()->runFunction( 'wfProfileOut', __METHOD__ );
 	}
 	
 	public function localSearch() {
