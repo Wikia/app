@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 3.3.0
@@ -47,9 +47,9 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 1.0.0
+ * @version    Release: 1.0.2
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 3.3.0
  */
@@ -106,7 +106,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
     protected $seleniumTimeout = 30;
 
     /**
-     * @var    array
+     * @var    string
      */
     protected $sessionId;
 
@@ -899,15 +899,13 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         }
 
         stream_set_blocking($handle, 1);
-        stream_set_timeout($handle, 0, $this->httpTimeout * 1000);
+        stream_set_timeout($handle, $this->httpTimeout);
 
-        $info     = stream_get_meta_data($handle);
-        $response = '';
+        /* Tell the web server that we will not be sending more data
+        so that it can start processing our request */
+        stream_socket_shutdown($handle, STREAM_SHUT_WR);
 
-        while (!$info['eof'] && !$info['timed_out']) {
-            $response .= fgets($handle, 4096);
-            $info = stream_get_meta_data($handle);
-        }
+        $response = stream_get_contents($handle);
 
         fclose($handle);
 

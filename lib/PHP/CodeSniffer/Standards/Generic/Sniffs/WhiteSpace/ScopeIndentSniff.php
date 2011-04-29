@@ -10,7 +10,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: ScopeIndentSniff.php 301632 2010-07-28 01:57:56Z squiz $
+ * @version   CVS: $Id: ScopeIndentSniff.php 307364 2011-01-11 05:34:03Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -27,7 +27,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Sniff
@@ -153,6 +153,15 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$scopeOpeners) === true) {
                 if (isset($tokens[$i]['scope_opener']) === true) {
                     $i = $tokens[$i]['scope_closer'];
+
+                    // If the scope closer is followed by a semi-colon, the semi-colon is part
+                    // of the closer and should also be ignored. This most commonly happens with
+                    // CASE statements that end with "break;", where we don't want to stop
+                    // ignoring at the break, but rather at the semi-colon.
+                    $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($i + 1), null, true);
+                    if ($tokens[$nextToken]['code'] === T_SEMICOLON) {
+                        $i = $nextToken;
+                    }
                 } else {
                     // If this token does not have a scope_opener indice, then
                     // it's probably an inline scope, so let's skip to the next
@@ -296,8 +305,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
         // Empty conditions array (top level structure).
         if (empty($tokens[$stackPtr]['conditions']) === true) {
-            if (isset($tokens[$stackPtr]['nested_parenthesis']) === TRUE
-                && empty($tokens[$stackPtr]['nested_parenthesis']) === FALSE
+            if (isset($tokens[$stackPtr]['nested_parenthesis']) === true
+                && empty($tokens[$stackPtr]['nested_parenthesis']) === false
             ) {
                 // Wrapped in parenthesis means it is probably in a
                 // function call (like a closure) so we have to assume indent

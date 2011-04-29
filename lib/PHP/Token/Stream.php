@@ -49,7 +49,7 @@ require_once 'PHP/Token.php';
  * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @copyright 2009-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: 1.0.0
+ * @version   Release: 1.0.1
  * @link      http://github.com/sebastianbergmann/php-token-stream/tree
  * @since     Class available since Release 1.0.0
  */
@@ -156,7 +156,11 @@ class PHP_Token_Stream implements ArrayAccess, Countable, SeekableIterator
             $lines          = substr_count($text, "\n");
             $line          += $lines;
 
-            if ($tokenClass == 'PHP_Token_COMMENT' ||
+            if ($tokenClass == 'PHP_Token_HALT_COMPILER') {
+                break;
+            }
+
+            else if ($tokenClass == 'PHP_Token_COMMENT' ||
                 $tokenClass == 'PHP_Token_DOC_COMMENT') {
                 $this->linesOfCode['cloc'] += $lines + 1;
             }

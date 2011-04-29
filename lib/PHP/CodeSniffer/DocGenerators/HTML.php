@@ -29,7 +29,7 @@ require_once 'PHP/CodeSniffer/DocGenerators/Generator.php';
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_Generator
@@ -190,7 +190,7 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
         error_reporting(E_ALL);
         echo '  <div class="tag-line">';
         echo 'Documentation generated on '.date('r');
-        echo ' by <a href="http://pear.php.net/package/PHP_CodeSniffer">PHP_CodeSniffer 1.3.0RC1</a>';
+        echo ' by <a href="http://pear.php.net/package/PHP_CodeSniffer">PHP_CodeSniffer 1.3.0</a>';
         echo '</div>'.PHP_EOL;
         error_reporting(E_ALL | E_STRICT);
 

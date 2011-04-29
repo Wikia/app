@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,13 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
  */
-
-require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
  * This class represents a single constant declarator within a constant
@@ -84,9 +82,9 @@ require_once 'PHP/Depend/Code/ASTNode.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://www.pdepend.org/
  */
 class PHP_Depend_Code_ASTConstantDeclarator extends PHP_Depend_Code_ASTNode
@@ -138,5 +136,16 @@ class PHP_Depend_Code_ASTConstantDeclarator extends PHP_Depend_Code_ASTNode
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitConstantDeclarator($this, $data);
+    }
+
+    /**
+     * Magic sleep method that returns an array with those property names that
+     * should be cached for this node instance.
+     *
+     * @return array(string)
+     */
+    public function  __sleep()
+    {
+        return array_merge(array('value'), parent::__sleep());
     }
 }

@@ -10,7 +10,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: NonExecutableCodeSniff.php 301632 2010-07-28 01:57:56Z squiz $
+ * @version   CVS: $Id: NonExecutableCodeSniff.php 305543 2010-11-19 02:52:15Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -26,7 +26,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
@@ -131,55 +131,8 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
         }
 
         $ourConditions = array_keys($tokens[$stackPtr]['conditions']);
-        $ourTokens     = $this->register();
-        $hasConditions = empty($ourConditions);
 
-        // Skip this token if it is non-executable code itself.
-        if ($hasConditions === false) {
-            for ($i = ($stackPtr - 1); $i >= 1; $i--) {
-                // Skip tokens that close the scope. They don't end
-                // the execution of code.
-                if (isset($tokens[$i]['scope_opener']) === true) {
-                    continue;
-                }
-
-                // Skip tokens that do not end execution.
-                if (in_array($tokens[$i]['code'], $ourTokens) === false) {
-                    continue;
-                }
-
-                if (empty($tokens[$i]['conditions']) === true) {
-                    // Found an end of execution token in the global
-                    // scope, so it will be executed before us.
-                    return;
-                }
-
-                // If the deepest condition this token is in also happens
-                // to be a condition we are in, it will get executed before us.
-                $conditions = array_keys($tokens[$i]['conditions']);
-                $condition  = array_pop($conditions);
-                if (in_array($condition, $ourConditions) === true) {
-                    return;
-                }
-            }//end for
-        } else {
-            // Look for other end of execution tokens in the global scope.
-            for ($i = ($stackPtr - 1); $i >= 1; $i--) {
-                if (in_array($tokens[$i]['code'], $ourTokens) === false) {
-                    continue;
-                }
-
-                if (empty($tokens[$i]['conditions']) === false) {
-                    continue;
-                }
-
-                // Another end of execution token was before us in the
-                // global scope, so we are not executable.
-                return;
-            }
-        }//end if
-
-        if ($hasConditions === false) {
+        if (empty($ourConditions) === false) {
             $condition = array_pop($ourConditions);
 
             if (isset($tokens[$condition]['scope_closer']) === false) {
@@ -224,6 +177,13 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
         $lastLine = $tokens[$start]['line'];
         for ($i = ($start + 1); $i < $end; $i++) {
             if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+                continue;
+            }
+
+            // Skip whole functions and classes because they are not
+            // technically executed code, but rather declarations that may be used.
+            if ($tokens[$i]['code'] === T_FUNCTION || $tokens[$i]['code'] === T_CLASS) {
+                $i = $tokens[$i]['scope_closer'];
                 continue;
             }
 

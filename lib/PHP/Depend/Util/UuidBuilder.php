@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,9 +55,9 @@
  * @package    PHP_Depend
  * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://www.pdepend.org/
  * @since      0.9.12
  */
@@ -111,7 +111,7 @@ class PHP_Depend_Util_UuidBuilder
     protected function forOffsetItem(PHP_Depend_Code_AbstractItem $item, $prefix)
     {
         $fileHash = $item->getSourceFile()->getUUID();
-        $itemHash = $this->hash($prefix . ':' . $item->getName());
+        $itemHash = $this->hash($prefix . ':' . strtolower($item->getName()));
 
         $offset = $this->getOffsetInFile($fileHash, $itemHash);
 
@@ -130,7 +130,7 @@ class PHP_Depend_Util_UuidBuilder
         return sprintf(
             '%s-%s',
             $method->getParent()->getUUID(),
-            $this->hash($method->getName())
+            $this->hash(strtolower($method->getName()))
         );
     }
 

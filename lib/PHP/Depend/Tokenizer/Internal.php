@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,16 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Tokenizer
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Token.php';
-require_once 'PHP/Depend/TokenizerI.php';
-require_once 'PHP/Depend/Code/File.php';
-require_once 'PHP/Depend/Tokenizer/PHP52Helper.php';
 
 /**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
@@ -59,9 +54,9 @@ require_once 'PHP/Depend/Tokenizer/PHP52Helper.php';
  * @package    PHP_Depend
  * @subpackage Tokenizer
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  *
  */
@@ -103,12 +98,14 @@ class PHP_Depend_Tokenizer_Internal
         T_CLONE                     =>  self::T_CLONE,
         T_CONST                     =>  self::T_CONST,
         T_EMPTY                     =>  self::T_EMPTY,
+        T_ENDIF                     =>  self::T_ENDIF,
         T_FINAL                     =>  self::T_FINAL,
         T_ISSET                     =>  self::T_ISSET,
         T_PRINT                     =>  self::T_PRINT,
         T_THROW                     =>  self::T_THROW,
         T_UNSET                     =>  self::T_UNSET,
         T_WHILE                     =>  self::T_WHILE,
+        T_ENDFOR                    =>  self::T_ENDFOR,
         T_ELSEIF                    =>  self::T_ELSEIF,
         T_FUNC_C                    =>  self::T_FUNC_C,
         T_GLOBAL                    =>  self::T_GLOBAL,
@@ -128,8 +125,9 @@ class PHP_Depend_Tokenizer_Internal
         T_LNUMBER                   =>  self::T_LNUMBER,
         T_PRIVATE                   =>  self::T_PRIVATE,
         T_REQUIRE                   =>  self::T_REQUIRE,
-        T_FUNCTION                  =>  self::T_FUNCTION,
         T_ABSTRACT                  =>  self::T_ABSTRACT,
+        T_ENDWHILE                  =>  self::T_ENDWHILE,
+        T_FUNCTION                  =>  self::T_FUNCTION,
         T_INT_CAST                  =>  self::T_INT_CAST,
         T_IS_EQUAL                  =>  self::T_IS_EQUAL,
         T_OR_EQUAL                  =>  self::T_OR_EQUAL,
@@ -139,6 +137,7 @@ class PHP_Depend_Tokenizer_Internal
         T_SL_EQUAL                  =>  self::T_SL_EQUAL,
         T_SR_EQUAL                  =>  self::T_SR_EQUAL,
         T_VARIABLE                  =>  self::T_VARIABLE,
+        T_ENDSWITCH                 =>  self::T_ENDSWITCH,
         T_DIV_EQUAL                 =>  self::T_DIV_EQUAL,
         T_AND_EQUAL                 =>  self::T_AND_EQUAL,
         T_MOD_EQUAL                 =>  self::T_MOD_EQUAL,
@@ -151,6 +150,8 @@ class PHP_Depend_Tokenizer_Internal
         T_CLOSE_TAG                 =>  self::T_CLOSE_TAG,
         T_PROTECTED                 =>  self::T_PROTECTED,
         T_CURLY_OPEN                =>  self::T_CURLY_BRACE_OPEN,
+        T_ENDFOREACH                =>  self::T_ENDFOREACH,
+        T_ENDDECLARE                =>  self::T_ENDDECLARE,
         T_IMPLEMENTS                =>  self::T_IMPLEMENTS,
         T_NUM_STRING                =>  self::T_NUM_STRING,
         T_PLUS_EQUAL                =>  self::T_PLUS_EQUAL,
@@ -349,7 +350,7 @@ class PHP_Depend_Tokenizer_Internal
      *
      * @var array(PHP_Depend_Token) $tokens
      */
-    protected $tokens = array();
+    protected $tokens = null;
 
     /**
      * The next free identifier for unknown string tokens.
@@ -377,9 +378,8 @@ class PHP_Depend_Tokenizer_Internal
      */
     public function setSourceFile($sourceFile)
     {
+        $this->tokens = null;
         $this->sourceFile = new PHP_Depend_Code_File($sourceFile);
-        $this->_tokenize();
-        $this->sourceFile->setTokens($this->tokens);
     }
 
     /**
@@ -390,6 +390,8 @@ class PHP_Depend_Tokenizer_Internal
      */
     public function next()
     {
+        $this->_tokenize();
+
         if ($this->index < $this->count) {
             return $this->tokens[$this->index++];
         }
@@ -404,6 +406,8 @@ class PHP_Depend_Tokenizer_Internal
      */
     public function peek()
     {
+        $this->_tokenize();
+
         if (isset($this->tokens[$this->index])) {
             return $this->tokens[$this->index]->type;
         }
@@ -419,6 +423,8 @@ class PHP_Depend_Tokenizer_Internal
      */
     public function peekNext()
     {
+        $this->_tokenize();
+        
         $offset = 0;
         do {
             $type = $this->tokens[$this->index + ++$offset]->type;
@@ -434,6 +440,8 @@ class PHP_Depend_Tokenizer_Internal
      */
     public function prev()
     {
+        $this->_tokenize();
+
         if ($this->index > 1) {
             return $this->tokens[$this->index - 2]->type;
         }
@@ -474,6 +482,10 @@ class PHP_Depend_Tokenizer_Internal
      */
     private function _tokenize()
     {
+        if ($this->tokens) {
+            return;
+        }
+
         $this->tokens = array();
         $this->index  = 0;
         $this->count  = 0;

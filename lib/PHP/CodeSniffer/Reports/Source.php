@@ -27,7 +27,7 @@
  * @copyright 2009 SQLI <www.sqli.com>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
@@ -37,9 +37,9 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
     /**
      * Prints the source of all errors and warnings.
      *
-     * @param array   $report       Prepared report.
-     * @param boolean $showSources  Show sources?
-     * @param int     $width        Maximum allowed lne width.
+     * @param array   $report      Prepared report.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed lne width.
      * 
      * @return string 
      */
@@ -129,7 +129,9 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
         echo 'WERE FOUND IN '.count($sources).' SOURCE(S)'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
-        if (class_exists('PHP_Timer', false) === true) {
+        if (PHP_CODESNIFFER_INTERACTIVE === false
+            && class_exists('PHP_Timer', false) === true
+        ) {
             echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
         }
 

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,13 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Code/NodeI.php';
 
 /**
  * This class provides an interface to a single source file.
@@ -55,26 +53,80 @@ require_once 'PHP/Depend/Code/NodeI.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
 {
     /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
+     * The internal used cache instance.
+     *
+     * @var PHP_Depend_Util_Cache_Driver
+     * @since 0.10.0
+     */
+    protected $cache = null;
+
+    /**
      * The unique identifier for this function.
      *
-     * @var string $_uuid
+     * @var string
      */
-    private $_uuid = null;
+    protected $uuid = null;
 
     /**
      * The source file name/path.
      *
-     * @var string $_fileName
+     * @var string
      */
-    private $_fileName = null;
+    protected $fileName = null;
+
+    /**
+     * The comment for this type.
+     *
+     * @var string
+     */
+    protected $docComment = null;
+
+    /**
+     * The files start line. This property must always have the value <em>1</em>.
+     *
+     * @var integer
+     * @since 0.10.0
+     */
+    protected $startLine = 0;
+
+    /**
+     * The files end line.
+     *
+     * @var integer
+     * @since 0.10.0
+     */
+    protected $endLine = 0;
+
+    /**
+     * List of classes, interfaces and functions that parsed from this file.
+     *
+     * @var array(PHP_Depend_Code_AbstractItem)
+     * @since 0.10.0
+     */
+    protected $childNodes = array();
+
+    /**
+     * Was this file instance restored from the cache?
+     *
+     * @var boolean
+     * @since 0.10.0
+     */
+    protected $cached = false;
 
     /**
      * Normalized code in this file.
@@ -84,20 +136,6 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     private $_source = null;
 
     /**
-     * The lines of code in this file.
-     *
-     * @var array(integer=>string) $_loc
-     */
-    private $_loc = null;
-
-    /**
-     * The comment for this type.
-     *
-     * @var string $_docComment
-     */
-    private $_docComment = null;
-
-    /**
      * Constructs a new source file instance.
      *
      * @param string $fileName The source file name/path.
@@ -105,7 +143,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     public function __construct($fileName)
     {
         if ($fileName !== null) {
-            $this->_fileName = realpath($fileName);
+            $this->fileName = realpath($fileName);
         }
     }
 
@@ -116,7 +154,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getName()
     {
-        return $this->_fileName;
+        return $this->fileName;
     }
 
     /**
@@ -126,7 +164,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getFileName()
     {
-        return $this->_fileName;
+        return $this->fileName;
     }
 
     /**
@@ -136,7 +174,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getUUID()
     {
-        return $this->_uuid;
+        return $this->uuid;
     }
 
     /**
@@ -149,18 +187,21 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function setUUID($uuid)
     {
-        $this->_uuid = $uuid;
+        $this->uuid = $uuid;
     }
 
     /**
-     * Returns the lines of code with stripped whitespaces.
+     * Setter method for the used parser and token cache.
      *
-     * @return array(integer=>string)
+     * @param PHP_Depend_Util_Cache_Driver $cache A cache driver instance.
+     *
+     * @return PHP_Depend_Code_File
+     * @since 0.10.0
      */
-    public function getLoc()
+    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
     {
-        $this->readSource();
-        return $this->_loc;
+        $this->cache = $cache;
+        return $this;
     }
 
     /**
@@ -181,8 +222,9 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getTokens()
     {
-        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        return (array) $storage->restore(md5($this->_fileName), __CLASS__);
+        return (array) $this->cache
+            ->type('tokens')
+            ->restore($this->getUUID());
     }
 
     /**
@@ -194,8 +236,9 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function setTokens(array $tokens)
     {
-        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        $storage->store($tokens, md5($this->_fileName), __CLASS__);
+        return $this->cache
+            ->type('tokens')
+            ->store($this->getUUID(), $tokens);
     }
 
     /**
@@ -205,7 +248,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getDocComment()
     {
-        return $this->_docComment;
+        return $this->docComment;
     }
 
     /**
@@ -217,7 +260,65 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function setDocComment($docComment)
     {
-        $this->_docComment = $docComment;
+        $this->docComment = $docComment;
+    }
+
+    /**
+     * Adds a source item that was parsed from this source file.
+     *
+     * @param PHP_Depend_Code_AbstractItem $item Node parsed in this file.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    public function addChild(PHP_Depend_Code_AbstractItem $item)
+    {
+        $this->childNodes[$item->getUUID()] = $item;
+    }
+
+    /**
+     * Returns the start line number for this source file. For an existing file
+     * this value must always be <em>1</em>, while it can be <em>0</em> for a
+     * not existing dummy file.
+     *
+     * @return integer
+     * @since 0.10.0
+     */
+    public function getStartLine()
+    {
+        if ($this->startLine === 0) {
+            $this->readSource();
+        }
+        return $this->startLine;
+    }
+
+    /**
+     * Returns the start line number for this source file. For an existing file
+     * this value must always be greater <em>0</em>, while it can be <em>0</em>
+     * for a not existing dummy file.
+     *
+     * @return integer
+     * @since 0.10.0
+     */
+    public function getEndLine()
+    {
+        if ($this->endLine === 0) {
+            $this->readSource();
+        }
+        return $this->endLine;
+    }
+
+    /**
+     * This method will return <b>true</b> when this file instance was restored
+     * from the cache and not currently parsed. Otherwise this method will return
+     * <b>false</b>.
+     *
+     * @return boolean
+     * @since 0.10.0
+     */
+    public function isCached()
+    {
+        return $this->cached;
     }
 
     /**
@@ -234,17 +335,43 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     }
 
     /**
-     * This method can be called by the PHP_Depend runtime environment or a
-     * utilizing component to free up memory. This methods are required for
-     * PHP version < 5.3 where cyclic references can not be resolved
-     * automatically by PHP's garbage collector.
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before it serializes an instance of this class. This method returns an
+     * array with those property names that should be serialized.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
+    public function __sleep()
+    {
+        return array(
+            'cache',
+            'childNodes',
+            'docComment',
+            'endLine',
+            'fileName',
+            'startLine',
+            'uuid'
+        );
+    }
+
+    /**
+     * The magic wakeup method will is called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method restores the references between all parsed entities
+     * in this source file and this file instance.
      *
      * @return void
-     * @since 0.9.12
+     * @since 0.10.0
+     * @see PHP_Depend_Code_File::$childNodes
      */
-    public function free()
+    public function __wakeup()
     {
-        // Nothing todo here
+        $this->cached = true;
+
+        foreach ($this->childNodes as $childNode) {
+            $childNode->setSourceFile($this);
+        }
     }
 
     /**
@@ -254,7 +381,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function __toString()
     {
-        return ($this->_fileName === null ? '' : $this->_fileName);
+        return ($this->fileName === null ? '' : $this->fileName);
     }
 
     /**
@@ -264,12 +391,33 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     protected function readSource()
     {
-        if ($this->_loc === null) {
-            $source = file_get_contents($this->_fileName);
+        if ($this->_source === null && file_exists($this->fileName)) {
+            $source = file_get_contents($this->fileName);
 
-            $this->_loc = preg_split('#(\r\n|\n|\r)#', $source);
+            $this->_source = str_replace(array("\r\n", "\r"), "\n", $source);
 
-            $this->_source = implode("\n", $this->_loc);
+            $this->startLine = 1;
+            $this->endLine   = substr_count($this->_source, "\n") + 1;
         }
     }
+    
+    // Deprecated methods
+    // @codeCoverageIgnoreStart
+
+    /**
+     * This method can be called by the PHP_Depend runtime environment or a
+     * utilizing component to free up memory. This methods are required for
+     * PHP version < 5.3 where cyclic references can not be resolved
+     * automatically by PHP's garbage collector.
+     *
+     * @return void
+     * @since 0.9.12
+     * @deprecated Since 0.10.0
+     */
+    public function free()
+    {
+        fwrite(STDERR, __METHOD__ . ' is deprecated since version 0.10.0' . PHP_EOL);
+    }
+
+    // @codeCoverageIgnoreEnd
 }

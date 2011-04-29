@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2010, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2002-2011, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@
  * @subpackage Util_Log
  * @author     Benjamin Eberlei <kontakt@beberlei.de>
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 3.5.0
@@ -51,9 +51,9 @@
  * @subpackage Util_Log
  * @author     Benjamin Eberlei <kontakt@beberlei.de>
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 3.5.0
+ * @version    Release: 3.5.13
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 3.5.0
  */
@@ -93,6 +93,16 @@ class PHPUnit_Util_Log_DBUS implements PHPUnit_Framework_TestListener
      * @var integer
      */
     protected $endedSuites = 0;
+
+    /**
+     *
+     */
+    public function __construct()
+    {
+        if (!extension_loaded('dbus')) {
+            throw new RuntimeException('ext/dbus is not available');
+        }
+    }
 
     /**
      * An error occurred.

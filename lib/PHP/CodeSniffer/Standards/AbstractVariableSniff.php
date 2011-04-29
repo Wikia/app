@@ -10,7 +10,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: AbstractVariableSniff.php 270198 2008-12-01 05:41:28Z squiz $
+ * @version   CVS: $Id: AbstractVariableSniff.php 308521 2011-02-21 00:56:09Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -34,7 +34,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
@@ -141,7 +141,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
                 $this->processVariable($phpcsFile, $stackPtr);
             } else if ($tokens[$stackPtr]['code'] === T_DOUBLE_QUOTED_STRING) {
                 // Check to see if this string has a variable in it.
-                $pattern = '|[^\\\]\$[a-zA-Z0-9_]+|';
+                $pattern = '|[^\\\]\${?[a-zA-Z0-9_]+}?|';
                 if (preg_match($pattern, $tokens[$stackPtr]['content']) !== 0) {
                     $this->processVariableInString($phpcsFile, $stackPtr);
                 }

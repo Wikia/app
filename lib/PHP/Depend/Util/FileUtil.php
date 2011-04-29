@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- *
+ * 
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -53,13 +53,29 @@
  * @package    PHP_Depend
  * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://www.pdepend.org/
  */
 final class PHP_Depend_Util_FileUtil
 {
+    /**
+     * Returns the home directory of the current user if it exists. Otherwise
+     * this method will return the system temp directory.
+     *
+     * @return string
+     * @since 0.10.0
+     */
+    public static function getUserHomeDirOrSysTempDir()
+    {
+        $home = self::getUserHomeDir();
+        if (file_exists($home)) {
+            return $home;
+        }
+        return self::getSysTempDir();
+    }
+
     /**
      * Returns the system temp directory.
      *
@@ -67,21 +83,20 @@ final class PHP_Depend_Util_FileUtil
      */
     public static function getSysTempDir()
     {
-        if (function_exists('sys_get_temp_dir') === true) {
-            return sys_get_temp_dir();
-        } else if ($tmp = getenv('TMP')) {
-            return $tmp;
-        } else if ($tmp = getenv('TEMP')) {
-            return $tmp;
-        } else if ($tmp = getenv('TMPDIR')) {
-            return $tmp;
-        }
+        return sys_get_temp_dir();
+    }
 
-        // Fallback, try to create a tmp directory.
-        if (file_exists('/tmp') === false) {
-            mkdir('/tmp');
+    /**
+     * Returns the home directory of the current user.
+     *
+     * @return string
+     * @since 0.10.0
+     */
+    public static function getUserHomeDir()
+    {
+        if (false === stripos(PHP_OS, 'win')) {
+            return getenv('HOME');
         }
-        return '/tmp';
+        return getenv('HOMEDRIVE') . getenv('HOMEPATH');
     }
 }
-?>

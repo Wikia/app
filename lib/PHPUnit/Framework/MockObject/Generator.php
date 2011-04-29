@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
  *
  * @package    PHPUnit_MockObject
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://github.com/sebastianbergmann/phpunit-mock-objects
  * @since      File available since Release 1.0.0
@@ -49,9 +49,9 @@ require_once 'Text/Template.php';
  *
  * @package    PHPUnit_MockObject
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 1.0.0
+ * @version    Release: 1.0.8
  * @link       http://github.com/sebastianbergmann/phpunit-mock-objects
  * @since      Class available since Release 1.0.0
  */
@@ -363,14 +363,14 @@ class PHPUnit_Framework_MockObject_Generator
     }
 
     /**
-     * @param  string  $originalClassName
-     * @param  array   $methods
-     * @param  string  $mockClassName
-     * @param  boolean $callOriginalClone
-     * @param  boolean $callAutoload
+     * @param  string     $originalClassName
+     * @param  array|null $methods
+     * @param  string     $mockClassName
+     * @param  boolean    $callOriginalClone
+     * @param  boolean    $callAutoload
      * @return array
      */
-    protected static function generateMock($originalClassName, array $methods, $mockClassName, $callOriginalClone, $callAutoload)
+    protected static function generateMock($originalClassName, $methods, $mockClassName, $callOriginalClone, $callAutoload)
     {
         $templateDir   = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Generator' .
                          DIRECTORY_SEPARATOR;
@@ -605,6 +605,7 @@ class PHPUnit_Framework_MockObject_Generator
           $method->getName(),
           $modifier,
           PHPUnit_Util_Class::getMethodParameters($method),
+          PHPUnit_Util_Class::getMethodParameters($method, TRUE),
           $reference,
           $static
         );
@@ -615,12 +616,13 @@ class PHPUnit_Framework_MockObject_Generator
      * @param  string  $className
      * @param  string  $methodName
      * @param  string  $modifier
-     * @param  string  $arguments
+     * @param  string  $arguments_decl
+     * @param  string  $arguments_call
      * @param  string  $reference
      * @param  boolean $static
      * @return string
      */
-    protected static function generateMockedMethodDefinition($templateDir, $className, $methodName, $modifier = 'public', $arguments = '', $reference = '', $static = FALSE)
+    protected static function generateMockedMethodDefinition($templateDir, $className, $methodName, $modifier = 'public', $arguments_decl = '', $arguments_call = '', $reference = '', $static = FALSE)
     {
         if ($static) {
             $template = new Text_Template(
@@ -634,11 +636,13 @@ class PHPUnit_Framework_MockObject_Generator
 
         $template->setVar(
           array(
-            'arguments'   => $arguments,
-            'class_name'  => $className,
-            'method_name' => $methodName,
-            'modifier'    => $modifier,
-            'reference'   => $reference
+            'arguments_decl'  => $arguments_decl,
+            'arguments_call'  => $arguments_call,
+            'arguments_count' => !empty($arguments_call) ? count(explode(',', $arguments_call)) : 0,
+            'class_name'      => $className,
+            'method_name'     => $methodName,
+            'modifier'        => $modifier,
+            'reference'       => $reference
           )
         );
 

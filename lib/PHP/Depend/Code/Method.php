@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,13 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Code/AbstractCallable.php';
 
 /**
  * Represents a php method node.
@@ -55,9 +53,9 @@ require_once 'PHP/Depend/Code/AbstractCallable.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
@@ -74,7 +72,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      *
      * @var integer $_modifiers
      */
-    private $_modifiers = 0;
+    protected $modifiers = 0;
 
     /**
      * This method sets a OR combined integer of the declared modifiers for this
@@ -92,7 +90,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function setModifiers($modifiers)
     {
-        if ($this->_modifiers !== 0) {
+        if ($this->modifiers !== 0) {
             return;
         }
 
@@ -107,7 +105,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
             throw new InvalidArgumentException('Invalid method modifier given.');
         }
 
-        $this->_modifiers = $modifiers;
+        $this->modifiers = $modifiers;
     }
 
     /**
@@ -117,7 +115,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isAbstract()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_ABSTRACT)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_ABSTRACT)
                                  === PHP_Depend_ConstantsI::IS_ABSTRACT);
     }
 
@@ -129,7 +127,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isPublic()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_PUBLIC)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_PUBLIC)
                                  === PHP_Depend_ConstantsI::IS_PUBLIC);
     }
 
@@ -141,7 +139,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isProtected()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_PROTECTED)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_PROTECTED)
                                  === PHP_Depend_ConstantsI::IS_PROTECTED);
     }
 
@@ -153,7 +151,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isPrivate()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_PRIVATE)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_PRIVATE)
                                  === PHP_Depend_ConstantsI::IS_PRIVATE);
     }
 
@@ -165,7 +163,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isStatic()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_STATIC)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_STATIC)
                                  === PHP_Depend_ConstantsI::IS_STATIC);
     }
 
@@ -177,7 +175,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isFinal()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_FINAL)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_FINAL)
                                  === PHP_Depend_ConstantsI::IS_FINAL);
     }
 
@@ -205,6 +203,22 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     }
 
     /**
+     * Returns the source file where this method was declared.
+     *
+     * @return PHP_Depend_Code_File
+     * @throws PHP_Depend_Code_Exceptions_SourceNotFoundException When no parent
+     *         class or interface was set for this method instance.
+     * @since 0.10.0
+     */
+    public function getSourceFile()
+    {
+        if ($this->parent === null) {
+            throw new PHP_Depend_Code_Exceptions_SourceNotFoundException($this);
+        }
+        return $this->parent->getSourceFile();
+    }
+
+    /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Depend_VisitorI $visitor The context visitor
@@ -215,6 +229,19 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     public function accept(PHP_Depend_VisitorI $visitor)
     {
         $visitor->visitMethod($this);
+    }
+
+    /**
+     * The magic sleep method will be called by the PHP engine when this class
+     * gets serialized. It returns an array with those properties that should be
+     * cached for method instances.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
+    public function __sleep()
+    {
+        return array_merge(array('modifiers'), parent::__sleep());
     }
 
     /**

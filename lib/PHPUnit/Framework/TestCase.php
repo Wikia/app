@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2010, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2002-2011, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@
  * @package    PHPUnit
  * @subpackage Framework
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 2.0.0
@@ -92,9 +92,9 @@ require_once 'Text/Template.php';
  * @package    PHPUnit
  * @subpackage Framework
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 3.5.0
+ * @version    Release: 3.5.13
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 2.0.0
  */
@@ -148,122 +148,122 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
      *
      * @var    boolean
      */
-    protected $inIsolation = FALSE;
+    private $inIsolation = FALSE;
 
     /**
      * @var    array
      */
-    protected $data = array();
+    private $data = array();
 
     /**
      * @var    string
      */
-    protected $dataName = '';
+    private $dataName = '';
 
     /**
      * @var    boolean
      */
-    protected $useErrorHandler = NULL;
+    private $useErrorHandler = NULL;
 
     /**
      * @var    boolean
      */
-    protected $useOutputBuffering = NULL;
+    private $useOutputBuffering = NULL;
 
     /**
      * The name of the expected Exception.
      *
      * @var    mixed
      */
-    protected $expectedException = NULL;
+    private $expectedException = NULL;
 
     /**
      * The message of the expected Exception.
      *
      * @var    string
      */
-    protected $expectedExceptionMessage = '';
+    private $expectedExceptionMessage = '';
 
     /**
      * The code of the expected Exception.
      *
      * @var    integer
      */
-    protected $expectedExceptionCode;
+    private $expectedExceptionCode;
 
     /**
      * The stack trace to where the expected exception was set.
      *
      * @var    array
      */
-    protected $expectedExceptionTrace = array();
+    private $expectedExceptionTrace = array();
 
     /**
      * The name of the test case.
      *
      * @var    string
      */
-    protected $name = NULL;
+    private $name = NULL;
 
     /**
      * @var    array
      */
-    protected $dependencies = array();
+    private $dependencies = array();
 
     /**
      * @var    array
      */
-    protected $dependencyInput = array();
+    private $dependencyInput = array();
 
     /**
      * @var    string
      */
-    protected $exceptionMessage = NULL;
+    private $exceptionMessage = NULL;
 
     /**
      * @var    integer
      */
-    protected $exceptionCode = 0;
+    private $exceptionCode = 0;
 
     /**
      * @var    Array
      */
-    protected $iniSettings = array();
+    private $iniSettings = array();
 
     /**
      * @var    Array
      */
-    protected $locale = array();
+    private $locale = array();
 
     /**
      * @var    Array
      */
-    protected $mockObjects = array();
+    private $mockObjects = array();
 
     /**
      * @var    integer
      */
-    protected $status;
+    private $status;
 
     /**
      * @var    string
      */
-    protected $statusMessage = '';
+    private $statusMessage = '';
 
     /**
      * @var    integer
      */
-    protected $numAssertions = 0;
+    private $numAssertions = 0;
 
     /**
      * @var PHPUnit_Framework_TestResult
      */
-    protected $result;
+    private $result;
 
     /**
      * @var mixed
      */
-    protected $testResult;
+    private $testResult;
 
     /**
      * Constructs a test case with the given name.
@@ -491,6 +491,8 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
             $result = $this->createResult();
         }
 
+        $this->result = $result;
+
         $this->setExpectedExceptionFromAnnotation();
         $this->setUseErrorHandlerFromAnnotation();
         $this->setUseOutputBufferingFromAnnotation();
@@ -500,49 +502,8 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
             $result->convertErrorsToExceptions($this->useErrorHandler);
         }
 
-        $this->result = $result;
-
-        if (!empty($this->dependencies) && !$this->inIsolation) {
-            $className  = get_class($this);
-            $passed     = $this->result->passed();
-            $passedKeys = array_keys($passed);
-            $numKeys    = count($passedKeys);
-
-            for ($i = 0; $i < $numKeys; $i++) {
-                $pos = strpos($passedKeys[$i], ' with data set');
-
-                if ($pos !== FALSE) {
-                    $passedKeys[$i] = substr($passedKeys[$i], 0, $pos);
-                }
-            }
-
-            $passedKeys = array_flip(array_unique($passedKeys));
-
-            foreach ($this->dependencies as $dependency) {
-                if (strpos($dependency, '::') === FALSE) {
-                    $dependency = $className . '::' . $dependency;
-                }
-
-                if (!isset($passedKeys[$dependency])) {
-                    $result->addError(
-                      $this,
-                      new PHPUnit_Framework_SkippedTestError(
-                        sprintf(
-                          'This test depends on "%s" to pass.', $dependency
-                        )
-                      ),
-                      0
-                    );
-
-                    return;
-                } else {
-                    if (isset($passed[$dependency])) {
-                        $this->dependencyInput[] = $passed[$dependency];
-                    } else {
-                        $this->dependencyInput[] = NULL;
-                    }
-                }
-            }
+        if (!$this->handleDependencies()) {
+            return;
         }
 
         if ($this->runTestInSeparateProcess === TRUE &&
@@ -578,6 +539,12 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
                 $coverage = 'FALSE';
             }
 
+            if ($result->isStrict()) {
+                $strict = 'TRUE';
+            } else {
+                $strict = 'FALSE';
+            }
+
             $data            = addcslashes(serialize($this->data), "'");
             $dependencyInput = addcslashes(
               serialize($this->dependencyInput), "'"
@@ -596,13 +563,15 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
                 'constants'                      => $constants,
                 'globals'                        => $globals,
                 'include_path'                   => $includePath,
-                'included_files'                 => $includedFiles
+                'included_files'                 => $includedFiles,
+                'strict'                         => $strict
               )
             );
 
             $this->prepareTemplate($template);
 
-            PHPUnit_Util_PHP::runJob($template->render(), $this, $result);
+            $php = PHPUnit_Util_PHP::factory();
+            $php->runJob($template->render(), $this, $result);
         } else {
             $result->run($this);
         }
@@ -949,6 +918,15 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
     }
 
     /**
+     * @return PHPUnit_Framework_TestResult
+     * @since  Method available since Release 3.5.7
+     */
+    public function getTestResultObject()
+    {
+        return $this->result;
+    }
+
+    /**
      * This method is a wrapper for the ini_set() function that automatically
      * resets the modified php.ini setting to its original value after the
      * test is run.
@@ -1118,7 +1096,7 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
      * @since  Method available since Release 3.4.0
      * @throws InvalidArgumentException
      */
-    protected function getMockForAbstractClass($originalClassName, array $arguments = array(), $mockClassName = '', $callOriginalConstructor = TRUE, $callOriginalClone = TRUE, $callAutoload = TRUE)
+    public function getMockForAbstractClass($originalClassName, array $arguments = array(), $mockClassName = '', $callOriginalConstructor = TRUE, $callOriginalClone = TRUE, $callAutoload = TRUE)
     {
         $mockObject = PHPUnit_Framework_MockObject_Generator::getMockForAbstractClass(
           $originalClassName,
@@ -1400,6 +1378,57 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
     protected function createResult()
     {
         return new PHPUnit_Framework_TestResult;
+    }
+
+    /**
+     * @since Method available since Release 3.5.4
+     */
+    protected function handleDependencies()
+    {
+        if (!empty($this->dependencies) && !$this->inIsolation) {
+            $className  = get_class($this);
+            $passed     = $this->result->passed();
+            $passedKeys = array_keys($passed);
+            $numKeys    = count($passedKeys);
+
+            for ($i = 0; $i < $numKeys; $i++) {
+                $pos = strpos($passedKeys[$i], ' with data set');
+
+                if ($pos !== FALSE) {
+                    $passedKeys[$i] = substr($passedKeys[$i], 0, $pos);
+                }
+            }
+
+            $passedKeys = array_flip(array_unique($passedKeys));
+
+            foreach ($this->dependencies as $dependency) {
+                if (strpos($dependency, '::') === FALSE) {
+                    $dependency = $className . '::' . $dependency;
+                }
+
+                if (!isset($passedKeys[$dependency])) {
+                    $this->result->addError(
+                      $this,
+                      new PHPUnit_Framework_SkippedTestError(
+                        sprintf(
+                          'This test depends on "%s" to pass.', $dependency
+                        )
+                      ),
+                      0
+                    );
+
+                    return FALSE;
+                } else {
+                    if (isset($passed[$dependency])) {
+                        $this->dependencyInput[] = $passed[$dependency];
+                    } else {
+                        $this->dependencyInput[] = NULL;
+                    }
+                }
+            }
+        }
+
+        return TRUE;
     }
 
     /**

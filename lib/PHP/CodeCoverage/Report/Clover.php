@@ -2,7 +2,7 @@
 /**
  * PHP_CodeCoverage
  *
- * Copyright (c) 2009-2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2009-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@
  * @category   PHP
  * @package    CodeCoverage
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2009-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2009-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://github.com/sebastianbergmann/php-code-coverage
  * @since      File available since Release 1.0.0
@@ -52,9 +52,9 @@ require_once 'PHP/Token/Stream/CachingFactory.php';
  * @category   PHP
  * @package    CodeCoverage
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2009-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2009-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 1.0.0
+ * @version    Release: 1.0.4
  * @link       http://github.com/sebastianbergmann/php-code-coverage
  * @since      Class available since Release 1.0.0
  */
@@ -72,11 +72,11 @@ class PHP_CodeCoverage_Report_Clover
         $document->formatOutput = TRUE;
 
         $root = $document->createElement('coverage');
-        $root->setAttribute('generated', $_SERVER['REQUEST_TIME']);
+        $root->setAttribute('generated', (int)$_SERVER['REQUEST_TIME']);
         $document->appendChild($root);
 
         $project = $document->createElement('project');
-        $project->setAttribute('timestamp', $_SERVER['REQUEST_TIME']);
+        $project->setAttribute('timestamp', (int)$_SERVER['REQUEST_TIME']);
 
         if (is_string($name)) {
             $project->setAttribute('name', $name);
@@ -120,6 +120,7 @@ class PHP_CodeCoverage_Report_Clover
                 $tokens        = PHP_Token_Stream_CachingFactory::get($filename);
                 $classesInFile = $tokens->getClasses();
                 $linesOfCode   = $tokens->getLinesOfCode();
+                unset($tokens);
 
                 $ignoredLines = PHP_CodeCoverage_Util::getLinesToBeIgnored(
                   $filename
@@ -454,6 +455,10 @@ class PHP_CodeCoverage_Report_Clover
         $project->appendChild($metrics);
 
         if ($target !== NULL) {
+            if (!is_dir(dirname($target))) {
+              mkdir(dirname($target), 0777, TRUE);
+            }
+
             return $document->save($target);
         } else {
             return $document->saveXML();

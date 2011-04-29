@@ -55,7 +55,7 @@ function __autoload($className)
  * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @copyright 2009-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: 1.0.0
+ * @version   Release: 1.0.1
  * @link      http://github.com/sebastianbergmann/php-token-stream/tree
  * @since     Class available since Release 1.0.0
  */
@@ -175,7 +175,7 @@ EOT;
      */
     protected static function printVersionString()
     {
-        print "phptok 1.0.0 by Sebastian Bergmann.\n\n";
+        print "phptok 1.0.1 by Sebastian Bergmann.\n\n";
     }
 }
 ?>

@@ -12,7 +12,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: FunctionCommentThrowTagSniff.php 301632 2010-07-28 01:57:56Z squiz $
+ * @version   CVS: $Id: FunctionCommentThrowTagSniff.php 308073 2011-02-07 05:20:21Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -32,7 +32,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
@@ -69,7 +69,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
 
         // Parse the function comment.
         $tokens       = $phpcsFile->getTokens();
-        $commentEnd   = $phpcsFile->findPrevious(T_DOC_COMMENT, ($stackPtr - 1));
+        $commentEnd   = $phpcsFile->findPrevious(T_DOC_COMMENT, ($currScope - 1));
         $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
         $comment      = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
 
@@ -95,20 +95,23 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
             while ($currPos < $currScopeEnd && $currPos !== false) {
 
                 /*
-                    If we can't find a string, we are probably throwing
+                    If we can't find a NEW, we are probably throwing
                     a variable, so we ignore it, but they still need to
                     provide at least one @throws tag, even through we
                     don't know the exception class.
                 */
 
-                $currException = $phpcsFile->findNext(T_STRING, $currPos, $currScopeEnd, false, null, true);
-                if ($currException !== false) {
-                    $throwTokens[] = $tokens[$currException]['content'];
+                $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($currPos + 1), null, true);
+                if ($tokens[$nextToken]['code'] === T_NEW) {
+                    $currException = $phpcsFile->findNext(T_STRING, $currPos, $currScopeEnd, false, null, true);
+                    if ($currException !== false) {
+                        $throwTokens[] = $tokens[$currException]['content'];
+                    }
                 }
 
                 $currPos = $phpcsFile->findNext(T_THROW, ($currPos + 1), $currScopeEnd);
             }
-        }
+        }//end if
 
         // Only need one @throws tag for each type of exception thrown.
         $throwTokens = array_unique($throwTokens);

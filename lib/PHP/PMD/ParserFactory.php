@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2009-2010, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2009-2011, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,17 +39,13 @@
  * @category  PHP
  * @package   PHP_PMD
  * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2009-2010 Manuel Pichler. All rights reserved.
+ * @copyright 2009-2011 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://phpmd.org
  */
 
-require_once 'PHP/PMD/Parser.php';
-
-require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/Input/ExcludePathFilter.php';
-require_once 'PHP/Depend/Input/ExtensionFilter.php';
+require_once 'PHP/Depend/Autoload.php';
 
 /**
  * Simple factory that is used to return a ready to use PHP_Depend instance.
@@ -57,13 +53,22 @@ require_once 'PHP/Depend/Input/ExtensionFilter.php';
  * @category  PHP
  * @package   PHP_PMD
  * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2009-2010 Manuel Pichler. All rights reserved.
+ * @copyright 2009-2011 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: 0.2.7
+ * @version   Release: 1.1.0
  * @link      http://phpmd.org
  */
 class PHP_PMD_ParserFactory
 {
+    /**
+     * Creates a new factory instance.
+     */
+    public function __construct()
+    {
+        $autoload = new PHP_Depend_Autoload();
+        $autoload->register();
+    }
+
     /**
      * Creates the used PHP_PMD_Parser analyzer instance.
      *
@@ -73,6 +78,8 @@ class PHP_PMD_ParserFactory
      */
     public function create(PHP_PMD $phpmd)
     {
+        include_once 'PHP/PMD/Parser.php';
+
         $pdepend = $this->_createInstance();
         $pdepend = $this->_init($pdepend, $phpmd);
 
@@ -86,23 +93,8 @@ class PHP_PMD_ParserFactory
      */
     private function _createInstance()
     {
-        $pdepend = new PHP_Depend();
-        $pdepend->setStorage(PHP_Depend::TOKEN_STORAGE, $this->_createEngine());
-        $pdepend->setStorage(PHP_Depend::PARSER_STORAGE, $this->_createEngine());
-
-        return $pdepend;
-    }
-
-    /**
-     * Returns an instance of the used php depend temp data storage.
-     *
-     * @return PHP_Depend_Storage_EngineI
-     */
-    private function _createEngine()
-    {
-        include_once 'PHP/Depend/Storage/FileEngine.php';
-
-        return new PHP_Depend_Storage_FileEngine();
+        $factory = new PHP_Depend_Util_Configuration_Factory();
+        return new PHP_Depend($factory->createDefault());
     }
 
     /**

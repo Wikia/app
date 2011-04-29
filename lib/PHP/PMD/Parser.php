@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2009-2010, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2009-2011, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,15 +39,11 @@
  * @category  PHP
  * @package   PHP_PMD
  * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2009-2010 Manuel Pichler. All rights reserved.
+ * @copyright 2009-2011 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://phpmd.org
  */
-
-require_once 'PHP/Depend/Log/LoggerI.php';
-require_once 'PHP/Depend/Log/CodeAwareI.php';
-require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
 
 require_once 'PHP/PMD/Node/Class.php';
 require_once 'PHP/PMD/Node/Function.php';
@@ -60,9 +56,9 @@ require_once 'PHP/PMD/Node/Method.php';
  * @category  PHP
  * @package   PHP_PMD
  * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2009-2010 Manuel Pichler. All rights reserved.
+ * @copyright 2009-2011 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: 0.2.7
+ * @version   Release: 1.1.0
  * @link      http://phpmd.org
  */
 class PHP_PMD_Parser

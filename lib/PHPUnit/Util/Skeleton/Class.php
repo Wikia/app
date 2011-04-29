@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2010, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2002-2011, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,11 +37,13 @@
  * @package    PHPUnit
  * @subpackage Util_Skeleton
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 3.3.0
  */
+
+require_once 'Text/Template.php';
 
 /**
  * Generator for class skeletons from test classes.
@@ -49,9 +51,9 @@
  * @package    PHPUnit
  * @subpackage Util_Skeleton
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 3.5.0
+ * @version    Release: 3.5.13
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 3.3.0
  */
@@ -185,7 +187,15 @@ class PHPUnit_Util_Skeleton_Class extends PHPUnit_Util_Skeleton
             $args  = substr($testMethod['signature'], $start, $end);
 
             foreach (explode(',', $args) as $arg) {
-                list($type, $var) = explode(' ', $arg);
+                $arg = explode(' ', trim($arg));
+
+                if (count($arg) == 2) {
+                    $type = $arg[0];
+                    $var  = $arg[1];
+                } else {
+                    $type = NULL;
+                    $var  = $arg[0];
+                }
 
                 if ($type == $this->outClassName['fullyQualifiedClassName']) {
                     $argVariables[] = $var;

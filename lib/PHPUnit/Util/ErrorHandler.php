@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2010, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2002-2011, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,11 +37,17 @@
  * @package    PHPUnit
  * @subpackage Util
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 2.3.0
  */
+
+// Workaround for http://bugs.php.net/bug.php?id=47987,
+// see https://github.com/sebastianbergmann/phpunit/issues#issue/125 for details
+require_once 'PHPUnit/Framework/Error.php';
+require_once 'PHPUnit/Framework/Error/Notice.php';
+require_once 'PHPUnit/Framework/Error/Warning.php';
 
 /**
  * Error handler that converts PHP errors and warnings to exceptions.
@@ -49,9 +55,9 @@
  * @package    PHPUnit
  * @subpackage Util
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 3.5.0
+ * @version    Release: 3.5.13
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 3.3.0
  */
@@ -93,7 +99,7 @@ class PHPUnit_Util_ErrorHandler
             }
         }
 
-        if ($errno == E_NOTICE || $errno == E_STRICT) {
+        if ($errno == E_NOTICE || $errno == E_USER_NOTICE || $errno == E_STRICT) {
             if (PHPUnit_Framework_Error_Notice::$enabled !== TRUE) {
                 return FALSE;
             }
@@ -101,7 +107,7 @@ class PHPUnit_Util_ErrorHandler
             $exception = 'PHPUnit_Framework_Error_Notice';
         }
 
-        else if ($errno == E_WARNING) {
+        else if ($errno == E_WARNING || $errno == E_USER_WARNING) {
             if (PHPUnit_Framework_Error_Warning::$enabled !== TRUE) {
                 return FALSE;
             }

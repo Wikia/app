@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,13 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Input/FilterI.php';
 
 /**
  * Simple utility filter iterator for php source files.
@@ -55,9 +53,9 @@ require_once 'PHP/Depend/Input/FilterI.php';
  * @package    PHP_Depend
  * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Input_Iterator extends FilterIterator
@@ -70,16 +68,29 @@ class PHP_Depend_Input_Iterator extends FilterIterator
     protected $filter = null;
 
     /**
+     * Optional root path for the files.
+     *
+     * @var string
+     * @since 0.10.0
+     */
+    protected $rootPath = null;
+
+    /**
      * Constructs a new file filter iterator.
      *
-     * @param Iterator                 $it     The inner iterator.
-     * @param PHP_Depend_Input_FilterI $filter The filter object.
+     * @param Iterator                 $iterator The inner iterator.
+     * @param PHP_Depend_Input_FilterI $filter   The filter object.
+     * @param string                   $rootPath Optional root path for the files.
      */
-    public function __construct(Iterator $it, PHP_Depend_Input_FilterI $filter)
-    {
-        parent::__construct($it);
+    public function __construct(
+        Iterator $iterator,
+        PHP_Depend_Input_FilterI $filter,
+        $rootPath = null
+    ) {
+        parent::__construct($iterator);
 
-        $this->filter = $filter;
+        $this->filter   = $filter;
+        $this->rootPath = $rootPath;
     }
 
     /**
@@ -89,6 +100,32 @@ class PHP_Depend_Input_Iterator extends FilterIterator
      */
     public function accept()
     {
-        return $this->filter->accept($this->getInnerIterator()->current());
+        return $this->filter->accept($this->getLocalPath(), $this->getFullPath());
+    }
+
+    /**
+     * Returns the full qualified realpath for the currently active file.
+     *
+     * @return string
+     * @since 0.10.0
+     */
+    protected function getFullPath()
+    {
+        return $this->getInnerIterator()->current()->getRealpath();
+    }
+
+    /**
+     * Returns the local path of the current file, if the root path property was
+     * set. If not, this method returns the absolute file path.
+     *
+     * @return string
+     * @since 0.10.0
+     */
+    protected function getLocalPath()
+    {
+        if ($this->rootPath && 0 === strpos($this->getFullPath(), $this->rootPath)) {
+            return substr($this->getFullPath(), strlen($this->rootPath));
+        }
+        return $this->getFullPath();
     }
 }

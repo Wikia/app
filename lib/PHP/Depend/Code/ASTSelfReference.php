@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,14 +40,12 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
 
 /**
  * This is a special reference container that is used whenever the keyword
@@ -57,13 +55,13 @@ require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-final class PHP_Depend_Code_ASTSelfReference
+class PHP_Depend_Code_ASTSelfReference
     extends PHP_Depend_Code_ASTClassOrInterfaceReference
 {
     /**
@@ -77,16 +75,74 @@ final class PHP_Depend_Code_ASTSelfReference
     const IMAGE = 'self';
 
     /**
+     * The source image for this node instance.
+     *
+     * @var string
+     * @since 0.10.0
+     */
+    protected $image = self::IMAGE;
+
+    /**
+     * The currently used builder context.
+     *
+     * @var PHP_Depend_Builder_Context
+     * @since 0.10.0
+     */
+    protected $context = null;
+
+    /**
+     * The full qualified class name, including the namespace or package name.
+     *
+     * @var string
+     * @since 0.10.0
+     */
+    protected $qualifiedName = null;
+
+    /**
      * Constructs a new type holder instance.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $type The type instance
+     * @param PHP_Depend_Builder_Context               $context The currently
+     *        used builder class or interface context.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $target  The type instance
      *        that reference the concrete target of self.
      */
     public function __construct(
-        PHP_Depend_Code_AbstractClassOrInterface $type
+        PHP_Depend_Builder_Context $context,
+        PHP_Depend_Code_AbstractClassOrInterface $target
     ) {
-        $this->image        = self::IMAGE;
-        $this->typeInstance = $type;
+        $this->context      = $context;
+        $this->typeInstance = $target;
+    }
+
+    /**
+     * Returns the class or interface instance that this node instance represents.
+     *
+     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @since 0.10.0
+     */
+    public function getType()
+    {
+        if ($this->typeInstance == null) {
+            $this->typeInstance = $this->context
+                ->getClassOrInterface($this->qualifiedName);
+        }
+        return $this->typeInstance;
+    }
+
+    /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
+    public function __sleep()
+    {
+        $this->qualifiedName = $this->getType()->getPackageName() . '\\' .
+                               $this->getType()->getName();
+
+        return array_merge(array('qualifiedName'), parent::__sleep());
     }
 
     /**

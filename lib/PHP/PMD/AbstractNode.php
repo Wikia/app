@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2009-2010, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2009-2011, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  * @category  PHP
  * @package   PHP_PMD
  * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2009-2010 Manuel Pichler. All rights reserved.
+ * @copyright 2009-2011 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://phpmd.org
@@ -55,9 +55,9 @@ require_once 'PHP/PMD/Node/Annotations.php';
  * @category  PHP
  * @package   PHP_PMD
  * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2009-2010 Manuel Pichler. All rights reserved.
+ * @copyright 2009-2011 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: 0.2.7
+ * @version   Release: 1.1.0
  * @link      http://phpmd.org
  */
 abstract class PHP_PMD_AbstractNode
@@ -291,13 +291,11 @@ abstract class PHP_PMD_AbstractNode
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
      *
-     * @param PHP_PMD_AbstractRule $rule The context rule instance.
+     * @param PHP_PMD_Rule $rule The context rule instance.
      *
      * @return boolean
      */
-    public abstract function hasSuppressWarningsAnnotationFor(
-        PHP_PMD_AbstractRule $rule
-    );
+    public abstract function hasSuppressWarningsAnnotationFor(PHP_PMD_Rule $rule);
 
     /**
      * Returns the name of the parent type or <b>null</b> when this node has no

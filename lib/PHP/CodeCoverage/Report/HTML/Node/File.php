@@ -2,7 +2,7 @@
 /**
  * PHP_CodeCoverage
  *
- * Copyright (c) 2009-2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2009-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@
  * @category   PHP
  * @package    CodeCoverage
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2009-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2009-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://github.com/sebastianbergmann/php-code-coverage
  * @since      File available since Release 1.0.0
@@ -55,9 +55,9 @@ require_once 'PHP/Token/Stream/CachingFactory.php';
  * @category   PHP
  * @package    CodeCoverage
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2009-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2009-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 1.0.0
+ * @version    Release: 1.0.4
  * @link       http://github.com/sebastianbergmann/php-code-coverage
  * @since      Class available since Release 1.0.0
  */
@@ -106,22 +106,22 @@ class PHP_CodeCoverage_Report_HTML_Node_File extends PHP_CodeCoverage_Report_HTM
     /**
      * @var integer
      */
-    protected $numClasses = 0;
-
-    /**
-     * @var integer
-     */
     protected $numTestedClasses = 0;
 
     /**
      * @var integer
      */
-    protected $numMethods = 0;
+    protected $numClasses = NULL;
 
     /**
      * @var integer
      */
-    protected $numTestedMethods = 0;
+    protected $numMethods = NULL;
+
+    /**
+     * @var integer
+     */
+    protected $numTestedMethods = NULL;
 
     /**
      * @var string
@@ -208,6 +208,14 @@ class PHP_CodeCoverage_Report_HTML_Node_File extends PHP_CodeCoverage_Report_HTM
      */
     public function getNumClasses()
     {
+        if ($this->numClasses === NULL) {
+            $this->numClasses = count($this->classes);
+
+            if (isset($this->classes['*'])) {
+                $this->numClasses--;
+            }
+        }
+
         return $this->numClasses;
     }
 
@@ -228,6 +236,18 @@ class PHP_CodeCoverage_Report_HTML_Node_File extends PHP_CodeCoverage_Report_HTM
      */
     public function getNumMethods()
     {
+        if ($this->numMethods === NULL) {
+            $this->numMethods = 0;
+
+            foreach ($this->classes as $class) {
+                foreach ($class['methods'] as $method) {
+                    if ($method['executableLines'] > 0) {
+                        $this->numMethods++;
+                    }
+                }
+            }
+        }
+
         return $this->numMethods;
     }
 
@@ -238,6 +258,19 @@ class PHP_CodeCoverage_Report_HTML_Node_File extends PHP_CodeCoverage_Report_HTM
      */
     public function getNumTestedMethods()
     {
+        if ($this->numTestedMethods === NULL) {
+            $this->numTestedMethods = 0;
+
+            foreach ($this->classes as $class) {
+                foreach ($class['methods'] as $method) {
+                    if ($method['executableLines'] > 0 &&
+                        $method['coverage'] == 100) {
+                        $this->numTestedMethods++;
+                    }
+                }
+            }
+        }
+
         return $this->numTestedMethods;
     }
 
@@ -399,12 +432,16 @@ class PHP_CodeCoverage_Report_HTML_Node_File extends PHP_CodeCoverage_Report_HTM
                 $testedClassesPercent = 0;
             }
 
+            $numMethods       = 0;
             $numTestedMethods = 0;
-            $numMethods       = count($classData['methods']);
 
             foreach ($classData['methods'] as $method) {
-                if ($method['executedLines'] == $method['executableLines']) {
-                    $numTestedMethods++;
+                if ($method['executableLines'] > 0) {
+                    $numMethods++;
+
+                    if ($method['executedLines'] == $method['executableLines']) {
+                        $numTestedMethods++;
+                    }
                 }
             }
 
@@ -439,50 +476,51 @@ class PHP_CodeCoverage_Report_HTML_Node_File extends PHP_CodeCoverage_Report_HTM
             );
 
             foreach ($classData['methods'] as $methodData) {
-                if ($methodData['executedLines'] ==
-                    $methodData['executableLines']) {
-                    $numTestedMethods     = 1;
-                    $testedMethodsPercent = 100;
-                } else {
-                    $numTestedMethods     = 0;
-                    $testedMethodsPercent = 0;
+                if ($methodData['executableLines'] > 0) {
+                    if ($methodData['executedLines'] == $methodData['executableLines']) {
+                        $numTestedMethods     = 1;
+                        $testedMethodsPercent = 100;
+                    } else {
+                        $numTestedMethods     = 0;
+                        $testedMethodsPercent = 0;
+                    }
+
+                    $items .= $this->doRenderItem(
+                      array(
+                        'name'                 => sprintf(
+                          '&nbsp;<a href="#%d">%s</a>',
+
+                          $methodData['startLine'],
+                          htmlspecialchars($methodData['signature'])
+                        ),
+                        'numClasses'           => '',
+                        'numTestedClasses'     => '',
+                        'testedClassesPercent' => '',
+                        'numMethods'           => 1,
+                        'numTestedMethods'     => $numTestedMethods,
+                        'testedMethodsPercent' => sprintf(
+                                                    '%01.2f', $testedMethodsPercent
+                                                  ),
+                        'numExecutableLines'   => $methodData['executableLines'],
+                        'numExecutedLines'     => $methodData['executedLines'],
+                        'executedLinesPercent' => PHP_CodeCoverage_Util::percent(
+                          $methodData['executedLines'],
+                          $methodData['executableLines'],
+                          TRUE
+                        ),
+                        'crap'                 => PHP_CodeCoverage_Util::crap(
+                                                    $methodData['ccn'],
+                                                    PHP_CodeCoverage_Util::percent(
+                                                      $methodData['executedLines'],
+                                                      $methodData['executableLines']
+                                                    )
+                                                  )
+                      ),
+                      $lowUpperBound,
+                      $highLowerBound,
+                      'method_item.html'
+                    );
                 }
-
-                $items .= $this->doRenderItem(
-                  array(
-                    'name'                 => sprintf(
-                      '&nbsp;<a href="#%d">%s</a>',
-
-                      $methodData['startLine'],
-                      htmlspecialchars($methodData['signature'])
-                    ),
-                    'numClasses'           => '',
-                    'numTestedClasses'     => '',
-                    'testedClassesPercent' => '',
-                    'numMethods'           => 1,
-                    'numTestedMethods'     => $numTestedMethods,
-                    'testedMethodsPercent' => sprintf(
-                                                '%01.2f', $testedMethodsPercent
-                                              ),
-                    'numExecutableLines'   => $methodData['executableLines'],
-                    'numExecutedLines'     => $methodData['executedLines'],
-                    'executedLinesPercent' => PHP_CodeCoverage_Util::percent(
-                      $methodData['executedLines'],
-                      $methodData['executableLines'],
-                      TRUE
-                    ),
-                    'crap'                 => PHP_CodeCoverage_Util::crap(
-                                                $methodData['ccn'],
-                                                PHP_CodeCoverage_Util::percent(
-                                                  $methodData['executedLines'],
-                                                  $methodData['executableLines']
-                                                )
-                                              )
-                  ),
-                  $lowUpperBound,
-                  $highLowerBound,
-                  'method_item.html'
-                );
             }
         }
 
@@ -593,10 +631,6 @@ class PHP_CodeCoverage_Report_HTML_Node_File extends PHP_CodeCoverage_Report_HTM
                                            $method['executableLines']) * 100;
                 } else {
                     $method['coverage'] = 100;
-                }
-
-                if ($method['coverage'] == 100) {
-                    $this->numTestedMethods++;
                 }
 
                 $method['crap'] = PHP_CodeCoverage_Util::crap(
@@ -812,9 +846,10 @@ class PHP_CodeCoverage_Report_HTML_Node_File extends PHP_CodeCoverage_Report_HTM
 
     protected function processClasses()
     {
+        $file    = $this->getId() . '.html#';
         $tokens  = PHP_Token_Stream_CachingFactory::get($this->getPath());
         $classes = $tokens->getClasses();
-        $file    = $this->getId() . '.html#';
+        unset($tokens);
 
         foreach ($classes as $className => $class) {
             $this->classes[$className] = array(
@@ -845,11 +880,7 @@ class PHP_CodeCoverage_Report_HTML_Node_File extends PHP_CodeCoverage_Report_HTM
 
                 $this->startLines[$method['startLine']] = &$this->classes[$className]['methods'][$methodName];
                 $this->endLines[$method['endLine']]     = &$this->classes[$className]['methods'][$methodName];
-
-                $this->numMethods++;
             }
-
-            $this->numClasses++;
         }
     }
 
@@ -857,6 +888,7 @@ class PHP_CodeCoverage_Report_HTML_Node_File extends PHP_CodeCoverage_Report_HTM
     {
         $tokens    = PHP_Token_Stream_CachingFactory::get($this->getPath());
         $functions = $tokens->getFunctions();
+        unset($tokens);
 
         if (count($functions) > 0 && !isset($this->classes['*'])) {
             $this->classes['*'] = array(
@@ -879,8 +911,6 @@ class PHP_CodeCoverage_Report_HTML_Node_File extends PHP_CodeCoverage_Report_HTM
 
             $this->startLines[$function['startLine']] = &$this->classes['*']['methods'][$functionName];
             $this->endLines[$function['endLine']]     = &$this->classes['*']['methods'][$functionName];
-
-            $this->numMethods++;
         }
     }
 }

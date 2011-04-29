@@ -29,7 +29,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @package  PHP_CodeSniffer
  * @author   Leif Wickland <lwickland@rightnow.com>
  * @license  http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version  Release: 1.3.0RC1
+ * @version  Release: 1.3.0
  * @link     http://pear.php.net/package/PHP_CodeSniffer
  */
 class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff

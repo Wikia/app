@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  * @category  PHP
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2011 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://www.pdepend.org/
@@ -51,9 +51,9 @@
  * @category  PHP
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2011 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: 0.9.19
+ * @version   Release: 0.10.3
  * @link      http://www.pdepend.org/
  */
 interface PHP_Depend_ConstantsI
@@ -844,6 +844,36 @@ interface PHP_Depend_ConstantsI
     const T_GOTO = 147;
 
     /**
+     * Alternative end token for an if-statement.
+     */
+    const T_ENDIF = 148;
+
+    /**
+     * Alternative end token for a for-statement.
+     */
+    const T_ENDFOR = 149;
+
+    /**
+     * Alternative end token for a foreach-statement.
+     */
+    const T_ENDFOREACH = 150;
+
+    /**
+     * Alternative end token for a switch-statement.
+     */
+    const T_ENDSWITCH = 151;
+
+    /**
+     * Alternative end token for a while-statement.
+     */
+    const T_ENDWHILE = 152;
+
+    /**
+     * Alternative end token for a declare-statement.
+     */
+    const T_ENDDECLARE = 153;
+
+    /**
      * Marks any content not between php tags.
      */
     const T_NO_PHP = 255;
@@ -858,4 +888,3 @@ interface PHP_Depend_ConstantsI
      */
     const PACKAGE_SEPARATOR = '\\';
 }
-?>

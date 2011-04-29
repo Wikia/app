@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,18 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Code/ASTFieldDeclaration.php';
-require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-
-require_once 'PHP/Depend/Code/AbstractClassOrInterface.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
 
 /**
  * Represents a php class node.
@@ -60,13 +53,20 @@ require_once 'PHP/Depend/Code/NodeIterator.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
 {
+    /**
+     * The type of this class.
+     *
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+
     /**
      * List of associated properties.
      *
@@ -79,7 +79,15 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      *
      * @var integer $_modifiers
      */
-    private $_modifiers = 0;
+    protected $modifiers = 0;
+
+    /**
+     * Name of the owning package. This property is used while we serialize and
+     * unserialize the object tree.
+     *
+     * @var string
+     */
+    protected $packageName = null;
 
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
@@ -88,7 +96,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function isAbstract()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT)
                                  === PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT);
     }
 
@@ -99,7 +107,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function isFinal()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_FINAL)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_FINAL)
                                  === PHP_Depend_ConstantsI::IS_FINAL);
     }
 
@@ -117,11 +125,6 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
                 PHP_Depend_Code_ASTFieldDeclaration::CLAZZ
             );
             foreach ($declarations as $declaration) {
-
-                $classOrInterfaceReference = $declaration->getFirstChildOfType(
-                    PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
-                );
-
                 $declarators = $declaration->findChildrenOfType(
                     PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
                 );
@@ -176,7 +179,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getModifiers()
     {
-        return $this->_modifiers;
+        return $this->modifiers;
     }
 
     /**
@@ -195,7 +198,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function setModifiers($modifiers)
     {
-        if ($this->_modifiers !== 0) {
+        if ($this->modifiers !== 0) {
             throw new BadMethodCallException(
                 'Cannot overwrite previously set class modifiers.'
             );
@@ -209,7 +212,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
             throw new InvalidArgumentException('Invalid class modifier given.');
         }
 
-        $this->_modifiers = $modifiers;
+        $this->modifiers = $modifiers;
     }
 
     /**
@@ -222,6 +225,22 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
     public function accept(PHP_Depend_VisitorI $visitor)
     {
         $visitor->visitClass($this);
+    }
+
+    /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method will register this object in the the global class
+     * context.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    public function  __wakeup()
+    {
+        parent::__wakeup();
+
+        $this->context->registerClass($this);
     }
 
     /**
@@ -251,34 +270,4 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
         $this->getProperties()->free();
         $this->_properties = array();
     }
-
-    // DEPRECATED METHODS
-    // @codeCoverageIgnoreStart
-
-    /**
-     * Adds a new property to this class instance.
-     *
-     * @param PHP_Depend_Code_Property $property The new class property.
-     *
-     * @return PHP_Depend_Code_Property
-     * @deprecated Since version 0.9.6, use addNode() instead.
-     */
-    public function addProperty(PHP_Depend_Code_Property $property)
-    {
-        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
-
-        if ($this->_properties === null) {
-            $this->_properties = array();
-        }
-
-        if (in_array($property, $this->_properties, true) === false) {
-            // Add to internal list
-            $this->_properties[] = $property;
-            // Set this as parent
-            $property->setDeclaringClass($this);
-        }
-        return $property;
-    }
-    
-    // @codeCoverageIgnoreEnd
 }

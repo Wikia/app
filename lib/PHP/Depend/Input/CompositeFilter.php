@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,13 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Input/FilterI.php';
 
 /**
  * Simple composite pattern implementation that allows to bundle multiple
@@ -56,9 +54,9 @@ require_once 'PHP/Depend/Input/FilterI.php';
  * @package    PHP_Depend
  * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Input_CompositeFilter implements PHP_Depend_Input_FilterI
@@ -83,19 +81,18 @@ class PHP_Depend_Input_CompositeFilter implements PHP_Depend_Input_FilterI
     }
 
     /**
-     * Delegates the given <b>$fileInfo</b> object to all aggregated filters.
+     * Delegates the given <b>$localPath</b> object to all aggregated filters.
+     * Returns <b>true</b> if this filter accepts the given path.
      *
-     * If one of these filters fail, this method will return <b>false</b> otherwise
-     * the return value is <b>true</b>
-     *
-     * @param SplFileInfo $fileInfo The context file object.
+     * @param string $relative The relative path to the specified root.
+     * @param string $absolute The absolute path to a source file.
      *
      * @return boolean
      */
-    public function accept(SplFileInfo $fileInfo)
+    public function accept($relative, $absolute)
     {
         foreach ($this->filters as $filter) {
-            if (!$filter->accept($fileInfo)) {
+            if (false === $filter->accept($relative, $absolute)) {
                 return false;
             }
         }

@@ -10,7 +10,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: JS.php 300023 2010-06-01 03:48:22Z squiz $
+ * @version   CVS: $Id: JS.php 305283 2010-11-11 23:22:14Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -22,7 +22,7 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PHP_CodeSniffer_Tokenizers_JS
@@ -165,6 +165,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                               'false'     => 'T_FALSE',
                               'null'      => 'T_NULL',
                               'this'      => 'T_THIS',
+                              'typeof'    => 'T_TYPEOF',
                               '('         => 'T_OPEN_PARENTHESIS',
                               ')'         => 'T_CLOSE_PARENTHESIS',
                               '{'         => 'T_OPEN_CURLY_BRACKET',
@@ -441,6 +442,7 @@ class PHP_CodeSniffer_Tokenizers_JS
             // the end of a string, like FOR and this.FORmat.
             if (in_array(strtolower($buffer), $tokenTypes) === true
                 && (preg_match('|[a-zA-z0-9_]|', $char) === 0
+                || isset($chars[($i + 1)]) === false
                 || preg_match('|[a-zA-z0-9_]|', $chars[($i + 1)]) === 0)
             ) {
                 $matchedToken    = false;
@@ -832,6 +834,8 @@ class PHP_CodeSniffer_Tokenizers_JS
                          T_BITWISE_OR,
                          T_BITWISE_AND,
                          T_COMMA,
+                         T_COLON,
+                         T_TYPEOF,
                         );
 
         $afterTokens = array(
@@ -840,6 +844,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                          ';',
                          ' ',
                          '.',
+                         $eolChar,
                         );
 
         // Find the last non-whitespace token that was added
@@ -873,8 +878,8 @@ class PHP_CodeSniffer_Tokenizers_JS
                     break;
                 }
             } else {
-                $possiblEolChar = substr($string, $next, strlen($eolChar));
-                if ($possiblEolChar === $eolChar) {
+                $possibleEolChar = substr($string, $next, strlen($eolChar));
+                if ($possibleEolChar === $eolChar) {
                     // This is the last token on the line and regular
                     // expressions need to be defined on a single line,
                     // so this is not a regular expression.
@@ -884,6 +889,10 @@ class PHP_CodeSniffer_Tokenizers_JS
         }
 
         if ($chars[$next] !== '/') {
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo "\t* could not find end of regular expression *".PHP_EOL;
+            }
+
             return null;
         }
 
@@ -895,13 +904,16 @@ class PHP_CodeSniffer_Tokenizers_JS
         }
 
         $regexEnd = $next;
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t* found end of regular expression at token $regexEnd *".PHP_EOL;
+        }
 
         for ($next = ($next + 1); $next < $numChars; $next++) {
             if ($chars[$next] !== ' ') {
                 break;
             } else {
-                $possiblEolChar = substr($string, $next, strlen($eolChar));
-                if ($possiblEolChar === $eolChar) {
+                $possibleEolChar = substr($string, $next, strlen($eolChar));
+                if ($possibleEolChar === $eolChar) {
                     // This is the last token on the line.
                     break;
                 }
@@ -909,6 +921,10 @@ class PHP_CodeSniffer_Tokenizers_JS
         }
 
         if (in_array($chars[$next], $afterTokens) === false) {
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo "\t* tokens after regular expression do not look correct *".PHP_EOL;
+            }
+
             return null;
         }
 

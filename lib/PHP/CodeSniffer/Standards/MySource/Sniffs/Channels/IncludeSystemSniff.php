@@ -9,7 +9,7 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: IncludeSystemSniff.php 302095 2010-08-11 04:42:36Z squiz $
+ * @version   CVS: $Id: IncludeSystemSniff.php 304170 2010-10-06 23:16:19Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -26,7 +26,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
@@ -106,8 +106,8 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
             $includedClasses[] = $matches[2];
 
             // Or a system it implements.
-            $class      = $phpcsFile->findPrevious(T_CLASS, $stackPtr);
-            $implements = $phpcsFile->findNext(T_IMPLEMENTS, $class);
+            $class      = $phpcsFile->getCondition($stackPtr, T_CLASS);
+            $implements = $phpcsFile->findNext(T_IMPLEMENTS, $class, ($class + 10));
             if ($implements !== false) {
                 $implementsClass     = $phpcsFile->findNext(T_STRING, $implements);
                 $implementsClassName = strtolower($tokens[$implementsClass]['content']);

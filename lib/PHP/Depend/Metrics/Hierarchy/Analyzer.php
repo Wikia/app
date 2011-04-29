@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,17 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/FilterAwareI.php';
-require_once 'PHP/Depend/Metrics/NodeAwareI.php';
-require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
  * This analyzer calculates class/package hierarchy metrics.
@@ -58,6 +52,9 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * This analyzer expects that a node list filter is set, before it starts the
  * analyze process. This filter will suppress PHP internal and external library
  * stuff.
+ * 
+ * This analyzer is based on the following metric set:
+ * - http://www.aivosto.com/project/help/pm-oo-misc.html
  *
  * This analyzer is based on the following metric set:
  * - http://www.aivosto.com/project/help/pm-oo-misc.html
@@ -66,9 +63,9 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_Hierarchy_Analyzer
@@ -327,10 +324,6 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
-        if (!$package->isUserDefined()) {
-            //return;
-        }
-
         $this->fireStartPackage($package);
 
         foreach ($package->getTypes() as $type) {

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,23 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Builder
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/BuilderI.php';
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
-require_once 'PHP/Depend/Code/Function.php';
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Code/Parameter.php';
-require_once 'PHP/Depend/Code/Property.php';
-require_once 'PHP/Depend/Util/Log.php';
-require_once 'PHP/Depend/Util/Type.php';
 
 /**
  * Default code tree builder implementation.
@@ -65,13 +53,29 @@ require_once 'PHP/Depend/Util/Type.php';
  * @package    PHP_Depend
  * @subpackage Builder
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 {
+    /**
+     * The internal used cache instance.
+     *
+     * @var PHP_Depend_Util_Cache_Driver
+     * @since 0.10.0
+     */
+    protected $cache = null;
+
+    /**
+     * The ast builder context.
+     *
+     * @var PHP_Depend_Builder_Context
+     * @since 0.10.0
+     */
+    protected $context = null;
+
     /**
      * This property holds all packages found during the parsing phase.
      *
@@ -153,6 +157,22 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->defaultFile    = new PHP_Depend_Code_File(null);
 
         $this->_packages[self::DEFAULT_PACKAGE] = $this->defaultPackage;
+
+        $this->context = new PHP_Depend_Builder_Context_GlobalStatic($this);
+    }
+
+    /**
+     * Setter method for the currently used token cache.
+     *
+     * @param PHP_Depend_Util_Cache_Driver $cache Used token cache instance.
+     *
+     * @return PHP_Depend_Builder_Default
+     * @since 0.10.0
+     */
+    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
+    {
+        $this->cache = $cache;
+        return $this;
     }
 
     /**
@@ -167,8 +187,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->checkBuilderState();
 
-        include_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-
         // Debug method creation
         PHP_Depend_Util_Log::debug(
             'Creating: PHP_Depend_Code_ASTClassOrInterfaceReference(' .
@@ -177,7 +195,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         );
 
         return new PHP_Depend_Code_ASTClassOrInterfaceReference(
-            $this,
+            $this->context,
             $qualifiedName
         );
     }
@@ -238,13 +256,10 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->checkBuilderState();
         
-        $className   = $this->extractTypeName($name);
-        $packageName = $this->extractPackageName($name);
-
-        $class = new PHP_Depend_Code_Class($className);
-        $class->setSourceFile($this->defaultFile);
-
-        $this->storeClass($className, $packageName, $class);
+        $class = new PHP_Depend_Code_Class($this->extractTypeName($name));
+        $class->setCache($this->cache)
+            ->setContext($this->context)
+            ->setSourceFile($this->defaultFile);
 
         return $class;
     }
@@ -279,15 +294,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildASTClassReference($qualifiedName)
     {
         $this->checkBuilderState();
-        
-        include_once 'PHP/Depend/Code/ASTClassReference.php';
 
         // Debug method creation
         PHP_Depend_Util_Log::debug(
             'Creating: PHP_Depend_Code_ASTClassReference(' . $qualifiedName . ')'
         );
 
-        return new PHP_Depend_Code_ASTClassReference($this, $qualifiedName);
+        return new PHP_Depend_Code_ASTClassReference($this->context, $qualifiedName);
     }
 
     /**
@@ -299,14 +312,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->checkBuilderState();
 
-        include_once 'PHP/Depend/Code/Closure.php';
-
         // Debug type constant creation
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_Closure()'
-        );
+        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_Closure()');
 
-        return new PHP_Depend_Code_Closure();
+        $closure = new PHP_Depend_Code_Closure();
+        $closure->setCache($this->cache);
+
+        return $closure;
     }
 
     /**
@@ -347,13 +359,10 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->checkBuilderState();
         
-        $interfaceName = $this->extractTypeName($name);
-        $packageName   = $this->extractPackageName($name);
-
-        $interface = new PHP_Depend_Code_Interface($interfaceName);
-        $interface->setSourceFile($this->defaultFile);
-
-        $this->storeInterface($interfaceName, $packageName, $interface);
+        $interface = new PHP_Depend_Code_Interface($this->extractTypeName($name));
+        $interface->setCache($this->cache)
+            ->setContext($this->context)
+            ->setSourceFile($this->defaultFile);
 
         return $interface;
     }
@@ -376,28 +385,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         }
         return $interface;
     }
-    
-    /**
-     * Builds a new code type reference instance.
-     *
-     * @param string $qualifiedName The qualified name of the referenced type.
-     *
-     * @return PHP_Depend_Code_ASTInterfaceReference
-     * @since 0.9.5
-     */
-    public function buildInterfaceReference($qualifiedName)
-    {
-        $this->checkBuilderState();
-
-        include_once 'PHP/Depend/Code/ASTInterfaceReference.php';
-
-        // Debug method creation
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ASTInterfaceReference(' . $qualifiedName . ')'
-        );
-
-        return new PHP_Depend_Code_ASTInterfaceReference($this, $qualifiedName);
-    }
 
     /**
      * Builds a new method instance.
@@ -411,12 +398,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->checkBuilderState();
 
         // Debug method creation
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_Method(' . $name . ')'
-        );
+        PHP_Depend_Util_Log::debug("Creating: PHP_Depend_Code_Method({$name})");
 
         // Create a new method instance
-        return new PHP_Depend_Code_Method($name);
+        $method = new PHP_Depend_Code_Method($name);
+        $method->setCache($this->cache);
+
+        return $method;
     }
 
     /**
@@ -451,13 +439,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->checkBuilderState();
 
         // Debug function creation
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_Function(' . $name . ')'
-        );
+        PHP_Depend_Util_Log::debug("Creating: PHP_Depend_Code_Function({$name})");
 
         // Create new function
         $function = new PHP_Depend_Code_Function($name);
-        $function->setSourceFile($this->defaultFile);
+        $function->setCache($this->cache)
+            ->setContext($this->context)
+            ->setSourceFile($this->defaultFile);
  
         return $function;
     }
@@ -474,13 +462,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildASTSelfReference(
         PHP_Depend_Code_AbstractClassOrInterface $type
     ) {
-        include_once 'PHP/Depend/Code/ASTSelfReference.php';
-
         PHP_Depend_Util_Log::debug(
             'Creating: PHP_Depend_Code_ASTSelfReference(' . $type->getName() . ')'
         );
 
-        return new PHP_Depend_Code_ASTSelfReference($type);
+        return new PHP_Depend_Code_ASTSelfReference($this->context, $type);
     }
 
     /**
@@ -516,13 +502,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildASTStaticReference(
         PHP_Depend_Code_AbstractClassOrInterface $owner
     ) {
-        include_once 'PHP/Depend/Code/ASTStaticReference.php';
+        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTStaticReference()');
 
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ASTStaticReference()'
-        );
-
-        return new PHP_Depend_Code_ASTStaticReference($owner);
+        return new PHP_Depend_Code_ASTStaticReference($this->context, $owner);
     }
 
     /**
@@ -936,7 +918,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTGlobalStatement
      * @since 0.9.12
      */
-    function buildASTGlobalStatement()
+    public function buildASTGlobalStatement()
     {
         return $this->_buildASTNodeInstance('ASTGlobalStatement');
     }
@@ -1075,6 +1057,35 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildASTDoWhileStatement($image)
     {
         return $this->_buildASTNodeInstance('ASTDoWhileStatement', $image);
+    }
+
+    /**
+     * Builds a new declare-statement node.
+     *
+     * <code>
+     * -------------------------------
+     * declare(encoding='ISO-8859-1');
+     * -------------------------------
+     *
+     * -------------------
+     * declare(ticks=42) {
+     *     // ...
+     * }
+     * -
+     *
+     * ------------------
+     * declare(ticks=42):
+     *     // ...
+     * enddeclare;
+     * -----------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTDeclareStatement
+     * @since 0.10.0
+     */
+    public function buildASTDeclareStatement()
+    {
+        return $this->_buildASTNodeInstance('ASTDeclareStatement');
     }
 
     /**
@@ -1660,10 +1671,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->_internal = true;
 
-        $package = $this->buildPackage($this->extractPackageName($qualifiedName));
-        return $package->addType(
-            $this->buildInterface($qualifiedName)
+        $interface = $this->buildInterface($qualifiedName);
+        $interface->setPackage(
+            $this->buildPackage($this->extractPackageName($qualifiedName))
         );
+
+        $this->restoreInterface($interface);
+
+        return $interface;
     }
 
     /**
@@ -1727,10 +1742,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->_internal = true;
 
-        $package = $this->buildPackage($this->extractPackageName($qualifiedName));
-        return $package->addType(
-            $this->buildClass($qualifiedName)
+        $class = $this->buildClass($qualifiedName);
+        $class->setPackage(
+            $this->buildPackage($this->extractPackageName($qualifiedName))
         );
+
+        $this->restoreClass($class);
+
+        return $class;
     }
 
     /**
@@ -1810,8 +1829,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         $this->_frozenClasses    = $this->_copyTypesWithPackage($this->_classes);
         $this->_frozenInterfaces = $this->_copyTypesWithPackage($this->_interfaces);
-        //$this->_frozenClasses    = $this->_classes;
-        //$this->_frozenInterfaces = $this->_interfaces;
 
         $this->_classes    = array();
         $this->_interfaces = array();
@@ -1842,6 +1859,54 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Restores a function within the internal type scope.
+     *
+     * @param PHP_Depend_Code_Function $function A function instance.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    public function restoreFunction(PHP_Depend_Code_Function $function)
+    {
+        $this->buildPackage($function->getPackageName())
+            ->addFunction($function);
+    }
+
+    /**
+     * Restores a class within the internal type scope.
+     *
+     * @param PHP_Depend_Code_Class $class A class instance.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    public function restoreClass(PHP_Depend_Code_Class $class)
+    {
+        $this->storeClass(
+            $class->getName(),
+            $class->getPackageName(),
+            $class
+        );
+    }
+
+    /**
+     * Restores an interface within the internal type scope.
+     *
+     * @param PHP_Depend_Code_Interface $interface An interface instance.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    public function restoreInterface(PHP_Depend_Code_Interface $interface)
+    {
+        $this->storeInterface(
+            $interface->getName(),
+            $interface->getPackageName(),
+            $interface
+        );
+    }
+
+    /**
      * This method will persist a class instance for later reuse.
      *
      * @param string                $className   The local class name.
@@ -1854,11 +1919,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     protected function storeClass(
         $className, $packageName, PHP_Depend_Code_Class $class
     ) {
-        $caseInsensitiveName = strtolower($className);
-        if (!isset($this->_classes[$caseInsensitiveName][$packageName])) {
-            $this->_classes[$caseInsensitiveName][$packageName] = array();
+        $className = strtolower($className);
+        if (!isset($this->_classes[$className][$packageName])) {
+            $this->_classes[$className][$packageName] = array();
         }
-        $this->_classes[$caseInsensitiveName][$packageName][] = $class;
+        $this->_classes[$className][$packageName][$class->getUUID()] = $class;
+
+        $package = $this->buildPackage($packageName);
+        $package->addType($class);
     }
 
     /**
@@ -1874,11 +1942,15 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     protected function storeInterface(
         $interfaceName, $packageName, PHP_Depend_Code_Interface $interface
     ) {
-        $caseInsensitiveName = strtolower($interfaceName);
-        if (!isset($this->_interfaces[$caseInsensitiveName][$packageName])) {
-            $this->_interfaces[$caseInsensitiveName][$packageName] = array();
+        $interfaceName = strtolower($interfaceName);
+        if (!isset($this->_interfaces[$interfaceName][$packageName])) {
+            $this->_interfaces[$interfaceName][$packageName] = array();
         }
-        $this->_interfaces[$caseInsensitiveName][$packageName][] = $interface;
+        $this->_interfaces[$interfaceName][$packageName][$interface->getUUID()]
+            = $interface;
+
+        $package = $this->buildPackage($packageName);
+        $package->addType($interface);
     }
 
     /**

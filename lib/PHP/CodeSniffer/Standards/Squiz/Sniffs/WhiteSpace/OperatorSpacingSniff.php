@@ -10,7 +10,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: OperatorSpacingSniff.php 301632 2010-07-28 01:57:56Z squiz $
+ * @version   CVS: $Id: OperatorSpacingSniff.php 304170 2010-10-06 23:16:19Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -25,7 +25,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sniff
@@ -76,7 +76,8 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             || $tokens[$stackPtr]['code'] === T_MINUS
         ) {
             if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-                $bracket = end($tokens[$stackPtr]['nested_parenthesis']);
+                $parenthesis = array_keys($tokens[$stackPtr]['nested_parenthesis']);
+                $bracket     = array_pop($parenthesis);
                 if (isset($tokens[$bracket]['parenthesis_owner']) === true) {
                     $function = $tokens[$bracket]['parenthesis_owner'];
                     if ($tokens[$function]['code'] === T_FUNCTION) {
