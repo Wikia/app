@@ -14,7 +14,7 @@ class FogbugzService extends Service {
 	protected $HTTPProxy = null;
 
 	public function __construct( $url, $login = '', $passwd = '', $HTTPProxy = null ) {
-		$this->setCurl( WF::build( 'Curl', array( 'url' => $url ) ) );
+		$this->setCurl( F::build( 'Curl', array( 'url' => $url ) ) );
 		$this->setLogin( $login );
 		$this->setPasswd( $passwd );
 		$this->setHTTPProxy( $HTTPProxy );
