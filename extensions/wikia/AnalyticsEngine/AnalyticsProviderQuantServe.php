@@ -14,7 +14,9 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 			$called = true;
 		}
 
-		return  '<script type="text/javascript" src="' . $wgProto . '://edge.quantserve.com/quant.js"></script>' . "\n" .
+		$hostPrefix = ($wgProto == 'https') ? 'https://secure' : 'http://edge';
+
+		return  '<script type="text/javascript" src="' . $hostPrefix . '.quantserve.com/quant.js"></script>' . "\n" .
 			"<script type=\"text/javascript\">/*<![CDATA[*/
 			try {
 				_qoptions = { qacct: '{$this->account}' };
