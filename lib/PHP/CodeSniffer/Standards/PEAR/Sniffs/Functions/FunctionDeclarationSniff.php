@@ -9,7 +9,7 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: FunctionDeclarationSniff.php 301632 2010-07-28 01:57:56Z squiz $
+ * @version   CVS: $Id: FunctionDeclarationSniff.php 308840 2011-03-02 05:32:18Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -23,7 +23,7 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_Sniff
@@ -151,6 +151,13 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
                 }
 
                 $lastLine = $tokens[$i]['line'];
+            }//end if
+
+            if ($tokens[$i]['code'] === T_ARRAY) {
+                // Skip arrays as they have their own indentation rules.
+                $i        = $tokens[$i]['parenthesis_closer'];
+                $lastLine = $tokens[$i]['line'];
+                continue;
             }
         }//end for
 

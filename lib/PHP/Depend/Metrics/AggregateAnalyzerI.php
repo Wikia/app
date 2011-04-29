@@ -4,7 +4,7 @@
  * 
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,13 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 
 /**
  * This analyzer interface provides a specialized form that allows an analyzer
@@ -56,9 +54,9 @@ require_once 'PHP/Depend/Metrics/AnalyzerI.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 interface PHP_Depend_Metrics_AggregateAnalyzerI extends PHP_Depend_Metrics_AnalyzerI

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,17 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Code/ASTArrayType.php';
-require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-
-require_once 'PHP/Depend/Code/NodeI.php';
 
 /**
  * An instance of this class represents a function or method parameter within
@@ -72,15 +66,22 @@ require_once 'PHP/Depend/Code/NodeI.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Code_Parameter
        extends ReflectionParameter
     implements PHP_Depend_Code_NodeI
 {
+    /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+
     /**
      * The unique identifier for this function.
      *
@@ -383,44 +384,6 @@ class PHP_Depend_Code_Parameter
     }
 
     /**
-     * This method can be called by the PHP_Depend runtime environment or a
-     * utilizing component to free up memory. This methods are required for
-     * PHP version < 5.3 where cyclic references can not be resolved
-     * automatically by PHP's garbage collector.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    public function free()
-    {
-        $this->_removeReferenceToDeclaringFunction();
-        $this->_removeReferencesToNodes();
-    }
-
-    /**
-     * Removes the reference to the declaring function of this parameter instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferenceToDeclaringFunction()
-    {
-        $this->_declaringFunction = null;
-    }
-
-    /**
-     * Removes all references to ast nodes associated with parameter instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferencesToNodes()
-    {
-        $this->_formalParameter    = null;
-        $this->_variableDeclarator = null;
-    }
-
-    /**
      * This method returns a string representation of this parameter.
      *
      * @return string
@@ -485,68 +448,21 @@ class PHP_Depend_Code_Parameter
         }
         return parent::export($function, $parameter, $return);
     }
-
-    // Deprecated methods
+    
     // @codeCoverageIgnoreStart
 
     /**
-     * Returns a value holder for the class or interface type declared for this
-     * parameter or <b>null</b> when no parameter type hint was declared.
-     *
-     * @return PHP_Depend_Code_ASTClassOrInterfaceReference
-     * @since 0.9.5
-     * @deprecated since 0.9.12
-     */
-    public function getClassReference()
-    {
-        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.12.' . PHP_EOL);
-        return $this->_formalParameter->getFirstChildOfType(
-            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
-        );
-    }
-
-    /**
-     * The line number where the item declaration starts.
-     *
-     * @var integer $_startLine
-     * @deprecated since 0.9.6
-     */
-    private $_startLine = 0;
-
-    /**
-     * The line number where the item declaration ends.
-     *
-     * @var integer $_endLine
-     * @deprecated since 0.9.6
-     */
-    private $_endLine = 0;
-
-    /**
-     * Sets the start line for this item.
-     *
-     * @param integer $startLine The start line for this item.
+     * This method can be called by the PHP_Depend runtime environment or a
+     * utilizing component to free up memory. This methods are required for
+     * PHP version < 5.3 where cyclic references can not be resolved
+     * automatically by PHP's garbage collector.
      *
      * @return void
-     * @deprecated since 0.9.6
+     * @since 0.9.12
+     * @deprecated Since 0.10.0
      */
-    public function setStartLine($startLine)
+    public function free()
     {
-        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.6.' . PHP_EOL);
-        $this->_startLine = $startLine;
-    }
-
-    /**
-     * Sets the end line for this item.
-     *
-     * @param integer $endLine The end line for this item
-     *
-     * @return void
-     * @deprecated since 0.9.6
-     */
-    public function setEndLine($endLine)
-    {
-        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.6.' . PHP_EOL);
-        $this->_endLine = $endLine;
     }
 
     // @codeCoverageIgnoreEnd

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,14 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Code/NodeI.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
 
 /**
  * Represents a php package node.
@@ -56,13 +53,20 @@ require_once 'PHP/Depend/Code/NodeIterator.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
 {
+    /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+
     /**
      * The package name.
      *
@@ -231,7 +235,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
         // Set this as class package
         $type->setPackage($this);
         // Append class to internal list
-        $this->types[] = $type;
+        $this->types[$type->getUUID()] = $type;
 
         return $type;
     }
@@ -250,7 +254,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
             // Remove class from internal list
             unset($this->types[$i]);
             // Remove this as parent
-            $type->setPackage(null);
+            $type->unsetPackage();
         }
     }
 
@@ -280,7 +284,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
         // Set this as function package
         $function->setPackage($this);
         // Append function to internal list
-        $this->functions[] = $function;
+        $this->functions[$function->getUUID()] = $function;
 
         return $function;
     }
@@ -298,7 +302,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
             // Remove function from internal list
             unset($this->functions[$i]);
             // Remove this as parent
-            $function->setPackage(null);
+            $function->unsetPackage();
         }
     }
 

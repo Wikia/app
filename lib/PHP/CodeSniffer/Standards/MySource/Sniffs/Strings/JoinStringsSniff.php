@@ -9,7 +9,7 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: JoinStringsSniff.php 301632 2010-07-28 01:57:56Z squiz $
+ * @version   CVS: $Id: JoinStringsSniff.php 306374 2010-12-15 00:09:59Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -21,7 +21,7 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class MySource_Sniffs_Strings_JoinStringsSniff implements PHP_CodeSniffer_Sniff
@@ -51,7 +51,7 @@ class MySource_Sniffs_Strings_JoinStringsSniff implements PHP_CodeSniffer_Sniff
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token
+     * @param integer              $stackPtr  The position of the current token
      *                                        in the stack passed in $tokens.
      *
      * @return void
@@ -71,8 +71,14 @@ class MySource_Sniffs_Strings_JoinStringsSniff implements PHP_CodeSniffer_Sniff
 
         $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($prev - 1), null, true);
         if ($tokens[$prev]['code'] === T_CLOSE_SQUARE_BRACKET) {
-            $error = 'Joining strings using inline arrays is not allowed; use the + operator instead';
-            $phpcsFile->addError($error, $stackPtr, 'ArrayNotAllowed');
+            $opener = $tokens[$prev]['bracket_opener'];
+            if ($tokens[($opener - 1)]['code'] !== T_STRING) {
+                // This means the array is declared inline, like x = [a,b,c].join()
+                // and not elsewhere, like x = y[a].join()
+                // The first is not allowed while the second is.
+                $error = 'Joining strings using inline arrays is not allowed; use the + operator instead';
+                $phpcsFile->addError($error, $stackPtr, 'ArrayNotAllowed');
+            }
         }
 
     }//end process()

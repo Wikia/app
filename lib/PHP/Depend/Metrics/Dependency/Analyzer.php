@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,14 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 
 /**
  * This visitor generates the metrics for the analyzed packages.
@@ -56,9 +53,9 @@ require_once 'PHP/Depend/Metrics/AnalyzerI.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_Dependency_Analyzer
@@ -108,14 +105,6 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     private $_efferentNodes = array();
 
     private $_afferentNodes = array();
-
-    /**
-     * This property holds the UUID ids of all skipable paths when this class
-     * collects the cycles.
-     *
-     * @var array(string=>boolean) $_skipablePaths
-     */
-    private $_skipablePaths = array();
 
     /**
      * All collected cycles for the input code.
@@ -224,10 +213,18 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      */
     public function getCycle(PHP_Depend_Code_NodeI $node)
     {
-        if (isset($this->_collectedCycles[$node->getUUID()])) {
+        if (array_key_exists($node->getUUID(), $this->_collectedCycles)) {
             return $this->_collectedCycles[$node->getUUID()];
         }
-        return null;
+
+        $list = array();
+        if ($this->collectCycle($list, $node)) {
+            $this->_collectedCycles[$node->getUUID()] = $list;
+        } else {
+            $this->_collectedCycles[$node->getUUID()] = null;
+        }
+
+        return $this->_collectedCycles[$node->getUUID()];
     }
 
     /**
@@ -266,14 +263,6 @@ class PHP_Depend_Metrics_Dependency_Analyzer
 
         foreach ($package->getTypes() as $type) {
             $type->accept($this);
-        }
-
-        $storage = new SplObjectStorage();
-        if ($this->collectCycle($storage, $package) === true) {
-            $this->_collectedCycles[$package->getUUID()] = array();
-            foreach ($storage as $pkg) {
-                $this->_collectedCycles[$package->getUUID()][] = $pkg;
-            }
         }
 
         $this->fireEndPackage($package);
@@ -484,61 +473,32 @@ class PHP_Depend_Metrics_Dependency_Analyzer
 
     /**
      * Collects a single cycle that is reachable by this package. All packages
-     * that are part of the cylce are stored in the given {@link SplObjectStorage}
-     * instance.
+     * that are part of the cylce are stored in the given <b>$list</b> array.
      *
-     * @param SplObjectStorage        $storage The cycle package object store.
-     * @param PHP_Depend_Code_Package $package The context code package.
+     * @param array(PHP_Depend_Code_Package) &$list   Already visited packages.
+     * @param PHP_Depend_Code_Package        $package The context code package.
      *
      * @return boolean If this method detects a cycle the return value is <b>true</b>
      *                 otherwise this method will return <b>false</b>.
      */
-    protected function collectCycle(
-        SplObjectStorage $storage,
-        PHP_Depend_Code_Package $package
-    ) {
-        if ($storage->contains($package)) {
-            $storage->rewind();
-            while (($tmp = $storage->current()) !== $package) {
-                $storage->detach($tmp);
-            }
+    protected function collectCycle(array &$list, PHP_Depend_Code_Package $package)
+    {
+        if (in_array($package, $list, true)) {
+            $list[] = $package;
             return true;
         }
 
-        $storage->attach($package);
+        $list[] = $package;
 
-        foreach ($package->getTypes() as $class) {
-
-            // Create a path identifier
-            $pathID = $package->getUUID() . '#' . $class->getUUID();
-
-            // There is no cycle for this combination, if this id already exists.
-            if (isset($this->_skipablePaths[$pathID])) {
-                continue;
+        foreach ($this->getEfferents($package) as $efferent) {
+            if ($this->collectCycle($list, $efferent)) {
+                return true;
             }
-
-            // Traverse all direct class dependencies
-            foreach ($class->getDependencies() as $dependency) {
-                $pkg = $dependency->getPackage();
-                if ($pkg !== $package && $this->collectCycle($storage, $pkg)) {
-                    return true;
-                }
-            }
-            // Traverse all indirect class dependencies
-            foreach ($class->getMethods() as $method) {
-                foreach ($method->getDependencies() as $dependency) {
-                    $pkg = $dependency->getPackage();
-                    if ($pkg !== $package && $this->collectCycle($storage, $pkg)) {
-                        return true;
-                    }
-                }
-            }
-
-            // No cycle detected, so mark as skipable
-            $this->_skipablePaths[$pathID] = true;
         }
-        $storage->detach($package);
 
+        if (is_int($idx = array_search($package, $list, true))) {
+            unset($list[$idx]);
+        }
         return false;
     }
 }

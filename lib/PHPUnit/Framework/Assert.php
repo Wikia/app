@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2010, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2002-2011, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@
  * @package    PHPUnit
  * @subpackage Framework
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 2.0.0
@@ -49,9 +49,9 @@
  * @package    PHPUnit
  * @subpackage Framework
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 3.5.0
+ * @version    Release: 3.5.13
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 2.0.0
  */
@@ -1200,17 +1200,20 @@ abstract class PHPUnit_Framework_Assert
      * @param  string $expected
      * @param  mixed  $actual
      * @param  string $message
+     * @deprecated
      */
     public static function assertType($expected, $actual, $message = '')
     {
+        PHPUnit_Util_DeprecatedFeature_Logger::log(
+          'assertType() will be removed in PHPUnit 3.6 and should no longer ' .
+          'be used. assertInternalType() should be used for asserting ' .
+          'internal types such as "integer" or "string" whereas ' .
+          'assertInstanceOf() should be used for asserting that an object is ' .
+          'an instance of a specified class or interface.'
+        );
+
         if (is_string($expected)) {
             if (PHPUnit_Util_Type::isType($expected)) {
-                if (class_exists($expected) || interface_exists($expected)) {
-                    throw new InvalidArgumentException(
-                      sprintf('"%s" is ambigious', $expected)
-                    );
-                }
-
                 $constraint = new PHPUnit_Framework_Constraint_IsType(
                   $expected
                 );
@@ -1242,9 +1245,18 @@ abstract class PHPUnit_Framework_Assert
      * @param  mixed   $classOrObject
      * @param  string  $message
      * @since  Method available since Release 3.4.0
+     * @deprecated
      */
     public static function assertAttributeType($expected, $attributeName, $classOrObject, $message = '')
     {
+        PHPUnit_Util_DeprecatedFeature_Logger::log(
+          'assertAttributeType() will be removed in PHPUnit 3.6 and should ' .
+          'no longer be used. assertAttributeInternalType() should be used ' .
+          'for asserting internal types such as "integer" or "string" ' .
+          'whereas assertAttributeInstanceOf() should be used for asserting ' .
+          'that an object is an instance of a specified class or interface.'
+        );
+
         self::assertType(
           $expected,
           self::readAttribute($classOrObject, $attributeName),
@@ -1259,17 +1271,20 @@ abstract class PHPUnit_Framework_Assert
      * @param  mixed  $actual
      * @param  string $message
      * @since  Method available since Release 2.2.0
+     * @deprecated
      */
     public static function assertNotType($expected, $actual, $message = '')
     {
+        PHPUnit_Util_DeprecatedFeature_Logger::log(
+          'assertNotType() will be removed in PHPUnit 3.6 and should no ' .
+          'longer be used. assertNotInternalType() should be used for ' .
+          'asserting internal types such as "integer" or "string" whereas ' .
+          'assertNotInstanceOf() should be used for asserting that an object ' .
+          'is not an instance of a specified class or interface.'
+        );
+
         if (is_string($expected)) {
             if (PHPUnit_Util_Type::isType($expected)) {
-                if (class_exists($expected) || interface_exists($expected)) {
-                    throw new InvalidArgumentException(
-                      sprintf('"%s" is ambigious', $expected)
-                    );
-                }
-
                 $constraint = new PHPUnit_Framework_Constraint_Not(
                   new PHPUnit_Framework_Constraint_IsType($expected)
                 );
@@ -1301,9 +1316,19 @@ abstract class PHPUnit_Framework_Assert
      * @param  mixed   $classOrObject
      * @param  string  $message
      * @since  Method available since Release 3.4.0
+     * @deprecated
      */
     public static function assertAttributeNotType($expected, $attributeName, $classOrObject, $message = '')
     {
+        PHPUnit_Util_DeprecatedFeature_Logger::log(
+          'assertAttributeNotType() will be removed in PHPUnit 3.6 and ' .
+          'should no longer be used. assertAttributeNotInternalType() should ' .
+          'be used for asserting internal types such as "integer" or ' .
+          '"string" whereas assertAttributeNotInstanceOf() should be used ' .
+          'for asserting that an object is an instance of a specified class ' .
+          'or interface.'
+        );
+
         self::assertNotType(
           $expected,
           self::readAttribute($classOrObject, $attributeName),
@@ -1837,7 +1862,7 @@ abstract class PHPUnit_Framework_Assert
         // assert specific number of elements
         if (is_numeric($count)) {
             $counted = $tags ? count($tags) : 0;
-            self::assertEquals($count, $counted);
+            self::assertEquals($count, $counted, $message);
         }
 
         // assert any elements exist if true, assert no elements exist if false

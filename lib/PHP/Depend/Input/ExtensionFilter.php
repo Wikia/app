@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,13 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Input/FilterI.php';
 
 /**
  * Whitelist filter that accepts files by their file extension.
@@ -55,9 +53,9 @@ require_once 'PHP/Depend/Input/FilterI.php';
  * @package    PHP_Depend
  * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Input_ExtensionFilter implements PHP_Depend_Input_FilterI
@@ -81,16 +79,16 @@ class PHP_Depend_Input_ExtensionFilter implements PHP_Depend_Input_FilterI
     }
 
     /**
-     * Returns <b>true</b> if the extension of the given <b>$fileInfo</b> instance
-     * is in the list of allowed extensions.
+     * Returns <b>true</b> if this filter accepts the given paths.
      *
-     * @param SplFileInfo $fileInfo The context file object.
+     * @param string $relative The relative path to the specified root.
+     * @param string $absolute The absolute path to a source file.
      *
      * @return boolean
      */
-    public function accept(SplFileInfo $fileInfo)
+    public function accept($relative, $absolute)
     {
-        $extension = pathinfo($fileInfo, PATHINFO_EXTENSION);
+        $extension = pathinfo($relative, PATHINFO_EXTENSION);
 
         return in_array($extension, $this->extensions);
     }

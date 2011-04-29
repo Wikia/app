@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,13 +39,11 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2011 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
  */
-
-require_once 'PHP/Depend/ConstantsI.php';
 
 /**
  * Base interface for all code node builders.
@@ -53,14 +51,34 @@ require_once 'PHP/Depend/ConstantsI.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2011 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: 0.9.19
+ * @version   Release: 0.10.3
  * @link      http://pdepend.org/
  */
 interface PHP_Depend_BuilderI
     extends PHP_Depend_ConstantsI, IteratorAggregate
 {
+    /**
+     * Setter method for the currently used token cache.
+     *
+     * @param PHP_Depend_Util_Cache_Driver $cache Used token cache instance.
+     *
+     * @return PHP_Depend_Builder_Default
+     * @since 0.10.0
+     */
+    function setCache(PHP_Depend_Util_Cache_Driver $cache);
+
+    /**
+     * Restores a function within the internal type scope.
+     *
+     * @param PHP_Depend_Code_Function $function A function instance.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    function restoreFunction(PHP_Depend_Code_Function $function);
+
     /**
      * This method will try to find an already existing instance for the given
      * qualified name. It will create a new {@link PHP_Depend_Code_Class}
@@ -105,6 +123,16 @@ interface PHP_Depend_BuilderI
     function getClass($qualifiedName);
 
     /**
+     * Restores an existing class instance within the context of this builder.
+     *
+     * @param PHP_Depend_Code_Class $class An existing class instance.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    function restoreClass(PHP_Depend_Code_Class $class);
+
+    /**
      * Builds a new code type reference instance.
      *
      * @param string $qualifiedName The qualified name of the referenced type.
@@ -131,6 +159,16 @@ interface PHP_Depend_BuilderI
     function buildInterface($qualifiedName);
 
     /**
+     * Restores an existing interface instance within the context of this builder.
+     *
+     * @param PHP_Depend_Code_Interface $interface An existing interface instance.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    function restoreInterface(PHP_Depend_Code_Interface $interface);
+
+    /**
      * This method will try to find an already existing instance for the given
      * qualified name. It will create a new {@link PHP_Depend_Code_Interface}
      * instance when no matching type exists.
@@ -141,16 +179,6 @@ interface PHP_Depend_BuilderI
      * @since 0.9.5
      */
     function getInterface($qualifiedName);
-
-    /**
-     * Builds a new code type reference instance.
-     *
-     * @param string $qualifiedName The qualified name of the referenced type.
-     *
-     * @return PHP_Depend_Code_ASTInterfaceReference
-     * @since 0.9.5
-     */
-    function buildInterfaceReference($qualifiedName);
 
     /**
      * Builds a new package instance.
@@ -622,6 +650,32 @@ interface PHP_Depend_BuilderI
      * @since 0.9.12
      */
     function buildASTDoWhileStatement($image);
+
+    /**
+     * Builds a new declare-statement node.
+     *
+     * <code>
+     * -------------------------------
+     * declare(encoding='ISO-8859-1');
+     * -------------------------------
+     *
+     * -------------------
+     * declare(ticks=42) {
+     *     // ...
+     * }
+     * -
+     *
+     * ------------------
+     * declare(ticks=42):
+     *     // ...
+     * enddeclare;
+     * -----------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTDeclareStatement
+     * @since 0.10.0
+     */
+    function buildASTDeclareStatement();
 
     /**
      * Builds a new member primary expression node.

@@ -4,7 +4,7 @@
  * 
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,25 +40,103 @@
  * @package    PHP_Depend
  * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
 
 /**
- * Simple extension of PHP's <b>SimpleXMLElement</b> class.
+ * Simple container class that holds settings for PHP_Depend and all its sub
+ * systems.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
  * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
-class PHP_Depend_Util_Configuration extends SimpleXMLElement
+class PHP_Depend_Util_Configuration
 {
-    
+    /**
+     * Simple object tree holding the concrete configuration values.
+     *
+     * @var stdClass
+     * @since 0.10.0
+     */
+    protected $settings = null;
+
+    /**
+     * Constructs a new configuration instance with the given settings tree.
+     *
+     * @param stdClass $settings The concrete configuration values.
+     * 
+     * @since 0.10.0
+     */
+    public function __construct(stdClass $settings)
+    {
+        $this->settings = $settings;
+    }
+
+    /**
+     * Magic get method that is called by PHP's runtime engine whenever an
+     * undeclared object property is accessed through a read operation. This
+     * implementation of the magic get method checks if a configuration value
+     * for the given <b>$name</b> exists and returns the configuration value if
+     * a matching entry exists. Otherwise this method will throw an exception.
+     *
+     * @param string $name Name of the requested configuration value.
+     *
+     * @return mixed
+     * @throws OutOfRangeException If no matching configuration value exists.
+     * @since 0.10.0
+     */
+    public function __get($name)
+    {
+        if (isset($this->settings->{$name})) {
+            return $this->settings->{$name};
+        }
+        throw new OutOfRangeException(
+            sprintf("A configuration option '%s' not exists.", $name)
+        );
+    }
+
+    /**
+     * Magic setter method that will be called by PHP's runtime engine when a
+     * write operation is performed on an undeclared object property. This
+     * implementation of the magic set method always throws an exception, because
+     * configuration settings are inmutable.
+     *
+     * @param string $name  Name of the write property.
+     * @param mixed  $value The new property value.
+     *
+     * @return void
+     * @throws OutOfRangeException Whenever this method is called.
+     * @since 0.10.0
+     */
+    public function __set($name, $value)
+    {
+        throw new OutOfRangeException(
+            sprintf("A configuration option '%s' not exists.", $name)
+        );
+    }
+
+    /**
+     * Magic isset method that will be called by PHP's runtime engine when the
+     * <em>isset()</em> operator is called on an undefined object property. This
+     * implementation of the magic isset method tests if a configuration value
+     * for the given <b>$name</b> exists.
+     *
+     * @param string $name Name of the requested property.
+     *
+     * @return boolean
+     * @since 0.10.0
+     */
+    public function __isset($name)
+    {
+        return isset($this->settings->{$name});
+    }
 }

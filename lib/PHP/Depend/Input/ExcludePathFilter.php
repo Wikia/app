@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,13 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Input/FilterI.php';
 
 /**
  * Filters a given file path against a blacklist with disallow path fragments.
@@ -55,19 +53,28 @@ require_once 'PHP/Depend/Input/FilterI.php';
  * @package    PHP_Depend
  * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Input_ExcludePathFilter implements PHP_Depend_Input_FilterI
 {
     /**
-     * Regular expression that should not match against the file path.
+     * Regular expression that should not match against the relative file paths.
      *
-     * @var string $regexp
+     * @var string
+     * @since 0.10.0
      */
-    protected $regexp = '';
+    protected $relative = '';
+
+    /**
+     * Regular expression that should not match against the absolute file paths.
+     *
+     * @var string
+     * @since 0.10.0
+     */
+    protected $absolute = '';
 
     /**
      * Constructs a new exclude path filter instance and accepts an array of
@@ -77,22 +84,50 @@ class PHP_Depend_Input_ExcludePathFilter implements PHP_Depend_Input_FilterI
      */
     public function __construct(array $patterns)
     {
-        $regexp = join('|', array_map('preg_quote', $patterns));
-        $regexp = str_replace(array('\*'), array('.*'), $regexp);
+        $quoted = array_map('preg_quote', $patterns);
 
-        $this->regexp = "({$regexp})i";
+        $this->relative = '(' . str_replace('\*', '.*', join('|', $quoted)) . ')i';
+        $this->absolute = '(^' . str_replace('\*', '.*', join('|^', $quoted)) . ')i';
     }
 
     /**
-     * Returns <b>true</b> while the file path doesn't match against any of the
-     * given patterns.
+     * Returns <b>true</b> if this filter accepts the given path.
      *
-     * @param SplFileInfo $fileInfo The context file object.
+     * @param string $relative The relative path to the specified root.
+     * @param string $absolute The absolute path to a source file.
      *
      * @return boolean
      */
-    public function accept(SplFileInfo $fileInfo)
+    public function accept($relative, $absolute)
     {
-        return (preg_match($this->regexp, $fileInfo->getPathname()) === 0);
+        return ($this->notRelative($relative) && $this->notAbsolute($absolute));
+    }
+
+    /**
+     * This method checks if the given <b>$path</b> does not match against the
+     * exclude patterns as an absolute path.
+     *
+     * @param string $path The absolute path to a source file.
+     *
+     * @return boolean
+     * @since 0.10.0
+     */
+    protected function notAbsolute($path)
+    {
+        return (preg_match($this->absolute, $path) === 0);
+    }
+
+    /**
+     * This method checks if the given <b>$path</b> does not match against the
+     * exclude patterns as an relative path.
+     *
+     * @param string $path The relative path to a source file.
+     *
+     * @return boolean
+     * @since 0.10.0
+     */
+    protected function notRelative($path)
+    {
+        return (preg_match($this->relative, $path) === 0);
     }
 }

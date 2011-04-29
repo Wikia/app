@@ -10,7 +10,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: AbstractPatternSniff.php 293833 2010-01-22 02:41:04Z squiz $
+ * @version   CVS: $Id: AbstractPatternSniff.php 307692 2011-01-24 04:09:41Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -30,7 +30,7 @@ if (class_exists('PHP_CodeSniffer_Standards_IncorrectPatternException', true) ==
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_CodeSniffer_Sniff
@@ -102,11 +102,10 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $patterns    = $this->getPatterns();
 
         foreach ($patterns as $pattern) {
-
             $parsedPattern = $this->_parse($pattern);
 
-            // Find a token position in the pattern that we can use for a listener
-            // token.
+            // Find a token position in the pattern that we can use
+            // for a listener token.
             $pos           = $this->_getListenerTokenPos($parsedPattern);
             $tokenType     = $parsedPattern[$pos]['token'];
             $listenTypes[] = $tokenType;
@@ -230,9 +229,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         // Loop over each pattern that is listening to the current token type
         // that we are processing.
         foreach ($this->_parsedPatterns[$type] as $patternInfo) {
-
             // If processPattern returns false, then the pattern that we are
-            // checking the code with must not be design to check that code.
+            // checking the code with must not be designed to check that code.
             $errors = $this->processPattern($patternInfo, $phpcsFile, $stackPtr);
             if ($errors === false) {
                 // The pattern didn't match.
@@ -296,11 +294,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
             $stackPtr--;
 
             for ($i = ($patternInfo['listen_pos'] - 1); $i >= 0; $i--) {
-
                 if ($pattern[$i]['type'] === 'token') {
-
                     if ($pattern[$i]['token'] === T_WHITESPACE) {
-
                         if ($tokens[$stackPtr]['code'] === T_WHITESPACE) {
                             $found = $tokens[$stackPtr]['content'].$found;
                         }
@@ -313,9 +308,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                                 $hasError = true;
                             }
                         }
-
                     } else {
-
                         // Check to see if this important token is the same as the
                         // previous important token in the pattern. If it is not,
                         // then the pattern cannot be for this piece of code.
@@ -349,7 +342,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         } else {
                             $stackPtr = ($prev - 1);
                         }
-
                     }//end if
                 } else if ($pattern[$i]['type'] === 'skip') {
                     // Skip to next piece of relevant code.
@@ -461,7 +453,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                             $hasError = true;
                         }
                     }
-
                 } else {
                     // Check to see if this important token is the same as the
                     // next important token in the pattern. If it is not, then
@@ -476,8 +467,33 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     if ($next === false
                         || $tokens[$next]['code'] !== $pattern[$i]['token']
                     ) {
+                        // The next important token did not match the pattern.
                         return false;
                     }
+
+                    if ($lastAddedStackPtr !== null) {
+                        if (($tokens[$next]['code'] === T_OPEN_CURLY_BRACKET
+                            || $tokens[$next]['code'] === T_CLOSE_CURLY_BRACKET)
+                            && isset($tokens[$next]['scope_condition']) === true
+                            && $tokens[$next]['scope_condition'] > $lastAddedStackPtr
+                        ) {
+                            // This is a brace, but the owner of it is after the current
+                            // token, which means it does not belong to any token in
+                            // our pattern. This means the pattern is not for us.
+                            return false;
+                        }
+
+                        if (($tokens[$next]['code'] === T_OPEN_PARENTHESIS
+                            || $tokens[$next]['code'] === T_CLOSE_PARENTHESIS)
+                            && isset($tokens[$next]['parenthesis_owner']) === true
+                            && $tokens[$next]['parenthesis_owner'] > $lastAddedStackPtr
+                        ) {
+                            // This is a bracket, but the owner of it is after the current
+                            // token, which means it does not belong to any token in
+                            // our pattern. This means the pattern is not for us.
+                            return false;
+                        }
+                    }//end if
 
                     // If we skipped past some whitespace tokens, then add them
                     // to the found string.
@@ -522,7 +538,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         $stackPtr = ($next + 1);
                     }
                 }//end if
-
             } else if ($pattern[$i]['type'] === 'skip') {
                 if ($pattern[$i]['to'] === 'unknown') {
                     $next = $phpcsFile->findNext(
@@ -562,7 +577,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
                     // Skip to the closing token.
                     $stackPtr = ($tokens[$next][$pattern[$i]['to']] + 1);
-                }
+                }//end if
             } else if ($pattern[$i]['type'] === 'string') {
                 if ($tokens[$stackPtr]['code'] !== T_STRING) {
                     $hasError = true;
@@ -738,7 +753,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 $specialPattern = $this->_createSkipPattern($pattern, ($i - 1));
                 $lastToken      = ($i - $firstToken);
                 $firstToken     = ($i + 3);
-                $i              = ($i + 3);
+                $i              = ($i + 2);
 
                 if ($specialPattern['to'] !== 'unknown') {
                     $firstToken++;
@@ -756,7 +771,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
             }
 
             if ($specialPattern !== false || $isLastChar === true) {
-
                 // If we are at the end of the string, don't worry about a limit.
                 if ($isLastChar === true) {
                     // Get the string from the end of the last skip pattern, if any,
@@ -765,18 +779,26 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 } else {
                     // Get the string from the end of the last special pattern,
                     // if any, to the start of this special pattern.
-                    $str = substr($pattern, $oldFirstToken, $lastToken);
+                    if ($lastToken === 0) {
+                        // Note that if the last special token was zero characters ago,
+                        // there will be nothing to process so we can skip this bit.
+                        // This happens if you have something like: EOL... in your pattern.
+                        $str = '';
+                    } else {
+                        $str = substr($pattern, $oldFirstToken, $lastToken);
+                    }
                 }
 
-                $tokenPatterns = $this->_createTokenPattern($str);
+                if ($str !== '') {
+                    $tokenPatterns = $this->_createTokenPattern($str);
+                    foreach ($tokenPatterns as $tokenPattern) {
+                        $patterns[] = $tokenPattern;
+                    }
+                }
 
                 // Make sure we don't skip the last token.
                 if ($isLastChar === false && $i === ($length - 1)) {
                     $i--;
-                }
-
-                foreach ($tokenPatterns as $tokenPattern) {
-                    $patterns[] = $tokenPattern;
                 }
             }//end if
 
@@ -786,7 +808,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
             if ($specialPattern !== false) {
                 $patterns[] = $specialPattern;
             }
-
         }//end for
 
         return $patterns;
@@ -809,6 +830,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $skip = array('type' => 'skip');
 
         $nestedParenthesis = 0;
+        $nestedBraces      = 0;
         for ($start = $from; $start >= 0; $start--) {
             switch ($pattern[$start]) {
             case '(':
@@ -819,7 +841,14 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 $nestedParenthesis--;
                 break;
             case '{':
-                $skip['to'] = 'scope_closer';
+                if ($nestedBraces === 0) {
+                    $skip['to'] = 'scope_closer';
+                }
+
+                $nestedBraces--;
+                break;
+            case '}':
+                $nestedBraces++;
                 break;
             case ')':
                 $nestedParenthesis++;

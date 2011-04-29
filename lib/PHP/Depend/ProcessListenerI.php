@@ -4,7 +4,7 @@
  * 
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,16 +39,13 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2011 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
  */
 
-require_once 'PHP/Depend/BuilderI.php';
-require_once 'PHP/Depend/TokenizerI.php';
-require_once 'PHP/Depend/Visitor/ListenerI.php';
-require_once 'PHP/Depend/Metrics/ListenerI.php';
+// @codeCoverageIgnoreStart
 
 /**
  * This listener can be used to get informations about the current pdepend process.
@@ -56,9 +53,9 @@ require_once 'PHP/Depend/Metrics/ListenerI.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2011 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: 0.9.19
+ * @version   Release: 0.10.3
  * @link      http://pdepend.org/
  */
 interface PHP_Depend_ProcessListenerI
@@ -129,3 +126,5 @@ interface PHP_Depend_ProcessListenerI
      */
     function endLogProcess();
 }
+
+// @codeCoverageIgnoreEnd

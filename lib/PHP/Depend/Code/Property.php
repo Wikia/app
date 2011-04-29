@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,16 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Code/ASTTypeNode.php';
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-
-require_once 'PHP/Depend/Code/AbstractItem.php';
 
 /**
  * This code class represents a class property.
@@ -58,15 +53,22 @@ require_once 'PHP/Depend/Code/AbstractItem.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Code_Property 
        extends ReflectionProperty
     implements PHP_Depend_Code_NodeI
 {
+    /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+    
     /**
      * The unique identifier for this function.
      *
@@ -395,6 +397,7 @@ class PHP_Depend_Code_Property
      *
      * @return mixed
      * @since 0.9.6
+     * @SuppressWarnings("PMD.UnusedFormalParameter")
      */
     public function getValue($object = null)
     {
@@ -411,6 +414,7 @@ class PHP_Depend_Code_Property
      *
      * @return void
      * @since 0.9.6
+     * @SuppressWarnings("PMD.UnusedFormalParameter")
      */
     public function setValue($object, $value = null)
     {
@@ -427,6 +431,7 @@ class PHP_Depend_Code_Property
      *
      * @return void
      * @since 0.9.6
+     * @SuppressWarnings("PMD.UnusedFormalParameter")
      */
     public function setAccessible($value)
     {
@@ -529,48 +534,4 @@ class PHP_Depend_Code_Property
             PHP_EOL
         );
     }
-
-    // DEPRECATED METHODS
-    // @codeCoverageIgnoreStart
-
-    /**
-     * Returns the parent class object or <b>null</b>
-     *
-     * @return PHP_Depend_Code_Class
-     * @deprecated Since version 0.9.6, use getDeclaringClass() instead.
-     */
-    public function getParent()
-    {
-        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
-        return $this->getDeclaringClass();
-    }
-
-    /**
-     * Sets the parent class object.
-     *
-     * @param PHP_Depend_Code_Class $parent The parent class.
-     *
-     * @return void
-     * @deprecated Since version 0.9.6, use setDeclaringClass() instead.
-     */
-    public function setParent(PHP_Depend_Code_Class $parent = null)
-    {
-        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
-        $this->setDeclaringClass($parent);
-    }
-
-    /**
-     * Returns the source tokens used for this property declaration.
-     *
-     * @return array(PHP_Depend_Token)
-     * @since 0.9.6
-     * @deprecated Since version 0.9.12, use setDeclaringClass() instead.
-     */
-    public function getTokens()
-    {
-        fwrite(STDERR, 'Since 0.9.12 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
-        return $this->_variableDeclarator->getTokens();
-    }
-
-    // @codeCoverageIgnoreEnd
 }

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,13 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Code/AbstractClassOrInterface.php';
 
 /**
  * Representation of a code interface.
@@ -55,20 +53,36 @@ require_once 'PHP/Depend/Code/AbstractClassOrInterface.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
 {
+    /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+
     /**
      * The modifiers for this interface instance, by default an interface is
      * always abstract.
      *
      * @var integer $_modifiers
      */
-    private $_modifiers = PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT;
+    protected $modifiers = PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT;
+
+    /**
+     * Name of the parent package for this interface instance. This property is
+     * used to restore the parent package instance while the object tree gets
+     * unserialized from the cache.
+     *
+     * @var string
+     */
+    protected $packageName = null;
 
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
@@ -126,7 +140,7 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getModifiers()
     {
-        return $this->_modifiers;
+        return $this->modifiers;
     }
 
     /**
@@ -140,5 +154,21 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
     public function accept(PHP_Depend_VisitorI $visitor)
     {
         $visitor->visitInterface($this);
+    }
+
+    /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method will register this object in the the global class
+     * context.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    public function  __wakeup()
+    {
+        parent::__wakeup();
+
+        $this->context->registerInterface($this);
     }
 }

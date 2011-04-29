@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,29 +36,29 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  PHP
- * @package   PHP_Depend_Code
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2010 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.pdepend.org/
- * @since     0.9.5
+ * @category   PHP
+ * @package    PHP_Depend
+ * @subpackage Code
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.pdepend.org/
+ * @since      0.9.5
  */
-
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
 
 /**
  * This is a classes only version of the class or interface reference .
  *
- * @category  PHP
- * @package   PHP_Depend_Code
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2010 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: 0.9.19
- * @link      http://www.pdepend.org/
- * @since     0.9.5
+ * @category   PHP
+ * @package    PHP_Depend
+ * @subpackage Code
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: 0.10.3
+ * @link       http://www.pdepend.org/
+ * @since      0.9.5
  */
 class PHP_Depend_Code_ASTClassReference
     extends PHP_Depend_Code_ASTClassOrInterfaceReference
@@ -76,7 +76,7 @@ class PHP_Depend_Code_ASTClassReference
     public function getType()
     {
         if ($this->typeInstance === null) {
-            $this->typeInstance = $this->builder->getClass($this->getImage());
+            $this->typeInstance = $this->context->getClass($this->getImage());
         }
         return $this->typeInstance;
     }

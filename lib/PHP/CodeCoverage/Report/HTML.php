@@ -2,7 +2,7 @@
 /**
  * PHP_CodeCoverage
  *
- * Copyright (c) 2009-2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2009-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@
  * @category   PHP
  * @package    CodeCoverage
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2009-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2009-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://github.com/sebastianbergmann/php-code-coverage
  * @since      File available since Release 1.0.0
@@ -53,9 +53,9 @@ require_once 'Text/Template.php';
  * @category   PHP
  * @package    CodeCoverage
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2009-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2009-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 1.0.0
+ * @version    Release: 1.0.4
  * @link       http://github.com/sebastianbergmann/php-code-coverage
  * @since      Class available since Release 1.0.0
  */
@@ -132,7 +132,7 @@ class PHP_CodeCoverage_Report_HTML
                         $commonPath, NULL
                       );
 
-        $this->addItems($root, $items, $files);
+        $this->addItems($root, $items);
 
         $this->renderDashboard(
           $root, $target . 'index.dashboard.html', $this->options['title']
@@ -182,7 +182,7 @@ class PHP_CodeCoverage_Report_HTML
                                           'D M j G:i:s T Y',
                                           $_SERVER['REQUEST_TIME']
                                         ),
-            'version'                => '1.0.0',
+            'version'                => '1.0.4',
             'php_version'            => PHP_VERSION,
             'generator'              => $this->options['generator'],
             'least_tested_methods'   => $this->leastTestedMethods($classes),
@@ -199,9 +199,8 @@ class PHP_CodeCoverage_Report_HTML
     /**
      * @param PHP_CodeCoverage_Report_HTML_Node_Directory $root
      * @param array                                       $items
-     * @param array                                       $files
      */
-    protected function addItems(PHP_CodeCoverage_Report_HTML_Node_Directory $root, array $items, array $files)
+    protected function addItems(PHP_CodeCoverage_Report_HTML_Node_Directory $root, array $items)
     {
         foreach ($items as $key => $value) {
             if (substr($key, -2) == '/f') {
@@ -219,7 +218,7 @@ class PHP_CodeCoverage_Report_HTML
                 }
             } else {
                 $child = $root->addDirectory($key);
-                $this->addItems($child, $value, $files);
+                $this->addItems($child, $value);
             }
         }
     }
@@ -322,7 +321,8 @@ class PHP_CodeCoverage_Report_HTML
           'file.png',
           'glass.png',
           'RGraph.bar.js',
-          'RGraph.common.js',
+          'RGraph.common.core.js',
+          'RGraph.common.tooltips.js',
           'RGraph.scatter.js',
           'scarlet_red.png',
           'snow.png',

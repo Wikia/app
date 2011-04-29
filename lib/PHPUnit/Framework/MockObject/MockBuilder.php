@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@
  * @package    PHPUnit_MockObject
  * @author     Giorgio Sironi <piccoloprincipeazzurro@gmail.com>
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://github.com/sebastianbergmann/phpunit-mock-objects
  * @since      File available since Release 1.0.0
@@ -49,7 +49,7 @@
  * @package    PHPUnit_MockObject
  * @author     Giorgio Sironi <piccoloprincipeazzurro@gmail.com>
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://github.com/sebastianbergmann/phpunit-mock-objects
  * @since      File available since Release 1.0.0
@@ -116,6 +116,23 @@ class PHPUnit_Framework_MockObject_MockBuilder
         return $this->testCase->getMock(
           $this->className,
           $this->methods,
+          $this->constructorArgs,
+          $this->mockClassName,
+          $this->originalConstructor,
+          $this->originalClone,
+          $this->autoload
+        );
+    }
+
+    /**
+     * Creates a mock object for an abstract class using a fluent interface.
+     *
+     * @return PHPUnit_Framework_MockObject_MockObject
+     */
+    public function getMockForAbstractClass()
+    {
+        return $this->testCase->getMockForAbstractClass(
+          $this->className,
           $this->constructorArgs,
           $this->mockClassName,
           $this->originalConstructor,

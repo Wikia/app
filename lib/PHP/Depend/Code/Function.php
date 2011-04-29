@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,13 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Code/AbstractCallable.php';
 
 /**
  * Represents a php function node.
@@ -55,19 +53,57 @@ require_once 'PHP/Depend/Code/AbstractCallable.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
 {
     /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * The parent package for this function.
      *
      * @var PHP_Depend_Code_Package
+     * @since 0.10.0
      */
     private $_package = null;
+
+    /**
+     * The currently used builder context.
+     *
+     * @var PHP_Depend_Builder_Context
+     * @since 0.10.0
+     */
+    protected $context = null;
+
+    /**
+     * The name of the parent package for this function. We use this property
+     * to restore the parent package while we unserialize a cached object tree.
+     *
+     * @var string
+     */
+    protected $packageName = null;
+
+    /**
+     * Sets the currently active builder context.
+     *
+     * @param PHP_Depend_Builder_Context $context Current builder context.
+     *
+     * @return PHP_Depend_Code_Function
+     * @since 0.10.0
+     */
+    public function setContext(PHP_Depend_Builder_Context $context)
+    {
+        $this->context = $context;
+        return $this;
+    }
 
     /**
      * Returns the parent package for this function.
@@ -86,9 +122,34 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
      *
      * @return void
      */
-    public function setPackage(PHP_Depend_Code_Package $package = null)
+    public function setPackage(PHP_Depend_Code_Package $package)
     {
-        $this->_package = $package;
+        $this->packageName = $package->getName();
+        $this->_package    = $package;
+    }
+
+    /**
+     * Resets the package associated with this function node.
+     *
+     * @return void
+     * @since 0.10.2
+     */
+    public function unsetPackage()
+    {
+        $this->packageName = null;
+        $this->_package    = null;
+    }
+
+    /**
+     * Returns the name of the parent namespace/package or <b>NULL</b> when this
+     * function does not belong to a package.
+     *
+     * @return string
+     * @since 0.10.0
+     */
+    public function getPackageName()
+    {
+        return $this->packageName;
     }
 
     /**
@@ -129,5 +190,34 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     private function _removeReferenceToPackage()
     {
         $this->_package = null;
+    }
+
+    /**
+     * The magic sleep method will be called by the PHP engine when this class
+     * gets serialized. It returns an array with those properties that should be
+     * cached for all function instances.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
+    public function  __sleep()
+    {
+        return array_merge(array('context', 'packageName'), parent::__sleep());
+    }
+
+    /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method will register this object in the the global function
+     * context.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    public function  __wakeup()
+    {
+        parent::__wakeup();
+
+        $this->context->registerFunction($this);
     }
 }

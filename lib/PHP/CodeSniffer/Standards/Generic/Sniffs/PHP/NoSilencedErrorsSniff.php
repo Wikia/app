@@ -28,7 +28,7 @@
  * @package  PHP_CodeSniffer
  * @author   Andy Brockhurst <abrock@yahoo-inc.com>
  * @license  http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version  Release: 1.3.0RC1
+ * @version  Release: 1.3.0
  * @link     http://pear.php.net/package/PHP_CodeSniffer
  */
 class Generic_Sniffs_PHP_NoSilencedErrorsSniff implements PHP_CodeSniffer_Sniff

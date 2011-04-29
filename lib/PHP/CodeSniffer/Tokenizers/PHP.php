@@ -9,7 +9,7 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: PHP.php 300684 2010-06-23 01:06:43Z squiz $
+ * @version   CVS: $Id: PHP.php 307870 2011-01-31 04:01:45Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -21,7 +21,7 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PHP_CodeSniffer_Tokenizers_PHP
@@ -417,7 +417,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
      * Performs additional processing after main tokenizing.
      *
      * This additional processing checks for CASE statements
-     * that are using curly braces for scope openers and closers.
+     * that are using curly braces for scope openers and closers. It
+     * also turn some T_FUNCTION tokens into T_CLOSURE when they
+     * are not standard function definitions.
      *
      * @param array  &$tokens The array of tokens to process.
      * @param string $eolChar The EOL character to use for splitting strings.
@@ -432,11 +434,31 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
         $numTokens = count($tokens);
         for ($i = ($numTokens - 1); $i >= 0; $i--) {
+            // Looking for functions that are actually closures.
+            if ($tokens[$i]['code'] === T_FUNCTION) {
+                for ($x = ($i + 1); $x < $numTokens; $x++) {
+                    if (in_array($tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                        break;
+                    }
+                }
+
+                if ($tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
+                    $tokens[$i]['code'] = T_CLOSURE;
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $tokens[$i]['line'];
+                        echo "\t* token $i on line $line changed from T_FUNCTION to T_CLOSURE".PHP_EOL;
+                    }
+                }
+
+                continue;
+            }//end if
+
             if (($tokens[$i]['code'] !== T_CASE
                 && $tokens[$i]['code'] !== T_DEFAULT)
                 || isset($tokens[$i]['scope_opener']) === false
             ) {
-                // Only interested in CASE and DEFAULT statements.
+                // Only interested in CASE and DEFAULT statements
+                // from here on in.
                 continue;
             }
 

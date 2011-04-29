@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,18 +40,11 @@
  * @package    PHP_Depend
  * @subpackage TextUI
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/TextUI/ResultPrinter.php';
-require_once 'PHP/Depend/TextUI/Runner.php';
-require_once 'PHP/Depend/Util/Configuration.php';
-require_once 'PHP/Depend/Util/ConfigurationInstance.php';
-require_once 'PHP/Depend/Util/Log.php';
 
 /**
  * Handles the command line stuff and starts the text ui runner.
@@ -60,9 +53,9 @@ require_once 'PHP/Depend/Util/Log.php';
  * @package    PHP_Depend
  * @subpackage TextUI
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_TextUI_Command
@@ -76,18 +69,6 @@ class PHP_Depend_TextUI_Command
      * Marks an input error exit.
      */
     const INPUT_ERROR = 1743;
-
-    /**
-     * Mapping between command line identifiers and optimzation strategies.
-     *
-     * @var array(string=>integer) $_optimizations
-     */
-    private $_optimizations = array(
-        PHP_Depend_TextUI_Runner::OPTIMZATION_BEST =>
-            'Provides lowest memory usage with best possible performance.',
-        PHP_Depend_TextUI_Runner::OPTIMZATION_NONE =>
-            'Highest memory usage without any caching.'
-    );
 
     /**
      * Collected log options.
@@ -128,10 +109,18 @@ class PHP_Depend_TextUI_Command
         $this->_runner = new PHP_Depend_TextUI_Runner();
         $this->_runner->addProcessListener(new PHP_Depend_TextUI_ResultPrinter());
 
-        if ($this->handleArguments() === false) {
+        try {
+            if ($this->handleArguments() === false) {
+                $this->printHelp();
+                return self::CLI_ERROR;
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage(), PHP_EOL, PHP_EOL;
+            
             $this->printHelp();
             return self::CLI_ERROR;
         }
+
         if (isset($this->_options['--help'])) {
             $this->printHelp();
             return PHP_Depend_TextUI_Runner::SUCCESS_EXIT;
@@ -167,8 +156,12 @@ class PHP_Depend_TextUI_Command
                 if (isset($analyzerOptions[$option]['value']) && is_bool($value)) {
                     echo 'Option ', $option, ' requires a value.', PHP_EOL;
                     return self::INPUT_ERROR;
-                } else if ($analyzerOptions[$option]['value'] === 'file' && file_exists($value) === false) {
-                    echo 'Specifie file ', $option, '=', $value, ' not exists.', PHP_EOL;
+                } else if ($analyzerOptions[$option]['value'] === 'file'
+                    && file_exists($value) === false
+                ) {
+                    echo 'Specified file ', $option, '=', $value,
+                         ' not exists.', PHP_EOL;
+
                     return self::INPUT_ERROR;
                 } else if ($analyzerOptions[$option]['value'] === '*') {
                     $value = array_map('trim', explode(',', $value));
@@ -185,15 +178,8 @@ class PHP_Depend_TextUI_Command
         }
 
         if (isset($options['--optimization'])) {
-            // Check optimization strategy
-            if (!isset($this->_optimizations[$options['--optimization']])) {
-                echo 'Invalid optimization ', $options['--optimization'],
-                     ' given.', PHP_EOL;
-                return self::INPUT_ERROR;
-            }
-
-            // Set optimization strategy
-            $this->_runner->setOptimization($options['--optimization']);
+            // This option is deprecated.
+            echo 'Option --optimization is ambiguous.', PHP_EOL;
             // Remove option
             unset($options['--optimization']);
         }
@@ -340,27 +326,23 @@ class PHP_Depend_TextUI_Command
             unset($this->_options['--bad-documentation']);
         }
 
+        $configurationFactory = new PHP_Depend_Util_Configuration_Factory();
+
         // Check for configuration option
         if (isset($this->_options['--configuration'])) {
             // Get config file
             $configFile = $this->_options['--configuration'];
             // Remove option from array
             unset($this->_options['--configuration']);
-
-            // First check config file
-            if (file_exists($configFile) === false) {
-                // Print error message
-                echo 'The configuration file "', $configFile,
-                     '" doesn\'t exist.', PHP_EOL, PHP_EOL;
-                // Return error
-                return false;
-            }
-
-            // Load configuration file
-            $config = new PHP_Depend_Util_Configuration($configFile, null, true);
-            // Store in config registry
-            PHP_Depend_Util_ConfigurationInstance::set($config);
+            
+            $configuration = $configurationFactory->create($configFile);
+        } else {
+            $configuration = $configurationFactory->createDefault();
         }
+        // Store in config registry
+        PHP_Depend_Util_ConfigurationInstance::set($configuration);
+
+        $this->_runner->setConfiguration($configuration);
 
         if (isset($this->_options['--debug'])) {
             // Remove option from array
@@ -379,7 +361,7 @@ class PHP_Depend_TextUI_Command
      */
     protected function printVersion()
     {
-        echo 'PHP_Depend 0.9.19 by Manuel Pichler', PHP_EOL, PHP_EOL;
+        echo 'PHP_Depend 0.10.3 by Manuel Pichler', PHP_EOL, PHP_EOL;
     }
 
     /**
@@ -436,16 +418,6 @@ class PHP_Depend_TextUI_Command
         );
         echo PHP_EOL;
 
-        $this->_printOption(
-            '--optimization=<mode>',
-            'Runtime switch to influence the internal processing.',
-            $l
-        );
-        foreach ($this->_optimizations as $name => $help) {
-            $this->_printOption('               "' . $name . '"', $help, $l);
-        }
-        echo PHP_EOL;
-
         $this->_printOption('--debug', 'Prints debugging information.', $l);
         $this->_printOption('--help', 'Print this help text.', $l);
         $this->_printOption('--version', 'Print the current version.', $l);
@@ -477,9 +449,6 @@ class PHP_Depend_TextUI_Command
                 $maxLength = $length;
             }
         }
-
-        // Calculate the max message length
-        $messageLength = 77 - $maxLength;
 
         ksort($options);
 

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2009-2010, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2009-2011, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_PMD
  * @subpackage TextUI
  * @author     Manuel Pichler <mapi@phpmd.org>
- * @copyright  2009-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2009-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://phpmd.org
@@ -56,9 +56,9 @@ require_once 'PHP/PMD/AbstractRule.php';
  * @package    PHP_PMD
  * @subpackage TextUI
  * @author     Manuel Pichler <mapi@phpmd.org>
- * @copyright  2009-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2009-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.2.7
+ * @version    Release: 1.1.0
  * @link       http://phpmd.org
  */
 class PHP_PMD_TextUI_CommandLineOptions
@@ -73,7 +73,7 @@ class PHP_PMD_TextUI_CommandLineOptions
      *
      * @var integer $_minimumPriority
      */
-    private $_minimumPriority = PHP_PMD_AbstractRule::LOWEST_PRIORITY;
+    private $_minimumPriority = PHP_PMD_Rule::LOWEST_PRIORITY;
 
     /**
      * A php source code filename or directory.
@@ -144,6 +144,10 @@ class PHP_PMD_TextUI_CommandLineOptions
 
             case '--reportfile':
                 $this->_reportFile = array_shift($args);
+                break;
+
+            case '--inputfile':
+                array_unshift($arguments, $this->_readInputFile(array_shift($args)));
                 break;
 
             case '--extensions':
@@ -322,7 +326,8 @@ class PHP_PMD_TextUI_CommandLineOptions
     public function usage()
     {
         return 'Mandatory arguments:' . PHP_EOL .
-               '1) A php source code filename or directory' . PHP_EOL .
+               '1) A php source code filename or directory. Can be a comma-' .
+               'separated string' . PHP_EOL .
                '2) A report format' . PHP_EOL .
                '3) A ruleset filename or a comma-separated string of ruleset' .
                'filenames' . PHP_EOL . PHP_EOL .
@@ -355,5 +360,25 @@ class PHP_PMD_TextUI_CommandLineOptions
         );
 
         fwrite(STDERR, $message . PHP_EOL . PHP_EOL);
+    }
+
+    /**
+     * This method takes the given input file, reads the newline separated paths
+     * from that file and creates a comma separated string of the file paths. If
+     * the given <b>$inputFile</b> not exists, this method will throw an
+     * exception.
+     *
+     * @param string $inputFile Specified input file name.
+     *
+     * @return string
+     * @throws InvalidArgumentException If the specified input file does not exist.
+     * @since 1.1.0
+     */
+    private function _readInputFile($inputFile)
+    {
+        if (file_exists($inputFile)) {
+            return join(',', array_map('trim', file($inputFile)));
+        }
+        throw new InvalidArgumentException("Input file '{$inputFile}' not exists.");
     }
 }

@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2010, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2002-2011, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@
  * @package    PHPUnit
  * @subpackage Util
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 3.4.0
@@ -49,9 +49,9 @@
  * @package    PHPUnit
  * @subpackage Util
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 3.5.0
+ * @version    Release: 3.5.13
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 3.4.0
  */
@@ -272,6 +272,12 @@ class PHPUnit_Util_GlobalState
 
         for ($i = $declaredClassesNum - 1; $i >= 0; $i--) {
             if (strpos($declaredClasses[$i], 'PHPUnit') !== 0 &&
+                strpos($declaredClasses[$i], 'File_Iterator') !== 0 &&
+                strpos($declaredClasses[$i], 'PHP_CodeCoverage') !== 0 &&
+                strpos($declaredClasses[$i], 'PHP_Timer') !== 0 &&
+                strpos($declaredClasses[$i], 'PHP_TokenStream') !== 0 &&
+                strpos($declaredClasses[$i], 'sfYaml') !== 0 &&
+                strpos($declaredClasses[$i], 'Text_Template') !== 0 &&
                 !$declaredClasses[$i] instanceof PHPUnit_Framework_Test) {
                 $class = new ReflectionClass($declaredClasses[$i]);
 

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,17 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
-require_once 'PHP/Depend/Metrics/AggregateAnalyzerI.php';
-require_once 'PHP/Depend/Metrics/FilterAwareI.php';
-require_once 'PHP/Depend/Metrics/NodeAwareI.php';
-require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
 
 /**
  * Generates some class level based metrics. This analyzer is based on the
@@ -62,9 +56,9 @@ require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_ClassLevel_Analyzer
@@ -84,6 +78,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     const M_IMPLEMENTED_INTERFACES       = 'impl',
           M_CLASS_INTERFACE_SIZE         = 'cis',
           M_CLASS_SIZE                   = 'csz',
+          M_NUMBER_OF_PUBLIC_METHODS     = 'npm',
           M_PROPERTIES                   = 'vars',
           M_PROPERTIES_INHERIT           = 'varsi',
           M_PROPERTIES_NON_PRIVATE       = 'varsnp',
@@ -109,14 +104,14 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * )
      * </code>
      *
-     * @var array(string=>array) $_nodeMetrics
+     * @var array(string=>array)
      */
     private $_nodeMetrics = null;
 
     /**
      * The internal used cyclomatic complexity analyzer.
      *
-     * @var PHP_Depend_Metrics_CyclomaticComplexity_Analyzer $_cyclomaticAnalyzer
+     * @var PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      */
     private $_cyclomaticAnalyzer = null;
 
@@ -214,6 +209,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
             self::M_IMPLEMENTED_INTERFACES       => $class->getInterfaces()->count(),
             self::M_CLASS_INTERFACE_SIZE         => 0,
             self::M_CLASS_SIZE                   => 0,
+            self::M_NUMBER_OF_PUBLIC_METHODS     => 0,
             self::M_PROPERTIES                   => 0,
             self::M_PROPERTIES_INHERIT           => $this->_calculateVARSi($class),
             self::M_PROPERTIES_NON_PRIVATE       => 0,
@@ -265,14 +261,15 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         // Increment Weighted Methods Per Class(WMC) value
         $this->_nodeMetrics[$uuid][self::M_WEIGHTED_METHODS] += $ccn;
         // Increment Class Size(CSZ) value
-        $this->_nodeMetrics[$uuid][self::M_CLASS_SIZE] += $ccn;
+        ++$this->_nodeMetrics[$uuid][self::M_CLASS_SIZE];
 
         // Increment Non Private values
         if ($method->isPublic()) {
+            ++$this->_nodeMetrics[$uuid][self::M_NUMBER_OF_PUBLIC_METHODS];
             // Increment Non Private WMC value
             $this->_nodeMetrics[$uuid][self::M_WEIGHTED_METHODS_NON_PRIVATE] += $ccn;
             // Increment Class Interface Size(CIS) value
-            $this->_nodeMetrics[$uuid][self::M_CLASS_INTERFACE_SIZE] += $ccn;
+            ++$this->_nodeMetrics[$uuid][self::M_CLASS_INTERFACE_SIZE];
         }
 
         $this->fireEndMethod($method);
@@ -366,7 +363,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         while ($parent !== null) {
             // Count all methods
             foreach ($parent->getMethods() as $m) {
-                if (!$m->isPrivate() && !isset($methods[$m->getName()])) {
+                if (!$m->isPrivate() && !isset($ccn[$m->getName()])) {
                     $ccn[$m->getName()] = $this->_cyclomaticAnalyzer->getCCN2($m);
                 }
             }

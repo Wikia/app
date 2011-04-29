@@ -10,7 +10,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: LineLengthSniff.php 301632 2010-07-28 01:57:56Z squiz $
+ * @version   CVS: $Id: LineLengthSniff.php 306530 2010-12-21 04:08:20Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -27,7 +27,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
@@ -66,8 +66,8 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
+     * @param int                  $stackPtr  The position of the current token in
+     *                                        the stack passed in $tokens.
      *
      * @return void
      */
@@ -118,7 +118,17 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
         if (preg_match('|@version[^\$]+\$Id|', $lineContent) === 0
             && preg_match('|@license|', $lineContent) === 0
         ) {
-            $lineLength = strlen($lineContent);
+            if (PHP_CODESNIFFER_ENCODING !== 'iso-8859-1') {
+                // Not using the detault encoding, so take a bit more care.
+                $lineLength = iconv_strlen($lineContent, PHP_CODESNIFFER_ENCODING);
+                if ($lineLength === false) {
+                    // String contained invalid characters, so revert to default.
+                    $lineLength = strlen($lineContent);
+                }
+            } else {
+                $lineLength = strlen($lineContent);
+            }
+
             if ($this->absoluteLineLimit > 0
                 && $lineLength > $this->absoluteLineLimit
             ) {

@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2002-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
  *
  * @package    DbUnit
  * @author     Mike Lively <m@digitalsandwich.com>
- * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2002-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.0.0
@@ -49,7 +49,7 @@
  * @author     Mike Lively <m@digitalsandwich.com>
  * @copyright  2010 Mike Lively <m@digitalsandwich.com>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 1.0.0
+ * @version    Release: 1.0.1
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.0.0
  */
@@ -77,18 +77,33 @@ class PHPUnit_Extensions_Database_DataSet_Persistors_Yaml implements PHPUnit_Ext
      */
     public function write(PHPUnit_Extensions_Database_DataSet_IDataSet $dataset)
     {
-        $phpArr = array();
+        $phpArr      = array();
+        $emptyTables = array();
 
         foreach ($dataset as $table) {
             $tableName          = $table->getTableMetaData()->getTableName();
-            $phpArr[$tableName] = array();
             $rowCount           = $table->getRowCount();
+
+            if (!$rowCount) {
+                $emptyTables[] = $tableName;
+                continue;
+            }
+
+            $phpArr[$tableName] = array();
 
             for ($i = 0; $i < $rowCount; $i++) {
                 $phpArr[$tableName][] = $table->getRow($i);
             }
         }
 
-        file_put_contents($this->filename, sfYaml::dump($phpArr, 3));
+        $emptyTablesAsString = '';
+
+        if (count($emptyTables)) {
+            $emptyTablesAsString = implode(":\n", $emptyTables) . ":\n\n";
+        }
+
+        file_put_contents(
+          $this->filename, sfYaml::dump($phpArr, 3) . $emptyTablesAsString
+        );
     }
 }

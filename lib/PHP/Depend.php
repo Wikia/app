@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,23 +39,11 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2011 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Parser.php';
-require_once 'PHP/Depend/StorageRegistry.php';
-require_once 'PHP/Depend/VisitorI.php';
-require_once 'PHP/Depend/Builder/Default.php';
-require_once 'PHP/Depend/Code/Filter/Null.php';
-require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
-require_once 'PHP/Depend/Metrics/AnalyzerClassFileSystemLocator.php';
-require_once 'PHP/Depend/Tokenizer/CacheDecorator.php';
-require_once 'PHP/Depend/Tokenizer/Internal.php';
-require_once 'PHP/Depend/Input/CompositeFilter.php';
-require_once 'PHP/Depend/Input/Iterator.php';
 
 /**
  * PHP_Depend analyzes php class files and generates metrics.
@@ -66,9 +54,9 @@ require_once 'PHP/Depend/Input/Iterator.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2011 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: 0.9.19
+ * @version   Release: 0.10.3
  * @link      http://pdepend.org/
  */
 class PHP_Depend
@@ -82,6 +70,14 @@ class PHP_Depend
      * Marks the storag engine used for parser artifacts.
      */
     const PARSER_STORAGE = 2;
+
+    /**
+     * The system configuration.
+     *
+     * @var PHP_Depend_Util_Configuration
+     * @since 0.10.0
+     */
+    protected $configuration = null;
 
     /**
      * List of source directories.
@@ -140,13 +136,6 @@ class PHP_Depend
     private $_withoutAnnotations = false;
 
     /**
-     * Should PHP_Depend treat <b>+global</b> as a regular project package?
-     *
-     * @var boolean $_supportBadDocumentation
-     */
-    private $_supportBadDocumentation = false;
-
-    /**
      * List or registered listeners.
      *
      * @var array(PHP_Depend_ProcessListenerI) $_listeners
@@ -169,20 +158,14 @@ class PHP_Depend
     private $_parseExceptions = array();
 
     /**
-     * Configured storage engines.
-     *
-     * @var array(PHP_Depend_Storage_AbstractEngine) $_storages
-     */
-    private $_storages = array(
-        self::TOKEN_STORAGE   =>  null,
-        self::PARSER_STORAGE  =>  null,
-    );
-
-    /**
      * Constructs a new php depend facade.
+     *
+     * @param PHP_Depend_Util_Configuration $configuration The system configuration.
      */
-    public function __construct()
+    public function __construct(PHP_Depend_Util_Configuration $configuration)
     {
+        $this->configuration = $configuration;
+
         $this->_codeFilter = new PHP_Depend_Code_Filter_Null();
         $this->_fileFilter = new PHP_Depend_Input_CompositeFilter();
     }
@@ -252,34 +235,6 @@ class PHP_Depend
     }
 
     /**
-     * Sets a storage instance for a special usage.
-     *
-     * @param integer                    $type   The target identifier.
-     * @param PHP_Depend_Storage_EngineI $engine The storage instance.
-     *
-     * @return void
-     */
-    public function setStorage($type, PHP_Depend_Storage_EngineI $engine)
-    {
-        switch ($type) {
-        case self::TOKEN_STORAGE:
-            $engine->setPrune();
-            break;
-
-        case self::PARSER_STORAGE:
-            $engine->setMaxLifetime(86400);
-            $engine->setProbability(5);
-            break;
-
-        default:
-            $message = sprintf('Unknown storage identifier "%s" given.', $type);
-            throw new InvalidArgumentException($message);
-        }
-
-        $this->_storages[$type] = $engine;
-    }
-
-    /**
      * Sets an additional code filter. These filters could be used to hide
      * external libraries and global stuff from the PDepend output.
      *
@@ -336,8 +291,6 @@ class PHP_Depend
      */
     public function analyze()
     {
-        $this->_initStorages();
-
         $this->_builder = new PHP_Depend_Builder_Default();
 
         $this->_performParseProcess();
@@ -594,16 +547,22 @@ class PHP_Depend
         // Reset list of thrown exceptions
         $this->_parseExceptions = array();
 
-        $tokenizer = new PHP_Depend_Tokenizer_CacheDecorator(
-            new PHP_Depend_Tokenizer_Internal()
-        );
+        // Create a cache instance
+        $cacheFactory = new PHP_Depend_Util_Cache_Factory($this->configuration);
+        $cache = $cacheFactory->create();
+
+        $tokenizer = new PHP_Depend_Tokenizer_Internal();
 
         $this->fireStartParseProcess($this->_builder);
 
         foreach ($this->_createFileIterator() as $file) {
             $tokenizer->setSourceFile($file);
 
-            $parser = new PHP_Depend_Parser($tokenizer, $this->_builder);
+            $parser = new PHP_Depend_Parser_VersionAllParser(
+                $tokenizer,
+                $this->_builder,
+                $cache
+            );
             $parser->setMaxNestingLevel(1024);
 
             // Disable annotation parsing?
@@ -663,27 +622,6 @@ class PHP_Depend
     }
 
     /**
-     * This method initializes the storage strategies for node tokens that are
-     * used during a single PHP_Depend run and the parser cache storage.
-     *
-     * @return void
-     */
-    private function _initStorages()
-    {
-        foreach ($this->_storages as $identifier => $storage) {
-            // Fallback for unconfigured storage engines
-            if ($storage === null) {
-                // Include memory storage class definition
-                include_once 'PHP/Depend/Storage/MemoryEngine.php';
-
-                $storage = new PHP_Depend_Storage_MemoryEngine();
-            }
-
-            PHP_Depend_StorageRegistry::set($identifier, $storage);
-        }
-    }
-
-    /**
      * This method will initialize all code analysers and register the
      * interested listeners.
      *
@@ -730,7 +668,8 @@ class PHP_Depend
                     new RecursiveIteratorIterator(
                         new RecursiveDirectoryIterator($directory . '/')
                     ),
-                    $this->_fileFilter
+                    $this->_fileFilter,
+                    $directory
                 )
             );
         }
@@ -783,23 +722,4 @@ class PHP_Depend
 
         return $this->_initAnalyseListeners($loader);
     }
-
-    // Deprecated Stuff
-    // @codeCoverageIgnoreStart
-
-    /**
-     * Should PHP_Depend support projects with a bad documentation. If this
-     * option is set to <b>true</b>, PHP_Depend will treat the default package
-     * <b>+global</b> as a regular project package.
-     *
-     * @return void
-     * @deprecated since 0.9.12
-     */
-    public function setSupportBadDocumentation()
-    {
-        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.12.' . PHP_EOL);
-        $this->_supportBadDocumentation = true;
-    }
-
-    // @codeCoverageIgnoreEnd
 }

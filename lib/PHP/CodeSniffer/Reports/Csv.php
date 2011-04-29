@@ -27,7 +27,7 @@
  * @copyright 2009 SQLI <www.sqli.com>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PHP_CodeSniffer_Reports_Csv implements PHP_CodeSniffer_Report
@@ -37,9 +37,9 @@ class PHP_CodeSniffer_Reports_Csv implements PHP_CodeSniffer_Report
     /**
      * Generates a csv report.
      * 
-     * @param array   $report       Prepared report.
-     * @param boolean $showSources  Show sources?
-     * @param int     $width        Maximum allowed lne width.
+     * @param array   $report      Prepared report.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed lne width.
      * 
      * @return string 
      */
@@ -48,7 +48,7 @@ class PHP_CodeSniffer_Reports_Csv implements PHP_CodeSniffer_Report
         $showSources=false,
         $width=80
     ) {
-        echo 'File,Line,Column,Severity,Message,Source'.PHP_EOL;
+        echo 'File,Line,Column,Type,Message,Source,Severity'.PHP_EOL;
 
         $errorsShown = 0;
         foreach ($report['files'] as $filename => $file) {
@@ -59,7 +59,8 @@ class PHP_CodeSniffer_Reports_Csv implements PHP_CodeSniffer_Report
                         $message  = str_replace('"', '\"', $error['message']);
                         $type     = strtolower($error['type']);
                         $source   = $error['source'];
-                        echo "\"$filename\",$line,$column,$type,\"$message\",$source".PHP_EOL;
+                        $severity = $error['severity'];
+                        echo "\"$filename\",$line,$column,$type,\"$message\",$source,$severity".PHP_EOL;
                         $errorsShown++;
                     }
                 }

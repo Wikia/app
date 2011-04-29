@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,14 +40,12 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
  * @since      0.9.8
  */
-
-require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
  * This node class represents a switch-label.
@@ -56,9 +54,9 @@ require_once 'PHP/Depend/Code/ASTNode.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://www.pdepend.org/
  * @since      0.9.8
  */
@@ -74,7 +72,7 @@ class PHP_Depend_Code_ASTSwitchLabel extends PHP_Depend_Code_ASTNode
      *
      * @var boolean
      */
-    private $_default = false;
+    protected $default = false;
 
     /**
      * Returns <b>true</b> when this node is the default label.
@@ -83,7 +81,7 @@ class PHP_Depend_Code_ASTSwitchLabel extends PHP_Depend_Code_ASTNode
      */
     public function isDefault()
     {
-        return $this->_default;
+        return $this->default;
     }
 
     /**
@@ -93,7 +91,7 @@ class PHP_Depend_Code_ASTSwitchLabel extends PHP_Depend_Code_ASTNode
      */
     public function setDefault()
     {
-        $this->_default = true;
+        $this->default = true;
     }
 
     /**
@@ -109,5 +107,18 @@ class PHP_Depend_Code_ASTSwitchLabel extends PHP_Depend_Code_ASTNode
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitSwitchLabel($this, $data);
+    }
+
+    /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
+    public function  __sleep()
+    {
+        return array_merge(array('default'), parent::__sleep());
     }
 }

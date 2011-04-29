@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,19 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
-require_once 'PHP/Depend/Log/LoggerI.php';
-require_once 'PHP/Depend/Log/CodeAwareI.php';
-require_once 'PHP/Depend/Log/FileAwareI.php';
-require_once 'PHP/Depend/Log/NoLogOutputException.php';
-require_once 'PHP/Depend/Metrics/NodeAwareI.php';
-require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
  * This logger generates a summary xml document with aggregated project, class,
@@ -62,9 +54,9 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Log_Summary_Xml
@@ -197,7 +189,7 @@ class PHP_Depend_Log_Summary_Xml
 
         $metrics = $dom->createElement('metrics');
         $metrics->setAttribute('generated', date('Y-m-d\TH:i:s'));
-        $metrics->setAttribute('pdepend', '0.9.19');
+        $metrics->setAttribute('pdepend', '0.10.3');
 
         foreach ($this->_getProjectMetrics() as $name => $value) {
             $metrics->setAttribute($name, $value);

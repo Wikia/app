@@ -11,7 +11,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: Tokens.php 302832 2010-08-27 00:39:30Z squiz $
+ * @version   CVS: $Id: Tokens.php 307870 2011-01-31 04:01:45Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -59,14 +59,16 @@ define('T_URL', 1040);
 define('T_STYLE', 1041);
 define('T_ASPERAND', 1042);
 define('T_DOLLAR', 1043);
+define('T_TYPEOF', 1044);
+define('T_CLOSURE', 1045);
 
-// Some PHP 5.3 tokens.
+// Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {
-    define('T_NAMESPACE', 1044);
+    define('T_NAMESPACE', 1046);
 }
 
 if (defined('T_NS_SEPARATOR') === false) {
-    define('T_NS_SEPARATOR', 1045);
+    define('T_NS_SEPARATOR', 1047);
 }
 
 /**
@@ -82,7 +84,7 @@ if (defined('T_NS_SEPARATOR') === false) {
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 final class PHP_CodeSniffer_Tokens
@@ -96,6 +98,7 @@ final class PHP_CodeSniffer_Tokens
     public static $weightings = array(
                                  T_CLASS               => 1000,
                                  T_FUNCTION            => 100,
+                                 T_CLOSURE             => 100,
 
                                  /*
                                      Conditions.
@@ -240,6 +243,7 @@ final class PHP_CodeSniffer_Tokens
     public static $parenthesisOpeners = array(
                                          T_ARRAY,
                                          T_FUNCTION,
+                                         T_CLOSURE,
                                          T_WHILE,
                                          T_FOR,
                                          T_FOREACH,
@@ -258,6 +262,7 @@ final class PHP_CodeSniffer_Tokens
                                    T_CLASS,
                                    T_INTERFACE,
                                    T_FUNCTION,
+                                   T_CLOSURE,
                                    T_IF,
                                    T_SWITCH,
                                    T_CASE,

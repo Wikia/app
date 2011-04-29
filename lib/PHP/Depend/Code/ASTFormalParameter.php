@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,14 +40,12 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-
-require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
  * This class represents a formal parameter within the signature of a function,
@@ -60,9 +58,9 @@ require_once 'PHP/Depend/Code/ASTNode.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
@@ -123,5 +121,18 @@ class PHP_Depend_Code_ASTFormalParameter extends PHP_Depend_Code_ASTNode
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitFormalParameter($this, $data);
+    }
+
+    /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
+    public function  __sleep()
+    {
+        return array_merge(array('passedByReference'), parent::__sleep());
     }
 }

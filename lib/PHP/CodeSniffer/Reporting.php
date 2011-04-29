@@ -31,7 +31,7 @@ if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
  * @copyright 2009 SQLI <www.sqli.com>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PHP_CodeSniffer_Reporting
@@ -86,13 +86,13 @@ class PHP_CodeSniffer_Reporting
         $reportClass = self::factory($report);
         $reportData  = $this->prepare($filesViolations);
 
-        if ($reportFile !== '') {
+        if ($reportFile !== null) {
             ob_start();
         }
 
         $numErrors = $reportClass->generate($reportData, $showSources, $reportWidth);
 
-        if ($reportFile !== '') {
+        if ($reportFile !== null) {
             $generatedReport = ob_get_contents();
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
                 ob_end_flush();
@@ -157,9 +157,10 @@ class PHP_CodeSniffer_Reporting
                     $newErrors = array();
                     foreach ($colErrors as $data) {
                         $newErrors[] = array(
-                                        'message' => $data['message'],
-                                        'source'  => $data['source'],
-                                        'type'    => 'ERROR',
+                                        'message'  => $data['message'],
+                                        'source'   => $data['source'],
+                                        'severity' => $data['severity'],
+                                        'type'     => 'ERROR',
                                        );
                     }//end foreach
 
@@ -174,9 +175,10 @@ class PHP_CodeSniffer_Reporting
                     $newWarnings = array();
                     foreach ($colWarnings as $data) {
                         $newWarnings[] = array(
-                                          'message' => $data['message'],
-                                          'source'  => $data['source'],
-                                          'type'    => 'WARNING',
+                                          'message'  => $data['message'],
+                                          'source'   => $data['source'],
+                                          'severity' => $data['severity'],
+                                          'type'     => 'WARNING',
                                          );
                     }//end foreach
 

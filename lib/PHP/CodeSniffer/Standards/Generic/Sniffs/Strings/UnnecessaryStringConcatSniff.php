@@ -9,7 +9,7 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: UnnecessaryStringConcatSniff.php 301632 2010-07-28 01:57:56Z squiz $
+ * @version   CVS: $Id: UnnecessaryStringConcatSniff.php 304603 2010-10-22 03:07:04Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -24,7 +24,7 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSniffer_Sniff
@@ -97,6 +97,18 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
             && in_array($tokens[$next]['code'], $stringTokens) === true
         ) {
             if ($tokens[$prev]['content'][0] === $tokens[$next]['content'][0]) {
+                // Before we throw an error for PHP, allow strings to be
+                // combined if they would have < and ? next to each other because
+                // this trick is sometimes required in PHP strings.
+                if ($phpcsFile->tokenizerType === 'PHP') {
+                    $prevChar = substr($tokens[$prev]['content'], -2, 1);
+                    $nextChar = $tokens[$next]['content'][1];
+                    $combined = $prevChar.$nextChar;
+                    if ($combined === '?'.'>' || $combined === '<'.'?') {
+                        return;
+                    }
+                }
+
                 $error = 'String concat is not required here; use a single string instead';
                 if ($this->error === true) {
                     $phpcsFile->addError($error, $stackPtr, 'Found');

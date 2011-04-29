@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,18 +40,11 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
-
-require_once 'PHP/Depend/Code/ASTInvocation.php';
-require_once 'PHP/Depend/Code/ASTMemberPrimaryPrefix.php';
-
-require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
  * This analyzer collects coupling values for the hole project. It calculates
@@ -78,14 +71,14 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.9.19
+ * @version    Release: 0.10.3
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_Coupling_Analyzer
        extends PHP_Depend_Metrics_AbstractAnalyzer
-    implements PHP_Depend_Metrics_AnalyzerI,
+    implements PHP_Depend_Metrics_NodeAwareI,
                PHP_Depend_Metrics_ProjectAwareI
 {
     /**
@@ -97,21 +90,50 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * Metrics provided by the analyzer implementation.
      */
     const M_CALLS  = 'calls',
-          M_FANOUT = 'fanout';
+          M_FANOUT = 'fanout',
+          M_CA     = 'ca',
+          M_CBO    = 'cbo',
+          M_CE     = 'ce';
+
+    /**
+     * Has this analyzer already processed the source under test?
+     *
+     * @var boolean
+     * @since 0.10.2
+     */
+    private $_uninitialized = true;
 
     /**
      * The number of method or function calls.
      *
-     * @var integer $_calls
+     * @var integer
      */
-    private $_calls = -1;
+    private $_calls = 0;
 
     /**
      * Number of fanouts.
      *
-     * @var integer $_fanout
+     * @var integer
      */
-    private $_fanout = -1;
+    private $_fanout = 0;
+
+    /**
+     * Temporary map that is used to hold the uuid combinations of dependee and
+     * depender.
+     *
+     * @var array(string=>array)
+     * @since 0.10.2
+     */
+    private $_temporaryCouplingMap = array();
+
+    /**
+     * This array holds a mapping between node identifiers and an array with
+     * the node's metrics.
+     *
+     * @var array(string=>array)
+     * @since 0.10.2
+     */
+    private $_nodeMetrics = array();
 
     /**
      * Provides the project summary as an <b>array</b>.
@@ -134,6 +156,31 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     }
 
     /**
+     * This method will return an <b>array</b> with all generated metric values
+     * for the given node instance. If there are no metrics for the given node
+     * this method will return an empty <b>array</b>.
+     *
+     * <code>
+     * array(
+     *     'loc'    =>  42,
+     *     'ncloc'  =>  17,
+     *     'cc'     =>  12
+     * )
+     * </code>
+     *
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     *
+     * @return array(string=>mixed)
+     */
+    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    {
+        if (isset($this->_nodeMetrics[$node->getUUID()])) {
+            return $this->_nodeMetrics[$node->getUUID()];
+        }
+        return array();
+    }
+
+    /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
@@ -142,22 +189,72 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
-        // Check for previous run
-        if ($this->_calls === -1) {
-
-            $this->fireStartAnalyzer();
-
-            // Init metrics
-            $this->_calls  = 0;
-            $this->_fanout = 0;
-
-            // Process all packages
-            foreach ($packages as $package) {
-                $package->accept($this);
-            }
-
-            $this->fireEndAnalyzer();
+        if ($this->_uninitialized) {
+            $this->_analyze($packages);
+            $this->_uninitialized = false;
         }
+    }
+
+    /**
+     * This method traverses all packages in the given iterator and calculates
+     * the coupling metrics for them.
+     *
+     * @param PHP_Depend_Code_NodeIterator $packages All parsed code packages.
+     *
+     * @return void
+     * @since 0.10.2
+     */
+    private function _analyze(PHP_Depend_Code_NodeIterator $packages)
+    {
+        $this->fireStartAnalyzer();
+        $this->_reset();
+
+        foreach ($packages as $package) {
+            $package->accept($this);
+        }
+
+        $this->_postProcessTemporaryCouplingMap();
+        $this->fireEndAnalyzer();
+    }
+
+    /**
+     * This method resets all internal state variables before the analyzer can
+     * start the object tree traversal.
+     *
+     * @return void
+     * @since 0.10.2
+     */
+    private function _reset()
+    {
+        $this->_calls                = 0;
+        $this->_fanout               = 0;
+        $this->_nodeMetrics          = array();
+        $this->_temporaryCouplingMap = array();
+    }
+
+    /**
+     * This method takes the temporary coupling map with node UUIDs and calculates
+     * the concrete node metrics.
+     *
+     * @return void
+     * @since 0.10.2
+     */
+    private function _postProcessTemporaryCouplingMap()
+    {
+        foreach ($this->_temporaryCouplingMap as $uuid => $metrics) {
+            $afferentCoupling = count($metrics['ca']);
+            $efferentCoupling = count($metrics['ce']);
+
+            $this->_nodeMetrics[$uuid] = array(
+                self::M_CA   =>  $afferentCoupling,
+                self::M_CBO  =>  $efferentCoupling,
+                self::M_CE   =>  $efferentCoupling
+            );
+
+            $this->_fanout += $efferentCoupling;
+        }
+        
+        $this->_temporaryCouplingMap = array();
     }
 
     /**
@@ -166,7 +263,6 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * @param PHP_Depend_Code_Function $function The current function node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
@@ -185,8 +281,19 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         }
         foreach ($function->getDependencies() as $type) {
             if (in_array($type, $fanouts, true) === false) {
+                $fanouts[] = $type;
                 ++$this->_fanout;
             }
+        }
+
+        foreach ($fanouts as $fanout) {
+            $this->_initClassOrInterfaceDependencyMap($fanout);
+
+            $this->_temporaryCouplingMap[
+                $fanout->getUUID()
+            ]['ca'][
+                $function->getUUID()
+            ] = true;
         }
 
         $this->_countCalls($function);
@@ -195,43 +302,58 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     }
 
     /**
+     * Visit method for classes that will be called by PHP_Depend during the
+     * analysis phase with the current context class.
+     *
+     * @param PHP_Depend_Code_Class $class The currently analyzed class.
+     *
+     * @return void
+     * @since 0.10.2
+     */
+    public function visitClass(PHP_Depend_Code_Class $class)
+    {
+        $this->_initClassOrInterfaceDependencyMap($class);
+        return parent::visitClass($class);
+    }
+
+    /**
+     * Visit method for interfaces that will be called by PHP_Depend during the
+     * analysis phase with the current context interface.
+     *
+     * @param PHP_Depend_Code_Interface $interface The currently analyzed interface.
+     *
+     * @return void
+     * @since 0.10.2
+     */
+    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    {
+        $this->_initClassOrInterfaceDependencyMap($interface);
+        return parent::visitInterface($interface);
+    }
+
+    /**
      * Visits a method node.
      *
      * @param PHP_Depend_Code_Class $method The method class node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->fireStartMethod($method);
 
-        $parent = $method->getParent();
+        $declaringClass = $method->getParent();
 
-        $fanouts = array();
-        if (($type = $method->getReturnClass()) !== null) {
-            if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
-                $fanouts[] = $type;
-                ++$this->_fanout;
-            }
-        }
+        $this->_calculateClassOrInterfaceCoupling(
+            $declaringClass,
+            $method->getReturnClass()
+        );
+
         foreach ($method->getExceptionClasses() as $type) {
-            if (in_array($type, $fanouts, true)) {
-                continue;
-            }
-            if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
-                $fanouts[] = $type;
-                ++$this->_fanout;
-            }
+            $this->_calculateClassOrInterfaceCoupling($declaringClass, $type);
         }
         foreach ($method->getDependencies() as $type) {
-            if (in_array($type, $fanouts, true)) {
-                continue;
-            }
-            if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
-                $fanouts[] = $type;
-                ++$this->_fanout;
-            }
+            $this->_calculateClassOrInterfaceCoupling($declaringClass, $type);
         }
 
         $this->_countCalls($method);
@@ -245,25 +367,81 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * @param PHP_Depend_Code_Property $property The property class node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitProperty()
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {
         $this->fireStartProperty($property);
 
-        // Check for not null
-        if (($type = $property->getClass()) !== null) {
-            $declaringClass = $property->getDeclaringClass();
-
-            // Only increment if these types are not part of the same hierarchy
-            if (!$type->isSubtypeOf($declaringClass)
-                && !$declaringClass->isSubtypeOf($type)
-            ) {
-                ++$this->_fanout;
-            }
-        }
+        $this->_calculateClassOrInterfaceCoupling(
+            $property->getDeclaringClass(),
+            $property->getClass()
+        );
 
         $this->fireEndProperty($property);
+    }
+
+    /**
+     * Calculates the coupling between the given types.
+     *
+     * @param PHP_Depend_Code_AbstractClassOrInterface $declaringClass The declaring
+     *        or context class.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $coupledClass   The class that
+     *        is used by the declaring class or <b>null</b> when no class is defined.
+     *
+     * @return void
+     * @since 0.10.2 
+     */
+    private function _calculateClassOrInterfaceCoupling(
+        PHP_Depend_Code_AbstractClassOrInterface $declaringClass,
+        PHP_Depend_Code_AbstractClassOrInterface $coupledClass = null
+    ) {
+        $this->_initClassOrInterfaceDependencyMap($declaringClass);
+
+        if (null === $coupledClass) {
+            return;
+        }
+        if ($coupledClass->isSubtypeOf($declaringClass)
+            || $declaringClass->isSubtypeOf($coupledClass)
+        ) {
+            return;
+        }
+
+        $this->_initClassOrInterfaceDependencyMap($coupledClass);
+
+        $this->_temporaryCouplingMap[
+            $declaringClass->getUUID()
+        ]['ce'][
+            $coupledClass->getUUID()
+        ] = true;
+
+        $this->_temporaryCouplingMap[
+            $coupledClass->getUUID()
+        ]['ca'][
+            $declaringClass->getUUID()
+        ] = true;
+    }
+
+    /**
+     * This method will initialize a temporary coupling container for the given
+     * given class or interface instance.
+     *
+     * @param PHP_Depend_Code_AbstractClassOrInterface $classOrInterface The
+     *        currently visited/traversed class or interface instance.
+     *
+     * @return void
+     * @since 0.10.2
+     */
+    private function _initClassOrInterfaceDependencyMap(
+        PHP_Depend_Code_AbstractClassOrInterface $classOrInterface
+    ) {
+        if (isset($this->_temporaryCouplingMap[$classOrInterface->getUUID()])) {
+            return;
+        }
+
+        $this->_temporaryCouplingMap[$classOrInterface->getUUID()] = array(
+            'ce' => array(),
+            'ca' => array()
+        );
     }
 
     /**

@@ -10,7 +10,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: DeprecatedFunctionsSniff.php 301632 2010-07-28 01:57:56Z squiz $
+ * @version   CVS: $Id: DeprecatedFunctionsSniff.php 306530 2010-12-21 04:08:20Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -27,7 +27,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.3.0RC1
+ * @version   Release: 1.3.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Generic_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_ForbiddenFunctionsSniff
@@ -57,7 +57,7 @@ class Generic_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_For
             $function = new ReflectionFunction($functionName);
 
             if ($function->isDeprecated() === true) {
-                $this->forbiddenFunctions[$functionName] = NULL;
+                $this->forbiddenFunctions[$functionName] = null;
             }
         }
 
