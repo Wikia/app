@@ -1,15 +1,21 @@
 <?php
 
 $wgExtensionMessagesFiles['LatestQuestions'] = dirname(__FILE__) . '/LatestQuestions.i18n.php';
-
-$wgHooks['AjaxAddScript'][] = 'wfLatestQuestionsAjaxAddScript';
-$wgHooks['MakeGlobalVariablesScript'][] = 'wfLatestQuestionsJSVariables';
+$wgExtensionFunctions[] = 'efLatestQuestionsInit';
 
 if( empty( $wgAnswersServer ) ) {
 	$wgAnswersServer = 'http://frag.wikia.com';
 }
 if( empty( $wgAnswersScript ) ) {
 	$wgAnswersScript = '/index.php';
+}
+
+function efLatestQuestionsInit() {
+	global $wgUser, $wgHooks;
+	if( $wgUser->isAnon() ) {
+		$wgHooks['AjaxAddScript'][] = 'wfLatestQuestionsAjaxAddScript';
+		$wgHooks['MakeGlobalVariablesScript'][] = 'wfLatestQuestionsJSVariables';
+	}
 }
 
 function wfLatestQuestionsAjaxAddScript( &$out ) {
