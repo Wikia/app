@@ -21,7 +21,7 @@ $dir = dirname(__FILE__);
 
 // rights
 $wgAvailableRights[] = 'chatmoderator';
-$wgGroupPermissions['*']['chatmoderator'] = false;
+$wgGroupPermissions['user']['chatmoderator'] = false;
 $wgGroupPermissions['sysop']['chatmoderator'] = true;
 $wgGroupPermissions['staff']['chatmoderator'] = true;
 $wgGroupPermissions['helper']['chatmoderator'] = true;
