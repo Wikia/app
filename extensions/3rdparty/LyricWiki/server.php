@@ -731,6 +731,9 @@ function getSong($artist, $song="", $doHyphens=true){
 			// These are "artists" which are very commonly accuring non-artists.  IE: Baby Einstein is a collection of classical music, Apple Inc. is just apple's (video?) podcasts
 			// NOTE: For now we leave the 'defaultLyrics' message for players that handle this explicitly as not being a match.
 		} else {
+			
+			// TODO: SHOULDN'T THIS STUFF BE IN lw_getTitle() INSTEAD OF HERE??
+			
 			// Attempt to interpret hyphen-delimited title/artist/ablum strings correctly.
 			$lastHyphen = false; // if this isn't false and there is no result, then the whole thing will be tried again using hyphenSong as the song.
 			if($doHyphens){ // can be turned off so that a second pass can be made without this hyphen trick if it doesn't work the first time.
@@ -749,7 +752,7 @@ function getSong($artist, $song="", $doHyphens=true){
 			$transArray = array(
 				"<" => "Less Than", // < is not a valid character in wiki titles.
 				">" => "Greater Than", // < is not a valid character in wiki titles.
-				"#" => "Number ", // note the trailing space
+				"#" => "Number ", // note the trailing space - TODO: FIXME: IS THIS STILL A RESTRICTION??
 				"{" => "(",
 				"}" => ")"
 			);
