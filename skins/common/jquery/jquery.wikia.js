@@ -203,17 +203,6 @@ jQuery.showCustomModal = function(title, content, options) {
 	});
 }
 
-//load jquery.wikia.modal if necessary and run callback function
-jQuery.loadModalJS = function(callback) {
-	//check if we already loaded jquery.wikia.modal.js
-	if (typeof $().makeModal != 'function') {
-		$().log('modal plugin loading...');
-		$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, callback);
-	} else {
-		callback();
-	}
-}
-
 // send POST request and parse returned JSON
 jQuery.postJSON = function(u, d, callback) {
 	return jQuery.post(u, d, callback, "json");
@@ -282,6 +271,14 @@ $.loadJQueryAIM = function(callback) {
 	$.loadLibrary('jQuery AIM',
 		stylepath + '/common/jquery/jquery.aim.js?' + wgStyleVersion,
 		typeof jQuery.AIM,
+		callback
+	);
+}
+
+$.loadModalJS = function(callback) {
+	$.loadLibrary('makeModal()',
+		stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion,
+		typeof jQuery.fn.makeModal,
 		callback
 	);
 }
@@ -595,6 +592,13 @@ $.extend({
 		var f = function() {};
 		f.prototype = sc.prototype || {};
 		bc.prototype = new f();
+
+		// macbre: support static members
+		if (typeof o.statics == 'object') {
+			bc = $.extend(bc, o.statics);
+			delete o.statics;
+		}
+
 		for (var m in o)
 			bc.prototype[m] = o[m];
 		bc.prototype.constructor = bc;
@@ -691,7 +695,7 @@ Observable = $.createClass(Object,{
 	fire: function(e) {
 		var a = Array.prototype.slice.call(arguments,1);
 		if (!this.events[e])
-			return;
+			return true;
 		var ee = this.events[e];
 		for (var i=0;i<ee.length;i++) {
 			if (typeof ee[i].fn == 'function') {
@@ -702,6 +706,21 @@ Observable = $.createClass(Object,{
 			}
 		}
 		return true;
+	},
+	
+	debugEvents: function( list ) {
+		var fns = list ? list : ['bind','unbind','fire','relayEvents'];
+		for (var i=0;i<fns.length;i++) {
+			(function(fn){
+				if (typeof this['nodebug-'+fn] == 'undefined') {
+					var f = this['nodebug-'+fn] = this[fn];
+					this[fn] = function() {
+						window.console && console.log && console.log(this,fn,arguments);
+						return f.apply(this,arguments);
+					}
+				}
+			}).call(this,fns[i]);
+		}
 	}
 
 });
@@ -834,3 +853,35 @@ jQuery.getResources = function(resources, callback) {
 if(jQuery.support){
 	jQuery.support.positionFixed = !( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} || (navigator.userAgent.match(/android/i) != null));
 }
+
+//Simple JavaScript Templating
+//John Resig - http://ejohn.org/ - MIT Licensed
+$.tmpl = function tmpl(str, data) {
+
+	// Figure out if we're getting a template, or if we need to
+	// load the template - and be sure to cache the result.
+	try {
+		var fn = new Function("obj",
+				"var p=[],print=function(){p.push.apply(p,arguments);};"
+						+
+
+						// Introduce the data as local variables using with(){}
+						"with(obj){p.push('"
+						+
+						// Convert the template into pure JavaScript
+						str.replace(/[\r\t\n]/g, " ").split("<%")
+								.join("\t")
+								.replace(/((^|%>)[^\t]*)'/g, "$1\r")
+								.replace(/\t=(.*?)%>/g, "',$1,'")
+								.split("\t")
+								.join("');").split("%>").join("p.push('")
+								.split("\r").join("\\'")
+						+ "');}return p.join('');");
+	}
+	catch(e) {
+		$().log(e, '$.tmpl');
+		$().log(str, '$.tmpl');
+	}
+	// Provide some basic currying to the user
+	return data ? fn(data) : fn;
+};

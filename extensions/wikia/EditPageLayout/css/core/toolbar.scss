@@ -1,0 +1,94 @@
+#EditPageToolbar {
+	@include box-shadow(0,4px,2px,$color-epl-gradient-shadow,false,-2px);
+	@include clearfix;
+	@include gradient-toolbar;
+	padding: 0 15px;
+	position: relative;
+
+	.cke_buttons {
+		@include clearfix;
+		display: block;
+		padding: 5px 0;
+		&.cke_toolbar_format_expanded {
+			border-top: solid 1px $color-epl-trigger-border;
+			margin-right: 40px;
+			padding-top: 5px;
+		}
+	}
+	.editpage-toolbar .cke_buttons {
+		padding: 2px 0 1px;
+	}
+	.cke_toolbar_expand {
+		> a {
+			color: #000;
+			cursor: pointer;
+			display: none;
+			height: 22px;
+			position: absolute;
+			text-align: center;
+			width: 22px;
+			label {
+				cursor: inherit;
+				font-size: 10px;
+			}
+			span {
+				display: block;
+				font-size: 14px;
+				font-weight: bold;
+				line-height: 6px;
+			}
+			&.expand {
+				top: 2px;
+				right: 20px;
+			}
+			&.collapse {
+				top: 44px;
+				right: 20px;
+			}
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+
+	.cke_more_buttons {
+		cursor: pointer;
+		float: left;
+		margin-top: 23px;
+		margin-left: 10px;
+	}
+
+	.cke_toolbar_widescreen {
+		@include clearfix;
+		border-top: solid 1px $color-epl-trigger-border;
+		padding-top: 5px;
+		.cke_toolbar_insert {
+			border-right: solid 1px $color-epl-trigger-border;
+			float: left;
+			margin-top: 5px;
+			padding: 0 5px 0 0;
+		}
+		> .right {
+			float: right;
+			clear: right;
+			width: 220px;
+			> span {
+				display: inline-block;
+			}
+		}
+	}
+
+	// buttons separator
+	.cke_separator {
+		@include gradient-separator;
+		display: inline-block;
+		float: left;
+		height: 30px;
+		margin: -1px 5px;
+		width: 1px;
+	}
+
+	.cke_toolbar_source {
+		padding: 8px 6px 4px;
+	}
+}

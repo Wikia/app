@@ -1,0 +1,29 @@
+body {
+	overflow-y: hidden;
+	padding: 0;
+	&.EditPageScrollable {
+		overflow-y: auto;
+	}
+}
+
+#wpTextbox1 {
+	resize: none; /* remove resize grip in Webkit / Fx4 */
+	width: 99%;
+}
+
+.WikiaPage {
+	margin: 0 auto;
+	padding: 0;
+	z-index: auto;
+}
+
+#WikiaMainContent {
+	z-index: auto;
+}
+
+// remove global header shadow
+#WikiaHeader {
+	nav:before {
+		background: none;
+	}
+}

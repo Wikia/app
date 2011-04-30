@@ -1,0 +1,38 @@
+.editpage-notices {
+	background-color: $color-epl-notices-background;
+	border: 1px solid $color-epl-notices-border;
+	border-top: none;
+	cursor: pointer;
+	display: block;
+	left: 50px;
+	padding: 2px 8px;
+	position: absolute;
+	right: 50px;
+	top: -1px;
+	z-index: 110;
+
+	li {
+		display: block;
+		border-top: 1px solid $color-epl-notices-border;
+		padding: 2px 8px;
+		text-align: center;
+		height: 18px;
+		line-height: 18px;
+
+		overflow: hidden;
+		white-space: nowrap;
+		-o-text-overflow: ellipsis;
+		text-overflow: ellipsis;
+
+		&:first-child {
+			border-top-width: 0;
+		}
+	}
+
+	.dismiss-icon {
+		position: absolute;
+		display: block;
+		top: 6px;
+		right: 6px;
+	}
+}

@@ -494,7 +494,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			}
 		}
 		else {
-			var el = YAHOO.util.Event.getTarget(e);
+			var el = YAHOO.util.Event.getTarget(e) || {id:''};
 			if (el.id == 'wmuLink') {
 				WMU_track('open/fromLinkAboveToolbar'); //tracking
 			} else if (el.id == 'wmuHelpLink') {

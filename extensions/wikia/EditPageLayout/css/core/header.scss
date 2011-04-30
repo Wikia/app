@@ -1,0 +1,42 @@
+#EditPageHeader {
+	@include gradient-header;
+	border-bottom: 1px solid #cbc9ca;
+	height: $height-epl-toolbar;
+	padding-left: 20px;
+	position: relative;
+
+	// scale down wiki logo
+	> .wordmark {
+		@include wordmark;
+		color: $color-links;
+		img {
+			float: left;
+			height: 45px;
+		}
+	}
+
+	> h1 {
+		color: #3a3a3a;
+		display: inline-block;
+		font-size: 20px;
+		line-height: $height-epl-toolbar - 4px; // move it 2px down
+		padding: 4px 9px 0;
+		zoom: 1; // ie
+		> a {
+			color: #2070AD;
+		}
+	}
+}
+
+// "edit title" button (will be shown by JS)
+#EditPageTitle {
+	display: none;
+}
+
+/* Need [Help]? */
+#HelpLink {
+	bottom: 5px;
+	color: #3a3a3a;
+	position: absolute;
+	right: 21px;
+}

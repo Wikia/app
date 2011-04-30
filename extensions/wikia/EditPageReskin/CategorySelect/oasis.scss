@@ -1,0 +1,75 @@
+@import url('/extensions/wikia/EditPageReskin/CategorySelect/CategorySelect.css');
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/yui-suggest";
+
+@import "../../EditPageLayout/css/mixins/constants";
+@import "../../EditPageLayout/css/mixins/helpers";
+
+#csMainContainer{
+	#csSuggestContainer {
+		.yui-ac-content {
+			border-top: medium none !important; /* used to override yui with !important */
+			border-bottom: solid 1px $color-epl-inputs-borders !important;
+			border-left: solid 1px $color-epl-inputs-borders !important;
+			border-right: solid 1px $color-epl-inputs-borders !important;
+		}
+		#csHintContainer {
+		    width: $width-epl-module-input - 4;
+		border-top: medium none;
+		border-bottom: solid 1px $color-epl-inputs-borders;
+		border-left: solid 1px $color-epl-inputs-borders;
+		border-right: solid 1px $color-epl-inputs-borders;
+		z-index: 999;
+		}
+	}
+}
+
+#csMainContainer.csEditMode #csCategoryInput {
+	@include epl-textfield;
+	width: $width-epl-module-input;
+	border: solid 1px $color-epl-inputs-borders;
+	font-style: normal;
+	color: black;
+	&.placeholder {
+		font-style: italic;
+		color: $color-epl-text-color;
+	}
+}
+
+.csEditMode #csItemsContainer .CSitem:hover {
+	background: $color-epl-module-header;
+}
+
+/* Oasis fixes */
+.csViewMode #csButtonsContainer {
+	background-color: mix($color-buttons, $color-page, 5%);
+	border-top: solid 1px $color-page;
+	margin: 25px -15px -12px;
+	text-align: right;
+	width: $width-epl-module-input;
+	input {
+		padding: 0 12px;
+	}
+}
+
+#csSuggestContainer {
+	@include yui-suggest;
+}
+
+.csEditMode #csSuggestContainer  .yui-ac-content {
+    width: $width-epl-module-input + 4 !important;
+}
+
+.csEditMode #csSuggestContainer {
+	top: 0px;
+    width: $width-epl-module-input;
+}
+
+.csEditMode  #csItemsContainerDiv{
+	max-height: 100px;
+    overflow-y: auto;
+    width: $width-epl-module-input + 20;
+    ul {
+    	width: $width-epl-module-input;
+    }
+}

@@ -316,7 +316,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgEnableEditPageReskinExt;
 
 		// InfoBox - Testing
 		$this->wgEnableInfoBoxTest = $wgEnableInfoBoxTest;
@@ -353,8 +353,10 @@ class BodyModule extends Module {
 			}
 		} else {
 			$this->headerModuleName = 'PageHeader';
-			if (self::isEditPage()) {
-				$this->headerModuleAction = 'EditPage';
+			if (empty($wgEnableEditPageReskinExt)) {
+				if (self::isEditPage()) {
+					$this->headerModuleAction = 'EditPage';
+				}
 			}
 
 			// FIXME: move to separate module

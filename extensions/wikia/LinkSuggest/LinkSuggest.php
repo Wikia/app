@@ -40,7 +40,7 @@ function wfLinkSuggestSetupVars( $vars ) {
 function wfLinkSuggestGetPreferences($user, &$preferences) {
 	$preferences['disablelinksuggest'] = array(
 		'type' => 'toggle',
-		'section' => 'editing/advancedediting',
+		'section' => 'editing/monobook-layout',
 		'label-message' => 'tog-disablelinksuggest',
 	);
 	return true;

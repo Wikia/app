@@ -8,7 +8,7 @@ class WikiaHookDispatcher {
 		return 'HOOK__'.$className."__".$methodName."__" . count($this->hookHandlers);
 	}
 
-	public function registerHook($className, $methodName, array $options = array(), $alwaysRebuild = false) {
+	public function registerHook($className, $methodName, array $options = array(), $alwaysRebuild = false, $object = null) {
 		$hookId = $this->generateHookId($className, $methodName);
 
 		$this->hookHandlers[$hookId] = array();
@@ -18,7 +18,7 @@ class WikiaHookDispatcher {
 			'method' => $methodName,
 			'options' => $options,
 			'rebuild' => $alwaysRebuild,
-			'object' => null
+			'object' => $object
 		);
 
 		return array( $this, $hookId );

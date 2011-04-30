@@ -1,0 +1,33 @@
+#EditPageTabs {
+	bottom: -1px;
+	position: absolute;
+	right: 300px;
+	.cke_button {
+		@include border-radius(5px);
+		@include border-radius-se(0);
+		@include border-radius-sw(0);
+		background-color: $color-epl-gradient-light;
+		cursor: pointer;
+		display: inline-block;
+		margin-left: 3px;
+		padding: 1px 0;
+		zoom: 1; // ie
+		&:first-child {
+			margin-left: 0;
+		}
+
+		&.cke_off {
+			background-color: $color-epl-gradient-dark;
+			border-bottom: 1px solid #cbc9ca;
+			padding-bottom: 0;
+		}
+
+		> a:hover {
+			text-decoration: none;
+		}
+		.cke_label {
+			display: inline-block;
+			padding: 2px 5px;
+		}
+	}
+}

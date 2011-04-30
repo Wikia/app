@@ -1,0 +1,22 @@
+.EditPagePermissionError {
+	#EditPageToolbar {
+		height: 38px;
+	}
+
+	#EditPageRail {
+		> .module {
+			display: none;
+			&.module_page_controls {
+				@include gradient-module;
+				display: block;
+				height: 300px;
+				> .module_content {
+					visibility: hidden;
+				}
+			}
+			&.module_license {
+				display: block;
+			}
+		}
+	}
+}

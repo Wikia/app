@@ -8,6 +8,18 @@ $config['rte'] = array(
 		'#function_AssetsConfig::getRTEAssets'
 	)
 );
+$config['rteepl'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#function_AssetsConfig::getRTEAssetsEPL'
+	)
+);
+$config['epl'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#function_AssetsConfig::getEPLAssets',
+	)
+);
 
 // Site specific CSS
 $config['site_anon_css'] = array(
@@ -34,6 +46,7 @@ $config['oasis_jquery'] = array(
 		'//skins/common/jquery/jquery.wikia.js',
 		'//skins/common/jquery/jquery.cookies.2.1.0.js',
 		'//skins/common/jquery/jquery.timeago.js',
+		'//skins/common/jquery/jquery.store.js',
 		'//skins/oasis/js/tables.js',
 		'//skins/oasis/js/common.js'
 	)
@@ -80,6 +93,7 @@ $config['oasis_shared_js'] = array(
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdSS/adss.js',
 		'//extensions/wikia/PageLayoutBuilder/js/view.js',
+		'//extensions/wikia/JSMessages/js/JSMessages.js', // TODO: maybe move to jquery.wikia.js
 		'//skins/oasis/js/GlobalModal.js',
 		'//skins/oasis/js/FirefoxFindFix.js'
 	)

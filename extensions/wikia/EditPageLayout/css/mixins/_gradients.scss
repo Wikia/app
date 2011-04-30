@@ -1,0 +1,19 @@
+@mixin gradient-header {
+	@include linear-gradient(#cfe1ed, top, #cfe1ed, 0%, #a6c4dc, 100%);
+}
+
+@mixin gradient-toolbar {
+	@include linear-gradient($color-epl-gradient-light, top, $color-epl-gradient-light, 50%, $color-epl-gradient-border, 100%);
+}
+
+@mixin gradient-separator {
+    @include linear-gradient($color-epl-separator-light, top, $color-epl-separator-light, 0%, $color-epl-separator-dark, 10%, $color-epl-separator-dark, 90%, $color-epl-separator-light, 100%);
+}
+
+@mixin gradient-module {
+	@include linear-gradient($color-epl-gradient-light, top, $color-epl-gradient-light, 60%, $color-epl-gradient-module-dark, 100%);
+}
+
+@mixin gradient-module-header {
+	@include linear-gradient($color-epl-gradient-light, top, $color-epl-gradient-light, 30%, $color-epl-gradient-dark, 100%);
+}

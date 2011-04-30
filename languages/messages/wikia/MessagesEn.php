@@ -1137,4 +1137,10 @@ Text should be placed on this page if you wish to explain usage, style and polic
 *http://www.wikia.com/Privacy_Policy|Privacy Policy
 *_LICENSE_
 *http://www.wikia.com/Special:CreateWiki|Create a wiki",
+# "editing" preferences sections
+'prefs-general' => 'General',
+'prefs-starting-an-edit' => 'Starting an edit',
+'prefs-editing-experience' => 'Editing experience',
+'prefs-monobook-layout' => 'Monobook layout only',
+'prefs-editarea-size' => 'Size of editing window (Monobook layout only)',
 ));

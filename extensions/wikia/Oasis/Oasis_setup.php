@@ -10,10 +10,12 @@
 $wgExtensionFunctions[] = 'wfOasisSetup';
 
 function wfOasisSetup() {
-	global $wgHooks;
+	global $wgHooks, $wgEnableEditPageReskinExt;
 
 	// modules and services
-	$wgHooks['AlternateEdit'][] = 'EditPageModule::onAlternateEdit';
+	if ( empty($wgEnableEditPageReskinExt) ) {
+		$wgHooks['AlternateEdit'][] = 'EditPageModule::onAlternateEdit';
+	}
 	$wgHooks['ArticleDeleteComplete'][] = 'PageStatsService::onArticleDeleteComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'LatestActivityModule::onArticleSaveComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'PageHeaderModule::onArticleSaveComplete';
@@ -23,8 +25,10 @@ function wfOasisSetup() {
 	$wgHooks['BlogsRenderBlogArticlePage'][] = 'BlogListingModule::renderBlogListing';
 	$wgHooks['DoEditSectionLink'][] = 'ContentDisplayModule::onDoEditSectionLink';
 	$wgHooks['EditPage::showEditForm:initial'][] = 'BodyModule::onEditPageRender';
-	$wgHooks['EditPage::showEditForm:initial'][] = 'EditPageModule::onShowEditFormInitial';
-	$wgHooks['EditPage::showEditForm:initial'][] = 'PageHeaderModule::modifyEditPage';
+	if ( empty($wgEnableEditPageReskinExt) ) {
+		$wgHooks['EditPage::showEditForm:initial'][] = 'EditPageModule::onShowEditFormInitial';
+		$wgHooks['EditPage::showEditForm:initial'][] = 'PageHeaderModule::modifyEditPage';
+	}
 	$wgHooks['FileDeleteComplete'][] = 'LatestPhotosModule::onImageDelete';
 	$wgHooks['MakeThumbLink2'][] = 'ContentDisplayModule::renderPictureAttribution';
 	$wgHooks['MessageCacheReplace'][] = 'LatestPhotosModule::onMessageCacheReplace';

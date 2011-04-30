@@ -1,0 +1,46 @@
+#EditPageEditor {
+	position: relative;
+	.editpage-loading-indicator {
+
+		.loading-background, .loading-message {
+			position: absolute;
+			background: $color-page;
+			display: block;
+		}
+		.loading-background {
+			z-index: 100;
+			@include opacity(75);
+			display: block;
+			left: 0;
+			right: 10px; // exclude padding from #EditPageEditor
+			top: 0;
+			bottom: 0;
+		}
+		.loading-message {
+			background: transparent;
+			z-index: 101;
+			top: 20%;
+			width: 100%;
+			text-align: center;
+
+			color: $color-links;
+
+			.loading-throbber, .loading-text {
+				display: inline-block;
+				zoom: 1;
+				vertical-align: middle;
+				background: $color-page;
+			}
+
+			.loading-throbber {
+				background: $color-page url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+				width: 16px;
+				height: 16px;
+			}
+
+			.loading-text {
+				padding-left: 9px;
+			}
+		}
+	}
+}

@@ -545,6 +545,7 @@ class PageHeaderModule extends Module {
 
 	/**
 	 * Modify edit page: add preview notice bar and render edit box header
+	 * (to be removed after EditPageReskin fully released)
 	 */
 	public static function modifyEditPage(&$editPage) {
 		wfProfileIn(__METHOD__);

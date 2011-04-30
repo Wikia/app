@@ -1,0 +1,183 @@
+#EditPage {
+
+	.module {
+		@include box-shadow(-2px,2px,2px,$color-epl-gradient-shadow,false,0);
+		margin-left: -10px;
+		> h3 {
+			@include gradient-module-header;
+			color: $color-epl-module-header;
+			cursor: pointer;
+			font-size: 14px;
+			font-weight: bold;
+			padding: 8px 20px;
+			> .chevron {
+				border-width: 6px;
+				float: right;
+				&.collapse {
+					border-bottom-color: #6fa7cc;
+					margin-top: 0;
+				}
+				&.expand {
+					border-top-color: #6fa7cc;
+					margin-top: 6px;
+				}
+			}
+		}
+
+		> .module_content {
+			@include gradient-module;
+			color: $color-epl-text-color;
+			padding: 10px 20px 20px 20px;
+		}
+	}
+	.module_license div.module_content{
+	    max-height: 30px;
+    	overflow: hidden;
+	}
+	// page controls
+	.module_page_controls {
+		// minor edit checkbox
+		label {
+			display: block;
+			font-size: 10px;
+			text-align: right;
+			input {
+				vertical-align: middle;
+			}
+		}
+
+		// edit summary
+		textarea {
+			@include epl-textfield;
+			height: 27px;
+			line-height: 13px;
+			margin: 5px 0 10px 0;
+			padding: 7px 8px;
+			resize: none; /* remove resize grip in Webkit / Fx4 */
+			font-style: normal;
+			color: black;
+		}
+
+		.buttons {
+			@include clearfix;
+		}
+
+		#wpPreview {
+			text-align: center;
+		}
+
+		.control-button {
+			float: left;
+			margin-top: 8px;
+			width: 112px;
+			&.even {
+				@include clearfix;
+				float: right;
+			}
+			&.disabled {
+				visibility: hidden;
+			}
+		}
+
+		.wikia-menu-button {
+			//float: left;
+			width: 110px; // preview has border 1px wide
+			height: 19px;
+			& > li > a {
+				display: inline-block;
+				width: 77px;
+			}
+		}
+
+	}
+
+	// module specific styling
+	.module_insert,
+	.module_templates {
+		> .module_content {
+			padding: 10px 0 10px 12px;
+		}
+		.cke_button_big {
+			display: inline-block;
+			margin: 5px 0 4px 5px;
+		}
+		.cke_hidden {
+			display: none;
+		}
+	}
+
+	// templates module
+	.module_templates {
+		.text-links {
+			> .tmpl_other {
+				border-right: solid 1px #0A3073;
+				display: inline;
+				padding: 0 10px 0 0;
+			}
+			> .tmpl_listused {
+				display: inline;
+				padding: 0 0 0 10px;
+			}
+		}
+	}
+
+	// categories module
+	.module_categories {
+		.info-text {
+			padding: 0 5px 5px;
+		}
+	}
+
+	// license module
+	.module_license {
+		&,
+		.module_content {
+			// remove background gradient and shadow
+			@include clear-box-shadow;
+			background: none;
+		}
+	}
+	// more generic selector to make it being applied on main pages
+	.cke_license {
+		color: #898989;
+		font-size: 9px;
+		line-height: 18px;
+		position: relative;
+		padding-left: 55px;
+		.cke_license_icon {
+			height: 20px;
+			margin-top: -10px;
+			position: absolute;
+			top: 50%;
+			width: 20px;
+			&.icon1 {
+				@include sprite-edit-page-full('cc_by_new',18px,18px);
+				left: 0;
+			}
+			&.icon2 {
+				@include sprite-edit-page-full('cc_logo_circle',18px,18px);
+				left: 25px;
+			}
+		}
+	}
+
+	// common styling
+	.module_content {
+		> .text-links {
+			clear: both;
+			> li {
+				display: block;
+				font-size: 12px;
+				padding: 4px 0;
+				> a {
+					color: $color-links;
+					cursor: pointer;
+					&:hover {
+						text-decoration: underline;
+					}
+				}
+			}
+		}
+	}
+
+}

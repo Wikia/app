@@ -75,6 +75,10 @@ function mwSetupToolbar() {
 	if (textboxes[0].style.display == 'none' && !document.getElementById('wpTextbox1___Frame')) {
 		return false;
 	}
+	// Wikia fix (wladek)
+	if (typeof window.WikiaEditor != 'undefined') {
+		return false;
+	}
 
 	for ( var i = 0; i < mwEditButtons.length; i++ ) {
 		mwInsertEditButton( toolbar, mwEditButtons[i] );

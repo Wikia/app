@@ -1,0 +1,23 @@
+#EditPageDialog {
+	.pagetitle {
+		border-bottom: solid 1px $color-headline-border;
+	}
+	.loading {
+		left: 50%;
+		position: absolute;
+		top: 50%;
+	}
+	&.preview {
+		.modalContent {
+			border-color: transparent;
+			padding: 0;
+			.WikiaArticle {
+				border: 1px solid $color-page-border;
+				overflow-y: scroll;
+			}
+		}
+		.modalToolbar {
+			padding: 6px 0 0 0;
+		}
+	}
+}
