@@ -36,7 +36,7 @@ class CategoryExhibitionSection {
 	/**
 	 * fetchSectionItems - returns gets array of items from category from specyfic namespace.
 	 * @param $sCategoryDBKey int category namespace
-	 * @param $mNamespace int namespace for category query
+	 * @param $mNamespace mixed: int namespace or array of int for category query
 	 * @return array
 	 */
 
@@ -161,7 +161,7 @@ class CategoryExhibitionSection {
 	/**
 	 * main function returning fillet template ready to print.
 	 * @param $itemsPerPage int number of articles per page
-	 * @param $namespace int namespace for category query
+	 * @param $namespace mixed: int namespace or array of int for category query
 	 * @return EasyTemplate object
 	 */
 
