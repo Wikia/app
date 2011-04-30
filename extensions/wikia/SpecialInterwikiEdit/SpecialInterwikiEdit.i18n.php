@@ -14,6 +14,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'interwikiedit'			=> 'Interwiki Editor',
 	'iwedit-title'	 		=> 'Interwiki Editor',
 	'iwedit-language-interwikis' 	=> 'language interwikis only',
 	'iwedit-all-interwikis' 	=> 'all interwikis',
