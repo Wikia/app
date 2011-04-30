@@ -961,6 +961,26 @@ function getSong($artist, $song="", $doHyphens=true){
 					}
 				}
 			}
+			
+			// If configured to do so, fallback to full wiki search.
+			if($wgRequest->getBool('fallbackSearch') && ($retVal['lyrics'] == $defaultLyrics)){
+// TODO: IMPLEMENT THE LOCAL WIKI SEARCH TO RETURN A STRUCTURED RESULT!
+//print "FALLBACK SEARCH";
+				try{
+					$maxResults = 25;
+					$searchString = trim("$artist $song"); // trim in case one is empty
+					$response = F::app()->sendRequest( 'SimpleSearch', 'localSearch', array( 'key' => $term, 'limit' => $maxResults ) );
+//print "RAW RESPONSE: <pre>";
+//print_r($response);
+
+				// TODO: Change the response format instead.
+				$retVal['lyrics'] = print_r($response, true);
+					
+					
+				} catch(WikiaException $e){
+					// TODO: For now, just leave the defaultLyrics.
+				}
+			}
 		}
 	} // end of the "if shut_down_api else"
 	
