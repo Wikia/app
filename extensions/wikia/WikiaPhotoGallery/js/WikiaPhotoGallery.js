@@ -651,6 +651,19 @@ var WikiaPhotoGallery = {
 						firstPage = this.GALLERY_PREVIEW_PAGE;
 						this.track('/init/edit/editpage/gallery');
 					}
+				} else if (typeof params.type == 'number') {
+					this.log('add new gallery with specified type');
+					this.editor.gallery.type = params.type;
+					if (this.isSlideshow()) {
+						firstPage = this.SLIDESHOW_PREVIEW_PAGE;
+						this.track('/init/new/editpage/slideshow');
+					} else if (this.isSlider()){
+						firstPage = this.SLIDER_PREVIEW_PAGE;
+						this.track('/init/new/editpage/slider');
+					} else {
+						firstPage = this.GALLERY_PREVIEW_PAGE;
+						this.track('/init/new/editpage/gallery');
+					}
 				} else {
 					this.log('add new gallery');
 					this.track('/init/new');
@@ -660,7 +673,22 @@ var WikiaPhotoGallery = {
 				break;
 
 			case 'source':
-				this.track('/init/new');
+				if (typeof params.type == 'number') {
+					this.log('add new gallery with specified type');
+					this.editor.gallery.type = params.type;
+					if (this.isSlideshow()) {
+						firstPage = this.SLIDESHOW_PREVIEW_PAGE;
+						this.track('/init/new/editpage/slideshow');
+					} else if (this.isSlider()){
+						firstPage = this.SLIDER_PREVIEW_PAGE;
+						this.track('/init/new/editpage/slider');
+					} else {
+						firstPage = this.GALLERY_PREVIEW_PAGE;
+						this.track('/init/new/editpage/gallery');
+					}
+				} else {
+					this.track('/init/new');
+				}
 				break;
 
 			case 'view':

@@ -37,7 +37,9 @@ if ( !empty( $wgEnableRecipesTemplateExt ) ) {
 	 * 2. by user profile extensions
 	 * in the second case, the toggle should not be displayed
 	 */
-	$wgHooks['EditPage::showEditForm:initial'][] = 'RecipesTemplate::showCreatePageToggle';
+	if ( empty($wgEnableEditPageReskinExt) ) {
+		$wgHooks['EditPage::showEditForm:initial'][] = 'RecipesTemplate::showCreatePageToggle'; // macbre: disable for EditPageLayout ext
+	}
 }
 
 // i18n

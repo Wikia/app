@@ -1,0 +1,27 @@
+@mixin button-icon-resize-square( $width, $height ) {
+	height: $height;
+	width: $width;
+	margin: floor(( 26px - $height ) / 2)  floor(( 26px - $width ) / 2);
+}
+
+@mixin button-icon-resize( $width, $height ) {
+	height: $height;
+	width: $width;
+	margin: floor(( 26px - $height ) / 2) 5px;
+}
+
+@mixin epl-textfield {
+	background: #f6f6f6;
+	border: solid 1px $color-epl-inputs-borders;
+	color: #666;
+	display: block;
+	font-family: inherit;
+	font-size: 12px;
+	font-style: italic;
+	line-height: 23px;
+	width: $width-epl-module-input;
+	&.placeholder {
+		color: $color-epl-text-color;
+		font-style: italic;
+	}
+}

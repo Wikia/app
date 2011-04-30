@@ -37,3 +37,8 @@
 	background-image: unquote("-moz-linear-gradient(" + unquote($mozBackground) + ")");
 	background-image: unquote("-webkit-gradient(linear, " + unquote($webkitBackground) + ")");
 }
+
+@mixin clear-linear-gradient($background-color: transparent) {
+	background-image: none;
+	background-color: $background-color;
+}

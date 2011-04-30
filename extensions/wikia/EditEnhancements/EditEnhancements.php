@@ -6,7 +6,9 @@ $wgExtensionCredits['other'][] = array(
 	'author' => array('Maciej Brencz', 'Christian Williams', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
 );
 
-$wgExtensionFunctions[] = 'wfEditEnhancementsInit';
+if ( empty($wgEnableEditPageReskinExt) ) {
+	$wgExtensionFunctions[] = 'wfEditEnhancementsInit';
+}
 $wgAutoloadClasses['EditEnhancements'] = dirname(__FILE__) . '/EditEnhancements.class.php';
 
 function wfEditEnhancementsInit($forceInit = false) {

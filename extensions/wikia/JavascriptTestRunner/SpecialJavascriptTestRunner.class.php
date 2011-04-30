@@ -87,8 +87,7 @@ class SpecialJavascriptTestRunner extends SpecialPage {
 			foreach ($testSuite->getFrameworkFiles() as $filePath) {
 				$wgOut->addScript("<script type=\"text/javascript\" src=\"{$basePath}/{$filePath}\"></script>");
 			}
-			$wgOut->addScript("<script type=\"text/javascript\" src=\"{$basePath}/extensions/wikia/JavascriptTestRunner/js/jsunity-0.6.js\"></script>");
-			
+
 			// Include test runner
 			$wgOut->addScript("<script type=\"text/javascript\" src=\"{$basePath}/extensions/wikia/JavascriptTestRunner/js/Xml.js\"></script>");
 			$wgOut->addScript("<script type=\"text/javascript\" src=\"{$basePath}/extensions/wikia/JavascriptTestRunner/js/JavascriptTestRunner.js\"></script>");
@@ -99,7 +98,10 @@ class SpecialJavascriptTestRunner extends SpecialPage {
 					$filePath = $basePath . '/' . $filePath;
 				$wgOut->addScript("<script type=\"text/javascript\" src=\"{$filePath}\"></script>");
 			}
-			
+
+//			var_dump($testSuite->getFrameworkFiles());
+//			var_dump($testSuite->getRequiredFiles());
+
 			// Include the test itself
 			$wgOut->addScript("<script type=\"text/javascript\" src=\"{$basePath}/{$testFile}\"></script>");
 
@@ -110,6 +112,7 @@ class SpecialJavascriptTestRunner extends SpecialPage {
 			$script .= "window.jtr_filters = ".self::createJavascriptList($filters).";\n";
 			$outputs = $wgRequest->getVal('output','');
 			$script .= "window.jtr_outputs = ".self::createJavascriptList($outputs).";\n";
+			$script .= "window.WikiaAutostartDisabled = true;\n";
 			if ($autoRun)
 				$script .= "window.WikiaJavascriptTestRunner.autorun();\n";
 			$wgOut->addInlineScript($script);
@@ -126,40 +129,46 @@ class JavascriptTestRunner_TestSuite {
 
 	protected $baseDir = '';
 	protected $testFile = '';
-	
+
 	protected $frameworkName = false;
 	protected $requiredFiles = array();
-	
+
 	protected $status = false;
-	
+
 	public function __construct( $baseDir, $testFile ) {
 		$this->baseDir = $baseDir;
 		$this->testFile = $testFile;
 		$this->load();
 	}
-	
+
 	protected function isPathSafe( $path ) {
 		$base = realpath($this->baseDir);
 		$current = realpath($this->baseDir . '/' . $path);
-		
+
 		return substr($current,0,strlen($base)) === $base;
 	}
-	
+
 	protected function getModuleFiles( $moduleName ) {
 		return (array)JavascriptTestRunner_Contants::$modules[$moduleName];
 	}
-	
+
 	protected function loadFile( $fileName ) {
 		$contents = file_get_contents( $this->baseDir . '/' . $fileName );
 		if ($contents === false)
 			return false;
-		
+
 		$lines = split("\r?\n",$contents);
 		foreach ($lines as $line) {
 			$matches = array();
 			if (preg_match("/^@test-([^ \t]+)[ \t]+(.*)\$/",trim($line),$matches)) {
 				@list( , $command, $value ) = $matches;
 				switch ($command) {
+					case 'require-group':
+						if (class_exists('AssetsManager')) {
+							$srcs = AssetsManager::getInstance()->getGroupLocalURL($value);
+							$this->requiredFiles = array_merge($this->requiredFiles,$srcs);
+						}
+						break;
 					case 'require-module':
 						if (isset($this->definedModules[$value])) {
 							$this->requiredFiles = array_merge($this->requiredFiles,$this->getModuleFiles($value));
@@ -176,39 +185,36 @@ class JavascriptTestRunner_TestSuite {
 		}
 		return true;
 	}
-	
+
 	protected function load() {
 		if (!$this->isPathSafe($this->testFile))
 			return;
-			
+
 		if (!$this->loadFile($this->testFile))
 			return;
-			
+
 		if (!$this->frameworkName || !$this->getFrameworkFiles())
 			return;
-		
+
 		$this->status = true;
 	}
-	
+
 	public function getStatus() {
 		return $this->status;
 	}
-	
+
 	public function getRequiredFiles() {
 		return $this->requiredFiles;
 	}
-	
+
 	public function getFrameworkFiles() {
 		return (array)JavascriptTestRunner_Constants::$frameworks[$this->frameworkName];
 	}
-	
+
 	public function getFrameworkName() {
 		return $this->frameworkName;
 	}
-	
-	
-	
-	
+
 }
 
 
@@ -223,7 +229,7 @@ class JavascriptTestRunner_Constants {
 			'extensions/wikia/RTE/js/RTE.js'
 		),
 	);
-	
+
 	static public $frameworks = array(
 		'jsUnity' => array(
 			'extensions/wikia/JavascriptTestRunner/js/jsunity-0.6.js'
@@ -232,5 +238,5 @@ class JavascriptTestRunner_Constants {
 			'extensions/wikia/JavascriptTestRunner/js/qunit.js'
 		)
 	);
-	
+
 }

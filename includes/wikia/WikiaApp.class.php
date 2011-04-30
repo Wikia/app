@@ -110,8 +110,8 @@ class WikiaApp {
 	 * @param array $options
 	 * @param bool $alwaysRebuild
 	 */
-	public function registerHook($hookName, $className, $methodName, array $options = array(), $alwaysRebuild = false) {
-		$this->globalRegistry->append('wgHooks', $this->hookDispatcher->registerHook($className, $methodName, $options, $alwaysRebuild), $hookName);
+	public function registerHook($hookName, $className, $methodName, array $options = array(), $alwaysRebuild = false, $object = null) {
+		$this->globalRegistry->append('wgHooks', $this->hookDispatcher->registerHook($className, $methodName, $options, $alwaysRebuild, $object), $hookName);
 	}
 
 	/**
@@ -138,6 +138,17 @@ class WikiaApp {
 	 */
 	public function registerExtensionMessageFile($name, $filePath) {
 		$this->globalRegistry->set('wgExtensionMessagesFiles', $filePath, $name);
+	}
+
+	/**
+	 * register messages package to be used in JS
+	 * @param string $name
+	 * @param string $filePath
+	 * @author macbre
+	 * @see /extensions/wikia/JSMessages
+	 */
+	public function registerExtensionJSMessagePackage($name, $messages) {
+		$this->globalRegistry->set('wgJSMessagesPackages', $messages, $name);
 	}
 
 	/**

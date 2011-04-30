@@ -1,0 +1,34 @@
+#EditPageEditor {
+	.gap {
+		background-color: #f6f6f6;
+		border-bottom: solid 1px #eae8e9;
+		border-top: solid 1px #eae8e9;
+		height: 15px;
+		margin-left: -1px;
+		margin-right: -10px;
+	}
+
+	#diff {
+		background-color: #e6f0fb;
+		margin-right: -10px;
+		padding: 5px;
+	}
+
+	#myedit {
+		background-color: #e6f0fb;
+		color: #000;
+		padding: 5px;
+		> textarea {
+			background-color: #fff;
+			color: #000;
+			height: 400px;
+		}
+	}
+}
+
+// the area below the diff should match the gap between sections
+.EditPageScrollable {
+	#EditPageEditor {
+		@include linear-gradient(#fff, top, #fff, 400px, #f6f6f6, 401px);
+	}
+}

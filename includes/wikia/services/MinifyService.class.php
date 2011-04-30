@@ -64,16 +64,19 @@ class MinifyService extends Service {
 		$tmpName = self::storeInTempFile($code);
 
 		// YUI compressor
-		exec("java -jar {$IP}/lib/yuicompressor-2.4.2.jar {$tmpName} --charset utf-8 --type js", $out, $res);
+		//exec("java -jar {$IP}/lib/yuicompressor-2.4.2.jar {$tmpName} --charset utf-8 --type js", $out, $res);
 
 		// Google Closure
-		//exec("java -jar {$IP}/lib/compiler.jar --js {$tmpName} --compilation_level SIMPLE_OPTIMIZATIONS --charset UTF-8 --warning_level QUIET", $out, $res);
+		#exec("java -jar {$IP}/lib/compiler.jar --js {$tmpName} --compilation_level SIMPLE_OPTIMIZATIONS --charset UTF-8 --warning_level QUIET", $out, $res);
+		exec("java -jar {$IP}/lib/compiler.jar --js {$tmpName} --compilation_level SIMPLE_OPTIMIZATIONS --charset UTF-8", $out, $res);
 
 		// concat lines from the output
 		$code = implode("\n", $out);
 
 		// clean up
-		self::removeTempFile($tmpName);
+		if ($res != self::RESULT_OK) {
+			self::removeTempFile($tmpName);
+		}
 
 		wfDebug(__METHOD__ . ": done!\n");
 
@@ -94,7 +97,10 @@ class MinifyService extends Service {
 		$tmpName = self::storeInTempFile($code);
 
 		// minify (output is written to stdout)
-		$code = exec("java -jar {$IP}/lib/yuicompressor-2.4.2.jar {$tmpName} --charset utf-8 --type css", $out, $res);
+		exec("java -jar {$IP}/lib/yuicompressor-2.4.2.jar {$tmpName} --charset utf-8 --type css", $out, $res);
+
+		// concat lines from the output
+		$code = implode("\n", $out);
 
 		// clean up
 		self::removeTempFile($tmpName);

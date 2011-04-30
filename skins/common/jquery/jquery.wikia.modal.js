@@ -217,6 +217,10 @@ $.fn.extend({
 		}
 
 		wrapper.data('blackout', blackout);
+		
+		if (typeof settings.onCreate == 'function') {
+			settings.onCreate(this,wrapper);
+		}
 
 		return wrapper;
 	},

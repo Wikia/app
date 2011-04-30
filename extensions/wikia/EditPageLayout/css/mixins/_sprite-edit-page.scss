@@ -1,0 +1,457 @@
+// @autosprite-start
+@mixin sprite-edit-page-base() {
+	background-color: transparent;
+	background-image: url('/extensions/wikia/EditPageLayout/images/sprite-edit-page.png'); /* wgCdnStylePath */
+	background-repeat: no-repeat;
+}
+@mixin sprite-edit-page($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {
+	$image-x: -1;
+	$image-y: -1;
+	$image-width: -1;
+	$image-height: -1;
+	// @autosprite-image-details: add_video_small.png@72,0,08c684854af9e9259d0206b4336eb3ab
+	@if $imageName == 'add_video_small' {
+		$image-x: 72px;
+		$image-y: 0px;
+		$image-width: 14px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: addlink.png@98,0,bdd90978ae1ad4a3bfb47ad323ae641b
+	@if $imageName == 'addlink' {
+		$image-x: 98px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: aligncenter.png@126,0,0cb3140ecb532013e9659a2508ce39e9
+	@if $imageName == 'aligncenter' {
+		$image-x: 126px;
+		$image-y: 0px;
+		$image-width: 12px;
+		$image-height: 11px;
+	}
+	// @autosprite-image-details: alignleft.png@150,0,05aaf9aad3240bee5752ed37c9feb9b3
+	@if $imageName == 'alignleft' {
+		$image-x: 150px;
+		$image-y: 0px;
+		$image-width: 12px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: alignright.png@174,0,e814493c02df6edef126d9fc67bb870b
+	@if $imageName == 'alignright' {
+		$image-x: 174px;
+		$image-y: 0px;
+		$image-width: 12px;
+		$image-height: 11px;
+	}
+	// @autosprite-image-details: attribution.png@198,0,adbc6d17d011555699e8b607096fe722
+	@if $imageName == 'attribution' {
+		$image-x: 198px;
+		$image-y: 0px;
+		$image-width: 18px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: bold.png@228,0,cde9cc3be281305e9c9916592b93cd74
+	@if $imageName == 'bold' {
+		$image-x: 228px;
+		$image-y: 0px;
+		$image-width: 11px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: carrot.png@251,0,52891b6e447fc33311e48001d2b02b67
+	@if $imageName == 'carrot' {
+		$image-x: 251px;
+		$image-y: 0px;
+		$image-width: 10px;
+		$image-height: 7px;
+	}
+	// @autosprite-image-details: cc_by_new.png@273,0,b8dda96262ad46f66bff7c97d2bb68b7
+	@if $imageName == 'cc_by_new' {
+		$image-x: 273px;
+		$image-y: 0px;
+		$image-width: 18px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: cc_logo_circle.png@303,0,d6f961e68f9d5a9334b1aaa58eb2103c
+	@if $imageName == 'cc_logo_circle' {
+		$image-x: 303px;
+		$image-y: 0px;
+		$image-width: 18px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: external_link.png@333,0,fedac4e086862195fb989d2f3da36e73
+	@if $imageName == 'external_link' {
+		$image-x: 333px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: formula.png@361,0,bbb2e033d18ba74264f101dfcc8bf615
+	@if $imageName == 'formula' {
+		$image-x: 361px;
+		$image-y: 0px;
+		$image-width: 21px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: gallery.png@394,0,17e6e437175833cfe4b149b4d6117a6f
+	@if $imageName == 'gallery' {
+		$image-x: 394px;
+		$image-y: 0px;
+		$image-width: 32px;
+		$image-height: 32px;
+	}
+	// @autosprite-image-details: horizontal_line.png@438,0,2d72a3c5fb5922a2052a31cda0881786
+	@if $imageName == 'horizontal_line' {
+		$image-x: 438px;
+		$image-y: 0px;
+		$image-width: 20px;
+		$image-height: 4px;
+	}
+	// @autosprite-image-details: ignore_wikia.png@470,0,d2fe02cc0ef52efb16836c69eafd06ff
+	@if $imageName == 'ignore_wikia' {
+		$image-x: 470px;
+		$image-y: 0px;
+		$image-width: 23px;
+		$image-height: 23px;
+	}
+	// @autosprite-image-details: indent.png@505,0,889738e01b2e5ea4171bb853a1583a93
+	@if $imageName == 'indent' {
+		$image-x: 505px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: italic.png@533,0,9de6c65a9964f37554a782d876927949
+	@if $imageName == 'italic' {
+		$image-x: 533px;
+		$image-y: 0px;
+		$image-width: 5px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: level_2_headline.png@550,0,bd6c1497619fa1dd85a780ee0cfaeb7a
+	@if $imageName == 'level_2_headline' {
+		$image-x: 550px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 22px;
+	}
+	// @autosprite-image-details: minor_edit.png@581,0,55ce05a6d166805936688d286a500800
+	@if $imageName == 'minor_edit' {
+		$image-x: 581px;
+		$image-y: 0px;
+		$image-width: 12px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: more.png@605,0,1693133ea974fab0d79200153fed1531
+	@if $imageName == 'more' {
+		$image-x: 605px;
+		$image-y: 0px;
+		$image-width: 9px;
+		$image-height: 9px;
+	}
+	// @autosprite-image-details: ordered.png@626,0,d2e96f2e389d4da8dac1fb9d4e7caa32
+	@if $imageName == 'ordered' {
+		$image-x: 626px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: outdent.png@654,0,0e3c2bd2dca82e56e631da24fd30166b
+	@if $imageName == 'outdent' {
+		$image-x: 654px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: pencil_small.png@682,0,01673a850e1f1f6d3c4f525952088ba6
+	@if $imageName == 'pencil_small' {
+		$image-x: 682px;
+		$image-y: 0px;
+		$image-width: 11px;
+		$image-height: 11px;
+	}
+	// @autosprite-image-details: photo.png@705,0,dbdd2f15f1f1b072a34cb14659168ae7
+	@if $imageName == 'photo' {
+		$image-x: 705px;
+		$image-y: 0px;
+		$image-width: 25px;
+		$image-height: 21px;
+	}
+	// @autosprite-image-details: photo_small.png@742,0,de9d9975ec45db1d95aa998701cd7dd5
+	@if $imageName == 'photo_small' {
+		$image-x: 742px;
+		$image-y: 0px;
+		$image-width: 17px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: poll.png@771,0,6901384f0e1e496876876a3026eac9e8
+	@if $imageName == 'poll' {
+		$image-x: 771px;
+		$image-y: 0px;
+		$image-width: 30px;
+		$image-height: 27px;
+	}
+	// @autosprite-image-details: puzzle_piece.png@813,0,3b38ca4abb12d099d4a1fbd37ee768d2
+	@if $imageName == 'puzzle_piece' {
+		$image-x: 813px;
+		$image-y: 0px;
+		$image-width: 30px;
+		$image-height: 30px;
+	}
+	// @autosprite-image-details: quotation.png@855,0,6af5e3856ef8ea36fd522aa195e5666a
+	@if $imageName == 'quotation' {
+		$image-x: 855px;
+		$image-y: 0px;
+		$image-width: 10px;
+		$image-height: 8px;
+	}
+	// @autosprite-image-details: redo.png@877,0,a344b92eac5a0948a507370471e8848c
+	@if $imageName == 'redo' {
+		$image-x: 877px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: share_alike.png@905,0,04b7f38d553f1fcdbf561392af2b97c2
+	@if $imageName == 'share_alike' {
+		$image-x: 905px;
+		$image-y: 0px;
+		$image-width: 18px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: signature.png@935,0,db7a4aa86c423b9c057633fdbf5a142b
+	@if $imageName == 'signature' {
+		$image-x: 935px;
+		$image-y: 0px;
+		$image-width: 25px;
+		$image-height: 22px;
+	}
+	// @autosprite-image-details: slider.png@972,0,dc64457ddc904fc1b8097ba5dd257bd2
+	@if $imageName == 'slider' {
+		$image-x: 972px;
+		$image-y: 0px;
+		$image-width: 43px;
+		$image-height: 29px;
+	}
+	// @autosprite-image-details: slideshow.png@1027,0,9bfd24dd3caff6032309712b2f07a75a
+	@if $imageName == 'slideshow' {
+		$image-x: 1027px;
+		$image-y: 0px;
+		$image-width: 41px;
+		$image-height: 32px;
+	}
+	// @autosprite-image-details: strike.png@1080,0,c53de58f14cc024ba7562b8b7182ee22
+	@if $imageName == 'strike' {
+		$image-x: 1080px;
+		$image-y: 0px;
+		$image-width: 22px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: switch.png@1114,0,edd02b9a42dc9b20af95f0f30b8a3bc4
+	@if $imageName == 'switch' {
+		$image-x: 1114px;
+		$image-y: 0px;
+		$image-width: 15px;
+		$image-height: 11px;
+	}
+	// @autosprite-image-details: table.png@1141,0,2d94a3d7167eb011485a18b754de080e
+	@if $imageName == 'table' {
+		$image-x: 1141px;
+		$image-y: 0px;
+		$image-width: 25px;
+		$image-height: 25px;
+	}
+	// @autosprite-image-details: trash_small.png@1178,0,bdfc186e0663b90cfcf4081fda42650a
+	@if $imageName == 'trash_small' {
+		$image-x: 1178px;
+		$image-y: 0px;
+		$image-width: 11px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: underline.png@1201,0,9d194dccfd9b5c7553adc2bc1a2dd6a0
+	@if $imageName == 'underline' {
+		$image-x: 1201px;
+		$image-y: 0px;
+		$image-width: 13px;
+		$image-height: 19px;
+	}
+	// @autosprite-image-details: undo.png@1226,0,3566f9179a0355abd55f1ebf12bd97be
+	@if $imageName == 'undo' {
+		$image-x: 1226px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: unordered.png@1254,0,d3e3b6f2971e93187c4ec497b5a7bb7e
+	@if $imageName == 'unordered' {
+		$image-x: 1254px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: video.png@1282,0,68010c42c38a1a894d8a16b4dae6c9a4
+	@if $imageName == 'video' {
+		$image-x: 1282px;
+		$image-y: 0px;
+		$image-width: 28px;
+		$image-height: 30px;
+	}
+	// @autosprite-image-details: wikia_link.png@1322,0,52d62a1d0281620a2877b27acd4693db
+	@if $imageName == 'wikia_link' {
+		$image-x: 1322px;
+		$image-y: 0px;
+		$image-width: 18px;
+		$image-height: 14px;
+	}
+	@if $image-x != -1 {
+		$position-x: 0px - $image-x;
+		$position-y: 0px - $image-y;
+		@if $width > 0 {
+			$position-x: $position-x + ( $width - $image-width ) / 2;
+		}
+		@if $height > 0 {
+			$position-y: $position-y + ( $height - $image-height ) / 2;
+		}
+		@if $offset-x != 0 {
+			$position-x: $position-x + $offset-x;
+		}
+		@if $offset-y != 0 {
+			$position-y: $position-y + $offset-y;
+		}
+		background-position: $position-x $position-y;
+	}
+}
+@mixin sprite-edit-page-full($imageName, $width: 0, $height: 0,$offset-x: 0,$offset-y: 0) {
+	@include sprite-edit-page-base;
+	@include sprite-edit-page($imageName,$width,$height,$offset-x,$offset-y);
+}
+@mixin sprite-edit-page-deep($width: 0,$height: 0) {
+	@include sprite-edit-page-base;
+	&.add-video-small {
+		@include sprite-edit-page('add_video_small',$width,$height);
+	}
+	&.addlink {
+		@include sprite-edit-page('addlink',$width,$height);
+	}
+	&.aligncenter {
+		@include sprite-edit-page('aligncenter',$width,$height);
+	}
+	&.alignleft {
+		@include sprite-edit-page('alignleft',$width,$height);
+	}
+	&.alignright {
+		@include sprite-edit-page('alignright',$width,$height);
+	}
+	&.attribution {
+		@include sprite-edit-page('attribution',$width,$height);
+	}
+	&.bold {
+		@include sprite-edit-page('bold',$width,$height);
+	}
+	&.carrot {
+		@include sprite-edit-page('carrot',$width,$height);
+	}
+	&.cc-by-new {
+		@include sprite-edit-page('cc_by_new',$width,$height);
+	}
+	&.cc-logo-circle {
+		@include sprite-edit-page('cc_logo_circle',$width,$height);
+	}
+	&.external-link {
+		@include sprite-edit-page('external_link',$width,$height);
+	}
+	&.formula {
+		@include sprite-edit-page('formula',$width,$height);
+	}
+	&.gallery {
+		@include sprite-edit-page('gallery',$width,$height);
+	}
+	&.horizontal-line {
+		@include sprite-edit-page('horizontal_line',$width,$height);
+	}
+	&.ignore-wikia {
+		@include sprite-edit-page('ignore_wikia',$width,$height);
+	}
+	&.indent {
+		@include sprite-edit-page('indent',$width,$height);
+	}
+	&.italic {
+		@include sprite-edit-page('italic',$width,$height);
+	}
+	&.level-2-headline {
+		@include sprite-edit-page('level_2_headline',$width,$height);
+	}
+	&.minor-edit {
+		@include sprite-edit-page('minor_edit',$width,$height);
+	}
+	&.more {
+		@include sprite-edit-page('more',$width,$height);
+	}
+	&.ordered {
+		@include sprite-edit-page('ordered',$width,$height);
+	}
+	&.outdent {
+		@include sprite-edit-page('outdent',$width,$height);
+	}
+	&.pencil-small {
+		@include sprite-edit-page('pencil_small',$width,$height);
+	}
+	&.photo {
+		@include sprite-edit-page('photo',$width,$height);
+	}
+	&.photo-small {
+		@include sprite-edit-page('photo_small',$width,$height);
+	}
+	&.poll {
+		@include sprite-edit-page('poll',$width,$height);
+	}
+	&.puzzle-piece {
+		@include sprite-edit-page('puzzle_piece',$width,$height);
+	}
+	&.quotation {
+		@include sprite-edit-page('quotation',$width,$height);
+	}
+	&.redo {
+		@include sprite-edit-page('redo',$width,$height);
+	}
+	&.share-alike {
+		@include sprite-edit-page('share_alike',$width,$height);
+	}
+	&.signature {
+		@include sprite-edit-page('signature',$width,$height);
+	}
+	&.slider {
+		@include sprite-edit-page('slider',$width,$height);
+	}
+	&.slideshow {
+		@include sprite-edit-page('slideshow',$width,$height);
+	}
+	&.strike {
+		@include sprite-edit-page('strike',$width,$height);
+	}
+	&.switch {
+		@include sprite-edit-page('switch',$width,$height);
+	}
+	&.table {
+		@include sprite-edit-page('table',$width,$height);
+	}
+	&.trash-small {
+		@include sprite-edit-page('trash_small',$width,$height);
+	}
+	&.underline {
+		@include sprite-edit-page('underline',$width,$height);
+	}
+	&.undo {
+		@include sprite-edit-page('undo',$width,$height);
+	}
+	&.unordered {
+		@include sprite-edit-page('unordered',$width,$height);
+	}
+	&.video {
+		@include sprite-edit-page('video',$width,$height);
+	}
+	&.wikia-link {
+		@include sprite-edit-page('wikia_link',$width,$height);
+	}
+}
+// @autosprite-end

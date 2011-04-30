@@ -1,0 +1,181 @@
+#EditPage {
+	.cke_button {
+		> a {
+			@include border-radius(4px);
+			background-color: #fff;
+			border: solid 1px #cacaca;
+			cursor: default;
+			display: inline-block;
+			float: left;
+			height: 26px;
+			margin: 0 5px;
+			width: 26px;
+			&:hover {
+				@include linear-gradient(transparent, top, $color-epl-gradient-light, 50%, #bdbcbc, 100%);
+				text-decoration: none;
+			}
+		}
+		.cke_label {
+			display: none;
+
+			cursor: inherit;
+			font-size: 10px;
+			color: #000;
+			white-space: nowrap;
+
+			// ck reset
+			padding-top: 0;
+			padding-left: 0;
+			padding-right: 0;
+			padding-bottom: 0;
+			height: auto;
+			line-height: normal;
+			vertical-align: baseline;
+			float: none;
+		}
+		&.cke_on {
+			> a {
+				@include box-shadow(-1px,1px,2px,#b1b1b1,true);
+				background-color: #e8e8e8;
+				border-top-color: #c7c7c7;
+				border-right-color: #c7c7c7;
+			}
+		}
+		&.cke_disabled {
+			@include opacity(20);
+		}
+		&.cke_hidden {
+			display: none;
+		}
+		&.cke_button_big {
+			> a {
+				display: inline-block;
+				height: 51px;
+				margin: 0 5px;
+				position: relative;
+				width: 51px;
+				.cke_label {
+					bottom: 0;
+					display: block;
+					left: 0;
+					overflow: hidden;
+					position: absolute;
+					text-align: center;
+					width: 51px;
+				}
+			}
+		}
+	}
+
+	// Button icons
+	.cke_button {
+		.cke_icon {
+			@include sprite-edit-page-base;
+			display: inline-block;
+			height: 16px;
+			width: 16px;
+			margin: 5px;
+		}
+		&.cke_button_big .cke_icon {
+			height: 32px;
+			width: 48px;
+			margin: 3px 1px;
+		}
+		.cke_button_bold .cke_icon {
+			@include sprite-edit-page('bold',16px,16px);
+		}
+		.cke_button_italic .cke_icon {
+			@include sprite-edit-page('italic',16px,16px);
+		}
+		.cke_button_link .cke_icon {
+			@include sprite-edit-page('addlink',16px,16px);
+		}
+		.cke_button_bulletedlist .cke_icon {
+			@include sprite-edit-page('unordered',16px,16px);
+		}
+		.cke_button_numberedlist .cke_icon {
+			@include sprite-edit-page('ordered',16px,16px);
+		}
+		.cke_button_indent .cke_icon {
+			@include sprite-edit-page('indent',16px,16px);
+		}
+		.cke_button_outdent .cke_icon {
+			@include sprite-edit-page('outdent',16px,16px);
+		}
+		.cke_button_justifyleft .cke_icon {
+			@include sprite-edit-page('alignleft',16px,16px);
+		}
+		.cke_button_justifycenter .cke_icon {
+			@include sprite-edit-page('aligncenter',16px,16px);
+		}
+		.cke_button_justifyright .cke_icon {
+			@include sprite-edit-page('alignright',16px,16px);
+		}
+		.cke_button_undo .cke_icon {
+			@include sprite-edit-page('undo',16px,16px);
+		}
+		.cke_button_redo .cke_icon {
+			@include sprite-edit-page('redo',16px,16px);
+		}
+		.cke_button_underline .cke_icon {
+			@include sprite-edit-page('underline',16px,20px);
+			@include button-icon-resize-square(16px,20px);
+		}
+		.cke_button_strike .cke_icon {
+			@include sprite-edit-page('strike',22px,16px);
+			@include button-icon-resize-square(22px,16px);
+		}
+		.cke_button_signature .cke_icon {
+			@include sprite-edit-page('signature',26px,22px);
+			@include button-icon-resize(26px,22px);
+		}
+	}
+	.RTEImageButton.cke_button_big .cke_icon {
+		@include sprite-edit-page('photo',48px,32px);
+	}
+	.RTEGalleryButton.cke_button_big .cke_icon {
+		@include sprite-edit-page('gallery',48px,32px);
+	}
+	.RTESlideshowButton.cke_button_big .cke_icon {
+		@include sprite-edit-page('slideshow',48px,32px);
+	}
+	.RTESliderButton.cke_button_big .cke_icon {
+		@include sprite-edit-page('slider',48px,32px, 0, 1px);
+	}
+	.RTEVideoButton.cke_button_big .cke_icon {
+		@include sprite-edit-page('video',48px,32px);
+	}
+	.RTEPollButton.cke_button_big .cke_icon {
+		@include sprite-edit-page('poll',48px,32px);
+	}
+	.cke_button_table.cke_button_big .cke_icon {
+		@include sprite-edit-page('table',48px,32px);
+	}
+	.module_templates .cke_button_big .cke_icon {
+		@include sprite-edit-page('puzzle_piece',48px,32px,2px);
+	}
+
+	// Buttons with label (Signature, Underline, Highlight)
+	.cke_label_button {
+		> a {
+			width: auto;
+		}
+		.cke_icon {
+			float: left;
+		}
+		.cke_label {
+			display: inline;
+			line-height: 26px;
+			padding: 0 4px;
+		}
+	}
+
+	.cke_panelbutton,
+	.cke_modulebutton {
+		position: relative;
+	}
+
+	.cke_buttons {
+		@include clearfix;
+	}
+}

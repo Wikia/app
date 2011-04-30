@@ -1,0 +1,55 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/layout";
+@import "../../../../skins/oasis/css/mixins/bodytext";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/wordmark";
+@import "../../../../skins/oasis/css/mixins/yui-suggest";
+
+@import "mixins/constants"; // colors + dimensions
+@import "mixins/gradients";
+@import "mixins/helpers"; // mixins
+@import "mixins/sprite-edit-page"; // icons
+
+@import "core/body"; // edit page specific rules for common Oasis page elements
+@import "core/header"; // edit page header (wordmark, page title, help link)
+@import "core/tabs"; // mode tabs
+@import "core/editpage"; // style main part of edit page
+@import "core/rail"; // right rail and modules
+@import "core/toolbar";
+@import "core/modules";
+@import "core/buttons"; // buttons (icons + states)
+@import "core/dropdowns"; // dropdowns (rcombo)
+@import "core/preview-diff"; // preview / show changes dialogs
+@import "core/conflict-diff"; // edit conflict / undo revisions
+@import "core/loading-indicator"; // loading indicator
+@import "core/notices"; // edit page notices
+@import "core/wide"; // wide mode related stuff
+@import "core/permission-error";
+@import "core/modals";
+
+/* modal dialog (page title, captcha) */
+#HiddenFieldsDialog {
+	input, textarea {
+		display: block;
+		width: 100%;
+	}
+}
+
+/* RT #74340: add styling for LinkSuggest */
+.link-suggest-container {
+	@include yui-suggest;
+}
+
+// TODO: try to "hide" stuff listed below in PHP
+#csMainContainer,
+.templatesUsed,
+.printfooter,
+#toolbar,
+#talkpagesignbox,
+.plb-edit-page-make-layout {
+	display: none;
+}

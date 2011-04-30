@@ -51,11 +51,11 @@ class MediaWiki {
 	 */
 	function performRequestForTitle( &$title, &$article, &$output, &$user, $request ) {
 		wfProfileIn( __METHOD__ );
-		
+
 		$output->setTitle( $title );
-		
+
 		wfRunHooks( 'BeforeInitialize', array( &$title, &$article, &$output, &$user, $request, $this ) );
-		
+
 		if( !$this->preliminaryChecks( $title, $output, $request ) ) {
 			wfProfileOut( __METHOD__ );
 			return;
@@ -564,6 +564,10 @@ class MediaWiki {
 					if( !$this->getVal( 'UseExternalEditor' ) || $action=='submit' || $internal ||
 					   $section || $oldid || ( !$user->getOption( 'externaleditor' ) && !$external ) ) {
 						$editor = new EditPage( $article );
+						/* Wikia change begin - @author: macbre */
+						/* Allow extensions to change EditPage class used for rendering edit pages */
+						wfRunHooks('AlternateEditPageClass', array(&$editor));
+						/* Wikia change - end */
 						$editor->submit();
 					} elseif( $this->getVal( 'UseExternalEditor' ) && ( $external || $user->getOption( 'externaleditor' ) ) ) {
 						$mode = $request->getVal( 'mode' );

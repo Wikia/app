@@ -471,7 +471,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 			}
 		}
 		else {
-			var el = YAHOO.util.Event.getTarget(e);
+			var el = YAHOO.util.Event.getTarget(e) || {id:''};
 			if (el.id == 'vetHelpLink') {
 				VET_track('open/fromEditTips'); //tracking
 			} else if (el.id == 'mw-editbutton-vet') {

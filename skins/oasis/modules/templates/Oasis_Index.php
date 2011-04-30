@@ -7,7 +7,7 @@
 
 	<title><?= $pagetitle ?></title>
 	<!-- SASS-generated CSS file -->
-	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/oasis.scss') ?>">
+	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL($mainsassfile) ?>">
 	<!-- CSS injected by extensions -->
 	<?= $csslinks ?>
 	<?php

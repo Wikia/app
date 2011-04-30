@@ -144,6 +144,8 @@ $wgAutoloadClasses['FogbugzService'] = $IP . '/includes/wikia/services/FogbugzSe
 $wgAutoloadClasses['MinifyService'] = $IP . '/includes/wikia/services/MinifyService.class.php';
 $wgAutoloadClasses['CsvService'] = $IP . '/includes/wikia/services/CsvService.class.php';
 $wgAutoloadClasses['MobileService'] = $IP . '/includes/wikia/services/MobileService.class.php';
+$wgAutoloadClasses['TemplateService'] = $IP . '/includes/wikia/services/TemplateService.class.php';
+$wgAutoloadClasses['SpriteService'] = $IP . '/includes/wikia/services/SpriteService.class.php';
 $wgAutoloadClasses['HubService'] = $IP . '/includes/wikia/services/HubService.class.php';
 $wgAutoloadClasses['SimpleSearchController']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
 
@@ -194,6 +196,16 @@ require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
  * i18n support for jquery.timeago.js (used in History Dropdown)
  */
 include_once( "$IP/extensions/wikia/TimeAgoMessaging/TimeAgoMessaging_setup.php" );
+
+/**
+ * Updated layout for edit pages (Oasis only)
+ */
+//include_once("$IP/extensions/wikia/EditPageLayout/EditPageLayout_setup.php");
+
+/**
+ * MW messages in JS
+ */
+include_once("$IP/extensions/wikia/JSMessages/JSMessages_setup.php");
 
 /**
  * API classes

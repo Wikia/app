@@ -1,0 +1,165 @@
+.editpage-visualwidemode {
+	#EditPageRail {
+		position: absolute;
+		top: 0;
+		right: 0;
+		.module {
+			border-left: 0px;
+			@include clear-box-shadow;
+		}
+		.module_content {
+			background-color: transparent;
+			background-image: none;
+		}
+	}
+	#EditPageMain {
+		width: $width-outside;
+	}
+	#EditPageToolbar {
+		padding-right: 15px + $width-rail - 10;
+		.cke_toolbar_expand {
+			> a {
+				right: 20px + $width-rail - 10;
+			}
+		}
+	}
+	#EditPageEditor {
+		padding-right: 0;
+	}
+}
+
+.editpage-sourcewidemode.mode-source {
+
+	#EditPageMain {
+		width: $width-outside - $width-rail;  // remove right rail "indent"
+	}
+
+	#EditPageEditor {
+		padding-right: 7px;
+	}
+
+	/* vertical bar with an arrow to show/hide the rail */
+	.editpage-widemode-trigger {
+		background-color: $color-epl-gradient-dark;
+		border-bottom: solid 1px $color-epl-trigger-border;
+		border-left: solid 1px $color-epl-trigger-border;
+		bottom: 0;
+		cursor: pointer;
+		display: block;
+		margin-left: 1px;
+		position: absolute;
+		right: $width-rail;
+		top: 0;
+		width: 7px;
+		z-index: 1;
+
+		.arrow {
+			border: 0 solid transparent;
+			border-left-color: $color-epl-module-header;
+			border-width: 4px 0 4px 4px;
+			height: 0;
+			left: 50%;
+			margin-left: -2px;
+			margin-top: -4px;
+			position: absolute;
+			top: 50%;
+			width: 0;
+		}
+	}
+
+	/* vertical bar styling when right rail is hidden */
+	&.editpage-sourcewidemode-on {
+		.editpage-widemode-trigger {
+			left: auto;
+			right: 10px;
+			.arrow {
+				border-width: 4px 4px 4px 0;
+				border-left-color: transparent;
+				border-right-color: $color-epl-module-header;
+			}
+		}
+	}
+
+	/* right rail adjustments */
+	&.editpage-sourcewidemode-on {
+		#EditPageRail {
+			position: absolute;
+			top: 0;
+			right: 0;
+			.module {
+				@include clear-box-shadow;
+				display: none;
+				border-left: 0px;
+			}
+			.module_content {
+				background-color: transparent;
+				background-image: none;
+			}
+		}
+		#EditPageMain {
+			width: $width-outside - 10;  // added: -10
+		}
+		#EditPageToolbar {
+			margin-right: -10px;
+			padding-right: 15px + $width-rail - 10;
+		}
+		.cke_toolbar_expand {
+			> a {
+				right: 20px + $width-rail - 10;
+			}
+		}
+		#EditPageEditor {
+			padding-right: 7px;
+		}
+	}
+
+	/* page controls styling */
+	$page-controls-wide-width: 640px;
+	&.editpage-sourcewidemode-on {
+		.cke_toolbar_source {
+			width: $width-outside - $page-controls-wide-width - 75;
+		}
+		#EditPageRail {
+			width: auto;
+			.module_page_controls {
+				// resetting module styling - start
+				display: block;
+				margin-left: 0;
+				// resetting module styling - end
+
+				.module_content {
+					position: relative;
+					width: $page-controls-wide-width;
+				}
+
+				// minor edit
+				label {
+					position: absolute;
+					top: 10px;
+					right: 285px;
+				}
+				// summary box
+				textarea {
+					position: absolute;
+					top: 9px;
+					left: 3px;
+					height: 15px;
+					padding: 2px;
+					margin: 0;
+				}
+				// save button
+				#wpSave {
+					position: absolute;
+					top: 0;
+					right: 15px;
+				}
+				// preview button
+				.wikia-menu-button {
+					position: absolute;
+					top: 0;
+					right: 140px;
+				}
+			}
+		}
+	}
+}

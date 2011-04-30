@@ -77,6 +77,7 @@ class EditPage {
 
 	// wikia changes begin
 	var $login = false, $autosave = false;
+	public $customOutputPage = null;
 	// wikia changes end
 
 	# Placeholders for text injection by hooks (must be HTML)
@@ -183,9 +184,9 @@ class EditPage {
 					!$oldrev->isDeleted( Revision::DELETED_TEXT ) ) {
 
 					$undotext = $this->mArticle->getUndoText( $undorev, $oldrev );
-					
+
 					wfRunHooks( 'EditPage::getContent::end', array( &$this, $undotext, $undorev, $oldrev  ) );
-					
+
 					if ( $undotext === false ) {
 						# Warn the user that something went wrong
 						$this->editFormPageTop .= $wgOut->parse( '<div class="error mw-undo-failure">' . wfMsgNoTrans( 'undo-failure' ) . '</div>' );
@@ -1280,11 +1281,19 @@ class EditPage {
 			$toolbar = '';
 			// @todo move this to a cleaner conditional instead of blanking a variable
 		}
-		$wgOut->addHTML( <<<HTML
+		/* Wikia change begin - @author: macbre */
+		/* Allow EditPageLayout extension to wrap #EditPage section using <form> tag */
+		if (empty($this->dontWrapWithForm)) {
+			$wgOut->addHTML( <<<HTML
 <form id="editform" name="editform" method="post" action="$action" enctype="multipart/form-data">
-<a name="EditPage"></a>
 HTML
 );
+			global $wgEnableEditPageReskinExt;
+			if ( empty($wgEnableEditPageReskinExt) ) {
+				$wgOut->addHTML( '<a name="EditPage"></a>' );
+			}
+		}
+		/* Wikia change end */
 
 		/* Wikia change begin - @author: Marooned */
 		/* used by captcha, CreatePage and maybe other extensions - moved above the toolbar  */
@@ -1399,7 +1408,14 @@ HTML
 			$this->showConflict();
 
 		$wgOut->addHTML( $this->editFormTextBottom );
-		$wgOut->addHTML( "</form>\n" );
+
+		/* Wikia change begin - @author: macbre */
+		/* Allow EditPageLayout extension to wrap #EditPage section using <form> tag */
+		if (empty($this->dontWrapWithForm)) {
+			$wgOut->addHTML( "</form>\n" );
+		}
+		/* Wikia change end */
+
 		if ( !$wgUser->getOption( 'previewontop' ) ) {
 			$this->displayPreviewArea( $previewOutput, false );
 		}
@@ -1408,7 +1424,12 @@ HTML
 	}
 
 	protected function showHeader() {
-		global $wgOut, $wgUser, $wgTitle, $wgMaxArticleSize, $wgLang;
+		// Wikia - start - @author: wladek - removed wgOut from global to allow injecting it
+		global $wgUser, $wgTitle, $wgMaxArticleSize, $wgLang;
+		// define wgOut
+		$wgOut = !empty($this->customOutputPage) ? $this->customOutputPage : $GLOBALS['wgOut'];
+		// Wikia - end
+
 		if ( $this->isConflict ) {
 			$wgOut->wrapWikiMsg( "<div class='mw-explainconflict'>\n$1</div>", 'explainconflict' );
 			$this->edittime = $this->mArticle->getTimestamp();

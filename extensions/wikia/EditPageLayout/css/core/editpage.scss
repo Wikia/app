@@ -1,0 +1,49 @@
+#EditPage {
+	@include clearfix;
+	@include gradient-module;
+	
+	position: relative;
+
+	// trick to overcome reseting CSS from Oasis core
+	b {
+		font-weight: bold;
+	}
+	i {
+		font-style: italic;
+	}
+}
+
+#EditPageMain {
+	float: left;
+	width: $width-outside - $width-rail + 10;
+}
+
+#EditPageEditorWrapper {
+	background-color: #f6f6f6;
+	padding-left: 20px;
+}
+
+#EditPageEditor {
+	background-color: #fff;
+	border-left: solid 1px #eae8e9;
+	border-right: solid 1px #efefef;
+	margin-top: 3px;
+	padding-right: 10px;
+
+	// source mode tweak
+	textarea {
+		border: 0;
+		font-family: Consolas, "Eupheima UCAS", Ayuthaya, Menlo, monospace;
+		font-size: 13px;
+		padding: 0;
+		width: 100%;
+	}
+}
+
+#EditPageHiddenFields {
+	display: none;
+}
+
+#editform {
+	position: relative;
+}

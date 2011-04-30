@@ -44,8 +44,8 @@ class OasisModule extends Module {
 	var $wgEnableOpenXSPC;
 	var $wgEnableCorporatePageExt;
 
-	public function executeIndex() {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType;
+	public function executeIndex($params) {
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType, $wgEnableEditPageReskinExt;
 
 		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
 		if(!empty($wikiWelcome)) {
@@ -56,7 +56,8 @@ class OasisModule extends Module {
 
 		$allInOne = $wgRequest->getBool('allinone', $wgAllInOne);
 
-		$this->body = wfRenderModule('Body');
+		// macbre: let extensions modify content of the page (e.g. EditPageLayout)
+		$this->body = !empty($params['body']) ? $params['body'] : wfRenderModule('Body');
 
 		// generate list of CSS classes for <body> tag
 		$this->bodyClasses = array('mediawiki', $this->dir, $this->pageclass);
@@ -173,6 +174,11 @@ class OasisModule extends Module {
 		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+		}
+
+		$this->mainsassfile = 'skins/oasis/css/oasis.scss';
+		if ( !empty($wgEnableEditPageReskinExt) ) {
+			$this->mainsassfile = 'skins/oasis/css/oasis-epl.scss';
 		}
 
 	} // end executeIndex()
