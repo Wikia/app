@@ -135,7 +135,7 @@ class CreateNewWikiModule extends Module {
 		} else {
 			$wgUser = $this->app->getGlobal('wgUser');
 			$numWikis = $this->countCreatedWikis($wgUser->getId());
-			if($numWikis > self::DAILY_USER_LIMIT) {
+			if($numWikis > self::DAILY_USER_LIMIT && !$wgUser->isAllowed( 'noratelimit' ) ) {
 				$this->status = 'wikilimit';
 				$this->statusMsg = $this->app->runFunction('wfMsg', 'cnw-error-wiki-limit', self::DAILY_USER_LIMIT);
 				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-wiki-limit-header');
