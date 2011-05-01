@@ -719,6 +719,7 @@ function getSong($artist, $song="", $doHyphens=true){
 			}
 		}
 
+		global $wgRequest;
 		$lowerSong = strtolower($song);
 		$lowerArtist = strtolower($artist);
 		if((($artist=="") || ($song=="") || (0 < preg_match("/^\?+$/", $artist))) && (strpos("$artist$song", ":") === false)){
@@ -731,7 +732,6 @@ function getSong($artist, $song="", $doHyphens=true){
 			// These are "artists" which are very commonly accuring non-artists.  IE: Baby Einstein is a collection of classical music, Apple Inc. is just apple's (video?) podcasts
 			// NOTE: For now we leave the 'defaultLyrics' message for players that handle this explicitly as not being a match.
 		} else {
-			
 			// TODO: SHOULDN'T THIS STUFF BE IN lw_getTitle() INSTEAD OF HERE??
 			
 			// Attempt to interpret hyphen-delimited title/artist/ablum strings correctly.
@@ -921,7 +921,6 @@ function getSong($artist, $song="", $doHyphens=true){
 
 				// SWC 20101209 - Now we allow our own apps to get full lyrics, but the request has to be cryptographically signed so that others can't do the same thing.
 				// NOTE: The value of the fullApiAuth param for the request must be the md5 hash of the concatenation of wgFullLyricWikiApiToken, the artist, and the song.
-				global $wgRequest;
 				$fullApiAuth = $wgRequest->getVal("fullApiAuth");
 				if(!empty($fullApiAuth)){
 					global $wgFullLyricWikiApiToken;
@@ -964,25 +963,31 @@ function getSong($artist, $song="", $doHyphens=true){
 					}
 				}
 			}
-			
-			// If configured to do so, fallback to full wiki search.
-			if($wgRequest->getBool('fallbackSearch') && ($retVal['lyrics'] == $defaultLyrics)){
-// TODO: IMPLEMENT THE LOCAL WIKI SEARCH TO RETURN A STRUCTURED RESULT!
-//print "FALLBACK SEARCH";
-				try{
-					$maxResults = 25;
-					$searchString = trim("$artist $song"); // trim in case one is empty
-					$response = F::app()->sendRequest( 'SimpleSearch', 'localSearch', array( 'key' => $term, 'limit' => $maxResults ) );
-//print "RAW RESPONSE: <pre>";
-//print_r($response);
-
-				// TODO: Change the response format instead.
-				$retVal['lyrics'] = print_r($response, true);
-					
-					
-				} catch(WikiaException $e){
-					// TODO: For now, just leave the defaultLyrics.
+		}
+		
+		// If configured to do so, fallback to full wiki search.
+		if($wgRequest->getBool('fallbackSearch') && ($retVal['lyrics'] == $defaultLyrics)){
+			try{
+				$maxResults = 25;
+				$searchString = trim("$artist $song"); // trim in case one is empty
+				$response = F::app()->sendRequest( 'SimpleSearch', 'localSearch', array( 'key' => $searchString, 'limit' => $maxResults ) );
+				// $numAvailResults = $response->getVal('totalCount'); // would be useful if we add paging.
+				$titles = array();
+				if(is_array($response->getVal('titleResults'))){
+					foreach($response->getVal('titleResults') as $resultData){
+						$titles[] = $resultData['textForm'];
+					}
 				}
+				if(is_array($response->getVal('textResults'))){
+					foreach($response->getVal('textResults') as $resultData){
+						$titles[] = $resultData['textForm'];
+					}
+				}
+
+				// Put the searchResults into the response.
+				$retVal['searchResults'] = $titles;
+			} catch(WikiaException $e){
+				// TODO: For now, just leave the defaultLyrics.
 			}
 		}
 	} // end of the "if shut_down_api else"
