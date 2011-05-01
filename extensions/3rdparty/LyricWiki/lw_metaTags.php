@@ -63,6 +63,7 @@ if (defined('MEDIAWIKI')) {
 				}
 			}
 			$out->addKeyword("lyrics");
+			$out->addKeyword("LyricWiki");
 
 			// Add back the original keywords.
 			foreach($originalKeywords as $kw){
