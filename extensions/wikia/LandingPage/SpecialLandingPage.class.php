@@ -50,7 +50,7 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 		}
 		
 		// fetching the landingpage sites
-		$landingPageLinks = CorporatePageHelper::parseMsgImg( 'landingpage-sites', false );
+		$landingPageLinks = CorporatePageHelper::parseMsgImg( 'landingpage-sites', false, false );
 		
 		// render HTML
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');

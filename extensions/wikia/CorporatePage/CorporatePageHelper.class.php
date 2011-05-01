@@ -148,7 +148,7 @@ class CorporatePageHelper{
 	 * @author Tomek
 	 */
 
-	static public function parseMsgImg($msg, $descThumb = false){
+	static public function parseMsgImg( $msg, $descThumb = false, $forContent = true ){
 		global $wgMemc, $wgLang;
 
 		$lang = $wgLang->getCode();
@@ -160,7 +160,11 @@ class CorporatePageHelper{
 
 		wfProfileIn( __METHOD__ );
 
-		$message = wfMsgForContent($msg);
+		if ( $forContent ) {
+			$message = wfMsgForContent($msg);
+		} else {
+			$message = wfMsg( $msg );
+		}
 		$lines = explode("\n",$message);
 		$out = array();
 		foreach($lines as $v){
