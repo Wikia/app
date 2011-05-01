@@ -291,9 +291,28 @@ class WikiaApiLyricwiki extends ApiBase {
 				print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 				print "<LyricsResult>\n";
 				$result = getSong($artist, $songName);
+
+				// TODO: Would probably be best to extract this whole XMLing function and make it recursive for inner-arrays.
 				foreach($result as $keyName=>$val){
-					print "\t<$keyName>".utf8_decode(htmlspecialchars($val, ENT_QUOTES, "UTF-8"))."</$keyName>\n";
+					if(is_array($val)){
+						print "\t<$keyName>\n";
+						$innerTagName = $keyName."_value"; // standard name of inner-tag
+						
+						// If wrapping tag is plural, make inner-tag the singular if that's straightforward.
+						$matches = array();
+						if(0 < preg_match("/^(.*?)e?s$/i", $keyName, $matches)){
+							$innerTagName = $matches[1];
+						}
+
+						foreach($val as $innerVal){
+							print "\t\t<$innerTagName>".utf8_decode(htmlspecialchars($innerVal, ENT_QUOTES, "UTF-8"))."</$innerTagName>\n";
+						}
+						print "\t</$keyName>\n";
+					} else {
+						print "\t<$keyName>".utf8_decode(htmlspecialchars($val, ENT_QUOTES, "UTF-8"))."</$keyName>\n";
+					}
 				}
+
 				print "</LyricsResult>\n";
 				break;
 			case "html":
@@ -335,7 +354,23 @@ class WikiaApiLyricwiki extends ApiBase {
 					print Xml::openElement('ul');
 					print "\n";
 					foreach($result as $keyName=>$val){
-						if(0 < preg_match("/^http:\/\//", $val)){
+						if(is_array($val)){
+							print Xml::openElement( 'li');
+							print Xml::openElement( 'strong' );
+							print htmlspecialchars( $keyName, ENT_QUOTES, "UTF-8" ).": ";
+								print Xml::openElement( 'ul' );
+									foreach($val as $innerVal){
+										print Xml::openElement( 'li' );
+										
+										// TODO: IF keyName == "searchResults", MAKE THESE INTO LINKS TO WIKI PAGES INSTEAD OF JUST PLAINTEXT.
+										
+										print $innerVal;
+										print Xml::closeElement( 'li' );
+									}
+								print Xml::closeElement( 'ul' );
+							print Xml::closeElement( 'strong' );
+							print Xml::closeElement( 'li' );
+						} else if(0 < preg_match("/^http:\/\//", $val)){
 							print Xml::openElement( 'a',
 								array(
 									'href' => $val,
