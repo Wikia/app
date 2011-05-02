@@ -1,5 +1,4 @@
 #VideoEmbed {
-	height: 507px;
 	padding: 25px 10px 10px;
 	position: relative;
 	width: 812px;
@@ -16,6 +15,14 @@
 	width: 810px;
 }
 
+#VideoEmbedTitle {
+	margin-top: -20px;
+}
+
+#VideoEmbedTitle2 {
+	margin-top: -20px;
+}
+
 #VideoEmbedSuccess {
 	line-height: 2em;
 	margin-bottom: 10px;
@@ -25,6 +32,7 @@
 	width: 450px;
 	padding: 2px;
 	font-family: sans-serif;
+	margin-bottom: 10px;
 }
 
 #VideoEmbedMainMesg {
@@ -36,7 +44,7 @@
 }
 
 #VideoEmbedUrlSubmit {
-	padding: 2px;
+	float: right;
 }
 
 #VideoEmbedSearch label {
@@ -49,9 +57,12 @@
 	width: 250px;
 }
 
+.v-float-right {
+	float: right;
+}
+
 #VideoEmbedBody {
 	background: #FFF;
-	height: 440px;
 	opacity: 1;
 	overflow: hidden;
 	padding: 15px;
@@ -101,7 +112,10 @@
 	right: 30px;
 	padding-left: 18px;
 	position: absolute;
+	z-index: 10000;
 	top: 5px;
+	margin-top: 15px;
+	margin-right: 15px;
 }
 #VideoEmbedClose a {
 	color: #FFF;
@@ -221,10 +235,13 @@
 /***INSERT OPTIONS***/
 .VideoEmbedOptionsTable {
 	color: #000;
+	padding-top: 20px;
+	width: 100%;
 }
 .VideoEmbedOptionsTable th {
 	font-weight: bold;
 	font-size: 11pt;
+	width: 50px;
 }
 .VideoEmbedOptionsTable td, .VideoEmbedOptionsTable th {
 	border-bottom: 1px solid #CCC;
@@ -288,8 +305,8 @@ VideoEmbedOptionsTable img {
 }
 
 #VET_div {
-    background: transparent;
-    border: 0;
+	background: transparent;
+	border: 0;
 }
 
 .VideoEmbedSourceNote {
@@ -353,5 +370,10 @@ VideoEmbedOptionsTable img {
 .vetnone {
 	float: none;
 	clear: none;
+}
+
+#VideoEmbedConflict,
+#VideoEmbedSummary {
+	margin-top: -20px;
 }
 

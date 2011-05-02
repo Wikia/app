@@ -35,4 +35,4 @@ echo wfMsg( 'vet-conflict-inf', $name );
 		</td>
 	</tr>
 </table>
-<div style="text-align: center;"><a onclick="VET_insertFinalVideo(event, 'overwrite');" href="#"><?= wfMsg('vet-overwrite') ?></a></div>
+<div style="margin-top:25px;"><a id="VideoEmbedConflictOverwriteButton" class="wikia-button v-float-right" onclick="VET_insertFinalVideo(event, 'overwrite');" href="#"><?= wfMsg('vet-overwrite') ?></a></div>
