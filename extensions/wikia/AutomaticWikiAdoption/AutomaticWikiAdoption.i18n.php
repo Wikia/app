@@ -84,6 +84,22 @@ Your wiki has been adopted! This means that someone else has volunteered to help
 <small>You can <a href=\"$3\">unsubscribe</a> from changes to this list.</small>",
 	'tog-adoptionmails' => 'E-mail me if $1 will become available for other users to adopt',
 	'wikiadoption-pref-label' => 'Changing these preferences will only affect e-mails from $1.',
+	'wikiadoption-welcome-header' => 'Congratulations! You\'ve adopted {{SITENAME}}!',
+	'wikiadoption-welcome-body' => "You're now a bureaucrat on this wiki. With your new status you now have access to all the tools that will help you manage {{SITENAME}}.
+<br><br>
+The most important thing you can do to help {{SITENAME}} grow is keep editing.
+<br><br>
+If there is no active administrator on a wiki it can be put up for adoption so be sure to check in on the wiki frequently.
+<br><br>
+Helpful Tools:
+<br><br>
+[[Special:ThemeDesigner|ThemeDesigner]]
+<br>
+[[Special:LayoutBuilder|Page Layout Builder]]
+<br>
+[[Special:ListUser|User List]]
+<br>
+[[Special:UserRights|Manage Rights]]",
 );
 
 /** Afrikaans (Afrikaans)
