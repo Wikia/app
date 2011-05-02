@@ -165,7 +165,7 @@ function VET_moveBackButton(selector) {
 		backButton.removeAttr('id').remove();
 
 		// keep reference to <a> tag
-		backButton = backButton.children('a').addClass('wikia-button yui-back');
+		backButton = backButton.children('a').addClass('wikia-button yui-back secondary v-float-right');
 		window.VETbackButton = backButton;
 	}
 
@@ -175,7 +175,7 @@ function VET_moveBackButton(selector) {
 	// move button
 	window.VETbackButton.clone().
 		click(VET_back).
-		insertBefore(selector);
+		insertAfter(selector);
 }
 
 /*
@@ -289,7 +289,7 @@ function VET_showPreview(e) {
 	var element = document.createElement('div');
 	element.id = 'VET_previewDiv';
 	element.style.width = '600px';
-	element.style.height = '500px';
+	element.style.height = '300px';
 	element.innerHTML = html;
 
 	document.body.appendChild(element);
@@ -471,7 +471,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 			}
 		}
 		else {
-			var el = YAHOO.util.Event.getTarget(e) || {id:''};
+			var el = YAHOO.util.Event.getTarget(e);
 			if (el.id == 'vetHelpLink') {
 				VET_track('open/fromEditTips'); //tracking
 			} else if (el.id == 'mw-editbutton-vet') {
@@ -522,7 +522,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 		var element = document.createElement('div');
 		element.id = 'VET_div';
 		element.style.width = '812px';
-		element.style.height = '587px';
+		element.style.height = '487px';
 		element.innerHTML = html;
 
 		document.body.appendChild(element);
@@ -581,7 +581,7 @@ function VET_loadMainFromView() {
 			 var element = document.createElement('div');
 			 element.id = 'VET_div';
 			 element.style.width = '812px';
-			 element.style.height = '587px';
+			 element.style.height = '487px';
 			 element.innerHTML = html;
 
 			 document.body.appendChild(element);
@@ -674,13 +674,13 @@ function VET_chooseImage(sourceId, itemId, itemLink, itemTitle) {
 }
 
 function VET_preQuery(e) {
+
 	if($G('VideoEmbedUrl').value == '') {
 		VET_track('query/undefined'); // tracking
 		alert(vet_warn2);
 		return false;
 	} else {
 		var query = $G('VideoEmbedUrl').value;
-
 		if ( !( query.match( 'http://' ) || query.match( 'www.' ) ) ) {
 			VET_track('query/url/' + query); // tracking
 			VET_sendQuery(query, 1, VET_curSourceId);
@@ -691,6 +691,8 @@ function VET_preQuery(e) {
 			VET_sendQueryEmbed( query );
 			return false;
 		}
+		var element = document.createElement('div');
+		element.style.height = '500px';
 	}
 }
 
@@ -994,7 +996,7 @@ function VET_switchScreen(to) {
 					break;
 
 				case 'Conflict':
-					VET_moveBackButton($('#VideoEmbedConflict').children('h1'));
+					VET_moveBackButton($('#VideoEmbedConflictOverwriteButton'));
 					break;
 			}
 		}, 50);

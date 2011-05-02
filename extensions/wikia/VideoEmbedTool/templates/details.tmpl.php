@@ -1,11 +1,8 @@
-<div style="position: absolute; z-index: 4; left: 0; width: 420px; height: 400px; background: #FFF; opacity: .9; filter: alpha(opacity=90);"></div>
-<div id="VideoEmbedThumb" style="text-align: right; position: absolute; z-index: 1000; right: 15px; height: <?= isset($props['name']) ? '255' : '370' ?>px;">
-<?= $props['code'] ?>
-<div style="text-align: center;"><?= wfMsg( 'vet-preview' ) ?></div>
-</div>
+<div style="position: absolute; z-index: 4; left: 0; width: 420px; height: 400px;"></div>
+
+<h1 id="VideoEmbedTitle2" ><?=wfMsg('vet-details-inf2') ?></h1>
 <?php
 echo '<div style="position: relative; z-index: 5;">';
-echo wfMsg('vet-details-inf2')
 ?>
 <table class="VideoEmbedOptionsTable">
 <?php
@@ -17,6 +14,12 @@ if('' == $props['oname']) {
 		<th><?= wfMsg( 'vet-name' ) ?></th>
 		<td>
 			<input type="text" id="VideoEmbedName" name="wpVideoEmbedName" value="<?= $props['vname'] ?>" />
+		</td>
+		<td rowspan="5" >
+			<div id="VideoEmbedThumb" style="text-align: right; right: 15px">
+			<?= $props['code'] ?>
+			<div style="text-align: center;"><?= wfMsg( 'vet-preview' ) ?></div>
+			</div>
 		</td>
 	</tr>
 <?
@@ -52,7 +55,7 @@ if('' == $props['oname']) {
 			<input type="radio" id="VideoEmbedLayoutRight" name="layout" checked="checked" onclick="VET_toggleSizing( true );" />
 			<label for="VideoEmbedLayoutRight"><img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/image_upload_right.png' ?>" alt="<?=wfMsg( 'vet-right' ) ?>" title="<?= wfMsg( 'vet-right' ) ?>" /></label>
 			</span>
-			<span id="VET_LayoutGalleryBox">			
+			<span id="VET_LayoutGalleryBox" style="display:none">
 			<input type="radio" id="VideoEmbedLayoutGallery" name="layout" onclick="VET_toggleSizing( false );" />
 			<label for="VideoEmbedLayoutGallery"><img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/image_upload_gallery.png' ?>" alt="<?= wfMsg( 'vet-gallery' ) ?>" title="<?= wfMsg( 'vet-gallery' ) ?>" /></label>
 			</span>
@@ -62,16 +65,16 @@ if('' == $props['oname']) {
 		<th><?= wfMsg('vet-caption') ?></th>
 		<td><input id="VideoEmbedCaption" type="text" /><?= wfMsg('vet-optional') ?></td>
 	</tr>
-	<tr class="VideoEmbedNoBorder">
-		<td>&nbsp;</td>
-		<td>
-			<input type="submit" value="<?= wfMsg('vet-insert2') ?>" onclick="VET_insertFinalVideo( event, 'details' );" />
+	<tr class="VideoEmbedNoBorder" style="padding: 0px" >
+		<td colspan="3" style="padding: 10px 0px 0px 0px" >
+			<input class="wikia-button" type="submit" style="float:right" value="<?= wfMsg('vet-insert2') ?>" onclick="VET_insertFinalVideo( event, 'details' );" />
 		</td>
+		
 	</tr>
+	
 </table>
 <input id="VideoEmbedId" type="hidden" value="<?= isset($props['id']) ? urlencode($props['id']) : '' ?>" />
 <input id="VideoEmbedProvider" type="hidden" value="<?= urlencode($props['provider']) ?>" />
 <input id="VideoEmbedOname" type="hidden" value="<?= urlencode($props['oname']) ?>" />
 <input id="VideoEmbedMetadata" type="hidden" value="<?= isset($props['metadata']) ? urlencode($props['metadata']) : '' ?>" />
-
 </div>
