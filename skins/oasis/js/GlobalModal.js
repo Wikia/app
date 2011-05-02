@@ -34,6 +34,19 @@ GlobalModal = {
 		if (!wgUserName) {
 			$('.ajaxLogin').trigger('click');
 		}
+	},
+	
+	showAdopt: function() {
+		$.get(wgScript, {
+			action: 'ajax',
+			rs: 'moduleProxy',
+			moduleName: 'AutomaticWikiAdoption',
+			actionName: 'AdoptWelcomeDialog',
+			outputType: 'html',
+			cb: wgCurRevisionId
+		}, function(html) {
+			$(html).makeModal({width: 500, height: 400});
+		});
 	}
 }
 
