@@ -3,6 +3,7 @@ require_once dirname(__FILE__) . '/../WikiaLabs.setup.php';
 wfLoadAllExtensions();
 
 class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
+	const TEST_PROJECT_ID = 111;
 	const TEST_PROJECT_NAME = 'Test Project';
 	const TEST_PROJECT_DESC = 'Hello World!';
 	const TEST_WIKI_ID = 177;
@@ -15,214 +16,243 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 	 * @var WikiaLabsProject
 	 */
 	protected $object = null;
+	protected $dbMock = null;
 	protected $cacheMock = null;
-	protected $loops = 1;
-
-
-	protected function verifyMockObjects() {
-	}
 
 	protected function setUp() {
-		$this->object = F::build( 'WikiaLabsProject' );
-	}
-
-	protected function setUpMock( $useCache ) {
-		$this->loops = 4;
-		if( !$useCache ) {
-			$this->cacheMock = $this->getMock( 'MemCachedClientforWiki', array(), array(), '', false );
-
-			$this->object = $this->getMock( 'WikiaLabsProject', array( 'getCache' ), array( F::build( 'App' ) ) );
-			$this->object->expects($this->any())
-				->method( 'getCache' )
-				->will( $this->returnValue( $this->cacheMock) );
-			$this->loops = 1;
-		}
+		$this->object = $this->getMock( 'WikiaLabsProject', array( 'getCache', 'getDb', 'getId', 'incrActivationsNum', 'decrActivationsNum', 'updateCachedEnables', 'updateCachedRating', 'setRating' ), array( F::build( 'App' ) ) );
+		$this->dbMock = $this->getMock( 'DatabaseMysql' );
+		$this->cacheMock = $this->getMock( 'MemCachedClientforWiki', array(), array(), '', false );
 	}
 
 	protected function tearDown() {
-		$this->object->delete();
-		parent::verifyMockObjects();
+		F::unsetInstance('WikiaLabsProject');
 	}
 
-	public function cacheDataProvider() {
+	protected function setUpMock() {
+		$this->object->expects($this->any())
+		  ->method( 'getCache' )
+		  ->will( $this->returnValue( $this->cacheMock) );
+		$this->object->expects($this->any())
+		  ->method( 'getDb' )
+		  ->will( $this->returnValue( $this->dbMock) );
+	}
+
+
+	public function testCreatingNewProject() {
+		$this->object->expects($this->exactly(3))
+		  ->method( 'getId' )
+		  ->will( $this->returnValue(0) );
+
+		$this->dbMock->expects($this->once())
+		  ->method('insert');
+
+		$this->dbMock->expects($this->once())
+		  ->method('insertId');
+
+		$this->setUpMock();
+
+		$testData = array( 'foo' => true, 'bar' => 1, 'desc' => self::TEST_PROJECT_DESC );
+		$releaseDate = strtotime( date('Y-m-d') );
+
+		$this->object->setName( self::TEST_PROJECT_NAME );
+		$this->object->setReleaseDate( $releaseDate );
+		$this->object->setData( $testData );
+		$this->object->setActive( true);
+		$this->object->setGraduated( false );
+		$this->object->update();
+
+		$this->assertEquals( self::TEST_PROJECT_NAME, $this->object->getName() );
+		$this->assertEquals( $releaseDate, $this->object->getReleaseDate() );
+		$this->assertEquals( 0, $this->object->getActivationsNum() );
+		$this->assertEquals( 0, $this->object->getRating() );
+		$this->assertTrue( $this->object->isActive() );
+		$this->assertFalse( $this->object->isGraduated() );
+
+		$actualData = $this->object->getData();
+
+		$this->assertEquals( $testData['foo'], $actualData['foo'] );
+		$this->assertEquals( $testData['bar'], $actualData['bar'] );
+		$this->assertEquals( $testData['desc'], $actualData['desc'] );
+	}
+
+
+	public function testUpdatingExistingProject() {
+		$this->object->expects($this->any())
+		  ->method( 'getId' )
+		  ->will( $this->returnValue( self::TEST_PROJECT_ID ) );
+
+		$this->dbMock->expects($this->once())
+		  ->method('update');
+
+		$this->setUpMock();
+
+		$testData = array( 'foo' => true, 'bar' => 1, 'desc' => self::TEST_PROJECT_DESC );
+
+		$this->object->setName( self::TEST_PROJECT_NAME );
+		$this->object->setData( $testData );
+		$this->object->update();
+
+		$this->assertEquals( self::TEST_PROJECT_ID, $this->object->getId() );
+		$this->assertEquals( self::TEST_PROJECT_NAME, $this->object->getName() );
+		$this->assertFalse( $this->object->isActive() );
+
+		$actualData = $this->object->getData();
+
+		$this->assertEquals( $testData['foo'], $actualData['foo'] );
+		$this->assertEquals( $testData['bar'], $actualData['bar'] );
+		$this->assertEquals( $testData['desc'], $actualData['desc'] );
+	}
+
+
+	public function gettingListOfProjectsDataProvider() {
 		return array(
-			array( true ),
-			array( false )
+			array(
+				array( 'name' => 'Test Name' ),
+				array( 'wlpr_name' => 'Test Name' )
+			),
+			array(
+				array( 'active' => true ),
+				array( 'wlpr_is_active' => 'y' )
+			),
+			array(
+				array( 'active' => false ),
+				array( 'wlpr_is_active' => 'n' )
+			),
+			array(
+				array( 'graduated' => true ),
+				array( 'wlpr_is_graduated' => 'y' )
+			),
+			array(
+				array( 'graduated' => false ),
+				array( 'wlpr_is_graduated' => 'n' )
+			)
 		);
 	}
 
 	/**
-	 * @dataProvider cacheDataProvider
+	 * @dataProvider gettingListOfProjectsDataProvider
 	 */
-	public function testCreatingNewProject( $useCache ) {
-		$this->setUpMock( $useCache );
+	public function testGettingListOfProjects( $refinements, $expectedWhereClause ) {
+		$project1 = new stdClass();
+		$project1->wlpr_id = 10;
 
-		for( $i = 0; $i < $this->loops; $i++ ) {
-			$this->assertInstanceOf( 'WikiaLabsProject', $this->object );
+		$project2 = new stdClass();
+		$project2->wlpr_id = 20;
 
-			$testData = array( 'foo' => true, 'bar' => 1, 'desc' => self::TEST_PROJECT_DESC );
-			$releaseDate = strtotime( date('Y-m-d') );
+		$resMock = $this->getMock( 'ResultWrapper', array( 'fetchObject'), array(), '', false );
+		$resMock->expects($this->exactly(3))
+		  ->method('fetchObject')
+		  ->will( $this->onConsecutiveCalls( $project1, $project2, null ) );
 
-			$this->object->setName( self::TEST_PROJECT_NAME );
-			$this->object->setReleaseDate( $releaseDate );
-			$this->object->setData( $testData );
-			$this->object->setActive( true);
-			$this->object->setGraduated( false );
-			$this->object->update();
+		$this->dbMock->expects($this->once())
+		  ->method('select')
+		  ->with( $this->anything(), $this->anything(), $this->equalTo($expectedWhereClause))
+		  ->will( $this->returnValue( $resMock ) );
 
-			$this->assertGreaterThan( 0, $this->object->getId() );
-			$this->assertEquals( self::TEST_PROJECT_NAME, $this->object->getName() );
-			$this->assertEquals( $releaseDate, $this->object->getReleaseDate() );
-			$this->assertEquals( 0, $this->object->getActivationsNum() );
-			$this->assertEquals( 0, $this->object->getRating() );
-			$this->assertTrue( $this->object->isActive() );
-			$this->assertFalse( $this->object->isGraduated() );
+		$this->setUpMock();
 
-			$actualData = $this->object->getData();
+		F::setInstance( 'WikiaLabsProject', $project1 );
 
-			$this->assertEquals( $testData['foo'], $actualData['foo'] );
-			$this->assertEquals( $testData['bar'], $actualData['bar'] );
-			$this->assertEquals( $testData['desc'], $actualData['desc'] );
-		}
-	}
-
-	/**
-	 * @dataProvider cacheDataProvider
-	 */
-	public function testUpdatingExistingProject( $useCache ) {
-		$this->setUpMock( $useCache );
-
-		for( $i = 0; $i < $this->loops; $i++ ) {
-			$this->assertInstanceOf( 'WikiaLabsProject', $this->object );
-
-			$testData = array( 'foo' => true, 'bar' => 1, 'desc' => self::TEST_PROJECT_DESC );
-
-			$this->object->setName( self::TEST_PROJECT_NAME );
-			$this->object->setData( $testData );
-			$this->object->update();
-
-			$this->assertEquals( self::TEST_PROJECT_NAME, $this->object->getName() );
-			$this->assertFalse( $this->object->isActive() );
-
-			$object = F::build( 'WikiaLabsProject', array( 'id' => $this->object->getId() ) );
-			$object->setActive( true );
-			$object->incrActivationsNum();
-			$object->setExtension( self::TEST_EXTENSION );
-			$object->update();
-
-			unset($object);
-
-			$object = F::build( 'WikiaLabsProject', array( 'id' => $this->object->getId() ) );
-
-			$this->assertEquals( self::TEST_PROJECT_NAME, $object->getName() );
-			$this->assertTrue( $object->isActive() );
-			$this->assertEquals( date('Y-m-d'), date('Y-m-d', $object->getReleaseDate()) );
-			$this->assertEquals( self::TEST_EXTENSION, $object->getExtension() );
-			$this->assertEquals( 1, $object->getActivationsNum() );
-
-			$actualData = $object->getData();
-
-			$this->assertEquals( $testData['foo'], $actualData['foo'] );
-			$this->assertEquals( $testData['bar'], $actualData['bar'] );
-			$this->assertEquals( $testData['desc'], $actualData['desc'] );
-
-			$object->delete();
-		}
-	}
-
-	/**
-	 * @dataProvider cacheDataProvider
-	 */
-	public function testGettingListOfProjects( $useCache ) {
-		$this->setUpMock( $useCache );
-		$testName = self::TEST_PROJECT_NAME . __METHOD__;
-
-		// hack: cleanup db first
-		$app = F::build('App');
-		$app->runFunction( 'wfGetDB', DB_MASTER, array(), $app->getGlobal( 'wgExternalDatawareDB' ) )->query( "DELETE FROM wikia_labs_project WHERE wlpr_name='" . $testName . "'" );
-
-		$project1 = F::build( 'WikiaLabsProject' );
-		$project1->setName( $testName );
-		$project1->setActive(true);
-		$project1->setGraduated(true);
-		$project1->update();
-
-		$project2 = F::build( 'WikiaLabsProject' );
-		$project2->setName( $testName );
-		$project2->setActive(false);
-		$project2->setGraduated(true);
-		$project2->update();
-
-		$list = $this->object->getList( array( 'active' => true, 'name' => $testName ) );
-
-		$this->assertEquals( 1, count($list) );
-		$this->assertEquals( $project1->getId(), $list[0]->getId() );
-		$this->assertEquals( $project1->getName(), $list[0]->getName() );
-		unset($list);
-
-		$list = $this->object->getList( array( 'active' => false, 'name' => $testName ) );
-
-		$this->assertEquals( 1, count($list) );
-		$this->assertEquals( $project2->getId(), $list[0]->getId() );
-		$this->assertEquals( $project2->getName(), $list[0]->getName() );
-		unset($list);
-
-		$list = $this->object->getList( array( 'graduated' => true, 'name' => $testName ) );
+		$list = $this->object->getList( $refinements );
 
 		$this->assertEquals( 2, count($list) );
-
-		$project1->delete();
-		$project2->delete();
+		$this->assertEquals( $project1->wlpr_id, $list[0]->wlpr_id );
 	}
 
-	/**
-	 * @dataProvider cacheDataProvider
-	 */
-	public function testEnablingAndDisablingForWiki( $useCache ) {
-		$this->setUpMock( $useCache );
 
-		for( $i = 0; $i < $this->loops; $i++ ) {
-			$this->object->setName( self::TEST_PROJECT_NAME );
-			$this->object->update();
+	public function testEnablingProjectForWiki() {
+		$this->object->expects($this->any())
+		  ->method( 'getId' )
+		  ->will( $this->returnValue( self::TEST_PROJECT_ID ) );
+		$this->object->expects($this->once())
+		  ->method( 'incrActivationsNum' );
+		$this->object->expects($this->once())
+		  ->method( 'updateCachedEnables' )
+		  ->with( $this->equalTo( self::TEST_WIKI_ID ), $this->equalTo( true ) );
 
-			$this->assertFalse( $this->object->isEnabled( self::TEST_WIKI_ID ) );
-			$this->assertEquals(0, $this->object->getActivationsNum());
+		$this->dbMock->expects($this->once())
+		  ->method('insert')
+		  ->with(
+		    $this->equalTo('wikia_labs_project_wiki_link'),
+		    $this->equalTo( array( 'wlpwli_wlpr_id' => self::TEST_PROJECT_ID, 'wlpwli_wiki_id' => self::TEST_WIKI_ID )),
+		    $this->anything() );
 
-			$this->object->setEnabled( self::TEST_WIKI_ID );
-			$this->assertTrue( $this->object->isEnabled( self::TEST_WIKI_ID ) );
-			$this->assertEquals(1, $this->object->getActivationsNum());
+		$this->setUpMock();
+
+		$this->object->setEnabled( self::TEST_WIKI_ID );
+	}
+
+	public function testDisablingProjectForWiki() {
+		$this->object->expects($this->any())
+		  ->method( 'getId' )
+		  ->will( $this->returnValue( self::TEST_PROJECT_ID ) );
+		$this->object->expects($this->once())
+		  ->method( 'decrActivationsNum' );
+		$this->object->expects($this->once())
+		  ->method( 'updateCachedEnables' )
+		  ->with( $this->equalTo( self::TEST_WIKI_ID ), $this->equalTo( false ) );
+
+		$this->dbMock->expects($this->once())
+		  ->method('delete')
+		  ->with(
+		    $this->equalTo('wikia_labs_project_wiki_link'),
+		    $this->equalTo( array( 'wlpwli_wlpr_id' => self::TEST_PROJECT_ID, 'wlpwli_wiki_id' => self::TEST_WIKI_ID )),
+		    $this->anything() );
+
+		$this->setUpMock();
 
 			$this->object->setDisabled( self::TEST_WIKI_ID );
-			$this->assertFalse( $this->object->isEnabled( self::TEST_WIKI_ID ) );
-			$this->assertEquals(0, $this->object->getActivationsNum());
-		}
+	}
+
+	public function updateRatingDataProvider() {
+		return array(
+			array( 0, self::TEST_USER_ID1, 5 ),
+			array( 1, self::TEST_USER_ID2, 2 )
+		);
 	}
 
 	/**
-	* @dataProvider cacheDataProvider
-	*/
-	public function testUpdateRating( $useCache ) {
-		$this->setUpMock( $useCache );
+	 * @dataProvider updateRatingDataProvider
+	 */
+	public function testUpdateRating( $ratingId, $testUser, $testRating ) {
+		$this->object = $this->getMock( 'WikiaLabsProject', array( 'getCache', 'getDb', 'getId', 'incrActivationsNum', 'decrActivationsNum', 'updateCachedEnables', 'updateCachedRating', 'setRating', 'update' ), array( F::build( 'App' ) ) );
 
-		for( $i = 0; $i < $this->loops; $i++ ) {
-			$this->object->update();
+		$testRow = new stdClass;
+		$testRow->wlpra_id = $ratingId;
+		$testRow->rating = 10;
 
-			$testRating1 = 5;
-			$testRating2 = 2;
+		$this->object->expects($this->atLeastOnce())
+		  ->method( 'getId' )
+		  ->will( $this->returnValue( self::TEST_PROJECT_ID ) );
+		$this->object->expects($this->once())
+		  ->method( 'updateCachedRating' )
+		  ->with( $this->equalTo( $testUser ), $this->equalTo( $testRating ) );
+		$this->object->expects($this->once())
+		  ->method( 'setRating' )
+		  ->with( $this->equalTo( $testRow->rating ) );
 
-			$this->object->updateRating( self::TEST_USER_ID1, $testRating1 );
-			$this->object->updateRating( self::TEST_USER_ID2, $testRating2 );
-
-			$this->assertEquals( 2, $this->object->getRating() );
-			$this->assertEquals( $testRating1, $this->object->getRatingByUser( self::TEST_USER_ID1 ) );
-			$this->assertEquals( $testRating2, $this->object->getRatingByUser( self::TEST_USER_ID2 ) );
-
-			$this->object->updateRating( self::TEST_USER_ID2, $testRating1 );
-
-			$this->assertEquals( 2, $this->object->getRating() );
-			$this->assertEquals( $testRating1, $this->object->getRatingByUser( self::TEST_USER_ID1, DB_MASTER ) );
-			$this->assertEquals( $testRating1, $this->object->getRatingByUser( self::TEST_USER_ID2, DB_MASTER ) );
+		if(!empty($ratingId)) {
+			$this->dbMock->expects($this->once())
+			  ->method('update');
 		}
+		else {
+			$this->dbMock->expects($this->once())
+			  ->method('insert');
+		}
+
+		$this->dbMock->expects($this->exactly(2))
+		  ->method('selectRow')
+		  ->with(
+		    $this->equalTo('wikia_labs_project_rating'),
+		    $this->anything(),
+		    $this->anything(),
+		    $this->anything() )
+		  ->will( $this->returnValue( $testRow ));
+
+		$this->setUpMock();
+
+		$this->object->updateRating( $testUser, $testRating );
 	}
 
 }
