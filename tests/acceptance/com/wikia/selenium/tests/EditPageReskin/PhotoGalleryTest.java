@@ -1,4 +1,4 @@
-package com.wikia.selenium.tests;
+package com.wikia.selenium.tests.EditPageReskin;
 
 import java.io.File;
 
