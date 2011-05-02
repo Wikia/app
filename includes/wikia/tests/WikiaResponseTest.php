@@ -77,6 +77,7 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 
 	public function testSettingResponseCode() {
 		$this->object->expects( $this->once() )->method( 'sendHeader' );
+		$this->object->setCode(200);
 		$this->object->sendHeaders();
 	}
 
