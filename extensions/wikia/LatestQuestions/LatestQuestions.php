@@ -3,6 +3,8 @@
 $wgExtensionMessagesFiles['LatestQuestions'] = dirname(__FILE__) . '/LatestQuestions.i18n.php';
 $wgExtensionFunctions[] = 'efLatestQuestionsInit';
 
+$wgAutoloadClasses['LatestQuestionsModule'] = dirname( __FILE__ ) . '/LatestQuestionsModule.php';
+
 if( empty( $wgAnswersServer ) ) {
 	$wgAnswersServer = 'http://frag.wikia.com';
 }
@@ -14,6 +16,7 @@ function efLatestQuestionsInit() {
 	global $wgUser, $wgHooks;
 	if( $wgUser->isAnon() ) {
 		$wgHooks['AjaxAddScript'][] = 'wfLatestQuestionsAjaxAddScript';
+		$wgHooks['GetRailModuleList'][] = 'wfLatestQuestionsAddModule';
 		$wgHooks['MakeGlobalVariablesScript'][] = 'wfLatestQuestionsJSVariables';
 	}
 }
@@ -22,6 +25,17 @@ function wfLatestQuestionsAjaxAddScript( &$out ) {
 	global $wgStyleVersion, $wgJsMimeType, $wgExtensionsPath;
 	$out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/LatestQuestions/LatestQuestions.js?{$wgStyleVersion}\"></script>\n" );
 	$out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/LatestQuestions/LatestQuestions.scss'));
+	return true;
+}
+
+function wfLatestQuestionsAddModule( &$railModuleList ) {
+	foreach( $railModuleList as $i => $m ) {
+		if( $m[0] == 'LatestActivity' ) {
+			$minKey = min( array_keys( $railModuleList ) );
+			$railModuleList[ $minKey - 1 ] = array( 'LatestQuestions', 'Placeholder', null );
+			break;
+		}
+	}
 	return true;
 }
 
