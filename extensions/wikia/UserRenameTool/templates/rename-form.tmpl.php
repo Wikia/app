@@ -11,8 +11,8 @@
 					<label for='oldusername'><?=wfMsgForContent('userrenametool-old')?></label>
 				</td>
 				<td class='mw-input'>
-					<input type="text" name="oldusername" size="20" tabindex="1" value="<?=$oldusername;?>"<?=($warnings) ? ' disabled' : null;?>/>
-					<?if($warnings):?><input type="hidden" name="oldusername" value="<?=$oldusername;?>"/><?endif?>
+					<input type="text" name="oldusername" size="20" tabindex="1" value="<?=$oldusername_hsc;?>"<?=($warnings) ? ' disabled' : null;?>/>
+					<?if($warnings):?><input type="hidden" name="oldusername" value="<?=$oldusername_hsc;?>"/><?endif?>
 				</td>
 			</tr>
 			<tr>
@@ -20,8 +20,8 @@
 					<label for='newusername'><?=wfMsgForContent( 'userrenametool-new' )?></label>
 				</td>
 				<td class='mw-input'>
-					<input type="text" name="newusername" size="20" tabindex="2" value="<?=$newusername;?>"<?=($warnings) ? ' disabled' : null;?>/>
-					<?if($warnings):?><input type="hidden" name="newusername" value="<?=$newusername;?>"/><?endif?>
+					<input type="text" name="newusername" size="20" tabindex="2" value="<?=$newusername_hsc;?>"<?=($warnings) ? ' disabled' : null;?>/>
+					<?if($warnings):?><input type="hidden" name="newusername" value="<?=$newusername_hsc;?>"/><?endif?>
 				</td>
 			</tr>
 			<tr>
