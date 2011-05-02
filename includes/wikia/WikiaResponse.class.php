@@ -12,7 +12,7 @@ class WikiaResponse {
 	 */
 	private $view = null;
 	private $body = null;
-	private $code;
+	private $code = null;
 	private $contentType = null;
 	private $headers = array();
 	private $format = null;
@@ -22,7 +22,6 @@ class WikiaResponse {
 	protected $exception = null;
 
 	public function __construct( $format ) {
-		$this->setCode( self::RESPONSE_CODE_OK );
 		$this->setFormat( $format );
 		$this->setView( F::build( 'WikiaView' ) );
 	}
@@ -199,11 +198,11 @@ class WikiaResponse {
 			$responseCodeSent = true;
 		}
 
-		if(!$responseCodeSent) {
+		if(!$responseCodeSent && !empty($this->code)) {
 			$this->sendHeader( "HTTP/1.1 " . $this->code, false );
 		}
 
-		if($this->contentType != null) {
+		if(!empty($this->contentType)) {
 			$this->sendHeader( "Content-Type: " . $this->contentType, true );
 		}
 
