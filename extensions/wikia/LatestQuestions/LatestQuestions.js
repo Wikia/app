@@ -17,7 +17,12 @@ var LatestQuestions = {
 	    html += "</ul>";
 	    html += "<a href='/wiki/Special:WikiActivity' title='Special:WikiActivity' class='more'>"+wgOasisMoreMsg+"</a>";
 	    html += "</section>";
-	    $("#WikiaRail").append(html).find("section.LatestQuestionsModule a").attr("href", function(i, val) {
+            if ($.browser.msie) {
+	        $("section.LatestQuestionsModule").empty().append(html);
+            } else {
+	        $("section.LatestQuestionsModule").replaceWith(html);
+            }
+	    $("section.LatestQuestionsModule a").attr("href", function(i, val) {
                 return wgAnswersServer + val;
             });
         }
