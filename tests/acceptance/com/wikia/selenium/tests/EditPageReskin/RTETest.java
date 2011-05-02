@@ -1,4 +1,4 @@
-package com.wikia.selenium.tests;
+package com.wikia.selenium.tests.EditPageReskin;
 
 import org.testng.annotations.Test;
 import org.testng.annotations.DataProvider;

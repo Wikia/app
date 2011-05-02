@@ -1,4 +1,4 @@
-package com.wikia.selenium.tests;
+package com.wikia.selenium.tests.EditPageReskin;
 
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.closeSeleniumSession;
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.session;
