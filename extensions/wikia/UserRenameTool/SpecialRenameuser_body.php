@@ -53,7 +53,7 @@ class SpecialRenameuser extends SpecialPage {
 		$newusername = $wgRequest->getText( 'newusername' );
 		$reason = $wgRequest->getText( 'reason' );
 		$token = $wgUser->editToken();
-		$nonotifyRenamed = $wgRequest->getBool( 'notify_renamed', false );
+		$notifyRenamed = $wgRequest->getBool( 'notify_renamed', false );
 		$confirmaction = false;
 		
 		if ($wgRequest->wasPosted() && $wgRequest->getInt('confirmaction')){
@@ -81,17 +81,19 @@ class SpecialRenameuser extends SpecialPage {
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$template->set_vars(
 			array (
-				"submitUrl"     => $wgTitle->getLocalUrl(),
-				"oldusername"   => $oldusername,
-				"newusername"   => $newusername,
-				"reason"        => $reason,
-				"move_allowed"  => $wgUser->isAllowed( 'move' ),
-				"confirmaction" => $confirmaction,
-				"warnings"      => $warnings,
-				"errors"        => $errors,
-				"infos"         => $infos,
-				"token"         => $token,
-				"notify_renamed" => $notifyRenamed,
+				"submitUrl"     	=> $wgTitle->getLocalUrl(),
+				"oldusername"   	=> $oldusername,
+				"oldusername_hsc"	=> htmlspecialchars($oldusername),
+				"newusername"   	=> $newusername,
+				"newusername_hsc"	=> htmlspecialchars($newusername),
+				"reason"        	=> $reason,
+				"move_allowed"  	=> $wgUser->isAllowed( 'move' ),
+				"confirmaction" 	=> $confirmaction,
+				"warnings"      	=> $warnings,
+				"errors"        	=> $errors,
+				"infos"         	=> $infos,
+				"token"         	=> $token,
+				"notify_renamed" 	=> $notifyRenamed,
 			)
 		);
 
