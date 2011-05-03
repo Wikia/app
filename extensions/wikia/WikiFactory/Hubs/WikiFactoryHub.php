@@ -200,12 +200,12 @@ class WikiFactoryHub {
 			return array();
 		}
 
+		wfProfileIn( __METHOD__ );
 		$oMemc = wfGetCache( CACHE_MEMCACHED );
 		$memkey = sprintf("%s", __METHOD__);
 		$cached = $oMemc->get($memkey);
 		if ( empty($cached) ) {
 
-			wfProfileIn( __METHOD__ );
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 			Wikia::log( __METHOD__, "var", $wgExternalSharedDB );
 			$oRes = $dbr->select(
