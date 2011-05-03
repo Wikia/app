@@ -47,6 +47,8 @@ GlobalModal = {
 		}, function(html) {
 			$(html).makeModal({width: 500, height: 400});
 		});
+		var sassUrl = $.getSassCommonURL('/extensions/wikia/AutomaticWikiAdoption/css/AutomaticWikiAdoption.scss');
+		$.getCSS(sassUrl, function(){});
 	}
 }
 

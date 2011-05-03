@@ -21,16 +21,15 @@ $messages['en'] = array(
 	'wikiadoption' => 'Automatic wiki adoption',
 	'wikiadoption-desc' => 'An AutomaticWikiAdoption extension for MediaWiki',
 	'wikiadoption-header' => 'Adopt this wiki',
-	'wikiadoption-button-adopt' => 'Adopt now',
-	'wikiadoption-description' => "You have contributed to this wiki, but there is no active administrator. Would you like the job?
-
-Being an administrator means that you will need to keep contributing content, but also encourage anyone else on the wiki directly, and be available to help them out when they need you.
-
-In return, we will give you the power to block / unblock users, lock pages from editing, and a whole bunch of other features. We will also send you an e-mail when anyone else edits this wiki.
-
-In short, you will have ownership, and you can shape this site to whatever you want it to be.
-
-Sound like fun?",
+	'wikiadoption-button-adopt' => 'Yes, I want to adopt {{SITENAME}}!',
+	'wikiadoption-adopt-inquiry' => 'Find out more!',
+	'wikiadoption-description' => "$1, ready to adopt {{SITENAME}}?
+<br><br>
+There hasn't been an active administrator on {{SITENAME}} for a while, and we're looking for a new leader to help this wiki's content and community grow! As someone who's contributed to {{SITENAME}} we were wondering if you'd like the job.
+<br><br>
+By adopting the wiki, you'll be promoted to administrator and bureaucrat to give you the tools you'll need to manage the wiki's community and content. You'll be able to create other administrators to help, delete, rollback, move and protect pages, as well as create user groups and assign users to them.
+<br><br>
+Are you ready to take the next steps to help {{SITENAME}}?",
 	'wikiadoption-know-more-header' => 'Want to know more?',
 	'wikiadoption-know-more-description' => 'Check out these links for more information. And of course, feel free to contact us if you have any questions!',
 	'wikiadoption-adoption-successed' => 'Congratulations! You are a now an administrator on this wiki!',
@@ -39,7 +38,7 @@ Sound like fun?",
 	'wikiadoption-not-enough-edits' => "Oops! You need to have more than 10 edits to adopt this wiki.",
 	'wikiadoption-adopted-recently' => "Oops! You have already adopted another wiki recently. You will need to wait a while before you can adopt a new wiki.",
 	'wikiadoption-log-reason' => 'Automatic Wiki Adoption',
-	'wikiadoption-notification' => "$1 is up for adoption! You can become the new owner. $2!",
+	'wikiadoption-notification' => "{{SITENAME}} is up for adoption. Interesting in becoming a leader here? Adopt this wiki to get started!  $2",
 	'wikiadoption-mail-first-subject' => "We have not seen you around in a while",
 	'wikiadoption-mail-first-content' => "Hi $1,
 
@@ -97,7 +96,7 @@ Helpful Tools:
 <br>
 [[Special:LayoutBuilder|Page Layout Builder]]
 <br>
-[[Special:ListUser|User List]]
+[[Special:ListUsers|User List]]
 <br>
 [[Special:UserRights|Manage Rights]]",
 );
