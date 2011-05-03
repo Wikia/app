@@ -45,7 +45,7 @@ class AutomaticWikiAdoptionHelper {
 	static function isAllowedToAdopt($wikiId, $user) {
 		global $wgMemc;
 		wfProfileIn(__METHOD__);
-
+		
 		//uncachable tests
 		//DB in read only mode
 		if (wfReadOnly()) {
@@ -318,7 +318,7 @@ class AutomaticWikiAdoptionHelper {
 			NotificationsModule::addNotification(
 				wfMsg('wikiadoption-notification', 
 						$wgSitename, 
-						Wikia::SpecialPageLink('AutomaticWikiAdoption','wikiadoption-button-adopt')), 
+						Wikia::SpecialPageLink('WikiAdoption','wikiadoption-adopt-inquiry')), 
 				array(
 					'name' => 'AutomaticWikiAdoption',
 					'dismissUrl' => $wgScript . '?action=ajax&rs=AutomaticWikiAdoptionAjax&method=dismiss',

@@ -59,7 +59,8 @@ class SpecialWikiAdoption extends UnlistedSpecialPage {
 			if ($wgRequest->wasPosted()) {
 				//user clicked button to adopt a wiki
 				if (AutomaticWikiAdoptionHelper::adoptWiki($wgCityId, $wgUser)) {
-					$wgOut->addHTML(wfMsgExt('wikiadoption-adoption-successed', array('parseinline')));
+					$mainPage = wfMsgForContent( 'mainpage' );
+					$wgOut->redirect($mainPage.'?modal=Adopt');
 				} else {
 					$wgOut->addHTML(wfMsgExt('wikiadoption-adoption-failed', array('parseinline')));
 				}
@@ -68,6 +69,7 @@ class SpecialWikiAdoption extends UnlistedSpecialPage {
 				$template = new EasyTemplate(dirname(__FILE__).'/templates');
 				$template->set_vars(array(
 					'formAction' => $wgTitle->getFullURL(),
+					'username' => $wgUser->getName(),
 				));
 
 				$wgOut->addHTML($template->render('main'));
