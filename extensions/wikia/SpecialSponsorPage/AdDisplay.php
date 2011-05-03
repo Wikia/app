@@ -22,9 +22,10 @@ class AdDisplay {
 
 	//use this one
 	public static function OutputAdvertisementOutputHook( &$out, &$text ){
-		global $wgUser, $wgRequest, $wgShowAds;
+		global $wgUser, $wgRequest, $wgShowAds, $wgTitle, $wgMaximizeArticleAreaArticleIds;
 
-		if( empty( $wgShowAds ) ) {
+		if( empty( $wgShowAds ) 
+		|| (is_array($wgMaximizeArticleAreaArticleIds) && in_array($wgTitle->getArticleId(), $wgMaximizeArticleAreaArticleIds)) ) {
 			return true;
 		}
 

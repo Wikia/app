@@ -9,6 +9,7 @@ class BodyModule extends Module {
 	var $wgNoExternals;
 	var $wgSuppressWikiHeader;
 	var $wgSuppressPageHeader;
+	var $wgSuppressRail;
 	var $wgSuppressFooter;
 	var $wgSuppressArticleCategories;
 	var $wgEnableCorporatePageExt;
@@ -140,10 +141,9 @@ class BodyModule extends Module {
 			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail,
 			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers,
-			$wgSalesTitles, $wgHideRailModuleArticleIds;
+			$wgSalesTitles;
 
-		if (is_array($wgHideRailModuleArticleIds)
-		&& in_array($wgTitle->getArticleId(), $wgHideRailModuleArticleIds)) {
+		if ($this->wgSuppressRail) {
 			return array();
 		}
 
@@ -321,7 +321,14 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgEnableEditPageReskinExt;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgEnableEditPageReskinExt, $wgMaximizeArticleAreaArticleIds;
+
+		// set up global vars
+		if (is_array($wgMaximizeArticleAreaArticleIds)
+		&& in_array($wgTitle->getArticleId(), $wgMaximizeArticleAreaArticleIds)) {
+			$this->wgSuppressRail = true;
+			$this->wgSuppressPageHeader = true;
+		}
 
 		// InfoBox - Testing
 		$this->wgEnableInfoBoxTest = $wgEnableInfoBoxTest;
