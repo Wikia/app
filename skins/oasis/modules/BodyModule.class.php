@@ -140,7 +140,12 @@ class BodyModule extends Module {
 			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail,
 			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers,
-			$wgSalesTitles;
+			$wgSalesTitles, $wgHideRailModuleArticleIds;
+
+		if (is_array($wgHideRailModuleArticleIds)
+		&& in_array($wgTitle->getArticleId(), $wgHideRailModuleArticleIds)) {
+			return array();
+		}
 
 		$railModuleList = array();
 
