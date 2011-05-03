@@ -58,7 +58,7 @@ $(document).ready(function() {
 			{
 				"fnRender": function ( oObj ) {
 					var row = '<span class="lc-row"><a href="' + oObj.aData[3] + '">' + oObj.aData[3] + '</a></span>';
-					row += '&nbsp;(<a href="' + oObj.aData[3] + 'index.php?title=Special:Contributions/' + username + '">';
+					row += '&nbsp;(<a href="' + oObj.aData[3] + 'index.php?title=Special:Contributions/' + encodeURIComponent(username) + '">';
 					row += '<?=wfMsg('lookupcontribscontribs')?>';
 					row += '</a>)</span>';
 					return row;
@@ -139,7 +139,7 @@ $(document).ready(function() {
 <form method="post" action="<?=$action?>" id="lc-form">
 <div class="lc_filter">
 	<span class="lc_filter lc_first"><?= wfMsg('lookupcontribsselectuser') ?></span>
-	<span class="lc_filter"><input type="text" name="target" id="lc_search" size="50" value="<?=$username?>"></span>
+	<span class="lc_filter"><input type="text" name="target" id="lc_search" size="50" value="<?= htmlentities($username); ?>"></span>
 	<span class="lc_filter"><input type="button" value="<?=wfMsg('lookupcontribsgo')?>" id="lc-showuser" onclick="submit();"></span>
 </div>
 </form>
