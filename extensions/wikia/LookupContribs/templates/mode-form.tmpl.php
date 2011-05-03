@@ -131,7 +131,7 @@ $(document).ready(function() {
 <form method="post" action="<?=$action?>" id="lc-form">
 <div class="lc_filter">
 	<span class="lc_filter lc_first"><?= wfMsg('lookupcontribsselectuser') ?></span>
-	<span class="lc_filter"><input type="text" name="target" id="lc_search" size="50" value="<?=$username?>"></span>
+	<input type="text" name="target" id="lc_search" size="50" value="<?= htmlentities($username); ?>"></span>
 	<span class="lc_filter"><input type="button" value="<?=wfMsg('lookupcontribsgo')?>" id="lc-showuser" onclick="submit();"></span>
 </div>
 </form>
