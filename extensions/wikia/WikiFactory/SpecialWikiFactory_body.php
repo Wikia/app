@@ -496,12 +496,14 @@ class WikiFactoryPage extends SpecialPage {
      */
 	private function doUpdateDomains( &$request ) {
 		$action = $request->getText( "wpAction", null );
+		$reason = $request->getText( "wpReason", "" );
 		$message = "";
 		switch( $action ) {
 			case "status":
 				$status = $request->getVal( "wpWikiStatus", 0 );
-				WikiFactory::setPublicStatus( $status, $this->mWiki->city_id );
+				WikiFactory::setPublicStatus( $status, $this->mWiki->city_id, $reason );
 				$this->mWiki->city_public = $status;
+				WikiFactory::clearCache( $this->mWiki->city_id );
 				$message = "Status of this wiki was changed to " . $this->mStatuses[ $status ];
 			break;
 		}
