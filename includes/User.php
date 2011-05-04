@@ -651,7 +651,7 @@ class User {
 
 	static function isInvalidUsernameCharacters($name) {
 		global $wgInvalidUsernameCharacters;
-		if ( !empty( $wgInvaludUsernameCharacters ) ) {
+		if ( !empty( $wgInvalidUsernameCharacters ) ) {
 			return !preg_match( '/[' . preg_quote( $wgInvalidUsernameCharacters, '/' ) . ']/', $name );
 		} else {
 			return true;
