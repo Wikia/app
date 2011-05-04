@@ -60,6 +60,10 @@ class JSMessages {
 		wfProfileIn(__METHOD__ . '::getAllMessages');
 		$lang = wfGetLangObj(false /* $langCode */);
 		$messages = $lang->getAllMessages();
+		// append legacy data
+		if (isset(Language::$dataCache->legacyData[$lang->getCode()]['messages'])) {
+			$messages = Language::$dataCache->legacyData[$lang->getCode()]['messages'] + $messages;
+		}
 		wfProfileOut(__METHOD__ . '::getAllMessages');
 
 		// apply pattern
