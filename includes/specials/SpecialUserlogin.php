@@ -534,13 +534,6 @@ class LoginForm {
 
 		$this->mExtUser = ExternalUser::newFromName( $this->mName );
 
-		# TODO: Allow some magic here for invalid external names, e.g., let the
-		# user choose a different wiki name.
-		$u = User::newFromName( $this->mName );
-		if( !( $u instanceof User ) || !User::isUsableName( $u->getName() ) ) {
-			return self::ILLEGAL;
-		}
-
 		global $wgExternalAuthType, $wgAutocreatePolicy;
 		if ( $wgExternalAuthType && $wgAutocreatePolicy != 'never'
 		&& is_object( $this->mExtUser )
@@ -548,6 +541,13 @@ class LoginForm {
 			# The external user and local user have the same name and
 			# password, so we assume they're the same.
 			$this->mExtUser->linkToLocal( $this->mExtUser->getId() );
+		}
+		
+		# TODO: Allow some magic here for invalid external names, e.g., let the
+		# user choose a different wiki name.
+		$u = User::newFromName( $this->mName );
+		if( !( $u instanceof User ) || !User::isUsableName( $u->getName() ) ) {
+			return self::ILLEGAL;
 		}
 			
 		$isAutoCreated = false;
