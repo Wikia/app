@@ -975,12 +975,12 @@ function getSong($artist, $song="", $doHyphens=true){
 				$titles = array();
 				if(is_array($response->getVal('titleResults'))){
 					foreach($response->getVal('titleResults') as $resultData){
-						$titles[] = $resultData['textForm'];
+						$titles[] = utf8_encode( $resultData['textForm'] );
 					}
 				}
 				if(is_array($response->getVal('textResults'))){
 					foreach($response->getVal('textResults') as $resultData){
-						$titles[] = $resultData['textForm'];
+						$titles[] = utf8_encode( $resultData['textForm'] );
 					}
 				}
 
