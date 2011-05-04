@@ -109,7 +109,7 @@ class Chat {
 	 * @param userObject - an object of class User (such as wgUser).
 	 */
 	public static function canChat($userObject){
-		return ( $userObject->isLoggedin() && ($userObject->isAllowed( 'chat' )) );
+		return ( $userObject->isLoggedin() && $userObject->isAllowed( 'chat' ) && (!$userObject->isBlocked()) );
 	} // end canChat()
 
 } // end class Chat

@@ -30,6 +30,12 @@ $wgAvailableRights[] = 'chat';
 $wgGroupPermissions['*']['chat'] = false;
 $wgGroupPermissions['user']['chat'] = true;
 
+// Allow admins to control banning/unbanning and chatmod-status
+$wgAddGroups['sysop'][] = 'chatmoderator';
+$wgAddGroups['sysop'][] = 'bannedfromchat';
+$wgRemoveGroups['sysop'][] = 'chatmoderator';
+$wgRemoveGroups['sysop'][] = 'bannedfromchat';
+
 // Attempt to do the permissions the other way (adding restriction instead of subtracting permission).
 // When in 'bannedfromchat' group, the 'chat' permission will be revoked
 // See http://www.mediawiki.org/wiki/Manual:$wgRevokePermissions
