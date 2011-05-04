@@ -381,7 +381,7 @@ class SpecialConnect extends SpecialPage {
 				return;
 			}
 
-			$user = User::newFromName($name);
+			$user = User::newFromName($name, 'creatable' );
 			if (!$user) {
 				wfDebug("FBConnect: Error adding new user.\n");
 				$wgOut->showErrorPage('fbconnect-error', 'fbconnect-error-creating-user');
