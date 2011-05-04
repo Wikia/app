@@ -125,7 +125,6 @@ function EditPageReskinMessageCacheFix() {
 		$messages = array();
 		include $file;
 		$wgMessageCache->addMessagesByLang($messages);
-		wladekLog($file);
 	}
 	
 	return true;
