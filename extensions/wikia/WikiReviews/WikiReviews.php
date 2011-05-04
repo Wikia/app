@@ -38,7 +38,7 @@ function wfWikiReviewsAddStyle( &$out, &$sk ) {
 // display comments before categories
 function wfWikiReviewsReplaceBodyTemplate( &$moduleObject, &$params ) {
 	if( wfWikiReviewsTitleCheck() ) {
-		$moduleObject->templatePath = dirname(__FILE__).'/templates/WikiReviewsBody_Index.php';
+		$moduleObject->getResponse()->getView()->setTemplatePath( dirname(__FILE__).'/templates/WikiReviewsBody_Index.php' );
 	}
 	return true;
 }
@@ -46,7 +46,7 @@ function wfWikiReviewsReplaceBodyTemplate( &$moduleObject, &$params ) {
 // hide history dropdown
 function wfWikiReviewsHideHistoryDropdown( &$moduleObject, &$params ) {
 	if( wfWikiReviewsTitleCheck() ) {
-		$moduleObject->templatePath = dirname(__FILE__).'/templates/Empty.php';
+		$moduleObject->getResponse()->getView()->setTemplatePath( dirname(__FILE__).'/templates/Empty.php' );
 		return false;
 	} else {
 		return true;
