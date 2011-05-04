@@ -34,6 +34,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class SpecialConnect extends SpecialPage {
 	private $userNamePrefix;
 	private $isNewUser = false;
+	private $mEmail = '';
+	private $mRealName = '';
 	static private $fbOnLoginJs;
 	static private $availableUserUpdateOptions = array('fullname', 'nickname', 'email', 'language', 'timecorrection');
 	
@@ -520,8 +522,8 @@ class SpecialConnect extends SpecialPage {
 		//        $u->setPassword( $this->mPassword );
 		//}
 
-		$u->setEmail( $this->mEmail ); 
-		//$u->setRealName( $this->mRealName ); // real name isn't required for FBConnect
+		$u->setEmail( $this->mEmail );
+		$u->setRealName( $this->mRealName ); 
 		$u->setToken();
 
 		$wgAuth->initUser( $u, $autocreate );
