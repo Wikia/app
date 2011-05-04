@@ -1,10 +1,15 @@
 .WikiaArticle {
 	min-height: 0;
+	padding: 0;
+}
+
+.WikiaArticle blockquote {
+	margin-left: 75px;
+	margin-right: 5px;
 }
 
 .WikiaArticleComments {
 	border-top: 0;
-	margin-top: 5px;
 	padding-top: 0;
 }
 
@@ -18,4 +23,8 @@
 
 #WikiaArticleBottomAd {
 	display: none;
+}
+
+#article-comments-ul {
+	margin-left: 0px;
 }
