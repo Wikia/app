@@ -349,7 +349,8 @@ $days .= '</select>';
 			<th width="7%"><?=wfMsg('awc-metrics-edits')?></th>
 			<th width="7%"><?=wfMsg('awc-metrics-images')?></th>
 			<th width="7%" rowspan="2"><?=wfMsg('awc-metrics-pageviews')?></th>
-			<th width="7%" rowspan="2"><input type="submit" value="<?=wfMsg('awc-metrics-close-action')?>"></th>
+			<th width="7%" rowspan="2"><input type="submit" value="<?=wfMsg('awc-metrics-close-action')?>">
+			<input type="hidden" name="close_flags[]" value="4"><input type="hidden" name="close_flags[]" value="8"></th>
 		</tr>
 		<tr>
 			<th colspan="5"><?=wfMsg('awc-metrics-statistics')?></th>
