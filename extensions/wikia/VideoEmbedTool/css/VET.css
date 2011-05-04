@@ -16,11 +16,11 @@
 }
 
 #VideoEmbedTitle {
-	margin-top: -20px;
+	margin-top: -15px;
 }
 
 #VideoEmbedTitle2 {
-	margin-top: -20px;
+	margin-top: -15px;
 }
 
 #VideoEmbedSuccess {
@@ -359,12 +359,12 @@ VideoEmbedOptionsTable img {
 
 #VideoReplaceLink {
 	font-size: 0.9em;
-	margin-top: 30px;
 	width: 400px;
 }
 
 #VideoReplaceLink p {
 	line-height: 1.5em;
+	float: left;
 }
 
 .vetnone {
@@ -374,6 +374,6 @@ VideoEmbedOptionsTable img {
 
 #VideoEmbedConflict,
 #VideoEmbedSummary {
-	margin-top: -20px;
+	margin-top: -15px;
 }
 

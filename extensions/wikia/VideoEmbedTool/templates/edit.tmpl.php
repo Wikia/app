@@ -1,11 +1,8 @@
-<div style="position: absolute; z-index: 4; left: 0; width: 420px; height: 400px; background: #FFF; opacity: .9; filter: alpha(opacity=90);"></div>
-<div id="VideoEmbedThumb" style="text-align: right; position: absolute; z-index: 1000; right: 15px; height: <?= isset($props['name']) ? '255' : '370' ?>px;">
-<?= $props['code'] ?>
-<div style="text-align: center;"><?= wfMsg( 'vet-preview' ) ?></div>
-</div>
 <?php
 echo '<div style="position: relative; z-index: 5;">';
-echo wfMsg('vet-details-inf2')
+echo '<h1 id="VideoEmbedTitle">';
+echo wfMsg('vet-details-inf2');
+echo '</h1>';
 ?>
 <table class="VideoEmbedOptionsTable">
 <?php
@@ -17,6 +14,12 @@ if('' == $props['oname']) {
 		<th><?= wfMsg( 'vet-name' ) ?></th>
 		<td>
 			<?= htmlspecialchars($props['vname']) ?>
+		</td>
+		<td rowspan="5" >
+			<div id="VideoEmbedThumb" style="text-align: right; right: 15px">
+			<?= $props['code'] ?>
+			<div style="text-align: center;"><?= wfMsg( 'vet-preview' ) ?></div>
+			</div>
 		</td>
 	</tr>
 <?
@@ -55,14 +58,11 @@ if('' == $props['oname']) {
 		<td><input id="VideoEmbedCaption" type="text" /><?= wfMsg('vet-optional') ?></td>
 	</tr>
 	<tr class="VideoEmbedNoBorder">
-		<td>&nbsp;</td>
-		<td>
-			<input type="submit" value="<?= wfMsg('vet-update') ?>" onclick="VET_doEditVideo();" />
+		<td colspan="3" style="padding: 5px 0px 0px 0px" >
+			<div id="VideoReplaceLink"><?= wfMsgExt('vet-video-replace-link', 'parse', $props['href']); ?></div>
+			<input class="wikia-button v-float-right" type="submit" value="<?= wfMsg('vet-update') ?>" onclick="VET_doEditVideo();" />
 		</td>
 	</tr>
 </table>
-
-<div id="VideoReplaceLink"><?= wfMsgExt('vet-video-replace-link', 'parse', $props['href']); ?></div>
-
 <input id="VideoEmbedHref" type="hidden" value="<?= htmlspecialchars($props['href']) ?>" />
 </div>
