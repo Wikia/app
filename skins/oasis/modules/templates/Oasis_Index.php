@@ -58,7 +58,7 @@
 <!--
 var gomez={
   gs: new Date().getTime(),
-  acctId:'B10B2F',
+  acctId:'448E69',
   pgId:'wikia',
   grpId:''
 };
