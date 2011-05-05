@@ -67,54 +67,48 @@ class WatchSubPagesHelper {
 	 * @author Jakub Kurcek <jakub@wikia-inc.com>
 	 */
 
-	static public function NotifyOnSubPageChange( $watchers, $title, $editor, $notificationTimeoutSql ) {
+	static public function NotifyOnSubPageChange( $watchers, $title, $editor, $notificationTimeoutSql, $method, $dbtype ) {
 		// Gets parent data
 		$arrTitle = explode( '/' , $title->getDBkey() );
-		
-		if ( empty($arrTitle) ) {
-			return true;
-		}
-		
-		// make Title		
-		$t = reset( $arrTitle );
-		$newTitle = Title::newFromDBkey( $t );
-		if ( ! ( $newTitle instanceof Title ) ) {
-			return true;
-		}
-		
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( $dbtype );
 		$res = $dbw->select( array( 'watchlist' ),
-			array( 'wl_user' ),
-			array(
-				'wl_title' => $newTitle->getDBkey(),
-				'wl_namespace' => $newTitle->getNamespace(),
-				'wl_user != ' . intval( $editor->getID() ),
-				$notificationTimeoutSql
-			),
-			__METHOD__
+				array( 'wl_user' ),
+				array(
+					"wl_title" => $arrTitle[0],
+					'wl_namespace' => $title->getNamespace(),
+					'wl_user != ' . intval( $editor->getID() ),
+					$notificationTimeoutSql
+				),
+			$method
 		);
 
 		// Gets user settings
 		while ( $row = $dbw->fetchObject( $res ) ) {
 
-			$tmpUser = new User();
+			$tmpUser = New User();
 			$tmpUser->setId( intval( $row->wl_user ) );
 			$tmpUser->loadFromId();
-			
 			$userToggles = $tmpUser->getToggles();
 			WatchSubPagesHelper::AddToUserMenu( &$userToggles );
 			if ( $tmpUser->getBoolOption( 'watchlistsubpages' ) ) {
 				$parentpageWatchers[] = (integer)$row->wl_user;
 			}
-			
 			unset( $tmpUser );
 		}
 
 		// Updates parent watchlist timestamp for $parentOnlyWatchers.
 		$parentOnlyWatchers = array_diff( $parentpageWatchers, $watchers );
-		
-		$wl = WatchedItem::fromUserTitle( $editor, $newTitle );
-		$wl->updateWatch( $parentOnlyWatchers, $timestamp );
+		$dbw->begin();
+		$dbw->update( 'watchlist',
+			array( /* SET */
+				'wl_notificationtimestamp' => $dbw->timestamp( $timestamp )
+			), array( /* WHERE */
+				'wl_title' => $title-> $arrTitle[0],
+				'wl_namespace' => $title->getNamespace(),
+				'wl_user' => $parentOnlyWatchers
+			), __METHOD__
+		);
+		$dbw->commit();
 
 		return true;
 	}
