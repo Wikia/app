@@ -168,6 +168,11 @@ function wfCreatePageAjaxGetDialog() {
 
 	$defaultLayout = $wgUser->getOption( 'createpagedefaultblank', false ) ?  'blank' : 'format';
 
+	if(!array_key_exists($defaultLayout, $options) ) {
+		reset($options);
+		$defaultLayout = key($options);
+	}
+	
 	$template->set_vars( array(
 			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ) ? true : false,
 			'options' => $options,
