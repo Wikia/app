@@ -224,7 +224,7 @@ class WikiaPhotoGalleryHelper {
 			$widthResize = (!empty($maxWidth)) ? $img->getWidth() / $maxWidth : 1;
 			$heightResize = (!empty($maxHeight)) ? $img->getHeight() / $maxHeight : 1;
 
-			$resizeRatio = min($widthResize, $heightResize);
+			$resizeRatio = max($widthResize, $heightResize);
 
 			//avoid division by zero
 			if(!$resizeRatio) $resizeRatio = 1;
