@@ -133,7 +133,7 @@ class WVE extends SpecialPage {
 				'required' => true, 
 			), array(
 				'too_long' => 'msg-key' // $value to long must be $min
-			);
+			)
 		));
 		
 		
