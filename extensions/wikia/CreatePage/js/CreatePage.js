@@ -41,6 +41,7 @@ CreatePage.openDialog = function(e, titleText) {
 			url: wgScript + '?action=ajax&rs=wfCreatePageAjaxGetDialog',
 			data: null,
 			success: function(data) {
+				$().log(data);
 				$.showModal(data.title, data.html, {
 					width: data.width,
 					id: 'CreatePageDialog',
