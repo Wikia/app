@@ -100,7 +100,7 @@ class MessageGroupStatistics {
 
 		$dbw->insert(
 				'groupstats',
-				$data,
+				$data
 			    );
 
 		return $data;
