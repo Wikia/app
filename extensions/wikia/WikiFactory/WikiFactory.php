@@ -1005,7 +1005,7 @@ class WikiFactory {
 	 * create key for domain, strip www if it's in address
 	 *
 	 * @access public
-	 * @autor eloy@wikia
+	 * @author eloy@wikia-inc.com
 	 * @static
 	 *
 	 * @param string  $domain	domain name
@@ -1031,7 +1031,7 @@ class WikiFactory {
 	 * simple caching, get serialized variable from file
 	 *
 	 * @access public
-	 * @autor eloy@wikia
+	 * @author eloy@wikia-inc.com
 	 * @static
 	 *
 	 * @param string $file file name with stored information
@@ -1079,7 +1079,7 @@ class WikiFactory {
 	 * store
 	 *
 	 * @access public
-	 * @autor eloy@wikia
+	 * @author eloy@wikia-inc.com
 	 * @static
 	 *
 	 * simple caching, store serialized variable in file
