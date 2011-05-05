@@ -43,9 +43,10 @@
 			if ($('#EditPageHiddenFields').children().exists()) {
 				$('#EditPageTitle').
 					show().
-					bind('click', function(ev) {
-						self.renderHiddenFieldsDialog();
-					});
+					bind('click', this.proxy(function(ev) {
+						this.editor.track('title', 'edit');
+						this.renderHiddenFieldsDialog();
+					}));
 			}
 
 			// check whether there are required fields with no value - show dialog
@@ -59,6 +60,15 @@
 			} else if ($('#EditPageHiddenFields [name=wpTitle]').exists()) { // page name is editable
 				this.updateEditedTitle();
 			}
+
+			// track clicks on page title and help link
+			this.titleNode.children('a').bind('click', this.proxy(function(ev) {
+				this.editor.track('title', 'pagename');
+			}));
+
+			$('#HelpLink').bind('click', this.proxy(function(ev) {
+				this.editor.track('title', 'help');
+			}));
 
 			// show form rendered by edit form callback (e.g. captcha)
 			if (this.callbackFields.exists()) {
@@ -74,13 +84,13 @@
 		// handle "Preview" button
 		onPreview: function() {
 			this.renderPreview({});
-			this.editor.track('visualMode', 'pageControls', 'preview', this.editor.getTrackerMode());
+			this.editor.track(this.editor.getTrackerInitialMode(), 'pageControls', 'preview', this.editor.getTrackerMode());
 		},
 
 		// handle "Show changes" button
 		onDiff: function() {
 			this.renderChanges({});
-			this.editor.track('visualMode', 'pageControls', 'diff', this.editor.getTrackerMode());
+			this.editor.track(this.editor.getTrackerInitialMode(), 'pageControls', 'diff', this.editor.getTrackerMode());
 		},
 
 		// handle "Save" button
@@ -114,6 +124,7 @@
 				mode = editor ? editor.mode : 'mw';
 
 			params = $.extend(params, {
+				page: wgEditPageClass ? wgEditPageClass:"",
 				method: method,
 				mode: editor.mode
 			});

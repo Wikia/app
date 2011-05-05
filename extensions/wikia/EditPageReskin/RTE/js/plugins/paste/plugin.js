@@ -7,7 +7,7 @@ CKEDITOR.plugins.add('rte-paste',
 	},
 
 	track: function(ev) {
-		RTE.track('paste', ev);
+		RTE.track('visualMode', 'paste', ev);
 	},
 
 	init: function(editor) {

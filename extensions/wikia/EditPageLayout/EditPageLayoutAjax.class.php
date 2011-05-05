@@ -5,15 +5,51 @@ class EditPageLayoutAjax {
 	/**
 	 * Perform reverse parsing on given HTML (when needed)
 	 */
-	static private function resolveWikitext($content, $mode) {
-		if ($mode == 'wysiwyg') {
-			$reverseParser = new RTEReverseParser();
-			$wikitext = $reverseParser->parse($content);
+	static private function resolveWikitext($content, $mode, $page, $method, $section ) {
+		global $wgRequest, $wgTitle;
+		wfProfileIn(__METHOD__);
+		if(class_exists($page)) {
+			$pageObj = new $page();
+			if(is_a( $pageObj, 'SpecialCustomEditPage' )) {
+				$wikitext = $pageObj->getWikitextFromRequestForPreview($wgRequest->getVal('title', 'empty'));
+				$service = new EditPageService($wgTitle);
+				$html = $pageObj->getOwnPreviewDiff($wikitext, $method);
+				
+				if($html === false ) {
+					$html = '';
+					if($method == 'preview') {
+						$html = $service->getPreview($wikitext);
+					} elseif($method == 'diff') {
+						$html = $service->getDiff($wikitext, $section);	
+					}
+				}
+				
+				$res = array(
+					'html' => $html
+				);
+				
+				wfProfileOut(__METHOD__);
+				return $res;
+			}			
 		}
-		else {
-			$wikitext = $content;
-		}
+		wfProfileOut(__METHOD__);
+		return array( 'html' => '' );
+	}
+	
+	/**
+	 * pass request to resolveWikitext
+	 */
+	static private function resolveWikitextFromRequest( $method ) {
+		global $wgRequest;
+		wfProfileIn(__METHOD__);
 
+		$content = $wgRequest->getVal('content', '');
+		$mode = $wgRequest->getVal('mode', '');
+		$page = $wgRequest->getVal('page', '');
+		$section = $wgRequest->getInt('section', 0);
+		
+		$wikitext = self::resolveWikitext($content, $mode, $page, $method, $section);
+		wfProfileOut(__METHOD__);
 		return $wikitext;
 	}
 
@@ -21,20 +57,10 @@ class EditPageLayoutAjax {
 	 * Parse provided wikitext to HTML using MW parser
 	 */
 	static public function preview() {
-		global $wgTitle, $wgRequest;
 		wfProfileIn(__METHOD__);
 
-		$service = new EditPageService($wgTitle);
-
-		$content = $wgRequest->getVal('content', '');
-		$mode = $wgRequest->getVal('mode', '');
-
-		$wikitext = self::resolveWikitext($content, $mode);
-
-		$res = array(
-			'html' => $service->getPreview($wikitext),
-		);
-
+		$res = self::resolveWikitextFromRequest('preview');
+		
 		wfProfileOut(__METHOD__);
 		return $res;
 	}
@@ -43,20 +69,10 @@ class EditPageLayoutAjax {
 	 * Render diff between the latest version of an article and given wikitext
 	 */
 	static public function diff() {
-		global $wgTitle, $wgRequest, $wgOut;
+		global $wgRequest, $wgTitle;
 		wfProfileIn(__METHOD__);
 
-		$service = new EditPageService($wgTitle);
-
-		$content = $wgRequest->getVal('content', '');
-		$mode = $wgRequest->getVal('mode', '');
-		$section = $wgRequest->getInt('section');
-
-		$wikitext = self::resolveWikitext($content, $mode);
-
-		$res = array(
-			'html' => $service->getDiff($wikitext, $section),
-		);
+		$res = self::resolveWikitextFromRequest('diff');
 
 		wfProfileOut(__METHOD__);
 		return $res;

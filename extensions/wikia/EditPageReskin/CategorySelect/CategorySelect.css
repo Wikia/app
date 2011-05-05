@@ -5,6 +5,10 @@
 }
 
 #csMainContainer {
+	position: relative;
+}
+
+.csViewMode#csMainContainer, .csEditMode#csMainContainer {
 	border: 1px solid #AAA;
 	padding: 5px 5px 2px 5px;
 	position: relative;
@@ -229,7 +233,7 @@
 	color: #000000;
 	overflow: hidden;
 	position: absolute;
-	width: 100%;
+	width: 250px;
 	z-index: 9050;
 }
 
@@ -238,7 +242,7 @@
 	list-style-image: none !important;
 	margin: 0 !important;
 	padding: 0 !important;
-	width: 100%;
+	width: 250px;
 }
 
 .wikiaSkinMonaco .yui-ac-content li {

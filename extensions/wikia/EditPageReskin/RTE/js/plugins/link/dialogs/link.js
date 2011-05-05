@@ -260,14 +260,24 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								var re = new RegExp('^(#(.+))|[' + RTE.constants.validTitleChars + ']+$');
 								var validPageNameFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badPageTitle);
 
-								return validPageNameFunc.apply(this);
+								var isValid = validPageNameFunc.apply(this);
+								if (!isValid) {
+									RTE.track('link', 'dialog', 'error');
+								}
+
+								return isValid;
 							}
 							else{
 								// validate URL
 								var re = new RegExp('^(' + RTE.constants.urlProtocols + ')');
 								var validUrlFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badUrl);
 
-								return validUrlFunc.apply(this);
+								var isValid = validUrlFunc.apply(this);
+								if (!isValid) {
+									RTE.track('link', 'dialog', 'error');
+								}
+
+								return isValid;
 							}
 						}
 					},
@@ -292,8 +302,12 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								RTE.log("mode changed to "+e.data.value);
 								if( e.data && e.data.value == 'ext' ){
 									setMode('external');
+
+									RTE.track('link', 'dialog', 'tab', 'internal2external');
 								}else{
 									setMode('internal');
+
+									RTE.track('link', 'dialog', 'tab', 'external2internal');
 								}
 							}
 						}

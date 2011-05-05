@@ -56,7 +56,7 @@ class CreateBlogPage extends SpecialCustomEditPage {
 	/**
 	 * Return wikitext for generating preview / diff / to be saved
 	 */
-	protected function getWikitextFromRequest() {
+	public function getWikitextFromRequest() {
 		$wikitext = parent::getWikitextFromRequest();
 
 		if( $this->mode == self::MODE_NEW ) {

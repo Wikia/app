@@ -26,7 +26,7 @@ class EditPageLayoutHelper {
 	 *
 	 * @author macbre
 	 */
-	function setupEditPage(Article $editedArticle, $fullScreen = true) {
+	function setupEditPage(Article $editedArticle, $fullScreen = true, $class = false) {
 		wfProfileIn(__METHOD__);
 		// don't render edit area when we're in read only mode
 		if ($this->app->runFunction('wfReadOnly')) {
@@ -75,6 +75,8 @@ class EditPageLayoutHelper {
 
 		$this->addJsVariable('wgIsEditPage', true);
 		$this->addJsVariable('wgEditedTitle', $editedTitle->getPrefixedText());
+		
+		$this->addJsVariable('wgEditPageClass', $class ? $class:'SpecialCustomEditPage' );
 
 		$this->addJsVariable('wgEditPageHandler',  !is_null($formCustomHandler)
 			? $formCustomHandler->getLocalUrl('wpTitle=$1')

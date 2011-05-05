@@ -138,32 +138,33 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 		}
 	}
 
-	protected function processPreview( $type = false /* 'article' */ ) {
-		if (empty($type)) {
-			$type = $this->request->getVal('type');
-		}
-		if (!in_array($type,array('form','article'))) {
-			$type = 'article';
-		}
-
-		$html = '';
-		$title = $this->getEditedArticle()->getTitle();
-		$parser = F::build('PageLayoutBuilderParser');
-		$parserOutput = $parser->parseForLayoutPreview( $this->getWikitextFromRequest(), $title, $type);
-		$html = $parserOutput->getText();
-
-		if ($type == "form") {
-			if (strlen(trim($html)) == 0) {
-				$html = XML::element("div",array(
-					"class" => "plb-form-errorbox" ),
-					wfMsg('plb-special-form-emptyformpreview')
-				);
+	
+	public function getOwnPreviewDiff( $wikitext, $method ) {
+		if($method == 'preview') {
+			if (empty($type)) {
+				$type = $this->request->getVal('type');
 			}
+			if (!in_array($type,array('form','article'))) {
+				$type = 'article';
+			}
+	
+			$html = '';
+			$title = $this->getEditedArticle()->getTitle();
+			$parser = F::build('PageLayoutBuilderParser');
+			$parserOutput = $parser->parseForLayoutPreview( $this->getWikitextFromRequest(), $title, $type);
+			$html = $parserOutput->getText();
+	
+			if ($type == "form") {
+				if (strlen(trim($html)) == 0) {
+					$html = XML::element("div",array(
+						"class" => "plb-form-errorbox" ),
+						wfMsg('plb-special-form-emptyformpreview')
+					);
+				}
+			}
+			return $html;
 		}
-
-		return array(
-			'html' => $html,
-		);
+		return false;
 	}
 
 	public function execute( $par ) {

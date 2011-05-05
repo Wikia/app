@@ -288,8 +288,10 @@ class BodyModule extends Module {
 		}
 		//  No rail on main page or edit page for oasis skin
 		if ( BodyModule::isEditPage() || ArticleAdLogic::isMainPage() ) {
+			$modules = array();
+			wfRunHooks( 'GetEditPageRailModuleList', array( &$modules ) );
 			wfProfileOut(__METHOD__);
-			return array();
+			return $modules;
 		}
 		// No modules on Custom namespaces, unless they are in the ContentNamespaces list, those get the content rail
 		if (is_array($wgExtraNamespacesLocal) && array_key_exists($subjectNamespace, $wgExtraNamespacesLocal) && !in_array($subjectNamespace, $wgContentNamespaces)) {

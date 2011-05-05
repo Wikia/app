@@ -130,6 +130,10 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 		$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectDisplayCategoryBox';
 
 		$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
+		
+		if($wgRequest->wasPosted()) {
+			CategorySelect::SelectCategoryAPIgetData($wgRequest->getVal('csWikitext', ''), true);
+		}
 	}
 	wfLoadExtensionMessages('CategorySelect');
 
@@ -510,10 +514,9 @@ JS
 //TODO
 function CategorySelectGenerateHTMLforEditRaw($categories, $text = '') {
 	global $wgWysiwygEdit, $wgEditPageLayoutEnable;
-
 	$result = '
 		<script type="text/javascript">document.write(\'<style type="text/css">#csWikitextContainer {display: none}</style>\');</script>
-		<div class="csEditMode" id="csMainContainer"> ' . $text . '
+		<div class="csEditMode" style="display:none" id="csMainContainer"> ' . $text . '
 			<input class="placeholder" placeholder="'.wfMsg('categoryselect-addcategory-edit').'" id="csCategoryInput" type="text" />
 			<div id="csSuggestContainer">
 				<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
@@ -531,7 +534,7 @@ function CategorySelectGenerateHTMLforEditRaw($categories, $text = '') {
 }
 
 function CategorySelectGenerateHTMLforEdit($formId = '') {
-	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgCategorySelectMetaData;
+	global $wgOut, $wgRequest, $wgExtensionsPath, $wgStyleVersion, $wgCategorySelectMetaData;
 
 	$wgOut->addScript("<script type=\"text/javascript\">var formId = '$formId';".CategorySelectGetCategories(true)."</script>");
 	$wgOut->addScript("<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/EditPageReskin/CategorySelect/CategorySelect.js?$wgStyleVersion\"></script>");
@@ -551,8 +554,7 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 
 	$text = "";
 	wfRunHooks ('CategorySelect:beforeDisplayingEdit', array ( &$text ) ) ;
-
-
+	
 	return CategorySelectGenerateHTMLforEditRaw($categories, $text);
 }
 

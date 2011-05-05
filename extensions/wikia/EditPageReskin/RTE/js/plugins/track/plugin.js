@@ -16,20 +16,6 @@ CKEDITOR.plugins.add('rte-track',
 		// track list creation
 		editor.on('listCreated', self.trackListCreated);
 
-		// track loading time
-		editor.on('RTEready', function() {
-			self.trackLoadTime(editor);
-		});
-
-		// track browser info (RT #37894)
-		editor.on('RTEready', function() {
-			self.trackBrowser('init');
-		});
-
-		$('#wpSave').click(function() {
-			self.trackBrowser('save');
-		});
-
 		// toolbar tracking
 
 		// tracking for CK toolbar buttons
@@ -103,12 +89,12 @@ CKEDITOR.plugins.add('rte-track',
 
 		// only track when style is applied
 		if (style && !remove) {
-			RTE.track('toolbar', 'format', style);
+			RTE.track('visualMode', 'applyFormat', style);
 		}
 	},
 
 	trackContextMenuOpen: function(ev) {
-		RTE.track('contextMenu', 'open');
+		RTE.track('visualMode', 'contextMenu', 'open');
 	},
 
 	trackContextMenuItem: function(ev) {
@@ -121,12 +107,12 @@ CKEDITOR.plugins.add('rte-track',
 			var group = groups[g];
 
 			if (name.indexOf(group) == 0) {
-				RTE.track('contextMenu', 'action', group, name);
+				RTE.track('visualMode', 'contextMenu', 'action', group, name);
 				return;
 			}
 		}
 
-		RTE.track('contextMenu', 'action', name);
+		RTE.track('visualMode', 'contextMenu', 'action', name);
 	},
 
 	trackListCreated: function(ev) {
@@ -134,54 +120,5 @@ CKEDITOR.plugins.add('rte-track',
 		var listType = (listNode.getName() == 'ul') ? 'unorderedList' : 'orderedList';
 
 		RTE.track('format', listType);
-	},
-
-	trackLoadTime: function(editor) {
-		// load time in ms (3.141 s will be reported as .../3100)
-		var trackingLoadTime = parseInt(RTE.loadTime * 10) * 100;
-
-		// tracking
-		switch (editor.mode) {
-			case 'source':
-				RTE.track('init', 'sourceMode', trackingLoadTime);
-
-				// add edgecase name (if any)
-				if (window.RTEEdgeCase) {
-					RTE.track('init', 'edgecase',  window.RTEEdgeCase);
-				}
-
-				break;
-
-			case 'wysiwyg':
-				RTE.track('init', 'wysiwygMode', trackingLoadTime);
-				break;
-		}
-	},
-
-	// track browser data (name, version) - RT #37894
-	trackBrowser: function(eventName) {
-		var env = CKEDITOR.env;
-
-		var name = (
-			env.ie ? 'ie' :
-			env.gecko ? 'gecko' :
-			env.opera ? 'opera' :
-			env.air ? 'air' :
-			env.webkit ? 'webkit' :
-			'unknown'
-		);
-
-		if (name == 'gecko') {
-			// small version fix for Gecko browsers
-			// 10900 => 1.9.0 (3.0.x line)
-			// 10902 => 1.9.2 (3.6.x line)
-			var version = parseInt(env.version / 10000) + '.' + parseInt(env.version / 100 % 100) + '.' + (env.version % 100);
-		}
-		else {
-			var version = env.version;
-		}
-
-		// and finally send it to GA
-		RTE.track('browser', eventName, name, version);
 	}
 });

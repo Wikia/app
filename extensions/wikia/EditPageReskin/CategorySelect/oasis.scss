@@ -5,7 +5,7 @@
 @import "../../EditPageLayout/css/mixins/constants";
 @import "../../EditPageLayout/css/mixins/helpers";
 
-#csMainContainer{
+#csMainContainer.csEditMode {
 	#csSuggestContainer {
 		.yui-ac-content {
 			border-top: medium none !important; /* used to override yui with !important */
@@ -22,17 +22,16 @@
 		z-index: 999;
 		}
 	}
-}
-
-#csMainContainer.csEditMode #csCategoryInput {
-	@include epl-textfield;
-	width: $width-epl-module-input;
-	border: solid 1px $color-epl-inputs-borders;
-	font-style: normal;
-	color: black;
-	&.placeholder {
-		font-style: italic;
-		color: $color-epl-text-color;
+	#csCategoryInput {
+		@include epl-textfield;
+		width: $width-epl-module-input;
+		border: solid 1px $color-epl-inputs-borders;
+		font-style: normal;
+		color: black;
+		&.placeholder {
+			font-style: italic;
+			color: $color-epl-text-color;
+		}
 	}
 }
 
@@ -54,11 +53,13 @@
 
 #csSuggestContainer {
 	@include yui-suggest;
+	width: 250px;
 }
 
 .csEditMode #csSuggestContainer  .yui-ac-content {
     width: $width-epl-module-input + 4 !important;
 }
+
 
 .csEditMode #csSuggestContainer {
 	top: 0px;
