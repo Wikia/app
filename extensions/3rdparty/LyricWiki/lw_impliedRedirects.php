@@ -54,7 +54,7 @@ function wfImpliedRedirects_articleFromTitle(&$title, &$article){
 			// so try to grab the song using that version of the artist's name.
 			$artistTitle = lw_getTitle($artist); // leaves the original version in tact
 			$finalName = $artistTitle;
-			$page = lw_getPage($artistTitle, array(), $finalName, $debug);
+			$page = lw_getPage($artistTitle, $finalName, $debug);
 			print (!$debug?"":"found:\n$page");
 			if($finalName != $artistTitle){
 				print (!$debug?"":"Artist redirect found to \"$finalName\". Applying to song \"$song\".\n");
