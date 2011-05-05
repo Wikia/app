@@ -24,11 +24,11 @@ $messages['en'] = array(
 	'wikiadoption-button-adopt' => 'Yes, I want to adopt {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Find out more!',
 	'wikiadoption-description' => "$1, ready to adopt {{SITENAME}}?
-<br><br>
+<br /><br />
 There hasn't been an active administrator on {{SITENAME}} for a while, and we're looking for a new leader to help this wiki's content and community grow! As someone who's contributed to {{SITENAME}} we were wondering if you'd like the job.
-<br><br>
+<br /><br />
 By adopting the wiki, you'll be promoted to administrator and bureaucrat to give you the tools you'll need to manage the wiki's community and content. You'll be able to create other administrators to help, delete, rollback, move and protect pages, as well as create user groups and assign users to them.
-<br><br>
+<br /><br />
 Are you ready to take the next steps to help {{SITENAME}}?",
 	'wikiadoption-know-more-header' => 'Want to know more?',
 	'wikiadoption-know-more-description' => 'Check out these links for more information. And of course, feel free to contact us if you have any questions!',
@@ -85,19 +85,19 @@ Your wiki has been adopted! This means that someone else has volunteered to help
 	'wikiadoption-pref-label' => 'Changing these preferences will only affect e-mails from $1.',
 	'wikiadoption-welcome-header' => 'Congratulations! You\'ve adopted {{SITENAME}}!',
 	'wikiadoption-welcome-body' => "You're now a bureaucrat on this wiki. With your new status you now have access to all the tools that will help you manage {{SITENAME}}.
-<br><br>
+<br /><br />
 The most important thing you can do to help {{SITENAME}} grow is keep editing.
-<br><br>
+<br /><br />
 If there is no active administrator on a wiki it can be put up for adoption so be sure to check in on the wiki frequently.
-<br><br>
+<br /><br />
 Helpful Tools:
-<br><br>
+<br /><br />
 [[Special:ThemeDesigner|ThemeDesigner]]
-<br>
+<br />
 [[Special:LayoutBuilder|Page Layout Builder]]
-<br>
+<br />
 [[Special:ListUsers|User List]]
-<br>
+<br />
 [[Special:UserRights|Manage Rights]]",
 );
 
