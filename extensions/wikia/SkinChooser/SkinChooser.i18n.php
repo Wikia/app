@@ -50,6 +50,13 @@ $messages['es'] = array(
 	'site-layout' => 'Diseños del sitio',
 );
 
+/** French (Français)
+ * @author Iketsi
+ */
+$messages['fr'] = array(
+	'new-look' => 'Nouveau look de Wikia',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -68,6 +75,15 @@ $messages['it'] = array(
 	'skinchooser-customcss' => "Per i temi personalizzati, selezionare l'opzione personalizzata nel menu sopra e specificare i CSS personalizzati in [[MediaWiki:Monaco.css]].",
 	'new-look' => 'Nuovo look di Wikia',
 	'site-layout' => 'Layout del sito',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'skinchooser-desc' => '利用者が個人設定で外装を変更できるようにする',
+	'new-look' => 'ウィキアの新しい外装',
+	'site-layout' => 'サイトの外装',
 );
 
 /** Macedonian (Македонски)
@@ -119,6 +135,16 @@ $messages['pl'] = array(
 	'site-layout' => 'Skórka',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'skinchooser-desc' => "A përmëtt a j'utent ëd serne jë skint ant ij Sò Gust",
+	'skinchooser-customcss' => "Për ij tema përsonalisà, selession-a j'opsion përsonalisà ant ël menu dzora e specìfica ij CSS përsonalisà an [[MediaWiki:Monaco.css]].",
+	'new-look' => 'Presentassion Neuva ëd Wikia',
+	'site-layout' => 'Presentassion dël sit',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -154,5 +180,15 @@ $messages['sv'] = array(
 	'skinchooser-customcss' => 'För anpassade teman, välj alternativet "anpassa" i menyn ovan och ange din anpassade CSS i [[MediaWiki:Monaco.css]].',
 	'new-look' => 'Wikias nya utseende',
 	'site-layout' => 'Layouter för webbplatsen',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'skinchooser-desc' => 'Nagpapahintulot sa mga tagagamit na pumili ng mga pabalat sa loob ng kanilang mga nais',
+	'skinchooser-customcss' => 'Para sa pasadyang mga tema, piliin ang pasadyang pilian sa loob ng menung nasa itaas at tukuyin ang pasadyang CSS sa loob ng [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Bagong Wangis ng Wikia',
+	'site-layout' => 'Mga Latag ng Pook',
 );
 

@@ -61,6 +61,15 @@ $messages['be-tarask'] = array(
 	'ajaxpoll-submitting' => 'Калі ласка, пачакайце, пакуль захоўваецца Ваш голас…',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;от всички гласове',
+	'ajaxpoll-thankyou' => 'Благодарности за участието ви в гласуването!',
+	'ajaxpoll-submit' => 'Гласуване!',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -291,6 +300,19 @@ $messages['ja'] = array(
 	'ajaxpoll-submitting' => 'あなたの投票を送信しています。お待ちください・・・',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;vun alle Shtemme',
+	'ajaxpoll-thankyou' => 'Mer danke för et Afshtemme!',
+	'ajaxpoll-error' => 'Doh hät jät nit jeflupp mem Beärbeide vun Dinge Shtemm. Bes esu jood_un versöhg_et norr_ens.',
+	'ajaxpoll-summary' => 'De Afshtemmung es {{GENDER:$1|vum|vum|vum Metmaacher|vun dä|vum}} $1 aam $2 aanjelaat woode, un bes jäz {{PLURAL:$3|hät Eine|hann_er $3 Metmaacher|hät Keine}} dobei metjemaat.',
+	'ajaxpoll-submit' => 'Afshtemme!',
+	'ajaxpoll-closed' => 'Di Affshtemmong es eröm. Vill Shpaß met däm, wad_eruß jekumme es.',
+	'ajaxpoll-submitting' => 'Ene koot Momang, Ding Shtemm weed beärbeidt&nbsp;…',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -312,6 +334,15 @@ $messages['mk'] = array(
 	'ajaxpoll-submit' => 'Гласај!',
 	'ajaxpoll-closed' => 'Анкетата сега е затворена. Уживајте во резултатите.',
 	'ajaxpoll-submitting' => 'Почекајте, ви го заведувам гласот...',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'ajaxpoll-submit' => 'വോട്ട് ചെയ്യുക!',
+	'ajaxpoll-closed' => 'വോട്ടെടുപ്പ് കഴിഞ്ഞിരിക്കുന്നു. ഫലങ്ങൾ ആസ്വദിക്കുക.',
+	'ajaxpoll-submitting' => 'ദയവായി കാത്തിരിക്കുക, താങ്കളുടെ വോട്ട് സമർപ്പിക്കുന്നു...',
 );
 
 /** Malay (Bahasa Melayu)
@@ -341,6 +372,17 @@ Probeer het nog een keer.',
 Geniet van de resultaten.',
 	'ajaxpoll-submitting' => 'Even geduld alstublieft.
 Bezig met het opslaan van uw stem...',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'ajaxpoll-thankyou' => 'Dank je wel voor je stem!',
+	'ajaxpoll-error' => 'Er is een fount opgetreden bij het verwerken van je stem.
+Probeer het nog een keer.',
+	'ajaxpoll-submitting' => 'Even geduld alsjeblieft.
+Bezig met het opslaan van je stem...',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -445,6 +487,16 @@ $messages['pt-br'] = array(
 	'ajaxpoll-submitting' => 'Por favor, aguarde. Estamos enviando o seu voto...',
 );
 
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'ajaxpoll-thankyou' => 'Vă mulţumim pentru votul dvs.!',
+	'ajaxpoll-error' => 'Există o problemă la procesarea votului dvs. Vă rugăm încercaţi iar.',
+	'ajaxpoll-submit' => 'Votează!',
+	'ajaxpoll-closed' => 'Sondajul este închis acum. Bucuraţi-vă de rezultate.',
+);
+
 /** Russian (Русский)
  * @author Lockal
  * @author Александр Сигачёв
@@ -516,6 +568,13 @@ $messages['uk'] = array(
 	'ajaxpoll-submit' => 'Проголосувати!',
 	'ajaxpoll-closed' => 'Голосування закрите! Насолоджуйтесь результатами!',
 	'ajaxpoll-submitting' => 'Будь ласка, почекайте, обробляється ваш голос ...',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author XiaoQiaoGrace
+ */
+$messages['vi'] = array(
+	'ajaxpoll-submit' => 'Bình chọn!',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

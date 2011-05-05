@@ -100,6 +100,16 @@ $messages['ar'] = array(
 	'editaccount-log-entry-close' => 'الحساب معطّل $2',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'editaccount-frame-usage' => 'Qeyd',
+	'editaccount-submit-email' => 'E-məktub ünvanını qeyd et',
+	'editaccount-submit-pass' => 'Parolu qeyd et',
+	'editaccount-submit-realname' => 'Əsl adı qeyd et',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
@@ -107,6 +117,13 @@ $messages['be-tarask'] = array(
 	'editaccount-submit-email' => 'Захаваць адрас электроннай пошты',
 	'editaccount-submit-pass' => 'Захаваць пароль',
 	'editaccount-submit-realname' => 'Захаваць сапраўднае імя',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'editaccount-submit-pass' => 'Съхраняване на паролата',
 );
 
 /** Bihari (भोजपुरी)
@@ -136,9 +153,11 @@ $messages['br'] = array(
 	'editaccount-label-email' => "Termeniñ ur chomlec'h postel nevez",
 	'editaccount-label-pass' => 'Termeniñ ur ger-tremen nevez',
 	'editaccount-label-realname' => 'Termeniñ un anv klok nevez',
+	'editaccount-label-clearunsub' => 'Digoumanantet',
 	'editaccount-submit-email' => 'Enrollañ ar postel',
 	'editaccount-submit-pass' => 'Enrollañ ar ger-tremen',
 	'editaccount-submit-realname' => 'Enrollañ an anv klok',
+	'editaccount-submit-clearunsub' => 'Diverkañ an digoumanantiñ',
 	'editaccount-submit-close' => 'Serriñ ar gont',
 	'editaccount-usage-close' => "Gallout a rit ivez diweredekaat ur gont implijer en ur rinegiñ he ger-tremen hag en ur implijout he chomlec'h postel. Diwallit ! Kollet e vo ar roadennoù ha ne c'hallor ket adtapout anezho.",
 	'editaccount-warning-close' => "<b>Diwallit !</b> Emaoc'h war-nes diweredekaat ar gont implijer <b>$1</b> da vat. Ne c'hallor ket en dizober. Ha c'hoant ho peus d'en ober ?",
@@ -147,6 +166,7 @@ $messages['br'] = array(
 	'editaccount-success-email-blank' => "Dilamet mat eo bet chomlec'h postel ar gont $1.",
 	'editaccount-success-pass' => 'Kemmet eo bet ger tremen ar gont $1.',
 	'editaccount-success-realname' => 'Kemmet eo bet anv gwir ar gont $1.',
+	'editaccount-success-unsub' => 'Tennet kuit eo bet an titour digoumanantiñ evit ar gont $1.',
 	'editaccount-success-close' => 'Diweredekaet eo bet ar gont $1.',
 	'editaccount-error-email' => "N'eo ket bet kemmet ar chomlec'h postel. Klaskit adarre pe kit a darempred gant ar skipailh teknikel.",
 	'editaccount-error-pass' => "N'eo ket bet kemmet ar ger tremen. Klaskit adarre pe kit a darempred gant ar skipailh teknikel.",
@@ -477,9 +497,11 @@ $messages['gl'] = array(
 	'editaccount-label-email' => 'Establecer un novo enderezo de correo electrónico',
 	'editaccount-label-pass' => 'Establecer un novo contrasinal',
 	'editaccount-label-realname' => 'Establecer un novo nome real',
+	'editaccount-label-clearunsub' => 'Cancelouse a subscrición',
 	'editaccount-submit-email' => 'Gardar o correo electrónico',
 	'editaccount-submit-pass' => 'Gardar o contrasinal',
 	'editaccount-submit-realname' => 'Gardar o nome real',
+	'editaccount-submit-clearunsub' => 'Desfacer a cancelación da subscrición',
 	'editaccount-submit-close' => 'Pechar a conta',
 	'editaccount-usage-close' => 'Tamén pode desactivar unha conta de usuario codificando o seu contrasinal e eliminando o enderezo de correo electrónico. Teña en conta que se perderá esa información e non se poderá recuperar.',
 	'editaccount-warning-close' => '<b>Coidado!</b> Está a piques de desactivar permanentemente a conta do usuario <b>$1</b>. Isto non se pode reverter. Está seguro de que é o que quere facer?',
@@ -488,6 +510,7 @@ $messages['gl'] = array(
 	'editaccount-success-email-blank' => 'Eliminouse con éxito o correo electrónico da conta $1.',
 	'editaccount-success-pass' => 'Cambiouse con éxito o contrasinal da conta $1.',
 	'editaccount-success-realname' => 'Cambiouse con éxito o nome real da conta $1.',
+	'editaccount-success-unsub' => 'Eliminouse correctamente a cancelación da subscrición para a conta $1 .',
 	'editaccount-success-close' => 'Desactivouse con éxito a conta $1.',
 	'editaccount-error-email' => 'Non se modificou o correo electrónico. Inténteo de novo ou póñase en contacto co equipo técnico.',
 	'editaccount-error-pass' => 'Non se modificou o contrasinal. Inténteo de novo ou póñase en contacto co equipo técnico.',
@@ -506,11 +529,13 @@ $messages['gl'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  * @author Misibacsi
  */
 $messages['hu'] = array(
 	'editaccount' => 'Felhasználói fiók szerkesztése',
+	'editaccount-desc' => 'Lehetővé teszi a személyzet tagjainak, hogy kezeljék a felhasználói fiókok információit',
 	'editaccount-title' => 'Special:Felhasználói fiók szerkesztése',
 	'editaccount-frame-manage' => 'Egy felhasználói fiók szerkesztése',
 	'editaccount-frame-usage' => 'Megjegyzés',
@@ -521,9 +546,11 @@ $messages['hu'] = array(
 	'editaccount-label-email' => 'Új e-mail cím beállítása',
 	'editaccount-label-pass' => 'Új jelszó beállítása',
 	'editaccount-label-realname' => 'Új valódi név beállítása',
+	'editaccount-label-clearunsub' => 'Leiratkozott',
 	'editaccount-submit-email' => 'E-mail mentése',
 	'editaccount-submit-pass' => 'Jelszó mentése',
 	'editaccount-submit-realname' => 'Valódi név mentése',
+	'editaccount-submit-clearunsub' => 'Leiratkozás törlése',
 	'editaccount-submit-close' => 'Felhasználói fiók lezárása',
 	'editaccount-status' => 'Állapotüzenet',
 	'editaccount-success-email' => 'A(z) $1 felhasználói fiók email címe sikeresen megváltoztatva erre: $2.',
@@ -542,6 +569,7 @@ $messages['hu'] = array(
 	'editaccount-log-entry-pass' => '„$2” jelszava megváltoztatva',
 	'editaccount-log-entry-realname' => '„$2” valódi neve megváltoztatva',
 	'editaccount-log-entry-close' => '„$2” felhasználói fiók letiltva',
+	'right-editaccount' => 'más felhasználók beállításainak szerkesztése',
 );
 
 /** Interlingua (Interlingua)
@@ -643,6 +671,49 @@ $messages['it'] = array(
 	'editaccount-log-entry-close' => 'Account $2 disabilitato',
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em"> Questo account è stato disattivato. </div>',
 	'right-editaccount' => 'Modifica le preferenze degli altri utenti',
+);
+
+/** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
+ */
+$messages['km'] = array(
+	'editaccount' => 'កែប្រែគណនី​',
+	'editaccount-desc' => 'អនុញ្ញាតអោយបុគ្គលិកគ្រប់គ្រងព័ត៌មានគណនីអ្នកប្រើប្រាស់របស់អ្នក',
+	'editaccount-frame-manage' => 'កែប្រែគណនី​មួយ',
+	'editaccount-frame-usage' => 'កំណត់សម្គាល់',
+	'editaccount-label-select' => 'ជ្រើសរើសគណនីអ្នកប្រើប្រាស់មួយ',
+	'editaccount-submit-account' => 'គ្រប់គ្រងគណនី',
+	'editaccount-frame-account' => 'កំពុងកែប្រែគណនីអ្នកប្រើប្រាស់៖ $1',
+	'editaccount-frame-close' => 'បិទគណនីរបស់អ្នកប្រើប្រាស់៖ $1',
+	'editaccount-label-email' => 'ដូរអាសយដ្ឋានអ៊ីមែលថ្មី',
+	'editaccount-label-pass' => 'ដូរពាក្យសំងាត់ថ្មី',
+	'editaccount-label-realname' => 'ដូរឈ្មោះពិតថ្មី',
+	'editaccount-label-clearunsub' => 'ឈប់ជាវ',
+	'editaccount-submit-email' => 'រក្សាទុកអាសយដ្ឋានអ៊ីមែល',
+	'editaccount-submit-pass' => 'រក្សាទុកពាក្យសំងាត់',
+	'editaccount-submit-realname' => 'រក្សាទុកឈ្មោះពិត',
+	'editaccount-submit-clearunsub' => 'សំអាតការឈប់ជាវ',
+	'editaccount-submit-close' => 'បិទគណនី',
+	'editaccount-status' => 'សារស្ថានភាព',
+	'editaccount-success-email' => 'បានប្ដូរអាសយដ្ឋានអ៊ីមែលសំរាប់គណនី $1 ទៅជា $2 បានសំរេច។',
+	'editaccount-success-email-blank' => 'បានដកចេញអាសយដ្ឋានអ៊ីមែលសំរាប់គណនី $1 បានសំរេច។',
+	'editaccount-success-pass' => 'បានប្ដូរពាក្យសំងាត់សំរាប់គណនី $1 បានសំរេច។',
+	'editaccount-success-realname' => 'បានប្ដូរឈ្មោះពិតសំរាប់គណនី $1 បានសំរេច។',
+	'editaccount-success-close' => 'បានបិទគណនី $1 បានសំរេច។',
+	'editaccount-error-email' => 'អ៊ីមែលមិនត្រូវបានប្ដូរទេ។ សូមសាកល្បងម្ដងទៀតឬទាក់ទងទៅក្រុមបច្ចេកទេស។',
+	'editaccount-error-pass' => 'ពាក្យសំងាត់មិនត្រូវបានប្ដូរទេ។ សូមសាកល្បងម្ដងទៀតឬទាក់ទងទៅក្រុមបច្ចេកទេស។',
+	'editaccount-error-realname' => 'ឈ្មោះពិតមិនត្រូវបានប្ដូរទេ។ សូមសាកល្បងម្ដងទៀតឬទាក់ទងទៅក្រុមបច្ចេកទេស។',
+	'editaccount-error-close' => 'មានបញ្ហាកើតឡើងពេលកំពុងបិទគណនី។ សូមសាកល្បងម្ដងទៀតឬទាក់ទងទៅក្រុមបច្ចេកទេស។',
+	'editaccount-invalid-email' => '"$1" មិនមែនជាអាសយដ្ឋានអ៊ីមែលមានសុពលភាពទេ!',
+	'editaccount-nouser' => 'គណនី "$1" មិនមានទេ!',
+	'editaccount-log' => 'កំណត់ត្រាស្ដីពីគណនីអ្នកប្រើប្រាស់',
+	'editaccount-log-header' => 'ទំព័រនេះជាបញ្ជីកំនែប្រែដែលធ្វើឡើងលើចំណង់ចំណូលចិត្តរបស់អ្នកប្រើ ដោយបុគ្គលិក Wikia។',
+	'editaccount-log-entry-email' => 'បានប្ដូរអ៊ីមែលសំរាប់អ្នកប្រើប្រាស់ $2',
+	'editaccount-log-entry-pass' => 'បានប្ដូរពាក្យសំងាត់សំរាប់អ្នកប្រើប្រាស់ $2',
+	'editaccount-log-entry-realname' => 'បានប្ដូរឈ្មោះពិតសំរាប់អ្នកប្រើប្រាស់ $2',
+	'editaccount-log-entry-close' => 'បានបិទគណនី $2',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">គណនីនេះត្រូវបានបិទហើយ។</div>',
+	'right-editaccount' => 'កែប្រែចំណង់ចំណូលចិត្តរបស់អ្នកប្រើប្រាស់ដទៃ',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -822,6 +893,21 @@ Probeer het opnieuw of neem contact op met het Tech Team.',
 	'right-editaccount' => 'Voorkeuren van gebruikers bewerken',
 );
 
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'editaccount-usage' => 'Gebruikersgevens worden voor iedere wiki apart in een cache bijgehouden.
+Als je een wachtwoord of e-mailadres opnieuw instelt, wordt alleen de cache voor deze wiki ongeldig gemaakt.
+Laat de gebruiker bij deze wiki aanmelden met een nieuw wachtwoord om problemen met de cache te voorkomen.',
+	'editaccount-usage-close' => 'Je kunt een gebruiker ook uitschakelen door een onbekend wachtwoord in te stellen en het e-mailadres te verwijderen.
+De huidige gegevens gaan dan verloren en zijn niet te herstellen.',
+	'editaccount-warning-close' => '<b>Let op!</b>
+Je staat op het punt de gebruiker <b>$1</b> permanent af te sluiten.
+Dit kan niet ongedaan gemaakt worden.
+Weet je zeker dat u dit wilt doen?',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
@@ -916,9 +1002,11 @@ $messages['pms'] = array(
 	'editaccount-label-email' => 'Buté na neuva adrëssa ëd pòsta eletrònica',
 	'editaccount-label-pass' => 'Ampòsta neuva ciav',
 	'editaccount-label-realname' => 'Ampòsta neuv nòm ver',
+	'editaccount-label-clearunsub' => 'Disiscrivù',
 	'editaccount-submit-email' => "Salvé l'adrëssa ëd pòsta eletrònica",
 	'editaccount-submit-pass' => 'Salva Ciav',
 	'editaccount-submit-realname' => 'Salva Nòm Ver',
+	'editaccount-submit-clearunsub' => 'Scansela disiscrission',
 	'editaccount-submit-close' => 'Sara Cont',
 	'editaccount-usage-close' => "A peul ëdcò disabilité a un cont utent an cripté soa ciav e gavand soa adrëssa ëd pòsta eletrònica. Ch'a fasa atension che sto dat a l'é përdù e a l'é pa arcuperàbil.",
 	'editaccount-warning-close' => "<b>Atension!</b> A l'é an camin ch'a disabìlita për sempe ël cont ëd l'utent <b>$1</b>. As peul pa torné andré. É-lo sigur ëd vorèj felo?",
@@ -927,6 +1015,7 @@ $messages['pms'] = array(
 	'editaccount-success-email-blank' => "Gavà da bin l'adrëssa ëd pòsta eletrònica dal cont $1.",
 	'editaccount-success-pass' => 'Cambià da bin ciav për ël cont $1.',
 	'editaccount-success-realname' => 'Cambià da bin ël nòm ver për ël cont $1.',
+	'editaccount-success-unsub' => 'Gavà da bin ël bit ëd disiscrission për ël cont $1.',
 	'editaccount-success-close' => 'Disabilità da bin ël cont $1.',
 	'editaccount-error-email' => "L'adrëssa ëd pòsta eletrònica e l'é pa stàita cambià. Ch'a preuva torna o ch'a contata l'Echip técnica.",
 	'editaccount-error-pass' => "La ciav a l'é pa stàita cangià. Ch'a preuva torna o ch'a contata l'Echip técnica.",
@@ -948,6 +1037,8 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'editaccount' => 'ګڼون سمول',
+	'editaccount-frame-manage' => 'يو ګڼون سمول',
 	'editaccount-frame-usage' => 'يادښت',
 	'editaccount-label-email' => 'نوې برېښليک پته ټاکل',
 	'editaccount-label-pass' => 'نوی پټنوم ټاکل',
@@ -1049,6 +1140,20 @@ $messages['pt-br'] = array(
 	'editaccount-log-entry-close' => 'desabilitada a conta $2',
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Essa conta foi desabilitada.</div>',
 	'right-editaccount' => 'Editar outras preferências de usuário',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'editaccount' => 'Modifică contul',
+	'editaccount-frame-manage' => 'Modifică un cont',
+	'editaccount-label-clearunsub' => 'Dezabonat',
+	'editaccount-submit-email' => 'Salvează adresa de e-mail',
+	'editaccount-submit-pass' => 'Salvează parola',
+	'editaccount-submit-realname' => 'Salvează numele real',
+	'editaccount-submit-close' => 'Închide contul',
+	'editaccount-status' => 'Mesaj de stare',
 );
 
 /** Russian (Русский)
@@ -1183,6 +1288,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Lokal Profil
  * @author Tobulos1
  */
 $messages['sv'] = array(
@@ -1199,6 +1305,7 @@ $messages['sv'] = array(
 	'editaccount-label-email' => 'Ange ny e-postadress',
 	'editaccount-label-pass' => 'Ange nytt lösenord',
 	'editaccount-label-realname' => 'Ange ett nytt riktigt namn',
+	'editaccount-label-clearunsub' => 'Prenumeration avslutad',
 	'editaccount-submit-email' => 'Spara e-postadress',
 	'editaccount-submit-pass' => 'Spara lösenord',
 	'editaccount-submit-realname' => 'Spara riktigt namn',

@@ -47,11 +47,13 @@ $messages['ast'] = array(
 	'our404handler-oops' => "Estes nun son les páxines que busques. Sal d'equí, por favor.",
 );
 
-/** Azerbaijani (Azərbaycanca) */
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
 $messages['az'] = array(
 	'our404handler' => 'Xəta 404: Səhifə tapılmadı!',
 	'our404handler-oops' => 'Sizin axtardığınız səhifə mövcud deyil. Zəhmət olmasa, bunlara əməl edin.',
-	'message404' => "'''Təəssüflər olsun ki, hansısa səbəbdən, sizin axtardığınız səhifə mövcud deyil.'''
+	'message404' => "'''Təəssüf ki, hansısa səbəbdən, sizin axtardığınız səhifə mövcud deyil.'''
 
 '''$1''' məqaləsi tapılmır.
 
@@ -74,6 +76,13 @@ $messages['be-tarask'] = array(
 * паглядзець артыкул [[$2]].
 * скарыстацца пошукам.
 * перайсьці да галоўнай старонкі сайту: [{{SERVER}} {{SITENAME}}].",
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'our404handler' => 'Грешка 404: Страницата не беше намерена!',
 );
 
 /** Breton (Brezhoneg)
@@ -370,6 +379,14 @@ $messages['ko'] = array(
 	'our404handler' => '404 오류: 페이지를 찾을 수 없습니다.',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'our404handler' => 'Fähler 404: Sigg nit jefonge!',
+	'our404handler-oops' => 'Dat sin nit de Sigge, woh De noh aam looere bes. Nemm andere!',
+);
+
 /** Kurdish (Latin) (Kurdî (Latin))
  * @author George Animal
  */
@@ -460,11 +477,26 @@ $messages['nl'] = array(
 Probeer het nog eens.",
 	'message404' => "'''Het spijt ons, maar op een of andere manier hebt u een pagina opgevraagd die niet bestaat.'''
 
-Artikel \"'''\$1'''\" is niet aangetroffen.
+Pagina \"'''\$1'''\" is niet aangetroffen.
 
-* U kunt het artikel \"[[\$2]]\" proberen
+* U kunt de pagina \"[[\$2]]\" proberen
 * U kunt het zoekveld gebruiken links op de pagina
 * U kunt naar de hoofdpagina van deze site gaan: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'our404handler-oops' => "Dit zijn niet de pagina's waar je naar op zoek bent.
+Probeer het nog eens.",
+	'message404' => "'''Het spijt ons, maar op een of andere manier heb je een pagina opgevraagd die niet bestaat.'''
+
+Pagina \"'''\$1'''\" is niet aangetroffen.
+
+* Je kunt de pagina \"[[\$2]]\" proberen
+* Je kunt het zoekveld gebruiken links op de pagina
+* Je kunt naar de hoofdpagina van deze site gaan: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -486,7 +518,7 @@ Artikkelen '''$1''' kunne ikkje verta funnen.
  * @author Nghtwlkr
  */
 $messages['no'] = array(
-	'our404handler' => 'Feil 404: Siden ble ikke funnet!',
+	'our404handler' => 'Feil 404: Finner ikke siden!',
 	'our404handler-oops' => 'Dette er ikke sidene du leter etter. Vennligst fortsett.',
 	'message404' => "
 '''Vi er virkelig lei for dette, men av en eller annen grunn finnes ikke siden du har bedt om.'''

@@ -17,6 +17,21 @@ $messages['qqq'] = array(
 	'performancestat-cpu' => 'CPU time (in seconds).',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'performancestat-total' => 'Ümumi: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'performancestat-total' => 'Общо: $1s',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -72,6 +87,15 @@ $messages['fr'] = array(
 	'performancestat-total' => 'Total : $1s',
 	'performancestat-apache' => 'Apache : $1s',
 	'performancestat-cpu' => 'Processeur : $1s',
+);
+
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'performancestat-total' => 'Összesen: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
 );
 
 /** Interlingua (Interlingua)
@@ -149,6 +173,23 @@ $messages['no'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'showperformancestats-desc' => 'Artorna statìstiche dle prestassion lesìbij da uman',
+	'performancestat-total' => 'Total: $1',
+	'performancestat-apache' => 'Apache: $1',
+	'performancestat-cpu' => 'CPU: $1',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'performancestat-total' => 'ټولټال: $1s',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -185,6 +226,16 @@ $messages['sr-ec'] = array(
 $messages['sv'] = array(
 	'showperformancestats-desc' => 'Returnerar en mänskligt läsbar prestandastatistik',
 	'performancestat-total' => 'Totalt: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'showperformancestats-desc' => 'Nagbabalik ng estadistika ng pagganap na nababasa ng tao',
+	'performancestat-total' => 'Kabuuan: $1s',
 	'performancestat-apache' => 'Apache: $1s',
 	'performancestat-cpu' => 'CPU: $1s',
 );

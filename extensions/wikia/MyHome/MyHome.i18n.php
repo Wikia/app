@@ -248,17 +248,20 @@ $messages['ar'] = array(
 /** Assamese (অসমীয়া)
  * @author Bellayet
  * @author Chaipau
+ * @author Jaminianurag
  */
 $messages['as'] = array(
 	'myhome-watchlist-feed' => 'লক্ষ্য তালিকা',
 	'myhome-user-contributions-feed' => 'অৱদানসমূহ',
-	'myhome-feed-newpage' => 'নতুন পাতা',
-	'myhome-feed-edit' => 'সম্পাদন কৰক',
+	'myhome-feed-newpage' => 'নতুন পৃষ্ঠা',
+	'myhome-feed-edit' => 'সম্পাদনা কৰক',
 	'myhome-feed-new-blog-comment-details' => 'মন্তব্য',
 	'myhome-feed-new-article-comment-details' => 'মন্তব্য',
 );
 
-/** Azerbaijani (Azərbaycanca) */
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
 $messages['az'] = array(
 	'wikiactivity' => 'Viki-fəaliyyət',
 	'myhome-activity-feed' => 'Son dəyişikliklər',
@@ -266,6 +269,7 @@ $messages['az'] = array(
 	'myhome-feed-edit' => 'redaktə',
 	'myhome-feed-talkpage' => 'müzakirə səhifəsi',
 	'myhome-feed-new-page-details' => 'Yeni səhifə',
+	'myhome-feed-summary-details' => 'Xülasə',
 	'myhome-feed-section-edit-details' => 'Bölmənin redaktəsi',
 	'myhome-feed-new-blog-post-details' => 'Yeni bloq',
 	'myhome-feed-new-blog-comment-details' => 'Şərh',
@@ -324,6 +328,29 @@ $messages['be-tarask'] = array(
 	'myhome-feed-move-details' => 'Перайменавана',
 	'myhome-feed-redirect-details' => 'Перанакіраваньне',
 	'myhome-community-corner-edit' => 'рэдагаваць паведамленьне',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'wikiactivity' => 'Уики активност',
+	'myhome-watchlist-feed' => 'Списък за наблюдение',
+	'myhome-user-contributions-feed' => 'Приноси',
+	'myhome-hot-spots-newest' => 'Нови страници в уикито',
+	'myhome-feed-newpage' => 'нова страница',
+	'myhome-feed-edit' => 'редактиране',
+	'myhome-feed-created-by' => 'създадена от $1',
+	'myhome-feed-added-by' => 'добавен от $1',
+	'myhome-feed-edited-by' => 'редактиранa от $1',
+	'myhome-feed-posted-by' => 'публикувано от $1',
+	'myhome-feed-article-comment-created-by' => 'нов коментар от $1',
+	'myhome-feed-by' => 'от $1',
+	'myhome-feed-new-page-details' => 'Нова страница',
+	'myhome-feed-summary-details' => 'Резюме',
+	'myhome-namespace-blog' => 'Блог',
+	'oasis-myhome-community-corner-edit' => 'редактиране на съобщението &gt;',
+	'myhome-community-corner-edit' => 'редактиране на съобщението',
 );
 
 /** Tibetan (བོད་ཡིག) */
@@ -638,6 +665,7 @@ Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Claudia Hattitten
  * @author LWChris
  * @author The Evil IP address
  */
@@ -654,8 +682,8 @@ Jeder kann Seiten ändern, Informationen hinzufügen oder Fehler berichtigen.
 Das Wiki wird durch die Gemeinschaft der Nutzer erstellt, und durch den Klick auf den Bearbeiten-Link werden Sie selbst zum Teil dieser Gemeinschaft.
 Probieren Sie es einfach aus!',
 	'myhome-log-in' => "<center>Die Startseiten-Funktion ist nur verfügbar wenn Sie eingeloggt sind.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Bitte melden Sie sich an um diese Seite zu sehen!]'''</big></center>",
-	'myhome-switch-to-monaco' => "Die Startseiten-Funktion ist nur für das Monaco-Design verfügbar.
-Wenn Sie die Startseite sehen möchten, gehen Sie bitte zu '''[[Special:Preferences|Ihren Einstellungen]]''' um Ihr Design zu wechseln.",
+	'myhome-switch-to-monaco' => "Die Wiki-Aktivitäten sind nur für den Wikia-Skin verfügbar.
+Wenn Sie die Letzten Aktivitäten sehen möchten, gehen Sie bitte zu '''[[Special:Preferences|Ihren Einstellungen]]''' um das Aussehen zu wechseln.",
 	'community-corner' => "'''Willkommen auf Ihrer Startseite!'''
 
 Diese Seite hilft Ihnen, den Überblick über alle wichtigen Vorgänge im Wiki zu behalten.
@@ -1271,10 +1299,12 @@ $messages['he'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  * @author Misibacsi
  */
 $messages['hu'] = array(
+	'myhome' => 'Kezdőlapom',
 	'wikiactivity' => 'Wiki tevékenység',
 	'myhome-watchlist-feed' => 'Figyelőlista',
 	'myhome-user-contributions-feed' => 'Közreműködések',
@@ -1283,10 +1313,21 @@ $messages['hu'] = array(
 	'myhome-feed-edit' => 'szerkesztés',
 	'myhome-feed-move' => 'lap átnevezve',
 	'myhome-feed-talkpage' => 'vitalap',
+	'myhome-feed-blogcomment' => 'bloghozzászólás',
 	'myhome-feed-delete' => 'törölve',
 	'myhome-feed-image' => 'kép hozzáadva',
 	'myhome-feed-video' => 'videó hozzáadva',
+	'myhome-feed-categorization' => 'kategorizálás',
+	'myhome-feed-created-by' => 'készítette: $1',
+	'myhome-feed-added-by' => 'hozzáadta: $1',
+	'myhome-feed-edited-by' => 'szerkesztette: $1',
+	'myhome-feed-posted-by' => 'közzétette: $1',
+	'myhome-feed-comment-by' => 'hozzászólt: $1',
+	'myhome-feed-deleted-by' => 'törölte: $1',
 	'myhome-feed-moved-by' => '$1 áthelyezte',
+	'myhome-feed-article-comment-created-by' => 'új hozzászólás írója: $1',
+	'myhome-feed-article-comment-edited-by' => 'módosította $1 hozzászólását',
+	'myhome-feed-by' => 'írta: $1',
 	'myhome-feed-new-page-details' => 'Új lap',
 	'myhome-feed-summary-details' => 'Összefoglaló',
 	'myhome-feed-section-edit-details' => 'Szakasz szerkesztése',
@@ -1298,6 +1339,7 @@ $messages['hu'] = array(
 	'myhome-hot-spots-number-of-editors' => 'szerkesztők',
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Közösségi sarok',
+	'oasis-myhome-community-corner-edit' => 'üzenet szerkesztése &gt;',
 	'myhome-community-corner-edit' => 'üzenet szerkesztése',
 	'myhome-default-view-checkbox' => 'Legyen $1 a saját alapértelmezett nézet',
 	'myhome-default-view-success' => 'Rendben, most már ez az alapértelmezés',
@@ -1741,6 +1783,41 @@ $messages['mk'] = array(
 	'activityfeed' => 'Лента на активности',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'wikiactivity' => 'വിക്കി പ്രവർത്തനങ്ങൾ',
+	'myhome-activity-more' => 'കൂടുതൽ സമീപകാല പ്രവർത്തനങ്ങൾ കാണുക',
+	'myhome-feed-newpage' => 'പുതിയ താൾ',
+	'myhome-feed-edit' => 'തിരുത്തുക',
+	'myhome-feed-move' => 'താൾ മാറ്റിയിരിക്കുന്നു',
+	'myhome-feed-talkpage' => 'സംവാദം താൾ',
+	'myhome-feed-delete' => 'മായ്ച്ചിരിക്കുന്നു',
+	'myhome-feed-image' => 'ചിത്രം ചേർത്തു',
+	'myhome-feed-video' => 'വീഡിയോ ചേർത്തു',
+	'myhome-feed-categorization' => 'വർഗ്ഗീകരണം',
+	'myhome-feed-created-by' => 'സൃഷ്ടിച്ചത് $1',
+	'myhome-feed-added-by' => 'കൂട്ടിച്ചേർത്തത് $1',
+	'myhome-feed-edited-by' => 'തിരുത്തിയത് $1',
+	'myhome-feed-comment-by' => 'അഭിപ്രായമിട്ടത് $1',
+	'myhome-feed-deleted-by' => 'മായ്ച്ചത് $1',
+	'myhome-feed-moved-by' => 'മാറ്റിയത് $1',
+	'myhome-feed-new-page-details' => 'പുതിയ താൾ',
+	'myhome-feed-summary-details' => 'ചുരുക്കം',
+	'myhome-feed-new-blog-comment-details' => 'അഭിപ്രായം',
+	'myhome-feed-new-article-comment-details' => 'അഭിപ്രായം',
+	'myhome-feed-move-details' => 'പുനഃർനാമകരണം ചെയ്തു',
+	'myhome-feed-redirect-details' => 'തിരിച്ചുവിടൽ',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|ഫോട്ടോ|ഫോട്ടോകൾ}} ചേർത്തു',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|വീഡിയോ|വീഡിയോകൾ}} ചേർത്തു',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|വർഗ്ഗം|വർഗ്ഗങ്ങൾ}} ചേർത്തു',
+	'myhome-namespace-blog' => 'ബ്ലോഗ്',
+	'myhome-community-corner-header' => 'സമൂഹ സന്ദേശങ്ങൾ',
+	'oasis-myhome-community-corner-edit' => 'സന്ദേശം തിരുത്തുക &gt;',
+	'myhome-community-corner-edit' => 'സന്ദേശം തിരുത്തുക',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  * @author Zamwan
@@ -1827,6 +1904,31 @@ Misalnya, anda boleh:
 	'activityfeed' => 'Suapan kegiatan',
 );
 
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'myhome-feed-newpage' => 'paġna ġdida',
+	'myhome-feed-new-page-details' => 'Paġna ġdida',
+);
+
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'myhome-watchlist-feed' => 'စောင့်ကြည့်စာရင်း',
+	'myhome-user-contributions-feed' => 'ပံ့ပိုးထားမှုများ',
+	'myhome-feed-newpage' => 'စာမျက်နှာအသစ်',
+	'myhome-feed-edit' => 'ပြင်​ဆင်​ရန်​',
+	'myhome-feed-delete' => 'ဖျက်ပြီးဖြစ်သည်',
+	'myhome-feed-new-page-details' => 'စာမျက်နှာအသစ်',
+	'myhome-feed-summary-details' => 'အ​ကျဉ်း​ချုပ်​',
+	'myhome-feed-new-blog-post-details' => 'ဘလော့အသစ်',
+	'myhome-feed-new-blog-comment-details' => 'မှတ်ချက်',
+	'myhome-feed-new-article-comment-details' => 'မှတ်ချက်',
+	'myhome-feed-move-details' => 'အမည်ပြန်မှည့်ရန်',
+);
+
 /** Mazanderani (مازِرونی)
  * @author محک
  */
@@ -1889,7 +1991,7 @@ Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categorie toegevoegd|Categorieën toegevoegd}}',
 	'myhome-user-contributions-empty' => 'U kunt meewerken aan deze wiki door op "bewerken" te klikken op een pagina en daarna toe te voegen wat u weet.
 Iedereen kan wijzigingen maken, informatie toevoegen of een fout verbeteren.
-De wiki is gebouwd door de gemeenschap, en zo gauw u op de knop "bewerken" klikt, maar u ook
+De wiki is gebouwd door de gemeenschap, en zo gauw u op de knop "bewerken" klikt, maakt u ook
 onderdeel uit van de gemeenschap.
 Probeer het maar!',
 	'myhome-hot-spots-number-of-editors' => 'bewerkers',
@@ -1921,6 +2023,38 @@ Als u de oprichter of een beheerder van deze wiki bent, kunt u dit bericht gebru
 	'myhome-default-view-success' => 'De nieuwe instellingen zijn opgeslagen',
 	'tooltip-pt-myhome' => 'Naar Mijn startpagina',
 	'activityfeed' => 'Activiteitenfeed',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'myhome-watchlist-feed-empty' => 'Je kunt pagina\'s toevoegen aan uw volglijst door op de verwijzing "{{int:watch}}" te klikken in de balk bovenaan de pagina.
+Je kunt je volglijst gebruiken om de laatste wijzigingen aan pagina\'s waar je bij betrokken bent te bekijken.',
+	'myhome-user-contributions-empty' => 'Je kunt meewerken aan deze wiki door op "bewerken" te klikken op een pagina en daarna toe te voegen wat je weet.
+Iedereen kan wijzigingen maken, informatie toevoegen of een fout verbeteren.
+De wiki is gebouwd door de gemeenschap, en zo gauw je op de knop "bewerken" klikt, maak jij ook
+onderdeel uit van de gemeenschap.
+Probeer het maar!',
+	'myhome-log-in' => "<center>De functie Mijn Startpagina is alleen beschikbaar als je bent aangemeld.<br /><br />
+<big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Meld je aan om deze pagina te bekijken!]</span>'''</big></center>",
+	'myhome-switch-to-monaco' => "De functie \"Mijn startpagina\" is alleen beschikbaar als je de Wikia-vormgeving gebruikt.
+Als je \"Mijn startpagina\" wilt bekijken, wijzig in '''[[Special:Preferences|uw voorkeuren]]''' het siteuiterlijk.",
+	'community-corner' => "'''Welkom bij Mijn startpagina!'''
+
+Deze pagina helpt je om op de hoogte te blijven van wat er gebeurt in de wiki.
+
+Als je de oprichter of een beheerder van deze wiki bent, kan je dit bericht gebruiken om gemeenschap informatie te geven over wat er momenteel gebeurt op de site. Je kunt bijvoorbeeld:
+
+* Een project organiseren om een gebied van de wiki op te bouwen
+
+* Een aantal nieuwe pagina's weergeven die iedereen zou moeten zien
+
+* Mensen betrekken in een discussie over wat er gebeurt op de site
+
+* Een bepaalde gebruiker prijzen die iets speciaals heeft toegevoegd aan de wiki
+
+* Of gewoon wat schrijven om mensen aan te moedigen!",
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -2140,6 +2274,7 @@ $messages['pms'] = array(
 	'myhome-hot-spots-newest' => 'Pàgine neuve an sla wiki',
 	'myhome-hot-spots-brandnew' => "Costa-sì a l'é na wiki neuva ëd pianta. Ch'a sgnaca dzora a [[Special:CreatePage|Pàgina neuva]] për ancaminé a scrive!",
 	'tog-myhomedisableredirect' => "Disabilité mia ridiression vers l'Atività dla Wiki",
+	'prefs-myhome' => 'Mia Intrada',
 	'myhome-feed-newpage' => 'pàgina neuva',
 	'myhome-feed-edit' => 'modifiché',
 	'myhome-feed-move' => 'pàgina tramudà',
@@ -2175,7 +2310,7 @@ $messages['pms'] = array(
 La wiki a l'é fàita da la comunità, e na vira ch'a sgnaca ël boton ëd modìfica, chiel a l'é part ëd la comunità. Ch'a fasa la preuva!",
 	'myhome-hot-spots-number-of-editors' => 'editor',
 	'myhome-log-in' => "<center>La funsion Mia Intrada a l'é disponìbil mach s'a l'é intrà ant ël sistema.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Ch'a intra ant ël sistema për vëdde sta pàgina-sì!]'''</big></center>",
-	'myhome-switch-to-monaco' => "La funsion Mia Intrada a l'é mach disponìbil s'a deuvra la pel Monaco. S'a vorèissa vardé Mia Intrada, për piasì ch'a vìsita '''[[Special:Preferences|sò Gust]]''' për cangé soa pel.",
+	'myhome-switch-to-monaco' => "La funsion WikiActivity a l'é mach disponìbil s'a deuvra la pel Wikia. S'a vorèissa vardé Mia Intrada, për piasì ch'a vìsita '''[[Special:Preferences|sò Gust]]''' për cangé soa pel.",
 	'myhome-namespace-blog' => 'Scartari',
 	'myhome-community-corner-header' => 'Mëssagi ëd la Comunità',
 	'oasis-myhome-community-corner-edit' => 'modifiché ël mëssagi &gt;',
@@ -2628,6 +2763,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Lokal Profil
  * @author McDutchie
  * @author Tobulos1
  */
@@ -2660,6 +2796,9 @@ $messages['sv'] = array(
 	'myhome-feed-comment-by' => 'kommentar av $1',
 	'myhome-feed-deleted-by' => 'strukits av $1',
 	'myhome-feed-moved-by' => 'flyttat av $1',
+	'myhome-feed-article-comment-created-by' => 'ny kommentar av $1',
+	'myhome-feed-article-comment-edited-by' => 'redigerad kommentar av $1',
+	'myhome-feed-by' => 'av $1',
 	'myhome-feed-diff-alt' => 'visa mig att ändra på den här sidan',
 	'myhome-feed-new-page-details' => 'Ny sida',
 	'myhome-feed-summary-details' => 'Sammanfattning',
@@ -2741,6 +2880,14 @@ $messages['te'] = array(
 	'myhome-namespace-blog' => 'బ్లాగు',
 );
 
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'myhome-feed-edit' => 'edita',
+	'myhome-feed-summary-details' => 'Rezumu',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -2760,7 +2907,8 @@ Magagamit mo ang talaan ng binabantayan upang masubaybayan ang pinakabagong mga 
 Pindutin ang '''[[Special:CreatePage|Bagong pahina]]''' upang magsimulang magsulat!",
 	'myhome-hot-spots-newest' => 'Bagong mga pahina sa wiki',
 	'myhome-hot-spots-brandnew' => 'Isa itong bagung-labas na wiki.  Pindutin ang [[Special:CreatePage|Bagong pahina]] para masimulan ang pagsusulat!',
-	'tog-myhomedisableredirect' => 'Huwag paganahin ang pagpapalit ng pupuntahang patungo sa Tahanan Ko',
+	'tog-myhomedisableredirect' => 'Huwag paganahin ang pagpapalit ng pupuntahang patungo sa Gawain ng Wiki',
+	'prefs-myhome' => 'Tahanan Ko',
 	'myhome-feed-newpage' => 'bagong pahina',
 	'myhome-feed-edit' => 'baguhin',
 	'myhome-feed-move' => 'inilipat ang pahina',
@@ -2798,10 +2946,10 @@ Binuo ng pamayanan ang wiki, at kapag pinindot ma ang pindutang pambago, bahagi 
 Subukan ito!',
 	'myhome-hot-spots-number-of-editors' => 'mga patnugot',
 	'myhome-log-in' => "<center>Makukuha lamang ang kasangkapang-katangiang Tahanan Ko kung nakalagda ka.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Mangyaring lumagda upang makitang ang pahinang ito!]'''</big></center>",
-	'myhome-switch-to-monaco' => "Makukuha lamang ang kasangkapang-katangiang Tahanan Ko kung ginagamit mo ang pabalat na Monaco.
-Kung nais mong makita ang Tahanan Ko, mangyaring dumalaw sa '''[[Special:Preferences|mga Nais mo]]''' upang mabago ang iyong pabalat.",
+	'myhome-switch-to-monaco' => "Makukuha lamang ang tampok na Gawain ng Wiki kung ginagamit mo ang pabalat na Wikia.
+Kung nais mong makita ang Tahanan Ko, mangyaring dumalaw sa '''[[Special:Preferences|mga Nais mo]]''' upang mabago ang pabalat mo.",
 	'myhome-namespace-blog' => 'Blog',
-	'myhome-community-corner-header' => 'Sulok ng Pamayanan',
+	'myhome-community-corner-header' => 'Mga Mensahe ng Pamayanan',
 	'oasis-myhome-community-corner-edit' => 'baguhin ang mensahe &gt;',
 	'myhome-community-corner-edit' => 'baguhin ang mensahe',
 	'community-corner' => "'''Maligayang Pagdating sa Tahanan Ko!'''
@@ -2820,7 +2968,7 @@ Halimbawa, maaari kang:
 * Magbigay ng isang labas-sigaw sa isang tagaambag na nagdagdag ng bagay na natatangi sa wiki
 
 * O kaya magpaskil lamang ng ilang mga pananalita ng pangpalakas ng kalooban!",
-	'myhome-hot-spots-definition' => 'Mga pahinang may pinakamaraming mga patnugot sa loob ng huling $1 mga araw.',
+	'myhome-hot-spots-definition' => 'Mga pahinang may pinakamaraming mga patnugot sa loob ng huling {{PLURAL:$1|araw|$1 mga araw}}.',
 	'myhome-default-view-checkbox' => 'Gawing likas na itinakdang pagtanaw ko ang $1',
 	'myhome-default-view-success' => 'Okey, ito na ngayon ang iyong likas na pagtatakda',
 	'tooltip-pt-myhome' => 'Pumunta sa Tahanan Ko',
@@ -2935,6 +3083,24 @@ $messages['uk'] = array(
 	'activityfeed' => 'Останні зміни',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author XiaoQiaoGrace
+ */
+$messages['vi'] = array(
+	'myhome-desc' => 'Trang riêng này dành cho thành viên đã đăng nhập',
+	'wikiactivity' => 'Hoạt động của Wiki',
+	'myhome-user-contributions-feed' => 'Đóng góp',
+	'myhome-hot-spots-feed' => 'Điểm nóng',
+	'myhome-hot-spots-newest' => 'Trang mới trên wiki này',
+	'myhome-feed-created-by' => 'Tạo bởi $1',
+	'myhome-feed-added-by' => 'Thêm vào bởi $1',
+	'myhome-feed-edited-by' => 'sửa đổi bởi $1',
+	'myhome-feed-posted-by' => 'đăng bởi $1',
+	'myhome-feed-new-page-details' => 'Trang mới',
+	'myhome-feed-summary-details' => 'Tóm lược',
+	'myhome-feed-section-edit-details' => 'Chỉnh sửa mục',
+);
+
 /** Chinese (中文)
  * @author Yyaootw
  */
@@ -2944,16 +3110,60 @@ $messages['zh'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
+ * @author Liangent
  */
 $messages['zh-hans'] = array(
+	'myhome-desc' => '已登录的用户的个人主页',
+	'myhome' => '我的主页',
+	'wikiactivity' => 'Wiki活动',
+	'myhome-activity-more' => '查看更多最新活动',
+	'myhome-activity-feed' => '活动供稿',
+	'myhome-watchlist-feed' => '监视列表',
+	'myhome-user-contributions-feed' => '贡献',
+	'myhome-hot-spots-feed' => '热点',
 	'myhome-hot-spots-newest' => '维基上的新页面',
+	'prefs-myhome' => '我的主页',
 	'myhome-feed-newpage' => '新页面',
+	'myhome-feed-edit' => '编辑',
 	'myhome-feed-move' => '页面已移动',
+	'myhome-feed-talkpage' => '讨论页',
+	'myhome-feed-blogcomment' => '博客评论',
 	'myhome-feed-delete' => '删除掉了',
 	'myhome-feed-image' => '添加了照片',
+	'myhome-feed-video' => '视频已添加',
+	'myhome-feed-categorization' => '分类',
+	'myhome-feed-created-by' => '$1创建',
+	'myhome-feed-added-by' => '$1添加',
+	'myhome-feed-edited-by' => '$1编辑',
+	'myhome-feed-posted-by' => '$1发布',
+	'myhome-feed-comment-by' => '$1的评论',
+	'myhome-feed-deleted-by' => '$1删除',
+	'myhome-feed-moved-by' => '$1移动',
+	'myhome-feed-article-comment-created-by' => '$1的新评论',
+	'myhome-feed-article-comment-edited-by' => '$1编辑的评论',
+	'myhome-feed-by' => '由$1',
+	'myhome-feed-diff-alt' => '此页上显示我的变动',
 	'myhome-feed-new-page-details' => '新页面',
+	'myhome-feed-summary-details' => '摘要',
+	'myhome-feed-section-edit-details' => '编辑段落',
 	'myhome-feed-new-blog-post-details' => '新博客',
+	'myhome-feed-new-blog-comment-details' => '评论',
+	'myhome-feed-new-article-comment-details' => '评论',
+	'myhome-feed-move-details' => '重命名',
+	'myhome-feed-redirect-details' => '重定向',
+	'myhome-feed-inserted-image-details' => '添加照片',
+	'myhome-feed-inserted-video-details' => '添加视频',
+	'myhome-feed-inserted-category-details' => '已添加分类',
+	'myhome-hot-spots-number-of-editors' => '编辑者',
 	'myhome-namespace-blog' => '博客',
+	'myhome-community-corner-header' => '社群消息',
+	'oasis-myhome-community-corner-edit' => '编辑消息 &gt;',
+	'myhome-community-corner-edit' => '编辑消息',
+	'myhome-hot-spots-definition' => '最近$1天编辑者最多的页面',
+	'myhome-default-view-checkbox' => '使$1成为我的默认视图',
+	'myhome-default-view-success' => '好的，现在这是您的默认视图了',
+	'tooltip-pt-myhome' => '转到我的主页',
+	'activityfeed' => '活动供稿',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)

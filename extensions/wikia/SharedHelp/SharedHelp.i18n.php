@@ -150,6 +150,7 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'sharedhelp-desc' => 'Mengambil laman dari [[w:c:Help|Wikia Bantuan]] lalu menyisipkannya ke dalam ruang nama {{ns:help}} di wiki ini',
+	'sharedhelp-autotalkcreate-summary' => 'Laman perbincangan dicipta secara automatik',
 );
 
 /** Dutch (Nederlands)

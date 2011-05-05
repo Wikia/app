@@ -121,6 +121,50 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	'right-phalanxexempt' => 'Exempt from Phalanx rules',
 );
 
+/** ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ (ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ)
+ * @author MooRePrabu
+ */
+$messages['saz'] = array(
+	'phalanx-type-user' => 'ꢮꢮ꣄ꢬꢸꢥꢵꢬ꣄',
+	'phalanx-label-filter' => 'ꢏꢜ꣄ꢗꢶ',
+	'phalanx-stats-table-language' => 'ꢩꢵꢰꣁ',
+);
+
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'phalanx-label-reason' => 'السبب:',
+	'phalanx-label-lang' => 'اللغة:',
+	'phalanx-stats-table-reason' => 'السبب',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'phalanx-type-user' => 'istifadəçi',
+	'phalanx-label-reason' => 'Səbəb:',
+	'phalanx-label-type' => 'Tipi:',
+	'phalanx-label-lang' => 'Dil:',
+	'phalanx-test-submit' => 'Test',
+	'phalanx-stats-table-type' => 'Tipi',
+	'phalanx-stats-table-language' => 'Dil',
+	'phalanx-stats-table-text' => 'Mətn',
+	'phalanx-stats-table-wiki-name' => 'Viki adı',
+	'phalanx-stats-table-wiki-url' => 'Viki URL',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'phalanx-label-reason' => 'Причина:',
+	'phalanx-label-lang' => 'Език:',
+	'phalanx-stats-table-language' => 'Език',
+	'phalanx-stats-table-reason' => 'Причина',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -136,6 +180,7 @@ $messages['br'] = array(
 	'phalanx-link-unblock' => 'distankañ',
 	'phalanx-link-modify' => 'kemmañ',
 	'phalanx-link-stats' => 'stadegoù',
+	'phalanx-stats-table-id' => 'Stankañ an ID',
 	'phalanx-stats-table-type' => 'Seurt',
 	'phalanx-stats-table-create' => 'Krouet',
 	'phalanx-stats-table-language' => 'Yezh',
@@ -368,18 +413,148 @@ Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wi
 );
 
 /** French (Français)
+ * @author Brunoperel
  * @author Crochet.david
+ * @author Iketsi
+ * @author Od1n
  */
 $messages['fr'] = array(
+	'phalanx-desc' => 'Phalanx est un mécanisme de défense contre les courriers indésirables intégré',
+	'phalanx' => 'Phalanx',
+	'phalanx-title' => 'Phalanx - Mécanisme de défense contre les courriers indésirables intégré',
 	'phalanx-type-content' => 'contenu de la page',
 	'phalanx-type-summary' => 'résumé de la page',
 	'phalanx-type-title' => 'titre de la page',
 	'phalanx-type-user' => 'utilisateur',
+	'phalanx-type-answers-question-title' => 'titre de la question',
+	'phalanx-type-answers-recent-questions' => 'questions récentes',
+	'phalanx-type-wiki-creation' => 'Création de wiki',
+	'phalanx-add-block' => 'Appliquer le bloc',
+	'phalanx-edit-block' => 'Sauvegarder le bloc',
 	'phalanx-label-filter' => 'Filtre :',
 	'phalanx-label-reason' => 'Motif :',
 	'phalanx-label-expiry' => 'Expiration :',
+	'phalanx-label-type' => 'Type :',
+	'phalanx-label-lang' => 'Langue :',
+	'phalanx-view-type' => 'Type de blocage...',
+	'phalanx-view-blocker' => 'Rechercher par texte de filtre:',
+	'phalanx-view-blocks' => 'Filtres de recherche',
+	'phalanx-format-text' => 'texte brut',
+	'phalanx-format-regex' => 'expression régulière',
+	'phalanx-format-case' => 'sensible à la casse',
+	'phalanx-format-exact' => 'exact',
+	'phalanx-tab-main' => 'Gérer les filtres',
+	'phalanx-tab-secondary' => 'Tester les filtres',
+	'phalanx-block-success' => 'Le blocage a été ajouté avec succès',
+	'phalanx-block-failure' => 'Une erreur est survenue durant l’ajout du blocage',
+	'phalanx-modify-success' => 'Le blocage a été modifié avec succès',
+	'phalanx-modify-failure' => 'Une erreur est survenue durant la modification du blocage',
+	'phalanx-modify-warning' => 'Vous éditez le bloc d\'identifiant #$1.
+En cliquant sur "{{int:phalanx-add-block}}" vos modifications seront enregistrées.',
 	'phalanx-test-submit' => 'Test',
 	'phalanx-test-results-legend' => 'Résultats des essais',
+	'phalanx-display-row-blocks' => 'blocages : $1',
+	'phalanx-display-row-created' => "créé par '''$1''' sur $2",
+	'phalanx-link-unblock' => 'débloquer',
+	'phalanx-link-modify' => 'modifier',
+	'phalanx-link-stats' => 'stats',
+	'phalanx-reset-form' => 'Réinitialiser le formulaire',
+	'phalanx-legend-input' => 'Créer ou modifier le filtre',
+	'phalanx-legend-listing' => 'Filtres actuellement utilisés',
+	'phalanx-unblock-message' => "Le bloc d'identifiant #$1 a été supprimé avec succès",
+	'phalanx-help-type-content' => "Ce filtre empêche une édition d'être enregistrée si son contenu correspond avec une des expressions contenues dans la liste noire.",
+	'phalanx-help-type-summary' => "Ce filtre empêche une édition d'être enregistrée si son résumé correspond avec une des expressions contenues dans la liste noire.",
+	'phalanx-help-type-title' => "Ce filtre empêche une page d'être créée si son titre correspond à une des expressions contenues dans la liste noire.
+
+Il n'empêche pas l'édition d'une page existante.",
+	'phalanx-help-type-user' => "Ce filtre bloque un utilisateur (exactement le même qu'un bloc local MediaWiki), si le nom ou l'adresse IP correspond à l'un des noms ou l'une des adresses IP sur la liste noire.",
+	'phalanx-help-type-wiki-creation' => "Ce filtre empêche la création d'un wiki si son nom ou son URL correspond à une des expressions contenues dans la liste noire.",
+	'phalanx-help-type-answers-question-title' => "Ce filtre bloque la création d'une question (page) si son titre correspond à une des expressions de la liste noire.
+
+Note: Ne fonctionne que sur les wikis de type Answers.",
+	'phalanx-user-block-reason-ip' => 'Cette adresse IP n’a pas les droits de modification dans le réseau Wikia en raison de vandalisme ou autres méfaits analogues commis par vous ou quelqu’un d’autre partageant cette adresse IP.
+Si vous pensez qu’il s’agit d’une erreur, [[$1|contactez-nous]].',
+	'phalanx-user-block-withreason-ip' => 'Cette adresse IP n’a pas les droits de modification dans le réseau Wikia en raison de vandalisme ou autres méfaits analogues commis par vous ou quelqu’un d’autre partageant cette adresse IP.
+Si vous pensez qu’il s’agit d’une erreur, [[$1|contactez-nous]].<br />La personne qui vous a bloqué a également donné ce motif : $1',
+	'phalanx-user-block-withreason-exact' => "Ce nom d'utilisateur ou cette adresse IP n’a pas les droits de modification dans le réseau Wikia en raison de vandalisme ou autres méfaits analogues commis par vous ou quelqu’un d’autre partageant cette adresse IP.
+Si vous pensez qu’il s’agit d’une erreur, [[Special:Contact|contactez Wikia]].<br />La personne qui vous a bloqué a également donné ce motif : $1.",
+	'phalanx-user-block-withreason-similar' => "Ce nom d'utilisateur n’a pas les droits de modification dans le réseau Wikia en raison de vandalisme ou autres méfaits analogues commis par vous ou quelqu’un d’autre partageant cette adresse IP.
+Veuillez [[Special:Contact|contacter Wikia]] à propos de ce problème.<br />La personne qui vous a bloqué a également donné ce motif : $1.",
+	'phalanx-title-move-summary' => 'Le motif que vous avez inscrit contenait une phrase bloquée.',
+	'phalanx-stats-title' => 'Statistiques Phalanx',
+	'phalanx-stats-block-notfound' => 'Identifiant de bloc non trouvé',
+	'phalanx-stats-table-id' => 'Identifiant de bloc',
+	'phalanx-stats-table-user' => 'Ajouté par',
+	'phalanx-stats-table-type' => 'Type',
+	'phalanx-stats-table-create' => 'Créé le',
+	'phalanx-stats-table-expire' => 'Expire le',
+	'phalanx-stats-table-exact' => 'Exact',
+	'phalanx-stats-table-regex' => 'Regex',
+	'phalanx-stats-table-case' => 'Casse',
+	'phalanx-stats-table-language' => 'Langue',
+	'phalanx-stats-table-text' => 'Texte',
+	'phalanx-stats-table-reason' => 'Motif',
+	'phalanx-stats-row-per-wiki' => "L'utilisateur '''$2''' a été bloqué sur '''$4''' par le filtre d'identifiant '''$3''' ($5) (type: '''$1''')",
+	'phalanx-rule-log-name' => 'Journal des règles Phalanx',
+	'phalanx-rule-log-header' => 'Ceci est un journal des changements de règles de Phalanx.',
+	'phalanx-rule-log-add' => 'Règle Phalanx ajoutée: $1',
+	'phalanx-rule-log-edit' => 'Règle Phalanx éditée: $1',
+	'phalanx-rule-log-delete' => 'Règle Phalanx supprimée: $1',
+	'phalanx-rule-log-details' => 'Filtre: "$1", type: "$2", motif: "$3"',
+	'phalanx-stats-table-wiki-id' => 'ID du wiki',
+	'phalanx-stats-table-wiki-name' => 'Nom du wiki',
+	'phalanx-stats-table-wiki-url' => 'URL du wiki',
+	'phalanx-stats-table-wiki-last-edited' => 'Dernière modification',
+);
+
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'phalanx' => 'Phalanx',
+	'phalanx-title' => 'Phalanx - Integrált spam elleni védelmi mechanizmus',
+	'phalanx-type-content' => 'lap tartalma',
+	'phalanx-type-summary' => 'lap összefoglalója',
+	'phalanx-type-title' => 'lap címe',
+	'phalanx-type-user' => 'felhasználó',
+	'phalanx-type-answers-question-title' => 'kérdés címe',
+	'phalanx-type-answers-recent-questions' => 'legújabb kérdések',
+	'phalanx-type-wiki-creation' => 'wiki létrehozás',
+	'phalanx-add-block' => 'Blokk alkalmazása',
+	'phalanx-edit-block' => 'Blokk mentése',
+	'phalanx-label-filter' => 'Szűrő:',
+	'phalanx-label-reason' => 'Ok:',
+	'phalanx-label-expiry' => 'Lejárat:',
+	'phalanx-label-type' => 'Típus:',
+	'phalanx-label-lang' => 'Nyelv:',
+	'phalanx-view-type' => 'Blokk típusa...',
+	'phalanx-view-blocks' => 'Szűrők keresése',
+	'phalanx-view-id' => 'Szűrő lekérése azonosító alapján:',
+	'phalanx-view-id-submit' => 'Szűrő lekérése',
+	'phalanx-format-text' => 'egyszerű szöveg',
+	'phalanx-format-regex' => 'regex',
+	'phalanx-format-case' => 'kis- és nagybetűérzékeny',
+	'phalanx-format-exact' => 'pontos',
+	'phalanx-tab-main' => 'Szűrők karbantartása',
+	'phalanx-tab-secondary' => 'Szűrők tesztelése',
+	'phalanx-test-submit' => 'Teszt',
+	'phalanx-test-results-legend' => 'Teszteredmények',
+	'phalanx-link-unblock' => 'blokk feloldása',
+	'phalanx-stats-table-id' => 'Blokkazonosító',
+	'phalanx-stats-table-user' => 'Hozzáadta',
+	'phalanx-stats-table-type' => 'Típus',
+	'phalanx-stats-table-create' => 'Létrehozás ideje',
+	'phalanx-stats-table-expire' => 'Lejárat:',
+	'phalanx-stats-table-exact' => 'Pontos',
+	'phalanx-stats-table-regex' => 'Regex',
+	'phalanx-stats-table-case' => 'Eset',
+	'phalanx-stats-table-language' => 'Nyelv',
+	'phalanx-stats-table-text' => 'Szöveg',
+	'phalanx-stats-table-reason' => 'Ok',
+	'phalanx-stats-table-wiki-id' => 'Wiki azonosító',
+	'phalanx-stats-table-wiki-name' => 'Wiki neve',
+	'phalanx-stats-table-wiki-url' => 'Wiki URL-címe',
+	'phalanx-stats-table-wiki-last-edited' => 'Utolsó szerkesztés',
 );
 
 /** Interlingua (Interlingua)
@@ -489,6 +664,47 @@ Per favor [[Special:Contact|contacta Wikia]] a proposito de iste problema.<br />
 	'right-phalanxexempt' => 'Exempte de regulas de Phalanx',
 );
 
+/** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
+ */
+$messages['km'] = array(
+	'phalanx-type-content' => 'ខ្លឹមសារទំព័រ',
+	'phalanx-type-summary' => 'ចំណារពន្យល់ទំព័រ',
+	'phalanx-type-title' => 'ចំណងជើង​ទំព័រ',
+	'phalanx-type-user' => 'អ្នកប្រើប្រាស់',
+	'phalanx-type-answers-question-title' => 'ចំនងជើងសំនួរ',
+	'phalanx-type-answers-recent-questions' => 'សំនួរថ្មីៗ',
+	'phalanx-type-wiki-creation' => 'ការបង្កើតវិគី',
+	'phalanx-add-block' => 'អនុវត្តការរាំងខ្ទប់',
+	'phalanx-edit-block' => 'រក្សាទុកការរាំងខ្ទប់',
+	'phalanx-label-filter' => 'តម្រង៖',
+	'phalanx-label-reason' => 'មូលហេតុ៖',
+	'phalanx-label-expiry' => 'រយៈពេលផុតកំណត់៖',
+	'phalanx-label-type' => 'ប្រភេទ​៖',
+	'phalanx-label-lang' => 'ភាសា៖',
+	'phalanx-view-type' => 'ប្រភេទការរាំងខ្ទប់...',
+	'phalanx-view-blocker' => 'ស្វែងរកដោយអត្ថបទតំរង៖',
+	'phalanx-view-blocks' => 'ស្វែងរកតំរង',
+	'phalanx-view-id' => 'យកតំរងដោយអត្តសញ្ញាណ៖',
+	'phalanx-view-id-submit' => 'យកតំរង',
+	'phalanx-format-text' => 'អត្ថបទធម្មតា',
+	'phalanx-tab-main' => 'គ្រប់គ្រងតំរង',
+	'phalanx-tab-secondary' => 'ធ្វើតេស្តតំរង',
+	'phalanx-block-success' => 'ការរាំងខ្ទប់ត្រូវបានបន្ថែមបានសំរេច',
+	'phalanx-block-failure' => 'មានបញ្ហាក្នុងពេលបន្ថែមការរាំងខ្ទប់',
+	'phalanx-modify-success' => 'ការរាំងខ្ទប់ត្រូវបានកែសំរួលបានសំរេច',
+	'phalanx-modify-failure' => 'មានបញ្ហាក្នុងពេលកែសំរួលការរាំងខ្ទប់',
+	'phalanx-modify-warning' => 'អ្នកកំពុងកែប្រែកការរាំងខ្ទប់អត្តសញ្ញាណ #$1។
+ការចុច "{{int:phalanx-add-block}}" នឹងរក្សាទុកការកែប្រែរបស់អ្នក!',
+	'phalanx-test-submit' => 'តេស្ត',
+	'phalanx-test-results-legend' => 'លទ្ធផលតេស្ត',
+	'phalanx-display-row-blocks' => 'ការរាំងខ្ទប់៖ $1',
+	'phalanx-display-row-created' => "បង្កើតដោយ '''$1''' នៅ $2",
+	'phalanx-link-unblock' => 'ឈប់រាំងខ្ទប់',
+	'phalanx-link-modify' => 'កែសំរួល',
+	'phalanx-link-stats' => 'ស្ថិតិ',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -498,9 +714,11 @@ $messages['lb'] = array(
 	'phalanx-label-reason' => 'Grond:',
 	'phalanx-label-lang' => 'Sprooch:',
 	'phalanx-test-submit' => 'Test',
+	'phalanx-stats-table-type' => 'Typ',
 	'phalanx-stats-table-language' => 'Sprooch',
 	'phalanx-stats-table-text' => 'Text:',
 	'phalanx-stats-table-reason' => 'Grond',
+	'phalanx-stats-table-wiki-name' => 'Numm vun der Wiki',
 );
 
 /** Macedonian (Македонски)
@@ -610,6 +828,32 @@ $messages['mk'] = array(
 	'right-phalanxexempt' => 'Изземен од правилата на Phalanx',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'phalanx-type-content' => 'താളിന്റെ ഉള്ളടക്കം',
+	'phalanx-type-summary' => 'താളിന്റെ ചുരുക്കം',
+	'phalanx-type-title' => 'താളിന്റെ തലക്കെട്ട്',
+	'phalanx-type-user' => 'ഉപയോക്താവ്',
+	'phalanx-type-answers-question-title' => 'ചോദ്യത്തിന്റെ തലക്കെട്ട്',
+	'phalanx-type-answers-recent-questions' => 'സമീപകാല ചോദ്യങ്ങൾ',
+	'phalanx-label-reason' => 'കാരണം:',
+	'phalanx-label-expiry' => 'കാലാവധി:',
+	'phalanx-label-type' => 'തരം:',
+	'phalanx-label-lang' => 'ഭാഷ:',
+	'phalanx-stats-table-type' => 'തരം',
+	'phalanx-stats-table-create' => 'സൃഷ്ടിച്ചത്',
+	'phalanx-stats-table-expire' => 'കാലാവധി',
+	'phalanx-stats-table-language' => 'ഭാഷ',
+	'phalanx-stats-table-text' => 'എഴുത്ത്',
+	'phalanx-stats-table-reason' => 'കാരണം',
+	'phalanx-stats-table-wiki-id' => 'വിക്കി ഐ.ഡി.',
+	'phalanx-stats-table-wiki-name' => 'വിക്കിയുടെ പേര്‌',
+	'phalanx-stats-table-wiki-url' => 'വിക്കിയുടെ യു.ആർ.എൽ.',
+	'phalanx-stats-table-wiki-last-edited' => 'അവസാനം തിരുത്തിയത്',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -679,6 +923,12 @@ Jika anda percaya bahawa ini ialah kesilapan, sila [[Special:Contact|hubungi Wik
 Jika anda percaya bahawa ini ialah kesilapan, sila [[Special:Contact|hubungi Wikia]].',
 	'phalanx-user-block-reason-similar' => 'Nama pengguna ini dihalang daripada menyunting atas kesalahan laku musnah atau gangguan oleh pengguna yang serupa namanya.
 Sila cipta nama pengguna yang lain atau [[Special:Contact|hubungi Wikia]] tentang masalah ini.',
+	'phalanx-user-block-withreason-ip' => 'Alamat IP ini dihalang daripada menyunting di seluruh rangkaian Wikia atas kesalahan laku musnah atau apa jua gangguan yang dilakukan oleh anda atau sesiapa yang berkongsi alamat IP anda.
+Jika anda percaya ini kesilapan, sila [[Special:Contact|hubungi Wikia]].<br />Penyekat juga memberikan sebab tambahan ini: $1.',
+	'phalanx-user-block-withreason-exact' => 'Alamat IP ini dihalang daripada menyunting di seluruh rangkaian Wikia atas kesalahan laku musnah atau apa jua gangguan.
+Jika anda percaya ini kesilapan, sila [[Special:Contact|hubungi Wikia]].<br />Penyekat juga memberikan sebab tambahan ini: $1.',
+	'phalanx-user-block-withreason-similar' => 'Nama pengguna ini dihalang daripada menyunting di seluruh rangkaian Wikia atas kesalahan laku musnah atau gangguan oleh pengguna yang serupa namanya.
+Sila [[Special:Contact|hubungi Wikia]] tentang masalah ini.<br />Penyekat juga memberikan sebab tambahan ini: $1.',
 	'phalanx-title-move-summary' => 'Sebab yang anda isikan mengandungi ungkapan terlarang.',
 	'phalanx-content-spam-summary' => 'Teks ini dijumpai dalam ringkasan laman.',
 	'phalanx-stats-title' => 'Statistik Phalanx',
@@ -706,6 +956,8 @@ Sila cipta nama pengguna yang lain atau [[Special:Contact|hubungi Wikia]] tentan
 	'phalanx-stats-table-wiki-name' => 'Nama Wiki',
 	'phalanx-stats-table-wiki-url' => 'URL Wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Suntingan terkini',
+	'right-phalanx' => 'Boleh menguruskan sekatan dan penapis spam sedunia',
+	'right-phalanxexempt' => 'Dikecualikan daripada peraturan Phalanx',
 );
 
 /** Dutch (Nederlands)
@@ -773,15 +1025,15 @@ Het voorkomt niet dat pagina's worden aangemaakt.
 
 Dit werkt alleen voor Antwoordwiki's.",
 	'phalanx-user-block-reason-ip' => 'Gebruikers vanaf dit IP-adres mogen niet bewerken in het gehele Wikia-netwerk wegens vandalisme of verstoring door u of door iemand met hetzelfde IP-adres.
-Als u denk dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]].',
+Als u denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]].',
 	'phalanx-user-block-reason-exact' => 'Deze (anonieme) gebruiker mag niet bewerken in het hele Wikia-netwerk wegens vandalisme of verstoring.
 Als u denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]]',
 	'phalanx-user-block-reason-similar' => 'Deze gebruiker mag niet bewerken in het hele Wikia-netwerk wegens vandalisme of verstoring door een gebruiker met een gelijkluidende naam.
 Kies een andere gebruikersnaam of [[Special:Contact|neem contact op met Wikia]] over het probleem.',
 	'phalanx-user-block-withreason-ip' => 'Gebruikers vanaf dit IP-adres mogen niet bewerken in het gehele Wikia-netwerk wegens vandalisme of verstoring door u of door iemand met hetzelfde IP-adres.
-Als u denk dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]].<br />De reden voor blokkeren is: $1.',
+Als u denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]].<br />De reden voor blokkeren is: $1.',
 	'phalanx-user-block-withreason-exact' => 'Gebruikers vanaf dit IP-adres mogen niet bewerken in het gehele Wikia-netwerk wegens vandalisme of verstoring door u of door iemand met hetzelfde IP-adres.
-Als u denk dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]].<br />De reden voor blokkeren is: $1.',
+Als u denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]].<br />De reden voor blokkeren is: $1.',
 	'phalanx-user-block-withreason-similar' => 'Deze gebruiker mag niet bewerken in het hele Wikia-netwerk wegens vandalisme of verstoring door een gebruiker met een gelijkluidende naam.
 Kies een andere gebruikersnaam of [[Special:Contact|neem contact op met Wikia]] over het probleem.<br />De reden voor blokkeren is: $1.',
 	'phalanx-title-move-summary' => 'De samenvatting die u hebt opgegeven bevat niet toegelaten tekst.',
@@ -813,6 +1065,23 @@ Kies een andere gebruikersnaam of [[Special:Contact|neem contact op met Wikia]] 
 	'phalanx-stats-table-wiki-last-edited' => 'Laatste bewerking',
 	'right-phalanx' => 'Kan globale blokkades en spamfilters beheren',
 	'right-phalanxexempt' => 'Kan Phalanx-regels omzeilen',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'phalanx-modify-warning' => 'Je bent blokkadenummer #$1 aan het bewerken.
+Als je op "{{int:phalanx-add-block}}" klikt, worden je wijzigingen opgeslagen.',
+	'phalanx-user-block-reason-ip' => 'Gebruikers vanaf dit IP-adres mogen niet bewerken in het gehele Wikia-netwerk wegens vandalisme of verstoring door jou of door iemand met hetzelfde IP-adres.
+Als je denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]].',
+	'phalanx-user-block-reason-exact' => 'Deze (anonieme) gebruiker mag niet bewerken in het hele Wikia-netwerk wegens vandalisme of verstoring.
+Als je denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]]',
+	'phalanx-user-block-withreason-ip' => 'Gebruikers vanaf dit IP-adres mogen niet bewerken in het gehele Wikia-netwerk wegens vandalisme of verstoring door jou of door iemand met hetzelfde IP-adres.
+Als je denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]].<br />De reden voor blokkeren is: $1.',
+	'phalanx-user-block-withreason-exact' => 'Gebruikers vanaf dit IP-adres mogen niet bewerken in het gehele Wikia-netwerk wegens vandalisme of verstoring door jou of door iemand met hetzelfde IP-adres.
+Als je denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]].<br />De reden voor blokkeren is: $1.',
+	'phalanx-title-move-summary' => 'De samenvatting die je hebt opgegeven bevat niet toegelaten tekst.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -920,6 +1189,21 @@ Vennligst [[Special:Contact|kontakt Wikia]] om problemet.<br />Blokkereren la i 
 	'phalanx-stats-table-wiki-last-edited' => 'Sist redigert',
 	'right-phalanx' => 'Kan administrere globale blokkeringer og spamfiltre',
 	'right-phalanxexempt' => 'Fritatt fra Phalanx-reglene',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'phalanx-type-content' => 'د مخ منځپانګه',
+	'phalanx-type-summary' => 'د مخ لنډيز',
+	'phalanx-type-title' => 'د مخ سرليک',
+	'phalanx-type-user' => 'کارن',
+	'phalanx-type-answers-question-title' => 'د پوښتنې سرليک',
+	'phalanx-label-reason' => 'سبب:',
+	'phalanx-label-lang' => 'ژبه:',
+	'phalanx-stats-table-language' => 'ژبه',
+	'phalanx-stats-table-reason' => 'سبب',
 );
 
 /** Portuguese (Português)
@@ -1192,6 +1476,7 @@ $messages['zh-hans'] = array(
 	'phalanx-label-lang' => '语言：',
 	'phalanx-stats-table-type' => '类型',
 	'phalanx-stats-table-create' => '以创造',
+	'phalanx-stats-table-expire' => '过期',
 	'phalanx-stats-table-language' => '语言',
 	'phalanx-stats-table-text' => '文字',
 	'phalanx-stats-table-reason' => '原因',

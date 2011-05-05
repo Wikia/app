@@ -47,6 +47,15 @@ $messages['qqq'] = array(
 * $1 is a blog post title.',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'partner-feed-recent-changes' => 'Последни промени',
+	'all-blog-posts' => 'всички категории',
+	'feed-title-recentchanges' => 'Последни промени',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -168,6 +177,17 @@ $messages['gl'] = array(
 	'feed-title-blogcomments' => 'Comentario sobre $1',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'feed-title-blogposts' => 'Legújabb blogbejegyzések',
+	'feed-title-recent-badges' => 'Legújabb jelvények',
+	'feed-title-recent-images' => 'Legújabb képek',
+	'all-blog-posts' => 'összes kategória',
+	'feed-title-recentchanges' => 'Friss változtatások',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -240,6 +260,15 @@ $messages['mk'] = array(
 	'feed-title-hot-content' => 'Актуелна содржина - $1',
 	'feed-title-blogcomments' => 'Коментари на $1',
 	'feed-title-recentchanges' => 'Скорешни промени',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'partner-feed-recent-changes' => 'സമീപകാല മാറ്റങ്ങൾ',
+	'feed-title-recent-images' => 'സമീപകാല ചിത്രങ്ങൾ',
+	'all-blog-posts' => 'എല്ലാ വർഗ്ഗങ്ങളും',
 );
 
 /** Malay (Bahasa Melayu)
@@ -329,6 +358,7 @@ $messages['pms'] = array(
 	'partner-feed-latest-images' => "Galarìa dj'ùltime figure ch'a son ëstàite carià",
 	'partner-feed-hotcontent' => "Sènter ëd contnù ativ classificà për nùmer d'editor",
 	'partner-feed-recent-blog-comments' => 'Coment recent colegà al mëssagi dë scartari specificà.',
+	'partner-feed-recent-changes' => 'Ùltime modìfiche',
 	'partnerfeed' => 'Cambrada ëd fluss',
 	'error-no-article' => 'Eror: Gnun paràmetr "artìcol" passà',
 	'feed-title-blogposts' => 'Mëssagi dë Scartari recent',
@@ -340,6 +370,7 @@ $messages['pms'] = array(
 	'blog-posts-from-listing' => 'da listé: $1',
 	'feed-title-hot-content' => 'Contnù càud - $1',
 	'feed-title-blogcomments' => 'Coment a $1',
+	'feed-title-recentchanges' => 'Ùltime modìfiche',
 );
 
 /** Pashto (پښتو)

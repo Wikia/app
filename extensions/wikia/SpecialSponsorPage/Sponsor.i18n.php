@@ -50,6 +50,22 @@ $messages['af'] = array(
 	'sponsorpage-save' => 'Stoor',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'sponsorpage-edit' => 'عدل',
+	'sponsorpage-save' => 'احفظ',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'sponsorpage-edit' => 'Redaktə',
+	'sponsorpage-save' => 'Qeyd et',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
@@ -71,6 +87,14 @@ $messages['be-tarask'] = array(
 	'sponsor-price-5mo' => '$5 за месяц',
 	'sponsorpage-edit' => 'Рэдагаваць',
 	'sponsorpage-save' => 'Захаваць',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'sponsorpage-edit' => 'Редактиране',
+	'sponsorpage-save' => 'Съхраняване',
 );
 
 /** Breton (Brezhoneg)
@@ -238,6 +262,17 @@ $messages['gl'] = array(
 	'sponsorpage-save' => 'Gardar',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'sponsor-form-page' => 'Szponzorált lap:',
+	'sponsor-price-45yr' => '$45 évente',
+	'sponsor-price-5mo' => '$5 havonta',
+	'sponsorpage-edit' => 'Szerkesztés',
+	'sponsorpage-save' => 'Mentés',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -348,6 +383,14 @@ $messages['ms'] = array(
 	'sponsorpage-save' => 'Simpan',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'sponsorpage-edit' => 'ပြင်​ဆင်​ရန်​',
+	'sponsorpage-save' => 'သိမ်းရန်',
+);
+
 /** Mazanderani (مازِرونی)
  * @author محک
  */
@@ -367,7 +410,7 @@ $messages['nl'] = array(
 	'sponsor-preview-errors' => 'Er zitten fouten in uw ontwerp:',
 	'sponsor-form-url' => 'URL van sponsorwebsite (uw website):',
 	'sponsor-form-linktext' => 'Tekst die u wilt weergeven in de verwijzing:',
-	'sponsor-form-additionaltext' => 'Tekst die wordt getoond onder uw link:',
+	'sponsor-form-additionaltext' => 'Tekst die wordt weergegeven onder uw verwijzing:',
 	'sponsor-form-page' => 'Te sponsoren pagina:',
 	'sponsor-form-price' => 'Sponsorbedrag:',
 	'sponsor-form-email' => 'Uw e-mailadres:',
@@ -376,6 +419,19 @@ $messages['nl'] = array(
 	'sponsor-price-5mo' => '5 USD per maand',
 	'sponsorpage-edit' => 'Bewerken',
 	'sponsorpage-save' => 'Opslaan',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'sponsor-preview-prompt' => 'Dit is een voorvertoning van je sponsoring. Klik op "Bewerken" om terug te gaan en wijzigingen aan te brengen of klik op "Opslaan" om naar PayPal te gaan.',
+	'sponsor-preview-errors' => 'Er zitten fouten in je ontwerp:',
+	'sponsor-form-url' => 'URL van sponsorwebsite (jouw website):',
+	'sponsor-form-linktext' => 'Tekst die je wilt weergeven in de verwijzing:',
+	'sponsor-form-additionaltext' => 'Tekst die wordt weergegeven onder je verwijzing:',
+	'sponsor-form-email' => 'Je e-mailadres:',
+	'sponsor-form-thanks' => 'Dank je wel voor je sponsoring!',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -480,6 +536,16 @@ $messages['pt-br'] = array(
 	'sponsorpage-save' => 'Salvar',
 );
 
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'sponsor-price-45yr' => '45$ pe an',
+	'sponsor-price-5mo' => '5$ pe lună',
+	'sponsorpage-edit' => 'Modifică',
+	'sponsorpage-save' => 'Salvează',
+);
+
 /** Russian (Русский)
  * @author Eleferen
  * @author Ytsukeng Fyvaprol
@@ -552,6 +618,13 @@ $messages['te'] = array(
 	'sponsor-price-45yr' => 'సంవత్సరానికి $45',
 	'sponsor-price-5mo' => 'నెలకి $5',
 	'sponsorpage-save' => 'భద్రపరచు',
+);
+
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'sponsorpage-edit' => 'Edita',
 );
 
 /** Tagalog (Tagalog)

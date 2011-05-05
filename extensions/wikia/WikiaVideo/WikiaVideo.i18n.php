@@ -65,15 +65,22 @@ $messages['af'] = array(
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'wikiavideo-reverted' => 'أُسترجع الفيديو $1 بنجاح. ارجع إلى $2.',
+	'wikiavideo-unreverted' => 'لا تملك الصلاحيات لاسترجاع $1.',
+	'wikiavideo-added' => 'أضيف الفيديو $1',
+	'wikiavideo-back' => 'ارجع',
 	'wikiavideo-create' => 'أضف فيديو',
 );
 
 /** Azerbaijani (Azərbaycanca)
  * @author Sortilegus
+ * @author Vago
  */
 $messages['az'] = array(
 	'wikiavideo-back' => 'geri',
+	'wikiavideo-create' => 'Video əlavə et',
 	'wikiavideo-category' => 'Videolar',
+	'wikiavideo-links' => 'Keçidlər',
 	'wikiavideo-pixel' => 'piksel',
 );
 
@@ -103,6 +110,8 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'wikiavideo-create' => 'Добавяне на видео',
+	'wikiavideo-category' => 'Видео',
+	'wikiavideo-links' => 'Препратки',
 );
 
 /** Bahasa Banjar (Bahasa Banjar)
@@ -555,6 +564,14 @@ $messages['ms'] = array(
 	'wikiavideo-intro-old' => "Anda akan menghapuskan versi '''[$1 $5]''' pada [$4 $3, $2].",
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'wikiavideo-back' => 'နောက်',
+	'wikiavideo-links' => 'လင့်',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -573,6 +590,14 @@ $messages['nl'] = array(
 	'wikiavideo-pixel' => ' pixel',
 	'wikiavideo-deleted-old' => "De versie van '''[$1 $2]''' per $4, $3 is verwijderd.",
 	'wikiavideo-intro-old' => "U bent de versie van '''[$1 $5]''' per [$4 $3, $2] aan het verwijderen.",
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'wikiavideo-unreverted' => 'Je hebt geen rechten om "$1" terug te draaien.',
+	'wikiavideo-intro-old' => "Je bent de versie van '''[$1 $5]''' per [$4 $3, $2] aan het verwijderen.",
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -710,6 +735,18 @@ $messages['pt-br'] = array(
 	'wikiavideo-pixel' => '  pixel',
 	'wikiavideo-deleted-old' => "Desde $4, $3, a versão de '''[$1 $2]''' foi deletada.",
 	'wikiavideo-intro-old' => "Você está eliminando a versão de '''[$1 $5]''' de [$4 $3, $2]",
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'wikiavideo-back' => 'înapoi',
+	'wikiavideo-create' => 'Adaugă videoclip',
+	'wikiavideo-replace' => 'Înlocuieşte videoclipul',
+	'wikiavideo-category' => 'Videoclipuri',
+	'wikiavideo-links' => 'Legături',
+	'wikiavideo-pixel' => ' pixeli',
 );
 
 /** Russian (Русский)

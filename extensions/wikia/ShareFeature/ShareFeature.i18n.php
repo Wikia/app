@@ -226,6 +226,13 @@ $messages['nl'] = array(
 	'sf-link-tooltip' => 'Dit artikel met uw vrienden delen',
 );
 
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'sf-link-tooltip' => 'Dit artikel met je vrienden delen',
+);
+
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Harald Khan
  */
@@ -302,6 +309,15 @@ $messages['pt-br'] = array(
 	'sf-link' => 'Compartilhe este artigo',
 	'sf-link-popup' => 'Compartilhe este artigo',
 	'sf-link-tooltip' => 'Compartilhe este artigo com seus amigos',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'sf-link' => 'Împărtăşeşte acest articol',
+	'sf-link-popup' => 'Împărtăşeşte acest articol',
+	'sf-link-tooltip' => 'Împărtăşeşte acest articol cu prietenii tăi',
 );
 
 /** Russian (Русский)

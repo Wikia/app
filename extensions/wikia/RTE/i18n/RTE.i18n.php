@@ -37,6 +37,13 @@ $messages['af'] = array(
 	'enablerichtexteditor' => 'Aktiveer uitgebreide teksverwerker',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'rte-edgecase-comment' => 'تعليقات HTML',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
@@ -216,6 +223,7 @@ $messages['fa'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author Od1n
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -234,7 +242,7 @@ $messages['fr'] = array(
 	'rte-edgecase-templateintable' => 'un tableau avec un appel de modèle dans sa définition',
 	'rte-edgecase-unclosed-tags' => 'balise HTML non fermée',
 	'enablerichtexteditor' => 'Activer le nouvel éditeur',
-	'rte-enablerichtexteditormessage' => 'Nouvel éditeur activé!',
+	'rte-enablerichtexteditormessage' => 'Nouvel éditeur activé !',
 	'rte-first-run-notice' => "Nous avons apporté quelques améliorations à l'éditeur. Pour en savoir plus, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lisez l'annonce].",
 	'prefs-rte' => 'Éditeur de texte enrichi',
 );
@@ -328,6 +336,15 @@ $messages['mk'] = array(
 	'prefs-rte' => 'Уредник на збогатен текст',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'rte-edgecase-triplecurls' => 'ഫലകത്തിനുള്ള ചരങ്ങൾ',
+	'rte-edgecase-syntax' => 'അനുവദനീയമല്ലാത്ത സിന്റാക്സ്',
+	'rte-edgecase-redirect' => 'തിരിച്ചുവിടൽ',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -375,6 +392,13 @@ $messages['nl'] = array(
 	'rte-enablerichtexteditormessage' => 'De uitgebreide tekstverwerker is ingeschakeld.',
 	'rte-first-run-notice' => 'We hebben een aantal verbeteringen gemaakt aan de tekstverwerker. [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news Lees ook de aankondiging].',
 	'prefs-rte' => 'Uitgebreide tekstverwerker',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'rte-no-js-fallback' => 'De uitgebreide tekstverwerker werkt niet als JavaScript is uitgeschakeld. Schakel JavaScript in in je browser of schakel in je [[Special:Preferences| voorkeuren]] terug naar de oude tekstverwerker voor MediaWiki.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)

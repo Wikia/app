@@ -167,6 +167,14 @@ $messages['ja'] = array(
 	'quickcreate' => 'レシピを送信',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'quickcreate-desc' => 'Deit ene Knopp för en neu Sigg aanzelääje en et Wiki met dä Müjjeleshkeit, dat naameloose Metmaacher sesh enlogge künne.',
+	'quickcreate' => 'Donn Ding Rezäpp enjävve',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

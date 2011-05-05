@@ -67,6 +67,23 @@ Kontroleer die gegewe IP-adres; u met moontlik \'n invoerfout gemaak.</p>',
 	'multilookuplastedit' => 'Laste wysiging vanaf die IP:',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'multilookupgo' => 'اذهب',
+	'multilookupwikiurl' => 'المسار',
+	'multilookupwikititle' => 'العنوان',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'multilookupwiki' => 'Viki',
+	'multilookupwikiurl' => 'URL',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
@@ -314,6 +331,7 @@ $messages['gl'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -322,8 +340,14 @@ $messages['hu'] = array(
 	'multilookupprevious' => 'előző',
 	'multilookupnbrresult' => 'Találatok száma:',
 	'multilookupinvalidresults' => 'Érvénytelen eredmények!',
+	'multilookupnoresultfound' => 'Nincs találat!',
 	'multilookupwiki' => 'Wiki',
 	'multilookupdetails' => 'Részletek megtekintése',
+	'multilookupwikidbname' => 'Adatbázisnév',
+	'multilookupwikiurl' => 'URL-cím',
+	'multilookupwikititle' => 'Cím',
+	'multilookupwikioptions' => 'Beállítások',
+	'multilookuplastedithdr' => 'Legutolsó szerkesztés',
 );
 
 /** Interlingua (Interlingua)
@@ -470,6 +494,19 @@ $messages['ms'] = array(
 	'right-multilookup' => 'Cari maklumat pengguna di pelbagai wiki',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'multilookupgo' => 'သွား​ပါ​',
+	'multilookupnext' => 'နောက်ထပ်',
+	'multilookupprevious' => 'နောက်',
+	'multilookupnbrresult' => 'အရေအတွက် -',
+	'multilookupdetails' => 'အသေးစိတ် ပြရန်',
+	'multilookupwikititle' => 'ခေါင်းစဉ်',
+	'multilookupwikioptions' => 'ရွေးပိုင်ခွင့်',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -499,6 +536,13 @@ Controleer het opgegeven IP-adres; mogelijk hebt u een invoerfout gemaakt.</p>',
 	'multilookuplastedithdr' => 'Laatste bewerking',
 	'multilookuprecordspager' => "Resultaten '''$1''' tot '''$2''' van '''$3''' worden weergegeven.",
 	'right-multilookup' => "Gebruikersinformatie in meerdere wiki's opzoeken",
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'multilookupnotspecify' => 'Je hebt nog geen IP-adres opgegeven',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -608,6 +652,7 @@ $messages['ps'] = array(
 	'multilookupnbrresult' => 'د پايلو شمېر:',
 	'multilookupwiki' => 'ويکي',
 	'multilookupwikititle' => 'سرليک',
+	'multilookupwikioptions' => 'خوښنې',
 );
 
 /** Portuguese (Português)
@@ -670,6 +715,17 @@ $messages['pt-br'] = array(
 	'multilookuplastedithdr' => 'Última edição',
 	'multilookuprecordspager' => "Mostrando os registos '''$1''' a '''$2''' de '''$3'''.",
 	'right-multilookup' => 'Procure informação de usuários em várias wikis',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'multilookupdetails' => 'Vezi detalii',
+	'multilookupwikiurl' => 'Adresă',
+	'multilookupwikititle' => 'Titlu',
+	'multilookupwikioptions' => 'Opţiuni',
+	'multilookuplastedithdr' => 'Ultima modificare',
 );
 
 /** Russian (Русский)

@@ -128,6 +128,16 @@ $messages['fr'] = array(
 	'unsubscribe-working-done' => 'Terminé.',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'unsubscribe' => 'Leiratkozás',
+	'unsubscribe-confirm-legend' => 'Megerősítés',
+	'unsubscribe-confirm-button' => 'Igen, biztos vagyok benne',
+	'unsubscribe-working-done' => 'Kész!',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -146,6 +156,25 @@ Per favor seque le ligamine ab tu e-mail.',
 	'unsubscribe-working' => 'Cancella subscription de $1 {{PLURAL:$1|conto|contos}} pro $2',
 	'unsubscribe-working-problem' => 'problema de cargamento del information de usator pro: $1',
 	'unsubscribe-working-done' => 'Complete.',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'unsubscribe' => 'Nimmieh Aboneere',
+	'unsubscribe-badaccess' => 'Leider kam_mer heh di eSigg nit tiräk bruche. Nemm dä Lengk uß dä <i lang="en">e-mail</i> aan Desch.',
+	'unsubscribe-badtoken' => 'Leider johv_et e Probleem met Dingem Schlößel.',
+	'unsubscribe-bademail' => 'Leider johv_et e Probleem met dä <i lang="en">e-mail</i>.',
+	'unsubscribe-badtime' => 'Leider deiht et dä Lengk nit mih. Nemm ene Lengk uß dä <i lang="en">e-mail</i> aan Desch, dä winnijer wi en Woch ald_es.',
+	'unsubscribe-nousers' => 'Mer han keine Metmaacher met dä <i lang="en">e-mail</i> Adräß jefonge.',
+	'unsubscribe-noconfusers' => 'Mer han keine beschtääteschte Metmaacher met dä <i lang="en">e-mail</i> Adräß jefonge.',
+	'unsubscribe-confirm-legend' => 'Beshtähtejje',
+	'unsubscribe-confirm-text' => 'Donn alle Abonnomangs met <code>$1</code> ußdraare?',
+	'unsubscribe-confirm-button' => 'Joh, esch ben mer sescher, esch well dat han.',
+	'unsubscribe-working' => 'Mer sen de $1 {{PLURAL:$1|Abonnomang|Abonnomangs}} för $2 am ußdraare&nbsp;…',
+	'unsubscribe-working-problem' => 'Mer han e Probleem beim Laade vun däm Metmaacher $1 singe Daate,',
+	'unsubscribe-working-done' => 'Fäädesch.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -195,6 +224,13 @@ $messages['ms'] = array(
 	'unsubscribe-working-done' => 'Selesai.',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'unsubscribe-confirm-legend' => 'အတည်ပြု',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -214,6 +250,13 @@ $messages['nl'] = array(
 	'unsubscribe-working-done' => 'Afgerond.',
 );
 
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'unsubscribe-badaccess' => 'Deze pagina kan niet direct benaderd worden. Volg alsjeblieft de verwijzing in je e-mail.',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
@@ -231,6 +274,13 @@ $messages['no'] = array(
 	'unsubscribe-working' => 'Avbryter abonnement for $1 {{PLURAL:$1|konto|kontoer}} for $2',
 	'unsubscribe-working-problem' => 'problem med å laste brukerinformasjon for: $1',
 	'unsubscribe-working-done' => 'Fullført.',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'unsubscribe-working-done' => 'بشپړ.',
 );
 
 /** Portuguese (Português)
@@ -318,6 +368,32 @@ $messages['sv'] = array(
 	'unsubscribe-working' => 'Avslutar prenumerationen $1 {{PLURAL:$1|konto|konton}} för $2',
 	'unsubscribe-working-problem' => 'problem med att läsa användarinformationen för: $1',
 	'unsubscribe-working-done' => 'Slutfört.',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'unsubscribe' => 'చందావిరమించు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'unsubscribe' => 'Pahintuin na ang pagtanggap ng sipi',
+	'unsubscribe-badaccess' => 'Paumanhin, ang pahinang ito ay hindi maaaring gamitin nang tuwiran. Mangyaring sundin ang kawing magmula sa e-liham mo.',
+	'unsubscribe-badtoken' => 'Paumanhin, nagkaroon ng isang suliranin sa kahalip na pangkaligtasan.',
+	'unsubscribe-bademail' => 'Paumanhin, nagkaroon ng isang suliranin sa e-liham.',
+	'unsubscribe-badtime' => 'Paumanhin, wala nang bisa ang kawing. Mangyaring gamitin ang isang kawing na mas mababa kaysa 7 mga araw na ang gulang.',
+	'unsubscribe-nousers' => 'Walang natagpuang mga tagagamit na may ganyang tirahan ng e-liham.',
+	'unsubscribe-noconfusers' => 'Walang natagpuang natiyak nang mga tagagamit na may ganyang tirahan ng e-liham.',
+	'unsubscribe-confirm-legend' => 'Tiyakin',
+	'unsubscribe-confirm-text' => 'Huwag nang patanggapin ng sipi ang lahat ng mga akawnt na may <code>$1</code>?',
+	'unsubscribe-confirm-button' => 'Oo, nakatitiyak ako',
+	'unsubscribe-working' => 'Hindi na patatanggapin ng sipi ang $1 {{PLURAL:$1|akawnt|mga akawnt}} para sa $2',
+	'unsubscribe-working-problem' => 'may suliranin sa pagkakarga ng kabatiran ng tagagamit para sa: $1',
+	'unsubscribe-working-done' => 'Buo na.',
 );
 
 /** Ukrainian (Українська)

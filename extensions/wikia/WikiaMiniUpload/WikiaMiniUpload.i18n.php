@@ -243,8 +243,27 @@ $messages['ang'] = array(
  */
 $messages['ar'] = array(
 	'wmu-flickr' => 'فلكر',
+	'wmu-upload-btn' => 'ارفع',
+	'wmu-insert' => 'أدرج',
 	'wmu-name' => 'الاسم',
 	'wmu-license' => 'الرخصة',
+	'wmu-width' => 'العرض',
+	'wmu-layout' => 'التخطيط',
+	'wmu-caption' => 'التعليق',
+	'wmu-link' => 'الوصلة',
+	'wmu-optional' => '(اختياري)',
+	'wmu-insert2' => 'أدرج الملف',
+	'wmu-gallery-btn1' => 'أضف صورة أخرى',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'wmu-thiswiki' => 'Bu viki',
+	'wmu-name' => 'Ad',
+	'wmu-license' => 'Lisenziya',
+	'wmu-size' => 'Həcm',
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
@@ -322,17 +341,25 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'wmu-upload' => 'Качване',
+	'wmu-thiswiki' => 'Това уики',
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Качване',
 	'wmu-name' => 'Име',
 	'wmu-license' => 'Лиценз',
 	'wmu-size' => 'Размер',
+	'wmu-width' => 'Ширина',
 	'wmu-optional' => '(незадължително)',
 	'wmu-prev' => 'Предишни 8',
 	'wmu-next' => 'Следващи 8',
 	'wmu-close' => 'затваряне',
+	'wmu-imagelink' => '<b>Ново!</b> Добавяне на изображения',
+	'wmu-notallowed' => 'Не можете да качвате изображения в това уики',
 	'wmu-gallery' => 'Галерия',
 	'wmu-columns' => '$1 {{PLURAL:$1|колона|колони}}',
+	'wmu-column' => 'Колони',
+	'wmu-gallery-btn1' => 'Добавяне на друго изображение',
+	'wmu-gallery-btn2' => 'Добавяне на галерия в страницата',
+	'wmu-alignment' => 'Подравняване',
 );
 
 /** Bahasa Banjar (Bahasa Banjar)
@@ -1124,6 +1151,7 @@ $messages['he'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -1142,6 +1170,8 @@ $messages['hu'] = array(
 	'wmu-thumbnail' => 'Bélyegkép',
 	'wmu-fullsize' => 'Teljes méret ($1×$2 képpont)',
 	'wmu-width' => 'Szélesség',
+	'wmu-layout' => 'Elrendezés',
+	'wmu-caption' => 'Felirat',
 	'wmu-link' => 'Hivatkozás',
 	'wmu-optional' => '(nem kötelező)',
 	'wmu-insert2' => 'Fájl beillesztése',
@@ -1641,6 +1671,27 @@ $messages['mt'] = array(
 	'wmu-close' => 'agħlaq',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'wmu-upload' => 'Upload တင်ရန်',
+	'wmu-find' => 'ရှာပါ',
+	'wmu-upload-btn' => 'Upload တင်ရန်',
+	'wmu-find-btn' => 'ရှာပါ',
+	'wmu-name' => 'အမည်',
+	'wmu-license' => 'လိုင်စင်',
+	'wmu-licensing' => 'လိုင်စင်သတ်မှတ်ခြင်း',
+	'wmu-size' => 'အရွယ်အစား',
+	'wmu-thumbnail' => 'နမူနာပုံငယ်',
+	'wmu-width' => 'အကျယ်',
+	'wmu-link' => 'လင့်',
+	'wmu-prev' => 'နောက် 8',
+	'wmu-back' => 'နောက်',
+	'wmu-close' => 'ပိတ်ရန်',
+	'wmu-column' => 'ဒေါင်လိုက်တန်း -',
+);
+
 /** Mazanderani (مازِرونی)
  * @author محک
  */
@@ -1704,7 +1755,7 @@ $messages['nl'] = array(
 	'wmu-imagelink' => '<b>Nieuw!</b> Afbeeldingen toevoegen',
 	'wmu-imagebutton' => 'Afbeeldingen toevoegen',
 	'wmu-license-cc' => 'Gelicenseerd onder de Creative Commons-licentie Naamsvermelding-Gelijk delen 3.0',
-	'wmu-bad-extension' => 'U hebt geprobeerd een niet toegestaan bestandtype te uploaden.
+	'wmu-bad-extension' => 'U hebt geprobeerd een niet toegestaan bestandstype te uploaden.
 Probeer het nog een keer.',
 	'wmu-filetype-missing' => 'Dit bestand heeft geen extensie',
 	'wmu-filetype-incorrect' => 'Dit bestand heeft een onjuiste extensie',
@@ -1733,6 +1784,30 @@ U kunt er geen afbeeldingen aan toevoegen.',
 	'wmu-replace-default-caption' => 'standaardbijschrift vervangen',
 	'wmu-appearance-in-article' => 'Weergave in pagina',
 	'wmu-alignment' => 'Uitlijning',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'wmu-notlogged' => 'Meld je aan of registreer een gebruiker om afbeeldingen te uploaden',
+	'wmu-flickr-inf' => 'Correct gelicenseerde afbeeldingen zoeken op Flicker en deze in je wiki importeren.',
+	'wmu-conflict-inf' => '<h1>Er bestaat al een bestand met deze naam</h1>Wat wil je met <b>$1</b> doen?',
+	'wmu-overwrite' => 'Het bestaande bestand met jouw bestand overschrijven',
+	'wmu-details-inf2' => '<h1>Paginaopties</h1>Bepaal hoe je het bestand in je pagina wilt invoegen.',
+	'wmu-success' => '<h1>Geslaagd</h1>Je afbeelding is ingevoegd.',
+	'wmu-warn1' => 'Je moet eerst een zoekopdracht selecteren!',
+	'wmu-warn2' => 'Je moet eerst een bestand selecteren!',
+	'wmu-warn3' => 'Je moet eerst een bestandsnaam selecteren!',
+	'wmu-bad-extension' => 'Je hebt geprobeerd een niet toegestaan bestandstype te uploaden.
+Probeer het nog een keer.',
+	'wmu-notallowed' => 'Je kunt geen afbeeldingen uploaden bij deze wiki',
+	'wmu-readonly' => 'Je kunt geen afbeeldingen uploaden.
+Deze wiki is alleen-lezen.',
+	'wmu-gallery-success' => 'Je hebt een afbeelding toegevoegd aan een nieuwe galerij.
+Klik hieronder om meer afbeeldingen aan de galerij toe te voegen.',
+	'wmu-no-preview' => 'Je kunt geen afbeelding uit een pagina toevoegen in de voorvertoning',
+	'wmu-no-rights' => 'Je mag geen afbeeldingen toevoegen aan deze pagina',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -1838,6 +1913,7 @@ $messages['pl'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'wmu-upload-image' => 'Caria Figura',
 	'wmu-upload' => 'Carié',
 	'wmu-notlogged' => "Ch'a intra ant ël sistema o ch'as argistra për carié dle figure da sò ordinator",
 	'wmu-find' => 'Treuva',
@@ -1854,6 +1930,7 @@ $messages['pms'] = array(
 	'wmu-details-inf' => "<h1>Detaj dl'archivi</h1>Ch'a spessìfica un nòm për st'archivi-sì. Ch'a serna cheicòs ëd descritiv.",
 	'wmu-name' => 'Nòm',
 	'wmu-license' => 'Licensa',
+	'wmu-licensing' => 'Licensa',
 	'wmu-details-inf2' => "<h1>Opsion ëd l'Artìcol</h1>Ch'a serna com ch'a veul che st'archivi-sì a comparissa an sò artìcol.",
 	'wmu-size' => 'Dimension',
 	'wmu-thumbnail' => 'Figurin-a',
@@ -1901,12 +1978,18 @@ $messages['pms'] = array(
 	'wmu-no-preview' => "A peul pa gionté na figura da n'artìcol an manera ëd preuva",
 	'wmu-no-protect' => "Sta pàgina-sì a l'é protegiùa, it peule pa giontéjë na figura",
 	'wmu-no-rights' => "A l'ha pa 'l përmess ëd gionté dle figure a sta pàgina-sì",
+	'wmu-more-options' => 'Pi opsion',
+	'wmu-fewer-options' => 'Men opsion',
+	'wmu-replace-default-caption' => 'rimpiassa tìtol ëd default',
+	'wmu-appearance-in-article' => 'Aparensa an Artìcol',
+	'wmu-alignment' => 'Aliniament',
 );
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'wmu-upload-image' => 'انځور پورته کول',
 	'wmu-upload' => 'پورته کول',
 	'wmu-find' => 'موندل',
 	'wmu-thiswiki' => 'همدا ويکي',
@@ -1914,12 +1997,14 @@ $messages['ps'] = array(
 	'wmu-upload-btn' => 'پورته کول',
 	'wmu-find-btn' => 'موندل',
 	'wmu-name' => 'نوم',
+	'wmu-license' => 'منښتليک',
 	'wmu-size' => 'کچه',
 	'wmu-thumbnail' => 'بټنوک',
+	'wmu-layout' => 'ليدنمخ',
 	'wmu-link' => 'تړنه',
 	'wmu-close' => 'تړل',
 	'wmu-imagebutton' => 'انځورونه ورګډول',
-	'wmu-gallery' => 'نندارتون',
+	'wmu-gallery' => 'انځورتون',
 	'wmu-gallery-btn1' => 'يو بل انځور ورګډول',
 );
 
@@ -2226,7 +2311,7 @@ $messages['sr-ec'] = array(
 	'wmu-gallery-btn2' => 'Убаци галерију на страницу',
 	'wmu-no-preview' => 'Не можете да додајете слике са странице у претпрегледу',
 	'wmu-no-protect' => 'Ова страница је заштићена. Не можете да додајете слике на њу',
-	'wmu-no-rights' => 'Немате дозволу да додајете слике на ову страницу',
+	'wmu-no-rights' => 'Немате овлашћења да додајете слике на ову страницу',
 	'wmu-more-options' => 'Више поставки',
 	'wmu-fewer-options' => 'Мање поставки',
 	'wmu-appearance-in-article' => 'Изглед чланка',
@@ -2342,10 +2427,18 @@ $messages['te'] = array(
 	'wmu-close' => 'మూసివేయి',
 );
 
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'wmu-name' => 'Naran',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'wmu-upload-image' => 'Ikarga ang Larawan',
 	'wmu-upload' => 'Ikarga',
 	'wmu-notlogged' => 'Lumagda o magpatala upang makapagkarga ng mga larawan mula sa kompyuter mo.',
 	'wmu-find' => 'Hanapin',
@@ -2362,6 +2455,7 @@ $messages['tl'] = array(
 	'wmu-details-inf' => '<h1>Mga detalye ng talaksan</h1>Tumukoy ng isang pangalan para sa talaksang ito.  Gawin itong isang bagay na mapaglarawan.',
 	'wmu-name' => 'Pangalan',
 	'wmu-license' => 'Lisensya',
+	'wmu-licensing' => 'Paglilisensya',
 	'wmu-details-inf2' => '<h1>Mga mapagpipiliang pang-artikulo</h1>Piliin kung ano ang magiging hitsura ng talaksang ito sa loob ng pahina mo.',
 	'wmu-size' => 'Sukat',
 	'wmu-thumbnail' => 'Kagyat',
@@ -2409,6 +2503,11 @@ $messages['tl'] = array(
 	'wmu-no-preview' => 'Hindi ka makapagdaragdag ng larawan mula sa larawan habang nasa modalidad ng paunang-tingin',
 	'wmu-no-protect' => 'Nakaprutekta ang pahinang ito, hindi ka makapagdaragdag ng larawan dito',
 	'wmu-no-rights' => 'Hindi ka pinapayagang magdagdag ng mga larawan sa pahinang ito',
+	'wmu-more-options' => 'Marami pang mga mapagpipilian',
+	'wmu-fewer-options' => 'Mas kakaunting mga mapagpipilian',
+	'wmu-replace-default-caption' => 'palitan ang likas na nakatakdang paliwanag',
+	'wmu-appearance-in-article' => 'Hitsura sa loob ng Artikulo',
+	'wmu-alignment' => 'Talatag',
 );
 
 /** Ukrainian (Українська)

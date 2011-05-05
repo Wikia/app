@@ -223,6 +223,13 @@ $messages['af'] = array(
 	'multiwikirecords' => "Gevind op $1 wiki's",
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'multidelete_button' => 'SİL',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
@@ -234,7 +241,22 @@ $messages['be-tarask'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'multiwikiedit_button' => 'РЕДАКТИРАНЕ',
+	'multiwikiedit_confirm' => 'ПОТВЪРЖДАВАНЕ',
+	'multiwikiedit_or' => '<b>ИЛИ</b>',
+	'multiwikiedit_this_wiki' => 'това уики',
+	'multiwikiedit_inbox_caption' => 'разделени със запетаи',
 	'multiwikiedit_all_wikis' => 'всички уикита',
+	'multiwikiedit_selected_wikis' => 'избраните уикита',
+	'multiwikiedit_success_subtitle' => 'за $1',
+	'multidelete_button' => 'ИЗТРИВАНЕ',
+	'multidelete_or' => '<b>ИЛИ</b>',
+	'multidelete_reason' => 'Причина за изтриването',
+	'multidelete_select_all' => 'Избиране на всички',
+	'multidelete_this_wiki' => 'това уики',
+	'multidelete_all_wikis' => 'всички уикита',
+	'multidelete_selected_wikis' => 'избраните уикита',
+	'multidelete_success_subtitle' => 'за $1',
 );
 
 /** Breton (Brezhoneg)
@@ -1012,6 +1034,7 @@ $messages['ha'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -1022,12 +1045,16 @@ $messages['hu'] = array(
 	'multiwikiedit_or' => '<b>VAGY</b>',
 	'multiwikiedit_page' => 'Szerkesztendő lapok',
 	'multiwikiedit_reason' => 'Szerkesztés indoklása',
+	'multiwikiedit_list_caption' => 'Wikilista',
 	'multiwikiedit_minoredit_caption' => 'Apró változtatás',
 	'multiwikiedit_botedit_caption' => 'Bot- (rejtett) szerkesztés',
 	'multiwikiedit_summary_text' => 'Összefoglaló mező',
 	'multiwikiedit_this_wiki' => 'ez a wiki',
 	'multidelete_button' => 'TÖRLÉS',
 	'multidelete_or' => '<b>VAGY</b>',
+	'multidelete_reason' => 'Törlés oka',
+	'multidelete_select_all' => 'Összes kiválasztása',
+	'multidelete_page' => 'Törlendő lapok',
 	'multidelete_processing' => 'lapok törlése',
 	'multidelete_this_wiki' => 'ez a wiki',
 	'multidelete_all_wikis' => 'összes wiki',
@@ -1049,6 +1076,10 @@ $messages['hu'] = array(
 	'multidelete_french_wikis' => 'összes francia wiki',
 	'multidelete_swedish_wikis' => 'összes svéd wiki',
 	'multidelete_german_wikis' => 'összes német wiki',
+	'multiwikifinder' => 'Címek keresése több wikiben',
+	'multiwikifindpagenames' => 'Lapnevek keresése',
+	'multiwikienterpagename' => 'Adj meg egy lapnevet:',
+	'multiwikirecords' => '$1 wiki található',
 );
 
 /** Interlingua (Interlingua)
@@ -1059,7 +1090,7 @@ $messages['ia'] = array(
 	'multiwikiedit' => 'Modificar un lot de paginas',
 	'multiwikiedit_button' => 'MODIFICAR',
 	'multiwikiedit_confirm' => 'CONFIRMAR',
-	'multiwikiedit_help' => 'Modifica un lot de paginas. Tu pote modificar paginas listate in un quadro de texto. Selige un usator que essera monstrate in le registros de deletion. Le file incargate debe continer un nomine de pagina e optionalmente un motivo separate per un "|" in cata linea.',
+	'multiwikiedit_help' => 'Modificar un lot de paginas. Tu pote modificar paginas listate in un quadro de texto. Selige le usator que essera monstrate in le registro de deletiones. Le file incargate debe continer in cata linea un nomine de pagina e un motivo facultative separate per un character "|".',
 	'multiwikiedit_caption' => 'Lista de paginas',
 	'multiwikiedit_title' => 'Modification multi-wiki',
 	'multiwikiedit_as' => 'Executar le script como',
@@ -1324,6 +1355,28 @@ $messages['ja'] = array(
 	'multiwikirecords' => '$1 のウィキが見つかりました',
 );
 
+/** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
+ */
+$messages['km'] = array(
+	'multidelete_brazilian_portuguese_wikis' => 'វិគីភាសាព័រទុយហ្គាល់ប្រេស៊ីលទាំងអស់',
+	'multidelete_hebrew_wikis' => 'វិគីភាសាហេប៊្រូទាំងអស់',
+	'multidelete_chinese_wikis' => 'វិគីភាសាចិនទាំងអស់',
+	'multidelete_polish_wikis' => 'វិគីភាសាប៉ូឡូញទាំងអស់',
+	'multidelete_czech_wikis' => 'វិគីភាសាឆែកទាំងអស់',
+	'multidelete_portuguese_wikis' => 'វិគីភាសាព័រទុយហ្គាល់ទាំងអស់',
+	'multidelete_dutch_wikis' => 'វិគីភាសាដាណឺម៉ាកទាំងអស់',
+	'multidelete_italian_wikis' => 'វិគីភាសាអ៊ីតាលីទាំងអស់',
+	'multidelete_russian_wikis' => 'វិគីភាសារុស្ស៊ីទាំងអស់',
+	'multidelete_english_wikis' => 'វិគីភាសាអង់គ្លេសទាំងអស់',
+	'multidelete_japanese_wikis' => 'វិគីភាសាជប៉ុនទាំងអស់',
+	'multidelete_finnish_wikis' => 'វិគីភាសាហ្វាំងឡង់ទាំងអស់',
+	'multidelete_spanish_wikis' => 'វិគីភាសាអេស្ប៉ាញទាំងអស់',
+	'multidelete_french_wikis' => 'វិគីភាសាបារាំងទាំងអស់',
+	'multidelete_swedish_wikis' => 'វិគីភាសាស៊ុយអែដទាំងអស់',
+	'multidelete_german_wikis' => 'វិគីភាសាអាល្លឺម៉ង់ទាំងអស់',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
@@ -1354,6 +1407,36 @@ $messages['kn'] = array(
 	'multidelete_french_wikis' => 'ಎಲ್ಲಾ ಫ಼್ರೆಂಚ್ ವಿಕಿಗಳು',
 	'multidelete_swedish_wikis' => 'ಎಲ್ಲಾ ಸ್ವೀಡಿಷ್ ವಿಕಿಗಳು',
 	'multidelete_german_wikis' => 'ಎಲ್ಲಾ ಜರ್ಮನ್ ವಿಕಿಗಳು',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'multiwikiedit_page' => 'Sigge zom Ändere',
+	'multiwikiedit_all_wikis' => 'all Wikis',
+	'multidelete_caption' => 'Sigge_Leß',
+	'multidelete_this_wiki' => 'heh dat Wiki',
+	'multidelete_all_wikis' => 'all Wikis',
+	'multidelete_selected_wikis' => 'ußjesöhk Wikis',
+	'multidelete_success_subtitle' => 'för $1',
+	'multidelete_brazilian_portuguese_wikis' => 'all de Wikis op brasilljaanesch Pochtojeesesch',
+	'multidelete_hebrew_wikis' => 'all de Wikis op Hebräjesch',
+	'multidelete_chinese_wikis' => 'all de Wikis op Shineesesch',
+	'multidelete_polish_wikis' => 'all de Wikis op Polnesch',
+	'multidelete_czech_wikis' => 'all de Wikis op Tschäschesch',
+	'multidelete_portuguese_wikis' => 'all de Wikis op Pochtojeesesch',
+	'multidelete_dutch_wikis' => 'all de Wikis op Holländesch',
+	'multidelete_italian_wikis' => 'all de Wikis op Italljäänesch',
+	'multidelete_russian_wikis' => 'all de Wikis op Rußßesch',
+	'multidelete_english_wikis' => 'all de Wikis op Änglesch',
+	'multidelete_japanese_wikis' => 'all de Wikis op Japaanesch',
+	'multidelete_finnish_wikis' => 'all de Wikis op Finnesch',
+	'multidelete_spanish_wikis' => 'all de Wikis op Shpaanesch',
+	'multidelete_french_wikis' => 'all de Wikis op Franzüüsesch',
+	'multidelete_swedish_wikis' => 'all de Wikis op Schweedesch',
+	'multidelete_german_wikis' => 'all de Wikis op Deutsch',
+	'multiwikirecords' => '{{PLURAL:$1|Ei Wiki|$1 Wikis|Kei Wiki}} jefonge',
 );
 
 /** Kurdish (Latin) (Kurdî (Latin))
@@ -1532,6 +1615,22 @@ $messages['mk'] = array(
 	'multiwikirecords' => 'пронајдено е $1 вики',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'multitasks-link-back-label' => 'ഇവിടെ',
+	'multiwikiedit_button' => 'തിരുത്തുക',
+	'multiwikiedit_confirm' => 'സ്ഥിരീകരിക്കുക',
+	'multiwikiedit_page' => 'തിരുത്തേണ്ട താളുകൾ',
+	'multiwikiedit_processing' => 'താളുകൾ തിരുത്തുന്നു',
+	'multiwikiedit_this_wiki' => 'ഈ വിക്കി',
+	'multiwikiedit_inbox_caption' => 'കോമ ഉപയോഗിച്ച് വേർതിരിച്ചവ',
+	'multiwikiedit_all_wikis' => 'എല്ലാ വിക്കികളും',
+	'multiwikiedit_selected_wikis' => 'തിരഞ്ഞെടുത്ത വിക്കികൾ',
+	'multiwikirecords' => '$1 വിക്കി കണ്ടെത്തി',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -1698,7 +1797,7 @@ De taak is niet toegevoegd.",
 De lijst is gesplitst in '''$1''' taken met een maximaal aantal pagina's van '''$2'''.",
 	'multiwikiedit_max_display_size' => "Meerdere wiki's bewerken heeft op het moment een maximaal aantal pagina's in de bevestigingsstap.
 Uw opdracht is ingekort tot $1 pagina's.
-Kies uw pagina's in sla de taak op.
+Kies uw pagina's en sla de taak op.
 Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
 	'multiwikiedit_add_text' => 'Geef eerst paginatekst in',
 	'multiwikiedit_supply_wikis' => "Geef alstublieft de lijst van geselecteerde wiki's op",
@@ -1745,7 +1844,7 @@ De taak is niet toegevoegd.",
 De lijst is gesplitst in '''$1''' taken met een maximaal aantal pagina's van '''$2'''.",
 	'multidelete_max_display_size' => "Meervoudig verwijderen heeft op het moment een maximaal aantal pagina's in de bevestigingsstap.
 Uw opdracht is ingekort tot '''$1''' pagina's.
-Kies uw pagina's in sla de taak op.
+Kies uw pagina's en sla de taak op.
 Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
 	'multidelete_brazilian_portuguese_wikis' => "alle Braziliaans-Portugese wiki's",
 	'multidelete_hebrew_wikis' => "alle Hebreeuwse wiki's",
@@ -1767,6 +1866,35 @@ Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
 	'multiwikifindpagenames' => 'Paginanamen zoeken',
 	'multiwikienterpagename' => 'Geef een paginanaam op:',
 	'multiwikirecords' => "Gevonden op $1 wiki's",
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'multiwikiedit_help' => 'Bewerk een groep pagina\'s.
+Je kunt pagina\'s opnemen in het onderstaande invoervenster.
+Kies een gebruiker die wordt gebruiker voor het verwijderlogboek.
+Een te uploaden bestanden moet een paginanaam bevatten en een optionele reden, gescheiden door het teken "|".
+Op iedere regel moet 1 pagina staan.',
+	'multiwikiedit_task_none_selected' => "Je hebt geen pagina's geselecteerd.
+De taak is niet toegevoegd.",
+	'multiwikiedit_task_link' => 'Je kunt je taak controleren',
+	'multiwikiedit_select_yourself' => 'jijzelf',
+	'multiwikiedit_max_display_size' => "Meerdere wiki's bewerken heeft op het moment een maximaal aantal pagina's in de bevestigingsstap.
+Je opdracht is ingekort tot $1 pagina's.
+Kies je pagina's en sla de taak op.
+Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
+	'multidelete_help' => "Een verzameling pagina's verwijderen via een achtergrondtaak.
+Je kunt dat doen voor deze wiki, alle wiki's van een gedeelde database, geselecteerde wiki's of geselecteerde taken.
+Je kunt er voor kiezen de pagina's als jezelf te verwijderen of als een administratieve gebruiker.",
+	'multidelete_task_none_selected' => "Je hebt geen pagina's geselecteerd.
+De taak is niet toegevoegd.",
+	'multidelete_task_link' => 'Je kunt je taak selecteren',
+	'multidelete_max_display_size' => "Meervoudig verwijderen heeft op het moment een maximaal aantal pagina's in de bevestigingsstap.
+Je opdracht is ingekort tot '''$1''' pagina's.
+Kies je pagina's en sla de taak op.
+Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)

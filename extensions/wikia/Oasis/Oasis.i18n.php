@@ -217,6 +217,64 @@ Example output: edited by Avatar 3 hours ago',
 Example output: deleted by Avatar 3 hours ago',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'oasis-home' => 'Tuisblad',
+	'oasis-more' => 'Wys meer >',
+	'oasis-mytools' => 'My hulpmiddels',
+	'oasis-follow' => 'Volg',
+	'oasis-share' => 'Deel',
+	'oasis-like' => 'Hou van',
+	'oasis-latest-photos-by' => 'deur',
+	'oasis-latest-photos-posted-in' => 'Gepos in',
+	'oasis-latest-photos-more-dotdotdot' => 'meer...',
+	'oasis-global-nav-create-wiki' => "Begin 'n wiki",
+	'oasis-page-header-comments' => '{{PLURAL:$1|Opmerking|Opmerkings}}',
+	'oasis-page-header-comments-k' => '$1K',
+	'oasis-page-header-comments-m' => '$1M',
+	'oasis-page-header-talk' => 'Bespreking',
+	'oasis-page-header-edited-by' => 'Gewysig $1 deur $2',
+	'oasis-page-header-edited' => 'Gewysig $1',
+	'oasis-page-header-read-more' => 'Lees meer: $1',
+	'oasis-page-header-history-link' => 'Wys volledige geskiedenis',
+	'oasis-page-header-back-to-article' => 'Terug na bladsy',
+	'oasis-page-header-back-to-template' => 'Terug na sjabloon',
+	'oasis-page-header-back-to-mediawiki' => 'Terug na MediaWiki-bladsy',
+	'oasis-page-header-back-to-category' => 'Terug na Kategorie',
+	'oasis-page-header-back-to-file' => 'Terug na lêer',
+	'oasis-page-header-back-to-video' => 'Terug na video',
+);
+
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'oasis-page-header-subtitle-mediawiki' => 'صحفة ميدياويكي',
+	'oasis-page-header-subtitle-template' => 'صفحة قالب',
+	'oasis-page-header-subtitle-category' => 'صفحة تصنيف',
+	'oasis-page-header-subtitle-forum' => 'صفحة منتدى',
+	'oasis-interlang-languages' => 'اللغات:',
+	'imageseo-featured-more' => 'المزيد...',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'oasis-page-header-comments-k' => '$1k',
+	'oasis-page-header-comments-m' => '$1M',
+	'oasis-page-header-talk' => 'Müzakirə',
+	'oasis-page-header-subtitle-template' => 'Şablon səhifəsi',
+	'oasis-page-header-subtitle-category' => 'Kateqoriya səhifəsi',
+	'oasis-page-header-subtitle-forum' => 'Forum səhifəsi',
+	'oasis-toolbar-edit-save' => 'Qeyd et',
+	'oasis-toolbar-edit-cancel' => 'İmtina',
+	'oasis-interlang-show-all' => '... hamısına bax >',
+	'oasis-interlang-languages' => 'Dillər:',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
@@ -228,12 +286,31 @@ $messages['be-tarask'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'oasis-home' => 'Начало',
+	'oasis-mytools' => 'Моите инструменти',
+	'oasis-share' => 'Споделяне',
+	'oasis-button-random-page' => 'Случайна страница',
+	'oasis-button-random-wiki' => 'Случайно уики',
+	'oasis-button-wiki-activity' => 'Уики активност',
+	'oasis-latest-photos-more-dotdotdot' => 'повече...',
+	'oasis-global-nav-create-wiki' => 'Създаване на уики',
 	'oasis-page-header-talk' => 'Беседа',
+	'oasis-page-header-edit-profile' => 'Редактиране на профила',
 	'oasis-page-header-subtitle-special' => 'Специална страница',
+	'oasis-notification-youhavenewmessages' => 'Имате $1 .',
+	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|направена редакция|направени редакции}}</sup>',
+	'oasis-toolbar-edit-toolbar-list' => 'Списък с инструменти',
 	'oasis-toolbar-edit-save' => 'Съхраняване',
+	'oasis-toolbar-edit-cancel' => 'Отказване',
+	'oasis-comments-header' => '$1 {{PLURAL:$1|коментар|коментара}}',
 	'oasis-comments-show-all' => 'Показване на всички',
+	'oasis-random-wiki' => 'Случайно уики',
+	'oasis-add-photo' => 'Добавяне на снимка',
 	'oasis-create-page' => 'Създаване на нова страница в това уики',
+	'oasis-add-page' => 'Добавяне на страница',
 	'oasis-section-edit' => 'Редактиране',
+	'oasis-interlang-languages' => 'Езици:',
+	'imageseo-featured-more' => 'повече...',
 );
 
 /** Breton (Brezhoneg)
@@ -905,6 +982,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Crochet.david
  * @author IAlex
+ * @author Peter17
  * @author Sherbrooke
  * @author Verdy p
  * @author Wyz
@@ -1027,6 +1105,8 @@ $messages['fr'] = array(
 	'oasis-upload-photos-force' => 'Envoyer malgré tout',
 	'oasis-upload-photos-caption' => 'Légende',
 	'oasis-modal-error-headline' => 'Veuillez corriger les erreurs suivantes',
+	'corporatelandingpage-trivia-title' => 'Wikia Trivia',
+	'corporatelandingpage-trivia-description' => 'Testez vos connaissances et gagnez un lot de prix de Wikia !',
 );
 
 /** Galician (Galego)
@@ -1191,6 +1271,70 @@ $messages['he'] = array(
 	'oasis-modal-error-headline' => 'נא לתקן את השגיאות הבאות',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'oasis-home' => 'Kezdőlap',
+	'oasis-more' => 'Továbbiak >',
+	'oasis-mytools' => 'Saját eszközök',
+	'oasis-follow' => 'Követés',
+	'oasis-share' => 'Megosztás',
+	'oasis-edit-protected-article' => 'Jelentkezz be a szerkesztéshez',
+	'oasis-button-random-page' => 'Váletlen lap',
+	'oasis-button-random-wiki' => 'Véletlen wiki',
+	'oasis-button-wiki-activity' => 'Tevékenységek a wikiben',
+	'oasis-button-wiki-activity-watchlist' => 'Csak a követett lapokon',
+	'oasis-related-video-header' => 'Kapcsolódó videók',
+	'oasis-latest-photos-more' => 'Továbbiak >',
+	'oasis-latest-photos-more-dotdotdot' => 'tovább...',
+	'oasis-global-nav-create-wiki' => 'Wiki indítása',
+	'oasis-page-header-comments' => 'Hozzászólások',
+	'oasis-page-header-comments-k' => '$1k',
+	'oasis-page-header-comments-m' => '$1M',
+	'oasis-page-header-talk' => 'Vitalap',
+	'oasis-page-header-history-link' => 'Teljes laptörténet megtekintése',
+	'oasis-page-header-add-topic' => 'Téma hozzáadása',
+	'oasis-page-header-edit-profile' => 'Profil szerkesztése',
+	'oasis-page-header-subtitle-mediawiki' => 'MediaWiki-lap',
+	'oasis-page-header-subtitle-special' => 'Speciális lap',
+	'oasis-page-header-subtitle-template' => 'Sablonlap',
+	'oasis-page-header-subtitle-category' => 'Kategórialap',
+	'oasis-page-header-subtitle-forum' => 'Fórumlap',
+	'oasis-user-page-change-avatar' => 'Avatár módosítása',
+	'oasis-content-picture-added-by' => 'Hozzáadta: $1',
+	'oasis-member-since' => 'Tag $1 óta',
+	'oasis-toolbar-edit-title' => 'Eszköztár testreszabása',
+	'oasis-toolbar-edit-toolbar-list' => 'Eszköztárlista',
+	'oasis-toolbar-edit-reset-defaults' => 'alapértelmezések használata',
+	'oasis-toolbar-edit-search-for-tool' => 'Eszköz keresése',
+	'oasis-toolbar-edit-popular-tools' => 'Népszerű eszközök',
+	'oasis-toolbar-edit-hide-tools' => 'Eszközök elrejtése',
+	'oasis-toolbar-edit-save' => 'Mentés',
+	'oasis-toolbar-edit-cancel' => 'Mégse',
+	'oasis-toolbar-edit-rename-item' => 'Elem átnevezése',
+	'oasis-toolbar-for-admins-only' => 'Ezt az eszközt a wiki adminisztrátorai használhatják.',
+	'oasis-toolbar-not-enabled-here' => 'Ez az eszköz nem elérhető ezen a wikin.',
+	'oasis-toolbar-customize' => 'Testreszabás',
+	'oasis-comments-show-all' => 'Összes megjelenítése',
+	'oasis-random-wiki' => 'Véletlen wiki',
+	'oasis-add-photo' => 'Kép hozzáadása',
+	'oasis-anon-user' => 'wikiás közreműködő',
+	'oasis-create-page' => 'Új lap létrehozása ezen a wikin',
+	'oasis-add-page' => 'Lap hozzáadása',
+	'oasis-section-edit' => 'Szerkesztés',
+	'oasis-section-edit-alt' => '$1 szakasz szerkesztése',
+	'oasis-popular-blogs-title' => 'Népszerű blog-<br />bejegyzések',
+	'oasis-spotlights-footer-title' => 'A Wikia-hálózat',
+	'themedesigner' => 'Tématervező',
+	'oasis-interlang-languages' => 'Nyelvek:',
+	'oasis-upload-photos-more-options' => 'További beállítások',
+	'oasis-upload-photos-fewer-options' => 'Kevesebb beállítás',
+	'oasis-upload-photos-force' => 'Mindenképp fel akarom tölteni',
+	'oasis-upload-photos-caption' => 'Felirat',
+	'oasis-modal-error-headline' => 'Javítsd a következő hibákat',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -1301,7 +1445,7 @@ $messages['ia'] = array(
 	'oasis-latest-activity-delete-details' => 'delite per $1 $2',
 	'oasis-interlang-show-all' => '... vider totes >',
 	'oasis-interlang-languages' => 'Linguas:',
-	'imageseo-featured-on' => 'In evidentia sur:',
+	'imageseo-featured-on' => 'Utilisate in: ',
 	'imageseo-featured-more' => 'plus...',
 	'oasis-editpage-readonlywarning' => '<h2>Guai!</h2>
 <p>Tu non pote modificar iste articulo al momento; iste problema essera probabilemente remediate tosto. Ecce lo que occurre:<br /><em>$1</em></p>
@@ -1316,11 +1460,14 @@ $messages['ia'] = array(
 	'corporatelandingpage-trivia-description' => 'Prova tu cognoscentia de trivialitates e gania un pacco de premios ab Wikia!',
 );
 
-/** Japanese (日本語) */
+/** Japanese (日本語)
+ * @author Tommy6
+ */
 $messages['ja'] = array(
 	'oasis-home' => 'ホーム',
 	'oasis-more' => 'さらに見る &gt;',
 	'oasis-mytools' => 'マイツール',
+	'oasis-follow' => 'フォローする',
 	'oasis-share' => 'この記事を共有',
 	'oasis-edit-protected-article' => 'ログインして編集',
 	'oasis-button-random-page' => '無作為ページ',
@@ -1330,6 +1477,7 @@ $messages['ja'] = array(
 	'oasis-button-wiki-activity-watchlist' => 'フォローしているページだけを表示する',
 	'oasis-activity-watchlist-login' => 'フォローしているページのみを表示するにはログインする必要があります。',
 	'oasis-activity-header' => 'ウィキアクティビティ',
+	'oasis-related-video-header' => '関連動画',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em> <span class="$2">件の記事がこのウィキにあります</span>',
 	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em> <span class="$2">件の画像がこのウィキにあります</span>',
 	'oasis-latest-photos-more' => '全て見る &gt;',
@@ -1380,6 +1528,21 @@ $messages['ja'] = array(
 	'oasis-notification-youhavenewmessages' => 'あなた宛に$1が届いています。',
 	'oasis-member-since' => '初回編集: $1',
 	'oasis-edits-counter' => '$1 <sup>回の編集</sup>',
+	'oasis-toolbar-edit-title' => 'ツールバーを設定',
+	'oasis-toolbar-edit-toolbar-list' => 'ツールの一覧',
+	'oasis-toolbar-edit-reset-defaults' => '既定に戻す',
+	'oasis-toolbar-edit-find-a-tool' => 'ツールを探す',
+	'oasis-toolbar-edit-advanced-tools' => '[[Help:マイツール|上級者向けのツール一覧]]',
+	'oasis-toolbar-edit-search-for-tool' => 'ツールを検索',
+	'oasis-toolbar-edit-popular-tools' => 'よく使われるツール',
+	'oasis-toolbar-edit-hide-tools' => '非表示',
+	'oasis-toolbar-edit-save' => '保存',
+	'oasis-toolbar-edit-cancel' => '中止',
+	'oasis-toolbar-edit-rename-item' => '名前を変更',
+	'oasis-toolbar-for-admins-only' => 'このツールはウィキの管理者が利用できます。',
+	'oasis-toolbar-not-enabled-here' => 'このウィキではまだこの機能を利用できません。',
+	'oasis-toolbar-more' => 'さらに表示&hellip;',
+	'oasis-toolbar-customize' => '設定',
 	'oasis-comments-header' => 'コメント（$1 件）',
 	'oasis-comments-showing-most-recent' => '最新の $1 件を表示しています',
 	'oasis-comments-show-all' => '全て表示',
@@ -1395,6 +1558,9 @@ $messages['ja'] = array(
 	'oasis-spotlights-rail-title' => 'ウィキアスポットライト',
 	'oasis-spotlights-footer-title' => 'ウィキアネットワーク',
 	'themedesigner' => 'テーマデザイナ',
+	'oasis-latest-activity-new-details' => '$1 による作成: $2',
+	'oasis-latest-activity-edit-details' => '$1 による編集: $2',
+	'oasis-latest-activity-delete-details' => '$1 による削除: $2',
 	'oasis-interlang-show-all' => '全て表示 >',
 	'oasis-interlang-languages' => '他の言語:',
 );
@@ -1421,8 +1587,19 @@ $messages['ku-latn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'oasis-latest-photos-more-dotdotdot' => 'méi …',
 	'oasis-page-header-talk' => 'Diskussioun',
+	'oasis-page-header-back-to-article' => "Zréck op d'Säit",
+	'oasis-page-header-back-to-template' => "Zréck op d'Schabloun",
+	'oasis-page-header-back-to-mediawiki' => "Zréck op d'MediaWiki Säit",
+	'oasis-page-header-back-to-category' => "Zréck op d'Kategorie",
+	'oasis-page-header-back-to-file' => 'Zréck op de Fichier',
+	'oasis-page-header-back-to-video' => 'Zréck op de Video',
+	'oasis-page-header-edit-profile' => 'Profil änneren',
 	'oasis-page-header-subtitle-mediawiki' => 'MediaWiki-Säit',
+	'oasis-page-header-subtitle-special' => 'Spezialsäit',
+	'oasis-page-header-subtitle-template' => 'Schabloune-Säit',
+	'oasis-page-header-subtitle-category' => 'Kategorie-Säit',
 	'oasis-toolbar-edit-save' => 'Späicheren',
 	'oasis-toolbar-edit-cancel' => 'Ofbriechen',
 	'oasis-add-page' => 'Eng Säit derbäisetzen',
@@ -1684,6 +1861,58 @@ $messages['mk'] = array(
 	'corporatelandingpage-trivia-description' => 'Испобајте си го знаењето на занимливости и освојте пакет-награда од Викија!',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'oasis-more' => 'കൂടുതൽ കാണുക >',
+	'oasis-mytools' => 'എന്റെ ഉപകരണങ്ങൾ',
+	'oasis-share' => 'പങ്ക് വെയ്ക്കുക',
+	'oasis-like' => 'ഇഷ്ടപ്പെടുക',
+	'oasis-edit-protected-article' => 'തിരുത്താനായി പ്രവേശിച്ചിരിക്കണം',
+	'oasis-button-random-page' => 'ഏതെങ്കിലും താൾ',
+	'oasis-button-random-wiki' => 'ഏതെങ്കിലും വിക്കി',
+	'oasis-button-wiki-activity' => 'വിക്കി പ്രവർത്തനങ്ങൾ',
+	'oasis-button-wiki-activity-feed' => 'എല്ലാ പ്രവർത്തനങ്ങളും കാണുക >',
+	'oasis-activity-header' => 'സമീപകാല വിക്കി പ്രവർത്തനം',
+	'oasis-related-video-header' => 'ബന്ധപ്പെട്ട ചലച്ചിത്രങ്ങൾ',
+	'oasis-latest-photos-more' => 'കൂടുതൽ കാണുക >',
+	'oasis-latest-photos-inner-message' => 'എല്ലാ ഫോട്ടോകളും കാണുക',
+	'oasis-latest-photos-more-dotdotdot' => 'കൂടുതൽ...',
+	'oasis-global-nav-create-wiki' => 'ഒരു വിക്കി തുടങ്ങുക',
+	'oasis-page-header-talk' => 'സംവാദം',
+	'oasis-page-header-edited-by' => 'തിരുത്തിയത് $1 $2',
+	'oasis-page-header-edited' => 'തിരുത്തിയത് $1',
+	'oasis-toolbar-edit-search-for-tool' => 'ഉപകരണത്തിനായി തിരയുക',
+	'oasis-toolbar-edit-popular-tools' => 'ജനപ്രിയ ഉപകരണങ്ങൾ',
+	'oasis-toolbar-edit-hide-tools' => 'ഉപകരണങ്ങൾ മറയ്ക്കുക',
+	'oasis-toolbar-edit-save' => 'സേവ് ചെയ്യുക',
+	'oasis-toolbar-edit-cancel' => 'റദ്ദാക്കുക',
+	'oasis-toolbar-edit-rename-item' => 'ഇനം പുനർനാമകരണം ചെയ്യുക',
+	'oasis-toolbar-customize' => 'ഇച്ഛാനുസരണമാക്കുക',
+	'oasis-comments-header' => '{{PLURAL:$1|ഒരു അഭിപ്രായം|$1 അഭിപ്രായങ്ങൾ}}',
+	'oasis-comments-show-all' => 'എല്ലാം പ്രദർശിപ്പിക്കുക',
+	'oasis-random-wiki' => 'ഏതെങ്കിലും വിക്കി',
+	'oasis-add-photo' => 'ഒരു ഫോട്ടോ ചേർക്കുക',
+	'oasis-anon-user' => 'ഒരു വിക്കിയ സംഭാവക(ൻ)',
+	'oasis-create-page' => 'ഈ വിക്കിയിൽ പുതിയൊരു താൾ തുടങ്ങുക',
+	'oasis-add-page' => 'ഒരു താൾ ചേർക്കുക',
+	'oasis-section-edit' => 'തിരുത്തുക',
+	'oasis-section-edit-alt' => '$1 എന്ന ഉപവിഭാഗം തിരുത്തുക',
+	'oasis-pages-on-wiki-header' => '$1 സംരംഭത്തിലെ താളുകൾ',
+	'oasis-latest-activity-new-details' => 'സൃഷ്ടിച്ചത് $1 $2',
+	'oasis-latest-activity-edit-details' => 'തിരുത്തിയത് $1 $2',
+	'oasis-latest-activity-delete-details' => 'മായ്ച്ചത് $1 $2',
+	'oasis-interlang-show-all' => '... എല്ലാം കാണുക >',
+	'oasis-interlang-languages' => 'ഭാഷകൾ:',
+	'imageseo-featured-more' => 'കൂടുതൽ...',
+	'oasis-upload-photos-title' => 'വിക്കിയിലേയ്ക്ക് ഒരു ഫോട്ടോ അപ്‌ലോഡ് ചെയ്യുക',
+	'oasis-upload-photos-more-options' => 'കൂടുതൽ ഐച്ഛികങ്ങൾ',
+	'oasis-upload-photos-fewer-options' => 'കുറവ് ഐച്ഛികങ്ങൾ',
+	'oasis-upload-photos-force' => 'എന്തായാലും അപ്‌ലോഡ് ചെയ്യുക',
+	'oasis-modal-error-headline' => 'താഴെക്കൊടുത്തിരിക്കുന്ന പിഴവുകൾ ദയവായി ശരിയാക്കുക',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -1804,6 +2033,26 @@ $messages['ms'] = array(
 	'oasis-upload-photos-force' => 'Muat naik sahaja',
 	'oasis-upload-photos-caption' => 'Kapsyen',
 	'oasis-modal-error-headline' => 'Sila betulkan kesilapan berikut:',
+	'corporatelandingpage-trivia-title' => 'Trivia Wikia',
+	'corporatelandingpage-trivia-description' => 'Uji pengetahuan trivia anda dan menangi hadiah daripada Wikia!',
+);
+
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'oasis-home' => 'ပင်မ',
+	'oasis-mytools' => 'ကိရိယာများ',
+	'oasis-edit-protected-article' => 'ပြင်ဆင်ရန်အတွက် login ဝင်ပါ',
+	'oasis-button-random-page' => 'ကျ​ပန်း​စာ​မျက်​နှာ​',
+	'oasis-button-random-wiki' => 'ကျပန်း ဝီကီ',
+	'oasis-latest-photos-by' => 'အားဖြင့်',
+	'oasis-latest-photos-more-dotdotdot' => 'နောက်ထပ်...',
+	'oasis-page-header-comments-k' => '$1 ထောင်',
+	'oasis-page-header-comments-m' => '$1 သန်း',
+	'oasis-page-header-talk' => 'ဆွေးနွေးရန်',
+	'oasis-page-header-read-more' => 'ဆက်လက်ဖက်ရန် : $1',
+	'oasis-page-header-add-topic' => 'အကြောင်းအရာအသစ် ထပ်ထည့်ရန်',
 );
 
 /** Dutch (Nederlands)
@@ -1929,6 +2178,21 @@ Scroll naar beneden om door te gaan met bewerken.',
 	'oasis-modal-error-headline' => 'Corrigeer alstublieft de onderstaande foutmeldingen',
 	'corporatelandingpage-trivia-title' => 'Wikia trivia',
 	'corporatelandingpage-trivia-description' => 'Toets uw triviakennis en win een prijzenpakket van Wikia!',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'oasis-activity-watchlist-login' => "Je moet aanmelden om alleen door jou gevolgde pagina's te zien.",
+	'oasis-page-header-no-comments-tooltip' => 'Je kunt de eerste zijn die overleg voor deze pagina start',
+	'oasis-badge-notification' => 'Je hebt zojuist het speldje "$2" verdiend $3',
+	'oasis-confirmation-user-logout' => 'Je bent afgemeld.',
+	'oasis-notification-youhavenewmessages' => 'Je hebt $1.',
+	'oasis-editpage-readonlywarning' => '<h2>Helaas!</h2>
+<p>Je kunt deze pagina op dit moment niet bewerken. Deze storing is waarschijnlijk snel verholpen. Dit is er aan de hand<br /><em>$1</em></p>
+<p>Kijk op <a href="http://twitter.com/wikia">Twitter</a> of <a href="http://facebook.com/wikia">Facebook</a> voor meer informatie.</p>',
+	'corporatelandingpage-trivia-description' => 'Toets je triviakennis en win een prijzenpakket van Wikia!',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -2307,14 +2571,14 @@ $messages['pt'] = array(
 	'oasis-comments-show-all' => 'Mostrar todos',
 	'oasis-comments-added-by' => '$1 por $2',
 	'oasis-random-wiki' => 'Wiki Aleatória',
-	'oasis-add-photo' => 'Adicionar uma Foto',
+	'oasis-add-photo' => 'Adicionar Foto',
 	'oasis-anon-user' => 'Um utilizador da Wikia',
 	'oasis-create-page' => 'Criar uma página nova nesta wiki',
 	'oasis-add-page' => 'Adicionar Página',
 	'oasis-section-edit' => 'Editar',
 	'oasis-section-edit-alt' => 'Editar a secção $1',
 	'oasis-popular-blogs-title' => 'Entradas populares<br />de blogues',
-	'oasis-spotlights-rail-title' => 'Mais de',
+	'oasis-spotlights-rail-title' => 'Mais da',
 	'oasis-spotlights-footer-title' => 'Rede da Wikia',
 	'themedesigner' => 'Variantes do Tema',
 	'oasis-pages-on-wiki-header' => 'Páginas na $1',
@@ -2624,6 +2888,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Avatar
+ * @author Lokal Profil
  * @author Tobulos1
  */
 $messages['sv'] = array(
@@ -2651,6 +2916,7 @@ $messages['sv'] = array(
 	'oasis-latest-photos-more-dotdotdot' => 'mer...',
 	'oasis-page-header-talk' => 'Diskutera',
 	'oasis-page-header-read-more' => 'Läs mer: $1',
+	'oasis-page-header-history-link' => 'Visa fullständig historik',
 	'oasis-page-header-back-to-article' => 'Tillbaka till sidan',
 	'oasis-page-header-back-to-template' => 'Tillbaka till mall',
 	'oasis-page-header-back-to-mediawiki' => 'Tillbaka till MediaWiki-sidan',
@@ -2659,7 +2925,21 @@ $messages['sv'] = array(
 	'oasis-page-header-back-to-video' => 'Tillbaka till Video',
 	'oasis-page-header-add-topic' => 'Nytt ämne',
 	'oasis-page-header-edit-profile' => 'Redigera profil',
+	'oasis-page-header-subtitle-mediawiki' => 'MediaWiki-sida',
+	'oasis-page-header-subtitle-special' => 'Specialsida',
+	'oasis-page-header-subtitle-template' => 'Mallsida',
+	'oasis-page-header-subtitle-category' => 'Kategorisida',
+	'oasis-page-header-subtitle-forum' => 'Forumsidan',
+	'oasis-page-header-subtitle-special-wikiactivity' => 'Se all aktivitet >',
+	'oasis-search-results-from' => 'Visar resultat från: $1',
+	'oasis-confirmation-page-deleted' => '"$1" har raderats. ([[Special:Undelete/$1|återställ]])',
+	'oasis-confirmation-comment-deleted' => 'Kommentaren har tagits bort.',
+	'oasis-confirmation-page-undeleted' => 'Den här sidan har återställts.',
+	'oasis-confirmation-user-logout' => 'Du har blivit utloggad.',
+	'oasis-notification-youhavenewmessages' => 'Du har $1.',
 	'oasis-member-since' => 'Medlem sedan $1',
+	'oasis-toolbar-edit-save' => 'Spara',
+	'oasis-toolbar-edit-cancel' => 'Avbryt',
 	'oasis-add-photo' => 'Lägg till ett foto',
 	'oasis-add-page' => 'Lägg till sida',
 	'oasis-section-edit' => 'Redigera',
@@ -2673,7 +2953,62 @@ $messages['sv'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'oasis-home' => 'Tahanan',
+	'oasis-more' => 'Tumingin pa >',
+	'oasis-mytools' => 'Mga Kasangkapan Ko',
+	'oasis-follow' => 'Sundan',
+	'oasis-share' => 'Ibahagi',
+	'oasis-like' => 'Gusto',
+	'oasis-edit-protected-article' => 'Lumagda upang makapamatnugot',
+	'oasis-button-random-page' => 'Alin mang pahina',
+	'oasis-button-random-wiki' => 'Alinmang Wiki',
+	'oasis-button-wiki-activity' => 'Mga Galaw sa Wiki',
+	'oasis-button-wiki-activity-feed' => 'Tingnan ang lahat ng gawain >',
+	'oasis-button-wiki-activity-watchlist' => 'Sinusundang mga Pahina lamang',
+	'oasis-activity-watchlist-login' => 'Kailangan mong lumagda upang makita ang sinusundan mong mga pahina lamang.',
+	'oasis-activity-header' => 'Kamakailang Galaw sa Wiki',
+	'oasis-related-video-header' => 'Kaugnay na mga Bidyo',
+	'oasis-related-video-by-5min' => 'sa pamamagitan ng 5 minutong Bidyo',
+	'oasis-page-header-comments-m' => '$1Milyon',
+	'oasis-page-header-talk' => 'Usapan',
+	'oasis-page-header-edited-by' => 'Binago ni $2 ang $1',
+	'oasis-page-header-edited' => 'Binago ang $1',
+	'oasis-page-header-read-more' => 'Magbasa pa: $1',
+	'oasis-page-header-history-link' => 'Tingnan ang buong kasaysayan',
+	'oasis-page-header-back-to-article' => 'Bumalik sa pahina',
+	'oasis-page-header-back-to-template' => 'Bumalik sa suleras',
+	'oasis-page-header-back-to-mediawiki' => 'Bumalik sa pahina ng MediaWiki',
+	'oasis-page-header-back-to-category' => 'Bumalik sa Kategorya',
+	'oasis-page-header-back-to-file' => 'Bumalik sa Talaksan',
+	'oasis-page-header-back-to-video' => 'Bumalik sa Bidyo',
+	'oasis-page-header-add-topic' => 'Magdagdag ng paksa',
+	'oasis-page-header-edit-profile' => 'Baguhin ang balangkas',
+	'oasis-page-header-editing' => '<strong>Namamatnugot:</strong> $1',
+	'oasis-page-header-editing-section' => '<strong>Binabago:</strong> $1 (seksyon)',
+	'oasis-page-header-subtitle-special' => 'Natatanging pahina',
+	'oasis-page-header-subtitle-template' => 'Pahina ng suleras',
+	'oasis-page-header-subtitle-category' => 'Pahina ng kategorya',
+	'oasis-page-header-subtitle-forum' => 'Pahina ng poro',
+	'oasis-page-header-subtitle-special-wikiactivity' => 'Tingnan ang lahat ng gawain >',
+	'oasis-search-results-from' => 'Ipinapakita ang mga resulta mula sa: $1',
+	'oasis-user-page-change-avatar' => 'Baguhin ang huwaran',
+	'oasis-content-picture-added-by' => 'Idinagdag ni $1',
+	'oasis-confirmation-page-deleted' => 'Nabura ang "$1". ([[Special:Undelete/$1|huwag burahin]])',
+	'oasis-confirmation-comment-deleted' => 'Nabura ang puna.',
+	'oasis-confirmation-page-undeleted' => 'Naipanumbalik na ang pahinang ito.',
+	'oasis-confirmation-user-logout' => 'Naalis ka na sa pagkakalagda.',
+	'oasis-notification-youhavenewmessages' => 'Mayroon kang $1.',
+	'oasis-member-since' => 'Kasapi magmula pa noong $1',
+	'oasis-edits-counter' => '$1 <sup>Nagawang {{PLURAL:$1|pamamatnugot|mga pamamatnugot}} made</sup>',
+	'oasis-toolbar-edit-title' => 'Ipasadya ang Halang na Pangkasangkapan',
 	'themedesigner' => 'Tagapagdisenyo ng Tema',
+	'oasis-upload-photos-title' => 'Magkaraga ng isang Larawan na papaitaas sa Wiki',
+	'oasis-upload-photos-more-options' => 'Marami pang mga Mapipili',
+	'oasis-upload-photos-fewer-options' => 'Mas Kaunting mga Mapipili',
+	'oasis-upload-photos-force' => 'Ikarga pa rin',
+	'oasis-upload-photos-caption' => 'Paliwanag',
+	'oasis-modal-error-headline' => 'Pakitama ang sumusunod na mga kamalian',
+	'corporatelandingpage-trivia-title' => 'Tribya ng Wikia',
 );
 
 /** Ukrainian (Українська)
@@ -2753,10 +3088,21 @@ $messages['uk'] = array(
 	'oasis-upload-photos-caption' => 'Підпис',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author XiaoQiaoGrace
+ */
+$messages['vi'] = array(
+	'oasis-page-header-subtitle-special' => 'Trang đặc biệt',
+	'oasis-page-header-subtitle-template' => 'Trang bản mẫu',
+	'oasis-page-header-subtitle-category' => 'Trang thể loại',
+	'oasis-page-header-subtitle-forum' => 'Trang diễn đàn',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
+	'oasis-share' => '分享',
 	'oasis-like' => '喜欢',
 	'oasis-latest-photos-inner-message' => '查看全部照片',
 	'oasis-latest-photos-more-dotdotdot' => '更多。。。',
@@ -2764,6 +3110,7 @@ $messages['zh-hans'] = array(
 	'oasis-page-header-history-link' => '查看全部历史',
 	'oasis-page-header-back-to-article' => '回到页面',
 	'oasis-page-header-add-topic' => '添加话题',
+	'oasis-page-header-subtitle-special' => '特别页面',
 	'oasis-notification-youhavenewmessages' => '您有 $1 。',
 	'oasis-toolbar-edit-save' => '保存',
 	'oasis-toolbar-edit-cancel' => '取消',

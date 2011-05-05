@@ -77,10 +77,11 @@ $messages['es'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author Od1n
  * @author Peter17
  */
 $messages['fr'] = array(
-	'interwikidispatcher' => 'Répartisseur interwiki',
+	'interwikidispatcher' => 'Répartiteur interwiki',
 	'interwikidispatcher-desc' => 'Résout les liens interwiki pour réduire les redirections Apache',
 );
 
@@ -138,6 +139,14 @@ $messages['it'] = array(
 $messages['ja'] = array(
 	'interwikidispatcher' => 'インターウィキの送出',
 	'interwikidispatcher-desc' => 'Apacheリダイレクトへのインターウィキを解決する',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'interwikidispatcher' => 'Engerwiki Wigger_Verdeiler',
+	'interwikidispatcher-desc' => 'Lühß Engerwiki-Lengks op, öm Ömleidonge em Apache-ẞööver enzeshpaare.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

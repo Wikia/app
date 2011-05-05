@@ -181,6 +181,13 @@ $messages['ka'] = array(
 	'mostpopularcategories' => 'ყველაზე პოპულარული კატეგორიები',
 );
 
+/** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
+ */
+$messages['km'] = array(
+	'mostpopularcategories' => 'ចំណាត់ថ្នាក់ក្រុមដែលមានប្រជាប្រិយបំផុត',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */

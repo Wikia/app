@@ -232,6 +232,18 @@ Nu wordt er niets uitgevoerd.
 De rest van de pagina kan uitgevoerd worden zodat u eenvoudig kunt zien of een van de gebruikersnamen niet geladen kon worden.',
 );
 
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'batchuserrights-intro' => 'Via deze pagina kan je meerdere gebruikers tegelijkertijd aan een groep toevoegen.
+Om beveiligingsredenen wordt de lijst met beschikbare groepen ingesteld in de instellingen van de uitbreiding en deze groepen kunnen niet vanuit de wiki gewijzigd worden.
+Vraag hulp van een systeembeheerder als je de beschikbare groepen wilt wijzigen.',
+	'batchuserrights-no-groups' => 'Je hebt geen groepen gekozen.
+Nu wordt er niets uitgevoerd.
+De rest van de pagina kan uitgevoerd worden zodat je eenvoudig kunt zien of een van de gebruikersnamen niet geladen kon worden.',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
@@ -348,5 +360,13 @@ Ang natitirang bahagi ng pahina ay papahintulutang tumakbo upang maginhawa mong 
  */
 $messages['uk'] = array(
 	'batchuserrights-desc' => 'Дозволяє додавати одного або декількох користувачів в групу за одну дію',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'batchuserrights' => '批处理的用户权限',
+	'batchuserrights-desc' => '允许将一个或多个用户添加到一个操作中的一个组',
 );
 

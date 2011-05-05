@@ -190,6 +190,13 @@ $messages['mk'] = array(
 	'outbound-screen-you-are-leaving' => 'Сега ја напуштате Викија.',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'outbound-screen-you-are-leaving' => 'താങ്കൾ ഇപ്പോൾ വിക്കിയയിൽ നിന്ന് പുറത്തുപോവുകയാണ്.',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -212,6 +219,18 @@ Er is hier niets te zien.
 
 Wilt u naar de [[{{MediaWiki:Mainpage}}|hoofdpagina]] gaan, of wellicht naar een [[Special:Random|Willekeurige pagina]]?',
 	'outbound-screen-you-are-leaving' => 'U verlaat nu Wikia.',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'outbound-screen-login-text' => 'Je kunt [[Special:UserLogin/signup|een gebruiker aanmaken]] of [[Special:UserLogin|aanmelden met een bestaande gebruiker]] om deze pagina in de toekomst over te slaan.',
+	'outbound-screen-already-logged-in-no-link' => 'Er is geen bestemming ingesteld.
+Er is hier niets te zien.
+
+Wil je naar de [[{{MediaWiki:Mainpage}}|hoofdpagina]] gaan, of wellicht naar een [[Special:Random|Willekeurige pagina]]?',
+	'outbound-screen-you-are-leaving' => 'Je verlaat nu Wikia.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)

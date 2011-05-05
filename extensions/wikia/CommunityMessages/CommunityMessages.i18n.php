@@ -148,6 +148,14 @@ $messages['it'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|I messaggi della comunità sono stati aggiornati]].',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'communitymessages-desc' => 'Zohsazprojramm för Hölp met de Gemeinschafs_Nohreeshte',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Gemeinschafs_Nohreeshte sinn_er om neuere Shtand]]',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

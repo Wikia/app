@@ -261,6 +261,8 @@ $messages['pms'] = array(
 	'taskmanager' => "Visualisé e gestì j'atività an slë sfond",
 	'taskmanager_title' => "Visualisé e gestì j'atività an slë sfond",
 	'taskmanager_tasklist' => "Artorna a la Lista dj'Atività",
+	'right-taskmanager' => "A peul mosté j'operassion an background",
+	'right-taskmanager-action' => "A peul gestì j'operassion an background",
 );
 
 /** Portuguese (Português)
@@ -343,6 +345,8 @@ $messages['tl'] = array(
 	'taskmanager' => 'Ipakita at pangasiwaan ang mga gawaing panlikuran',
 	'taskmanager_title' => 'Ipakita at pangasiwaan ang mga gawaing panlikuran',
 	'taskmanager_tasklist' => 'Bumalik sa Talaan ng Gawain',
+	'right-taskmanager' => 'Maaaring ipakita ang mga gawaing panlikuran',
+	'right-taskmanager-action' => 'Maaaring pamahalaan ang mga gawaing panlikuran',
 );
 
 /** Turkish (Türkçe)

@@ -132,9 +132,11 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author LWChris
+ * @author Purodha
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'userprofilepage-desc' => '{{desc}}',
 	'userprofilepage-user-group-vstf' => 'Vandalism/Spam Task Force',
 	'userprofilepage-top-pages-title' => 'Parameters:
 * $1 is a username
@@ -185,19 +187,60 @@ $messages['af'] = array(
 	'recipes-template-user-affiliation-hint' => 'Affiliasie',
 );
 
-/** Assamese (অসমীয়া) */
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'userprofilepage-about-article-title' => 'عن',
+	'userprofilepage-user-group-sysop' => 'إداري',
+	'userprofilepage-user-group-bot' => 'بوت',
+	'recipes-template-user-description-label' => 'الوصف',
+	'recipes-template-user-description-hint' => 'معلومات مختصرة عن المستخدم',
+	'recipes-template-user-birthdate-label' => 'تاريخ الميلاد',
+	'recipes-template-user-birthdate-hint' => 'تاريخ الميلاد (بأي صيغة)',
+	'recipes-template-user-gender-label' => 'الجنس',
+	'recipes-template-user-gender-hint' => 'الجنس',
+);
+
+/** Assamese (অসমীয়া)
+ * @author Jaminianurag
+ */
 $messages['as'] = array(
 	'userprofilepage-edit-avatar-label' => 'চিত্ৰ সম্পাদনা',
 	'userprofilepage-users-notes-title' => 'মোৰ বিষয়ে',
+	'userprofilepage-about-section-title' => 'মোৰ $1 সাক্ষাত্‍কাৰ',
 	'userprofilepage-edit-button' => 'সম্পাদনা',
 	'userprofilepage-about-article-title' => 'বিষয়ে',
+	'userprofilepage-about-empty-section' => 'এই অংশটো খালি হৈ আছে | যোগ দিবৰ বাবে ক্লিক {{int:userprofilepage-edit-button}} কৰক !',
+	'userprofilepage-edit-permision-denied' => 'সম্পাদনাৰ অনুমতি নাই',
+	'userprofilepage-edit-permision-denied-info' => 'আপোনাৰ কোনো সদস্য পৃষ্ঠা বা সহ-পৃষ্ঠা সম্পাদনা কৰাৰ বাবে অনুমতি নাই',
+	'userprofilepage-user-group-sysop' => 'প্ৰশাসক',
+	'userprofilepage-user-group-bot' => 'বট',
+	'userprofilepage-user-group-bureaucrat' => 'বুৰুক্ৰেট',
+	'userprofilepage-user-group-helper' => 'সহায়ক',
+	'userprofilepage-user-group-vstf' => 'VSTF',
+	'userprofilepage-user-group-sysop-tooltip' => 'এই সদস্য গৰাকী ৱিকিৰ এজন প্ৰশাসক',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'userprofilepage-edit-button' => 'Redaktə',
+	'userprofilepage-user-group-sysop' => 'İdarəçi',
+	'userprofilepage-user-group-bot' => 'Botlar',
+	'userprofilepage-user-group-bureaucrat' => 'Bürokrat',
+	'recipes-template-user-gender-label' => 'Cins',
+	'recipes-template-user-gender-hint' => 'Cins',
 );
 
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'userprofilepage-users-notes-title' => 'За мен',
 	'userprofilepage-edit-button' => 'Редактиране',
+	'userprofilepage-leave-message' => 'Оставяне на съобщение',
 	'userprofilepage-user-group-sysop' => 'Администратор',
 	'userprofilepage-user-group-bot' => 'Бот',
 	'userprofilepage-user-group-bureaucrat' => 'Бюрократ',
@@ -207,6 +250,7 @@ $messages['bg'] = array(
 	'userprofilepage-user-group-bot-tooltip' => 'Този потребител е Бот',
 	'userprofilepage-user-group-bureaucrat-tooltip' => 'Този потребител е Бюрократ в това уики',
 	'userprofilepage-user-group-helper-tooltip' => 'Този потребител е Помощник',
+	'recipes-template-user-description-label' => 'Описание',
 	'recipes-template-user-birthdate-label' => 'Дата на раждане',
 	'recipes-template-user-birthdate-hint' => 'Дата на раждане (в какъв да е формат)',
 	'recipes-template-user-gender-label' => 'Пол',
@@ -609,6 +653,25 @@ $messages['fr'] = array(
 	'recipes-template-user-affiliation-hint' => 'Affiliation',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'userprofilepage-edit-button' => 'Szerkesztés',
+	'userprofilepage-user-group-sysop' => 'Adminisztrátor',
+	'userprofilepage-user-group-bot' => 'Bot',
+	'userprofilepage-user-group-bureaucrat' => 'Bürokrata',
+	'userprofilepage-user-group-helper' => 'Segítő',
+	'recipes-template-user-species-label' => 'Fajok',
+	'recipes-template-user-species-hint' => 'Fajok',
+	'recipes-template-user-abilities-label' => 'Képességek',
+	'recipes-template-user-abilities-hint' => 'Képességek',
+	'recipes-template-user-gender-label' => 'Nem',
+	'recipes-template-user-gender-hint' => 'Nem',
+	'recipes-template-user-affiliation-label' => 'Kapcsolódás',
+	'recipes-template-user-affiliation-hint' => 'Kapcsolódás',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -858,6 +921,32 @@ $messages['ms'] = array(
 	'recipes-template-user-affiliation-hint' => 'Sekutu',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'userprofilepage-users-notes-title' => 'ကျွန်ုပ်၏အကြောင်း',
+	'userprofilepage-edit-button' => 'ပြင်​ဆင်​ရန်​',
+	'userprofilepage-about-article-title' => 'အကြောင်း',
+	'userprofilepage-user-group-sysop' => 'အက်ဒမင်',
+	'userprofilepage-user-group-bot' => 'ဘော့',
+	'userprofilepage-user-group-bureaucrat' => 'ဗျူရိုကရက်',
+	'userprofilepage-top-wikis-edit-count' => 'တည်းဖြတ်မှုအရေအတွက်',
+	'userprofilepage-top-wikis-hide-label' => 'ဝှက်',
+	'recipes-template-user-description-label' => 'ဖော်ပြချက်',
+	'recipes-template-user-gender-label' => 'ကျား/မ',
+	'recipes-template-user-gender-hint' => 'ကျား/မ',
+);
+
+/** Nepali (नेपाली)
+ * @author Bhawani Gautam
+ */
+$messages['ne'] = array(
+	'userprofilepage-top-wikis-hide-label' => 'लुकाउने',
+	'recipes-template-user-gender-label' => 'लिङ्ग',
+	'recipes-template-user-gender-hint' => 'लिङ्ग',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -894,7 +983,7 @@ $messages['nl'] = array(
 	'userprofilepage-user-group-vstf-tooltip' => 'Deze gebruiker is lid van de Anti-spamgroep',
 	'userprofilepage-top-wikis-title' => "Topwiki'a van $1",
 	'userprofilepage-top-wikis-edit-count' => 'Aantal bewerkingen',
-	'userprofilepage-top-wikis-hidden-see-more' => "U hebt $1 verbogen {{PLURAL:$1|wiki|wiki's}}",
+	'userprofilepage-top-wikis-hidden-see-more' => "U hebt $1 verborgen {{PLURAL:$1|wiki|wiki's}}",
 	'userprofilepage-top-wikis-unhide-label' => 'weergeven',
 	'userprofilepage-top-wikis-hide-label' => 'verbergen',
 	'userprofilepage-top-wikis-locked-label' => 'De huidige wiki kan niet verborgen worden',
@@ -924,6 +1013,19 @@ $messages['nl'] = array(
 	'recipes-template-user-gender-hint' => 'Geslacht',
 	'recipes-template-user-affiliation-label' => 'Voorkeuren en interesses',
 	'recipes-template-user-affiliation-hint' => 'Voorkeuren en interesses',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'userprofilepage-edit-permision-denied-info' => "Je kunt gebruikerspagina's of subpagina's van gebruikerspagina van andere gebruikers niet bewerken.",
+	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Iedereen in deze wiki wil graag meer over je weten.</div><a href="$1">Bewerk deze paragraaf</a> om meer over jezelf toe te voegen en iedereen te laten weten wat je bezig houdt.',
+	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 heeft nog geen informatie toegevoegd.</div>Je kunt <a href="$2">een bericht achterlaten</a>.',
+	'userprofilepage-user-anon' => 'Deze gebruiker is nog niet ingeschreven bij Wikia. [[Special:Signup|Schrijf je in]] om een gebruiker aan te maken en bewerkingspunten en waardering van je medegebruikers te ontvangen.',
+	'userprofilepage-top-wikis-hidden-see-more' => "Je hebt $1 verborgen {{PLURAL:$1|wiki|wiki's}}",
+	'userprofilepage-top-pages-hidden-see-more' => "Je hebt $1 {{PLURAL:$1|pagina|pagina's}} verborgen",
+	'userprofilepage-top-pages-default' => 'Je hebt nog geen favoriete pagina\'s. Bekijk een aantal <a href="$1">willekeurige pagina\'s</a> op de wiki!',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -1001,9 +1103,20 @@ $messages['no'] = array(
  */
 $messages['ps'] = array(
 	'userprofilepage-edit-avatar-label' => 'انځور سمول',
+	'userprofilepage-users-notes-title' => 'زما په اړه',
 	'userprofilepage-edit-button' => 'سمول',
 	'userprofilepage-about-article-title' => 'په اړه',
+	'userprofilepage-leave-message' => 'پيغام پرېښودل',
+	'userprofilepage-user-group-sysop' => 'پازوال',
+	'userprofilepage-user-group-helper' => 'مرستيال',
+	'userprofilepage-user-group-bot-tooltip' => 'دا کارن يو روباټ دی',
+	'userprofilepage-top-wikis-edit-count' => 'د سمونونو شمېر',
 	'userprofilepage-top-wikis-hide-label' => 'پټول',
+	'userprofilepage-activity-new' => ' $1 جوړ شو',
+	'userprofilepage-top-recent-activity-see-more' => 'ټول &gt; کتل',
+	'recipes-template-user-birthdate-label' => 'زېږون نېټه',
+	'recipes-template-user-gender-label' => 'جنس',
+	'recipes-template-user-gender-hint' => 'جنس',
 );
 
 /** Portuguese (Português)
@@ -1072,6 +1185,15 @@ $messages['pt'] = array(
 	'recipes-template-user-gender-hint' => 'Sexo',
 	'recipes-template-user-affiliation-label' => 'Afiliação',
 	'recipes-template-user-affiliation-hint' => 'Afiliação',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'userprofilepage-about-article-title' => 'Despre',
+	'userprofilepage-user-group-sysop' => 'Admin',
+	'recipes-template-user-birthdate-label' => 'Data naşterii',
 );
 
 /** Russian (Русский)
@@ -1282,6 +1404,62 @@ $messages['te'] = array(
 	'recipes-template-user-birthdate-label' => 'పుట్టిన రోజు',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'userprofilepage-edit-avatar-label' => 'Baguhin ang larawan',
+	'userprofilepage-users-notes-title' => 'Tungkol sa akin',
+	'userprofilepage-about-section-title' => 'Panayam ko ng $1',
+	'userprofilepage-edit-button' => 'Baguhin',
+	'userprofilepage-about-article-title' => 'Patungkol',
+	'userprofilepage-edit-permision-denied' => 'Tinanggihan ang mga kapahintulutan ng pamamatnugot',
+	'userprofilepage-leave-message' => 'Mag-iwan ng mensahe',
+	'userprofilepage-user-group-sysop' => 'Tagapangasiwa',
+	'userprofilepage-user-group-staff' => 'Kawani',
+	'userprofilepage-user-group-bot' => 'Bot',
+	'userprofilepage-user-group-bureaucrat' => 'Burokrato',
+	'userprofilepage-user-group-helper' => 'Katulong',
+	'userprofilepage-user-group-vstf' => 'VSTF',
+	'userprofilepage-user-group-sysop-tooltip' => 'Ang tagagamit ay isang Tagapangasiwa sa wiking ito',
+	'userprofilepage-user-group-staff-tooltip' => 'Ang tagagamit na ito ay isang Kawani ng Wikia',
+	'userprofilepage-user-group-bot-tooltip' => 'Ang tagagamit na ito ay isang Bot',
+	'userprofilepage-user-group-bureaucrat-tooltip' => 'Ang tagagamit na ito ay isang Burokrato sa wiking ito',
+	'userprofilepage-user-group-helper-tooltip' => 'Ang tagagamit na ito ay isang Katulong',
+	'userprofilepage-user-group-vstf-tooltip' => 'Ang tagagamit na ito ay isang kasapi ng Hukbo ng Gawaing Laban sa Basurang Liham',
+	'userprofilepage-top-wikis-title' => 'Pangunahing mga wiki ni $1',
+	'userprofilepage-top-wikis-edit-count' => 'Bilang ng mga Pamamatnugot',
+	'userprofilepage-top-wikis-hidden-see-more' => 'Itinago mo ang {{PLURAL:$1| $1 wiki|$1 mga wiki}}',
+	'userprofilepage-top-wikis-unhide-label' => 'huwag ikubli',
+	'userprofilepage-top-wikis-hide-label' => 'ikubli',
+	'userprofilepage-top-wikis-locked-label' => 'Hindi maikukubli ang pangkasalukuyang wiki',
+	'userprofilepage-recent-activity-title' => 'kamakailang gawain ni $1',
+	'userprofilepage-activity-edit' => 'binago ang pahinang $1',
+	'userprofilepage-activity-new' => 'nilikha ang $1',
+	'userprofilepage-activity-comment' => 'pumuna sa $1',
+	'userprofilepage-activity-image' => 'nagkarga ng larawan sa $1',
+	'userprofilepage-activity-video' => 'nagkarga ng isang bidyo sa $1',
+	'userprofilepage-activity-delete' => 'binura ang pahina ng $1',
+	'userprofilepage-activity-talk' => 'nag-iwan ng isang mensahe sa pahina ng usapan ni $1',
+	'userprofilepage-recent-activity-default' => 'Sumali si $1 sa Wikia',
+	'userprofilepage-top-recent-activity-see-more' => 'Tingnan lahat &gt;',
+	'userprofilepage-top-pages-title' => 'Pangunahing $2 Mga Pahina ni $1',
+	'userprofilepage-top-page-unhide-label' => 'huwag itago',
+	'userprofilepage-top-pages-hidden-see-more' => 'Itinago mo ang {{PLURAL:$1| $1 pahina|$1 mga pahina}}',
+	'recipes-template-user-description-label' => 'Paglalarawan',
+	'recipes-template-user-description-hint' => 'Maikling kabatiran tungkol sa tagagamit',
+	'recipes-template-user-birthdate-label' => 'Petsa ng kapanganakan',
+	'recipes-template-user-birthdate-hint' => 'Petsa ng kapanganakan (nasa anumang anyo)',
+	'recipes-template-user-species-label' => 'Mga uri',
+	'recipes-template-user-species-hint' => 'Uri',
+	'recipes-template-user-abilities-label' => 'Mga kakayahan',
+	'recipes-template-user-abilities-hint' => 'Mga kakayahan',
+	'recipes-template-user-gender-label' => 'Kasarian',
+	'recipes-template-user-gender-hint' => 'Kasarian',
+	'recipes-template-user-affiliation-label' => 'Kaaniban',
+	'recipes-template-user-affiliation-hint' => 'Kaaniban',
+);
+
 /** Ukrainian (Українська)
  * @author Тест
  */
@@ -1306,6 +1484,24 @@ $messages['uk'] = array(
 	'recipes-template-user-birthdate-hint' => 'Дата народження (в будь-якому форматі)',
 	'recipes-template-user-gender-label' => 'Стать',
 	'recipes-template-user-gender-hint' => 'Стать',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author XiaoQiaoGrace
+ */
+$messages['vi'] = array(
+	'userprofilepage-user-group-sysop' => 'Bảo quản viên',
+	'userprofilepage-user-group-staff' => 'Nhân viên Wikia',
+	'userprofilepage-user-group-bot' => 'robot',
+	'userprofilepage-user-group-bureaucrat' => 'Hành chính viên',
+	'userprofilepage-user-group-helper' => 'Thành viên trợ giúp',
+	'userprofilepage-user-group-vstf' => 'Đội tình nguyện chống phá hoại',
+	'userprofilepage-user-group-sysop-tooltip' => 'Người dùng này là Bảo quản viên tại wiki đây',
+	'userprofilepage-user-group-staff-tooltip' => 'Người dùng này là nhân viên Wikia',
+	'userprofilepage-user-group-bot-tooltip' => 'Người dùng này là một Robot',
+	'userprofilepage-user-group-bureaucrat-tooltip' => 'Người dùng này là Hành chính viên tại wiki đây',
+	'userprofilepage-user-group-helper-tooltip' => 'Người dùng này là thành viên trợ giúp',
+	'userprofilepage-user-group-vstf-tooltip' => 'Người dùng này là thành viên đội tình nguyện chống phá hoại',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

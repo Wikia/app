@@ -448,3 +448,10 @@ $messages['zh-hans'] = array(
 	'wikifactoryreporter' => 'WikiFactory 报告',
 );
 
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Wrightbus
+ */
+$messages['zh-hant'] = array(
+	'wikifactoryreporter' => 'WikiFactory 報告員',
+);
+

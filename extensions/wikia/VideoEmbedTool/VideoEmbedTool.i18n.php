@@ -85,7 +85,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'vet-upload-btn' => '{{Identical|Go}}',
+	'vet-upload-btn' => '{{Identical|Go}}Upload button text.',
 	'vet-find-btn' => '{{Identical|Search}}',
 	'vet-flickr-inf' => ' Maybe "free videos" is meant here?',
 	'vet-insert' => '{{Identical|Insert}}',
@@ -123,7 +123,7 @@ $messages['af'] = array(
 	'vet-find' => "Vind 'n video",
 	'vet-thiswiki' => 'Hierdie wiki',
 	'vet-flickr' => 'Flickr',
-	'vet-upload-btn' => 'OK',
+	'vet-upload-btn' => 'Laai op',
 	'vet-find-btn' => 'Soek',
 	'vet-flickr-inf' => "Soek korrek gelisensieerde vrye foto's vanaf Flickr en laai hulle in u wiki in.",
 	'vet-conflict-inf' => "<h1>Oeps, 'n video met daardie naam bestaan reeds.</h1>Wat wil u met <b>$1</b> doen?",
@@ -135,7 +135,7 @@ $messages['af'] = array(
 Verskaf 'n beskrywende naam vir die video.",
 	'vet-name' => 'Naam',
 	'vet-license' => 'Lisensie',
-	'vet-details-inf2' => '<h1>Videovertoon-opsies</h1>',
+	'vet-details-inf2' => '</h1>Videovertoon-opsies</h1>',
 	'vet-size' => 'Grootte',
 	'vet-thumbnail' => 'Duimnael',
 	'vet-fullsize' => 'Volledige grootte ($1x$2px)',
@@ -177,12 +177,12 @@ Verskaf 'n beskrywende naam vir die video.",
 	'vet-preview' => '<i>Hierdie voorskou is nie korrek geskaal nie</i>',
 	'vet-bad-url' => 'Die opgegewe URL is ongeldig',
 	'vet-non-existing' => 'Die opgegewe video bestaan nie',
-	'vet-main-info' => "<i>Soek na 'n video of verskaf die volledige URL van een van die ondersteunde webwerwe</i>",
+	'vet-main-info' => "<i>Verskaf 'n volledige URL vanaf een van die ondersteunde webwerwe.</i>",
 	'vet-page-success' => 'Die videobladsy is suksesvol opgedateer.
 U sal moontlik die videobladsy moet opruim (purge) om die verandering te sien.',
 	'vet-add-button' => 'Voeg Video by',
 	'vet-added-from-gallery' => 'video bygevoeg vanuit videogalery',
-	'vet-see-all' => 'wys allmal',
+	'vet-see-all' => 'alle',
 	'vet-bad-search' => "'n Fout het voorgekom tydens die laai van die soekopdrag.",
 	'vet-no-preview' => "U kan nie 'n video by die bladsy voeg as u met 'n voorskou besig is nie",
 	'vet-single-success' => 'Die video is suksesvol by die bladsy bygevoeg.',
@@ -200,6 +200,49 @@ U sal moontlik die videobladsy moet opruim (purge) om die verandering te sien.',
 $messages['an'] = array(
 	'vet-insert' => 'Insertar',
 	'vet-thumbnail' => 'Miniatura',
+);
+
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'vet-upload' => 'المسار الكامل',
+	'vet-thiswiki' => 'هذه الويكي',
+	'vet-flickr' => 'فلكر',
+	'vet-upload-btn' => 'اذهب',
+	'vet-find-btn' => 'ابحث',
+	'vet-insert' => 'أدرج',
+	'vet-name' => 'الاسم',
+	'vet-license' => 'الرخصة',
+	'vet-size' => 'الحجم',
+	'vet-thumbnail' => 'مصغرة',
+	'vet-fullsize' => 'الحجم الكلي ($1x$2px)',
+	'vet-width' => 'العرض',
+	'vet-layout' => 'التخطيط',
+	'vet-caption' => 'التعليق',
+	'vet-optional' => ' (اختياري)',
+	'vet-insert2' => 'أدرج الفيديو',
+	'vet-update' => 'حدّث الفيديو',
+	'vet-close' => 'أغلق',
+	'vet-show-message' => 'أظهر الرسالة',
+	'vet-hide-message' => 'أخفِ الرسالة',
+	'vet-hide-license-msg' => 'أخفِ نص الرخصة',
+	'vet-show-license-msg' => 'أظهر نص الرخصة',
+	'vet-title' => 'إضافة فيديو لمقالك',
+	'vet-supported' => 'مواقع الفيديو المدعومة:',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'vet-name' => 'Ad',
+	'vet-license' => 'Lisenziya',
+	'vet-size' => 'Həcm',
+	'vet-close' => 'Bağla',
+	'vet-left' => 'Sol',
+	'vet-right' => 'Sağ',
+	'vet-gallery' => 'Qalereya',
 );
 
 /** Belarusian (Беларуская)
@@ -231,7 +274,7 @@ $messages['be-tarask'] = array(
 	'vet-details-inf' => '<h1>Апісаньне файла</h1>Пазначце назву гэтага відэа. Паспрабуйце апісаць ёй зьмест файла.',
 	'vet-name' => 'Назва',
 	'vet-license' => 'Ліцэнзія',
-	'vet-details-inf2' => '<h1>Устаноўкі паказу відэа</h1>',
+	'vet-details-inf2' => '</h1>Устаноўкі паказу відэа</h1>',
 	'vet-size' => 'Памер',
 	'vet-thumbnail' => 'Мініятура',
 	'vet-fullsize' => 'Поўны памер ($1×$2пкс)',
@@ -289,16 +332,27 @@ $messages['be-tarask'] = array(
 	'vet-protected' => 'Гэтае відэа было абароненае',
 );
 
-/** Bulgarian (Български) */
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
 $messages['bg'] = array(
+	'vet-upload' => 'Пълен адрес',
 	'vet-thiswiki' => 'Това уики',
+	'vet-flickr' => 'Flickr',
 	'vet-find-btn' => 'Търсене',
 	'vet-name' => 'Име',
 	'vet-license' => 'Лиценз',
 	'vet-size' => 'Размер',
+	'vet-width' => 'Ширина',
 	'vet-prev' => 'Предишни 8',
 	'vet-next' => 'Следващи 8',
+	'vet-back' => 'Връщане',
 	'vet-close' => 'Затваряне',
+	'vet-show-message' => 'показване на съобщението',
+	'vet-hide-message' => 'скриване на съобщението',
+	'vet-hide-license-msg' => 'скриване на лицензния текст',
+	'vet-show-license-msg' => 'показване на лицензния текст',
+	'vet-add-button' => 'Добавяне на видео',
 	'vet-left' => 'Ляво',
 	'vet-right' => 'Дясно',
 	'vet-gallery' => 'Галерия',
@@ -326,7 +380,7 @@ $messages['br'] = array(
 	'vet-details-inf' => "<h1>Anv ar restr</h1>Roit un anv heverk d'ar video, mar plij",
 	'vet-name' => 'Anv',
 	'vet-license' => 'Aotre implijout',
-	'vet-details-inf2' => '<h1> An dibaboù diskwel video </h1>',
+	'vet-details-inf2' => '</h1> An dibaboù diskwel video </h1>',
 	'vet-size' => 'Ment',
 	'vet-thumbnail' => 'Munud',
 	'vet-fullsize' => 'Ment klok ($1x$2px)',
@@ -432,7 +486,7 @@ $messages['de'] = array(
 	'vet-details-inf' => '<h1>Dateiname</h1>Bitte gib einen möglichst aussagekräftigen Namen für dieses Video an.',
 	'vet-name' => 'Name',
 	'vet-license' => 'Lizenz',
-	'vet-details-inf2' => '<h1>Video Anzeige-Optionen</h1>',
+	'vet-details-inf2' => '</h1>Video Anzeige-Optionen</h1>',
 	'vet-size' => 'Größe',
 	'vet-thumbnail' => 'Miniatur',
 	'vet-fullsize' => 'Original ($1x$2px)',
@@ -525,6 +579,7 @@ $messages['ee'] = array(
  * @author Peter17
  * @author Sanbec
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'vet-upload' => 'URL completa',
@@ -532,7 +587,7 @@ $messages['es'] = array(
 	'vet-find' => 'Buscar un vídeo',
 	'vet-thiswiki' => 'Este wiki',
 	'vet-flickr' => 'Flickr',
-	'vet-upload-btn' => 'Insertar',
+	'vet-upload-btn' => 'Subir',
 	'vet-find-btn' => 'Búsqueda',
 	'vet-flickr-inf' => 'Busca fotos con la licencia libre apropiada desde Flickr e impórtalas después a tu wiki.',
 	'vet-conflict-inf' => '<h1>Uups, ya existe un vídeo con ese nombre.</h1>¿Qué quieres hacer con <b>$1</b>?',
@@ -543,7 +598,7 @@ $messages['es'] = array(
 	'vet-details-inf' => '<h1>Detalles del archivo</h1>Especifica un nombre para el vídeo. ¡Que sea descriptivo!',
 	'vet-name' => 'Nombre',
 	'vet-license' => 'Licencia',
-	'vet-details-inf2' => '<h1>Opciones de Muestra del Vídeo</h1>',
+	'vet-details-inf2' => '</h1>Opciones de Muestra del Vídeo</h1>',
 	'vet-size' => 'Tamaño',
 	'vet-thumbnail' => 'Miniatura',
 	'vet-fullsize' => 'Tamaño completo ($1x$2px)',
@@ -579,6 +634,7 @@ $messages['es'] = array(
 	'vet-max-thumb' => 'tamaño máximo del thumbnail excedido, revirtiendo a su tamaño original',
 	'vet-notallowed' => 'No puedes insertar vídeos en este wiki',
 	'vet-title' => 'Añadir un vídeo a tu artículo',
+	'vet-description' => 'Escribe la URL completa de cualquiera de los sitios soportados. Ver',
 	'vet-supported' => 'Sitios de vídeos soportados:',
 	'vet-preview' => '<i>esta es solamente una vista reducida de lo que se mostrará</i>',
 	'vet-bad-url' => 'La URL aportada es inválida',
@@ -660,7 +716,7 @@ $messages['fr'] = array(
 	'vet-details-inf' => '<h1>Le nom du fichier</h1>Merci de donner un nom très significatif pour la vidéo.',
 	'vet-name' => 'Nom',
 	'vet-license' => 'Licence',
-	'vet-details-inf2' => "<h1>Les options d'affichage vidéo</h1>",
+	'vet-details-inf2' => "</h1>Les options d'affichage vidéo</h1>",
 	'vet-size' => 'Taille',
 	'vet-thumbnail' => 'Aperçu',
 	'vet-fullsize' => 'Taille originale ($1px/$2px)',
@@ -727,7 +783,7 @@ $messages['gl'] = array(
 	'vet-find' => 'Atopar un vídeo',
 	'vet-thiswiki' => 'Este wiki',
 	'vet-flickr' => 'Flickr',
-	'vet-upload-btn' => 'CARGAR',
+	'vet-upload-btn' => 'Cargar',
 	'vet-find-btn' => 'Procurar',
 	'vet-flickr-inf' => 'Busca fotografías de licenza libre de Flickr e impórtaas no seu wiki.',
 	'vet-conflict-inf' => '<h1>Vaites!, xa existe un vídeo con ese nome.</h1>Que quere facer con <b>$1</b>?',
@@ -738,7 +794,7 @@ $messages['gl'] = array(
 	'vet-details-inf' => '<h1>Detalles do ficheiro</h1>Especifique un nome para este vídeo. Escolla un que sexa descritivo.',
 	'vet-name' => 'Nome',
 	'vet-license' => 'Licenza',
-	'vet-details-inf2' => '<h1>Opcións de visualización do vídeo</h1>',
+	'vet-details-inf2' => 'Opcións de visualización do vídeo',
 	'vet-size' => 'Tamaño',
 	'vet-thumbnail' => 'Miniatura',
 	'vet-fullsize' => 'Tamaño completo ($1x$2px)',
@@ -780,11 +836,11 @@ $messages['gl'] = array(
 	'vet-preview' => '<i>Esta vista previa non está a escala</i>',
 	'vet-bad-url' => 'O enderezo URL solicitado non é válido',
 	'vet-non-existing' => 'O vídeo solicitado non existe',
-	'vet-main-info' => '<i>Busque un vídeo ou escriba o enderezo URL completo de calquera dos sitios soportados</i>',
+	'vet-main-info' => '<i>Escriba o enderezo URL completo de calquera dos sitios soportados</i>',
 	'vet-page-success' => 'A páxina do vídeo foi actualizada correctamente. Poida que teña que recargar a páxina para ollar os cambios.',
 	'vet-add-button' => 'Engadir o vídeo',
 	'vet-added-from-gallery' => 'vídeo engadido dunha galería de vídeos',
-	'vet-see-all' => 'ollar todos',
+	'vet-see-all' => 'todos',
 	'vet-bad-search' => 'Erro ao cargar a pescuda.',
 	'vet-no-preview' => 'Non pode engadir un vídeo ao artigo no modo de vista previa',
 	'vet-single-success' => 'O vídeo colocouse con éxito neste artigo',
@@ -902,7 +958,7 @@ $messages['hu'] = array(
 	'vet-insert' => 'Beillesztés',
 	'vet-name' => 'Név',
 	'vet-license' => 'Licenc',
-	'vet-details-inf2' => '<h1>Videó megjelenítési beállítások</h1>',
+	'vet-details-inf2' => '</h1>Videó megjelenítési beállítások</h1>',
 	'vet-size' => 'Méret',
 	'vet-thumbnail' => 'Bélyegkép',
 	'vet-fullsize' => 'Teljes méret ($1×$2 képpont)',
@@ -943,7 +999,7 @@ $messages['ia'] = array(
 	'vet-find' => 'Cercar un video',
 	'vet-thiswiki' => 'Iste wiki',
 	'vet-flickr' => 'Flickr',
-	'vet-upload-btn' => 'IR',
+	'vet-upload-btn' => 'Incargar',
 	'vet-find-btn' => 'Cercar',
 	'vet-flickr-inf' => 'Cerca photos de licentia libere in Flickr e importa los in tu wiki.',
 	'vet-conflict-inf' => '<h1>Ups, un video con iste nomine ja existe.</h1>Que vole tu facer con <b>$1</b>?',
@@ -954,7 +1010,7 @@ $messages['ia'] = array(
 	'vet-details-inf' => '<h1>Detalios del file</h1>Specifica un nomine descriptive pro iste video.',
 	'vet-name' => 'Nomine',
 	'vet-license' => 'Licentia',
-	'vet-details-inf2' => '<h1>Optiones de reproduction video</h1>',
+	'vet-details-inf2' => '</h1>Optiones de reproduction video</h1>',
 	'vet-size' => 'Dimension',
 	'vet-thumbnail' => 'Miniatura',
 	'vet-fullsize' => 'Dimension original ($1 × $2 px)',
@@ -992,15 +1048,16 @@ $messages['ia'] = array(
 	'vet-max-thumb' => 'dimension maximal del miniatura excedite, reversion al dimension original',
 	'vet-notallowed' => 'Tu non pote inserer videos in iste wiki.',
 	'vet-title' => 'Adder un video a tu articulo',
+	'vet-description' => 'Entra le URL complete de un del sitos supportate. Vide',
 	'vet-supported' => 'Sitos de video supportate:',
 	'vet-preview' => '<i>Previsualisation a scala reducite</i>',
 	'vet-bad-url' => 'Le URL fornite es invalide',
 	'vet-non-existing' => 'Le video fornite non existe',
-	'vet-main-info' => '<i>Cerca un video o entra le URL complete de un del sitos supportate</i>',
+	'vet-main-info' => '<i>Entra le URL complete de un del sitos supportate</i>',
 	'vet-page-success' => 'Le pagina del video ha essite actualisate. Es possibile que tu debe recargar le pagina del video pro vider le cambio.',
 	'vet-add-button' => 'Adder video',
 	'vet-added-from-gallery' => 'video addite ex galeria de videos',
-	'vet-see-all' => 'vider totes',
+	'vet-see-all' => 'totes',
 	'vet-bad-search' => 'Error durante le cargamento del consulta de recerca.',
 	'vet-no-preview' => 'Tu non pote adder un video ex un articulo in modo de previsualisation.',
 	'vet-single-success' => 'Le video ha essite placiate in iste articulo con successo.',
@@ -1020,7 +1077,7 @@ $messages['id'] = array(
 	'vet-insert' => 'Sisipkan',
 	'vet-name' => 'Nama',
 	'vet-license' => 'Lisensi',
-	'vet-details-inf2' => '<h1>Pilihan Tampilan Video</h1>',
+	'vet-details-inf2' => '</h1>Pilihan Tampilan Video</h1>',
 	'vet-size' => 'Ukuran',
 	'vet-thumbnail' => 'Miniatur',
 	'vet-fullsize' => 'Ukuran-penuh ($1x$2px)',
@@ -1143,7 +1200,7 @@ $messages['ja'] = array(
 この動画の名前を指定してください。動画の内容がわかるようなものがいいでしょう。',
 	'vet-name' => '動画名',
 	'vet-license' => 'ライセンス',
-	'vet-details-inf2' => '<h1>動画表示のオプション</h1>',
+	'vet-details-inf2' => '</h1>動画表示のオプション</h1>',
 	'vet-size' => 'サイズ',
 	'vet-thumbnail' => 'サムネイル',
 	'vet-fullsize' => 'フルサイズ ($1 x $2 ピクセル)',
@@ -1291,7 +1348,7 @@ $messages['mk'] = array(
 	'vet-details-inf' => '<h1>Податоци за податотеката</h1>Назначете име за оваа видеоснимка. Треба да биде описно.',
 	'vet-name' => 'Име',
 	'vet-license' => 'Лиценца',
-	'vet-details-inf2' => '<h1>Нагодувања за приказ на видеоснимки</h1>',
+	'vet-details-inf2' => '</h1>Нагодувања за приказ на видеоснимки</h1>',
 	'vet-size' => 'Големина',
 	'vet-thumbnail' => 'Минијатура',
 	'vet-fullsize' => 'Во полна големина ($1x$2px)',
@@ -1376,7 +1433,7 @@ $messages['ms'] = array(
 	'vet-details-inf' => '<h1>Butiran fail</h1>Berikan nama yang deskriptif kepada video ini.',
 	'vet-name' => 'Nama',
 	'vet-license' => 'Lesen',
-	'vet-details-inf2' => '<h1>Pilihan paparan video</h1>',
+	'vet-details-inf2' => '</h1>Pilihan paparan video</h1>',
 	'vet-size' => 'Saiz',
 	'vet-thumbnail' => 'Imej ringkas',
 	'vet-fullsize' => 'Saiz penuh ( $1 x $2 px)',
@@ -1442,6 +1499,23 @@ $messages['mt'] = array(
 	'vet-close' => 'Agħlaq',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'vet-upload-btn' => 'သွား​ပါ​',
+	'vet-find-btn' => 'ရှာ​ဖွေ​ရန်​',
+	'vet-name' => 'အမည်',
+	'vet-license' => 'လိုင်စင်',
+	'vet-size' => 'အရွယ်အစား',
+	'vet-thumbnail' => 'နမူနာပုံငယ်',
+	'vet-width' => 'အကျယ်',
+	'vet-prev' => 'နောက် 8',
+	'vet-back' => 'နောက်',
+	'vet-close' => 'ပိတ်ရန်',
+	'vet-see-all' => 'ဆက်လက်ကြည့်ရန်',
+);
+
 /** Dutch (Nederlands)
  * @author Naudefj
  * @author Siebrand
@@ -1452,7 +1526,7 @@ $messages['nl'] = array(
 	'vet-find' => 'Video zoeken',
 	'vet-thiswiki' => 'Deze wiki',
 	'vet-flickr' => 'Flickr',
-	'vet-upload-btn' => 'OK',
+	'vet-upload-btn' => 'Uploaden',
 	'vet-find-btn' => 'Zoeken',
 	'vet-flickr-inf' => 'Zoek correct gelicenseerde vrije afbeeldingen van Flickr en importeer ze in uw wiki.',
 	'vet-conflict-inf' => '<h1>De video met deze naam bestaat al</h1>Wat wilt u met <b>$1</b> doen?',
@@ -1464,7 +1538,7 @@ $messages['nl'] = array(
 Geef een beschrijvende naam op voor deze video.',
 	'vet-name' => 'Naam',
 	'vet-license' => 'Licentie',
-	'vet-details-inf2' => '<h1>Videoweergaveinstellingen</h1>',
+	'vet-details-inf2' => '</h1>Videoweergaveinstellingen</h1>',
 	'vet-size' => 'Grootte',
 	'vet-thumbnail' => 'Miniatuur',
 	'vet-fullsize' => 'Volledige grootte ($1x$2px)',
@@ -1486,8 +1560,8 @@ Geef een beschrijvende naam op voor deze video.',
 	'vet-back' => 'terug',
 	'vet-close' => 'sluiten',
 	'vet-warn1' => 'U moet eerst een zoekopdracht ingeven!',
-	'vet-warn2' => 'Geef alstublieft de URL van de video die u wilt toevoegen op',
-	'vet-warn3' => 'Geef alstublieft de naam van de video die u wilt toevoegen op',
+	'vet-warn2' => 'Geef alstublieft de URL op van de video die u wilt toevoegen',
+	'vet-warn3' => 'Geef alstublieft de naam op van de video die u wilt toevoegen',
 	'vet-imagelink' => '<b>Nieuw!</b> Video toevoegen',
 	'vet-imagebutton' => "Video's toevoegen",
 	'vet-license-cc' => 'Gelicenseerd onder de Creative Commons-licentie Naamsvermelding-Gelijk delen 3.0',
@@ -1502,16 +1576,17 @@ Geef een beschrijvende naam op voor deze video.',
 	'vet-max-thumb' => 'de maximale miniatuurgrootte is overschreden; de originele afmetingen worden ingesteld',
 	'vet-notallowed' => "U kunt geen video's toevoegen in deze wiki",
 	'vet-title' => 'Video aan uw pagina toevoegen',
+	'vet-description' => 'Geef een volledige URL op van een van de ondersteunde websites. Zie',
 	'vet-supported' => 'Ondersteunde videosites:',
 	'vet-preview' => '<i>Deze voorvertoning is niet correct geschaald</i>',
 	'vet-bad-url' => 'De opgegeven URL is ongeldig',
 	'vet-non-existing' => 'De opgegeven video bestaat niet',
-	'vet-main-info' => '<i>Zoek een video of geef een volledige URL op van een van de ondersteunde websites.</i>',
+	'vet-main-info' => '<i>Geef een volledige URL op van een van de ondersteunde websites.</i>',
 	'vet-page-success' => 'Die videopagina is bijgewerkt.
 Wellicht moet u de videopagina opschonen om de wijzigingen te zien.',
 	'vet-add-button' => 'Video toevoegen',
 	'vet-added-from-gallery' => 'video toegevoegd vanuit videogalerij',
-	'vet-see-all' => 'allemaal bekijken',
+	'vet-see-all' => 'alle',
 	'vet-bad-search' => 'Er is een fout opgetreden bij het laden van de zoekopdracht.',
 	'vet-no-preview' => 'U kunt geen video uit een pagina toevoegen in de voorvertoning',
 	'vet-single-success' => 'De video is aan de pagina toegevoegd.',
@@ -1521,6 +1596,26 @@ Wellicht moet u de videopagina opschonen om de wijzigingen te zien.',
 	'vet-right' => 'Rechts',
 	'vet-gallery' => 'Galerij',
 	'vet-protected' => 'Deze video is beveiligd',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'vet-flickr-inf' => 'Zoek correct gelicenseerde vrije afbeeldingen van Flickr en importeer ze in je wiki.',
+	'vet-conflict-inf' => '<h1>De video met deze naam bestaat al</h1>Wat wil je met <b>$1</b> doen?',
+	'vet-overwrite' => 'De bestaande video met jouw bestand overschrijven',
+	'vet-warn1' => 'Je moet eerst een zoekopdracht ingeven!',
+	'vet-warn2' => 'Geef alstublieft de URL op van de video die je wilt toevoegen',
+	'vet-warn3' => 'Geef alsjeblieft de naam op van de video die je wilt toevoegen',
+	'vet-uploadtext' => "'''Via dit formulier kan je snel bestanden uploaden en in pagina's plaatsen.'''
+
+''Zie ook het [[Special:Log/upload|uploadlogboek]] en een [[Special:ImageList|lijst met alle toegevoegde bestanden]].''",
+	'vet-notallowed' => "Je kunt geen video's toevoegen in deze wiki",
+	'vet-title' => 'Video aan je pagina toevoegen',
+	'vet-page-success' => 'Die videopagina is bijgewerkt.
+Wellicht moet je de videopagina opschonen om de wijzigingen te zien.',
+	'vet-no-preview' => 'Je kunt geen video uit een pagina toevoegen in de voorvertoning',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -1533,7 +1628,7 @@ $messages['no'] = array(
 	'vet-find' => 'Finn en video',
 	'vet-thiswiki' => 'Denne Wikien',
 	'vet-flickr' => 'Flickr',
-	'vet-upload-btn' => 'Kjør',
+	'vet-upload-btn' => 'Last opp',
 	'vet-find-btn' => 'Søk',
 	'vet-flickr-inf' => 'Søk gjennom forsvarlig lisensierte gratisbilder fra Flickr og importer dem til wikien din.',
 	'vet-conflict-inf' => '<h1>Oops, en video med det navnet finnes allerede.</h1>Hva vil du gjøre med <b>$1</b>?',
@@ -1544,7 +1639,7 @@ $messages['no'] = array(
 	'vet-details-inf' => '<h1>Fildetaljer</h1>Angi et navn for denne videoen. Gi den noe beskrivende.',
 	'vet-name' => 'Navn',
 	'vet-license' => 'Lisens',
-	'vet-details-inf2' => '<h1>Videovisningsvalg</h1>',
+	'vet-details-inf2' => '</h1>Videovisningsvalg</h1>',
 	'vet-size' => 'Størrelse',
 	'vet-thumbnail' => 'Miniatyrbilde',
 	'vet-fullsize' => 'Full størrelse ($1x$2px)',
@@ -1582,15 +1677,16 @@ $messages['no'] = array(
 	'vet-max-thumb' => 'maks størrelse for miniatyrbilde overskredet, går tilbake til opprinnelig størrelse',
 	'vet-notallowed' => 'Du kan ikke sette inn videoer på denne wikien',
 	'vet-title' => 'Legg en video til artikkelen din',
+	'vet-description' => 'Skriv inn hele nettadressen fra noen av de støttede nettstedene. Se',
 	'vet-supported' => 'Støttede videosteder:',
 	'vet-preview' => '<i>Denne forhåndsvisningen er ikke i riktig skala</i>',
 	'vet-bad-url' => 'Den oppgitte URL-en er ugyldig',
 	'vet-non-existing' => 'Den oppgitte videoen finnes ikke',
-	'vet-main-info' => '<i>Søk etter en video eller skriv inn hele nettadressen fra en av de støttede sidene</i>',
+	'vet-main-info' => '<i>Skriv inn hele nettadressen fra noen av de støttede nettstedene</i>',
 	'vet-page-success' => 'Videosiden ble oppdatert. Du må kanskje slette mellomlagerfiler for videosiden for å se endringen.',
 	'vet-add-button' => 'Legg til video',
 	'vet-added-from-gallery' => 'video lagt til fra videogalleri',
-	'vet-see-all' => 'se alle',
+	'vet-see-all' => 'alle',
 	'vet-bad-search' => 'Feil under lasting av søkespørring.',
 	'vet-no-preview' => 'Du kan ikke legge til video fra artikkel i forhåndsvisningsmodus',
 	'vet-single-success' => 'Video ble vellykket plassert i denne artikkelen',
@@ -1617,7 +1713,7 @@ $messages['oc'] = array(
 	'vet-insert' => 'Inserir',
 	'vet-name' => 'Nom',
 	'vet-license' => 'Licéncia',
-	'vet-details-inf2' => "<h1>Las opcions d'afichatge vidèo</h1>",
+	'vet-details-inf2' => "</h1>Las opcions d'afichatge vidèo</h1>",
 	'vet-size' => 'Talha',
 	'vet-thumbnail' => 'Apercebut',
 	'vet-width' => 'largor',
@@ -1663,7 +1759,7 @@ $messages['pl'] = array(
 Podaj nazwę tego filmu. Może to być np. opis jego zawartości.',
 	'vet-name' => 'Nazwa',
 	'vet-license' => 'Licencja',
-	'vet-details-inf2' => '<h1>Opcje wyświetlania filmu</h1>',
+	'vet-details-inf2' => '</h1>Opcje wyświetlania filmu</h1>',
 	'vet-size' => 'Rozmiar',
 	'vet-thumbnail' => 'Miniatura',
 	'vet-fullsize' => 'Pełnowymiarowy ($1x$2pks.)',
@@ -1742,7 +1838,7 @@ $messages['pms'] = array(
 	'vet-details-inf' => "<h1>Detaj dl'archivi</h1>Ch'a spessìfica un nòm për ës filmà-sì. Ch'a sia cheicòs ëd descritiv.",
 	'vet-name' => 'Nòm',
 	'vet-license' => 'Licensa',
-	'vet-details-inf2' => '<h1>Opsion ëd visualisassion dël filmà</h1>',
+	'vet-details-inf2' => '</h1>Opsion ëd visualisassion dël filmà</h1>',
 	'vet-size' => 'Dimension',
 	'vet-thumbnail' => 'Figurin-a',
 	'vet-fullsize' => 'Dimension pien-a ($1x$2pt)',
@@ -1810,6 +1906,7 @@ $messages['ps'] = array(
 	'vet-upload-btn' => 'ورځه',
 	'vet-find-btn' => 'پلټل',
 	'vet-name' => 'نوم',
+	'vet-license' => 'منښتليک',
 	'vet-size' => 'کچه',
 	'vet-thumbnail' => 'بټنوک',
 	'vet-layout' => 'ليدنمخ',
@@ -1820,7 +1917,7 @@ $messages['ps'] = array(
 	'vet-see-all' => 'ټول کتل',
 	'vet-left' => 'کيڼ',
 	'vet-right' => 'ښي',
-	'vet-gallery' => 'نندارتون',
+	'vet-gallery' => 'انځورتون',
 	'vet-protected' => 'دا ويډيو ژغورل شوې',
 );
 
@@ -1845,7 +1942,7 @@ $messages['pt'] = array(
 	'vet-details-inf' => '<h1>Detalhes do ficheiro</h1>Introduza um nome descritivo para este vídeo.',
 	'vet-name' => 'Nome',
 	'vet-license' => 'Licença',
-	'vet-details-inf2' => '<h1>Opções de visionamento de vídeos</h1>',
+	'vet-details-inf2' => '</h1>Opções de visionamento de vídeos</h1>',
 	'vet-size' => 'Dimensão',
 	'vet-thumbnail' => 'Miniatura',
 	'vet-fullsize' => 'Dimensão completa ($1x$2px)',
@@ -1924,7 +2021,7 @@ $messages['pt-br'] = array(
 	'vet-details-inf' => '<h1>Detalhes do arquivo</h1>Introduza um nome descritivo para este vídeo.',
 	'vet-name' => 'Nome',
 	'vet-license' => 'Licença',
-	'vet-details-inf2' => '<h1>Opções de visualização de vídeos</h1>',
+	'vet-details-inf2' => '</h1>Opções de visualização de vídeos</h1>',
 	'vet-size' => 'Tamanho',
 	'vet-thumbnail' => 'Miniatura',
 	'vet-fullsize' => 'Tamanho original ($1x$2px)',
@@ -1982,6 +2079,15 @@ $messages['pt-br'] = array(
 	'vet-protected' => 'Este vídeo está protegido.',
 );
 
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'vet-flickr' => 'Flickr',
+	'vet-name' => 'Nume',
+	'vet-license' => 'Licenţă',
+);
+
 /** Russian (Русский)
  * @author Eleferen
  * @author Lockal
@@ -2004,7 +2110,7 @@ $messages['ru'] = array(
 	'vet-details-inf' => '<h1>Имя файла</h1>Укажите имя для этого видео. Постарайтесь описать в нём содержимое файла.',
 	'vet-name' => 'Имя',
 	'vet-license' => 'Лицензия',
-	'vet-details-inf2' => '<h1>Параметры отображения видео</h1>',
+	'vet-details-inf2' => '</h1>Параметры отображения видео</h1>',
 	'vet-size' => 'Размер',
 	'vet-thumbnail' => 'Миниатюра',
 	'vet-fullsize' => 'Полный размер ($1x$2 пикс.)',
@@ -2089,7 +2195,7 @@ $messages['sr-ec'] = array(
 	'vet-details-inf' => '<h1>Детаљи о датотеци</h1>Одредите назив видео снимка. Нека буде нешто описно.',
 	'vet-name' => 'Назив',
 	'vet-license' => 'Лиценца',
-	'vet-details-inf2' => '<h1>Поставке видео приказа</h1>',
+	'vet-details-inf2' => '</h1>Поставке видео приказа</h1>',
 	'vet-size' => 'Величина',
 	'vet-thumbnail' => 'Умањени приказ',
 	'vet-fullsize' => 'Пуна величина ($1×$2 тачака)',
@@ -2150,7 +2256,7 @@ $messages['sv'] = array(
 	'vet-details-inf' => '<h1>Fildetaljer</h1>Ange ett namn för den här videon. Gör den något mer beskrivande.',
 	'vet-name' => 'Namn',
 	'vet-license' => 'Licens',
-	'vet-details-inf2' => '<h1>Visningsalternativ för video</h1>',
+	'vet-details-inf2' => '</h1>Visningsalternativ för video</h1>',
 	'vet-size' => 'Storlek',
 	'vet-thumbnail' => 'Miniatyrbild',
 	'vet-fullsize' => 'Full-storlek ($1x$2px)',
@@ -2227,6 +2333,86 @@ $messages['te'] = array(
 	'vet-optional' => '  (ఐచ్చికం)',
 	'vet-back' => 'వెనక్కి',
 	'vet-close' => 'మూసివేయి',
+);
+
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'vet-name' => 'Naran',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'vet-upload' => 'Buong URL',
+	'vet-notlogged' => 'Lumagda o magpatala upang makapagsingit ng mga bidyo',
+	'vet-find' => 'Maghanap ng isang bidyo',
+	'vet-thiswiki' => 'Ang wiking ito',
+	'vet-flickr' => 'Flickr',
+	'vet-upload-btn' => 'Pumunta',
+	'vet-find-btn' => 'Maghanap',
+	'vet-flickr-inf' => 'Maghanap ng malalayang mga larawang may marapat na lisensiya mula sa Flickr at angkatin sila papunta sa wiki mo.',
+	'vet-conflict-inf' => '<h1>Naku, umiiral na ang isang bidyong may ganyang pangalan.</h1>Ano ang nais mong gawin tungkol sa <b>$1</b>?',
+	'vet-rename' => 'Muling pangalanan ang bidyo',
+	'vet-existing' => 'Gamitin ang umiiral na bidyo',
+	'vet-overwrite' => 'Patungan ng iyo ang umiiral na bidyo',
+	'vet-insert' => 'Isingit',
+	'vet-name' => 'Pangalan',
+	'vet-license' => 'Lisensiya',
+	'vet-size' => 'Sukat',
+	'vet-thumbnail' => 'Kagyat',
+	'vet-fullsize' => 'Buong-sukat ($1x$2px)',
+	'vet-width' => 'Lapad',
+	'vet-layout' => 'Kalatagan',
+	'vet-caption' => 'Paliwanag',
+	'vet-optional' => '(Maaaring wala nito)',
+	'vet-insert2' => 'Isingit ang bidyo',
+	'vet-update' => 'Isapanahon ang bidyo',
+	'vet-video-replace-link' => 'Upang mapalitan ang bidyong ito, mangyaring pumunta sa [[:$1]]',
+	'vet-prev' => 'Nakaraang 8',
+	'vet-next' => 'Susunod na 8',
+	'vet-metacafe' => 'Mga bidyo ng Kapihang Meta ($1 {{PLURAL:$1|kinalabasan|mga kinalabasan}})',
+	'vet-insert3' => 'Isingit ang bidyong ito',
+	'vet-recent-inf' => 'Kamakailang isingit na mga bidyo',
+	'vet-thiswiki2' => 'Ang bidyo ng wiking ito ($1 {{PLURAL:$1|kinalabasan|mga kinalabasan}})',
+	'vet-success' => '<h1>Tagumpay</h1>',
+	'vet-return' => 'Magbalik sa pamamatnugot',
+	'vet-back' => 'Bumalik',
+	'vet-close' => 'Isara',
+	'vet-warn1' => 'Kailangan mo munang tukuyin ang tanong!',
+	'vet-warn2' => 'Mangyaring ibigay ang URL ng bidyong nais mong idagdag',
+	'vet-warn3' => 'Mangyaring ibigay ang pangalan ng bidyong nais mong idagdag',
+	'vet-imagelink' => '<b>Bago!</b> Magsingit ng mga bidyo',
+	'vet-imagebutton' => 'Isingit ang mga bidyo',
+	'vet-license-cc' => 'Nakalisensya sa ilalim ng Creative Commons Attribution-Share Alike 3.0',
+	'vet-name-incorrect' => 'Ang pangalan bidyong ito ay naglalaman ng hindi katanggap-tanggap na mga panitik',
+	'vet-show-message' => 'ipakita ang mensahe',
+	'vet-hide-message' => 'itago ang mensahe',
+	'vet-hide-license-msg' => 'itago ang teksto ng lisensya',
+	'vet-show-license-msg' => 'ipakita ang teksto ng lisensya',
+	'vet-max-thumb' => 'lumabis sa pinakamataas na sukat ng kagyat, nagpapanumbalik sa orihinal na sukat',
+	'vet-notallowed' => 'Hindi ka makapagsisingit ng mga bidyo sa wiking ito',
+	'vet-title' => 'Magdagdag ng isang bidyo sa artikulo mo',
+	'vet-supported' => 'Tinatangkilik na mga sityo ng bidyo:',
+	'vet-preview' => '<i>Wala sa sukat ang paunang tinging ito</i>',
+	'vet-bad-url' => 'Hindi katanggap-katanggap ang ibinigay na URL',
+	'vet-non-existing' => 'Hindi umiiral ang ibinigay na bidyo',
+	'vet-main-info' => '<i>Maghanap ng isang bidyo o ipasok ang buong URL mula sa anumang tinatangkilik na mga sityo</i>',
+	'vet-page-success' => 'Matagumpay na naisapanahon ang pahina ng bidyo. Maaaring kailanganin mong purgahin ang pahina ng bidyo upang makita ang pagbabago.',
+	'vet-add-button' => 'Idagdag ang bidyo',
+	'vet-added-from-gallery' => 'idinagdag ang bidyong nagmula sa galeriya ng bidyo',
+	'vet-see-all' => 'tingnan ang lahat',
+	'vet-bad-search' => 'Kamalian sa pagkakarga ng tanong ng paghanap.',
+	'vet-no-preview' => 'Hindi ka maaaring magdagdag ng bidyo mula sa artikulo habang nasa pamamaraan ng paunang tingin.',
+	'vet-single-success' => 'Matagumpay na nailagay ang bidyo sa loob ng artikulong ito.',
+	'vet-gallery-create-success' => 'Isang tanghalan ng bidyo ang naidagdag sa artikulong ito.',
+	'vet-gallery-add-success' => 'Isang bidyo ang naidagdag sa tanghalan ng bidyo sa loob ng artikulong ito.',
+	'vet-left' => 'Kaliwa',
+	'vet-right' => 'Kanan',
+	'vet-gallery' => 'Galeriya',
+	'vet-protected' => 'Pinuprutektahan ang bidyong ito.',
 );
 
 /** Ukrainian (Українська)

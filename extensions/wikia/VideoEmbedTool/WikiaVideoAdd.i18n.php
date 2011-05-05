@@ -158,6 +158,13 @@ $messages['de-formal'] = array(
 	'wva-notallowed' => 'Sie können in diesem Wiki keine Videos einfügen.',
 );
 
+/** Esperanto (Esperanto)
+ * @author Yekrats
+ */
+$messages['eo'] = array(
+	'wva-add' => 'Aldoni',
+);
+
 /** Spanish (Español)
  * @author Danke7
  * @author Translationista
@@ -435,6 +442,13 @@ $messages['ms'] = array(
 	'wva-protected' => 'Video ini dilindungi.',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'wva-add' => 'ပေါင်းထည့်ရန်',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -449,6 +463,14 @@ $messages['nl'] = array(
 	'wva-notlogged' => "U moet aanmelden of registreren om video's te kunnen toevoegen.",
 	'wva-notallowed' => "U kunt geen video's toevoegen in deze wiki.",
 	'wva-protected' => 'Deze video is beschermd.',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'wva-notlogged' => "Je moet aanmelden of registreren om video's te kunnen toevoegen.",
+	'wva-notallowed' => "Je kunt geen video's toevoegen in deze wiki.",
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -575,13 +597,16 @@ $messages['pt-br'] = array(
 /** Romanian (Română)
  * @author Minisarm
  * @author Misterr
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
 	'wva-success' => 'Clipul video $1 a fost adăugat cu succes.',
+	'wva-name' => 'Introdu numele:',
 	'wva-url' => 'Introduceți adresa URL:',
 	'wva-add' => 'Adaugă',
 	'wva-notlogged' => 'Trebuie să vă autentificați sau să vă înregistrați pentru a putea adăuga clipuri video.',
 	'wva-notallowed' => 'Nu puteți adăuga clipuri video pe acest wiki.',
+	'wva-protected' => 'Acest clip este protejat.',
 );
 
 /** Russian (Русский)

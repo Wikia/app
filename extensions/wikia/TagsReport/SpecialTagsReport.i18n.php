@@ -40,6 +40,13 @@ $messages['af'] = array(
 	'tagsreportgenerated' => 'Gegenereer op $1 om $2',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'tagsreportgo' => 'Göstər',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
@@ -55,6 +62,13 @@ $messages['be-tarask'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|старонка|старонкі|старонак}})',
 	'tagsreportpagesfound' => '{{PLURAL:$1|Знойдзеная <strong>$1</strong> старонка, якая ўтрымлівае|Знойдзеныя <strong>$1</strong> старонкі, якія ўтрымліваюць|Знойдзеныя <strong>$1</strong> старонак, якія ўтрымліваюць}} спэцыяльныя тэгі (dpl, youtube, і г.д.)',
 	'tagsreportgenerated' => 'Створаная $1 $2',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'tagsreportgo' => 'Показване',
 );
 
 /** Breton (Brezhoneg)
@@ -338,6 +352,14 @@ $messages['ms'] = array(
 	'tagsreportgenerated' => 'Dijana pada $1, $2',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'tagsreportgo' => 'ပြ',
+	'tagsreportgenerated' => '$1 ရက် $2 အချိန်တွင် ဖန်တီးခဲ့သည်',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -352,6 +374,13 @@ $messages['nl'] = array(
 	'tagsreportpages' => "(<strong>$1</strong> {{PLURAL:$1|pagina|pagina's}})",
 	'tagsreportpagesfound' => "Er {{PLURAL:$1|is <strong>$1</strong> pagina|zijn <strong>$1</strong> pagina's}} aangetroffen die een special label {{PLURAL:$1|bevat|bevatten}} (DPL, YouTube, enzovoort).",
 	'tagsreportgenerated' => 'Aangemaakt op $1 om $2',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'tagsreportnotspecify' => 'Je hebt nog geen special label geselecteerd.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -384,8 +413,8 @@ $messages['pms'] = array(
 	'tagsreportnoresults' => 'Pa gnun arzultà trovà',
 	'tagsreportmainnspace' => 'Prinsipal',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pàgina|pàgina}})',
-	'tagsreportpagesfound' => 'Trovà <strong>$1</strong> pàgine, che a conten-o etichëtte speciaj (dpl, youtube, etc...)',
-	'tagsreportgenerated' => 'Generà dzora a $1 $2',
+	'tagsreportpagesfound' => 'Trovà <strong>$1</strong> {{PLURAL:$1|pagina|pagine}}, che a conten-o etichëtte speciaj (DPL, YouTube, etc...)',
+	'tagsreportgenerated' => 'Generà ël $1 a $2',
 );
 
 /** Pashto (پښتو)
@@ -508,8 +537,8 @@ $messages['tl'] = array(
 	'tagsreportnoresults' => 'Walang natagpuang mga resulta',
 	'tagsreportmainnspace' => 'Pangunahin',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pahina|mga pahina}})',
-	'tagsreportpagesfound' => 'Nakatagpo ng <strong>$1</strong> mga pahina, na naglalaman ng natatanging tatak (dpl, youtube, atbp.)',
-	'tagsreportgenerated' => 'Nilikha noong $1 $2',
+	'tagsreportpagesfound' => 'Nakatagpo ng <strong>$1</strong> {{PLURAL:$1|pahina|mga pahina}}, na naglalaman ng natatanging tatak (DPL, YouTube, atbp.)',
+	'tagsreportgenerated' => 'Nalikha noong $1 sa ganap na $2',
 );
 
 /** Ukrainian (Українська)

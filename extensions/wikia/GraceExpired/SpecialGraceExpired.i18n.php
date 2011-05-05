@@ -112,6 +112,13 @@ $messages['ia'] = array(
 Isto ''non'' prende in conto le activitate del evalutation de paginas.",
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'graceexpired-row' => '$1 (en $2, et läz jeändert aam $3)',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

@@ -423,6 +423,7 @@ Ola, benvido(a) a {{SITENAME}}. Grazas pola súa edición na páxina \"[[:\$1]]\
 
 Se necesita axuda e non hai administradores locais aquí, quizais queira visitar os [[wikia:Forum:Community Central Forum|foros no wiki central da comunidade]] \$3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|foro de axuda]] | [[w:sblog|blogue]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 /** Hebrew (עברית)
@@ -736,7 +737,7 @@ $messages['nl'] = array(
 * [[Special:Contributions/{{PAGENAME}}|Uw eigen bijdragen]]
 
 ==Mijn favoriete pagina's==
-* Voeg hier verwijzingen toe van uw favoriete pagina's op deze wiki!
+* Voeg hier verwijzingen toe naar uw favoriete pagina's op deze wiki!
 * Favoriete pagina #2
 * Favoriete pagina #3",
 	'welcome-message-user' => 'Hallo, welkom bij {{SITENAME}}! Bedankt voor uw bewerking van de pagina [[:$1]].
@@ -758,11 +759,48 @@ Als u hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum
 
 Hallo! Welkom bij {{SITENAME}}. Dank u wel voor uw bewerking aan de pagina [[:$1]].
 
-'''[[Special:Userlogin|Meld u zich alstublieft aan of maak een gebruiker aan]]'''. Zo kunt u eenvoudig uw bewerkingen bijhouden en contact houden met de andere leden van de gemeenschap.
+'''[[Special:UserLogin|Meld u zich alstublieft aan of maak een gebruiker aan]]'''. Zo kunt u eenvoudig uw bewerkingen bijhouden en contact houden met de andere leden van de gemeenschap.
 
 Als u hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum voor hulp]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HA Welkom bewerken',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'welcome-user-page' => "==Over mij==
+''Dit is je gebruikerspagina. Bewerk deze pagina alsjeblieft en vertel de gemeenschap iets over jezelf''
+
+==Mijn bijdragen==
+* [[Special:Contributions/{{PAGENAME}}|Je eigen bijdragen]]
+
+==Mijn favoriete pagina's==
+* Voeg hier verwijzingen toe naar je favoriete pagina's op deze wiki!
+* Favoriete pagina #2
+* Favoriete pagina #3",
+	'welcome-message-user' => 'Hoi, welkom bij {{SITENAME}}! Bedankt voor je bewerking van de pagina [[:$1]].
+
+Laat gerust een bericht achter op [[$2|mijn overlegpagina]] als ik je ergens mee kan helpen! $3',
+	'welcome-message-anon' => "Hoi, welkom bij {{SITENAME}}. Dank je wel voor je werk aan de pagina [[:$1]].
+
+'''[[Special:Userlogin|Maak alsjeblieft een gebruiker aan of meld je aan]]'''.
+Het is een eenvoudige manier om je bijdragen te volgen en helpt je bij het onderhouden van contacten met de rest van de gemeenschap.
+
+Laat alsjeblieft een bericht achter op [[$2|mijn overleg pagina]] als ik je ergens mee kan helpen! $3",
+	'welcome-message-user-staff' => '==Welkom==
+
+Hoi! Welkom bij {{SITENAME}}. Dank je wel voor je bewerking aan de pagina [[:$1]].
+
+Als je hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3',
+	'welcome-message-anon-staff' => "==Welkom==
+
+Hoi! Welkom bij {{SITENAME}}. Dank je wel voor je bewerking aan de pagina [[:$1]].
+
+'''[[Special:UserLogin|Meld je alsjeblieft aan of maak een gebruiker aan]]'''. Zo kan je eenvoudig je bewerkingen bijhouden en contact houden met de andere leden van de gemeenschap.
+
+Als je hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3",
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -929,6 +967,7 @@ Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]
 
 S'a l'has dabzògn d'agiut, e a-i é gnun aministrator locaj ambelessì, a peul visité le [[wikia:Forum:Community Central Forum|piasse ëd la Wiki Sentral ëd la Comunità]] $3",
 	'staffsig-text' => "$1<staff /> <small>([[w:forums|piassa d'agiut]] | [[w:sblog|blog]])</small>",
+	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 /** Pashto (پښتو)
@@ -1236,5 +1275,47 @@ $messages['uk'] = array(
 
 Якщо вам потрібна допомога, а локальні адміністратори відсутні, ви можете відвідати [[wikia:Forum:Community Central Forum|форуми спільноти Central Wiki]] $3',
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|форум допомоги]] | [[w:sblog|блог]])</small>',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author XiaoQiaoGrace
+ */
+$messages['vi'] = array(
+	'welcome-user-page' => "==Giới thiệu thành viên==
+''Đây là trang thành viên của bạn. Xin vui lòng viết và sửa đổi trang này để cho cộng đồng biết bạn!''
+
+==Đóng góp==
+* [[Special:Contributions/{{PAGENAME}}|Đóng góp của tôi]]
+
+==Bài viết ưa thích==
+* Liên kết trang bạn thích đến đây
+* trang thứ 2
+* trang thứ 3",
+	'welcome-message-user' => 'Chào bạn, hoan nghênh bạn đến {{SITENAME}}! Cảm ơn bạn đã chỉnh sửa trang [[:$1]].
+
+Xin vui lòng để lại tin nhắn vào [[$2|trang thảo luận thành viên]] của tớ nếu bạn cần trợ giúp về bất cứ điều gì!$3',
+	'welcome-message-anon' => "Chào bạn, hoan nghênh bạn đến với {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]].
+
+'''[[Special:Userlogin|Xin bạn đăng kí và tạo tài khoản mới]]'''.
+
+Đó là cách dễ dàng để giữ lại những đóng góp của bạn và giúp bạn giao tiếp với cộng đồng.
+
+Xin vui lòng để lại tin nhắn vào [[$2|trang thảo luận thành viên]] của tớ nếu bạn cần sự trợ giúp về bất cứ điều gì! $3",
+	'welcome-message-log' => 'Chào mừng cộng sự mới',
+	'welcome-message-user-staff' => '==Xin chào==
+
+Chào bạn, hoang nghênh bạn đến {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]].
+
+Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần giúp đỡ, có lẽ bạn sẽ cần đến [[wikia:Forum:Community Central Forum|Cộng đồng trung tâm Wikia]] $3',
+	'welcome-message-anon-staff' => "==Xin chào==
+Chào bạn, hoan nghênh bạn đến với {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]].
+
+'''[[Special:UserLogin|Xin bạn đăng kí và tạo tài khoản mới]]'''.
+
+Đó là cách dễ dàng để giữ lại những đóng góp của bạn và giúp bạn giao tiếp với cộng đồng.
+
+Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần giúp đỡ, có lẽ bạn sẽ cần đến [[wikia:Forum:Community Central Forum|fCộng đồng trung tâm Wikia]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|diễn đàn trợ giúp]] | [[w:sblog|blog]])</small>',
+	'hawelcomeedit' => 'Sửa đổi tin nhắn chào mừng',
 );
 

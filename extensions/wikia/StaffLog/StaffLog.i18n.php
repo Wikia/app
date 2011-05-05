@@ -77,13 +77,16 @@ $messages['es'] = array(
 	'right-stafflog' => 'Puede ver el registro del staff',
 );
 
-/** French (Français) */
+/** French (Français)
+ * @author Peter17
+ */
 $messages['fr'] = array(
 	'stafflog-desc' => 'Identification centralisée pour le personnel',
 	'stafflog' => 'StaffLog',
 	'stafflog-blockmsg' => '$1 $2 a essayé de bloquer l’employé $3 sur le wiki $4. Motif : $5',
 	'stafflog-piggybackloginmsg' => '$1 Accès superposé - utilisateur $2 connecté en tant que $3',
 	'stafflog-piggybacklogoutmsg' => '$1 Accès superposé - utilisateur $2 déconnecté du compte $3',
+	'right-stafflog' => 'Peut afficher le journal de l’équipe d’administration',
 );
 
 /** Interlingua (Interlingua)
@@ -125,6 +128,7 @@ $messages['ms'] = array(
 	'stafflog-blockmsg' => '$1 $2 telah cuba menyekat pengguna kakitangan $3 di wiki $4. Sebab: $5',
 	'stafflog-piggybackloginmsg' => 'Gendong $1 - pengguna $2 log masuk sebagai $3',
 	'stafflog-piggybacklogoutmsg' => 'Gendong $1 - pengguna $2 log keluar dari akaun $3',
+	'right-stafflog' => 'Boleh melihat log kakitangan',
 );
 
 /** Dutch (Nederlands)
@@ -153,6 +157,7 @@ $messages['no'] = array(
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
+ * @author Dragonòt
  */
 $messages['pms'] = array(
 	'stafflog-desc' => "Argistrassion sentralisà për l'echip",
@@ -160,6 +165,7 @@ $messages['pms'] = array(
 	'stafflog-blockmsg' => "$1 $2 a l'ha provà a bloché l'utent ëd l'echip $3 an sla wiki $4. Rason: $5",
 	'stafflog-piggybackloginmsg' => "$1 Conession mùltipla - l'utent $2 a l'é intrà com $3",
 	'stafflog-piggybacklogoutmsg' => "$1 Conession mùltipla - l'utent $2 a l'é surtì dal cont $3",
+	'right-stafflog' => 'A peul vëdde lë stafflog',
 );
 
 /** Portuguese (Português)
@@ -199,6 +205,18 @@ $messages['ru'] = array(
  */
 $messages['sv'] = array(
 	'stafflog-blockmsg' => '$1 $2 försökte blockera personalanvändaren $3 på wikin $4. Anledning: $5',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'stafflog-desc' => 'Nakagitnang paglagda para sa tauhan',
+	'stafflog' => 'Talaan ng Tauhan',
+	'stafflog-blockmsg' => 'Si $1 $2 ay sumubok na hadlangan ang tauhang tagagamit na si $3 sa wiking $4. Dahilan: $5',
+	'stafflog-piggybackloginmsg' => '$1 Pakikisakay - si tagagamit na $2 ay lumagda bilang si $3',
+	'stafflog-piggybacklogoutmsg' => '$1 Pakikisakay - si tagagamit na $2 ay umalis sa pagkakalagda mula sa akawnt ni $3',
+	'right-stafflog' => 'Maaaring tingnan ang talaan ng tauhan',
 );
 
 /** Ukrainian (Українська)

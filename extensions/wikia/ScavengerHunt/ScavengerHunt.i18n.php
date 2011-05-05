@@ -114,6 +114,28 @@ $messages['af'] = array(
 	'scavengerhunt-entry-form-submit' => 'Stuur inskrywing',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'scavengerhunt-list-edit' => 'عدل',
+	'scavengerhunt-label-name' => 'الاسم:',
+	'scavengerhunt-entry-form-name' => 'اسمك:',
+	'scavengerhunt-entry-form-email' => 'عنوان بريدك الإلكتروني:',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'scavengerhunt-list-edit' => 'redaktə',
+	'scavengerhunt-label-name' => 'Ad:',
+	'scavengerhunt-button-save' => 'Qeyd et',
+	'scavengerhunt-button-delete' => 'Sil',
+	'scavengerhunt-entry-form-name' => 'Sizin adınız:',
+	'scavengerhunt-entry-form-email' => 'Sizin e-poçt ünvanınız:',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -217,6 +239,7 @@ $messages['de'] = array(
 );
 
 /** Spanish (Español)
+ * @author Od1n
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -235,6 +258,11 @@ $messages['es'] = array(
 	'scavengerhunt-label-landing-button-text' => 'Texto del botón de la página de inicio:',
 	'scavengerhunt-label-starting-clue' => 'Comenzar pista emergente',
 	'scavengerhunt-label-starting-clue-title' => 'Título emergente:',
+	'scavengerhunt-button-save' => 'Guardar',
+	'scavengerhunt-button-delete' => 'Borrar',
+	'scavengerhunt-button-export' => 'Exportar a CSV',
+	'scavengerhunt-entry-form-name' => 'Tu nombre:',
+	'scavengerhunt-entry-form-email' => 'Tu dirección de correo electrónico:',
 );
 
 /** Finnish (Suomi)
@@ -242,6 +270,72 @@ $messages['es'] = array(
  */
 $messages['fi'] = array(
 	'scavengerhunt-label-image-check' => '(näytä kuva)',
+);
+
+/** French (Français)
+ * @author Brunoperel
+ * @author Iketsi
+ * @author Od1n
+ */
+$messages['fr'] = array(
+	'scavengerhunt-list-header-name' => 'Nom de la partie',
+	'scavengerhunt-list-header-is-enabled' => 'Activé?',
+	'scavengerhunt-list-header-actions' => 'Actions',
+	'scavengerhunt-list-enabled' => 'Activé',
+	'scavengerhunt-list-disabled' => 'Désactivé',
+	'scavengerhunt-list-edit' => 'modifier',
+	'scavengerhunt-label-dialog-check' => '(afficher la boîte de dialogue)',
+	'scavengerhunt-label-image-check' => "(voir l'image)",
+	'scavengerhunt-label-general' => 'Général',
+	'scavengerhunt-label-name' => 'Nom :',
+	'scavengerhunt-label-starting-clue-title' => 'Titre du popup :',
+	'scavengerhunt-label-starting-clue-button-text' => 'Texte du bouton du popup :',
+	'scavengerhunt-label-article-title' => "Titre de la page (titre de l'article sur ce wiki):",
+	'scavengerhunt-label-article-hidden-image' => 'Image cachée:',
+	'scavengerhunt-label-article-clue-title' => 'Titre du popup d’indice :',
+	'scavengerhunt-label-article-clue-text' => 'Texte du popup d’indice :',
+	'scavengerhunt-label-article-clue-button-text' => 'Texte du bouton du popup d’indice :',
+	'scavengerhunt-label-entry-form-title' => 'Titre du popup :',
+	'scavengerhunt-label-entry-form-text' => 'Texte du popup :',
+	'scavengerhunt-label-entry-form-image' => 'Image de popup (adresse URL) :',
+	'scavengerhunt-label-entry-form-question' => 'Question du popup :',
+	'scavengerhunt-label-goodbye' => 'Popup d’au revoir',
+	'scavengerhunt-label-goodbye-title' => 'Titre du popup :',
+	'scavengerhunt-label-goodbye-text' => 'Message de popup:',
+	'scavengerhunt-button-add' => 'Ajouter une partie',
+	'scavengerhunt-button-save' => 'Enregistrer',
+	'scavengerhunt-button-disable' => 'Désactiver',
+	'scavengerhunt-button-enable' => 'Activer',
+	'scavengerhunt-button-delete' => 'Supprimer',
+	'scavengerhunt-button-export' => 'Exporter en CSV',
+	'scavengerhunt-form-error' => 'Veuillez corriger les erreurs suivantes :',
+	'scavengerhunt-form-error-no-landing-title' => 'Veuillez entrer le titre de la page de départ.',
+	'scavengerhunt-form-error-no-article-title' => 'Veuillez entrer tous les titres d’articles.',
+	'scavengerhunt-form-error-article-hidden-image' => 'Veuillez entrer toutes les adresses des images cachées.',
+	'scavengerhunt-entry-form-name' => 'Votre nom :',
+	'scavengerhunt-entry-form-email' => 'Votre adresse de courriel :',
+	'scavengerhunt-entry-form-submit' => 'Soumettre l’entrée',
+);
+
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'scavengerhunt-list-header-name' => 'Játék neve',
+	'scavengerhunt-list-header-actions' => 'Műveletek',
+	'scavengerhunt-list-enabled' => 'Engedélyezve',
+	'scavengerhunt-list-disabled' => 'Letiltva',
+	'scavengerhunt-list-edit' => 'szerkesztés',
+	'scavengerhunt-label-dialog-check' => '(párbeszédablak megjelenítése)',
+	'scavengerhunt-label-image-check' => '(kép megjelenítése)',
+	'scavengerhunt-label-general' => 'Általános',
+	'scavengerhunt-label-name' => 'Név:',
+	'scavengerhunt-button-add' => 'Játék hozzáadása',
+	'scavengerhunt-button-save' => 'Mentés',
+	'scavengerhunt-button-disable' => 'Letiltás',
+	'scavengerhunt-button-enable' => 'Engedélyezés',
+	'scavengerhunt-button-delete' => 'Törlés',
+	'scavengerhunt-button-export' => 'Kimentés CSV-be',
 );
 
 /** Interlingua (Interlingua)
@@ -407,10 +501,35 @@ $messages['mk'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'scavengerhunt-list-header-name' => 'Nama permainan',
+	'scavengerhunt-list-header-is-enabled' => 'Dihidupkan?',
+	'scavengerhunt-list-header-actions' => 'Tindakan',
+	'scavengerhunt-list-enabled' => 'Dihidupkan',
+	'scavengerhunt-list-disabled' => 'Dimatikan',
+	'scavengerhunt-list-edit' => 'sunting',
+	'scavengerhunt-label-dialog-check' => '(tunjukkan dialog)',
+	'scavengerhunt-label-image-check' => '(tunjukkan imej)',
+	'scavengerhunt-label-general' => 'Umum',
+	'scavengerhunt-label-name' => 'Nama:',
+	'scavengerhunt-label-starting-clue-title' => 'Tajuk tetimbul:',
 	'scavengerhunt-label-article-title' => 'Tajuk laman (tajuk rencana di wiki ini):',
+	'scavengerhunt-label-article-hidden-image' => 'Imej tersembunyi:',
+	'scavengerhunt-label-entry-form' => 'Borang penyertaan',
+	'scavengerhunt-label-entry-form-title' => 'Tajuk tetimbul:',
+	'scavengerhunt-label-entry-form-text' => 'Teks tetimbul:',
+	'scavengerhunt-label-goodbye-title' => 'Tajuk tetimbul:',
+	'scavengerhunt-label-goodbye-text' => 'Pesanan tetimbul:',
+	'scavengerhunt-label-goodbye-image' => 'Imej tetimbil (alamat URL):',
+	'scavengerhunt-button-add' => 'Tambahkan permainan',
+	'scavengerhunt-button-save' => 'Simpan',
+	'scavengerhunt-button-disable' => 'Matikan',
+	'scavengerhunt-button-enable' => 'Hidupkan',
+	'scavengerhunt-button-delete' => 'Hapuskan',
+	'scavengerhunt-button-export' => 'Eksport ke CSV',
 	'scavengerhunt-form-error-no-article-title' => 'Sila isikan semua tajuk rencana.',
 	'scavengerhunt-entry-form-name' => 'Nama anda:',
 	'scavengerhunt-entry-form-email' => 'Alamat e-mel anda:',
+	'scavengerhunt-entry-form-submit' => 'Hantar penyertaan',
 );
 
 /** Dutch (Nederlands)
@@ -481,6 +600,14 @@ $messages['nl'] = array(
 	'scavengerhunt-entry-form-submit' => 'Inschrijvingsformulier opslaan',
 );
 
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'scavengerhunt-entry-form-name' => 'Je naam:',
+	'scavengerhunt-entry-form-email' => 'Je e-mailadres:',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
@@ -547,6 +674,18 @@ $messages['no'] = array(
 	'scavengerhunt-entry-form-name' => 'Ditt navn:',
 	'scavengerhunt-entry-form-email' => 'Din e-postadresse:',
 	'scavengerhunt-entry-form-submit' => 'Send inn oppføring',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'scavengerhunt-list-edit' => 'سمول',
+	'scavengerhunt-label-name' => 'نوم:',
+	'scavengerhunt-button-save' => 'خوندي کول',
+	'scavengerhunt-button-delete' => 'ړنګول',
+	'scavengerhunt-entry-form-name' => 'ستاسې نوم:',
+	'scavengerhunt-entry-form-email' => 'ستاسې برېښليک پته:',
 );
 
 /** Portuguese (Português)
@@ -616,6 +755,19 @@ $messages['pt'] = array(
 	'scavengerhunt-entry-form-name' => 'O seu nome:',
 	'scavengerhunt-entry-form-email' => 'Correio electrónico:',
 	'scavengerhunt-entry-form-submit' => 'Enviar entrada',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'scavengerhunt-list-header-name' => 'Numele jocului',
+	'scavengerhunt-list-header-is-enabled' => 'Activat?',
+	'scavengerhunt-label-general' => 'General',
+	'scavengerhunt-label-name' => 'Nume:',
+	'scavengerhunt-button-add' => 'Adaugă un joc',
+	'scavengerhunt-entry-form-name' => 'Numele tău:',
+	'scavengerhunt-entry-form-email' => 'Adresa ta de e-mail:',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)

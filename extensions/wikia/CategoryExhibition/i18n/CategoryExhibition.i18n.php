@@ -31,6 +31,18 @@ $messages['af'] = array(
 	'category-exhibition-display-new' => 'Kategorie-uitstal-weergawe',
 );
 
+/** Arabic (العربية)
+ * @author Mutarjem horr
+ */
+$messages['ar'] = array(
+	'category-exhibition-alphabetical' => 'أبجديأّ',
+	'category-exhibition-mostvisited' => 'الأكثر مشاهدة',
+	'category-exhibition-recentedits' => 'تحرير مؤخراّ',
+	'category-exhibition-page-header' => 'الصفحات في التصنيف " $1 "',
+	'category-exhibition-subcategories-header' => 'التصنيفات الفرعية',
+	'category-exhibition-media-header' => 'الوسائل في الفئة "$1"',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -153,6 +165,21 @@ $messages['gl'] = array(
 	'category-exhibition-display-new' => 'Vista da exhibición da categoría',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'category-exhibition-sorttype' => 'Rendezés típusa:',
+	'category-exhibition-alphabetical' => 'ABC-sorrend',
+	'category-exhibition-mostvisited' => 'Legtöbbet látogatott',
+	'category-exhibition-recentedits' => 'Legutóbb szerkesztett',
+	'category-exhibition-page-header' => 'A(z) „$1” kategóriába tartozó lapok',
+	'category-exhibition-subcategories-header' => 'Alkategóriák',
+	'category-exhibition-media-header' => 'A(z) „$1” kategóriába tartozó médiafájlok',
+	'category-exhibition-blogs-header' => 'Blogbejegyzések',
+	'category-exhibition-display-old' => 'Kategória listanézet',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -174,6 +201,19 @@ $messages['ia'] = array(
  */
 $messages['it'] = array(
 	'category-exhibition-mostvisited' => 'Più visitate',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'category-exhibition-sorttype' => '並べ替えの種類:',
+	'category-exhibition-alphabetical' => 'アルファベット順',
+	'category-exhibition-mostvisited' => '閲覧の多い順',
+	'category-exhibition-recentedits' => '更新順',
+	'category-exhibition-subcategories-header' => '下位カテゴリ',
+	'category-exhibition-blogs-header' => 'ブログ記事',
+	'category-exhibition-display-old' => 'カテゴリ一覧表示',
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -200,6 +240,16 @@ $messages['mk'] = array(
 	'category-exhibition-blogs-header' => 'Блог-записи',
 	'category-exhibition-display-old' => 'Преглед: Список на категории',
 	'category-exhibition-display-new' => 'Преглед: Изложба на категории',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'category-exhibition-recentedits' => 'സമീപകാലത്ത് തിരുത്തിയവ',
+	'category-exhibition-page-header' => '"$1" എന്ന വർഗ്ഗത്തിലെ താളുകൾ',
+	'category-exhibition-subcategories-header' => 'ഉപവർഗ്ഗങ്ങൾ',
+	'category-exhibition-media-header' => '"$1" എന്ന വർഗ്ഗത്തിലെ മീഡിയകൾ',
 );
 
 /** Malay (Bahasa Melayu)
@@ -292,6 +342,19 @@ $messages['pt-br'] = array(
 	'category-exhibition-display-new' => 'Vista de Exibição de Categorias',
 );
 
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'category-exhibition-sorttype' => 'Tipul de sortare:',
+	'category-exhibition-alphabetical' => 'Alfabetic',
+	'category-exhibition-mostvisited' => 'Cel mai vizitat',
+	'category-exhibition-recentedits' => 'Modificat recent',
+	'category-exhibition-page-header' => 'Pagini în categoria "$1"',
+	'category-exhibition-subcategories-header' => 'Subcategorii',
+	'category-exhibition-blogs-header' => 'Postări pe blog',
+);
+
 /** Russian (Русский) */
 $messages['ru'] = array(
 	'category-exhibition-sorttype' => 'Тип сортировки:',
@@ -328,6 +391,17 @@ $messages['sv'] = array(
 /** Telugu (తెలుగు) */
 $messages['te'] = array(
 	'category-exhibition-subcategories-header' => 'ఉపవర్గాలు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'category-exhibition-sorttype' => 'Uri ng pag-uuri:',
+	'category-exhibition-alphabetical' => 'Naka-abakada',
+	'category-exhibition-mostvisited' => 'Pinaka dinadalaw',
+	'category-exhibition-recentedits' => 'Kamakailang binago',
+	'category-exhibition-page-header' => 'Mga pahina sa kategoryang "$1"',
 );
 
 /** Ukrainian (Українська) */

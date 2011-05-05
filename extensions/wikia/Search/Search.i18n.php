@@ -32,6 +32,15 @@ $messages['az'] = array(
 	'wikiasearch-image-results' => '"$1" üçün şəkil axtarışının nəticələri',
 );
 
+/** Bashkir (Башҡортса)
+ * @author Roustammr
+ */
+$messages['ba'] = array(
+	'wikiasearch-titles-only' => 'Биттәрҙең баш исемдәренән генә эҙләргә',
+	'wikiasearch-search-this-wiki' => 'Wikia Central да ғына эҙләү',
+	'wikiasearch-search-wikia' => 'Wikia ла эҙләргә',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
@@ -348,6 +357,13 @@ $messages['nl'] = array(
 	'wikiasearch-image-results' => 'Afbeeldingsresultaten voor "$1"',
 );
 
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'wikiasearch-system-error-msg' => 'Door een systeemfout was het niet mogelijk je zoekopdracht uit te voeren',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
@@ -387,6 +403,7 @@ $messages['pl'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'search-desc' => "Motor d'arserca ëd Cross-Wikia ch'a dòvra ël backend Solr",
 	'wikiasearch-titles-only' => 'Sërché mach ant ij tìtoj dle pàgine',
 	'wikiasearch-system-error-msg' => "Për n'eror dël sistema, soa arserca a peul pa esse completà",
 	'wikiasearch-search-this-wiki' => 'Serca Mach an Wikia Sentral',
@@ -429,6 +446,14 @@ $messages['pt-br'] = array(
 	'wikiasearch-search-this-wiki' => 'Pesquisar apenas na wikia Central',
 	'wikiasearch-search-wikia' => 'Pesquisar na wikia',
 	'wikiasearch-image-results' => 'Resultados de Imagens para "$1"',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'wikiasearch-search-wikia' => 'Căutare Wikia',
+	'wikiasearch-image-results' => 'Rezultate imagine pentru "$1"',
 );
 
 /** Russian (Русский)
@@ -476,6 +501,15 @@ $messages['ta'] = array(
 	'wikiasearch-search-this-wiki' => 'மத்திய விக்கியாவில் மட்டும் தேடுங்கள்',
 	'wikiasearch-search-wikia' => 'விக்கியாவில் தேடுங்கள்',
 	'wikiasearch-image-results' => '"$1"-ன் தோற்றத்தின் முடிவுகள்',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'wikiasearch-titles-only' => 'కేవలం పుటల శీర్శికలలో వెతుకు',
+	'wikiasearch-search-wikia' => 'వికియాను వెతకండి',
+	'wikiasearch-image-results' => '"$1" కొరకు బొమ్మల ఫలితాలు',
 );
 
 /** Tagalog (Tagalog)

@@ -25,6 +25,13 @@ $messages['ast'] = array(
 	'ezapi-desc' => 'Desendolcu non complicáu de módulu de la API AJAX',
 );
 
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'ezapi-desc' => 'Modulenn diorroiñ an API AJAX hep rouestlad',
+);
+
 /** Czech (Česky)
  * @author Dontlietome7
  */
@@ -67,6 +74,13 @@ $messages['it'] = array(
 	'ezapi-desc' => 'Semplice sviluppo di un modulo API AJAX',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'ezapi-desc' => 'Unkomplezeete Entwecklong vun Module för de <i lang="en">AJAX-API</i>.',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -95,6 +109,13 @@ $messages['no'] = array(
 	'ezapi-desc' => 'Ukomplisert AJAX API-modulutvikling',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'ezapi-desc' => 'Dësvilup pa complicà dël mòdul AJAX API',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -114,5 +135,12 @@ $messages['pt-br'] = array(
  */
 $messages['roa-tara'] = array(
 	'ezapi-desc' => 'Module de sviluppe AJAX API none comblecate',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'ezapi-desc' => 'Hindi masalimuot na pagpapunlad ng modyul ng API ng AJAX',
 );
 

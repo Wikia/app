@@ -27,7 +27,7 @@ $messages['qqq'] = array(
  */
 $messages['af'] = array(
 	'spellchecker-desc' => 'Bied speltoetsing vir die PHP-module enchant',
-	'enablespellchecker' => 'Aktiveer speltoetser',
+	'enablespellchecker' => 'Aktiveer speltoetser in visuele modus',
 	'spellchecker-info' => 'Speltoetser-inligting',
 	'spellchecker-info-languages' => 'Beskikbare tale ($1)',
 	'spellchecker-info-provider' => 'Verskaffer',
@@ -37,6 +37,20 @@ $messages['af'] = array(
 	'spellchecker-info-spellcheck-submit' => 'Toets spelling',
 	'spellchecker-info-spellcheck-is-correct' => 'Die woord "$1" is korrek gespel',
 	'spellchecker-info-spellcheck-suggestions' => 'Spelvoorstelle vir "$1": $2',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'spellchecker-info-spellcheck-languages' => 'Dil',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'spellchecker-info-spellcheck-languages' => 'Език',
 );
 
 /** Breton (Brezhoneg)
@@ -78,7 +92,7 @@ $messages['de'] = array(
  */
 $messages['es'] = array(
 	'spellchecker-desc' => 'Proporciona una interfaz de comprobación ortográfica para encantar módulos PHP',
-	'enablespellchecker' => 'Habilitar corrector ortográfico',
+	'enablespellchecker' => 'Habilitar corrector ortográfico en modo visual',
 	'spellchecker-info' => 'Información del corrector ortográfico',
 	'spellchecker-info-languages' => 'Idiomas disponibles ($1)',
 	'spellchecker-info-provider' => 'Proveedor',
@@ -114,12 +128,22 @@ $messages['fr'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Suggestions d’orthographe pour « $1 » : $2',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'spellchecker-info-languages' => 'Elérhető nyelvek ($1)',
+	'spellchecker-info-dictionaries' => 'Rendelkezésre álló szótárak',
+	'spellchecker-info-spellcheck-languages' => 'Nyelv',
+	'spellchecker-info-spellcheck-submit' => 'Helyesírás-ellenőrzés',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
 	'spellchecker-desc' => 'Forni un interfacie de verification de orthographia pro le modulo PHP "enchant"',
-	'enablespellchecker' => 'Activar verification de orthographia',
+	'enablespellchecker' => 'Activar corrector orthographic in modo visual',
 	'spellchecker-info' => 'Informationes del verificator de orthographia',
 	'spellchecker-info-languages' => 'Linguas disponibile ($1)',
 	'spellchecker-info-provider' => 'Fornitor',
@@ -180,12 +204,19 @@ $messages['ms'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Cadangan ejaan untuk "$1": $2',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'spellchecker-info-spellcheck-languages' => 'ဘာသာ',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'spellchecker-desc' => 'Biedt spellingcontrole voor de PHP-module enchant',
-	'enablespellchecker' => 'Spellingscontrole inschakelen',
+	'enablespellchecker' => 'Spellingscontrole inschakelen in visuele modus',
 	'spellchecker-info' => 'Spellingscontrolegegevens',
 	'spellchecker-info-languages' => 'Beschikbare talen ($1)',
 	'spellchecker-info-provider' => 'Aanbieder',
@@ -199,10 +230,11 @@ $messages['nl'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'spellchecker-desc' => 'Tilbyr et grensesnitt for korrekturlesning for enchant PHP-modulen',
-	'enablespellchecker' => 'Aktiver korrekturleser',
+	'enablespellchecker' => 'Aktiver korrekturleser i visuell modus',
 	'spellchecker-info' => 'Informasjon om korrekturleseren',
 	'spellchecker-info-languages' => 'Tilgjengelige språk ($1)',
 	'spellchecker-info-provider' => 'Leverandør',
@@ -212,6 +244,13 @@ $messages['no'] = array(
 	'spellchecker-info-spellcheck-submit' => 'Sjekk staving',
 	'spellchecker-info-spellcheck-is-correct' => 'Ordet «$1» er riktig stavet',
 	'spellchecker-info-spellcheck-suggestions' => 'Forslag til stavemåte for «$1»: $2',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'spellchecker-info-spellcheck-languages' => 'ژبه',
 );
 
 /** Portuguese (Português)

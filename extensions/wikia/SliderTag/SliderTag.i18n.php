@@ -7,6 +7,13 @@ $messages['en'] = array(
 	'slidertag-featured-wikis' => 'Featured wikis',
 );
 
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'slidertag-desc' => '{{desc}}',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
@@ -33,10 +40,11 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Purodha
  */
 $messages['de'] = array(
 	'slidertag-desc' => 'Bietet einen allgemeinen Weg für Benutzer gestaltete Slider hinzuzufügen',
-	'slidertag-featured-wikis' => 'Gestaltete Wikis',
+	'slidertag-featured-wikis' => 'Empfohlene Wikis',
 );
 
 /** Spanish (Español)
@@ -91,6 +99,14 @@ $messages['ig'] = array(
  */
 $messages['it'] = array(
 	'slidertag-featured-wikis' => 'Wiki in primo piano',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'slidertag-desc' => 'Brängk ene jrondsäzlejje Wääsch för Metmaacher, <i lang="en">featured</i> Schieber enzfööje.',
+	'slidertag-featured-wikis' => 'Ämfohle Wikis',
 );
 
 /** Macedonian (Македонски)

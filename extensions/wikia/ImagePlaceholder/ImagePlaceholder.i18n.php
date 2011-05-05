@@ -37,6 +37,14 @@ $messages['be-tarask'] = array(
 	'imgplc-notinhistory' => 'Вы ня можаце дадаць выяву ў рэжыме гісторыі.',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'imgplc-create' => 'Добавяне на изображение',
+	'imgplc-image' => 'Изображение',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -199,6 +207,16 @@ $messages['ko'] = array(
 	'imgplc-image' => '그림',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'imgplc-create' => 'Donn e Beld dobei',
+	'imgplc-placeholder' => 'Plazhallder',
+	'imgplc-image' => 'Beld',
+	'imgplc-notinhistory' => 'Belder kammer nit em Zosammehang vun de verjange Versione dobei donn',
+);
+
 /** Kurdish (Latin) (Kurdî (Latin))
  * @author George Animal
  */
@@ -222,6 +240,14 @@ $messages['mk'] = array(
 	'imgplc-placeholder' => 'Пополнувач',
 	'imgplc-image' => 'Слика',
 	'imgplc-notinhistory' => 'Не можете да додавате слики во историски режим.',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'imgplc-create' => 'ചിത്രം ചേർക്കുക',
+	'imgplc-image' => 'ചിത്രം',
 );
 
 /** Malay (Bahasa Melayu)
@@ -249,6 +275,13 @@ $messages['nl'] = array(
 	'imgplc-placeholder' => 'Plaatshouder',
 	'imgplc-image' => 'Afbeelding',
 	'imgplc-notinhistory' => 'U kunt geen afbeelding toevoegen in geschiedenismodus.',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'imgplc-notinhistory' => 'Je kunt geen afbeelding toevoegen in geschiedenismodus.',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
