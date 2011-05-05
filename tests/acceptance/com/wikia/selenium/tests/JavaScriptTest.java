@@ -8,47 +8,47 @@ import static org.testng.AssertJUnit.assertFalse;
 import org.testng.annotations.Test;
 
 import java.io.*;
+import java.util.Date;
 
 /**
  * Prototype of crusecontrol and javascript unit testing, using browser as javascript environment
  */
 public class JavaScriptTest extends BaseTest {
-	protected String[] javascriptTests = new String[] {
-		"extensions/wikia/JavascriptTestRunner/js/tests/DummyTest.js",
-		"extensions/wikia/JavascriptTestRunner/js/tests/RTETest.js"
-	};
-
-	@Test(groups={"broken", "javascript"})
-	public void testFoo() throws Exception {
-		runJavaScriptTests();
-	}
-	
-	public void runJavaScriptTests() throws Exception {
+	public void runJavaScriptTest(String testPath) throws Exception {
 		boolean result = true;
-		for (String testPath : javascriptTests) {
-			closeSeleniumSession();
-			startSession(this.seleniumHost, this.seleniumPort, this.browser, this.webSite, this.timeout, this.noCloseAfterFail);
-			loginAsStaff();
-			session().open("wiki/Special:JavascriptTestRunner?test="+testPath+"&autorun=1&output=mwarticle,selenium");
-			session().waitForPageToLoad(this.getTimeout());
-			session().waitForCondition("typeof window.jtr_xml != 'undefined';", this.getTimeout());
+		String  date   = (new Date()).toString();
 
-			String reportText = session().getEval("window.jtr_xml");
-			result &= session().getEval("window.jtr_status").equals("OK");
+		session().open("wiki/Special:JavascriptTestRunner?test="+testPath+"&autorun=1&output=mwarticle,selenium");
+		session().waitForPageToLoad(this.getTimeout());
+		session().waitForCondition("typeof window.jtr_xml != 'undefined';", this.getTimeout());
 
-			String jsTestName = testPath.substring(testPath.lastIndexOf("/") + 1);
-			String filename = "jstest_" + this.getClass().getName() + "_" + jsTestName + ".xml";
+		String reportText = session().getEval("window.jtr_xml");
+		result &= session().getEval("window.jtr_status").equals("OK");
 
-			File file = new File(System.getenv("BUILDLOGS") + "/xml", filename);
-			file.createNewFile();
-			FileOutputStream out;
-			PrintStream p;
-			out = new FileOutputStream(System.getenv("BUILDLOGS") + "/xml/" + filename);
-			p = new PrintStream(out);
-			p.print(reportText);
-			p.close();
+		String jsTestName = testPath.substring(testPath.lastIndexOf("/") + 1);
+		String filename = "jstest_" + this.getClass().getName() + "_" + jsTestName + "_" + date + ".xml";
 
-		}
+		File file = new File(System.getenv("BUILDLOGS") + "/xml", filename);
+		file.createNewFile();
+		FileOutputStream out;
+		PrintStream p;
+		out = new FileOutputStream(System.getenv("BUILDLOGS") + "/xml/" + filename);
+		p = new PrintStream(out);
+		p.print(reportText);
+		p.close();
+
 		assertTrue("A JavaScript test failed", result);
 	}
+
+	/*
+	@Test(groups={"broken", "javascript"})
+	public void testDummyTest() throws Exception {
+		runJavaScriptTest("extensions/wikia/JavascriptTestRunner/js/tests/DummyTest.js");
+	}
+
+	@Test(groups={"broken", "javascript"})
+	public void testRTETest() throws Exception {
+		runJavaScriptTest("extensions/wikia/JavascriptTestRunner/js/tests/RTETest.js");
+	}
+	*/
 }
