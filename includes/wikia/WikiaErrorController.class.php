@@ -16,6 +16,6 @@ class WikiaErrorController extends WikiaController {
 	}
 
 	private function isValidHTTPErrorCode( $code ) {
-		return in_array( $code, array( 400, 401, 402, 403, 404, 500, 501, 502, 503 ) );
+		return in_array( $code, array( 400, 401, 402, 403, 404, 406, 500, 501, 502, 503 ) );
 	}
 }
