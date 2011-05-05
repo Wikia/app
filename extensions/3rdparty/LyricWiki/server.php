@@ -511,7 +511,7 @@ function searchArtists($searchString){
 
 	GLOBAL $SHUT_DOWN_API;
 	if(!$SHUT_DOWN_API){
-// TODO: THIS FUNCTION IS USELESS.. HAVE IT FOLLOW REDIRECTS, FIND CLOSE MATCHES, ETC.
+// TODO: THIS FUNCTION IS USELESS.. HAVE IT FOLLOW REDIRECTS, FIND CLOSE MATCHES, FALL BACK TO GRACENOTE, ETC.
 
 		// If the string starts or ends with %'s, trim them off.
 		if(strlen($artist) >= 1){
@@ -524,7 +524,8 @@ function searchArtists($searchString){
 			print (!$debug?"":"After trimming '%'s off: \"$artist\".\n");
 
 			$db = lw_connect_readOnly();
-			$queryString = "SELECT page_title FROM page WHERE page_namespace=0 AND page_title NOT LIKE '%:%' AND page_title LIKE '$artist' LIMIT $MAX_RESULTS";
+			$ns = NS_MAIN;
+			$queryString = "SELECT page_title FROM page WHERE page_namespace=$ns AND page_title NOT LIKE '%:%' AND page_title LIKE '$artist' LIMIT $MAX_RESULTS";
 			if($result = mysql_query($queryString, $db)){
 				if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
 					for($cnt=0; $cnt<$numRows; $cnt++){
@@ -651,9 +652,21 @@ function getSOTD(){
 function getSongResult($artist, $song){
 	return getSong($artist,$song);
 }
-function getSong($artist, $song="", $doHyphens=true){
+/**
+ * The most commonly called function in the API... attempts to find a match for a provided artist/song name and return
+ * a fair-use snippet of lyrics along with a link to the page.  Internally handles "fuzzy" title matching to get close matches,
+ * fallback to Gracenote pages if those exist and regular pages don't, and follow "implied redirects" (eg: "Prodigy" redirects
+ * to "The Prodigy", therefore we can infer that "Prodigy:Firestarter" => "The Prodigy:Firestarter").
+ *
+ * @params doHyphens is a bool which will be true initially and indicates that the function should try to remove hyphens.  Recursive calls might not do this.
+ * @param ns the namespace to use when looking for songs. Will always try the main namespace first, but recursive calls might fall back to NS_GRACENOTE if matches aren't found in the main namespace.
+ * @param isOuterRequest is a bool which represents if this is the actual request from the SOAP or REST APIs.  It will be set to false by all recursive calls.
+ */
+function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterRequest=true){
 	wfDebug("LWSOAP: inside " . __METHOD__ . "\n");
-	$id = requestStarted(__METHOD__, "$artist|$song");
+	if($isOuterRequest){
+		$id = requestStarted(__METHOD__, "$artist|$song");
+	}
 	$debug = false;$debugSuffix = "_debug";
 	$artist = rawurldecode($artist);
 	$song = rawurldecode($song);
@@ -685,12 +698,13 @@ function getSong($artist, $song="", $doHyphens=true){
 	}
 	$defaultLyrics = "Not found";
 	$defaultUrl = "http://lyrics.wikia.com";
+	$nsString = ($ns == NS_GRACENOTE ? "Gracenote:" : ""); // FIXME: Is there a more programmatic way to get this string?
 	$urlRoot = "http://lyrics.wikia.com/"; // may differ from default URL, should contain a slash after it.
 	$instrumental = "Instrumental";
 	$DENIED_NOTICE = "Unfortunately, due to licensing restrictions from some of the major music publishers we can no longer return lyrics through the LyricWiki API (where this application gets some or all of its lyrics).\n";
 	$DENIED_NOTICE.= "\nThe lyrics for this song can be found at the following URL:\n";
 	$DENIED_NOTICE_SUFFIX = "\n\n\n(Please note: this is not the fault of the developer who created this application, but is a restriction imposed by the music publishers themselves.)";
-	//$TRUNCATION_NOTICE = "Our licenses prevent us from returning the full lyrics to this song via the API.  For full lyrics, please visit: $urlRoot"."$artist:$song";
+	//$TRUNCATION_NOTICE = "Our licenses prevent us from returning the full lyrics to this song via the API.  For full lyrics, please visit: $urlRoot"."$nsString$artist:$song";
 	$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $defaultLyrics, 'url' => $defaultUrl, 'page_namespace' => '', 'page_id' => '');
 
 	GLOBAL $SHUT_DOWN_API;
@@ -705,11 +719,6 @@ function getSong($artist, $song="", $doHyphens=true){
 			"baby einstein", "apple inc.", "soundtrack", "various", "various artists", "the howard stern show", "frequence3.fr", "frequence3",
 			"http://www.radiofg.com", "radio paradise", "webex", "brought to you by santrex.net", "3fm", "no artist", "thank you for using starplayr"
 		);
-
-		// The vast majority of failures come from players passing clearly-invalid requests - skip those.
-		//if(($artist == "") && (0<preg_match("/^Track [0-9]+$/i", $song))){ // covered by the next IF anyway, so this has been removed.
-			// NOTE: For now we leave the 'defaultLyrics' message for players that handle this explicitly as not being a match.
-		//} else
 
 		// Lots of files are getting requested for some reason.
 		if(strlen($song) >= 4){
@@ -732,8 +741,8 @@ function getSong($artist, $song="", $doHyphens=true){
 			// These are "artists" which are very commonly accuring non-artists.  IE: Baby Einstein is a collection of classical music, Apple Inc. is just apple's (video?) podcasts
 			// NOTE: For now we leave the 'defaultLyrics' message for players that handle this explicitly as not being a match.
 		} else {
-			// TODO: SHOULDN'T THIS STUFF BE IN lw_getTitle() INSTEAD OF HERE??
-			
+			// TODO: SHOULDN'T MOST OF THE REWRITES BELOW BE IN lw_getTitle() INSTEAD OF HERE??
+
 			// Attempt to interpret hyphen-delimited title/artist/ablum strings correctly.
 			$lastHyphen = false; // if this isn't false and there is no result, then the whole thing will be tried again using hyphenSong as the song.
 			if($doHyphens){ // can be turned off so that a second pass can be made without this hyphen trick if it doesn't work the first time.
@@ -752,7 +761,7 @@ function getSong($artist, $song="", $doHyphens=true){
 			$transArray = array(
 				"<" => "Less Than", // < is not a valid character in wiki titles.
 				">" => "Greater Than", // < is not a valid character in wiki titles.
-				"#" => "Number ", // note the trailing space - TODO: FIXME: IS THIS STILL A RESTRICTION??
+				"#" => "Number ", // note the trailing space - TODO: FIXME: IS THIS STILL A RESTRICTION?? - it appears to be ("select page_title from page where page_title like '%#%' LIMIT 10;" yielded no results in production).
 				"{" => "(",
 				"}" => ")"
 			);
@@ -774,7 +783,6 @@ function getSong($artist, $song="", $doHyphens=true){
 			$artist = preg_replace("/Aint([^a-z]|$)/", "Ain't$1", $artist);
 			$artist = preg_replace("/Dont([^a-z]|$)/", "Don't$1", $artist);
 			$artist = preg_replace("/Cant([^a-z]|$)/", "Can't$1", $artist);
-
 
 			// Strip the "featuring" artists.
 			$index = strpos(strtolower($artist), " ft.");
@@ -802,7 +810,7 @@ function getSong($artist, $song="", $doHyphens=true){
 			print (!$debug?"":"utf8_compliant: ".utf8_compliant("$title")." - $title\n");
 			print (!$debug?"":"Looking for \"$title\"\n");
 			// If the song was not found... use some tricks to try to find it. - SWC 20061209
-			if(!lw_pageExists($title)){
+			if(!lw_pageExists($title, $ns)){
 				$lookedFor .= "$title\n";
 				print (!$debug?"":"Not found...\n");
 
@@ -810,7 +818,8 @@ function getSong($artist, $song="", $doHyphens=true){
 				// so try to grab the song using that version of the artist's name.
 				$artistTitle = lw_getTitle($artist); // leaves the original version in tact
 				$finalName = $artistTitle;
-				$page = lw_getPage($artistTitle, array(), $finalName, $debug);
+				// NOTE: This is intentionally ONLY in NS_MAIN. Artist redirects should all be done in the main namespace.
+				$page = lw_getPage($artistTitle, $finalName, $debug, NS_MAIN);
 				print (!$debug?"":"found:\n$page");
 				if($finalName != $artistTitle){
 					print (!$debug?"":"Artist redirect found to \"$finalName\". Applying to song \"$song\".\n");
@@ -820,7 +829,7 @@ function getSong($artist, $song="", $doHyphens=true){
 				}
 
 				// If the song was still not found... chop off any trailing parentheses and try again. - SWC 20070101
-				if(!lw_pageExists($title)){
+				if(!lw_pageExists($title, $ns)){
 					$lookedFor .= "$title\n";
 					print (!$debug?"":"$title not found.\n");
 					$finalSong = preg_replace("/\s*\(.*$/", "", $song);
@@ -833,14 +842,14 @@ function getSong($artist, $song="", $doHyphens=true){
 				}
 			}
 			$lookedFor .= "$title\n";
-			if(lw_pageExists($title)){
-				$finalName = $page_namespace = $page_id = "";
-				$content = lw_getPage($title, array(), $finalName, $debug, $page_namespace, $page_id);
+			if(lw_pageExists($title, $ns)){
+				$finalName = $page_id = "";
+				$content = lw_getPage($title, $finalName, $debug, $ns, $page_id);
 
 				// Parse the lyrics from the content.
 				$matches = array();
-				if(0<preg_match("/<lyrics?>(.*)<.lyrics?>/si", $content, $matches) || (0<preg_match("/<lyrics?>(.*)/si", $content, $matches))){
-					$content = $matches[1]; // Grabs lyrics if they are inside of lyrics tags.
+				if(0<preg_match("/<(gracenotelyrics|lyrics?)>(.*)<.(gracenotelyrics|lyrics?)>/si", $content, $matches) || (0<preg_match("/<(gracenotelyrics|lyrics?)>(.*)/si", $content, $matches))){
+					$content = $matches[2]; // Grabs lyrics if they are inside of lyrics tags.
 					// Sometimes when people convert to the new lyrics tags, they forget to delete the spaces at the beginning of the lines.
 					if(0<preg_match("/(\n [^\n]*)+/si", $content, $matches)){
 						//$content = $matches[0];
@@ -860,14 +869,14 @@ function getSong($artist, $song="", $doHyphens=true){
 					// TODO: Log the page which didn't parse here for purposes of fixing poorly formatted pages.
 				}
 				$content = trim($content);
-				$url = $urlRoot.str_replace("%3A", ":", urlencode($finalName)); // %3A as ":" is for readability.
+				$url = $urlRoot.$nsString.str_replace("%3A", ":", urlencode($finalName)); // %3A as ":" is for readability.
 				$retVal['artist'] = $artist;
 				$retVal['song'] = $song;
 				$retVal['lyrics'] = $content;
 				$retVal['url'] = $url;
 
 				// Additional data to help with tracking the hits for royalty payments via Gracenote (among other potential uses).
-				$retVal['page_namespace'] = $page_namespace;
+				$retVal['page_namespace'] = $ns;
 				$retVal['page_id'] = $page_id;
 
 				// Set the artist and song to the artist and song which were actually found (not what was passed in).
@@ -878,7 +887,7 @@ function getSong($artist, $song="", $doHyphens=true){
 				}
 			}
 			if(($retVal['lyrics'] == '') || ($retVal['lyrics'] == $defaultLyrics)){
-				$url = $urlRoot."index.php?title=".str_replace("%3A", ":", urlencode($title)); // %3A as ":" is for readability.
+				$url = $urlRoot."index.php?title=$nsString".str_replace("%3A", ":", urlencode($title)); // %3A as ":" is for readability.
 				$retVal['url'] = "$url&amp;action=edit";
 				$retVal['artist'] = $origArtist;
 				$retVal['song'] = $origSong;
@@ -898,22 +907,37 @@ function getSong($artist, $song="", $doHyphens=true){
 				}
 
 				logSoapFailure($origArtistSql, $origSongSql, $lookedForSql);
-
-				$resultFound = false;
-			} else {
-				$resultFound = true;
 			}
-			if(($resultFound === false) && ($lastHyphen !== false)){
+			
+			// If there was no result, give it another try without the hyphen trick.
+			if(($retVal['lyrics'] == $defaultLyrics) && ($lastHyphen !== false)){ // this logic should be kept even if isOuterRequest is false (ie: Gracenote should be tried with and without the hyphen trick
 				print (!$debug?"":"Trying again but assuming hyphens are part of the song name...\n");
-				$retVal = getSong($origArtist, $hyphenSong, false); // the false stops the hyphen trick from being tried again
-			} else {
-				// Take the results and figure out if a result was served.  Log this to get a good percentage of how many requests are made and what percentage are handled.
+				$retVal = getSong($origArtist, $hyphenSong, false, $ns, false); // the first false stops the hyphen trick from being tried again, the second false indicates that this is a recursive call
+			}
+
+			// If there was no result, give it another try by going through the NS_GRACNOTE (if this is not NS_GRACENOTE already) before trying the fallback search.
+			if(($isOuterRequest) && ($retVal['lyrics'] == $defaultLyrics) && ($ns != NS_GRACENOTE)){
+				print (!$debug?"":"Trying again but using Gracenote namespace this time...\n");
+				$gnRetVal = getSong($artist, $song, true, NS_GRACENOTE, false); // since we're starting all tricks from scratch, use doHyphens=true
+
+				// If we found a legit match, overwrite whole result (don't do that normally because it would mess up the URL to use the GN namespace even though song is in neither namespace).
+				if($gnRetVal['lyrics'] != $defaultLyrics){
+					$retVal = $gnRetVal;
+				}
+			}
+			
+			// Done looking for matches, there is either a match or not at this point.
+			// Do cleanup tasks like recording stats & truncating lyrics for copyright reasons.
+			// Fallback search is done afterwards.
+			if($isOuterRequest){
+				// Record whether a successful result was served.  Log this to get a good percentage of how many requests are made and what percentage are handled.
 				if(!$SHUT_DOWN_API){
 					// SWC 20090501 - Shut this down to reduce database load.  I don't generally track the success rate right now, so it's pretty flat around 50%.
 					// Can re-enable this later if we actually start paying attention to this again.
-					
+
 					// SWC 20101017 - Rewriting this to use memcached.  Should be fast enough now.
 					include "soap_stats.php"; // for tracking success/failure
+					$resultFound = ($retVal['lyrics'] != $defaultLyrics);
 					lw_soapStats_logHit($resultFound);
 				}
 
@@ -964,7 +988,7 @@ function getSong($artist, $song="", $doHyphens=true){
 				}
 			}
 		}
-		
+
 		// If configured to do so, fallback to full wiki search.
 		if($wgRequest->getBool('fallbackSearch') && ($retVal['lyrics'] == $defaultLyrics)){
 			try{
@@ -987,12 +1011,14 @@ function getSong($artist, $song="", $doHyphens=true){
 				// Put the searchResults into the response.
 				$retVal['searchResults'] = $titles;
 			} catch(WikiaException $e){
-				// TODO: For now, just leave the defaultLyrics.
+				// TODO: For now, just leave the defaultLyrics with no search results.
 			}
 		}
 	} // end of the "if shut_down_api else"
 	
-	requestFinished($id);
+	if($isOuterRequest){
+		requestFinished($id);
+	}
 	return $retVal;
 } // end getSong()
 
@@ -1025,7 +1051,7 @@ function getArtist($artist){
 	GLOBAL $SHUT_DOWN_API;
 	$correctArtist = $artist; // this will be overwritten (by reference) in lw_getPage().
 	if((!$SHUT_DOWN_API) && lw_pageExists($title)){
-		$content = lw_getPage($title, array(), $correctArtist, $debug);
+		$content = lw_getPage($title, $correctArtist, $debug);
 		$albums = parseDiscographies($content, $correctArtist);
 		if($debug){
 			$albums[] = array(
@@ -1303,7 +1329,7 @@ function getHometown($artist){
 		print (!$debug?"":"Looking for \"$title\"\n");
 		$finalName = "";
 		if(lw_pageExists($title)){
-			$page = lw_getPage($title, array(), $finalName, $debug);
+			$page = lw_getPage($title, $finalName, $debug);
 
 			$matches = array();
 			if(0 < preg_match("/\{\{Hometown[\s*\|]+country\s*=\s*([a-z _]*)[\s*\|]+state\s*=\s*([a-z _]*)[\s*\|]+hometown\s*=\s*([a-z _]*)/is", $page, $matches)){
@@ -1914,21 +1940,21 @@ function lw_getTitle($artist, $song='', $applyUnicode=true, $allowAllCaps=true){
 // Simple function to see if a page exists given its properly formatted page name.
 // Returns a boolean, true if page exists, false if it doesn't.
 //
-// Caches results, so it is safe to call multiple times.
+// Caches results, so it is safe to call multiple times on same run.
 ////
 GLOBAL $EXIST_CACHE;
-function lw_pageExists($pageTitle){
+function lw_pageExists($pageTitle, $ns=NS_MAIN){
 	GLOBAL $EXIST_CACHE;
 	if(!isset($EXIST_CACHE)){
 		$EXIST_CACHE = array();
 	}
 
-	if(isset($EXIST_CACHE[$pageTitle])){
-		$retVal = $EXIST_CACHE[$pageTitle];
+	if(isset($EXIST_CACHE["$ns:$pageTitle"])){
+		$retVal = $EXIST_CACHE["$ns:$pageTitle"];
 	} else {
 		$queryTitle = str_replace("'", "\'", $pageTitle);
-		$retVal = (0 < lw_simpleQuery("SELECT /* LyricWiki API server.php::lw_pageExists() */ COUNT(*) FROM page WHERE page_title='$queryTitle' AND page_namespace='0'")); // the page_namespace='0' speeds it up significantly
-		$EXIST_CACHE[$pageTitle] = $retVal;
+		$retVal = (0 < lw_simpleQuery("SELECT /* LyricWiki API server.php::lw_pageExists() */ COUNT(*) FROM page WHERE page_title='$queryTitle' AND page_namespace='$ns'")); // the page_namespace='$ns' speeds it up significantly since it can then use the index on page_namespace,page_title
+		$EXIST_CACHE["$ns:$pageTitle"] = $retVal;
 	}
 	return $retVal;
 } // end lw_pageExists()
@@ -1936,25 +1962,24 @@ function lw_pageExists($pageTitle){
 ////
 // Returns the content of the page with the given page title.
 // Returns an empty string if the page is not found.
-// Automatically compensates for redirects.  Pages array contains the pages
-// already attempted in order to prevent run-away recursion.
+// Automatically compensates for redirects.
 //
-// If there are redirects, finalName will be modified to contain the pageName
-// of the page which the redirection stops upon.
-//
-// If the page is found to be an existing article, then page_namespace and page_id will be set
-// to the namespace number and the article id (which matches page.page_id) respectively.
+// @param finalName - If there are redirects, finalName will be modified to
+//    contain the pageName of the page which the redirection stops upon.
+// @param debug - if true, prints debugging statements
+// @param page_namespace - is the namespace that the page is in
+// @param page_id - If the page is found to be an existing article, then page_id will be set
+// to the Article id (which matches page.page_id).
 ////
-function lw_getPage($pageTitle, $pages=array(), &$finalName='', $debug=false, &$page_namespace='', &$page_id=''){
+function lw_getPage($pageTitle, &$finalName='', $debug=false, $page_namespace=NS_MAIN, &$page_id=''){
 	$retVal = "";
 	$finalName = $pageTitle;
 
 	// Get the text of the end-point article and record what the final article name is.
-	$title = Title::newFromDBkey($pageTitle);
+	$title = Title::newFromText($pageTitle, $page_namespace);
 	if( $title ) {
 		if($title->exists()){
 			$page_id = $title->getArticleID();
-			$page_namespace = $title->getNamespace();
 
 			$article = Article::newFromID($title->getArticleID());
 			if($article->isRedirect()){
