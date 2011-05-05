@@ -35,6 +35,10 @@
 				this.editor.on('mode',this.modeChanged,this);
 			}
 		},
+		
+		init: function() {
+			this.track(this.wide ? 'initOn' : 'initOff');
+		},
 
 		modeChanged: function() {
 			var toolbar = this.editor.getSpace('toolbar');
@@ -49,6 +53,8 @@
 		toggle: function() {
 			this.setState(!this.getState());
 			this.saveState();
+
+			this.track(this.wide ? 'switchOn' : 'switchOff');
 		},
 
 		loadState: function() {
@@ -67,6 +73,10 @@
 
 		getState: function() {
 			return this.editor.element.hasClass(this.wideClassName);
+		},
+
+		track: function(ev) {
+			this.editor.track('widescreenSource', ev);
 		}
 	});
 

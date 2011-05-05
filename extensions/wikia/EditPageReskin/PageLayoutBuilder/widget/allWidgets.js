@@ -19,7 +19,7 @@ $(function() {
 	$('.plb-empty-input').focus(PageLayoutBuilder.inputEnter)
 						 .blur(PageLayoutBuilder.inputExit);
 	
-	$("#plbForm,#editform").submit(function() {
+	$(".WikiaArticle form").submit(function() {
 		$("input.plb-empty-input, textarea.plb-empty-input ").val("");
 	});
 	

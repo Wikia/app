@@ -58,6 +58,7 @@
 		},
 
 		constructor: function( plugins, config ) {
+			$().log(plugins);
 			WE.initAddons();
 			WE.Editor.superclass.constructor.call(this);
 			WE.fire('newInstance',plugins,config);

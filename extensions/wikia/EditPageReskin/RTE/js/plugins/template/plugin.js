@@ -61,7 +61,7 @@ CKEDITOR.plugins.add('rte-template',
 						RTE.templateHelpers.makeLayout(editor);
 						break;
 					default:
-						RTE.track('template', 'dialog', 'search', 'dropdown', value);
+						RTE.track('visualMode', 'template', 'dialog', 'search', 'dropdown', value);
 	
 						// show template editor with selected template
 						RTE.templateEditor.createTemplateEditor(value);

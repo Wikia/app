@@ -5,13 +5,22 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 	protected $fullScreen = false;
 	protected $parser = null; 
 	protected $tagValues = false;
-
 	
 	public function __construct() {
 		parent::__construct( 'PageLayoutBuilderForm', 'PageLayoutBuilderForm' );
 	}
 	
 	public function renderHeader($par) {
+		$errors = $this->mEditPage->getNotices();
+	
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars(array(
+			"errors" => $errors,
+			"iserror" => !empty($errors)
+		));
+		
+		$this->out->addHTML( $oTmpl->render( "create-article-header" ) );
+		
 		$this->forceUserToProvideTitle( 'plb-special-form-article-name' );
 	}
 	
@@ -49,8 +58,13 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 	}	
 	
 	public function showOwnTextbox() {
-		//$html = $parserOut->getText();
-		$this->formValues['articleName'] = "dsds";
+		$parser = $this->getParser();
+		$text = $parser->preParseForm( $this->layoutArticle->getContent() );
+		$parserOptions = ParserOptions::newFromUser($this->user);
+		$parserOptions->setEditSection(false);
+		$parserOut = $parser->parse($text , $this->layoutTitle, $parserOptions);
+		$this->formHTML = $parserOut->getText();
+		
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(array(
 			"data" => $this->formValues,
@@ -64,7 +78,7 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 			"isdelete" => false//PageLayoutBuilderModel::layoutIsDelete($this->formValues['plbId']),
 		));
 		
-		$this->out->addHTML( $oTmpl->render( "create-article" ) );		
+		$this->out->addHTML( $oTmpl->render( "create-article" ) );
 		return true;
 	}
 	
@@ -83,29 +97,36 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 	 */
 	protected function processSubmit() {
 
-		$this->formErrors = array();
-		$this->formErrorsList = array();
-
-		if(isset($elements)) {
-			foreach($elements as $key => $value) {
-				
+		$formErrors = array();
+		$formErrorsList = array();
+		$formValues = array();
+		
+		if(isset($this->elements)) {
+			foreach($this->elements as $key => $value) {
+				$reqVal = $this->request->getVal('plb_'.$key, '');
+				$formValues[$key] = $reqVal;
 				$oWidget = LayoutWidgetBase::getNewWidget($value['type'], $value['attributes'], $reqVal);
 
 				$validateResult = $oWidget->validateForm();
 				if(!($validateResult === true)) {
-					$this->formErrorsList[$key] = 1;
-					if(!in_array($validateResult, $this->formErrors)) {
-						$this->formErrors = $this->formErrors + $validateResult;
+					$formErrorsList[$key] = 1;
+					if(!in_array($validateResult, $formErrors)) {
+						$formErrors = $formErrors + $validateResult;
 					}
 				}
 			}
 		} 
+	
+		if(count($formErrors) > 0) {
+			foreach($formErrors as $val) {
+				$this->addEditNotice(  $val );
+			}
+		}
 		
-		$this->getParser()->forceFormValue($this->formValues);
-		$this->getParser()->forceFormErrors($this->formErrors);
-
+		$this->getParser()->forceFormValue($formValues);
+		$this->getParser()->forceFormErrors($formErrorsList);
 		
-		if($this->mode == self::MODE_NEW || $this->mode == MODE_NEW_SETUP) {
+		if($this->mode == self::MODE_NEW || $this->mode == self::MODE_NEW_SETUP) {
 			if ( $this->titleStatus == self::STATUS_ALREADY_EXISTS ) {
 				$this->addEditNotice( wfMsg( 'plb-special-form-already-exists' ) );
 			}
@@ -121,9 +142,11 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 		}
 	}
 	
-	protected function getWikitextFromRequest() {
+	public function getWikitextFromRequest() {
 		$this->tagValues = array();
 		$this->formValues = array();
+
+		$this->elements = PageLayoutBuilderModel::getElementList( $this->layoutTitle->getArticleID() );
 
 		foreach ( $this->elements as $key => $value) {
 			$reqVal = $this->request->getVal('plb_'.$key, '');
@@ -169,11 +192,22 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 		$staticChute = new StaticChute('js');
 		$staticChute->useLocalChuteUrl();
 		$this->out->addScript($staticChute->getChuteHtmlForPackage('yui'));
-		$this->out->addScript( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageReskin/PageLayoutBuilder/css/form.scss')); 
-		$this->out->addScript( AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/_EditPage.scss')); 
 		
-		$this->out->addScript("<script type=\"text/javascript\" src=\"".$this->app->getGlobal('wgExtensionsPath')."/wikia/EditPageReskin/PageLayoutBuilder/widget/allWidgets.js?".$this->app->getGlobal('wgStyleVersion')."\"></script>");
+		$this->out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageReskin/PageLayoutBuilder/css/form.scss')); 
+		$this->out->addStyle( AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/_EditPage.scss'));
 		
+		$js = array(
+			'/wikia/PageLayoutBuilder/widget/allWidgets.js',
+			'/wikia/EditPageLayout/js/editor/WikiaEditor.js',
+			'/wikia/EditPageLayout/js/editor/PageControls.js',
+			'/wikia/PageLayoutBuilder/js/form.js',
+			'/wikia/EditPageLayout/js/loaders/LayoutBuilderFormEditorLoader.js'
+		);
+		
+		foreach( $js as $val ) {
+			$this->out->addScript("<script type=\"text/javascript\" src=\"".$this->app->getGlobal('wgExtensionsPath'). $val . '?' .$this->app->getGlobal('wgStyleVersion')."\"></script>"); 			
+		}
+
 		//close every thing in form 
 		$this->out->addHTML(Xml::element("form", array("method" => "POST", "action" => $this->request->getFullRequestURL()."&action=submit"), '', true));
 		parent::execute( $par );
@@ -184,9 +218,9 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 		$this->plbId = (int) $this->getField('plbId',''); // layout ID
 		$this->layoutTitle = Title::newFromID($this->plbId);
 		
-		if($this->plbId == 0 && $this->layoutTitle instanceof  Title && $this->layoutTitle->getNamespace() ==  NS_PLB_LAYOUT ) {
+		if($this->plbId == 0 || (!$this->layoutTitle instanceof  Title) || $this->layoutTitle->getNamespace() !=  NS_PLB_LAYOUT ) {
 			$this->executeIsNolayout();
-			return true;
+			return false;
 		}
 		
 		$this->layoutArticle = new Article($this->layoutTitle);
@@ -196,9 +230,7 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 	
 	protected function afterArticleInitialize($mode, $title, $article) {
 		$this->formValues = array();
-		
 		$parser = $this->getParser();
-		$this->elements = PageLayoutBuilderModel::getElementList( $this->layoutTitle->getArticleID() );
 		if ( $mode == self::MODE_EDIT ) {
 			if(!$title->userCan('edit')) {
 				$this->out->permissionRequired( 'edit' );
@@ -209,14 +241,12 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 				$this->executeIsNoArtile();
 			}
 			
-			$loadedValues = $parser->loadFormFromText($article->getContent(), $article->getId(), $this->plbId );
+			$loadedValues = $parser->loadFormFromText($this->getEditPage()->getContent(), $article->getId(), $this->plbId );
 		}		
+		if(!empty($loadedValues['cswikitext'])) {
+			CategorySelect::SelectCategoryAPIgetData($loadedValues['cswikitext'], true);
+		}
 		
-		$text = $parser->preParseForm( $this->layoutArticle->getContent() );
-		$parserOptions = ParserOptions::newFromUser($this->user);
-		$parserOptions->setEditSection(false);
-		$parserOut = $parser->parse($text , $this->layoutTitle, $parserOptions);
-		$this->formHTML = $parserOut->getText();
 		return true;
 	}
 	
@@ -229,14 +259,12 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 	}
 
 	function executeIsNolayout() {
-		global $wgOut;
-		$wgOut->showErrorPage( 'plb-special-no-layout', 'plb-special-no-layout-body', array(wfGetReturntoParam()));
+		$this->out->showErrorPage( 'plb-special-no-layout', 'plb-special-no-layout-body', array(wfGetReturntoParam()));
 	}
 
 
 	function executeIsNoArtile() {
-		global $wgOut;
-		$wgOut->showErrorPage( 'plb-special-no-article', 'plb-special-no-article-body', array(wfGetReturntoParam()));
+		$this->out->showErrorPage( 'plb-special-no-article', 'plb-special-no-article-body', array(wfGetReturntoParam()));
 	}
 	
 	
@@ -260,6 +288,26 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 			}
 		}
 		return false;
+	}
+	
+	function afterSave( $status ) {
+		switch( $status ) {
+			case EditPage::AS_SUCCESS_UPDATE:
+			case EditPage::AS_SUCCESS_NEW_ARTICLE:
+			case EditPage::AS_ARTICLE_WAS_DELETED:
+				PageLayoutBuilderModel::articleMarkAsPLB( $this->getEditedArticle()->getID(), $this->layoutTitle->getArticleID() );
+				$this->getEditedArticle()->getTitle()->invalidateCache();
+				$this->out->redirect($this->getEditedArticle()->getTitle()->getFullUrl());
+				break;
+			default:
+				if( $status == EditPage::AS_READ_ONLY_PAGE_LOGGED ) {
+					$this->addEditNotice(wfMsg('plb-special-form-cant-edit'));
+				}
+				else {
+					$this->addEditNotice(wfMsg('plb-special-form-spam'));
+				}
+				break;
+		}
 	}
 	
 	/**
@@ -296,147 +344,13 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 		return true;
 	}
 
-	
-	function afterSave( $status ) {
-		switch( $status ) {
-			case EditPage::AS_SUCCESS_UPDATE:
-			case EditPage::AS_SUCCESS_NEW_ARTICLE:
-			case EditPage::AS_ARTICLE_WAS_DELETED:
-				PageLayoutBuilderModel::articleMarkAsPLB( $this->getEditedArticle()->getID(), $this->layoutTitle->getArticleID() );
-				$this->getEditedArticle()->getTitle()->invalidateCache();
-				$this->out->redirect($this->getEditedArticle()->getTitle()->getFullUrl());
-				break;
-			default:
-				if( $status == EditPage::AS_READ_ONLY_PAGE_LOGGED ) {
-					$this->formErrors[] = wfMsg('plb-special-form-cant-edit');
-				}
-				else {
-					$this->formErrors[] = wfMsg('plb-special-form-spam');
-				}
-				break;
+	public static function getEditPageRailModuleList(&$modules) {
+		global $wgTitle;
+		if( $wgTitle->isSpecial('PageLayoutBuilderForm') ) {
+			$modules = array (
+				1501 => array('Search', 'Index', null),
+				1500 => array('PageLayoutBuilderForm', 'Index', null));
 		}
-	}
-}
-
-
-class PageLayoutBuilderFormXXX extends SpecialPage {
-    function __construct() {
-	    wfLoadExtensionMessages( 'PageLayoutBuilder' );
-	    parent::__construct( 'PageLayoutBuilderForm', 'PageLayoutBuilderForm' );
-	}
-    function execute($article_id = null, $limit = "", $offset = "", $show = true) {
-		global $wgRequest, $wgOut, $wgTitle, $wgUser, $wgExtensionsPath, $wgScriptPath, $wgStyleVersion;
-
-		$this->pageId = (int) $wgRequest->getVal('pageId', ''); // article ID
-
-		//TODO: rename vars
-
-		if($this->pageId > 0) {
-
-			
-			
-		} else {
-
-		}
-
-		
-		if($this->layoutTitle instanceof  Title && $this->layoutTitle->getNamespace() ==  NS_PLB_LAYOUT ) {
-			
-			
-			$this->formValues['articleName'] = "";$wgRequest->getVal('default', '');
-			$this->formErrors = array();
-
-			if(!($this->pageId > 0)) {
-				
-			}
-
-
-			$pageTs = "";
-			if($wgRequest->wasPosted()) {
-				$this->executeSubmit($parser);
-			} elseif($this->pageId > 0) {
-				$pageArticle = new Article($this->pageTitle);
-				$editPage = new EditPage( $pageArticle );
-				
-				$pageTs = $pageArticle->getTimestamp(); 
-			} else {
-				$this->formValues['articleName'] = $wgRequest->getVal('default', '');
-			}
-
-
-			if($this->isCategorySelect()) {
-				global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgCategorySelectMetaData,$wgHooks,$wgRequest;
-				$cssFile = wfGetSassUrl('/extensions/wikia/EditPageReskin/CategorySelect/oasis.scss');
-				$wgOut->addExtensionStyle($cssFile);
-
-				wfLoadExtensionMessages('CategorySelect');
-
-				if(!empty($loadedValues['cswikitext'])) {
-					$cattext = $loadedValues['cswikitext'];
-				} else {
-					$cattext = $wgRequest->getVal('csWikitext', '');
-				}
-
-				$categories = CategorySelect::SelectCategoryAPIgetData($cattext);
-				$categories = htmlspecialchars(Wikia::json_encode($categories['categories']));
-				$catHtml = '<input type="hidden" value="'.$categories.'" name="wpCategorySelectWikitext" id="wpCategorySelectWikitext" /> ';
-				$catHtml .= CategorySelectGenerateHTMLforEditRaw( $cattext );
-			}
-
-			//TODO: move this to template
-
-
-
-		} else {
-			
-			return true;
-		}
-		$wgOut->setPageTitle( $this->pageHeader );
 		return true;
-    }
-    
-
-	/**
-	 * isUndo 
-	 *
-	 * @author Tomek Odrobny
-	 * 
-	 * @access public
-	 *
-	 */
-	
-	public static function isUndo( &$self, $undotext, $undorev, $oldrev ) {	
-		global $wgOut;
-		$wgOut->addHTML( $self->editFormPageTop );
-	
-		if($undotext !== false) {
-			$self->textbox1 = $oldrev->getText();
-			$self->showDiff();	
-		}	
-				
-		return true;	
-	}
-
-	function executeSubmit(&$parser) {
-		global $wgRequest, $wgOut, $wgUser;
-
-		$status = PageLayoutBuilderModel::saveArticle( $this->mArticle, $mwText,  $wgRequest->getVal('wpEdittime'), $wgRequest->getVal("wpSummary", "") );
-		switch( $status ) {
-			case EditPage::AS_SUCCESS_UPDATE:
-			case EditPage::AS_SUCCESS_NEW_ARTICLE:
-			case EditPage::AS_ARTICLE_WAS_DELETED:
-				PageLayoutBuilderModel::articleMarkAsPLB( $this->mArticle->getID(), $this->layoutTitle->getArticleID() );
-				$this->mArticle->getTitle()->invalidateCache();
-				$wgOut->redirect($this->mArticle->getTitle()->getFullUrl() );
-				break;
-			default:
-				if( $status == EditPage::AS_READ_ONLY_PAGE_LOGGED ) {
-					$this->addEditNotice( wfMsg('plb-special-form-cant-edit') );
-				}
-				else {
-					$this->addEditNotice( wfMsg('plb-special-form-spam') );
-				}
-				break;
-		}
 	}
 }

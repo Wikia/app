@@ -62,6 +62,7 @@
 				scope: this
 			});
 			this.modeChanged();
+			this.setupTracking();
 		},
 
 		modeChanged: function() {
@@ -73,8 +74,39 @@
 					this.buildToolbar(this.el.get(0));
 				}
 			}
+		},
+
+		setupTracking: function() {
+			var buttons = this.el.children('img'),
+				self = this;
+
+			buttons.bind('click', function(ev) {
+				var buttonId = $(this).attr('id');
+				self.track(buttonId);
+			});
+		},
+
+		track: function(buttonId) {
+			// track clicks on #mw-editbutton-bold as "bold"
+			var buttonName = buttonId.split('-').pop();
+
+			// modify selected names to match the spec
+			switch(buttonName) {
+				case 'link':
+					buttonName = 'linkInternal';
+					break;
+
+				case 'extlink':
+					buttonName = 'linkExternal';
+					break;
+
+				case 'headline':
+					buttonName = 'heading';
+					break;
+			}
+
+			this.editor.track(this.editor.getTrackerInitialMode(), 'sourceToolbar', buttonName);
 		}
-		
 	});
 
 	WE.modules.ToolbarMediawiki.nextId = 1;

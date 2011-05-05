@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Abstract class for special pages implementing custom edit pages
+ * class for special pages implementing custom edit pages
  *
  * @author macbre
  */
 
-abstract class SpecialCustomEditPage extends SpecialPage {
+class SpecialCustomEditPage extends SpecialPage {
 	/* status for title */
 
 	const STATUS_OK = 0;
@@ -151,7 +151,7 @@ abstract class SpecialCustomEditPage extends SpecialPage {
 		$wikitext = $this->request->getText($fieldName);
 
 		// perform reverse parsing when needed (i.e. convert HTML from RTE to wikitext)
-		if (class_exists('RTE') && $this->request->getVal('RTEMode') == 'wysiwyg') {
+		if (class_exists('RTE') && ($this->request->getVal('RTEMode') == 'wysiwyg' || $this->request->getVal('mode') == 'wysiwyg' )) {
 			$wikitext = RTE::HtmlToWikitext($wikitext);
 			$this->request->setVal('RTEMode', null);
 		}
@@ -191,6 +191,15 @@ abstract class SpecialCustomEditPage extends SpecialPage {
 	protected function getDefaultTitle() {
 		return new Title;
 	}
+	
+	/**
+	 * Get edit page object 
+	 */
+	
+	public function getEditPage() {
+		return $this->mEditPage;
+	} 
+
 
 	/**
 	 * initialize article title
@@ -208,7 +217,6 @@ abstract class SpecialCustomEditPage extends SpecialPage {
 			// We are editing an existing article
 			$this->setEditedTitle($requestedTitle);
 			$this->mode = self::MODE_EDIT;
-			$this->afterArticleInitialize($this->mode, $requestedTitle, $requestedArticle);
 			return true;
 		}
 
@@ -240,8 +248,6 @@ abstract class SpecialCustomEditPage extends SpecialPage {
 				$this->setEditedTitle($title);
 			}
 		}
-
-		$this->afterArticleInitialize($this->mode, $title, $this->getEditedArticle());
 	}
 
 	/**
@@ -259,7 +265,7 @@ abstract class SpecialCustomEditPage extends SpecialPage {
 	protected function initializeEditPage() {
 		$helper = new EditPageLayoutHelper();
 
-		$editPage = $helper->setupEditPage($this->mEditedArticle, $this->fullScreen);
+		$editPage = $helper->setupEditPage($this->mEditedArticle, $this->fullScreen, get_class($this) );
 
 		//var used by onMakeGlobalVariablesScript in EditPageLayoutHelper
 		if(!empty($this->titleNS)) {
@@ -280,11 +286,12 @@ abstract class SpecialCustomEditPage extends SpecialPage {
 		//set action to have some value(not empty)
 		$this->action = $this->request->getVal('action', 'edit');
 		$this->request->setVal( 'action', $this->action );
-
+				
 		$value = $this->getField($this->titleFieldName);
 
-		$this->initializeTitle( $value );
-
+		if($this->initializeTitle( $value ) === false) {
+			return ;
+		}
 
 		$this->addHiddenField(array(
 			'name' => $this->pageIdFieldName,
@@ -294,8 +301,6 @@ abstract class SpecialCustomEditPage extends SpecialPage {
 			'value' => $this->getTitle()->getArticleID(),
 			'required' => true
 		));
-
-		$this->renderHeader($par);
 
 		// TODO: call appriopriate hook instead of a function
 		if( function_exists('CategorySelectInitializeHooks') ) {
@@ -309,18 +314,12 @@ abstract class SpecialCustomEditPage extends SpecialPage {
 
 		// (try to) create instance of custom EditPage class
 		$this->mEditPage = $this->initializeEditPage();
-
+		
 		if (empty($this->mEditPage)) {
 			return;
 		}
-
-		foreach ($this->editNoticesStack as $editNotice) {
-			$this->mEditPage->addEditNotice($editNotice);
-		}
-
-		foreach ($this->mHiddenFields as $field) {
-			$this->mEditPage->addHiddenField($field);
-		}
+		
+		$this->afterArticleInitialize($this->mode, $this->getEditedArticle()->getTitle(), $this->getEditedArticle());
 
 		$this->setUpControlButtons();
 
@@ -383,6 +382,16 @@ abstract class SpecialCustomEditPage extends SpecialPage {
 		// render edit form
 		$this->mEditPage->lastSaveStatus = null;
 
+		$this->renderHeader($par);
+		
+		foreach ($this->editNoticesStack as $editNotice) {
+			$this->mEditPage->addEditNotice($editNotice);
+		}
+
+		foreach ($this->mHiddenFields as $field) {
+			$this->mEditPage->addHiddenField($field);
+		}
+		
 		// render special page setup method
 		$this->mEditPage->submit();
 
@@ -410,31 +419,6 @@ abstract class SpecialCustomEditPage extends SpecialPage {
 	}
 
 	/**
-	 * Generate preview
-	 */
-	protected function processPreview() {
-		$service = EditPageService::newFromArticle($this->mEditedArticle);
-		$wikitext = $this->getWikitextFromRequest();
-
-		return array(
-			'html' => $service->getPreview($wikitext),
-		);
-	}
-
-	/**
-	 * Generate "Show changes"
-	 */
-	protected function processDiff() {
-		$service = EditPageService::newFromArticle($this->mEditedArticle);
-		$wikitext = $this->getWikitextFromRequest();
-		$section = $this->request->getInt('section');
-
-		return array(
-			'html' => $service->getDiff($wikitext, $section),
-		);
-	}
-
-	/**
 	 * Allow extensions to perform additional checks when saving an article
 	 */
 	protected function processSubmit() {
@@ -443,20 +427,34 @@ abstract class SpecialCustomEditPage extends SpecialPage {
 	}
 
 	/**
-	 * Return wikitext for generating preview / diff / to be saved
+	 * Return wikitext
 	 */
-	protected function getWikitextFromRequest() {
+	public function getWikitextFromRequest() {
 		// "wikitext" field used when generating preview / diff
 		$wikitext = $this->request->getText('wikitext');
 
 		if ($wikitext == '') {
 			// "wpTextbox1" field used when submitting editpage (needs to be processed by Reverse Parser if saved from wysiwyg mode)
-			$wikitext = $this->getWikitextFromField('wpTextbox1');
+			
+			$method = $this->request->getVal('method', '');
+			if($method == 'preview' || $method == 'diff') {
+				$wikitext = $this->getWikitextFromField('content');
+			} else {
+				$wikitext = $this->getWikitextFromField('wpTextbox1');	
+			}
 		}
 
 		return $wikitext;
 	}
 
+	/**
+	 * Return wikitext for generating preview / diff / to be saved
+	 */
+	public function getWikitextFromRequestForPreview($title) {
+		$this->initializeTitle($title);
+		return $this->getWikitextFromRequest();
+	}
+	
 	/**
 	 * Override this to take action after page has been saved
 	 * @param int $status EditPage save status
@@ -482,5 +480,13 @@ abstract class SpecialCustomEditPage extends SpecialPage {
 	 * Override this method to set up buttons in Page Controls module
 	 */
 	protected function setUpControlButtons() {
+	}
+	
+	/**
+	 * Function used to render some html instead preview or diff
+	 */
+
+	public function getOwnPreviewDiff( $wikitext, $method ) {
+		return false;
 	}
 }

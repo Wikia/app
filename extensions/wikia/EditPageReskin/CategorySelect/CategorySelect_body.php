@@ -25,11 +25,10 @@ if (!defined('MEDIAWIKI')) {
 class CategorySelect {
 	private static $categories, $maybeCategory, $maybeCategoryBegin, $outerTag, $nodeLevel, $frame, $categoryNamespace;
 
-	static function SelectCategoryAPIgetData($wikitext) {
+	static function SelectCategoryAPIgetData($wikitext, $force = false) {
 		global $wgCategorySelectMetaData;
-
 		//this function is called from different hooks - parse article only once
-		if (is_array($wgCategorySelectMetaData)) {
+		if (!$force && is_array($wgCategorySelectMetaData)) {
 			return $wgCategorySelectMetaData;
 		}
 
@@ -64,7 +63,7 @@ class CategorySelect {
 		$modifiedWikitext = self::$frame->expand( $root, PPFrame::NO_TEMPLATES | PPFrame::RECOVER_COMMENTS);
 		//replace markers back to wikitext
 		$modifiedWikitext = $wgParser->mStripState->unstripBoth($modifiedWikitext);
-
+		
 		$wgCategorySelectMetaData = array('wikitext' => rtrim($modifiedWikitext), 'categories' => $categories);
 		wfProfileOut( __METHOD__ );
 		return $wgCategorySelectMetaData;

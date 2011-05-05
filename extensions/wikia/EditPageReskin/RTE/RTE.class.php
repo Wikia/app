@@ -11,6 +11,9 @@ class RTE {
 	// should we use Wysiwyg editor?
 	private static $useWysiwyg = true;
 
+	// reason of fallback to source mode
+	private static $wysiwygDisabledReason = false;
+
 	// are we using development version of CK?
 	private static $devMode;
 
@@ -50,7 +53,7 @@ class RTE {
 	 * Callback function for preg_replace_callback which handle placeholer markers.
 	 * Called from RTEParser class.
 	 *
-	 * @author: Inez Korczyński
+	 * @author: Inez KorczyDski
 	 */
 	public static function replacePlaceholder($var) {
 		$data = RTEData::get('placeholder', intval($var[1]));
@@ -109,7 +112,7 @@ class RTE {
 	/**
 	 * Setup Rich Text Editor by loading needed JS/CSS files and adding hook(s)
 	 *
-	 * @author Inez Korczyński, Macbre
+	 * @author Inez KorczyDski, Macbre
 	 */
 	public static function init(&$form) {
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgRequest, $wgAllInOne;
@@ -126,6 +129,9 @@ class RTE {
 
 		// i18n
 		wfLoadExtensionMessages('RTE');
+
+		// add global JS variables
+		$wgHooks['MakeGlobalVariablesScript'][] = 'RTE::makeGlobalVariablesScript';
 
 		// should CK editor be disabled?
 		if (self::$useWysiwyg === false) {
@@ -151,9 +157,6 @@ class RTE {
 
 		// parse wikitext of edited page and add extra fields to editform
 		$wgHooks['EditPage::showEditForm:fields'][] = 'RTE::init2';
-
-		// add global JS variables
-		$wgHooks['MakeGlobalVariablesScript'][] = 'RTE::makeGlobalVariablesScript';
 
 		// add CSS class to <body> tag
 		$wgHooks['SkinGetPageClasses'][] = 'RTE::addBodyClass';
@@ -225,6 +228,17 @@ class RTE {
 		global $wgLegalTitleChars, $wgServer, $wgScriptPath;
 
 		wfProfileIn(__METHOD__);
+
+		// reason why wysiwyg is disabled
+		if (self::$useWysiwyg === false) {
+			if (!empty(self::$wysiwygDisabledReason)) {
+				$vars['RTEDisabledReason'] = self::$wysiwygDisabledReason;
+			}
+
+			// no reason to add variables listed below
+			wfProfileOut(__METHOD__);
+			return true;
+		}
 
 		// CK instance id
 		$vars['RTEInstanceId'] = self::getInstanceId();
@@ -359,12 +373,10 @@ HTML
 	private static function checkEditorConditions() {
 		global $wgRequest, $wgUser;
 
-		wfProfileIn(__METHOD__);
-
 		// check browser compatibility
 		if (!self::isCompatibleBrowser()) {
 			RTE::log('editor is disabled because of unsupported browser');
-			self::disableEditor();
+			self::disableEditor('browser');
 		}
 
 		// check useeditor URL param (wysiwyg / source / mediawiki)
@@ -375,7 +387,7 @@ HTML
 
 			switch($useEditor) {
 				case 'mediawiki':
-					self::disableEditor();
+					self::disableEditor('useeditor');
 					break;
 
 				case 'source':
@@ -388,37 +400,37 @@ HTML
 		global $wgWysiwygDisabledNamespaces, $wgWysiwygDisableOnTalk;
 		if(!empty($wgWysiwygDisabledNamespaces) && is_array($wgWysiwygDisabledNamespaces)) {
 			if(in_array(self::$title->getNamespace(), $wgWysiwygDisabledNamespaces)) {
-				self::disableEditor();
+				self::disableEditor('disablednamespace');
 			}
 		} else {
 			if(self::$title->getNamespace() == NS_TEMPLATE || self::$title->getNamespace() == NS_MEDIAWIKI) {
-				self::disableEditor();
+				self::disableEditor('namespace');
 			}
 		}
 		if(!empty($wgWysiwygDisableOnTalk)) {
 			if(self::$title->isTalkPage()) {
-				self::disableEditor();
+				self::disableEditor('talkpage');
 			}
 		}
 
 		// RT #10170: do not initialize for user JS/CSS subpages
 		if (self::$title->isCssJsSubpage()) {
 			RTE::log('editor is disabled on user JS/CSS subpages');
-			self::disableEditor();
+			self::disableEditor('cssjssubpage');
 		}
 
 		// check user preferences option
 		$userOption = $wgUser->getOption('enablerichtext');
 		if( ($userOption != true) && ($useEditor != 'wysiwyg') ) {
 			RTE::log('editor is disabled because of user preferences');
-			self::disableEditor();
+			self::disableEditor('usepreferences');
 		}
 
 		// check current skin - enable RTE only on Monaco
 		$skinName = get_class($wgUser->getSkin());
 		if($skinName != 'SkinMonaco' && $skinName != 'SkinOasis') {
 			RTE::log("editor is disabled because skin {$skinName} is unsupported");
-			self::disableEditor();
+			self::disableEditor('skin');
 		}
 
 		// start in source when previewing from source mode
@@ -435,10 +447,11 @@ HTML
 	/**
 	 * Disable CK editor - MediaWiki editor will be loaded
 	 */
-	public static function disableEditor() {
+	public static function disableEditor($reason = false) {
 		self::$useWysiwyg = false;
+		self::$wysiwygDisabledReason = $reason;
 
-		RTE::log('CK editor disabled');
+		RTE::log("CK editor disabled - the reason is '{$reason}'");
 	}
 
 	/**

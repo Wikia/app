@@ -122,7 +122,9 @@ $wgHooks['EditPageBeforeEditButtons'][] = 'PageLayoutBuilderForm::addFormButton'
 
 $wgHooks['EditPage::getContent::isUndo'][] = 'PageLayoutBuilderForm::isUndo';
 
+$wgHooks['GetEditPageRailModuleList'][] = 'PageLayoutBuilderForm::getEditPageRailModuleList';
 $wgHooks['CreateWikiLocalJob-complete'][] = 'PageLayoutBuilderHelper::copyLayout';
+
 $wgHooks['BeforeEditEnhancements'][] = 'SpecialPageLayoutBuilder::onBeforeEditEnhancements';
 //$wgHooks['GetRailModuleList'][] = 'SpecialPageLayoutBuilder::onGetRailModuleSpecialPageList';
 

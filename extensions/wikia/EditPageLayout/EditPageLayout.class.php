@@ -234,7 +234,6 @@ class EditPageLayout extends EditPage {
 			$this->textbox1 = $this->preloadedText;
 		}
 
-		parent::showEditForm($formCallback);
 
 		// show diff only (handle edit reverts)
 		if ($this->formtype == 'diff') {
@@ -243,6 +242,9 @@ class EditPageLayout extends EditPage {
 			$this->showDiff();
 			$this->out->addHtml('</div>');
 		}
+		
+		parent::showEditForm($formCallback);
+		
 	}
 
 	/**
