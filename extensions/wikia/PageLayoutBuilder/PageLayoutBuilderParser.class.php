@@ -314,7 +314,7 @@ class PageLayoutBuilderParser extends Parser {
 
 	/*
 	 * @author Tomasz Odrobny
-	 * @params Title
+	 * @param Title
 	 * @return Parser
 	 */
 
