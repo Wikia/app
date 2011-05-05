@@ -127,7 +127,7 @@ JS
 	 *
 	 * @author macbre
 	 */
-	function addNavigation(&$controller, &$params) {
+	function addNavigation(&$moduleObject, &$params) {
 		global $wgUser;
 		wfProfileIn(__METHOD__);
 
@@ -135,7 +135,7 @@ JS
 
 		// RT #68074: show default view checkbox for logged-in users only
 		$showDefaultViewSwitch = $wgUser->isLoggedIn() && ($this->defaultView != $this->feedSelected);
-
+		
 		$template->set_vars(array(
 			'classWatchlist' => $this->classWatchlist,
 			'defaultView' => $this->defaultView,
@@ -145,7 +145,7 @@ JS
 		));
 
 		// replace subtitle with navigation for WikiActivity
-		$controller->getResponse()->setVal('pageSubtitle', $template->render('navigation.oasis'));
+		$moduleObject->pageSubtitle = $template->render('navigation.oasis');
 
 		wfProfileOut(__METHOD__);
 		return true;
