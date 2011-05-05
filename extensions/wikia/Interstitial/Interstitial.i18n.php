@@ -32,6 +32,13 @@ $messages['qqq'] = array(
 	'interstitial-disabled-no-link' => "''On the World Wide Web, interstitials are web page advertisements that are displayed before or after an expected content page, often to display advertisements or confirm the user's age.''",
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'interstitial-default-campaign-code' => 'Wikia те обича!',
+);
+
 /** Breton (Brezhoneg)
  * @author Fohanno
  */
@@ -85,6 +92,28 @@ $messages['fi'] = array(
 	'interstitial-default-campaign-code' => 'Wikia rakastaa sinua!',
 );
 
+/** French (Français)
+ * @author Brunoperel
+ * @author Iketsi
+ * @author Zcqsc06
+ */
+$messages['fr'] = array(
+	'interstitial-default-campaign-code' => 'Wikia vous aime !',
+	'interstitial-skip-ad' => 'Ignorer cette annonce',
+	'interstitial-already-logged-in-no-link' => "Vous êtes déjà connecté et il n'y a pas de destination.",
+	'interstitial-disabled-no-link' => "Il n'ya pas de destination et les interstitiels ne sont pas activés sur ce wiki.",
+	'interstitial-link-away' => "Il n'y a rien à voir ici! <br /><br /> Souhaitez-vous aller à la [[{{MediaWiki: Mainpage}} | Main Page]] ou peut-être [[Special: Random | Une page au hasard]]?",
+	'exitstitial-register' => '<a href="#" class="register">Inscription</a> ou <a href="#" class="login">connexion</a> pour sauter les publicité.',
+	'exitstitial-button' => 'Ignorer cette annonce',
+);
+
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'interstitial-skip-ad' => 'Hirdetés átugrása',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -109,6 +138,13 @@ $messages['mk'] = array(
 	'interstitial-link-away' => 'Тука нема што да се види!<br /><br />Дали би сакале да појдете на [[{{MediaWiki:Mainpage}}|Главната страница]] или пак да отворите [[Special:Random|случајна]]?',
 	'exitstitial-register' => '<a href="#" class="register">Регистрирајте се</a> или <a href="#" class="login">Најавете се</a> за да ги прескокнете рекламите.',
 	'exitstitial-button' => 'Прескокни ја рекламава',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'interstitial-default-campaign-code' => 'വിക്കിയ താങ്കളെ സ്നേഹിക്കുന്നു!',
 );
 
 /** Malay (Bahasa Melayu)
@@ -137,6 +173,15 @@ $messages['nl'] = array(
 	'exitstitial-button' => 'Deze advertentie overslaan',
 );
 
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'interstitial-default-campaign-code' => 'Wikia houdt van jou!',
+	'interstitial-already-logged-in-no-link' => 'Je bent al aangemeld en er is nog geen bestemming ingesteld.',
+	'interstitial-link-away' => 'Er is hier niets te zien!<br /><br />Wil je naar de [[{{MediaWiki:Mainpage}}|Hoofdpagina]] of misschien naar een [[Special:Random|willekeurige pagina]]?',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
@@ -155,6 +200,19 @@ $messages['no'] = array(
  */
 $messages['pl'] = array(
 	'exitstitial-button' => 'Pomiń reklamę',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'interstitial-default-campaign-code' => 'Wikia at Veul Bin!',
+	'interstitial-skip-ad' => 'Sàuta sto ad',
+	'interstitial-already-logged-in-no-link' => 'It ses già intrà e a-i é pa gnun-e destinassion ampostà.',
+	'interstitial-disabled-no-link' => "A-i é pa gnun-e destinassion ampostà e j'interstitial a son pa abilità su sta wiki.",
+	'interstitial-link-away' => 'A-i é pa gnente da vardé ambelessì!<br /><br />Veul-lo andé a la [[{{MediaWiki:Mainpage}}|Pàgina prinsipal]] o miraco a na [[Special:Random|pàgina a asar]]?',
+	'exitstitial-register' => '<a href="#" class="register">Registrë-te</a> o <a href="#" class="login">Intra</a> për sauté j\'ads.',
+	'exitstitial-button' => 'Sàuta Sto Ad',
 );
 
 /** Portuguese (Português)
@@ -200,5 +258,18 @@ $messages['sv'] = array(
 	'interstitial-default-campaign-code' => 'Wikia älskar dig!',
 	'interstitial-skip-ad' => 'Hoppa över denna annons',
 	'exitstitial-button' => 'Hoppa över denna annons',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'interstitial-default-campaign-code' => 'Mahal Ka ng Wikia!',
+	'interstitial-skip-ad' => 'Laktawan ang patalastas na ito',
+	'interstitial-already-logged-in-no-link' => 'Nakalagda ka na at walang nakatakdang patutunguhan.',
+	'interstitial-disabled-no-link' => 'Walang itinakdang kapupuntahan at hindi pinagagana ang mga siwang sa wiking ito.',
+	'interstitial-link-away' => 'Walang makikita rito!<br /><br />Nais mo bang pumunta sa [[{{MediaWiki:Mainpage}}|Pangunahing Pahina]] o marahil sa [[Special:Random|alin mang pahina]]?',
+	'exitstitial-register' => '<a href="#" class="register">Magpatala</a> o <a href="#" class="login">Lumagda</a> upang laktawan ang mga patalastas.',
+	'exitstitial-button' => 'Laktawan ang Patalastas na Ito',
 );
 

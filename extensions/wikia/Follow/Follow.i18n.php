@@ -119,9 +119,20 @@ Please visit and edit often...
 </p>'
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'wikiafollowedpages-special-showmore' => 'Wys meer',
+	'wikiafollowedpages-special-blog-by' => 'deur $1',
+	'wikiafollowedpages-userpage-more' => 'Meer',
+	'wikiafollowedpages-userpage-hide' => 'versteek',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author Loya
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'follow-desc' => 'تحسينات لخاصية الصفحات المراقبة',
@@ -138,7 +149,7 @@ $messages['ar'] = array(
 	'wikiafollowedpages-special-empty' => 'قائمة الصفحات المتابعة لهذا المستخدم فارغة.
 أضف صفحات لهذه القائمة عبر النقر على "{{int:watch}}" في أعلى الصفحة.',
 	'wikiafollowedpages-special-anon' => 'يرجى [[خاص:Signup|تسجيل الدخول]] من أجل رؤية قائمة الصفحات التي تتابعها.',
-	'wikiafollowedpages-special-showall' => 'عرض الكل',
+	'wikiafollowedpages-special-showall' => 'اعرض الكل >',
 	'wikiafollowedpages-special-title' => 'الصفحات المتابعة',
 	'wikiafollowedpages-special-delete-tooltip' => 'إزالة هذه الصفحة',
 	'wikiafollowedpages-special-hidden' => 'هذا المستخدم إختار أن يخفي {{GENDER:$1|صفحاته|صفحاتها}} المتابعة.',
@@ -224,6 +235,36 @@ ___________________________________________
 </p>',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'wikiafollowedpages-special-heading-category' => 'Kateqoriyalar ($1)',
+	'wikiafollowedpages-special-heading-article' => 'Məqalələr ($1)',
+	'wikiafollowedpages-special-namespace' => '($1 səhifə)',
+	'oasis-wikiafollowedpages-special-seeall' => 'Hamısına bax >',
+	'wikiafollowedpages-special-showall' => 'Hamısını göstər >',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'wikiafollowedpages-special-heading-category' => 'Категории ($1)',
+	'wikiafollowedpages-special-heading-article' => 'Статии ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Блогове и публикации ($1)',
+	'wikiafollowedpages-special-heading-forum' => 'Нишки от форумите ($1)',
+	'wikiafollowedpages-special-heading-project' => 'Страници на проекта ($1)',
+	'wikiafollowedpages-special-heading-user' => 'Потребителски страници ($1)',
+	'wikiafollowedpages-special-heading-templates' => 'Шаблони ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'МедияУики страници ($1)',
+	'wikiafollowedpages-special-heading-media' => 'Снимки и видео ($1)',
+	'wikiafollowedpages-special-blog-by' => 'от $1',
+	'wikiafollowedpages-userpage-heading' => 'Страниците, които следя',
+	'wikiafollowedpages-userpage-more' => 'Повече',
+	'wikiafollowedpages-userpage-hide' => 'скриване',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Y-M D
@@ -241,7 +282,7 @@ $messages['br'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'Pajennoù MediaWiki ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Skeudennoù ha videoioù ($1)',
 	'wikiafollowedpages-special-namespace' => '(pajenn $1)',
-	'wikiafollowedpages-special-empty' => 'Goullo eo roll evezhiañ an implijer-mañ.
+	'wikiafollowedpages-special-empty' => 'Goullo eo ho roll evezhiañ.
 Ouzhpennit pajennoù d\'ar roll-mañ en ur glikañ war "{{int:watch}}" e laez ur bajenn.',
 	'wikiafollowedpages-special-anon' => 'Mar plij [[Special:Signup|kevreit]] evit krouiñ pe sellout ouzh ho roll evezhiañ.',
 	'oasis-wikiafollowedpages-special-seeall' => 'Gwelet pep tra >',
@@ -481,11 +522,12 @@ Schau doch mal rein und bearbeite sie weiter...
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Claudia Hattitten
  * @author The Evil IP address
  */
 $messages['de-formal'] = array(
-	'wikiafollowedpages-special-empty' => 'Die Liste der beobachteten Seiten dieses Benutzers ist leer.
-Sie können durch Klicken des {{int:watch}}-Buttons Seiten dieser Liste hinzufügen.',
+	'wikiafollowedpages-special-empty' => 'Ihre Liste verfolgter Seiten ist leer.
+Sie können durch Klicken des {{int:watch}}-Knopfes Seiten dieser Liste hinzufügen.',
 	'wikiafollowedpages-special-anon' => 'Bitte [[Special:Signup|anmelden]] um Ihre Beobachtungsliste zu erstellen oder betrachten.',
 	'wikiafollowedpages-userpage-empty' => 'Die Liste der beobachteten Seiten dieses Benutzers ist leer.
 Sie können durch Klicken des {{int:watch}}-Buttons Seiten dieser Liste hinzufügen.',
@@ -1047,6 +1089,35 @@ ___________________________________________
 </p>',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'prefs-basic' => 'Alapbeállítások',
+	'wikiafollowedpages-special-heading-category' => 'Kategóriák ($1)',
+	'wikiafollowedpages-special-heading-article' => 'Szócikkek ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Blogok és bejegyzések ($1)',
+	'wikiafollowedpages-special-heading-forum' => 'Fórumtémák ($1)',
+	'wikiafollowedpages-special-heading-project' => 'Projektlapok ($1)',
+	'wikiafollowedpages-special-heading-user' => 'Felhasználói lapok ($1)',
+	'wikiafollowedpages-special-heading-templates' => 'Sablonok ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'MediaWiki-lapok ( $1 )',
+	'wikiafollowedpages-special-heading-media' => 'Képek és videók ($1)',
+	'wikiafollowedpages-special-namespace' => '($1 lap)',
+	'oasis-wikiafollowedpages-special-seeall' => 'Összes >',
+	'wikiafollowedpages-special-seeall' => 'Összes >',
+	'wikiafollowedpages-special-showall' => 'Összes >',
+	'wikiafollowedpages-special-showmore' => 'Továbbiak',
+	'wikiafollowedpages-special-title' => 'Követett lapok',
+	'wikiafollowedpages-special-delete-tooltip' => 'Lap eltávolítása',
+	'wikiafollowedpages-special-blog-by' => 'írta: $1',
+	'wikiafollowedpages-masthead' => 'Követett lapok',
+	'wikiafollowedpages-following' => 'Követés',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Haladó beállítások',
+	'wikiafollowedpages-userpage-more' => 'Tovább',
+	'wikiafollowedpages-userpage-hide' => 'elrejtés',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -1195,6 +1266,7 @@ $messages['ig'] = array(
  */
 $messages['ja'] = array(
 	'follow-desc' => 'ウォッチリストの機能を改善する',
+	'prefs-basic' => '基本設定',
 	'wikiafollowedpages-special-heading-category' => 'カテゴリ（$1件）',
 	'wikiafollowedpages-special-heading-article' => '記事（$1件）',
 	'wikiafollowedpages-special-heading-blogs' => 'ブログとブログの記事（$1件）',
@@ -1205,7 +1277,7 @@ $messages['ja'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'MediaWikiメッセージページ（$1件）',
 	'wikiafollowedpages-special-heading-media' => '画像と動画（$1件）',
 	'wikiafollowedpages-special-namespace' => '（$1件）',
-	'wikiafollowedpages-special-empty' => 'このユーザーのフォローページリストは空です。リストにページを追加するには、ページのトップにある"{{int:watch}}"リンクをクリックしてください。',
+	'wikiafollowedpages-special-empty' => 'あなたのフォローページリストは空です。このリストにページを追加するには、各ページにある「{{int:watch}}」リンクをクリックしてください。',
 	'wikiafollowedpages-special-anon' => '自分のフォローページリストを作成・閲覧するには、[[Special:Signup|ログイン]]してください。',
 	'oasis-wikiafollowedpages-special-seeall' => '全て見る &gt;',
 	'wikiafollowedpages-special-seeall' => '全て見る &gt;',
@@ -1221,6 +1293,8 @@ $messages['ja'] = array(
 	'wikiafollowedpages-special-title-userbar' => 'フォローしているページ',
 	'tog-enotiffollowedpages' => 'フォローしているページが編集されたらメールで通知する',
 	'tog-enotiffollowedminoredits' => '細部の編集でもメールを受け取る',
+	'prefs-wikiafollowedpages-prefs-advanced' => '高度な設定',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'ウォッチリストのみ',
 	'tog-hidefollowedpages' => 'フォローしているページのリストを非公開にする',
 	'follow-categoryadd-summary' => 'カテゴリへのページの追加',
 	'follow-bloglisting-summary' => 'ブログリストへのブログ記事の追加',
@@ -1421,6 +1495,28 @@ ___________________________________________
 <li>Сакате да изберете кои пораки ги добивате по е-пошта? Одете на <a href="{{fullurl:{{ns:special}}:Preferences}}">Корисничките нагодувања</a></li>
 </ul>
 </p>',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'prefs-basic' => 'അടിസ്ഥാന ഐച്ഛികങ്ങൾ',
+	'wikiafollowedpages-special-heading-category' => 'വർഗ്ഗങ്ങൾ ($1)',
+	'wikiafollowedpages-special-heading-article' => 'ലേഖനങ്ങൾ ($1)',
+	'wikiafollowedpages-special-heading-project' => 'പദ്ധതി താളുകൾ ($1)',
+	'wikiafollowedpages-special-heading-user' => 'ഉപയോക്തൃ താളുകൾ ($1)',
+	'wikiafollowedpages-special-heading-templates' => 'ഫലകം താളുകൾ ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'മീഡിയവിക്കി താളുകൾ ($1)',
+	'wikiafollowedpages-special-heading-media' => 'ചിത്രങ്ങളും വീഡിയോകളും ($1)',
+	'wikiafollowedpages-special-namespace' => '($1 താൾ)',
+	'oasis-wikiafollowedpages-special-seeall' => 'എല്ലാം കാണുക >',
+	'wikiafollowedpages-special-seeall' => 'എല്ലാം കാണുക >',
+	'wikiafollowedpages-special-showall' => 'എല്ലാം പ്രദർശിപ്പിക്കുക >',
+	'wikiafollowedpages-special-showmore' => 'കൂടുതൽ പ്രദർശിപ്പിക്കുക',
+	'wikiafollowedpages-special-delete-tooltip' => 'ഈ താൾ നീക്കം ചെയ്യുക',
+	'wikiafollowedpages-userpage-more' => 'കൂടുതൽ',
+	'wikiafollowedpages-userpage-hide' => 'മറയ്ക്കുക',
 );
 
 /** Malay (Bahasa Melayu)
@@ -1643,6 +1739,76 @@ Kom alstublieft vaak langs om bewerkingen te maken...
 </p>',
 );
 
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'wikiafollowedpages-special-empty' => 'Je volglijst is leeg.
+Voeg pagina\'s toe aan deze lijst door te klikken op "{{int:watch}}" bovenaan pagina\'s.',
+	'wikiafollowedpages-special-anon' => '[[Special:Signup|Meld je aan]] om je volglijst te bewerken of te bekijken.',
+	'wikiafollowedpages-userpage-hide-tooltip' => "Je huidige gevolgde pagina's voor andere gebruikers verbergen",
+	'enotif_body_categoryadd' => 'Hoi $WATCHINGUSERNAME,
+
+Er is een pagina is toegevoegd aan een categorie die je volgt op {{SITENAME}}.
+
+Zie "$PAGETITLE_URL" voor de nieuwe pagina.
+
+Kom alsjeblieft vaak langs om bewerkingen te maken...
+
+{{SITENAME}}
+
+___________________________________________ 
+* Kom kijken op onze uitgelichte wiki\'s! http://www.wikia.com 
+
+ * Wil je bepalen welke e-mails je ontvangt? 
+Ga naar: {{fullurl:{{ns:special}}:Preferences}}.',
+	'enotif_body_categoryadd-html' => '<p>Hoi $WATCHINGUSERNAME,
+<br /><br />
+Er is een pagina is toegevoegd aan een categorie die je volgt op {{SITENAME}}.
+<br /><br />
+Zie <a href="$PAGETITLE_URL">$PAGETITLE</a> voor de nieuwe pagina.
+<br /><br />
+Kom alsjeblieft vaak langs om bewerkingen te maken...
+<br /><br />
+{{SITENAME}}
+<br /><hr />
+<ul>
+<li><a href="http://www.wikia.com">Kom kijken op onze uitgelichte wiki\'s</a></li>
+<li>Wil je bepalen welke e-mails je ontvangt? Ga naar je <a href="{{fullurl:{{ns:special}}:Preferences}}">gebruikersvoorkeuren</a>.</li>
+</ul>
+</p>',
+	'enotif_body_blogpost' => 'Hoi $WATCHINGUSERNAME,
+
+Er is een bewerking gemaakt aan een blog die je volgt op {{SITENAME}}.
+
+Zie "$PAGETITLE_URL" voor het nieuwe blogbericht.
+
+Kom alsjeblieft vaak langs om bewerkingen te maken...
+
+{{SITENAME}}
+
+___________________________________________ 
+* Kom kijken op onze uitgelichte wiki\'s! http://www.wikia.com 
+
+ * Wil je bepalen welke e-mails je ontvangt?
+Ga naar: {{fullurl:{{ns:special}}:Preferences}}.',
+	'enotif_body_blogpost-HTML' => '<p>Hoi $WATCHINGUSERNAME,
+<br /><br />
+Er is een bewerking gemaakt aan een blog die je volgt op {{SITENAME}}.
+<br /><br />
+Zie <a href="$PAGETITLE_URL">$PAGETITLE</a> voor het nieuwe blogbericht.
+<br /><br />
+Kom alsjeblieft vaak langs om bewerkingen te maken...
+<br /><br />
+{{SITENAME}}
+<br /><hr />
+<ul>
+<li><a href="http://www.wikia.com">Kom kijken op onze uitgelichte wiki\'s</a></li>
+<li>Wil je bepalen welke e-mails je ontvangt? Ga naar je <a href="{{fullurl:{{ns:special}}:Preferences}}">gebruikersvoorkeuren</a>.</li>
+</ul>
+</p>',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
@@ -1793,6 +1959,7 @@ Dodaj strony do tej listy klikając "{{int:watch}}" na górze strony.',
  */
 $messages['pms'] = array(
 	'follow-desc' => "Ameliorament për la funsionalità ëd lòn ch'as ten sot euj",
+	'prefs-basic' => 'Opsion base',
 	'wikiafollowedpages-special-heading-category' => 'Categorìe ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Artìcoj ($1)',
 	'wikiafollowedpages-special-heading-blogs' => 'Scartari e artìcoj ($1)',
@@ -1803,7 +1970,7 @@ $messages['pms'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'Pàgine ëd MediaWiki ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Figure e filmà ($1)',
 	'wikiafollowedpages-special-namespace' => '(Pàgina $1)',
-	'wikiafollowedpages-special-empty' => 'La lista dle pàgine tnùe sot euj ëd cost utent-sì a l\'é veuida.
+	'wikiafollowedpages-special-empty' => 'La lista dle toe pàgine tnùe sot euj a l\'é veuida.
 Ch\'a gionta dle pàgine a costa lista an sgnacand "{{int:watch}}" an cò dla pàgina.',
 	'wikiafollowedpages-special-anon' => "Për piasì ch'a [[Special:Signup|intra ant ël sistema]] për creé o vardé soa lista dle pàgine tnùe sot euj.",
 	'oasis-wikiafollowedpages-special-seeall' => 'Varda tut >',
@@ -1820,6 +1987,8 @@ Ch\'a gionta dle pàgine a costa lista an sgnacand "{{int:watch}}" an cò dla p�
 	'wikiafollowedpages-special-title-userbar' => 'Pàgine tnùe sot euj',
 	'tog-enotiffollowedpages' => "Mandeme un mëssagi an pòsta eletrònica quand che na pàgina ch'im ten-o sot euj a l'é modìficà",
 	'tog-enotiffollowedminoredits' => "Mandeme un mëssagi an pòsta eletrònica për dle modìfiche cite a le pàgine ch'im ten-o sot euj",
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Opsion avansà',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Mach lista tnàa sot euj',
 	'tog-hidefollowedpages' => "Rende privà le liste dle pàgine ch'im ten-o sot euj",
 	'follow-categoryadd-summary' => 'Pàgine giontà a la categorìa',
 	'follow-bloglisting-summary' => 'Scartari scrivù an sla pàgina djë scartari',
@@ -2142,6 +2311,21 @@ Visite-nos sempre e edite muito...
 <li>Quer definir que notificações deseja receber? Visite <a href="{{fullurl:{{ns:special}}:Preferences}}">Preferências do utilizador</a></li>
 </ul>
 </p>',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'prefs-basic' => 'Opţiuni de bază',
+	'wikiafollowedpages-special-heading-category' => 'Categorii ($1)',
+	'wikiafollowedpages-special-heading-article' => 'Articole ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Bloguri şi postări ($1)',
+	'wikiafollowedpages-special-heading-forum' => 'Fire de discuţii pe forum ($1)',
+	'wikiafollowedpages-special-heading-project' => 'Pagini de proiect ($1)',
+	'wikiafollowedpages-special-heading-user' => 'Pagini de utilizatori ($1)',
+	'wikiafollowedpages-userpage-more' => 'Mai multe',
+	'wikiafollowedpages-userpage-hide' => 'ascunde',
 );
 
 /** Russian (Русский)
@@ -2544,8 +2728,8 @@ $messages['uk'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'Сторінки MediaWiki ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Зображення та відео ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 сторінка)',
-	'wikiafollowedpages-special-empty' => 'Список статей спостереження цього користувача порожній.
-Щоб додати сторінки в цей список, натисніть "{{int:watch}}" зверху цієї сторінки.',
+	'wikiafollowedpages-special-empty' => 'Ваш список спостереження порожній.
+Додавайте сторінки в список, натискаючи "{{int:watch}}" зверху сторінки.',
 	'wikiafollowedpages-special-anon' => 'Будь ласка, [[Special:Signup|увійдіть до системи]] для створення або перегляду сторінок свого списку спостереження.',
 	'oasis-wikiafollowedpages-special-seeall' => 'Переглянути всі >',
 	'wikiafollowedpages-special-seeall' => 'Переглянути всі >',
@@ -2648,5 +2832,6 @@ $messages['zh-hans'] = array(
 	'wikiafollowedpages-special-seeall' => '显示全部 》',
 	'wikiafollowedpages-special-showmore' => '显示更多',
 	'wikiafollowedpages-userpage-more' => '更多',
+	'wikiafollowedpages-userpage-hide' => '隐瞒',
 );
 

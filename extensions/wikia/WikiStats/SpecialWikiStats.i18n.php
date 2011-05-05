@@ -269,6 +269,7 @@ $messages['qqq'] = array(
 	'wikistats_xls_generate_info' => 'Needs plural support',
 	'wikistats_showstats_btn' => 'Button text, also referenced in {{msg-mw|wikistats_info}}.',
 	'wikistats_panel_close_btn' => 'Button text. Translate as verb.',
+	'wikistats_daterange_from' => '{{Identical|From}}',
 	'wikistats_latest_userviews_pages' => 'Needs plural',
 	'wikistats_latest_pageviews_subtitle' => 'Needs plural support.',
 	'wikistats_active_wikians_date' => 'for the last what? can it be singular or plural? and if it is more tha on variable, it might be feminine or neg, like in spanish week is feminine but month is masc.',
@@ -483,6 +484,74 @@ $messages['ar'] = array(
 	'wikistats_date_of_generate' => 'وُلّدت في $1',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ * @author Vago
+ * @author Vugar 1981
+ */
+$messages['az'] = array(
+	'wikistats_panel_close_btn' => 'Bağla',
+	'wikistats_daterange_from' => 'Kimdən:',
+	'wikistats_daterange_to' => 'Kimə:',
+	'wikistats_latest_userviews_pages' => '$1 baxılan səhifə',
+	'wikistats_active_day' => 'gün',
+	'wikistats_active_month' => 'ay',
+	'wikistats_active_year' => 'il',
+	'wikistats_active_months' => 'aylar',
+	'wikistats_articles_text' => 'Məqalələr',
+	'wikistats_archived' => 'Arxivləşdirilib',
+	'wikistats_other' => 'Digər',
+	'wikistats_database' => 'Verilənlər bazası',
+	'wikistats_links' => 'Keçidlər',
+	'wikistats_images' => 'Şəkillər',
+	'wikistats_video' => 'Video',
+	'wikistats_date' => 'Tarix',
+	'wikistats_hide' => 'Gizlət',
+	'wikistats_wikiname' => 'Ad:',
+	'wikistats_wikicategory' => 'Kateqoriya:',
+	'wikistats_wikiid' => 'ID:',
+	'wikistats_username' => 'İstifadəçi',
+	'wikistats_usernames' => 'İstifadəçilər',
+	'wikistats_bytes' => 'bayt',
+	'wikistats_size' => 'həcm',
+	'wikistats_interwiki' => 'interviki',
+	'wikistats_image' => 'şəkil',
+	'wikistats_image_namespace' => 'şəkil',
+	'wikistats_official' => 'rəsmi',
+	'wikistats_count' => 'sayı',
+	'wikistats_first_edit' => 'İlk redaktə',
+	'wikistats_last_edit' => 'Son redaktə',
+	'wikistats_total' => 'cəmi',
+	'wikistats_new' => 'yeni',
+	'wikistats_more_txt' => 'çox',
+	'wikistats_now' => 'indi',
+	'wikistats_wikiurl' => 'URL:',
+	'wikistats_wikilang' => 'Dillər:',
+	'wikistats_website' => 'vebsayt',
+	'wikistats_back_to_prevpage' => 'Geri',
+	'wikistats_trend_where_text' => 'hara:',
+	'wikistats_full_dump_stats' => 'Əla',
+	'wikistats_xls_cancel' => 'Ləğv et',
+	'wikistats_select_btn' => 'Seç',
+	'wikistats_dbdump_generated' => 'dəyişdirilmiş:',
+	'wikistats_search_text' => 'Axtar:',
+	'wikistats_lifetime_editors' => 'Bütün redaktələr',
+	'wikistats_article_total' => 'Bütün məqalələr',
+	'wikistats_article_edits' => 'Məqalə redaktələri',
+	'wikistats_article_talk' => 'Məqalə:Müzakirə',
+	'wikistats_content' => 'məzmun',
+	'wikistats_userns' => 'istifadəçi',
+	'wikistats_mediawiki_stats' => 'MediyaViki statistikası:',
+	'wikistats_nbr_kilo' => 'K = x 1000',
+	'wikistats_nbr_mega' => 'M = K x 1000',
+	'wikistats_nbr_giga' => 'G = M x 1000',
+	'wikistats_current_month' => 'Bu ay',
+	'wikistats_see_also' => 'Həmçinin bax:',
+	'wikistats_language_top' => 'Dillərin Top-10-u',
+	'wikistats_language_all' => 'Bütün dillər',
+	'wikistats_title' => 'Başlıq',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
@@ -661,13 +730,21 @@ $messages['be-tarask'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'wikistats' => 'Wikia статистики',
+	'wikistats_wikia' => 'Wikia',
+	'wikistats_pagetitle' => 'Wikia статистики',
 	'wikistats_showstats_btn' => 'Показване на статистики',
 	'wikistats_panel_close_btn' => 'Затваряне',
+	'wikistats_daterange_from' => 'От:',
+	'wikistats_daterange_to' => 'До:',
 	'wikistats_active_day' => 'ден',
 	'wikistats_active_month' => 'месец',
 	'wikistats_active_year' => 'година',
 	'wikistats_active_months' => 'месеца',
 	'wikistats_database' => 'База от данни',
+	'wikistats_images' => 'Изображения',
+	'wikistats_video' => 'Видео',
+	'wikistats_media' => 'Изображения и видео',
 	'wikistats_date' => 'Дата',
 	'wikistats_namespace' => 'Именно пространство',
 	'wikistats_show' => 'Показване',
@@ -675,11 +752,31 @@ $messages['bg'] = array(
 	'wikistats_wikiname' => 'Име:',
 	'wikistats_wikicategory' => 'Категория:',
 	'wikistats_wikiid' => 'Номер:',
+	'wikistats_username' => 'Потребител',
+	'wikistats_usernames' => 'Потребители',
+	'wikistats_size' => 'размер',
+	'wikistats_namespaces' => 'именни пространства',
+	'wikistats_redirects' => 'пренасочвания',
+	'wikistats_unique_users' => 'Уникални потребители',
+	'wikistats_first_edit' => 'Първа редакция',
+	'wikistats_last_edit' => 'Последна редакция',
+	'wikistats_wikiurl' => 'Адрес:',
+	'wikistats_wikilang' => 'Език:',
+	'wikistats_website' => 'Уеб сайт',
+	'wikistats_tables' => 'Таблици',
+	'wikistats_charts' => 'Графики',
+	'wikistats_trend_formula' => 'Формула',
+	'wikistats_trend_where_text' => 'където:',
 	'wikistats_trend_all_wikia_text' => 'Всички уикита',
+	'wikistats_xls_cancel' => 'Отказване',
+	'wikistats_select_text' => 'Избиране на Wikia:',
+	'wikistats_select_btn' => 'Избиране',
+	'wikistats_ns_statistics_legend' => 'Именни пространства',
 	'wikistats_search_text' => 'Търсене:',
 	'wikistats_code_version' => 'Версия на кода:',
 	'wikistats_see_also' => 'Вижте също:',
 	'wikistats_language_all' => 'Всички езици',
+	'wikistats_title' => 'Заглавие',
 );
 
 /** Bahasa Banjar (Bahasa Banjar)
@@ -1004,6 +1101,7 @@ $messages['cy'] = array(
 );
 
 /** German (Deutsch)
+ * @author Claudia Hattitten
  * @author George Animal
  * @author Kghbln
  * @author LWChris
@@ -1144,10 +1242,10 @@ $messages['de'] = array(
 	'wikistats_column_D' => 'Summe aller registrierten Bearbeiter mit mehr als 100 Bearbeitungen im laufenden Monat (Inhalts-Namensräume)',
 	'wikistats_column_E' => 'Anzahl aller Artikel in Inhalts-Namensräumen',
 	'wikistats_column_F' => 'Neue Artikel pro Tag im laufenden Monat',
-	'wikistats_column_G' => 'Anzahl der Bearbeitungen von Artikeln in Inhalts-Namensräumen',
-	'wikistats_column_H' => 'Gesamtanzahl aller Links zu Bildern in Artikeln in Inhalts-Namensräumen',
+	'wikistats_column_G' => 'Anzahl der Bearbeitungen in inhaltlichen Namensräumen',
+	'wikistats_column_H' => 'Gesamtanzahl aller Links zu Bildern in inhaltlichen Namensräumen',
 	'wikistats_column_I' => 'Anzahl der hochgeladenen Bilder',
-	'wikistats_column_J' => 'Anzahl der eingebetteten Video in Artikeln in Inhalts-Namensräumen',
+	'wikistats_column_J' => 'Anzahl der eingebetteten Videos in inhaltlichen Namensräumen',
 	'wikistats_column_K' => 'Anzahl der hochgeladenen Videos',
 	'wikistats_website' => 'Website',
 	'wikistats_tables' => 'Tabellen',
@@ -1650,6 +1748,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author IAlex
  * @author McDutchie
+ * @author Od1n
  * @author Peter17
  * @author Urhixidur
  * @author Wyz
@@ -1657,13 +1756,13 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'wikistats' => 'Statistiques de Wikia',
 	'wikistats_wikia' => 'Wikia',
-	'wikistats_pagetitle' => 'Statistiques de wikia',
+	'wikistats_pagetitle' => 'Statistiques de Wikia',
 	'wikistats_info' => 'Sélectionnez un wiki depuis la liste et appuyez sur « {{int:wikiastats_showstats_btn}} »',
 	'wikistats_mainstats_info' => 'Sélectionnez un wiki depuis la liste et appuyez sur « {{int:wikiastats_xls_generate}} »',
 	'wikistats_xls_generate_info' => 'Vous pouvez sélectionner au maximum $1 wikis depuis la liste',
 	'wikistats_comparision' => 'Comparaisons',
 	'wikistats_showstats_btn' => 'Afficher les statistiques',
-	'wikistats_wikia_information' => 'Informations de wikia',
+	'wikistats_wikia_information' => 'Informations de Wikia',
 	'wikiastast_refresh_data' => 'Actualiser les données',
 	'wikistats_showcharts' => 'Afficher les graphes',
 	'wikistats_export_xls' => 'Exporter en XLS',
@@ -2085,6 +2184,7 @@ $messages['he'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Enbéká
  * @author Glanthor Reviol
  * @author Misibacsi
@@ -2107,10 +2207,12 @@ $messages['hu'] = array(
 	'wikistats_nostats_found' => 'Nem találhatók statisztikák a kiválasztott Wikiához',
 	'wikistats_anon_wikians_count' => '$1 névtelen szerkesztő található',
 	'wikistats_article_one_link' => 'Olyan szócikkek, amikben legalább egy belső hivatkozás van',
+	'wikistats_active_wikians_subtitle_info' => 'Δ = változás a rangsorolásban',
 	'wikistats_active_day' => 'nap',
 	'wikistats_active_month' => 'hónap',
 	'wikistats_active_year' => 'év',
 	'wikistats_active_months' => 'hónap',
+	'wikistats_number_editors' => 'szerkesztők száma',
 	'wikistats_wikians' => 'Regisztrált szerkesztők',
 	'wikistats_articles' => 'Szócikkek (átirányítások nélkül)',
 	'wikistats_articles_text' => 'Szócikkek',
@@ -2120,6 +2222,8 @@ $messages['hu'] = array(
 	'wikistats_links' => 'Hivatkozások',
 	'wikistats_reg_users' => 'Egyedi regisztrált szerkesztők',
 	'wikistats_images' => 'Képek',
+	'wikistats_video' => 'Videó',
+	'wikistats_media' => 'Képek és videó',
 	'wikistats_uploaded_images' => 'feltöltve',
 	'wikistats_connection_error' => 'Kapcsolódási hiba',
 	'wikistats_distrib_edits' => 'Szerkesztések >=',
@@ -2160,6 +2264,7 @@ $messages['hu'] = array(
 	'wikistats_more_txt' => 'több',
 	'wikistats_now' => 'most',
 	'wikistats_days_ago' => 'napja',
+	'wikistats_month_ago' => '$1 $2 ezelőtt',
 	'wikistats_wikiurl' => 'URL:',
 	'wikistats_wikicreated' => 'Létrehozva:',
 	'wikistats_wikilang' => 'Nyelv:',
@@ -2168,17 +2273,20 @@ $messages['hu'] = array(
 	'wikistats_charts' => 'Diagram',
 	'wikistats_back_to_prevpage' => 'Vissza',
 	'wikistats_trend_value' => 'érték',
+	'wikistats_trend_formula' => 'Képlet',
 	'wikistats_trend_where_text' => 'hol:',
 	'wikistats_trend_all_wikia_text' => 'Összes wiki',
 	'wikistats_always_selected' => '(mindig kiválasztva)',
 	'wikistats_creation_legend' => 'Átlagos havi növekedés:',
 	'wikistats_select_statistics' => 'Statisztika kiválasztása',
 	'wikistats_select_wikia_statistics' => '$1 Wikiához tartozó statisztika kiválasztása',
+	'wikistats_xls_files_stats' => 'XLS',
 	'wikistats_full_dump_stats' => 'Teljes',
 	'wikistats_current_dump_stats' => 'Aktuális',
 	'wikistats_database_name_stats' => 'Adatbázisnév',
 	'wikistats_dbdumps_stats' => 'Adatbázis dumpok',
 	'wikistats_please_wait' => 'xls fájl készítése – kérlek várj …',
+	'wikistats_xls_generate' => 'Generálás',
 	'wikistats_xls_cancel' => 'Mégse',
 	'wikistats_select_text' => 'Wikia kiválasztása:',
 	'wikistats_select_btn' => 'Kijelölés',
@@ -2189,8 +2297,12 @@ $messages['hu'] = array(
 	'wikistats_search_text' => 'Keresés:',
 	'wikistats_sort_list_size' => 'Lista rendezése méret alapján',
 	'wikistats_lifetime_editors' => 'Összes szerkesztő',
+	'wikistats_article_daily' => 'Szerkesztés/nap',
+	'wikistats_image_uploads' => 'Feltöltött képek',
+	'wikistats_video_uploads' => 'Feltöltött videók',
 	'wikistats_months_edits' => 'Szerkesztők ebben a hónapban',
 	'wikistats_content' => 'tartalom',
+	'wikistats_userns' => 'felhasználó',
 	'wikistats_other_namespace' => 'egyéb<br />névterek',
 	'wikistats_code_version' => 'Kód verziója:',
 	'wikistats_mediawiki_stats' => 'MediaWiki statisztika:',
@@ -2198,6 +2310,15 @@ $messages['hu'] = array(
 	'wikistats_nbr_mega' => 'M = K×1000',
 	'wikistats_nbr_giga' => 'G = M×1000',
 	'wikistats_nbr_format' => 'Számformátum:',
+	'wikistats_daily' => 'Napi statisztika (erre a hónapra)',
+	'wikistats_month' => 'Havi statisztika',
+	'wikistats_current_month' => 'Aktuális hónap',
+	'wikistats_see_also' => 'Lásd még:',
+	'wikistats_language_top' => 'Legjobb $1 nyelv',
+	'wikistats_language_all' => 'Minden nyelv',
+	'wikistats_title' => 'Cím',
+	'wikistats_namespaces_top10list' => 'Top 10 lista',
+	'wikistats_namespace_top' => 'Előre definiált névterek',
 );
 
 /** Interlingua (Interlingua)
@@ -3789,6 +3910,23 @@ $messages['mt'] = array(
 	'wikistats_hide' => 'Aħbi',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'wikistats_showstats_btn' => 'စာရင်းအင်းတို့ကို ကြည့်ရန်',
+	'wikistats_wikia_information' => 'Wikia အချက်အလက်',
+	'wikistats_panel_close_btn' => 'ပိတ်ရန်',
+	'wikistats_daterange_from' => 'မှ  :',
+	'wikistats_daterange_to' => 'သို့ :',
+	'wikistats_number_editors' => 'တည်းဖြတ်သူအရေအတွက် -',
+	'wikistats_articles_text' => 'ဆောင်းပါးများ',
+	'wikistats_other' => 'အခြား',
+	'wikistats_links' => 'လင့်',
+	'wikistats_images' => 'ရုပ်ပုံ',
+	'wikistats_uploaded_images' => 'အပ်လုပ် တင်ပြီးဖြစ်သည်',
+);
+
 /** Mazanderani (مازِرونی)
  * @author محک
  */
@@ -3806,7 +3944,7 @@ $messages['nl'] = array(
 	'wikistats_pagetitle' => 'Wikia-statistieken',
 	'wikistats_info' => 'Selecteer een wiki uit de lijst en klik "{{int:wikiastats_showstats_btn}}".',
 	'wikistats_mainstats_info' => 'Selecteer een wiki uit de lijst en klik "{{int:wikiastats_xls_generate}}"',
-	'wikistats_xls_generate_info' => "U kan maximaal $1 wiki's uit de lijst selecteren",
+	'wikistats_xls_generate_info' => "U kunt maximaal $1 wiki's uit de lijst selecteren",
 	'wikistats_comparision' => 'Vergelijkingen',
 	'wikistats_showstats_btn' => 'Statistieken weergeven',
 	'wikistats_wikia_information' => 'Informatie over Wikia',
@@ -4042,6 +4180,16 @@ U moet aangemeld zijn om de Wikia-statistieken in te zien.
 	'wikistats_error_malformed_date' => 'Fout: de opgegeven datumnotatie is onjuist',
 );
 
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'wikistats_xls_generate_info' => "Je kunt maximaal $1 wiki's uit de lijst selecteren",
+	'wikistats_restricted_page' => 'Beschermde pagina.<br />
+Je moet aangemeld zijn om de Wikia-statistieken in te zien.
+[[Special:UserLogin|Registreer een nieuwe gebruiker of meld je aan]] als je nog geen gebruiker hebt.',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
@@ -4112,7 +4260,7 @@ $messages['no'] = array(
 	'wikistats_images' => 'Bilder',
 	'wikistats_video' => 'Video',
 	'wikistats_media' => 'Bilder og video',
-	'wikistats_video_embeded' => 'innbygd',
+	'wikistats_video_embeded' => 'inkludert',
 	'wikistats_uploaded_images' => 'opplastet',
 	'wikistats_with_links' => 'med lenker',
 	'wikistats_connection_error' => 'Tilkoblingsfeil',
@@ -4164,7 +4312,7 @@ $messages['no'] = array(
 	'wikistats_more_txt' => 'mer',
 	'wikistats_now' => 'nå',
 	'wikistats_days_ago' => 'dager siden',
-	'wikistats_month_ago' => '$1 $2 siden',
+	'wikistats_month_ago' => 'for $1 $2 siden',
 	'wikistats_wikiurl' => 'URL:',
 	'wikistats_wikicreated' => 'Opprettet:',
 	'wikistats_wikilang' => 'Språk:',
@@ -4182,7 +4330,7 @@ $messages['no'] = array(
 	'wikistats_column_G' => 'Antall redigeringer i innholdsnavnerommet',
 	'wikistats_column_H' => 'Totalt antall lenker til bilder i artikler fra innholdsnavnerommet',
 	'wikistats_column_I' => 'Totalt antall opplastede bilder',
-	'wikistats_column_J' => 'Totalt antall innebygde videoer i artikler i innholdsnavnerommet',
+	'wikistats_column_J' => 'Totalt antall inkluderte videoer i artikler i innholdsnavnerommet',
 	'wikistats_column_K' => 'Totalt antall opplastede videoer',
 	'wikistats_website' => 'Nettsted',
 	'wikistats_tables' => 'Tabeller',
@@ -4582,18 +4730,23 @@ $messages['ps'] = array(
 	'wikistats_active_month' => 'مياشت',
 	'wikistats_active_year' => 'کال',
 	'wikistats_active_months' => 'مياشتې',
+	'wikistats_number_editors' => 'د سمونګرانو شمېر',
 	'wikistats_articles_text' => 'ليکنې',
 	'wikistats_other' => 'بل',
 	'wikistats_database' => 'توکبنسټ',
 	'wikistats_links' => 'تړنې',
 	'wikistats_images' => 'انځورونه',
 	'wikistats_video' => 'ويډيو',
+	'wikistats_media' => 'انځورونه او ويډيو',
+	'wikistats_distrib_edits' => 'سمونونه >=',
+	'wikistats_distrib_edits_total' => 'ټولټال سمونونه',
 	'wikistats_date' => 'نېټه',
 	'wikistats_namespace' => 'نوم-تشيال',
 	'wikistats_show' => 'ښکاره کول',
 	'wikistats_hide' => 'پټول',
 	'wikistats_wikiname' => 'نوم:',
 	'wikistats_wikicategory' => 'وېشنيزه:',
+	'wikistats_wikiid' => 'پېژند:',
 	'wikistats_largerthan' => 'لوی له',
 	'wikistats_username' => 'کارن',
 	'wikistats_usernames' => 'کارنان',
@@ -4975,6 +5128,81 @@ $messages['pt-br'] = array(
 	'wikistats_xls_cancel' => 'Cancelar',
 	'wikistats_select_btn' => 'Selecionar',
 	'wikistats_other_statistics_legend' => 'Outras estatísticas',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'wikistats' => 'Statistici Wikia',
+	'wikistats_wikia' => 'Wikia',
+	'wikistats_pagetitle' => 'Statistici Wikia',
+	'wikistats_comparision' => 'Comparaţii',
+	'wikistats_showstats_btn' => 'Afişează statisticile',
+	'wikistats_wikia_information' => 'Informaţii Wikia',
+	'wikistats_panel_close_btn' => 'Închide',
+	'wikistats_daterange_from' => 'De la:',
+	'wikistats_daterange_to' => 'Către:',
+	'wikistats_active_day' => 'zi',
+	'wikistats_active_month' => 'lună',
+	'wikistats_active_year' => 'an',
+	'wikistats_active_months' => 'luni',
+	'wikistats_database' => 'Baza de date',
+	'wikistats_links' => 'Legături',
+	'wikistats_images' => 'Imagini',
+	'wikistats_video' => 'Videoclipuri',
+	'wikistats_media' => 'Imagini şi clipuri',
+	'wikistats_video_embeded' => 'cod de încorporat',
+	'wikistats_distrib_edits_total' => 'Modificări totale',
+	'wikistats_hide' => 'Ascunde',
+	'wikistats_wikiname' => 'Nume:',
+	'wikistats_wikicategory' => 'Categorie:',
+	'wikistats_size' => 'dimensiune',
+	'wikistats_words' => 'cuvinte',
+	'wikistats_redirects' => 'redirecţionări',
+	'wikistats_visits' => 'vizite',
+	'wikistats_new_per_day' => 'noi<br />pe zi',
+	'wikistats_official' => 'oficiali',
+	'wikistats_count' => 'Contorizare',
+	'wikistats_unique_users' => 'Utilizatori unici',
+	'wikistats_first_edit' => 'Prima modificare',
+	'wikistats_last_edit' => 'Ultima modificare',
+	'wikistats_rank' => 'rang',
+	'wikistats_total' => 'total',
+	'wikistats_now' => 'acum',
+	'wikistats_days_ago' => 'zile în urmă',
+	'wikistats_wikiurl' => 'Adresă:',
+	'wikistats_wikilang' => 'Limbă:',
+	'wikistats_website' => 'Sait web',
+	'wikistats_tables' => 'Tabele',
+	'wikistats_charts' => 'Grafice',
+	'wikistats_back_to_mainpage' => 'Mergi la pagina principală a statisticilor',
+	'wikistats_back_to_prevpage' => 'Înapoi',
+	'wikistats_trend_value' => 'valoare',
+	'wikistats_trend_formula' => 'Formulă',
+	'wikistats_trend_all_wikia_text' => 'Toate wiki-urile',
+	'wikistats_select_statistics' => 'Selectează statisticile',
+	'wikistats_select_wikia_statistics' => 'Selectează statisticile pentru Wikia $1',
+	'wikistats_xls_files_stats' => 'XLS',
+	'wikistats_database_name_stats' => 'Nume bază de date',
+	'wikistats_xls_generate' => 'Generează',
+	'wikistats_xls_cancel' => 'Renunţă',
+	'wikistats_select_text' => 'Selectează Wikia:',
+	'wikistats_select_btn' => 'Selectează',
+	'wikistats_see_definitions' => 'Vezi definiţiile',
+	'wikistats_language_stats' => 'Statistici limbă',
+	'wikistats_main_statistics_legend' => 'Statistici principale',
+	'wikistats_search_text' => 'Căutare:',
+	'wikistats_sort_list_size' => 'Sortează lista după dimensiune',
+	'wikistats_content' => 'conţinut',
+	'wikistats_userns' => 'utilizator',
+	'wikistats_mediawiki_stats' => 'Statistici MediaWiki:',
+	'wikistats_statistics_information' => 'Informaţii statistici',
+	'wikistats_month' => 'Statistici lunare',
+	'wikistats_see_also' => 'Vezi şi:',
+	'wikistats_language_all' => 'Toate limbile',
+	'wikistats_title' => 'Titlu',
+	'wikistats_namespaces_top10list' => 'Lista top 10',
 );
 
 /** Russian (Русский)
@@ -5773,6 +6001,8 @@ $messages['te'] = array(
 	'wikistats_showstats_btn' => 'గణాంకాలను చూపించు',
 	'wikistats_wikia_information' => 'వికియా సమాచారం',
 	'wikistats_panel_close_btn' => 'మూసివేయి',
+	'wikistats_latest_userviews' => 'క్రియాశీల వాడుకరులు (పుటల వీక్షణలు)',
+	'wikistats_active_useredits' => 'భాషా కలాపం',
 	'wikistats_active_day' => 'రోజు',
 	'wikistats_active_month' => 'నెల',
 	'wikistats_active_year' => 'సంవత్సరం',
@@ -5798,10 +6028,13 @@ $messages['te'] = array(
 	'wikistats_previous_month' => 'గత<br />నెల',
 	'wikistats_total' => 'మొత్తం',
 	'wikistats_more_txt' => 'మరిన్ని',
+	'wikistats_now' => 'ఇప్పుడు',
 	'wikistats_days_ago' => 'రోజుల క్రితం',
 	'wikistats_month_ago' => '$1 $2 క్రితం',
 	'wikistats_wikilang' => 'భాష:',
+	'wikistats_history_mainstats_value4' => '&gt; 75%',
 	'wikistats_tables' => 'పట్టికలు',
+	'wikistats_back_to_prevpage' => 'వెనక్కి',
 	'wikistats_trend_value' => 'విలువ',
 	'wikistats_trend_where_text' => 'ఎక్కడ:',
 	'wikistats_trend_all_wikia_text' => 'అన్ని వికీలు',
@@ -5809,11 +6042,19 @@ $messages['te'] = array(
 	'wikistats_main_statistics_legend' => 'ప్రధాన గణాంకాలు',
 	'wikistats_other_statistics_legend' => 'ఇతర గణాంకాలు',
 	'wikistats_search_text' => 'వెతుకు:',
+	'wikistats_article_total' => 'మొత్తం వ్యాసాలు',
+	'wikistats_blog_comment' => 'బ్లాగు వ్యాఖ్యలు',
+	'wikistats_photo_new' => 'కొత్త ఫొటోలు',
+	'wikistats_video_new' => 'కొత్త వీడియోలు',
 	'wikistats_restricted_page' => 'నియంత్రిత పుట.<br />
 వికియా గణాంకాలను చూడడానికి మీరు ప్రవేశించివుండాలి.
 దయచేసి [[Special:UserLogin|ప్రవేశించండి]] లేదా మీకు ఇప్పటికే ఖాతా లేకపోతే ఒక కొత్త ఖాతాని సృష్టించుకోండి.',
 	'wikistats_mediawiki_stats' => 'మీడియావికీ గణాంకాలు:',
 	'wikistats_statistics_information' => 'గణాంక సమాచారం',
+	'wikistats_current_month' => 'ప్రస్తుత నెల',
+	'wikistats_see_also' => 'ఇవి కూడా చూడండి:',
+	'wikistats_language_all' => 'అన్ని భాషలు',
+	'wikistats_title' => 'శీర్షిక',
 );
 
 /** Tagalog (Tagalog)
@@ -5836,7 +6077,10 @@ $messages['tl'] = array(
 	'wikistats_daterange_from' => 'Mula sa:',
 	'wikistats_daterange_to' => 'Papunta sa:',
 	'wikistats_nostats_found' => 'Walang natagpuang estadistika para sa napiling Wikia',
+	'wikistats_pviews_notfound' => 'Walang natagpuang mga pagtanaw sa pahina',
+	'wikistats_invalid_date' => 'Hindi katanggap-tanggap na saklaw ng mga petsa',
 	'wikistats_distrib_article' => 'Pamamahagi ng galaw ng patnugot',
+	'wikistats_breakdown_editors' => 'Galaw ng patnugot',
 	'wikistats_breakdown_anons' => 'Gawain ng hindi nagpapakilala',
 	'wikistats_active_absent_wikians' => 'Pagkakalista ng galaw ng nakapagpatalang mga patnugot',
 	'wikistats_anon_wikians' => 'Pagkakalista ng galaw ng hindi nagpapakilalang patnugot',
@@ -5845,6 +6089,7 @@ $messages['tl'] = array(
 	'wikistats_latest_userviews' => 'Masisiglang mga tagagamit (mga pagtanaw sa pahina)',
 	'wikistats_active_useredits' => 'Gawain sa wika',
 	'wikistats_latest_userviews_pages' => '$1 mga pahinang dinalaw',
+	'wikistats_latest_userviews_list' => 'Talaan ng mga tagagamit na dumalaw sa wiki sa loob ng huling oras (ang pagkakaayos ay ayon sa huling pagdalaw)',
 	'wikistats_latest_pageviews_subtitle' => 'sa loob ng huling $1 na mga minuto',
 	'wikistats_pageviews' => 'Mga pagtingin sa pahina sa bawat puwang na pampangalan sa bawat buwan',
 	'wikistats_article_size' => 'Mga artikulong naglalaman ng kahit na isang kawing na panloob at .. tekstong may nababasang mga panitik, na hindi pumapansin sa mga kodigo ng wiki at html, mga kawing na nakatago, atbp.;<br />Hindi rin kabilang ang mga paulo (hindi kasama ang mga panlipat ng kapupuntahan)',
@@ -5943,6 +6188,16 @@ $messages['tl'] = array(
 	'wikistats_history_mainstats_value3' => '25% &lt; x &lt; 75%',
 	'wikistats_history_mainstats_value4' => '&gt; 75%',
 	'wikistats_column_A' => 'Kabuaan ng nagpatalang mga patnugot sa loob ng kasalukuyang buwan (lahat ng mga puwang na pampangalan)',
+	'wikistats_column_B' => 'Kabuuan ng nagpatalang mga patnugot sa loob ng kasulukuyang buwan (mga puwang pampangalan ng nilalaman)',
+	'wikistats_column_C' => 'Bilang ng nagpatalang mga patnugot na namatnugot ng mahigit kaysa 5 mga ulit sa loob ng kasalukuyang buwan (mga puwang pampangalan ng nilalaman)',
+	'wikistats_column_D' => 'Bilang ng nagpatalang mga patnugot na namatnugot ng mahigit kaysa 100 mga ulit sa loob ng kasalukuyang buwan (mga puwang pampangalan ng nilalaman)',
+	'wikistats_column_E' => 'Bilang ng lahat ng mga pahina ng mga artikulo ng puwang na pampangalan ng nilalaman',
+	'wikistats_column_F' => 'Bagong mga artikulo bawat araw sa loob ng pangkasalukuyang buwan',
+	'wikistats_column_G' => 'Bilang mga pamamatnugot ng artikulo ng mga puwang na pampangalan ng nilalaman',
+	'wikistats_column_H' => 'Kabuuang bilang ng mga kawing sa mga larawan sa mga artikulo ng puwang pampangalan ng nilalaman',
+	'wikistats_column_I' => 'Kabuuang bilang ng naikargang paitaas na mga larawan',
+	'wikistats_column_J' => 'Kabuuang bilang ng ibinaong bidyo sa mga artikulo ng puwang pampangalan ng nilalaman',
+	'wikistats_column_K' => 'Kabuuang bilang ng naikargang mga bidyo',
 	'wikistats_website' => 'Websayt',
 	'wikistats_tables' => 'Mga talahanayan',
 	'wikistats_charts' => 'Mga tsart',
@@ -6205,8 +6460,13 @@ $messages['ur'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Nglekhoi
+ * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'wikistats_active_day' => 'ngày',
+	'wikistats_active_month' => 'tháng',
+	'wikistats_active_year' => 'năm',
+	'wikistats_active_months' => 'tháng',
 	'wikistats_content' => 'nội dung',
 	'wikistats_userns' => 'thành viên',
 	'wikistats_current_month' => 'Tháng hiện tại',
@@ -6248,11 +6508,65 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Horacewai2
+ * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'wikistats' => 'Wikia統計',
 	'wikistats_wikia' => 'Wikia',
 	'wikistats_pagetitle' => 'Wikia統計',
+	'wikistats_info' => '從清單中選擇一個 wiki，然後按 "{{int:wikistats_showstats_btn}}"',
+	'wikistats_mainstats_info' => '從清單中選擇一個 wiki，然後按 "{{int:wikistats_xls_generate}}"',
+	'wikistats_xls_generate_info' => '您最多可從清單中選擇 $1 個 Wiki',
+	'wikistats_export_xls' => '匯出至 XLS',
+	'wikistats_active_wikians_subtitle_info' => 'Δ = 排名變化',
+	'wikistats_active_day' => '天',
+	'wikistats_active_month' => '月',
+	'wikistats_active_year' => '年',
+	'wikistats_active_months' => '月',
+	'wikistats_number_editors' => '編輯者數量',
+	'wikistats_number_anons' => '匿名者數量',
+	'wikistats_wikians' => '已註冊的編輯者',
+	'wikistats_articles' => '條目（除重定向頁面外）',
+	'wikistats_articles_text' => '條目',
+	'wikistats_other' => '其他',
+	'wikistats_images' => '圖片',
+	'wikistats_video' => '影片',
+	'wikistats_media' => '圖片及影片',
+	'wikistats_show' => '顯示',
+	'wikistats_stats' => '顯示 %s 統計',
+	'wikistats_hide' => '隱藏',
+	'wikistats_largerthan' => '大於',
+	'wikistats_username' => '使用者',
+	'wikistats_usernames' => '使用者',
+	'wikistats_edits' => '編輯',
+	'wikistats_bytes' => '位元組',
+	'wikistats_size' => '大小',
+	'wikistats_words' => '字',
+	'wikistats_internal' => '內部',
+	'wikistats_rank' => '排名',
+	'wikistats_days_ago' => '天前',
+	'wikistats_month_ago' => '$1 $2 前',
+	'wikistats_wikiurl' => '網址：',
+	'wikistats_wikilang' => '語言：',
+	'wikistats_trend_all_wikia_text' => '所有 wiki',
+	'wikistats_creation_legend' => '每月平均增長：',
+	'wikistats_xls_cancel' => '取消',
+	'wikistats_select_text' => '選擇 Wikia：',
+	'wikistats_select_btn' => '選擇',
+	'wikistats_xls_uncheck_list' => '取消勾選',
+	'wikistats_lifetime_editors' => '編輯者總數',
+	'wikistats_article_total' => '條目總數',
+	'wikistats_blog_created' => '已創建的部落格',
+	'wikistats_blog_comment' => '部落格評論',
+	'wikistats_photo_new' => '新照片',
+	'wikistats_video_new' => '新影片',
+	'wikistats_article_daily' => '編輯／天',
+	'wikistats_image_uploads' => '已上傳的圖像',
+	'wikistats_video_uploads' => '已上傳的影片',
+	'wikistats_code_version' => '代碼版本：',
+	'wikistats_current_month' => '本月',
+	'wikistats_language_top' => '首 $1 種語言',
+	'wikistats_language_all' => '所有語言',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)

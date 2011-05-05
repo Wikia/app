@@ -50,26 +50,57 @@ $messages['ast'] = array(
 	'chat-no-login' => 'Has de tar coneutáu pa charrar',
 	'chat-no-login-text' => 'Por favor, conéutate pa charrar.',
 	'chat-default-topic' => 'Bienveníu a la charra $1',
-	'chat-you-are-banned' => 'Lo siento, tas espulsáu de la charra',
-	'chat-you-are-banned-text' => "Tas espulsáu de la charra.
-Si pienses que fue por error o quies que se reconsidere, ponte'n contautu con un alministrador.",
+	'chat-ban-cant-ban-moderator' => 'Nun pues espulsar/torgar a otru moderador del chat.',
+	'chat-ban-already-banned' => '$1 yá tien torgáu el chat nesta wiki.',
+	'chat-ban-you-need-permission' => 'Nun tienes el permisu de $1 que ye necesariu pa espulsar/torgar a un usuariu.',
+	'chat-ban-requires-usertoban-parameter' => "'$1' ye necesariu, pero nun s'alcontró na petición.",
+	'chat-you-are-banned' => 'Fallu de permisos.',
+	'chat-you-are-banned-text' => "Nun tienes permisu pal chat d'esta wiki. Si pienses que foi por error o quies que se reconsidere, ponte en contautu con un alministrador.",
+	'chat-room-is-not-on-this-wiki' => 'La sala de charra na que tas tentando entrar paez que nun esiste nesta wiki.',
 	'chat-kick-log-reason' => "Espulsáu/torgáu na charra d'esta wiki por $1.
 Ponte'n contautu con ellos pa más info.",
+	'chat-headline' => 'Chat de $1',
+	'chat-live' => '¡En vivo!',
+	'chat-start-a-chat' => 'Aniciar una charra',
+	'chat-whos-here' => 'Quién ta equí ($1)',
+	'chat-join-the-chat' => 'Xunise al Chat',
+	'chat-edit-count' => '$1 Ediciones',
+	'chat-member-since' => 'Miembru dende $1',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'chat-desc' => '[[Special:Chat|Чат]]',
 );
 
 /** Breton (Brezhoneg)
  * @author Fulup
+ * @author Y-M D
  */
 $messages['br'] = array(
 	'chat-desc' => '[[Special:Chat|Flapiñ war-eeun]]',
 	'chat-no-login' => "Ret eo deoc'h bezañ kevreet evit flapiñ",
 	'chat-no-login-text' => 'Kevreit evit gallout flapiñ.',
 	'chat-default-topic' => 'Degemer mat er flap $1',
-	'chat-you-are-banned' => "Ho tigarez, berzet eo bet ar flap ouzhoc'h",
+	'chat-ban-cant-ban-moderator' => "Ne c'hellit ket skarzhañ/stankañ ur merour all deus ar flap.",
+	'chat-ban-already-banned' => '$1 a zo stanket dija war flap ar wiki-mañ.',
+	'chat-ban-you-need-permission' => "N'ho peus ket an aotreoù $1 rekis evit skarzhañ/stankañ un implijer.",
+	'chat-ban-requires-usertoban-parameter' => 'Rekis eo "$1" met n\'eo ket bet kavet er reked.',
+	'chat-you-are-banned' => 'Fazi aotreoù.',
 	'chat-you-are-banned-text' => "Berzet eo bet ar flap ouzhoc'h.
 Ma soñj deoc'h ez eo dre fazi pe mar fell deoc'h e vefe distroet war an diviz e c'hallit mont e darempred gant ur merour.",
+	'chat-room-is-not-on-this-wiki' => "War a seblant n' ez eus ket eus deus ar flap a glaskit keveañ outañ.",
 	'chat-kick-log-reason' => "Skarzhet eus ar flap er wiki-mañ gant $1.
 Kit e darempred ganto da c'houzout hiroc'h.",
+	'chat-headline' => 'Chat $1',
+	'chat-live' => 'War-eeun !',
+	'chat-start-a-chat' => 'Kregiñ gant ar Flap',
+	'chat-whos-here' => "Piv 'vez amañ ($1)",
+	'chat-join-the-chat' => 'Mont er Flap',
+	'chat-edit-count' => '$1 Kemm',
+	'chat-member-since' => 'Ezel adalek an $1',
 );
 
 /** Bosnian (Bosanski)
@@ -143,18 +174,48 @@ Por favor, contáctalo para más información.',
 );
 
 /** French (Français)
+ * @author IAlex
+ * @author Notafish
+ * @author Od1n
  * @author Wyz
  */
 $messages['fr'] = array(
 	'chat-desc' => '[[Special:Chat|Tchater en direct]]',
-	'chat-no-login' => 'Vous devez être connecté pour tchater',
+	'chat-no-login' => 'Vous devez être connecté pour tchater.',
 	'chat-no-login-text' => 'Veuillez vous connecter pour tchater.',
 	'chat-default-topic' => 'Bienvenue sur le tchat de $1',
-	'chat-you-are-banned' => 'Désolé, vous êtes banni du tchat',
-	'chat-you-are-banned-text' => "Vous avez été interdit de tchat.
-Si vous pensez que c'est une erreur ou souhaitez en discuter, veuillez contacter un administrateur.",
-	'chat-kick-log-reason' => 'Éjecté/Banni du tchat pour ce wiki par $1.
-Veuillez les contacter pour plus d’informations.',
+	'chat-ban-cant-ban-moderator' => 'Vous ne pouvez pas éjecter/bannir un autre modérateur de tchat.',
+	'chat-ban-already-banned' => '$1 est déjà banni du tchat sur ce wiki.',
+	'chat-ban-you-need-permission' => 'Vous n’avez pas la permission $1, qui est nécessaire pour pouvoir éjecter/bannir un utilisateur.',
+	'chat-ban-requires-usertoban-parameter' => "'$1' est requis mais n’a pas été trouvé dans la requête.",
+	'chat-you-are-banned' => 'Erreur de permissions.',
+	'chat-you-are-banned-text' => "Désolé, vous n'avez pas la permission de tchater sur ce wiki. Si vous pensez que c'est une erreur ou souhaitez en discuter, veuillez contacter un administrateur.",
+	'chat-room-is-not-on-this-wiki' => 'Le salon de tchat auquel vous essayez de vous connecter ne semble pas exister sur ce wiki.',
+	'chat-kick-log-reason' => 'Éjecté/banni du tchat pour ce wiki par $1. Veuillez les contacter pour plus d’informations.',
+	'chat-headline' => '$1 — Tchat',
+	'chat-live' => 'En direct !',
+	'chat-start-a-chat' => 'Démarrer un tchat',
+	'chat-whos-here' => 'Qui est présent ($1)',
+	'chat-join-the-chat' => 'Rejoindre le tchat',
+	'chat-edit-count' => '$1 contributions',
+	'chat-member-since' => 'Membre depuis $1',
+);
+
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'chat-no-login' => 'A csevegéshez be kell jelentkezned!',
+	'chat-no-login-text' => 'Jelentkezz be a csevegéshez!',
+	'chat-default-topic' => 'Üdvözlünk a $1 csevegőben!',
+	'chat-ban-already-banned' => '$1 már ki van tiltva a wiki csevegőjéből.',
+	'chat-you-are-banned' => 'Engedélyezési hiba.',
+	'chat-headline' => '$1-csevegő',
+	'chat-live' => 'Élő!',
+	'chat-start-a-chat' => 'Csevegő indítása',
+	'chat-whos-here' => 'Ki van itt ($1)',
+	'chat-join-the-chat' => 'Csatlakozás a csevegéshez',
+	'chat-edit-count' => '$1 szerkesztés',
 );
 
 /** Interlingua (Interlingua)
@@ -184,12 +245,62 @@ Per favor contacta le pro plus informationes.',
 	'chat-member-since' => 'Membro depost $1',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'chat-desc' => '[[Special:Chat|ライブチャット]]',
+	'chat-no-login' => 'ログインする必要があります。',
+	'chat-no-login-text' => 'チャット機能を利用するにはログインする必要があります。',
+	'chat-default-topic' => '「$1 チャット」にようこそ',
+	'chat-ban-cant-ban-moderator' => '他のチャットモデレータを強制退出させるあるいは追放することはできません。',
+	'chat-ban-already-banned' => '$1 は既にこのウィキのチャットから追放されています。',
+	'chat-ban-you-need-permission' => 'ユーザを強制退出させるあるいは追放するのに必要な$1権限がありません。',
+	'chat-ban-requires-usertoban-parameter' => '「$1」が要求されましたがリクエストの中に見つかりませんでした。',
+	'chat-you-are-banned' => '権限がありません',
+	'chat-you-are-banned-text' => 'このウィキのチャット機能を利用する権限がありません。もし、これが誤りであるあるいは再考が必要であると考えるのであれば、管理者に連絡を取ってください。',
+	'chat-room-is-not-on-this-wiki' => 'あなたが入ろうとしたチャットルームはこのウィキにはないようです。',
+	'chat-kick-log-reason' => '$1 がこのウィキのチャットから強制退出あるいは追放しました。さらに詳しい情報については、実施者に問い合わせてください。',
+	'chat-headline' => '$1 チャット',
+	'chat-live' => 'Live!',
+	'chat-start-a-chat' => 'チャットに参加',
+	'chat-whos-here' => '現在いるユーザ ($1)',
+	'chat-join-the-chat' => 'チャットに参加',
+	'chat-edit-count' => '編集回数: $1',
+	'chat-member-since' => '利用開始: $1',
+);
+
+/** Korean (한국어)
+ * @author Infinity
+ */
+$messages['ko'] = array(
+	'chat-desc' => '[[Special:Chat|실시간 채팅]]',
+	'chat-no-login' => '채팅을 하기 위해서는 로그인이 필요합니다.',
+	'chat-no-login-text' => '채팅을 하기 위해서는 로그인이 필요합니다.',
+	'chat-default-topic' => '$1 채팅에 오신 것을 환영합니다',
+	'chat-ban-cant-ban-moderator' => '다른 채팅 운영자를 추방할 수 없습니다.',
+	'chat-ban-already-banned' => '$1 사용자는 이미 추방되었습니다.',
+	'chat-ban-you-need-permission' => '다른 사용자를 추방하기 위해서는 $1 권한이 필요합니다.',
+	'chat-you-are-banned' => '권한 오류',
+	'chat-you-are-banned-text' => '죄송합니다. 이 위키에서 채팅에 참여할 권한이 없습니다. 만약 이 사안이 관리자의 실수이거나 재검토가 필요하다고 생각하신다면 관리자에게 문의해주세요.',
+	'chat-room-is-not-on-this-wiki' => '입장하려고 하는 채팅방이 이 위키에 없습니다.',
+	'chat-kick-log-reason' => '$1에 의해 채팅에서 추방됨. 더 자세한 이유는 운영진에게 문의.',
+	'chat-headline' => '$1 채팅',
+	'chat-live' => '라이브!',
+	'chat-start-a-chat' => '채팅 시작하기',
+	'chat-whos-here' => '채팅중인 사용자 ($1)',
+	'chat-join-the-chat' => '채팅 참가하기',
+	'chat-edit-count' => '$1회 기여',
+	'chat-member-since' => '$1부터 기여',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
 	'chat-default-topic' => 'Wëllkomm am $1-Chat',
-	'chat-you-are-banned' => 'Pardon, Dir sidd am Chat gespaart.',
+	'chat-you-are-banned' => 'Berechtigungs-Feeler',
+	'chat-edit-count' => '$1 Ännerungen',
 );
 
 /** Macedonian (Македонски)
@@ -219,6 +330,13 @@ $messages['mk'] = array(
 	'chat-member-since' => 'Членува од $1',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'chat-edit-count' => '$1 തിരുത്തലുകൾ',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -227,11 +345,23 @@ $messages['ms'] = array(
 	'chat-no-login' => 'Anda mesti log masuk untuk bersembang',
 	'chat-no-login-text' => 'Sila log masuk untuk bersembang',
 	'chat-default-topic' => 'Selamat datang ke ruang sembang $1',
-	'chat-you-are-banned' => 'Maaf, anda dilarang bersembang',
-	'chat-you-are-banned-text' => 'Anda dilarang bersembang.
+	'chat-ban-cant-ban-moderator' => 'Anda tidak boleh menghalau/melarang Penyelia Sembang yang lain.',
+	'chat-ban-already-banned' => '$1 sudah dilarang daripada bersembang di wiki ini.',
+	'chat-ban-you-need-permission' => 'Anda tidak mendapat kebenaran $1 yang diperlukan untuk menghalau/melarang pengguna.',
+	'chat-ban-requires-usertoban-parameter' => "'$1' diperlukan tetapi tiada dalam permintaan.",
+	'chat-you-are-banned' => 'Ralat kebenaran.',
+	'chat-you-are-banned-text' => 'Maaf, anda tidak dibenarkan untuk bersembang di wiki ini.
 Jika anda rasa ini kesilapan atau ingin merayu untuk dibenarkan semula, sila hubungi pentadbir.',
+	'chat-room-is-not-on-this-wiki' => 'Ruang sembang yang anda cuba masuk itu nampaknya tidak wujud di wiki ini.',
 	'chat-kick-log-reason' => 'Dilarang daripada bersembang di wiki ini oleh $1.
 Sila hubungi mereka untuk penjelasan lanjut.',
+	'chat-headline' => 'Ruang Sembang $1',
+	'chat-live' => 'Live!',
+	'chat-start-a-chat' => 'Mula Bersembang',
+	'chat-whos-here' => 'Siapa di sini ($1)',
+	'chat-join-the-chat' => 'Jom Sembang',
+	'chat-edit-count' => '$1 Suntingan',
+	'chat-member-since' => 'Ahli sejak $1',
 );
 
 /** Dutch (Nederlands)
@@ -260,6 +390,18 @@ Neem alstublieft contact op met deze gebruiker voor meer informatie.',
 	'chat-member-since' => 'Lid sinds $1',
 );
 
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'chat-no-login' => 'Je moet aangemeld zijn om deel te nemen aan de chat',
+	'chat-no-login-text' => 'Meld je aan om deel te nemen aan de chat.',
+	'chat-ban-cant-ban-moderator' => 'Je kunt een andere chatmoderator niet kicken of verbannen.',
+	'chat-ban-you-need-permission' => 'Je hebt het recht "$1" niet wat nodig is om een gebruiker te kicken of te verbannen.',
+	'chat-you-are-banned-text' => 'Je mag niet langer deelnemen aan de chat. Als je denkt dat dit niet klopt, of als je wilt vragen uw blokkade op te heffen, neem dan contact op met een beheerder.',
+	'chat-room-is-not-on-this-wiki' => 'De chatroom waar je probeert binnen te komen bestaat niet op deze wiki.',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
@@ -268,11 +410,29 @@ $messages['no'] = array(
 	'chat-no-login' => 'Du må være logget inn for å chatte',
 	'chat-no-login-text' => 'Vennligst logg inn for å chatte.',
 	'chat-default-topic' => 'Velkommen til $1-chatten',
-	'chat-you-are-banned' => 'Beklager, du er utestengt fra chatten',
-	'chat-you-are-banned-text' => 'Du har blitt utestengt fra chatten.
-Hvis du tror dette er en feil, eller om du vil bli revurdert, vennligst kontakt en administrator.',
+	'chat-ban-cant-ban-moderator' => 'Du kan ikke sparke/utestenge en annen Chat-moderator.',
+	'chat-ban-already-banned' => '$1 er allerede utestengt fra chatten på denne wikien.',
+	'chat-ban-you-need-permission' => 'Du har ikke $1-tillatelsen som kreves for å sparke/utestenge en bruker.',
+	'chat-ban-requires-usertoban-parameter' => '«$1» er påkrevd, men ble ikke funnet i forespørselen.',
+	'chat-you-are-banned' => 'Rettighetsfeil.',
+	'chat-you-are-banned-text' => 'Beklager, du har ikke rett til å chatte på denne wikien. Hvis du tror dette er en feil, eller om du vil bli revurdert, vennligst kontakt en administrator.',
+	'chat-room-is-not-on-this-wiki' => 'Chatrommet du forsøker å entre ser ikke ut til å eksistere på denne wikien.',
 	'chat-kick-log-reason' => 'Sparket/utestengt fra chatten på denne wikien av $1.
 Vennligst kontakt dem for mer informasjon.',
+	'chat-headline' => '$1-chat',
+	'chat-live' => 'Live!',
+	'chat-start-a-chat' => 'Start en chat',
+	'chat-whos-here' => 'Hvem er her ($1)',
+	'chat-join-the-chat' => 'Bli med i chatten',
+	'chat-edit-count' => '$1 redigeringer',
+	'chat-member-since' => 'Medlem siden $1',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'chat-live' => 'ژوندی!',
 );
 
 /** Portuguese (Português)
@@ -283,10 +443,22 @@ $messages['pt'] = array(
 	'chat-no-login' => 'Para conversar tem de autenticar-se',
 	'chat-no-login-text' => 'Autentique-se para conversar, por favor.',
 	'chat-default-topic' => 'Bem-vindo(a) à conversa $1',
-	'chat-you-are-banned' => 'Desculpe, foi banido da conversação',
-	'chat-you-are-banned-text' => 'Foi banido da conversação. Se acho que isto foi um erro ou pretende que o seu banimento seja reconsiderado contacte um administrador.',
+	'chat-ban-cant-ban-moderator' => 'Não pode expulsar nem bloquear outro Moderador de Conversação',
+	'chat-ban-already-banned' => '$1 já está bloqueado da conversação nesta wiki.',
+	'chat-ban-you-need-permission' => 'Não tem a permissão $1, que é necessária para expulsar ou bloquear utilizadores.',
+	'chat-ban-requires-usertoban-parameter' => "'$1' é obrigatório mas não foi encontrado no pedido.",
+	'chat-you-are-banned' => 'Erro de permissões.',
+	'chat-you-are-banned-text' => 'Desculpe, mas não tem permissões para usar a conversação nesta wiki. Se acredita que a falta de permissões resulta de um erro ou pretende que o assunto seja reconsiderado, contacte um administrador, por favor.',
+	'chat-room-is-not-on-this-wiki' => 'A sala de conversação onde está tentando entrar não parece existir nesta wiki.',
 	'chat-kick-log-reason' => 'Banido da conversação desta wiki por $1.
 Contacte este utilizador para mais informações.',
+	'chat-headline' => 'Conversação $1',
+	'chat-live' => 'Ao vivo!',
+	'chat-start-a-chat' => 'Inicie uma Conversação',
+	'chat-whos-here' => 'Quem está aqui ($1)',
+	'chat-join-the-chat' => 'Junte-se à Conversação',
+	'chat-edit-count' => '$1 Edições',
+	'chat-member-since' => 'Membro desde $1',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -300,6 +472,19 @@ $messages['pt-br'] = array(
 	'chat-you-are-banned' => 'Desculpe, você está banido do chat',
 	'chat-you-are-banned-text' => 'Você foi banido do chat.
 Se você acha que isso foi um erro ou gostaria de ser reconsiderado(a), por favor entre em contato com um administrador.',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'chat-desc' => '[[Special:Chat|Chat live]]',
+	'chat-no-login' => 'Trebuie să fii autentificat pentru a intra pe chat.',
+	'chat-no-login-text' => 'Te rugăm autentifică-te pentru a intra pe chat.',
+	'chat-start-a-chat' => 'Porneşte un chat',
+	'chat-whos-here' => 'Cine-i aici ($1)',
+	'chat-join-the-chat' => 'Alăturaţi-vă chat-ului',
+	'chat-member-since' => 'Membru din $1',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
@@ -317,6 +502,13 @@ $messages['sr-ec'] = array(
 Контактирајте га да бисте сазнали зашто сте избачени.',
 );
 
+/** Swedish (Svenska)
+ * @author Lokal Profil
+ */
+$messages['sv'] = array(
+	'chat-you-are-banned' => 'Behörighetsfel.',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -325,10 +517,35 @@ $messages['tl'] = array(
 	'chat-no-login' => 'Dapat kang nakalagda upang makapagsatsatan',
 	'chat-no-login-text' => 'Mangyaring lumagda upang makapagsatsatan.',
 	'chat-default-topic' => 'Maligayang pagdating sa satsatang $1',
-	'chat-you-are-banned' => 'Paumanhin, pinagbabawalan kang makipagsatsatan',
-	'chat-you-are-banned-text' => 'Pinagbawalan kang makipagsatsatan.
-Kung iniisip mong isa itong pagkakamali o nais mong muling maisaalang-alang, mangyaring makipag-ugnayan sa tagapangasiwa.',
+	'chat-you-are-banned' => 'Kamalian sa mga kapahintulutan.',
+	'chat-you-are-banned-text' => 'Paumanhin, wala kang pahintulot na makipagsatsatan sa wiking ito.
+Kung iniisip mong isa itong pagkakamali o nais mong muling maisaalang-alang, mangyaring makipag-ugnayan sa isang tagapangasiwa.',
 	'chat-kick-log-reason' => 'Sinipa/pinagbawala mula sa satsatan para sa wiking ito ni $1.
 Mangyaring makipag-ugnayan sa kanila para sa mas maraming kabatiran.',
+	'chat-headline' => '$1 Satsatan',
+	'chat-live' => 'Buhay!',
+	'chat-start-a-chat' => 'Magsimula ng isang Satsatan',
+	'chat-whos-here' => 'Sino ang narito ($1)',
+	'chat-join-the-chat' => 'Sumali sa Satsatan',
+	'chat-edit-count' => '$1 Mga pamamatnugot',
+	'chat-member-since' => 'Kasapi magmula pa noong $1',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Liangent
+ */
+$messages['zh-hans'] = array(
+	'chat-desc' => '[[Special:Chat|在线聊天]]',
+	'chat-no-login' => '您必须登录以聊天。',
+	'chat-no-login-text' => '请登录以聊天。',
+	'chat-default-topic' => '欢迎来到$1聊天',
+	'chat-you-are-banned' => '权限错误。',
+	'chat-headline' => '$1聊天',
+	'chat-live' => '在线！',
+	'chat-start-a-chat' => '开始聊天',
+	'chat-whos-here' => '谁在这里（$1）',
+	'chat-join-the-chat' => '加入聊天',
+	'chat-edit-count' => '$1次编辑',
+	'chat-member-since' => '$1以来的成员',
 );
 

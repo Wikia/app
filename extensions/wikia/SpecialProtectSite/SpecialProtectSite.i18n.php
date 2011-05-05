@@ -55,6 +55,16 @@ $messages['af'] = array(
 	'protectsite-unprotect' => 'Verwyder beskerming',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'protectsite-allowall' => 'كل المستخدمين',
+	'protectsite-comment' => 'التعليق:',
+	'protectsite-protect' => 'احمِ',
+	'protectsite-unprotect' => 'أزل الحماية',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
@@ -279,6 +289,7 @@ $messages['gl'] = array(
 	'protectsite-until' => 'Protexido ata:',
 	'protectsite-protect' => 'Protexer',
 	'protectsite-unprotect' => 'Desprotexer',
+	'protectsite-nologs' => 'non mostrar nos rexistros',
 );
 
 /** Hausa (هَوُسَ) */
@@ -371,6 +382,7 @@ $messages['ja'] = array(
 	'protectsite-until' => '保護期限：',
 	'protectsite-protect' => '保護',
 	'protectsite-unprotect' => '保護解除',
+	'protectsite-nologs' => 'ログに表示させない',
 );
 
 /** Colognian (Ripoarisch)
@@ -423,7 +435,7 @@ $messages['ltg'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'specialprotectsite-desc' => 'Му овозможува на администраторот [[Special:ProtectSite|привремено да блокира разни измени на мреж-то место]]',
+	'specialprotectsite-desc' => 'Му овозможува на администраторот [[Special:ProtectSite|привремено да спречува разни измени на мреж-то место]]',
 	'protectsite' => 'Заштити мреж. место',
 	'protectsite-text-protect' => '<!-- Инструкции/Коментари/Правила на употреба -->',
 	'protectsite-text-unprotect' => '<!-- Инструкции/Коментари кога е заштитено -->',
@@ -475,11 +487,22 @@ $messages['ms'] = array(
 	'protectsite-nologs' => 'jangan tunjukkan dalam log',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'protectsite-allowall' => 'အသုံးပြုသူအားလုံး',
+	'protectsite-comment' => 'မှတ်ချက် :',
+	'protectsite-protect' => 'ပရောဂျက်',
+	'protectsite-unprotect' => 'မကာကွယ်တော့ရန်',
+);
+
 /** Dutch (Nederlands)
+ * @author SPQRobin
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'specialprotectsite-desc' => 'Maakt het voor sitebeheerders mogelijk [[Special:ProtectSite|tijdelijke verschillende wijzigingen aan te site tegen te gaan]]',
+	'specialprotectsite-desc' => 'Maakt het voor sitebeheerders mogelijk [[Special:ProtectSite|tijdelijk verschillende wijzigingen aan de site tegen te gaan]]',
 	'protectsite' => 'Site beveiligen',
 	'protectsite-text-protect' => '<!-- Instructies/opmerkingen/beleid voor gebruik -->',
 	'protectsite-text-unprotect' => '<!-- Instructies/opmerkingen als beveiligd -->',
@@ -582,6 +605,7 @@ $messages['pms'] = array(
 	'protectsite-until' => 'Protegiù fin-a a:',
 	'protectsite-protect' => 'Protet',
 	'protectsite-unprotect' => 'Dësprotege',
+	'protectsite-nologs' => 'mosta pa ant ij registr',
 );
 
 /** Pashto (پښتو)
@@ -652,6 +676,17 @@ $messages['pt-br'] = array(
 	'protectsite-protect' => 'Proteger',
 	'protectsite-unprotect' => 'Desproteger',
 	'protectsite-nologs' => 'não mostrar nos registos',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'protectsite' => 'Protejează un sait',
+	'protectsite-allowall' => 'Toţi utilizatorii',
+	'protectsite-comment' => 'Comentariu:',
+	'protectsite-protect' => 'Protejează',
+	'protectsite-unprotect' => 'Deprotejează',
 );
 
 /** Russian (Русский)

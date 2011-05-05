@@ -87,6 +87,7 @@ $messages['af'] = array(
 	'lookupcontribswikidbname' => 'DB-naam',
 	'lookupcontribswikiurl' => 'Url',
 	'lookupcontribswikititle' => 'Titel',
+	'lookupcontribswikioptions' => 'Instellings',
 	'lookupcontribscontribslink' => 'Bydraes-skakel',
 	'lookupcontribsdetails' => 'Sien details vir:',
 	'lookupcontribscontribs' => 'bydraes',
@@ -101,6 +102,19 @@ $messages['af'] = array(
 	'right-lookupcontribs' => 'Kyk na gebruiker se globale wysigings',
 	'lookupcontribsshowpages' => 'Alle bladsye ($1 naamruimtes)',
 	'lookupcontribscontent' => 'inhoud',
+	'lookupcontribsnormal' => 'onlangs',
+	'lookupcontribsfinal' => 'laaste',
+	'lookupcontribsall' => 'alle',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'lookupcontribswiki' => 'Viki',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribsnext' => 'növbəti',
+	'lookupcontribsfinal' => 'son',
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
@@ -115,6 +129,8 @@ $messages['be-tarask'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'lookupcontribswiki' => 'Уики',
+	'lookupcontribswikiurl' => 'Адрес',
 	'lookupcontribsall' => 'всички',
 );
 
@@ -449,6 +465,7 @@ $messages['gl'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -457,11 +474,14 @@ $messages['hu'] = array(
 	'lookupcontribsfullurls' => 'teljes URL-ek',
 	'lookupcontribsgo' => 'Menj',
 	'lookupcontribsselectwikis' => 'Wikik kiválasztása:',
+	'lookupcontribsnoresultfound' => 'Nincs találat!',
 	'lookupcontribsinvalidresults' => 'Érvénytelen eredmények!',
 	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikidbname' => 'Adatbázisnév',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Cím',
+	'lookupcontribswikioptions' => 'Beállítások',
+	'lookupcontribslastedited' => 'Legutóbbi szerkesztés',
 	'lookupcontribsnbrresult' => 'Találatok száma:',
 	'lookupcontribsnext' => 'következő',
 	'lookupcontribsprevious' => 'előző',
@@ -469,6 +489,7 @@ $messages['hu'] = array(
 	'lookupcontribsrestore' => 'visszaállítás',
 	'lookupcontribslog' => 'napló',
 	'lookupcontribsdiff' => 'eltérés',
+	'lookupcontribsshowpages' => 'Összes lap ($1 névter)',
 );
 
 /** Interlingua (Interlingua)
@@ -666,6 +687,31 @@ $messages['mk'] = array(
 	'lookupcontribsall' => 'сите',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'lookupcontribsselectuser' => 'ഉപയോക്താവിനെ തിരഞ്ഞെടുക്കുക:',
+	'lookupcontribsgo' => 'പോകൂ',
+	'lookupcontribsnoresultfound' => 'ഒരു ഫലവും കണ്ടെത്തിയില്ല!',
+	'lookupcontribsinvalidresults' => 'അസാധുവായ ഫലങ്ങൾ!',
+	'lookupcontribswiki' => 'വിക്കി',
+	'lookupcontribswikiurl' => 'യൂ.ആർ.എൽ.',
+	'lookupcontribswikititle' => 'ശീർഷകം',
+	'lookupcontribswikioptions' => 'ഐച്ഛികങ്ങൾ',
+	'lookupcontribsnbrresult' => 'ഫലങ്ങളുടെ എണ്ണം:',
+	'lookupcontribsnext' => 'അടുത്തത്',
+	'lookupcontribsprevious' => 'മുമ്പ്',
+	'lookupcontribspageremoved' => 'നീക്കം ചെയ്തു:',
+	'lookupcontribsrestore' => 'പുനഃസ്ഥാപിക്കുക',
+	'lookupcontribshist' => 'നാൾവഴി',
+	'lookupcontribsdiff' => 'വ്യത്യാസം',
+	'right-lookupcontribs' => 'ഉപയോക്താവിന്റെ ആഗോള തിരുത്തലുകൾ കാണുക',
+	'lookupcontribsshowpages' => 'എല്ലാ താളുകളും ($1 നാമമേഖലകൾ)',
+	'lookupcontribscontent' => 'ഉള്ളടക്കം',
+	'lookupcontribsall' => 'എല്ലാം',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -721,6 +767,33 @@ Tolong semak ejaan nama pengguna itu.</p>',
 	'lookupcontribsall' => 'semua',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'lookupcontribsrecentcontributions' => '$1 အတွက် လတ်​တ​လော ပံ့ပိုးမှုများ',
+	'lookupcontribsfinalcontributions' => '$1 အတွက် နောက်ဆုံး ပံ့ပိုးမှုများ',
+	'lookupcontribsgo' => 'သွား​ပါ​',
+	'lookupcontribswiki' => 'ဝီကီ',
+	'lookupcontribswikidbname' => 'DB အမည်',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'ခေါင်းစဉ်',
+	'lookupcontribswikioptions' => 'ရွေးပိုင်ခွင့်',
+	'lookupcontribscontribslink' => 'ပံပိုးထားသော လင့်များ',
+	'lookupcontribscontribs' => 'ပံ့ပိုး',
+	'lookupcontribsnbrresult' => 'အရေအတွက် :',
+	'lookupcontribsnext' => 'နောက်ထပ်',
+	'lookupcontribsprevious' => 'နောက်',
+	'lookupcontribspageremoved' => 'ဖျက်ပြီး :',
+	'lookupcontribsrestore' => 'ပြန်လည် ထိန်းသိမ်းရန်',
+	'lookupcontribslog' => 'မှတ်​တမ်း​များ​',
+	'lookupcontribshist' => 'မှတ်တမ်း',
+	'lookupcontribsdiff' => 'ကွဲပြားမှု',
+	'lookupcontribsshowpages' => 'စာမျက်နှာအားလုံး (အမည်ညွှန်း $1)',
+	'lookupcontribscontent' => 'မာတိကာ',
+	'lookupcontribsall' => 'အားလုံး',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -774,6 +847,13 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'laatste',
 	'lookupcontribsall' => 'alle',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'lookupcontribusernotspecify' => 'Je hebt nog geen gebruiker opgegeven',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -1047,6 +1127,21 @@ Verifique se se enganou com o nome do utilizador.</p>',
 	'lookupcontribsall' => 'todas',
 );
 
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'lookupcontribsselectuser' => 'Selectează utilizatorul:',
+	'lookupcontribsdisplaymode' => 'Mod de afişare:',
+	'lookupcontribsnoresultfound' => 'Niciun rezultat găsit!',
+	'lookupcontribsinvalidresults' => 'Rezultate invalide!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikiurl' => 'Adresă',
+	'lookupcontribswikititle' => 'Titlu',
+	'lookupcontribswikioptions' => 'Opţiuni',
+	'lookupcontribscontent' => 'conţinut',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -1138,6 +1233,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Lokal Profil
  * @author Per
  * @author WikiPhoenix
  */
@@ -1148,6 +1244,8 @@ $messages['sv'] = array(
 	'lookupcontribswikidbname' => 'DB namn',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Titel',
+	'lookupcontribswikioptions' => 'Alternativ',
+	'lookupcontribslastedited' => 'Senast redigerad',
 	'lookupcontribsnext' => 'nästa',
 	'lookupcontribsprevious' => 'föregående',
 	'lookupcontribsrestore' => 'återställ',
@@ -1216,8 +1314,10 @@ Suriin ang ibinigay na pangalan ng tagagamit para sa maaaring mga kamalian.</p>'
 	'lookupcontribswikidbname' => 'Pangalan ng Kalipunan ng Dato',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Pamagat',
+	'lookupcontribswikioptions' => 'Mga mapagpipilian',
 	'lookupcontribscontribslink' => 'Kawing sa mga ambag',
 	'lookupcontribsdetails' => 'Tingnan ang mga detalye para sa:',
+	'lookupcontribslastedited' => 'Huling binago',
 	'lookupcontribscontribs' => 'mga ambag',
 	'lookupcontribsnbrresult' => 'Bilang ng mga resulta:',
 	'lookupcontribsnext' => 'susunod',
@@ -1230,6 +1330,9 @@ Suriin ang ibinigay na pangalan ng tagagamit para sa maaaring mga kamalian.</p>'
 	'right-lookupcontribs' => 'Tingnan ang pandaigdigang pamamatnugot ng tagagamit',
 	'lookupcontribsshowpages' => 'Lahat ng mga pahina ($1 mga puwang na pampangalan)',
 	'lookupcontribscontent' => 'nilalaman',
+	'lookupcontribsnormal' => 'kamakailan',
+	'lookupcontribsfinal' => 'pangwakas',
+	'lookupcontribsall' => 'lahat',
 );
 
 /** Ukrainian (Українська)

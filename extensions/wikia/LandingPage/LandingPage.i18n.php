@@ -25,6 +25,13 @@ $messages['en'] = array(
 			* http://poptarts.wikia.com|Pop Tarts Wikii|landingpage-wikis-en.png",
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'landingpage' => 'Добре дошли в Wikia',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Y-M D
@@ -113,12 +120,22 @@ $messages['gl'] = array(
 	'landingpage-buttons-learn-more' => 'Máis información &gt;',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'landingpage' => 'Üdv a Wikián!',
+	'landingpage-start-exploring' => 'Készen állsz a felfedezésre?',
+	'landingpage-readfaq' => 'Kérdéseid vannak? Olvasd el a GyIK-ot &gt;',
+	'landingpage-buttons-learn-more' => 'Tudj meg többet &gt;',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
 	'landingpage' => 'Benvenite a Wikia',
-	'landingpage-start-exploring' => 'Preste a comenciar a explorar?',
+	'landingpage-start-exploring' => 'Preste a explorar?',
 	'landingpage-start-exploring-text' => 'Cerca tu topico favorite o explora alcun favoritos del communitate hic infra.',
 	'landingpage-readfaq' => 'Questiones? Lege nostre FAQ &gt;',
 	'landingpage-text' => 'In Wikia tu pote <strong>connecter te a personas</strong> que ha <strong>passiones e interesses</strong> in commun con te. Cerca tu gruppo, face commentos e modificationes, o mesmo <strong>comencia tu proprie sito web</strong> e communitate.',
@@ -145,6 +162,17 @@ $messages['ko'] = array(
 	'landingpage-buttons-learn-more' => '더 알아보기 &gt;',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'landingpage' => 'Willkumme bei Wikia',
+	'landingpage-start-exploring' => 'Wells De erömloore?',
+	'landingpage-start-exploring-text' => 'Söhk noh Dinge leevste Saache udder blädder onge en de Jemeinschaff ier Favoritte.',
+	'landingpage-readfaq' => 'Häs De Froore? Liß uns Sigg met öff jeshtallte Froore &gt;',
+	'landingpage-buttons-learn-more' => 'Mieh eruß fenge &gt;',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -155,6 +183,14 @@ $messages['mk'] = array(
 	'landingpage-readfaq' => 'Имате прашања? Прочитајте ја страницата за ЧПП &gt;',
 	'landingpage-text' => 'На Викија можете да <strong>се поврзете со луѓето</strong> што имаат исти <strong>страсти и интереси</strong> како вас. Пронајдете си група, давајте коментари, правете уредувања; можете дури и да <strong>започнете сопствена страница</strong> и заедница.',
 	'landingpage-buttons-learn-more' => 'Дознајте повеќе &gt;',
+	'landingpage-buttons-about-wikia-url' => 'http://community.wikia.com/wiki/About_Wikia?uselang=mk',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'landingpage' => 'വിക്കിയയിലേയ്ക്ക് സ്വാഗതം',
 );
 
 /** Malay (Bahasa Melayu)
@@ -185,6 +221,14 @@ $messages['nl'] = array(
 * Español|es
 * Deutsch|de
 * Français|fr',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'landingpage-start-exploring-text' => 'Zoeken naar je favoriete onderwerp of hieronder door uitgelichte gemeenschappen bladeren.',
+	'landingpage-text' => 'Bij Wikia kan je <strong>verbinden met mensen</strong> die je <strong>passies en interesses</strong> delen. Vind je groep, maak opmerkingen en bewerkingen, of begin zelfs <strong>je eigen website</strong> en gemeenschap.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -275,7 +319,7 @@ $messages['sv'] = array(
  */
 $messages['tl'] = array(
 	'landingpage' => 'Maligayang Pagdating sa Wikia',
-	'landingpage-buttons-learn-more' => 'Umalam ng marami pa',
+	'landingpage-buttons-learn-more' => 'Umalam ng marami pa &gt;',
 );
 
 /** Ukrainian (Українська) */
@@ -283,5 +327,15 @@ $messages['uk'] = array(
 	'landingpage' => 'Ласкаво просимо у Wikia',
 	'landingpage-readfaq' => 'Є запитання? Читайте наші FAQ &gt;',
 	'landingpage-buttons-learn-more' => 'Дізнатись більше &gt;',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Liangent
+ */
+$messages['zh-hans'] = array(
+	'landingpage' => '欢迎光临Wikia',
+	'landingpage-start-exploring' => '准备好开始探索了？',
+	'landingpage-readfaq' => '有问题？阅读我们的常见问题 &gt;',
+	'landingpage-buttons-learn-more' => '了解更多 &gt;',
 );
 

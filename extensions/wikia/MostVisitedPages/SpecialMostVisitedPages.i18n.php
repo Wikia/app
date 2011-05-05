@@ -64,6 +64,13 @@ $messages['be-tarask'] = array(
 	'mostvisitedpagessearchtext' => 'Назва артыкула:',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'mostvisitedpagessearchbtn' => 'търсене',
+);
+
 /** Breton (Brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -264,6 +271,18 @@ $messages['ja'] = array(
 	'mostvisitedpagesalllink' => '全期間の結果を見る',
 );
 
+/** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
+ */
+$messages['km'] = array(
+	'mostvisitedpages' => 'ទំព័រដែលត្រូវបានមើលច្រើនបំផុត',
+	'mostvisitedpagessearchtext' => 'ឈ្មោះអត្ថបទ៖',
+	'mostvisitedpagessearchbtn' => 'ស្វែងរក',
+	'mostvisitedpageslatest' => 'ក្នុងរយៈពេល $1នាទីចុងក្រោយ',
+	'mostvisitedpageslatestlink' => 'មើលទំព័រដែលត្រូវបានចូលមើលថ្មីៗបំផុត',
+	'mostvisitedpagesalllink' => 'មើលទំព័រដែលត្រូវបានចូលមើលច្រើនបំផុត',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
@@ -307,6 +326,13 @@ $messages['mk'] = array(
 	'mostvisitedpageslatest' => 'во последните $1 минути',
 	'mostvisitedpageslatestlink' => 'Најскоро посетени страници',
 	'mostvisitedpagesalllink' => 'Најпосетени страници',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'mostvisitedpagessearchbtn' => 'തിരയുക',
 );
 
 /** Malay (Bahasa Melayu)
@@ -544,9 +570,14 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Farewell
+ * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
 	'mostvisitedpages' => 'Các trang được xem nhiều nhất',
+	'mostvisitedpagessearchtext' => 'Tên trang',
+	'mostvisitedpagessearchbtn' => 'Tìm kiếm',
+	'mostvisitedpageslatestlink' => 'Xem trang được truy cập mới nhất',
+	'mostvisitedpagesalllink' => 'Xem trang được truy cập nhiều nhất',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

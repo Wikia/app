@@ -12,6 +12,13 @@ $messages['en'] = array(
 	'wikipayment-paypal-profile-name' => "Paid Wiki"
 );
 
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'wikipayment-desc' => '{{desc}}',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  */
@@ -59,6 +66,20 @@ $messages['es'] = array(
 	'wikipayment-paypal-profile-name' => 'Paid Wiki',
 );
 
+/** French (Français)
+ * @author Iketsi
+ * @author Od1n
+ * @author Peter17
+ */
+$messages['fr'] = array(
+	'wikipayment-desc' => 'Permet le paiement de chaque wiki pour désactiver les publicités.',
+	'wikipayment-paypal-redirect' => 'Redirection vers PayPal, veuillez patienter&hellip;',
+	'wikipayment-paypal-error' => 'Erreur de paiement PayPal (code : $1)',
+	'wikipayment-paypal-return-ok' => 'Paiement PayPal réussi',
+	'wikipayment-paypal-return-cancel' => 'Paiement PayPal annulé',
+	'wikipayment-paypal-profile-name' => 'Wiki payé',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -69,6 +90,18 @@ $messages['ia'] = array(
 	'wikipayment-paypal-return-ok' => 'Pagamento de PayPal succedite',
 	'wikipayment-paypal-return-cancel' => 'Pagamento de PayPal cancellate',
 	'wikipayment-paypal-profile-name' => 'Wiki pagate',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'wikipayment-desc' => 'Määd et Bezahle per Wiki müjjelesh, öm de Reklame afzeschallde.',
+	'wikipayment-paypal-redirect' => 'Mer sin aam Ömleide noh <i lang="en">PayPal</i>, bes esu godd un waad ene Momang&nbsp;…',
+	'wikipayment-paypal-error' => 'Ene Fähler beim Bezahle met <i lang="en">PayPal</i> (Kood: $1)',
+	'wikipayment-paypal-return-ok' => 'Et Bezahle met <i lang="en">PayPal</i> hät jeflupp.',
+	'wikipayment-paypal-return-cancel' => 'Et Bezahle met <i lang="en">PayPal</i> wood afjebroche.',
+	'wikipayment-paypal-profile-name' => 'Bezahlt Wiki',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -126,6 +159,18 @@ $messages['no'] = array(
 	'wikipayment-paypal-profile-name' => 'Betalt Wiki',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'wikipayment-desc' => 'A përmëtt wiki a pagament për disabilité la reclame',
+	'wikipayment-paypal-redirect' => 'Rediressioné a PayPal, për piasì speta&hellip;',
+	'wikipayment-paypal-error' => 'Eror ëd pagament PayPal (còdes: $1)',
+	'wikipayment-paypal-return-ok' => 'Pagament PayPal andàit bin',
+	'wikipayment-paypal-return-cancel' => 'Pagament PayPal scanselà',
+	'wikipayment-paypal-profile-name' => 'Wiki pagà',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  * @author Waldir
@@ -149,6 +194,15 @@ $messages['pt-br'] = array(
 	'wikipayment-paypal-return-ok' => 'Pagamento PayPal bem sucedido',
 	'wikipayment-paypal-return-cancel' => 'Pagamento PayPal cancelado',
 	'wikipayment-paypal-profile-name' => 'Wiki paga',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'wikipayment-paypal-error' => 'Plata prin PayPal a întâmpinat o eroare (cod: $1)',
+	'wikipayment-paypal-return-ok' => 'Plată realizată cu succes prin PayPal',
+	'wikipayment-paypal-return-cancel' => 'Plata prin Paypal a fost anulată',
 );
 
 /** Russian (Русский)
@@ -185,5 +239,29 @@ $messages['sv'] = array(
 	'wikipayment-paypal-return-ok' => 'PayPal betalning klar',
 	'wikipayment-paypal-return-cancel' => 'PayPal betalning avbruten',
 	'wikipayment-paypal-profile-name' => 'Betald Wiki',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikipayment-desc' => 'Nagbibigay-daan sa pagbabayad sa bawat wiki upang huwag paganahin ang mga patalastas.',
+	'wikipayment-paypal-redirect' => 'Pinapupunta sa Paypal, mangyaring maghintay&hellip;',
+	'wikipayment-paypal-error' => 'Kamalian sa pagbabayad ng PayPal (kodigo: $1)',
+	'wikipayment-paypal-return-ok' => 'Matagumpay ang pagbabayad ng PayPal',
+	'wikipayment-paypal-return-cancel' => 'Hindi itinuloy ang pagbabayad ng PayPal',
+	'wikipayment-paypal-profile-name' => 'Binabayarang Wiki',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Wrightbus
+ */
+$messages['zh-hant'] = array(
+	'wikipayment-desc' => '為使用者提供付款渠道，透過付款予 wiki 項目，以停止在該 wiki 顯示廣告。',
+	'wikipayment-paypal-redirect' => '正在重定向到 PayPal，請稍候&hellip;',
+	'wikipayment-paypal-error' => 'PayPal 付款錯誤（代碼： $1 ）',
+	'wikipayment-paypal-return-ok' => 'PayPal 付款成功',
+	'wikipayment-paypal-return-cancel' => 'PayPal 付款已取消',
+	'wikipayment-paypal-profile-name' => '付款予 Wiki',
 );
 

@@ -32,6 +32,13 @@ $messages['af'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fout: Bladsyinhoud benodig',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'contentfeeds-firstfewarticles-tag-next' => 'Növbəti',
+);
+
 /** Breton (Brezhoneg)
  * @author Fohanno
  * @author Y-M D
@@ -119,6 +126,17 @@ $messages['fr'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Erreur : le corps de la page est nécessaire',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'contentfeeds-firstfewarticles-tag-header' => 'Hozd létre az első néhány lapodat!',
+	'contentfeeds-firstfewarticles-tag-title' => 'Cím',
+	'contentfeeds-firstfewarticles-tag-next' => 'Következő',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Hiba: a lap címét kötelező megadni',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Hiba: a lap szövegét kötelező megadni',
+);
+
 /** Interlingua (Interlingua) */
 $messages['ia'] = array(
 	'contentfeeds-desc' => 'Forni informationes ric e actual per medio de varie etiquettas o "syndicationes"',
@@ -129,6 +147,20 @@ $messages['ia'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Sequente',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Error: Titulo de pagina es requirite',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: Texto de pagina es requirite',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'contentfeeds-desc' => 'Verdeilt ußförlesche un aktoälle Enfommazjuhne övver divärse Etikättscher un Kanääl.',
+	'contentfeeds-newimages-rss-title' => 'Ene <i lang="en">RSS</i>-Kannal för {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Kanaal vun $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Donn Ding eezde Sigge aanlääje!',
+	'contentfeeds-firstfewarticles-tag-title' => 'Tittel',
+	'contentfeeds-firstfewarticles-tag-next' => 'Näächs',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Fähler: Ene Sigge_Tittel weed jebruch',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fähler: En Sigg bruch ene Enhalld',
 );
 
 /** Kurdish (Latin) (Kurdî (Latin))
@@ -156,6 +188,14 @@ $messages['mk'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Грешка: Се бара содржина на страницата',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'ശീർഷകം',
+	'contentfeeds-firstfewarticles-tag-next' => 'അടുത്തത്',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -180,6 +220,13 @@ $messages['nl'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Volgende',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Fout: paginanaam is verplicht',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fout: paginainhoud is verplicht',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'contentfeeds-firstfewarticles-tag-header' => "Maak je eerste pagina's aan!",
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
@@ -240,6 +287,13 @@ $messages['pt-br'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Erro: O conteúdo da página é necessário',
 );
 
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Titlu',
+);
+
 /** Russian (Русский) */
 $messages['ru'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Заголовок',
@@ -279,6 +333,17 @@ $messages['sw'] = array(
 /** Telugu (తెలుగు) */
 $messages['te'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'శీర్షిక',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'contentfeeds-newimages-rss-desc' => 'Pasubo mula sa $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Likhain ang una mong iilang mga pahina!',
+	'contentfeeds-firstfewarticles-tag-title' => 'Pamagat',
+	'contentfeeds-firstfewarticles-tag-next' => 'Susunod',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kamalian: Kailangan ang  isang pamagat ng pahina',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

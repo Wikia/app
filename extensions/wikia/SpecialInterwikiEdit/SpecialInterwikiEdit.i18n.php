@@ -43,6 +43,20 @@ $messages['af'] = array(
 	'iwedit-success' => '<p>Die skakel is geskep.</p>',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'iwedit-update' => 'حدّث',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'iwedit-title' => 'İnterviki redaktoru',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
@@ -103,8 +117,10 @@ $messages['de'] = array(
 
 /** Spanish (Español)
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
+	'interwikiedit' => 'Editor de interwikis',
 	'iwedit-title' => 'Editor de Interwiki',
 	'iwedit-language-interwikis' => 'sólo interwikis de idioma',
 	'iwedit-all-interwikis' => 'todos los interwikis',
@@ -175,6 +191,7 @@ $messages['hy'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'interwikiedit' => 'Editor interwiki',
 	'iwedit-title' => 'Editor interwiki',
 	'iwedit-language-interwikis' => 'interwikis de linguas solmente',
 	'iwedit-all-interwikis' => 'tote le interwikis',
@@ -259,7 +276,7 @@ $messages['ms'] = array(
 	'iwedit-title' => 'Penyunting Antara Wiki',
 	'iwedit-language-interwikis' => 'antara wiki bahasa sahaja',
 	'iwedit-all-interwikis' => 'semua antara wiki',
-	'iwedit-update' => 'Kemaskini',
+	'iwedit-update' => 'Kemas kini',
 	'iwedit-error' => '<p>Berlakunya ralat.</p>',
 	'iwedit-success' => '<p>Pautan berjaya dicipta.</p>',
 );
@@ -268,6 +285,7 @@ $messages['ms'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'interwikiedit' => 'Interwikitabel bewerken',
 	'iwedit-title' => 'Interwikitabel bewerken',
 	'iwedit-language-interwikis' => "alleen taalinterwiki's",
 	'iwedit-all-interwikis' => "alle interwiki's",
@@ -280,6 +298,7 @@ $messages['nl'] = array(
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'interwikiedit' => 'Interwiki-editor',
 	'iwedit-title' => 'Interwiki Editor',
 	'iwedit-language-interwikis' => 'kun språkinterwikier',
 	'iwedit-all-interwikis' => 'alle interwikier',

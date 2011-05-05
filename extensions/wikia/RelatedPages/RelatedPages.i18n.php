@@ -22,6 +22,13 @@ $messages['af'] = array(
 	'wikiarelatedpages-heading' => 'Lees meer',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'wikiarelatedpages-heading' => 'اقرأ المزيد',
+);
+
 /** Azerbaijani (Azərbaycanca)
  * @author Sortilegus
  */
@@ -154,6 +161,13 @@ $messages['lb'] = array(
 $messages['mk'] = array(
 	'wikiarelatedpages-desc' => 'Во страниците додава список на поврзани страници',
 	'wikiarelatedpages-heading' => 'Прочитајте повеќе',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'wikiarelatedpages-heading' => 'കൂടുതൽ വായിക്കുക',
 );
 
 /** Malay (Bahasa Melayu)

@@ -95,11 +95,21 @@ $messages['ar'] = array(
 	'tog-disablecategoryselect' => 'تعطيل وسم التصنيفات',
 );
 
-/** Assamese (অসমীয়া) */
+/** Assamese (অসমীয়া)
+ * @author Jaminianurag
+ */
 $messages['as'] = array(
-	'categoryselect-addcategory-button' => 'শ্ৰেণী সংযুগ কৰক',
+	'categoryselect-addcategory-button' => 'শ্ৰেণী সংযোগ কৰক',
 	'categoryselect-button-save' => 'সঞ্চিত কৰক',
 	'categoryselect-button-cancel' => 'বাতিল কৰক',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'categoryselect-button-save' => 'Qeyd et',
+	'categoryselect-button-cancel' => 'Ləğv et',
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
@@ -114,6 +124,8 @@ $messages['be-tarask'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'categoryselect-addcategory-button' => 'Добавяне на категория',
+	'categoryselect-edit-summary' => 'Добавяне на категории',
 	'categoryselect-button-save' => 'Съхраняване',
 	'categoryselect-button-cancel' => 'Отказване',
 );
@@ -339,18 +351,22 @@ $messages['ha'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
 	'categoryselect-code-view' => 'Kódnézet',
 	'categoryselect-visual-view' => 'Grafikus nézet',
 	'categoryselect-infobox-caption' => 'Kategóriabeállítások',
+	'categoryselect-infobox-category' => 'Add meg a kategória nevét:',
 	'categoryselect-addcategory-button' => 'Kategória hozzáadása',
+	'categoryselect-suggest-hint' => 'Nyomj Entert, ha kész vagy',
 	'categoryselect-edit-summary' => 'Kategóriák hozzáadása',
 	'categoryselect-button-save' => 'Mentés',
 	'categoryselect-button-cancel' => 'Mégse',
 	'categoryselect-error-user-rights' => 'Felhasználói jog hiba.',
 	'categoryselect-error-db-locked' => 'Az adatbázis zárolva.',
+	'tog-disablecategoryselect' => 'Kategóriacímkézés letiltása',
 );
 
 /** Interlingua (Interlingua)
@@ -491,6 +507,18 @@ $messages['mk'] = array(
 	'tog-disablecategoryselect' => 'Оневозможи означување на категории',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'categoryselect-infobox-caption' => 'വർഗ്ഗത്തിലെ ഐച്ഛികങ്ങൾ',
+	'categoryselect-addcategory-button' => 'വർഗ്ഗം ചേർക്കുക',
+	'categoryselect-suggest-hint' => 'പൂർത്തിയാകുമ്പോൾ എന്റർ അമർത്തുക',
+	'categoryselect-button-save' => 'സേവ് ചെയ്യുക',
+	'categoryselect-button-cancel' => 'റദ്ദാക്കുക',
+	'categoryselect-error-not-exist' => 'ലേഖനം [id=$1] നിലവിലില്ല.',
+);
+
 /** Mongolian (Монгол)
  * @author Chinneeb
  */
@@ -549,6 +577,13 @@ Terugschakelen naar visuele weergave is niet mogelijk.',
 	'categoryselect-error-db-locked' => 'De database is geblokkeerd.',
 	'categoryselect-edit-abort' => 'De wijziging die u probeerde te maken is afgebroken door een uitbreidingshook',
 	'tog-disablecategoryselect' => 'Categorielabels uitschakelen',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'categoryselect-edit-abort' => 'De wijziging die je probeerde te maken is afgebroken door een uitbreidingshook',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -667,6 +702,21 @@ $messages['pt-br'] = array(
 	'categoryselect-error-db-locked' => 'O banco de dados está bloqueado.',
 	'categoryselect-edit-abort' => "A alteração que você tentou fazer foi abortada pelo ''hook'' de uma extensão",
 	'tog-disablecategoryselect' => 'Desabilitar os botões de aplicação de categoria',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'categoryselect-code-view' => 'Vizualizare cod',
+	'categoryselect-visual-view' => 'Vizualizare vizuală',
+	'categoryselect-infobox-caption' => 'Opţiuni categorie',
+	'categoryselect-infobox-category' => 'Furnizaţi numele categoriei:',
+	'categoryselect-addcategory-button' => 'Adaugă categorie',
+	'categoryselect-suggest-hint' => 'Apasă Enter când aţi terminat',
+	'categoryselect-button-save' => 'Salvează',
+	'categoryselect-button-cancel' => 'Renunţă',
+	'categoryselect-error-db-locked' => 'Baza de date este blocată.',
 );
 
 /** Russian (Русский)
@@ -802,6 +852,13 @@ $messages['uk'] = array(
 /** Urdu (اردو) */
 $messages['ur'] = array(
 	'categoryselect-button-cancel' => 'منسوخ',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author XiaoQiaoGrace
+ */
+$messages['vi'] = array(
+	'categoryselect-button-save' => 'Lưu',
 );
 
 /** Wu (吴语) */

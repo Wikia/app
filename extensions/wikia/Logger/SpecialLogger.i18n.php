@@ -13,6 +13,29 @@ $messages['en'] = array(
 	'loggernoresult' => 'No results found',
 );
 
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'logger-desc' => '{{desc}}',
+);
+
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'loggerrecords' => '$1 rekords',
+	'loggergo' => 'Wys',
+	'loggernoresult' => 'Geen resultate gevind nie',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'loggergo' => 'Göstər',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -80,6 +103,24 @@ $messages['eu'] = array(
 	'loggergo' => 'Erakutsi',
 );
 
+/** French (Français)
+ * @author Iketsi
+ */
+$messages['fr'] = array(
+	'loggergo' => 'Afficher',
+	'loggernoresult' => 'Aucun résultat trouvé',
+);
+
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'loggerselectlogname' => 'Válaszd ki a napló nevét:',
+	'loggerrecords' => '$1 rekord',
+	'loggergo' => 'Megjelenítés',
+	'loggernoresult' => 'Nincs találat',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -92,6 +133,16 @@ $messages['ia'] = array(
 	'loggerrecords' => '$1 registros',
 	'loggergo' => 'Monstrar',
 	'loggernoresult' => 'Nulle resultato trovate',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'loggerrecordswithpercent' => "'''$1''' Endrääsh ('''$2''' Prozent jedonn)",
+	'loggerrecords' => '$1 Endrääsh',
+	'loggergo' => 'Zeish',
+	'loggernoresult' => 'Nix jefonge',
 );
 
 /** Kurdish (Latin) (Kurdî (Latin))
@@ -113,6 +164,13 @@ $messages['mk'] = array(
 	'loggerrecords' => '$1 записи',
 	'loggergo' => 'Покажи',
 	'loggernoresult' => 'Нема пронајдено резултати',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'loggergo' => 'പ്രദർശിപ്പിക്കുക',
 );
 
 /** Malay (Bahasa Melayu)
@@ -157,6 +215,20 @@ $messages['no'] = array(
 	'loggernoresult' => 'Ingen resultater funnet',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'logger-desc' => 'Logger për script ëd backend',
+	'logger' => 'Logger ëd backend',
+	'loggertitle' => 'Logger ëd backend',
+	'loggerselectlogname' => 'Selession-a nòm ëd registr:',
+	'loggerrecordswithpercent' => "'''$1''' registrassion ('''$2''' përsent finì)",
+	'loggerrecords' => '$1 registrassion',
+	'loggergo' => 'Smon',
+	'loggernoresult' => 'Pa gnun arzultà trovà',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  * @author Waldir
@@ -187,6 +259,13 @@ $messages['pt-br'] = array(
 	'loggernoresult' => 'Nenhum resultado encontrado',
 );
 
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'loggernoresult' => 'Niciun rezultat găsit',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
@@ -200,6 +279,20 @@ $messages['sr-ec'] = array(
 $messages['sv'] = array(
 	'loggergo' => 'Visa',
 	'loggernoresult' => 'Inga resultat hittades',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'logger-desc' => 'Mga tagapagtala para sa mga panitik na panlikurang dulo',
+	'logger' => 'Tagapagtala sa panlikurang dulo',
+	'loggertitle' => 'Tagapagtala sa panlikurang dulo',
+	'loggerselectlogname' => 'Piliin ang pangalan ng talaan:',
+	'loggerrecordswithpercent' => "'''$1''' mga rekord ('''$2''' bahagdan ang natapos na)",
+	'loggerrecords' => '$1 mga tala',
+	'loggergo' => 'Ipakita',
+	'loggernoresult' => 'Walang natagpuang mga kinalabasan',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

@@ -10,6 +10,13 @@ $messages['en'] = array(
 	'timeago-second' => 'a minute ago',
 );
 
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'timeagomessaging-desc' => '{{desc}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -19,6 +26,16 @@ $messages['af'] = array(
 	'timeago-hour' => "{{PLURAL:$1|'n uur|$1 ure}} gelede",
 	'timeago-minute' => "{{PLURAL:$1|'n minuut|$1 minute}} gelede",
 	'timeago-second' => "'n minuut gelede",
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'timeago-day' => 'преди {{PLURAL:$1|един ден|$1 дни}}',
+	'timeago-hour' => 'преди {{PLURAL:$1|един час|$1 часа}}',
+	'timeago-minute' => 'преди {{PLURAL:$1|една минута|$1 минути}}',
+	'timeago-second' => 'преди една минута',
 );
 
 /** Breton (Brezhoneg)
@@ -85,6 +102,16 @@ $messages['fr'] = array(
 	'timeago-second' => 'il y a une minute',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'timeago-day' => '{{PLURAL:$1|egy|$1}} nappal ezelőtt',
+	'timeago-hour' => '{{PLURAL:$1|egy|$1}} órával ezelőtt',
+	'timeago-minute' => '{{PLURAL:$1|egy|$1}} perccel ezelőtt',
+	'timeago-second' => 'egy perccel ezelőtt',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -94,6 +121,17 @@ $messages['ia'] = array(
 	'timeago-hour' => '{{PLURAL:$1|un hora|$1 horas}} retro',
 	'timeago-minute' => '{{PLURAL:$1|un minuta|$1 minutas}} retro',
 	'timeago-second' => 'un minuta retro',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'timeagomessaging-desc' => 'jquery.timeago.js プラグインを国際化する',
+	'timeago-day' => '$1日前',
+	'timeago-hour' => '$1時間前',
+	'timeago-minute' => '$1分前',
+	'timeago-second' => '1分前',
 );
 
 /** Macedonian (Македонски)
@@ -149,6 +187,27 @@ $messages['pl'] = array(
 	'timeago-second' => 'minutę temu',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'timeagomessaging-desc' => 'A dà i18n për ël plugin jquery.timeago.js',
+	'timeago-day' => '{{PLURAL:$1|un di|$1 di}} fà',
+	'timeago-hour' => "{{PLURAL:$1|n'ora|$1 ore}} fà",
+	'timeago-minute' => '{{PLURAL:$1|na minuta|$1 minute}} fà',
+	'timeago-second' => 'na minuta fà',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'timeago-day' => '{{PLURAL:$1|يوه ورځ|$1 ورځې}} دمخه',
+	'timeago-hour' => '{{PLURAL:$1|يو ساعت|$1 ساعتونه}} دمخه',
+	'timeago-minute' => '{{PLURAL:$1|يوه دقيقه|$1 دقيقې}} دمخه',
+	'timeago-second' => 'يوه دقيقه دمخه',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -169,6 +228,13 @@ $messages['pt-br'] = array(
 	'timeago-hour' => 'há {{PLURAL:$1|uma hora|$1 horas}}',
 	'timeago-minute' => 'há {{PLURAL:$1|um minuto|$1 minutos}}',
 	'timeago-second' => 'há um minuto',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'timeago-second' => 'un minut în urmă',
 );
 
 /** Russian (Русский)
@@ -201,6 +267,17 @@ $messages['sv'] = array(
 	'timeago-hour' => '{{PLURAL:$1|en timme|$1 timmar}} sedan',
 	'timeago-minute' => '{{PLURAL:$1|en minut|$1 minuter}} sedan',
 	'timeago-second' => 'en minut sedan',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'timeagomessaging-desc' => 'Nagbibigay ng i18n para sa pamasak na jquery.timeago.js plugin',
+	'timeago-day' => '{{PLURAL:$1|isang araw|$1 mga araw}} na ang nakalipas',
+	'timeago-hour' => '{{PLURAL:$1|isang horas|$1 mga oras}} na ang nakalilipas',
+	'timeago-minute' => '{{PLURAL:$1|isang minuto|$1 mga minuto}} na ang nakalipas',
+	'timeago-second' => 'isang minuto na ang nakalipas',
 );
 
 /** Ukrainian (Українська)

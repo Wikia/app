@@ -62,17 +62,47 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'wikiapoll-desc' => ' يوفر طريقة سهلة لإنشاء وإدارة تصويتات في ويكيا.',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|لم يُصوّت أحد|صوّت شخص واحد|صوّت شخصان|صوّت $1 أشخاص|صوّت $1 شخصًا|صوّت $1 شخص}}',
+	'wikiapoll-question' => '$1؟',
 	'wikiapoll-thanks-for-vote' => 'شكرا!',
+	'wikiapoll-vote' => 'صوّت!',
+	'wikiapoll-votes' => '{{PLURAL:$1||صوت واحد|صوتان|$1 أصوات|$1 صوتًا|$1 صوت}}',
+	'wikiapoll-createpoll-headline' => 'إنشاء اقتراع',
+	'wikiapoll-editpoll-headline' => 'تعديل اقتراع',
+	'wikiapoll-question-label' => 'السؤال',
+	'wikiapoll-addnewitem-label' => 'أضف عنصرًا جديدًا',
+	'wikiapoll-cancel-label' => 'ألغِ',
+	'wikiapoll-publish-label' => 'انشر',
+	'wikiapoll-error-duplicate' => 'يوجد اقتراع بهذا الاسم بالفعل.',
+	'wikiapoll-error-invalid-title' => 'نص السؤال غير صالح.',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ * @author Vago
+ */
+$messages['az'] = array(
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Təşəkkürlər!',
+	'wikiapoll-question-label' => 'Sual',
+	'wikiapoll-cancel-label' => 'Ləğv et',
 );
 
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'wikiapoll-question' => '$1?',
 	'wikiapoll-thanks-for-vote' => 'Благодарности!',
+	'wikiapoll-vote' => 'Гласуване!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 глас|$1 гласа}}',
+	'wikiapoll-question-label' => 'Въпрос',
+	'wikiapoll-cancel-label' => 'Отказване',
+	'wikiapoll-publish-label' => 'Публикуване',
 );
 
 /** Breton (Brezhoneg)
@@ -210,6 +240,16 @@ $messages['fr'] = array(
 	'wikiapoll-error-invalid-title' => 'L’intitulé de la question n’est pas valide.',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'wikiapoll-thanks-for-vote' => 'Köszönjük!',
+	'wikiapoll-vote' => 'Szavazás!',
+	'wikiapoll-cancel-label' => 'Mégse',
+	'wikiapoll-publish-label' => 'Közzététel',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -289,6 +329,18 @@ $messages['ms'] = array(
 	'wikiapoll-error-invalid-title' => 'Teks soalan tidak sah.',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'wikiapoll-thanks-for-vote' => 'ကျေးဇူးတင်ပါတယ်။',
+	'wikiapoll-vote' => 'ဆန္ဒမဲ',
+	'wikiapoll-question-label' => 'မေးခွန်း',
+	'wikiapoll-addnewitem-label' => 'အသစ် ထည့်ရန်',
+	'wikiapoll-cancel-label' => 'မလုပ်တော့ပါ',
+	'wikiapoll-error-invalid-title' => 'မေးခွန်း သည် တရားမဝင်ပါ။',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -327,6 +379,18 @@ $messages['no'] = array(
 	'wikiapoll-publish-label' => 'Publiser',
 	'wikiapoll-error-duplicate' => 'En avstemning med det navnet eksisterer allerede.',
 	'wikiapoll-error-invalid-title' => 'Spørsmålsteksten er ugyldig.',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wikiapoll-thanks-for-vote' => 'مننه!',
+	'wikiapoll-vote' => 'رايه ورکول!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 رايه|$1 رايې}}',
+	'wikiapoll-question-label' => 'پوښتنه',
+	'wikiapoll-cancel-label' => 'ناګارل',
+	'wikiapoll-publish-label' => 'خپرول',
 );
 
 /** Portuguese (Português)
@@ -368,6 +432,23 @@ $messages['pt-br'] = array(
 	'wikiapoll-publish-label' => 'Publicar',
 	'wikiapoll-error-duplicate' => 'Uma enquete com esse nome já existe.',
 	'wikiapoll-error-invalid-title' => 'Pergunta inválida.',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Mersi!',
+	'wikiapoll-vote' => 'Votează!',
+	'wikiapoll-createpoll-headline' => 'Crează un sondaj',
+	'wikiapoll-editpoll-headline' => 'Editează sondajul',
+	'wikiapoll-question-label' => 'Întrebare',
+	'wikiapoll-addnewitem-label' => 'Adaugă element nou',
+	'wikiapoll-cancel-label' => 'Renunţă',
+	'wikiapoll-publish-label' => 'Publică',
+	'wikiapoll-error-duplicate' => 'Un sondaj cu acel nume există deja.',
+	'wikiapoll-error-invalid-title' => 'Textul întrebării este invalid.',
 );
 
 /** Russian (Русский)
@@ -425,6 +506,29 @@ $messages['sv'] = array(
 $messages['te'] = array(
 	'wikiapoll-question' => '$1?',
 	'wikiapoll-thanks-for-vote' => 'కృతజ్ఞతలు!',
+	'wikiapoll-question-label' => 'ప్రశ్న',
+	'wikiapoll-cancel-label' => 'రద్దుచేయి',
+	'wikiapoll-publish-label' => 'ప్రచురించు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikiapoll-desc' => 'Nagbibigay ng isang maginhawaang paraan upang lumikha at mamahala ng mga botohan',
+	'wikiapoll-people-voted' => '{{PLURAL:$1| $1 tao|$1 mga tao}}ng bumoto',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Salamat!',
+	'wikiapoll-vote' => 'Bumoto!',
+	'wikiapoll-votes' => '{{PLURAL:$1| $1 boto| $1 mga boto}}',
+	'wikiapoll-createpoll-headline' => 'Likhain ang Botohan',
+	'wikiapoll-editpoll-headline' => 'Baguhin ang Botohan',
+	'wikiapoll-question-label' => 'Katanungan',
+	'wikiapoll-addnewitem-label' => 'Magdagdag ang bagong bagay',
+	'wikiapoll-cancel-label' => 'Huwag ituloy',
+	'wikiapoll-publish-label' => 'Ilathala',
+	'wikiapoll-error-duplicate' => 'Umiiral na ang ganyang botohan na may ganyang pangalan.',
+	'wikiapoll-error-invalid-title' => 'Hindi katanggap-tanggap ang teksto ng katanungan.',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

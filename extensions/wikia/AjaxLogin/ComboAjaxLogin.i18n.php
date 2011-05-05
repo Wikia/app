@@ -58,11 +58,47 @@ $messages['ar'] = array(
 	'comboajaxlogin-connectmarketing-forward' => 'إبذأ &raquo',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'comboajaxlogin-desc' => "Cuadru dinámicu que permite la entrada d'usuarios, recordar la contraseña y el rexistru d'usuarios",
+	'comboajaxlogin-createlog' => 'Entrar o crear una cuenta',
+	'comboajaxlogin-actionmsg' => "Pa facer esta aición, primero tienes d'entrar o crear una cuenta",
+	'comboajaxlogin-actionmsg-protected' => "Pa facer esta aición, primero tienes d'entrar o crear una cuenta.",
+	'comboajaxlogin-connectmarketing' => "<h1>Coneuta les tos cuentes</h1>
+<ul>
+<li>Caltién el to nome d'usuariu actual, historial, ediciones... res nun camuda menos la manera d'entrar</li>
+<li>Comparti la to actividá en Wikia colos amigos de Facebook</li>
+<li>Control completu de lo que s'espubliza</li>
+</ul>",
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Coneutar con Facebook Connect</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => "<h1>Coneuta la cuenta de Wikia con Facebook</h1>
+<ul>
+<li>Caltién el to nome d'usuariu actual, historial, ediciones... res nun camuda menos la manera d'entrar</li>
+<li>Comparti la to actividá en Wikia colos amigos de Facebook, con control completu de lo que s'espubliza</li>
+</ul>",
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Atrás',
+	'comboajaxlogin-connectmarketing-forward' => 'Primeros pasos &raquo;',
+	'comboajaxlogin-connectdirections' => "Escribi equí el to nome d'usuariu y contraseña de Wikia - en segundu planu coneutaremos máxicamente les tos cuentes de Wikia y Facebook.
+
+Cuando acabes, podrás entrar fácilmente usando cualesquier botón de Facebook Connect.",
+	'comboajaxlogin-post-not-understood' => "Hebo un fallu na manera en que taba construíu esti formulariu.
+Téntalo otra vuelta o [[Special:Contact|informa d'ello]].",
+	'comboajaxlogin-readonlytext' => '<h2>¡Lo sentimos!</h2>
+<p>Nun pues crear una cuenta nesti momentu - tendríamos de volver a tar funcionando nun tris. Esto ye lo que ta pasando:<br /><em>$1</em></p>
+<p>Por favor, visita <a href="http://twitter.com/wikia">Twitter</a> o <a href="http://facebook.com/wikia">Facebook</a> pa más información.
+<br />
+(Si yá tienes una cuenta, pues <a href="#">entrar</a> de mou normal, pero nun podrás editar.)</p>',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'comboajaxlogin-createlog' => 'Влизане или регистриране на нова сметка',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Влизане чрез Facebook Connect</h1>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Връщане',
 );
 
 /** Breton (Brezhoneg)
@@ -81,9 +117,9 @@ $messages['br'] = array(
 <li>Kontroll klok war ar pezh a vez embannet</li>
 </ul>",
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Kevreañ gant Facebook Connect</h1>',
-	'comboajaxlogin-connectmarketing-oasis' => "<h1>Kevreit ho kont wikia da Facebook</h1>
+	'comboajaxlogin-connectmarketing-oasis' => "<h1>Kevreit ho kont Wikia da Facebook</h1>
 <ul>
-<li>Dalc'hit hoc'h anv implijer red, istor ar c'hemmoù... ne cheñch netra nemet an doare da gevreañ</li>
+<li>Derc'hel a ra hoc'h anv implijer red, istor ar c'hemmoù... ne cheñch netra nemet evit an doare d'en em gevreañ</li>
 <li>Rannit hoc'h obererezh war Wikia gant ho mignoned war Facebook</li>
 <li>Kontroll klok war ar pezh a vez embannet</li>
 </ul>",
@@ -274,6 +310,14 @@ Cando estea listo, pode acceder ao sistema facilmente usando calquera botón de 
 Inténteo de novo ou [[Special:Contact|informe do problema]].',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Vissza',
+	'comboajaxlogin-connectmarketing-forward' => 'Első lépések &raquo;',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -333,6 +377,7 @@ $messages['ja'] = array(
 <li>ウィキア上でのあなたの活動を Facebook 上の友達と共有できます</li>
 <li>どの情報を表示させるかは設定により指定できます</li>
 </ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Facebookコネクトを利用してログイン</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>ウィキアのアカウントを Facebook に接続する</h1>
 <ul>
 <li>現在の利用者名や履歴、編集機能などは維持され、ログイン方法以外に変更されるものはありません。</li>
@@ -347,6 +392,10 @@ $messages['ja'] = array(
 	'comboajaxlogin-post-not-understood' => 'フォームの構築でエラーが発生しました。
 
 やり直すか、[[Special:Contact|このエラーを報告]]してください。',
+	'comboajaxlogin-readonlytext' => '<h2>申し訳ありません</h2>
+<p>現在、以下の理由によりアカウントを作成できなくなっています。<br /><em>$1</em></p>
+<p>さらに詳しい情報については <a href="http://twitter.com/wikia">Twitter</a> や <a href="http://facebook.com/wikia">Facebook</a> をご覧ください。<br />
+（既にアカウントをお持ちであれば、通常通り<a href="#">ログイン</a>はできますが、編集はできません。）</p>',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -459,6 +508,33 @@ Probeer het nog een keer of [[Special:Contact|rapporteer dit]].',
 <p>Kijk op <a href="http://twitter.com/wikia">Twitter</a> of <a href="http://facebook.com/wikia">Facebook</a> voor meer informatie.
 <br />
 Als u al een gebruiker hebt, kunt u <a href="#">aanmelden</a> zoals altijd, maar bewerken is op het moment niet mogelijk.</p>',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'comboajaxlogin-actionmsg' => 'Om deze handeling uit te kunnen voeren moet je eerst aanmelden of een gebruiker registreren',
+	'comboajaxlogin-actionmsg-protected' => 'Je moet eerst aanmelden of een gebruiker aanmaken om deze beveiligde pagina te kunnen bewerken.',
+	'comboajaxlogin-connectmarketing' => '<h1>Met andere websites verbinden</h1>
+<ul>
+<li>Behoud je huidige gebruikersnaam, geschiedenis, bewerkingen, enzovoort. Niets wijzigt, behalve de manier waarop je aanmeld</li>
+<li>Deel je activiteit bij Wikia met je vrienden op Facebook</li>
+<li>Volledige controle over wat wordt gepubliceerd</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Je Wikia-gebruiker met je Facebook-gebruiker verbinden</h1>
+<ul>
+<li>Behoud je huidige gebruikersnaam, geschiedenis, bewerkingen, enzovoort. Niets wijzigt, behalve de manier waarop je aanmeld</li>
+<li>Deel je activiteit bij Wikia met je vrienden op Facebook en behoud volledige controle over wat wordt gepubliceerd</li>
+</ul>',
+	'comboajaxlogin-connectdirections' => 'Voer hier je gebruikersnaam en wachtwoord voor Wikia in, dan verbinden we op de achtergrond je Wikia- en Facebookgebruikers.
+
+Nadat je dit hebt uitgevoerd, kan je eenvoudig aanmelden met de knop Facebook Connect.',
+	'comboajaxlogin-readonlytext' => '<h2>Storing</h2>
+<p>Je kunt op dit moment geen gebruiker aanmaken. Meestal is de site weer snel beschikbaar. Dit is wat er aan de hand is:<br /><em>$1</em></p>
+<p>Kijk op <a href="http://twitter.com/wikia">Twitter</a> of <a href="http://facebook.com/wikia">Facebook</a> voor meer informatie.
+<br />
+Als je al een gebruiker hebt, kan je <a href="#">aanmelden</a> zoals altijd, maar bewerken is op het moment niet mogelijk.</p>',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -637,6 +713,16 @@ Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
 (Se já tem uma conta, pode <a href="#">autenticar-se</a> normalmente, mas não poderá editar.)</p>',
 );
 
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'comboajaxlogin-createlog' => 'Autentificaţi-vă sau creaţi un cont',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Autentificare cu Facebook Connect</h1>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Înapoi',
+	'comboajaxlogin-connectmarketing-forward' => 'Începeţi &raquo;',
+);
+
 /** Russian (Русский)
  * @author Eleferen
  * @author G0rn
@@ -730,6 +816,7 @@ $messages['tl'] = array(
 <li>Ipamahagi ang iyong mga ginagawa sa Wikia sa iyong mga kaibigang nasa Facebook</li>
 <li>Buong pagtaban sa kung ano ang nailathala</li>
 </ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Lumagda sa pamamagitan ng Pang-ugnay ng Facebook</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Iugnay ang iyong akawnt sa Wikia sa Facebook</h1>
 <ul>
 <li>Panatilihin ang iyong pangkasalukuyang pangalan ng tagagamit, kasaysayan, mga pamamatnugot... walang mababago maliban sa kung paano lumalagda</li>
@@ -758,15 +845,37 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
+ * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'comboajaxlogin-desc' => 'Hộp này cho phép người dùng đăng nhập, nhắc nhở mật khẩu và đăng ký người dùng',
 	'comboajaxlogin-createlog' => 'Đăng nhập hay mở tài khoản mới',
+	'comboajaxlogin-actionmsg' => 'Để thực hiện thao tác này trước tiên bạn cần phải đăng nhập hoặc tạo tài khoản',
+	'comboajaxlogin-actionmsg-protected' => 'Để thực hiện thao tác này trước tiên bạn cần phải đăng nhập hoặc tạo tài khoản',
+	'comboajaxlogin-connectmarketing' => '<h1>Kết nối tài khoản của bạn với Facebook</h1>
+<ul>
+<li>Giữ tên người dùng hiện tại, lịch sử sửa đổi... không có gì thay đổi ngoại trừ cách bạn đăng nhập như thế nào </li>
+<li>Hoạt động của bạn trên Wikia chia sẻ với bạn bè trên Facebook</li>
+<li>Kiểm soát hoàn toàn của những gì được công bố</li>
+</ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => 'Đăng nhập cùng với Facebook',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Kết nối tài khoản của bạn với Facebook</h1>
+<ul>
+<li>Giữ tên người dùng hiện tại, lịch sử sửa đổi... không có gì thay đổi ngoại trừ cách bạn đăng nhập như thế nào</li>
+<li>Hoạt động của bạn trên Wikia chia sẻ với bạn bè trên Facebook</li>
+<li>Kiểm soát hoàn toàn của những gì được công bố</li>
+</ul>',
 	'comboajaxlogin-connectmarketing-back' => '« Trở về',
 	'comboajaxlogin-connectmarketing-forward' => 'Bắt đầu »',
 	'comboajaxlogin-connectdirections' => 'Hãy nhập tên người dùng và mật khẩu vào đây. Các tài khoản Wikia và Facebook của bạn sẽ được nối với nhau ở hậu trường.
 
 Sau đó, bạn có thể đặng nhập dễ dàng dùng bất cứ nút Facebook Connect nào.',
 	'comboajaxlogin-post-not-understood' => 'Có lỗi khi xây dựng biểu mẫu này. Xin vui lòng thử lần nữa hay [[Special:Contact|báo cáo lỗi này]].',
+	'comboajaxlogin-readonlytext' => '<h2>Chân thành xin lỗi!</h2>
+<p>Bạn không thể tạo một tài khoản hiện nay - chúng tôi cần phải hoạt động và chạy lại một thời gian rất ngắn. Đây là những gì đang xảy ra:<br /><em>$1</em></p>
+<p>Vui lòng kiểm tra <a href="http://twitter.com/wikia">Twitter</a> hay <a href="http://facebook.com/wikia">Facebook</a> để biết thêm thông tin.
+<br />
+(Nếu bạn có tài khoản, bạn có thể <a href="#">đăng nhập</a> như bình thường, nhưng có thể bạn không thể chỉnh sửa trong một thời gian ngắn.)</p>',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

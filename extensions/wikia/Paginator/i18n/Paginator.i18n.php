@@ -15,6 +15,14 @@ $messages['af'] = array(
 	'paginator-back' => 'Vorige',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'paginator-next' => 'التالي',
+	'paginator-back' => 'السابق',
+);
+
 /** Asturian (Asturianu)
  * @author Xuacu
  */
@@ -83,6 +91,14 @@ $messages['he'] = array(
 	'paginator-back' => 'הקודם',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'paginator-next' => 'Következő',
+	'paginator-back' => 'Vissza',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -121,6 +137,13 @@ $messages['mk'] = array(
 	'paginator-back' => 'Назад',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'paginator-next' => 'അടുത്തത്',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -130,6 +153,7 @@ $messages['ms'] = array(
 );
 
 /** Nepali (नेपाली)
+ * @author Bhawani Gautam
  * @author Bhawani Gautam Rhk
  */
 $messages['ne'] = array(
@@ -197,6 +221,14 @@ $messages['sv'] = array(
 $messages['sw'] = array(
 	'paginator-next' => 'Ijayo',
 	'paginator-back' => 'Rudi',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'paginator-next' => 'Susunod',
+	'paginator-back' => 'Bumalik',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

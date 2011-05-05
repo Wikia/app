@@ -17,6 +17,13 @@ $messages['af'] = array(
 	'relatedvideo' => "Verwante video's",
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'related-video-random-video' => 'فيديو عشوائي',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -108,6 +115,15 @@ $messages['it'] = array(
 	'relatedvideo' => 'Video correlati',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'related-video-random-video' => 'Ene zohfälleje Viddejo',
+	'related-video-related' => 'Ähnlijje Viddejos',
+	'relatedvideo' => 'Ähnlijje Viddejos',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -115,6 +131,14 @@ $messages['mk'] = array(
 	'related-video-random-video' => 'Случајна видеоснимка',
 	'related-video-related' => 'Поврзани видеоснимки',
 	'relatedvideo' => 'Поврзани видеоснимки',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'related-video-related' => 'ബന്ധപ്പെട്ട ചലച്ചിത്രങ്ങൾ',
+	'relatedvideo' => 'ബന്ധപ്പെട്ട ചലച്ചിത്രങ്ങൾ',
 );
 
 /** Malay (Bahasa Melayu)

@@ -72,6 +72,13 @@ $messages['ar'] = array(
 	'whereisextension-filter' => 'مُرشِّح',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'whereisextension-submit' => 'Axtar',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
@@ -90,10 +97,13 @@ $messages['be-tarask'] = array(
 	'whereisextension-search-type-full' => 'Падобна',
 );
 
-/** Bulgarian (Български) */
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
 $messages['bg'] = array(
 	'whereisextension-submit' => 'Търсене',
 	'whereisextension-all-groups' => 'Всички групи',
+	'whereisextension-search-type' => 'Тип:',
 );
 
 /** Breton (Brezhoneg)
@@ -262,6 +272,7 @@ $messages['ha'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -272,6 +283,8 @@ $messages['hu'] = array(
 	'whereisextension-filter' => 'Szűrő',
 	'whereisextension-all-groups' => 'Összes csoport',
 	'whereisextension-name-contains' => 'változónév tartalmazza:',
+	'whereisextension-search-type' => 'Típus:',
+	'whereisextension-search-type-bool' => 'Logikai érték',
 );
 
 /** Interlingua (Interlingua)
@@ -350,6 +363,13 @@ $messages['kn'] = array(
 	'whereisextension-submit' => 'ಹುಡುಕು',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'whereisextension-search-type' => 'Tüp:',
+);
+
 /** Kurdish (Latin) (Kurdî (Latin))
  * @author George Animal
  */
@@ -400,6 +420,15 @@ $messages['ms'] = array(
 	'whereisextension-search-type' => 'Jenis:',
 	'whereisextension-search-type-bool' => 'Boolean',
 	'whereisextension-search-type-full' => 'Seperti',
+);
+
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'whereisextension-submit' => 'ရှာ​ဖွေ​ရန်​',
+	'whereisextension-filter' => 'စိစစ်မှု',
+	'whereisextension-search-type' => 'အမျိုးအစား :',
 );
 
 /** Dutch (Nederlands)

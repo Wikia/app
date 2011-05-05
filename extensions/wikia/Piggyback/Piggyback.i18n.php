@@ -117,6 +117,15 @@ Verifica le orthographia.',
 	'piggyback-issysopto' => 'Non es possibile portar le conto de un usator con le derecto al portacontos.',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'piggyback-nosuchuser' => '「$1」という利用者は存在しません。
+利用者名の大文字小文字は区別されます。
+入力に間違いがないか確認してください。',
+);
+
 /** Kurdish (Latin) (Kurdî (Latin))
  * @author George Animal
  */
@@ -146,6 +155,14 @@ $messages['mk'] = array(
 	'piggyback-issysopto' => 'Не можете да се качите на ушка на корисник со право за качување на ушка.',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'piggyback-otherusername' => 'മറ്റ് ഉപയോക്തൃനാമം:',
+	'piggyback-wronguser' => '$1 താങ്കളുടെ ഉപയോക്തൃനാമം അല്ല',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -158,11 +175,14 @@ Nama pengguna adalah peka kecil besar huruf (case-sensitive).
 Sila semak ejaan anda.',
 	'piggyback-wronguser' => '$1 bukan nama pengguna anda',
 	'piggyback-loginprompt' => 'Sila taipkan semula nama pengguna dan kata laluan anda.',
+	'piggyback-firstlogout' => 'Sila log keluar balik ke akaun anda terlebih dahulu.',
 	'piggyback-itisyou' => 'Anda tidak boleh menggendong diri sendiri.',
 	'piggyback-issysopto' => 'Anda tidak boleh menggendong pengguna dengan hak menggendong.',
 );
 
-/** Dutch (Nederlands) */
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
 $messages['nl'] = array(
 	'piggybac-desc' => 'Maakt het mogelijk aan te melden als een andere gebruiker',
 	'piggyback' => 'Piggyback',
@@ -172,9 +192,23 @@ Gebruikersnamen zijn hoofdlettergevoelig.
 Controleer uw schrijfwijze.',
 	'piggyback-wronguser' => '$1 is niet uw gebruikersnaam',
 	'piggyback-loginprompt' => 'Voer uw gebruikersnaam en wachtwoord opnieuw in.',
-	'piggyback-firstlogout' => 'Meld eerst af om weer terug te werken met uw eigen gebruiker.',
+	'piggyback-firstlogout' => 'Meld eerst af om weer te werken met uw eigen gebruiker.',
 	'piggyback-itisyou' => 'U kunt piggyback niet op uzelf gebruiken.',
 	'piggyback-issysopto' => 'U kunt piggyback niet gebruiken om aan te melden als een andere gebruiker met het recht piggyback.',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'piggyback-nosuchuser' => 'De gebruiker "$1" bestaat niet.
+Gebruikersnamen zijn hoofdlettergevoelig.
+Controleer je schrijfwijze.',
+	'piggyback-wronguser' => '$1 is niet jouw gebruikersnaam',
+	'piggyback-loginprompt' => 'Voer je gebruikersnaam en wachtwoord opnieuw in.',
+	'piggyback-firstlogout' => 'Meld eerst af om weer te werken met je eigen gebruiker.',
+	'piggyback-itisyou' => 'Je kunt piggyback niet op jezelf gebruiken.',
+	'piggyback-issysopto' => 'Je kunt piggyback niet gebruiken om aan te melden als een andere gebruiker met het recht piggyback.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */

@@ -80,16 +80,49 @@ Write the second section of your page here. Do not forget to add a category to h
 
 /** Message documentation (Message documentation)
  * @author Hamilton Abreu
+ * @author Purodha
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'wikibuilder-desc' => '{{desc}}',
 	'owb-step4-plus-price' => '{{doc-important|The "double dollar sign" is correct in the English message. The first is for currency, the second is the parameter "$1" for the cost.}}',
+);
+
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'owb-step1' => 'الخطوة 1',
+	'owb-step2' => 'الخطوة 2',
+	'owb-step2-gallery' => 'معرض السمات',
+	'owb-step3' => 'الخطوة 3',
+	'owb-step4' => 'الخطوة 4',
+	'owb-step4-error-caption' => 'خطأ',
+	'owb-status-saving' => 'يحفظ',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ * @author Vago
+ */
+$messages['az'] = array(
+	'owb-headline' => 'Salam, $1',
+	'owb-button-save-pages' => 'Səhifələri qeyd et',
+	'owb-step1' => '1-ci addım',
+	'owb-step2' => '2-ci addım',
+	'owb-step3' => '3-cü addım',
+	'owb-step3-your-pages' => 'Səhifənizin adı',
+	'owb-step4' => '4-cü addım',
+	'owb-step4-plus-price' => '<strong>$$1</strong>/month',
+	'owb-step4-error-caption' => 'Xəta',
 );
 
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'owb-headline' => 'Здравейте, $1',
+	'owb-button-skip' => 'Пропускане',
 	'owb-step1' => 'Стъпка 1',
 	'owb-step2' => 'Стъпка 2',
 	'owb-step3' => 'Стъпка 3',
@@ -209,12 +242,13 @@ Zde napište druhou sekci. Nezapomeňte stránku kategorizovat!',
 );
 
 /** German (Deutsch)
+ * @author Claudia Hattitten
  * @author George Animal
  * @author LWChris
  */
 $messages['de'] = array(
 	'wikibuilder-desc' => '[[Special:WikiBuilder|Assistent zur Wiki-Erstellung]]',
-	'owb-title' => 'Wiki-Generator',
+	'owb-title' => 'Wiki-Aufbau',
 	'owb-headline' => 'Hallo, $1',
 	'owb-button-skip' => 'Überspringen',
 	'owb-button-save-intro' => 'Intro speichern',
@@ -262,7 +296,7 @@ $messages['de'] = array(
 <li>Verbinden und Mögen auf Facebook</li>
 <li>Keine Bandbreitenbegrenzung</li></ul>',
 	'owb-step4-plus-price' => '<strong>$1 $</strong>/Monat',
-	'owb-step4-plus-details' => '<ul><li><strong>Keine anzeigen!<small><em>(Grenzwerte gelten für große Wikis)</em></small></strong></li>
+	'owb-step4-plus-details' => '<ul><li><strong>Keine Anzeigen! <small><em>(Grenzwerte gelten für große Wikis)</em></small></strong></li>
 <li>Unbegrenzte Seiten und Bilder</li>
 <li>Einfache Wiki-Bearbeitungswerkzeuge</li>
 <li>Verbinden und Mögen auf Facebook</li>
@@ -456,6 +490,21 @@ quelques pages',
 ==En-tête de section==
 
 Écrivez la deuxième section de la page ici. N'oubliez pas d’ajouter une catégorie pour aider les gens à trouver la page.",
+);
+
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'owb-headline' => 'Szia, $1',
+	'owb-button-skip' => 'Kihagyás',
+	'owb-button-save-theme' => 'Téma mentése',
+	'owb-button-save-pages' => 'Lapok mentése',
+	'owb-step1' => '1. lépés',
+	'owb-step2' => '2. lépés',
+	'owb-step3' => '3. lépés',
+	'owb-step4' => '4. lépés',
+	'owb-status-saving' => 'Mentés',
 );
 
 /** Interlingua (Interlingua)
@@ -726,6 +775,16 @@ Tulis bahagian pertama laman anda di sini. Pastikan anda sisipkan pautan ke lama
 Tulis bahagian kedua laman anda di sini. Jangan lupa bubuh kategori untuk membantu orang lain mencari laman ini.',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'owb-button-skip' => 'ကျော်ရန်',
+	'owb-button-save-pages' => 'ဤစာမျက်နှာကို သိမ်းရန်',
+	'owb-step4-error-caption' => 'အမှား',
+	'owb-status-saving' => 'သိမ်းနေသည်',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
@@ -743,7 +802,7 @@ $messages['nl'] = array(
 	'owb-step1' => 'Stap 1',
 	'owb-step1-label' => 'Waat gaat het over?',
 	'owb-step1-label-formatted' => 'Waar gaat<br />het over?',
-	'owb-step1-instruction' => 'Schrijf een korte introductie voor uw homepage. Maak de tekst aantrekkelijk zodat andere enthousiast worden en willen meewerken aan uw project.',
+	'owb-step1-instruction' => 'Schrijf een korte introductie voor uw startpagina. Maak de tekst aantrekkelijk zodat andere enthousiast worden en willen meewerken aan uw project.',
 	'owb-step1-sample' => 'Voorbeeldstartpagina voor een wiki',
 	'owb-step2' => 'Stap 2',
 	'owb-step2-label' => 'Kies een vormgeving',
@@ -804,6 +863,29 @@ Schrijf hier het eerste deel van uw pagina. Denk eraan dat u verwijzingen naar a
 ==Koptekst==
 
 Schrijf hier het tweede deel van uw pagina. Vergeet niet een categorie toe te voegen zodat andere gebruikers de pagina kunnen vinden.",
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'owb-button-done' => 'Doorgaan naar je wiki',
+	'owb-step1-instruction' => 'Schrijf een korte introductie voor je startpagina. Maak de tekst aantrekkelijk zodat andere enthousiast worden en willen meewerken aan je project.',
+	'owb-step2-instruction1' => 'Het is eenvoudig om je wiki er uniek uit te laten zien. Kies een vormgeving die past bij je project.',
+	'owb-step2-instruction2' => 'Je kunt je vormgeving en opmaak op ieder moment aanpassen.',
+	'owb-step3-instruction' => "Je moet een paar pagina's maken om met je wiki te beginnen. Daarna kan je pagina's toevoegen wanneer je wilt.",
+	'owb-step3-your-pages' => 'Je paginanamen',
+	'owb-api-error-title' => 'Er is een fout opgetreden tijdens het verwerken van je aanvraag',
+	'owb-new-pages-text' => "[[File:Placeholder|right|300px]]
+Schrijf hier de eerste paragraaf van je pagina.
+
+==Koptekst==
+
+Schrijf hier het eerste deel van uw pagina. Denk eraan dat je verwijzingen naar andere pagina's in de wiki opneemt.
+
+==Koptekst==
+
+Schrijf hier het tweede deel van je pagina. Vergeet niet een categorie toe te voegen zodat andere gebruikers de pagina kunnen vinden.",
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -885,6 +967,16 @@ Skriv sidens første seksjon her. Husk å inkludere lenker til andre sider på w
 Skriv sidens andre seksjon her. Ikke glem å legge til en kategori for å hjelpe folk med å finne siden.',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'owb-headline' => '$1 سلامونه',
+	'owb-button-save-pages' => 'مخونه خوندي کول',
+	'owb-step1-label' => 'دا ده څه په اړه دی؟',
+	'owb-step4-error-caption' => 'تېروتنه',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  * @author SandroHc
@@ -964,6 +1056,23 @@ Escreva aqui a primeira secção da sua página. Lembre-se de incluir links para
 ==Cabeçalho de secção==
 
 Escreva aqui a segunda secção da sua página. Não se esqueça de acrescentar uma categoria, para ajudar os outros a encontrar a página.',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'owb-button-skip' => 'Omite',
+	'owb-button-save-theme' => 'Salvează tema',
+	'owb-button-save-pages' => 'Salvează paginile',
+	'owb-step1' => 'Pasul 1',
+	'owb-step2' => 'Pasul 2',
+	'owb-step2-label' => 'Alege o temă',
+	'owb-step2-label-formatted' => 'Alege<br />o temă',
+	'owb-step2-gallery' => 'Galeria de teme',
+	'owb-step3' => 'Pasul 3',
+	'owb-step3-your-pages' => 'Numele paginilor tale',
+	'owb-step4' => 'Pasul 4',
 );
 
 /** Russian (Русский)
@@ -1178,6 +1287,85 @@ Skriv den första delen av din sida här. Kom ihåg att inkludera länkar till a
 Skriv den andra delen av din sida här. Glöm inte att lägga till en kategori för att hjälpa människor att hitta sidan.',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Madyikero ng paglikha ng Wiki]]',
+	'owb-title' => 'Tagapagtayo ng Wiki',
+	'owb-headline' => 'Kumusta, $1',
+	'owb-button-skip' => 'Laktawan',
+	'owb-button-save-intro' => 'Sagipin ang Pagpapakilala',
+	'owb-button-save-theme' => 'Sagipin ang Tema',
+	'owb-button-save-pages' => 'Sagipin ang mga Pahina',
+	'owb-button-done' => 'Ipagpatuloy ang wiki mo',
+	'owb-button-plus' => 'Piliin ang Wikia+Plus',
+	'owb-step1' => 'Hakbang 1',
+	'owb-step1-label' => 'Sa ano ba ito patungkol?',
+	'owb-step1-label-formatted' => 'Sa ano ba<br />ito patungkol?',
+	'owb-step1-instruction' => 'Magsulat ng isang maikling pagpapakilala para sa iyong bahay-pahina. Gawin itong mabilisan at masaya upang makuhang maging napupuka ang ibang tao hinggil sa pag-aambag sa proyekto mo.',
+	'owb-step1-sample' => 'Halimbawang Bahay-Pahina ng Wiki',
+	'owb-step2' => 'Hakbang 2',
+	'owb-step2-label' => 'Pumili ng isang tema',
+	'owb-step2-label-formatted' => 'Pumili ng<br />isang tema',
+	'owb-step2-instruction1' => 'Napakadaling gawing natatangi ang anyo ng wiki mo. Pumili lamang ng isang tema na aakma sa proyekto mo.',
+	'owb-step2-instruction2' => 'Maaari mong palitan ang tema mo o magdisenyo ng sarili mo anumang oras.',
+	'owb-step2-gallery' => 'Tanghalan ng Tema',
+	'owb-step3' => 'Hakbang 3',
+	'owb-step3-label' => 'Magsimula ng ilang mga pahina',
+	'owb-step3-label-formatted' => 'Magsimula ng<br />ilang mga pahina',
+	'owb-step3-instruction' => 'Upang simulan ang wiki mo, kakailanganin mong magdagdag ng ilang mga pahina. Maaari ka pang magdagdag kung kailan mo nais.',
+	'owb-step3-your-pages' => 'Mga Pangalan ng Pahina Mo',
+	'owb-step3-examples1-title' => 'Halimbawa: Mga Pangalan ng Pahina ng mga Pelikula ng Halimaw',
+	'owb-step3-examples1' => "<li>Frankenstein's Monster</li>
+<li>The Wolfman</li>
+<li>The Howling</li>
+<li>The Mummy</li>
+<li>House of Wax</li>
+<li>Swamp Thing</li>",
+	'owb-step3-examples2-title' => 'Halimbawa: Mga Pangalan ng Pahina ng mga Larong Pangtabla',
+	'owb-step3-examples2' => '<li>Monopoly</li>
+<li>Risk</li><li>Scrabble</li>
+<li>Trivial Pursuit</li>
+<li>Pictionary</li>
+<li>Taboo</li>',
+	'owb-step4' => 'Hakbang 4',
+	'owb-step4-label-formatted' => 'Balaking<br />pabuya',
+	'owb-step4-label' => 'Magdagdag ng isang balaking pabuya',
+	'owb-step4-instruction' => 'Piliing tanggalin ang mga patalastas sa pamamagitan ng Wikia+Plus o magpatuloy sa pamamagitan ng Payak na Wikia.',
+	'owb-step4-basic-price' => '<strong>$0</strong>/buwan',
+	'owb-step4-basic-details' => '<ul><li>Mga patalastas ng Wikia para sa mga tagagamit na hindi nakalagda</li>
+<li>Walang hangganang mga pahina at mga larawan</li>
+<li>Maginhawang mga kasangkapan ng patnugot ng wiki</li>
+<li>Umugnay at magustuhan sa Facebook</li>
+<li>Walang hangganang lapad ng alon</li></ul>',
+	'owb-step4-plus-price' => '<strong>$$1</strong>/buwan',
+	'owb-step4-plus-details' => '<ul><li><strong>Walang mga Patalastas!<small><em>(nilalapat ang mga hangganan sa malalaking mga wiki)</em></small></strong></li>
+<li>Walang hangganang mga pahina at mga larawan</li>
+<li>Maginhawang mga kasangkapan ng patnugot ng wiki</li>
+<li>Umugnay at magustuhan sa Facebook</li>
+<li>Walang hangganang lapad ng alon</li></ul>',
+	'owb-step4-error-caption' => 'Kamalian',
+	'owb-step4-error-upgrade-content' => 'Ang wiking ito ay hindi maaaring itaas ang antas upang maging Plus.',
+	'owb-step4-error-token-content' => 'Nabigong makuha ang angkop na kahalip mula sa PayPal.',
+	'owb-status-saving' => 'Sinasagip',
+	'owb-unable-to-edit-description' => 'Hindi maaaring baguhin ang paglalarawan sa pamamagitan ng Tagapagtayo ng Wiki',
+	'owb-readonly-try-again' => 'Ang Wiki ay pangkasalukuyang nasa pamamaraang mababasa lamang. Mangyaring subukan ulit sa loob ng ilang mga sandali',
+	'owb-error-saving-articles' => 'Kamalian sa Pagsasagip ng mga Pahina',
+	'owb-api-error-title' => 'Kamalian sa pagsasagawa ng kahilingan mo',
+	'owb-api-error' => 'Mangyaring subukan ulit o laktawan ang hakbang na ito',
+	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
+Isulat dito ang unang talata ng pahina mo.
+
+==Paulo ng bahagi==
+
+Isulat dito ang unang bahagi ng pahina mo. Huwag kalimutang isama ang mga kawing na papunta sa ibang mga pahina sa ibabaw ng wiki.
+
+==Paulo ng bahagi==
+
+Isulat dito ang pangalawang bahagi ng pahina mo. Huwag kalimutang magdagdag ng isang kategorya upang tulungan ang mga tao na matagpuan ang pahina.',
+);
+
 /** Ukrainian (Українська)
  * @author Тест
  */
@@ -1195,5 +1383,19 @@ $messages['zh-hans'] = array(
 	'owb-button-done' => '继续到您的维基',
 	'owb-step4-error-caption' => '错误',
 	'owb-status-saving' => '正在保存。。。',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Wrightbus
+ */
+$messages['zh-hant'] = array(
+	'owb-step1' => '第 1 步',
+	'owb-step2' => '第 2 步',
+	'owb-step3' => '第 3 步',
+	'owb-step4' => '第 4 步',
+	'owb-step4-error-caption' => '錯誤',
+	'owb-status-saving' => '儲存中',
+	'owb-error-saving-articles' => '在儲存頁面時發生錯誤',
+	'owb-api-error-title' => '在處理閣下要求時發生錯誤',
 );
 

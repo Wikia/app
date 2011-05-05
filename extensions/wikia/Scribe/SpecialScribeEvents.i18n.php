@@ -14,6 +14,13 @@ $messages['en'] = array(
 	'scribeeventsrecords' => 'Records',
 );
 
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'scribe-desc' => '{{desc}}',
+);
+
 /** Breton (Brezhoneg) */
 $messages['br'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Ostilh]] da glask titl ur bajenn resis e-touez wikioù',
@@ -72,6 +79,24 @@ $messages['it'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Strumento]] per cercare una pagina specifica tra le wiki',
 	'scribeevents' => 'Eventi recenti',
 	'scribeeventsrecords' => 'Resoconti',
+);
+
+/** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
+ */
+$messages['km'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|ឧបករណ៍]]សំរាប់ស្វែងរកចំណងជើងទំព័រកំណត់មួយនៅលើវិគីទាំងអស់',
+	'scribeevents' => 'ព្រឹត្តិការណ៍នាពេលថ្មីៗ',
+	'scribeeventsrecords' => 'កំណត់ត្រា',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Werkzüsh]], öm en Wikis noh enem beshtempte Sigge_Tittel ze söhke.',
+	'scribeevents' => 'Läzde Bejebeheite',
+	'scribeeventsrecords' => 'Daatesäz',
 );
 
 /** Macedonian (Македонски) */

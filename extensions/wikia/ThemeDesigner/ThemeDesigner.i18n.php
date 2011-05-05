@@ -116,6 +116,32 @@ $messages['af'] = array(
 	'themedesigner-history-item' => '$1 deur $2',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'themedesigner-button-cancel' => 'ألغِ',
+	'themedesigner-button-ok' => 'موافق',
+	'themedesigner-button-upload' => 'ارفع',
+	'themedesigner-button-save' => 'احفظ',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ * @author Vugar 1981
+ */
+$messages['az'] = array(
+	'themedesigner-page' => 'Səhifə',
+	'themedesigner-color' => 'rəng',
+	'themedesigner-small' => 'Kiçik',
+	'themedesigner-large' => 'Geniş',
+	'themedesigner-button-cancel' => 'Ləğv et',
+	'themedesigner-button-ok' => 'Ok',
+	'themedesigner-font' => 'şrift',
+	'themedesigner-size' => 'həcm',
+	'themedesigner-history-item' => '$1 tərəfindən $2',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
@@ -136,13 +162,18 @@ $messages['be-tarask'] = array(
 	'themedesigner-tab-theme' => 'Афармленьне',
 );
 
-/** Bulgarian (Български) */
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
 $messages['bg'] = array(
 	'themedesigner-color' => 'цвят',
 	'themedesigner-buttons' => 'бутони',
 	'themedesigner-links' => 'препратки',
 	'themedesigner-button-cancel' => 'Отказване',
+	'themedesigner-pick-a-color' => 'Избиране на цвят',
 	'themedesigner-button-upload' => 'Качване',
+	'themedesigner-font' => 'шрифт',
+	'themedesigner-size' => 'размер',
 	'themedesigner-button-save' => 'Съхраняване',
 );
 
@@ -552,6 +583,46 @@ $messages['gl'] = array(
 	'themedesigner-reason' => 'Deseñador de temas visuais; gardado por $1',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'themedesigner-background' => 'Háttér',
+	'themedesigner-page' => 'Lap',
+	'themedesigner-color' => 'szín',
+	'themedesigner-graphic' => 'ábra',
+	'themedesigner-buttons' => 'gombok',
+	'themedesigner-links' => 'hivatkozások',
+	'themedesigner-header' => 'fejléc',
+	'themedesigner-text-wordmark' => 'Szöveges védjegy',
+	'themedesigner-graphic-wordmark' => 'Grafikus védjegy',
+	'themedesigner-small' => 'Kicsi',
+	'themedesigner-medium' => 'Közepes',
+	'themedesigner-large' => 'Nagy',
+	'themedesigner-tile-background' => 'mozaik háttér',
+	'themedesigner-tab-theme' => 'Téma',
+	'themedesigner-tab-customize' => 'Testreszabás',
+	'themedesigner-tab-wordmark' => 'Védjegy',
+	'themedesigner-preview-mode' => 'Előnézeti mód...',
+	'themedesigner-previous-versions' => 'Korábbi változatok',
+	'themedesigner-button-save-im-done' => 'Mentés, kész vagyok',
+	'themedesigner-button-cancel' => 'Mégse',
+	'themedesigner-pick-a-color' => 'Válassz egy színt',
+	'themedesigner-enter-your-own' => 'Saját megadása',
+	'themedesigner-color-name-or-hex-code' => 'Szín neve vagy hexadecimális kódja',
+	'themedesigner-button-ok' => 'OK',
+	'themedesigner-pick-an-image' => 'Kép kiválasztása',
+	'themedesigner-dont-use-a-background' => 'Ne használjon hátteret',
+	'themedesigner-upload-your-own' => 'Saját feltöltése',
+	'themedesigner-button-upload' => 'Feltöltés',
+	'themedesigner-rules-background' => 'jpg, gif vagy png. Legfeljebb 100 kilobájt',
+	'themedesigner-default' => 'Alapértelmezett',
+	'themedesigner-font' => 'betűtípus',
+	'themedesigner-size' => 'méret',
+	'themedesigner-button-save' => 'Mentés',
+	'themedesigner-upload-a-graphic' => 'ábra feltöltése',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -643,10 +714,50 @@ $messages['ja'] = array(
 	'themedesigner-size' => 'サイズ',
 	'themedesigner-button-save' => '保存',
 	'themedesigner-upload-a-graphic' => '画像をアップロード',
-	'themedesigner-rules-wordmark' => '250x65 ピクセル（.png ファイルのみ）',
+	'themedesigner-rules-wordmark' => '250x65 ピクセルまで（.png ファイルのみ）',
 	'themedesigner-dont-use-a-graphic' => '画像を使用しない',
 	'themedesigner-history-item' => '$1 by $2',
 	'themedesigner-button-change-text' => 'テキストを変更',
+);
+
+/** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
+ */
+$messages['km'] = array(
+	'themedesigner-background' => 'ផ្ទៃខាងក្រោយ',
+	'themedesigner-page' => 'ទំព័រ',
+	'themedesigner-color' => 'ពណ៌',
+	'themedesigner-graphic' => 'ក្រាហ្វិច',
+	'themedesigner-buttons' => 'ប៊ូតុង',
+	'themedesigner-links' => 'តំណ​ភ្ជាប់',
+	'themedesigner-header' => 'ក្បាលខាងលើ',
+	'themedesigner-small' => 'តូច',
+	'themedesigner-medium' => 'មធ្យម',
+	'themedesigner-large' => 'ធំ',
+	'themedesigner-button-save-im-done' => 'ខ្ញុំធ្វើរួចហើយ។ រក្សាទុក។',
+	'themedesigner-button-cancel' => 'បោះបង់',
+	'themedesigner-pick-a-color' => 'ច្បិចយកពណ៌',
+	'themedesigner-enter-your-own' => 'បញ្ចូលដោយខ្លួនអ្នក',
+	'themedesigner-color-name-or-hex-code' => 'ឈ្មោះពណ៌ឬកូដគោល១៦',
+	'themedesigner-button-ok' => 'យល់ព្រម​',
+	'themedesigner-pick-an-image' => 'រើសយករូបភាព',
+	'themedesigner-dont-use-a-background' => 'កុំប្រើផ្ទៃខាងក្រោយ',
+	'themedesigner-upload-your-own' => 'ផ្ទុកឡើងរបស់អ្នក',
+	'themedesigner-button-upload' => 'ផ្ទុកឡើង',
+	'themedesigner-rules-background' => 'jpg, gif ឬ png។ អតិបរមាត្រឹម 100 គីឡូបៃ។',
+	'themedesigner-default' => 'លំនាំដើម',
+	'themedesigner-font' => 'ពុម្ព​អក្សរ​',
+	'themedesigner-size' => 'ទំហំ',
+	'themedesigner-button-save' => 'រក្សាទុក',
+	'themedesigner-upload-a-graphic' => 'ផ្ទុកឡើងក្រាហ្វិច',
+	'themedesigner-rules-wordmark' => 'ធំបំផុតត្រឹម 250x65 ភិចសែល (ឯកសារប្រភេទ .png ប៉ុណ្ណោះ)',
+	'themedesigner-dont-use-a-graphic' => 'កុំប្រើក្រាហ្វិច',
+	'themedesigner-history-item' => '$1 ដោយ $2',
+	'themedesigner-button-change-text' => 'ប្ដូរអត្ថបទ',
+	'themedesigner-size-error' => 'ទំហំឯកសារមិនត្រឹមត្រូវ',
+	'themedesigner-dimensions-error' => 'រូបភាពធំជាងវិមាត្រកំហិត',
+	'themedesigner-type-error' => 'ប្រភេទឯកសារមិនត្រឹមត្រូវ',
+	'themedesugber-uknown-error' => 'មានបញ្ហាកើតឡើង ដោយយើងមិនដឹងថាមកពីមូលហេតុអ្វី។ សូមសាកល្បងម្ដងទៀត',
 );
 
 /** Kurdish (Latin) (Kurdî (Latin))
@@ -781,6 +892,29 @@ $messages['ms'] = array(
 	'themedesugber-uknown-error' => 'Ada ralat, tetapi kami tidak dapat mengenal pastinya; sila cuba lagi',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'themedesigner-page' => 'စာ​မျက်​နှာ​',
+	'themedesigner-color' => 'အရောင်',
+	'themedesigner-links' => 'လင့်',
+	'themedesigner-small' => 'သေးငယ်သော',
+	'themedesigner-medium' => 'အလယ်လတ်',
+	'themedesigner-large' => 'အကြီး',
+	'themedesigner-button-cancel' => 'မလုပ်တော့ပါ',
+	'themedesigner-button-ok' => 'အိုကေ',
+	'themedesigner-pick-an-image' => 'ပုံရွေးချယ်ရန်',
+	'themedesigner-dont-use-a-background' => 'နောက်ခံပုံမရွေးချယ်ရန်',
+	'themedesigner-button-upload' => 'Upload တင်ရန်',
+	'themedesigner-rules-background' => 'jpg, gif or png. 100 kilobyte သာသတ်မှတ်ထားသည်',
+	'themedesigner-default' => 'ပုံမှန်',
+	'themedesigner-font' => 'ဖောင့်',
+	'themedesigner-size' => 'အရွယ်အစား',
+	'themedesigner-button-save' => 'သိမ်းရန်',
+	'themedesigner-history-item' => '$2 က $1',
+);
+
 /** Mazanderani (مازِرونی)
  * @author محک
  */
@@ -821,7 +955,7 @@ $messages['nl'] = array(
 	'themedesigner-button-ok' => 'OK',
 	'themedesigner-pick-an-image' => 'Kies een afbeelding',
 	'themedesigner-dont-use-a-background' => 'Geen achtergrond gebruiken',
-	'themedesigner-upload-your-own' => 'Eigen uploaden',
+	'themedesigner-upload-your-own' => 'Zelf uploaden',
 	'themedesigner-button-upload' => 'Uploaden',
 	'themedesigner-rules-background' => 'JPG, GIF of PNG. Maximaal 100 kilobyte.',
 	'themedesigner-default' => 'Standaard',
@@ -984,10 +1118,15 @@ $messages['pms'] = array(
 	'themedesigner-size' => 'dimension',
 	'themedesigner-button-save' => 'Salva',
 	'themedesigner-upload-a-graphic' => 'caria un gràfich',
-	'themedesigner-rules-wordmark' => '250x65 pontin (mach archivi .png)',
+	'themedesigner-rules-wordmark' => 'fin a 250x65 pontin (mach archivi .png)',
 	'themedesigner-dont-use-a-graphic' => "Dovré pa 'd gràfich",
 	'themedesigner-history-item' => '$1 da $2',
 	'themedesigner-button-change-text' => 'Modifiché ël test',
+	'themedesigner-reason' => 'Theme Designer - salvatagi fàit da $1',
+	'themedesigner-size-error' => "Dimension d'archivi pa giusta",
+	'themedesigner-dimensions-error' => 'La figura a passa ij lìmit ëd dimension',
+	'themedesigner-type-error' => "Sòrt d'archivi pa giusta",
+	'themedesugber-uknown-error' => "A l'é capitaje n'eror, për maleur i podoma pa identifichelo, për piasì preuva torna",
 );
 
 /** Pashto (پښتو)
@@ -1003,6 +1142,9 @@ $messages['ps'] = array(
 	'themedesigner-medium' => 'منځوی',
 	'themedesigner-large' => 'لوی',
 	'themedesigner-button-cancel' => 'ناګارل',
+	'themedesigner-button-ok' => 'ښه',
+	'themedesigner-button-upload' => 'پورته کول',
+	'themedesigner-default' => 'تلواليز',
 	'themedesigner-font' => 'ليکبڼه',
 	'themedesigner-size' => 'کچه',
 	'themedesigner-button-save' => 'خوندي کول',
@@ -1110,6 +1252,16 @@ $messages['pt-br'] = array(
 	'themedesigner-dimensions-error' => 'A imagem excede os limites de tamanho',
 	'themedesigner-type-error' => 'Tipo de ficheiro incorrecto',
 	'themedesugber-uknown-error' => 'Ocorreu um erro que não é possível identificar. Tente novamente, por favor.',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'themedesigner-page' => 'Pagină',
+	'themedesigner-color' => 'culoare',
+	'themedesigner-font' => 'font',
+	'themedesigner-size' => 'mărime',
 );
 
 /** Russian (Русский)
@@ -1266,6 +1418,13 @@ $messages['te'] = array(
 	'themedesigner-button-save' => 'భద్రపరచు',
 );
 
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'themedesigner-page' => 'Pájina',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -1278,11 +1437,40 @@ $messages['tl'] = array(
 	'themedesigner-graphic' => 'malarawan',
 	'themedesigner-buttons' => 'mga pindutan',
 	'themedesigner-links' => 'mga kawing',
+	'themedesigner-header' => 'paulo',
 	'themedesigner-text-wordmark' => 'Markang salita ng teksto',
 	'themedesigner-graphic-wordmark' => 'Malarawang marka ng salita',
 	'themedesigner-small' => 'Maliit',
 	'themedesigner-medium' => 'Gitnang sukat',
 	'themedesigner-large' => 'Malaki',
+	'themedesigner-tile-background' => 'panlikuran ng tisa',
+	'themedesigner-tab-theme' => 'Tema',
+	'themedesigner-tab-customize' => 'Ipasadya',
+	'themedesigner-tab-wordmark' => 'Panandang salita',
+	'themedesigner-preview-mode' => 'Pamamaraan na Paunang Tingin...',
+	'themedesigner-previous-versions' => 'Nakaraang mga bersyon',
+	'themedesigner-button-save-im-done' => 'Sagipin, tapos na ako',
+	'themedesigner-button-cancel' => 'Huwag ituloy',
+	'themedesigner-pick-a-color' => 'Pumili ng isang kulay',
+	'themedesigner-enter-your-own' => 'Ipasok ang pansarili mong',
+	'themedesigner-color-name-or-hex-code' => 'Pangalan ng kulay o kodigong hex',
+	'themedesigner-button-ok' => 'Sige',
+	'themedesigner-pick-an-image' => 'Pumili ng isang larawan',
+	'themedesigner-dont-use-a-background' => 'Huwag gumamit ng isang panlikuran',
+	'themedesigner-upload-your-own' => 'Ikargang paitaas ang mula sa sarili mo',
+	'themedesigner-button-upload' => 'Ikarga',
+	'themedesigner-rules-background' => 'jpg, gif o png. 100 kilobayt na hangganan',
+	'themedesigner-default' => 'Likas na katakdaan',
+	'themedesigner-font' => 'estilo ng titik',
+	'themedesigner-size' => 'sukat',
+	'themedesigner-button-save' => 'Sagipin',
+	'themedesigner-upload-a-graphic' => 'magkarga ng isang pagkakaguhit',
+	'themedesigner-rules-wordmark' => 'hanggang sa 250x65 mga piksel (mga talaksang .png lang)',
+	'themedesigner-dont-use-a-graphic' => 'Huwag gumamit ng isang naiguhit',
+	'themedesigner-history-item' => '$1 ng $2',
+	'themedesigner-button-change-text' => 'Baguhin ang teksto',
+	'themedesigner-reason' => 'Tagapagdisenyo ng Tema - ang pagsasagip ay ginawa ni $1',
+	'themedesigner-size-error' => 'Hindi tamang sukat ng talaksan',
 );
 
 /** Ukrainian (Українська)
@@ -1304,6 +1492,52 @@ $messages['uk'] = array(
 	'themedesigner-size' => 'розмір',
 	'themedesigner-button-save' => 'Зберегти',
 	'themedesigner-button-change-text' => 'Змінити текст',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author XiaoQiaoGrace
+ */
+$messages['vi'] = array(
+	'themedesigner-desc' => 'Cho phép các bảo quản viên trong wiki để thiết kế giao diện',
+	'themedesigner-title' => 'Thiết kế giao diện Wikia',
+	'themedesigner-background' => 'Nền',
+	'themedesigner-page' => 'Trang',
+	'themedesigner-color' => 'màu sắc',
+	'themedesigner-graphic' => 'đồ họa',
+	'themedesigner-buttons' => 'nút nhấn',
+	'themedesigner-links' => 'liên kết',
+	'themedesigner-header' => 'tiêu đề',
+	'themedesigner-small' => 'Nhỏ',
+	'themedesigner-medium' => 'Vừa',
+	'themedesigner-large' => 'Lớn',
+	'themedesigner-tile-background' => 'lát nền',
+	'themedesigner-tab-theme' => 'Giao diện',
+	'themedesigner-tab-customize' => 'Tùy chỉnh',
+	'themedesigner-preview-mode' => 'Chế độ trước',
+	'themedesigner-previous-versions' => 'Phiên bản cũ',
+	'themedesigner-button-save-im-done' => 'Lưu, tôi đã xong',
+	'themedesigner-button-cancel' => 'Hủy bỏ',
+	'themedesigner-pick-a-color' => 'Chọn màu',
+	'themedesigner-enter-your-own' => 'Nhập riêng cho bạn',
+	'themedesigner-color-name-or-hex-code' => 'Tên màu hoặc mã thập lục phân',
+	'themedesigner-pick-an-image' => 'Chọn một hình ảnh',
+	'themedesigner-dont-use-a-background' => 'Không dùng nền',
+	'themedesigner-upload-your-own' => 'Tải lên của riêng bạn',
+	'themedesigner-button-upload' => 'Tải lên',
+	'themedesigner-rules-background' => 'jpg, gif hoặc png. giới hạn 100 kilobyte',
+	'themedesigner-default' => 'Mặc định',
+	'themedesigner-font' => 'phông chữ',
+	'themedesigner-size' => 'Dung lượng, kích cỡ',
+	'themedesigner-button-save' => 'Lưu trang',
+	'themedesigner-upload-a-graphic' => 'tải lên một hình ảnh',
+	'themedesigner-rules-wordmark' => 'tải lên giới hạn đến 250x65 điểm ảnh (chỉ tập tin .png)',
+	'themedesigner-dont-use-a-graphic' => 'Không dùng đồ họa',
+	'themedesigner-button-change-text' => 'Thay đổi văn bản',
+	'themedesigner-reason' => 'Thiết kế giao diện - đã xong bởi $1',
+	'themedesigner-size-error' => 'Dung lượng, kích cỡ không chính xác',
+	'themedesigner-dimensions-error' => 'Hình ảnh vượt quá kích cỡ giới hạn',
+	'themedesigner-type-error' => 'Loại tệp không chính xác',
+	'themedesugber-uknown-error' => 'Lỗi đã xảy ra, tiếc là chúng tôi không thể xác định nó, xin vui lòng thử lại',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

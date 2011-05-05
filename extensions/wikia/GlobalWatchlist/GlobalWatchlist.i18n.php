@@ -47,6 +47,14 @@ $messages['af'] = array(
 	'globalwatchlist-no-blog-page-found' => 'Geen blog-bladsy gevind nie.',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'globalwatchlist-digest-email-subject' => 'Седмичен бюлетин',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|коментар|коментара}})',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
@@ -391,6 +399,19 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'ブログページは見つかりませんでした。',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'globalwatchlist-desc' => 'Scheck jede Woch en Zosammefaßong met de <i lang="en">e-mail</i>vu dä Sigge en de Oppaßleß vu alle Wikis',
+	'tog-watchlistdigest' => 'Scheck mer jeede Woch en Zosammefaßong met de <i lang="en">e-mail</i>',
+	'globalwatchlist-see-more' => 'Bes esu jood un donn op Dinge einzelne Oppaßleßte noh mieh Änderonge looere.',
+	'globalwatchlist-digest-email-subject' => 'Zusammefassong vun de Woch',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|Aanmerkong|Aanmerkonge|Aanmerkonge}})',
+	'globalwatchlist-no-page-found' => 'Kein Sigg jefonge',
+	'globalwatchlist-no-blog-page-found' => 'Kein Sigg vun enem <i lang="en">blog</i> jefonge.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -434,6 +455,13 @@ $3
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|коментар|коментари}})',
 	'globalwatchlist-no-page-found' => 'Нема пронајдено страница.',
 	'globalwatchlist-no-blog-page-found' => 'Нема пронајдено блог-страница.',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'globalwatchlist-no-page-found' => 'ഒരു താളും കണ്ടെത്താനായില്ല.',
 );
 
 /** Malay (Bahasa Melayu)
@@ -495,6 +523,29 @@ Groet, Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|opmerking|opmerkingen}})',
 	'globalwatchlist-no-page-found' => 'Geen pagina aangetroffen.',
 	'globalwatchlist-no-blog-page-found' => 'Geen blogpagina aangetroffen.',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'globalwatchlist-see-more' => 'Controleer alsjeblieft je lokale volglijst op meer wijzigingen',
+	'globalwatchlist-digest-email-body' => 'Hoi $1.
+
+Dit is een lijst met pagina\'s op je volglijst bij Wikia die zijn bewerkt sinds je ze hebt bezocht.
+
+$2
+
+Dit is een lijst met blogpagina\'s op je volglijst bij Wikia die zijn bewerkt of waar reacties bij zijn geplaatst sinds je ze hebt bezocht.
+
+$3
+
+Bezoek ze alsjeblieft en bewerk ze als nodig.
+
+Groet, Wikia
+
+* Op de pagina http://www.wikia.com/wiki/Special:Preferences kunt u uw instellingen wijzigen voor volglijste-mails.
+* Zie het tabblad "Volglijst" in je voorkeuren om alle pagina\'s uit deze wekelijkse samenvatting als gelezen te markeren.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -631,6 +682,14 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comentário|comentários}})',
 	'globalwatchlist-no-page-found' => 'Nenhuma página encontrada.',
 	'globalwatchlist-no-blog-page-found' => 'Nenhuma página de blog encontrada.',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'globalwatchlist-no-page-found' => 'Nicio pagină găsită.',
+	'globalwatchlist-no-blog-page-found' => 'Nicio postare pe blog găsită.',
 );
 
 /** Russian (Русский)

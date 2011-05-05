@@ -21,6 +21,13 @@ $messages['qqq'] = array(
 	'userdata-wf-reason' => 'Log message for administrators only. Do not change "Special:UserData."',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'userdata' => 'احصل على بيانات المستخدم',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -58,6 +65,32 @@ $messages['es'] = array(
 	'userdata-not-updated' => 'Error al actualizar wgUserData.',
 	'userdata-wf-reason' => 'Valor actualizado a través de [[Special:UserData|UserData]]',
 	'userdata-no-wf' => 'WikiFactory no está habilitado en esta wiki. No se puede alterar wgUserData.',
+);
+
+/** French (Français)
+ * @author Iketsi
+ * @author Od1n
+ */
+$messages['fr'] = array(
+	'userdata' => "Obtenir des données d'utilisateur",
+	'userdata-userid-label' => "Fournir l'ID utilisateur :",
+	'userdata-submit' => 'Obtenir les données',
+	'specialuserdata-desc' => 'Fournit une interface permettant de changer wgUserData par wiki.',
+	'userdata-header' => 'Augmentation wgUserData',
+	'userdata-value' => 'La valeur actuelle des wgUserData est « $1 ». Appuyez sur le bouton pour le mettre en timestamp actuel.',
+	'userdata-updated' => 'wgUserData mis à jour pour "$1".',
+	'userdata-not-updated' => 'Échec de la mise à jour de wgUserData.',
+	'userdata-wf-reason' => 'Valeur mise à jour via [[Special:UserData|UserData]]',
+	'userdata-no-wf' => "WikiFactory n'est pas activé sur ce wiki. Impossible de modifier wgUserData.",
+);
+
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'userdata' => 'Felhasználói adatok lekérése',
+	'userdata-userid-label' => 'Add meg a felhasználó azonosítóját:',
+	'userdata-submit' => 'Adatok lekérése',
 );
 
 /** Interlingua (Interlingua)

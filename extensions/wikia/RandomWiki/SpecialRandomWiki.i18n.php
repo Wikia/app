@@ -22,6 +22,13 @@ $messages['af'] = array(
 	'randomwiki' => 'Willekeurige wiki',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'randomwiki' => 'ويكي عشوائية',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
@@ -29,6 +36,13 @@ $messages['af'] = array(
 $messages['be-tarask'] = array(
 	'randomwiki-desc' => 'Дазваляе ўдзельнікам праглядаць выпадковыя вікі',
 	'randomwiki' => 'Выпадковыя вікі',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'randomwiki' => 'Случайно уики',
 );
 
 /** Breton (Brezhoneg)
@@ -141,6 +155,14 @@ $messages['ja'] = array(
 	'randomwiki' => 'おまかせウィキ',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'randomwiki-desc' => 'Löht de Metmaacher e zohfällesh Wiki ußprobeere.',
+	'randomwiki' => 'Zohfällesh Wiki',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -155,6 +177,13 @@ $messages['lb'] = array(
 $messages['mk'] = array(
 	'randomwiki-desc' => 'Им овозможува на корисниците да истражат некое случајно вики',
 	'randomwiki' => 'Случајно вики',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'randomwiki' => 'ഏതെങ്കിലും വിക്കി',
 );
 
 /** Malay (Bahasa Melayu)

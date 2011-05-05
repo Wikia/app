@@ -73,6 +73,7 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'ircgate-username' => 'Потребителско име:',
+	'ircgate-channel' => 'Канал:',
 );
 
 /** Bahasa Banjar (Bahasa Banjar)
@@ -115,11 +116,12 @@ $messages['cy'] = array(
 );
 
 /** German (Deutsch)
+ * @author Claudia Hattitten
  * @author LWChris
  */
 $messages['de'] = array(
 	'ircgate-username' => 'Benutzername:',
-	'ircgate-channel' => 'Channel:',
+	'ircgate-channel' => 'Chat-Kanal:',
 );
 
 /** Spanish (Español)
@@ -246,6 +248,7 @@ $messages['kn'] = array(
  */
 $messages['ksh'] = array(
 	'ircgate-username' => 'Metmaachername:',
+	'ircgate-channel' => 'Kanaal:',
 );
 
 /** Kurdish (Latin) (Kurdî (Latin))
@@ -301,6 +304,13 @@ $messages['mn'] = array(
 $messages['ms'] = array(
 	'ircgate-username' => 'Nama pengguna:',
 	'ircgate-channel' => 'Saluran:',
+);
+
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'ircgate-username' => 'အသုံးပြုသူအမည် :',
 );
 
 /** Nepali (नेपाली)
@@ -427,6 +437,13 @@ $messages['te'] = array(
 	'ircgate-username' => 'వాడుకరిపేరు:',
 );
 
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'ircgate-username' => "Naran uza-na'in:",
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -449,6 +466,14 @@ $messages['tr'] = array(
 $messages['uk'] = array(
 	'ircgate-username' => "Ім'я користувача:",
 	'ircgate-channel' => 'Канал:',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author XiaoQiaoGrace
+ */
+$messages['vi'] = array(
+	'ircgate-username' => 'Tên đăng nhập:',
+	'ircgate-channel' => 'Kênh:',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

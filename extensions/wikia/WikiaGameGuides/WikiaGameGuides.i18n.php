@@ -75,6 +75,13 @@ $messages['it'] = array(
 	'wikiagameguides-desc' => "Moduli per l'applicazione mobile Wikia Game Guides",
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'wikiagameguides-desc' => 'Module för de Wikia Spellaanleidonge (<i lang="en">Wikia Game Guides</i>) ier mobile Aanwändong.',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -103,6 +110,13 @@ $messages['no'] = array(
 	'wikiagameguides-desc' => 'Moduler for Wikias spillguide-app',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'wikiagameguides-desc' => "Mòduj për l'app mobile Wikia Games Guides",
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -122,5 +136,12 @@ $messages['pt-br'] = array(
  */
 $messages['ru'] = array(
 	'wikiagameguides-desc' => 'Модули мобильного приложения Wikia Game Guides',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikiagameguides-desc' => 'Mga modyul ng aplikasyong naililipat-lipat ng Mga Gabay sa Laro ng Wikia',
 );
 

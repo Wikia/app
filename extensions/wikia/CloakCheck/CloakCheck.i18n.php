@@ -38,12 +38,44 @@ $messages['qqq'] = array(
 	'cloakcheck-form-check-self' => "An \"''IRC cloak''\" is a technical measure on an IRC network to hide the IP address of a user.",
 );
 
+/** Arabic (العربية)
+ * @author Mutarjem horr
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'cloakcheck-form-username' => 'اسم المستخدم:',
+	'cloakcheck-form-check' => 'تحقق من اسم المستخدم',
+	'cloakcheck-process-empty' => 'يجب أن لا يكون إاسم المستخدم فارغًا.',
+	'cloakcheck-process-notexist' => 'إسم المستخدم غير موجود.',
+	'cloakcheck-process-username' => 'اسم المستخدم: $1',
+	'cloakcheck-process-accountage-yes' => 'الحساب قديم كفاية.',
+	'cloakcheck-process-accountage-no' => 'الحساب حديث جداّ.',
+	'cloakcheck-process-emailconf-yes' => 'عنوان البريد الإلكتروني مؤكد.',
+	'cloakcheck-process-emailconf-no' => 'عنوان البريد الإلكتروني غير مؤكد.',
+	'cloakcheck-process-edits-yes' => 'لدى المستخدم ما يكفي من التغييرات.',
+	'cloakcheck-process-edits-no' => 'ليس لدى المستخدم ما يكفي من التغييرات.',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'cloakcheck-form-username' => 'İstifadəçi adı:',
+	'cloakcheck-process-username' => 'İstifadəçi adı: $1',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'cloakcheck-form-username' => 'Потребителско име:',
+	'cloakcheck-process-empty' => 'Полето за потребителско име не може да бъде празно.',
+	'cloakcheck-process-notexist' => 'Това потребителско име не съществува.',
 	'cloakcheck-process-username' => 'Потребителско име: $1',
+	'cloakcheck-process-emailconf-yes' => 'Адресът за електронна поща е потвърден.',
+	'cloakcheck-process-emailconf-no' => 'Адресът за електронна поща не е потвърден.',
+	'cloakcheck-process-edits-yes' => 'Потребителят има достатъчно редакции.',
+	'cloakcheck-process-edits-no' => 'Потребителят няма достатъчно редакции.',
 );
 
 /** Breton (Brezhoneg)
@@ -173,6 +205,19 @@ $messages['gl'] = array(
 	'cloakcheck-process-edits-no' => 'O usuario non ten suficientes edicións.',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'cloakcheck-form-username' => 'Felhasználónév:',
+	'cloakcheck-form-check' => 'Felhasználónév ellenőrzése',
+	'cloakcheck-process-username' => 'Felhasználónév: $1',
+	'cloakcheck-process-accountage-yes' => 'A fiók elég idős.',
+	'cloakcheck-process-accountage-no' => 'A fiók túlságosan új.',
+	'cloakcheck-process-emailconf-yes' => 'E-mail cím megerősítve.',
+	'cloakcheck-process-emailconf-no' => 'E-mail cím nincs megerősítve.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -250,6 +295,19 @@ $messages['mk'] = array(
 	'cloakcheck-process-emailconf-no' => 'Е-поштенската адреса не е потврдена.',
 	'cloakcheck-process-edits-yes' => 'Корисникот има доволен број уредувања.',
 	'cloakcheck-process-edits-no' => 'Корисникот нема доволен број уредувања.',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'cloakcheck-form-username' => 'ഉപയോക്തൃനാമം:',
+	'cloakcheck-form-check' => 'ഉപയോക്തൃനാമം പരിശോധിക്കുക',
+	'cloakcheck-process-empty' => 'ഉപയോക്തൃനാമം ശൂന്യമായിരിക്കാൻ പാടില്ല.',
+	'cloakcheck-process-notexist' => 'ഉപയോക്തൃനാമം നിലവിലില്ല.',
+	'cloakcheck-process-username' => 'ഉപയോക്തൃനാമം: $1',
+	'cloakcheck-process-emailconf-yes' => 'ഇമെയിൽ വിലാസം സ്ഥിരീകരിച്ചിട്ടുണ്ട്.',
+	'cloakcheck-process-emailconf-no' => 'ഇമെയിൽ വിലാസം സ്ഥിരീകരിച്ചിട്ടില്ല.',
 );
 
 /** Malay (Bahasa Melayu)
@@ -393,6 +451,22 @@ $messages['pt-br'] = array(
 	'cloakcheck-process-edits-no' => 'O utilizador não tem edições suficientes.',
 );
 
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'cloakcheck-form-username' => 'Nume de utilizator:',
+	'cloakcheck-form-check' => 'Verifică numele de utilizator',
+	'cloakcheck-process-empty' => 'Numele de utilizator trebuie să nu fie gol.',
+	'cloakcheck-process-notexist' => 'Numele de utilizator nu există.',
+	'cloakcheck-process-username' => 'Numele de utilizator: $1',
+	'cloakcheck-process-accountage-yes' => 'Contul este suficient de vechi.',
+	'cloakcheck-process-accountage-no' => 'Contul este prea nou.',
+	'cloakcheck-process-emailconf-yes' => 'Adresa de e-mail confirmată.',
+	'cloakcheck-process-emailconf-no' => 'Adresa de e-mail neconfirmată.',
+	'cloakcheck-process-edits-yes' => 'Utilizatorul are suficiente modificări.',
+);
+
 /** Russian (Русский)
  * @author Eleferen
  */
@@ -479,6 +553,7 @@ $messages['tl'] = array(
 $messages['zh-hans'] = array(
 	'cloakcheck-form-username' => '用户名：',
 	'cloakcheck-form-check' => '检查用户名',
+	'cloakcheck-process-notexist' => '用户名不存在',
 	'cloakcheck-process-username' => '用户名：$1',
 	'cloakcheck-process-accountage-yes' => '用户够旧',
 	'cloakcheck-process-accountage-no' => '用户太新',

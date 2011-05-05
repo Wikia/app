@@ -86,6 +86,20 @@ $messages['it'] = array(
 	'categorygalleries-desc' => 'Mostra una galleria di pagine sulle pagine delle categorie',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'categorygalleries-desc' => 'カテゴリページでページをギャラリー形式で表示する',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'categorygalleries-desc' => 'Donn en Jalleri vun Sigge op de Sigge vun de Saachjroppe aanzeije.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -121,6 +135,13 @@ $messages['no'] = array(
 	'categorygalleries-desc' => 'Viser et sidegalleri på kategorisider',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'categorygalleries-desc' => 'A mosta na galerìa ëd pagine ansima a le pagine ëd categorìe',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -147,6 +168,13 @@ $messages['roa-tara'] = array(
  */
 $messages['sv'] = array(
 	'categorygalleries-desc' => 'Visar ett sido-galleri på kategorisidor',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'categorygalleries-desc' => 'Nagpapakita ng isang tanghalan ng mga pahina sa mga pahina ng kategorya',
 );
 
 /** Ukrainian (Українська)

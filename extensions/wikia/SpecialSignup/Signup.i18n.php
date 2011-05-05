@@ -60,6 +60,13 @@ $messages['fr'] = array(
 	'signup' => 'Connexion',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'signup' => 'Regisztráció',
+);
+
 /** Interlingua (Interlingua) */
 $messages['ia'] = array(
 	'signup-desc' => 'Adde le alias [[{{#Special:Signup}}]] pro [[{{#Special:UserLogin}}/signup]]',
@@ -100,12 +107,28 @@ $messages['no'] = array(
 	'signup' => 'Registrer',
 );
 
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Odisha1
+ * @author Psubhashish
+ */
+$messages['or'] = array(
+	'signup-desc' => '[[{{#Special:UserLogin}}/signup]] ବଦଳରେ [[{{#Special:Signup}}]] ନାଆଁଟି ଯୋଡ଼େ',
+	'signup' => 'ଯୋଗ ଦେବା',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  */
 $messages['pms'] = array(
 	'signup-desc' => "A gionta dj'alias [[{{#Special:Signup}}]] për [[{{#Special:UserLogin}}/signup]]",
 	'signup' => 'Conession',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'signup' => 'نومليکل',
 );
 
 /** Portuguese (Português) */
@@ -146,10 +169,27 @@ $messages['te'] = array(
 	'signup' => 'నమోదవ్వండి',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'signup-desc' => 'Nagdaragdag ng [[{{#Special:Signup}}]] na pang-taguri para sa [[{{#Special:UserLogin}}/signup]]',
+	'signup' => 'Magpatala',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author XiaoQiaoGrace
+ */
+$messages['vi'] = array(
+	'signup' => 'Đăng ký',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
+ * @author Liangent
  */
 $messages['zh-hans'] = array(
+	'signup-desc' => '为[[{{#Special:UserLogin}}/signup]]添加别名[[{{#Special:Signup}}]]',
 	'signup' => '注册',
 );
 

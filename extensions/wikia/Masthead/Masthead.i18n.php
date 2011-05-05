@@ -45,8 +45,14 @@ $messages['qqq'] = array(
 	'right-removeavatar' => '{{doc-right|removeavatar}}',
 );
 
-/** Afrikaans (Afrikaans) */
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
 $messages['af'] = array(
+	'blog-avatar-removeavatar' => 'Verwyder avatar',
+	'blog-avatar-goto-userpage' => 'Gaan na gebruikersblad',
+	'blog-avatar-edit' => 'Wysig',
+	'blog-avatar-delete' => 'Skrap',
 	'prefs-avatarupload' => 'Avatar',
 );
 
@@ -56,6 +62,13 @@ $messages['af'] = array(
 $messages['ar'] = array(
 	'blog-avatar-changed-log' => 'أضاف أو غير الصورة الرمزية',
 	'useravatar-log' => 'سجل تغييرات الصور الرمزية',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'blog-avatar-delete' => 'Sil',
 );
 
 /** Bulgarian (Български)
@@ -310,6 +323,28 @@ Lembre que os avatares son globais, é dicir, a eliminación do avatar dun usuar
 	'right-removeavatar' => 'Eliminar avatares de usuario',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'blog-avatar-removeavatar' => 'Avatár eltávolítása',
+	'blog-avatar-edit' => 'Módosítás',
+	'blog-avatar-delete' => 'Törlés',
+	'prefs-avatarupload' => 'Avatár',
+	'blog-avatar-choose-avatar' => 'Válassz egy új avatárt',
+	'blog-avatar-upload-avatar' => 'Új avatár feltöltése',
+	'blog-avatar-nouser' => 'Felhasználó nem található!',
+	'blog-avatar-getuser' => 'Keresés',
+	'blog-avatar-remove-confirm' => 'Biztosan el szeretnéd távolítani az avatárodat?',
+	'blog-avatar-error-nofile' => 'Válassz egy fájlt a számítógépről',
+	'blog-avatar-error-size' => 'A feltöltött fájl túl nagy, az engedélyezett méret legfeljebb $1 Kb.',
+	'blog-avatar-error-cantwrite' => 'Nem sikerült menteni a fájlt',
+	'blog-avatar-error-type' => 'Érvénytelen MIME-típus. Megadott: $1, engedélyezett: $2',
+	'blog-avatar-removed-log' => 'Eltávolította $1 avatárját',
+	'removeuseravatar' => 'Felhasználó avatárjának eltávolítása',
+	'right-removeavatar' => 'felhasználók avatárjának eltávolítása',
+);
+
 /** Armenian (Հայերեն)
  * @author Chaojoker
  * @author Pandukht
@@ -354,7 +389,7 @@ Per favor memora que le avatares es global; remover le avatar de un usator lo re
 	'blog-avatar-error-size' => 'Le file incargate es troppo grande; le maximo permittite es $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Impossibile salveguardar le file',
 	'blog-avatar-error-type' => 'Typo MIME invalide. Fornite: $1 - Permittite: $2',
-	'blog-avatar-changed-log' => 'Addeva o cambiava avatar',
+	'blog-avatar-changed-log' => 'addeva o cambiava su avatar',
 	'blog-avatar-removed-log' => 'Removeva le avatares de $1',
 	'blog-avatar-save-info' => 'Pro salveguardar le modificationes, <a href="#prefcontrol">va al basso</a> e preme e button "{{int:saveprefs}}"',
 	'masthead-edits-since' => 'modificationes depost le',
@@ -482,6 +517,13 @@ $messages['mk'] = array(
 	'right-removeavatar' => 'Отстранување на аватари на корисници',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'blog-avatar-edit' => 'മാറ്റുക',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -547,6 +589,20 @@ De maximale toegestane grootte is $1 KB.',
 	'blog-avatar-alt' => 'Logboek van toegevoegde en verwijderde avatars',
 	'removeuseravatar' => 'Avatars van gebruiker verwijderen',
 	'right-removeavatar' => 'Avatars van gebruikers verwijderen',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'blog-avatar-remove-info' => 'Via deze pagina kan je de avatars van gebruikers verwijderen.
+Voer de precieze gebruikersnaam in in het invoerveld en klik "{{int:blog-avatar-getuser}}".
+
+Denk eraan dat avatars globaal zijn.
+Avatars voor een gebruiker worden in alle Wikia verwijderd.',
+	'blog-avatar-remove-confirm' => 'Weet je zeker dat je de avatar wilt verwijderen?',
+	'blog-avatar-error-nofile' => 'Kies een bestand van je computer',
+	'blog-avatar-save-info' => 'Als je de wijzigingen wilt opslaan, klik dan <a href="#prefcontrol">go to bottom</a> op de knop "{{int:saveprefs}}"',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -809,8 +865,13 @@ $messages['te'] = array(
 	'prefs-avatarupload' => 'అవతారం',
 );
 
-/** Tagalog (Tagalog) */
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
 $messages['tl'] = array(
+	'blog-avatar-goto-userpage' => 'Pumunta sa pahina ng tagagamit',
+	'blog-avatar-edit' => 'Baguhin',
+	'blog-avatar-delete' => 'Burahin',
 	'prefs-avatarupload' => 'Huwaran',
 );
 

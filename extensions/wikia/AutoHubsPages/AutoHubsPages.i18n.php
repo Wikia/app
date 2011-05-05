@@ -47,12 +47,29 @@ $messages['qqq'] = array(
 * $1 is the number of editors.',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'hub-hotspot-from' => 'van',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'hub-topusers-header' => 'Top $1 istifadəçi',
+	'hub-featured' => 'Top $1 viki',
+	'hub-header' => '$1 Viki',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'hub-blog-comments' => '{{PLURAL:$1|един коментар|$1 коментара}}',
 	'hub-blog-showarticle' => 'Показване на страницата',
+	'hub-hotspot-from' => 'от',
 );
 
 /** Breton (Brezhoneg)
@@ -223,6 +240,16 @@ $messages['gl'] = array(
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|editor|editores}}</span>',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'hub-topusers-header' => 'Legjobb $1 felhasználó',
+	'hub-featured' => 'Legjobb $1 wiki',
+	'hub-header' => '$1 wikik',
+	'hub-editors' => '<strong>{{PLURAL:$1|Egy|$1}}</strong><span>szerkesztő</span>',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -288,6 +315,15 @@ $messages['mk'] = array(
 	'hub-show-feed' => 'Прикажи канал',
 	'hub-contributors-info' => 'Ова се најкотираните корисници неделава, рангирани по број науредувања.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|уредник|уредници}}</span>',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'hub-blog-showarticle' => 'താൾ പ്രദർശിപ്പിക്കുക',
+	'hub-hide-feed' => 'ഫീഡ് മറയ്ക്കുക',
+	'hub-show-feed' => 'ഫീഡ് പ്രദർശിപ്പിക്കുക',
 );
 
 /** Malay (Bahasa Melayu)
@@ -430,6 +466,16 @@ $messages['pt-br'] = array(
 	'hub-show-feed' => 'Mostrar feed',
 	'hub-contributors-info' => 'Estes são os melhores editores da semana, ordenados pelo número de edições.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|editor|editores}}</span>',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'unhide' => 'Reafişare',
+	'hub-header' => 'Wiki-uri $1',
+	'hub-blog-showarticle' => 'Arată pagina',
+	'hub-hotspot-from' => 'de la',
 );
 
 /** Russian (Русский)

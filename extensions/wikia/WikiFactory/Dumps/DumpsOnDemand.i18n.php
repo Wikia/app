@@ -82,6 +82,8 @@ $messages['be-tarask'] = array(
 $messages['bg'] = array(
 	'dump-database' => 'Дъмпове на базата данни',
 	'dump-database-curr-pages' => 'Текущи страници',
+	'dump-database-full-pages-info' => '(Предупреждение: файлът може да е много голям)',
+	'dump-database-request-submit' => 'Изпращане на заявка',
 );
 
 /** Bahasa Banjar (Bahasa Banjar)
@@ -446,6 +448,13 @@ $messages['ms'] = array(
 	'dump-database-info-more' => 'Sila <a href="http://community.wikia.com/wiki/Help:Database_download">rujuk di sini</a> untuk maklumat lanjut',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'dump-database-curr-pages' => 'ယခုစာမျက်နှာများ',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -579,9 +588,12 @@ $messages['pt-br'] = array(
 	'dump-database-info-more' => 'Por favor <a href="http://community.wikia.com/wiki/Help:Database_download">veja isto</a> para mais informações',
 );
 
-/** Romanian (Română) */
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
 $messages['ro'] = array(
 	'dump-database-curr-pages' => 'Pagini curente',
+	'dump-database-request' => 'Solicită o actualizare',
 );
 
 /** Russian (Русский)
@@ -704,5 +716,13 @@ $messages['uk'] = array(
 	'dump-database-request-already-submitted' => 'Запит на створення дампа було надіслано недавно (менше 7 днів тому)',
 	'dump-database-request-requested' => 'Запит на створення дампа бази данних надіслано.',
 	'dump-database-info-more' => 'Будь ласка, ознайомтесь з детальнішою інформацією <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Wrightbus
+ */
+$messages['zh-hant'] = array(
+	'dump-database-request' => '請求更新',
+	'dump-database-request-submit' => '發送請求',
 );
 

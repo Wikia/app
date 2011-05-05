@@ -131,6 +131,13 @@ $messages['ja'] = array(
 	'tog-disablelinksuggest' => '編集時のリンク補完を使わない',
 );
 
+/** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
+ */
+$messages['km'] = array(
+	'tog-disablelinksuggest' => 'កុំបង្ហាញសំណើតំណភ្ជាប់',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

@@ -119,6 +119,7 @@ $messages['qqq'] = array(
 	'rte-ck-templateDropDown-label' => '{{Identical|Template}}',
 	'rte-ck-templateEditor-dialog-insert' => '{{Identical|Insert}}',
 	'rte-ck-templateEditor-dialog-magicWordsLink' => '{{doc-important|Do not translate the namespace part "Help:"}}',
+	'rte-ck-templateEditor-editor-parameters' => '{{Identical|Parameter}}',
 	'rte-ck-templateEditor-editor-previewButton' => '{{Identical|Preview}}',
 	'rte-ck-templateEditor-editor-previewTitle' => '{{Identical|Preview}}',
 );
@@ -137,11 +138,47 @@ $messages['af'] = array(
 	'rte-ck-templateEditor-editor-previewTitle' => 'Voorskou',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'rte-ck-hoverPreview-delete' => 'احذف',
+	'rte-ck-hoverPreview-edit' => 'عدل',
+	'rte-ck-link-error-title' => 'خطأ',
+	'rte-ck-link-external-linkText' => 'نص الوصلة',
+	'rte-ck-link-external-tab' => 'وصلة خارجية',
+	'rte-ck-link-external-url' => 'المسار',
+	'rte-ck-media-delete' => 'أزل',
+	'rte-ck-media-edit' => 'عدل',
+	'rte-ck-photoGallery-tooltipSlideshow' => 'هذا عرض الشرائح.',
+	'rte-ck-templateDropDown-label' => 'قالب',
+	'rte-ck-templateEditor-dialog-insert' => 'أدرج',
+	'rte-ck-templateEditor-dialog-magicWords' => 'كلمات سحرية',
+	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:كلمات سحرية',
+	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'الأكثر استخداما',
+	'rte-ck-templateEditor-editor-previewButton' => 'عاين',
+	'rte-ck-templateEditor-editor-previewTitle' => 'معاينة',
+);
+
 /** Asturian (Asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
 	'rte-ck-media-edit' => 'camudar',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'rte-ck-hoverPreview-comment-title' => 'Şərh',
+	'rte-ck-hoverPreview-delete' => 'sil',
+	'rte-ck-hoverPreview-edit' => 'redaktə',
+	'rte-ck-link-error-title' => 'Xəta',
+	'rte-ck-link-external-url' => 'URL',
+	'rte-ck-signature-label' => 'İmza',
+	'rte-ck-templateDropDown-label' => 'Şablon',
+	'rte-ck-templateEditor-dialog-insert' => 'Yerləşdirmək',
 );
 
 /** Belarusian (Беларуская)
@@ -245,9 +282,18 @@ $messages['bg'] = array(
 	'rte-ck-errorPopupTitle' => 'Грешка!',
 	'rte-ck-hoverPreview-delete' => 'изтриване',
 	'rte-ck-hoverPreview-edit' => 'редактиране',
+	'rte-ck-link-error-title' => 'Грешка',
+	'rte-ck-link-external-tab' => 'Външна препратка',
+	'rte-ck-link-external-url' => 'Адрес',
+	'rte-ck-link-internal-tab' => 'Вътрешна препратка',
+	'rte-ck-link-status-exists' => 'Страницата съществува',
+	'rte-ck-link-status-notexists' => 'Страницата не съществува',
+	'rte-ck-link-status-external' => 'Външна препратка',
 	'rte-ck-media-delete' => 'премахване',
 	'rte-ck-media-edit' => 'промяна',
 	'rte-ck-poll-add' => 'Добавяне на анкета',
+	'rte-ck-templateDropDown-label' => 'Шаблон',
+	'rte-ck-templateDropDown-title' => 'Избиране на шаблон',
 );
 
 /** Breton (Brezhoneg)
@@ -384,7 +430,7 @@ $messages['ca'] = array(
 	'rte-ck-link-status-external' => 'Enllaç extern',
 	'rte-ck-media-delete' => 'Treure',
 	'rte-ck-media-edit' => 'Modifica',
-	'rte-ck-modeSwitch-toSource' => 'Canviar a manera de font',
+	'rte-ck-modeSwitch-toSource' => 'Canviar a codi font',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Canviar a mode WYSIWYG',
 	'rte-ck-modeSwitch-error' => "S'ha produït un error en canviar el mode. Torneu-ho a intentar.",
 	'rte-ck-photoGallery-add' => 'Afegeix una galeria de fotos o un slideshow',
@@ -918,6 +964,59 @@ $messages['gl'] = array(
 	'rte-ck-widescreen-toggle' => 'Activar ou desactivar a pantalla completa',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'rte-ck-bucket-textAppearance' => 'Szöveg megjelenése',
+	'rte-ck-errorPopupTitle' => 'Hiba!',
+	'rte-ck-hoverPreview-comment-title' => 'Hozzászólás',
+	'rte-ck-hoverPreview-delete' => 'törlés',
+	'rte-ck-hoverPreview-edit' => 'szerkesztés',
+	'rte-ck-hoverPreview-media-notExisting' => 'A kép vagy a fájl nem létezik!',
+	'rte-ck-hoverPreview-template-intro' => 'Ez egy sablon.',
+	'rte-ck-hoverPreview-template-notExisting' => 'A sablon nem létezik!',
+	'rte-ck-hoverPreview-video-notExisting' => 'A videó nem létezik!',
+	'rte-ck-image-add' => 'Kép hozzáadása',
+	'rte-ck-image-confirmDelete' => 'Biztosan el szeretnéd távolítani ezt a képet a lapról?',
+	'rte-ck-link-add' => 'Hivatkozás hozzáadása',
+	'rte-ck-link-error-title' => 'Hiba',
+	'rte-ck-link-external-linkText' => 'Hivatkozás szövege',
+	'rte-ck-link-external-tab' => 'Külső hivatkozás',
+	'rte-ck-link-external-url' => 'URL-cím',
+	'rte-ck-link-internal-linkText' => 'Hivatkozás szövege',
+	'rte-ck-link-internal-pageName' => 'Lap neve:',
+	'rte-ck-link-internal-tab' => 'Belső hivatkozás',
+	'rte-ck-link-title' => 'Hivatkozás létrehozása vagy szerkesztése',
+	'rte-ck-link-label-target' => 'Céllap vagy URL-cím',
+	'rte-ck-link-label-display' => 'Megjelenítendő szöveg',
+	'rte-ck-link-label-internal' => 'A wiki egyik lapjára',
+	'rte-ck-link-label-external' => 'Egy külső hivatkozásra',
+	'rte-ck-link-status-checking' => 'Állapot ellenőrzése',
+	'rte-ck-link-status-exists' => 'A lap létezik',
+	'rte-ck-link-status-notexists' => 'A lap nem létezik',
+	'rte-ck-link-status-external' => 'Külső hivatkozás',
+	'rte-ck-media-delete' => 'eltávolítás',
+	'rte-ck-media-edit' => 'módosítás',
+	'rte-ck-photoGallery-tooltip' => 'Ez egy galéria.',
+	'rte-ck-poll-add' => 'Szavazás hozzáadása',
+	'rte-ck-signature-label' => 'Aláírás',
+	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Más sablon / varázsszó',
+	'rte-ck-templateDropDown-label' => 'Sablon',
+	'rte-ck-templateDropDown-title' => 'Válassz egy sablont',
+	'rte-ck-templateEditor-dialog-browse' => 'Sablon böngészése',
+	'rte-ck-templateEditor-dialog-insert' => 'Beszúrás',
+	'rte-ck-templateEditor-dialog-magicWords' => 'Varázsszavak',
+	'rte-ck-templateEditor-dialog-search' => 'Leggyakrabban használt',
+	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Válassz másik sablont',
+	'rte-ck-templateEditor-editor-parameters' => 'Paraméterek',
+	'rte-ck-templateEditor-editor-previewButton' => 'Előnézet',
+	'rte-ck-templateEditor-editor-previewTitle' => 'Előnézet',
+	'rte-ck-templateEditor-title' => 'Sablonszerkesztő',
+	'rte-ck-unlink' => 'Hivatkozás eltávolítása',
+	'rte-ck-video-add' => 'Videó hozzáadása',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -1244,6 +1343,57 @@ $messages['mk'] = array(
 	'rte-ck-spellchecker-moreSuggestions' => 'Повеќе предлози',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'rte-ck-bucket-controls' => 'നിയന്ത്രണസൗകര്യങ്ങൾ',
+	'rte-ck-errorPopupTitle' => 'പിഴവ്!',
+	'rte-ck-hoverPreview-comment-title' => 'അഭിപ്രായം',
+	'rte-ck-hoverPreview-confirmDelete' => 'ഇത് ഈ താളിൽ നിന്നും നീക്കം ചെയ്യണമെന്ന് ഉറപ്പാണോ?',
+	'rte-ck-hoverPreview-delete' => 'മായ്ക്കുക',
+	'rte-ck-hoverPreview-edit' => 'തിരുത്തുക',
+	'rte-ck-hoverPreview-media-notExisting' => 'ഈ ചിത്രം അല്ലെങ്കിൽ പ്രമാണം നിലവിലില്ല!',
+	'rte-ck-hoverPreview-template-intro' => 'ഇതൊരു ഫലകമാണ്.',
+	'rte-ck-hoverPreview-template-notExisting' => 'ഈ ഫലകം നിലവിലില്ല!',
+	'rte-ck-hoverPreview-video-notExisting' => 'ഈ വീഡിയോ നിലവിലില്ല!',
+	'rte-ck-image-add' => 'ഒരു ചിത്രം ചേർക്കുക',
+	'rte-ck-image-confirmDelete' => 'ഈ ചിത്രം ഈ താളിൽ നിന്നും നീക്കം ചെയ്യണമെന്ന് താങ്കൾക്കുറപ്പാണോ?',
+	'rte-ck-image-confirmDeleteTitle' => 'ഈ ചിത്രം നീക്കം ചെയ്യണോ?',
+	'rte-ck-link-error-badPageTitle' => 'ദയവായി താളിനൊരു തലക്കെട്ട് നൽകുക.',
+	'rte-ck-link-error-title' => 'പിഴവ്',
+	'rte-ck-link-external-tab' => 'പുറത്തേയ്ക്കുള്ള കണ്ണി',
+	'rte-ck-link-external-url' => 'യൂ.ആർ.എൽ.',
+	'rte-ck-link-internal-linkText' => 'കണ്ണിയാകേണ്ട എഴുത്ത്',
+	'rte-ck-link-internal-pageName' => 'താളിന്റെ പേര്',
+	'rte-ck-link-internal-tab' => 'ആന്തരിക കണ്ണി',
+	'rte-ck-link-title' => 'ഒരു കണ്ണി സൃഷ്ടിക്കുക അല്ലെങ്കിൽ തിരുത്തുക',
+	'rte-ck-link-label-target' => 'ലക്ഷ്യം വെയ്ക്കുന്ന താൾ അല്ലെങ്കിൽ യൂ.ആർ.എൽ.',
+	'rte-ck-link-label-display' => 'പ്രദർശിപ്പിക്കേണ്ട എഴുത്ത്',
+	'rte-ck-link-label-internal' => 'ഒരു വിക്കി താളിലേയ്ക്ക്',
+	'rte-ck-link-status-checking' => 'തൽസ്ഥിതി പരിശോധിക്കുന്നു',
+	'rte-ck-link-status-exists' => 'താൾ നിലവിലുണ്ട്',
+	'rte-ck-link-status-notexists' => 'താൾ നിലവിലില്ല',
+	'rte-ck-link-status-external' => 'പുറത്തേയ്ക്കുള്ള കണ്ണി',
+	'rte-ck-media-delete' => 'നീക്കം ചെയ്യുക',
+	'rte-ck-media-edit' => 'മാറ്റം വരുത്തുക',
+	'rte-ck-signature-add' => 'താങ്കളുടെ ഒപ്പ് ചേർക്കുക',
+	'rte-ck-signature-label' => 'ഒപ്പ്',
+	'rte-ck-table-alignNotSet' => 'സജ്ജമാക്കിയിട്ടില്ല',
+	'rte-ck-templateDropDown-chooseAnotherTpl' => 'മറ്റ് ഫലകം / മാന്ത്രികവാക്ക്',
+	'rte-ck-templateDropDown-label' => 'ഫലകം',
+	'rte-ck-templateDropDown-title' => 'ഒരു ഫലകം തിരഞ്ഞെടുക്കുക',
+	'rte-ck-templateEditor-dialog-insert' => 'ഉൾപ്പെടുത്തുക',
+	'rte-ck-templateEditor-dialog-magicWords' => 'മാന്ത്രികപദങ്ങൾ',
+	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:മാന്ത്രികപദങ്ങൾ',
+	'rte-ck-templateEditor-editor-parameters' => 'ചരങ്ങൾ',
+	'rte-ck-templateEditor-editor-previewButton' => 'എങ്ങനെയുണ്ടെന്നു കാണുക',
+	'rte-ck-templateEditor-editor-previewTitle' => 'എങ്ങനെയുണ്ടെന്നു കാണുക',
+	'rte-ck-unlink' => 'കണ്ണി നീക്കംചെയ്യുക',
+	'rte-ck-video-add' => 'ഒരു വീഡിയോ ചേർക്കുക',
+	'rte-ck-video-confirmDeleteTitle' => 'ഈ വീഡിയോ നീക്കംചെയ്യണോ?',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -1366,7 +1516,7 @@ $messages['nl'] = array(
 	'rte-ck-image-add' => 'Afbeelding toevoegen',
 	'rte-ck-image-confirmDelete' => 'Weet u zeker dat u de afbeelding van deze pagina wilt verwijderen?',
 	'rte-ck-image-confirmDeleteTitle' => 'Deze afbeelding verwijderen?',
-	'rte-ck-imagePlaceholder-confirmDelete' => 'Weet u zeker dat u reservering voor de afbeelding van deze pagina wilt verwijderen?',
+	'rte-ck-imagePlaceholder-confirmDelete' => 'Weet u zeker dat u de reservering voor de afbeelding van deze pagina wilt verwijderen?',
 	'rte-ck-imagePlaceholder-confirmDeleteTitle' => 'Deze reservering voor een afbeelding verwijderen?',
 	'rte-ck-imagePlaceholder-tooltip' => 'Dit is een reservering voor een afbeelding.',
 	'rte-ck-link-add' => 'Verwijzing toevoegen',
@@ -1425,13 +1575,27 @@ $messages['nl'] = array(
 	'rte-ck-video-add' => 'Video toevoegen',
 	'rte-ck-video-confirmDelete' => 'Weet u zeker dat u de video van deze pagina wilt verwijderen?',
 	'rte-ck-video-confirmDeleteTitle' => 'Deze video verwijderen?',
-	'rte-ck-videoPlaceholder-confirmDelete' => 'Weet u zeker dat u reservering voor de video van deze pagina wilt verwijderen?',
+	'rte-ck-videoPlaceholder-confirmDelete' => 'Weet u zeker dat u de reservering voor de video van deze pagina wilt verwijderen?',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Deze reservering voor een video verwijderen?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Dit is een reservering voor een video.',
 	'rte-ck-widescreen-toggle' => 'Breedbeeld in- of uitschakelen',
 	'rte-ck-poll-confirmDelete' => 'Weet u zeker dat u de peiling van deze pagina wilt verwijderen?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Deze peiling verwijderen?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Meer suggesties',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'rte-ck-hoverPreview-confirmDelete' => 'Weet je zeker dat je dit van deze pagina wilt verwijderen?',
+	'rte-ck-image-confirmDelete' => 'Weet je zeker dat je de afbeelding van deze pagina wilt verwijderen?',
+	'rte-ck-imagePlaceholder-confirmDelete' => 'Weet je zeker dat je de reservering voor de afbeelding van deze pagina wilt verwijderen?',
+	'rte-ck-photoGallery-confirmDelete' => 'Weet je zeker dat je de galerij van deze pagina wilt verwijderen?',
+	'rte-ck-templateEditor-editor-intro' => 'Wijzig de waarden aan de linkerkant en klik voor een voorvertoning. Klik als je klaar bent met bewerken op "OK".',
+	'rte-ck-video-confirmDelete' => 'Weet je zeker dat je de video van deze pagina wilt verwijderen?',
+	'rte-ck-videoPlaceholder-confirmDelete' => 'Weet je zeker dat je de reservering voor de video van deze pagina wilt verwijderen?',
+	'rte-ck-poll-confirmDelete' => 'Weet je zeker dat je de peiling van deze pagina wilt verwijderen?',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -1677,11 +1841,13 @@ $messages['pms'] = array(
 	'rte-ck-media-edit' => 'modìfica',
 	'rte-ck-modeSwitch-toSource' => 'Passé an manera sorgiss',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Cangia a manera WYSIWYG',
+	'rte-ck-modeSwitch-error' => "A l'é capitaje n'eror an mente dël cangiament ëd manera. Për piasì preuva torna.",
 	'rte-ck-photoGallery-add' => 'Gionté na galarìa ëd fòto o ëd diapositive',
 	'rte-ck-photoGallery-confirmDelete' => 'É-lo sigur ëd vorèj gavé la galarìa da sta pàgina?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Gavé sta galarìa?',
 	'rte-ck-photoGallery-tooltip' => "Costa a l'é na galarìa.",
 	'rte-ck-photoGallery-tooltipSlideshow' => "Costa a l'é na sequensa ëd diapositive.",
+	'rte-ck-poll-add' => 'Gionta un custionari',
 	'rte-ck-signature-add' => 'Gionta toa firma',
 	'rte-ck-signature-label' => 'Firma',
 	'rte-ck-table-alignNotSet' => 'Pa ampostà',
@@ -1711,6 +1877,9 @@ $messages['pms'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => "Gavé 's marcapòst për un filmà?",
 	'rte-ck-videoPlaceholder-tooltip' => "Sossì a l'é un marcapòst ëd filmà.",
 	'rte-ck-widescreen-toggle' => 'Cangé lë scren pien',
+	'rte-ck-poll-confirmDelete' => 'É-lo sigur ëd vorèj gavé ël custionari da sta pàgina?',
+	'rte-ck-poll-confirmDeleteTitle' => 'Gavé sto custionari?',
+	'rte-ck-spellchecker-moreSuggestions' => 'Pi sugeriment',
 );
 
 /** Pashto (پښتو)
@@ -1723,6 +1892,7 @@ $messages['ps'] = array(
 	'rte-ck-hoverPreview-edit' => 'سمول',
 	'rte-ck-image-add' => 'يو انځور ورګډول',
 	'rte-ck-link-add' => 'تړنه ورګډول',
+	'rte-ck-link-error-title' => 'تېروتنه',
 	'rte-ck-link-external-tab' => 'باندنۍ تړنه',
 	'rte-ck-link-internal-pageName' => 'د مخ نوم',
 	'rte-ck-link-internal-tab' => 'کورنۍ تړنه',
@@ -1731,6 +1901,7 @@ $messages['ps'] = array(
 	'rte-ck-signature-label' => 'لاسليک',
 	'rte-ck-templateDropDown-label' => 'کينډۍ',
 	'rte-ck-templateEditor-dialog-insert' => 'ورټومبل',
+	'rte-ck-templateEditor-dialog-magicWords' => 'کوډګريز وييونه',
 	'rte-ck-templateEditor-editor-previewButton' => 'مخليدنه',
 	'rte-ck-templateEditor-editor-previewTitle' => 'مخليدنه',
 	'rte-ck-video-add' => 'يوه ويډيو ورګډول',
@@ -1808,7 +1979,7 @@ $messages['pt'] = array(
 	'rte-ck-templateEditor-dialog-insert' => 'Inserir',
 	'rte-ck-templateEditor-dialog-magicWords' => 'Palavras mágicas',
 	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:Palavras mágicas',
-	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Usados com maior frequência',
+	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'As mais usadas',
 	'rte-ck-templateEditor-dialog-search' => 'Procurar uma predefinição',
 	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Escolha outra predefinição',
 	'rte-ck-templateEditor-editor-intro' => 'Altere os valores da esquerda e clique para antever o resultado. Quando tiver terminado de editar, clique "OK".',
@@ -1920,6 +2091,23 @@ $messages['pt-br'] = array(
 	'rte-ck-poll-confirmDelete' => 'Tem a certeza de que pretende remover a enquete desta página?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Remover esta enquete?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'rte-ck-link-internal-pageName' => 'Nume pagină',
+	'rte-ck-link-internal-tab' => 'Legătură internă',
+	'rte-ck-link-status-exists' => 'Pagina există',
+	'rte-ck-link-status-external' => 'Legătură externă',
+	'rte-ck-photoGallery-confirmDeleteTitle' => 'Eliminaţi această galerie?',
+	'rte-ck-poll-add' => 'Adaugă un sondaj',
+	'rte-ck-signature-add' => 'Adaugă semnătura ta',
+	'rte-ck-templateEditor-dialog-magicWords' => 'Cuvinte magice',
+	'rte-ck-templateEditor-editor-parameters' => 'Parametrii',
+	'rte-ck-unlink' => 'Elimină legătura',
+	'rte-ck-video-add' => 'Adaugă un videoclip',
 );
 
 /** Russian (Русский)
@@ -2181,6 +2369,14 @@ $messages['te'] = array(
 	'rte-ck-templateEditor-editor-previewTitle' => 'మునుజూపు',
 );
 
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'rte-ck-hoverPreview-edit' => 'edita',
+	'rte-ck-media-delete' => 'hasai',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -2385,9 +2581,28 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author NavaRose
+ * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'rte-ck-bucket-textAppearance' => 'Diện mạo văn bản',
+	'rte-ck-bucket-insert' => 'Chèn',
+	'rte-ck-bucket-controls' => 'Điều khiển',
+	'rte-ck-commentEditor-title' => 'Trình soạn thảo luận',
+	'rte-ck-errorPopupTitle' => 'Lỗi!',
+	'rte-ck-hoverPreview-codedElement-intro' => 'Xin vui lòng chuyển sang chế độ nguồn để chỉnh sửa!',
+	'rte-ck-hoverPreview-codedElement-title' => 'Mã hóa phần tử',
+	'rte-ck-hoverPreview-comment-intro' => 'Điều này chỉ có thể được nhìn thấy trong thời gian chỉnh sửa.',
+	'rte-ck-hoverPreview-comment-title' => 'Ý kiến',
+	'rte-ck-hoverPreview-confirmDelete' => 'Bạn có chắc bạn muốn loại bỏ nó khỏi trang này?',
+	'rte-ck-hoverPreview-delete' => 'xóa',
+	'rte-ck-hoverPreview-edit' => 'sửa đổi',
+	'rte-ck-hoverPreview-media-notExisting' => 'Hình ảnh hoặc tập tin này không tồn tại!',
+	'rte-ck-hoverPreview-template-intro' => 'Đây là một bản mẫu.',
+	'rte-ck-hoverPreview-template-notExisting' => 'Bản mẫu này không tồn tại!',
+	'rte-ck-hoverPreview-video-notExisting' => 'Đoạn phim này không tồn tại',
 	'rte-ck-image-add' => 'Chèn hình ảnh',
+	'rte-ck-image-confirmDelete' => 'Bạn có chắc bạn muốn bỏ hình ảnh từ trang này?',
+	'rte-ck-image-confirmDeleteTitle' => 'Bỏ hình ảnh này?',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Chuyển sang chế độ WYSIWYG',
 );
 
@@ -2395,6 +2610,7 @@ $messages['vi'] = array(
  * @author Hydra
  */
 $messages['zh-hans'] = array(
+	'rte-ck-errorPopupTitle' => '出现问题！',
 	'rte-ck-hoverPreview-delete' => '删除',
 	'rte-ck-image-add' => '添加一个照片',
 	'rte-ck-link-error-title' => '问题',

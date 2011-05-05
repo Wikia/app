@@ -11,6 +11,13 @@ $messages['en'] = array(
 	'imageserving-desc' => 'Selects images from a specified array of pages based on visual requirements',
 );
 
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'imageserving-desc' => '{{desc}}',
+);
+
 /** Asturian (Asturianu)
  * @author Xuacu
  */
@@ -69,6 +76,13 @@ $messages['it'] = array(
 	'imageserving-desc' => 'Seleziona le immagini da una lista specificata di pagine basata sulle esigenze visive',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'imageserving-desc' => 'Söhk Bellder us enem aanjajovve Saz vun Sigge uß, opjrond vun Aanforderunge aan et Ußsinn.',
+);
+
 /** Macedonian (Македонски) */
 $messages['mk'] = array(
 	'imageserving-desc' => 'Одбира слики од назначена низа страници зависно од визуелните потреби',
@@ -116,6 +130,13 @@ $messages['roa-tara'] = array(
 /** Russian (Русский) */
 $messages['ru'] = array(
 	'imageserving-desc' => 'Выбирает изображений из указанного массива страниц на основе визуальных требований',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'imageserving-desc' => 'Pumipili ng mga larawan mula sa isang tinukoy na hilera ng mga pahina batay sa mga pangangailangang pangmata',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

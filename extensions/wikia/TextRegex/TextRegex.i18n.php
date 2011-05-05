@@ -134,6 +134,13 @@ $messages['be-tarask'] = array(
 	'textregex-return-mainpage' => '[{{SERVER}}$1 вярнуцца да сьпісу]',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'textregex-select-default' => '-- избиране --',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
@@ -803,6 +810,13 @@ Försök igen.',
 	'textregex-select-regexlist' => 'gå till listan',
 	'textregex-invalid-regexid' => 'Ogiltig fras.',
 	'textregex-phrase-statistics' => "Statistik för \"'''\$1'''\" fras (antal poster: \$2)",
+);
+
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 hasai]',
 );
 
 /** Tagalog (Tagalog)

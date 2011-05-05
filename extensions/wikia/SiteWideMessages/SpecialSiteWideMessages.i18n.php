@@ -205,9 +205,51 @@ $messages['an'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'swm-list-table-lang' => 'اللغات',
+	'swm-yes' => 'نعم',
+	'swm-no' => 'لا',
+	'swm-error-no-such-wiki' => 'لا توجد ويكي كهذه!',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ * @author Vago
+ */
+$messages['az'] = array(
+	'sitewidemessages' => 'Geniş mesajlar saytı',
+	'swm-page-title-editor' => 'Geniş mesajlar saytı :: Redaktə',
+	'swm-page-title-preview' => 'Geniş mesajlar saytı :: Bax',
+	'swm-page-title-send' => 'Geniş mesajlar saytı :: Göndər',
+	'swm-page-title-sent' => 'Geniş mesajlar saytı :: Göndərildi',
+	'swm-page-title-dismiss' => 'Geniş mesajlar saytı :: Təmizlə',
+	'swm-page-title-list' => 'Geniş mesajlar saytı :: Siyahı',
+	'swm-label-edit' => 'Redaktə',
+	'swm-label-remove' => 'Çıxar',
+	'swm-label-sent' => 'Göndər',
+	'swm-label-list' => 'Siyahı',
+	'swm-label-recipient' => 'Qəbul edənlər',
+	'swm-label-recipient-wikis' => 'Vikilər',
+	'swm-label-recipient-users' => 'İstifadəçilər',
+	'swm-label-mode-wikis-all' => 'Bütün vikilər',
+	'swm-label-mode-users-all' => 'Bütün istifadəçilər',
+	'swm-label-mode-users-active' => 'Aktiv istifadəçilər',
+	'swm-label-mode-users-user' => 'Seçilmiş istifadəçi',
+	'swm-label-content' => 'Məzmun',
+	'swm-label-language' => 'Dil',
+	'swm-button-preview' => '[ Bax ]',
+	'swm-button-save' => '[ Yaddaşa ver ]',
+	'swm-button-new' => '[ Yeni ]',
+	'swm-list-no-messages' => 'Mesaj yoxdur.',
+	'swm-list-table-wiki' => 'Viki',
+	'swm-list-table-group' => 'Qrup',
+	'swm-list-table-removed' => 'Çıxarılıb',
+	'swm-list-table-tools' => 'Alətlər',
+	'swm-list-table-lang' => 'Dillər',
+	'swm-yes' => 'Bəli',
+	'swm-no' => 'Xeyr',
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
@@ -293,8 +335,16 @@ $messages['bg'] = array(
 	'swm-label-mode-wikis-wiki' => 'Избраното уики',
 	'swm-label-mode-users-all' => 'Всички потребители',
 	'swm-label-mode-users-active' => 'Активни потребители',
+	'swm-label-language' => 'Език',
+	'swm-list-no-messages' => 'Няма съобщения.',
+	'swm-list-table-id' => 'Номер',
+	'swm-list-table-wiki' => 'Уики',
+	'swm-list-table-tools' => 'Инструменти',
+	'swm-list-table-lang' => 'Езици',
 	'swm-yes' => 'Да',
 	'swm-no' => 'Не',
+	'swm-error-no-such-wiki' => 'Няма такова уики!',
+	'swm-error-no-such-user' => 'Посоченият потребител не съществува.',
 );
 
 /** Breton (Brezhoneg)
@@ -889,6 +939,7 @@ $messages['ha'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -896,11 +947,17 @@ $messages['hu'] = array(
 	'swm-label-edit' => 'Szerkesztés',
 	'swm-label-remove' => 'Eltávolítás',
 	'swm-label-sent' => 'Elküldve',
+	'swm-label-list' => 'Lista',
 	'swm-label-recipient' => 'Címzettek',
 	'swm-label-recipient-wikis' => 'Wikik',
 	'swm-label-recipient-users' => 'Felhasználók',
+	'swm-label-expiration' => 'Lejárati idő',
 	'swm-label-mode-wikis-all' => 'Összes wiki',
+	'swm-label-mode-wikis-hub' => 'Kiválasztott hub',
+	'swm-label-mode-wikis-wiki' => 'Kiválasztott wiki',
 	'swm-label-mode-users-all' => 'Összes felhasználó',
+	'swm-label-mode-users-active' => 'Aktív szerkesztők',
+	'swm-label-mode-users-group' => 'A csoporthoz tartozó felhasználók',
 	'swm-label-mode-users-user' => 'Kiválasztott felhasználó',
 	'swm-label-content' => 'Tartalom',
 	'swm-label-comment' => 'Megjegyzés',
@@ -1128,6 +1185,7 @@ $messages['kn'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
+	'swm-label-recipient-users' => 'Metmaacher',
 	'swm-label-comment' => 'Aanmerkung',
 	'swm-button-new' => '[ Neu ]',
 );
@@ -1323,6 +1381,32 @@ $messages['ms'] = array(
 	'swm-lang-other' => 'semua bahasa yang tinggal',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'swm-label-preview' => 'နမူနာ',
+	'swm-label-edit' => 'ပြင်​ဆင်​ရန်​',
+	'swm-label-remove' => 'ဖျက်ရန်',
+	'swm-label-sent' => 'ပို့',
+	'swm-label-list' => 'မှတ်တမ်း',
+	'swm-label-recipient-users' => 'အသုံးပြုသူများ',
+	'swm-label-mode-users-all' => 'အသုံးပြုသူအားလုံး',
+	'swm-label-mode-users-active' => 'လက်ရှိလုပ်ကိုင်နေသော အသုံးပြုသူများ',
+	'swm-label-content' => 'မာတိကာ',
+	'swm-label-comment' => 'မှတ်ချက်',
+	'swm-label-language' => 'ဘာသာ',
+	'swm-list-no-messages' => 'မက်ဆေ့ မရှိပါ',
+	'swm-list-table-sender' => 'ပေးပို့သူ',
+	'swm-list-table-group' => 'အုပ်စု',
+	'swm-list-table-expire' => 'သက်တမ်းကုန်',
+	'swm-list-table-removed' => 'ဖျက်ပြီး',
+	'swm-list-table-content' => 'မာတိကာ',
+	'swm-list-table-lang' => 'ဘာသာများ',
+	'swm-yes' => 'လုပ်မည်',
+	'swm-no' => 'မလုပ်ပါ',
+);
+
 /** Mazanderani (مازِرونی)
  * @author محک
  */
@@ -1331,6 +1415,7 @@ $messages['mzn'] = array(
 );
 
 /** Nepali (नेपाली)
+ * @author Bhawani Gautam
  * @author Bhawani Gautam Rhk
  */
 $messages['ne'] = array(
@@ -1406,6 +1491,14 @@ Dit kan niet ongedaan gemaakt worden.',
 	'swm-error-long-message' => 'Berichten hebben een limiet van vijfhonderd tekens.',
 	'swm-error-empty-group' => 'Voer de naam van de groep in.',
 	'swm-lang-other' => 'alle overgebleven talen',
+);
+
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'swm-msg-remove' => 'Weet je zeker dat je dit bericht wilt verwijderen?
+Dit kan niet ongedaan gemaakt worden.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -1587,13 +1680,14 @@ $messages['ps'] = array(
 	'swm-button-send' => '[ لېږل]',
 	'swm-button-save' => '[ خوندي کول]',
 	'swm-button-new' => '[ نوی]',
+	'swm-list-table-id' => 'پېژند',
 	'swm-list-table-sender' => 'لېږونکی',
 	'swm-list-table-wiki' => 'ويکي',
 	'swm-list-table-recipient' => 'ترلاسه کوونکی',
 	'swm-list-table-group' => 'ډله',
 	'swm-list-table-expire' => 'د پای نېټه',
 	'swm-list-table-date' => 'د لېږلو نېټه',
-	'swm-list-table-content' => 'مينځپانګه',
+	'swm-list-table-content' => 'منځپانګه',
 	'swm-list-table-tools' => 'اوزارونه',
 	'swm-list-table-lang' => 'ژبې',
 	'swm-yes' => 'هو',
@@ -1742,6 +1836,20 @@ $messages['pt-br'] = array(
 	'swm-lang-other' => 'todas as línguas restantes',
 );
 
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'swm-list-table-group' => 'Grup',
+	'swm-list-table-date' => 'Data trimiterii',
+	'swm-list-table-tools' => 'Unelte',
+	'swm-list-table-lang' => 'Limbi',
+	'swm-yes' => 'Da',
+	'swm-no' => 'Nu',
+	'swm-error-no-such-wiki' => 'Nu există un asemenea wiki!',
+	'swm-error-empty-group' => 'Introdu numele grupului.',
+);
+
 /** Russian (Русский)
  * @author Lockal
  * @author Александр Сигачёв
@@ -1878,6 +1986,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Lokal Profil
  * @author Tobulos1
  */
 $messages['sv'] = array(
@@ -1904,6 +2013,7 @@ $messages['sv'] = array(
 	'swm-label-language' => 'Språk',
 	'swm-button-lang-checkall' => '[ Kontrollera alla ]',
 	'swm-button-lang-checknone' => '[ Kontrollera ingen ]',
+	'swm-no' => 'Nej',
 );
 
 /** Swahili (Kiswahili)
@@ -1948,6 +2058,18 @@ $messages['te'] = array(
 	'swm-list-table-lang' => 'భాషలు',
 	'swm-yes' => 'అవును',
 	'swm-no' => 'కాదు',
+);
+
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'swm-label-edit' => 'Edita',
+	'swm-label-remove' => 'Hasai',
+	'swm-label-language' => 'Lian',
+	'swm-list-table-lang' => 'Lian sira',
+	'swm-yes' => 'Sin',
+	'swm-no' => 'Lae',
 );
 
 /** Tagalog (Tagalog)
