@@ -164,6 +164,8 @@ class SponsorshipDashboardReport {
 			$this->setId( $db->insertId() );
 			$db->commit();
 		}		
+
+
 		$this->saveSources();
 	}
 
@@ -209,7 +211,7 @@ class SponsorshipDashboardReport {
 	}
 
 	public function saveSources(){
-		
+
 		$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
 		$db->delete(
 			'specials.wmetrics_source',
@@ -220,6 +222,19 @@ class SponsorshipDashboardReport {
 				$source->save( $this->id );
 			}
 		}
+	}
+
+	public function getProgress(){
+
+		$wgMemc = $this->App->getGlobal('wgMemc');
+		$progress = $counter = 0;
+		foreach( $this->reportSources as $source ){
+			$result = $wgMemc->get( $source->getCacheKey() );
+			$progress = ( !empty( $result ) ) ? $progress + 1 : $progress;
+			$counter++;
+		}
+
+		return ( $counter == 0 ) ? 100 : ceil( $progress / $counter * 100 );
 	}
 
 	// builds array with filled forms;

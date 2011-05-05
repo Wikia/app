@@ -4,6 +4,9 @@ var SponsorshipDashboardEditor = {
 	currentIndex: 0,
 	sourceData: {},
 	chartCount: 0,
+	intId: null,
+	lockDisplay: false,
+	isError: false,
 	
 	init: function() {
 
@@ -12,9 +15,9 @@ var SponsorshipDashboardEditor = {
 		$( '.sd-addWikiStats' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetStatsForm' )} );
 		$( '.sd-addOneDot' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetOneDotForm' )} );
 		$( '.sd-addMobile' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetMobileForm' )} );
-		$( '.sd-save' ).click( function(){ SponsorshipDashboardEditor.gatherDataFromAllSources( true, false ) } );
-		$( '.sd-save-as-new' ).click( function(){ SponsorshipDashboardEditor.gatherDataFromAllSources( true, true ) } );
-		$( '.sd-preview' ).click( function(){ SponsorshipDashboardEditor.gatherDataFromAllSources( false, false ) } );
+		$( '.sd-save' ).click( function(){ SponsorshipDashboardEditor.generateSave( false ) } );
+		$( '.sd-save-as-new' ).click( function(){ SponsorshipDashboardEditor.generateSave( true ) } );
+		$( '.sd-preview' ).click( function(){ SponsorshipDashboardEditor.generatePreview() } );
 
 
 		$( '#sd-source' ).click( function(e){
@@ -74,49 +77,135 @@ var SponsorshipDashboardEditor = {
 		SponsorshipDashboardEditor.sourceCounter = SponsorshipDashboardEditor.sourceCounter + 1;
 	},
 
-	gatherDataFromAllSources: function ( save, asNew ){
+	generateSave: function ( asNew ){
+
 		SponsorshipDashboardEditor.sourceData = [],
 		$( 'form.sd-form' ).each( function( index ){
 			SponsorshipDashboardEditor.sourceData.push( $( this ).serialize() );
 		});
 
-		$().log( SponsorshipDashboardEditor.sourceData, 'test' );
-
 		SponsorshipDashboardEditor.chartCount = SponsorshipDashboardEditor.chartCount + 1;
-
-		$( '#debug' ).removeClass( 'small' );
-		
-		if( save == true ){
-			$( '#debug' ).addClass( 'throbber' );
-			$( '#debug' ).addClass( 'small' );
-			var axMethod = 'axSaveReport';
-		} else {
-			$( '#debug' ).addClass( 'throbber' );
-			var axMethod = 'axPreviewReport';
-		}
-
+		$( '#debug' ).addClass( 'throbber' );
+		$( '#debug' ).addClass( 'small' );
 		$( '#debug' ).show();
 		$( '#debug' ).empty();
 		$( '#debug' ).get(0).scrollIntoView();
+		$( '#progress').hide();
 
-		var data = {
+		$.post(
+			wgScript,
+			{
+				action: 'ajax',
+				articleId: wgArticleId,
+				method: 'axSaveReport',
+				rs: 'SponsorshipDashboardAjax',
+				chartCount : SponsorshipDashboardEditor.chartCount,
+				formData: SponsorshipDashboardEditor.sourceData,
+				asNew: asNew
+			},
+			function( axData ){
+				window.location.href = axData;
+			}
+		);
+	},
+
+	generatePreview: function (){
+
+		if ( SponsorshipDashboardEditor.intId != null ){
+			clearInterval( SponsorshipDashboardEditor.intId );
+		}
+		SponsorshipDashboardEditor.sourceData = [],
+		$( 'form.sd-form' ).each( function( index ){
+			SponsorshipDashboardEditor.sourceData.push( $( this ).serialize() );
+		});
+
+		SponsorshipDashboardEditor.chartCount = SponsorshipDashboardEditor.chartCount + 1;
+
+		$( '#debug' ).addClass( 'small' );
+		$( '#debug' ).hide();
+		$( '#debug' ).empty();
+		$( '#progress').show();
+		$( '#progress progress').attr( 'value', 0 );
+		$( '#progressValue').html( 0 );
+		$( '#progress' ).get(0).scrollIntoView();
+		
+		var objData = {
 			action: 'ajax',
 			articleId: wgArticleId,
-			method: axMethod,
+			method: 'axPreviewReport',
 			rs: 'SponsorshipDashboardAjax',
 			chartCount : SponsorshipDashboardEditor.chartCount,
-			formData: SponsorshipDashboardEditor.sourceData,
-			asNew: asNew
-		};
-		$().log( data, 'test' );
-		$.post( wgScript, data,
-		function( axData ){
-			if( save == true ){
-				window.location.href = axData;
-			} else {
-				$( '#debug' ).html( axData );
+			formData: SponsorshipDashboardEditor.sourceData
+		}
+
+		SponsorshipDashboardEditor.isError = false;
+
+		$.ajax({
+			url: wgScript,
+			data: objData,
+			type: 'POST',
+			success: function( axData ){
+				SponsorshipDashboardEditor.displayChart( axData );
+			},
+			error: function(){
+				SponsorshipDashboardEditor.isError = true;
 			}
 		});
+		
+		SponsorshipDashboardEditor.lockDisplay = false;
+		SponsorshipDashboardEditor.intId = setInterval( progress, 5000 );
+
+		function progress(){
+			$.post(
+				wgScript,
+				{
+					action: 'ajax',
+					articleId: wgArticleId,
+					method: 'axReportProgress',
+					rs: 'SponsorshipDashboardAjax',
+					chartCount : SponsorshipDashboardEditor.chartCount,
+					formData: SponsorshipDashboardEditor.sourceData
+				},
+				function( axProgressData ){
+					if ( SponsorshipDashboardEditor.lockDisplay == false ){
+						$( '#progress progress').attr( 'value', axProgressData );
+						$( '#progressValue').html( axProgressData );
+						if ( axProgressData == 100 && SponsorshipDashboardEditor.isError == true ) {
+							$.ajax({
+								url: wgScript,
+								data: objData,
+								type: 'POST',
+								success: function( axData ){
+									SponsorshipDashboardEditor.displayChart( axData );
+								},
+								error: function(){
+									SponsorshipDashboardEditor.displayErrorMsg();
+								}
+							});
+						}
+					}
+				}
+			);
+		}
+	},
+
+	displayChart: function ( chartHtml ){
+		$( '#progress progress').attr( 'value', 100 );
+		$( '#progressValue').html( 100 );
+		
+		SponsorshipDashboardEditor.lockDisplay = true;
+		if ( SponsorshipDashboardEditor.intId != null ){
+			clearInterval( SponsorshipDashboardEditor.intId );
+		}
+		$( '#debug' ).show();
+		$( '#debug' ).get(0).scrollIntoView();
+		$( '#debug' ).removeClass( 'small' );
+		$( '#debug' ).html( chartHtml );
+		$( '#progress').hide();
+	},
+
+	displayErrorMsg: function (){
+		alert( 'error' );
 	},
 	
 	validatorNumber: function (){

@@ -404,7 +404,6 @@ class SponsorshipDashboard extends SpecialPage {
 
 		$report = F::build('SponsorshipDashboardReport' , array( $id ) );
 		$report->setId( $id );
-
 		$report->loadReportParams();
 		$report->loadSources();
 
@@ -414,6 +413,7 @@ class SponsorshipDashboard extends SpecialPage {
 		$wgOut->addHTML(
 			$chart->getHTML()
 		);
+		
 		$wgOut->addHTML(
 			$table->getHTML()
 		);

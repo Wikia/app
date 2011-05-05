@@ -1,59 +1,84 @@
 @import "../../../../skins/oasis/css//core/color";
 
+.sponsorship-dashboard-panel-chart {
+	margin-top: 35px;
+	margin-left: 10px;
+	height: 400px;
+}
 
-.sponsorship-dashboard-panel {
-	height: 500px;
-	float: left;
-	&.left {	
-		width: 290px;
-		margin-top: 35px;
-		margin-left: 10px;
-		height: 400px;
-	}
-	&.right {
-		float:left;
-		width: 600px;
+.sponsorship-dashboard-panel-variables {
+	margin: 25px 0  0 35px;
+}
+
+.sponsorship-dashboard-panel-header {
+	height: 60px;
+	margin: 20px 35px 0px 35px;
+	width: 910px;
+	font-size: 12px;
 	
-		.sponsorship-dashboard-panel-header {
-			height: 60px;
-			width: 660px;
-			margin: 0px;
-
-			.datepicker {
-				float: left;
-				padding: 5px;
-
-				&.left {
-					margin-left: 50px;
-				}
-			}
-		}
-
-		.sponsorship-dashboard-panel-body {
-/*			position: absolute;*/
-		}
-
-		.sponsorship-dashboard-panel-cachedate {
-			font-style: italic;
-			font-size: 11px;
-			float: right;
-			
-		}
+	.datepicker {
+		float: left;
+		padding: 5px;
 	}
 }
 
-.placeholder {
-	width:630px;
-	height:400px;
+.sponsorship-dashboard-actions {
+	height: 30px;
+	text-align: right;
+	.wikia-menu-button {
+		margin-right: 45px;
+	}
+}
+
+.sd-select-deselect-all {
+	margin-top: 15px;
+}
+
+input[type="checkbox"] {
+	margin: 5px;
+	padding: 0px;
+}
+
+.colorHolder {
+	width: 23px;
+	height: 23px;
+	display: inline-block;
+	margin-top:2px;
+}
+
+.sponsorship-dashboard-panel-body {
 	margin-left: 20px;
+}
+
+.sponsorship-dashboard-panel-cachedate {
+	font-style: italic;
+	font-size: 11px;
+	text-align: right;
+	height: 40px;
+	margin-right: 45px;
+	width: 910px;
+}
+
+.sd-variable-wrapper {
+	width: 450px;
+	display: inline-block;
+}
+
+.placeholder {
+	width:930px;
+	height:400px;
 }
 
 h2.title {
 	margin: 40px 0 10px 0;
 }
 
-div.description {
-	margin: 0px 0px 20px 10px;
+div.sponsorship-dashboard-description {
+	margin: 0px 35px 0px 35px;
+	font-size: 13px;
+	strong.bigFont {
+		font-size: 16px;
+	}
 }
 
 .overviewWrapper {
@@ -64,17 +89,18 @@ div.description {
 		width:200px;
 		height:35px;
 		cursor:col-resize;
+		float: right;
+		margin-right: 9px;
 	}
 
 	.overviewLabel {
 		margin-left: 10px;
 		width:200px;
+		text-align: right;
+		margin-right: 15px;
+		line-height: 30px;
+		height: 20px;
 	}
-}
-.colorHolder {
-	width: 20px;
-	display: inline-block;
-	margin-top:2px;
 }
 
 .toolTip {
@@ -153,10 +179,14 @@ ul.tabs {
 .sponsorship-dashboard-table {
 
 	font-size: 12px;
-	width: 100%;
-
+	width: 910px;
+	margin: 5px 35px;
 	thead {
 		font-weight: bold;
+		line-height: 14px;
+		td {
+			vertical-align: top;
+		}
 	}
 	td {
 		padding: 5px;

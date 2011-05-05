@@ -248,9 +248,9 @@ abstract class SponsorshipDashboardSource {
 	public function save( $reportId ) {
 		Wikia::log( __METHOD__, 'JKU', 'saveMe');
 		$this->setReportId( $reportId );
-
+		
 		if ( $this->saveable && !empty( $this->reportId ) ) {
-			
+
 			$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
 
 			$array = array(
@@ -444,6 +444,8 @@ abstract class SponsorshipDashboardSource {
 			return array();
 		}
 
+		var_dump( array_flip( SponsorshipDashboardService::getPopularHubs( true ) ) );
+
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$res = $dbr->query( 'SELECT id, name FROM city_tag', __METHOD__);
 		$returnArray = array();
@@ -455,7 +457,8 @@ abstract class SponsorshipDashboardSource {
 				}
 			}
 		}
-		
+		var_dump( $returnArray );
+
 		return $returnArray;
 	}
 

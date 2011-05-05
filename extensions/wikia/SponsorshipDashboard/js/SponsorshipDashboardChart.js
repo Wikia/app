@@ -69,15 +69,18 @@ var SponsorshipDashboard = {
 		//insert checkboxes
 		this.choiceContainer = $('#choices' + this.chartId);
 		this.log(this.datasets);
+		var choiceContainerHtml = this.choiceContainer.html();
+		this.choiceContainer.html('');
 		$.each(this.datasets, function(key, val) {
 			var tmpText = '<div class="colorHolder" style="background-color: ' + SponsorshipDashboard.predefinedColors[val.color] +'"><input type="checkbox" name="' + key + '" ';
 			if ($.inArray(key, SponsorshipDashboard.hiddenSeries) == -1) {
 				tmpText += ' checked="checked"';
 			}
-			tmpText = tmpText +' id="id' + key + SponsorshipDashboard.chartId + '"></div><label for="id' + key + SponsorshipDashboard.chartId + '"> ' + val.label + '</label><br/>';
+			tmpText = '<div class="sd-variable-wrapper">' + tmpText +' id="id' + key + SponsorshipDashboard.chartId + '"></div><label for="id' + key + SponsorshipDashboard.chartId + '"> ' + val.label + '</label></div>';
 
 			SponsorshipDashboard.choiceContainer.append(tmpText);
 		});
+		SponsorshipDashboard.choiceContainer.append( choiceContainerHtml );
 
 		//bindings
 		this.choiceContainer.find('input').add('#sponsorshipDashboardShowTrends').click(this.plotAccordingToChoices);

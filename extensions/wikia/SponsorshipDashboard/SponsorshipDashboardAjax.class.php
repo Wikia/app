@@ -101,6 +101,19 @@ class SponsorshipDashboardAjax {
 		}
 	}
 
+	static public function axReportProgress() {
+
+		$SponsorshipDashboard = new SponsorshipDashboard();
+		if ( $SponsorshipDashboard->isAllowed() ){
+			$report = new SponsorshipDashboardReport();
+			$report->fillFromSerializedData( serialize( $_POST['formData'] ) );
+			$report->lockSources();
+			echo $report->getProgress();
+		} else {
+			echo wfMsg('sponsorship-dashboard-not-allowed');
+		}
+	}
+
 	static public function axDownloadCSV() {
 
 		$SponsorshipDashboard = new SponsorshipDashboard();

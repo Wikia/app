@@ -211,7 +211,11 @@ $messages['en'] = array(
 	'sponsorship-dashboard-download-csv' => 'Download CSV file',
 	'sponsorship-dashboard-save-as-new' => 'Save as new',
 	'sponsorship-dashboard-source-global' => 'data for all wikis',
-	'sponsorship-dashboard-source-max-elements' => 'number of top results'
+	'sponsorship-dashboard-source-max-elements' => 'number of top results',
+	'sponsorship-dashboard-compleat' => '% compleated',
+	'sponsorship-dashboard-select-all' => 'select add',
+	'sponsorship-dashboard-deselect-all' => 'deselect all',
+	'sponsorship-dashboard-download' => 'extra actions'
 );
 
 /** Message documentation (Message documentation)
