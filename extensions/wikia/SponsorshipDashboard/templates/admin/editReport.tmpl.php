@@ -1,6 +1,10 @@
 <!-- s:<?= __FILE__ ?> -->
 <!-- MAIN-PAGE -->
 
+<div id="progress">
+	<progress value="0" max="100"></progress>
+	<span> <div id="progressValue"></div><?=wfMsg("sponsorship-dashboard-compleat" ); ?> </span>
+</div>
 <div id="debug">
 </div>
 <h2> <?=wfMsg('sponsorship-dashboard-report-general-ptions'); ?> </h2>

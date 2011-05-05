@@ -19,13 +19,22 @@ class SponsorshipDashboardService extends Service {
 			: F::app()->getGlobal( 'wgStatsDB' );
 	}
 
-	static function getPopularHubs(){
+	static function getPopularHubs( $all = false ){
 
 		$wgCityId = WF::build( 'App' )->getGlobal( 'wgCityId' );
 		$wgHubsPages = WF::build( 'App' )->getGlobal( 'wgHubsPages' );
 
+		if ( empty( $wgHubsPages ) || !is_array( $wgHubsPages ) || !isset( $wgHubsPages['en'] ) ) {
+			return array();
+		}
+
 		$wikiFactoryTags = new WikiFactoryTags( $wgCityId );
-		$cityTags = $wikiFactoryTags->getTags();
+		if ( $all ){
+			$cityTags = $wikiFactoryTags->getAllTags();
+			$cityTags = $cityTags['byid'];
+		} else {
+			$cityTags = $wikiFactoryTags->getTags();
+		}
 
 		if ( empty( $cityTags ) ){
 			Wikia::log( __METHOD__ , false, "City [{$wgCityId}] has no tags" );

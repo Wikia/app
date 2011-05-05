@@ -146,6 +146,18 @@ form.sd-sub-form{
 	}
 }
 
+#progress {
+	display: none;
+	text-align: center;
+	width: 100%
+	progress {
+		width: 500px;
+
+	}
+	div {
+		display: inline;
+	}
+}
 
 
 
