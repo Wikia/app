@@ -620,19 +620,10 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			// recalculate dimensions (RT #59355)
 			foreach ($this->mImages as $index => $image) {
-				if (!empty($heights[$index]) && !empty($widths[$index])) {
-					//fix #59355, min() added to let borders wrap images with smaller width
-					//fix #63886, round ( $tmpFloat ) != floor ( $tmpFloat ) added to check if thumbnail will be generated from proper width
-					$tmpFloat = ( $widths[$index] * $height / $heights[$index] );
-					$widths[$index] = min( $widths[$index], floor( $tmpFloat ) );
-					$heights[$index] = min( $height, $heights[$index] );
-					if ( round ( $tmpFloat ) != floor ( $tmpFloat ) ){
-						$heights[$index] --;
-					}
-				} else {
-					$widths[$index] = $thumbSize;
-					$heights[$index] = $height;
-				}
+				$dimensions = WikiaPhotoGalleryHelper::getThumbnailDimensions( $fileObjectsCache[$index], $thumbSize, $height, true );
+
+				$heights[$index] = $dimensions['height'];
+				$widths[$index] = $dimensions['width'];
 			}
 		}
 
