@@ -212,8 +212,8 @@ $messages['en'] = array(
 	'sponsorship-dashboard-save-as-new' => 'Save as new',
 	'sponsorship-dashboard-source-global' => 'data for all wikis',
 	'sponsorship-dashboard-source-max-elements' => 'number of top results',
-	'sponsorship-dashboard-compleat' => '% compleated',
-	'sponsorship-dashboard-select-all' => 'select add',
+	'sponsorship-dashboard-compleat' => '% complete',
+	'sponsorship-dashboard-select-all' => 'select all',
 	'sponsorship-dashboard-deselect-all' => 'deselect all',
 	'sponsorship-dashboard-download' => 'extra actions'
 );
