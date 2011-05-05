@@ -48,7 +48,7 @@ class FacebookApiException extends Exception
   /**
    * Return the associated result object returned by the API server.
    *
-   * @returns Array the result from the API server
+   * @return Array the result from the API server
    */
   public function getResult() {
     return $this->result;
@@ -79,7 +79,7 @@ class FacebookApiException extends Exception
   /**
    * To make debugging easier.
    *
-   * @returns String the string representation of the error
+   * @return String the string representation of the error
    */
   public function __toString() {
     $str = $this->getType() . ': ';

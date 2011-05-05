@@ -57,7 +57,7 @@ class Phalanx {
 	 * @author Marooned <marooned at wikia-inc.com>
 	 *
 	 * @param $typemask bit mask of types
-	 * @returns Array of strings with human-readable names
+	 * @return Array of strings with human-readable names
 	 */
 	static public function getTypeNames( $typemask ) {
 

@@ -133,7 +133,7 @@ class ContentBlock {
 	 * @author Marooned <marooned at wikia-inc.com>
 	 *
 	 * @param $
-	 * @returns
+	 * @return
 	 */
 	private static function applyWhitelist($text) {
 		wfProfileIn( __METHOD__ );

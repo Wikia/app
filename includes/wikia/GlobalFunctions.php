@@ -993,7 +993,7 @@ function wfGetEmailPostbackToken($emailId, $emailAddr){
  *
  * @author tor
  *
- * @returns boolean
+ * @return boolean
  */
 function wfAutomaticReadOnly() {
 	global $wgReadOnly;

@@ -1638,7 +1638,7 @@ function toggleDisplay(id, type) {
    *
    * Note that at least one of the (uid, aids) parameters must be specified.
    *
-   * @returns an array of album objects.
+   * @return an array of album objects.
    */
   public function &photos_getAlbums($uid, $aids) {
     return $this->call_method('facebook.photos.getAlbums',
