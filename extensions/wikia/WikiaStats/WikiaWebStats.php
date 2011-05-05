@@ -59,7 +59,7 @@ function ajaxOneDot (&$bottomScriptText) {
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/WikiaStats/js/WikiaStats.js?$wgStyleVersion\"></script>\n" );
 
-		$bottomScriptText .= '<script type="text/javascript">/*<![CDATA[*/OneDot.track()/*]]>*/</script>';
+		$bottomScriptText .= "<script type=\"text/javascript\" src=\"$url\"></script>";
 		$bottomScriptText .= '<noscript><img src="'.$url.'" width="1" height="1" border="0" alt="" /></noscript>';
 		$bottomScriptText .= "\n";
 	}
