@@ -24,7 +24,7 @@ class ExternalStoreRiak {
 	/**
 	 * get riak database handler
 	 *
-	 * @acccess private
+	 * @access private
 	 */
 	private function getClient() {
 
