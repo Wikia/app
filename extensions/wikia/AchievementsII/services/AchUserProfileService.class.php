@@ -23,10 +23,7 @@ class AchUserProfileService {
     	if(
 		in_array( strtolower( $wgUser->getSkin()->getSkinName() ), array( 'monaco', 'oasis' ) ) &&
 		$this->mUserOwner &&
-		
-		//check for blocked users/bots
-		(!$this->mUserOwner->isBlocked() && !in_array( $this->mUserOwner->getName(), $wgWikiaBotLikeUsers )) &&
-
+		AchAwardingService::canEarnBadges( $this->mUserOwner ) &&
 		$this->mUserOwner->isLoggedIn() &&
 		!($wgUser->getId() == $this->mUserOwner->getId() && $wgUser->getOption('hidepersonalachievements'))) {
 

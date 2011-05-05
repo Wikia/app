@@ -677,6 +677,7 @@ class AchAwardingService {
 		
 		if (
 			$user->isAnon() ||
+			$user->isBlocked() ||
 			( $user->isBot() || in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) ||
 			/*
 			 * certain users (like staff and helpers) should not earn badges
