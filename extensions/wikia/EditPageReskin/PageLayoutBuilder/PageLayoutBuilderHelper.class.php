@@ -69,7 +69,7 @@ class PageLayoutBuilderHelper {
 	 * copyLayout - use by task to copy layouts from commuinty
 	 * 
 	 * @author Tomasz Odrobny
-	 * @params Title
+	 * @param Title
 	 * @return Parser
 	 */
 	
