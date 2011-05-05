@@ -21,6 +21,10 @@ class WikiaPhotoGalleryHelper {
 	const STRICT_IMG_WIDTH_PREV = 320;
 	const STRICT_IMG_HEIGHT_PREV = 157;
 
+	// transofmration modes for getThumbnailDimentions method
+	const THUMB_SHRINK = 'shrink';
+	const THUMB_CROP = 'crop';
+
 	/**
 	 * Used to store wikitext between calls to useDefaultRTEPlaceholder and renderGalleryPlaceholder
 	 */
@@ -207,27 +211,41 @@ class WikiaPhotoGalleryHelper {
 	}
 
 	/**
-	 * Return dimensions for thumbnail of given image to fit given area (handle "crop" attribute)
+	 * Return dimensions for thumbnail of given image to fit given area
+	 *
+	 * @param $img LocalFile object
+	 * @param $maxWidth int
+	 * @param $maxHeight int
+	 * @param $transform mixed boolean or string, possible values: 'crop', 'shrink' (defaults to 'crop' on true)
 	 */
-	static public function getThumbnailDimensions($img, $maxWidth, $maxHeight, $crop = false) {
+	static public function getThumbnailDimensions($img, $maxWidth, $maxHeight, $transform = false) {
 		wfProfileIn(__METHOD__);
 
-		// image has to fit width x height box
-		$thumbParams = array(
-			'height' => min($img->getHeight(), $maxHeight),
-			'width' => min($img->getWidth(), $maxWidth),
-		);
-
-		// support "crop" attribute
-		if (!empty($crop)) {
-			//avoid division by zero #59972
+		// image just has to fit width x height box
+		if ( empty( $transform ) ) {
+			$thumbParams = array(
+				'height' => min($img->getHeight(), $maxHeight),
+				'width' => min($img->getWidth(), $maxWidth),
+			);
+		} else {
 			$widthResize = (!empty($maxWidth)) ? $img->getWidth() / $maxWidth : 1;
 			$heightResize = (!empty($maxHeight)) ? $img->getHeight() / $maxHeight : 1;
 
-			$resizeRatio = max($widthResize, $heightResize);
+			// default, prevents division by zero
+			$resizeRatio = 1;
 
-			//avoid division by zero
-			if(!$resizeRatio) $resizeRatio = 1;
+			switch ( $transform ) {
+				case self::THUMB_SHRINK:
+					// shirnk to fit
+					// @TODO should probably also handle a situation where only one constraint is given
+					$resizeRatio = max( $widthResize, $heightResize );
+					break;
+				case self::THUMB_CROP:
+				default:
+					// crop to fit
+					$resizeRatio = min($widthResize, $heightResize);
+					break;
+			}
 
 			$thumbParams = array(
 				'height' => min($img->getHeight(), round($img->getHeight() / $resizeRatio)),

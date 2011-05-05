@@ -617,10 +617,9 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			// limit height (RT #59355)
 			$height = min($height, $thumbSize);
-
 			// recalculate dimensions (RT #59355)
 			foreach ($this->mImages as $index => $image) {
-				$dimensions = WikiaPhotoGalleryHelper::getThumbnailDimensions( $fileObjectsCache[$index], $thumbSize, $height, true );
+				$dimensions = WikiaPhotoGalleryHelper::getThumbnailDimensions( $fileObjectsCache[$index], $thumbSize, $height, WikiaPhotoGalleryHelper::THUMB_SHRINK );
 
 				$heights[$index] = $dimensions['height'];
 				$widths[$index] = $dimensions['width'];
@@ -712,7 +711,6 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		foreach ($this->mImages as $index => $imageData) {
-
 			if ($perRow != 'dynamic' && ($index % $perRow) == 0){
 				$html .= Xml::openElement('div', array('class' => 'wikia-gallery-row'));
 			}
