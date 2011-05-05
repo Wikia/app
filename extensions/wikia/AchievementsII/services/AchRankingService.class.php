@@ -39,25 +39,27 @@ class AchRankingService {
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 			$res = $dbr->select('ach_user_score', 'user_id, score', array('wiki_id' => $wgCityId), __METHOD__, $rules);
 			$rankingSnapshot = ($compareToSnapshot) ? $this->loadFromSnapshot() : null;
-			$positionCounter = 1;
+			$position = 0;
+			$counter = 1;
 			$prevScore = -1;
 			$prevPosition = -1;
 			
 			while ( $row = $dbr->fetchObject( $res ) ) {
 				$user = User::newFromId($row->user_id);
-				
+					
 				if ( $user && AchAwardingService::canEarnBadges( $user ) ) {
 					// If this user has the same score as previous user, give them the same (lower) rank (RT#67874).
-					$position = (($prevScore == $row->score) && ($prevPosition != -1))? $prevPosition : $positionCounter;
+					if ( $prevScore != $row->score ) {
+						$position++;
+					}
 					
 					$ranking[] = new AchRankedUser($user, $row->score, $position, ($rankingSnapshot != null && isset($rankingSnapshot[$user->getId()])) ? $rankingSnapshot[$user->getId()] : null);
 					
-					$prevPosition = $position;
+					$counter++;
 					$prevScore = $row->score;
-					$positionCounter++;
 				}
 				
-				if ( $limit > 0 && $positionCounter == $limit ) break;
+				if ( $limit > 0 && $counter == $limit ) break;
 			}
 			
 			$dbr->freeResult($res);
@@ -92,7 +94,7 @@ class AchRankingService {
 			$ranking = $this->getUsersRanking();
 
 			foreach($ranking as $position => $rankedUser) {
-				if($rankedUser->getId() == $user->getId()) return ++$position;
+				if($rankedUser->getId() == $user->getId()) return $rankedUser->getCurrentRanking();
 			}
 
 			return count($ranking) + 1;
@@ -161,7 +163,7 @@ class AchRankingService {
 		while(($row = $dbr->fetchObject($res)) && (count($badges) <= $limit)) {
 			$user = User::newFromId($row->user_id);
 
-			if($user && !$user->isBlocked() && !in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) {
+			if( $user && AchAwardingService::canEarnBadges( $user ) ) {
 				$badges[] = array('user' => $user, 'badge' => new AchBadge($row->badge_type_id, $row->badge_lap, $row->badge_level), 'date' => $row->date);
 			}
 		}
