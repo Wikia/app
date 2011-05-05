@@ -34,12 +34,16 @@ $messages['en'] = array(
 	'sotd-error-song-undefined' => 'Please enter a song name',
 	'sotd-error-song-unknown' => 'The lyrics page does not exist',
 	'sotd-error-reason-undefined' => 'Please provide a reason',
+	'sotd-error-reason-short' => 'The reason has to be at least 50 characters long',
 	'sotd-error-prefdate-invalid' => 'The preferred date is invalid',
 	'sotd-error-prefdate-past' => 'The preferred date lies in the past',
+	'sotd-error-prefdate-soon' => 'You need an occasion for a date within the next two weeks',
 	'sotd-links-addone' => 'Add a nomination',
+	'sotd-links-edit' => 'Edit',
 	'sotd-links-view' => 'View nominations',
 	'sotd-links-manage' => 'Manage',
 	'sotd-links-refresh' => 'Refresh',
+	'sotd-links-queue' => 'Show queue',
 	'sotd-edit-nosuchtoken' => 'There is no nomination with that token.',
 	'sotd-edit-token' => 'Edit token',
 	'sotd-edit-preview' => 'Preview',
@@ -47,8 +51,9 @@ $messages['en'] = array(
 	'sotd-edit-success-review' => 'The nomination was reviewed successfully.',
 	'sotd-edit-failure' => 'The nomination could not be edited.',
 	'sotd-edit-explain' => "Your nomination was declined so far, but that doesn't mean it can't be used later.<br/>
-	Most likely, it was just missing both the GoEar and YouTube link. It'll frequently be rechecked by our managers.<br/>
-	As soon as it is available on one of the two websites it'll be modified by them and then accepted.",
+	Maybe your reason was too short or too common and fits to any song. Feel free to nominate it again with a more detailed reason.<br/>
+	If that doesn't apply to your nomination, it was maybe just missing both the GoEar and YouTube link.<br/>
+	As soon as it is available on one of the two websites we will modify and then accept it.",
 	'sotd-edit-toolate' => 'The nomination already has been assigned a final status. It cannot be edited or deleted anymore.',
 	'sotd-deletion-success' => 'The nomination was deleted successfully.',
 	'sotd-deletion-failure' => 'The nomination could not be deleted.',
@@ -70,13 +75,14 @@ $messages['en'] = array(
 	'sotd-status-4' => 'Accepted',
 	'sotd-action-unknown' => 'You performed an unknown action:',
 	'sotd-back-to-page' => '[[$1|Back to the page]]',
+	'sotd-already-exists' => "Sorry, the song you chose is already nominated.
+	
+	[[$1|Nominate a different song]]",
 	'sotd-thank-you' => "'''Thanks!''' Your nomination was added to the suggestions for our '''[[LyricWiki:Song of the Day|Song of the Day]]'''.
 
 	This is your personal token to your nomination: '''$1'''<br/>
 	It allows you to check, edit or withdraw your nomination. Please keep the token if you want to perform one of these actions.<br/>
-	Keep in mind changes are only possible until your nomination was reviewed and added to the queue.
-
-	[[$2|Add another song]]",
+	Keep in mind changes are only possible until your nomination was reviewed and added to the queue.",
 );
 
 $messages['de'] = array(
@@ -112,12 +118,16 @@ $messages['de'] = array(
 	'sotd-error-song-undefined' => 'Bitte gib den Namen eines Songs ein',
 	'sotd-error-song-unknown' => 'Die Lyricsseite existiert nicht',
 	'sotd-error-reason-undefined' => 'Bitte gib einen Grund an',
+	'sotd-error-reason-short' => 'Der Grund muss mindestens 50 Zeichen lang sein',
 	'sotd-error-prefdate-invalid' => 'Das bevorzugte Datum ist ungültig',
 	'sotd-error-prefdate-past' => 'Das bevorzugte Datum liegt in der Vergangenheit',
+	'sotd-error-prefdate-soon' => 'Du brauchst einen Anlass für ein Datum innerhalb der nächsten 2 Wochen',
 	'sotd-links-addone' => 'Eine Nominierung hinzufügen',
+	'sotd-links-edit' => 'Bearbeiten',
 	'sotd-links-view' => 'Nominierungen ansehen',
 	'sotd-links-manage' => 'Verwalten',
 	'sotd-links-refresh' => 'Aktualisieren',
+	'sotd-links-queue' => 'Queue anzeigen',
 	'sotd-edit-nosuchtoken' => 'Es gibt keine Nominierung mit diesem Token.',
 	'sotd-edit-token' => 'Bearbeitungstoken',
 	'sotd-edit-preview' => 'Vorschau',
@@ -125,8 +135,9 @@ $messages['de'] = array(
 	'sotd-edit-success-review' => 'Die Nominierung wurde erfolgreich überarbeitet.',
 	'sotd-edit-failure' => 'Die Nominierung konnte nicht bearbeitet werden.',
 	'sotd-edit-explain' => 'Deine Nominierung wurde vorerst abgelehnt, aber das heißt nicht, dass sie nicht doch später verwendet wird.<br/>
-	Höchstwahrscheinlich fehlten nur sowohl der GoEar als auch der YouTube Link. Sie wird daher regelmäßig von unseren Managern überprüft.<br/>
-	Sobald der Song auf einer der beiden Webseiten verfügbar ist, wird die Nominierung von ihnen überarbeitet und dann angenommen.',
+	Vielleicht war deine Begründung zu kurz oder allgemein und passt zu jedem Song. In diesem Fall darfst du gern den Song mit detaillierterem Grund erneut nominieren.<br/>
+	Ist das bei deiner Nominierung nicht der Fall, fehlte höchstwahrscheinlich nur sowohl der GoEar als auch der YouTube Link.<br/>
+	Sobald der Song auf einer der beiden Webseiten verfügbar ist, wird die Nominierung von uns überarbeitet und dann angenommen.',
 	'sotd-edit-toolate' => 'Die Nominierung hat bereits einen finalen Status. Sie kann nicht mehr bearbeitet oder entfernt werden.',
 	'sotd-deletion-success' => 'Nominierung erfolgreich entfernt.',
 	'sotd-deletion-failure' => 'Die Nominierung konnte nicht entfernt werden.',
@@ -148,11 +159,12 @@ $messages['de'] = array(
 	'sotd-status-4' => 'Angenommen',
 	'sotd-action-unknown' => 'Du hast eine unbekannte Aktion ausgeführt:',
 	'sotd-back-to-page' => '[[$1|Zurück zur Seite]]',
+	'sotd-already-exists' => "Entschuldigung, der von dir gewählte Song ist bereits nominiert.
+	
+	[[$1|Einen anderen Song nominieren]]",
 	'sotd-thank-you' => "'''Danke!''' Deine Nominierung wurde zu den Vorschlägen für unseren '''[[LyricWiki:Song of the Day|Song des Tages]]''' hinzugefügt.
 
 	Dies ist dein persönlicher Token zu deiner Nominierung: '''$1'''<br/>
 	Er erlaubt es dir, deine Nominierung zu beobachten, bearbeiten oder zurückzuziehen. Bitte bewahre den Token auf, wenn du eine dieser Aktionen ausführen möchtest.<br/>
-	Denk dran, dass Veränderungen nur möglich sind, bis deine Nominierung gesichtet und zur Warteliste hinzugefügt worden ist.
-
-	[[$2|Eine weitere hinzufügen]]",
+	Denk dran, dass Veränderungen nur möglich sind, bis deine Nominierung gesichtet und zur Warteliste hinzugefügt worden ist.",
 );
