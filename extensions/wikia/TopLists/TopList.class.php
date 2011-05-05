@@ -181,7 +181,7 @@ class TopList extends TopListBase {
 	 * @param forceReload Boolean Optional, true will force the list object
 	 * to be reloaded from the DB
 	 *
-	 * @returns Boolean true if the user can perform the action, false otherwise
+	 * @return Boolean true if the user can perform the action, false otherwise
 	 */
 	public function checkUserItemsRight( $action, $user = null, $forceReload = false ){
 		global $wgUser;
