@@ -1197,7 +1197,7 @@ function wfAppendTimerHeader ($label, $time, $calculateOffset = false) {
  * Set the X-Timer header at the end of page processing.
  * This is intended to be called from OutputPage::output
  */
-function wgSendTimerHeader () {
+function wfSendTimerHeader () {
 	global $wgApacheTimerString, $wgProfiler;
 
 	if ($wgProfiler instanceof ProfilerSimpleText) {
