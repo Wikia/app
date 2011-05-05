@@ -1672,7 +1672,7 @@ class OutputPage {
 		}
 
 		$this->sendCacheControl();
-		wgSendTimerHeader();   // Wikia change -- emit X-Timer: header
+		wfSendTimerHeader();   // Wikia change -- emit X-Timer: header
 		ob_end_flush();
 		wfProfileOut( __METHOD__ );
 	}
