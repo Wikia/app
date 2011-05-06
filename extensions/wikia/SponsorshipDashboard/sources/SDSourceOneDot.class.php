@@ -134,8 +134,10 @@ class SponsorshipDashboardSourceOneDot extends SponsorshipDashboardSource {
 				$totalMainNumber = count( $aMainResults[ $key ] );
 				$totalCompetitors = 0;
 				foreach( $val as $city ){
-					if ( in_array( $city, $aSecondResults[ $key ] ) ){
-						$totalCompetitors++;
+					if ( isset( $aSecondResults[ $key ] ) && is_array( $aSecondResults[ $key ] ) ){
+						if ( in_array( $city, $aSecondResults[ $key ] ) ){
+							$totalCompetitors++;
+						}
 					}
 				}
 				$this->dataAll[ $key ][ 'a'.md5( $this->getMasterCityId().'|'.$this->getCityId() ) ] = $totalCompetitors / $totalMainNumber * 100;
