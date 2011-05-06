@@ -11,10 +11,13 @@ EOT;
 
 $dir = dirname(__FILE__) . '/';
 
+$wgAutoloadClasses['WikiReviewsModule'] = $dir . 'WikiReviewsModule.php';
+
 $wgExtensionMessagesFiles['WikiReviews'] = $dir . 'WikiReviews.i18n.php';
 
 $wgHooks['BeforePageDisplay'][] = 'wfWikiReviewsAddStyle';
 $wgHooks['BodyIndexAfterExecute'][] = 'wfWikiReviewsReplaceBodyTemplate';
+$wgHooks['GetRailModuleList'][] = 'wfWikiReviewsAddModule';
 $wgHooks['HistoryDropdownIndexBeforeExecute'][] = 'wfWikiReviewsHideHistoryDropdown';
 $wgHooks['PageHeaderIndexAfterExecute'][] = 'wfWikiReviewsRemoveEditButton';
 
@@ -30,7 +33,16 @@ function wfWikiReviewsTitleCheck() {
 function wfWikiReviewsAddStyle( &$out, &$sk ) {
 	global $wgExtensionsPath, $wgStyleVersion;
 	if( wfWikiReviewsTitleCheck() ) {
-		$out->addExtensionStyle( "$wgExtensionsPath/wikia/WikiReviews/WikiReviews.css?$wgStyleVersion" );
+		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL("$wgExtensionsPath/wikia/WikiReviews/WikiReviews.scss"));
+	}
+	return true;
+}
+
+// add rail module
+function wfWikiReviewsAddModule( &$railModuleList ) {
+	global $wgEnableAdSS, $wgTitle;
+	if( !empty( $wgEnableAdSS ) && AdSS_Publisher::canShowAds( $wgTitle ) ) {
+		$railModuleList[1449] = array( 'WikiReviews', 'SponsoredLinks', null );
 	}
 	return true;
 }
@@ -38,7 +50,11 @@ function wfWikiReviewsAddStyle( &$out, &$sk ) {
 // display comments before categories
 function wfWikiReviewsReplaceBodyTemplate( &$moduleObject, &$params ) {
 	if( wfWikiReviewsTitleCheck() ) {
+		global $wgEnableAdSS, $wgTitle;
 		$moduleObject->getResponse()->getView()->setTemplatePath( dirname(__FILE__).'/templates/WikiReviewsBody_Index.php' );
+		if( !empty( $wgEnableAdSS ) && AdSS_Publisher::canShowAds( $wgTitle ) ) {
+			$moduleObject->displaySponsoredLinks = true;
+		}
 	}
 	return true;
 }
