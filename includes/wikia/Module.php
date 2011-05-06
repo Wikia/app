@@ -21,6 +21,46 @@ abstract class Module extends WikiaController {
 		}
 	}
 
+	/* This magic function allows the Module to pretend to be a Response object
+	 * We will pass all calls except getData() render() toString() to the real Response object
+	 * Dispatcher is none the wiser, and treats the Module as a response object
+	 */
+	protected $realResponse;
+
+	public function __call($method, $args) 
+	{ 
+		if (method_exists($this->realResponse,$method)) 
+			return $this->realResponse->$method($args); 
+		else 
+			throw new WikiaException( sprintf('Response Proxy failed for Method: %s', $method) );
+	}		
+			
+	// Save the real response object so we can act as a proxy
+	public function setResponse(WikiaResponse &$response) {
+		$this->realResponse = $response;
+		$this->response = $this;
+		$response = $this;
+	}
+
+	public function printText() {
+		$this->realResponse->setData($this->getData());
+		print $this->realResponse->toString();				
+	}
+	
+	public function render() {
+		$this->realResponse->setData($this->getData());
+		print $this->realResponse->toString();		
+	}
+	
+	public function toString() {
+		$this->realResponse->setData($this->getData());
+		return $this->realResponse->toString();
+	}
+	
+	public function getVal($key, $default = null) {
+		return isset($this->$key) ? $this->$key : $default;
+	}
+	
 	public static function setSkinTemplateObj(&$skinTemplate) {
 		self::$skinTemplateObj = $skinTemplate;
 	}
@@ -29,48 +69,9 @@ abstract class Module extends WikiaController {
 		return self::$skinTemplateObj;
 	}
 
-	// TODO: This function goes away, replaced by Dispatcher::dispatch
+	// TODO: This function goes away when all usages are replaced by Controller::sendRequest
 	public static function get($name, $action = 'Index', $params = null) {
-		global $wgAutoloadClasses;
-
-		$moduleClassName = $name.'Module';
-
-		if( !class_exists( $moduleClassName ) ) {
-			return null;
-		}
-		wfProfileIn(__METHOD__ . " (" . $name.'_'.$action .")");
-
-		//$moduleObject = new $moduleClassName();
-		$moduleObject = F::build($moduleClassName);
-		$moduleObject->templatePath = dirname($wgAutoloadClasses[$moduleClassName]).'/templates/'.$name.'_'.$action.'.php';
-
-		// auto-initialize any module variables which match variables in skinTemplate->data or _GLOBALS
-		$objvars = get_object_vars($moduleObject);
-		$skindata = array();
-		if (isset(self::$skinTemplateObj) && is_array(self::$skinTemplateObj->data)) {
-			$skindata = self::$skinTemplateObj->data;
-		}
-		foreach ($objvars as $var => $unused) {
-			if (array_key_exists($var, $GLOBALS)) {
-				$moduleObject->$var = $GLOBALS[$var];
-			}
-			if (array_key_exists($var, $skindata)) {
-				$moduleObject->$var = $skindata[$var];
-			}
-		}
-
-		if(wfRunHooks($name.$action.'BeforeExecute', array(&$moduleObject, &$params))) {
-			$actionName = 'execute'.$action;
-
-			// BugId:2649
-			if (method_exists($moduleObject, $actionName)) {
-				$moduleObject->$actionName($params);
-			}
-		}
-		wfRunHooks($name.$action.'AfterExecute', array(&$moduleObject, &$params));
-
-		wfProfileOut(__METHOD__ . " (" . $name.'_'.$action .")");
-		return $moduleObject;
+		return F::app()->sendRequest($name, $action, $params);		
 	}
 
 	public function getData($var = null) {
@@ -81,13 +82,4 @@ abstract class Module extends WikiaController {
 			return isset($vars[$var]) ? $vars[$var] : null;
 		}
 	}
-	/*
-	public function getView() {
-		return new View($this->templatePath, $this->getData());
-	}
-
-	public function render() {
-		return $this->getView()->render();
-	}
-	*/
 }
