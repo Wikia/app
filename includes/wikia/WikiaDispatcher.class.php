@@ -73,11 +73,6 @@ class WikiaDispatcher {
 				}
 				$app->runHook( ( $controllerName . $originalMethod . 'AfterExecute' ), array( &$controller, &$params ) );
 
-				// Work around for module dispatching until modules are renamed
-				if ($controller instanceof Module) {
-					$response->setData($controller->getData());
-				}
-
 			} catch (Exception $e) {
 				$app->runFunction( 'wfProfileOut', ( __METHOD__ . " (" . $controllerName.'_'.$method .")" ) );
 				$response->setException($e);
