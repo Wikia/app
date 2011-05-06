@@ -56,7 +56,7 @@ class WikiaQuizElement {
 	 * Load quizElement data (try to use cache layer)
 	 */
 	private function load($master = false) {
-		global $wgMemc;
+		global $wgMemc, $wgLang;
 		wfProfileIn(__METHOD__);
 
 		if (!$master) {
@@ -76,10 +76,14 @@ class WikiaQuizElement {
 
 			// get quizElement's author and creation timestamp
 			$title = $article->getTitle();
+			$url = $title->getLocalUrl();
 			$firstRev = $title->getFirstRevision();
 			$titleText = $title->getText();
 			$imageSrc = '';
+			$imageShort = '';
 			$explanation = '';
+			$quizName = '';
+			$order = '';
 
 			// parse wikitext with possible answers (stored as wikitext list)
 			$content = $article->getContent();
@@ -90,14 +94,25 @@ class WikiaQuizElement {
 				$line = trim($line);
 				// override article title
 				if (substr($line, 0, strlen(self::TITLE_MARKER)) == self::TITLE_MARKER) {
-					$titleText = trim( substr($line, strlen(self::TITLE_MARKER)) );
+					$customTitle = trim( substr($line, strlen(self::TITLE_MARKER)) );
+					if ($customTitle) {
+						$titleText = $customTitle;
+					}
 				}
 				elseif (substr($line, 0, strlen(self::IMAGE_MARKER)) == self::IMAGE_MARKER) {
-					$filename = trim( substr($line, strlen(self::IMAGE_MARKER)) );
-					$imageSrc = $this->getImageSrc($filename);
+					$imageShort = trim( substr($line, strlen(self::IMAGE_MARKER)) );
+					$imageSrc = $this->getImageSrc($imageShort);
 				}
-				if (substr($line, 0, strlen(self::EXPLANATION_MARKER)) == self::EXPLANATION_MARKER) {
+				elseif (substr($line, 0, strlen(self::EXPLANATION_MARKER)) == self::EXPLANATION_MARKER) {
 					$explanation = trim( substr($line, strlen(self::EXPLANATION_MARKER)) );
+				}
+				elseif (preg_match("/\[\[{$wgLang->getNsText(NS_CATEGORY)}\:(.+?)(\|(.+))*\]\]/", $line, $matches)) {
+					if (startsWith($matches[1], WikiaQuiz::QUIZ_CATEGORY_PREFIX)) {
+						$quizName = trim( substr($matches[1], strlen(WikiaQuiz::QUIZ_CATEGORY_PREFIX)));
+						if (isset($matches[3])) {
+							$order = $matches[3];
+						}
+					}
 				}
 				// answers are specially marked
 				elseif (substr($line, 0, strlen(self::ANSWER_MARKER)) == self::ANSWER_MARKER) {
@@ -113,7 +128,8 @@ class WikiaQuizElement {
 						$answers[] = array(
 							'text' => $answerChunks[0],
 							'correct' => $correct,
-							'image' => isset($answerChunks[1]) ? $this->getImageSrc($answerChunks[1]) : ''
+							'image' => isset($answerChunks[1]) ? $this->getImageSrc($answerChunks[1]) : '',
+							'imageShort' => isset($answerChunks[1]) ? $answerChunks[1] : ''
 						);
 					}
 				}
@@ -142,15 +158,22 @@ class WikiaQuizElement {
 //				$votes += $row->cnt;
 //			}
 
+			$quizTitleObject = F::build('Title', array($quizName, NS_WIKIA_QUIZ), 'newFromText');
+			
 			$this->mData = array(
 				'creator' => $firstRev->mUser,
 				'created' => $firstRev->mTimestamp,
 				'touched' => $article->getTouched(),
+				'url' => $url,
 				'title' => $titleText,
 				'question' => $titleText,
 				'answers' => $answers,
 				'image' => $imageSrc,
+				'imageShort' => $imageShort,
 				'explanation' => $explanation,
+				'quiz' => $quizName,
+				'quizUrl' => $quizTitleObject ? $quizTitleObject->getLocalUrl() : '',
+				'order' => $order,
 				'params' => $params,
 			);
 
@@ -225,81 +248,31 @@ class WikiaQuizElement {
 
 		return $this->mData['title'];
 	}
+	
+	public function getQuizTitle() {
+		if (is_null($this->mData)) {
+			$this->load();
+		}
 
+		return $this->mData['quiz'];		
+	}
+	
 	/**
-	 * Register answer from current user (use IP for anons)
+	 * Return quizElement's order in quiz
 	 */
-	public function answer($answerId) {
-		global $wgUser;
-		wfProfileIn(__METHOD__);
+	public function getOrder() {
+		if (is_null($this->mData)) {
+			$this->load();
+		}
 
-		$ip = wfGetIP();
-		$user = $wgUser->getId();
-
-		wfDebug(__METHOD__ . ": registering answer #{$answerId} on behalf of user #{$user} / {$ip}\n");
-
-//		$dbw = wfGetDB( DB_MASTER );
-//		$dbw->begin();
-//
-//		/**
-//		 * delete old answer (if any)
-//		 */
-//		$dbw->delete(
-//			'poll_vote',
-//			array(
-//				'poll_id' => $this->mPollId,
-//				'poll_user' => $user,
-//			),
-//			__METHOD__
-//		);
-//
-//		/**
-//		 * insert new one
-//		 */
-//		$status = $dbw->insert(
-//			'poll_vote',
-//			array(
-//				'poll_id' => $this->mPollId,
-//				'poll_user' => $user,
-//				'poll_ip' => $ip,
-//				'poll_answer' => $answerId,
-//				'poll_date' => date('Y-m-d H:i:s')
-//			),
-//			__METHOD__
-//		);
-//		$dbw->commit();
-//
-//		$this->purge();
-
-		// forces reload of memcache object from master before anyone else can get to it. :)
-		$this->load(true);
-
-		wfProfileOut(__METHOD__);
+		return $this->mData['order'];		
 	}
 
 	/**
-	 * Check if current user (use IP for anons) has voted
+	 * Render HTML for QuizElement page
 	 */
-	public function hasAnswered() {
-		global $wgUser;
-		wfProfileIn(__METHOD__);
-
-//		$dbr = wfGetDB(DB_SLAVE);
-//		$votes = $dbr->selectField(
-//			array('poll_vote'),
-//			array('COUNT(*)'),
-//			array(
-//				'poll_id' => $this->mPollId,
-//				'poll_user' => $wgUser->getId()
-//			),
-//			__METHOD__
-//		);
-//
-//		$hasVoted = $votes > 0;
-//
-//		wfProfileOut(__METHOD__);
-//		return $hasVoted;
-                return false;
+	public function render() {
+		return wfRenderModule('WikiaQuiz', 'ArticleIndex', array('quizElement' => $this));
 	}
 
 	/**

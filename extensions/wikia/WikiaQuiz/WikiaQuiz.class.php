@@ -53,6 +53,22 @@ class WikiaQuiz {
 	}
 
 	/**
+	 * Return instance of WikiaQuiz for given article from Quiz namespace
+	 */
+	static public function newFromArticle(Article $article) {
+		$id = $article->getID();
+		return self::newFromId($id);
+	}
+
+	/**
+	 * Return instance of WikiaQuiz for given title from Quiz namespace
+	 */
+	static public function newFromTitle(Title $title) {
+		$id = $title->getArticleId();
+		return self::newFromId($id);
+	}
+
+	/**
 	 * Load quiz data (try to use cache layer)
 	 */
 	private function load($master=false) {
@@ -65,29 +81,44 @@ class WikiaQuiz {
 		}
 
 		if (empty($this->mData)) {
-			if (empty($this->mCategory)) {
-				$this->mCategory = Category::newFromID($this->mQuizId);
-			}
+			$article = Article::newFromID($this->mQuizId);
 
 			// check quiz existence
-			if (empty($this->mCategory) || !$this->mCategory->getID()) {
+			if (empty($article)) {
 				wfDebug(__METHOD__ . ": quiz doesn't exist\n");
 				wfProfileOut(__METHOD__);
 				return;
 			}
 
-			// get quiz elements
+			// get quiz's author and creation timestamp
+			$title = $article->getTitle();
+			$firstRev = $title->getFirstRevision();
+			$titleText = $title->getText();
+
+			// load quiz's elements
+			if (empty($this->mCategory)) {
+				$catName = self::QUIZ_CATEGORY_PREFIX . $titleText;
+				$cat = F::build('Category', array($catName), 'newFromName');
+				$this->mCategory = $cat;
+			}
+
 			$quizElements = array();
-			$quizIterator = $this->mCategory->getMembers();
-			while ($quizElementTitle = $quizIterator->current()) {
-				$quizElement = WikiaQuizElement::newFromId($quizElementTitle->getArticleId());
-				$quizElements[] = $quizElement->getData();
-				$quizIterator->next();
+			if (empty($this->mCategory) || !$this->mCategory->getID()) {
+				wfDebug(__METHOD__ . ": quiz's category doesn't exist\n");
+			}
+			else {
+				// get quiz elements
+				$quizIterator = $this->mCategory->getMembers();
+				while ($quizElementTitle = $quizIterator->current()) {
+					$quizElement = WikiaQuizElement::newFromId($quizElementTitle->getArticleId());
+					$quizElements[] = $quizElement->getData();
+					$quizIterator->next();
+				}				
 			}
 
 			$this->mData = array(
 				'id' => $this->mQuizId,
-				'name' => $this->getName(),
+				'name' => $titleText,
 				'elements' => $quizElements,
 			);
 
@@ -126,9 +157,33 @@ class WikiaQuiz {
 	 * Get quiz's name (does not include the mandatory category prefix)
 	 */
 	public function getName() {
-		return $this->mName;
+		if (is_null($this->mData)) {
+			$this->load();
+		}
+		return $this->mData['name'];
+	}
+	
+	/**
+	 * Get quiz's title (does not include the mandatory category prefix)
+	 */
+	public function getTitle() {
+		if (is_null($this->mData)) {
+			$this->load();
+		}
+		return $this->mData['name'];
 	}
 
+	
+	/**
+	 * Get quiz's elemeents
+	 */
+	public function getElements() {
+		if (is_null($this->mData)) {
+			$this->load();
+		}
+		return $this->mData['elements'];
+	}
+	
 	/**
 	 * Return true if current quizElement exists
 	 */
@@ -138,6 +193,13 @@ class WikiaQuiz {
 		}
 
 		return $this->mExists === true;
+	}
+
+	/**
+	 * Render HTML for Quiz page
+	 */
+	public function render() {
+		return wfRenderModule('WikiaQuiz', 'Index', array('quiz' => $this));
 	}
 
 	/**
