@@ -140,7 +140,7 @@ class BodyModule extends Module {
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
 			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail,
-			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers,
+			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers, $wgEnableWikiReviews,
 			$wgSalesTitles;
 
 		if ($this->wgSuppressRail) {
@@ -157,9 +157,11 @@ class BodyModule extends Module {
 		if($namespace == NS_SPECIAL) {
 			if ($wgTitle->isSpecial('Search')) {
 				$railModuleList = array(
-					1450 => array('PagesOnWiki', 'Index', null),
 					1300 => array('LatestActivity', 'Index', null),
 				);
+				if( empty( $wgEnableWikiReviews ) ) {
+					$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
+				}
 
 				if( empty( $wgEnableWikiAnswers ) ) {
 					$railModuleList[1250] = array('LatestPhotos', 'Index', null);
@@ -177,18 +179,22 @@ class BodyModule extends Module {
 			} else if ($wgTitle->isSpecial('WikiActivity')) {
 				$railModuleList = array (
 					1500 => array('Search', 'Index', null),
-					1450 => array('PagesOnWiki', 'Index', null),
 					1300 => array('HotSpots', 'Index', null),
 					1290 => array('CommunityCorner', 'Index', null),
 				);
+				if( empty( $wgEnableWikiReviews ) ) {
+					$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
+				}
 			} else if ($wgTitle->isSpecial('Following') || $wgTitle->isSpecial('Contributions') ) {
 				// intentional nothing here
 			} else if ($wgTitle->isSpecial('ThemeDesignerPreview') ) {
 				$railModuleList = array (
 					1500 => array('Search', 'Index', null),
-					1450 => array('PagesOnWiki', 'Index', null),
 					1300 => array('LatestActivity', 'Index', null),
 				);
+				if( empty( $wgEnableWikiReviews ) ) {
+					$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
+				}
 				if( empty( $wgEnableWikiAnswers ) ) {
 					$railModuleList[1250] = array('LatestPhotos', 'Index', null);
 				}
@@ -222,8 +228,10 @@ class BodyModule extends Module {
 			array_key_exists( $subjectNamespace, $wgExtraNamespaces ) ) {
 			// add any content page related rail modules here
 
-			$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 			$railModuleList[1300] = array('LatestActivity', 'Index', null);
+			if( empty( $wgEnableWikiReviews ) ) {
+				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
+			}
 			if( empty( $wgEnableWikiAnswers ) ) {
 				$railModuleList[1250] = array('LatestPhotos', 'Index', null);
 			}
