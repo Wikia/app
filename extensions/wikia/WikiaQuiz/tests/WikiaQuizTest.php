@@ -13,10 +13,10 @@ class WikiaQuizTest extends PHPUnit_Framework_TestCase {
 
 	public function testNewFromName() {
 		$cat = $this->getMock('Category', array('getName', 'getId'), array(), '', false);
-		$cat->expects($this->once())
+		$cat->expects($this->any())
 		    ->method('getName')
 			->will($this->returnValue('Quiz_foobar'));
-		$cat->expects($this->once())
+		$cat->expects($this->any())
 		    ->method('getId')
 			->will($this->returnValue(5));
 

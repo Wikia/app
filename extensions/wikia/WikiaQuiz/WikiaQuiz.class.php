@@ -160,7 +160,7 @@ class WikiaQuiz {
 		if (is_null($this->mData)) {
 			$this->load();
 		}
-		return $this->mData['name'];
+		return $this->mName;
 	}
 	
 	/**
