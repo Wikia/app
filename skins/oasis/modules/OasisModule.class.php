@@ -266,7 +266,8 @@ JS;
 		// move JS files added by extensions to list of files to be loaded using WSL
 		$headscripts = $wgOut->getScript();
 
-		preg_match_all("#<script type=\"{$wgJsMimeType}\" src=\"([^\"]+)\"></script>#", $headscripts, $matches, PREG_SET_ORDER);
+		// find <script> tags with src attribute
+		preg_match_all("#<script[^>]+src=\"([^\"]+)\"[^>]*></script>#", $headscripts, $matches, PREG_SET_ORDER);
 		foreach($matches as $scriptSrc) {
 			$jsReferences[] = str_replace('&amp;', '&', $scriptSrc[1]);
 			$headscripts = str_replace($scriptSrc[0], '', $headscripts);

@@ -148,6 +148,7 @@ class JSMessages {
 		wfProfileIn(__METHOD__);
 		wfDebug(__METHOD__ . "\n");
 
+		// get items to be rendered as a variable in <head> section
 		$instance = self::getInstance();
 		$packages = $instance->queue['inline'];
 
@@ -166,24 +167,28 @@ class JSMessages {
 		wfProfileIn(__METHOD__);
 		wfDebug(__METHOD__ . "\n");
 
+		// get items to be loaded via JS file
 		$instance = self::getInstance();
 		$packages = $instance->queue['external'];
-		sort($packages);
 
-		// additional URL parameters
-		$lang = $this->app->getGlobal('wgLang')->getCode();
-		$cb = $this->app->getGlobal('wgMemc')->get(wfMemcKey('wgMWrevId'));
+		if (!empty($packages)) {
+			sort($packages);
 
-		$url = wfAppendQuery($this->app->getGLobal('wgScript'), array(
-			'action' => 'ajax',
-			'rs' => 'JSMessagesAjax',
-			'packages' => implode(',', $packages),
-			'uselang' => $lang,
-			'cb' => intval($cb),
-		));
+			// additional URL parameters
+			$lang = $this->app->getGlobal('wgLang')->getCode();
+			$cb = $this->app->getGlobal('wgMemc')->get(wfMemcKey('wgMWrevId'));
 
-		// request a script
-		$this->app->getGlobal('wgOut')->addScriptFile($url);
+			$url = wfAppendQuery($this->app->getGLobal('wgScript'), array(
+				'action' => 'ajax',
+				'rs' => 'JSMessagesAjax',
+				'packages' => implode(',', $packages),
+				'uselang' => $lang,
+				'cb' => intval($cb),
+			));
+
+			// request a script
+			$this->app->getGlobal('wgOut')->addScriptFile($url);
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;
