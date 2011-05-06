@@ -346,7 +346,7 @@ class WikiaLabsProject {
 		);
 
 		$projects = array();
-		while( $row = $dbr->fetchObject( $res ) ) {
+		while( $row = $this->getDb()->fetchObject( $res ) ) {
 			$projects[] = WF::build( 'WikiaLabsProject', array( 'id' => $row->wlpr_id ) );
 		}
 
