@@ -86,11 +86,13 @@
 			} ?>
 			<?= wfRenderModule('ArticleInterlang') ?>
 
+			<?php if($displaySponsoredLinks): ?>
 			<?= wfMsg('sponsor-header'); ?>
 			<div class="sponsormsg">
 			<ul>
 			</ul>
 			</div>
+			<?php endif; ?>
 
 		</div>
 
