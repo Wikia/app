@@ -4,7 +4,6 @@
 	<?= Wikia::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'blog-create-post-label', 'sprite blog') ?>
 	<h3>
 		<?= $title ?> 
-		<span class="reload"><?= Wikia::link($wgTitle, "<img src=\"$wgStylePath/oasis/images/reload_button.png\">", array(), array('action' => 'purge')); ?></span>
 	</h3>
 	<?php } // end BlogListingBox header ?>
 	<ul>
