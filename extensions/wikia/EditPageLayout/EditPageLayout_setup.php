@@ -31,7 +31,6 @@ $app->registerClass('EditPageLayout', $dir . '/EditPageLayout.class.php');
 $app->registerClass('EditPageLayoutAjax', $dir . '/EditPageLayoutAjax.class.php');
 $app->registerClass('EditPageLayoutHelper', $dir . '/EditPageLayoutHelper.class.php');
 $app->registerClass('EditPageLayoutModule', $dir . '/EditPageLayoutModule.class.php');
-$app->registerClass('EditPageNoticesHelper', $dir . '/EditPageNoticesHelper.class.php');
 
 // mocks classes
 $app->registerClass('ObjectMocker', $dir . '/mocks/ObjectMocker.class.php');
@@ -108,7 +107,7 @@ function EditPageLayoutAjax() {
 $app->registerExtensionFunction('EditPageReskinMessageCacheFix');
 function EditPageReskinMessageCacheFix() {
 	global $wgMessageCache;
-	
+
 	$dir = dirname(dirname(__FILE__));
 	$files = array(
 		$dir . '/EditPageLayout/EditPageLayout.i18n.php',
@@ -120,12 +119,12 @@ function EditPageReskinMessageCacheFix() {
 		$dir . '/EditPageReskin/RTE/i18n/CK.core.i18n.php',
 		$dir . '/EditPageReskin/RTE/i18n/CK.wikia.i18n.php',
 	);
-	
+
 	foreach ($files as $file) {
 		$messages = array();
 		include $file;
 		$wgMessageCache->addMessagesByLang($messages);
 	}
-	
+
 	return true;
 }
