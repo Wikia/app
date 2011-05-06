@@ -141,7 +141,7 @@ $(document).ready(function() {
 <? if ( count($aCategories) > 0 ) foreach ($aCategories as $id => $catName) : ?>
 			<th width="<?=intval(80/count($aCategories))?>"><?=$catName['name']?></option>
 <? endforeach ?>
-			<th width="10%"><?=wfMsg('awc-metrics-sum-month')?></th>
+			<th width="10%"><?=wfMsg('awc-metrics-sum-day')?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -155,7 +155,7 @@ $(document).ready(function() {
 <? if ( count($aCategories) > 0 ) foreach ($aCategories as $id => $catName) : ?>
 			<th width="<?=intval(80/count($aCategories))?>"><?=$catName['name']?></option>
 <? endforeach ?>
-			<th width="10%"><?=wfMsg('awc-metrics-sum-month')?></th>
+			<th width="10%"><?=wfMsg('awc-metrics-sum-day')?></th>
 		</tr>
 	</tfoot>
 	</table>
