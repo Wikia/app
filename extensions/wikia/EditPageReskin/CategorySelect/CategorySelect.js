@@ -256,6 +256,7 @@ function addCategoryBase(category, params, index) {
 
 	if(csType == 'module') {
 		$("#csItemsContainer").append( elementA );
+		$('#csItemsContainerDiv').scrollTop(100*100);
 		$(elementA).append($("<span class='listmark' >&middot;</span>"));
 	} else {
 		$(elementA).insertBefore( $('#csCategoryInput') );
