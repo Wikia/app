@@ -92,15 +92,18 @@ $wgHooks['ContributionsToolLinks'][] = 'efLoadPhalanxLink';
 /**
  * Add a link to central:Special:Phalanx from Special:Contributions/USERNAME
  * if the user has 'phalanx' permission
+ * @param $id Integer: user ID
+ * @param $nt Title: user page title
+ * @param $links Array: tool links
  * @return true
  */
-function efLoadPhalanxLink( $id, $nt, &$links ){
+function efLoadPhalanxLink( $id, $nt, &$links ) {
 	global $wgUser;
 	if( $wgUser->isAllowed( 'phalanx' ) ) {
-		$links[] = $wgUser->getSkin()->link(
+		wfLoadExtensionMessages( 'Phalanx' );
+		$links[] = $wgUser->getSkin()->makeKnownLinkObj(
 			GlobalTitle::newFromText('Phalanx', NS_SPECIAL, 177),
-			'Phalanx',
-			array(),
+			'PhalanxBlock',
 			wfArrayToCGI( array('type'=>'8', 'target'=>$nt->getText() ) )
 		);
 	}
