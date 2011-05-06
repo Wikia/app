@@ -10,7 +10,7 @@ class WikiaSpecialPageController extends WikiaController {
 		$app = F::build( 'App' );
 		$out = $app->getGlobal( 'wgOut' );
 		$response = $app->sendRequest( substr( get_class( $this ), 0, -10 ), null, array( 'par' => $par /* to be compatibile with MW core */ ) + $_POST + $_GET, false );
-		
+
 		if( $response->getFormat() == 'html' ) {
 			try {
 				$out->addHTML( $response->toString() );
@@ -21,6 +21,7 @@ class WikiaSpecialPageController extends WikiaController {
 			}
 		}
 		else {
+			// @todo try to refactor it without calling exit
 			$response->sendHeaders();
 			$response->render();
 			exit;
