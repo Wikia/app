@@ -140,15 +140,15 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 		$project2 = new stdClass();
 		$project2->wlpr_id = 20;
 
-		$resMock = $this->getMock( 'ResultWrapper', array( 'fetchObject'), array(), '', false );
-		$resMock->expects($this->exactly(3))
-		  ->method('fetchObject')
-		  ->will( $this->onConsecutiveCalls( $project1, $project2, null ) );
+		$resMock = $this->getMock( 'ResultWrapper', array(), array(), '', false );
 
 		$this->dbMock->expects($this->once())
 		  ->method('select')
 		  ->with( $this->anything(), $this->anything(), $this->equalTo($expectedWhereClause))
 		  ->will( $this->returnValue( $resMock ) );
+		$this->dbMock->expects($this->exactly(3))
+		  ->method('fetchObject')
+		  ->will( $this->onConsecutiveCalls( $project1, $project2, null ) );
 
 		$this->setUpMock();
 
