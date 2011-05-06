@@ -7,43 +7,54 @@
  */
 class DummyExtensionSpecialPageController extends WikiaSpecialPageController {
 
-	private $data = array();
+	private $businessLogic = null;
+	private $controllerData = array();
 
 	public function __construct() {
-		$this->data[] = 'foo';
-		$this->data[] = 'bar';
-		$this->data[] = 'baz';
+		$this->controllerData[] = 'foo';
+		$this->controllerData[] = 'bar';
+		$this->controllerData[] = 'baz';
 
 		// standard SpecialPage constructor call
 		parent::__construct( 'DummyExtension', '', false );
 	}
 
+	public function init() {
+		$this->businessLogic = F::build( 'DummyExtension', array( $this->app->wg->Title ) );
+	}
+
 	/**
-	 * this is default method
+	 * this is default method, which in this example just redirects to helloWorld method
 	 */
 	public function index() {
 		$this->redirect( 'DummyExtensionSpecialPage', 'helloWorld' );
 	}
 
+	/**
+	 * helloWorld method
+	 *
+	 * @requestParam int $wikiId
+	 * @responseParam string $header
+	 * @responseParam array $wikiData
+	 */
 	public function helloWorld() {
-		if($this->request->getVal('param') == 1 ) {
-			// changing default template
-			$this->response->setTemplatePath( dirname( __FILE__ ) . '/templates/someTemplate.php' );
-		}
+		$this->wf->profileIn( __METHOD__ );
+
+		// getting request data
+		$wikiId = $this->getVal( 'wikiId' );
 
 		// setting response data
-		$this->response->setVal( 'header', 'Hello World!' );
+		$this->setVal( 'header', $this->wf->msg('extension-hello-msg') );
+		$this->setVal( 'wikiData', $this->businessLogic->getWikiData( $wikiId ) );
 
 		// example of setting SpecialPage::mIncluding
 		$this->mIncluding = true;
+
+		$this->wf->profileOut( __METHOD__ );
 	}
 
-	public function getDialog() {
-
-	}
-
-	public function getSomeData() {
-		$this->response->setVal( 'someData', $this->data );
+	public function getSomeControllerData() {
+		$this->setVal( 'controllerData', $this->controllerData );
 	}
 
 }
