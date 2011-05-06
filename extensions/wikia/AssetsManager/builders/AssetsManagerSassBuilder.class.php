@@ -38,7 +38,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 		$sassResult = shell_exec($escapedCmd);
 		if ($sassResult != '') {
-			error_log("Sass commandline error: " . $sassResult);
+			Wikia::log("Sass commandline error: " . $sassResult);
 			unlink($tempOutFile);
 			throw new Exception('Problem with SASS processing.');
 		}
