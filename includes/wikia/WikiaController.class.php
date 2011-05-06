@@ -17,6 +17,16 @@ abstract class WikiaController {
 	 * @var WikiaApp
 	 */
 	protected $app = null;
+	/**
+	 * global registry object
+	 * @var WikiaGlobalRegistry
+	 */
+	protected $wg = null;
+	/**
+	 * function wrapper object
+	 * @var WikiaFunctionWrapper
+	 */
+	protected $wf = null;
 
 	//protected $allowedRequests = array( 'help' => array('html', 'json') );
 
@@ -79,6 +89,10 @@ abstract class WikiaController {
 	 */
 	public function setApp( WikiaApp $app ) {
 		$this->app = $app;
+
+		// setting helpers
+		$this->wg = $app->wg;
+		$this->wf = $app->wf;
 	}
 
 	public function redirect( $controllerName, $methodName, $resetResponse = true ) {

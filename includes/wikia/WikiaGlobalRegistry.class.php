@@ -18,7 +18,7 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 		else {
 			$GLOBALS[$propertyName][$key][] = $value;
 		}
-		
+
 		return $this;
 	}
 
@@ -41,6 +41,14 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 	public function has($propertyName) {
 		$this->validatePropertyName($propertyName);
 		return isset($GLOBALS[$propertyName]);
+	}
+
+	public function __get($propertyName) {
+		return $this->get( 'wg' . ucfirst($propertyName) );
+	}
+
+	public function __set($propertyName, $value) {
+		$this->set( ( 'wg' . ucfirst($propertyName) ), $value );
 	}
 
 }

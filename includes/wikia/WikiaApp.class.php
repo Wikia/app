@@ -27,6 +27,21 @@ class WikiaApp {
 	 * @var WikiaDispatcher
 	 */
 	private $dispatcher = null;
+	/**
+	 * function wrapper
+	 * @var WikiaFunctionWrapper
+	 */
+	private $functionWrapper = null;
+	/**
+	 * global MW variables helper accessor
+	 * @var WikiaGlobalRegistry
+	 */
+	public $wg = null;
+	/**
+	 * global MW functions helper accessor
+	 * @var WikiaFunctionWrapper
+	 */
+	public $wf = null;
 
 	/**
 	 * constructor
@@ -51,6 +66,11 @@ class WikiaApp {
 		$this->globalRegistry = $globalRegistry;
 		$this->localRegistry = $localRegistry;
 		$this->hookDispatcher = $hookDispatcher;
+		$this->functionWrapper = new WikiaFunctionWrapper();
+
+		// set helper accessors
+		$this->wg = $this->globalRegistry;
+		$this->wf = $this->functionWrapper;
 
 		// register ajax dispatcher
 		$this->globalRegistry->append('wgAjaxExportList', 'WikiaApp::ajax');
@@ -64,9 +84,14 @@ class WikiaApp {
 		return $this->hookDispatcher;
 	}
 
+	/**
+	 * set MediaWiki registry (global)
+	 * @param WikiaGlobalRegistry $globalRegistry
+	 */
 	public function setGlobalRegistry(WikiaGlobalRegistry $globalRegistry) {
 		$this->globalRegistry = $globalRegistry;
 	}
+
 	/**
 	 * get MediaWiki registry (global)
 	 * @return WikiaGlobalRegistry
@@ -75,6 +100,10 @@ class WikiaApp {
 		return $this->globalRegistry;
 	}
 
+	/**
+	 * set Wikia registry (local)
+	 * @param WikiaLocalRegistry $localRegistry
+	 */
 	public function setLocalRegistry(WikiaLocalRegistry $localRegistry) {
 		$this->localRegistry = $localRegistry;
 	}
@@ -88,6 +117,22 @@ class WikiaApp {
 	}
 
 	/**
+	 * get global function wrapper
+	 * @return WikiaFunctionWrapper
+	 */
+	public function getFunctionWrapper() {
+		return $this->functionWrapper;
+	}
+
+	/**
+	 * set global function wrapper
+	 * @param WikiaFunctionWrapper $functionWrapeper
+	 */
+	public function setFunctionWrapper(WikiaFunctionWrapper $functionWrapper) {
+		$this->functionWrapper = $functionWrapper;
+	}
+
+	/**
 	 * get dispatcher object
 	 * @return WikiaDispatcher
 	 */
@@ -98,7 +143,11 @@ class WikiaApp {
 		return $this->dispatcher;
 	}
 
-	public function setDispatcher($dispatcher) {
+	/**
+	 * set dispatcher object
+	 * @param WikiaDispatcher $dispatcher
+	 */
+	public function setDispatcher(WikiaDispatcher $dispatcher) {
 		$this->dispatcher = $dispatcher;
 	}
 
@@ -287,7 +336,7 @@ class WikiaApp {
 	public function runFunction() {
 		$funcArgs = func_get_args();
 		$funcName = array_shift($funcArgs);
-		return call_user_func_array( $funcName, $funcArgs );
+		return $this->functionWrapper->run( $funcName, $funcArgs );
 	}
 
 	/**
