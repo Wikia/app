@@ -15,6 +15,19 @@ class CreateWikiTest extends PHPUnit_Framework_TestCase {
 	const TEST_EXTENSION = '';
 	const TEST_USER_ID1 = 1;
 	const TEST_USER_ID2 = 2;
+	
+	private $wgUserBackup = null;
+	
+	protected function setUp() {
+		global $wgUser;
+		$this->wgUserBackup = $wgUser;
+		$wgUser = User::newFromId(self::TEST_USER_ID1);
+	}
+	
+	protected function tearDown() {
+		global $wgUser;
+		$wgUser = $this->wgUserBackup;
+	}
 
 	/**
 	 * CreateWikiProject object
