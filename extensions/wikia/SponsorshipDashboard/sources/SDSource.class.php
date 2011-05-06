@@ -444,22 +444,7 @@ abstract class SponsorshipDashboardSource {
 			return array();
 		}
 
-		var_dump( array_flip( SponsorshipDashboardService::getPopularHubs( true ) ) );
-
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$res = $dbr->query( 'SELECT id, name FROM city_tag', __METHOD__);
-		$returnArray = array();
-
-		while ( $row = $res->fetchObject( $res ) ) {
-			foreach ( $wgHubsPages['en'] as $hubPage ) {
-				if ( $hubPage['name'] == $row->name ) {
-					$returnArray[ $row->id ] = $row->name;
-				}
-			}
-		}
-		var_dump( $returnArray );
-
-		return $returnArray;
+		return array_flip( SponsorshipDashboardService::getPopularHubs( true ) );
 	}
 
 	/*

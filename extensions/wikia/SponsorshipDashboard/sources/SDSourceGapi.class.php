@@ -13,7 +13,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 	const SD_MAX_RESULTS = 365;
 	const SD_DATE_CELL = 'date';
 	
-	const SD_GAPI_RETRIES = 4;
+	const SD_GAPI_RETRIES = 50;
 	const SD_GAPI_RESULT_EMPTY = '';
 	const SD_MC_KEY_PREFIX_GAPI = 'Gapi';
 
@@ -264,7 +264,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 			} catch ( Exception $e ) {
 				$retries--;
 				sleep( 1 );
-				Wikia::log( __METHOD__, false, $e->getMessage() );
+				Wikia::log( __METHOD__, 'jku', $e->getMessage() );
 			}
 		}
 
