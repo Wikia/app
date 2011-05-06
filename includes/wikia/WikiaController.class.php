@@ -96,6 +96,25 @@ abstract class WikiaController {
 	}
 
 	/**
+	 * Convenience method for getting a value from the request object
+	 * @param string $key
+	 * @param string $value 
+	 */
+
+	public function getVal($key, $default = null) {
+		return $this->request->getVal($key, $default);
+	}
+	
+	/**
+	 * Convenience method for setting a value on the response object
+	 * @param string $key
+	 * @param string $value 
+	 */
+	public function setVal($key, $value) {
+		$this->response->setVal($key, $value);
+	}
+	
+	/**
 	 * Prints documentation of current controller
 	 */
 	public function help() {
