@@ -11,29 +11,35 @@ class DummyExtension {
 	 * wikia app instance
 	 * @var WikiaApp
 	 */
-	private $wikia = null;
+	private $app = null;
 
 	public function __construct(Title $currentTitle = null) {
+		$this->app = F::app();
 		$this->title = $currentTitle;
-		$this->wikia = F::app();
 	}
 
-	/**
-	 * @return Title
-	 */
-	public function getTitle() {
-		if($this->title == null) {
-			$this->title = $this->wikia->getGlobal('wgTitle');
+	public function getWikiData( $wikiId ) {
+		$this->app->wf->profileIn( __METHOD__ );
+
+		if( empty( $wikiId ) ) {
+			throw new WikiaException("Unknown wikiId");
 		}
-		return $this->title;
+
+		$dbr = $this->app->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
+		$row = $dbr->selectRow( 'city_list', array('city_url', 'city_title'), array( 'city_id' => $wikiId ), __METHOD__ );
+
+		if( !empty($row) ) {
+			$wiki = array( 'title' => $row->city_title, 'url' => $row->city_url );
+		}
+		else {
+			throw new WikiaException("Unknown wikiId: $wikiId");
+		}
+
+		$this->app->wf->profileOut( __METHOD__ );
+		return $wiki;
 	}
 
 	public function onOutputPageBeforeHTML( &$out, &$text ) {
-
-		$dbr = $this->wikia->runFunction( 'wfGetDB', DB_SLAVE, array(), $this->wikia->getGlobal( 'wgExternalSharedDB' ) );
-
-		//var_dump( $dbr );
-
 		return true;
 	}
 
