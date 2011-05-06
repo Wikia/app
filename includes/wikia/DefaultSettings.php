@@ -73,7 +73,7 @@ if($wgDBname != 'uncyclo') {
 global $wgAutoloadClasses;
 
 /**
- * MW Abstraction Layer classes
+ * Framework classes
  */
 $wgAutoloadClasses['F'] = $IP . '/includes/wikia/WikiaSuperFactory.class.php';
 $wgAutoloadClasses['WF'] = $IP . '/includes/wikia/WikiaSuperFactory.class.php';
@@ -89,6 +89,7 @@ $wgAutoloadClasses['WikiaErrorController'] = $IP . '/includes/wikia/WikiaErrorCo
 $wgAutoloadClasses['WikiaRequest'] = $IP . '/includes/wikia/WikiaRequest.class.php';
 $wgAutoloadClasses['WikiaResponse'] = $IP . '/includes/wikia/WikiaResponse.class.php';
 $wgAutoloadClasses['WikiaView'] = $IP . '/includes/wikia/WikiaView.class.php';
+$wgAutoloadClasses['WikiaFunctionWrapper'] = $IP . '/includes/wikia/WikiaFunctionWrapper.class.php';
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
 
