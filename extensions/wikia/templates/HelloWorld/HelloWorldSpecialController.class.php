@@ -28,6 +28,7 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 
+		$this->wg->Out->setPageTitle($this->wf->msg('helloworld-specialpage-title'));
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/templates/HelloWorld/css/HelloWorld.scss'));
 		$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/templates/HelloWorld/js/HelloWorld.js');
 
@@ -48,7 +49,7 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 		$wikiId = $this->getVal( 'wikiId', $this->wg->CityId );
 
 		// setting response data
-		$this->setVal( 'header', $this->wf->msg('extension-hello-msg') );
+		$this->setVal( 'header', $this->wf->msg('helloworld-hello-msg') );
 		$this->setVal( 'wikiData', $this->businessLogic->getWikiData( $wikiId ) );
 
 		// example of setting SpecialPage::mIncluding
