@@ -22,7 +22,7 @@ $app->registerClass('HelloWorld', $dir . 'HelloWorld.class.php');
 /**
  * controllers
  */
-//$app->registerClass('HelloWorldController', $dir . 'HelloWorldController.class.php');
+$app->registerClass('HelloWorldController', $dir . 'HelloWorldController.class.php');
 $app->registerClass('HelloWorldSpecialController', $dir . 'HelloWorldSpecialController.class.php');
 
 /**
