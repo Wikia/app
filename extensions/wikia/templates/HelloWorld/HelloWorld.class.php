@@ -1,6 +1,6 @@
 <?php
 
-class Extension {
+class HelloWorld {
 
 	/**
 	 * current page title

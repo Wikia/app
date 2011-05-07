@@ -1,5 +1,5 @@
 <h1><?php echo $header; ?></h1>
-<p>This is an <strong>Example Extension</strong> helloWorld Template!</p>
+<p>This is the <strong>HelloWorld_Hello</strong> Template!</p>
 <br />
 Wiki data:<br />
 <ul>

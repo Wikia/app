@@ -5,7 +5,7 @@
  * @author ADi
  *
  */
-class ExtensionController extends WikiaSpecialPageController {
+class HelloWorldSpecialController extends WikiaSpecialPageController {
 
 	private $businessLogic = null;
 	private $controllerData = array();
@@ -16,18 +16,18 @@ class ExtensionController extends WikiaSpecialPageController {
 		$this->controllerData[] = 'baz';
 
 		// standard SpecialPage constructor call
-		parent::__construct( 'Extension', '', false );
+		parent::__construct( 'HelloWorld', '', false );
 	}
 
 	public function init() {
-		$this->businessLogic = F::build( 'Extension', array( $this->app->wg->Title ) );
+		$this->businessLogic = F::build( 'HelloWorld', array( $this->app->wg->Title ) );
 	}
 
 	/**
 	 * this is default method, which in this example just redirects to helloWorld method
 	 */
 	public function index() {
-		$this->redirect( 'Extension', 'helloWorld' );
+		$this->redirect( 'HelloWorldSpecial', 'Hello' );
 	}
 
 	/**
@@ -37,7 +37,7 @@ class ExtensionController extends WikiaSpecialPageController {
 	 * @responseParam string $header
 	 * @responseParam array $wikiData
 	 */
-	public function helloWorld() {
+	public function Hello() {
 		$this->wf->profileIn( __METHOD__ );
 
 		// getting request data
