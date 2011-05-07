@@ -41,7 +41,7 @@ class ExtensionController extends WikiaSpecialPageController {
 		$this->wf->profileIn( __METHOD__ );
 
 		// getting request data
-		$wikiId = $this->getVal( 'wikiId' );
+		$wikiId = $this->getVal( 'wikiId', $this->wg->CityId );
 
 		// setting response data
 		$this->setVal( 'header', $this->wf->msg('extension-hello-msg') );
