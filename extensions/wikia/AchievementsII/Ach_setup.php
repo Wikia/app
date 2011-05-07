@@ -62,6 +62,7 @@ $wgAvailableRights[] = 'achievements-exempt';
 $wgGroupPermissions['*']['achievements-exempt'] = false;
 $wgGroupPermissions['helper']['achievements-exempt'] = true;
 $wgGroupPermissions['staff']['achievements-exempt'] = true;
+$wgGroupPermissions['vstf']['achievements-exempt'] = true;
 
 // overrides acievements-exempt
 $wgAvailableRights[] = 'achievements-explicit';
