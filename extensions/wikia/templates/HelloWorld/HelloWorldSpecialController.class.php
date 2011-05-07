@@ -24,7 +24,7 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * this is default method, which in this example just redirects to helloWorld method
+	 * this is default method, which in this example just redirects to Hello method
 	 */
 	public function index() {
 

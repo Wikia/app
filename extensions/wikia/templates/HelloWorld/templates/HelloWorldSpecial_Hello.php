@@ -6,3 +6,7 @@ Wiki data:<br />
 	<li><strong>Title:</strong> <?= $wikiData['title']; ?></li>
 	<li><strong>Url:</strong> <a href="<?= $wikiData['url']; ?>"><?= $wikiData['url']; ?></a></li>
 </ul>
+
+<div id="HelloWorldAjax" class="HelloWorldAjax">
+	<button>Get some Ajax!</button>
+</div>
