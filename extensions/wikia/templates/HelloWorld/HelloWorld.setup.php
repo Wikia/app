@@ -12,28 +12,28 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes
  */
-$app->registerClass('Extension', $dir . 'Extension.class.php');
-$app->registerClass('ExtensionController', $dir . 'ExtensionController.class.php');
+$app->registerClass('HelloWorld', $dir . 'HelloWorld.class.php');
 
 /**
  * hooks
  */
-//$app->registerHook('OutputPageBeforeHTML', 'Extension', 'onOutputPageBeforeHTML');
+//$app->registerHook('OutputPageBeforeHTML', 'HelloWorld', 'onOutputPageBeforeHTML');
 
 /**
  * controllers
  */
-$app->registerClass('ExtensionController', $dir . 'ExtensionController.class.php');
+//$app->registerClass('HelloWorldController', $dir . 'HelloWorldController.class.php');
+$app->registerClass('HelloWorldSpecialController', $dir . 'HelloWorldSpecialController.class.php');
 
 /**
  * special pages
  */
-$app->registerSpecialPage('Extension', 'ExtensionController');
+$app->registerSpecialPage('HelloWorld', 'HelloWorldSpecialController');
 
 /**
  * message files
  */
-$app->registerExtensionMessageFile('Extension', $dir . 'Extension.i18n.php');
+$app->registerExtensionMessageFile('HelloWorld', $dir . 'HelloWorld.i18n.php');
 
 /**
  * setup functions
