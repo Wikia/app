@@ -97,14 +97,15 @@ class ChooseNameTemplate extends QuickTemplate {
 					// If we didn't get an acceptable language from facebook, display the form.
 					?><label for='uselang'><?php $this->msg('yourlanguage') ?></label> <br>
 					<select style="height:22px;" name="uselang" id="uselang"><?php
-					$isSelected = false;
 			
 					$aTopLanguages = explode(',', wfMsg('wikia-language-top-list'));
 					asort( $aLanguages );
 						if (!empty($aTopLanguages) && is_array($aTopLanguages)) :
 				?>
 												<optgroup label="<?= wfMsg('wikia-language-top', count($aTopLanguages)) ?>">
-				<?php foreach ($aTopLanguages as $sLang) :
+				<?php
+						$isSelected = false;
+						foreach ($aTopLanguages as $sLang) :
 								$selected = '';
 								if ( !$isSelected && ( $wgLanguageCode == $sLang ) ) :
 										$isSelected = true;
@@ -118,7 +119,9 @@ class ChooseNameTemplate extends QuickTemplate {
 												<optgroup label="<?= wfMsg('wikia-language-all') ?>">
 				<?php if (!empty($aLanguages) && is_array($aLanguages)) : ?>
 				<?php
+						$isSelected = false;
 						foreach ($aLanguages as $sLang => $sLangName) :
+								$selected = '';
 								if ( empty($isSelected) && ( $wgLanguageCode == $sLang ) ) :
 										$isSelected = true;
 										$selected = ' selected="selected"';
