@@ -3,5 +3,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'extension-hello-msg' => 'Hello, this is an example i18n message!'
+	'helloworld-hello-msg' => 'Hello, this is an example i18n message!',
+	'helloworld-specialpage-title' => 'Special:Hello World'
 );
