@@ -27,11 +27,13 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 	 * this is default method, which in this example just redirects to helloWorld method
 	 */
 	public function index() {
+		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/templates/HelloWorld/css/HelloWorld.scss'));
+
 		$this->redirect( 'HelloWorldSpecial', 'Hello' );
 	}
 
 	/**
-	 * helloWorld method
+	 * Hello method
 	 *
 	 * @requestParam int $wikiId
 	 * @responseParam string $header
