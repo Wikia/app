@@ -29,7 +29,7 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 	public function index() {
 
 		$this->wg->Out->setPageTitle($this->wf->msg('helloworld-specialpage-title'));
-		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/templates/HelloWorld/css/HelloWorld.scss'));
+		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/templates/HelloWorld/css/HelloWorld_Oasis.scss'));
 		$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/templates/HelloWorld/js/HelloWorld.js');
 
 		$this->redirect( 'HelloWorldSpecial', 'Hello' );
