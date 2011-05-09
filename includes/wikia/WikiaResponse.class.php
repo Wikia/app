@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Nirvana Framework - Response class
+ *
+ * @group nirvana
+ *
+ * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
+ * @author Owen Davis <owen(at)wikia-inc.com>
+ * @author Wojciech Szela <wojtek(at)wikia-inc.com>
+ */
 class WikiaResponse {
 
 	const RESPONSE_CODE_OK = 200;
@@ -21,11 +30,19 @@ class WikiaResponse {
 	protected $data = array();
 	protected $exception = null;
 
+	/**
+	 * constructor
+	 * @param string $format
+	 */
 	public function __construct( $format ) {
 		$this->setFormat( $format );
 		$this->setView( F::build( 'WikiaView' ) );
 	}
 
+	/**
+	 * set exception
+	 * @param Exception $exception
+	 */
 	public function setException(Exception $exception) {
 		$this->exception = $exception;
 	}
@@ -47,58 +64,113 @@ class WikiaResponse {
 		$this->view->setResponse( $this );
 	}
 
+	/**
+	 * gets the controller name
+	 * @return string
+	 */
 	public function getControllerName() {
 		return $this->controllerName;
 	}
 
+	/**
+	 * sets the controller name
+	 * @param string $value
+	 */
 	public function setControllerName( $value ) {
 		$this->controllerName = $value;
 	}
 
+	/**
+	 * gets method name
+	 * @return string
+	 */
 	public function getMethodName() {
 		return $this->methodName;
 	}
 
+	/**
+	 * sets method name
+	 * @param string $value
+	 */
 	public function setMethodName( $value ) {
 		$this->methodName = $value;
 	}
 
+	/**
+	 * gets response data
+	 * @return array
+	 */
 	public function getData() {
 		return $this->data;
 	}
 
+	/**
+	 * sets response data
+	 * @param array $data
+	 */
 	public function setData( Array $data ) {
 		$this->data = $data;
 	}
 
+	/**
+	 * get response body
+	 * @return string
+	 */
 	public function getBody() {
 		return $this->body;
 	}
 
+	/**
+	 * sets response body
+	 * @param string $value
+	 */
 	public function setBody($value) {
 		$this->body = $value;
 	}
 
+	/**
+	 * reset all response data
+	 */
 	public function resetData() {
 		$this->data = array();
 	}
 
+	/**
+	 * append something to response body
+	 * @param string $value
+	 */
 	public function appendBody($value) {
 		$this->body .= $value;
 	}
 
+	/**
+	 * get response code
+	 * @return int
+	 */
 	public function getCode() {
 		return $this->code;
 	}
 
+	/**
+	 * set response code
+	 * @param int $value
+	 */
 	public function setCode($value) {
 		$this->code = $value;
 	}
 
+	/**
+	 * get content type
+	 * @return string
+	 */
 	public function getContentType() {
 		return $this->contentType;
 	}
 
+	/**
+	 * set content type
+	 * @param string $value
+	 */
 	public function setContentType($value) {
 		$this->contentType = $value;
 	}

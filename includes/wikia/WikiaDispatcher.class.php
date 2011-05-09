@@ -1,4 +1,15 @@
 <?php
+
+
+/**
+ * Nirvana Framework - Dispatcher class, this is where all magic happens
+ *
+ * @group nirvana
+ *
+ * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
+ * @author Owen Davis <owen(at)wikia-inc.com>
+ * @author Wojciech Szela <wojtek(at)wikia-inc.com>
+ */
 class WikiaDispatcher {
 
 	const DEFAULT_METHOD_NAME = 'index';
@@ -15,6 +26,13 @@ class WikiaDispatcher {
 		return !empty( $controllerName ) ? ( $controllerName . 'Controller' ) : null;
 	}
 
+	/**
+	 * dispatch the request
+	 *
+	 * @param WikiaApp $app
+	 * @param WikiaRequest $request
+	 * @return WikiaResponse
+	 */
 	public function dispatch(WikiaApp $app, WikiaRequest $request = null) {
 		if (null === $request) {
 			$request = F::build( 'WikiaRequest', array( 'params' => ( $_POST + $_GET ) ) );

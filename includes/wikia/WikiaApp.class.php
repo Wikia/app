@@ -1,9 +1,13 @@
 <?php
 
 /**
- * Wikia Application class
- * @author ADi
- * @author Wojtek
+ * Nirvana Framework - Application class
+ *
+ * @group nirvana
+ *
+ * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
+ * @author Owen Davis <owen(at)wikia-inc.com>
+ * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  */
 class WikiaApp {
 
@@ -45,7 +49,8 @@ class WikiaApp {
 
 	/**
 	 * constructor
-	 * @param WikiaRegistry $registry
+	 * @param WikiaGlobalRegistry $globalRegistry
+	 * @param WikiaLocalRegistry $localRegistry
 	 * @param WikiaHookDispatcher $hookDispatcher
 	 */
 	public function __construct(WikiaGlobalRegistry $globalRegistry = null, WikiaLocalRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null) {
@@ -261,53 +266,6 @@ class WikiaApp {
 	}
 
 	/**
-	 * get cookies array
-	 * @deprecated
-	 * @return array
-	 */
-	public function getCookies() {
-		return $_COOKIE;
-	}
-
-	/**
-	 * get cookie
-	 * @param string $key
-	 * @return mixed
-	 */
-	public function getCookie( $key ) {
-		return $this->isCookie( $key ) ? $_COOKIE[ $key ] : null;
-	}
-
-	/**
-	 * set cookie
-	 * @deprecated
-	 * @param string $key
-	 * @param mixed $value
-	 * @param int $expire
-	 */
-	public function setCookie( $key, $value, $expire ) {
-		setcookie( $key, $value, $expire );
-	}
-
-	/**
-	 * unset cookie
-	 * @deprecated
-	 * @param string $key
-	 */
-	public function unsetCookie( $key ) {
-		unset( $_COOKIE[ $key ] );
-	}
-
-	/**
-	 * check if cookie is set
-	 * @deprecated
-	 * @param string $key
-	 */
-	public function isCookie( $key ) {
-		return (bool) isset( $_COOKIE[ $key ] );
-	}
-
-	/**
 	 * Prepares and sends a request to a Controller
 	 *
 	 * @param $controllerName string the name of the controller, without the 'Controller' or 'Model' suffix
@@ -371,7 +329,9 @@ class WikiaApp {
 		return $response->toString();
 	}
 
-	//TODO: take a look here
+	/**
+	 * @todo: take a look here, consider removing
+	 */
 	public static function ajax() {
 		return F::app()->sendRequest( null, null, null, false );
 	}

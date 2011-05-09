@@ -1,15 +1,33 @@
 <?php
 
+/**
+ * Nirvana Framework - Request class
+ *
+ * @group nirvana
+ *
+ * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
+ * @author Owen Davis <owen(at)wikia-inc.com>
+ * @author Wojciech Szela <wojtek(at)wikia-inc.com>
+ */
 class WikiaRequest {
 
 	private $isDispatched = false;
 	private $isInternal = false;
 	protected $params = array();
 
+	/**
+	 * constructor
+	 * @param array $params
+	 */
 	public function __construct( Array $params ) {
 		$this->params = $params;
 	}
 
+	/**
+	 * checks if it's an ajax request
+	 * @experimental
+	 * @return bool
+	 */
 	public function isXmlHttp() {
 		if( isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ) ) {
 			return true;
@@ -17,6 +35,12 @@ class WikiaRequest {
 		return false;
 	}
 
+	/**
+	 * get param value
+	 * @param string $key param key
+	 * @param mixed $default param value
+	 * @return mixed
+	 */
 	public function getVal( $key, $default = null ) {
 		if( isset($this->params[$key]) ) {
 			return $this->params[$key];
@@ -25,26 +49,51 @@ class WikiaRequest {
 		return $default;
 	}
 
+	/**
+	 * set param value
+	 * @param string $key param key
+	 * @param mixed $value param value
+	 */
 	public function setVal( $key, $value ) {
 		$this->params[$key] = $value;
 	}
 
+	/**
+	 * checks if request was already dispatched
+	 * @return bool
+	 */
 	public function isDispatched() {
 		return $this->isDispatched;
 	}
 
+	/**
+	 * set "dispatched" flag
+	 * @param bool $value
+	 */
 	public function setDispatched($value) {
 		$this->isDispatched = (bool) $value;
 	}
 
+	/**
+	 * checks if it's internal request
+	 * @return bool
+	 */
 	public function isInternal() {
 		return $this->isInternal;
 	}
 
-	public function setInternal($flag) {
-		$this->isInternal = (bool) $flag;
+	/**
+	 * set "internal" flag
+	 * @param bool $value
+	 */
+	public function setInternal($value) {
+		$this->isInternal = (bool) $value;
 	}
 
+	/**
+	 * get all params
+	 * @return array
+	 */
 	public function getParams() {
 		return $this->params;
 	}
@@ -97,4 +146,50 @@ class WikiaRequest {
 	public function wasPosted() {
 		return isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] == 'POST';
 	}
+
+
+	/**
+	 * get cookies array
+	 * @deprecated
+	 * @return array
+	 */
+	public function getCookies() {
+		return $_COOKIE;
+	}
+
+	/**
+	 * get cookie
+	 * @param string $key
+	 * @return mixed
+	 */
+	public function getCookie( $key ) {
+		return $this->isCookie( $key ) ? $_COOKIE[ $key ] : null;
+	}
+
+	/**
+	 * set cookie
+	 * @param string $key
+	 * @param mixed $value
+	 * @param int $expire
+	 */
+	public function setCookie( $key, $value, $expire ) {
+		setcookie( $key, $value, $expire );
+	}
+
+	/**
+	 * unset cookie
+	 * @param string $key
+	 */
+	public function unsetCookie( $key ) {
+		unset( $_COOKIE[ $key ] );
+	}
+
+	/**
+	 * check if cookie is set
+	 * @param string $key
+	 */
+	public function isCookie( $key ) {
+		return (bool) isset( $_COOKIE[ $key ] );
+	}
+
 }

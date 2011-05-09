@@ -1,8 +1,10 @@
 <?php
 
 /**
- * Wikia Super Factory class
- * @author ADi
+ * Nirvana Framework - (Super)Factory class
+ *
+ * @group nirvana
+ * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
  */
 abstract class WikiaSuperFactory {
 	protected static $constructors = array();

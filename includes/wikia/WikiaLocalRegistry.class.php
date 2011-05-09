@@ -1,5 +1,15 @@
 <?php
 
+
+/**
+ * Nirvana Framework - Local registry class
+ *
+ * @group nirvana
+ *
+ * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
+ * @author Owen Davis <owen(at)wikia-inc.com>
+ * @author Wojciech Szela <wojtek(at)wikia-inc.com>
+ */
 class WikiaLocalRegistry extends WikiaRegistry {
 
 	private $container = array();
