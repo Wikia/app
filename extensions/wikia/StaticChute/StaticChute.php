@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * OBSOLETE
+ * 
+ * This extension is OBSOLETE. It is being phased out or is kept only for backward compatibility.
+ * See OBSOLETE file for details.
+ */
+
 class StaticChute {
 
 	public $fileType; // js|css|html
@@ -102,6 +109,7 @@ class StaticChute {
 			'monobook/tracker.js',
 			'common/tracker.js',
 			'common/contributed.js',
+			'common/mwsuggest.js',
 			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 			'../extensions/FBConnect/fbconnect.js',
 			'../extensions/wikia/AdEngine/AdProviderOpenX.js',
