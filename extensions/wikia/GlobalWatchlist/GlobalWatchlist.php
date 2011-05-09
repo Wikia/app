@@ -5,6 +5,7 @@
  * !IMPORTANT! see GlobalWatchlist.sql file for db schema !IMPORTANT!
  *
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia.com>
+ * @author Piotr 'Moli' Molski <moli(at)wikia.com>
  *
  */
 
@@ -15,7 +16,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'GlobalWatchlist',
-	'author' => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek]',
+	'author' => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek], [http://www.wikia.com/wiki/User:Moli.wikia]',
 	'descriptionmsg' => 'globalwatchlist-desc',
 );
 
@@ -26,32 +27,14 @@ $wgGlobalWatchlistMaxDigestedArticlesPerWiki = 50;
 $wgExtensionMessagesFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWatchlist.i18n.php';
 
 // classes
-$wgAutoloadClasses['GlobalWatchlistBot'] = dirname( __FILE__ ) . '/GlobalWatchlistBot.class.php';
+$wgAutoloadClasses['GlobalWatchlistBot'] = dirname( __FILE__ ) . '/GlobalWatchlist.bot.php';
+$wgAutoloadClasses['GlobalWatchlistHook'] = dirname( __FILE__ ) . '/GlobalWatchlist.hooks.php';
 
 // hooks
-$wgHooks['GetPreferences'][] = 'wfGlobalWatchlistOnGetPreferences';
-
-function wfGlobalWatchlistOnGetPreferences($user, &$defaultPreferences) {
-	global $wgUser, $wgExternalDatawareDB;
-
-	$defaultPreferences['watchlistdigest'] = array(
-		'type' => 'toggle',
-		'label-message' => 'tog-watchlistdigest',
-		'section' => 'watchlist/advancedwatchlist',
-	);
-
-	$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
-	$oResource = $dbr->query("SELECT count(*) AS count FROM global_watchlist WHERE gwa_user_id='" . $wgUser->getID() . "'");
-	$oResultRow = $dbr->fetchObject($oResource);
-
-	if($oResultRow->count) {
-		// show this toggle only when there was actaully any global watchlist sent for this user
-		$defaultPreferences['watchlistdigestclear'] = array(
-			'type' => 'toggle',
-			'label-message' => 'tog-watchlistdigestclear',
-			'section' => 'watchlist/advancedwatchlist',
-		);
-	}
-
-	return true;
-}
+$wgHooks[ 'GetPreferences' ][] = 'GlobalWatchlistHook::getPreferences';
+$wgHooks[ 'WatchedItem::addWatch' ][] = 'GlobalWatchlistHook::addGlobalWatch';
+$wgHooks[ 'WatchedItem::removeWatch' ][] = 'GlobalWatchlistHook::removeGlobalWatch';
+$wgHooks[ 'WatchedItem::updateWatch' ][] = 'GlobalWatchlistHook::updateGlobalWatch';
+$wgHooks[ 'WatchedItem::replaceWatch'][] = 'GlobalWatchlistHook::replaceGlobalWatch';
+$wgHooks[ 'WatchlistEditor::clearWatchlist'][] = 'GlobalWatchlistHook::clearGlobalWatch';
+$wgHooks[ 'User::resetWatch' ][] = 'GlobalWatchlistHook::resetGlobalWatch';

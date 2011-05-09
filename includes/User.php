@@ -2503,16 +2503,8 @@ class User {
 		// If the page is watched by the user (or may be watched), update the timestamp on any
 		// any matching rows
 		if ( $watched ) {
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->update( 'watchlist',
-					array( /* SET */
-						'wl_notificationtimestamp' => null
-					), array( /* WHERE */
-						'wl_title' => $title->getDBkey(),
-						'wl_namespace' => $title->getNamespace(),
-						'wl_user' => $this->getID()
-					), __METHOD__
-			);
+			$wl = WatchedItem::fromUserTitle( $this, $title );
+			$wl->clearWatch();
 		}
 	}
 
@@ -2538,6 +2530,8 @@ class User {
 					'wl_user' => $currentUser
 				), __METHOD__
 			);
+			
+			wfRunHooks( 'User::resetWatch', array ( $currentUser ) );
 		# 	We also need to clear here the "you have new message" notification for the own user_talk page
 		#	This is cleared one page view later in Article::viewUpdates();
 		}

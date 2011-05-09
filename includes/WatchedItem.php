@@ -53,28 +53,31 @@ class WatchedItem {
 	 */
 	public function addWatch() {
 		wfProfileIn( __METHOD__ );
+		$rows = array();
 
 		// Use INSERT IGNORE to avoid overwriting the notification timestamp
 		// if there's already an entry for this page
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->insert( 'watchlist',
-		  array(
+		$timestamp = null;
+		
+		$rows[] = array(
 			'wl_user' => $this->id,
-			'wl_namespace' => MWNamespace::getSubject($this->ns),
+			'wl_namespace' => MWNamespace::getSubject( $this->ns ),
 			'wl_title' => $this->ti,
-			'wl_notificationtimestamp' => null
-		  ), __METHOD__, 'IGNORE' );
-
-		// Every single watched page needs now to be listed in watchlist;
-		// namespace:page and namespace_talk:page need separate entries:
-		$dbw->insert( 'watchlist',
-		  array(
+			'wl_notificationtimestamp' => $timestamp
+		);
+		
+		$rows[] = array(
 			'wl_user' => $this->id,
 			'wl_namespace' => MWNamespace::getTalk($this->ns),
 			'wl_title' => $this->ti,
-			'wl_notificationtimestamp' => null
-		  ), __METHOD__, 'IGNORE' );
-
+			'wl_notificationtimestamp' => $timestamp
+		);
+		
+		$dbw->insert( 'watchlist', $rows, __METHOD__, 'IGNORE' );
+		
+		wfRunHooks( 'WatchedItem::addWatch', array ( $this ) );
+		
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -85,6 +88,7 @@ class WatchedItem {
 	 */
 	public function removeWatch() {
 		$success = false;
+		
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete( 'watchlist',
 			array(
@@ -112,7 +116,47 @@ class WatchedItem {
 		if ( $dbw->affectedRows() ) {
 			$success = true;
 		}
+		
+		wfRunHooks( 'WatchedItem::removeWatch', array ( $this, $success ) );
+				
 		return $success;
+	}
+
+	/**
+	 * Wikia changes: update watch in database
+	 * @param $watchers Array: array of users IDs. If empty, $this->id is taken
+	 * @param $timestamp: update timestamp
+	 * @return bool (always true)
+	 */
+	public function updateWatch( /*Array*/$watchers = null, $timestamp = null ) {
+		$dbw = wfGetDB( DB_MASTER );
+		
+		$user = ( !empty($watchers) ) ? $watchers : $this->id;
+		$ts = ( !is_null( $timestamp ) ) ? $dbw->timestamp( $timestamp ) : null;
+		
+		$dbw->begin();
+		$dbw->update( 'watchlist',
+				array( /* SET */
+					'wl_notificationtimestamp' => $ts
+				), array( /* WHERE */
+					'wl_title' => $this->ti,
+					'wl_namespace' => $this->ns,
+					'wl_user' => $user
+				), __METHOD__
+		);
+		$dbw->commit();
+		
+		wfRunHooks( 'WatchedItem::updateWatch', array ( $this, $user, $ts ) );
+		
+		return true;	
+	}
+	
+	/**
+	 * Wikia changes: clear user's notification 
+	 * @return bool (always true)
+	 */
+	public function clearWatch() {
+		return $this->updateWatch();
 	}
 
 	/**
@@ -161,6 +205,9 @@ class WatchedItem {
 		# Note that multi-row replace is very efficient for MySQL but may be inefficient for
 		# some other DBMSes, mostly due to poor simulation by us
 		$dbw->replace( 'watchlist', array( array( 'wl_user', 'wl_namespace', 'wl_title' ) ), $values, __METHOD__ );
+		
+		wfRunHooks( 'WatchedItem::replaceWatch', array ( $ot, $nt, $values ) );
+				
 		return true;
 	}
 }

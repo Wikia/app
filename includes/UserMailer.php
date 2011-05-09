@@ -534,25 +534,24 @@ class EmailNotification {
 		if( !wfRunHooks( 'AllowNotifyOnPageChange', array( $editor, $title ) ) ) {
 			return false;
 		}
-			
-		/* Wikia change begin - @author: wladek & tomek */
-		/* RT#55604: Add a timeout to the watchlist email block */
-		$notificationTimeoutSql = 'wl_notificationtimestamp IS NULL';
-
-		global $wgEnableWatchlistNotificationTimeout, $wgWatchlistNotificationTimeout;
-		if ( !empty($wgEnableWatchlistNotificationTimeout) && isset($wgWatchlistNotificationTimeout) ) {
-			$blockTimeout = wfTimestamp(TS_MW,wfTimestamp(TS_UNIX,$timestamp) - intval($wgWatchlistNotificationTimeout) );
-			$notificationTimeoutSql = "$notificationTimeoutSql OR wl_notificationtimestamp < '$blockTimeout'";
-		}
-
-		if(!empty($otherParam['notisnull'])) {
-			$notificationTimeoutSql = "1";
-		}
-		/* Wikia change end */
 
 		// Build a list of users to notfiy
 		$watchers = array();
 		if ($wgEnotifWatchlist || $wgShowUpdatedMarker) {
+			
+			global $wgEnableWatchlistNotificationTimeout, $wgWatchlistNotificationTimeout;
+			/* Wikia change begin - @author: wladek & tomek */
+			/* RT#55604: Add a timeout to the watchlist email block */
+			if ( !empty( $otherParam['notisnull'] ) ) {
+				$notificationTimeoutSql = "1";
+			} elseif ( !empty($wgEnableWatchlistNotificationTimeout) && isset($wgWatchlistNotificationTimeout) ) {
+				$blockTimeout = wfTimestamp( TS_MW, wfTimestamp( TS_UNIX, $timestamp ) - intval( $wgWatchlistNotificationTimeout ) );
+				$notificationTimeoutSql = "$notificationTimeoutSql OR wl_notificationtimestamp < '$blockTimeout'";
+			} else {
+				$notificationTimeoutSql = 'wl_notificationtimestamp IS NULL';
+			}
+			/* Wikia change end */
+					
 			$dbw = wfGetDB( DB_MASTER );		
 			$res = $dbw->select( array( 'watchlist' ),
 				array( 'wl_user' ),
@@ -560,10 +559,7 @@ class EmailNotification {
 					'wl_title' => $title->getDBkey(),
 					'wl_namespace' => $title->getNamespace(),
 					'wl_user != ' . intval( $editor->getID() ),
-			/* Wikia change begin - @author: wladek */
-			/* RT#55604: Add a timeout to the watchlist email block */
 					$notificationTimeoutSql,
-			/* Wikia change end */
 				), __METHOD__
 			);
 			while ($row = $dbw->fetchObject( $res ) ) {
@@ -572,23 +568,14 @@ class EmailNotification {
 			if ($watchers) {
 				// Update wl_notificationtimestamp for all watching users except
 				// the editor
-				$dbw->begin();
-				$dbw->update( 'watchlist',
-					array( /* SET */
-						'wl_notificationtimestamp' => $dbw->timestamp( $timestamp )
-					), array( /* WHERE */
-						'wl_title' => $title->getDBkey(),
-						'wl_namespace' => $title->getNamespace(),
-						'wl_user' => $watchers
-					), __METHOD__
-				);
-				$dbw->commit();
+				$wl = WatchedItem::fromUserTitle( $editor, $title );
+				$wl->updateWatch( $watchers, $timestamp );
+
 			}
 
 			/* Wikia change begin - @author: Jakub Kurcek */
-			wfRunHooks( 'NotifyOnSubPageChange', array ( $watchers, $title, $editor, $notificationTimeoutSql, __METHOD__, DB_MASTER ) );
+			wfRunHooks( 'NotifyOnSubPageChange', array ( $watchers, $title, $editor, $notificationTimeoutSql ) );
 			/* Wikia change end */
-
 		}
 
 		if ($wgEnotifUseJobQ) {
