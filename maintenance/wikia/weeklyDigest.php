@@ -59,10 +59,10 @@ class WeeklyDigest extends Maintenance {
 			$oWatchlistBot->setDebugMailTo( $sDebugMailTo );
 
 			if ( $bClearMode ) {
-				$this->output( "Run weekly digest with --clear option ..." );
+				$this->output( "Run weekly digest with --clear option ... \n" );
 				$oWatchlistBot->clear();
 			} elseif ( $bUpdateMode ) {
-				$this->output( "Run weekly digest with --update option for page {$sPage} and namespace {$sNamespace} ..." );
+				$this->output( "Run weekly digest with --update option for page {$sPage} and namespace {$sNamespace} ... \n" );
 				if ( !empty( $sPage ) && !is_null( $sNamespace ) ) {
 					if ( ! $oWatchlistBot->updateLocalWatchlist( $sPage, $sNamespace ) ) {
 						print "Update error \n"; 
@@ -73,7 +73,7 @@ class WeeklyDigest extends Maintenance {
 					exit(1);
 				}
 			} elseif ( $bSendMode ) { 
-				$this->output( "Run weekly digest with --send option for user {$this->getOption( 'users' )} ..." );
+				$this->output( "Run weekly digest with --send option for user {$this->getOption( 'users' )} ... \n" );
 				if ( ! $oWatchlistBot->send() ) {
 					print "Send failed \n";
 					exit(1);

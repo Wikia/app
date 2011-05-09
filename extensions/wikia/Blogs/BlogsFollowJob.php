@@ -87,7 +87,7 @@ class BlogsFolllowJob extends Job {
 		
 		while ($row = $dbw->fetchObject( $res ) ) {
 			$watchers[] = intval( $row->wl_user );
-		}		
+		}
 
 		if ( !empty($watchers) ) {
 			$enotif = new EmailNotification();
@@ -104,17 +104,8 @@ class BlogsFolllowJob extends Job {
 			);
 							
 			/* Update wl_notificationtimestamp for all watching users except the editor */
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->begin();
-			$dbw->update( 'watchlist',
-				array( 'wl_notificationtimestamp' => $dbw->timestamp( $timestamp ) ), 
-				array( 
-					'wl_title' 		=> $ownerTitle->getDBkey(),
-					'wl_namespace'	=> $ownerTitle->getNamespace(),
-					'wl_user' 		=> $watchers
-				), __METHOD__
-			);
-			$dbw->commit();			
+			$wl = WatchedItem::fromUserTitle( $editor, $ownerTitle );
+			$wl->updateWatch( $watchers, $timestamp );		
 		}
 
 		wfProfileOut( __METHOD__ );

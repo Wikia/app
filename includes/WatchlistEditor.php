@@ -255,6 +255,8 @@ class WatchlistEditor {
 	private function clearWatchlist( $user ) {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete( 'watchlist', array( 'wl_user' => $user->getId() ), __METHOD__ );
+		
+		wfRunHooks( 'WatchlistEditor::clearWatchlist', array ( $user ) );		
 	}
 
 	/**
@@ -270,24 +272,14 @@ class WatchlistEditor {
 		$dbw = wfGetDB( DB_MASTER );
 		$rows = array();
 		foreach( $titles as $title ) {
-			if( !$title instanceof Title )
+			if ( !$title instanceof Title )
 				$title = Title::newFromText( $title );
-			if( $title instanceof Title ) {
-				$rows[] = array(
-					'wl_user' => $user->getId(),
-					'wl_namespace' => ( $title->getNamespace() & ~1 ),
-					'wl_title' => $title->getDBkey(),
-					'wl_notificationtimestamp' => null,
-				);
-				$rows[] = array(
-					'wl_user' => $user->getId(),
-					'wl_namespace' => ( $title->getNamespace() | 1 ),
-					'wl_title' => $title->getDBkey(),
-					'wl_notificationtimestamp' => null,
-				);
+			if ( $title instanceof Title ) {
+				$wl = WatchedItem::fromUserTitle( $user, $title );
+				$wl->addWatch();
+				unset($wl);		
 			}
 		}
-		$dbw->insert( 'watchlist', $rows, __METHOD__, 'IGNORE' );
 	}
 
 	/**
@@ -302,29 +294,16 @@ class WatchlistEditor {
 	private function unwatchTitles( $titles, $user ) {
 		$dbw = wfGetDB( DB_MASTER );
 		foreach( $titles as $title ) {
-			if( !$title instanceof Title )
+			if ( !$title instanceof Title ) {
 				$title = Title::newFromText( $title );
-			if( $title instanceof Title ) {
-				$dbw->delete(
-					'watchlist',
-					array(
-						'wl_user' => $user->getId(),
-						'wl_namespace' => ( $title->getNamespace() & ~1 ),
-						'wl_title' => $title->getDBkey(),
-					),
-					__METHOD__
-				);
-				$dbw->delete(
-					'watchlist',
-					array(
-						'wl_user' => $user->getId(),
-						'wl_namespace' => ( $title->getNamespace() | 1 ),
-						'wl_title' => $title->getDBkey(),
-					),
-					__METHOD__
-				);
+			}
+			
+			if ( $title instanceof Title ) {
 				$article = new Article($title);
-				wfRunHooks('UnwatchArticleComplete',array(&$user,&$article));
+				if ( wfRunHooks( 'UnwatchArticle', array( &$user, &$article ) ) ) {
+					$user->removeWatch( $title );
+					wfRunHooks( 'UnwatchArticleComplete', array( &$user, &$article ) );
+				}
 			}
 		}
 	}
