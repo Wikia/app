@@ -1,17 +1,12 @@
 <?php
-/**
- * Wikia exception
- *
- * @category Wikia
- * @version $Id:$
- */
 
 /**
- * Wikia exception
+ * Nirvana Framework - Wikia exception
  *
  * Base class for Wikia codebase exceptions. PHP 5.3 compatible
  *
- * @category Wikia
+ * @group nirvana
+ *
  * @author Wojciech Szela <wojtek@wikia-inc.com>
  * @link http://pl2.php.net/manual/en/class.exception.php
  */
@@ -35,9 +30,9 @@ class WikiaException extends MWException {
 		if (version_compare(PHP_VERSION, '5.3.0', '<')) {
 			parent::__construct($message, $code);
 			$this->_previous = $previous;
-        } else {
+		} else {
 			parent::__construct($message, $code, $previous);
-        }
+		}
 	}
 
 	/**
@@ -70,7 +65,7 @@ class WikiaException extends MWException {
 		}
 
 		return parent::__toString();
-    }
+	}
 
 	/**
 	 * Previous exception getter

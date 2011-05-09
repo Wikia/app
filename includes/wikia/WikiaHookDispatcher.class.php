@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Nirvana Framework - Hook dispatcher
+ *
+ * @group nirvana
+ *
+ * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
+ * @author Owen Davis <owen(at)wikia-inc.com>
+ * @author Wojciech Szela <wojtek(at)wikia-inc.com>
+ */
 class WikiaHookDispatcher {
 
 	private $hookHandlers = array();
@@ -8,6 +17,15 @@ class WikiaHookDispatcher {
 		return 'HOOK__'.$className."__".$methodName."__" . count($this->hookHandlers);
 	}
 
+	/**
+	 * registers new hook callback
+	 *
+	 * @param string $className
+	 * @param string $methodName
+	 * @param array $options
+	 * @param bool $alwaysRebuild
+	 * @param mixed $object
+	 */
 	public function registerHook($className, $methodName, array $options = array(), $alwaysRebuild = false, $object = null) {
 		$hookId = $this->generateHookId($className, $methodName);
 

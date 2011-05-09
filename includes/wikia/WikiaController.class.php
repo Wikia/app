@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Nirvana Framework - Controller class
+ *
+ * @group nirvana
+ *
+ * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
+ * @author Owen Davis <owen(at)wikia-inc.com>
+ * @author Wojciech Szela <wojtek(at)wikia-inc.com>
+ */
 abstract class WikiaController {
 
 	/**
@@ -95,6 +104,13 @@ abstract class WikiaController {
 		$this->wf = $app->wf;
 	}
 
+	/**
+	 * redirects flow to another controller/method
+	 *
+	 * @param string $controllerName
+	 * @param string $methodName
+	 * @param bool $resetResponse
+	 */
 	public function redirect( $controllerName, $methodName, $resetResponse = true ) {
 		if( $resetResponse ) {
 			$this->response->resetData();
@@ -105,6 +121,14 @@ abstract class WikiaController {
 		$this->request->setDispatched(false);
 	}
 
+	/**
+	 * send request to another controller/method
+	 *
+	 * @param string $controllerName
+	 * @param string $methodName
+	 * @param array $params
+	 * @return WikiaResponse
+	 */
 	public function sendRequest( $controllerName, $methodName, $params = array() ) {
 		return $this->app->sendRequest( $controllerName, $methodName, $params );
 	}
@@ -112,24 +136,25 @@ abstract class WikiaController {
 	/**
 	 * Convenience method for getting a value from the request object
 	 * @param string $key
-	 * @param string $value 
+	 * @param string $value
 	 */
 
 	public function getVal($key, $default = null) {
 		return $this->request->getVal($key, $default);
 	}
-	
+
 	/**
 	 * Convenience method for setting a value on the response object
 	 * @param string $key
-	 * @param string $value 
+	 * @param string $value
 	 */
 	public function setVal($key, $value) {
 		$this->response->setVal($key, $value);
 	}
-	
+
 	/**
-	 * Prints documentation of current controller
+	 * Prints documentation for current controller
+	 * @todo implement request/responseParams tags
 	 */
 	public function help() {
 		$reflection = new ReflectionClass($this);
@@ -160,5 +185,8 @@ abstract class WikiaController {
 		$this->getResponse()->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/Wikia_help.php' );
 	}
 
+	/**
+	 * init function for controller, called just before method
+	 */
 	public function init() {}
 }
