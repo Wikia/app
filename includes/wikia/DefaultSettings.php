@@ -90,10 +90,13 @@ $wgAutoloadClasses['WikiaRequest'] = $IP . '/includes/wikia/WikiaRequest.class.p
 $wgAutoloadClasses['WikiaResponse'] = $IP . '/includes/wikia/WikiaResponse.class.php';
 $wgAutoloadClasses['WikiaView'] = $IP . '/includes/wikia/WikiaView.class.php';
 $wgAutoloadClasses['WikiaFunctionWrapper'] = $IP . '/includes/wikia/WikiaFunctionWrapper.class.php';
+$wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/WikiaBaseTest.class.php';
+
+F::setInstance( 'App', new WikiaApp() );
+
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
 
-F::setInstance( 'App', new WikiaApp() );
 
 /**
  * custom wikia classes
