@@ -70,7 +70,10 @@ class WikiaFunctionWrapper {
 	 * @see wfMsgExt
 	 */
 	public function msgExt( $key, $options ) {
-		return wfMsgExt( $key, $option );
+		$args = func_get_args();
+		array_shift( $args );
+		array_shift( $args );
+		return wfMsgExt( $key, $options, $args );
 	}
 
 }
