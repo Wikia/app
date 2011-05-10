@@ -59,8 +59,10 @@ class WikiaFunctionWrapper {
 	 * wfMsg wrapper
 	 * @see wfMsg
 	 */
-	public function msg( $key) {
-		return wfMsg( $key );
+	public function msg( $key ) {
+		$args = func_get_args();
+		array_shift( $args );
+		return wfMsgReal( $key, $args, true );
 	}
 
 	/**
