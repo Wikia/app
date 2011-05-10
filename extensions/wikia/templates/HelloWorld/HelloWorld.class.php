@@ -2,15 +2,10 @@
 
 class HelloWorld {
 
-	/**
-	 * current page title
-	 * @var Title
-	 */
+	// MediaWiki Title object
 	private $title = null;
-	/**
-	 * wikia app instance
-	 * @var WikiaApp
-	 */
+	
+	// WikiaApp
 	private $app = null;
 
 	public function __construct(Title $currentTitle = null) {
@@ -18,6 +13,14 @@ class HelloWorld {
 		$this->title = $currentTitle;
 	}
 
+	/**
+	 * @brief Gets the title and URL for a wiki
+	 * @details Returns an array containing 'title' and 'url' keys, given a wiki ID
+	 *
+	 * @param Int $wikiId
+	 *
+	 * @return array 
+	 */
 	public function getWikiData( $wikiId ) {
 		$this->app->wf->profileIn( __METHOD__ );
 
@@ -39,6 +42,15 @@ class HelloWorld {
 		return $wiki;
 	}
 
+	/**
+	 * @brief Returns true
+	 * @details This function doesn't actually do anything - handler for MediaWiki hook
+	 *
+	 * @param OutputPage &$out MediaWiki OutputPage passed by reference
+	 * @param string &$text The article contents passed by reference
+	 *
+	 * @return true
+	 */
 	public function onOutputPageBeforeHTML( &$out, &$text ) {
 		return true;
 	}
