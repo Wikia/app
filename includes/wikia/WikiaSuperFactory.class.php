@@ -131,6 +131,10 @@ abstract class WikiaSuperFactory {
 		}
 	}
 
+	/**
+	 * get application object
+	 * @return WikiaApp
+	 */
 	public static function app() {
 		return self::build( self::APP_OBJECT );
 	}
