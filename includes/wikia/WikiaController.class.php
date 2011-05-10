@@ -186,6 +186,13 @@ abstract class WikiaController {
 	}
 
 	/**
+	 * force framework to skip rendering the template
+	 */
+	public function skipRendering() {
+		$this->response->setBody('');
+	}
+
+	/**
 	 * init function for controller, called just before method
 	 */
 	public function init() {}
