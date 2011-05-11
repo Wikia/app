@@ -52,9 +52,7 @@ function wfWikiReviewsReplaceBodyTemplate( &$moduleObject, &$params ) {
 	if( wfWikiReviewsTitleCheck() ) {
 		global $wgEnableAdSS, $wgTitle;
 		$moduleObject->getResponse()->getView()->setTemplatePath( dirname(__FILE__).'/templates/WikiReviewsBody_Index.php' );
-		if( !empty( $wgEnableAdSS ) && AdSS_Publisher::canShowAds( $wgTitle ) ) {
-			$moduleObject->displaySponsoredLinks = true;
-		}
+		$moduleObject->displaySponsoredLinks = !empty( $wgEnableAdSS ) && AdSS_Publisher::canShowAds( $wgTitle );
 	}
 	return true;
 }
