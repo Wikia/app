@@ -36,7 +36,7 @@ class WikiaQuizHooks {
 		}
 	
 		if (!empty($specialPageTitle)) {
-			$wgOut->redirect( $specialPageTitle->getFullUrl() . '/' . $title->getDBkey() );
+			$wgOut->redirect( $specialPageTitle->getFullUrl() . '/' . $title->getPartialURL() );
 		}
 		
 		return true;
