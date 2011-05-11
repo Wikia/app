@@ -7,7 +7,10 @@ $wgAutoloadClasses['LatestQuestionsModule'] = dirname( __FILE__ ) . '/LatestQues
 
 if( empty( $wgAnswersServer ) ) {
 	$wgAnswersServer = 'http://frag.wikia.com';
+} else {
+	$wgAnswersServer = trim( $wgAnswersServer, " /" );
 }
+
 if( empty( $wgAnswersScript ) ) {
 	$wgAnswersScript = '/index.php';
 }
