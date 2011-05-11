@@ -16,19 +16,22 @@ class ProposalController extends WikiaSpecialPageController {
 	public function renderDashboard() {
 		$this->setHeaders();
 
-		$wikiId = $this->request->getVal( 'wikiId' );
-		$userId = $this->request->getVal( 'userId' );
+		$wikiId = $this->getVal( 'wikiId' );
+		$userId = $this->getVal( 'userId' );
+		$switchTemplate = (bool) $this->getVal( 'switchTemplate', false );
+
+		if( $switchTemplate ) {
+			// changing default template
+			$this->response->getView()->setTemplatePath( dirname( __FILE__ ) . '/templates/someTemplate.php' );
+		}
 
 		$usersResponse = $this->sendRequest('ProposalUsers', 'get', array( 'wikiId' => $wikiId ) );
 		$pagesResponse = $this->sendRequest('ProposalPages', 'get', array( 'userId' => $userId ) );
-//var_dump($usersResponse->getException());
-//var_dump($pagesResponse->getException());
 
-
-		$this->response->setVal( 'wikiId', $wikiId );
-		$this->response->setVal( 'userId', $userId );
-		$this->response->setVal( 'users', $usersResponse->getVal( 'users' ) );
-		$this->response->setVal( 'pages', $pagesResponse->getVal( 'pages' ) );
+		$this->setVal( 'wikiId', $wikiId );
+		$this->setVal( 'userId', $userId );
+		$this->setVal( 'users', $usersResponse->getVal( 'users' ) );
+		$this->setVal( 'pages', $pagesResponse->getVal( 'pages' ) );
 	}
 
 	public function getUsersView() {
@@ -43,6 +46,10 @@ class ProposalController extends WikiaSpecialPageController {
 		$usersView = $this->app->getView( 'ProposalUsers', 'get', $data );
 
 		$this->response->setBody( $usersView->render() );
+	}
+
+	public function onSpecialPage_initList( &$list ) {
+		var_dump( $list );
 	}
 
 }

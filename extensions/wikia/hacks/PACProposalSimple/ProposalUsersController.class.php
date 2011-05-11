@@ -17,10 +17,10 @@ class ProposalUsersController extends WikiaSpecialPageController  {
 	public function get() {
 		$users = F::build( 'ProposalUsers' );
 
-		$wikiId = $this->request->getVal( 'wikiId' );
+		$wikiId = $this->getVal( 'wikiId' );
 		if( !empty($wikiId) ) {
-			$this->response->setVal( 'users', $users->getList( $wikiId ) );
-			$this->response->setVal( 'wikiId', $wikiId );
+			$this->setVal( 'users', $users->getList( $wikiId ) );
+			$this->setVal( 'wikiId', $wikiId );
 		}
 		else {
 			throw new WikiaException( 'Invalid Wiki ID' );
