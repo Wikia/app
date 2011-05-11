@@ -30,7 +30,7 @@ abstract class Module extends WikiaController {
 	public function __call($method, $args) 
 	{ 
 		if (method_exists($this->realResponse,$method)) 
-			return $this->realResponse->$method($args); 
+			return call_user_func_array(array($this->realResponse,$method), $args); 
 		else 
 			throw new WikiaException( sprintf('Response Proxy failed for Method: %s', $method) );
 	}		
