@@ -32,15 +32,8 @@ class OasisTemplate extends QuickTemplate {
 	function execute() {
 		Module::setSkinTemplateObj($this);
 
-		$entryModuleName = Wikia::getVar('OasisEntryModuleName');
-		if(empty($entryModuleName)) {
-			$entryModuleName = 'Oasis';
-		}
+		$entryModuleName = Wikia::getVar( 'OasisEntryModuleName', 'Oasis' );
 
-		// old way
-		//echo Module::get($entryModuleName)->render();
-
-		// new way
 		$response = F::app()->sendRequest( $entryModuleName, 'index', null, false );
 
 		$response->sendHeaders();
