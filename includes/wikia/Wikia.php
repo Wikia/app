@@ -472,8 +472,8 @@ class Wikia {
 		Wikia::$vars[$key] = $value;
 	}
 
-	public static function getVar($key) {
-		return isset(Wikia::$vars[$key]) ? Wikia::$vars[$key] : null;
+	public static function getVar($key, $default = null) {
+		return isset(Wikia::$vars[$key]) ? Wikia::$vars[$key] : $default;
 	}
 
 	public static function isVarSet($key) {
