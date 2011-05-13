@@ -37,8 +37,12 @@ function jslint($file) {
 	return $warnings;
 }
 
-#$files = glob("{$IP}/skins/common/*.js");
-$files = glob("{$IP}/skins/common/jquery/*.js");
+$outputFile = isset($options['output']) ? $options['output'] : '/tmp/jslint.html';
+
+echo "JS lint report will be generated in {$outputFile}...\n";
+
+$files = glob("{$IP}/skins/common/*.js");
+#$files = glob("{$IP}/skins/common/jquery/*.js");
 #$files = array("{$IP}/extensions/wikia/VideoEmbedTool/js/VET.js");
 
 $warnings = array();
@@ -49,6 +53,18 @@ foreach($files as $file) {
 	$warnings = array_merge($warnings, jslint($file));
 }
 
-var_dump($warnings);
+// TODO: use nice HTML and CSS
+$html = '<table><tr><th>File name</th><th>Line</th></th>Message</th></tr>';
+
+foreach($warnings as $warning) {
+	$html .= "<tr><td><tt>{$warning['file']}</tt></td><td>{$warning['line']}</td><td>{$warning['msg']}</td></tr>";
+}
+
+$html .= '</table>';
+
+// save report
+file_put_contents($outputFile, $html);
+
+echo "\n\nDone!\n";
 
 exit(0);
