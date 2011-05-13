@@ -8,7 +8,7 @@
  * SERVER_ID=156 jslint.php
  *	 --log-junit ${project.dir}/build/logs/jslint.xml
  *	 --conf ${project.dir}/config/LocalSettings.php
- * 	 --output ${project.build}/jslint/report.html
+ * 	 --output ${project.dir}/build/jslint/report.html
  *
  * @author Maciej Brencz
  */
@@ -21,7 +21,7 @@ function jslint($file) {
 
 	$warnings = array();
 
-	exec("java -jar {$IP}/lib/compiler.jar --debug --warning_level DEFAULT --js_output_file /dev/null --js {$file} 2>&1", $out, $res);
+	exec("java -jar {$IP}/lib/compiler.jar --debug --warning_level DEFAULT --compilation_level WHITESPACE_ONLY --js_output_file /dev/null --js {$file} 2>&1", $out, $res);
 	#var_dump($out);
 
 	foreach($out as $line) {
