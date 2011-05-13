@@ -21,14 +21,23 @@ function jslint($file) {
 	$warnings = array();
 
 	exec("java -jar {$IP}/lib/compiler.jar --debug --warning_level DEFAULT --js_output_file /dev/null --js {$file} 2>&1", $out, $res);
-	var_dump($out);
+	#var_dump($out);
+
+	foreach($out as $line) {
+		if (preg_match('#^(/[^:]+):(\d*):(.*)$#', $line, $matches)) {
+			$warnings[] = array(
+				'file' => $matches[1],
+				'line' => intval($matches[2]),
+				'msg' => trim($matches[3]),
+			);
+		}
+	}
 
 	return $warnings;
 }
 
 $file = "{$IP}/extensions/wikia/VideoEmbedTool/js/VET.js";
-
-$ret = jslint)$file);
+$ret = jslint($file);
 
 var_dump($ret);
 
