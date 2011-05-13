@@ -14,7 +14,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		$this->app = F::app();
-		$this->appMock = new WikiaAppMock;
+		$this->appMock = new WikiaAppMock( $this );
 		$this->setUp = true;
 	}
 
@@ -36,18 +36,18 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->mockedClasses[] = $className;
 	}
 
-	protected function mockGlobal( $globalName, $returnValue ) {
+	protected function mockGlobalVariable( $globalName, $returnValue, $callsNum = 1 ) {
 		if($this->appMock == null) {
 			$this->markTestSkipped('WikiaBaseTest Error - add parent::setUp() and/or parent::tearDown() to your own setUp/tearDown methods');
 		}
-		$this->appMock->mockGlobal( $globalName, $returnValue );
+		$this->appMock->mockGlobalVariable( $globalName, $returnValue, $callsNum );
 	}
 
-	protected function mockFunction( $functionName, $returnValue ) {
+	protected function mockGlobalFunction( $functionName, $returnValue, $callsNum = 1 ) {
 		if($this->appMock == null) {
 			$this->markTestSkipped('WikiaBaseTest Error - add parent::setUp() and/or parent::tearDown() to your own setUp/tearDown methods');
 		}
-		$this->appMock->mockFunction( $functionName, $returnValue );
+		$this->appMock->mockGlobalFunction( $functionName, $returnValue, $callsNum );
 	}
 
 	protected function mockApp() {
@@ -62,59 +62,89 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 }
 
-class WikiaAppMock extends PHPUnit_Framework_TestCase {
+class WikiaAppMock {
 
+	/**
+	 * Test case object
+	 * @var PHPUnit_Framework_TestCase
+	 */
+	private $testCase = null;
 	private $mock = null;
 	private $methods = array();
 	private $mockedGlobals = array();
 	private $mockedFunctions = array();
 
+	public function __construct( PHPUnit_Framework_TestCase $testCase ) {
+		$this->testCase = $testCase;
+	}
+
 	public function init() {
-		$this->mock = $this->getMock( 'WikiaApp', $this->methods, array(), '', false );
+		$wikiaAppArgs = array();
+
 		if( in_array( 'getGlobal', $this->methods )) {
-			$this->mock->expects( $this->exactly( count( $this->mockedGlobals ) ) )
-			              ->method( 'getGlobal' )
-			              ->will( $this->returnCallback(array( $this, 'getGlobalCallback')));
+			$globalRegistryMock = $this->testCase->getMock( 'WikiaGlobalRegistry', array( 'get', 'set' ) );
+			$globalRegistryMock->expects( $this->testCase->exactly( count( $this->mockedGlobals ) ) )
+			    ->method( 'get' )
+			    ->will( $this->testCase->returnCallback(array( $this, 'getGlobalCallback')) );
+
+			$wikiaAppArgs[] = $globalRegistryMock;
+			$wikiaAppArgs[] = null; // WikiaLocalRegistry
+			$wikiaAppArgs[] = null; // WikiaHookDispatcher
 		}
 		if( in_array( 'runFunction', $this->methods ) ) {
-			$this->mock->expects( $this->exactly( count( $this->mockedFunctions ) ) )
-			              ->method( 'runFunction' )
-			              // @todo support params
-			              ->will( $this->returnCallback(array( $this, 'runFunctionCallback')));
+			$functionWrapperMock = $this->testCase->getMock( 'WikiaFunctionWrapper' );
+			foreach( $this->mockedFunctions as $functionName => $functionData ) {
+				$functionWrapperMock->expects( $this->testCase->exactly( $functionData['calls'] ) )
+				    ->method( $functionName )
+				    ->will( $this->testCase->returnValue( $functionData['value'] ) );
+			}
+			$wikiaAppArgs[] = $functionWrapperMock;
 		}
+
+		$this->mock = $this->testCase->getMock( 'WikiaApp', array( 'ajax' /* we just have to have something to prevent mocking everything */), $wikiaAppArgs, '' );
 		F::setInstance('App', $this->mock);
 	}
 
-	public function mockGlobal($globalName, $returnValue) {
+	public function mockGlobalVariable($globalName, $returnValue, $callsNum = 1) {
 		if(!in_array( 'getGlobal', $this->methods )) {
 			$this->methods[] = 'getGlobal';
 		}
 		if(!in_array($globalName, $this->mockedGlobals)) {
-			$this->mockedGlobals[$globalName] = $returnValue;
+			$this->mockedGlobals[$globalName] = array( 'value' => $returnValue, 'calls' => $callsNum );
 		}
 		else {
-			$this->markTestSkipped( "Global variable $globalName already mocked, multiple mocks of the same variable are evil!" );
+			$this->markTestSkipped( "Global variable $globalName already mocked, multiple mocks of the same variable not supported." );
 		}
 	}
 
-	protected function mockFunction($functionName, $returnValue, $inputParams	 ) {
+	/**
+	 * @brief mock global function
+	 * @param string $functionName
+	 * @param mixed $returnValue
+	 * @param array $inputParams
+	 *
+	 * @todo support params
+	 */
+	public function mockGlobalFunction($functionName, $returnValue, $callsNum = 1, $inputParams = array() ) {
 		if(!in_array( 'runFunction', $this->methods )) {
 			$this->methods[] = 'runFunction';
 		}
-		//$this->mockedFunctions[] = $functionName, $returnValue;
+		if(!in_array($functionName, $this->mockedFunctions)) {
+			$this->mockedFunctions[$functionName] = array( 'value' => $returnValue, 'calls' => $callsNum );
+		}
+		else {
+			$this->markTestSkipped( "Function $functionName already mocked, multiple mocks of the same function not supported." );
+		}
 	}
 
 	public function getGlobalCallback( $globalName ) {
-		return ( isset($this->mockedGlobals[$globalName]) ? $this->mockedGlobals[$globalName] : null );
-	}
-
-	public function runFunctionCallback( $functionName ) {
-		return ( isset($this->mockedFunctions[$functionName]) ? $this->mockedFunctions[$functionName] : null );
+		return ( isset($this->mockedGlobals[$globalName]['value']) ? $this->mockedGlobals[$globalName]['value'] : null );
 	}
 
 }
 
-class WikiaAppFunctionMock {
+/*
+class WrappedFunctionMock {
 	public $name;
 	public $returnValue;
 	public $params = array();
@@ -124,5 +154,5 @@ class WikiaAppFunctionMock {
 		$this->returnValue = $returnValue;
 		$this->params = $params;
 	}
-
 }
+*/
