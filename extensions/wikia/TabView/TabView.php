@@ -57,7 +57,7 @@ function tabviewRender($input, $params, &$parser ) {
 	}
 
 	// prepeare tabs options array
-	$optins = array();
+	$options = array();
 
 	$optionsIndex = $index = 0;
 	foreach($tabs as $tab) {
