@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 /**
  * Prototype of crusecontrol and javascript unit testing, using browser as javascript environment
  */
-public class WikiaEditorJavaScriptTest extends JavaScriptTest {
+public class AdDriverJavaScriptTest extends JavaScriptTest {
 	@Test(groups={"CI", "JavaScript"})
 	public void testDummyTest() throws Exception {
 		runJavaScriptTest("extensions/wikia/AdEngine/js/tests/AdDriverTest.js");
