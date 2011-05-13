@@ -8,6 +8,7 @@
  * SERVER_ID=156 jslint.php
  *	 --log-junit ${project.dir}/build/logs/jslint.xml
  *	 --conf ${project.dir}/config/LocalSettings.php
+ * 	 --output ${project.build}/jslint/report.html
  *
  * @author Maciej Brencz
  */
@@ -26,7 +27,7 @@ function jslint($file) {
 	foreach($out as $line) {
 		if (preg_match('#^(/[^:]+):(\d*):(.*)$#', $line, $matches)) {
 			$warnings[] = array(
-				'file' => $matches[1],
+				'file' => str_replace($IP, '', $matches[1]),
 				'line' => intval($matches[2]),
 				'msg' => trim($matches[3]),
 			);
@@ -36,9 +37,18 @@ function jslint($file) {
 	return $warnings;
 }
 
-$file = "{$IP}/extensions/wikia/VideoEmbedTool/js/VET.js";
-$ret = jslint($file);
+#$files = glob("{$IP}/skins/common/*.js");
+$files = glob("{$IP}/skins/common/jquery/*.js");
+#$files = array("{$IP}/extensions/wikia/VideoEmbedTool/js/VET.js");
 
-var_dump($ret);
+$warnings = array();
+
+foreach($files as $file) {
+	echo "\nChecking {$file}...";
+
+	$warnings = array_merge($warnings, jslint($file));
+}
+
+var_dump($warnings);
 
 exit(0);
