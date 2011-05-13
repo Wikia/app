@@ -176,7 +176,8 @@
 			});
 			suiteId++;
 		}
-		xml = Xml.intro() + Xml.element('testsuites',xml);
+		//xml = Xml.intro() + Xml.element('testsuites',xml);
+		xml = Xml.intro() + xml;
 		return xml;
 	};
 	JTR.tools.JUnitReport = JUnitReport;
