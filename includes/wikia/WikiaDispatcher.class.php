@@ -93,6 +93,11 @@ class WikiaDispatcher {
 
 			} catch (Exception $e) {
 				$app->runFunction( 'wfProfileOut', ( __METHOD__ . " (" . $controllerName.'_'.$method .")" ) );
+				// Work around for errors thrown inside modules -- remove when modules go away
+				if ($response instanceof Module) {
+					$response = F::build( 'WikiaResponse', array( 'format' => $format ) );
+				}
+
 				$response->setException($e);
 
 				if ($controllerClassName != 'WikiaErrorController' && $method != 'error') {
