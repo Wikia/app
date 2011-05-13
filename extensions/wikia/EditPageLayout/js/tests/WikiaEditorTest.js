@@ -94,7 +94,7 @@ test('Plugins > Spaces',function(){
 });
 
 test('Plugins > Messages',function(){
-	var m = window.wgMessages;
+	var m = window.wgMessages = window.wgMessages || {};
 	
 	m['wikia-editor-xxx-1'] = 'aaa';
 	m['wikia-editor-xxx-2'] = 'bbb';
