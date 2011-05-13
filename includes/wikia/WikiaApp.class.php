@@ -53,10 +53,9 @@ class WikiaApp {
 	 * @param WikiaLocalRegistry $localRegistry
 	 * @param WikiaHookDispatcher $hookDispatcher
 	 */
-	public function __construct(WikiaGlobalRegistry $globalRegistry = null, WikiaLocalRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null) {
+	public function __construct(WikiaGlobalRegistry $globalRegistry = null, WikiaLocalRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null, WikiaFunctionWrapper $functionWrapper = null) {
 
 		if(is_null($globalRegistry)) {
-			F::setInstance('WikiaGlobalRegistry', new WikiaGlobalRegistry());
 			$globalRegistry = F::build('WikiaGlobalRegistry');
 		}
 		if(is_null($localRegistry)) {
@@ -64,14 +63,17 @@ class WikiaApp {
 			$localRegistry = F::build('WikiaLocalRegistry');
 		}
 		if(is_null($hookDispatcher)) {
-			F::setInstance( 'WikiaHookDispatcher', new WikiaHookDispatcher());
+			F::setInstance('WikiaHookDispatcher', new WikiaHookDispatcher());
 			$hookDispatcher = F::build( 'WikiaHookDispatcher' );
+		}
+		if(is_null($functionWrapper)) {
+			$functionWrapper = F::build( 'WikiaFunctionWrapper' );
 		}
 
 		$this->globalRegistry = $globalRegistry;
 		$this->localRegistry = $localRegistry;
 		$this->hookDispatcher = $hookDispatcher;
-		$this->functionWrapper = new WikiaFunctionWrapper();
+		$this->functionWrapper = $functionWrapper;
 
 		// set helper accessors
 		$this->wg = $this->globalRegistry;
