@@ -10,6 +10,10 @@ class RenameUserHelper {
 
 	const CLUSTER_DEFAULT = 'c1';
 
+	public static $excludedWikis = array(
+		425, /* uncyclopedia */
+	);
+
 	/**
 	 * @author Federico "Lox" Lucignano
 	 * @param $userID int the registered user ID
@@ -38,9 +42,12 @@ class RenameUserHelper {
 			$result = array();
 
 			while($row = $dbr->fetchObject($res)) {
-				$result[] = (int)$row->wiki_id;
-
-				wfDebugLog(__CLASS__.'::'.__METHOD__, "Registered user with ID {$userID} was active on wiki with ID {$row->wiki_id}");
+				if ( !in_array( $row->wiki_id, self::$excludedWikis ) ) {
+					$result[] = (int)$row->wiki_id;
+					wfDebugLog(__CLASS__.'::'.__METHOD__, "Registered user with ID {$userID} was active on wiki with ID {$row->wiki_id}");
+				} else {
+					wfDebugLog(__CLASS__.'::'.__METHOD__, "Skipped wiki with ID {$row->wiki_id}");
+				}
 			}
 
 			$dbr->freeResult($res);
