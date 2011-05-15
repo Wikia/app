@@ -387,6 +387,27 @@ class PageHeaderModule extends Module {
 				$this->pageRedirect,
 			));
 
+			/*
+			 * support for language variants
+			 * this adds links which automatically convert the content to that variant
+			 *
+			 * @author tor@wikia-inc.com
+			 */
+			if ( $wgContLang->hasVariants() ) {
+				foreach ( $wgContLang->getVariants() as $variant ) {
+					if ( $variant != $wgContLang->getCode() ) {
+						$subtitle[] = Xml::element(
+							'a',
+							array(
+								'href' => $wgTitle->getLocalUrl( array( 'variant' => $variant ) ),
+								'rel' => 'nofollow'
+							),
+							$wgContLang->getVariantname( $variant )
+						);
+					}
+				}
+			}
+
 			$pipe = wfMsg('pipe-separator');
 			$this->pageSubtitle = implode(" {$pipe} ", $subtitle);
 		}
