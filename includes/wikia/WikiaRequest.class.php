@@ -3,7 +3,7 @@
 /**
  * Nirvana Framework - Request class
  *
- * @group nirvana
+ * @ingroup nirvana
  *
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
  * @author Owen Davis <owen(at)wikia-inc.com>
@@ -25,7 +25,7 @@ class WikiaRequest {
 
 	/**
 	 * checks if it's an ajax request
-	 * @experimental
+	 * @note This is experimental
 	 * @return bool
 	 */
 	public function isXmlHttp() {
