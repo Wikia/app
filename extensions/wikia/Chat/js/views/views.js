@@ -365,6 +365,7 @@ NodeChatHelper = {
 
 	liIdByUsername: function(username){
 		username = username.replace(/ /g, "_"); // encodeURIComponent would add invalid characters
+		username = username.replace(/./g, "-PERIOD-"); // jQuery doesn't handle periods in ids well
 		return 'user-' + username;
 	},
 
