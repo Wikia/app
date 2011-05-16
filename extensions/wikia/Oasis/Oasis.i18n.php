@@ -150,6 +150,13 @@ $messages['en'] = array(
 
 	'oasis-modal-error-headline' => 'Please correct the following errors',
 
+	# hidden header navigation messages (for screen readers, among others)
+	'oasis-skip-to-content' => 'Skip to Content',
+	'aosis-skip-to-wiki-navigation' => 'Skip to Wiki Navigation',
+	'oasis-skip-to-site-navigation' => 'Skip to Site Navigation',
+	'oasis-wiki-navigation' => '$1 Navigation',
+	'oasis-related-categories' => 'Related Categories',
+
 	# Corporate landing pages
 	'corporatelandingpage-trivia-title' => 'Wikia Trivia',
 	'corporatelandingpage-trivia-description' => 'Test your trivia knowledge and win a prize pack from Wikia!',

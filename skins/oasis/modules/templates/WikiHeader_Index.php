@@ -9,7 +9,7 @@
 		</a>
 	</h1>
 	<nav>
-		<h1><?= htmlspecialchars($wordmarkText) ?> Navigation</h1>
+		<h1><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ); ?></h1>
 		<ul>
 
 <?php
