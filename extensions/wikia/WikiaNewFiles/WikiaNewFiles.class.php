@@ -1,6 +1,5 @@
 <?php
 /**
- * @file
  * @ingroup SpecialPage
  * Extends the IncludeableSpecialPage to override some of the header formatting
  *
