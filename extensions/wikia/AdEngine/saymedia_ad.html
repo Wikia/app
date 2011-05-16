@@ -1,0 +1,32 @@
+<html>
+<head></head>
+<body>
+<script>
+var config = {};
+var am;
+var hash = window.location.hash;
+if (hash != null) {
+    var str = unescape(unescape(hash));
+	str = str.substring(2);
+    str = str.substring(0, str.length - 2);
+	str = str.replace(/['"]/g,'');
+
+    var values = str.split(",");
+    var l = values.length;
+    for(var i = 0; i < l; i++) {
+        var kvp = values[i].split(":");
+        config[kvp[0]] = kvp.splice(1, kvp.length-1).join("");
+
+        if(config[kvp[0]].substr(0,4) == "http") {
+            config[kvp[0]] = config[kvp[0]].substr(0, 4) + ':' + config[kvp[0]].substr(4, config[kvp[0]].length);
+        }
+    }
+}
+
+var EAP_VERSION = config.ev;
+
+document.write('<script type="text/javascript" src="http://core.videoegg.com/eap/' + EAP_VERSION + '/html/js/iframe_ad.js"><\/script>');
+</script>
+<div id="ad" style="top:0;left:0;position:absolute;"></div>
+</body>
+</html>
