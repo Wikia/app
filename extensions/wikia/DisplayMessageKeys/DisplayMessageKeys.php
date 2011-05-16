@@ -10,6 +10,7 @@
  * @file
  * @ingroup Extensions
  * @author Łukasz Garczewski (TOR) <tor@wikia-inc.com>
+ * @author Maciej Błaszkowski (Marooned) <marooned@wikia-inc.com>
  * @date 2011-05-14
  * @copyright Copyright © 2011 Łukasz Garczewski, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -23,7 +24,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['other'][] = array(
         'name' => 'DisplayMessageKeys',
-        'author' => "[http://community.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]",
+        'author' => array(
+		"[http://community.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]",
+		"Maciej 'Marooned' Błaszkowski",
+	),
 	'description' => 'Allows users to see message keys in place via ?uselang=messages'
 );
 
