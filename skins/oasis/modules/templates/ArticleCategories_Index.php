@@ -2,7 +2,7 @@
 	if ($catlinks != '') {
 ?>
 <nav id="WikiaArticleCategories" class="WikiaArticleCategories">
-	<h1>Related Categories</h1>
+	<h1><?= wfMsg( 'oasis-related-categories' ); ?></h1>
 	<?= $catlinks ?>
 </nav>
 <?php
