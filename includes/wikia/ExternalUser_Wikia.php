@@ -203,7 +203,7 @@ class ExternalUser_Wikia extends ExternalUser {
 				'user_registration' => $dbw->timestamp( $User->mRegistration ),
 				'user_editcount' => 0,
 				'user_birthdate' => $User->mBirthDate
-			), __METHOD__
+			), __METHOD__, array('IGNORE')
 		);
 		$User->mId = $dbw->insertId();
 
@@ -223,6 +223,10 @@ class ExternalUser_Wikia extends ExternalUser {
 	public function linkToLocal( $id ) {
 
 		wfProfileIn( __METHOD__ );
+
+		if ( empty( $this->mRow ) ) {
+			return false;
+		}
 
 		wfDebug( __METHOD__ . ": update local user table: $id \n" );
 		$dbw = wfGetDB( DB_MASTER );
