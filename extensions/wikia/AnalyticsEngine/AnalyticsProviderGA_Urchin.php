@@ -15,7 +15,7 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 
 		if(!empty($wgEnableGA)) {
 			//return "<script type=\"text/javascript\">(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();urchinTracker = function() {_gaq.push(['_setAccount', 'UA-2871474-1']);_gaq.push(['_trackEvent', 'Error', 'FakeUrchinTrackerCalled']);};</script>";
-			return  '<script type="text/javascript" src="' . $wgProto . '://www.google-analytics.com/ga.js"></script><script type="text/javascript">urchinTracker = function() {_gaq.push([\'_setAccount\', \'UA-2871474-1\']);_gaq.push([\'_trackEvent\', \'Error\', \'FakeUrchinTrackerCalled\']);};</script>' . "\n";
+			return  '<script type="text/javascript" src="' . $wgProto . '://www.google-analytics.com/ga.js"></script><script type="text/javascript">_gaq.push([\'_setSampleRate\', \'20\']);</script><script type="text/javascript">urchinTracker = function() {_gaq.push([\'_setAccount\', \'UA-2871474-1\']);_gaq.push([\'_trackEvent\', \'Error\', \'FakeUrchinTrackerCalled\']);};</script>' . "\n";
 		} else {
 			return  '<script type="text/javascript" src="' . $wgProto . '://www.google-analytics.com/urchin.js"></script>' . "\n";
 		}
