@@ -4,8 +4,9 @@ $(document).ready(function(){
 });
 
 var MobileSkin = {
-	uacct: "UA-19473076-1",//test related to FB#4768, original value was "UA-2871474-1"
+	uacct: "UA-2871474-1",
 	username: (wgUserName == null) ? 'anon' : 'user',
+	sampleSet: false,
 	ct: {},
 	c: null,
 	h: null,
@@ -13,6 +14,10 @@ var MobileSkin = {
 	
 	track: function(str) {
 		if(typeof wgEnableGA != "undefined" && wgEnableGA == true) {
+			if(!MobileSkin.sampleSet) {
+				_gaq.push(['_setSampleRate', '20']);
+				MobileSkin.sampleSet = true;
+			}
 			_gaq.push(['_setAccount', MobileSkin.uacct]);
 			_gaq.push(['_trackPageview', str]);
 		} else if(typeof urchinTracker !== 'undefined') {
