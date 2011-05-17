@@ -244,10 +244,9 @@ class CategoryExhibitionSection {
 				if ( empty( $image ) ){
 					return '';
 				}
-				$imageInfo = getimagesize( $image->getPath() );
 				$imageUrl = wfReplaceImageServer(
 					$image->getThumbUrl(
-						$imageServing->getCut( $imageInfo[0], $imageInfo[1] )."-".$image->getName()
+						$imageServing->getCut( $image->width, $image->height )."-".$image->getName()
 					)
 				);
 			}
