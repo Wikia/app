@@ -298,7 +298,7 @@ function authConnection(client, socket, authData){
 							}
 
 							// Load the initial userList
-							console.log("Finding members of " + roomId);
+							console.log("Finding members of roomId " + roomId);
 
 							rc.hgetall(getKey_usersInRoom( roomId ), function(err, usernameToData){
 								if (err) {
@@ -795,19 +795,20 @@ function broadcastToRoom(client, socket, data, callback){
 	var roomId = client.roomId;
 
 	// Get the set of members from redis.
+	console.log("Broadcasting to room " + roomId);
 	rc.hgetall(getKey_usersInRoom( roomId ), function(err, usernameToData){
 		if (err) {
 			console.log('Error: while trying to find members of room "' + roomId + '": ' + err);
 		} else {
-			console.log("Raw data from key " + getKey_usersInRoom( roomId ) + ": ");
-			console.log(usernameToData);
+			//console.log("Raw data from key " + getKey_usersInRoom( roomId ) + ": ");
+			//console.log(usernameToData);
 			_.each(usernameToData, function(userData){
 				var userModel = new models.User( JSON.parse(userData) );
 				
-				console.log("SENDING TO " + userModel.get('name'));
+				console.log("\tSENDING TO " + userModel.get('name'));
 				var socketId = sessionIdsByKey[ getKey_userInRoom(userModel.get('name'), roomId) ];
 				if(socketId){
-					console.log("SOCKETID: " + socketId);
+					console.log("\tSOCKETID: " + socketId);
 					if( typeof socket.clients[socketId] == "undefined"){
 						// This happened once (and before this check was here, crashed the server).  Not sure if this is just a normal side-effect of the concurrency or is a legit
 						// problem. This logging should help in debugging if this becomes an issue.
@@ -1102,45 +1103,63 @@ function api_getStats(successCallback, errorCallback){
 					console.log(errorMsg);
 					errorCallback(errorMsg);
 				} else {
-					for (var index = 0; index < usersInRoomKeys.length; index++){
-						var usersInRoomKey = usersInRoomKeys[index];
-						rc.hlen(usersInRoomKey, function(err, numUsersInRoom){
-							if (err) {
-								var errorMsg = 'Error: while getting number of users in room with key: ' + numUsersInRoom + ' ...error was: '+ err;
-								console.log(errorMsg);
-								errorCallback(errorMsg);
-							} else if(numUsersInRoom && (numUsersInRoom > 0)){
-								roomsWithOccupants++;
-								totalConnectedUsers += numUsersInRoom;
-								if(numUsersInRoom > usersInMostPopularRoom){
-									usersInMostPopularRoom = numUsersInRoom;
-									mostPopularRoomKey = usersInRoomKey;
-								}
-							}
-							
-							// If this is the last key in the array, do the follow-up processing.
-							if(index + 1 >= usersInRoomKeys.length){
-								// Find the info about the most popular room.
-								mostPopularRoomKey = mostPopularRoomKey.replace(new RegExp(getKeyPrefix_usersInRoom()), getKeyPrefix_room()); // convert from users_in_room key to key for info about room.
-								console.log("STATS: FINDING INFO ABOUT THE MOST POPULAR ROOM (" + mostPopularRoomKey + ")...");
-								rc.hgetall(mostPopularRoomKey, function(err, roomData){
-									if (err) {
-										var errorMsg = 'Error: while getting room information about most popular room with key: ' + mostPopularRoomKey + ' ...error was: '+ err;
-										console.log(errorMsg);
-										errorCallback(errorMsg);
-									} else {
-										stats.mostPopularRoom = roomData;
+					if(usersInRoomKeys.length == 0){
+						console.log("STATS: No users in any rooms yet.");
+						errorCallback("There are no users in any rooms at the moment.");
+					} else {
+
+						// Die for now... these stats are all wrong because of race-conditions.
+						console.log("STATS: ");
+						console.log(stats);
+						successCallback( stats );
+					
+						// NOTE: this won't work because the redis calls are async, so they're going in paraallel. It gets quite wrong quite fast.
+						/*
+						console.log("STATS: Found " + usersInRoomKeys.length + " room keys.");
+						for (var index = 0; index < usersInRoomKeys.length; index++){
+							var usersInRoomKey = usersInRoomKeys[index];
+							console.log("STATS: Looking for number of users in roomkey: " + usersInRoomKey + " (index=" + index + ").");
+							rc.hlen(usersInRoomKey, function(err, numUsersInRoom){
+								console.log("STATS: Roomkey " + usersInRoomKey + " has " + numUsersInRoom + " users in it (index=" + index + ").");
+								if (err) {
+									var errorMsg = 'Error: while getting number of users in room with key: ' + numUsersInRoom + ' ...error was: '+ err;
+									console.log(errorMsg);
+									errorCallback(errorMsg);
+								} else if(numUsersInRoom && (numUsersInRoom > 0)){
+									roomsWithOccupants++;
+									totalConnectedUsers += numUsersInRoom;
+									if(numUsersInRoom > usersInMostPopularRoom){
+										console.log("There were " + usersInMostPopularRoom + " users in room " + mostPopularRoomKey + " but there are " + numUsersInRoom + " in " + usersInRoomKey);
+										usersInMostPopularRoom = numUsersInRoom;
+										mostPopularRoomKey = usersInRoomKey;
 									}
-									
-									stats.roomsWithOccupants = roomsWithOccupants;
-									stats.totalConnectedUsers = totalConnectedUsers;
-									stats.usersInMostPopularRoom = usersInMostPopularRoom;
-									console.log("STATS: ");
-									console.log(stats);
-									successCallback( stats );
-								});
-							}
-						});
+								}
+								
+								// If this is the last key in the array, do the follow-up processing.
+								if(index + 1 >= usersInRoomKeys.length){
+									// Find the info about the most popular room.
+									mostPopularRoomKey = mostPopularRoomKey.replace(new RegExp(getKeyPrefix_usersInRoom()), getKeyPrefix_room()); // convert from users_in_room key to key for info about room.
+									console.log("STATS: FINDING INFO ABOUT THE MOST POPULAR ROOM (" + mostPopularRoomKey + ")...");
+									rc.hgetall(mostPopularRoomKey, function(err, roomData){
+										if (err) {
+											var errorMsg = 'Error: while getting room information about most popular room with key: ' + mostPopularRoomKey + ' ...error was: '+ err;
+											console.log(errorMsg);
+											errorCallback(errorMsg);
+										} else {
+											stats.mostPopularRoom = roomData;
+										}
+										
+										stats.roomsWithOccupants = roomsWithOccupants;
+										stats.totalConnectedUsers = totalConnectedUsers;
+										stats.usersInMostPopularRoom = usersInMostPopularRoom;
+										console.log("STATS: ");
+										console.log(stats);
+										successCallback( stats );
+									});
+								}
+							});
+						}
+						*/
 					}
 				}
 			});
