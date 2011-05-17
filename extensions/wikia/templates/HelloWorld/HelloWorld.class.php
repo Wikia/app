@@ -4,7 +4,7 @@ class HelloWorld {
 
 	// MediaWiki Title object
 	private $title = null;
-	
+
 	// WikiaApp
 	private $app = null;
 
@@ -19,7 +19,7 @@ class HelloWorld {
 	 *
 	 * @param Int $wikiId
 	 *
-	 * @return array 
+	 * @return array
 	 */
 	public function getWikiData( $wikiId ) {
 		$this->app->wf->profileIn( __METHOD__ );
