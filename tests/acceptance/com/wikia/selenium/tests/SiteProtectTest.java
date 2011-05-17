@@ -26,7 +26,7 @@ public class SiteProtectTest extends BaseTest {
 		session().open("index.php?title=WikiaAutomatedTest&action=edit");
 		session().waitForPageToLoad(this.getTimeout());
 		if(isOasis()){
-			assertTrue(session().isTextPresent("You do not have permission to edit this page, for the following reason:"));
+			assertTrue(session().isTextPresent("You do not have permission to edit this page, for the following reason"));
 		} else {
 			assertEquals("Permission error", session().getText("//div[@id='article']/h1"));
 		}
