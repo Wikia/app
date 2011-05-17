@@ -10,6 +10,7 @@ class ChatRailModule extends Module {
 	var $avatarsInRoom;
 	var $buttonIconUrl;
 	var $buttonText;
+	var $isLoggedIn;
 
 	/**
 	 * Render placeholder. Content will be ajax-loaded for freshness
@@ -32,8 +33,12 @@ class ChatRailModule extends Module {
 		$this->linkToSpecialChat = SpecialPage::getTitleFor("Chat")->escapeLocalUrl();
 		$this->windowFeatures = $this->getWindowFeatures();
 		$this->chatHeadline = wfMsg('chat-headline', $wgSitename);
-		$this->profileAvatar = AvatarService::renderAvatar($wgUser->getName(), ChatRailModule::AVATAR_SIZE);
-		
+		if($wgUser->isLoggedIn()){
+			$this->profileAvatar = AvatarService::renderAvatar($wgUser->getName(), ChatRailModule::AVATAR_SIZE);
+		} else {
+			$this->profileAvatar = "";
+		}
+
 		// List of other people in chat
 		$this->totalInRoom = 0;
 		$roomName = $roomTopic = ""; // just needed for pass-by-reference... will be ignored
@@ -50,7 +55,6 @@ class ChatRailModule extends Module {
 		} else {
 			$this->buttonText = wfMsg('chat-start-a-chat');		
 		}
-
 
 		wfProfileOut( __METHOD__ );
 	}
