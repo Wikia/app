@@ -33,6 +33,7 @@ class ChatRailModule extends Module {
 		$this->linkToSpecialChat = SpecialPage::getTitleFor("Chat")->escapeLocalUrl();
 		$this->windowFeatures = $this->getWindowFeatures();
 		$this->chatHeadline = wfMsg('chat-headline', $wgSitename);
+		$this->isLoggedIn = $wgUser->isLoggedIn();
 		if($wgUser->isLoggedIn()){
 			$this->profileAvatar = AvatarService::renderAvatar($wgUser->getName(), ChatRailModule::AVATAR_SIZE);
 		} else {

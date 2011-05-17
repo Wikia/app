@@ -16,7 +16,7 @@
 
 <div class="chat-join">
 	<?= $profileAvatar ?>
-	<button onclick="window.open('<?= $linkToSpecialChat ?>', 'wikiachat', '<?= $windowFeatures ?>')">
+	<button onclick="window.open('<?= $linkToSpecialChat ?>', 'wikiachat', '<?= $windowFeatures ?>')"<?= ($isLoggedIn?"":" class='loginToChat'"); ?>>
 		<img src="<?= $buttonIconUrl ?>">
 		<?= $buttonText ?>
 	</button>
