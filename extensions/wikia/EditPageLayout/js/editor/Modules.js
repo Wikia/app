@@ -1,18 +1,18 @@
 (function(window,$){
-	
+
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
-	
+
 	WE.module = $.createClass(Observable,{
 
 		MESSAGE_MODULE_PREFIX: 'modules-',
-		
+
 		// module is only visible in wysiwyg mode
 		modes: {
 			wysiwyg: true
 		},
 
 		enabled: true,
-		
+
 		headerClass: '',
 		headerText: '',
 		headerTextId: '',
@@ -36,7 +36,7 @@
 			if (this.headerText) return this.headerText;
 			return '';
 		},
-		
+
 		setHeaderText: function( text ) {
 			this.headerText = text;
 			this.fire('headerchange',this,text);
@@ -58,7 +58,7 @@
 			if (!this.enabled) {
 				return false;
 			}
-			
+
 			var el = $(this.renderHtml());
 			this.el = el;
 			this.afterRender();
@@ -73,20 +73,24 @@
 			this.el.show();
 			this.fire('show',this);
 		},
-		
+
 		hide: function() {
 			this.el.hide();
 			this.fire('hide',this);
 		},
-		
+
 		msg: function() {
 			var args = Array.prototype.slice.call(arguments,0);
 			args[0] = this.MESSAGE_MODULE_PREFIX + args[0];
 			return this.editor.msg.apply(this.editor,args);
+		},
+
+		proxy: function( fn ) {
+			return $.proxy(fn,this);
 		}
-		
+
 	});
-	
+
 	WE.modules.base = WE.module;
-	
+
 })(this,jQuery);

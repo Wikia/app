@@ -43,7 +43,7 @@
 
 			// tracking specific for CKeditor
 			if (this.editor.ck) {
-				this.editor.ck.on('insertTemplate', $.proxy(this.onInsertTemplate, this));
+				this.editor.ck.on('insertTemplate', this.proxy(this.onInsertTemplate));
 			}
 		},
 		
