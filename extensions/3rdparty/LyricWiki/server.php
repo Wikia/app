@@ -991,28 +991,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 
 		// If configured to do so, fallback to full wiki search.
 		if($wgRequest->getBool('fallbackSearch') && ($retVal['lyrics'] == $defaultLyrics)){
-			try{
-				$maxResults = 25;
-				$searchString = trim("$artist $song"); // trim in case one is empty
-				$response = F::app()->sendRequest( 'SimpleSearch', 'localSearch', array( 'key' => $searchString, 'limit' => $maxResults ) );
-				// $numAvailResults = $response->getVal('totalCount'); // would be useful if we add paging.
-				$titles = array();
-				if(is_array($response->getVal('titleResults'))){
-					foreach($response->getVal('titleResults') as $resultData){
-						$titles[] = utf8_encode( $resultData['textForm'] );
-					}
-				}
-				if(is_array($response->getVal('textResults'))){
-					foreach($response->getVal('textResults') as $resultData){
-						$titles[] = utf8_encode( $resultData['textForm'] );
-					}
-				}
-
-				// Put the searchResults into the response.
-				$retVal['searchResults'] = $titles;
-			} catch(WikiaException $e){
-				// TODO: For now, just leave the defaultLyrics with no search results.
-			}
+			$retVal['searchResults'] = lw_getSearchResults("$artist $song");
 		}
 	} // end of the "if shut_down_api else"
 	
@@ -1074,28 +1053,7 @@ function getArtist($artist){
 	
 	// If configured to do so, fallback to full wiki search.
 	if($wgRequest->getBool('fallbackSearch') && (count($retVal['albums']) == 0)){
-		try{
-			$maxResults = 25;
-			$searchString = trim("$artist"); // trim in case one is empty
-			$response = F::app()->sendRequest( 'SimpleSearch', 'localSearch', array( 'key' => $searchString, 'limit' => $maxResults ) );
-			// $numAvailResults = $response->getVal('totalCount'); // would be useful if we add paging.
-			$titles = array();
-			if(is_array($response->getVal('titleResults'))){
-				foreach($response->getVal('titleResults') as $resultData){
-					$titles[] = utf8_encode( $resultData['textForm'] );
-				}
-			}
-			if(is_array($response->getVal('textResults'))){
-				foreach($response->getVal('textResults') as $resultData){
-					$titles[] = utf8_encode( $resultData['textForm'] );
-				}
-			}
-
-			// Put the searchResults into the response.
-			$retVal['searchResults'] = $titles;
-		} catch(WikiaException $e){
-			// TODO: For now, just leave the discography with no search results.
-		}
+		$retVal['searchResults'] = lw_getSearchResults("$artist");
 	}
 
 	requestFinished($id);
@@ -1850,6 +1808,36 @@ function postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags
 //////////////////////////////////////////////////////////////////////////////
 // Helper functions for the SOAP
 
+/**
+ * Uses our search backend via the SimpleSearch module to find reasonable matches
+ * for the search string. These aren't perfect at exact matches, etc. and is more
+ * designed as a fallback to use when exact matches can't be found.
+ *
+ * @param searchString - the text string to search for using SimpleSearch.
+ */
+function lw_getSearchResults($searchString, $maxResults=25){
+	$titles = array();
+	try{
+		$searchString = trim($searchString);
+		$response = F::app()->sendRequest( 'SimpleSearch', 'localSearch', array( 'key' => $searchString, 'limit' => $maxResults ) );
+		// $numAvailResults = $response->getVal('totalCount'); // would be useful if we add paging.
+		$titles = array();
+		if(is_array($response->getVal('titleResults'))){
+			foreach($response->getVal('titleResults') as $resultData){
+				$titles[] = $resultData['textForm'];
+			}
+		}
+		if(is_array($response->getVal('textResults'))){
+			foreach($response->getVal('textResults') as $resultData){
+				$titles[] = $resultData['textForm'];
+			}
+		}
+	} catch(WikiaException $e){
+		// TODO: Add logging of some sort.  For now, just return empty results and don't handle the error.
+	}
+	return $titles;
+} // end lw_getSearchResults()
+
 ////
 // Takes in an array of the AlbumData format and returns wikitext for that
 // album as it would appear on an artist's page.
@@ -1907,7 +1895,7 @@ function lw_fmtArtist($artist){
 function lw_fmtAlbum($album,$year){
 	$year = ($year==""?"????":$year);
 	return lw_fmtSong($album)." ($year)";
-}
+} // end lw_fmtAlbum()
 
 ////
 // Returns the standardly formatted song name.
@@ -1931,7 +1919,7 @@ function lw_fLetter($input){
 		$fLetter = "Symbol";
 	}
 	return $fLetter;
-}
+} // end lw_fLetter()
 
 ////
 // Returns the correctly formatted pagename from the artist and the song.
@@ -2218,7 +2206,7 @@ function lw_createPage($pageTitle, $content, $summary="Page created using [[Lyri
 
 	$retVal = ($retVal==""?"Page created successfully.":$retVal);
 	return $retVal;
-}
+} // end lw_createPage()
 
 ////
 // Performs more advanced initialization.  Too much unneeded work for most functions, but can be used in several.
