@@ -71,6 +71,47 @@
 			}));
 		},
 
+		trackEdgecaseReason: function() {
+			var edgecase = this.getEdgecaseType();
+
+			if (edgecase !== false) {
+				var initialMode;
+
+				switch(this.editor.mode) {
+					case 'wysiwyg':
+						initialMode = 'visualMode';
+						break;
+
+					case 'source':
+						initialMode = 'sourceMode';
+
+						// fallback to mediawiki editor
+						if (window.RTEDisabledReason) {
+							switch(window.RTEDisabledReason) {
+								// RTE disabled in user preferences
+								case 'usepreferences':
+									initialMode = 'sourceModeLockedByPref';
+									break;
+
+								// NS_TEMPLATE / NS_MEDIAWIKI
+								case 'namespace':
+								// $wgWysiwygDisabledNamespaces
+								case 'disablednamespace':
+									initialMode = 'sourceModeLockedByArticle';
+									break;
+							}
+						}
+						// fallback aka edgecase
+						else if (this.getEdgecaseType() !== false) {
+							initialMode = 'sourceModeFallback';
+						}
+						break;
+				}
+
+				this.track('initEditor', initialMode, 'reason', edgecase);
+			}
+		},
+
 		onEditorReady: function() {
 			if (typeof window.wgNow == 'undefined') {
 				return;
@@ -84,11 +125,8 @@
 
 			this.track('initEditor', this.getTrackerInitialMode(), loadTime);
 
-			// track edgecases
-			var edgecase = this.getEdgecaseType();
-			if (edgecase !== false) {
-				this.track('initEditor', this.getTrackerInitialMode(), 'reason', edgecase);
-			}
+			// track reason of fallback to source mode
+			this.trackEdgecaseReason();
 		},
 
 		onStateChange: function(editor, state) {
@@ -158,7 +196,7 @@
 			if (this.initialMode !== false) {
 				return this.initialMode;
 			}
-			
+
 			switch(this.editor.mode) {
 				case 'wysiwyg':
 					this.initialMode = 'visualMode';
@@ -168,24 +206,9 @@
 					this.initialMode = 'sourceMode';
 
 					// fallback to mediawiki editor
-					if (window.RTEDisabledReason) {
-						switch(window.RTEDisabledReason) {
-							// RTE disabled in user preferences
-							case 'usepreferences':
-								this.initialMode = 'sourceModeLockedByPref';
-								break;
-
-							// NS_TEMPLATE / NS_MEDIAWIKI
-							case 'namespace':
-							// $wgWysiwygDisabledNamespaces
-							case 'disablednamespace':
-								this.initialMode = 'sourceModeLockedByArticle';
-								break;
-						}
-					}
-					// fallback aka edgecase
-					else if (this.getEdgecaseType() !== false) {
-						this.initialMode = 'sourceModeFallback';
+					// caused either by user preferences or an edgecase
+					if (window.RTEDisabledReason || (this.getEdgecaseType() !== false)) {
+						this.initialMode = 'sourceModeLocked';
 					}
 					break;
 			}
