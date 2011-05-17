@@ -846,7 +846,7 @@ function processText(text, client) {
 
 	// Linkify http://links
 	var exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])/ig;
-	var pageLink = decodeURIComponent( text.replace(exp, "$1") );
+	var pageLink = unescape( text.replace(exp, "$1") );
 	text = text.replace(exp, "<a href='$1'>" + pageLink + "</a>");
 
 	// Linkify [[Pipes|Pipe-notation]] in bracketed links.
@@ -854,7 +854,7 @@ function processText(text, client) {
 	text = text.replace(exp, function(wholeMatch, article, linkText) {
 		article = article.replace(/ /g, "_");
 		linkText = linkText.replace(/_/g, " ");
-		linkText = decodeURIComponent( linkText );
+		linkText = unescape( linkText );
 
 		var path = client.wgServer + client.wgArticlePath;
 		var url = path.replace("$1", article);
@@ -867,7 +867,7 @@ function processText(text, client) {
 		var article = match.substr(2, match.length - 4);
 		article = article.replace(/ /g, "_");
 		var linkText = article.replace(/_/g, " ");
-		linkText = decodeURIComponent( linkText );
+		linkText = unescape( linkText );
 
 		var path = client.wgServer + client.wgArticlePath;
 		var url = path.replace("$1", article);
