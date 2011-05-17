@@ -17,7 +17,7 @@ class WikiaFunctionWrapper {
 	 * @param array $funcArgs
 	 */
 	public function run( $funcName, $funcArgs ) {
-		if( function_exists( $funcName ) ) {
+		if( is_callable( $funcName ) ) {
 			return call_user_func_array( $funcName, $funcArgs );
 		}
 		else {
