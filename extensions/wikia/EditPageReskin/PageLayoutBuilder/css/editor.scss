@@ -496,4 +496,9 @@ span.plb-editor-element-list{
 			}
 		}
 	}
+	.module_plb_list {
+		.module_content {
+			overflow-y: auto;
+		}
+	}
 }

@@ -163,10 +163,11 @@
 			var module = this.modules[id];
 
 			if (animate) {
-				module.content.slideUp();
+				module.content.slideUp(this.proxy(this.fireToolbarsResized));
 			}
 			else {
 				module.content.hide();
+				this.fireToolbarsResized();
 			}
 
 			module.chevron.removeClass('collapse').addClass('expand');
@@ -176,10 +177,11 @@
 			var module = this.modules[id];
 
 			if (animate) {
-				module.content.slideDown();
+				module.content.slideDown(this.proxy(this.fireToolbarsResized));
 			}
 			else {
 				module.content.show();
+				this.fireToolbarsResized();
 			}
 
 			module.chevron.removeClass('expand').addClass('collapse');
@@ -232,7 +234,12 @@
 			else {
 				return true;
 			}
+		},
+		
+		fireToolbarsResized: function() {
+			this.editor.fire('toolbarsResized',this.editor);
 		}
+		
 	});
 
 	WE.plugins.fitscreen = $.createClass(WE.plugin,{
