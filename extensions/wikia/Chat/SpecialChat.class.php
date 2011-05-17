@@ -21,12 +21,12 @@ class SpecialChat extends UnlistedSpecialPage {
 				$wgOut->showErrorPage( 'chat-you-are-banned', 'chat-you-are-banned-text' );
 			}
 		} else {
-			// TODO: FIXME: Will this look hideous in the small window?
-			// TODO: FIXME: Will this look hideous in the small window?
-
 			// TODO: FIXME: Make a link on this page which lets the user login.
 			// TODO: FIXME: Make a link on this page which lets the user login.
+			
+			// $wgOut->permissionRequired( 'chat' ); // this is a really useless message, don't use it.
 			$wgOut->showErrorPage( 'chat-no-login', 'chat-no-login-text' );
+
 		}
 
 		wfProfileOut( __METHOD__ );
