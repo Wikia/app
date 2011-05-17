@@ -17,7 +17,6 @@ if ( scriptAlreadyLoaded != 'SliderGallery' ){
 			$(this).css("left", parseInt($(this).css("left")) - (620 * random));
 		});
 		
-		//for(var i in allSliders){
 		$.each(allSliders, function(i, val){
 
 			//select nav
