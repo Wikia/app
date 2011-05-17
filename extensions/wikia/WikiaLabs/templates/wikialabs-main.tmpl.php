@@ -65,13 +65,17 @@
 			<div id="wpError"></div>
 		</div>
 		<h2 class="title" ><?php echo wfMsg( 'wikialabs-feedback-title' ); ?></h2>
-		<span class="comments" ><?php echo wfMsg( 'wikialabs-feedback-comments' ); ?></span>
+		<p><?php echo wfMsg('wikilabs-feedback-we-love-getting-feedback'); ?></p>
+		<p><?php echo wfMsg('wikilabs-feedback-if-you-have-and-improve-idea'); ?></p>
 		<span class="stars" >
-			<?php for($i = 1; $i < 6; $i ++): ?>
-				<img data-index="<?php echo $i; ?>" src="<?= wfBlankImgUrl() ;?>"/>
-			<?php endfor; ?>
+			<?php echo wfMsg( 'wikialabs-feedback-rating' ); ?>
+			<ul>
+				<?php for($i = 1; $i < 6; $i ++): ?>
+					<li><img data-index="<?php echo $i; ?>" src="<?= wfBlankImgUrl() ;?>"/></li>
+				<?php endfor; ?>
+			</ul>
 		</span>
-		<span class="project" ><?php echo wfMsg( 'wikialabs-feedback-rating' ); ?></span>
+		<label class="comments" ><?php echo wfMsg( 'wikialabs-feedback-comments' ); ?></label>
 		<textarea name="feedbacktext" class="feedbacktext" ></textarea>
 		<button class="okbutton" ><?php echo wfMsg('wikialabs-feedback-submit'); ?></button>
 	</form>

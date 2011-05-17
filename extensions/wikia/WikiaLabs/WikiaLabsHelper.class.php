@@ -53,7 +53,7 @@ abstract class WikiaLabsHelper {
 		$request = $app->getGlobal( 'wgRequest' );
 		$user = $app->getGlobal( 'wgUser' );
 		$wikiaLabs = WF::build( 'WikiaLabs' );
-
+		
 		$response = new AjaxResponse();
 		$result =  $wikiaLabs->saveFeedback( $request->getVal('projectId', 0), $user, $request->getVal('rating', 0), $request->getVal('feedbacktext') );
 		$response->addText( json_encode( $result ) );
