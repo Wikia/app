@@ -101,7 +101,6 @@
 					content: this.msg('templates-makeLayout-confirmation-text'),
 					width: 500,
 					onOk: function() {
-						alert(2); return;
 						$("#editform")
 							.attr("action", window.PLBMakeLayoutUrl)
 							.submit();
