@@ -15,23 +15,47 @@
 			this.items = [];
 			var list = this.editor.config.popularTemplates || [];
 			for (var i=0;i<list.length;i++) {
-				var templateName = list[i];
-				var buttonId = 'Template_Popular'+i;
+				var templateName = list[i],
+					buttonId = 'Template_Popular'+i,
+					self = this;
+
 				this.editor.ui.addElement(buttonId,{
 					type: 'button',
 					label: templateName,
 					clicksource: (function(templateName){
+						var buttonId = i+1;
 						return function(sourceEditor) {
 							// XXX: fix for multiple instances
 							insertTags('{{'+templateName,'}}','');
+
+							// tracking
+							self.track(buttonId);
 						};
 					})(templateName),
 					ckcommand: 'InsertTemplate',
 					clickdatawysiwyg: {
-						templateName: templateName
+						templateName: templateName,
+						buttonId: i
 					}
 				});
 				this.items.push(buttonId);
+			}
+
+			// tracking specific for CKeditor
+			if (this.editor.ck) {
+				this.editor.ck.on('insertTemplate', $.proxy(this.onInsertTemplate, this));
+			}
+		},
+		
+		track: function(ev) {
+			this.editor.track(this.editor.getTrackerMode(), 'templates', ev);
+		},
+
+		onInsertTemplate: function(ev) {
+			var data = ev.data;
+
+			if (typeof data.buttonId != 'undefined') {
+				this.track(data.buttonId + 1);
 			}
 		},
 
@@ -48,14 +72,17 @@
 			if (typeof window.RTE != 'undefined') {
 				tmpl += this.getLinkHtml('tmpl_other','otherTemplates',function(){
 					self.openTemplatesShowcase();
+					self.track('other');
 				});
 			}
 			tmpl += this.getLinkHtml('tmpl_listused','showUsedList',function(){
 				self.showUsedTemplates();
+				self.track('list');
 			});
 			if (typeof window.PLBMakeLayoutUrl != 'undefined') {
 				tmpl += this.getLinkHtml('tmpl_makelayout','makeLayout',function(){
 					self.makeLayoutFromPage();
+					self.track('plbLayout');
 				});
 			}
 			tmpl += '</ul>';

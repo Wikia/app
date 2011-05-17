@@ -95,6 +95,7 @@ CKEDITOR.plugins.add('rte-template',
 		*/
 		editor.addCommand('InsertTemplate',{
 			exec: function( editor, data ) {
+				editor.fire('insertTemplate', data);
 				if (data && data.templateName)
 					RTE.templateEditor.createTemplateEditor(data.templateName);
 			}
