@@ -21,13 +21,13 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 
 	// Controllers can all have an optional init method
 	public function init() {
-		$this->businessLogic = F::build( 'HelloWorld', array( $this->app->wg->Title ) );
+		$this->businessLogic = F::build( 'HelloWorld', array( 'currentTitle' => $this->app->wg->Title ) );
 	}
 
 	/**
 	 * @brief this is default method, which in this example just redirects to Hello method
 	 * @details No parameters
-	 * 
+	 *
 	 */
 	public function index() {
 		$this->wg->Out->setPageTitle("Page Title");
