@@ -13,13 +13,18 @@ class WikiaLabsSpecial extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgExtensionsPath;
-
+		$wgExtensionsPath = $this->app->getGlobal('wgExtensionsPath');
+		
 		if ( $this->user->isAnon() ) {
 			$this->displayRestrictionError($this->user);
 			return ;
 		}
-
+		
+		$feedbackAdded = intval($this->app->getGlobal('wgRequest')->getText('feedbackAdded'));
+		if( 1 === $feedbackAdded ) {
+			NotificationsModule::addConfirmation($this->app->runFunction('wfMsg', 'wikialabs-feedback-validator-notification-ok'));
+		}
+		
 		//wikialabs-list-project-warning-box-no-admin
 		$oTmpl = WF::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
 		$projects = WF::build( 'WikiaLabsProject')->getList(array("graduated" => false, "active" => true  )  );
@@ -57,7 +62,7 @@ class WikiaLabsSpecial extends SpecialPage {
 
 		$this->out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaLabs/css/wikialabs.scss'));
 		$this->out->addHTML( $oTmpl->render("wikialabs-main") );
-		$this->out->addScriptFile( $this->app->getGlobal('wgExtensionsPath')."/wikia/WikiaLabs/js/main.js" );
+		$this->out->addScriptFile( $wgExtensionsPath."/wikia/WikiaLabs/js/main.js" );
 		$this->out->setPageTitle( $this->app->runFunction('wfMsg', 'wikialabs-list-project-title') );
 		return ;
 	}

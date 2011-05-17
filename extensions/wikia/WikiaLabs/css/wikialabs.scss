@@ -302,6 +302,13 @@ $margin-images: 10px;
 }
 
 .feedbackmodal {
+	h2 {
+		font-size: 18px;
+	}
+	p {
+		line-spacing: 22.5px;
+		font-size: 13px;
+	}
  	.feedbacktext {
  	 	margin-bottom: 12px;
 		height: 100px;
@@ -315,8 +322,17 @@ $margin-images: 10px;
  	}
 
  	.stars {
-		float: right;
-		margin-left: 3px;
+		display: block;
+		font-weight: bold;
+		margin-top: 10px;
+		ul {
+			margin-left: 10px;
+			display: inline;
+		}
+		li {
+			margin-right: 10px;
+			display: inline;
+		}
 		img {
 			background: url("/extensions/wikia/WikiaLabs/images/star-inactive.png") transparent; /* $wgCdnStylePath */
 			height: 18px;
@@ -332,29 +348,24 @@ $margin-images: 10px;
 		}
  	}
 
-	.project {
-		float: right;
-	}
-
 	.okbutton {
-		float: right;
+		float: left;
 	}
 
 	.comments {
-		float: left;
 		display: block;
-		padding-bottom: 2px;
-		padding-top: 6px;
+		margin-top: 10px;
 		margin-bottom: 5px;
+		font-weight: bold;
 	}
 
 	.title {
 		display: block;
 		clear: both;
 		font-size: 18px;
-		margin-top: 10px;
+		margin-top: 15px;
 		margin-bottom: 10px;
-		border-bottom: 1px solid $color-page-border
+		font-weight: bold;
 	}
 
 	.appScreen {

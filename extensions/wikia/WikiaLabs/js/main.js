@@ -80,7 +80,7 @@ WikiaLabs.showFeedback = function(e){
 				}
 				else {
 					modalWrap.closeModal();
-					window.location = wgScript = '?title=' + wgCanonicalNamespace + ':' + wgCanonicalSpecialPageName;
+					window.location = wgScript = '?title=' + wgCanonicalNamespace + ':' + wgCanonicalSpecialPageName + '&feedbackAdded=1';
 				}
 			}
 		});
