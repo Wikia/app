@@ -66,7 +66,7 @@ function wfDPLmagic( &$magicWords, $langCode = 'en' ) {
 	return true;
 }
 
-function parseForum( $input, $argv, &$parser ) {
+function parseForum( $input, $argv, $parser ) {
 	$f = new DPLForum();
 	
 	$js = '<script type="text/javascript">wgAfterContentAndJS.push(function() {if (skin == "oasis") {importStylesheetURI($.getSassCommonURL("extensions/DPLforum/css/oasis.scss"));}});</script>';
