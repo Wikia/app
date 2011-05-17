@@ -1029,7 +1029,7 @@ function getArtist($artist){
 	$id = requestStarted(__METHOD__, "$artist");
 	// For now the regex makes it only read the first disc and ignore beyond that (since it assumes the track listing is over).
 	$albums = array();
-	GLOBAL $amazonRoot;
+	GLOBAL $amazonRoot, $wgRequest;
 
 	$debug = false;
 	$debugSuffix = "_debug";
@@ -1070,6 +1070,32 @@ function getArtist($artist){
 	$isUTF = utf8_compliant("$correctArtist");
 	if($isUTF === false){
 		$retVal['artist'] = utf8_encode($retVal['artist']);
+	}
+	
+	// If configured to do so, fallback to full wiki search.
+	if($wgRequest->getBool('fallbackSearch') && (count($retVal['albums']) == 0)){
+		try{
+			$maxResults = 25;
+			$searchString = trim("$artist"); // trim in case one is empty
+			$response = F::app()->sendRequest( 'SimpleSearch', 'localSearch', array( 'key' => $searchString, 'limit' => $maxResults ) );
+			// $numAvailResults = $response->getVal('totalCount'); // would be useful if we add paging.
+			$titles = array();
+			if(is_array($response->getVal('titleResults'))){
+				foreach($response->getVal('titleResults') as $resultData){
+					$titles[] = utf8_encode( $resultData['textForm'] );
+				}
+			}
+			if(is_array($response->getVal('textResults'))){
+				foreach($response->getVal('textResults') as $resultData){
+					$titles[] = utf8_encode( $resultData['textForm'] );
+				}
+			}
+
+			// Put the searchResults into the response.
+			$retVal['searchResults'] = $titles;
+		} catch(WikiaException $e){
+			// TODO: For now, just leave the discography with no search results.
+		}
 	}
 
 	requestFinished($id);
