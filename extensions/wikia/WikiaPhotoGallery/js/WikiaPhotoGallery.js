@@ -952,7 +952,7 @@ var WikiaPhotoGallery = {
 		});
 
 		// setup clicks on "Select" button
-		$('#WikiaPhotoGallerySearchResultsSelect').unbind('.selectImage').bind('click.selectImage', function(ev) {
+		$('#WikiaPhotoGallerySearchResultsSelect').show().unbind('.selectImage').bind('click.selectImage', function(ev) {
 			var selected = results.find('input:checked');
 			self.log(selected.length + ' image(s) selected')
 
@@ -1009,6 +1009,9 @@ var WikiaPhotoGallery = {
 			selected.attr('checked', false).each(function() {
 				$(this).parent().removeClass('accent selected');
 			});
+
+			$(this).hide();
+
 		});
 
 		// setup is done - show the results

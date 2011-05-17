@@ -98,7 +98,6 @@
 			<?= $imagesOnPage ?>
 		</div>
 
-		<a id="WikiaPhotoGallerySearchResultsSelect" class="wikia-button"><?= wfMsg('wikiaPhotoGallery-upload-selectbutton') ?></a>
 	</div>
 </div>
 
@@ -447,6 +446,8 @@
 
 <!-- Editor toolbar -->
 <div class="neutral modalToolbar clearfix">
+
+	<a id="WikiaPhotoGallerySearchResultsSelect" class="wikia-button"><?= wfMsg('wikiaPhotoGallery-upload-selectbutton') ?></a>
 	<a id="WikiaPhotoGalleryEditorSave" class="wikia-button"></a>
 	<a id="WikiaPhotoGalleryEditorCancel" class="wikia-button secondary"><?= wfMsg('wikiaPhotoGallery-back') ?></a>
 
