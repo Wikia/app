@@ -241,13 +241,16 @@ class CategoryExhibitionSection {
 			if ( !empty( $value[0]['name'] ) ){
 				$tmpTitle = Title::newFromText( $value[0]['name'], NS_FILE );
 				$image = wfFindFile( $tmpTitle );
+				if ( empty( $image ) ){
+					return '';
+				}
 				$imageInfo = getimagesize( $image->getPath() );
 				$imageUrl = wfReplaceImageServer(
 					$image->getThumbUrl(
 						$imageServing->getCut( $imageInfo[0], $imageInfo[1] )."-".$image->getName()
 					)
 				);
-			};
+			}
 		}
 		return $imageUrl;
 	}
