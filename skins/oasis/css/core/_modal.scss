@@ -70,10 +70,14 @@ yui-overlay, .yui-panel-container {
 }
 
 .skin-oasis {
+
+  #ImageUpload {
+    background: $color-page;
+  }
+
 	#ImageUpload,
 	#VideoEmbed {
 		@include box-shadow(0, 10px, 60px, mix($color-page, #000));
-		background: $color-page;
 		border: 5px solid $color-body;
 		padding: 35px 5px 5px 5px !important;
 		position: absolute;
