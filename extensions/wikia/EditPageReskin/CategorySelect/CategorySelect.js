@@ -1,5 +1,5 @@
 var oAutoComp;
-var categories; 
+var categories;
 var fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
 var ajaxUrl = wgServer + wgScript + '?action=ajax';
 var csType = 'edit';
@@ -72,6 +72,8 @@ function deleteCategory(e) {
 	e.parentNode.parentNode.removeChild(e.parentNode);
 	categories[catId] = null;
 	$('#csWikitext').html(generateWikitextForCategories());
+
+	$('#csItemsContainer').trigger('categorySelectDelete');
 }
 
 function modifyCategory(e) {
@@ -109,7 +111,7 @@ function modifyCategory(e) {
 					alert(csEmptyName);
 					return;
 				}
-				
+
 				$().log(category, "Cat");
 				if (categories[catId].category != category) {
 					categories[catId].category = category;
@@ -118,9 +120,9 @@ function modifyCategory(e) {
 							$().log(category, "Cat");
 							var elementText = category;
 							if(csType == 'module') {
-								elementText = $('<span>' + category + '</span>').get(0);	
+								elementText = $('<span>' + category + '</span>').get(0);
 							}
-							
+
 							$(this).contents().eq(0).replaceWith(elementText);
 							return false;
 						}
@@ -148,9 +150,11 @@ function modifyCategory(e) {
 	};
 
 	$.showCustomModal(csInfoboxCaption, dialogContent, dialogOptions);
+
+	$('#csItemsContainer').trigger('categorySelectEdit');
 }
 
-function replaceAddToInput(e) { 
+function replaceAddToInput(e) {
 	$('#csAddCategoryButton').hide();
 	$('#csCategoryInput').show();
 	positionSuggestBox();
@@ -169,16 +173,16 @@ function addAddCategoryButton() {
 			elementA.tabindex = '-1';
 			elementA.onfocus = 'this.blur()';
 			elementA.onclick = function(e) {replaceAddToInput(this); return false;};
-	
+
 			elementImg = document.createElement('img');
 			elementImg.src = wgBlankImgUrl;
 			elementImg.className = 'sprite-small add';
 			elementImg.onclick = function(e) {replaceAddToInput(this); return false;};
 			elementA.appendChild(elementImg);
-	
+
 			elementText = document.createTextNode(csAddCategoryButtonText);
 			elementA.appendChild(elementText);
-	
+
 			$('#csItemsContainer').get(0).appendChild(elementA);
 		}
 	}
@@ -190,7 +194,7 @@ function inputBlur() {
 		input.hide();
 		addAddCategoryButton();
 	}
-	$('#csHintContainer').hide();		
+	$('#csHintContainer').hide();
 }
 
 
@@ -221,9 +225,9 @@ function addCategoryBase(category, params, index) {
 	}
 
 	categories[index] = {'namespace': params['namespace'] ? params['namespace'] : csDefaultNamespace, 'category': category, 'outerTag': params['outerTag'], 'sortkey': params['sortkey']};
-	var categoryText = category; 
+	var categoryText = category;
 	if(csType == 'module') {
-		
+
 		if(categoryText.length > csMaxTextLength) {
 			categoryText = categoryText.substr(0,csMaxTextLength)  + '...';
 		}
@@ -233,13 +237,13 @@ function addCategoryBase(category, params, index) {
 		elementA = document.createElement('a');
 		elementText = document.createTextNode(categoryText);
 	}
-	
+
 	elementA.className = 'CSitem';	//setAttribute doesn't work in IE
 	elementA.tabindex = '-1';
 	elementA.onfocus = 'this.blur()';
 	elementA.setAttribute('catId', index);
 
-	
+
 	elementA.appendChild(elementText);
 
 	elementImg = document.createElement('img');
@@ -261,7 +265,7 @@ function addCategoryBase(category, params, index) {
 	} else {
 		$(elementA).insertBefore( $('#csCategoryInput') );
 	}
-	
+
 	if ($('#csCategoryInput').css('display') != 'none') {
 		collapseAutoComplete();
 	}
@@ -271,6 +275,8 @@ function addCategoryBase(category, params, index) {
 function addCategory(category, params, index) {
 	addCategoryBase(category, params, index);
 	$('#csCategoryInput').attr('value', '');
+
+	$('#csItemsContainer').trigger('categorySelectAdd');
 }
 
 
@@ -325,7 +331,7 @@ function initializeDragAndDrop() {
 			},
 			update: function(event, ui) {
 				var srcEl = ui.item;
-				
+
 				var prevSibId = srcEl.prev('a, li').attr('catid');
 				if (typeof prevSibId == 'undefined') prevSibId = -1;
 				$().log('moving ' + srcEl.attr('catid') + ' before ' + prevSibId);
@@ -404,6 +410,8 @@ function moveElement(movedId, prevSibId) {
 	}
 	//save changes into main array
 	categories = newCat;
+
+	$('#csItemsContainer').trigger('categorySelectMove');
 }
 
 function inputKeyPress(e) {
@@ -413,11 +421,11 @@ function inputKeyPress(e) {
 		//TODO: stop AJAX call for AutoComplete
 		e.preventDefault();
 		category = $('#csCategoryInput').attr('value');
-	
+
 		if( category != '' ) {
 			addCategory(category);
 		}
-		
+
 		$('#csWikitext').attr('value', generateWikitextForCategories());
 		//hide input and show button when [enter] pressed with empty input
 		if (category == '') {
@@ -481,7 +489,7 @@ function initAutoComplete() {
 		// Init datasource
 		var oDataSource = new YAHOO.widget.DS_JSFunction(getCategories);
 		//oDataSource.queryMatchCase = true;
-	
+
 		// Init AutoComplete object and assign datasource object to it
 		oAutoComp = new YAHOO.widget.AutoComplete('csCategoryInput', 'csSuggestContainer', oDataSource);
 		oAutoComp.autoHighlight = false;
@@ -503,7 +511,7 @@ function initHandlers() {
 	if(csType == 'module') {
 		$('#csCategoryInput').focus(inputFocus);
 	}
-	
+
 	//TODO: add foucs
 	if (typeof formId != 'undefined') {
 		$('#'+formId).submit(regularEditorSubmit);
