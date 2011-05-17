@@ -115,6 +115,12 @@ class WikiaLabsProject {
 	public function setActivationsNum($value) {
 		$this->activationsNum = $value;
 	}
+	
+	public function getActivationsNumFormated() {
+		$wgLang = $this->app->getGlobal('wgLang');
+		
+		return $wgLang->formatNum($this->activationsNum);
+	}
 
 	public function incrActivationsNum() {
 		$this->activationsNum++;

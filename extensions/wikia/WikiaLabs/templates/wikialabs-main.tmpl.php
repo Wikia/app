@@ -36,23 +36,23 @@
 					<img src="<?= $wgExtensionsPath ?>/wikia/WikiaLabs/images/star-inactive.png">
 					<?php echo wfMsg('wikialabs-list-project-add-give-feedback'); ?>
 				</a>
-
+                
+                <span class="stars" >
+                    <?php for($i = 1; $i < 6; $i ++): ?>
+                        <?php if(round($value->getRating()) >= $i): ?>
+                            <img class="staractive" data-index="<?php echo $i; ?>" src="<?= wfBlankImgUrl() ;?>"/>
+                        <?php else: ?>
+                            <img data-index="<?php echo $i; ?>" src="<?= wfBlankImgUrl() ;?>"/>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+                    <span class="ratings" >
+                        <?php echo $value->getRating(); ?><br>
+                        <?php echo wfMsg('wikialabs-list-project-ratings'); ?>
+                    </span>
+                </span>
+                
 				<span class="active" >
-					<a href="#" class="wikia-button secondary" ><?php echo $value->getActivationsNum(); ?></a><?php echo wfMsg('wikialabs-list-project-currently-active'); ?>
-				</span>
-
-				<span class="stars" >
-					<?php for($i = 1; $i < 6; $i ++): ?>
-						<?php if(round($value->getRating()) >= $i): ?>
-							<img class="staractive" data-index="<?php echo $i; ?>" src="<?= wfBlankImgUrl() ;?>"/>
-						<?php else: ?>
-							<img data-index="<?php echo $i; ?>" src="<?= wfBlankImgUrl() ;?>"/>
-						<?php endif; ?>
-					<?php endfor; ?>
-					<span class="ratings" >
-						<?php echo $value->getRating(); ?><br>
-						<?php echo wfMsg('wikialabs-list-project-ratings'); ?>
-					</span>
+					<?php echo wfMsgExt('wikialabs-list-project-currently-active-on-wikis', array('parsemag'), $value->getActivationsNumFormated() ); ?>
 				</span>
 			</span>
 		</li>
