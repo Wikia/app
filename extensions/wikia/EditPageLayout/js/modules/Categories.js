@@ -40,10 +40,20 @@
 				categorySelectEdit: this.proxy(function(ev) {this.track('edit')}),
 				categorySelectDelete: this.proxy(function(ev) {this.track('delete')})
 			});
+
+			// save
+			this.editor.on('state', this.proxy(this.onStateChange));
 		},
 
-		track: function(ev) {
-			this.editor.track(this.editor.getTrackerMode(), 'categories', ev);
+		onStateChange: function(editor, state) {
+			if (state == editor.states.SAVING) {
+				var categoriesCount = this.el.find('.CSitem').length;
+				this.track('saveNumber', categoriesCount);
+			}
+		},
+
+		track: function(ev, param) {
+			this.editor.track(this.editor.getTrackerMode(), 'categories', ev, param);
 		}
 
 	});
