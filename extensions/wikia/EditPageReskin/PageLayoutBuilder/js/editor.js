@@ -1785,6 +1785,7 @@
 					this.widgetsTutorial.hide();
 					this.widgetsInfo.hide();
 				}
+				this.editor.fire('plbSetAutosizedModule',this);
 			},
 			
 			bindUI: function( plbeditor, ui ) {
@@ -1861,52 +1862,6 @@
 				this.ui.fire('delete',id);
 				return false;
 			}
-
-/*
-			items: [],
-
-			init: function() {
-				modules.LayoutBuilderElementsList.superclass.init.call(this);
-				var self = this;
-				this.items = [];
-				for (var type in PLB.Library) {
-					var name = 'PLBAddElement_' + type;
-					var def = PLB.Library[type];
-					this.items.push(name);
-					
-					this.env.ui.add(name,{
-						type: 'button',
-						label: def.caption,
-						className: name,
-						click: (function(type){
-							return function() {
-								self.addElement(type);
-							};
-						})(type)
-					});
-				}
-			},
-			
-			getLayoutEditor: function() {
-				// XXX: make it work with multiple instances
-				return window.plb;
-			},
-			
-			addElement: function( type ) {
-				var plb = this.getLayoutEditor();
-				var mode = this.env.getCurrentMode();
-				if (mode == 'source') {
-					plb.creator.onAddElementClick( type );
-				} else {
-					plb.onCreateWidgetRequest( type );
-				}
-			},
-			
-			afterRender: function( el ) {
-				modules.LayoutBuilderElementsList.superclass.afterRender.call(this,el);
-				el.find('.cke_button').addClass('cke_button_big');
-			}
-*/			
 		
 		});
 	});
@@ -1923,6 +1878,39 @@
 			
 		});
 		
+		WE.plugins.plblistautoheight = $.createClass(WE.plugin,{
+			
+			module: false,
+			
+			beforeInit: function() {
+				this.editor.on('plbSetAutosizedModule',this.proxy(this.setModule));
+				this.editor.on('toolbarsResized',this.proxy(this.toolbarsResized));
+				$(window).bind('resize',this.proxy(this.toolbarsResized));	
+			},
+			
+			setModule: function( module ) {
+				this.module = module;
+				this.toolbarsResized();
+			},
+			
+			toolbarsResized: function() { 
+				if (!this.module) {
+					return;
+				}
+			
+				var el = this.module.el.closest('.module_content');
+				var p = el.closest('[data-space-type]');
+				if (el.css('display') == 'none') {
+					el.css('max-height','');
+				} else {
+					var maxH = $(window).height() - (p.offset().top + p.outerHeight(true) - el.height());
+					if (maxH < 150) maxH = 150;
+					el.css('max-height',maxH);
+				}
+			}
+		
+		});
+		
 		
 		WE.on('wikiaeditorspacesbeforelayout',function(element,config){
 			config.wide = true;
@@ -1934,6 +1922,7 @@
 		
 		WE.on('newInstance',function(plugins,config){
 			plugins.push('plb');
+			plugins.push('plblistautoheight');
 			config.categoriesIntroText = $.msg('plb-special-form-cat-info');
 			config.insertCutPosition = 1;
 			config.insertCutText = $.msg('wikia-editor-plb-show-static-buttons')

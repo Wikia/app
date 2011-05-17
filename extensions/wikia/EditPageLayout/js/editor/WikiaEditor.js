@@ -709,6 +709,7 @@
 				}
 			}
 			this.editor.fire('toolbarsRendered',this.editor);
+			this.editor.fire('toolbarsResized',this.editor);
 		}
 
 	});
