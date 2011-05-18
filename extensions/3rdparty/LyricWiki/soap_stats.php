@@ -31,7 +31,7 @@ define('LW_API_STATS_SAMPLING_INTERVAL', 10);
 function lw_soapStats_logHit($resultsFound){
 	wfProfileIn(__METHOD__);
 	
-	if(rand(LW_API_STATS_SAMPLING_INTERVAL) == 0){
+	if(rand(1, LW_API_STATS_SAMPLING_INTERVAL) === 1){
 		lw_soapStats_term($resultsFound, LW_TERM_DAILY);
 		lw_soapStats_term($resultsFound, LW_TERM_WEEKLY);
 		lw_soapStats_term($resultsFound, LW_TERM_MONTHLY);
