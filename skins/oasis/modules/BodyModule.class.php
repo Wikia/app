@@ -154,17 +154,20 @@ class BodyModule extends Module {
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
 
+		$latestPhotosKey = $wgUser->isAnon() ? 1300 : 1250;
+		$latestActivityKey = $wgUser->isAnon() ? 1250 : 1300;
+
 		if($namespace == NS_SPECIAL) {
 			if ($wgTitle->isSpecial('Search')) {
 				$railModuleList = array(
-					1300 => array('LatestActivity', 'Index', null),
+					$latestActivityKey => array('LatestActivity', 'Index', null),
 				);
 				if( empty( $wgEnableWikiReviews ) ) {
 					$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 				}
 
 				if( empty( $wgEnableWikiAnswers ) ) {
-					$railModuleList[1250] = array('LatestPhotos', 'Index', null);
+					$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
 				}
 
 				if($wgEnableSpotlightsV2_Rail) {
@@ -173,7 +176,7 @@ class BodyModule extends Module {
 			} else if ($wgTitle->isSpecial('Leaderboard')) {
 				$railModuleList = array (
 					1500 => array('Search', 'Index', null),
-					1300 => array('LatestActivity', 'Index', null),
+					$latestActivityKey => array('LatestActivity', 'Index', null),
 					1290 => array('LatestEarnedBadges', 'Index', null)
 				);
 			} else if ($wgTitle->isSpecial('WikiActivity')) {
@@ -190,13 +193,13 @@ class BodyModule extends Module {
 			} else if ($wgTitle->isSpecial('ThemeDesignerPreview') ) {
 				$railModuleList = array (
 					1500 => array('Search', 'Index', null),
-					1300 => array('LatestActivity', 'Index', null),
+					$latestActivityKey => array('LatestActivity', 'Index', null),
 				);
 				if( empty( $wgEnableWikiReviews ) ) {
 					$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 				}
 				if( empty( $wgEnableWikiAnswers ) ) {
-					$railModuleList[1250] = array('LatestPhotos', 'Index', null);
+					$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
 				}
 				if($wgEnableSpotlightsV2_Rail) {
 					$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
@@ -228,12 +231,12 @@ class BodyModule extends Module {
 			array_key_exists( $subjectNamespace, $wgExtraNamespaces ) ) {
 			// add any content page related rail modules here
 
-			$railModuleList[1300] = array('LatestActivity', 'Index', null);
+			$railModuleList[$latestActivityKey] = array('LatestActivity', 'Index', null);
 			if( empty( $wgEnableWikiReviews ) ) {
 				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 			}
 			if( empty( $wgEnableWikiAnswers ) ) {
-				$railModuleList[1250] = array('LatestPhotos', 'Index', null);
+				$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
 			}
 
 			if($wgEnableSpotlightsV2_Rail) {
