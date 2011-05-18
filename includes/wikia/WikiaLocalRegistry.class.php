@@ -4,7 +4,7 @@
 /**
  * Nirvana Framework - Local registry class
  *
- * @group nirvana
+ * @ingroup nirvana
  *
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
  * @author Owen Davis <owen(at)wikia-inc.com>

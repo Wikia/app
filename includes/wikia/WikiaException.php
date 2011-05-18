@@ -5,7 +5,7 @@
  *
  * Base class for Wikia codebase exceptions. PHP 5.3 compatible
  *
- * @group nirvana
+ * @ingroup nirvana
  *
  * @author Wojciech Szela <wojtek@wikia-inc.com>
  * @link http://pl2.php.net/manual/en/class.exception.php

@@ -1,6 +1,6 @@
 <?php
 /**
- * @group mwabstract
+ * @ingroup mwabstract
  */
 class WikiaLocalRegistryTest extends PHPUnit_Framework_TestCase {
 	const VALID_KEY   = 'key';

@@ -1,6 +1,6 @@
 <?php
 /**
- * @group mwabstract
+ * @ingroup mwabstract
  */
 class WikiaAppTest extends PHPUnit_Framework_TestCase {
 	private $application;
