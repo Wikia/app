@@ -11,6 +11,7 @@ class ChatRailModule extends Module {
 	var $buttonIconUrl;
 	var $buttonText;
 	var $isLoggedIn;
+	var $chatClickAction;
 
 	/**
 	 * Render placeholder. Content will be ajax-loaded for freshness
@@ -56,6 +57,7 @@ class ChatRailModule extends Module {
 		} else {
 			$this->buttonText = wfMsg('chat-start-a-chat');		
 		}
+		$this->chatClickAction = "window.open('{$this->linkToSpecialChat}', 'wikiachat', '{$this->windowFeatures}')";
 
 		wfProfileOut( __METHOD__ );
 	}

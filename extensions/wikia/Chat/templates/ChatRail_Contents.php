@@ -16,8 +16,24 @@
 
 <div class="chat-join">
 	<?= $profileAvatar ?>
-	<button onclick="window.open('<?= $linkToSpecialChat ?>', 'wikiachat', '<?= $windowFeatures ?>')"<?= ($isLoggedIn?"":" class='loginToChat'"); ?>>
+	<button onclick="onChatButtonClick()"<?= ($isLoggedIn?"":" class='loginToChat'"); ?>>
 		<img src="<?= $buttonIconUrl ?>">
 		<?= $buttonText ?>
 	</button>
 </div>
+
+<script>
+	function onChatButtonClick(){
+		var isLoggedIn = <?= ($isLoggedIn ? "true" : "false") ?>;
+		var message = 'protected'; // gives the 'login required to perform this action' message at the top of the login box
+		if(isLoggedIn){
+			<?= $chatClickAction ?>
+		} else {
+			showComboAjaxForPlaceHolder(false, "", function(){
+				AjaxLogin.doSuccess = function() {
+					<?= $chatClickAction ?>
+				}
+			}, false, message); // show the 'login required for this action' message.
+		}
+	} // end onChatButtonClick()
+</script>
