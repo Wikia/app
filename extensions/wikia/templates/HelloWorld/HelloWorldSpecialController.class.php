@@ -2,6 +2,7 @@
 
 /**
  * This is an example use of SpecialPage controller
+ * 
  * @author ADi
  *
  */
