@@ -34,10 +34,10 @@ class AutomaticWikiAdoptionGatherDataMapper {
 		$recentAdminEdit = array();
 
 		//get wikis with pages < 1000 and admins not active in last 14 days but wit at least 1 edit
-		//194785 = ID of wiki created on 2010-12-14 so it will work for wikis created after this project has been deployed
+		//260000 = ID of wiki created on 2011-05-01 so it will work for wikis created after this project has been deployed
 		$res = $dbrStats->query(
 			'select e1.wiki_id, sum(e1.edits) as sum_edits from specials.events_local_users e1 ' .
-			'where e1.wiki_id > 194785 ' .
+			'where e1.wiki_id > 260000 ' .
 			'group by e1.wiki_id ' .
 			'having sum_edits < 1000 and (' .
 			'select count(0) from specials.events_local_users e2 ' .
