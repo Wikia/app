@@ -42,4 +42,25 @@ class ModuleDataAnonTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($userName, $moduleData['username']);
 	}
 
+	function testBodyModule() {
+		global $wgTitle, $wgEnableWikiReviews;
+
+		//Special search page has a custom list of modules
+		$wgTitle = Title::newFromText('Special:Search');
+		$moduleData = Module::get('Body')->getData();
+		$railList = $moduleData['railModuleList'];
+		if( empty( $wgEnableWikiReviews ) ) {
+			$this->assertEquals($railList[1450][0], 'PagesOnWiki');
+		}
+		$this->assertEquals($railList[1250][0], 'LatestActivity');
+		$this->assertEquals($railList[1300][0], 'LatestPhotos');
+
+		// Content page check
+		$wgTitle = Title::newFromText('Foo');
+		$moduleData = Module::get('Body')->getData();
+		$railList = $moduleData['railModuleList'];
+		$this->assertEquals($railList[1500][0], 'Search');
+		$this->assertEquals($railList[1150][0], 'Spotlights');
+	}
+
 }
