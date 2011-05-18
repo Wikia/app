@@ -54,7 +54,7 @@ class AutomaticWikiAdoptionJobSendMail {
 				}
 				if (!isset($commandLineOptions['dryrun'])) {
 					$adminUser->sendMail(
-						wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-subject"),
+						strtr(wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-subject"), $magicwords),
 						strtr(wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-content", $adminName, $specialUserRightsUrl, $specialPreferencesUrl), $magicwords),
 						null, //from
 						null, //replyto

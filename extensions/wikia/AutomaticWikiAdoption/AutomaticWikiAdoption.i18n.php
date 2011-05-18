@@ -42,45 +42,58 @@ Are you ready to take the next steps to help {{SITENAME}}?",
 	'wikiadoption-mail-first-subject' => "We have not seen you around in a while",
 	'wikiadoption-mail-first-content' => "Hi $1,
 
-It's been a couple of weeks since we have seen an administrator on your wiki. Remember, your community will be looking to you to make sure the wiki is running smoothly.
+It's been a couple of weeks since we have seen an administrator on #WIKINAME. Administrators are an integral part of #WIKINAME and it's important they have a regular presence. If there are no active administrators for a long period of time, this wiki may be put up for adoption to allow another user to become an administrator.
 
-If you need help taking care of the wiki, you can also allow other community members to become administrators by going to $2.
+If you need help taking care of the wiki, you can also allow other community members to become administrators now by going to $2.  Hope to see you on #WIKINAME soon!
 
 The Wikia Team
 
-Click the following link to unsubscribe from changes to this list: $3.",
+You can unsubscribe from changes to this list here: $3",
 	'wikiadoption-mail-first-content-HTML' => "Hi $1,<br /><br />
-It's been a couple of weeks since we have seen an administrator on your wiki. Remember, your community will be looking to you to make sure the wiki is running smoothly.<br /><br />
-If you need help taking care of the wiki, you can also allow other community members to become administrators by going to <a href=\"$2\">User rights management</a>.<br /><br />
-<b>The Wikia Team</b><br /><br />
-<small>You can <a href=\"$3\">unsubscribe</a> from changes to this list.</small>",
-	'wikiadoption-mail-second-subject' => "We will put your wiki up for adoption soon",
-	'wikiadoption-mail-second-content' => "Hi $1,
 
-It's been a while since we have seen an administrator around on your wiki. It is important to have active administrators for the community so the wiki can continue to run smoothly - so we will put your wiki up for adoption soon to give it a chance to have active administrators again.
+It's been a couple of weeks since we have seen an administrator on #WIKINAME. Administrators are an integral part of #WIKINAME and it's important they have a regular presence. If there are no active administrators for a long period of time, this wiki may be put up for adoption to allow another user to become an administrator.<br /><br />
+
+If you need help taking care of the wiki, you can also allow other community members to become administrators now by going to <a href=\"$2\">User Rights management</a>.  Hope to see you on #WIKINAME soon!<br /><br />
+
+The Wikia Team<br /><br />
+
+You can <a href=\"$3\">unsubscribe</a> from changes to this list.",
+	'wikiadoption-mail-second-subject' => "#WIKINAME will be put up for adoption soon",
+	'wikiadoption-mail-second-content' => "Hi $1,
+Oh, no! It's been almost 30 days since there's been an active administrator on #WIKINAME. It's important that adminstraters regularly appear and contribute so the wiki can continue to run smoothly.
+
+Since it's been so many days since a current administrator has appeared, #WIKINAME will now be offered for adoption to other editors. 
 
 The Wikia Team
 
-Click the following link to unsubscribe from changes to this list: $3.",
-	'wikiadoption-mail-second-content-HTML' => "Hi $1,
+You can unsubscribe from changes to this list here: $3",
+	'wikiadoption-mail-second-content-HTML' => "Hi $1,<br /><br />
+Oh, no! It's been almost 30 days since there's been an active administrator on #WIKINAME. It's important that adminstraters regularly appear and contribute so the wiki can continue to run smoothly.<br /><br />
 
-It's been a while since we have seen an administrator around on your wiki. It is important to have active administrators for the community so the wiki can continue to run smoothly - so we will put your wiki up for adoption soon to give it a chance to have active administrators again.
+Since it's been so many days since a current administrator has appeared, #WIKINAME will now be offered for adoption to other editors. <br /><br />
 
-<b>The Wikia Team</b>
+The Wikia Team<br /><br />
 
-<small>You can <a href=\"$3\">unsubscribe</a> from changes to this list.</small>",
-	'wikiadoption-mail-adoption-subject' => 'Your wiki has been adopted',
+You can <a href=\"$3\">unsubscribe</a> from changes to this list.",
+	'wikiadoption-mail-adoption-subject' => '#WIKINAME has been adopted',
 	'wikiadoption-mail-adoption-content' => "Hi $1,
 
-Your wiki has been adopted! This means that someone else has volunteered to help maintain the community and content on the site. Do not worry - you are still an administrator, and you are welcome to come back at any time.
+#WIKINAME has been adopted.  Wikis are available to be adopted when none of the current administrators are active for 30 days or more.
+
+The adopting user of #WIKINAME will now have bureaucrat and admin status.  Don't worry, you'll also your retain administrator status on this wiki and are welcome to return and continue contributing at any time!
 
 The Wikia Team
 
-Click the following link to unsubscribe from changes to this list: $3.",
+You can unsubscribe from changes to this list here: $3",
 	'wikiadoption-mail-adoption-content-HTML' => "Hi $1,<br /><br />
-Your wiki has been adopted! This means that someone else has volunteered to help maintain the community and content on the site. Do not worry - you are still an administrator, and you are welcome to come back at any time.<br /><br />
-<b>The Wikia Team</b><br /><br />
-<small>You can <a href=\"$3\">unsubscribe</a> from changes to this list.</small>",
+
+#WIKINAME has been adopted.  Wikis are available to be adopted when none of the current administrators are active for 30 days or more.<br /><br />
+
+The adopting user of #WIKINAME will now have bureaucrat and admin status.  Don't worry, you'll also your retain administrator status on this wiki and are welcome to return and continue contributing at any time!<br /><br />
+
+The Wikia Team<br /><br />
+
+You can <a href=\"$3\">unsubscribe</a> from changes to this list.",
 	'tog-adoptionmails' => 'E-mail me if $1 will become available for other users to adopt',
 	'wikiadoption-pref-label' => 'Changing these preferences will only affect e-mails from $1.',
 	'wikiadoption-welcome-header' => 'Congratulations! You\'ve adopted {{SITENAME}}!',
@@ -221,7 +234,7 @@ Dein Wiki wurde adoptiert! Das bedeutet, dass ein Anderer freiwillig bei der Pfl
 	'wikiadoption-pref-label' => 'Eine Änderung dieser Einstellungen wirkt sich nur auf E-Mails von $1 aus.',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬) */
+/** German (formal address) (Deutsch (Sie-Form)) */
 $messages['de-formal'] = array(
 	'wikiadoption-notification' => "$1 kann adoptiert werden. Sie können der neue Verwalter werden. ''Jetzt adoptieren!''",
 );
@@ -759,7 +772,7 @@ Handige hulpmiddelen:<br /><br />
 [[Special:UserRights|Rechten beheren]]',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel) (Nederlands (informeel))
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -820,7 +833,7 @@ Je wiki is geadopteerd! Dit betekent dat iemand anders zich heeft opgeworpen om 
 <small>Je kunt je van wijzigingen op deze lijst <a href="$3">uitschrijven</a>.</small>',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Jon Harald Søby
  * @author Nghtwlkr
@@ -1066,7 +1079,7 @@ $messages['ru'] = array(
 Кликните по ссылке, чтобы отписаться от изменений в этом списке: $3.',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1139,7 +1152,7 @@ $messages['uk'] = array(
 	'wikiadoption-know-more-header' => 'Хочете знати більше?',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Hydra
  */
 $messages['zh-hans'] = array(
