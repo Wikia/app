@@ -581,12 +581,18 @@ class WikiaPhotoGallery extends ImageGallery {
 		$heights = array();
 		$widths = array();
 
+		$images = array();
+		foreach ($this->mImages as $index => $imageData) {
+			$img = $this->getImage($imageData[0]);
+			if(!empty($img)) {
+				$images[] = $imageData;
+				$fileObjectsCache[] = $img;
+			}
+		}
+		$this->mImages = $images;
+
 		// loop throught the images and get height of the tallest one
 		foreach ($this->mImages as $index => $imageData) {
-			$fileObjectsCache[$index] = $this->getImage($imageData[0]);
-
-			if (!$fileObjectsCache[$index]) continue;
-
 			// get thumbnail limited only by given width
 			if ($fileObjectsCache[$index]->width > $thumbSize) {
 				$imageHeight = round( $fileObjectsCache[$index]->height * ($thumbSize / $fileObjectsCache[$index]->width) );
