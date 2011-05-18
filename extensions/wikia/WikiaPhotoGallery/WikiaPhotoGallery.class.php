@@ -580,35 +580,36 @@ class WikiaPhotoGallery extends ImageGallery {
 		$fileObjectsCache = array();
 		$heights = array();
 		$widths = array();
-
 		$images = array();
-		foreach ($this->mImages as $index => $imageData) {
+		
+		// loop throught the images and get height of the tallest one
+		foreach ($this->mImages as $imageData) {
+			
 			$img = $this->getImage($imageData[0]);
+			
 			if(!empty($img)) {
 				$images[] = $imageData;
 				$fileObjectsCache[] = $img;
+				
+				// get thumbnail limited only by given width
+				if ( $img->width > $thumbSize ) {
+					$imageHeight = round( $img->height * ( $thumbSize / $img->width ) );
+					$imageWidth = $thumbSize;
+				} else {
+					$imageHeight = $img->height;
+					$imageWidth = $img->width;
+				}
+	
+				$heights[] = $imageHeight;
+				$widths[] = $imageWidth;
+	
+				if ($imageHeight > $maxHeight) {
+					$maxHeight = $imageHeight;
+				}
 			}
 		}
+		
 		$this->mImages = $images;
-
-		// loop throught the images and get height of the tallest one
-		foreach ($this->mImages as $index => $imageData) {
-			// get thumbnail limited only by given width
-			if ($fileObjectsCache[$index]->width > $thumbSize) {
-				$imageHeight = round( $fileObjectsCache[$index]->height * ($thumbSize / $fileObjectsCache[$index]->width) );
-				$imageWidth = $thumbSize;
-			} else {
-				$imageHeight = $fileObjectsCache[$index]->height;
-				$imageWidth = $fileObjectsCache[$index]->width;
-			}
-
-			$heights[$index] = $imageHeight;
-			$widths[$index] = $imageWidth;
-
-			if ($imageHeight > $maxHeight) {
-				$maxHeight = $imageHeight;
-			}
-		}
 
 		// calculate height based on gallery width
 		$height = round($thumbSize / $ratio);
@@ -623,6 +624,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			// limit height (RT #59355)
 			$height = min($height, $thumbSize);
+			
 			// recalculate dimensions (RT #59355)
 			foreach ($this->mImages as $index => $image) {
 				$dimensions = WikiaPhotoGalleryHelper::getThumbnailDimensions( $fileObjectsCache[$index], $thumbSize, $height, WikiaPhotoGalleryHelper::THUMB_SHRINK );
