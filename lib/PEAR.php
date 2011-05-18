@@ -565,13 +565,12 @@ class PEAR
         } else {
             $ec = 'PEAR_Error';
         }
-        if ($skipmsg) {
-            $a = &new $ec($code, $mode, $options, $userinfo);
-            return $a;
+		if ($skipmsg) {
+            $a = new $ec($code, $mode, $options, $userinfo);
         } else {
-            $a = &new $ec($message, $code, $mode, $options, $userinfo);
-            return $a;
+            $a = new $ec($message, $code, $mode, $options, $userinfo);
         }
+		return $a;
     }
 
     // }}}
