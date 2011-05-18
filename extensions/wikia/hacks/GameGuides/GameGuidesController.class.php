@@ -15,13 +15,13 @@ class GameGuidesController extends WikiaController {
 	
 	function init() {
 		$requestedVersion = $this->request->getInt( 'ver', self::API_VERSION );
-		$requestedRevision = $this->request()->getInt( 'rev', self::API_REVISION );
+		$requestedRevision = $this->request->getInt( 'rev', self::API_REVISION );
 		
 		if ( $requestedVersion != self::API_VERSION || $requestedRevision != self::API_REVISION ) {
 			throw new GameGuidesWrongAPIVersionException();
 		}
 		
-		if ( !$this->mDevelEnvironment && !$this->request->wasPosted() ) {
+		if ( !$this->wg->develEnvironment && !$this->request->wasPosted() ) {
 			throw new GameGuidesRequestNotPostedException();
 		}
 		
