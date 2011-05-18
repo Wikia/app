@@ -17,6 +17,7 @@ Options:
   -m                Minor edit
   -b                Bot (hidden) edit
   -a                Enable autosummary
+  -p 				Edit on the article begining
   --no-rc           Do not show the change in recent changes
 
 If the specified user does not exist, it will be created.
@@ -31,6 +32,7 @@ $summary = isset( $options['s'] ) ? $options['s'] : '';
 $minor = isset( $options['m'] );
 $bot = isset( $options['b'] );
 $autoSummary = isset( $options['a'] );
+$prepend = isset( $options['p'] );
 $noRC = isset( $options['no-rc'] );
 
 $wgUser = User::newFromName( $userName );
@@ -55,7 +57,7 @@ $text = file_get_contents( 'php://stdin' );
 
 if ( $wgArticle->getID() ) {
     #--- read current body of article
-    $text = $wgArticle->getContent() . "\n" . $text;
+    $text = ( $prepend ) ? $text . "\n" . $wgArticle->getContent() : $wgArticle->getContent() . "\n" . $text;
 }
 
 # Do the edit
