@@ -246,6 +246,8 @@ class WikiaPhotoGalleryHelper {
 					$resizeRatio = min($widthResize, $heightResize);
 					break;
 			}
+			
+			if(!$resizeRatio) $resizeRatio = 1;
 
 			$thumbParams = array(
 				'height' => min($img->getHeight(), round($img->getHeight() / $resizeRatio)),
