@@ -3,7 +3,7 @@
 require_once dirname(__FILE__) . '/_fixtures/TestController.php';
 
 /**
- * @group mwabstract
+ * @ingroup mwabstract
  */
 class WikiaControllerTest extends PHPUnit_Framework_TestCase {
 

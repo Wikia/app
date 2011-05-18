@@ -2,7 +2,7 @@
 require_once dirname(__FILE__) . '/_fixtures/TestHookHandler.php';
 
 /**
- * @group mwabstract
+ * @ingroup mwabstract
  */
 class WikiaHookDispatcherTest extends PHPUnit_Framework_TestCase {
 	private $dispatcher;

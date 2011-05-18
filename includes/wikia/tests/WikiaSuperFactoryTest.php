@@ -3,7 +3,7 @@
 require_once dirname(__FILE__) . "/_fixtures/WikiaSuperFactoryTestClass.php";
 
 /**
- * @group mwabstract
+ * @ingroup mwabstract
  */
 class WikiaSuperFactoryTest extends PHPUnit_Framework_TestCase {
 
