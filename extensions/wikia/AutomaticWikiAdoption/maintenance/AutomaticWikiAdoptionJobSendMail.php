@@ -54,12 +54,12 @@ class AutomaticWikiAdoptionJobSendMail {
 				}
 				if (!isset($commandLineOptions['dryrun'])) {
 					$adminUser->sendMail(
-						strtr(wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-subject"), $magicwords),
-						strtr(wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-content", $adminName, $specialUserRightsUrl, $specialPreferencesUrl), $magicwords),
+						strtr(wfMsgForContent("wikiadoption-mail-{$jobOptions['mailType']}-subject"), $magicwords),
+						strtr(wfMsgForContent("wikiadoption-mail-{$jobOptions['mailType']}-content", $adminName, $specialUserRightsUrl, $specialPreferencesUrl), $magicwords),
 						null, //from
 						null, //replyto
 						'AutomaticWikiAdoption',
-						strtr(wfMsgForContent("automaticwikiadoption-mail-{$jobOptions['mailType']}-content-HTML", $adminName, $specialUserRightsUrl, $specialPreferencesUrl), $magicwords)
+						strtr(wfMsgForContent("wikiadoption-mail-{$jobOptions['mailType']}-content-HTML", $adminName, $specialUserRightsUrl, $specialPreferencesUrl), $magicwords)
 					);
 				}
 			}
