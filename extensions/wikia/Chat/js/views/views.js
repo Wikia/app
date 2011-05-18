@@ -87,7 +87,7 @@ var UserView = Backbone.View.extend({
 		} else {
 			$(this.el).removeClass('away');
 		}
-		
+
 		// If this is you, render your content on top.
 		if( this.model.get('name') == wgUserName ){
 			NodeChatHelper.log("Attempting to render self. Copying up to other div.");
@@ -103,6 +103,7 @@ var UserView = Backbone.View.extend({
 var NodeChatView = Backbone.View.extend({
 	initialize: function(options) {
 		this.autoReconnect = true;
+		this.comingBackFromAway = false; // to prevent us from spamming "back" commands when we're in the process of coming back from away
 		this.model.chats.bind('add', this.addChat);
 		this.model.users.bind('add', this.addUser);
 		this.model.users.bind('remove', this.removeUser);
@@ -252,6 +253,11 @@ var NodeChatView = Backbone.View.extend({
 					// Is this the right way to do it?
 					this.model.users.remove(connectedUser);
 					this.model.users.add(updatedUser);
+					
+					// If it was the current user who changed (and they are "back") set them as no longer in the process of comingBackFromAway.
+					if((this.comingBackFromAway) && (connectedUser.get('name') == wgUserName) && (connectedUser.get('statusState') != STATUS_STATE_AWAY)){
+						this.comingBackFromAway = false;
+					}
 				}
 				break;
 			default:
@@ -286,12 +292,15 @@ var NodeChatView = Backbone.View.extend({
 	
 	// Set the user as being back from their "away" state (they are here again) and remove the status message.
 	setBack: function(){
-		NodeChatHelper.log("Attempting to come BACK from away.");
-		var setStatusCommand = new models.SetStatusCommand({
-			statusState: STATUS_STATE_PRESENT,
-			statusMessage: ''
-		});
-		this.socket.send(setStatusCommand.xport());
+		if( ! this.comingBackFromAway){ // if we have sent this command (but just haven't finished coming back yet), don't keep spamming the server w/this command
+			NodeChatHelper.log("Attempting to come BACK from away.");
+			this.comingBackFromAway = true;
+			var setStatusCommand = new models.SetStatusCommand({
+				statusState: STATUS_STATE_PRESENT,
+				statusMessage: ''
+			});
+			this.socket.send(setStatusCommand.xport());
+		}
 	},
 
 	kickBan: function(e){
