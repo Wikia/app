@@ -24,7 +24,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'AutomaticWikiAdoption',
 	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
 	'description' => 'TODO',
-	'description-msg' => 'automaticwikiadoption-desc',
+	'description-msg' => 'wikiadoption-desc',
 );
 
 $dir = dirname(__FILE__);
