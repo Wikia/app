@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Simplified API for local and wikia-wide (global) search
+ * 
+ * @author Federico "Lox" Lucignano
+ */
 class SimpleSearchController extends WikiaController {
 	private $mEnableCrossWikiaSearch;
 	private $mDisableTextSearch;
@@ -14,6 +18,9 @@ class SimpleSearchController extends WikiaController {
 		);
 	}
 	
+	/*
+	 * @todo separate the data fetching code in a model
+	 */
 	private function getResults() {
 		$this->getApp()->runFunction( 'wfProfileIn', __METHOD__ );
 		
@@ -123,12 +130,24 @@ class SimpleSearchController extends WikiaController {
 		$this->getApp()->runFunction( 'wfProfileOut', __METHOD__ );
 	}
 	
+	/**
+	 * @brief Runs a local search on the current wiki
+	 * 
+	 * @todo Finish documenting
+	 * @see getResults
+	 */
 	public function localSearch() {
 		$this->getApp()->setGlobal( 'wgEnableCrossWikiaSearch', false );
 		$this->getResults();
 		$this->getApp()->setGlobal( 'wgEnableCrossWikiaSearch', $this->mEnableCrossWikiaSearch );
 	}
 	
+	/**
+	 * @brief Runs a wikia-wide (global) search
+	 * 
+	 * @todo Finish documenting
+	 * @see getResults
+	 */
 	public function globalSearch() {
 		$this->getApp()->setGlobal( 'wgEnableCrossWikiaSearch', true );
 		$this->getResults();
