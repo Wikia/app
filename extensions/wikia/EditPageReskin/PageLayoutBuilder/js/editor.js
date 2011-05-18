@@ -1070,7 +1070,7 @@
 			}
 
 			$().log('refreshing wigdets list...','PLB');
-			
+
 			this.fire('refresh',this);
 			$('.plb-rte-widget-edit-button',this.rte.getBody()).each($.proxy(function(i,e){
 				$(e)
@@ -1253,11 +1253,11 @@
 
 		refreshPreview: function(values) {
 			var val = PageLayoutBuilder.Lang["plb-editor-preview-desc"];
-			
-			if( typeof(values.caption) != 'undefined' ) {	
+
+			if( typeof(values.caption) != 'undefined' ) {
 				$('.plb-pe-window-preview .plb-form-caption-p').html($.htmlentities( values.caption ));
 			}
-			
+
 			if((typeof(values.instructions) != 'undefined') && (values.instructions != "")) {
 				val = values.instructions;
 			}
@@ -1655,7 +1655,7 @@
 			var helpbox = $(PageLayoutBuilder.helpbox.html);
 
 			$().log(PageLayoutBuilder.helpbox.html);
-			
+
 			var mopts = {
 				onClose: function() {},
 				closeOnBlackoutClick: false,
@@ -1692,12 +1692,12 @@
 	GlobalTriggers.on("beforeMWToolbarRender",function(toolbar){
 		$("#sourceModeInsertElement").prependTo(toolbar).show();
 	});
-	
+
 	GlobalTriggers.on('wikiaeditoraddons',function(WE){
 		var modules = WE.modules;
-		
+
 		modules.LayoutBuilderAddElement = $.createClass(modules.ButtonsList,{
-			
+
 			modes: true,
 
 			headerClass: 'plb_insert',
@@ -1713,7 +1713,7 @@
 					var name = 'PLBAddElement_' + type;
 					var def = PLB.Library[type];
 					this.items.push(name);
-					
+
 					this.editor.ui.addElement(name,{
 						type: 'button',
 						label: def.caption,
@@ -1726,12 +1726,36 @@
 					});
 				}
 			},
-			
+
+			track: function(ev) {
+				var name = ev.split('_').pop();
+
+				switch(name) {
+					case 'input':
+						name = 'inputbox';
+						break;
+
+					case 'image':
+						name = 'photo';
+						break;
+
+					case 'mlinput':
+						name = 'paragraph';
+						break;
+
+					case 'sinput':
+						name = 'dropdownList';
+						break;
+				}
+
+				this.editor.track(this.editor.getTrackerMode(), 'plbFeatures', name);
+			},
+
 			getLayoutEditor: function() {
 				// XXX: make it work with multiple instances
 				return window.plb;
 			},
-			
+
 			addElement: function( type ) {
 				var plb = this.getLayoutEditor();
 				var mode = this.editor.mode;
@@ -1740,31 +1764,37 @@
 				} else {
 					plb.onCreateWidgetRequest( type );
 				}
+
+				this.track(type);
 			},
-			
+
 			afterRender: function() {
 				modules.LayoutBuilderAddElement.superclass.afterRender.call(this);
 				this.el.find('.cke_button').addClass('cke_button_big');
 			}
-		
+
 		});
-		
+
 		modules.LayoutBuilderElementsList = $.createClass(modules.base,{
 
 			headerClass: 'plb_list',
 			headerTextId: 'plb-list-title',
-			
+
 			loaded: false,
-			
+
 			init: function() {
 				// XXX: multiple instances
 				this.ed = window.plb;
 			},
-			
+
+			track: function(ev) {
+				this.editor.track(this.editor.getTrackerMode(), 'plbList', ev);
+			},
+
 			renderHtml: function() {
 				return '<div class="plb-toolbox">' + PLB.Data.toolboxHtml + '</div>';
 			},
-			
+
 			afterRender: function() {
 				this.widgetsTutorial = $('.plb-widgets-tutorial',this.el);
 //				this.widgetsTutorial.css('max-height',(this.el.innerHeight() - this.widgetsManager.outerHeight()) + 'px');
@@ -1779,7 +1809,7 @@
 				else
 					this.ed.bind('uiReady',$.proxy(this.bindUI,this));
 			},
-			
+
 			afterAttach: function() {
 				if (!this.loaded) {
 					this.widgetsTutorial.hide();
@@ -1787,7 +1817,7 @@
 				}
 				this.editor.fire('plbSetAutosizedModule',this);
 			},
-			
+
 			bindUI: function( plbeditor, ui ) {
 				this.ui = ui;
 				this.ui.on('refresh',this.refresh,this);
@@ -1831,12 +1861,12 @@
 				// Bind to the edit and delete buttons from the overlay
 				$('.edit',this.widgetsList).click($.proxy(this.onItemEditClick,this));
 				$('.delete',this.widgetsList).click($.proxy(this.onItemDeleteClick,this));
-				
+
 				this.loaded = true;
-				
+
 				this.setHeaderText(this.msg('plb-list-title-count',[l.length]));
 			},
-			
+
 			onMouseEnter : function (e) {
 				var el = $(e.target).closest('li');
 				el.addClass('hover');
@@ -1846,12 +1876,13 @@
 				var el = $(e.target).closest('li');
 				el.removeClass('hover');
 			},
-			
+
 			// Handle click on edit button in the widgets list
 			onItemEditClick : function (e) {
 				var el = $(e.target).closest('li');
 				var id = el.attr('__plb_id');
 				this.ui.fire('edit',id);
+				this.track('edit');
 				return false;
 			},
 
@@ -1860,44 +1891,45 @@
 				var el = $(e.target).closest('li');
 				var id = el.attr('__plb_id');
 				this.ui.fire('delete',id);
+				this.track('delete');
 				return false;
 			}
-		
+
 		});
 	});
-	
+
 	GlobalTriggers.on('wikiaeditor',function(WE){
-		
+
 		WE.plugins.plb = $.createClass(WE.plugin,{
-			
+
 			initDom: function() {
 				$('#wpPreviewForm',this.editor.element).click(this.proxy(function(e) {
 					this.editor.controls.renderPreview({'type' : 'form'});
 				}));
 			}
-			
+
 		});
-		
+
 		WE.plugins.plblistautoheight = $.createClass(WE.plugin,{
-			
+
 			module: false,
-			
+
 			beforeInit: function() {
 				this.editor.on('plbSetAutosizedModule',this.proxy(this.setModule));
 				this.editor.on('toolbarsResized',this.proxy(this.toolbarsResized));
-				$(window).bind('resize',this.proxy(this.toolbarsResized));	
+				$(window).bind('resize',this.proxy(this.toolbarsResized));
 			},
-			
+
 			setModule: function( module ) {
 				this.module = module;
 				this.toolbarsResized();
 			},
-			
-			toolbarsResized: function() { 
+
+			toolbarsResized: function() {
 				if (!this.module) {
 					return;
 				}
-			
+
 				var el = this.module.el.closest('.module_content');
 				var p = el.closest('[data-space-type]');
 				if (el.css('display') == 'none') {
@@ -1908,18 +1940,18 @@
 					el.css('max-height',maxH);
 				}
 			}
-		
+
 		});
-		
-		
+
+
 		WE.on('wikiaeditorspacesbeforelayout',function(element,config){
 			config.wide = true;
 		});
-		
+
 		WE.on('wikiaeditorspaceslayout',function(element,layout,config){
 			layout.rail.push('LayoutBuilderAddElement', 'LayoutBuilderElementsList');
 		});
-		
+
 		WE.on('newInstance',function(plugins,config){
 			plugins.push('plb');
 			plugins.push('plblistautoheight');
@@ -1928,8 +1960,8 @@
 			config.insertCutText = $.msg('wikia-editor-plb-show-static-buttons')
 			config.wideModeDisabled = true;
 		});
-		
+
 	});
-	
+
 
 })();
