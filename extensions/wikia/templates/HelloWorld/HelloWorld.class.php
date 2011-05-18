@@ -17,7 +17,7 @@ class HelloWorld {
 	 * @brief Gets the title and URL for a wiki
 	 * @details Returns an array containing 'title' and 'url' keys, given a wiki ID
 	 *
-	 * @param Int $wikiId
+	 * @param int $wikiId
 	 *
 	 * @return array
 	 */
