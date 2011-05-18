@@ -151,7 +151,16 @@ $wgAutoloadClasses['MobileService'] = $IP . '/includes/wikia/services/MobileServ
 $wgAutoloadClasses['TemplateService'] = $IP . '/includes/wikia/services/TemplateService.class.php';
 $wgAutoloadClasses['SpriteService'] = $IP . '/includes/wikia/services/SpriteService.class.php';
 $wgAutoloadClasses['HubService'] = $IP . '/includes/wikia/services/HubService.class.php';
+
+// controllers
 $wgAutoloadClasses['SimpleSearchController']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
+$wgAutoloadClasses['SimpleSearchTooManyResultsException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
+$wgAutoloadClasses['SimpleSearchDisabledException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
+$wgAutoloadClasses['SimpleSearchEngineException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
+$wgAutoloadClasses['SimpleSearchEmptyKeyException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
+$wgAutoloadClasses['MobileStatsController']  =  $IP.'/includes/wikia/services/MobileStatsController.class.php';
+$wgAutoloadClasses['MobileStatsExternalRequestException']  =  $IP.'/includes/wikia/services/MobileStatsController.class.php';
+$wgAutoloadClasses['MobileStatsMissingParametersException']  =  $IP.'/includes/wikia/services/MobileStatsController.class.php';
 
 // modules
 $wgAutoloadClasses['OasisModule'] = $IP.'/skins/oasis/modules/OasisModule.class.php';
