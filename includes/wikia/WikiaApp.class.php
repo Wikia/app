@@ -1,5 +1,9 @@
 <?php
 
+/** @defgroup nirvana Nirvana
+ *  The Nirvana Framework
+ */
+
 /**
  * Nirvana Framework - Application class
  *
