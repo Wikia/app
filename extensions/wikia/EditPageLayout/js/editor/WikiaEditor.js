@@ -360,6 +360,7 @@
 			if (!config)
 				return '';
 
+			config.label || (config.label = $.msg(config.labelId));
 			config.title || (config.title = config.label);
 			var id = 'uielem_' + this.nextId++;
 			var buttonClass = 'cke_' + config.type;

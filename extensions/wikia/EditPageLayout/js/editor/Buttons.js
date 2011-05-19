@@ -11,14 +11,14 @@
 	
 	buttons['InsertImage'] = {
 		type: 'button',
-		label: 'Image',
+		labelId: 'wikia-editor-media-image',
 		className: 'RTEImageButton',
 		clicksource: function() { WMU_show({}); },
 		ckcommand: 'addimage'
 	};
 	buttons['InsertGallery'] = {
 		type: 'button',
-		label: 'Gallery',
+		labelId: 'wikia-editor-media-gallery',
 		className: 'RTEGalleryButton',
 		clicksource: function() {
 			WikiaPhotoGallery.showEditor({
@@ -31,7 +31,7 @@
 	};
 	buttons['InsertSlideshow'] = {
 		type: 'button',
-		label: 'Slideshow',
+		labelId: 'wikia-editor-media-slideshow',
 		className: 'RTESlideshowButton',
 		clicksource: function() {
 			WikiaPhotoGallery.showEditor({
@@ -44,7 +44,7 @@
 	};
 	buttons['InsertSlider'] = {
 		type: 'button',
-		label: 'Slider',
+		labelId: 'wikia-editor-media-slider',
 		className: 'RTESliderButton',
 		clicksource: function() {
 			WikiaPhotoGallery.showEditor({
@@ -57,7 +57,7 @@
 	};
 	buttons['InsertVideo'] = {
 		type: 'button',
-		label: 'Video',
+		labelId: 'wikia-editor-media-video',
 		className: 'RTEVideoButton',
 		clicksource: function() { VET_show({}); },
 		ckcommand: 'addvideo',
