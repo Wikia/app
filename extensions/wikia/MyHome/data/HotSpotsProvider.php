@@ -69,7 +69,7 @@ class HotSpotsProvider {
 		}
 		$results3 = array();
 		foreach($results2 as $key => $val) {
-			$title = Title::newFromText($key, 500);
+			$title = Title::newFromText($key, 500 /* NS_BLOG_ARTICLE */);
 			if($title && $title->exists() && count($val) > 1) {
 				$results3[] = array(
 					'title' => end(explode('/', $title->getPrefixedText(), 2)),

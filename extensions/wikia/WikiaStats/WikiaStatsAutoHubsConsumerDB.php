@@ -23,10 +23,10 @@ class WikiaStatsAutoHubsConsumerDB {
 	}
 
 	private function makeInsert($table, $data, $options = array(), $onUpdate = '') {
-		wfProfileIn( __METHOD__ );	
+		wfProfileIn( __METHOD__ );
 		if ( !is_array($data) ) {
 			return null;
-		}	
+		}
 		$keys = array_keys( $data[0] );
 
 		$sql = 'INSERT %s INTO `noreptemp`.`%s` (%s) VALUES %s %s';
@@ -59,11 +59,11 @@ class WikiaStatsAutoHubsConsumerDB {
 	 */
 	 public function insertBlogComment($data) {
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( empty($data) ) {
 			return true;
 		}
-			  		
+
   		foreach ( $data as $lang => $tags ) {
 			if ( !empty($tags) ) {
 				foreach ( $tags as $tag_id => $records ) {
@@ -79,7 +79,7 @@ class WikiaStatsAutoHubsConsumerDB {
 
 		wfProfileOut( __METHOD__ );
 	 }
-	 
+
 	 /**
 	 * instert stats for article per tag
 	 *
@@ -90,11 +90,11 @@ class WikiaStatsAutoHubsConsumerDB {
 	 */
 	 public function insertArticleEdit($data) {
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( empty($data) ) {
 			return true;
 		}
-			  		
+
   		foreach ( $data as $lang => $tags ) {
 			if ( !empty($tags) ) {
 				foreach ( $tags as $tag_id => $records ) {
@@ -109,8 +109,8 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		wfProfileOut( __METHOD__ );
-	 }	 
-	 
+	 }
+
 	 /**
 	 * instert stats for users per tag
 	 *
@@ -121,14 +121,14 @@ class WikiaStatsAutoHubsConsumerDB {
 	 */
 	 public function insertUserEdit($data) {
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( empty($data) ) {
 			return true;
 		}
-			  		
+
   		foreach ( $data as $lang => $tags ) {
 			if ( !empty($tags) ) {
-				foreach ( $tags as $tag_id => $records ) {			
+				foreach ( $tags as $tag_id => $records ) {
 					$sql = $this->makeInsert("tags_top_users", $records, array('ignore'), "ON DUPLICATE KEY UPDATE tu_count = tu_count + 1");
 					if ( $sql ) {
 						$this->dbs->query($sql, __METHOD__);
@@ -139,7 +139,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		wfProfileOut( __METHOD__ );
-	 }	 	 
+	 }
 
 
 	/**
@@ -256,12 +256,12 @@ class WikiaStatsAutoHubsConsumerDB {
 		$res = $this->dbs->select(
 			array( 'specials.summary_tags_top_articles' ),
 			array( 'city_id, page_id, tag_id, page_name, page_url, wikiname, wikiurl, all_count' ),
-			array( 
-				'tag_id' => $tag_id, 
-				'city_lang' => $lang 
+			array(
+				'tag_id' => $tag_id,
+				'city_lang' => $lang
 			),
 			__METHOD__,
-			array( 
+			array(
 				'ORDER BY' 	=> 'all_count desc',
 				'LIMIT'		=> 100
 			)
@@ -328,7 +328,7 @@ class WikiaStatsAutoHubsConsumerDB {
 				'LIMIT'		=> $limit
 			)
 		);
-		
+
 		if ( $this->dbs->numRows( $res ) == 0 && !empty($wgDotDisplay) ) {
 			$date = date('Ymd', time() - 7 * 24 * 60 * 60);
 			$conditions[] = "use_date > $date";
@@ -386,11 +386,11 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		$dbs = WikiFactory::db( DB_SLAVE );
-		
+
 		if ( empty($city_array) ) {
-			return array("value" => array(), "age" => time());	
+			return array("value" => array(), "age" => time());
 		}
-		
+
 		$res = $dbs->select(
 			array( "city_list"),
 			array( "city_id, city_description, city_sitename, city_url, city_title" ),
@@ -431,7 +431,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		$res = $this->dbs->select(
 			array( 'specials.summary_tags_top_users' ),
 			array( 'user_id, tag_id, username, groups, all_count' ),
-			array( 
+			array(
 				'tag_id' => $tag_id,
 				'city_lang' => $lang
 			),
@@ -526,7 +526,7 @@ class WikiaStatsAutoHubsConsumerDB {
 			if(!$last_city_id) {
 				$city_id = $last_city_id;
 			} else {
-				$city_id = 177;	
+				$city_id = 177;
 			}
 		}
 
@@ -902,6 +902,10 @@ class WikiaStatsAutoHubsConsumerDB {
 					continue;
 				}
 			}
+
+			// fix UTF-8 encoding (BugId:929)
+			$row['page_name'] = utf8_decode($row['page_name']);
+			$row['page_url'] = utf8_decode($row['page_url']);
 
 			$row['real_pagename'] = $row['page_name'];
 			$row['page_name'] = urldecode( str_replace('_' ,' ' , $row['page_name']) );
