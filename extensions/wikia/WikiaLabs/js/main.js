@@ -13,7 +13,7 @@ WikiaLabs.init = function() {
 	$('#addFeedback').click(function(){
 		WikiaLabs.giveFeedback(0, function(){});
 	});
-	$('.buttons .slider').bind('switch', WikiaLabs.switchToggle);
+	$('.buttons .slider').bind('switch', WikiaLabs.switchToggle).click(WikiaLabs.switchToggle);
 	$('.WikiaLabsStaff select').change( WikiaLabs.staffEditCombo ).val(0); 
 	$('.wikiaLabsMainView .buttons .feedback').click( WikiaLabs.showFeedback );
 	$.loadJQueryUI(function() {
