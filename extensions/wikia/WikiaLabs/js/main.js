@@ -5,15 +5,44 @@ $(function() {
 });
 
 WikiaLabs.init = function() {
+	var startPosition;
+	var startLeft;
 	$('#addProject').click(function(){
 		WikiaLabs.editProject(0, function(){});
 	});
 	$('#addFeedback').click(function(){
 		WikiaLabs.giveFeedback(0, function(){});
 	});
-	$('.buttons .slider').click(WikiaLabs.switchTogel);
+	$('.buttons .slider').bind('switch', WikiaLabs.switchToggle);
 	$('.WikiaLabsStaff select').change( WikiaLabs.staffEditCombo ).val(0); 
 	$('.wikiaLabsMainView .buttons .feedback').click( WikiaLabs.showFeedback );
+	$.loadJQueryUI(function() {
+		$('.button').draggable({
+			axis: 'x',
+			containment: 'parent',
+			distance: 5,
+			start: function() {
+				startPosition = $(this).offset().left;
+				startLeft = $(this).css('left');
+			},
+			stop: function() {
+				if (Math.abs(startPosition - $(this).offset().left) >= 30) {
+					$(this).parent().trigger('switch');
+				} else {
+					if (!$(this).parent().hasClass('on')) {
+						$(this).animate({       
+							left: 0
+						});
+					} else if ($(this).parent().hasClass('on')) {
+						$(this).animate({       
+							left: 67
+						});
+					}
+				}
+			}
+		});
+	});
+
 }
 
 WikiaLabs.showFeedback = function(e){
@@ -183,7 +212,7 @@ WikiaLabs.uploadImage = function ( imgelement ) {
 	return false;
 }
 
-WikiaLabs.switchTogel = function(e) {
+WikiaLabs.switchToggle = function(e) {
 	var slider;
 	slider = $(e.target).closest('.buttons').find('.slider');
 	var onoff = slider.hasClass('on')  ? 0:1;
@@ -228,34 +257,35 @@ WikiaLabs.switchTogel = function(e) {
 }
 
 WikiaLabs.switchRequest = function(slider, onoff) {
+	if( slider.hasClass('on') ) {      
+    	slider.find('.button').animate({       
+	    	left: 0
+		});   
+	} else {               	 
+		slider.find('.button').animate({       
+			left: 67
+		});
+	}
 	$.ajax({
 		url: wgScript + '?action=ajax&rs=WikiaLabsHelper::switchProject&id=' +  slider.attr('data-id') + '&onoff=' + onoff ,
 		dataType: "json",
 		type: "POST",
 		success: function(data) {
-			WikiaLabs.animateTogel(slider);
+			WikiaLabs.animateToggle(slider);
 		}
 	});
 }
 
-WikiaLabs.animateTogel = function(slider) {
+WikiaLabs.animateToggle = function(slider) {
 	$().log(slider, 'WikiaLabs');
 	if( slider.hasClass('on') ) {      
-			slider.find('.textoff').fadeIn();              
-	    	slider.find('.texton').fadeOut();    
-	    	
-	    	slider.find('.button').animate({       
-		    	left: '-=67'     
-		    });   
-		    slider.removeClass('on');
-	    } else {               	 
-	    	slider.find('.texton').fadeIn();              
-	    	slider.find('.textoff').fadeOut();
-		    
-	    	slider.find('.button').animate({       
-	    		left: '+=67'     
-	    	});
-	    	slider.addClass('on'); 
+		slider.find('.textoff').fadeIn();              
+	   	slider.find('.texton').fadeOut();    
+	    slider.removeClass('on');
+    } else {               	 
+    	slider.find('.texton').fadeIn();              
+    	slider.find('.textoff').fadeOut();
+    	slider.addClass('on'); 
 	}
 }
 
