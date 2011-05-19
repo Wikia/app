@@ -85,6 +85,7 @@ var STATUS_STATE_AWAY = 'away';
 			'statusState': STATUS_STATE_PRESENT,
 			'statusMessage': '',
 			'isModerator': false,
+			'isStaff': false,
 			'avatarSrc': "http://placekitten.com/50/50",
 			'editCount': '?',
 			'since': ''
@@ -149,7 +150,7 @@ var STATUS_STATE_AWAY = 'away';
 
 
 	Backbone.Model.prototype.mport = function (data, silent) {
-		//console.log("DATA FROM mport:\n" + data);
+		console.log("DATA FROM mport:\n" + data);
 
 		function process(targetObj, data) {
 			targetObj.id = data.id || null;
