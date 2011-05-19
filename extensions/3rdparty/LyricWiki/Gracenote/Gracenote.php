@@ -21,7 +21,6 @@ define('GRACENOTE_VIEW_OTHER_LYRICS', 'ViewOther');
 define('GRACENOTE_VIEW_NOT_LYRICS', 'NotLyrics');
 define('GRACENOTE_VIEW_UNKNOWN', 'Unknown'); // indicates an error
 define('GRACENOTE_ALREADY_PROCESSED', '#PROCESSED#'); // this would not be a valid page name, so this is guaranteed not to be a valid entry into the gracenote-id div.
-define('GOOGLE_ANALYTICS_ID', "UA-10496195-1"); // lyrics.wikia.com ID
 
 ////
 // Returns HTML which outputs the required branding for Gracenote.
