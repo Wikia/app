@@ -92,18 +92,10 @@ class WikiaView {
 				throw new WikiaException( "Invalid controller name: $controllerName" );
 			}
 
-			$dirPath = dirname( $autoloadClasses[$controllerClass] );
-			$templatePath = $dirPath . '/templates/' . $controllerName . '_' . $methodName . '.php';
+			$templatePath = dirname( $autoloadClasses[$controllerClass] ) . '/templates/' . $controllerName . '_' . $methodName . '.php';
 
 			if( !file_exists( $templatePath ) ) {
-				// fallback to old template names (upper case method)
-				$oldTemplatePath = $dirPath . '/templates/' . $controllerName . '_' . ucfirst( $methodName ) . '.php';
-				if( !file_exists( $oldTemplatePath ) ) {
-					throw new WikiaException( "Template file not found: $templatePath" );
-				}
-				else {
-					$templatePath = $oldTemplatePath;
-				}
+				throw new WikiaException( "Template file not found: $templatePath" );
 			}
 
 			$this->setTemplatePath( $templatePath );
