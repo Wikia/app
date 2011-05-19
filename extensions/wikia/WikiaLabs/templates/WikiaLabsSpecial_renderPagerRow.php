@@ -1,0 +1,1 @@
+<li><a href="<?php echo $row->city_url; ?>"><?php echo $row->city_title; ?></a></li>
