@@ -8,34 +8,34 @@ EOT;
 	exit( 1 );
 }
 
-
-$wgExtensionCredits['specialpage'][] = array(
-	'name' => 'WikiaLabs',
-	'author' => array( "Tomasz Odrobny", "Adrain 'ADi' Wieczorek" ),
-	'url' => '',
-	'description' => '',
-);
-
-$dir = dirname(__FILE__) . '/';
-
-/**
- * @var WikiaApp
- */
 $app = F::app();
+$dir = dirname(__FILE__) . '/';
 
 /**
  * classes
  */
 $app->registerClass('WikiaLabsSpecial', $dir . 'WikiaLabsSpecial.class.php');
+$app->registerClass('WikiaLabsWikisListPager', $dir . 'WikiaLabsWikisListPager.class.php');
 $app->registerClass('WikiaLabsModule', $dir . 'WikiaLabsModule.class.php');
 $app->registerClass('WikiaLabs', $dir . 'WikiaLabs.class.php');
 $app->registerClass('WikiaLabsProject', $dir . 'WikiaLabsProject.class.php');
 $app->registerClass('WikiaLabsHelper', $dir . 'WikiaLabsHelper.class.php');
 
 /**
+ * hooks
+ */
+$app->registerHook('GetRailModuleSpecialPageList', 'WikiaLabs', 'onGetRailModuleSpecialPageList' );
+$app->registerHook('MyTools::getDefaultTools', 'WikiaLabs', 'onGetDefaultTools' );
+
+/**
+ * controllers
+ */
+$app->registerClass('WikiaLabsSpecialController', $dir . 'WikiaLabsSpecialController.class.php');
+
+/**
  * special pages
  */
-$app->registerSpecialPage('WikiaLabs', 'WikiaLabsSpecial');
+$app->registerSpecialPage('WikiaLabs', 'WikiaLabsSpecialController');
 
 /**
 * message files
@@ -53,23 +53,16 @@ $app->registerExtensionAliasFile('WikiaLabs', $dir . 'WikiaLabs.alias.php');
 F::addClassConstructor( 'WikiaLabs', array( 'app' => $app ) );
 F::addClassConstructor( 'WikiaLabsProject', array( 'app' => $app, 'id' => 0 ) );
 
-/**
- * hooks
- */
-$app->registerHook('GetRailModuleSpecialPageList', 'WikiaLabs', 'onGetRailModuleSpecialPageList' );
-$app->registerHook('MyTools::getDefaultTools', 'WikiaLabs', 'onGetDefaultTools' );
+/*
+ * set global
+*/
+$logTypes = $app->getGlobal('wgLogTypes');
+$logTypes[] = 'wikialabs';
+$app->setGlobal('wgLogTypes', $logTypes);
 
-	/*
-	 * set global
-	*/
-	$logTypes = $app->getGlobal('wgLogTypes');
-	$logTypes[] = 'wikialabs';
-	$app->setGlobal('wgLogTypes', $logTypes);
-
-	$logHeaders = $app->getGlobal('wgLogHeaders');
-	$logHeaders['wikialabs'] = 'wikialabs';
-	$app->setGlobal('wgLogHeaders', $logHeaders);
-
+$logHeaders = $app->getGlobal('wgLogHeaders');
+$logHeaders['wikialabs'] = 'wikialabs';
+$app->setGlobal('wgLogHeaders', $logHeaders);
 
 /*
  * ajax function
