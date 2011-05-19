@@ -19,6 +19,7 @@ Properties (select multiple properties using ctrl/shift):<br>
 	<h1><?= wfMsg('userpreferencesstats-graphs-header') ?></h1>
 	<!-- graphs added by JS -->
 </div>
+<div id="hover"></div>
 
 <script>
 var data = {}, htmlLabels = {};
@@ -34,15 +35,27 @@ var data = {}, htmlLabels = {};
 $.each(data, function(index, value) {
 	$().log('adding graph: ' + index);
 	var graph = $('<div class="graph-plot" id="' + index + '">');
+//		.bind('plothover', function(event, pos, obj) {
+//		if (!obj) return;
+//		var percent = parseFloat(obj.series.percent).toFixed(2);
+//		$("#hover").html('<span style="color: ' + obj.series.color+'">' + obj.series.label + ' (' + percent + '%)</span>');
+//		});
+
 	var graphLabel = $('<span class="graph-label">').html(htmlLabels[index]);
 	var graphWrapper = $('<div class="graph-wrapper">').append(graphLabel).append(graph);
 	$('#graphs').append(graphWrapper);
 	$.plot(graph, data[index], {
+		grid: {
+			hoverable: true
+		},
 		legend: {
 			show: false
 		},
 		series: {
 			pie: {
+				combine: {
+					threshold: 0.1
+				},
 				label: {
 					background: {
 						color: '#000',
