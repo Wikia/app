@@ -1,0 +1,21 @@
+@import "../../../../../skins/oasis/css/core/color";
+
+#graphs {
+	.graph-label {
+		font-size: 12pt;
+		b {
+			font-size: 14pt;
+		}
+	}
+
+	.graph-plot {
+		height: 300px;
+		margin: 10px;
+		width: 300px;
+	}
+
+	.graph-wrapper {
+		float: left;
+		text-align: center;
+	}
+}
