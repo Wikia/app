@@ -20,6 +20,11 @@ body {
 	margin: 0;
 }
 
+textarea {
+	font: inherit;
+	line-height: normal;
+}
+
 // Only ChatMods will have this class on body tag. Use it to augment the interface.
 body.chat-mod {
 	.UserStatsMenu .kickban {
@@ -289,7 +294,8 @@ a {
 	}
 	[name="message"] {
 		border: 1px solid $color-page-border;
-		height: 2.5em;
+		height: 2em;
+		padding: 2px;
 		resize: none;
 		width: 98%;
 	}
