@@ -41,6 +41,7 @@ class ChatAjax {
 			'canChat' => Chat::canChat($wgUser),
 			'isLoggedIn' => $wgUser->isLoggedIn(),
 			'isChatMod' => $wgUser->isAllowed( 'chatmoderator' ),
+			'isStaff' => $wgUser->isAllowed( 'staff' ),
 			'username' => $wgUser->getName(),
 			'avatarSrc' => AvatarService::getAvatarUrl($wgUser->getName(), self::CHAT_AVATAR_DIMENSION),
 			'editCount' => "",

@@ -81,6 +81,11 @@ var UserView = Backbone.View.extend({
 			$(this.el).addClass('chat-mod');
 		}
 		
+		if(this.model.get('isStaff') === true){
+			$(this.el).addClass('staff');
+		}
+		
+		
 		// If the user is away, add a certain class to them, if not, remove the away class.
 		if(this.model.get('statusState') == STATUS_STATE_AWAY){
 			$(this.el).addClass('away');
