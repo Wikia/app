@@ -572,7 +572,7 @@ class Preprocessor_DOM implements Preprocessor {
 				$i += $count;
 				# RTE (Rich Text Editor) - begin
 				# @author: Inez Korczyński
-				if(!empty($wgRTEParserEnabled) && $RTE_flags === 0 && $count == 2 && $curChar == "{") {
+				if(!empty($wgRTEParserEnabled) && $RTE_flags === 0 && ($count == 2 || $count == 3) && $curChar == "{") {
 					$openAt[] = $i;
 				}
 				# RTE - end
@@ -643,13 +643,13 @@ class Preprocessor_DOM implements Preprocessor {
 
 					# RTE (Rich Text Editor) - begin
 					# @author: Inez Korczyński
-					if(!empty($wgRTEParserEnabled) && $RTE_flags === 0 && $count == 2 && $curChar == '}') {
+					if(!empty($wgRTEParserEnabled) && $RTE_flags === 0 && ($count == 2 || $count == 3) && $curChar == '}') {
 						$closeAt[] = $i;
 						if(count($closeAt) == count($openAt)) {
 							$openIdx = $openAt[0];
 							$closeIdx = $closeAt[count($closeAt)-1];
 							$openAt = $closeAt = array();
-							$attr .= ' _rte_wikitextidx="'.RTEData::put('wikitext', substr($text, $openIdx-2, $closeIdx-$openIdx+4)).'"';
+							$attr .= ' _rte_wikitextidx="'.RTEData::put('wikitext', substr($text, $openIdx-$count, $closeIdx-$openIdx+2*$count)).'"';
 						}
 					}
 					# RTE - end
@@ -1106,19 +1106,34 @@ class PPFrame_DOM implements PPFrame {
 					$titles = $xpath->query( 'title', $contextNode );
 					$title = $titles->item( 0 );
 					$parts = $xpath->query( 'part', $contextNode );
-					if ( $flags & self::NO_ARGS ) {
-						$newIterator = $this->virtualBracketedImplode( '{{{', '|', '}}}', $title, $parts );
+
+					# RTE (Rich Text Editor) - begin
+					# @author: Wladyslaw Bodzek
+					global $wgRTEParserEnabled;
+					if ( !empty($wgRTEParserEnabled) ) {
+						//var_dump($contextNode->getAttribute('_rte_wikitextidx'));
+						$dataIdx = RTEData::put('placeholder', array(
+							'type' => 'tplarg',
+							'wikitextIdx' => $contextNode->getAttribute('_rte_wikitextidx'),
+							'lineStart' => $contextNode->getAttribute('lineStart'),
+							'title' => $title->textContent));
+						$out .= RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
 					} else {
-						$params = array(
-							'title' => new PPNode_DOM( $title ),
-							'parts' => new PPNode_DOM( $parts ) );
-						$ret = $this->parser->argSubstitution( $params, $this );
-						if ( isset( $ret['object'] ) ) {
-							$newIterator = $ret['object'];
+						if ( $flags & self::NO_ARGS ) {
+							$newIterator = $this->virtualBracketedImplode( '{{{', '|', '}}}', $title, $parts );
 						} else {
-							$out .= $ret['text'];
+							$params = array(
+								'title' => new PPNode_DOM( $title ),
+								'parts' => new PPNode_DOM( $parts ) );
+							$ret = $this->parser->argSubstitution( $params, $this );
+							if ( isset( $ret['object'] ) ) {
+								$newIterator = $ret['object'];
+							} else {
+								$out .= $ret['text'];
+							}
 						}
 					}
+					# RTE - end
 				} elseif ( $contextNode->nodeName == 'comment' ) {
 					# HTML-style comment
 					# Remove it in HTML, pre+remove and STRIP_COMMENTS modes
