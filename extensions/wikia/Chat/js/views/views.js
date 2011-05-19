@@ -267,7 +267,7 @@ var NodeChatView = Backbone.View.extend({
 	},
 
 	sendMessage: function(){
-		var inputField = $('input[name=message]');
+		var inputField = $('[name=message]');
 		var nameField = $('input[name=user_name]');
 		if (inputField.val()) {
 			var chatEntry = new models.ChatEntry({name: nameField.val(), text: inputField.val()});
@@ -335,7 +335,16 @@ NodeChatHelper = {
 		$(window)
 			.mousemove(NodeChatHelper.resetActivityTimer)
 			.keypress(NodeChatHelper.resetActivityTimer)
-			.focus(NodeChatHelper.resetActivityTimer);		
+			.focus(NodeChatHelper.resetActivityTimer);
+			
+		// Pressing enter in the message entry box submits form, shift-enter adds newline
+		$('#Write [name="message"]').keypress(function(event) {
+			if (event.which == 13 && !event.shiftKey) {
+				event.preventDefault();
+				console.log('submitting form');
+				$(event.target).closest('form').submit();
+			}
+		});
 	},
 	
 	startActivityTimer: function() {
@@ -379,7 +388,7 @@ NodeChatHelper = {
 	},
 
 	focusTextInput: function() {
-		$("#Write").find('input[type="text"]').focus();
+		$('#Write [name="message"]').focus();
 	},	
 	
 	userStatsMenuInit: function() {
