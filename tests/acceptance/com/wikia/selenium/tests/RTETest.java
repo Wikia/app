@@ -238,6 +238,8 @@ public class RTETest extends BaseTest {
 				"{|\n|[[foo]]\n<br />bar\n|}",
 				"{|\n|  foo ||    || bar  ||\n|}",
 				"<gallery caption=\"Sample\" widths=\"200px\" heights=100 perrow=\"3\" captionalign=\"right\">\nSpiderpig.jpg\n</gallery>",
+				"{{{text}}}hgjhgjgh{{{text|test}}}\nasas",
+				"asdasdasdasd\n\n{{{text|Hmmm... This is a test}}}\nasdasd",
 		};
 	}
 
@@ -273,7 +275,8 @@ public class RTETest extends BaseTest {
 		// open RTE editor in source mode
 		session().open("index.php?title=RTE_test_page&action=edit&useeditor=source");
 		session().waitForPageToLoad(this.getTimeout());
-
+		waitForElement("//a[contains(@class,'cke_button_source')]");
+		
 		for(String wikitext : wikiTexts) {
 			// set text in source mode
 			session().runScript("window.RTE.instance.setData(\"" + wikitext.replace("\n", "\\n").replace("\"", "\\\"") + "\");");
