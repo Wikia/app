@@ -327,6 +327,7 @@ function authConnection(client, socket, authData){
 										name: name,
 										avatarSrc: avatarSrc,
 										isModerator: client.isChatMod, 
+										isStaff: client.isStaff,
 										editCount: editCount,
 										since: since
 									});

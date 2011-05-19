@@ -114,7 +114,8 @@ a {
 		display: none;
 	}
 	&.chat-mod .username {
-		font-weight: bold;
+		background: url(/extensions/wikia/Chat/images/icon-chatmod.png) right center no-repeat;
+		padding-right: 15px;
 	}
 	&.away {
 		color: $color-chat-gray;
