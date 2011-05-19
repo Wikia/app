@@ -18,7 +18,7 @@ class WikiaSpecialPageController extends WikiaController {
 
 	public function execute( $par ) {
 		$app = F::build( 'App' );
-		$out = $app->getGlobal( 'wgOut' );
+		$out = $app->wg->Out;
 		$response = $app->sendRequest( substr( get_class( $this ), 0, -10 ), null, array( 'par' => $par /* to be compatibile with MW core */ ) + $_POST + $_GET, false );
 
 		if( $response->getFormat() == 'html' ) {
@@ -27,7 +27,7 @@ class WikiaSpecialPageController extends WikiaController {
 			} catch( Exception $exception ) {
 				// in case of exception thrown by WikiaView, just render standard error controller response
 				$response->setException( $exception );
-				$out->addHTML( $app->getView( 'WikiaError', 'error', array( 'response' => $response ) )->render() );
+				$out->addHTML( $app->getView( 'WikiaError', 'error', array( 'response' => $response, 'devel' => $app->wg->DevelEnvironment ) )->render() );
 			}
 		}
 		else {
