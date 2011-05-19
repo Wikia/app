@@ -4,8 +4,11 @@ Properties (select multiple properties using ctrl/shift):<br>
 <form action="" method="get">
 	<select size="10" id="propertySelect" name="prop[]" multiple>
 	<?php
+	$selected = '';
 	foreach ( $wikiData as $propName ) {
-		$selected = in_array( $propName, $selectedProps ) ? ' selected' : '';
+		if (!empty($selectedProps)) {
+			$selected = in_array( $propName, $selectedProps ) ? ' selected' : '';
+		}
 		echo "\t\t<option value=\"$propName\"$selected>$propName</option>\n";
 	}
 	?>
