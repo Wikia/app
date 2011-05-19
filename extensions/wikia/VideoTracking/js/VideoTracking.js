@@ -77,6 +77,7 @@ VideoTracker = {
 
 	track: function( fakeUrl ) {
 		window.jQuery.tracker.byStr('VideoPlayer' + fakeUrl);
+		window.jQuery.tracker.byStr('VideoPlayer/' + wgCityId + '/' + wgArticleId + fakeUrl);
 	}
 };
 
