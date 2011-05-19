@@ -118,9 +118,9 @@ $wgHooks['ParserAfterTidy'][] = 'PageLayoutBuilderParser::replaceTags';
 $wgHooks['ParserAfterStrip'][] = 'PageLayoutBuilderParser::removeGalleryAndIPHook';
 $wgHooks['Parser::FetchTemplateAndTitle'][] =  'PageLayoutBuilderParser::fetchTemplateAndTitleHook';
 
-$wgHooks['EditPageBeforeEditButtons'][] = 'PageLayoutBuilderForm::addFormButton';
+//$wgHooks['EditPageBeforeEditButtons'][] = 'PageLayoutBuilderForm::addFormButton';
 
-$wgHooks['EditPage::getContent::isUndo'][] = 'PageLayoutBuilderForm::isUndo';
+//$wgHooks['EditPage::getContent::isUndo'][] = 'PageLayoutBuilderForm::isUndo';
 
 $wgHooks['GetEditPageRailModuleList'][] = 'PageLayoutBuilderForm::getEditPageRailModuleList';
 $wgHooks['CreateWikiLocalJob-complete'][] = 'PageLayoutBuilderHelper::copyLayout';
