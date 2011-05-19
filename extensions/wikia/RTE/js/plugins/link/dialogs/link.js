@@ -97,6 +97,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					case 'internal':
 						setMode('internal');
 						setTimeout(checkStatus,200);
+						if (data.text === data.link) {
+							this._.similarLink = true;
+						}
 						break;
 
 					case 'external':
@@ -434,6 +437,12 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						'noforce': true,
 						'wikitext': null
 					};
+
+					//If the target and display text match: updating the target should update the display text.
+					//If they do not match, this should not happen.
+					if ( (this._.similarLink) && (data.text !== data.link) ) {
+						data.text = data.link;
+					}
 
 					// set content of link element
 
