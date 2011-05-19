@@ -7,8 +7,8 @@ var RelatedPagesHistory = {
 	
 	init: function(){
 		RelatedPagesHistory.loadCounter();
-		$().log( '1' );
 		if ( $('section.WikiaActivityModule').length > 0 ){
+			$().log( '1' );
 			$( 'nav.RelatedPagesModule li').each( function( idx, item ) {
 				var relatedPage = {};
 				var aMore = $( item ).find( 'a.more' );
@@ -25,36 +25,40 @@ var RelatedPagesHistory = {
 					'link': aMore.attr('href'),
 					'name': aMore.html(),
 			///		'img':	imageData,
-					'position' : 1.1,
+					'position' : 0.6,
 					'id':	RelatedPagesHistory.counter
 				}
 
 				RelatedPagesHistory.addPage( relatedPage );
 			});
 		}
-
 		
-		$( '#WikiaArticle a').each( function( idx, item ) {
-			var relatedPage = {};
-			var aMore = $( item );
-			if ( aMore.text() != '' ){
-				relatedPage = {
-					'link': aMore.attr('href'),
-					'name': aMore.text(),
-			///		'img':	imageData,
-					'position' : 0.1,
-					'id':	RelatedPagesHistory.counter
+		if ( $('#WikiaArticle a').length > 0 ){
+			$( '#WikiaArticle a').each( function( idx, item ) {
+				var relatedPage = {};
+				var aMore = $( item );
+				var aMoreText =  aMore.text();
+				if ( aMoreText.length > 5 ){
+					relatedPage = {
+						'link': aMore.attr('href'),
+						'name': aMoreText,
+				///		'img':	imageData,
+						'position' : 0.1,
+						'id':	RelatedPagesHistory.counter
+					}
+					
+					RelatedPagesHistory.addPage( relatedPage );
 				}
-
-				RelatedPagesHistory.addPage( relatedPage );
-			}
-		});
-
+			});
+		}
+		
 		RelatedPagesHistory.saveCounter();
 		RelatedPagesHistory.saveData();
 		$().log( RelatedPagesHistory.getData(), 'currentlyInStorage' );
 
-		$( 'section.WikiaActivityModule' ).html( RelatedPagesHistory.createTemplate() );
+		$( 'section.WikiaActivityModule' ).html( 
+			RelatedPagesHistory.createTemplate()
+		);
 
 	},
 
@@ -82,7 +86,13 @@ var RelatedPagesHistory = {
 	},
 	
 	getData: function(){
-		return $.storage.get( RelatedPagesHistory.STORAGE_NAME );
+		var resultArray = [];
+		try {
+			resultArray = $.storage.get( RelatedPagesHistory.STORAGE_NAME );
+		} catch( e ){
+			return resultArray;
+		}
+		return resultArray;
 	},
 
 	loadCounter: function(){
@@ -94,7 +104,9 @@ var RelatedPagesHistory = {
 	},
 
 	addPage: function( page ){
+
 		var currentData = RelatedPagesHistory.getData();
+
 		if ( currentData == null || currentData.length == 0 ){
 			currentData = [];
 		}
@@ -104,8 +116,10 @@ var RelatedPagesHistory = {
 		$.each( currentData, function( index, value ) {			
 			if ( value.name != page.name && ( '/wiki/' + wgPageName ) != value.link ){
 				finalPages.push( value );
+
 			} else {
 				if (  page.position < 1 ){
+
 					if ( ( page.position + value.position ) > 1 ){
 						page.position = 1;
 					} else {
@@ -119,6 +133,7 @@ var RelatedPagesHistory = {
 		finalPages.push( page );
 		RelatedPagesHistory.counter++;
 		$.storage.set( RelatedPagesHistory.STORAGE_NAME, finalPages );
+
 	},
 
 	saveData: function (){
