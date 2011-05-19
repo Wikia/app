@@ -87,7 +87,11 @@ class WikiaDispatcher {
 				$originalMethod = ucfirst($this->getMethodName($request));
 
 				if($app->runHook( ( $controllerName . $originalMethod . 'BeforeExecute' ), array( &$controller, &$params ) )) {
-					$controller->$method($params);
+					$result = $controller->$method($params);
+					if($result === false) {
+						// skip template rendering when false returned
+						$controller->skipRendering();
+					}
 				}
 				$app->runHook( ( $controllerName . $originalMethod . 'AfterExecute' ), array( &$controller, &$params ) );
 
