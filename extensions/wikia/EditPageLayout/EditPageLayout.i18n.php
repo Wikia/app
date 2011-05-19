@@ -17,6 +17,12 @@ $messages['en'] = array(
 	'editpagelayout-pageControls-back' => 'Back to editor',
 	'editpagelayout-pageControls-changes' => 'Changes',
 
+	'wikia-editor-media-image' => 'Photo',
+	'wikia-editor-media-gallery' => 'Gallery',
+	'wikia-editor-media-slideshow' => 'Slideshow',
+	'wikia-editor-media-slider' => 'Slider',
+	'wikia-editor-media-video' => 'Video',
+
 	'wikia-editor-modules-templates-title' => 'Templates',
 	'wikia-editor-modules-templates-otherTemplates' => 'Add other templates',
 	'wikia-editor-modules-templates-showUsedList' => 'Show list of used templates',
