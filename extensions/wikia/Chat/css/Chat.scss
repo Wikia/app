@@ -244,6 +244,9 @@ a {
 			content: ":";
 		}
 	}
+	.message {
+		white-space: pre;
+	}
 	.inline-alert {
 		color: $color-chat-gray;
 		font-weight: bold;
@@ -279,7 +282,10 @@ a {
 		vertical-align: middle;
 		width: 28px;
 	}
-	input[type="text"] {
+	[name="message"] {
+		border: 1px solid $color-page-border;
+		height: 2.5em;
+		resize: none;
 		width: 98%;
 	}
 	input[type="submit"] {

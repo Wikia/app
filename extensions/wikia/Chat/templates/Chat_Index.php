@@ -50,7 +50,7 @@
 
 		<form id="Write" class="Write" onsubmit="return false">
 			<img src="<?= $avatarUrl ?>">
-			<input type="text" name="message" autocomplete="off">
+			<textarea name="message"></textarea>
 			<input type="submit">
 		</form>
 
