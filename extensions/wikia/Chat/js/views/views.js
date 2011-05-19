@@ -293,7 +293,7 @@ var NodeChatView = Backbone.View.extend({
 	// Set the user as being back from their "away" state (they are here again) and remove the status message.
 	setBack: function(){
 		if( ! this.comingBackFromAway){ // if we have sent this command (but just haven't finished coming back yet), don't keep spamming the server w/this command
-			NodeChatHelper.log("Attempting to come BACK from away.");
+			NodeChatHelper.log("Telling the server that I'm back.");
 			this.comingBackFromAway = true;
 			var setStatusCommand = new models.SetStatusCommand({
 				statusState: STATUS_STATE_PRESENT,
@@ -367,7 +367,6 @@ NodeChatHelper = {
 	},
 	
 	setBack: function() {
-		NodeChatHelper.log("Telling the server that I'm back.");
 		NodeChatController.view.setBack();
 	},
 
