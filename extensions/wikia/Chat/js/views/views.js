@@ -174,8 +174,8 @@ var NodeChatView = Backbone.View.extend({
 	
 	removeUser: function(user) {
 		NodeChatHelper.log("Trying to remove " + user.get('name') + " from the list.");
-		NodeChatHelper.log("Matches found: " + $('#' + NodeChatHelper.liIdByUsername( user.get('name') )).length);
-		$('#' + NodeChatHelper.liIdByUsername( user.get('name') )).remove();
+		NodeChatHelper.log("Matches found: " + $('[id="' + NodeChatHelper.liIdByUsername( user.get('name') ) + '"]').length);
+		$('[id="' + NodeChatHelper.liIdByUsername( user.get('name') ) + '"]').remove();
 	},
 
 	msgReceived: function(message){
@@ -380,9 +380,12 @@ NodeChatHelper = {
 		}
 	},
 
+	/**
+	 * WARNING: When using this id in jQuery, remember that the name may contain periods which triggers a jQuery bug.
+	 * Searching for $('#some.id') won't work, but $('[id="some.id"]') will.
+	 */
 	liIdByUsername: function(username){
 		username = username.replace(/ /g, "_"); // encodeURIComponent would add invalid characters
-		username = username.replace(/./g, "-PERIOD-"); // jQuery doesn't handle periods in ids well
 		return 'user-' + username;
 	},
 
