@@ -36,7 +36,7 @@ class WikiaLabsProject {
 	/**
 	 * get cache handler
 	 */
-	protected function getCache() {
+	public function getCache() {
 		return $this->app->getGlobal( 'wgMemc' );
 	}
 

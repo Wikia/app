@@ -8,6 +8,7 @@ class WikiaLabs {
 	const TEMPLATE_NAME_ADDPROJECT = 'wikialabs-addproject';
 	const STATUS_OK = 'ok';
 	const STATUS_ERROR = 'error';
+	const FEEDBACK_FREQUENCY = 60;
 
 	protected $app = null;
 	protected $user = null;
@@ -118,12 +119,40 @@ class WikiaLabs {
 			$out['status'] = self::STATUS_ERROR;
 			return $out;
 		}
-
+		
+		if( true !== ($result = $this->checkSpam($project, $projectId)) ) {
+			return $result;
+		}
+		
 		$project->updateRating( $user->getId(), $rating );
 		if(!empty($message)) {
 			$this->saveFeedbackInFogbugz( $project, $message, $user->getEmail() );
 		}
 		return $out;
+	}
+	
+	/**
+	 * @brief checks if this is not a spam attempt
+	 * 
+	 * @param WikiaLabsProject $project data access object for wikia labs' project
+	 * @param int $projectId id of wikia labs' project
+	 * 
+	 * @author Andrzej 'nAndy' Lukaszewski 
+	 * 
+	 * @return true | Array array when an error occurs
+	 */
+	protected function checkSpam(WikiaLabsProject $project, $projectId) {
+		$cache = $project->getCache();
+		$memcSpamKey = $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $projectId, 'spamCheckTime' );
+		$memcSpamVal = $cache->get($memcSpamKey);
+		
+		if( empty($memcSpamVal) ) {
+			$cache->set($memcSpamKey, true, self::FEEDBACK_FREQUENCY);
+		} else {
+			return array( 'status' => 'error', 'errors' => array(wfMsg('wikialabs-feedback-validator-spam-attempt')) );
+		}
+		
+		return true;
 	}
 
 	protected function saveFeedbackInFogbugz( WikiaLabsProject $project, $message, $userEmail ) {

@@ -61,6 +61,8 @@ $messages['en'] = array(
 	'wikialabs-feedback-validator-message-too-long' => 'Comment can not be longer than 255 characters',
 	'wikialabs-feedback-validator-message-too-short' => 'Please enter a comment',
 	'wikialabs-feedback-validator-rating' => 'Please give a rating',
+
+	'wikialabs-feedback-validator-spam-attempt' => 'Please wait 60 seconds before submitting next feedback',
 	
 	'wikialabs-feedback-validator-notification-ok' => 'Your feedback has been added. Thank you!',
 );
