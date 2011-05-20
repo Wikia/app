@@ -11,6 +11,7 @@ $messages['en'] = array(
 	'article-comments-anonymous' => 'Anonymous user',
 	'article-comments-comments' => 'Comments ($1)',
 	'article-comments-post' => 'Post comment',
+	'article-comments-cancel' => 'Cancel',
 	'article-comments-delete' => 'delete',
 	'article-comments-edit' => 'edit',
 	'article-comments-history' => 'history',

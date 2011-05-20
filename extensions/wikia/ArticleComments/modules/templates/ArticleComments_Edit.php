@@ -9,6 +9,7 @@ if ( $canEdit ) {
 			<textarea name="wpArticleComment" id="article-comm-textfield-<?=$title->getArticleId()?>"><?=$comment?></textarea><br />
 <? if (!$isReadOnly) { ?>
 			<input type="submit" name="wpArticleSubmit" id="article-comm-submit-<?=$title->getArticleId()?>" value="<? echo wfMsg('article-comments-post') ?>" />
+			<input type="submit" name="wpArticleCancel" class="article-comm-edit-cancel wikia-button secondary" value="<? echo wfMsg('article-comments-cancel') ?>" />
 			<img src="<?= $stylePath ?>/common/images/ajax.gif" class="throbber" />
 <? } ?>
 		</div>
