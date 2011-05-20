@@ -2,7 +2,7 @@
 
 class WikiaLabsProject {
 	const CACHE_TTL = 10800;
-
+	const EXTERNAL_DATA_URL = 'http://messaging.wikia.com';
 	protected $id = 0;
 	protected $app = null;
 	protected $name;
@@ -319,8 +319,19 @@ class WikiaLabsProject {
 		}
 		
 		$users = $this->app->getGlobal('wgWikiaBotUsers');
-		$api = new WikiAPIClient(33);
+		$api = new WikiAPIClient();
 	
+			
+		$url = self::EXTERNAL_DATA_URL;
+		// devbox override
+		$wgDevelEnvironment = $this->app->getGlobal('wgDevelEnvironment');
+		
+		if (!empty($wgDevelEnvironment)) {
+			$url = str_replace('wikia.com', $this->app->getGlobal('wgDevelEnvironmentName').'.wikia-dev.com',$url);
+		}
+		
+		$api->setExternalDataUrl($url);
+		
 		$api->login($users['staff']['username'], $users['staff']['password']);
 		
 		

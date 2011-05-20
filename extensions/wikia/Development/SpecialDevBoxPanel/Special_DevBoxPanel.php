@@ -78,9 +78,10 @@ function devBoxPanelAdditionalScripts( &$out, &$sk ){
  * @return true to allow the WikiFactoryLoader to do its other necessary initalization.
  */
 function wfDevBoxForceWiki(&$wikiFactoryLoader){
-	global $wgDevelEnvironment, $wgWikiFactoryDB, $wgCommandLineMode;
-
+	global $wgDevelEnvironment, $wgDevelEnvironmentName, $wgWikiFactoryDB, $wgCommandLineMode;
 	if($wgDevelEnvironment){
+		$hostParts = getHostParts();
+		$wgDevelEnvironmentName = array_pop($hostParts);
 		$forcedWikiDomain = getForcedWikiValue();
 		$cityId = WikiFactory::DomainToID($forcedWikiDomain);
 		if(!$cityId){
@@ -137,6 +138,17 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
 
 
 /**
+ * @return Parts of host. used to set $wgDevelEnvironmentName;
+ */
+
+function getHostParts() {
+	if (!isset($_SERVER['HTTP_HOST'])) return null;
+	if (count (explode(".", $_SERVER['HTTP_HOST'])) == 3) return null;
+	$aHostParts = explode(".", str_replace('.wikia-dev.com', '', $_SERVER['HTTP_HOST']));
+	return $aHostParts;
+}
+
+/**
  * @return String full domain of wiki which this dev-box should behave as.
  *
  * Hostname scheme: override.developer.wikia-dev.com
@@ -149,9 +161,10 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
  *	}
  */
 function getForcedWikiValue(){
-	if (!isset($_SERVER['HTTP_HOST'])) return "";
-	if (count (explode(".", $_SERVER['HTTP_HOST'])) == 3) return "";
-	$aHostParts = explode(".", str_replace('.wikia-dev.com', '', $_SERVER['HTTP_HOST']));
+	$aHostParts = getHostParts();
+	if(empty($aHostParts)) {
+		return "";
+	}
 	array_pop($aHostParts);  // remove developer name
 	$override = implode(".", $aHostParts);
 	return "$override.wikia.com";
