@@ -7,6 +7,7 @@ package com.wikia.selenium.tests;
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.session;
 import static org.testng.AssertJUnit.assertTrue;
 
+import java.util.Date;
 import org.testng.annotations.Test;
 
 /**
@@ -19,7 +20,8 @@ public class ContentFeedsTest extends BaseTest {
 	public void testWikiTweetsTag() throws Exception {
 		login();
 
-		String content = "<wikitweets size=\"5\" keywords=\"wikia\" />";
+		String date = (new Date()).toString();
+		String content = "<wikitweets size=\"5\" keywords=\"wikia\" />" + date;
 		editArticle("Project:WikiTweetsTagTestArticle", content);
 
 		waitForElement("//ul[@class='cfWikiTweetsTag']/li/a", this.getTimeout());
@@ -32,7 +34,8 @@ public class ContentFeedsTest extends BaseTest {
 	public void testMostVisitedTag() throws Exception {
 		login();
 
-		String content = "<mostvisited size=\"5\" />";
+		String date = (new Date()).toString();
+		String content = "<mostvisited size=\"5\" />" + date;
 		editArticle("Project:MostVisitedTagTestArticle", content);
 
 		assertTrue(session().isElementPresent("//ul[@class='cfMostVisitedTag']"));
@@ -44,7 +47,8 @@ public class ContentFeedsTest extends BaseTest {
 		login();
 		uploadImage();
 
-		String content = "<recentimages size=\"5\" />";
+		String date = (new Date()).toString();
+		String content = "<recentimages size=\"5\" />" + date;
 		editArticle("Project:RecentImagesTagTestArticle", content);
 
 		assertTrue(session().isElementPresent("//span[@class='wikia-gallery-item']"));
