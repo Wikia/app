@@ -36,7 +36,7 @@ $messages['en'] = array(
 	'wikialabs-list-project-warning-box' => "Try out some ideas we're playing with and share your feedback with us.<br /><br />Keep in mind that we're still working on these. You may find glitches and bugs and features may <b>change</b>, <b>break</b> or <b>disappear</b>. It's all in good fun! ",
 	'wikialabs-list-project-warning-box-no-admin' => "WikiaLabs allows Admins to try out beta features on the wiki.<br /><br />Keep in mind that we're still working on these features. You may find glitches and bugs and features may <b>change</b>, <b>break</b> or <b>disappear</b>.<br /><br /> If you have any feedback for the team please let us know by clicking the 'Give Feedback' Button. Thanks.",
 	'wikialabs-list-project-list-of-wikis-uses' => 'List of wikis uses that extension',
-	'wikialabs-projects-name-17096' => "dsdss",
+
 	'wikialabs-list-wikias-list-title' => 'Wiki Labs - List of wikis',
 	'wikialabs-list-wikias-list-back-to-wikialab' => 'Back to Wikia Labs',
 	'wikialabs-list-wikias-list-wrong-project-id' => 'Wrong project ID. The list can\'t be displayed.',
