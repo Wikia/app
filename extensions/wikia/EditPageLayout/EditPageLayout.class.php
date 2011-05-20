@@ -242,9 +242,9 @@ class EditPageLayout extends EditPage {
 			$this->showDiff();
 			$this->out->addHtml('</div>');
 		}
-		
+
 		parent::showEditForm($formCallback);
-		
+
 	}
 
 	/**
@@ -468,7 +468,7 @@ class EditPageLayout extends EditPage {
 	 * Overwrite methods below to remove certain elements of the edit page
 	 */
 	protected function getCopywarn() {}
-	protected function showEditTools() {}
+//	protected function showEditTools() {}
 	protected function showIntro() {}
 	protected function showSummaryInput( $isSubjectPreview, $summary = "" ) {}
 	protected function displayPreviewArea( $previewOutput, $isOnTop = false ) {}
