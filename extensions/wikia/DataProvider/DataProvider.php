@@ -359,7 +359,8 @@ class DataProvider
 		$results = $wgMemc->get( $memckey );
 
 		if ( !is_array( $results ) ) {
-            $nsClause = '';
+			$results = array();
+	           $nsClause = '';
             $dbr = wfGetDB( DB_SLAVE );
             if( count( $ns) ) {
             	$nsClause = "page_namespace IN (" . $dbr->makeList( $ns ) . ")";
