@@ -38,8 +38,8 @@ WIKIA_PROXY_HOST = "127.0.0.1";
 WIKIA_PROXY_PORT = 6081;
 
 
-// NOTE: WE COULD REPLACE activeClients BY JUST USING rc.hlen(getKey_usersInRoom(client.roomId)); ... IT'S O(1) .. alternately, we could keep both as a way to doublecheck.
-// NOTE: WE COULD REPLACE activeClients BY JUST USING rc.hlen(getKey_usersInRoom(client.roomId)); ... IT'S O(1) .. alternately, we could keep both as a way to doublecheck.
+// NOTE: MUST REPLACE activeClients BY JUST USING rc.hlen(getKey_usersInRoom(client.roomId)); ... IT'S O(1) .. alternately, we could keep both as a way to doublecheck.  NOTE: activeClients is way wrong & is way high. REMOVE IT!!
+// NOTE: MUST REPLACE activeClients BY JUST USING rc.hlen(getKey_usersInRoom(client.roomId)); ... IT'S O(1) .. alternately, we could keep both as a way to doublecheck.  NOTE: activeClients is way wrong & is way high. REMOVE IT!!
 
 // TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
 //process.on('uncaughtException', function (err) {
@@ -261,13 +261,10 @@ function authConnection(client, socket, authData){
 					if( (data.canChat) && (data.isLoggedIn) ){
 						client.isAuthenticated = true;
 						client.isChatMod = data.isChatMod;
+						client.isStaff = data.isStaff;
 						client.roomId = roomId;
 						// TODO: REFACTOR THIS TO TAKE ANY FIELDS THAT data GIVES IT.
 						client.ATTEMPTED_NAME = data.username;
-						var name = data.username;
-						var avatarSrc = data.avatarSrc;
-						var editCount = data.editCount;
-						var since = data.since;
 						
 						// User has been approved & their data has been set on the client. Put them into the chat.
 
@@ -277,99 +274,24 @@ function authConnection(client, socket, authData){
 						client.wgArticlePath = data.wgArticlePath;
 						// TODO: REFACTOR THESE TO USE THE VALUE STORED IN THE 'chat' OBJ IN REDIS (remove the setting of these client vars from the ajax request also).
 
- 						rc.hincrby(getKey_room(client.roomId), 'activeClients', 1);
-
 						client.on('disconnect', function(){clientDisconnect(client)});
 
-						var nodeChatModel = new models.NodeChatModel();
-						rc.lrange(getKey_chatEntriesInRoom(client.roomId), (-1 * NUM_MESSAGES_TO_SHOW_ON_CONNECT), -1, function(err, data) {
+						// BugzId 5752 - clear chat buffer if this is the first user in the room (to avoid confusion w/past chats).
+						rc.hlen(getKey_usersInRoom(client.roomId), function(err, numInRoom){
 							if (err) {
-								console.log('Error: ' + err);
-							} else if (data) {
-								_.each(data, function(jsonChat) {
-									var chatEntry = new models.ChatEntry();
-									chatEntry.mport(jsonChat);
-									nodeChatModel.chats.add(chatEntry);
-								});
-
-								console.log('Revived ' + nodeChatModel.chats.length + ' chats');
+								console.log('Error: while trying to find number of people in room "' + client.roomId + '": ' + err);
+							} else if((numInRoom) && (numInRoom > 0)){
+								finishConnectingUser(client, socket, data);
 							} else {
-								console.log('No data returned for key');
-							}
+								// Nobody is in the room yet, so clear the back-buffer before doing the rest of the setup (as per BugzId 5752).
+								console.log(data.username + " is the first person to re-enter a now-empty room " + client.roomId + ".");
+								console.log("Deleting the back-buffer before connecting them the rest of the way.");
 
-							// Load the initial userList
-							console.log("Finding members of roomId " + roomId);
-
-							rc.hgetall(getKey_usersInRoom( roomId ), function(err, usernameToData){
-								if (err) {
-									console.log('Error: while trying to find members of room "' + roomId + '": ' + err);
-								} else if(usernameToData){
-									_.each(usernameToData, function(userData){
-										var userModel = new models.User( JSON.parse(userData) );
-										//console.log("Room member of " + roomId + ": ");
-										//console.log(userModel);
-										nodeChatModel.users.add(userModel);
-									});
-								}
-
-								// Send this whole model to the newly-connected user.
-								//console.log("SENDING INITIAL STATE...");
-								//console.log(nodeChatModel.xport());
-								client.send({
-									event: 'initial',
-									data: nodeChatModel.xport()
+								rc.del(getKey_chatEntriesInRoom(client.roomId), function(err, delData){
+									finishConnectingUser(client, socket, data);
 								});
-								
-								// Initial connection of the user (unless they're already connected).
-								var connectedUser = nodeChatModel.users.find(function(user){return user.get('name') == name;});
-								if(!connectedUser) {
-									connectedUser = new models.User({
-										name: name,
-										avatarSrc: avatarSrc,
-										isModerator: client.isChatMod, 
-										isStaff: client.isStaff,
-										editCount: editCount,
-										since: since
-									});
-									nodeChatModel.users.add(connectedUser);
-									console.log('[getConnectedUser] new user: ' + connectedUser.get('name') + ' on client: ' + client.sessionId);
-								}
-								client.myUser = connectedUser;
-								
-								if( client.ATTEMPTED_NAME != client.myUser.get('name') ){
-									console.log("\t\t============== POSSIBLE IDENTITY PROBLEM!!!!!! - BEG ==============");
-									console.log("\t\tATTEMPTED NAME:     " + client.ATTEMPTED_NAME + " (probably the correct name)");
-									console.log("\t\tATTACHED TO USR:    " + client.myUser.get('name'));
-									console.log("\t\tAFTER MATCHING FOR: " + name);
-									console.log("\t\t============== POSSIBLE IDENTITY PROBLEM!!!!!! - END ==============");
-								}
-
-								// If this same user is already in the sessionIdsByKey hash, then they must be connected in
-								// another browser. Kick that other instance before continuing (multiple instances cause all kinds of weirdness.
-								var existingId = sessionIdsByKey[getKey_userInRoom(client.myUser.get('name'), client.roomId)];
-								if(typeof existingId != "undefined"){
-									// Send the old client a notice that they're about to be disconnected and why.
-									var oldClient = socket.clients[existingId];
-									if(typeof oldClient != "undefined"){
-										// TODO: i18n: how?
-										sendInlineAlertToClient(oldClient, "You have connected from another browser. This connection will be closed.", function(){
-											// Looks like we're kicking ourself, but since we're not in the sessionIdsByKey map yet,
-											// this will only kick the other instance of this same user connected to the room.
-											kickUserFromRoom(oldClient, socket, client.myUser, client.roomId, function(){
-												// This needs to be done after the user is removed from the room.  Since clientDisconnect() is called asynchronously,
-												// the user is explicitly removed from the room first, then clientDisconnect() is prevented from attempting to remove
-												// the user (since that may get called at some point after formallyAddClient() adds the user intentionally).
-												formallyAddClient(client, socket, connectedUser);
-											});
-										});
-									}
-								} else {
-									// Put the user info into the room hash in redis, and add the client to the in-memory (not redis) hash of connected sockets.
-									formallyAddClient(client, socket, connectedUser);
-								}
-							});
+							}
 						});
-
 					} else {
 						console.log("User failed authentication. Error from server was: " + data.errorMsg);
 						sendInlineAlertToClient(client, data.errorMsg);
@@ -383,6 +305,104 @@ function authConnection(client, socket, authData){
 	}); // end of block for getting wgServer from the room's hash in redis.
 	console.log("Started request to get wgServer from redis");
 } // end of socket connection code
+
+
+/**
+ * This is called after the result from the MediaWiki server has set up this client's user-info.
+ * This adds the user to the room in redis and sends the initial state to the client.
+ */
+function finishConnectingUser(client, socket, rawUserInfo){
+	rc.hincrby(getKey_room(client.roomId), 'activeClients', 1);
+
+	var nodeChatModel = new models.NodeChatModel();
+	rc.lrange(getKey_chatEntriesInRoom(client.roomId), (-1 * NUM_MESSAGES_TO_SHOW_ON_CONNECT), -1, function(err, data) {
+		if (err) {
+			console.log('Error: ' + err);
+		} else if (data) {
+			_.each(data, function(jsonChat) {
+				var chatEntry = new models.ChatEntry();
+				chatEntry.mport(jsonChat);
+				nodeChatModel.chats.add(chatEntry);
+			});
+
+			console.log('Revived ' + nodeChatModel.chats.length + ' chats');
+		} else {
+			console.log('No data returned for key');
+		}
+
+		// Load the initial userList
+		console.log("Finding members of roomId " + client.roomId);
+
+		rc.hgetall(getKey_usersInRoom( client.roomId ), function(err, usernameToData){
+			if (err) {
+				console.log('Error: while trying to find members of room "' + client.roomId + '": ' + err);
+			} else if(usernameToData){
+				_.each(usernameToData, function(userData){
+					var userModel = new models.User( JSON.parse(userData) );
+					//console.log("Room member of " + client.roomId + ": ");
+					//console.log(userModel);
+					nodeChatModel.users.add(userModel);
+				});
+			}
+
+			// Send this whole model to the newly-connected user.
+			//console.log("SENDING INITIAL STATE...");
+			//console.log(nodeChatModel.xport());
+			client.send({
+				event: 'initial',
+				data: nodeChatModel.xport()
+			});
+			
+			// Initial connection of the user (unless they're already connected).
+			var connectedUser = nodeChatModel.users.find(function(user){return user.get('name') == rawUserInfo.username;});
+			if(!connectedUser) {
+			connectedUser = new models.User({
+					name: rawUserInfo.username,
+					avatarSrc: rawUserInfo.avatarSrc,
+					isModerator: client.isChatMod,
+					isStaff: client.isStaff,
+					editCount: rawUserInfo.editCount,
+					since: rawUserInfo.since
+				});
+				nodeChatModel.users.add(connectedUser);
+				console.log('[getConnectedUser] new user: ' + connectedUser.get('name') + ' on client: ' + client.sessionId);
+			}
+			client.myUser = connectedUser;
+			
+			if( client.ATTEMPTED_NAME != client.myUser.get('name') ){
+				console.log("\t\t============== POSSIBLE IDENTITY PROBLEM!!!!!! - BEG ==============");
+				console.log("\t\tATTEMPTED NAME:     " + client.ATTEMPTED_NAME + " (probably the correct name)");
+				console.log("\t\tATTACHED TO USR:    " + client.myUser.get('name'));
+				console.log("\t\tAFTER MATCHING FOR: " + rawUserInfo.username);
+				console.log("\t\t============== POSSIBLE IDENTITY PROBLEM!!!!!! - END ==============");
+			}
+
+			// If this same user is already in the sessionIdsByKey hash, then they must be connected in
+			// another browser. Kick that other instance before continuing (multiple instances cause all kinds of weirdness.
+			var existingId = sessionIdsByKey[getKey_userInRoom(client.myUser.get('name'), client.roomId)];
+			if(typeof existingId != "undefined"){
+				// Send the old client a notice that they're about to be disconnected and why.
+				var oldClient = socket.clients[existingId];
+				if(typeof oldClient != "undefined"){
+					// TODO: i18n: how?
+					sendInlineAlertToClient(oldClient, "You have connected from another browser. This connection will be closed.", function(){
+						// Looks like we're kicking ourself, but since we're not in the sessionIdsByKey map yet,
+						// this will only kick the other instance of this same user connected to the room.
+						kickUserFromRoom(oldClient, socket, client.myUser, client.roomId, function(){
+							// This needs to be done after the user is removed from the room.  Since clientDisconnect() is called asynchronously,
+							// the user is explicitly removed from the room first, then clientDisconnect() is prevented from attempting to remove
+							// the user (since that may get called at some point after formallyAddClient() adds the user intentionally).
+							formallyAddClient(client, socket, connectedUser);
+						});
+					});
+				}
+			} else {
+				// Put the user info into the room hash in redis, and add the client to the in-memory (not redis) hash of connected sockets.
+				formallyAddClient(client, socket, connectedUser);
+			}
+		});
+	});
+} // end finishConnectingUser()
 
 /**
  * Adds the client to their room in redis and adds their sessionId to the hash of sessionIdsByKey.
