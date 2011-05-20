@@ -749,8 +749,8 @@ HTML
 
 		if ( array_key_exists($name, $values) ) {
 			// don't continue when on Special:Preferences (actually only check namespace ID, it's faster)
-			global $wgTitle;
-			if ( !empty($wgTitle) && ($wgTitle->getNamespace() == NS_SPECIAL) ) {
+			global $wgTitle, $wgRTEDisablePreferencesChange;
+			if ( !empty($wgRTEDisablePreferencesChange) || !empty($wgTitle) && ($wgTitle->getNamespace() == NS_SPECIAL) ) {
 				wfProfileOut(__METHOD__);
 				return true;
 			}

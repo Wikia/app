@@ -28,6 +28,9 @@ class EditPageLayoutHelper {
 	 */
 	function setupEditPage(Article $editedArticle, $fullScreen = true, $class = false) {
 		wfProfileIn(__METHOD__);
+
+		$user = $this->app->wg->User;
+
 		// don't render edit area when we're in read only mode
 		if ($this->app->runFunction('wfReadOnly')) {
 			// set correct page title
@@ -75,7 +78,7 @@ class EditPageLayoutHelper {
 
 		$this->addJsVariable('wgIsEditPage', true);
 		$this->addJsVariable('wgEditedTitle', $editedTitle->getPrefixedText());
-		
+
 		$this->addJsVariable('wgEditPageClass', $class ? $class:'SpecialCustomEditPage' );
 
 		$this->addJsVariable('wgEditPageHandler',  !is_null($formCustomHandler)
@@ -84,6 +87,13 @@ class EditPageLayoutHelper {
 
 		$this->addJsVariable('wgEditPagePopularTemplates', TemplateService::getPromotedTemplates());
 		$this->addJsVariable('wgEditPageIsWidePage', $this->isWidePage() );
+
+		if ($user->isLoggedIn()) {
+			global $wgRTEDisablePreferencesChange;
+			$wgRTEDisablePreferencesChange = true;
+			$this->addJsVariable('wgEditPageWideSourceMode', (bool)$user->getOption( 'editwidth' ) );
+			unset($wgRTEDisablePreferencesChange);
+		}
 
 		$this->addJsVariableRef('wgEditPageFormType', $this->editPage->formtype);
 		$this->addJsVariableRef('wgEditPageIsConflict', $this->editPage->isConflict);

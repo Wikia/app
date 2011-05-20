@@ -71,6 +71,7 @@
 				popularTemplates: window.wgEditPagePopularTemplates || [],
 				autoResizeMode: (window.wgEditPageIsConflict || window.wgEditPageFormType == 'diff') ? 'editpage' : 'editarea',
 				categoriesDisabled: (typeof window.initCatSelectForEdit != 'function'),
+				wideInSourceInitial: window.wgEditPageWideSourceMode,
 				wideInSourceDisabled: window.wgEditPageHasEditPermissionError,
 				mode: mode
 			};
