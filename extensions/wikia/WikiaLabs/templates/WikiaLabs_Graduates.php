@@ -10,9 +10,10 @@
 			<li>
 				<img src="<?php echo $value['prjscreenurl'] ?>"  class="appScreen"/>
 				<div>
-				<a class='title' href="<?php echo $value['link']; ?>" ><?php echo $value['name']; ?></a>
-				<?php echo $value['description'] ?>
-				
+					<a class='title' href="<?php echo $value['link']; ?>"><?php echo $value['name']; ?></a>
+					<p class='description'>
+						<?php echo $value['description'] ?>
+					</p>
 				</div>
 			</li>
 			<?php endforeach; ?>
