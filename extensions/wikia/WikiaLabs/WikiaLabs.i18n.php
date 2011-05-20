@@ -64,3 +64,7 @@ $messages['en'] = array(
 	
 	'wikialabs-feedback-validator-notification-ok' => 'Your feedback has been added. Thank you!',
 );
+
+$messages['qqq'] = array(
+	'wikialabs-list-project-add-give-feedback' => 'keep it short, size limitation',
+);
