@@ -15,7 +15,7 @@ var MobileSkin = {
 	track: function(str) {
 		if(typeof wgEnableGA != "undefined" && wgEnableGA == true) {
 			if(!MobileSkin.sampleSet) {
-				_gaq.push(['_setSampleRate', '20']);
+				_gaq.push(['_setSampleRate', '10']);
 				MobileSkin.sampleSet = true;
 			}
 			_gaq.push(['_setAccount', MobileSkin.uacct]);
