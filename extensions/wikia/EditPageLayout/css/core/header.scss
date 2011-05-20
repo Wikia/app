@@ -4,28 +4,41 @@
 	height: $height-epl-toolbar;
 	padding-left: 20px;
 	position: relative;
+	vertical-align: top;
 
 	// scale down wiki logo
 	> .wordmark {
 		@include wordmark;
+		@include clearfix;
 		color: $color-links;
+		width: auto;
+		margin-right: 20px;
+		float: left;
 		img {
 			float: left;
 			height: 45px;
 		}
 	}
 
+  > h2 {
+    font-size: 14px;
+    line-height: 21px;
+  }
+
 	> h1 {
 		color: #3a3a3a;
-		display: inline-block;
+		display: block;
 		font-size: 20px;
-		line-height: $height-epl-toolbar - 4px; // move it 2px down
-		padding: 4px 9px 0;
+		line-height: 23px;
+		padding: 0;
 		zoom: 1; // ie
 		> a {
 			color: #2070AD;
 		}
 	}
+}
+
+#EditPageTitleHeader {
 }
 
 // "edit title" button (will be shown by JS)
