@@ -4,7 +4,7 @@ $(function() {
 			fieldsHide = ['editwidth', 'showtoolbar', 'previewonfirst', 'previewontop', 'disableeditingtips', 'disablelinksuggest', 'externaleditor', 'externaldiff', 'disablecategoryselect'],
 			fieldsShow = ['disablespellchecker'];
 
-/*
+		/*
 		// hide certain fields when RTE is enabled
 		$(fieldsHide).each(function(i, id) {
 			var checkboxRow = $('input[name="wp' + id + '"]').closest('tr');
@@ -28,7 +28,7 @@ $(function() {
 				checkboxRow.show();
 			}
 		});
-*/
+		*/
 	};
 
 	var RTEMonobookOnlyPreferences = function() {
