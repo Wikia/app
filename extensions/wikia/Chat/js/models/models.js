@@ -150,7 +150,7 @@ var STATUS_STATE_AWAY = 'away';
 
 
 	Backbone.Model.prototype.mport = function (data, silent) {
-		console.log("DATA FROM mport:\n" + data);
+		//console.log("DATA FROM mport:\n" + data);
 
 		function process(targetObj, data) {
 			targetObj.id = data.id || null;
