@@ -127,9 +127,9 @@ var ArticleComments = {
 					details = $(blockquote).find('details');
 				
 				commentTextDiv.hide();
-				$(details).remove();
+				details.remove();
 				$(json.text).attr('id', 'article-comm-div-form-' + json.id).appendTo(blockquote);
-				$(details).appendTo(blockquote);
+				details.appendTo(blockquote);
 				
 				$('#article-comm-submit-' + json.id).bind('click', {id: json.id, emptyMsg: json.emptyMsg}, ArticleComments.save);
 				$('.article-comm-edit-cancel').bind('click', {id: json.id, target: e.target, text: json.text}, ArticleComments.cancelEdit);
