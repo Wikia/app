@@ -53,6 +53,7 @@
 			var self = this;
 			this.copyFromToolbar();
 			setTimeout(function(){ self.copyFromToolbar(); },1000);
+			this.editor.fire('mediawikiToolbarRendered',this.editor,$(this.toolbarNode));
 			this.editor.log('loading source mode toolbar');
 		},
 
