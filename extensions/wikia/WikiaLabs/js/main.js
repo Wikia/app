@@ -261,10 +261,12 @@ WikiaLabs.switchRequest = function(slider, onoff) {
     	slider.find('.button').animate({       
 	    	left: 0
 		});   
+	   	slider.find('.texton').fadeOut();    
 	} else {               	 
 		slider.find('.button').animate({       
 			left: 67
 		});
+    	slider.find('.textoff').fadeOut();
 	}
 	$.ajax({
 		url: wgScript + '?action=ajax&rs=WikiaLabsHelper::switchProject&id=' +  slider.attr('data-id') + '&onoff=' + onoff ,
@@ -280,11 +282,9 @@ WikiaLabs.animateToggle = function(slider) {
 	$().log(slider, 'WikiaLabs');
 	if( slider.hasClass('on') ) {      
 		slider.find('.textoff').fadeIn();              
-	   	slider.find('.texton').fadeOut();    
 	    slider.removeClass('on');
     } else {               	 
     	slider.find('.texton').fadeIn();              
-    	slider.find('.textoff').fadeOut();
     	slider.addClass('on'); 
 	}
 }
