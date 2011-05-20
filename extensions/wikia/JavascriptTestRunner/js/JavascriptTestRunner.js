@@ -23,11 +23,12 @@
 	/**
 	 * TestRunner - main testing class
 	 */
-	var TestRunner = function( outputs ) {
-		this.configure(outputs);
+	var TestRunner = function( outputs, name ) {
+		this.configure(outputs,name);
 	}
-	TestRunner.prototype.configure = function( outputs ) {
+	TestRunner.prototype.configure = function( outputs, name ) {
 		this.outputs = outputs;
+		this.name = name;
 	}
 	TestRunner.prototype.run = function( frameworkName, testSuites ) {
 		var framework = new JTR.frameworks[frameworkName](this);
@@ -44,15 +45,19 @@
 			this.outputs[i].handle(data);
 		}
 	}
+	TestRunner.prototype.newTestResult = function() {
+		return new TestResult(this.name);
+	}
 	JTR.TestRunner = TestRunner;
 	
 	
 	/**
 	 * TestResult - results storage class
 	 */
-	var TestResult = function() {
+	var TestResult = function( name ) {
 		this.suiteFailures = 0;
 		this.suites = {};
+		this.name = name || '(unnamed)';
 	};
 	TestResult.prototype.findName = function( o, name ) {
 		name = name || 'unnamed';
@@ -146,7 +151,17 @@
 	JUnitReport.getXml = function( testResult ) {
 		var Xml = window.WikiaXml;
 		var xml = '';
-		var suiteId = 0;
+		var suiteId = 1;
+		var wrapperData = {
+			name: testResult.name,
+			'package': 'com.wikia.javascript.tests',
+			errors: 0,
+			failures: 0,
+			skipped: 0,
+			tests: 0,
+			id: 0,
+			time: 0
+		};
 		for (var suiteName in testResult.suites) {
 			var suite = testResult.suites[suiteName];
 			
@@ -164,18 +179,24 @@
 			};
 			
 			suiteXml = Xml.element('properties') + suiteXml;
-			xml += Xml.element('testsuite',suiteXml,{
-				name: suiteName,
-				'package': 'com.wikia.javascript.tests',
-				errors: suite.stats[JTR.status.ERROR],
-				failures: suite.stats[JTR.status.FAILURE],
-				skipped: suite.stats[JTR.status.SKIPPED],
-				tests: suite.stats.total,
-				id: suiteId,
-				time: suite.stats.time / 1000
-			});
+			var suiteData = {
+					name: suiteName,
+					'package': 'com.wikia.javascript.tests',
+					errors: suite.stats[JTR.status.ERROR],
+					failures: suite.stats[JTR.status.FAILURE],
+					skipped: suite.stats[JTR.status.SKIPPED],
+					tests: suite.stats.total,
+					id: suiteId,
+					time: suite.stats.time / 1000
+			};
+			var accumKeys = ['errors','failures','skipped','tests','time'];
+			for (var i=0;i<accumKeys.length;i++) {
+				wrapperData[accumKeys[i]] += suiteData[accumKeys[i]];
+			}
+			xml += Xml.element('testsuite',suiteXml,suiteData);
 			suiteId++;
 		}
+		xml = Xml.element('testsuite',xml,wrapperData);
 		//xml = Xml.intro() + Xml.element('testsuites',xml);
 		xml = Xml.intro() + xml;
 		return xml;
@@ -244,7 +265,7 @@
 		var args = Array.prototype.slice.call(arguments,0);
 		var self = this;
 		
-		this.result = new TestResult();
+		this.result = this.testRunner.newTestRunner();
 		
 		var oldLogger = jsUnity.logger;
 		jsUnity.logger = {log:function(){ self.log.apply(self,arguments);}};
@@ -288,7 +309,7 @@
 		var args = Array.prototype.slice.call(arguments,0);
 		var self = this;
 		
-		this.result = new TestResult();
+		this.result = this.testRunner.newTestResult();
 		
 		/*
 		var oldLogger = jsUnity.logger;
@@ -344,6 +365,7 @@
 		var outputNames = window.jtr_outputs;
 		var frameworkName = window.jtr_framework;
 		var testSuite = window.jtr_testsuite;
+		var testSuiteName = window.jtr_testname;
 		
 		if (!frameworkName) {
 			throw new Exception("No framework name specified for test suite");
@@ -363,7 +385,7 @@
 		}
 		
 		var jtr = new JTR.TestRunner();
-		jtr.configure(outputs);
+		jtr.configure(outputs,testSuiteName);
 		jtr.run(frameworkName,testSuite);
 	}
 	JTR.autorun = function() {

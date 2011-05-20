@@ -107,7 +107,8 @@ class SpecialJavascriptTestRunner extends SpecialPage {
 
 
 			$script = "\n";
-			$script .= "window.jtr_framework = '".$testSuite->getFrameworkName()."';\n";
+			$script .= "window.jtr_testname = ".Wikia::json_encode((string)$testSuite->getTestName()).";\n";
+			$script .= "window.jtr_framework = ".Wikia::json_encode((string)$testSuite->getFrameworkName()).";\n";
 			$filters = $wgRequest->getVal('filter','');
 			$script .= "window.jtr_filters = ".self::createJavascriptList($filters).";\n";
 			$outputs = $wgRequest->getVal('output','');
@@ -205,6 +206,10 @@ class JavascriptTestRunner_TestSuite {
 
 	public function getRequiredFiles() {
 		return $this->requiredFiles;
+	}
+
+	public function getTestName() {
+		return preg_replace("/[^-a-zA-Z0-9]/",'_',$this->testFile);
 	}
 
 	public function getFrameworkFiles() {
