@@ -68,6 +68,7 @@ class WikiaLabsSpecialController extends WikiaSpecialPageController {
 		$this->setVal('cityId', $cityId);
 		$this->setVal('userId', $userId);
 		$this->setVal('contLang', $this->app->getGlobal( 'wgContLang' ));
+		$this->setVal('lang', $this->app->getGlobal( 'wgLang' ));
 		$this->setVal('wikilistUrl', $this->title->getFullUrl('method=wikislist'));
 		$this->setVal('wgExtensionsPath', $this->extensionsPath);
 		$this->setVal('isAdmin', $this->isAdmin);

@@ -11,13 +11,13 @@
 			<img class="appScreen" src="<?php echo $data['prjscreenurl'] ?>">
 			<span class='details' >
 			 	<h2 class="prjname" >
-			 		<?php echo $value->getName(); ?>
+					<?php echo $value->getTextFor('name'); ?>
 			 		<?php if( $user->isAllowed('wikialabsadmin') ): ?>
 			 			<a href="<?php echo $wikilistUrl.'&project_id='.$value->getId(); ?>">[<?php echo wfMsg('wikialabs-list-project-list-of-wikis-uses')?>]</a>
 			 		<?php endif; ?>
 			 	</h2>
-				<span class="data"><?php echo $contLang->date($value->getReleaseDateMW()); ?></span>
-			 	<?php echo $data['description']; ?>
+				<span class="data"><?php echo $lang->date($value->getReleaseDateMW()); ?></span>
+				<?php echo $value->getTextFor('description'); ?>
 			</span>
 			<span class='buttons'>
 				<?php if($isAdmin): ?>
@@ -28,7 +28,7 @@
 						<?php if($data['enablewarning']): ?>
 							<div class="warning" style="display:none" >
 							<h1><?php echo wfMsg( 'wikialabs-list-project-warning' ); ?></h2>
-								<?php echo $data['warning']; ?>
+								<?php echo $value->getTextFor('warning'); ?>
 								<div class="buttons">
 									<button type="button" class="secondary cancelbutton" id="cancelProject"><?php echo wfMsg('wikialabs-list-project-warning-cancel'); ?></button>
 									<button class="okbutton" ><?php echo wfMsg('wikialabs-list-project-warning-ok'); ?></button>

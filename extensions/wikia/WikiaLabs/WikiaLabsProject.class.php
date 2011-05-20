@@ -29,7 +29,7 @@ class WikiaLabsProject {
 	 * get db handler
 	 * @return DatabaseBase
 	 */
-	public function getDb( $type = DB_SLAVE ) {
+	protected function getDb( $type = DB_SLAVE ) {
 		return $this->app->runFunction( 'wfGetDB', $type, array(), $this->app->getGlobal( 'wgExternalDatawareDB' ) );
 	}
 
@@ -317,6 +317,19 @@ class WikiaLabsProject {
 			);
 			$this->id = $db->insertId();
 		}
+		
+		$users = $this->app->getGlobal('wgWikiaBotUsers');
+		$api = new WikiAPIClient(33);
+	
+		$api->login($users['staff']['username'], $users['staff']['password']);
+		
+		
+		$data = $this->getData();
+		
+		$api->edit('MediaWiki:'.'wikialabs-projects-name-'.$this->getId(), $this->getName());
+		empty($data['description']) or $api->edit('MediaWiki:'.'wikialabs-projects-description-'.$this->getId(), $data['description']);
+		empty($data['warning']) or $api->edit('MediaWiki:'.'wikialabs-projects-warning-'.$this->getId(), $data['warning']);
+		
 		$db->commit();
 		$this->setDataToCache( $fields );
 	}
@@ -419,7 +432,21 @@ class WikiaLabsProject {
 			$this->update();
 		}
 	}
+	
+	
+	public function getTextFor($msg) {
+		$data = $this->getData();
+		$data['name'] = $this->getName();
+		$msgFull = 'wikialabs-projects-' . $msg . '-'. $this->getId();
 
+		if( wfEmptyMsg($msgFull,wfMsg($msgFull)) || $this->app->wg->Lang->getCode() == 'en' ) {
+			return $data[$msg];
+
+		} else {
+			return wfMsg($msgFull);
+		}
+	} 
+	
 	protected function getCachedRatingByUser( $userId ) {
 		$ratings = $this->getCachedRatings();
 		return ( !empty($ratings[$this->getId()][$userId]) ? $ratings[$this->getId()][$userId] : false );
@@ -442,4 +469,5 @@ class WikiaLabsProject {
 		}
 		return $rating;
 	}
+
 }

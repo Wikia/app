@@ -28,6 +28,7 @@ class WikiaLabsSpecial extends SpecialPage {
 		//wikialabs-list-project-warning-box-no-admin
 		$oTmpl = WF::build( 'EasyTemplate', array( dirname( __FILE__ ) . "/templates/" ) );
 		$projects = WF::build( 'WikiaLabsProject')->getList(array("graduated" => false, "active" => true  )  );
+		
 		$userId = $this->user->getId();
 
 		$cityId = $this->app->getGlobal( 'wgCityId' );
@@ -35,7 +36,7 @@ class WikiaLabsSpecial extends SpecialPage {
 		/*sync with WF */
 		foreach($projects as $value) {
 			$val = $this->app->runFunction( 'WikiFactory::getVarValueByName',  $value->getExtension(), $cityId);
-			if( $value->isEnabled($cityId) != $val  ){
+			if( $value->isEnabled($cityId) != $val  ) {
 				if($val) {
 					$value->setEnabled($cityId);
 				} else {
@@ -57,6 +58,7 @@ class WikiaLabsSpecial extends SpecialPage {
 			'userId' => $userId,
 			'isAdmin' => $this->isAdmin,
 			'contLang' => $this->app->getGlobal( 'wgContLang' ),
+			'lang' => $this->app->getGlobal( 'wgLang' ),
 			'wgExtensionsPath' => $wgExtensionsPath,
 		) );
 
