@@ -28,7 +28,7 @@ _comscore.push({ c1: "2", c2: "'.self::$PARTNER_ID.'",
 })();
 </script>
 <noscript>
-<img src="http://b.scorecardresearch.com/p?c1=2&c2='.self::$PARTNER_ID.'&c3=&c4=&c5=&c6=&c7='.$this->getC7ParamAndValue().'&c15=&cv=2.0&cj=1" />
+<img src="http://b.scorecardresearch.com/p?c1=2&amp;c2='.self::$PARTNER_ID.'&amp;c3=&amp;c4=&amp;c5=&amp;c6=&amp;c7='.$this->getC7ParamAndValue().'&amp;c15=&amp;cv=2.0&amp;cj=1" />
 </noscript>
 <!-- End comScore Tag -->';
 			break;
