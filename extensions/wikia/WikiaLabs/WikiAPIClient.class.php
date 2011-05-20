@@ -2,10 +2,7 @@
 
 class WikiAPIClient {
 	public $cookie = array();
-	
-	function __construct($city_id) {
-		
-	}
+	public $externalDataUrl = array();
 	
 	private function queryByPost($attr) {
 		$attr['format'] = 'json'; 
@@ -15,8 +12,8 @@ class WikiAPIClient {
 		if ( !isset( $options['timeout'] ) ) {
 			$options['timeout'] = 'default';
 		}
-		
-		$req = HttpRequest::factory( $this->getExternalDataUrl(), $options );
+	
+		$req = HttpRequest::factory( $this->getExternalDataUrl(). '/api.php?' , $options );
 			
 		if(!empty($this->cookie) ) {
 			$req->setCookieJar($this->cookie);
@@ -79,8 +76,11 @@ class WikiAPIClient {
 		//TODO: error handling
 	}
 	
+	public function setExternalDataUrl($url) {		
+		return $this->externalDataUrl = $url;;
+	}
 	
 	public function getExternalDataUrl() {		
-		return 'http://messaging.tomek.wikia-dev.com/api.php?';
+		return $this->externalDataUrl; 
 	}
 }

@@ -31,7 +31,8 @@ class WikiaLabsModule extends Module {
 			}
 
 			$out[$key] = $data;
-			$out[$key]['name'] = $value->getName();
+			$out[$key]['name'] = $value->getTextFor('name');
+			$out[$key]['description'] = $value->getTextFor('description');
 		}
 
 		$this->projects = $out;

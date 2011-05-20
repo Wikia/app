@@ -1,4 +1,4 @@
-<h1> <?php echo wfMsg('wikialabs-add-project-title'); ?> </h1>
+<h1> <?php echo wfMsg('wikialabs-add-project-title', array('$1' => $project->getId()) ); ?> </h1>
 <form>
 <input type="hidden" value="<?php echo $project->getId(); ?>" name="project[id]" id="projectId" >
 <div class="addprjmodal" >
