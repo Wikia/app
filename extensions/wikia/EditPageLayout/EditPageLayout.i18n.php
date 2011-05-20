@@ -39,8 +39,8 @@ $messages['en'] = array(
 	'wikia-editor-loadingStates-toVisual' => 'Switching to visual mode...',
 	'wikia-editor-loadingStates-saving' => 'Publishing your edit!',
 
-	'wikia-editor-edittools-caption' => 'Edit tools',
-	'wikia-editor-edittools-dialog-title' => 'Edit tools',
+	'wikia-editor-edittools-caption' => 'More shortcuts',
+	'wikia-editor-edittools-dialog-title' => 'Wikitext shortcuts',
 
 	'wikia-editor-notices-dialog-title' => 'Notices details',
 
