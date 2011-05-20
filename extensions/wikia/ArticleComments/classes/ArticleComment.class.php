@@ -381,11 +381,12 @@ class ArticleComment {
 		if ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) {
 			wfLoadExtensionMessages('ArticleComments');
 			$vars = array(
-				'canEdit'		=> $this->canEdit(),
-				'comment'		=> $this->mLastRevision->getText(),
-				'isReadOnly'	=> wfReadOnly(),
-				'stylePath'		=> $wgStylePath,
-				'title'			=> $this->mTitle
+				'canEdit'			=> $this->canEdit(),
+				'comment'			=> $this->mLastRevision->getText(),
+				'isReadOnly'		=> wfReadOnly(),
+				'stylePath'			=> $wgStylePath,
+				'articleId'			=> $this->mTitle->getArticleId(),
+				'articleFullUrl'	=> $this->mTitle->getFullUrl(),
 			);
 			$text = wfRenderPartial('ArticleComments', 'Edit', $vars);
 		}
