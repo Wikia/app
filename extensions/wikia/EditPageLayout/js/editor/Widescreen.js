@@ -29,7 +29,7 @@
 				this.editor.element.addClass(this.className);
 
 				// load the saved state (if any)
-				this.loadState();
+				this.loadState(true);
 
 				// adjust the height when changing modes
 				this.editor.on('mode',this.modeChanged,this);
@@ -57,8 +57,15 @@
 			this.track(this.wide ? 'switchOn' : 'switchOff');
 		},
 
-		loadState: function() {
+		loadState: function( initial ) {
 			var wide = $.storage.get(this.storageEntry) == true;
+			this.editor.log('widescreen::load() - wide = '+(wide?'true':'false'));
+			if (initial) {
+				if (typeof this.editor.config.wideInSourceInitial != 'undefined') {
+					wide = !!this.editor.config.wideInSourceInitial;
+					this.editor.log('widescreen::load() - wide[2] = '+(wide?'true':'false'));
+				}
+			}
 			this.setState(wide);
 		},
 
@@ -69,6 +76,9 @@
 
 		saveState: function() {
 			$.storage.set(this.storageEntry,this.wide);
+			$.post(window.wgScript + '?action=ajax&rs=EditPageLayoutAjax&method=setWidescreen',{
+				state: this.wide ? '1' : '0'
+			});
 		},
 
 		getState: function() {
