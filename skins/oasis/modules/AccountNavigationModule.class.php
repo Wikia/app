@@ -45,6 +45,9 @@ class AccountNavigationModule extends Module {
 			case 'mytalk':
 				$attributes['accesskey'] = 'n';
 				break;
+			case 'login':
+				$attributes['accesskey'] = 'o';
+				break;
 		}
 
 		$ret = Xml::element('a', $attributes, $personalUrl['text']);
