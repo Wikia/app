@@ -721,14 +721,26 @@ function wfGetFixedLanguageNames() {
 }
 
 /**
- * Get a shared cache key
+ * @brief: Get a shared cache key
+ * @details: this function is used for creating keys for information that
+ * 	should be shared among wikis. Function uses func_get_arrays
+ *
+ * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
+ *
+ * @param Array, parts for creating keys, func_get_args() is used internally
+ *
+ * @return string  created key for cache
  */
 function wfSharedMemcKey( /*... */ ) {
-	global $wgSharedDB, $wgWikiaCentralAuthDatabase;
+	global $wgSharedKeyPrefix;
 
 	$args = func_get_args();
-	$prefix = empty( $wgWikiaCentralAuthDatabase ) ? $wgSharedDB : $wgWikiaCentralAuthDatabase;
-	$key = $prefix . ':' . implode( ':', $args );
+	if( $wgSharedKeyPrefix === false ) { // non shared wiki, fallback to normal function
+		$key = 	wfWikiID() . ':' . implode( ':', $args );
+	}
+	else {
+		$key = $wgSharedKeyPrefix . ':' . implode( ':', $args );
+	}
 	return $key;
 }
 

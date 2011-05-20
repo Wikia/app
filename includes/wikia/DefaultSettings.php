@@ -536,6 +536,7 @@ $wgExternalArchiveDB = 'archive';
 $wgExternalStatsDB = 'dbstats';
 $wgStatsDB = 'stats';
 $wgExternalWikiaStatsDB = 'wikiastats';
+$wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
 
