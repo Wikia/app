@@ -55,7 +55,7 @@ class EditPageLayoutModule extends Module {
 		$this->header = wfRenderModule('GlobalHeader');
 
 		// Editing [foo]
-		$title = $editPage->getEditedTitle();
+		$this->title = $editPage->getEditedTitle();
 		$section = $app->getGlobal('wgRequest')->getVal('section');
 
 		if ($section == 'new') {
@@ -69,14 +69,13 @@ class EditPageLayoutModule extends Module {
 		}
 
 		// title
-		$titleText = $title->getPrefixedText();
+		$this->titleText = $this->title->getPrefixedText();
 
-		if ($titleText == '') {
-			$titleText = ' ';
+		if ($this->titleText == '') {
+			$this->titleText = ' ';
 		}
 
-		$this->title = $app->runFunction('wfMsg', $msgKey,
-			Xml::element('a', array('href' => $title->getLocalUrl()), $titleText));
+		$this->editing = $app->runFunction('wfMsg', $msgKey, '');
 
 		// render help link and point the link to new tab
 		$this->helpLink = $app->runFunction('wfMsgExt', 'editpagelayout-helpLink', array('parseinline'));

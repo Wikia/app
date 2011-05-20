@@ -158,9 +158,11 @@
 
 			window.wgEditedTitle = prefix + window.wgEditedTitle;
 
+			var shortText = window.wgEditedTitle.substring(0, 23);
+
 			this.titleNode.children('a').
 				attr('href', wgArticlePath.replace('$1', window.wgEditedTitle)).
-				text(window.wgEditedTitle);
+				text(shortText);
 		},
 
 		// return true if any of the required fields has no value

@@ -11,11 +11,16 @@
 				<? } ?>
 				</a>
 			</span>
-			<h1><?= $title ?></h1>
-			<a id="EditPageTitle" class="wikia-button secondary">
-				<img class="sprite edit-pencil" src="<?= $wgBlankImgUrl ?>">
-				<?= wfMsg('editpagelayout-edit-title') ?>
-			</a>
+			<h2>
+				<?= $editing ?>
+				<a id="EditPageTitle" class="wikia-button secondary">
+					<img class="sprite edit-pencil" src="<?= $wgBlankImgUrl ?>">
+					<?= wfMsg('editpagelayout-edit-title') ?>
+				</a>
+			</h2>
+			<h1>
+				<?= Xml::element('a', array('href' => $title->getLocalUrl()), substr($titleText, 0, 17)) ?>
+			</h1>
 			<nav id="EditPageTabs" class="editpage-tabs" data-space-type="tabs" data-space-autoshow="true" style="display:none"></nav>
 			<aside id="HelpLink"><?= $helpLink ?></aside>
 		</header>
