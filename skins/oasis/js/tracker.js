@@ -558,7 +558,10 @@ var initTracker = function() {
 			$.tracker.byStr('pageheader/post');
 		});
 	}
-	
+
+	if (wgCanonicalSpecialPageName == "Search") {
+		$.tracker.byStr('search/searchResults/view');
+	}
 
 	// BugId:2435 - track MW editor view
 	if (window.wgIsEditPage && (typeof RTE == 'undefined')) {

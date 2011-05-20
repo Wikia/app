@@ -14,6 +14,7 @@ WikiaSearchApp = {
 
 	init : function() {
 		WikiaSearchApp.searchForm = $('#WikiaSearch');
+		WikiaSearchApp.searchFormBottom = $('#search');
 		WikiaSearchApp.searchField = WikiaSearchApp.searchForm.children('input[placeholder]');
 
 		// RT #141437 - hide HOME_TOP_RIGHT_BOXAD when showing search suggestions
@@ -29,6 +30,9 @@ WikiaSearchApp = {
 
 		// track form submittion
 		WikiaSearchApp.searchForm.submit(function(ev) {
+			WikiaSearchApp.track('submit');
+		});
+		WikiaSearchApp.searchFormBottom.submit(function(ev) {
 			WikiaSearchApp.track('submit');
 		});
 	},
