@@ -7,9 +7,14 @@
 
 $toolbox-button: 105px;
 $margin-images: 10px;
+$warning-bg-color: #FFFFCC;
+
+@if lightness($color-page) < 50 {
+	$warning-bg-color: #323232;
+}
 
 .WikiaArticle .warningBox {
-	background-color: #FFFFCC;
+	background-color: $warning-bg-color;
 	border: 1px solid #AAAAAA;
 	margin: 1em 3em 1em 0;
 	padding: 6px;
