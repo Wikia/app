@@ -11,7 +11,7 @@
 			var WE = window.WikiaEditor;
 
 			var data = {
-				main: typeof window.wgEditPageIsWidePage != 'undefined' && window.wgEditPageIsWidePage,
+				main: !!window.wgEditPageIsWidePage,
 				rte: typeof window.RTE != 'undefined',
 				wide: false
 			};
@@ -73,6 +73,8 @@
 				categoriesDisabled: (typeof window.initCatSelectForEdit != 'function'),
 				wideInSourceInitial: window.wgEditPageWideSourceMode,
 				wideInSourceDisabled: window.wgEditPageHasEditPermissionError,
+				isWidePage: !!window.wgEditPageIsWidePage,
+				extraPageWidth: (window.sassParams && window.sassParams.hd) ? 200 : 0,
 				mode: mode
 			};
 			

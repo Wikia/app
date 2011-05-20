@@ -299,7 +299,9 @@
 
 		// render "Preview" modal
 		renderPreview: function(extraData) {
-			var self = this;
+			var self = this, width = 680, config = this.editor.config;
+			if (config.isWidePage) width += 300;
+			if (config.extraPageWidth) width += config.extraPageWidth;
 			this.renderDialog($.msg('preview'), {
 				buttons: [
 					{
@@ -319,6 +321,7 @@
 						}
 					}
 				],
+				width: width, 
 				className: 'preview'
 			}, function(contentNode) {
 				self.getContent(function(content) {
