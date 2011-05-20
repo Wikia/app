@@ -1154,10 +1154,19 @@ class Article {
 					$wgOut->addInlineScript( "redirectToFragment(\"$fragment\");" );
 				}
 
+				/*
+				 * Commented out by christian@wikia-inc.com
+				 * /extensions/wikia/CanonicalHref is used by Wikia to handle redirects and all of these cases:
+				 * http://muppet.wikia.com/wiki/Kermit_the_Frog
+				 * http://muppet.wikia.com/index.php/Kermit_the_Frog
+				 * http://muppet.wikia.com/index.php?title=Kermit_the_Frog
+				 * http://muppet.wikia.com/wiki/Kermit_the_Frog?action=view
+				 * 
 				// Add a <link rel="canonical"> tag
 				$wgOut->addLink( array( 'rel' => 'canonical',
 					'href' => $this->mTitle->getLocalURL() )
 				);
+				*/
 				return true;
 			}
 		} elseif ( $rdfrom ) {
