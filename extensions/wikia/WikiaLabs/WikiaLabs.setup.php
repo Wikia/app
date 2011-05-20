@@ -14,6 +14,7 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes
  */
+$app->registerClass('WikiAPIClient', $dir . 'WikiAPIClient.class.php');
 $app->registerClass('WikiaLabsSpecial', $dir . 'WikiaLabsSpecial.class.php');
 $app->registerClass('WikiaLabsWikisListPager', $dir . 'WikiaLabsWikisListPager.class.php');
 $app->registerClass('WikiaLabsModule', $dir . 'WikiaLabsModule.class.php');
