@@ -25,11 +25,13 @@ class SimpleSearchController extends WikiaController {
 		$this->getApp()->runFunction( 'wfProfileIn', __METHOD__ );
 		
 		//parameters
-		$key = trim( $this->getRequest()->getVal( 'key' ) );
+		$key = trim( $this->getVal( 'key' ) );
 		$limit = $this->getRequest()->getInt( 'limit', 0 );
 		$offset = $this->getRequest()->getInt( 'offset', 0 );
-		$namespaces = (array) $this->getRequest()->getVal( 'namespaces', array() );
+		$namespaces = (array) $this->getVal( 'namespaces', array() );
 		$showRedirects = $this->getRequest()->getBool( 'redirects', true );
+		$urlParams = $this->getVal( 'urlParams', '' );
+		$fullURL = $this->getRequest()->getBool( 'fullURL', false );
 		
 		$results = Array();
 		$this->getResponse()->setVal( 'key', $key );
@@ -97,7 +99,7 @@ class SimpleSearchController extends WikiaController {
 											
 											$results[] = array(
 												'textForm' => $title->getText(),
-												'urlForm' => $title->getFullUrl()
+												'urlForm' => ( $fullURL ) ? $title->getFullUrl( $urlParams ) : $title->getLocalUrl( $urlParams )
 											);
 										}
 									}
@@ -150,6 +152,7 @@ class SimpleSearchController extends WikiaController {
 	 */
 	public function globalSearch() {
 		$this->getApp()->setGlobal( 'wgEnableCrossWikiaSearch', true );
+		$this->request->setVal( 'fullURL', true );
 		$this->getResults();
 		$this->getApp()->setGlobal( 'wgEnableCrossWikiaSearch', $this->mEnableCrossWikiaSearch );
 	}
