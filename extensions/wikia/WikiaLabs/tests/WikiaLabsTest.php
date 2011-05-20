@@ -122,13 +122,16 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 			     ->will( $this->returnValue( self::TEST_USER_EMAIL ) );
 		}
 
-		$object = $this->getMock( 'WikiaLabs', array( 'saveFeedbackInFogbugz') );
+		$object = $this->getMock( 'WikiaLabs', array( 'saveFeedbackInFogbugz', 'checkSpam') );
 		if($statusOk) {
 			$object->expects( $this->once() )
 			       ->method( 'saveFeedbackInFogbugz' )
 			       ->with( $this->equalTo( $project ), $this->equalTo( $message ), $this->equalTo( self::TEST_USER_EMAIL ) );
 		}
-
+			$object->expects( $this->any() )
+			       ->method( 'checkSpam' )
+			       ->will($this->returnValue(true));
+		
 		$result = $object->saveFeedback( $projectId, $user, $rating, $message );
 
 		$this->assertEquals( ( $statusOk ? WikiaLabs::STATUS_OK : WikiaLabs::STATUS_ERROR ), $result['status'] );
