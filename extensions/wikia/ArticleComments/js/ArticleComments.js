@@ -119,16 +119,38 @@ var ArticleComments = {
 
 		$.getJSON(wgScript, data, function(json) {
 			if (!json.error) {
-				$(e.target).closest('.buttons').hide();
-				$('#comm-text-' + json.id).html(json.text);
+				var buttons = $(e.target).closest('.buttons');
+				buttons.hide();
+				
+				var commentTextDiv = $('#comm-text-' + json.id),
+					blockquote = commentTextDiv.parent(),
+					details = $(blockquote).find('details');
+				
+				commentTextDiv.hide();
+				$(details).remove();
+				$(json.text).attr('id', 'article-comm-div-form-' + json.id).appendTo(blockquote);
+				$(details).appendTo(blockquote);
+				
 				$('#article-comm-submit-' + json.id).bind('click', {id: json.id, emptyMsg: json.emptyMsg}, ArticleComments.save);
+				$('.article-comm-edit-cancel').bind('click', {id: json.id, target: e.target, text: json.text}, ArticleComments.cancelEdit);
 			}
 			ArticleComments.processing = false;
 		});
 		ArticleComments.processing = true;
 		ArticleComments.log('end: edit');
 	},
-
+	
+	cancelEdit: function(e) {
+		ArticleComments.log('begin: cancel edit');
+		e.preventDefault();
+		
+		$('#article-comm-div-form-' + e.data.id).remove();
+		$(e.data.target).closest('.buttons').show();
+		$('#comm-text-' + e.data.id).show();
+		
+		ArticleComments.log('end: cancel edit');
+	},
+	
 	reply: function(e) {
 		ArticleComments.log('begin: reply');
 		e.preventDefault();
