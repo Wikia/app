@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wmu-upload-image' => 'Upload Image',
+	'wmu-upload-image' => 'Upload Photo',
 	'wmu-upload' => 'Upload',
 	'wmu-notlogged' => 'Log in or register to upload images from your computer',
 	'wmu-find' => 'Find',
@@ -71,7 +71,7 @@ $messages['en'] = array(
 	'wmu-more-options' => 'More options',
 	'wmu-fewer-options' => 'Fewer options',
 	'wmu-replace-default-caption' => 'replace default caption',
-	'wmu-appearance-in-article' => 'Appearance in Article',
+	'wmu-appearance-in-article' => 'Appearance on Page',
 	'wmu-alignment' => 'Alignment',
 );
 
