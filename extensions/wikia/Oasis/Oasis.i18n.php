@@ -152,7 +152,7 @@ $messages['en'] = array(
 
 	# hidden header navigation messages (for screen readers, among others)
 	'oasis-skip-to-content' => 'Skip to Content',
-	'aosis-skip-to-wiki-navigation' => 'Skip to Wiki Navigation',
+	'oasis-skip-to-wiki-navigation' => 'Skip to Wiki Navigation',
 	'oasis-skip-to-site-navigation' => 'Skip to Site Navigation',
 	'oasis-wiki-navigation' => '$1 Navigation',
 	'oasis-related-categories' => 'Related Categories',
