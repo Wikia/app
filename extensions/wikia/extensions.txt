@@ -61,6 +61,8 @@ ignored = createpage-newpagelayout
 Edit Account
 file = EditAccount/SpecialEditAccount.i18n.php
 
+Edit Page Layout
+
 Ez API
 
 Follow
@@ -110,6 +112,15 @@ Lookup Contribs
 file = LookupContribs/SpecialLookupContribs.i18n.php
 
 Masthead
+
+Mobile - Game Guides
+file = MobileAppTranslations/GameGuides.i18n.php
+
+Mobile - Lyric Wiki
+file = MobileAppTranslations/lyricwiki.i18n.php
+
+Mobile - Wikia Pad
+file = MobileAppTranslations/WikiaPad.i18n.php
 
 Most Popular Categories
 file = MostPopularCategories/SpecialMostPopularCategories.i18n.php
