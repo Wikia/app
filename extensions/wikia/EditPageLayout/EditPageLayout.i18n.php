@@ -62,10 +62,10 @@ $messages['en'] = array(
 	'prefs-starting-an-edit' => 'Starting an edit',
 	'prefs-editing-experience' => 'Editing experience',
 	'prefs-monobook-layout' => 'Monobook layout only',
-	'prefs-editarea-size' => 'Size of editing window (Monobook layout only)',
+	'prefs-editarea-size' => 'Size of editing window (MonoBook layout only)',
 
 	'tog-editsection' => 'Enable section editing via edit links',
 	'tog-editwidth' => 'Widen the Source mode edit box to fill the entire screen',
-	'tog-minordefault' => 'Mark all edits as \'minor\' by default',
+	'tog-minordefault' => 'Mark all edits as "minor" by default',
 	'tog-forceeditsummary' => 'Prompt me if I leave a blank edit summary',
 );
