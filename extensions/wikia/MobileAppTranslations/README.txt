@@ -7,6 +7,6 @@ The apps are currently written for the Titanium platform (which has translation 
 may be written in other non-PHP languages or with translation files which are not MediaWiki compatible.
 
 Conversion scripts are used to turn these into standard MediaWiki i18n files so that they can be translated
-using our normal systems (eg: the l33t translators at TranslateWiki.net).
+using our normal systems (e.g. the translators at translatewiki.net).
 
 Conversion scripts should then be used to convert the PHP _back_ to whatever format the mobile apps need.

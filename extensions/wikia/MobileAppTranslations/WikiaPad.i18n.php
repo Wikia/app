@@ -23,7 +23,7 @@ $messages['en'] = array(
 	'tab-discover-loading-message' => 'Loading...',
 	'tab-discover-no-network-dialog-title' => 'Network unavailable',
 	'tab-discover-no-network-dialog-message' => 'No network connection detected',
-	'tab-discover-no-network-dialog-close-button' => 'Ok',
+	'tab-discover-no-network-dialog-close-button' => 'OK',
 
 	//  Search tab 
 	'tab-search-loading-message' => 'Searching...',
@@ -52,4 +52,3 @@ $messages['it'] = array(
 	//  Browser 
 	'browser-loading-message' => 'Caricamento...'
 );
-

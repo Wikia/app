@@ -11,38 +11,6 @@
 
 $messages = array();
 
-// Lang: de
-$messages['de'] = array(
-	'activityindicator-message' => 'Lade...',
-	'windowwikis-title' => 'Unsere Top-Spiele',
-	'windowwikis-titleprompt' => 'Wikia Game Guides',
-	'windowwikis-searchbar-hint' => 'Durchsuche unsere Top-Spiele...',
-	'windowwikicontents-title' => '%s',
-	'windowwikicontents-windowtitle-leftbutton-label' => 'Spiele',
-	'windowcategory-title' => '%s: %s',
-	'windowcategory-searchbar-hint' => 'Suche %s...',
-	'windowcategory-windowtitle-leftbutton-label' => 'Zurück',
-	'windowarticle-windowtitle-searchbar-hint-short' => 'Suche...',
-	'windowarticle-windowtitle-searchbar-hint' => 'Suche %s...',
-	'windowarticle-menu-search-label' => 'Suche',
-	'windowarticle-menu-games-label' => 'Spiele',
-	'windowarticle-menu-dashboard-label' => 'Inhalte',
-	'windowarticle-no-search-results' => 'Keine Ergebnisse für %s',
-	'windowarticle-search-back' => 'Zurück zum Artikel',
-	'alertdialog-error-title' => 'Fehler',
-	'alertdialog-error-button-label' => 'Schließen',
-
-	//  errors 
-	'error-update-required' => 'Für diese App ist ein Update verfügbar und benötigt.',
-	'error-no-connection' => 'Keine Internet-Verbindung vorhanden.\n%s',
-	'error-server' => 'Unsere Server haben einen Fehler gemeldet, sorry.\n%s',
-	'error-json-parse' => 'Es gab ein Problem mit den Daten von unseren Servern, sorry.\n%s',
-	'error-app-will-close' => 'Fortsetzung nicht möglich. Die App wird geschlossen, versuche sie erneut auszuführen.',
-	'error-plase-close-app' => 'Fortsetzung nicht möglich. Bitte versuche sie zu schließen und erneut auszuführen.',
-	'error-close-window-retry' => 'Dieses Fenster wird geschlossen. Probiere es bitte noch einmal oder wähle einen anderen Eintrag.',
-	'error-please-try-again' => 'Bitte probiere es noch einmal.'
-);
-
 // Lang: en
 $messages['en'] = array(
 	'activityindicator-message' => 'Loading...',
@@ -64,7 +32,7 @@ $messages['en'] = array(
 	'alertdialog-error-title' => 'Error',
 	'alertdialog-error-button-label' => 'Close',
 
-	//  errors 
+	//  errors
 	'error-update-required' => 'An update for this app is available and required.\n%s',
 	'error-no-connection' => 'No internet connection available.\n%s',
 	'error-server' => 'Our servers responded with an error, sorry.\n%s',
@@ -73,6 +41,38 @@ $messages['en'] = array(
 	'error-plase-close-app' => 'It\'s not possible to continue, please try closing the application and reopening it.',
 	'error-close-window-retry' => 'This window will close, pleae try again or pick a different item.',
 	'error-please-try-again' => 'Please try again.'
+);
+
+// Lang: de
+$messages['de'] = array(
+	'activityindicator-message' => 'Lade...',
+	'windowwikis-title' => 'Unsere Top-Spiele',
+	'windowwikis-titleprompt' => 'Wikia Game Guides',
+	'windowwikis-searchbar-hint' => 'Durchsuche unsere Top-Spiele...',
+	'windowwikicontents-title' => '%s',
+	'windowwikicontents-windowtitle-leftbutton-label' => 'Spiele',
+	'windowcategory-title' => '%s: %s',
+	'windowcategory-searchbar-hint' => 'Suche %s...',
+	'windowcategory-windowtitle-leftbutton-label' => 'Zurück',
+	'windowarticle-windowtitle-searchbar-hint-short' => 'Suche...',
+	'windowarticle-windowtitle-searchbar-hint' => 'Suche %s...',
+	'windowarticle-menu-search-label' => 'Suche',
+	'windowarticle-menu-games-label' => 'Spiele',
+	'windowarticle-menu-dashboard-label' => 'Inhalte',
+	'windowarticle-no-search-results' => 'Keine Ergebnisse für %s',
+	'windowarticle-search-back' => 'Zurück zum Artikel',
+	'alertdialog-error-title' => 'Fehler',
+	'alertdialog-error-button-label' => 'Schließen',
+
+	//  errors
+	'error-update-required' => 'Für diese App ist ein Update verfügbar und benötigt.',
+	'error-no-connection' => 'Keine Internet-Verbindung vorhanden.\n%s',
+	'error-server' => 'Unsere Server haben einen Fehler gemeldet, sorry.\n%s',
+	'error-json-parse' => 'Es gab ein Problem mit den Daten von unseren Servern, sorry.\n%s',
+	'error-app-will-close' => 'Fortsetzung nicht möglich. Die App wird geschlossen, versuche sie erneut auszuführen.',
+	'error-plase-close-app' => 'Fortsetzung nicht möglich. Bitte versuche sie zu schließen und erneut auszuführen.',
+	'error-close-window-retry' => 'Dieses Fenster wird geschlossen. Probiere es bitte noch einmal oder wähle einen anderen Eintrag.',
+	'error-please-try-again' => 'Bitte probiere es noch einmal.'
 );
 
 // Lang: es
@@ -96,7 +96,7 @@ $messages['es'] = array(
 	'alertdialog-error-title' => 'Error',
 	'alertdialog-error-button-label' => 'Cerrar',
 
-	//  errors 
+	//  errors
 	'error-update-required' => 'Hay una actualización necesaria disponible para esta aplicación.\n%s',
 	'error-no-connection' => 'Conexión a Intenet no disponible.\n%s',
 	'error-server' => 'Nuestros servidores respondieron con un error, lo sentimos.\n%s',
@@ -128,7 +128,7 @@ $messages['fr'] = array(
 	'alertdialog-error-title' => 'Erreur',
 	'alertdialog-error-button-label' => 'Fermer',
 
-	//  errors 
+	//  errors
 	'error-update-required' => 'Une mise de l\'application est disponible et nécessaire.\n%s',
 	'error-no-connection' => 'Aucune connexion internet disponible.\n%s',
 	'error-server' => 'Nos serveurs ont retourné une erreur, désolé.\n%s',
@@ -160,7 +160,7 @@ $messages['it'] = array(
 	'alertdialog-error-title' => 'Errore',
 	'alertdialog-error-button-label' => 'Chiudi',
 
-	//  errors 
+	//  errors
 	'error-update-required' => 'Un aggiornamento per questa applicazione e\' disponibile e necessario per continuare.\n%s',
 	'error-no-connection' => 'Nessuna connessione ad internet.\n%s',
 	'error-server' => 'Spiacenti, I nostri server hanno risposto con un errore.\n%s',
@@ -192,7 +192,7 @@ $messages['pl'] = array(
 	'alertdialog-error-title' => 'Błąd',
 	'alertdialog-error-button-label' => 'Zakmnij',
 
-	//  errors 
+	//  errors
 	'error-update-required' => 'Wymagana jest aktualizacja aplikacji.\n%s',
 	'error-no-connection' => 'Brak połaczenia z Internetem.\n%s',
 	'error-server' => 'Przepraszamy, błąd serwera.\n%s',
