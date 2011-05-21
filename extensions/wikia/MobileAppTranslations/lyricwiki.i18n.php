@@ -11,6 +11,54 @@
 
 $messages = array();
 
+// Lang: en
+$messages['en'] = array(
+	//  Tabs 
+	'app-loading' => 'Loading...',
+	'app-tab-search' => 'Search',
+	'app-tab-about' => 'About',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'SotD',
+
+	//  Networking / Connectivity Issues 
+	'app-async-error-title' => 'Oops',
+	'app-async-error-message' => 'Temporary problem with connection. Please try again later.',
+	'app-nonetwork-dialog-title' => 'Network unavailable',
+	'app-nonetwork-dialog-message' => 'No network connection detected.',
+	'app-nonetwork-dialog-close-button' => 'Ok',
+
+	//  Search tab 
+	'search-go' => 'Go!',
+	'search-hint-text' => 'ex: \'John Lennon:Imagine\'',
+	'search-no-match-found' => 'No match found.',
+	'search-no-match-found-query' => 'Searched for: %s',
+	'search-results-title' => 'Search results for: %s',
+
+	//  Login dialog 
+	'login-label' => 'Login to LyricWiki',
+	'login-username-hint' => 'Username',
+	'login-password-hint' => 'Password',
+	'login-submit-button' => 'Login',
+
+	//  About tab 
+	'about-heading' => 'LyricWiki',
+	'about-credits' => 'by %s',
+	'about-heading-tips' => 'Searching',
+	'about-tips-0' => 'Start typing an artist name to auto-complete as you type.',
+	'about-tips-1' => 'The pictures on the main screen are the Top 9 songs on iTunes right now.',
+	'about-heading-licensing' => 'Copyrights',
+	'about-licensing-0' => 'This app is 100% legal. Royalties are paid to song rights-holders through Gracenote - just like on the LyricWiki website.',
+	'about-heading-feedback' => 'Feedback',
+	'about-feedback-0' => 'Want to tell us something about the app? Email me: %s',
+	'about-heading-rate' => 'Rate the app please!',
+	'about-rate-0' => 'If you like this app, please rate it 5 stars in the Android Market :)',
+
+	//  Lyrics window 
+	'gracenote-takedown' => 'Doh! Unfortunately, we are not licensed to display the full lyrics for this song at the moment (this happens for less than 1% of our songs). Please try again next week.',
+	'lyrics-artist-byline' => 'by %s',
+	'ringtone-matcher-by-song' => 'Send %s Ringtone to your Cell'
+);
+
 // Lang: cs
 $messages['cs'] = array(
 	//  Tabs 
@@ -91,54 +139,6 @@ $messages['de'] = array(
 	'gracenote-takedown' => 'Mist! Leider sind wir im Moment nicht berechtigt, dir den gesamten Songtext für dieses Lied anzuzeigen (das trifft auf weniger als 1% unserer Songs zu). Bitte versuch es nächste Woche noch einmal.',
 	'lyrics-artist-byline' => 'von %s',
 	'ringtone-matcher-by-song' => 'Hol dir %s als Klingelton auf dein Handy'
-);
-
-// Lang: en
-$messages['en'] = array(
-	//  Tabs 
-	'app-loading' => 'Loading...',
-	'app-tab-search' => 'Search',
-	'app-tab-about' => 'About',
-	'app-tab-browse' => 'A..Z',
-	'app-tab-sotd' => 'SotD',
-
-	//  Networking / Connectivity Issues 
-	'app-async-error-title' => 'Oops',
-	'app-async-error-message' => 'Temporary problem with connection. Please try again later.',
-	'app-nonetwork-dialog-title' => 'Network unavailable',
-	'app-nonetwork-dialog-message' => 'No network connection detected.',
-	'app-nonetwork-dialog-close-button' => 'Ok',
-
-	//  Search tab 
-	'search-go' => 'Go!',
-	'search-hint-text' => 'ex: \'John Lennon:Imagine\'',
-	'search-no-match-found' => 'No match found.',
-	'search-no-match-found-query' => 'Searched for: %s',
-	'search-results-title' => 'Search results for: %s',
-
-	//  Login dialog 
-	'login-label' => 'Login to LyricWiki',
-	'login-username-hint' => 'Username',
-	'login-password-hint' => 'Password',
-	'login-submit-button' => 'Login',
-
-	//  About tab 
-	'about-heading' => 'LyricWiki',
-	'about-credits' => 'by %s',
-	'about-heading-tips' => 'Searching',
-	'about-tips-0' => 'Start typing an artist name to auto-complete as you type.',
-	'about-tips-1' => 'The pictures on the main screen are the Top 9 songs on iTunes right now.',
-	'about-heading-licensing' => 'Copyrights',
-	'about-licensing-0' => 'This app is 100% legal. Royalties are paid to song rights-holders through Gracenote - just like on the LyricWiki website.',
-	'about-heading-feedback' => 'Feedback',
-	'about-feedback-0' => 'Want to tell us something about the app? Email me: %s',
-	'about-heading-rate' => 'Rate the app please!',
-	'about-rate-0' => 'If you like this app, please rate it 5 stars in the Android Market :)',
-
-	//  Lyrics window 
-	'gracenote-takedown' => 'Doh! Unfortunately, we are not licensed to display the full lyrics for this song at the moment (this happens for less than 1% of our songs). Please try again next week.',
-	'lyrics-artist-byline' => 'by %s',
-	'ringtone-matcher-by-song' => 'Send %s Ringtone to your Cell'
 );
 
 // Lang: es
@@ -439,4 +439,3 @@ $messages['sv'] = array(
 	'lyrics-artist-byline' => 'av %s',
 	'ringtone-matcher-by-song' => 'Skicka %s Rington till din Mobil.'
 );
-
