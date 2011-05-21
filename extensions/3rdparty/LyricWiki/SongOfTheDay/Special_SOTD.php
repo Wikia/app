@@ -9,7 +9,7 @@ EOT;
 }
 $wgExtensionCredits['specialpage'][] = array(
   'name' => 'SOTD',
-  'version' => '0.0.4',
+  'version' => '0.0.5',
   'author' => '[http://lyrics.wikia.com/User:LWChris Christoph Engels]',
   'url' => 'http://lyrics.wikia.com/User:LWChris',
   'descriptionmsg' => 'sotd-desc',
