@@ -3,6 +3,7 @@
 * TODO: Add comments to SQL queries (so ops ppl and other engineers will know what's going on).
 * TODO: When a user hits the page, automatically display their nominations on it (the token thing can probably go away & we can just use id's instead).
 * TODO: Use our code-conventions for linebreaks (not a huge issue).
+* TODO: Tidy up code: More subfunctions and variables with telling names to split the if-else tree.
 */
 
 class SOTD extends SpecialPage
@@ -11,7 +12,7 @@ class SOTD extends SpecialPage
 	{
 		parent::__construct( 'SOTD' );
 		wfLoadExtensionMessages('SOTD');
-		global $errors, $errorlist, $wgOut, $wgExtensionsPath, $wgStyleVersion;
+		global $errors, $errorlist, $wgOut;
 		$wgOut->addStyle(AssetsManager::getInstance()->getOneLocalURL('extensions/3rdparty/LyricWiki/SongOfTheDay/Special_SOTD.css'));
 		$errors = array ( 'set' => false );
 		$errorlist = '';
@@ -126,7 +127,7 @@ class SOTD extends SpecialPage
 
 	function getGoEarID( $url )
 	{ # Retrieve the GoEar audio ID from a complete URL
-	  $parts = explode( '/listen' , $url );
+		$parts = explode( '/listen' , $url );
 		$url = end ( $parts );
 		return preg_replace( '/win\.php\?.*v=|\.php\?.*v=|^\/|\W.*$/', '', $url );
 	}
@@ -140,8 +141,6 @@ class SOTD extends SpecialPage
 	{
 		return '<a href="http://www.youtube.com/'.$param.'" target="_blank">'.wfMsg('sotd-video').'</a>';
 	}
-
-
 
 	function makeUserLink( $userId, $userName )
 	{
@@ -165,6 +164,32 @@ class SOTD extends SpecialPage
 		return "[[$userLink|$userText]]";
 	}
 
+	function parsePreview ( $data )
+	{ # $data = array with fields: sn_userid, sn_username, sn_artist, sn_song, sn_reason, sn_audio*, sn_video*, sn_prefdate*, sn_occasion*
+	  # * this field has to be empty if not set for that nomination
+		$text = "\n".
+		"'''Song: \"[[".$data['sn_artist'].":".$data['sn_song']."|".$data['sn_song']."]]\" by [[".$data['sn_artist']."]]'''<br/>\n".
+		"'''Nominated by:''' " . $this->makeUserLink( $data['sn_userid'] , $data['sn_username'] ) . "<br/>\n".
+		"'''Reason:''' ".$data['sn_reason']."<br/>\n";
+		if ( ! empty( $data['sn_audio'] ) ) {
+			$text .= "'''Audio:''' {{audio|".$data['sn_audio']."}}<br/>\n";
+		}
+		if ( ! empty( $data['sn_video'] ) ) {
+			$text .= "'''Video:''' {{video|".$data['sn_video']."}}<br/>\n";
+		}
+		if ( ! empty( $data['sn_prefdate'] ) )
+		{
+			$prefDateF = "'''Preferred Date:''' " . date( 'F j, Y', $data['sn_prefdate'] );
+			if ( ! empty( $data['sn_occasion'] ) )
+			{
+				$prefDateF .= " (".$data['sn_occasion'].")";
+			};
+			$text .= "$prefDateF<br/>\n";
+		};
+		$text .= "\n";
+		return $text;
+	}
+
 	function execute( $par )
 	{
 		global $wgRequest, $wgOut, $wgUser, $wgPageName, $errors, $errorlist;
@@ -180,19 +205,9 @@ class SOTD extends SpecialPage
 			{
 				if ( $wgRequest->wasPosted() )
 				{
+					$dbw = wfGetDB( DB_MASTER );
 					if ( $action == "manage" )
 					{
-						$dbw = wfGetDB( DB_MASTER );
-						$clearOld = $wgRequest->getBool('clearold');
-						if ( $clearOld )
-						{
-							$aWeekAgo = mktime(0, 0, 0, date("m"), date("d")-7, date("Y"));
-							$aMonthAgo = mktime(0, 0, 0, date("m")-1, date("d"), date("Y"));
-							# Remove accepted or declined nominations with a preferred date more than a week ago
-							$dbw->delete( 'sotdnoms' , array( "sn_prefdate is not NULL", "sn_prefdate<'$aWeekAgo'", "sn_status>'2'" ) );
-							# Remove accepted or declined nominations submitted more than a month ago
-							$dbw->delete( 'sotdnoms' , array( "sn_nomdate<'$aMonthAgo'", "sn_status>'2'" ) );
-						}
 						$values = $wgRequest->getValues();
 						$ids = array_keys( $values );
 						$count = 0;
@@ -207,45 +222,18 @@ class SOTD extends SpecialPage
 									$sql = "SELECT * FROM sotdnoms WHERE sn_id=$id";
 									$result = $dbw->doQuery( $sql );
 									$row = $dbw->fetchRow( $result );
-									$id = $row['sn_id'];
-									$artist = $row['sn_artist'];
-									$song = $row['sn_song'];
-									$reason = $row['sn_reason'];
-									$alink = $row['sn_audio'];
-									$vlink = $row['sn_video'];
-									$prefDate = $row['sn_prefdate'];
-									$occasion = $row['sn_occasion'];
-									$text .= "\n".
-													"'''Song: \"[[$artist:$song|$song]]\" by [[$artist]]'''<br/>\n".
-													"'''Nominated by:''' " . $this->makeUserLink( $row['sn_userid'] , $row['sn_username'] ) . "<br/>\n".
-													"'''Reason:''' $reason<br/>\n";
-									if ( $alink ) {
-									$text .= "'''Audio:''' {{audio|$alink}}<br/>\n";
-									}
-									if ( $vlink ) {
-									$text .= "'''Video:''' {{video|$vlink}}<br/>\n";
-									}
-									if ( ! is_null( $prefDate ))
-									{
-										$prefDateF = "'''Preferred Date:''' " . date( 'F j, Y', $prefDate );
-										if ( ! empty( $occasion ) )
-										{
-											$prefDateF .= " ($occasion)";
-										};
-										$text .= "$prefDateF<br/>\n";
-									};
-									$text .= "\n<br/>";
+									$text .= $this->parsePreview( $row )."<br/>";
 									++$count;
 								}
 							}
-						}
+						};
 						if ( $count )
 						{	# Insert into database
 							$SOTDTitle = Title::makeTitle( NS_PROJECT, 'SOTD' );
 							$SOTDArticle = new Article( $SOTDTitle , 0 );
 							$content = $SOTDArticle->getContent();
-							// Make sure the previous nominations (if there are any) end with two br's in a row.
-							// If there are no previous nominations, there should still be one nomination.
+							# Make sure the previous nominations (if there are any) end with two br's in a row.
+							# If there are no previous nominations, there should still be one nomination.
 							$matches = array();
 							while (0 >= preg_match("/(==START==|<br\/?>)\s*<br\/>\s*$/is", $content, $matches))
 							{
@@ -253,14 +241,27 @@ class SOTD extends SpecialPage
 							};
 							$content .= $text;
 							$SOTDArticle->doEdit($content , ( $count > 1 ) ? "Accepted $count new nominations" : 'Accepted 1 new nomination' );
-						}
+						};
+						$clearOld = $wgRequest->getBool('clearold');
+						if ( $clearOld )
+						{
+							$aWeekAgo = mktime(0, 0, 0, date("m"), date("d")-7, date("Y"));
+							$aMonthAgo = mktime(0, 0, 0, date("m")-1, date("d"), date("Y"));
+							# Remove accepted or declined nominations with a preferred date more than a week ago
+							$dbw->delete( 'sotdnoms' , array( "sn_prefdate is not NULL", "sn_prefdate<'$aWeekAgo'", "sn_status>'2'" ) );
+							# Remove accepted or declined nominations submitted more than a month ago
+							$dbw->delete( 'sotdnoms' , array( "sn_nomdate<'$aMonthAgo'", "sn_status>'2'" ) );
+						};
 					}
 					else
 					{
 						$wgOut->addHTML(wfMsg('sotd-action-unknown') . "<br /><b>$action</b>");
 					}
 				}
-				$dbw = wfGetDB( DB_SLAVE );
+				else
+				{
+					$dbw = wfGetDB( DB_SLAVE );
+				}
 				$sql = 'SELECT * FROM sotdnoms';
 				$result = $dbw->doQuery( $sql );
 				$rows = $dbw->numRows( $result );
@@ -275,7 +276,7 @@ class SOTD extends SpecialPage
 					' . $source . '
 				</span>
 				<form method="post" id="manage-sotd">
-					<table cellspacing="0" cellpadding="3">
+					<table cellspacing="0" cellpadding="3" width="100%">
 						<tr>
 							<th>'.wfMsg('sotd-manage-id').'</th>
 							<th>'.wfMsg('sotd-manage-nomination').'</th>
@@ -331,8 +332,9 @@ class SOTD extends SpecialPage
 							}
 							$prefDateF = $wgOut->parseInline( $prefDateF );
 						};
+						$classes = array ('pending','modified','suitable','declined','accepted');
 						$wgOut->addHTML('
-						<tr class="' . strtolower( wfMsg('sotd-status-'.$status) ) . "\">
+						<tr class="' . $classes[ $status ] . "\">
 							<td class=\"id\">$id</td>
 							<td class=\"ta-center\">$nomination</td>
 							<td>$nominated</td>
@@ -395,7 +397,10 @@ class SOTD extends SpecialPage
 		{ # Edit mode subpage
 			$token = $wgRequest->getText('token');
 			$source = ( $canModify ) ? $wgOut->parseInline('[[' . $pagename . '/Admin|'.wfMsg('sotd-links-manage').']] | ') : '' ;
-			$source .= $wgOut->parseInline('[[' . $pagename . '|'.wfMsg('sotd-links-addone').']]');
+			$source .= $wgOut->parseInline('[[' .
+				$pagename . '|'.wfMsg('sotd-links-addone').']] | [['.
+				'LyricWiki:Song of the Day/Special page|'.wfMsg('sotd-links-help').']] | [['.
+				'LyricWiki:SOTD|'.wfMsg('sotd-links-queue').']]');
 			$wgOut->addHTML( '<span class="sotd-navlinks">
 				' . $source . '
 			</span>
@@ -475,26 +480,7 @@ class SOTD extends SpecialPage
 							$prefYear = '';
 							$prefdate = '0';
 						}
-						$text = "\n".
-										"'''Song: \"[[$artist:$song|$song]]\" by [[$artist]]'''<br/>\n".
-										"'''Nominated by:''' " . $this->makeUserLink( $row['sn_userid'] , $row['sn_username'] ) . "<br/>\n".
-										"'''Reason:''' $reason<br/>\n";
-						if ( $alink ) {
-						$text .= "'''Audio:''' {{audio|$alink}}<br/>\n";
-						}
-						if ( $vlink ) {
-						$text .= "'''Video:''' {{video|$vlink}}<br/>\n";
-						}
-						if ( ! is_null( $prefDate ))
-						{
-							$prefDateF = "'''Preferred Date:''' " . date( 'F j, Y', $prefDate );
-							if ( ! empty( $occasion ) )
-							{
-								$prefDateF .= " ($occasion)";
-							};
-							$text .= "$prefDateF<br/>\n";
-						};
-						$text .= "\n<br/>";
+						$preview = $this->parsePreview( $row )."<br/>";
 						$wgOut->addHTML( '<table cellspacing="0" cellpadding="3" id="edit-sotd">
 					<tr>
 						<td><label for="token">'.wfMsg('sotd-edit-token').':</label></td>
@@ -511,7 +497,7 @@ class SOTD extends SpecialPage
 					</tr>
 					<tr>
 						<td><label for="preview">'.wfMsg('sotd-edit-preview').':</label></td>
-						<td>'.$wgOut->parseInline( $text ).'</td>
+						<td>'.$wgOut->parseInline( $preview ).'</td>
 					</tr>
 					<tr>
 						<td colspan="2" class="ta-center">');
@@ -658,8 +644,12 @@ class SOTD extends SpecialPage
 					{ # Error: Not a valid date (e. g. "Feb 30")
 						$this->addError( 'prefdate' , 'invalid' );
 					}
-					elseif ( ! $mode == 'review' )
-					{	# Valid date, but maybe in the past? Check is skipped for review mode
+					elseif( $mode == 'review' )
+					{	# Valid date, further checks are skipped for review mode
+						$prefDate = mktime( 0, 0, 0, $prefMonth, $prefDay, $prefYear + date('Y'));
+					}
+					else
+					{	# Valid date, but maybe in the past?
 						$prefDate = mktime( 0, 0, 0, $prefMonth, $prefDay, $prefYear + date('Y'));
 						if ( $prefDate <= time() )
 						{ # Error: Date was in the past
@@ -702,42 +692,24 @@ class SOTD extends SpecialPage
 					{
 						$now = time();
 						$token = md5( $now );
-						$dbw->insert('sotdnoms', array(
-							'sn_userid'		=> $wgUser->getID(),
+						$data = array(
+							'sn_userid'	=> $wgUser->getID(),
 							'sn_username'	=> $wgUser->getName(),
-							'sn_artist'		=> $artist,
-							'sn_song'			=> $song,
-							'sn_reason'		=> $reason,
-							'sn_video'		=> $vlink,
-							'sn_audio'		=> $alink,
+							'sn_artist'	=> $artist,
+							'sn_song'	=> $song,
+							'sn_reason'	=> $reason,
+							'sn_video'	=> $vlink,
+							'sn_audio'	=> $alink,
 							'sn_prefdate'	=> $prefDate,
-							'sn_occasion' => $occasion,
+							'sn_occasion'	=> $occasion,
 							'sn_nomdate'	=> $now,
-							'sn_token'		=> $token
-						));
-						$text = "\n".
-										"'''Song: \"[[$artist:$song|$song]]\" by [[$artist]]'''<br/>\n".
-										"'''Nominated by:''' " . $this->makeUserLink( $wgUser->getID() , $wgUser->getName() ) . "<br/>\n".
-										"'''Reason:''' $reason<br/>\n";
-						if ( $alink ) {
-						$text .= "'''Audio:''' {{audio|$alink}}<br/>\n";
-						}
-						if ( $vlink ) {
-						$text .= "'''Video:''' {{video|$vlink}}<br/>\n";
-						}
-						if ( ! is_null( $prefDate ))
-						{
-							$prefDateF = "'''Preferred Date:''' " . date( 'F j, Y', $prefDate );
-							if ( ! empty( $occasion ) )
-							{
-								$prefDateF .= " ($occasion)";
-							};
-							$text .= "$prefDateF<br/>\n";
-						};
-						$text .= "\n";
+							'sn_token'	=> $token
+						);
+						$dbw->insert('sotdnoms', $data);
+						$preview = $this->parsePreview( $data );
 						$wgOut->addHTML( wfMsgExt('sotd-thank-you', 'parseinline', array ( $token )) . '<br />
 					<h3>'.wfMsg('sotd-edit-preview').'</h3>
-					' .	$wgOut->parseInline( $text ) . '
+					' .	$wgOut->parseInline( $preview ) . '
 					<p>
 						<a href="'.$this->getTitle()->getLocalURL() .'/Edit?token='.$token.'" target="_self" title="'.$token.'">'.wfMsg('sotd-links-edit').'</a> | ' .
 					'<a href="'.$this->getTitle()->getLocalURL() .'" target="_self" title="'.$pagename.'">'.wfMsg('sotd-links-addone').'</a>
@@ -757,41 +729,25 @@ class SOTD extends SpecialPage
 						{
 							$status = $row['sn_status'];
 							if ( ( $mode == 'review' ) && $canModify && ( $status < 4 ) )
-							{ # Silently perform changes without taking over the nomination (managers only)
-								$dbw->update('sotdnoms', array(
-									'sn_artist'		=> $artist,
-									'sn_song'			=> $song,
-									'sn_reason'		=> $reason,
-									'sn_video'		=> $vlink,
-									'sn_audio'		=> $alink,
-									'sn_prefdate'	=> $prefDate,
+							{ # Silently perform an update without taking over the nomination (managers only)
+								$data = array(
+									'sn_userid'   => $row['sn_userid'],
+									'sn_username' => $row['sn_username'],
+									'sn_artist'   => $artist,
+									'sn_song'     => $song,
+									'sn_reason'   => $reason,
+									'sn_video'    => $vlink,
+									'sn_audio'    => $alink,
+									'sn_prefdate' => $prefDate,
 									'sn_occasion' => $occasion,
-									'sn_token'		=> $token
-								), array("sn_token='$token'", "sn_status<'4'"));
-								$wgOut->addHTML( $wgOut->parse( wfMsg('sotd-edit-success-review') ) ); 
-								$text = "\n".
-										"'''Song: \"[[$artist:$song|$song]]\" by [[$artist]]'''<br/>\n".
-										"'''Nominated by:''' " . $this->makeUserLink( $wgUser->getID() , $wgUser->getName() ) . "<br/>\n".
-										"'''Reason:''' $reason<br/>\n";
-								if ( $alink ) {
-								$text .= "'''Audio:''' {{audio|$alink}}<br/>\n";
-								}
-								if ( $vlink ) {
-								$text .= "'''Video:''' {{video|$vlink}}<br/>\n";
-								}
-								if ( ! is_null( $prefDate ))
-								{
-									$prefDateF = "'''Preferred Date:''' " . date( 'F j, Y', $prefDate );
-									if ( ! empty( $occasion ) )
-									{
-										$prefDateF .= " ($occasion)";
-									};
-									$text .= "$prefDateF<br/>\n";
-								};
-								$text .= "\n";
+									'sn_token'    => $token
+								);
+								$dbw->update('sotdnoms', $data , array("sn_token='$token'", "sn_status<'4'"));
+								$preview = $this->parsePreview( $data );
+								$wgOut->addHTML( $wgOut->parse( wfMsg('sotd-edit-success-review') ) );
 								$wgOut->addHTML( wfMsgExt('sotd-thank-you', 'parseinline', array ( $token )) . '<br />
 					<h3>'.wfMsg('sotd-edit-preview').'</h3>
-					' .	$wgOut->parseInline( $text ) . '
+					' .	$wgOut->parseInline( $preview ) . '
 					<p>
 						<a href="'.$this->getTitle()->getLocalURL() .'/Edit?token='.$token.'" target="_self" title="'.$token.'">'.wfMsg('sotd-links-edit').'</a> | ' .
 					'<a href="'.$this->getTitle()->getLocalURL() .'" target="_self" title="'.$pagename.'">'.wfMsg('sotd-links-addone').'</a>
@@ -803,44 +759,26 @@ class SOTD extends SpecialPage
 								if ( $status == 2 )
 								{	# If the status was already set to "suitable", inform the manager about the modification
 									$status = 1;
-								}
-								$dbw->update('sotdnoms', array(
-									'sn_userid'		=> $wgUser->getID(),
-									'sn_username'	=> $wgUser->getName(),
-									'sn_artist'		=> $artist,
-									'sn_song'			=> $song,
-									'sn_reason'		=> $reason,
-									'sn_video'		=> $vlink,
-									'sn_audio'		=> $alink,
-									'sn_prefdate'	=> $prefDate,
-									'sn_occasion' => $occasion,
-									'sn_nomdate'	=> $now,
-									'sn_token'		=> $token,
-									'sn_status'   => $status
-								), array("sn_token='$token'", "sn_status<'3'"));
-								$wgOut->addHTML( $wgOut->parse( wfMsg('sotd-edit-success') ) ); 
-								$text = "\n".
-										"'''Song: \"[[$artist:$song|$song]]\" by [[$artist]]'''<br/>\n".
-										"'''Nominated by:''' " . $this->makeUserLink( $wgUser->getID() , $wgUser->getName() ) . "<br/>\n".
-										"'''Reason:''' $reason<br/>\n";
-								if ( $alink ) {
-								$text .= "'''Audio:''' {{audio|$alink}}<br/>\n";
-								}
-								if ( $vlink ) {
-								$text .= "'''Video:''' {{video|$vlink}}<br/>\n";
-								}
-								if ( ! is_null( $prefDate ))
-								{
-									$prefDateF = "'''Preferred Date:''' " . date( 'F j, Y', $prefDate );
-									if ( ! empty( $occasion ) )
-									{
-										$prefDateF .= " ($occasion)";
-									};
-									$text .= "$prefDateF<br/>\n";
 								};
-								$text .= "\n";
+								$data = array(
+									'sn_userid'	=> $wgUser->getID(),
+									'sn_username'	=> $wgUser->getName(),
+									'sn_artist'	=> $artist,
+									'sn_song'	=> $song,
+									'sn_reason'	=> $reason,
+									'sn_video'	=> $vlink,
+									'sn_audio'	=> $alink,
+									'sn_prefdate'	=> $prefDate,
+									'sn_occasion'	=> $occasion,
+									'sn_nomdate'	=> $now,
+									'sn_token'	=> $token,
+									'sn_status'	=> $status
+								);
+								$dbw->update('sotdnoms', $data , array("sn_token='$token'", "sn_status<'3'"));
+								$wgOut->addHTML( $wgOut->parse( wfMsg('sotd-edit-success') ) );
+								$preview = $this->parsePreview( $data );
 								$wgOut->addHTML( '<h3>'.wfMsg('sotd-edit-preview').'</h3>
-					' .	$wgOut->parseInline( $text ) . '
+					' .	$wgOut->parseInline( $preview ) . '
 					<p>
 						<a href="'.$this->getTitle()->getLocalURL() .'/Edit?token='.$token.'" target="_self" title="'.$token.'">'.wfMsg('sotd-links-edit').'</a> | ' .
 					'<a href="'.$this->getTitle()->getLocalURL() .'" target="_self" title="'.$pagename.'">'.wfMsg('sotd-links-addone').'</a>
@@ -891,7 +829,10 @@ class SOTD extends SpecialPage
 					$video="watch?v=$vlink";
 				}
 				$source = ( $canModify ) ? $wgOut->parseInline('[[' . $pagename . '/Admin|'.wfMsg('sotd-links-manage').']] | ') : '' ;
-				$source .= $wgOut->parseInline('[[' . $pagename . '/Edit|'.wfMsg('sotd-links-view').']]');
+				$source .= $wgOut->parseInline('[[' .
+				$pagename . '/Edit|'.wfMsg('sotd-links-view').']] | [['.
+					'LyricWiki:Song of the Day/Special page|'.wfMsg('sotd-links-help').']] | [['.
+					'LyricWiki:SOTD|'.wfMsg('sotd-links-queue').']]');
 				$wgOut->addHTML( '<span class="sotd-navlinks">
 					' . $source . '
 				</span>
