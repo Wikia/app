@@ -47,7 +47,7 @@ $messages['en'] = array(
 	'wikia-editor-notices-dialog-title' => 'Notices details',
 
 	// Short notices
-	'nonunicodebrowser-notice' => "'''Warning: Your browser is not unicode compliant.'''",
+	'nonunicodebrowser-notice' => "'''Warning: Your browser is not Unicode compliant.'''",
 	'rev-deleted-text-notice' => "This page revision has been '''deleted'''. [More info]",
 	'readonlywarning-notice' => "'''Warning: The database has been locked for maintenance.''' [More info]",
 	'anoneditwarning-notice' => '',
