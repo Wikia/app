@@ -51,7 +51,7 @@ $messages['en'] = array(
 	'about-heading-feedback' => 'Feedback',
 	'about-feedback-0' => 'Want to tell us something about the app? Email me: %s',
 	'about-heading-rate' => 'Rate the app please!',
-	'about-rate-0' => 'If you like this app, please rate it 5 stars in the Android Market :)',
+	'about-rate-0' => 'If you like this app, please rate it 5 stars in the Android Market!',
 
 	//  Lyrics window 
 	'gracenote-takedown' => 'Doh! Unfortunately, we are not licensed to display the full lyrics for this song at the moment (this happens for less than 1% of our songs). Please try again next week.',
