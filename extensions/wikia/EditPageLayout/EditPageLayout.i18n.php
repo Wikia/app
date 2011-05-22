@@ -61,7 +61,7 @@ $messages['en'] = array(
 	'prefs-general' => 'General',
 	'prefs-starting-an-edit' => 'Starting an edit',
 	'prefs-editing-experience' => 'Editing experience',
-	'prefs-monobook-layout' => 'Monobook layout only',
+	'prefs-monobook-layout' => 'MonoBook layout only',
 	'prefs-editarea-size' => 'Size of editing window (MonoBook layout only)',
 
 	'tog-editsection' => 'Enable section editing via edit links',
