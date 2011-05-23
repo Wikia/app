@@ -1,4 +1,4 @@
-<?php
+U<?php
 /**
 * TODO: Add comments to SQL queries (so ops ppl and other engineers will know what's going on).
 * TODO: When a user hits the page, automatically display their nominations on it (the token thing can probably go away & we can just use id's instead).
@@ -13,7 +13,7 @@ class SOTD extends SpecialPage
 		parent::__construct( 'SOTD' );
 		wfLoadExtensionMessages('SOTD');
 		global $errors, $errorlist, $wgOut;
-		# $wgOut->addStyle(AssetsManager::getInstance()->getOneLocalURL('extensions/3rdparty/LyricWiki/SongOfTheDay/Special_SOTD.css'));
+		$wgOut->addStyle(AssetsManager::getInstance()->getOneLocalURL('extensions/3rdparty/LyricWiki/SongOfTheDay/Special_SOTD.css'));
 		$errors = array ( 'set' => false );
 		$errorlist = '';
 	}
