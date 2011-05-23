@@ -9,6 +9,7 @@ class GameGuidesController extends WikiaController {
 	const API_VERSION = 1;
 	const API_REVISION = 6;
 	const APP_NAME = 'GameGuides';
+	const SKIN_NAME = 'wikiaapp';
 	
 	private $mModel = null;
 	private $mPlatform = null;
@@ -31,84 +32,106 @@ class GameGuidesController extends WikiaController {
 	
 	/*
 	 * @brief Returns a list of recommended wikis with some data from Oasis' ThemeSettings
+	 * 
+	 * @requestParam integer $limit [OPTIONAL] the maximum number of results for this call
+	 * @requestParam integer $batch [OPTIONAL] the batch of results for this call, used only when $limit is passed in
+	 * 
+	 * @responseParam see GameGuidesModel::getWikiList
+	 * @see GameGuidesModel::getWikiList
 	 */
 	public function listWikis(){
 		$this->wf->profileIn( __METHOD__ );
 		$this->track( array( 'list_games' ) );
 		
 		$limit = $this->request->getInt( 'limit', null );
-		$offset = $this->request->getInt( 'offset', 0 );
+		$batch = $this->request->getInt( 'batch', 1 );
+		$result = $this->mModel->getWikisList( $limit, $batch );
 		
-		$this->setVal( 'data', $this->mModel->getWikisList( $limit, $offset ) );
+		foreach( $result as $key => $value ){
+			$this->setVal( $key, $value );
+		}
 		
 		$this->wf->profileOut( __METHOD__ );
 	}
 	
 	/*
-	 * Returns a collection of data for the current wiki to use in the
+	 * @brief Returns a collection of data for the current wiki to use in the
 	 * per-wiki screen of the application
 	 * 
-	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+	 * @responseParam see GameGuidesModel::getWikiContents
+	 * @see GameGuidesModel::getWikiContents
 	 */
 	public function listWikiContents(){
-		wfProfileIn( __METHOD__ );
-		global $wgDBname;
+		$this->wf->profileIn( __METHOD__ );
+		$this->track( array( 'list_wiki_contents', $this->wg->DBname ) );
 		
-		$this->track( array( 'list_wiki_contents', $wgDBname ) );
+		$result = $this->mModel->getWikiContents();
 		
-		$ret = $this->mModel->getWikiContents();
+		foreach( $result as $key => $value ){
+			$this->setVal( $key, $value );
+		}
 		
-		$this->setContentType( EzApiContentTypes::JSON );
-		$this->setResponseContent( Wikia::json_encode( $ret ) );
-		
-		wfProfileOut( __METHOD__ );
-		return $ret;
+		$this->wf->profileOut( __METHOD__ );
 	}
 	
 	/*
-	 * Returns all the contents associated to an entry for the current wiki
+	 * @brief Returns all the contents associated to a category for the current wiki
 	 * 
-	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+	 * @requestParam string $category the name of the category to fetch contents from
+	 * @requestParam integer $limit [OPTIONAL] the maximum number of results for this call
+	 * @requestParam integer $batch [OPTIONAL] the batch of results for this call, used only when $limit is passed in
+	 * 
+	 * @responseParam see GameGuidesModel::getCategoryContents
+	 * @see GameGuidesModel::getCategoryContents
 	 */
-	public function listEntryContents(){
-		wfProfileIn( __METHOD__ );
-		global $wgDBname;
-		$entry = $this->getRequest()->getText('entry');
+	public function listCategoryContents(){
+		$this->wf->profileIn( __METHOD__ );
 		
-		$this->track( array( 'list_category_contents', $wgDBname, $entry ) );
+		$category = $this->getVal('category');
+		$this->track( array( 'list_category_contents', $this->wg->DBname, $category ) );
 		
-		$ret = $this->mModel->getCategoryContents( $this->getRequest()->getText('entry') );
+		$limit = $this->request->getInt( 'limit', null );
+		$batch = $this->request->getInt( 'batch', 1 );
+		$result = $this->mModel->getCategoryContents( $category, $limit, $batch );
 		
-		$this->setContentType( EzApiContentTypes::JSON );
-		$this->setResponseContent( Wikia::json_encode( $ret ) );
+		foreach( $result as $key => $value ){
+			$this->setVal( $key, $value );
+		}
 		
-		wfProfileOut( __METHOD__ );
-		return $ret;
+		$this->wf->profileOut( __METHOD__ );
 	}
 	
 	/**
-	 * Returns the results from a local wiki search for the passed in term
+	 * @brief Returns the results from a local wiki search for the passed in term
 	 * 
-	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+	 * @reqeustParam string $term the term to search for
+	 * @requestParam integer $limit [OPTIONAL] the maximum number of results for this call
+	 * @requestParam integer $batch [OPTIONAL] the batch of results for this call, used only when $limit is passed in
+	 * 
+	 * @responseParam see GameGuidesModel::getSearchResults
+	 * @see GameGuidesModel::getSearchResults
 	 */
-	public function listLocalSearchResults(){
-		wfProfileIn( __METHOD__ );
-		global $wgDBname;
+	public function search(){
+		$this->wf->profileIn( __METHOD__ );
 		
-		$this->track( array( 'local_search', $wgDBname ) );
+		$this->track( array( 'local_search', $this->wg->DBname ) );
 		
-		$ret = $this->mModel->getLocalSearchResults( $this->getRequest()->getText('term') );
+		$term = $this->getVal( 'term' );
+		$limit = $this->request->getInt( 'limit', GameGuidesModel::SEARCH_RESULTS_LIMIT );
+		$result = $this->mModel->getSearchResults( $term, $limit );
 		
-		$this->setContentType( EzApiContentTypes::JSON );
-		$this->setResponseContent( Wikia::json_encode( $ret ) );
+		foreach( $result as $key => $value ){
+			$this->setVal( $key, $value );
+		}
 		
-		wfProfileOut( __METHOD__ );
-		return $ret;
+		$this->wf->profileOut( __METHOD__ );
 	}
 	
 	/**
 	 * @brief Tracks API requests via Scribe
+	 * 
 	 * @param array $trackingData Required, a set of strings/numbers that will be concatenated with '/'
+	 * 
 	 * @see MobileStatsController
 	 */
 	private function track( $trackingData ){

@@ -9,8 +9,6 @@ class MobileStatsController extends WikiaController {
 	
 	/**
 	 * @brief Tracks mobile apps' via Scribe
-	 *
-	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 * 
 	 * @requestParam string $appName The name of the mobile app requesting for tracking
 	 * @requestParam array $URIData A set of values that will be concatenated with '/' in an "action URI"

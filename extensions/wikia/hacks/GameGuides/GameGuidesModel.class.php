@@ -1,6 +1,7 @@
 <?php
 /**
  * A model for the Game Guides controller
+ * 
  * @author Federico "Lox" Lucignano
  */
 
@@ -11,7 +12,7 @@ class GameGuidesModel{
 	const WF_WIKI_RECOMMEND_VAR = 'wgWikiaGameGuidesRecommend';
 	const MEMCHACHE_KEY_PREFIX = 'WikiaGameGuides';
 	const CACHE_DURATION = 86400;//24h
-	const SEARCH_RESULTS_LIMIT = 100;
+	const SEARCH_RESULTS_LIMIT = 50;
 	const CATEGORY_RESULTS_LIMIT = 0;//no limits for now
 	
 	private $app;
@@ -21,15 +22,25 @@ class GameGuidesModel{
 	}
 	
 	/*
-	 * Gets a list of recommended wikis through WikiFactory
+	 * @brief Gets a list of recommended wikis through WikiFactory
 	 * 
-	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+	 * @param integer $limit [OPTIONAL] the maximum number of results
+	 * @param int $batch [OPTIONAL] the batch of results, used only when $limit is passed in
+	 * 
+	 * @return array a paginated batch (see wfPaginateArray), each item is an hash with the following keys:
+	 * * string name wiki's name
+	 * * string color wiki's wordmark text color
+	 * * string backgroundColor wiki's background color
+	 * * string domain wiki's domain
+	 * * wordmarkUrl wiki's wordmark image URL
+	 * 
+	 * @see wfPaginateArray
 	 */
-	public function getWikisList( $limit = null, $offset = 0 ){
+	public function getWikisList( $limit = null, $batch = 1 ){
 		$this->app->wf->profileIn( __METHOD__ );
+		
 		$cacheKey = $this->generateCacheKey( __METHOD__ );
 		$games = $this->loadFromCache( $cacheKey );
-		$ret = Array();
 		
 		if ( empty( $games ) ) {
 			$games = Array();
@@ -62,38 +73,38 @@ class GameGuidesModel{
 			$this->storeInCache( $cacheKey , $games );
 		}
 		
-		if ( !empty( $limit ) ) {
-			$ret['items'] = array_slice( $games, $offset, $limit );
-			$ret['next'] = ( ( $offset + $limit ) < count( $games ) ) ? $offset + count( $ret['items'] ) : false;
-		} else {
-			$ret['items'] = $games;
-		}
+		$ret = $this->app->wf->paginateArray( $games, $limit, $batch );
 		
 		$this->app->wf->profileOut( __METHOD__ );
 		return $ret;
 	}
 	
 	/*
-	 * Returns a structure representing application-related content for the current wiki
+	 * @brief Returns a structure representing application-related content for the current wiki
 	 * 
-	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+	 * @return Array an hash with the following keys:
+	 * * string searchURL the URL for the local Search page
+	 * * array entries a list of contect categories, each item has the following structure:
+	 * ** string title the label to use for this category
+	 * ** string categoryName the actual name of the category
+	 * ** string icon the icon ID to use for this category 
 	 */
-	public function getWikiContents($limit = null){
-		wfProfileIn( __METHOD__ );
-		$cacheKey = $this->generateCacheKey( __METHOD__ . ":limit-{$limit}" );
+	public function getWikiContents(){
+		$this->app->wf->profileIn( __METHOD__ );
+		
+		$cacheKey = $this->generateCacheKey( __METHOD__ );
 		$ret = $this->loadFromCache( $cacheKey );
 		
 		if ( empty( $ret ) ) {
 			$ret = Array();
-			wfLoadExtensionMessages( 'WikiaGameGuides' );
+			$this->app->wf->loadExtensionMessages( 'GameGuides' );
 			
-			$searchTitle = Title::newFromText( 'Search', NS_SPECIAL );
-			$ret[ 'searchURL' ] = $searchTitle->getLocalUrl( array( 'useskin' => 'wikiaapp' ) );
-			
+			$searchTitle = F::build( 'Title', array( 'Search', NS_SPECIAL ), 'newFromText' );
+			$ret[ 'searchURL' ] = $searchTitle->getLocalUrl( array( 'useskin' => GameGuidesController::SKIN_NAME ) );
 			$ret[ 'entries' ] = Array();
 			
 			$entries = array_filter(
-				explode( "\n", strip_tags( str_replace( array( '<br>', '<br/>', '<br />' ), "\n" , wfMsgForContent( 'wikiagameguides-contents' ) ) ) ),
+				explode( "\n", strip_tags( str_replace( array( '<br>', '<br/>', '<br />' ), "\n" , $this->app->wf->msgForContent( 'wikiagameguides-contents' ) ) ) ),
 				array( __CLASS__, 'verifyElement')
 			);
 			
@@ -111,189 +122,111 @@ class GameGuidesModel{
 			$this->storeInCache($cacheKey , $ret);
 		}
 		
-		wfProfileOut( __METHOD__ );
+		$this->app->wf->profileOut( __METHOD__ );
 		return $ret;
 	}
 	
 	/*
-	 * Gets data for a Wiki's entry
+	 * @brief Gets data for a Wiki's entry
 	 * 
-	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+	 * @param integer $limit [OPTIONAL] the maximum number of results for this call
+	 * @param integer $batch [OPTIONAL] the batch of results, used only when $limit is passed in
+	 * @param integer $totalLimit [OPTIONAL] the maximum total number of results to fetch from the selected category
+	 * 
+	 * @return array a paginated batch (see wfPaginateArray), each item is an hash with the following keys:
+	 * * string title content's title
+	 * * string url content's URL (local to the wiki)
+	 * 
+	 * @see wfPaginateArray
 	 */
-	public function getCategoryContents( $categoryName, $limit = self::CATEGORY_RESULTS_LIMIT ) {
-		wfProfileIn( __METHOD__ );
+	public function getCategoryContents( $categoryName, $limit = null, $batch = 1, $totalLimit = self::CATEGORY_RESULTS_LIMIT ) {
+		$this->app->wf->profileIn( __METHOD__ );
+		
 		$categoryName = trim( $categoryName );
-		$category = Category::newFromName( $categoryName );
+		$category = F::build( 'Category', array( $categoryName ), 'newFromName' );
 		
 		if ( $category ) {
 			$cacheKey = $this->generateCacheKey(
 				__METHOD__ .
-				":category-{$category->getID()}" .
-				":limit-{$limit}"
+				":{$category->getID()}" .
+				":{$totalLimit}"
 			);
-			$ret = $this->loadFromCache( $cacheKey );
+			$contents = $this->loadFromCache( $cacheKey );
 			
-			if ( empty( $ret ) ) {
-				$ret = Array();
-				$titles = $category->getMembers($limit);
+			if ( empty( $contents ) ) {
+				$contents = Array();
+				$titles = $category->getMembers( $totalLimit );
 				
 				foreach( $titles as $title ) {
-					$ret[] = Array(
+					$contents[] = array(
 						'title' => $title->getText(),
-						//TODO: replace temporary solution to reach the App skin
 						'url' => $title->getLocalUrl( array( 'useskin' => 'wikiaapp' ) )
 					);
 				}
+				
+				$this->storeInCache( $cacheKey , $contents );
 			}
-			
-			$this->storeInCache($cacheKey , $ret);
 		} else {
-			wfProfileOut( __METHOD__ );
-			throw new EzApiException( "No data for '{$categoryName}'" );
+			$this->app->wf->profileOut( __METHOD__ );
+			throw new WikiaException( "No data for '{$categoryName}'" );
 		}
 		
-		wfProfileOut( __METHOD__ );
+		$ret = $this->app->wf->paginateArray( $contents, $limit, $batch );
+		
+		$this->app->wf->profileOut( __METHOD__ );
 		return $ret;
 	}
 	
 	
 	/*
-	 * Searches for a term wikia-wide
+	 * @brief Searches for a term on the current wiki
 	 * 
-	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+	 * @param string $term the term to search for
+	 * @param integer $totalLimit [OPTIONAL] the maximum total number of results to fetch from the search index
+	 * 
+	 * @return array a results set produced by SimpleSearchController::localSearch
+	 * @see SimpleSearchController::localSearch
 	 */
-	public function getLocalSearchResults($term, $limit = self::SEARCH_RESULTS_LIMIT){
-		wfProfileIn( __METHOD__ );
+	public function getSearchResults( $term, $totalLimit = self::SEARCH_RESULTS_LIMIT ){
+		$this->app->wf->profileIn( __METHOD__ );
 		
-		/*
-		die(var_dump(F::app()->sendRequest( 'SimpleSearch', 'localSearch', array( 'key' => $term, 'limit' => $limit ) )->getVal('textResults')));
-		exit;
-		*/
-		
-		global $wgEnableCrossWikiaSearch, $wgDisableTextSearch;
 		$term = trim( $term );
 		$ret = Array();
 		
 		if ( !empty( $term ) ) {
-			wfLoadExtensionMessages( 'WikiaGameGuides' );
+			$this->app->wf->loadExtensionMessages( 'GameGuides' );
+			
 			$cacheKey = $this->generateCacheKey(
 				__METHOD__ .
-				':term-' .
-				str_replace( ' ',  '_', $term ) ./* no spaces in memcache keys */
-				":limit-{$limit}"
+				':' .
+				str_replace( array( ' ', "\n", "\t", "\r" ),  '_', $term ) ./* no spaces in memcache keys */
+				":{$totalLimit}"
 			);
 			$ret = $this->loadFromCache( $cacheKey );
 			
 			if ( empty( $ret ) ) {
-				//This is set in WF, in this case we want only local results
-				$wgEnableCrossWikiaSearch = false;
-				$ret = Array();
+				$searchResponse = F::app()->sendRequest( 'SimpleSearch', 'localSearch', array(
+					'key' => $term,
+					'limit' => $totalLimit,
+					'urlParams' => array( 'useskin' => 'wikiaapp' )
+				) );
 				
-				$search = SearchEngine::create();
-				$search->setLimitOffset( $limit );
-				//We need only main namespace results, ad that one
-				//is searched by default
-				//$search->setNamespaces( $this->namespaces);
-				$search->showRedirects = true;
-				
-				$term = $search->transformSearchTerm( $term );
-				$rewritten = $search->replacePrefixes( $term );
-				$titleMatches = $search->searchTitle( $rewritten );
-				$textMatches = $search->searchText( $rewritten );
-				
-				if ( !( ( $search instanceof SearchErrorReporting ) && $search->getError() ) ) {
-					// did you mean... suggestions
-					if ( $textMatches && $textMatches->hasSuggestion() ) {
-						$ret[ 'didYouMeanQuery' ] = $textMatches->getSuggestionQuery();
-						$ret[ 'didYouMeanSnippet' ] = $textMatches->getSuggestionSnippet();
-					}
-					
-					if ( empty( $wgDisableTextSearch ) ) {
-						//count number of results
-						$num = ( $titleMatches ? $titleMatches->numRows() : 0 ) +
-							( $textMatches ? $textMatches->numRows() : 0);
-						$totalNum = 0;
-						
-						if ( $titleMatches && !is_null( $titleMatches->getTotalHits() ) ) {
-							$totalNum += $titleMatches->getTotalHits();
-						}
-						
-						if ( $textMatches && !is_null( $textMatches->getTotalHits() ) ) {
-							$totalNum += $textMatches->getTotalHits();
-						}
-				
-						// Sometimes the search engine knows there are too many hits
-						if ( !( $titleMatches instanceof SearchResultTooMany ) ) {
-							// show number of results
-							$ret[ 'resultsCount' ] = $num;
-							$ret[ 'resultsTotalCount' ] = $totalNum;
-							
-							//MW hooks
-							if( $num ) {
-								wfRunHooks(
-									'SpecialSearchResults',
-									array( $term, &$titleMatches, &$textMatches )
-								);
-							} else {
-								wfRunHooks( 'SpecialSearchNoResults', array( $term ) );
-							}
-							
-							$this->processSearchResults( $titleMatches, 'title', $ret );
-							$this->processSearchResults( $textMatches, 'text', $ret );
-							
-							$this->storeInCache($cacheKey, $ret, 1800 /*30min*/);
-						} else {
-							wfProfileOut( __METHOD__ );
-							throw new EzApiException( 'Too many results' );
-						}
-					} else {
-						wfProfileOut( __METHOD__ );
-						throw new EzApiException( 'Search disabled' );
-					}
-				} else {
-					wfProfileOut( __METHOD__ );
-					throw new EzApiException( "Search error: {$search->getError()}");
-				}
+				$ret = $searchResponse->getData();
 			}
+			
+			$this->storeInCache( $cacheKey , $ret );
 		}
 		
 		wfProfileOut( __METHOD__ );
 		return $ret;
-	}
-	
-	private function processSearchResults( $matches, $type, &$output ) {
-		if ( $matches ) {
-			if ( $matches->numRows() ) {
-				global $wgContLang;
-				/*$terms = $wgContLang->convertForSearchResult(
-					$matches->termMatches()
-				);*/
-				
-				$output[ "{$type}MatchesInfo" ] = $matches->getInfo();
-				$output[ "{$type}Matches" ] = Array();
-				
-				while ( $result = $matches->next() ) {
-					if ( !$result->isBrokenTitle() && !$result->isMissingRevision() ) {
-						$title = $result->getTitle();
-						$output[ "{$type}Matches" ][] = Array(
-							'title' => $title->getText(),
-							'link' => $title->getLocalUrl( array( 'useskin' => 'wikiaapp' ) )
-							//'terms' => $terms
-						);
-					}
-				}
-			}
-			
-			$matches->free();
-		}
 	}
 	
 	private function generateCacheKey( $token ){
 		return $this->app->wf->memcKey( $token, GameGuidesController::API_VERSION . '.' . GameGuidesController::API_REVISION ); 
 	}
 	
-	private function loadFromCache($key){
-		$this->app->wg->memc->get($key);
+	private function loadFromCache( $key ){
+		$this->app->wg->memc->get( $key );
 	}
 	
 	private function storeInCache( $key, $value, $duration = self::CACHE_DURATION ){
