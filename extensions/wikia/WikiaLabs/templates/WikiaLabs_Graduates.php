@@ -10,7 +10,11 @@
 			<li>
 				<img src="<?php echo $value['prjscreenurl'] ?>"  class="appScreen"/>
 				<div>
-					<a class='title' href="<?php echo $value['link']; ?>"><?php echo $value['name']; ?></a>
+					<?php if( $value['link'] === '#' ): ?>
+						<span class="title"><?php echo $value['name']; ?></span>
+					<?php else: ?>
+						<a class='title' href="<?php echo $value['link']; ?>"><?php echo $value['name']; ?></a>
+					<?php endif; ?>
 					<p class='description'>
 						<?php echo $value['description'] ?>
 					</p>
