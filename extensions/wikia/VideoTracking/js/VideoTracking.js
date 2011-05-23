@@ -7,7 +7,7 @@ VideoTracker = {
 	STATE_PAUSE: 2,
 	STATE_FINISH: 0,
 	videoList: [],
-	trackingProgressPoints: [ 25, 50, 75, 100 ],
+	trackingProgressPoints: [ 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ],
 
 	init: function() {
 
@@ -18,7 +18,6 @@ VideoTracker = {
 			$( this ).attr( VideoTracker.PAUSED_ATTR, 0 );
 			this.addEventListener( 'onStateChange', 'VideoTracker.statusChangeTracking' );
 		});
-
 
 		// add tracking if any video exist
 		if ( VideoTracker.videoList.length > 0 ) {
@@ -76,8 +75,7 @@ VideoTracker = {
 	},
 
 	track: function( fakeUrl ) {
-		window.jQuery.tracker.byStr('VideoPlayer' + fakeUrl);
-		window.jQuery.tracker.byStr('VideoPlayer/' + wgCityId + '/' + wgArticleId + fakeUrl);
+		window.jQuery.tracker.byStr('VideoPlayer/' + wgDBname + '/' + wgTitle + fakeUrl);
 	}
 };
 
