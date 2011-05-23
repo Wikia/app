@@ -27,8 +27,22 @@ $messages['en'] = array(
 	'wikiaquiz-error-missing-answers' => 'You must provide at least one answer.',
 	'wikiaquiz-error-invalid-correct-answer' => 'You must specify one correct answer.',
 	'wikiaquiz-error-invalid-quiz' => 'Quiz name is invalid.',
-    	'wikiaquiz-error-invalid-article' => 'Article ID is invalid.'
+	'wikiaquiz-error-invalid-article' => 'Article ID is invalid.',
     
+// game itself
+	'wikiaquiz-game-start-button' => 'Start Game',
+	'wikiaquiz-game-cadence-3' => 'Ready',
+	'wikiaquiz-game-cadence-2' => 'Set',
+	'wikiaquiz-game-cadence-1' => 'Go!',
+	'wikiaquiz-game-question-label' => 'QUESTION',
+	'wikiaquiz-game-next-button' => 'Next Question',
+	'wikiaquiz-game-finish-button' => 'Finish',
+	'wikiaquiz-game-correct-label' => 'Correct! You rock.',
+	'wikiaquiz-game-incorrect-label' => 'WRONG. Boo.',
+	'wikiaquiz-game-congratulations' => 'Great job, $1!',
+	'wikiaquiz-game-your-score' => 'YOUR SCORE IS',
+	'wikiaquiz-game-continue-button' => 'Continue',
+	'wikiaquiz-game-thanks' => 'Thanks for playing!',
 );
 
 /** Message documentation (Message documentation) */

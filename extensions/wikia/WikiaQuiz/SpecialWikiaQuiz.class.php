@@ -13,7 +13,12 @@ class SpecialWikiaQuiz extends UnlistedSpecialPage {
 
 		//wfLoadExtensionMessages('WikiBuilder');
 		$wgOut->setPageTitle(wfMsg('Sample Quiz'));
-		if ($wgRequest->getVal('v') == '2') {	
+		
+		if ($wgRequest->getVal('v') == '3') {	
+			$wgOut->addHtml(wfRenderModule('WikiaQuiz', 'SampleQuiz3'));
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaQuiz/css/WikiaQuiz3.scss'));
+			$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaQuiz/js/WikiaQuiz3.js"></script>');
+		} else if ($wgRequest->getVal('v') == '2') {	
 			$wgOut->addHtml(wfRenderModule('WikiaQuiz', 'SampleQuiz2'));
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaQuiz/css/WikiaQuiz2.scss'));
 			//$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaQuiz/js/excanvas.compiled.js"></script>');
