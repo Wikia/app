@@ -138,7 +138,7 @@ class UserProfilePageHelper {
 		if( $title->getNamespace() == NS_USER ) {
 			$user = self::getUserFromTitle( $title );
 
-			if( !empty( $user ) && ( strcmp( $user->getName(), $wgUser->getName() ) != 0 ) && !$wgUser->isAllowed( 'staff' ) && !$wgUser->isAllowed( 'sysop' ) ) {
+			if( !empty( $user ) && ( strcmp( $user->getName(), $wgUser->getName() ) != 0 ) && !$wgUser->isAllowed( 'editprofile' ) ) {
 				$wgOut->clearHTML();
 				$wgOut->showErrorPage( 'userprofilepage-edit-permision-denied', 'userprofilepage-edit-permision-denied-info' );
 				$result = false;

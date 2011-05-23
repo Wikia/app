@@ -68,4 +68,16 @@ function wfUserProfilePageInit() {
 	if( defined( 'NS_BLOG_ARTICLE' ) ) {
 		$wgUserProfilePagesNamespaces[] = NS_BLOG_ARTICLE;
 	}
+
+	/**
+	 * rights
+	 */
+	global $wgAvailableRights, $wgGroupPermissions;
+	$wgAvailableRights[] = 'editprofile';
+	$wgGroupPermissions['*']['editprofile'] = false;
+	$wgGroupPermissions['sysop']['editprofile'] = true;
+	$wgGroupPermissions['staff']['editprofile'] = true;
+	$wgGroupPermissions['helper']['editprofile'] = true;
+	$wgGroupPermissions['vstf']['editprofile'] = true;
+
 }

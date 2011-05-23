@@ -128,6 +128,9 @@ $messages['en'] = array(
 *<div class="answer"><<wpGender>></div>
 *<div class="question">Do you have any affiliation?</div>
 *<div class="answer"><<wpAffiliation>></div></div>',
+
+	'right-editprofile' => "Edit other users' profiles",
+
 );
 
 /** Message documentation (Message documentation)
