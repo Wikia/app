@@ -11,10 +11,10 @@
 		</div>
 	<? endif ;?>
 </div>
-<? if(!empty($userRights)) :?>
+<? if(!empty($userGroups)) :?>
 	<ul class="user-groups">
-		<? foreach ( $userRights as $rightName ) :?>
-			<li><a title="<?= wfMsg("userprofilepage-user-group-{$rightName}-tooltip") ;?>"><?= wfMsg('userprofilepage-user-group-' . $rightName) ;?></a></li>
+		<? foreach ( $userGroups as $groupName ) :?>
+			<li><a title="<?= wfMsg("userprofilepage-user-group-{$groupName}-tooltip") ;?>"><?= wfMsg('userprofilepage-user-group-' . $groupName) ;?></a></li>
 		<? endforeach ;?>
 	</ul>
 <? endif ;?>
