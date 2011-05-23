@@ -6,10 +6,9 @@ class FooterModule extends Module {
 	var $showToolbar;
 	var $showNotifications;
 	var $showLoadTime;
-	var $loadTimeStats;
 
 	public function executeIndex() {
-		global $wgTitle, $wgContentNamespaces, $wgUser, $wgSuppressToolbar, $wgShowMyToolsOnly, $wgEnableShowPerformanceStatsExt;
+		global $wgTitle, $wgContentNamespaces, $wgUser, $wgSuppressToolbar, $wgShowMyToolsOnly;
 
 		// don't show toolbar when wgSuppressToolbar is set (for instance on edit pages)
 		$this->showToolbar = empty($wgSuppressToolbar) && !$wgUser->isAnon();
@@ -23,15 +22,8 @@ class FooterModule extends Module {
 		}
 
 		$this->showNotifications = true;
-
-		// If this user is a member of staff, display the 'loadtime' stats in the footer bar.
-		$this->showLoadTime = false;
-		if(!empty($wgEnableShowPerformanceStatsExt)){
-			if($wgUser->isAllowed('performancestats')){
-				$this->showLoadTime = true;
-				$this->loadTimeStats = wfGetPerformanceStats();
-			}
-		}
+                
+                // BugId:5497 PerformanceStats are now displayed via OasisToolbarService (see: DevInfoUserCommand)
 	}
 
 	static protected $toolbarService = null;

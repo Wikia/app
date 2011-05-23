@@ -29,6 +29,7 @@ $wgExtensionMessagesFiles['ShowPerformanceStats'] = dirname(__FILE__) . '/ShowPe
 $wgAvailableRights[] = 'performancestats';
 $wgGroupPermissions['*']['performancestats'] = false;
 $wgGroupPermissions['staff']['performancestats'] = true;
+$wgGroupPermissions['helper']['performancestats'] = true; // BugId:5497
 
 function wfGetPerformanceStats(){
 	wfProfileIn( __METHOD__ );

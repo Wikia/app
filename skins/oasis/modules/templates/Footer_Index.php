@@ -9,12 +9,8 @@
 	 		echo wfRenderModule('Notifications');
 	 	} ?>
 		<ul class="tools">
-			<?php echo wfRenderModule('Footer','Toolbar'); ?>
-<?php if($showLoadTime) { ?>
-			<li class="loadtime">
-				<?= $loadTimeStats ?>
-			</li>
-<?php } ?>
+			<?php echo wfRenderModule('Footer','Toolbar');
+                        /* BugId:5497 PerformanceStats are now displayed via OasisToolbarService (see: DevInfoUserCommand) */ ?>
 		</ul>
 		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
 		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
