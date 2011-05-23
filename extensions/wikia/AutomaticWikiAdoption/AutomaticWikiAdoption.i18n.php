@@ -27,7 +27,7 @@ $messages['en'] = array(
 <br /><br />
 There hasn't been an active administrator on {{SITENAME}} for a while, and we're looking for a new leader to help this wiki's content and community grow! As someone who's contributed to {{SITENAME}} we were wondering if you'd like the job.
 <br /><br />
-By adopting the wiki, you'll be promoted to administrator and bureaucrat to give you the tools you'll need to manage the wiki's community and content. You'll be able to create other administrators to help, delete, rollback, move and protect pages, as well as create user groups and assign users to them.
+By adopting the wiki, you'll be promoted to administrator and bureaucrat to give you the tools you'll need to manage the wiki's community and content. You'll also be able to create other administrators to help, delete, rollback, move and protect pages.
 <br /><br />
 Are you ready to take the next steps to help {{SITENAME}}?",
 	'wikiadoption-know-more-header' => 'Want to know more?',
