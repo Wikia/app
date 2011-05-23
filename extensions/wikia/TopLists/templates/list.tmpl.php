@@ -1,11 +1,11 @@
 <div id="toplists-list-body">
-	<input type="hidden" id="top-list-title" value="<?= htmlspecialchars( $list->getTitle()->getText() ); ?>">
+	<input type="hidden" id="top-list-title" value="<?= htmlspecialchars( $listTitle ) ?>">
 	<? if ( !empty( $relatedImage ) ) :?>
 		<div class="thumb tright">
 			<div class="thumbinner" style="width:200px;">
-				<a href="<?= ( $relatedTitle instanceof Title ) ? $relatedTitle->getLocalURL() : "/wiki/File:{$relatedImage[ 'name' ]}\" class=\"image" ;?>"
-				   title="<?= ( $relatedTitle instanceof Title ) ? $relatedTitle->getText() : $relatedImage[ 'name' ] ;?>">
-					<img alt="<?= ( $relatedTitle instanceof Title ) ? $relatedTitle->getText() : $relatedImage[ 'name' ] ;?>"
+				<a href="<?= ( !is_null( $relatedTitleData ) ) ? $relatedTitleData['localURL'] : "/wiki/File:{$relatedImage[ 'name' ]}\" class=\"image" ;?>"
+				   title="<?= ( !is_null( $relatedTitleData ) ) ? $relatedTitleData['text'] : $relatedImage[ 'name' ] ;?>">
+					<img alt="<?= ( !is_null( $relatedTitleData ) ) ? $relatedTitleData['text'] : $relatedImage[ 'name' ] ;?>"
 					     src="<?= $relatedImage[ 'url' ] ;?>"
 					     border="0"
 					     class="thumbimage" />
@@ -16,15 +16,15 @@
 							<img src="<?= wfBlankImgUrl() ;?>" class="sprite details" width="16" height="16" alt="" />
 						</a>
 					</div>
-					<? if( $relatedTitle instanceof Title ) :?>
-						<a href="<?= $relatedTitle->getLocalURL() ;?>" title="<?= $relatedTitle->getText() ;?>"><?= $relatedTitle->getText() ;?></a>
+					<? if( !is_null( $relatedTitleData ) ) :?>
+						<a href="<?= $relatedTitleData['localURL'] ?>" title="<?= $relatedTitleData['text'] ?>"><?= $relatedTitleData['text'] ?></a>
 					<? endif ;?>
 				</div>
 			</div>
 		</div>
-	<? elseif( $relatedTitle instanceof Title ) :?>
+	<? elseif( !is_null( $relatedTitleData ) ) :?>
 		<div class="ListRelatedArticle">
-			<?= wfMsgForContent( 'toplists-list-related-to' ) ;?> <a href="<?= $relatedTitle->getLocalURL() ;?>" title="<?= $relatedTitle->getText() ;?>"><?= $relatedTitle->getText() ;?></a>
+			<?= wfMsgForContent( 'toplists-list-related-to' ) ;?> <a href="<?= $relatedTitleData['localURL'] ?>" title="<?= $relatedTitleData['text'] ?>"><?= $relatedTitleData['text'] ?></a>
 		</div>
 	<? endif ;?>
 
