@@ -176,11 +176,18 @@ class WikiaApp {
 
 	/**
 	 * register class
-	 * @param string $className
+	 * @param mixed $className the name of the class or a list of classes contained in the same file passed as an array
 	 * @param string $filePath
 	 */
 	public function registerClass($className, $filePath) {
-		$this->globalRegistry->set('wgAutoloadClasses', $filePath, $className);
+		//checking if $className is an array should be faster than creating a 1 element array and then use the same foreach loop
+		if ( is_array( $className ) ) {
+			foreach ( $className  as $cls ) {
+				$this->globalRegistry->set('wgAutoloadClasses', $filePath, $cls);
+			}
+		} else {
+			$this->globalRegistry->set('wgAutoloadClasses', $filePath, $className);
+		}
 	}
 
 	/**
