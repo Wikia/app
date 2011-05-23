@@ -40,7 +40,7 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 
 
 	public function testCreatingNewProject() {
-		$this->object->expects($this->exactly(3))
+		$this->object->expects($this->any())
 		  ->method( 'getId' )
 		  ->will( $this->returnValue(0) );
 
