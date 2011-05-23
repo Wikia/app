@@ -89,12 +89,13 @@ function enableSemantics( $namespace = null, $complete = false ) {
 	// Set up autoloading; essentially all classes should be autoloaded!
 	$wgAutoloadClasses['SMWParserExtensions']       = $smwgIP . 'includes/SMW_ParserExtensions.php';
 	$wgAutoloadClasses['SMWInfolink']               = $smwgIP . 'includes/SMW_Infolink.php';
+	$wgAutoloadClasses['SMWCompatibilityHelpers']   = $incDir . 'SMW_CompatibilityHelpers.php';
+	$wgAutoloadClasses['SMWDataValueFactory']   	= $incDir . 'SMW_DataValueFactory.php';
 // 	$wgAutoloadClasses['SMWFactbox']                = $smwgIP . 'includes/SMW_Factbox.php';
 	$wgAutoloadClasses['SMWParseData']              = $smwgIP . 'includes/SMW_ParseData.php';
 	$wgAutoloadClasses['SMWOutputs']                = $smwgIP . 'includes/SMW_Outputs.php';
 	$wgAutoloadClasses['SMWSemanticData']           = $smwgIP . 'includes/SMW_SemanticData.php';
 	$wgAutoloadClasses['SMWOrderedListPage']        = $smwgIP . 'includes/articlepages/SMW_OrderedListPage.php';
-// 	$wgAutoloadClasses['SMWTypePage']               = $smwgIP . 'includes/articlepages/SMW_TypePage.php';
 	$wgAutoloadClasses['SMWPropertyPage']           = $smwgIP . 'includes/articlepages/SMW_PropertyPage.php';
 // 	$wgAutoloadClasses['SMWConceptPage']            = $smwgIP . 'includes/articlepages/SMW_ConceptPage.php';
 	$wgAutoloadClasses['SMWQueryLanguage']          = $smwgIP . 'includes/SMW_QueryLanguage.php';
@@ -117,19 +118,19 @@ function enableSemantics( $namespace = null, $complete = false ) {
 
 	// Datavalues
 	$dvDir = $smwgIP . 'includes/datavalues/';
+	$wgAutoloadClasses['SMWDataValue']           	= $dvDir . 'SMW_DataValue.php';
 	$wgAutoloadClasses['SMWContainerValue']		= $dvDir . 'SMW_DV_Container.php';
 //	$wgAutoloadClasses['SMWRecordValue']         	= $dvDir . 'SMW_DV_Record.php';
 	$wgAutoloadClasses['SMWErrorValue']          	= $dvDir . 'SMW_DV_Error.php';
 	$wgAutoloadClasses['SMWStringValue']         	= $dvDir . 'SMW_DV_String.php';
 	$wgAutoloadClasses['SMWWikiPageValue']       	= $dvDir . 'SMW_DV_WikiPage.php';
-	$wgAutoloadClasses['SMWSimpleWikiPageValue'] 	= $dvDir . 'SMW_DV_SimpleWikiPage.php';
 	$wgAutoloadClasses['SMWPropertyValue']       	= $dvDir . 'SMW_DV_Property.php';
 	$wgAutoloadClasses['SMWURIValue']            	= $dvDir . 'SMW_DV_URI.php';
 	$wgAutoloadClasses['SMWTypesValue']          	= $dvDir . 'SMW_DV_Types.php';
 //	$wgAutoloadClasses['SMWTypeListValue']      	= $dvDir . 'SMW_DV_TypeList.php';
 	$wgAutoloadClasses['SMWNumberValue']         	= $dvDir . 'SMW_DV_Number.php';
 //	$wgAutoloadClasses['SMWTemperatureValue']    	= $dvDir . 'SMW_DV_Temperature.php';
-//	$wgAutoloadClasses['SMWLinearValue']         	= $dvDir . 'SMW_DV_Linear.php';
+//	$wgAutoloadClasses['SMWQuantityValue']         	= $dvDir . 'SMW_DV_Quantity.php';
 	$wgAutoloadClasses['SMWTimeValue']           	= $dvDir . 'SMW_DV_Time.php';
 //	$wgAutoloadClasses['SMWBoolValue']           	= $dvDir . 'SMW_DV_Bool.php';
 //	$wgAutoloadClasses['SMWConceptValue']        	= $dvDir . 'SMW_DV_Concept.php';
@@ -176,8 +177,6 @@ function enableSemantics( $namespace = null, $complete = false ) {
 // 	$wgAutoloadClasses['SMWConjunction']            = $smwgIP . 'includes/storage/SMW_Description.php';
 // 	$wgAutoloadClasses['SMWDisjunction']            = $smwgIP . 'includes/storage/SMW_Description.php';
 // 	$wgAutoloadClasses['SMWSomeProperty']           = $smwgIP . 'includes/storage/SMW_Description.php';
-// 	$wgAutoloadClasses['SMWRecordDescription']      = $smwgIP . 'includes/SMW_Record_Descriptions.php';
-// 	$wgAutoloadClasses['SMWRecordFieldDescription'] = $smwgIP . 'includes/SMW_Record_Descriptions.php';
 // 	$wgAutoloadClasses['SMWSQLStore2']              = $smwgIP . 'includes/storage/SMW_SQLStore2.php';
 	$wgAutoloadClasses['SMWSQLStoreLight']          = $smwgIP . 'includes/storage/SMW_SQLStoreLight.php';
 	$wgAutoloadClasses['SMWSQLStore2Table']         = $smwgIP . 'includes/storage/SMW_SQLStore2Table.php';
@@ -187,10 +186,7 @@ function enableSemantics( $namespace = null, $complete = false ) {
 	if ( !class_exists( 'Html' ) ) {
 		$wgAutoloadClasses['Html'] = $smwgIP . 'compat/Html.php';
 	}	
-	
-	// Do not autoload RAPStore, since some special pages load all autoloaded classes, which causes
-	// troubles with RAP store if RAP is not installed (require_once fails).
-	// $wgAutoloadClasses['SMWRAPStore']             = $smwgIP . 'includes/storage/SMW_RAPStore.php';
+
 	$wgAutoloadClasses['SMWTestStore']              = $smwgIP . 'includes/storage/SMW_TestStore.php';
 
 	///// Register specials, do that early on in case some other extension calls "addPage" /////
@@ -297,7 +293,6 @@ function smwfUnregisterDatatypes() {
 	SMWDataValueFactory::registerDatatype('_rec', 'SMWErrorValue');
 	SMWDataValueFactory::registerDatatype('__tls', 'SMWErrorValue');
 	SMWDataValueFactory::registerDatatype('__con', 'SMWErrorValue');
-	SMWDataValueFactory::registerDatatype('__lin', 'SMWErrorValue');
 	SMWDataValueFactory::registerDatatype('__imp', 'SMWErrorValue');
 	return true;
 }

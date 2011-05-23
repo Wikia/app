@@ -100,7 +100,6 @@ class SMWNumberValue extends SMWDataValue {
 		if ( $this->m_caption === false ) {
 			$this->m_caption = $value;
 		}
-		$this->m_dataitem = null;
 		$this->m_unitin = false;
 		$this->m_unitvalues = false;
 		$number = $unit = '';
@@ -112,22 +111,14 @@ class SMWNumberValue extends SMWDataValue {
 		} elseif ( $this->convertToMainUnit( $number, $unit ) === false ) { // so far so good: now convert unit and check if it is allowed
 			$this->addError( wfMsgForContent( 'smw_unitnotallowed', $unit ) );
 		} // note that convertToMainUnit() also sets m_dataitem if valid
-		if ( $this->m_dataitem === null ) { // make sure this is always set
-			$this->m_dataitem = new SMWDINumber( 32202, $this->m_typeid );
-		}
-	}
-
-	protected function parseDBkeys( $args ) {
-		$dataItem = SMWDINumber::doUnserialize( $args[0], $this->m_typeid );
-		$this->setDataItem( $dataItem );
 	}
 
 	/**
-	 * @see SMWDataValue::setDataItem()
+	 * @see SMWDataValue::loadDataItem()
 	 * @param $dataitem SMWDataItem
 	 * @return boolean
 	 */
-	public function setDataItem( SMWDataItem $dataItem ) {
+	protected function loadDataItem( SMWDataItem $dataItem ) {
 		if ( $dataItem->getDIType() == SMWDataItem::TYPE_NUMBER ) {
 			$this->m_dataitem = $dataItem;
 			$this->m_caption = false;
@@ -152,7 +143,6 @@ class SMWNumberValue extends SMWDataValue {
 	}
 
 	public function getShortWikiText( $linked = null ) {
-		$this->unstub();
 		if ( ( $linked === null ) || ( $linked === false ) || ( $this->m_outformat == '-' )
 			|| ( $this->m_outformat == '-u' ) || ( $this->m_outformat == '-n' ) || ( !$this->isValid() ) ) {
 			return $this->m_caption;
@@ -188,7 +178,6 @@ class SMWNumberValue extends SMWDataValue {
 	}
 
 	public function getLongWikiText( $linked = null ) {
-		$this->unstub();
 		if ( !$this->isValid() ) {
 			return $this->getErrorText();
 		} else {
@@ -221,32 +210,17 @@ class SMWNumberValue extends SMWDataValue {
 		return $this->getLongWikiText( $linker );
 	}
 
-	public function getDBkeys() {
-		$this->unstub();
-		return array( $this->m_dataitem->getSerialization(), floatval( $this->m_dataitem->getNumber() ) );
-	}
-
 	public function getNumber() {
-		$this->unstub();
-		return $this->m_dataitem->getNumber();
-	}
-
-	public function getSignature() {
-		return 'tf';
-	}
-
-	public function getValueIndex() {
-		return 1;
-	}
-
-	public function getLabelIndex() {
-		return 0;
+		return $this->isValid() ? $this->m_dataitem->getNumber() : 32202;
 	}
 
 	public function getWikiValue() {
-		$this->unstub();
-		$unit = $this->getUnit();
-		return strval( $this->m_dataitem->getSerialization() ) . ( $unit != '' ? ' ' . $unit : '' );
+		if ( $this->isValid() ) {
+			$unit = $this->getUnit();
+			return strval( $this->m_dataitem->getSerialization() ) . ( $unit != '' ? ' ' . $unit : '' );
+		} else {
+			return 'error';
+		}
 	}
 
 	/**
@@ -260,17 +234,23 @@ class SMWNumberValue extends SMWDataValue {
 		return '';
 	}
 
+	/**
+	 * Create links to mapping services based on a wiki-editable message.
+	 * The parameters available to the message are:
+	 * $1: string of numerical value in English punctuation
+	 * $2: string of integer version of value, in English punctuation
+	 *
+	 * @return array
+	 */
 	protected function getServiceLinkParams() {
-		$this->unstub();
-		// Create links to mapping services based on a wiki-editable message. The parameters
-		// available to the message are:
-		// $1: string of numerical value in English punctuation
-		// $2: string of integer version of value, in English punctuation
-		return array( strval( $this->m_dataitem->getNumber() ), strval( round( $this->m_dataitem->getNumber() ) ) );
+		if ( $this->isValid() ) {
+			return array( strval( $this->m_dataitem->getNumber() ), strval( round( $this->m_dataitem->getNumber() ) ) );
+		} else {
+			return array();
+		}
 	}
 
 	public function getExportData() {
-		$this->unstub();
 		if ( $this->isValid() ) {
 			$lit = new SMWExpLiteral( $this->m_dataitem->getNumber(), $this, 'http://www.w3.org/2001/XMLSchema#double' );
 			return new SMWExpData( $lit );
@@ -304,7 +284,7 @@ class SMWNumberValue extends SMWDataValue {
 	 * @return boolean specifying if the unit string is allowed
 	 */
 	protected function convertToMainUnit( $number, $unit ) {
-		$this->m_dataitem = new SMWDINumber( $number, $this->m_typeid );
+		$this->m_dataitem = new SMWDINumber( $number );
 		$this->m_unitin = '';
 		return ( $unit == '' );
 	}

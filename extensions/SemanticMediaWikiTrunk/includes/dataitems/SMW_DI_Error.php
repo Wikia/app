@@ -9,6 +9,8 @@
  * pass around lists of error messages within the application. They are not
  * meant to be stored or exported, but they can be useful to a user.
  *
+ * @since 1.6
+ *
  * @author Markus Krötzsch
  * @ingroup SMWDataItems
  */
@@ -20,8 +22,7 @@ class SMWDIError extends SMWDataItem {
 	 */
 	protected $m_errors;
 
-	public function __construct( $errors, $typeid = '__err' ) {
-		parent::__construct( $typeid );
+	public function __construct( $errors ) {
 		$this->m_errors = $errors;
 	}
 
@@ -44,10 +45,11 @@ class SMWDIError extends SMWDataItem {
 	/**
 	 * Create a data item from the provided serialization string and type
 	 * ID.
+	 * @todo Be more careful with unserialization. It can create E_NOTICEs.
 	 * @return SMWDIError
 	 */
-	public static function doUnserialize( $serialization, $typeid ) {
-		return new SMWDIError( unserialize( $serialization ), $typeid );
+	public static function doUnserialize( $serialization ) {
+		return new SMWDIError( unserialize( $serialization ) );
 	}
 
 }

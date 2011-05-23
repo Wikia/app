@@ -18,8 +18,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "smwfGetValues";
 
-// function smwfGetValues($p, $v) { return SMWSearchByProperty::getSuggestedValues($p, $v); }
-
 /**
  * This special page for Semantic MediaWiki implements a
  * view on a relation-object pair,i.e. a typed backlink.
@@ -101,8 +99,8 @@ class SMWSearchByProperty extends SpecialPage {
 	 * @return string  HTML of the search by property function
 	 */
 	private function displaySearchByProperty() {
-		global $wgUser, $wgOut, $smwgSearchByPropertyFuzzy;
-		$skin = $wgUser->getSkin();
+		global $wgOut, $smwgSearchByPropertyFuzzy;
+		$skin = $this->getSkin();
 
 		if ( $this->propertystring == '' ) {
 			return '<p>' . wfMsg( 'smw_sbv_docu' ) . "</p>\n";
@@ -175,8 +173,7 @@ class SMWSearchByProperty extends SpecialPage {
 	 * @return string  HTML with the bullet list and a header
 	 */
 	private function displayResults( $results, $number = - 1, $first = true, $highlight = false ) {
-		global $wgUser;
-		$skin = $wgUser->getSkin();
+		$skin = $this->getSkin();
 
 		$html  = "<ul>\n";
 
@@ -206,8 +203,8 @@ class SMWSearchByProperty extends SpecialPage {
 	 * @return string  HTML with the navigation bar
 	 */
 	private function getNavigationBar( $count ) {
-		global $wgUser, $smwgQMaxInlineLimit;
-		$skin = $wgUser->getSkin();
+		global $smwgQMaxInlineLimit;
+		$skin = $this->getSkin();
 
 		if ( $this->offset > 0 )
 			$navigation = '<a href="' . htmlspecialchars( $skin->makeSpecialUrl( 'SearchByProperty', 'offset=' . max( 0, $this->offset - $this->limit ) . '&limit=' . $this->limit . '&property=' . urlencode( $this->property->getWikiValue() ) . '&value=' . urlencode( $this->value->getWikiValue() ) ) ) . '">' . wfMsg( 'smw_result_prev' ) . '</a>';
@@ -270,6 +267,7 @@ class SMWSearchByProperty extends SpecialPage {
 	 *
 	 * @param[in] $count int  How many entities have the exact same value on the property?
 	 * @param[in] $greater bool  Should the values be bigger? Set false for smaller values
+	 * 
 	 * @return array of array of SMWWikiPageValue, SMWDataValue with the first being the entity, and the second the value
 	 */
 	private function getNearbyResults( $count, $greater = true ) {
@@ -298,15 +296,18 @@ class SMWSearchByProperty extends SpecialPage {
 
 		$result = $results->getNext();
 		$ret = array();
+		
 		while ( $result ) {
-			array_push( $ret, array( $result[0]->getNextObject(), $result[1]->getNextObject() ) );
+			array_push( $ret, array( $result[0]->getNextDataValue(), $result[1]->getNextDataValue() ) );
 			$result = $results->getNext();
 		}
+		
 		if ( !$greater ) {
 			$temp = array();
 			while ( $ret ) array_push( $temp, array_pop( $ret ) );
 			$ret = $temp;
 		}
+		
 		return $ret;
 	}
 
@@ -325,4 +326,22 @@ class SMWSearchByProperty extends SpecialPage {
 
 		return $html;
 	}
+
+    /**
+     * Compatibility method to get the skin; MW 1.18 introduces a getSkin method in SpecialPage.
+     *
+     * @since 1.6
+     *
+     * @return Skin
+     */
+    public function getSkin() {
+        if ( method_exists( 'SpecialPage', 'getSkin' ) ) {
+            return parent::getSkin();
+        }
+        else {
+            global $wgUser;
+            return $wgUser->getSkin();
+        }
+    }
+	
 }

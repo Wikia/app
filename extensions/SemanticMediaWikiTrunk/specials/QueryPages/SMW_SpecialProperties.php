@@ -47,19 +47,6 @@ class SMWSpecialProperties extends SpecialPage {
  */
 class SMWPropertiesPage extends SMWQueryPage {
 
-	function getName() {
-		// TODO: should probably use SMW prefix
-		return "Properties";
-	}
-
-	function isExpensive() {
-		return false; // Disables caching for now
-	}
-
-	function isSyndicated() {
-		return false; // TODO: why not?
-	}
-
 	function getPageHeader() {
 		return '<p>' . wfMsg( 'smw_properties_docu' ) . "</p><br />\n";
 	}
@@ -77,9 +64,10 @@ class SMWPropertiesPage extends SMWQueryPage {
 			$errors[] = wfMsg( 'smw_propertyhardlyused' );
 		}
 		if ( $result[0]->isUserDefined() && ( $title !== null ) && $title->exists() ) { // FIXME: this bypasses SMWDataValueFactory; ungood
-			$types = smwfGetStore()->getPropertyValues( $diWikiPage, new SMWDIProperty( '_TYPE' ) );
+			$typeProperty = new SMWDIProperty( '_TYPE' );
+			$types = smwfGetStore()->getPropertyValues( $diWikiPage, $typeProperty );
 			if ( count( $types ) >= 1 ) {
-				$typeDataValue = SMWDataValueFactory::newDataItemValue( current( $types ) );
+				$typeDataValue = SMWDataValueFactory::newDataItemValue( current( $types ), $typeProperty );
 				$typestring = $typeDataValue->getLongHTMLText( $skin );
 			}
 			$proplink = $skin->makeKnownLinkObj( $title, $result[0]->getLabel() );
@@ -96,7 +84,8 @@ class SMWPropertiesPage extends SMWQueryPage {
 			global $smwgPDefaultType;
 			$typepagedbkey = str_replace( ' ', '_', SMWDataValueFactory::findTypeLabel( $smwgPDefaultType ) );
 			$diTypePage = new SMWDIWikiPage( $typepagedbkey, SMW_NS_TYPE, '', '__typ' );
-			$dvTypePage = SMWDataValueFactory::newDataItemValue( $diTypePage );
+			$dvTypePage = SMWDataValueFactory::newTypeIdValue( '__typ' );
+			$dvTypePage->setDataItem( $diTypePage );
 			$typestring = $dvTypePage->getLongHTMLText( $skin );
 			if ( ( $title !== null ) && ( $title->exists() ) ) { // print only when we did not print a "nopage" warning yet
 				$errors[] = wfMsg( 'smw_propertylackstype', $typestring );

@@ -21,6 +21,8 @@
  * malformed queries, permission issues, etc. Connection problems are usually
  * ignored so as to keep the wiki running even if the SPARQL backend is down.
  *
+ * @since 1.6
+ *
  * @ingroup SMWSparql
  */
 class SMWSparqlDatabaseError extends Exception {
@@ -204,6 +206,21 @@ class SMWSparqlDatabase {
 	 * @return SMWSparqlResultWrapper
 	 */
 	public function select( $vars, $where, $options = array(), $extraNamespaces = array() ) {
+		$sparql = $this->getSparqlForSelect( $vars, $where, $options, $extraNamespaces );
+		return $this->doQuery( $sparql );
+	}
+
+	/**
+	 * Build the SPARQL query that is used by SMWSparqlDatabase::select().
+	 * The function declares the standard namespaces wiki, swivt, rdf, owl,
+	 * rdfs, property, xsd, so these do not have to be included in
+	 * $extraNamespaces.
+	 *
+	 * @param $where string WHERE part of the query, without surrounding { }
+	 * @param $extraNamespaces array (associative) of namespaceId => namespaceUri
+	 * @return string SPARQL query
+	 */
+	public function getSparqlForSelect( $vars, $where, $options = array(), $extraNamespaces = array() ) {
 		$sparql = self::getPrefixString( $extraNamespaces ) . 'SELECT ';
 		if ( array_key_exists( 'DISTINCT', $options ) ) {
 			$sparql .= 'DISTINCT ';
@@ -223,8 +240,7 @@ class SMWSparqlDatabase {
 		if ( array_key_exists( 'LIMIT', $options ) ) {
 			$sparql .= "\nLIMIT " . $options['LIMIT'];
 		}
-
-		return $this->doQuery( $sparql );
+		return $sparql;
 	}
 
 	/**
@@ -238,7 +254,49 @@ class SMWSparqlDatabase {
 	 * @return SMWSparqlResultWrapper
 	 */
 	public function ask( $where, $extraNamespaces = array() ) {
-		$sparql = self::getPrefixString( $extraNamespaces ) . "ASK {\n" . $where . "\n}";
+		$sparql = $this->getSparqlForAsk( $where, $extraNamespaces );
+		return $this->doQuery( $sparql );
+	}
+
+	/**
+	 * Build the SPARQL query that is used by SMWSparqlDatabase::ask().
+	 * The function declares the standard namespaces wiki, swivt, rdf, owl,
+	 * rdfs, property, xsd, so these do not have to be included in
+	 * $extraNamespaces.
+	 *
+	 * @param $where string WHERE part of the query, without surrounding { }
+	 * @param $extraNamespaces array (associative) of namespaceId => namespaceUri
+	 * @return string SPARQL query
+	 */
+	public function getSparqlForAsk( $where, $extraNamespaces = array() ) {
+		return self::getPrefixString( $extraNamespaces ) . "ASK {\n" . $where . "\n}";
+	}
+
+	/**
+	 * SELECT wrapper for counting results.
+	 * The function declares the standard namespaces wiki, swivt, rdf, owl,
+	 * rdfs, property, xsd, so these do not have to be included in
+	 * $extraNamespaces.
+	 *
+	 * @param $variable string variable name or '*'
+	 * @param $where string WHERE part of the query, without surrounding { }
+	 * @param $options array (associative) of options, e.g. array('LIMIT' => '10')
+	 * @param $extraNamespaces array (associative) of namespaceId => namespaceUri
+	 * @return SMWSparqlResultWrapper
+	 */
+	public function selectCount( $variable, $where, $options = array(), $extraNamespaces = array() ) {
+		$sparql = self::getPrefixString( $extraNamespaces ) . 'SELECT (COUNT(';
+		if ( array_key_exists( 'DISTINCT', $options ) ) {
+			$sparql .= 'DISTINCT ';
+		}
+		$sparql .= $variable . ") AS ?count) WHERE {\n" . $where . "\n}";
+		if ( array_key_exists( 'OFFSET', $options ) ) {
+			$sparql .= "\nOFFSET " . $options['OFFSET'];
+		}
+		if ( array_key_exists( 'LIMIT', $options ) ) {
+			$sparql .= "\nLIMIT " . $options['LIMIT'];
+		}
+
 		return $this->doQuery( $sparql );
 	}
 
@@ -377,7 +435,9 @@ class SMWSparqlDatabase {
 	 * method does not throw anything, then an empty result with an error
 	 * code is returned.
 	 * 
-	 * @note This method currently is specific to 4Store. It uses POST parameters that are not given in the specification.
+	 * @note This method has not been tesetd sufficiently since 4Store uses
+	 * another post encoding. To avoid using it, simply do not provide a
+	 * data endpoint URL when configuring the SPARQL database.
 	 *
 	 * @param $payload string Turtle serialization of data to send
 	 * @return SMWSparqlResultWrapper
@@ -388,16 +448,14 @@ class SMWSparqlDatabase {
 		}
 		curl_setopt( $this->m_curlhandle, CURLOPT_URL, $this->m_dataEndpoint );
 		curl_setopt( $this->m_curlhandle, CURLOPT_POST, true );
-		$parameterString = "data=" . urlencode( $payload ) . '&graph=default&mime-type=application/x-turtle';
-		curl_setopt( $this->m_curlhandle, CURLOPT_POSTFIELDS, $parameterString );
 
-//// POST as file, fails in 4Store
-// 		$payloadFile = tmpfile();
-// 		fwrite( $payloadFile, $payload );
-// 		fseek( $payloadFile, 0 ); 
-// 		curl_setopt( $this->m_curlhandle, CURLOPT_INFILE, $payloadFile );
-// 		curl_setopt( $this->m_curlhandle, CURLOPT_INFILESIZE, strlen( $payload ) ); 
-// 		curl_setopt( $this->m_curlhandle, CURLOPT_HTTPHEADER, array( 'Content-Type: application/x-turtle' ) );
+		// POST as file (fails in 4Store)
+		$payloadFile = tmpfile();
+		fwrite( $payloadFile, $payload );
+		fseek( $payloadFile, 0 ); 
+		curl_setopt( $this->m_curlhandle, CURLOPT_INFILE, $payloadFile );
+		curl_setopt( $this->m_curlhandle, CURLOPT_INFILESIZE, strlen( $payload ) ); 
+		curl_setopt( $this->m_curlhandle, CURLOPT_HTTPHEADER, array( 'Content-Type: application/x-turtle' ) );
 
 		curl_exec( $this->m_curlhandle );
 

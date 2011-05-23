@@ -30,12 +30,12 @@ class SMWStringCondition {
 	const STRCOND_PRE = 0;
 	const STRCOND_POST = 1;
 	const STRCOND_MID = 2;
-	
+
 	/**
 	 * String to match.
 	 */
 	public $string;
-	
+
 	/**
 	 * Condition. One of STRCOND_PRE (string matches prefix),
 	 * STRCOND_POST (string matches postfix), STRCOND_MID
@@ -62,19 +62,19 @@ class SMWStringCondition {
  * @author Markus Krötzsch
  */
 class SMWRequestOptions {
-	
+
 	/**
 	 * The maximum number of results that should be returned.
 	 */
 	public $limit = -1;
-	
+
 	/**
 	 * A numerical offset. The first $offset results are skipped.
 	 * Note that this does not imply a defined order of results
 	 * (see SMWRequestOptions->$sort below).
 	 */
 	public $offset = 0;
-	
+
 	/**
 	 * Should the result be ordered? The employed order is defined
 	 * by the type of result that are requested: wiki pages and strings
@@ -82,26 +82,26 @@ class SMWRequestOptions {
 	 * numerically. Usually, the order should be fairly "natural".
 	 */
 	public $sort = false;
-	
+
 	/**
 	 * If SMWRequestOptions->$sort is true, this parameter defines whether
 	 * the results are ordered in ascending or descending order.
 	 */
 	public $ascending = true;
-	
+
 	/**
 	 * Specifies a lower or upper bound for the values returned by the query.
 	 * Whether it is lower or upper is specified by the parameter "ascending"
 	 * (true->lower, false->upper).
 	 */
 	public $boundary = null;
-	
+
 	/**
 	 * Specifies whether or not the requested boundary should be returned
 	 * as a result.
 	 */
 	public $include_boundary = true;
-	
+
 	/**
 	 * An array of string conditions that are applied if the result has a
 	 * string label that can be subject to those patterns.
@@ -124,7 +124,7 @@ class SMWRequestOptions {
 	public function getStringConditions() {
 		return $this->stringcond;
 	}
-	
+
 }
 
 
@@ -162,6 +162,12 @@ abstract class SMWStore {
 	 *
 	 * If called with $subject == null, all values for the given property
 	 * are returned.
+	 *
+	 * @param $subject mixed SMWDataItem or null
+	 * @param $property SMWDIProperty
+	 * @param $requestoptions SMWRequestOptions
+	 *
+	 * @return array of SMWDataItem
 	 */
 	public abstract function getPropertyValues( $subject, SMWDIProperty $property, $requestoptions = null );
 
@@ -253,6 +259,8 @@ abstract class SMWStore {
 	 * includes relations, attributes, and special properties. This does
 	 * not delete the respective text from the wiki, but only clears the
 	 * stored data.
+	 *
+	 * @param Title $subject
 	 */
 	public abstract function deleteSubject( Title $subject );
 
@@ -260,6 +268,8 @@ abstract class SMWStore {
 	 * Update the semantic data stored for some individual. The data is
 	 * given as a SMWSemanticData object, which contains all semantic data
 	 * for one particular subject.
+	 *
+	 * @param SMWSemanticData $data
 	 */
 	public abstract function doDataUpdate( SMWSemanticData $data );
 
@@ -273,9 +283,7 @@ abstract class SMWStore {
 	public function updateData( SMWSemanticData $data ) {
 		wfRunHooks( 'SMWStore::updateDataBefore', array( $this, $data ) );
 
-		$this->doDataUpdate( $data );
-
-		// Invalidate the page, so data stored on it gets displayed immeditaely in queries.
+		// Invalidate the page, so data stored on it gets displayed immediately in queries.
 		global $smwgAutoRefreshSubject;
 		if ( $smwgAutoRefreshSubject && !wfReadOnly() ) {
 			$title = Title::makeTitle( $data->getSubject()->getNamespace(), $data->getSubject()->getDBkey() );
@@ -288,12 +296,14 @@ abstract class SMWStore {
 				__METHOD__
 			);
 
-			HTMLFileCache::clearFileCache( $title );			
-		}
+			HTMLFileCache::clearFileCache( $title );
+	    }
+
+		$this->doDataUpdate( $data );
 
 		wfRunHooks( 'SMWStore::updateDataAfter', array( $this, $data ) );
 	}
-	
+
 	/**
 	 * Clear all semantic data specified for some page.
 	 * 
@@ -323,7 +333,9 @@ abstract class SMWStore {
 	 * the case that the query asked for a plain string (querymode
 	 * MODE_COUNT or MODE_DEBUG) a plain wiki and HTML-compatible string is
 	 * returned.
-	 * 
+	 *
+	 * @param SMWQuery $query
+	 *
 	 * @return SMWQueryResult
 	 */
 	public abstract function getQueryResult( SMWQuery $query );
@@ -434,5 +446,47 @@ abstract class SMWStore {
 	 * @return decimal between 0 and 1 to indicate the overall progress of the refreshing
 	 */
 	public abstract function refreshData( &$index, $count, $namespaces = false, $usejobs = true );
+
+	/**
+	 * Generate textual debug output that shows an arbitrary list of
+	 * informative fields. Used for formatting query debug output.
+	 *
+	 * @note All strings given must be usable and safe in wiki and HTML
+	 * contexts.
+	 *
+	 * @param $storeName string name of the storage backend for which this is generated
+	 * @param $entries array of name => value of informative entries to display
+	 * @param $query SMWQuery or null, if given add basic data about this query as well
+	 * @return string
+	 */
+	public static function formatDebugOutput( $storeName, array $entries, $query = null ) {
+		if ( $query !== null ) {
+			$preEntries = array();
+			$preEntries['Generated Wiki-Query'] = '<pre>' . str_replace( '[', '&#x005B;', $query->getDescription()->getQueryString() ) . '</pre>';
+			$preEntries['Query Metrics'] = 'Query-Size:' . $query->getDescription()->getSize() . '<br />' .
+						'Query-Depth:' . $query->getDescription()->getDepth();
+			$entries = array_merge( $preEntries, $entries );
+
+			$errors = '';
+			foreach ( $query->getErrors() as $error ) {
+				$errors .= $error . '<br />';
+			}
+			if ( $errors == '' ) {
+				$errors = 'None';
+			}
+			$entries['Errors and Warnings'] = $errors;
+		}
+
+		$result = '<div style="border: 5px dotted #A1FB00; background: #FFF0BD; padding: 20px; ">' .
+		          "<h3>Debug Output by $storeName</h3>";
+		foreach ( $entries as $header => $information ) {
+			$result .= "<h4>$header</h4>";
+			if ( $information != '' ) {
+				$result .= "$information";
+			}
+		}
+		$result .= '</div>';
+		return $result;
+	}
 
 }

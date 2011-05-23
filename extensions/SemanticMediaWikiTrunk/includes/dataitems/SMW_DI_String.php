@@ -6,6 +6,8 @@
 
 /**
  * Exception to be thrown when input string is too long.
+ * 
+ * @since 1.6
  */
 class SMWStringLengthException extends SMWDataItemException {
 	public function __construct( $string ) {
@@ -16,6 +18,8 @@ class SMWStringLengthException extends SMWDataItemException {
 /**
  * This class implements (length restricted) string data items.
  *
+ * @since 1.6
+ *
  * @author Markus Krötzsch
  * @ingroup SMWDataItems
  */
@@ -23,11 +27,11 @@ class SMWDIString extends SMWDIBlob {
 
 	const MAXLENGTH = 255;
 
-	public function __construct( $string, $typeid = '_str' ) {
+	public function __construct( $string ) {
 		if ( strlen( $string ) > SMWDIString::MAXLENGTH ) {
 			throw new SMWStringLengthException( $string );
 		}
-		parent::__construct( $string, $typeid );
+		parent::__construct( $string );
 	}
 
 	public function getDIType() {
@@ -39,8 +43,8 @@ class SMWDIString extends SMWDIBlob {
 	 * ID.
 	 * @return SMWDIString
 	 */
-	public static function doUnserialize( $serialization, $typeid ) {
-		return new SMWDIString( $serialization, $typeid );
+	public static function doUnserialize( $serialization ) {
+		return new SMWDIString( $serialization );
 	}
 
 }

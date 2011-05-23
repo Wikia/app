@@ -7,6 +7,8 @@
 /**
  * This class implements blob (long string) data items.
  *
+ * @since 1.6
+ *
  * @author Markus Krötzsch
  * @ingroup SMWDataItems
  */
@@ -18,8 +20,7 @@ class SMWDIBlob extends SMWDataItem {
 	 */
 	protected $m_string;
 
-	public function __construct( $string, $typeid = '_txt' ) {
-		parent::__construct( $typeid );
+	public function __construct( $string ) {
 		$this->m_string = $string;
 	}
 
@@ -35,6 +36,14 @@ class SMWDIBlob extends SMWDataItem {
 		return $this->m_string;
 	}
 
+	/**
+	 * @see SMWDataItem::getSortKeyDataItem()
+	 * @return SMWDataItem
+	 */
+	public function getSortKeyDataItem() {
+		return $this;
+	}
+
 	public function getSerialization() {
 		return $this->m_string;
 	}
@@ -44,8 +53,8 @@ class SMWDIBlob extends SMWDataItem {
 	 * ID.
 	 * @return SMWDIBlob
 	 */
-	public static function doUnserialize( $serialization, $typeid ) {
-		return new SMWDIBlob( $serialization, $typeid );
+	public static function doUnserialize( $serialization ) {
+		return new SMWDIBlob( $serialization );
 	}
 
 }

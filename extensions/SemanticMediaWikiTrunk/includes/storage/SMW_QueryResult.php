@@ -314,7 +314,7 @@ class SMWResultArray {
 
 	/**
 	 * Compatibility alias for getNextDatItem().
-	 * @deprecated Call getNextDataValue() or getNextDataItem() directly as needed. Method will vanish before SMW 1.7.
+	 * @deprecated since 1.6. Call getNextDataValue() or getNextDataItem() directly as needed. Method will vanish before SMW 1.7.
 	 */
 	public function getNextObject() {
 		return $this->getNextDataValue();
@@ -322,6 +322,8 @@ class SMWResultArray {
 
 	/**
 	 * Return the next SMWDataItem object or false if no further object exists.
+	 * 
+	 * @since 1.6
 	 * 
 	 * @return SMWDataItem or false
 	 */
@@ -337,6 +339,8 @@ class SMWResultArray {
 	 * Return an SMWDataValue object for the next SMWDataItem object or
 	 * false if no further object exists.
 	 * 
+	 * @since 1.6
+	 * 
 	 * @return SMWDataValue or false
 	 */
 	public function getNextDataValue() {
@@ -344,7 +348,12 @@ class SMWResultArray {
 		if ( $di === false ) {
 			return false;
 		}
-		$dv = SMWDataValueFactory::newDataItemValue( $di );
+		if ( $this->mPrintRequest->getMode() == SMWPrintRequest::PRINT_PROP ) {
+			$diProperty = $this->mPrintRequest->getData()->getDataItem();
+		} else {
+			$diProperty = null;
+		}
+		$dv = SMWDataValueFactory::newDataItemValue( $di, $diProperty );
 		if ( $this->mPrintRequest->getOutputFormat() ) {
 			$dv->setOutputFormat( $this->mPrintRequest->getOutputFormat() );
 		}
@@ -360,14 +369,16 @@ class SMWResultArray {
 	 * 
 	 * @param integer $outputMode
 	 * @param mixed $linker
+	 * 
+	 * @return string or false
 	 */
 	public function getNextText( $outputMode, $linker = null ) {
-		$dv = $this->getNextDataValue();
-		if ( $dv !== false ) { // Print data values.
-			if ( ( $dv->getTypeID() == '_wpg' ) || ( $dv->getTypeID() == '__sin' ) ) { // Prefer "long" text for page-values.
-				return $dv->getLongText( $outputMode, $linker );
+		$dataValue = $this->getNextDataValue();
+		if ( $dataValue !== false ) { // Print data values.
+			if ( ( $dataValue->getTypeID() == '_wpg' ) || ( $dataValue->getTypeID() == '__sin' ) ) { // Prefer "long" text for page-values.
+				return $dataValue->getLongText( $outputMode, $linker );
 			} else {
-				return $dv->getShortText( $outputMode, $linker );
+				return $dataValue->getShortText( $outputMode, $linker );
 			}
 		} else {
 			return false;

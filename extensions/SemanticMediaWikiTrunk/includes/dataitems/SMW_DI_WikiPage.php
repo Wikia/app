@@ -7,6 +7,8 @@
 /**
  * This class implements wiki page data items.
  *
+ * @since 1.6
+ *
  * @author Markus Krötzsch
  * @ingroup SMWDataItems
  */
@@ -36,8 +38,7 @@ class SMWDIWikiPage extends SMWDataItem {
 	 * would be more work than it is worth, since callers will usually be
 	 * careful and since errors here do not have major consequences.
 	 */
-	public function __construct( $dbkey, $namespace, $interwiki, $typeid = '_wpg' ) {
-		parent::__construct( $typeid );
+	public function __construct( $dbkey, $namespace, $interwiki ) {
 		if ( !is_numeric( $namespace ) ) {
 			throw new SMWDataItemException( "Given namespace '$namespace' is not an integer." );
 		}
@@ -72,6 +73,25 @@ class SMWDIWikiPage extends SMWDataItem {
 		return $this->m_dbkey;
 	}
 
+	/**
+	 * Create a MediaWiki Title object for this SMWDIWikiPage. The result
+	 * can be null if an error occurred.
+	 *
+	 * @todo From MW 1.17 on, makeTitleSafe supports interwiki prefixes.
+	 * This function can be simplified when compatibility to MW 1.16 is
+	 * dropped.
+	 * @return mixed Title or null
+	 */
+	public function getTitle() {
+		if ( $this->m_interwiki == '' ) {
+			return Title::makeTitleSafe( $this->m_namespace, $this->m_dbkey, '' );
+		} else {
+			$datavalue = new SMWWikiPageValue( '_wpg' );
+			$datavalue->setDataItem( $this );
+			return Title::newFromText( $datavalue->getPrefixedText() );
+		}
+	}
+
 	public function getSerialization() {
 		return strval( $this->m_dbkey . '#' . strval( $this->m_namespace ) . '#' . $this->m_interwiki );
 	}
@@ -81,23 +101,22 @@ class SMWDIWikiPage extends SMWDataItem {
 	 * ID.
 	 * @return SMWDIWikiPage
 	 */
-	public static function doUnserialize( $serialization, $typeid ) {
+	public static function doUnserialize( $serialization ) {
 		$parts = explode( '#', $serialization, 3 );
 		if ( count( $parts ) != 3 ) {
 			throw new SMWDataItemException( "Unserialization failed: the string \"$serialization\" was not understood." );
 		}
-		return new SMWDIWikiPage( $parts[0], floatval( $parts[1] ), $parts[2], $typeid );
+		return new SMWDIWikiPage( $parts[0], floatval( $parts[1] ), $parts[2] );
 	}
 
 	/**
 	 * Create a data item from a MediaWiki Title.
 	 *
 	 * @param $title Title
-	 * @param $typeid string optional type ID to use
 	 * @return SMWDIWikiPage
 	 */
-	public static function newFromTitle( Title $title, $typeid = '_wpg' ) {
-		return new SMWDIWikiPage( $title->getDBkey(), $title->getNamespace(), $title->getInterwiki(), $typeid );
+	public static function newFromTitle( Title $title ) {
+		return new SMWDIWikiPage( $title->getDBkey(), $title->getNamespace(), $title->getInterwiki() );
 	}
 
 }
