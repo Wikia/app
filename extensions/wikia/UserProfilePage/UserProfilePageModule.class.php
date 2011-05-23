@@ -30,7 +30,7 @@ class UserProfilePageModule extends Module {
 				}
 			}
 
-			$this->userRights = array_intersect( $userProfilePage->getUser()->getRights(), array(
+			$this->groupName = array_intersect( $userProfilePage->getUser()->getEffectiveGroups(), array(
 				'sysop',
 				'bot',
 				'staff',
