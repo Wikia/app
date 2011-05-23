@@ -28,6 +28,17 @@
 		border: solid 1px $color-epl-inputs-borders;
 		font-style: normal;
 		color: black;
+		
+		&::-webkit-input-placeholder {
+			font-style: italic;
+			color: $color-epl-text-color;
+		}
+		
+		&:-moz-placeholder {
+			font-style: italic;
+			color: $color-epl-text-color;
+		}
+		
 		&.placeholder {
 			font-style: italic;
 			color: $color-epl-text-color;
