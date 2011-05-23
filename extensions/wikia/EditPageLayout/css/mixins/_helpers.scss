@@ -20,8 +20,19 @@
 	font-style: italic;
 	line-height: 23px;
 	width: $width-epl-module-input;
-	&.placeholder {
-		color: $color-epl-text-color;
+	
+	&::-webkit-input-placeholder {
 		font-style: italic;
+		color: $color-epl-text-color;
+	}
+	
+	&:-moz-placeholder {
+		font-style: italic;
+		color: $color-epl-text-color;
+	}
+	
+	&.placeholder {
+		font-style: italic;
+		color: $color-epl-text-color;
 	}
 }
