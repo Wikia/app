@@ -16,7 +16,8 @@ var NodeChatController = {
 		
 		this.socket.on('connect', function() { 
             if(NodeChatController.announceConnection){
-				inlineAlert(NodeChatController.model, 'Reconnected!'); // TODO: i18n: how do we do i18n for this?
+				//inlineAlert(NodeChatController.model, 'Reconnected!'); // Removed by BugzId 5753 - TODO: i18n: how do we do i18n for this?
+				NodeChatHelper.log("Reconnected.");
 				NodeChatController.announceConnection = false;
 			}
             NodeChatController.connected = true;
@@ -25,7 +26,9 @@ var NodeChatController = {
 
 		//Try to reconnect if we get disconnected (and inform the user of what is going on).
         this.socket.on('disconnect', function(){
-			inlineAlert(NodeChatController.model, 'Disconnected from the chat server. Uh oh!'); // TODO: i18n: how do we do i18n for this?
+			//inlineAlert(NodeChatController.model, 'Disconnected from the chat server. Uh oh!'); // Removed by BugzId 5753 - TODO: i18n: how do we do i18n for this?
+			NodeChatHelper.log("Node-server connection needs to be refreshed...");
+
             NodeChatController.connected = false;
 			NodeChatController.announceConnection = true;
             //view.setConnected(false);
@@ -37,7 +40,9 @@ var NodeChatController = {
         });
         function tryconnect(){
             if(!NodeChatController.connected) {
-				inlineAlert(NodeChatController.model, "Trying to reconnect..."); // TODO: i18n: how do we do i18n for this?
+				//inlineAlert(NodeChatController.model, "Trying to reconnect..."); // Removed by BugzId 5753 - TODO: i18n: how do we do i18n for this?
+				NodeChatHelper.log("Trying to re-connect to node-server.");
+				
                 mySocket.connect();
                 clearTimeout(trying);
                 trying = setTimeout(tryconnect,30000);
