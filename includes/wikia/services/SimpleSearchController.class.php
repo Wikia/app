@@ -6,38 +6,31 @@
  */
 class SimpleSearchController extends WikiaController {
 	private $mEnableCrossWikiaSearch;
-	private $mDisableTextSearch;
-	
+
 	public function init() {
-		list(
-			$this->mEnableCrossWikiaSearch,
-			$this->mDisableTextSearch
-		) = $this->getApp()->getGlobals(
-			'wgEnableCrossWikiaSearch',
-			'wgDisableTextSearch'
-		);
+		$this->mEnableCrossWikiaSearch = $this->wg->EnableCrossWikiaSearch;
 	}
 	
 	/*
 	 * @todo separate the data fetching code in a model
 	 */
 	private function getResults() {
-		$this->getApp()->runFunction( 'wfProfileIn', __METHOD__ );
+		$this->wf->profileIn( __METHOD__ );
 		
 		//parameters
 		$key = trim( $this->getVal( 'key' ) );
-		$limit = $this->getRequest()->getInt( 'limit', 0 );
-		$offset = $this->getRequest()->getInt( 'offset', 0 );
+		$limit = $this->request->getInt( 'limit', 0 );
+		$offset = $this->request->getInt( 'offset', 0 );
 		$namespaces = (array) $this->getVal( 'namespaces', array() );
-		$showRedirects = $this->getRequest()->getBool( 'redirects', true );
+		$showRedirects = $this->request->getBool( 'redirects', true );
 		$urlParams = $this->getVal( 'urlParams', '' );
-		$fullURL = $this->getRequest()->getBool( 'fullURL', false );
+		$fullURL = $this->request->getBool( 'fullURL', false );
 		
 		$results = Array();
-		$this->getResponse()->setVal( 'key', $key );
+		$this->setVal( 'key', $key );
 		
 		if ( !empty( $key ) ) {
-			$search = SearchEngine::create();
+			$search = F::build( 'SearchEngine', array(), 'create' );
 			$search->setLimitOffset( $limit, $offset );
 			
 			$namespaces = array_merge( $search->namespaces, $namespaces );
@@ -52,7 +45,7 @@ class SimpleSearchController extends WikiaController {
 			$totalCount = 0;
 			
 			if ( !( ( $search instanceof SearchErrorReporting ) && $search->getError() ) ) {
-				if ( empty( $this->mDisableTextSearch ) ) {
+				if ( empty( $this->wg->DisableTextSearch ) ) {
 					// Sometimes the search engine knows there are too many hits
 					if ( !( $titleMatches instanceof SearchResultTooMany ) ) {
 						//count number of results
@@ -61,12 +54,12 @@ class SimpleSearchController extends WikiaController {
 						
 						//MW hooks
 						if( $num ) {
-							$this->getApp()->runHook( 'SpecialSearchResults', array( $key, &$titleMatches, &$textMatches ) );
+							$this->app->runHook( 'SpecialSearchResults', array( $key, &$titleMatches, &$textMatches ) );
 						} else {
-							$this->getApp()->runHook( 'SpecialSearchNoResults', array( $key ) );
+							$this->app->runHook( 'SpecialSearchNoResults', array( $key ) );
 						}
 						
-						$this->getResponse()->setVal( 'count', $num );
+						$this->setVal( 'count', $num );
 						
 						if ( $titleMatches && !is_null( $titleMatches->getTotalHits() ) ) {
 							$totalCount += $titleMatches->getTotalHits();
@@ -76,12 +69,12 @@ class SimpleSearchController extends WikiaController {
 							$totalCount += $textMatches->getTotalHits();
 						}
 						
-						$this->getResponse()->setVal( 'totalCount', $totalCount );
+						$this->setVal( 'totalCount', $totalCount );
 						
 						// did you mean... suggestions
 						if ($textMatches && $textMatches->hasSuggestion() ) {
-							$this->getResponse( 'suggestionQuery', $textMatches->getSuggestionQuery() );
-							$this->getResponse( 'suggestionSnippet', $textMatches->getSuggestionSnippet() );
+							$this->setVal( 'suggestionQuery', $textMatches->getSuggestionQuery() );
+							$this->setVal( 'suggestionSnippet', $textMatches->getSuggestionSnippet() );
 						}
 						
 						foreach ( array( 'title', 'text' ) as $set ) {
@@ -90,7 +83,7 @@ class SimpleSearchController extends WikiaController {
 							
 							if ( $matches ) {
 								if ( $matches->numRows() ) {
-									$this->getResponse()->setVal( "{$set}ResultsInfo", $matches->getInfo() );
+									$this->setVal( "{$set}ResultsInfo", $matches->getInfo() );
 									$results = array();
 									
 									while ( $result = $matches->next() ) {
@@ -104,32 +97,32 @@ class SimpleSearchController extends WikiaController {
 										}
 									}
 									
-									$this->getResponse()->setVal( "{$set}Results", $results );
+									$this->setVal( "{$set}Results", $results );
 								}
 								
 								$matches->free();
 							}
 						}
 					} else {
-						$this->getApp()->runFunction( 'wfProfileOut', __METHOD__ );
+						$this->wf->profileOut( __METHOD__ );
 						throw new SimpleSearchTooManyResultsException();
 					}
 				} else {
-					$this->getApp()->runFunction( 'wfProfileOut', __METHOD__ );
+					$this->wf->profileOut( __METHOD__ );
 					throw new SimpleSearchDisabledException();
 				}
 			} else {
-				$this->getApp()->runFunction( 'wfProfileOut', __METHOD__ );
+				$this->wf->profileOut( __METHOD__ );
 				throw new SimpleSearchEngineException( $search );
 			}
 		} else {
-			$this->getApp()->runFunction( 'wfProfileOut', __METHOD__ );
+			$this->wf->profileOut( __METHOD__ );
 			throw new SimpleSearchEmptyKeyException();
 		}
 		
-		$this->getResponse()->setVal( 'results', $results );
+		$this->setVal( 'results', $results );
 		
-		$this->getApp()->runFunction( 'wfProfileOut', __METHOD__ );
+		$this->wf->profileOut( __METHOD__ );
 	}
 	
 	/**
@@ -139,9 +132,9 @@ class SimpleSearchController extends WikiaController {
 	 * @see getResults
 	 */
 	public function localSearch() {
-		$this->getApp()->setGlobal( 'wgEnableCrossWikiaSearch', false );
+		$this->wg->EnableCrossWikiaSearch = false;
 		$this->getResults();
-		$this->getApp()->setGlobal( 'wgEnableCrossWikiaSearch', $this->mEnableCrossWikiaSearch );
+		$this->wg->EnableCrossWikiaSearch = $this->mEnableCrossWikiaSearch;
 	}
 	
 	/**
@@ -151,10 +144,10 @@ class SimpleSearchController extends WikiaController {
 	 * @see getResults
 	 */
 	public function globalSearch() {
-		$this->getApp()->setGlobal( 'wgEnableCrossWikiaSearch', true );
+		$this->wg->EnableCrossWikiaSearch = true;
 		$this->request->setVal( 'fullURL', true );
 		$this->getResults();
-		$this->getApp()->setGlobal( 'wgEnableCrossWikiaSearch', $this->mEnableCrossWikiaSearch );
+		$this->wg->EnableCrossWikiaSearch = $this->mEnableCrossWikiaSearch;
 	}
 }
 
