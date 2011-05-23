@@ -60,7 +60,7 @@ The Wikia Team<br /><br />
 You can <a href=\"$3\">unsubscribe</a> from changes to this list.",
 	'wikiadoption-mail-second-subject' => "#WIKINAME will be put up for adoption soon",
 	'wikiadoption-mail-second-content' => "Hi $1,
-Oh, no! It's been almost 30 days since there's been an active administrator on #WIKINAME. It's important that adminstraters regularly appear and contribute so the wiki can continue to run smoothly.
+Oh, no! It's been almost 30 days since there's been an active administrator on #WIKINAME. It's important that administrators regularly appear and contribute so the wiki can continue to run smoothly.
 
 Since it's been so many days since a current administrator has appeared, #WIKINAME will now be offered for adoption to other editors. 
 
