@@ -193,6 +193,7 @@ class WikiaQuizElement {
 		return;
 	}
 
+	//@todo refactor this function and the version in WikiaQuiz.class
 	private function getImageSrc($filename) {
 		$imageSrc = '';
 		$fileTitle = Title::newFromText($filename, NS_FILE);

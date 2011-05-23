@@ -9,6 +9,18 @@
 		<input type="text" name="title">
 	</div>
 
+	<label><?= wfMsg('wikiaquiz-titlescreentext-label') ?></label>	
+	<div class="titlescreentext">
+		<input type="text" name="titlescreentext">
+	</div>
+
+	<label><?= wfMsg('wikiaquiz-titlescreenimages-label') ?></label>	
+	<div class="titlescreenimages">
+		<div><input type="text" name="titlescreenimage[]"></div>
+		<div><input type="text" name="titlescreenimage[]"></div>
+		<div><input type="text" name="titlescreenimage[]"></div>
+	</div>
+
 	<label><?= wfMsg('wikiaquiz-questions-label') ?></label>	
 	<ul>
 		<li class="new-item">
