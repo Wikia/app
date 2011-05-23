@@ -165,7 +165,7 @@ class SimpleSearchDisabledException extends WikiaException {
 
 class SimpleSearchEngineException extends WikiaException {
 	function __construct( SearchEngine $search ) {
-		parent::__construct( 'Search error: {$search->getError()}' );
+		parent::__construct( "Search error: {$search->getError()}" );
 	}
 }
 
