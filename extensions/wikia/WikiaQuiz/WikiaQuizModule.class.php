@@ -73,7 +73,7 @@ class WikiaQuizModule extends Module {
 		if ($quizName) {
 			$quiz = WikiaQuiz::newFromName($quizName);
 			$this->data = $quiz->getData();
-			hyunbug($this->data);
+			//hyunbug($this->data);
 		}
 	}
 
