@@ -15,6 +15,7 @@ $aUserNames = (isset($options['users'])) ? explode(',', $options['users']) : arr
 $aUseDB = (isset($options['usedb'])) ? explode(',', $options['usedb']) : array();
 $bDbExistsCheck = (isset($options['checkdb']) ? true : false);
 $bClearMode = (isset($options['clear']) ? true : false);
+$bRegenMode = (isset($options['regen']) ? true : false);
 $sDebugMailTo = (isset($options['mailto']) ? $options['mailto'] : '');
 
 if(class_exists('GlobalWatchlistBot')) {
@@ -24,6 +25,8 @@ if(class_exists('GlobalWatchlistBot')) {
 
 	if($bClearMode) {
 		$oWatchlistBot->clear();
+	} elseif ( $bRegenMode ) {
+		$oWatchlistBot->regenerate();
 	}
 	else {
 		$oWatchlistBot->run();

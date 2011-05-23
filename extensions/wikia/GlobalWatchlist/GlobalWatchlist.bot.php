@@ -61,6 +61,21 @@ class GlobalWatchlistBot {
 	}
 
 	/**
+	 * run watchlist
+	 */
+	public function regenerate() {
+		global $wgExternalDatawareDB;
+
+		$this->mStartTime = time();
+		$this->printDebug( "Script started. (" . date( 'Y-m-d H:i:s' ) . ")" );
+
+		// regenerate watchlist data
+		$this->regenerateWatchlist();
+		
+		$this->printDebug( "Script finished. (total time: " . $this->calculateDuration( time() - $this->mStartTime ) . ")" );
+	}
+
+	/**
 	 * update local watchlist
 	 */
 	public function updateLocalWatchlist( $page_title, $namespace ) {
@@ -101,7 +116,7 @@ class GlobalWatchlistBot {
 		$aWhereClause = array( 
 			"gwa_user_id > 0",
 			"gwa_timestamp is not null",
-			"gwa_timestamp <= gwa_rev_timestamp",
+			/*"gwa_timestamp <= gwa_rev_timestamp",*/
 		);
 		if ( count( $this->mUsers ) ) {
 			// get only users passed by --users argument
@@ -737,5 +752,77 @@ class GlobalWatchlistBot {
 			return 0;
 		}
 	}
+	
+	/**
+	 * gather digest data for all users
+	 */
+	public function regenerateWatchlist() {
+		global $wgExternalSharedDB, $wgExternalDatawareDB;
+
+		$wlNbr = 0;
+		$this->printDebug( "Regenerate watchlist data ..." );
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$dbext = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+
+		$where = array(
+			"city_public" 		=> 1,
+			"city_useshared" 	=> 1
+		);
+		if ( !empty( $this->mUseDB ) ) {
+			$where[] = " city_id in (" . implode( ",", $this->mUseDB ) . ") ";
+		}
+
+		$oResource = $dbr->select(
+			array( "city_list" ),
+			array( "city_id", "city_dbname", "city_lang", "city_title" ),
+			$where,
+			__METHOD__,
+			array( "ORDER BY" => "city_id" )
+		);
+
+		while ( $oResultRow = $dbr->fetchObject( $oResource ) ) {
+			$mCntUsers = 0;
+			# -- load users from watchlist table with list of pages
+			$localTime = time();
+			$this->printDebug( "Processing {$oResultRow->city_dbname} ... " );
+			$aUsers = $this->getUsersPagesFromWatchlist( $oResultRow->city_dbname );
+			# ---
+			$this->printDebug( count( $aUsers ) . " watchlister(s) found " );
+			if ( !empty( $aUsers ) ) {
+				# ----
+				$dbext->begin();
+				$dbext->delete("global_watchlist", array( 'gwa_city_id' => $oResultRow->city_id ), __METHOD__ );				
+				foreach ( $aUsers as $iUserId => $aWatchLists ) {
+					if ( !empty( $aWatchLists ) ) {
+						foreach ( $aWatchLists as $oWatchLists ) {
+							$dbext->insert(
+								"global_watchlist",
+								array(
+									"gwa_user_id" 	=> $iUserId,
+									"gwa_city_id"	=> $oResultRow->city_id,
+									"gwa_namespace" => $oWatchLists->page_namespace,
+									"gwa_title"		=> $oWatchLists->page_title,
+									"gwa_rev_id"	=> $oWatchLists->page_revision,
+									"gwa_timestamp"	=> $oWatchLists->page_timestamp
+								),
+								__METHOD__
+							);
+							$wlNbr++;
+							$mCntUsers++;
+						} // foreach $aWatchLists
+					} // if !empty $aWatchLists
+				} // foreach
+				$dbext->commit();
+			} // !empty
+			$aUsers = null;
+			unset($aUsers);
+			$this->printDebug( "Gathering watchlist data for: {$oResultRow->city_dbname} ({$oResultRow->city_id}) and " . $mCntUsers . " users ... done! (time: " . $this->calculateDuration( time() - $localTime ) . ")" );
+		} // while
+		$dbr->freeResult( $oResource );
+
+		$this->printDebug( "Gathering all watchlist data ... done! (time: " . $this->calculateDuration( time() - $this->mStartTime ) . ")" );
+		return $wlNbr;
+	}	
 
 }
