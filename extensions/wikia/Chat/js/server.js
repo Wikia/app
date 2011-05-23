@@ -423,9 +423,6 @@ function formallyAddClient(client, socket, connectedUser){
 			event: 'join',
 			joinData: connectedUser.xport()
 		});
-
-		// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
-		broadcastInlineAlert(client, socket, connectedUser.get('name') + " has joined the chat.");
 	});
 } // end formallyAddClient()
 
@@ -463,15 +460,27 @@ function clientDisconnect(client) {
  * After a client has been disconnected, broadcast the part and the associated inline-alert to all remaining members of the room.
  */
 function broadcastDisconnectionInfo(client, socket){
-	// Broadcast the 'part' to all clients.
-	broadcastToRoom(client, socket, {
-		event: 'part',
-		data: client.myUser.xport()
-	});
+	// Delay before sending part messages because there are occasional disconnects/reconnects or just ppl refreshing their browser
+	// and that's really not useful information to anyone that under-the-hood they were disconnected for a moment (BugzId 5753).
+	var DELAY_MILLIS = 3000;
+	setTimeout(function(){
+		// Now that the delay has passed, check that the user is still gone (if they're disconnecting/reconnecting, don't bother showing the part-message).
+		rc.hget(getKey_usersInRoom(client.roomId), client.myUser.get('name'), function(err, data){
+			// If data is EMPTY, then the user is still gone, so we can actually broadcast the message now.
+			if(!data){
+				// Broadcast the 'part' to all clients.
+				broadcastToRoom(client, socket, {
+					event: 'part',
+					data: client.myUser.xport()
+				});
 
-	// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
-	broadcastInlineAlert(client, socket, client.myUser.get('name') + " has left the chat.");
+				// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
+				broadcastInlineAlert(client, socket, client.myUser.get('name') + " has left the chat.");
+			}
+		});
+	}, DELAY_MILLIS);
 } // end broadcastDisconnectionInfo()
+
 
 // Start the main chat server listening.
 app.listen(CHAT_SERVER_PORT);
@@ -579,7 +588,7 @@ function kickBan(client, socket, msg){
 					try{
 						data = JSON.parse(responseBody);
 					} catch(e){
-						data = {'error': "Error communicating w/MediaWiki server."}; // probably can't i18n this msg since this only happens when we CAN'T get a result anyway.
+						data = {'error': "Error communicating w/MediaWiki server."}; // probably can't i18n this msg since this only happens when we CAN'T get a result anyway... but we might be passing msgs to the client-side so... TODO: i18n it!
 						console.log("Error: while parsing result of kickBan call to MediaWiki server. Error was: ");
 						console.log(e);
 						console.log("Response that didn't parse was:\n" + responseBody);
@@ -647,13 +656,11 @@ function kickUserFromServer(client, socket, userToKick, roomId){
 		
 		// This closes the connection (takes a few seconds) after calling the clientDisconnect() handler which will
 		// broadcast the 'part' and delete the session id from the sessionIdsByKey hash.
-// TODO: SWITCH THESE METHODS AND TEST KICKBANS AGAIN.
 		socket.clients[kickedClientId]._onDisconnect();
 
-		// This is the way fzysqr does it.  It might close the connection more quickly (the _onDisconnect() works and is tested but the client stays open for a few seconds).
+		// NOTE: This is the way fzysqr does it (as opposed to the ._onDisconnect() done above).  It might close the connection more quickly (the _onDisconnect() works and is tested but the client stays open for a few seconds).
 		//socket.clients[kickedClientId].send({ event: 'disconnect' });
 		//socket.clients[kickedClientId].connection.end();
-		
 	}
 } // end kickUserFromServer()
 

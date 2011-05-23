@@ -209,8 +209,11 @@ var NodeChatView = Backbone.View.extend({
 				});
 				break;
 			case 'initial':
+
+// TODO: MODIFY THIS AS PART OF BugzId 5753 SO THAT IT ONLY ADDS MSGS SINCE THE LAST ITEM THAT WAS CHANGED (ie: during the reconnection if this was a reconnection rather than an initial connection).
+// TODO: MODIFY THIS AS PART OF BugzId 5753 SO THAT IT ONLY ADDS MSGS SINCE THE LAST ITEM THAT WAS CHANGED (ie: during the reconnection if this was a reconnection rather than an initial connection).
 				this.model.mport(message.data);
-				//this.beautifyUserList(); // now attached to all changes
+
 				break;
 			case 'disableReconnect':
 				this.autoReconnect = false;
@@ -236,6 +239,10 @@ var NodeChatView = Backbone.View.extend({
 									});
 				if(typeof connectedUser == "undefined"){
 					this.model.users.add(joinedUser);
+
+					// Create the inline-alert (on client side so that we only display it if the user actually IS new to the room and not just disconnecting/reconnecting).
+					var newChatEntry = new models.InlineAlert({text: joinedUser.get('name') + ' has joined the chat.'});
+					this.model.chats.add(newChatEntry);
 				}
 				break;
 			case 'part': // A user left the chat.
