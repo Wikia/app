@@ -3104,6 +3104,7 @@ $messages['vi'] = array(
 	'oasis-page-header-subtitle-template' => 'Trang bản mẫu',
 	'oasis-page-header-subtitle-category' => 'Trang thể loại',
 	'oasis-page-header-subtitle-forum' => 'Trang diễn đàn',
+	'oasis-page-header-editing' => '<strong>Sửa đổi:</strong> $1',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
