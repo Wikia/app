@@ -1,4 +1,4 @@
-U<?php
+<?php
 /**
 * TODO: Add comments to SQL queries (so ops ppl and other engineers will know what's going on).
 * TODO: When a user hits the page, automatically display their nominations on it (the token thing can probably go away & we can just use id's instead).
