@@ -107,7 +107,12 @@ $messages['en'] = array(
 	'rte-ck-poll-confirmDeleteTitle' => 'Remove this poll?',
 	'rte-ck-spellchecker-moreSuggestions' => 'More suggestions',
 
-	'rte-ck-format-tag_p' => 'normal text',
+	'rte-ck-format-tag_p' => 'Normal text',
+	'rte-ck-format-tag_pre' => 'Code (preformatted text)',
+	'rte-ck-format-tag_h2' => 'Heading 2',
+	'rte-ck-format-tag_h3' => 'Heading 3',
+	'rte-ck-format-tag_h4' => 'Heading 4',
+	'rte-ck-format-tag_h5' => 'Heading 5',
 );
 
 /** Message documentation (Message documentation)
