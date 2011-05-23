@@ -73,12 +73,22 @@ class TopListParser {
 
 		if ( !empty( $list ) ) {
 			$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+                        
+                        if ( $relatedTitle instanceof Title ) {
+                            $relatedTitleData = array(
+                                'localURL' => $relatedTitle->getLocalURL(),
+                                'text'     => $relatedTitle->getText()
+                            );
+                        } else {
+                            $relatedTitleData = null;
+                        }
+                        
 			$template->set_vars(
 				array(
 					'list' => $list,
+                                        'listTitle' => $list->getTitle()->getText(),
+                                        'relatedTitleData' => $relatedTitleData,
 					'attribs' => self::$mAttributes,
-					'relatedTitle' => $relatedTitle,
-					'relatedImage' => $relatedImage,
 					'relatedUrl' => $relatedUrl
 				)
 			);
