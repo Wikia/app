@@ -370,7 +370,17 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 
 		this.row = row;
 
-		var top = 19+(2+(YAHOO.Tools.getBrowserAgent().mac ? 13 : 16)*row)-control.scrollTop;
+		var browserLineHeight = 16;
+		if (YAHOO.Tools.getBrowserAgent().mac) {
+			browserLineHeight = 13;
+		}
+		else if ($.browser.mozilla) {
+			browserLineHeight = 17;
+		}
+		else if ($.browser.webkit) {
+			browserLineHeight = 15;
+		}
+		var top = 19+(2+ browserLineHeight *row)-control.scrollTop;
 		var left = 3+(8*(charInLine-this._sCurQuery.length))-control.scrollLeft;
 
 		switch (window.skin) {

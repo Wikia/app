@@ -42,6 +42,7 @@
 /* RT #74340: add styling for LinkSuggest */
 .link-suggest-container {
 	@include yui-suggest;
+	position: absolute;
 }
 
 // TODO: try to "hide" stuff listed below in PHP

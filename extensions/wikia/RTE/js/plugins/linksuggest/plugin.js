@@ -8,11 +8,6 @@ CKEDITOR.plugins.add('rte-linksuggest',
 			return;
 		}
 
-		// check browsers (only IE and Gecko is supported)
-		if (!CKEDITOR.env.ie && !CKEDITOR.env.gecko) {
-			return;
-		}
-
 		// setup data source for link suggest
 		this.dataSource = new window.YAHOO.widget.DS_XHR(window.wgServer + window.wgScriptPath, ["\n"]);
 		this.dataSource.responseType = window.YAHOO.widget.DS_XHR.TYPE_FLAT;
