@@ -23,13 +23,39 @@ class WikiaQuizModule extends Module {
 		}
 	}
 	
+	/**
+	 * depracated, keeping for reference.  Please do not delete the other resources (js, css)
+	 * @author Hyun Lim
+	 */
 	public function executeSampleQuiz() {
 		$this->executeGetQuiz();
 	}
 
-	// 2nd prototype
+	/**
+	 * depracated, keeping for reference.  Please do not delete the other resources (js, css)
+	 * @author Hyun Lim
+	 */
 	public function executeSampleQuiz2() {
 		$this->executeGetQuiz();
+	}
+	
+	/**
+	 * Current version.
+	 * @author Hyun Lim
+	 */
+	public function executeSampleQuiz3() {
+		global $wgUser;
+		$this->executeGetQuiz();
+		
+		$themeSettings = new ThemeSettings();
+		$settings = $themeSettings->getSettings();
+		$this->wordmarkType = $settings['wordmark-type'];
+		$this->wordmarkText = $settings['wordmark-text'];
+		if ($this->wordmarkType == 'graphic') {
+			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
+		}
+		
+		$this->username = $wgUser->getName();
 	}
 
 	public function executeGetQuizElement() {
@@ -47,6 +73,7 @@ class WikiaQuizModule extends Module {
 		if ($quizName) {
 			$quiz = WikiaQuiz::newFromName($quizName);
 			$this->data = $quiz->getData();
+			hyunbug($this->data);
 		}
 	}
 

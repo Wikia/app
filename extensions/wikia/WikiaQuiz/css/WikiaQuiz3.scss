@@ -1,0 +1,385 @@
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/transform";
+@import "../../../../skins/oasis/css/mixins/transition";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/layout";
+
+
+$base-z: 5;
+$frame-z: $base-z + 1;
+$floor-z: $base-z - 5;
+$question-color: #ddd;
+$panel-width: 800px;
+$panel-height: 500px;
+
+// generic shapes
+
+/**
+ * Generic bubble shape.
+ * Notes:
+ * - positioning should be done on individual implementation.  this is only for visual styling.
+ * - overwrite &:after (the tail) left attribute on implementor to position tail in center.
+ */
+$bubble-padding: 50px;
+$bubble-color-alt: $color-header-alt;
+@if lightness($bubble-color-alt) < 25 {
+	$bubble-color-alt: mix($color-header-alt, #fff, 60%);
+}
+.quiz-bubble {
+	
+	@include border-radius(10px);
+	@include box-shadow(0, 2px, 5px, #000);
+	@include linear-gradient($color-header, top, $bubble-color-alt, 0, $color-header, 100%);
+	color: $color-header-text;
+	font-size: 28px;
+	line-height: 36px;
+	padding: $bubble-padding;
+	position: absolute;
+	text-align: center;
+	
+	&:after {
+		$border-width: 20px;
+		$border-top-width: 25px;
+		bottom: -45px;
+		border: $border-width solid transparent;
+		border-top-style: solid;
+		border-top-width: $border-top-width;
+		border-top-color: $color-header;
+		content: "";
+		left: 0;	// overwrite on implementor
+		height: 0;
+		position: absolute;
+		width: 0;
+	}
+}
+
+/**
+ * Quiz
+ */
+.WikiaQuiz {
+	//border: 10px solid $color-body;
+	height: $panel-height;
+	margin: 0 auto;
+	position: relative;
+	overflow: hidden;
+	width: $panel-width;
+	ol, ul {
+		margin: 0;
+		padding: 0;
+	}
+	>div {
+		z-index: $base-z;
+	}
+	.quiz-frame {
+		border: 10px solid $color-body;
+		height: $panel-height - 20px;
+		position: absolute;
+		width: $panel-width - 20px;
+		z-index: 0;
+	}
+	.title-screen {
+		display: block; // temp
+		.title {
+			$width: 415px;
+			$visual-width: $width + ($bubble-padding * 2);
+			bottom: 125px;
+			left: ($panel-width - $visual-width) / 2;
+			width: $width;
+			&:after {
+				left: ($visual-width - $bubble-padding)/2;
+			}
+		}
+		
+	}
+	.count-down {
+		display: none;
+		.number {
+			@include border-radius(100px);
+			@include box-shadow(0, 5px, 20px, #000, false, -5px);
+			@include linear-gradient($color-header, top, $bubble-color-alt, 0, $color-header, 100%);
+			color: $color-header-text;
+			font-size: 144px;
+			height: 110px;
+			left: 290px;
+			padding-top: 90px;
+			position: absolute;
+			text-align: center;
+			top: 120px;
+			width: 200px;
+		}
+		.cadence {
+			font-size: 28px;
+			margin: 340px auto 0 auto;
+			text-align: center;
+		}
+	}
+	.questions {
+		.question-set {
+			display: none;
+			.question-bubble {
+				$bubble-visual-width: 630px;
+				$bubble-width: $bubble-visual-width - (20 * 2);
+				bottom: 175px; //360px shifted
+				height: 122px;
+				left: ($panel-width - $bubble-visual-width) / 2;
+				line-height: 32px;
+				padding: 50px 20px 0;
+				width: $bubble-width;
+				z-index: $frame-z + 1;
+				&:after {
+					position: absolute;
+					left: ($bubble-visual-width - $bubble-padding)/2;
+				}
+			}
+			.question-label {
+				$logical-height: 116px;
+				$border-radius: $logical-height/2;
+				$padding-top: 25px;
+				$height: $logical-height - $padding-top;
+				$width: 116px;
+				@include border-radius($border-radius);
+				background-color: $color-body;
+				color: white;
+				font-size: 12px;
+				height: $height;
+				left: $panel-width/2 - $width/2;
+				padding-top: $padding-top;
+				position: absolute;
+				text-align: center;
+				top: 60px;
+				width: $width;
+				z-index: $base-z;
+				.number {
+					display: block;
+					font-size: 42px;
+					line-height: 44px;
+				}
+			}
+			.question-image {
+				@include box-shadow(0, 2px, 10px, #000, false, -5px);
+				@include transform-rotate(-6deg);
+				border: 5px solid white;
+				height: 155px;
+				left: 30px;
+				position: absolute;
+				top: 30px;
+				width: 155px;
+				z-index: $frame-z + 2;
+			}
+			.question-number {
+				$logical-height: 510px;
+				$border-radius: $logical-height/2;
+				$padding-top: 25px;
+				$height: $logical-height - $padding-top;
+				$width: 510px;
+				@include border-radius($border-radius);
+				@include opacity(10);
+				background-color: #999;
+				color: white;
+				font-size: 450px;
+				height: $height;
+				left: $panel-width/2 - $width/2;
+				line-height: 450px;
+				padding-top: $padding-top;
+				position: absolute;
+				text-align: center;
+				top: -50px;
+				width: $width;
+				z-index: $floor-z;
+			}
+			.answers {
+				display: none;
+				font-size: 19px;
+				left: 32px;
+				line-height: 27px;
+				list-style: none;
+				position: absolute;
+				text-align: center;
+				top: 185px;
+				width: 735px;
+				z-index: $base-z;
+				.answer {
+					cursor: pointer;
+					float: left;
+					margin-left: 25px;
+					position: relative;
+					.answer-label {
+						margin-top: 175px;
+						width: 165px;
+					}
+					.representation {
+						@include box-shadow(0, 2px, 10px, #000, false, -5px);
+						@include linear-gradient($color-buttons, top, mix($color-buttons, #fff, 60%), 0, $color-buttons, 100%);
+						background-color: $color-buttons;
+						border: 5px solid white;
+						color: $color-button-text;
+						display: table-cell;
+						height: 155px;
+						position: absolute;
+						vertical-align: middle;
+						width: 155px;
+						&:hover {
+							border-color: $color-buttons;
+						}
+					}
+					&:first-child {
+						margin-left: 0;
+					}
+					.anchor-hack {
+						height: 1px;
+						width: 165px;
+						&:hover {
+							cursor: default;
+						}
+					}
+				}
+			}
+			&:first-child {
+				//display: block;
+			}
+			.explanation {
+				display: none;
+				position: absolute;
+				right: 50px;
+				top: 50px;
+				width: 400px;
+				.answer-response {
+					padding-bottom: 10px;
+					padding-top: 10px;
+					width: 300px;
+					&:after {
+						left: 185px;
+					}
+				}
+				.correct-answer {
+					font-size: 30px;
+					margin-top: 100px;
+					text-align: center;
+				}
+				.answer-explanation {
+					font-size: 15px;
+					margin: 20px;
+				}
+				button {
+					position: absolute;
+					top: 300px;
+					right: 0;
+				}
+			}
+		}
+ 	}
+ 	.quiz-end {
+ 		display: none;
+		text-align: center;
+		.congratulations {
+			left: 100px;
+			top: -30px;
+			width: 500px;
+			&:after {
+				left: 290px;
+			}
+		}
+		.score-panel {
+			color: $color-buttons;
+			font-size: 17px;
+			font-weight: bold;
+			height: 225px;
+			margin: 155px auto 0;
+			position: relative;
+			width: 400px;
+			.score {
+				$logical-height: 180px;
+				$border-radius: $logical-height/2;
+				$padding-top: 15px;
+				$height: $logical-height - $padding-top;
+				$width: 180px;
+				@include border-radius($border-radius);
+				background-color: $color-buttons;
+				color: white;
+				font-size: 125px;
+				height: $height;
+				line-height: 150px;
+				margin: 10px auto;
+				padding-top: $padding-top;
+				text-align: center;
+				vertical-align: text-top;
+				width: $width;
+				z-index: $floor-z;
+				&.full {
+					font-size: 100px;
+				}
+			}
+			.continue {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+			}
+		}
+	}
+	.quiz-thanks {
+		display: none;
+		.thanks {
+			left: 100px;
+			padding: 40px 0;
+			top: 75px;
+			width: 600px;
+			&:after {
+				left: 285px;
+			}
+		}
+		.more-info {
+			margin-top: 240px;
+			text-align: center;
+			h2 {
+				border-bottom: none;
+			}
+			ul {
+				li {
+					margin: 10px 0;
+				}
+			}
+		}
+	}
+}
+
+.QuizStatus {
+	@include linear-gradient($color-header, top, mix($color-header, #fff, 80%), 18%, mix($color-header, #fff, 90%), 35%, $color-header, 53%);
+	@include border-radius(7px);
+	top: -85px;
+	height: 55px;
+	margin: 0 auto;
+	position: relative;
+	text-align: center;
+	width: $panel-width + 14px;
+	
+	img {
+		position: absolute;
+		left: 0;
+	}
+	button {
+		@include box-shadow(0, 0, 8px, #fff);
+		position: relative;
+		top: 15px;
+	}
+	/* decorators */
+	&:before, &:after {
+		background-color: $color-header;
+		content: "";
+		height: 14px;
+		position: absolute;
+		bottom: -7px;
+		width: 7px;
+	}
+	&:before {
+		@include border-radius-sw(7px);
+		left: 0;
+	}
+	&:after {
+		@include border-radius-se(7px);
+		right: 0;
+	}
+}
