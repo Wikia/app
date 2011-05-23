@@ -226,6 +226,20 @@ class BlogArticle extends Article {
 		return true;
 	}
 
+	
+	/**
+	 * return list of props
+	 *
+	 * @access public
+	 * @static
+	 *
+	 */
+	
+	static public function getPropsList() {
+		$replace = array('voting' => WPP_BLOGS_VOTING, 'commenting' => WPP_BLOGS_COMMENTING );
+		return $replace;
+	}
+	
 	/**
 	 * save article extra properties to page_props table
 	 *
@@ -235,25 +249,34 @@ class BlogArticle extends Article {
 	 * @param array $props array of properties to save (prop name => prop value)
 	 */
 	static public function setProps( $page_id, Array $props ) {
-
 		wfProfileIn( __METHOD__ );
+		global $wgBlogsInWikiaProps;
 		$dbw = wfGetDB( DB_MASTER );
-		foreach( $props as $sPropName => $sPropValue) {
-			$dbw->replace(
-				"page_props",
-				array(
-					"pp_page",
-					"pp_propname"
-				),
-				array(
-					"pp_page" => $page_id,
-					"pp_propname" => $sPropName,
-					"pp_value" => $sPropValue
-				),
-				__METHOD__
-			);
-			Wikia::log( __METHOD__, "save", "id: {$page_id}, key: {$sPropName}, value: {$sPropValue}" );
+		if(empty($wgBlogsInWikiaProps)) {
+			 //TODO: remove it after migration
+			foreach( $props as $sPropName => $sPropValue) {
+				$dbw->replace(
+					"page_props",
+					array(
+						"pp_page",
+						"pp_propname"
+					),
+					array(
+						"pp_page" => $page_id,
+						"pp_propname" => $sPropName,
+						"pp_value" => $sPropValue
+					),
+					__METHOD__
+				);
+				Wikia::log( __METHOD__, "save", "id: {$page_id}, key: {$sPropName}, value: {$sPropValue}" );
+			} 
 		}
+
+		$replace = self::getPropsList();
+		foreach( $props as $sPropName => $sPropValue) {
+			wfSetWikiaPageProp($replace[$sPropName], $page_id, $sPropValue );
+		}	
+		
 		$dbw->commit(); #--- for ajax
 		wfProfileOut( __METHOD__ );
 	}
@@ -267,23 +290,29 @@ class BlogArticle extends Article {
 	 * @return Array
 	 */
 	static public function getProps( $page_id ) {
-
 		wfProfileIn( __METHOD__ );
+		global $wgBlogsInWikiaProps;
 		$return = array();
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-			array( "page_props" ),
-			array( "*" ),
-			array( "pp_page" => $page_id ),
-			__METHOD__
-		);
-		while( $row = $dbr->fetchObject( $res ) ) {
-			$return[ $row->pp_propname ] = $row->pp_value;
+		if(empty($wgBlogsInWikiaProps)) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select(
+				array( "page_props" ),
+				array( "*" ),
+				array( "pp_page" => $page_id ),
+				__METHOD__
+			);
+			while( $row = $dbr->fetchObject( $res ) ) {
+				$return[ $row->pp_propname ] = $row->pp_value;
+			}
+			$dbr->freeResult( $res );
+		} else {
+			$types = self::getPropsList();
+			foreach( $types as $key => $value ) {
+				$return[$key] =  (int) wfGetWikiaPageProp($value, $page_id );
+			}
 		}
-		$dbr->freeResult( $res );
+		
 		wfProfileOut( __METHOD__ );
-
 		wfDebug( __METHOD__ . ": getting props for $page_id\n" );
 
 		return $return;

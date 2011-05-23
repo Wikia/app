@@ -327,6 +327,7 @@ class ArticleCommentList {
 		$commentListHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'useMaster' => false));
 
 		$commentingAllowed = true;
+
 		if (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
 			$props = BlogArticle::getProps($wgTitle->getArticleID());
 			$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;

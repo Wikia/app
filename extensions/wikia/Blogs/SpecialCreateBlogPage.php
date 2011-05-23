@@ -101,6 +101,10 @@ class CreateBlogPage extends SpecialBlogPage {
 		}
 
 		$aPageProps = array();
+		
+		$aPageProps['voting'] = 0;
+		$aPageProps['commenting'] = 0;
+		
 		if(!empty($this->mFormData['isVotingEnabled'])) {
 			$aPageProps['voting'] = 1;
 		}
