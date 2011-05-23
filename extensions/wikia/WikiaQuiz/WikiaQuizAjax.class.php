@@ -257,15 +257,34 @@ class WikiaQuizAjax {
 	}
 	
 	private static function parseCreateEditQuizRequest(WebRequest $request, $quiz, &$error) {
-		$wgRequest = F::app()->getGlobal('wgRequest');
 		$wgUser = F::app()->getGlobal('wgUser');
 		$wgLang = F::app()->getGlobal('wgLang');
 
+		// parse quiz fields
+		$quizContent = '';
+
+		// title
 		if (!empty($quiz)) {
 			$title = $quiz->getTitle();
 		}
 		else {
-			$title = trim($wgRequest->getVal ('title'));
+			$title = trim($request->getVal ('title'));
+		}
+		
+		// title screen text
+		$titleScreenText = trim($request->getVal ('titlescreentext'));
+		$quizContent .= WikiaQuiz::TITLESCREENTEXT_MARKER . $titleScreenText . "\n";
+		
+		// title screen images
+		$titleScreenImages = $request->getArray ('titlescreenimage');
+		foreach($titleScreenImages as $image) {
+			if ($image) {
+				if (!self::isValidImage($image)) {
+					$error = wfMsg('wikiaquiz-error-invalid-image', $image);
+					return;
+				}
+				$quizContent .= WikiaQuiz::IMAGE_MARKER . $image . "\n";
+			}
 		}
 
 		$patternCategory = "/\[\[".$wgLang->getNsText(NS_CATEGORY)."\:".WikiaQuiz::QUIZ_CATEGORY_PREFIX . $title."(\|(.+))*\]\]/";
@@ -335,10 +354,7 @@ class WikiaQuizAjax {
 			}
 		}
 		
-		//@todo add quiz fields		
-		$content = '';
-		
-		return $content;
+		return $quizContent;
 	}
 	
 	private static function parseCreateEditQuizArticleRequest(WebRequest $request, WikiaQuizElement $quizElement, &$error) {

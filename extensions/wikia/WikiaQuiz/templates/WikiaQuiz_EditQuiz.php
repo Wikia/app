@@ -12,6 +12,18 @@
 		<p><?=$data['name'] ?></p>
 	</div>
 
+	<label><?= wfMsg('wikiaquiz-titlescreentext-label') ?></label>	
+	<div class="titlescreentext">
+		<input type="text" name="titlescreentext" value="<?= htmlspecialchars($data['titlescreentext']) ?>">
+	</div>
+
+	<label><?= wfMsg('wikiaquiz-titlescreenimages-label') ?></label>	
+	<div class="titlescreenimages">
+		<div><input type="text" name="titlescreenimage[]" value="<?= isset($data['imageShorts'][0]) ? htmlspecialchars($data['imageShorts'][0]) : '' ?>"></div>
+		<div><input type="text" name="titlescreenimage[]" value="<?= isset($data['imageShorts'][1]) ? htmlspecialchars($data['imageShorts'][1]) : '' ?>"></div>
+		<div><input type="text" name="titlescreenimage[]" value="<?= isset($data['imageShorts'][2]) ? htmlspecialchars($data['imageShorts'][2]) : '' ?>"></div>
+	</div>
+
 	<label><?= wfMsg('wikiaquiz-questions-label') ?></label>	
 	<ul>
 		<li class="new-item">

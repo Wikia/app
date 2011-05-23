@@ -15,6 +15,8 @@ class WikiaQuiz {
 	const CACHE_TTL = 86400;
 	const CACHE_VER = 5;
 	const QUIZ_CATEGORY_PREFIX = 'Quiz_';
+	const TITLESCREENTEXT_MARKER = 'TITLESCREENTEXT:';
+	const IMAGE_MARKER = 'IMAGE:';
 
 	private function __construct($quizId) {
 		$this->mData = null;
@@ -94,6 +96,24 @@ class WikiaQuiz {
 			$title = $article->getTitle();
 			$firstRev = $title->getFirstRevision();
 			$titleText = $title->getText();
+			$titleScreenText = '';
+			$images = array();
+			$imageShorts = array();
+
+			// parse wikitext containing quiz data
+			$content = $article->getContent();
+
+			$lines = explode("\n", $content);
+			foreach($lines as $line) {
+				if (startsWith($line, self::TITLESCREENTEXT_MARKER)) {
+					$titleScreenText = trim( substr($line, strlen(self::TITLESCREENTEXT_MARKER)) );
+				}
+				elseif (startsWith($line, self::IMAGE_MARKER)) {
+					$imageShort = trim( substr($line, strlen(self::IMAGE_MARKER)) );
+					$images[] = $this->getImageSrc($imageShort);					
+					$imageShorts[] = $imageShort;
+				}
+			}
 
 			// load quiz's elements
 			if (empty($this->mCategory)) {
@@ -120,6 +140,9 @@ class WikiaQuiz {
 				'id' => $this->mQuizId,
 				'name' => $titleText,
 				'elements' => $quizElements,
+				'titlescreentext' => $titleScreenText,
+				'images' => $images,
+				'imageShorts' => $imageShorts
 			);
 
 			wfDebug(__METHOD__ . ": loaded from scratch\n");
@@ -226,5 +249,25 @@ class WikiaQuiz {
 		wfDebug(__METHOD__ . ": purged quiz #{$this->mQuizId}\n");
 
 		wfProfileOut(__METHOD__);
+	}
+	
+	//@todo refactor this function and the version in WikiaQuizElement.class
+	private function getImageSrc($filename) {
+		$imageSrc = '';
+		$fileTitle = Title::newFromText($filename, NS_FILE);
+		$image = wfFindFile($fileTitle);
+		if ( !is_object( $image ) || $image->height == 0 || $image->width == 0 ){
+			return $imageSrc;
+		} else {
+			$thumbDim = ($image->height > $image->width) ? $image->width : $image->height;
+			$imageServing = new imageServing( array( $fileTitle->getArticleID() ), $thumbDim, array( "w" => $thumbDim, "h" => $thumbDim ) );
+			$imageSrc = wfReplaceImageServer(
+				$image->getThumbUrl(
+					$imageServing->getCut( $thumbDim, $thumbDim )."-".$image->getName()
+				)
+			);
+		}
+
+		return $imageSrc;
 	}
 }
