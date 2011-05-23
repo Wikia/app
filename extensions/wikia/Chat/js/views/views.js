@@ -107,6 +107,7 @@ var UserView = Backbone.View.extend({
 
 var NodeChatView = Backbone.View.extend({
 	initialize: function(options) {
+		this.isInitialized = false; // so that init only happens once and not again upon any reconnections.
 		this.autoReconnect = true;
 		this.comingBackFromAway = false; // to prevent us from spamming "back" commands when we're in the process of coming back from away
 		this.model.chats.bind('add', this.addChat);
@@ -178,8 +179,8 @@ var NodeChatView = Backbone.View.extend({
 	},
 	
 	removeUser: function(user) {
-		NodeChatHelper.log("Trying to remove " + user.get('name') + " from the list.");
-		NodeChatHelper.log("Matches found: " + $('[id="' + NodeChatHelper.liIdByUsername( user.get('name') ) + '"]').length);
+		//NodeChatHelper.log("Trying to remove " + user.get('name') + " from the list.");
+		//NodeChatHelper.log("Matches found: " + $('[id="' + NodeChatHelper.liIdByUsername( user.get('name') ) + '"]').length);
 		$('[id="' + NodeChatHelper.liIdByUsername( user.get('name') ) + '"]').remove();
 	},
 
@@ -210,9 +211,12 @@ var NodeChatView = Backbone.View.extend({
 				break;
 			case 'initial':
 
-// TODO: MODIFY THIS AS PART OF BugzId 5753 SO THAT IT ONLY ADDS MSGS SINCE THE LAST ITEM THAT WAS CHANGED (ie: during the reconnection if this was a reconnection rather than an initial connection).
-// TODO: MODIFY THIS AS PART OF BugzId 5753 SO THAT IT ONLY ADDS MSGS SINCE THE LAST ITEM THAT WAS CHANGED (ie: during the reconnection if this was a reconnection rather than an initial connection).
-				this.model.mport(message.data);
+// TODO: MODIFY THIS AS PART OF BugzId 5753 SO THAT IT ADDS MSGS SINCE THE LAST ITEM THAT WAS CHANGED (ie: during the reconnection if this was a reconnection rather than an initial connection).
+// TODO: MODIFY THIS AS PART OF BugzId 5753 SO THAT IT ADDS MSGS SINCE THE LAST ITEM THAT WAS CHANGED (ie: during the reconnection if this was a reconnection rather than an initial connection).
+				if(!this.isInitialized){
+					this.model.mport(message.data);
+					this.isInitialized = true;
+				}
 
 				break;
 			case 'disableReconnect':
