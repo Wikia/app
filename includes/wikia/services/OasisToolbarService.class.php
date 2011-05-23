@@ -475,6 +475,7 @@
 				'SpecialPage:MyContributions',
 				'SpecialPage:WikiaLabs',
 				'SpecialPage:Statistics',
+                                'Action:DevInfo' // a.k.a. PerformanceStats, BugId:5497
 			);
 		}
 
@@ -496,9 +497,14 @@
 		}
 		
 		public function getBlacklist() {
-			return array(
-				'PageAction:Share',
-			);
+                        $out = array(
+                            'PageAction:Share'
+                        );
+                        // BugId:5497, blacklist DevInfo if not allowed
+                        if ( !F::app()->wg->user->isAllowed( 'performancestats' ) ) {
+                            $out[] = 'Action:DevInfo';
+                        }
+                        return $out;
 		}
 
 		protected function importMyTools() {

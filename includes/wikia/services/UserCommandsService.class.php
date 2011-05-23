@@ -16,7 +16,7 @@
 			$hash = $name . ($options ? serialize($options) : '');
 			if (empty($this->cache[$hash])) {
 				list($type,$data) = explode(':',$name,2);
-				
+                                
 				$className = false;
 				switch ($type) {
 					case "SpecialPage":
@@ -30,12 +30,12 @@
 						}
 						break;
 					case "Action":
-						if (in_array($data,array("CustomizeToolbar"))) {
+						if (in_array($data,array("CustomizeToolbar", "DevInfo"))) {
 							$className = "{$data}UserCommand";
 						}
 						break;
 				}
-				
+
 				$this->cache[$hash] = $className ? new $className( $name, $options ) : null;
 			}
 			return $this->cache[$hash];
@@ -54,3 +54,5 @@ $wgAutoloadClasses['ShareUserCommand'] = dirname(__FILE__) . '/usercommands/Shar
 $wgAutoloadClasses['SpecialPageUserCommand'] = dirname(__FILE__) . '/usercommands/SpecialPageUserCommand.php';
 $wgAutoloadClasses['CustomizeToolbarUserCommand'] = dirname(__FILE__) . '/usercommands/CustomizeToolbarUserCommand.php';
 $wgAutoloadClasses['MenuUserCommand'] = dirname(__FILE__) . '/usercommands/MenuUserCommand.php';
+// Developer Info a.k.a. PerformanceStats (BugId:5497)
+$wgAutoloadClasses['DevInfoUserCommand'] = dirname( __FILE__ ) . '/usercommands/DevInfoUserCommand.php';
