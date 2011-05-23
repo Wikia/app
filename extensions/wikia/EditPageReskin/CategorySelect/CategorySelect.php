@@ -517,7 +517,7 @@ function CategorySelectGenerateHTMLforEditRaw($categories, $text = '') {
 	$result = '
 		<script type="text/javascript">document.write(\'<style type="text/css">#csWikitextContainer {display: none}</style>\');</script>
 		<div class="csEditMode" style="display:none" id="csMainContainer"> ' . $text . '
-			<input class="placeholder" placeholder="'.wfMsg('categoryselect-addcategory-edit').'" id="csCategoryInput" type="text" />
+			<input placeholder="'.wfMsg('categoryselect-addcategory-edit').'" id="csCategoryInput" type="text" />
 			<div id="csSuggestContainer">
 				<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
 			</div>
