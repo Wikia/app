@@ -78,10 +78,8 @@ function devBoxPanelAdditionalScripts( &$out, &$sk ){
  * @return true to allow the WikiFactoryLoader to do its other necessary initalization.
  */
 function wfDevBoxForceWiki(&$wikiFactoryLoader){
-	global $wgDevelEnvironment, $wgDevelEnvironmentName, $wgWikiFactoryDB, $wgCommandLineMode;
+	global $wgDevelEnvironment, $wgWikiFactoryDB, $wgCommandLineMode;
 	if($wgDevelEnvironment){
-		$hostParts = getHostParts();
-		$wgDevelEnvironmentName = array_pop($hostParts);
 		$forcedWikiDomain = getForcedWikiValue();
 		$cityId = WikiFactory::DomainToID($forcedWikiDomain);
 		if(!$cityId){
@@ -142,9 +140,11 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
  */
 
 function getHostParts() {
+	global $wgDevelEnvironmentName;  // used by WikiaLabs
 	if (!isset($_SERVER['HTTP_HOST'])) return null;
 	if (count (explode(".", $_SERVER['HTTP_HOST'])) == 3) return null;
 	$aHostParts = explode(".", str_replace('.wikia-dev.com', '', $_SERVER['HTTP_HOST']));
+	$wgDevelEnvironmentName = $aHostParts[0];
 	return $aHostParts;
 }
 
