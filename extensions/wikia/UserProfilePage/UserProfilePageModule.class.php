@@ -30,7 +30,7 @@ class UserProfilePageModule extends Module {
 				}
 			}
 
-			$this->groupName = array_intersect( $userProfilePage->getUser()->getEffectiveGroups(), array(
+			$this->userGroups = array_intersect( $userProfilePage->getUser()->getEffectiveGroups(), array(
 				'sysop',
 				'bot',
 				'staff',
