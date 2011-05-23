@@ -20,6 +20,10 @@ $color-input-field-shadow: mix($color-input-field, #000, 95%);
 	&::-webkit-input-placeholder {
 		color: $color-links;
 	}
+	
+	&:-moz-placeholder {
+		color: $color-links;
+	}
 
 	&.placeholder {
 		color: $color-links;

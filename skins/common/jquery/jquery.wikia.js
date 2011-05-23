@@ -530,13 +530,13 @@ $(window).bind('load', function() {
  */
 
 $(function() {
-	$('input[placeholder]').placeholder();
+	$('input[placeholder], textarea[placeholder]').placeholder();
 });
 
 jQuery.fn.placeholder = function() {
 	 //feature detection
 	var hasNativeSupport = 'placeholder' in document.createElement('input');
-
+	
 	if(!hasNativeSupport){
 		this.each(function() {
 			var input = $(this);
