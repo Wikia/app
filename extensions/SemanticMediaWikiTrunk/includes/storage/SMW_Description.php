@@ -113,9 +113,9 @@ abstract class SMWDescription {
 	 *
 	 * @return string
 	 */
-	public function getTypeID() {
-		return '_wpg';
-	}
+// 	public function getTypeID() {
+// 		return '_wpg';
+// 	}
 
 	/**
 	 * Recursively restrict query to a maximal size and depth as given.
@@ -180,9 +180,9 @@ class SMWThingDescription extends SMWDescription {
 	 * processing an SMWSomeProperty object where the property does not specify
 	 * the type.
 	 */
-	public function getTypeID() {
-		return '';
-	}
+// 	public function getTypeID() {
+// 		return '';
+// 	}
 }
 
 /**
@@ -216,7 +216,7 @@ class SMWClassDescription extends SMWDescription {
 	public function getQueryString( $asvalue = false ) {
 		$first = true;
 		foreach ( $this->m_diWikiPages as $wikiPage ) {
-			$wikiValue = SMWDataValueFactory::newDataItemValue( $wikiPage );
+			$wikiValue = SMWDataValueFactory::newDataItemValue( $wikiPage, null );
 			if ( $first ) {
 				$result = '[[' . $wikiValue->getPrefixedText();
 				$first = false;
@@ -296,7 +296,7 @@ class SMWConceptDescription extends SMWDescription {
 	}
 
 	public function getQueryString( $asvalue = false ) {
-		$pageValue = SMWDataValueFactory::newDataItemValue( $this->m_concept );
+		$pageValue = SMWDataValueFactory::newDataItemValue( $this->m_concept, null );
 		$result = '[[' . $pageValue->getPrefixedText() . ']]';
 		if ( $asvalue ) {
 			return ' &lt;q&gt;' . $result . '&lt;/q&gt; ';
@@ -373,10 +373,12 @@ class SMWValueDescription extends SMWDescription {
 	
 	protected $m_dataItem;
 	protected $m_comparator;
+	protected $m_property;
 
-	public function __construct( SMWDataItem $dataItem, $comparator = SMW_CMP_EQ ) {
+	public function __construct( SMWDataItem $dataItem, $property, $comparator = SMW_CMP_EQ ) {
 		$this->m_dataItem = $dataItem;
 		$this->m_comparator = $comparator;
+		$this->m_property = $property;
 	}
 
 	/// @deprecated Use getDataItem() and SMWDataValueFactory::newDataItemValue() if needed. Vanishes before SMW 1.7
@@ -394,7 +396,7 @@ class SMWValueDescription extends SMWDescription {
 
 	public function getQueryString( $asvalue = false ) {
 		$comparator = SMWQueryLanguage::getStringForComparator( $this->m_comparator );
-		$dataValue = SMWDataValueFactory::newDataItemValue( $this->m_dataItem );
+		$dataValue = SMWDataValueFactory::newDataItemValue( $this->m_dataItem, $this->m_property );
 		if ( $asvalue ) {
 			return $comparator . $dataValue->getWikiValue();
 		} else { // this only is possible for values of Type:Page
@@ -414,9 +416,9 @@ class SMWValueDescription extends SMWDescription {
 		return 1;
 	}
 
-	public function getTypeID() {
-		return $this->m_dataItem->getTypeID();
-	}
+// 	public function getTypeID() {
+// 		return $this->m_dataItem->getTypeID();
+// 	}
 
 }
 
@@ -500,13 +502,13 @@ class SMWConjunction extends SMWDescription {
 		return $depth;
 	}
 
-	public function getTypeID() {
-		if ( count( $this->m_descriptions ) > 0 ) { // all subdescriptions should have the same type!
-			return reset( $this->m_descriptions )->getTypeID();
-		} else {
-			return ''; // unknown
-		}
-	}
+// 	public function getTypeID() {
+// 		if ( count( $this->m_descriptions ) > 0 ) { // all subdescriptions should have the same type!
+// 			return reset( $this->m_descriptions )->getTypeID();
+// 		} else {
+// 			return ''; // unknown
+// 		}
+// 	}
 
 	public function getQueryFeatures() {
 		$result = SMW_CONJUNCTION_QUERY;
@@ -670,13 +672,13 @@ class SMWDisjunction extends SMWDescription {
 		return $depth;
 	}
 
-	public function getTypeID() {
-		if ( count( $this->m_descriptions ) > 0 ) { // all subdescriptions should have the same type!
-			return reset( $this->m_descriptions )->getTypeID();
-		} else {
-			return ''; // unknown
-		}
-	}
+// 	public function getTypeID() {
+// 		if ( count( $this->m_descriptions ) > 0 ) { // all subdescriptions should have the same type!
+// 			return reset( $this->m_descriptions )->getTypeID();
+// 		} else {
+// 			return ''; // unknown
+// 		}
+// 	}
 
 	public function getQueryFeatures() {
 		$result = SMW_DISJUNCTION_QUERY;

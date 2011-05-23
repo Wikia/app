@@ -61,12 +61,12 @@ class SMWSQLHelpers {
 	 * @param DatabaseBase or Database $db
 	 * @param $reportTo Object to report back to.
 	 */
-	public static function setupTable( $tableName, array $fields, $db, $reportTo = null ) {
-		$tableName = $db->tableName( $tableName );
+	public static function setupTable( $rawTableName, array $fields, $db, $reportTo = null ) {
+		$tableName = $db->tableName( $rawTableName );
 
 		self::reportProgress( "Checking table $tableName ...\n", $reportTo );
 		
-		if ( $db->tableExists( $tableName ) === false ) { // create new table
+		if ( $db->tableExists( $rawTableName ) === false ) { // create new table
 			self::reportProgress( "   Table not found, now creating...\n", $reportTo );
 			self::createTable( $tableName, $fields, $db, $reportTo );
 			self::reportProgress( "   ... done.\n", $reportTo );	
@@ -163,6 +163,7 @@ class SMWSQLHelpers {
 		global $wgDBtype;
 		
 		if ( $wgDBtype == 'postgres' ) {
+			$tableName = str_replace( '"', '', $tableName );
 			// Use the data dictionary in postgresql to get an output comparable to DESCRIBE.
 			$sql = <<<EOT
 SELECT
@@ -171,13 +172,13 @@ SELECT
 	(SELECT substring(pg_catalog.pg_get_expr(d.adbin, d.adrelid) for 128) 
 	FROM pg_catalog.pg_attrdef d 
 	WHERE d.adrelid = a.attrelid AND d.adnum = a.attnum AND a.atthasdef) as "Extra", 
-		case when a.attnotnull THEN \'NO\'::text else \'YES\'::text END as "Null", a.attnum 
+		case when a.attnotnull THEN 'NO'::text else 'YES'::text END as "Null", a.attnum 
 	FROM pg_catalog.pg_attribute a 
 	WHERE a.attrelid = (
 	    SELECT c.oid 
 	    FROM pg_catalog.pg_class c 
 	    LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace 
-	    WHERE c.relname ~ \'^(' . $tableName . ')$\' 
+	    WHERE c.relname ~ '^($tableName)$'
 	    AND pg_catalog.pg_table_is_visible(c.oid) 
 	    LIMIT 1 
 	 ) AND a.attnum > 0 AND NOT a.attisdropped 
@@ -193,9 +194,9 @@ EOT;
 		
 		foreach ( $res as $row ) {
 			$type = strtoupper( $row->Type );
-			
+
 			if ( $wgDBtype == 'postgres' ) { // postgresql
-				if ( eregi( '^nextval\\(.+\\)$', $row->Extra ) ) {
+				if ( preg_match( '/^nextval\\(.+\\)/i', $row->Extra ) ) {
 					$type = 'SERIAL NOT NULL';
 				} elseif ( $row->Null != 'YES' ) {
 						$type .= ' NOT NULL';
@@ -220,7 +221,7 @@ EOT;
 			
 			$curfields[$row->Field] = $type;
 		}
-		
+
 		return $curfields;
 	}
 	
@@ -259,11 +260,11 @@ EOT;
 			$typeold = ( $notnullposold > 0 ) ? substr( $currentFields[$name], 0, $notnullposold ) : $currentFields[$name];
 			
 			if ( $typeold != $type ) {
-				$db->query( "ALTER TABLE \"" . $tableName . "\" ALTER COLUMN \"" . $name . "\" ENGINE " . $type, __METHOD__ );
+				$db->query( "ALTER TABLE " . $tableName . " ALTER COLUMN \"" . $name . "\" ENGINE " . $type, __METHOD__ );
 			}
 			
 			if ( $notnullposold != $notnullposnew ) {
-				$db->query( "ALTER TABLE \"" . $tableName . "\" ALTER COLUMN \"" . $name . "\" " . ( $notnullposnew > 0 ? 'SET' : 'DROP' ) . " NOT NULL", __METHOD__ );
+				$db->query( "ALTER TABLE " . $tableName . " ALTER COLUMN \"" . $name . "\" " . ( $notnullposnew > 0 ? 'SET' : 'DROP' ) . " NOT NULL", __METHOD__ );
 			}
 			
 			self::reportProgress( "done.\n", $reportTo );
@@ -310,11 +311,11 @@ EOT;
 	 * @param array $columns The field names to put indexes on
 	 * @param DatabaseBase or Database $db
 	 */
-	public static function setupIndex( $tableName, array $columns, $db ) {
+	public static function setupIndex( $rawTableName, array $columns, $db ) {
 		// TODO: $verbose is not a good global name! 
 		global $wgDBtype, $verbose; 
 		
-		$tableName = $db->tableName( $tableName );
+		$tableName = $db->tableName( $rawTableName );
 
 		if ( $wgDBtype == 'postgres' ) { // postgresql
 			$sql = "SELECT  i.relname AS indexname,"
@@ -356,7 +357,9 @@ EOT;
 						$column = $index;
 					}
 					
-					$db->query( "CREATE $type {$tableName}_index{$key} ON $tableName USING btree(" . $column . ")", __METHOD__ );
+					if ( $db->indexInfo( $rawTableName, "{$rawTableName}_index{$key}" ) === false ) {
+						$db->query( "CREATE $type {$rawTableName}_index{$key} ON $tableName USING btree(" . $column . ")", __METHOD__ );
+					}
 				}
 			}
 		} else { // MySQL

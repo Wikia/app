@@ -498,9 +498,9 @@ END;
 	 * @return string
 	 */
 	protected function getInputForm( $printoutstring, $urltail ) {
-		global $wgUser, $smwgQSortingSupport, $smwgResultFormats;
+		global $smwgQSortingSupport, $smwgResultFormats;
 
-		$skin = $wgUser->getSkin();
+		$skin = $this->getSkin();
 		$result = '';
 
 		if ( $this->m_editquery ) {
@@ -643,9 +643,9 @@ END;
 	 * @return string
 	 */
 	protected function getNavigationBar( SMWQueryResult $res, $urltail ) {
-		global $wgUser, $smwgQMaxInlineLimit;
+		global $smwgQMaxInlineLimit;
 
-		$skin = $wgUser->getSkin();
+		$skin = $this->getSkin();
 		$offset = $this->m_params['offset'];
 		$limit  = $this->m_params['limit'];
 
@@ -703,6 +703,9 @@ END;
 		$printer = SMWQueryProcessor::getResultPrinter( $format, SMWQueryProcessor::SPECIAL_PAGE );
 
 		$params = method_exists( $printer, 'getParameters' ) ? $printer->getParameters() : array();
+		
+		// Ignore the format parameter, as we got a special control in the GUI for it already.
+		unset( $params['format'] );
 		
 		$optionsHtml = array();
 		
@@ -812,5 +815,22 @@ END;
 		
 		return $input->getHtml();
 	}
+
+    /**
+     * Compatibility method to get the skin; MW 1.18 introduces a getSkin method in SpecialPage.
+     *
+     * @since 1.6
+     *
+     * @return Skin
+     */
+    public function getSkin() {
+        if ( method_exists( 'SpecialPage', 'getSkin' ) ) {
+            return parent::getSkin();
+        }
+        else {
+            global $wgUser;
+            return $wgUser->getSkin();
+        }
+    }
 
 }

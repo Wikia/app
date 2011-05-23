@@ -13,6 +13,8 @@
  * Storage access class for using SMW's SPARQL database for keeping semantic
  * data.
  *
+ * @since 1.6
+ *
  * @note For now, the store keeps an underlying SMWSQLStore2 running for
  * completeness. This might change in the future.
  *
@@ -177,13 +179,15 @@ class SMWSparqlStore extends SMWSQLStore2 {
 
 		if ( $query->querymode == SMWQuery::MODE_NONE ) { // don't query, but return something to printer
 			return new SMWQueryResult( $query->getDescription()->getPrintrequests(), $query, array(), $this, true );
-		} elseif ( $query->querymode == SMWQuery::MODE_DEBUG || $query->querymode == SMWQuery::MODE_COUNT ) {
-			return "Not implemented.\n";
+		} elseif ( $query->querymode == SMWQuery::MODE_DEBUG ) {
+			$queryEngine = new SMWSparqlStoreQueryEngine( $this );
+			return $queryEngine->getDebugQueryResult( $query ); 
+		} elseif ( $query->querymode == SMWQuery::MODE_COUNT ) {
+			$queryEngine = new SMWSparqlStoreQueryEngine( $this );
+			return $queryEngine->getCountQueryResult( $query ); 
 		} else {
 			$queryEngine = new SMWSparqlStoreQueryEngine( $this );
-			$queryResult = $queryEngine->getInstanceQueryResult( $query ); 
-// 			debug_zval_dump( $queryResult );
-			return $queryResult;
+			return $queryEngine->getInstanceQueryResult( $query ); 
 		}
 	}
 

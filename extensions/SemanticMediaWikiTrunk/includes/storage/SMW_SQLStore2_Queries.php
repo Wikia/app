@@ -286,50 +286,36 @@ class SMWSQLStore2QueryEngine {
 	 */
 	protected function getDebugQueryResult( SMWQuery $query, $rootid ) {
 		$qobj = $this->m_queries[$rootid];
+
+		$entries = array();
+
 		$sql_options = $this->getSQLOptions( $query, $rootid );
-
 		list( $startOpts, $useIndex, $tailOpts ) = $this->m_dbs->makeSelectOptions( $sql_options );
-
-		$result = '<div style="border: 1px dotted black; background: #A1FB00; padding: 20px; ">' .
-		          '<b>Debug output by SMWSQLStore2</b><br />' .
-		          'Generated Wiki-Query<br /><tt>' .
-		          str_replace( '[', '&#x005B;', $query->getDescription()->getQueryString() ) . '</tt><br />' .
-		          'Query-Size: ' . $query->getDescription()->getSize() . '<br />' .
-		          'Query-Depth: ' . $query->getDescription()->getDepth() . '<br />';
-
 		if ( $qobj->joinfield !== '' ) {
-			$result .= 'SQL query<br />' .
+			$entries['SQL Query'] =
 			           "<tt>SELECT DISTINCT $qobj->alias.smw_title AS t,$qobj->alias.smw_namespace AS ns FROM " .
 			           $this->m_dbs->tableName( $qobj->jointable ) . " AS $qobj->alias" . $qobj->from .
 			           ( ( $qobj->where == '' ) ? '':' WHERE ' ) . $qobj->where . "$tailOpts LIMIT " .
 			           $sql_options['LIMIT'] . ' OFFSET ' . $sql_options['OFFSET'] . ';</tt>';
 		} else {
-			$result .= '<b>Empty result, no SQL query created.</b>';
+			$entries['SQL Query'] = 'Empty result, no SQL query created.';
 		}
 
-		$errors = '';
-
-		foreach ( $query->getErrors() as $error ) {
-			$errors .= $error . '<br />';
-		}
-
-		$result .= ( $errors ) ? "<br />Errors and warnings:<br />$errors":'<br />No errors or warnings.';
 		$auxtables = '';
-
 		foreach ( $this->m_querylog as $table => $log ) {
 			$auxtables .= "<li>Temporary table $table";
-
 			foreach ( $log as $q ) {
 				$auxtables .= "<br />&#160;&#160;<tt>$q</tt>";
 			}
-
 			$auxtables .= '</li>';
 		}
+		if ( $auxtables ) {
+			$entries['Auxilliary Tables Used'] = "<ul>$auxtables</ul>";
+		} else {
+			$entries['Auxilliary Tables Used'] = 'No auxilliary tables used.';
+		}
 
-		$result .= ( $auxtables ) ? "<br />Auxilliary tables used:<ul>$auxtables</ul>":'<br />No auxilliary tables used.';
-		$result .= '</div>';
-
-		return $result;
+		return SMWStore::formatDebugOutput( 'SMWSQLStore2', $entries, $query );;
 	}
 
 	/**
@@ -488,7 +474,7 @@ class SMWSQLStore2QueryEngine {
 				$this->m_queries[$cqid] = $cquery;
 			}
 		} elseif ( $description instanceof SMWValueDescription ) { // Only type '_wpg' objects can appear on query level (essentially as nominal classes).
-			if ( $description->getDataItem()->getTypeID() == '_wpg' ) {
+			if ( $description->getDataItem() instanceof SMWDIWikiPage ) {
 				if ( $description->getComparator() == SMW_CMP_EQ ) {
 					$query->type = SMW_SQL2_VALUE;
 					$oid = $this->m_store->getSMWPageID( $description->getDataItem()->getDBkey(), $description->getDataItem()->getNamespace(), $description->getDataItem()->getInterwiki() );
@@ -589,13 +575,7 @@ class SMWSQLStore2QueryEngine {
 	 */
 	protected function compilePropertyCondition( SMWSQLStore2Query $query, SMWDIProperty $property, SMWDescription $valuedesc ) {
 		$tableid = SMWSQLStore2::findPropertyTableID( $property );
-
-		if ( $tableid == '' ) { // probably a type-polymorphic property
-			$typeid = $valuedesc->getTypeID();
-			$tableid = SMWSQLStore2::findTypeTableID( $typeid );
-		} else { // normal property
-			$typeid = $property->findPropertyTypeID();
-		}
+		$typeid = $property->findPropertyTypeID();
 
 		if ( $tableid == '' ) { // Still no table to query? Give up.
 			$query->type = SMW_SQL2_NOQUERY;

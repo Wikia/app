@@ -1,5 +1,6 @@
 <?php
 /**
+ * @deprecated This file is obsolete and will soon vanish.
  * @file
  * @ingroup SMWDataValues
  */
@@ -13,26 +14,6 @@
  * @ingroup SMWDataValues
  */
 abstract class SMWContainerValue extends SMWDataValue {
-
-	protected $m_data;
-
-	public function getBaseType() {
-		return SMWDataValue::TYPE_CONT;
-	}
-
-	public function __construct( $typeid ) {
-		parent::__construct( $typeid );
-		$this->m_data = new SMWSemanticData( null );
-	}
-
-	/**
-	 * We use the internal SMWSemanticData object to store some of this objects
-	 * data. Clone it to make sure that data can be modified independelty from
-	 * the original object's content.
-	 */
-	public function __clone() {
-		$this->m_data = clone $this->m_data; // note that this is always set
-	}
 
 	/**
 	 * Containers have one DB key, so the value of this function should be an array with one
@@ -67,18 +48,6 @@ abstract class SMWContainerValue extends SMWDataValue {
 			}
 		}
 		return array( $data );
-	}
-
-	public function getSignature() {
-		return 'c';
-	}
-
-	public function getValueIndex() {
-		return -1;
-	}
-
-	public function getLabelIndex() {
-		return -1;
 	}
 
 	public function getHash() {

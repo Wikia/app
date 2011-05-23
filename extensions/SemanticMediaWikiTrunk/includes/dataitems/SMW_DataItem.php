@@ -18,6 +18,8 @@
 
 /**
  * Exception to be thrown when data items are created from unsuitable inputs.
+ * 
+ * @since 1.6
  */
 class SMWDataItemException extends Exception {
 }
@@ -30,13 +32,12 @@ class SMWDataItemException extends Exception {
  * is mostly enforced by the API with some minor exceptions).
  * 
  * The set of available data items is fixed and cannot be extended. These are
- * the kinds of information that SMW can process. However, a type ID can be held
- * by a data item, and this type might determine details of processing in some
- * contexts (for example, since it can be used to chose an implementation for
- * formatting this value for display in the wiki). Data items do not implement
- * such selection procedures -- they are nothing but data and provide only
- * minimal interfaces for accessing the stored data (or aspects of it).
+ * the kinds of information that SMW can process. Their concrete use and
+ * handling might depend on the context in which they are used. In particular,
+ * property values may be influences by settings made for their property. This
+ * aspect, however, is not part of the data item API.
  *
+ * @since 1.6
  *
  * @ingroup SMWDataItems
  */
@@ -56,7 +57,7 @@ abstract class SMWDataItem {
 	const TYPE_URI       = 5;
 	///  Data item ID for SMWDITimePoint
 	const TYPE_TIME      = 6;
-	///  Data item ID for SMWDIGeoCoords
+	///  Data item ID for SMWDIGeoCoord
 	const TYPE_GEO       = 7;
 	///  Data item ID for SMWDIContainer
 	const TYPE_CONTAINER = 8;
@@ -70,23 +71,6 @@ abstract class SMWDataItem {
 	const TYPE_ERROR     = 12;
 
 	/**
-	 * The SMW type ID that governs the handling of this data item.
-	 * This data should not be considered part of the value. It is
-	 * provided merely to assist suitable handling and will not be
-	 * stored with the data.
-	 * @var string
-	 */
-	protected $m_typeid;
-
-	/**
-	 * Constructor.
-	 * @param $typeid string the SMW type ID that governs the handling of this data item.
-	 */
-	public function __construct( $typeid ) {
-		$this->m_typeid = $typeid;
-	}
-
-	/**
 	 * Convenience method that returns a constant that defines the concrete
 	 * class that implements this data item. Used to switch when processing
 	 * data items.
@@ -95,22 +79,41 @@ abstract class SMWDataItem {
 	abstract public function getDIType();
 
 	/**
-	 * Get the SMW type ID that governs the handling of this data item.
-	 * @return string $typeid the SMW type ID
-	 */
-	public function getTypeID() {
-		return $this->m_typeid;
-	}
-
-	/**
 	 * Return a value that can be used for sorting data of this type.
 	 * If the data is of a numerical type, the sorting must be done in
 	 * numerical order. If the data is a string, the data must be sorted
 	 * alphabetically.
+	 * 
+	 * @note Every data item returns a sort key, even if there is no
+	 * natural linear order for the type. SMW must order listed data 
+	 * in some way in any case. If there is a natural order (e.g. for
+	 * Booleans where false < true), then the sortkey must agree with
+	 * this order (e.g. for Booleans where false maps to 0, and true
+	 * maps to 1).
+	 *
+	 * @note Wiki pages are a special case in SMW. They are ordered by a
+	 * sortkey that is assigned to them as a property value. When pages are
+	 * sorted, this data should be used if possible.
 	 *
 	 * @return float or string 
 	 */
 	abstract public function getSortKey();
+
+	/**
+	 * Create a data item that represents the sortkey, i.e. either an
+	 * SMWDIBlob or an SMWDINumber. For efficiency, these subclasses
+	 * overwrite this method to return themselves.
+	 *
+	 * @return SMWDataItem
+	 */
+	public function getSortKeyDataItem() {
+		$sortkey = $this->getSortKey();
+		if ( is_numeric( $sortkey ) ) {
+			return new SMWDINumber( $sortkey );
+		} else {
+			return new SMWDIBlob( $sortkey );
+		}
+	}
 
 	/**
 	 * Get a UTF-8 encoded string serialization of this data item.
@@ -132,14 +135,46 @@ abstract class SMWDataItem {
 	}
 
 	/**
-	 * Create a data item from the provided serialization string and type
-	 * ID. This static method really needs to be re-implemented by each
-	 * data item class. It is given here only for reference. Note that PHP
-	 * does not support "abstract static".
+	 * Create a data item of the given dataitem ID based on the the
+	 * provided serialization string and (optional) typeid.
+	 *
+	 * @param $diType integer dataitem ID
+	 * @param $serialization string
+	 * @param $typeid string SMW type ID (optional)
+	 * 
 	 * @return SMWDataItem
 	 */
-	public static function doUnserialize( $serialisation, $typeid ) {
-		throw new ErrorException( "Called doUnserialize() on abstract base class SMWDataItem. This means that some data item implementation forgot to implement this method statically." );
+	public static function newFromSerialization( $diType, $serialization ) {
+		$diClass = self::getDataItemClassNameForId( $diType );
+		return call_user_func( array( $diClass, 'doUnserialize' ), $serialization );
+	}
+
+	/**
+	 * Gets the class name of the data item that has the provided type id.
+	 * 
+	 * @param integer $diType Element of the SMWDataItem::TYPE_ enum
+	 * 
+	 * @throws InvalidArgumentException
+	 * 
+	 * @return string
+	 */
+	public static function getDataItemClassNameForId( $diType ) {
+		switch ( $diType ) {
+			case self::TYPE_NUMBER:    return 'SMWDINumber';
+			case self::TYPE_STRING:    return 'SMWDIString';
+			case self::TYPE_BLOB:      return 'SMWDIBlob';
+			case self::TYPE_BOOLEAN:   return 'SMWDIBoolean';
+			case self::TYPE_URI:       return 'SMWDIUri';
+			case self::TYPE_TIME:      return 'SMWDITimePoint';
+			case self::TYPE_GEO:       return 'SMWDIGeoCoord';
+			case self::TYPE_CONTAINER: return 'SMWDIContainer';
+			case self::TYPE_WIKIPAGE:  return 'SMWDIWikiPage';
+			case self::TYPE_CONCEPT:   return 'SMWDIConcept';
+			case self::TYPE_PROPERTY:  return 'SMWDIProperty';
+			case self::TYPE_ERROR:     return 'SMWDIError';
+			case self::TYPE_NOTYPE: default:
+				throw new InvalidArgumentException( "The value \"$diType\" is not a valid dataitem ID." );
+		}
 	}
 
 }

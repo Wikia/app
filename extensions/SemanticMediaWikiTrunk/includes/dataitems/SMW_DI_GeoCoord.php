@@ -18,13 +18,11 @@ class SMWDIGeoCoord extends SMWDataItem {
 	/**
 	 * Constructor.
 	 * 
-	 * @param array $coords Array with lat and long keys pointing to float values.
-	 * @param string $typeid
+	 * @param $coords array Array with lat and long keys pointing to float values.
+	 * @param $typeid string
 	 */
-	public function __construct( array $coords, $typeid = '_geo' ) {
-		parent::__construct( $typeid );
-
-        $this->coordinateSet = $coords;
+	public function __construct( array $coords ) {
+		$this->coordinateSet = $coords;
 	}
 
 	/**
@@ -36,7 +34,8 @@ class SMWDIGeoCoord extends SMWDataItem {
 	}
 	
 	/**
-	 * Returns the coordinate set as an array with lat and long keys pointing to float values.
+	 * Returns the coordinate set as an array with lat and long keys
+	 * pointing to float values.
 	 * 
 	 * @since 1.6
 	 *
@@ -52,7 +51,7 @@ class SMWDIGeoCoord extends SMWDataItem {
 	 */
 	public function getSortKey() {
 		return $this->coordinateSet['lat']; // TODO
-	}    
+	}
 
 	/**
 	 * (non-PHPdoc)
@@ -67,16 +66,16 @@ class SMWDIGeoCoord extends SMWDataItem {
 	 * ID.
 	 * @note PHP can convert any string to some number, so we do not do
 	 * validation here (because this would require less efficient parsing).
-	 * @return SMWDINumber
+	 * @return SMWDIGeoCoord
 	 */
-	public static function doUnserialize( $serialization, $typeid ) {
+	public static function doUnserialize( $serialization ) {
 		$parts = explode( ',', $serialization );
-		
+
 		if ( count( $parts ) != 2 ) {
-			throw new Exception( 'Unserialization of coordinates failed' );
+			throw new SMWDataItemException( 'Unserialization of coordinates failed' );
 		}
-		
-		return new self( array( 'lat' => (float)$parts[0], 'lon' => (float)$parts[1], ), $typeid );
+
+		return new self( array( 'lat' => (float)$parts[0], 'lon' => (float)$parts[1], ) );
 	}
 
 }
