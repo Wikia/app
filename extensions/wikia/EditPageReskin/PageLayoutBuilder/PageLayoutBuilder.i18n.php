@@ -187,6 +187,7 @@ $messages['en'] = array (
 	'plb-helpbox-checkboxinfo2' => 'Do not show this tutorial again.',
 	'plb-helpbox-help-desc' => 'Still have questions?',
 	'plb-helpbox-help-link' => 'Read the layout builder guide.',
+	'plb-helpbox-help-link-title' => 'Layout_builder',
 
 	'plb-list-action-copy' => 'New wiki category',
 	'plb-copy-confirm' => 'Hitting save will add this page layout to every new wiki created in the category(s) you have selected.  Please use care when using this tool.  Are you sure you want to save?',
