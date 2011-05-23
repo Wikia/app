@@ -9,6 +9,7 @@ class WeeklyDigest extends Maintenance {
 		$this->addOption( 'users', 'Send emails to comma separated list of users' );
 		$this->addOption( 'usedb', 'Use comma separated list of database names' );
 		$this->addOption( 'clear', 'Marking all pages as "visited"' );
+		$this->addOption( 'regen', 'Regenerate global watchlist for all Wikis' );
 		$this->addOption( 'mailto', 'Set debug mail' );
 		$this->addOption( 'update', 'Update local watchlist - mark all pages as visited on Wikia. Use this option with --page and --namespace options' );
 		$this->addOption( 'page', 'Mark this page as visited' );
@@ -21,7 +22,7 @@ class WeeklyDigest extends Maintenance {
 		if ( class_exists('GlobalWatchlistBot') ) {
 			
 			// defaults
-			$bDebugMode = $bClearMode = $bUpdateMode = $bSendMode = false;
+			$bDebugMode = $bClearMode = $bUpdateMode = $bSendMode = $bRegenMode = false;
 			$aUserNames = $aUseDB = array();
 			$sDebugMailTo = $sPage = '';
 			$sNamespace = null;
@@ -37,6 +38,8 @@ class WeeklyDigest extends Maintenance {
 				$bUpdateMode = true;
 			} elseif ( $this->hasOption( 'send' ) ) {
 				$bSendMode = true;
+			} elseif ( $this->hasOption( 'regen' ) ) {
+				$bRegenMode = true;
 			}
 			
 			if ( $this->hasOption( 'users' ) ) {
@@ -61,6 +64,9 @@ class WeeklyDigest extends Maintenance {
 			if ( $bClearMode ) {
 				$this->output( "Run weekly digest with --clear option ... \n" );
 				$oWatchlistBot->clear();
+			} elseif ( $bRegenMode ) {
+				$this->output( "Run weekly digest with --regen option ... \n" );
+				$oWatchlistBot->regenerate();			
 			} elseif ( $bUpdateMode ) {
 				$this->output( "Run weekly digest with --update option for page {$sPage} and namespace {$sNamespace} ... \n" );
 				if ( !empty( $sPage ) && !is_null( $sNamespace ) ) {
