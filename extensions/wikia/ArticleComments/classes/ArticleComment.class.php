@@ -198,10 +198,11 @@ class ArticleComment {
 			$buttons = array();
 			$replyButton = '';
 
-			$commentingAllowed = true;
+			$commentingAllowed = true;				
 			if (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
 				$props = BlogArticle::getProps($wgTitle->getArticleID());
 				$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
+				
 			}
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {

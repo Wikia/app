@@ -140,11 +140,9 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
  */
 
 function getHostParts() {
-	global $wgDevelEnvironmentName;  // used by WikiaLabs
 	if (!isset($_SERVER['HTTP_HOST'])) return null;
 	if (count (explode(".", $_SERVER['HTTP_HOST'])) == 3) return null;
 	$aHostParts = explode(".", str_replace('.wikia-dev.com', '', $_SERVER['HTTP_HOST']));
-	$wgDevelEnvironmentName = $aHostParts[0];
 	return $aHostParts;
 }
 
@@ -161,7 +159,17 @@ function getHostParts() {
  *	}
  */
 function getForcedWikiValue(){
+	global $wgDevelEnvironmentName;
 	$aHostParts = getHostParts();
+	
+	if(!empty($hostParts)) {
+		$wgDevelEnvironmentName = array_pop($hostParts);	
+	} else {
+		$host = exec('hostname'); //TODO: replce it by gethostname php >= 5.3.0
+		$host = explode("-", $host);
+		$wgDevelEnvironmentName = trim($host[1]);
+	}
+		
 	if(empty($aHostParts)) {
 		return "";
 	}
