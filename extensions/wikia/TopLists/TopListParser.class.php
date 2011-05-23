@@ -88,6 +88,7 @@ class TopListParser {
 					'list' => $list,
                                         'listTitle' => $list->getTitle()->getText(),
                                         'relatedTitleData' => $relatedTitleData,
+                                        'relatedImage' => $relatedImage,
 					'attribs' => self::$mAttributes,
 					'relatedUrl' => $relatedUrl
 				)
