@@ -32,12 +32,31 @@ function ArticleAjaxLoadinig_UserLoadFromSession($user, $result) {
 }
 
 function ArticleAjaxLoadinig_addJSVariable($vars) {
+
+	// Assign logged-in users to groups
+	// G1 - 6% (for this group Article Ajax Loading is enabled)
+	// G2 - 6% (control group)
+	// G3 - 6% (control group)
+
 	global $wgRequest, $wgUser;
 	if($wgUser->isLoggedIn()) {
 		if($wgRequest->getVal('mode') != 'AAL') {
 			$anon = new User();
 			if($wgUser->getPageRenderingHash() == $anon->getPageRenderingHash()) {
-				$vars['aal'] = $wgUser->getID() % 10;
+
+				$mod = $wgUser->getID() % 100;
+
+				if($mod >= 1 && $mod <= 6) {
+					$vars['aal'] = 'G1';
+				} else if($mod >= 7 && $mod <= 12) {
+					$vars['aal'] = 'G2';
+				} else if($mod >= 13 && $mod <= 18) {
+					$vars['aal'] = 'G3';
+				}
+
+				if($wgUser->getID() == 51654) {
+					$vars['aal'] = 'G1';
+				}
 			}
 		}
 	}
