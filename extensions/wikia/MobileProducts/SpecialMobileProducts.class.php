@@ -45,6 +45,12 @@
 	function execute( $product ) {
 		$this->setHeaders();
 		
+		//make the page crawlable and the links followable (setHeaders adds a noindex,nofollow robots policy to specialpages by default)
+		$this->mOut->setRobotPolicy( array(
+			'index' => 'index',
+			'follow' => 'follow'
+		) );
+		
 		$this->mApp->setGlobal( 'wgSuppressWikiHeader', true );
 		$this->mApp->setGlobal( 'wgSuppressPageHeader', true );
 		$this->mApp->setGlobal( 'wgShowMyToolsOnly', true );
