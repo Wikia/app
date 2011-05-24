@@ -462,7 +462,7 @@ function clientDisconnect(client) {
 function broadcastDisconnectionInfo(client, socket){
 	// Delay before sending part messages because there are occasional disconnects/reconnects or just ppl refreshing their browser
 	// and that's really not useful information to anyone that under-the-hood they were disconnected for a moment (BugzId 5753).
-	var DELAY_MILLIS = 3000;
+	var DELAY_MILLIS = 5000;
 	setTimeout(function(){
 		// Now that the delay has passed, check that the user is still gone (if they're disconnecting/reconnecting, don't bother showing the part-message).
 		rc.hget(getKey_usersInRoom(client.roomId), client.myUser.get('name'), function(err, data){
