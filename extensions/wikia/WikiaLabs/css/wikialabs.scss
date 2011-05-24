@@ -330,12 +330,12 @@ $warning-bg-color: #FFFFCC;
 }
 
 .feedbackmodal {
+  @include bodytext;
 	h2 {
 		font-size: 18px;
 	}
 	p {
 		line-spacing: 22.5px;
-		font-size: 13px;
 	}
  	.feedbacktext {
  	 	margin-bottom: 12px;
