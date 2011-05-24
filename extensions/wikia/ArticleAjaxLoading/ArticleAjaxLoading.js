@@ -5,7 +5,6 @@ ArticleAjaxLoading = {
 	cache: {},
 	
 	track: function(data) {
-		console.dir(data);
 		_gaq.push(['_setAccount', 'UA-2871474-1']);
 		_gaq.push(data);
 	},
