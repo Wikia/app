@@ -88,7 +88,6 @@
 		</div>
 	</script>
 
-
 	<!-- Load these after the DOM is built -->
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.5.js"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/JSMessages/js/JSMessages.js"></script>
