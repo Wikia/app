@@ -5,6 +5,7 @@ ArticleAjaxLoading = {
 	cache: {},
 	
 	track: function(data) {
+		console.dir(data);
 		_gaq.push(['_setAccount', 'UA-2871474-1']);
 		_gaq.push(data);
 	},
@@ -21,15 +22,15 @@ ArticleAjaxLoading = {
 									
 									if(window.aal == 'G3') {
 										
-										ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G3']);
+										ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G3', 1]);
 										
 									} else if(window.aal == 'G2') {
 										
-										ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G2']);
+										ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G2', 1]);
 										
 									} else if(window.aal == 'G1') {
 										
-										ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G1']);
+										ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G1', 1]);
 
 										// backup variables that we have to recover after every ajax request 
 										ArticleAjaxLoading.cache.articleComments = $('#article-comments').find('.session').html();
@@ -65,7 +66,7 @@ ArticleAjaxLoading = {
 		if(window.wgNamespaceNumber === 0 && window.wgAction == 'view' && window.wgArticleId != 0) {
 			var href = $(this).attr('href');
 			
-			if(href.indexOf(window.wgArticlePath.replace('$1', '')) === 0  && !/[?&#:]/.test(href) && !/(.htm|.php)/.test(href)) {
+			if(href && href.indexOf(window.wgArticlePath.replace('$1', '')) === 0  && !/[?&#:]/.test(href) && !/(.htm|.php)/.test(href)) {
 				e.stopImmediatePropagation();
 				e.preventDefault();
 				
@@ -152,7 +153,14 @@ $.pjax = function( options ) {
 				return window.location = options.url;
 			}
 			
-			ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G1']);
+			
+			$('body').css('cursor', 'auto');
+
+			scroll(0,0);
+			
+			ArticleAjaxLoading.counter++;
+			
+			ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G1', ArticleAjaxLoading.counter+1]);
 			
 			if(window.WikiaPhotoGalleryView) {
 				WikiaPhotoGalleryView.init.call(WikiaPhotoGalleryView);
@@ -214,12 +222,6 @@ $.pjax = function( options ) {
 			}
 
 			success.apply(this, arguments)
-			
-			$('body').css('cursor', 'auto');
-			
-			scroll(0,0);
-			
-			ArticleAjaxLoading.counter++;
 		}
 	}
 	
