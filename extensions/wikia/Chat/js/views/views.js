@@ -210,12 +210,23 @@ var NodeChatView = Backbone.View.extend({
 				});
 				break;
 			case 'initial':
-
-// TODO: MODIFY THIS AS PART OF BugzId 5753 SO THAT IT ADDS MSGS SINCE THE LAST ITEM THAT WAS CHANGED (ie: during the reconnection if this was a reconnection rather than an initial connection).
-// TODO: MODIFY THIS AS PART OF BugzId 5753 SO THAT IT ADDS MSGS SINCE THE LAST ITEM THAT WAS CHANGED (ie: during the reconnection if this was a reconnection rather than an initial connection).
 				if(!this.isInitialized){
+					// On first connection, just update the entire model.
 					this.model.mport(message.data);
 					this.isInitialized = true;
+				} else {
+					// If this is a reconnect... go through the model that was given and selectively, only add ChatEntries that were not already in the collection of chats.
+					var jsonObj = JSON.parse(message.data);
+					var chatEntries = this.model.chats;
+					_.each(jsonObj.collections.chats.models, function(item, index){
+						var match = chatEntries.get(item.id);
+						if(typeof match == "undefined"){
+							NodeChatHelper.log("Found a ChatEntry that must have occurred during reconnection. Adding it to the model...");
+							var additionalEntry = new models.ChatEntry();
+							additionalEntry.mport( JSON.stringify(item) );
+							chatEntries.add(additionalEntry);
+						}
+					});
 				}
 
 				break;
