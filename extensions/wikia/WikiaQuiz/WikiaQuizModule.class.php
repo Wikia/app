@@ -44,8 +44,10 @@ class WikiaQuizModule extends Module {
 	 * @author Hyun Lim
 	 */
 	public function executeSampleQuiz3() {
-		global $wgUser;
+		global $wgUser, $wgOut, $wgRequest, $wgSiteName;
 		$this->executeGetQuiz();
+		
+		$wgOut->setPageTitle($this->data['name']);
 		
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
@@ -54,6 +56,14 @@ class WikiaQuizModule extends Module {
 		if ($this->wordmarkType == 'graphic') {
 			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
 		}
+		
+		// Facebook opengraph meta data
+		$wgOut->addMeta('property:og:title', $this->data['name']);
+		$wgOut->addMeta('property:og:type', 'game');
+		$wgOut->addMeta('property:og:url', $wgRequest->getFullRequestURL());
+		$wgOut->addMeta('property:og:site_name', $wgSiteName);
+		$wgOut->addMeta('property:og:description', 'Take degrassi the Quiz!');
+		$wgOut->addMeta('property:og:image', $this->wordmarkUrl);
 		
 		$this->username = $wgUser->getName();
 	}
@@ -71,7 +81,9 @@ class WikiaQuizModule extends Module {
 		$wgRequest = F::app()->getGlobal('wgRequest');
 		$quizName = $wgRequest->getVal('quiz');
 		if ($quizName) {
-			$quiz = WikiaQuiz::newFromName($quizName);
+			//$quiz = WikiaQuiz::newFromName($quizName);
+			$title = Title::newFromText($quizName, NS_WIKIA_QUIZ);
+			$quiz = WikiaQuiz::newFromTitle($title);
 			$this->data = $quiz->getData();
 			//hyunbug($this->data);
 		}

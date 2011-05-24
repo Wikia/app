@@ -37,6 +37,7 @@ class WikiaQuiz {
 	/**
 	 * Return instance of WikiaQuiz for given name
 	 */
+	 /*
 	static public function newFromName($name) {
 		$catName = self::QUIZ_CATEGORY_PREFIX . $name;
 
@@ -53,6 +54,7 @@ class WikiaQuiz {
 
 		return $quiz;
 	}
+	*/
 
 	/**
 	 * Return instance of WikiaQuiz for given article from Quiz namespace
@@ -104,6 +106,9 @@ class WikiaQuiz {
 			$content = $article->getContent();
 
 			$lines = explode("\n", $content);
+			
+			hyunbug('lines');
+			hyunbug($lines);
 			foreach($lines as $line) {
 				if (startsWith($line, self::TITLESCREENTEXT_MARKER)) {
 					$titleScreenText = trim( substr($line, strlen(self::TITLESCREENTEXT_MARKER)) );
@@ -156,6 +161,9 @@ class WikiaQuiz {
 		}
 
 		$this->mExists = true;
+		
+		hyunbug('++++++');
+		hyunbug($this->mData);
 
 		wfProfileOut(__METHOD__);
 		return;
