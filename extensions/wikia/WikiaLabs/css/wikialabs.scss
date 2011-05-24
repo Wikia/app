@@ -68,6 +68,19 @@ $warning-bg-color: #FFFFCC;
 			top: 0;
 			width: $toolbox-button;
 			border: none;
+    .loading {
+      display: block;
+      width: 16px;
+      height: 16px;
+      margin-top: 4px;
+      background-image: url(/skins/common/images/ajax.gif);
+    }
+    .loadon {
+      margin-left: 30px;
+    }
+    .loadoff {
+      margin-left: -5px;
+    }
 			.feedback {
 					margin-top: 6px;
 					margin-bottom: 6px;
