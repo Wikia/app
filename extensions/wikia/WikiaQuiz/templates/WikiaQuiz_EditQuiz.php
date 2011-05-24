@@ -24,6 +24,18 @@
 		<div><input type="text" name="titlescreenimage[]" value="<?= isset($data['imageShorts'][2]) ? htmlspecialchars($data['imageShorts'][2]) : '' ?>"></div>
 	</div>
 
+	<label><?= wfMsg('wikiaquiz-moreinfoheading-label') ?></label>	
+	<div class="moreinfoheading">
+		<input type="text" name="moreinfoheading" value="<?= htmlspecialchars($data['moreinfoheading']) ?>">
+	</div>
+
+	<label><?= wfMsg('wikiaquiz-moreinfolinks-label') ?></label>	
+	<div class="moreinfolinks">
+		<div><label><?= wfMsg('wikiaquiz-moreinfoarticle-label') ?></label><input type="text" name="moreinfoarticle[]" value="<?= isset($data['moreinfo'][0]['article']) ? htmlspecialchars($data['moreinfo'][0]['article']) : '' ?>"><label><?= wfMsg('wikiaquiz-moreinfolinktext-label') ?></label><input type="text" name="moreinfolinktext[]" value="<?= isset($data['moreinfo'][0]['text']) ? htmlspecialchars($data['moreinfo'][0]['text']) : '' ?>"></div>
+		<div><label><?= wfMsg('wikiaquiz-moreinfoarticle-label') ?></label><input type="text" name="moreinfoarticle[]" value="<?= isset($data['moreinfo'][1]['article']) ? htmlspecialchars($data['moreinfo'][1]['article']) : '' ?>"><label><?= wfMsg('wikiaquiz-moreinfolinktext-label') ?></label><input type="text" name="moreinfolinktext[]" value="<?= isset($data['moreinfo'][1]['text']) ? htmlspecialchars($data['moreinfo'][1]['text']) : '' ?>"></div>
+		<div><label><?= wfMsg('wikiaquiz-moreinfoarticle-label') ?></label><input type="text" name="moreinfoarticle[]" value="<?= isset($data['moreinfo'][2]['article']) ? htmlspecialchars($data['moreinfo'][2]['article']) : '' ?>"><label><?= wfMsg('wikiaquiz-moreinfolinktext-label') ?></label><input type="text" name="moreinfolinktext[]" value="<?= isset($data['moreinfo'][2]['text']) ? htmlspecialchars($data['moreinfo'][2]['text']) : '' ?>"></div>
+	</div>
+
 	<label><?= wfMsg('wikiaquiz-questions-label') ?></label>	
 	<ul>
 		<li class="new-item">

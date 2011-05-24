@@ -21,6 +21,18 @@
 		<div><input type="text" name="titlescreenimage[]"></div>
 	</div>
 
+	<label><?= wfMsg('wikiaquiz-moreinfoheading-label') ?></label>	
+	<div class="moreinfoheading">
+		<input type="text" name="moreinfoheading">
+	</div>
+
+	<label><?= wfMsg('wikiaquiz-moreinfolinks-label') ?></label>	
+	<div class="moreinfolinks">
+		<div><label><?= wfMsg('wikiaquiz-moreinfoarticle-label') ?></label><input type="text" name="moreinfoarticle[]"><label><?= wfMsg('wikiaquiz-moreinfolinktext-label') ?></label><input type="text" name="moreinfolinktext[]"></div>
+		<div><label><?= wfMsg('wikiaquiz-moreinfoarticle-label') ?></label><input type="text" name="moreinfoarticle[]"><label><?= wfMsg('wikiaquiz-moreinfolinktext-label') ?></label><input type="text" name="moreinfolinktext[]"></div>
+		<div><label><?= wfMsg('wikiaquiz-moreinfoarticle-label') ?></label><input type="text" name="moreinfoarticle[]"><label><?= wfMsg('wikiaquiz-moreinfolinktext-label') ?></label><input type="text" name="moreinfolinktext[]"></div>
+	</div>
+
 	<label><?= wfMsg('wikiaquiz-questions-label') ?></label>	
 	<ul>
 		<li class="new-item">

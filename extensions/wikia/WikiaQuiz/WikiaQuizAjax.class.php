@@ -273,7 +273,9 @@ class WikiaQuizAjax {
 		
 		// title screen text
 		$titleScreenText = trim($request->getVal ('titlescreentext'));
-		$quizContent .= WikiaQuiz::TITLESCREENTEXT_MARKER . $titleScreenText . "\n";
+		if ($titleScreenText) {
+			$quizContent .= WikiaQuiz::TITLESCREENTEXT_MARKER . $titleScreenText . "\n";
+		}
 		
 		// title screen images
 		$titleScreenImages = $request->getArray ('titlescreenimage');
@@ -284,6 +286,31 @@ class WikiaQuizAjax {
 					return;
 				}
 				$quizContent .= WikiaQuiz::IMAGE_MARKER . $image . "\n";
+			}
+		}
+		
+		// More Info heading
+		$moreInfoHeading = trim($request->getVal ('moreinfoheading'));
+		if ($moreInfoHeading) {
+			$quizContent .= WikiaQuiz::MOREINFOHEADING_MARKER . $moreInfoHeading . "\n";
+		}
+		
+		// More Info links
+		$moreInfoArticles = $request->getArray ('moreinfoarticle');
+		$moreInfoLinkTexts = $request->getArray ('moreinfolinktext');
+		foreach($moreInfoArticles as $index=>$articleName) {
+			if ($articleName) {
+				$title_object = F::build('Title', array($articleName), 'newFromText');
+				if (is_object ($title_object) && $title_object->exists() ) {
+					$article = F::build('Article', array($title_object));
+					$moreInfoLinkText = isset($moreInfoLinkTexts[$index]) ? $moreInfoLinkTexts[$index] : '';
+					$quizContent .= WikiaQuiz::MOREINFOLINK_MARKER . $articleName . WikiaQuiz::MOREINFOLINK_TEXT_MARKER . $moreInfoLinkText . "\n";
+				}
+				else {
+					$error = wfMsg('wikiaquiz-error-invalid-articele-with-details', $articleName);
+					return;
+
+				}
 			}
 		}
 
