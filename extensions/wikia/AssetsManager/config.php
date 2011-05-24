@@ -95,7 +95,8 @@ $config['oasis_shared_js'] = array(
 		'//extensions/wikia/PageLayoutBuilder/js/view.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js', // TODO: maybe move to jquery.wikia.js
 		'//skins/oasis/js/GlobalModal.js',
-		'//skins/oasis/js/FirefoxFindFix.js'
+		'//skins/oasis/js/FirefoxFindFix.js',
+		'//extensions/wikia/ArticleAjaxLoading/ArticleAjaxLoading.js'
 	)
 );
 
