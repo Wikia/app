@@ -353,7 +353,6 @@
 				width: 680
 			});
 		}
-		
 	});
 
 	WE.plugins.wikiacore = $.createClass(WE.plugin,{

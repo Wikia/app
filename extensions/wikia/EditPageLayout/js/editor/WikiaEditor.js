@@ -48,7 +48,7 @@
 	})();
 
 	WE.Editor = $.createClass(Observable,{
-		
+
 		states: {
 			IDLE: 1,
 			INITIALIZING: 2,
@@ -156,7 +156,7 @@
 				window.opera.postError.apply(window.opera,args);
 			}
 		},
-		
+
 		log: function() {
 			this._log('log',Array.prototype.slice.call(arguments,0));
 		},
@@ -770,21 +770,28 @@
 		},
 
 		initEditor: function() {
+			this.editor.getEditbox = this.proxy(this.getEditbox);
+
 			this.editor.fire('editorReady',this.editor);
 			this.editor.setMode(this.editor.mode,true);
 			this.editor.setState(this.editor.states.IDLE);
-			
+
 			var self = this,
 				cnt = this.editor.getEditorSpace() || this.editor.element;
-			this.textarea = cnt.find('textarea');
+			this.textarea = cnt.find('textarea').eq(0); // get the first textarea in the editor
 			this.textarea
 				.focus(this.proxy(this.editorFocused))
 				.blur(this.proxy(this.editorBlurred));
-			this.editor.fire('editboxReady',this.editor,this.textarea);
+
+			this.editor.fire('editboxReady',this.editor,this.getEditbox());
 		},
 
 		initDom: function() {
-			this.editor.fire('editboxReady',this.editor,this.textarea);
+			this.editor.fire('editboxReady',this.editor,this.getEditbox());
+		},
+
+		getEditbox: function() {
+			return this.textarea;
 		},
 
 		editorFocused: function() {
@@ -814,6 +821,8 @@
 			RTE.init(mode);
 			this.instance = RTE.instance;
 			this.editor.ck = this.instance;
+			this.editor.getEditbox = this.proxy(this.getEditbox);
+
 			for (var i=0;i<this.proxyEvents.length;i++) {
 				(function(eventName){
 					this.instance.on(eventName,function(){
@@ -833,28 +842,44 @@
 		modeChanged: function() {
 			var mode = this.instance.mode;
 			if (this.loading) {
-				this.editor.fire('editorReady',this.editor);				
+				this.editor.fire('editorReady',this.editor);
 			}
 			this.editor.setMode(mode,this.loading);
 			this.editor.setState(this.editor.states.IDLE);
-			
+
 			this.loading = false;
 		},
-		
+
 		beforeModeChange: function() {
 			if (this.instance.mode == 'source')
 				this.editor.setState(this.editor.states.LOADING_VISUAL);
 			else
 				this.editor.setState(this.editor.states.LOADING_SOURCE);
 		},
-		
+
 		modeChangeCancelled: function() {
 			this.editor.setState(this.editor.states.IDLE);
 		},
 
 		themeLoaded: function() {
-			var editbox = $(this.instance.getThemeSpace('contents').$);
-			this.editor.fire('editboxReady',this.editor,editbox);
+			this.editor.fire('editboxReady',this.editor,$(this.instance.getThemeSpace('contents').$));
+		},
+
+		getEditbox: function() {
+			var editbox;
+
+			// TODO: move it to RTE?
+			switch (this.instance.mode) {
+				case 'wysiwyg':
+					editbox = $(this.instance.document.getBody().$);
+					break;
+
+				case 'source':
+					editbox = $(this.instance.textarea.$);
+					break;
+			}
+
+			return editbox;
 		},
 
 		editorFocused: function() {
