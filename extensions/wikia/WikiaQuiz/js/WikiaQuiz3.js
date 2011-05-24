@@ -16,12 +16,15 @@ var WikiaQuiz = {
 		WikiaQuiz.ui.startButton = $('#StartButton');
 		WikiaQuiz.ui.endScreen = $('#WikiaQuiz .quiz-end');
 		WikiaQuiz.ui.thanksScreen = $('#WikiaQuiz .quiz-thanks');
+		WikiaQuiz.ui.progressBar = $('#ProgressBar');
+		WikiaQuiz.ui.progressBarIndicators = $('#ProgressBar .indicator');
 		
 		// events
 		WikiaQuiz.ui.startButton.click(WikiaQuiz.handleStart);
 	},
 	handleStart: function() {
 		WikiaQuiz.ui.startButton.hide();
+		WikiaQuiz.ui.progressBar.show();
 		WikiaQuiz.countDown();
 	},
 	countDown: function() {
@@ -55,6 +58,7 @@ var WikiaQuiz = {
 		WikiaQuiz.ui.answerResponse = WikiaQuiz.ui.explanation.find('.answer-response');
 		WikiaQuiz.ui.nextButton = WikiaQuiz.ui.explanation.find('button');
 		WikiaQuiz.answered = false;
+		WikiaQuiz.ui.progressBarIndicators.eq(WikiaQuiz.cqNum).addClass('on');
 		WikiaQuiz.cq.fadeIn(WikiaQuiz.animationTiming, function() {
 			setTimeout(WikiaQuiz.showAnswers, 2000);
 		});
@@ -139,6 +143,7 @@ var WikiaQuiz = {
 		if(score == 100) {
 			scoreUI.addClass('full');
 		}
+		WikiaQuiz.ui.progressBar.fadeOut(WikiaQuiz.animationTiming);
 		WikiaQuiz.ui.endScreen.fadeIn(WikiaQuiz.animationTiming, function() {
 			WikiaQuiz.ui.endScreen.find('.continue').click(function() {
 				WikiaQuiz.ui.endScreen.fadeOut(WikiaQuiz.animationTiming, function() {

@@ -82,13 +82,46 @@ $bubble-color-alt: $color-header-alt;
 		z-index: 0;
 	}
 	.title-screen {
+		@include box-shadow(0, 0, 25px, #000, true, 5px);
+		background: mix($color-body, #fff, 90%);
 		display: block; // temp
+		height: $panel-height;
+		width: $panel-width;
+		.title-image {
+			@include box-shadow(0, 2px, 10px, #000, false, -5px);
+			border: 5px solid white;
+			position: absolute;
+			top: 30px;
+			&.image1 {
+				@include transform(translate(17px, 0) rotate(-6deg));
+				height: 205px;
+				left: 40px;
+				top: 50px;
+				width: 205px;
+				z-index: $base-z - 2;
+			}
+			&.image2 {
+				height: 250px;
+				left: 270px;
+				width: 250px;
+				z-index: $base-z - 1;
+			}
+			&.image3 {
+				@include transform-rotate(5deg);
+				height: 205px;
+				left: 545px;
+				top: 50px;
+				width: 205px;
+				z-index: $base-z - 2;
+			}
+		}
 		.title {
 			$width: 415px;
 			$visual-width: $width + ($bubble-padding * 2);
 			bottom: 125px;
 			left: ($panel-width - $visual-width) / 2;
 			width: $width;
+			z-index: $base-z;
 			&:after {
 				left: ($visual-width - $bubble-padding)/2;
 			}
@@ -368,6 +401,28 @@ $bubble-color-alt: $color-header-alt;
 		@include box-shadow(0, 0, 8px, #fff);
 		position: relative;
 		top: 15px;
+	}
+	.progress-bar {
+		display: none;
+		height: 14px;
+		margin: 0 auto;
+		padding-top: 20px; 
+		width: 110px;
+		.indicator {
+			@include border-radius(7px);
+			background-color: mix($color-header, #fff, 70%);
+			float: left;
+			height: 14px;
+			margin-left: 10px;
+			width: 14px;
+			&:first-child {
+				margin-left: 0px;
+			}
+			&.on {
+				@include transition-shorthand(background 400ms);
+				background-color: $color-body;
+			}
+		}
 	}
 	/* decorators */
 	&:before, &:after {

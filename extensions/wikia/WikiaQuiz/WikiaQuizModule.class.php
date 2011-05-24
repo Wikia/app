@@ -62,7 +62,7 @@ class WikiaQuizModule extends Module {
 		$wgOut->addMeta('property:og:type', 'game');
 		$wgOut->addMeta('property:og:url', $wgRequest->getFullRequestURL());
 		$wgOut->addMeta('property:og:site_name', $wgSiteName);
-		$wgOut->addMeta('property:og:description', 'Take degrassi the Quiz!');
+		$wgOut->addMeta('property:og:description', $this->data['titlescreentext']);
 		$wgOut->addMeta('property:og:image', $this->wordmarkUrl);
 		
 		$this->username = $wgUser->getName();
