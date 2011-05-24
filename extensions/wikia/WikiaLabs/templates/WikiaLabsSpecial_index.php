@@ -50,10 +50,6 @@
 							<img data-index="<?php echo $i; ?>" src="<?= wfBlankImgUrl() ;?>"/>
 						<?php endif; ?>
 					<?php endfor; ?>
-					<span class="ratings" >
-						<?php echo $value->getRating(); ?><br>
-						<?php echo wfMsg('wikialabs-list-project-ratings'); ?>
-					</span>
 				</span>
 				
 				<span class="active" >
