@@ -26,7 +26,6 @@ $messages['en'] = array(
 	'wikialabs-add-project-validator-description' => 'Description cannot be empty',
 	'wikialabs-list-project-title' => 'Wikia Labs',
 	'wikialabs-list-project-add-give-feedback' => 'Give feedback',
-	'wikialabs-list-project-ratings' => 'ratings',
 	'wikialabs-list-project-inactive' => 'inactive', 
 	'wikialabs-list-project-active' => 'active',
 	'wikialabs-list-project-warning' => 'Are you sure?',
