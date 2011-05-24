@@ -23,7 +23,7 @@ class ActivityFeedAPIProxy implements iAPIProxy {
 		}
 
 		$this->APIparams['rclimit'] = $limit;
-
+		
 		$api = new ApiMain(new FauxRequest($this->APIparams));
 		$api->execute();
 		$res = &$api->GetResultData();

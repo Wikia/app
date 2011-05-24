@@ -77,7 +77,7 @@ class DataFeedProvider {
 		while((count($this->results) < $limit + 1) && $hard_limit--) {
 			$callLimit = max(10, round(($proxyLimit - count($this->results)) * 1.2));
 			$res = $this->proxy->get($callLimit, $queryContinue);
-
+			
 			if (isset($res['results'])) {
 				foreach($res['results'] as $oneres) {
 					$this->filterOne($oneres);
@@ -313,7 +313,7 @@ class DataFeedProvider {
 		|| ($res['ns'] == NS_IMAGE && $this->proxyType == self::WL)
 		|| ($res['ns'] == NS_VIDEO && $this->proxyType == self::WL)
 		|| (defined('NS_TOPLIST') && $res['ns'] == NS_TOPLIST) ) {
-
+			
 			$item['title'] = $res['title'];
 			$item['url'] = $title->getLocalUrl();
 			$item['diff'] = $title->getLocalUrl('diff='.$res['revid'].'&oldid='.$res['old_revid']);
@@ -373,8 +373,8 @@ class DataFeedProvider {
 			$item['url'] = $title->getLocalUrl();
 
 		} else if (defined('NS_BLOG_ARTICLE_TALK') && $res['ns'] == NS_BLOG_ARTICLE_TALK && class_exists('ArticleComment')) {
-
-			$parts = ArticleComment::explode($res['title']);
+			
+			$parts = ArticleComment::explode($res['title'], $title );
 			$item['title'] = $parts['title'];
 			$item['url'] = Title::newFromText($title->getBaseText(), NS_BLOG_ARTICLE_TALK)->getLocalUrl();
 

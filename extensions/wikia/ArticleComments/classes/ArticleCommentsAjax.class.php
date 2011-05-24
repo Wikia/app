@@ -39,6 +39,7 @@ class ArticleCommentsAjax {
 		);
 
 		$title = Title::newFromID( $articleId );
+		
 		if ( !$title ) {
 			return $result;
 		}

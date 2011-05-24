@@ -321,7 +321,7 @@ class ArticleComment {
 		}
 	}
 
-	public static function explode($titleText) {
+	public static function explode($titleText, $oTitle = null) {
 		$count = 0;
 		$titleTextStripped = str_replace(ARTICLECOMMENT_PREFIX, '', $titleText, $count);
 		$partsOriginal = explode('/', $titleText);
@@ -335,12 +335,19 @@ class ArticleComment {
 			$title = $titleText;
 			$partsOriginal = $partsStripped = array();
 		}
-
+		
+		if( !empty($oTitle) && defined('NS_BLOG_ARTICLE_TALK') && $oTitle->getNamespace() == NS_BLOG_ARTICLE_TALK ) {
+			$tmpArr = explode('/', $title);
+			array_shift($tmpArr);
+			$title = implode('/', $tmpArr);
+		}
+		
 		$result = array(
 			'title' => $title,
 			'partsOriginal' => $partsOriginal,
 			'partsStripped' => $partsStripped
 		);
+		
 		return $result;
 	}
 
@@ -662,13 +669,13 @@ class ArticleComment {
 	static public function watchlistNotify(RecentChange &$oRC) {
 		global $wgEnableGroupedArticleCommentsRC;
 		wfProfileIn( __METHOD__ );
-
+		
 		if ( !empty($wgEnableGroupedArticleCommentsRC) && ( $oRC instanceof RecentChange ) ) {
 			$title = $oRC->getAttribute('rc_title');
 			$namespace = $oRC->getAttribute('rc_namespace');
 			$article_id = $oRC->getAttribute('rc_cur_id');
 			$title = Title::newFromText($title, $namespace);
-
+			
 			//TODO: review
 			if (MWNamespace::isTalk($namespace) &&
 				ArticleComment::isTitleComment($title) &&
@@ -681,6 +688,7 @@ class ArticleComment {
 					$mAttribs['rc_title'] = $oArticlePage->getDBkey();
 					$mAttribs['rc_namespace'] = MWNamespace::getSubject($oArticlePage->getNamespace());
 					$mAttribs['rc_log_action'] = 'article_comment';
+					
 					$oRC->setAttribs($mAttribs);
 				}
 			}
