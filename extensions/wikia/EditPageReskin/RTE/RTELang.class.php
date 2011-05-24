@@ -29,6 +29,30 @@ class RTELang {
 
 		wfProfileOut(__METHOD__);
 	}
+	
+	/**
+	 * Return messages from given file for given language (including fallback to English)
+	 * 
+	 * @param $msgFile string name of messages i18n.php file 
+	 * @param $langCode string code of the language to load messages for
+	 */
+	static public function getMessagesFromFile($msgFile, $langCode) {
+		wfProfileIn(__METHOD__);
+
+		$messages = array();
+		require $msgFile;
+
+		// always fallback to English
+		$fileMessages = $messages['en'];
+
+		// apply messages from selected language
+		if (($langCode != 'en') && isset($messages[$langCode])) {
+			$fileMessages = array_merge($fileMessages, $messages[$langCode]);
+		}
+
+		wfProfileOut(__METHOD__);
+		return $fileMessages;
+	}
 
 	/**
 	 * Return nested array with CK messages
@@ -52,16 +76,14 @@ class RTELang {
 
 		// load messages file to get list of messages we should return:
 		// 1. CKeditor's core messages
-		$messages = array();
-		require $msgFiles['CKcore'];
-		$coreMessages = array_merge($messages['en'] /* always fallback to 'en' */, $messages[$lang]);
-		$list = array_keys($messages['en']);
+		$coreMessages = self::getMessagesFromFile($msgFiles['CKcore'], $lang);
 
 		// 2. Wikia specific messages
-		$messages = array();
-		require $msgFiles['CKwikia'];
-		$coreMessages = array_merge($coreMessages, $messages['en'] /* always fallback to 'en' */, $messages[$lang]);
-		$list = array_merge($list, array_keys($messages['en']));
+		$wikiaMessages = self::getMessagesFromFile($msgFiles['CKwikia'], $lang);
+		$coreMessages = array_merge($coreMessages, $wikiaMessages);
+
+		// 3. get list of extension's messages
+		$list = array_keys($coreMessages);
 
 		// convert flat array to nested array
 		wfProfileIn(__METHOD__ . '::loop');
@@ -69,7 +91,7 @@ class RTELang {
 		self::$messages = array();
 
 		foreach($list as $msgName) {
-			// check for messages customized locallly via MW page
+			// check for messages customized via "local" MW page or messaging.wikia.com
 			$mwMsg = wfMsg($msgName);
 
 			if (wfEmptyMsg($msgName, $mwMsg)) {
@@ -79,6 +101,8 @@ class RTELang {
 			else {
 				// use "local" message from MW page
 				$value = $mwMsg;
+
+				//wfDebug(__METHOD__ . " - {$msgName} customized via MW page\n");
 			}
 
 			// add a message to the output
