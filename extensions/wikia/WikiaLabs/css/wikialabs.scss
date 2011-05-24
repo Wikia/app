@@ -47,6 +47,8 @@ $warning-bg-color: #FFFFCC;
 			vertical-align: top;
 			padding-right: $toolbox-button + $margin-images;
 			display: block;
+			float: right;
+			width: 375px;
 			.prjname {
 				display: block;
 				font-size: 20px;
