@@ -86,7 +86,7 @@ JS
 		$wgOut->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/MyHome/oasis.scss'));
 
 		$data = $feedProvider->get(50);  // this breaks when set to 60...
-
+		
 		// FIXME: do it in AchievementsII extension
 		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
 		if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){

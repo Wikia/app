@@ -31,7 +31,7 @@ class SpecialActivityFeed extends SpecialPage {
 		$feedProvider = new DataFeedProvider($feedProxy);
 
 		$data = $feedProvider->get(60);
-
+		
 		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
 		if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
 			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css?{$wgStyleVersion}");

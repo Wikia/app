@@ -47,7 +47,7 @@ class FeedRenderer {
 
 	public function render($data, $wrap = true, $parameters = array()) {
 		wfProfileIn(__METHOD__);
-
+		
 		$template = 'feed';
 		if (isset($parameters['flags']) && in_array('shortlist', $parameters['flags'])) {
 			$template = 'feed.simple';
