@@ -33,6 +33,7 @@ $messages['en'] = array(
 	'themedesigner-dont-use-a-background' => 'Don\'t use a background',
 	'themedesigner-upload-your-own' => 'Upload your own',
 	'themedesigner-button-upload' => 'Upload',
+	'themedesigner-button-upload-wordmark' => 'Upload',
 	'themedesigner-rules-background' => 'jpg, gif or png. 100 kilobyte limit',
 	'themedesigner-default' => 'Default',
 	'themedesigner-font' => 'font',

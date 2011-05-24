@@ -47,7 +47,7 @@
 
 		<form onsubmit="return AIM.submit(this, ThemeDesigner.wordmarkUploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=WordmarkUpload&outputType=html" method="POST" enctype="multipart/form-data">
 			<input id="WordMarkUploadFile" name="wpUploadFile" type="file" />
-			<input type="submit" value="Upload" onclick="return ThemeDesigner.wordmarkUpload(event);"/> <?= wfMsg('themedesigner-rules-wordmark') ?>
+			<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" onclick="return ThemeDesigner.wordmarkUpload(event);"/> <?= wfMsg('themedesigner-rules-wordmark') ?>
 		</form>
 
 		<div class="preview">
