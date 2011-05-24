@@ -29,7 +29,7 @@ class WikiaLabsProject {
 	 * get db handler
 	 * @return DatabaseBase
 	 */
-	protected function getDb( $type = DB_SLAVE ) {
+	public function getDb( $type = DB_SLAVE ) {
 		return $this->app->runFunction( 'wfGetDB', $type, array(), $this->app->getGlobal( 'wgExternalDatawareDB' ) );
 	}
 

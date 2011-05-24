@@ -29,10 +29,12 @@ class WikiaLabsWikisListPager extends AlphabeticPager {
 	 * @details sets database query
 	 */
 	public function getQueryInfo() {
+		$ids = $this->getWikisIds();
+		
 		return array(
 			'tables' => 'city_list',
 			'fields' => 'city_id, city_title, city_url',
-			'conds' => array('city_id' => $this->getWikisIds()),
+			'conds' => array('city_id' => !empty($ids) ? $ids : 0),
 			'options' => array('order by' => 'city_title')
 		);
 	}
