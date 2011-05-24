@@ -11,7 +11,7 @@
 		padding: 5px 0;
 		&.cke_toolbar_format_expanded {
 			border-top: solid 1px $color-epl-trigger-border;
-			margin-right: 40px;
+			margin-right: 60px;
 			padding-top: 5px;
 		}
 	}
@@ -26,7 +26,7 @@
 			height: 22px;
 			position: absolute;
 			text-align: center;
-			width: 22px;
+			width: 40px;
 			label {
 				cursor: inherit;
 				font-size: 10px;
