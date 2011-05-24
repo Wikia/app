@@ -1,5 +1,7 @@
 WikiaLabs = {};
 
+WikiaLabs.sliderEnable = true;
+
 $(function() {
 	WikiaLabs.init();	
 });
@@ -213,6 +215,7 @@ WikiaLabs.uploadImage = function ( imgelement ) {
 }
 
 WikiaLabs.switchToggle = function(e) {
+	if (!WikiaLabs.sliderEnable) return;
 	var slider;
 	slider = $(e.target).closest('.buttons').find('.slider');
 	var onoff = slider.hasClass('on')  ? 0:1;
@@ -257,16 +260,19 @@ WikiaLabs.switchToggle = function(e) {
 }
 
 WikiaLabs.switchRequest = function(slider, onoff) {
+	WikiaLabs.sliderEnable = false;
+	$('.button').draggable("option", "disabled", true);
+	
 	if( slider.hasClass('on') ) {      
     	slider.find('.button').animate({       
 	    	left: 0
-		});   
-	   	slider.find('.texton').fadeOut();    
+		});
+		slider.find('.texton').html('<span class="loading loadon"></span>');    
 	} else {               	 
 		slider.find('.button').animate({       
 			left: 67
 		});
-    	slider.find('.textoff').fadeOut();
+		slider.find('.textoff').html('<span class="loading loadoff"></span>');
 	}
 	$.ajax({
 		url: wgScript + '?action=ajax&rs=WikiaLabsHelper::switchProject&id=' +  slider.attr('data-id') + '&onoff=' + onoff ,
@@ -274,6 +280,8 @@ WikiaLabs.switchRequest = function(slider, onoff) {
 		type: "POST",
 		success: function(data) {
 			WikiaLabs.animateToggle(slider);
+			WikiaLabs.sliderEnable = true;
+			$('.button').draggable("option", "disabled", false);
 		}
 	});
 }
@@ -281,10 +289,12 @@ WikiaLabs.switchRequest = function(slider, onoff) {
 WikiaLabs.animateToggle = function(slider) {
 	$().log(slider, 'WikiaLabs');
 	if( slider.hasClass('on') ) {      
-		slider.find('.textoff').fadeIn();              
+		slider.find('.texton').html('active').hide();
+		slider.find('.textoff').fadeIn();
 	    slider.removeClass('on');
     } else {               	 
-    	slider.find('.texton').fadeIn();              
+		slider.find('.textoff').html('inactive').hide();
+		slider.find('.texton').fadeIn();
     	slider.addClass('on'); 
 	}
 }
