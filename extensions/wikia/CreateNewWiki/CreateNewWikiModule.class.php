@@ -61,14 +61,20 @@ class CreateNewWikiModule extends Module {
 
 		// form field values
 		$hubs = WikiFactoryHub::getInstance();
-		$this->aCategories = $hubs->getCategories();
-		$useLang = $wgRequest->getVal('uselang', $wgUser->getOption( 'language' ));
-		$this->params['wikiLanguage'] = empty($this->params['wikiLanguage']) ? $useLang: $this->params['wikiLanguage'];
-		$this->params['wikiLanguage'] = empty($useLang) ? $this->wgLanguageCode : $useLang;  // precedence: selected form field, uselang, default wiki lang
-
-		$this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
+                $this->aCategories = $hubs->getCategories();
+                
+                $this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
 		$this->aLanguages = wfGetFixedLanguageNames();
 		asort($this->aLanguages);
+                
+		$useLang = $wgRequest->getVal('uselang', $wgUser->getOption( 'language' ));
+                
+                // falling back to english (BugId:3538)
+                if ( !array_key_exists($useLang, $this->aLanguages) ) {
+                    $useLang = 'en';
+                }
+		$this->params['wikiLanguage'] = empty($this->params['wikiLanguage']) ? $useLang: $this->params['wikiLanguage'];
+		$this->params['wikiLanguage'] = empty($useLang) ? $this->wgLanguageCode : $useLang;  // precedence: selected form field, uselang, default wiki lang
 
 		// facebook callback overwrite on login.  CreateNewWiki re-uses current login stuff.
 		$fbOnLoginJsOverride = 'WikiBuilder.fbLoginCallback();';
