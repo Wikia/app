@@ -9,6 +9,18 @@
 <?	} ?>
 </ul>
 <? } ?>
+<? if ($data['moreinfoheading']) { ?>
+<p>More Info heading: <?= $data['moreinfoheading'] ?></p>
+<? } ?>
+<? if (sizeof($data['moreinfo'])) { ?>
+<h3>More Info articles</h3>
+<ul>
+<? foreach ($data['moreinfo'] as $moreinfo) { ?>
+	<li><a href="<?=$moreinfo['url']?>"><?=$moreinfo['text']?htmlentities($moreinfo['text']):htmlentities($moreinfo['article'])?></a></li>
+<? } ?>
+</ul>
+<? } ?>
+
 <h3>Questions</h3>
 <ul>
 <? foreach ($data['elements'] as $element) { ?>

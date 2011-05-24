@@ -17,6 +17,9 @@ class WikiaQuiz {
 	const QUIZ_CATEGORY_PREFIX = 'Quiz_';
 	const TITLESCREENTEXT_MARKER = 'TITLESCREENTEXT:';
 	const IMAGE_MARKER = 'IMAGE:';
+	const MOREINFOHEADING_MARKER = 'MOREINFOHEADING:';
+	const MOREINFOLINK_MARKER = 'MOREINFOLINK:';
+	const MOREINFOLINK_TEXT_MARKER = '|';
 
 	private function __construct($quizId) {
 		$this->mData = null;
@@ -79,6 +82,8 @@ class WikiaQuiz {
 			$titleScreenText = '';
 			$images = array();
 			$imageShorts = array();
+			$moreInfoHeading = '';
+			$moreInfoLinks = array();
 
 			// parse wikitext containing quiz data
 			$content = $article->getContent();
@@ -93,6 +98,18 @@ class WikiaQuiz {
 					$imageShort = trim( substr($line, strlen(self::IMAGE_MARKER)) );
 					$images[] = $this->getImageSrc($imageShort);					
 					$imageShorts[] = $imageShort;
+				}
+				elseif (startsWith($line, self::MOREINFOHEADING_MARKER)) {
+					$moreInfoHeading = trim( substr($line, strlen(self::MOREINFOHEADING_MARKER)) );
+				}
+				elseif (startsWith($line, self::MOREINFOLINK_MARKER)) {
+					$moreInfo = substr($line, strlen(self::MOREINFOLINK_MARKER));
+					$moreInfoChunks = explode(self::MOREINFOLINK_TEXT_MARKER, $moreInfo);
+					$title = F::build('Title', array($moreInfoChunks[0]), 'newFromText');
+					$moreInfoLinks[] = array('article'=>$moreInfoChunks[0],
+								'url'=>$title->getFullUrl(),
+								'text'=>isset($moreInfoChunks[1]) ? $moreInfoChunks[1] : '' );
+					
 				}
 			}
 
@@ -123,7 +140,9 @@ class WikiaQuiz {
 				'elements' => $quizElements,
 				'titlescreentext' => $titleScreenText,
 				'images' => $images,
-				'imageShorts' => $imageShorts
+				'imageShorts' => $imageShorts,
+				'moreinfoheading' => $moreInfoHeading,
+				'moreinfo' => $moreInfoLinks
 			);
 
 			wfDebug(__METHOD__ . ": loaded from scratch\n");
