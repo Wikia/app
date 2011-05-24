@@ -221,7 +221,7 @@ class EditPageLayoutHelper {
 	 * Apply user preferences changes
 	 */
 	function onGetPreferences($user, &$defaultPreferences) {
-		// rewrite sections for the following user options
+		// modify sections for the following user options
 		$prefs = array(
 			// General
 			'enablerichtext' => 'general',
@@ -239,18 +239,19 @@ class EditPageLayoutHelper {
 			'forceeditsummary' => 'editing-experience',
 			'disablecategoryselect' => 'editing-experience',
 			'editwidth' => 'editing-experience',
+			'disablelinksuggest' => 'editing-experience', // handled in wfLinkSuggestGetPreferences()
 
 			// Monobook layout only
 			'showtoolbar' => 'monobook-layout',
 			'previewontop' => 'monobook-layout',
 			'previewonfirst' => 'monobook-layout',
-			'disablelinksuggest' => 'monobook-layout',
 
 			// Size of editing window (Monobook layout only)
 			'cols' => 'editarea-size',
 			'rows' => 'editarea-size',
 		);
 
+		// move checkboxes / inputs to different section on "Editing" tab
 		foreach($prefs as $name => $section) {
 			if (isset($defaultPreferences[$name])) {
 				$defaultPreferences[$name]['section'] = 'editing/' . $section;

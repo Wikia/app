@@ -10,7 +10,7 @@
  * @author Inez Korczyński <inez@wikia-inc.com>
  * @author Bartek Łapiński <bartek@wikia-inc.com>
  * @author Lucas Garczewski (TOR) <tor@wikia-inc.com>
- * @copyright Copyright © 2008-2009, Wikia Inc.
+ * @copyright Copyright (c) 2008-2009, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -40,7 +40,7 @@ function wfLinkSuggestSetupVars( $vars ) {
 function wfLinkSuggestGetPreferences($user, &$preferences) {
 	$preferences['disablelinksuggest'] = array(
 		'type' => 'toggle',
-		'section' => 'editing/monobook-layout',
+		'section' => 'editing/editing-experience',
 		'label-message' => 'tog-disablelinksuggest',
 	);
 	return true;
