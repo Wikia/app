@@ -10,6 +10,8 @@ RelatedPages = {
 		$().log(msg, 'RelatedPages');
 	},
 	init: function() {
+		$(window).unbind('scroll', RelatedPages.updateScroll);
+
 		this.module = $('.RelatedPagesModule').first();
 
 		// there's no Related Pages module on this page
@@ -71,7 +73,7 @@ RelatedPages = {
 
 	attachLazyLoaderEvents: function() {
 		if (RelatedPages.module.exists()) {
-			$(window).scroll(RelatedPages.updateScroll);
+			$(window).bind('scroll', RelatedPages.updateScroll);
 			RelatedPages.updateScroll(); // check if we are already in the visible area
 		}
 	},
