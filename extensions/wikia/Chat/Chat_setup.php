@@ -13,7 +13,7 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Chat',
 	'author' => array( 'Christian Williams', 'Sean Colombo' ),
-	'url' => 'http://www.wikia.com',
+	'url' => 'http://community.wikia.com/wiki/Chat',
 	'descriptionmsg' => 'chat-desc',
 );
 
@@ -61,6 +61,14 @@ $wgExtensionMessagesFiles['Chat'] = $dir.'/Chat.i18n.php';
 
 // hooks
 $wgHooks[ 'GetRailModuleList' ][] = 'ChatHelper::onGetRailModuleList';
+
+// WikiaApp
+$app = WF::build('App');
+
+// register messages package for JS
+$app->registerExtensionJSMessagePackage('Chat', array(
+	'chat-*',
+));
 
 // ajax
 $wgAjaxExportList[] = 'ChatAjax';
