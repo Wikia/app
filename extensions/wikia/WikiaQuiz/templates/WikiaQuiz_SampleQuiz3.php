@@ -1,3 +1,4 @@
+<fb:like class="fblike" href="" send="true" layout="button_count" width="300" show_faces="false" font="" height="50"></fb:like>
 <section id="WikiaQuiz" class="WikiaQuiz">
 	<div class="quiz-frame">
 	</div>
