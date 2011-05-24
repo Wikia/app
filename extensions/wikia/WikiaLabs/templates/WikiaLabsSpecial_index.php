@@ -12,9 +12,6 @@
 			<span class='details' >
 			 	<h2 class="prjname" >
 					<?php echo $value->getTextFor('name'); ?>
-			 		<?php if( $user->isAllowed('wikialabsadmin') ): ?>
-			 			<a href="<?php echo $wikilistUrl.'&project_id='.$value->getId(); ?>">[<?php echo wfMsg('wikialabs-list-project-list-of-wikis-uses')?>]</a>
-			 		<?php endif; ?>
 			 	</h2>
 				<span class="data"><?php echo $lang->date($value->getReleaseDateMW()); ?></span>
 				<?php echo $value->getTextFor('description'); ?>
@@ -53,7 +50,12 @@
 				</span>
 				
 				<span class="active" >
-					<?php echo wfMsgExt('wikialabs-list-project-currently-active-on-wikis', array('parsemag'), $value->getActivationsNumFormated() ); ?>
+					<?php $numMsg = wfMsgExt('wikialabs-list-project-currently-active-on-wikis', array('parsemag'), $value->getActivationsNumFormated() ); ?>
+					<?php if( $user->isAllowed('wikialabsadmin') ): ?>
+						<a href="<?php echo $wikilistUrl.'&project_id='.$value->getId(); ?>"><?php echo $numMsg; ?></a>
+					<?php else: ?>
+						<?php echo $numMsg; ?>
+					<?php endif; ?>
 				</span>
 			</span>
 		</li>
