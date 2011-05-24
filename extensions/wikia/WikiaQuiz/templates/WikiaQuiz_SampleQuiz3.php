@@ -3,8 +3,11 @@
 	<div class="quiz-frame">
 	</div>
 	<div class="title-screen">
+		<img src="<?= $data['images'][0] ?>" class="title-image image1" height="205" width="205">
+		<img src="<?= $data['images'][1] ?>" class="title-image image2" height="250" width="250">
+		<img src="<?= $data['images'][2] ?>" class="title-image image3" height="205" width="205">
 		<h1 class="title quiz-bubble">
-			<?= $data['name'] ?>
+			<?= $data['titlescreentext'] ?>
 		</h1>
 	</div>
 	<div class="count-down" id="CountDown">
@@ -96,6 +99,11 @@
 		<img src="<?= $wordmarkUrl ?>" alt="<?= $wordmarkText ?>" height="55">
 	<? } ?>
 	<button id="StartButton"><?= wfMsg('wikiaquiz-game-start-button') ?></button>
+	<div id="ProgressBar" class="progress-bar">
+		<? for ($i = 0; $i < $numOfQuestions; $i++) { ?>
+			<div class="indicator"></div>
+		<? } ?>
+	</div>
 	<div class="leftcorner"></div>
 	<div class="rightcorner"></div>
 </div>
