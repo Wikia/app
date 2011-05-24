@@ -875,7 +875,7 @@ function processText(text, client) {
 
 	// Linkify http://links
 	var exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])/ig;
-	var pageLink = unescape( text.replace(exp, "$1") );
+	var pageLink = unescape( exp.exec(text)[1] );
 	text = text.replace(exp, "<a href='$1'>" + pageLink + "</a>");
 
 	// Linkify [[Pipes|Pipe-notation]] in bracketed links.
