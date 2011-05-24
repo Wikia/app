@@ -35,28 +35,6 @@ class WikiaQuiz {
 	}
 
 	/**
-	 * Return instance of WikiaQuiz for given name
-	 */
-	 /*
-	static public function newFromName($name) {
-		$catName = self::QUIZ_CATEGORY_PREFIX . $name;
-
-		//$cat = Category::newFromName($catName);
-		$cat = F::build('Category', array($catName), 'newFromName');
-
-		if (!$cat) {
-			return false;
-		}
-
-		$quiz = new self($cat->getId());
-		$quiz->mName = substr($cat->getName(), strlen(self::QUIZ_CATEGORY_PREFIX));
-		$quiz->mCategory = $cat;
-
-		return $quiz;
-	}
-	*/
-
-	/**
 	 * Return instance of WikiaQuiz for given article from Quiz namespace
 	 */
 	static public function newFromArticle(Article $article) {
@@ -107,8 +85,6 @@ class WikiaQuiz {
 
 			$lines = explode("\n", $content);
 			
-			hyunbug('lines');
-			hyunbug($lines);
 			foreach($lines as $line) {
 				if (startsWith($line, self::TITLESCREENTEXT_MARKER)) {
 					$titleScreenText = trim( substr($line, strlen(self::TITLESCREENTEXT_MARKER)) );
@@ -162,9 +138,6 @@ class WikiaQuiz {
 
 		$this->mExists = true;
 		
-		hyunbug('++++++');
-		hyunbug($this->mData);
-
 		wfProfileOut(__METHOD__);
 		return;
 	}
