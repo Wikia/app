@@ -1955,6 +1955,8 @@ INPUTS
 		wfProfileIn( __METHOD__ );
 
 		// wikia change begin
+		// TODO: remove?
+		// @see https://trac.wikia-inc.com/changeset/6028
 		global $wgRequest;
 		if ($wgUser->getOption( 'showtoolbar' ) && !$wgUser->getOption( 'riched_disable' ) && !$this->previewOnOpen() ) {
 			$oldTextBox1 = $this->textbox1;
