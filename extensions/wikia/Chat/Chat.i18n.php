@@ -14,6 +14,10 @@ $messages['en'] = array(
 	'chat-ban-you-need-permission' => 'You do not have the $1 permission which is required to kick/ban a user.',
 	'chat-missing-required-parameter' => '\'$1\' is required but was not found in the request.',
 
+	'chat-err-already-chatmod' => "Error: \"$1\" is already in the \"$2\" group.",
+	'chat-err-no-permission-to-add-chatmod' => "Error: You do not have permission to add the \"$1\" group to this user.",
+	'chat-userrightslog-a-made-b-chatmod' => "$1 promoted $2 to be a chat moderator on this wiki.",
+
 	'chat-you-are-banned' => 'Permissions error.',
 	// TODO: link to list of admins
 	'chat-you-are-banned-text' => 'Sorry, you do not have permission to chat on this wiki.  If you think this was a mistake or would like to be reconsidered, please contact an administrator.',
