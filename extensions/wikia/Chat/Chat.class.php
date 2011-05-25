@@ -65,32 +65,59 @@ class Chat {
 	static public function promoteChatModerator($userNameToPromote){
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
-		
-// TODO: REMOVE WHEN IMPLEMENTED
-$errorMsg = "ERROR: promoteChatMod NOT IMPLEMENTED YET.";
+		$CHAT_MOD_GROUP = 'chatmoderator';
+
 		$userToPromote = User::newFromName($userNameToPromote);
 
-	
-		// TODO: If we ever care (there is no GUI for it right now) use the 'add-self' array if user is trying to promote themself.
-		$changeableGroups = $wgUser->changeableGroups();
-		if(in_array('chatmoderator', $changeableGroups['add'])){
-			
-			// TODO: Check if the userToPromote is already a chatmoderator (or in the chatmoderator group)?
-			
-			
-			// TODO: ADD THE USERGROUP.
-			
-			
-			
+		// Check if the userToPromote is already in the chatmoderator group.
+		if(in_array( $CHAT_MOD_GROUP, $userToPromote->getEffectiveGroups() )){
+			$errorMsg = wfMsg("chat-err-already-chatmod", $userNameToPromote, $CHAT_MOD_GROUP);
 		} else {
-		
-			// TODO: Error that you can't add that group.
-			
+			$changeableGroups = $wgUser->changeableGroups();
+			$isSelf = ($userToPromote->getName() == $wgUser->getName());
+			$addableGroups = array_merge( $changeableGroups['add'], $isSelf ? $changeableGroups['add-self'] : array() );
+			if(in_array($CHAT_MOD_GROUP, $addableGroups)){
+				// Adding the group is allowed. Add the group, clear the cache, run necessary hooks, and log the change.
+				$oldGroups = $userToPromote->getGroups();
+
+				$userToPromote->addGroup( $CHAT_MOD_GROUP );
+
+				$userToPromote->invalidateCache();
+				if ( $userToPromote instanceof User ) {
+					$removegroups = array();
+					$addgroups = array( $CHAT_MOD_GROUP );
+					wfRunHooks( 'UserRights', array( &$userToPromote, $addgroup, $removegroup ) );
+				}
+
+				// Update user-rights log.
+				$newGroups = array_merge($oldGroups, array($CHAT_MOD_GROUP));
+				$reason = wfMsg('chat-userrightslog-a-made-b-chatmod', $wgUser->getName(), $userToPromote->getName());
+				$log = new LogPage( 'rights' );
+				$log->addEntry( 'rights',
+					$userToPromote->getUserPage(),
+					$reason,
+					array(
+						Chat::makeGroupNameListForLog( $oldGroups ),
+						Chat::makeGroupNameListForLog( $newGroups )
+					)
+				);
+			} else {
+				$errorMsg = wfMsg("chat-err-no-permission-to-add-chatmod", $CHAT_MOD_GROUP);
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
 		return ( $errorMsg=="" ? true : $errorMsg);
 	} // end promoteChatMod()
+	
+	
+	static public function makeGroupNameListForLog( $ids ) {
+		if ( empty( $ids ) ) {
+			return '';
+		} else {
+			return $this->makeGroupNameList( $ids );
+		}
+	}
 
 	/**
 	 * Returns true if the user with the provided username has the 'chatmoderator' right
