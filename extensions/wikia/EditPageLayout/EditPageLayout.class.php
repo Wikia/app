@@ -255,8 +255,8 @@ class EditPageLayout extends EditPage {
 		if( $this->mPreventSave ) {
 			$this->save = false;
 		}
-		
-		RTE::log(__METHOD__, $this->textbox1);
+
+		wfDebug(__METHOD__ . "{$this->textbox1}\n");
 	}
 
 	/**
