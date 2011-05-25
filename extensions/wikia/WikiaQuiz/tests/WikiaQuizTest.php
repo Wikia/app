@@ -10,6 +10,10 @@ class WikiaQuizTest extends PHPUnit_Framework_TestCase {
 	protected function tearDown() {
 		F::unsetInstance('Category');
 	}
+	
+	public function testFoo() {
+		$this->markTestIncomplete('Test class without tests always fails');
+	}
 
 }
 
