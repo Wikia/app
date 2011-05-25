@@ -37,8 +37,8 @@ require_once( "$IP/maintenance/install-utils.inc" );
 install_version_checks();
 
 require_once( "$IP/includes/Defines.php" );
-require_once( "$IP/includes/DefaultSettings.php" );
 require_once( "$IP/includes/AutoLoader.php" );
+require_once( "$IP/includes/DefaultSettings.php" );
 require_once( "$IP/includes/MagicWord.php" );
 require_once( "$IP/includes/Namespace.php" );
 require_once( "$IP/includes/ProfilerStub.php" );
