@@ -238,7 +238,7 @@ function authConnection(client, socket, authData){
 			var requestUrl = AUTH_URL + "&roomId=" + roomId;
 			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching this (at least on dev boxes) when we don't want it to... so cachebust it.
 
-			console.log("Requesting user info from: " + requestUrl);
+			console.log("Requesting user info from: " + 	);
 
 			var httpClient = http.createClient(WIKIA_PROXY_PORT, WIKIA_PROXY_HOST);
 			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
@@ -295,6 +295,8 @@ function authConnection(client, socket, authData){
 					} else {
 						console.log("User failed authentication. Error from server was: " + data.errorMsg);
 						sendInlineAlertToClient(client, data.errorMsg);
+						console.log("Entire data was: ");
+						console.log(data);
 					}
 				});
 			});
