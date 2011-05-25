@@ -134,6 +134,17 @@ abstract class WikiaController {
 	}
 
 	/**
+	 * Convenience method for sending requests to the same controller
+	 *
+	 * @param string $methodName
+	 * @param array $params
+	 * @return WikiaResponse
+	 */
+	public function sendSelfRequest( $methodName, $params = array() ) {
+		return $this->sendRequest( $this->response->getControllerName(), $methodName, $params );
+	}
+
+	/**
 	 * Convenience method for getting a value from the request object
 	 * @param string $key
 	 * @param string $value
