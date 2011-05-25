@@ -261,7 +261,7 @@ class ArticleCommentInit {
 	/**
 	 * isFbConnectionNeeded -- checkes is everything OK with Facebook connection
 	 *
-	 * @access private
+	 * @access public
 	 * @author Jakub
 	 *
 	 * @return boolean
@@ -282,5 +282,30 @@ class ArticleCommentInit {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * HAWelcome
+	 *
+	 * @param Title $title
+	 * @param User $fakeUser
+	 *
+	 * @access public
+	 * @author Jakub
+	 *
+	 * @return boolean
+	 */
+	static public function HAWelcomeGetPrefixText( &$prefixedText, $title ) {
+
+		if ( ArticleComment::isTitleComment( $title ) ){
+
+			if ( defined('ARTICLECOMMENT_PREFIX') ){
+				$aPrefix = explode( ARTICLECOMMENT_PREFIX, $prefixedText );
+				if ( count( $aPrefix ) > 0 ){
+					$prefixedText = substr_replace( $aPrefix[0] ,"" ,-1 );
+				}
+			}
+		}
+		return true;
 	}
 }

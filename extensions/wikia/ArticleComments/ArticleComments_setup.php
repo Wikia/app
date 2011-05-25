@@ -77,6 +77,8 @@ $wgHooks['UserMailer::NotifyUser'][] = 'ArticleCommentInit::ArticleCommentNotify
 $wgHooks['UndeleteComplete'][] = 'ArticleCommentList::undeleteComplete';
 // prevent editing not own comments
 $wgHooks['userCan'][] = 'ArticleCommentInit::userCan';
+// HAWelcome
+$wgHooks['HAWelcomeGetPrefixText'][] = 'ArticleCommentInit::HAWelcomeGetPrefixText';
 
 // added by Moli
 // special::movepage
