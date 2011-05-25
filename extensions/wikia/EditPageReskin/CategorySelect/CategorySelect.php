@@ -135,6 +135,7 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 			$csWikitext = $wgRequest->getVal('csWikitext', '');
 
 			if ($csWikitext != '') {
+				// TODO: when is this code executed?
 				CategorySelect::SelectCategoryAPIgetData($csWikitext, true);
 			}
  		}
