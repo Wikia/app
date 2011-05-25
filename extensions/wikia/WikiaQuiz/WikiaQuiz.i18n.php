@@ -86,6 +86,6 @@ $messages['qqq'] = array(
 	'wikiaquiz-error-invalid-correct-answer' => 'Error message when no correct answer given',
 	'wikiaquiz-error-invalid quiz' => 'Error message when quiz is invalid',
 	'wikiaquiz-error-invalid article' => 'Error message when article ID is invalid', 
-	'wikiaquiz-error-invalid-article-with-details' => 'Error message when article is invalid, with details' 
-  	'wikiaquiz-error-invalid article' => 'Error message when article ID is invalid'  
+	'wikiaquiz-error-invalid-article-with-details' => 'Error message when article is invalid, with details',
+  	'wikiaquiz-error-invalid article' => 'Error message when article ID is invalid',
 );
