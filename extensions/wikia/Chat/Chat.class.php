@@ -63,6 +63,7 @@ class Chat {
 	 * Returns true on success, returns an error message as a string on failure.
 	 */
 	static public function promoteChatModerator($userNameToPromote){
+		global $wgUser;
 		wfProfileIn( __METHOD__ );
 		
 // TODO: REMOVE WHEN IMPLEMENTED
@@ -74,9 +75,16 @@ $errorMsg = "ERROR: promoteChatMod NOT IMPLEMENTED YET.";
 		$changeableGroups = $wgUser->changeableGroups();
 		if(in_array('chatmoderator', $changeableGroups['add'])){
 			
-			// TODO: Check if the userToPromote is already a chatmoderator.
+			// TODO: Check if the userToPromote is already a chatmoderator (or in the chatmoderator group)?
+			
+			
+			// TODO: ADD THE USERGROUP.
+			
+			
 			
 		} else {
+		
+			// TODO: Error that you can't add that group.
 			
 		}
 
