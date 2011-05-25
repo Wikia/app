@@ -28,7 +28,8 @@ class ExternalUser_Wikia extends ExternalUser {
 	private function initFromCond( $cond ) {
 		global $wgExternalSharedDB;
 
-		wfDebug( __METHOD__ . ": init User from cond: " . print_r($cond, true) . " \n" );
+
+		wfDebug( __METHOD__ . ": init User from cond: " . wfArrayToString( $cond ) . " \n" );
 
 		$this->mDb = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
