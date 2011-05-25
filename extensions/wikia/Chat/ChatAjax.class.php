@@ -97,7 +97,7 @@ class ChatAjax {
 	 * Ajax endpoint for kickbanning a user. This will change their permissions so that
 	 * they are not allowed to chat on the current wiki.
 	 *
-	 * Returns an associative array.  On success, returns "success" => "", on failure,
+	 * Returns an associative array.  On success, returns "success" => true, on failure,
 	 * returns "error" => [error message].
 	 */
 	static public function kickBan(){
@@ -122,17 +122,17 @@ class ChatAjax {
 	} // end kickBan()
 
 	/**
-	 * Ajax endpoint to set a user as a chat moderator.
+	 * Ajax endpoint to set a user as a chat moderator (ie: add them to the 'chatmoderator' group).
 	 *
-	 * Returns an associative array.  On success, returns "success" => "", on failure,
+	 * Returns an associative array.  On success, returns "success" => true, on failure,
 	 * returns "error" => [error message].
 	 */
-	static public function addChatMod(){
+	static public function giveChatMod(){
 		global $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		$retVal = array();
-		$PARAM_NAME = "username";
+		$PARAM_NAME = "userToPromote";
 		$userToPromote = $wgRequest->getVal( $PARAM_NAME );
 		if(empty($userToPromote)){
 			$retVal["error"] = wfMsg('chat-missing-required-parameter', $PARAM_NAME);
@@ -146,6 +146,7 @@ class ChatAjax {
 		}
 
 		wfProfileOut( __METHOD__ );
+		return $retVal;
 	} // end addChatMod()
 
 } // end class ChatAjax
