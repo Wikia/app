@@ -22,9 +22,11 @@ class GameGuidesController extends WikiaController {
 			throw new GameGuidesWrongAPIVersionException();
 		}
 		
+		/*
 		if ( !$this->wg->develEnvironment && !$this->request->wasPosted() ) {
 			throw new GameGuidesRequestNotPostedException();
 		}
+		*/
 		
 		$this->mModel = F::build( 'GameGuidesModel' );
 		$this->mPlatform = $this->request->getVal( 'os' );
