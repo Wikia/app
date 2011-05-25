@@ -546,7 +546,7 @@ class EmailNotification {
 				$notificationTimeoutSql = "1";
 			} elseif ( !empty($wgEnableWatchlistNotificationTimeout) && isset($wgWatchlistNotificationTimeout) ) {
 				$blockTimeout = wfTimestamp( TS_MW, wfTimestamp( TS_UNIX, $timestamp ) - intval( $wgWatchlistNotificationTimeout ) );
-				$notificationTimeoutSql = "$notificationTimeoutSql OR wl_notificationtimestamp < '$blockTimeout'";
+				$notificationTimeoutSql = "wl_notificationtimestamp IS NULL OR wl_notificationtimestamp < '$blockTimeout'";
 			} else {
 				$notificationTimeoutSql = 'wl_notificationtimestamp IS NULL';
 			}
