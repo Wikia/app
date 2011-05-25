@@ -255,6 +255,8 @@ class EditPageLayout extends EditPage {
 		if( $this->mPreventSave ) {
 			$this->save = false;
 		}
+		
+		RTE::log(__METHOD__, $this->textbox1);
 	}
 
 	/**
@@ -289,7 +291,7 @@ class EditPageLayout extends EditPage {
 		$this->mHiddenFields[] = $field;
 	}
 
-/**
+	/**
 	 * Return HTML of hidden <section> with custom hidden fields
 	 */
 	public function renderHiddenFields() {
