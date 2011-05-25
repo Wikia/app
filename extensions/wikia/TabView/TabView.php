@@ -95,15 +95,24 @@ function tabviewRender($input, $params, &$parser ) {
 		unset($url, $text, $noCache, $active);
 	}
 
+	//$out = '<script>wgAfterContentAndJS.push(function() { $.loadJQueryUI(function(){ $("#flytabs_'.$id.'").tabs({ cache: true, selected: '.$optionsIndex.' }); });});</script>';
 
-	$out = '<script>wgAfterContentAndJS.push(function() { $.loadJQueryUI(function(){ $("#flytabs_'.$id.'").tabs({ cache: true, selected: '.$optionsIndex.' }); });});</script>';
-
-	// $out = '<script> $.loadJQueryUI(function(){ $("#flytabs_'.$id.'").tabs(); });</script>';
-	$out .= '<div id="flytabs_'.$id.'"><ul>';
+	$out = '<div id="flytabs_'.$id.'"><ul>';
 	foreach( $options as $option ){
 			$out .= '<li><a href="'.$option['url'].'"><span>'.$option['caption'].'</span></a></li>';
 	}
 	$out .= '</ul></div>';
+
+	// lazy load JS
+	$out .= F::build('JSSnippets')->addToStack(
+		array('/extensions/wikia/TabView/js/TabView.js'),
+		array('$.loadJQueryUI'),
+		'TabView.init',
+		array(
+			'id' => 'flytabs_'.$id,
+			'selected' => $optionsIndex,
+		)
+	);
 
 	return $out;
 }

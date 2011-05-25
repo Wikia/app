@@ -206,6 +206,7 @@ class AjaxPollClass {
 	 *
 	 * @access public
 	 * @author Krzysztof Krzyżaniak (eloy)
+	 * @author Marooned (switching to JSSnippets)
 	 *
 	 * @return string: rendered HTML code
 	 */
@@ -241,39 +242,34 @@ class AjaxPollClass {
 			global $wgExtensionsPath, $wgStyleVersion;
 
 			// load CSS/JS only when needed
-			$before .= <<<JS
-<script type="text/javascript">/*<![CDATA[*/
-wgAfterContentAndJS.push(function() {
-	if (!window.AjaxPollLoaded) {
-		importStylesheetURI('{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$wgStyleVersion}');
-		importScriptURI('{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.js?{$wgStyleVersion}');
-		window.AjaxPollLoaded = true;
-		if (skin == 'oasis') {
-			importStylesheetURI($.getSassCommonURL('extensions/wikia/AjaxPoll/oasis.scss'));
-		}
-	}
-});
-/*]]>*/</script>
-JS;
+
+			$before .= F::build('JSSnippets')->addToStack(
+				array(
+					'/extensions/wikia/AjaxPoll/css/AjaxPoll.css',
+					'/extensions/wikia/AjaxPoll/js/AjaxPoll.js'
+				),
+				array(),
+				'AjaxPoll.init'
+			);
 		}
 
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$timestamp = wfTimestamp( TS_MW, $this->mCreated );
 		$oTmpl->set_vars( array(
-			"id"		=> $this->mId,
-			"votes"		=> $votes,
-			"total"		=> $total,
-			"answers"	=> $answers,
-			"question"	=> $question,
-			"title"		=> $this->mTitle,
-			"status"	=> $this->mStatus,
-			"attribs"	=> $this->mAttribs,
-			"created_time"	=> $wgContLang->time( $timestamp ),
-			"created_date"	=> $wgContLang->date( $timestamp ),
+			'id'		=> $this->mId,
+			'votes'		=> $votes,
+			'total'		=> $total,
+			'answers'	=> $answers,
+			'question'	=> $question,
+			'title'		=> $this->mTitle,
+			'status'	=> $this->mStatus,
+			'attribs'	=> $this->mAttribs,
+			'created_time'	=> $wgContLang->time( $timestamp ),
+			'created_date'	=> $wgContLang->date( $timestamp ),
 		));
 
-		$before .= $oTmpl->execute( "poll" );
-		$out = "";
+		$before .= $oTmpl->execute( 'poll' );
+		$out = '';
 		/**
 		 * trim lines to avoid parser false behaviour
 		 */

@@ -373,6 +373,7 @@ include_once( "$IP/extensions/wikia/TagCloud/TagCloudClass.php" );
 include_once( "$IP/extensions/wikia/MostPopularCategories/SpecialMostPopularCategories.php" );
 include_once( "$IP/extensions/wikia/Scribe/SpecialScribeEvents.php" );
 include_once( "$IP/extensions/wikia/AssetsManager/AssetsManager_setup.php" );
+include_once( "$IP/extensions/wikia/JSSnippets/JSSnippets_setup.php" );
 
 /**
  * onedot is switched off for while

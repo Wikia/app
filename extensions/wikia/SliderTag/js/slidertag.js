@@ -1,8 +1,3 @@
-wgAfterContentAndJS.push(function() {
-
-// TODO: add this as a dependency
-importStylesheetURI(wgExtensionsPath + "/wikia/SliderTag/slidertag.css?" + wgStyleVersion);
-
 function spotlightSlider_setup() {
 	//timer for automatic spotlight slideshow
 	var spotlightSlider_timer;
@@ -45,7 +40,3 @@ function spotlightSlider_scroll(nav) {
 		$("#spotlight-slider-" + thumb_index).find(".description").fadeIn();
 	});
 }
-
-spotlightSlider_setup();
-
-});
