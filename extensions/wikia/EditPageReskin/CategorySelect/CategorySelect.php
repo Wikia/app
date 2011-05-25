@@ -131,14 +131,16 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 
 		$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
 
+		/**
+		// used by PLB (when creating layout from an article), but not really needed here
 		if($wgRequest->wasPosted()) {
 			$csWikitext = $wgRequest->getVal('csWikitext', '');
 
 			if ($csWikitext != '') {
-				// TODO: when is this code executed?
 				CategorySelect::SelectCategoryAPIgetData($csWikitext, true);
 			}
  		}
+		**/
 	}
 	wfLoadExtensionMessages('CategorySelect');
 
@@ -559,7 +561,7 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 
 	$text = "";
 	wfRunHooks ('CategorySelect:beforeDisplayingEdit', array ( &$text ) ) ;
-	
+
 	return CategorySelectGenerateHTMLforEditRaw($categories, $text);
 }
 
