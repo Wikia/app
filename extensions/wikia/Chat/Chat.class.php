@@ -86,7 +86,7 @@ class Chat {
 				if ( $userToPromote instanceof User ) {
 					$removegroups = array();
 					$addgroups = array( $CHAT_MOD_GROUP );
-					wfRunHooks( 'UserRights', array( &$userToPromote, $addgroup, $removegroup ) );
+					wfRunHooks( 'UserRights', array( &$userToPromote, $addgroups, $removegroups ) );
 				}
 
 				// Update user-rights log.
@@ -115,7 +115,14 @@ class Chat {
 		if ( empty( $ids ) ) {
 			return '';
 		} else {
-			return $this->makeGroupNameList( $ids );
+			return Chat::makeGroupNameList( $ids );
+		}
+	}
+	static public function makeGroupNameList( $ids ) {
+		if ( empty( $ids ) ) {
+			return wfMsgForContent( 'rightsnone' );
+		} else {
+			return implode( ', ', $ids );
 		}
 	}
 
