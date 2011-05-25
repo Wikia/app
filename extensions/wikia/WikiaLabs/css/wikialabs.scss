@@ -70,30 +70,30 @@ $warning-bg-color: #FFFFCC;
 			top: 0;
 			width: $toolbox-button;
 			border: none;
-    .loading {
-      display: block;
-      width: 16px;
-      height: 16px;
-      margin-top: 4px;
-      background-image: url(/skins/common/images/ajax.gif);
-    }
-    .loadon {
-      margin-left: 30px;
-    }
-    .loadoff {
-      margin-left: -5px;
-    }
+			.loading {
+				display: block;
+				width: 16px;
+				height: 16px;
+				margin-top: 4px;
+				background-image: url(/skins/common/images/ajax.gif);
+			}
+			.loadon {
+				margin-left: 30px;
+			}
+			.loadoff {
+				margin-left: -5px;
+			}
 			.feedback {
-					margin-top: 6px;
-					margin-bottom: 6px;
-          width: 93px;
-          overflow: hidden;
-				    img {
-				    vertical-align: middle;
+				margin-top: 6px;
+				margin-bottom: 6px;
+				width: 93px;
+				overflow: hidden;
+				img {
+					vertical-align: middle;
 					margin: -2px -2px 0 -5px;
 					padding: 0;
 					width: 20px;
-					}
+				}
 			}
 			.active {
 				display: block;
