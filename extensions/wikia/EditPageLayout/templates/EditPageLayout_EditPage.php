@@ -31,6 +31,11 @@
 					<div id="EditPageToolbar" class="editpage-toolbar" data-space-type="toolbar"></div>
 					<div id="EditPageEditorWrapper" data-space-type="editor">
 						<div id="EditPageEditor" class="editpage-content">
+							<noscript><style>
+								.edit-page-notices {
+									display: block;
+								}
+							</style></noscript>
 							<div class="editpage-notices" data-space-type="notices-short">
 								<ul>
 <?php
