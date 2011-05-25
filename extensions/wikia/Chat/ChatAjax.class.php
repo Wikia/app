@@ -104,9 +104,10 @@ class ChatAjax {
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );
 
+		$retVal = array();
 		$userToBan = $wgRequest->getVal('userToBan');
 		if(empty($userToBan)){
-			$retVal["error"] = wfMsg('chat-ban-requires-usertoban-parameter', 'usertoBan');
+			$retVal["error"] = wfMsg('chat-missing-required-parameter', 'usertoBan');
 		} else {
 			$result = Chat::banUser($userToBan);
 			if($result === true){
@@ -118,6 +119,33 @@ class ChatAjax {
 
 		wfProfileOut( __METHOD__ );
 		return $retVal;
-	}
+	} // end kickBan()
+
+	/**
+	 * Ajax endpoint to set a user as a chat moderator.
+	 *
+	 * Returns an associative array.  On success, returns "success" => "", on failure,
+	 * returns "error" => [error message].
+	 */
+	static public function addChatMod(){
+		global $wgRequest, $wgUser;
+		wfProfileIn( __METHOD__ );
+
+		$retVal = array();
+		$PARAM_NAME = "username";
+		$userToPromote = $wgRequest->getVal( $PARAM_NAME );
+		if(empty($userToPromote)){
+			$retVal["error"] = wfMsg('chat-missing-required-parameter', $PARAM_NAME);
+		} else {
+			$result = Chat::promoteChatModerator($userToPromote);
+			if($result === true){
+				$retVal["success"] = true;
+			} else {
+				$retVal["error"] = $result;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+	} // end addChatMod()
 
 } // end class ChatAjax

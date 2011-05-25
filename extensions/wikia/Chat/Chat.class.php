@@ -8,9 +8,6 @@
  * @author Sean Colombo
  */
 class Chat {
-	const MINUTES_TO_KEEP_MESSAGES_FOR = 10;
-	const MINUTES_TO_USER_TIMEOUT = 2; // if user has not updated at all during this time, remove them from the room.
-	
 	var $chatId;
 
 	public function __construct($chatId){
@@ -58,6 +55,34 @@ class Chat {
 		wfProfileOut( __METHOD__ );
 		return ( $errorMsg=="" ? true : $errorMsg);
 	} // end banUser()
+
+	/**
+	 * Attempts to add the 'chatmoderator' group to the user whose name is provided
+	 * in 'userNameToPromote'.
+	 *
+	 * Returns true on success, returns an error message as a string on failure.
+	 */
+	static public function promoteChatModerator($userNameToPromote){
+		wfProfileIn( __METHOD__ );
+		
+// TODO: REMOVE WHEN IMPLEMENTED
+$errorMsg = "ERROR: promoteChatMod NOT IMPLEMENTED YET.";
+		$userToPromote = User::newFromName($userNameToPromote);
+
+	
+		// TODO: If we ever care (there is no GUI for it right now) use the 'add-self' array if user is trying to promote themself.
+		$changeableGroups = $wgUser->changeableGroups();
+		if(in_array('chatmoderator', $changeableGroups['add'])){
+			
+			// TODO: Check if the userToPromote is already a chatmoderator.
+			
+		} else {
+			
+		}
+
+		wfProfileOut( __METHOD__ );
+		return ( $errorMsg=="" ? true : $errorMsg);
+	} // end promoteChatMod()
 
 	/**
 	 * Returns true if the user with the provided username has the 'chatmoderator' right
