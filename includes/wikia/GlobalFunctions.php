@@ -1329,7 +1329,7 @@ if (!function_exists('http_build_url')) {
 }
 
 /**
- * Registers an EzAPI module, the module must be a subclass of EzApiModuleBase
+ * @brief Registers an EzAPI module, the module must be a subclass of EzApiModuleBase
  *
  * @author Federico "Lox" Lucignano
  * @global Array $GLOBAL[ wgEzApiModules ] Stores the list of available modules
@@ -1421,13 +1421,13 @@ function wfGetSessionKey( $id ) {
 
 /**
  * @brief Handles pagination for arrays
- * 
+ *
  * @author Federico "Lox" Lucignano
- * 
+ *
  * @param Array $data the array to paginate
  * @param integer $limit the maximum number of items per page
  * @param integer $batch [OPTIONAL] the batch to retrieve
- * 
+ *
  * @return array an hash with the following keys:
  * * items array the items for the requested batch
  * * next integer the number of items in the next batch
@@ -1436,7 +1436,7 @@ function wfGetSessionKey( $id ) {
  * */
 function wfPaginateArray( $data, $limit, $batch = 1 ){
 	wfProfileIn( __METHOD__ );
-	
+
 	$data = (array) $data;
 	$limit = (int) $limit;
 	$batch = (int) $batch;
@@ -1445,46 +1445,65 @@ function wfPaginateArray( $data, $limit, $batch = 1 ){
 	$next = 0;
 	$batches = 1;
 	$currentBatch = 1;
-	
+
 	if ( $batch < 1 ) {
 		$batch = 1;
 	}
-	
+
 	if ( $limit < 1 ) {
 		$limit = null;
 	}
-	
+
 	if ( !empty( $limit ) && $total ) {
 		$batches = ceil($total / $limit);
-		
+
 		if ( $batch > $batches ) {
 			$batch = $batches;
 		}
-		
+
 		$offset = $limit * ( $batch - 1 );
-		
+
 		if ( $offset >= $total ) {
 			$offset = $total - 1;
 		}
-		
+
 		$partial = $offset + $limit;
 		$ret['items'] = array_slice( $data, $offset, $limit );
-		
+
 		if ( $partial < $total ) {
 			$leftOver = $total - $partial;
-			
+
 			$next = ( $leftOver > $limit ) ? $limit : $leftOver;
 		}
 	} else {
 		$batch = 1;
 		$ret['items'] = $data;
 	}
-	
+
 	$ret['next'] = $next;
 	$ret['batches'] = $batches;
 	$ret['currentBatch'] = $batch;
-	
+
 	wfProfileOut( __METHOD__ );
-	
+
 	return $ret;
+}
+
+/**
+ * @brief Helper function for displaying arrays as pairs key => value
+ *
+ * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
+ *
+ * @param Array $array typical array with key => value
+ *
+ * @return string string for debugging purposes
+ */
+function wfArrayToString( $array ) {
+	$retval = "";
+	if( is_array( $array ) ) {
+		foreach( $array as $key => $value )
+			$retval = "{$key} => {$value} ";
+	}
+
+	return trim( $retval );
 }
