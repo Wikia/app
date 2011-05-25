@@ -154,7 +154,7 @@
 
 		_log: function( type, args ) {
 			if (window.console) {
-				if (typeof window.console[type] == 'function') {
+				if (typeof window.console[type] == 'function' && typeof window.console[type].apply == 'function') {
 					window.console[type].apply(window.console,args);
 				} else if (typeof window.console[type] == 'object') { // IE
 					var x = [];

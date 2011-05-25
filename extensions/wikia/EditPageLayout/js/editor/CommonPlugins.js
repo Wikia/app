@@ -241,9 +241,37 @@
 		}
 		
 	});
+	
+	WE.plugins.sizechangedevent = $.createClass(WE.plugin,{
+		
+		initDom: function() {
+			var self = this, editor = this.editor;
+			
+			this.fireResizeEvent();
+			
+			$(window).bind('resize', function() {
+				self.fireResizeEvent();
+			});
 
-	WE.plugins.fitscreen = $.createClass(WE.plugin,{
+			// trigger this event to recalculate top offset
+			this.editor.element.bind('resize', function() {
+				self.fireResizeEvent();
+			});
 
+			// dirty trick to allow toolbar / right rail to be fully initialized
+			//setTimeout(this.proxy(this.fireResizeEvent),10);
+		},
+		
+		fireResizeEvent: function() {
+			this.editor.fire('sizeChanged',this.editor);
+		}
+		
+	});
+
+	WE.plugins.autoresizer = $.createClass(WE.plugin,{
+
+		requires: ['sizechangedevent'],
+		
 		editarea: false,
 		editbox: false,
 		mode: false,
@@ -254,6 +282,7 @@
 				this.editor.on('editboxReady',this.proxy(this.editboxReady));
 				this.editor.on('mode',this.proxy(this.delayedResize));
 				this.editor.on('toolbarsRendered',this.proxy(this.delayedResize));
+				this.editor.on('sizeChanged',this.proxy(this.delayedResize));
 			}
 
 			this.editarea = $('#EditPageEditor');
@@ -261,31 +290,12 @@
 
 		initDom: function() {
 			if (this.enabled) {
-				this.initResize();
+				this.delayedResize();
 			}
 		},
 
 		editboxReady: function( editor, editbox ) {
 			this.editbox = editbox;
-			this.initResize();
-		},
-
-		// init autoresizing feature of textarea / RTE
-		initResize: function() {
-			var self = this;
-
-			this.resize();
-
-			$(window).bind('resize', function() {
-				self.resize();
-			});
-
-			// trigger this event to recalculate top offset
-			this.editor.element.bind('resize', function() {
-				self.resize();
-			});
-
-			// dirty trick to allow toolbar / right rail to be fully initialized
 			this.delayedResize();
 		},
 
@@ -354,11 +364,57 @@
 			});
 		}
 	});
+	
+	WE.plugins.railminimumheight = $.createClass(WE.plugin,{
+		
+		requires: ['sizechangedevent'],
+		
+		MINIMUM_HEIGHT: 600,
+		CONTAINER_SELECTOR: '> .rail-auto-height',
+		
+		beforeInit: function() {
+			this.editor.on('sizeChanged',this.proxy(this.delayedResize));
+		},
+		
+		delayedResize: function() {
+			setTimeout(this.proxy(this.resize),10);
+		},
+
+		// get height needed to fit given node into browser's viewport height
+		getHeightToFit: function(node) {
+			var topOffset = node.offset().top,
+				viewportHeight = $.getViewportHeight();
+
+			return viewportHeight - topOffset;
+		},
+
+		resize: function() {
+			var viewportHeight = $.getViewportHeight();
+			var el, rail = this.editor.getSpace('rail');
+			
+			if (rail.exists() && (el = rail.find(this.CONTAINER_SELECTOR)) && el.exists()) {
+				if (viewportHeight > this.MINIMUM_HEIGHT) {
+					el.css({
+						'overflow-y': 'hidden',
+						'height': 'auto'
+					});
+				} else {
+					var h = viewportHeight - el.offset().top - (el.outerHeight(true) - el.height());
+					el.css({
+						'overflow-y': 'auto',
+						'height' : h
+					});
+				}
+			}
+		}
+		
+		
+	});
 
 	WE.plugins.wikiacore = $.createClass(WE.plugin,{
 
-		requires: ['core','noticearea','loadingstatus','pagecontrols','fitscreen','edittools',
-			'widemodemanager', 'tracker']
+		requires: ['core','noticearea','loadingstatus','pagecontrols','autoresizer','edittools',
+			'widemodemanager', 'railminimumheight', 'tracker']
 
 	});
 

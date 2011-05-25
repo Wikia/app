@@ -46,6 +46,10 @@
 			}
 
 			WE.fire('wikiaeditorspaceslayout',this.element,layout,data);
+			
+			if (layout.rail.length > 0) {
+				layout.rail = [{cls:'rail-auto-height',items:layout.rail}];
+			}
 
 			return layout;
 		},
