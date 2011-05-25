@@ -340,7 +340,7 @@ public class BaseTest {
 		BufferedReader in = new BufferedReader(new FileReader(file.getParentFile() + "/fixtures/captcha.txt"));
 		String strLine;
 		while ((strLine = in.readLine()) != null) {
-			String[] field = strLine.split("\t");
+			String[] field = strLine.split(" ");
 			if (field[1].equals(md5)) {
 				in.close();
 				return field[0];
