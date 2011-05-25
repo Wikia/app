@@ -139,7 +139,14 @@ var AjaxLogin = {
 				if (!$('#wikiPreview').children().exists()) {
 					$('#wpLogin').attr('value', 1);
 				}
-				$('#wpPreview').click();
+
+				// EditPageReskin (BugId:5307)
+				if (window.WikiaEditor) {
+					WikiaEditor.reloadEditor();
+				}
+				else {
+					$('#wpPreview').click();
+				}
 			}
 		} else {
 			if(wgCanonicalSpecialPageName == "Userlogout") {
