@@ -96,6 +96,7 @@ var UserProfilePage = {
 			UserProfilePage._hiddenTopPagesWrapper.removeClass('user-profile-box');
 			UserProfilePage.doAction('unhide', 'page', $(this).attr('data-id' ));
 		});
+		$('#WikiaPage').click(UserProfilePage.trackClick);
 	},
 
 	enrichAboutSection: function(){
@@ -114,5 +115,41 @@ var UserProfilePage = {
 	blockInput: function(context){
 		UserProfilePage.unblockInput(context);
 		context.prepend('<div class="profile-loading-screen"></div>');
+	},
+
+	track: function(fakeUrl) {
+		$.tracker.byStr('profile/' + fakeUrl);
+	},
+
+	trackClick: function(ev) {
+		var node = $(ev.target);
+		if (node.is('img')) {
+			node = node.parent();
+		}
+		if (node.hasParent('#WikiaRail')) {
+			if (node.hasParent('#profile-top-wikis-body')) {
+				if (node.hasParent('.wordmark')) {
+					UserProfilePage.track('top_wikis/wiki');
+				} else if (node.is('.HideButton')) {
+					UserProfilePage.track('top_wikis/hide');
+				}
+			} else if (node.is('.WikiaActivityModule ul a')) {
+				UserProfilePage.track('recent_activity_link');
+			} else if (node.is('.WikiaActivityModule .more')) {
+				UserProfilePage.track('recent_activity_more');
+			} else if (node.hasParent('.top-page-item')) {
+				UserProfilePage.track('top_pages');
+			}
+		} else if (node.hasParent('#WikiaMainContent .tabs-container')) {
+			if(node.parent().attr('data-id') == "talk") {
+				UserProfilePage.track('talk_tab');
+			} else if(node.parent().attr('data-id') == "profile") {
+				UserProfilePage.track('profile_tab');
+			} else if(node.parent().attr('data-id') == "contribs") {
+				UserProfilePage.track('contribs_tab');
+			} else if(node.parent().attr('data-id') == "blog") {
+				UserProfilePage.track('blog_tab');
+			}
+		}
 	}
 };
