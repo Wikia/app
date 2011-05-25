@@ -531,11 +531,14 @@ class PageHeaderModule extends Module {
 		
 		// page namespace
 		$ns = $wgTitle->getNamespace();
-
+                
 		// default title "settings" (RT #145371), don't touch special pages
 		if ($ns == NS_FORUM) {
 			$this->title = $wgTitle->getText();
 			$this->displaytitle = false;
+                // we don't want htmlspecialchars for SpecialPages (BugId:6012)
+                } else if ($ns == NS_SPECIAL) {
+                    $this->displaytitle = true;
 		} else if ($ns != NS_SPECIAL) {
 			$this->displaytitle = true;
 			$this->title = $wgOut->getPageTitle();
