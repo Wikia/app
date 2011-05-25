@@ -132,7 +132,6 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 		$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
 
 		if($wgRequest->wasPosted()) {
-			CategorySelect::SelectCategoryAPIgetData($wgRequest->getVal('csWikitext', ''), true);
 			$csWikitext = $wgRequest->getVal('csWikitext', '');
 
 			if ($csWikitext != '') {
