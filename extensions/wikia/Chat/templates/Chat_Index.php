@@ -83,6 +83,7 @@
 			<ul class="actions">
 				<li class="profile"><a href="#">User Profile</a></li>
 				<li class="contribs"><a href="#">Contributions</a></li>
+				<li class="give-chat-mod"><a href="#">Give ChatMod Status</a></li>
 				<li class="kickban"><a href="#">Kickban</a></li>
 			</ul>
 		</div>
