@@ -677,13 +677,15 @@ function giveChatMod(client, socket, msg){
 		// TODO: The users are in a hash now... grab the user, then send them.
 						// Build a user that looks like the one that got banned... then kick them!
 						promotedUser = new models.User({name: userToPromote});
-		
-						// TODO: broadcastInlineAlert saying that A has made B a chatmoderator
+
+						// Broadcast inline-alert saying that A has made B a chatmoderator.
 						// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
 						broadcastInlineAlert(client, socket, client.myUser.get('name') + " has made <strong>" + promotedUser.get('name') + "</strong> a chat moderator.", function(){
 
 							// TODO: Somehow force the new chatmoderator's user info to be updated & then send this updated model to all clients.
 							
+							// TODO: Kick the promoted user from the room so that they autoReconnect which should update them with their new state (and all other users).
+							kickUserFromRoom(client, socket, promotedUser, client.roomId);
 						});
 					}
 				});
