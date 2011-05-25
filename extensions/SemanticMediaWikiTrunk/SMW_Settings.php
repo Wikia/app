@@ -42,7 +42,7 @@ $smwgIP = dirname( __FILE__ ) . '/';
 # Use another storage backend for Semantic MediaWiki. The default is suitable
 # for most uses of SMW.
 ##
-$smwgDefaultStore = "SMWSQLStore2";
+$smwgDefaultStore = "SMWSparqlStore";
 ##
 
 ###
