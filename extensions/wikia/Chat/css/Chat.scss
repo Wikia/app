@@ -4,6 +4,7 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/core/buttons";
 @import "../../../../skins/oasis/css/core/typography";
+@import "UserStatsMenu.scss";
 
 $color-chat-gray: mix($color-text, $color-page);
 $color-chat-you: mix($color-text, $color-page, 5);
@@ -25,7 +26,7 @@ textarea {
 	line-height: normal;
 }
 
-// Only ChatMods will have this class on body tag. Use it to augment the interface.
+// Use these classes to augment the interface.
 body.chat-mod {
 	.UserStatsMenu .kickban {
 		display: list-item;
@@ -34,6 +35,15 @@ body.chat-mod {
 	.UserStatsMenu.chat-mod .kickban {
 		display: none;
 	}
+}
+body.can-give-chat-mod {
+	.UserStatsMenu .give-chat-mod {
+		display: list-item;
+	}
+	// do not show give chat mod links for chatmods
+	.UserStatsMenu.chat-mod .give-chat-mod {
+		display: none;
+	}	
 }
 
 // A visual indication that we are forcing the page to connect to the prod node server.
@@ -137,63 +147,15 @@ a {
 	}
 }	
 
-#UserStatsMenu {
-	position: absolute;
-	z-index: 100;
-}
+
 .UserStatsMenu {
-	background: $color-page;
-	border: 3px solid $color-buttons;
-	display: none;
-	font-size: 12px;
-	padding: 5px;
-	&.chat-mod .kickban {
-		display: none;
-	}
-	.kickban {
-		display: none; // by default, do not display kickban link for anyone - override above for chatmods
-	}
-	.info {
-		background: $color-menu-highlight;
-		margin-bottom: 5px;
-		padding: 5px 5px 5px 35px;
-		position: relative;
-		img {
-			@extend ._avatar;
-			height: 24px;
-			position: absolute;
-			left: 5px;
-			top: 5px;
-			width: 24px;
-		}
-		.username {
-			display: block;
-			font-weight: bold;
-		}
-		.edits {
-			display: block;
-		}
-		.since {
-			display: block;
-		}
-	}
-	.actions {
-		li {
-			border-top: 1px solid $color-page-border;
-			&:first-child {
-				border-top: none;
-			}
-			a {
-				display: block;
-				padding: 5px;
-				&:hover {
-					background: $color-menu-highlight;
-					text-decoration: none;
-				}
-			}
-		}
+	// By default, do not display these links for anyone
+	// Override above for select groups
+	.kickban, .give-chat-mod {
+		display: none; 
 	}
 }
+
 
 .WikiaPage {
 	@include border-radius-se(5px);
@@ -278,10 +240,10 @@ a {
 
 .Write {
 	bottom: 0;
-	height: 30px;
+	height: 45px;
 	left: 0;
 	line-height: 30px;
-	padding: 10px 0 10px 55px;
+	padding-left: 55px;
 	position: absolute;
 	right: 150px;
 	img {
@@ -289,15 +251,19 @@ a {
 		height: 28px;
 		left: 15px;
 		position: absolute;
-		vertical-align: middle;
 		width: 28px;
 	}
 	[name="message"] {
 		border: 1px solid $color-page-border;
-		height: 2em;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		height: 3.3em;
+		line-height: 1.4em;
+		margin: 0;
 		padding: 2px;
 		resize: none;
-		width: 98%;
+		width: 100%;
 	}
 	input[type="submit"] {
 		display: none;

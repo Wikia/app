@@ -130,7 +130,8 @@ var NodeChatView = Backbone.View.extend({
 
 	events: {
 		"submit #Write": "sendMessage",
-		"click .kickban": "kickBan"
+		"click .kickban": "kickBan",
+		"click .give-chat-mod": "giveChatMod"
 	},
 	
 	// When the user list changes, make sure it is built the way we want (no duplicates, etc.).
@@ -341,7 +342,18 @@ var NodeChatView = Backbone.View.extend({
 
 		// TODO: LATER: Some sort of indicator that the ban is underway. 50% opacity on the user's li?
 		// TODO: LATER: Some sort of indicator that the ban is underway. 50% opacity on the user's li?
+	},
+
+	giveChatMod: function(e){
+		e.preventDefault();
+		var user = $(e.target).closest('.UserStatsMenu').find('.username').text();
+		NodeChatHelper.log("Attempting to give chat mod to user: " + user);
+		var giveChatModCommand = new models.GiveChatModCommand({userToPromote: user});
+		this.socket.send(giveChatModCommand.xport());
+
+		$("#UserStatsMenu").hide();
 	}
+
 });
 
 NodeChatHelper = {

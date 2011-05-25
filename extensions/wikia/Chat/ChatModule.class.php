@@ -27,10 +27,10 @@ class ChatModule extends Module {
 
 		// String replacement logic taken from includes/Skin.php
 		$this->wgFavicon = str_replace('images.wikia.com', 'images1.wikia.nocookie.net', $wgFavicon);
-		
+
 		// add messages (fetch them using <script> tag)
 		JSMessages::getInstance()->enqueuePackage('Chat', JSMessages::EXTERNAL); // package defined in Chat_setup.php
-
+		
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
 		// Variables for this user
@@ -63,6 +63,12 @@ class ChatModule extends Module {
 			$this->bodyClasses .= ' chat-mod ';
 		} else {
 			$this->isChatMod = 0;
+		}
+		
+		// Adding chatmoderator group for other users. CSS classes added to body tag to hide/show option in menu.
+		$userChangeableGroups = $wgUser->changeableGroups();		
+		if (in_array('chatmoderator', $userChangeableGroups['add'])) {
+			$this->bodyClasses .= ' can-give-chat-mod ';
 		}
 
 		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
