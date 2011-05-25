@@ -238,7 +238,7 @@ function authConnection(client, socket, authData){
 			var requestUrl = AUTH_URL + "&roomId=" + roomId;
 			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching this (at least on dev boxes) when we don't want it to... so cachebust it.
 
-			console.log("Requesting user info from: " + 	);
+			console.log("Requesting user info from: " + requestUrl);
 
 			var httpClient = http.createClient(WIKIA_PROXY_PORT, WIKIA_PROXY_HOST);
 			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
