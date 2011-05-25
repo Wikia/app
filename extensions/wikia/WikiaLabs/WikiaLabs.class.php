@@ -8,6 +8,10 @@ class WikiaLabs {
 	const TEMPLATE_NAME_ADDPROJECT = 'wikialabs-addproject';
 	const STATUS_OK = 'ok';
 	const STATUS_ERROR = 'error';
+	
+	/**
+	 * @var integer TTL of memcached row 
+	 */
 	const FEEDBACK_FREQUENCY = 60;
 
 	protected $app = null;
@@ -80,9 +84,11 @@ class WikiaLabs {
 	}
 
 	public function saveFeedback( $projectId, User $user, $rating, $message ) {
-
-		if ( $user->getId() == 0 ) {
-			return array( 'status' => self::STATUS_ERROR );
+		if( !$user->isAllowed( 'wikialabsuser' ) ) {
+			return array( 
+				'status' => self::STATUS_ERROR, 
+				'errors' => array(wfMsg('wikialabs-feedback-validator-user-not-allowed')) 
+			);
 		}
 
 		$project = WF::build( 'WikiaLabsProject', array( 'id' => (int) $projectId ) );
@@ -120,7 +126,7 @@ class WikiaLabs {
 			return $out;
 		}
 		
-		if( true !== ($result = $this->checkSpam($project, $projectId)) ) {
+		if( true !== ($result = $this->checkSpam($user->getName(), $project, $projectId)) ) {
 			return $result;
 		}
 		
@@ -134,6 +140,7 @@ class WikiaLabs {
 	/**
 	 * @brief checks if this is not a spam attempt
 	 * 
+	 * @param string $userName name retrived from user object
 	 * @param WikiaLabsProject $project data access object for wikia labs' project
 	 * @param int $projectId id of wikia labs' project
 	 * 
@@ -141,15 +148,19 @@ class WikiaLabs {
 	 * 
 	 * @return true | Array array when an error occurs
 	 */
-	protected function checkSpam(WikiaLabsProject $project, $projectId) {
+	protected function checkSpam($userName, WikiaLabsProject $project, $projectId) {
 		$cache = $project->getCache();
-		$memcSpamKey = $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $projectId, 'spamCheckTime' );
+		//it didn't work without urlencode($userName) maybe because of multibyte signs
+		$memcSpamKey = $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, urlencode($userName), $projectId, 'spamCheckTime' );
 		$memcSpamVal = $cache->get($memcSpamKey);
 		
 		if( empty($memcSpamVal) ) {
 			$cache->set($memcSpamKey, true, self::FEEDBACK_FREQUENCY);
 		} else {
-			return array( 'status' => 'error', 'errors' => array(wfMsg('wikialabs-feedback-validator-spam-attempt')) );
+			return array( 
+				'status' => self::STATUS_ERROR, 
+				'errors' => array(wfMsg('wikialabs-feedback-validator-spam-attempt')) 
+			);
 		}
 		
 		return true;
