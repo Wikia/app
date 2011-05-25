@@ -26,6 +26,9 @@ var WikiaQuiz = {
 		WikiaQuiz.sound.correct = document.getElementById('SoundAnswerCorrect');
 		WikiaQuiz.sound.wrong = document.getElementById('SoundAnswerWrong');
 		WikiaQuiz.sound.applause = document.getElementById('SoundApplause');
+		for(sound in WikiaQuiz.sound) {
+			WikiaQuiz.sound[sound].load();
+		}
 		
 		// events
 		WikiaQuiz.ui.startButton.click(WikiaQuiz.handleStart);
