@@ -29,7 +29,7 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 
 	protected function getUserMock(  ) {
 		$user = $this->getMock( 'User' );
-		$user->expects( $this->once() )
+		$user->expects( $this->atLeastOnce() )
 		     ->method( 'isAllowed' )
 		     ->with( $this->equalTo( 'wikialabsuser' ))
 		     ->will( $this->returnValue( true ));
@@ -111,8 +111,8 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 
 		F::setInstance( 'WikiaLabsProject', $project );
 
-		$user = $this->getMock( 'User' );
-		$user->expects( $this->atLeastOnce() )
+		$user = $this->getUserMock();
+		$user->expects( $this->any() )
 		     ->method( 'getId' )
 		     ->will( $this->returnValue( self::TEST_USER_ID ) );
 
@@ -134,7 +134,7 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 		
 		$result = $object->saveFeedback( $projectId, $user, $rating, $message );
 
-		$this->assertEquals( ( $statusOk ? WikiaLabs::STATUS_OK : WikiaLabs::STATUS_ERROR ), $result['status'] );
+		$this->assertEquals( ( $statusOk ? WikiaLabs::STATUS_OK : WikiaLabs::STATUS_ERROR ), $result['status'], 'wrong saveFeedback status returned' );
 		$this->assertTrue( is_array( $result ) );
 	}
 
