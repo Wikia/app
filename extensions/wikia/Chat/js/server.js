@@ -34,6 +34,8 @@ if(process.argv.length < 3){
 	}
 }
 */
+
+// Local varnish (NOTE: CURRENTLY, PROXY ISN'T USED... search for var httpCilent below).
 WIKIA_PROXY_HOST = "127.0.0.1";
 WIKIA_PROXY_PORT = 6081;
 
@@ -57,6 +59,7 @@ var API_SERVER_PORT = 8001;
 
 var AUTH_URL = "/?action=ajax&rs=ChatAjax&method=getUserInfo"; // do NOT add hostname into this URL.
 var KICKBAN_URL = "/?action=ajax&rs=ChatAjax&method=kickBan";
+var GIVECHATMOD_URL = "/?action=ajax&rs=ChatAjax&method=giveChatMod";
 
 var app = require('express').createServer()
     , jade = require('jade')
@@ -172,6 +175,10 @@ function messageDispatcher(client, socket, data){
 							console.log("Kickbanning user: " + dataObj.attrs.userToBan);
 							kickBan(client, socket, data);
 							break;
+						case 'givechatmod':
+							console.log("Giving chatmoderator status to user: " + dataObj.attrs.userToPromote);
+							giveChatMod(client, socket, data);
+							break;
 						case 'setstatus':
 							console.log("Setting status for " + client.myUser.get('name') + " to " + dataObj.attrs.statusState + " with message '" + dataObj.attrs.statusMessage + "'.");
 							setStatus(client, socket, data);
@@ -240,7 +247,10 @@ function authConnection(client, socket, authData){
 
 			console.log("Requesting user info from: " + requestUrl);
 
-			var httpClient = http.createClient(WIKIA_PROXY_PORT, WIKIA_PROXY_HOST);
+			// NOTE: Swap back if we want to use a proxy again.
+			//var httpClient = http.createClient(WIKIA_PROXY_PORT, WIKIA_PROXY_HOST);
+			var httpClient = http.createClient(80, wikiHostname);
+
 			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
 			httpRequest.addListener("response", function (response) {
 				//debugObject(client.request.headers);
@@ -601,7 +611,7 @@ function kickBan(client, socket, msg){
 						sendInlineAlertToClient(client, data.error);
 					} else {
 		// TODO: ONCE WE HAVE A LIST OF CLIENTS, INSTEAD OF BUILDING A FAKE... LOOP THROUGH THE USERS IN THIS CHAT AND FIND THE REAL ONE. THAT'S FAR SAFER/BETTER.
-		// TODO: The users in the room will soon be a hash.  Build the user from the hash and use that.
+		// TODO: The users are in a hash now... grab (or build) the user from that data or obj and use that instead of this fake user.
 						// Build a user that looks like the one that got banned... then kick them!
 						kickedUser = new models.User({name: userToBan});
 						// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
@@ -616,6 +626,73 @@ function kickBan(client, socket, msg){
 		}
 	});
 } // end kickBan()
+
+/**
+ * Add the chatmoderator group to the user whose username is specified in the command (if allowed).
+ */
+function giveChatMod(client, socket, msg){
+	var giveChatModCommand = new models.GiveChatModCommand();
+	giveChatModCommand.mport(msg);
+
+	var userToPromote = giveChatModCommand.get('userToPromote');
+
+	// Find the hostname to make the request to.
+	rc.hget(getKey_room(client.roomId), 'wgServer', function(err, data) {
+		if (err) {
+			console.log('Error: getting wgServer for a room: ' + err);
+		} else if (data) {
+			var wikiHostname = data.replace(/^https?:\/\//i, "");
+
+			// Ban the user via request to Wikia MediaWiki server ajax-endpoint.
+			var requestHeaders = {
+				'Cookie': client.cookieStr,
+				'Host': wikiHostname
+			};
+			var requestUrl = GIVECHATMOD_URL;
+			requestUrl += "&userToPromote=" + encodeURIComponent(userToPromote);
+			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching ajax requests (at least on dev boxes) when we don't want it to... so cachebust it.
+			var httpClient = http.createClient(WIKIA_PROXY_PORT, WIKIA_PROXY_HOST);
+			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
+			httpRequest.addListener("response", function (response) {
+				var responseBody = "";
+				response.addListener("data", function(chunk) {
+					responseBody += chunk;
+				});
+				response.addListener("end", function() {
+					var data;
+					try{
+						data = JSON.parse(responseBody);
+					} catch(e){
+						data = {'error': "Error communicating w/MediaWiki server."}; // probably can't i18n this msg since this only happens when we CAN'T get a result anyway... but we might be passing msgs to the client-side so... TODO: i18n it!
+						console.log("Error: while parsing result of giveChatMod call to MediaWiki server. Error was: ");
+						console.log(e);
+						console.log("Response that didn't parse was:\n" + responseBody);
+					}
+
+					// Either send the error to the client who tried this action, or (if it was a success), send the updated User to all clients.
+					if(data.error){
+						sendInlineAlertToClient(client, data.error);
+					} else {
+		// TODO: ONCE WE HAVE A LIST OF CLIENTS, INSTEAD OF BUILDING A FAKE... LOOP THROUGH THE USERS IN THIS CHAT AND FIND THE REAL ONE. THAT'S FAR SAFER/BETTER.
+		// TODO: The users are in a hash now... grab the user, then send them.
+						// Build a user that looks like the one that got banned... then kick them!
+						promotedUser = new models.User({name: userToPromote});
+		
+						// TODO: broadcastInlineAlert saying that A has made B a chatmoderator
+						// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
+						broadcastInlineAlert(client, socket, client.myUser.get('name') + " has made <strong>" + promotedUser.get('name') + "</strong> a chat moderator.", function(){
+
+							// TODO: Somehow force the new chatmoderator's user info to be updated & then send this updated model to all clients.
+							
+						});
+					}
+				});
+			});
+			httpRequest.end();
+		}
+	});
+
+} // end giveChatMod()
 
 /**
  * Given a User model and a room id, disconnect the client if that username has a client connected. Also,
