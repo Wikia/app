@@ -70,6 +70,7 @@ class Chat {
 		$userToPromote = User::newFromName($userNameToPromote);
 
 		// Check if the userToPromote is already in the chatmoderator group.
+		$errorMsg = "";
 		if(in_array( $CHAT_MOD_GROUP, $userToPromote->getEffectiveGroups() )){
 			$errorMsg = wfMsg("chat-err-already-chatmod", $userNameToPromote, $CHAT_MOD_GROUP);
 		} else {
