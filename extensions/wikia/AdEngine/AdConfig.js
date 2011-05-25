@@ -140,7 +140,7 @@ AdConfig.DART = {
 	   '728x90': '728x90,468x60,980x130,980x65',
 	   '160x600': '160x600,120x600',
 	   '0x0': '1x1',
-	   '300x53': '300x53'
+	   '300x100': '300x100'
 	},
 
 	slotMap: {
@@ -179,7 +179,9 @@ AdConfig.DART = {
 	   'TOP_LEADERBOARD': {'tile': 2, 'loc': "top", 'dcopt': "ist"},
 	   'TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"}, 
 	   'TEST_HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"}, 
-	   'TEST_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"}
+	   'TEST_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
+	   'HOME_TOP_RIGHT_BUTTON': {'tile': 3, 'loc': "top"},
+	   'TOP_RIGHT_BUTTON': {'tile': 3, 'loc': "top"}
 	}
 };
 

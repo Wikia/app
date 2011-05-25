@@ -88,24 +88,9 @@ EOT;
 			);
 EOT;
 		} else {
-			if (strpos($slotname, 'TOP_RIGHT_BUTTON') !== FALSE) {
-				$out .= <<<EOT
-				if (typeof(Geo) != "undefined") {
-					var geoData = Geo.getGeoData();
-				}
-				else {
-					var geoCookie = readCookie('Geo');
-					var geoData = eval("(" + unescape(geoCookie) + ")"); 
-				}
-				if (geoData['country'] == 'US') {
-					document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
-				}
+			$out .= <<<EOT
+			document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
 EOT;
-			} else {
-				$out .= <<<EOT
-				document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
-EOT;
-			}
 		}
 		$out .= "/*]]>*/</script>\n";
 		return $out;
