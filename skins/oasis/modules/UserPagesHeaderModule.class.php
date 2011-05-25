@@ -100,12 +100,14 @@ class UserPagesHeaderModule extends Module {
 		$tabs[] = array(
 				'link' => Wikia::link(Title::newFromText($userName, NS_USER), wfMsg('profile')),
 				'selected' => ($namespace == NS_USER),
+				'data-id' => 'profile',
 				);
 		
 		// talk
 		$tabs[] = array(
 				'link' => Wikia::link(Title::newFromText($userName, NS_USER_TALK), wfMsg('talkpage')),
 				'selected' => ($namespace == NS_USER_TALK),
+				'data-id' => 'talk',
 				);
 		
 		// blog
@@ -113,6 +115,7 @@ class UserPagesHeaderModule extends Module {
 			$tabs[] = array(
 					'link' => Wikia::link(Title::newFromText($userName, NS_BLOG_ARTICLE), wfMsg('blog-page'), array(), array(), 'known'),
 					'selected' => ($namespace == NS_BLOG_ARTICLE),
+					'data-id' => 'blog',
 					);
 		}
 		
@@ -120,6 +123,7 @@ class UserPagesHeaderModule extends Module {
 		$tabs[] = array(
 				'link' => Wikia::link(SpecialPage::getTitleFor("Contributions/{$userName}"), wfMsg('contris_s')),
 				'selected' => ($wgTitle->isSpecial( 'Contributions' )),
+				'data-id' => 'contribs',
 				);
 		
 		if (self::isItMe($userName)) {

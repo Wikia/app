@@ -72,7 +72,7 @@
 <?php
 		foreach($tabs as $tab) {
 ?>
-			<li<?= !empty($tab['selected']) ? ' class="selected"' : '' ?>><?= $tab['link'] ?><?php
+			<li<?= !empty($tab['selected']) ? ' class="selected"' : '' ?><?= !empty($tab['data-id']) ? ' data-id="'.$tab['data-id'].'"' : '' ?>><?= $tab['link'] ?><?php
 			if (!empty($tab['selected'])) {
 ?>
 				<img class="chevron" src="<?= $wgBlankImgUrl; ?>">
