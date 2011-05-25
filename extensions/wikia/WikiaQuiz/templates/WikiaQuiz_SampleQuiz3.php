@@ -44,7 +44,7 @@
 						<? if(!empty($a['correct'])) { $correctAnswerLabel = $a['text']; } ?>
 						<li class="answer" data-correct="<?= $a['correct'] ?>">
 							<? if (empty($a['image'])) { ?>
-								<div class="representation"><?= $a['text'] ?></div>
+								<div class="representation text"><?= $a['text'] ?></div>
 							<? } else { ?>
 								<img class="representation" src="<?= $a['image'] ?>" height="155" width="155">
 							<? } ?>
@@ -92,6 +92,8 @@
 			</ul>
 		</div>
 	</div>
+	<div id="CorrectIcon" class="correct-icon effect"></div>
+	<div id="WrongIcon" class="wrong-icon effect"></div>
 </section>
 <div id="QuizStatus" class="QuizStatus">
 	<? if(!empty($wordmarkUrl)) { ?>
@@ -119,3 +121,6 @@
 		incorrectLabel: '<?= wfMsg('wikiaquiz-game-incorrect-label') ?>'
 	};
 </script>
+<audio id="SoundAnswerCorrect" src="/extensions/wikia/WikiaQuiz/sounds/correct.mp3" preload="auto"></audio>
+<audio id="SoundAnswerWrong" src="/extensions/wikia/WikiaQuiz/sounds/wrong.mp3" preload="auto"></audio>
+<audio id="SoundApplause" src="/extensions/wikia/WikiaQuiz/sounds/applause.mp3" preload="auto"></audio>

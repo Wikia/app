@@ -256,6 +256,10 @@ $bubble-color-alt: $color-header-alt;
 						vertical-align: middle;
 						width: 155px;
 						//@include transition-shorthand(scale 400ms);
+						&.text {
+							height: 125px;
+							padding-top: 30px;
+						}
 					}
 					&.hover .representation{
 						border-color: $color-buttons;
@@ -379,6 +383,26 @@ $bubble-color-alt: $color-header-alt;
 				}
 			}
 		}
+	}
+	.correct-icon, .wrong-icon {
+		@include opacity(99);
+		@include transition-shorthand(all 200ms ease-in);
+		height: 132px;
+		left: 25px;
+		position: absolute;
+		top: 25px;
+		width: 132px;
+		z-index: frame-z + 1;
+		&.effect {
+			@include opacity(0);
+			@include transform(translate(0,-132px) scale(2));
+		}
+	}
+	.correct-icon {
+		background: url(/extensions/wikia/WikiaQuiz/images/correct.png) no-repeat;
+	}
+	.wrong-icon {
+		background: url(/extensions/wikia/WikiaQuiz/images/wrong.png) no-repeat;
 	}
 }
 
