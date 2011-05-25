@@ -368,7 +368,7 @@ NodeChatHelper = {
 		$('#Write [name="message"]').keypress(function(event) {
 			if (event.which == 13 && !event.shiftKey) {
 				event.preventDefault();
-				console.log('submitting form');
+				NodeChatHelper.log('submitting form');
 				$(event.target).closest('form').submit();
 			}
 		});
