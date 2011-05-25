@@ -72,20 +72,18 @@ class ContentFeeds {
 		$tagBody.= '<a href="http://search.twitter.com/search?q=' . urlencode($phrase) . '" target="_blank">Loading ...</a>';
 		$tagBody.= '</ul>';
 
-		$jsBody = <<<SCRIPT
-<script type="text/javascript">/*<![CDATA[*/
-	wgAfterContentAndJS.push(function() {
-		$.getScript('{$wgExtensionsPath}/wikia/ContentFeeds/js/ContentFeeds.js?{$wgStyleVersion}', function() {
-			$( function() { ContentFeeds.getTweets('{$tagId}','{$phrase}',{$limit}); });
-		});
-	});
-/*]]>*/</script>
-SCRIPT;
+		$tagBody .= F::build('JSSnippets')->addToStack(
+			array('/extensions/wikia/ContentFeeds/js/ContentFeeds.js'),
+			array(),
+			'ContentFeeds.getTweets',
+			array(
+				'tagId' => $tagId,
+				'phrase' => $phrase,
+				'limit' => $limit,
+			)
+		);
 
-		// remove whitespaces from inline JS code
-		$jsBody = preg_replace("#[\n\t]+#", '', $jsBody);
-
-		return $tagBody . $jsBody;
+		return $tagBody;
 	}
 
 	/**
@@ -110,20 +108,18 @@ SCRIPT;
 		$tagBody.= '<a href="http://twitter.com/' . urlencode($user) . '" target="_blank">Loading ...</a>';
 		$tagBody.= '</ul>';
 
-		$jsBody = <<<SCRIPT
-<script type="text/javascript">/*<![CDATA[*/
-	wgAfterContentAndJS.push(function() {
-		$.getScript('{$wgExtensionsPath}/wikia/ContentFeeds/js/ContentFeeds.js?{$wgStyleVersion}', function() {
-			$( function() { ContentFeeds.getUserTweets('{$tagId}','{$user}',{$limit}); });
-		});
-	});
-/*]]>*/</script>
-SCRIPT;
+		$tagBody .= F::build('JSSnippets')->addToStack(
+			array('/extensions/wikia/ContentFeeds/js/ContentFeeds.js'),
+			array(),
+			'ContentFeeds.getUserTweets',
+			array(
+				'tagId' => $tagId,
+				'user' => $user,
+				'limit' => $limit,
+			)
+		);
 
-		// remove whitespaces from inline JS code
-		$jsBody = preg_replace("#[\n\t]+#", '', $jsBody);
-
-		return $tagBody . $jsBody;
+		return $tagBody;
 	}
 
 	/**
@@ -268,6 +264,9 @@ SCRIPT;
 
 	/**
 	 * parser hook for <firstfewarticles> tag
+	 *
+	 * TODO: finish it
+	 *
 	 * @return string tag body
 	 */
 	public static function firstFewArticlesParserHook( $input, $args, $parser ) {
@@ -278,15 +277,16 @@ SCRIPT;
 		$emptyTitleErrorMsg = wfMsg( 'contentfeeds-firstfewarticles-tag-empty-title-error' );
 		$emptyBodyErrorMsg = wfMsg( 'contentfeeds-firstfewarticles-tag-empty-body-error' );
 
+		// TODO: refactor using JS snippets (see wikiTweetsParserHook and userTweetsParserHook methods)
 		$jsBody .= <<<SCRIPT
 <script type="text/javascript">/*<![CDATA[*/
 	wgAfterContentAndJS.push(function() {
 		$.getScript('{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js?{$wgStyleVersion}', function() {
 			$( function() {
-							$.getScript('{$wgExtensionsPath}/wikia/ContentFeeds/js/FirstFewArticles.js?{$wgStyleVersion}', function() {
-								$( function() { } );
-							});
-						});
+				$.getScript('{$wgExtensionsPath}/wikia/ContentFeeds/js/FirstFewArticles.js?{$wgStyleVersion}', function() {
+					$( function() { } );
+				});
+			});
 		});
 	});
 /*]]>*/</script>

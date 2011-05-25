@@ -16,7 +16,7 @@
  */
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'AjaxPoll',
-	'author' => array('[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', 'Maciej Brencz'),
+	'author' => array('[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', 'Maciej Brencz', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
 	'version' => '1.1',
 	'description' => 'Poll extension for MediaWiki driven by Ajax requests',
 	'url' => 'http://help.wikia.com/wiki/Help:Polls'

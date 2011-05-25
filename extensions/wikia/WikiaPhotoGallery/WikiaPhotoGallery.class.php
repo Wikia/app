@@ -549,6 +549,12 @@ class WikiaPhotoGallery extends ImageGallery {
 				break;
 		}
 
+		$out .= F::build('JSSnippets')->addToStack(
+			array('/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js'),
+			array(),
+			'WikiaPhotoGalleryView.init'
+		);
+
 		wfProfileOut(__METHOD__);
 		return $out;
 	}
@@ -581,16 +587,16 @@ class WikiaPhotoGallery extends ImageGallery {
 		$heights = array();
 		$widths = array();
 		$images = array();
-		
+
 		// loop throught the images and get height of the tallest one
 		foreach ($this->mImages as $imageData) {
-			
+
 			$img = $this->getImage($imageData[0]);
-			
-			if(!empty($img)) {
+
+			if (!empty($img)) {
 				$images[] = $imageData;
 				$fileObjectsCache[] = $img;
-				
+
 				// get thumbnail limited only by given width
 				if ( $img->width > $thumbSize ) {
 					$imageHeight = round( $img->height * ( $thumbSize / $img->width ) );
@@ -599,16 +605,16 @@ class WikiaPhotoGallery extends ImageGallery {
 					$imageHeight = $img->height;
 					$imageWidth = $img->width;
 				}
-	
+
 				$heights[] = $imageHeight;
 				$widths[] = $imageWidth;
-	
+
 				if ($imageHeight > $maxHeight) {
 					$maxHeight = $imageHeight;
 				}
 			}
 		}
-		
+
 		$this->mImages = $images;
 
 		// calculate height based on gallery width
@@ -624,7 +630,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			// limit height (RT #59355)
 			$height = min($height, $thumbSize);
-			
+
 			// recalculate dimensions (RT #59355)
 			foreach ($this->mImages as $index => $image) {
 				$dimensions = WikiaPhotoGalleryHelper::getThumbnailDimensions( $fileObjectsCache[$index], $thumbSize, $height, WikiaPhotoGalleryHelper::THUMB_SHRINK );
@@ -1152,39 +1158,15 @@ class WikiaPhotoGallery extends ImageGallery {
 		// output JS to init slideshow
 		$width = "{$params['width']}px";
 
-		$js = <<<JS
-wgAfterContentAndJS.push(function() {
-	$.getScript(stylepath + '/common/jquery/jquery-slideshow-0.4.js?' + wgStyleVersion, function() {
-		var slideshow = $('#$id');
-		var cb = function(index) {
-			var item = slideshow.find('li').eq(index);
-			if (item.attr('title')) {
-				item.css('backgroundImage', 'url(' + item.attr('title') + ')');
-				item.removeAttr('title');
-			}
-		};
-
-		var item = slideshow.find('li').first();
-		if (item.attr('title')!='')item.css('backgroundImage', 'url(' + item.attr('title') + ')');
-		item.removeAttr('title');
-
-		slideshow.slideshow({
-			buttonsClass:	'wikia-button',
-			nextClass:	'wikia-slideshow-next',
-			prevClass:	'wikia-slideshow-prev',
-			slideWidth:	'{$width}',
-			slidesClass:	'wikia-slideshow-images',
-			slideCallback: cb
-		});
-
-		$().log('#$id initialized', 'Slideshow');
-	});
-});
-JS;
-
-		// remove whitespaces from inline JS code
-		$js = preg_replace("#[\n\t]+#", '', $js);
-		$s .= '<script type="text/javascript">/*<![CDATA[*/' . $js . '/*]]>*/</script>';
+		$s .= F::build('JSSnippets')->addToStack(
+			array(
+				'/skins/common/jquery/jquery-slideshow-0.4.js',
+				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
+			),
+			array(),
+			'WikiaPhotoGallerySlideshow.init',
+			array('id' => $id, 'width' => $width)
+		);
 
 		wfProfileOut(__METHOD__);
 		return $s;
@@ -1214,9 +1196,6 @@ JS;
 			$tmpArr[] = $i;
 		}
 
-		$html = "<script> if(!allSliders){ var allSliders = new Array(); }; allSliders.push(".$this->mData['id']."); </script>";
-		$html .= "<script> wgAfterContentAndJS.push(function() { $.getScript('{$wgExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallerySlider.js?{$wgStyleVersion}'); }); </script>";
-
 		if ( $this->getParam('orientation') == 'right' ){
 			$sliderClass = 'vertical';
 			$thumbDimensions = array( "w" => 110, "h" => 60 );
@@ -1239,7 +1218,7 @@ JS;
 
 			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 			$img = wfFindFile( $nt, $time );
-			if (	is_object($img) && ($nt->getNamespace() == NS_FILE) &&
+			if ( is_object($img) && ($nt->getNamespace() == NS_FILE) &&
 				$img->getHeight() == WikiaPhotoGalleryHelper::STRICT_IMG_HEIGHT &&
 				$img->getWidth() == WikiaPhotoGalleryHelper::STRICT_IMG_WIDTH
 			) {
@@ -1266,15 +1245,30 @@ JS;
 			}
 		}
 
-		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
-		$template->set_vars(array(
-			'sliderClass' => $sliderClass,
-			'images' => $out,
-			'thumbDimensions' => $thumbDimensions,
-			'sliderId' => $this->mData["id"]
-		));
+		$html = '';
+		//check if we have something to show (images might not match required sizes
+		if ( count( $out ) ) {
+			$template = new EasyTemplate(dirname(__FILE__) . '/templates');
+			$template->set_vars(array(
+				'sliderClass' => $sliderClass,
+				'images' => $out,
+				'thumbDimensions' => $thumbDimensions,
+				'sliderId' => $this->mData['id']
+			));
 
-		$html .= $template->render('renderSlider');
+			$html = $template->render('renderSlider');
+
+			$html .= F::build('JSSnippets')->addToStack(
+				array(
+					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.css',
+					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.js'
+				),
+				array(),
+				'WikiaPhotoGallerySlider.init',
+				array($this->mData['id'])
+			);
+		}
+
 		wfProfileOut(__METHOD__);
 		return $html;
 
@@ -1675,36 +1669,15 @@ JS;
 		$height = $params['height'];
 		$width = $params['width'];
 
-		$js = <<<JS
-wgAfterContentAndJS.push(function() {
-	$.getScript(stylepath + '/common/jquery/jquery-slideshow-0.4.js?' + wgStyleVersion, function() {
-		var slideshow = $('#$id');
-
-		slideshow.find('li').each(function() {
-			var frame = $(this);
-			var currentImg = frame.children('img');
-
-			WikiaPhotoGalleryView.loadAndResizeImage(currentImg, {$width}, {$height}, function(image) {
-				image.css('margin-top', ({$height} - parseInt(image.css('height'))) >> 1);
-			});
-		});
-
-		slideshow.slideshow({
-			buttonsClass:	'wikia-button',
-			nextClass:	'wikia-slideshow-next',
-			prevClass:	'wikia-slideshow-prev',
-			slideWidth:	'{$width}px',
-			slidesClass:	'wikia-slideshow-images'
-		});
-
-		$().log('#$id initialized', 'Slideshow');
-	});
-});
-JS;
-
-		// remove whitespaces from inline JS code
-		$js = preg_replace("#[\n\t]+#", '', $js);
-		$s .= '<script type="text/javascript">/*<![CDATA[*/' . $js . '/*]]>*/</script>';
+		$s .= F::build('JSSnippets')->addToStack(
+			array(
+				'/skins/common/jquery/jquery-slideshow-0.4.js',
+				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
+			),
+			array(),
+			'WikiaPhotoGallerySlideshow.init',
+			array('id' => $id, 'width' => $width)
+		);
 
 		wfProfileOut(__METHOD__);
 		return $s;

@@ -36,11 +36,11 @@ var AjaxPoll = {
 
 		// form AJAX request
 		var params = {
-			title:		wgPageName,
-			action:		'ajax',
-			rs:		'axAjaxPollSubmit',
-			wpPollId:	pollId,
-			wpVote:		'Vote!'
+			title: wgPageName,
+			action: 'ajax',
+			rs: 'axAjaxPollSubmit',
+			wpPollId: pollId,
+			wpVote: 'Vote!'
 		};
 
 		// get voted option
@@ -64,6 +64,7 @@ var AjaxPoll = {
 	initialized: false,
 
 	init: function() {
+		$().log('JS loaded', 'AjaxPoll');
 		if (this.initialized) {
 			return;
 		}
@@ -83,7 +84,3 @@ var AjaxPoll = {
 		this.initialized = true;
 	}
 };
-
-$(function() {
-	AjaxPoll.init();
-}).log('JS loaded', 'AjaxPoll');

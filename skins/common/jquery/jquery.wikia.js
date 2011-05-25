@@ -480,31 +480,6 @@ $.fn.hasParent = function(selector) {
 	return this.first().parent().closest(selector).exists();
 }
 
-// RT #19369: TabView
-$(function() {
-	if (typeof window.__FlyTabs == 'undefined') {
-		return;
-	}
-
-	if(skin == 'oasis') {
-		importStylesheetURI(wgExtensionsPath+ '/wikia/TabView/TabView.css?' + wgStyleVersion);
-	}
-
-	$.getScript(stylepath + '/common/jquery/jquery.flytabs.js?' + wgStyleVersion, function() {
-		$().log(window.__FlyTabs, 'TabView');
-
-		for(t=0; t<window.__FlyTabs.length; t++) {
-			var tab = window.__FlyTabs[t];
-
-			$('#flytabs_' + tab.id).flyTabs.config({align: 'none', effect: 'no'});
-
-			for (s=0; s<tab.options.length; s++) {
-				$('#flytabs_' + tab.id).flyTabs.addTab(tab.options[s]);
-			}
-		}
-	});
-});
-
 // macbre: page loading times (onDOMready / window onLoad)
 $(function() {
 	if (typeof wgNow != 'undefined') {

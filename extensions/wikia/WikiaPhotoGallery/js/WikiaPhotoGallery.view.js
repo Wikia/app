@@ -1,7 +1,6 @@
-/* JS to be used in view mode in Monaco skin */
 var WikiaPhotoGalleryView = {
 	log: function(msg) {
-		$().log(msg, 'ImageGallery');
+		$().log(msg, 'WikiaPhotoGallery:view');
 	},
 
 	getArticle: function() {
@@ -398,7 +397,3 @@ var WikiaPhotoGalleryView = {
 		);
 	}
 };
-
-$(function() {
-	WikiaPhotoGalleryView.init.call(WikiaPhotoGalleryView);
-});

@@ -15,7 +15,6 @@ $wgExtensionCredits['parserhook'][] = array(
 	'descriptionmsg' => 'slidertag-desc',
 );
 
-global $IP;
 require_once( "$IP/extensions/wikia/CorporatePage/CorporatePageHelper.class.php" );
 
 $dir = dirname( __FILE__ ) . '/';
@@ -66,9 +65,6 @@ function wfSlider( $input, $args, $parser ) {
 	if ( $data ) {
 		wfLoadExtensionMessages( 'SliderTag' );
 
-		// TODO: lazy load following JS
-		$html = "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/SliderTag/slidertag.js?{$wgStyleVersion}\"></script>";
-
 		$html .= '<div id="spotlight-slider"><ul>';
 
 		foreach ( $data as $key => $value ) {
@@ -92,6 +88,12 @@ function wfSlider( $input, $args, $parser ) {
 SLIDERITEM;
 		}
 		$html .= '</ul></div>';
+
+		$html .= F::build('JSSnippets')->addToStack(
+			array('/extensions/wikia/SliderTag/js/slidertag.js', '/extensions/wikia/SliderTag/css/slidertag.css'),
+			array(),
+			'spotlightSlider_setup'
+		);
 	}
 
 	return $html;
