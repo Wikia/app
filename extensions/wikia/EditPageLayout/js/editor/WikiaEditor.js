@@ -47,6 +47,15 @@
 		}
 	})();
 
+	// reload the editor (used by AjaxLogin) - BugId:5307
+	WE.reloadEditor = function() {
+		// clear the edit token - preview will be forced
+		$('input[name=wpEditToken]').val('');
+
+		// save the page
+		$('#wpSave').click();
+	};
+
 	WE.Editor = $.createClass(Observable,{
 
 		states: {

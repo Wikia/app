@@ -130,10 +130,15 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 		$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectDisplayCategoryBox';
 
 		$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
-		
+
 		if($wgRequest->wasPosted()) {
 			CategorySelect::SelectCategoryAPIgetData($wgRequest->getVal('csWikitext', ''), true);
-		}
+			$csWikitext = $wgRequest->getVal('csWikitext', '');
+
+			if ($csWikitext != '') {
+				CategorySelect::SelectCategoryAPIgetData($csWikitext, true);
+			}
+ 		}
 	}
 	wfLoadExtensionMessages('CategorySelect');
 
