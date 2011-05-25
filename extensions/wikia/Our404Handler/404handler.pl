@@ -246,6 +246,7 @@ my @tests = qw(
 	/s/science/ru/images/thumb/2/29/Gtk-redo-ltr.svg/17px-Gtk-redo-ltr.svg.png
 	/b/biologija/lt/images/thumb/7/7d/Eagle_Owl_IMG_9203.JPG/800px-@commons-Eagle_Owl_IMG_9203.JPG
 	/h/half-life/en/images/thumb/1/1c/Eli_proto_physics.jpg/250px-Eli_proto_physics.jpg
+	/c/communitytest/images/thumb/5/50/Wiki-background/80px-Wiki-background
 );
 use warnings;
 my @done = ();

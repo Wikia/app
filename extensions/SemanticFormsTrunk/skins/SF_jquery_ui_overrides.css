@@ -1,0 +1,39 @@
+/*
+ * Overrides of the CSS for the jQuery UI libraries, for use by Semantic Forms
+ */
+.ui-widget input, .ui-widget {
+	font-family: sans-serif;
+	font-size: 10pt;
+}
+
+.ui-widget input.ui-widget-content {
+	padding-left: 0.2em;
+	margin: 0 0 0 .1em;
+}
+
+.ui-menu-item .ui-state-hover {
+	background: #222288;
+	color: white;
+	border: none;
+}
+ul.ui-menu {
+	padding: 0 0 5px 0;
+	max-height: 200px;
+	overflow: auto;
+}
+.ui-menu .ui-menu-item a.ui-state-hover {
+	margin: auto;
+}
+
+.ui-corner-left, .ui-corner-right, .ui-corner-all {
+	border-radius: 0;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+}
+
+/*
+button.ui-button-icon-only {
+	vertical-align: auto;
+}
+*/
+
