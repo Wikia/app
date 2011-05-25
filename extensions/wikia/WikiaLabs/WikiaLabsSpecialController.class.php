@@ -32,7 +32,7 @@ class WikiaLabsSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		$this->wf->profileIn( __METHOD__ );
 		
-		if ( $this->user->isAnon() ) {
+		if ( !$this->user->isAllowed( 'wikialabsuser' ) ) {
 			$this->displayRestrictionError($this->user);
 			$this->skipRendering();
 			return;
@@ -63,8 +63,12 @@ class WikiaLabsSpecialController extends WikiaSpecialPageController {
 			$this->isAdmin = true;
 		}
 		
+		$isWikiaLabsAdmin = false;
+		if( $this->user->isAllowed( 'wikialabsadmin' ) ) {
+			$isWikiaLabsAdmin = true;
+		}
+		
 		$this->setVal('projects', $this->projects);
-		$this->setVal('user', $this->user);
 		$this->setVal('cityId', $cityId);
 		$this->setVal('userId', $userId);
 		$this->setVal('contLang', $this->app->getGlobal( 'wgContLang' ));
@@ -72,6 +76,7 @@ class WikiaLabsSpecialController extends WikiaSpecialPageController {
 		$this->setVal('wikilistUrl', $this->title->getFullUrl('method=wikislist'));
 		$this->setVal('wgExtensionsPath', $this->extensionsPath);
 		$this->setVal('isAdmin', $this->isAdmin);
+		$this->setVal('isWikiaLabsAdmin', $isWikiaLabsAdmin);
 		
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaLabs/css/wikialabs.scss'));
 		$this->wg->Out->addScriptFile($this->extensionsPath.'/wikia/WikiaLabs/js/main.js');

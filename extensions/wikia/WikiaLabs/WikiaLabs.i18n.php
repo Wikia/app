@@ -57,6 +57,7 @@ $messages['en'] = array(
 	'wikilabs-feedback-if-you-have-and-improve-idea' => 'If you have an idea for how we can improve this feature, or if you’ve discovered a bug, please add a comment below and the people working on this feature will get your message.',
 	'wikialabs-feedback-comments' => 'Comment:',
 	
+	'wikialabs-feedback-validator-user-not-allowed' => 'You are not allowed to leave feedback message',
 	'wikialabs-feedback-validator-message-too-long' => 'Comment can not be longer than 255 characters',
 	'wikialabs-feedback-validator-message-too-short' => 'Please enter a comment',
 	'wikialabs-feedback-validator-rating' => 'Please give a rating',

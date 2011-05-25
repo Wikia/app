@@ -51,7 +51,7 @@
 				
 				<span class="active" >
 					<?php $numMsg = wfMsgExt('wikialabs-list-project-currently-active-on-wikis', array('parsemag'), $value->getActivationsNumFormated() ); ?>
-					<?php if( $user->isAllowed('wikialabsadmin') ): ?>
+					<?php if( $isWikiaLabsAdmin ): ?>
 						<a href="<?php echo $wikilistUrl.'&project_id='.$value->getId(); ?>"><?php echo $numMsg; ?></a>
 					<?php else: ?>
 						<?php echo $numMsg; ?>

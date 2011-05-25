@@ -20,7 +20,8 @@ class WikiaLabsWikisListPager extends AlphabeticPager {
 		
 		$this->projects = $projects;
 		$this->projectId = $projectId;
-		
+
+		$this->mDb = WikiFactory::db( DB_SLAVE );		
 		$this->mProjectDb = $this->projects->getDb();
 	}
 	
