@@ -78,7 +78,6 @@ $config['oasis_shared_js'] = array(
 		'//skins/common/ajax.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/ImageLightbox/ImageLightbox.js',
-		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/AdEngine/AdConfig.js',
@@ -92,7 +91,7 @@ $config['oasis_shared_js'] = array(
 		'//extensions/wikia/AdEngine/liftium/Wikia.js',
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdSS/adss.js',
-		'//extensions/wikia/PageLayoutBuilder/js/view.js',
+		'//extensions/wikia/PageLayoutBuilder/js/view.js', // TODO: load it on demand
 		'//extensions/wikia/JSMessages/js/JSMessages.js', // TODO: maybe move to jquery.wikia.js
 		'//skins/oasis/js/GlobalModal.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
