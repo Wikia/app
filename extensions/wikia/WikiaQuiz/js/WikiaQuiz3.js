@@ -42,7 +42,6 @@ var WikiaQuiz = {
 				WikiaQuiz.ui.countDownCadence.html(WikiaQuizVars.cadence[i]);
 			}
 		}, 1000);
-		//WikiaQuiz.initializeQuestion(WikiaQuiz.qSet.eq(WikiaQuiz.cqNum));
 	},
 	initializeQuestion: function(cq) {
 		WikiaQuiz.cq = cq;
@@ -59,12 +58,18 @@ var WikiaQuiz = {
 		WikiaQuiz.ui.nextButton = WikiaQuiz.ui.explanation.find('button');
 		WikiaQuiz.answered = false;
 		WikiaQuiz.ui.progressBarIndicators.eq(WikiaQuiz.cqNum).addClass('on');
+		WikiaQuiz.ui.allAnswers.hover(function() {
+				$(this).addClass('hover');
+			}, function() {
+				$(this).removeClass('hover');
+			});
 		WikiaQuiz.cq.fadeIn(WikiaQuiz.animationTiming, function() {
 			setTimeout(WikiaQuiz.showAnswers, 2000);
 		});
 	},
 	unbindAll: function() {
 		WikiaQuiz.ui.answers.unbind('click');
+		WikiaQuiz.ui.allAnswers.unbind('hover');
 		WikiaQuiz.ui.nextButton.unbind('click');
 	},
 	showAnswers: function() {
@@ -82,14 +87,12 @@ var WikiaQuiz = {
 		$().log('Answer Clicked')
 		$().log(evt);
 		var target = $(evt.target);
+		var targetClass = target.attr('class');
 		var answer = target.closest('.answer');
-		/*
-		var srcElement = $(evt.srcElement);
-		var answer = $(evt.srcElement).closest('.answer');
-		*/
-		if(target.attr('class') != 'anchor-hack' && answer.length) {
+		if(targetClass != 'anchor-hack' && answer.length) {
 			$().log('found:');
 			$().log(answer);
+			answer.unbind();
 			WikiaQuiz.ui.chosenAnswer = answer;
 			if(answer.data('correct') == '1') {
 				WikiaQuiz.score++;
@@ -97,6 +100,7 @@ var WikiaQuiz = {
 			} else {
 				WikiaQuiz.ui.answerResponse.text(WikiaQuizVars.incorrectLabel);
 			}
+			
 			WikiaQuiz.showSelection(answer);
 		}
 		
@@ -104,7 +108,7 @@ var WikiaQuiz = {
 	showSelection: function(answer) {
 		var r = answer.find('.representation');
 		if(r.length) {
-			var e = WikiaQuiz.ui.allRepresentations.not(r).add(WikiaQuiz.ui.allAnswerLabels).add(WikiaQuiz.ui.questionBubble);
+			var elementsToHide = WikiaQuiz.ui.allRepresentations.not(r).add(WikiaQuiz.ui.allAnswerLabels).add(WikiaQuiz.ui.questionBubble);
 			
 			var i = WikiaQuiz.ui.allAnswers.index(answer);
 			var left = (20 - (i * 190));
@@ -115,7 +119,7 @@ var WikiaQuiz = {
 				left: left,
 				top: -135
 				}, WikiaQuiz.animationTiming);
-			e.fadeOut(WikiaQuiz.animationTiming);
+			elementsToHide.fadeOut(WikiaQuiz.animationTiming);
 			WikiaQuiz.ui.explanation.fadeIn(WikiaQuiz.animationTiming, function() {
 				WikiaQuiz.ui.nextButton.bind('click', WikiaQuiz.handleNextClick);
 			});

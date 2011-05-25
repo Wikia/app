@@ -255,9 +255,11 @@ $bubble-color-alt: $color-header-alt;
 						position: absolute;
 						vertical-align: middle;
 						width: 155px;
-						&:hover {
-							border-color: $color-buttons;
-						}
+						//@include transition-shorthand(scale 400ms);
+					}
+					&.hover .representation{
+						border-color: $color-buttons;
+						@include transform-scale(1.1);
 					}
 					&:first-child {
 						margin-left: 0;
@@ -355,10 +357,6 @@ $bubble-color-alt: $color-header-alt;
 	}
 	.quiz-thanks {
 		display: none;
-		.fblike {
-			margin: 0 auto;
-			width: 300px;
-		}
 		.thanks {
 			left: 100px;
 			padding: 40px 0;
@@ -370,6 +368,7 @@ $bubble-color-alt: $color-header-alt;
 		}
 		.more-info {
 			margin-top: 240px;
+			position: relative;
 			text-align: center;
 			h2 {
 				border-bottom: none;
@@ -440,5 +439,40 @@ $bubble-color-alt: $color-header-alt;
 	&:after {
 		@include border-radius-se(7px);
 		right: 0;
+	}
+}
+
+.quiz-facebook {
+	border: 1px solid $color-page-border;
+	height: 73px;
+	margin: 0 auto 0;
+	position: relative;
+	top: -40px;
+	width: 798px;
+	.challenge {
+		background-color: #c3c3c3;
+		font-size: 16px;
+		height: 48px;
+		padding-top: 25px;
+		position: relative;
+		text-align: center;
+		width: 230px;
+		&:after {
+			border: 37px solid transparent;
+			border-left-style: solid;
+			border-left-width: 18px;
+			border-left-color: #c3c3c3;
+			content: "";
+			height: 0;
+			position: absolute;
+			right: -54px;
+			top: 0;
+			width: 0;
+		}
+	}
+	.fblike {
+		position: absolute;
+		right: 0;
+		top: 5px;
 	}
 }

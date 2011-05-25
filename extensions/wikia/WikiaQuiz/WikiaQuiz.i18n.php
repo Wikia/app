@@ -9,12 +9,6 @@ $messages['en'] = array(
 	'wikiaquiz-createquizarticle-headline' => 'Create Quiz Question and Answers',
 	'wikiaquiz-editquizarticle-headline' => 'Edit Quiz Question and Answers',
 	'wikiaquiz-title-label' => 'Title',
-	'wikiaquiz-titlescreentext-label' => 'Title screen text',
-	'wikiaquiz-titlescreenimages-label' => 'Title screen images',
-	'wikiaquiz-moreinfoheading-label' => 'More info heading',
-	'wikiaquiz-moreinfolinks-label' => 'More info links',        
-	'wikiaquiz-moreinfoarticle-label' => 'Article',    
-	'wikiaquiz-moreinfolinktext-label' => 'Link Text',    
 	'wikiaquiz-question-label' => 'Question',
 	'wikiaquiz-image-label' => 'Image (optional)',
 	'wikiaquiz-explanation-label' => 'Answer explanation (optional)',
@@ -34,7 +28,6 @@ $messages['en'] = array(
 	'wikiaquiz-error-invalid-correct-answer' => 'You must specify one correct answer.',
 	'wikiaquiz-error-invalid-quiz' => 'Quiz name is invalid.',
 	'wikiaquiz-error-invalid-article' => 'Article ID is invalid.',
-	'wikiaquiz-error-invalid-article-with-details' => 'Article is invalid: $1',
     
 // game itself
 	'wikiaquiz-game-start-button' => 'Start Game',
@@ -50,8 +43,9 @@ $messages['en'] = array(
 	'wikiaquiz-game-your-score' => 'YOUR SCORE IS',
 	'wikiaquiz-game-continue-button' => 'Continue',
 	'wikiaquiz-game-thanks' => 'Thanks for playing!',
+	'wikiaquiz-game-challenge' => 'Challenge your friends to play!',
 );
- 
+
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
 	'wikiaquiz-desc' => '{{desc}}',
@@ -60,12 +54,6 @@ $messages['qqq'] = array(
 	'wikiaquiz-createquizarticle-headline' => 'Headline for Create QuizArticle Special Page',
 	'wikiaquiz-editquizarticle-headline' => 'Headline for Edit QuizArticle Special Page',
 	'wikiaquiz-title-label' => 'Form Label for Title',
-	'wikiaquiz-titlescreentext-label' => 'Form Label for Title Screen Text',
-	'wikiaquiz-titlescreentext-label' => 'Form Label for Title Screen Images',
-	'wikiaquiz-moreinfoheading-label' => 'Form Label for More Info Heading',
-	'wikiaquiz-moreinfoarticle-label' => 'Form Label for More info Article',    
-	'wikiaquiz-moreinfolinks-label' => 'Form Label for More Info Links',        
-	'wikiaquiz-moreinfolinktext-label' => 'Form Label for More info Link Text',    
 	'wikiaquiz-question-label' => 'Form Label for Question',
 	'wikiaquiz-image-label' => 'Form Label for Image',
 	'wikiaquiz-explanation-label' => 'Form Label for Answer Explanation',
@@ -84,6 +72,5 @@ $messages['qqq'] = array(
 	'wikiaquiz-error-missing-answers' => 'Error message when no answer given',
 	'wikiaquiz-error-invalid-correct-answer' => 'Error message when no correct answer given',
 	'wikiaquiz-error-invalid quiz' => 'Error message when quiz is invalid',
-  	'wikiaquiz-error-invalid article' => 'Error message when article ID is invalid',
-	'wikiaquiz-error-invalid-article-with-details' => 'Error message when article is invalid, with details'
+  	'wikiaquiz-error-invalid article' => 'Error message when article ID is invalid'  
 );

@@ -58,7 +58,7 @@ class WikiaQuizModule extends Module {
 		}
 		
 		// Facebook opengraph meta data
-		$wgOut->addMeta('property:og:title', $this->data['name']);
+		$wgOut->addMeta('property:og:title', $this->data['titlescreentext']);
 		$wgOut->addMeta('property:og:type', 'game');
 		$wgOut->addMeta('property:og:url', $wgRequest->getFullRequestURL());
 		$wgOut->addMeta('property:og:site_name', $wgSiteName);
@@ -81,11 +81,9 @@ class WikiaQuizModule extends Module {
 		$wgRequest = F::app()->getGlobal('wgRequest');
 		$quizName = $wgRequest->getVal('quiz');
 		if ($quizName) {
-			//$quiz = WikiaQuiz::newFromName($quizName);
 			$title = Title::newFromText($quizName, NS_WIKIA_QUIZ);
 			$quiz = WikiaQuiz::newFromTitle($title);
 			$this->data = $quiz->getData();
-			//hyunbug($this->data);
 		}
 	}
 
