@@ -1,4 +1,3 @@
-<fb:like class="fblike" href="" send="true" layout="button_count" width="300" show_faces="false" font="" height="50"></fb:like>
 <section id="WikiaQuiz" class="WikiaQuiz">
 	<div class="quiz-frame">
 	</div>
@@ -85,11 +84,11 @@
 			<?= wfmsg('wikiaquiz-game-thanks') ?>
 		</div>
 		<div class="more-info">
-			<h2>Get the dish on the new season on the Degrassi Wiki</h2>
+			<h2><?= $data['moreinfoheading'] ?></h2>
 			<ul>
-				<li>Filler Static Content</li>
-				<li>Static Content</li>
-				<li>Static Content</li>
+				<? foreach ($data['moreinfo'] as $line) { ?>
+					<li><a href="<?= $line['url'] ?>"><?= $line['text'] ?></a></li>
+				<? } ?>
 			</ul>
 		</div>
 	</div>
@@ -106,6 +105,12 @@
 	</div>
 	<div class="leftcorner"></div>
 	<div class="rightcorner"></div>
+</div>
+<div class="quiz-facebook">
+	<div class="challenge">
+		<?= wfMsg('wikiaquiz-game-challenge') ?>
+	</div>
+	<fb:like class="fblike" href="" send="true" width="530" show_faces="true" font="" height="75" action="recommend"></fb:like>
 </div>
 <script>
 	WikiaQuizVars = {
