@@ -223,6 +223,7 @@ Example output: edited by Avatar 3 hours ago',
 * $2 is a point in time
 
 Example output: deleted by Avatar 3 hours ago',
+	'oasis-content-picture-added-by' => 'Parameter $2 is a username in case you need it for {{GENDER}}',
 );
 
 /** Afrikaans (Afrikaans)

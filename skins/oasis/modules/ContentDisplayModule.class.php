@@ -15,8 +15,13 @@ class ContentDisplayModule extends Module {
 	 * This method is called by MakeThumbLink2 hook
 	 */
 	static function renderPictureAttribution($skin, $title, $file, $frameParams, $handlerParams, &$s, $outerWidth) {
-		global $wgUser;
+		global $wgUser, $wgEnableOasisPictureAttribution;
 		wfProfileIn(__METHOD__);
+
+		if ( empty( $wgEnableOasisPictureAttribution ) ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
 
 		// prevent fatal errors
 		if ( empty( $file ) || get_class( $wgUser->getSkin() ) != 'SkinOasis' ) {
@@ -39,7 +44,7 @@ class ContentDisplayModule extends Module {
 
 		$html = Xml::openElement('div', array('class' => 'picture-attribution')) .
 			$avatar .
-			wfMsg('oasis-content-picture-added-by', $link) .
+			wfMsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $userName ) .
 			Xml::closeElement('div');
 
 		// replace placeholder
