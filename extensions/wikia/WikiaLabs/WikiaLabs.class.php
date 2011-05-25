@@ -123,9 +123,11 @@ class WikiaLabs {
 			}
 			$out['in'] = $in;
 			$out['status'] = self::STATUS_ERROR;
+			
 			return $out;
 		}
 		
+           
 		if( true !== ($result = $this->checkSpam($user->getName(), $project, $projectId)) ) {
 			return $result;
 		}
@@ -134,6 +136,7 @@ class WikiaLabs {
 		if(!empty($message)) {
 			$this->saveFeedbackInFogbugz( $project, $message, $user->getEmail() );
 		}
+
 		return $out;
 	}
 	
