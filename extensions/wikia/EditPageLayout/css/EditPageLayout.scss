@@ -19,8 +19,8 @@
 @import "core/tabs"; // mode tabs
 @import "core/editpage"; // style main part of edit page
 @import "core/rail"; // right rail and modules
-@import "core/toolbar";
-@import "core/modules";
+@import "core/toolbar"; // toolbar
+@import "core/modules"; // module-specific
 @import "core/buttons"; // buttons (icons + states)
 @import "core/dropdowns"; // dropdowns (rcombo)
 @import "core/preview-diff"; // preview / show changes dialogs
