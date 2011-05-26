@@ -304,7 +304,7 @@ function authConnection(client, socket, authData){
 						});
 					} else {
 						console.log("User failed authentication. Error from server was: " + data.errorMsg);
-						sendInlineAlertToClient(client, data.errorMsg);
+						sendInlineAlertToClient(client, data.errorMsg, '', []);
 						console.log("Entire data was: ");
 						console.log(data);
 					}
@@ -396,8 +396,7 @@ function finishConnectingUser(client, socket, rawUserInfo){
 				// Send the old client a notice that they're about to be disconnected and why.
 				var oldClient = socket.clients[existingId];
 				if(typeof oldClient != "undefined"){
-					// TODO: i18n: how?
-					sendInlineAlertToClient(oldClient, "You have connected from another browser. This connection will be closed.", function(){
+					sendInlineAlertToClient(oldClient, '', 'chat-err-connected-from-another-browser', [], function(){
 						// Looks like we're kicking ourself, but since we're not in the sessionIdsByKey map yet,
 						// this will only kick the other instance of this same user connected to the room.
 						kickUserFromRoom(oldClient, socket, client.myUser, client.roomId, function(){
@@ -599,7 +598,11 @@ function kickBan(client, socket, msg){
 					try{
 						data = JSON.parse(responseBody);
 					} catch(e){
-						data = {'error': "Error communicating w/MediaWiki server."}; // probably can't i18n this msg since this only happens when we CAN'T get a result anyway... but we might be passing msgs to the client-side so... TODO: i18n it!
+						data = {
+							error: '',
+							errorWfMsg: 'chat-err-communicating-with-mediawiki',
+							errorMsgParams: []
+						};
 						console.log("Error: while parsing result of kickBan call to MediaWiki server. Error was: ");
 						console.log(e);
 						console.log("Response that didn't parse was:\n" + responseBody);
@@ -607,7 +610,10 @@ function kickBan(client, socket, msg){
 
 					// Process response from MediaWiki server and then kick the user from all clients.
 					if(data.error){
-						sendInlineAlertToClient(client, data.error);
+						if(!data.errorWfMsg){data.errorWfMsg = ''};
+						if(!data.errorMsgParams){data.errorMsgParams = [];}
+
+						sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
 					} else {
 		// TODO: ONCE WE HAVE A LIST OF CLIENTS, INSTEAD OF BUILDING A FAKE... LOOP THROUGH THE USERS IN THIS CHAT AND FIND THE REAL ONE. THAT'S FAR SAFER/BETTER.
 		// TODO: The users are in a hash now... grab (or build) the user from that data or obj and use that instead of this fake user.
@@ -661,7 +667,11 @@ function giveChatMod(client, socket, msg){
 					try{
 						data = JSON.parse(responseBody);
 					} catch(e){
-						data = {'error': "Error communicating w/MediaWiki server."}; // probably can't i18n this msg since this only happens when we CAN'T get a result anyway... but we might be passing msgs to the client-side so... TODO: i18n it!
+						data = {
+							error: '',
+							errorWfMsg: 'chat-err-communicating-with-mediawiki',
+							errorMsgParams: []
+						};
 						console.log("Error: while parsing result of giveChatMod call to MediaWiki server. Error was: ");
 						console.log(e);
 						console.log("Response that didn't parse was:\n" + responseBody);
@@ -669,7 +679,7 @@ function giveChatMod(client, socket, msg){
 
 					// Either send the error to the client who tried this action, or (if it was a success), send the updated User to all clients.
 					if(data.error){
-						sendInlineAlertToClient(client, data.error);
+						sendInlineAlertToClient(client, data.error, '', []);
 					} else {
 		// TODO: ONCE WE HAVE A LIST OF CLIENTS, INSTEAD OF BUILDING A FAKE... LOOP THROUGH THE USERS IN THIS CHAT AND FIND THE REAL ONE. THAT'S FAR SAFER/BETTER.
 		// TODO: The users are in a hash now... grab the user, then send them.
@@ -800,9 +810,16 @@ function getKey_chatEntriesInRoom(roomId){ return "chatentries:" + roomId; }
 /**
  * Sends some text to the client specified as an InlineAlert but does not store it
  * or persist it anywhere.
+ *
+ * Can use client-side i18n, so expects EITHER a 'text' string or a MediaWiki message name and parameters (pass in an
+ * empty string for 'text' parameter if using client-side i18n).
  */
-function sendInlineAlertToClient(client, msgText, callback){
-	var inlineAlert = new models.InlineAlert({text: msgText});
+function sendInlineAlertToClient(client, text, wfMsg, msgParams, callback){
+	var inlineAlert = new models.InlineAlert({
+		text: text,
+		wfMsg: wfMsg,
+		msgParams: msgParams
+	});
 	client.send({
 		event: 'chat:add',
 		data: inlineAlert.xport()
