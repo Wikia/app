@@ -1,3 +1,4 @@
+<? if (!empty($quiz)) { ?>
 <section class="WikiaQuiz" data-id="<?= $quiz->getId() ?>">
 <? if ($data['titlescreentext']) { ?>
 <p>Title screen text: <?= $data['titlescreentext'] ?></p>
@@ -30,3 +31,4 @@
 <?	} ?>
 </ul>
 </section>
+<? } ?>

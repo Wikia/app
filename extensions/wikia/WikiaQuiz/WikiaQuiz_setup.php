@@ -81,10 +81,10 @@ function WikiaQuizAjax() {
 //Edit page
 
 // permissions
-$wgNamespaceProtection[NS_WIKIA_QUIZ]      = array( 'quiz-edit' );
-$wgNamespaceProtection[NS_WIKIA_QUIZARTICLE] = array( 'quizarticle-edit' );
-$wgGroupPermissions['staff']['quiz-edit'] = true;
-$wgGroupPermissions['staff']['quizarticle-edit'] = true;
+$wgGroupPermissions['*']['wikiaquiz'] = false;
+$wgGroupPermissions['staff']['wikiaquiz'] = true;
+$wgNamespaceProtection[NS_WIKIA_QUIZ]      = array( 'wikiaquiz' );
+$wgNamespaceProtection[NS_WIKIA_QUIZARTICLE] = array( 'wikiaquiz' );
 
 $wgNonincludableNamespaces[] = NS_WIKIA_QUIZ;
 $wgNonincludableNamespaces[] = NS_WIKIA_QUIZARTICLE;
