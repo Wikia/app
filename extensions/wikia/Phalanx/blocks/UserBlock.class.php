@@ -148,4 +148,44 @@ class UserBlock {
 		$canSend = self::blockCheck($user);
 		return true;
 	}
+
+	/**
+	 * Hook handler
+	 * Checks if user just being created is not blocked
+	 *
+	 * @author wladek
+	 * @param $user User
+	 * @param $name string
+	 * @param $validate string
+	 */
+	public static function onAbortNewAccount( $user, &$abortError ) {
+		$text = $user->getName();
+		error_log("User::newFromName( $text ) = checking");
+		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_USER );
+		$state = self::blockCheckInternal( $user, $blocksData, $text, false, true );
+		if ( !$state ) {
+			error_log("User::newFromName( $text ) = access denied");
+			$abortError .= wfMsg( 'phalanx-user-block-new-account' );
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Hook handler
+	 * Checks if user name is not blocked
+	 *
+	 * @author wladek
+	 * @param $userName string
+	 * @param $abortError string [OUTPUT]
+	 */
+	public static function onValidateUserName( $userName, &$abortError ) {
+		$user = User::newFromName($userName);
+		if ( !$user || !self::onAbortNewAccount($user, $abortError) ) {
+			$abortError = 'phalanx-user-block-new-account';
+			return false;
+		}
+		return true;
+	}
+
 }

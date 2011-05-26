@@ -76,6 +76,7 @@ If you believe this is in error, please [[Special:Contact|contact Wikia]].',
 If you believe this is in error, please [[Special:Contact|contact Wikia]].',
 	'phalanx-user-block-reason-similar' => 'This username is prevented from editing across the entire Wikia network due to vandalism or other disruption by a user with a similar name.
 Please [[Special:Contact|contact Wikia]] about the problem.',
+	'phalanx-user-block-new-account' => 'Username is not available for registration. Please choose another one.',
 
 	#block reason overrides, worded to add the block reason
 	'phalanx-user-block-withreason-ip' => 'This IP address is prevented from editing across the entire Wikia network due to vandalism or other disruption by you or by someone who shares your IP address.
@@ -115,7 +116,7 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	'phalanx-stats-table-wiki-name' => 'Wiki Name',
 	'phalanx-stats-table-wiki-url' => 'Wiki URL',
 	'phalanx-stats-table-wiki-last-edited' => 'Last edited',
-	
+
 	#permissions
 	'right-phalanx' => 'Can manage global blocks and spam filters',
 	'right-phalanxexempt' => 'Exempt from Phalanx rules',
@@ -781,7 +782,7 @@ $messages['mk'] = array(
 	'phalanx-help-type-answers-question-title' => 'Овој филтер блокира создавање на прашање (страница) ако насловот одговара на некој од изразите наведени на црниот список.
 
 Напомена: работи само на викија за одговорање на прашања',
-	'phalanx-help-type-answers-recent-questions' => 'Овој филтер спречува приказ на прашања (страници) во низа изводи (посреднички елементи, списоци, пописи направени со ознаки). 
+	'phalanx-help-type-answers-recent-questions' => 'Овој филтер спречува приказ на прашања (страници) во низа изводи (посреднички елементи, списоци, пописи направени со ознаки).
 Филтерот не спречува создавање на таквите страници.
 
 Напомена: работи само на викија за одговорање на прашања',
@@ -1150,7 +1151,7 @@ Det hindrer ikke disse sidene i å opprettes.
 Note: fungerer kun på Svar-wikier.',
 	'phalanx-user-block-reason-ip' => 'Denne IP-adressen er forhindret i å redigere over hele Wikia-nettverket  grunnet vandalisme eller annt hærverk fra deg eller noen som deler din IP-adresse.
 Om du mener dette er en feil, vennligst [[Special:Contact|kontakt Wikia]].',
-	'phalanx-user-block-reason-exact' => 'Dette brukernavnet eller IP-adressen er forhindret i år redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk. 
+	'phalanx-user-block-reason-exact' => 'Dette brukernavnet eller IP-adressen er forhindret i år redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk.
 Om du mener dette er en feil, vennligst [[Special:Contact|kontakt Wikia]].',
 	'phalanx-user-block-reason-similar' => 'Dette brukernavnet er forhindret i å redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk av en bruker med lignende navn.
 Vennligst opprett et alternativt brukernavn eller [[Special:Contact|kontakt Wikia]] om problemet.',
