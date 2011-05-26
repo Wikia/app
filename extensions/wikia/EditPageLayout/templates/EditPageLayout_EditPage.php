@@ -74,7 +74,7 @@
 					<div class="module module_page_controls">
 						<div class="module_content">
 							<label>
-								<input type="checkbox" name="wpMinoredit" />
+								<input type="checkbox" name="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>" />
 								<?= wfMsg('editpagelayout-pageControls-minorEdit') ?>
 							</label>
 							<?= $summaryBox ?>
@@ -89,19 +89,19 @@
 	 	switch ($buttonType) {
 	 		case 'save':
 ?>
-								<input class="<?=$buttonClasses?>" id="wpSave" name="wpSave" type="submit" value="<?= wfMsg('savearticle') ?>" />
+								<input class="<?=$buttonClasses?>" id="wpSave" name="wpSave" type="submit" value="<?= wfMsg('savearticle') ?>" accesskey="<?=wfMsg('accesskey-save');?>" />
 <?php
 	 			break;
 	 		case 'preview':
 ?>
 								<ul class="wikia-menu-button secondary <?=$buttonClasses?>">
 									<li>
-										<a id="wpPreview"><?= wfMsg('preview') ?></a>
+										<a id="wpPreview" accesskey="<?=wfMsg('accesskey-preview');?>"><?= wfMsg('preview') ?></a>
 										<img src="<?= $wgBlankImgUrl ?>" class="chevron">
 									</li>
 									<ul>
 										<li>
-											<a id="wpDiff"><?= wfMsg('showdiff') ?></a>
+											<a id="wpDiff" accesskey="<?=wfMsg('accesskey-diff');?>"><?= wfMsg('showdiff') ?></a>
 										</li>
 									</ul>
 								</ul>
