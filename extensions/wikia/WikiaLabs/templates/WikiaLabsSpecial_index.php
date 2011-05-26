@@ -12,8 +12,8 @@
 			<span class='details' >
 			 	<h2 class="prjname" >
 					<?php echo $value->getTextFor('name'); ?>
+					<span class="data"><?php echo $lang->date($value->getReleaseDateMW()); ?></span>
 			 	</h2>
-				<span class="data"><?php echo $lang->date($value->getReleaseDateMW()); ?></span>
 				<?php echo $value->getTextFor('description'); ?>
 			</span>
 			<span class='buttons'>
