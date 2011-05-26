@@ -1,62 +1,14 @@
 
-const NODE_EXIT_USAGE = 1;
-var WIKIA_PROXY_HOST, WIKIA_PROXY_PORT;
-const MAX_MESSAGES_IN_BACKLOG = 50; // how many messages each room will store for now. only longer than NUM_MESSAGES_TO_SHOW_ON_CONNECT for potential debugging.
-const NUM_MESSAGES_TO_SHOW_ON_CONNECT = 10;
+/** CONFIG, REQUIRES, OTHER EXTERNAL STUFF **/
 
-// Choose proxy settings based on whether this is development or production.
-/*
-// NOTE: NOW THAT THE SAME PROXY IS USED IN BOTH LOCATIONS, WE DON'T NEED THE STARTUP ARGUMENT, IT APPEARS.  IF THIS STAYS LIKE THIS, DELETE THIS SECTION.
-if(process.argv.length < 3){
-	console.log("ERROR: You must specify a parameter of which server to run as. Either 'dev' (for development) or 'prod' (for production).");
-	process.exit(NODE_EXIT_USAGE);
-} else {
-	var whichServer = process.argv[2].toLowerCase();
-	switch(whichServer){
-		case "dev":
-		case "development":
-			WIKIA_PROXY_HOST = "127.0.0.1";
-			WIKIA_PROXY_PORT = 6081;
-			console.log("Running as DEVELOPMENT server.");
-			break;
-
-		case "prod":
-		case "production":
-			WIKIA_PROXY_HOST = "127.0.0.1";
-			WIKIA_PROXY_PORT = 6081;
-			console.log("Running as PRODUCTION server.");
-			break;
-
-		default:
-			console.log("ERROR: Environment not recognized: '" + whichServer + "'. Please choose either 'dev' (for development) or 'prod' (for production).");
-			process.exit(NODE_EXIT_USAGE);
-			break;
-	}
-}
-*/
-
-// Local varnish (NOTE: CURRENTLY, PROXY ISN'T USED... search for var httpCilent below).
-WIKIA_PROXY_HOST = "127.0.0.1";
-WIKIA_PROXY_PORT = 6081;
-
-
-// TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
-//process.on('uncaughtException', function (err) {
-//  console.log('Caught exception: ' + err);
-//  console.log('Stacktrace: ');
-//	console.log(err.stack);
-//	console.log('Full, raw error: ');
-//	console.log(err);
-//	process.exit(1);
-//	// TODO: is there some way to email us here (if on production) so that we know the server crashed?
-//});
-
-var CHAT_SERVER_PORT = 8000;
-var API_SERVER_PORT = 8001;
-
+// NOTE: REFACTOR: Move these settings into server_config.js sometime to keep them there (then would just need to call "config.EXAMPLE" instead of "EXAMPLE" when using them).
 var AUTH_URL = "/?action=ajax&rs=ChatAjax&method=getUserInfo"; // do NOT add hostname into this URL.
 var KICKBAN_URL = "/?action=ajax&rs=ChatAjax&method=kickBan";
 var GIVECHATMOD_URL = "/?action=ajax&rs=ChatAjax&method=giveChatMod";
+var WIKIA_PROXY_HOST, WIKIA_PROXY_PORT;
+
+// Local varnish (NOTE: CURRENTLY, PROXY ISN'T USED... search for var httpCilent below).
+WIKIA_PROXY_HOST = "127.0.0.1";WIKIA_PROXY_PORT = 6081;
 
 var app = require('express').createServer()
     , jade = require('jade')
@@ -67,20 +19,39 @@ var app = require('express').createServer()
     , rc = redis.createClient()
     , models = require('./models/models')
 	, urlUtil = require('url');
-
-var http = require("http");
-
-console.log("== Starting Node Chat Server ==");
-
 rc.on('error', function(err) {
     console.log('Error ' + err);
 });
 
+var http = require("http");
+
+var config = require("./server_config.js");
+
+// TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
+//process.on('uncaughtException', function (err) {
+//  console.log('Caught exception: ' + err);
+//  console.log('Stacktrace: ');
+//	console.log(err.stack);
+//	console.log('Full, raw error: ');
+//	console.log(err);
+//	// TODO: is there some way to email us here (if on production) so that we know the server crashed?
+//	process.exit(1);
+//});
+
+
+
+/** DONE WITH CONFIGS & REQUIRES... BELOW IS THE ACTUAL APP CODE! **/
+
+// This includes and starts the API server (which MediaWiki makes requests to).
+console.log("== Starting the API Server ==");
+require("./server_api.js");
+
+// Start the Node Chat server (which browsers connect to).
+console.log("== Starting Node Chat Server ==");
 
 //configure express to use jade
 app.set('view engine', 'jade');
 app.set('view options', {layout: false});
-
 
 //setup routes
 app.get('/*.(js|css)', function(req, res){
@@ -93,7 +64,7 @@ app.get('/', function(req, res){
 
 // TODO: MUST REMOVE THIS WHEN WE HAVE MULTIPLE NODE SERVERS! (and figure out another solution to prune entries who are no longer connected... perhaps prune any time you try to send to them & they're not there?).
 console.log("Pruning old room memberships...");
-rc.keys( getKeyPrefix_usersInRoom()+":*", function(err, data){
+rc.keys( config.getKeyPrefix_usersInRoom()+":*", function(err, data){
 	if(err){
 		console.log("Error: while trying to get all room membership lists. Error msg: " + err);
 	} else {
@@ -132,7 +103,7 @@ function messageDispatcher(client, socket, data){
 	} else {
 		// The user is authed. Check to make sure their client sessionId still exists. If it doesn't, we probably banned them.
 		console.log("Checking to make sure user isn't banned.");
-		var sessionId = sessionIdsByKey[getKey_userInRoom(client.myUser.get('name'), client.roomId)];
+		var sessionId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
 		if((typeof sessionId == "undefined") || (sessionId != client.sessionId)){
 			// Message ignored. Log the reason.
 			if(typeof sessionId == "undefined"){
@@ -212,8 +183,8 @@ function authConnection(client, socket, authData){
 	console.log("Authentication info recieved from client. Verifying with Wikia MediaWiki app server...");
 
 	// Need to auth with the correct wiki. Lookup the hostname for the chat in redis.
-	console.log("Trying to find the wgServer for the room key: " + getKey_room( auth.get('roomId') ));
-	rc.hget(getKey_room( auth.get('roomId') ), 'wgServer', function(err, data) {
+	console.log("Trying to find the wgServer for the room key: " + config.getKey_room( auth.get('roomId') ));
+	rc.hget(config.getKey_room( auth.get('roomId') ), 'wgServer', function(err, data) {
 		if (err) {
 			console.log('Error getting wgServer for a room: ' + err);
 		} else if (data) {
@@ -290,7 +261,7 @@ function authConnection(client, socket, authData){
 						client.on('disconnect', function(){clientDisconnect(client)});
 
 						// BugzId 5752 - clear chat buffer if this is the first user in the room (to avoid confusion w/past chats).
-						rc.hlen(getKey_usersInRoom(client.roomId), function(err, numInRoom){
+						rc.hlen(config.getKey_usersInRoom(client.roomId), function(err, numInRoom){
 							if (err) {
 								console.log('Error: while trying to find number of people in room "' + client.roomId + '": ' + err);
 							} else if((numInRoom) && (numInRoom > 0)){
@@ -300,7 +271,7 @@ function authConnection(client, socket, authData){
 								console.log(data.username + " is the first person to re-enter a now-empty room " + client.roomId + ".");
 								console.log("Deleting the back-buffer before connecting them the rest of the way.");
 
-								rc.del(getKey_chatEntriesInRoom(client.roomId), function(err, delData){
+								rc.del(config.getKey_chatEntriesInRoom(client.roomId), function(err, delData){
 									finishConnectingUser(client, socket, data);
 								});
 							}
@@ -328,7 +299,7 @@ function authConnection(client, socket, authData){
  */
 function finishConnectingUser(client, socket, rawUserInfo){
 	var nodeChatModel = new models.NodeChatModel();
-	rc.lrange(getKey_chatEntriesInRoom(client.roomId), (-1 * NUM_MESSAGES_TO_SHOW_ON_CONNECT), -1, function(err, data) {
+	rc.lrange(config.getKey_chatEntriesInRoom(client.roomId), (-1 * config.NUM_MESSAGES_TO_SHOW_ON_CONNECT), -1, function(err, data) {
 		if (err) {
 			console.log('Error: ' + err);
 		} else if (data) {
@@ -346,7 +317,7 @@ function finishConnectingUser(client, socket, rawUserInfo){
 		// Load the initial userList
 		console.log("Finding members of roomId " + client.roomId);
 
-		rc.hgetall(getKey_usersInRoom( client.roomId ), function(err, usernameToData){
+		rc.hgetall(config.getKey_usersInRoom( client.roomId ), function(err, usernameToData){
 			if (err) {
 				console.log('Error: while trying to find members of room "' + client.roomId + '": ' + err);
 			} else if(usernameToData){
@@ -392,7 +363,7 @@ function finishConnectingUser(client, socket, rawUserInfo){
 
 			// If this same user is already in the sessionIdsByKey hash, then they must be connected in
 			// another browser. Kick that other instance before continuing (multiple instances cause all kinds of weirdness.
-			var existingId = sessionIdsByKey[getKey_userInRoom(client.myUser.get('name'), client.roomId)];
+			var existingId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
 			if(typeof existingId != "undefined"){
 				// Send the old client a notice that they're about to be disconnected and why.
 				var oldClient = socket.clients[existingId];
@@ -424,11 +395,11 @@ function finishConnectingUser(client, socket, rawUserInfo){
  */
 function formallyAddClient(client, socket, connectedUser){
 	// Add the user to the set of users in the room in redis.
-	var hashOfUsersKey = getKey_usersInRoom(client.roomId);
+	var hashOfUsersKey = config.getKey_usersInRoom(client.roomId);
 	var userData = client.myUser.attributes;
 	delete userData.id;
 
-	sessionIdsByKey[getKey_userInRoom(client.myUser.get('name'), client.roomId)] = client.sessionId;
+	sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)] = client.sessionId;
 	rc.hset(hashOfUsersKey, client.myUser.get('name'), JSON.stringify(userData), function(err, data){
 		// Broadcast the join to all clients.
 		broadcastToRoom(client, socket, {
@@ -446,7 +417,7 @@ function formallyAddClient(client, socket, connectedUser){
  */
 function clientDisconnect(client) {
 	// Remove the in-memory mapping of this user in this room to their sessionId
-	delete sessionIdsByKey[getKey_userInRoom(client.myUser.get('name'), client.roomId)];
+	delete sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
 
 	// Remove the user from the set of usernames in the current room (in redis).
 	if(client.doNotRemoveFromRedis){
@@ -454,7 +425,7 @@ function clientDisconnect(client) {
 		broadcastDisconnectionInfo(client, socket);
 	} else {
 		console.log("Disconnected: " + client.myUser.get('name') + " and about to remove them from the room in redis & broadcast the part and InlineAlert...");
-		var hashOfUsersKey = getKey_usersInRoom(client.roomId);
+		var hashOfUsersKey = config.getKey_usersInRoom(client.roomId);
 		rc.hdel(hashOfUsersKey, client.myUser.get('name'), function(err, data){
 			if (err) {
 				console.log('Error: while trying to remove user "' + client.myUser.get('name') + '" from room "' + client.roomId + '": ' + err);
@@ -474,7 +445,7 @@ function broadcastDisconnectionInfo(client, socket){
 	var DELAY_MILLIS = 7000;
 	setTimeout(function(){
 		// Now that the delay has passed, check that the user is still gone (if they're disconnecting/reconnecting, don't bother showing the part-message).
-		rc.hget(getKey_usersInRoom(client.roomId), client.myUser.get('name'), function(err, data){
+		rc.hget(config.getKey_usersInRoom(client.roomId), client.myUser.get('name'), function(err, data){
 			// If data is EMPTY, then the user is still gone, so we can actually broadcast the message now.
 			if(!data){
 				// Broadcast the 'part' to all clients.
@@ -491,60 +462,15 @@ function broadcastDisconnectionInfo(client, socket){
 
 
 // Start the main chat server listening.
-app.listen(CHAT_SERVER_PORT);
-console.log("Chat server running on port " + CHAT_SERVER_PORT);
+app.listen(config.CHAT_SERVER_PORT);
+console.log("Chat server running on port " + config.CHAT_SERVER_PORT);
 
-// Create the API server (which fills requests from the MediaWiki server).
-// TODO: IS THERE A CLEAN WAY TO EXTRACT THIS TO ANOTHER FILE?
-http.createServer(function (req, res) {
-	apiDispatcher(req, res, function(result){
-		// SUCCESS CALLBACK
-		res.writeHead(200, {'Content-Type': 'application/json'});
-		res.write( JSON.stringify(result) );
-		res.end();
-	}, function(errMsg){
-		// ERROR CALLBACK
-		res.writeHead(400, {'Content-Type': 'text/plain'});
-		var errorData = {
-			'errorMsg': errMsg
-		}
-		res.write( JSON.stringify(errorData) );
-		res.end();
-	});
 
-}).listen(API_SERVER_PORT);
-console.log("API server running on port " + API_SERVER_PORT);
 
-/**
- * Dispatch the request to the correct destination and instruct them to end up in the
- * resulting callbacks.
- */
-function apiDispatcher(req, res, successCallback, errorCallback){
-	var reqData = urlUtil.parse(req.url, true);
-	if(reqData.query.func){
-		var func = reqData.query.func.toLowerCase();
-		
-		if(func == "getdefaultroomid"){
-			// TODO: FIXME: ADD SOME TOKEN-VERIFICATION. This would make sure that only the MediaWiki app is creating rooms (it can check permissions, make sure the extraDataString is good, etc.).
-			// TODO: FIXME: ADD SOME TOKEN-VERIFICATION. This would make sure that only the MediaWiki app is creating rooms (it can check permissions, make sure the extraDataString is good, etc.).
 
-			api_getDefaultRoomId(reqData.query.wgCityId, reqData.query.defaultRoomName,
-								 reqData.query.defaultRoomTopic, reqData.query.extraDataString,
-								 successCallback, errorCallback);
 
-		} else if(func == "getcityidforroom"){
-			api_getCityIdForRoom(reqData.query.roomId, successCallback, errorCallback);
-		} else if(func == "getusersinroom"){
-			api_getUsersInRoom(reqData.query.roomId, successCallback, errorCallback);
-		} else if(func == "getstats"){
-			api_getStats(successCallback, errorCallback);
-		} else {
-			errorCallback("Function not recognized: " + func);
-		}
-	} else {
-		errorCallback("Must provide a 'func' to execute.");
-	}
-}
+
+
 
 
 
@@ -570,7 +496,7 @@ function kickBan(client, socket, msg){
 	var userToBan = kickBanCommand.get('userToBan');
 
 	// Find the hostname to make the request to.
-	rc.hget(getKey_room(client.roomId), 'wgServer', function(err, data) {
+	rc.hget(config.getKey_room(client.roomId), 'wgServer', function(err, data) {
 		if (err) {
 			console.log('Error: getting wgServer for a room: ' + err);
 		} else if (data) {
@@ -642,7 +568,7 @@ function giveChatMod(client, socket, msg){
 	var userToPromote = giveChatModCommand.get('userToPromote');
 
 	// Find the hostname to make the request to.
-	rc.hget(getKey_room(client.roomId), 'wgServer', function(err, data) {
+	rc.hget(config.getKey_room(client.roomId), 'wgServer', function(err, data) {
 		if (err) {
 			console.log('Error: getting wgServer for a room: ' + err);
 		} else if (data) {
@@ -690,7 +616,7 @@ function giveChatMod(client, socket, msg){
 						// Broadcast inline-alert saying that A has made B a chatmoderator.
 						broadcastInlineAlert(client, socket, 'chat-inlinealert-a-made-b-chatmod', [client.myUser.get('name'), promotedUser.get('name')], function(){
 							// Force the user to reconnect so that their real state is fetched again and is broadcast to all users (whose models will be updated).
-							var promotedClientId = sessionIdsByKey[getKey_userInRoom(promotedUser.get('name'), client.roomId)];
+							var promotedClientId = sessionIdsByKey[config.getKey_userInRoom(promotedUser.get('name'), client.roomId)];
 							if(typeof promotedClientId != 'undefined'){
 								socket.clients[promotedClientId].send({
 									event: 'forceReconnect',
@@ -713,7 +639,7 @@ function giveChatMod(client, socket, msg){
 function kickUserFromRoom(client, socket, userToKick, roomId, callback){
 	// Removing the user from the room.
 	console.log("Kicking " + userToKick.get('name') + " from room " + roomId);
-	var hashOfUsersKey = getKey_usersInRoom(roomId);
+	var hashOfUsersKey = config.getKey_usersInRoom(roomId);
 	rc.hdel(hashOfUsersKey, userToKick.get('name'), function(){
 		kickUserFromServer(client, socket, userToKick, roomId);
 
@@ -731,7 +657,7 @@ function kickUserFromRoom(client, socket, userToKick, roomId, callback){
 function kickUserFromServer(client, socket, userToKick, roomId){
 	// Force-close the kicked user's connection so that they can't interact anymore.
 	console.log("Force-closing connection for kicked user: " + userToKick.get('name'));
-	var kickedClientId = sessionIdsByKey[getKey_userInRoom(userToKick.get('name'), roomId)];
+	var kickedClientId = sessionIdsByKey[config.getKey_userInRoom(userToKick.get('name'), roomId)];
 
 	if(typeof kickedClientId != 'undefined'){
 		// If we're kicking the user (for whatever reason) they shouldn't try to auto-reconnect.
@@ -764,7 +690,7 @@ function setStatus(client, socket, setStatusData){
 	var userName = client.myUser.get('name');
 	var roomId = client.roomId;
 	var userJson;
-	rc.hget( getKey_usersInRoom( roomId ), userName, function(err, userData){
+	rc.hget( config.getKey_usersInRoom( roomId ), userName, function(err, userData){
 		if (err) {
 			console.log('Error: while trying to load user data for "' + userName + '" in room: "' + roomId + '": ' + err);
 		} else if(userData){
@@ -772,7 +698,7 @@ function setStatus(client, socket, setStatusData){
 			userJson = JSON.parse( userData );
 			userJson.statusState = setStatusCommand.get('statusState');
 			userJson.statusMessage = setStatusCommand.get('statusMessage');
-			rc.hset( getKey_usersInRoom( roomId ), userName, JSON.stringify(userJson), function(){
+			rc.hset( config.getKey_usersInRoom( roomId ), userName, JSON.stringify(userJson), function(){
 				// Broadcast the user as an update to everyone in the room
 				var userToUpdate = new models.User( userJson );
 				broadcastToRoom(client, socket, {
@@ -786,22 +712,6 @@ function setStatus(client, socket, setStatusData){
 	});
 } // end setStatus()
 
-
-
-/** KEY BUILDING / ACCESSING FUNCTIONS **/
-
-function getKey_listOfRooms(cityId){ return "rooms_on_wiki:" + cityId; }
-function getKey_nextRoomId(){ return "next.room.id"; }
-function getKeyPrefix_room(){ return "room"; }
-function getKey_room(roomId){ return getKeyPrefix_room() + ":" + roomId; }
-function getKey_userInRoom(userName, roomId){
-	// Key representing the presence of a single user in a specific room (that user may be in multiple rooms).
-	// used by the in-memory sessionIdByKey hash, not by redis.. so not prefixed.
-	return roomId + ":" + userName;
-}
-function getKeyPrefix_usersInRoom(){ return "users_in_room"; }
-function getKey_usersInRoom(roomId){ return getKeyPrefix_usersInRoom() +":" + roomId; } // key for set of all usernames in the given room
-function getKey_chatEntriesInRoom(roomId){ return "chatentries:" + roomId; }
 
 
 /** HELPER FUNCTIONS **/
@@ -859,7 +769,7 @@ function storeAndBroadcastChatEntry(client, socket, chatEntry, callback){
         var expandedMsg = chatEntry.get('id') + ' ' + chatEntry.get('name') + ': ' + chatEntry.get('text');
         console.log('(' + client.sessionId + ':' + chatEntry.get('name') + ') ' + expandedMsg);
 
-		var chatEntriesInRoomKey = getKey_chatEntriesInRoom(client.roomId);
+		var chatEntriesInRoomKey = config.getKey_chatEntriesInRoom(client.roomId);
         rc.rpush(chatEntriesInRoomKey, chatEntry.xport(), function(){
 			// Keep the list to a defined max length.
 			pruneExtraMessagesFromRoom( chatEntriesInRoomKey );
@@ -878,10 +788,10 @@ function pruneExtraMessagesFromRoom(chatEntriesInRoomKey){
 	rc.llen(chatEntriesInRoomKey, function(err, len){
 		if(err){
 			console.log("Error: while trying to get length of list of messages in '" + chatEntriesInRoomKey + "'. Error msg: " + err);
-		} else if( len > MAX_MESSAGES_IN_BACKLOG + 1 ){
-			console.log("Found a bunch of extra messages in '" + chatEntriesInRoomKey + "'.  Getting rid of the oldest " + (len - MAX_MESSAGES_IN_BACKLOG) + " of them.");
-			rc.ltrim(chatEntriesInRoomKey, (-1 * MAX_MESSAGES_IN_BACKLOG), -1, redis.print);
-		} else if( len == (MAX_MESSAGES_IN_BACKLOG + 1)){
+		} else if( len > config.MAX_MESSAGES_IN_BACKLOG + 1 ){
+			console.log("Found a bunch of extra messages in '" + chatEntriesInRoomKey + "'.  Getting rid of the oldest " + (len - config.MAX_MESSAGES_IN_BACKLOG) + " of them.");
+			rc.ltrim(chatEntriesInRoomKey, (-1 * config.MAX_MESSAGES_IN_BACKLOG), -1, redis.print);
+		} else if( len == (config.MAX_MESSAGES_IN_BACKLOG + 1)){
 			// This seems like it'd be faster than ltrim even though ltrim says it's O(N) where N is number to remove and this is O(1).
 			console.log("Trimming extra entry from list of messages in '" + chatEntriesInRoomKey + "'");
 			rc.lpop(chatEntriesInRoomKey, redis.print);
@@ -928,24 +838,24 @@ function broadcastToRoom(client, socket, data, callback){
 
 	// Get the set of members from redis.
 	console.log("Broadcasting to room " + roomId);
-	rc.hgetall(getKey_usersInRoom( roomId ), function(err, usernameToData){
+	rc.hgetall(config.getKey_usersInRoom( roomId ), function(err, usernameToData){
 		if (err) {
 			console.log('Error: while trying to find members of room "' + roomId + '": ' + err);
 		} else {
-			//console.log("Raw data from key " + getKey_usersInRoom( roomId ) + ": ");
+			//console.log("Raw data from key " + config.getKey_usersInRoom( roomId ) + ": ");
 			//console.log(usernameToData);
 			_.each(usernameToData, function(userData){
 				var userModel = new models.User( JSON.parse(userData) );
 				
 				console.log("\tSENDING TO " + userModel.get('name'));
-				var socketId = sessionIdsByKey[ getKey_userInRoom(userModel.get('name'), roomId) ];
+				var socketId = sessionIdsByKey[ config.getKey_userInRoom(userModel.get('name'), roomId) ];
 				if(socketId){
 					console.log("\tSOCKETID: " + socketId);
 					if( typeof socket.clients[socketId] == "undefined"){
 						// This happened once (and before this check was here, crashed the server).  Not sure if this is just a normal side-effect of the concurrency or is a legit
 						// problem. This logging should help in debugging if this becomes an issue.
 						console.log("WARNING: Somehow the client socket for " + userModel.get('name') + " is totally closed but their socketId is still in the hash. Potentially a race-condition?");
-						delete sessionIdsByKey[ getKey_userInRoom(userModel.get('name'), roomId) ];
+						delete sessionIdsByKey[ config.getKey_userInRoom(userModel.get('name'), roomId) ];
 					} else {
 						socket.clients[socketId].send(data);
 					}
@@ -1035,268 +945,3 @@ function debugObject(obj, padding){
 		console.log(padding + "Not an object: " + obj);
 	}
 }
-
-/** API FUNCTIONS (for use by the MediaWiki server) **/
-
-/**
- * Returns the id of the default chat for the given wiki.
- *
- * Expects the deafult room name and default topic name because those require MediaWiki-side i18n.
- *
- * If the chat doesn't exist, creates it.
- *
- * As per the API convention, passes json on success to the successCallback or an error message (a string) to
- * the errorCallback on error.
- */
-function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDataString, successCallback, errorCallback){
-	// See if there are any rooms for this wiki and if there are, get the first one.
-	var roomId = "";
-	var roomName = "";
-	var roomTopic = "";
-
-	var keyForListOfRooms = getKey_listOfRooms(cityId);
-	//console.log("About to get rooms using key: " + keyForListOfRooms);
-	rc.llen(keyForListOfRooms, function(err, numRooms){
-		if (err) {
-			console.log('Warning: while getting length of list of rooms for wiki with cityId "'+ cityId + '": ' + err);
-
-			// No luck loading the room... create it.
-			api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, successCallback, errorCallback);
-		} else if (numRooms && (numRooms != 0)) {
-			//console.log("Found " + numRooms + " rooms on wiki with city '" + cityId + "'...");
-			var roomIds = rc.lrange(keyForListOfRooms, 0, 1, function(err, roomIds){
-				if (err) {
-					console.log('Warning: while getting first room for cityId "'+ cityId + '": ' + err);
-
-					// No luck loading the room... create it.
-					api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, successCallback, errorCallback);
-				} else if(roomIds){
-					// For now, if there is more than one wiki in the room, we just grab the first as the default room.
-					roomId = roomIds[0];
-					var roomKey = getKey_room(roomId);
-					rc.hgetall(roomKey, function(err, roomData){
-						if(err){
-							console.log("Warning: couldn't get hash data for room w/key '"+ roomKey + "': " + err);
-
-							// No luck loading the room... create it.
-							api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, successCallback, errorCallback);
-						} else {
-						
-							console.log("Room data loaded for " + roomData.room_name);
-							//console.log(roomData);
-						
-							var result = {
-								'roomId': roomId,
-								'roomName': roomData.room_name,
-								'roomTopic': roomData.room_topic
-							};
-							successCallback(result);
-						}
-					});
-				} else {
-					console.log("Warning: First room not found even though there were rooms a moment ago for cityId: " + cityId);
-
-					// No luck loading the room... create it.
-					api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, successCallback, errorCallback);
-				}
-			});
-		} else {
-			// No luck loading the room... create it.
-			api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, successCallback, errorCallback);
-		}
-	});
-} // end api_getDefaultRoomId()
-
-/**
- * Create a chat room on the given wiki with the given name and topic, and return its roomId.
- *
- * The 'extraDataString' is a json string of a hash of data which should be stored in the 'room'
- * object for use in the chat server later.
- */
-function api_createChatRoom(cityId, roomName, roomTopic, extraDataString, successCallback, errorCallback){
-	var roomId = "";
-
-	// Get the next id that a new room should have.
-	rc.incr(getKey_nextRoomId(), function(err, roomId){
-		if (err) {
-			var errorMsg = 'Error: while getting length of list of rooms for wiki with cityId "'+ cityId + '": ' + err;
-			console.log(errorMsg);
-			errorCallback(errorMsg);
-		} else {
-			// Create the room.
-			var roomKey = getKey_room( roomId );
-			var extraData = {};
-			if(extraDataString){
-				try{
-					extraData = JSON.parse( extraDataString );
-				} catch(e){
-					console.log("Error: while parsing extraDataString. Error is: ");
-					console.log(e);
-					extraData = {};
-				}
-			}
-
-			// Store the room in redis.
-			rc.hmset(roomKey, {
-				'room_id': roomId,
-				'room_name': roomName,
-				'room_topic': roomTopic,
-				'wgCityId': cityId,
-				'wgServer': extraData.wgServer,
-				'wgArticlePath': extraData.wgArticlePath
-			});
-
-			// Add the room to the list of rooms on this wiki.
-			rc.rpush(getKey_listOfRooms(cityId), roomId);
-
-			var result = {
-				'roomId': roomId,
-				'roomName': roomName,
-				'roomTopic': roomTopic
-			};
-			successCallback(result);
-		}
-	});
-} // end api_createChatRoom()
-
-/**
- * Given a roomId, returns the cityId which it has in redis (as JSON).
- */
-function api_getCityIdForRoom(roomId, successCallback, errorCallback){
-	rc.hget(getKey_room(roomId), 'wgCityId', function(err, cityId){
-		if (err) {
-			var errorMsg = 'Error: while getting wgCityId of room: "'+ roomId + '": ' + err;
-			console.log(errorMsg);
-			errorCallback(errorMsg);
-		} else {
-			var result = {
-				'cityId': cityId
-			};
-			successCallback(result);
-		}
-	});
-} // end api_getCityIdForRoom()
-
-/**
- * Given a roomId, returns a list of the usernames of all users in the room (as JSON).
- */
-function api_getUsersInRoom(roomId, successCallback, errorCallback){
-	rc.hkeys(getKey_usersInRoom(roomId), function(err, users){
-		if (err) {
-			var errorMsg = 'Error: while getting wgCityId of room: "'+ roomId + '": ' + err;
-			console.log(errorMsg);
-			errorCallback(errorMsg);
-		} else {
-			if(!users){users = {};} // if the key doesn't exist, return an empty userlist
-			successCallback(users);
-		}
-	});
-} // end api_getUsersInRoom()
-
-/**
- * Returns some JSON of stats about the server (to help judge the usage-level for making scaling estimations).
- */
-function api_getStats(successCallback, errorCallback){
-
-	console.log("== GETTING DETAILED STATS ABOUT THE STATE OF THE SERVER ==");
-
-	var stats = {
-		totalRooms: 0,
-		roomsWithOccupants: 0,
-		totalConnectedUsers: 0,
-		usersInMostPopularRoom: 0,
-		mostPopularRoom: {} // will contain the hash of data about the most popular room.
-	};
-
-	// Find total number of rooms.
-	console.log("STATS: FINDING NUMBER OF ROOMS...");
-	rc.keys(getKey_room("*"), function(err, roomKeys){
-		if (err) {
-			var errorMsg = 'Error: while getting all rooms: ' + err;
-			console.log(errorMsg);
-			errorCallback(errorMsg);
-		} else {
-			// Count the rooms that have been created on this server (many may be empty).
-			var totalRooms = 0, key;
-			for (key in roomKeys) {
-				if (roomKeys.hasOwnProperty(key)){
-					totalRooms++;
-				}
-			}
-			stats.totalRooms = totalRooms;
-
-			// Iterate through rooms and find number of occupants total (and track number of rooms which have > 0 users in them right now).
-			var roomsWithOccupants = 0;
-			var totalConnectedUsers = 0;
-			var usersInMostPopularRoom = 0;
-			var mostPopularRoomKey = "";
-			console.log("STATS: FINDING OCCUPANTS PER ROOM & RELATED STATS...");
-			rc.keys(getKey_usersInRoom("*"), function(err, usersInRoomKeys){
-				if (err) {
-					var errorMsg = 'Error: while getting all users_in_room keys: ' + err;
-					console.log(errorMsg);
-					errorCallback(errorMsg);
-				} else {
-					if(usersInRoomKeys.length == 0){
-						console.log("STATS: No users in any rooms yet.");
-						errorCallback("There are no users in any rooms at the moment.");
-					} else {
-
-						// Die for now... these stats are all wrong because of race-conditions.
-						console.log("STATS: ");
-						console.log(stats);
-						successCallback( stats );
-					
-						// NOTE: this won't work because the redis calls are async, so they're going in paraallel. It gets quite wrong quite fast.
-						/*
-						console.log("STATS: Found " + usersInRoomKeys.length + " room keys.");
-						for (var index = 0; index < usersInRoomKeys.length; index++){
-							var usersInRoomKey = usersInRoomKeys[index];
-							console.log("STATS: Looking for number of users in roomkey: " + usersInRoomKey + " (index=" + index + ").");
-							rc.hlen(usersInRoomKey, function(err, numUsersInRoom){
-								console.log("STATS: Roomkey " + usersInRoomKey + " has " + numUsersInRoom + " users in it (index=" + index + ").");
-								if (err) {
-									var errorMsg = 'Error: while getting number of users in room with key: ' + numUsersInRoom + ' ...error was: '+ err;
-									console.log(errorMsg);
-									errorCallback(errorMsg);
-								} else if(numUsersInRoom && (numUsersInRoom > 0)){
-									roomsWithOccupants++;
-									totalConnectedUsers += numUsersInRoom;
-									if(numUsersInRoom > usersInMostPopularRoom){
-										console.log("There were " + usersInMostPopularRoom + " users in room " + mostPopularRoomKey + " but there are " + numUsersInRoom + " in " + usersInRoomKey);
-										usersInMostPopularRoom = numUsersInRoom;
-										mostPopularRoomKey = usersInRoomKey;
-									}
-								}
-								
-								// If this is the last key in the array, do the follow-up processing.
-								if(index + 1 >= usersInRoomKeys.length){
-									// Find the info about the most popular room.
-									mostPopularRoomKey = mostPopularRoomKey.replace(new RegExp(getKeyPrefix_usersInRoom()), getKeyPrefix_room()); // convert from users_in_room key to key for info about room.
-									console.log("STATS: FINDING INFO ABOUT THE MOST POPULAR ROOM (" + mostPopularRoomKey + ")...");
-									rc.hgetall(mostPopularRoomKey, function(err, roomData){
-										if (err) {
-											var errorMsg = 'Error: while getting room information about most popular room with key: ' + mostPopularRoomKey + ' ...error was: '+ err;
-											console.log(errorMsg);
-											errorCallback(errorMsg);
-										} else {
-											stats.mostPopularRoom = roomData;
-										}
-										
-										stats.roomsWithOccupants = roomsWithOccupants;
-										stats.totalConnectedUsers = totalConnectedUsers;
-										stats.usersInMostPopularRoom = usersInMostPopularRoom;
-										console.log("STATS: ");
-										console.log(stats);
-										successCallback( stats );
-									});
-								}
-							});
-						}
-						*/
-					}
-				}
-			});
-		}
-	});
-} // end api_getStats()
