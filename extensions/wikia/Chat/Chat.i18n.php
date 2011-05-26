@@ -7,9 +7,13 @@ $messages['en'] = array(
 	'chat-no-login' => 'You must be logged in to chat.',
 	'chat-no-login-text' => 'Please login to chat.',
 	'chat-default-topic' => 'Welcome to the $1 chat',
+	
+	// Many of these are sent from server.js to the client (which uses $.msg() to translate the message).
 	'chat-user-parted' => '$1 has left the chat.',
 	'chat-user-was-kickbanned' => '$1 was kickbanned.',
 	'chat-inlinealert-a-made-b-chatmod' => "$1 has made <strong>$2</strong> a chat moderator.",
+	'chat-err-connected-from-another-browser' => 'You have connected from another browser. This connection will be closed.',
+	'chat-err-communicating-with-mediawiki' => 'Error communicating with MediaWiki server.',
 
 	// Possible errors when trying to kick/ban a user:
 	'chat-ban-cant-ban-moderator' => "You cannot kick/ban another Chat Moderator.",
