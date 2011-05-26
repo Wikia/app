@@ -21,10 +21,13 @@ class ChatModule extends Module {
 	var $mainPageURL;
 	var $wgFavicon = '';
 	var $jsMessagePackagesUrl = '';
+	var $app;
 
 	public function executeIndex() {
 		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId, $wgFavicon;
 		wfProfileIn( __METHOD__ );
+		
+		$this->app = WF::build('App');
 
 		// String replacement logic taken from includes/Skin.php
 		$this->wgFavicon = str_replace('images.wikia.com', 'images1.wikia.nocookie.net', $wgFavicon);
@@ -78,7 +81,7 @@ class ChatModule extends Module {
 		$this->themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wgCityId );
 		
 		// Since we don't emit all of the JS headscripts or so, fetch the URL to load the JS Messages packages.
-		$this->jsMessagePackagesUrl = JSMessages::getPackagesUrl();
+		$this->jsMessagePackagesUrl = JSMessages::getPackagesUrl( $this->app );
 
 		wfProfileOut( __METHOD__ );
 	}

@@ -167,7 +167,7 @@ class JSMessages {
 		wfProfileIn(__METHOD__);
 		wfDebug(__METHOD__ . "\n");
 
-		$url = JSMessages::getPackagesUrl();
+		$url = JSMessages::getPackagesUrl( $this->app );
 		if($url != ""){
 			// request a script
 			$this->app->getGlobal('wgOut')->addScriptFile($url);
@@ -182,7 +182,7 @@ class JSMessages {
 	 *
 	 * If there are no packages to load, returns an empty-string.
 	 */
-	public static function getPackagesUrl(){
+	public static function getPackagesUrl( $app ){
 		wfProfileIn( __METHOD__ );
 	
 		// get items to be loaded via JS file
@@ -194,10 +194,10 @@ class JSMessages {
 			sort($packages);
 
 			// additional URL parameters
-			$lang = $this->app->getGlobal('wgLang')->getCode();
-			$cb = $this->app->getGlobal('wgMemc')->get(wfMemcKey('wgMWrevId'));
+			$lang = $app->getGlobal('wgLang')->getCode();
+			$cb = $app->getGlobal('wgMemc')->get(wfMemcKey('wgMWrevId'));
 
-			$url = wfAppendQuery($this->app->getGLobal('wgScript'), array(
+			$url = wfAppendQuery($app->getGLobal('wgScript'), array(
 				'action' => 'ajax',
 				'rs' => 'JSMessagesAjax',
 				'packages' => implode(',', $packages),
