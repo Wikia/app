@@ -37,32 +37,6 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 		case 'valuewiki':
 			return AdDriver.adProviderLiftium;
 			break;
-		case 'glee':
-		case 'lyricwiki':
-			switch (slotname) {
-				case 'CORP_TOP_RIGHT_BOXAD':
-				case 'HOME_TOP_RIGHT_BOXAD':
-				case 'HOME_TOP_RIGHT_BUTTON':
-				case 'TEST_HOME_TOP_RIGHT_BOXAD':
-				case 'TEST_TOP_RIGHT_BOXAD':
-				case 'TOP_RIGHT_BOXAD':
-				case 'TOP_RIGHT_BUTTON':
-					return AdDriver.adProviderLiftium;
-					break;
-				default:
-			}
-			break;
-		case 'howto':
-			switch (slotname) {
-				case 'CORP_TOP_LEADERBOARD':
-				case 'HOME_TOP_LEADERBOARD':
-				case 'TOP_LEADERBOARD':
-					return 'NO-AD';
-					break;	
-				default:
-					return AdDriver.adProviderLiftium;
-			}
-			break;
 		case 'cookbook_import':
 			//switch (slotname) {
 				//case 'LEFT_SKYSCRAPER_2':
@@ -100,17 +74,6 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 	}
 
 	switch (slotname) {
-		case 'HOME_TOP_RIGHT_BUTTON':
-		case 'TOP_RIGHT_BUTTON':
-			// special case for Lyrics above
-			// enabled for English gaming wikis only
-			if (typeof window.cityShort == 'undefined' || window.cityShort != 'gaming') {
-				return 'NO-AD'
-			}
-			if (wgContentLanguage != 'en') {
-				return 'NO-AD'
-			}
-			break;
 		case 'MIDDLE_RIGHT_BOXAD':
 			// currently MIDDLE_RIGHT_BOXAD is reserved for partner widgets
 			// (e.g. eBay search). Don't make ad call if prerequisites aren't
