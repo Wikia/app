@@ -84,7 +84,7 @@ class WikiaLabs {
 	}
 
 	public function saveFeedback( $projectId, User $user, $rating, $message ) {
-		if( !$user->isAllowed( 'wikialabsuser' ) ) {
+		if( !$user->isAllowed( 'wikialabsuser' ) && !$user->isAllowed( 'wikialabsview' ) ) {
 			return array( 
 				'status' => self::STATUS_ERROR, 
 				'errors' => array(wfMsg('wikialabs-feedback-validator-user-not-allowed')) 
@@ -123,11 +123,9 @@ class WikiaLabs {
 			}
 			$out['in'] = $in;
 			$out['status'] = self::STATUS_ERROR;
-			
 			return $out;
 		}
 		
-           
 		if( true !== ($result = $this->checkSpam($user->getName(), $project, $projectId)) ) {
 			return $result;
 		}
@@ -136,7 +134,6 @@ class WikiaLabs {
 		if(!empty($message)) {
 			$this->saveFeedbackInFogbugz( $project, $message, $user->getEmail() );
 		}
-
 		return $out;
 	}
 	
