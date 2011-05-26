@@ -79,8 +79,8 @@ var STATUS_STATE_AWAY = 'away';
 			this.set({
 				isInlineAlert: true, // so that the view can detect that this should be displayed specially
 				text: options.text,
-				wfMsg: '',
-				msgParams: [],
+				wfMsg: options.wfMsg,
+				msgParams: options.msgParams,
 			});
 		}
 	});
