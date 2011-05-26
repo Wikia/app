@@ -83,6 +83,10 @@ function efPhalanxInit() {
 
 	// RT#93196 - prevent use of user2user email
 	$wgHooks['UserCanSendEmail'][] = 'UserBlock::onUserCanSendEmail';
+
+	// fb#5311 - prevent a phalanx blocked name from being created.
+	$wgHooks['AbortNewAccount'][] = 'UserBlock::onAbortNewAccount';
+	$wgHooks['cxValidateUserName'][] = 'UserBlock::onValidateUserName';
 }
 
 

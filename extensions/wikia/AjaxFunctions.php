@@ -28,11 +28,18 @@ function cxValidateUserName () {
 	wfProfileIn(__METHOD__);
 
 	$uName = $wgRequest->getVal('uName');
-	
+
 	$result = wfValidateUserName($uName);
 
+	if ( $result === true ) {
+		$message = '';
+		if ( !wfRunHooks("cxValidateUserName",array($uName,&$message)) ) {
+			$result = $message;
+		}
+	}
+
 	if( $result === true ) {
-		$data = array('result' => 'OK' );	
+		$data = array('result' => 'OK' );
 	} else {
 		$data = array('result' => 'INVALID', 'msg' => wfMsg($result), 'msgname' => $result );
 	}
@@ -80,14 +87,14 @@ function wfValidateUserName($uName){
 			if(User::idFromName($uName) != 0) {
 				$result = 'userlogin-bad-username-taken';
 			}
-			
+
 			global $wgReservedUsernames;
 			if(in_array($uName, $wgReservedUsernames)){
 				$result = 'userlogin-bad-username-taken'; // if we returned 'invalid', that would be confusing once a user checked and found that the name already met the naming requirements.
 			}
 		}
 	}
-	
+
 	wfProfileOut(__METHOD__);
 	return $result;
 }
