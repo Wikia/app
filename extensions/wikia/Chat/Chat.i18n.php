@@ -7,6 +7,9 @@ $messages['en'] = array(
 	'chat-no-login' => 'You must be logged in to chat.',
 	'chat-no-login-text' => 'Please login to chat.',
 	'chat-default-topic' => 'Welcome to the $1 chat',
+	'chat-user-parted' => '$1 has left the chat.',
+	'chat-user-was-kickbanned' => '$1 was kickbanned.',
+	'chat-inlinealert-a-made-b-chatmod' => "$1 has made <strong>$2</strong> a chat moderator.",
 
 	// Possible errors when trying to kick/ban a user:
 	'chat-ban-cant-ban-moderator' => "You cannot kick/ban another Chat Moderator.",
