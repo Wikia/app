@@ -63,7 +63,8 @@ var STATUS_STATE_AWAY = 'away';
 			'msgType': 'chat', // used by the server to determine how to handle one of these objects.
 			'name': '',
 			'text': '',
-			'avatarSrc': ''
+			'avatarSrc': '',
+			'timeStamp': ''
 		}
 	});
 	/**
