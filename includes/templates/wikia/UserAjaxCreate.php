@@ -140,6 +140,7 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 <?php if (!empty($aLanguages) && is_array($aLanguages)) : ?>
 <?php
 	foreach ($aLanguages as $sLang => $sLangName) :
+		$selected = '';
 		if ( empty($isSelected) && ( $wgLanguageCode == $sLang ) ) :
 			$isSelected = true;
 			$selected = ' selected="selected"';
