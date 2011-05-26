@@ -19,9 +19,13 @@ class Chat {
 	 * from chat on the current wiki. This can be reversed by removing them from
 	 * the 'bannedfromchat' group.
 	 *
+	 * Will set doKickAnyway to true if the user should be kicked despite any error
+	 * messages (this is used primarily when the user is already banned from the wiki.
+	 * in that case, there is an error, but if the user is present they should be kicked).
+	 *
 	 * Returns true on success, returns an error message as a string on failure.
 	 */
-	static public function banUser($userNameToKickBan){
+	static public function banUser($userNameToKickBan, &$doKickAnyway=false){
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
 
@@ -34,6 +38,8 @@ class Chat {
 			} else {
 				if( !Chat::canChat($userToKickBan) ){
 					$errorMsg .= wfMsg('chat-ban-already-banned', $userToKickBan->getName()). "\n";
+					// If the user is already banned... make sure they get kicked if they're somehow still in the room (eg: they got banned from somewhere other than the Chat interface).
+					$doKickAnyway = true;
 				} else {
 					// Add the user to the banned group for this wiki.
 					$BANNED_GROUP = "bannedfromchat";
