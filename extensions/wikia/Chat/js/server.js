@@ -40,9 +40,6 @@ WIKIA_PROXY_HOST = "127.0.0.1";
 WIKIA_PROXY_PORT = 6081;
 
 
-// NOTE: MUST REPLACE activeClients BY JUST USING rc.hlen(getKey_usersInRoom(client.roomId)); ... IT'S O(1) .. alternately, we could keep both as a way to doublecheck.  NOTE: activeClients is way wrong & is way high. REMOVE IT!!
-// NOTE: MUST REPLACE activeClients BY JUST USING rc.hlen(getKey_usersInRoom(client.roomId)); ... IT'S O(1) .. alternately, we could keep both as a way to doublecheck.  NOTE: activeClients is way wrong & is way high. REMOVE IT!!
-
 // TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
 //process.on('uncaughtException', function (err) {
 //  console.log('Caught exception: ' + err);
@@ -330,8 +327,6 @@ function authConnection(client, socket, authData){
  * This adds the user to the room in redis and sends the initial state to the client.
  */
 function finishConnectingUser(client, socket, rawUserInfo){
-	rc.hincrby(getKey_room(client.roomId), 'activeClients', 1);
-
 	var nodeChatModel = new models.NodeChatModel();
 	rc.lrange(getKey_chatEntriesInRoom(client.roomId), (-1 * NUM_MESSAGES_TO_SHOW_ON_CONNECT), -1, function(err, data) {
 		if (err) {
@@ -464,9 +459,6 @@ function clientDisconnect(client) {
 			if (err) {
 				console.log('Error: while trying to remove user "' + client.myUser.get('name') + '" from room "' + client.roomId + '": ' + err);
 			} else {
-				// Decrement the number of active clients in the room.
-				rc.hincrby(getKey_room(client.roomId), 'activeClients', -1);
-
 				broadcastDisconnectionInfo(client, socket);
 			}
 		});
@@ -723,8 +715,6 @@ function kickUserFromRoom(client, socket, userToKick, roomId, callback){
 	console.log("Kicking " + userToKick.get('name') + " from room " + roomId);
 	var hashOfUsersKey = getKey_usersInRoom(roomId);
 	rc.hdel(hashOfUsersKey, userToKick.get('name'), function(){
-		rc.hincrby(getKey_room(client.roomId), 'activeClients', -1);
-
 		kickUserFromServer(client, socket, userToKick, roomId);
 
 		if(typeof callback == "function"){
@@ -875,7 +865,7 @@ function storeAndBroadcastChatEntry(client, socket, chatEntry, callback){
 			pruneExtraMessagesFromRoom( chatEntriesInRoomKey );
 		
 			// Send to everyone in the room.
-			broadcastChatEntry(client, socket, chatEntry, callback);
+			broadcastChatEntryToRoom(client, socket, chatEntry, callback);
 		});
     });
 } // end chatMessage()
@@ -913,21 +903,19 @@ function broadcastInlineAlert(client, socket, wfMsg, msgParams, callback){
 		wfMsg: wfMsg,
 		msgParams: msgParams
 	});
-	broadcastChatEntry(client, socket, inlineAlert, callback);
+	broadcastChatEntryToRoom(client, socket, inlineAlert, callback);
 } // end broadcastInlineAlert()
 
 /**
  * Send the 'chat:add' update to all clients in the chat room.  This assumes that the caller
  * has already added the chatEntry to the model if it wants the chatEntry to be in the model.
- *
- * TODO: RENAME TO broadcastChatEntryToRoom?
  */
-function broadcastChatEntry(client, socket, chatEntry, callback){
+function broadcastChatEntryToRoom(client, socket, chatEntry, callback){
 	broadcastToRoom(client, socket, {
 		event: 'chat:add',
 		data:chatEntry.xport()
 	}, callback);
-} // end broadcastChatEntry()
+} // end broadcastChatEntryToRoom()
 
 /**
  * Broadcasts the 'data' to all of the clients who are in the room specified
@@ -1153,7 +1141,6 @@ function api_createChatRoom(cityId, roomName, roomTopic, extraDataString, succes
 				'room_id': roomId,
 				'room_name': roomName,
 				'room_topic': roomTopic,
-				'activeClients': 0,
 				'wgCityId': cityId,
 				'wgServer': extraData.wgServer,
 				'wgArticlePath': extraData.wgArticlePath
