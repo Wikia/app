@@ -9,6 +9,7 @@ class LatestPhotosModule extends Module {
 	var $enableEmptyGallery;
 	var $total;
 
+	var $wgEnableUploads;
 	var $wgStylePath;
 	var $wgUser;
 

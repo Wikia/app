@@ -26,13 +26,12 @@
 	if (!empty($action)) {
 		echo wfRenderModule('MenuButton', 'Index', array('action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName));
 	}
-	if (!empty($isNewFiles)) {
-?>
 
-	<?php $disabled = Wikia::specialPageLink('Upload', 'oasis-add-photo', (!$wgUser->isLoggedIn() ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo', 'sprite photo') ?>
-
-<?php
+	// "Add a photo" button
+	if (!empty($isNewFiles) && !empty($wgEnableUploads)) {
+		echo Wikia::specialPageLink('Upload', 'oasis-add-photo', (!$wgUser->isLoggedIn() ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo', 'sprite photo');
 	}
+
 	// render page type line
 	if ($pageSubtitle != '') {
 ?>
