@@ -61,6 +61,7 @@
 	<!-- HTML Templates -->
 	<script type='text/template' id='message-template'>
 		<img class="avatar" src="<%= avatarSrc %>"/>
+		<time><%= timeStamp %></time>
 		<span class="username"><%= name %></span>
 		<span class="message"><%= text %></span>
 	</script>

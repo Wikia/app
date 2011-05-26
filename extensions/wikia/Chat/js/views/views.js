@@ -58,6 +58,21 @@ var ChatView = Backbone.View.extend({
 			$(this.el).addClass('inline-alert');
 		}
 		
+		// Timestamps
+		if(this.model.get('timeStamp').toString().match(/^\d+$/)) {
+			var date = new Date(this.model.get('timeStamp'));
+			var hours;
+			if (date.getHours() == 0) {
+				hours = 12;
+			} else if (date.getHours() > 12) {
+				hours = date.getHours() - 12;
+			} else {
+				hours = date.getHours();
+			}
+			var minutes = (date.getMinutes().toString().length == 1) ? '0' + date.getMinutes() : date.getMinutes();
+			$(this.el).find('time').text(hours + ':' + minutes);
+		}
+		
 		return this;
 	}
 });
