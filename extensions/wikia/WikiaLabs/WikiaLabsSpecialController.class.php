@@ -32,7 +32,7 @@ class WikiaLabsSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		$this->wf->profileIn( __METHOD__ );
 		
-		if ( !$this->user->isAllowed( 'wikialabsuser' ) ) {
+		if ( !$this->user->isAllowed( 'wikialabsuser' )  && !$this->user->isAllowed( 'wikialabsview' ) ) {
 			$this->displayRestrictionError($this->user);
 			$this->skipRendering();
 			return;
