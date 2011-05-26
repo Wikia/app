@@ -594,6 +594,7 @@ function kickBan(client, socket, msg){
 			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching ajax requests (at least on dev boxes) when we don't want it to... so cachebust it.
 			var httpClient = http.createClient(WIKIA_PROXY_PORT, WIKIA_PROXY_HOST);
 			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
+			console.log("Trying to ban '" + userToBan + "' by hitting hostname " + wikiHostname + " with URL:\n" + requestUrl);
 			httpRequest.addListener("response", function (response) {
 				var responseBody = "";
 				response.addListener("data", function(chunk) {
