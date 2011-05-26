@@ -200,6 +200,9 @@ a {
 		.username {
 			display: none;
 		}
+		time {
+			display: none;
+		}
 	}
 	.avatar {
 		@extend ._avatar;
@@ -215,6 +218,11 @@ a {
 		&:after {
 			content: ":";
 		}
+	}
+	time {
+		color: $color-chat-gray;
+		float: right;
+		font-size: 12px;
 	}
 	.message {
 		white-space: pre-line;
