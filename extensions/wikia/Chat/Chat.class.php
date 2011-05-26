@@ -33,7 +33,7 @@ class Chat {
 				$errorMsg .= wfMsg('chat-ban-cant-ban-moderator')."\n";
 			} else {
 				if( !Chat::canChat($userToKickBan) ){
-					$errorMsg .= wfMsg('chat-ban-already-banned'). "\n";
+					$errorMsg .= wfMsg('chat-ban-already-banned', $userToKickBan->getName()). "\n";
 				} else {
 					// Add the user to the banned group for this wiki.
 					$BANNED_GROUP = "bannedfromchat";
