@@ -475,7 +475,7 @@ class ArticleComment {
 	 * @access public
 	 *
 	 * @param WebRequest $request -- instance of WebRequest
-	 * @param User       $user    -- instance of User
+	 * @param User       $user    -- instance of User who is leaving the comment
 	 * @param Title      $title   -- instance of Title
 	 *
 	 * @return Article -- newly created article
@@ -534,7 +534,7 @@ class ArticleComment {
 		//this function calls Article::onArticleCreate which clears cache for article and it's talk page
 		$retval = $editPage->internalAttemptSave( $result, $bot );
 
-		$key = $title->getPrefixedDBkey();
+		$key = $title->getPrefixedDBkey(); // FIXME: does this line cause some side-effects that are needed? Otherwise, this line doesn't appear to serve any purpose.
 
 		wfProfileOut( __METHOD__ );
 
