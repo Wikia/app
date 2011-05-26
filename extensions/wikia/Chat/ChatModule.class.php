@@ -20,6 +20,7 @@ class ChatModule extends Module {
 	var $pathToContribsPage;
 	var $mainPageURL;
 	var $wgFavicon = '';
+	var $jsMessagePackagesUrl = '';
 
 	public function executeIndex() {
 		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId, $wgFavicon;
@@ -75,6 +76,9 @@ class ChatModule extends Module {
 
 		//Theme Designer stuff
 		$this->themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wgCityId );
+		
+		// Since we don't emit all of the JS headscripts or so, fetch the URL to load the JS Messages packages.
+		$this->jsMessagePackagesUrl = JSMessages::getPackagesUrl();
 
 		wfProfileOut( __METHOD__ );
 	}

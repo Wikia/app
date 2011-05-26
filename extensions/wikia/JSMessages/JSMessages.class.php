@@ -167,10 +167,29 @@ class JSMessages {
 		wfProfileIn(__METHOD__);
 		wfDebug(__METHOD__ . "\n");
 
+		$url = JSMessages::getPackagesUrl();
+		if($url != ""){
+			// request a script
+			$this->app->getGlobal('wgOut')->addScriptFile($url);
+		}
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+	
+	/**
+	 * Return the URL of the ajax-call to load all of the JS messages packages that are configured to be loaded.
+	 *
+	 * If there are no packages to load, returns an empty-string.
+	 */
+	public static function getPackagesUrl(){
+		wfProfileIn( __METHOD__ );
+	
 		// get items to be loaded via JS file
 		$instance = self::getInstance();
 		$packages = $instance->queue['external'];
 
+		$url = "";
 		if (!empty($packages)) {
 			sort($packages);
 
@@ -185,13 +204,10 @@ class JSMessages {
 				'uselang' => $lang,
 				'cb' => intval($cb),
 			));
-
-			// request a script
-			$this->app->getGlobal('wgOut')->addScriptFile($url);
 		}
 
-		wfProfileOut(__METHOD__);
-		return true;
+		wfProfileOut( __METHOD__ );
+		return $url;
 	}
 
 	/**
