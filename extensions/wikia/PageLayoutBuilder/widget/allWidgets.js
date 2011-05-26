@@ -11,29 +11,31 @@ PageLayoutBuilder.inputEnter = function (e) {
 PageLayoutBuilder.inputExit = function (e) {
 	var value = $(e.target).attr('data-instructions');
 	if($(e.target).val() == "") {
-		$(e.target).val(value).addClass("plb-empty-input");	
-	}		
+		$(e.target).val(value).addClass("plb-empty-input");
+	}
 }
 
 $(function() {
 	$('.plb-empty-input').focus(PageLayoutBuilder.inputEnter)
 						 .blur(PageLayoutBuilder.inputExit);
-	
+
 	$("#plbForm,#editform").submit(function() {
 		$("input.plb-empty-input, textarea.plb-empty-input ").val("");
 	});
-	
+
 	PageLayoutBuilder.hideImageButtons();
-	
+
 	$('.gallerybox').hover(function() {
 	    $(this).find("button").css("visibility", "visible");
 	},function() {
 		if(PageLayoutBuilder.hasImage($(this))) {
-			$(this).find("button").css("visibility", "hidden");	
+			$(this).find("button").css("visibility", "hidden");
 		}
 	});
 
-	WikiaPhotoGalleryView.initGalleries();
+	if (window.WikiaPhotoGalleryView) {
+		WikiaPhotoGalleryView.initGalleries();
+	}
 });
 
 PageLayoutBuilder.uploadImage = function (size, name) {
@@ -41,10 +43,10 @@ PageLayoutBuilder.uploadImage = function (size, name) {
 		importStylesheetURI( wgExtensionsPath+ '/wikia/WikiaMiniUpload/css/WMU.css?'+wgStyleVersion );
 		$.getScript(wgExtensionsPath+ '/wikia/WikiaMiniUpload/js/WMU.js?'+wgStyleVersion, function() {
 			WMU_show();
-			
+
 			WMU_Event_OnLoadDetails = function() {
 				$('#ImageColumnRow,#ImageSizeRow,#ImageWidthRow,#ImageLayoutRow').hide();
-			};			
+			};
 
 			PageLayoutBuilder.WMU_insertImage = function(event,body) {
 				var imageName = $("#ImageUploadFileName").val();
@@ -76,7 +78,7 @@ PageLayoutBuilder.uploadImage = function (size, name) {
 
 PageLayoutBuilder.hasImage = function(element) {
 	if($( '#'  + element.attr('id').replace('imagediv','plb') ).val() == "") {
-		return false; 
+		return false;
 	};
 	return true;
 }
@@ -87,7 +89,7 @@ PageLayoutBuilder.hideImageButtons = function() {
 			function(){
 			    var element = $(this);
 			    if(PageLayoutBuilder.hasImage(element)) {
-			    	element.find("button").css("visibility", "hidden");	
+			    	element.find("button").css("visibility", "hidden");
 			    }
 			}
 	);
@@ -104,10 +106,10 @@ PageLayoutBuilder.setupTextarea = function(node) {
 	var toolbar = $('<div>').
 		addClass('plb-form-template-toolbar').
 		insertBefore(node);
-	
+
 	// show toolbar on focus / hide on blur
 	var toolbarHideTimeout = false;
-		
+
 	// toolbar buttons
 	var toolbarButtons = [
 		{
@@ -274,7 +276,7 @@ PageLayoutBuilder.uploadGallery = function(element_id) {
 
 PageLayoutBuilder.showGalleryForPLB = function(element_id) {
 	var text = $('#plb_' + element_id ).val();
-	
+
 	$.ajax({
 		url: wgScript + '?action=ajax&rs=LayoutWidgetGallery::getGalleryDataAjax',
 		data: {
@@ -290,16 +292,16 @@ PageLayoutBuilder.showGalleryForPLB = function(element_id) {
 				element_id: element_id,
 				gallery: data,
 				target: $("body") //.closest('.wikia-gallery')
-			}); 
+			});
 	}});
-} 
+}
 $(function() {
 	$('body').bind('beforeSaveGalleryData', function(e, element_id, gallery, modal) {
-		var data = { 
-				plb_id: $("#wpPlbId").val(), 
-				gallery: WikiaPhotoGallery.JSONtoWikiTextInner(gallery), 
+		var data = {
+				plb_id: $("#wpPlbId").val(),
+				gallery: WikiaPhotoGallery.JSONtoWikiTextInner(gallery),
 				element_id:element_id};
-		
+
 		$().log(data, 'beforeSaveGalleryData' );
 		$('#plb_' + element_id).val(WikiaPhotoGallery.JSONtoWikiTextInner(gallery) )
 		$.ajax({
@@ -320,7 +322,7 @@ $(function() {
 		});
 		return false;
 	});
-	
+
 	$('body').bind('beforeGalleryShow', function(e, button) {
 		WikiaPhotoGalleryView.loadEditorJS(function() {
 			var element_id = parseInt($(button).closest('.wikia-gallery').attr('id').replace('gallery-plb_', ''));
@@ -328,10 +330,10 @@ $(function() {
 		});
 		return false;
 	});
-	
+
 });
 
-		
+
 //* end gallery * //
 
 
