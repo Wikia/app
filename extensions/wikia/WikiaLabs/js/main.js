@@ -37,7 +37,7 @@ WikiaLabs.init = function() {
 						});
 					} else if ($(this).parent().hasClass('on')) {
 						$(this).animate({       
-							left: 67
+							left: 65
 						});
 					}
 				}
@@ -267,12 +267,16 @@ WikiaLabs.switchRequest = function(slider, onoff) {
     	slider.find('.button').animate({       
 	    	left: 0
 		});
-		slider.find('.texton').html('<span class="loading loadon"></span>');    
+		slider.find('.texton').fadeOut('normal', function() {
+			slider.find('.loading').css('display', 'block');
+		});
 	} else {               	 
 		slider.find('.button').animate({       
-			left: 67
+			left: 65
 		});
-		slider.find('.textoff').html('<span class="loading loadoff"></span>');
+		slider.find('.textoff').fadeOut('normal', function() {
+			slider.find('.loading').css('display', 'block');
+		});
 	}
 	$.ajax({
 		url: wgScript + '?action=ajax&rs=WikiaLabsHelper::switchProject&id=' +  slider.attr('data-id') + '&onoff=' + onoff ,
@@ -290,12 +294,16 @@ WikiaLabs.animateToggle = function(slider) {
 	$().log(slider, 'WikiaLabs');
 	if( slider.hasClass('on') ) {      
 		slider.find('.texton').html('active').hide();
-		slider.find('.textoff').fadeIn();
-	    slider.removeClass('on');
-    } else {               	 
+		slider.find('.loading').fadeOut('normal', function() {
+			slider.find('.textoff').fadeIn();
+		});
+		slider.removeClass('on');
+	} else {               	 
 		slider.find('.textoff').html('inactive').hide();
-		slider.find('.texton').fadeIn();
-    	slider.addClass('on'); 
+		slider.find('.loading').fadeOut('normal', function() {
+			slider.find('.texton').fadeIn();
+		});
+		slider.addClass('on'); 
 	}
 }
 
