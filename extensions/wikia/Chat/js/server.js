@@ -615,8 +615,13 @@ function kickBan(client, socket, msg){
 					}
 
 					// Process response from MediaWiki server and then kick the user from all clients.
-					if(data.error){
+					if(data.error || data.errorWfMsg){
 						sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
+						
+						if(data.doKickAnyway){
+							kickedUser = new models.User({name: userToBan});
+							kickUserFromRoom(client, socket, kickedUser, client.roomId);
+						}
 					} else {
 		// TODO: ONCE WE HAVE A LIST OF CLIENTS, INSTEAD OF BUILDING A FAKE... LOOP THROUGH THE USERS IN THIS CHAT AND FIND THE REAL ONE. THAT'S FAR SAFER/BETTER.
 		// TODO: The users are in a hash now... grab (or build) the user from that data or obj and use that instead of this fake user.

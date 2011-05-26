@@ -99,6 +99,11 @@ class ChatAjax {
 	 *
 	 * Returns an associative array.  On success, returns "success" => true, on failure,
 	 * returns "error" => [error message].
+	 * Regardless of outcome, returns another field whose key is "doKickAnyway" and where 0
+	 * indicates the caller should take no action, but 1 indicates that the caller should
+	 * kick the user even if this function returned an error (this is useful in the case that
+	 * the caller is trying to kickBan a user who is already banned.  They might have been
+	 * banned on the wiki & now are still logged in... if this is the case, they should be kicked!
 	 */
 	static public function kickBan(){
 		global $wgRequest;
@@ -106,16 +111,18 @@ class ChatAjax {
 
 		$retVal = array();
 		$userToBan = $wgRequest->getVal('userToBan');
+		$doKickAnyway = false; // might get changed by reference
 		if(empty($userToBan)){
 			$retVal["error"] = wfMsg('chat-missing-required-parameter', 'usertoBan');
 		} else {
-			$result = Chat::banUser($userToBan);
+			$result = Chat::banUser($userToBan, $doKickAnyway);
 			if($result === true){
 				$retVal["success"] = true;
 			} else {
 				$retVal["error"] = $result;
 			}
 		}
+		$retVal["doKickAnyway"] = ($doKickAnyway?"1":"0");
 
 		wfProfileOut( __METHOD__ );
 		return $retVal;
