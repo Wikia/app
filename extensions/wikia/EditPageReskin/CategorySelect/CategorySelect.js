@@ -211,12 +211,14 @@ function addCategoryBase(category, params, index) {
 	if (index === undefined) {
 		index = categories.length;
 	}
-
+	
 	//replace full wikitext that user may provide (eg. [[category:abc]]) to just a name (abc)
 	category = category.replace(fixCategoryRegexp, '$1');
+	
 	//if user provides "abc|def" explode this into category "abc" and sortkey "def"
 	extractedParams = extractSortkey(category);
 	category = extractedParams['name'];
+	
 	params['sortkey'] = extractedParams['sort'] + params['sortkey'];
 
 	if (category == '') {
@@ -274,8 +276,7 @@ function addCategoryBase(category, params, index) {
 
 function addCategory(category, params, index) {
 	addCategoryBase(category, params, index);
-	$('#csCategoryInput').attr('value', '');
-
+	$('#csCategoryInput').val('');
 	$('#csItemsContainer').trigger('categorySelectAdd');
 }
 
@@ -417,11 +418,14 @@ function moveElement(movedId, prevSibId) {
 function inputKeyPress(e) {
 	if(e.keyCode == 13) {
 		csTrack('enterCategory');
-
+		
 		//TODO: stop AJAX call for AutoComplete
 		e.preventDefault();
-		category = $('#csCategoryInput').attr('value');
-
+		category = $('#csCategoryInput').val();
+		var suggestions = $('#csSuggestContainer').find('.CSsuggestHover');
+		suggestedCategory = ( typeof(suggestions.get(0)) === 'undefined' ) ? null : suggestions.get(0).val();
+		if( suggestedCategory !== null ) category = suggestedCategory;
+		
 		if( category != '' ) {
 			addCategory(category);
 		}
@@ -443,6 +447,7 @@ function inputKeyPress(e) {
 }
 
 function submitAutoComplete(comp, resultListItem) {
+	$('csCategoryInput').val('');
 	addCategory(resultListItem[2][0]);
 	positionSuggestBox();
 }
