@@ -1,15 +1,6 @@
 
-/** CONFIG, REQUIRES, OTHER EXTERNAL STUFF **/
-
-// NOTE: REFACTOR: Move these settings into server_config.js sometime to keep them there (then would just need to call "config.EXAMPLE" instead of "EXAMPLE" when using them).
-var AUTH_URL = "/?action=ajax&rs=ChatAjax&method=getUserInfo"; // do NOT add hostname into this URL.
-var KICKBAN_URL = "/?action=ajax&rs=ChatAjax&method=kickBan";
-var GIVECHATMOD_URL = "/?action=ajax&rs=ChatAjax&method=giveChatMod";
-var WIKIA_PROXY_HOST, WIKIA_PROXY_PORT;
-
-// Local varnish (NOTE: CURRENTLY, PROXY ISN'T USED... search for var httpCilent below).
-WIKIA_PROXY_HOST = "127.0.0.1";WIKIA_PROXY_PORT = 6081;
-
+/** REQUIRES, OTHER SETUP **/
+	
 var app = require('express').createServer()
     , jade = require('jade')
     , socket = require('socket.io').listen(app)
@@ -19,13 +10,12 @@ var app = require('express').createServer()
     , rc = redis.createClient()
     , models = require('./models/models')
 	, urlUtil = require('url');
+var http = require("http");
+var config = require("./server_config.js");
+
 rc.on('error', function(err) {
     console.log('Error ' + err);
 });
-
-var http = require("http");
-
-var config = require("./server_config.js");
 
 // TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
 //process.on('uncaughtException', function (err) {
@@ -210,15 +200,14 @@ function authConnection(client, socket, authData){
 				'Cookie': client.cookieStr,
 				'Host': wikiHostname
 			};
-			var requestUrl = AUTH_URL + "&roomId=" + roomId;
+			var requestUrl = config.AUTH_URL + "&roomId=" + roomId;
 			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching this (at least on dev boxes) when we don't want it to... so cachebust it.
 
 			console.log("Requesting user info from: " + requestUrl);
 
 			// NOTE: Swap back if we want to use a proxy again.
-			//var httpClient = http.createClient(WIKIA_PROXY_PORT, WIKIA_PROXY_HOST);
-			var httpClient = http.createClient(80, wikiHostname);
-
+			var httpClient = http.createClient(config.WIKIA_PROXY_PORT, config.WIKIA_PROXY_HOST);
+			//var httpClient = http.createClient(80, wikiHostname); // TODO: Swap this in for ALL INSTANCES of createClient if we don't want to use local proxy anymore.
 			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
 			httpRequest.addListener("response", function (response) {
 				//debugObject(client.request.headers);
@@ -507,10 +496,10 @@ function kickBan(client, socket, msg){
 				'Cookie': client.cookieStr,
 				'Host': wikiHostname
 			};
-			var requestUrl = KICKBAN_URL;
+			var requestUrl = config.KICKBAN_URL;
 			requestUrl += "&userToBan=" + encodeURIComponent(userToBan);
 			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching ajax requests (at least on dev boxes) when we don't want it to... so cachebust it.
-			var httpClient = http.createClient(WIKIA_PROXY_PORT, WIKIA_PROXY_HOST);
+			var httpClient = http.createClient(config.WIKIA_PROXY_PORT, config.WIKIA_PROXY_HOST);
 			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
 			console.log("Trying to ban '" + userToBan + "' by hitting hostname " + wikiHostname + " with URL:\n" + requestUrl);
 			httpRequest.addListener("response", function (response) {
@@ -579,10 +568,10 @@ function giveChatMod(client, socket, msg){
 				'Cookie': client.cookieStr,
 				'Host': wikiHostname
 			};
-			var requestUrl = GIVECHATMOD_URL;
+			var requestUrl = config.GIVECHATMOD_URL;
 			requestUrl += "&userToPromote=" + encodeURIComponent(userToPromote);
 			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching ajax requests (at least on dev boxes) when we don't want it to... so cachebust it.
-			var httpClient = http.createClient(WIKIA_PROXY_PORT, WIKIA_PROXY_HOST);
+			var httpClient = http.createClient(config.WIKIA_PROXY_PORT, config.WIKIA_PROXY_HOST);
 			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
 			httpRequest.addListener("response", function (response) {
 				var responseBody = "";
