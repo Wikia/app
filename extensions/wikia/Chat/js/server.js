@@ -267,6 +267,12 @@ function authConnection(client, socket, authData){
 						console.log("Error: while parsing result of getUserInfo(). Error was: ");
 						console.log(e);
 						console.log("Response that didn't parse was:\n" + responseBody);
+
+						data = {
+							error: '',
+							errorWfMsg: 'chat-err-communicating-with-mediawiki',
+							errorMsgParams: []
+						};
 					}
 					if( (data.canChat) && (data.isLoggedIn) ){
 						client.isAuthenticated = true;
@@ -304,7 +310,7 @@ function authConnection(client, socket, authData){
 						});
 					} else {
 						console.log("User failed authentication. Error from server was: " + data.errorMsg);
-						sendInlineAlertToClient(client, data.errorMsg, '', []);
+						sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
 						console.log("Entire data was: ");
 						console.log(data);
 					}
@@ -675,8 +681,8 @@ function giveChatMod(client, socket, msg){
 					}
 
 					// Either send the error to the client who tried this action, or (if it was a success), send the updated User to all clients.
-					if(data.error){
-						sendInlineAlertToClient(client, data.error, '', []);
+					if(data.error || data.errorWfMsg){
+						sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
 					} else {
 		// TODO: ONCE WE HAVE A LIST OF CLIENTS, INSTEAD OF BUILDING A FAKE... LOOP THROUGH THE USERS IN THIS CHAT AND FIND THE REAL ONE. THAT'S FAR SAFER/BETTER.
 		// TODO: The users are in a hash now... grab the user, then send them.
