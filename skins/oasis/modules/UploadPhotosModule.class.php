@@ -7,8 +7,10 @@ class UploadPhotosModule extends Module {
 	const UPLOAD_WARNING = -2;
 	const UPLOAD_PERMISSION_ERROR = -1;
 
-	var $wgScriptPath;
 	var $licensesHtml;
+
+	var $wgScriptPath;
+	var $wgEnableUploads;
 	var $wgBlankImgUrl;
 
 	public function executeIndex() {
@@ -48,6 +50,9 @@ class UploadPhotosModule extends Module {
 		if ( $permErrors !== true ) {
 			$this->status = self::UPLOAD_PERMISSION_ERROR;
 			$this->statusMessage = $this->uploadMessage( $this->status, null );
+		} else if (empty($this->wgEnableUploads)) {
+			// BugId:6122
+			$this->statusMessage = wfMsg('uploaddisabled');
 		} else {
 			$details = $up->verifyUpload();
 

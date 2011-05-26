@@ -34,10 +34,11 @@ class PageHeaderModule extends Module {
 	var $showSearchBox;
 	var $isMainPage;
 	var $total;
+	var $isNewFiles;
 
 	var $wgUser;
-	var $isNewFiles;
 	var $wgABTests;
+	var $wgEnableUploads;
 
 	/**
 	 * Use MW core variable to generate action button
