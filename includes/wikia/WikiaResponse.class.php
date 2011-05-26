@@ -292,7 +292,14 @@ class WikiaResponse {
 	// @codeCoverageIgnoreEnd
 
 	public function __toString() {
-		return $this->toString();
+		try {
+			return $this->toString();
+		} catch( Exception $e ) {
+			// php doesn't allow exceptions to be thrown inside __toString() so we need an extra try/catch block here
+			$app = F::app();
+			$this->setException( $e );
+			return $app->getView( 'WikiaError', 'error', array( 'response' => $this, 'devel' => $app->wg->DevelEnvironment ) )->render();
+		}
 	}
 
 }
