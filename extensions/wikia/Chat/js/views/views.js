@@ -234,6 +234,9 @@ var NodeChatView = Backbone.View.extend({
 			case 'disableReconnect':
 				this.autoReconnect = false;
 				break;
+			case 'forceReconnect':
+				NodeChatController.socket.disconnect();
+				break;
 			case 'chat:add':
 				var newChatEntry;
 				var dataObj = JSON.parse(message.data);
