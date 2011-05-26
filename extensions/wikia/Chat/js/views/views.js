@@ -15,6 +15,16 @@ var ChatView = Backbone.View.extend({
 
 	render: function(type){
 		//NodeChatHelper.log("ABOUT TO RENDER THIS CHAT MESSAGE: " + JSON.stringify(this.model));
+		
+		// Inline Alerts have may have i18n messages in them. If so (and they don't have 'text' yet), process the message and cache it in 'text'.
+		// This needs to be done before the template processing below so that 'text' will be set by then.
+		if(this.model.get('text') == ''){
+			NodeChatHelper.log("Found an i18n message with msg name " + this.model.get('wfMsg') + " and params: " + this.model.get('msgParams'));
+			var i18nText = $.msg(this.model.get('wfMsg'), this.model.get('msgParams'));
+			this.model.set({text: i18nText});
+			NodeChatHelper.log("Message translated to: " + i18nText);
+		}
+
 		if(this.model.get('isInlineAlert')){
 			var originalTemplate = this.template;
 			this.template = this.inlineTemplate;
@@ -228,6 +238,9 @@ var NodeChatView = Backbone.View.extend({
 							chatEntries.add(additionalEntry);
 						}
 					});
+					
+					// TODO: update the entire userlist (if the server went down or something, you're not going to get "part" messages for the users who are gone).
+					// See BugzId 6107 for more info & partially completed code.
 				}
 
 				break;

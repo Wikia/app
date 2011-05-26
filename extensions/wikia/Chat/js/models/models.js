@@ -66,12 +66,21 @@ var STATUS_STATE_AWAY = 'away';
 			'avatarSrc': ''
 		}
 	});
-	// Inline alerts are a special type of ChatEntry which aren't from a user and should be displayed differently (like system messages basically).
+	/**
+	 * Inline alerts are a special type of ChatEntry which aren't from a user and should be displayed differently (like system messages basically).
+	 *
+	 * If 'wfMsg' is set, then the code in wfMsg will be passed to the $.msg() i18n function and
+	 * 'msgParams' will be used as the parameters.  In this case, 'text' should be left blank on the server-side because it will
+	 * be used on the client-side as a cache of the output of the $.msg(wfMsg, msgParams) call. If 'text' is already filled in, then the i18n processing
+	 * will be assumed to have already been done.
+	 */
 	models.InlineAlert = models.ChatEntry.extend({
 		initialize: function(options){
 			this.set({
 				isInlineAlert: true, // so that the view can detect that this should be displayed specially
-				text: options.text
+				text: options.text,
+				wfMsg: '',
+				msgParams: [],
 			});
 		}
 	});
