@@ -440,7 +440,7 @@ class SpecialCustomEditPage extends SpecialPage {
 			if($method == 'preview' || $method == 'diff') {
 				$wikitext = $this->getWikitextFromField('content');
 			} else {
-				$wikitext = $this->getWikitextFromField('wpTextbox1');	
+				$wikitext = $this->getWikitextFromField('wpTextbox1');
 			}
 		}
 

@@ -47,7 +47,7 @@ class EditPageLayoutAjax {
 		$mode = $wgRequest->getVal('mode', '');
 		$page = $wgRequest->getVal('page', '');
 		$section = $wgRequest->getInt('section', 0);
-
+		
 		$wikitext = self::resolveWikitext($content, $mode, $page, $method, $section);
 		wfProfileOut(__METHOD__);
 		return $wikitext;
