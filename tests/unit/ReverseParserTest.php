@@ -4,7 +4,7 @@ class ReverseParserTest extends PHPUnit_Framework_TestCase {
 	var $reverseParser;
 
 	function setUp() {
-		global $$wgAutoloadClasses;
+		global $wgAutoloadClasses;
 		require_once($wgAutoloadClasses['RTE']);
 		require_once($wgAutoloadClasses['RTEReverseParser']);
 
