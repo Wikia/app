@@ -1,3 +1,4 @@
+<? if (!empty($quizElement)) { ?>
 <section class="WikiaQuizArticle" data-id="<?= $quizElement->getId() ?>">
 <p>(in the quiz <a href="<?=$data['quizUrl']?>"><?= htmlentities($data['quiz']) ?></a>)</p>
 <? if ($data['image']) { ?>
@@ -21,3 +22,4 @@
 <p><?= htmlentities($data['explanation']) ?></p>
 <? } ?>
 </section>
+<? } ?>

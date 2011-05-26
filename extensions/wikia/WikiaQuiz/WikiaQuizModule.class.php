@@ -10,6 +10,10 @@ class WikiaQuizModule extends Module {
 	 */
 	
 	public function executeIndex($params) {
+		if (!$this->checkPermissions()) {
+			return;
+		}
+
 		if (!empty($params['quiz'])) {
 			$this->quiz = $params['quiz'];
 			$this->data = $this->quiz->getData();
@@ -17,6 +21,10 @@ class WikiaQuizModule extends Module {
 	}
 	
 	public function executeArticleIndex($params) {
+		if (!$this->checkPermissions()) {
+			return;
+		}
+
 		if (!empty($params['quizElement'])) {
 			$this->quizElement = $params['quizElement'];
 			$this->data = $this->quizElement->getData();
@@ -111,6 +119,25 @@ class WikiaQuizModule extends Module {
 			$this->quizElement = WikiaQuizElement::NewFromTitle($title);
 			$this->data = $this->quizElement->getData();
 		}
+	}
+	
+	private function checkPermissions() {
+		global $wgUser, $wgOut;
+		
+		if ($wgUser->isBlocked()) {
+			$wgOut->blockedPage();
+			return false;
+		}
+		if (!$wgUser->isAllowed('wikiaquiz')) {
+			$wgOut->permissionRequired( "" );
+			return false;
+		}
+		if (wfReadOnly() && !wfAutomaticReadOnly()) {
+			$wgOut->readOnlyPage();
+			return false;
+		}
+		
+		return true;
 	}
 
 }

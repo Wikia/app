@@ -14,12 +14,12 @@ class SpecialCreateWikiaQuizArticle extends SpecialPage {
 			$wgOut->blockedPage();
 			return;
 		}
-		if (wfReadOnly() && !wfAutomaticReadOnly()) {
-			$wgOut->readOnlyPage();
+		if (!$wgUser->isAllowed('wikiaquiz')) {
+			$this->displayRestrictionError();
 			return;
 		}
-		if (!$wgUser->isAllowed('createpage') || !$wgUser->isAllowed('edit')) {
-			$this->displayRestrictionError();
+		if (wfReadOnly() && !wfAutomaticReadOnly()) {
+			$wgOut->readOnlyPage();
 			return;
 		}
 
