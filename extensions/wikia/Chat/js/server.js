@@ -681,11 +681,13 @@ function giveChatMod(client, socket, msg){
 						// Broadcast inline-alert saying that A has made B a chatmoderator.
 						// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
 						broadcastInlineAlert(client, socket, client.myUser.get('name') + " has made <strong>" + promotedUser.get('name') + "</strong> a chat moderator.", function(){
-
-							// TODO: Somehow force the new chatmoderator's user info to be updated & then send this updated model to all clients.
-							
-							// TODO: Kick the promoted user from the room so that they autoReconnect which should update them with their new state (and all other users).
-							kickUserFromRoom(client, socket, promotedUser, client.roomId);
+							// Force the user to reconnect so that their real state is fetched again and is broadcast to all users (whose models will be updated).
+							var promotedClientId = sessionIdsByKey[getKey_userInRoom(promotedUser.get('name'), client.roomId)];
+							if(typeof promotedClientId != 'undefined'){
+								socket.clients[promotedClientId].send({
+									event: 'forceReconnect',
+								});
+							}
 						});
 					}
 				});
@@ -702,6 +704,7 @@ function giveChatMod(client, socket, msg){
  */
 function kickUserFromRoom(client, socket, userToKick, roomId, callback){
 	// Removing the user from the room.
+	console.log("Kicking " + userToKick.get('name') + " from room " + roomId);
 	var hashOfUsersKey = getKey_usersInRoom(roomId);
 	rc.hdel(hashOfUsersKey, userToKick.get('name'), function(){
 		rc.hincrby(getKey_room(client.roomId), 'activeClients', -1);
