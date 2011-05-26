@@ -486,8 +486,7 @@ function broadcastDisconnectionInfo(client, socket){
 					data: client.myUser.xport()
 				});
 
-				// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
-				broadcastInlineAlert(client, socket, client.myUser.get('name') + " has left the chat.");
+				broadcastInlineAlert(client, socket, 'chat-user-parted', [client.myUser.get('name')]);
 			}
 		});
 	}, DELAY_MILLIS);
@@ -614,8 +613,7 @@ function kickBan(client, socket, msg){
 		// TODO: The users are in a hash now... grab (or build) the user from that data or obj and use that instead of this fake user.
 						// Build a user that looks like the one that got banned... then kick them!
 						kickedUser = new models.User({name: userToBan});
-						// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
-						broadcastInlineAlert(client, socket, kickedUser.get('name') + " was kickbanned.", function(){
+						broadcastInlineAlert(client, socket, 'chat-user-was-kickbanned', [kickedUser.get('name')], function(){
 							// The user has been banned and the ban has been broadcast, now physically remove them from the room.
 							kickUserFromRoom(client, socket, kickedUser, client.roomId);
 						});
@@ -679,8 +677,7 @@ function giveChatMod(client, socket, msg){
 						promotedUser = new models.User({name: userToPromote});
 
 						// Broadcast inline-alert saying that A has made B a chatmoderator.
-						// TODO: FIGURE OUT A GOOD WAY TO GET THIS MESSAGE i18n'ed.
-						broadcastInlineAlert(client, socket, client.myUser.get('name') + " has made <strong>" + promotedUser.get('name') + "</strong> a chat moderator.", function(){
+						broadcastInlineAlert(client, socket, 'chat-inlinealert-a-made-b-chatmod', [client.myUser.get('name'), promotedUser.get('name')], function(){
 							// Force the user to reconnect so that their real state is fetched again and is broadcast to all users (whose models will be updated).
 							var promotedClientId = sessionIdsByKey[getKey_userInRoom(promotedUser.get('name'), client.roomId)];
 							if(typeof promotedClientId != 'undefined'){
@@ -878,9 +875,16 @@ function pruneExtraMessagesFromRoom(chatEntriesInRoomKey){
 /**
  * For broadcasting text (as an ephemeral - not persisted - InlineAlert) to all
  * members of the same room that client is in.
+ *
+ * @param wfMsg - the MediaWiki message name (will be translated client-side).
+ * @param msgParams - an array containing the parameters (if any) to be passed in with the i18n message to $.msg().
  */
-function broadcastInlineAlert(client, socket, text, callback){
-	var inlineAlert = new models.InlineAlert({text: text});
+function broadcastInlineAlert(client, socket, wfMsg, msgParams, callback){
+	var inlineAlert = new models.InlineAlert({
+		text: '',
+		wfMsg: wfMsg,
+		msgParams: msgParams
+	});
 	broadcastChatEntry(client, socket, inlineAlert, callback);
 } // end broadcastInlineAlert()
 
