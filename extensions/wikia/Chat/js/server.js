@@ -851,11 +851,13 @@ function storeAndBroadcastChatEntry(client, socket, chatEntry, callback){
     rc.incr('next.chatentry.id', function(err, newId) {
 		// Set the id from redis, and the name/avatar based on what we KNOW this client's credentials to be.
 		// Originally, the client may spoof a name/avatar, but we will ignore what they gave us and override them here.
+		var now = new Date();
 		chatEntry.set({
 			id: newId,
 			name: client.myUser.get('name'),
 			avatarSrc: client.myUser.get('avatarSrc'),
-			text: processText(chatEntry.get('text'), client)
+			text: processText(chatEntry.get('text'), client),
+			timeStamp: now.getTime()
 		});
 
         var expandedMsg = chatEntry.get('id') + ' ' + chatEntry.get('name') + ': ' + chatEntry.get('text');
