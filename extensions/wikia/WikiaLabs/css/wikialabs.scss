@@ -71,17 +71,12 @@ $warning-bg-color: #FFFFCC;
 			width: $toolbox-button;
 			border: none;
 			.loading {
-				display: block;
+				display: none;
 				width: 16px;
 				height: 16px;
-				margin-top: 4px;
-				background-image: url(/skins/common/images/ajax.gif);
-			}
-			.loadon {
-				margin-left: 30px;
-			}
-			.loadoff {
-				margin-left: -5px;
+				margin-top: 5px;
+				background-image: url(/skins/common/images/ajax.gif); /* $wgCdnStylePath */
+				margin-left: 45px;
 			}
 			.feedback {
 				margin-top: 6px;
@@ -133,15 +128,16 @@ $warning-bg-color: #FFFFCC;
 				}
 			}
 			.slider {
-				background: url(/extensions/wikia/WikiaLabs/images/toggle-bkg-inactive.png); /* $wgCdnStylePath */
-				border: medium solid;
+				background-color: #eeeded;
 				display: block;
-				height: 27px;
-				width: 109px;
-				border: none;
+				height: 26px;
+				width: 107px;
+				border: 1px solid #a6a6a6;
+				@include border-radius(4px);
 				cursor:pointer;
+				@include box-shadow(0, 2px, 5px, #999, true);
 				&.on {
-					background: url(/extensions/wikia/WikiaLabs/images/toggle-bkg-active.png); /* $wgCdnStylePath */
+					@include linear-gradient(#477c0f, top, #477c0f, 0%, #85cd38, 100%);
 				}
 				.texton {
 					margin-left: 18px;
@@ -165,16 +161,18 @@ $warning-bg-color: #FFFFCC;
 					}
 				}
 				.button {
-					background: url(/extensions/wikia/WikiaLabs/images/toggle-switch.png); /* $wgCdnStylePath */
-					border: none;
+					@include linear-gradient(#fafafa, top, #fff, 35%, #F2F2F2, 65%);
+					border: 1px solid #a6a6a6;
+					@include border-radius(4px);
 					display: block;
-					height: 27px;
+					height: 26px;
 					padding: 0;
 					width: 42px;
 					position: absolute;
+					top: 0px;
 					z-index: 1;
 					&.on {
-						left: 67px;
+						left: 65px;
 					}
 				}
 			}

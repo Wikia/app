@@ -22,6 +22,7 @@
 						<span class='button  <?php echo $value->isEnabled($cityId) ? "on":""; ?>'></span>
 						<span class="textoff  <?php echo $value->isEnabled($cityId) ? "on":""; ?>"><?php echo wfMsg('wikialabs-list-project-inactive'); ?></span>
 						<span class="texton  <?php echo $value->isEnabled($cityId) ? "on":""; ?>" ><?php echo wfMsg('wikialabs-list-project-active'); ?></span>
+						<span class="loading"></span>
 						<?php if($data['enablewarning']): ?>
 							<div class="warning" style="display:none" >
 							<h1><?php echo wfMsg( 'wikialabs-list-project-warning' ); ?></h2>
