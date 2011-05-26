@@ -37,8 +37,7 @@ test('isHighValueSlot', function() {
   ok( AdConfig.isHighValueSlot('MIDDLE_RIGHT_BOXAD'), 'MIDDLE_RIGHT_BOXAD' );
   ok( AdConfig.isHighValueSlot('TOP_LEADERBOARD'), 'TOP_LEADERBOARD' );
   ok( AdConfig.isHighValueSlot('TOP_RIGHT_BOXAD'), 'TOP_RIGHT_BOXAD' );
-
-  ok( !AdConfig.isHighValueSlot('LEFT_SKYSCRAPER_2'), 'LEFT_SKYSCRAPER_2' );
+  ok( AdConfig.isHighValueSlot('LEFT_SKYSCRAPER_2'), 'LEFT_SKYSCRAPER_2' );
   ok( !AdConfig.isHighValueSlot('PREFOOTER_LEFT_BOXAD'), 'PREFOOTER_LEFT_BOXAD' );
   ok( !AdConfig.isHighValueSlot('PREFOOTER_RIGHT_BOXAD'), 'PREFOOTER_RIGHT_BOXAD' );
   ok( !AdConfig.isHighValueSlot('INVISIBLE_2'), 'INVISIBLE_2' );
@@ -329,7 +328,7 @@ test('getLocKV', function() {
   equal( AdConfig.DART.getLocKV('INVISIBLE_1'), 'loc=invisible;', 'INVISIBLE_1' );
   equal( AdConfig.DART.getLocKV('INVISIBLE_2'), 'loc=invisible;', 'INVISIBLE_2' );
   equal( AdConfig.DART.getLocKV('LEFT_SKYSCRAPER_2'), 'loc=middle;', 'LEFT_SKYSCRAPER_2' );
-  equal( AdConfig.DART.getLocKV('LEFT_SKYSCRAPER_3'), 'loc=middle;', 'LEFT_SKYSCRAPER_3' );
+  equal( AdConfig.DART.getLocKV('LEFT_SKYSCRAPER_3'), 'loc=footer;', 'LEFT_SKYSCRAPER_3' );
   equal( AdConfig.DART.getLocKV('MIDDLE_RIGHT_BOXAD'), 'loc=middle;', 'MIDDLE_RIGHT_BOXAD' );
   equal( AdConfig.DART.getLocKV('PREFOOTER_LEFT_BOXAD'), 'loc=footer;', 'PREFOOTER_LEFT_BOXAD' );
   equal( AdConfig.DART.getLocKV('PREFOOTER_RIGHT_BOXAD'), 'loc=footer;', 'PREFOOTER_RIGHT_BOXAD' );
