@@ -610,9 +610,6 @@ function kickBan(client, socket, msg){
 
 					// Process response from MediaWiki server and then kick the user from all clients.
 					if(data.error){
-						if(!data.errorWfMsg){data.errorWfMsg = ''};
-						if(!data.errorMsgParams){data.errorMsgParams = [];}
-
 						sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
 					} else {
 		// TODO: ONCE WE HAVE A LIST OF CLIENTS, INSTEAD OF BUILDING A FAKE... LOOP THROUGH THE USERS IN THIS CHAT AND FIND THE REAL ONE. THAT'S FAR SAFER/BETTER.
