@@ -194,6 +194,10 @@ class PageHeaderModule extends Module {
 			$this->displaytitle = true;
 			$this->title = $wgOut->getPageTitle();
 		}
+		else {
+			// on special pages titles are already properly encoded (BugId:5983)
+			$this->displaytitle = true;
+		}
 
 		// use service to get data
 		$service = PageStatsService::newFromTitle( $wgTitle );
