@@ -89,6 +89,7 @@ $config['oasis_shared_js'] = array(
 		'//extensions/wikia/QuantcastSegments/qcs.js',
 		'//extensions/wikia/AdEngine/liftium/Liftium.js',
 		'//extensions/wikia/AdEngine/liftium/Wikia.js',
+		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdSS/adss.js',
 		'//extensions/wikia/PageLayoutBuilder/js/view.js', // TODO: load it on demand
