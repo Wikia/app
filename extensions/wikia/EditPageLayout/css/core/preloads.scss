@@ -1,0 +1,8 @@
+.mw-newarticletext {
+	@include bodytext;
+	background-color: #e6f0fb;
+	margin-right: -10px;
+	max-height: 70px;
+	overflow: auto;
+	padding: 5px;
+}

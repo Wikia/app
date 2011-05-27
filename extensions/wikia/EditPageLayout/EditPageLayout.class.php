@@ -54,9 +54,9 @@ class EditPageLayout extends EditPage {
 	function __construct(Article $article) {
 		parent::__construct($article);
 
-		$this->app = WF::build('App');
-		$this->out = $this->app->getGlobal('wgOut');
-		$this->request = $this->app->getGlobal('wgRequest');
+		$this->app = F::build('App');
+		$this->out = $this->app->wg->Out;
+		$this->request = $this->app->wg->Request;
 
 		// default setup of summary box
 		$this->mSummaryBox = array(
@@ -64,8 +64,8 @@ class EditPageLayout extends EditPage {
 			'placeholder' => wfMsg('editpagelayout-pageControls-summaryLabel'),
 		);
 
-		$this->mCoreEditNotices = WF::build('EditPageNotices');
-		$this->mEditNotices = WF::build('EditPageNotices');
+		$this->mCoreEditNotices = F::build('EditPageNotices');
+		$this->mEditNotices = F::build('EditPageNotices');
 
 		// add messages (fetch them using <script> tag)
 		JSMessages::getInstance()->enqueuePackage('EditPageLayout', JSMessages::EXTERNAL);
@@ -474,11 +474,27 @@ class EditPageLayout extends EditPage {
 	}
 
 	/**
+	 * Show all applicable editing introductions
+	 *
+	 * Handle preloads (BugId:5652)
+	 */
+	protected function showIntro() {
+		// Code copied from EditPage.php
+		if ( !$this->showCustomIntro() && !$this->mTitle->exists() ) {
+			if ( $this->app->wg->User->isLoggedIn() ) {
+				$this->out->wrapWikiMsg( "<div class=\"mw-newarticletext\">\n$1</div>", 'newarticletext' );
+			} else {
+				$this->out->wrapWikiMsg( "<div class=\"mw-newarticletextanon\">\n$1</div>", 'newarticletextanon' );
+			}
+
+			$this->out->addHtml('<div class="gap">&nbsp;</div>');
+		}
+	}
+
+	/**
 	 * Overwrite methods below to remove certain elements of the edit page
 	 */
 	protected function getCopywarn() {}
-//	protected function showEditTools() {}
-	protected function showIntro() {}
 	protected function showSummaryInput( $isSubjectPreview, $summary = "" ) {}
 	protected function displayPreviewArea( $previewOutput, $isOnTop = false ) {}
 }
