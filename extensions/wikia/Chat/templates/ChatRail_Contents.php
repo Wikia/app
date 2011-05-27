@@ -1,14 +1,30 @@
 <h1><?= $chatHeadline ?></h1>
 <div class="chat-live"><?= wfMsg('chat-live') ?></div>
 
+<? //print_r($chatters) ?>
+
 <? if ( !empty($totalInRoom) ) { ?>
 <div class="chat-whos-here">
 	<h2><?= wfMsg('chat-whos-here', $totalInRoom) ?></h2>
-	<?php if(!empty($avatarsInRoom)){ ?>
+	<?php if(!empty($chatters)){ ?>
 	<ul>
-		<? foreach($avatarsInRoom as $avatarInRoom) { 
-			echo "<li><img src='$avatarInRoom' class='avatar'/></li>";
-		} ?>
+		<? foreach($chatters as $chatter) { ?>
+			<li>
+				<img src='<?= $chatter['avatarUrl'] ?>' class='avatar'/>
+				<div class="UserStatsMenu">
+					<div class="info">
+						<img src="<?= $chatter['avatarUrl'] ?>">
+						<span class="username"><?= $chatter['username'] ?></span>
+						<span class="edits"><?= wfMsg('chat-edit-count', $chatter['editCount']) ?></span>
+						<span class="since"><?= wfMsg('chat-member-since', $chatter['since']) ?></span>
+					</div>
+					<ul class="actions">
+						<li class="profile"><a href="<?= $chatter['profileUrl'] ?>">User Profile</a></li>
+						<li class="contribs"><a href="<?= $chatter['contribsUrl'] ?>">Contributions</a></li>
+					</ul>
+				</div>				
+			</li>
+		<? } ?>
 	</ul>
 	<?php } ?>
 </div>

@@ -1,17 +1,22 @@
 <?php
 class ChatRailModule extends Module {
-	const MAX_AVATARS_TO_SHOW = 6;
+	const MAX_CHATTERS = 6;
 	const AVATAR_SIZE = 50;
 	var $linkToSpecialChat;
 	var $windowFeatures;
 	var $chatHeadline;
 	var $profileAvatar;
-	var $totalInRoom;
-	var $avatarsInRoom;
+
+	
+	var $totalInRoom; //keep this
+	//var $avatarsInRoom; //ditch this
+
+	var $chatters; //new
+
 	var $buttonIconUrl;
 	var $buttonText;
 	var $isLoggedIn;
-	var $chatClickAction;
+	var $chatClickAction;	
 
 	/**
 	 * Render placeholder. Content will be ajax-loaded for freshness
@@ -45,10 +50,31 @@ class ChatRailModule extends Module {
 		$this->totalInRoom = 0;
 		$roomName = $roomTopic = ""; // just needed for pass-by-reference... will be ignored
 		$roomId = NodeApiClient::getDefaultRoomId($roomName, $roomTopic); // get id of default chat for the wiki
-		$this->avatarsInRoom = NodeApiClient::getAvatarsInRoom( $roomId,
-																ChatRailModule::MAX_AVATARS_TO_SHOW,
-																$this->totalInRoom,
-																ChatRailModule::AVATAR_SIZE );
+		
+		// Gets array of users currently in chat to populate rail module and user stats menus
+		$chatters = NodeApiClient::getChatters($roomId, ChatRailModule::MAX_CHATTERS, $this->totalInRoom);
+		for ($i = 0; $i < count($chatters); $i++) {
+			// avatar
+			$chatters[$i]['avatarUrl'] = AvatarService::getAvatarUrl($chatters[$i]['username'], ChatRailModule::AVATAR_SIZE);
+			
+			// get stats for edit count and member since
+			$user = User::newFromName($chatters[$i]['username']);
+			$userStatsService = new UserStatsService($user->getId());
+			$stats = $userStatsService->getStats();
+
+			// edit count
+			$chatters[$i]['editCount'] = $stats['edits'];
+			
+			// member since
+			$chatters[$i]['since'] = date("M Y", strtotime($stats['date']));
+			
+			// profile page
+			$chatters[$i]['profileUrl'] = Title::makeTitle( NS_USER, $chatters[$i]['username'] )->getFullURL();
+			
+			// contribs page
+			$chatters[$i]['contribsUrl'] = SpecialPage::getTitleFor( 'Contributions', $chatters[$i]['username'] )->getFullURL();
+		}
+		$this->chatters = $chatters;
 
 		// Button setup
 		$this->buttonIconUrl = $wgExtensionsPath .'/wikia/Chat/images/chat_icon.png';
