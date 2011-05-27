@@ -10,7 +10,7 @@ class GameGuidesModel{
 	 * the WikiFactory toggle that qualifies a wiki for being listed in the app
 	 */
 	const WF_WIKI_RECOMMEND_VAR = 'wgWikiaGameGuidesRecommend';
-	const MEMCHACHE_KEY_PREFIX = 'WikiaGameGuides';
+	const MEMCHACHE_KEY_PREFIX = 'GameGuides';
 	const CACHE_DURATION = 86400;//24h
 	const SEARCH_RESULTS_LIMIT = 50;
 	const CATEGORY_RESULTS_LIMIT = 0;//no limits for now
@@ -222,7 +222,7 @@ class GameGuidesModel{
 	}
 	
 	private function generateCacheKey( $token ){
-		return $this->app->wf->memcKey( $token, GameGuidesController::API_VERSION . '.' . GameGuidesController::API_REVISION ); 
+		return $this->app->wf->memcKey( $token, GameGuidesController::API_VERSION . '.' . GameGuidesController::API_REVISION . '.' . GameGuidesController::API_MINOR_REVISION ); 
 	}
 	
 	private function loadFromCache( $key ){
