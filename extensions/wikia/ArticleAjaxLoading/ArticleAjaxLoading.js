@@ -73,7 +73,7 @@ ArticleAjaxLoading = {
 				
 				$.pjax({
 					url: href,
-					container: '#WikiaMainContent',
+					container: '#WikiaMainContent'
 				});
 			}
 		}
