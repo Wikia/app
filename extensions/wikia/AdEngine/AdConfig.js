@@ -321,7 +321,7 @@ AdConfig.DART.isHub = function() {
 		return false;
 	}
 
-	if (typeof wgHubsPages == 'undefined') {
+	if (typeof wgHubsPages == 'undefined' || !wgHubsPages) {
 		return false;
 	}
 

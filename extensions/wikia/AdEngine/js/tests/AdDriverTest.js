@@ -211,7 +211,7 @@ test('isHub', function() {
   window.wgPageName = 'Foobar'
   ok( !AdConfig.DART.isHub(), 'Page: Foobar' );
   window.wgPageName = 'Movie';
-  delete window.wgHubsPages;
+  window.wgHubsPages = null;
   ok (!AdConfig.DART.isHub(), 'no wgHubsPages' );
   window.wgDB = 'muppet';
   ok( !AdConfig.DART.isHub(), 'Wiki: Muppet' );
