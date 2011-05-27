@@ -137,6 +137,11 @@ $dark-wiki: 1;
 	}
 	.count-down {
 		display: none;
+		height: $panel-height;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: $panel-width;
 		.number {
 			@include border-radius(100px);
 			@include box-shadow(0, 5px, 20px, #000, false, -5px);
@@ -144,7 +149,7 @@ $dark-wiki: 1;
 			color: $color-header-text;
 			font-size: 144px;
 			height: 110px;
-			left: 290px;
+			left: 300px;
 			padding-top: 90px;
 			position: absolute;
 			text-align: center;
@@ -162,8 +167,14 @@ $dark-wiki: 1;
 		}
 	}
 	.questions {
+		position: absolute;
+		left: $panel-width;
+		top: 0;
 		.question-set {
 			display: none;
+			height: $panel-height;
+			position: relative;
+			width: $panel-width;
 			.question-bubble {
 				$bubble-visual-width: 630px;
 				$bubble-width: $bubble-visual-width - (20 * 2);
@@ -292,7 +303,7 @@ $dark-wiki: 1;
 				}
 			}
 			&:first-child {
-				//display: block;
+				display: block;
 			}
 			.explanation {
 				display: none;
