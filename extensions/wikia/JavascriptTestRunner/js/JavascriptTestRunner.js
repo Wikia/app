@@ -265,7 +265,7 @@
 		var args = Array.prototype.slice.call(arguments,0);
 		var self = this;
 		
-		this.result = this.testRunner.newTestRunner();
+		this.result = this.testRunner.newTestResult();
 		
 		var oldLogger = jsUnity.logger;
 		jsUnity.logger = {log:function(){ self.log.apply(self,arguments);}};
