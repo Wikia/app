@@ -20,7 +20,7 @@
 			<?= wfMsg('wikiaquiz-game-cadence-3') ?>
 		</div>
 	</div>
-	<ul class="questions">
+	<ul class="questions" id="Questions">
 		
 		<? 
 		$numOfQuestions = count($data['elements']);
@@ -98,7 +98,7 @@
 			<h2><?= $data['moreinfoheading'] ?></h2>
 			<ul>
 				<? foreach ($data['moreinfo'] as $line) { ?>
-					<li><a href="<?= $line['url'] ?>"><?= $line['text'] ?></a></li>
+					<li><a href="<?= $line['url'] ?>" target="_blank"><?= $line['text'] ?></a></li>
 				<? } ?>
 			</ul>
 		</div>
