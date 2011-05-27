@@ -55,6 +55,10 @@
 			this.saveState();
 
 			this.track(this.wide ? 'switchOn' : 'switchOff');
+
+			// toolbar height can change - resize the editor (BugId:5694)
+			this.modeChanged();
+			$(window).trigger('resize');
 		},
 
 		loadState: function( initial ) {
