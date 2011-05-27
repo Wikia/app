@@ -421,13 +421,20 @@ class EditPageLayout extends EditPage {
 		}
 	}
 
-
 	protected function showTextbox1($customAttribs = null, $textoverride = null) {
 		if(!empty($this->mSpecialPage)) {
 			if($this->mSpecialPage->showOwnTextbox()) {
 				return true;
 			}
 		}
+
+		// MW core says: In an edit conflict bypass the overrideable content form method
+		// and fallback to the raw wpTextbox1
+		// Wikia: in visual mode we want to show HTML (BugId:5428)
+		if ($this->isConflict) {
+			$textoverride = $this->textbox1;
+		}
+
 		parent::showTextbox1($customAttribs, $textoverride );
 	}
 
