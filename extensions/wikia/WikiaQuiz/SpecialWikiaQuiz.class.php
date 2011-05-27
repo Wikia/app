@@ -8,7 +8,7 @@ class SpecialWikiaQuiz extends UnlistedSpecialPage {
 	}
 
 	public function execute() {
-		global $wgOut, $wgExtensionsPath, $wgUser, $wgRequest;
+		global $wgOut, $wgExtensionsPath, $wgUser, $wgRequest, $IP;
 		wfProfileIn( __METHOD__ );
 
 		//wfLoadExtensionMessages('WikiBuilder');
@@ -17,7 +17,9 @@ class SpecialWikiaQuiz extends UnlistedSpecialPage {
 		if ($wgRequest->getVal('v') == '3') {	
 			$wgOut->addHtml(wfRenderModule('WikiaQuiz', 'SampleQuiz3'));
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaQuiz/css/WikiaQuiz3.scss'));
+			$wgOut->addScript('<script src="'.AssetsManager::getInstance()->getOneCommonURL('skins/common/modernizr-1.7.min.js').'"></script>');
 			$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaQuiz/js/WikiaQuiz3.js"></script>');
+			//$wgOut->addScript('<script src="'.'/skins/common/modernizr-1.7.min.js"></script>');
 		} else if ($wgRequest->getVal('v') == '2') {	
 			$wgOut->addHtml(wfRenderModule('WikiaQuiz', 'SampleQuiz2'));
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaQuiz/css/WikiaQuiz2.scss'));
