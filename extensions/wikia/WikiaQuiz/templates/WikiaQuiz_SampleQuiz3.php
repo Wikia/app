@@ -105,7 +105,7 @@
 	</div>
 	<div id="CorrectIcon" class="correct-icon effect"></div>
 	<div id="WrongIcon" class="wrong-icon effect"></div>
-	<label id="MuteToggle" class="mute-control"><input type="checkbox" checked="checked">Mute</label>
+	<label id="MuteToggle" class="mute-control"><input type="checkbox" checked="checked"><?= wfMsg('wikiaquiz-game-mute') ?></label>
 </section>
 <div id="QuizStatus" class="QuizStatus">
 	<? if(!empty($wordmarkUrl)) { ?>
