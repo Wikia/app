@@ -71,6 +71,7 @@ public class BaseTest {
 	@AfterMethod(alwaysRun = true)
 	protected void closeSession() throws Exception {
 		if (noCloseAfterFail == null || noCloseAfterFail.equals("0")) {
+			session().close();
 			closeSeleniumSession();
 		}
 	}
