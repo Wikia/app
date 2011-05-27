@@ -2,11 +2,15 @@ var WikiaQuiz = {
 	animationTiming: 400,
 	ui: {},
 	sound: {},
+	isMuted: true,
 	qSet: false,
 	imgLargeSize: '245px',
 	imgScaleFactor: '+=90',
 	score: 0,
 	init: function() {
+		//game settings
+		WikiaQuiz.isMuted = $.getUrlVar('muted') != 'false';
+		
 		//DOM
 		jQuery.fx.interval = 13; // 16 is roughly 60 fps, 32 is roughly 30 fps
 		WikiaQuiz.qSet = $('#WikiaQuiz .questions .question-set');
@@ -24,20 +28,22 @@ var WikiaQuiz = {
 		WikiaQuiz.ui.progressBarIndicators = $('#ProgressBar .indicator');
 		WikiaQuiz.ui.correctIcon = $('#CorrectIcon');
 		WikiaQuiz.ui.wrongIcon = $('#WrongIcon');
+		WikiaQuiz.ui.muteToggle = $('#MuteToggle');
 		WikiaQuiz.sound.correct = document.getElementById('SoundAnswerCorrect');
 		WikiaQuiz.sound.wrong = document.getElementById('SoundAnswerWrong');
 		WikiaQuiz.sound.applause = document.getElementById('SoundApplause');
-		var audio = (typeof Modernizr != 'undefined' && Modernizr.audio);
+		WikiaQuiz.audio = (typeof Modernizr != 'undefined' && Modernizr.audio);
 		for(sound in WikiaQuiz.sound) {
-			if(audio) {
+			if(WikiaQuiz.audio) {
 				WikiaQuiz.sound[sound].load();
-			}else {
+			} else {
 				WikiaQuiz.sound[sound].play = function() {};	//empty function
 			}
 		}
 		
 		// events
 		WikiaQuiz.ui.startButton.click(WikiaQuiz.handleStart);
+		WikiaQuiz.ui.muteToggle.click(WikiaQuiz.toggleSound);
 	},
 	handleStart: function() {
 		WikiaQuiz.ui.startButton.hide();
@@ -152,7 +158,7 @@ var WikiaQuiz = {
 					WikiaQuiz.ui.nextButton.bind('click', WikiaQuiz.handleNextClick);
 					WikiaQuiz.ui.answerIndicator.removeClass('effect');
 					setTimeout(function() {
-						WikiaQuiz.sound.answerIndicator.play();
+						WikiaQuiz.playSound(WikiaQuiz.sound.answerIndicator);
 					}, 100);
 					WikiaQuiz.ui.explanation.fadeIn(WikiaQuiz.animationTiming);
 				});
@@ -185,13 +191,22 @@ var WikiaQuiz = {
 		}
 		WikiaQuiz.ui.progressBar.fadeOut(WikiaQuiz.animationTiming);
 		WikiaQuiz.ui.endScreen.fadeIn(WikiaQuiz.animationTiming, function() {
-			WikiaQuiz.sound.applause.play();
+			WikiaQuiz.playSound(WikiaQuiz.sound.applause);
 			WikiaQuiz.ui.endScreen.find('.continue').click(function() {
 				WikiaQuiz.ui.endScreen.fadeOut(WikiaQuiz.animationTiming, function() {
 					WikiaQuiz.ui.thanksScreen.fadeIn(WikiaQuiz.animationTiming);
 				});
 			});
 		});
+	},
+	playSound: function(soundElement) {
+		if(WikiaQuiz.audio && !WikiaQuiz.isMuted) {
+			soundElement.play();
+		}
+	},
+	toggleSound: function() {
+		$().log('Mute Toggle Clicked');
+		WikiaQuiz.isMuted = $(this).find('input').attr('checked');
 	}
 };
 

@@ -439,6 +439,11 @@ $dark-wiki: 1;
 	.wrong-icon {
 		background: url(/extensions/wikia/WikiaQuiz/images/wrong.png) no-repeat;
 	}
+	.mute-control {
+		bottom: 8px;
+		position: absolute;
+		right: 15px;
+	}
 }
 
 .QuizStatus {
