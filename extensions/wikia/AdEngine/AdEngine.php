@@ -12,7 +12,7 @@ $wgHooks['BeforePageDisplay'][] = 'adEngineAdditionalScripts';
 $wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
 
 function wfAdEngineSetupJSVars($vars) {
-	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC, $wgAdslot_INVISIBLE_1, $wgAdDriverCookieLifetime, $wgCityId, $wgDartCustomKeyValues, $wgUser;
+	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC, $wgAdDriverCookieLifetime, $wgDartCustomKeyValues, $wgUser, $wgEnableWikiAnswers;
 
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 	$vars['wgNoExternals'] = $wgNoExternals;
@@ -33,6 +33,9 @@ function wfAdEngineSetupJSVars($vars) {
 	$vars['wgDartCustomKeyValues'] = $wgDartCustomKeyValues;
 
 	$vars['wgUserShowAds'] = $wgUser->getOption('showAds');
+
+	// Answers sites
+	$vars['wgEnableWikiAnswers'] = $wgEnableWikiAnswers;
 
 	return true;
 }

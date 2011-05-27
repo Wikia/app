@@ -51,26 +51,9 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 		default:
 	}
 
-	switch (skin) {
-		case 'answers':
-			switch (slotname) {
-				case 'CORP_TOP_LEADERBOARD':
-				case 'HOME_TOP_LEADERBOARD':
-				case 'TOP_LEADERBOARD':
-					return 'NO-AD';
-					break;
-				case 'INCONTENT_BOXAD_1':
-					switch (wgDB) {
-						case 'answers':
-							return 'NO-AD';
-							break;
-						default:
-					}
-					break;
-				default:
-			}
-			break;
-		default:
+	// Answers sites
+	if (wgEnableWikiAnswers) {
+		return AdDriver.adProviderLiftium;
 	}
 
 	switch (slotname) {
