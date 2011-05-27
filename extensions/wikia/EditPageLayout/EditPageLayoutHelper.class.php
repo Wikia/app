@@ -276,7 +276,7 @@ class EditPageLayoutHelper {
 		return array(
 			'extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
 			'extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
-			'extensions/wikia/EditPageLayout/js/editor/ui/buttons.js',
+			'extensions/wikia/EditPageLayout/js/editor/Buttons.js',
 			'extensions/wikia/EditPageLayout/js/editor/Tracker.js',
 			'extensions/wikia/EditPageLayout/js/editor/PageControls.js',
 			'extensions/wikia/EditPageLayout/js/editor/CommonPlugins.js',
