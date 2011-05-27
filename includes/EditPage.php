@@ -2040,6 +2040,11 @@ INPUTS
 			$conflict = '<hr />';
 		}
 
+		// wikia change begin
+		// BugId:5451
+		wfRunHooks( 'EditPageGetPreviewNote', array( $this, &$note ) );
+		// wikia change end
+
 		$previewhead = "<div class='previewnote'>\n" .
 			'<h2 id="mw-previewheader">' . htmlspecialchars( wfMsg( 'preview' ) ) . "</h2>" .
 			$wgOut->parse( $note ) . $conflict . "</div>\n";

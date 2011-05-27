@@ -52,6 +52,7 @@ $app->registerClass('SpecialCustomEditPage', $dir . '/SpecialCustomEditPage.clas
 $app->registerHook('AlternateEditPageClass', 'EditPageLayoutHelper', 'onAlternateEditPageClass');
 $app->registerHook('EditPageBeforeConflictDiff', 'EditPageLayoutHelper', 'onEditPageBeforeConflictDiff');
 $app->registerHook('EditPageGetDiffText', 'EditPageLayoutHelper', 'onEditPageGetDiffText');
+$app->registerHook('EditPageGetPreviewNote', 'EditPageLayoutHelper', 'onEditPageGetPreviewNote');
 $app->registerHook('GetPreferences', 'EditPageLayoutHelper', 'onGetPreferences');
 
 // messages
