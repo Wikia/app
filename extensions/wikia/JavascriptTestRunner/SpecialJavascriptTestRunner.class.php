@@ -6,58 +6,16 @@ class SpecialJavascriptTestRunner extends SpecialPage {
 		parent::__construct( 'JavascriptTestRunner', 'javascripttestrunner', false );
 	}
 
-	static public function createJavascriptList( $string ) {
+	static public function createJavascriptList( $string, $excludes = array() ) {
 		$items = explode(',',$string);
 		foreach ($items as $k => $v) {
-			if (empty($v)) {
+			if (empty($v) || in_array( $v, $excludes )) {
 				unset($items[$k]);
 			} else {
 				$items[$k] = "'$v'";
 			}
 		}
 		return '[' . implode(',',$items) . ']';
-	}
-
-	protected function isPathSafe( $fileName ) {
-		global $IP;
-		$base = realpath($IP);
-		$current = realpath($IP.'/'.$fileName);
-		if (substr($current,0,strlen($base)) !== $base) {
-			return false;
-		}
-		return true;
-	}
-
-	protected $definedModules = array(
-		'rte-prod' => array(
-			'extensions/wikia/RTE/ckeditor/ckeditor.js',
-		),
-		'rte-test' => array(
-			'extensions/wikia/RTE/ckeditor/ckeditor_source.js',
-			'extensions/wikia/RTE/js/RTE.js'
-		),
-	);
-
-	protected function getIncludedFiles( $contents ) {
-		$list = array();
-		$lines = split("\r?\n",$contents);
-		foreach ($lines as $line) {
-			$matches = array();
-			if (preg_match("/^@test-([^ \t]+)[ \t]+(.*)\$/",trim($line),$matches)) {
-				@list( , $command, $value ) = $matches;
-				switch ($command) {
-					case 'require-module':
-						if (isset($this->definedModules[$value])) {
-							$list = array_merge($list,$this->definedModules[$value]);
-						}
-						break;
-					case 'require-file':
-						$list[] = $value;
-						break;
-				}
-			}
-		}
-		return $list;
 	}
 
 	function execute() {
@@ -88,6 +46,10 @@ class SpecialJavascriptTestRunner extends SpecialPage {
 				$wgOut->addScript("<script type=\"text/javascript\" src=\"{$basePath}/{$filePath}\"></script>");
 			}
 
+			foreach ($testSuite->getFrameworkStyles() as $filePath) {
+				$wgOut->addStyle("{$basePath}/{$filePath}");
+			}
+
 			// Include test runner
 			$wgOut->addScript("<script type=\"text/javascript\" src=\"{$basePath}/extensions/wikia/JavascriptTestRunner/js/Xml.js\"></script>");
 			$wgOut->addScript("<script type=\"text/javascript\" src=\"{$basePath}/extensions/wikia/JavascriptTestRunner/js/JavascriptTestRunner.js\"></script>");
@@ -112,11 +74,13 @@ class SpecialJavascriptTestRunner extends SpecialPage {
 			$filters = $wgRequest->getVal('filter','');
 			$script .= "window.jtr_filters = ".self::createJavascriptList($filters).";\n";
 			$outputs = $wgRequest->getVal('output','');
-			$script .= "window.jtr_outputs = ".self::createJavascriptList($outputs).";\n";
+			$script .= "window.jtr_outputs = ".self::createJavascriptList($outputs,$testSuite->getFrameworkForbiddenOutputs()).";\n";
 			$script .= "window.WikiaAutostartDisabled = true;\n";
 			if ($autoRun)
 				$script .= "window.WikiaJavascriptTestRunner.autorun();\n";
 			$wgOut->addInlineScript($script);
+
+			$wgOut->addHtml($testSuite->getFrameworkHtml());
 
 		} else {
 			$wgOut->addHTML("No test given to run.");
@@ -132,6 +96,10 @@ class JavascriptTestRunner_TestSuite {
 	protected $testFile = '';
 
 	protected $frameworkName = false;
+	/**
+	 * @var JavascriptTestFramework
+	 */
+	protected $framework = null;
 	protected $requiredFiles = array();
 
 	protected $status = false;
@@ -150,7 +118,7 @@ class JavascriptTestRunner_TestSuite {
 	}
 
 	protected function getModuleFiles( $moduleName ) {
-		return (array)JavascriptTestRunner_Contants::$modules[$moduleName];
+		return (array)JavascriptTestRunner_Constants::$modules[$moduleName];
 	}
 
 	protected function loadFile( $fileName ) {
@@ -171,7 +139,7 @@ class JavascriptTestRunner_TestSuite {
 						}
 						break;
 					case 'require-module':
-						if (isset($this->definedModules[$value])) {
+						if (isset(JavascriptTestRunner_Constants::$modules[$value])) {
 							$this->requiredFiles = array_merge($this->requiredFiles,$this->getModuleFiles($value));
 						}
 						break;
@@ -184,6 +152,7 @@ class JavascriptTestRunner_TestSuite {
 				}
 			}
 		}
+		$this->framework = JavascriptTestFramework::newFromName($this->frameworkName);
 		return true;
 	}
 
@@ -213,7 +182,31 @@ class JavascriptTestRunner_TestSuite {
 	}
 
 	public function getFrameworkFiles() {
-		return (array)JavascriptTestRunner_Constants::$frameworks[$this->frameworkName];
+		if ($this->framework) {
+			return $this->framework->javascriptFiles;
+		}
+		return array();
+	}
+
+	public function getFrameworkStyles() {
+		if ($this->framework) {
+			return $this->framework->styleFiles;
+		}
+		return array();
+	}
+
+	public function getFrameworkHtml() {
+		if ($this->framework) {
+			return $this->framework->html;
+		}
+		return '';
+	}
+
+	public function getFrameworkForbiddenOutputs() {
+		if ($this->framework) {
+			return $this->framework->forbiddenOutputs;
+		}
+		return array();
 	}
 
 	public function getFrameworkName() {
@@ -233,15 +226,6 @@ class JavascriptTestRunner_Constants {
 			'extensions/wikia/RTE/ckeditor/ckeditor_source.js',
 			'extensions/wikia/RTE/js/RTE.js'
 		),
-	);
-
-	static public $frameworks = array(
-		'jsUnity' => array(
-			'extensions/wikia/JavascriptTestRunner/js/jsunity-0.6.js'
-		),
-		'QUnit' => array(
-			'extensions/wikia/JavascriptTestRunner/js/qunit.js'
-		)
 	);
 
 }

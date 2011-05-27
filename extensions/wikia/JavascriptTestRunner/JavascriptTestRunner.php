@@ -1,7 +1,7 @@
 <?php
 /**
  * Javascript unit test runner and integration with wikia's stack Selenium + CruiseControl
- * 
+ *
  * @ingroup Wikia
  *
  * @author Władysław Bodzek <wladek@wikia-inc.com>
@@ -38,4 +38,7 @@ $wgExtensionMessagesFiles['JavascriptTestRunner'] = $dir . 'JavascriptTestRunner
 
 //classes
 $wgAutoloadClasses['SpecialJavascriptTestRunner'] = dirname( __FILE__ ) . '/SpecialJavascriptTestRunner.class.php';
+$wgAutoloadClasses['JavascriptTestFramework'] = dirname( __FILE__ ) . '/JavascriptTestFramework.class.php';
+$wgAutoloadClasses['JavascriptTestFramework_QUnit'] = dirname( __FILE__ ) . '/JavascriptTestFramework_QUnit.class.php';
+$wgAutoloadClasses['JavascriptTestFramework_jsUnity'] = dirname( __FILE__ ) . '/JavascriptTestFramework_jsUnity.class.php';
 
