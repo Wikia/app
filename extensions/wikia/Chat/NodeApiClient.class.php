@@ -91,29 +91,20 @@ class NodeApiClient {
 		wfProfileOut( __METHOD__ );
 		return $roomId;
 	} // end getDefaultRoomId()
-	
-	/**
-	 * Given a roomId, return up to maxAvatars random avatar URLs. This
-	 * function makes no guarantee to the caller that the avatars will be the same or
-	 * different from previous calls even if there are more than maxAvatars
-	 * users in the room.
-	 *
-	 * If 'numInRoom' is provided, that variable will be set by reference to contain
-	 * the total number of users in the room.
-	 */
-	static public function getAvatarsInRoom($roomId, $maxAvatars, &$numInRoom=0, $avatarSize=50){
+
+
+	static public function getChatters($roomId, $maxChatters, &$numInRoom=0) {
 		global $wgMemc;
 		wfProfileIn(__METHOD__);
-		$avatarUrls = array();
 
 		// Since this is used on every page render & involves a network request to the node servers, cache the results
 		// in memcached (but only for a short time because it needs to be very close to "live" to interest people).
-		$memKey = wfMemcKey("NodeApiClient::getAvatarsInRoom", $roomId, $maxAvatars, $avatarSize);
+		$memKey = wfMemcKey("NodeApiClient::getChatters", $roomId, $maxChatters);
 		
 		$data = $wgMemc->get($memKey);
 		if(!$data){
 			$data['numInRoom'] = 0;
-			$data['avatarUrls'] = array();
+			$data['chatters'] = array();
 
 			$usersInRoomJson = NodeApiClient::makeRequest(array(
 				"func" => "getUsersInRoom",
@@ -125,19 +116,20 @@ class NodeApiClient {
 			$data['numInRoom'] = count($usersInRoomData);
 
 			// Get the avatar urls for the subset of users which we want avatars for.
-			for($index=0; (($index < count($usersInRoomData)) && ($index < $maxAvatars)); $index++){
-				$data['avatarUrls'][] = AvatarService::getAvatarUrl($usersInRoomData[$index], $avatarSize);
+			for($index=0; (($index < count($usersInRoomData)) && ($index < $maxChatters)); $index++){
+				$data['chatters'][] = array('username' => $usersInRoomData[$index]);
 			}
 
 			$wgMemc->set($memKey, $data, 30); // only cache for a short time... needs to be pretty fresh (this might even be too long).
 		}
-
+		
 		// Allow calling code to find the total number of users in the room (by reference).
 		$numInRoom = $data['numInRoom'];
 
 		wfProfileOut( __METHOD__ );
-		return $data['avatarUrls'];
-	} // end getAvatarsInRoom()
+		return $data['chatters'];
+	}
+
 
 	/**
 	 * Does the request to the Node server and returns the responseText (empty string on failure).
