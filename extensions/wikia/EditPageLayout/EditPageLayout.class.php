@@ -67,7 +67,6 @@ class EditPageLayout extends EditPage {
 		$this->mCoreEditNotices = WF::build('EditPageNotices');
 		$this->mEditNotices = WF::build('EditPageNotices');
 
-
 		// add messages (fetch them using <script> tag)
 		JSMessages::getInstance()->enqueuePackage('EditPageLayout', JSMessages::EXTERNAL);
 	}
