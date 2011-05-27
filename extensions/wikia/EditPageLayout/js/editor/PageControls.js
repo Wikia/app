@@ -158,11 +158,15 @@
 
 			window.wgEditedTitle = prefix + window.wgEditedTitle;
 
-			var shortText = window.wgEditedTitle.substring(0, 23);
+			if (window.wgEditedTitle.substring(0, 30) == window.wgEditedTitle) {
+				var shortText = $.htmlentities(window.wgEditedTitle);
+			} else {
+				var shortText = $.htmlentities(window.wgEditedTitle.substring(0, 30)) + '&hellip;';
+			}
 
 			this.titleNode.children('a').
 				attr('href', wgArticlePath.replace('$1', window.wgEditedTitle)).
-				text(shortText);
+				html(shortText);
 		},
 
 		// return true if any of the required fields has no value
