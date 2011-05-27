@@ -12,6 +12,7 @@ var AdDriver = {
 	cookieNameNumAllCall: 'adDriverNumAllCall',
 	cookieNameNumDARTCall: 'adDriverNumDARTCall',
 	cookieNameLastDARTCallNoAd: 'adDriverLastDARTCallNoAd',
+	debug: false,
 	minNumDARTCall: 3,
 	paramLiftiumTag: 'liftium_tag',
 	standardLeaderboardMinHeight: 90,
@@ -20,10 +21,13 @@ var AdDriver = {
 	init: function() {
 		window.adDriverLastDARTCallNoAds = new Array();
 		window.adDriverAdCallComplete = new Array();
+		AdDriver.debug = parseInt($.getUrlVar('debug'));
 	},
 
 	log: function(msg) {
-		$().log('AdDriver: ' + msg);
+		if (AdDriver.debug) {
+			$().log('AdDriver: ' + msg);
+		}
 	}
 }
 
