@@ -116,12 +116,6 @@ $dark-wiki: 1;
 			width: 205px;
 			z-index: $floor-z;
 		}
-		&.half {
-			@include opacity(50);
-		}
-		&.hide {
-			@include opacity(0);
-		}
 	}
 	.title-screen {
 		@include box-shadow(0, 0, 25px, #000, true, 5px);
@@ -156,11 +150,15 @@ $dark-wiki: 1;
 			text-align: center;
 			top: 120px;
 			width: 200px;
+			z-index: $base-z;
 		}
 		.cadence {
 			font-size: 28px;
 			margin: 340px auto 0 auto;
 			text-align: center;
+		}
+		.title-image {
+			@include opacity(20);
 		}
 	}
 	.questions {
@@ -387,6 +385,7 @@ $dark-wiki: 1;
 			padding: 40px 0;
 			top: 75px;
 			width: 600px;
+			z-index: $base-z;
 			&:after {
 				left: 285px;
 			}
@@ -395,6 +394,7 @@ $dark-wiki: 1;
 			margin-top: 240px;
 			position: relative;
 			text-align: center;
+			z-index: $base-z;
 			h2 {
 				border-bottom: none;
 			}
@@ -403,6 +403,9 @@ $dark-wiki: 1;
 					margin: 10px 0;
 				}
 			}
+		}
+		.title-image {
+			@include opacity(20);
 		}
 	}
 	.correct-icon, .wrong-icon {
