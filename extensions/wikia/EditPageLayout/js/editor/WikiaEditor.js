@@ -267,6 +267,20 @@
 				scope: this
 			});
 		},
+		
+		buildClickHandler: function( config ) {
+			if (!config.click) {
+				var editor = this.editor;
+				config.click = function() {
+					var mode = editor.mode;
+					if (typeof config['click'+mode] == 'function')
+						return config['click'+mode].apply(this,arguments);
+					else
+						editor.warn('Mode "'+mode+'" not supported for button: '+config.name);
+				};
+				this.editor.fire('uiBuildClickHandler',this.editor,config);
+			}
+		},		
 
 		addDefaults: function() {
 			var elements = {}, config = this.editor.config;
@@ -306,6 +320,7 @@
 
 		addElement: function( name, def ) {
 			def.name = name;
+			this.buildClickHandler(def);
 			this.items[name] = def;
 			this.editor.fire('uiAddElement',this.editor,name,def);
 		},
@@ -346,95 +361,13 @@
 
 		requires: ['ui','functions'],
 
-		nextId: 1,
-
 		init: function() {
 			this.editor.ui.addHandler('button',this);
-			this.editor.ui.buildClickHandler = this.proxy(this.buildClickHandler);
-		},
-
-		buildClickHandler: function( config ) {
-			var editor = this.editor;
-			config.click = function() {
-				var mode = editor.mode;
-				if (typeof config['click'+mode] == 'function')
-					return config['click'+mode].apply(this,arguments);
-				else
-					editor.warn('Mode "'+mode+'" not supported for button: '+config.name);
-			};
-			this.editor.fire('uiBuildClickHandler',this.editor,config);
 		},
 
 		render: function( config, data ) {
-			if (!config)
-				return '';
-
-			config.label || (config.label = $.msg(config.labelId));
-			config.title || (config.title = config.label);
-			var id = 'uielem_' + this.nextId++;
-			var buttonClass = 'cke_' + config.type;
-			var classes = (config.className || '');
-			var title = config.title || '';
-			var label = config.label || '';
-
-			if (typeof config.click != 'function') {
-				this.buildClickHandler(config);
-			}
-			var clickFn = config.clickFn = config.clickFn || this.editor.addFunction(config.click);
-
-			var html = '';
-
-			html += '<span class="' + buttonClass + ' ' + classes + '">';
-			html += '<a id="' + id + '" class="cke_off ' + classes + '"'
-				+ ' title="' + title + '"'
-				+ ' tabindex="-1"'
-				+ ' hidefocus="true"'
-			    + ' role="button"'
-				+ ' aria-labelledby="' + id + '_label"';
-
-			// Some browsers don't cancel key events in the keydown but in the
-			// keypress.
-			// TODO: Check if really needed for Gecko+Mac.
-			/*
-			if ( env.opera || ( env.gecko && env.mac ) )
-			{
-				html += ' onkeypress="return false;"';
-			}
-			*/
-
-			// With Firefox, we need to force the button to redraw, otherwise it
-			// will remain in the focus state.
-			/*
-			if ( env.gecko )
-			{
-				html += ' onblur="this.style.cssText = this.style.cssText;"';
-			}
-			*/
-
-			html +=	' onclick="WikiaEditor.callFunction(' + clickFn + ', this); return false;">';
-			//html += ' onclick="return false;"';
-			//html += ' onmousedown="WikiaEditor.callFunction(' + clickFn + ', this); return false;">';
-
-			if ( config.hasIcon !== false ) {
-				html += '<span class="cke_icon">&nbsp;</span>';
-			}
-			if ( config.hasLabel !== false ) {
-				var labelClass = config.labelClass || 'cke_label';
-				html += '<span id="' + id + '_label" class="' + labelClass + '">' + label + '</span>';
-			}
-
-			if ( config.hasArrow ) {
-				var arrowClass = config.arrowClass || 'cke_openbutton';
-				html += '<span class="' + arrowClass + '">&nbsp;</span>';
-			}
-
-			html += '</a>' + '</span>';
-
-			if (typeof data == 'object') {
-				data.id = id;
-			}
-
-			return html;
+			var button = new WE.ui.button(this.editor,config,data);
+			return button.render();
 		}
 
 	});
@@ -443,101 +376,13 @@
 
 		requires: ['ui','uibuttons'],
 
-		autoRenderList: false,
-
-		beforeInit: function() {
-			this.autoRenderList = [];
-			this.editor.on('toolbarsRendered',this.autoRenderPanels,this);
-		},
-
 		init: function() {
 			this.editor.ui.addHandler('panelbutton',this);
 		},
 
-		autoRenderPanels: function() {
-			for (var i=0;i<this.autoRenderList.length;i++) {
-				this.autoRenderList[i]();
-			}
-			this.autoRenderList = [];
-		},
-
 		render: function( config, data ) {
-			data = data || {};
-			data.opened = false;
-			config = $.extend({},config);
-			config.mouseenter = function() {
-				data.inside++;
-			};
-			config.mouseleave = function() {
-				data.inside--;
-			}
-			config.renderpanel = function() {
-				var button = $('#'+data.id),
-					el = button.exists() &&  button.closest('.cke_'+config.type);
-				if (button && el && !data.panel) {
-					var pos = el.position();
-					var panel = data.panel = $('<div>');
-					panel.addClass('cke_panel_dropdown').addClass(config.panelClass || '').appendTo(el.offsetParent());
-					config.positionpanel();
-					config.panelOnInit && config.panelOnInit(data.panel,config,panel);
-					panel.hide();
-
-					button.add(panel)
-						.mouseenter(config.mouseenter)
-						.mouseleave(config.mouseleave);
-					panel
-						.delegate('.cke_button, .text-links a','mouseenter',config.mouseleave)
-						.delegate('.cke_button, .text-links a','mouseleave',config.mouseenter)
-				}
-			};
-			config.positionpanel = function() {
-				var button = $('#'+data.id),
-					el = button.exists() &&  button.closest('.cke_'+config.type);
-				var pos = el.position();
-				var mod = { left: 5, top: -20 };
-				data.panel.css({
-					position: 'absolute',
-					left: pos.left + mod.left,
-					top: pos.top + mod.top + el.outerHeight(),
-					'padding-top': -mod.top
-				});
-			};
-			config.click = function() {
-				var button = $('#'+data.id),
-					el = button.closest('.cke_'+config.type);
-				if (!data.panel)
-					config.renderpanel();
-				if (!data.opened) {
-					el.addClass('cke_opened');
-					config.panelOnShow && config.panelOnShow(data.panel,config,panel);
-					config.positionpanel();
-					data.panel.show();
-					data.opened = true;
-					data.inside = 1;
-				} else {
-					el.removeClass('cke_opened');
-					config.panelOnHide && config.panelOnHide(data.panel,config,panel);
-					data.panel.hide();
-					data.opened = false;
-					data.inside = 0;
-				}
-			};
-			this.editor.ui.on('bodyClick',function() {
-				if (data.opened && data.inside == 0) {
-					config.click();
-				}
-			});
-			this.editor.on('editorFocus',function() {
-				if (data.opened) {
-					config.click();
-				}
-			});
-			config.hasArrow = true;
-			config.labelClass = 'cke_text';
-			if (config.autorenderpanel) {
-				this.autoRenderList.push(config.renderpanel);
-			};
-			return this.editor.plugins.uibuttons.render(config,data);
+			var button = new WE.ui.panelbutton(this.editor,config,data);
+			return button.render();
 		}
 
 	});
@@ -551,31 +396,10 @@
 		},
 
 		render: function( config, data ) {
-			config = $.extend({},config);
-			data = data || {};
-
-			var editor = this.editor;
-			config.panelOnInit = function( panel, config, data ) {
-				var module = editor.modules.create(config.module);
-				var el = module.render();
-
-				// immitate that module sits in rail
-				var headerClass = module.getHeaderClass();
-				var elcontent = $('<div>')
-					.addClass('module_content')
-					.append(el)
-				var elmodule = $('<div>')
-					.addClass('module module_' + headerClass)
-					.attr('data-id',headerClass)
-					.append(elcontent);
-
-				panel.append(elmodule);
-				module.afterAttach();
-			}
-			config.panelClass = config.panelClass ? config.panelClass + ' ' : '';
-
-			return this.editor.plugins.uipanelbuttons.render(config,data);
+			var button = new WE.ui.modulebutton(this.editor,config,data);
+			return button.render();
 		}
+		
 	});
 
 
@@ -1013,15 +837,14 @@
 			}
 
 			element.type = this.mapping[element.type];
-			this.editor.ui.buildClickHandler(element);
 			this.addButton(element);
 		},
 
-		buildWysiwygClickHandler: function( editor, config ) {
-			this.editor.log('buildWysiwygClickHandler',config.name,config);
-			if (!config.clickwysiwyg && config.ckcommand) {
-				config.clickwysiwyg = function() {
-					editor.ck.execCommand(config.ckcommand,config.clickdatawysiwyg);
+		buildWysiwygClickHandler: function( editor, button ) {
+			this.editor.log('buildWysiwygClickHandler',button.name,button);
+			if (!button.clickwysiwyg && button.ckcommand) {
+				button.clickwysiwyg = function() {
+					editor.ck.execCommand(button.ckcommand,button.clickdatawysiwyg);
 				};
 			}
 		},
