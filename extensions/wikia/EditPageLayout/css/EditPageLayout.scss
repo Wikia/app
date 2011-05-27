@@ -30,6 +30,7 @@
 @import "core/wide"; // wide mode related stuff
 @import "core/permission-error";
 @import "core/modals";
+@import "core/preloads"; // editor preloads
 
 /* modal dialog (page title, captcha) */
 #HiddenFieldsDialog {
