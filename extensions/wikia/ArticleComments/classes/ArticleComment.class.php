@@ -588,72 +588,37 @@ class ArticleComment {
 	static public function addArticlePageToWatchlist($comment, $commentId) {
 		global $wgUser, $wgEnableArticleWatchlist, $wgBlogsEnableStaffAutoFollow;
 
-		$watchthis = false;
-		if ( empty($wgEnableArticleWatchlist) ) {
-			return $watchthis;
-		}
-
-		if ( !$wgUser->isAnon() ) {
-			if ( $wgUser->getOption( 'watchdefault' ) ) {
-				$watchthis = true;
-			} elseif ( $wgUser->getOption( 'watchcreations' ) && empty($commentId) /* new comment */ ) {
-				$watchthis = true;
-			}
+		if ( empty($wgEnableArticleWatchlist) || $wgUser->isAnon() ) {
+			return false;
 		}
 
 		$oArticlePage = $comment->getArticleTitle();
-		if ( !is_null($oArticlePage) ) {
-			$dbw = wfGetDB(DB_MASTER);
-			$dbw->begin();
-			if ( !$comment->mTitle->userIsWatching() ) {
-				# comment
-				$dbw->insert(
-					'watchlist',
-					array(
-					'wl_user' => $wgUser->getId(),
-					'wl_namespace' => MWNamespace::getTalk($comment->mTitle->getNamespace()),
-					'wl_title' => $comment->mTitle->getDBkey(),
-					'wl_notificationtimestamp' => wfTimestampNow()
-					), __METHOD__, 'IGNORE'
-				);
-			}
-
-			if ( !$oArticlePage->userIsWatching() ) {
-				# and article page
-				$dbw->insert(
-					'watchlist',
-					array(
-					'wl_user' => $wgUser->getId(),
-					'wl_namespace' => $comment->mTitle->getNamespace(),
-					'wl_title' => $oArticlePage->getDBkey(),
-					'wl_notificationtimestamp' => NULL
-					), __METHOD__, 'IGNORE'
-				);
-			}
-
-			if ( !empty($wgBlogsEnableStaffAutoFollow) && defined('NS_BLOG_ARTICLE') && $comment->mTitle->getNamespace() == NS_BLOG_ARTICLE ) {
-				$owner = BlogArticle::getOwner($oArticlePage);
-				$oUser = User::newFromName($owner);
-				if ( $oUser instanceof User ) {
-					$groups = $oUser->getEffectiveGroups();
-					if ( is_array($groups) && in_array( 'staff', $groups ) ) {
-						$dbw->insert(
-							'watchlist',
-							array(
-							'wl_user' => $wgUser->getId(),
-							'wl_namespace' => NS_BLOG_ARTICLE,
-							'wl_title' => $oUser->getName(),
-							'wl_notificationtimestamp' => NULL
-							), __METHOD__, 'IGNORE'
-						);
-					}
-				}
-			}
-
-			$dbw->commit();
+		if ( is_null($oArticlePage) ) {
+			return false;
 		}
 
-		return $watchthis;
+		if ( ( $wgUser->getOption( 'watchdefault' ) || ( $wgUser->getOption( 'watchcreations' ) && empty($commentId) /* new comment */ ) ) && !$comment->mTitle->userIsWatching() ) {
+			# comment
+			$wgUser->addWatch( $comment->mTitle );
+		}
+
+		if ( $wgUser->getOption( 'watchdefault' ) && !$oArticlePage->userIsWatching() ) {
+			# and article page
+			$wgUser->addWatch( $oArticlePage );
+		}
+
+		if ( !empty($wgBlogsEnableStaffAutoFollow) && defined('NS_BLOG_ARTICLE') && $comment->mTitle->getNamespace() == NS_BLOG_ARTICLE ) {
+			$owner = BlogArticle::getOwner($oArticlePage);
+			$oUser = User::newFromName($owner);
+			if ( $oUser instanceof User ) {
+				$groups = $oUser->getEffectiveGroups();
+				if ( is_array($groups) && in_array( 'staff', $groups ) ) {
+					$wgUser->addWatch( Title::newFromText( $oUser->getName(), NS_BLOG_ARTICLE ) );
+				}
+			}
+		}
+
+		return true;
 	}
 
 	/**
