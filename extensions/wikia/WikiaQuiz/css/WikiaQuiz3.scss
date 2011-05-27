@@ -29,8 +29,12 @@ $bubble-color-alt: $color-header-alt;
 @if lightness($bubble-color-alt) < 25 {
 	$bubble-color-alt: mix($color-header-alt, #fff, 60%);
 }
-.quiz-bubble {
-	
+$dark-wiki: 1;
+@if lightness($color-page) < 50 {
+	$dark-wiki: 0;
+}
+
+.quiz-bubble {	
 	@include border-radius(10px);
 	@include box-shadow(0, 2px, 5px, #000);
 	@include linear-gradient($color-header, top, $bubble-color-alt, 0, $color-header, 100%);
@@ -61,7 +65,11 @@ $bubble-color-alt: $color-header-alt;
  * Quiz
  */
 .WikiaQuiz {
-	//border: 10px solid $color-body;
+	$box-shadow-color: #555;
+	@if $dark-wiki == 1 {
+		$box-shadow-color: #777;
+	}
+	@include box-shadow(0, 0, 15px, $box-shadow-color);
 	height: $panel-height;
 	margin: 0 auto;
 	position: relative;
@@ -81,40 +89,46 @@ $bubble-color-alt: $color-header-alt;
 		width: $panel-width - 20px;
 		z-index: 0;
 	}
+	.title-image {
+		@include box-shadow(0, 2px, 10px, #000, false, -5px);
+		border: 5px solid white;
+		position: absolute;
+		top: 30px;
+		&.image1 {
+			@include transform(translate(17px, 0) rotate(-6deg));
+			height: 205px;
+			left: 40px;
+			top: 50px;
+			width: 205px;
+			z-index: $floor-z;
+		}
+		&.image2 {
+			height: 250px;
+			left: 270px;
+			width: 250px;
+			z-index: $floor-z + 1;
+		}
+		&.image3 {
+			@include transform-rotate(5deg);
+			height: 205px;
+			left: 545px;
+			top: 50px;
+			width: 205px;
+			z-index: $floor-z;
+		}
+		&.half {
+			@include opacity(50);
+		}
+		&.hide {
+			@include opacity(0);
+		}
+	}
 	.title-screen {
 		@include box-shadow(0, 0, 25px, #000, true, 5px);
 		background: mix($color-body, #fff, 90%);
 		display: block; // temp
 		height: $panel-height;
 		width: $panel-width;
-		.title-image {
-			@include box-shadow(0, 2px, 10px, #000, false, -5px);
-			border: 5px solid white;
-			position: absolute;
-			top: 30px;
-			&.image1 {
-				@include transform(translate(17px, 0) rotate(-6deg));
-				height: 205px;
-				left: 40px;
-				top: 50px;
-				width: 205px;
-				z-index: $base-z - 2;
-			}
-			&.image2 {
-				height: 250px;
-				left: 270px;
-				width: 250px;
-				z-index: $base-z - 1;
-			}
-			&.image3 {
-				@include transform-rotate(5deg);
-				height: 205px;
-				left: 545px;
-				top: 50px;
-				width: 205px;
-				z-index: $base-z - 2;
-			}
-		}
 		.title {
 			$width: 415px;
 			$visual-width: $width + ($bubble-padding * 2);
@@ -126,7 +140,6 @@ $bubble-color-alt: $color-header-alt;
 				left: ($visual-width - $bubble-padding)/2;
 			}
 		}
-		
 	}
 	.count-down {
 		display: none;
@@ -261,9 +274,12 @@ $bubble-color-alt: $color-header-alt;
 							padding-top: 30px;
 						}
 					}
-					&.hover .representation{
-						border-color: $color-buttons;
+					&.hover .representation {
+						border-color: $color-links;
 						@include transform-scale(1.1);
+					}
+					&.selected .representation {
+						border-color: white;
 					}
 					&:first-child {
 						margin-left: 0;
@@ -337,7 +353,7 @@ $bubble-color-alt: $color-header-alt;
 				$height: $logical-height - $padding-top;
 				$width: 180px;
 				@include border-radius($border-radius);
-				background-color: $color-buttons;
+				background-color: $color-links;
 				color: white;
 				font-size: 125px;
 				height: $height;
@@ -349,7 +365,12 @@ $bubble-color-alt: $color-header-alt;
 				width: $width;
 				z-index: $floor-z;
 				&.full {
-					font-size: 100px;
+					font-size: 90px;
+				}
+				.percentage {
+					font-size: 0.2em;
+					position: relative;
+					top: -2em;
 				}
 			}
 			.continue {
@@ -387,7 +408,7 @@ $bubble-color-alt: $color-header-alt;
 	.correct-icon, .wrong-icon {
 		@include opacity(99);
 		@include transition-shorthand(all 200ms ease-in);
-		height: 132px;
+		height: 136px;
 		left: 25px;
 		position: absolute;
 		top: 25px;
@@ -395,7 +416,7 @@ $bubble-color-alt: $color-header-alt;
 		z-index: frame-z + 1;
 		&.effect {
 			@include opacity(0);
-			@include transform(translate(0,-132px) scale(2));
+			@include transform(translate(0,-136px) scale(2));
 		}
 	}
 	.correct-icon {
@@ -409,16 +430,16 @@ $bubble-color-alt: $color-header-alt;
 .QuizStatus {
 	@include linear-gradient($color-header, top, mix($color-header, #fff, 80%), 18%, mix($color-header, #fff, 90%), 35%, $color-header, 53%);
 	@include border-radius(7px);
+	@include box-shadow(0, 2px, 5px, #111);
 	top: -85px;
 	height: 55px;
 	margin: 0 auto;
 	position: relative;
 	text-align: center;
 	width: $panel-width + 14px;
-	
 	img {
 		position: absolute;
-		left: 0;
+		left: 15px;
 	}
 	button {
 		@include box-shadow(0, 0, 8px, #fff);
@@ -467,6 +488,7 @@ $bubble-color-alt: $color-header-alt;
 }
 
 .quiz-facebook {
+	@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
 	border: 1px solid $color-page-border;
 	height: 73px;
 	margin: 0 auto 0;
@@ -475,6 +497,8 @@ $bubble-color-alt: $color-header-alt;
 	width: 798px;
 	.challenge {
 		background-color: #c3c3c3;
+		$challenge-text-color: black;
+		color: $challenge-text-color;
 		font-size: 16px;
 		height: 48px;
 		padding-top: 25px;
@@ -499,4 +523,9 @@ $bubble-color-alt: $color-header-alt;
 		right: 0;
 		top: 5px;
 	}
+}
+
+/* Overwrites */
+.WikiaPageHeader h2 {
+	display: none;
 }

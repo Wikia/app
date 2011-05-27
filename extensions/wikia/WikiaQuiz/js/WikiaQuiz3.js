@@ -26,8 +26,9 @@ var WikiaQuiz = {
 		WikiaQuiz.sound.correct = document.getElementById('SoundAnswerCorrect');
 		WikiaQuiz.sound.wrong = document.getElementById('SoundAnswerWrong');
 		WikiaQuiz.sound.applause = document.getElementById('SoundApplause');
+		WikiaQuiz.ui.titleImages = $('#WikiaQuiz .title-image');
 		for(sound in WikiaQuiz.sound) {
-			WikiaQuiz.sound[sound].load();
+			//WikiaQuiz.sound[sound].load();
 		}
 		
 		// events
@@ -39,6 +40,7 @@ var WikiaQuiz = {
 		WikiaQuiz.countDown();
 	},
 	countDown: function() {
+		WikiaQuiz.ui.titleImages.addClass('half');
 		WikiaQuiz.ui.titleScreen.hide();
 		WikiaQuiz.ui.countDown.show();
 		var i = 0;
@@ -104,6 +106,7 @@ var WikiaQuiz = {
 			$().log('found:');
 			$().log(answer);
 			answer.unbind();
+			answer.addClass('selected');
 			WikiaQuiz.ui.chosenAnswer = answer;
 			if(answer.data('correct') == '1') {
 				WikiaQuiz.correct = true;
@@ -143,7 +146,7 @@ var WikiaQuiz = {
 					WikiaQuiz.ui.nextButton.bind('click', WikiaQuiz.handleNextClick);
 					WikiaQuiz.ui.answerIndicator.removeClass('effect');
 					setTimeout(function() {
-						WikiaQuiz.sound.answerIndicator.play();
+						//WikiaQuiz.sound.answerIndicator.play();
 					}, 100);
 					WikiaQuiz.ui.explanation.fadeIn(WikiaQuiz.animationTiming);
 				});
@@ -170,13 +173,13 @@ var WikiaQuiz = {
 	showEnd: function() {
 		var score = (WikiaQuiz.score / WikiaQuiz.totalQ) * 100;
 		var scoreUI = $("#FinalScore");
-		scoreUI.text(score);
+		scoreUI.find('.number').text(score);
 		if(score == 100) {
 			scoreUI.addClass('full');
 		}
 		WikiaQuiz.ui.progressBar.fadeOut(WikiaQuiz.animationTiming);
 		WikiaQuiz.ui.endScreen.fadeIn(WikiaQuiz.animationTiming, function() {
-			WikiaQuiz.sound.applause.play();
+			//WikiaQuiz.sound.applause.play();
 			WikiaQuiz.ui.endScreen.find('.continue').click(function() {
 				WikiaQuiz.ui.endScreen.fadeOut(WikiaQuiz.animationTiming, function() {
 					WikiaQuiz.ui.thanksScreen.fadeIn(WikiaQuiz.animationTiming);
