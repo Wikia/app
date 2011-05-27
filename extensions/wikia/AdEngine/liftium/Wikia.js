@@ -570,7 +570,7 @@ var AIC2 = {
 	called          : false,
 	startPosition   : 0,
 	stopPosition    : 0,
-	magicNumber     : 400,
+	magicNumber     : 800,
 	visible         : false
 };
 		
@@ -583,16 +583,21 @@ if ($("#WikiaMainContent").width() != 680) {
 	Liftium.d("AIC2: non standard width, bailing out", 3);
 	return;
 }
+if ($('body').hasClass('rtl')) {
+	Liftium.d("AIC2: rtl wiki, bailing out", 3);
+	return;
+}
 
 	if (!AIC2.checkStartStopPosition()) return;
 
 	if (AIC2.startPosition + AIC2.magicNumber < AIC2.stopPosition) {
 		Liftium.d("AIC2: page long enough", 7);
-		$('#WikiaFooter').prepend('<div id="INCONTENT_BOXAD_1" class="noprint" style="height: 250px; width: 300px; position: fixed; bottom: 30px; left: 50%; margin-left: 190px;"><div id="Liftium_300x250_99"><iframe width="300" height="250" id="INCONTENT_BOXAD_1_iframe" class="" noresize="true" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" style="border:none" target="_blank"></iframe></div></div><!-- END SLOTNAME: INCONTENT_BOXAD_1 -->');
+		$('#WikiaRail').append('<div id="INCONTENT_BOXAD_1" class="noprint" style="height: 250px; width: 300px; position: relative;"><div id="Liftium_300x250_99"><iframe width="300" height="250" id="INCONTENT_BOXAD_1_iframe" class="" noresize="true" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" style="border:none" target="_blank"></iframe></div></div><!-- END SLOTNAME: INCONTENT_BOXAD_1 -->');
 		
-		if (!AIC2.checkFooterAd()) {
+		//if (!AIC2.checkFooterAd()) {
 			$(window).bind("scroll.AIC2", AIC2.onScroll);
-		}
+			$(window).bind("resize.AIC2", AIC2.onScroll);
+		//}
 	} else {
 		Liftium.d("AIC2: page too short", 3);
 	}
@@ -602,9 +607,17 @@ AIC2.checkStartStopPosition = function() {
 	Liftium.d("AIC2: check start/stop position", 7);
 
 	try {
-		var startPosition = parseInt($('#WikiaRail').offset().top) + parseInt($('#WikiaRail').height());
-		var stopPosition = parseInt($("#WikiaArticleCategories").offset().top) - parseInt($(window).height());
+		var adHeight = parseInt($('#INCONTENT_BOXAD_1').height()) || 0;
+
+		var startPosition = parseInt($('#WikiaRail').offset().top) + parseInt($('#WikiaRail').height()) - adHeight;
+		var stopPosition = parseInt($('#WikiaFooter').offset().top) - 10 - adHeight;
+
+		if ($('#LEFT_SKYSCRAPER_3').length && $('#LEFT_SKYSCRAPER_3').height() > 50) {
+			Liftium.d("AIC2: sky3 found", 3);
+			stopPosition = parseInt($('#LEFT_SKYSCRAPER_3').offset().top) - 20 - adHeight;
+		}
 	} catch (e) {
+		Liftium.d("AIC2: catched in start/stop:", 1, e);
 		// bail out - missing elements, broken dom, erroneous cast...
 		return false;
 	}
@@ -647,27 +660,65 @@ AIC2.onScroll = function() {
 		if (!AIC2.visible) {
 			Liftium.d("AIC2.showAd", 5);
 			if (!AIC2.checkStartStopPosition()) return;
-			if (!AIC2.checkFooterAd()) {
+			//if (!AIC2.checkFooterAd()) {
 				if ($('#INCONTENT_BOXAD_1').hasClass('wikia-ad') == false) {
 					LiftiumOptions.placement = "INCONTENT_BOXAD_1";
 					Liftium.callInjectedIframeAd("300x250", document.getElementById("INCONTENT_BOXAD_1_iframe"));
 					$('#INCONTENT_BOXAD_1').addClass('wikia-ad');
 				}
-				$('#INCONTENT_BOXAD_1').css('position','fixed');
-				$('#INCONTENT_BOXAD_1').css('bottom','30px');
-				$('#INCONTENT_BOXAD_1').slideDown();
+				$('#INCONTENT_BOXAD_1').css({
+					'position': 'fixed',
+					'top': '10px',
+					'bottom': '',
+					'left': '50%',
+					'margin-left': '190px',
+				});
+				$('#INCONTENT_BOXAD_1').css('visibility', 'visible');
 				
 				AIC2.visible = true;
-			}
+			//}
 		}
 	} else {
 		if (AIC2.visible) {
 			Liftium.d("AIC2.hideAd", 5);
-			$('#INCONTENT_BOXAD_1').slideUp();
-			
+			$('#INCONTENT_BOXAD_1').css('visibility', 'hidden');
+			AIC2.glueAd();
+
 			AIC2.visible = false;
 		}
 	}
+};
+
+AIC2.glueAd = function() {
+	Liftium.d("AIC2: glueAd", 9);
+
+	var adPosition = parseInt($('#INCONTENT_BOXAD_1').offset().top);
+	if (adPosition > AIC2.stopPosition) {
+		Liftium.d("AIC2: glue at the bottom", 7);
+
+		var bigSpace = parseInt(AIC2.stopPosition - AIC2.startPosition + 10);
+		// bottom
+		$('#INCONTENT_BOXAD_1').css({
+			'position': 'relative',
+			'top': bigSpace + 'px',
+			'bottom': '',
+			'left': '',
+			'margin-left': '',
+		});
+	} else {
+		Liftium.d("AIC2: glue at the top", 7);
+
+		// top
+		$('#INCONTENT_BOXAD_1').css({
+			'position': 'relative',
+			'top': '10px',
+			'bottom': '',
+			'left': '',
+			'margin-left': '',
+		});
+	}
+
+	$('#INCONTENT_BOXAD_1').css('visibility', 'visible');
 };
 
 AIC2.checkFooterAd = function() {
@@ -682,11 +733,9 @@ AIC2.checkFooterAd = function() {
 	}
 };
 
-/* rt#141687
 if (top == self && window.wgEnableAdsInContent && window.wgIsArticle && (window.wgNamespaceNumber != 6) && ! AIC2.called && ! window.wgIsMainpage ) {
 	wgAfterContentAndJS.push(function(){AIC2.init();});
 }
-*/
 
 
 
