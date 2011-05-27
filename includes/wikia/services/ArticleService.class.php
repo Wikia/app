@@ -43,8 +43,13 @@ class ArticleService extends Service {
 			$content = preg_replace($re, '', $content);
 
 			// remove [[Image:...]] and [[File:...]] tags
-			$ns = $wgContLang->getNsText( NS_FILE );
-			$re = strtr( $re_magic, array( 'S' => "\\[", 'E' => "\\]", 'X' => "(Image|$ns):" ));
+			$nsFile = $wgContLang->getNsText( NS_FILE );
+			$nsFileAlias = $this->getNsAlias( NS_FILE ); // [[Image:...]]
+			if( empty( $nsFileAlias ) ) {
+				// hardcoded "Image" as fallback, just in case
+				$nsFileAlias = 'Image';
+			}
+			$re = strtr( $re_magic, array( 'S' => "\\[", 'E' => "\\]", 'X' => "($nsFileAlias:$nsFile):" ));
 			$content = preg_replace($re, '', $content);
 
 			// skip "edit" section and TOC
@@ -82,5 +87,14 @@ class ArticleService extends Service {
 
 		wfProfileOut(__METHOD__);
 		return $content;
+	}
+
+	private function getNsAlias( $ns ) {
+		foreach( F::app()->wg->NamespaceAliases as $alias => $nsAlias ) {
+			if( $nsAlias == $ns ) {
+				return $alias;
+			}
+		}
+		return null;
 	}
 }
