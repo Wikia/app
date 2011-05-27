@@ -10,6 +10,9 @@
 		</h1>
 	</div>
 	<div class="count-down" id="CountDown">
+		<img src="<?= $data['images'][0] ?>" class="title-image image1" height="205" width="205">
+		<img src="<?= $data['images'][1] ?>" class="title-image image2" height="250" width="250">
+		<img src="<?= $data['images'][2] ?>" class="title-image image3" height="205" width="205">
 		<div class="number quiz-circle">
 			3
 		</div>
@@ -69,17 +72,25 @@
 	</ul>
 	<div class="quiz-end">
 		<div class="congratulations quiz-bubble">
-			<?= wfMsg('wikiaquiz-game-congratulations', $username) ?>
+			<? if($wgUser->isAnon()) {
+					echo wfMsg('wikiaquiz-game-congratulations-anon', $username);
+			   } else {
+					echo wfMsg('wikiaquiz-game-congratulations', $username);
+			   } 
+			?>
 		</div>
 		<div class="score-panel">
 			<?= wfMsg ('wikiaquiz-game-your-score') ?>
 			<div class="score" id="FinalScore">
-				0
+				<span class="number">0</span><span class="percentage">%</span>
 			</div>
 			<button class="continue"><?= wfMsg('wikiaquiz-game-continue-button') ?></button>
 		</div>
 	</div>
 	<div class="quiz-thanks">
+		<img src="<?= $data['images'][0] ?>" class="title-image image1" height="205" width="205">
+		<img src="<?= $data['images'][1] ?>" class="title-image image2" height="250" width="250">
+		<img src="<?= $data['images'][2] ?>" class="title-image image3" height="205" width="205">
 		<div class="thanks quiz-bubble">
 			<?= wfmsg('wikiaquiz-game-thanks') ?>
 		</div>

@@ -47,10 +47,12 @@ $messages['en'] = array(
 	'wikiaquiz-game-correct-label' => 'Correct! You rock.',
 	'wikiaquiz-game-incorrect-label' => 'WRONG. Boo.',
 	'wikiaquiz-game-congratulations' => 'Great job, $1!',
+	'wikiaquiz-game-congratulations-anon' => 'Great job!',
 	'wikiaquiz-game-your-score' => 'YOUR SCORE IS',
 	'wikiaquiz-game-continue-button' => 'Continue',
 	'wikiaquiz-game-thanks' => 'Thanks for playing!',
 	'wikiaquiz-game-challenge' => 'Challenge your friends to play!',
+	'wikiaquiz-facebook-creative' => 'Come play $1 at {{SITENAME}}',
 );
 
 /** Message documentation (Message documentation) */

@@ -4,6 +4,7 @@ class WikiaQuizModule extends Module {
 
 	var $data;
 	var $wgBlankImgUrl;
+	var $wgUser;
 
 	/**
 	 * Render HTML Quiz namespace pages
@@ -70,7 +71,7 @@ class WikiaQuizModule extends Module {
 		$wgOut->addMeta('property:og:type', 'game');
 		$wgOut->addMeta('property:og:url', $wgRequest->getFullRequestURL());
 		$wgOut->addMeta('property:og:site_name', $wgSiteName);
-		$wgOut->addMeta('property:og:description', $this->data['titlescreentext']);
+		$wgOut->addMeta('property:og:description', wfMsg('wikiaquiz-facebook-creative', $this->data['titlescreentext']));
 		$wgOut->addMeta('property:og:image', $this->wordmarkUrl);
 		
 		$this->username = $wgUser->getName();
