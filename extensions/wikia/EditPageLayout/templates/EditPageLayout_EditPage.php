@@ -14,12 +14,19 @@
 			<h2>
 				<?= $editing ?>
 				<a id="EditPageTitle" class="wikia-button secondary">
-					<img class="sprite edit-pencil" src="<?= $wgBlankImgUrl ?>">
+					<img class="sprite edit-pencil-small" src="<?= $wgBlankImgUrl ?>">
 					<?= wfMsg('editpagelayout-edit-title') ?>
 				</a>
 			</h2>
 			<h1>
-				<?= Xml::element('a', array('href' => $title->getLocalUrl()), substr($titleText, 0, 17)) ?>
+				<?
+				if (mb_substr($titleText, 0, 30) == $titleText) {
+					$titleShortText = htmlspecialchars($titleText);
+				} else {
+					$titleShortText = htmlspecialchars(mb_substr($titleText, 0, 30)).'&hellip;';
+				}
+				echo '<a href="'.htmlspecialchars($title->getLocalUrl()).'">'.$titleShortText.'</a>';
+				?>
 			</h1>
 			<nav id="EditPageTabs" class="editpage-tabs" data-space-type="tabs" data-space-autoshow="true" style="display:none"></nav>
 			<aside id="HelpLink"><?= $helpLink ?></aside>
