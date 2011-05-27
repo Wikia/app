@@ -53,8 +53,7 @@ $messages['en'] = array(
 
 	'wikialabs-feedback-title' => 'Feedback',
 	'wikialabs-feedback-rating' => 'Your rating:',
-	'wikilabs-feedback-we-love-getting-feedback' => 'We love getting feedback on features that are in WikiaLabs.',
-	'wikilabs-feedback-if-you-have-and-improve-idea' => 'If you have an idea for how we can improve this feature, or if you’ve discovered a bug, please add a comment below and the people working on this feature will get your message.',
+	'wikialabs-feedback-we-love-getting-feedback' => 'We love getting feedback on features that are in WikiaLabs. If you have an idea for how we can improve this feature, or if you’ve discovered a bug, please add a comment below and the people working on this feature will get your message.',
 	'wikialabs-feedback-comments' => 'Comment:',
 	
 	'wikialabs-feedback-validator-user-not-allowed' => 'You are not allowed to leave feedback message',
