@@ -69,8 +69,7 @@
 			<div id="wpError"></div>
 		</div>
 		<h2 class="title" ><?php echo wfMsg( 'wikialabs-feedback-title' ); ?></h2>
-		<p><?php echo wfMsg('wikilabs-feedback-we-love-getting-feedback'); ?></p>
-		<p><?php echo wfMsg('wikilabs-feedback-if-you-have-and-improve-idea'); ?></p>
+		<p><?php echo wfMsg('wikialabs-feedback-we-love-getting-feedback'); ?></p>
 		<span class="stars" >
 			<?php echo wfMsg( 'wikialabs-feedback-rating' ); ?>
 			<ul>
