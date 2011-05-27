@@ -52,6 +52,7 @@ $messages['en'] = array(
 	'wikiaquiz-game-continue-button' => 'Continue',
 	'wikiaquiz-game-thanks' => 'Thanks for playing!',
 	'wikiaquiz-game-challenge' => 'Challenge your friends to play!',
+	'wikiaquiz-game-mute' => 'Mute',
 	'wikiaquiz-facebook-creative' => 'Come play $1 at {{SITENAME}}',
 );
 
