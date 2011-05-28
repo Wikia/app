@@ -74,7 +74,18 @@ class CreateBlogPage extends SpecialBlogPage {
 				$this->parseArticle(urldecode($wgRequest->getVal('article')));
 			}
 			else {
-				$this->createEditPage('');
+				$text = '';
+
+				$preload = $wgRequest->getText( 'preload' );
+				if ( !empty( $preload ) ) {
+					$preloadTitle = Title::newFromText( $preload );
+					if ( !is_null( $preloadTitle ) ) {
+						$preloadArticle = new Article( $preloadTitle );
+						$text = $preloadArticle->getContent();
+					}
+				}
+
+				$this->createEditPage( $text );
 			}
 			$this->renderForm();
 		}
