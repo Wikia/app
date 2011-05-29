@@ -39,7 +39,7 @@ $messages['en'] = array(
 	'error-json-parse' => 'There was a problem with the data returned from our servers, sorry.\n%s',
 	'error-app-will-close' => 'It\'s not possible to continue, the application will close, try reopening it.',
 	'error-plase-close-app' => 'It\'s not possible to continue, please try closing the application and reopening it.',
-	'error-close-window-retry' => 'This window will close, pleae try again or pick a different item.',
+	'error-close-window-retry' => 'This window will close, please try again or pick a different item.',
 	'error-please-try-again' => 'Please try again.'
 );
 
