@@ -705,11 +705,11 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 	$DENIED_NOTICE.= "\nThe lyrics for this song can be found at the following URL:\n";
 	$DENIED_NOTICE_SUFFIX = "\n\n\n(Please note: this is not the fault of the developer who created this application, but is a restriction imposed by the music publishers themselves.)";
 	//$TRUNCATION_NOTICE = "Our licenses prevent us from returning the full lyrics to this song via the API.  For full lyrics, please visit: $urlRoot"."$nsString$artist:$song";
-	$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $defaultLyrics, 'url' => $defaultUrl, 'page_namespace' => '', 'page_id' => '');
+	$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $defaultLyrics, 'url' => $defaultUrl, 'page_namespace' => '', 'page_id' => '', 'isOnTakedownList' => false);
 
 	GLOBAL $SHUT_DOWN_API;
 	if($SHUT_DOWN_API){
-		$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $defaultLyrics, 'url' => 'http://lyrics.wikia.com', 'page_namespace' => '', 'page_id' => '');
+		$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $defaultLyrics, 'url' => 'http://lyrics.wikia.com', 'page_namespace' => '', 'page_id' => '', 'isOnTakedownList' => false);
 		global $SHUT_DOWN_API_REASON;
 		$retVal['lyrics'] = $SHUT_DOWN_API_REASON;
 	} else {
@@ -966,6 +966,9 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 				//	print "UTF8-song: ".(utf8_compliant($song)?"true":"false")."<br/>";
 				//	print "UTF8-lyrics: ".(utf8_compliant($lyrics)?"true":"false")."<br/>";
 				//}
+				
+				// Determine if this result was from the takedown list (must be done before truncating to a snippet, below).
+				$retVal['isOnTakedownList'] = (0 < preg_match("/\{\{gracenote[ _]takedown\}\}/", $retVal['lyrics']));
 
 				// SWC 20090802 - Neuter the actual lyrics :( - return an explanation with a link to the LyricWiki page.
 				// SWC 20091021 - Gil has determined that up to 17% of the lyrics can be returned as fair-use - we'll stick with 1/7th (about 14.3%) of the characters for safety.
@@ -994,8 +997,9 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 			$retVal['searchResults'] = lw_getSearchResults("$artist $song");
 		}
 	} // end of the "if shut_down_api else"
-	
+
 	if($isOuterRequest){
+		$retVal['isOnTakedownList'] = ($retVal['isOnTakedownList'] ? "1" : "0"); // turn it into a string
 		requestFinished($id);
 	}
 	return $retVal;
@@ -1404,7 +1408,7 @@ function getTopSongs($limit){
 // TODO: FORMAT THE artist/song correctly and use lw_pageExists or whatever to figure out the correct name (or call getSong on it?).
 // TEMP HACK TO JUST MAKE THIS URL UP... WILL NOTTTT BE OKAY TO RELEASE IT LIKE THIS SINCE IT WOULD GIVE A TON OF BAD URLs EVEN WHEN WE HAVE GOOD URLS:
 $finalName = "$artist:$song";
-// TODO: ACCOMPLISH THIS BY EXTRACTING THE TITLE-MATCHING, IMPLIED REDIRECTS, ETC. FROM getSong() INTO A DIFF FUNCTION (maybe call it findMatchingPageTitle?).
+// TODO: ACCOMPLISH THIS BY EXTRACTING THE TITLE-MATCHING, IMPLIED REDIRECTS, ETC. FROM getSong() INTO A DIFF FUNCTION (maybe call it findMatchingPageTitle?).  ...when doing that, checkSongExists() should probably also use the new function.
 				$url = $urlRoot.str_replace("%3A", ":", urlencode($finalName)); // %3A as ":" is for readability.
 
 				// LATER: Add album to the return array? (could build it from itms:artist, itms:album, and itms:releasedate).
