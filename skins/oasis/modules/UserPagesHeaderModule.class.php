@@ -308,7 +308,7 @@ class UserPagesHeaderModule extends Module {
 		
 		// dropdown actions for "Profile" and "Talk page" tabs
 		if (in_array($namespace, array(NS_USER, NS_USER_TALK))) {
-			$actions = array('move', 'protect', 'unprotect', 'delete', 'undelete');
+			$actions = array('move', 'protect', 'unprotect', 'delete', 'undelete', 'history');
 			
 			// add "edit" item to "Leave a message" button
 			if ($this->actionName == 'leavemessage') {
@@ -561,7 +561,7 @@ class UserPagesHeaderModule extends Module {
 		}
 		
 		// dropdown actions
-		$actions = array('move', 'protect', 'unprotect', 'delete', 'undelete');
+		$actions = array('move', 'protect', 'unprotect', 'delete', 'undelete', 'history');
 		foreach($actions as $action) {
 			if (isset($this->content_actions[$action])) {
 				$this->actionMenu['dropdown'][$action] = $this->content_actions[$action];
