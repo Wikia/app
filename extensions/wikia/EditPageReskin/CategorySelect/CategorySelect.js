@@ -3,7 +3,7 @@ var categories;
 var fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
 var ajaxUrl = wgServer + wgScript + '?action=ajax';
 var csType = 'edit';
-var csMaxTextLength = 28;
+var csMaxTextLength = 20;
 var csDraggingEvent = false;
 
 // macbre: generic tracking for CategorySelect (refs RT #68550)
@@ -136,14 +136,7 @@ function modifyCategory(e) {
 					sortkey = extractedParams['sort'] + sortkey;
 					categories[catId].sortkey = sortkey;
 				}
-				if (categories[catId].sortkey == '') {
-					oldClassName = 'sorted';
-					newClassName = 'sort';
-				} else {
-					oldClassName = 'sort';
-					newClassName = 'sorted';
-				}
-				$(e).removeClass(oldClassName).addClass(newClassName);
+				
 				$('#sortDialog').closeModal();
 			}}
 		]
@@ -211,14 +204,12 @@ function addCategoryBase(category, params, index) {
 	if (index === undefined) {
 		index = categories.length;
 	}
-	
+
 	//replace full wikitext that user may provide (eg. [[category:abc]]) to just a name (abc)
 	category = category.replace(fixCategoryRegexp, '$1');
-	
 	//if user provides "abc|def" explode this into category "abc" and sortkey "def"
 	extractedParams = extractSortkey(category);
 	category = extractedParams['name'];
-	
 	params['sortkey'] = extractedParams['sort'] + params['sortkey'];
 
 	if (category == '') {
@@ -250,13 +241,14 @@ function addCategoryBase(category, params, index) {
 
 	elementImg = document.createElement('img');
 	elementImg.src = wgBlankImgUrl;
-	elementImg.className = 'sprite-small ' + (params['sortkey'] == '' ? 'sort' : 'sorted');
+	elementImg.className = 'sprite-small edit';
 	elementImg.onclick = function(e) {if (csDraggingEvent) return; csTrack('sortCategory'); modifyCategory(this); return false;};
 	elementA.appendChild(elementImg);
 
 	elementImg = document.createElement('img');
 	elementImg.src = wgBlankImgUrl;
-	elementImg.className = 'sprite-small close';
+	elementImg.className = 'sprite-small delete';
+	
 	elementImg.onclick = function(e) {if (csDraggingEvent) return; csTrack('deleteCategory'); deleteCategory(this); return false;};
 	elementA.appendChild(elementImg);
 
@@ -276,7 +268,8 @@ function addCategoryBase(category, params, index) {
 
 function addCategory(category, params, index) {
 	addCategoryBase(category, params, index);
-	$('#csCategoryInput').val('');
+	$('#csCategoryInput').attr('value', '');
+
 	$('#csItemsContainer').trigger('categorySelectAdd');
 }
 
@@ -418,14 +411,11 @@ function moveElement(movedId, prevSibId) {
 function inputKeyPress(e) {
 	if(e.keyCode == 13) {
 		csTrack('enterCategory');
-		
+
 		//TODO: stop AJAX call for AutoComplete
 		e.preventDefault();
-		category = $('#csCategoryInput').val();
-		var suggestions = $('#csSuggestContainer').find('.CSsuggestHover');
-		suggestedCategory = ( typeof(suggestions.get(0)) === 'undefined' ) ? null : suggestions.get(0).val();
-		if( suggestedCategory !== null ) category = suggestedCategory;
-		
+		category = $('#csCategoryInput').attr('value');
+
 		if( category != '' ) {
 			addCategory(category);
 		}
@@ -447,7 +437,6 @@ function inputKeyPress(e) {
 }
 
 function submitAutoComplete(comp, resultListItem) {
-	$('csCategoryInput').val('');
 	addCategory(resultListItem[2][0]);
 	positionSuggestBox();
 }
