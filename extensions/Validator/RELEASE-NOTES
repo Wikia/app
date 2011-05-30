@@ -4,7 +4,43 @@ For a documentation of all features, see http://www.mediawiki.org/wiki/Extension
 This change log contains a list of completed to-do's (new features, bug fixes, refactoring) for every version of Validator.
 
 
-== Validator change log ==
+=== Validator 0.4.6 ===
+(2011-05-xx)
+
+* Added ParameterInput class to generate HTML inputs for parameters, based on code from SMWs Special:Ask.
+
+* Removed ParamManipulationBoolstr
+
+* Added "$manipulate = true" as second parameter for Parameter::setDefault,
+  which gets passed to Parameter::setDoManipulationOfDefault.
+
+* Boolean manipulation now ignores values that are already a boolean.
+
+=== Validator 0.4.5 ===
+(2011-03-05)
+
+* Escaping fix in the describe parser hook.
+
+* Added string manipulation, applied by default on strings and chars.
+
+=== Validator 0.4.4 ===
+(2011-02-16)
+
+* Tweaks to parser usage in the ParserHook class.
+
+* Fixed incorrect output of nested pre-tags in the describe parser hook.
+
+=== Validator 0.4.3.1 ===
+(2011-01-20)
+
+* Removed underscore and space switching behaviour for tag extensions and parser functions.
+
+=== Validator 0.4.3 ===
+(2011-01-11)
+
+* Added describe parser hook that enables automatic documentation generation of parser hooks defined via Validator.
+
+* Modified the ParserHook and Parameter classes to allow specifying a description message.
 
 === Validator 0.4.2 ===
 (2010-10-28)
@@ -16,7 +52,7 @@ This change log contains a list of completed to-do's (new features, bug fixes, r
 === Validator 0.4.1 ===
 (2010-10-20)
 
-* Various small fixes and improvements
+* Made several small fixes and improvements.
 
 === Validator 0.4 ===
 (2010-10-15)

@@ -9,7 +9,8 @@
  * @file Validator.php
  * @ingroup Validator
  *
- * @author Jeroen De Dauw
+ * @licence GNU GPL v3 or later
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 
 /**
@@ -24,7 +25,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'Not an entry point.' );
 }
 
-define( 'Validator_VERSION', '0.4.2' );
+define( 'Validator_VERSION', '0.4.6 alpha' );
 
 // Register the internationalization file.
 $wgExtensionMessagesFiles['Validator'] = dirname( __FILE__ ) . '/Validator.i18n.php';
@@ -48,6 +49,7 @@ $wgAutoloadClasses['ListParameterCriterion']	= $incDir . 'ListParameterCriterion
 $wgAutoloadClasses['ListParameterManipulation']	= $incDir . 'ListParameterManipulation.php';
 $wgAutoloadClasses['Parameter'] 				= $incDir . 'Parameter.php';
 $wgAutoloadClasses['ParameterCriterion'] 		= $incDir . 'ParameterCriterion.php';
+$wgAutoloadClasses['ParameterInput']			= $incDir . 'ParameterInput.php';
 $wgAutoloadClasses['ParameterManipulation'] 	= $incDir . 'ParameterManipulation.php';
 $wgAutoloadClasses['ParserHook'] 				= $incDir . 'ParserHook.php';
 $wgAutoloadClasses['Validator'] 				= $incDir . 'Validator.php';
@@ -69,31 +71,23 @@ $wgAutoloadClasses['CriterionTrue']				= $incDir . 'criteria/CriterionTrue.php';
 $wgAutoloadClasses['CriterionUniqueItems']		= $incDir . 'criteria/CriterionUniqueItems.php';
 
 $wgAutoloadClasses['ParamManipulationBoolean']	= $incDir . 'manipulations/ParamManipulationBoolean.php';
-$wgAutoloadClasses['ParamManipulationBoolstr']	= $incDir . 'manipulations/ParamManipulationBoolstr.php';
 $wgAutoloadClasses['ParamManipulationFloat']	= $incDir . 'manipulations/ParamManipulationFloat.php';
 $wgAutoloadClasses['ParamManipulationFunctions']= $incDir . 'manipulations/ParamManipulationFunctions.php';
 $wgAutoloadClasses['ParamManipulationImplode']	= $incDir . 'manipulations/ParamManipulationImplode.php';
 $wgAutoloadClasses['ParamManipulationInteger']	= $incDir . 'manipulations/ParamManipulationInteger.php';
+$wgAutoloadClasses['ParamManipulationString']	= $incDir . 'manipulations/ParamManipulationString.php';
 
+$wgAutoloadClasses['ValidatorDescribe'] 		= $incDir . 'parserHooks/Validator_Describe.php';
 $wgAutoloadClasses['ValidatorListErrors'] 		= $incDir . 'parserHooks/Validator_ListErrors.php';
 unset( $incDir );
 
-$wgExtensionFunctions[] = 'efValidatorSetup';
+# Registration of the listerrors parser hooks.
+$wgHooks['ParserFirstCallInit'][] = 'ValidatorListErrors::staticInit';
+$wgHooks['LanguageGetMagic'][] = 'ValidatorListErrors::staticMagic';
 
-/**
- * Function for backwards compatibility with MW 1.15.x.
- * 
- * @since 0.4.2
- */
-function efValidatorSetup() {
-	// This function has been deprecated in 1.16, but needed for earlier versions.
-	// It's present in 1.16 as a stub, but lets check if it exists in case it gets removed at some point.
-	if ( function_exists( 'wfLoadExtensionMessages' ) ) {
-		wfLoadExtensionMessages( 'Validator' );
-	}
-	
-	return true;
-}
+# Registration of the describe parser hooks.
+$wgHooks['ParserFirstCallInit'][] = 'ValidatorDescribe::staticInit';
+$wgHooks['LanguageGetMagic'][] = 'ValidatorDescribe::staticMagic';
 
 // This file needs to be included directly, since Validator_Settings.php
 // uses it, in some rare cases before autoloading is defined.

@@ -4,22 +4,19 @@
  * File defining the settings for the Validator extension
  *
  *                          NOTICE:
- * Changing one of these settings can be done by copieng or cutting it,
+ * Changing one of these settings can be done by copying or cutting it,
  * and placing it in LocalSettings.php, AFTER the inclusion of Validator.
  *
  * @file Validator_Settings.php
  * @ingroup Validator
  *
- * @author Jeroen De Dauw
+ * @licence GNU GPL v3 or later
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'Not an entry point.' );
 }
-
-# Registration of the listerrors parser hooks.
-$wgHooks['ParserFirstCallInit'][] = 'ValidatorListErrors::staticInit';
-$wgHooks['LanguageGetMagic'][] = 'ValidatorListErrors::staticMagic';
 
 # Maps actions to error severity.
 # ACTION_LOG will cause the error to be logged

@@ -13,7 +13,8 @@
  * @ingroup Validator
  * @ingroup Criteria
  * 
- * @author Jeroen De Dauw
+ * @licence GNU GPL v3 or later
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 abstract class ListParameterCriterion extends ParameterCriterion {
 	

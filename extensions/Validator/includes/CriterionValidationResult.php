@@ -8,7 +8,8 @@
  * @file CriterionValidationResult.php
  * @ingroup Validator
  * 
- * @author Jeroen De Dauw
+ * @licence GNU GPL v3 or later
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class CriterionValidationResult {
 	
@@ -80,7 +81,7 @@ class CriterionValidationResult {
 	}
 	
 	/**
-	 * Returns whether no errors occured.
+	 * Returns whether no errors occurred.
 	 * 
 	 * @since 0.4
 	 * 

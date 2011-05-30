@@ -1,16 +1,15 @@
 <?php
 
 /**
- * Class for parameter validation of a single parser hook or other parameterized construct.
+ * Class for parameter validation of a single parser hook or other parametrized construct.
  *
  * @since 0.1
  *
  * @file Validator.php
  * @ingroup Validator
  *
- * @author Jeroen De Dauw
- *
- * TODO: break on fatal errors, such as missing required parameters that are dependencies 
+ * @licence GNU GPL v3 or later
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class Validator {
 	
@@ -24,9 +23,9 @@ class Validator {
 	protected $parameters;
 	
 	/**
-	 * Asscoaitive array containing parameter names (keys) and their user-provided data (values).
-	 * This list is needed because adittional parameter definitions can be added to the $parameters
-	 * feild during validation, so we can't determine in advance if a parameter is unknown.
+	 * Associative array containing parameter names (keys) and their user-provided data (values).
+	 * This list is needed because additional parameter definitions can be added to the $parameters
+	 * field during validation, so we can't determine in advance if a parameter is unknown.
 	 * 
 	 * @since 0.4
 	 * 
@@ -61,15 +60,27 @@ class Validator {
 	 */
 	protected $element;
 	
+	/** 
+	 * Indicates if unknown parameters should be seen as invalid.
+	 * If this value is false, they will simply be ignored.
+	 * 
+	 * @since 0.4.3
+	 * 
+	 * @var boolean
+	 */
+	protected $unknownInvalid;
+	
 	/**
 	 * Constructor.
 	 * 
-	 * @param srting $element
+	 * @param string $element
+	 * @param boolean $unknownInvalid Should unknown parameter be regarded as invalid (or, if not, just be ignored)
 	 * 
 	 * @since 0.4
 	 */
-	public function __construct( $element = '' ) {
+	public function __construct( $element = '', $unknownInvalid = true ) {
 		$this->element = $element;
+		$this->unknownInvalid = $unknownInvalid;
 	}
 	
 	/**
@@ -143,7 +154,7 @@ class Validator {
 	 * for unknown parameters and optionally for parameter overriding.
 	 * 
 	 * @param array $parameters Parameter name as key, parameter value as value
-	 * @param array $parameterInfo Main parameter name as key, parameter meta data as valu
+	 * @param array $parameterInfo Main parameter name as key, parameter meta data as value
 	 * @param boolean $toLower Indicates if the parameter values should be put to lower case. Defaults to true.
 	 */
 	public function setParameters( array $parameters, array $parameterInfo, $toLower = true ) {
@@ -151,7 +162,7 @@ class Validator {
 		
 		$this->parameters = $parameterInfo;
 		
-		// Loop through all the user provided parameters, and destinguise between those that are allowed and those that are not.
+		// Loop through all the user provided parameters, and distinguish between those that are allowed and those that are not.
 		foreach ( $parameters as $paramName => $paramData ) {
 			$paramName = trim( strtolower( $paramName ) );
 			$paramValue = is_array( $paramData ) ? $paramData['original-value'] : trim( $paramData );
@@ -224,7 +235,7 @@ class Validator {
 	public function validateParameters() {
 		$this->doParamProcessing();
 		
-		if ( !$this->hasfatalError() ) {
+		if ( !$this->hasFatalError() && $this->unknownInvalid ) {
 			// Loop over the remaining raw parameters.
 			// These are unrecognized parameters, as they where not used by any parameter definition.
 			foreach ( $this->rawParameters as $paramName => $paramValue ) {
@@ -325,7 +336,7 @@ class Validator {
 	}
 	
 	/**
-	 * Tries to find a matching user provided value and, when found, assingns it
+	 * Tries to find a matching user provided value and, when found, assigns it
 	 * to the parameter, and removes it from the raw values. Returns a boolean
 	 * indicating if there was any user value set or not.
 	 * 
@@ -378,7 +389,7 @@ class Validator {
 	
 	/**
 	 * Returns an associative array with the parameter names as key and their
-	 * correspinding values as value.
+	 * corresponding values as value.
 	 * 
 	 * @since 0.4
 	 * 
@@ -397,10 +408,27 @@ class Validator {
 	/**
 	 * Returns the errors.
 	 *
+	 * @since 0.4
+	 *
 	 * @return array of ValidationError
 	 */
 	public function getErrors() {
 		return $this->errors;
+	}
+	
+	/**
+	 * @since 0.4.6
+	 * 
+	 * @return array of string
+	 */
+	public function getErrorMessages() {
+		$errors = array();
+		
+		foreach ( $this->errors as $error ) {
+			$errors[] = $error->getMessage();
+		}
+		
+		return $errors;
 	}
 	
 	/**

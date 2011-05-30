@@ -150,6 +150,17 @@ class CriterionInArray extends ItemParameterCriterion {
 				$parameter->getValue()
 			);			
 		}
-	}	
+	}
+	
+	/**
+	 * Returns the allowed values.
+	 * 
+	 * @since 0.4.6
+	 * 
+	 * @return array
+	 */
+	public function getAllowedValues() {
+		return $this->allowedValues;
+	}
 	
 }

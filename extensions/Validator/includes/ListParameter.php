@@ -8,7 +8,8 @@
  * @file ListParameter.php
  * @ingroup Validator
  * 
- * @author Jeroen De Dauw
+ * @licence GNU GPL v3 or later
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class ListParameter extends Parameter {
 	
@@ -195,7 +196,7 @@ class ListParameter extends Parameter {
 	}
 	
 	/**
-	 * Handles any validation errors that occured for a single criterion.
+	 * Handles any validation errors that occurred for a single criterion.
 	 * 
 	 * @since 0.4
 	 * 
@@ -227,8 +228,9 @@ class ListParameter extends Parameter {
 	 * 
 	 * @since 0.4
 	 */
-	public function setDefault( $default ) {
+	public function setDefault( $default, $manipulate = true ) {
 		$this->default = is_array( $default ) ? $default : array( $default );
+		$this->setDoManipulationOfDefault( $manipulate );
 	}	
 	
 }

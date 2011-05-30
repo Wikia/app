@@ -28,7 +28,7 @@ class ParamManipulationFunctions extends ItemParameterManipulation {
 	 * 
 	 * @since 0.4.2
 	 * 
-	 * You can provide an array with function names or pass each function name as a seperate argument.
+	 * You can provide an array with function names or pass each function name as a separate argument.
 	 */
 	public function __construct() {
 		parent::__construct();
