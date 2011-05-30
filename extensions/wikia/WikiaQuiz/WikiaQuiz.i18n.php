@@ -33,7 +33,7 @@ $messages['en'] = array(
 	'wikiaquiz-error-missing-answers' => 'You must provide at least one answer.',
 	'wikiaquiz-error-invalid-correct-answer' => 'You must specify one correct answer.',
 	'wikiaquiz-error-invalid-quiz' => 'Quiz name is invalid.',
-	'wikiaquiz-error-invalid-article' => 'Article ID is invalid.'
+	'wikiaquiz-error-invalid-article' => 'Article ID is invalid.',
 	'wikiaquiz-error-invalid-article-with-details' => 'Article is invalid: $1', 
     
 	// game itself
