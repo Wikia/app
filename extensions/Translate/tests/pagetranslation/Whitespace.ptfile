@@ -1,0 +1,17 @@
+There is a two new lines after this line.
+
+<translate>
+
+There is a two new lines before and after this line.
+
+</translate>
+
+There is a two new lines before and after this line also.
+
+
+There is three spaces trailing on this line:   <translate>
+
+ This line is prefixed with a space, with two trailing spaces </translate> 
+
+<translate>line1</translate>
+<translate>line2</translate>

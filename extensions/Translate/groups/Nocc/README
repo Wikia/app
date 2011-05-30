@@ -1,0 +1,13 @@
+== Setup ==
+ cd %GROUPROOT%
+ svn checkout http://nocc.svn.sourceforge.net/svnroot/nocc/trunk nocc
+
+Add to your LocalSettings.php:
+ wfAddNamespace( 1204, 'Nocc' );
+ $wgTranslateGroupFiles[] = "$IP/extensions/Translate/groups/Nocc/Nocc.yaml";
+
+== Export ==
+* Required: connect access to the NOCC SourceForge project. Contact:
+  Tim Gerundt <tim AT gerundt DOT de>.
+* php export.php --target=$EXPORTPATH --grouptrail=out-nocc- --skip=en --lang=* --threshold=35
+* Download, diff and commit the export to the project.

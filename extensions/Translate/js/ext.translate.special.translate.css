@@ -1,0 +1,39 @@
+/* Group listing at Special:Translate */
+
+table.mw-sp-translate-grouplist td {
+	min-width: 13em;
+}
+
+table.mw-sp-translate-subgroup {
+	border: 0;
+	margin: 0;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.depth-2 { background-color: #EEE; }
+.depth-3 { background-color: #DDD; }
+.depth-4 { background-color: #CCC; }
+
+a.mw-sp-showmore {
+	display: block;
+	margin: 0.5em;
+	margin-left: 2em;
+	font-style: oblique;
+	cursor: pointer;
+}
+
+/* Form at Special:Translate */
+
+.mw-sp-translate-error {
+	font-style: italic;
+	background-color: yellow;
+	padding-left: 3em;
+	padding-right: 3em;
+}
+
+.mw-sp-translate-settings table {
+	border-spacing: 12pt 5pt;
+	background-color: inherit;
+	font-weight: bold;
+}

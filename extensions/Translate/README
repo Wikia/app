@@ -1,0 +1,227 @@
+== Copying ==
+See http://www.gnu.org/licenses/gpl2.html
+
+== Installation ==
+For very very quick start add the following to LocalSettings.php:
+
+include("$IP/extensions/Translate/Translate.php");
+$wgTranslateEC = array_keys($wgTranslateAC); // All modules
+$wgTranslateFuzzyBotName = 'FuzzyBot';
+$wgGroupPermissions['Translators']['translate'] = true;
+
+Make sure you have configured $wgCacheDirectory properly.
+
+More documenation is at
+ http://translatewiki.net/wiki/Translating:Documentation#Documentation_for_system_administrators
+
+== Contributing ==
+Translations? -> go to http://translatewiki.net and sign up.
+Code? File format handlers? New message groups? Graphics? Suggestions?
+Bug reports? -> please start a thread at http://translatewiki.net/wiki/Support
+or join us at #mediawiki-i18n and let us know what you have in mind.
+
+Bugs and feature requests are collected at:
+ http://translatewiki.net/wiki/Issues_and_features
+
+Documentation for the extension is at:
+ http://translatewiki.net/wiki/Translating:Documentation
+And for the code at:
+ http://translatewiki.net/docs/Translate/html/
+
+== Change log ==
+
+=== Changes in ??? ===
+* 2010-09-25
+- First Api Query Module messagecollection
+* 2010-08-23
+- Fixed multiple bugs in Special:TranslationStats
+* 2010-08-20
+- Documentation updated a lot, added doxygen spec file.
+* 2010-06-12
+- Removed $wgGoogleApiKey, $wgTranslateTM and $wgTranslateApertium
+- You need to migrate to $wgTranslateTranslationServices
+- Page translation has been improved a lot
+- translation memory suggestions can now be loaded asynchronously
+* 2010-03-27
+- Improvements to js edit, like save and open next
+* 2010-02-24
+- Dropped $wgTranslateCssLocation. In MW 1.16 and later you can use $wgExtensionAssetsPath
+* 2010-01-24
+- Support for Apertium machine translation service
+- Fixed issue with jQuery and Vector skin
+* 2010-01-22
+- Support for using Google's translation api as a source for tm suggestions
+- Interface element for copying tm suggestion into text area
+* 2010-01-16  Translation memory suggestions are aggregated intelligently to save space
+              There is link back to the original message in tm suggestions
+              tm-export superceded dump-tm
+
+=== Changes in version 12 ===
+- Page translation
+- New fuzzy system, should be faster now
+- Edit are consistently filled when starting translation
+
+=== Changes in version 11 ===
+* 2009-05-09
+- Support added for OpenLayers
+- Page translation feature updated. Not backwards compatible
+* 2009-04-28   Tweaks for new preferences system
+* 2009-04-27   Updated preferences handling; only show when relevant
+* 2009-04-24   Updated preferences handling to work with MediaWiki 1.15a r49790 and up
+* 2009-04-23   Link added to message group in the source message fieldset description
+* 2009-04-15   Added class 'mw-sp-translate-[id]' to all message groups on Special:Translate
+* 2009-04-04:2 Support added for NOCC
+* 2009-04-04:1 PhpVariables Mantis header inconsistency fixed
+* 2009-03-29   Table header on Special:LanguageStats suppressed when all translations are complete
+
+=== Changes in version 10 ===
+* 2009-03-24   Also 2 decimals for fuzzy in Special:LanguageStats
+* 2009-03-23   Localised number formatting in Special:LanguageStats
+* 2009-02-22
+- Intro suppressed
+- message documentation no longer show warnings
+- improved keeping track of the language that is being translated in
+* 2009-02-14   Export header for MantisBT updated
+* 2009-01-18:1 Bug in autoexport fixed. Provides realiable output again
+* 2009-01-17:2 Content translation was disabled
+* 2009-01-17:1 Headers in gettext files no longer multiply
+* 2009-01-15   Support structure for Commonist added
+* 2009-01-11:4 Export time checks for special page aliases and updated FreeCol problematic checks
+* 2009-01-11:3 Skip optionals and ignored messages in previous/next to avoid accidental translations
+* 2009-01-11:2 wgMaxShellMemory increased for sync-group.php to avoid out of memory issues
+* 2009-01-11:1 New options added to and performance improvements for autoexport.php
+* 2008-12-31   XHTML fixes in Special:LanguageStats
+* 2008-12-18   Special:TranslationStats allow passing a language parameter now and uses fontconfig if available
+* 2008-12-16   Miscellaneous problematic checks updated
+* 2008-12-15:2 Export headers for MantisBT updated
+* 2008-12-15:1 task to display untranslation optional messages was added
+* 2008-12-07   bug in export to file in web interface caused empty translations to be exported
+* 2008-11-30:1 added Special:LanguageStats for real-time translation statistics
+* 2008-11-24:2 fallback messages in the edit screen now have an edit link
+* 2008-11-24:1 added Special:Translations to show all translations of a message
+* 2008-09-09:1 add message checks for Mantis
+* 2008-09-07   add support for Mantis
+* 2008-09-05   add languageeditstats.php to provide a top list of edits per language
+* 2008-09-05   add import for groups containing "." like core-1.13
+* 2008-08-08:1 experimental sync-group to import external changes and keep them in sync
+* 2008-08-04:1 add "Other translations" link to Special:Prefexindex in sidebar toolbox
+* 2008-07-29:2 support for variables and purging and fallbacks in page translation
+* 2008-07-29:1 bug fixes and enhanced magic word support for AdvancedTranslate
+* 2008-07-26:2 proper parents for branched messages
+* 2008-07-26:1
+ - improved speed and memory usage
+ - experimental <translate> tag for wikipage translation
+* 2008-07-17:1
+- simple form to generate graphs
+- scale and count parameters for graphs
+* 2008-07-15:2 new check for unaltered namespaces in pagename messages of MediaWiki
+* 2008-07-15:1
+ - improved message checks
+ - can now work for meta groups too
+ - fixed messages not shown in the list anymore, but script still needed to find
+   the broken ones
+* 2008-07-13:2 group filter for graphs
+* 2008-07-13:1 experimental alias-export for extensions
+* 2008-07-08:1 simple edit stats with phplot
+* 2008-07-05:1 fuzzy.php was ignoring the namespace
+* 2008-07-04:2
+ - use a existing hook for quick links
+ - possible fix for Windows
+* 2008-07-04:1 poimport uses correct namespace
+* 2008-07-01:1
+ - Fix gettext message name snippets: filter / and trim after trailing
+ - Load normal comments from gettext files
+ - Quick links for viewing, using a private hook
+* 2008-06-30:3 Check for unknown vars for mediawiki type
+* 2008-06-30:2 Checks for missing and unknown variables for FreeCol
+* 2008-06-30:1 More contrast in the new default page for Special translate
+* 2008-06-29:2 Branched core messages now load translations from trunk files too
+
+=== Changes in version 9 ===
+* Released 2008-06-29
+* (bug 12955) Numbers should be localized in Translate extension
+* Support branches for core messages
+* fuzzy.php got support for --comment and --skiplanguages
+* untranslated is now the default task
+* truncate very long message names in table view
+* show definition closer to edit area
+* show the group of message when editing
+* branched core messages should now export properly
+* $wgTranslateBlacklist added to prevent edits to certain language/group combinations
+* new exporters
+* changed the way of adding MediaWiki extensions
+* support for having messages in namespaces other than NS_MEDIAWIKi
+* try to load qqq from files if not found from the database
+* added $wgTranslateAuthorBlacklist
+* new options to groupStatistics.php: --fuzzy and --skipzero
+* fuzzy respects now $wgTranslateMessageNamespaces
+* freecol not added by default
+* Messages keys can now start with capital letter, but have to be unique after normalising case and spaces
+* poimport will no longer replace translation in database with empty string
+* Support for exporting very basic Xliff files (no import yet)
+* Task for listing problematic messages
+* CreateCheckIndex.php maintenance script for creating a list of problematic messsages
+* Aliases for special pages
+* improvements to Special:Magic and support for translating special page aliases for extensions
+* more generic check framework
+* new front page for Special:Translate
+* desc and descmsg support for mediawiki extension group definitions
+
+=== Changes in version 8 ===
+* Released 2008-02-06
+* export.php for even faster exporting (only core messages supported currently)
+* Message groups can now have description or notes for translations
+* Enhanced edit view with fieldsets and message documentation
+* New variable $wgTranslateDocumentationLanguageCode
+* Fixed Special:Magic form submission and selector bug
+* --skiplanguages option for groupStatistics.php
+* Force keys to lower case in serialised index to avoid misses due to case
+* Changed fuzzy.php to assume location of commandline.inc, so that it can be run from any location
+* Preserve whitespace also in Special:Translate table
+* Run checks on editing view (current translation or submitted translation in preview) and display them to user
+* Fixed a bug where empty text area would be filled with current translation even after first page load
+* Don't fuzzy Documentation language
+* Export task was erronously outputting as plain
+* New variable $wgTranslateCC for adding custom groups
+* WikiMessageGroup class, which is easy to use class for defining a message group for wiki's custom user interface elements
+* Array keys in $wgTranslateEC and $wgTranslateAC are not used for alphabetical sorting only. MessageGroup::$id and MessageGroup::getId() are used for everything else.
+* Export documentation messages as "extracted comments" in po export
+* Import fuzzy messages as fuzzy in po import
+* Experimental support for some extensions in export.php
+* export.php can now export most supported groups
+* autoexport.php helper
+* Content-Disposition header for po export
+* Link to Special:Translate added in Special:Version
+* Possibility to add comments when editing with Special:magic
+
+=== Changes in version 7 ===
+* Released 2007-12-29
+* New HTMLSelector class
+* Cleaned user interface of Special:Translate
+* Special:TranslationChanges remembers hours option
+* Removed for a while unused setting $wgTranslateTryLoad
+* TranslateTasks::getTask returns null for invalid keys instead of throwing en error
+* New member function TranslateTask::plainOutput - Tasks can use it to request plain text output
+* Add css as a separate file instead of adding it to request output and new setting for it: $wgTranslateCssLocation
+* Filled readme for old changes a bit
+* Experimental po import
+* groupStatistics.php for creating statistics for groups
+
+=== Changes in version 6 ===
+* Released 2007-12-21
+* New classes MessageCollection and TMessage
+* Experimental po export
+* MessageGroup::fillBools has changed to getBools and usage changed a little
+* New member function MessageGroup::isMeta
+* Lots of new extensions supported
+
+=== Changes in version 5 ===
+* Released 2007-11-14
+* CreateMessageIndex.php which creates serialised index of message key -> group
+
+=== Changes in version 4 ===
+* New "task-based" interface
+* Paging of messages
+* Separation of translation and interface language
+* New mediawiki extensions available for translation
+* Support for extensions which use splitted i18n files

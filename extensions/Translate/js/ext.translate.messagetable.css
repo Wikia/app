@@ -1,0 +1,43 @@
+.mw-sp-translate-table {
+	width: 100%;
+	border-style: solid none none solid;
+	border-width: 1px;
+	border-collapse: collapse;
+}
+
+.mw-sp-translate-table th {
+	background-color: #b2b2ff;
+	border-style: none solid solid none;
+	border-width: 1px;
+}
+
+.mw-sp-translate-table tr.orig {
+	background-color: #ffe2e2;
+}
+
+.mw-sp-translate-table tr.new {
+	background-color: #e2ffe2;
+}
+
+.mw-sp-translate-table tr.def {
+	background-color: #f0f0ff;
+}
+
+.mw-sp-translate-table tr.ign {
+	background-color: #202020;
+}
+
+.mw-sp-translate-table tr.opt {
+	background-color: #F2F200;
+}
+
+.mw-sp-translate-table .untranslated {
+	background-color: #a2f290;
+}
+
+
+.mw-sp-translate-table td {
+	vertical-align: top;
+	border-style: none solid solid none;
+	border-width: 1px;
+}
