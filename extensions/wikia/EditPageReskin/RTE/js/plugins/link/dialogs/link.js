@@ -270,6 +270,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
 							else{
 								// validate URL
 								var re = new RegExp('^(' + RTE.constants.urlProtocols + ')');
+								if (!this.getValue().match(re)) {
+									this.setValue('http://' + this.getValue());
+								}
 								var validUrlFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badUrl);
 
 								var isValid = validUrlFunc.apply(this);
