@@ -38,6 +38,8 @@
 					<div id="EditPageToolbar" class="editpage-toolbar" data-space-type="toolbar"></div>
 					<div id="EditPageEditorWrapper" data-space-type="editor">
 						<div id="EditPageEditor" class="editpage-content">
+							
+							<!-- notices -->
 							<noscript><style>
 								.edit-page-notices {
 									display: block;
@@ -56,6 +58,46 @@
 								<span class="dismiss-icon sprite-small close"></span>
 							</div>
 							<div class="editpage-notices-html" data-space-type="notices-html" style="display:none"><?= $noticesHtml?></div>
+
+							<!-- preloads -->
+							<?php
+								if (!empty($editPagePreloads)) {
+
+									// new page preload
+									if (isset($editPagePreloads['intro'])) {
+							?>
+							<div id="EditPageIntro" class="editpage-intro">
+								<div class="<?= $editPagePreloads['class'] ?>">
+									<?= $editPagePreloads['intro'] ?>
+								</div>
+								<a class="expand">
+									<label><?= wfMsg('editpagelayout-more') ?></label>
+									<span>+</span>
+								</a>
+							</div>
+							<div class="gap">&nbsp;</div>
+							<?php
+									}
+
+									// custom edit page preload
+									if (isset($editPagePreloads['custom-intro'])) {
+							?>
+							<div id="EditPageCustomIntro" class="editpage-intro">
+								<div class="mw-custompreload">
+									<?= $editPagePreloads['custom-intro'] ?>
+								</div>
+								<a class="expand">
+									<label><?= wfMsg('editpagelayout-more') ?></label>
+									<span>+</span>
+								</a>
+							</div>
+							<div class="gap">&nbsp;</div>
+							<?php
+									}
+								}
+							?>
+
+							<!-- edit form content --> 
 							<?= $bodytext ?>
 							<div class="editpage-loading-indicator" data-space-type="loading-status" style="display:none">
 								<div class="loading-background"></div>

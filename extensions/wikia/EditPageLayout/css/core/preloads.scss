@@ -1,8 +1,30 @@
-.mw-newarticletext {
-	@include bodytext;
-	background-color: #e6f0fb;
+.editpage-intro {
 	margin-right: -10px;
-	max-height: 70px;
+	max-height: 80px;
 	overflow: auto;
-	padding: 5px;
+	position: relative;
+	> div {
+		@include bodytext;
+		background-color: #e7f0f9;
+		padding: 5px;
+	}
+	> .expand {
+		bottom: 5px;
+		color: #000;
+		cursor: pointer;
+		display: none;
+		font-size: 11px;
+		position: absolute;
+		right: 5px;
+		> span {
+			font-weight: bold;
+		}
+	}
+}
+
+// margin fix for "narrow" source mode
+.mode-source.editpage-sourcewidemode-off {
+	.editpage-intro {
+		margin-right: 0;
+	}
 }

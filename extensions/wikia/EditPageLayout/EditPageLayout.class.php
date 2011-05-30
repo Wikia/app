@@ -51,6 +51,9 @@ class EditPageLayout extends EditPage {
 	// is permission error triggered
 	public $mHasPermissionError = false;
 
+	// edit page preloads
+	protected $mEditPagePreloads = array();
+
 	function __construct(Article $article) {
 		parent::__construct($article);
 
@@ -479,16 +482,57 @@ class EditPageLayout extends EditPage {
 	 * Handle preloads (BugId:5652)
 	 */
 	protected function showIntro() {
-		// Code copied from EditPage.php
-		if ( !$this->showCustomIntro() && !$this->mTitle->exists() ) {
+		$this->showCustomIntro();
+
+		// Code based on EditPage.php
+		if (!$this->mTitle->exists() ) {
 			if ( $this->app->wg->User->isLoggedIn() ) {
-				$this->out->wrapWikiMsg( "<div class=\"mw-newarticletext\">\n$1</div>", 'newarticletext' );
+				$msgName = 'newarticletext';
+				$class = 'mw-newarticletext';
 			} else {
-				$this->out->wrapWikiMsg( "<div class=\"mw-newarticletextanon\">\n$1</div>", 'newarticletextanon' );
+				$msgName = 'newarticletextanon';
+				$class = 'mw-newarticletextanon';
 			}
 
-			$this->out->addHtml('<div class="gap">&nbsp;</div>');
+			$msg = wfMsgExt($msgName, array('parse'));
+
+			$this->mEditPagePreloads['intro'] = $msg;
+			$this->mEditPagePreloads['class'] = $class;
 		}
+	}
+
+	/**
+	 * Attempt to show a custom editing introduction, if supplied
+	 *
+	 * @return bool
+	 */
+	protected function showCustomIntro() {
+		// Code based on EditPage.php
+		if ( $this->editintro ) {
+			$title = Title::newFromText( $this->editintro );
+			if ( $title instanceof Title && $title->exists() && $title->userCanRead() ) {
+				$revision = Revision::newFromTitle( $title );
+
+				$wgOut = new OutputPage();
+				$wgOut->addWikiTextTitleTidy( $revision->getText(), $this->mTitle );
+
+				// store it
+				$text = $wgOut->getHTML();
+				$this->mEditPagePreloads['custom-intro'] = trim($text);
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Get edit page preloads content (both intro and custom intro)
+	 */
+	public function getEditPagePreloads() {
+		return $this->mEditPagePreloads;
 	}
 
 	/**

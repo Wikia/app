@@ -8,6 +8,7 @@
 
 		className: 'editpage-sourcewidemode',
 		wideClassName: 'editpage-sourcewidemode-on',
+		narrowClassName: 'editpage-sourcewidemode-off',
 		storageEntry: 'wgSourceModeWidescreen',
 
 		triggerClassName: 'editpage-widemode-trigger',
@@ -21,7 +22,7 @@
 			if (this.enabled) {
 				this.active = this.editor.mode == 'source';
 				// set up the trigger
-				this.trigger = this.editor.element.find('.'+this.triggerClassName)
+				this.trigger = this.editor.element.find('.'+this.triggerClassName);
 				this.trigger.click(this.proxy(this.toggle));
 				this.trigger.css('display','');
 
@@ -76,6 +77,7 @@
 		setState: function( wide ) {
 			this.wide = wide;
 			this.editor.element[wide ? 'addClass' : 'removeClass'](this.wideClassName);
+			this.editor.element[!wide ? 'addClass' : 'removeClass'](this.narrowClassName);
 		},
 
 		saveState: function() {
