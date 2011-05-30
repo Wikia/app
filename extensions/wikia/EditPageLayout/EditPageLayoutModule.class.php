@@ -84,6 +84,9 @@ class EditPageLayoutModule extends Module {
 		// action for edit form
 		$this->editFormAction = $editPage->getFormAction();
 
+		// preloads
+		$this->editPagePreloads = $editPage->getEditPagePreloads();
+
 		// summary box
 		$this->summaryBox = $editPage->renderSummaryBox();
 
