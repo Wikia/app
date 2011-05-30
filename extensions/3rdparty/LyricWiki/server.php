@@ -814,6 +814,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 				$lookedFor .= "$title\n";
 				print (!$debug?"":"Not found...\n");
 
+				/** IMPLIED REDIRECTS **/
 				// If the artist has a redirect on their own page, that generally means that all songs belong to that finalized name...
 				// so try to grab the song using that version of the artist's name.
 				$artistTitle = lw_getTitle($artist); // leaves the original version in tact
@@ -823,8 +824,18 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 				print (!$debug?"":"found:\n$page");
 				if($finalName != $artistTitle){
 					print (!$debug?"":"Artist redirect found to \"$finalName\". Applying to song \"$song\".\n");
-					// TODO: FIXME: Would passing in the third parameter (applyEncoding=false) remove the need for utf8_decode?
-					$title = utf8_decode(lw_getTitle($finalName, $song)); // decode is used to prevent double-encode calls that would otherwise happen.  I'm skeptical as to whether this would always work (assuming the special char was in the original title instead of the redirected artist as tested).
+					
+					// If the redirect is just to different capitalization, then use the special
+					// caps instead of letting lw_getTitle() overwrite this capitalization-change.
+					if(strtolower($finalName) == strtolower($artistTitle)){
+						$title = "$finalName:" . lw_getTitle($song, "", false); // 'false' is to prevent re-utf8_encoding the strings
+					} else {
+						// Would passing in the third parameter (applyEncoding=false) remove the need for utf8_decode?
+						//$title = utf8_decode(lw_getTitle($finalName, $song)); // decode is used to prevent double-encode calls that would otherwise happen.  I'm skeptical as to whether this would always work (assuming the special char was in the original title instead of the redirected artist as tested).
+	// TODO: HAVE CHANGED THE CODE BELOW TO TRY THE COMMENT FROM THE LINE ABOVE... TEST THIS NEW CODE WITH VARIOUS
+	// ENCODED SONGS. NEED TO TRY W/SPECIAL CHARS IN REAL ARTIST NAME, IN REDIRECT TEXT, AND IN SONG NAME.
+						$title = lw_getTitle($finalName, $song, false); // 'false' is to prevent re-utf8_encoding the strings
+					}
 					print (!$debug?"":"Title \"$title\"\n");
 				}
 
@@ -1818,6 +1829,7 @@ function postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags
  * designed as a fallback to use when exact matches can't be found.
  *
  * @param searchString - the text string to search for using SimpleSearch.
+ * @return an array of strings which are the textForm of the page title (eg: "Cake:Dime").
  */
 function lw_getSearchResults($searchString, $maxResults=25){
 	$titles = array();
