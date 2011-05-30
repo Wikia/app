@@ -4,7 +4,7 @@
 
 	WE.module = $.createClass(Observable,{
 
-		MESSAGE_MODULE_PREFIX: 'modules-',
+		MODULE_MESSAGES_PREFIX: 'modules-',
 
 		// module is only visible in wysiwyg mode
 		modes: {
@@ -81,7 +81,7 @@
 
 		msg: function() {
 			var args = Array.prototype.slice.call(arguments,0);
-			args[0] = this.MESSAGE_MODULE_PREFIX + args[0];
+			args[0] = this.MODULE_MESSAGES_PREFIX + args[0];
 			return this.editor.msg.apply(this.editor,args);
 		},
 

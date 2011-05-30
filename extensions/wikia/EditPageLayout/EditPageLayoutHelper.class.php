@@ -274,15 +274,20 @@ class EditPageLayoutHelper {
 
 	static public function getAssets() {
 		return array(
+			// >> editor stack loaders and configurers
 			'extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
+			// >> editor core
 			'extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
 			'extensions/wikia/EditPageLayout/js/editor/Buttons.js',
-			'extensions/wikia/EditPageLayout/js/editor/Tracker.js',
-			'extensions/wikia/EditPageLayout/js/editor/PageControls.js',
-			'extensions/wikia/EditPageLayout/js/editor/CommonPlugins.js',
 			'extensions/wikia/EditPageLayout/js/editor/Modules.js',
-			'extensions/wikia/EditPageLayout/js/editor/Widescreen.js',
+			// >> Wikia specific editor plugins
+			'extensions/wikia/EditPageLayout/js/plugins/Tracker.js',
+			'extensions/wikia/EditPageLayout/js/plugins/PageControls.js',
+			'extensions/wikia/EditPageLayout/js/plugins/CommonPlugins.js',
+			'extensions/wikia/EditPageLayout/js/plugins/Widescreen.js',
+			// >> extras (mainly things which should be moved elsewhere)
 			'extensions/wikia/EditPageLayout/js/extras/Buttons.js',
+			// >> visual modules - toolbars etc.
 			'extensions/wikia/EditPageLayout/js/modules/Container.js',
 			'extensions/wikia/EditPageLayout/js/modules/RailContainer.js',
 			'extensions/wikia/EditPageLayout/js/modules/ButtonsList.js',
