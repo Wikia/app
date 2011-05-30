@@ -2554,6 +2554,9 @@ INPUTS
 		$newtext = $this->mArticle->preSaveTransform( $newtext );
 		$oldtitle = wfMsgExt( 'currentrev', array( 'parseinline' ) );
 		$newtitle = wfMsgExt( 'yourtext', array( 'parseinline' ) );
+		
+		wfRunHooks( 'EditPageBeforeDiffText', array( $this, &$newtext, &$oldtext, &$newtitle, &$oldtitle) );
+		
 		if ( $oldtext !== false  || $newtext != '' ) {
 			$de = new DifferenceEngine( $this->mTitle );
 			$de->setText( $oldtext, $newtext );
