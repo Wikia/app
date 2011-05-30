@@ -9,6 +9,7 @@
 		titleNode: false,
 
 		textarea: false,
+		minorEditCheck: false,
 
 		beforeInit: function() {
 			this.editor.controls = this;
@@ -25,6 +26,10 @@
 
 			// pressing enter in edit summary should initiate publish button
 			this.textarea.bind('keypress', this.proxy(this.onSummaryKeypress));
+			
+			this.minorEditCheck = pageControls.find('#wpMinoredit');
+			// pressing enter on minor edit checkbox should not save the edition
+			this.minorEditCheck.bind('keypress', this.proxy(this.onMinorEditKeypress));
 
 			// attach events
 			$('#wpPreview').bind('click', this.proxy(this.onPreview));
@@ -93,12 +98,7 @@
 		},
 
 		// handle "Save" button
-		onSave: function() {
-			var focusedElId =  $(document.activeElement).attr('id');
-			if( typeof(focusedElId) !== 'undefined' && focusedElId !== 'wpSave' && focusedElId !== 'wpSummary') {
-				return false;
-			}
-			
+		onSave: function(e) {
 			if (this.textarea.val() == this.textarea.attr('placeholder')) {
 				this.textarea.val('');
 			}
@@ -119,6 +119,14 @@
 				// submit the form
 				var form = this.textarea.closest('form');
 				form.submit();
+			}
+		},
+		
+		// handle keypressing on "Minor edit" checkbox
+		onMinorEditKeypress: function(ev) {
+			if (ev.keyCode == 13 /* enter */) {
+				ev.preventDefault();
+				return;
 			}
 		},
 
