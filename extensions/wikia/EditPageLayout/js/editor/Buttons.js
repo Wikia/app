@@ -4,6 +4,11 @@
 	
 	WE.ui = WE.ui || {};
 
+	/**
+	 * Defines UI element base class.
+	 * 
+	 * UI element is always returned as HTML string.
+	 */
 	WE.ui.base = $.createClass(Observable,{
 	
 		constructor: function( editor, config, data ) {

@@ -44,7 +44,7 @@
 			if (!done)
 				window.GlobalTriggers.fire('wikiaeditoraddons',WE);
 			done = true;
-		}
+		};
 	})();
 
 	// reload the editor (used by AjaxLogin) - BugId:5307
@@ -65,9 +65,10 @@
 			LOADING_SOURCE: 4,
 			LOADING_VISUAL: 5
 		},
+		
+		editorElement: false,
 
 		constructor: function( plugins, config ) {
-			$().log(plugins);
 			WE.initAddons();
 			WE.Editor.superclass.constructor.call(this);
 			WE.fire('newInstance',plugins,config);
@@ -353,55 +354,33 @@
 
 	});
 
-
 	/**
-	 * UI buttons renderer plugin for Wikia Editor
+	 * Automatically register UI element types defined in namespaces WikiaEditor.ui
 	 */
-	WE.plugins.uibuttons = $.createClass(WE.plugin,{
-
-		requires: ['ui','functions'],
-
-		init: function() {
-			this.editor.ui.addHandler('button',this);
-		},
-
-		render: function( config, data ) {
-			var button = new WE.ui.button(this.editor,config,data);
-			return button.render();
-		}
-
-	});
-
-	WE.plugins.uipanelbuttons = $.createClass(WE.plugin,{
-
-		requires: ['ui','uibuttons'],
-
-		init: function() {
-			this.editor.ui.addHandler('panelbutton',this);
-		},
-
-		render: function( config, data ) {
-			var button = new WE.ui.panelbutton(this.editor,config,data);
-			return button.render();
-		}
-
-	});
-
-	WE.plugins.uimodulebuttons = $.createClass(WE.plugin,{
-
-		requires: ['ui','uibuttons','uipanelbuttons'],
-
-		init: function() {
-			this.editor.ui.addHandler('modulebutton',this);
-		},
-
-		render: function( config, data ) {
-			var button = new WE.ui.modulebutton(this.editor,config,data);
-			return button.render();
-		}
+	WE.plugins.uiautoregister = $.createClass(WE.plugin,{
 		
-	});
+		requires: ['ui', 'functions'],
+		
+		init: function() {
+			if (WE.ui) {
+				for (var i in WE.ui) {
+					if (i != 'base') {
+						this.editor.ui.addHandler(i,this);
+					}
+				}
+			}
+		},
+		
+		render: function( config, data ) {
+			var type = config.type;
+			if (!WE.ui[type]) return '';
+			
+			var e = new WE.ui[type](this.editor,config,data);
+			return e.render();
+		}
 
+	});
+	
 
 	/**
 	 * Space manager plugin for Wikia Editor
@@ -422,10 +401,10 @@
 
 			// Find all spaces
 			this.spaces = {};
-			var spaces = this.element.find('[data-space-type]');
+			var spaces = this.element.find('['+this.SPACE_TYPE_ATTRIBUTE+']');
 			for (var i=0;i<spaces.length;i++) {
 				var space = $(spaces.get(i));
-				this.spaces[space.attr('data-space-type')] = space;
+				this.spaces[space.attr(this.SPACE_TYPE_ATTRIBUTE)] = space;
 			}
 			// Override with config
 			if (this.editor.config.spaces)
@@ -451,7 +430,7 @@
 	});
 
 	/**
-	 * Modules provider plugin for WikiaEditor
+	 * Modules factory
 	 */
 	WE.plugins.modules = $.createClass(WE.plugin,{
 
@@ -494,7 +473,8 @@
 	});
 
 	/**
-	 * Toolbar spaces manager
+	 * Toolbars manager - automatically fills in appropriate spaces 
+	 * with configured modules during editor initialization.
 	 */
 	WE.plugins.toolbarspaces = $.createClass(WE.plugin,{
 
@@ -586,7 +566,7 @@
 	WE.plugins.core = $.createClass(WE.plugin,{
 
 		requires: ['functions','messages',
-		    'ui','uibuttons','uipanelbuttons','uimodulebuttons',
+		    'ui','uibautoregister',
 		    'spaces','toolbarspaces','collapsiblemodules', 'preloads']
 
 	});

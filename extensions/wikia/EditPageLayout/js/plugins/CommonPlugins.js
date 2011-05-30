@@ -2,6 +2,9 @@
 
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
 
+	/**
+	 * Notice area handling
+	 */
 	WE.plugins.noticearea = $.createClass(WE.plugin,{
 
 		visible: false,
@@ -59,7 +62,9 @@
 
 	});
 
-
+	/**
+	 * Loading status indicator
+	 */
 	WE.plugins.loadingstatus = $.createClass(WE.plugin,{
 
 		requires: ['spaces'],
@@ -103,7 +108,7 @@
 	});
 
 	/**
-	 * Collapsible modules plugin for Wikia Editor
+	 * Collapsible modules handling
 	 */
 	WE.plugins.collapsiblemodules = $.createClass(WE.plugin,{
 
@@ -242,6 +247,10 @@
 		
 	});
 	
+	/**
+	 * Adds a custom event "sizeChanged" 
+	 * when editor area is resized
+	 */
 	WE.plugins.sizechangedevent = $.createClass(WE.plugin,{
 		
 		initDom: function() {
@@ -268,6 +277,12 @@
 		
 	});
 
+	/**
+	 * Automatically resizes editor area depenging on mode
+	 * which is specified in config.autoResizeMode:
+	 * - editarea - makes the editor fit into browser window
+	 * - editpage - force editor minimum height
+	 */
 	WE.plugins.autoresizer = $.createClass(WE.plugin,{
 
 		requires: ['sizechangedevent'],
@@ -328,6 +343,10 @@
 		}
 	});
 	
+	/**
+	 * Adds textual link "More shortcuts" into source mode toolbar
+	 * which shows a modal popup with edit tools.
+	 */
 	WE.plugins.edittools = $.createClass(WE.plugin,{
 		
 		LINK_CAPTION_MESSAGE: 'edittools-caption',
@@ -365,6 +384,9 @@
 		}
 	});
 	
+	/**
+	 * Adds scroll bar to right rail if rail is shorter than the specified minimum
+	 */
 	WE.plugins.railminimumheight = $.createClass(WE.plugin,{
 		
 		requires: ['sizechangedevent'],
@@ -411,17 +433,14 @@
 		
 	});
 
+	/**
+	 * Shortcut to automatically add all Wikia specific plugins
+	 */
 	WE.plugins.wikiacore = $.createClass(WE.plugin,{
 
 		requires: ['core','noticearea','loadingstatus','pagecontrols','autoresizer','edittools',
 			'widemodemanager', 'railminimumheight', 'tracker']
 
 	});
-
-	WE.plugins.wikiaui = $.createClass(WE.plugin,{
-
-	});
-
-
 
 })(this,jQuery);

@@ -2,6 +2,10 @@
 
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
 
+	/**
+	 * Wide screen mode handling in source mode.
+	 * Switched using the vertical bar at right side of the editor.
+	 */
 	WE.plugins.sourcewidemode = $.createClass(WE.plugin,{
 
 		requires: ['spaces'],
@@ -96,6 +100,9 @@
 		}
 	});
 
+	/**
+	 * Wide screen mode appearing on main page - keeps the same height of toolbar and right rail
+	 */
 	WE.plugins.mainpagewidemode = $.createClass(WE.plugin,{
 
 		requires: ['spaces'],
@@ -124,6 +131,9 @@
 		}
 	});
 
+	/**
+	 * Wide screen chooser and manager. Lazy initializes the choosen plugin during editor load
+	 */
 	WE.plugins.widemodemanager = $.createClass(WE.plugin,{
 
 		beforeInit: function() {

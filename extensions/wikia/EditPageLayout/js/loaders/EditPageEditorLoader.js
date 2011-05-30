@@ -1,4 +1,8 @@
 (function(window,$){
+	
+	/**
+	 * Wikia Editor loader for Edit pages
+	 */
 	var EditPageEditorLoader = $.createClass(Object,{
 
 		element: false,
@@ -35,18 +39,16 @@
 				layout.toolbar.push('FormatExpanded');
 			}
 
-			// page controls
-			//layout.rail.push('PageControls');
 			// standard modules
 			if (data.wide) {
 				layout.toolbar.push('ToolbarWidescreen');
-				//layout.toolbar.push('RailInsert','ToolbarCategories','ToolbarTemplates','ToolbarLicense');
 			} else {
 				layout.rail.push('RailInsert','RailCategories','RailTemplates','RailLicense');
 			}
 
 			WE.fire('wikiaeditorspaceslayout',this.element,layout,data);
 			
+			// Wraps all modules in right rail for the plugin "railminimumheight"
 			if (layout.rail.length > 0) {
 				layout.rail = [{cls:'rail-auto-height',items:layout.rail}];
 			}
@@ -62,23 +64,37 @@
 
 			var plugins = [ 'wikiacore', rte ? 'ckeditorsuite' : 'mweditorsuite' ];
 			var config = {
+				// the main DOM element where the editor should be rendered
 				element: this.element,
+				// toolbars definition
 				toolbars: this.getToolbarsConfig(),
+				// toolbar types overrides
 				toolbarTypes: {
 					rail: 'railcontainer'
 				},
+				// spaces overrides
 				spaces: {
 					tabs: $('#EditPageTabs')
 				},
+				// shall format toolbar be expanded by default?
 				formatExpanded: window.wgNamespaceNumber >= 0 && window.wgNamespaceNumber % 2 == 1, // talk namespaces
+				// default UI elements which should to be registered in the editor
 				uiElements: window.wgEditorExtraButtons || {},
+				// list of popular templates used by Templates module
 				popularTemplates: window.wgEditPagePopularTemplates || [],
+				// editor auto resize mode 
 				autoResizeMode: (window.wgEditPageIsConflict || window.wgEditPageFormType == 'diff') ? 'editpage' : 'editarea',
+				// disable Categories module?
 				categoriesDisabled: (typeof window.initCatSelectForEdit != 'function'),
+				// initial state of wide screen mode in source mode
 				wideInSourceInitial: window.wgEditPageWideSourceMode,
+				// is wide screen mode in source mode disabled?
 				wideInSourceDisabled: window.wgEditPageHasEditPermissionError,
+				// is the current page wide in view? (adds 300px in preview popup)
 				isWidePage: !!window.wgEditPageIsWidePage,
+				// extra page width (e.g. in oasis hd) (adds extra width in preview popup) 
 				extraPageWidth: (window.sassParams && window.sassParams.hd) ? 200 : 0,
+				// initial editor mode
 				mode: mode
 			};
 			
