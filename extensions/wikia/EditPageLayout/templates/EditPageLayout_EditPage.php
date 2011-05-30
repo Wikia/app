@@ -127,7 +127,7 @@
 					<div class="module module_page_controls">
 						<div class="module_content">
 							<label>
-								<input type="checkbox" name="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>" />
+								<input type="checkbox" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>" />
 								<?= wfMsg('editpagelayout-pageControls-minorEdit') ?>
 							</label>
 							<?= $summaryBox ?>
