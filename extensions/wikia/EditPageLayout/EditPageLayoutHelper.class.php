@@ -285,6 +285,7 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/plugins/PageControls.js',
 			'extensions/wikia/EditPageLayout/js/plugins/CommonPlugins.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Widescreen.js',
+			'extensions/wikia/EditPageLayout/js/plugins/Preloads.js',
 			// >> extras (mainly things which should be moved elsewhere)
 			'extensions/wikia/EditPageLayout/js/extras/Buttons.js',
 			// >> visual modules - toolbars etc.
