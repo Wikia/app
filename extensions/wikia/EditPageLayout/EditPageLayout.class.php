@@ -239,10 +239,10 @@ class EditPageLayout extends EditPage {
 
 		// show diff only (handle edit reverts)
 		if ($this->formtype == 'diff') {
-			$this->out->addHtml('<div class="gap">&nbsp;</div>');
 			$this->out->addHtml('<div id="diff">');
 			$this->showDiff();
 			$this->out->addHtml('</div>');
+			$this->out->addHtml('<div class="gap">&nbsp;</div>');
 		}
 
 		parent::showEditForm($formCallback);
