@@ -19,6 +19,14 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		
 	private 
 		$mediaNS = array(NS_VIDEO, NS_IMAGE, NS_FILE);
+		
+	private $stripTags = array(
+		"/\{\{#dpl(.*)\}\}/siU",
+		"/\{\{#dplchapter(.*)\}\}/siU",
+		"/<(dpl|dynamicpagelist)(.*)>(.*)<\/(dpl|dynamicpagelist)>/siU",
+		"/<(youtube|gvideo|aovideo|aoaudio|wegame|tangler|gtrailer|nicovideo|ggtube)(.*)>(.*)<\/(youtube|gvideo|aovideo|aoaudio|wegame|tangler|gtrailer|nicovideo|ggtube)>/siU",
+		"/<(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet|gallery)(.*)>(.*)<\/(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet|gallery)>/siU",
+	);		
 
 	/**
 	 * constructor
@@ -563,6 +571,14 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			
 		$oArticle = Article::newFromId($this->mPageId);
 		if ( $oArticle instanceof Article ) {
+			
+			if (!empty($this->stripTags)) {
+				/* skip some special tags  */
+				foreach ($this->stripTags as $id => $tag) {
+					$content = preg_replace($tag, '', $content);
+				}
+			}
+			
 			$content = str_replace("{{", "", $content);	
 			global $wgParser;		
 			$wgParser->clearTagHooks();	
