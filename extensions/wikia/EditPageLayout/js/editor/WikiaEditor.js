@@ -587,7 +587,7 @@
 
 		requires: ['functions','messages',
 		    'ui','uibuttons','uipanelbuttons','uimodulebuttons',
-		    'spaces','toolbarspaces','collapsiblemodules']
+		    'spaces','toolbarspaces','collapsiblemodules', 'preloads']
 
 	});
 

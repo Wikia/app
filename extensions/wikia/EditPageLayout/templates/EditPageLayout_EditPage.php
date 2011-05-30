@@ -67,8 +67,10 @@
 									if (isset($editPagePreloads['intro'])) {
 							?>
 							<div id="EditPageIntro" class="editpage-intro">
-								<div class="<?= $editPagePreloads['class'] ?>">
-									<?= $editPagePreloads['intro'] ?>
+								<div class="editpage-intro-wrapper">
+									<div class="<?= $editPagePreloads['class'] ?>">
+										<?= $editPagePreloads['intro'] ?>
+									</div>
 								</div>
 								<a class="expand">
 									<label><?= wfMsg('editpagelayout-more') ?></label>
@@ -83,8 +85,10 @@
 									if (isset($editPagePreloads['custom-intro'])) {
 							?>
 							<div id="EditPageCustomIntro" class="editpage-intro">
-								<div class="mw-custompreload">
-									<?= $editPagePreloads['custom-intro'] ?>
+								<div class="editpage-intro-wrapper">
+									<div class="mw-custompreload">
+										<?= $editPagePreloads['custom-intro'] ?>
+									</div>
 								</div>
 								<a class="expand">
 									<label><?= wfMsg('editpagelayout-more') ?></label>

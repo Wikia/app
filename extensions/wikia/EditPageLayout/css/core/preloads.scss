@@ -1,13 +1,28 @@
 .editpage-intro {
 	margin-right: -10px;
-	max-height: 80px;
-	overflow: auto;
 	position: relative;
-	> div {
-		@include bodytext;
-		background-color: #e7f0f9;
-		padding: 5px;
+
+	// scroll area
+	> .editpage-intro-wrapper {
+		max-height: 80px;
+		overflow: auto;
+
+		// preload content
+		> div {
+			@include bodytext;
+			background-color: #e7f0f9;
+			padding: 5px;
+		}
 	}
+
+	// expanded state
+	&.expanded {
+		> .editpage-intro-wrapper {
+			max-height: 150px;
+		}
+	}
+
+	// expand link
 	> .expand {
 		bottom: 5px;
 		color: #000;
@@ -15,8 +30,15 @@
 		display: none;
 		font-size: 11px;
 		position: absolute;
-		right: 5px;
+		right: 20px;
+		&:hover {
+			text-decoration: none;
+		}
+		> label {
+			cursor: pointer;
+		}
 		> span {
+			font-size: 15px;
 			font-weight: bold;
 		}
 	}
