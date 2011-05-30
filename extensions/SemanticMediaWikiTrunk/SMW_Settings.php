@@ -60,9 +60,9 @@ $smwgDefaultStore = "SMWSparqlStore";
 # in some SPARQL databases this method is more efficient than update.
 ##
 $smwgSparqlDatabase = 'SMWSparqlDatabase';
-$smwgSparqlQueryEndpoint = 'http://localhost:8080/sparql/';
-$smwgSparqlUpdateEndpoint = 'http://localhost:8080/update/';
-$smwgSparqlDataEndpoint = 'http://localhost:8080/data/';
+$smwgSparqlQueryEndpoint = 'http://localhost:9000/sparql/';
+$smwgSparqlUpdateEndpoint = 'http://localhost:9000/update/';
+$smwgSparqlDataEndpoint = 'http://localhost:9000/data/';
 ##
 
 // load global constants and setup functions
