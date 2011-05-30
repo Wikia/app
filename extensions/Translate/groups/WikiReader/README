@@ -1,0 +1,8 @@
+Check out writable copy:
+
+cd $HOME/projects/
+git clone git://github.com/wikireader/wikireader.git wikireader
+
+Settings:
+wfAddNamespace( 1224, 'WikiReader' );
+$wgTranslateGroupFiles[] = "$IP/extensions/Translate/groups/WikiReader/WikiReader.yml";

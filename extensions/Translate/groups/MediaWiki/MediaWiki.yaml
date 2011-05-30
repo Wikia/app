@@ -1,0 +1,24 @@
+---
+BASIC:
+  id: core
+  label: MediaWiki
+  description: "{{int:translate-group-desc-mediawikicore}}"
+  namespace: NS_MEDIAWIKI
+  display: core/
+  class: MediaWikiMessageGroup
+
+FILES:
+  class: JavaFFS
+  sourcePattern: %MWROOT%/languages/messages/Messages%CODE%.php
+  targetPattern: Messages%CODE%.php
+
+CHECKER:
+  class: MediaWikiMessageChecker
+  checks:
+    - pluralCheck
+    - wikiParameterCheck
+    - wikiLinksCheck
+    - XhtmlCheck
+    - braceBalanceCheck
+    - pagenameMessagesCheck
+    - miscMWChecks

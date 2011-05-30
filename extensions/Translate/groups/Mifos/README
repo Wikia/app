@@ -1,0 +1,10 @@
+== Setup ==
+ cd %GROUPROOT%
+ git clone git://mifos.git.sourceforge.net/gitroot/mifos/head mifos
+
+Add to your LocalSettings.php:
+ wfAddNamespace( 1230, 'Mifos' );
+ $wgTranslateGroupFiles[] = "$IP/extensions/Translate/groups/Mifos/Mifos.yaml"
+
+== Export ==
+???

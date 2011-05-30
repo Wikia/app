@@ -1,0 +1,11 @@
+BASIC:
+  id: tsint-0-all
+  label: Toolserver Intuition
+  display: tsint
+  meta: yes
+  class: AggregateMessageGroup
+  description: '{{int:translate-group-desc-tsint}}'
+  namespace: NS_TOOLSERVER
+
+GROUPS:
+  - tsint-*

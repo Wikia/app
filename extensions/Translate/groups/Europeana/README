@@ -1,0 +1,7 @@
+== Setup ==
+ cd %GROUPROOT%
+ svn co http://www.europeanalabs.org/svn/europeana/trunk/portal-full/src/main/message_keys/ europeana
+
+Add to your LocalSettings.php:
+ wfAddNamespace( 1204, 'Europeana' );
+ $wgTranslateGroupFiles[] = "$IP/extensions/Translate/groups/Europeana/Europeana.yaml
