@@ -171,7 +171,6 @@ class PageLayoutBuilderHelper {
 		    "post_url" => self::getCreateLayoutFromArticleUrl(),
 		));
 
-		$wgOut->addHTML( $oTmpl->render("article-button") );
 		return true;
 	}
 

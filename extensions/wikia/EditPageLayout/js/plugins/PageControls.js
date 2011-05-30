@@ -20,7 +20,6 @@
 				menu = pageControls.find('nav');
 
 			this.textarea = pageControls.find('textarea');
-
 			// set up the caption of summary field
 			this.textarea.placeholder();
 
@@ -95,6 +94,11 @@
 
 		// handle "Save" button
 		onSave: function() {
+			var focusedElId =  $(document.activeElement).attr('id');
+			if( typeof(focusedElId) !== 'undefined' && focusedElId !== 'wpSave' && focusedElId !== 'wpSummary') {
+				return false;
+			}
+			
 			if (this.textarea.val() == this.textarea.attr('placeholder')) {
 				this.textarea.val('');
 			}
@@ -114,7 +118,7 @@
 
 				// submit the form
 				var form = this.textarea.closest('form');
-				form.submit();
+				//form.submit();
 			}
 		},
 
