@@ -14,7 +14,7 @@
 			border-right: solid 1px $color-epl-inputs-borders !important;
 		}
 		#csHintContainer {
-		    width: $width-epl-module-input - 4;
+		width: $width-epl-module-input - 4;
 		border-top: medium none;
 		border-bottom: solid 1px $color-epl-inputs-borders;
 		border-left: solid 1px $color-epl-inputs-borders;
@@ -24,6 +24,7 @@
 	}
 	#csCategoryInput {
 		@include epl-textfield;
+		line-height: 0px;
 		width: $width-epl-module-input;
 		border: solid 1px $color-epl-inputs-borders;
 		font-style: normal;
@@ -80,8 +81,8 @@
 .csEditMode  #csItemsContainerDiv{
 	max-height: 100px;
     overflow-y: auto;
-    width: $width-epl-module-input + 20;
+    width: $width-epl-module-input + 6;
     ul {
-    	width: $width-epl-module-input;
+    	width: $width-epl-module-input - 10;
     }
 }

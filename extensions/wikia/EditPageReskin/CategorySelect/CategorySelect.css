@@ -76,23 +76,14 @@
     margin-top: 10px;
 }
 
-.csEditMode .CSitem .sort, .csEditMode .CSitem .sorted
-{
-	background-position: 0px 0px;
-	height: 15px;
-	vertical-align: middle;
-    width: 15px;
-	background-image: url(/extensions/wikia/EditPageReskin/CategorySelect/image/Pencil-rte.png);  
+.csEditMode .CSitem .edit {
+	margin-left: 5px;  
 }
 
 
-.csEditMode .CSitem .close
-{
-	background-position: 0px 0px;
-	height: 15px;
-	vertical-align: middle;
-    width: 15px;
-	background-image: url(/extensions/wikia/EditPageReskin/CategorySelect/image/Trash.png);  
+.csEditMode .CSitem .delete {
+    margin-left: 4px;
+    margin-right: 2px;  
 }
 
 .csEditMode #csItemsContainer .CSitem {
