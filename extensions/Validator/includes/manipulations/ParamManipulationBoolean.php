@@ -28,7 +28,10 @@ class ParamManipulationBoolean extends ItemParameterManipulation {
 	 * @since 0.4
 	 */	
 	public function doManipulation( &$value, Parameter $parameter, array &$parameters ) {
-		$value = in_array( $value, array( 'yes', 'on' ) );
+		// When the value defaulted to a boolean, there is no need for this manipulation.
+		if ( !is_bool( $value ) || !$parameter->wasSetToDefault() ) {
+			$value = in_array( strtolower( $value ), array( 'yes', 'on' ) );
+		}
 	}
 	
 }

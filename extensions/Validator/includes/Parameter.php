@@ -8,7 +8,8 @@
  * @file Parameter.php
  * @ingroup Validator
  * 
- * @author Jeroen De Dauw
+ * @licence GNU GPL v3 or later
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class Parameter {
 	
@@ -160,7 +161,7 @@ class Parameter {
 	protected $errors = array();
 	
 	/**
-	 * Indicates if the parameter manipualations should be applied to the default value.
+	 * Indicates if the parameter manipulations should be applied to the default value.
 	 * 
 	 * @since 0.4
 	 * 
@@ -176,6 +177,16 @@ class Parameter {
 	 * @var boolean
 	 */
 	protected $defaulted = false;
+	
+	/**
+	 * A description for the parameter or false when there is none.
+	 * Can be obtained via getDescription and set via setDescription.
+	 * 
+	 * @since 0.4.3
+	 * 
+	 * @var mixed string or false
+	 */
+	protected $description = false;
 	
 	/**
 	 * Constructor.
@@ -413,7 +424,7 @@ class Parameter {
 	}
 	
 	/**
-	 * Handles any validation errors that occured for a single criterion.
+	 * Handles any validation errors that occurred for a single criterion.
 	 * 
 	 * @since 0.4
 	 * 
@@ -446,6 +457,33 @@ class Parameter {
 	 */			
 	public function &getValue() {
 		return $this->value;
+	}
+	
+	/**
+	 * Returns the type of the parameter.
+	 * 
+	 * @since 0.4.3
+	 * 
+	 * @return string element of the Parameter::TYPE_ enum 
+	 */
+	public function getType() {
+		return $this->type;
+	}
+	
+	/**
+	 * Returns an internationalized message indicating the parameter type suited for display to users. 
+	 * 
+	 * @since 0.4.3
+	 * 
+	 * @return string
+	 */
+	public function getTypeMessage() {
+		global $wgLang;
+
+		$message = wfMsg( 'validator-type-' . $this->type );
+		return $this->isList() ?
+			wfMsgExt( 'validator-describe-listtype', 'parsemag', $message )
+			: $wgLang->ucfirst( $message );
 	}
 	
 	/**
@@ -489,7 +527,7 @@ class Parameter {
 	}	
 	
 	/**
-	 * Returns all validation errors that occured so far.
+	 * Returns all validation errors that occurred so far.
 	 * 
 	 * @since 0.4
 	 * 
@@ -599,7 +637,7 @@ class Parameter {
 				$manipulations[] = new ParamManipulationBoolean();
 				break;
 			case self::TYPE_CHAR: case self::TYPE_STRING: default:
-				// No extra manipulations for these types
+				$manipulations[] = new ParamManipulationString();
 				break;
 		}		
 		
@@ -682,13 +720,26 @@ class Parameter {
 	 * @since 0.4
 	 * 
 	 * @param mixed $default
+	 * @param boolean $manipulate Should the default be manipulated or not? Since 0.4.6.
 	 */
-	public function setDefault( $default ) {
+	public function setDefault( $default, $manipulate = true ) {
 		$this->default = $default;
+		$this->setDoManipulationOfDefault( $manipulate );
 	}
 	
 	/**
-	 * Set if the parameter manipualations should be applied to the default value.
+	 * Returns the default value.
+	 * 
+	 * @since 0.4.3
+	 * 
+	 * @return mixed
+	 */
+	public function getDefault() {
+		return $this->default; 
+	}
+	
+	/**
+	 * Set if the parameter manipulations should be applied to the default value.
 	 * 
 	 * @since 0.4
 	 * 
@@ -711,6 +762,29 @@ class Parameter {
 		}
 		
 		return false;
-	}		
+	}
+
+	/**
+	 * Returns a description message for the parameter, or false when there is none.
+	 * Override in deriving classes to add a message.
+	 * 
+	 * @since 0.4.3
+	 * 
+	 * @return mixed string or false
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+	
+	/**
+	 * Sets a description message for the parameter.
+	 * 
+	 * @since 0.4.3
+	 * 
+	 * @param string $descriptionMessage
+	 */
+	public function setDescription( $descriptionMessage ) {
+		$this->description = $descriptionMessage;
+	}	
 	
 }

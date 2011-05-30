@@ -2,7 +2,7 @@
 
 /**
  * Item parameter manipulation base class. This is for manipulations
- * that apply to individial values, which can either be the whole value
+ * that apply to individual values, which can either be the whole value
  * of a non-list parameter, or a single item of a list parameter.
  * 
  * @since 0.4
@@ -11,7 +11,8 @@
  * @ingroup Validator
  * @ingroup ParameterManipulations
  * 
- * @author Jeroen De Dauw
+ * @licence GNU GPL v3 or later
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 abstract class ItemParameterManipulation extends ParameterManipulation {
 	

@@ -29,7 +29,7 @@ class ValidatorListErrors extends ParserHook {
 	);
 	
 	/**
-	 * No LST in pre-5.3 PHP *sigh*.
+	 * No LSB in pre-5.3 PHP *sigh*.
 	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
 	 */
 	public static function staticMagic( array &$magicWords, $langCode ) {
@@ -39,7 +39,7 @@ class ValidatorListErrors extends ParserHook {
 	}
 	
 	/**
-	 * No LST in pre-5.3 PHP *sigh*.
+	 * No LSB in pre-5.3 PHP *sigh*.
 	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
 	 */	
 	public static function staticInit( Parser &$wgParser ) {
@@ -76,7 +76,8 @@ class ValidatorListErrors extends ParserHook {
 		$params['minseverity'] = new Parameter( 'minseverity' );
 		$params['minseverity']->setDefault( $egValidatorErrListMin );
 		$params['minseverity']->addCriteria( new CriterionInArray( array_keys( self::$severityMap ) ) );
-
+		$params['minseverity']->setDescription( wfMsg( 'validator-listerrors-par-minseverity' ) );
+		
  		return $params;
 	}
 	
@@ -208,5 +209,12 @@ class ValidatorListErrors extends ParserHook {
 		
 		return wfMsg( 'validator-listerrors-' . $reverseMap[$severity] );
 	}		
+
+	/**
+	 * @see ParserHook::getDescription()
+	 */
+	public function getDescription() {
+		return wfMsg( 'validator-listerrors-description' );
+	}	
 	
 }

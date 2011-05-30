@@ -2,7 +2,7 @@
 
 /**
  * Item parameter criterion definition class. This is for criteria
- * that apply to individial values, which can either be the whole value
+ * that apply to individual values, which can either be the whole value
  * of a non-list parameter, or a single item of a list parameter.
  * 
  * @since 0.4
@@ -11,7 +11,8 @@
  * @ingroup Validator
  * @ingroup Criteria
  * 
- * @author Jeroen De Dauw
+ * @licence GNU GPL v3 or later
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 abstract class ItemParameterCriterion extends ParameterCriterion {
 	
@@ -30,7 +31,7 @@ abstract class ItemParameterCriterion extends ParameterCriterion {
 	
 	/**
 	 * Gets an internationalized error message to construct a ValidationError with
-	 * when the criterions validation failed. (for non-list values)
+	 * when the criteria validation failed. (for non-list values)
 	 * 
 	 * @param Parameter $parameter
 	 * 
@@ -112,7 +113,7 @@ abstract class ItemParameterCriterion extends ParameterCriterion {
 	
 	/**
 	 * Gets an internationalized error message to construct a ValidationError with
-	 * when the criterions validation failed. (for list values)
+	 * when the criteria validation failed. (for list values)
 	 * 
 	 * @param Parameter $parameter
 	 * @param array $invalidItems
@@ -133,7 +134,7 @@ abstract class ItemParameterCriterion extends ParameterCriterion {
 	
 	/**
 	 * Gets an internationalized error message to construct a ValidationError with
-	 * when the criterions validation failed. (for list values when all values are invalid)
+	 * when the criteria validation failed. (for list values when all values are invalid)
 	 * 
 	 * @param Parameter $parameter
 	 * 
@@ -147,7 +148,7 @@ abstract class ItemParameterCriterion extends ParameterCriterion {
 	
 	/**
 	 * Gets an internationalized error message to construct a ValidationError with
-	 * when the criterions validation failed. (for list values when only some values are invalid)
+	 * when the criteria validation failed. (for list values when only some values are invalid)
 	 * 
 	 * @param Parameter $parameter
 	 * @param array $invalidItems

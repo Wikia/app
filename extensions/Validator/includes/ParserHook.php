@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class for out of the box parser hook functionality inetgrated with the validation
+ * Class for out of the box parser hook functionality integrated with the validation
  * provided by Validator.
  *
  * @since 0.4
@@ -9,12 +9,46 @@
  * @file ParserHook.php
  * @ingroup Validator
  *
- * @author Jeroen De Dauw
+ * @licence GNU GPL v3 or later
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 abstract class ParserHook {
 	
 	const TYPE_TAG = 0;
 	const TYPE_FUNCTION = 1;
+	
+	/**
+	 * @since 0.4.3
+	 * 
+	 * @var array
+	 */
+	protected static $registeredHooks = array();
+	
+	/**
+	 * Returns an array of registered parser hooks (keys) and their handling
+	 * ParserHook deriving class names (values).
+	 * 
+	 * @since 0.4.3
+	 * 
+	 * @return array
+	 */
+	public static function getRegisteredParserHooks() {
+		return self::$registeredHooks;
+	}
+	
+	/**
+	 * Returns the name of the ParserHook deriving class that defines a certain parser hook,
+	 * or false if there is none.
+	 * 
+	 * @since 0.4.3
+	 * 
+	 * @param string $hookName
+	 * 
+	 * @return mixed string or false
+	 */
+	public static function getHookClassName( $hookName ) {
+		return array_key_exists( $hookName, self::$registeredHooks ) ? self::$registeredHooks[$hookName] : false;
+	}
 	
 	/**
 	 * @since 0.4
@@ -31,18 +65,32 @@ abstract class ParserHook {
 	protected $parser;
 	
 	/**
+	 * @since 0.4.4
+	 * 
+	 * @var PPFrame
+	 */
+	protected $frame;
+	
+	/**
+	 * @since 0.4.4
+	 * 
+	 * @var ParserHook::TYPE_ enum item
+	 */	
+	protected $currentType;
+	
+	/**
 	 * @since 0.4
 	 * 
 	 * @var boolean
 	 */
-	protected $forTagExtensions; 
+	public $forTagExtensions; 
 	
 	/**
 	 * @since 0.4
 	 * 
 	 * @var boolean
 	 */	
-	protected $forParserFunctions; 
+	public $forParserFunctions; 
 	
 	/**
 	 * Gets the name of the parser hook.
@@ -88,18 +136,24 @@ abstract class ParserHook {
 	 */
 	public function init( Parser &$wgParser ) {
 		$className = get_class( $this );
+		$first = true;
 		
 		foreach ( $this->getNames() as $name ) {
+			if ( $first ) {
+				self::$registeredHooks[$name] = $className;
+				$first = false;
+			}
+			
 			if ( $this->forTagExtensions ) {
 				$wgParser->setHook(
-					$this->getTagName( $name ),
+					$name,
 					array( new ParserHookCaller( $className, 'renderTag' ), 'runHook' )
 				);
 			}
 			
 			if ( $this->forParserFunctions ) {
 				$wgParser->setFunctionHook(
-					$this->getFunctionName( $name ),
+					$name,
 					array( new ParserHookCaller( $className, 'renderFunction' ), 'runHook' )
 				);
 			}
@@ -124,32 +178,6 @@ abstract class ParserHook {
 
 		return $names;
 	}
-
-	/**
-	 * Returns the tag extension version of the name.
-	 * 
-	 * @since 0.4
-	 * 
-	 * @param string $rawName
-	 * 
-	 * @return string
-	 */
-	protected function getTagName( $rawName ) {
-		return str_replace( '_', ' ', $rawName );
-	}
-	
-	/**
-	 * Returns the parser function version of the name.
-	 * 
-	 * @since 0.4
-	 * 
-	 * @param string $rawName
-	 * 
-	 * @return string
-	 */	
-	protected function getFunctionName( $rawName ) {
-		return str_replace( ' ', '_', $rawName );
-	}
 	
 	/**
 	 * Function to add the magic word in pre MW 1.16.
@@ -163,7 +191,6 @@ abstract class ParserHook {
 	 */
 	public function magic( array &$magicWords, $langCode ) {
 		foreach ( $this->getNames() as $name ) {
-			$name = $this->getFunctionName( $name );
 			$magicWords[$name] = array( 0, $name );
 		}
 		
@@ -178,14 +205,16 @@ abstract class ParserHook {
 	 * @param minxed $input string or null
 	 * @param array $args
 	 * @param Parser $parser
-	 * @param PPFrame $frame Available from 1.16 - commented out for bc for now
+	 * @param PPFrame $frame Available from 1.16
 	 * 
 	 * @return string
 	 */
-	public function renderTag( $input, array $args, Parser $parser /*, PPFrame $frame*/  ) {
+	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame = null  ) {
 		$this->parser = $parser;
+		$this->frame = $frame;
 		
-		$defaultParam = array_shift( $this->getDefaultParameters( self::TYPE_TAG ) );
+		$defaultParameters = $this->getDefaultParameters( self::TYPE_TAG );
+		$defaultParam = array_shift( $defaultParameters );
 
 		// If there is a first default parameter, set the tag contents as it's value.
 		if ( !is_null( $defaultParam ) && !is_null( $input ) ) {
@@ -209,10 +238,16 @@ abstract class ParserHook {
 		$args = func_get_args();
 		
 		$this->parser = array_shift( $args );	
-	
+		$output = $this->validateAndRender( $args, self::TYPE_FUNCTION );
+		$options = $this->getFunctionOptions();
+		
+		if ( array_key_exists( 'isHTML', $options ) && $options['isHTML'] ) {
+			return $this->parser->insertStripItem( $output, $this->parser->mStripState );
+		}
+		
 		return array_merge( 
-			array( $this->validateAndRender( $args, self::TYPE_FUNCTION ) ),
-			$this->getFunctionOptions()
+			array( $output ),
+			$options
 		);
 	}
 	
@@ -362,6 +397,90 @@ abstract class ParserHook {
 	 */
 	protected function getDefaultParameters( $type ) {
 		return array();
+	}
+	
+	/**
+	 * Returns the data needed to describe the parser hook.
+	 * This is mainly needed because some of the individual get methods
+	 * that return the needed data are protected, and cannot be made
+	 * public without breaking b/c in a rather bad way.
+	 * 
+	 * @since 0.4.3
+	 * 
+	 * @param integer $type Item of the ParserHook::TYPE_ enum
+	 * 
+	 * @return array
+	 */
+	public function getDescriptionData( $type ) {
+		return array(
+			'names' => $this->getNames(),
+			'description' => $this->getDescription(),
+			'parameters' => $this->getParameterInfo( $type ),
+			'defaults' => $this->getDefaultParameters( $type ),
+		);
+	}
+	
+	/**
+	 * Returns a description message for the parser hook, or false when there is none.
+	 * Override in deriving classes to add a message.
+	 * 
+	 * @since 0.4.3
+	 * 
+	 * @return mixed string or false
+	 */
+	public function getDescription() {
+		return false;
+	}
+	
+	/**
+	 * Returns if the current render request is coming from a tag extension.
+	 * 
+	 * @since 0.4.4
+	 * 
+	 * @return boolean
+	 */
+	protected function isTag() {
+		return $this->currentType == self::TYPE_TAG;
+	}
+	
+	/**
+	 * Returns if the current render request is coming from a parser function.
+	 * 
+	 * @since 0.4.4
+	 * 
+	 * @return boolean
+	 */
+	protected function isFunction() {
+		return $this->currentType == self::TYPE_FUNCTION;
+	}
+	
+	/**
+	 * Utility function to parse wikitext without having to care
+	 * about handling a tag extension or parser function. 
+	 * 
+	 * @since 0.4.4
+	 * 
+	 * @param string $text The wikitext to be parsed
+	 * 
+	 * @return string the parsed output
+	 */
+	protected function parseWikitext( $text ) {
+		// Parse the wikitext to HTML.
+		if ( $this->isFunction() ) {
+			return $this->parser->parse(
+				text,
+				$this->parser->mTitle,
+				$this->parser->mOptions,
+				true,
+				false
+			)->getText();
+		}
+		else {
+			return $this->parser->recursiveTagParse(
+				$text,
+				$this->frame
+			);				
+		}		
 	}	
 	
 }
