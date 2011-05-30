@@ -98,7 +98,7 @@
 		},
 
 		// handle "Save" button
-		onSave: function(e) {
+		onSave: function() {
 			if (this.textarea.val() == this.textarea.attr('placeholder')) {
 				this.textarea.val('');
 			}
