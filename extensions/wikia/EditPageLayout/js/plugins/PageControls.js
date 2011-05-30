@@ -118,7 +118,7 @@
 
 				// submit the form
 				var form = this.textarea.closest('form');
-				//form.submit();
+				form.submit();
 			}
 		},
 
