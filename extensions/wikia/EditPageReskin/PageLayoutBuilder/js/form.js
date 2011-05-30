@@ -25,7 +25,7 @@
 	
 })(this,jQuery);
 
-		
+
 $(function() {
 	$('#csMainContainer').removeClass('csEditMode');
 	$('#csCategoryInput').attr('placeholder','').hide();
