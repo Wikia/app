@@ -24,7 +24,7 @@ ul.plb-form-actions {
 		float: left;
 		padding-left:1px;
 		padding-right:1px;
-		&.summary {
+		&:first-child {
 			float: none;
 		}
 		span {
@@ -39,6 +39,7 @@ ul.plb-form-actions {
 		}
 		#wpFormSummary {
 		    height: auto;
+		    width: 340px;
     		padding: 0;
     	}
 	}
@@ -188,4 +189,13 @@ span.plb-article-title {
 		font-weight: normal;
 		font-size:24px;
     } 
+}
+
+.templatesUsed,
+.printfooter,
+#toolbar,
+#talkpagesignbox,
+.mw-editTools,
+.plb-edit-page-make-layout {
+	display: none;
 }

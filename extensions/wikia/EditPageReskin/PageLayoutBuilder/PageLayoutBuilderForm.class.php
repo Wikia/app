@@ -196,8 +196,10 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 		$this->out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageReskin/PageLayoutBuilder/css/form.scss'));
 		$this->out->addStyle( AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/_EditPage.scss'));
 
+		RTE::disableEditor();
+
 		$js = array(
-			'/wikia/PageLayoutBuilder/widget/allWidgets.js',
+			'/wikia/EditPageReskin/PageLayoutBuilder/widget/allWidgets.js',
 			'/wikia/EditPageLayout/js/editor/WikiaEditor.js',
 			'/wikia/EditPageLayout/js/plugins/PageControls.js',
 			'/wikia/EditPageReskin/PageLayoutBuilder/js/form.js',
