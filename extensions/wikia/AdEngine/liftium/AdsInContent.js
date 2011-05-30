@@ -20,6 +20,10 @@ if ($('body').hasClass('rtl')) {
 	Liftium.d("AIC2: rtl wiki, bailing out", 3);
 	return;
 }
+if ($.getViewportWidth() < 1010) {
+	Liftium.d("AIC2: window too narrow, bailing out", 3);
+	return;
+}
 
 	if (!AIC2.checkStartStopPosition()) return;
 
