@@ -25,6 +25,12 @@ define( 'SMW_HEADERS_HIDE', 0 ); // Used to be "false" hence use "0" to support 
  */
 abstract class SMWResultPrinter {
 
+	/**
+	 * List of parameters, set by readParameters (which is deprecated)
+	 * and can be used to store parameters in readParameters.
+	 * 
+	 * @var array
+	 */
 	protected $m_params;
 
 	/**
@@ -96,7 +102,7 @@ abstract class SMWResultPrinter {
 	 * Return serialised results in specified format.
 	 * Implemented by subclasses.
 	 */
-	abstract protected function getResultText( /* SMWQueryResult */ $res, $outputmode );
+	abstract protected function getResultText( SMWQueryResult $res, $outputmode );
 
 	/**
 	 * Constructor. The parameter $format is a format string
@@ -112,7 +118,7 @@ abstract class SMWResultPrinter {
 		$this->mInline = $inline;
 		$this->mLinkFirst = ( $smwgQDefaultLinking != 'none' );
 		$this->mLinkOthers = ( $smwgQDefaultLinking == 'all' );
-		$this->mLinker = class_exists('DummyLinker') ? new DummyLinker : new Linker; ///TODO: how can we get the default or user skin here (depending on context)?
+		$this->mLinker = class_exists( 'DummyLinker' ) ? new DummyLinker : new Linker; ///TODO: how can we get the default or user skin here (depending on context)?
 		$this->useValidator = $useValidator;
 	}
 
@@ -608,6 +614,10 @@ abstract class SMWResultPrinter {
 		$params['limit'] = new Parameter( 'limit', Parameter::TYPE_INTEGER );
 		$params['limit']->setDescription( wfMsg( 'smw_paramdesc_limit' ) );
 		$params['limit']->setDefault( 20 );
+		
+		$params['offset'] = new Parameter( 'offset', Parameter::TYPE_INTEGER );
+		$params['offset']->setDescription( wfMsg( 'smw_paramdesc_offset' ) );
+		$params['offset']->setDefault( 0 );
 		
 		$params['headers'] = new Parameter( 'headers' );
 		$params['headers']->setDescription( wfMsg( 'smw_paramdesc_headers' ) );

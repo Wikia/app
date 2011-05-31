@@ -120,7 +120,8 @@ class SMWRDFXMLSerializer extends SMWSerializer{
 			$this->post_ns_buffer .= "\t$indent<$type";
 		}
 
-		if ( $expData->getSubject() instanceof SMWExpResource ) {
+		if ( ( $expData->getSubject() instanceof SMWExpResource ) &&
+		      !$expData->getSubject()->isBlankNode() ) {
 			 $this->post_ns_buffer .= ' rdf:about="' . $expData->getSubject()->getUri() . '"';
 		} // else: blank node, no "rdf:about"
 
@@ -149,7 +150,7 @@ class SMWRDFXMLSerializer extends SMWSerializer{
 						if ( $collection !== false ) { // RDF-style collection (list)
 							$this->serializeExpCollection( $property, $collection, "\t\t$indent", $isClassTypeProp );
 						} elseif ( count( $valueElement->getProperties() ) > 0 ) { // resource with data
-							$this->post_ns_buffer .= "\t\t$indent<" . $expResourceProperty->getQName() . ">\n";
+							$this->post_ns_buffer .= "\t\t$indent<" . $property->getQName() . ">\n";
 							$this->serializeNestedExpData( $valueElement, "\t\t$indent" );
 							$this->post_ns_buffer .= "\t\t$indent</" . $property->getQName() . ">\n";
 						} else { // resource without data
@@ -180,8 +181,7 @@ class SMWRDFXMLSerializer extends SMWSerializer{
 		if ( $expLiteral->getDatatype() != '' ) {
 			$this->post_ns_buffer .= ' rdf:datatype="' . $expLiteral->getDatatype() . '"';
 		}
-		$this->post_ns_buffer .= '>' .
-			str_replace( array( '&', '>', '<' ), array( '&amp;', '&gt;', '&lt;' ), $expLiteral->getLexicalForm() ) .
+		$this->post_ns_buffer .= '>' . $this->makeAttributeValueString( $expLiteral->getLexicalForm() ) .
 			'</' . $expResourceProperty->getQName() . ">\n";
 	}
 
@@ -197,10 +197,12 @@ class SMWRDFXMLSerializer extends SMWSerializer{
 	protected function serializeExpResource( SMWExpNsResource $expResourceProperty, SMWExpResource $expResource, $indent, $isClassTypeProp ) {
 		$this->post_ns_buffer .= $indent . '<' . $expResourceProperty->getQName();
 		if ( !$expResource->isBlankNode() ) {
-			if ( ( $expResource instanceof SMWExpNsResource ) && ( $expResource->getNamespaceID() == 'wiki' ) ) { // very common case, reduce bandwidth
+			if ( ( $expResource instanceof SMWExpNsResource ) && ( $expResource->getNamespaceID() == 'wiki' ) ) { 
+				// very common case, reduce bandwidth
 				$this->post_ns_buffer .= ' rdf:resource="&wiki;' . $expResource->getLocalName() . '"';
 			} else {
-				$this->post_ns_buffer .= ' rdf:resource="' . $expResource->getUri() . '"';
+				$uriValue = $this->makeAttributeValueString( $expResource->getUri() );
+				$this->post_ns_buffer .= ' rdf:resource="' . $uriValue . '"';
 			}
 		}
 		$this->post_ns_buffer .= "/>\n";
@@ -237,10 +239,22 @@ class SMWRDFXMLSerializer extends SMWSerializer{
 	 * Escape a string in the special form that is required for values in 
 	 * DTD entity declarations in XML. Namely, this require the percent sign
 	 * to be replaced.
-	 * @param string $string to be escaped 
+	 *
+	 * @param $string string to be escaped
+	 * @return string
 	 */
 	protected function makeValueEntityString( $string ) {
 		return "'" . str_replace( '%','&#37;',$string ) . "'";
+	}
+
+	/**
+	 * Escape a string as required for using it in XML attribute values.
+	 *
+	 * @param $string string to be escaped 
+	 * @return string
+	 */
+	protected function makeAttributeValueString( $string ) {
+		return str_replace( array( '&', '>', '<' ), array( '&amp;', '&gt;', '&lt;' ), $string );
 	}
 
 }

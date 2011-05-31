@@ -2451,6 +2451,9 @@ $messages['frp'] = array(
 	'sf_formedit_remove' => 'Enlevar',
 	'sf_formedit_addanother' => 'Apondre una ôtra',
 	'sf_formedit_none' => 'Niona',
+	'sf_formedit_saveandcontinueediting' => 'Sôvar et pués continuar',
+	'sf_formedit_tooltip_saveandcontinueediting' => 'Sôvar les balyês et pués continuar lo changement',
+	'sf_autoedit_success' => '[[$1]] changiê avouéc reusséta en utilisent lo formulèro $2.',
 	'runquery' => 'Ègzécutar la requéta',
 	'sf_runquery_title' => 'Ègzécutar la requéta : $1',
 	'sf_runquery_additionalquery' => 'Requéta de ples',
@@ -4777,6 +4780,13 @@ $messages['mr'] = array(
 	'sf_category_hasdefaultform' => 'हे वर्गीकरण फॉर्म $1 वापरते.',
 	'sf_category_desc' => 'हे $1 वर्गीकरण आहे.',
 	'sf_blank_namespace' => 'मुख्य',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'sf_createform_inputtypedefault' => '(tersedia)',
 );
 
 /** Erzya (Эрзянь)

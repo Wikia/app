@@ -58,7 +58,7 @@ class SFUtils {
 	 * A very similar function to titleURLString(), to get the
 	 * non-URL-encoded title string
 	 */
-	static function titleString( $title ) {
+	public static function titleString( $title ) {
 		$namespace = $title->getNsText();
 		if ( $namespace != '' ) {
 			$namespace .= ':';
@@ -83,12 +83,31 @@ class SFUtils {
 			} else {
 				$page = new SMWDIWikiPage( $pageName, $pageNamespace, null );
 			}
-			$property = new SMWDIProperty( $propID );
-			return $store->getPropertyValues( $page, $property, $requestOptions );
+			$property = SMWDIProperty::newFromUserLabel( $propID );
+			$res = $store->getPropertyValues( $page, $property, $requestOptions );
+			$values = array();
+			foreach ( $res as $value ) {
+				// getSortKey() seems to return the correct
+				// value for every data type.
+				$values[] = $value->getSortKey();
+			}
+			return $values;
 		} else {
 			$title = Title::makeTitleSafe( $pageNamespace, $pageName );
 			$property = SMWPropertyValue::makeProperty( $propID );
-			return $store->getPropertyValues( $title, $property, $requestOptions );
+			$res = $store->getPropertyValues( $title, $property, $requestOptions );
+			$values = array();
+			foreach ( $res as $value ) {
+				if ( method_exists( $value, 'getTitle' ) ) {
+					$valueTitle = $value->getTitle();
+					if ( !is_null( $valueTitle ) ) {
+						$values[] = $valueTitle->getText();
+					}
+				} else {
+					$values[] = str_replace( '_' , ' ', $value->getWikiValue() );
+				}
+			}
+			return array_unique( $values );
 		}
 	}
 
@@ -98,7 +117,7 @@ class SFUtils {
 	 * - this function doubles as a function to get all categories on
 	 * the site, if no article is specified
 	 */
-	static function getCategoriesForPage( $title = null ) {
+	public static function getCategoriesForPage( $title = null ) {
 		$categories = array();
 		$db = wfGetDB( DB_SLAVE );
 		$conditions = null;
@@ -121,25 +140,33 @@ class SFUtils {
 		return $categories;
 	}
 
-	static function initProperties() {
+	public static function registerProperty( $id, $typeid, $label ) {
+		if ( class_exists( 'SMWDIProperty' ) ) {
+			SMWDIProperty::registerProperty( $id, $typeid, $label, true );
+		} else {
+			SMWPropertyValue::registerProperty( $id, $typeid, $label, true );
+		}
+	}
+
+	public static function initProperties() {
 		global $sfgContLang;
 		$sf_props = $sfgContLang->getPropertyLabels();
 		if ( array_key_exists( SF_SP_HAS_DEFAULT_FORM, $sf_props ) )
-			SMWPropertyValue::registerProperty( '_SF_DF', '__spf', $sf_props[SF_SP_HAS_DEFAULT_FORM], true );
+			self::registerProperty( '_SF_DF', '__spf', $sf_props[SF_SP_HAS_DEFAULT_FORM] );
 		if ( array_key_exists( SF_SP_HAS_ALTERNATE_FORM, $sf_props ) )
-			SMWPropertyValue::registerProperty( '_SF_AF', '__spf', $sf_props[SF_SP_HAS_ALTERNATE_FORM], true );
+			self::registerProperty( '_SF_AF', '__spf', $sf_props[SF_SP_HAS_ALTERNATE_FORM] );
 		if ( array_key_exists( SF_SP_CREATES_PAGES_WITH_FORM, $sf_props ) )
-			SMWPropertyValue::registerProperty( '_SF_CP', '__spf', $sf_props[SF_SP_CREATES_PAGES_WITH_FORM], true );
+			self::registerProperty( '_SF_CP', '__spf', $sf_props[SF_SP_CREATES_PAGES_WITH_FORM] );
 		if ( array_key_exists( SF_SP_PAGE_HAS_DEFAULT_FORM, $sf_props ) )
-			SMWPropertyValue::registerProperty( '_SF_PDF', '__spf', $sf_props[SF_SP_PAGE_HAS_DEFAULT_FORM], true );
+			self::registerProperty( '_SF_PDF', '__spf', $sf_props[SF_SP_PAGE_HAS_DEFAULT_FORM] );
 		if ( array_key_exists( SF_SP_HAS_FIELD_LABEL_FORMAT, $sf_props ) )
-			SMWPropertyValue::registerProperty( '_SF_FLF', '_str', $sf_props[SF_SP_HAS_FIELD_LABEL_FORMAT], true );
+			self::registerProperty( '_SF_FLF', '_str', $sf_props[SF_SP_HAS_FIELD_LABEL_FORMAT] );
 		// also initialize hardcoded English values, if it's a non-English-language wiki
-		SMWPropertyValue::registerProperty( '_SF_DF_BACKUP', '__spf', 'Has default form', true );
-		SMWPropertyValue::registerProperty( '_SF_AF_BACKUP', '__spf', 'Has alternate form', true );
-		SMWPropertyValue::registerProperty( '_SF_CP_BACKUP', '__spf', 'Creates pages with form', true );
-		SMWPropertyValue::registerProperty( '_SF_PDF_BACKUP', '__spf', 'Page has default form', true );
-		SMWPropertyValue::registerProperty( '_SF_FLF_BACKUP', '_str', 'Has field label format', true );
+		self::registerProperty( '_SF_DF_BACKUP', '__spf', 'Has default form' );
+		self::registerProperty( '_SF_AF_BACKUP', '__spf', 'Has alternate form' );
+		self::registerProperty( '_SF_CP_BACKUP', '__spf', 'Creates pages with form' );
+		self::registerProperty( '_SF_PDF_BACKUP', '__spf', 'Page has default form' );
+		self::registerProperty( '_SF_FLF_BACKUP', '_str', 'Has field label format' );
 
 		return true;
 	}
@@ -147,7 +174,7 @@ class SFUtils {
 	/**
 	 * Creates HTML linking to a wiki page
 	 */
-	static function linkText( $namespace, $name, $text = null ) {
+	public static function linkText( $namespace, $name, $text = null ) {
 		$title = Title::makeTitleSafe( $namespace, $name );
 		if ( is_null( $title ) ) {
 			return $name; // TODO maybe report an error here?
@@ -164,7 +191,7 @@ class SFUtils {
 	 * allows pages to spoof a normal edit page, that can preview, save,
 	 * etc.
 	 */
-	static function printRedirectForm( $title, $page_contents, $edit_summary, $is_save, $is_preview, $is_diff, $is_minor_edit, $watch_this, $start_time, $edit_time ) {
+	public static function printRedirectForm( $title, $page_contents, $edit_summary, $is_save, $is_preview, $is_diff, $is_minor_edit, $watch_this, $start_time, $edit_time ) {
 		global $wgUser, $sfgScriptPath;
 		
 		if ( $is_save ) {
@@ -181,17 +208,17 @@ class SFUtils {
 	<p style="position: absolute; left: 45%; top: 45%;"><img src="$sfgScriptPath/skins/loading.gif" /></p>
 
 END;
-		$form_body = "\t" . Html::Hidden( 'wpTextbox1', $page_contents ) . "\n";
-		$form_body .= "\t" . Html::Hidden( 'wpSummary', $edit_summary ) . "\n";
-		$form_body .= "\t" . Html::Hidden( 'wpStarttime', $start_time ) . "\n";
-		$form_body .= "\t" . Html::Hidden( 'wpEdittime', $edit_time ) . "\n";
-		$form_body .= "\t" . Html::Hidden( 'wpEditToken', $wgUser->isLoggedIn() ? $wgUser->editToken() : EDIT_TOKEN_SUFFIX ) . "\n";
-		$form_body .= "\t" . Html::Hidden( $action, null ) . "\n";
+		$form_body = "\t" . Html::hidden( 'wpTextbox1', $page_contents ) . "\n";
+		$form_body .= "\t" . Html::hidden( 'wpSummary', $edit_summary ) . "\n";
+		$form_body .= "\t" . Html::hidden( 'wpStarttime', $start_time ) . "\n";
+		$form_body .= "\t" . Html::hidden( 'wpEdittime', $edit_time ) . "\n";
+		$form_body .= "\t" . Html::hidden( 'wpEditToken', $wgUser->isLoggedIn() ? $wgUser->editToken() : EDIT_TOKEN_SUFFIX ) . "\n";
+		$form_body .= "\t" . Html::hidden( $action, null ) . "\n";
 
 		if ( $is_minor_edit )
-			$form_body .= "\t" . Html::Hidden( 'wpMinoredit' , null ) . "\n";
+			$form_body .= "\t" . Html::hidden( 'wpMinoredit' , null ) . "\n";
 		if ( $watch_this )
-			$form_body .= "\t" . Html::Hidden( 'wpWatchthis', null ) . "\n";
+			$form_body .= "\t" . Html::hidden( 'wpWatchthis', null ) . "\n";
 		$text .= Xml::tags(
 			'form',
 			array(
@@ -219,7 +246,7 @@ END;
 	 * Uses the ResourceLoader (available with MediaWiki 1.17 and higher)
 	 * to load all the necessary JS and CSS files for Semantic Forms.
 	 */
-	static function loadJavascriptAndCSS( $parser = null ) {
+	public static function loadJavascriptAndCSS( $parser = null ) {
 		// Handling depends on whether or not this form is embedded
 		// in another page.
 		if ( !is_null( $parser ) ) {
@@ -240,7 +267,7 @@ END;
 	 * Javascript files to be added regardless of the MediaWiki version
 	 * (i.e., even if the ResourceLoader is installed).
 	 */
-	static function addJavascriptFiles( $parser ) {
+	public static function addJavascriptFiles( $parser ) {
 		global $wgOut, $wgFCKEditorDir, $wgScriptPath, $wgJsMimeType;
 
 		$scripts = array();
@@ -270,7 +297,7 @@ END;
 	 * 
 	 * Accepts an optional Parser instance, or uses $wgOut if omitted.
 	 */
-	static function addJavascriptAndCSS( $parser = null ) {
+	public static function addJavascriptAndCSS( $parser = null ) {
 		global $wgOut;
 
 		if ( !$parser ) {
@@ -359,7 +386,7 @@ END;
 	/**
 	 * Return an array of all form names on this wiki
  	*/
-	static function getAllForms() {
+	public static function getAllForms() {
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select( 'page',
 			'page_title',
@@ -375,7 +402,7 @@ END;
 		return $form_names;
 	}
 
-	static function formDropdownHTML() {
+	public static function formDropdownHTML() {
 		// create a dropdown of possible form names
 		global $sfgContLang;
 		$namespace_labels = $sfgContLang->getNamespaces();
@@ -383,10 +410,9 @@ END;
 		$form_names = SFUtils::getAllForms();
 		$select_body = "";
 		foreach ( $form_names as $form_name ) {
-			$select_body .= '	' . Xml::element( 'option', null, $form_name ) . "\n";
+			$select_body .= "\t" . Xml::element( 'option', null, $form_name ) . "\n";
 		}
-		$str = "	$form_label:" . Xml::tags( 'select', array( 'name' => 'form' ), $select_body ) . "\n";
-		return $str;
+		return "\t$form_label:" . Xml::tags( 'select', array( 'name' => 'form' ), $select_body ) . "\n";
 	}
 
 	/*
@@ -395,21 +421,13 @@ END;
 	 * case-insensitive queries; for queries with a substring, the
 	 * function SFAutocompleteAPI::getAllValuesForProperty() exists.
 	 */
-	static function getAllValuesForProperty( $property_name ) {
+	public static function getAllValuesForProperty( $property_name ) {
 		global $sfgMaxAutocompleteValues;
 
 		$store = smwfGetStore();
 		$requestoptions = new SMWRequestOptions();
 		$requestoptions->limit = $sfgMaxAutocompleteValues;
-		$data_values = self::getSMWPropertyValues( $store, null, null, $property_name, $requestoptions );
-		$values = array();
-		foreach ( $data_values as $dv ) {
-			// getPropertyValues() gets many repeat values - we want
-			// only one of each value
-			$string_value = str_replace( '_', ' ', $dv->getWikiValue() );
-			if ( array_search( $string_value, $values ) === false )
-				$values[] = $string_value;
-		}
+		$values = self::getSMWPropertyValues( $store, null, null, $property_name, $requestoptions );
 		sort( $values );
 		return $values;
 	}
@@ -419,7 +437,7 @@ END;
 	 * subcategories, down a certain number of levels - heavily based on
 	 * SMW's SMWInlineQuery::includeSubcategories()
 	 */
-	static function getAllPagesForCategory( $top_category, $num_levels, $substring = null ) {
+	public static function getAllPagesForCategory( $top_category, $num_levels, $substring = null ) {
 		if ( 0 == $num_levels ) return $top_category;
 		global $sfgMaxAutocompleteValues;
 
@@ -492,7 +510,7 @@ END;
 		return $pages;
 	}
 
-	static function getAllPagesForConcept( $concept_name, $substring = null ) {
+	public static function getAllPagesForConcept( $concept_name, $substring = null ) {
 		global $sfgMaxAutocompleteValues;
 
 		$store = smwfGetStore();
@@ -534,7 +552,7 @@ END;
 		return $pages;
 	}
 
-	static function getAllPagesForNamespace( $namespace_name, $substring = null ) {
+	public static function getAllPagesForNamespace( $namespace_name, $substring = null ) {
 		// cycle through all the namespace names for this language, and
 		// if one matches the namespace specified in the form, add the
 		// names of all the pages in that namespace to $names_array
@@ -573,7 +591,7 @@ END;
 	 * Creates an array of values that match the specified source name and type,
 	 * for use by both Javascript autocompletion and comboboxes.
 	 */
-	static function getAutocompleteValues( $source_name, $source_type ) {
+	public static function getAutocompleteValues( $source_name, $source_type ) {
 		$names_array = array();
 		// the query depends on whether this is a property, category, concept
 		// or namespace
@@ -596,7 +614,7 @@ END;
 	 * Helper function to get an array of values out of what may be either
 	 * an array or a delimited string
 	 */
-	static function getValuesArray( $value, $delimiter ) {
+	public static function getValuesArray( $value, $delimiter ) {
 		if ( is_array( $value ) ) {
 			return $value;
 		} else {
@@ -605,7 +623,7 @@ END;
 		}
 	}
 
-	static function getValuesFromExternalURL( $external_url_alias, $substring ) {
+	public static function getValuesFromExternalURL( $external_url_alias, $substring ) {
 		global $sfgAutocompletionURLs;
 		if ( empty( $sfgAutocompletionURLs ) ) return array();
 		$url = $sfgAutocompletionURLs[$external_url_alias];
@@ -625,7 +643,7 @@ END;
 	/**
 	 * A helper function, used by getFormTagComponents().
 	 */
-	static function convertBackToPipes( $s ) {
+	public static function convertBackToPipes( $s ) {
 		return str_replace( "\1", '|', $s );
 	}
 
@@ -635,7 +653,7 @@ END;
 	 * that are within parser function calls - i.e., pipes within
 	 * double curly brackets.
 	 */
-	static function getFormTagComponents( $str ) {
+	public static function getFormTagComponents( $str ) {
 		// Turn each pipe within double curly brackets into another,
 		// unused character (here, "\1"), then do the explode, then
 		// convert them back.
@@ -650,7 +668,7 @@ END;
 	 * Parse the form definition and store the resulting HTML in the
 	 * page_props table, if caching has been specified in LocalSettings.php
 	 */
-	static function cacheFormDefinition( $parser, $text ) {
+	public static function cacheFormDefinition( $parser, $text ) {
 		global $sfgCacheFormDefinitions;
 		if ( ! $sfgCacheFormDefinitions )
 			return true;
@@ -686,11 +704,11 @@ END;
 	}
 
 	/**
-	 * Tranlates an EditPage storing error into the corresponding message id
+	 * Translates an EditPage error code into a corresponding message ID
 	 * @param $error The error code
 	 * @return String
 	 */
-	static function processEditErrors ( $error ) {
+	public static function processEditErrors ( $error ) {
 
 		switch ( $error ) {
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
@@ -744,4 +762,26 @@ END;
 		}
 	}
 
+	public static function addToAdminLinks( &$admin_links_tree ) {
+		$data_structure_label = wfMsg( 'smw_adminlinks_datastructure' );
+		$data_structure_section = $admin_links_tree->getSection( $data_structure_label );
+		if ( is_null( $data_structure_section ) ) {
+			return true;
+		}
+		$smw_row = $data_structure_section->getRow( 'smw' );
+		$smw_row->addItem( ALItem::newFromSpecialPage( 'Templates' ), 'Properties' );
+		$smw_row->addItem( ALItem::newFromSpecialPage( 'Forms' ), 'SemanticStatistics' );
+		$smw_admin_row = $data_structure_section->getRow( 'smw_admin' );
+		$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateClass' ), 'SMWAdmin' );
+		$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateProperty' ), 'SMWAdmin' );
+		$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateTemplate' ), 'SMWAdmin' );
+		$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateForm' ), 'SMWAdmin' );
+		$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateCategory' ), 'SMWAdmin' );
+		$smw_docu_row = $data_structure_section->getRow( 'smw_docu' );
+		$sf_name = wfMsg( 'specialpages-group-sf_group' );
+		$sf_docu_label = wfMsg( 'adminlinks_documentation', $sf_name );
+		$smw_docu_row->addItem( ALItem::newFromExternalLink( "http://www.mediawiki.org/wiki/Extension:Semantic_Forms", $sf_docu_label ) );
+
+		return true;
+	}
 }

@@ -42,7 +42,7 @@ $smwgIP = dirname( __FILE__ ) . '/';
 # Use another storage backend for Semantic MediaWiki. The default is suitable
 # for most uses of SMW.
 ##
-$smwgDefaultStore = "SMWSparqlStore";
+$smwgDefaultStore = "SMWSQLStore2";
 ##
 
 ###
@@ -60,9 +60,9 @@ $smwgDefaultStore = "SMWSparqlStore";
 # in some SPARQL databases this method is more efficient than update.
 ##
 $smwgSparqlDatabase = 'SMWSparqlDatabase';
-$smwgSparqlQueryEndpoint = 'http://localhost:9000/sparql/';
-$smwgSparqlUpdateEndpoint = 'http://localhost:9000/update/';
-$smwgSparqlDataEndpoint = 'http://localhost:9000/data/';
+$smwgSparqlQueryEndpoint = 'http://localhost:8080/sparql/';
+$smwgSparqlUpdateEndpoint = 'http://localhost:8080/update/';
+$smwgSparqlDataEndpoint = 'http://localhost:8080/data/';
 ##
 
 // load global constants and setup functions

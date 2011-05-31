@@ -14,7 +14,7 @@
 /**
  * @ingroup SFSpecialPages
  */
-class SFUploadWindow2 extends UnlistedSpecialPage {
+class SFUploadWindow2Proto extends UnlistedSpecialPage {
 	/**
 	 * Constructor : initialise object
 	 * Get data POSTed through the form and assign them to the object
@@ -102,18 +102,6 @@ class SFUploadWindow2 extends UnlistedSpecialPage {
 		}
 		$this->mInputID	   = $request->getText( 'sfInputID' );
 		$this->mDelimiter	 = $request->getText( 'sfDelimiter' );
-	}
-
-	/**
-	 * This page can be shown if uploading is enabled.
-	 * Handle permission checking elsewhere in order to be able to show
-	 * custom error messages.
-	 *
-	 * @param User $user
-	 * @return bool
-	 */
-	public function userCanExecute( User $user ) {
-		return UploadBase::isEnabled() && parent::userCanExecute( $user );
 	}
 
 	/**
@@ -1095,4 +1083,54 @@ class SFUploadSourceField extends HTMLTextField {
 			: 60;
 	}
 	
+}
+
+global $wgVersion;
+$uceMethod = new ReflectionMethod( 'SpecialPage', 'userCanExecute' );
+$uceParams = $uceMethod->getParameters();
+// @TODO The "User" class was added to the function header
+// for SpecialPage::userCanExecute in MW 1.18 (r86407) - somehow
+// both the old and new signatures need to be supported. When support
+// is dropped for MW below 1.18 this should be reintegrated into one
+// class.
+if ( $uceParams[0]->getClass() ) { // found a class definition for param $user
+
+	/**
+	 * Class variant for MW 1.18+
+	 */
+	class SFUploadWindow2 extends SFUploadWindow2Proto {
+		/**
+		 * This page can be shown if uploading is enabled.
+		 * Handle permission checking elsewhere in order to be able to show
+		 * custom error messages.
+		 *
+		 * @param User $user
+		 * @return bool
+		 */
+		public function userCanExecute( User $user ) {
+			return UploadBase::isEnabled() && parent::userCanExecute( $user );
+		}
+
+
+	}
+
+} else {
+
+	/**
+	 * Class variant for MW up to 1.17
+	 */
+	class SFUploadWindow2 extends SFUploadWindow2Proto {
+		/**
+		 * This page can be shown if uploading is enabled.
+		 * Handle permission checking elsewhere in order to be able to show
+		 * custom error messages.
+		 *
+		 * @param User $user
+		 * @return bool
+		 */
+		public function userCanExecute( $user ) {
+			return UploadBase::isEnabled() && parent::userCanExecute( $user );
+		}
+	}
+
 }

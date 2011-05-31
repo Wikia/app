@@ -69,6 +69,8 @@ class SMWExporter {
 	 * can be used to pass a particular SMWTypesValue object that is used
 	 * for determining the OWL type for property pages.
 	 *
+	 * @todo Take into account whether the wiki page belongs to a builtin property, and ensure URI alignment/type declaration in this case.
+	 *
 	 * @param $diWikiPage SMWDIWikiPage
 	 * @param $typesvalueforproperty mixed either an SMWTypesValue or null
 	 * @param $addStubData boolean to indicate if additional data should be added to make a stub entry for this page
@@ -76,7 +78,9 @@ class SMWExporter {
 	 */
 	static public function makeExportDataForSubject( SMWDIWikiPage $diWikiPage, $typesvalueforproperty = null, $addStubData = false ) {		
 		global $wgContLang;
-		$result = new SMWExpData( self::getDataItemExpElement( $diWikiPage ) );
+		$wikiPageExpElement = self::getDataItemExpElement( $diWikiPage );
+		$result = new SMWExpData( $wikiPageExpElement );
+
 		$pageTitle = str_replace( '_', ' ', $diWikiPage->getDBkey() );
 		if ( $diWikiPage->getNamespace() !== 0 ) {
 			$prefixedSubjectTitle = $wgContLang->getNsText( $diWikiPage->getNamespace()) . ":" . $pageTitle;
@@ -84,6 +88,7 @@ class SMWExporter {
 			$prefixedSubjectTitle = $pageTitle;
 		}
 		$prefixedSubjectUrl = wfUrlencode( str_replace( ' ', '_', $prefixedSubjectTitle ) );
+
 		switch ( $diWikiPage->getNamespace() ) {
 			case NS_CATEGORY: case SMW_NS_CONCEPT:
 				$maintype_pe = self::getSpecialNsResource( 'owl', 'Class' );
@@ -101,19 +106,24 @@ class SMWExporter {
 				$label = $prefixedSubjectTitle;
 				$maintype_pe = self::getSpecialNsResource( 'swivt', 'Subject' );
 		}
-		$ed = new SMWExpLiteral( $label );
-		$result->addPropertyObjectValue( self::getSpecialNsResource( 'rdfs', 'label' ), $ed );
-		$ed = new SMWExpResource( self::getNamespaceUri( 'wikiurl' ) . $prefixedSubjectUrl );
-		$result->addPropertyObjectValue( self::getSpecialNsResource( 'swivt', 'page' ), $ed );
-		$ed = new SMWExpResource( self::$m_exporturl . '/' . $prefixedSubjectUrl );
-		$result->addPropertyObjectValue( self::getSpecialNsResource( 'rdfs', 'isDefinedBy' ), $ed );
+
 		$result->addPropertyObjectValue( self::getSpecialNsResource( 'rdf', 'type' ), $maintype_pe );
-		$ed = new SMWExpLiteral( $diWikiPage->getNamespace(), 'http://www.w3.org/2001/XMLSchema#integer' );
-		$result->addPropertyObjectValue( self::getSpecialNsResource( 'swivt', 'wikiNamespace' ), $ed );
-		if ( $addStubData ) {
-			$defaultSortkey = new SMWExpLiteral( str_replace( '_', ' ', $diWikiPage->getDBkey() ) );
-			$result->addPropertyObjectValue( self::getSpecialPropertyResource( '_SKEY' ), $defaultSortkey );
+
+		if ( !$wikiPageExpElement->isBlankNode() ) {
+			$ed = new SMWExpLiteral( $label );
+			$result->addPropertyObjectValue( self::getSpecialNsResource( 'rdfs', 'label' ), $ed );
+			$ed = new SMWExpResource( self::getNamespaceUri( 'wikiurl' ) . $prefixedSubjectUrl );
+			$result->addPropertyObjectValue( self::getSpecialNsResource( 'swivt', 'page' ), $ed );
+			$ed = new SMWExpResource( self::$m_exporturl . '/' . $prefixedSubjectUrl );
+			$result->addPropertyObjectValue( self::getSpecialNsResource( 'rdfs', 'isDefinedBy' ), $ed );
+			$ed = new SMWExpLiteral( $diWikiPage->getNamespace(), 'http://www.w3.org/2001/XMLSchema#integer' );
+			$result->addPropertyObjectValue( self::getSpecialNsResource( 'swivt', 'wikiNamespace' ), $ed );
+			if ( $addStubData ) {
+				$defaultSortkey = new SMWExpLiteral( str_replace( '_', ' ', $diWikiPage->getDBkey() ) );
+				$result->addPropertyObjectValue( self::getSpecialPropertyResource( '_SKEY' ), $defaultSortkey );
+			}
 		}
+
 		return $result;
 	}
 	
@@ -248,6 +258,9 @@ class SMWExporter {
 			$namespace = $importValue->getNS();
 			$namespaceId = $importValue->getNSID();
 			$localName = $importValue->getLocalName();
+		} elseif ( self::isInternalObjectDiPage( $diWikiPage ) ) { // blank node
+			$localName = $namespace = $namespaceId = '';
+			$diWikiPage = null; // do not associate any wiki page with blank nodes
 		} else {
 			$localName = '';
 			if ( $diWikiPage->getNamespace() == SMW_NS_PROPERTY ) {
@@ -256,7 +269,7 @@ class SMWExporter {
 				$localName = self::encodeURI( rawurlencode( $diWikiPage->getDBkey() ) );
 			}
 			if ( ( $localName == '' ) ||
-			     ( in_array( $localName[0], array( '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ) ) ) ) {
+			     ( in_array( $localName{0}, array( '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ) ) ) ) {
 				$namespace = self::getNamespaceUri( 'wiki' );
 				$namespaceId = 'wiki';
 				if ( $diWikiPage->getNamespace() !== 0 ) {
@@ -313,7 +326,7 @@ class SMWExporter {
 						}
 					}
 				}
-			}
+			} // else: not in wiki namespace -- TODO: this could be an imported URI
 		} else {
 			// TODO (currently not needed, but will be useful for displaying external SPARQL results)
 		}
@@ -358,7 +371,7 @@ class SMWExporter {
 				return self::getSpecialNsResource( 'rdf', 'type' );
 			case '_SUBC':
 				return self::getSpecialNsResource( 'rdfs', 'subClassOf' );
-			case '_CONC': // we actually simplify this below, but need a non-null value now
+			case '_CONC':
 				return self::getSpecialNsResource( 'owl', 'equivalentClass' );
 			case '_URI':
 				if ( $forNamespace == NS_CATEGORY || $forNamespace == SMW_NS_CONCEPT ) {
@@ -380,9 +393,10 @@ class SMWExporter {
 				return self::getSpecialNsResource( 'swivt', 'wikiPageModificationDate' );
 			case '_SKEY':
 				return self::getSpecialNsResource( 'swivt', 'wikiPageSortKey' );
-			case '_TYPE': /// TODO: property type currently not exported
-				return null;
-			default: return null;
+			case '_TYPE':
+				return self::getSpecialNsResource( 'swivt', 'type' );
+			default:
+				return self::getSpecialNsResource( 'swivt', 'specialProperty' . $propertyKey );
 		}
 	}
 
@@ -514,8 +528,7 @@ class SMWExporter {
 				$lit = new SMWExpLiteral( $xsdvalue, 'http://www.w3.org/2001/XMLSchema#boolean', $dataItem );
 				return $lit;
 			case SMWDataItem::TYPE_URI:
-				/// TODO This escaping seems very odd. The serialisation should handle such things.
-				$res = new SMWExpResource( str_replace( '&', '&amp;', $dataItem->getURI() ), $dataItem );
+				$res = new SMWExpResource( $dataItem->getURI(), $dataItem );
 				return $res;
 			case SMWDataItem::TYPE_TIME:
 				$gregorianTime = $dataItem->getForCalendarModel( SMWDITime::CM_GREGORIAN );
@@ -547,8 +560,7 @@ class SMWExporter {
 				/// TODO
 				return null;
 			case SMWDataItem::TYPE_CONTAINER:
-				/// TODO
-				return null;
+				return self::makeExportData( $dataItem->getSemanticData() );
 			case SMWDataItem::TYPE_WIKIPAGE:
 				return self::getResourceElementForWikiPage( $dataItem );
 			case SMWDataItem::TYPE_CONCEPT:
@@ -604,6 +616,37 @@ class SMWExporter {
 	 */
 	static public function hasHelperExpElement( $dataItemType ) {
 		return ( $dataItemType == SMWDataItem::TYPE_TIME );
+	}
+
+	/**
+	 * Create a dataitem of a wikipage that is used to represent internal
+	 * objects. These objects are used as anonymous placeholders that are
+	 * only defined by their context. In particular, no two distinct
+	 * dataitems for this wiki page should be assumed to represent the same
+	 * object.
+	 *
+	 * @return SMWDIWikiPage
+	 */
+	static public function getInternalObjectDiPage() {
+		return new SMWDIWikiPage( 'SMWInternalObject', NS_SPECIAL, '' );
+	}
+
+	/**
+	 * Check if the given wiki page represents an internal object. See
+	 * SMWExporter::getInternalObjectDiPage() for details.
+	 *
+	 * @see SMWExporter::getInternalObjectDiPage()
+	 * @param $diWikiPage SMWDIWikiPage
+	 * @return boolean
+	 */
+	static public function isInternalObjectDiPage( SMWDIWikiPage $diWikiPage ) {
+		if ( $diWikiPage->getNamespace() == NS_SPECIAL &&
+		     $diWikiPage->getDBkey() == 'SMWInternalObject' &&
+		     $diWikiPage->getInterwiki() == '' ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
