@@ -158,9 +158,11 @@ var WikiaPhotoGallery = {
 		// buttons
 		var saveButton = $('#WikiaPhotoGalleryEditorSave');
 		var cancelButton = $('#WikiaPhotoGalleryEditorCancel');
+		var selectImageButton = $('#WikiaPhotoGallerySearchResultsSelect');
 
 		// hide edit conflict buttons
 		$('#WikiaPhotoGalleryEditConflictButtons').hide();
+		selectImageButton.hide();
 
 		// popup title
 		var type = this.isSlideshow() ? 'slideshow' : this.isSlider() ? 'slider' : 'gallery';
@@ -187,6 +189,8 @@ var WikiaPhotoGallery = {
 				} else {
 					cancelButton.hide();
 				}
+				
+				selectImageButton.show();
 
 				this.setupUploadPage(params);
 				break;
@@ -896,6 +900,7 @@ var WikiaPhotoGallery = {
 
 			target.addClass('accent selected');
 		};
+		
 		var unselectImage = function(ev) {
 			var target = $(ev.target);
 
@@ -952,7 +957,7 @@ var WikiaPhotoGallery = {
 		});
 
 		// setup clicks on "Select" button
-		$('#WikiaPhotoGallerySearchResultsSelect').show().unbind('.selectImage').bind('click.selectImage', function(ev) {
+		$('#WikiaPhotoGallerySearchResultsSelect').unbind('.selectImage').bind('click.selectImage', function(ev) {
 			var selected = results.find('input:checked');
 			self.log(selected.length + ' image(s) selected')
 
