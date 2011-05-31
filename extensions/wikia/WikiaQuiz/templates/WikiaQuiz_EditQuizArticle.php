@@ -38,7 +38,7 @@
 	<?php foreach($data['answers'] as $n => $answer) { ?>
 	<li>
 		<label class="order"><?="#".($n+1)?></label>
-		<div class="details"><div><label><?= wfMsg('wikiaquiz-answer-label') ?></label><input type="text" name="answer[]" value="<?= htmlspecialchars($answer['text']) ?>"></div><div><label><?= wfMsg('wikiaquiz-correct-label') ?></label><input type="radio" name="correct" value="1" class="correct"<?= $answer['correct'] ? " checked" : "" ?>></div><div><label><?= wfMsg('wikiaquiz-image-label') ?></label><input type="text" name ="answer-image[]" value="<?= htmlspecialchars($answer['imageShort']) ?>"></div></div>
+		<div class="details"><div><label><?= wfMsg('wikiaquiz-answer-label') ?></label><input type="text" name="answer[]" value="<?= htmlspecialchars($answer['text']) ?>"></div><div><label><?= wfMsg('wikiaquiz-correct-label') ?></label><input type="radio" name="correct" value="<?=$n+1?>" class="correct"<?= $answer['correct'] ? " checked" : "" ?>></div><div><label><?= wfMsg('wikiaquiz-image-label') ?></label><input type="text" name ="answer-image[]" value="<?= htmlspecialchars($answer['imageShort']) ?>"></div></div>
 		<img src="<?= $wgBlankImgUrl ?>" class="sprite trash">
 		<img src="<?= $wgBlankImgUrl ?>" class="sprite drag">
 	</li>

@@ -6,7 +6,7 @@
 
 class WikiaQuizIndexArticle extends Article {
 
-	private $mQuizElement;
+	private $mQuiz;
 
 	function __construct($title) {
 		parent::__construct($title);

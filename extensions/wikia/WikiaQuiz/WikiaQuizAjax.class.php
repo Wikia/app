@@ -462,7 +462,7 @@ class WikiaQuizAjax {
 			$error = wfMsg('wikiaquiz-error-invalid-correct-answer');	
 			return;			
 		}
-		
+
 		return $content;
 	}
 	

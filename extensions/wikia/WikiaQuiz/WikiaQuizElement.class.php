@@ -61,7 +61,7 @@ class WikiaQuizElement {
 
 		if (!$master) {
 			//@todo use memcache
-			//$this->mData = $wgMemc->get($this->mMemcacheKey);
+			$this->mData = $wgMemc->get($this->mMemcacheKey);
 		}
 
 		if (empty($this->mData)) {
@@ -141,23 +141,6 @@ class WikiaQuizElement {
 			// TODO: handle quizElement parameters (image / video for quizElement)
 			$params = array();
 
-//			// query for votes
-//			$votes = 0;
-//			$whichDB = $master ? DB_MASTER : DB_SLAVE;
-//			$dbr = wfGetDB($whichDB);
-//			$res = $dbr->select(
-//				array('poll_vote'),
-//				array('poll_answer as answer', 'COUNT(*) as cnt'),
-//				array('poll_id' => $this->mPollId),
-//				__METHOD__,
-//				array('GROUP BY' => 'poll_answer')
-//			);
-//
-//			while ($row = $dbr->fetchObject($res)) {
-//				$answers[$row->answer]['votes'] = $row->cnt;
-//				$votes += $row->cnt;
-//			}
-
 			$quizTitleObject = F::build('Title', array($quizName, NS_WIKIA_QUIZ), 'newFromText');
 			
 			$this->mData = array(
@@ -180,8 +163,7 @@ class WikiaQuizElement {
 			wfDebug(__METHOD__ . ": loaded from scratch\n");
 
 			// store it in memcache
-			//@todo use memcache
-			//$wgMemc->set($this->mMemcacheKey, $this->mData, self::CACHE_TTL);
+			$wgMemc->set($this->mMemcacheKey, $this->mData, self::CACHE_TTL);
 		}
 		else {
 			wfDebug(__METHOD__ . ": loaded from memcache\n");

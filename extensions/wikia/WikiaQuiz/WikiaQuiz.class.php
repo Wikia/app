@@ -61,8 +61,7 @@ class WikiaQuiz {
 		wfProfileIn(__METHOD__);
 
 		if (!$master) {
-			//@todo use memcache
-			//$this->mData = $wgMemc->get($this->mMemcacheKey);
+			$this->mData = $wgMemc->get($this->mMemcacheKey);
 		}
 
 		if (empty($this->mData)) {
@@ -148,8 +147,7 @@ class WikiaQuiz {
 			wfDebug(__METHOD__ . ": loaded from scratch\n");
 
 			// store it in memcache
-			//@todo use memcache
-			//$wgMemc->set($this->mMemcacheKey, $this->mData, self::CACHE_TTL);
+			$wgMemc->set($this->mMemcacheKey, $this->mData, self::CACHE_TTL);
 		}
 		else {
 			wfDebug(__METHOD__ . ": loaded from memcache\n");
