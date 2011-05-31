@@ -1410,12 +1410,13 @@ function getTopSongs($limit){
 					$itunes = $link;
 				}
 
-				// TODO: Make LW url.
+				// Make LW url.
 				$url = $defaultUrl;
 // TODO: FORMAT THE artist/song correctly and use lw_pageExists or whatever to figure out the correct name (or call getSong on it?).
 // TEMP HACK TO JUST MAKE THIS URL UP... WILL NOTTTT BE OKAY TO RELEASE IT LIKE THIS SINCE IT WOULD GIVE A TON OF BAD URLs EVEN WHEN WE HAVE GOOD URLS:
 $finalName = "$artist:$song";
 // TODO: ACCOMPLISH THIS BY EXTRACTING THE TITLE-MATCHING, IMPLIED REDIRECTS, ETC. FROM getSong() INTO A DIFF FUNCTION (maybe call it findMatchingPageTitle?).  ...when doing that, checkSongExists() should probably also use the new function.
+				$finalName = str_replace(" ", "_", $finalName);
 				$url = $urlRoot.str_replace("%3A", ":", urlencode($finalName)); // %3A as ":" is for readability.
 
 				// LATER: Add album to the return array? (could build it from itms:artist, itms:album, and itms:releasedate).
