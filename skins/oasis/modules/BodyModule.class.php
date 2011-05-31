@@ -141,7 +141,7 @@ class BodyModule extends Module {
 			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail,
 			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers, $wgEnableWikiReviews,
-			$wgSalesTitles;
+			$wgEnableBlogsAsClassifieds, $wgSalesTitles;
 
 		if ($this->wgSuppressRail) {
 			return array();
@@ -259,7 +259,8 @@ class BodyModule extends Module {
 			}
 		}
 
-		if (self::isBlogPost() || self::isBlogListing()) {
+		if ( self::isBlogPost() || self::isBlogListing()
+		  || ( !empty( $wgEnableBlogsAsClassifieds ) && $wgTitle->isContentPage() ) ) {
 			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
 			if($wgEnableSpotlightsV2_Rail) {
 				$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
