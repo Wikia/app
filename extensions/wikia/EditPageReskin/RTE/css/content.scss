@@ -3,6 +3,14 @@
  */
 @import "../../../../../skins/oasis/css/oasis";
 
+head {
+	// fb#5654 Editor reskin: Firefox loading effect issue
+	// IMPORTANT !!!!
+	// DON'T REMOVE THIS CSS RULE
+	// THAT'S REQUIRED TO CHECK IF THIS FILE IS LOADED INSIDE VISUAL EDITOR
+	color: green;
+}
+
 body {
 	background: $color-page;
 	color: $color-text;
