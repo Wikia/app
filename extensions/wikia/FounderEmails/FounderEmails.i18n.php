@@ -136,7 +136,7 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 // New Founder email messages
 	'founderemails-email-footer-line1' => 'To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
-	'founderemails-email-footer-line2' => 'Want to control which emails you receive? Go to: <a href="$WIKIURL/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">$WIKIURL/wiki/Special:Preferences</a>',
+	'founderemails-email-footer-line2' => 'Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 // day 0
 	'founderemails-email-0-day-heading' => 'Nice to meet you $FOUNDERNAME,',
 	'founderemails-email-0-day-congratulations' => 'Congratulations on creating $WIKINAME!',
