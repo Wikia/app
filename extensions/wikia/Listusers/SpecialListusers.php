@@ -24,19 +24,21 @@ $wgAvailableRights[] = 'listusers';
 
 $wgSpecialPageGroups['Listusers'] = 'users';
 
+$dir = dirname(__FILE__);
+
 #--- helper file
-require_once( dirname(__FILE__) . '/SpecialListusers_helper.php' );
+include( $dir . '/SpecialListusers_helper.php' );
 
 #--- hooks file
-require_once( dirname(__FILE__) . '/SpecialListusers_ajax.php' );
+include( $dir . '/SpecialListusers_ajax.php' );
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "ListusersAjax::axShowUsers";
 
 #--- hooks file
-require_once( dirname(__FILE__) . '/SpecialListusers_hooks.php' );
+include( $dir . '/SpecialListusers_hooks.php' );
 $wgHooks['SpecialPage_initList'][]	= 'ListusersHooks::Activeusers';
 if( empty($wgDevelEnvironment) ){ // This tries to write to a database that the devboxes don't have write-permission for.
 	$wgHooks['UserRights'][] 			= 'ListusersHooks::updateUserRights';
 }
 
-extAddSpecialPage( dirname(__FILE__) . '/SpecialListusers_body.php', 'Listusers', 'Listusers' );
+extAddSpecialPage( $dir . '/SpecialListusers_body.php', 'Listusers', 'Listusers' );
