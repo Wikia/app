@@ -60,6 +60,14 @@ $messages['en'] = array(
 	'wikialabs-feedback-validator-message-too-long' => 'Comment can not be longer than 255 characters',
 	'wikialabs-feedback-validator-message-too-short' => 'Please enter a comment',
 	'wikialabs-feedback-validator-rating' => 'Please give a rating',
+	'wikilabs-feedback-validator-category' => 'Please select a category in the "{{int:wikialabs-feedback-category}}" dropdown menu',
+
+	'wikialabs-feedback-category' => 'What\'s this about?',
+	'wikialabs-category-choose-one' => 'Choose one...',
+	'wikialabs-love-this-project' => 'I love this project.',
+	'wikialabs-hate-this-project' => 'I hate this project.',
+	'wikialabs-problem-with-project' => 'I have a problem with this project',
+	'wikialabs-an-idea-for-project' => 'I have an idea for this project',
 
 	'wikialabs-feedback-validator-spam-attempt' => 'Please wait 60 seconds before submitting next feedback',
 	

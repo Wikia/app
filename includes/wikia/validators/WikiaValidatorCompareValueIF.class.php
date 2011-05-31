@@ -1,17 +1,12 @@
 <?php 
-
 class WikiaValidatorCompareValueIF extends WikiaValidatorCompare {
-	const EQUAL      = '==';
-	const NOT_EQUAL  = '!=';
-	const LESS_THAN  = '<';
-	const LESS_THAN_EQUAL    = '<=';
-	const GREATER_THAN       = '>';
-	const GREATER_THAN_EQUAL = '>=';
+	const NOT_EMPTY_VALUE = 'not_empty';
+	const EMPTY_VALUE = 'empty';
 	
 	protected function config( array $options = array() ) {	
 		$this->setOption( 'value', true );
 		$this->setOption( 'validator', false );
-		return parent::config();	
+		return parent::config();
 	}
 	
 	public function isValidInternal($value = null) {
@@ -21,8 +16,13 @@ class WikiaValidatorCompareValueIF extends WikiaValidatorCompare {
 		if (is_array( $value ) && count( $value ) != 2 ) {
 			$this->throwException( 'WikiaValidatorCompareValueIF: value need to be array with two elements' );
 		}
-
-		$valid = $this->doCompare( $expression, $value[0],  $this->getOption( 'value' ) );
+		
+		if( in_array($expression, array(self::NOT_EMPTY_VALUE, self::EMPTY_VALUE) )) {
+			$valid = self::NOT_EMPTY_VALUE === $expression ? !empty($value[0]) : empty($value[0]);
+		} else {
+			$valid = $this->doCompare( $expression, $value[0],  $this->getOption( 'value' ) );
+		}
+		
 		$validator =  $this->getOption( 'validator' ); 
 		
 		if( ($valid) && $validator != false ) {
