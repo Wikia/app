@@ -54,9 +54,9 @@
 </tr>
 <tr>
 <td align="center" style="font-size:11px;color:#3a3a3a;line-height:16px">
-<?= FounderEmailsModule::localMsg('founderemails-email-footer-line1') ?>
+<?= wfMsg('founderemails-email-footer-line1') ?>
 <br>
-<?= FounderEmailsModule::localMsg('founderemails-email-footer-line2') ?>
+<?= wfMsgExt('founderemails-email-footer-line2', array( 'parsemag' ) ) ?>
 </td>
 </tr>
 <tr>
