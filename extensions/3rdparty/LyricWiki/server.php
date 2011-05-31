@@ -830,10 +830,6 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 					if(strtolower($finalName) == strtolower($artistTitle)){
 						$title = "$finalName:" . lw_getTitle($song, "", false); // 'false' is to prevent re-utf8_encoding the strings
 					} else {
-						// Would passing in the third parameter (applyEncoding=false) remove the need for utf8_decode?
-						//$title = utf8_decode(lw_getTitle($finalName, $song)); // decode is used to prevent double-encode calls that would otherwise happen.  I'm skeptical as to whether this would always work (assuming the special char was in the original title instead of the redirected artist as tested).
-	// TODO: HAVE CHANGED THE CODE BELOW TO TRY THE COMMENT FROM THE LINE ABOVE... TEST THIS NEW CODE WITH VARIOUS
-	// ENCODED SONGS. NEED TO TRY W/SPECIAL CHARS IN REAL ARTIST NAME, IN REDIRECT TEXT, AND IN SONG NAME.
 						$title = lw_getTitle($finalName, $song, false); // 'false' is to prevent re-utf8_encoding the strings
 					}
 					print (!$debug?"":"Title \"$title\"\n");
