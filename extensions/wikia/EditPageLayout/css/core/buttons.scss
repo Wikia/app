@@ -11,7 +11,7 @@
 			margin: 0 5px;
 			width: 26px;
 			&:hover {
-				@include linear-gradient(transparent, top, $color-epl-gradient-light, 50%, #bdbcbc, 100%);
+				@include linear-gradient(mix($color-epl-gradient-light,#bdbcbc), top, $color-epl-gradient-light, 50%, #bdbcbc, 100%);
 				text-decoration: none;
 			}
 		}
