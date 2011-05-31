@@ -13,10 +13,6 @@ abstract class SpecialEditPage extends SpecialPage {
 	protected $mEditIntro;
 
 	public function __construct( $name = '', $restriction = '', $listed = true, $function = false, $file = 'default', $includable = false ) {
-		global $wgRequest;
-
-		$wgRequest->setVal( 'action', 'edit' );
-
 		parent::__construct( $name, $restriction, $listed, $function, $file, $includable );
 
 		// force EditEnhancements initialisation if available
@@ -28,6 +24,9 @@ abstract class SpecialEditPage extends SpecialPage {
 
 	public function execute() {
 		global $wgRequest, $wgUser;
+
+		$wgRequest->setVal( 'action', 'edit' );
+
 		// force CategorySelect initialisation if available
 		if ( function_exists( 'CategorySelectInit' ) && function_exists( 'CategorySelectInitializeHooks' ) && ( $wgUser->getOption( 'disablecategoryselect', false ) == false ) ) {
 			$this->mCategorySelectEnabled = true;
