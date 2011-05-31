@@ -99,25 +99,3 @@ function sffInitUserLanguage( $langcode ) {
 		$sfgLang = new $sfLangClass();
 	}
 }
-
-function sffAddToAdminLinks( &$admin_links_tree ) {
-	$data_structure_label = wfMsg( 'smw_adminlinks_datastructure' );
-	$data_structure_section = $admin_links_tree->getSection( $data_structure_label );
-	if ( is_null( $data_structure_section ) )
-		return true;
-	$smw_row = $data_structure_section->getRow( 'smw' );
-	$smw_row->addItem( ALItem::newFromSpecialPage( 'Templates' ), 'Properties' );
-	$smw_row->addItem( ALItem::newFromSpecialPage( 'Forms' ), 'SemanticStatistics' );
-	$smw_admin_row = $data_structure_section->getRow( 'smw_admin' );
-	$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateClass' ), 'SMWAdmin' );
-	$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateProperty' ), 'SMWAdmin' );
-	$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateTemplate' ), 'SMWAdmin' );
-	$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateForm' ), 'SMWAdmin' );
-	$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateCategory' ), 'SMWAdmin' );
-	$smw_docu_row = $data_structure_section->getRow( 'smw_docu' );
-	$sf_name = wfMsg( 'specialpages-group-sf_group' );
-	$sf_docu_label = wfMsg( 'adminlinks_documentation', $sf_name );
-	$smw_docu_row->addItem( ALItem::newFromExternalLink( "http://www.mediawiki.org/wiki/Extension:Semantic_Forms", $sf_docu_label ) );
-
-	return true;
-}

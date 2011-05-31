@@ -1432,7 +1432,8 @@ END;
 			$javascript_text = '';
 		}
 
-		$wgOut->addParserOutputNoText( $wgParser->getOutput() );
+		$parserOutput = $wgParser->getOutput();
+		$wgOut->addParserOutputNoText( $parserOutput );
 
 		$wgParser = $oldParser;
 

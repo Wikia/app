@@ -72,15 +72,14 @@ class SFTemplateField {
 		}
 		// TODO - need handling for the case of more than one type.
 		if ( count( $types ) > 0 ) {
-			$this->field_type = $types[0]->getWikiValue();
+			$this->field_type = $types[0];
 		}
 
-		foreach ( $allowed_values as $value ) {
+		foreach ( $allowed_values as $allowed_value ) {
 			// HTML-unencode each value
-			$wiki_value = html_entity_decode( $value->getWikiValue() );
-			$this->possible_values[] = $wiki_value;
+			$this->possible_values[] = html_entity_decode( $allowed_value );
 			if ( count( $label_formats ) > 0 ) {
-				$label_format = $label_formats[0]->getWikiValue();
+				$label_format = $label_formats[0];
 				$prop_instance = SMWDataValueFactory::findTypeID( $this->field_type );
 				$label_value = SMWDataValueFactory::newTypeIDValue( $prop_instance, $wiki_value );
 				$label_value->setOutputFormat( $label_format );
