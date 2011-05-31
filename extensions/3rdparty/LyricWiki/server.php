@@ -511,7 +511,7 @@ function searchArtists($searchString){
 
 	GLOBAL $SHUT_DOWN_API;
 	if(!$SHUT_DOWN_API){
-// TODO: THIS FUNCTION IS USELESS.. HAVE IT FOLLOW REDIRECTS, FIND CLOSE MATCHES, FALL BACK TO GRACENOTE, ETC.
+// TODO: HAVE IT FOLLOW REDIRECTS, FIND CLOSE MATCHES, FALL BACK TO GRACENOTE, ETC.? or just use SimpleSearch now?
 
 		// If the string starts or ends with %'s, trim them off.
 		if(strlen($artist) >= 1){
@@ -523,6 +523,7 @@ function searchArtists($searchString){
 			}
 			print (!$debug?"":"After trimming '%'s off: \"$artist\".\n");
 
+			// TODO: Is it even worth trying this initial query before the SimpleSearch service?
 			$db = lw_connect_readOnly();
 			$ns = NS_MAIN;
 			$queryString = "SELECT page_title FROM page WHERE page_namespace=$ns AND page_title NOT LIKE '%:%' AND page_title LIKE '$artist' LIMIT $MAX_RESULTS";
@@ -540,60 +541,84 @@ function searchArtists($searchString){
 
 			// If there were no results at all, look for some with a more liberal query (which takes WAY too long to execute).
 			if(count($retVal) == 0){
-			// TODO: Figure out a better query.  This one takes 15 seconds to run on the live server (400,000+ rows and a bunch of connections at a time: max-connections=100).
-			// NOTE: Now that we have a Lucene Search server, there may be a way to query that for results.
-		//		$db = lw_connect_readOnly();
-		//		$queryString = "SELECT page_title FROM wiki_page WHERE page_namespace=0 AND page_title NOT LIKE '%:%' AND page_title LIKE '%$artist%' LIMIT $MAX_RESULTS";
-		//		if($result = mysql_query($queryString, $db)){
-		//			if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
-		//				for($cnt=0; $cnt<$numRows; $cnt++){
-		//					$retVal[] = mysql_result($result, $cnt, "page_title");
-		//				}
-		//			} else {
-		//				print (!$debug?"":"No matches for page_title LIKE \"$artist\".\n");
-		//			}
-		//		} else {
-		//			print (!$debug?"":"Error with query: \"$queryString\"\nmysql_error: ".mysql_error());
-		//		}
+				// Under the hood this uses the SimpleSearch service which is powered by Lucene.
+				$searchResults = lw_getSearchResults($artist, $MAX_RESULTS * 3); // select more than max so that we can filter after-the-fact for artists.
+				foreach($searchResults as $searchResult){
+					// Only use the result if it is an artist page (has no colon in it).
+					// TODO: FIXME: is there any good way to easily check if the page is actually an artist page for an artist which has a colon in their name?
+					if(strpos($searchResult, ":") === false){
+						$retVal[] = $searchResult;
+					}
+				}
 			}
 		}
+		
+		// Limit the number of results returned to what was specified.
+		$retVal = array_slice($retVal, 0, $MAX_RESULTS);
 	}
 
 	requestFinished($id);
 	return $retVal;
-}
+} // end searchArtists()
 
+/**
+ * Given the album to search for, returns an array which contains 
+ * associative arrays whose keys are 'artist', 'album', 'year'. 
+ */
 function searchAlbums($artist, $album, $year){
 	$id = requestStarted(__METHOD__, "$artist|$album|$year");
 	$retVal = array();
-	$retVal[] = array('artist' => 'Pink Floyd', 'album' => 'Dark Side Of The Moon', 'year' => 1973);
-	$retVal[] = array('artist' => 'P1Nk F10yd', 'album' => 'D4rk S1d3 0f T3h M00n', 'year' => 2006);
+	$MAX_RESULTS = 10;
 
 	GLOBAL $SHUT_DOWN_API;
 	if(!$SHUT_DOWN_API){
-		// TODO: IMPLEMENT
-		// TODO: IMPLEMENT
+		$searchResults = lw_getSearchResults("$artist $album", $MAX_RESULTS * 3); // select more than max so that we can filter after-the-fact for artists.
+		foreach($searchResults as $searchResult){
+			// Only use the result if it is an album page (has a colon in it and ends with a year).
+			$matches = array();
+			if(0 < preg_match("/^(.*):(.*?)\(([0-9]{4})\)$/", $searchResult, $matches){
+				$retVal[] = array(
+								'artist' => $matches[1],
+								'album' => $matches[2],
+								'year' => $matches[3]
+							);
+			}
+		}
+
+		// Trim the array to the size desired by the client.
+		$retVal = array_slice($retVal, 0, $MAX_RESULTS);
 	}
 
 	requestFinished($id);
 	return $retVal;
-}
+} // end searchAlbums()
 
-function searchSongs($artist, $song){ // TODO: IMPLEMENT
+/**
+ * Given an artist and song to search for, returns close matches in the form of an
+ * array which contains associative arrays whose keys are 'artist' and 'song'.
+ */
+function searchSongs($artist, $song){
 	$id = requestStarted(__METHOD__, "$artist|$song");
-	$retVal = array('artist' => 'Beethoven', 'song' => 'Moonlight Sonata');
+	$MAX_RESULTS = 10;
 
 	GLOBAL $SHUT_DOWN_API;
 	if(!$SHUT_DOWN_API){
+		$searchResults = lw_getSearchResults("$artist $song", $MAX_RESULTS * 2); // select more than max so that we can filter after-the-fact for artists.
+		foreach($searchResults as $searchResult){
+			// Only use the result if it is a song page (has a colon in it).
+			$matches = array();
+			if(0 < preg_match("/^(.*):(.*?)$/", $searchResult, $matches){
+				$retVal[] = array('artist' => $matches[1], 'song' => $matches[2]);
+			}
+		}
 
-		// TODO: IMPLEMENT
-		// TODO: IMPLEMENT
-
+		// Trim the array to the size desired by the client.
+		$retVal = array_slice($retVal, 0, $MAX_RESULTS);
 	}
 
 	requestFinished($id);
 	return $retVal;
-}
+} // end searchSongs()
 
 //////////////////////////////////////////
 // FETCHING METHODS
@@ -635,8 +660,8 @@ function getSOTD(){
 				$song = "";
 			}
 		}
-		
-		// TODO: Could memcache this result since the getSong will be called a bunch fo this song & it shouldn't change for a day.
+	
+		// TODO: Could memcache this result since the getSong will be called a bunch for this song & it shouldn't change for a day.
 		$retVal = getSong($artist, $song);
 
 		$retVal['artist'] = str_replace("_", " ", $retVal['artist']);
@@ -649,9 +674,6 @@ function getSOTD(){
 	return $retVal;
 }
 
-function getSongResult($artist, $song){
-	return getSong($artist,$song);
-}
 /**
  * The most commonly called function in the API... attempts to find a match for a provided artist/song name and return
  * a fair-use snippet of lyrics along with a link to the page.  Internally handles "fuzzy" title matching to get close matches,
@@ -662,6 +684,7 @@ function getSongResult($artist, $song){
  * @param ns the namespace to use when looking for songs. Will always try the main namespace first, but recursive calls might fall back to NS_GRACENOTE if matches aren't found in the main namespace.
  * @param isOuterRequest is a bool which represents if this is the actual request from the SOAP or REST APIs.  It will be set to false by all recursive calls.
  */
+function getSongResult($artist, $song){ return getSong($artist,$song); } // Alias. (think it was needed for Flash or one of the SOAP libraries)
 function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterRequest=true){
 	wfDebug("LWSOAP: inside " . __METHOD__ . "\n");
 	if($isOuterRequest){
@@ -1276,19 +1299,33 @@ function lw_getTracksFromWikiText($artist, $albumNames, $listing){
 	return $albums;
 } // end lw_getTracksFromWikiText()
 
-function getAlbum($artist){ // TODO: IMPLEMENT - UM... THIS DOESN'T LOOK LIKE IT HAS ENOUGH PARAMETERS YET.
+/**
+ * Given an artist, album-name, and year, attempts to return a matching album data (including track-listing).
+ *
+ * @param artist
+ * @param albumName
+ * @param year
+ * @return an array whose keys are 'artist', 'album' (the album name), 'year', 'amazonLink', and 'songs' which is
+ * itself an array of the page-titles (as strings) of all of the songs on the album (in the order that they appear
+ * on the album).
+ */
+function getAlbum($artist, $albumName, $year){
 	$id = requestStarted(__METHOD__, "$artist");
 	$link = "http://www.amazon.com/exec/obidos/redirect?link_code=ur2&tag=motiveforcell-20&camp=1789&creative=9325&path=http%3A%2F%2Fwww.amazon.com%2Fgp%2Fproduct%2FB0009X777W%2Fsr%3D8-1%2Fqid%3D1147400297%2Fref%3Dpd_bbs_1%3F%255Fencoding%3DUTF8";
 	$songs = array('Run Away', 'Right Here', 'Paper Jesus', 'Schizophrenic Conversations',
 					'Falling', 'Cross To Bear', 'Devil', 'Please', 'Everything Changes',
 					'Take This', 'King Of All Excuses', 'Reply');
 
-	// TODO: If album page doesn't exist, search the artist page for that album.
+	// TODO: ADD ALBUM-ART IMG INTO RESULT ONCE THERE IS A SERVICE TO GET IT.
+	// TODO: ADD ALBUM-ART IMG INTO RESULT ONCE THERE IS A SERVICE TO GET IT.
 
 	$retVal = array('artist' => 'Staind', 'album' => 'Chapter V', 'year' => 2005, 'amazonLink' => $link, 'songs' => $songs);
 
 	GLOBAL $SHUT_DOWN_API;
 	if(!$SHUT_DOWN_API){
+	
+	
+	
 		// TODO: IMPLEMENT
 		// TODO: IMPLEMENT
 	}
