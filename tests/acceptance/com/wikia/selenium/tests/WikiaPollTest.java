@@ -12,7 +12,7 @@ public class WikiaPollTest extends BaseTest {
 
 	@Test(groups={"oasis"})
 	public void testSpecialCreatePoll() throws Exception {
-		login();
+		loginAsStaff();
 		session().open("index.php?title=Special:CreatePoll");
 		session().waitForPageToLoad(this.getTimeout());
 
@@ -41,6 +41,6 @@ public class WikiaPollTest extends BaseTest {
 				
 
 		// clean up
-		doDelete("label=regexp:.*Author request", "Clean up after test");
+		doDelete("label=regexp:^.*Author request", "Clean up after test");
 	}
 }
