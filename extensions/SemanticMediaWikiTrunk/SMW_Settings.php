@@ -23,7 +23,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 # web. Change it if required ($wgScriptPath is the path to the base directory
 # of your wiki). No final slash.
 ##
-$smwgScriptPath = ( 
+$smwgScriptPath = (
 	( version_compare( $wgVersion, '1.16', '>=' ) && isset( $wgExtensionAssetsPath ) && $wgExtensionAssetsPath )
 	? $wgExtensionAssetsPath : $wgScriptPath . '/extensions'
 	) . '/SemanticMediaWiki';
@@ -64,6 +64,9 @@ $smwgSparqlQueryEndpoint = 'http://localhost:8080/sparql/';
 $smwgSparqlUpdateEndpoint = 'http://localhost:8080/update/';
 $smwgSparqlDataEndpoint = 'http://localhost:8080/data/';
 ##
+
+// Wikia overrides
+require_once( 'Wikia_Settings.php' );
 
 // load global constants and setup functions
 require_once( 'includes/SMW_Setup.php' );
