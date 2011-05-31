@@ -89,19 +89,21 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 
 	public function savingFeedbackDataProvider() {
 		return array(
-			array( 0, 1, 'AtLeast10CharLongMsg', false ), // invalid projectId
-			array( 1, 1, 'AtLeast10CharLongMsg', true ),
-			array( 0, 0, 'TooShort', false ), // all wrong
-			array( 1, 2, 'AtLeast10CharLongMsg', true ),
-			array( 1, 10, 'AtLeast10CharLongMsg', false ), // rating > max
-			array( 1, 0, 'AtLeast10CharLongMsg', false ) // rating < min
+			array( 0, 1, 7, 'AtLeast10CharLongMsg', false ), // invalid projectId
+			array( 1, 1, 7, 'AtLeast10CharLongMsg', true ),
+			array( 0, 0, 0, 'TooShort', false ), // all wrong
+			array( 1, 2, 7, 'AtLeast10CharLongMsg', true ),
+			array( 1, 10, 7, 'AtLeast10CharLongMsg', false ), // rating > max
+			array( 1, 0, 7, 'AtLeast10CharLongMsg', false ), // rating < min
+			array( 1, 10, 10, 'AtLeast10CharLongMsg', false ), // feedback category > max
+			array( 1, 0, 3, 'AtLeast10CharLongMsg', false ) // feedback category < min
 		);
 	}
 
 	/**
 	 * @dataProvider savingFeedbackDataProvider
 	 */
-	public function testSavingFeedback( $projectId, $rating, $message, $statusOk ) {
+	public function testSavingFeedback( $projectId, $rating, $category, $message, $statusOk ) {
 		$project = $this->getMock( 'WikiaLabsProject', array(), array( $this->app ) );
 		if($statusOk) {
 			$project->expects( $this->once() )
@@ -132,7 +134,7 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 			       ->method( 'checkSpam' )
 			       ->will($this->returnValue(true));
 		
-		$result = $object->saveFeedback( $projectId, $user, $rating, $message );
+		$result = $object->saveFeedback( $projectId, $user, $rating, $category, $message );
 
 		$this->assertEquals( ( $statusOk ? WikiaLabs::STATUS_OK : WikiaLabs::STATUS_ERROR ), $result['status'], 'wrong saveFeedback status returned' );
 		$this->assertTrue( is_array( $result ) );

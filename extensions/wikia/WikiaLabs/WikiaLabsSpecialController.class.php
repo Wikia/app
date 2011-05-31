@@ -78,6 +78,9 @@ class WikiaLabsSpecialController extends WikiaSpecialPageController {
 		$this->setVal('isAdmin', $this->isAdmin);
 		$this->setVal('isWikiaLabsAdmin', $isWikiaLabsAdmin);
 		
+		$wikialabs = new WikiaLabs();
+		$this->setVal('categories', $wikialabs->getFeedbackCategories());
+		
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaLabs/css/wikialabs.scss'));
 		$this->wg->Out->addScriptFile($this->extensionsPath.'/wikia/WikiaLabs/js/main.js');
 		$this->wg->Out->setPageTitle($this->app->runFunction('wfMsg', 'wikialabs-list-project-title'));

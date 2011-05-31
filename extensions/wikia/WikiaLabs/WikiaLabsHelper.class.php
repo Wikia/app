@@ -55,7 +55,7 @@ abstract class WikiaLabsHelper {
 		$wikiaLabs = WF::build( 'WikiaLabs' );
 		
 		$response = new AjaxResponse();
-		$result =  $wikiaLabs->saveFeedback( $request->getVal('projectId', 0), $user, $request->getVal('rating', 0), $request->getVal('feedbacktext') );
+		$result =  $wikiaLabs->saveFeedback( $request->getVal('projectId', 0), $user, $request->getVal('rating', 0), $request->getVal('feedbackcategory', 0), $request->getVal('feedbacktext') );
 		$response->addText( json_encode( $result ) );
 
 		return $response;

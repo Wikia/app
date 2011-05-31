@@ -10,6 +10,17 @@ class WikiaLabs {
 	const STATUS_ERROR = 'error';
 	
 	/**
+	 * @var array with feedback categories and its title and priority
+	 */
+	private $feedbackCategories = array(
+		0 => array('title' => null, 'priority' => null, 'msg' => 'wikialabs-category-choose-one'),
+		7 => array('title' => 'Love', 'priority' => 7, 'msg' => 'wikialabs-love-this-project'),
+		6 => array('title' => 'Hate', 'priority' => 6, 'msg' => 'wikialabs-hate-this-project'),
+		4 => array('title' => 'Problem', 'priority' => 4, 'msg' => 'wikialabs-problem-with-project'),
+		5 => array('title' => 'Idea', 'priority' => 5, 'msg' => 'wikialabs-an-idea-for-project'),
+	);
+	
+	/**
 	 * @var integer TTL of memcached row 
 	 */
 	const FEEDBACK_FREQUENCY = 60;
@@ -83,7 +94,7 @@ class WikiaLabs {
 		return $this->getFogbugzService()->logon()->getAreas( self::FOGBUGZ_PROJECT_ID );
 	}
 
-	public function saveFeedback( $projectId, User $user, $rating, $message ) {
+	public function saveFeedback( $projectId, User $user, $rating, $category, $message ) {
 		if( !$user->isAllowed( 'wikialabsuser' ) && !$user->isAllowed( 'wikialabsview' ) ) {
 			return array( 
 				'status' => self::STATUS_ERROR, 
@@ -96,22 +107,42 @@ class WikiaLabs {
 		$mulitvalidator = new WikiaValidatorsSet();
 
 		$mulitvalidator->addValidator( 'message', new WikiaValidatorString(
-					array("min" => 10, "max" => 1000),
+					array('min' => 10, 'max' => 1000),
 					array('too_short' => 'wikialabs-feedback-validator-message-too-short',
 						  'too_long' => 'wikialabs-feedback-validator-message-too-long'
 		)));
 
-		$mulitvalidator->addValidator( 'projectId', new WikiaValidatorInteger(array("min" => 1)) );
+		$mulitvalidator->addValidator( 'projectId', new WikiaValidatorInteger(array('min' => 1)) );
 
-		$mulitvalidator->addValidator( 'rating', new WikiaValidatorInteger(array("min" => 1, "max" => 5),
+		$mulitvalidator->addValidator( 'rating', new WikiaValidatorInteger(array('min' => 1, 'max' => 5),
 					array(
 						'too_small' => 'wikialabs-feedback-validator-rating'
 				)) );
-
+		
+		$feedbackCategoryValidator = new WikiaValidatorCompareValueIF(array(
+			'value' => true,
+			'validator'  =>  new WikiaValidatorInteger(
+				array(
+					'min' => 4, 
+					'max' => 7,
+					'required' => true,
+				),
+				array(
+					'not_int' => 'wikilabs-feedback-validator-category',
+					'too_small' => 'wikilabs-feedback-validator-category',
+					'too_big' => 'wikilabs-feedback-validator-category'
+				)
+			),
+			'expression' => 'not_empty'
+		));
+		
+		$mulitvalidator->addValidator('feedbackcategory', $feedbackCategoryValidator, array('message', 'feedbackcategory'));
+		
 		$in = array(
 			'message' => $message,
 			'projectId' => $projectId,
-			'rating' => $rating
+			'rating' => $rating,
+			'feedbackcategory' => $category
 		);
 
 		$out = array();
@@ -131,9 +162,10 @@ class WikiaLabs {
 		}
 		
 		$project->updateRating( $user->getId(), $rating );
-		if(!empty($message)) {
-			$this->saveFeedbackInFogbugz( $project, $message, $user->getEmail(), $user->getName() );
+		if( !empty($message) ) {
+			$this->saveFeedbackInFogbugz( $project, $message, $user->getEmail(), $user->getName(), $category );
 		}
+		
 		return $out;
 	}
 	
@@ -173,10 +205,11 @@ class WikiaLabs {
 	 * @param string $message feedback message
 	 * @param string $userEmail user's e-mail address
 	 * @param string $userName user's name
+	 * @param integer $feedbackCat feedback category which is defined above in $feedbackCategories property (equals piority in FogBugz: 4-7)
 	 */
-	protected function saveFeedbackInFogbugz( WikiaLabsProject $project, $message, $userEmail, $userName ) {
+	protected function saveFeedbackInFogbugz( WikiaLabsProject $project, $message, $userEmail, $userName, $feedbackCat ) {
 		$areaId = $project->getFogbugzProject();
-		$title = self::FOGBUGZ_CASE_TITLE . $project->getName();
+		$title = self::FOGBUGZ_CASE_TITLE . $project->getName() .' - '.$this->feedbackCategories[$feedbackCat]['title'];
 		
 		$message = <<<MSG
 User name: $userName
@@ -327,5 +360,14 @@ MSG;
 		}
 
 		return true;
+	}
+	
+	/**
+	 * Simple getter for array with feedback categories
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	public function getFeedbackCategories() {
+		return $this->feedbackCategories;
 	}
 }

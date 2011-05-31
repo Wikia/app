@@ -328,7 +328,7 @@ $warning-bg-color: #FFFFCC;
 }
 
 .feedbackmodal {
-  @include bodytext;
+	@include bodytext;
 	h2 {
 		font-size: 18px;
 	}
@@ -347,8 +347,9 @@ $warning-bg-color: #FFFFCC;
 		margin-top: 18px;
  	}
 
- 	.stars {
-		display: block;
+ 	.stars,
+ 	.categories {
+		float: left;
 		font-weight: bold;
 		margin-top: 10px;
 		ul {
@@ -372,6 +373,12 @@ $warning-bg-color: #FFFFCC;
 				background-position: -8px -8px;
 			}
 		}
+ 	}
+ 	.categories {
+ 		float: right;
+ 	}
+ 	.clear {
+ 		clear: both;
  	}
 
 	.okbutton {

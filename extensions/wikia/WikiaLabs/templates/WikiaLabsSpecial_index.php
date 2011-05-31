@@ -78,6 +78,15 @@
 				<?php endfor; ?>
 			</ul>
 		</span>
+		<span class="categories" >
+			<?php echo wfMsg( 'wikialabs-feedback-category' ); ?>
+			<select name="feedbackcategory">
+				<?php foreach($categories as $cat): ?>
+					<option value="<?php echo $cat['priority']; ?>"><?php echo wfMsg($cat['msg']); ?></option>
+				<?php endforeach; ?>
+			</select>
+		</span>
+		<br class="clear" />
 		<label class="comments" ><?php echo wfMsg( 'wikialabs-feedback-comments' ); ?></label>
 		<textarea name="feedbacktext" class="feedbacktext" ></textarea>
 		<button class="okbutton" ><?php echo wfMsg('wikialabs-feedback-submit'); ?></button>
