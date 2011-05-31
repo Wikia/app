@@ -266,3 +266,11 @@ $messages['tl'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Naisapanahon na ang mga Mensahe ng Pamayanan]].',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author XiaoQiaoGrace
+ */
+$messages['vi'] = array(
+	'communitymessages-desc' => 'Người trợ giúp mở rộng những tin nhắn cộng đồng',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Tin nhắn cộng đồng đã được cập nhật]]',
+);
+

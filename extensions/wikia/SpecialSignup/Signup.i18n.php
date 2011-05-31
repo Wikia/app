@@ -177,10 +177,19 @@ $messages['tl'] = array(
 	'signup' => 'Magpatala',
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Zahidulla
+ */
+$messages['tt-cyrl'] = array(
+	'signup-desc' => '[[{{#Special:UserLogin}}/signup]] өчен [[{{#Special:Signup}}]] псевдонимын өсти',
+	'signup' => 'Теркәлү',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'signup-desc' => 'Thêm biệt hiệu [[{{#Special:Signup}}]] cho [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Đăng ký',
 );
 

@@ -68,14 +68,15 @@ $messages['es'] = array(
 /** French (Français)
  * @author Brunoperel
  * @author Od1n
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'cacheepoch-desc' => 'Fournit une interface permettant de changer wgCacheEpoch pour un wiki.',
 	'cacheepoch' => 'Interface de cache Epoch',
 	'cacheepoch-header' => 'Augmenter wgCacheEpoch',
-	'cacheepoch-value' => 'La valeur actuelle des wgCacheEpoch  est "$1". Appuyez sur le bouton pour le fixer à la valeur du timestamp actuel.',
+	'cacheepoch-value' => 'La valeur actuelle de wgCacheEpoch est « $1 ». Appuyez sur le bouton pour la définir à la valeur du timestamp actuel.',
 	'cacheepoch-submit' => 'Mettre à jour la valeur',
-	'cacheepoch-updated' => 'wgCacheEpoch mis à jour à "$1".',
+	'cacheepoch-updated' => 'wgCacheEpoch mis à jour avec « $1 ».',
 	'cacheepoch-not-updated' => 'Échec de la mise à jour de wgCacheEpoch.',
 	'cacheepoch-wf-reason' => 'Valeur mise à jour via Special:CacheEpoch',
 	'cacheepoch-no-wf' => "WikiFactory n'est pas activé sur ce wiki. Impossible de modifier wgCacheEpoch.",
@@ -192,6 +193,13 @@ $messages['pt-br'] = array(
 	'cacheepoch-not-updated' => 'Erro ao actualizar a wgCacheEpoch.',
 	'cacheepoch-wf-reason' => 'Valor atualizado via Especial:CacheEpoch',
 	'cacheepoch-no-wf' => 'O WikiFactory não está ativado nesta wiki. Não é possível alterar a wgCacheEpoch.',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'cacheepoch-submit' => 'Isapanahon ang halaga',
 );
 
 /** Ukrainian (Українська)

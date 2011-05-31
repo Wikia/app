@@ -107,6 +107,13 @@ $messages['lb'] = array(
 	'categorygalleries-desc' => 'Weist eng Galerie vu Säiten op de Kategoriesäiten',
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'categorygalleries-desc' => 'Rodyti kategorijos puslapiuose galeriją',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -140,6 +147,13 @@ $messages['no'] = array(
  */
 $messages['pms'] = array(
 	'categorygalleries-desc' => 'A mosta na galerìa ëd pagine ansima a le pagine ëd categorìe',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'categorygalleries-desc' => 'د يوه مخ انځورتون د وېشنيزې په مخونو ښکاره کوي',
 );
 
 /** Portuguese (Português)

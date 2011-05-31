@@ -270,7 +270,7 @@ Si vous préférez utiliser la messagerie électronique classique ou souhaitez j
 	'specialcontact-filledin' => 'Ces informations ont été remplies à partir de vos préférences',
 	'specialcontact-ccme' => 'M’envoyer une copie de ce message',
 	'specialcontact-ccdisabled' => 'Désactivé : Veuillez valider votre adresse de courriel pour utiliser cette fonction',
-	'specialcontact-notyou' => 'Ce n’est vous ?',
+	'specialcontact-notyou' => 'Ce n’est pas vous ?',
 	'specialcontact-captchainfo' => 'Veuillez saisir le texte dans l’image.',
 	'specialcontact-captchatitle' => 'Mot flouté',
 	'specialcontact-formtitle' => 'Contacter le staff d’aide de Wikia',

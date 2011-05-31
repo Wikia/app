@@ -295,10 +295,11 @@ $messages['tl'] = array(
 );
 
 /** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Zahidulla
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
-	'randomwiki-desc' => 'Кулланучыларга теләсә нинди очраклы бит карарга ярдәм итә',
+	'randomwiki-desc' => 'Кулланучыларга очраклы вики карарга рөхсәт итә',
 	'randomwiki' => 'Очраклы  Wiki',
 );
 

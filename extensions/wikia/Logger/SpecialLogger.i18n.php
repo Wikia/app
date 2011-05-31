@@ -104,9 +104,17 @@ $messages['eu'] = array(
 );
 
 /** French (Français)
+ * @author Balzac 40
  * @author Iketsi
+ * @author Verdy p
  */
 $messages['fr'] = array(
+	'logger-desc' => 'Enregistreur de journaux pour scripts du serveur',
+	'logger' => 'Enregistreur de journaux sur le serveur',
+	'loggertitle' => 'Enregistreur de journaux sur le serveur',
+	'loggerselectlogname' => 'Sélectionnez le nom du journal :',
+	'loggerrecordswithpercent' => "'''$1''' enregistrements ('''$2'''&nbsp;% finis)",
+	'loggerrecords' => '$1 enregistrements',
 	'loggergo' => 'Afficher',
 	'loggernoresult' => 'Aucun résultat trouvé',
 );
@@ -150,6 +158,13 @@ $messages['ksh'] = array(
  */
 $messages['ku-latn'] = array(
 	'loggergo' => 'Nîşan bide',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'loggergo' => 'Weisen',
 );
 
 /** Macedonian (Македонски)

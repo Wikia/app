@@ -1157,6 +1157,7 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
 	'blog-comment-edit' => 'modifier',
 	'blog-comment-error' => 'Le commentaire n’a pas pu être enregistré',
 	'blog-comment-cannot-add' => 'Vous ne pouvez pas ajouter de commentaire au blog.',
+	'blug-cut-sign' => '[…]',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Évaluer cet article :',
 	'blog-create-post-label' => 'Créer un billet de blog',
@@ -1165,7 +1166,7 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
 	'blog-create-listing-label' => 'Créer une liste de blogs',
 	'blog-refresh-label' => 'Actualiser',
 	'blog-widgets-label' => 'Tableau de bord des widgets',
-	'blog-listing-zero-other' => '{{GENDER:{{PAGENAME}}|Cet utilisateur|Cette utilisatrice|Cet utilisateur}} n’a pas encore publié d’article de blog !',
+	'blog-listing-zero-other' => 'Aucun billet de blog publié !',
 	'blog-listing-created' => 'Page de liste de blogs créée',
 	'blog-userblog' => 'Le blog de $1',
 	'blog-fromsitename' => 'De $1',
@@ -1921,6 +1922,13 @@ $messages['kn'] = array(
 	'blog-comment-delete' => 'ಅಳಿಸು',
 );
 
+/** Korean (한국어)
+ * @author Cwt96
+ */
+$messages['ko'] = array(
+	'createblogpage' => '블로그 만들기',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -1961,6 +1969,8 @@ $messages['lb'] = array(
 	'create-blog-listing-sortby-date' => 'Neisten',
 	'create-blog-listing-sortby-author' => 'Auteur',
 	'blog-emptyparam' => 'Den Numm vum Parameter kann net eidel sinn.',
+	'blog-readfullpost' => 'Liest méi',
+	'blog-writeone' => 'Schreift een!',
 	'blog-added' => 'derbäigesat',
 	'blog-edited' => 'geännert',
 	'blog-page' => 'Blog',
@@ -1991,6 +2001,53 @@ $messages['lv'] = array(
 	'create-blog-categories-submit' => 'Iesniegt',
 	'create-blog-save' => 'Saglabāt lapu',
 	'blog-comments' => 'Komentāri',
+);
+
+/** Maithili (मैथिली)
+ * @author Vinitutpal
+ */
+$messages['mai'] = array(
+	'createblogpage' => 'ब्लाग बनाऊ',
+	'createbloglistingpage' => 'लिस्टिंग ब्लाग बनाऊ',
+	'create-blog-spam' => 'स्पैम के तरहे लखाह दैत छै',
+	'create-blog-cant-edit' => '
+सम्पादित नहि भ सकत',
+	'create-blog-post-category' => 'ब्लॉग पोस्ट',
+	'create-blog-categories-submit' => 'दिअ',
+	'create-blog-save' => 'पन्नाक रक्षण करू',
+	'create-blog-preview' => 'पूर्वप्रदर्शन',
+	'create-blog-listing-preview' => 'पूर्वावलोकन',
+	'create-blog-listing-matches-calculate' => 'गणना करू',
+	'create-blog-listing-matches-recalculate' => 'फेर सं गणना करू',
+	'create-blog-listing-sortby' => 'क्रमबद्ध करू',
+	'create-blog-listing-sortby-date' => 'सबसें तत्काल',
+	'create-blog-listing-sortby-author' => 'लेखक',
+	'create-blog-listing-sortby-comments' => 'टिप्पणी गिनू',
+	'create-blog-listing-output-as-box' => 'नक़ल करहि आ चिपकाबही लेल कोड बनाऊ',
+	'blog-defaulttitle' => 'वृत्तलेख',
+	'blog-readfullpost' => 'आ बेसी पढू',
+	'blog-olderposts' => 'पुरान वृत्तलेख',
+	'blog-newerposts' => 'नब वृत्तलेख',
+	'blog-nopostfound' => 'वृत्तलेख नहि भेटल',
+	'blog-writeone' => 'एकटा लिखू',
+	'blog-empty-user-blog' => 'एखन धरि प्रयोग करहि बला कोनो वृत्तलेख नहि लिखलक अछि',
+	'blog-added' => 'जोडू',
+	'blog-edited' => 'संपादन करू',
+	'blog-page' => 'वृत्तलेख',
+	'blog-zero-comments' => 'एखन धरि कोनो टिप्पणी नहि अछि',
+	'blog-comments-dsc' => 'नबका पहिने',
+	'blog-comments-asc' => 'नबका अंतिम',
+	'blog-comments-anonymous' => 'नुकायल प्रयोक्ता',
+	'blog-comment-delete' => 'मेटाउ',
+	'blog-comment-hide' => 'नुकाऊ',
+	'blog-comment-unhide' => 'आगू आनू',
+	'blog-comment-history' => 'इतिहास',
+	'blog-comment-edit' => 'संपादन करू',
+	'blog-comment-error' => 'टिप्पणी सुरक्षित नहि राखल गेल',
+	'blog-avatar-preferences-title' => 'अवतार',
+	'blog-create-post-label' => 'वृत्तलेख बनाऊ',
+	'blog-create-listing-label' => 'लिस्टिंग ब्लाग बनाऊ',
+	'blog-refresh-label' => 'रिफ्रेश करू',
 );
 
 /** Macedonian (Македонски)

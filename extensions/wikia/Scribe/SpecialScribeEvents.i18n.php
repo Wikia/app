@@ -167,3 +167,11 @@ $messages['sr-ec'] = array(
 	'scribeeventsrecords' => 'Белешке',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'scribeevents' => 'Kamakailang mga kaganapan',
+	'scribeeventsrecords' => 'Mga rekord',
+);
+

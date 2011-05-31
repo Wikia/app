@@ -286,6 +286,7 @@ $messages['ku-latn'] = array(
 $messages['lb'] = array(
 	'unhide' => 'Nees weisen',
 	'hub-topusers-header' => 'Top $1-Benotzer',
+	'hub-featured' => 'Top $1 Wikien',
 	'hub-header' => '$1 Wikien',
 	'hub-blog-comments' => '{{PLURAL:$1|eng Bemierkung|$1 Bemierkungen}}',
 	'hub-blog-continue' => 'Weider liesen',

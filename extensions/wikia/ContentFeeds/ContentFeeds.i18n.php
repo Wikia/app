@@ -126,6 +126,16 @@ $messages['fr'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Erreur : le corps de la page est nécessaire',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Título',
+	'contentfeeds-firstfewarticles-tag-next' => 'Seguinte',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Erro: O título da páxina é necesario',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Erro: O corpo da páxina é necesario',
+);
+
 /** Hungarian (Magyar)
  * @author Dani
  */

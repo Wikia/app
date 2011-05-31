@@ -536,7 +536,7 @@ $messages['ms'] = array(
 	'categoryselect-infobox-caption' => 'Pilihan kategori',
 	'categoryselect-infobox-category' => 'Nyatakan nama kategori:',
 	'categoryselect-infobox-sortkey' => 'Abjadkan rencana ini di laman kategori "$1" di bawah nama',
-	'categoryselect-addcategory-button' => 'Nyatakan kategori',
+	'categoryselect-addcategory-button' => 'Tambah kategori',
 	'categoryselect-suggest-hint' => 'Tekan Enter apabila siap',
 	'categoryselect-tooltip' => "'''Baru!''' Bar alat pengetagan kategori. Cubalah atau dapatkan [[Help:CategorySelect|bantuan]] untuk mengetahui lebih lanjut",
 	'categoryselect-unhandled-syntax' => 'Sintaks yang tidak diuruskan dikesan - tidak dapat beralih kembali ke mod visual.',
@@ -828,6 +828,30 @@ $messages['tl'] = array(
 	'categoryselect-error-db-locked' => 'Nakakandado ang kalipunan ng dato',
 	'categoryselect-edit-abort' => 'Ang pagbabagong sinubok mong gawin ay pinigil ng isang kawil ng dugtong',
 	'tog-disablecategoryselect' => 'Huwag Paganahin ang Pagtatatak ng Kategorya',
+);
+
+/** Turkish (Türkçe)
+ * @author Gizemb
+ */
+$messages['tr'] = array(
+	'categoryselect-button-save' => 'Kaydet',
+	'categoryselect-button-cancel' => 'İptal',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Zahidulla
+ */
+$messages['tt-cyrl'] = array(
+	'categoryselect-code-view' => 'Кодны карау',
+	'categoryselect-visual-view' => 'Визуаль карау',
+	'categoryselect-infobox-caption' => 'Төркемнәр көйләнмәләре',
+	'categoryselect-addcategory-button' => 'Төркем өстәргә',
+	'categoryselect-suggest-hint' => 'Тәмамлагач Enter-га басыгыз',
+	'categoryselect-edit-summary' => 'Төркемнәр өстәү',
+	'categoryselect-button-save' => 'Сакларга',
+	'categoryselect-button-cancel' => 'Кире кагу',
+	'categoryselect-error-not-exist' => '[id=$1] мәкаләсе юк.',
+	'categoryselect-error-db-locked' => 'Мәгълүматлар базасы тыелган',
 );
 
 /** Ukrainian (Українська)

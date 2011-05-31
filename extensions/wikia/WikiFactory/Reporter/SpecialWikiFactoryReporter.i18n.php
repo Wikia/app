@@ -427,6 +427,13 @@ $messages['tr'] = array(
 	'wikifactoryreporter' => 'VikiFabrika Raporlayıcısı',
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Zahidulla
+ */
+$messages['tt-cyrl'] = array(
+	'wikifactoryreporter' => 'WikiFactory репортеры',
+);
+
 /** Ukrainian (Українська)
  * @author Alex Khimich
  */

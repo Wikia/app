@@ -260,9 +260,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'timeagomessaging-desc' => 'Ger i18n för jquery.timeago.js plugin',
+	'timeagomessaging-desc' => 'Ger i18n till jquery.timeago.js-tillägget',
 	'timeago-day' => '{{PLURAL:$1|en dag|$1 dagar}} sedan',
 	'timeago-hour' => '{{PLURAL:$1|en timme|$1 timmar}} sedan',
 	'timeago-minute' => '{{PLURAL:$1|en minut|$1 minuter}} sedan',

@@ -404,30 +404,65 @@ $messages['bcl'] = array(
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author KorneySan
  * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
+	'userrenametool' => 'Перайменаваць рахунак удзельніка',
 	'renameuser' => 'Перайменаваць рахунак удзельніка',
+	'userrenametool-warning' => 'Перш чым пераймяноўваць рахунак, упэўніцеся, што ўся інфармацыя слушная, і паведаміце ўдзельніку, што на на перайменаваньне можа спатрэбіцца некаторы час.
+Глядзіце [[Special:Stafflog|журнал супрацоўніка]] для дадатковай інфармацыі.',
 	'userrenametool-desc' => "Дадае [[Special:Renameuser|спэцыяльную старонку]] для перайменаваньня рахунку ўдзельніка (неабходныя правы на ''перайменаваньне ўдзельніка'')",
 	'userrenametool-old' => 'Цяперашняе імя ўдзельніка:',
 	'userrenametool-new' => 'Новае імя:',
 	'userrenametool-reason' => 'Прычына перайменаваньня:',
 	'userrenametool-move' => 'Перайменаваць старонкі ўдзельніка і размоваў (і іх падстаронкі)',
 	'userrenametool-reserve' => 'Заблякаваць старое імя ўдзельніка для выкарыстаньня ў будучыні',
+	'userrenametool-notify-renamed' => 'Адправіць электронны ліст ўдзельніку з новым іменем пасьля завяршэньня',
 	'userrenametool-warnings' => 'Папярэджаньні:',
 	'userrenametool-confirm' => 'Так, перайменаваць удзельніка',
 	'userrenametool-submit' => 'Перайменаваць',
 	'userrenametool-errordoesnotexist' => 'Рахунак «<nowiki>$1</nowiki>» не існуе.',
 	'userrenametool-errorexists' => 'Рахунак «<nowiki>$1</nowiki>» ужо існуе.',
 	'userrenametool-errorinvalid' => 'Няслушнае імя ўдзельніка «<nowiki>$1</nowiki>».',
+	'userrenametool-errorinvalidnew' => 'Няслушнае новае імя ўдзельніка «<nowiki>$1</nowiki>»',
 	'userrenametool-errortoomany' => 'Удзельнік «<nowiki>$1</nowiki>» зрабіў $2 {{PLURAL:$2|рэдагаваньне|рэдагаваньні|рэдагаваньняў}}. Перайменаваньне рахунку ўдзельніка, які зрабіў болей за $3 {{PLURAL:$3|рэдагаваньне|рэдагаваньні|рэдагаваньняў}} можа нэгатыўна паўплываць на працу {{GRAMMAR:родны|{{SITENAME}}}}.',
+	'userrenametool-errorprocessing' => 'Працэс перайменаваньня рахунку <nowiki>$1</nowiki> у <nowiki>$2</nowiki> ужо выконваецца.',
+	'userrenametool-errorblocked' => 'Удзельнік <nowiki>$1</nowiki> заблякаваны <nowiki>$2</nowiki> на $3.',
+	'userrenametool-errorlocked' => 'Удзельнік <nowiki>$1</nowiki> заблякаваны.',
+	'userrenametool-errorbot' => 'Удзельнік <nowiki>$1</nowiki> — робат.',
 	'userrenametool-error-request' => 'Узьніклі праблемы з атрыманьнем запыту.
 Калі ласка, вярніцеся назад і паспрабуйце ізноў.',
 	'userrenametool-error-same-user' => 'Немагчыма перайменаваць рахунак удзельніка ў тое ж самае імя.',
+	'userrenametool-error-extension-abort' => 'Пашырэньне прадухіліла перайменаваньне рахунку.',
+	'userrenametool-error-cannot-rename-account' => 'Перайменаваньне рахунку ўдзельніка ў агульнай глябальнай базе зьвестак не атрымалася.',
+	'userrenametool-error-cannot-create-block' => 'Немагчыма стварыць блякаваньне ўваходу ў сыстэму.',
+	'userrenametool-warn-repeat' => 'Увага! Рахунак удзельніка «<nowiki>$1</nowiki>» ужо быў перайменаваны ў «<nowiki>$2</nowiki>».
+Працягвайце апрацоўку толькі ў тым выпадку, калі Вам неабходна абнавіць некаторую інфармацыю, якая адсутнічае.',
+	'userrenametool-warn-table-missing' => 'Табліца «<nowiki>$2</nowiki>» не існуе ў базе зьвестак «<nowiki>$1</nowiki>».',
+	'userrenametool-info-started' => '$1 пачаў перайменаваньне: $2 у $3 (журналы: $4).
+Прычына: «$5».',
+	'userrenametool-info-finished' => '$1 завяршыў перайменаваньне: $2 у $3 (журналы: $4).
+Прычына: «$5».',
+	'userrenametool-info-failed' => '$1 немагчыма перайменаваць: $2 у $3 (журналы: $4).
+Прычына: «$5».',
+	'userrenametool-info-wiki-finished' => '$1 перайменаваў $2 у $3 ($4).
+Прычына: «$5».',
+	'userrenametool-info-wiki-finished-problems' => '$1 перайменаваў $2 у $3 ($4) з памылкамі.
+Прычына: «$5».',
+	'userrenametool-info-in-progress' => 'Адбываецца перайменаваньне.
+Астатнія дзеяньні будуць рабіцца ў фонавым рэжыме.
+Вы будзеце апавешчаны па электроннай пошце пра яго завяршэньне.',
 	'userrenametool-success' => 'Рахунак «<nowiki>$1</nowiki>» быў перайменаваны ў «<nowiki>$2</nowiki>».',
+	'userrenametool-confirm-intro' => 'Вы сапраўды жадаеце гэта зрабіць?',
+	'userrenametool-confirm-yes' => 'Так',
+	'userrenametool-confirm-no' => 'Не',
 	'userrenametool-page-exists' => 'Старонка $1 ужо існуе і ня можа быць аўтаматычна перазапісаная.',
 	'userrenametool-page-moved' => 'Старонка $1 была перайменаваная ў $2.',
 	'userrenametool-page-unmoved' => 'Старонка $1 ня можа быць перайменаваная ў $2.',
+	'userrenametool-finished-email-subject' => 'Працэс перайменаваньня рахунку скончаны для [$1]',
+	'userrenametool-finished-email-body-text' => 'Працэс пераносу з «<nowiki>$1</nowiki>» у «<nowiki>$2</nowiki>» скончаны.',
+	'userrenametool-finished-email-body-html' => 'Працэс пераносу з «<nowiki>$1</nowiki>» у «<nowiki>$2</nowiki>» скончаны.',
 	'userrenametool-logpage' => 'Журнал перайменаваньняў удзельнікаў',
 	'userrenametool-logpagetext' => 'Гэта журнал перайменаваньняў рахункаў удзельнікаў.',
 	'userrenametool-logentry' => 'перайменаваў $1 у «$2»',
@@ -3462,6 +3497,7 @@ $messages['su'] = array(
  * @author M.M.S.
  * @author Najami
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'userrenametool' => 'Ändra en användares namn',
@@ -3474,6 +3510,7 @@ Se [[Special:Stafflog|personalloggen]] för loggar.',
 	'userrenametool-reason' => 'Anledning till namnbytet:',
 	'userrenametool-move' => 'Flytta användarsidan och användardiskussionen (och deras undersidor) till det nya namnet',
 	'userrenametool-reserve' => 'Reservera det gamla användarnamnet från framtida användning',
+	'userrenametool-notify-renamed' => 'Skicka e-post till den omdöpta användaren när du är klar.',
 	'userrenametool-warnings' => 'Varningar:',
 	'userrenametool-confirm' => 'Ja, byt namn på användaren',
 	'userrenametool-submit' => 'Verkställ',
@@ -3488,7 +3525,25 @@ Se [[Special:Stafflog|personalloggen]] för loggar.',
 	'userrenametool-errorbot' => 'Användare <nowiki>$1</nowiki> är en bot.',
 	'userrenametool-error-request' => 'Ett problem inträffade i hanteringen av begäran. Gå tillbaks och försök igen.',
 	'userrenametool-error-same-user' => 'Du kan inte byta namn på en användare till samma som tidigare.',
+	'userrenametool-error-extension-abort' => 'En förlängning förhindrade namnbytningsprocessen.',
 	'userrenametool-error-cannot-rename-account' => 'Att byta namn på användarkontot på den delade globala databasen misslyckades.',
+	'userrenametool-error-cannot-create-block' => 'Misslyckades att skapa en logg i block.',
+	'userrenametool-warn-repeat' => 'OBS! Användaren "<nowiki>$1</nowiki>" har redan byt namn till "<nowiki>$2</nowiki>".
+Fortsätt endast om du behöver uppdatera saknad information.',
+	'userrenametool-warn-table-missing' => 'Tabellen "<nowiki>$2</nowiki>" finns inte i databasen "<nowiki>$1</nowiki>."',
+	'userrenametool-info-started' => '$1 började byta namn från $2 till $3 (loggar: $4).
+Anledning: "$5".',
+	'userrenametool-info-finished' => '$1 fullföljde namnbytet från $2 till $3 (loggar: $4).
+Anledning: "$5".',
+	'userrenametool-info-failed' => '$1 MISSLYCKADES att byta namn från $2 till $3 (loggar: $4).
+Anledning: "$5".',
+	'userrenametool-info-wiki-finished' => '$1 bytte namn från $2 till $3 den $4.
+Anledning: "$5".',
+	'userrenametool-info-wiki-finished-problems' => '$1 bytte namn från $2 till $3, den $4, med fel.
+Anledning: "$5".',
+	'userrenametool-info-in-progress' => 'Namnbytningsprocessen pågår just nu.
+Resten kommer att slutföras i bakgrunden.
+Du kommer att meddelas via e-post när det är slutfört.',
 	'userrenametool-success' => 'Användaren "<nowiki>$1</nowiki>" har fått sitt namn bytt till "<nowiki>$2</nowiki>"',
 	'userrenametool-confirm-intro' => 'Vill du verkligen göra det här?',
 	'userrenametool-confirm-yes' => 'Ja',
@@ -3496,10 +3551,14 @@ Se [[Special:Stafflog|personalloggen]] för loggar.',
 	'userrenametool-page-exists' => 'Sidan $1 finns redan och kan inte skrivas över automatiskt.',
 	'userrenametool-page-moved' => 'Sidan $1 har flyttats till $2.',
 	'userrenametool-page-unmoved' => 'Sidan $1 kunde inte flyttas till $2.',
+	'userrenametool-finished-email-subject' => 'Namnbytningsprocessen är slutförd för [$1]',
+	'userrenametool-finished-email-body-text' => 'Flyttningsprocessen för "<nowiki>$1</nowiki>" till "<nowiki>$2</nowiki>" har slutförts.',
+	'userrenametool-finished-email-body-html' => 'Flyttningsprocessen för "<nowiki>$1</nowiki>" till "<nowiki>$2</nowiki>" har slutförts.',
 	'userrenametool-logpage' => 'Logg över användarnamnsbyten',
 	'userrenametool-logpagetext' => 'Detta är en logg över byten av användarnamn',
 	'userrenametool-logentry' => 'bytte namn på $1 till "$2"',
-	'userrenametool-log' => '{{PLURAL:$1|1 redigering|$1 redigeringar}}. Anledning: $2',
+	'userrenametool-log' => '{{PLURAL:$1|1 redigering|$1 redigeringar}}.
+Anledning: $2',
 	'userrenametool-move-log' => 'Flyttade automatiskt sidan när namnet byttes på användaren "[[User:$1|$1]]" till "[[User:$2|$2]]"',
 	'right-renameuser' => 'Ändra användares namn',
 );
@@ -3630,9 +3689,24 @@ $messages['tl'] = array(
 	'userrenametool-errorexists' => 'Umiiral na ang tagagamit na "<nowiki>$1</nowiki>".',
 	'userrenametool-errorinvalid' => 'Hindi tanggap ang pangalan ng tagagamit na "<nowiki>$1</nowiki>".',
 	'userrenametool-errortoomany' => 'Ang tagagamit na si "<nowiki>$1</nowiki>" ay mayroong $2 {{PLURAL:$2|ambag|mga ambag}}, ang muling pagpapangalan sa isang tagagamit na may mahigit sa $3 {{PLURAL:$3|ambag|mga ambag}} ay makakaapekto sa gawain ng sayt/sityo.',
+	'userrenametool-errorlocked' => 'Ikinandado ang tagagamit na <nowiki>$1</nowiki>.',
+	'userrenametool-errorbot' => 'Isang bot ang tagagamit na <nowiki>$1</nowiki>.',
 	'userrenametool-error-request' => 'Nagkaroon ng isang suliranin sa pagtanggap ng kahilingan.
 Magbalik lamang at subukan uli.',
 	'userrenametool-error-same-user' => 'Hindi mo maaaring pangalanang muli ang tagagamit patungo sa kaparehong bagay na katulad ng dati.',
+	'userrenametool-error-extension-abort' => 'Hinadlangan ng isang dugtong ang pagsasagawa ng muling pagpapangalan.',
+	'userrenametool-error-cannot-rename-account' => 'Nabigo ang muling pagpapangalan ng akawnt ng tagagamit na nasa ibabaw ng pinagsasaluhang pandaigdigang kalipunan ng dato.',
+	'userrenametool-error-cannot-create-block' => 'Nabigo ang paglikha ng isang talaan na hinahadlangan.',
+	'userrenametool-warn-repeat' => 'Pansinin! Ang tagagamit na "<nowiki>$1</nowiki>" ay muli nang pinangalanan upang maging "<nowiki>$2</nowiki>".
+Magpatuloy lamang sa pagsasagawa kung kailangan mong isapanahon ang ilang nawawalang mga kabatiran.',
+	'userrenametool-warn-table-missing' => 'Hindi umiiral ang talangguhit na "<nowiki>$2</nowiki>" sa loob ng kalipunan ng datong "<nowiki>$1</nowiki>."',
+	'userrenametool-info-started' => 'Sinimulan ni $1 na muling pangalanan ang: $2 upang maging $3 (mga pagtatala: $4).
+Dahilan: "$5".',
+	'userrenametool-info-wiki-finished-problems' => 'Muling pinangalanan ni $1 ang $2 upang maging $3 noong $4 na may mga kamalian.
+Dahilan: "$5".',
+	'userrenametool-info-in-progress' => 'Isinasagawa ang muling pagpapangalan.
+Ang natitira pa ay isasagawa sa likuran.
+Pababatiran ka sa pamamagitan ng e-liham kapag nabuo na ito.',
 	'userrenametool-success' => 'Ang tagagamit na "<nowiki>$1</nowiki>" ay muling napangalanan na patungong "<nowiki>$2</nowiki>".',
 	'userrenametool-confirm-intro' => 'Talaga bang nais mong gawin ito?',
 	'userrenametool-confirm-yes' => 'Oo',
@@ -3641,6 +3715,8 @@ Magbalik lamang at subukan uli.',
 	'userrenametool-page-moved' => 'Ang pahinang $1 ay nailipat na patungo sa $2.',
 	'userrenametool-page-unmoved' => 'Hindi mailipat ang pahinang $1 patungo sa $2.',
 	'userrenametool-finished-email-subject' => 'Nabuo ang pagsasagawa ng muling pagpapangalan para sa [$1]',
+	'userrenametool-finished-email-body-text' => 'Nabuo na ang pagsasagawa ng paglipat para sa "<nowiki>$1</nowiki>" papunta sa "<nowiki>$2</nowiki>".',
+	'userrenametool-finished-email-body-html' => 'Nabuo na ang pagsasagawa ng paglipat para sa "<nowiki>$1</nowiki>" papunta sa "<nowiki>$2</nowiki>".',
 	'userrenametool-logpage' => 'Talaan ng muling pagpapangalan ng tagagamit',
 	'userrenametool-logpagetext' => 'Isa itong pagtatala/talaan ng mga pagbabago sa mga pangalan ng tagagamit.',
 	'userrenametool-logentry' => 'muling pinangalan si $1 patungo sa "$2"',

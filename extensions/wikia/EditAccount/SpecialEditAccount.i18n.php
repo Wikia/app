@@ -134,6 +134,12 @@ $messages['bh'] = array(
 	'editaccount-title' => 'विशेष: खाता सम्पादन',
 );
 
+/** Bhojpuri (भोजपुरी) */
+$messages['bho'] = array(
+	'editaccount' => 'खाता सम्पादन',
+	'editaccount-title' => 'विशेष: खाता सम्पादन',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
@@ -351,6 +357,7 @@ $messages['es'] = array(
 	'editaccount-submit-email' => 'Guardar correo electrónico',
 	'editaccount-submit-pass' => 'Guardar contraseña',
 	'editaccount-submit-realname' => 'Guardar nombre verdadero',
+	'editaccount-submit-clearunsub' => 'Borrar desuscripción',
 	'editaccount-submit-close' => 'Cerrar cuenta',
 	'editaccount-usage-close' => 'También puedes desactivar una cuenta de usuario desordenando su contraseña y eliminando la dirección de correo electrónico. Ten en cuenta que estos datos se perderán y no se podrán recuperar.',
 	'editaccount-warning-close' => '<b>Atención:</b> Estás a punto de desactivar permanentemente la cuenta del usuario <b>$1</b>. Esta acción es irreversible. ¿Seguro que eso es lo que deseas?',
@@ -359,6 +366,7 @@ $messages['es'] = array(
 	'editaccount-success-email-blank' => 'Se ha eliminado con éxito el correo electrónico de la cuenta de $1.',
 	'editaccount-success-pass' => 'Se ha cambiado correctamente la contraseña de cuenta de $1.',
 	'editaccount-success-realname' => 'Se ha cambiado correctamente el nombre real de la cuenta de $1.',
+	'editaccount-success-unsub' => 'Eliminada correctamente la suscripción de la cuenta $1.',
 	'editaccount-success-close' => 'Se ha inhabilitado correctamente la cuenta $1.',
 	'editaccount-error-email' => 'El correo electrónico no se ha cambiado. Inténtalo de nuevo o contacta con el Equipo Técnico.',
 	'editaccount-error-pass' => 'La clave ha sido cambiada. Inténtalo de nuevo o contacta con el Equipo Técnico.',
@@ -1290,6 +1298,7 @@ $messages['sr-ec'] = array(
 /** Swedish (Svenska)
  * @author Lokal Profil
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'editaccount' => 'Redigera konto',
@@ -1297,7 +1306,7 @@ $messages['sv'] = array(
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Redigera ett konto',
 	'editaccount-frame-usage' => 'Notis',
-	'editaccount-usage' => 'Användardata är cachad separat för varje wiki. När du återställer ett lösenord eller en e-post kommer cachen att brytas för, endast, denna wiki. Vänligen styr användaren till denna wiki för att logga in med ett nybildat lösenord för att undvika cache-problem.',
+	'editaccount-usage' => 'Användardata är cachad separat för varje wiki. När du återställer ett lösenord eller en e-post kommer cachen att brytas för endast denna wiki. Vänligen styr användaren till denna wiki för att logga in med ett nybildat lösenord för att undvika cache-problem.',
 	'editaccount-label-select' => 'Välj ett användarkonto',
 	'editaccount-submit-account' => 'Hantera konto',
 	'editaccount-frame-account' => 'Redigerar användarkonto: $1',

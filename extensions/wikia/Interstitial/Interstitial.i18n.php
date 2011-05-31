@@ -94,6 +94,7 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Brunoperel
+ * @author Crochet.david
  * @author Iketsi
  * @author Zcqsc06
  */
@@ -102,7 +103,7 @@ $messages['fr'] = array(
 	'interstitial-skip-ad' => 'Ignorer cette annonce',
 	'interstitial-already-logged-in-no-link' => "Vous êtes déjà connecté et il n'y a pas de destination.",
 	'interstitial-disabled-no-link' => "Il n'ya pas de destination et les interstitiels ne sont pas activés sur ce wiki.",
-	'interstitial-link-away' => "Il n'y a rien à voir ici! <br /><br /> Souhaitez-vous aller à la [[{{MediaWiki: Mainpage}} | Main Page]] ou peut-être [[Special: Random | Une page au hasard]]?",
+	'interstitial-link-away' => 'Il n’y a rien à voir ici !<br /><br />Si vous souhaitez aller à la [[{{MediaWiki:Mainpage}}|page d’accueil]] ou peut-être une [[Special:Random|une page au hasard]] ?',
 	'exitstitial-register' => '<a href="#" class="register">Inscription</a> ou <a href="#" class="login">connexion</a> pour sauter les publicité.',
 	'exitstitial-button' => 'Ignorer cette annonce',
 );

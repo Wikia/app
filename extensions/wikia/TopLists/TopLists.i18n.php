@@ -579,7 +579,7 @@ $messages['fr'] = array(
 	'toplists-list-add-item-label' => 'Ajouter un élément',
 	'toplists-list-add-item-name-label' => 'Continuer la liste...',
 	'toplists-list-item-voted' => 'Voté',
-	'toplists-createpage-dialog-label' => 'Liste de top 10',
+	'toplists-createpage-dialog-label' => 'Liste du top 10',
 	'toplists-email-subject' => 'Une liste de top 10 a été modifiée',
 	'toplists-email-body' => 'Bonjour de Wikia !
 
@@ -770,6 +770,13 @@ Tu pote <a href="$4">cancellar le subscription</a> al cambios in iste lista.',
 	'toplists-msg-fb-OnRateArticle-short' => 'ha votate in un lista Top 10 in $WIKINAME!',
 	'toplists-create-heading' => '<em>Nove!</em> Crea tu proprie top dece',
 	'toplists-create-button-msg' => 'Crear un lista',
+);
+
+/** Italian (Italiano)
+ * @author Minerva Titani
+ */
+$messages['it'] = array(
+	'toplists-create-button-msg' => 'Crea una lista',
 );
 
 /** Colognian (Ripoarisch)
@@ -1597,6 +1604,8 @@ $messages['tl'] = array(
 	'toplists-desc' => 'Mga talaan ng pinakamatataas na 10',
 	'right-toplists-create-edit-list' => 'Likhain at baguhin ang mga pahina ng talaan ng Pinakamataas na 10',
 	'right-toplists-create-item' => 'Lumikha at idagdag ang mga bagay sa isang pahina ng talaan ng Pinakamataas na 10',
+	'right-toplists-edit-item' => 'Baguhin ang mga bagay na nasa loob ng isang pahina ng talaan ng Nangungunang 10',
+	'right-toplists-delete-item' => 'Magbura ng mga bagay na nasa loob ng isang pahina ng talaan ng Nangungunang 10',
 	'createtoplist' => 'Lumikha ng isang bagong talaan ng Pinakamataas na 10',
 	'edittoplist' => 'Baguhin ang talaan ng Pinakamataas na 10',
 	'toplists-category' => 'Mga Talaan ng Pinakamatataas na 10',
@@ -1615,6 +1624,7 @@ $messages['tl'] = array(
 	'toplists-error-add-item-permission' => 'Kamalian sa pahintulot: Ang akawnt mo ay hindi nabigyan ng karapatan upang lumikha ng bagong mga bagay.',
 	'toplists-error-add-item-list-not-exists' => 'Hindi umiiral ang talaan ng Pinakamataas na 10 ng "$1".',
 	'toplists-error-backslash-not-allowed' => 'Ang bantas na "/" ay hindi pinapayagan sa loob ng pamagat ng isang talaan ng Pinakamataas na 10.',
+	'toplists-upload-error-unknown' => 'Naganap ang isang kamalian habang isinasagawa ang hiling ng pagkakargang papaitaas. Mangyaring subukan muli.',
 	'toplists-editor-title-label' => 'Pangalan ng talaan',
 	'toplists-editor-title-placeholder' => 'Magpasok ng isang pangalan para sa talaan',
 	'toplists-editor-related-article-label' => 'Kaugnay na pahina <small>(maaaring wala, subalit pumipili ng isang larawan)</small>',

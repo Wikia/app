@@ -353,6 +353,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'unsubscribe' => 'Avsluta prenumeration',

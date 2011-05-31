@@ -516,6 +516,7 @@ $messages['te'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'search-desc' => 'Makinang panghanap ng Cross-Wikia na ginagamit ang panlikurang dulo ng Solr',
 	'wikiasearch-titles-only' => 'Maghanap lamang sa loob ng mga pamagat ng pahina',
 	'wikiasearch-system-error-msg' => 'Dahila sa isang kamalian ng sistema, hindi makukumpleto ang paghahanap mo',
 	'wikiasearch-search-this-wiki' => 'Maghanap lamang sa Wikia Central',
@@ -543,5 +544,17 @@ $messages['uk'] = array(
 	'wikiasearch-titles-only' => 'Шукати тільки в заголовках сторінок',
 	'wikiasearch-system-error-msg' => 'Ваш пошук не може бути виконаним через системну помилку',
 	'wikiasearch-image-results' => 'Результати пошуку зображень для "$1"',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author XiaoQiaoGrace
+ */
+$messages['vi'] = array(
+	'search-desc' => 'Thông qua công cụ tìm kiếm Wikia bằng cách sử dụng phụ trợ Solr',
+	'wikiasearch-titles-only' => 'Chỉ tìm kiếm tiêu đề trang',
+	'wikiasearch-system-error-msg' => 'Do một lỗi hệ thống, tìm kiếm của bạn không thể hoàn tất',
+	'wikiasearch-search-this-wiki' => 'Chỉ tìm kiếm ở trung tâm Wikia',
+	'wikiasearch-search-wikia' => 'Tìm kiếm Wikia',
+	'wikiasearch-image-results' => 'Kết quả hình ảnh cho "$1"',
 );
 

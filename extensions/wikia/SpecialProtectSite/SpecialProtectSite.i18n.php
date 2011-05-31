@@ -636,7 +636,7 @@ $messages['pt'] = array(
 	'protectsite-createpage' => 'Permitir a criação de páginas por',
 	'protectsite-edit' => 'Permitir a edição de páginas por',
 	'protectsite-move' => 'Permitir a movimentação de páginas por',
-	'protectsite-upload' => 'Permitir o upload de ficheiros por',
+	'protectsite-upload' => 'Permitir o envio de ficheiros por',
 	'protectsite-timeout' => 'Prazo de expiração:',
 	'protectsite-timeout-error' => "'''Prazo de expiração inválido.'''",
 	'protectsite-maxtimeout' => 'Máximo:',
@@ -810,6 +810,7 @@ $messages['tl'] = array(
 	'protectsite-until' => 'Isanggalang hanggang:',
 	'protectsite-protect' => 'Isanggalang',
 	'protectsite-unprotect' => 'Huwag isanggalang',
+	'protectsite-nologs' => 'huwag ipakita sa loob ng mga talaan',
 );
 
 /** Ukrainian (Українська)

@@ -221,6 +221,7 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author Verdy p
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -230,6 +231,7 @@ $messages['fr'] = array(
 	'wikiapoll-thanks-for-vote' => 'Merci !',
 	'wikiapoll-vote' => 'Voter !',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 vote|$1 votes}}',
+	'wikiapoll-question-mark-after' => '&nbsp;?',
 	'wikiapoll-createpoll-headline' => 'Créer un sondage',
 	'wikiapoll-editpoll-headline' => 'Modifier le sondage',
 	'wikiapoll-question-label' => 'Question',

@@ -479,7 +479,7 @@ $messages['ms'] = array(
 	'multilookupnbrresult' => 'Jumlah hasil:',
 	'multilookupinvalidresults' => 'Hasil tidak sah!',
 	'multilookupnoresultfound' => 'Tiada hasil carian!',
-	'multilookupwiki' => 'Wii',
+	'multilookupwiki' => 'Wiki',
 	'multilookuplink' => 'Pautan sumbangan',
 	'multilookupdetails' => 'Lihat butiran',
 	'multilookuplistwikiainfo' => 'Senarai wiki di mana laman disunting oleh pengguna dari alamat IP <b>$1</b>',
@@ -839,6 +839,12 @@ $messages['tl'] = array(
 	'multilookuplistwikiainfo' => 'Talaan ng mga wiki kung saan ang mga pahina ay binago ng mga tagagamit mula sa tirahan ng IP na <b>$1</b>',
 	'multilookupinvaliduser' => 'Hindi umiiral ang <p class="error">Tirahan ng IP"<b>$1</b>".  Suriin ang ibinigay na tirahan ng IP para sa maaaring mga kamalian sa pagmamakinilya.</p>',
 	'multilookuplastedit' => 'Huling pagbabago mula sa ganitong tirahan ng IP:',
+	'multilookupwikidbname' => 'Pangalan ng kalipunan ng dato',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Pamagat',
+	'multilookupwikioptions' => 'Mga mapagpipilian',
+	'multilookuplastedithdr' => 'Huling pagbago',
+	'multilookuprecordspager' => "Ipinapakita ang '''$1''' hanggang '''$2''' ng '''$3''' mga rekord.",
 	'right-multilookup' => 'Kabatirang panghanap sa mga tagagamit na nasa maramihang mga wiki',
 );
 

@@ -606,13 +606,18 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Houcinee1
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'achievements-gold' => 'الذهب',
 	'achievements-viewall' => 'اعرض الكل',
 	'achievements-viewless' => 'أغلق',
 	'leaderboard-intro-hide' => 'أخفِ',
 	'leaderboard-intro-open' => 'افتح',
+	'achievements-leaderboard-member-label' => 'عضو',
+	'achievements-about-title' => 'حول هذه الصفحة...',
+	'achievements-community-platinum-enabled' => 'تمكين',
 	'achievements-community-platinum-edit' => 'عدل',
 	'achievements-community-platinum-save' => 'احفظ',
 	'achievements-community-platinum-cancel' => 'ألغِ',
@@ -632,9 +637,25 @@ $messages['as'] = array(
 
 /** Azerbaijani (Azərbaycanca)
  * @author Cekli829
+ * @author Ebrahimi-amir
  * @author Vago
  */
 $messages['az'] = array(
+	'achievementsii-desc' => 'Wiki istifadəçilər üçün bir nailiyyət döş nişanları sistemi',
+	'achievements-upload-error' => 'Bağışlayın!
+
+Bu şəkil işləmir.
+
+Əmin olun ki şəkil Bir. jpg və ya .png faylıdır.
+
+Hələ də işləmirsə, onda şəkil çox böyük ola bilər.
+
+Başqa bir cəhd edin!',
+	'achievements-upload-not-allowed' => 'İdarəçilər adları və nailiyyət nişanları şəkilləri, [[Special: AchievementsCustomize | Özelleştir nailiyyətləri]] səhifəsinə baxmaqla dəyişdirə bilərlər.',
+	'achievements-non-existing-category' => 'Müəyyən kateqoriya yoxdur.',
+	'achievements-no-stub-category' => 'Qaralamalar üçün yollar (tracks) yaratmamaqı xahiş edirik.',
+	'right-platinum' => 'Platinum nişanları yaradmaq və redaktə etmək.',
+	'right-sponsored-achievements' => 'Sponsor İdarə nailiyyətləri.',
 	'achievements-platinum' => 'Platin',
 	'achievements-gold' => 'Qızıl',
 	'achievements-silver' => 'Gümüş',
@@ -642,7 +663,11 @@ $messages['az'] = array(
 	'achievements-gold-points' => '100<br />pts',
 	'achievements-silver-points' => '50<br />pts',
 	'achievements-bronze-points' => '10<br />pts',
+	'achievements-you-must' => 'Bu nişan qazanmaq üçün $ 1 lazımdır.',
+	'leaderboard-button' => 'Liderlərin nailiyyətləri.',
 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|point|points}}</small>',
+	'achievements-profile-title-no' => '$ 1\'s döş nişanları.',
+	'achievements-no-badges' => 'Bu wiki haqqında qazanmaq imkanı olan döş nişanları görmək üçün aşağıdakı siyahısını  yoxlayın!',
 	'achievements-viewall' => 'Hamısına bax',
 	'achievements-viewless' => 'Bağla',
 	'achievements-viewall-oasis' => 'Həmçinin bax',
@@ -678,6 +703,11 @@ $messages['az'] = array(
 	'achievements-badge-name-edit-6' => 'Lider Viki',
 	'achievements-badge-name-edit-7' => 'Ekspert Viki',
 	'achievements-badge-name-picture-6' => 'Dizayner',
+	'achievements-badge-to-get-welcome' => 'Wikiyə qoşulmaq',
+	'achievements-badge-to-get-introduction' => 'öz istifadəçi səhifənə əlavə et',
+	'achievements-badge-to-get-creator' => 'Bu wikinin xaliqi olmaq',
+	'achievements-badge-to-get-pounce' => 'tez ol',
+	'achievements-badge-to-get-luckyedit' => 'bəxtiyar ol',
 );
 
 /** Belarusian (Беларуская)
@@ -865,6 +895,10 @@ $5",
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'achievements-platinum' => 'Платина',
+	'achievements-gold' => 'Злато',
+	'achievements-silver' => 'Сребро',
+	'achievements-bronze' => 'Бронз',
 	'achievements-gold-points' => '100<br />т.',
 	'achievements-silver-points' => '50<br />т.',
 	'achievements-bronze-points' => '10<br />т.',
@@ -879,6 +913,8 @@ $messages['bg'] = array(
 	'achievements-leaderboard-member-label' => 'Член',
 	'achievements-leaderboard-points-label' => 'Точки',
 	'achievements-leaderboard-points' => '{{PLURAL:$1|точка|точки}}',
+	'achievements-save' => 'Съхраняване на промените',
+	'achievements-community-platinum-how-to-earn' => 'Как се спечелва:',
 	'achievements-community-platinum-create-badge' => 'Създаване на значка',
 	'achievements-community-platinum-edit' => 'редактиране',
 	'achievements-community-platinum-save' => 'съхраняване',
@@ -891,6 +927,12 @@ $messages['bg'] = array(
 	'achievements-badge-name-picture-7' => 'Куратор',
 	'achievements-badge-name-category-2' => 'Изследовател',
 	'achievements-badge-name-category-4' => 'Навигатор',
+	'achievements-badge-name-introduction' => 'Въведение',
+	'achievements-badge-hover-desc-welcome' => 'за присъединяване към уикито!',
+	'achievements-badge-hover-desc-creator' => 'за създаване на уикито!',
+	'achievements-badge-your-desc-welcome' => 'за присъединяване към уикито!',
+	'achievements-badge-your-desc-creator' => 'за създаване на уикито!',
+	'achievements-userprofile-no-badges-owner' => 'Вижте списъка по-долу, за да видите всички значки, които можете да спечелите в това уики!',
 );
 
 /** Bengali (বাংলা)
@@ -2144,6 +2186,7 @@ Lee cualquiera de las entradas de blog, y escribe tus propias opiniones en los c
 	'achievements-badge-to-get-luckyedit-details' => 'Necesitas suerte para conseguir este logro. 
 ¡No dejes de editar!',
 	'achievements-badge-to-get-community-platinum-details' => '¡Este es un logro especial de platino que solamente estará disponible por un tiempo limitado!',
+	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|por compartir un enlace|por obtener {{PLURAL:$1|una persona|$1 personas}} en hacer clic a enlaces compartidos}}',
 	'achievements-badge-hover-desc-edit' => 'por hacer $1 {{PLURAL:$1|edición|ediciones}}<br />
 en {{PLURAL:$1|una página|páginas}}!',
 	'achievements-badge-hover-desc-edit-plus-category' => 'por hacer $1 {{PLURAL:$1|edición|ediciones}}<br />
@@ -2166,6 +2209,7 @@ en la página de discusión de alguien más!',
 	'achievements-badge-hover-desc-caffeinated' => 'por hacer 100 ediciones en páginas en un solo día!',
 	'achievements-badge-hover-desc-luckyedit' => 'por hacer la edición afortunada $1th en el wiki!',
 	'achievements-badge-hover-desc-community-platinum' => 'Este es un logro especial de platino que solamente estará disponible por un tiempo limitado!',
+	'achievements-badge-your-desc-sharing' => '{{#ifeq:$1|0|por compartir un enlace|por obtener {{PLURAL:$1|una persona|$1 personas}} en hacer clic a enlaces compartidos}}',
 	'achievements-badge-your-desc-edit' => 'por hacer {{PLURAL:$1|tu primera edición|$1 ediciones}} en {{PLURAL:$1|una página|varias páginas}}!',
 	'achievements-badge-your-desc-edit-plus-category' => 'por hacer {{PLURAL:$1|tu primera edición|$1 ediciones}} en {{PLURAL:$2|una página|$2 páginas}}!',
 	'achievements-badge-your-desc-picture' => 'por agregar {{PLURAL:$1|tu primera imagen|$1 imágenes}} a {{PLURAL:$1|una página|varias páginas}}!',
@@ -2180,6 +2224,7 @@ en la página de discusión de alguien más!',
 	'achievements-badge-your-desc-pounce' => 'por hacer ediciones en 100 páginas dentro de la primera hora de vida de las páginas!',
 	'achievements-badge-your-desc-caffeinated' => 'por hacer 100 ediciones en páginas en un solo día!',
 	'achievements-badge-your-desc-luckyedit' => 'por hacer la edición afortunada $1th en el wiki!',
+	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|por compartir un enlace|por obtener {{PLURAL:$1|una persona|$1 personas}} en hacer clic a enlaces compartidos}}',
 	'achievements-badge-desc-edit' => 'por hacer $1 {{PLURAL:$1|edición|ediciones}} en {{PLURAL:$1|una página|páginas}}!',
 	'achievements-badge-desc-edit-plus-category' => 'por hacer $1 {{PLURAL:$1|edición|ediciones}} en {{PLURAL:$2|una página|$2 páginas}}!',
 	'achievements-badge-desc-picture' => 'por agregar $1 {{PLURAL:$1|imagen|imágenes}} a {{PLURAL:$1|una página|páginas}}!',
@@ -3585,6 +3630,33 @@ $messages['ig'] = array(
 	'achievements-badge-name-category-4' => 'Ọtúzọr',
 );
 
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'achievements-non-existing-category' => 'Лаьрха цатег йоацаш я',
+	'achievements-gold' => 'Дошув',
+	'achievements-silver' => 'Дотув',
+	'achievements-track-name-edit' => 'Дийнасурт хувца',
+	'achievements-track-name-picture' => 'Дийнасуртий бIасанче',
+	'achievements-track-name-category' => 'Дийнасуртий цатег',
+	'achievements-viewall' => 'Массадолачунга хьажа',
+	'achievements-viewless' => 'ДIакъовла',
+	'achievements-viewall-oasis' => 'Дерригачунга хьажа',
+	'leaderboard-intro-hide' => 'къайладаккха',
+	'leaderboard-intro-open' => 'хьадела',
+	'leaderboard-intro-headline' => 'Толамаш фу яхалг да?',
+	'achievements-title' => 'Толамаш',
+	'achievements-send' => 'Сурт кходе',
+	'achievements-save' => 'Хувцамаш кходе',
+	'achievements-special-saved' => 'Хувцамаш кхояь я',
+	'achievements-about-title' => 'Укх оагIува лаьца...',
+	'achievements-create-edit-plus-category' => 'Ер дийнасурт хьаде',
+	'achievements-community-platinum-edit' => 'хувца',
+	'achievements-community-platinum-save' => 'кходе',
+	'achievements-community-platinum-cancel' => 'дIадаккха',
+);
+
 /** Italian (Italiano)
  * @author Minerva Titani
  */
@@ -3616,6 +3688,20 @@ Se non ti piace l'immagine che hai scelto, clicca su \"{{int:achievements-ripris
 Puoi anche dare alle medaglie nuovi nomi che riflettono l'argomento della wiki.
 Quando hai cambiato i nomi delle medaglie, clicca su \"{{int:achievements-salvare}}\" per salvare le modifiche.
 Buon divertimento!",
+	'achievements-create-edit-plus-category-content' => 'È possibile creare un nuovo set di medaglie per premiare gli utenti che modificano le pagine in una determinata categoria, per evidenziare un\'area particolare del sito a cui gli utenti si divertirebbero a collaborare.
+È possibile impostare più di una categoria di set, quindi provate a scegliere due categorie che aiutino gli utenti a mostrare la loro specialità!
+Per esempio, crea una rivalità tra gli utenti che modificano le pagine di Vampiri e gli utenti che modifica le pagine di Lupi mannari, o tra Maghi e Babbani, o tra Autorobots e Distructors.
+
+Per creare una nuovo set di medaglie per la  "Modifica nella categoria", digita il nome della categoria nel campo sottostante.
+Il set regolare per le modifiche continuerà ad esistere, perché questa funzione creerà un set autonomo di medaglie personalizzabile separatamente.
+Quando viene creato il set, le nueve medaglie appariranno nell\'elenco a sinistra, sotto il set regolare di medaglie per le modifiche.
+Personalizza i nomi e le immagini per il nuovo set, in modo che gli utenti possano notare la differenza!
+Una volta che hai finito la personalizzazione, spunta la casella "{{int:achievements-abilitare-set}}" per attivare il set  e quindi fare clic su "{{int:achievements-salvare}}".
+Gli utenti potranno visualizzare il nuovo set nei loro profili utente e cominceranno a guadagnare medaglie quando modificheranno pagine in quella categoria.
+Dopo potrai decidere di disattivare il set, se non vuoi più evidenziare tale categoria.
+Gli utenti che avranno guadagnato medaglie in quel set le manterranno sempre, anche se il set sarà disattivato.
+
+Questa funzione aggiungerà divertimento alla conquista delle medaglie. Provala!',
 	'achievements-create-edit-plus-category' => 'Crea questa lista',
 	'achievements-community-platinum-current-badges' => 'Medaglie di platino attuali',
 	'achievements-community-platinum-create-badge' => 'Crea medaglia',
@@ -3635,6 +3721,8 @@ Buon divertimento!",
 	'achievements-badge-name-sayhi' => 'Solo un saluto',
 	'achievements-badge-name-creator' => 'Il Creatore',
 	'achievements-badge-name-luckyedit' => 'Modifica fortunata',
+	'achievements-badge-to-get-caffeinated-details' => 'Ci vuole una giornata piena per guadagnare questa medaglia.
+Continua a modificare!',
 	'achievements-badge-to-get-community-platinum-details' => 'Questa è una medaglia speciale di platino disponibile sono per un periodo limitato!',
 	'achievements-badge-your-desc-sayhi' => 'per aver lasciato un messaggio nella pagina di discussione di un altro utente!',
 	'achievements-badge-desc-caffeinated' => 'per aver fatto 100 modifiche alle pagine in un solo giorno!',
@@ -3853,7 +3941,35 @@ $messages['ka'] = array(
 	'achievements-profile-title-oasis' => 'მიღწევების <br /> ქულები',
 );
 
+/** Khmer (ភាសាខ្មែរ)
+ * @author T-Rithy
+ */
+$messages['km'] = array(
+	'achievements-platinum' => 'ប្លាទីន',
+	'achievements-gold' => 'មាស',
+	'achievements-silver' => 'ប្រាក់',
+	'achievements-bronze' => 'សំរិទ្ធ',
+	'achievements-viewall' => 'បង្ហាញទាំងអស់',
+	'achievements-viewless' => 'បិទ',
+	'achievements-viewall-oasis' => 'មើលទាំងអស់',
+	'leaderboard-intro-hide' => 'លាក់',
+	'leaderboard-intro-open' => 'បើក',
+	'achievements-leaderboard-rank-label' => 'ចំណាត់ថ្នាក់',
+	'achievements-leaderboard-member-label' => 'សមាជិក',
+	'achievements-send' => 'រក្សារូបភាពទុក',
+	'achievements-save' => 'រក្សាបំលាស់ប្តូរទុក',
+	'achievements-revert' => 'ត្រឡប់ទៅភាពដើមវិញ',
+	'platinum' => 'ប្លាទីន',
+	'achievements-community-platinum-edit' => 'កែប្រែ',
+	'achievements-community-platinum-save' => 'រក្សាទុក',
+	'achievements-community-platinum-cancel' => 'បោះបង់',
+	'achievements-badge-name-sharing-0' => 'អ្នកចែករំលែក',
+	'achievements-badge-name-sharing-3' => 'អ្នកផ្សព្វផ្សាយ',
+	'achievements-badge-to-get-welcome' => 'ចូលរួមវិគី',
+);
+
 /** Korean (한국어)
+ * @author Cwt96
  * @author Infinity
  */
 $messages['ko'] = array(
@@ -3896,6 +4012,7 @@ $messages['ko'] = array(
 	'achievements-ranked' => '이 위키의 $1위',
 	'achievements-viewall' => '모두 보기',
 	'achievements-viewless' => '닫기',
+	'achievements-viewall-oasis' => '전체 보기',
 	'leaderboard-intro-hide' => '숨기기',
 	'leaderboard-intro-open' => '보이기',
 	'leaderboard-intro' => "위키에서 문서를 편집하고 파일을 올리고 댓글을 남김으로서 배지를 얻으실 수 있습니다. 배지를 얻게 되면 그에 대응하는 포인트도 획득하실 수 있으며 많은 포인트를 얻을수록 리더보드에서 더 높은 자리에 위치할 수 있게 됩니다. 얻으신 배지는 당신의 [[$1|사용자 문서]]에서 확인하실 수 있습니다.
@@ -4151,6 +4268,7 @@ $messages['ku-latn'] = array(
 	'achievements-bronze' => 'Bronz',
 	'achievements-gold-points' => '100<br />pts',
 	'leaderboard-intro-hide' => 'veşêre',
+	'leaderboard-intro-open' => 'veke',
 	'achievements-leaderboard-member-label' => 'Endam',
 	'achievements-send' => 'Wêneyê qeyd bike',
 	'achievements-save' => 'Guherandina qeyd bike',
@@ -4212,8 +4330,11 @@ $messages['lb'] = array(
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Klickt fir méi Informatiounen',
 	'achievements-badge-name-edit-1' => 'Just den Ufank',
 	'achievements-badge-name-edit-4' => 'Mataarbechter',
+	'achievements-badge-name-picture-5' => 'Decorateur',
 	'achievements-badge-name-blogcomment-1' => 'An dann nach eppes',
+	'achievements-badge-name-love-6' => 'Wiki Held!',
 	'achievements-badge-name-welcome' => 'Wëllkomm op der Wiki',
+	'achievements-badge-to-get-welcome' => 'maacht mat bäi der Wiki',
 	'achievements-badge-to-get-introduction' => 'op Är eege Benotzersäit derbäisetzen',
 );
 
@@ -4227,10 +4348,85 @@ $messages['lez'] = array(
 
 /** Lithuanian (Lietuvių)
  * @author Cyklopas
+ * @author Eitvys200
  */
 $messages['lt'] = array(
+	'achievements-platinum' => 'Platina',
+	'achievements-gold' => 'Auksas',
+	'achievements-silver' => 'Sidabras',
+	'achievements-bronze' => 'Bronza',
+	'achievements-gold-points' => '100 <br /> taškai',
+	'achievements-silver-points' => '50 <br /> taškai',
+	'achievements-bronze-points' => '10 <br /> taškai',
+	'achievements-you-must' => 'Jums reikia $1 gautumėt šį ženklelį.',
+	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|taškas|taškai}}</small>',
+	'achievements-profile-title-no' => '$1 ženkleliai',
+	'achievements-no-badges' => 'Peržiūrėkite žemiau, norėdami pamatyti ženklelius, kuriuos galite uždirbti šioje wiki!',
+	'achievements-notification-subtitle' => 'Jūs ką tik uždirbote "$1" ženklelį $2',
+	'achievements-notification-link' => '<big><strong>[[Specialus: Mypage | Sužinokite daugiau ženkliukų kuriuos galite uždirbti]]!</strong></big>',
+	'achievements-points' => '$1 {{PLURAL:$1|taškas|taškai}}',
+	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|taškas|taškai}}',
+	'achievements-earned' => 'Šis ženklelis buvo uždirbtas {{PLURAL:$1| 1 vartotojo | $1 vartotojų}}.',
+	'achievements-profile-title' => '$1 $2 uždirbo {{PLURAL:$2|ženklelį|ženklelius}}',
+	'achievements-profile-title-challenges' => 'Daugiau ženklelių, kuriuos galite užsidirbti!',
+	'achievements-profile-customize' => 'Redaguokite ženklelius >',
+	'achievements-ranked' => 'Užėmė #$1 šioje wiki',
+	'achievements-viewall' => 'Peržiūrėti visus',
+	'achievements-viewless' => 'Uždaryti',
+	'achievements-viewall-oasis' => 'Žiūrėti visus',
+	'achievements-toggle-hide' => 'Nerodyti taškų, ženklelių ir reitingo mano profilyje',
+	'leaderboard-intro-hide' => 'slėpti',
+	'leaderboard-intro-open' => 'atidaryti',
+	'achievements-leaderboard-rank-label' => 'Rangas',
+	'achievements-leaderboard-member-label' => 'Narys',
+	'achievements-leaderboard-points-label' => 'Taškai',
+	'achievements-leaderboard-points' => '{{PLURAL:$1|taškas|taškai}}',
+	'achievements-send' => 'Išsaugoti nuotrauką',
+	'achievements-save' => 'Išsaugoti pakeitimus',
+	'achievements-customize' => 'Redaguoti nuotrauką',
+	'achievements-special-saved' => 'Pakeitimai išsaugoti.',
+	'achievementscustomize' => 'Redaguoti ženklelius',
+	'achievements-about-title' => 'Apie šį puslapį...',
+	'platinum' => 'Platina',
+	'achievements-community-platinum-awarded-email-subject' => 'Jums buvo suteiktas naujas platinos ženklelis!',
+	'achievements-community-platinum-awarded-for' => 'Apdovanotas už:',
+	'achievements-community-platinum-how-to-earn' => 'Kaip uždirbti:',
+	'achievements-community-platinum-awarded-for-example' => 'pavyzdžiui, "darant ..."',
+	'achievements-community-platinum-how-to-earn-example' => 'pavyzdžiui, "padaryti 3 keitimus ..."',
+	'achievements-community-platinum-badge-image' => 'Ženklelio vaizdas:',
+	'achievements-community-platinum-awarded-to' => 'Skiriama:',
+	'achievements-community-platinum-current-badges' => 'Dabartiniai platinos ženkleliai',
+	'achievements-community-platinum-create-badge' => 'Sukurti ženklelį',
+	'achievements-community-platinum-enabled' => 'įjungta',
+	'achievements-community-platinum-edit' => 'redaguoti',
+	'achievements-community-platinum-save' => 'išsaugoti',
+	'achievements-community-platinum-cancel' => 'atšaukti',
+	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Paspauskite norėdami gauti daugiau informacijos',
+	'achievements-badge-name-edit-3' => 'Wiki draugas',
+	'achievements-badge-name-edit-6' => 'Wiki lyderis',
+	'achievements-badge-name-edit-7' => 'Wiki ekspertas',
+	'achievements-badge-name-picture-2' => 'Iliustratorius',
 	'achievements-badge-name-picture-3' => 'Kolektorius',
+	'achievements-badge-name-picture-4' => 'Meno mėgėjas',
+	'achievements-badge-name-picture-6' => 'Dizaineris',
+	'achievements-badge-name-category-2' => 'Tyrinėtojas',
+	'achievements-badge-name-category-6' => 'Wiki Planuotojas',
+	'achievements-badge-name-blogpost-0' => 'Kažką pasakyti',
+	'achievements-badge-name-blogpost-1' => 'Penki dalykai pasakyti',
+	'achievements-badge-name-blogpost-2' => 'Kalbėjimo Šou',
+	'achievements-badge-name-blogpost-3' => 'Vakarėlio gyvenimas',
+	'achievements-badge-name-blogcomment-1' => 'Ir dar vienas dalykas',
+	'achievements-badge-name-love-0' => 'Raktas į Wiki!',
+	'achievements-badge-name-love-1' => 'Dvi savaites wiki',
+	'achievements-badge-name-love-3' => 'Skirta',
+	'achievements-badge-name-love-5' => 'Wiki gyvenimas',
+	'achievements-badge-name-love-6' => 'Wiki herojus!',
+	'achievements-badge-name-sharing-1' => 'Gražinkit atgal',
 	'achievements-badge-name-sharing-2' => 'Kalbantysis',
+	'achievements-badge-name-welcome' => 'Sveiki atvykę į Wiki',
+	'achievements-badge-name-sayhi' => 'Sustoja pasisveikinti',
+	'achievements-badge-name-creator' => 'Kūrėjas',
+	'achievements-badge-name-luckyedit' => 'Laimingas redagavimas',
 	'achievements-badge-to-get-pounce' => 'skubėk',
 	'achievements-badge-hover-desc-welcome' => 'už prisijungimą prie Wiki!',
 );
@@ -6947,11 +7143,16 @@ $5',
 );
 
 /** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
  * @author බිඟුවා
  */
 $messages['si'] = array(
 	'achievements-viewless' => 'වසන්න',
 	'leaderboard-intro-hide' => 'සඟවන්න',
+	'achievements-community-platinum-enabled' => 'බලය දෙන ලදී',
+	'achievements-community-platinum-edit' => 'සංස්කරණය කරන්න',
+	'achievements-community-platinum-save' => 'සුරකින්න',
+	'achievements-community-platinum-cancel' => 'අත් හරින්න',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
@@ -7446,6 +7647,7 @@ Magpatuloy sa pamamatnugot!',
 /** Turkish (Türkçe)
  * @author 82-145
  * @author Emperyan
+ * @author Gizemb
  */
 $messages['tr'] = array(
 	'achievementsii-desc' => 'Viki kullanıcıları için bir başarı nişanı sistemi',
@@ -7454,32 +7656,104 @@ Bu resim çalışmıyor.
 .jpg ya da .png dosyası olduğundan emin olun.
 Eğer hala çalışmazsa, resim çok büyük olabilir.
 Lütfen bir başkasını deneyin.',
+	'achievements-non-existing-category' => 'Belirtilen kategori yok.',
 	'achievements-platinum' => 'Altın',
 	'achievements-gold' => 'Altın',
 	'achievements-silver' => 'Gümüş',
 	'achievements-bronze' => 'Bronz',
+	'achievements-gold-points' => '100<br /> puan',
+	'achievements-silver-points' => '50<br /> puan',
+	'achievements-bronze-points' => '10<br />puan',
+	'achievements-you-must' => 'Bu rozeti kazanmak için 1$\'a ihtiyacınız var.',
+	'achievements-profile-title-no' => '$1 kişisinin rozetleri',
+	'achievements-profile-title-challenges' => 'Daha fazla rozet kazanabilirsin!',
+	'achievements-profile-customize' => 'Rozetleri düzenle >',
+	'achievements-ranked' => "Bu wiki'de #$1 oldun",
+	'achievements-viewall' => 'Hepsini göster',
+	'achievements-viewless' => 'Kapat',
+	'achievements-viewall-oasis' => 'Hepsini gör',
+	'achievements-toggle-hide' => 'Puanları, rozetleri ve sıralamamı profilimde gösterme',
 	'leaderboard-intro-hide' => 'gizle',
+	'leaderboard-intro-open' => 'aç',
+	'leaderboard-title' => 'Sıralama',
+	'achievements-recent-earned-badges' => 'Son Kazanılan Rozetler',
+	'achievements-leaderboard-rank-label' => 'Sıralama',
 	'achievements-leaderboard-member-label' => 'Üye',
+	'achievements-leaderboard-points-label' => 'Puan',
 	'achievements-leaderboard-most-recently-earned-label' => 'Son kazanılanlar',
+	'achievements-send' => 'Resmi kaydet',
 	'achievements-save' => 'Değişiklikleri kaydet',
+	'achievements-customize' => 'Resmi düzenle',
+	'achievements-enable-track' => 'etkin',
+	'achievements-special-saved' => 'Değişiklikler kaydedildi.',
+	'achievementscustomize' => 'Rozetleri düzenle',
+	'achievements-about-title' => 'Bu sayfa hakkında...',
 	'platinum' => 'Altın',
+	'achievements-community-platinum-awarded-for' => 'Ödül sebebi:',
+	'achievements-community-platinum-how-to-earn' => 'Nasıl kazanılır:',
+	'achievements-community-platinum-awarded-for-example' => 'örneğin "... yapmak için"',
+	'achievements-community-platinum-how-to-earn-example' => 'örneğin "3 düzenleme yap"',
+	'achievements-community-platinum-badge-image' => 'Rozet görseli:',
+	'achievements-community-platinum-current-badges' => 'Mevcut platin rozetler',
+	'achievements-community-platinum-create-badge' => 'Rozet oluştur',
+	'achievements-community-platinum-enabled' => 'etkin',
+	'achievements-community-platinum-show-recents' => 'son kazanılan rozetlerde göster',
 	'achievements-community-platinum-edit' => 'değiştir',
 	'achievements-community-platinum-save' => 'kaydet',
 	'achievements-community-platinum-cancel' => 'iptal et',
+	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Daha fazla bilgi için tıkla',
 	'achievements-badge-name-edit-0' => 'Bir Fark Yaratmak',
 	'achievements-badge-name-edit-1' => 'Sadece Başlangıç',
 	'achievements-badge-name-edit-3' => 'Viki Dost',
 	'achievements-badge-name-edit-4' => 'İşbirlikçi',
+	'achievements-badge-name-edit-5' => 'Wiki Oluşturucu',
+	'achievements-badge-name-edit-6' => 'Wiki Lideri',
+	'achievements-badge-name-edit-7' => 'Wiki Uzmanı',
+	'achievements-badge-name-picture-0' => 'Enstantane',
+	'achievements-badge-name-picture-1' => 'Paparazzi',
+	'achievements-badge-name-picture-3' => 'Koleksiyoner',
+	'achievements-badge-name-picture-4' => 'Sanat Sever',
+	'achievements-badge-name-picture-5' => 'Dekoratör',
 	'achievements-badge-name-picture-6' => 'Tasarımcı',
+	'achievements-badge-name-picture-7' => 'Küratör',
+	'achievements-badge-name-category-0' => 'Bağlantı Oluştur',
+	'achievements-badge-name-category-2' => 'Araştırmacı',
+	'achievements-badge-name-category-3' => 'Tur Rehberi',
+	'achievements-badge-name-category-6' => 'Wiki Planlayıcısı',
+	'achievements-badge-name-blogpost-0' => 'Söylenecek bir şey',
+	'achievements-badge-name-blogpost-1' => 'Söylenecek 5 şey',
+	'achievements-badge-name-blogpost-2' => 'Talk Show',
+	'achievements-badge-name-blogcomment-1' => 'Ve bir şey daha',
+	'achievements-badge-name-love-1' => "Wiki'de 2 hafta",
+	'achievements-badge-name-love-2' => 'Sadık',
+	'achievements-badge-name-love-3' => 'Adanmış',
+	'achievements-badge-name-love-4' => 'Bağımlı',
 	'achievements-badge-name-love-5' => 'Bir Viki yaşamı',
 	'achievements-badge-name-love-6' => 'Viki Kahramanı!',
 	'achievements-badge-name-sharing-0' => 'Paylaşımcı',
+	'achievements-badge-name-sharing-1' => 'Geri getir',
+	'achievements-badge-name-sharing-2' => 'Konuşmacı',
 	'achievements-badge-name-welcome' => "Viki'ye hoşgeldiniz",
+	'achievements-badge-name-introduction' => 'Giriş',
+	'achievements-badge-name-sayhi' => 'Selam vermek için durma',
+	'achievements-badge-name-luckyedit' => 'Şanslı düzenleme',
 	'achievements-badge-to-get-welcome' => "Viki'ye katıl",
+	'achievements-badge-to-get-introduction' => 'kullanıcı sayfanızı ekleyin',
 	'achievements-badge-to-get-pounce' => 'hızlı ol',
 	'achievements-badge-to-get-luckyedit' => 'şanslı ol',
 	'achievements-badge-hover-desc-welcome' => "Viki'ye katılmak için!",
 	'achievements-badge-hover-desc-creator' => "Viki'yi yaratmak için!",
+	'achievements-badge-your-desc-welcome' => 'wikiye katıldığınız için!',
+	'achievements-badge-your-desc-introduction' => 'kendi kullanıcı sayfanızı eklediğiniz için!',
+	'achievements-badge-your-desc-sayhi' => 'başkasının tartışma penceresine mesaj bıraktığınız için!',
+	'achievements-badge-your-desc-creator' => 'wiki oluşturduğunuz için!',
+	'achievements-badge-your-desc-pounce' => 'sayfa oluşturulduktan sonraki 1 saat içinde 100 değişiklik yaptığınız için!',
+	'achievements-badge-your-desc-caffeinated' => 'bir gün içinde 100 değişiklik yaptığınız için!',
+	'achievements-badge-your-desc-luckyedit' => 'wikide Şanslı $1 sayılı düzenlemeyi yaptığın için!',
+	'achievements-badge-desc-welcome' => 'wikiye katıldığın için!',
+	'achievements-badge-desc-introduction' => 'kendi kullanıcı sayfanı eklediğin için!',
+	'achievements-badge-desc-sayhi' => 'başkasının tartışma sayfasına mesaj bıraktığın için!',
+	'achievements-badge-desc-creator' => 'wiki oluşturduğun için!',
 );
 
 /** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
@@ -7500,6 +7774,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
  * @author Nglekhoi
  * @author Thanhtai2009
  * @author Trần Nguyễn Minh Huy
@@ -7523,6 +7798,7 @@ Hãy thử những ảnh khác!',
 	'achievements-track-name-picture' => 'Theo dõi hình ảnh',
 	'achievements-track-name-category' => 'Cây thể loại',
 	'achievements-track-name-blogpost' => 'Theo dõi Blog Post',
+	'achievements-notification-subtitle' => 'Bạn vừa giành được huy hiệu “$1” $2',
 	'leaderboard-intro-hide' => 'ẩn',
 	'leaderboard' => 'Bảng vàng thành tựu',
 	'achievements-title' => 'Thành tựu',

@@ -47,6 +47,13 @@ $messages['ast'] = array(
 	'ajaxpoll-submitting' => "Aguarda, por favor, se ta unviando'l to votu...",
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'ajaxpoll-submit' => 'Səs ver!',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Wizardist
@@ -104,7 +111,7 @@ $messages['de'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;aller Stimmen',
 	'ajaxpoll-thankyou' => 'Vielen Dank für deine Stimme!',
 	'ajaxpoll-error' => 'Es gab ein Problem bei der Verarbeitung deiner Stimme. Probiere es bitte noch einmal.',
-	'ajaxpoll-summary' => 'Die Umfrage wurde am $1 um $2 erstellt. Bisher {{plural:$3|hat|haben}} $3 Nutzer abgestimmt.',
+	'ajaxpoll-summary' => 'Die Umfrage wurde am $2 um $1 erstellt. Bisher {{plural:$3|hat|haben}} $3 Nutzer abgestimmt.',
 	'ajaxpoll-submit' => 'Abstimmen!',
 	'ajaxpoll-closed' => 'Die Umfrage ist beendet. Viel Spaß mit den Ergebnissen.',
 	'ajaxpoll-submitting' => 'Bitte warte kurz, deine Stimme wird verarbeitet.',
@@ -323,6 +330,19 @@ $messages['lb'] = array(
 	'ajaxpoll-submitting' => 'Waart w.e.g., Är Stëmm gëtt elo geschéckt ...',
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'ajaxpoll-percentVotes' => '$1% visų balsų',
+	'ajaxpoll-thankyou' => 'Dėkojame už Jūsų balsą!',
+	'ajaxpoll-error' => 'Iškilo problema su jūsų balsu, bandykite dar kartą.',
+	'ajaxpoll-summary' => 'Apklausa buvo sukurta $1 į $2 , iki dabar balsavo $3 žmonės.',
+	'ajaxpoll-submit' => 'Balsuoti!',
+	'ajaxpoll-closed' => 'Apklausa baigta. Mėgaukitės rezultatais.',
+	'ajaxpoll-submitting' => 'Prašome palaukti, siunčiame jūsų balsą ...',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -512,10 +532,11 @@ $messages['ru'] = array(
 );
 
 /** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
  * @author බිඟුවා
  */
 $messages['si'] = array(
-	'ajaxpoll-submit' => 'ඡන්දය',
+	'ajaxpoll-submit' => 'ඡන්දය දෙන්න!',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
@@ -555,6 +576,17 @@ $messages['tl'] = array(
 	'ajaxpoll-submit' => 'Bumoto!',
 	'ajaxpoll-closed' => 'Nakasara na ang botohan.  Kasiyahan ang mga kinalabasan.',
 	'ajaxpoll-submitting' => 'Pakihintay, ipinapasa ang boto mo...',
+);
+
+/** Turkish (Türkçe)
+ * @author Gizemb
+ */
+$messages['tr'] = array(
+	'ajaxpoll-thankyou' => 'Oy verdiğiniz için teşekkür ederiz!',
+	'ajaxpoll-error' => 'Oyunuz işleme alınırken bir sorun oluştu, lütfen tekrar deneyiniz.',
+	'ajaxpoll-submit' => 'Oy ver!',
+	'ajaxpoll-closed' => 'Anket kapandı. Sonuçların tadını çıkarın.',
+	'ajaxpoll-submitting' => 'Lütfen bekleyin, oyunuz kaydediliyor...',
 );
 
 /** Ukrainian (Українська)

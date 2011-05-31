@@ -460,6 +460,11 @@ $messages['sv'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'partner-feed-achievements-leaderboard' => 'Pinunong pisara ng mga nakamit na pang mga wiki',
+	'partner-feed-earned-badges' => 'Kamakailang nakamit na mga tsapa para sa isang partikular na Wiki',
+	'partner-feed-recent-blog-posts' => 'Kamakailang mga pagpapaskil na blog kaugnay ng isang patalastas',
+	'partner-feed-latest-images' => 'Tanghalan ng pinakabagong mga larawan na naikargang papaitaas',
+	'partner-feed-recent-changes' => 'Kamakailang mga pagbabago',
 	'partnerfeed' => 'Pakain ng katambal',
 	'error-no-article' => 'Kamalian: Walang pumasang mga parametro ng "artikulo"',
 	'feed-title-blogposts' => 'Kamakailang mga pagpapaskil ng blog',
@@ -471,6 +476,7 @@ $messages['tl'] = array(
 	'blog-posts-from-listing' => 'mula sa pagkakalista: $1',
 	'feed-title-hot-content' => 'Mainit na nilalaman - $1',
 	'feed-title-blogcomments' => 'Mga puna sa $1',
+	'feed-title-recentchanges' => 'Kamakailang mga pagbabago',
 );
 
 /** Ukrainian (Українська)

@@ -227,6 +227,7 @@ $messages['af'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'multiwikiedit_button' => 'REDAKTƏ',
 	'multidelete_button' => 'SİL',
 );
 
@@ -1869,6 +1870,7 @@ Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author MarkvA
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -1880,7 +1882,10 @@ Op iedere regel moet 1 pagina staan.',
 	'multiwikiedit_task_none_selected' => "Je hebt geen pagina's geselecteerd.
 De taak is niet toegevoegd.",
 	'multiwikiedit_task_link' => 'Je kunt je taak controleren',
+	'multiwikiedit_link_back' => '$1 terug naar het Multiwikibewerkingsformulier',
 	'multiwikiedit_select_yourself' => 'jijzelf',
+	'multiwikiedit_split_results' => "Het aantal pagina's was te groot om in 1 taak uit te voeren.
+De lijst is gesplitst in '''$1''' taken met een maximaal aantal pagina's van '''$2'''.",
 	'multiwikiedit_max_display_size' => "Meerdere wiki's bewerken heeft op het moment een maximaal aantal pagina's in de bevestigingsstap.
 Je opdracht is ingekort tot $1 pagina's.
 Kies je pagina's en sla de taak op.
@@ -1891,6 +1896,9 @@ Je kunt er voor kiezen de pagina's als jezelf te verwijderen of als een administ
 	'multidelete_task_none_selected' => "Je hebt geen pagina's geselecteerd.
 De taak is niet toegevoegd.",
 	'multidelete_task_link' => 'Je kunt je taak selecteren',
+	'multidelete_link_back' => '$1 terug naar het formulier Meervoudig verwijderen',
+	'multidelete_split_results' => "Het aantal pagina's was te groot om in 1 taak uit te voeren.
+De lijst is gesplitst in '''$1''' taken met een maximaal aantal pagina's van '''$2'''.",
 	'multidelete_max_display_size' => "Meervoudig verwijderen heeft op het moment een maximaal aantal pagina's in de bevestigingsstap.
 Je opdracht is ingekort tot '''$1''' pagina's.
 Kies je pagina's en sla de taak op.

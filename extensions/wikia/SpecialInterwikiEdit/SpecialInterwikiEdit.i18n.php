@@ -104,9 +104,11 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Claudia Hattitten
  * @author LWChris
  */
 $messages['de'] = array(
+	'interwikiedit' => 'Interwiki-Editor',
 	'iwedit-title' => 'Interwiki-Editor',
 	'iwedit-language-interwikis' => 'nur Sprach-Interwikis',
 	'iwedit-all-interwikis' => 'alle Interwikis',
@@ -141,8 +143,10 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Peter17
+ * @author Wyz
  */
 $messages['fr'] = array(
+	'interwikiedit' => 'Éditeur interwiki',
 	'iwedit-title' => 'Éditeur Interwiki',
 	'iwedit-language-interwikis' => 'interwikis de langues seulement',
 	'iwedit-all-interwikis' => 'tous les interwikis',
@@ -155,6 +159,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'interwikiedit' => 'Editor de interwiki',
 	'iwedit-title' => 'Editor de interwiki',
 	'iwedit-language-interwikis' => 'só interwikis de linguas',
 	'iwedit-all-interwikis' => 'todos os interwikis',
@@ -261,6 +266,7 @@ $messages['ltg'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'interwikiedit' => 'Уредник на интервикија',
 	'iwedit-title' => 'Уредник на интервикија',
 	'iwedit-language-interwikis' => 'само јазични интервикија',
 	'iwedit-all-interwikis' => 'сите интервикија',
@@ -273,6 +279,7 @@ $messages['mk'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'interwikiedit' => 'Penyunting Antara Wiki',
 	'iwedit-title' => 'Penyunting Antara Wiki',
 	'iwedit-language-interwikis' => 'antara wiki bahasa sahaja',
 	'iwedit-all-interwikis' => 'semua antara wiki',
@@ -355,12 +362,13 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
-	'iwedit-title' => 'Editor de Interwikis',
-	'iwedit-language-interwikis' => 'só interwikis de língua',
-	'iwedit-all-interwikis' => 'todas as interwikis',
+	'interwikiedit' => 'Editor de Links Interwikis',
+	'iwedit-title' => 'Editor de Links Interwikis',
+	'iwedit-language-interwikis' => 'só links interlínguas',
+	'iwedit-all-interwikis' => 'todos os links interwikis',
 	'iwedit-update' => 'Actualizar',
 	'iwedit-error' => '<p>Ocorreu um erro.</p>',
-	'iwedit-success' => '<p>Criação de link com sucesso.</p>',
+	'iwedit-success' => '<p>Os links foram criados correctamente.</p>',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -435,6 +443,7 @@ $messages['te'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'interwikiedit' => 'Patnugot ng Ugnayang-Wiki',
 	'iwedit-title' => 'Pamatnugot na Interwiki',
 	'iwedit-language-interwikis' => 'mga interwiking pangwika lang',
 	'iwedit-all-interwikis' => 'lahat ng mga interwiki',
