@@ -134,16 +134,21 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author LWChris
  * @author Purodha
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'userprofilepage-desc' => '{{desc}}',
+	'userprofilepage-edit-button' => '{{Identical|Edit}}',
+	'userprofilepage-about-article-title' => '{{Identical|About}}',
 	'userprofilepage-user-group-vstf' => 'Vandalism/Spam Task Force',
+	'userprofilepage-top-wikis-hide-label' => '{{Identical|Hide}}',
 	'userprofilepage-top-pages-title' => 'Parameters:
 * $1 is a username
 * $2 is a wiki name',
+	'recipes-template-user-description-label' => '{{Identical|Description}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -235,6 +240,76 @@ $messages['az'] = array(
 	'userprofilepage-user-group-bureaucrat' => 'Bürokrat',
 	'recipes-template-user-gender-label' => 'Cins',
 	'recipes-template-user-gender-hint' => 'Cins',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+ * @author EugeneZelenko
+ * @author Jim-by
+ * @author KorneySan
+ */
+$messages['be-tarask'] = array(
+	'userprofilepage-desc' => 'Дадае старонкі ўдзельнікаў, якія лёгка абнаўляць',
+	'userprofilepage-edit-avatar-label' => 'Рэдагаваць выяву',
+	'userprofilepage-users-notes-title' => 'Пра мяне',
+	'userprofilepage-about-section-title' => 'Маё $1 інтэрвію',
+	'userprofilepage-edit-button' => 'Рэдагаваць',
+	'userprofilepage-about-article-title' => 'Пра',
+	'userprofilepage-about-empty-section' => 'Гэтая сэкцыя пустая. Націсьніце «{{int:userprofilepage-edit-button}}», каб дадаць што-небудзь!',
+	'userprofilepage-edit-permision-denied' => 'Рэдагаваньне забаронена',
+	'userprofilepage-edit-permision-denied-info' => 'У Вас недастаткова правоў для рэдагаваньня старонак ці падстаронак іншых удзельнікаў',
+	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Усім у {{GRAMMAR:месны|{{SITENAME}}}} хацелася бы ведаць пра Вас болей!</div><a href="$1">Адрэдагуйце гэтую сэкцыю</a> каб дадаць паболей інфармацыі пра сябе і распавесьці нам пра тое, што Вы любіце.',
+	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 яшчэ не дадаў ніякай інфармацыі.</div>Вы можаце <a href="$2">пакінуць яму паведамленьне</a>',
+	'userprofilepage-user-doesnt-exists' => 'Удзельнік $1 не існуе ў Вікіі. Праверце «[[Special:WikiActivity|Вікі-дзейнасць]]» каб убачыць, хто актыўны ў {{GRAMMAR:месны|{{SITENAME}}}}.',
+	'userprofilepage-user-anon' => 'Гэты ўдзельнік яшчэ не зарэгістраваны ў Вікіі. [[Special:Signup|Стварыце рахунак]] і пачніце прэтэндаваць на ачкі рэдагаваньняў, узнагароды і падзякі ад Вашых калегаў-рэдактараў!',
+	'userprofilepage-leave-message' => 'Пакінуць паведамленьне',
+	'userprofilepage-edits-since' => 'Рэдагаваньняў пасьля далучэньня да {{GRAMMAR:родны|{{SITENAME}}}}<br />$1',
+	'userprofilepage-user-last-action-edit' => '$1 адрэдагаваў старонку <a href="$2">$3</a>',
+	'userprofilepage-user-last-action-new' => '$1 стварыў <a href="$2">$3</a>',
+	'userprofilepage-user-last-action-delete' => '$1 выдаліў старонку <a href="$2">$3</a>',
+	'userprofilepage-user-group-sysop' => 'Адміністратар',
+	'userprofilepage-user-group-staff' => 'Супрацоўнік',
+	'userprofilepage-user-group-bot' => 'Робат',
+	'userprofilepage-user-group-bureaucrat' => 'Бюракрат',
+	'userprofilepage-user-group-helper' => 'Памагаты',
+	'userprofilepage-user-group-vstf' => 'Сілы для змаганьня з вандалізмам/спамам',
+	'userprofilepage-user-group-sysop-tooltip' => 'Гэты ўдзельнік зьяўляецца адміністратарам {{GRAMMAR:родны|{{SITENAME}}}}',
+	'userprofilepage-user-group-staff-tooltip' => 'Гэты ўдзельнік зьяўляецца супрацоўнікам Вікіі',
+	'userprofilepage-user-group-bot-tooltip' => 'Гэты ўдзельнік зьяўляецца ботам',
+	'userprofilepage-user-group-bureaucrat-tooltip' => 'Гэты ўдзельнік зьяўляецца бюракратам {{GRAMMAR:родны|{{SITENAME}}}}',
+	'userprofilepage-user-group-helper-tooltip' => 'Гэты ўдзельнік зьяўляецца памагатым у {{GRAMMAR:месны|{{SITENAME}}}}',
+	'userprofilepage-user-group-vstf-tooltip' => 'Гэты ўдзельнік зьяўляецца чальцом сілаў для змаганьня з вандалізмам/спамам',
+	'userprofilepage-top-wikis-title' => 'Папулярныя вікі $1',
+	'userprofilepage-top-wikis-edit-count' => 'Колькасьць рэдагаваньняў',
+	'userprofilepage-top-wikis-hidden-see-more' => 'У Вас {{PLURAL:$1|маецца $1 схаваная вікі|маюцца $1 схаваныя вікі|маюцца $1 схаваных вікі}}',
+	'userprofilepage-top-wikis-unhide-label' => 'паказаць',
+	'userprofilepage-top-wikis-hide-label' => 'схаваць',
+	'userprofilepage-top-wikis-locked-label' => 'Цяперашняя вікі не можа быць схаваная',
+	'userprofilepage-recent-activity-title' => 'Апошняя актыўнасьць $1',
+	'userprofilepage-activity-edit' => 'адрэдагаваў старонку $1',
+	'userprofilepage-activity-new' => 'стварыў $1',
+	'userprofilepage-activity-comment' => 'пракамэнтаваў $1',
+	'userprofilepage-activity-image' => 'загрузіў выяву ў $1',
+	'userprofilepage-activity-video' => 'загрузіў відэа ў $1',
+	'userprofilepage-activity-delete' => 'выдаліў старонку $1',
+	'userprofilepage-activity-talk' => 'пакінуў паведамленьне на старонцы гутарак $1',
+	'userprofilepage-recent-activity-default' => '$1 далучыўся да Вікіі',
+	'userprofilepage-top-recent-activity-see-more' => 'Паказаць усё &gt;',
+	'userprofilepage-top-pages-title' => 'Папулярныя старонкі $1 у $2',
+	'userprofilepage-top-page-unhide-label' => 'паказаць',
+	'userprofilepage-top-pages-hidden-see-more' => 'У Вас {{PLURAL:$1|маецца $1 схаваная старонка|маюцца $1 схаваныя старонкі|маюцца $1 схаваных старонак}}',
+	'userprofilepage-top-pages-default' => 'У Вас няма папулярных старонак. Чаму б не паглядзець <a href="$1">выпадковыя старонкі</a> ў {{GRAMMAR:месны|{{SITENAME}}}}?',
+	'recipes-template-user-description-label' => 'Апісаньне',
+	'recipes-template-user-description-hint' => 'Кароткая інфармацыя пра ўдзельніка',
+	'recipes-template-user-birthdate-label' => 'Дата нараджэньня',
+	'recipes-template-user-birthdate-hint' => 'Дата нараджэньня (у любым фармаце)',
+	'recipes-template-user-species-label' => 'Віды',
+	'recipes-template-user-species-hint' => 'Віды',
+	'recipes-template-user-abilities-label' => 'Здольнасьці',
+	'recipes-template-user-abilities-hint' => 'Здольнасьці',
+	'recipes-template-user-gender-label' => 'Пол',
+	'recipes-template-user-gender-hint' => 'Пол',
+	'recipes-template-user-affiliation-label' => 'Прыналежнасьць',
+	'recipes-template-user-affiliation-hint' => 'Прыналежнасьць',
 );
 
 /** Bulgarian (Български)
@@ -376,6 +451,7 @@ $messages['ce'] = array(
 );
 
 /** German (Deutsch)
+ * @author DaSch
  * @author George Animal
  * @author LWChris
  */
@@ -442,6 +518,7 @@ $messages['de'] = array(
 	'recipes-template-user-gender-hint' => 'Geschlecht',
 	'recipes-template-user-affiliation-label' => 'Zugehörigkeit',
 	'recipes-template-user-affiliation-hint' => 'Zugehörigkeit',
+	'right-editprofile' => 'Benutzerprofile anderer Benutzer bearbeiten',
 );
 
 /** Greek (Ελληνικά)
@@ -541,6 +618,7 @@ $messages['es'] = array(
 	'recipes-template-user-gender-hint' => 'Sexo',
 	'recipes-template-user-affiliation-label' => 'Afiliación',
 	'recipes-template-user-affiliation-hint' => 'Afiliación',
+	'right-editprofile' => 'Editar perfiles de otros usuarios',
 );
 
 /** Persian (فارسی)
@@ -654,6 +732,7 @@ $messages['fr'] = array(
 	'recipes-template-user-gender-hint' => 'Genre',
 	'recipes-template-user-affiliation-label' => 'Affiliation',
 	'recipes-template-user-affiliation-hint' => 'Affiliation',
+	'right-editprofile' => "Modifier le profil d'autres utilisateurs",
 );
 
 /** Hungarian (Magyar)
@@ -741,6 +820,7 @@ $messages['ia'] = array(
 	'recipes-template-user-gender-hint' => 'Sexo',
 	'recipes-template-user-affiliation-label' => 'Affiliation',
 	'recipes-template-user-affiliation-hint' => 'Affiliation',
+	'right-editprofile' => 'Modificar le profilos de altere usatores',
 );
 
 /** Kurdish (Latin) (Kurdî (Latin))
@@ -854,6 +934,7 @@ $messages['mk'] = array(
 	'recipes-template-user-gender-hint' => 'Пол',
 	'recipes-template-user-affiliation-label' => 'Наклонетост',
 	'recipes-template-user-affiliation-hint' => 'Наклонетост',
+	'right-editprofile' => 'Уредување на туѓи профили',
 );
 
 /** Malay (Bahasa Melayu)
@@ -922,6 +1003,7 @@ $messages['ms'] = array(
 	'recipes-template-user-gender-hint' => 'Jantina',
 	'recipes-template-user-affiliation-label' => 'Sekutu',
 	'recipes-template-user-affiliation-hint' => 'Sekutu',
+	'right-editprofile' => 'Sunting profil pengguna lain',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -1099,6 +1181,7 @@ $messages['no'] = array(
 	'recipes-template-user-gender-hint' => 'Kjønn',
 	'recipes-template-user-affiliation-label' => 'Tilknytning',
 	'recipes-template-user-affiliation-hint' => 'Tilknytning',
+	'right-editprofile' => 'Rediger profilen til andre brukere',
 );
 
 /** Pashto (پښتو)
@@ -1188,6 +1271,7 @@ $messages['pt'] = array(
 	'recipes-template-user-gender-hint' => 'Sexo',
 	'recipes-template-user-affiliation-label' => 'Afiliação',
 	'recipes-template-user-affiliation-hint' => 'Afiliação',
+	'right-editprofile' => 'Editar o perfil de outros utilizadores',
 );
 
 /** Romanian (Română)
@@ -1202,6 +1286,7 @@ $messages['ro'] = array(
 /** Russian (Русский)
  * @author Byulent
  * @author DCamer
+ * @author KorneySan
  */
 $messages['ru'] = array(
 	'userprofilepage-desc' => 'Предоставляет пользователю страницу, которую легко и весело обновить',
@@ -1210,7 +1295,7 @@ $messages['ru'] = array(
 	'userprofilepage-about-section-title' => 'Моё $1 интервью',
 	'userprofilepage-edit-button' => 'Редактировать',
 	'userprofilepage-about-article-title' => 'Описание',
-	'userprofilepage-about-empty-section' => 'Этот раздел пуст. Нажмите кнопку «Изменить», чтобы добавить что-нибудь!',
+	'userprofilepage-about-empty-section' => 'Этот раздел пуст. Нажмите кнопку {{int:userprofilepage-edit-button}}, чтобы добавить что-нибудь!',
 	'userprofilepage-edit-permision-denied' => 'Редактирование запрещено',
 	'userprofilepage-edit-permision-denied-info' => 'У вас недостаточно прав для редактирования страницы или подстраницы какого-либо пользователя',
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Всем на этой вики хотелось бы знать о вас больше!</div><a href="$1">Изменить этот раздел</a> чтобы добавить побольше информации о себе и рассказать нам о том, что вы любите.',

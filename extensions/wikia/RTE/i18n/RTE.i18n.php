@@ -242,7 +242,7 @@ $messages['fr'] = array(
 	'rte-edgecase-templateintable' => 'un tableau avec un appel de modèle dans sa définition',
 	'rte-edgecase-unclosed-tags' => 'balise HTML non fermée',
 	'enablerichtexteditor' => 'Activer le nouvel éditeur',
-	'rte-enablerichtexteditormessage' => 'Nouvel éditeur activé !',
+	'rte-enablerichtexteditormessage' => 'Éditeur de texte enrichi activé !',
 	'rte-first-run-notice' => "Nous avons apporté quelques améliorations à l'éditeur. Pour en savoir plus, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lisez l'annonce].",
 	'prefs-rte' => 'Éditeur de texte enrichi',
 );
@@ -602,6 +602,7 @@ $messages['tl'] = array(
 	'enablerichtexteditor' => 'Paganahin ang Patnugot ng Mayamang Teksto',
 	'rte-enablerichtexteditormessage' => 'Pinagana na ang Patnugot ng Mayamang Teksto!',
 	'rte-first-run-notice' => 'Mayroon kaming ilang mga pagpapainam sa patnugot. Upang makaalam ng mas marami, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news basahin ang pahayag].',
+	'prefs-rte' => 'Patnugot ng Mayamang Teksto',
 );
 
 /** Turkish (Türkçe)

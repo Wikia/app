@@ -187,6 +187,13 @@ $messages['pms'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Pàgina ëd discussion creà automaticament',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'sharedhelp-autotalkcreate-summary' => 'د خبرو اترو مخ په خپلکاره توګه جوړ شو',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */

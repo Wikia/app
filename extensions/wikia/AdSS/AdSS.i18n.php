@@ -272,6 +272,7 @@ $messages['az'] = array(
 	'adss-button-cancel' => 'Ləğv et',
 	'adss-button-yes' => 'Bəli',
 	'adss-button-no' => 'Xeyr',
+	'adss-per-site' => 'Bütün səhifələr',
 	'adss-close' => 'Bağla',
 	'adss-cancel' => 'Ləğv et',
 	'adss-type' => 'Tipi',
@@ -303,13 +304,19 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'adss-sponsor-links' => 'Спонсорирани препратки в Wikia',
+	'adss-form-email' => 'Електронна поща:',
+	'adss-form-password' => 'Парола:',
 	'adss-form-login-link' => 'Влизане',
 	'adss-form-field-empty-errormsg' => 'Това поле не може да бъде празно',
 	'adss-form-non-existent-title-errormsg' => 'Тази страница не съществува',
+	'adss-form-pick-plan-errormsg' => 'Необходимо е да се избере план',
+	'adss-form-pick-plan' => 'Избиране на рекламен пакет',
+	'adss-form-reviews-page-day-plan-header' => 'Спонсориране на този бизнес',
 	'adss-form-or' => '- или -',
 	'adss-button-edit' => 'Редактиране',
 	'adss-button-login' => 'Влизане',
 	'adss-button-save-pay' => 'Съхраняване и плащане',
+	'adss-button-pay-paypal' => 'Плащане чрез PayPal',
 	'adss-button-select' => 'Избиране',
 	'adss-button-save' => 'Съхраняване',
 	'adss-button-cancel' => 'Отказване',
@@ -318,10 +325,13 @@ $messages['bg'] = array(
 	'adss-per-site' => 'Всички страници',
 	'adss-close' => 'Затваряне',
 	'adss-cancel' => 'Отказване',
+	'adss-admin-tab-reports' => 'Отчети',
 	'adss-wrong-id' => 'Грешен номер',
 	'adss-price' => 'Цена',
 	'adss-status' => 'Статут',
+	'adss-fee' => 'Такса',
 	'adss-description' => 'Описание',
+	'adss-amount' => '$1 щатски долара',
 );
 
 /** Breton (Brezhoneg)
@@ -1541,6 +1551,8 @@ $messages['gl'] = array(
 	'adss-form-thanks' => 'Grazas polo seu patrocinio! O seu anuncio xa está comprado e comezará a aparecer despois da aprobación manual (nas vindeiras 48 horas).
 
 Por que non [[Special:AdSS|merca]] outro anuncio?',
+	'adss-upsell-yes' => 'Si, quero!',
+	'adss-upsell-no' => 'Non, grazas',
 	'adss-upsell-error' => 'Houbo un erro!',
 	'adss-button-preview' => 'Vista previa',
 	'adss-button-edit' => 'Editar',
@@ -1573,6 +1585,8 @@ Por que non [[Special:AdSS|merca]] outro anuncio?',
 	'adss-pending' => 'Pendente',
 	'adss-wikia' => 'Wikia',
 	'adss-type' => 'Tipo',
+	'adss-price' => 'Prezo',
+	'adss-ad' => 'Anuncio',
 	'adss-status' => 'Estado',
 	'adss-created' => 'Creado',
 	'adss-fee' => 'Custo',
@@ -1846,6 +1860,19 @@ $messages['ig'] = array(
 	'adss-button-save-pay' => 'Donyéré',
 );
 
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'adss-button-edit' => 'Хувца',
+	'adss-button-login' => 'Чувала/яла',
+	'adss-button-save' => 'Кходе',
+	'adss-button-cancel' => 'ДIадаккха',
+	'adss-button-yes' => 'Мегаьд',
+	'adss-button-no' => 'Мегаьдац',
+	'adss-per-site' => 'Еррига оагIувнаш',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author គីមស៊្រុន
  */
@@ -2030,6 +2057,8 @@ $messages['lb'] = array(
 	'adss-form-non-existent-title-errormsg' => 'Dës Säit gëtt et net',
 	'adss-form-banner-upload-errormsg' => 'Dir musst e Bild eraussiche fir eropzelueden',
 	'adss-form-or' => '- oder -',
+	'adss-upsell-yes' => 'Jo, ech wëll et!',
+	'adss-upsell-no' => 'Nee, merci',
 	'adss-upsell-error' => 'Et ass e Feeler geschitt!',
 	'adss-button-edit' => 'Änneren',
 	'adss-button-save-pay' => 'Späicheren',
@@ -3382,6 +3411,16 @@ $messages['ru'] = array(
 	'adss-description' => 'Описание',
 );
 
+/** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['si'] = array(
+	'adss-form-password' => 'ඔබගේ මුර පදය:',
+	'adss-form-login-link' => 'ප්‍රවිෂ්ට වන්න',
+	'adss-timestamp' => 'කාලමුද්‍රාව',
+	'adss-description' => 'විස්තරය',
+);
+
 /** Slovenian (Slovenščina)
  * @author Dbc334
  */
@@ -3624,6 +3663,90 @@ $messages['tl'] = array(
 	'adss-button-no' => 'Hindi',
 	'adss-buy-another' => 'Bumili ng isa pang patalastas!',
 	'adss-preview-prompt' => 'Narito ang kung paano ang magiging anyo ng iyong pagtataguyod - pindutin ang "Baguhin" upang bumalik at gumawa ng mga pagbabago, o "Sagipin" upang masagip ito at pumunta sa PayPal.',
+	'adss-per-site' => 'Lahat ng mga pahina',
+	'adss-per-hub' => 'Lunduyan ng gawain',
+	'adss-per-page' => 'Isang pahina lamang',
+	'adss-close' => 'Isara',
+	'adss-cancel' => 'Huwag ituloy',
+	'adss-manager-tab-adList' => 'Mga patalastas mo',
+	'adss-manager-tab-billing' => 'Pagtatala ng babayaran',
+	'adss-admin-tab-adList' => 'Talaan ng mga patalastas',
+	'adss-admin-tab-billing' => 'Pagtatala ng babayaran',
+	'adss-admin-tab-reports' => 'Mga ulat',
+	'adss-not-logged-in' => 'Kailangang nakalagda ka',
+	'adss-wrong-id' => 'Maling ID',
+	'adss-no-permission' => 'Walang pahintulot',
+	'adss-canceled' => 'Hindi itinuloy',
+	'adss-rejected' => 'Tinanggihan',
+	'adss-approved' => 'Pinayagan',
+	'adss-pending' => 'Nakabinbin',
+	'adss-wikia' => 'Wikia',
+	'adss-type' => 'Uri',
+	'adss-no-shares' => '# mga kabahagi',
+	'adss-price' => 'Halaga',
+	'adss-ad' => 'Patalastas',
+	'adss-status' => 'Katayuan',
+	'adss-created' => 'Nalikha na',
+	'adss-your-balance' => 'Nakatakdang natitira pa:',
+	'adss-your-billing-agreement' => 'Kasunduan sa pagbabayad ng singilin sa PayPal:',
+	'adss-no-billing-agreement' => 'Walang katanggap-tanggap na kasunduan na pang-PayPal. Muling likhain ang iyong kasunduan ng pagbabayad sa singilin upang mapanatiling tumatakbo ang mga patalastas mo.',
+	'adss-create-billing-agreement' => 'Lumikha ng isang kasunduan sa pagbabayad ng singilin',
+	'adss-cancel-billing-agreement-confirmation' => 'Nakatitiyak ka bang nais mong huwag nang ituloy ang kasunduan mo ng pagbabayad sa singilin? Hihinto sa pagtakbo ang mga patalastas mo kapag walang isang katanggap-tanggap na kasunduan na pang-PayPal.',
+	'adss-billing-agreement-created' => 'Matagumpay na nalikha ang kasunduan ng pagbabayad sa singilin (BAID=$1). Bumalik sa [[Special:AdSS/manager/billing|pisarang dunggulan]].',
+	'adss-paypal-payment' => 'Pagbabayad sa PayPal',
+	'adss-adss-fee' => 'Bayaring AdSS',
+	'adss-adss-refund' => 'Pagsasauli ng Bayad ng AdSS',
+	'adss-fee' => 'Bayarin',
+	'adss-paid' => 'Bayad na',
+	'adss-timestamp' => 'Tatak ng oras',
+	'adss-description' => 'Paglalarawan',
+	'adss-amount' => '$$1',
+	'adss-cancel-confirmation' => 'Nakatitiyak ka bang nais mong burahin ang patalastas na ito?',
+	'adss-welcome-subject' => '[AdSS] Salamat sa iyong pagtataguyod!',
+);
+
+/** Turkish (Türkçe)
+ * @author Gizemb
+ */
+$messages['tr'] = array(
+	'adss-form-usd-per-day' => 'günde $$1',
+	'adss-upsell-yes' => 'Evet, istiyorum!',
+	'adss-upsell-no' => 'Hayır, teşekkürler',
+	'adss-upsell-thanks' => 'Teklifi seçtiğiniz için teşekkür ederiz!',
+	'adss-upsell-error' => 'Bir hata oluştu!',
+	'adss-button-preview' => 'Önizleme',
+	'adss-button-edit' => 'Düzenle',
+	'adss-button-login' => 'Giriş yap',
+	'adss-button-login-buy' => 'HEMEN giriş yap ve satın al',
+	'adss-button-save-pay' => 'Kaydet & öde',
+	'adss-button-pay-paypal' => 'PayPal ile öde',
+	'adss-button-select' => 'Seç',
+	'adss-button-buy-now' => 'HEMEN al',
+	'adss-button-save' => 'Kaydet',
+	'adss-button-cancel' => 'İptal',
+	'adss-button-yes' => 'Evet',
+	'adss-button-no' => 'Hayır',
+	'adss-preview-header' => 'Önizleme',
+	'adss-click-here' => 'Burayı tıkla',
+	'adss-per-site' => 'Tüm sayfalar',
+	'adss-per-page' => 'Sadece bir sayfa',
+	'adss-close' => 'Kapat',
+	'adss-cancel' => 'İptal',
+	'adss-manager-tab-adList' => 'Reklamlarınız',
+	'adss-admin-tab-adList' => 'Reklamların listesi',
+	'adss-admin-tab-reports' => 'Raporlar',
+	'adss-not-logged-in' => 'Oturum açmanız gerekiyor',
+	'adss-wrong-id' => 'Yanlış kimlik',
+	'adss-no-permission' => 'İzin yok',
+	'adss-canceled' => 'İptal edildi',
+	'adss-rejected' => 'Reddedildi',
+	'adss-approved' => 'Onaylandı',
+	'adss-pending' => 'Beklemede',
+	'adss-wikia' => 'Wikia',
+	'adss-type' => 'Tür',
+	'adss-price' => 'Fiyat',
+	'adss-ad' => 'Reklam',
+	'adss-created' => 'Oluşturuldu',
 );
 
 /** Ukrainian (Українська)

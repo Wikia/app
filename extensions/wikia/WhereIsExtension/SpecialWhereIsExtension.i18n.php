@@ -665,6 +665,23 @@ $messages['uk'] = array(
 	'whereisextension-search-type' => 'Тип:',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author XiaoQiaoGrace
+ */
+$messages['vi'] = array(
+	'whereisextension' => 'Đâu là phần mở rộng',
+	'whereisextension-submit' => 'Tìm kiếm',
+	'whereisextension-list' => 'Danh sách wiki phù hợp với tiêu chí',
+	'whereisextension-isset' => 'được thiết lập để',
+	'whereisextension-filter' => 'Bộ lọc',
+	'whereisextension-all-groups' => 'Tất cả các nhóm',
+	'whereisextension-name-contains' => 'tên biến có chứa',
+	'whereisextension-search-like-value' => 'Giống như:',
+	'whereisextension-search-type' => 'Kiểu:',
+	'whereisextension-search-type-bool' => 'Boolean',
+	'whereisextension-search-type-full' => 'Giống như',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  */

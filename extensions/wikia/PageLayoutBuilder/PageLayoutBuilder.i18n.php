@@ -234,6 +234,7 @@ $messages['ar'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'plb-special-form-submit-button' => 'Səhifəni qeyd et',
 	'plb-special-form-summary' => 'Xülasə:',
 	'plb-form-title' => 'Başlıq:',
 	'plb-list-count' => '#Məqalələr',
@@ -244,6 +245,7 @@ $messages['az'] = array(
 	'plb-editor-overlay-edit' => 'redaktə',
 	'plb-widget-name-plb_image' => 'Şəkil',
 	'plb-widget-name-plb_gallery' => 'Qalereya',
+	'plb-property-editor-width' => 'Genişlik',
 	'plb-property-editor-spacing-small' => 'Kiçik',
 	'plb-property-editor-spacing-large' => 'Geniş',
 	'plb-property-editor-alignment-left' => 'Sol',
@@ -454,7 +456,7 @@ $messages['de'] = array(
 	'plb-editor-elements-in-the-editor' => '<span>ELEMENTE</span> IM EDTOR FORMULAR',
 	'plb-editor-add-element' => 'Element hinzufügen',
 	'plb-editor-edit' => 'Bearbeiten',
-	'plb-editor-toolbar-caption' => 'Seiten-Layout-Generator',
+	'plb-editor-toolbar-caption' => 'Layout-Ersteller',
 	'plb-editor-toolbar-formatting' => 'Formatierung',
 	'plb-editor-toolbar-static' => 'Statisch',
 	'plb-editor-rte-caption' => 'Element hinzufügen',
@@ -875,6 +877,7 @@ $messages['fr'] = array(
 	'plb-helpbox-checkboxinfo2' => 'Ne plus afficher ce tutoriel.',
 	'plb-helpbox-help-desc' => 'Vous avez encore des questions ?',
 	'plb-helpbox-help-link' => 'Consultez le guide du Générateur de mise en page.',
+	'plb-helpbox-help-link-title' => 'Générateur de mise en page',
 	'plb-parser-error-not-on-plb-article' => 'Les éléments de mise en page ne peuvent être utilisés que sur les pages de mise en page',
 	'plb-parser-error-use-on-template' => 'Impossible d’utiliser des éléments de mise en page dans les modèles',
 	'plb-list-action-copy' => 'Nouvelle catégorie de wiki',
@@ -1058,8 +1061,8 @@ $messages['ia'] = array(
 	'plb-parser-preview-mlinput' => 'Isto es un elemento a plure lineas. Si un usator completa le formulario pro crear nove paginas a base de iste designo, ille videra un grande quadro de entrata, e si ille lo completa pro generar un pagina, le texto apparera in iste bloco sur tu designo. Si tu combina isto con altere variabiles, tu pote crear designos belle e complete, ma toto que le usatores debe facer es completar un formulario; de iste maniera, tu pote haber multe paginas fascinante, generate si rapidemente como possibile.',
 	'plb-parser-preview-sinput' => 'Le selection del usator apparera hic.',
 	'plb-create-from-article-new' => '<span style="color:red">Nove!</span> Constructor de designos',
-	'plb-create-from-article-button' => 'Facer un designo de iste pagina',
-	'plb-create-from-article-button-title' => 'Facer un designo de iste pagina',
+	'plb-create-from-article-button' => 'Facer un designo ex iste pagina',
+	'plb-create-from-article-button-title' => 'Facer un designo ex iste pagina',
 	'plb-create-from-article-button-desc' => 'Usar iste pagina como base pro un designo. <a href="#">Leger plus ></a>',
 	'plb-layout-usercant' => 'Pardono, tu non ha accesso al constructor de designos. Contacta un administrator in iste wiki pro obtener adjuta.',
 	'plb-editor-elements-in-the-editor' => '<span>ELEMENTOS</span> IN LE FORMULARIO DE MODIFICATION',
@@ -1732,6 +1735,7 @@ $messages['nl'] = array(
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author MarkvA
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -1757,6 +1761,9 @@ $messages['nl-informal'] = array(
 	'plb-parser-preview-mlinput' => "Dit is een meerregelig element. Als een gebruiker het formulier invult om een pagina aan te maken die gebaseerd is op deze vormgeving, dan krijgt deze een groot invoerveld te zien en als dat wordt ingevuld bij het aanmaken van een pagina, wordt die tekst weergegeven op deze plaats in de vormgeving. Dit element combineren met andere variabelen betekent dat je mooie en complete vormgevingen kunt maken terwijl gebruikers alleen maar een formulier hoeven in te vullen. Zo kan je dus snel veel pagina's (laten) aanmaken.",
 	'plb-layout-usercant' => 'Je hebt geen toegang tot de Wizard Vormgeving. Vraag een wikibeheerder om je te helpen.',
 	'plb-editor-left-sidebar-tutorial' => '<br /><b>Welkom bij de Wizard Vormgeving!</b><br /><br />Klik op de knop <em>Element toevoegen</em> om elementen toe te voegen van het gewenste type.<br /><br />Als je hier meer items toevoegt, worden nieuwe vragen toegevoegd aan het aanmaakproces voor een pagina.',
+	'plb-property-editor-help-caption' => 'Als gebruikers een pagina maken van je vormgeving, dan is dit de hulptekst voor het invoerveld.',
+	'plb-property-editor-help-instructions' => "Als gebruikers een pagina's van je vormgeving aanmaken, dan wordt dit weergegeven in het invoerveld voor dit element.",
+	'plb-property-editor-help-required' => 'Dit bepaalt of een element verplicht is om een pagina van je vormgeving aan te maken.',
 	'plb-property-editor-help-choices' => 'Als gebruikers een pagina maken van je vormgeving, dan is dit de keuzelijst voor dit element.',
 	'plb-helpbox-bigimage-desc' => "De Wizard Vormgeving maakt het mogelijk om pagina's vooraf vorm te geven zodat deze door andere gebruikers van de wiki snel in elkaar gezet kunnen worden. Vormgevingen helpen jou en de gebruikers van de wiki snel pagina's aan te maken die ook een gelijkvormig uiterlijk hebben.",
 	'plb-helpbox-box1' => '<h1>Aanmaak door beheerder</h1>Als beheerder heb je de mogelijkheid om nieuwe vormgevingen voor je wiki aan te maken. Start de Wizard Vormgeving en plaats elementen als tekstvelden, afbeeldingsvelden en meer op een pagina, pas er opmaakeigenschappen op toe en bepaal de volgorde.',

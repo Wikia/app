@@ -330,6 +330,7 @@ $messages['de'] = array(
 	'themedesigner-dont-use-a-background' => 'Keinen Hintergrund verwenden',
 	'themedesigner-upload-your-own' => 'Eigenes Bild hochladen',
 	'themedesigner-button-upload' => 'Hochladen',
+	'themedesigner-button-upload-wordmark' => 'Hochladen',
 	'themedesigner-rules-background' => 'jpg, gif oder png. Maximal 100 Kilobyte.',
 	'themedesigner-default' => 'Standard',
 	'themedesigner-font' => 'Schriftart',
@@ -359,6 +360,7 @@ $messages['en-gb'] = array(
  * @author Danke7
  * @author Locos epraix
  * @author Sanbec
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'themedesigner-desc' => 'Permitir a los administradores del wiki poder diseñar un tema propio para el wiki',
@@ -391,6 +393,7 @@ $messages['es'] = array(
 	'themedesigner-dont-use-a-background' => 'No usar una imagen de fondo',
 	'themedesigner-upload-your-own' => 'Subir un diseño propio',
 	'themedesigner-button-upload' => 'Subir',
+	'themedesigner-button-upload-wordmark' => 'Subir',
 	'themedesigner-rules-background' => 'jpg, gif o png. Límite: 100 Kb',
 	'themedesigner-default' => 'Por defecto',
 	'themedesigner-font' => 'fuente',
@@ -520,6 +523,7 @@ $messages['fr'] = array(
 	'themedesigner-dont-use-a-background' => 'Ne pas utiliser d’arrière-plan',
 	'themedesigner-upload-your-own' => 'Importez la vôtre',
 	'themedesigner-button-upload' => 'Importer',
+	'themedesigner-button-upload-wordmark' => 'Importer',
 	'themedesigner-rules-background' => 'jpg, gif ou png. Limite : 100 Ko',
 	'themedesigner-default' => 'Défaut',
 	'themedesigner-font' => 'police',
@@ -658,6 +662,7 @@ $messages['ia'] = array(
 	'themedesigner-dont-use-a-background' => 'Non usar un fundo',
 	'themedesigner-upload-your-own' => 'Incargar un proprie',
 	'themedesigner-button-upload' => 'Incargar',
+	'themedesigner-button-upload-wordmark' => 'Incargar',
 	'themedesigner-rules-background' => 'JPG, GIF o PNG. Limite de 100 kilobytes.',
 	'themedesigner-default' => 'Predefinition',
 	'themedesigner-font' => 'typo de litteras',
@@ -673,6 +678,15 @@ $messages['ia'] = array(
 	'themedesigner-dimensions-error' => 'Le imagine excede le limites del dimensiones',
 	'themedesigner-type-error' => 'Typo de file incorrecte',
 	'themedesugber-uknown-error' => 'Un error occurreva. Regrettabilemente nos non succedeva a identificar lo. Per favor reproba.',
+);
+
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'themedesigner-page' => 'ОагIув',
+	'themedesigner-color' => 'бос',
+	'themedesigner-links' => 'Iинкаш',
 );
 
 /** Japanese (日本語)
@@ -818,6 +832,7 @@ $messages['mk'] = array(
 	'themedesigner-dont-use-a-background' => 'Не користи позадина',
 	'themedesigner-upload-your-own' => 'Подигнете своја',
 	'themedesigner-button-upload' => 'Подигни',
+	'themedesigner-button-upload-wordmark' => 'Подигни',
 	'themedesigner-rules-background' => 'jpg, gif или png. Ограничено на 100 килобајти',
 	'themedesigner-default' => 'По основно',
 	'themedesigner-font' => 'фонт',
@@ -876,6 +891,7 @@ $messages['ms'] = array(
 	'themedesigner-dont-use-a-background' => 'Jangan gunakan latar belakang',
 	'themedesigner-upload-your-own' => 'Muat naik gambar sendiri',
 	'themedesigner-button-upload' => 'Muat naik',
+	'themedesigner-button-upload-wordmark' => 'Muat naik',
 	'themedesigner-rules-background' => 'jpg, gif atau png. Had 100 kilobait',
 	'themedesigner-default' => 'Tersedia',
 	'themedesigner-font' => 'fon',
@@ -925,6 +941,7 @@ $messages['mzn'] = array(
 
 /** Dutch (Nederlands)
  * @author McDutchie
+ * @author SPQRobin
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -958,6 +975,7 @@ $messages['nl'] = array(
 	'themedesigner-dont-use-a-background' => 'Geen achtergrond gebruiken',
 	'themedesigner-upload-your-own' => 'Zelf uploaden',
 	'themedesigner-button-upload' => 'Uploaden',
+	'themedesigner-button-upload-wordmark' => 'Uploaden',
 	'themedesigner-rules-background' => 'JPG, GIF of PNG. Maximaal 100 kilobyte.',
 	'themedesigner-default' => 'Standaard',
 	'themedesigner-font' => 'lettertype',
@@ -977,6 +995,7 @@ $messages['nl'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'themedesigner-desc' => 'Lar wiki-administratorer utforme et tema for en wiki',
@@ -1009,6 +1028,7 @@ $messages['no'] = array(
 	'themedesigner-dont-use-a-background' => 'Ikke bruk en bakgrunn',
 	'themedesigner-upload-your-own' => 'Last opp din egen',
 	'themedesigner-button-upload' => 'Last opp',
+	'themedesigner-button-upload-wordmark' => 'Last opp',
 	'themedesigner-rules-background' => 'jpg, gif eller png. Grense på 100 kilobyte',
 	'themedesigner-default' => 'Standard',
 	'themedesigner-font' => 'skrifttype',
@@ -1186,6 +1206,7 @@ $messages['pt'] = array(
 	'themedesigner-dont-use-a-background' => 'Não usar imagem de fundo',
 	'themedesigner-upload-your-own' => 'Faça o upload de uma',
 	'themedesigner-button-upload' => 'Upload',
+	'themedesigner-button-upload-wordmark' => 'Enviar',
 	'themedesigner-rules-background' => 'jpg, gif ou png. Máx: 100 KB',
 	'themedesigner-default' => 'Padrão',
 	'themedesigner-font' => 'fonte',
@@ -1472,6 +1493,9 @@ $messages['tl'] = array(
 	'themedesigner-button-change-text' => 'Baguhin ang teksto',
 	'themedesigner-reason' => 'Tagapagdisenyo ng Tema - ang pagsasagip ay ginawa ni $1',
 	'themedesigner-size-error' => 'Hindi tamang sukat ng talaksan',
+	'themedesigner-dimensions-error' => 'Lampas ang larawan sa mga hangganan ng mga sukat',
+	'themedesigner-type-error' => 'Hindi tamang uri ng talaksan',
+	'themedesugber-uknown-error' => 'Naganap ang isang kamalian, sa kasamaang-palad hindi namin nagawang kilalanin ito, mangyaring subukan muli',
 );
 
 /** Ukrainian (Українська)

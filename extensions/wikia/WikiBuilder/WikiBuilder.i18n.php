@@ -1211,8 +1211,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Wiki-skaparguide]]',
 	'owb-title' => 'Wiki Builder',
 	'owb-headline' => 'Hej, $1',
 	'owb-button-skip' => 'Hoppa över',
@@ -1225,7 +1227,7 @@ $messages['sv'] = array(
 	'owb-step1-label' => 'Vad handlar det om?',
 	'owb-step1-label-formatted' => 'Vad handlar<br />det om?',
 	'owb-step1-instruction' => 'Skriv en kort introduktion för din hemsida. Skriv det kvickt och roligt för att få andra uppspelta över att bidra till ditt projekt.',
-	'owb-step1-sample' => 'Ett prov på en Wiki hemsida',
+	'owb-step1-sample' => 'Exempel på en Wiki-hemsida',
 	'owb-step2' => 'Steg 2',
 	'owb-step2-label' => 'Välj ett tema',
 	'owb-step2-label-formatted' => 'Välj ett<br />tema',
@@ -1234,17 +1236,17 @@ $messages['sv'] = array(
 	'owb-step2-gallery' => 'Tema-Galleri',
 	'owb-step3' => 'Steg 3',
 	'owb-step3-label' => 'Starta några sidor',
-	'owb-step3-label-formatted' => 'Start<br />några sidor',
+	'owb-step3-label-formatted' => 'Starta<br />några sidor',
 	'owb-step3-instruction' => 'För att starta din wiki, måste du lägga till några sidor. Du kan lägga till fler när du vill.',
 	'owb-step3-your-pages' => 'Dina sidonamn',
-	'owb-step3-examples1-title' => 'Exempel: Monsterfilmer',
+	'owb-step3-examples1-title' => 'Exempel: Namn på sidor om monsterfilmer',
 	'owb-step3-examples1' => "<li>Frankenstein's Monster</li>
 <li>The Wolfman</li>
 <li>The Howling</li>
 <li>The Mummy</li>
 <li>House of Wax</li>
 <li>Swamp Thing</li>",
-	'owb-step3-examples2-title' => 'Exempel: Brädspel',
+	'owb-step3-examples2-title' => 'Exempel: Namn på sidor om brädspel',
 	'owb-step3-examples2' => '<li>Monopol</li>
 <li>Risk</li><li>Scrabble</li>
 <li>Trivial Pursuit</li>
@@ -1268,7 +1270,7 @@ $messages['sv'] = array(
 <li>Ingen bredbandsgräns</li></ul>',
 	'owb-step4-error-caption' => 'Fel',
 	'owb-step4-error-upgrade-content' => 'Denna wiki kan inte uppgraderas till Plus.',
-	'owb-step4-error-token-content' => 'Misslyckades med att få korrekt token från PayPal.',
+	'owb-step4-error-token-content' => 'Misslyckades att få korrekt nyckel från PayPal.',
 	'owb-status-saving' => 'Sparar',
 	'owb-unable-to-edit-description' => 'Beskrivningen kan inte redigeras med Wiki Builder',
 	'owb-readonly-try-again' => 'Wikin är för närvarande i skrivskyddat läge. Försök igen om en stund',

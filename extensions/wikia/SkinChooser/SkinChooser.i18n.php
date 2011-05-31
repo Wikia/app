@@ -52,9 +52,14 @@ $messages['es'] = array(
 
 /** French (Français)
  * @author Iketsi
+ * @author Verdy p
+ * @author Wyz
  */
 $messages['fr'] = array(
-	'new-look' => 'Nouveau look de Wikia',
+	'skinchooser-desc' => 'Permet aux utilisateurs de choisir des habillages dans leurs préférences',
+	'skinchooser-customcss' => 'Pour des thèmes personnalisés, sélectionnez l’option « personnalisé » dans le menu ci-dessus et spécifiez le code CSS personnalisé dans [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Nouvelle apparence de Wikia',
+	'site-layout' => 'Gabarits du site',
 );
 
 /** Interlingua (Interlingua)

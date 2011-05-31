@@ -114,6 +114,11 @@ $messages['qqq'] = array(
 	'myhome-feed-new-blog-comment-details' => '{{Identical|Comment}}',
 	'myhome-feed-new-article-comment-details' => '{{Identical|Comment}}',
 	'myhome-feed-redirect-details' => '{{Identical|Redirect}}',
+	'myhome-default-view-checkbox' => "In the list of recent wiki activity (Special:WikiActivity), this is a checkbox button to toggle between viewing a summary of all activity and a summary of activity in pages on the user's watchlist.
+
+The parameter $1 is replaced by either:
+* {{msg-wikia|Myhome-activity-feed}}, or:
+* {{msg-wikia|Myhome-watchlist-feed}}",
 );
 
 /** Afrikaans (Afrikaans)
@@ -1420,7 +1425,7 @@ Si tu es le fundator o un administrator de iste wiki, tu pote cambiar iste messa
 
 * O simplemente scriber alcun parolas de incoragiamento!",
 	'myhome-hot-spots-definition' => 'Paginas con le plus contributores in le ultime {{PLURAL:$1|die|$1 dies}}.',
-	'myhome-default-view-checkbox' => 'Facer de $1 mi vista predefinite',
+	'myhome-default-view-checkbox' => 'Facer del $1 mi vista predefinite',
 	'myhome-default-view-success' => 'OK, isto es ora tu option predefinite',
 	'tooltip-pt-myhome' => 'Ir a mi pagina initial',
 	'activityfeed' => 'Summario de activitate',
@@ -1692,6 +1697,8 @@ $messages['lb'] = array(
 	'myhome-feed-move' => 'Säit geréckelt',
 	'myhome-feed-talkpage' => 'Diskussiounssäit',
 	'myhome-feed-delete' => 'geläscht',
+	'myhome-feed-article-comment-created-by' => 'nei Bemierkung vum $1',
+	'myhome-feed-by' => 'vum $1',
 	'myhome-feed-new-page-details' => 'Nei Säit',
 	'myhome-feed-summary-details' => 'Resumé',
 	'myhome-feed-new-blog-comment-details' => 'Bemierkung',
@@ -2656,6 +2663,7 @@ $messages['rue'] = array(
 
 /** Sinhala (සිංහල)
  * @author තඹරු විජේසේකර
+ * @author පසිඳු කාවින්ද
  */
 $messages['si'] = array(
 	'myhome' => 'මගේ නිවස',
@@ -2664,12 +2672,19 @@ $messages['si'] = array(
 	'myhome-watchlist-feed' => 'මුර-ලැයිස්තුව',
 	'myhome-user-contributions-feed' => 'දායකත්‍වයන්',
 	'myhome-hot-spots-newest' => 'විකියේ නව පිටු',
-	'tog-myhomedisableredirect' => 'නිවසට ආපසු හරවා යැවීම අහෝසි කරන්න',
+	'tog-myhomedisableredirect' => 'විකී සක්‍රීයතා වෙත මගේ ආපසු හරවා යැවීම අක්‍රීය කරන්න',
 	'myhome-feed-newpage' => 'නව පිටුව',
 	'myhome-feed-edit' => 'සංස්කරණය කරන්න',
 	'myhome-feed-move' => 'පිටුව ගෙනයන ලදී.',
 	'myhome-feed-talkpage' => 'සාකච්ඡා පිටුව',
 	'myhome-feed-delete' => 'මකාදමන ලදී.',
+	'myhome-hot-spots-number-of-editors' => 'සංස්කාරකයන්',
+	'myhome-namespace-blog' => 'බ්ලෝග්',
+	'myhome-community-corner-header' => 'ප්‍රජා පණිවුඩ',
+	'myhome-community-corner-edit' => 'පණිවුඩය සංස්කරණය කරන්න',
+	'myhome-default-view-checkbox' => '$1 මගේ සාමාන්‍ය නැරඹීම් විදිහ කරන්න',
+	'myhome-default-view-success' => 'හරි, දැන් මෙය ඔබේ සාමාන්‍ය විදිහයි',
+	'tooltip-pt-myhome' => 'මගේ නිවස වෙත යන්න',
 );
 
 /** Slovenian (Slovenščina)

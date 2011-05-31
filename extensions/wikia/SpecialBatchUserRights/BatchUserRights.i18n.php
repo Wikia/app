@@ -177,6 +177,14 @@ $messages['lb'] = array(
 	'batchuserrights-userload-error' => "De Benotzer \"'''\$1'''\" konnt net geluede ginn.",
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'batchuserrights-single-progress-update' => 'Pridėta {{PLURAL:$1| grupė | grupės}} į <strong>$2</strong> .',
+	'batchuserrights-userload-error' => "Nepavyko įkelti naudotojo \"''' \$1 '''\".",
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

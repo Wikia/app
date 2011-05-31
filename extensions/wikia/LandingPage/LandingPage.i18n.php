@@ -105,6 +105,26 @@ $messages['fr'] = array(
 	'landingpage-readfaq' => 'Des questions ? Lisez notre FAQ &gt;',
 	'landingpage-text' => "Chez Wikia vous pouvez <strong>communiquer avec des gens</strong> qui partagent vos <strong>centres d'intérêt</strong>. Trouvez votre groupe, commentez et éditez, vous pouvez même <strong>démarrer votre propre site</strong> et communauté.",
 	'landingpage-buttons-learn-more' => 'En savoir plus &gt;',
+	'landingpage-language-links' => '* Français|fr
+* English|en
+* Dansk|da
+* Deutsch|de
+* Eesti|et
+* Español|es
+* Italiano|it
+* Nederlands|nl
+* Norsk (bokmål)|no
+* Polski|pl
+* Português|pt
+* Português do Brasil|pt-br
+* Suomi|fi
+* Svenska|sv
+* Русский|ru
+* 日本語|ja
+* 中文 (台灣)‬|zh
+* עברית|he
+* العربية|ar',
+	'landingpage-buttons-about-wikia-url' => 'http://www.community.wikia.com/wiki/About_Wikia?uselang=fr',
 );
 
 /** Galician (Galego)
@@ -171,6 +191,13 @@ $messages['ksh'] = array(
 	'landingpage-start-exploring-text' => 'Söhk noh Dinge leevste Saache udder blädder onge en de Jemeinschaff ier Favoritte.',
 	'landingpage-readfaq' => 'Häs De Froore? Liß uns Sigg met öff jeshtallte Froore &gt;',
 	'landingpage-buttons-learn-more' => 'Mieh eruß fenge &gt;',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'landingpage' => 'Wëllkomm op Wikia',
 );
 
 /** Macedonian (Македонски)

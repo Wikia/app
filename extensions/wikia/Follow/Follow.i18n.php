@@ -874,6 +874,7 @@ Merci de visiter ce site et de le modifier fréquemment...
  */
 $messages['gl'] = array(
 	'follow-desc' => 'Melloras para a lista de vixilancia',
+	'prefs-basic' => 'Opcións básicas',
 	'wikiafollowedpages-special-heading-category' => 'Categorías ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Artigos ($1)',
 	'wikiafollowedpages-special-heading-blogs' => 'Blogues e publicacións ($1)',

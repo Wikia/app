@@ -70,6 +70,7 @@ $messages['es'] = array(
 /** French (Français)
  * @author Iketsi
  * @author Od1n
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'userdata' => "Obtenir des données d'utilisateur",
@@ -77,8 +78,8 @@ $messages['fr'] = array(
 	'userdata-submit' => 'Obtenir les données',
 	'specialuserdata-desc' => 'Fournit une interface permettant de changer wgUserData par wiki.',
 	'userdata-header' => 'Augmentation wgUserData',
-	'userdata-value' => 'La valeur actuelle des wgUserData est « $1 ». Appuyez sur le bouton pour le mettre en timestamp actuel.',
-	'userdata-updated' => 'wgUserData mis à jour pour "$1".',
+	'userdata-value' => 'La valeur actuelle de wgUserData est « $1 ». Appuyez sur le bouton pour la définir à la valeur du timestamp actuel.',
+	'userdata-updated' => 'wgUserData mis à jour avec « $1 ».',
 	'userdata-not-updated' => 'Échec de la mise à jour de wgUserData.',
 	'userdata-wf-reason' => 'Valeur mise à jour via [[Special:UserData|UserData]]',
 	'userdata-no-wf' => "WikiFactory n'est pas activé sur ce wiki. Impossible de modifier wgUserData.",

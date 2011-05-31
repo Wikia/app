@@ -202,6 +202,13 @@ $messages['ksh'] = array(
 	'mostpopularcategories' => 'De et öffß afjeroofe Saachjroppe.',
 );
 
+/** Ladino (Ladino)
+ * @author Universal Life
+ */
+$messages['lad'] = array(
+	'mostpopularcategories' => 'Katēggorías más populares',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

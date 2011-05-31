@@ -308,6 +308,11 @@ $messages['gl'] = array(
 Cando estea listo, pode acceder ao sistema facilmente usando calquera botón de conexión do Facebook.',
 	'comboajaxlogin-post-not-understood' => 'Houbo un erro no xeito en que se construíu este formulario.
 Inténteo de novo ou [[Special:Contact|informe do problema]].',
+	'comboajaxlogin-readonlytext' => '<h2>Sentímolo!</h2>
+<p>Nestes intres non pode crear unha conta; axiña estaremos de volta. Aquí está o que aconteceu:<br /><em>$1</em></p>
+<p>Comprobe o <a href="http://twitter.com/wikia">Twitter</a> ou o <a href="http://facebook.com/wikia">Facebook</a> para obter máis información.
+<br />
+(Se xa ten unha conta, pode <a href="#">acceder ao sistema</a> como de costume, pero non poderá editar.)</p>',
 );
 
 /** Hungarian (Magyar)

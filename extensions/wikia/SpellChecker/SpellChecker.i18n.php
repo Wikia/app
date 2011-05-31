@@ -71,11 +71,12 @@ $messages['br'] = array(
 );
 
 /** German (Deutsch)
+ * @author Claudia Hattitten
  * @author LWChris
  */
 $messages['de'] = array(
 	'spellchecker-desc' => 'Stellt Rechtschreibprüfung Schnittstelle für bezauberndes PHP-Modul bereit',
-	'enablespellchecker' => 'Rechtschreibprüfung aktivieren',
+	'enablespellchecker' => 'Rechtschreibprüfung im grafischen Modus aktivieren',
 	'spellchecker-info' => 'Rechtschreibprüfung Informationen',
 	'spellchecker-info-languages' => 'Verfügbare Sprachen ($1)',
 	'spellchecker-info-provider' => 'Anbieter',
@@ -112,11 +113,12 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Wyz
  */
 $messages['fr'] = array(
 	'spellchecker-desc' => 'Fournit une interface de vérification d’orthographe pour le module PHP enchant',
-	'enablespellchecker' => 'Activer le vérificateur d’orthographe',
+	'enablespellchecker' => 'Activer le correcteur orthographique en mode visuel',
 	'spellchecker-info' => 'Informations du vérificateur d’orthographe',
 	'spellchecker-info-languages' => 'Langues disponibles ($1)',
 	'spellchecker-info-provider' => 'Fournisseur',
@@ -159,7 +161,7 @@ $messages['ia'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'enablespellchecker' => 'Spellchecker aschalten',
+	'enablespellchecker' => 'Spellchecker am graphesche Mod aschalten',
 	'spellchecker-info' => 'Informatiounen iwwer de Spellchecker',
 	'spellchecker-info-languages' => 'Disponibel Sproochen ($1)',
 	'spellchecker-info-dictionaries' => 'Disponibel Dictionnairen',
@@ -173,7 +175,7 @@ $messages['lb'] = array(
  */
 $messages['mk'] = array(
 	'spellchecker-desc' => 'Овозможува посредник за правописна проверка за PHP-модулот Enchant',
-	'enablespellchecker' => 'Овозможи правописна проверка',
+	'enablespellchecker' => 'Овозможи правописна проверка во визуелниот режим',
 	'spellchecker-info' => 'Информации за правописната проверка',
 	'spellchecker-info-languages' => 'Јазици на располагање ($1)',
 	'spellchecker-info-provider' => 'Добавувач',
@@ -192,7 +194,7 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'spellchecker-desc' => 'Menyediakan antara muka menyemakan ejaan untuk modul PHP enchant',
-	'enablespellchecker' => 'Hidupkan penyemak ejaan',
+	'enablespellchecker' => 'Hidupkan penyemak ejaan dalam mod visual',
 	'spellchecker-info' => 'Maklumat penyemak ejaan',
 	'spellchecker-info-languages' => 'Bahasa yang ada ($1)',
 	'spellchecker-info-provider' => 'Pembekal',
@@ -254,19 +256,20 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Waldir
  */
 $messages['pt'] = array(
-	'spellchecker-desc' => 'Fornece interface de verificação ortográfica para o módulo PHP enchant',
-	'enablespellchecker' => 'Ativar o corretor ortográfico',
+	'spellchecker-desc' => 'Fornece uma interface de verificação ortográfica para o módulo PHP enchant',
+	'enablespellchecker' => 'Activar o corretor ortográfico no modo visual',
 	'spellchecker-info' => 'Informação do corretor ortográfico',
 	'spellchecker-info-languages' => 'Línguas disponíveis ($1)',
 	'spellchecker-info-provider' => 'Fornecedor',
 	'spellchecker-info-dictionaries' => 'Dicionários disponíveis',
-	'spellchecker-info-spellcheck-text' => 'Texto a ser verificado',
+	'spellchecker-info-spellcheck-text' => 'Texto para ser verificado',
 	'spellchecker-info-spellcheck-languages' => 'Língua',
 	'spellchecker-info-spellcheck-submit' => 'Verificar ortografia',
-	'spellchecker-info-spellcheck-is-correct' => 'A palavra "$1" está escrita corretamente',
+	'spellchecker-info-spellcheck-is-correct' => 'A palavra "$1" está escrita correctamente',
 	'spellchecker-info-spellcheck-suggestions' => 'Sugestões de ortografia para "$1": $2',
 );
 
@@ -323,7 +326,7 @@ $messages['te'] = array(
  */
 $messages['tl'] = array(
 	'spellchecker-desc' => 'Nagbibigay ng ugnayang-mukha ng pagsusuri ng pagbabaybay para sa modyul ng gayuma ng PHP',
-	'enablespellchecker' => 'Paganahin ang pangsuri ng pagbabaybay',
+	'enablespellchecker' => 'Paganahin ang pangsuri ng baybay na nasa paraang nakikita',
 	'spellchecker-info' => 'Kabatiran sa pangsuri ng pagbabaybay',
 	'spellchecker-info-languages' => 'Makukuhang mga wika ($1)',
 	'spellchecker-info-provider' => 'Tagapagbigay',
@@ -333,6 +336,23 @@ $messages['tl'] = array(
 	'spellchecker-info-spellcheck-submit' => 'Suriin ang pagbabaybay',
 	'spellchecker-info-spellcheck-is-correct' => 'Tama ang pagkakabaybay ng salitang "$1"',
 	'spellchecker-info-spellcheck-suggestions' => 'Mga mungkahing pagbabaybay para sa "$1": $2',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author XiaoQiaoGrace
+ */
+$messages['vi'] = array(
+	'spellchecker-desc' => 'Cung cấp giao diện kiểm tra chính tả cho mô-đun PHP',
+	'enablespellchecker' => 'Kích hoạt tính năng kiểm tra chính tả ở chế độ trực quan',
+	'spellchecker-info' => 'Thông tin kiểm tra chính tả',
+	'spellchecker-info-languages' => 'Ngôn ngữ có sẵn ($1)',
+	'spellchecker-info-provider' => 'Nhà cung cấp',
+	'spellchecker-info-dictionaries' => 'Những bộ từ điển có sẵn',
+	'spellchecker-info-spellcheck-text' => 'Văn bản được kiểm tra',
+	'spellchecker-info-spellcheck-languages' => 'Ngôn ngữ',
+	'spellchecker-info-spellcheck-submit' => 'Kiểm tra chính tả',
+	'spellchecker-info-spellcheck-is-correct' => 'Từ " $1 "được viết đúng chính tả',
+	'spellchecker-info-spellcheck-suggestions' => 'Gợi ý chính tả cho "$1": $2',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

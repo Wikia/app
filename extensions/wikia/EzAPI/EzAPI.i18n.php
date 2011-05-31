@@ -60,6 +60,13 @@ $messages['fr'] = array(
 	'ezapi-desc' => "Module de développement sans complication de l'API AJAX",
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'ezapi-desc' => 'Módulo de desenvolvemento simplificado da API AJAX',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

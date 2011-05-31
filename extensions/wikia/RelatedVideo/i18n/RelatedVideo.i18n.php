@@ -229,6 +229,24 @@ $messages['te'] = array(
 	'relatedvideo' => 'సంబంధిత దృశ్యకాలు',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'related-video-random-video' => 'Alin mang bidyo',
+	'related-video-related' => 'Kaugnay na mga bidyo',
+	'relatedvideo' => 'Kaugnay na mga bidyo',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Zahidulla
+ */
+$messages['tt-cyrl'] = array(
+	'related-video-random-video' => 'Очраклы видео',
+	'related-video-related' => 'Охшаш видео',
+	'relatedvideo' => 'Охшаш видео',
+);
+
 /** Ukrainian (Українська)
  * @author Тест
  */

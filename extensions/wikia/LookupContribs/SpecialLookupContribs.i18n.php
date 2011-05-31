@@ -113,6 +113,7 @@ $messages['af'] = array(
 $messages['az'] = array(
 	'lookupcontribswiki' => 'Viki',
 	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Başlıq',
 	'lookupcontribsnext' => 'növbəti',
 	'lookupcontribsfinal' => 'son',
 );
@@ -753,7 +754,7 @@ Tolong semak ejaan nama pengguna itu.</p>',
 	'lookupcontribsnbrresult' => 'Jumlah hasil:',
 	'lookupcontribsnext' => 'berikutnya',
 	'lookupcontribsprevious' => 'sebelumnya',
-	'lookupcontribspageremoved' => 'Digugurkan:',
+	'lookupcontribspageremoved' => 'Dibuang:',
 	'lookupcontribsrestore' => 'pulihkan',
 	'lookupcontribslog' => 'log',
 	'lookupcontribshist' => 'sej',

@@ -192,6 +192,7 @@ $messages['br'] = array(
 
 /** German (Deutsch)
  * @author Claudia Hattitten
+ * @author DaSch
  * @author George Animal
  * @author LWChris
  */
@@ -261,6 +262,7 @@ Wenn du denkst, dass es sich hierbei um einen Fehler handelt, [[Special:Contact|
 Wenn du denkst, dass es sich hierbei um einen Fehler handelt, dann [[Special:Contact|kontaktiere Wikia]]!',
 	'phalanx-user-block-reason-similar' => 'Aufgrund von Ähnlichkeit mit dem Benutzernamen eines für Vandalismus oder anderes Fehlverhalten gesperrten Benutzers wurde auch diesem Benutzerkonto das Schreibrecht im gesamten Wikia-Netzwerk entzogen.
 Bitte [[Special:Contact|kontaktiere Wikia]] im Falle eines Versehens!',
+	'phalanx-user-block-new-account' => 'Dieser Benutzername ist zur Registrierung nicht verfügbar. Bitte wähle einen anderen.',
 	'phalanx-user-block-withreason-ip' => 'Aufgrund von Vandalismus oder anderem Fehlverhalten durch dich oder jemanden, der deine IP-Adresse mitnutzt, wurde dieser IP-Adresse das Schreibrecht entzogen. Dies gilt für das gesamte Wikia-Netzwerk.
 Wenn du denkst, dass es sich hierbei um einen Fehler handelt, [[Special:Contact|kontaktiere Wikia]]!<br />Als Sperrgrund wurde Folgendes angegeben: $1',
 	'phalanx-user-block-withreason-exact' => 'Diesem Benutzernamen oder dieser IP-Adresse ist das Schreiben – aufgrund von Vandalismus oder anderem Fehlverhalten – im gesamten Wikia-Netzwerk verboten worden.
@@ -367,6 +369,7 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].',
 Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].',
 	'phalanx-user-block-reason-similar' => 'Este nombre de usuario ha sido bloqueado para editar en toda Wikia debido a vandalismo, spam u otro problema por ti u otra persona quien comparte la misma dirección IP.
 Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].',
+	'phalanx-user-block-new-account' => 'El nombre de usuario no está disponible para su registro. Por favor, selecciona otro.',
 	'phalanx-user-block-withreason-ip' => 'Esta dirección IP ha sido bloqueada para editar en toda Wikia debido a vandalismo, spam u otro problema por ti u otra persona quien comparte la misma dirección IP.
 Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />El que hizo el bloqueo ha dado este motivo adicional: $1.',
 	'phalanx-user-block-withreason-exact' => 'Este nombre de usuario ha sido bloqueado para editar en toda Wikia debido a vandalismo, spam u otro problema.
@@ -414,10 +417,13 @@ Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wi
 );
 
 /** French (Français)
+ * @author Balzac 40
  * @author Brunoperel
  * @author Crochet.david
  * @author Iketsi
  * @author Od1n
+ * @author Verdy p
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'phalanx-desc' => 'Phalanx est un mécanisme de défense contre les courriers indésirables intégré',
@@ -440,6 +446,8 @@ $messages['fr'] = array(
 	'phalanx-view-type' => 'Type de blocage...',
 	'phalanx-view-blocker' => 'Rechercher par texte de filtre:',
 	'phalanx-view-blocks' => 'Filtres de recherche',
+	'phalanx-view-id' => 'Filtrer par ID :',
+	'phalanx-view-id-submit' => 'Filtrer',
 	'phalanx-format-text' => 'texte brut',
 	'phalanx-format-regex' => 'expression régulière',
 	'phalanx-format-case' => 'sensible à la casse',
@@ -452,6 +460,7 @@ $messages['fr'] = array(
 	'phalanx-modify-failure' => 'Une erreur est survenue durant la modification du blocage',
 	'phalanx-modify-warning' => 'Vous éditez le bloc d\'identifiant #$1.
 En cliquant sur "{{int:phalanx-add-block}}" vos modifications seront enregistrées.',
+	'phalanx-test-description' => 'Texte fourni par le test contre les blocages actuels.',
 	'phalanx-test-submit' => 'Test',
 	'phalanx-test-results-legend' => 'Résultats des essais',
 	'phalanx-display-row-blocks' => 'blocages : $1',
@@ -473,15 +482,25 @@ Il n'empêche pas l'édition d'une page existante.",
 	'phalanx-help-type-answers-question-title' => "Ce filtre bloque la création d'une question (page) si son titre correspond à une des expressions de la liste noire.
 
 Note: Ne fonctionne que sur les wikis de type Answers.",
-	'phalanx-user-block-reason-ip' => 'Cette adresse IP n’a pas les droits de modification dans le réseau Wikia en raison de vandalisme ou autres méfaits analogues commis par vous ou quelqu’un d’autre partageant cette adresse IP.
-Si vous pensez qu’il s’agit d’une erreur, [[$1|contactez-nous]].',
-	'phalanx-user-block-withreason-ip' => 'Cette adresse IP n’a pas les droits de modification dans le réseau Wikia en raison de vandalisme ou autres méfaits analogues commis par vous ou quelqu’un d’autre partageant cette adresse IP.
-Si vous pensez qu’il s’agit d’une erreur, [[$1|contactez-nous]].<br />La personne qui vous a bloqué a également donné ce motif : $1',
-	'phalanx-user-block-withreason-exact' => "Ce nom d'utilisateur ou cette adresse IP n’a pas les droits de modification dans le réseau Wikia en raison de vandalisme ou autres méfaits analogues commis par vous ou quelqu’un d’autre partageant cette adresse IP.
-Si vous pensez qu’il s’agit d’une erreur, [[Special:Contact|contactez Wikia]].<br />La personne qui vous a bloqué a également donné ce motif : $1.",
+	'phalanx-help-type-answers-recent-questions' => 'Ce filtre empêche des questions (pages) d’être affichées dans un certains nombre de sorties (widgets, listes, énumérations générées par balise).
+Il n’empêche pas ces pages d’être créées.
+
+Note : cela ne fonctionne que sur les wikis de type Réponses.',
+	'phalanx-user-block-reason-ip' => 'Cette adresse IP n’a pas les droits de modification dans le réseau entier Wikia en raison de vandalisme ou autres méfaits analogues commis par vous ou par quelqu’un d’autre qui partage cette adresse IP.
+Si vous pensez qu’il s’agit d’une erreur, [[Special:Contact|Contacter Wikia]].',
+	'phalanx-user-block-reason-exact' => 'Ce nom d’utilisateur ou cette adresse IP est interdit de toute modification sur l’intégralité du réseau Wikia en raison de vandalisme ou d’autres perturbations.
+Si vous pensez qu’il s’agit d’une erreur, veuillez [[Special:Contact|contacter Wikia]].',
+	'phalanx-user-block-reason-similar' => 'Ce nom d’utilisateur est interdit de toute modification dans l’intégralité du réseau Wikia en raison de vandalisme ou d’autres perturbations par un utilisateur de nom similaire.
+Veuillez [[Special:Contact|contacter Wikia]] à propos de ce problème.',
+	'phalanx-user-block-new-account' => "Le nom d'utilisateur n'est pas disponible pour enregistrement. Veuillez en choisir un autre.",
+	'phalanx-user-block-withreason-ip' => 'Cette adresse IP n’a pas les droits de modification dans le réseau entier Wikia en raison de vandalisme ou autres méfaits analogues commis par vous ou par quelqu’un d’autre qui partage cette adresse IP.
+Si vous pensez qu’il s’agit d’une erreur, [[Special:Contact|Contacter Wikia]].<br />La personne qui vous a bloqué a également donné ce motif : $1.',
+	'phalanx-user-block-withreason-exact' => "Ce nom d'utilisateur ou cette adresse IP est interdit de toute modification dans l’intégralité du réseau Wikia en raison de vandalisme ou d’autres perturbations.
+Si vous pensez qu’il s’agit d’une erreur, veuillez [[Special:Contact|contacter Wikia]].<br />La personne qui a mis en place ce blocage a également donné ce motif supplémentaire : $1.",
 	'phalanx-user-block-withreason-similar' => "Ce nom d'utilisateur n’a pas les droits de modification dans le réseau Wikia en raison de vandalisme ou autres méfaits analogues commis par vous ou quelqu’un d’autre partageant cette adresse IP.
 Veuillez [[Special:Contact|contacter Wikia]] à propos de ce problème.<br />La personne qui vous a bloqué a également donné ce motif : $1.",
 	'phalanx-title-move-summary' => 'Le motif que vous avez inscrit contenait une phrase bloquée.',
+	'phalanx-content-spam-summary' => 'Le texte a été trouvé dans le résumé de la page.',
 	'phalanx-stats-title' => 'Statistiques Phalanx',
 	'phalanx-stats-block-notfound' => 'Identifiant de bloc non trouvé',
 	'phalanx-stats-table-id' => 'Identifiant de bloc',
@@ -495,6 +514,7 @@ Veuillez [[Special:Contact|contacter Wikia]] à propos de ce problème.<br />La 
 	'phalanx-stats-table-language' => 'Langue',
 	'phalanx-stats-table-text' => 'Texte',
 	'phalanx-stats-table-reason' => 'Motif',
+	'phalanx-stats-row' => "à $4, le type de filtre '''$1''' a bloqué '''$2''' sur $3",
 	'phalanx-stats-row-per-wiki' => "L'utilisateur '''$2''' a été bloqué sur '''$4''' par le filtre d'identifiant '''$3''' ($5) (type: '''$1''')",
 	'phalanx-rule-log-name' => 'Journal des règles Phalanx',
 	'phalanx-rule-log-header' => 'Ceci est un journal des changements de règles de Phalanx.',
@@ -506,6 +526,8 @@ Veuillez [[Special:Contact|contacter Wikia]] à propos de ce problème.<br />La 
 	'phalanx-stats-table-wiki-name' => 'Nom du wiki',
 	'phalanx-stats-table-wiki-url' => 'URL du wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Dernière modification',
+	'right-phalanx' => 'Peut gérer les blocages globaux et filtres de contenu indésirable',
+	'right-phalanxexempt' => 'Exonéré des règles Phalanx',
 );
 
 /** Hungarian (Magyar)
@@ -628,6 +650,7 @@ Si tu crede que isto es un error, per favor [[Special:Contact|contacta Wikia]].'
 Si tu crede que isto es un error, per favor [[Special:Contact|contacta Wikia]].',
 	'phalanx-user-block-reason-similar' => 'Iste nomine de usator es impedite de facer modificationes in tote le rete de Wikia pro causa de vandalismo o de altere disruption per un usator con un nomine similar.
 Per favor [[Special:Contact|contacta Wikia]] a proposito de iste problema.',
+	'phalanx-user-block-new-account' => 'Iste nomine de usator non es disponibile pro registration. Per favor elige un altere.',
 	'phalanx-user-block-withreason-ip' => 'Iste adresse IP es impedite de facer modificationes in tote le rete de Wikia pro causa de vandalismo o de altere disruption per te o per alcuno altere qui usa un adresse IP in commun con te.
 Si tu crede que isto es un error, per favor [[Special:Contact|contacta Wikia]].<br />Le blocator dava tamben iste motivo additional: $1.',
 	'phalanx-user-block-withreason-exact' => 'Iste nomine de usator o adresse IP es impedite de facer modificationes in tote le rete de Wikia pro causa de vandalismo o de altere disruption.
@@ -782,7 +805,7 @@ $messages['mk'] = array(
 	'phalanx-help-type-answers-question-title' => 'Овој филтер блокира создавање на прашање (страница) ако насловот одговара на некој од изразите наведени на црниот список.
 
 Напомена: работи само на викија за одговорање на прашања',
-	'phalanx-help-type-answers-recent-questions' => 'Овој филтер спречува приказ на прашања (страници) во низа изводи (посреднички елементи, списоци, пописи направени со ознаки).
+	'phalanx-help-type-answers-recent-questions' => 'Овој филтер спречува приказ на прашања (страници) во низа изводи (посреднички елементи, списоци, пописи направени со ознаки). 
 Филтерот не спречува создавање на таквите страници.
 
 Напомена: работи само на викија за одговорање на прашања',
@@ -792,6 +815,7 @@ $messages['mk'] = array(
 Доколку сметате дека ова е по грешка, [[Special:Contact|контактирајте ја Викија]].',
 	'phalanx-user-block-reason-similar' => 'Ова корисничко име е спречено да уредува низ сета мрежа на Викија поради вандализам или друго нарушување од страна на корисник со слично име.
 [[Special:Contact|Известете ја Викија]] за проблемот.',
+	'phalanx-user-block-new-account' => 'Корисничкото не е слободно за регистрација. Одберете друго.',
 	'phalanx-user-block-withreason-ip' => 'Оваа IP-адреса е спречена да уредува низ сета мрежа на Викија поради вандализам или друго нарушување од страна на вас или некој што ја користи вашата IP-адреса.
 Доколку сметате дека ова е по грешка, [[Special:Contact|контактирајте ја Викија]].<br />Лицето што го постави блокот го понуди и следново дополнително образложение: $1.',
 	'phalanx-user-block-withreason-exact' => 'Ова корисничко име или IP-адреса е спречено да уредува низ сета мрежа на Викија поради вандализам или друго нарушување.
@@ -924,6 +948,7 @@ Jika anda percaya bahawa ini ialah kesilapan, sila [[Special:Contact|hubungi Wik
 Jika anda percaya bahawa ini ialah kesilapan, sila [[Special:Contact|hubungi Wikia]].',
 	'phalanx-user-block-reason-similar' => 'Nama pengguna ini dihalang daripada menyunting atas kesalahan laku musnah atau gangguan oleh pengguna yang serupa namanya.
 Sila cipta nama pengguna yang lain atau [[Special:Contact|hubungi Wikia]] tentang masalah ini.',
+	'phalanx-user-block-new-account' => 'Nama pengguna ini tidak boleh dipakai untuk pendaftaran. Sila pilih satu lagi.',
 	'phalanx-user-block-withreason-ip' => 'Alamat IP ini dihalang daripada menyunting di seluruh rangkaian Wikia atas kesalahan laku musnah atau apa jua gangguan yang dilakukan oleh anda atau sesiapa yang berkongsi alamat IP anda.
 Jika anda percaya ini kesilapan, sila [[Special:Contact|hubungi Wikia]].<br />Penyekat juga memberikan sebab tambahan ini: $1.',
 	'phalanx-user-block-withreason-exact' => 'Alamat IP ini dihalang daripada menyunting di seluruh rangkaian Wikia atas kesalahan laku musnah atau apa jua gangguan.
@@ -1087,6 +1112,7 @@ Als je denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met 
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'phalanx-desc' => 'Phalanx er en integrert mekanisme for forsvar mot spam',
@@ -1151,10 +1177,11 @@ Det hindrer ikke disse sidene i å opprettes.
 Note: fungerer kun på Svar-wikier.',
 	'phalanx-user-block-reason-ip' => 'Denne IP-adressen er forhindret i å redigere over hele Wikia-nettverket  grunnet vandalisme eller annt hærverk fra deg eller noen som deler din IP-adresse.
 Om du mener dette er en feil, vennligst [[Special:Contact|kontakt Wikia]].',
-	'phalanx-user-block-reason-exact' => 'Dette brukernavnet eller IP-adressen er forhindret i år redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk.
+	'phalanx-user-block-reason-exact' => 'Dette brukernavnet eller IP-adressen er forhindret i år redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk. 
 Om du mener dette er en feil, vennligst [[Special:Contact|kontakt Wikia]].',
 	'phalanx-user-block-reason-similar' => 'Dette brukernavnet er forhindret i å redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk av en bruker med lignende navn.
 Vennligst opprett et alternativt brukernavn eller [[Special:Contact|kontakt Wikia]] om problemet.',
+	'phalanx-user-block-new-account' => 'Brukernavnet er ikke tilgjengelig for registrering. Velg et annet.',
 	'phalanx-user-block-withreason-ip' => 'Denne IP-adressen er forhindret i å redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk fra deg eller noen deler din IP-adresse.
 Om du mener dette er en feil, vennligst [[Special:Contact|kontakt Wikia]].<br />Blokkereren la i tillegg til denne begrunnelsen: $1.',
 	'phalanx-user-block-withreason-exact' => 'Dette brukernavnet eller denne IP-adressen er forhindret i å redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk.
@@ -1278,6 +1305,7 @@ Se acredita que este bloqueio foi feito em erro [[Special:Contact|contacte a Wik
 Se acredita que este bloqueio foi feito em erro [[Special:Contact|contacte a Wikia]], por favor.',
 	'phalanx-user-block-reason-similar' => 'Este nome de utilizador está impedido de editar as wikis da Wikia, devido a actividades de vandalismo ou outras formas de perturbação exercidas por outro utilizador com um nome semelhante.
 [[Special:Contact|Contacte a Wikia]] acerca deste problema, por favor.',
+	'phalanx-user-block-new-account' => 'O nome de utilizador não está disponível para registo. Escolha outro, por favor.',
 	'phalanx-user-block-withreason-ip' => 'Este endereço IP está impedido de editar as wikis da Wikia, devido a actividades de vandalismo ou outra forma de perturbação conduzidas por si ou por outra pessoa que partilha o seu endereço IP actual.
 Se acredita que este bloqueio foi feito em erro, [[Special:Contact|contacte a Wikia]], por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
 	'phalanx-user-block-withreason-exact' => 'Este nome de utilizador ou endereço IP estão impedidos de editar as wikis da Wikia, devido a actividades de vandalismo ou outra forma de perturbação.

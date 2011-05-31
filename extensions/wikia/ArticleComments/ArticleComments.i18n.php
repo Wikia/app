@@ -97,6 +97,8 @@ $messages['az'] = array(
 	'article-comments-delete' => 'sil',
 	'article-comments-edit' => 'redaktə',
 	'article-comments-history' => 'Tarix',
+	'article-comments-toc-item' => 'Şərhlər',
+	'article-comments-reply' => 'Yenidən',
 	'article-comments-next-page' => 'Növbəti',
 );
 
@@ -197,6 +199,7 @@ $messages['de'] = array(
 	'article-comments-anonymous' => 'Unangemeldeter Benutzer',
 	'article-comments-comments' => 'Kommentare ($1)',
 	'article-comments-post' => 'Kommentieren',
+	'article-comments-cancel' => 'Abbrechen',
 	'article-comments-delete' => 'löschen',
 	'article-comments-edit' => 'bearbeiten',
 	'article-comments-history' => 'Versionen',
@@ -299,6 +302,7 @@ $messages['es'] = array(
 	'article-comments-anonymous' => 'Usuario anónimo',
 	'article-comments-comments' => 'Comentarios ($1)',
 	'article-comments-post' => 'Dejar comentario',
+	'article-comments-cancel' => 'Cancelar',
 	'article-comments-delete' => '(borrar)',
 	'article-comments-edit' => '(editar)',
 	'article-comments-history' => '(Historial)',
@@ -413,24 +417,26 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Verdy p
  * @author Wyz
  */
 $messages['fr'] = array(
 	'article-comments-anonymous' => 'Utilisateur anonyme',
 	'article-comments-comments' => 'Commentaires ($1)',
 	'article-comments-post' => 'Ajouter un commentaire',
-	'article-comments-delete' => 'Supprimer',
+	'article-comments-cancel' => 'Annuler',
+	'article-comments-delete' => 'supprimer',
 	'article-comments-edit' => 'modifier',
 	'article-comments-history' => 'historique',
 	'article-comments-error' => 'Le commentaire n’a pas pu être enregistré',
 	'article-comments-undeleted-comment' => "Commentaire de l'article de blog $1 restauré",
 	'article-comments-rc-comment' => 'Commentaire de page ([[$1]])',
 	'article-comments-rc-comments' => 'Commentaires de page ([[$1]])',
-	'article-comments-fblogin' => 'Veuillez <a href="$1">vous connecter et lier avec Facebook</a> pour poster un commentaire sur ce wiki !',
-	'article-comments-fbconnect' => 'Veuillez <a href="$1">lier ce compte avec Facebook</a> pour commenter !',
+	'article-comments-fblogin' => 'Veuillez <a href="$1">vous connecter et relier Facebook</a> pour poster un commentaire sur ce wiki !',
+	'article-comments-fbconnect' => 'Veuillez <a href="$1">relier ce compte avec Facebook</a> pour commenter !',
 	'article-comments-rc-blog-comment' => 'Commentaire de blog ([[$1]])',
 	'article-comments-rc-blog-comments' => 'Commentaires de blog ([[$1]])',
-	'article-comments-login' => '<a href="$1">Indentifiez-vous</a> pour faire un commenaire',
+	'article-comments-login' => 'Veuillez vous <a href="$1">connecter</a> pour laisser un commentaire sur ce wiki.',
 	'article-comments-toc-item' => 'Commentaires',
 	'article-comments-comment-cannot-add' => 'Vous ne pouvez pas ajouter un commentaire à cette page.',
 	'article-comments-reply' => 'Répondre',
@@ -467,6 +473,29 @@ Wikia
 </p>',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'article-comments-anonymous' => 'Usuario anónimo',
+	'article-comments-comments' => 'Comentarios ($1)',
+	'article-comments-post' => 'Publicar un comentario',
+	'article-comments-delete' => 'borrar',
+	'article-comments-edit' => 'editar',
+	'article-comments-history' => 'historial',
+	'article-comments-error' => 'O comentario non se puido gardar',
+	'article-comments-undeleted-comment' => 'Comentario restaurado da páxina de blogue "$1"',
+	'article-comments-rc-comment' => 'Comentario de artigo ([[$1]])',
+	'article-comments-rc-comments' => 'Comentarios de artigo ([[$1]])',
+	'article-comments-toc-item' => 'Comentarios',
+	'article-comments-comment-cannot-add' => 'Non pode engadir un comentario ao artigo.',
+	'article-comments-reply' => 'Responder',
+	'article-comments-show-all' => 'Mostrar todos os comentarios',
+	'article-comments-prev-page' => 'Anterior',
+	'article-comments-next-page' => 'Seguinte',
+	'article-comments-page-spacer' => '&#160...&#160',
+);
+
 /** Hungarian (Magyar)
  * @author Dani
  */
@@ -497,6 +526,7 @@ $messages['ia'] = array(
 	'article-comments-anonymous' => 'Usator anonyme',
 	'article-comments-comments' => 'Commentos ($1)',
 	'article-comments-post' => 'Adjunger commento',
+	'article-comments-cancel' => 'Cancellar',
 	'article-comments-delete' => 'deler',
 	'article-comments-edit' => 'modificar',
 	'article-comments-history' => 'historia',
@@ -543,6 +573,16 @@ Wikia
 <li>Vole determinar qual emails tu recipe? <a href="{{fullurl:Special:Preferences}}">Actualisa tu preferentias<a>.</li>
 </ul>
 </p>',
+);
+
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'article-comments-cancel' => 'ДIадаккха',
+	'article-comments-delete' => 'дIадаккха',
+	'article-comments-edit' => 'хувца',
+	'article-comments-history' => 'искар',
 );
 
 /** Italian (Italiano) */
@@ -601,6 +641,21 @@ $PAGETITLE に $PAGEEDITOR がコメントをつけました。
 <br /><br />
 Wikia
 </p>',
+);
+
+/** Khmer (ភាសាខ្មែរ)
+ * @author T-Rithy
+ */
+$messages['km'] = array(
+	'article-comments-cancel' => 'បោះបង់',
+	'article-comments-delete' => 'លប់',
+	'article-comments-edit' => 'កែប្រែ',
+	'article-comments-history' => 'ប្រវត្តិ',
+	'article-comments-error' => 'មតិនេះមិនត្រូវបានរក្សាទុកទេ',
+	'article-comments-toc-item' => 'មតិ',
+	'article-comments-reply' => 'ឆ្លើយតប',
+	'article-comments-prev-page' => 'មុន​',
+	'article-comments-next-page' => 'បន្ទាប់',
 );
 
 /** Colognian (Ripoarisch)
@@ -666,6 +721,7 @@ $messages['mk'] = array(
 	'article-comments-anonymous' => 'Анонимен корисник',
 	'article-comments-comments' => 'Коментари ($1)',
 	'article-comments-post' => 'Објави коментар',
+	'article-comments-cancel' => 'Откажи',
 	'article-comments-delete' => 'избриши',
 	'article-comments-edit' => 'уреди',
 	'article-comments-history' => 'историја',
@@ -741,6 +797,7 @@ $messages['ms'] = array(
 	'article-comments-anonymous' => 'Pengguna tanpa nama',
 	'article-comments-comments' => 'Ulasan ($1)',
 	'article-comments-post' => 'Kirim ulasan',
+	'article-comments-cancel' => 'Batalkan',
 	'article-comments-delete' => 'hapuskan',
 	'article-comments-edit' => 'sunting',
 	'article-comments-history' => 'sejarah',
@@ -799,12 +856,14 @@ $messages['mzn'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author SPQRobin
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'article-comments-anonymous' => 'Anonieme gebruiker',
 	'article-comments-comments' => 'Opmerkingen ($1)',
 	'article-comments-post' => 'Opmerking plaatsen',
+	'article-comments-cancel' => 'Annuleren',
 	'article-comments-delete' => 'verwijderen',
 	'article-comments-edit' => 'bewerken',
 	'article-comments-history' => 'geschiedenis',
@@ -882,6 +941,7 @@ $messages['no'] = array(
 	'article-comments-anonymous' => 'Anonym bruker',
 	'article-comments-comments' => 'Kommentarer ($1)',
 	'article-comments-post' => 'Post kommentar',
+	'article-comments-cancel' => 'Avbryt',
 	'article-comments-delete' => 'slett',
 	'article-comments-edit' => 'rediger',
 	'article-comments-history' => 'historikk',
@@ -964,6 +1024,7 @@ $messages['pt'] = array(
 	'article-comments-anonymous' => 'Utilizador anónimo',
 	'article-comments-comments' => 'Comentários ($1)',
 	'article-comments-post' => 'Publicar comentário',
+	'article-comments-cancel' => 'Cancelar',
 	'article-comments-delete' => 'eliminar',
 	'article-comments-edit' => 'editar',
 	'article-comments-history' => 'histórico',
@@ -1091,6 +1152,15 @@ $messages['roa-tara'] = array(
 	'article-comments-reply' => 'Respunne',
 );
 
+/** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['si'] = array(
+	'article-comments-delete' => 'මකන්න',
+	'article-comments-edit' => 'සංස්කරණය කරන්න',
+	'article-comments-history' => 'ඉතිහාසය',
+);
+
 /** Swedish (Svenska)
  * @author WikiPhoenix
  */
@@ -1195,6 +1265,22 @@ Wikia
 <li>Nais mo bang tabanan kung anong mga e-liham ang tatanggapin? <a href="{{fullurl:Special:Preferences}}">Isapanahon ang mga Nais mo<a>.</li>
 </ul>
 </p>',
+);
+
+/** Turkish (Türkçe)
+ * @author Gizemb
+ */
+$messages['tr'] = array(
+	'article-comments-anonymous' => 'Anonim kullanıcı',
+	'article-comments-comments' => 'Yorum ($1)',
+	'article-comments-post' => 'Yorum yap',
+	'article-comments-cancel' => 'İptal',
+	'article-comments-delete' => 'sil',
+	'article-comments-edit' => 'düzenle',
+	'article-comments-history' => 'geçmiş',
+	'article-comments-reply' => 'Yanıtla',
+	'article-comments-show-all' => 'Tüm yanıtları göster',
+	'article-comments-next-page' => 'Sonraki',
 );
 
 /** Vietnamese (Tiếng Việt)

@@ -245,6 +245,14 @@ $messages['ru'] = array(
 	'wikiarelatedpages-heading' => 'Читать больше',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Lesko987
+ */
+$messages['sl'] = array(
+	'wikiarelatedpages-desc' => 'Na strani doda seznam sorodnih strani',
+	'wikiarelatedpages-heading' => 'Preberite več',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
@@ -271,6 +279,14 @@ $messages['tl'] = array(
 /** Ukrainian (Українська) */
 $messages['uk'] = array(
 	'wikiarelatedpages-heading' => 'Читати далі',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author XiaoQiaoGrace
+ */
+$messages['vi'] = array(
+	'wikiarelatedpages-desc' => 'Thêm danh sách đến các trang liên quan của những bài viết',
+	'wikiarelatedpages-heading' => 'Xem thêm',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

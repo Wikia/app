@@ -192,6 +192,7 @@ $messages['az'] = array(
 	'cnw-name-wiki-wiki' => 'Viki',
 	'cnw-login' => 'Daxil ol',
 	'cnw-auth-headline' => 'Daxil ol',
+	'cnw-desc-lang' => 'Dil',
 );
 
 /** Bulgarian (Български)
@@ -526,6 +527,18 @@ Mettez à niveau via Paypal pour obtenir un wiki sans publicité pour seulement 
 	'cnw-error-wiki-limit' => 'Bonjour, vous êtes limité à la création de $1 wikis par jour. Attendez 24 heures avant de créer un autre wiki.',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'cnw-next' => 'Seguinte',
+	'cnw-back' => 'Volver',
+	'cnw-or' => 'ou',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-desc-change-lang' => 'cambiar',
+	'cnw-desc-lang' => 'Lingua',
+);
+
 /** Hebrew (עברית)
  * @author Amire80
  */
@@ -809,7 +822,9 @@ $messages['lb'] = array(
 	'cnw-or' => 'oder',
 	'cnw-name-wiki-label' => 'Gitt Ärer Wiki en Numm',
 	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-auth-headline' => 'Aloggen',
 	'cnw-desc-lang' => 'Sprooch',
+	'cnw-upgrade-now' => 'Elo aktualiséieren',
 );
 
 /** Lithuanian (Lietuvių)
@@ -1057,6 +1072,7 @@ Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author MarkvA
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -1068,6 +1084,7 @@ $messages['nl-informal'] = array(
 	'cnw-auth-signup-creative' => 'Je hebt een gebruiker nodig om door te kunnen gaan met het bouwen van uw wiki.<br />Registreren kost maar een minuutje van je tijd!',
 	'cnw-desc-headline' => 'Waar gaat je wiki over?',
 	'cnw-desc-creative' => 'Beschrijf je onderwerp',
+	'cnw-desc-placeholder' => 'Dit wordt weergegeven op de hoofdpagina van je wiki.',
 	'cnw-desc-tip1-creative' => 'Gebruik deze ruimte om mensen over je wiki te vertellen in een paar zinnen',
 	'cnw-desc-tip2-creative' => 'Geef je bezoeker wat details over je onderwerp',
 	'cnw-desc-tip3-creative' => "Laat mensen weten dat ze kunnen helpen om je wiki te bewerken en pagina's toe te voegen",
@@ -1214,10 +1231,10 @@ $messages['pt'] = array(
 	'cnw-desc-placeholder' => 'Isto irá aparecer na página principal da sua wiki.',
 	'cnw-desc-tip1' => 'Sugestão',
 	'cnw-desc-tip1-creative' => 'Use este espaço para descrever a sua wiki aos visitantes numa frase ou duas',
-	'cnw-desc-tip2' => 'Ei',
-	'cnw-desc-tip2-creative' => 'Dê aos visitantes alguns detalhes específicos sobre o assunto',
-	'cnw-desc-tip3' => 'Sugestão Para Profissionais',
-	'cnw-desc-tip3-creative' => 'Informe as pessoas de que podem ajudar a desenvolver a wiki editando e acrescentando páginas',
+	'cnw-desc-tip2' => 'Conselho',
+	'cnw-desc-tip2-creative' => 'Dê aos visitantes detalhes específicos sobre o assunto da sua wiki',
+	'cnw-desc-tip3' => 'Dica Profissional',
+	'cnw-desc-tip3-creative' => 'Diga às pessoas que podem ajudar a desenvolver a wiki editando e acrescentando páginas',
 	'cnw-desc-choose' => 'Escolher uma categoria',
 	'cnw-desc-select-one' => 'Seleccione uma',
 	'cnw-desc-default-lang' => 'A sua wiki será em $1',
@@ -1225,8 +1242,8 @@ $messages['pt'] = array(
 	'cnw-desc-lang' => 'Língua',
 	'cnw-desc-wiki-submit-error' => 'Escolha uma categoria, por favor',
 	'cnw-theme-headline' => 'Escolha uma variante do tema',
-	'cnw-theme-creative' => 'Escolha uma variante do tema abaixo; verá uma antevisão de cada variante à medida que a escolher.',
-	'cnw-theme-instruction' => 'Tambem poderá criar uma variante personalizada mais tarde, usando "As Minhas Ferramentas".',
+	'cnw-theme-creative' => 'Escolha uma variante do tema; pode ver uma antevisão de cada variante, clicando-a.',
+	'cnw-theme-instruction' => 'Também pode criar uma variante personalizada mais tarde, usando "As Minhas Ferramentas".',
 	'cnw-upgrade-headline' => 'Pretende a versão melhorada?',
 	'cnw-upgrade-creative' => 'A versão Wikia Plus permite-lhe remover os anúncios da <span class="wiki-name"></span>, uma oferta única só disponível para novos fundadores.',
 	'cnw-upgrade-marketing' => 'A versão Wikia Plus é excelente para:<ul>
@@ -1373,7 +1390,7 @@ $messages['sr-ec'] = array(
 	'cnw-title' => 'Прављење нове викије',
 	'cnw-name-wiki-headline' => 'Започињање викије',
 	'cnw-name-wiki-label' => 'Дајте назив викији',
-	'cnw-name-wiki-wiki' => 'Викија',
+	'cnw-name-wiki-wiki' => 'Вики',
 	'cnw-login' => 'Пријави ме',
 	'cnw-signup' => 'Отвори налог',
 	'cnw-signup-prompt' => 'Немате налог?',

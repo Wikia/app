@@ -39,6 +39,7 @@ $messages['qqq'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Meno25
  * @author Mutarjem horr
  * @author OsamaK
  */
@@ -46,7 +47,7 @@ $messages['ar'] = array(
 	'cloakcheck-form-username' => 'اسم المستخدم:',
 	'cloakcheck-form-check' => 'تحقق من اسم المستخدم',
 	'cloakcheck-process-empty' => 'يجب أن لا يكون إاسم المستخدم فارغًا.',
-	'cloakcheck-process-notexist' => 'إسم المستخدم غير موجود.',
+	'cloakcheck-process-notexist' => 'اسم المستخدم غير موجود.',
 	'cloakcheck-process-username' => 'اسم المستخدم: $1',
 	'cloakcheck-process-accountage-yes' => 'الحساب قديم كفاية.',
 	'cloakcheck-process-accountage-no' => 'الحساب حديث جداّ.',
@@ -271,9 +272,13 @@ $messages['ku-latn'] = array(
 	'cloakcheck-process-username' => 'Navê bikarhêner: $1',
 );
 
-/** Luxembourgish (Lëtzebuergesch) */
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
 $messages['lb'] = array(
 	'cloakcheck-form-username' => 'Benotzernumm:',
+	'cloakcheck-form-check' => 'Benotzernumm nokucken',
+	'cloakcheck-process-empty' => 'De Benotzernumm däerf net eidel sinn.',
 	'cloakcheck-process-username' => 'Benotzernumm: $1',
 );
 

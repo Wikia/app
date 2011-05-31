@@ -2761,7 +2761,7 @@ $messages['lb'] = array(
 	'wikiaPhotoGallery-preview-size-larger' => 'méi grouss',
 	'wikiaPhotoGallery-preview-columns' => 'Zuel vu Colonnen',
 	'wikiaPhotoGallery-preview-position-left' => 'Lenks',
-	'wikiaPhotoGallery-preview-position-center' => 'Zentriert',
+	'wikiaPhotoGallery-preview-position-center' => 'Zentréiert',
 	'wikiaPhotoGallery-preview-position-right' => 'Riets',
 	'wikiaPhotoGallery-preview-spacing-small' => 'Kleng',
 	'wikiaPhotoGallery-preview-spacing-large' => 'Grouss',
@@ -2905,6 +2905,20 @@ Taip pat galite spustelėti "$2", norėdami pamatyti atnaujintą puslapį.',
 	'wikiaPhotoGallery-photooptions-linksub' => 'Kai šią nuotrauką paspausite, eisite į šį puslapį.',
 	'wikiaPhotoGallery-photooptions-linktext' => 'Tekstas rodomas nuorodai.',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Nuoroda į (įterpti puslapio pavadinimą ar URL adresą).',
+);
+
+/** Maithili (मैथिली)
+ * @author Vinitutpal
+ */
+$messages['mai'] = array(
+	'wikiaPhotoGallery-back' => 'पाछां',
+	'wikiaPhotoGallery-finish' => 'पूर्ण',
+	'wikiaPhotoGallery-edit-abort' => 'संशोधन जे अहाँ करऽ चाहलौं से विस्तार नोकसी द्वारा खतम कऽ देल गेल।',
+	'wikiaPhotoGallery-error-caption' => 'गलती',
+	'wikiaPhotoGallery-upload-findtitle' => 'ताकू',
+	'wikiaPhotoGallery-upload-findbutton' => 'ताकू',
+	'wikiaPhotoGallery-upload-page-next' => 'अगलका',
+	'wikiaPhotoGallery-upload-page-prev' => 'पहिलुका',
 );
 
 /** Macedonian (Македонски)
@@ -4574,16 +4588,31 @@ $messages['ru'] = array(
 );
 
 /** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
  * @author බිඟුවා
  */
 $messages['si'] = array(
-	'wikiaPhotoGallery-add-gallery' => 'පිංතූර ගැලරියක් ඇතුල් කරන්න',
+	'wikiaPhotoGallery-back' => 'ආපසු',
+	'wikiaPhotoGallery-finish' => 'අවසාන කරන්න',
+	'wikiaPhotoGallery-add-gallery' => 'පින්තූර ගැලරියක් හෝ පැතිදර්ශණයක් ඇතුල් කරන්න',
 	'wikiaPhotoGallery-viewmode-addphoto' => 'මෙම ගැලරියට පිංතූරයක් එක් කරන්න',
 	'wikiaPhotoGallery-error-caption' => 'දෝෂය',
-	'wikiaPhotoGallery-upload-title' => 'පිංතූරය තෝරන්න',
+	'wikiaPhotoGallery-upload-title' => 'ප්‍රතිබිම්භය සොයා උඩුගත කරන්න',
+	'wikiaPhotoGallery-upload-info-choose-list' => "'''හෝ''' තෝරන්න:",
 	'wikiaPhotoGallery-upload-uploadtitle' => 'උඩුගත කිරීම',
 	'wikiaPhotoGallery-upload-findtitle' => 'සොයන්න',
+	'wikiaPhotoGallery-upload-findbutton' => 'සොයන්න',
 	'wikiaPhotoGallery-upload-filesinsert' => 'මෙම පිංතූරය ඇතුල් කරන්න',
+	'wikiaPhotoGallery-upload-error-conflict-insert' => 'ඇතුල් කරන්න',
+	'wikiaPhotoGallery-upload-select-images' => 'තෝරන්න',
+	'wikiaPhotoGallery-photooptions-done' => 'සිදුකලා',
+	'wikiaPhotoGallery-preview-hover-modify' => 'වෙනස් කරන්න',
+	'wikiaPhotoGallery-preview-hover-delete' => 'මකන්න',
+	'wikiaPhotoGallery-preview-tab-layout' => 'සැලැස්ම',
+	'wikiaPhotoGallery-preview-captionalignment-left' => 'වම',
+	'wikiaPhotoGallery-preview-captionsize-small' => 'කුඩා',
+	'wikiaPhotoGallery-preview-bordersize-medium' => 'මධ්‍යම',
+	'wikiaPhotoGallery-preview-bordersize-large' => 'විශාල',
 );
 
 /** Slovenian (Slovenščina)
