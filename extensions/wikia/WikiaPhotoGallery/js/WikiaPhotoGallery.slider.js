@@ -1,6 +1,7 @@
 var WikiaPhotoGallerySlider = {
 	//timer for automatic wikiaPhotoGallery slideshow
 	timer: null,
+	sliderEnable: true,
 
 	//ID of image that will be shown on load, integer, 0-3
 	initialImageId: 0, //Math.floor(Math.random() * 4),
@@ -32,6 +33,9 @@ var WikiaPhotoGallerySlider = {
 				clearInterval(WikiaPhotoGallerySlider.timer);
 				WikiaPhotoGallerySlider.scroll($(this));
 			}
+		});
+		$('.wikiaPhotoGallery-slider-body ul li a').click(function() {
+			WikiaPhotoGallerySlider.sliderEnable = false;
 		});
 
 		$('#wikiaPhotoGallery-slider-body-' + sliderId).css('display', 'block');
@@ -65,8 +69,10 @@ var WikiaPhotoGallerySlider = {
 	},
 
 	slideshow: function() {
-		var current = $('#wikiaPhotoGallery-slider-body-' + WikiaPhotoGallerySlider.sliderId + ' .selected').parent().prevAll().length;
-		var next = ( ( current == $('#wikiaPhotoGallery-slider-body-' + WikiaPhotoGallerySlider.sliderId + ' .nav').length - 1 ) || ( current > 3 ) ) ? 0 : current + 1;
-		WikiaPhotoGallerySlider.scroll($('#wikiaPhotoGallery-slider-' + WikiaPhotoGallerySlider.sliderId + '-' + next).find('.nav'), WikiaPhotoGallerySlider.sliderId);
+		if (WikiaPhotoGallerySlider.sliderEnable) {
+			var current = $('#wikiaPhotoGallery-slider-body-' + WikiaPhotoGallerySlider.sliderId + ' .selected').parent().prevAll().length;
+			var next = ( ( current == $('#wikiaPhotoGallery-slider-body-' + WikiaPhotoGallerySlider.sliderId + ' .nav').length - 1 ) || ( current > 3 ) ) ? 0 : current + 1;
+			WikiaPhotoGallerySlider.scroll($('#wikiaPhotoGallery-slider-' + WikiaPhotoGallerySlider.sliderId + '-' + next).find('.nav'), WikiaPhotoGallerySlider.sliderId);
+		}
 	}
 }
