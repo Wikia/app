@@ -33,7 +33,6 @@ class UnsubscribePage extends UnlistedSpecialPage {
 	 */
 	public function execute( $subpage ) {
 		global $wgRequest, $wgUser, $wgOut;
-		wfLoadExtensionMessages( 'Unsubscribe' );
 
 		$this->setHeaders();
 
@@ -108,7 +107,9 @@ class UnsubscribePage extends UnlistedSpecialPage {
 	 * @param $email string: email whose info we're looking up
 	 */
 	private function email2users($email) {
-		$dbr = wfGetDB( DB_SLAVE );
+		global $wgExternalSharedDB;
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		$oRes = $dbr->select(
 			"user",
