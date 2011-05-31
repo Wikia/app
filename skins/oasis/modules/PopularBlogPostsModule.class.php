@@ -8,7 +8,11 @@ class PopularBlogPostsModule extends Module {
 		global $wgParser, $wgMemc, $wgLang;
 
 		$mcKey = wfMemcKey( "OasisPopularBlogPosts", $wgLang->getCode() );
-		$this->body = $wgMemc->get($mcKey);
+		$tempBody = $wgMemc->get($mcKey);
+		if (substr($tempBody, 0, 9) == '<p><br />') {
+			$tempBody = '<p>'.substr($tempBody, 9);
+		}
+		$this->body = $tempBody;
 		if (empty ($this->body)) {
 			$input = "	<title>" .wfMsg('oasis-popular-blogs-title') ."</title>
 						<type>box</type>
