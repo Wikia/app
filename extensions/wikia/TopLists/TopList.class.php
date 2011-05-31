@@ -380,7 +380,7 @@ class TopList extends TopListBase {
 			$relatedArticle = $this->getRelatedArticle();
 			
 			if ( !empty( $relatedArticle ) ) {
-				$contentText .= ' ' . TOPLIST_ATTRIBUTE_RELATED . '="' . htmlspecialchars( $relatedArticle->getText() ) . '"';
+				$contentText .= ' ' . TOPLIST_ATTRIBUTE_RELATED . '="' . htmlspecialchars( $relatedArticle->getPrefixedText() ) . '"';
 			}
 
 			$picture = $this->getPicture();
