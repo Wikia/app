@@ -96,7 +96,7 @@ class WikiaLabs {
 		$mulitvalidator = new WikiaValidatorsSet();
 
 		$mulitvalidator->addValidator( 'message', new WikiaValidatorString(
-					array("min" => 10, "max" => 255),
+					array("min" => 10, "max" => 1000),
 					array('too_short' => 'wikialabs-feedback-validator-message-too-short',
 						  'too_long' => 'wikialabs-feedback-validator-message-too-long'
 		)));
@@ -132,7 +132,7 @@ class WikiaLabs {
 		
 		$project->updateRating( $user->getId(), $rating );
 		if(!empty($message)) {
-			$this->saveFeedbackInFogbugz( $project, $message, $user->getEmail() );
+			$this->saveFeedbackInFogbugz( $project, $message, $user->getEmail(), $user->getName() );
 		}
 		return $out;
 	}
@@ -165,11 +165,28 @@ class WikiaLabs {
 		
 		return true;
 	}
-
-	protected function saveFeedbackInFogbugz( WikiaLabsProject $project, $message, $userEmail ) {
+	
+	/**
+	 * Saves feedback in fogbugz
+	 * 
+	 * @param WikiaLabsProject $project data access object
+	 * @param string $message feedback message
+	 * @param string $userEmail user's e-mail address
+	 * @param string $userName user's name
+	 */
+	protected function saveFeedbackInFogbugz( WikiaLabsProject $project, $message, $userEmail, $userName ) {
 		$areaId = $project->getFogbugzProject();
 		$title = self::FOGBUGZ_CASE_TITLE . $project->getName();
+		
+		$message = <<<MSG
+User name: $userName
+Wiki name: {$this->app->getGlobal('wgSitename')}
+Wiki address: {$this->app->getGlobal('wgServer')}
 
+
+$message
+MSG;
+		
 		$this->getFogbugzService()->logon()->createCase( $areaId, $title, self::FOGBUGZ_CASE_PRIORITY, $message, array( self::FOGBUGZ_CASE_TAG ), $userEmail, self::FOGBUGZ_PROJECT_ID );
 	}
 
