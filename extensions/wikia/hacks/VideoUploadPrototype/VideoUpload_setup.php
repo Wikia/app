@@ -45,6 +45,7 @@ $wgHooks['EditPage::showEditForm:initial2'][] = 'VideoUploadHelper::setupEditPag
 // TOTAL HACK... should never be shown to end-users... no need for i18n (sorry TOR!)
 //$wgExtensionMessagesFiles['VideoUploadPrototype'] = $dir . 'Special_VideoUploadPrototype.i18n.php';
 
+$wgSpecialPages['VideoUploadPrototype'] = 'VideoUploadPrototype';
 //Special:VideoUploadHelper -> workaround - see http://www.longtailvideo.com/support/forums/bits-on-the-run/system-api/18401/handling-upload-response-in-js
 $wgSpecialPages['VideoUploadHelper'] = 'SpecialVideoUploadHelper';
 
