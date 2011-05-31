@@ -566,7 +566,7 @@
 	WE.plugins.core = $.createClass(WE.plugin,{
 
 		requires: ['functions','messages',
-		    'ui','uibautoregister',
+		    'ui','uiautoregister',
 		    'spaces','toolbarspaces','collapsiblemodules', 'preloads']
 
 	});
