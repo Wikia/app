@@ -5,7 +5,7 @@
 	// scroll area
 	> .editpage-intro-wrapper {
 		max-height: 80px;
-		overflow: auto;
+		overflow: hidden;
 
 		// preload content
 		> div {
@@ -19,6 +19,7 @@
 	&.expanded {
 		> .editpage-intro-wrapper {
 			max-height: 150px;
+			overflow: auto;
 		}
 	}
 
