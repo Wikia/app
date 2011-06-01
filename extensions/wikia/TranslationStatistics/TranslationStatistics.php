@@ -23,7 +23,7 @@ $wgAutoloadClasses['SpecialGroupStats'] = $dir . 'SpecialGroupStats.body.php';
 $wgAutoloadClasses['PHPlot'] = $dir . 'phplot.php';
 
 // Attach hooks
-$wgHooks['ArticleSaveComplete'][] = 'MessageGroupStats::invalidateStats';
+$wgHooks['ArticleSaveComplete'][] = 'MessageGroupStats::invalidateCache';
 
 // i18n
 $wgExtensionMessagesFiles['TranslationStatistics'] = $dir . 'TranslationStatistics.i18n.php';

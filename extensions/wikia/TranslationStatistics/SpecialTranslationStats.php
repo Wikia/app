@@ -41,7 +41,7 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 
                 $opts->add( 'endday', 1 /* now */ );
                 $opts->add( 'endmonth', /* now  */ 5 );
-               $opts->add( 'endyear', 2011 /* now */ );
+		$opts->add( 'endyear', 2011 /* now */ );
 
 		$opts->add( 'width', 600 );
 		$opts->add( 'height', 400 );
@@ -104,6 +104,7 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 				header( 'Cache-Control: private, max-age=3600' );
 				header( 'Expires: ' . wfTimestamp( TS_RFC2822, time() + 3600 ) );
 			}
+die( var_dump( $opts ) );
 			$this->draw( $opts );
 
 
