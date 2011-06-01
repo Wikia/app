@@ -32,6 +32,8 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 		$opts->add( 'language', '' );
 		$opts->add( 'count', 'edits' );
 		$opts->add( 'scale', 'days' );
+                
+                $opts->add( 'days', 30 );
 
                 // now
                 $endday = time();
@@ -127,6 +129,7 @@ class SpecialTranslationStats extends IncludableSpecialPage {
                         /* check if form has been posted */
                         if ( $validRange && $wgRequest->getVal( 'preview' ) ) {
                             $this->table( $opts );
+
                         }
 		}
         }
@@ -134,7 +137,7 @@ class SpecialTranslationStats extends IncludableSpecialPage {
         protected function checkDates(FormOptions $opts) {
             $start = mktime( '00', '00', '00', $opts->getValue( 'startmonth' ), $opts->getValue( 'startday' ), $opts->getValue( 'startyear' ) );
             $end = mktime( '23', '59', '59', $opts->getValue( 'endmonth' ), $opts->getValue( 'endday' ), $opts->getValue( 'endyear' ) );
-            return $start > $end;
+            return $start < $end;
         }
         
         // Taken from XML class, since the name of the select is hard-coded there
@@ -248,6 +251,7 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 
 
 	function table( $opts ) {
+                global $wgOut;
 		$data = $this->getData( $opts );
 		$legend = array_shift( $data );
 		array_unshift( $legend, 'Date' );
@@ -436,20 +440,13 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 			$so = new TranslatePerLanguageStats( $opts );
 		}
                 
-                $now = time();
-                
-                /* calculate from and to
-                 * if from > to, return error
-                 */
-//                $from, $to = '';
+                $start = mktime( '00', '00', '00', $opts->getValue( 'startmonth' ), $opts->getValue( 'startday' ), $opts->getValue( 'startyear' ) );
+                $end = mktime( '23', '59', '59', $opts->getValue( 'endmonth' ), $opts->getValue( 'endday' ), $opts->getValue( 'endyear' ) );
 
-		//$start = ;
-                
-                //return $opts;
 
 		/* Ensure that the first item in the graph has full data even
 		 * if it doesn't align with the given 'days' boundary */
-		$cutoff = $now - ( 3600 * 24 * $opts->getValue( 'days' ) );
+/*		$cutoff = $now - ( 3600 * 24 * $opts->getValue( 'days' ) );
 		if ( $opts['scale'] === 'hours' ) {
 			$cutoff -= ( $cutoff % 3600 );
 		} elseif ( $opts['scale'] === 'days' ) {
@@ -457,7 +454,7 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 		} elseif ( $opts['scale'] === 'weeks' ) {
 			/* Here we assume that week starts on monday, which does not
 			 * always hold true. Go backwards day by day until we are on monday */
-			while ( date( 'D', $cutoff ) !== "Mon" ) {
+			/*while ( date( 'D', $cutoff ) !== "Mon" ) {
 				$cutoff -= 86400;
 			}
 			$cutoff -= ( $cutoff % 86400 );
@@ -467,7 +464,7 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 				$cutoff -= 86400;
 			}
 			$cutoff -= ( $cutoff % 86400 );
-		}
+		}*/
 
 		$tables = array();
 		$fields = array();
@@ -475,10 +472,10 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 		$type = __METHOD__;
 		$options = array();
 
-		$so->preQuery( $tables, $fields, $conds, $type, $options, $cutoff );
+		$so->preQuery( $tables, $fields, $conds, $type, $options, $start, $end );
 		$res = $dbr->select( $tables, $fields, $conds, $type, $options );
 		wfDebug( __METHOD__ . "-queryend\n" );
-
+               
 		// Start processing the data
 		$dateFormat = $so->getDateFormat();
 		$increment = self::getIncrement( $opts['scale'] );
@@ -490,15 +487,15 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 
 		$data = array();
 		// Allow 10 seconds in the future for processing time
-		while ( $cutoff <= $now + 10 ) {
-			$date = $wgLang->sprintfDate( $dateFormat, wfTimestamp( TS_MW, $cutoff ) );
-			$cutoff += $increment;
+		while ( $start <= $end ) {
+			$date = $wgLang->sprintfDate( $dateFormat, wfTimestamp( TS_MW, $start ) );
+			$start += $increment;
 			$data[$date] = $defaults;
 		}
 
 		// Processing
 		$labelToIndex = array_flip( $labels );
-
+                
 		foreach ( $res as $row ) {
 			$indexLabels = $so->indexOf( $row );
 			if ( $indexLabels === false ) {
@@ -694,7 +691,7 @@ interface TranslationStatsInterface {
 	 * @param $options \array Empty array. Append extra query options.
 	 * @param $cutoff \string Precalculated cutoff timestamp in unix format.
 	 */
-	public function preQuery( &$tables, &$fields, &$conds, &$type, &$options, $cutoff );
+	public function preQuery( &$tables, &$fields, &$conds, &$type, &$options, $start, $end );
 
 	/**
 	 * Return the indexes which this result contributes to.
@@ -774,8 +771,12 @@ class TranslatePerLanguageStats extends TranslationStatsBase {
 		$opts->validateIntBounds( 'days', 1, 200 );
 	}
 
-	public function preQuery( &$tables, &$fields, &$conds, &$type, &$options, $cutoff ) {
+	public function preQuery( &$tables, &$fields, &$conds, &$type, &$options, $start, $end = null ) {
 		global $wgTranslateMessageNamespaces;
+                
+                if ( is_null($end) ) {
+                    $end = time();
+                }
 
 		$db = wfGetDB( DB_SLAVE );
 
@@ -783,7 +784,8 @@ class TranslatePerLanguageStats extends TranslationStatsBase {
 		$fields = array( 'rc_timestamp' );
 
 		$conds = array(
-			"rc_timestamp >= '{$db->timestamp( $cutoff )}'",
+			"rc_timestamp >= '{$db->timestamp( $start )}'",
+                        "rc_timestamp <= '{$db->timestamp( $end )}'",
 			'rc_namespace' => $wgTranslateMessageNamespaces,
 			'rc_bot' => 0
 		);
@@ -954,11 +956,17 @@ class TranslatePerLanguageStats extends TranslationStatsBase {
  * @ingroup Stats
  */
 class TranslateRegistrationStats extends TranslationStatsBase {
-	public function preQuery( &$tables, &$fields, &$conds, &$type, &$options, $cutoff ) {
+	public function preQuery( &$tables, &$fields, &$conds, &$type, &$options, $start, $end = null ) {
+                if ( is_null($end) ) {
+                    $end = time();
+                }
 		$db = wfGetDB( DB_SLAVE );
 		$tables = 'user';
 		$fields = 'user_registration';
-		$conds = array( "user_registration >= '{$db->timestamp( $cutoff )}'" );
+		$conds = array(
+                        "user_registration >= '{$db->timestamp( $start )}'",
+                        "user_registration <= '{$db->timestamp( $end )}'"
+                );
 		$type .= '-registration';
 		$options = array();
 	}
