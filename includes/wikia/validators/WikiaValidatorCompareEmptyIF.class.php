@@ -4,7 +4,7 @@
  * 
  * @author Andrzej 'nAndy' Łukaszewski
  */
-class WikiaValidatorCompareIfEmpty extends WikiaValidatorCompareValueIF {
+class WikiaValidatorCompareEmptyIF extends WikiaValidatorCompareValueIF {
 	const EMPTY_VALUE = 'empty';
 	const NOT_EMPTY_VALUE = 'not_empty';
 	
@@ -34,7 +34,7 @@ class WikiaValidatorCompareIfEmpty extends WikiaValidatorCompareValueIF {
 		$value = array_values($value);
 		
 		if( is_array($value) && count($value) != 2 ) {
-			$this->throwException( 'WikiaValidatorIfEmpty: passed value need to be an array with two elements' );
+			$this->throwException( 'WikiaValidatorCompareEmptyIF: passed value need to be an array with two elements' );
 		}
 		
 		$valid = $this->doCompare($condition, $value[0]);
@@ -53,11 +53,11 @@ class WikiaValidatorCompareIfEmpty extends WikiaValidatorCompareValueIF {
 	/**
 	 * Overwritten method; Depending on condition returns true or false
 	 * 
-	 * @param string $condition one of two WikiaValidatorCompareIfEmpty::EMPTY_VALUE, WikiaValidatorCompareIfEmpty::NOT_EMPTY_VALUE
+	 * @param string $condition one of two WikiaValidatorCompareEmptyIF::EMPTY_VALUE, WikiaValidatorCompareEmptyIF::NOT_EMPTY_VALUE
 	 * @param string $value the value which will be checked
 	 * 
 	 * @return boolean
-	 * @throws WikiaValidatorIfEmpty: no expression exception
+	 * @throws WikiaValidatorCompareEmptyIF: no expression exception
 	 */
 	protected function doCompare($condition, $value) {
 		switch($condition)
@@ -69,7 +69,7 @@ class WikiaValidatorCompareIfEmpty extends WikiaValidatorCompareValueIF {
 				return !empty($value);
 				break;
 			default:
-				$this->throwException( 'WikiaValidatorIfEmpty: no expression ' . $this->getOption('condition') );
+				$this->throwException( 'WikiaValidatorCompareEmptyIF: no expression ' . $this->getOption('condition') );
 		}
 	}
 	
