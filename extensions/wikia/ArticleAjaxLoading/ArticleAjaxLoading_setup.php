@@ -46,11 +46,11 @@ function ArticleAjaxLoadinig_addJSVariable($vars) {
 
 				$mod = $wgUser->getID() % 100;
 
-				if($mod >= 1 && $mod <= 6) {
+				if($mod >= 1 && $mod <= 20) {
 					$vars['aal'] = 'G1';
-				} else if($mod >= 7 && $mod <= 12) {
+				} else if($mod >= 21 && $mod <= 40) {
 					$vars['aal'] = 'G2';
-				} else if($mod >= 13 && $mod <= 18) {
+				} else if($mod >= 41 && $mod <= 60) {
 					$vars['aal'] = 'G3';
 				}
 
