@@ -33,7 +33,7 @@ require_once (MAGPIE_DIR . 'rss_utils.inc');
 */
 class MagpieRSS {
     var $parser;
-    
+
     var $current_item   = array();  // item currently being parsed
     var $items          = array();  // collection of parsed items
     var $channel        = array();  // hash of channel fields
@@ -42,14 +42,14 @@ class MagpieRSS {
     var $feed_type;
     var $feed_version;
     var $encoding       = '';       // output encoding of parsed rss
-    
+
     var $_source_encoding = '';     // only set if we have to parse xml prolog
-    
+
     var $ERROR = "";
     var $WARNING = "";
-    
+
     // define some constants
-    
+
     var $_CONTENT_CONSTRUCTS = array('content', 'summary', 'info', 'title', 'tagline', 'copyright');
     var $_KNOWN_ENCODINGS    = array('UTF-8', 'US-ASCII', 'ISO-8859-1');
 
@@ -57,75 +57,75 @@ class MagpieRSS {
     var $stack              = array(); // parser stack
     var $inchannel          = false;
     var $initem             = false;
-    var $incontent          = false; // if in Atom <content mode="xml"> field 
+    var $incontent          = false; // if in Atom <content mode="xml"> field
     var $intextinput        = false;
     var $inimage            = false;
     var $current_namespace  = false;
-    
+
 
     /**
      *  Set up XML parser, parse source, and return populated RSS object..
-     *   
+     *
      *  @param string $source           string containing the RSS to be parsed
      *
      *  NOTE:  Probably a good idea to leave the encoding options alone unless
      *         you know what you're doing as PHP's character set support is
      *         a little weird.
      *
-     *  NOTE:  A lot of this is unnecessary but harmless with PHP5 
+     *  NOTE:  A lot of this is unnecessary but harmless with PHP5
      *
      *
-     *  @param string $output_encoding  output the parsed RSS in this character 
+     *  @param string $output_encoding  output the parsed RSS in this character
      *                                  set defaults to ISO-8859-1 as this is PHP's
      *                                  default.
      *
      *                                  NOTE: might be changed to UTF-8 in future
      *                                  versions.
-     *                               
-     *  @param string $input_encoding   the character set of the incoming RSS source. 
+     *
+     *  @param string $input_encoding   the character set of the incoming RSS source.
      *                                  Leave blank and Magpie will try to figure it
      *                                  out.
-     *                                  
-     *                                   
+     *
+     *
      *  @param bool   $detect_encoding  if false Magpie won't attempt to detect
      *                                  source encoding. (caveat emptor)
      *
      */
-    function MagpieRSS ($source, $output_encoding='ISO-8859-1', 
-                        $input_encoding=null, $detect_encoding=true) 
-    {   
+    function MagpieRSS ($source, $output_encoding='ISO-8859-1',
+                        $input_encoding=null, $detect_encoding=true)
+    {
         # if PHP xml isn't compiled in, die
         #
         if (!function_exists('xml_parser_create')) {
-            $this->error( "Failed to load PHP's XML Extension. " . 
+            $this->error( "Failed to load PHP's XML Extension. " .
                           "http://www.php.net/manual/en/ref.xml.php",
                            E_USER_ERROR );
         }
-        
-        list($parser, $source) = $this->create_parser($source, 
+
+        list($parser, $source) = $this->create_parser($source,
                 $output_encoding, $input_encoding, $detect_encoding);
-        
-        
+
+
         if (!is_resource($parser)) {
             $this->error( "Failed to create an instance of PHP's XML parser. " .
                           "http://www.php.net/manual/en/ref.xml.php",
                           E_USER_ERROR );
         }
 
-        
+
         $this->parser = $parser;
-        
+
         # pass in parser, and a reference to this object
         # setup handlers
         #
         xml_set_object( $this->parser, $this );
-        xml_set_element_handler($this->parser, 
+        xml_set_element_handler($this->parser,
                 'feed_start_element', 'feed_end_element' );
-                        
-        xml_set_character_data_handler( $this->parser, 'feed_cdata' ); 
-    
+
+        xml_set_character_data_handler( $this->parser, 'feed_cdata' );
+
         $status = xml_parse( $this->parser, $source );
-        
+
         if (! $status ) {
             $errorcode = xml_get_error_code( $this->parser );
             if ( $errorcode != XML_ERROR_NONE ) {
@@ -137,25 +137,25 @@ class MagpieRSS {
                 $this->error( $errormsg );
             }
         }
-        
+
         xml_parser_free( $this->parser );
 
         $this->normalize();
     }
-    
+
     function feed_start_element($p, $element, &$attrs) {
         $el = $element = strtolower($element);
         $attrs = array_change_key_case($attrs, CASE_LOWER);
-        
+
         // check for a namespace, and split if found
         $ns = false;
         if ( strpos( $element, ':' ) ) {
-            list($ns, $el) = split( ':', $element, 2); 
+            list($ns, $el) = split( ':', $element, 2);
         }
         if ( $ns and $ns != 'rdf' ) {
             $this->current_namespace = $ns;
         }
-            
+
         # if feed type isn't set, then this is first element of feed
         # identify feed from root element
         #
@@ -175,37 +175,37 @@ class MagpieRSS {
             }
             return;
         }
-    
-        if ( $el == 'channel' ) 
+
+        if ( $el == 'channel' )
         {
             $this->inchannel = true;
         }
-        elseif ($el == 'item' or $el == 'entry' ) 
+        elseif ($el == 'item' or $el == 'entry' )
         {
             $this->initem = true;
             if ( isset($attrs['rdf:about']) ) {
-                $this->current_item['about'] = $attrs['rdf:about']; 
+                $this->current_item['about'] = $attrs['rdf:about'];
             }
         }
-        
+
         // if we're in the default namespace of an RSS feed,
         //  record textinput or image fields
-        elseif ( 
-            $this->feed_type == RSS and 
-            $this->current_namespace == '' and 
-            $el == 'textinput' ) 
+        elseif (
+            $this->feed_type == RSS and
+            $this->current_namespace == '' and
+            $el == 'textinput' )
         {
             $this->intextinput = true;
         }
-        
+
         elseif (
-            $this->feed_type == RSS and 
-            $this->current_namespace == '' and 
-            $el == 'image' ) 
+            $this->feed_type == RSS and
+            $this->current_namespace == '' and
+            $el == 'image' )
         {
             $this->inimage = true;
         }
-        
+
         # handle atom content constructs
         elseif ( $this->feed_type == ATOM and in_array($el, $this->_CONTENT_CONSTRUCTS) )
         {
@@ -213,44 +213,44 @@ class MagpieRSS {
             if ($el == 'content' ) {
                 $el = 'atom_content';
             }
-            
+
             $this->incontent = $el;
-            
-            
+
+
         }
-        
+
         // if inside an Atom content construct (e.g. content or summary) field treat tags as text
-        elseif ($this->feed_type == ATOM and $this->incontent ) 
+        elseif ($this->feed_type == ATOM and $this->incontent )
         {
             // if tags are inlined, then flatten
-            $attrs_str = join(' ', 
-                    array_map('map_attrs', 
-                    array_keys($attrs), 
+            $attrs_str = join(' ',
+                    array_map('map_attrs',
+                    array_keys($attrs),
                     array_values($attrs) ) );
-            
+
             $this->append_content( "<$element $attrs_str>"  );
-                    
+
             array_unshift( $this->stack, $el );
         }
-        
+
         // Atom support many links per containging element.
         // Magpie treats link elements of type rel='alternate'
         // as being equivalent to RSS's simple link element.
         //
-        elseif ($this->feed_type == ATOM and $el == 'link' ) 
+        elseif ($this->feed_type == ATOM and $el == 'link' )
         {
-        	// Wikia change - begin
-        	// BugId:985
-            if ( isset($attrs['rel']) ) {
-            	if ( $attrs['rel'] == 'alternate' ) { 
-	                $link_el = 'link';
-            	}
-            	else {
-                	$link_el = 'link_' . $attrs['rel'];
+			// Wikia change - begin
+			// BugId:985
+			if ( isset($attrs['rel']) ) {
+				if ( $attrs['rel'] == 'alternate' ) {
+					$link_el = 'link';
+				}
+				else {
+					$link_el = 'link_' . $attrs['rel'];
 				}
 			}
 			else {
-            	$link_el = 'link';	
+				$link_el = 'link';
 			}
 			// Wikia change - end
 
@@ -261,11 +261,11 @@ class MagpieRSS {
             array_unshift($this->stack, $el);
         }
     }
-    
 
-    
+
+
     function feed_cdata ($p, $text) {
-        if ($this->feed_type == ATOM and $this->incontent) 
+        if ($this->feed_type == ATOM and $this->incontent)
         {
             $this->append_content( $text );
         }
@@ -274,36 +274,36 @@ class MagpieRSS {
             $this->append($current_el, $text);
         }
     }
-    
+
     function feed_end_element ($p, $el) {
         $el = strtolower($el);
-        
-        if ( $el == 'item' or $el == 'entry' ) 
+
+        if ( $el == 'item' or $el == 'entry' )
         {
             $this->items[] = $this->current_item;
             $this->current_item = array();
             $this->initem = false;
         }
-        elseif ($this->feed_type == RSS and $this->current_namespace == '' and $el == 'textinput' ) 
+        elseif ($this->feed_type == RSS and $this->current_namespace == '' and $el == 'textinput' )
         {
             $this->intextinput = false;
         }
-        elseif ($this->feed_type == RSS and $this->current_namespace == '' and $el == 'image' ) 
+        elseif ($this->feed_type == RSS and $this->current_namespace == '' and $el == 'image' )
         {
             $this->inimage = false;
         }
         elseif ($this->feed_type == ATOM and in_array($el, $this->_CONTENT_CONSTRUCTS) )
-        {   
+        {
             $this->incontent = false;
         }
-        elseif ($el == 'channel' or $el == 'feed' ) 
+        elseif ($el == 'channel' or $el == 'feed' )
         {
             $this->inchannel = false;
         }
         elseif ($this->feed_type == ATOM and $this->incontent  ) {
             // balance tags properly
             // note:  i don't think this is actually neccessary
-            if ( $this->stack[0] == $el ) 
+            if ( $this->stack[0] == $el )
             {
                 $this->append_content("</$el>");
             }
@@ -316,19 +316,19 @@ class MagpieRSS {
         else {
             array_shift( $this->stack );
         }
-        
+
         $this->current_namespace = false;
     }
-    
+
     function concat (&$str1, $str2="") {
         if (!isset($str1) ) {
             $str1="";
         }
         $str1 .= $str2;
     }
-    
-    
-    
+
+
+
     function append_content($text) {
         if ( $this->initem ) {
             $this->concat( $this->current_item[ $this->incontent ], $text );
@@ -337,13 +337,13 @@ class MagpieRSS {
             $this->concat( $this->channel[ $this->incontent ], $text );
         }
     }
-    
+
     // smart append - field and namespace aware
     function append($el, $text) {
         if (!$el) {
             return;
         }
-        if ( $this->current_namespace ) 
+        if ( $this->current_namespace )
         {
             if ( $this->initem ) {
                 $this->concat(
@@ -379,10 +379,10 @@ class MagpieRSS {
                 $this->concat(
                     $this->channel[ $el ], $text );
             }
-            
+
         }
     }
-    
+
     function normalize () {
         // if atom populate rss fields
         if ( $this->is_atom() ) {
@@ -393,7 +393,7 @@ class MagpieRSS {
                     $item['description'] = $item['summary'];
                 if ( isset($item['atom_content']))
                     $item['content']['encoded'] = $item['atom_content'];
-                
+
                 $atom_date = (isset($item['issued']) ) ? $item['issued'] : $item['modified'];
                 if ( $atom_date ) {
                     $epoch = @parse_w3cdtf($atom_date);
@@ -401,9 +401,9 @@ class MagpieRSS {
                         $item['date_timestamp'] = $epoch;
                     }
                 }
-                
+
                 $this->items[$i] = $item;
-            }       
+            }
         }
         elseif ( $this->is_rss() ) {
             $this->channel['tagline'] = $this->channel['description'];
@@ -413,7 +413,7 @@ class MagpieRSS {
                     $item['summary'] = $item['description'];
                 if ( isset($item['content']['encoded'] ) )
                     $item['atom_content'] = $item['content']['encoded'];
-                
+
                 if ( $this->is_rss() == '1.0' and isset($item['dc']['date']) ) {
                     $epoch = @parse_w3cdtf($item['dc']['date']);
                     if ($epoch and $epoch > 0) {
@@ -426,22 +426,22 @@ class MagpieRSS {
                         $item['date_timestamp'] = $epoch;
                     }
                 }
-                
+
                 $this->items[$i] = $item;
             }
         }
     }
-    
-    
+
+
     function is_rss () {
         if ( $this->feed_type == RSS ) {
-            return $this->feed_version; 
+            return $this->feed_version;
         }
         else {
             return false;
         }
     }
-    
+
     function is_atom() {
         if ( $this->feed_type == ATOM ) {
             return $this->feed_version;
@@ -466,15 +466,15 @@ class MagpieRSS {
             $this->encoding = $out_enc;
             xml_parser_set_option($parser, XML_OPTION_TARGET_ENCODING, $out_enc);
         }
-        
+
         return array($parser, $source);
     }
-    
+
     /**
     * Instantiate an XML parser under PHP5
     *
     * PHP5 will do a fine job of detecting input encoding
-    * if passed an empty string as the encoding. 
+    * if passed an empty string as the encoding.
     *
     * All hail libxml2!
     *
@@ -488,7 +488,7 @@ class MagpieRSS {
             return xml_parser_create('');
         }
     }
-    
+
     /**
     * Instaniate an XML parser under PHP4
     *
@@ -508,7 +508,7 @@ class MagpieRSS {
         if ( !$detect ) {
             return array(xml_parser_create($in_enc), $source);
         }
-        
+
         if (!$in_enc) {
             if (preg_match('/<?xml.*encoding=[\'"](.*?)[\'"].*?>/m', $source, $m)) {
                 $in_enc = strtoupper($m[1]);
@@ -518,24 +518,24 @@ class MagpieRSS {
                 $in_enc = 'UTF-8';
             }
         }
-        
+
         if ($this->known_encoding($in_enc)) {
             return array(xml_parser_create($in_enc), $source);
         }
-        
+
         // the dectected encoding is not one of the simple encodings PHP knows
-        
+
         // attempt to use the iconv extension to
         // cast the XML to a known encoding
         // @see http://php.net/iconv
-       
+
         if (function_exists('iconv'))  {
             $encoded_source = iconv($in_enc,'UTF-8', $source);
             if ($encoded_source) {
                 return array(xml_parser_create('UTF-8'), $encoded_source);
             }
         }
-        
+
         // iconv didn't work, try mb_convert_encoding
         // @see http://php.net/mbstring
         if(function_exists('mb_convert_encoding')) {
@@ -544,15 +544,15 @@ class MagpieRSS {
                 return array(xml_parser_create('UTF-8'), $encoded_source);
             }
         }
-        
-        // else 
+
+        // else
         $this->error("Feed is in an unsupported character encoding. ($in_enc) " .
                      "You may see strange artifacts, and mangled characters.",
                      E_USER_NOTICE);
-            
+
         return array(xml_parser_create(), $source);
     }
-    
+
     function known_encoding($enc) {
         $enc = strtoupper($enc);
         if ( in_array($enc, $this->_KNOWN_ENCODINGS) ) {
@@ -565,16 +565,16 @@ class MagpieRSS {
 
     function error ($errormsg, $lvl=E_USER_WARNING) {
         // append PHP's error message if track_errors enabled
-        if ( isset($php_errormsg) ) { 
+        if ( isset($php_errormsg) ) {
             $errormsg .= " ($php_errormsg)";
         }
         if ( MAGPIE_DEBUG ) {
-            trigger_error( $errormsg, $lvl);        
+            trigger_error( $errormsg, $lvl);
         }
         else {
             error_log( $errormsg, 0);
         }
-        
+
         $notices = E_USER_NOTICE|E_NOTICE;
         if ( $lvl&$notices ) {
             $this->WARNING = $errormsg;
@@ -582,15 +582,15 @@ class MagpieRSS {
             $this->ERROR = $errormsg;
         }
     }
-    
-    
+
+
 } // end class RSS
 
 function map_attrs($k, $v) {
     return "$k=\"$v\"";
 }
 
-// patch to support medieval versions of PHP4.1.x, 
+// patch to support medieval versions of PHP4.1.x,
 // courtesy, Ryan Currie, ryan@digibliss.com
 
 if (!function_exists('array_change_key_case')) {
