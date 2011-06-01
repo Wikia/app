@@ -45,12 +45,6 @@ Community Messages
 
 Content Feeds
 
-#Commented out 2010-02-01 -- tor
-#Dropping in favour of CreatePage (below)
-#Create A Page
-#file = CreateAPage/MultiEdit.i18n.php
-#optional = createplate-Blank, createplate-list
-
 Create New Wiki
 ignored = cnw-name-wiki-language, cnw-name-wiki-domain
 
@@ -275,6 +269,8 @@ ignored = wikiagameguides-tab-more-content, wikiagameguides-contents
 
 Wikia Irc Gateway
 ignored = ircgate-channellist
+
+Wikia Labs
 
 Wikia Mini Upload
 
