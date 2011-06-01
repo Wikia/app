@@ -88,7 +88,8 @@
 		</span>
 		<br class="clear" />
 		<label class="comments" ><?php echo wfMsg( 'wikialabs-feedback-comments' ); ?></label>
-		<textarea name="feedbacktext" class="feedbacktext" ></textarea>
+		<textarea name="feedbacktext" class="feedbacktext" maxlength="1000"></textarea>
+		<span class="feedbackCounter">0</span>
 		<button class="okbutton" ><?php echo wfMsg('wikialabs-feedback-submit'); ?></button>
 	</form>
 </div>

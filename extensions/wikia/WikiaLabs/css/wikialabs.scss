@@ -336,12 +336,14 @@ $warning-bg-color: #FFFFCC;
 		line-spacing: 22.5px;
 	}
  	.feedbacktext {
- 	 	margin-bottom: 12px;
 		height: 100px;
 		width: 675px;
  	 	display: block;
  	}
-
+	.feedbackCounter {
+		display: block;
+		text-align: right;
+	}
  	.clearfix {
 		@include clearfix;
 		margin-top: 18px;
@@ -391,7 +393,21 @@ $warning-bg-color: #FFFFCC;
 		margin-bottom: 5px;
 		font-weight: bold;
 	}
-
+	
+	.comments,
+	.feedbacktext,
+	.feedbackcounter {
+		color: #000;
+	}
+	
+	.red {
+		color: #f00;
+	}
+	
+	.redborder {
+		border: 1px solid #f00;
+	}
+	
 	.title {
 		display: block;
 		clear: both;

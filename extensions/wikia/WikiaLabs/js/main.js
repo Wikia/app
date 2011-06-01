@@ -1,6 +1,7 @@
 WikiaLabs = {};
 
 WikiaLabs.sliderEnable = true;
+WikiaLabs.feedbackTextLimit = 1000;
 
 $(function() {
 	WikiaLabs.init();	
@@ -32,11 +33,11 @@ WikiaLabs.init = function() {
 					$(this).parent().trigger('switch');
 				} else {
 					if (!$(this).parent().hasClass('on')) {
-						$(this).animate({       
+						$(this).animate({
 							left: 0
 						});
 					} else if ($(this).parent().hasClass('on')) {
-						$(this).animate({       
+						$(this).animate({
 							left: 65
 						});
 					}
@@ -44,7 +45,6 @@ WikiaLabs.init = function() {
 			}
 		});
 	});
-
 }
 
 WikiaLabs.showFeedback = function(e){
@@ -54,7 +54,7 @@ WikiaLabs.showFeedback = function(e){
 	var id = button.attr('data-id');
 	var starValue = button.attr('data-user-feedback');
 	
-	var modal =	$( '#feedbackmodal' )
+	var modal = $( '#feedbackmodal' )
 					.clone()
 					.attr('id','')
 					.show()
@@ -73,7 +73,7 @@ WikiaLabs.showFeedback = function(e){
 			    element.addClass('staractive')	
 			} else {
 				element.removeClass('staractive')	
-            }
+			}
 		});
 	} 
 	
@@ -115,11 +115,15 @@ WikiaLabs.showFeedback = function(e){
 				}
 			}
 		});
+		
 		return false;
 	});
 	
 	var modalWrap = modal.makeModal({ width : 650});
+	
+	$('.feedbacktext').bind('keypress keydown keyup paste cut', WikiaLabs.onFeedbackTextChange);
 }
+
 
 WikiaLabs.editProject = function(id, callback) {
 	$.ajax({
@@ -128,7 +132,7 @@ WikiaLabs.editProject = function(id, callback) {
 		type: "POST",
 		success: function(data) {
 			callback(data);
-			var modal =	$(data).makeModal({ width : 650});
+			var modal = $(data).makeModal({ width : 650});
 			okbutton = modal.find('#saveProject'); 
 			okbutton.click(function() {
 				okbutton.css('opacity', '0.5' );
@@ -165,8 +169,8 @@ WikiaLabs.editProject = function(id, callback) {
 				return false;
 			}); 
 			//solve YUI modal problem 
-            modal.css('z-index', 9999);
-            $('.blackout').css('z-index', 9998);
+			modal.css('z-index', 9999);
+			$('.blackout').css('z-index', 9998);
 			
 		}
 	});
@@ -232,7 +236,7 @@ WikiaLabs.switchToggle = function(e) {
 	}
 	
 	warning.show();
-	var modal =	$(warning).makeModal({ width : 650});
+	var modal = $(warning).makeModal({ width : 650});
 	
 	var okbutton = modal.find('.okbutton');
 	var count = 3; 
@@ -263,15 +267,15 @@ WikiaLabs.switchRequest = function(slider, onoff) {
 	WikiaLabs.sliderEnable = false;
 	$('.button').draggable("option", "disabled", true);
 	
-	if( slider.hasClass('on') ) {      
-    	slider.find('.button').animate({       
-	    	left: 0
+	if( slider.hasClass('on') ) {
+		slider.find('.button').animate({
+			left: 0
 		});
 		slider.find('.texton').fadeOut('normal', function() {
 			slider.find('.loading').css('display', 'block');
 		});
-	} else {               	 
-		slider.find('.button').animate({       
+	} else {
+		slider.find('.button').animate({
 			left: 65
 		});
 		slider.find('.textoff').fadeOut('normal', function() {
@@ -292,13 +296,13 @@ WikiaLabs.switchRequest = function(slider, onoff) {
 
 WikiaLabs.animateToggle = function(slider) {
 	$().log(slider, 'WikiaLabs');
-	if( slider.hasClass('on') ) {      
+	if( slider.hasClass('on') ) {
 		slider.find('.texton').html('active').hide();
 		slider.find('.loading').fadeOut('normal', function() {
 			slider.find('.textoff').fadeIn();
 		});
 		slider.removeClass('on');
-	} else {               	 
+	} else {
 		slider.find('.textoff').html('inactive').hide();
 		slider.find('.loading').fadeOut('normal', function() {
 			slider.find('.texton').fadeIn();
@@ -307,3 +311,23 @@ WikiaLabs.animateToggle = function(slider) {
 	}
 }
 
+WikiaLabs.onFeedbackTextChange = function(e) {
+	setTimeout(function() {
+		var textarea = $(e.target),
+			counter = $( textarea.next('.feedbackCounter') ),
+			label = $( textarea.prev('.comments') ),
+			chars = textarea.val().length;
+		
+		if( chars >= WikiaLabs.feedbackTextLimit ) {
+			textarea.addClass('red redborder');
+			counter.addClass('red');
+			label.addClass('red');
+		} else {
+			textarea.removeClass('red redborder');
+			counter.removeClass('red');
+			label.removeClass('red');
+		}
+		
+		counter.text(chars);
+	}, 100);
+}
