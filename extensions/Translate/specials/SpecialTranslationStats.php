@@ -683,8 +683,12 @@ class TranslatePerLanguageStats extends TranslationStatsBase {
 		$opts->validateIntBounds( 'days', 1, 200 );
 	}
 
-	public function preQuery( &$tables, &$fields, &$conds, &$type, &$options, $cutoff ) {
+	public function preQuery( &$tables, &$fields, &$conds, &$type, &$options, $start, $end = null ) {
 		global $wgTranslateMessageNamespaces;
+                
+                if ( is_null($end) ) {
+                    $end = time();
+                }
 
 		$db = wfGetDB( DB_SLAVE );
 
@@ -692,7 +696,8 @@ class TranslatePerLanguageStats extends TranslationStatsBase {
 		$fields = array( 'rc_timestamp' );
 
 		$conds = array(
-			"rc_timestamp >= '{$db->timestamp( $cutoff )}'",
+			"rc_timestamp >= '{$db->timestamp( $start )}'",
+                        "rc_timestamp <= '{$db->timestamp( $end )}'",
 			'rc_namespace' => $wgTranslateMessageNamespaces,
 			'rc_bot' => 0
 		);
@@ -863,11 +868,17 @@ class TranslatePerLanguageStats extends TranslationStatsBase {
  * @ingroup Stats
  */
 class TranslateRegistrationStats extends TranslationStatsBase {
-	public function preQuery( &$tables, &$fields, &$conds, &$type, &$options, $cutoff ) {
+	public function preQuery( &$tables, &$fields, &$conds, &$type, &$options, $start, $end = null ) {
+                if ( is_null($end) ) {
+                    $end = time();
+                }
 		$db = wfGetDB( DB_SLAVE );
 		$tables = 'user';
 		$fields = 'user_registration';
-		$conds = array( "user_registration >= '{$db->timestamp( $cutoff )}'" );
+		$conds = array(
+                    "user_registration >= '{$db->timestamp( $start )}'",
+                    "user_registration <= '{$db->timestamp( $end )}'"
+                );
 		$type .= '-registration';
 		$options = array();
 	}
