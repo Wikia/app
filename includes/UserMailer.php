@@ -382,7 +382,7 @@ class UserMailer {
 		}
 
 		// Add a header for the server-name (helps us route where SendGrid will send bounces).
-		if(!empty($_SERVER)) {
+ 		if(isset($_SERVER['SERVER_NAME'])) {
 			$headers["X-ServerName"] = $_SERVER['SERVER_NAME'];
 		}
 
