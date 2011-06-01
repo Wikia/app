@@ -127,7 +127,7 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 			$this->form( $opts );
                         
                         /* check if form has been posted */
-                        if ( $validRange ) {
+                        if ( $validRange && $wgRequest->wasPosted() ) {
                             $this->table( $opts );
                         }
 		}
@@ -245,8 +245,20 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 			Html::element( 'hr' ) .
 			Html::rawElement( 'div', array( 'style' => 'margin: 1em auto; text-align: center;' ), $this->image( $opts ) )
 		);
+
 	}
 
+
+	function table( $opts ) {
+		$data = $this->getData( $opts );
+		$legend = array_shift( $data );
+		array_unshift( $legend, 'Date' );
+		foreach ( $data[0] as $date => &$row ) {
+			array_unshift( $row, $date );
+		}
+
+		$wgOut->addHTML( Xml::buildTable( $data[0], array( 'class' => 'wikitable' ), $legend ) );
+	}
 
 	/**
 	 * Constructs a table row with label and input in two columns.
