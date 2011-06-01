@@ -38,7 +38,7 @@ class FounderEmails {
 
 	/**
 	 * Get list of wikis with a particular local preference setting
-	 * Since the expected default is 1, we need to look for users with no up_property value set
+	 * Since the expected default is 0, we need to look for users with up_property value set to 1
 	 * 
 	 * @param $prefPrefix String Which preference setting to search for, MUST be either:
 	 *							 founderemails-complete-digest OR founderemails-views-digest
@@ -49,14 +49,18 @@ class FounderEmails {
 
 		$db = wfGetDB(DB_SLAVE, array(), 'wikicities');
 		$cityList = array();
-		// Since the preference default is true, we need to find all users with NO row for that preference
 		$oRes = $db->select (
-			"city_list LEFT OUTER JOIN wikicities.user_properties ON city_founding_user = up_user AND (up_property like '$prefPrefix-%')",
-			array ('city_id', 'up_property'),
-			array ('up_property' => null)
+			array ('city_list' , 'wikicities.user_properties'), 
+			array ('city_id', 'up_property'), 
+			array ( 
+					'city_founding_user = up_user',  
+					"up_property like '$prefPrefix-%'", 
+					'up_value' => 1) 
 		);
+		// Filter out any preferences for founders of more than one wiki
 		while ( $oRow = $db->fetchObject ( $oRes )) {
-			$cityList[] = $oRow->city_id;
+			if ($oRow->up_property == "$prefPrefix-{$oRow->city_id}") 
+				$cityList[] = $oRow->city_id; 		
 		}
 		wfProfileOut( __METHOD__ );		
 		return $cityList;
