@@ -1,16 +1,25 @@
 <?php
 
 $messages = array();
+// note: leaving in body-HTML for backwards compatibility
 
 $messages['en'] = array(
 	'founderemails-desc' => 'Helps informing founders about changes on their wiki',
 	'tog-founderemailsenabled' => 'E-mail me updates on what other people are doing (founders only)',
-	'founderemails-email-user-registered-subject' => 'Someone registered an account on your wiki!',
-	'founderemails-email-user-registered-body' => 'Hey $FOUNDERNAME,
+// registered
+	'founderemails-email-user-registered-subject' => 'Someone new joined $WIKINAME',
+	'founderemails-email-user-registered-body' => 'Hi $Foundername,
 
-It looks like $USERNAME has registered on your wiki! Why don\'t you drop by their talkpage $USERTALKPAGEURL to say hello?
+Congratulations! $USERNAME has just joined $WIKINAME.
 
--- The Wikia Team',
+Take this opportunity to welcome them to your wiki and encourage them to help edit. The more the merrier, and the faster your wiki will grow.
+
+The Wikia Team',
+	'founderemails-email-user-registered-greeting' => 'Hi $FOUNDERNAME,',
+	'founderemails-email-user-registered-headline' => 'Congratulations! $USERNAME has just joined $WIKINAME.',
+	'founderemails-email-user-registered-content' => 'Take this opportunity to welcome them to your wiki and encourage them to help edit. The more the merrier, and the faster your wiki will grow.',
+	'founderemails-email-user-registered-signature' => 'The Wikia Team',
+	'founderemails-email-user-registered-button' => 'Welcome Them',
 	'founderemails-email-user-registered-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 It looks like $USERNAME has registered on your wiki! Why don\'t you drop by their <a href="$USERTALKPAGEURL">talkpage</a> to say hello?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
@@ -38,33 +47,58 @@ It\'s been a little while since you started a wiki on Wikia - we hope it\'s goin
 	'founderemails-email-10-days-passed-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 It\'s been a little while since you started a wiki on Wikia - we hope it\'s going great! We wanted to share a few final tidbits to help make your wiki more like home.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
-	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Registered user changed your wiki for the first time!',
-	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Hey $FOUNDERNAME,
+// first edit
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => '$WIKINAME has a new edit!',
+	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Hi $FOUNDERNAME,
 
-It looks like registered user $USERNAME has edited your wiki for the first time! Why don\'t you drop by their talkpage ($USERTALKPAGEURL) to say hello?
+All right! $USERNAME has just made their very first edit on $WIKINAME.
 
--- The Wikia Team',
+Head over to $PAGETITLE to check out what they added.
+
+The Wikia Team',
+	'founderemails-email-first-edit-greeting' => 'Hi $FOUNDERNAME,',
+	'founderemails-email-first-edit-headline' => 'All right! $USERNAME has just made their very first edit on $WIKINAME.',
+	'founderemails-email-first-edit-content' => 'Head over to $PAGETITLE to check out what they added.',
+	'founderemails-email-first-edit-signature' => 'The Wikia Team',
+	'founderemails-email-first-edit-button' => 'Check it out!',
 	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 It looks like registered user $USERNAME has edited your wiki for the first time! Why don\'t you drop by their <a href="$USERTALKPAGEURL">talkpage</a> to say hello?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
-	'founderemails-email-page-edited-reg-user-subject' => 'Registered user changed your wiki!',
-	'founderemails-email-page-edited-reg-user-body' => 'Hey $FOUNDERNAME,
+// general user edit
+	'founderemails-email-page-edited-reg-user-subject' => 'New edit on $WIKINAME!',
+	'founderemails-email-page-edited-reg-user-body' => 'Hi $FOUNDERNAME,
 
-It looks like registered user $USERNAME has edited your wiki! Why don\'t you drop by their talkpage ($USERTALKPAGEURL) to say hello?
+$USERNAME just made another edit to the $WIKINAME on $PAGETITLE.
 
--- The Wikia Team',
+Head over to $PAGETITLE to see what they\'ve changed.
+
+The Wikia Team',
+	'founderemails-email-general-edit-greeting' => 'Hi $FOUNDERNAME,',
+	'founderemails-email-general-edit-headline' => '$USERNAME just made another edit to the $WIKINAME on $PAGETITLE.',
+	'founderemails-email-general-edit-content' => 'Head over to $PAGETITLE to check out what they added.',
+	'founderemails-email-general-edit-signature' => 'The Wikia Team',
+	'founderemails-email-general-edit-button' => 'Check it out!',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 It looks like registered user $USERNAME has edited your wiki! Why don\'t you drop by their <a href="$USERTALKPAGEURL">talkpage</a> to say hello?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
-	'founderemails-email-page-edited-anon-subject' => 'Someone changed your wiki!',
-	'founderemails-email-page-edited-anon-body' => 'Hey $FOUNDERNAME,
+// anon edit
+	'founderemails-email-page-edited-anon-subject' => 'A mysterious friend edited $WIKINAME',
+	'founderemails-email-page-edited-anon-body' => 'Hi $FOUNDERNAME,
 
-It looks like someone has edited your wiki! Why don\'t you check it out $MYHOMEURL to see what changed?
+A Wikia Contributor has just made an edit to $PAGETITLE on $WIKINAME.
 
--- The Wikia Team',
+Wikia Contributors are people who make edits without logging in to a Wikia account. Go see what this mysterious friend added!
+
+The Wikia Team',
+	'founderemails-email-anon-edit-greeting' => 'Hi $FOUNDERNAME,',
+	'founderemails-email-anon-edit-headline' => 'A Wikia Contributor has just made an edit to $PAGETITLE on $WIKINAME.',
+	'founderemails-email-anon-edit-content' => 'Wikia Contributors are people who make edits without logging in to a Wikia account. Go see what this mysterious friend added!',
+	'founderemails-email-anon-edit-signature' => 'The Wikia Team',
+	'founderemails-email-anon-edit-button' => 'Check it out!',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 It looks like someone has edited your wiki! Why don\'t you <a href="$MYHOMEURL">check it out</a> to see what changed?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
+// answers
 	'founderemails-answers-email-user-registered-subject' => 'Someone registered an account on your QA wiki!',
 	'founderemails-answers-email-user-registered-body' => 'Hey $FOUNDERNAME,
 
@@ -125,15 +159,25 @@ It looks like someone has edited your wiki! Why don\'t you check it out $MYHOMEU
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 It looks like someone has edited your wiki! Why don\'t you <a href="$MYHOMEURL">check it out</a> to see what changed?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
-	'founderemails-lot-happening-subject' => 'A lot happening on your site today!',
-	'founderemails-lot-happening-body' => 'Hey $FOUNDERNAME,
+// a lot happening 
+	'founderemails-lot-happening-subject' => '$WIKINAME is heating up!',
+	'founderemails-lot-happening-body' => 'Hi $FOUNDERNAME,
 
-There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s been going on.
+Congratulations! there\'s a lot going on at $WIKINAME today!
 
--- The Wikia Team',
+If you haven\'t already you can go to Wiki Activity see all of the great work that\'s been happening.
+
+Since there\'s so much going on, you might also want to change your email preferences to digest mode. With digest mode on you\'ll receive one email that lists all of the activity on your wiki each day.
+
+The Wikia Team',
 	'founderemails-lot-happening-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
 There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s been going on.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
+	'founderemails-email-lot-happening-greeting' => 'Hi $FOUNDERNAME,',
+	'founderemails-email-lot-happening-headline' => 'Congratulations! there\'s a lot going on at $WIKINAME today!',
+	'founderemails-email-lot-happening-content' => 'If you haven\'t already you can go to Wiki Activity see all of the great work that\'s been happening.  Since there\'s so much going on, you might also want to change your email preferences to digest mode. With digest mode on you\'ll receive one email that lists all of the activity on your wiki each day.',
+	'founderemails-email-lot-happening-signature' => 'The Wikia Team',
+	'founderemails-email-lot-happening-button' => 'See Activities',
 // New Founder email messages
 	'founderemails-email-footer-line1' => 'To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'founderemails-email-footer-line2' => 'Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
@@ -179,6 +223,63 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-10-day-join-content' => 'Ask people on other forums or websites that are about your topic for help by posting in their forums or comments.  If possible, contact the administrator and see if they\'re interested in link-sharing &mdash; they\'ll put your wiki link on their website if you put their link on your wiki.',
 	'founderemails-email-10-day-wikiahelps-text' => 'You can also ask other Wikians to help out on your wiki by posting in the forums on <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>.',
 	'founderemails-email-10-day-wikiahelps-signature' => 'Keep up the good work!<br />The Wikia Team',
+// views digest
+	'founderemails-email-views-digest-subject' => 'Today\'s views on $WIKINAME',
+	'founderemails-email-views-digest-body' => 'Hi $FOUNDERNAME,
+
+Today $WIKINAME was viewed by # people.
+
+Keep adding new content and promoting your wiki to encourage more people to read, edit and spread the word.
+
+The Wikia Team',
+	'founderemails-email-views-digest-greeting' => 'Hi $FOUNDERNAME,',
+	'founderemails-email-views-digest-headline' => 'Today $WIKINAME was viewed by $UNIQUEVIEWS people.',
+	'founderemails-email-views-digest-content' => 'Keep adding new content and promoting your wiki to encourage more people to read, edit and spread the word.',
+	'founderemails-email-views-digest-signature' => 'The Wikia Team',
+	'founderemails-email-views-digest-button' => 'Add more pages',	
+// complete digest
+	'founderemails-email-complete-digest-subject' => 'The latest activity on $WIKINAME',
+	'founderemails-email-complete-digest-body' => 'Hi $FOUNDERNAME,
+
+It\'s time for your daily dose of activity from $WIKINAME.
+
+$UNIQUEVIEWS people viewed your wiki.
+
+Keep up the great work adding interesting content for people to read!
+
+$USEREDITS edits were made.
+
+Happy editors make happy wikis. Make sure to thank your editors and check in with them from time to time.
+
+$USERJOINS people joined your wiki.
+
+Welcome new people to your wiki with a talk page message.
+
+You can always head over to wiki activity to view all of the exiting changes being made on $WIKINAME. Check in often, as the founder your community looks to you to help guide and run the wiki.
+
+The Wikia Team',
+	'founderemails-email-complete-digest-greeting' => 'Hi $FOUNDERNAME,',
+	'founderemails-email-complete-digest-headline' => 'It\'s time for your daily dose of activity from $WIKINAME.',
+	'founderemails-email-complete-digest-content' => '$UNIQUEVIEWS people viewed your wiki.
+<br><br>
+Keep up the great work adding interesting content for people to read!
+<br><br>
+$USEREDITS edits were made.
+<br><br>
+Happy editors make happy wikis. Make sure to thank your editors and check in with them from time to time.
+<br><br>
+$USERJOINS people joined your wiki.
+<br><br>
+Welcome new people to your wiki with a talk page message.
+<br><br>
+You can always head over to wiki activity to view all of the exiting changes being made on $WIKINAME. Check in often, as the founder your community looks to you to help guide and run the wiki.',
+	'founderemails-email-complete-digest-signature' => 'The Wikia Team',
+	'founderemails-email-complete-digest-button' => 'Go to wiki activity',
+// founder emails preferences
+	'founderemails-pref-joins' => 'Email me when someone joins $1',
+	'founderemails-pref-edits' => 'Email me when someone edits $1',
+	'founderemails-pref-views-digest' => 'Send me a daily email telling me how many times $1 was viewed',
+	'founderemails-pref-complete-digest' => 'Send me a daily digest of activity on my wiki',
 );
 
 /** Message documentation (Message documentation)
@@ -3169,7 +3270,7 @@ $messages['uk'] = array(
 	'founderemails-lot-happening-subject' => 'Сьогодні на вашому сайті відбувається багато подій!',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Hydra
  */
 $messages['zh-hans'] = array(

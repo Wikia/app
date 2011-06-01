@@ -6,6 +6,11 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		$this->setData( $data );
 	}
 
+	public function enabled ( $wgCityId ) {
+		// This type of email cannot be disabled or avoided without unsubscribing from all email
+		return true;
+	}
+	
 	public function process( Array $events ) {
 		global $wgExternalSharedDB, $wgEnableAnswers;
 		wfProfileIn( __METHOD__ );
@@ -48,7 +53,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 					$mailCategory = FounderEmailsEvent::CATEGORY_0_DAY;
 				}
 				
-				if ($langCode == 'en') {
+				if ($langCode == 'en' && empty( $wgEnableAnswers )) {
 					$mailBodyHTML = wfRenderModule("FounderEmails", $event['data']['dayName'], array('language' => 'en'));
 					$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
 					$mailCategory .= 'EN';
@@ -57,7 +62,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 					$mailCategory .= 'INT';
 				}
 				
-				$founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $wikiId, $mailCategory );
+				$founderEmails->notifyFounder( $this, $mailSubject, $mailBody, $mailBodyHTML, $wikiId, $mailCategory );
 
 				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 				$dbw->delete( 'founder_emails_event', array( 'feev_id' => $event['id'] ) );
@@ -78,7 +83,10 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		$mainpageTitle = Title::newFromText( wfMsgForContent( 'Mainpage' ) );
 
 		// set FounderEmails notifications enabled by default for wiki founder
-		$wikiFounder->setOption( 'founderemailsenabled', true );
+//		$wikiFounder->setOption( 'founderemailsenabled', true );
+		$wikiFounder->setOption("founderemails-joins-$wgCityId", true);
+		$wikiFounder->setOption("founderemails-edits-$wgCityId", true);
+		
 		$wikiFounder->saveSettings();
 
 		foreach ( $wgFounderEmailsExtensionConfig['events']['daysPassed']['days'] as $daysToActivate ) {

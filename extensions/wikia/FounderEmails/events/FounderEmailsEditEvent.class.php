@@ -6,8 +6,20 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		$this->setData( $data );
 	}
 
+	public function enabled ( $wgCityId ) {
+ 		
+		// If digest mode is enabled, do not create edit event notifications
+		if ( FounderEmails::getInstance()->getWikiFounder()->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
+			return false;
+		}
+		if ( FounderEmails::getInstance()->getWikiFounder()->getOption( "founderemails-edits-$wgCityId" ) ) {
+			return true;
+		}
+		return false;
+	}
+	
 	public function process( Array $events ) {
-		global $wgCityId, $wgEnableAnswers, $wgSitename;
+		global $wgCityId, $wgEnableAnswers, $wgSitename, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		if ( $this->isThresholdMet( count( $events ) ) ) {
@@ -23,6 +35,8 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				'$UNSUBSCRIBEURL' => $eventData['data']['unsubscribeUrl'],
 				'$MYHOMEURL' => $eventData['data']['myHomeUrl'],
 				'$WIKINAME' => $wgSitename,
+				'$PAGETITLE' => $eventData['data']['titleText'],
+				'$PAGEURL' => $eventData['data']['titleUrl'],
 			);
 
 			$msgKeys = array();
@@ -41,9 +55,15 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				$aAllCounter = array();
 			}
 
-			$aWikiCounter = empty( $aAllCounter[$wgCityId] ) ? array() : $aAllCounter[$wgCityId];
-
+			// quit if this particular user has generated an edit email in the last hour
+			$memcKey = wfMemcKey("FounderEmail", "EditEvent", $eventData['data']['editorName']);
+			if ($wgMemc->get($memcKey) == "1") {
+				return true;
+			}
 			// quit if the Founder has recieved enough emails today			
+
+			$aWikiCounter = empty( $aAllCounter[$wgCityId] ) ? array() : $aAllCounter[$wgCityId];
+			
 			if ( !empty( $aWikiCounter[0] ) && $aWikiCounter[0] == $today && $aWikiCounter[1] === 'full' ) {
 				return true;
 			}
@@ -56,29 +76,37 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			
 			$mailCategory = FounderEmailsEvent::CATEGORY_DEFAULT;
 			// @FIXME magic number, move to config
-			if ( $aWikiCounter[1] === 9 ) {
+			if ( $aWikiCounter[1] === 15 ) {
 				$msgKeys['subject'] = 'founderemails-lot-happening-subject';
 				$msgKeys['body'] = 'founderemails-lot-happening-body';
 				$msgKeys['body-html'] = 'founderemails-lot-happening-body-HTML';
 				$mailCategory = FounderEmailsEvent::CATEGORY_EDIT_HIGH_ACTIVITY;
+				$mailKey = 'lot-happening';
 			} elseif ( $eventData['data']['registeredUserFirstEdit'] ) {
 				$msgKeys['subject'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-first-edit-subject';
 				$msgKeys['body'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-first-edit-body';
 				$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-first-edit-body-HTML';
 				$mailCategory = FounderEmailsEvent::CATEGORY_FIRST_EDIT_USER;
+				$mailKey = 'first-edit';
 			} elseif ( $eventData['data']['registeredUser'] ) {
 				$msgKeys['subject'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-subject';
 				$msgKeys['body'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-body';
 				$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-body-HTML';
 				$mailCategory = FounderEmailsEvent::CATEGORY_EDIT_USER;
+				$mailKey = 'general-edit';
 			} else {
 				$msgKeys['subject'] = 'founderemails' . $wikiType . '-email-page-edited-anon-subject';
 				$msgKeys['body'] = 'founderemails' . $wikiType . '-email-page-edited-anon-body';
 				$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-anon-body-HTML';
 				$mailCategory = FounderEmailsEvent::CATEGORY_EDIT_ANON;
+				$mailKey = 'anon-edit';
 			}
 
-			$aWikiCounter[1] = ( $aWikiCounter[1] === 9 ) ? 'full' : $aWikiCounter[1] + 1;
+			// Set flag so this user won't generate edit notifications for 1 hour
+			$wgMemc->set($memcKey, "1", 3600);
+			
+			// Increment counter for daily notification limit
+			$aWikiCounter[1] = ( $aWikiCounter[1] === 15 ) ? 'full' : $aWikiCounter[1] + 1;
 			$aAllCounter[$wgCityId] = $aWikiCounter;
 
 			$oFounder->setOption( 'founderemails-counter', serialize( $aAllCounter ) );
@@ -87,13 +115,20 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$langCode = $oFounder->getOption( 'language' );
 			$mailCategory .= (!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
 
-			$mailSubject = $this->getLocalizedMsgBody( $msgKeys['subject'], $langCode, array() );
-			$mailBody = $this->getLocalizedMsgBody( $msgKeys['body'], $langCode, $emailParams );
-			$mailBodyHTML = $this->getLocalizedMsgBody( $msgKeys['body-html'], $langCode, $emailParams );
+			if(!empty($langCode) && $langCode == 'en' && empty( $wgEnableAnswers )) { // FounderEmailv2.1
+				$mailSubject = $this->getLocalizedMsgBody( $msgKeys['subject'], $langCode, $emailParams );
+				$mailBody = $this->getLocalizedMsgBody( $msgKeys['body'], $langCode, $emailParams );
+				$mailBodyHTML = wfRenderModule("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => $mailKey)));
+				$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
+			} else {	// old emails
+				$mailSubject = $this->getLocalizedMsgBody( $msgKeys['subject'], $langCode, $emailParams );
+				$mailBody = $this->getLocalizedMsgBody( $msgKeys['body'], $langCode, $emailParams );
+				$mailBodyHTML = $this->getLocalizedMsgBody( $msgKeys['body-html'], $langCode, $emailParams );
+			}
 
 			wfProfileOut( __METHOD__ );
-			return $founderEmails->notifyFounder( $mailSubject, $mailBody, $mailBodyHTML, $wgCityId, $mailCategory );
-			
+			$founderEmails->notifyFounder( $this, $mailSubject, $mailBody, $mailBodyHTML, $wgCityId, $mailCategory );
+			return true;
 		}
 
 		wfProfileOut( __METHOD__ );
