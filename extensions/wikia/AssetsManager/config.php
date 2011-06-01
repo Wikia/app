@@ -95,8 +95,7 @@ $config['oasis_shared_js'] = array(
 		'//extensions/wikia/PageLayoutBuilder/js/view.js', // TODO: load it on demand
 		'//extensions/wikia/JSMessages/js/JSMessages.js', // TODO: maybe move to jquery.wikia.js
 		'//skins/oasis/js/GlobalModal.js',
-		'//skins/oasis/js/FirefoxFindFix.js',
-		'//extensions/wikia/ArticleAjaxLoading/ArticleAjaxLoading.js'
+		'//skins/oasis/js/FirefoxFindFix.js'
 	)
 );
 
@@ -115,6 +114,7 @@ $config['oasis_user_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//skins/common/ajaxwatch.js',
+		'//extensions/wikia/ArticleAjaxLoading/ArticleAjaxLoading.js',
 		'#function_AssetsConfig::getSiteJS'
 	)
 );
