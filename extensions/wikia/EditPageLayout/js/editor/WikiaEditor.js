@@ -583,7 +583,7 @@
 		},
 
 		initEditor: function() {
-			this.editor.getEditbox = this.proxy(this.getEditbox);
+			this.editor.getEditorElement = this.proxy(this.getEditorElement);
 
 			this.editor.fire('editorReady',this.editor);
 			this.editor.setMode(this.editor.mode,true);
@@ -591,12 +591,15 @@
 
 			var self = this,
 				cnt = this.editor.getEditorSpace() || this.editor.element;
-			this.textarea = cnt.find('textarea').eq(0); // get the first textarea in the editor
+			this.textarea = cnt.find('#wpTextbox1');
+			if (!this.textarea.exists()) {
+				this.textarea = cnt.find('textarea').eq(0); // get the first textarea in the editor
+			}
 			this.textarea
 				.focus(this.proxy(this.editorFocused))
 				.blur(this.proxy(this.editorBlurred));
 
-			this.editor.fire('editboxReady',this.editor,this.getEditbox());
+			//this.editor.fire('editboxReady',this.editor,this.getEditbox());
 		},
 
 		initDom: function() {
@@ -604,6 +607,10 @@
 		},
 
 		getEditbox: function() {
+			return this.textarea;
+		},
+		
+		getEditorElement: function() {
 			return this.textarea;
 		},
 
@@ -634,7 +641,7 @@
 			RTE.init(mode);
 			this.instance = RTE.instance;
 			this.editor.ck = this.instance;
-			this.editor.getEditbox = this.proxy(this.getEditbox);
+			this.editor.getEditorElement = this.proxy(this.getEditorElement);
 
 			for (var i=0;i<this.proxyEvents.length;i++) {
 				(function(eventName){
@@ -693,6 +700,17 @@
 			}
 
 			return editbox;
+		},
+		
+		getEditorElement: function() {
+			switch (this.instance.mode) {
+			case 'wysiwyg':
+				return $(this.instance.getThemeSpace('contents').$);
+				break;
+			case 'source':
+				return $(this.instance.textarea.$);
+			}
+			return false;
 		},
 
 		editorFocused: function() {

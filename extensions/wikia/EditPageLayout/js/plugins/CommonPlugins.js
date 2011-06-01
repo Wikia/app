@@ -502,11 +502,12 @@
 		pollStylesheets: function() {
 			this.pollStylesheetsTimer.stop();
 			
-			var ed = this.editor.getEditorSpace(),
+			var ed = this.editor.getEditorElement(),
 				iframe = ed.find('iframe');
 			if (iframe.exists()) {
 				var doc = iframe.get(0).contentDocument,
-					headColor = $('head',doc).css('color');
+					head = doc && $('head',$(doc)),
+					headColor = head && head.css('color');
 				if ( (typeof headColor == 'string') && $.inArray(headColor.toLowerCase(), ['transparent','rgb(0, 0, 0)','white','#ffffff','#fff']) == -1 ) {
 					this.fireState(this.editor.states.IDLE);
 					return;
