@@ -12,6 +12,8 @@ abstract class FounderEmailsEvent {
 	const CATEGORY_EDIT_USER = 'FounderEmailsEditUser';
 	const CATEGORY_EDIT_ANON = 'FounderEmailsEditAnon';
 	const CATEGORY_EDIT_HIGH_ACTIVITY = 'FounderEmailsHighActivity';
+	const CATEGORY_VIEWS_DIGEST = 'FounderEmailsViewsDigest';
+	const CATEGORY_COMPLETE_DIGEST = 'FounderEmailsCompleteDigest';
 
 	private $id = 0;
 	protected $mType = null;
@@ -64,6 +66,8 @@ abstract class FounderEmailsEvent {
 		$this->mData = $data;
 	}
 
+	abstract public function enabled ( $wgCityId );
+	
 	abstract public function process( Array $events );
 
 	public static function register() {

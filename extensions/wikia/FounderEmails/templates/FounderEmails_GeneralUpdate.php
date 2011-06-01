@@ -30,16 +30,31 @@
 <td>
 <table cellpadding="13" cellspacing="0" width="100%">
 <tr>
-<td style="color:#2c85d5;font-size:17px;font-weight:bold">Hi $FOUNDERNAME,</td>
+<td style="color:#2c85d5;font-size:17px;font-weight:bold"><?= $greeting ?></td>
 </tr>
 <tr>
-<td style="color:#2c85d5;font-size:24px">$USERNAME has just joined $WIKINAME.</td>
+<td style="color:#2c85d5;font-size:24px"><?= $headline ?></td>
 </tr>
 <tr>
-<td style="color:#3a3a3a;font-size:14px;line-height:20px">Welcome them to your wiki and encourage them to help the wiki grow!</td>
+<td style="color:#3a3a3a;font-size:14px;line-height:20px"><?= $content ?></td>
 </tr>
+<? if (!empty($buttonUrl)) { ?>
 <tr>
-<td style="color:#3a3a3a;font-size:14px;line-height:20px">The Wikia Team</td>
+<td>
+	<a href="<?= $buttonUrl ?>" style="text-decoration:none">
+	<table cellpadding="0" cellspacing="0" height="39">
+		<tr valign="middle" align="center">
+			<td height="39" width="5" background="http://images4.wikia.nocookie.net/wikianewsletter/images/5/55/Ctaleft.png"></td>
+			<td style="color:#fff;font-size:14px;padding: 0 10px;" background="http://images2.wikia.nocookie.net/wikianewsletter/images/5/53/Ctacenter.png"><?= $button ?></td>
+			<td height="39" width="5" background="http://images3.wikia.nocookie.net/wikianewsletter/images/e/e4/Ctaright.png"></td>
+		</tr>
+	</table>
+	</a>
+</td>
+</tr>
+<? } ?>
+<tr>
+<td style="color:#3a3a3a;font-size:14px;line-height:20px"><?= $signature ?></td>
 </tr>
 </table>
 </td>
@@ -56,7 +71,7 @@
 <td align="center" style="font-size:11px;color:#3a3a3a;line-height:16px">
 <?= wfMsg('founderemails-email-footer-line1') ?>
 <br>
-<?= wfMsgExt('founderemails-email-footer-line2', array( 'parsemag' ) ) ?>
+<?= wfMsg('founderemails-email-footer-line2') ?>
 </td>
 </tr>
 <tr>

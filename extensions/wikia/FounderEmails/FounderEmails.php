@@ -42,7 +42,20 @@ $wgFounderEmailsExtensionConfig = array(
 			'className'  => 'FounderEmailsDaysPassedEvent',
 			'hookName'   => 'CreateWikiLocalJob-complete',
 			'days'       => array( 0, 3, 10 )
-		)
+		),
+		'viewsDigest' => array(
+			'className'  => 'FounderEmailsDailyDigestEvent',
+			'hookName'   => null,
+			'type'       => "viewsDigest"
+		),
+		'completeDigest' => array(
+			'className'  => 'FounderEmailsCompleteDigestEvent',
+			'hookName'   => null
+		),
+		'viewsDigest' => array(
+			'className'  => 'FounderEmailsViewsDigestEvent',
+			'hookName'   => null
+		)		
 	)
 );
 
@@ -52,7 +65,7 @@ $wgFounderEmailsExtensionConfig = array(
 $wgExtensionFunctions[] = 'wfFounderEmailsInit';
 
 function wfFounderEmailsInit() {
-	global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgAutoloadClasses, $wgFounderEmailsExtensionConfig, $wgDefaultUserOptions;
+	global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgAutoloadClasses, $wgFounderEmailsExtensionConfig, $wgDefaultUserOptions, $wgCityId;
 
 	$dir = dirname( __FILE__ ) . '/';
 
@@ -78,7 +91,11 @@ function wfFounderEmailsInit() {
 	$wgHooks['GetPreferences'][] = 'FounderEmails::onGetPreferences';
 
 	// Set default for the toggle (applied to all new user accounts).  This is safe even if this user isn't a founder yet.
-	$wgDefaultUserOptions['founderemailsenabled'] = 1;
+	// $wgDefaultUserOptions["founderemailsenabled"] = 1;  // Old preference not used any more
+	$wgDefaultUserOptions["founderemails-joins-$wgCityId"] = 1;
+	$wgDefaultUserOptions["founderemails-edits-$wgCityId"] = 1;
+	$wgDefaultUserOptions["founderemails-views-digest-$wgCityId"] = 1;
+	$wgDefaultUserOptions["founderemails-complete-digest-$wgCityId"] = 1;
 
 	// for testing purposes only, TODO: remove when released & fully tested
 	global $wgRequest, $wgUser;
