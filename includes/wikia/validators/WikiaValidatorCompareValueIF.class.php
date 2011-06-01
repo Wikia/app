@@ -1,7 +1,5 @@
 <?php 
 class WikiaValidatorCompareValueIF extends WikiaValidatorCompare {
-	const NOT_EMPTY_VALUE = 'not_empty';
-	const EMPTY_VALUE = 'empty';
 	
 	protected function config( array $options = array() ) {	
 		$this->setOption( 'value', true );
@@ -14,14 +12,10 @@ class WikiaValidatorCompareValueIF extends WikiaValidatorCompare {
 		$value = array_values( $value );
 		
 		if (is_array( $value ) && count( $value ) != 2 ) {
-			$this->throwException( 'WikiaValidatorCompareValueIF: value need to be array with two elements' );
+			$this->throwException( 'WikiaValidatorCompareValueIF: passed value need to be an array with two elements' );
 		}
 		
-		if( in_array($expression, array(self::NOT_EMPTY_VALUE, self::EMPTY_VALUE) )) {
-			$valid = self::NOT_EMPTY_VALUE === $expression ? !empty($value[0]) : empty($value[0]);
-		} else {
-			$valid = $this->doCompare( $expression, $value[0],  $this->getOption( 'value' ) );
-		}
+		$valid = $this->doCompare( $expression, $value[0],  $this->getOption( 'value' ) );
 		
 		$validator =  $this->getOption( 'validator' ); 
 		

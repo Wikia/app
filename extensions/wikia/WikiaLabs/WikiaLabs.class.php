@@ -119,8 +119,9 @@ class WikiaLabs {
 						'too_small' => 'wikialabs-feedback-validator-rating'
 				)) );
 		
-		$feedbackCategoryValidator = new WikiaValidatorCompareValueIF(array(
+		$feedbackCategoryValidator = new WikiaValidatorCompareIfEmpty(array(
 			'value' => true,
+			'condition' => 'not_empty',
 			'validator'  =>  new WikiaValidatorInteger(
 				array(
 					'min' => 4, 
@@ -132,8 +133,7 @@ class WikiaLabs {
 					'too_small' => 'wikilabs-feedback-validator-category',
 					'too_big' => 'wikilabs-feedback-validator-category'
 				)
-			),
-			'expression' => 'not_empty'
+			)
 		));
 		
 		$mulitvalidator->addValidator('feedbackcategory', $feedbackCategoryValidator, array('message', 'feedbackcategory'));
