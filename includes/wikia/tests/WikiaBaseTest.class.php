@@ -81,15 +81,14 @@ class WikiaAppMock {
 	public function init() {
 		$wikiaAppArgs = array();
 
+		$globalRegistryMock = null;
+		$functionWrapperMock = null;
+
 		if( in_array( 'getGlobal', $this->methods )) {
 			$globalRegistryMock = $this->testCase->getMock( 'WikiaGlobalRegistry', array( 'get', 'set' ) );
 			$globalRegistryMock->expects( $this->testCase->exactly( count( $this->mockedGlobals ) ) )
 			    ->method( 'get' )
 			    ->will( $this->testCase->returnCallback(array( $this, 'getGlobalCallback')) );
-
-			$wikiaAppArgs[] = $globalRegistryMock;
-			$wikiaAppArgs[] = null; // WikiaLocalRegistry
-			$wikiaAppArgs[] = null; // WikiaHookDispatcher
 		}
 		if( in_array( 'runFunction', $this->methods ) ) {
 			$functionWrapperMock = $this->testCase->getMock( 'WikiaFunctionWrapper' );
@@ -98,8 +97,11 @@ class WikiaAppMock {
 				    ->method( $functionName )
 				    ->will( $this->testCase->returnValue( $functionData['value'] ) );
 			}
-			$wikiaAppArgs[] = $functionWrapperMock;
 		}
+		$wikiaAppArgs[] = $globalRegistryMock;
+		$wikiaAppArgs[] = null; // WikiaLocalRegistry
+		$wikiaAppArgs[] = null; // WikiaHookDispatcher
+		$wikiaAppArgs[] = $functionWrapperMock;
 
 		$this->mock = $this->testCase->getMock( 'WikiaApp', array( 'ajax' /* we just have to have something to prevent mocking everything */), $wikiaAppArgs, '' );
 		F::setInstance('App', $this->mock);
