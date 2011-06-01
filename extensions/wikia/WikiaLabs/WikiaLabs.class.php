@@ -119,7 +119,7 @@ class WikiaLabs {
 						'too_small' => 'wikialabs-feedback-validator-rating'
 				)) );
 		
-		$feedbackCategoryValidator = new WikiaValidatorCompareIfEmpty(array(
+		$feedbackCategoryValidator = new WikiaValidatorCompareEmptyIF(array(
 			'value' => true,
 			'condition' => 'not_empty',
 			'validator'  =>  new WikiaValidatorInteger(
