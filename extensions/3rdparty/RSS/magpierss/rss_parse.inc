@@ -239,14 +239,21 @@ class MagpieRSS {
         //
         elseif ($this->feed_type == ATOM and $el == 'link' ) 
         {
-            if ( isset($attrs['rel']) and $attrs['rel'] == 'alternate' ) 
-            {
-                $link_el = 'link';
-            }
-            else {
-                $link_el = 'link_' . $attrs['rel'];
-            }
-            
+        	// Wikia change - begin
+        	// BugId:985
+            if ( isset($attrs['rel']) ) {
+            	if ( $attrs['rel'] == 'alternate' ) { 
+	                $link_el = 'link';
+            	}
+            	else {
+                	$link_el = 'link_' . $attrs['rel'];
+				}
+			}
+			else {
+            	$link_el = 'link';	
+			}
+			// Wikia change - end
+
             $this->append($link_el, $attrs['href']);
         }
         // set stack[0] to current element
