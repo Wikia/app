@@ -134,6 +134,13 @@
 			&:first-child {
 				border: none;
 			}
+			h1,
+			details span {
+				padding-left: 10px;
+			}
+			h1 {
+				font-weight: bold;
+			}
 		}
 	}
 	img {
