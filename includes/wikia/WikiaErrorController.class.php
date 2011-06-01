@@ -14,7 +14,7 @@ class WikiaErrorController extends WikiaController {
 	public function error() {
 		$code = $this->getResponse()->getException()->getCode();
 
-		if( empty( $code ) || !$this->isValidHTTPErrorCode( $code ) ) {
+		if( empty( $code ) || !$this->isValidHTTPCode( $code ) ) {
 			$code = WikiaResponse::RESPONSE_CODE_ERROR;
 		}
 
@@ -24,7 +24,8 @@ class WikiaErrorController extends WikiaController {
 		$this->getResponse()->setVal('devel', $this->app->getGlobal( 'wgDevelEnvironment' ) );
 	}
 
-	private function isValidHTTPErrorCode( $code ) {
-		return in_array( $code, array( 400, 401, 402, 403, 404, 406, 500, 501, 502, 503 ) );
+	private function isValidHTTPCode( $code ) {
+		//HTTP response codes MUST be 3 digits and 500 MUST be avoided since it fallbacks to Iowa
+		return (($code > 99) && ($code < 999) && ($code != 500));
 	}
 }

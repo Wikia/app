@@ -263,15 +263,25 @@ class WikiaResponse {
 	public function sendHeaders() {
 		$this->view->prepareResponse($this);
 
-		$responseCodeSent = false;
-
 		foreach( $this->getHeaders() as $header ) {
-			$this->sendHeader( ( $header['name'] . ': ' . $header['value'] ), $header['replace'], ( !$responseCodeSent ? $this->code : null ) );
-			$responseCodeSent = true;
+			$this->sendHeader( ( $header['name'] . ': ' . $header['value'] ), $header['replace']);
 		}
 
-		if(!$responseCodeSent && !empty($this->code)) {
-			$this->sendHeader( "HTTP/1.1 " . $this->code, false );
+		if(!empty($this->code)) {
+			$msg = '';
+			
+			//standard HTTP response codes get automatically described by PHP and those descriptions shouldn't be overridden, ever
+			//use a custom error code if you need a custom code description
+			if( !$this->isStandardHTTPCode( $this->code ) ) {
+				if ( $this->hasException() ) {
+					$msg = ' ' . $this->getException()->getMessage();
+				}
+				
+				if(empty($msg))
+					$msg = ' Unknown';
+			}
+			
+			$this->sendHeader( "HTTP/1.1 {$this->code}{$msg}", false );
 		}
 
 		if(!empty($this->contentType)) {
@@ -279,15 +289,20 @@ class WikiaResponse {
 		}
 
 	}
+	
+	private function isStandardHTTPCode($code){
+		return in_array( $code, array(
+			100, 101,
+			200, 201, 202, 203, 204, 205, 206,
+			300, 301, 302, 303, 304, 305, 306, 307,
+			401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417,
+			500, 501, 502, 503, 504, 505
+		) );
+	}
 
 	// @codeCoverageIgnoreStart
-	protected function sendHeader( $header, $replace, $responseCode = null ) {
-		if( !empty( $responseCode ) ) {
-			header( $header, $replace, $responseCode );
-		}
-		else {
-			header( $header, $replace );
-		}
+	protected function sendHeader( $header, $replace ) {
+		header( $header, $replace );
 	}
 	// @codeCoverageIgnoreEnd
 
