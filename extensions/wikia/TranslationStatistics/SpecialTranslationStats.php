@@ -34,14 +34,18 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 		$opts->add( 'scale', 'days' );
 
 		$opts->add( 'days', 30 );
-
-		$opts->add( 'startday', 1 /* now - 30 days */ );
-		$opts->add( 'startmonth', /* now - 30 days */ 3 );
-		$opts->add( 'startyear', 2011 /* now - 30 days */ );
-
-                $opts->add( 'endday', 1 /* now */ );
-                $opts->add( 'endmonth', /* now  */ 5 );
-		$opts->add( 'endyear', 2011 /* now */ );
+                
+                // now
+                $endday = time();
+                $opts->add( 'endday',           date( 'j', $endday ) );
+                $opts->add( 'endmonth',   (int) date( 'n', $endday ) );
+		$opts->add( 'endyear',          date( 'Y', $endday ) );
+                
+                // enddate - 30 days
+                $startday = $endday - 2592000;
+		$opts->add( 'startday',         date( 'j', $startday ) );
+		$opts->add( 'startmonth', (int) date( 'n', $startday ) );
+		$opts->add( 'startyear',        date( 'Y', $startday ) );
 
 		$opts->add( 'width', 600 );
 		$opts->add( 'height', 400 );
@@ -88,15 +92,24 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 			}
 			$opts[$t] = implode( ',', $values );
 		}
-
-		if ( $this->including() ) {
-			$wgOut->addHTML( $this->image( $opts ) );
+                
+                $validRange = $this->checkDates( $opts );
+                
+                if ( $this->including() ) {
+                        if ( $validRange ) {
+                            $wgOut->addHTML( $this->image( $opts ) );
+                        }
 		} elseif ( $opts['graphit'] ) {
 
 			if ( !class_exists( 'PHPlot' ) ) {
 				header( "HTTP/1.0 500 Multi fail" );
 				echo "PHPlot not found";
 			}
+                        
+                        if ( !$validRange ) {
+                            header( "HTTP/1.0 500 Multi fail" );
+                            echo "Invalid date range";
+                        }
 
 			if ( !$wgRequest->getBool( 'debug' ) ) {
 				$wgOut->disable();
@@ -104,13 +117,42 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 				header( 'Cache-Control: private, max-age=3600' );
 				header( 'Expires: ' . wfTimestamp( TS_RFC2822, time() + 3600 ) );
 			}
-die( var_dump( $opts ) );
 			$this->draw( $opts );
 
 
 		} else {
+                        if ( !$validRange ) {
+                            $wgOut->addHTML('<p>' . wfMsg('translationstats-invalid-range') . '</p>');
+                        }
 			$this->form( $opts );
+                        
+                        /* check if form has been posted */
+                        if ( $validRange ) {
+                            $this->table( $opts );
+                        }
 		}
+        }
+        
+        protected function checkDates(FormOptions $opts) {
+            $start = mktime( '00', '00', '00', $opts->getValue( 'startmonth' ), $opts->getValue( 'startday' ), $opts->getValue( 'startyear' ) );
+            $end = mktime( '23', '59', '59', $opts->getValue( 'endmonth' ), $opts->getValue( 'endday' ), $opts->getValue( 'endyear' ) );
+            return $start > $end;
+        }
+        
+        // Taken from XML class, since the name of the select is hard-coded there
+        // see Xml::monthSelector
+        protected function monthSelector( $selected = '', $allmonths = null, $id = null, $name = null ) {
+		global $wgLang;
+		$options = array();
+		if( is_null( $selected ) )
+			$selected = '';
+		if( !is_null( $allmonths ) )
+			$options[] = Xml::option( wfMsg( 'monthsall' ), $allmonths, $selected === $allmonths );
+		for( $i = 1; $i < 13; $i++ )
+			$options[] = Xml::option( $wgLang->getMonthName( $i ), $i, $selected === $i );
+		return Xml::openElement( 'select', array( 'id' => $id, 'name' => $name, 'class' => 'mw-month-selector' ) )
+			. implode( "\n", $options )
+			. Xml::closeElement( 'select' );
 	}
 
 	/**
@@ -132,6 +174,17 @@ die( var_dump( $opts ) );
 		);
 
 		$submit = Xml::submitButton( wfMsg( 'translate-statsf-submit' ) );
+                
+                $days = '';
+                for ( $i = 1; $i <= 31; $i++ ) {
+                    $days .= "$i\n";
+                }
+                
+                $years = '';
+                $currentYear = date( 'Y' );
+                for ($i = 0; $i < 10; $i++ ) {
+                    $years .= ( $currentYear - $i ) . "\n";
+                }
 
 		$wgOut->addHTML(
 			$this->eInput( 'width', $opts ) .
@@ -140,9 +193,14 @@ die( var_dump( $opts ) );
                        '<tr>' .
                        '<td>' . wfMsg( 'label-for-date' ) . '</td>' .
                        '<td>' . 
-				Xml::monthSelector( $opts->getValue( 'startmonth' ), null, 'startmonth' ) .
-				wfMsg( 'translationstats-from-to' ) .
-				Xml::monthSelector( $opts->getValue( 'endmonth' ), null, 'endmonth' ) .
+                                wfMsg( 'translationstats-from' ) .
+                                Xml::listDropDown( 'startday', $days, null, $opts->getValue( 'startday' ) ) .
+				$this->monthSelector( $opts->getValue( 'startmonth' ), null, 'startmonth', 'startmonth' ) .
+                                Xml::listDropDown( 'startyear', $years, null, $opts->getValue( 'startyear' ) ) .
+				wfMsg( 'translationstats-to' ) .
+                                Xml::listDropDown( 'endday', $days, null, $opts->getValue( 'endday' ) ) .
+				$this->monthSelector( $opts->getValue( 'endmonth' ), null, 'endmonth', 'endmonth' ) .
+                                Xml::listDropDown( 'endyear', $years, null, $opts->getValue( 'endyear' ) ) .
 			'</td>' .
                        '</tr>' .
 			$this->eRadio( 'scale', $opts, array( 'months', 'weeks', 'days', 'hours' ) ) .
@@ -159,7 +217,7 @@ die( var_dump( $opts ) );
 			'</form>' .
 			'</fieldset>'
 		);
-
+                
 		if ( !$opts['preview'] ) {
 			return;
 		}
@@ -185,14 +243,10 @@ die( var_dump( $opts ) );
 
 		$wgOut->addHTML(
 			Html::element( 'hr' ) .
-			Html::element( 'pre', null, "{{{$titleText}{$spiParams}}}" )
-		);
-
-		$wgOut->addHTML(
-			Html::element( 'hr' ) .
 			Html::rawElement( 'div', array( 'style' => 'margin: 1em auto; text-align: center;' ), $this->image( $opts ) )
 		);
 	}
+
 
 	/**
 	 * Constructs a table row with label and input in two columns.
@@ -371,8 +425,17 @@ die( var_dump( $opts ) );
 		} else {
 			$so = new TranslatePerLanguageStats( $opts );
 		}
+                
+                $now = time();
+                
+                /* calculate from and to
+                 * if from > to, return error
+                 */
+//                $from, $to = '';
 
-		$now = time();
+		//$start = ;
+                
+                //return $opts;
 
 		/* Ensure that the first item in the graph has full data even
 		 * if it doesn't align with the given 'days' boundary */
