@@ -65,7 +65,7 @@ window.onFBloaded = function() {
 	// NOTE: Auth.login doesn't appear to work anymore.  The onlogin attribute of the fb:login-buttons is being used instead.
 
 	// Register a function for when the user logs out of Facebook
-	FB.Event.subscribe('auth.logout', function(response) {
+/*	FB.Event.subscribe('auth.logout', function(response) {
 		// TODO: Internationalize
 		var login = confirm("Not logged in.\n\nWe detected that you have been logged " +
 		                    "out of Facebook. If this isn't the case, don't worry! " +
@@ -75,7 +75,7 @@ window.onFBloaded = function() {
 		if (login) {
 			window.location = window.wgArticlePath.replace(/\$1/, "Special:Connect");
 		}
-	});
+	}); */ 
 
 	if (typeof GlobalTriggers != 'undefined') {
 		GlobalTriggers.fire('fbinit');
