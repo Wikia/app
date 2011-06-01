@@ -95,7 +95,7 @@ function wfFounderEmailsInit() {
 	$wgDefaultUserOptions["founderemails-joins-$wgCityId"] = 1;
 	$wgDefaultUserOptions["founderemails-edits-$wgCityId"] = 1;
 	$wgDefaultUserOptions["founderemails-views-digest-$wgCityId"] = 1;
-	$wgDefaultUserOptions["founderemails-complete-digest-$wgCityId"] = 1;
+	$wgDefaultUserOptions["founderemails-complete-digest-$wgCityId"] = 0;
 
 	// for testing purposes only, TODO: remove when released & fully tested
 	global $wgRequest, $wgUser;
