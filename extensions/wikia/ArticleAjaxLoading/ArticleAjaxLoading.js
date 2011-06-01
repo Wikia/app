@@ -18,67 +18,6 @@ ArticleAjaxLoading = {
 							if(window.wgIsMainpage == false) { // not for main page
 								var ua = $.browser;
 								if((ua.mozilla == true && ua.version.slice(0,3) == '2.0') || (ua.safari == true && ua.webkit == true)) { // for firefox 4 or chrome
-									
-									if(window.aal == 'G3') {
-										
-										ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G3', 1]);
-										
-									} else if(window.aal == 'G2') {
-										
-										ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G2', 1]);
-										
-									} else if(window.aal == 'G1') {
-										
-										ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G1', 1]);
-
-										// backup variables that we have to recover after every ajax request 
-										ArticleAjaxLoading.cache.articleComments = $('#article-comments').find('.session').html();
-										ArticleAjaxLoading.cache.wgUserName = wgUserName;
-										ArticleAjaxLoading.cache.wgOneDotURL = wgOneDotURL;
-										ArticleAjaxLoading.cache.wgIsLogin = wgIsLogin;
-										ArticleAjaxLoading.cache.wgUserGroups = wgUserGroups;
-	
-										// handle clicks on links in article content
-										$('#WikiaArticle a').live('click', ArticleAjaxLoading.linkClickHandler);										
-									}
-
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	},
-	
-	linkClickHandler: function(e) {
-		// Do not change behaviour for middle click, cmd click and ctrl click 
-		if(e.which == 2 || e.metaKey) {
-			return true
-		}
-		
-		if(ArticleAjaxLoading.counter > 100) {
-			ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'CounterExceeded']);
-			return true;
-		}
-		
-		if(window.wgNamespaceNumber === 0 && window.wgAction == 'view' && window.wgArticleId != 0) {
-			var href = $(this).attr('href');
-			
-			if(href && href.indexOf(window.wgArticlePath.replace('$1', '')) === 0  && !/[?&#:]/.test(href) && !/(.htm|.php)/.test(href)) {
-				e.stopImmediatePropagation();
-				e.preventDefault();
-				
-				$('body').css('cursor', 'wait');
-				
-				$.pjax({
-					url: href,
-					container: '#WikiaMainContent'
-				});
-			}
-		}
-	}
-};
 
 /* PJAX */
 (function($){
@@ -274,6 +213,67 @@ if ( !window.history || !window.history.pushState ) {
 
 })(jQuery);
 /* PJAX */
+
+									if(window.aal == 'G3') {
+										
+										ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G3', 1]);
+										
+									} else if(window.aal == 'G2') {
+										
+										ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G2', 1]);
+										
+									} else if(window.aal == 'G1') {
+										
+										ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G1', 1]);
+
+										// backup variables that we have to recover after every ajax request 
+										ArticleAjaxLoading.cache.articleComments = $('#article-comments').find('.session').html();
+										ArticleAjaxLoading.cache.wgUserName = wgUserName;
+										ArticleAjaxLoading.cache.wgOneDotURL = wgOneDotURL;
+										ArticleAjaxLoading.cache.wgIsLogin = wgIsLogin;
+										ArticleAjaxLoading.cache.wgUserGroups = wgUserGroups;
+	
+										// handle clicks on links in article content
+										$('#WikiaArticle a').live('click', ArticleAjaxLoading.linkClickHandler);										
+									}
+
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	
+	linkClickHandler: function(e) {
+		// Do not change behaviour for middle click, cmd click and ctrl click 
+		if(e.which == 2 || e.metaKey) {
+			return true
+		}
+		
+		if(ArticleAjaxLoading.counter > 100) {
+			ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'CounterExceeded']);
+			return true;
+		}
+		
+		if(window.wgNamespaceNumber === 0 && window.wgAction == 'view' && window.wgArticleId != 0) {
+			var href = $(this).attr('href');
+			
+			if(href && href.indexOf(window.wgArticlePath.replace('$1', '')) === 0  && !/[?&#:]/.test(href) && !/(.htm|.php)/.test(href)) {
+				e.stopImmediatePropagation();
+				e.preventDefault();
+				
+				$('body').css('cursor', 'wait');
+				
+				$.pjax({
+					url: href,
+					container: '#WikiaMainContent'
+				});
+			}
+		}
+	}
+};
 
 $(function() {
 	ArticleAjaxLoading.init();
