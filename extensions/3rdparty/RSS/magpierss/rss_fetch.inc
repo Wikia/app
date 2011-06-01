@@ -394,11 +394,27 @@ function init () {
         define('MAGPIE_USE_GZIP', true);
     }
 
+	// Wikia change - begin
+	// BugId:985
+	global $wgHTTPProxy;
+
+	if (!empty($wgHTTPProxy)) {
+		list($proxyHost, $proxyPort) = explode(':', $wgHTTPProxy);
+
+		if ( !defined('MAGPIE_PROXY_HOST') ) {
+	        define('MAGPIE_PROXY_HOST', $proxyHost);
+	    }
+	    if ( !defined('MAGPIE_PROXY_PORT') ) {
+	        define('MAGPIE_PROXY_PORT', $proxyPort); 
+	    }
+	}
+	// Wikia change - end
+
     if ( !defined('MAGPIE_PROXY_HOST') ) {
         define('MAGPIE_PROXY_HOST', '');
     }
     if ( !defined('MAGPIE_PROXY_PORT') ) {
-        define('MAGPIE_PROXY_PORT', '');
+        define('MAGPIE_PROXY_PORT', ''); 
     }
 }
 
