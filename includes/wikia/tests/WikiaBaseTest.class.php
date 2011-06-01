@@ -9,26 +9,15 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	protected $app = null;
 	protected $appMock = null;
 	protected $mockedClasses = array();
-	private $setUp = false;
-	private $tearDown = false;
 
 	protected function setUp() {
 		$this->app = F::app();
 		$this->appMock = new WikiaAppMock( $this );
-		$this->setUp = true;
 	}
 
 	protected function tearDown() {
 		F::setInstance('App', $this->app);
 		$this->unsetClassInstances();
-		$this->tearDown = true;
-	}
-
-	public function __destruct() {
-		if(!$this->setUp || !$this->tearDown) {
-			echo "WikiaBaseTest Error - add parent::setUp() and/or parent::tearDown() to your own setUp/tearDown methods\n";
-			exit;
-		}
 	}
 
 	protected function mockClass($className, $mock) {
