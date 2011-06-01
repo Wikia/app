@@ -402,11 +402,11 @@ function init () {
 		list($proxyHost, $proxyPort) = explode(':', $wgHTTPProxy);
 
 		if ( !defined('MAGPIE_PROXY_HOST') ) {
-	        define('MAGPIE_PROXY_HOST', $proxyHost);
-	    }
-	    if ( !defined('MAGPIE_PROXY_PORT') ) {
-	        define('MAGPIE_PROXY_PORT', $proxyPort); 
-	    }
+			define('MAGPIE_PROXY_HOST', $proxyHost);
+		}
+		if ( !defined('MAGPIE_PROXY_PORT') ) {
+			define('MAGPIE_PROXY_PORT', $proxyPort);
+		}
 	}
 	// Wikia change - end
 
@@ -414,7 +414,7 @@ function init () {
         define('MAGPIE_PROXY_HOST', '');
     }
     if ( !defined('MAGPIE_PROXY_PORT') ) {
-        define('MAGPIE_PROXY_PORT', ''); 
+        define('MAGPIE_PROXY_PORT', '');
     }
 }
 
