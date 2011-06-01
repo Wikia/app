@@ -91,7 +91,20 @@ class FBConnectHooks {
 	public static function BeforePageDisplay( &$out, &$sk ) {
 		global $wgVersion, $fbLogo, $fbScript, $fbExtensionScript,
 			$fbIncludeJquery, $fbScriptEnableLocales, $wgJsMimeType,
-			$wgStyleVersion, $wgScriptPath, $wgUser;
+			$wgStyleVersion, $wgScriptPath, $wgUser, $wgTitle;
+
+		if($wgTitle->getArticleID() > 0) {
+			$images = new imageServing(array($wgTitle->getArticleId()), 100, array( 'w' => 1, 'h' => 1 ));			
+			$image = $images->getImages(1);
+			if(!empty($image)) {
+				$out->addLink(
+					array(
+						'rel' => 'image_src',
+						'href' => $image[$wgTitle->getArticleId()][0]['url']
+					)
+				);		
+			}			
+		}
 
 		if( !in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaphone', 'SkinWikiaApp' ) ) ){
 			// If the user's language is different from the default language, use the correctly localized facebook code.
