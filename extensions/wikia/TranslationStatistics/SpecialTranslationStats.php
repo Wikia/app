@@ -33,8 +33,6 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 		$opts->add( 'count', 'edits' );
 		$opts->add( 'scale', 'days' );
 
-		$opts->add( 'days', 30 );
-                
                 // now
                 $endday = time();
                 $opts->add( 'endday',           date( 'j', $endday ) );
@@ -127,7 +125,7 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 			$this->form( $opts );
                         
                         /* check if form has been posted */
-                        if ( $validRange && $wgRequest->wasPosted() ) {
+                        if ( $validRange && $wgRequest->getVal( 'preview' ) ) {
                             $this->table( $opts );
                         }
 		}
