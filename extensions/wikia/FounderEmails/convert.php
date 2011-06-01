@@ -79,18 +79,20 @@ class FounderEmailsOptionsConverter extends Maintenance {
 				while( $city = $dbw->fetchObject( $sth2 ) ) {
 					$city_id = $city->city_id;
 					if( !$this->hasOption( 'dry' ) ) {
-						$user->setOption( "founderemails-pref-joins-{$city_id}", $row->up_value );
-						$user->setOption( "founderemails-pref-edits-{$city_id}", $row->up_value );
-						$user->setOption( "founderemails-pref-digest-{$city_id}", $row->up_value );
+						$user->setOption( "founderemails-joins-{$city_id}", $row->up_value );
+						$user->setOption( "founderemails-edits-{$city_id}", $row->up_value );
+						$user->setOption( "founderemails-views-digest-{$city_id}", $row->up_value );
+						$user->setOption( "founderemails-complete-digest-{$city_id}", $row->up_value );
 						if( $this->hasOption( 'remove' ) ) {
 							// hack, User object doesn't have method for resetting option
 							unset( $user->mOptions[ "founderemailsenabled" ] );
 						}
 						$changed = true;
 					}
-					wfOut("\tset founderemails-pref-joins-{$city_id} to {$row->up_value}\n" );
-					wfOut("\tset founderemails-pref-edits-{$city_id} to {$row->up_value}\n" );
-					wfOut("\tset founderemails-pref-digest-{$city_id} to {$row->up_value}\n" );
+					wfOut("\tset founderemails-joins-{$city_id} to {$row->up_value}\n" );
+					wfOut("\tset founderemails-edits-{$city_id} to {$row->up_value}\n" );
+					wfOut("\tset founderemails-views-digest-{$city_id} to {$row->up_value}\n" );
+					wfOut("\tset founderemails-complete-digest-{$city_id} to {$row->up_value}\n" );
 				}
 				if( $changed ) {
 					$user->saveSettings();
