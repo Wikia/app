@@ -152,6 +152,23 @@ var initTracker = function() {
 					$.tracker.byStr(fakeUrl + id);
 			}
 		}
+		var parentId = node.parent().attr('data-id');
+		if (parentId) {
+			switch(parentId) {
+				case "talk":
+					$.tracker.byStr('profile/talk_tab');
+					break;
+				case "profile":
+					$.tracker.byStr('profile/profile_tab');
+					break;
+				case "contribs":
+					$.tracker.byStr('profile/contribs_tab');
+					break;
+				case "blog":
+					$.tracker.byStr('profile/blog_tab');
+					break;
+			}
+		}
 	});
 
 	// categories
