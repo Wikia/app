@@ -174,6 +174,7 @@ class OasisModule extends Module {
 		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->aperture = AnalyticsEngine::track('Aperture', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		$this->mainsassfile = 'skins/oasis/css/oasis.scss';

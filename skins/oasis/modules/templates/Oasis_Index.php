@@ -101,6 +101,9 @@ var gomez={
 <!-- quantServe -->
 <?= $quantServe ?>
 
+<!-- aperture -->
+<?= $aperture ?>
+
 <?php
 	print '<script type="text/javascript">/*<![CDATA[*/while(wgAfterContentAndJS.length>0){wgAfterContentAndJS.shift()();}/*]]>*/</script>' . "\n";
 	print "<!-- BottomScripts -->\n";
