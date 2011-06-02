@@ -48,7 +48,7 @@ class RiakSessionHandler {
 	static public function read( $id ) {
 		global $wgRiakSessionNode;
 
-		$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode );
+		$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode, false );
 		wfDebugLog( "session", __METHOD__ . ": reading $id from session storage\n", true );
 		return $cache->get( self::key( $id ) );
 	}
@@ -56,7 +56,7 @@ class RiakSessionHandler {
 	static public function write( $id, $data ) {
 		global $wgRiakSessionNode;
 
-		$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode );
+		$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode, false );
 		wfDebugLog( "session", __METHOD__ . ": store on session storage with key {$id}\n", true );
 		$cache->set( self::key( $id ), $data, self::EXPIRE );
 	}
@@ -64,7 +64,7 @@ class RiakSessionHandler {
 	static public function destroy( $id ) {
 		global $wgRiakSessionNode;
 
-		$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode );
+		$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode, false );
 		$cache->delete( self::key( $id ) );
 	}
 
