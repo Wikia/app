@@ -71,6 +71,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	font-size: 13px;
 	background-color: #fff;
 	white-space: pre;
+	overflow: auto;
 }
 
 .cke_skin_wikia .cke_browser_iequirks textarea.cke_source
