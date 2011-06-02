@@ -567,7 +567,7 @@
 
 		requires: ['functions','messages',
 		    'ui','uiautoregister',
-		    'spaces','toolbarspaces','collapsiblemodules', 'preloads']
+		    'spaces','toolbarspaces','collapsiblemodules']
 
 	});
 

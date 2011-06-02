@@ -26,7 +26,7 @@
 	
 
 	$(function(){
-		editor = new LayoutBuilderFormEditorLoader();
+		var editor = new LayoutBuilderFormEditorLoader();
 		$().log(editor);
 		editor.init();
 	});
