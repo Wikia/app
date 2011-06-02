@@ -1068,8 +1068,27 @@ function getArtist($artist){
 
 		// Some artists with a ton of albums have a "split catalog" which just links to the other albums.
 		if(strpos($content, "SplitCatalog") !== false){
-			// TODO: Include any transcluded pages.
-			// TODO: Include any transcluded pages.
+			// Find all of the albums on the page.
+			$matches = array();
+			if(0 < preg_match_all("/[^\n]*\[\[([^\n]*?):([^\n\|]*)\(([0-9]{4})\)(\||\]\])[^\n]*/", $content, $matches)){
+				$lines = $matches[0];
+				$artists = $matches[1];
+				$albums = $matches[2];
+				$years = $matches[3];
+				for($index = 0; $index < count($artists); $index++){
+					$albumPageTitle = $artists[$index].":".$albums[$index]." (".$years[$index].")";
+					
+					// Grab the content of the album page and stuff it in where the link was.
+					$line = $lines[$index];
+					$albumContent = lw_getPage($albumPageTitle);
+
+					// Strip out headings from the album page (the discogrphy parser expects headings to be the album names).
+					$albumContent = preg_replace("/==[^\n]*==/", "", $albumContent);
+					
+					$albumContent = "== $line ==\n$albumContent"; // needs to have the album header there so that it can be parsed.
+					$content = str_replace($line, $albumContent, $content);
+				}
+			}
 		}
 
 		$albums = parseDiscographies($content, $correctArtist);
