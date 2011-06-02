@@ -5,16 +5,21 @@
 		margin-left: -10px;
 		> h3 {
 			@include gradient-module-header;
+			@include clearfix;
 			color: $color-epl-module-header;
 			cursor: pointer;
 			font-size: 14px;
 			font-weight: bold;
 			padding: 8px 20px;
+			> span {
+				float: left;
+			}
 			> .chevron {
 				border-width: 6px;
 				float: right;
 				&.collapse {
 					border-bottom-color: #6fa7cc;
+					border-top-color: transparent;
 					margin-top: 0;
 				}
 				&.expand {
@@ -160,7 +165,7 @@
 			}
 		}
 	}
-	
+
 	.cke_toolbar_source {
 		.edittools-button {
 			color: #006CB0;
