@@ -28,6 +28,16 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 	switch ( $lang ) {
 		case 'zh-tw':
 		case 'zh-hk':
+		case 'zh-clas':
+		case 'zh-class':
+		case 'zh-cn':
+		case 'zh-hans':
+		case 'zh-hant':
+		case 'zh-min-':
+		case 'zh-min-n':
+		case 'zh-mo':
+		case 'zh-sg':
+		case 'zh-yue':
 			$lang = 'zh';
 			break;
 		case 'pt-br':
@@ -39,7 +49,7 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 	 * set this as tag
 	 */
 	$tags = new WikiFactoryTags( $row->city_id );
-	wfWaitForSlaveS( 5 );
+	wfWaitForSlaves( 5 );
 	$tags->addTagsByName( $lang );
 
 	Wikia::log( "AddLangTag", false, "$hub added as tag in {$row->city_id}" );
