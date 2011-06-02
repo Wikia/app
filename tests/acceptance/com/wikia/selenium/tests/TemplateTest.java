@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class TemplateTest extends BaseTest {
 
-	@Test(groups="oasis")
+	@Test(groups="CI")
 	public void testEnsureImportantElementsOfExistentTemplatePageExist() throws Exception {
 		login();
 		session().open("index.php?title=Template:Infobox");
@@ -22,21 +22,16 @@ public class TemplateTest extends BaseTest {
 		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h1"), "Infobox");
 		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h2"), "Template page");
 
-		// Edit Button
-		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']/ul/li/a[@data-id='edit']"));
-
-		// Comments Button
-		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']/ul/li/a[@data-id='comment']"));
-
-		// History Menu
-		assertEquals(session().getText("//header[@id='WikiaPageHeader']/details/ul/li/a[@accesskey='h']"), "View full history");
+		// menu buttons
+		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='move' and @accesskey='m']"));
+		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='edit' and @accesskey='e']"));
+		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='history']"));
 		
-		// non existent elements
 		// Wikia Rail
-		assertFalse(session().isElementPresent("//div[@id='WikiaRail']"));
+		assertTrue(session().isElementPresent("//div[@id='WikiaRail']"));
 	}
 
-	@Test(groups="oasis")
+	@Test(groups="CI")
 	public void testEnsureImportantElementsOfExistentTemplateTalkPageExist() throws Exception {
 		login();
 		try {
@@ -53,18 +48,16 @@ public class TemplateTest extends BaseTest {
 		// back to template link
 		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h2/a"), "Back to template");
 
-		// add topic button
-		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']/ul/li/a[@data-id='addtopic']"));
-
-		// History Menu
-		assertEquals(session().getText("//header[@id='WikiaPageHeader']/details/ul/li/a[@accesskey='h']"), "View full history");
+		// menu buttons
+		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='addtopic' and @accesskey='a']"));
+		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='edit' and @accesskey='e']"));
+		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='history']"));
 		
-		// non existent elements
 		// Wikia Rail
-		assertFalse(session().isElementPresent("//div[@id='WikiaRail']"));
+		assertTrue(session().isElementPresent("//div[@id='WikiaRail']"));
 	}
 
-	@Test(groups="oasis")
+	@Test(groups="CI")
 	public void testEnsureNonExistantTemplatePageContainsProperElements() throws Exception {
 
 		login();
@@ -83,9 +76,8 @@ public class TemplateTest extends BaseTest {
 
 		// check info message
 		assertTrue(session().isTextPresent("This page needs content. You can help by adding a sentence or a photo!"));
-
-		// non existent elements
+		
 		// Wikia Rail
-		assertFalse(session().isElementPresent("//div[@id='WikiaRail']"));
+		assertTrue(session().isElementPresent("//div[@id='WikiaRail']"));
 	}
 }
