@@ -61,10 +61,16 @@ class SFAutocompleteAPI extends ApiBase {
 		}
 		 */
 
+		// Format data as the API requires it.
+		$formattedData = array();
+		foreach ( $data as $value ) {
+			$formattedData[] = array( 'title' => $value );
+		}
+
 		// Set top-level elements.
 		$result = $this->getResult();
-		$result->setIndexedTagName( $data, 'p' );
-		$result->addValue( null, $this->getModuleName(), $data );
+		$result->setIndexedTagName( $formattedData, 'p' );
+		$result->addValue( null, $this->getModuleName(), $formattedData );
 	}
 
 	protected function getAllowedParams() {
@@ -112,7 +118,7 @@ class SFAutocompleteAPI extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: SF_AutocompleteAPI.php 86141 2011-04-15 21:38:46Z jeroendedauw $';
+		return __CLASS__ . ': $Id: SF_AutocompleteAPI.php 89319 2011-06-02 04:26:58Z yaron $';
 	}
 
 	public static function getAllValuesForProperty( $is_relation, $property_name, $substring = null ) {
@@ -147,7 +153,7 @@ class SFAutocompleteAPI extends ApiBase {
 			
 		while ( $row = $db->fetchRow( $res ) ) {
 			if ( $substring != null ) {
-				$values[] = array( 'title' => str_replace( '_', ' ', $row[0] ) );
+				$values[] = str_replace( '_', ' ', $row[0] );
 			} else {
 				$cur_value = str_replace( "'", "\'", $row[0] );
 				$values[] = str_replace( '_', ' ', $cur_value );

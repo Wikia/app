@@ -133,12 +133,13 @@ class SFFormLinker {
 		}
 			
 		$store = smwfGetStore();
-		$form_names = SFUtils::getSMWPropertyValues( $store, $page_name, $page_namespace, $prop_smw_id );
+		$subject = Title::makeTitleSafe( $page_namespace, $page_name );
+		$form_names = SFUtils::getSMWPropertyValues( $store, $subject, $prop_smw_id );
 		
 		// If we're using a non-English language, check for the English
 		// string as well.
 		if ( ! class_exists( 'SF_LanguageEn' ) || ! $sfgContLang instanceof SF_LanguageEn ) {
-			$backup_form_names = SFUtils::getSMWPropertyValues( $store, $page_name, $page_namespace, $backup_prop_smw_id );
+			$backup_form_names = SFUtils::getSMWPropertyValues( $store, $subject, $backup_prop_smw_id );
 			$form_names = array_merge( $form_names, $backup_form_names );
 		}
 		// Add this data to the "cache".

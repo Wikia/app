@@ -1,17 +1,17 @@
 <?php
 /**
  * Base classes for SMW's binding to SPARQL stores.
- *
+ * 
  * @file
  * @ingroup SMWSparql
- *
+ * 
  * @author Markus Krötzsch
  */
 
 /**
  * This group contains all parts of SMW that relate to communication with
  * storage backends and clients via SPARQL.
- *
+ * 
  * @defgroup SMWSparql SWMSparql
  * @ingroup SMW
  */
@@ -50,7 +50,7 @@ class SMWSparqlDatabaseError extends Exception {
 	 * @var integer
 	 */
 	public $errorCode;
-
+	
 	/**
 	 * Constructor that creates an error message based on the given data.
 	 *
@@ -83,7 +83,7 @@ class SMWSparqlDatabaseError extends Exception {
 		$message = "A SPARQL query error has occurred\n" .
 		  "Query: $queryText\n" .
 		  "Error: $errorName\n" .
-		  "Endpoint: $endpoint\n" .
+		  "Endpoint: $endpoint\n" . 
 		  "HTTP response code: $httpCode\n";
 
 		parent::__construct( $message );
@@ -95,9 +95,9 @@ class SMWSparqlDatabaseError extends Exception {
 
 /**
  * Basic database connector for exchanging data via SPARQL.
- *
+ * 
  * @ingroup SMWSparql
- *
+ * 
  * @author Markus Krötzsch
  */
 class SMWSparqlDatabase {
@@ -147,7 +147,6 @@ class SMWSparqlDatabase {
 		$this->m_updateEndpoint = $updateEndpoint;
 		$this->m_dataEndpoint = $dataEndpoint;
 		$this->m_curlhandle = curl_init();
-		curl_setopt( $this->m_curlhandle, CURLOPT_PROXY, null );
 		curl_setopt( $this->m_curlhandle, CURLOPT_FORBID_REUSE, false );
 		curl_setopt( $this->m_curlhandle, CURLOPT_FRESH_CONNECT, false );
 		curl_setopt( $this->m_curlhandle, CURLOPT_RETURNTRANSFER, true ); // put result into variable
@@ -435,7 +434,7 @@ class SMWSparqlDatabase {
 	 * SMWSparqlDatabase::throwSparqlErrors(). If errors occur and this
 	 * method does not throw anything, then an empty result with an error
 	 * code is returned.
-	 *
+	 * 
 	 * @note This method has not been tesetd sufficiently since 4Store uses
 	 * another post encoding. To avoid using it, simply do not provide a
 	 * data endpoint URL when configuring the SPARQL database.
@@ -453,9 +452,9 @@ class SMWSparqlDatabase {
 		// POST as file (fails in 4Store)
 		$payloadFile = tmpfile();
 		fwrite( $payloadFile, $payload );
-		fseek( $payloadFile, 0 );
+		fseek( $payloadFile, 0 ); 
 		curl_setopt( $this->m_curlhandle, CURLOPT_INFILE, $payloadFile );
-		curl_setopt( $this->m_curlhandle, CURLOPT_INFILESIZE, strlen( $payload ) );
+		curl_setopt( $this->m_curlhandle, CURLOPT_INFILESIZE, strlen( $payload ) ); 
 		curl_setopt( $this->m_curlhandle, CURLOPT_HTTPHEADER, array( 'Content-Type: application/x-turtle' ) );
 
 		curl_exec( $this->m_curlhandle );
@@ -526,3 +525,4 @@ class SMWSparqlDatabase {
 	}
 
 }
+

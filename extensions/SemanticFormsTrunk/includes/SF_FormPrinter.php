@@ -62,31 +62,19 @@ class SFFormPrinter {
 	 * Must be derived from SFFormInput.
 	 */
 	public function registerInputType( $inputTypeClass ) {
-		global $smwgContLang;
- 
 		$inputTypeName = call_user_func( array( $inputTypeClass, 'getName' ) );
 		$this->mInputTypeClasses[$inputTypeName] = $inputTypeClass;
 		$this->setInputTypeHook( $inputTypeName, array( $inputTypeClass, 'getHTML' ), array() );
 
 		$defaultProperties = call_user_func( array( $inputTypeClass, 'getDefaultPropTypes' ) );
-		foreach ( $defaultProperties as $propertyTypeID => $additionalValues ) {
-			if ( $smwgContLang != null ) {
-				$datatypeLabels =	$smwgContLang->getDatatypeLabels();
-				$datatypeLabels['enumeration'] = 'enumeration';
-				$propertyType = $datatypeLabels[$propertyTypeID];
-				$this->setSemanticTypeHook( $propertyType, false, array( $inputTypeClass, 'getHTML' ), $additionalValues );
-			}
-			$this->mDefaultInputForPropType[$propertyTypeID] = $inputTypeName;
+		foreach ( $defaultProperties as $propertyType => $additionalValues ) {
+			$this->setSemanticTypeHook( $propertyType, false, array( $inputTypeClass, 'getHTML' ), $additionalValues );
+			$this->mDefaultInputForPropType[$propertyType] = $inputTypeName;
 		}
 		$defaultPropertyLists = call_user_func( array( $inputTypeClass, 'getDefaultPropTypeLists' ) );
-		foreach ( $defaultPropertyLists as $propertyTypeID => $additionalValues ) {
-			if ( $smwgContLang != null ) {
-				$datatypeLabels =	$smwgContLang->getDatatypeLabels();
-				$datatypeLabels['enumeration'] = 'enumeration';
-				$propertyType = $datatypeLabels[$propertyTypeID];
-				$this->setSemanticTypeHook( $propertyType, true, array( $inputTypeClass, 'getHTML' ), $additionalValues );
-			}
-			$this->mDefaultInputForPropTypeList[$propertyTypeID] = $inputTypeName;
+		foreach ( $defaultPropertyLists as $propertyType => $additionalValues ) {
+			$this->setSemanticTypeHook( $propertyType, true, array( $inputTypeClass, 'getHTML' ), $additionalValues );
+			$this->mDefaultInputForPropTypeList[$propertyType] = $inputTypeName;
 		}
 
 		$otherProperties = call_user_func( array( $inputTypeClass, 'getOtherPropTypesHandled' ) );
@@ -159,9 +147,10 @@ class SFFormPrinter {
 
 	/**
 	 * Show the set of previous deletions for the page being added.
-	 * This function is copied almost exactly from EditPage::showDeletionLog() -
-	 * unfortunately, neither that function nor Article::showDeletionLog() can
-	 * be called from here, since they're both protected
+	 * This function is copied almost exactly from
+	 * EditPage::showDeletionLog() - unfortunately, neither that function
+	 * nor Article::showDeletionLog() can be called from here, since
+	 * they're both protected.
 	 */
 	function showDeletionLog( $out ) {
 		// if MW doesn't have LogEventsList defined, exit immediately
@@ -202,8 +191,8 @@ class SFFormPrinter {
 	}
 
 	/**
-	 * Like PHP's str_replace(), but only replaces the first found instance -
-	 * unfortunately, str_replace() doesn't allow for that.
+	 * Like PHP's str_replace(), but only replaces the first found
+	 * instance - unfortunately, str_replace() doesn't allow for that.
 	 * This code is basically copied directly from
 	 * http://www.php.net/manual/en/function.str-replace.php#86177
 	 * - this might make sense in the SFUtils class, if it's useful in
@@ -253,8 +242,8 @@ END;
 	 * This function is the real heart of the entire Semantic Forms
 	 * extension. It handles two main actions: (1) displaying a form on the
 	 * screen, given a form definition and possibly page contents (if an
-	 * existing page is being edited); and (2) creating actual page contents,
-	 * if the form was already submitted by the user.
+	 * existing page is being edited); and (2) creating actual page
+	 * contents, if the form was already submitted by the user.
 	 *
 	 * It also does some related tasks, like figuring out the page name (if
 	 * only a page formula exists).
@@ -285,10 +274,10 @@ END;
 		// If we have existing content and we're not in an active replacement
 		// situation, preserve the original content. We do this because we want
 		// to pass the original content on IF this is a partial form.
-		// TODO: A better approach here would be to pass the revision id of the
+		// TODO: A better approach here would be to pass the revision ID of the
 		// existing page content through the replace value, which would
 		// minimize the html traffic and would allow us to do a concurrent
-		// update check.	For now, we pass it through the hidden text field...
+		// update check. For now, we pass it through a hidden text field.
 
 		if ( ! $wgRequest->getCheck( 'partial' ) ) {
 			$original_page_content = $existing_page_content;
@@ -300,14 +289,14 @@ END;
 			 }
 		}
 
-		// Disable all form elements if user doesn't have edit permission -
-		// two different checks are needed, because editing permissions can be
-		// set in different ways.
-		// HACK - sometimes we don't know the page name in advance, but we still
-		// need to set a title here for testing permissions
+		// Disable all form elements if user doesn't have edit
+		// permission - two different checks are needed, because
+		// editing permissions can be set in different ways.
+		// HACK - sometimes we don't know the page name in advance, but
+		// we still need to set a title here for testing permissions.
 		if ( $embedded ) {
-			// if this is an embedded form (probably a 'RunQuery'), just use the
-			// name of the actual page we're on
+			// If this is an embedded form (probably a 'RunQuery'),
+			// just use the name of the actual page we're on.
 			global $wgTitle;
 			$this->mPageTitle = $wgTitle;
 		} elseif ( $page_name == '' ) {
@@ -334,8 +323,8 @@ END;
 		$form_text = "";
 		if ( $userCanEditPage || $is_query ) {
 			$form_is_disabled = false;
-			// Show "Your IP address will be recorded" warning if user is
-			// anonymous, and it's not a query -
+			// Show "Your IP address will be recorded" warning if
+			// user is anonymous, and it's not a query -
 			// wiki-text for bolding has to be replaced with HTML.
 			if ( $wgUser->isAnon() && ! $is_query ) {
 				$anon_edit_warning = preg_replace( "/'''(.*)'''/", "<strong>$1</strong>", wfMsg( 'anoneditwarning' ) );
@@ -410,9 +399,10 @@ END;
 		} // end while
 		$form_def_sections[] = trim( substr( $form_def, $section_start ) );
 
-		// Cycle through form definition file (and possibly an existing article
-		// as well), finding template and field declarations and replacing them
-		// with form elements, either blank or pre-populated, as appropriate.
+		// Cycle through the form definition file, and possibly an
+		// existing article as well, finding template and field
+		// declarations and replacing them with form elements, either
+		// blank or pre-populated, as appropriate.
 		$all_fields = array();
 		$data_text = "";
 		$template_name = "";
@@ -424,8 +414,8 @@ END;
 			$tif = new SFTemplateInForm();
 			$start_position = 0;
 			$template_text = "";
-			// the append is there to ensure that the original array doesn't get
-			// modified; is it necessary?
+			// the append is there to ensure that the original
+			// array doesn't get modified; is it necessary?
 			$section = " " . $form_def_sections[$section_num];
 
 			while ( $brackets_loc = strpos( $section, '{{{', $start_position ) ) {
@@ -1042,7 +1032,7 @@ END;
 								( $cur_value == '' || $cur_value == 'now' ) ) {
 							if ( $input_type == 'date' || $input_type == 'datetime' ||
 									$input_type == 'year' ||
-									( $input_type == '' && $form_field->template_field->field_type_id == '_dat' ) ) {
+									( $input_type == '' && $form_field->template_field->property_type == '_dat' ) ) {
 								// Get current time, for the time zone specified in the wiki.
 								global $wgLocaltimezone;
 								if ( isset( $wgLocaltimezone ) ) {
@@ -1287,11 +1277,14 @@ END;
 						$this->multipleTemplateInstanceTableHTML( $section )
 					) . "\n";
 
-					// this will cause the section to be re-parsed on the next go
+					// This will cause the section to be
+					// re-parsed on the next go.
 					$section_num--;
 				} else {
-					// This is the last instance of this template - print all the
-					// sections necessary for adding additional instances.
+					// This is the last instance of this
+					// template - print all the sections
+					// necessary for adding additional
+					// instances.
 					$form_text .= "\t\t" . Xml::tags( 'div',
 						array(
 							'class' => "multipleTemplateStarter",
@@ -1468,17 +1461,17 @@ END;
 			$funcArgs[] = $other_args;
 			$text = call_user_func_array( $hook_values[0], $funcArgs );
 		} else { // input type not defined in form
-			$field_type = $template_field->field_type;
+			$property_type = $template_field->property_type;
 			$is_list = ( $form_field->is_list || $template_field->is_list );
-			if ( $field_type != '' &&
-					array_key_exists( $field_type, $this->mSemanticTypeHooks ) &&
-					isset( $this->mSemanticTypeHooks[$field_type][$is_list] ) ) {
+			if ( $property_type != '' &&
+				array_key_exists( $property_type, $this->mSemanticTypeHooks ) &&
+				isset( $this->mSemanticTypeHooks[$property_type][$is_list] ) ) {
 				$funcArgs = array();
 				$funcArgs[] = $cur_value;
 				$funcArgs[] = $form_field->input_name;
 				$funcArgs[] = $form_field->is_mandatory;
 				$funcArgs[] = $form_field->is_disabled;
-				$hook_values = $this->mSemanticTypeHooks[$field_type][$is_list];
+				$hook_values = $this->mSemanticTypeHooks[$property_type][$is_list];
 				$other_args = $form_field->getArgumentsForInputCall( $hook_values[1] );
 				$funcArgs[] = $other_args;
 				$text = call_user_func_array( $hook_values[0], $funcArgs );
