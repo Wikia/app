@@ -15,12 +15,13 @@
  */
 class RiakCache extends BagOStuff {
 
-	private $mBucket, $mNode, $mNodeName, $mClient;
+	private $mBucket, $mNode, $mNodeName, $mClient, $mException;
 
-	public function __construct( $bucket = false, $node = false ) {
+	public function __construct( $bucket = false, $node = false, $exception = true ) {
 		global $wgRiakStorageNodes, $wgRiakDefaultNode;
 
 		$this->mBucket = $bucket;
+		$this->mException = $exception;
 		if( $node ) {
 			if( isset( $wgRiakStorageNodes[ $node ] ) ) {
 				wfDebugLog( __CLASS__, __METHOD__ . ": using $node as requested riak node.", true );
@@ -73,7 +74,8 @@ class RiakCache extends BagOStuff {
 				$this->mNode[ "port" ],
 				$this->mNode[ "prefix" ],
 				'mapred',
-				$this->mNode[ "proxy" ]
+				$this->mNode[ "proxy" ],
+				$this->mException
 			);
 		}
 		catch ( Exception $e ) {
