@@ -918,7 +918,7 @@ class RiakBucket {
   function getKeys() {
     $params = array('props'=>'false','keys'=>'true');
     $url = RiakUtils::buildRestPath($this->client, $this, NULL, NULL, $params);
-    $response = RiakUtils::httpRequest('GET', $url);
+    $response = RiakUtils::httpRequest('GET', $url, array(), '', $this->client->getProxy());
 
     # Use a RiakObject to interpret the response, we are just interested in the value.
     $obj = new RiakObject($this->client, $this, NULL);
@@ -1136,7 +1136,7 @@ class RiakObject {
     $method = $this->key ? 'PUT' : 'POST';
 
     # Run the operation.
-    $response = RiakUtils::httpRequest($method, $url, $headers, $content);
+    $response = RiakUtils::httpRequest($method, $url, $headers, $content, $this->client->getProxy());
     $this->populate($response, array(200, 201, 300));
     return $this;
   }
