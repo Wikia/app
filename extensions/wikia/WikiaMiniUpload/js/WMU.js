@@ -1005,7 +1005,7 @@ function WMU_insertImage(e, type) {
 			params.push( 'size=full' );
 		}
 		params.push('layout=' + ($G('ImageUploadLayoutLeft').checked ? 'left' : 'right'));
-		params.push('caption=' + $G('ImageUploadCaption').value);
+		params.push('caption=' + encodeURIComponent( $G('ImageUploadCaption').value ) );
 		params.push('slider=' + $('#ImageUploadWidthCheckbox').val());
 	}
 
