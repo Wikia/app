@@ -111,7 +111,7 @@
 
 	$(function(){
 		if (!window.WikiaAutostartDisabled) {
-			editor = new EditPageEditorLoader();
+			var editor = new EditPageEditorLoader();
 			editor.init();
 		}
 	});
