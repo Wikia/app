@@ -1006,7 +1006,7 @@ class RenameUserProcess {
                         $text = vsprintf($text,$args);
 		}
              */
-		return StaffLogger::log("renameuser", $action, $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mNewUsername, $text);
+            StaffLogger::log("renameuser", $action, $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mNewUsername, $text);
 	}
 	
 	/**
