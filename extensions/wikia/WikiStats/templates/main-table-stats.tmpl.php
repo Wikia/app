@@ -63,7 +63,7 @@
 			}
 		}
 		$cols[] = $column;
-		$style = ""; if ( in_array( $column, array('E', 'I', 'K') ) ) $style = "background-color:#F5F5F5";		
+		$style = "";
 ?>
 	<<?=$row?> style="white-space:nowrap;<?=$style?>" title="<?= $column ?> - <?=$__number?>"><?= $out ?></<?=$row?>>
 <?php		
