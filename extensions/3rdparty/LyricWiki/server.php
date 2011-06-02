@@ -607,7 +607,7 @@ function searchSongs($artist, $song){
 		foreach($searchResults as $searchResult){
 			// Only use the result if it is a song page (has a colon in it).
 			$matches = array();
-			if(0 < preg_match("/^(.*):(.*?)$/", $searchResult, $matches){
+			if(0 < preg_match("/^(.*):(.*?)$/", $searchResult, $matches)){
 				$retVal[] = array('artist' => $matches[1], 'song' => $matches[2]);
 			}
 		}
