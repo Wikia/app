@@ -576,7 +576,7 @@ function searchAlbums($artist, $album, $year){
 		foreach($searchResults as $searchResult){
 			// Only use the result if it is an album page (has a colon in it and ends with a year).
 			$matches = array();
-			if(0 < preg_match("/^(.*):(.*?)\(([0-9]{4})\)$/", $searchResult, $matches){
+			if(0 < preg_match("/^(.*):(.*?)\(([0-9]{4})\)$/", $searchResult, $matches)){
 				$retVal[] = array(
 								'artist' => $matches[1],
 								'album' => $matches[2],
