@@ -244,7 +244,9 @@ ignored = theorytab-subpage
 Time Ago Messaging
 descmsg = timeago-desc
 
-Top Lists
+Top 10 Lists
+file = TopLists/TopLists.i18n.php
+aliasfile = TopLists/TopLists.namespaces.php
 ignored = toplists-msg-fb-OnRateArticle-link, toplists-msg-fb-OnRateArticle
 
 Unsubscribe
