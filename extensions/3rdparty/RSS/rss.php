@@ -14,6 +14,8 @@
  *  # iconv <http://www.gnu.org/software/libiconv/>, see also <http://www.php.net/iconv>
  *
  *  07.05.2008 compatible/checked with MediaWiki 1.12
+ *
+ * TODO: update to v1.8 - http://www.mediawiki.org/wiki/Extension:RSS (MW1.17+ required)
  */
 
 if( !defined( 'MEDIAWIKI' ) ) {
