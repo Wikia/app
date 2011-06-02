@@ -1065,6 +1065,13 @@ function getArtist($artist){
 	$correctArtist = $artist; // this will be overwritten (by reference) in lw_getPage().
 	if((!$SHUT_DOWN_API) && lw_pageExists($title)){
 		$content = lw_getPage($title, $correctArtist, $debug);
+
+		// Some artists with a ton of albums have a "split catalog" which just links to the other albums.
+		if(strpos($content, "SplitCatalog") !== false){
+			// TODO: Include any transcluded pages.
+			// TODO: Include any transcluded pages.
+		}
+
 		$albums = parseDiscographies($content, $correctArtist);
 		if($debug){
 			$albums[] = array(
