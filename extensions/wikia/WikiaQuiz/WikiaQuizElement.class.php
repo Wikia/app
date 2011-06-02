@@ -10,6 +10,7 @@ class WikiaQuizElement {
 	private $mExists;
 	private $mMemcacheKey;
 	private $mQuizElementId;
+	private $mQuizTitleObject;
 
 	const CACHE_TTL = 86400;
 	const CACHE_VER = 5;
@@ -82,7 +83,7 @@ class WikiaQuizElement {
 			$imageSrc = '';
 			$imageShort = '';
 			$explanation = '';
-			$quizName = '';
+			$quizName = '';	//@todo support multiple quizzes
 			$order = '';
 
 			// parse wikitext with possible answers (stored as wikitext list)
@@ -141,7 +142,7 @@ class WikiaQuizElement {
 			// TODO: handle quizElement parameters (image / video for quizElement)
 			$params = array();
 
-			$quizTitleObject = F::build('Title', array($quizName, NS_WIKIA_QUIZ), 'newFromText');
+			$this->mQuizTitleObject = F::build('Title', array($quizName, NS_WIKIA_QUIZ), 'newFromText');
 			
 			$this->mData = array(
 				'creator' => $firstRev->mUser,
@@ -155,7 +156,7 @@ class WikiaQuizElement {
 				'imageShort' => $imageShort,
 				'explanation' => $explanation,
 				'quiz' => $quizName,
-				'quizUrl' => $quizTitleObject ? $quizTitleObject->getLocalUrl() : '',
+				'quizUrl' => $this->mQuizTitleObject ? $this->mQuizTitleObject->getLocalUrl() : '',
 				'order' => $order,
 				'params' => $params,
 			);
@@ -277,6 +278,18 @@ class WikiaQuizElement {
 			// apply changes to page_touched fields
 			$dbw = wfGetDB(DB_MASTER);
 			$dbw->commit();
+		}
+		
+		// purge cached quiz
+		if (empty($this->mQuizTitleObject)) {
+			$this->load();
+		}
+		if (!empty($this->mQuizTitleObject)) {
+			$quizArticle = F::build('WikiaQuizIndexArticle', array($this->mQuizTitleObject));
+			$quizArticle->doPurge();		
+		}
+		else {
+			// should never get to this point
 		}
 
 		wfDebug(__METHOD__ . ": purged quizElement #{$this->mQuizElementId}\n");
