@@ -75,27 +75,31 @@ class SFUtils {
 	 * Helper function to handle getPropertyValues() in both SMW 1.6
 	 * and earlier versions.
 	 */
-	public static function getSMWPropertyValues( $store, $pageName, $pageNamespace, $propID, $requestOptions = null ) {
+	public static function getSMWPropertyValues( $store, $subject, $propID, $requestOptions = null ) {
 		// SMWDIProperty was added in SMW 1.6
 		if ( class_exists( 'SMWDIProperty' ) ) {
-			if ( is_null( $pageName ) ) {
+			if ( is_null( $subject ) ) {
 				$page = null;
 			} else {
-				$page = new SMWDIWikiPage( $pageName, $pageNamespace, null );
+				$page = SMWDIWikiPage::newFromTitle( $subject );
 			}
 			$property = SMWDIProperty::newFromUserLabel( $propID );
 			$res = $store->getPropertyValues( $page, $property, $requestOptions );
 			$values = array();
 			foreach ( $res as $value ) {
-				// getSortKey() seems to return the correct
-				// value for every data type.
-				$values[] = $value->getSortKey();
+				if ( $value instanceof SMWDIUri ) {
+					$values[] = $value->getFragment();
+				} else {
+					// getSortKey() seems to return the
+					// correct value for all the other
+					// data types.
+					$values[] = str_replace( '_', ' ', $value->getSortKey() );
+				}
 			}
 			return $values;
 		} else {
-			$title = Title::makeTitleSafe( $pageNamespace, $pageName );
 			$property = SMWPropertyValue::makeProperty( $propID );
-			$res = $store->getPropertyValues( $title, $property, $requestOptions );
+			$res = $store->getPropertyValues( $subject, $property, $requestOptions );
 			$values = array();
 			foreach ( $res as $value ) {
 				if ( method_exists( $value, 'getTitle' ) ) {
@@ -427,7 +431,7 @@ END;
 		$store = smwfGetStore();
 		$requestoptions = new SMWRequestOptions();
 		$requestoptions->limit = $sfgMaxAutocompleteValues;
-		$values = self::getSMWPropertyValues( $store, null, null, $property_name, $requestoptions );
+		$values = self::getSMWPropertyValues( $store, null, $property_name, $requestoptions );
 		sort( $values );
 		return $values;
 	}
@@ -476,10 +480,7 @@ END;
 								$cur_title = Title::makeTitleSafe( $row['page_namespace'], $row['page_title'] );
 								$cur_value = self::titleString( $cur_title );
 								if ( ! in_array( $cur_value, $pages ) ) {
-									if ( $substring == null )
-										$pages[] = $cur_value;
-									else
-										$pages[] = array( 'title' => $cur_value );
+									$pages[] = $cur_value;
 								}
 								// return if we've reached the maximum number of allowed values
 								if ( count( $pages ) > $sfgMaxAutocompleteValues ) {
@@ -516,6 +517,7 @@ END;
 		$store = smwfGetStore();
 
 		$concept = Title::makeTitleSafe( SMW_NS_CONCEPT, $concept_name );
+
 		if ( !is_null( $substring ) ) {
 			$substring = strtolower( $substring );
 		}
@@ -525,6 +527,10 @@ END;
 			return array();
 		}
 
+		if ( class_exists( 'SMWDIWikiPage' ) ) {
+			// SMW 1.6
+			$concept = SMWDIWikiPage::newFromTitle( $concept );
+		}
 		$desc = new SMWConceptDescription( $concept );
 		$printout = new SMWPrintRequest( SMWPrintRequest::PRINT_THIS, "" );
 		$desc->addPrintRequest( $printout );
@@ -544,7 +550,7 @@ END;
 				$lowercasePageName = strtolower( $pageName );
 				if ( strpos( $lowercasePageName, $substring ) === 0 ||
 					strpos( $lowercasePageName, ' ' . $substring ) > 0 ) {
-						$pages[] = array( 'title' => $pageName );
+						$pages[] = $pageName;
 					}
 			}
 		}
@@ -574,12 +580,7 @@ END;
 					$conditions, __METHOD__,
 					array( 'ORDER BY' => 'page_title' ) );
 				while ( $row = $db->fetchRow( $res ) ) {
-					$cur_value = str_replace( '_', ' ', $row[0] );
-					if ( $substring == null ) {
-						$pages[] = $cur_value;
-					} else {
-						$pages[] = array( 'title' => $cur_value );
-					}
+					$pages[] = str_replace( '_', ' ', $row[0] );
 				}
 				$db->freeResult( $res );
 			}

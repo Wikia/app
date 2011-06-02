@@ -14,8 +14,7 @@ class SFTemplateField {
 	var $value_labels;
 	var $label;
 	var $semantic_property;
-	var $field_type;
-	var $field_type_id;
+	var $property_type;
 	var $possible_values;
 	var $is_list;
 	var $input_type;
@@ -55,24 +54,21 @@ class SFTemplateField {
 
 	function setTypeAndPossibleValues() {
 		$proptitle = Title::makeTitleSafe( SMW_NS_PROPERTY, $this->semantic_property );
-		if ( $proptitle === NULL )
+		if ( $proptitle === null ) {
 			return;
+		}
+
 		$store = smwfGetStore();
-		$types = SFUtils::getSMWPropertyValues( $store, $this->semantic_property, SMW_NS_PROPERTY, "Has type" );
 		// this returns an array of objects
-		$allowed_values = SFUtils::getSMWPropertyValues( $store, $this->semantic_property, SMW_NS_PROPERTY, "Allows value" );
-		$label_formats = SFUtils::getSMWPropertyValues( $store, $this->semantic_property, SMW_NS_PROPERTY, "Has field label format" );
+		$allowed_values = SFUtils::getSMWPropertyValues( $store, $proptitle, "Allows value" );
+		$label_formats = SFUtils::getSMWPropertyValues( $store, $proptitle, "Has field label format" );
 		// SMW 1.6+
 		if ( class_exists( 'SMWDIProperty' ) ) {
-			$propValue = new SMWDIProperty( $this->semantic_property );
-			$this->field_type_id = $propValue->findPropertyTypeID();
+			$propValue = SMWDIProperty::newFromUserLabel( $this->semantic_property );
+			$this->property_type = $propValue->findPropertyTypeID();
 		} else {
 			$propValue = SMWPropertyValue::makeUserProperty( $this->semantic_property );
-			$this->field_type_id = $propValue->getPropertyTypeID();
-		}
-		// TODO - need handling for the case of more than one type.
-		if ( count( $types ) > 0 ) {
-			$this->field_type = $types[0];
+			$this->property_type = $propValue->getPropertyTypeID();
 		}
 
 		foreach ( $allowed_values as $allowed_value ) {
@@ -80,18 +76,17 @@ class SFTemplateField {
 			$this->possible_values[] = html_entity_decode( $allowed_value );
 			if ( count( $label_formats ) > 0 ) {
 				$label_format = $label_formats[0];
-				$prop_instance = SMWDataValueFactory::findTypeID( $this->field_type );
+				$prop_instance = SMWDataValueFactory::findTypeID( $this->property_type );
 				$label_value = SMWDataValueFactory::newTypeIDValue( $prop_instance, $wiki_value );
 				$label_value->setOutputFormat( $label_format );
 				$this->value_labels[$wiki_value] = html_entity_decode( $label_value->getWikiValue() );
 			}
 		}
 
-		// HACK - if there were any possible values, set the field
+		// HACK - if there were any possible values, set the property
 		// type to be 'enumeration', regardless of what the actual type is
 		if ( count( $this->possible_values ) > 0 ) {
-			$this->field_type = 'enumeration';
-			$this->field_type_id = 'enumeration';
+			$this->property_type = 'enumeration';
 		}
 	}
 
