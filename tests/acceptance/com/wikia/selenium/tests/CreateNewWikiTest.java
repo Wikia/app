@@ -181,6 +181,7 @@ public class CreateNewWikiTest extends BaseTest {
 	}
 	
 	public void deleteWiki(String language) throws Exception {
+		closeNotifications();
 		session().open("http://community.wikia.com/wiki/Special:WikiFactory");
 		session().waitForPageToLoad(this.getTimeout());
 
@@ -200,6 +201,14 @@ public class CreateNewWikiTest extends BaseTest {
 
 			clickAndWait("close_saveBtn");
 			assertTrue(session().isTextPresent("was closed"));
+		}
+	}
+	
+	public void closeNotifications() throws Exception {
+		String closeButton = "//*[@id='WikiaNotifications']//a[contains(@class, 'close-notification')]";
+		if (session().isElementPresent(closeButton)) {
+			// click but don't wait for anything
+			session().click(closeButton);
 		}
 	}
 
