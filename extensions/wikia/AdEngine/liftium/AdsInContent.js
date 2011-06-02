@@ -140,7 +140,7 @@ AIC2.glueAd = function() {
 			'top': bigSpace + 'px',
 			'bottom': '',
 			'left': '',
-			'margin-left': '',
+			'margin-left': ''
 		});
 	} else {
 		Liftium.d("AIC2: glue at the top", 7);
@@ -151,7 +151,7 @@ AIC2.glueAd = function() {
 			'top': '10px',
 			'bottom': '',
 			'left': '',
-			'margin-left': '',
+			'margin-left': ''
 		});
 	}
 
