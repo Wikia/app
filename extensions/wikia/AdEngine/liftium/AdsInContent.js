@@ -108,7 +108,7 @@ AIC2.onScroll = function() {
 					'top': '10px',
 					'bottom': '',
 					'left': '50%',
-					'margin-left': '190px',
+					'margin-left': '190px'
 				});
 				$('#INCONTENT_BOXAD_1').css('visibility', 'visible');
 				
