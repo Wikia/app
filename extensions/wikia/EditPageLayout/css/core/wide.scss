@@ -34,10 +34,6 @@
 		width: $width-outside - $width-rail;  // remove right rail "indent"
 	}
 
-	#EditPageEditor {
-		padding-right: 7px;
-	}
-
 	/* vertical bar with an arrow to show/hide the rail */
 	.editpage-widemode-trigger {
 		background-color: $color-epl-gradient-dark;
@@ -80,6 +76,12 @@
 		}
 	}
 
+	&.editpage-sourcewidemode-off {
+		#EditPageEditor {
+			padding-right: 7px;
+		}
+	}
+
 	/* right rail adjustments */
 	&.editpage-sourcewidemode-on {
 		#EditPageRail {
@@ -97,19 +99,16 @@
 			}
 		}
 		#EditPageMain {
-			width: $width-outside - 10;  // added: -10
+			width: $width-outside - 6;  // added: -6
 		}
 		#EditPageToolbar {
-			margin-right: -10px;
+			margin-right: -6px;
 			padding-right: 15px + $width-rail - 10;
 		}
 		.cke_toolbar_expand {
 			> a {
 				right: 20px + $width-rail - 10;
 			}
-		}
-		#EditPageEditor {
-			padding-right: 7px;
 		}
 	}
 
