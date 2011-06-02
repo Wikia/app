@@ -71,6 +71,7 @@ HEAD;
 
 
 // generate minified version of CSS
+// TODO: use AssetsManager package
 $files = array();
 
 chdir(dirname(__FILE__) . '/ckeditor/_source/skins/wikia');
@@ -89,6 +90,8 @@ $files[] = getcwd() . '/editor.css';
 
 minify('css', $files, 'editor.min.css', $eol);
 
+/**
+// JS is generated on-the-fly by AssetsManager
 
 // generate minified version of JS
 $files = array();
@@ -114,5 +117,6 @@ if (preg_match_all('%[^/]\'([^\']+).js%', $input, $matches, PREG_SET_ORDER)) {
 //var_dump($files);
 
 minify('js', $files, 'ckeditor.js', $eol);
+**/
 
 echo "Done!\n\n";
