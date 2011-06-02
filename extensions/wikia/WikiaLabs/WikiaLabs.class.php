@@ -2,7 +2,6 @@
 
 class WikiaLabs {
 	const FOGBUGZ_PROJECT_ID = 24;
-	const FOGBUGZ_CASE_PRIORITY = 5;
 	const FOGBUGZ_CASE_TITLE = 'WikiaLabs Feedback - Project: ';
 	const FOGBUGZ_CASE_TAG = 'WikiaLabsFeedback';
 	const TEMPLATE_NAME_ADDPROJECT = 'wikialabs-addproject';
@@ -220,7 +219,7 @@ Wiki address: {$this->app->getGlobal('wgServer')}
 $message
 MSG;
 		
-		$this->getFogbugzService()->logon()->createCase( $areaId, $title, self::FOGBUGZ_CASE_PRIORITY, $message, array( self::FOGBUGZ_CASE_TAG ), $userEmail, self::FOGBUGZ_PROJECT_ID );
+		$this->getFogbugzService()->logon()->createCase( $areaId, $title, $feedbackCat, $message, array( self::FOGBUGZ_CASE_TAG ), $userEmail, self::FOGBUGZ_PROJECT_ID );
 	}
 
 	public function saveProject( $project ) {

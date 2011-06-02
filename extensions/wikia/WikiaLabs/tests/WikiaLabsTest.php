@@ -95,8 +95,8 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 			array( 1, 2, 7, 'AtLeast10CharLongMsg', true ),
 			array( 1, 10, 7, 'AtLeast10CharLongMsg', false ), // rating > max
 			array( 1, 0, 7, 'AtLeast10CharLongMsg', false ), // rating < min
-			array( 1, 10, 10, 'AtLeast10CharLongMsg', false ), // feedback category > max
-			array( 1, 0, 3, 'AtLeast10CharLongMsg', false ) // feedback category < min
+			array( 1, 1, 8, 'AtLeast10CharLongMsg', false ), // feedback category > max
+			array( 1, 1, 3, 'AtLeast10CharLongMsg', false ) // feedback category < min
 		);
 	}
 
