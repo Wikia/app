@@ -502,13 +502,13 @@ class RenameUserProcess {
 			),
 			TASK_STARTED
 		);
-
+                
 		$this->addLogDestination(self::LOG_BATCH_TASK, $this->mGlobalTask);
 
 		$this->addLog("---USERNAMES LOG BEGIN---\n".$this->getInternalLog()."---USERNAMES LOG END---");
 
 		$tasks = array($this->mGlobalTask->getID());
-
+                
 		// Put the starting line to log
 		$this->addMainLog("start", RenameUserLogFormatter::start($this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks));
 
@@ -989,13 +989,24 @@ class RenameUserProcess {
 	 * @param $arg1 mixed Multiple format parameters
 	 */
 	public function addMainLog( $action, $text, $arg1 = null ) {
-		if (func_num_args() > 1) {
+            /*
+             * BugId:1030
+             * Michał Roszka (Mix) <michal@wikia-inc.com>
+             * 
+             * $text is HTML and may contain % which are not vsptintf's conversion specification marks,
+             * e.g. username f"oo"bar results with <a href="http://community.wikia.com/wiki/User:F%22oo%22baz">F&quot;oo&quot;baz</a>
+             * which breaks vsprintf.
+             * 
+             * There are 4 calls of this method, none of them passing any vsprintf's conversion specification marks.
+             * vsprintf seems unnecessary, let's just pass $text to StaffLogger::log()
+
+                if (func_num_args() > 1) {
 			$args = func_get_args();
 			$args = array_slice($args,1);
-			$text = vsprintf($text,$args);
+                        $text = vsprintf($text,$args);
 		}
-
-		StaffLogger::log("renameuser", $action, $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mNewUsername, $text);
+             */
+		return StaffLogger::log("renameuser", $action, $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mNewUsername, $text);
 	}
 	
 	/**
