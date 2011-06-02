@@ -37,7 +37,7 @@ var WikiaPhotoGallerySlideshow = {
 		slideshow.find('.wikia-slideshow-popout').click(this.onPopOutClickFn);
 
 		// handle clicks on slideshow images
-		slideshow.find('.wikia-slideshow-images').find('a').click(this.onPopOutClickFn);
+		slideshow.find('.wikia-slideshow-images a').click(this.onPopOutClickFn);
 
 		// handle clicks on "Add Image"
 		slideshow.find('.wikia-slideshow-addimage').click(function(e) {
@@ -101,10 +101,11 @@ var WikiaPhotoGallerySlideshow = {
 	},
 
 	onPopOutClickFn: function(ev) {
+		var node = $(this),
+			slideshow = node.closest('wikia-slideshow');
+
 		// stop slideshow animation
 		slideshow.trigger('stop');
-
-		var node = $(this);
 
 		// if user clicked on slideshow image, open popout on this image (index)
 		var nodeId = node.attr('id');
