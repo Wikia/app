@@ -64,9 +64,12 @@ function wfOasisSetup() {
 	wfLoadExtensionMessages('Oasis');
 }
 
+// TODO: why do we have this code here? It should be placed in ThemeDesigner
 function Oasis_UploadVerification($destName, $tempPath, &$error) {
 	$destName = strtolower($destName);
 	if($destName == 'wiki-wordmark.png' || $destName == 'wiki-background') {
+		// BugId:983
+		$error = wfMsg('themedesigner-manual-upload-error');
 		return false;
 	}
 	return true;
