@@ -157,11 +157,16 @@ class UploadPhotosModule extends Module {
 				$msg = wfMsgHtml($details['details'][0]);
 				break;
 
+			case UploadBase::UPLOAD_VERIFICATION_ERROR:
+				$msg = $details['error'];
+				break;
+
 			case self::UPLOAD_PERMISSION_ERROR:
 				$msg = wfMsg( 'badaccess' );
 				break;
+
 			default:
-				throw new MWException( __METHOD__ . ": Unknown value `{$value}`" );
+				throw new MWException( __METHOD__ . ": Unknown value `{$statusCode}`" );
 	 	}
 
 	 	return $msg;

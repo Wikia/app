@@ -48,7 +48,8 @@ $messages['en'] = array(
 	'themedesigner-size-error' => 'Incorrect file size',
 	'themedesigner-dimensions-error' => 'The image exceed the dimensions\' limits',
 	'themedesigner-type-error' => 'Incorrect file type',
-	'themedesugber-uknown-error' => 'An error has occurred, unfortunately we were not able to identify it, please try again'
+	'themedesugber-uknown-error' => 'An error has occurred, unfortunately we were not able to identify it, please try again',
+	'themedesigner-manual-upload-error' => 'Use Theme Designer to upload wordmark or wiki background'
 );
 
 /** Message documentation (Message documentation)
