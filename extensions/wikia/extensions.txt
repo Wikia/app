@@ -167,6 +167,7 @@ file = RelatedVideo/i18n/RelatedVideo.i18n.php
 
 RTE - Base
 file = RTE/i18n/RTE.i18n.php
+ignored = editor-template-list
 
 RTE - CK Wikia
 file = RTE/i18n/CK.wikia.i18n.php

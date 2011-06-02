@@ -21,6 +21,12 @@ $messages['en'] = array(
 	'rte-enablerichtexteditormessage' => 'Rich Text Editor enabled!',
 	'rte-first-run-notice' => 'We have made some improvements to the editor. To learn more, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news read the announcement].',
 	'prefs-rte' => 'Rich Text Editor',
+
+	'editor-template-list' => '* Template:Infobox
+* Template:Welcome
+* Template:WelcomeIP
+* Template:Delete
+* Template:Wikipedia',
 );
 
 /** Message documentation (Message documentation)
@@ -28,6 +34,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'rte-edgecase-redirect' => '{{Identical|Redirect}}',
+	'editor-template-list' => 'This should not be translated, it is meant to be adjusted per wiki',
 );
 
 /** Afrikaans (Afrikaans)
