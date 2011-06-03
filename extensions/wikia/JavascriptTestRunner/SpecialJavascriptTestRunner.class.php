@@ -219,6 +219,9 @@ class JavascriptTestRunner_TestSuite {
 class JavascriptTestRunner_Constants {
 
 	static public $modules = array(
+		'mockjax' => array(
+			'skins/common/jquery/jquery.mockjax.js',
+		),
 		'rte-prod' => array(
 			'extensions/wikia/RTE/ckeditor/ckeditor.js',
 		),
