@@ -1456,7 +1456,7 @@ class WikiFactory {
 	 * @return string: HTML form
 	 */
 	static public function setPublicStatus( $city_public, $city_id, $reason = "" ) {
-
+		global $wgWikicitiesReadOnly;
 		if( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
