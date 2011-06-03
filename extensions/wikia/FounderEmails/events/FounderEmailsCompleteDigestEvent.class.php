@@ -52,7 +52,7 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 
 				$mailSubject = $this->getLocalizedMsg( 'founderemails-email-complete-digest-subject', $emailParams );
 				$mailBody = $this->getLocalizedMsg( 'founderemails-email-complete-digest-body', $emailParams );		
-				$mailBodyHTML = wfRenderModule("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'complete-digest')));
+				$mailBodyHTML = wfRenderModule("FounderEmails", "CompleteDigest", array_merge($emailParams, array('language' => 'en', 'type' => 'complete-digest')));
 				$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
 				$mailCategory = FounderEmailsEvent::CATEGORY_COMPLETE_DIGEST.(!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
 

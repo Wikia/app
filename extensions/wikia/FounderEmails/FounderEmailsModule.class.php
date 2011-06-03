@@ -15,7 +15,8 @@ class FounderEmailsModule extends Module {
 					'$UNIQUEVIEWS' => '6')
 			);
 		} else if(!empty($type)) {
-			$this->previewBody = wfRenderModule("FounderEmails", "GeneralUpdate", 
+			$executionType = $type == 'complete-digest' ? 'CompleteDigest' : 'GeneralUpdate';
+			$this->previewBody = wfRenderModule("FounderEmails", $executionType, 
 				array('type' => $type, 
 					'language' => 'en', 
 					'$PAGEURL' => 'http://www.wikia.com',
@@ -89,5 +90,19 @@ class FounderEmailsModule extends Module {
 			default:
 				break;
 		}
+	}
+	
+	public function executeCompleteDigest($params) {
+		$this->greeting = wfMsgForContent('founderemails-email-complete-digest-greeting');
+		$this->headline = wfMsgForContent('founderemails-email-complete-digest-headline');
+		$this->heading1 = wfMsgForContent('founderemails-email-complete-digest-content-heading1');
+		$this->content1 = wfMsgForContent('founderemails-email-complete-digest-content1');
+		$this->heading2 = wfMsgForContent('founderemails-email-complete-digest-content-heading2');
+		$this->content2 = wfMsgForContent('founderemails-email-complete-digest-content2');
+		$this->heading3 = wfMsgForContent('founderemails-email-complete-digest-content-heading3');
+		$this->content3 = wfMsgForContent('founderemails-email-complete-digest-content3');
+		$this->signature = wfMsgForContent('founderemails-email-complete-digest-signature');
+		$this->button = wfMsgForContent('founderemails-email-complete-digest-button');
+		$this->buttonUrl = $params['$PAGEURL'];
 	}
 }
