@@ -11,6 +11,9 @@ class WikiaQuizHooks {
 			case NS_WIKIA_QUIZARTICLE:
 				$article = new WikiaQuizArticle($title);
 				break;
+			case NS_WIKIA_PLAYQUIZ:
+				$article = new WikiaQuizPlayArticle($title);
+				break;
 		}
 
 		wfProfileOut(__METHOD__);
@@ -55,12 +58,16 @@ class WikiaQuizHooks {
 		if (!empty($title)) {
 			switch ($title->getNamespace()) {
 				case NS_WIKIA_QUIZ:
-					$quiz = WikiaQuiz::newFromArticle($article);
-					$quiz->purge();
+					$quizIndexArticle = new WikiaQuizIndexArticle($title);
+					$quizIndexArticle->doPurge();
+//					$quiz = WikiaQuiz::newFromArticle($article);
+//					$quiz->purge();
 					break;
 				case NS_WIKIA_QUIZARTICLE:
-					$quizElement = WikiaQuizElement::newFromArticle($article);
-					$quizElement->purge();
+					$quizArticle = new WikiaQuizArticle($title);
+					$quizArticle->doPurge();
+//					$quizElement = WikiaQuizElement::newFromArticle($article);
+//					$quizElement->purge();
 					break;
 			}
 		}

@@ -104,9 +104,15 @@ class WikiaQuiz {
 				elseif (startsWith($line, self::MOREINFOLINK_MARKER)) {
 					$moreInfo = substr($line, strlen(self::MOREINFOLINK_MARKER));
 					$moreInfoChunks = explode(self::MOREINFOLINK_TEXT_MARKER, $moreInfo);
-					$title = F::build('Title', array($moreInfoChunks[0]), 'newFromText');
+					if (Http::isValidURI($moreInfoChunks[0])) {
+						$moreInfoUrl = $moreInfoChunks[0];
+					}
+					else {
+						$title = F::build('Title', array($moreInfoChunks[0]), 'newFromText');
+						$moreInfoUrl = $title->getFullUrl();
+					}
 					$moreInfoLinks[] = array('article'=>$moreInfoChunks[0],
-								'url'=>$title->getFullUrl(),
+								'url'=>$moreInfoUrl,
 								'text'=>isset($moreInfoChunks[1]) ? $moreInfoChunks[1] : '' );
 					
 				}

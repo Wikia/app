@@ -29,9 +29,10 @@ $wgExtensionMessagesFiles['WikiaQuiz'] = "{$dir}/WikiaQuiz.i18n.php";
 // setup "Quiz" namespace
 define('NS_WIKIA_QUIZ', 700);
 define('NS_WIKIA_QUIZARTICLE', 710);
+define('NS_WIKIA_PLAYQUIZ', 720);
 
 $wgExtensionNamespacesFiles['WikiaQuiz'] = "{$dir}/WikiaQuiz.namespaces.php";
-wfLoadExtensionNamespaces('WikiaQuiz', array(NS_WIKIA_QUIZ, NS_WIKIA_QUIZARTICLE));
+wfLoadExtensionNamespaces('WikiaQuiz', array(NS_WIKIA_QUIZ, NS_WIKIA_QUIZARTICLE, NS_WIKIA_PLAYQUIZ));
 
 // classes
 $wgAutoloadClasses['WikiaQuiz'] = "{$dir}/WikiaQuiz.class.php";
@@ -40,6 +41,7 @@ $wgAutoloadClasses['WikiaQuizArticle'] = "{$dir}/WikiaQuizArticle.class.php";
 $wgAutoloadClasses['WikiaQuizElement'] = "{$dir}/WikiaQuizElement.class.php";
 $wgAutoloadClasses['WikiaQuizHooks'] = "{$dir}/WikiaQuizHooks.class.php";
 $wgAutoloadClasses['WikiaQuizIndexArticle'] = "{$dir}/WikiaQuizIndexArticle.class.php";
+$wgAutoloadClasses['WikiaQuizPlayArticle'] = "{$dir}/WikiaQuizPlayArticle.class.php";
 $wgAutoloadClasses['SpecialCreateWikiaQuiz'] = "{$dir}/SpecialCreateWikiaQuiz.class.php";
 $wgAutoloadClasses['SpecialCreateWikiaQuizArticle'] = "{$dir}/SpecialCreateWikiaQuizArticle.class.php";
 $wgAutoloadClasses['SpecialWikiaQuiz'] = "{$dir}/SpecialWikiaQuiz.class.php";
@@ -85,6 +87,8 @@ $wgGroupPermissions['*']['wikiaquiz'] = false;
 $wgGroupPermissions['staff']['wikiaquiz'] = true;
 $wgNamespaceProtection[NS_WIKIA_QUIZ]      = array( 'wikiaquiz' );
 $wgNamespaceProtection[NS_WIKIA_QUIZARTICLE] = array( 'wikiaquiz' );
+$wgNamespaceProtection[NS_WIKIA_PLAYQUIZ] = array( 'wikiaquiz' );
 
 $wgNonincludableNamespaces[] = NS_WIKIA_QUIZ;
 $wgNonincludableNamespaces[] = NS_WIKIA_QUIZARTICLE;
+$wgNonincludableNamespaces[] = NS_WIKIA_PLAYQUIZ;

@@ -300,16 +300,20 @@ class WikiaQuizAjax {
 		$moreInfoLinkTexts = $request->getArray ('moreinfolinktext');
 		foreach($moreInfoArticles as $index=>$articleName) {
 			if ($articleName) {
-				$title_object = F::build('Title', array($articleName), 'newFromText');
-				if (is_object ($title_object) && $title_object->exists() ) {
-					$article = F::build('Article', array($title_object));
-					$moreInfoLinkText = isset($moreInfoLinkTexts[$index]) ? $moreInfoLinkTexts[$index] : '';
+				$moreInfoLinkText = isset($moreInfoLinkTexts[$index]) ? $moreInfoLinkTexts[$index] : '';
+				if (Http::isValidURI($articleName)) {
 					$quizContent .= WikiaQuiz::MOREINFOLINK_MARKER . $articleName . WikiaQuiz::MOREINFOLINK_TEXT_MARKER . $moreInfoLinkText . "\n";
 				}
 				else {
-					$error = wfMsg('wikiaquiz-error-invalid-articele-with-details', $articleName);
-					return;
+					$title_object = F::build('Title', array($articleName), 'newFromText');
+					if (is_object ($title_object) && $title_object->exists() ) {
+						$quizContent .= WikiaQuiz::MOREINFOLINK_MARKER . $articleName . WikiaQuiz::MOREINFOLINK_TEXT_MARKER . $moreInfoLinkText . "\n";
+					}
+					else {
+						$error = wfMsg('wikiaquiz-error-invalid-article-with-details', $articleName);
+						return;
 
+					}					
 				}
 			}
 		}

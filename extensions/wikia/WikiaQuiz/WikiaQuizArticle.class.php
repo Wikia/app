@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This class is used to render Quiz namespace page
+ * This class is used to render QuizArticle namespace page
  */
 
 class WikiaQuizArticle extends Article {
@@ -47,7 +47,7 @@ class WikiaQuizArticle extends Article {
 	}
 
 	/**
-	 * Purge poll (and articles embedding it) when poll's page is purged
+	 * Purge quizElement's Article and QuizElement
 	 */
 	public function doPurge() {
 		parent::doPurge();
