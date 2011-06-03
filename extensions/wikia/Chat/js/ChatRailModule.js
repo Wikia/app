@@ -20,11 +20,11 @@ var ChatRailModule = {
 	
 	userStatsMenuInit: function() {
 		// Clicking avatar opens user stats menu
-		$('.ChatModule .chat-whos-here .avatar').click(function(event) {
-			event.stopPropagation();
+		$('.ChatModule .chat-whos-here > ul > li').hover(function(event) {
 			$('.UserStatsMenu').hide();
-			$(this).next('.UserStatsMenu').show();
+			$(this).find('.UserStatsMenu').show();
 
+/*
 			// Bind event handler to body to close the menu			
 			$('body').bind('click.userStatsMenuClose', function(event) {
 				if (!$(event.target).closest('.UserStatsMenu').exists()) {
@@ -32,8 +32,10 @@ var ChatRailModule = {
 					$('body').unbind('.userStatsMenuClose');
 				};
 			});
+*/
 
-
+		}, function() {
+			$(this).find('.UserStatsMenu').hide();		
 		});
 	}
 };

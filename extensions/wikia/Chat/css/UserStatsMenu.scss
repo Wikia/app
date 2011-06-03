@@ -30,6 +30,7 @@
 		}
 		.since {
 			display: block;
+			white-space: nowrap;
 		}
 	}
 	.actions {
@@ -43,7 +44,7 @@
 				padding: 5px;
 				&:hover {
 					background: $color-menu-highlight;
-					text-decoration: none;
+					text-decoration: none;			
 				}
 			}
 		}
