@@ -114,16 +114,14 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 			$langCode = $oFounder->getOption( 'language' );
 			$mailCategory .= (!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
+			$mailSubject = $this->getLocalizedMsg( $msgKeys['subject'], $emailParams );
+			$mailBody = $this->getLocalizedMsg( $msgKeys['body'], $emailParams );
 
 			if(!empty($langCode) && $langCode == 'en' && empty( $wgEnableAnswers )) { // FounderEmailv2.1
-				$mailSubject = $this->getLocalizedMsgBody( $msgKeys['subject'], $langCode, $emailParams );
-				$mailBody = $this->getLocalizedMsgBody( $msgKeys['body'], $langCode, $emailParams );
 				$mailBodyHTML = wfRenderModule("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => $mailKey)));
 				$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
 			} else {	// old emails
-				$mailSubject = $this->getLocalizedMsgBody( $msgKeys['subject'], $langCode, $emailParams );
-				$mailBody = $this->getLocalizedMsgBody( $msgKeys['body'], $langCode, $emailParams );
-				$mailBodyHTML = $this->getLocalizedMsgBody( $msgKeys['body-html'], $langCode, $emailParams );
+				$mailBodyHTML = $this->getLocalizedMsg( $msgKeys['body-html'], $emailParams );
 			}
 
 			wfProfileOut( __METHOD__ );

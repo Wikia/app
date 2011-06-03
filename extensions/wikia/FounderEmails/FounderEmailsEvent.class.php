@@ -107,18 +107,18 @@ abstract class FounderEmailsEvent {
 		return $this->id;
 	}
 
-	protected function getLocalizedMsgBody( $sMsgKey, $sLangCode, $params = array() ) {
-		$sBody = null;
+	/**
+	 * Wrapper for wfMsgExt that also does simple template replacements of params in message
+	 * This used to allow for a language override, but we should send FounderEmails in the wiki "content" language
+	 * 
+	 * @param String $sMsgKey mediawiki message name
+	 * @param type $params FounderEmail specific string replacements for $XYZ
+	 * @return String The message text
+	 */
+	
+	protected function getLocalizedMsg( $sMsgKey, $params = array() ) {
 
-		if ( !empty( $sLangCode ) ) {
-			// custom lang translation
-			$sBody = wfMsgExt( $sMsgKey, array( 'language' => $sLangCode ) );
-		}
-
-		if ( $sBody == null ) {
-			$sBody = wfMsg( $sMsgKey );
-		}
-
+		$sBody = wfMsgExt( $sMsgKey, array( 'content', 'parsemag') );
 		return strtr( $sBody, $params );
 	}
 }

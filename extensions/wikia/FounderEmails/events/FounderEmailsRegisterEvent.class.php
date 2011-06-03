@@ -38,14 +38,14 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 
 			$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';
 			$langCode = $founderEmails->getWikiFounder()->getOption( 'language' );
-			$mailSubject = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-user-registered-subject', $langCode, array() );
-			$mailBody = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-user-registered-body', $langCode, $emailParams );
+			$mailSubject = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-user-registered-subject', array() );
+			$mailBody = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-user-registered-body', $emailParams );
 			
 			if(!empty($langCode) && $langCode == 'en' && empty( $wgEnableAnswers )) { // FounderEmailv2.1
 				$mailBodyHTML = wfRenderModule("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'user-registered')));
 				$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
 			} else {
-				$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-user-registered-body-HTML', $langCode, $emailParams );
+				$mailBodyHTML = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-user-registered-body-HTML', $emailParams );
 			}
 			
 			$mailCategory = FounderEmailsEvent::CATEGORY_REGISTERED.(!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');

@@ -2,8 +2,8 @@
 class FounderEmailsModule extends Module {
 
 	var $language;
-	var $msgParams;
 
+	// This function is only used for testing / previewing / debugging the FounderEmails templates
 	public function executeIndex() {
 		global $wgRequest;
 		$day = $wgRequest->getVal('day');
@@ -59,11 +59,12 @@ class FounderEmailsModule extends Module {
 	 */
 	public function executeGeneralUpdate($params) {
 		$type = $params['type'];
-		$this->greeting = wfMsg('founderemails-email-'.$type.'-greeting');
-		$this->headline = wfMsg('founderemails-email-'.$type.'-headline');
-		$this->content = wfMsg('founderemails-email-'.$type.'-content');
-		$this->signature = wfMsg('founderemails-email-'.$type.'-signature');
-		$this->button = wfMsg('founderemails-email-'.$type.'-button');
+		$this->language = $params['language'];
+		$this->greeting = wfMsgForContent('founderemails-email-'.$type.'-greeting');
+		$this->headline = wfMsgForContent('founderemails-email-'.$type.'-headline');
+		$this->content = wfMsgForContent('founderemails-email-'.$type.'-content');
+		$this->signature = wfMsgForContent('founderemails-email-'.$type.'-signature');
+		$this->button = wfMsgForContent('founderemails-email-'.$type.'-button');
 		//$this->buttonUrl = 'http://www.wikia.com';
 		if (isset($params['$PAGEURL'])) {
 			$this->buttonUrl = $params['$PAGEURL'];

@@ -24,8 +24,8 @@
 </td>
 </tr>
 </table>
-<h1 style="color:#fa5c1f;font-size:19px;font-weight:normal"><?= wfMsg('founderemails-email-3-day-heading') ?></h1>
-<h2 style="color:#fa5c1f;font-size:22px;font-weight:bold"><?= wfMsg('founderemails-email-3-day-congratulations') ?></h2>
+<h1 style="color:#fa5c1f;font-size:19px;font-weight:normal"><?= wfMsgForContent('founderemails-email-3-day-heading') ?></h1>
+<h2 style="color:#fa5c1f;font-size:22px;font-weight:bold"><?= wfMsgForContent('founderemails-email-3-day-congratulations') ?></h2>
 </td>
 <td width="30">
 &nbsp;
@@ -39,7 +39,7 @@
 </tr>
 <tr>
 <td width="30">&nbsp;</td>
-<td style="color:#2c85d5;font-size:17px;font-weight:bold" valign="top"><?= wfMsg('founderemails-email-3-day-tips-heading') ?></td>
+<td style="color:#2c85d5;font-size:17px;font-weight:bold" valign="top"><?= wfMsgForContent('founderemails-email-3-day-tips-heading') ?></td>
 <td width="30">&nbsp;</td>
 </tr>
 <tr>
@@ -54,9 +54,9 @@
 	<tr>
 		<td width="30">&nbsp;</td>
 		<td>
-			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= wfMsg('founderemails-email-3-day-editmainpage-heading') ?></h2>
+			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= wfMsgForContent('founderemails-email-3-day-editmainpage-heading') ?></h2>
 			<span style="color:#3a3a3a;font-size:14px;line-height:20px">
-				<?= wfMsg('founderemails-email-3-day-editmainpage-content') ?>
+				<?= wfMsgForContent('founderemails-email-3-day-editmainpage-content') ?>
 			</span>
 		</td>
 		<td width="15">&nbsp;</td>
@@ -64,7 +64,7 @@
 			<a href="$EDITMAINPAGEURL" style="text-decoration:none">
 			<table cellpadding="0" cellspacing="0" background="http://images1.wikia.nocookie.net/wikianewsletter/images/9/9e/Founder_emails_button2.png" width="102" height="40">
 				<tr valign="middle" align="center">
-					<td style="color:#fff;font-size:14px"><?= wfMsg('founderemails-email-3-day-editmainpage-button') ?></td>
+					<td style="color:#fff;font-size:14px"><?= wfMsgForContent('founderemails-email-3-day-editmainpage-button') ?></td>
 				</tr>
 			</table>
 			</a>
@@ -83,9 +83,9 @@
 	<tr>
 		<td width="30">&nbsp;</td>
 		<td>
-			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= wfMsg('founderemails-email-3-day-addphotos-heading') ?></h2>
+			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= wfMsgForContent('founderemails-email-3-day-addphotos-heading') ?></h2>
 			<span style="color:#3a3a3a;font-size:14px;line-height:20px">
-				<?= wfMsg('founderemails-email-3-day-addphotos-content') ?>
+				<?= wfMsgForContent('founderemails-email-3-day-addphotos-content') ?>
 			</span>
 		</td>
 		<td width="15">&nbsp;</td>
@@ -93,7 +93,7 @@
 			<a href="$ADDAPHOTOURL" style="text-decoration:none">
 			<table cellpadding="0" cellspacing="0" background="http://images1.wikia.nocookie.net/wikianewsletter/images/9/9e/Founder_emails_button2.png" width="102" height="40">
 				<tr valign="middle" align="center">
-					<td style="color:#fff;font-size:14px"><?= wfMsg('founderemails-email-3-day-addphotos-button') ?></td>
+					<td style="color:#fff;font-size:14px"><?= wfMsgForContent('founderemails-email-3-day-addphotos-button') ?></td>
 				</tr>
 			</table>
 			</a>
@@ -112,9 +112,9 @@
 	<tr>
 		<td width="30">&nbsp;</td>
 		<td>
-			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= wfMsg('founderemails-email-3-day-explore-heading') ?></h2>
+			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= wfMsgForContent('founderemails-email-3-day-explore-heading') ?></h2>
 			<span style="color:#3a3a3a;font-size:14px;line-height:20px">
-				<?= wfMsg('founderemails-email-3-day-explore-content') ?>
+				<?= wfMsgForContent('founderemails-email-3-day-explore-content') ?>
 			</span>
 		</td>
 		<td width="15">&nbsp;</td>
@@ -122,7 +122,7 @@
 			<a href="$EXPLOREURL" style="text-decoration:none">
 			<table cellpadding="0" cellspacing="0" background="http://images1.wikia.nocookie.net/wikianewsletter/images/9/9e/Founder_emails_button2.png" width="102" height="40">
 				<tr valign="middle" align="center">
-					<td style="color:#fff;font-size:14px"><?= wfMsg('founderemails-email-3-day-explore-button') ?></td>
+					<td style="color:#fff;font-size:14px"><?= wfMsgForContent('founderemails-email-3-day-explore-button') ?></td>
 				</tr>
 			</table>
 			</a>
@@ -142,7 +142,7 @@
 		<td width="30">&nbsp;</td>
 		<td colspan="2">
 			<span style="color:#3a3a3a;font-size:14px;line-height:20px">
-				<?= wfMsg('founderemails-email-3-day-wikiahelps-text') ?>
+				<?= wfMsgForContent('founderemails-email-3-day-wikiahelps-text') ?>
 			</span>
 		</td>
 		<td width="30">&nbsp;</td>
@@ -153,7 +153,7 @@
 	<tr>
 		<td width="30">&nbsp;</td>
 		<td style="color:#3a3a3a;font-size:14px;line-height:20px">
-			<?= wfMsg('founderemails-email-3-day-wikiahelps-signature') ?>
+			<?= wfMsgForContent('founderemails-email-3-day-wikiahelps-signature') ?>
 		</td>
 		<td valign="bottom" align="right">
 			<img alt="Wikia" src="http://images3.wikia.nocookie.net/wikianewsletter/images/2/28/Wikialogo.png">
@@ -171,9 +171,9 @@
 </tr>
 <tr>
 <td align="center" style="font-size:11px;color:#3a3a3a;line-height:16px">
-<?= wfMsg('founderemails-email-footer-line1') ?>
+<?= wfMsgForContent('founderemails-email-footer-line1') ?>
 <br>
-<?= wfMsgExt('founderemails-email-footer-line2', array( 'parsemag' ) ) ?>
+<?= wfMsgExt('founderemails-email-footer-line2', array( 'content', 'parsemag' ) ) ?>
 </td>
 </tr>
 <tr>

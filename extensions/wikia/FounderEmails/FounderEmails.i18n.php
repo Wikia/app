@@ -446,7 +446,7 @@ Ur bern traoù a c\'hoarvez war ho wiki hiziv ! Kit war $MYHOMEURL da welet pena
 Ur bern traoù a c\'hoarvez war ho wiki hiziv ! Kit war $MYHOMEURL da welet penaos emañ kont.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Skipailh wikia</div>',
 	'founderemails-email-footer-line1' => 'Evit gwelet darvoudoù ziwezhañ Wikia, kit war <a style="color:#2a87d5;text-decoration:none;" href="http://communaute.wikia.com">communaute.wikia.com</a>',
-	'founderemails-email-footer-line2' => 'Ha c\'hoant hoc\'h eus merañ ar posteloù a resevit ? Kit \'ta amañ : <a href="$WIKIURL/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">$WIKIURL/wiki/Special:Preferences</a>',
+	'founderemails-email-footer-line2' => 'Ha c\'hoant hoc\'h eus merañ ar posteloù a resevit ? Kit \'ta amañ : {{fullurl:{{ns:special}}:Preferences}}',
 	'founderemails-email-0-day-heading' => "Ur blijadur eo anavezout ac'hanoc'h \$FOUNDERNAME,",
 	'founderemails-email-0-day-congratulations' => 'Gourc’hemennoù evit krouidigezh $WIKINAME!',
 	'founderemails-email-0-day-tips-heading' => "Setu un nebeut kuzulioù talvoudus evit sikour ac'hanoc'h da gregiñ e-barzh :",
@@ -602,7 +602,7 @@ Eine Menge passiert auf deiner Seite heute! Schau mal auf $MYHOMEURL vorbei, um 
 Eine Menge passiert auf deiner Seite heute! Schau mal auf $MYHOMEURL vorbei, um zu sehen was alles so los war.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
 	'founderemails-email-footer-line1' => 'Um aktuelle Ereignisse in Wikia mitzubekommen, besuche <a style="color:#2a87d5;text-decoration:none;" href="http://de.community.wikia.com">de.community.wikia.com</a>',
-	'founderemails-email-footer-line2' => 'Willst du steuern, welche E-Mails du bekommst? Gehe auf: <a href="$WIKIURL/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">$WIKIURL/wiki/Special:Preferences</a>',
+	'founderemails-email-footer-line2' => 'Willst du steuern, welche E-Mails du bekommst? Gehe auf: {{fullurl:{{ns:special}}:Preferences}}',
 	'founderemails-email-0-day-heading' => 'Schön, dich zu treffen, $FOUNDERNAME,',
 	'founderemails-email-0-day-congratulations' => 'Herzlichen Glückwunsch zur Erstellung von $WIKINAME!',
 	'founderemails-email-0-day-tips-heading' => 'Hier sind ein paar hilfreiche Tipps zum Einstieg:',
@@ -899,7 +899,7 @@ Parece que alguien ha editado tu wiki! Por qué no <a href="$MYHOMEURL">verifica
 ¡Hay muchas cosas sucediendo hoy en tu wiki! Pasa por $MYHOMEURL para ver lo que ha estado pasando.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- El Equipo de Wikia</div>',
 	'founderemails-email-footer-line1' => 'Para ver las últimas noticias en Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
-	'founderemails-email-footer-line2' => '¿Quieres controlar los correos electrónicos que recibes? Ve a <a href="$WIKIURL/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">$WIKIURL/wiki/Especial:Preferencias</a>',
+	'founderemails-email-footer-line2' => '¿Quieres controlar los correos electrónicos que recibes? Ve a {{fullurl:{{ns:special}}:Preferences}}',
 	'founderemails-email-0-day-heading' => 'Encantado de conocerte $FOUNDERNAME,',
 	'founderemails-email-0-day-congratulations' => '¡Felicitaciones por crear $WIKINAME!',
 	'founderemails-email-0-day-tips-heading' => 'Aquí hay algunos consejos útiles para comenzar:',
@@ -1302,7 +1302,7 @@ Il y a beaucoup de choses qui se passent sur votre wiki, aujourd'hui ! Rendez-vo
 Il y a beaucoup de choses qui se passent sur votre wiki, aujourd\'hui ! Rendez-vous sur $MYHOMEURL pour voir ce qu\'il en est.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- L\'équipe Wikia</div>',
 	'founderemails-email-footer-line1' => 'Pour voir les derniers évènements sur Wikia, rendez-vous sur <a style="color:#2a87d5;text-decoration:none;" href="http://communaute.wikia.com">communaute.wikia.com</a>',
-	'founderemails-email-footer-line2' => 'Vous souhaitez contrôler les courriels que vous recevez ? Rendez-vous sur : <a href="$WIKIURL/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">$WIKIURL/wiki/Special:Preferences</a>',
+	'founderemails-email-footer-line2' => 'Vous souhaitez contrôler les courriels que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}',
 	'founderemails-email-0-day-heading' => 'Enchanté de vous connaître $FOUNDERNAME,',
 	'founderemails-email-0-day-congratulations' => 'Félicitations pour la création de $WIKINAME !',
 	'founderemails-email-0-day-tips-heading' => 'Voici quelques conseils utiles pour vous aider à démarrer :',
@@ -1646,7 +1646,7 @@ Il eveni multo in tu wiki hodie! Visita $MYHOMEURL pro vider lo que ha occurrite
 Il eveni multo in tu wiki hodie! Visita $MYHOMEURL pro vider lo que ha occurrite.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Le equipa de Wikia</div>',
 	'founderemails-email-footer-line1' => 'Pro sequer le ultime evenimentos in Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
-	'founderemails-email-footer-line2' => 'Vole seliger le e-mails que tu recipe? Visita: <a href="$WIKIURL/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">$WIKIURL/wiki/Special:Preferences</a>',
+	'founderemails-email-footer-line2' => 'Vole seliger le e-mails que tu recipe? Visita: {{fullurl:{{ns:special}}:Preferences}}',
 	'founderemails-email-0-day-heading' => 'Placer de cognoscer te, $FOUNDERNAME.',
 	'founderemails-email-0-day-congratulations' => 'Felicitationes pro le creation de $WIKINAME!',
 	'founderemails-email-0-day-tips-heading' => 'Ecce alcun consilios utile pro adjutar te a comenciar:',
@@ -1874,7 +1874,7 @@ IПомина извесно време откако го започнавте �
 Денес има многу случувања на вашето Вики! Наминете на $MYHOMEURL за да видите што има.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
 	'founderemails-email-footer-line1' => 'За да ги проследите најновите случувања на Викија, посетете ја страницата <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
-	'founderemails-email-footer-line2' => 'Сакате да одберете кои пораки да ги добивате? Одете на: <a href="$WIKIURL/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">$WIKIURL/wiki/Special:Preferences</a>',
+	'founderemails-email-footer-line2' => 'Сакате да одберете кои пораки да ги добивате? Одете на: {{fullurl:{{ns:special}}:Preferences}}',
 	'founderemails-email-0-day-heading' => 'Драго ми е што Ве запознав, $FOUNDERNAME,',
 	'founderemails-email-0-day-congratulations' => 'Честититки за новосоздаденото - $WIKINAME!',
 	'founderemails-email-0-day-tips-heading' => 'Еве некои корисни совети за почеток:',
@@ -2070,7 +2070,7 @@ Wiki anda memang meriah hari ini! Sila bersinggah di $MYHOMEURL untuk melihat ap
 Wiki anda memang meriah hari ini! Sila bersinggah di $MYHOMEURL untuk melihat apa yang berlaku.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Pasukan Wikia</div>',
 	'founderemails-email-footer-line1' => 'Untuk melihat perkembangan terbaru di Wikia, kunjungi <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
-	'founderemails-email-footer-line2' => 'Ingin mengawal e-mel yang anda terima? Pergi ke: <a href="$WIKIURL/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">$WIKIURL/wiki/Special:Preferences</a>',
+	'founderemails-email-footer-line2' => 'Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Preferences}}',
 	'founderemails-email-0-day-heading' => 'Selamat berkenalan, $FOUNDERNAME,',
 	'founderemails-email-0-day-congratulations' => 'Syabas kerana mencipta $WIKINAME!',
 	'founderemails-email-0-day-tips-heading' => 'Berikut ialah petua-petua berguna untuk membantu anda bermula:',
@@ -2256,7 +2256,7 @@ Er gebeurt veel op uw wiki vandaag. Kom naar $MYHOMEURL om te kijken wat er alle
 Er gebeurt veel op uw wiki vandaag! Kom naar $MYHOMEURL om te kijken wat er allemaal gebeurt.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
 	'founderemails-email-footer-line1' => 'Ga naar <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> om de laatste ontwikkelingen bij Wikia te volgen',
-	'founderemails-email-footer-line2' => 'Wilt u bepalen welke e-mails u krijgt? ga naar <a href="$WIKIURL/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">uw voorkeuren</a>',
+	'founderemails-email-footer-line2' => 'Wilt u bepalen welke e-mails u krijgt? ga naar {{fullurl:{{ns:special}}:Preferences}}',
 	'founderemails-email-0-day-heading' => 'Goed u te ontmoeten, $FOUNDERNAME.',
 	'founderemails-email-0-day-congratulations' => 'Gefeliciteerd met het aanmaken van $WIKINAME!',
 	'founderemails-email-0-day-tips-heading' => 'Hier zijn een paar nuttige tips om u snel op weg te helpen:',
@@ -2433,7 +2433,7 @@ Er gebeurt veel op je wiki vandaag. Kom naar $MYHOMEURL om te kijken wat er alle
 	'founderemails-lot-happening-body-HTML' => 'Hoi $FOUNDERNAME,<br /><br />
 Er gebeurt veel op je wiki vandaag! Kom naar $MYHOMEURL om te kijken wat er allemaal gebeurt.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
-	'founderemails-email-footer-line2' => 'Wil je bepalen welke e-mails je krijgt? ga naar <a href="$WIKIURL/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">je voorkeuren</a>',
+	'founderemails-email-footer-line2' => 'Wil je bepalen welke e-mails je krijgt? ga naar {{fullurl:{{ns:special}}:Preferences}}',
 	'founderemails-email-0-day-heading' => 'Goed je te zien, $FOUNDERNAME.',
 	'founderemails-email-0-day-tips-heading' => 'Hier zijn een paar nuttige tips om je snel op weg te helpen:',
 	'founderemails-email-0-day-addpages-content' => 'In een wiki draait alles om het delen van informatie; in dit geval over jouw unieke onderwerp. Maak pagina\'s aan door te klikken op "<a style="color:#2a87d5;text-decoration:none;" href="$ADDAPAGEURL">Pagina toevoegen</a>" en voeg nog meer gegevens over je onderwerp toe.',
@@ -2597,7 +2597,7 @@ Det er en masse som skjer på wikien din i dag! Stikk innom $MYHOMEURL for å se
 Det er en masse som skjer på wikien din i dag! Stikk innom $MYHOMEURL for å se hva som står på.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Wikia-teamet</div>',
 	'founderemails-email-footer-line1' => 'For å sjekke ut de siste hendelsene på Wikia, gå til <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
-	'founderemails-email-footer-line2' => 'Vil du kontrollere hvilke e-post du mottar? Gå til: <a href="$WIKIURL/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">$WIKIURL/wiki/Spesial:Innstillinger</a>',
+	'founderemails-email-footer-line2' => 'Vil du kontrollere hvilke e-post du mottar? Gå til: {{fullurl:{{ns:special}}:Preferences}}',
 	'founderemails-email-0-day-heading' => 'Hyggelig å treffe deg $FOUNDERNAME,',
 	'founderemails-email-0-day-congratulations' => 'Gratulerer med opprettelsen av $WIKINAME!',
 	'founderemails-email-0-day-tips-heading' => 'Her er noen nyttige tips for å komme i gang:',
@@ -2970,7 +2970,7 @@ Há muitas coisas a acontecer hoje na sua wiki! Passe por $MYHOMEURL para ver o 
 Há muitas coisas a acontecer hoje na sua wiki! Passe por $MYHOMEURL para ver o que se tem passado.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- A Equipa Wikia</div>',
 	'founderemails-email-footer-line1' => 'Para conhecer as últimas novidades na Wikia, visite <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
-	'founderemails-email-footer-line2' => 'Quer decidir quais as mensagens de correio electrónico que recebe? Faça-o em <a href="$WIKIURL/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">$WIKIURL/wiki/Especial:Preferências</a>',
+	'founderemails-email-footer-line2' => 'Quer decidir quais as mensagens de correio electrónico que recebe? Faça-o em {{fullurl:{{ns:special}}:Preferences}}',
 	'founderemails-email-0-day-heading' => 'É um prazer conhecê-lo(a) $FOUNDERNAME,',
 	'founderemails-email-0-day-congratulations' => 'Parabéns por ter criado a wiki $WIKINAME!',
 	'founderemails-email-0-day-tips-heading' => 'Tem aqui algumas dicas úteis para quem está a começar:',

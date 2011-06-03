@@ -52,8 +52,8 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 			$langCode = $foundingUser->getOption( 'language' );
 			// Only send digest emails for English users until translation is done 
 			if ($langCode == 'en') {
-				$mailSubject = $this->getLocalizedMsgBody( 'founderemails-email-views-digest-subject', $langCode, $emailParams );
-				$mailBody = $this->getLocalizedMsgBody( 'founderemails-email-views-digest-body', $langCode, $emailParams );		
+				$mailSubject = $this->getLocalizedMsg( 'founderemails-email-views-digest-subject', $emailParams );
+				$mailBody = $this->getLocalizedMsg( 'founderemails-email-views-digest-body', $emailParams );		
 				$mailBodyHTML = wfRenderModule("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'views-digest')));
 				$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
 				$mailCategory = FounderEmailsEvent::CATEGORY_VIEWS_DIGEST.(!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
