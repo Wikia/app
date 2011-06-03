@@ -31,6 +31,7 @@ Please try again or [[Special:Contact|report this]].",
 <p>Please check <a href=\"http://twitter.com/wikia\">Twitter</a> or <a href=\"http://facebook.com/wikia\">Facebook</a> for more information.
 <br />
 (If you already have an account, you can <a href=\"#\">log in</a> as normal, but you won't be able to edit.)</p>",
+	"comboajaxlogin-ajaxerror" => "Wikia is not responding. Please check your network connection.",
 );
 
 /** Message documentation (Message documentation)
@@ -515,7 +516,7 @@ Probeer het nog een keer of [[Special:Contact|rapporteer dit]].',
 Als u al een gebruiker hebt, kunt u <a href="#">aanmelden</a> zoals altijd, maar bewerken is op het moment niet mogelijk.</p>',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel) (Nederlands (informeel))
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -542,7 +543,7 @@ Nadat je dit hebt uitgevoerd, kan je eenvoudig aanmelden met de knop Facebook Co
 Als je al een gebruiker hebt, kan je <a href="#">aanmelden</a> zoals altijd, maar bewerken is op het moment niet mogelijk.</p>',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
@@ -765,7 +766,7 @@ $messages['ru'] = array(
 (Если у вас уже есть учётная запись, вы можете <a href="#">войти</a> как обычно, но вы не сможете редактировать.)</p>',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -883,7 +884,7 @@ Sau đó, bạn có thể đặng nhập dễ dàng dùng bất cứ nút Facebo
 (Nếu bạn có tài khoản, bạn có thể <a href="#">đăng nhập</a> như bình thường, nhưng có thể bạn không thể chỉnh sửa trong một thời gian ngắn.)</p>',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Wilsonmess
  */
 $messages['zh-hans'] = array(

@@ -26,6 +26,22 @@ $wgHooks['BeforePageDisplay'][] = 'ajaxLoginAdditionalScripts';
 
 $wgExtensionMessagesFiles['ComboAjaxLogin'] = dirname(__FILE__) . '/ComboAjaxLogin.i18n.php';
 
+$wgExtensionFunctions[] = 'efSetupComboAjaxLogin';
+
+function efSetupComboAjaxLogin() {
+	JSMessages::getInstance()->enqueuePackage('ComboAjaxLogin', JSMessages::EXTERNAL);		
+	return true;
+}
+
+
+// WikiaApp
+$app = WF::build('App');
+
+// register messages package for JS
+$app->registerExtensionJSMessagePackage('ComboAjaxLogin', array(
+	'comboajaxlogin-*',
+));
+
 
 /**
  * Hooked to BeforePageDisplay to allow adding of required JS scripts.
