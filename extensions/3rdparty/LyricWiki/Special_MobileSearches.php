@@ -246,11 +246,12 @@ function wfMobileSearches(){
 			}
 
 			if(!empty($data)){
-				$wgMemc->set($CACHE_KEY_TIME, $cachedOn, strtotime("+2 hour"));
-				$wgMemc->set($CACHE_KEY_STATS, $statsHtml, strtotime("+2 hour"));
+				$TWO_HOURS_IN_SECONDS = (60*60*2);
+				$wgMemc->set($CACHE_KEY_TIME, $cachedOn, $TWO_HOURS_IN_SECONDS);
+				$wgMemc->set($CACHE_KEY_STATS, $statsHtml, $TWO_HOURS_IN_SECONDS);
 				
 				// We use CACHE_KEY_DATA to determine when all of these keys have expired, so it should expire a few microseconds after the other two (that's why it's below the other set()s).
-				$wgMemc->set($CACHE_KEY_DATA, $data, strtotime("+2 hour"));
+				$wgMemc->set($CACHE_KEY_DATA, $data, $TWO_HOURS_IN_SECONDS);
 			}
 		}
 
