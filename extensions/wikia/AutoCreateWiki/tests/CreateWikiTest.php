@@ -17,10 +17,12 @@ class CreateWikiTest extends PHPUnit_Framework_TestCase {
 	const TEST_USER_ID2 = 2;
 	
 	private $wgUserBackup = null;
+	private $mIP = null;
 	
 	protected function setUp() {
-		global $wgUser;
+		global $wgUser, $IP;
 		$this->wgUserBackup = $wgUser;
+		$this->mIP = $IP;
 		$wgUser = User::newFromId(self::TEST_USER_ID1);
 	}
 	
@@ -35,7 +37,7 @@ class CreateWikiTest extends PHPUnit_Framework_TestCase {
 	 * @group Infrastructure
 	 */
 	public function testWikiCreation() {
-		
+		global $wgCityId, $wgWikiaLocalSettingsPath; 
 		$languages = array( 'en', 'pl', 'de', 'pt-br' );;
 
 		$types = array( false, "answers" );
@@ -52,7 +54,22 @@ class CreateWikiTest extends PHPUnit_Framework_TestCase {
 					$type
 				);		
 				
-				$this->assertEquals( 0, $this->oCWiki->create(), "CreateWiki failed for language: {$lang} and type: {$type}" );
+				$created = $this->oCWiki->create();
+				
+				$this->assertEquals( 0, $created, "CreateWiki failed for language: {$lang} and type: {$type}" );
+				
+				if ( $created == 0 ) {
+					$city_id = $this->oCWiki->getWikiInfo('city_id');
+					$cmd = sprintf(
+						"SERVER_ID=%d %s %s/extensions/wikia/WikiFactory/Close/simpleclose.php -wiki_id %d --conf %s",
+						$wgCityId,
+						"/usr/bin/php",
+						$this->mIP,
+						$city_id,
+						$wgWikiaLocalSettingsPath
+					);
+					wfShellExec( $cmd );
+				}
 			}
 		}
 	}
