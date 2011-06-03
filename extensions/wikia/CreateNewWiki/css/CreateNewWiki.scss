@@ -67,10 +67,15 @@ $color-borders: #CECECE;
 	}
 	input[type=text],
 	input[type=password] {
+
 		background: #e2f1fe;
 		border: 1px solid #dbdbdb;
 		font-size: 17px;
+		outline: 0;
 		padding: 0.3em;
+		&:focus {
+			@include box-shadow(0px, 0px, 6px, #2b5e94);
+		}
 	}
 	label {
 		/* following !important is used because the existing template has inline styles */
