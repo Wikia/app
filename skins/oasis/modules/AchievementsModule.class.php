@@ -47,6 +47,8 @@ class AchievementsModule extends Module {
 
 
 	private function getBadgesData(){
+		global $wgContLang;
+		
 		// get achievement lists
 		$rankingService = new AchRankingService();
 		$userProfileService = new AchUserProfileService();
@@ -57,7 +59,7 @@ class AchievementsModule extends Module {
 		$this->ownerCounters = $userProfileService->mOwnerCounters;
 
 		$this->ownerRank = $rankingService->getUserRankingPosition($userProfileService->mUserOwner);
-		$this->ownerScore = $rankingService->getUserScore($userProfileService->mUserOwner->getId());
+		$this->ownerScore = $wgContLang->formatNum($rankingService->getUserScore($userProfileService->mUserOwner->getId()));
 
 		if($userProfileService->mUserViewer && $userProfileService->mUserViewer->isLoggedIn() && $userProfileService->mUserViewer->getId() == $userProfileService->mUserOwner->getId()) {
 			$this->viewer_is_owner = true;
