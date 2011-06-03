@@ -345,17 +345,6 @@ class RenameUserProcess {
 			wfProfileOut(__METHOD__);
 			return false;
 		}
-		elseif($olduser->isBlocked() || !UserBlock::blockCheck($olduser) || $olduser->isBlockedGlobally()){
-			$blockedBy = $olduser->blockedBy();
-
-			if(is_numeric($blockedBy)){
-				$blockedBy = (string)User::whoIs((int)$blockedBy);
-			}
-
-			$this->addError(wfMsgForContent( 'userrenametool-errorblocked', $this->mRequestData->oldUsername, $blockedBy, $olduser->blockedFor()));
-			wfProfileOut(__METHOD__);
-			return false;
-		}
 		elseif($olduser->isLocked()){
 			$this->addError(wfMsgForContent( 'userrenametool-errorlocked', $this->mRequestData->oldUsername));
 			wfProfileOut(__METHOD__);
