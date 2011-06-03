@@ -260,17 +260,12 @@ You can always head over to wiki activity to view all of the exiting changes bei
 The Wikia Team',
 	'founderemails-email-complete-digest-greeting' => 'Hi $FOUNDERNAME,',
 	'founderemails-email-complete-digest-headline' => 'It\'s time for your daily dose of activity from $WIKINAME.',
-	'founderemails-email-complete-digest-content' => '$UNIQUEVIEWS people viewed your wiki.
-<br><br>
-Keep up the great work adding interesting content for people to read!
-<br><br>
-$USEREDITS edits were made.
-<br><br>
-Happy editors make happy wikis. Make sure to thank your editors and check in with them from time to time.
-<br><br>
-$USERJOINS people joined your wiki.
-<br><br>
-Welcome new people to your wiki with a talk page message.
+	'founderemails-email-complete-digest-content-heading1' => '$UNIQUEVIEWS people viewed your wiki.',
+	'founderemails-email-complete-digest-content1' => 'Keep up the great work adding interesting content for people to read!',
+	'founderemails-email-complete-digest-content-heading2' => '$USEREDITS edits were made.',
+	'founderemails-email-complete-digest-content2' => 'Happy editors make happy wikis. Make sure to thank your editors and check in with them from time to time.',
+	'founderemails-email-complete-digest-content-heading3' => '$USERJOINS people joined your wiki.',
+	'founderemails-email-complete-digest-content3' => 'Welcome new people to your wiki with a talk page message.
 <br><br>
 You can always head over to wiki activity to view all of the exiting changes being made on $WIKINAME. Check in often, as the founder your community looks to you to help guide and run the wiki.',
 	'founderemails-email-complete-digest-signature' => 'The Wikia Team',
@@ -644,7 +639,7 @@ Eine Menge passiert auf deiner Seite heute! Schau mal auf $MYHOMEURL vorbei, um 
 	'founderemails-email-10-day-wikiahelps-signature' => 'Weiter so!<br />Das Wikia Team',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form))
  * @author LWChris
  * @author The Evil IP address
  * @author Umherirrender
@@ -2298,7 +2293,7 @@ Er gebeurt veel op uw wiki vandaag! Kom naar $MYHOMEURL om te kijken wat er alle
 	'founderemails-email-10-day-wikiahelps-signature' => 'Blijf vooral doorgaan met uw goede werk!<br />Het Wikia-team',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel) (Nederlands (informeel))
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -2455,7 +2450,7 @@ Er gebeurt veel op je wiki vandaag! Kom naar $MYHOMEURL om te kijken wat er alle
 	'founderemails-email-10-day-wikiahelps-text' => 'Je kunt ook andere Wikianen om hulp bij je wiki vragen door berichten te plaatsen in de forums op <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
