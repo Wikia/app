@@ -2,12 +2,13 @@
 	float: right;
 	position: relative;
 	width: $width-rail - 10;
-	
+
 	.rail-auto-height {
 		margin-left: -14px;
 		padding-left: 14px;
+		position: relative;
 		overflow-x: hidden;
-		
+
 		> * {
 			width: $width-rail;
 		}
