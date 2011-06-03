@@ -599,8 +599,8 @@ EOD;
 			}
 		}
 
-		$text = strpos( $fixed_url, "YOUTUBE.COM" ) + strpos( $fixed_url, "YOUTU.BE" );
-		if( false !== $text ) { // youtube
+		// YouTube
+		if((strpos( $fixed_url, "YOUTUBE.COM" ) !== false) || (strpos( $fixed_url, "YOUTU.BE" ) !== false)){
 			$provider = self::V_YOUTUBE;
 
 			$aData = array();
@@ -715,101 +715,97 @@ EOD;
 			}
 		}
 
-                $text = strpos( $fixed_url, "SOUTHPARKSTUDIOS.COM" );
-                if( false !== $text ) { // southparkstudios
-                        $provider = self::V_SOUTHPARKSTUDIOS;
-                        $parsed = split( "/", $url );
-                        if( is_array( $parsed ) ) {
-                                $mdata = array_pop( $parsed );
-                                if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
-                                        $this->mId = $mdata;
-                                } else {
-                                        $this->mId = array_pop( $parsed );
-                                }
-                                $this->mProvider = $provider;
-                                $this->mData = array();
-                                return true;
-                        }
-                }
+		$text = strpos( $fixed_url, "SOUTHPARKSTUDIOS.COM" );
+		if( false !== $text ) { // southparkstudios
+				$provider = self::V_SOUTHPARKSTUDIOS;
+				$parsed = split( "/", $url );
+				if( is_array( $parsed ) ) {
+						$mdata = array_pop( $parsed );
+						if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
+								$this->mId = $mdata;
+						} else {
+								$this->mId = array_pop( $parsed );
+						}
+						$this->mProvider = $provider;
+						$this->mData = array();
+						return true;
+				}
+		}
 
 		$text = strpos( $fixed_url, "BLIP.TV" );
 		if( false !== $text ) { // Blip TV
-
-           	$provider = self::V_BLIPTV;
-		$blip = '';
-		$parsed = split( "/", $url );
-                if( is_array( $parsed ) ) {
-                	$mdata = array_pop( $parsed );
-			if ( '' != $mdata ) {
-				$blip = $mdata;
-			} else {
-				$blip = array_pop( $parsed );
+			$provider = self::V_BLIPTV;
+			$blip = '';
+			$parsed = split( "/", $url );
+			if( is_array( $parsed ) ) {
+				$mdata = array_pop( $parsed );
+				if ( '' != $mdata ) {
+					$blip = $mdata;
+				} else {
+					$blip = array_pop( $parsed );
+				}
+				$this->mProvider = $provider;
+				$this->mData = array();
+				$last = explode( "?", $blip);
+				$this->mId = $last[0];
+				return true;
 			}
-	                $this->mProvider = $provider;
-	                $this->mData = array();
-			$last = explode( "?", $blip);
-			$this->mId = $last[0];
-			return true;
-           	}
-	}
+		}
 
-                $text = strpos( $fixed_url, "WWW.DAILYMOTION" );
-                if( false !== $text ) { // Dailymotion
+		$text = strpos( $fixed_url, "WWW.DAILYMOTION" );
+		if( false !== $text ) { // Dailymotion
 			// dailymotion goes like
 			// http://www.dailymotion.pl/video/xavqj5_NAME
 			// (example for Polish location)
-                        $provider = self::V_DAILYMOTION;
-                        $parsed = split( "/", $url );
-                        if( is_array( $parsed ) ) {
-                                $mdata = array_pop( $parsed );
-                                if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
-					// todo check out for more parameters
-                                        $this->mId = $mdata;
-                                } else {
-                                        $this->mId = array_pop( $parsed );
-                                }
-                                $this->mProvider = $provider;
-                                $this->mData = array();
-                                return true;
-                        }
-                }
+			$provider = self::V_DAILYMOTION;
+			$parsed = split( "/", $url );
+			if( is_array( $parsed ) ) {
+				$mdata = array_pop( $parsed );
+				if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
+					// TODO: check out for more parameters
+					$this->mId = $mdata;
+				} else {
+						$this->mId = array_pop( $parsed );
+				}
+				$this->mProvider = $provider;
+				$this->mData = array();
+				return true;
+			}
+		}
 
-                $text = strpos( $fixed_url, "VIDDLER.COM" );
-                if( false !== $text ) { // Blip TV
-                        $provider = self::V_VIDDLER;
-                        $parsed = split( "/explore/", strtolower($url));
-                        if( is_array( $parsed ) ) {
-                                $mdata = array_pop( $parsed );
-                                if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
-                                        $this->mId = $mdata;
-                                } else {
+		$text = strpos( $fixed_url, "VIDDLER.COM" );
+		if( false !== $text ) { // Blip TV
+			$provider = self::V_VIDDLER;
+			$parsed = split( "/explore/", strtolower($url));
+			if( is_array( $parsed ) ) {
+				$mdata = array_pop( $parsed );
+				if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
+					$this->mId = $mdata;
+				} else {
+					$this->mId = array_pop( $parsed );
+				}
+				if ( substr( $this->mId, -1, 1) != "/" )
+				{
+					$this->mId .= "/";
+				}
+				$this->mProvider = $provider;
+				$this->mData = array();
+				return true;
+			}
+		}
 
-                                        $this->mId = array_pop( $parsed );
-                                }
-                                if ( substr( $this->mId, -1, 1) != "/" )
-                                {
-                                	$this->mId .= "/";
-                                }
-                                $this->mProvider = $provider;
-                                $this->mData = array();
-                                return true;
-                        }
-                }
-
-                $text = strpos( $fixed_url, "GAMETRAILERS" );
-                if( false !== $text ) { // Gametrailers
-                        $provider = self::V_GAMETRAILERS;
-                        $parsed = split( "/", $url );
-                        if( is_array( $parsed ) ) {
-								$this->mId = explode("?",array_pop( $parsed ));
-								$this->mId = $this->mId[0];
-                                $this->mProvider = $provider;
-                                $this->mData = array();
-                                return true;
-                        }
-                }
-
-
+		$text = strpos( $fixed_url, "GAMETRAILERS" );
+		if( false !== $text ) { // Gametrailers
+			$provider = self::V_GAMETRAILERS;
+			$parsed = split( "/", $url );
+			if( is_array( $parsed ) ) {
+				$this->mId = explode("?",array_pop( $parsed ));
+				$this->mId = $this->mId[0];
+				$this->mProvider = $provider;
+				$this->mData = array();
+				return true;
+			}
+		}
 
 		return false;
 	}
