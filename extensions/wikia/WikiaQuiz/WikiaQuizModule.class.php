@@ -33,6 +33,30 @@ class WikiaQuizModule extends Module {
 		}
 	}
 	
+	public function executePlayQuiz($params) {
+		global $wgUser, $wgOut, $wgRequest, $wgSiteName;
+
+		$this->data = $params['data'];	
+		
+		$themeSettings = new ThemeSettings();
+		$settings = $themeSettings->getSettings();
+		$this->wordmarkType = $settings['wordmark-type'];
+		$this->wordmarkText = $settings['wordmark-text'];
+		if ($this->wordmarkType == 'graphic') {
+			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
+		}
+		
+		// Facebook opengraph meta data
+		$wgOut->addMeta('property:og:title', $this->data['titlescreentext']);
+		$wgOut->addMeta('property:og:type', 'game');
+		$wgOut->addMeta('property:og:url', $wgRequest->getFullRequestURL());
+		$wgOut->addMeta('property:og:site_name', $wgSiteName);
+		$wgOut->addMeta('property:og:description', wfMsg('wikiaquiz-facebook-creative', $this->data['titlescreentext']));
+		$wgOut->addMeta('property:og:image', $this->wordmarkUrl);
+		
+		$this->username = $wgUser->getName();
+	}
+
 	/**
 	 * depracated, keeping for reference.  Please do not delete the other resources (js, css)
 	 * @author Hyun Lim
@@ -96,7 +120,7 @@ class WikiaQuizModule extends Module {
 			$this->data = $quiz->getData();
 		}
 	}
-
+	
 	public function executeCreateQuiz() {
 		
 	}

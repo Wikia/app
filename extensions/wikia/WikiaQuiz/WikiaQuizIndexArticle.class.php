@@ -26,7 +26,7 @@ class WikiaQuizIndexArticle extends Article {
 		// let MW handle basic stuff
 		parent::view();
 
-		// poll doesn't exist
+		// quiz doesn't exist
 		if (!$wgTitle->exists() || empty($this->mQuiz)) {
 			wfProfileOut(__METHOD__);
 			return;
@@ -39,7 +39,7 @@ class WikiaQuizIndexArticle extends Article {
 		// add CSS/JS
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaQuiz/css/WikiaQuizBuilder.scss'));
 
-		// render poll page
+		// render quiz page
 		$wgOut->clearHTML();
 		$wgOut->addHTML($this->mQuiz->render());
 
@@ -47,16 +47,21 @@ class WikiaQuizIndexArticle extends Article {
 	}
 
 	/**
-	 * Purge poll (and articles embedding it) when poll's page is purged
+	 * Purge quiz (and articles embedding it) when quiz's page is purged
 	 */
 	public function doPurge() {
 		parent::doPurge();
 
 		wfDebug(__METHOD__ . "\n");
 
-		// purge poll's data
+		// purge quiz's data
 		if (!empty($this->mQuiz)) {
 			$this->mQuiz->purge();
 		}
+		
+		// purge QuizPlay article
+		$quizPlayTitle = F::build('Title', array($this->getTitle()->getText(), NS_WIKIA_PLAYQUIZ), 'newFromText');
+		$quizPlayArticle = F::build('Article', array($quizPlayTitle));
+		$quizPlayArticle->doPurge();
 	}
 }
