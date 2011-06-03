@@ -71,10 +71,10 @@ class FounderEmails {
 	 * send notification email to wiki founder
 	 */
 	public function notifyFounder( $event, $mailSubject, $mailBody, $mailBodyHTML, $wikiId = 0, $category = 'FounderEmails' ) {
-		global $wgPasswordSender;
+		global $wgPasswordSender, $wgNoReplyAddress;
 		$from = new MailAddress( $wgPasswordSender, 'Wikia' );
 		if ( $event->enabled( $wikiId ) ) {
-			return $this->getWikiFounder( $wikiId )->sendMail( $mailSubject, $mailBody, $from, null, $category, $mailBodyHTML );
+			return $this->getWikiFounder( $wikiId )->sendMail( $mailSubject, $mailBody, $from, $wgNoReplyAddress, $category, $mailBodyHTML );
 		}
 	}
 
