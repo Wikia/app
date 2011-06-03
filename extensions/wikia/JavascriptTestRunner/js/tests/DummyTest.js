@@ -2,6 +2,10 @@
 @test-require-file extensions/wikia/includetest.js
 @test-framework jsUnity
 */
+
+/**
+ * That is the simplest test for jsUnity framework
+ */
 var test = {
 	suiteName: 'DummyTest',
 	setUp: function () {

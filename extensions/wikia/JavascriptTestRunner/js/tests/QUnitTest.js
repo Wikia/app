@@ -1,6 +1,10 @@
 /*
 @test-framework QUnit
 */
+
+/**
+ * That is the example test for QUnit framework
+ */
 module("Module A");
 test("first test within module", function() {
   ok( true, "all pass" );
