@@ -5,6 +5,7 @@ class WikiaQuizModule extends Module {
 	var $data;
 	var $wgBlankImgUrl;
 	var $wgUser;
+	var $wgExtensionsPath;
 
 	/**
 	 * Render HTML Quiz namespace pages
