@@ -214,6 +214,14 @@ var AjaxLogin = {
 		// This function is used to submit login form and the login and connect form, so we have to store which one it is.
 		var formId = AjaxLogin.form.id;
 
+		$(ev.target).ajaxError(function() {
+			// Ajax/network connectivity error message should be here 
+			// (need method/design from UI styleguide team)
+			// For now, just unblock the form fields
+			AjaxLogin.displayReason($.msg('comboajaxlogin-ajaxerror'));
+			AjaxLogin.blockLoginForm(false);
+		});
+
 		$.postJSON(window.wgScriptPath + '/api.php?' + params.join('&'), POSTparams, function(response) {
 			var responseResult = response.ajaxlogin.result;
 			switch(responseResult) {
