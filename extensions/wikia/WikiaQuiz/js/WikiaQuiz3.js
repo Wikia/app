@@ -208,6 +208,7 @@ var WikiaQuiz = {
 	},
 	playSound: function(soundElement) {
 		if(WikiaQuiz.audio && !WikiaQuiz.isMuted) {
+			soundElement.load();
 			soundElement.play();
 		}
 	},
