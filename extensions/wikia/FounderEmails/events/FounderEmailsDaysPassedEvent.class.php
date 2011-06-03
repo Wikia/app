@@ -42,8 +42,8 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				// force loading messages for given languege, to make maintenance script works properly
 				wfLoadExtensionMessages( 'FounderEmails', $langCode );
 
-				$mailSubject = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-subject', $langCode, array() );
-				$mailBody = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body', $langCode, $emailParams );
+				$mailSubject = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-subject', $emailParams );
+				$mailBody = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body', $emailParams );
 				$mailCategory = FounderEmailsEvent::CATEGORY_DEFAULT;
 				if($activateDays == 3) {
 					$mailCategory = FounderEmailsEvent::CATEGORY_3_DAY;
@@ -52,14 +52,13 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				} else if($activateDays == 0) {
 					$mailCategory = FounderEmailsEvent::CATEGORY_0_DAY;
 				}
+				$mailCategory .= (!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
 				
 				if ($langCode == 'en' && empty( $wgEnableAnswers )) {
 					$mailBodyHTML = wfRenderModule("FounderEmails", $event['data']['dayName'], array('language' => 'en'));
 					$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
-					$mailCategory .= 'EN';
 				} else {
-					$mailBodyHTML = $this->getLocalizedMsgBody( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body-HTML', $langCode, $emailParams );
-					$mailCategory .= 'INT';
+					$mailBodyHTML = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body-HTML', $emailParams );
 				}
 				
 				$founderEmails->notifyFounder( $this, $mailSubject, $mailBody, $mailBodyHTML, $wikiId, $mailCategory );

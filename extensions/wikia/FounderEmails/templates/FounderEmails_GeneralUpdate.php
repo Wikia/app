@@ -69,9 +69,9 @@
 </tr>
 <tr>
 <td align="center" style="font-size:11px;color:#3a3a3a;line-height:16px">
-<?= wfMsg('founderemails-email-footer-line1') ?>
+<?= wfMsgForContent('founderemails-email-footer-line1') ?>
 <br>
-<?= wfMsg('founderemails-email-footer-line2') ?>
+<?= wfMsgExt('founderemails-email-footer-line2', array( 'content', 'parsemag' ) ) ?>
 </td>
 </tr>
 <tr>
