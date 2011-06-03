@@ -105,7 +105,7 @@
 	</div>
 	<div id="CorrectIcon" class="correct-icon effect"></div>
 	<div id="WrongIcon" class="wrong-icon effect"></div>
-	<label id="MuteToggle" class="mute-control"><input type="checkbox" checked="checked"><?= wfMsg('wikiaquiz-game-mute') ?></label>
+	<label id="MuteToggle" class="mute-control"><input type="checkbox"><?= wfMsg('wikiaquiz-game-mute') ?></label>
 </section>
 <div id="QuizStatus" class="QuizStatus">
 	<? if(!empty($wordmarkUrl)) { ?>
@@ -133,6 +133,6 @@
 		incorrectLabel: '<?= wfMsg('wikiaquiz-game-incorrect-label') ?>'
 	};
 </script>
-<audio id="SoundAnswerCorrect" src="/extensions/wikia/WikiaQuiz/sounds/correct.mp3" preload="auto"></audio>
-<audio id="SoundAnswerWrong" src="/extensions/wikia/WikiaQuiz/sounds/wrong.mp3" preload="auto"></audio>
-<audio id="SoundApplause" src="/extensions/wikia/WikiaQuiz/sounds/applause.mp3" preload="auto"></audio>
+<audio id="SoundAnswerCorrect" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/correct.mp3" preload="auto"></audio>
+<audio id="SoundAnswerWrong" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/wrong.mp3" preload="auto"></audio>
+<audio id="SoundApplause" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/applause.mp3" preload="auto"></audio>
