@@ -6,13 +6,8 @@ class ChatRailModule extends Module {
 	var $windowFeatures;
 	var $chatHeadline;
 	var $profileAvatar;
-
-	
-	var $totalInRoom; //keep this
-	//var $avatarsInRoom; //ditch this
-
-	var $chatters; //new
-
+	var $totalInRoom;
+	var $chatters;
 	var $buttonIconUrl;
 	var $buttonText;
 	var $isLoggedIn;
@@ -32,7 +27,7 @@ class ChatRailModule extends Module {
 	 * Render module contents - loaded via ajax only for freshness
 	 */
 	public function executeContents(){
-		global $wgUser, $wgSitename, $wgOut, $wgExtensionsPath;
+		global $wgUser, $wgSitename, $wgOut, $wgExtensionsPath, $wgContLang;
 		wfProfileIn( __METHOD__ );
 
 		// Main variables
@@ -63,7 +58,7 @@ class ChatRailModule extends Module {
 			$stats = $userStatsService->getStats();
 
 			// edit count
-			$chatters[$i]['editCount'] = $stats['edits'];
+			$chatters[$i]['editCount'] = $wgContLang->formatNum($stats['edits']);
 			
 			// member since
 			$chatters[$i]['since'] = date("M Y", strtotime($stats['date']));
