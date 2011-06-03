@@ -52,6 +52,9 @@ class ArticleService extends Service {
 			$re = strtr( $re_magic, array( 'S' => "\\[", 'E' => "\\]", 'X' => "($nsFileAlias:$nsFile):" ));
 			$content = preg_replace($re, '', $content);
 
+			// (FB #1015) remove <h2> sections
+			$content = preg_replace('#==\s(.*)\s==#', '', $content);
+
 			// skip "edit" section and TOC
 			$content .= "\n__NOEDITSECTION__\n__NOTOC__";
 
