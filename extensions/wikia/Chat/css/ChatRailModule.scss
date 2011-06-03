@@ -1,5 +1,6 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
 @import "UserStatsMenu.scss";
 
 $color-chat-live: $color-buttons;
@@ -54,12 +55,14 @@ $color-chat-avatar-border: $color-page-border;
 		.avatar {
 			margin: 0;
 		}
-		li {
-			display: inline;
-			margin: 0 0 0 15px;
-			position: relative;
-			&:first-child {
-				margin: 0;
+		>ul {
+			>li {
+				display: inline-block;
+				margin: 0 0 0 10px;
+				position: relative;
+				&:first-child {
+					margin: 0;
+				}
 			}
 		}
 	}
@@ -74,7 +77,7 @@ $color-chat-avatar-border: $color-page-border;
 	}
 	
 	.UserStatsMenu {
-		right: 40px;
+		right: 30px;
 		top: 0;
 	}
 }
