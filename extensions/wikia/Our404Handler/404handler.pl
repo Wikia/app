@@ -11,12 +11,12 @@ package main;
 #
 # available options:
 # --http -- will use http get insted of NFS local file read
-#
+# --store -- will store generated file on disc
 
-use strict;
-use feature ":5.10";
+use common::sense;
 
 use URI;
+use Sys::Hostname;
 use FCGI;
 use FCGI::ProcManager;
 use Imager;
@@ -39,13 +39,17 @@ use Cwd;
 use Try::Tiny;
 
 #
-# constant
+# constants
 #
 use constant FFMPEG   => "/usr/bin/ffmpeg";
 use constant OGGTHUMB => "/usr/bin/oggThumb";
 use constant SVG_DEFAULT_WIDTH => 512;
 use constant SVG_DEFAULT_HEIGHT => 512;
 
+#
+# globals
+#
+our $hostname = hostname;
 
 
 sub real404 {
@@ -53,6 +57,7 @@ sub real404 {
 	print "HTTP/1.0 404 Not Found\r\n";
 	print "Cache-control: max-age=30\r\n";
 	print "Connection: close\r\n";
+	print "X-Thumbnailer-Hostname: $hostname\r\n";
 	print "Content-Type: text/html; charset=utf-8\r\n\r\n";
 	print qq{
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -75,6 +80,7 @@ sub real503 {
 	print "Retry-After: 30\r\n";
 	print "Connection: close\r\n";
 	print "X-Thumbnailer-Error: backend not responding\r\n";
+	print "X-Thumbnailer-Hostname: $hostname\r\n";
 	print "Content-Type: text/plain; charset=utf-8\r\n\r\n";
 	print "Backend for getting original file $request_uri is not responding\n";
 }
@@ -266,11 +272,14 @@ my $test        = $ENV{ "TEST"     } || 0;
 my $pidfile     = $ENV{ "PIDFILE"  } || "/var/run/thumbnailer/404handler.pid";
 my $use_http    = 0;
 my $use_devel   = 0;
+my $use_store   = 0;
+
+
 
 #
 # overwrite some settings with getopt
 #
-GetOptions( "http" => \$use_http, "devel" => \$use_devel );
+GetOptions( "http" => \$use_http, "devel" => \$use_devel, "store" => \$use_store );
 
 #
 # fastcgi request
@@ -579,6 +588,7 @@ while( $request->Accept() >= 0 || $test ) {
 							print "Cache-control: max-age=30\r\n";
 							print "Content-Length: $output_length\r\n";
 							print "Last-Modified: $last_modified\r\n";
+							print "X-Thumbnailer-Hostname: $hostname\r\n";
 							print "Connection: keep-alive\r\n";
 							print "Content-type: image/png\r\n\r\n";
 							print $output unless $test;
@@ -616,6 +626,7 @@ while( $request->Accept() >= 0 || $test ) {
 						print "HTTP/1.1 200 OK\r\n";
 						print "X-LIGHTTPD-send-file: $thumbnail\r\n";
 						print "Cache-control: max-age=30\r\n";
+						print "X-Thumbnailer-Hostname: $hostname\r\n";
 						print "Content-type: $mimetype\r\n\r\n";
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 						print STDERR "File $thumbnail created, time: $t_elapsed\n" if $debug;
@@ -628,6 +639,7 @@ while( $request->Accept() >= 0 || $test ) {
 						#
 						print "HTTP/1.1 200 OK\r\n";
 						print "X-LIGHTTPD-send-file: $original\r\n";
+						print "X-Thumbnailer-Hostname: $hostname\r\n";
 						print "Cache-control: max-age=30\r\n";
 						print "Content-type: $mimetype\r\n\r\n";
 					}
@@ -713,6 +725,7 @@ while( $request->Accept() >= 0 || $test ) {
 							print "Content-Length: $output_length\r\n";
 							print "Last-Modified: $last_modified\r\n";
 							print "Connection: keep-alive\r\n";
+							print "X-Thumbnailer-Hostname: $hostname\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
 							print $output unless $test;
 
