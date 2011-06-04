@@ -179,6 +179,8 @@ var WikiBuilder = {
 		} else {
 			$.tracker.byStr('createnewwiki/view');
 		}
+
+		WikiBuilder.wikiName.focus();
 	},
 	
 	handleRegister: function() {
