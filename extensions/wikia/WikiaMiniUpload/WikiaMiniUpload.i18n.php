@@ -4,6 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'wmu-upload-image' => 'Upload Photo',
+	'wmu-title' => 'Upload Photo',
 	'wmu-upload' => 'Upload',
 	'wmu-notlogged' => 'Log in or register to upload images from your computer',
 	'wmu-find' => 'Find',
