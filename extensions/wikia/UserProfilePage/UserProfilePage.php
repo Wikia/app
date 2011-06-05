@@ -69,15 +69,22 @@ function wfUserProfilePageInit() {
 		$wgUserProfilePagesNamespaces[] = NS_BLOG_ARTICLE;
 	}
 
-	/**
-	 * rights
-	 */
-	global $wgAvailableRights, $wgGroupPermissions;
-	$wgAvailableRights[] = 'editprofile';
-	$wgGroupPermissions['*']['editprofile'] = false;
-	$wgGroupPermissions['sysop']['editprofile'] = true;
-	$wgGroupPermissions['staff']['editprofile'] = true;
-	$wgGroupPermissions['helper']['editprofile'] = true;
-	$wgGroupPermissions['vstf']['editprofile'] = true;
-
 }
+
+/**
+ * rights
+ */
+/* NOTE: These have to be defined outside of that hooked init function.
+	I'm not entirely sure why, but it wasnt working how it was.
+	The ->isAllowed('editprofile') checks were all failing to acknowledge the editing person had this right.
+	It was listed in the group permission array, but not in the wgUser object.
+	Much debugging was done. Verified this works in all cases/groups. --Uberfuzzy */
+
+global $wgAvailableRights, $wgGroupPermissions;
+$wgAvailableRights[] = 'editprofile';
+$wgGroupPermissions['*']['editprofile'] = false;
+$wgGroupPermissions['sysop']['editprofile'] = true;
+$wgGroupPermissions['staff']['editprofile'] = true;
+$wgGroupPermissions['helper']['editprofile'] = true;
+$wgGroupPermissions['vstf']['editprofile'] = true;
+
