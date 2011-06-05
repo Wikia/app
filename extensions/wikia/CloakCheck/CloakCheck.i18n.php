@@ -5,12 +5,13 @@ $messages = array();
 $messages['en'] = array(
 	'cloakcheck' => 'IRC cloak eligibility check',
 	'cloakcheck-desc' => 'Provides an all-in-one interface to verify requirements for an IRC cloak',
+	'right-cloakcheck' => 'can check IRC cloak related information on other users',
 
 	#form
-	##only seen by staff
+	##only seen by flagged users
 	'cloakcheck-form-username' => 'Username:',
 	'cloakcheck-form-check' => 'Check username',
-	##only seen by non-staff
+	##only seen by non-flagged
 	'cloakcheck-form-check-self' => 'Check IRC cloak eligibility',
 
 	#process

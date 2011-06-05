@@ -42,13 +42,13 @@ class CloakCheck extends SpecialPage {
 		$wgOut->setArticleRelated( false );
 
 		#staff can see other people, users cant
-		if( !$wgUser->isAllowed( 'staff' ) ) {
+		if( !$wgUser->isAllowed( 'cloakcheck' ) ) {
 			#user is user, show just button
-			$this->isStaff = false;
+			$this->isChecker = false;
 			$this->mTarget = $wgUser->getName();
 		} else {
-			#user is staff, allow to use full form/subpage
-			$this->isStaff = true;
+			#user is staff (or otherwise flagged), allow to use full form/subpage
+			$this->isChecker = true;
 			$this->mTarget = $wgRequest->getText('username', $subpage);
 		}
 
@@ -66,7 +66,7 @@ class CloakCheck extends SpecialPage {
 
 		$wgOut->addHTML("<form action=\"". $this->mTitle->getFullURL() ."\" method='post'>\n");
 		
-		if( $this->isStaff ) {
+		if( $this->isChecker ) {
 			$wgOut->addHTML( wfMsg('cloakcheck-form-username') . " <input name='username' value=\"". htmlspecialchars($this->mTarget) ."\" />\n");
 			$wgOut->addHTML("<input type='submit' value='". wfMsg('cloakcheck-form-check') ."' />\n");
 		} else {

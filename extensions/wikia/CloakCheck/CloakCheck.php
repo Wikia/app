@@ -9,7 +9,7 @@ $dir = dirname(__FILE__);
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'IRC CloakCheck',
 	'author' => 'Chris \'Uberfuzzy\' Stafford',
-	'version' => '1.0 (fall 2010)',
+	'version' => '1.1 (Summer 2011)',
 	'description' => 'cloakcheck-desc'
 );
 
@@ -19,3 +19,8 @@ $wgExtensionAliasesFiles['CloakCheck'] = $dir . '/CloakCheck.alias.php';
 $wgSpecialPages['CloakCheck'] = 'CloakCheck'; # Let MediaWiki know about your new special page.
 
 $wgSpecialPageGroups['CloakCheck'] = 'users';
+
+// New user right, required to use the extension.
+$wgAvailableRights[] = 'cloakcheck';
+$wgGroupPermissions['*']['cloakcheck'] = false;
+$wgGroupPermissions['staff']['cloakcheck'] = true;
