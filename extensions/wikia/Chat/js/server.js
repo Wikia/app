@@ -885,7 +885,7 @@ function processText(text, client) {
 	text = text.replace(exp, "<a href='$1'>" + pageLink + "</a>");
 
 	// Linkify [[Pipes|Pipe-notation]] in bracketed links.
-	var exp = /\[\[([ %!\"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\x80-\xFF+]*)\|([^\]\|]*)\]\]/ig;
+	var exp = /\[\[([ %!\"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\x80-\xFF+#]*)\|([^\]\|]*)\]\]/ig;
 	text = text.replace(exp, function(wholeMatch, article, linkText) {
 		article = article.replace(/ /g, "_");
 		linkText = linkText.replace(/_/g, " ");
