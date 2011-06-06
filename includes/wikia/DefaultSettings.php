@@ -824,3 +824,8 @@ $wgGlobalUserProperties = array('language');
  * debug level for memcached
  */
 $wgMemCachedDebugLevel = 1;
+
+/**
+ * enable this defaultly, since we 100% include it in assetmanager now
+ */
+$wgEnableMWSuggest = true;
