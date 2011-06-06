@@ -27,9 +27,9 @@ $dir = dirname(__FILE__);
 $wgExtensionMessagesFiles['WikiaQuiz'] = "{$dir}/WikiaQuiz.i18n.php";
 
 // setup "Quiz" namespace
-define('NS_WIKIA_QUIZ', 700);
-define('NS_WIKIA_QUIZARTICLE', 710);
-define('NS_WIKIA_PLAYQUIZ', 720);
+define('NS_WIKIA_QUIZ', 1000);
+define('NS_WIKIA_QUIZARTICLE', 1010);
+define('NS_WIKIA_PLAYQUIZ', 1020);
 
 $wgExtensionNamespacesFiles['WikiaQuiz'] = "{$dir}/WikiaQuiz.namespaces.php";
 wfLoadExtensionNamespaces('WikiaQuiz', array(NS_WIKIA_QUIZ, NS_WIKIA_QUIZARTICLE, NS_WIKIA_PLAYQUIZ));
