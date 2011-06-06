@@ -156,17 +156,11 @@ function gracenote_disableEdit(&$out, &$sk){
 function gracenote_installCopyProtection(&$out, &$sk){
 	wfProfileIn( __METHOD__ );
 
-#	Uncomment this for local testing -- Wikia already loads jquery
-#	$out->addScript("<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js\"></script>");
-
 	global $wgTitle, $wgUser;
-	// Lyrics protections are unneeded JS on pages which aren't even in the right namespace for being lyrics pages.
-	if(($wgTitle->getNamespace() != NS_MAIN) && ($wgTitle->getNamespace() != NS_GRACENOTE)){
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-	// If this is a logged-in user on community pages, we don't need the protections since they're trusted.
-	if($wgUser->isLoggedIn() && ($wgTitle->getNamespace() != NS_GRACENOTE)){
+
+	// Lyrics protections are unneeded JS on pages which aren't even in the right namespace for being GRACENOTE lyrics pages.
+	// UPDATE: BugzId 6278 - 20110605 - After reading the contract, we realized that we only need these protections on Gracenote lyrics pages.
+	if($wgTitle->getNamespace() != NS_GRACENOTE){
 		wfProfileOut(__METHOD__);
 		return true;
 	}
