@@ -240,6 +240,11 @@ class BlogTemplateClass {
 		'pages' => array(
 			'type' 		=> 'number',
 			'pattern' 	=> '/^\d*$/'
+		),
+
+		'seemore' => array(
+			'type' => 'string',
+			'default' 	=> '',
 		)
 	);
 
@@ -571,6 +576,10 @@ class BlogTemplateClass {
 			if (self::$aOptions['type'] == 'box') {
 				self::__makeStringOption('style', self::$aBlogParams['style']['default']);
 			}
+		}
+		/* see more */
+		if ( !isset(self::$aOptions['seemore']) ) {
+			self::__makeStringOption('seemore', Title::newFromText(wfMsg('blogs-recent-url'))->getFullURL());
 		}
     	wfProfileOut( __METHOD__ );
 	}
@@ -1109,6 +1118,7 @@ class BlogTemplateClass {
 							self::__makeBoolOption($sParamName, $sParamValue);
 						}
 						break;
+					case 'seemore'  :
 					case 'title'	:
 					case 'class'	:
 					case 'style'	:
@@ -1159,6 +1169,7 @@ class BlogTemplateClass {
 					case 'paging'		:
 						self::__makeBoolOption($sParamName, $sParamValue);
 						break;
+					case 'seemore'      :
 					case 'title' 		:
 					case 'class'		:
 					case 'style'		:
