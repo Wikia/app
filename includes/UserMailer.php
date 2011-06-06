@@ -175,7 +175,7 @@ class UserMailer {
 				$headers['To'] = implode( ", ", (array )$dest );
 			}
 
-			if ( $replyto ) {
+			if ( $replyto instanceof MailAddress /* Wikia change (BugId:6519) */ ) {
 				$headers['Reply-To'] = $replyto->toString();
 			}
 			$headers['Subject'] = wfQuotedPrintable( $subject );
@@ -219,8 +219,8 @@ class UserMailer {
 
 			wfDebug( "Sending mail via PEAR::Mail to $dest\n" );
 			/* Wikia change here */
-			if ( $wgEnotifImpersonal ) {		
-				$chunks = array_chunk( (array)$dest, $wgEnotifMaxRecips );						
+			if ( $wgEnotifImpersonal ) {
+				$chunks = array_chunk( (array)$dest, $wgEnotifMaxRecips );
 				foreach ($chunks as $chunk) {
 					$e = self::sendWithPear($mail_object, $chunk, $headers, $body);
 					if( WikiError::isError( $e ) )
@@ -231,11 +231,11 @@ class UserMailer {
 					$to = array( $to );
 				}
 				# array of MailAddress objects
-				$chunks = array_chunk( (array)$to, $wgEnotifMaxRecips );	
+				$chunks = array_chunk( (array)$to, $wgEnotifMaxRecips );
 				foreach ($chunks as $chunk) {
 					$e = self::sendMail( $mail_object, $chunk, $headers, $headers['Subject'], $body );
 					if( WikiError::isError( $e ) )
-						return $e;					
+						return $e;
 				}
 			}
 		} else	{
@@ -258,7 +258,7 @@ class UserMailer {
 				"Content-Transfer-Encoding: 8bit$endl" .
 				"X-Mailer: MediaWiki mailer$endl".
 				'From: ' . $from->toString();
-			if ($replyto) {
+			if ( $replyto instanceof MailAddress /* Wikia change (BugId:6519) */ ) {
 				$headers .= "{$endl}Reply-To: " . $replyto->toString();
 			}
 
@@ -268,7 +268,7 @@ class UserMailer {
 			/* Wikia change end */
 
 			wfDebug( "Sending mail via internal mail() function\n" );
-			
+
 			$wgErrorString = '';
 			$html_errors = ini_get( 'html_errors' );
 			ini_set( 'html_errors', '0' );
@@ -441,11 +441,11 @@ class UserMailer {
 		$phrase = strtr( $phrase, array( "\r" => '', "\n" => '', '"' => '' ) );
 		return '"' . $phrase . '"';
 	}
-	
+
 	/**
 	 * Wikia changes - @author: moli
 	 * Send email to user
-	 * 
+	 *
 	 * @param $mail String: mail, Mail ...
 	 * @param $emails Array of MailAddress objects
 	 * @param $headers Array: email's headers
@@ -458,30 +458,30 @@ class UserMailer {
 		if ( empty($emails) ) {
 			return $res;
 		}
-		
+
 		if ( !is_array( $emails ) ) {
 			$emails = array ( $emails );
 		}
 
 		foreach ( $emails as $to ) {
 			if ( $to instanceof MailAddress ) {
-				
+
 				wfRunHooks('ComposeMail', array( $to, &$body, &$subject ));
-				
+
 				if ( $mail == 'mail' ) {
 					$res = mail( $to->toString(), wfQuotedPrintable( $subject ), $body, $headers );
 				} elseif ( is_object( $mail ) ) {
 					$res = self::sendWithPear( $mail, array($to->address), $headers, $body );
 					if ( WikiError::isError( $res ) ) {
 						return $res;
-					}			
+					}
 				} else {
 					wfDebug( "Invalid use of " . __METHOD__ . ": mail = $mail \n" );
-					$res = false;	 
+					$res = false;
 				}
 			}
 		}
-		
+
 		return $res;
 	}
 }
@@ -538,7 +538,7 @@ class EmailNotification {
 		// Build a list of users to notfiy
 		$watchers = array();
 		if ($wgEnotifWatchlist || $wgShowUpdatedMarker) {
-			
+
 			global $wgEnableWatchlistNotificationTimeout, $wgWatchlistNotificationTimeout;
 			/* Wikia change begin - @author: wladek & tomek */
 			/* RT#55604: Add a timeout to the watchlist email block */
@@ -551,8 +551,8 @@ class EmailNotification {
 				$notificationTimeoutSql = 'wl_notificationtimestamp IS NULL';
 			}
 			/* Wikia change end */
-					
-			$dbw = wfGetDB( DB_MASTER );		
+
+			$dbw = wfGetDB( DB_MASTER );
 			$res = $dbw->select( array( 'watchlist' ),
 				array( 'wl_user' ),
 				array(
@@ -690,7 +690,7 @@ class EmailNotification {
 			$user = User::newFromName( $name );
 			$this->compose( $user );
 		}
-		
+
 		$this->sendMails();
 		wfProfileOut( __METHOD__ );
 	}
@@ -772,7 +772,7 @@ class EmailNotification {
 		$keys['$ACTION']             = $this->action;
 
 		wfRunHooks('MailNotifyBuildKeys', array( &$keys, $this->action, $this->other_param ));
-		
+
 		wfRunHooks('ComposeCommonSubjectMail', array( $this->title, &$keys, &$subject, $this->editor ));
 		$subject = strtr( $subject, $keys );
 
@@ -813,7 +813,7 @@ class EmailNotification {
 		$keys['$PAGEEDITOR_WIKI'] = $userPage->escapeFullURL();
 		wfRunHooks('ComposeCommonBodyMail', array( $this->title, &$keys, &$body, $editor ));
 		$body = strtr( $body, $keys );
-		
+
 		if ($bodyHTML) {
 			$bodyHTML = strtr( $bodyHTML, $keys );
 		}
