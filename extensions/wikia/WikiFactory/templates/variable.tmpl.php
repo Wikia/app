@@ -113,7 +113,7 @@ New value:
 <?php endif ?>
 	<br/>By tag: <input type="text" name="tagName" id="tagName" value="" size="30" /> (Apply this value to wikis with this tag)
 	<br/>Reason: <input type="text" id="wk-reason" name="reason" value="" size="30" /> (optional, reason text or ticket number)
-	<br/><input type="button" id="wk-submit" name="submit" value="<?= wgMsg('wikifactory-button-saveparse'); ?>" onclick="$Factory.Variable.tagCheck();" />
+	<br/><input type="button" id="wk-submit" name="submit" value="<?= wfMsg('wikifactory-button-saveparse'); ?>" onclick="$Factory.Variable.tagCheck();" />
 	&nbsp;<input type="button" class="wikia-button red" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Variable.tagCheck('remove');" /><br/>
 	&nbsp;<span id="wf-variable-parse">&nbsp;</span>
 	&nbsp;<span id="wf-tag-parse">&nbsp;</span>
@@ -167,7 +167,7 @@ New value:
 	 <textarea name="varValue" id="varValue"><?php if( isset( $rel_var->cv_value ) ) echo var_export( unserialize( $rel_var->cv_value ), 1) ?></textarea><br />
 
 <?php endif ?>
-	<input type="button" id="wk-submit" name="submit" value="<?= wgMsg('wikifactory-button-saveparse'); ?>" onclick="$Factory.Variable.submit($(this).parent().attr('id'));" />
+	<input type="button" id="wk-submit" name="submit" value="<?= wfMsg('wikifactory-button-saveparse'); ?>" onclick="$Factory.Variable.submit($(this).parent().attr('id'));" />
 	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Variable.remove_submit(true, $(this).parent().attr('id'));" />
 	&nbsp;<span id="wf-variable-parse-<?= $form_id ?>">&nbsp;</span>
 </form>
