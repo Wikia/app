@@ -221,7 +221,7 @@ class EditPageLayoutHelper {
 	 * Get warning note shown when preview mode is forced and add it to the nofitication area
 	 */
 	function onEditPageGetPreviewNote($editform, &$note) {
-		if ($note != '') {
+		if (!empty($this->editPage) && ($note != '')) {
 			$this->editPage->addEditNotice($note);
 		}
 
