@@ -897,7 +897,7 @@ function processText(text, client) {
 	});
 
 	// Linkify [[links]] - the allowed characters come from http://www.mediawiki.org/wiki/Manual:$wgLegalTitleChars
-	var exp = /(\[\[[ %!\"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\x80-\xFF+]*\]\])/ig;
+	var exp = /(\[\[[ %!\"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\x80-\xFF+#]*\]\])/ig;
 	text = text.replace(exp, function(match) {
 		var article = match.substr(2, match.length - 4);
 		article = article.replace(/ /g, "_");
