@@ -24,6 +24,7 @@ class MenuButtonModule extends Module {
 	var $icon;
 	var $iconBefore;
 	var $loginURL;
+	var $loginToEditURL;
 	var $loginTitle;
 
 	var $wgOut;
@@ -35,15 +36,10 @@ class MenuButtonModule extends Module {
 		wfProfileIn(__METHOD__);
 
 		$this->loginURL = $this->createLoginURL();
+		$this->loginToEditURL = $this->createLoginURL("action=edit");
 
 		if (isset($data['action'])) {
 			$this->action = $data['action'];
-		}
-		
-		// Make sure the returntoquery is there, if needed.
-		$skin = $wgUser->getSkin();
-		if( $skin->thisquery != '' ) {
-			$action['href'] .= "&returntoquery={$skin->thisquery}";
 		}
 
 		// action ID for tracking
@@ -136,14 +132,20 @@ class MenuButtonModule extends Module {
 		wfProfileOut(__METHOD__);
 	}
 
-	public function createLoginURL() {
+	/**
+	 * @param extraReturnToQuery is a string which will be urlencoded and appended to the returntoquery. eg: "action=edit".
+	 */
+	public function createLoginURL($extraReturnToQuery='') {
 		global $wgUser, $wgTitle;
 
 		/** create login URL **/
 		$skin = $wgUser->getSkin();
 		$returnto = "returnto={$skin->thisurl}";
-		if( $skin->thisquery != '' ) {
-			$returnto .= "&returntoquery={$skin->thisquery}";
+
+		$returntoquery = $skin->thisquery;
+		$returntoquery .= ($returntoquery == "" ? "" : "&amp;") . urlencode( $extraReturnToQuery );
+		if( $returntoquery != '' ) {
+			$returnto .= "&returntoquery=$returntoquery";
 		}
 
 		//$signUpHref = Skin::makeSpecialUrl('Signup', $returnto);
