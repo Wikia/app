@@ -87,12 +87,14 @@ class EditPageLayoutModule extends Module {
 		// preloads
 		$this->editPagePreloads = $editPage->getEditPagePreloads();
 
+		// minor edit checkbox (BugId:6461)
+		$this->minorEditCheckbox = !empty($editPage->minoredit);
+
 		// summary box
 		$this->summaryBox = $editPage->renderSummaryBox();
 
 		// extra buttons
 		$this->buttons = $editPage->getControlButtons();
-
 
 		// dismissable notices
 		$this->notices = $editPage->getNotices();
