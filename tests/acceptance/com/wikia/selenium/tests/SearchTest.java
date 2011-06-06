@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class SearchTest extends BaseTest {
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testEnsureThatWhenThereAreNoSearchResultProperMessageIsDisplayed() throws Exception {
 		session().open("/");
 		session().waitForPageToLoad(this.getTimeout());
@@ -29,7 +29,7 @@ public class SearchTest extends BaseTest {
 		assertTrue(session().isTextPresent("There were no results matching the query."));
 	}
 	
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testEnsureThatWhenUserSearchesForExactPageTitleTheSearchedPageIsDisplayed() throws Exception {
 		session().open("/");
 		session().type("//input[@name='search']", "main page");
