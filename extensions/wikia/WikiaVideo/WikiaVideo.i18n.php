@@ -5,6 +5,7 @@ $messages['en'] = array(
 	'wikiavideo-reverted' => 'The video $1 was successfully reverted. Go back to $2.',
 	'wikiavideo-unreverted' => 'You do not have permission to revert $1.',
 	'wikiavideo-added' => 'added video $1',
+	'wikiavideo-updated' => 'updated video [[$1]]',
 	'wikiavideo-back' => 'back',
 	'wikiavideo-create' => 'Add Video',
 	'wikiavideo-replace' => 'Replace Video',
@@ -13,9 +14,9 @@ $messages['en'] = array(
 	'wikiavideo-placeholder' => 'Placeholder',
 	'wikiavideo-gallery-template' => 'This video gallery is within a template, and is not editable from the view mode. Please edit the appropriate template.',
 	'wikiavideo-not-supported' => 'This skin does not support inserting videos from the view mode into galleries.',
-	'wikiavideo-pixel' => ' pixel',
 	'wikiavideo-deleted-old' => "The version of '''[$1 $2]''' as of $4, $3 has been deleted.",
 	'wikiavideo-intro-old' => "You are deleting the version of '''[$1 $5]''' as of [$4 $3, $2].",
+	'wikiavideo-details' => '$1 ($2 pixels, provider: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Message documentation (Message documentation)
@@ -26,6 +27,8 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'wikiavideo-back' => '{{Identical|Back}}',
 	'wikiavideo-links' => '{{Identical|Link}}',
+	'wikiavideo-updated' => '$1 is the title of the updated file',
+	'wikiavideo-details' => '$1 is a link with the videotitle as contents, $2 is dimensions in pixels, $3 is a URL of the provider, $4 is the provider\'s name',
 	'wikiavideo-deleted-old' => 'Message displayed when you succeed in deleting a version of a video.
 
 Parameters:

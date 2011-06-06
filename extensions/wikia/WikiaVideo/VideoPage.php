@@ -1189,7 +1189,7 @@ EOD;
 
 		if( $dbw->affectedRows() == 0 ) {
 			// we are updating
-			$desc = "updated video [[" . self::getNameFromTitle( $this->mTitle ) . "]]";
+			$desc = wfMsgForContent( 'wikiavideo-updated', self::getNameFromTitle( $this->mTitle ) );
 			$dbw->insertSelect( 'oldimage', 'image',
 				array(
 					'oi_name' => 'img_name',
@@ -1636,9 +1636,8 @@ EOD;
 		$provider = $wgWikiaVideoProviders[$this->mProvider];
 		$purl = $this->getProviderUrl();
 		$ratio = $this->getTextRatio();
-		// @todo FIXME: Bad i18n. Message should be something like "$1 ($2 pixel, provider $3)"
-		$s = '<div id="VideoPageInfo"><a href="' . $url . '">' . $this->mTitle->getText() . ' </a> (' . $ratio . wfMsg( 'wikiavideo-pixel' );
-		$s .= ', provider: <a href="' . $purl . '" class="external" target="_blank">' . $provider . '</a>)</div>';
+		$link = '<a href="' . $url . '">' . $this->mTitle->getText() . '</a>';
+		$s = '<div id="VideoPageInfo">' . wfMsg( 'wikiavideo-parent', $link, $ratio, $purl, $provider ) . '</div>';
 		$wgOut->addHTML( $s );
 	}
 }
