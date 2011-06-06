@@ -54,7 +54,7 @@
 	</ul>
 	<?php  // only display more link for the bloglistingbox
 		if (strpos($blogListingClass, 'WikiaBlogListingBox') !== false) {
-			echo Wikia::link(Title::newFromText(wfMsg('blogs-recent-url')), wfMsg('oasis-more'), array('class' => 'more'));
+			echo Wikia::link($seeMoreUrl, wfMsg('oasis-more'), array('class' => 'more'));
 		}
 		if (isset($pager)) {
 			echo "<div id='wk_blogs_loader2' style='float:right;'></div>";

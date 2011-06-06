@@ -9,6 +9,7 @@ class BlogListingModule extends Module {
 	var $blogListingClass;
 	var $title;
 	var $pager;
+	var $seeMoreUrl;
 
 	/**
 	 * Modify results from Blogs
@@ -71,6 +72,8 @@ class BlogListingModule extends Module {
 		} else {
 			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListing$additionalClass", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => $aOptions['title'], 'pager' => $sPager));
 		}
+		
+		$this->seeMoreUrl = $aOptions['seemore'];
 
 		wfProfileOut(__METHOD__);
 		return true;
