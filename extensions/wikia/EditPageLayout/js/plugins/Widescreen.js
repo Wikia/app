@@ -40,7 +40,7 @@
 				this.editor.on('mode',this.modeChanged,this);
 			}
 		},
-		
+
 		init: function() {
 			this.track(this.wide ? 'initOn' : 'initOff');
 		},
@@ -53,6 +53,13 @@
 			cssTop += 2; // go below toolbar border
 
 			this.trigger.css('top', cssTop);
+
+			// resize source mode textarea in IE (BugId:6289)
+			if (this.editor.ck) {
+				this.editor.ck.fire('resize');
+			}
+
+			$(window).trigger('resize');
 		},
 
 		toggle: function() {
@@ -63,7 +70,6 @@
 
 			// toolbar height can change - resize the editor (BugId:5694)
 			this.modeChanged();
-			$(window).trigger('resize');
 		},
 
 		loadState: function( initial ) {
