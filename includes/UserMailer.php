@@ -370,7 +370,7 @@ class UserMailer {
 			'Message-ID' => "<$msgid@" . $wgSMTP['IDHost'] . '>', // FIXME
 			'X-Mailer' => 'MediaWiki mailer'
 		);
-		if ( $replyto ) {
+		if ( $replyto instanceof MailAddress /* Wikia change (BugId:6519) */ ) {
 			$headers['Reply-To'] = $replyto->toString();
 		}
 
