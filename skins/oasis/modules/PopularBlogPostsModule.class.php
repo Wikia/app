@@ -12,7 +12,7 @@ class PopularBlogPostsModule extends Module {
 		if (substr($tempBody, 0, 9) == '<p><br />') {
 			$tempBody = '<p>'.substr($tempBody, 9);
 		}
-		//$this->body = $tempBody;
+		$this->body = $tempBody;
 		if (empty ($this->body)) {
 			$input = "	<title>" .wfMsg('oasis-popular-blogs-title') ."</title>
 						<type>box</type>
