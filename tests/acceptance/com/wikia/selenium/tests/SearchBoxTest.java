@@ -13,7 +13,7 @@ public class SearchBoxTest extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testSearchSuggest() throws Exception {
 		randomPage();
 		String title = session().getEval("window.wgTitle");

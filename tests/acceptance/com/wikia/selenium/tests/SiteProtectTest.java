@@ -33,7 +33,7 @@ public class SiteProtectTest extends BaseTest {
 		assertTrue(session().isTextPresent("You do not have permission to edit this page"));
 	}
 
-	@Test(dependsOnMethods="testProtectSite", alwaysRun=true)
+	@Test(groups={"CI"},dependsOnMethods="testProtectSite", alwaysRun=true)
 	public void testUnprotectSite() throws Exception {
 		// Unprotect the site
 		loginAsStaff();
