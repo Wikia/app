@@ -54,12 +54,13 @@
 	</ul>
 	<?php  // only display more link for the bloglistingbox
 		if (strpos($blogListingClass, 'WikiaBlogListingBox') !== false) {
-			echo Wikia::link($seeMoreUrl, wfMsg('oasis-more'), array('class' => 'more'));
+			echo Wikia::linkTag($seeMoreUrl, wfMsg('oasis-more'), array('class' => 'more'));
 		}
 		if (isset($pager)) {
 			echo "<div id='wk_blogs_loader2' style='float:right;'></div>";
 			echo "<div class='wk_blogs_pager'>";
 			echo $pager;
 			echo "</div>";
-	} ?>
+		}
+	?>
 </section>
