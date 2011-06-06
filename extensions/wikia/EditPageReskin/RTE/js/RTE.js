@@ -120,10 +120,10 @@ window.RTE = {
 		CKEDITOR.dtd.table.img = 1;
 
 		// allow UL id DT (RT#52593)
-		CKEDITOR.dtd.dt.ul = 1;
+		//CKEDITOR.dtd.dt.ul = 1; (BUGID#1034)
 
 		// allow OL id DT (RT#52593)
-		CKEDITOR.dtd.dt.ol = 1;
+		//CKEDITOR.dtd.dt.ol = 1; (BUGID#1034)
 
 		// set startup mode
 		RTE.config.startupMode = mode;
