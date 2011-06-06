@@ -4,9 +4,8 @@ ArticleAjaxLoading = {
 
 	cache: {},
 	
-	track: function(data) {
-		_gaq.push(['_setAccount', 'UA-2871474-1']);
-		_gaq.push(data);
+	track: function(str) {
+		Liftium.trackEvent(str, 'UA-2871474-1');
 	},
 
 	init: function() {
@@ -18,6 +17,68 @@ ArticleAjaxLoading = {
 							if(window.wgIsMainpage == false) { // not for main page
 								var ua = $.browser;
 								if((ua.mozilla == true && ua.version.slice(0,3) == '2.0') || (ua.safari == true && ua.webkit == true)) { // for firefox 4 or chrome
+									
+									if(document.location.href.toLowerCase().indexOf('aal') > -1 || window.aal == 'G1') {
+										
+										ArticleAjaxLoading.track('/aal/pageview/g1/1');
+
+										// backup variables that we have to recover after every ajax request 
+										ArticleAjaxLoading.cache.articleComments = $('#article-comments').find('.session').html();
+										ArticleAjaxLoading.cache.wgUserName = wgUserName;
+										ArticleAjaxLoading.cache.wgOneDotURL = wgOneDotURL;
+										ArticleAjaxLoading.cache.wgIsLogin = wgIsLogin;
+										ArticleAjaxLoading.cache.wgUserGroups = wgUserGroups;
+	
+										// handle clicks on links in article content
+										$('#WikiaArticle a').live('click', ArticleAjaxLoading.linkClickHandler);	
+									
+									} else if(window.aal == 'G2') {
+										
+										ArticleAjaxLoading.track('/aal/pageview/g2/1');
+										
+									} else if(window.aal == 'G3') {
+
+										ArticleAjaxLoading.track('/aal/pageview/g3/1');
+
+									}
+
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	
+	linkClickHandler: function(e) {
+		// Do not change behaviour for middle click, cmd click and ctrl click 
+		if(e.which == 2 || e.metaKey) {
+			return true
+		}
+		
+		if(ArticleAjaxLoading.counter > 100) {
+			ArticleAjaxLoading.track('/aal/CounterExceeded');
+			return true;
+		}
+		
+		if(window.wgNamespaceNumber === 0 && window.wgAction == 'view' && window.wgArticleId != 0) {
+			var href = $(this).attr('href');
+			
+			if(href && href.indexOf(window.wgArticlePath.replace('$1', '')) === 0  && !/[?&#:]/.test(href) && !/(.htm|.php)/.test(href)) {
+				e.stopImmediatePropagation();
+				e.preventDefault();
+				
+				$('body').css('cursor', 'wait');
+				
+				$.pjax({
+					url: href,
+					container: '#WikiaMainContent'
+				});
+			}
+		}
+	}
+};
 
 /* PJAX */
 (function($){
@@ -75,7 +136,7 @@ $.pjax = function( options ) {
 				$('script').eq(0).replaceWith(data.globalVariablesScript);
 				
 				if(wgIsMainpage == true || window.wgNamespaceNumber !== 0) {
-					ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'NavigatedToMainPage']);
+					ArticleAjaxLoading.track('/aal/NavigatedToMainPage');
 					return window.location = options.url;
 				}
 				
@@ -87,7 +148,7 @@ $.pjax = function( options ) {
 				$container.replaceWith(data.body);
 				document.title = data.title;
 			} catch(err) {
-				ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'ErrorInResponse']);
+				ArticleAjaxLoading.track('/aal/ErrorInResponse');
 				return window.location = options.url;
 			}
 			
@@ -97,8 +158,8 @@ $.pjax = function( options ) {
 			scroll(0,0);
 			
 			ArticleAjaxLoading.counter++;
-			
-			ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G1', ArticleAjaxLoading.counter+1]);
+		
+			ArticleAjaxLoading.track('/aal/pageview/g1/' + (ArticleAjaxLoading.counter+1));	
 			
 			if(window.WikiaPhotoGalleryView) {
 				WikiaPhotoGalleryView.init.call(WikiaPhotoGalleryView);
@@ -213,67 +274,6 @@ if ( !window.history || !window.history.pushState ) {
 
 })(jQuery);
 /* PJAX */
-
-									if(window.aal == 'G3') {
-										
-										ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G3', 1]);
-										
-									} else if(window.aal == 'G2') {
-										
-										ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G2', 1]);
-										
-									} else if(window.aal == 'G1') {
-										
-										ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'PageView', 'G1', 1]);
-
-										// backup variables that we have to recover after every ajax request 
-										ArticleAjaxLoading.cache.articleComments = $('#article-comments').find('.session').html();
-										ArticleAjaxLoading.cache.wgUserName = wgUserName;
-										ArticleAjaxLoading.cache.wgOneDotURL = wgOneDotURL;
-										ArticleAjaxLoading.cache.wgIsLogin = wgIsLogin;
-										ArticleAjaxLoading.cache.wgUserGroups = wgUserGroups;
-	
-										// handle clicks on links in article content
-										$('#WikiaArticle a').live('click', ArticleAjaxLoading.linkClickHandler);										
-									}
-
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	},
-	
-	linkClickHandler: function(e) {
-		// Do not change behaviour for middle click, cmd click and ctrl click 
-		if(e.which == 2 || e.metaKey) {
-			return true
-		}
-		
-		if(ArticleAjaxLoading.counter > 100) {
-			ArticleAjaxLoading.track(['_trackEvent', 'ArticleAjaxLoading', 'CounterExceeded']);
-			return true;
-		}
-		
-		if(window.wgNamespaceNumber === 0 && window.wgAction == 'view' && window.wgArticleId != 0) {
-			var href = $(this).attr('href');
-			
-			if(href && href.indexOf(window.wgArticlePath.replace('$1', '')) === 0  && !/[?&#:]/.test(href) && !/(.htm|.php)/.test(href)) {
-				e.stopImmediatePropagation();
-				e.preventDefault();
-				
-				$('body').css('cursor', 'wait');
-				
-				$.pjax({
-					url: href,
-					container: '#WikiaMainContent'
-				});
-			}
-		}
-	}
-};
 
 $(function() {
 	ArticleAjaxLoading.init();
