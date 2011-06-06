@@ -3,7 +3,7 @@
 }
 
 @mixin gradient-toolbar {
-	@include linear-gradient(mix($color-epl-gradient-light, $color-epl-gradient-border, 50%), top, $color-epl-gradient-light, 50%, $color-epl-gradient-border, 100%);
+	@include linear-gradient($color-epl-gradient-solid, top, $color-epl-gradient-light, 50%, $color-epl-gradient-border, 100%);
 }
 
 @mixin gradient-separator {
@@ -15,5 +15,5 @@
 }
 
 @mixin gradient-module-header {
-	@include linear-gradient(mix($color-epl-gradient-light,$color-epl-gradient-dark,50%), top, $color-epl-gradient-light, 30%, $color-epl-gradient-dark, 100%);
+	@include linear-gradient(#e8e8e8, top, $color-epl-gradient-light, 30%, $color-epl-gradient-dark, 100%);
 }
