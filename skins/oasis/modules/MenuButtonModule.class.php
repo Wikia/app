@@ -39,6 +39,12 @@ class MenuButtonModule extends Module {
 		if (isset($data['action'])) {
 			$this->action = $data['action'];
 		}
+		
+		// Make sure the returntoquery is there, if needed.
+		$skin = $wgUser->getSkin();
+		if( $skin->thisquery != '' ) {
+			$action['href'] .= "&returntoquery={$skin->thisquery}";
+		}
 
 		// action ID for tracking
 		if (isset($data['name'])) {
