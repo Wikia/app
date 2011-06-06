@@ -14,7 +14,9 @@ class WikiaQuizPlayArticle extends Article {
 		// quiz object is linked to NS_WIKIA_QUIZ namespace
 		$quizTitle = F::build('Title', array($title->getText(), NS_WIKIA_QUIZ), 'newFromText');
 		$this->mQuiz = WikiaQuiz::newFromTitle($quizTitle);
-		$this->mQuiz->getData();	// lazy load data
+		if (!empty($this->mQuiz)) {
+			$this->mQuiz->getData();	// lazy load data
+		}
 	}
 
 	/**
