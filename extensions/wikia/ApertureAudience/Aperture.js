@@ -7,7 +7,7 @@ var Aperture = {
 	scriptUrl : '.displaymarketplace.com/displayscript.js',
 	
 	init : function() {
-		if (wgEnableAperture) {
+		if (typeof wgEnableAperture != undefined && wgEnableAperture) {
 			Aperture.geoData = Geo.getGeoData();
 			var key = 'country';
 			if ($(Aperture.geoData).exists()) {
