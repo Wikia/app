@@ -41,7 +41,6 @@ class AnalyticsEngine {
 		  case 'Comscore': $AP = new AnalyticsProviderComscore(); break;
 	//	  case 'MessageQueue': $AP = new AnalyticsProviderMessageQueue(); break;
 		  case 'Exelate': $AP = new AnalyticsProviderExelate(); break;
-		  case 'Aperture': $AP = new AnalyticsProviderAperture(); break;
 		  default: return '<!-- Invalid provider for AnalyticsEngine::getTrackCode -->';
 		}
 

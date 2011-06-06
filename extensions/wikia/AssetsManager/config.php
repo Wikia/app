@@ -43,10 +43,10 @@ $config['oasis_jquery'] = array(
 		'//skins/common/jquery/jquery-1.5.2.js',
 		'//skins/common/jquery/jquery.json-1.3.js',
 		'//skins/common/jquery/jquery.getcss.js',
-		'//skins/common/jquery/jquery.wikia.js',
 		'//skins/common/jquery/jquery.cookies.2.1.0.js',
 		'//skins/common/jquery/jquery.timeago.js',
 		'//skins/common/jquery/jquery.store.js',
+		'//skins/common/jquery/jquery.wikia.js',
 		'//skins/oasis/js/tables.js',
 		'//skins/oasis/js/common.js'
 	)
@@ -87,6 +87,7 @@ $config['oasis_shared_js'] = array(
 		'//extensions/wikia/AdEngine/ghost/gw-2010.10.11/lib/gw.js',
 		'//extensions/wikia/Geo/geo.js',
 		'//extensions/wikia/QuantcastSegments/qcs.js',
+		'//extensions/wikia/ApertureAudience/Aperture.js',
 		'//extensions/wikia/AdEngine/liftium/Liftium.js',
 		'//extensions/wikia/AdEngine/liftium/Wikia.js',
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
