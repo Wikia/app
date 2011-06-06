@@ -78,13 +78,13 @@
 }
 
 .csEditMode .CSitem .edit {
-	margin-left: 8px;  
+	margin-left: 8px;
 }
 
 
 .csEditMode .CSitem .delete {
     margin-left: 4px;
-    margin-right: 2px;  
+    margin-right: 2px;
 }
 
 .csEditMode #csItemsContainer .CSitem {
@@ -135,6 +135,7 @@
 	padding: 0 5px;
 	position: relative;
 	white-space: nowrap;
+	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 }
