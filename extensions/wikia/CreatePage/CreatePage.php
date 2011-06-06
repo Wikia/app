@@ -213,7 +213,7 @@ function wfCreatePageAjaxCheckTitle() {
 			$result['msg'] = wfMsg( 'createpage-error-invalid-title' );
 		}
 		else {
-			if ( $oTitle->exists() ) {
+			if ( $oTitle->exists() && !$oTitle->isDeleted() ) {
 				$result['result'] = 'error';
 				$result['msg'] = wfMsg( 'createpage-error-article-exists', array( $oTitle->getFullUrl(), $oTitle->getText() ) );
 			}
