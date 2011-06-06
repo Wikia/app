@@ -24,7 +24,7 @@ use Image::LibRSVG;
 use Image::Info qw(image_info);
 use File::LibMagic;
 use File::Basename;
-use File::Path;
+use File::Path qw(make_path);
 use File::Copy;
 use File::Slurp;
 use XML::Simple;
@@ -50,6 +50,7 @@ use constant SVG_DEFAULT_HEIGHT => 512;
 # globals
 #
 our $hostname = hostname;
+our $debug    = $ENV{ "DEBUG" } || 1;
 
 
 sub real404 {
@@ -74,7 +75,8 @@ sub real404 {
 }
 
 sub real503 {
-	my $request_uri  = shift;
+	my ( $request_uri, $original )  = @_;
+
 	print "HTTP/1.1 503 Service Unavailable\r\n";
 	print "Cache-control: max-age=30\r\n";
 	print "Retry-After: 30\r\n";
@@ -82,7 +84,7 @@ sub real503 {
 	print "X-Thumbnailer-Error: backend not responding\r\n";
 	print "X-Thumbnailer-Hostname: $hostname\r\n";
 	print "Content-Type: text/plain; charset=utf-8\r\n\r\n";
-	print "Backend for getting original file $request_uri is not responding\n";
+	print "Backend for getting original file for $request_uri thumbnail is not responding\n";
 }
 
 #
@@ -216,8 +218,29 @@ sub videoThumbnail {
 }
 
 #
-# do not make zombies
+# write file to disc
 #
+sub store_file {
+	my( $path, $data ) = @_;
+
+	##
+	# first create path if doesn't exists
+	#
+	my $errstr = "";
+	my $dir = dirname( $path );
+	unless( -d $dir ) {
+		unless( make_path( $dir, { err => \$errstr } ) ) {
+			say STDERR "Could not create folder for $dir: $errstr" if $debug > 1;
+		}
+	}
+
+	#
+	# then slurp file
+	#
+	unless( write_file( $path, {binmode => ':raw' }, $data ) ) {
+		say STDERR "Could not write thumbnail $path" if $debug > 1;
+	}
+}
 
 no warnings; # avoid "Possible attempt to separate words with commas"
 my @tests = qw(
@@ -267,7 +290,6 @@ my $basepath    = $ENV{ "IMGPATH"  } || "/images";
 my $baseurl     = $ENV{ "BASEURL"  } || "http://images.wikia.com";
 my $clients     = $ENV{ "CHILDREN" } || 4;
 my $listen      = $ENV{ "SOCKET"   } || "0.0.0.0:39393";
-my $debug       = $ENV{ "DEBUG"    } || 1;
 my $test        = $ENV{ "TEST"     } || 0;
 my $pidfile     = $ENV{ "PIDFILE"  } || "/var/run/thumbnailer/404handler.pid";
 my $use_http    = 0;
@@ -368,10 +390,6 @@ while( $request->Accept() >= 0 || $test ) {
 	( $width ) = $last =~ /^seek=(\d+)\-.+\w$/ unless $width;
 	( $width ) = $last =~ /^(mid)\-.+\w$/ unless $width;
 
-	#
-	# instant commons has source in other place
-	#
-
 	if( $width ) {
 		$width = $maxwidth if $width =~ /^\d+$/ && $width > $maxwidth;
 		#
@@ -423,7 +441,7 @@ while( $request->Accept() >= 0 || $test ) {
 			if( $use_http ) {
 				$remote = $original;
 				substr( $remote, 0, length( $basepath ), $baseurl );
-				substr( $thumbnail, 0, length( $basepath ), $baseurl );
+				substr( $thumbnail, 0, length( $basepath ), $baseurl ) unless $use_store;
 				my $ua = LWP::UserAgent->new();
 				$ua->timeout( 5 );
 				$ua->proxy( "http", "http://127.0.0.1:6081/" ) unless $use_devel;
@@ -584,6 +602,7 @@ while( $request->Accept() >= 0 || $test ) {
 						my $output_length = length( $output );
 
 						if( $output_length ) {
+							store_file( $thumbnail, $output );
 							print "HTTP/1.1 200 OK\r\n";
 							print "Cache-control: max-age=30\r\n";
 							print "Content-Length: $output_length\r\n";
@@ -646,7 +665,7 @@ while( $request->Accept() >= 0 || $test ) {
 				}
 				else {
 					#
-					# for other else use Graphics::Magick
+					# for other else use Imager
 					#
 					my $image = Imager->new;
 					$image->read( data => $content, type => $imgtype );
@@ -717,6 +736,9 @@ while( $request->Accept() >= 0 || $test ) {
 						use bytes;
 						my $output_length = length( $output );
 						if( $output_length ) {
+
+							store_file( $thumbnail, $output );
+
 							#
 							# serve file if is ready to serve
 							#
@@ -753,7 +775,7 @@ while( $request->Accept() >= 0 || $test ) {
 	if( ! $transformed ) {
 		given( $last_status ) {
 			when( 404 ) { real404( $request_uri ) }
-			default     { real503( $request_uri ) }
+			default     { real503( $request_uri, $remote ) }
 		};
 	}
 
