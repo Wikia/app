@@ -55,6 +55,8 @@ $messages['en'] = array(
 	"closewiki-images-url" => "Image archive: $1",
 	"closewiki-unknown" => "Unknown",
 	"closewiki-return" => "Back to $1",
+	'wikifactory-button-saveparse' => "Parse &amp; Save changes",
+	'wikifactory-button-save' => 'Save changes',
 // metrics
 	"awc-metrics-language-top-list" => "de,en,es,fr,it,ja,pl,pt,pt-br,zh",
 	"awc-metrics-wikis" => "Display Wikis",
