@@ -38,7 +38,7 @@
 					<div id="EditPageToolbar" class="editpage-toolbar" data-space-type="toolbar"></div>
 					<div id="EditPageEditorWrapper" data-space-type="editor">
 						<div id="EditPageEditor" class="editpage-content">
-							
+
 							<!-- notices -->
 							<noscript><style>
 								.edit-page-notices {
@@ -101,7 +101,7 @@
 								}
 							?>
 
-							<!-- edit form content --> 
+							<!-- edit form content -->
 							<?= $bodytext ?>
 							<div class="editpage-loading-indicator" data-space-type="loading-status" style="display:none">
 								<div class="loading-background"></div>
@@ -127,7 +127,7 @@
 					<div class="module module_page_controls">
 						<div class="module_content">
 							<label>
-								<input type="checkbox" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>" />
+								<input type="checkbox" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
 								<?= wfMsg('editpagelayout-pageControls-minorEdit') ?>
 							</label>
 							<?= $summaryBox ?>
