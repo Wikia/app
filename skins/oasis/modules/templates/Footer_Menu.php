@@ -31,7 +31,7 @@
 </li>
 <?php     break; ?>
 <?php case 'devinfo': /* Temporary, BugId:5497; TODO: call getPerformanceStats in DevInfoUserCommand.php rather than here */ ?>
-<li>
+<li class="loadtime">
     <span><?= F::app()->wf->getPerformanceStats(); ?></span>
 </li>
 <?php     break; ?>
