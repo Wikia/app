@@ -42,7 +42,10 @@
 			}
 		}
 		&.cke_disabled {
-			@include opacity(20);
+			> a {
+				@include opacity(20);
+				zoom: 1; /* IE fix to make opacity work */
+			}
 		}
 		&.cke_hidden {
 			display: none;
