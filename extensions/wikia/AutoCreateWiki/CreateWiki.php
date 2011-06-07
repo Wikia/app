@@ -208,6 +208,12 @@ class CreateWiki {
 		// prepare all values needed for creating wiki
 		$this->prepareValues( $this->mDomain, $this->mLanguage, $this->mType );
 
+		// prevent domain to be registered more than once
+		if ( !AutoCreateWiki::lockDomain($this->mDomain) ) {
+			wfProfileOut( __METHOD__ );
+			return self::ERROR_DOMAIN_NAME_TAKEN;
+		}
+
 		if( strpos( $wgWikiaLocalSettingsPath, "central") !== false ) {
 			$wgWikiaLocalSettingsPath = str_replace( "central", "wiki.factory", $wgWikiaLocalSettingsPath );
 		}
@@ -399,17 +405,17 @@ class CreateWiki {
 		$this->addCustomSettings( $this->mNewWiki->language, $langCreationVar, "language" );
 		wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wiki_type} and language: {$this->mNewWiki->language} \n", true );
 
-		/** 
-		 * set tags per language 
-		 * @FIXME the switch is !@#$ creazy, but I didn't find a core function 
-		 */ 
-		$langTag = $this->mNewWiki->language; 
-		if ( $langTag !== 'en' ) { 
-			switch ( $langTag ) { 
-				case 'pt-br': 
-					$langTag = 'pt'; 
-					break; 
-				case 'zh-tw': 
+		/**
+		 * set tags per language
+		 * @FIXME the switch is !@#$ creazy, but I didn't find a core function
+		 */
+		$langTag = $this->mNewWiki->language;
+		if ( $langTag !== 'en' ) {
+			switch ( $langTag ) {
+				case 'pt-br':
+					$langTag = 'pt';
+					break;
+				case 'zh-tw':
 				case 'zh-hk':
 				case 'zh-clas':
 				case 'zh-class':
@@ -421,13 +427,13 @@ class CreateWiki {
 				case 'zh-mo':
 				case 'zh-sg':
 				case 'zh-yue':
-					$langTag = 'zh'; 
-					break; 
-			} 
+					$langTag = 'zh';
+					break;
+			}
 
-			$tags = new WikiFactoryTags( $this->mNewWiki->city_id ); 
-			$tags->addTagsByName( $langTag ); 
-		} 
+			$tags = new WikiFactoryTags( $this->mNewWiki->city_id );
+			$tags->addTagsByName( $langTag );
+		}
 
 		/**
 		 * move main page

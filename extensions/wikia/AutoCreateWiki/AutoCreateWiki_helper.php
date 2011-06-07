@@ -19,6 +19,7 @@ class AutoCreateWiki {
 
 	const STAFF_LIST = "staffsigs";
     const BAD_WORDS_MSG = 'creation_blacklist';
+    const LOCK_DOMAIN_TIMEOUT = 30;
 
 	/**
 	 * isDomainExists
@@ -492,4 +493,32 @@ class AutoCreateWiki {
 
 		return $res;
 	}
+
+
+
+
+	/**
+	 * Returns memcache key for locking given domain
+	 * @param string $domain
+	 * @return string
+	 */
+	static protected function getLockDomainKey( $domain ) {
+		return wfSharedMemcKey('createwiki','domain','lock',urlencode($domain));
+	}
+
+	/**
+	 * Locks domain if possible for predefined amount of time
+	 * Returns true if successful
+	 *
+	 * @param string $domain
+	 * @return bool
+	 */
+	static public function lockDomain( $domain ) {
+		global $wgMemc;
+		$key = self::getLockDomainKey($domain);
+		$status = $wgMemc->add($key,1,self::LOCK_DOMAIN_TIMEOUT);
+		wfDebug("AutoCreateWiki::lockDomain(\"$domain\") = ".($status?"OK":"failed")."\n");
+		return $status;
+	}
+
 }
