@@ -39,18 +39,9 @@ $wgExtensionFunctions[] = 'wfCreatePageInit';
 
 // initialize create page extension
 function wfCreatePageInit() {
-	global $wgUser,
-		$wgHooks,
+	global $wgHooks,
 		$wgAjaxExportList,
-		$wgOut,
-		$wgScriptPath,
-		$wgStyleVersion,
-		$wgExtensionsPath,
-		$wgWikiaEnableNewCreatepageExt,
-		$wgCdnStylePath,
-		$wgScript,
-		$wgCreatePageOptions,
-		$wgWikiaCreatePageUseFormatOnly;
+		$wgWikiaEnableNewCreatepageExt;
 
 	// load messages from file
 	wfLoadExtensionMessages( 'CreatePage' );
@@ -66,9 +57,26 @@ function wfCreatePageInit() {
 	$wgHooks['MakeGlobalVariablesScript'][] = 'wfCreatePageSetupVars';
 	$wgHooks['EditPage::showEditForm:initial'][] = 'wfCreatePageLoadPreformattedContent';
 	$wgHooks['GetPreferences'][] = 'wfCreatePageOnGetPreferences';
+	$wgHooks['BeforeInitialize'][] = 'wfCreatePageOnBeforeInitialize';
 
 	$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
 	$wgAjaxExportList[] = 'wfCreatePageAjaxCheckTitle';
+}
+
+// use different code for Special:CreatePage when using monobook (BugId:6601)
+function wfCreatePageOnBeforeInitialize(&$title, &$article, &$output, &$user, $request, $mw) {
+	global $wgAutoloadClasses;
+	$skinName = get_class($user->getSkin());
+
+	if ($skinName == 'SkinMonoBook') {
+		// use different class to handle Special:CreatePage
+		$dir = dirname(__FILE__) . '/monobook';
+
+		$wgAutoloadClasses['SpecialCreatePage'] = $dir . '/SpecialCreatePage.class.php';
+		$wgAutoloadClasses['SpecialEditPage'] = $dir . '/SpecialEditPage.class.php';
+	}
+
+	return true;
 }
 
 function wfCreatePageSetupVars( $vars ) {
@@ -123,8 +131,8 @@ function wfCreatePageAjaxGetDialog() {
 	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$options = array();
 	$standardOptions = array();
-	
-	
+
+
 	$standardOptions['format'] = array(
 		'namespace' => NS_MAIN,
 		'label' => wfMsg( 'createpage-dialog-format' ),
@@ -140,11 +148,11 @@ function wfCreatePageAjaxGetDialog() {
 		'trackingId' => 'blankpage',
 		'submitUrl' => "{$wgScript}?title=$1&action=edit"
 	);
-	
+
 	$listtype = "short";
 	wfRunHooks( 'CreatePage::FetchOptions', array(&$standardOptions, &$options, &$listtype ) );
 
-	$options = $options + $standardOptions; 
+	$options = $options + $standardOptions;
 	$optionsCount = count( $options );
 	$detectedWidth = ( $optionsCount * CREATEPAGE_ITEM_WIDTH );
 

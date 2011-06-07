@@ -1,0 +1,1 @@
+Files in this directory are used to serve monobook-only version of Special:CreatePage as requested in fb#6601

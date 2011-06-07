@@ -1000,7 +1000,7 @@ class User {
 	}
 
 	/**
-	 * Load the data for this user object from another user object. 
+	 * Load the data for this user object from another user object.
 	 */
 	protected function loadFromUserObject( $user ) {
 		$user->load();
@@ -2426,7 +2426,9 @@ class User {
 			$this->mSkin =& Skin::newFromKey( $userSkin );
 			*/
 
+			// Wikia change begin
 			wfRunHooks('AlternateGetSkin', array (&$this));
+			// Wikia change end
 
 			wfProfileOut( __METHOD__ );
 		}
@@ -2544,7 +2546,7 @@ class User {
 					'wl_user' => $currentUser
 				), __METHOD__
 			);
-			
+
 			wfRunHooks( 'User::resetWatch', array ( $currentUser ) );
 		# 	We also need to clear here the "you have new message" notification for the own user_talk page
 		#	This is cleared one page view later in Article::viewUpdates();
