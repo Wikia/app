@@ -82,6 +82,13 @@ img.withCaption {
 	padding-bottom: 25px;
 }
 
+/* BugId:6457 */
+.WikiaArticle {
+	h2 {
+		overflow: visible;
+	}
+}
+
 /**
  *  placeholders
  */
