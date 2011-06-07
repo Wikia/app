@@ -742,7 +742,7 @@ function axAWCMetrics() {
 		return;
 	}
 
-	if ( !in_array('staff', $wgUser->getGroups()) ) {
+	if ( !$wgUser->isAllowed('wikifactory') ) {
 		return "";
 	}
 
