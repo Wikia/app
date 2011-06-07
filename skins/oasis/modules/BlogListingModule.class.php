@@ -67,10 +67,12 @@ class BlogListingModule extends Module {
 		if (!empty($aOptions['class'])) {
 			$additionalClass = ' '.$aOptions['class'];
 		}
+
+		$seeMoreUrl = (isset($aOptions['seemore']) ? $aOptions['seemore'] : "");
 		if ($aOptions['type'] == 'box') {
-			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListingBox module $additionalClass", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => $aOptions['title'], 'seeMoreUrl' => $aOptions['seemore']));
+			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListingBox module $additionalClass", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => $aOptions['title'], 'seeMoreUrl' => $seeMoreUrl));
 		} else {
-			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListing$additionalClass", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => $aOptions['title'], 'pager' => $sPager, 'seeMoreUrl' => $aOptions['seemore']));
+			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListing$additionalClass", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => $aOptions['title'], 'pager' => $sPager, 'seeMoreUrl' => $seeMoreUrl));
 		}
 
 		wfProfileOut(__METHOD__);
