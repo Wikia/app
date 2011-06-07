@@ -13,8 +13,7 @@ $app = F::app();
 $app->registerClass(
 	array(
 		'GameGuidesController',
-		'GameGuidesWrongAPIVersionException',
-		'GameGuidesRequestNotPostedException'
+		'GameGuidesWrongAPIVersionException'
 	),
 	"{$dir}/GameGuidesController.class.php"
 );
