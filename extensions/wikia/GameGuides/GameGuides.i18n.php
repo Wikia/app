@@ -4,13 +4,11 @@ $messages = array();
 
 $messages['en'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides mobile app modules',
-	'wikiagameguides-contents' => ''
 );
 
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides is the name of a product, do not translate on a per-word basis',
-	'wikiagameguides-contents' => 'Keep empty, this has to be defined on each wiki manually'
 );
 
 /** Breton (Brezhoneg)

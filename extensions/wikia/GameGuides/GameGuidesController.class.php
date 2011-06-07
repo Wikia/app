@@ -20,14 +20,8 @@ class GameGuidesController extends WikiaController {
 		$requestedRevision = $this->request->getInt( 'rev', self::API_REVISION );
 		
 		if ( $requestedVersion != self::API_VERSION || $requestedRevision != self::API_REVISION ) {
-			throw new  GameGuidesWrongAPIVersionException($this->response);
+			throw new  GameGuidesWrongAPIVersionException();
 		}
-		
-		/*
-		if ( !$this->wg->develEnvironment && !$this->request->wasPosted() ) {
-			throw new GameGuidesRequestNotPostedException();
-		}
-		*/
 		
 		$this->mModel = F::build( 'GameGuidesModel' );
 		$this->mPlatform = $this->request->getVal( 'os' );
@@ -147,21 +141,7 @@ class GameGuidesController extends WikiaController {
 }
 
 class GameGuidesWrongAPIVersionException extends WikiaException {
-	function __construct( WikiaResponse $response = null ) {
-		if ( $response ) {
-			$response->setHeader( 'X-Wikia-Code', 1 );
-		}
-		
-		parent::__construct( 'Wrong API version', 501 );
-	}
-}
-
-class GameGuidesRequestNotPostedException extends WikiaException {
-	function __construct( WikiaResponse $response = null ) {
-		if ( $response ) {
-			$response->setHeader( 'X-Wikia-Code', 2 );
-		}
-		
-		parent::__construct( 'Only POST requests allowed', 406 );
+	function __construct() {
+		parent::__construct( 'Wrong API version', 801 );
 	}
 }
