@@ -5,9 +5,9 @@ var Aperture = {
 	nonsecureScriptHost : 'http://edge.aperture',
 	secureScriptHost : 'https://xedge.aperture',
 	scriptUrl : '.displaymarketplace.com/displayscript.js',
-	
+
 	init : function() {
-		if (typeof wgEnableAperture != undefined && wgEnableAperture) {
+		if (window.wgEnableAperture) {
 			Aperture.geoData = Geo.getGeoData();
 			var key = 'country';
 			if ($(Aperture.geoData).exists()) {
