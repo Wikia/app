@@ -476,7 +476,9 @@ div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
 }
 
 /* dropdown lists */
-.cke_skin_wikia .cke_panel.cke_format_panel {
+.cke_skin_wikia .cke_panel.cke_format_panel,
+.cke_skin_wikia .cke_panel.cke_format_panel iframe /* BugId:5678 */
+{
 	height: 212px;
 	width: 200px;
 }
@@ -664,5 +666,3 @@ div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
 		}
 	}
 }
-
-
