@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2002-2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
  *
  * @package    DbUnit
  * @author     Mike Lively <m@digitalsandwich.com>
- * @copyright  2002-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.0.0
@@ -53,7 +53,7 @@ require_once 'SymfonyComponents/YAML/sfYaml.php';
  * @author     Mike Lively <m@digitalsandwich.com>
  * @copyright  2010 Mike Lively <m@digitalsandwich.com>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 1.0.1
+ * @version    Release: 1.0.0
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.0.0
  */
@@ -84,51 +84,26 @@ class PHPUnit_Extensions_Database_DataSet_YamlDataSet extends PHPUnit_Extensions
     {
         $data = sfYaml::load($yamlFile);
 
-        foreach ($data as $tableName => $rows) {
-            if (!isset($rows)) {
-                $rows = array();
-            }
-
+        foreach ($data as $tableName => $rows)
+        {
             if (!is_array($rows)) {
                 continue;
             }
 
-            if (!array_key_exists($tableName, $this->tables)) {
-                $columns = $this->getColumns($rows);
+            if (!array_key_exists($tableName, $this->tables))
+            {
+                $columns = count($rows) ? array_keys(current($rows)) : array();
 
-                $tableMetaData = new PHPUnit_Extensions_Database_DataSet_DefaultTableMetaData(
-                  $tableName, $columns
-                );
+                $tableMetaData = new PHPUnit_Extensions_Database_DataSet_DefaultTableMetaData($tableName, $columns);
 
-                $this->tables[$tableName] = new PHPUnit_Extensions_Database_DataSet_DefaultTable(
-                  $tableMetaData
-                );
+                $this->tables[$tableName] = new PHPUnit_Extensions_Database_DataSet_DefaultTable($tableMetaData);
             }
 
-            foreach ($rows as $row) {
+            foreach ($rows as $row)
+            {
                 $this->tables[$tableName]->addRow($row);
             }
         }
-    }
-
-    /**
-     * Creates a unique list of columns from all the rows in a table.
-     * If the table is defined another time in the Yaml, and if the Yaml
-     * parser could return the multiple occerrences, then this would be
-     * insufficient unless we grouped all the occurences of the table
-     * into onwe row set.  sfYaml, however, does not provide multiple tables
-     * with the same name, it only supplies the last table.
-     *
-     * @params all the rows in a table.
-     */
-    private function getColumns($rows) {
-        $columns = array();
-
-        foreach ($rows as $row) {
-            $columns = array_merge($columns, array_keys($row));
-        }
-
-        return array_values(array_unique($columns));
     }
 
     /**
@@ -140,9 +115,7 @@ class PHPUnit_Extensions_Database_DataSet_YamlDataSet extends PHPUnit_Extensions
      */
     protected function createIterator($reverse = FALSE)
     {
-        return new PHPUnit_Extensions_Database_DataSet_DefaultTableIterator(
-          $this->tables, $reverse
-        );
+        return new PHPUnit_Extensions_Database_DataSet_DefaultTableIterator($this->tables, $reverse);
     }
 
     /**
@@ -157,12 +130,8 @@ class PHPUnit_Extensions_Database_DataSet_YamlDataSet extends PHPUnit_Extensions
 
         try {
             $pers->write($dataset);
-        }
-
-        catch (RuntimeException $e) {
-            throw new PHPUnit_Framework_Exception(
-              __METHOD__ . ' called with an unwritable file.'
-            );
+        } catch (RuntimeException $e) {
+            throw new PHPUnit_Framework_Exception(__METHOD__ . ' called with an unwritable file.');
         }
     }
 }

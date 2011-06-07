@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,12 +40,14 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
+
+require_once 'PHP/Depend/Code/ASTNodeI.php';
 
 /**
  * This is an abstract base implementation of the ast node interface.
@@ -54,21 +56,14 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.10.3
+ * @version    Release: 0.9.19
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
 abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
 {
-    /**
-     * The type of this class.
-     * 
-     * @since 0.10.0
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * The source image for this node instance.
      *
@@ -103,28 +98,28 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      *
      * @var integer
      */
-    protected $startLine = 0;
+    private $_startLine = -1;
 
     /**
      * The end line for this node.
      *
      * @var integer
      */
-    protected $endLine = 0;
+    private $_endLine = -1;
 
     /**
      * The start column for this node.
      *
      * @var integer
      */
-    protected $startColumn = 0;
+    private $_startColumn = -1;
 
     /**
      * The end column for this node.
      *
      * @var integer
      */
-    protected $endColumn = 0;
+    private $_endColumn = -1;
 
     /**
      * Constructs a new ast node instance.
@@ -156,7 +151,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setStartLine($startLine)
     {
-        $this->startLine = $startLine;
+        $this->_startLine = $startLine;
     }
 
     /**
@@ -166,7 +161,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getStartLine()
     {
-        return $this->startLine;
+        return $this->_startLine;
     }
 
     /**
@@ -179,7 +174,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setStartColumn($startColumn)
     {
-        $this->startColumn = $startColumn;
+        $this->_startColumn = $startColumn;
     }
 
     /**
@@ -189,7 +184,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getStartColumn()
     {
-        return $this->startColumn;
+        return $this->_startColumn;
     }
 
     /**
@@ -202,7 +197,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setEndLine($endLine)
     {
-        $this->endLine = $endLine;
+        $this->_endLine = $endLine;
     }
 
     /**
@@ -212,7 +207,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getEndLine()
     {
-        return $this->endLine;
+        return $this->_endLine;
     }
 
     /**
@@ -225,7 +220,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setEndColumn($endColumn)
     {
-        $this->endColumn = $endColumn;
+        $this->_endColumn = $endColumn;
     }
 
     /**
@@ -235,7 +230,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getEndColumn()
     {
-        return $this->endColumn;
+        return $this->_endColumn;
     }
 
     /**
@@ -256,10 +251,10 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
         $startColumn,
         $endColumn
     ) {
-        $this->startLine   = $startLine;
-        $this->startColumn = $startColumn;
-        $this->endLine     = $endLine;
-        $this->endColumn   = $endColumn;
+        $this->_startLine   = $startLine;
+        $this->_startColumn = $startColumn;
+        $this->_endLine     = $endLine;
+        $this->_endColumn   = $endColumn;
     }
 
     /**
@@ -339,20 +334,6 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     }
 
     /**
-     * This method adds a new child node at the first position of the children.
-     *
-     * @param PHP_Depend_Code_ASTNodeI $node The new child node.
-     *
-     * @return void
-     * @since 0.10.2
-     */
-    public function prependChild(PHP_Depend_Code_ASTNodeI $node)
-    {
-        array_unshift($this->nodes, $node);
-        $node->setParent($this);
-    }
-
-    /**
      * This method adds a new child node to this node instance.
      *
      * @param PHP_Depend_Code_ASTNodeI $node The new child node.
@@ -361,7 +342,10 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function addChild(PHP_Depend_Code_ASTNodeI $node)
     {
+        // Store child node
         $this->nodes[] = $node;
+
+        // Set this as parent
         $node->setParent($this);
     }
 
@@ -446,43 +430,6 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     {
         $this->_removeReferenceToParentNode();
         $this->_removeReferencesToChildNodes();
-    }
-
-    /**
-     * The magic sleep method will be called by PHP's runtime environment right
-     * before an instance of this class gets serialized. It should return an
-     * array with those property names that should be serialized for this class.
-     *
-     * @return array(string)
-     * @since 0.10.0
-     */
-    public function  __sleep()
-    {
-        return array(
-            'image',
-            'comment',
-            'startLine',
-            'startColumn',
-            'endLine',
-            'endColumn',
-            'nodes'
-        );
-    }
-
-    /**
-     * The magic wakeup method will be called by PHP's runtime environment when
-     * a previously serialized object gets unserialized. This implementation of
-     * the wakeup method restores the dependencies between an ast node and the
-     * node's children.
-     *
-     * @return void
-     * @since 0.10.0
-     */
-    public function __wakeup()
-    {
-        foreach ($this->nodes as $node) {
-            $node->parent = $this;
-        }
     }
 
     /**

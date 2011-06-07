@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
  *
  * @package    PHPUnit_MockObject
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://github.com/sebastianbergmann/phpunit-mock-objects
  * @since      File available since Release 1.0.0
@@ -47,9 +47,9 @@
  *
  * @package    PHPUnit_MockObject
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 1.0.8
+ * @version    Release: 1.0.0
  * @link       http://github.com/sebastianbergmann/phpunit-mock-objects
  * @since      Class available since Release 1.0.0
  */
@@ -71,13 +71,16 @@ class PHPUnit_Framework_MockObject_Invocation_Static implements PHPUnit_Framewor
      * @var array
      */
     protected static $uncloneableClasses = array(
-      'Closure',
-      'COMPersistHelper',
-      'IteratorIterator',
-      'RecursiveIteratorIterator',
-      'SplFileObject',
-      'PDORow',
-      'ZipArchive'
+      'AppendIterator' => TRUE,
+      'CachingIterator' => TRUE,
+      'Closure' => TRUE,
+      'COMPersistHelper' => TRUE,
+      'IteratorIterator' => TRUE,
+      'LimitIterator' => TRUE,
+      'RecursiveCachingIterator' => TRUE,
+      'RecursiveRegexIterator' => TRUE,
+      'RegexIterator' => TRUE,
+      'ZipArchive' => TRUE
     );
 
     /**
@@ -139,35 +142,22 @@ class PHPUnit_Framework_MockObject_Invocation_Static implements PHPUnit_Framewor
      */
     protected function cloneObject($original)
     {
-        $cloneable = NULL;
+        $cloneable = TRUE;
         $object    = new ReflectionObject($original);
 
         if (method_exists($object, 'isCloneable')) {
             $cloneable = $object->isCloneable();
         }
 
-        if ($cloneable === NULL &&
-            $object->isInternal() &&
-            isset(self::$uncloneableExtensions[$object->getExtensionName()])) {
+        else if ($object->isInternal() &&
+            isset(self::$uncloneableExtensions[$object->getExtensionName()]) ||
+            isset(self::$uncloneableClasses[$object->getName()])) {
             $cloneable = FALSE;
         }
 
-        if ($cloneable === NULL && $object->hasMethod('__clone')) {
+        else if ($object->hasMethod('__clone')) {
             $method    = $object->getMethod('__clone');
             $cloneable = $method->isPublic();
-        }
-
-        if ($cloneable === NULL) {
-            foreach (self::$uncloneableClasses as $class) {
-                if ($original instanceof $class) {
-                    $cloneable = FALSE;
-                    break;
-                }
-            }
-        }
-
-        if ($cloneable === NULL) {
-            $cloneable = TRUE;
         }
 
         if ($cloneable) {

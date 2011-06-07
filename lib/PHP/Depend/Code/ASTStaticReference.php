@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,12 +40,14 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
+
+require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
 
 /**
  * This is a special reference container that is used whenever the keyword
@@ -55,13 +57,14 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.10.3
+ * @version    Release: 0.9.19
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-class PHP_Depend_Code_ASTStaticReference extends PHP_Depend_Code_ASTSelfReference
+final class PHP_Depend_Code_ASTStaticReference
+    extends PHP_Depend_Code_ASTClassOrInterfaceReference
 {
     /**
      * The image type of this node.
@@ -74,13 +77,18 @@ class PHP_Depend_Code_ASTStaticReference extends PHP_Depend_Code_ASTSelfReferenc
     const IMAGE = 'static';
 
     /**
-     * The source image for this node instance.
+     * Constructs a new type holder instance.
      *
-     * @var string
-     * @since 0.10.0
+     * @param PHP_Depend_Code_AbstractClassOrInterface $owner The type instance
+     *        that reference the concrete target of self.
      */
-    protected $image = self::IMAGE;
-    
+    public function __construct(
+        PHP_Depend_Code_AbstractClassOrInterface $owner
+    ) {
+        $this->image        = self::IMAGE;
+        $this->typeInstance = $owner;
+    }
+
     /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.

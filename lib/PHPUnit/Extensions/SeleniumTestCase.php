@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2002-2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 3.0.0
@@ -50,9 +50,9 @@ require_once 'File/Iterator/Factory.php';
  *
  * @package    PHPUnit_Selenium
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 1.0.2
+ * @version    Release: 1.0.0
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 3.0.0
  */
@@ -292,18 +292,12 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             $result = $this->createResult();
         }
 
-        $this->result = $result;
-
         $this->collectCodeCoverageInformation = $result->getCollectCodeCoverageInformation();
 
         foreach ($this->drivers as $driver) {
             $driver->setCollectCodeCoverageInformation(
               $this->collectCodeCoverageInformation
             );
-        }
-
-        if (!$this->handleDependencies()) {
-            return;
         }
 
         $result->run($this);
@@ -406,10 +400,10 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     {
         $this->start();
 
-        if (!is_file($this->getName(FALSE))) {
+        if (!is_file($this->name)) {
             parent::runTest();
         } else {
-            $this->runSelenese($this->getName(FALSE));
+            $this->runSelenese($this->name);
         }
 
         if (!empty($this->verificationErrors)) {

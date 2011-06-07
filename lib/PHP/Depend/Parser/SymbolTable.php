@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Parser
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -53,13 +53,20 @@
  * @package    PHP_Depend
  * @subpackage Parser
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.10.3
+ * @version    Release: 0.9.19
  * @link       http://www.pdepend.org/
  */
 class PHP_Depend_Parser_SymbolTable
 {
+    /**
+     * Should this instance handle keys case insensitive.
+     *
+     * @var boolean $_caseInsensitive
+     */
+    private $_caseInsensitive = false;
+
     /**
      * Stack with all active scopes.
      *
@@ -73,6 +80,16 @@ class PHP_Depend_Parser_SymbolTable
      * @var array(string=>string) $_scope
      */
     private $_scope = array();
+
+    /**
+     * Constructs a new symbol table.
+     *
+     * @param boolean $caseInsensitive Should we handle key case insensitive.
+     */
+    public function __construct($caseInsensitive = false)
+    {
+        $this->_caseInsensitive = (boolean) $caseInsensitive;
+    }
 
     /**
      * This method creates a new scope.
@@ -112,7 +129,7 @@ class PHP_Depend_Parser_SymbolTable
         if (is_array($this->_scope) === false) {
             throw new UnderflowException('No active scope.');
         }
-        $this->_scope[strtolower($key)] = $value;
+        $this->_scope[$this->_prepareKey($key)] = $value;
     }
 
     /**
@@ -130,10 +147,27 @@ class PHP_Depend_Parser_SymbolTable
             throw new UnderflowException('No active scope.');
         }
 
-        $key = strtolower($key);
+        $key = $this->_prepareKey($key);
         if (isset($this->_scope[$key])) {
             return $this->_scope[$key];
         }
         return null;
     }
+
+    /**
+     * This method will return a lower case key representation when the case
+     * insensitive flag was set for this instance.
+     *
+     * @param string $key The key for a searched scope value.
+     *
+     * @return string
+     */
+    private function _prepareKey($key)
+    {
+        if ($this->_caseInsensitive === true) {
+            return strtolower($key);
+        }
+        return $key;
+    }
 }
+?>

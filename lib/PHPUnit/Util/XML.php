@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2011, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2002-2010, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@
  * @package    PHPUnit
  * @subpackage Util
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 3.2.0
@@ -49,9 +49,9 @@
  * @package    PHPUnit
  * @subpackage Util
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 3.5.13
+ * @version    Release: 3.5.0
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 3.2.0
  */
@@ -188,25 +188,26 @@ class PHPUnit_Util_XML
             return $actual;
         }
 
-        $document  = new DOMDocument;
         $internal  = libxml_use_internal_errors(TRUE);
-        $message   = '';
         $reporting = error_reporting(0);
+        $dom       = new DOMDocument;
 
         if ($isHtml) {
-            $loaded = $document->loadHTML($actual);
+            $loaded = $dom->loadHTML($actual);
         } else {
-            $loaded = $document->loadXML($actual);
-        }
-
-        foreach (libxml_get_errors() as $error) {
-            $message .= $error->message;
+            $loaded = $dom->loadXML($actual);
         }
 
         libxml_use_internal_errors($internal);
         error_reporting($reporting);
 
         if ($loaded === FALSE) {
+            $message = '';
+
+            foreach (libxml_get_errors() as $error) {
+                $message .= $error->message;
+            }
+
             if ($filename != '') {
                 throw new PHPUnit_Framework_Exception(
                   sprintf(
@@ -221,7 +222,7 @@ class PHPUnit_Util_XML
             }
         }
 
-        return $document;
+        return $dom;
     }
 
     /**

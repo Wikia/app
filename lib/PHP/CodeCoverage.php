@@ -2,7 +2,7 @@
 /**
  * PHP_CodeCoverage
  *
- * Copyright (c) 2009-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2009-2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@
  * @category   PHP
  * @package    CodeCoverage
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2009-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2009-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://github.com/sebastianbergmann/php-code-coverage
  * @since      File available since Release 1.0.0
@@ -53,9 +53,9 @@ require_once 'PHP/CodeCoverage/Util.php';
  * @category   PHP
  * @package    CodeCoverage
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2009-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2009-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 1.0.4
+ * @version    Release: 1.0.0
  * @link       http://github.com/sebastianbergmann/php-code-coverage
  * @since      Class available since Release 1.0.0
  */
@@ -85,6 +85,11 @@ class PHP_CodeCoverage
      * @var boolean
      */
     protected $processUncoveredFilesFromWhitelist = TRUE;
+
+    /**
+     * @var boolean
+     */
+    protected $promoteGlobals = FALSE;
 
     /**
      * @var mixed
@@ -120,26 +125,6 @@ class PHP_CodeCoverage
     protected $tests = array();
 
     /**
-     * @var boolean
-     */
-    protected $isCodeCoverageTestSuite = FALSE;
-
-    /**
-     * @var boolean
-     */
-    protected $isFileIteratorTestSuite = FALSE;
-
-    /**
-     * @var boolean
-     */
-    protected $isTimerTestSuite = FALSE;
-
-    /**
-     * @var boolean
-     */
-    protected $isTokenStreamTestSuite = FALSE;
-
-    /**
      * Default PHP_CodeCoverage object.
      *
      * @var PHP_CodeCoverage
@@ -165,22 +150,6 @@ class PHP_CodeCoverage
 
         $this->driver = $driver;
         $this->filter = $filter;
-
-        if (defined('PHP_CODECOVERAGE_TESTSUITE')) {
-            $this->isCodeCoverageTestSuite = TRUE;
-        }
-
-        if (defined('FILE_ITERATOR_TESTSUITE')) {
-            $this->isFileIteratorTestSuite = TRUE;
-        }
-
-        if (defined('PHP_TIMER_TESTSUITE')) {
-            $this->isTimerTestSuite = TRUE;
-        }
-
-        if (defined('PHP_TOKENSTREAM_TESTSUITE')) {
-            $this->isTokenStreamTestSuite = TRUE;
-        }
     }
 
     /**
@@ -451,6 +420,19 @@ class PHP_CodeCoverage
     }
 
     /**
+     * @param  boolean $flag
+     * @throws InvalidArgumentException
+     */
+    public function setPromoteGlobals($flag)
+    {
+        if (!is_bool($flag)) {
+            throw new InvalidArgumentException;
+        }
+
+        $this->promoteGlobals = $flag;
+    }
+
+    /**
      * Filters sourcecode files from PHP_CodeCoverage, PHP_TokenStream,
      * Text_Template, and File_Iterator.
      *
@@ -464,26 +446,26 @@ class PHP_CodeCoverage
                 continue;
             }
 
-            if (!$this->isCodeCoverageTestSuite &&
+            if (!defined('PHP_CODECOVERAGE_TESTSUITE') &&
                 strpos($filename, dirname(__FILE__)) === 0) {
                 unset($data[$filename]);
                 continue;
             }
 
-            if (!$this->isFileIteratorTestSuite &&
+            if (!defined('FILE_ITERATOR_TESTSUITE') &&
                 (substr($filename, -17) == 'File/Iterator.php' ||
                  substr($filename, -25) == 'File/Iterator/Factory.php')) {
                 unset($data[$filename]);
                 continue;
             }
 
-            if (!$this->isTimerTestSuite &&
+            if (!defined('PHP_TIMER_TESTSUITE') &&
                 (substr($filename, -13) == 'PHP/Timer.php')) {
                 unset($data[$filename]);
                 continue;
             }
 
-            if (!$this->isTokenStreamTestSuite &&
+            if (!defined('PHP_TOKENSTREAM_TESTSUITE') &&
                 (substr($filename, -13) == 'PHP/Token.php' ||
                  substr($filename, -20) == 'PHP/Token/Stream.php' ||
                  substr($filename, -35) == 'PHP/Token/Stream/CachingFactory.php')) {
@@ -564,46 +546,44 @@ class PHP_CodeCoverage
      */
     protected function processUncoveredFilesFromWhitelist()
     {
-        $data           = array();
-        $includedFiles  = array_flip(get_included_files());
+        $data = array();
+
         $uncoveredFiles = array_diff(
-          $this->filter->getWhitelist(), $this->coveredFiles
+          $this->filter->getWhitelist(), array_keys($this->coveredFiles)
         );
 
+        $newVariables     = array();
+        $newVariableNames = array();
+        $oldVariableNames = array();
+        $uncoveredFile    = NULL;
+        $variableName     = NULL;
+
         foreach ($uncoveredFiles as $uncoveredFile) {
-            if (isset($includedFiles[$uncoveredFile])) {
-                foreach (array_keys($this->data) as $test) {
-                    if (isset($this->data[$test]['raw'][$uncoveredFile])) {
-                        $coverage = $this->data[$test]['raw'][$uncoveredFile];
+            if ($this->promoteGlobals) {
+                $oldVariableNames = array_keys(get_defined_vars());
+            }
 
-                        foreach (array_keys($coverage) as $key) {
-                            if ($coverage[$key] == 1) {
-                                $coverage[$key] = -1;
-                            }
-                        }
+            $this->driver->start();
+            include_once $uncoveredFile;
+            $coverage = $this->driver->stop();
 
-                        $data[$uncoveredFile] = $coverage;
+            if ($this->promoteGlobals) {
+                $newVariables = get_defined_vars();
 
-                        break;
+                $newVariableNames = array_diff(
+                  array_keys($newVariables), $oldVariableNames
+                );
+
+                foreach ($newVariableNames as $variableName) {
+                    if ($variableName != 'oldVariableNames') {
+                        $GLOBALS[$variableName] = $newVariables[$variableName];
                     }
                 }
-            } else {
-                $this->driver->start();
-                include_once $uncoveredFile;
-                $coverage = $this->driver->stop();
+            }
 
-                foreach ($coverage as $file => $fileCoverage) {
-                    if (!isset($data[$file]) &&
-                        in_array($file, $uncoveredFiles)) {
-                        foreach (array_keys($fileCoverage) as $key) {
-                            if ($fileCoverage[$key] == 1) {
-                                $fileCoverage[$key] = -1;
-                            }
-                        }
-
-                        $data[$file]          = $fileCoverage;
-                        $includedFiles[$file] = TRUE;
-                    }
+            foreach ($coverage as $file => $fileCoverage) {
+                if (!isset($data[$file])) {
+                    $data[$file] = $fileCoverage;
                 }
             }
         }
