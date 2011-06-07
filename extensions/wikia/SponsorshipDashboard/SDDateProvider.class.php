@@ -35,6 +35,11 @@ class SponsorshipDashboardDateProviderMonth {
 		return implode( '-', $aDate );
 	}
 
+	public function getGapiSamplingDateFromResult( $result ){
+
+		return mktime( 0,0,0, $result->getMonth(), 0, $result->getYear() );
+	}
+
 	public function getGapiSortingDate(){
 
 		return array( '-month', '-year' );		
@@ -137,6 +142,11 @@ class SponsorshipDashboardDateProviderDay {
 		$aDate[] = $result->getDay();
 
 		return implode( '-', $aDate );
+	}
+
+	public function getGapiSamplingDateFromResult( $result ){
+
+		return mktime( 0,0,0, $result->getMonth(), $result->getDay(), $result->getYear() );
 	}
 
 	public function getGapiSortingDate(){
