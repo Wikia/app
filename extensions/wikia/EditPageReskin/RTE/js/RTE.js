@@ -2,29 +2,34 @@ window.RTE = {
 	// configuration
 	// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
 	config: {
-		'alignableElements':  ['p', 'div', 'td' ,'th'],
-		'baseFloatZIndex': 1000,
-		'bodyClass': 'WikiaArticle',
-		'bodyId': 'bodyContent',
-		'contentsCss': $.getSassCommonURL('/extensions/wikia/EditPageReskin/RTE/css/content.scss'),
-		'coreStyles_bold': {element: 'b', overrides: 'strong'},
-		'coreStyles_italic': {element: 'i', overrides: 'em'},
-		'customConfig': '',
-		'dialog_backgroundCoverColor': '#000',
-		'dialog_backgroundCoverOpacity': (window.skin == 'oasis' ? 0.8 : 0.5),
-		'disableDragDrop': false,
-		'disableObjectResizing': true,
-		'entities': false,
-		'format_tags': 'p;h2;h3;h4;h5;pre',
-		'height': 400,
-		'language': window.wgUserLanguage,
-		'removePlugins': 'about,elementspath,filebrowser,flash,forms,horizontalrule,image,justify,link,liststyle,maximize,newpage,pagebreak,toolbar,save,scayt,smiley,wsc',
-		'resize_enabled': false,
-		'skin': 'wikia',
-		'startupFocus': true,
-		'theme': 'wikia',
-		'toolbar': 'Wikia',
-		'toolbarCanCollapse': false
+		alignableElements: {
+			div: true,
+			p: true,
+			td: true,
+			th: true
+		},
+		baseFloatZIndex: 1000,
+		bodyClass: 'WikiaArticle',
+		bodyId: 'bodyContent',
+		contentsCss: $.getSassCommonURL('/extensions/wikia/EditPageReskin/RTE/css/content.scss'),
+		coreStyles_bold: {element: 'b', overrides: 'strong'},
+		coreStyles_italic: {element: 'i', overrides: 'em'},
+		customConfig: '',
+		dialog_backgroundCoverColor: '#000',
+		dialog_backgroundCoverOpacity: (window.skin == 'oasis' ? 0.8 : 0.5),
+		disableDragDrop: false,
+		disableObjectResizing: true,
+		entities: false,
+		format_tags: 'p;h2;h3;h4;h5;pre',
+		height: 400,
+		language: window.wgUserLanguage,
+		removePlugins: 'about,elementspath,filebrowser,flash,forms,horizontalrule,image,justify,link,liststyle,maximize,newpage,pagebreak,toolbar,save,scayt,smiley,wsc',
+		resize_enabled: false,
+		skin: 'wikia',
+		startupFocus: true,
+		theme: 'wikia',
+		toolbar: 'Wikia',
+		toolbarCanCollapse: false
 	},
 
 	// reference to current CK instance
@@ -40,6 +45,7 @@ window.RTE = {
 	loadTime: false,
 
 	// reference to #RTEStuff node
+	// TODO: store this node per instance
 	stuffNode: false,
 
 	// list of our RTE custom plugins (stored in js/plugins) to be loaded on editor init
