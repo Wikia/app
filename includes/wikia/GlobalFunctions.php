@@ -1404,12 +1404,10 @@ function endsWith($haystack, $needle, $case = true) {
  * @return String $key
  */
 function wfGetSessionKey( $id ) {
-	global $wgSharedDB, $wgDBname, $wgWikiaCentralAuthDatabase, $wgExternalUserEnabled, $wgExternalSharedDB;
+	global $wgSharedDB, $wgDBname, $wgExternalUserEnabled, $wgExternalSharedDB;
 
 	if ( !empty( $wgExternalUserEnabled ) ) {
 		$key = "{$wgExternalSharedDB}:session:{$id}";
-	} elseif ( !empty( $wgWikiaCentralAuthDatabase ) ) {
-		$key = "{$wgWikiaCentralAuthDatabase}:session:{$id}";
 	} elseif ( !empty( $wgSharedDB ) ) {
 		$key = "{$wgSharedDB}:session:{$id}";
 	} else {
