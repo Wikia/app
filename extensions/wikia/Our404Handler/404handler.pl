@@ -9,9 +9,12 @@ package main;
 #
 
 #
-# available options:
-# --http -- will use http get insted of NFS local file read
-# --store -- will store generated file on disc
+# available switches:
+# --http   -- will use http get insted of NFS local file read
+# --store  -- will store generated file on disc
+# --syslog -- will use syslog instead of STDERR for debug messages
+# --devel  -- will switch on some additional information and behaviour typical for
+#             environments
 
 use common::sense;
 
@@ -37,6 +40,8 @@ use LWP::UserAgent;
 use DateTime;
 use Cwd;
 use Try::Tiny;
+use Sys::Syslog;
+
 
 #
 # constants
@@ -47,12 +52,19 @@ use constant SVG_DEFAULT_WIDTH => 512;
 use constant SVG_DEFAULT_HEIGHT => 512;
 
 #
-# globals
+# globals (flags mainly)
 #
 our $hostname = hostname;
 our $debug    = $ENV{ "DEBUG" } || 1;
+our $use_http    = 0;
+our $use_devel   = 0;
+our $use_store   = 0;
+our $use_syslog  = 0;
 
 
+#
+# print out 404 page
+#
 sub real404 {
 	my $request_uri  = shift;
 	print "HTTP/1.0 404 Not Found\r\n";
@@ -74,6 +86,9 @@ sub real404 {
 		};
 }
 
+#
+# print out error page
+#
 sub real503 {
 	my ( $request_uri, $original )  = @_;
 
@@ -230,7 +245,7 @@ sub store_file {
 	my $dir = dirname( $path );
 	unless( -d $dir ) {
 		unless( make_path( $dir, { err => \$errstr } ) ) {
-			say STDERR "Could not create folder for $dir: $errstr" if $debug > 1;
+			__debug( "Could not create folder for $dir: $errstr", 2 );
 		}
 	}
 
@@ -238,7 +253,34 @@ sub store_file {
 	# then slurp file
 	#
 	unless( write_file( $path, {binmode => ':raw' }, $data ) ) {
-		say STDERR "Could not write thumbnail $path" if $debug > 1;
+		__debug( "Could not write thumbnail $path", 2 );
+	}
+}
+
+##
+#
+# @brief debug log small routine
+
+# @param string $info -- debug info
+# @param integer $level -- severity
+#
+# also used
+#
+# @global integer $debug -- global serverity level
+# @global integer $use_syslog -- use STDERR or syslog
+#
+sub __debug {
+	my( $info, $level ) = @_;
+
+	$level ||= 1;
+
+	if( $level <= $debug ) {
+		if( $use_syslog ) {
+			syslog( "info", $info );
+		}
+		else {
+			say STDERR $info
+		}
 	}
 }
 
@@ -292,16 +334,17 @@ my $clients     = $ENV{ "CHILDREN" } || 4;
 my $listen      = $ENV{ "SOCKET"   } || "0.0.0.0:39393";
 my $test        = $ENV{ "TEST"     } || 0;
 my $pidfile     = $ENV{ "PIDFILE"  } || "/var/run/thumbnailer/404handler.pid";
-my $use_http    = 0;
-my $use_devel   = 0;
-my $use_store   = 0;
-
-
 
 #
 # overwrite some settings with getopt
 #
-GetOptions( "http" => \$use_http, "devel" => \$use_devel, "store" => \$use_store );
+GetOptions( "http" => \$use_http, "devel" => \$use_devel, "store" => \$use_store, "syslog" => \$use_syslog );
+
+#
+# syslog stream
+#
+openlog( "thumbnailer", "pid,nofatal", "LOG_LOCAL6" ) if $use_syslog;
+
 
 #
 # fastcgi request
@@ -409,7 +452,7 @@ while( $request->Accept() >= 0 || $test ) {
 		$origname =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg if $use_http;
 		if( index( $last, $origname ) == -1 && index( $thumbnail, "/archive/" ) == -1 ) {
 			$last_status = 404;
-			say STDERR "$origname not found in $last (thumbnail: $thumbnail)" if $debug;
+			__debug( "$origname not found in $last (thumbnail: $thumbnail)", 1 );
 		}
 		else {
 			#
@@ -453,7 +496,7 @@ while( $request->Accept() >= 0 || $test ) {
 					$content = $response->content;
 					$content_length = length( $content );
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					say STDERR "Reading remote $remote, content-length: $content_length, time: $t_elapsed" if $debug;
+					__debug( "Reading remote $remote, content-length: $content_length, time: $t_elapsed", 1 );
 				}
 				else {
 					$last_status = $response->code();
@@ -466,7 +509,7 @@ while( $request->Accept() >= 0 || $test ) {
 				$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
 				$content_length = length( $content );
 				$last_modified = $datetime->strftime( "%a, %d %b %Y %T GMT" );
-				print STDERR "Reading local $original, content-length: $content_length, time: $t_elapsed\n" if $debug;
+				__debug( "Reading local $original, content-length: $content_length, time: $t_elapsed", 1 );
 			}
 			no bytes;
 
@@ -478,7 +521,7 @@ while( $request->Accept() >= 0 || $test ) {
 				$mimetype = $flm->checktype_contents( $content );
 				( $imgtype ) = $mimetype =~ m![^/+]/(\w+)!;
 				$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-				say STDERR "$original $thumbnail $mimetype $imgtype $request_uri $referer, time: $t_elapsed" if $debug;
+				__debug( "$original $thumbnail $mimetype $imgtype $request_uri $referer, time: $t_elapsed", 1 );
 
 				#
 				# read original file, thumbnail it, store on disc
@@ -512,7 +555,7 @@ while( $request->Accept() >= 0 || $test ) {
 							# http://www.w3.org/TR/SVG/coords.html#ViewBoxAttribute
 							#
 							my $xmlp = XMLin( $content );
-							say STDERR "There's no width and height defined for SVG file, checking viewbox" if $debug > 2;
+							__debug( "There's no width and height defined for SVG file, checking viewbox", 3 );
 							my $viewBox = $xmlp->{ "viewBox" };
 							if( $viewBox && $viewBox =~/\d+[\s|,]*\d+[\s|,]*(\d+)[\s|,]*(\d+)/ ) {
 								$origw = $1;
@@ -534,7 +577,7 @@ while( $request->Accept() >= 0 || $test ) {
 
 						my $height = scaleHeight( $origw, $origh, $width, $test );
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-						say STDERR "reading svg as xml (for size checking) $origw x $origh, time: $t_elapsed" if $debug > 2;
+						__debug( "reading svg as xml (for size checking) $origw x $origh, time: $t_elapsed", 3 );
 
 						#
 						# RSVG thumbnailer
@@ -565,7 +608,7 @@ while( $request->Accept() >= 0 || $test ) {
 							$image->read( data => $content, type => "png" );
 
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-							say STDERR "Creating $w x $h preview from svg file for cropping, time: $t_elapsed" if $debug > 1;
+							__debug( "Creating $w x $h preview from svg file for cropping, time: $t_elapsed", 2 );
 
 							$w = $x2 - $x1;
 							$h = $y2 - $y1;
@@ -573,7 +616,7 @@ while( $request->Accept() >= 0 || $test ) {
 							if( $w > 0 && $h > 0 ) {
 								$image = $image->crop( left => $x1, top => $y1, right => $x2, bottom => $y2  );
 								$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-								say STDERR "Cropping into $x1 $x2 x $y1 $y2, time: $t_elapsed" if $debug > 1;
+								__debug( "Cropping into $x1 $x2 x $y1 $y2, time: $t_elapsed", 2 );
 								$cropped = 1;
 							}
 
@@ -594,7 +637,7 @@ while( $request->Accept() >= 0 || $test ) {
 							$rsvg->loadImageFromString( $content, 0, $args );
 							$transformed = 1;
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-							say STDERR "reading svg as image (for transforming), time: $t_elapsed" if $debug > 2;
+							__debug( "reading svg as image (for transforming), time: $t_elapsed", 3 );
 
 							$output = $rsvg->getImageBitmap( "png" );
 						}
@@ -613,19 +656,19 @@ while( $request->Accept() >= 0 || $test ) {
 							print $output unless $test;
 
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-							say STDERR "File $thumbnail served, time: $t_elapsed" if $debug;
+							__debug( "File $thumbnail served, time: $t_elapsed", 1 );
 							$transformed = 1;
 						}
 						else {
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-							say STDERR "SVG conversion from $original to $thumbnail failed, time: $t_elapsed" if $debug;
+							__debug( "SVG conversion from $original to $thumbnail failed, time: $t_elapsed", 1 );
 						}
 						no bytes;
 						undef $rsvg;
 						undef $info;
 					}
 					else {
-						say STDERR "Thumbnail requested for SVG $original is not PNG file" if $debug;
+						__debug( "Thumbnail requested for SVG $original is not PNG file", 1 );
 					}
 				}
 				elsif( $mimetype =~ m!application/ogg! ) {
@@ -636,7 +679,7 @@ while( $request->Accept() >= 0 || $test ) {
 
 					videoThumbnail( $original, $thumbnail, $seek );
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					print STDERR "Creating thumbnail for video file $original, time: $t_elapsed\n";
+					__debug( "Creating thumbnail for video file $original, time: $t_elapsed", 1 );
 
 					$transformed = 1;
 					if( -f $thumbnail ) {
@@ -648,11 +691,11 @@ while( $request->Accept() >= 0 || $test ) {
 						print "X-Thumbnailer-Hostname: $hostname\r\n";
 						print "Content-type: $mimetype\r\n\r\n";
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-						print STDERR "File $thumbnail created, time: $t_elapsed\n" if $debug;
+						__debug( "File $thumbnail created, time: $t_elapsed", 1 );
 					}
 					else {
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-						print STDERR "Thumbnailer from $original to $thumbnail failed, time: $t_elapsed\n" if $debug;
+						__debug( "Thumbnailer from $original to $thumbnail failed, time: $t_elapsed", 1 );
 						#
 						# serve original file
 						#
@@ -681,7 +724,7 @@ while( $request->Accept() >= 0 || $test ) {
 						if( $w > 0 && $h > 0 ) {
 							$image = $image->crop( left => $x1, top => $y1, right => $x2, bottom => $y2  );
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-							say STDERR "Cropping into $x1 $x2 x $y1 $y2, time: $t_elapsed" if $debug > 2;
+							__debug( "Cropping into $x1 $x2 x $y1 $y2, time: $t_elapsed", 3 );
 							$cropped = 1;
 						}
 					}
@@ -694,7 +737,7 @@ while( $request->Accept() >= 0 || $test ) {
 						$origh  = $image->getheight();
 					};
 					$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-					say STDERR "Original size $origw x $origh, time: $t_elapsed" if $debug > 2;
+					__debug( "Original size $origw x $origh, time: $t_elapsed", 3 );
 					if( $origw && $origh ) {
 						#
 						# not bigger than original
@@ -711,16 +754,16 @@ while( $request->Accept() >= 0 || $test ) {
 							#
 							my $crop_width = $image->getwidth();
 							my $crop_height = $image->getheight();
-							say STDERR "Size after cropping: $crop_width x $crop_height, requested size: $width x $height" if $debug > 2;
+							__debug( "Size after cropping: $crop_width x $crop_height, requested size: $width x $height", 3 );
 							if( $crop_width < $width ) {
-								say STDERR "crop smaller than requested width: $crop_width < $width" if $debug > 2;
+								__debug( "crop smaller than requested width: $crop_width < $width", 3 );
 								#
 								# create base image with white background
 								# count where to place (gravity => center from IM)
 								#
 								my $background = Imager->new( xsize => $width, ysize => $height );
 								$background = $background->box( filled => 1, color => "white" );
-								say STDERR "Crop size $width x $height" if $debug > 2;
+								__debug( "Crop size $width x $height", 3 );
 								my $offsetx = $width/2 - $crop_width/2;
 								my $offsety = $height/2 - $crop_height/2;
 								$background->paste( src => $image, left => $offsetx, top => $offsety );
@@ -729,7 +772,7 @@ while( $request->Accept() >= 0 || $test ) {
 						}
 
 						$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-						say STDERR "Resizing into $thumbnail, time: $t_elapsed" if $debug;
+						__debug( "Resizing into $thumbnail, time: $t_elapsed", 1 );
 
 						my $output = undef;
 						$image->write( data => \$output, type => $imgtype, jpegquality => 90 );
@@ -751,14 +794,8 @@ while( $request->Accept() >= 0 || $test ) {
 							print "Content-type: $mimetype\r\n\r\n";
 							print $output unless $test;
 
-							# debug code, remove later
-							# use File::Temp qw/ tempfile tempdir /;
-							# my ( $fh, $fhn ) = tempfile();
-							# say "writting $fhn";
-							# write_file( $fhn, {binmode => ':raw' }, $output );
-
 							$t_elapsed = tv_interval( $t_start, [ gettimeofday() ] );
-							say STDERR "File $thumbnail served, time: $t_elapsed" if $debug;
+							__debug( "File $thumbnail served, time: $t_elapsed", 1 );
 							$transformed  = 1;
 						}
 						no bytes;
@@ -767,7 +804,7 @@ while( $request->Accept() >= 0 || $test ) {
 				}
 			}
 			else {
-				say STDERR "$thumbnail original file $original does not exists" if $debug > 1;
+				__debug( "$thumbnail original file $original does not exists", 2 );
 			}
 		}
 	}
@@ -783,7 +820,11 @@ while( $request->Accept() >= 0 || $test ) {
 	$manager->pm_post_dispatch() unless $test;
 }
 
+#
+# clean up section
+#
 $manager->pm_remove_pid_file() unless $test;
+closelog() if $use_syslog;
 
 #
 # if test display results
