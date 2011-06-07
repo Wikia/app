@@ -119,7 +119,7 @@ class MultiHideWikisMaintenance {
 			$this->inputIds = preg_replace("/[\r\n]+/", ",", $contents);
 		}
 		if ($this->inputIds != '') {
-			$idsList = split(",+",$this->inputIds);
+			$idsList = preg_split("/,+/",$this->inputIds);
 			$wikiIds = array();
 			foreach ($idsList as $id) {
 				$id = intval(trim($id));
@@ -144,6 +144,12 @@ class MultiHideWikisMaintenance {
 			$city_name = $city->city_dbname;
 			if (!$city->city_public) {
 				echo "$wikiId: error: ({$city_name}) city is already non-public\n";
+				continue;
+			}
+
+			$evaluator = new DeadWikiEvaluator($wikiId);
+			if (!$evaluator->getStatus()) {
+				echo "$wikiId: error: ({$city_name}) city does not meet requirements to be closed: ".$evaluator->getMessage()."\n";
 				continue;
 			}
 
@@ -182,5 +188,6 @@ class MultiHideWikisMaintenance {
  * --file <file name to read wiki ids from>
  * --dry-run
  */
+$wgAutoloadClasses['DeadWikiEvaluator'] = "{$IP}/extensions/wikia/WikiFactory/Evaluate/DeadWikiEvaluator.class.php";
 $maintenance = new MultiHideWikisMaintenance( $options );
 $maintenance->execute();
