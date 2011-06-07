@@ -1,7 +1,9 @@
 // 100 based (e.g. 80 instead of .8)
+// @see http://www.quirksmode.org/css/opacity.html
 @mixin opacity($value) {
 	opacity: #{"." + $value};
-	filter: alpha(opacity=$value);
 	-khtml-opacity: #{"." + $value};
 	-moz-opacity: #{"." + $value};
+	-ms-filter: #{"\"progid:DXImageTransform.Microsoft.Alpha(Opacity=" + $value + ")\""}; /* IE8 */
+	filter: #{"alpha(opacity=" + $value + ")"}; /* IE7 and below */
 }
