@@ -88,13 +88,14 @@ foreach($files as $file) {
 }
 
 // TODO: use nice HTML and CSS
-$html = '<table><tr><th>File name</th><th>Line</th></th>Message</th></tr>';
+$html = '<table border="1"><tr><th>File name</th><th>Line</th></th>Message</th></tr>';
 
 foreach($warnings as $warning) {
 	$html .= "<tr><td><tt>{$warning['file']}</tt></td><td>{$warning['line']}</td><td>{$warning['msg']}</td></tr>";
 }
 
 $html .= '</table>';
+$html .= '<hr/><address>Generated on ' . date('r') . '</address>';
 
 // save report
 file_put_contents($outputFile, $html);
