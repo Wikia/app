@@ -17,7 +17,7 @@
     public function __phpunit_getInvocationMocker()
     {
         if ($this->invocationMocker === NULL) {
-            $this->invocationMocker = new PHPUnit_Framework_MockObject_InvocationMocker;
+            $this->invocationMocker = new PHPUnit_Framework_MockObject_InvocationMocker($this);
         }
 
         return $this->invocationMocker;
@@ -40,7 +40,6 @@
 
     public function __phpunit_cleanup()
     {
-        self::$staticInvocationMocker = NULL;
-        $this->invocationMocker       = NULL;
+        $this->invocationMocker = NULL;
     }
 }

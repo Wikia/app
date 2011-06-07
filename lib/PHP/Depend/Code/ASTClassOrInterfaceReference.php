@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,12 +40,14 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
  * @since      0.9.5
  */
+
+require_once 'PHP/Depend/Code/ASTTypeNode.php';
 
 /**
  * This class is used as a placeholder for unknown classes or interfaces. It
@@ -55,9 +57,9 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.10.3
+ * @version    Release: 0.9.19
  * @link       http://www.pdepend.org/
  * @since      0.9.5
  */
@@ -70,30 +72,30 @@ class PHP_Depend_Code_ASTClassOrInterfaceReference
     const CLAZZ = __CLASS__;
 
     /**
-     * The global AST builder context.
+     * The associated AST builder.
      *
-     * @var PHP_Depend_Builder_Context
+     * @var PHP_Depend_BuilderI $builder
      */
-    protected $context = null;
+    protected $builder = null;
 
     /**
      * An already loaded type instance.
      *
-     * @var PHP_Depend_Code_AbstractClassOrInterface
+     * @var PHP_Depend_Code_AbstractClassOrInterface $typeInstance
      */
     protected $typeInstance = null;
 
     /**
      * Constructs a new type holder instance.
      *
-     * @param PHP_Depend_Builder_Context $context       The global builder context.
-     * @param string                     $qualifiedName The qualified type name.
+     * @param PHP_Depend_BuilderI $builder       The associated AST builder instance.
+     * @param string              $qualifiedName The qualified type name.
      */
-    public function __construct(PHP_Depend_Builder_Context $context, $qualifiedName)
+    public function __construct(PHP_Depend_BuilderI $builder, $qualifiedName)
     {
         parent::__construct($qualifiedName);
 
-        $this->context = $context;
+        $this->builder = $builder;
     }
 
     /**
@@ -104,7 +106,7 @@ class PHP_Depend_Code_ASTClassOrInterfaceReference
     public function getType()
     {
         if ($this->typeInstance === null) {
-            $this->typeInstance = $this->context->getClassOrInterface(
+            $this->typeInstance = $this->builder->getClassOrInterface(
                 $this->getImage()
             );
         }
@@ -124,17 +126,5 @@ class PHP_Depend_Code_ASTClassOrInterfaceReference
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitClassOrInterfaceReference($this, $data);
-    }
-
-    /**
-     * Magic method which returns the names of all those properties that should
-     * be cached for this node instance.
-     *
-     * @return array(string)
-     * @since 0.10.0
-     */
-    public function __sleep()
-    {
-        return array_merge(array('context'), parent::__sleep());
     }
 }

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2009-2011, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2009-2010, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,13 +39,12 @@
  * @category  PHP
  * @package   PHP_PMD
  * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2009-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2009-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://phpmd.org
  */
 
-require_once 'PHP/PMD/Rule.php';
 require_once 'PHP/PMD/RuleViolation.php';
 
 /**
@@ -54,15 +53,20 @@ require_once 'PHP/PMD/RuleViolation.php';
  * @category  PHP
  * @package   PHP_PMD
  * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2009-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2009-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: 1.1.0
+ * @version   Release: 0.2.7
  * @link      http://phpmd.org
  *
  * @SuppressWarnings(PHPMD)
  */
-abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
+abstract class PHP_PMD_AbstractRule
 {
+    /**
+     * The default lowest rule priority.
+     */
+    const LOWEST_PRIORITY = 5;
+
     /**
      * List of readable priority names.
      *
@@ -419,4 +423,14 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
         $ruleViolation = new PHP_PMD_RuleViolation($this, $node, $message);
         $this->_report->addRuleViolation($ruleViolation);
     }
+
+    /**
+     * This method should implement the violation analysis algorithm of concrete
+     * rule implementations. All extending classes must implement this method.
+     *
+     * @param PHP_PMD_AbstractNode $node The current context for analysis.
+     *
+     * @return void
+     */
+    public abstract function apply(PHP_PMD_AbstractNode $node);
 }

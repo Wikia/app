@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,11 +40,22 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
+
+require_once 'PHP/Depend/Code/ASTFormalParameter.php';
+require_once 'PHP/Depend/Code/ASTFormalParameters.php';
+require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
+require_once 'PHP/Depend/Code/ASTAllocationExpression.php';
+require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
+require_once 'PHP/Depend/Code/ASTStaticVariableDeclaration.php';
+
+require_once 'PHP/Depend/Code/AbstractItem.php';
+require_once 'PHP/Depend/Code/NodeIterator.php';
+require_once 'PHP/Depend/Code/ClassOrInterfaceReferenceIterator.php';
 
 /**
  * Abstract base class for callable objects.
@@ -55,37 +66,21 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.10.3
+ * @version    Release: 0.9.19
  * @link       http://pdepend.org/
  */
-abstract class PHP_Depend_Code_AbstractCallable
-       extends PHP_Depend_Code_AbstractItem
+abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_AbstractItem
 {
-    /**
-     * The type of this class.
-     * 
-     * @since 0.10.0
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
-     * The internal used cache instance.
-     *
-     * @var PHP_Depend_Util_Cache_Driver
-     * @since 0.10.0
-     */
-    protected $cache = null;
-
     /**
      * A reference instance for the return value of this callable. By
      * default and for any scalar type this property is <b>null</b>.
      *
-     * @var PHP_Depend_Code_ASTClassOrInterfaceReference
+     * @var PHP_Depend_Code_ASTClassOrInterfaceReference $_returnClassReference
      * @since 0.9.5
      */
-    protected $returnClassReference = null;
+    private $_returnClassReference = null;
 
     /**
      * List of all exceptions classes referenced by this callable.
@@ -93,22 +88,38 @@ abstract class PHP_Depend_Code_AbstractCallable
      * @var array(PHP_Depend_Code_ASTClassOrInterfaceReference)
      * @since 0.9.5
      */
-    protected $exceptionClassReferences = array();
+    private $_exceptionClassReferences = array();
+
+    /**
+     * List of class references for all classes or interfaces this callable
+     * depends on.
+     *
+     * @var array(PHP_Depend_Code_ASTClassOrInterfaceReference)
+     * @since 0.9.5
+     */
+    private $_dependencyClassReferences = array();
+
+    /**
+     * List of method/function parameters.
+     *
+     * @var PHP_Depend_Code_NodeIterator $_parameters
+     */
+    private $_parameters = null;
 
     /**
      * Does this callable return a value by reference?
      *
-     * @var boolean
+     * @var boolean $_returnsReference
      */
-    protected $returnsReference = false;
+    private $_returnsReference = false;
 
     /**
      * List of all parsed child nodes.
      *
-     * @var array(PHP_Depend_Code_ASTNodeI)
+     * @var array(PHP_Depend_Code_ASTNodeI) $_nodes
      * @since 0.9.6
      */
-    protected $nodes = array();
+    private $_nodes = array();
 
     /**
      * The start line number of the method or function declaration.
@@ -116,7 +127,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      * @var integer
      * @since 0.9.12
      */
-    protected $startLine = 0;
+    private $_startLine = 0;
 
     /**
      * The end line number of the method or function declaration.
@@ -124,37 +135,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      * @var integer
      * @since 0.9.12
      */
-    protected $endLine = 0;
-
-    /**
-     * List of method/function parameters.
-     *
-     * @var array(PHP_Depend_Code_Parameter)
-     */
-    private $_parameters = null;
-
-    /**
-     * Was this callable instance restored from the cache?
-     *
-     * @var boolean
-     * @since 0.10.0
-     */
-    protected $cached = false;
-
-    /**
-     * Setter method for the currently used token cache, where this callable
-     * instance can store the associated tokens.
-     *
-     * @param PHP_Depend_Util_Cache_Driver $cache The currently used cache instance.
-     *
-     * @return PHP_Depend_Code_AbstractCallable
-     * @since 0.10.0
-     */
-    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
-    {
-        $this->cache = $cache;
-        return $this;
-    }
+    private $_endLine = 0;
 
     /**
      * Adds a parsed child node to this node.
@@ -167,7 +148,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function addChild(PHP_Depend_Code_ASTNodeI $node)
     {
-        $this->nodes[] = $node;
+        $this->_nodes[] = $node;
     }
 
     /**
@@ -178,7 +159,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function getChildren()
     {
-        return $this->nodes;
+        return $this->_nodes;
     }
 
     /**
@@ -194,7 +175,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function getFirstChildOfType($targetType)
     {
-        foreach ($this->nodes as $node) {
+        foreach ($this->_nodes as $node) {
             if ($node instanceof $targetType) {
                 return $node;
             }
@@ -217,7 +198,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function findChildrenOfType($targetType, array &$results = array())
     {
-        foreach ($this->nodes as $node) {
+        foreach ($this->_nodes as $node) {
             if ($node instanceof $targetType) {
                 $results[] = $node;
             }
@@ -233,9 +214,8 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function getTokens()
     {
-        return (array) $this->cache
-            ->type('tokens')
-            ->restore($this->uuid);
+        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
+        return (array) $storage->restore($this->getUUID(), get_class($this));
     }
 
     /**
@@ -247,12 +227,11 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function setTokens(array $tokens)
     {
-        $this->startLine = reset($tokens)->startLine;
-        $this->endLine   = end($tokens)->endLine;
-
-        $this->cache
-            ->type('tokens')
-            ->store($this->uuid, $tokens);
+        $this->_startLine = reset($tokens)->startLine;
+        $this->_endLine   = end($tokens)->endLine;
+        
+        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
+        $storage->store($tokens, $this->getUUID(), get_class($this));
     }
 
     /**
@@ -263,7 +242,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function getStartLine()
     {
-        return $this->startLine;
+        return $this->_startLine;
     }
 
     /**
@@ -274,7 +253,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function getEndLine()
     {
-        return $this->endLine;
+        return $this->_endLine;
     }
 
     /**
@@ -285,10 +264,17 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function getDependencies()
     {
+        $classReferences = $this->_dependencyClassReferences;
+
+        $references = $this->findChildrenOfType(
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
+        );
+        foreach ($references as $reference) {
+            $classReferences[] = $reference;
+        }
+
         return new PHP_Depend_Code_ClassOrInterfaceReferenceIterator(
-            $this->findChildrenOfType(
-                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
-            )
+            $classReferences
         );
     }
 
@@ -302,10 +288,10 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function getReturnClass()
     {
-        if ($this->returnClassReference === null) {
+        if ($this->_returnClassReference === null) {
             return null;
         }
-        return $this->returnClassReference->getType();
+        return $this->_returnClassReference->getType();
     }
 
     /**
@@ -321,7 +307,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     public function setReturnClassReference(
         PHP_Depend_Code_ASTClassOrInterfaceReference $classReference
     ) {
-        $this->returnClassReference = $classReference;
+        $this->_returnClassReference = $classReference;
     }
 
     /**
@@ -337,7 +323,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     public function addExceptionClassReference(
         PHP_Depend_Code_ASTClassOrInterfaceReference $classReference
     ) {
-        $this->exceptionClassReferences[] = $classReference;
+        $this->_exceptionClassReferences[] = $classReference;
     }
 
     /**
@@ -349,20 +335,26 @@ abstract class PHP_Depend_Code_AbstractCallable
     public function getExceptionClasses()
     {
         return new PHP_Depend_Code_ClassOrInterfaceReferenceIterator(
-            $this->exceptionClassReferences
+            $this->_exceptionClassReferences
         );
     }
 
     /**
-     * Returns an array with all method/function parameters.
+     * Returns an iterator with all method/function parameters.
      *
-     * @return array(PHP_Depend_Code_Parameter)
+     * <b>NOTE:</b> All node iterators return an alphabetic ordered list of
+     * nodes. Use the {@link PHP_Depend_Code_Parameter::getPosition()} for the
+     * correct parameter position.
+     *
+     * @return PHP_Depend_Code_NodeIterator
      */
     public function getParameters()
     {
         if ($this->_parameters === null) {
             $this->_initParameters();
         }
+        $this->_parameters->rewind();
+        
         return $this->_parameters;
     }
 
@@ -375,7 +367,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function returnsReference()
     {
-        return $this->returnsReference;
+        return $this->_returnsReference;
     }
 
     /**
@@ -388,7 +380,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function setReturnsReference()
     {
-        $this->returnsReference = true;
+        $this->_returnsReference = true;
     }
 
     /**
@@ -419,19 +411,6 @@ abstract class PHP_Depend_Code_AbstractCallable
             }
         }
         return $staticVariables;
-    }
-
-    /**
-     * This method will return <b>true</b> when this callable instance was
-     * restored from the cache and not currently parsed. Otherwise this method
-     * will return <b>false</b>.
-     *
-     * @return boolean
-     * @since 0.10.0
-     */
-    public function isCached()
-    {
-        return $this->cached;
     }
 
     /**
@@ -470,48 +449,7 @@ abstract class PHP_Depend_Code_AbstractCallable
             $parameter->setOptional($optional);
         }
 
-        $this->_parameters = $parameters;
-    }
-    
-    /**
-     * The magic sleep method will be called by the PHP engine when this class
-     * gets serialized. It returns an array with those properties that should be
-     * cached for all callable instances.
-     *
-     * @return array(string)
-     * @since 0.10.0
-     */
-    public function __sleep()
-    {
-        $this->___temp___ = serialize($this->nodes);
-
-        return array(
-            'cache',
-            'uuid',
-            'name',
-            'startLine',
-            'endLine',
-            'docComment',
-            'returnsReference',
-            'returnClassReference',
-            'exceptionClassReferences',
-            '___temp___'
-        );
-    }
-
-    /**
-     * The magic wakeup method is called by the PHP runtime environment when a
-     * serialized instance of this class gets unserialized and all properties
-     * are restored. This implementation of the <b>__wakeup()</b> method sets
-     * a flag that this object was restored from the cache.
-     *
-     * @return void
-     * @since 0.10.0
-     */
-    public function __wakeup()
-    {
-        $this->nodes  = unserialize($this->___temp___);
-        $this->cached = true;
+        $this->_parameters = new PHP_Depend_Code_NodeIterator($parameters);
     }
 
     /**
@@ -525,7 +463,20 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function free()
     {
+        $this->_removeReferencesToParameters();
         $this->_removeReferencesToNodes();
+    }
+
+    /**
+     * Free memory consumed by parameters associated with this callable instance.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    private function _removeReferencesToParameters()
+    {
+        $this->getParameters()->free();
+        $this->_parameters = array();
     }
 
     /**
@@ -537,9 +488,42 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     private function _removeReferencesToNodes()
     {
-        foreach ($this->nodes as $node) {
+        foreach ($this->_nodes as $i => $node) {
             $node->free();
         }
-        $this->nodes = array();
+        $this->_nodes = array();
     }
+
+    // DEPRECATED METHODS AND PROPERTIES
+    // @codeCoverageIgnoreStart
+
+    /**
+     * Sets the start line for this item.
+     *
+     * @param integer $startLine The start line for this item.
+     *
+     * @return void
+     * @deprecated Since version 0.9.6
+     */
+    public function setStartLine($startLine)
+    {
+        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
+        $this->startLine = $startLine;
+    }
+
+    /**
+     * Sets the end line for this item.
+     *
+     * @param integer $endLine The end line for this item
+     *
+     * @return void
+     * @deprecated Since version 0.9.6
+     */
+    public function setEndLine($endLine)
+    {
+        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
+        $this->endLine = $endLine;
+    }
+
+    // @codeCoverageIgnoreEnd
 }

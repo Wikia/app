@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2011, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2002-2010, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@
  * @package    PHPUnit
  * @subpackage Framework
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 2.0.0
@@ -76,9 +76,9 @@ require_once 'PHP/CodeCoverage.php';
  * @package    PHPUnit
  * @subpackage Framework
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 3.5.13
+ * @version    Release: 3.5.0
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 2.0.0
  */
@@ -365,19 +365,28 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
             return;
         }
 
+        if (!file_exists($filename)) {
+            $includePaths = explode(PATH_SEPARATOR, get_include_path());
+
+            foreach ($includePaths as $includePath) {
+                $file = $includePath . DIRECTORY_SEPARATOR . $filename;
+
+                if (file_exists($file)) {
+                    $filename = $file;
+                    break;
+                }
+            }
+        }
+
         PHPUnit_Util_Class::collectStart();
-        $filename   = PHPUnit_Util_Fileloader::checkAndLoad($filename, $syntaxCheck);
+        PHPUnit_Util_Fileloader::checkAndLoad($filename, $syntaxCheck);
         $newClasses = PHPUnit_Util_Class::collectEnd();
         $baseName   = str_replace('.php', '', basename($filename));
 
         foreach ($newClasses as $className) {
             if (substr($className, 0 - strlen($baseName)) == $baseName) {
-                $class = new ReflectionClass($className);
-
-                if ($class->getFileName() == $filename) {
-                    $newClasses = array($className);
-                    break;
-                }
+                $newClasses = array($className);
+                break;
             }
         }
 
@@ -508,8 +517,10 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
                         $message .= "\n" . $_message;
                     }
 
-                    $data = self::warning($message);
+                    return new PHPUnit_Framework_Warning($message);
                 }
+
+                $groups = PHPUnit_Util_Test::getGroups($className, $name);
 
                 // Test method with @dataProvider.
                 if (isset($data)) {
@@ -517,47 +528,30 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
                       $className . '::' . $name
                     );
 
-                    if (empty($data)) {
-                        $data = self::warning(
-                          sprintf(
-                            'No tests found in suite "%s".',
-                            $test->getName()
-                          )
-                        );
-                    }
+                    foreach ($data as $_dataName => $_data) {
+                        $_test = new $className($name, $_data, $_dataName);
 
-                    if ($data instanceof PHPUnit_Framework_Warning) {
-                        $test->addTest($data);
-                    }
+                        if ($runTestInSeparateProcess) {
+                            $_test->setRunTestInSeparateProcess(TRUE);
 
-                    else {
-                        $groups = PHPUnit_Util_Test::getGroups($className, $name);
-
-                        foreach ($data as $_dataName => $_data) {
-                            $_test = new $className($name, $_data, $_dataName);
-
-                            if ($runTestInSeparateProcess) {
-                                $_test->setRunTestInSeparateProcess(TRUE);
-
-                                if ($preserveGlobalState !== NULL) {
-                                    $_test->setPreserveGlobalState($preserveGlobalState);
-                                }
+                            if ($preserveGlobalState !== NULL) {
+                                $_test->setPreserveGlobalState($preserveGlobalState);
                             }
-
-                            if ($backupSettings['backupGlobals'] !== NULL) {
-                                $_test->setBackupGlobals(
-                                  $backupSettings['backupGlobals']
-                                );
-                            }
-
-                            if ($backupSettings['backupStaticAttributes'] !== NULL) {
-                                $_test->setBackupStaticAttributes(
-                                  $backupSettings['backupStaticAttributes']
-                                );
-                            }
-
-                            $test->addTest($_test, $groups);
                         }
+
+                        if ($backupSettings['backupGlobals'] !== NULL) {
+                            $_test->setBackupGlobals(
+                              $backupSettings['backupGlobals']
+                            );
+                        }
+
+                        if ($backupSettings['backupStaticAttributes'] !== NULL) {
+                            $_test->setBackupStaticAttributes(
+                              $backupSettings['backupStaticAttributes']
+                            );
+                        }
+
+                        $test->addTest($_test, $groups);
                     }
                 }
 
@@ -831,9 +825,9 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
             $this->addTest(
               self::warning(
                 sprintf(
-                  'Test method "%s" in test class "%s" is not public.',
-                  $name,
-                  $class->getName()
+                  'Test method "%s" is not public.',
+
+                  $name
                 )
               )
             );

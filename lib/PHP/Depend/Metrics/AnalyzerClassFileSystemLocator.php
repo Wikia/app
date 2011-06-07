@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,12 +40,14 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  * @since      0.9.10
  */
+
+require_once 'PHP/Depend/Metrics/AnalyzerClassLocator.php';
 
 /**
  * Locator that searches for PHP_Depend analyzers that follow the PHP_Depend
@@ -55,9 +57,9 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.10.3
+ * @version    Release: 0.9.19
  * @link       http://pdepend.org/
  * @since      0.9.10
  */
@@ -121,12 +123,7 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
     {
         $result = array();
 
-        if (0 === stripos(PHP_OS, 'win')) {
-            $paths = explode(PATH_SEPARATOR, get_include_path());
-        } else {
-            preg_match_all('(:?(([a-z]+://)?[^:]+):?)i', get_include_path(), $match);
-            $paths = $match[1];
-        }
+        $paths = explode(PATH_SEPARATOR, get_include_path());
 
         foreach ($paths as $path) {
             $dir = $path.'/PHP/Depend/Metrics/';

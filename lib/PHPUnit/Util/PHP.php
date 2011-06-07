@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2011, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2002-2010, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@
  * @package    PHPUnit
  * @subpackage Util
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 3.4.0
@@ -49,13 +49,13 @@
  * @package    PHPUnit
  * @subpackage Util
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 3.5.13
+ * @version    Release: 3.5.0
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 3.4.0
  */
-abstract class PHPUnit_Util_PHP
+class PHPUnit_Util_PHP
 {
     /**
      * Path to the PHP interpreter that is to be used.
@@ -63,6 +63,17 @@ abstract class PHPUnit_Util_PHP
      * @var    string $phpBinary
      */
     protected static $phpBinary = NULL;
+
+    /**
+     * Descriptor specification for proc_open().
+     *
+     * @var    array
+     */
+    protected static $descriptorSpec = array(
+      0 => array('pipe', 'r'),
+      1 => array('pipe', 'w'),
+      2 => array('pipe', 'w')
+    );
 
     /**
      * Returns the path to a PHP interpreter.
@@ -117,84 +128,45 @@ abstract class PHPUnit_Util_PHP
     }
 
     /**
-     * @return PHPUnit_Util_PHP
-     * @since  Method available since Release 3.5.12
-     */
-    public static function factory()
-    {
-        if (DIRECTORY_SEPARATOR == '\\') {
-            return new PHPUnit_Util_PHP_Windows;
-        }
-
-        return new PHPUnit_Util_PHP_Default;
-    }
-
-    /**
      * Runs a single job (PHP code) using a separate PHP process.
      *
      * @param  string                       $job
      * @param  PHPUnit_Framework_TestCase   $test
      * @param  PHPUnit_Framework_TestResult $result
      * @return array|null
-     * @throws PHPUnit_Framework_Exception
      */
-    public function runJob($job, PHPUnit_Framework_Test $test = NULL, PHPUnit_Framework_TestResult $result = NULL)
+    public static function runJob($job, PHPUnit_Framework_Test $test = NULL, PHPUnit_Framework_TestResult $result = NULL)
     {
         $process = proc_open(
-          self::getPhpBinary(),
-          array(
-            0 => array('pipe', 'r'),
-            1 => array('pipe', 'w'),
-            2 => array('pipe', 'w')
-          ),
-          $pipes
+          self::getPhpBinary(), self::$descriptorSpec, $pipes
         );
 
-        if (!is_resource($process)) {
-            throw new PHPUnit_Framework_Exception(
-              'Unable to create process for process isolation.'
-            );
-        }
+        if (is_resource($process)) {
+            if ($result !== NULL) {
+                $result->startTest($test);
+            }
 
-        if ($result !== NULL) {
-            $result->startTest($test);
-        }
+            fwrite($pipes[0], $job);
+            fclose($pipes[0]);
 
-        $this->process($pipes[0], $job);
-        fclose($pipes[0]);
+            $stdout = stream_get_contents($pipes[1]);
+            fclose($pipes[1]);
 
-        $stdout = stream_get_contents($pipes[1]);
-        fclose($pipes[1]);
+            $stderr = stream_get_contents($pipes[2]);
+            fclose($pipes[2]);
 
-        $stderr = stream_get_contents($pipes[2]);
-        fclose($pipes[2]);
+            proc_close($process);
 
-        proc_close($process);
-        $this->cleanup();
-
-        if ($result !== NULL) {
-            $this->processChildResult($test, $result, $stdout, $stderr);
-        } else {
-            return array('stdout' => $stdout, 'stderr' => $stderr);
+            if ($result !== NULL) {
+                self::processChildResult($test, $result, $stdout, $stderr);
+            } else {
+                return array('stdout' => $stdout, 'stderr' => $stderr);
+            }
         }
     }
 
     /**
-     * @param resource $pipe
-     * @param string   $job
-     * @since Method available since Release 3.5.12
-     */
-    abstract protected function process($pipe, $job);
-
-    /**
-     * @since Method available since Release 3.5.12
-     */
-    protected function cleanup()
-    {
-    }
-
-    /**
-     * Processes the TestResult object from an isolated process.
+     * Runs a single job (PHP code) using a separate PHP process.
      *
      * @param PHPUnit_Framework_TestCase   $test
      * @param PHPUnit_Framework_TestResult $result
@@ -202,7 +174,7 @@ abstract class PHPUnit_Util_PHP
      * @param string                       $stderr
      * @since Method available since Release 3.5.0
      */
-    protected function processChildResult(PHPUnit_Framework_Test $test, PHPUnit_Framework_TestResult $result, $stdout, $stderr)
+    protected static function processChildResult(PHPUnit_Framework_Test $test, PHPUnit_Framework_TestResult $result, $stdout, $stderr)
     {
         if (!empty($stderr)) {
             $time = 0;

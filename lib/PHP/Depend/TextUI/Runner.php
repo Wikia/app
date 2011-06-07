@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,11 +40,17 @@
  * @package    PHP_Depend
  * @subpackage TextUI
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
+
+require_once 'PHP/Depend.php';
+require_once 'PHP/Depend/Code/Filter/Package.php';
+require_once 'PHP/Depend/Log/LoggerFactory.php';
+require_once 'PHP/Depend/Input/ExcludePathFilter.php';
+require_once 'PHP/Depend/Input/ExtensionFilter.php';
 
 /**
  * The command line runner starts a PDepend process.
@@ -53,9 +59,9 @@
  * @package    PHP_Depend
  * @subpackage TextUI
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 0.10.3
+ * @version    Release: 0.9.19
  * @link       http://pdepend.org/
  */
 class PHP_Depend_TextUI_Runner
@@ -71,12 +77,16 @@ class PHP_Depend_TextUI_Runner
     const EXCEPTION_EXIT = 2;
 
     /**
-     * The system configuration.
-     *
-     * @var PHP_Depend_Util_Configuration
-     * @since 0.10.0
+     * Marks the best optimization strategy that tries to provide best performance
+     * while it keeps memory usage low.
      */
-    protected $configuration = null;
+    const OPTIMZATION_BEST = 'best';
+
+    /**
+     * Marks the pass through optimization strategy that will consume most
+     * memory and will perform all actions without caching.
+     */
+    const OPTIMZATION_NONE = 'none';
 
     /**
      * List of allowed file extensions. Default file extensions are <b>php</b>
@@ -107,6 +117,29 @@ class PHP_Depend_TextUI_Runner
      * @var array(string) $_sourceArguments
      */
     private $_sourceArguments = array();
+
+    /**
+     * Mapping between optimization strategies and storage engines.
+     *
+     * @var array(string=>array) $_optimizations
+     */
+    private $_optimizations = array(
+        self::OPTIMZATION_BEST => array(
+            PHP_Depend::TOKEN_STORAGE   =>  'PHP_Depend_Storage_FileEngine',
+            PHP_Depend::PARSER_STORAGE  =>  'PHP_Depend_Storage_FileEngine',
+        ),
+        self::OPTIMZATION_NONE => array(
+            PHP_Depend::TOKEN_STORAGE   =>  'PHP_Depend_Storage_MemoryEngine',
+            PHP_Depend::PARSER_STORAGE  =>  'PHP_Depend_Storage_MemoryEngine',
+        ),
+    );
+
+    /**
+     * The selected optimization strategy.
+     *
+     * @var string $_optimization
+     */
+    private $_optimization = self::OPTIMZATION_BEST;
 
     /**
      * Should the parse ignore doc comment annotations?
@@ -143,19 +176,6 @@ class PHP_Depend_TextUI_Runner
      * @var array(string) $_parseErrors
      */
     private $_parseErrors = array();
-
-    /**
-     * Sets the system configuration.
-     *
-     * @param PHP_Depend_Util_Configuration $configuration The system configuration.
-     *
-     * @return void
-     * @since 0.10.0
-     */
-    public function setConfiguration(PHP_Depend_Util_Configuration $configuration)
-    {
-        $this->configuration = $configuration;
-    }
 
     /**
      * Sets a list of allowed file extensions.
@@ -207,6 +227,18 @@ class PHP_Depend_TextUI_Runner
     public function setSourceArguments(array $sourceArguments)
     {
         $this->_sourceArguments = $sourceArguments;
+    }
+
+    /**
+     * Sets the optimization strategy.
+     *
+     * @param string $optimization The optimization strategy.
+     *
+     * @return void
+     */
+    public function setOptimization($optimization)
+    {
+        $this->_optimization = $optimization;
     }
 
     /**
@@ -268,8 +300,17 @@ class PHP_Depend_TextUI_Runner
      */
     public function run()
     {
-        $pdepend = new PHP_Depend($this->configuration);
+        $pdepend = new PHP_Depend();
         $pdepend->setOptions($this->_options);
+
+        foreach ($this->_optimizations[$this->_optimization] as $type => $class) {
+            // Import storage engine class definition
+            if (class_exists($class) === false) {
+                include_once strtr($class, '_', '/') . '.php';
+            }
+
+            $pdepend->setStorage($type, new $class());
+        }
 
         if (count($this->_extensions) > 0) {
             $filter = new PHP_Depend_Input_ExtensionFilter($this->_extensions);
@@ -320,7 +361,7 @@ class PHP_Depend_TextUI_Runner
                 $pdepend->addLogger($logger);
             }
         } catch (Exception $e) {
-            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT, $e);
+            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
         foreach ($this->_processListeners as $processListener) {
@@ -334,7 +375,7 @@ class PHP_Depend_TextUI_Runner
                 $this->_parseErrors[] = $exception->getMessage();
             }
         } catch (Exception $e) {
-            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT, $e);
+            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
         return self::SUCCESS_EXIT;
@@ -361,4 +402,31 @@ class PHP_Depend_TextUI_Runner
     {
         return $this->_parseErrors;
     }
+
+    // Deprecated Stuff
+    // @codeCoverageIgnoreStart
+
+    /**
+     * Should PHP_Depend treat <b>+global</b> as a regular project package?
+     *
+     * @var boolean
+     * @deprecated since 0.9.12
+     */
+    private $_supportBadDocumentation = false;
+
+    /**
+     * Should PHP_Depend support projects with a bad documentation. If this
+     * option is set to <b>true</b>, PHP_Depend will treat the default package
+     * <b>+global</b> as a regular project package.
+     *
+     * @return void
+     * @deprecated since 0.9.12
+     */
+    public function setSupportBadDocumentation()
+    {
+        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.12.' . PHP_EOL);
+        $this->_supportBadDocumentation = true;
+    }
+
+    // @codeCoverageIgnoreEnd
 }
