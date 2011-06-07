@@ -63,10 +63,9 @@ $wgAutoloadClasses['LayoutWidgetGallery'] = $dir . "widget/LayoutWidgetGallery.c
 $wgAjaxExportList[] = 'LayoutWidgetGallery::renderForFormAjax';
 $wgAjaxExportList[] = 'LayoutWidgetGallery::getGalleryDataAjax';
 
-/* parser and revers parser */
+/* parser and reverse parser */
 
 $wgAjaxExportList[] = 'PageLayoutBuilderEditor::closeHelpbox';
-
 
 if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 	$wgHooks['ParserFirstCallInit'][] = 'PageLayoutBuilderParser::init';
