@@ -186,13 +186,13 @@ class MyHome {
 	public static function getInitialMainPage($title) {
 		wfProfileIn(__METHOD__);
 
-		global $wgUser, $wgTitle;
+		global $wgUser, $wgTitle, $wgRequest;
 
 		// dirty hack to make skin chooser work ($wgTitle is not set at this point yet)
 		$wgTitle = Title::newMainPage();
 
-		// do not redirect for skins different then monaco
-		if(get_class($wgUser->getSkin()) != 'SkinOasis') {
+		// do not redirect for skins different then Oasis or logged-in requests driven by RandomWiki (FB#1033)
+		if(get_class($wgUser->getSkin()) != 'SkinOasis' || ( $wgUser->isLoggedIn() && $wgRequest->getInt( 'randomWiki' ) == 1 ) ) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}

@@ -31,7 +31,7 @@ class RandomWiki extends SpecialPage {
 	}
 
 	public function execute( $wikiID ) {
-		global $wgOut, $wgRequest, $wgCityId;
+		global $wgOut, $wgRequest, $wgCityId, $wgUser;
 
 		wfProfileIn( __METHOD__ );
 		$this->setHeaders();
@@ -126,6 +126,11 @@ class RandomWiki extends SpecialPage {
 
 		$wgServerRemote = WikiFactory::getVarByName( 'wgServer', $destinationID );
 		$url = unserialize( $wgServerRemote->cv_value );
+		
+		//FB#1033: avoid being sent to Special:WikiActivity when logged-in, see MyHomw::getInitialMainPage
+		if ( $wgUser->isLoggedIn() ) {
+			$url .= '?randomWiki=1';
+		}
 
 		// Redirect the user to a randomly-chosen wiki
 		$wgOut->redirect( $url );
