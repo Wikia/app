@@ -353,13 +353,21 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 
 	public function getMetricValue( $res, $metric ){
 
+		// add sampling
+		$aSampling = F::app()->sendRequest(
+			'GoogleAnalyticsSampling',
+			'getSamplingRate',
+			array( 'date' => $this->frequency->getGapiSamplingDateFromResult( $res ) )
+		)->getData();
+		$iSampling = 100/$aSampling[ GoogleAnalyticsSamplingController::SAMPLING_RATE ];
 		$sName = 'get'.ucfirst( $metric );
-
+		
 		// hack for displaying hours insteed of seconds
 		if ( in_array( $metric, array( 'timeOnSite', 'avgTimeOnSite', 'avgTimeOnPage' ) ) ){
 			return floor( $res->$sName() / 360 );
 		}
-		return $res->$sName();
+		$iValue = $iSampling * $res->$sName();
+		return $iValue;
 	}
 
 	public function getMetricName( $metric ){
