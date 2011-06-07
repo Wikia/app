@@ -37,30 +37,22 @@ class EditPageLayoutHelper {
 			$this->out->setPageTitle($this->app->runFunction('wfMsg', 'editing', $this->app->getGlobal('wgTitle')->getPrefixedText()));
 			return false;
 		}
-		// TODO: create static chute package
-		$wgExtensionsPath = $this->app->getGlobal('wgExtensionsPath');
-		$cb = $this->app->getGlobal('wgStyleVersion');
-		$wgJsMimeType = $this->app->getGlobal('wgJsMimeType');
 
+		// use "reskined" edit page layout
 		if ($fullScreen) {
 			// add stylesheet
 			$this->out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageLayout/css/EditPageLayout.scss'));
 
 			// add javascript engine
 			$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('epl');
+			$wgJsMimeType = $this->app->wg->JsMimeType;
+
 			foreach($srcs as $src) {
-				$this->out->addScript("<script src=\"{$src}\" type=\"{$wgJsMimeType}\"></script>");
+				$this->out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>");
 			}
 
 			// set Oasis entry-point
 			Wikia::setVar('OasisEntryModuleName', 'EditPageLayout');
-
-			/*
-			$files = self::getAssets();
-			foreach ($files as $file) {
-				$this->out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/EditPageLayout/js/{$file}?{$cb}\"></script>");
-			}
-			*/
 		}
 
 		// macbre: load YUI on edit page (it's always loaded using $.loadYUI)
