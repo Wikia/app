@@ -19,9 +19,6 @@ class RiakSessionHandler {
 	/**
 	 * return proper key for session
 	 *
-	 * if $wgWikiaCentralAuthDatabase is set it means that we use WikiaCentralAuth
-	 * and we want to set prefix for $wgWikiaCentralAuthDatabase
-	 *
 	 * if $wgSharedDB is set it means that we use global user table on 1st cluster
 	 *
 	 * if nothing from above is set we have local user table (for example
