@@ -138,7 +138,7 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 		}
 	}
 
-	
+
 	public function getOwnPreviewDiff( $wikitext, $method ) {
 		if($method == 'preview') {
 			if (empty($type)) {
@@ -147,13 +147,13 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 			if (!in_array($type,array('form','article'))) {
 				$type = 'article';
 			}
-	
+
 			$html = '';
 			$title = $this->getEditedArticle()->getTitle();
 			$parser = F::build('PageLayoutBuilderParser');
 			$parserOutput = $parser->parseForLayoutPreview( $this->getWikitextFromRequest(), $title, $type);
 			$html = $parserOutput->getText();
-	
+
 			if ($type == "form") {
 				if (strlen(trim($html)) == 0) {
 					$html = XML::element("div",array(
@@ -474,6 +474,24 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 
 
 		$buttons = $buttons_out;
+		return true;
+	}
+
+	/**
+	 * rollbackHook
+	 *
+	 * @author Tomek Odrobny
+	 *
+	 * @access public
+	 *
+	 */
+	static public function onArticleRollbackComplete(&$article, $user, $revision) {
+		if($revision->getTitle()->getNamespace() != NS_PLB_LAYOUT) {
+			return true;
+		}
+		$parser = new PageLayoutBuilderParser();
+		$out = $parser->parseForLayoutPreview($revision->getRawText(), $revision->getTitle());
+		PageLayoutBuilderModel::saveElementList($revision->getTitle()->getArticleId(), $out->mPlbFormElements);
 		return true;
 	}
 }
