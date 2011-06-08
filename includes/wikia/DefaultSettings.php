@@ -245,6 +245,7 @@ $wgAutoloadClasses[ "WikiaApiQueryEventInfo"       ] = "{$IP}/extensions/wikia/W
 $wgAutoloadClasses[ "WikiaApiQueryScribeEvents"    ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryScribeEvents.php";
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"        ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
 $wgAutoloadClasses[ "ApiRunJob"                    ] = "{$IP}/extensions/wikia/WikiaApi/ApiRunJob.php";
+$wgAutoloadClasses[ "WikiaApiRiakAccess"           ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiRiakAccess.php";
 $wgAutoloadClasses[ "ExternalUser_Wikia"           ] = "{$IP}/includes/wikia/ExternalUser_Wikia.php";
 
 if( $wgUseFakeExternalStoreDB !== true ) {
@@ -334,6 +335,8 @@ $wgAPIModules[ "ajaxlogin"         ] = "WikiaApiAjaxLogin";
 $wgAPIModules[ "theschwartz"       ] = "WikiaApiReportEmail";
 $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
 $wgAPIModules[ "runjob"            ] = "ApiRunJob";
+$wgAPIModules[ "riakaccess"        ] = "WikiaApiRiakAccess";
+
 
 if( $wgUseFakeExternalStoreDB !== true ) {
 	$wgAPIModules[ "blob"              ] = "WikiaApiQueryBlob";
