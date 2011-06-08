@@ -173,7 +173,7 @@ class ApiRunJob extends ApiBase {
 		);
 	}
 
-		public function getDescription() {
+	public function getDescription() {
 		return array (
 			'Run jobs from jobs queue.'
 		);
