@@ -509,7 +509,7 @@ AdConfig.DART.initCategories = function() {
 	var categories = '';
 
 	for (var i=0; i < wgCategories.length; i++) {
-		categoryStr = 'cat=' + encodeURIComponent(wgCategories[i].toLowerCase()) + ';';
+		categoryStr = 'cat=' + encodeURIComponent(wgCategories[i].toLowerCase().replace(/ /g, '_')) + ';';
 		if (categories.length + categoryStr.length <= AdConfig.DART.categoryStrMaxLength) {
 			categories += categoryStr;
 		}
