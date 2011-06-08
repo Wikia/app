@@ -1,0 +1,48 @@
+@import "../../../skins/oasis/css/mixins/border-radius";
+@import "../../../skins/oasis/css/core/layout";
+
+.global-notification {
+	.msg{
+		background: #FEF4BC;
+		color: #3a3a3a;
+		display: inline-block;
+		padding: 8px;
+		zoom: 1;
+		*display: inline; /* IE7 hack */
+		.warning{
+			background-image: url(/extensions/wikia/GlobalNotification/bullet_error.png);	/* $wgCdnStylePath */
+			display: block;
+			float: left;
+			height: 16px;
+			margin-right: 5px;
+			position: relative;
+			top: -1px;
+			width: 16px;
+		}
+	}
+} 
+
+body >.global-notification {
+	position: fixed;
+	text-align: center;
+	top: 0;
+	width: 100%;
+	*z-index: $zTop + 1;	/* IE7 hack */
+	.msg{
+		@include border-radius-se(10px);
+		@include border-radius-sw(10px);
+		border-bottom: 1px solid #404040;
+		border-left: 1px solid #404040;
+		border-right: 1px solid #404040;
+		position: relative;
+		z-index: $zTop + 1;
+	}
+}
+
+.modalWrapper >.global-notification {
+	background: #FEF4BC;
+	.msg {
+		background: none;
+		width: 100%;
+	}
+}

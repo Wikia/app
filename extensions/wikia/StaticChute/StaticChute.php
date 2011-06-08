@@ -115,6 +115,7 @@ class StaticChute {
 			'../extensions/wikia/AdEngine/AdProviderOpenX.js',
 			'../extensions/wikia/AdEngine/LazyLoadAds.js',
 			'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
+			'../extensions/wikia/GlobalNotification/GlobalNotification.js',
 		);
 	}
 
