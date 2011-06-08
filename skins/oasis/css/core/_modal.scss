@@ -2,19 +2,17 @@
 	@include box-shadow(0, 10px, 60px, mix($color-page, #000));
 	background: $color-page;
 	border: 5px solid $color-body;
-	padding: 26px 18px 18px 18px;
 	position: absolute;
 	>h1 {
 		color: $color-links;
 		font-size: 22px;
-		margin-bottom: 10px;
-		margin-right: 30px;
+		margin: 26px 48px 10px 18px;
 		overflow: hidden;
 	}
 	.close {
-		position: absolute;
-		right: 18px;
-		top: 18px;
+		@include clearfix;
+		float: right;
+		margin: 18px 18px 0 0;
 	}
 	.neutral {
 		background: transparent;
@@ -36,6 +34,7 @@
 	@include clearfix;
 	@include bodytext;
 	display: block;
+	margin: 0 18px 18px 18px;
 }
 
 .blackout {
