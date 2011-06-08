@@ -294,10 +294,11 @@ class UserPagesHeaderModule extends Module {
 		else if (defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) {
 				// "Create a blog post" button
 				if (self::isItMe($this->userName)) {
+					global $wgCreateBlogPagePreload;
 					wfLoadExtensionMessages('Blogs');
 					
 					$this->actionButton = array(
-							'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl(),
+							'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl( !empty($wgCreateBlogPagePreload) ? "preload=$wgCreateBlogPagePreload" : "" ),
 							'text' => wfMsg('blog-create-post-label'),
 							);
 					
@@ -578,9 +579,10 @@ class UserPagesHeaderModule extends Module {
 		wfProfileIn(__METHOD__);
 		
 		wfLoadExtensionMessages('Blogs');
+		global $wgCreateBlogPagePreload;
 		// "Create blog post" button
 		$this->actionButton = array(
-				'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl(),
+				'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl( !empty($wgCreateBlogPagePreload) ? "preload=$wgCreateBlogPagePreload" : "" ),
 				'text' => wfMsg('blog-create-post-label'),
 				);
 		$this->title = wfMsg('create-blog-post-category');
