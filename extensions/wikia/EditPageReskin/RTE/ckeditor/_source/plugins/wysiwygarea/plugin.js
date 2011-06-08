@@ -712,7 +712,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 									// Prevent right click from selecting an empty block even
 									// when selection is anchored inside it. (#5845)
-									if ( !target.getOuterHtml().replace( emptyParagraphRegexp, '' ) )
+									if ( target.getOuterHtml && !target.getOuterHtml().replace( emptyParagraphRegexp, '' ) )
 									{
 										var range = new CKEDITOR.dom.range( domDocument );
 										range.moveToElementEditStart( target );
