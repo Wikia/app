@@ -38,6 +38,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			{
 				var listItem = listNode.getChild( i );
 
+				// Fixing malformed nested lists by moving it into a previous list item. (#6236)
+				if( listItem.type == CKEDITOR.NODE_ELEMENT && listItem.getName() in CKEDITOR.dtd.$list )
+					CKEDITOR.plugins.list.listToArray( listItem, database, baseArray, baseIndentLevel + 1 );
+
 				// It may be a text node or some funny stuff.
 				if ( listItem.$.nodeName.toLowerCase() != 'li' )
 					continue;
@@ -83,6 +87,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				currentIndex = baseIndex,
 				indentLevel = Math.max( listArray[ baseIndex ].indent, 0 ),
 				currentListItem = null,
+				itemDir,
 				paragraphName = ( paragraphMode == CKEDITOR.ENTER_P ? 'p' : 'div' );
 			while ( 1 )
 			{
@@ -111,7 +116,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				}
 				else if ( item.indent == Math.max( indentLevel, 0 ) + 1 )
 				{
-					var listData = CKEDITOR.plugins.list.arrayToList( listArray, null, currentIndex, paragraphMode );
+					// Maintain original direction (#6861).
+					var orgDir = item.element.getDirection( 1 ),
+						currDir = listArray[ currentIndex - 1 ].element.getDirection( 1 ),
+						listData = CKEDITOR.plugins.list.arrayToList( listArray, null, currentIndex, paragraphMode,
+						currDir != orgDir ? orgDir: null );
 
 					// If the next block is an <li> with another list tree as the first
 					// child, we'll need to append a filler (<br>/NBSP) or the list item
@@ -123,9 +132,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				}
 				else if ( item.indent == -1 && !baseIndex && item.grandparent )
 				{
-					currentListItem;
 					if ( listNodeNames[ item.grandparent.getName() ] )
+					{
 						currentListItem = item.element.clone( false, true );
+						itemDir = item.element.getDirection( 1 );
+						item.grandparent.getDirection( 1 ) != itemDir &&
+							currentListItem.setAttribute( 'dir', itemDir );
+					}
 					else
 					{
 						// Create completely new blocks here.
@@ -133,7 +146,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						{
 							currentListItem = doc.createElement( paragraphName );
 							item.element.copyAttributes( currentListItem, { type:1, value:1 } );
-							var itemDir = item.element.getDirection() || dir;
+							itemDir = item.element.getDirection() || dir;
 							itemDir &&
 								currentListItem.setAttribute( 'dir', itemDir );
 
@@ -214,6 +227,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 	function onSelectionChange( evt )
 	{
+		if ( evt.editor.readOnly )
+			return null;
+
 		var path = evt.data.path,
 			blockLimit = path.blockLimit,
 			elements = path.elements,
@@ -233,8 +249,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		for ( i = 0 ; i < elements.length && ( element = elements[ i ] )
 			  && !element.equals( blockLimit ); i++ )
 		{
-			if ( listNodeNames[ elements[i].getName() ] )
-				return this.setState( this.type == elements[i].getName() ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF );
+			if ( listNodeNames[ elements[ i ].getName() ] )
+				return this.setState( this.type == elements[ i ].getName() ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF );
 		}
 
 		return this.setState( CKEDITOR.TRISTATE_OFF );
@@ -466,9 +482,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	listCommand.prototype = {
 		exec : function( editor )
 		{
-			editor.focus();
-
 			var doc = editor.document,
+				config = editor.config,
 				selection = editor.getSelection(),
 				ranges = selection && selection.getRanges( /*true*/ CKEDITOR.ONLY_FORMATTABLES );
 
@@ -482,21 +497,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			if ( this.state == CKEDITOR.TRISTATE_OFF )
 			{
 				var body = doc.getBody();
-				body.trim();
-				if ( !body.getFirst() )
+				if ( !body.getFirst( nonEmpty ) )
 				{
-					var paragraph = doc.createElement( editor.config.enterMode == CKEDITOR.ENTER_P ? 'p' :
-							( editor.config.enterMode == CKEDITOR.ENTER_DIV ? 'div' : 'br' ) );
-					paragraph.appendTo( body );
-					ranges = new CKEDITOR.dom.rangeList( [ new CKEDITOR.dom.range( doc ) ] );
-					// IE exception on inserting anything when anchor inside <br>.
-					if ( paragraph.is( 'br' ) )
-					{
-						ranges[ 0 ].setStartBefore( paragraph );
-						ranges[ 0 ].setEndAfter( paragraph );
-					}
-					else
-						ranges[ 0 ].selectNodeContents( paragraph );
+					config.enterMode == CKEDITOR.ENTER_BR ?
+						body.appendBogus() :
+						ranges[ 0 ].fixBlock( 1, config.enterMode == CKEDITOR.ENTER_P ? 'p' : 'div' );
+
 					selection.selectRanges( ranges );
 				}
 				// Maybe a single range there enclosing the whole list,

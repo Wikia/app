@@ -255,7 +255,7 @@ window.RTE = {
 
 			editor.fire('modeSwitch');
 		}
-		
+
 		// ok, we're done!
 		RTE.loaded = true;
 		RTE.loading(false);
@@ -263,9 +263,9 @@ window.RTE = {
 		// calculate load time
 		RTE.loadTime = ( (new Date()).getTime() - window.wgRTEStart.getTime() ) / 1000;
 
-		RTE.log('CKEditor v' + CKEDITOR.version + ' (' +
-			(window.RTEDevMode ? 'in development mode' : CKEDITOR.revision) +
-			') is ready in "' + RTE.instance.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
+		RTE.log('CKEditor v' + CKEDITOR.version +
+			(window.RTEDevMode ? ' (in development mode)' : '') +
+			' is ready in "' + RTE.instance.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
 
 		// fire custom event for "track" plugin
 		RTE.instance.fire('RTEready');

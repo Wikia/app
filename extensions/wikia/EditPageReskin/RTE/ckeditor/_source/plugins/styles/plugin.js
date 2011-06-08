@@ -19,11 +19,11 @@ CKEDITOR.plugins.add( 'styles',
 });
 
 /**
- * Registers a function to be called whenever a style changes its state in the
+ * Registers a function to be called whenever the selection position changes in the
  * editing area. The current state is passed to the function. The possible
  * states are {@link CKEDITOR.TRISTATE_ON} and {@link CKEDITOR.TRISTATE_OFF}.
  * @param {CKEDITOR.style} style The style to be watched.
- * @param {Function} callback The function to be called when the style state changes.
+ * @param {Function} callback The function to be called.
  * @example
  * // Create a style object for the &lt;b&gt; element.
  * var style = new CKEDITOR.style( { element : 'b' } );
@@ -79,12 +79,14 @@ CKEDITOR.STYLE_OBJECT = 3;
 
 (function()
 {
-	var blockElements	= { address:1,div:1,h1:1,h2:1,h3:1,h4:1,h5:1,h6:1,p:1,pre:1 };
-	var objectElements	= { a:1,embed:1,hr:1,img:1,li:1,object:1,ol:1,table:1,td:1,tr:1,th:1,ul:1,dl:1,dt:1,dd:1,form:1};
+	var blockElements	= { address:1,div:1,h1:1,h2:1,h3:1,h4:1,h5:1,h6:1,p:1,pre:1 },
+		objectElements	= { a:1,embed:1,hr:1,img:1,li:1,object:1,ol:1,table:1,td:1,tr:1,th:1,ul:1,dl:1,dt:1,dd:1,form:1};
 
-	var semicolonFixRegex = /\s*(?:;\s*|$)/;
+	var semicolonFixRegex = /\s*(?:;\s*|$)/,
+		varRegex = /#\((.+?)\)/g;
 
-	var notBookmark = CKEDITOR.dom.walker.bookmark( 0, 1 );
+	var notBookmark = CKEDITOR.dom.walker.bookmark( 0, 1 ),
+		nonWhitespaces = CKEDITOR.dom.walker.whitespaces( 1 );
 
 	CKEDITOR.style = function( styleDefinition, variablesValues )
 	{
@@ -99,7 +101,7 @@ CKEDITOR.STYLE_OBJECT = 3;
 		var element = this.element = ( styleDefinition.element || '*' ).toLowerCase();
 
 		this.type =
-			( element == '#' || blockElements[ element ] ) ?
+			blockElements[ element ] ?
 				CKEDITOR.STYLE_BLOCK
 			: objectElements[ element ] ?
 				CKEDITOR.STYLE_OBJECT
@@ -211,7 +213,7 @@ CKEDITOR.STYLE_OBJECT = 3;
 		// current style definition.
 		checkElementRemovable : function( element, fullMatch )
 		{
-			if ( !element )
+			if ( !element || element.isReadOnly() )
 				return false;
 
 			var def = this._.definition,
@@ -286,7 +288,7 @@ CKEDITOR.STYLE_OBJECT = 3;
 		},
 
 		// Builds the preview HTML based on the styles definition.
-		buildPreview : function()
+		buildPreview : function( label )
 		{
 			var styleDefinition = this._.definition,
 				html = [],
@@ -313,7 +315,7 @@ CKEDITOR.STYLE_OBJECT = 3;
 			if ( cssStyle )
 				html.push( ' style="', cssStyle, '"' );
 
-			html.push( '>', styleDefinition.name, '</', elementName, '>' );
+			html.push( '>', ( label || styleDefinition.name ), '</', elementName, '>' );
 
 			return html.join( '' );
 		}
@@ -821,26 +823,26 @@ CKEDITOR.STYLE_OBJECT = 3;
 		}
 
 		range.moveToBookmark( bookmark );
-}
+	}
 
 	function applyObjectStyle( range )
 	{
 		var root = range.getCommonAncestor( true, true ),
-				element = root.getAscendant( this.element, true );
-		element && setupElement( element, this );
+			element = root.getAscendant( this.element, true );
+		element && !element.isReadOnly() && setupElement( element, this );
 	}
 
 	function removeObjectStyle( range )
 	{
 		var root = range.getCommonAncestor( true, true ),
-				element = root.getAscendant( this.element, true );
+			element = root.getAscendant( this.element, true );
 
 		if ( !element )
 			return;
 
-		var style = this;
-		var def = style._.definition;
-		var attributes = def.attributes;
+		var style = this,
+			def = style._.definition,
+			attributes = def.attributes;
 		var styles = CKEDITOR.style.getStyleText( def );
 
 		// Remove all defined attributes.
@@ -884,8 +886,11 @@ CKEDITOR.STYLE_OBJECT = 3;
 
 		while ( ( block = iterator.getNextParagraph() ) )		// Only one =
 		{
-			var newBlock = getElement( this, doc, block );
-			replaceBlock( block, newBlock );
+			if ( !block.isReadOnly() )
+			{
+				var newBlock = getElement( this, doc, block );
+				replaceBlock( block, newBlock );
+			}
 		}
 
 		range.moveToBookmark( bookmark );
@@ -970,7 +975,6 @@ CKEDITOR.STYLE_OBJECT = 3;
 			removeNoAttribsElement( newBlock );
 	}
 
-	var nonWhitespaces = CKEDITOR.dom.walker.whitespaces( 1 );
 	/**
 	 * Merge a <pre> block with a previous sibling if available.
 	 */
@@ -1039,6 +1043,7 @@ CKEDITOR.STYLE_OBJECT = 3;
 			} );
 		return headBookmark + str.replace( regexp, replacement ) + tailBookmark;
 	}
+
 	/**
 	 * Converting a list of <pre> into blocks with format well preserved.
 	 */
@@ -1174,9 +1179,8 @@ CKEDITOR.STYLE_OBJECT = 3;
 		var def = style._.definition,
 			attribs = def.attributes,
 			styles = def.styles,
-			overrides = getOverrides( style );
-
-		var innerElements = element.getElementsByTag( style.element );
+			overrides = getOverrides( style ),
+			innerElements = element.getElementsByTag( style.element );
 
 		for ( var i = innerElements.count(); --i >= 0 ; )
 			removeFromElement( style,  innerElements.getItem( i ) );
@@ -1195,7 +1199,6 @@ CKEDITOR.STYLE_OBJECT = 3;
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -1279,11 +1282,9 @@ CKEDITOR.STYLE_OBJECT = 3;
 
 	function getElement( style, targetDocument, element )
 	{
-		var el;
-
-		var def = style._.definition;
-
-		var elementName = style.element;
+		var el,
+			def = style._.definition,
+			elementName = style.element;
 
 		// The "*" element name will always be a span for this function.
 		if ( elementName == '*' )
@@ -1309,9 +1310,9 @@ CKEDITOR.STYLE_OBJECT = 3;
 
 	function setupElement( el, style )
 	{
-		var def = style._.definition;
-		var attributes = def.attributes;
-		var styles = CKEDITOR.style.getStyleText( def );
+		var def = style._.definition,
+			attributes = def.attributes,
+			styles = CKEDITOR.style.getStyleText( def );
 
 		// Assign all defined attributes.
 		if ( attributes )
@@ -1329,7 +1330,6 @@ CKEDITOR.STYLE_OBJECT = 3;
 		return el;
 	}
 
-	var varRegex = /#\((.+?)\)/g;
 	function replaceVariables( list, variablesValues )
 	{
 		for ( var item in list )
@@ -1340,7 +1340,6 @@ CKEDITOR.STYLE_OBJECT = 3;
 				});
 		}
 	}
-
 
 	// Returns an object that can be used for style matching comparison.
 	// Attributes names and values are all lowercased, and the styles get
@@ -1470,6 +1469,16 @@ CKEDITOR.STYLE_OBJECT = 3;
 		else
 			styleText = unparsedCssText;
 
+		// Normalize font-family property, ignore quotes and being case insensitive. (#7322)
+		// http://www.w3.org/TR/css3-fonts/#font-family-the-font-family-property
+		styleText = styleText.replace( /(font-family:)(.*?)(?=;|$)/, function ( match, prop, val )
+		{
+			var names = val.split( ',' );
+			for ( var i = 0; i < names.length; i++ )
+				names[ i ] = CKEDITOR.tools.trim( names[ i ].replace( /["']/g, '' ) );
+			return prop + names.join( ',' );
+		});
+
 		// Shrinking white-spaces around colon and semi-colon (#4147).
 		// Compensate tail semi-colon.
 		return styleText.replace( /\s*([;:])\s*/, '$1' )
@@ -1578,11 +1587,11 @@ CKEDITOR.styleCommand.prototype.exec = function( editor )
  * 	// Block Styles
  * 	{ name : 'Blue Title'		, element : 'h3', styles : { 'color' : 'Blue' } },
  * 	{ name : 'Red Title'		, element : 'h3', styles : { 'color' : 'Red' } },
- * 
+ *
  * 	// Inline Styles
  * 	{ name : 'Marker: Yellow'	, element : 'span', styles : { 'background-color' : 'Yellow' } },
  * 	{ name : 'Marker: Green'	, element : 'span', styles : { 'background-color' : 'Lime' } },
- * 
+ *
  * 	// Object Styles
  * 	{
  * 		name : 'Image on Left',
