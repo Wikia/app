@@ -34,6 +34,7 @@ function jslint($file) {
 				'file' => str_replace($IP, '', $matches[1]),
 				'line' => intval($matches[2]),
 				'msg' => trim($matches[3]),
+				'isError' => strpos($matches[3], 'ERROR') !== false,
 			);
 		}
 	}
@@ -80,6 +81,7 @@ $files = find($IP, '*.js');
 //var_dump($files); die();
 
 $warnings = array();
+$timeStart = time();
 
 foreach($files as $file) {
 	echo "\nChecking {$file}...";
@@ -87,11 +89,16 @@ foreach($files as $file) {
 	$warnings = array_merge($warnings, jslint($file));
 }
 
-// TODO: use nice HTML and CSS
-$html = '<table border="1"><tr><th>File name</th><th>Line</th></th>Message</th></tr>';
+$time = time() - $timeStart;
+
+// generate the report
+$html = '<p>Checked ' . count($files) . ' files in ' . round($time / 60) .' minutes</p>';
+
+$html .= '<table border="1"><tr><th>File name</th><th>Line</th><th>Message</th></tr>';
 
 foreach($warnings as $warning) {
-	$html .= "<tr><td><tt>{$warning['file']}</tt></td><td>{$warning['line']}</td><td>{$warning['msg']}</td></tr>";
+	$style = $warning['isError'] ? ' style="background: #fd5e53; color: #fff"' : '';
+	$html .= "<tr{$style}><td><tt>{$warning['file']}</tt></td><td>{$warning['line']}</td><td>{$warning['msg']}</td></tr>";
 }
 
 $html .= '</table>';
@@ -102,4 +109,5 @@ file_put_contents($outputFile, $html);
 
 echo "\n\nDone!\n";
 
+// exit code required by CruiseControl
 exit(0);
