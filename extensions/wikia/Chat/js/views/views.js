@@ -288,7 +288,7 @@ var NodeChatView = Backbone.View.extend({
 					this.model.users.add(joinedUser);
 
 					// Create the inline-alert (on client side so that we only display it if the user actually IS new to the room and not just disconnecting/reconnecting).
-					var newChatEntry = new models.InlineAlert({text: joinedUser.get('name') + ' has joined the chat.'});
+					var newChatEntry = new models.InlineAlert({text: $.msg( 'chat-user-joined', joinedUser.get('name') ) });
 					this.model.chats.add(newChatEntry);
 				} else {
 					// The user is already in the room... just update them (in case they have changed).

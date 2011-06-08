@@ -7,6 +7,7 @@ $messages['en'] = array(
 	'chat-no-login' => 'You must be logged in to chat.',
 	'chat-no-login-text' => 'Please login to chat.',
 	'chat-default-topic' => 'Welcome to the $1 chat',
+	'chat-user-joined' => '$1 has joined the chat.',
 	
 	// Many of these are sent from server.js to the client (which uses $.msg() to translate the message).
 	'chat-user-parted' => '$1 has left the chat.',
