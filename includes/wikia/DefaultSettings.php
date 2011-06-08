@@ -118,10 +118,6 @@ $wgAutoloadClasses['WikiaSkinMonoBook'] = "$IP/skins/wikia/WikiaMonoBook.php";
 
 //AutomaticWikiAdoption
 $wgAutoloadClasses['AutomaticWikiAdoptionGatherData']  =  $IP.'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherData.php';
-$wgAutoloadClasses['AutomaticWikiAdoptionGatherDataMapper']  =  $IP.'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherDataMapper.php';
-$wgAutoloadClasses['AutomaticWikiAdoptionJobSendMail']  =  $IP.'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionJobSendMail.php';
-$wgAutoloadClasses['AutomaticWikiAdoptionJobSetAdoptionFlag']  =  $IP.'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionJobSetAdoptionFlag.php';
-$wgAutoloadClasses['AutomaticWikiAdoptionJobFactory']  =  $IP.'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionJobFactory.php';
 
 // core
 //$wgAutoloadClasses['View']  =  $IP.'/includes/wikia/View.php';
