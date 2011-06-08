@@ -6,7 +6,7 @@ import static org.testng.AssertJUnit.assertTrue;
 import org.testng.annotations.Test;
 
 public class CorporateFooterTest extends BaseTest {
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testFooterLinks() throws Exception {
 		session().open("/");
 		session().waitForPageToLoad(this.getTimeout());
@@ -18,8 +18,10 @@ public class CorporateFooterTest extends BaseTest {
 		assertTrue(session().isElementPresent("//footer[@id='WikiaFooter']//a[@id='WikiaRandomWiki']"));
 
 		// checking for spotlights
-		assertTrue(session().isElementPresent("//footer[@class='WikiaFooter']//ul[@id='SPOTLIGHT_FOOTER']/li"));
-		assertTrue(session().isElementPresent("//footer[@class='WikiaFooter']//ul[@id='SPOTLIGHT_FOOTER']/li/div[contains(@id,'beacon_')]"));
+		assertTrue(session().isElementPresent("//footer[@id='WikiaFooter']//ul[@id='SPOTLIGHT_FOOTER']/li"));
+		// figure out how to scroll to bottom
+		session().focus("//footer[@class='CorporateFooter']");
+		assertTrue(session().isElementPresent("//footer[@id='WikiaFooter']//ul[@id='SPOTLIGHT_FOOTER']/li/div[starts-with(@id,'beacon_')]"));
 
 		// checking for hub branding
 		assertTrue(session().isElementPresent("//footer[@class='CorporateFooter']/nav/div[@class='WikiaHubBranding']"));

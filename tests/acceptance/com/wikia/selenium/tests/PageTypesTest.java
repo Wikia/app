@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 public class PageTypesTest extends BaseTest {
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testContentPage() throws Exception {
 		session().open("index.php?title=Special:Random");
 		session().waitForPageToLoad(this.getTimeout());
@@ -34,7 +34,7 @@ public class PageTypesTest extends BaseTest {
 		assertTrue(session().isElementPresent("//details//ul[@class='history']"));
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testMediawikiPage() throws Exception {
 		loginAsStaff();
 		editArticle("MediaWiki:Mainpage", "Mainpage");
@@ -59,7 +59,7 @@ public class PageTypesTest extends BaseTest {
 		assertTrue(session().isElementPresent("WikiaSearch"));
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testCategoryPage() throws Exception {
 		loginAsStaff();
 		editArticle("Category:Some category", "Wikia PageTypes test");
@@ -92,7 +92,7 @@ public class PageTypesTest extends BaseTest {
 		doDelete("label=regexp:^.*Author request", "Wikia PageTypes test");
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testForumPage() throws Exception {
 		String page = "Forum:WikiaTest";
 
@@ -122,7 +122,7 @@ public class PageTypesTest extends BaseTest {
 		doDelete("label=regexp:^.*Author request", "Wikia PageTypes test");
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testBlogPostPage() throws Exception {
 		String page = "User_blog:WikiaStaff/Test_Blog_Post";
 
@@ -152,7 +152,7 @@ public class PageTypesTest extends BaseTest {
 		assertFalse(session().isElementPresent("//details//ul[@class='history']"));
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testBlogPostsListingPage() throws Exception {
 		session().open("index.php?title=Blog:Recent_posts");
 		session().waitForPageToLoad(this.getTimeout());
@@ -173,7 +173,7 @@ public class PageTypesTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@id='WikiaUserPagesHeader']/a[contains(@href,'Special:CreateBlogPage')]"));
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testUserPage() throws Exception {
 		// user subpage (catch HTTP 404)
 		try {

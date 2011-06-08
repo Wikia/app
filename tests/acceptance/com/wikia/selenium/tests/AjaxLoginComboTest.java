@@ -11,7 +11,7 @@ import static org.testng.AssertJUnit.assertTrue;
  */
 public class AjaxLoginComboTest extends BaseTest {
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testEnsureThatAnonymousUserCanEditArticlesButCanNotUploadPhotos() throws Exception {
 		session().open("index.php?title=comboPlaceholder&action=edit&useeditor=mediawiki");
 		session().type("wpTextbox1", "[[image:placeholder]]");
@@ -34,7 +34,7 @@ public class AjaxLoginComboTest extends BaseTest {
 		assertTrue(session().isElementPresent("ImageUpload"));
 	}
 
-	@Test(groups={"oasis", "RTE", "CI"})
+	@Test(groups={"CI"})
 	public void testEnsureThatAnonymousUserCanNotInsertPhotosUsingRTE() throws Exception {
 		session().open("index.php?title=combotext&action=edit&useeditor=mediawiki");
 		waitForElement("mw-editbutton-wmu");
@@ -54,11 +54,11 @@ public class AjaxLoginComboTest extends BaseTest {
 		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiabot.username"));
 		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiabot.password"));
 		session().click("wpLoginattempt");
-	    session().waitForPageToLoad(this.getTimeout());
+		session().waitForPageToLoad(this.getTimeout());
 
 		waitForWikiabotLoggedIn();
 		session().click("wpPreview");
-	    session().waitForPageToLoad(this.getTimeout());
+		session().waitForPageToLoad(this.getTimeout());
 		waitForWikiabotLoggedIn();
 
 		session().isTextPresent("Test Text wikieditor");

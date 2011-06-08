@@ -54,7 +54,7 @@ public class PhalanxTest extends BaseTest {
  	 * Console logging
  	 */
 	private void log(String message) {
-		System.out.println(message);
+		//System.out.println(message);
 	}
 
 	/**
@@ -361,7 +361,7 @@ public class PhalanxTest extends BaseTest {
 	}
 
 	@Test(groups={"CI"}, dependsOnMethods={"articleMoveTest"}, alwaysRun=true)
-    public void articleMoveCleanupTest() throws Exception {
+	public void articleMoveCleanupTest() throws Exception {
 		this.log("Test article move - cleanup");
 
 		loginAsStaff();
@@ -435,11 +435,10 @@ public class PhalanxTest extends BaseTest {
 	 * Hook triggered: ApiCreateMultiplePagesBeforeCreation
 	 * Tests blocks: TitleBlackList
 	 */
+	/**
 	@Test(groups={"deprecated"})
 	public void articlesCreationNewWikiBuilderTest() throws Exception {
 		this.log("Test articles creation (via WikiBuilder)");
-
-		/**
 
 		Random randomGenerator = new Random();
 		String articleNameSuffix = Integer.toString(randomGenerator.nextInt(99999));
@@ -482,9 +481,8 @@ public class PhalanxTest extends BaseTest {
 		// cleanup
 		this.deleteArticle(this.testArticleName + articleNameSuffix);
 		this.deleteArticle(this.testArticleName + articleNameSuffix + "Foo");
-
-		**/
 	}
+	**/
 
 	/**
 	 * Test file upload (using Special:Upload)
@@ -618,7 +616,7 @@ public class PhalanxTest extends BaseTest {
 	}
 
 	@Test(groups={"CI"}, dependsOnMethods={"contentBlockTest"})
-    public void contentBlockApplyTest() throws Exception {
+	public void contentBlockApplyTest() throws Exception {
 		// test edit blocking
 		this.log(" 2) Testing article edit blocking");
 
@@ -628,7 +626,7 @@ public class PhalanxTest extends BaseTest {
 	}
 
 	@Test(groups={"CI"}, dependsOnMethods={"contentBlockApplyTest"})
-    public void contentBlockStatsTest() throws Exception {
+	public void contentBlockStatsTest() throws Exception {
 		// test stats page
 		this.log(" 3) Testing stats page");
 
@@ -657,7 +655,7 @@ public class PhalanxTest extends BaseTest {
 	}
 
 	@Test(groups={"CI"}, dependsOnMethods={"contentBlockStatsTest"})
-    public void contentBlockAfterRemovalTest() throws Exception {
+	public void contentBlockAfterRemovalTest() throws Exception {
 		// test edit blocking
 		this.log(" 5) Testing article edit blocking");
 

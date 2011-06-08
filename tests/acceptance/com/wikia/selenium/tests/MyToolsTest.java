@@ -6,7 +6,7 @@ import static org.testng.AssertJUnit.*;
 import org.testng.annotations.Test;
 
 public class MyToolsTest extends BaseTest {
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testMyTools() throws Exception {
 		session().open("index.php");
 		session().waitForPageToLoad(this.getTimeout());
