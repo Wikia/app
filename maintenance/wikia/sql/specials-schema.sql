@@ -2,7 +2,7 @@ CREATE TABLE `city_list_count` (
   `city_created` date NOT NULL,
   `count_created` int(8) unsigned NOT NULL,
   PRIMARY KEY `city_created` 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `city_list_cats` (
@@ -22,4 +22,4 @@ CREATE TABLE `city_list_cats` (
   KEY `city_founding_user_inx` (city_founding_user),
   KEY `date_created_inx` (date_created),
   KEY `cat_name_inx` (cat_name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
