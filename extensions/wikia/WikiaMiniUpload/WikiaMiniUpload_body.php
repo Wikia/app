@@ -258,7 +258,7 @@ class WikiaMiniUpload {
 
 		$ret = $upload->verifyUpload();
 
-		if(!wfRunHooks('WikiaMiniUpload:BeforeProcessing', $mSrcName)) {
+		if(!wfRunHooks('WikiaMiniUpload:BeforeProcessing', array($mSrcName))) {
 			wfDebug( "Hook 'WikiaMiniUpload:BeforeProcessing' broke processing the file." );
 			return UploadBase::VERIFICATION_ERROR;
 		}
