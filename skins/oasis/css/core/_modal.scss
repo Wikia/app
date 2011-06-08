@@ -1,6 +1,3 @@
-@import "../mixins/box-shadow";
-@import "../mixins/clearfix";
-
 .modalWrapper {
 	@include box-shadow(0, 10px, 60px, mix($color-page, #000));
 	background: $color-page;
@@ -37,6 +34,7 @@
 
 .modalContent {
 	@include clearfix;
+	@include bodytext;
 	display: block;
 }
 
