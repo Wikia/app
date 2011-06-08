@@ -31,6 +31,8 @@ public class ArticleCommentTest extends BaseTest {
 	public static String articlePath = "index.php?title=Special:Random";
 	public static String blogPostName = "Change_me_in_constructor";
 	public static String blogPostName_1 = "Blog_post_number_1";
+	public String location = "";
+	public String commentContent = "";
 	
 	public ArticleCommentTest() {
 		// choose a blog post name based on the timestamp
@@ -242,16 +244,16 @@ public class ArticleCommentTest extends BaseTest {
 	}
 
 	@Test(groups={"CI"})
-	public void testh8StaffEditArticleComment() throws Exception {
+	public void testh8StaffEditArticleCommentPart1() throws Exception {
 		loginAsRegular();
 
 		session().open(articlePath);
 		session().waitForPageToLoad(this.getTimeout());
 		
-		String location = session().getLocation();
+		this.location = session().getLocation();
 
-		String commentContent = "test comment: " + new Date().toString();
-		addComment(commentContent);
+		this.commentContent = "test comment: " + new Date().toString();
+		addComment(this.commentContent);
 
 		assertTrue(session().isElementPresent("//ul[@id='article-comments-ul']/li[1]" +
 				"//a[@class='article-comm-edit']"));
@@ -261,18 +263,20 @@ public class ArticleCommentTest extends BaseTest {
 
 		waitForElement("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']");
 
-		session().type("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']", "edit(" + commentContent + ")");
+		session().type("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']", "edit(" + this.commentContent + ")");
 
 		session().click("//ul[@id='article-comments-ul']/li[1]//input[@name='wpArticleSubmit']");
 
 		waitForElement("//ul[@id='article-comments-ul']" +
 						"/li[1 and contains(@class,'article-comments-li')]" +
 						"//div[@class='article-comm-text']" +
-						"/p[contains(text(), 'edit(" + commentContent + ")')]");
-
-		logout();
+						"/p[contains(text(), 'edit(" + this.commentContent + ")')]");
+	}
+	
+	@Test(groups={"CI"},dependsOnMethods={"testh8StaffEditArticleCommentPart1"})
+	public void testh8StaffEditArticleCommentPart2() throws Exception {
 		loginAsStaff();
-		session().open(location);
+		session().open(this.location);
 		session().waitForPageToLoad(this.getTimeout());
 
 		session().click("//ul[@id='article-comments-ul']/li[1]" +
@@ -280,14 +284,14 @@ public class ArticleCommentTest extends BaseTest {
 
 		waitForElement("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']");
 
-		session().type("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']", "edit(" + commentContent + ")");
+		session().type("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']", "edit(" + this.commentContent + ")");
 
 		session().click("//ul[@id='article-comments-ul']/li[1]//input[@name='wpArticleSubmit']");
 
 		waitForElement("//ul[@id='article-comments-ul']" +
 						"/li[1 and contains(@class,'article-comments-li')]" +
 						"//div[@class='article-comm-text']" +
-						"/p[contains(text(), 'edit(" + commentContent + ")')]");
+						"/p[contains(text(), 'edit(" + this.commentContent + ")')]");
 	}
 
 	@Test(groups={"CI"})
@@ -401,7 +405,6 @@ public class ArticleCommentTest extends BaseTest {
 	}
 
 	// tests for blog pages comments
-
 	@Test(groups={"CI"})
 	public void testn14CommentSection() throws Exception {
 		//System.out.println("Starting testn14CommentSection...");

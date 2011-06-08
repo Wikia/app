@@ -25,7 +25,7 @@ import com.thoughtworks.selenium.SeleniumException;
 import org.testng.annotations.Test;
 
 public class FollowedPagesTest extends BaseTest {
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testSpecialPreferences() throws Exception {
 		loginAsStaff();
 		session().open("index.php?title=Special:Preferences");
@@ -59,7 +59,7 @@ public class FollowedPagesTest extends BaseTest {
 		assertTrue( session().isTextPresent("Please log in to create or view your followed pages list."));
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testFollowUnFollow() throws Exception {
 		session().open("index.php");
 		login();
@@ -91,7 +91,7 @@ public class FollowedPagesTest extends BaseTest {
 	}
 
 	// Follow a random page, assert followed, unfollow, assert unfollowed
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testFollowedPages() throws Exception {
 		login();
 		session().click("link=Random Page");

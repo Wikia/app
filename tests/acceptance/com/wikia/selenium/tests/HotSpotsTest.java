@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 public class HotSpotsTest extends BaseTest {
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testHotSpots() throws Exception {
 		loginAsRegular();
 		session().open("/wiki/Special:WikiActivity");

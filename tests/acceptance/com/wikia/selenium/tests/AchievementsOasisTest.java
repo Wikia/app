@@ -6,7 +6,7 @@ import static org.testng.AssertJUnit.assertTrue;
 import org.testng.annotations.Test;
 
 public class AchievementsOasisTest extends BaseTest {
-	@Test(groups="oasis")
+	@Test(groups="CI")
 	public void testEnsureAchievementsWidgetIsPresentOnUserProfilePage() throws Exception {
 		loginAsRegular();
 

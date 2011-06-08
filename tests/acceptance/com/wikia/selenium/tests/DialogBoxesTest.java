@@ -22,8 +22,9 @@ public class DialogBoxesTest extends BaseTest {
 		assertFalse(session().isElementPresent("//section[@class='modalWrapper']"));
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"deprecated", "CI"})
 	public void testShareFeatureDialog() throws Exception {
+		login();
 		randomPage();
 
 		// click "Share" link
@@ -35,7 +36,7 @@ public class DialogBoxesTest extends BaseTest {
 		closeDialogBox();
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI"})
 	public void testCreatePageDialog() throws Exception {
 		randomPage();
 
