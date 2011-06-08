@@ -28,7 +28,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		classid : [ { type : ATTRTYPE_OBJECT, name : 'classid' } ],
 		codebase : [ { type : ATTRTYPE_OBJECT, name : 'codebase'} ],
 		pluginspage : [ { type : ATTRTYPE_EMBED, name : 'pluginspage' } ],
-		src : [ { type : ATTRTYPE_PARAM, name : 'movie' }, { type : ATTRTYPE_EMBED, name : 'src' } ],
+		src : [ { type : ATTRTYPE_PARAM, name : 'movie' }, { type : ATTRTYPE_EMBED, name : 'src' }, { type : ATTRTYPE_OBJECT, name :  'data' } ],
 		name : [ { type : ATTRTYPE_EMBED, name : 'name' } ],
 		align : [ { type : ATTRTYPE_OBJECT, name : 'align' } ],
 		title : [ { type : ATTRTYPE_OBJECT, name : 'title' }, { type : ATTRTYPE_EMBED, name : 'title' } ],
