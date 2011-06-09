@@ -70,13 +70,13 @@ class SiteWideMessages extends SpecialPage {
 
 		//fetching hub list
 		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-        $dbResult = $DB->select(
-            array( 'city_cats' ),
-            array( 'cat_id, cat_name' ),
-            null,
-            __METHOD__,
-            array( 'ORDER BY' => 'cat_name' )
-        );
+		$dbResult = $DB->select(
+			array( 'city_cats' ),
+			array( 'cat_id, cat_name' ),
+			null,
+			__METHOD__,
+			array( 'ORDER BY' => 'cat_name' )
+		);
 
 		$hubList = array();
 		while ($row = $DB->FetchObject($dbResult)) {
