@@ -28,7 +28,7 @@ var STATUS_STATE_AWAY = 'away';
 	models.Command = Backbone.Model.extend({
 		defaults: {
 			'msgType': 'command', // used by the server to determine how to handle one of these objects.
-			'command': '',
+			'command': ''
 		}
 	});
 	models.KickBanCommand = models.Command.extend({
@@ -81,7 +81,7 @@ var STATUS_STATE_AWAY = 'away';
 				isInlineAlert: true, // so that the view can detect that this should be displayed specially
 				text: options.text,
 				wfMsg: options.wfMsg,
-				msgParams: options.msgParams,
+				msgParams: options.msgParams
 			});
 		}
 	});
