@@ -182,6 +182,7 @@ window.RTE = {
 		RTE.instance.on('wysiwygModeReady', RTE.onWysiwygModeReady);
 
 		// event fired when Widescreen button in pressed
+		// TODO: remove
 		RTE.instance.on('widescreen', RTE.onWidescreen);
 
 		// clean HTML returned by CKeditor
