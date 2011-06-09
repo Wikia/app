@@ -8,6 +8,10 @@ class EditPageLayout extends EditPage {
 	protected $app;
 	protected $out;
 	protected $request;
+	/**
+	 * @var EditPageLayoutHelper
+	 */
+	protected $helper = null;
 
 	// emit <form> tag wrapping #EditPage section
 	protected $dontWrapWithForm = true;
@@ -72,6 +76,10 @@ class EditPageLayout extends EditPage {
 
 		// add messages (fetch them using <script> tag)
 		JSMessages::getInstance()->enqueuePackage('EditPageLayout', JSMessages::EXTERNAL);
+	}
+
+	public function setHelper( EditPageLayoutHelper $helper ) {
+		$this->helper = $helper;
 	}
 
 	function edit() {
@@ -148,6 +156,30 @@ class EditPageLayout extends EditPage {
 		// restore state of output
 		$this->out->clearHTML();
 		$this->out->addHTML($oldHtml);
+	}
+
+	/**
+	 * Get HTML of notices shown above the editor and use show it as custom dismissable notice
+	 */
+	public function blockedPage() {
+		$this->helper->addJsVariable( 'wgEditPageIsReadOnly', true );
+		$first = $this->firsttime || ( !$this->save && $this->textbox1 == '' );
+
+		$bridge = F::build('EditPageOutputBridge',array($this,$this->mCoreEditNotices));
+		parent::blockedPage();
+		$bridge->close();
+
+		$this->mCoreEditNotices->get( 'blockedtext' )->setSummary( $this->app->wf->msg( 'editpagelayout-blocked-user' ) );
+		$this->mCoreEditNotices->remove( 'blockededitsource' );
+		$this->mCoreEditNotices->remove( false );
+
+		// restore state of output
+		$this->out->clearHTML();
+
+		$this->out->addHtml('<div id="myedit">');
+		$this->out->addHtml( '<h2>' . $this->app->wf->msgExt( $first ? 'blockedoriginalsource' : 'blockededitsource', array( 'parseinline' ), $this->mTitle->getPrefixedText() ) . '</h2>' );
+		$this->showTextbox1();
+		$this->out->addHtml('</div>');
 	}
 
 	public function setPreloadedText( $text ) {
@@ -455,8 +487,22 @@ class EditPageLayout extends EditPage {
 	 */
 	function readOnlyPage( $source = null, $protected = false, $reasons = array(), $action = null ) {
 		$this->mIsReadOnlyPage = true;
+		$this->helper->addJsVariable( 'wgEditPageIsReadOnly', true );
 
+		$bridge = F::build('EditPageOutputBridge',array($this,$this->mCoreEditNotices));
 		parent::readOnlyPage($source, $protected, $reasons, $action);
+		$bridge->close();
+
+		//$this->mCoreEditNotices->get( ??? )->setSummary( $this->app->wf->msgExt( 'editpagelayout-blocked-user' ) );
+		$this->mCoreEditNotices->remove( 'templatesUsed' );
+		$this->mCoreEditNotices->remove( 'viewsourcetext' );
+		$this->mCoreEditNotices->remove( false );
+
+		$this->textbox1 = $source;
+		$this->out->clearHTML();
+		$this->out->addHtml('<div id="myedit">');
+		$this->showTextbox1( array( 'readonly' ) );
+		$this->out->addHtml('</div>');
 	}
 
 	public function isReadOnlyPage() {

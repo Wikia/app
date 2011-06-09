@@ -461,7 +461,12 @@ class EditPage {
 	 * Redirect to the article page if redlink=1
 	 */
 	function readOnlyPage( $source = null, $protected = false, $reasons = array(), $action = null ) {
-		global $wgRequest, $wgOut;
+		global $wgRequest;
+		// Wikia - start - @author: ADi - removed wgOut from global to allow injecting it
+		// define wgOut
+		$wgOut = !empty($this->customOutputPage) ? $this->customOutputPage : $GLOBALS['wgOut'];
+		// Wikia - end
+
 		if ( $wgRequest->getBool( 'redlink' ) ) {
 			// The edit page was reached via a red link.
 			// Redirect to the article page and let them click the edit tab if
@@ -1150,18 +1155,18 @@ class EditPage {
 	 */
 	function initialiseForm() {
 		global $wgUser;
-		
-		
+
+
 		//Wikia Change
 		//https://wikia.fogbugz.com/default.asp?3319#21795
 		if ( ( !empty( $this->mArticle->mRevision ) && $this->mArticle->mRevision->isCurrent() ) || empty( $this->mArticle->mRevision ) ) {
-			$this->edittime = $this->mArticle->getTimestamp();	
+			$this->edittime = $this->mArticle->getTimestamp();
 		} else {
 			$rev = Revision::newFromTitle( $this->mTitle );
 			$this->edittime = $rev->getTimestamp();
 		}
 		//
-		
+
 		$this->textbox1 = $this->getContent( false );
 		// activate checkboxes if user wants them to be always active
 		# Sort out the "watch" checkbox
@@ -2072,7 +2077,10 @@ INPUTS
 	 * Call the stock "user is blocked" page
 	 */
 	function blockedPage() {
-		global $wgOut;
+		// Wikia - start - @author: ADi - removed wgOut from global to allow injecting it
+		// define wgOut
+		$wgOut = !empty($this->customOutputPage) ? $this->customOutputPage : $GLOBALS['wgOut'];
+		// Wikia - end
 		$wgOut->blockedPage( false ); # Standard block notice on the top, don't 'return'
 
 		# If the user made changes, preserve them when showing the markup
@@ -2554,9 +2562,9 @@ INPUTS
 		$newtext = $this->mArticle->preSaveTransform( $newtext );
 		$oldtitle = wfMsgExt( 'currentrev', array( 'parseinline' ) );
 		$newtitle = wfMsgExt( 'yourtext', array( 'parseinline' ) );
-		
+
 		wfRunHooks( 'EditPageBeforeDiffText', array( $this, &$newtext, &$oldtext, &$newtitle, &$oldtitle) );
-		
+
 		if ( $oldtext !== false  || $newtext != '' ) {
 			$de = new DifferenceEngine( $this->mTitle );
 			$de->setText( $oldtext, $newtext );
@@ -2717,7 +2725,7 @@ INPUTS
 		switch ( $value ) {
 			case self::AS_HOOK_ERROR_EXPECTED:
 			case self::AS_CONTENT_TOO_BIG:
-		 	case self::AS_ARTICLE_WAS_DELETED:
+			case self::AS_ARTICLE_WAS_DELETED:
 			case self::AS_CONFLICT_DETECTED:
 			case self::AS_SUMMARY_NEEDED:
 			case self::AS_TEXTBOX_EMPTY:

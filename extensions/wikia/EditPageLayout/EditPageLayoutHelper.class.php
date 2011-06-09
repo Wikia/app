@@ -101,6 +101,8 @@ class EditPageLayoutHelper {
 
 		WF::setInstance('EditPageLayoutHelper', $this );
 
+		$this->editPage->setHelper( $this );
+
 		wfProfileOut(__METHOD__);
 		return $this->editPage;
 	}
