@@ -23,3 +23,12 @@ CREATE TABLE `city_list_cats` (
   KEY `date_created_inx` (date_created),
   KEY `cat_name_inx` (cat_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `multilookup` (
+  `ml_city_id` int(9) unsigned NOT NULL,
+  `ml_ip` int(10) NOT NULL,
+  `ml_count` int(6) unsigned NOT NULL default 0,
+  `ml_ts` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (ml_city_id, ml_ip),
+  KEY `multilookup_ts_inx` (ml_ip, ml_ts)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
