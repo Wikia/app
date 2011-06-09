@@ -40,6 +40,7 @@ var WikiBuilder = {
 		WikiBuilder.descWikiSubmitError = $('#DescWiki .submit-error');
 		WikiBuilder.nextButtons = WikiBuilder.wb.find('nav .next');
 		WikiBuilder.finishSpinner = $('#CreateNewWiki .finish-status');
+		WikiBuilder.descWikiNext = $('#DescWiki nav .next');
 		
 		// Name Wiki event handlers
 		$('#NameWiki input.next').click(function() {
@@ -115,7 +116,8 @@ var WikiBuilder = {
 		});
 		
 		// Description event handlers
-		$('#DescWiki nav .next').click(function() {
+		WikiBuilder.descWikiNext.click(function() {
+			WikiBuilder.descWikiNext.attr('disabled', true);
 			$.tracker.byStr('createnewwiki/descwiki/next');
 			var val = WikiBuilder.wikiCategory.find('option:selected').val();
 			if(val) {
@@ -132,6 +134,7 @@ var WikiBuilder = {
 						// check phalanx result
 						if (res.msgHeader) {
 							$.showModal(res.msgHeader, res.msgBody);
+							WikiBuilder.descWikiNext.attr('disabled', false);
 						} else {
 							// call create wiki ajax
 							WikiBuilder.saveState({
@@ -144,6 +147,7 @@ var WikiBuilder = {
 				});
 			} else {
 				WikiBuilder.descWikiSubmitError.show().html(WikiBuilderCfg['desc-wiki-submit-error']).delay(3000).fadeOut();
+				WikiBuilder.descWikiNext.attr('disabled', false);
 			}
 		});
 		$('#Description').placeholder();
