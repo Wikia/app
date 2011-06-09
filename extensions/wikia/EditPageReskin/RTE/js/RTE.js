@@ -116,20 +116,21 @@ window.RTE = {
 		// cache buster used by CK when loading CSS/JS
 		CKEDITOR.timestamp = window.wgStyleVersion;
 
+		// CKEDITOR.dtd fixes
+		// TODO: move to different place
+
 		// allow <img> (used for placeholders) to be placed inside <pre>
 		CKEDITOR.dtd.pre.img = 1;
 
 		// allow <center> to be placed inside <p>
-		CKEDITOR.dtd.p.center = 1;
+		CKEDITOR.dtd.p = $.extend({}, CKEDITOR.dtd.p, {center:1});
 
 		// allow <img> (used for placeholders) to be "direct" child of <table> (refs RT #49507)
 		CKEDITOR.dtd.table.img = 1;
 
-		// allow UL id DT (RT#52593)
-		//CKEDITOR.dtd.dt.ul = 1; (BUGID#1034)
-
-		// allow OL id DT (RT#52593)
-		//CKEDITOR.dtd.dt.ol = 1; (BUGID#1034)
+		// allow UL and OL in DT (RT#52593)
+		// DTD rules for <dt> use $inline elements which should not be modified (BugId:1304)
+		CKEDITOR.dtd.dt = $.extend({}, CKEDITOR.dtd.dt, {ul:1, ol:1});
 
 		// set startup mode
 		RTE.config.startupMode = mode;
