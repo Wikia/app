@@ -54,6 +54,25 @@
 
 						<tr>
 							<td>
+								<input name="mSendModeWikis" id="mSendModeWikisC" type="radio" value="CLUSTER"<?= $formData['sendModeWikis'] == 'CLUSTER' ? ' checked="checked"' : ''?>/>
+							</td>
+							<td>
+								<label for="mSendModeWikisC"><?= wfMsg('swm-label-mode-wikis-cluster') ?></label>
+							</td>
+							<td>
+								<select name="mClusterId" id="mClusterId" style="width:314px">
+								<?php
+								foreach ($formData['clusterNames'] as $clusterId => $clusterName) {
+									$selected = $clusterId == $formData['clusterId'] ? ' selected="selected"' : '';
+									echo "\t\t\t\t\t\t\t\t<option value=\"$clusterId\"$selected>$clusterName</option>\n";
+								}
+								?>
+								</select>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
 								<input name="mSendModeWikis" id="mSendModeWikisW" type="radio" value="WIKI"<?= $formData['sendModeWikis'] == 'WIKI' ? ' checked="checked"' : ''?>/>
 							</td>
 							<td>
@@ -211,6 +230,7 @@
 function grayOut(e) {
 	switch (e.target.id) {
 		case 'mSendModeWikisH':
+		case 'mSendModeWikisC':
 		case 'mSendModeWikisW':
 			$('#mSendModeUsersA').attr('disabled',true);
 			if ($('#mSendModeUsersA').attr('checked'))
@@ -231,6 +251,6 @@ function grayOut(e) {
 			$('input.swm-lang-checkbox').attr('disabled',false);
 	}
 }
-$('#mSendModeWikisA').add('#mSendModeWikisH').add('#mSendModeWikisW').add('#mSendModeUsersA').add('#mSendModeUsersC').add('#mSendModeUsersG').add('#mSendModeUsersU').bind('click', grayOut);
+$('#mSendModeWikisA').add('#mSendModeWikisH').add('#mSendModeWikisC').add('#mSendModeWikisW').add('#mSendModeUsersA').add('#mSendModeUsersC').add('#mSendModeUsersG').add('#mSendModeUsersU').bind('click', grayOut);
 </script>
 <!-- e:<?= __FILE__ ?> -->

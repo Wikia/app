@@ -39,6 +39,7 @@ $messages['en'] = array(
 	'swm-label-expiration'		=> 'Expiration time',
 	'swm-label-mode-wikis-all'	=> 'All wikis',
 	'swm-label-mode-wikis-hub'	=> 'Selected hub',
+	'swm-label-mode-wikis-cluster'=> 'Selected cluster',
 	'swm-label-mode-wikis-wiki'	=> 'Selected wiki',
 	'swm-label-mode-users-all'	=> 'All users',
 	'swm-label-mode-users-active'		=> 'Active users',

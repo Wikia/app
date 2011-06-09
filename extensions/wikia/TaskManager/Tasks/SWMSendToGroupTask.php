@@ -83,6 +83,19 @@ class SWMSendToGroupTask extends BatchTask {
 				}
 				break;
 
+			case 'CLUSTER':
+				switch ($args['sendModeUsers']) {
+					case 'ALL':
+					case 'ACTIVE':
+						$result = $this->sendMessageToCluster($args);
+						break;
+
+					case 'GROUP':
+						$result = $this->sendMessageToGroupOnCluster($args);
+						break;
+				}
+				break;
+
 			case 'WIKI':
 				switch ($args['sendModeUsers']) {
 					case 'GROUP':
@@ -230,6 +243,32 @@ class SWMSendToGroupTask extends BatchTask {
 									'Sender: %s [id: %d]',
 									$args['groupName'],
 									$args['hubId'],
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
+						}
+						break;
+
+					case 'CLUSTER':
+						switch ($args['sendModeUsers']) {
+							case 'ALL':
+							case 'ACTIVE':
+								$desc = sprintf('SiteWideMessages :: Send to a cluster<br/>' .
+									'Cluster: %s<br/>' .
+									'Sender: %s [id: %d]',
+									$args['clusterId'],
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
+
+							case 'GROUP':
+								$desc = sprintf('SiteWideMessages :: Send to a group on a cluster<br/>' .
+									'Group: %s, Cluster: %s<br/>' .
+									'Sender: %s [id: %d]',
+									$args['groupName'],
+									$args['clusterId'],
 									$args['senderName'],
 									$args['senderId']
 								);
@@ -450,6 +489,105 @@ class SWMSendToGroupTask extends BatchTask {
 		return $result;
 	}
 
+
+
+	/**
+	 * sendMessageToCluster
+	 *
+	 * sends a message to active users on wikis in specified cluster
+	 *
+	 * @access private
+	 * @author Maciej Błaszkowski (Marooned) <marooned at wikia.com>
+	 * @author Wladyslaw Bodzek
+	 *
+	 * @param mixed $params - task arguments
+	 *
+	 * @return boolean: result of sending
+	 */
+	private function sendMessageToCluster($params) {
+		global $wgExternalSharedDB;
+		$result = true;
+
+		$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+
+		$clusterId = intval($params['clusterId']);
+		$clusterQuery = $clusterId == 1 ? " AND (city_cluster IS NULL OR city_cluster = 'c1')"
+			: " AND city_cluster = 'c{$clusterId}' ";
+
+		//step 1 of 3: get list of all active wikis
+		$this->addLog('Step 1 of 3: get list of all active wikis belonging to a specified cluster');
+		$dbResult = $DB->Query (
+			  'SELECT city_id, city_dbname'
+			. ' FROM city_list'
+			. ' JOIN city_cat_mapping USING (city_id)'
+			. ' WHERE city_public = 1'
+			. ' AND city_useshared = 1'
+			. $clusterQuery
+			. ';'
+			, __METHOD__
+		);
+
+		$wikisDB = array();
+		while ($row = $DB->FetchObject($dbResult)) {
+			$wikisDB[$row->city_id] = $row->city_dbname;
+		}
+		$DB->FreeResult($dbResult);
+
+		$result = $this->sendMessageHelperToActive($DB, $wikisDB, $params);
+
+		return $result;
+	}
+
+	/**
+	 * sendMessageToGroupOnCluster
+	 *
+	 * sends a message to active users on wikis in specified cluster
+	 *
+	 * @access private
+	 * @author Maciej Błaszkowski (Marooned) <marooned at wikia.com>
+	 * @author Wladyslaw Bodzek
+	 *
+	 * @param mixed $params - task arguments
+	 *
+	 * @return boolean: result of sending
+	 */
+	private function sendMessageToGroupOnCluster($params) {
+		global $wgExternalSharedDB;
+		$result = true;
+
+		$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+
+		$clusterId = intval($params['clusterId']);
+		$clusterQuery = $clusterId == 1 ? " AND (city_cluster IS NULL OR city_cluster = 'c1')"
+			: " AND city_cluster = 'c{$clusterId}' ";
+
+
+		//step 1 of 3: get list of all active wikis
+		$this->addLog('Step 1 of 3: get list of all active wikis belonging to a specified cluster');
+		$dbResult = $DB->Query (
+			  'SELECT city_id, city_dbname'
+			. ' FROM city_list'
+			. ' JOIN city_cat_mapping USING (city_id)'
+			. ' WHERE city_public = 1'
+			. ' AND city_useshared = 1'
+			. $clusterQuery
+			. ';'
+			, __METHOD__
+		);
+
+		$wikisDB = array();
+		while ($row = $DB->FetchObject($dbResult)) {
+			$wikisDB[$row->city_id] = $row->city_dbname;
+		}
+		$DB->FreeResult($dbResult);
+
+		$result = $this->sendMessageHelperToGroup($DB, $wikisDB, $params);
+
+		return $result;
+	}
+
+
+
 	/**
 	 * sendMessageToActive
 	 *
@@ -538,7 +676,7 @@ class SWMSendToGroupTask extends BatchTask {
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 
 		$dbResult = $dbr->select(
-			array(' `specials`.`events_local_users` '),
+			array('`specials`.`events_local_users`'),
 			array('user_id', 'wiki_id'),
 			array('wiki_id IN (' . implode(',', array_keys($wikisDB)) . ')'),
 			__METHOD__,

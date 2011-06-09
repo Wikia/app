@@ -61,6 +61,7 @@ class SiteWideMessages extends SpecialPage {
 		$formData['sendModeWikis'] = $wgRequest->getVal('mSendModeWikis', 'ALL');
 		$formData['sendModeUsers'] = $wgRequest->getVal('mSendModeUsers', 'ALL');
 		$formData['hubId'] = intval($wgRequest->getVal('mHubId'));
+		$formData['clusterId'] = intval($wgRequest->getVal('mClusterId'));
 		$formData['wikiName'] = $wgRequest->getText('mWikiName');
 		$formData['groupName'] = $wgRequest->getText('mGroupName');
 		$formData['groupNameS'] = $wgRequest->getText('mGroupNameS');
@@ -87,6 +88,27 @@ class SiteWideMessages extends SpecialPage {
 		}
 
 		$formData['hubNames'] = $hubList;
+
+		//fetching cluster list
+		$dbResult = $DB->select(
+			array( 'city_list' ),
+			array( 'city_cluster' ),
+			null,
+			__METHOD__,
+			array( 'GROUP BY' => 'city_cluster', 'ORDER BY' => 'city_cluster', 'DISTINCT' )
+		);
+
+		$clusterList = array();
+		while ($row = $DB->FetchObject($dbResult)) {
+			$clusterId = empty($row->city_cluster) ? 1 : intval(substr($row->city_cluster,1));
+			$clusterName = empty($row->city_cluster) ? 'c1' : $row->city_cluster;
+			$clusterList[$clusterId] = $clusterName;
+		}
+		if ($dbResult !== false) {
+			$DB->FreeResult($dbResult);
+		}
+
+		$formData['clusterNames'] = $clusterList;
 
 		//fetching group list
 		global $wgGroupPermissions;
@@ -165,7 +187,7 @@ class SiteWideMessages extends SpecialPage {
 				//TODO: if $mRecipientId == 0 => error - no such user
 				$mText = $wgRequest->getText('mContent');
 				$groupName = $formData['groupName'] == '' ? $formData['groupNameS'] : $formData['groupName'];
-				$result = $this->sendMessage($wgUser, $mRecipientId, $mText, $formData['expireTime'], $formData['wikiName'], $formData['userName'], $groupName, $formData['sendModeWikis'], $formData['sendModeUsers'], $formData['hubId'], $formData['mLang']);
+				$result = $this->sendMessage($wgUser, $mRecipientId, $mText, $formData['expireTime'], $formData['wikiName'], $formData['userName'], $groupName, $formData['sendModeWikis'], $formData['sendModeUsers'], $formData['hubId'], $formData['mLang'], $formData['clusterId']);
 
 				if (is_null($result['msgId'])) {	//we have an error
 					$formData['messageContent'] = $wgRequest->getText('mContent');
@@ -243,7 +265,7 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	//DB functions
-	private function sendMessage($mSender, $mRecipientId, $mText, $mExpire, $mWikiName, $mRecipientName, $mGroupName, $mSendModeWikis, $mSendModeUsers, $mHubId, $mLang) {
+	private function sendMessage($mSender, $mRecipientId, $mText, $mExpire, $mWikiName, $mRecipientName, $mGroupName, $mSendModeWikis, $mSendModeUsers, $mHubId, $mLang, $mClusterId) {
 		global $wgExternalSharedDB, $wgStatsDB;
 		$result = array('msgId' => null, 'errMsg' => null);
 		$dbInsertResult = false;
@@ -257,12 +279,19 @@ class SiteWideMessages extends SpecialPage {
 			case 'ALL':
 				$mWikiName = '';
 				$mHubId = null;
+				$mClusterId = null;
 				break;
 			case 'HUB':
 				$mWikiName = '';
+				$mClusterId = null;
+				break;
+			case 'CLUSTER':
+				$mWikiName = '';
+				$mHubId = null;
 				break;
 			case 'WIKI':
 				$mHubId = null;
+				$mClusterId = null;
 				$mLang = array( MSG_LANG_ALL );
 		}
 
@@ -321,7 +350,7 @@ class SiteWideMessages extends SpecialPage {
 			$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$dbResult = (boolean)$DB->Query (
 				  'INSERT INTO ' . MSG_TEXT_DB
-				. ' (msg_sender_id, msg_text, msg_mode, msg_expire, msg_recipient_name, msg_group_name, msg_wiki_name, msg_hub_id, msg_lang)'
+				. ' (msg_sender_id, msg_text, msg_mode, msg_expire, msg_recipient_name, msg_group_name, msg_wiki_name, msg_hub_id, msg_lang, msg_cluster_id)'
 				. ' VALUES ('
 				. $DB->AddQuotes($mSender->GetID()). ', '
 				. $DB->AddQuotes($mText) . ', '
@@ -331,7 +360,8 @@ class SiteWideMessages extends SpecialPage {
 				. $DB->AddQuotes($mGroupName) . ', '
 				. $DB->AddQuotes($mWikiName) . ', '
 				. $DB->AddQuotes($mHubId) . ' , '
-				. $DB->AddQuotes($mLang)
+				. $DB->AddQuotes($mLang) . ' , '
+				. $DB->AddQuotes($mClusterId)
 				. ');'
 				, __METHOD__
 			);
@@ -375,7 +405,8 @@ class SiteWideMessages extends SpecialPage {
 											'groupName'		=> $mGroupName,
 											'senderId'		=> $mSender->GetID(),
 											'senderName'	=> $mSender->GetName(),
-											'hubId'			=> $mHubId
+											'hubId'			=> $mHubId,
+											'clusterId'     => $mClusterId,
 										),
 										TASK_QUEUED
 									);
@@ -399,7 +430,33 @@ class SiteWideMessages extends SpecialPage {
 											'groupName'		=> $mGroupName,
 											'senderId'		=> $mSender->GetID(),
 											'senderName'	=> $mSender->GetName(),
-											'hubId'			=> $mHubId
+											'hubId'			=> $mHubId,
+											'clusterId'     => $mClusterId,
+										),
+										TASK_QUEUED
+									);
+									break;
+							}
+							break;
+
+						case 'CLUSTER':
+							switch ($mSendModeUsers) {
+								case 'ALL':
+								case 'ACTIVE':
+								case 'GROUP':
+									//add task to TaskManager
+									$oTask = new SWMSendToGroupTask();
+									$oTask->createTask(
+										array(
+											'messageId'		=> $result['msgId'],
+											'sendModeWikis'	=> $mSendModeWikis,
+											'sendModeUsers'	=> $mSendModeUsers,
+											'wikiName'		=> $mWikiName,
+											'groupName'		=> $mGroupName,
+											'senderId'		=> $mSender->GetID(),
+											'senderName'	=> $mSender->GetName(),
+											'hubId'			=> $mHubId,
+											'clusterId'     => $mClusterId,
 										),
 										TASK_QUEUED
 									);
@@ -459,7 +516,8 @@ class SiteWideMessages extends SpecialPage {
 											'groupName'		=> $mGroupName,
 											'senderId'		=> $mSender->GetID(),
 											'senderName'	=> $mSender->GetName(),
-											'hubId'			=> $mHubId
+											'hubId'			=> $mHubId,
+											'clusterId'     => $mClusterId,
 										),
 										TASK_QUEUED
 									);
