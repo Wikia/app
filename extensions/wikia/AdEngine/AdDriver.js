@@ -173,7 +173,7 @@ AdDriver.incrementNumCall = function(cookieName, slotname) {
 	}
 
 	var cookieOptions = {hoursToLive: window.wgAdDriverCookieLifetime, path: wgCookiePath};	// do not set cookie domain
-	$.cookies.set(cookieName, JSON.stringify(newSlotnameObjs), cookieOptions);
+	$.cookies.set(cookieName, $.toJSON(newSlotnameObjs), cookieOptions);
 
 	return num;
 }
@@ -237,7 +237,7 @@ AdDriver.setLastDARTCallNoAd = function(slotname, value) {
 
 	if (newSlotnameTimestamps.length) {
 		var cookieOptions = {hoursToLive: window.wgAdDriverCookieLifetime, path: wgCookiePath};	// do not set cookie domain
-		$.cookies.set(AdDriver.cookieNameLastDARTCallNoAd, JSON.stringify(newSlotnameTimestamps), cookieOptions);
+		$.cookies.set(AdDriver.cookieNameLastDARTCallNoAd, $.toJSON(newSlotnameTimestamps), cookieOptions);
 	}
 
 	return value;
