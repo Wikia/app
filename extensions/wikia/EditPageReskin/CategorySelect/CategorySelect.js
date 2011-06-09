@@ -445,10 +445,16 @@ function collapseAutoComplete() {
 	if ((csType != 'module') && $('#csCategoryInput').css('display') != 'none' && $('#csWikitextContainer').css('display') != 'block') {
 		$('#csHintContainer').show();
 	}
+        var wikiaMainContent = $('#WikiaMainContent');
+        $('#WikiaFooter').css('z-index', Math.min(1, wikiaMainContent.css('z-index')));
+        wikiaMainContent.css('z-index', 1);
 }
 
 function expandAutoComplete(sQuery , aResults) {
 	$('#csHintContainer').hide();
+        var wikiaFooter = $('#WikiaFooter');
+        $('#WikiaMainContent').css('z-index', Math.max(2, wikiaFooter.css('z-index')));
+        wikiaFooter.css('z-index', 1);
 }
 
 function regularEditorSubmit(e) {
