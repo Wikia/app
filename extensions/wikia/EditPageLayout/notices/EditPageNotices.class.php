@@ -20,6 +20,31 @@ class EditPageNotices implements IteratorAggregate {
 		}
 	}
 
+	public function remove( $messageId ) {
+		foreach( $this->notices as $key => $notice ) {
+			if( $notice->getMessageId() == $messageId ) {
+				unset( $this->notices[ $key ] );
+			}
+		}
+	}
+
+	public function get( $messageId ) {
+		foreach( $this->notices as $key => $notice ) {
+			if( $notice->getMessageId() == $messageId ) {
+				return $notice;
+			}
+		}
+	}
+
+	public function isExists( $messageId ) {
+		foreach( $this->notices as $key => $notice ) {
+			if( $notice->getMessageId() == $messageId ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public function getHtml() {
 		$html = '';
 		foreach ($this->notices as $notice) {

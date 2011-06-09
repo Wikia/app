@@ -82,9 +82,9 @@ class EditPageOutputBridge {
 		if ($html != '') {
 			$this->analyzeHtml($html,$more);
 		}
-		if ($more) {
-			$this->notices->add(wfMsg('editpagelayout-more-notices'));
-		}
+		//if ($more) {
+		//	$this->notices->add(wfMsg('editpagelayout-more-notices'));
+		//}
 	}
 
 	protected function analyzeHtml( $html, &$more = null ) {

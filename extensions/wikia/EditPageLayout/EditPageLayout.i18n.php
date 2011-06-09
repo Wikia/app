@@ -18,6 +18,7 @@ $messages['en'] = array(
 	'editpagelayout-pageControls-newSectionLabel' => 'Add the section headline',
 	'editpagelayout-pageControls-back' => 'Back to editor',
 	'editpagelayout-pageControls-changes' => 'Changes',
+	'editpagelayout-blocked-user' => 'Your user name or IP address has been blocked',
 
 	'wikia-editor-media-image' => 'Photo',
 	'wikia-editor-media-gallery' => 'Gallery',

@@ -17,7 +17,8 @@
 			var data = {
 				main: !!window.wgEditPageIsWidePage,
 				rte: typeof window.RTE != 'undefined',
-				wide: false
+				wide: false,
+				readOnly: window.wgEditPageIsReadOnly
 			};
 			data.wide = data.rte && data.main;
 
@@ -42,6 +43,8 @@
 			// standard modules
 			if (data.wide) {
 				layout.toolbar.push('ToolbarWidescreen');
+			} else if(data.readOnly) {
+				layout.rail.push('RailLicense');
 			} else {
 				layout.rail.push('RailInsert','RailCategories','RailTemplates','RailLicense');
 			}
