@@ -136,6 +136,12 @@ class MultiHideWikisMaintenance {
 		$reason = $this->reason;
 
 		foreach ($this->wikiIds as $wikiId) {
+			// check memory usage
+			if ( !$this->checkMemoryLimit(1) ) {
+				echo "error: memory limit exceeded (1G), please restart the script\n";
+				return;
+			}
+
 			$city = WikiFactory::getWikiByID($wikiId);
 			if (!$city) {
 				echo "$wikiId: error: city could not be found\n";
@@ -172,6 +178,10 @@ class MultiHideWikisMaintenance {
 		$this->loadWikiIds();
 
 		$this->processWikis();
+	}
+
+	protected function checkMemoryLimit( $limit ) {
+		return memory_get_usage(true) < $limit * 1000000000;
 	}
 
 }
