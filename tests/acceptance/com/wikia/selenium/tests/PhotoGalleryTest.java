@@ -135,6 +135,7 @@ public class PhotoGalleryTest extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 
 		// clear wikitext
+		waitForElement("wpTextbox1");
 		session().type("wpTextbox1", "");
 
 		// check if button in toolbar exists
@@ -176,6 +177,7 @@ public class PhotoGalleryTest extends BaseTest {
 		session().click("//a[@id='WikiaPhotoGalleryEditorSave']");
 
 		// check wikitext
+		waitForElement("wpTextbox1");
 		String wikitext = session().getValue("wpTextbox1").replace("\r\n", "\n").replace("\r", "\n").trim();
 		String pattern = "";
 
@@ -218,6 +220,7 @@ public class PhotoGalleryTest extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 
 		// clear wikitext
+		waitForElement("wpTextbox1");
 		session().type("wpTextbox1", "");
 
 		// check if button in toolbar exists

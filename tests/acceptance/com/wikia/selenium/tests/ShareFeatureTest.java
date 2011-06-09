@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 public class ShareFeatureTest extends BaseTest {
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "deprecated"})
 	public void testSharedFeatureLoggedIn() throws Exception {
 		login();
 		session().open("index.php?title=Special:Random");
@@ -19,7 +19,7 @@ public class ShareFeatureTest extends BaseTest {
 		waitForElement("facebook");
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "deprecated"})
 	public void testSharedFeatureAnon() throws Exception {
 		session().open("index.php?title=Special:Random");
 		session().waitForPageToLoad(this.getTimeout());
@@ -30,7 +30,7 @@ public class ShareFeatureTest extends BaseTest {
 		waitForElement("facebook");
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "deprecated"})
 	public void testSharedFeatureNoFooter() throws Exception {
 		login();
 		session().open("index.php?title=Special:Random");
