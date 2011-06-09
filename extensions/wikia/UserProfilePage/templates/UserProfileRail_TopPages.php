@@ -14,7 +14,7 @@
 							</div>
 						<?php endif; ?>
 					</div>
-					<details><?= $page['title'] ;?></details>
+					<span class="top-page-item-label"><?= $page['title'] ;?></span>
 				</a>
 
 				<? if( $userIsOwner )  :?>

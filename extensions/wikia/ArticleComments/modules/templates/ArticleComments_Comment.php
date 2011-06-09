@@ -8,7 +8,7 @@
 		<div class="article-comm-text" id="comm-text-<?= $comment['articleId'] ?>">
 		<?= $comment['text'] ?>
 		</div>
-		<details>
+		<div class="edited-by">
 		<?= wfMsg('oasis-comments-added-by', $comment['timestamp'], $comment['sig']) ?>
 		<?php if( !empty($comment['isStaff']) ) { print "<span class=\"stafflogo\"><img src=\"http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png\" title=\"This user is a member of Wikia staff\" alt=\"@wikia\" /></span>\n"; } ?>
 		<?php
@@ -23,6 +23,6 @@
 			<?php
 		}
 			?>
-		</details>
+		</div>
 	</blockquote>
 </li>

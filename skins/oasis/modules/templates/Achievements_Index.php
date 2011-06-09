@@ -6,9 +6,9 @@
 ?>
 	<h1><?= wfMsgExt('achievements-profile-title', array('parsemag'), $ownerName, count($ownerBadges)) ?></h1>
 	
-	<details class="tally">
+	<div class="data-details tally">
 		<em><?= $ownerScore ?></em> <?= wfMsg('achievements-profile-title-oasis') ?>
-	</details>
+	</div>
 	
 	<p><?= wfMsgExt ('achievements-ranked-oasis', array('parse') , $ownerName, $ownerRank) ?> </p>
 	<div style="height: <?= count($ownerBadges) > 3 ? '200' : '100' ?>px">

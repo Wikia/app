@@ -19,7 +19,7 @@
 								?><div class="snippet category-gallery-placeholder" ></div><?
 							}?>
 						</div>
-						<details><?=$row['title'] ?></details>
+						<div class="title"><?=$row['title'] ?></div>
 					</a>
 				</div>
 			<? } ?>

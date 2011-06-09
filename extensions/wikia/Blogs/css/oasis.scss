@@ -11,7 +11,7 @@
 		position: absolute;
 		right: 0;
 	}
-	details {
+	.author-details {
 		@include clearfix;
 		*display: inline;
 		padding: 8px 0;
@@ -64,7 +64,7 @@
 		right: 10px;
 		top: 0px;
 	}
-	details {
+	.author-details {
 		@include clearfix;
 		.avatar {
 			float: left;
@@ -135,7 +135,8 @@
 				border: none;
 			}
 			h1,
-			details span {
+			details span,
+			.author-details span {
 				padding-left: 10px;
 			}
 			h1 {
@@ -169,7 +170,8 @@
 		top: -2px;
 	}
 
-	details {
+	details,
+	.author-details {
 		img { // /** the avatar **/
 			float: left;
 			height: 25px;

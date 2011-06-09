@@ -8,7 +8,7 @@
 		<li>
 			<img src="<?= $wgBlankImgUrl ?>" class="sprite <?= $item['changeicon'] ?>" height="20" width="20">
 			<em><?= $item['page_href'] ?></em>
-			<details><?= $item['changemessage'] ?></details>
+			<div class="edited-by"><?= $item['changemessage'] ?></div>
 		</li>
 <?php
 		}

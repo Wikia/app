@@ -21,10 +21,10 @@
 
 			<h1><a href="<?= htmlspecialchars($title->getLocalUrl()) ?>"><?= htmlspecialchars(BlogTemplateClass::getSubpageText($title)) ?></a></h1>
 
-		<details>
+		<div class="author-details">
 			<?= $post['avatar'] ?>
 			<span><?= wfMsg('blog-by', $post['date'], Xml::element('a', array('href' => htmlspecialchars($post['userpage'])), $post['username'], false)) ?></span>
-		</details>
+		</div>
 
 		<blockquote>
 			<?php
