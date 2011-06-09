@@ -145,7 +145,8 @@ $Factory.VariableCallback = {
         $Factory.Busy(0);
     },
     failure: function( aData ) {
-        $().log( "simple replace failure" );
+        $().log( "failure in VariableCallback" );
+		$().log( aData["responseText"] );
         $Factory.Busy(0);
     }
 };

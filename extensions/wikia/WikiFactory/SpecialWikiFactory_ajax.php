@@ -79,11 +79,6 @@ function axWFactoryGetVariable() {
 
 	$variable = WikiFactory::getVarById( $cv_id, $city_id );
 
-	$script = "";
-	foreach (array("wgServer", "wgScriptPath", "wgScript") as $part) {
-		$script .= unserialize(WikiFactory::getVarByName($part, $city_id)->cv_value);
-	}
-
 	$related = array();
 	$r_pages = array();
 	if (preg_match("/Related variables:(.*)$/", $variable->cv_description, $matches)) {
@@ -93,7 +88,9 @@ function axWFactoryGetVariable() {
 			if (!empty($rel_var)) $related[] = $rel_var;
 			else {
 				if (preg_match("/^MediaWiki:.*$/", $name, $matches2)) {
-					$r_pages[] = array("script" => $script, "name" => $name);
+					$r_pages[] = array(
+									"url" => GlobalTitle::newFromText( $name, 0, $city_id )->getFullURL()
+									);
 				}
 			}
 		}
