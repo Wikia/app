@@ -77,7 +77,7 @@
 			this.initialized = false;
 			this.state = false;
 			this.mode = false;
-			this.debugEvents(['fire']);
+			//this.debugEvents(['fire']);
 		},
 
 		initPlugins: function() {
