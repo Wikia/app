@@ -500,6 +500,8 @@ AdDriverDelayedLoader.loadNext = function() {
 			}
 		}
 		else {
+			// hide slot and load next one
+			$('#' + AdDriverDelayedLoader.currentAd.slotname).css("display", "none");
 			AdDriverDelayedLoader.loadNext();
 		}
 	}
