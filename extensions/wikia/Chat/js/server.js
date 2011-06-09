@@ -76,7 +76,7 @@ socket.on('connection', function(client){
 	
 	// Send a message to the client to cause it to send it's authentication info back to the server.
 	client.send({
-		event: 'auth',
+		event: 'auth'
     });
 
 	console.log("Raw connection recieved. Waiting for authentication info from client.");
@@ -608,7 +608,7 @@ function giveChatMod(client, socket, msg){
 							var promotedClientId = sessionIdsByKey[config.getKey_userInRoom(promotedUser.get('name'), client.roomId)];
 							if(typeof promotedClientId != 'undefined'){
 								socket.clients[promotedClientId].send({
-									event: 'forceReconnect',
+									event: 'forceReconnect'
 								});
 							}
 						});
@@ -651,7 +651,7 @@ function kickUserFromServer(client, socket, userToKick, roomId){
 	if(typeof kickedClientId != 'undefined'){
 		// If we're kicking the user (for whatever reason) they shouldn't try to auto-reconnect.
 		socket.clients[kickedClientId].send({
-			event: 'disableReconnect',
+			event: 'disableReconnect'
 		});
 
 		// To prevent race-conditions, we don't have any users kicked by this function get removed from
