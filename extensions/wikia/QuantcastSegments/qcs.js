@@ -23,7 +23,7 @@ QuantcastSegments.setQcseg = function (qcResult) {
 		editedObj.segments = editedSegments;
 		qcResult = editedObj;
 	}
-	$.cookies.set(QuantcastSegments.segCookieName, JSON.stringify(qcResult), { hoursToLive: 24*QuantcastSegments.segCookieExpires, path: wgCookiePath, domain: wgCookieDomain})
+	$.cookies.set(QuantcastSegments.segCookieName, $.toJSON(qcResult), { hoursToLive: 24*QuantcastSegments.segCookieExpires, path: wgCookiePath, domain: wgCookieDomain})
 	if (typeof(window.wgNow) == 'object') {
 		var now = window.wgNow;
 	} else {
