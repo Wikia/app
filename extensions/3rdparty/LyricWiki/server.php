@@ -695,7 +695,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 	$song = rawurldecode($song);
 	$origArtist = $artist; // for logging the failed requests, record the original name before we start messing with it
 	$origSong = $song;
-	$lookedFor = ""; // which titles we looked for.  Used in SOAP failures
+	$lookedFor = ""; // which titles we looked for.  Used in SOAP failures - TODO: REFACTOR TO BE AN ARRAY... SRSLY.
 
 	// Trick to show debug output.  Just add the debugSuffix to the end of the song name, and debug output will be displayed.
 	if((strlen($song) >= strlen($debugSuffix)) && (substr($song, (0-strlen($debugSuffix))) == $debugSuffix)){
@@ -837,13 +837,13 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 				$lookedFor .= "$title\n";
 				print (!$debug?"":"Not found...\n");
 
-				/** IMPLIED REDIRECTS **/
+				/** ATTEMPT: IMPLIED REDIRECTS **/
 				// If the artist has a redirect on their own page, that generally means that all songs belong to that finalized name...
 				// so try to grab the song using that version of the artist's name.
 				$artistTitle = lw_getTitle($artist); // leaves the original version in tact
 				$finalName = $artistTitle;
-				// NOTE: This is intentionally ONLY in NS_MAIN. Artist redirects should all be done in the main namespace.
-				$page = lw_getPage($artistTitle, $finalName, $debug, NS_MAIN);
+				// NOTE: This is intentionally ONLY in NS_MAIN rather than '$ns'. Artist redirects should all be done in the main namespace.
+				$page = lw_getPage($artistTitle, $finalName, $debug, NS_MAIN); // this is done for the side-effects of setting finalName.
 				print (!$debug?"":"found:\n$page");
 				if($finalName != $artistTitle){
 					print (!$debug?"":"Artist redirect found to \"$finalName\". Applying to song \"$song\".\n");
@@ -858,15 +858,32 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 					print (!$debug?"":"Title \"$title\"\n");
 				}
 
-				// If the song was still not found... chop off any trailing parentheses and try again. - SWC 20070101
+				$lookedFor .= "$title\n";
 				if(!lw_pageExists($title, $ns)){
-					$lookedFor .= "$title\n";
+					print (!$debug?"":"Not found...\n");
+
+					/** ATTEMPT: REMOVE TRAILING PARENTHESES **/
+					// If the song was still not found... chop off any trailing parentheses and try again. - SWC 20070101
 					print (!$debug?"":"$title not found.\n");
 					$finalSong = preg_replace("/\s*\(.*$/", "", $song);
 					if($song != $finalSong){
 						$title = lw_getTitle($finalName, $finalSong);
 						print (!$debug?"":"Looking without parentheses for \"$title\"\n");
 					}
+				} else {
+					print (!$debug?"":"$title found.\n");
+				}
+
+				$lookedFor .= "$title\n";
+				if(!lw_pageExists($title, $ns)){
+					print (!$debug?"":"Not found...\n");
+
+					/** ATTEMPT: ORIGINAL SONG CAPITALIZATION - SWC 20110609 **/
+					// If the title wasn't found from any previous tricks, try the original song capitalization that was passed in (with the possibly-rewritten artist name).
+					// NOTE: lw_pageExists() caches results, so re-looking up the same one if capitalization is the same, is not a problem... however, if that ends up being
+					// a lot of overhead at some point, we could make it only try this again if the new $title is not in $lookedFor already.
+					$title = "$finalName:" . utf8_encode($song); // not lw_getTitle so that original capitalization survives
+					print (!$debug?"":"Looking with original song capitalization for \"$title\"\n");
 				} else {
 					print (!$debug?"":"$title found.\n");
 				}
@@ -2033,6 +2050,8 @@ function lw_getTitle($artist, $song='', $applyUnicode=true, $allowAllCaps=true){
 ////
 GLOBAL $EXIST_CACHE;
 function lw_pageExists($pageTitle, $ns=NS_MAIN){
+	wfProfileIn( __METHOD__ );
+
 	GLOBAL $EXIST_CACHE;
 	if(!isset($EXIST_CACHE)){
 		$EXIST_CACHE = array();
@@ -2045,6 +2064,8 @@ function lw_pageExists($pageTitle, $ns=NS_MAIN){
 		$retVal = (0 < lw_simpleQuery("SELECT /* LyricWiki API server.php::lw_pageExists() */ COUNT(*) FROM page WHERE page_title='$queryTitle' AND page_namespace='$ns'")); // the page_namespace='$ns' speeds it up significantly since it can then use the index on page_namespace,page_title
 		$EXIST_CACHE["$ns:$pageTitle"] = $retVal;
 	}
+	
+	wfProfileOut( __METHOD__ );
 	return $retVal;
 } // end lw_pageExists()
 
