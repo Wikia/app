@@ -369,12 +369,12 @@ body .cke_dialog
 	text-align: center;
 	height: 16px;
 	width: 16px;
-	top: 8px;
+	top: 0;
 }
 
 .cke_skin_wikia .cke_ltr .cke_dialog_close_button
 {
-	right: 10px;
+	right: 0;
 }
 
 .cke_skin_wikia .cke_browser_ie8.cke_rtl .cke_dialog_close_button
@@ -384,7 +384,7 @@ body .cke_dialog
 
 .cke_skin_wikia .cke_rtl .cke_dialog_close_button
 {
-	left: 10px;
+	left: 0;
 }
 
 .cke_skin_wikia .cke_browser_ie7.cke_rtl .cke_dialog_close_button
