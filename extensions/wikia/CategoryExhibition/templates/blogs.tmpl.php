@@ -20,7 +20,7 @@
 							}?>
 
 						</div>
-						<details><?=$row['title'] ?></details>
+						<div class="title"><?=$row['title'] ?></div>
 					</a>
 				</div>
 			<? } ?>

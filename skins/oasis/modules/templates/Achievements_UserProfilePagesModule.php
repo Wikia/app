@@ -5,8 +5,8 @@
 	<? else :?>
 		<h1><?= wfMsgExt('achievements-userprofile-title', array('parsemag'), $ownerName, count($ownerBadges)) ?></h1>
 		<div class="data">
-			<details class="tally"><?= wfMsg('achievements-userprofile-profile-score', $ownerScore) ?></details>
-			<details class="ranking"><?= wfMsgExt ('achievements-userprofile-ranked', array('parse') , $ownerRank) ?></details>
+			<div class="data-details tally"><?= wfMsg('achievements-userprofile-profile-score', $ownerScore) ?></div>
+			<div class="data-details ranking"><?= wfMsgExt ('achievements-userprofile-ranked', array('parse') , $ownerRank) ?></div>
 		</div>
 		<div style="height: <?= count($ownerBadges) > 3 ? '200' : '100' ?>px">
 			<ul class="badges-icons badges">

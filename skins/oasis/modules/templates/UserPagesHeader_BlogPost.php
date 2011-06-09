@@ -11,9 +11,9 @@
 	?>
 	<h1><?= htmlspecialchars($title) ?></h1>
 
-	<details>
+	<div class="author-details">
 		<?= $avatar ?>
 		<span class="post-author"><a href="<?= htmlspecialchars($userPage) ?>"><?= htmlspecialchars($userName) ?></a></span>
 		<span><?= $editTimestamp ?></span>
-	</details>
+	</div>
 </div>

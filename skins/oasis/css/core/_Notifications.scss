@@ -89,7 +89,7 @@
 				font-weight: bold;
 			}
 		}
-		details {
+		.notification-details {
 			@include border-radius-sw(4px);
 			@include border-radius-se(4px);
 			background-color: $color-notification-details-background;

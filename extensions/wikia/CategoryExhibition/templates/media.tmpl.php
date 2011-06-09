@@ -24,8 +24,8 @@
 				</a>
 			</span>
 			<? } ?>
-			<details><a href="<?=$row['url'] ?>" class="<?=$row['class']; ?>" title="<?=$row['title']; ?>"><?=$row['title']; ?></a></details>
-			<details class="bigger"><? if(!empty($row['targetUrl']) && !empty($row['targetText'])){ echo 'Posted in: <a href="'.$row['targetUrl'].'" title="'.$row['targetText'].'">'.$row['targetText'].'</a>';  } ; ?></details>
+			<div class="title"><a href="<?=$row['url'] ?>" class="<?=$row['class']; ?>" title="<?=$row['title']; ?>"><?=$row['title']; ?></a></div>
+			<div class="title bigger"><? if(!empty($row['targetUrl']) && !empty($row['targetText'])){ echo 'Posted in: <a href="'.$row['targetUrl'].'" title="'.$row['targetText'].'">'.$row['targetText'].'</a>';  } ; ?></div>
 		</div>
 		<? }; if(!$fromAjax){ ?>
 		</div>

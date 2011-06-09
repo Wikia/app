@@ -261,7 +261,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		}
 	}
 
-	details {
+	.title {
 
 		@include border-radius-ne(9px);
 		@include border-radius-se(9px);
@@ -315,7 +315,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		top: $thumb-border-top - 30px ;
 	}
 
-	details {
+	.title {
 		position: relative;
 		text-align: left;
 		display: block;
@@ -328,7 +328,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		width: $thumb-size-width + $thumb-border-left + $thumb-border-right;
 	}
 
-	details.bigger {
+	.title.bigger {
 
 		max-height: 24px;
 		height: 24px;

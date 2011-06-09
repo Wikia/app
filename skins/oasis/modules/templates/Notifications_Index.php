@@ -18,7 +18,7 @@
 				<big><?= $notification['data']['points'] ?></big>
 				<?= $notification['message'] ?>
 			</p>
-			<details><a href="<?= htmlspecialchars($notification['data']['userPage']) ?>"><?= wfMsg('oasis-badge-notification-see-more') ?></a></details>
+			<div class="notification-details"><a href="<?= htmlspecialchars($notification['data']['userPage']) ?>"><?= wfMsg('oasis-badge-notification-see-more') ?></a></div>
 		</div>
 <?php
 					break;

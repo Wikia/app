@@ -135,7 +135,7 @@
 				bottom: 10px;
 			}
 		}
-		details {
+		.data-details {
 			margin: {
 				top: 10px;
 				bottom: 5px;
@@ -196,7 +196,7 @@
 		.data {
 			@include clearfix;
 
-			details, details > p {
+			.data-details, .data-details > p {
 				margin: 0px;
 				font-size: 11px;
 				line-height: 13px;
