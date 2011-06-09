@@ -39,6 +39,7 @@ class SMWSparqlDatabase4Store extends SMWSparqlDatabase {
 		curl_setopt( $this->m_curlhandle, CURLOPT_POST, true );
 		$parameterString = "query=" . urlencode( $sparql ) . "&restricted=1";
 		curl_setopt( $this->m_curlhandle, CURLOPT_POSTFIELDS, $parameterString );
+		curl_setopt( $this->m_curlhandle, CURLOPT_PROXY, false );
 
 		$xmlResult = curl_exec( $this->m_curlhandle );
 
