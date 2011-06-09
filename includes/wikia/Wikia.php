@@ -441,9 +441,11 @@ $wgHooks['SoftwareInfo']             [] = "Wikia::softwareInfo";
 $wgHooks['AddNewAccount']            [] = "Wikia::ignoreUser";
 $wgHooks['WikiFactory::execute']     [] = "Wikia::switchDBToLightMode";
 $wgHooks['EmailConfirmed']           [] = "Wikia::isEmailConfirmedHook";
-//$wgHooks['IsTrustedProxy']           [] = "Wikia::trustInternalIps";
-//$wgHooks['RawPageViewBeforeOutput']  [] = 'Wikia::rawPageViewBeforeOutput';
-$wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
+//$wgHooks['IsTrustedProxy']         [] = "Wikia::trustInternalIps";
+//$wgHooks['RawPageViewBeforeOutput'][] = 'Wikia::rawPageViewBeforeOutput';
+$wgHooks['AllowNotifyOnPtageChange']  [] = "Wikia::allowNotifyOnPageChange";
+# changes in recentchanges (MultiLookup)
+$wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -1819,5 +1821,55 @@ class Wikia {
 		$linker = self::getLinker();
 		return $linker->link($target, $text, $customAttribs, $query, $options);
 	}
+	
+	
+	
+	/**
+	 * recentChangesSave -- hook
+	 * Send information to the backend script, when new record was added to the recentchanges table
+	 * 
+	 * @static
+	 * @access public
+	 *
+	 * @param RecentChange $oRC
+	 *
+	 * @author Piotr Molski (MoLi)
+	 * @return true
+	 */
+	static public function recentChangesSave( $oRC ) {
+		global $wgCityId, $wgDBname, $wgEnableScribeReport;
+		
+		if ( empty( $wgEnableScribeReport ) ) {
+			return true;
+		}
+		
+		if ( !is_object( $oRC ) ) {
+			return true;
+		}
+		
+		$rc_ip = $oRC->getAttribute( 'rc_ip' );
+		if ( is_null( $rc_ip ) ) {
+			return true;
+		}
+		
+		$params = array(
+			'dbname'	=> $wgDBname,
+			'wiki_id'	=> $wgCityId,
+			'ip'		=> $rc_ip
+		);
 
+		try {
+			$message = array(
+				'method' => 'ipActivity',
+				'params' => $params
+			);
+			$data = Wikia::json_encode( $message );
+			WScribeClient::singleton('trigger')->send($data);
+		}
+		catch( TException $e ) {
+			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
+		}
+		
+		return true;
+	}
 }
