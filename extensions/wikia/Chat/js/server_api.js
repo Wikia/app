@@ -16,11 +16,10 @@ rc.on('error', function(err) {
 });
 
 
-resg = 0;
+
 // Create the API server (which fills requests from the MediaWiki server).
 http.createServer(function (req, res) {
 	apiDispatcher(req, res, function(result){
-		resg = res;
 		// SUCCESS CALLBACK
 		res.writeHead(200, {'Content-Type': 'application/json'});
 		res.write( JSON.stringify(result) );
@@ -59,8 +58,6 @@ function apiDispatcher(req, res, successCallback, errorCallback){
 			api_getCityIdForRoom(reqData.query.roomId, successCallback, errorCallback);
 		} else if(func == "getusersinroom"){
 			api_getUsersInRoom(reqData.query.roomId, successCallback, errorCallback);
-		} else if(func == "getroomslist"){
-			api_getRoomsList(successCallback, errorCallback);
 		} else if(func == "getstats"){
 			api_getStats(successCallback, errorCallback);
 		} else {
@@ -199,7 +196,6 @@ function api_createChatRoom(cityId, roomName, roomTopic, extraDataString, succes
  * Given a roomId, returns the cityId which it has in redis (as JSON).
  */
 function api_getCityIdForRoom(roomId, successCallback, errorCallback){
-	
 	rc.hget(config.getKey_room(roomId), 'wgCityId', function(err, cityId){
 		if (err) {
 			var errorMsg = 'Error: while getting wgCityId of room: "'+ roomId + '": ' + err;
@@ -218,7 +214,6 @@ function api_getCityIdForRoom(roomId, successCallback, errorCallback){
  * Given a roomId, returns a list of the usernames of all users in the room (as JSON).
  */
 function api_getUsersInRoom(roomId, successCallback, errorCallback){
-	resg.write( "sddsds" );
 	rc.hkeys(config.getKey_usersInRoom(roomId), function(err, users){
 		if (err) {
 			var errorMsg = 'Error: while getting wgCityId of room: "'+ roomId + '": ' + err;
@@ -231,24 +226,6 @@ function api_getUsersInRoom(roomId, successCallback, errorCallback){
 	});
 } // end api_getUsersInRoom()
 
-
-/**
- * Returns some JSON of stats about the server (to help judge the usage-level for making scaling estimations).
- */
-function api_getRoomsList(successCallback, errorCallback){
-	var test = ["X"];
-	rc.keys(config.getKey_room("*"), function(err, roomKeys){
-		test.push( roomKeys );
-			for(var index in roomKeys){
-				test.push( roomKeys[index] );	
-				rc.hgetall( 'room:13' , function(err, data) {
-					test.push( "CZEMU to nie dzia¸a" );	
-					test.push( data );	
-					successCallback( test );
-				});
-		}
-	});
-}
 /**
  * Returns some JSON of stats about the server (to help judge the usage-level for making scaling estimations).
  */
