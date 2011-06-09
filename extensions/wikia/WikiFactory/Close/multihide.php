@@ -116,10 +116,11 @@ class MultiHideWikisMaintenance {
 	protected function loadWikiIds() {
 		if ($this->inputFile != '') {
 			$contents = file_get_contents($this->inputFile);
-			$this->inputIds = preg_replace("/[\r\n]+/", ",", $contents);
+			$this->inputIds = $contents;
 		}
 		if ($this->inputIds != '') {
-			$idsList = preg_split("/,+/",$this->inputIds);
+			$idsList = preg_replace("/[\r\n]+/", ",", $this->inputIds);
+			$idsList = preg_split("/,+/",$idsList);
 			$wikiIds = array();
 			foreach ($idsList as $id) {
 				$id = intval(trim($id));
@@ -136,6 +137,7 @@ class MultiHideWikisMaintenance {
 		$reason = $this->reason;
 
 		foreach ($this->wikiIds as $wikiId) {
+//			echo "status: memory = ".memory_get_usage(true)."\n";
 			// check memory usage
 			if ( !$this->checkMemoryLimit(1) ) {
 				echo "error: memory limit exceeded (1G), please restart the script\n";
@@ -198,6 +200,6 @@ class MultiHideWikisMaintenance {
  * --file <file name to read wiki ids from>
  * --dry-run
  */
-$wgAutoloadClasses['DeadWikiEvaluator'] = "{$IP}/extensions/wikia/WikiFactory/Evaluate/DeadWikiEvaluator.class.php";
+$wgAutoloadClasses['DeadWikiEvaluator'] = dirname(__FILE__). "/../Evaluate/DeadWikiEvaluator.class.php";
 $maintenance = new MultiHideWikisMaintenance( $options );
 $maintenance->execute();

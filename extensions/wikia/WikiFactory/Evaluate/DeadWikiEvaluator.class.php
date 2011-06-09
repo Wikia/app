@@ -136,13 +136,13 @@ abstract class WikiEvaluator {
 			switch ($cond) {
 				case 'min':
 					if ($value < $refValue) {
-						$this->messages[] = "{$name} is lesser than \"{$rawRefValue}\"";
+						$this->messages[] = "{$name} (\"{$value}\") is lesser than \"{$rawRefValue}\"";
 						return;
 					}
 					break;
 				case 'max':
 					if ($value > $refValue) {
-						$this->messages[] = "{$name} is greater than \"{$rawRefValue}\"";
+						$this->messages[] = "{$name} (\"{$value}\") is greater than \"{$rawRefValue}\"";
 						return;
 					}
 					break;
