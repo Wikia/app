@@ -118,7 +118,7 @@ abstract class FounderEmailsEvent {
 	
 	protected function getLocalizedMsg( $sMsgKey, $params = array() ) {
 
-		$sBody = wfMsgExt( $sMsgKey, array( 'content', 'parsemag') );
+		$sBody = wfMsgExt( $sMsgKey, array( 'content', 'parse') );
 		return strtr( $sBody, $params );
 	}
 }

@@ -98,7 +98,7 @@ function wfFounderEmailsInit() {
 	$wgDefaultUserOptions["founderemails-views-digest-$wgCityId"] = 1;
 	$wgDefaultUserOptions["founderemails-complete-digest-$wgCityId"] = 0;
 
-	// for testing purposes only, TODO: remove when released & fully tested
+	/* for testing purposes only, TODO: remove when released & fully tested
 	global $wgRequest, $wgUser;
 	if ( $wgRequest->getCheck( 'founderEmailsTest' ) && ( $wgRequest->getVal( 'eventType' ) != null ) ) {
 		$eventType  = $wgRequest->getVal( 'eventType' );
@@ -118,6 +118,7 @@ function wfFounderEmailsInit() {
 			FounderEmailsRegisterEvent::register( $wgUser );
 		}
 	}
+	 */
 }
 
 $dir = dirname(__FILE__).'/';
