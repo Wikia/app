@@ -203,7 +203,7 @@ var AjaxLogin = {
 		var params = [
 			'action=ajaxlogin',
 			'format=json',
-			(AjaxLogin.action == 'password' ? 'wpMailmypassword=1' : 'wpLoginattempt=1'),
+			(AjaxLogin.action == 'password' ? 'wpMailmypassword=1' : 'wpLoginattempt=1')
 		];
 
 		var POSTparams = AjaxLogin.form.serialize();
