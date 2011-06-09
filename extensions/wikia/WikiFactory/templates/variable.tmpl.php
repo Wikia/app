@@ -187,7 +187,13 @@ New value:
 <h3><?= $rel_page["name"] ?></h3>
 
 <div>
-<?= Xml::element("a", array("class" => "wikia-button", "href" => $rel_page["script"] . "?" . http_build_query(array("title" => $rel_page["name"], "action" => "edit"))), "Edit") ?>
+<?= Xml::element("a", array(
+						"class" => "wikia-button",
+						"href" => $rel_page["url"] . "?" . http_build_query( array(
+																				"action" => "edit"
+																				)
+																			)
+							), "Edit") ?>
 </div>
 
 <?php endforeach; ?>
