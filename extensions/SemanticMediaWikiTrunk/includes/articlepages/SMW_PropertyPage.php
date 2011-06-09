@@ -65,9 +65,9 @@ class SMWPropertyPage extends SMWOrderedListPage {
 			$result .= wfMsgExt( 'smw_subpropertyarticlecount', array( 'parsemag' ), $resultCount ) . "</p>\n";
 			
 			if ( $resultCount < 6 ) {
-				$result .= SMWPageLister::getShortList( 0, $resultCount, $subproperties, null, $this->getSkin() );
+				$result .= SMWPageLister::getShortList( 0, $resultCount, $subproperties, null );
 			} else {
-				$result .= SMWPageLister::getColumnList( 0, $resultCount, $subproperties, null, $this->getSkin() );
+				$result .= SMWPageLister::getColumnList( 0, $resultCount, $subproperties, null );
 			}
 
 			$result .= "\n</div>";
@@ -98,7 +98,7 @@ class SMWPropertyPage extends SMWOrderedListPage {
 		$result = '';
 
 		if ( count( $diWikiPages ) > 0 ) {
-			$pageLister = new SMWPageLister( $diWikiPages, null, $this->getSkin(), $this->limit, $this->from, $this->until );
+			$pageLister = new SMWPageLister( $diWikiPages, null, $this->limit, $this->from, $this->until );
 			$this->mTitle->setFragment( '#SMWResults' ); // Make navigation point to the result list.
 			$navigation = $pageLister->getNavigationLinks( $this->mTitle );
 
@@ -158,8 +158,8 @@ class SMWPropertyPage extends SMWOrderedListPage {
 
 			// Property name
 			$searchlink = SMWInfolink::newBrowsingLink( '+', $dvWikiPage->getShortHTMLText() );
-			$r .= '<tr><td class="smwpropname">' . $dvWikiPage->getLongHTMLText( $this->getSkin() ) .
-			      '&#160;' . $searchlink->getHTML( $this->getSkin() ) . '</td><td class="smwprops">';
+			$r .= '<tr><td class="smwpropname">' . $dvWikiPage->getLongHTMLText( smwfGetLinker() ) .
+			      '&#160;' . $searchlink->getHTML( smwfGetLinker() ) . '</td><td class="smwprops">';
 			
 			// Property values
 			$ropts = new SMWRequestOptions();
@@ -175,10 +175,10 @@ class SMWPropertyPage extends SMWOrderedListPage {
 
 				if ( $i < $smwgMaxPropertyValues + 1 ) {
 					$dv = SMWDataValueFactory::newDataItemValue( $di, $this->mProperty );
-					$r .= $dv->getLongHTMLText( $this->getSkin() ) . $dv->getInfolinkText( SMW_OUTPUT_HTML, $this->getSkin() );
+					$r .= $dv->getLongHTMLText( smwfGetLinker() ) . $dv->getInfolinkText( SMW_OUTPUT_HTML, smwfGetLinker() );
 				} else {
 					$searchlink = SMWInfolink::newInversePropertySearchLink( '…', $dvWikiPage->getWikiValue(), $this->mTitle->getText() );
-					$r .= $searchlink->getHTML( $this->getSkin() );
+					$r .= $searchlink->getHTML( smwfGetLinker() );
 				}
 			}
 

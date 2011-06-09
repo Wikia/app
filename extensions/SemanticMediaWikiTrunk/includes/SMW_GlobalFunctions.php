@@ -302,6 +302,8 @@ function &smwfGetStore() {
  * stores (e.g. using other stores for fast querying than for storing new
  * facts), somewhat similar to MediaWiki's DB implementation.
  *
+ * @since 1.6
+ *
  * @return SMWSparqlDatabase or null
  */
 function &smwfGetSparqlDatabase() {
@@ -311,4 +313,25 @@ function &smwfGetSparqlDatabase() {
 		$smwgSparqlDatabaseMaster = new $smwgSparqlDatabase( $smwgSparqlQueryEndpoint, $smwgSparqlUpdateEndpoint, $smwgSparqlDataEndpoint );
 	}
 	return $smwgSparqlDatabaseMaster;
+}
+
+/**
+ * Compatibility helper for using Linker methods.
+ * MW 1.16 has a Linker with non-static methods,
+ * where in MW 1.19 they are static, and a DummyLinker
+ * class is introduced, which can be instantaited for
+ * compat reasons. 
+ * 
+ * @since 1.6
+ * 
+ * @return Linker or DummyLinker
+ */
+function smwfGetLinker() {
+	static $linker = false;
+	
+	if ( $linker === false ) {
+		$linker = class_exists( 'DummyLinker' ) ? new DummyLinker() : new Linker();
+	}
+	
+	return $linker;
 }
