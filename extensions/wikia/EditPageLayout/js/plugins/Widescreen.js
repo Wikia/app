@@ -37,7 +37,10 @@
 				this.loadState(true);
 
 				// adjust the height when changing modes
-				this.editor.on('mode',this.modeChanged,this);
+				this.editor.on('mode',function() {
+					// give some time for toolbar to be fully switched (BugId:5328)
+					setTimeout($.proxy(this.modeChanged, this), 100);
+				},this);
 			}
 		},
 
