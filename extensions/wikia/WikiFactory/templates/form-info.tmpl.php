@@ -4,16 +4,29 @@
 		Wiki was created on <strong><?php echo $wiki->city_created ?></strong>
 	</li>
 	<li>
-		Founder name: <strong><?php echo $user_name ?></strong> (id <?php echo $wiki->city_founding_user ?>)
-			<? if($wiki->city_founding_user): ?>
-			<sup><a href="<?php echo $wikiFactoryUrl; ?>/Metrics?founder=<?php echo rawurlencode($user_name); ?>">more by user</a></sup><? endif; ?>
+		Founder id: #<strong><?php echo $founder_id; ?></strong>
+		<? if( !empty( $founder_id ) ): ?>
+			<ul>
+				<li>Current name: <?php 
+					print "<strong>" . $founder_username . "</strong>";
+					print " <sup><a href=\"{$wikiFactoryUrl}/Metrics?founder=". rawurlencode($founder_username) . "\">more by this username</a></sup>";
+					?></li>
+				<li>Current email: <?php 
+				if( empty( $founder_usermail ) ) :
+					print "<i>empty</i>";
+				else:
+					print "<strong>" . $founder_usermail . "</strong>";
+					print " <sup><a href=\"{$wikiFactoryUrl}/Metrics?email=". urlencode($founder_usermail) . "\">more by this email</a></sup>";
+				endif; ?></li>
+			</ul>
+		<? endif; ?>
 	</li>
 	<li>
-		Founder email: <?php if( empty( $wiki->city_founding_email) ) :
+		Founder email: <?php if( empty( $founder_email ) ) :
 			print "<i>empty</i>";
 		else:
-			print "<strong>" . $wiki->city_founding_email . "</strong>";
-			print " <sup><a href=\"{$wikiFactoryUrl}/Metrics?email=". urlencode($wiki->city_founding_email) . "\">more by email</a></sup>";
+			print "<strong>" . $founder_email . "</strong>";
+			print " <sup><a href=\"{$wikiFactoryUrl}/Metrics?email=". urlencode($founder_email) . "\">more by this email</a></sup>";
 		endif; ?>
 	</li>
 	<li>

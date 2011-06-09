@@ -342,11 +342,6 @@ class WikiFactoryPage extends SpecialPage {
 			}
 		}
 
-		$user_name = 'unknown';
-		if (!empty($this->mWiki->city_founding_user)) {
-			$user_name = User::WhoIs($this->mWiki->city_founding_user);
-		}
-
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$vars = array(
 			"tab"         => $this->mTab,
@@ -362,10 +357,27 @@ class WikiFactoryPage extends SpecialPage {
 			"variables"   => WikiFactory::getVariables(),
 			"wikiRequest" => $oWikiRequest,
 			"variableName"=> $this->mVariableName,
-			"user_name"   => $user_name,
 			"isDevel"     => $wgDevelEnvironment,
 			'wikiFactoryUrl' => Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl()
 		);
+		if( $this->mTab === 'info' ) {
+			$vars[ 'founder_id' ] = $this->mWiki->city_founding_user;
+
+			if( !empty( $this->mWiki->city_founding_user ) ) {
+				#if we knew who they were, get their current info
+				$fu = User::newFromId( $this->mWiki->city_founding_user );
+				$vars[ 'founder_username' ] = $fu->getName();
+				$vars[ 'founder_usermail' ] = $fu->getEmail();
+			}
+			else
+			{	#dont know who made the wiki, so dont try to do lookups
+				$vars[ 'founder_username' ] = null;
+				$vars[ 'founder_usermail' ] = null;
+			}
+
+			#this is the static stored email
+			$vars[ 'founder_email' ] = $this->mWiki->city_founding_email;
+		}
 		if( $this->mTab === "tags" ||  $this->mTab === "findtags" ) {
 			$vars[ 'searchTag' ] = $this->mSearchTag;
 			$vars[ 'searchTagWikiIds' ] = $this->mTagWikiIds;
