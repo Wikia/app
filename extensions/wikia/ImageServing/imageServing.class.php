@@ -68,6 +68,7 @@ class imageServing{
 			}
 
 			if( count( $articles ) < 1 ) {
+				wfProfileOut( __METHOD__ );				
 				return $cache_return;
 			}
 
