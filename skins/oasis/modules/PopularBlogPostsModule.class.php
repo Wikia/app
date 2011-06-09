@@ -8,11 +8,7 @@ class PopularBlogPostsModule extends Module {
 		global $wgParser, $wgMemc, $wgLang, $wgPopularBlogPostsOnlyTitles;
 
 		$mcKey = wfMemcKey( "OasisPopularBlogPosts", $wgLang->getCode() );
-		$tempBody = $wgMemc->get($mcKey);
-		if (substr($tempBody, 0, 9) == '<p><br />') {
-			$tempBody = '<p>'.substr($tempBody, 9);
-		}
-		$this->body = $tempBody;
+		$this->body = $wgMemc->get($mcKey);
 		if (empty ($this->body)) {
 			$input = "	<title>" .wfMsg('oasis-popular-blogs-title') ."</title>
 						<type>box</type>
@@ -33,6 +29,12 @@ class PopularBlogPostsModule extends Module {
 			}
 
 			$this->body = BlogTemplateClass::parseTag($input, $params, $wgParser);
+			if (substr($this->body, 0, 9) == '<p><br />') {
+				$this->body = '<p>'.substr($this->body, 9);
+			}
+			if (substr($this->body, 0, 45) !== '<section class="WikiaBlogListingBox module ">') {
+				$this->body = '<section class="WikiaBlogListingBox module ">'.$this->body.'</section>';
+			}
 			$wgMemc->set ($mcKey, $this->body, 60*60);  // cache for 1 hour
 		}
 
