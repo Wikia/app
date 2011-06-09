@@ -17,6 +17,9 @@ class UADTest extends PHPUnit_Framework_TestCase {
 		$this->object = $this->getMock('UAD', array( 'getDb' ), array( $this->app ));
 	}
 
+	/**
+	 * @group Hack
+	 */
 	public function testCreatingToken() {
 		$dbMock = $this->getMock( 'DatabaseMysql', array( 'insert', 'insertId', 'update', 'commit' ) );
 
@@ -46,6 +49,7 @@ class UADTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @expectedException WikiaException
+	 * @group Hack
 	 */
 	public function testCreatingTokenException() {
 		$dbMock = $this->getMock( 'DatabaseMysql', array( 'insert', 'insertId', 'update', 'commit' ) );
@@ -80,6 +84,7 @@ class UADTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @group Hack
 	 * @dataProvider storingEventsDataProvider
 	 */
 	public function testStoringEvents( $events) {
