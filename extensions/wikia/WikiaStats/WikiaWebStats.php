@@ -57,8 +57,6 @@ function ajaxOneDot (&$bottomScriptText) {
 	if ( !empty($wgCityId) && !empty($wgDotDisplay) && empty($wgReadOnly) ) {
 		$url = getOneDotURL();
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/WikiaStats/js/WikiaStats.js?$wgStyleVersion\"></script>\n" );
-
 		$bottomScriptText .= "<script type=\"text/javascript\" src=\"$url\"></script>";
 		$bottomScriptText .= '<noscript><img src="'.$url.'" width="1" height="1" border="0" alt="" /></noscript>';
 		$bottomScriptText .= "\n";
