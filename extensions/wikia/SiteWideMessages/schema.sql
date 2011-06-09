@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `messages_text`
 	`msg_group_name`      varchar (255), -- only for displaying in the history
 	`msg_wiki_name`       varchar (255), -- only for displaying in the history
 	`msg_hub_id`          int (9),
+	`msg_cluster_id`      int (9),
 	`msg_lang`            varchar (255),
 	PRIMARY KEY (`msg_id`)
 );
