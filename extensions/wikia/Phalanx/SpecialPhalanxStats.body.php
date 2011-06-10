@@ -233,6 +233,7 @@ class PhalanxStatsPager extends ReverseChronologicalPager {
 		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 
 		$this->mBlockId = (int) $id;
+                $this->mDefaultQuery['blockId'] = (int) $id;
 
 	}
 
