@@ -12,6 +12,7 @@
 	buttons['InsertImage'] = {
 		type: 'button',
 		labelId: 'wikia-editor-media-image',
+		titleId: 'wikia-editor-media-image-tooltip',
 		className: 'RTEImageButton',
 		clicksource: function() { WMU_show({}); },
 		ckcommand: 'addimage'
@@ -19,6 +20,7 @@
 	buttons['InsertGallery'] = {
 		type: 'button',
 		labelId: 'wikia-editor-media-gallery',
+		titleId: 'wikia-editor-media-gallery-tooltip',
 		className: 'RTEGalleryButton',
 		clicksource: function() {
 			WikiaPhotoGallery.showEditor({
@@ -32,6 +34,7 @@
 	buttons['InsertSlideshow'] = {
 		type: 'button',
 		labelId: 'wikia-editor-media-slideshow',
+		titleId: 'wikia-editor-media-slideshow-tooltip',
 		className: 'RTESlideshowButton',
 		clicksource: function() {
 			WikiaPhotoGallery.showEditor({
@@ -45,6 +48,7 @@
 	buttons['InsertSlider'] = {
 		type: 'button',
 		labelId: 'wikia-editor-media-slider',
+		titleId: 'wikia-editor-media-slider-tooltip',
 		className: 'RTESliderButton',
 		clicksource: function() {
 			WikiaPhotoGallery.showEditor({
@@ -58,6 +62,7 @@
 	buttons['InsertVideo'] = {
 		type: 'button',
 		labelId: 'wikia-editor-media-video',
+		titleId: 'wikia-editor-media-video-tooltip',
 		className: 'RTEVideoButton',
 		clicksource: function() { VET_show({}); },
 		ckcommand: 'addvideo',

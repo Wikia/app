@@ -17,11 +17,13 @@
 			for (var i=0;i<list.length;i++) {
 				var templateName = list[i],
 					buttonId = 'Template_Popular'+i,
-					self = this;
+					self = this,
+					label = this.msg('templates-add-tooltip', [templateName]);
 
 				this.editor.ui.addElement(buttonId,{
 					type: 'button',
 					label: templateName,
+					title: label,
 					clicksource: (function(templateName){
 						var buttonId = i+1;
 						return function(sourceEditor) {
@@ -46,7 +48,7 @@
 				this.editor.ck.on('insertTemplate', this.proxy(this.onInsertTemplate));
 			}
 		},
-		
+
 		track: function(ev) {
 			this.editor.track(this.editor.getTrackerMode(), 'templates', ev);
 		},

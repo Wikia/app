@@ -16,6 +16,7 @@ CKEDITOR.plugins.add( 'table',
 		editor.ui.addButton( 'Table',
 			{
 				label : lang.toolbar,
+				title: lang.toolbarTooltip,
 				command : 'table'
 			});
 

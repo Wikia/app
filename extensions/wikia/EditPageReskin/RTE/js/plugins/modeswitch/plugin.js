@@ -1,59 +1,64 @@
 CKEDITOR.plugins.add('rte-modeswitch',
 {
 	sourceButton: false,
+	messages: {},
 
 	init: function(editor) {
-		var self = this;
+		this.messages = editor.lang.modeSwitch;
 
 		this.addCommands(editor);
 
-		editor.on('instanceReady', function(ev) {
-			self.updateSourceButtonTooltip(editor);
-			self.updateModeInfo(editor);
-		});
+		// update <body> node classes
+		editor.on('instanceReady', $.proxy(this.updateModeInfo, this));
+		editor.on('mode', $.proxy(this.updateModeInfo, this));
 
-		editor.on('mode', function(ev) {
-			self.updateSourceButtonTooltip(editor);
-			self.updateModeInfo(editor);
-		});
-	},
+		// disable buttons while switching between modes
+		editor.on('modeSwitch', $.proxy(function(){
+			this.sourceCommand.disable();
+			this.wysiwygCommand.disable();
+		}, this));
 
-	// get reference to source button
-	getSourceButton: function(editor) {
-		if (this.sourceButton == false) {
-			var sourceCommand = editor.getCommand( 'source' );
-			var uiItem = sourceCommand.uiItems[0];
-
-			if (uiItem) {
-				this.sourceButton = $('#' + uiItem._.id);
+		// enable button switching to the "opposite" mode
+		editor.on('modeSwitchCancelled', $.proxy(function(){
+			if (editor.mode == 'source') {
+				this.wysiwygCommand.enable();
 			}
-		}
-		return this.sourceButton;
+			else {
+				this.sourceCommand.enable();
+			}
+		}, this));
+
+		// update switching tabs tooltips
+		editor.on('mode', $.proxy(this.updateTooltips, this));
 	},
 
-	// change tooltip for "Source" button
-	updateSourceButtonTooltip: function(editor) {
-		var sourceButton = this.getSourceButton(editor),
-			msgKey = (editor.mode == 'wysiwyg') ? 'toSource' : 'toWysiwyg';
-			msg = editor.lang.modeSwitch[msgKey];
-
-		if (sourceButton) {
-			sourceButton.attr('title', msg);
-			sourceButton.find('.cke_label').text(msg);
-		}
-	},
-
-	updateModeInfo: function(editor) {
+	updateModeInfo: function(ev) {
 		// set class for body indicating current editor mode (used mainly by automated tests)
-		$('body').removeClass('rte_wysiwyg').removeClass('rte_source').addClass('rte_' + editor.mode);
+		$('body').
+			removeClass('rte_wysiwyg').removeClass('rte_source').
+			addClass('rte_' + ev.editor.mode);
 
 		// this hidden editform field is used by RTE backend to parse HTML back to wikitext
-		$('#RTEMode').attr('value', editor.mode);
+		$('#RTEMode').attr('value', ev.editor.mode);
+	},
+
+	updateTooltips: function(ev) {
+		var mode = ev.editor.mode,
+			sourceTabLabel = this.messages['toSource' + (mode == 'source' ? '' : 'Tooltip')],
+			wysiwygTabLabel = this.messages['toWysiwyg' + (mode == 'wysiwyg' ? '' : 'Tooltip')];
+
+		this.getSwitchTab('source').attr('title', sourceTabLabel);
+		this.getSwitchTab('wysiwyg').attr('title', wysiwygTabLabel);
+	},
+
+	// get jQuery object for mode switching tab
+	getSwitchTab: function(mode) {
+		var nodeId = this[mode + 'Command'].uiItems[0]._.id;
+		return $('#' + nodeId);
 	},
 
 	addCommands: function(editor) {
-		var self = this;
-		this.sourceCommand = editor.addCommand('ModeSource',{
+		this.sourceCommand = editor.addCommand('ModeSource', {
 			modes: {wysiwyg:1},
 			editorFocus : false,
 			canUndo : false,
@@ -62,7 +67,8 @@ CKEDITOR.plugins.add('rte-modeswitch',
 					editor.execCommand('source');
 			}
 		});
-		this.wysiwygCommand = editor.addCommand('ModeWysiwyg',{
+
+		this.wysiwygCommand = editor.addCommand('ModeWysiwyg', {
 			modes: {source:1},
 			exec: function() {
 				if (editor.mode == 'source')
@@ -70,24 +76,14 @@ CKEDITOR.plugins.add('rte-modeswitch',
 			}
 		});
 
-		editor.on('modeSwitch',function(){
-			self.sourceCommand.disable();
-			self.wysiwygCommand.disable();
-		});
-		editor.on('modeSwitchCancelled',function(){
-			if (editor.mode == 'source')
-				self.wysiwygCommand.enable();
-			else
-				self.sourceCommand.enable();
-		});
-
 		editor.ui.addButton( 'ModeSource', {
-			label : editor.lang.modeSwitch.toSource,
+			label : this.messages.toSource,
 			hasIcon: false,
 			command : 'ModeSource'
 		});
+
 		editor.ui.addButton( 'ModeWysiwyg', {
-			label : editor.lang.modeSwitch.toWysiwyg,
+			label : this.messages.toWysiwyg,
 			hasIcon: false,
 			command : 'ModeWysiwyg'
 		});
