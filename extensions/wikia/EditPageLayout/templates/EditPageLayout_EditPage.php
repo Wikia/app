@@ -126,7 +126,9 @@
 								<input type="checkbox" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
 								<?= wfMsg('editpagelayout-pageControls-minorEdit') ?>
 							</label>
-							<?= $summaryBox ?>
+							<div id="wpSummaryLabel">
+								<?= $summaryBox ?>
+							</div>
 							<nav class="buttons">
 <?php
 	foreach ($buttons as $button) {
