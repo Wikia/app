@@ -483,6 +483,15 @@
 			if (this.enabled) {
 				this.pollStylesheetsTimer = new Timer(this.proxy(this.pollStylesheets),this.pollStylesheetsTimerDelay);
 				this.editor.on('state',this.proxy(this.stateChanged));
+
+				// hide loading indicator when fallback occurs (BugId:6823)
+				this.editor.on('editorReady', this.proxy(function() {
+					if (this.editor.ck) {
+						this.editor.ck.on('modeSwitchCancelled', this.proxy(function() {
+							this.fireState(this.editor.states.IDLE);
+						}));
+					}
+				}));
 			}
 		},
 
