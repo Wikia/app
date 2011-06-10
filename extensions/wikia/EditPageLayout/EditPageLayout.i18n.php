@@ -60,6 +60,7 @@ $messages['en'] = array(
 	'rev-deleted-text-notice' => "This page revision has been '''deleted'''. [More info]",
 	'readonlywarning-notice' => "'''Warning: The database has been locked for maintenance.''' [More info]",
 	'anoneditwarning-notice' => '',
+	'longpagewarning-notice' => '',
 	'userinvalidcssjstitle-notice' => "'''Warning:''' There is no skin \"$1\". [More info]",
 	'semiprotectedpagewarning-notice' => "'''Note:''' This page has been locked so that only registered users can edit it. [More info]",
 	'protectedpagewarning-notice' => "'''Warning:''' This page has been locked so that only users with admin rights can edit it. [More info]",
