@@ -13,5 +13,5 @@ var DevBoxPanel = {
 		
 		$(".tab-pane").css("display", "none");
 		$('#' + $(elem).attr("pane")).css("display", "block");
-	},
+	}
 };
