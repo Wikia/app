@@ -127,8 +127,8 @@ class UserBlock {
 		if ($user->mBlock) {
 			$user->mBlock->mId = $blockData['id'];
 			$user->mBlock->mExpiry = is_null($blockData['expire']) ? 'infinity' : $blockData['expire'];
-			$user->mBlock->mTimestamp = $blockData['timestamp'];
-			$user->mBlock->mAddress = $address;
+			$user->mBlock->mTimestamp = wfTimestamp( TS_MW, $blockData['timestamp'] );
+			$user->mBlock->mAddress = $blockData['text'];
 			$user->mBlock->mBlockEmail = true;
 
 			// account creation check goes through the same hook...
@@ -186,5 +186,4 @@ class UserBlock {
 		}
 		return true;
 	}
-
 }
