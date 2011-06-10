@@ -61,68 +61,68 @@ class MultipleLookupCore {
 
 		return false;
 	}
-
-	function checkUserActivity( ) {
+	
+	public function countUserActivity() {
 		global $wgMemc, $wgStatsDB;
+		
+		$countActivity = 0;
+		$ip = ip2long( $this->mUsername );
+		$memkey = __METHOD__ . ":all:" . $ip;
+		$cached = $wgMemc->get( $memkey );
+		if ( empty( $cached ) || MULTILOOKUP_NO_CACHE ) {
+			
+			$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+			$oRow = $dbs->selectRow(
+				array( '`specials`.`multilookup`' ),
+				array( 'count(ml_city_id) as cnt' ),
+				array( 'ml_ip' => $ip ),
+				__METHOD__
+			);
+
+			if ( isset( $oRow->cnt ) ) {
+				$countActivity = $oRow->cnt;
+			}
+
+			if ( !MULTILOOKUP_NO_CACHE ) {
+				$wgMemc->set( $memkey, $countActivity, 60 * 15 );
+			}
+		} else {
+			$countActivity = $cached;
+		}
+
+		return $countActivity;
+	}
+
+	function checkUserActivity() {
+		global $wgMemc, $wgStatsDB;
+		
 		$userActivity = array();
-		$memkey = __METHOD__ . ":all:" . $this->mUsername;
+		
+		$ip = ip2long( $this->mUsername );
+		$memkey = __METHOD__ . ":all:ip:" . $ip . ":limit:" . intval($this->mLimit) . ":offset:" . intval($this->mOffset);
 		$cached = $wgMemc->get( $memkey );
 		if ( !is_array ( $cached ) || MULTILOOKUP_NO_CACHE ) {
 			$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
-			if ( !is_null( $dbs ) ) {
-				$oRow = $dbs->selectRow(
-					array( 'city_ip_activity' ),
-					array( 'ca_latest_activity' ),
-					array( 'ca_ip_text' => $this->mUsername ),
-					__METHOD__
-				);
-
-				if ( isset( $oRow->ca_latest_activity ) ) {
-					$userActivity = $oRow->ca_latest_activity;
-				}
-
-				$userActivityWikiaList = array();
-				$userActivityWikiaListByCnt = array();
-				if ( !empty( $userActivity ) ) {
-					$userActivityWikiaList = explode( ',', $userActivity );
-					if ( is_array( $userActivityWikiaList ) ) {
-						foreach ( $userActivityWikiaList as $id => $wikisWithCnt ) {
-							$_temp = explode( "<CNT>", $wikisWithCnt );
-							if ( is_array( $_temp ) && count( $_temp ) == 2 ) {
-								$wikiName = $_temp[0];
-								$cnt = $_temp[1];
-								$userActivityWikiaListByCnt[$cnt][] = $wikiName;
-							}
-						}
-					}
-					/* sort array */
-					unset( $userActivityWikiaList );
-					$userActivityWikiaList = array();
-					if ( !empty( $userActivityWikiaListByCnt ) ) {
-						$loop = 0;
-						krsort( $userActivityWikiaListByCnt );
-						foreach ( $userActivityWikiaListByCnt as $cnt => $wikis ) {
-							if ( is_array( $wikis ) && !empty( $wikis ) ) {
-								foreach ( $wikis as $i => $wikiName ) {
-									$wikiRow = WikiFactory::getWikiByDB( $wikiName );
-									$url = $title = "";
-									if ( !empty( $wikiRow ) ) {
-										$url = $wikiRow->city_url;
-										$title = $wikiRow->city_title;
-									}
-									$userActivityWikiaList[$loop] = array( $wikiName, $title, $url );
-									$loop++;
-								}
-							}
-						}
-					}
-				}
-
-				$userActivity = $userActivityWikiaList;
-				if ( !MULTILOOKUP_NO_CACHE ) {
-					$wgMemc->set( $memkey, $userActivity, 60 * 15 );
+					
+			$oRes = $dbs->select(
+				array( '`specials`.`multilookup`' ),
+				array( 'ml_city_id' ),
+				array( 'ml_ip' => $ip ),
+				__METHOD__,
+				array( 'ORDER BY' => 'ml_count DESC, ml_ts DESC', 'LIMIT' => $this->mLimit, 'OFFSET' => $this->mOffset )
+			);
+			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
+				$oWikia = WikiFactory::getWikiByID( $oRow->ml_city_id );
+				if ( $oWikia ) {
+					$userActivity[] = array( $oWikia->city_dbname, $oWikia->city_title, $oWikia->city_url );
 				}
 			}
+			$dbs->freeResult( $oRes );
+
+			if ( !MULTILOOKUP_NO_CACHE ) {
+				$wgMemc->set( $memkey, $userActivity, 60 * 15 );
+			}
+			
 		} else {
 			$userActivity = $cached;
 		}
