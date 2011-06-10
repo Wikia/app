@@ -11,12 +11,19 @@
 		@include wordmark;
 		@include clearfix;
 		color: $color-links;
-		width: auto;
-		margin-right: 20px;
 		float: left;
+		margin-right: 20px;
+		width: auto;
 		img {
 			float: left;
 			height: 45px;
+		}
+		// text wordmark should be vertically centered
+		&.text {
+			> a {
+				display: inline-block;
+				line-height: 46px;
+			}
 		}
 	}
 	> h2 {
