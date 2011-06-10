@@ -51,13 +51,13 @@ class MultiLookupAjax {
 		if ( empty($dbname) ) {
 			$oML->setLimit($limit);
 			$oML->setOffset($offset);
-			$activity = $oML->checkUserActivity();
-			if ( !empty($activity) ) {
+			$count = $oML->countUserActivity();
+			$data = $oML->checkUserActivity();
+			if ( !empty($data) ) {
 				$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
-				$result['iTotalDisplayRecords'] = count($activity);
+				$result['iTotalDisplayRecords'] = $count;
 				$result['sColumns'] = 'id,dbname,title,url,options';
 				$rows = array();			
-				$data = array_slice($activity, $offset, $limit);
 				$loop = 1;
 				foreach ( $data as $row ) {
 					$usernames = "";
