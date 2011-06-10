@@ -70,7 +70,7 @@
 		requires: ['spaces'],
 
 		MESSAGE_PREFIX: 'loadingStates-',
-		
+
 		extraStates: false,
 		extraStatesCount: 0,
 
@@ -79,12 +79,12 @@
 			this.editor.on('state',this.proxy(this.stateChanged));
 			this.editor.on('extraState',this.proxy(this.extraStateChanged));
 		},
-		
+
 		init: function() {
 			this.el = this.editor.getSpace('loading-status');
 			this.set('loading');
 		},
-		
+
 		extraStateChanged: function( editor, name, state ) {
 			var states = editor.states;
 			if (state == states.INITIALIZING) {
@@ -112,10 +112,10 @@
 				value = 'toVisual';
 			else if (state == states.SAVING)
 				value = 'saving';
-		
+
 			if (value == false && this.extraStatesCount > 0)
 				return;
-			
+
 			this.set(value);
 		},
 
@@ -268,24 +268,24 @@
 				return true;
 			}
 		},
-		
+
 		fireToolbarsResized: function() {
 			this.editor.fire('toolbarsResized',this.editor);
 		}
-		
+
 	});
-	
+
 	/**
-	 * Adds a custom event "sizeChanged" 
+	 * Adds a custom event "sizeChanged"
 	 * when editor area is resized
 	 */
 	WE.plugins.sizechangedevent = $.createClass(WE.plugin,{
-		
+
 		initDom: function() {
 			var self = this, editor = this.editor;
-			
+
 			this.fireResizeEvent();
-			
+
 			$(window).bind('resize', function() {
 				self.fireResizeEvent();
 			});
@@ -298,11 +298,11 @@
 			// dirty trick to allow toolbar / right rail to be fully initialized
 			//setTimeout(this.proxy(this.fireResizeEvent),10);
 		},
-		
+
 		fireResizeEvent: function() {
 			this.editor.fire('sizeChanged',this.editor);
 		}
-		
+
 	});
 
 	/**
@@ -314,7 +314,7 @@
 	WE.plugins.autoresizer = $.createClass(WE.plugin,{
 
 		requires: ['sizechangedevent'],
-		
+
 		editarea: false,
 		editbox: false,
 		mode: false,
@@ -370,23 +370,23 @@
 			}
 		}
 	});
-	
+
 	/**
 	 * Adds textual link "More shortcuts" into source mode toolbar
 	 * which shows a modal popup with edit tools.
 	 */
 	WE.plugins.edittools = $.createClass(WE.plugin,{
-		
+
 		LINK_CAPTION_MESSAGE: 'edittools-caption',
 		DIALOG_TITLE_MESSAGE: 'edittools-dialog-title',
-		
+
 		modal: false,
 		html: false,
-		
+
 		beforeInit: function() {
 			this.editor.on('mediawikiToolbarRendered',this.proxy(this.mediawikiToolbarRendered));
 		},
-		
+
 		mediawikiToolbarRendered: function( editor, el ) {
 			this.html = this.editor.element.find('.mw-editTools').html();
 			if (this.html) {
@@ -396,7 +396,7 @@
 				$(el).append(link);
 			}
 		},
-		
+
 		showEdittools: function( evt ) {
 			evt && evt.preventDefault();
 			var title = $.htmlentities(this.editor.msg(this.DIALOG_TITLE_MESSAGE));
@@ -411,21 +411,21 @@
 			});
 		}
 	});
-	
+
 	/**
 	 * Adds scroll bar to right rail if rail is shorter than the specified minimum
 	 */
 	WE.plugins.railminimumheight = $.createClass(WE.plugin,{
-		
+
 		requires: ['sizechangedevent'],
-		
+
 		MINIMUM_HEIGHT: 600,
 		CONTAINER_SELECTOR: '> .rail-auto-height',
-		
+
 		beforeInit: function() {
 			this.editor.on('sizeChanged',this.proxy(this.delayedResize));
 		},
-		
+
 		delayedResize: function() {
 			setTimeout(this.proxy(this.resize),10);
 		},
@@ -441,7 +441,7 @@
 		resize: function() {
 			var viewportHeight = $.getViewportHeight();
 			var el, rail = this.editor.getSpace('rail');
-			
+
 			if (rail.exists() && (el = rail.find(this.CONTAINER_SELECTOR)) && el.exists()) {
 				if (viewportHeight > this.MINIMUM_HEIGHT) {
 					el.css({
@@ -457,25 +457,25 @@
 				}
 			}
 		}
-		
-		
+
+
 	});
-	
-	
+
+
 	WE.plugins.cssloadcheck = $.createClass(WE.plugin,{
-		
+
 		CSS_STATE_NAME: 'ck-stylesheets',
-		
+
 		pollStylesheetsTimer: false,
 		pollStylesheetsTimerDelay: 100,
-		
+
 		currentDelay: 0,
 		maxAllowedDelay: 10000,
-		
+
 		lastAnnounced: false,
 
 		enabled: false,
-		
+
 		beforeInit: function() {
 			// enable this plugin only for Firefox 4.0+ (BugId:5654)
 			this.enabled = !!$.browser.mozilla && (parseInt($.browser.version) == 2 /* '2.0.1' = Fx 4.0.1 */);
@@ -485,16 +485,16 @@
 				this.editor.on('state',this.proxy(this.stateChanged));
 			}
 		},
-		
+
 		init: function() {
 			if (this.enabled) {
 				this.stateChanged(this.editor,this.editor.state);
 			}
 		},
-		
+
 		stateChanged: function( editor, state ) {
 			var states = this.editor.states;
-			
+
 			this.pollStylesheetsTimer.stop();
 			if ((state == states.INITIALIZING && this.editor.mode == 'wysiwyg') || state == states.LOADING_VISUAL) {
 				// when wysiwyg mode is loading
@@ -506,10 +506,10 @@
 				this.fireState(states.IDLE);
 			}
 		},
-		
+
 		pollStylesheets: function() {
 			this.pollStylesheetsTimer.stop();
-			
+
 			var ed = this.editor.getEditorElement(),
 				iframe = ed.find('iframe');
 			if (iframe.exists()) {
@@ -521,23 +521,23 @@
 					return;
 				}
 			}
-			
+
 			this.currentDelay += this.pollStylesheetsTimerDelay;
 			if (this.currentDelay > this.maxAllowedDelay) {
 				this.fireState(this.editor.states.IDLE);
 				return;
 			}
-			
+
 			this.pollStylesheetsTimer.start();
 		},
-		
+
 		fireState: function( state ) {
 			if (this.lastAnnounced !== state) {
 				this.editor.fire('extraState',this.editor,this.CSS_STATE_NAME,state);
 				this.lastAnnounced = state;
 			}
 		}
-		
+
 	});
 
 	/**

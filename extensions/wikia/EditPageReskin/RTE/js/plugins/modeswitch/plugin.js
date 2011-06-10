@@ -19,8 +19,8 @@ CKEDITOR.plugins.add('rte-modeswitch',
 		}, this));
 
 		// enable button switching to the "opposite" mode
-		editor.on('modeSwitchCancelled', $.proxy(function(){
-			if (editor.mode == 'source') {
+		editor.on('modeSwitchCancelled', $.proxy(function(ev){
+			if (ev.editor.mode == 'source') {
 				this.wysiwygCommand.enable();
 			}
 			else {
