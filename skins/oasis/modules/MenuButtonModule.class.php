@@ -181,6 +181,10 @@ class MenuButtonModule extends Module {
 				$accesskey = 'd';
 				break;
 
+			case 'history':
+				$accesskey = 'h';
+				break;
+
 			default:
 				$accesskey = false;
 		}
