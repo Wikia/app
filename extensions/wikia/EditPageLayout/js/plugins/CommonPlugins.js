@@ -473,15 +473,23 @@
 		maxAllowedDelay: 10000,
 		
 		lastAnnounced: false,
+
+		enabled: false,
 		
 		beforeInit: function() {
-			this.pollStylesheetsTimer = new Timer(this.proxy(this.pollStylesheets),this.pollStylesheetsTimerDelay);
-			this.editor.on('state',this.proxy(this.stateChanged));
-			//this.editor.on('');
+			// enable this plugin only for Firefox 4.0+ (BugId:5654)
+			this.enabled = !!$.browser.mozilla && (parseInt($.browser.version) == 2 /* '2.0.1' = Fx 4.0.1 */);
+
+			if (this.enabled) {
+				this.pollStylesheetsTimer = new Timer(this.proxy(this.pollStylesheets),this.pollStylesheetsTimerDelay);
+				this.editor.on('state',this.proxy(this.stateChanged));
+			}
 		},
 		
 		init: function() {
-			this.stateChanged(this.editor,this.editor.state);
+			if (this.enabled) {
+				this.stateChanged(this.editor,this.editor.state);
+			}
 		},
 		
 		stateChanged: function( editor, state ) {
