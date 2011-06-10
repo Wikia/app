@@ -65,6 +65,7 @@ $app->registerExtensionJSMessagePackage('EditPageLayout', array(
 	'preview',
 	'savearticle',
 	'editpagelayout-captcha-title',
+	'editpagelayout-edit-info',
 	'editpagelayout-more',
 	'editpagelayout-less',
 	'editpagelayout-pageControls-changes',

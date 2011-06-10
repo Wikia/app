@@ -51,6 +51,12 @@
 						this.editor.track('title', 'edit');
 						this.renderHiddenFieldsDialog();
 					}));
+
+				// update the tooltip if there are two or more fields (BugId:6726)
+				var noFields = $('#EditPageHiddenFields').find('input[type!="hidden"]').length;
+				if (noFields >= 2) {
+					$('#EditPageTitle').attr('title', $.msg('editpagelayout-edit-info'));
+				}
 			}
 
 			// check whether there are required fields with no value - show dialog

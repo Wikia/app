@@ -6,6 +6,8 @@
  * Renders modified HTML for edit pages
  */
 class EditPageLayoutModule extends Module {
+	
+	const TITLE_MAX_LENGTH = 30;
 
 	// globals
 	var $wgBlankImgUrl;
@@ -73,6 +75,14 @@ class EditPageLayoutModule extends Module {
 
 		if ($this->titleText == '') {
 			$this->titleText = ' ';
+		}
+
+		// limit title length
+		if (mb_strlen($this->titleText) > self::TITLE_MAX_LENGTH) {
+			$this->titleShortText = htmlspecialchars(mb_substr($this->titleText, 0, self::TITLE_MAX_LENGTH)) . '&hellip;';
+		}
+		else {
+			$this->titleShortText = htmlspecialchars($this->titleText);
 		}
 
 		$this->editing = $app->runFunction('wfMsg', $msgKey, '');

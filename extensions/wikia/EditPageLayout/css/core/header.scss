@@ -32,7 +32,8 @@
 	}
 	> h1 {
 		color: #3a3a3a;
-		display: block;
+		display: inline-block;
+		float: left;
 		font-size: 19px;
 		line-height: 17px;
 		padding: 0;
@@ -45,8 +46,15 @@
 
 // "edit title" button (will be shown by JS)
 #EditPageTitle {
+	cursor: pointer;
 	display: none;
 	font-size: 11px;
+	margin: 0 4px;
+	text-decoration: none;
+	> img {
+		margin: 4px;
+		vertical-align: middle;
+	}
 }
 
 /* Need [Help]? */

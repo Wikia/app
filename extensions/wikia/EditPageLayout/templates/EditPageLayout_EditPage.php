@@ -11,23 +11,19 @@
 				<? } ?>
 				</a>
 			</span>
+			<!-- "Editing" -->
 			<h2>
 				<?= $editing ?>
-				<a id="EditPageTitle" class="wikia-button secondary">
-					<img class="sprite edit-pencil-small" src="<?= $wgBlankImgUrl ?>">
-					<?= wfMsg('editpagelayout-edit-title') ?>
-				</a>
 			</h2>
+			<!-- edited page title -->
 			<h1>
-				<?
-				if (mb_substr($titleText, 0, 30) == $titleText) {
-					$titleShortText = htmlspecialchars($titleText);
-				} else {
-					$titleShortText = htmlspecialchars(mb_substr($titleText, 0, 30)).'&hellip;';
-				}
-				echo '<a href="'.htmlspecialchars($title->getLocalUrl()).'">'.$titleShortText.'</a>';
-				?>
+				<a href="<?= htmlspecialchars($title->getLocalUrl()) ?>"><?= $titleShortText ?></a>
 			</h1>
+			<!-- pencil icon -->
+			<a id="EditPageTitle" title="<?= wfMsg('editpagelayout-edit-title') ?>">
+				<img class="sprite edit-pencil-small" src="<?= $wgBlankImgUrl ?>">
+			</a>
+			<!-- mode switching tabs -->
 			<nav id="EditPageTabs" class="editpage-tabs" data-space-type="tabs" data-space-autoshow="true" style="display:none"></nav>
 			<aside id="HelpLink"><?= $helpLink ?></aside>
 		</header>
