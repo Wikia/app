@@ -22,7 +22,7 @@
 		&.text {
 			> a {
 				display: inline-block;
-				line-height: 46px;
+				line-height: $height-epl-toolbar;
 			}
 		}
 	}
