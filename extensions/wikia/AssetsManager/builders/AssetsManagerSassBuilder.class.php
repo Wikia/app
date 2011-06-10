@@ -31,6 +31,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		$tempDir = sys_get_temp_dir();
 		//replace \ to / is needed because escapeshellcmd() replace \ into spaces (?!!)
 		$tempOutFile = str_replace('\\', '/', tempnam($tempDir, 'Sass'));
+		$tempDir = str_replace('\\', '/', $tempDir);
 		$params = urldecode(http_build_query($this->mParams, '', ' '));
 
 		$cmd = "{$wgSassExacutable} {$IP}/{$this->mOid} {$tempOutFile} --cache-location {$tempDir} --style compact -r {$IP}/extensions/wikia/SASS/wikia_sass.rb {$params}";
