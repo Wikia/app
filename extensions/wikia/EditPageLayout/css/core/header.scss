@@ -1,7 +1,7 @@
 #EditPageHeader {
 	@include gradient-header;
 	border-bottom: 1px solid #cbc9ca;
-	height: $height-epl-toolbar;
+	height: $height-epl-header;
 	padding-left: 20px;
 	position: relative;
 	vertical-align: top;
@@ -22,7 +22,7 @@
 		&.text {
 			> a {
 				display: inline-block;
-				line-height: $height-epl-toolbar;
+				line-height: $height-epl-header;
 			}
 		}
 	}
