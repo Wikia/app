@@ -55,7 +55,7 @@ $wgFounderEmailsExtensionConfig = array(
 		'viewsDigest' => array(
 			'className'  => 'FounderEmailsViewsDigestEvent',
 			'hookName'   => null
-		)		
+		)
 	)
 );
 
@@ -68,9 +68,6 @@ function wfFounderEmailsInit() {
 	global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgAutoloadClasses, $wgFounderEmailsExtensionConfig, $wgDefaultUserOptions, $wgCityId;
 
 	$dir = dirname( __FILE__ ) . '/';
-
-	//We are now using sendgrid for tracking clicks inside email, disable custom tracking
-	//$wgOut->addScript( "<script type=\"$wgJsMimeType\" src=\"$wgExtensionsPath/wikia/FounderEmails/js/FounderEmails.js?$wgStyleVersion\"></script>" );
 
 	// load messages from file
 	wfLoadExtensionMessages( 'FounderEmails' );
