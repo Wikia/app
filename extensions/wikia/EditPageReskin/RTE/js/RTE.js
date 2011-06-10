@@ -168,7 +168,6 @@ window.RTE = {
 
 		// mode is ready
 		RTE.instance.on('mode', function() {
-			RTE.loading(false);
 			RTE.log('mode "' + this.mode + '" is loaded');
 		});
 
@@ -187,9 +186,6 @@ window.RTE = {
 
 		// clean HTML returned by CKeditor
 		RTE.instance.on('getData', RTE.filterHtml);
-
-		// CK is loading...
-		RTE.loading(true);
 
 		// CKeditor code is loaded, now it's time to initialize RTE
 		GlobalTriggers.fire('rteinit', RTE.instance);
@@ -253,14 +249,11 @@ window.RTE = {
 				editor.fire('saveSnapshot');
 			}
 
-			editor.getCommand('source').setState(CKEDITOR.TRISTATE_DISABLED);
-
 			editor.fire('modeSwitch');
 		}
 
 		// ok, we're done!
 		RTE.loaded = true;
-		RTE.loading(false);
 
 		// calculate load time
 		RTE.loadTime = ( (new Date()).getTime() - window.wgRTEStart.getTime() ) / 1000;
@@ -331,18 +324,6 @@ window.RTE = {
 		return jQuery(RTE.instance.document.$.body);
 	},
 
-	// set loading state of an editor (show progress icon)
-	loading: function(loading) {
-		/*
-		if (loading) {
-			$('body').addClass('RTEloading');
-		}
-		else {
-			$('body').removeClass('RTEloading');
-		}
-		*/
-	},
-
 	// handle mode switching (prepare data)
 	modeSwitch: function(mode) {
 		RTE.log('switching from "' + mode +'" mode');
@@ -355,11 +336,7 @@ window.RTE = {
 			RTE.log('error occured during mode switch');
 
 			// remove loading indicator, don't switch mode
-			RTE.loading(false);
 			RTE.instance.fire('modeSwitchCancelled');
-
-			// enable "Source" button
-			editor.getCommand('source').setState(mode == 'wysiwyg' ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_ON);
 
 			// track errors
 			RTE.track('switchMode', 'error');
@@ -367,9 +344,6 @@ window.RTE = {
 			// modal with a message
 			$.showModal(editor.lang.errorPopupTitle, editor.lang.modeSwitch.error, {width: 400});
 		};
-
-		// show loading indicator
-		RTE.loading(true);
 
 		switch (mode) {
 			case 'wysiwyg':
@@ -411,8 +385,6 @@ window.RTE = {
 						RTE.tools.alert(data.edgecase.info.title, data.edgecase.info.content);
 
 						// stay in source mode
-						editor.getCommand('source').setState(CKEDITOR.TRISTATE_ON);
-						RTE.loading(false);
 						RTE.instance.fire('modeSwitchCancelled');
 
 						// tracking
