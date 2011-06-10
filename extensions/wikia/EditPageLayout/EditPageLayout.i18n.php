@@ -8,6 +8,7 @@ $messages['en'] = array(
 	'editpagelayout-helpLink-url' => 'Help:Editing',
 	'editpagelayout-helpLink' => 'Need [[{{MediaWiki:Editpagelayout-helpLink-url}}|Help?]]',
 	'editpagelayout-edit-title' => 'Edit title',
+	'editpagelayout-edit-info' => 'Edit info',
 	'editpagelayout-diff-header-url' => 'Help:Diff',
 	'editpagelayout-diff-header' => 'The differences ([[{{MediaWiki:Editpagelayout-diff-header-url}}|help]])',
 	'editpagelayout-myedit-header' => 'This is your edit. Copy your changes to the box above!',
@@ -75,6 +76,8 @@ $messages['en'] = array(
  * @author Claudia Hattitten
  */
 $messages['qqq'] = array(
+	'editpagelayout-edit-title' => 'Tooltip for title edit popup icon',
+	'editpagelayout-edit-info' => 'Tooltip for title and description edit popup icon',
 	'editpagelayout-helpLink-url' => 'See interwiki links (below categories) on http://help.wikia.com/wiki/Help:Editing for eventually an appropiate page name. {{doc-important|Do not change the "<tt>Help:</tt>" part.}}',
 	'editpagelayout-diff-header-url' => 'See interwiki links (below categories) on http://help.wikia.com/wiki/Help:Diff for eventually an appropiate page name. {{doc-important|Do not change the "<tt>Help:</tt>" part.}}',
 	'wikia-editor-media-slider' => 'This refers to a special kind of slideshow which is intended for the main page. See http://help.wikia.com/wiki/Help:Galleries_and_slideshows#Creating_a_main_page_slider.',
