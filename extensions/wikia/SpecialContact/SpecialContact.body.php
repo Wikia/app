@@ -131,7 +131,7 @@ class ContactForm extends SpecialPage {
 		}
 
 		$mail_user = new MailAddress($this->mEmail);
-		$mail_community = new MailAddress($wgSpecialContactEmail);
+		$mail_community = new MailAddress($wgSpecialContactEmail, 'Wikia Support');
 
 		$errors = '';
 
