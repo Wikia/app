@@ -44,7 +44,7 @@
 	}
 }
 
-// "edit title" button (will be shown by JS)
+// "edit title" button
 #EditPageTitle {
 	cursor: pointer;
 	display: none;
@@ -54,6 +54,13 @@
 	> img {
 		margin: 4px;
 		vertical-align: middle;
+	}
+}
+
+// JS enabled pencil button - it should only be visible when hovered over #EditPageHeader
+#EditPageHeader:hover {
+	> #EditPageTitle.enabled {
+		display: inline;
 	}
 }
 
