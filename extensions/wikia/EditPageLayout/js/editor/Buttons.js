@@ -1,16 +1,16 @@
 (function(window,$){
 
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
-	
+
 	WE.ui = WE.ui || {};
 
 	/**
 	 * Defines UI element base class.
-	 * 
+	 *
 	 * UI element is always returned as HTML string.
 	 */
 	WE.ui.base = $.createClass(Observable,{
-	
+
 		constructor: function( editor, config, data ) {
 			WE.ui.base.superclass.constructor.call(this);
 			this.editor = editor;
@@ -24,56 +24,55 @@
 			this.data.button = this;
 			this.init();
 		},
-		
+
 		init: function() {
 		},
-		
+
 		beforeRender: function() {
 		},
-		
+
 		renderHtml: function() {
 			return '';
 		},
-		
+
 		render: function() {
-			if (!this.config) 
+			if (!this.config)
 				return '';
 			this.beforeRender();
 			return this.renderHtml();
 		},
-		
+
 		proxy: function( fn ) {
 			return $.proxy(fn,this);
 		}
-		
+
 	});
-	
+
 	WE.ui.button = $.createClass(WE.ui.base,{
-	
+
 		statics: {
 			nextId: 1
 		},
-		
+
 		clickButtonHandler: function() {
 			var mode = this.editor.mode;
 			if (typeof this['click'+mode] == 'function')
 				return this['click'+mode].apply(this,arguments);
 			else
 				this.editor.warn('Mode "'+mode+'" not supported for button: '+this.name);
-		
 		},
-		
+
 		buildClickHandler: function() {
 			this.click = this.clickButtonHandler;
 			this.editor.fire('uiBuildClickHandler',this.editor,this);
 		},
-	
+
 		beforeRender: function() {
 			// set up label
 			this.label || (this.label = $.msg(this.labelId));
 			this.label = this.label || '';
 			// set up title
-			this.title || (this.title = this.label);
+			this.title || (this.titleId && (this.title = $.msg(this.titleId))) || (this.title = this.label);
 			this.title = this.title || '';
 			// set up id
 			this.id = 'uielem_' + WE.ui.button.nextId++;
@@ -89,7 +88,7 @@
 			this.click = this.click || this.buildClickHandler();
 			this.clickFn = this.clickFn || this.editor.addFunction(this.proxy(this.click));
 		},
-	
+
 		renderHtml: function() {
 			var html = '';
 
@@ -139,26 +138,26 @@
 
 			this.data.id = this.id;
 
-			return html;			
+			return html;
 		}
-		
+
 	});
 
 	WE.ui.panelbutton = $.createClass(WE.ui.button,{
-	
+
 		getEl: function() {
 			var button = $('#'+this.id);
 			return button.exists() && button.closest('.cke_'+this.type);
 		},
-		
+
 		moveInside: function() {
 			this.data.inside++;
 		},
-		
+
 		moveOutside: function() {
 			this.data.inside--;
 		},
-		
+
 		renderPanel: function() {
 			var button = $('#'+this.id),
 				el = this.getEl();
@@ -178,7 +177,7 @@
 					.delegate('.cke_button, .text-links a','mouseleave',this.proxy(this.moveInside));
 			}
 		},
-		
+
 		positionPanel: function() {
 			var el = this.getEl();
 			var pos = el.position();
@@ -190,7 +189,7 @@
 				'padding-top': -mod.top
 			});
 		},
-		
+
 		clickHandler: function() {
 			var button = $('#'+this.id),
 				el = button.closest('.cke_'+this.type);
@@ -211,15 +210,15 @@
 				this.inside = 0;
 			}
 		},
-		
-		
+
+
 		beforeRender: function() {
 			this.opened = false;
 			this.click = this.clickHandler;
-			
+
 			// call superclass
 			WE.ui.panelbutton.superclass.beforeRender.call(this);
-			
+
 			this.editor.ui.on('bodyClick',this.proxy(function() {
 				if (this.opened && this.inside == 0) {
 					this.click();
@@ -232,20 +231,20 @@
 			}));
 			this.hasArrow = true;
 			this.labelClass = 'cke_text';
-			
+
 			if (this.autorenderpanel) {
 				this.editor.on('toolbarsRendered',this.proxy(this.renderPanel));
 			};
 		},
-		
+
 		panelOnInit: function() {},
 		panelOnShow: function() {},
 		panelOnHide: function() {}
-	
-	});	
-	
+
+	});
+
 	WE.ui.modulebutton = $.createClass(WE.ui.panelbutton,{
-	
+
 		panelOnInit: function( panel, config, data ) {
 			var module = this.moduleObject = this.editor.modules.create(config.module);
 			var el = module.render();
@@ -263,14 +262,14 @@
 			panel.append(elmodule);
 			module.afterAttach();
 		},
-		
+
 		beforeRender: function() {
-			this.panelClass = this.panelClass ? this.panelClass + ' ' : '';		
-			
+			this.panelClass = this.panelClass ? this.panelClass + ' ' : '';
+
 			// call sueprclass
 			WE.ui.modulebutton.superclass.beforeRender.call(this);
 		}
-		
-	});	
-	
+
+	});
+
 })(this,jQuery);

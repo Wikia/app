@@ -125,7 +125,7 @@ $messages['en'] = array (
 
 	'plb-widget-name-plb_input' => 'Input Box',
 	'plb-widget-name-plb_mlinput' => 'Paragraph',
-	'plb-widget-name-plb_image' => 'Image',
+	'plb-widget-name-plb_image' => 'Photo',
 	'plb-widget-name-plb_sinput' => 'Drop down list',
 
 	'plb-widget-name-plb_gallery' => 'Gallery',

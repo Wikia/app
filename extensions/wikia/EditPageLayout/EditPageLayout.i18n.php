@@ -27,7 +27,14 @@ $messages['en'] = array(
 	'wikia-editor-media-slider' => 'Slider',
 	'wikia-editor-media-video' => 'Video',
 
+	'wikia-editor-media-image-tooltip' => 'Add Photo',
+	'wikia-editor-media-gallery-tooltip' => 'Add Gallery',
+	'wikia-editor-media-slideshow-tooltip' => 'Add Slideshow',
+	'wikia-editor-media-slider-tooltip' => 'Add Slider',
+	'wikia-editor-media-video-tooltip' => 'Add Video',
+
 	'wikia-editor-modules-templates-title' => 'Templates',
+	'wikia-editor-modules-templates-add-tooltip' => 'Add \'$1\' Template',
 	'wikia-editor-modules-templates-otherTemplates' => 'Add other templates',
 	'wikia-editor-modules-templates-showUsedList' => 'Show list of used templates',
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'List of used templates',
