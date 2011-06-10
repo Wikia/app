@@ -46,7 +46,8 @@
 			// show "Edit title" button and attach handler for it (when we have custom fields attached to this edit form)
 			if ($('#EditPageHiddenFields').children().exists()) {
 				$('#EditPageTitle').
-					show().
+					// show it only when hovering over #EditPageHeader
+					addClass('enabled').
 					bind('click', this.proxy(function(ev) {
 						this.editor.track('title', 'edit');
 						this.renderHiddenFieldsDialog();
