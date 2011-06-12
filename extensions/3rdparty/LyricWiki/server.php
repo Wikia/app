@@ -798,15 +798,6 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 			}
 			print (!$debug?"":"After substitutions: \"$artist:$song\"\n");
 
-			// Naming conventions. See: http://www.lyricwiki.org/LyricWiki:Page_names
-			// Common contractions.  Our standards USE the contractions.
-			$song = preg_replace("/Aint([^a-z]|$)/", "Ain't$1", $song);
-			$song = preg_replace("/Dont([^a-z]|$)/", "Don't$1", $song);
-			$song = preg_replace("/Cant([^a-z]|$)/", "Can't$1", $song);
-			$artist = preg_replace("/Aint([^a-z]|$)/", "Ain't$1", $artist);
-			$artist = preg_replace("/Dont([^a-z]|$)/", "Don't$1", $artist);
-			$artist = preg_replace("/Cant([^a-z]|$)/", "Can't$1", $artist);
-
 			// Strip the "featuring" artists.
 			$index = strpos(strtolower($artist), " ft.");
 			$index = ($index===false?strpos(strtolower($artist), " feat."):$index);
@@ -2032,12 +2023,19 @@ function lw_getTitle($artist, $song='', $applyUnicode=true, $allowAllCaps=true){
 	if($applyUnicode){
 		$title = utf8_encode($title);
 	}
+	
 	$title = str_replace("|", "/", $title); # TODO: Figure out if this is the right solution.
 	$title = preg_replace('/([-\("\.\/:_])([a-z])/e', '"$1".strtoupper("$2")', $title);
 	$title = preg_replace('/\b(O)[\']([a-z])/ei', '"$1".strtoupper("\'$2")', $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.  Does it to "O'Riley" but not "I'm" or "Don't"
 	$title = preg_replace('/( \()[\']([a-z])/ei', '"$1".strtoupper("\'$2")', $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
 	$title = preg_replace('/ [\']([a-z])/ei', '" ".strtoupper("\'$1")', $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
 	$title = strtr($title, " ", "_"); // Warning: multiple-byte substitutions don't seem to work here, so smart-quotes can't be fixed in this line.
+	
+	// Naming conventions. See: http://www.lyricwiki.org/LyricWiki:Page_names
+	// Common contractions.  Our standards USE the contractions.
+	$title = preg_replace("/Aint([^a-z]|$)/", "Ain't$1", $title);
+	$title = preg_replace("/Dont([^a-z]|$)/", "Don't$1", $title);
+	$title = preg_replace("/Cant([^a-z]|$)/", "Can't$1", $title);
 
 	return $title;
 } // end lw_getTitle()

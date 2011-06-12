@@ -64,7 +64,8 @@ function wfMobileSearches(){
 		require_once($dir . 'nusoap.php');
 		// Create the client instance
 		$wsdlUrl = 'http://'.$_SERVER['SERVER_NAME'].'/server.php?wsdl&1';
-		$client = new nusoapclient($wsdlUrl, true);
+		$PROXY_HOST = "127.0.0.1"; $PROXY_PORT = "6081"; // use local-varnish for the proxy
+		$client = new nusoapclient($wsdlUrl, true, $PROXY_HOST, $PROXY_PORT);
 		$err = $client->getError();
 		if ($err) {
 			echo '<h2>Constructor error</h2><pre>' . $err . '</pre>';
