@@ -224,6 +224,7 @@ class WikiaApiLyricwiki extends ApiBase {
 	} // end rest_getSotd()
 
 	function rest_getSong( $artist, $song, $fmt ) {
+		global $wgRequest;
 		// Phase 'title' out (deprecated).  this is not the same as the soap.  I was coding too fast whilst in an IRC discussion and someone said artist/title just for the sake of argument and I didn't check against the SOAP :[ *embarassing*
 		$songName = getVal($_GET, 'song', getVal($_GET, 'title'));
 		$artist = getVal($_GET, 'artist');
@@ -231,8 +232,15 @@ class WikiaApiLyricwiki extends ApiBase {
 		// I'm not sure why, but in this context underscores don't behave like spaces automatically.
 		$artist = str_replace("_", " ", $artist);
 		$songName = str_replace("_", " ", $songName);
-		$songName .= (!empty($debug)?"_debug":"");
-#die( 'foobar' );
+
+		// Allow debug suffix to persist (needs an underscore instead of a space). It is recommended to use debug=1 instead though.
+		$songName = preg_replace("/ debug$/i", "_debug", $songName); // allow the debug suffix to be passed through correctly.
+
+		// Allow "&debug=1" as a URL param option instead of just messing with the song name (cleaner this way).
+		$debugMode = $wgRequest->getBool('debug');
+		if($debugMode){
+			$songName .= "_debug";
+		}
 
 		$client = strtolower(getVal($_GET, 'client'));
 
