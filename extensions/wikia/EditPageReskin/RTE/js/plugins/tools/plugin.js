@@ -219,6 +219,8 @@ window.RTE.tools = {
 	},
 
 	// inserts given DOMElement / jQuery element into CK
+	// TODO: throw an exception if jQuery element was not
+	// created inside CKeditor's document
 	insertElement: function(element, dontReinitialize) {
 		var CKelement = new CKEDITOR.dom.element($(element).get(0));
 
