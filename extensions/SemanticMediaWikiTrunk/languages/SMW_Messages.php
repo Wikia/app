@@ -231,6 +231,11 @@ It takes care that humans do not turn into websites.',
 	'smw_ask_hide_embed'	=> 'Hide embed code',
 	'smw_ask_embed_instr'	=> 'To embed this query inline into a wiki page use the code below.',
 
+	// Messages for Query Creator Special
+	'querycreator'          => 'Query Creator',
+	'smw_show_addnal_opts'  => 'Show additional options',
+	'smw_hide_addnal_opts'  => 'Hide additional options',
+
 	// Messages for the search by property special
 	'searchbyproperty'      => 'Search by property',
 	'smw_sbv_docu'          => 'Search for all pages that have a given property and value.',
@@ -6715,7 +6720,7 @@ $messages['mk'] = array(
 	'smw_result_noresults' => 'Нема резултати.',
 	'smwadmin' => 'Администраторски функции за Семантички МедијаВики',
 	'smw_smwadmin_setupsuccess' => 'Складишниот систем е успешно поставен.',
-	'smw_smwadmin_return' => 'Назад кон $1',
+	'smw_smwadmin_return' => 'Назад на $1',
 	'smw_smwadmin_updatestarted' => 'Започнат е нов процес за обнова на семантичките податоци.
 Сите складирани податоци ќе бидат преработени или поправени, каде што е потребно.
 На оваа специјална страница можете да го следите процесот на поднова.',
