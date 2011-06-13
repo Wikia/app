@@ -162,3 +162,18 @@
 		}
 	}
 }
+
+/* IE7 only fixes */
+/* BugId:6349 */
+#EditPage.editpage-visualwidemode {
+	#EditPageToolbar {
+		*background-color: transparent;
+		*z-index: 2;
+	}
+	.cke_modulebutton.cke_opened {
+		*z-index: 3;
+	}
+	.cke_panel_dropdown {
+		*z-index: 2;
+	}
+}
