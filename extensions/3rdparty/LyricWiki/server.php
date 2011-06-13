@@ -880,7 +880,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 				}
 			}
 			$lookedFor .= "$title\n";
-			if(lw_pageExists($title, $ns)){
+			if(lw_pageExists($title, $ns, $debug)){
 				$finalName = $page_id = "";
 				$content = lw_getPage($title, $finalName, $debug, $ns, $page_id);
 
@@ -2047,7 +2047,7 @@ function lw_getTitle($artist, $song='', $applyUnicode=true, $allowAllCaps=true){
 // Caches results, so it is safe to call multiple times on same run.
 ////
 GLOBAL $EXIST_CACHE;
-function lw_pageExists($pageTitle, $ns=NS_MAIN){
+function lw_pageExists($pageTitle, $ns=NS_MAIN, $debug=false){
 	wfProfileIn( __METHOD__ );
 
 	GLOBAL $EXIST_CACHE;
@@ -2056,13 +2056,20 @@ function lw_pageExists($pageTitle, $ns=NS_MAIN){
 	}
 
 	if(isset($EXIST_CACHE["$ns:$pageTitle"])){
+		print (!$debug?"":"Using cached value for $ns:$pageTitle\n");
 		$retVal = $EXIST_CACHE["$ns:$pageTitle"];
 	} else {
 		$queryTitle = str_replace("'", "\'", $pageTitle);
-		$retVal = (0 < lw_simpleQuery("SELECT /* LyricWiki API server.php::lw_pageExists() */ COUNT(*) FROM page WHERE page_title='$queryTitle' AND page_namespace='$ns'")); // the page_namespace='$ns' speeds it up significantly since it can then use the index on page_namespace,page_title
+
+		// the page_namespace='$ns' speeds it up significantly since it can then use the index on page_namespace,page_title
+		$queryString = "SELECT /* LyricWiki API server.php::lw_pageExists() */ COUNT(*) FROM page WHERE page_title='$queryTitle' AND page_namespace='$ns'";
+		print (!$debug?"":"Query for looking up the page:\n$queryString\n");
+		
+		$retVal = (0 < lw_simpleQuery($queryString));
 		$EXIST_CACHE["$ns:$pageTitle"] = $retVal;
 	}
-	
+	print (!$debug?"":"Page exists: ".($retVal?"yes":"no")."\n");
+
 	wfProfileOut( __METHOD__ );
 	return $retVal;
 } // end lw_pageExists()
