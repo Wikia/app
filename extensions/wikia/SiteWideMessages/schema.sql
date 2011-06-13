@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `messages_status`
 	`msg_status`       tinyint             NOT NULL,
 	`msg_date`         timestamp           NOT NULL    default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
 	PRIMARY KEY (`msg_recipient_id`, `msg_id`),
-	KEY `msg_id` (`msg_id`)
+	KEY `msg_id` (`msg_id`),
+	KEY `msg_wiki_id_idx` (`msg_wiki_id`)
 );
 -- msg_status: 0 = unseen, 1 = seen, 2 = dismissed
