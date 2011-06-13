@@ -860,3 +860,10 @@ $.tmpl = function tmpl(str, data) {
 	// Provide some basic currying to the user
 	return data ? fn(data) : fn;
 };
+
+//beacon_id cookie
+$(function() {
+	if ( window.beacon_id ) {
+		$.cookies.set( 'wikia_beacon_id', window.beacon_id, { path: wgCookiePath, domain: wgCookieDomain });
+	}
+});
