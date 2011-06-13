@@ -3,13 +3,16 @@
 // Go through all usernames and calculate and record spoof thingies
 
 $base = dirname( dirname( dirname( __FILE__ ) ) );
+
 require $base . '/maintenance/commandLine.inc';
+
+include( '/usr/wikia/source/trunk/extensions/AntiSpoof/AntiSpoof.php' );
 
 $dbw = wfGetDB( DB_MASTER );
 
 $dbw->bufferResults( false );
 
-$batchSize = 1000;
+$batchSize = 10;
 
 $result = $dbw->select( 'user', 'user_name', null, 'batchAntiSpoof.php' );
 $n = 0;
