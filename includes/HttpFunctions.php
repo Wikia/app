@@ -176,6 +176,12 @@ class HttpRequest {
 
 		$members = array( "postData", "proxy", "noProxy", "sslVerifyHost", "caInfo",
 						  "method", "followRedirects", "maxRedirects" );
+
+		// Wikia change - @author: wladek - begin
+		// allow overriding of curl options
+		$members[] = "curlOptions";
+		// Wikia change - end
+
 		foreach ( $members as $o ) {
 			if ( isset($options[$o]) ) {
 				$this->$o = $options[$o];
