@@ -1125,8 +1125,13 @@ class RTEReverseParser {
 			case 'dd':
 				$textContent = rtrim( self::addSpaces($node, $textContent) );
 
+				// fix for empty list item between items (BugId:4821)
+				// MW parser skips those items, we should maintain empty line
+				if (($textContent == '') && self::isNewNode($node) && self::nextSiblingIs($node, $node->nodeName)) {
+					$out = "\n";
+				}
 				// fix for single ":::: foo" gaining extra :
-				if (strspn($textContent, ':') > 0) {
+				else if (strspn($textContent, ':') > 0) {
 					$out = "{$textContent}\n";
 				}
 				// check for <dl><dd><ul><li>1</li></ul></dd></dl>
