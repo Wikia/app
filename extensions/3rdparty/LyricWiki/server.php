@@ -2054,6 +2054,7 @@ function lw_pageExists($pageTitle, $ns=NS_MAIN, $debug=false){
 	if(!isset($EXIST_CACHE)){
 		$EXIST_CACHE = array();
 	}
+	$pageTitle = str_replace(" ", "_", $pageTitle);
 
 	if(isset($EXIST_CACHE["$ns:$pageTitle"])){
 		print (!$debug?"":"Using cached value for $ns:$pageTitle\n");
