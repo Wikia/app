@@ -79,7 +79,8 @@ class ScribeProducer {
 					'logId'			=> $this->mLogId,
 					'serverName'	=> $this->mServerName,
 					'archive'		=> $this->mArchive,
-					'hostname'		=> wfHostname()
+					'hostname'		=> wfHostname(),
+					'beaconId'		=> wfGetBeaconId()
 				) 
 			);
 			WScribeClient::singleton( $this->mKey )->send( $data );
@@ -450,6 +451,5 @@ class ScribeProducer {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
 }
 

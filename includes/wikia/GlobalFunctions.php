@@ -1505,3 +1505,18 @@ function wfArrayToString( $array ) {
 
 	return trim( $retval );
 }
+
+/**
+ * @brief Function for getting beacon_id from cookie
+ *
+ * @author Piotr Molski (moli) <moli@wikia-inc.com>
+ *
+ * @param none
+ *
+ * @return string string with beacon ID
+ */
+function wfGetBeaconId() {
+	return ( isset( $_COOKIE['wikia_beacon_id'] ) ) 
+	? $_COOKIE['wikia_beacon_id'] 
+	: '';
+}
