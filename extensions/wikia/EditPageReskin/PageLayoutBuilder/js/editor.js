@@ -882,7 +882,7 @@
 
 		// Create new widget
 		createWidget : function ( type ) {
-			var el = $(PLB.Library[type].templateHtml);
+			var el = $(PLB.Library[type].templateHtml, this.rte.instance.document.$);
 			var w = PLB.Widget.create(this,el);
 			w.setId(this.generateWidgetId());
 			w.getElement().attr('data-rte-instance', window.RTE.instanceId);
