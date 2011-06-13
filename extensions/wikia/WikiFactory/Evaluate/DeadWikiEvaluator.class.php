@@ -69,10 +69,12 @@ abstract class WikiEvaluator {
 	}
 
 	protected function getEditsCount() {
+		$excludedUsersQuery = "NOT rc_user IN (" . implode(',',$this->getData('ExcludedUsers')) . ")";
 		return $this->db->selectField('recentchanges','count(*)',array(
 			'rc_namespace' => 0,
 			'rc_bot' => 0,
 			"rc_ip != '127.0.0.1'",
+			$staffUsersQuery,
 		),__METHOD__);
 	}
 
@@ -80,6 +82,7 @@ abstract class WikiEvaluator {
 		return $this->db->selectField('page','count(*)',array(
 			'page_namespace' => 0,
 			'page_is_redirect' => 0,
+			'page_len' => 0,
 		),__METHOD__);
 	}
 
@@ -155,6 +158,59 @@ abstract class WikiEvaluator {
 	}
 
 	abstract protected function doEvaluate();
+
+	static protected $cachedData = array();
+
+	protected function getData( $name ) {
+		$class = get_class($this);
+		if (!array_key_exists($class, self::$cachedData) || !array_key_exists($name, self::$cachedData[$class])) {
+			$callback = array( $this, "getData_{$name}" );
+			if (is_callable($callback))
+				$value = false;
+			else
+				$value = call_user_func($callback);
+			self::$cachedData[$class][$name] = $value;
+		}
+		return self::$cachedData[$class][$name];
+	}
+
+	protected function getData_StaffUsers() {
+		global $wgExternalSharedDB;
+
+		$db = wfGetDB(DB_SLAVE,array(),$wgExternalSharedDB);
+		$set = $db->select('user_groups','ug_user',array(
+			'ug_group' => 'staff',
+		),__METHOD__,array('DISTINCT'));
+
+		$users = array();
+		while ($row = $db->fetchRow($set)) {
+			$users[] = intval($row->ug_user);
+		}
+		$db->freeResult($set);
+
+		return $users;
+	}
+
+	protected function getData_ExcludedUsers() {
+		global $wgExternalSharedDB;
+
+		$db = wfGetDB(DB_SLAVE,array(),$wgExternalSharedDB);
+		$set = $db->select('user','user_id',array(
+			'user_name' => array( 'Default', 'CreateWiki' ),
+		),__METHOD__,array('DISTINCT'));
+
+		$users = array();
+		while ($row = $db->fetchRow($set)) {
+			$users[] = intval($row->ug_user);
+		}
+		$db->freeResult($set);
+
+		$users = array_merge( $users, $this->getData( 'StaffUsers' ) );
+
+		$users = array_unique($users);
+
+		return $users;
+	}
 
 }
 
