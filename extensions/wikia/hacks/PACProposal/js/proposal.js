@@ -1,1 +1,1 @@
-console..og( 'Proposal JS loaded' );
+console.log( 'Proposal JS loaded' );
