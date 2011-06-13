@@ -73,8 +73,9 @@ abstract class WikiEvaluator {
 		return $this->db->selectField('recentchanges','count(*)',array(
 			'rc_namespace' => 0,
 			'rc_bot' => 0,
+			'rc_type' => array( 0, 1 ),
 			"rc_ip != '127.0.0.1'",
-			$staffUsersQuery,
+			$excludedUsersQuery,
 		),__METHOD__);
 	}
 
@@ -87,7 +88,12 @@ abstract class WikiEvaluator {
 	}
 
 	protected function getLoggedActionsCount() {
-		$value = $this->db->selectField('logging','max(log_id)',array(),__METHOD__);
+		$excludedLogTypes = array( 'patrol' );
+		$excludedLogTypes = array_map( array( $this->db, 'addQuotes' ), $excludedLogTypes );
+		$excludedLogTypes = "NOT log_type IN (" . implode(',',$excludedLogTypes) . ")";
+		$value = $this->db->selectField('logging','count(*)',array(
+			$excludedLogTypes,
+		),__METHOD__);
 		if (is_numeric($value)) {
 			$value = max(0, $value - 6) /* actions done during wiki creation */;
 		}
@@ -166,9 +172,9 @@ abstract class WikiEvaluator {
 		if (!array_key_exists($class, self::$cachedData) || !array_key_exists($name, self::$cachedData[$class])) {
 			$callback = array( $this, "getData_{$name}" );
 			if (is_callable($callback))
-				$value = false;
-			else
 				$value = call_user_func($callback);
+			else
+				$value = false;
 			self::$cachedData[$class][$name] = $value;
 		}
 		return self::$cachedData[$class][$name];

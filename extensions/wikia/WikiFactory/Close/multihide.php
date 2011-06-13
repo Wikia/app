@@ -18,6 +18,7 @@ $optionsWithArgs = array(
 	'file',
 	'ids',
 	'reason',
+	'start',
 );
 
 require_once( "commandLine.inc" );
@@ -45,6 +46,7 @@ class MultiHideWikisMaintenance {
 		WikiFactory::FLAG_FREE_WIKI_URL => true,
 	);
 	protected $reason = "-";
+	protected $start = 0;
 
 	protected $wikiIds = array();
 
@@ -87,6 +89,10 @@ class MultiHideWikisMaintenance {
 
 			if ($k == 'quiet') {
 				$this->quiet = true;
+			}
+
+			if ($k == 'start' && !empty($v)) {
+				$this->start = intval($v);
 			}
 		}
 
@@ -137,6 +143,10 @@ class MultiHideWikisMaintenance {
 		$reason = $this->reason;
 
 		foreach ($this->wikiIds as $wikiId) {
+			// skip wikis with id lesser than "start"
+			if ($this->start && $this->start > $wikiId) {
+				continue;
+			}
 //			echo "status: memory = ".memory_get_usage(true)."\n";
 			// check memory usage
 			if ( !$this->checkMemoryLimit(1) ) {
