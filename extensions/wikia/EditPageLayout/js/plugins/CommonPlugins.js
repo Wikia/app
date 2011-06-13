@@ -478,7 +478,7 @@
 
 		beforeInit: function() {
 			// enable this plugin only for Firefox 4.0+ (BugId:5654)
-			this.enabled = !!$.browser.mozilla && (parseInt($.browser.version) == 2 /* '2.0.1' = Fx 4.0.1 */);
+			this.enabled = !!$.browser.mozilla && (parseInt($.browser.version) >= 2 /* '2.0.1' = Fx 4.0.1 */);
 
 			if (this.enabled) {
 				this.pollStylesheetsTimer = new Timer(this.proxy(this.pollStylesheets),this.pollStylesheetsTimerDelay);
