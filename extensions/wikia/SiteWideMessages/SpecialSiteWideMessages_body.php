@@ -474,7 +474,8 @@ class SiteWideMessages extends SpecialPage {
 										array('`specials`.`events_local_users`'),
 										array('user_id'),
 										array('wiki_id' => $mWikiId),
-										__METHOD__
+										__METHOD__,
+										array( 'DISTINCT' )
 									);
 
 									$activeUsers = array();
