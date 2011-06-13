@@ -193,12 +193,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						}
 
 					}
-					$().log({
-						elementPath: elementPath,
-						elementPathBlock: elementPath.block,
-						elementPathBlockLimit: elementPath.blockLimit,
-						notEditableIndex: notEditableIndex
-					},'RTE-enterkey');
 					// Wikia - end
 
 					for ( var i = 0, len = elementPath.elements.length ; i < len ; i++ )
