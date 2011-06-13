@@ -597,11 +597,6 @@ class ArticleComment {
 			return false;
 		}
 
-		if ( ( $wgUser->getOption( 'watchdefault' ) || ( $wgUser->getOption( 'watchcreations' ) && empty($commentId) /* new comment */ ) ) && !$comment->mTitle->userIsWatching() ) {
-			# comment
-			$wgUser->addWatch( $comment->mTitle );
-		}
-
 		if ( $wgUser->getOption( 'watchdefault' ) && !$oArticlePage->userIsWatching() ) {
 			# and article page
 			$wgUser->addWatch( $oArticlePage );
