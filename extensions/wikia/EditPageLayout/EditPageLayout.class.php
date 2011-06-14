@@ -540,6 +540,20 @@ class EditPageLayout extends EditPage {
 				$class = 'mw-newarticletextanon';
 			}
 
+			// Give a notice if the user is editing a deleted/moved page...
+			$out = new OutputPage();
+			$resultRowsNum = LogEventsList::showLogExtract( $out, array( 'delete', 'move' ), $this->mTitle->getPrefixedText(),
+				'', array( 'lim' => 10,
+					   'conds' => array( "log_action != 'revision'" ),
+					   'showIfEmpty' => false,
+					   'msgKey' => array( 'recreate-moveddeleted-warn') )
+			);
+
+			if( $resultRowsNum > 0 ) {
+				$notice = F::build( 'EditPageNotice', array( 'html' => $out->getHTML(), 'messageId' => 'recreate-moveddeleted-warn' ) );
+				$this->mEditNotices->add( $notice, 'recreate-moveddeleted-warn' );
+			}
+
 			$msg = wfMsgExt($msgName, array('parse'));
 
 			$this->mEditPagePreloads['intro'] = $msg;
