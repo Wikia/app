@@ -98,8 +98,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 
 				$data = array();
 				// check data from cache ...
-				// cache tmp turned off because purging isn't working properly
-				$cached = null; //$this->getDataFromCache($lcache_key);
+				$cached = $this->getDataFromCache($lcache_key);
 				if (empty($cached)) {
 					#--- database instance - DB_SLAVE
 					$db =& $this->getDB();
@@ -665,6 +664,10 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 
 		$this->initCacheKey($lcache_key, __CLASS__);
 		$this->setCacheKey ($lcache_key, 'P', $page);
+		$this->deleteCacheData($lcache_key);
+
+		$this->initCacheKey($lcache_key, __CLASS__);
+		$this->setCacheKey ($lcache_key, 'P', $page);
 		//$this->setCacheKey ($lcache_key, 'I', $ip);
 		$this->setCacheKey ($lcache_key, 'UB', $browserId);
 		$this->setCacheKey ($lcache_key, 'U', $user_id);
@@ -678,8 +681,6 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		$this->initCacheKey( $lcache_key, __CLASS__, ':getVoteArticle' );
 		$this->setCacheKey ($lcache_key, 'P', $page);
 		$this->setCacheKey ($lcache_key, 'UB', $browserId);
-		$this->deleteCacheData($lcache_key);
-
 		$this->deleteCacheData($lcache_key);
 	}
 
