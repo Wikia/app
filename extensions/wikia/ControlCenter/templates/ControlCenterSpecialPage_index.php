@@ -40,13 +40,13 @@
 					<h1><?= wfMsg("controlcenter-controls-community-header") ?></h1><span class="tooltip"></span>
 				</header>
 				<ul class="controls">
-					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-user-list-tooltip") ?>">
+					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-user-list-tooltip") ?>" data-control="ListUsers">
 						<div class="representation">
 							<div class="icon"></div>
 						</div>
 						<?= wfMsg("controlcenter-control-user-list-label") ?>
 					</li>
-					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-user-rights-tooltip") ?>">
+					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-user-rights-tooltip") ?>" data-control="UserRights">
 						<div class="representation">
 							<div class="icon"></div>
 						</div>

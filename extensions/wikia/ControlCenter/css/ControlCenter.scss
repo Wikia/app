@@ -125,6 +125,14 @@ $base-z: 5;
 	}
 }
 
+#ControlCenterAdvanced {
+	display: none;
+}
+
+#ControlCenterContentArea {
+	display: none;
+}
+
 // Oasis overwrites
 .WikiaArticle {
 	padding: 0;

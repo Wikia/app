@@ -26,7 +26,6 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/ControlCenter/css/ControlCenter.scss'));
 		$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/ControlCenter/js/ControlCenter.js');
 		
-		
 		// hide some default oasis UI things
 		$wgSuppressWikiHeader = true;
 		$wgSuppressPageHeader = true;
@@ -50,7 +49,7 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 		}
 		
 	}
-
+	
 	/**
 	 * @details
 	 * 	SpecialPage::capturePath will skip SpecialPages which are not "includable" 
