@@ -131,6 +131,12 @@ $base-z: 5;
 
 #ControlCenterContentArea {
 	display: none;
+	// feature overwrites
+	
+	/* ListUser overwrite */
+	.lu_fieldset {
+		white-space: normal;
+	}
 }
 
 // Oasis overwrites
