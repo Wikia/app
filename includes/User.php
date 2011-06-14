@@ -497,6 +497,17 @@ class User {
 			$user_name = $nt->getText();
 			wfRunHooks( 'UserNameLoadFromId', array( $user_name, &$s ) );
 		}
+		
+		/* wikia change */
+		if ( $s === false ) {
+			global $wgExternalAuthType;
+			if ( $wgExternalAuthType ) {
+				$mExtUser = ExternalUser::newFromName( $nt->getText() );
+				if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
+					$mExtUser->linkToLocal( $mExtUser->getId() );
+				}
+			}
+		}
 
 		if ( $s === false ) {
 			$result = null;
