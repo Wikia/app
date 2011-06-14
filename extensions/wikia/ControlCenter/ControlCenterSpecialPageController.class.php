@@ -51,4 +51,53 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 		
 	}
 
+	/**
+	 * @details
+	 * 	SpecialPage::capturePath will skip SpecialPages which are not "includable" 
+	 *	Which is like all of them. :)  So we need to force it
+	 *  $output = SpecialPage::capturePath($title);
+	 *  
+	 * @requestParam string page the name of the Special page to invoke
+	 * @responseParam string output the HTML output of the special page
+	 */
+	
+	public function GetSpecialPage () {
+
+		$pageName = $this->request->getVal("page");
+		$title = SpecialPage::getTitleFor($pageName);
+		
+
+		global $wgOut, $wgTitle;
+
+		// Save global variables and initialize context for special page
+		$oldTitle = $wgTitle;
+		$oldOut = $wgOut;
+		$wgOut = new OutputPage;
+		$wgOut->setTitle( $title );
+				
+		// Construct special page object
+		try {
+			$sp = new $pageName(); 
+		} catch (Exception $e) {
+			print_pre("Could not construct special page object");
+		}
+		if ($sp instanceof SpecialPage) {
+			$ret = $sp->execute(false);
+		} else {
+			print_pre("Object is not a special page.");
+		}
+
+		// TODO: check retval of special page call?
+		
+		$output = $wgOut->getHTML();
+		
+		// Restore global variables
+		$wgTitle = $oldTitle;
+		$wgOut = $oldOut;
+		
+		//print_pre($wgOut->getHTML());
+		$this->response->setVal("output", $output);
+		
+	}
+
 }
