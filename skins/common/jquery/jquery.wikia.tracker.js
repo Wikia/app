@@ -333,6 +333,27 @@ jQuery.tracker.track = function(fakeurl) {
 	}
 };
 
+jQuery.tracker.trackEvent = function(category, action, opt_label, opt_value) {
+	var gaqArgs = ['_trackEvent'],
+		logStr = Array.prototype.join.call(arguments, '/');
+
+	for (var i=0; i < arguments.length; i++) {
+		gaqArgs.push(arguments[i]);
+	}
+
+	if(window.wgEnableGA) {
+		_gaq.push(
+			['_setAccount', 'UA-2871474-1'],
+			gaqArgs
+		);
+
+		$().log(logStr, 'tracker [event]');
+	}
+	else {
+		$().log(logStr, 'tracker [event void]');
+	}
+};
+
 // macbre: temporary fix
 var WET = {
 	byStr: function(str) {
@@ -342,7 +363,7 @@ var WET = {
 };
 
 // macbre: simple click tracking
-// usage: $('#foo').clickTrack('feature/foo');
+// usage: $('#foo').trackClick('feature/foo');
 jQuery.fn.trackClick = function(fakeUrl) {
 	this.click(function(ev) {
 		jQuery.tracker.byStr(fakeUrl);
