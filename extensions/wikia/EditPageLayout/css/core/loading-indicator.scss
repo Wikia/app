@@ -30,6 +30,7 @@
 				zoom: 1;
 				vertical-align: middle;
 				background: $color-page;
+				padding: 10px;
 			}
 
 			.loading-throbber {
@@ -40,6 +41,7 @@
 
 			.loading-text {
 				padding-left: 9px;
+				font-size: 16px;
 			}
 		}
 	}
