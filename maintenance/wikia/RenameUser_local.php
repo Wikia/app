@@ -1,8 +1,5 @@
 <?php
 /**
- * This script takes a snapshot of the current user ranking if Achievements extension is enabled and stores it in the
- * ach_ranking_snapshots table stored in $wgExternalSharedDB
- *
  * @package MediaWiki
  * @subpackage Maintanance
  *
@@ -92,7 +89,7 @@ try {
 
 if(!empty($errors)){
 	echo("Process for wiki with ID {$wgCityId} resulted in the following errors:\n");
-	
+
 	foreach($errors as $error){
 		echo(" - $error\n");
 	}
