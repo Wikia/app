@@ -308,12 +308,12 @@ class Masthead {
 	 * @param width - the width of the thumbnail (height will be same propotion to width as in unscaled image)
 	 * @param inPurgeFormat - boolean - if true, then the returned URL will be in the format used for purging
 	 *                                  which means it will use images.wikia.com instead of a CDN hostname.
-	 * 
+	 *
 	 *
 	 * @return string -- url to Avatar
 	 */
 	public function getThumbnail( $width, $inPurgeFormat = false, $avoidUpscaling = false ) {
-		
+
 		if( $avoidUpscaling ) {
 			list( $imageWidth ) = getimagesize( $this->getFullPath );
 
@@ -388,7 +388,6 @@ class Masthead {
 		wfProfileIn( __METHOD__ );
 
 		$url = $this->getUrl();
-//		Wikia::log( __METHOD__, 'url', $url );
 
 		if ( ! $alt ) {
 			$alt = '[' .$this->mUser->getName() .']';
@@ -821,11 +820,11 @@ class Masthead {
 				/* set user option */
 				$formData[AVATAR_USER_OPTION_NAME] = $sUrl;
 			}
-		}		
+		}
 
-		return $result;	
+		return $result;
 	}
-	
+
 	public static function onGetPreferences($user, &$defaultPreferences) {
 		global $wgUser, $wgCityId, $wgEnableUploads, $wgUploadDirectory;
 
@@ -861,9 +860,9 @@ class Masthead {
 
 		$html = wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE );
 		$html .= $oTmpl->execute('pref-avatar-form');
-		
+
 		$defaultPreferencesTemp = array();
-		
+
 		foreach($defaultPreferences as $k => $v) {
 			$defaultPreferencesTemp[$k] = $v;
 			if($k == 'showAds') {
@@ -874,7 +873,7 @@ class Masthead {
 					'section' => 'personal/avatarupload');
 			}
 		}
-		
+
 		$defaultPreferences = $defaultPreferencesTemp;
 
 		return true;
