@@ -361,7 +361,7 @@ JAVASCRIPT;
 	 *
 	 * @return string - the HTML string to output for the <googlemap> tag
 	 **/
-	function render16 ( $pContent, $pArgv, &$pParser ) {
+	function render16 ( $pContent, $pArgv, $pParser ) {
 		global $wgGoogleMaps;
 		// pass through to the main render function, creating a new parser
 		// for parsing the local content
