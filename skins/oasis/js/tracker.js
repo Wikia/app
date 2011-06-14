@@ -588,4 +588,11 @@ var initTracker = function() {
 			$.tracker.byStr('mweditor/save');
 		});
 	}
+	
+	// store timestamp when user left the page
+	$(window).unload(function(ev) {
+		if ($.storage) {
+			$.storage.set('unloadstamp', +new Date() /* leave + for casting to UNIX timestamp */);
+		}
+	});
 }

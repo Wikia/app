@@ -11,6 +11,7 @@
 	WE.plugins.tracker = $.createClass(WE.plugin,{
 
 		trackerFn: false,
+		eventTrackerFn: false,
 		trackerRoot: 'editpage',
 
 		// visualMode / sourceMode
@@ -19,6 +20,7 @@
 
 		beforeInit: function() {
 			this.setTrackingFunction(jQuery.tracker.byStr);
+			this.eventTrackerFn = jQuery.tracker.trackEvent;
 		},
 
 		init: function() {
@@ -133,6 +135,10 @@
 			var states = editor.states;
 
 			switch (state) {
+				case states.IDLE:
+					this.reportLoadTime();
+					break;
+
 				case states.SAVING:
 					this.track('save');
 					break;
@@ -159,6 +165,34 @@
 			}
 		},
 
+		// measure how long it takes to fully load the editor (BugId:6907)
+		reportLoadTime: function() {
+			if (!this.loadTimeReported) {
+				var now = +new Date(),
+					browserInfo = this.getBrowserInfo().name,
+					editButtonClickTimestamp = parseInt($.storage.get('unloadstamp'));
+
+				// time it took to load the editor fully (since the moment user clicked the "edit" button)
+				if (editButtonClickTimestamp) {
+					var loadTimeTotal = now - editButtonClickTimestamp;
+
+					this.editor.log('Editor loaded in ' + (loadTimeTotal / 1000) + ' s (after "edit" was clicked)');
+					this.trackEvent('editpage', 'loadTimeTotal', browserInfo, loadTimeTotal);
+				}
+
+				// time it took to load the editor fully (within current page view)
+				if (window.wgNow) {
+					var loadTime = now - window.wgNow;
+
+					this.editor.log('Editor loaded in ' + (loadTime / 1000) + ' s (after HTML has arrived)');
+					this.trackEvent('editpage', 'loadTime', browserInfo, loadTime);
+				}
+
+				// send this report just once
+				this.loadTimeReported = true;
+			}
+		},
+
 		setTrackingFunction: function(fn) {
 			var self = this;
 
@@ -177,17 +211,22 @@
 			}
 		},
 
-		// @see http://code.google.com/intl/pl-PL/apis/analytics/docs/tracking/eventTrackerGuide.html
+
 		track: function(action, label, value) {
 			var args = [this.trackerRoot];
 			for (i=0; i < arguments.length; i++) {
 				args.push(arguments[i]);
 			}
 
-			// TODO: use GA event tracking
-			// pageTracker._trackEvent.apply(window, args);
 			if (this.trackerFn) {
 				this.trackerFn.call(window, args.join('/'));
+			}
+		},
+
+		// @see http://code.google.com/intl/pl-PL/apis/analytics/docs/tracking/eventTrackerGuide.html
+		trackEvent: function(category, action, opt_label, opt_value) {
+			if (this.eventTrackerFn) {
+				this.eventTrackerFn.apply(window, arguments);
 			}
 		},
 
