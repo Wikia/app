@@ -8,7 +8,7 @@ $messages['en'] = array(
 	'tog-founderemailsenabled' => 'E-mail me updates on what other people are doing (founders only)',
 // registered
 	'founderemails-email-user-registered-subject' => 'Someone new joined $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Hi $Foundername,
+	'founderemails-email-user-registered-body' => 'Hi $FOUNDERNAME,
 
 Congratulations! $USERNAME has just joined $WIKINAME.
 
