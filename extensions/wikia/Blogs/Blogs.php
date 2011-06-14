@@ -163,6 +163,7 @@ $wgAjaxExportList[] = "CreateBlogListingPage::axBlogListingCheckMatches";
  * hooks
  */
 $wgHooks[ 'AlternateEdit' ][] = 'SpecialBlogPage::alternateEditHook';
+$wgHooks[ 'EditPage::showEditForm:fields' ][] = 'CreateBlogPage::onEditPageShowEditFormFields';
 $wgHooks[ 'ArticleFromTitle' ][] = 'BlogArticle::ArticleFromTitle';
 $wgHooks[ 'CategoryViewer::getOtherSection' ][] = 'BlogArticle::getOtherSection';
 $wgHooks[ 'CategoryViewer::addPage' ][] = 'BlogArticle::addCategoryPage';
