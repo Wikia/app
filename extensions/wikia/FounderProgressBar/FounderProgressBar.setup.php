@@ -13,7 +13,7 @@ $wgAutoloadClasses[ 'FounderProgressBarController' ] = $dir . '/FounderProgressB
 $wgAutoloadClasses[ 'FounderProgressBarHooks' ] = $dir . '/FounderProgressBarHooks.class.php';
 
 // I18N
-$wgExtensionMessagesFiles['FounderProgressBarController'] = $dir . '/FounderProgressBarController.i18n.php';
+$wgExtensionMessagesFiles['FounderProgressBar'] = $dir . '/FounderProgressBar.i18n.php';
 
 // SETUP
 $wgExtensionFunctions[] = 'FounderProgressBar_setup';
