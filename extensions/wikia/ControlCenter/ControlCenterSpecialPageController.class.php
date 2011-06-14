@@ -63,17 +63,17 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 	
 	public function GetSpecialPage () {
 
+		// Construct title object from request params
 		$pageName = $this->request->getVal("page");
 		$title = SpecialPage::getTitleFor($pageName);
 		
-
-		global $wgOut, $wgTitle;
-
 		// Save global variables and initialize context for special page
+		global $wgOut, $wgTitle;
 		$oldTitle = $wgTitle;
 		$oldOut = $wgOut;
 		$wgOut = new OutputPage;
 		$wgOut->setTitle( $title );
+		$wgTitle = $title;
 				
 		// Construct special page object
 		try {
