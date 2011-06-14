@@ -25,6 +25,14 @@ class SMWParserExtensions {
 	 * @param string $text
 	 */
 	static public function onInternalParseBeforeLinks( &$parser, &$text ) {
+		// Wikia - start
+		// ignore SMW links when rendering for RTE (BugId:3186)
+		global $wgRTEParserEnabled;
+		if (!empty($wgRTEParserEnabled)) {
+			return true;
+		}
+		// Wikia - end
+
 		global $smwgStoreAnnotations, $smwgLinksInValues;
 
 		SMWParseData::stripMagicWords( $text, $parser );
