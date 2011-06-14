@@ -527,6 +527,10 @@ class Masthead {
 				if( $wgEnableUploadInfoExt ) {
 					UploadInfo::log( $mUserPage, $sImageFull, $this->getLocalPath(), "", "r" );
 				}
+
+				// remove thumbnails
+				$this->purgeThumbnails();
+
 				$errorNo = UPLOAD_ERR_OK;
 
 			}
@@ -718,13 +722,13 @@ class Masthead {
 		 * save to new file ... but create folder for it first
 		 */
 		if ( !is_dir( dirname( $sFilePath ) ) && !wfMkdirParents( dirname( $sFilePath ) ) ) {
-//				Wikia::log( __METHOD__, 'dir', sprintf('Cannot create directory %s', dirname( $sFilePath ) ) );
+			wfDebugLog( "avatar", __METHOD__ . sprintf( ": Cannot create directory %s", dirname( $sFilePath ) ), true );
 			wfProfileOut( __METHOD__ );
 			return UPLOAD_ERR_CANT_WRITE;
 		}
 
 		if( !imagepng( $oImg, $sFilePath ) ) {
-//				Wikia::log( __METHOD__, 'save', sprintf('Cannot save png Avatar: %s', $sFilePath ));
+			wfDebugLog( "avatar", __METHOD__ . ": Cannot save png Avatar: $sFilePath", true);
 			$errorNo = UPLOAD_ERR_CANT_WRITE;
 		}
 		else {
@@ -744,6 +748,10 @@ class Masthead {
 			if( $wgEnableUploadInfoExt ) {
 				UploadInfo::log( $mUserPage, $sFilePath, $this->getLocalPath() );
 			}
+
+			// remove generated thumbnails
+			$this->purgeThumbnails();
+
 			$errorNo = UPLOAD_ERR_OK;
 		}
 
@@ -1257,6 +1265,48 @@ class Masthead {
 		wfProfileOut(__METHOD__);
 
 		return $shown;
+	}
+
+	/**
+	 * @brief remove thumbnails for avatar by cleaning up whole folder
+	 *
+	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
+	 * @access private
+	 *
+	 * @return boolean status of operation
+	 */
+	private function purgeThumbnails( ) {
+		// get path to thumbnail folder
+		wfProfileIn( __METHOD__ );
+		$dir = dirname( $this->getFullPath( ) );
+		if( is_dir( $dir )  ) {
+			$files = array();
+			// copied from LocalFile->getThumbnails
+			$handle = opendir( $dir );
+
+			if ( $handle ) {
+				while ( false !== ( $file = readdir( $handle ) ) ) {
+					if ( $file{0} != '.' ) {
+						$files[] = $file;
+					}
+				}
+				closedir( $handle );
+			}
+
+			// copied from LocalFile->purgeThumbnails()
+			$urls = array();
+			$urls[] = $this->getPurgeUrl( "thumb" );
+			foreach( $files as $file ) {
+				@unlink( "$dir/$file" );
+				$url = $this->getPurgeUrl( '/thumb/' ) . $file ;
+				$urls[] = $url;
+				wfDebugLog( "avatar", __METHOD__ . "Removing $dir/$file and purging $url\n", true );
+			}
+		}
+		else {
+			wfDebugLog( "avatar", __METHOD__ . ": $dir exists but is not directory so not removed.\n", true );
+		}
+		wfProfileOut( __METHOD__ );
 	}
 }
 
