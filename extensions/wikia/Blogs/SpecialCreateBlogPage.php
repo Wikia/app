@@ -112,10 +112,10 @@ class CreateBlogPage extends SpecialBlogPage {
 		}
 
 		$aPageProps = array();
-		
+
 		$aPageProps['voting'] = 0;
 		$aPageProps['commenting'] = 0;
-		
+
 		if(!empty($this->mFormData['isVotingEnabled'])) {
 			$aPageProps['voting'] = 1;
 		}
@@ -132,6 +132,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		$result = false;
 		$bot = $wgUser->isAllowed('bot') && $wgRequest->getBool('bot',true);
 		$status = $editPage->internalAttemptSave( $result, $bot );
+
 		switch( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
@@ -141,6 +142,11 @@ class CreateBlogPage extends SpecialBlogPage {
 				self::invalidateCacheConnected( $this->mPostArticle );
 				$this->createListingPage();
 				$wgOut->redirect($this->mPostArticle->getTitle()->getFullUrl());
+				break;
+
+			// fix an issue with double edit page when captcha is triggered (BugId:6679)
+			case EditPage::AS_HOOK_ERROR:
+				Wikia::log( __METHOD__, 'editpage', 'hook prevented the save' );
 				break;
 
 			default:
@@ -370,6 +376,22 @@ class CreateBlogPage extends SpecialBlogPage {
 				EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
 			);
 		}
+	}
+
+	/**
+	 * Add hidden field with blog page title when captcha is triggered (BugId:6679)
+	 *
+	 * Title provided by the user will be maintained when captcha is resolved and next POST request sent
+	 */
+	public static function onEditPageShowEditFormFields(&$editPage, &$wgOut) {
+		global $wgRequest;
+		$blogPostTitle = $wgRequest->getVal('blogPostTitle');
+
+		if (!is_null($blogPostTitle) && $wgRequest->wasPosted()) {
+			$wgOut->addHTML(Xml::hidden('blogPostTitle', $blogPostTitle));
+		}
+
+		return true;
 	}
 }
 
