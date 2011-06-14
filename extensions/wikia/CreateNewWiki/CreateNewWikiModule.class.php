@@ -3,7 +3,8 @@ class CreateNewWikiModule extends Module {
 
 	// global imports
 	var $IP;
-	var $wgUser;
+	//var $wgUser;
+	var $isUserLoggedIn;
 	var $wgLanguageCode;
 	var $wgOasisThemes;
 	var $wgSitename;
@@ -62,13 +63,13 @@ class CreateNewWikiModule extends Module {
 		// form field values
 		$hubs = WikiFactoryHub::getInstance();
                 $this->aCategories = $hubs->getCategories();
-                
+
                 $this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
 		$this->aLanguages = wfGetFixedLanguageNames();
 		asort($this->aLanguages);
-                
+
 		$useLang = $wgRequest->getVal('uselang', $wgUser->getOption( 'language' ));
-                
+
                 // falling back to english (BugId:3538)
                 if ( !array_key_exists($useLang, $this->aLanguages) ) {
                     $useLang = 'en';
@@ -78,6 +79,9 @@ class CreateNewWikiModule extends Module {
 
 		// facebook callback overwrite on login.  CreateNewWiki re-uses current login stuff.
 		$fbOnLoginJsOverride = 'WikiBuilder.fbLoginCallback();';
+
+		// export info if user is logged in
+		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// remove wikia plus for now for all languages
 		$this->skipWikiaPlus = true;
