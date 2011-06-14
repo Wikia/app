@@ -69,7 +69,7 @@
 			</form>
 		</li>
 <?php
-	if (!$wgUser->isLoggedIn()) {
+	if (!$isUserLoggedIn) {
 ?>
 		<li id="Auth" class="step">
 			<h2 class="headline login"><?= wfMsg('cnw-auth-headline') ?></h2>
@@ -168,7 +168,7 @@
 	</ol>
 	<ul id="StepsIndicator">
 		<?php
-			$steps = $wgUser->isLoggedIn() ? 4 : 5;
+			$steps = $isUserLoggedIn ? 4 : 5;
 			$active = empty($currentStep) ? 1 : 3;
 			for($i = 0; $i < $steps; $i++) {
 		?>
