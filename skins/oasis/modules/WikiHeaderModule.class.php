@@ -15,6 +15,7 @@ class WikiHeaderModule extends Module {
 	var $wordmarkSize;
 	var $wordmarkStyle;
 	var $wordmarkUrl;
+	var $wordmarkFont;
 
 	public function executeIndex() {
 		global $wgOut, $wgCityId, $wgUser, $wgMemc;
@@ -25,6 +26,7 @@ class WikiHeaderModule extends Module {
 		$this->wordmarkText = $settings["wordmark-text"];
 		$this->wordmarkType = $settings["wordmark-type"];
 		$this->wordmarkSize = $settings["wordmark-font-size"];
+		$this->wordmarkFont = $settings["wordmark-font"];
 
 		if ($this->wordmarkType == "graphic") {
 			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
