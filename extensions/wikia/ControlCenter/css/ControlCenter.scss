@@ -3,15 +3,19 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/opacity";
-@import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/core/layout";
 
-.control-center {
+$control-center-content-width: 690px;
+$control-center-header-height: 48px;
+$base-z: 5;
+
+.ControlCenter {
+	position: relative;
 	>header {
 		@include linear-gradient(false, top, #cde2f0, 20%, #bbd6e8, 70%, #9db9cd, 100%);
 		border-bottom: 1px solid #b6c1c9;
 		border-top: 1px solid #c8d4dd;
-		height: 48px;
+		height: $control-center-header-height;
 		padding: 0 15px;
 		position: relative;
 		h1 {
@@ -26,16 +30,18 @@
 		}
 	}
 	.control-center-content {
+		background-color: #fff;
 		border-bottom: 1px solid #eee;
 		border-right: 1px solid #eee;
-		border-top: 1px solid #eee;
 		padding-top: 20px;
-		width: 690px;
-		.controls-wiki {
+		position: relative;
+		width: $control-center-content-width;
+		z-index: $base-z;
+		.control-section {
 			header {
-				@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
-				border-bottom: 1px solid $color-page-border;
-				border-top: 1px solid $color-page-border;
+				@include linear-gradient(#ebebeb, top, #fff, 50%, #ebebeb, 100%);
+				border-bottom: 1px solid #ebebeb;
+				border-top: 1px solid #ebebeb;
 				font-size: 12px;
 				font-style: italic;
 				height: 25px;
@@ -48,21 +54,23 @@
 					margin: 0 30px 0 20px;
 				}
 			}
-			.row {
+			.controls {
 				font-size: 11px;
 				line-height: 13px;
+				padding: 0 15px;
 				text-align: center;
 				@include clearfix;
-				.item {
+				.control {
 					cursor: pointer;
+					float: left;
 					/* 115px visual height */
 					height: 95px;
 					padding-top: 20px;
 					width: 80px;
 					.representation {
-						@include border-radius(10px);
-						@include linear-gradient($color-module-shadow, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
-						border: 1px solid #aaa;
+						@include border-radius(7px);
+						@include linear-gradient(#ebebeb, top, #fff, 50%, #ebebeb, 100%);
+						border: 1px solid #cfcfd0;
 						display: block;
 						height: 50px;
 						margin: 0px auto 5px;
@@ -72,12 +80,45 @@
 							height: 50px;
 							width: 50px;
 						}
-						&:hover {
-							$color-hover: mix($color-module-shadow, #000, 60%);
-							@include linear-gradient($color-hover, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
-							@include box-shadow(-5px, 5px, 5px, #999, true, 0);
+					}
+					&:hover {
+						.representation {
+							background: #e2e2e2;
+							@include box-shadow(-5px, 5px, 5px, #cacaca, true, 0);
 						}
 					}
+				}
+			}
+		}
+	}
+	.tabs {
+		$nav-height: 18px;
+		border: 0;
+		padding: 10px 0 0 0;
+		position: absolute;
+		right: $width-outside - $control-center-content-width - 1px;
+		top: $control-center-header-height - $nav-height - 10px;
+		z-index: $base-z + 1;
+		ul {
+			@include clearfix;
+			li {
+				@include border-radius-ne(5px);
+				@include border-radius-nw(5px);
+				@include box-shadow(0, 0, 10px, #9db9cd, false, 0);
+				background: #dfdfdf;
+				float: left;
+				font-size: 12px;
+				height: $nav-height;
+				line-height: 16px;
+				margin-left: 4px;
+				padding: 2px 25px 0;
+				position: relative;
+				&.active {
+					background: white;
+					top: 0px;
+				}
+				&:hover {
+					cursor: pointer;
 				}
 			}
 		}
@@ -87,4 +128,13 @@
 // Oasis overwrites
 .WikiaArticle {
 	padding: 0;
+	ul, ol {
+		margin: 0;
+		list-style: none;
+	}
+}
+
+.WikiaPage {
+	background-color: #fff;
+	color: #000;
 }

@@ -22,14 +22,17 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 		*/
 		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgSuppressToolbar, $wgOut;
 		
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/ControlCenter/css/ControlCenter.scss'));
+		//$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/ControlCenter/css/ControlCenter.scss'));
+		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/ControlCenter/css/ControlCenter.scss'));
+		$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/ControlCenter/js/ControlCenter.js');
+		
 		
 		// hide some default oasis UI things
 		$wgSuppressWikiHeader = true;
 		$wgSuppressPageHeader = true;
-		$wgSuppressFooter = true;
+		//$wgSuppressFooter = true;
 		$wgSuppressAds = true;
-		$wgSuppressToolbar = true;
+		//$wgSuppressToolbar = true;
 		
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
