@@ -47,7 +47,9 @@ var displayOverlayAd = function(){
 						height: '+parseInt(OverlayAd.settings.height-10)+'px;\
 						top: 10px;\
 					}\
-					.close {\
+					.close {';
+				if (OverlayAd.settings.close) {
+					html += '\
 						background: url("/extensions/wikia/AdEngine/close_button.png");\
 						cursor: pointer;\
 						height: 18px;\
@@ -55,16 +57,30 @@ var displayOverlayAd = function(){
 						position: absolute;\
 						top: ' + OverlayAd.settings.close.yoffset + 'px;\
 						width: 18px;\
-						z-index: 1;\
+						z-index: 1;';
+				}
+				else {
+					html += '\
+						display: none;';
+				}
+				html += '\
 					}\
-					.close_background {\
+					.close_background {';
+				if (OverlayAd.settings.close) {
+					html += '\
 						background-color: #' + OverlayAd.settings.close.background + ';\
 						height: 14px;\
 						left: ' + parseInt(OverlayAd.settings.width-16 + OverlayAd.settings.close.xoffset) + 'px;\
 						position: absolute;\
 						top: ' + parseInt(2 + OverlayAd.settings.close.yoffset) + 'px;\
 						width: 14px;\
-						z-index: 0;\
+						z-index: 0;';
+				}
+				else {
+					html += '\
+						display: none;';
+				}
+				html += '\
 					}\
 				</style>\
 				<div id="wikia_overlay_ad" class="wikia_overlay_ad">\
@@ -84,7 +100,7 @@ var displayOverlayAd = function(){
 			},
 
 			init: function() {
-				if (typeof OverlayAd_settings != "undefined") {
+				if (window.OverlayAd_settings) {
 					$.extend(true, OverlayAd.settings, OverlayAd_settings);
 				}
 
@@ -116,10 +132,12 @@ var displayOverlayAd = function(){
 						
 				WET.byStr("overlay_ad/started");
 				$(".wikia_overlay_ad").show(OverlayAd.settings.speed, function() {
-					setTimeout(function() {
-						WET.byStr("overlay_ad/autoclosed");
-						$(".wikia_overlay_ad").hide(OverlayAd.settings.speed);
-					}, OverlayAd.settings.duration);
+					if (OverlayAd.settings.duration > 0) {
+						setTimeout(function() {
+							WET.byStr("overlay_ad/autoclosed");
+							$(".wikia_overlay_ad").hide(OverlayAd.settings.speed);
+						}, OverlayAd.settings.duration);
+					}
 				});
 
 			}
