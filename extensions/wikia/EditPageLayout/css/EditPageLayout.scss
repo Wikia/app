@@ -34,8 +34,11 @@
 
 /* modal dialog (page title, captcha) */
 #HiddenFieldsDialog {
-	input, textarea {
+	input {
 		display: block;
+	}
+	input[type="text"],
+	textarea {
 		width: 100%;
 	}
 }
