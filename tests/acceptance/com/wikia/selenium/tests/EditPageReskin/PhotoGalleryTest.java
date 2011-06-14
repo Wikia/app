@@ -39,7 +39,7 @@ public class PhotoGalleryTest extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 	}
 
-	@Test(groups={"CI","envProduction"})
+	@Test(groups={"CI","envProduction","noIE"})
 	public void testSlideshowPopOut() throws Exception {
 		loginAsStaff();
 		prepareTestArticle();
@@ -68,7 +68,7 @@ public class PhotoGalleryTest extends BaseTest {
 		assertFalse(session().isElementPresent("//div[@class='wikia-slideshow-popout-images-wrapper']"));
 	}
 
-	@Test(groups={"CI","envProduction"})
+	@Test(groups={"CI","envProduction","noIE"})
 	public void testSlideshowInViewMode() throws Exception {
 		loginAsStaff();
 		prepareTestArticle();
@@ -106,7 +106,7 @@ public class PhotoGalleryTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@class='wikia-slideshow clearfix floatright']/div/div/ul/li/span[@class='wikia-slideshow-link-overlay']"));
 	}
 
-	@Test(groups={"CI","envProduction"})
+	@Test(groups={"CI","envProduction","noIE"})
 	public void testGalleryInViewMode() throws Exception {
 		loginAsStaff();
 		prepareTestArticle();
@@ -141,7 +141,7 @@ public class PhotoGalleryTest extends BaseTest {
 		assertTrue(session().isElementPresent("//span[2 and @class='wikia-gallery-item']//img[contains(@title,'Test link')]"));
 	}
 
-	@Test(groups={"CI","envProduction"})
+	@Test(groups={"CI","envProduction","noIE"})
 	public void testImageUpload() throws Exception {
 		loginAsStaff();
 
@@ -199,7 +199,7 @@ public class PhotoGalleryTest extends BaseTest {
 	//so that it can be found; because indexing takes a lot time
 	//test has been disabled for the moment
 	//@Test(groups={"CI","envProduction"})
-	@Test(groups={"broken"})
+	@Test(groups={"broken","noIE"})
 	public void testImageSearch() throws Exception {
 		loginAsStaff();
 		
@@ -268,7 +268,7 @@ public class PhotoGalleryTest extends BaseTest {
 		assertTrue(session().isElementPresent("//span[@class='wikia-gallery-item']//img[contains(@title,'Image search test')]"));
 	}
 
-	@Test(groups={"CI","envProduction"})
+	@Test(groups={"CI","envProduction","noIE"})
 	public void testEditInRTE() throws Exception {
 		loginAsStaff();
 
@@ -316,7 +316,7 @@ public class PhotoGalleryTest extends BaseTest {
 	}
 
 	//@author Marooned
-	@Test(groups={"CI","envProduction"})
+	@Test(groups={"CI","envProduction","noIE"})
 	public void testFeedGallery() throws Exception {
 		loginAsStaff();
 
@@ -362,7 +362,7 @@ public class PhotoGalleryTest extends BaseTest {
 	}
 
 	//@author Marooned
-	@Test(groups={"CI","envProduction"})
+	@Test(groups={"CI","envProduction","noIE"})
 	public void testFeedSlideshow() throws Exception {
 		loginAsStaff();
 

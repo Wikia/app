@@ -28,7 +28,7 @@ public class AjaxLoginComboTest extends BaseTest {
 		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiabot.username"));
 		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiabot.password"));
 		session().click("wpLoginattempt");
-	    session().waitForPageToLoad(this.getTimeout());
+		session().waitForPageToLoad(this.getTimeout());
 		waitForWikiabotLoggedIn();
 
 		assertTrue(session().isElementPresent("ImageUpload"));

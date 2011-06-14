@@ -11,7 +11,7 @@ import static org.testng.AssertJUnit.assertTrue;
 public class UploadImageTest extends BaseTest {
 	private String uploadFileUrl = "http://images.wikia.com/wikiaglobal/images/b/bc/Wiki.png";
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "noIE"})
 	public void testNormalUploadImage() throws Exception {
 		// keep file extensions consistent (uploaded image can be either PNG or JPG)
 		String fileNameExtenstion = uploadFileUrl.substring(uploadFileUrl.length() - 3, uploadFileUrl.length());
@@ -41,7 +41,7 @@ public class UploadImageTest extends BaseTest {
 		logout();
 	}
 
-	@Test(groups={"CI"},dependsOnMethods="testNormalUploadImage")
+	@Test(groups={"CI", "noIE"},dependsOnMethods="testNormalUploadImage")
 	public void testDeleteUploadedImage() throws Exception {
 		// keep file extensions consistent (uploaded image can be either PNG or JPG)
 		String fileNameExtenstion = uploadFileUrl.substring(uploadFileUrl.length() - 3, uploadFileUrl.length());

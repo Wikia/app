@@ -490,7 +490,7 @@ public class PhalanxTest extends BaseTest {
 	 * Hook triggered: UploadForm:BeforeProcessing
 	 * Tests blocks: TitleBlackList
 	 */
-	@Test(groups={"CI"})
+	@Test(groups={"CI","noIE"})
 	public void fileUploadTest() throws Exception {
 		this.log("Test file upload (using Special:Upload)");
 
