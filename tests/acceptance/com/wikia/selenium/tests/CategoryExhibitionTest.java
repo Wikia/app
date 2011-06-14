@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 public class CategoryExhibitionTest extends BaseTest {
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "noIE"})
 	public void testSortTypeAndDisplay() throws Exception {
 
 		// prepare

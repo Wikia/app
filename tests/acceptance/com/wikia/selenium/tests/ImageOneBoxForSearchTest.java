@@ -6,7 +6,8 @@ import static org.testng.AssertJUnit.assertTrue;
 
 public class ImageOneBoxForSearchTest extends BaseTest {
 
-	@Test(groups={"CI"})
+	// hard to test on devbox - search works on production data, not devbox
+	@Test(groups={"CI", "broken"})
 	public void testImageSearchResults() throws Exception {
 		session().open("/");
 		waitForElement("WikiaSearch", this.getTimeout()); 

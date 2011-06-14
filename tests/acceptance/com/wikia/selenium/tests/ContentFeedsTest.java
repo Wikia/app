@@ -42,7 +42,7 @@ public class ContentFeedsTest extends BaseTest {
 		assertTrue(session().isElementPresent("//ul[@class='cfMostVisitedTag']/li/a"));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "noIE"})
 	public void testRecentImagesTag() throws Exception {
 		login();
 		uploadImage();

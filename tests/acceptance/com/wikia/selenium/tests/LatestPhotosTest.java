@@ -7,7 +7,7 @@ import static org.testng.AssertJUnit.assertEquals;
 import org.testng.annotations.Test;
 
 public class LatestPhotosTest extends BaseTest {
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "noIE"})
 	public void testLatestPhotos() throws Exception {
 		loginAsStaff();
 		
