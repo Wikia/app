@@ -2,7 +2,7 @@
 Wikia Editor Introduction
 =========================
 
-Editor is a event-driven platform which is designed to have all features implemented as plugins.
+Editor is an event-driven platform which is designed to have all features implemented as plugins.
 The main editor object does not handle anything more than being able to bootstrap plugins
 and allow message and data exchange between plugins (+ logging capabilities, which might have 
 been done as a separate plugin too).
