@@ -162,7 +162,7 @@ class TopListItem extends TopListBase {
 	private function _queryVotesApi() {
 		$pageId = $this->getArticle()->getId();
 
-		$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $pageId, "wkuservote" => 0, "wktimestamps" => 1 ));
+		$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $pageId, "wktimestamps" => 1 ));
 		$oApi = new ApiMain($oFauxRequest);
 		$oApi->execute();
 		$aResult = $oApi->GetResultData();
