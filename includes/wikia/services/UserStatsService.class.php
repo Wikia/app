@@ -51,6 +51,7 @@ class UserStatsService extends Service {
 
 		if (!empty($stats)) {
 			$stats['edits']++;
+			$stats['date'] = wfTimestampNow();
 			$wgMemc->set($key, $stats, self::CACHE_TTL);
 
 			wfDebug(__METHOD__ . ": user #{$this->userId}\n");
