@@ -47,7 +47,9 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 			$wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
 			$this->response->setVal('wordmarkUrl', $wordmarkUrl);
 		}
-		
+
+		$founderProgressBar = (string)F::app()->sendRequest( 'FounderProgressBar', 'widget' );
+		$this->response->setVal('founderProgressBar', $founderProgressBar);
 	}
 	
 	/**

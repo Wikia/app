@@ -1,0 +1,26 @@
+#FounderProgressWidget {
+	>h1 {
+		color: #737373;
+		font-size: 16px;
+	}
+	.box {
+		border: 1px solid #e8e8e8;
+		position: relative;
+		.numeric-progress {
+			color: #3a3a3a;
+			font-size: 36px;
+			left: 0;
+			padding-top: 36px;
+			position: absolute;
+			text-align: center;
+			top: 0;
+			width: 95px;
+			.percentage {
+				font-size: 14px;
+				font-weight: bold;
+				position: relative;
+				top: -14px;
+			}
+		}
+	}
+}
