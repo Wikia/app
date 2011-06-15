@@ -5,12 +5,18 @@
 	> .editpage-intro-wrapper {
 		max-height: 80px;
 		overflow: hidden;
+		color: #3a3a3a;
 
 		// preload content
 		> div {
 			@include bodytext;
 			background-color: #e7f0f9;
 			padding: 5px;
+		}
+
+		// links
+		a {
+			color: #006cbd !important;
 		}
 	}
 
