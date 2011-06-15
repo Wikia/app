@@ -32,6 +32,9 @@
 		color: $color-text;
 		font-size: 14px;
 		line-height: 21px;
+		// BugId:7024 - override per-wiki custom CSS
+		margin: 0;
+		padding: 0;
 	}
 	> h1 {
 		display: inline-block;
