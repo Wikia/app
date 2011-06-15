@@ -14,7 +14,15 @@ $color-epl-toolbar-border: #ddd;
 $color-epl-trigger-border: #cacaca;
 
 $color-epl-text-color: #666;
-$color-epl-links: #006CBD; // BugId:6921
+
+// BugId:6921
+$color-epl-links: #006CBD; // module links 
+
+// page title / help link
+$color-epl-header-links: #006CBD;
+@if lightness($color-page) < 50 {
+	$color-epl-header-links: #f37207;
+}
 
 $height-epl-header: 45px;
 $width-epl-module-input: 240px;
