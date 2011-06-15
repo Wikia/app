@@ -312,6 +312,10 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 			return TRUE;
 		if ($wgRequest->getVal('new_offset'))
 			return TRUE;
+		if ($wgRequest->getVal('new_filter_wiki_id'))
+			return TRUE;
+		if ($wgRequest->getVal('new_filter_dst'))
+			return TRUE;
 		
 		return FALSE;
 	}
