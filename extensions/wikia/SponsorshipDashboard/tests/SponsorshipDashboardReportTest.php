@@ -2,6 +2,9 @@
 require_once dirname(__FILE__) . '/../SponsorshipDashboard_setup.php';
 wfLoadAllExtensions();
 
+/**
+ * @group Infrastructure
+ */
 class SponsorshipDashboardReportTest extends PHPUnit_Framework_TestCase {
 
 	private $app;
