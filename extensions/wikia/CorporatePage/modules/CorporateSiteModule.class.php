@@ -173,10 +173,10 @@ class CorporateSiteModule extends Module {
 		$tag_id = AutoHubsPagesHelper::getHubIdFromTitle($wgTitle);
 		$tag_name = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);
 
-		if ($isManager) {
-			$temp = $datafeeds->getTopArticles($tag_id, $lang, 15, 3, true, true);
+		if ( $isManager ) {
+			$temp = $datafeeds->getTopArticles( $tag_id, $lang, 15, 3, true, true, true );
 		} else {
-			$temp = $datafeeds->getTopArticles($tag_id, $lang, 5, 1);
+			$temp = $datafeeds->getTopArticles( $tag_id, $lang, 5, 1, false, false, true );
 		}
 
 		$this->data['title'] = $wgTitle;

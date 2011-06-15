@@ -237,9 +237,13 @@ class WikiaStatsAutoHubsConsumerDB {
 	 * @author Tomasz Odrobny
 	 * @access public
 	 *
+         * @param content_ns null|bool when true, only pages from content namespaces count;
+         *                             when false, only pages from non-content namespaces count;
+         *                             when null, no namespace filter is applied.
+         *                             See: BugId:6905 and BugId:6814.
 	 */
 
-	public function getTopArticles($tag_id, $lang = "en", $limit = 5, $per_wiki = 1, $show_hide = false, $force_reload = false) {
+	public function getTopArticles($tag_id, $lang = "en", $limit = 5, $per_wiki = 1, $show_hide = false, $force_reload = false, $content_ns = null ) {
 		global $wgMemc;
 
 		wfProfileIn( __METHOD__ );
@@ -253,13 +257,17 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		$tag_id = (int) $tag_id;
+                $where = array(
+                    'tag_id' => $tag_id,
+                    'city_lang' => $lang
+                );
+                if ( !is_null( $content_ns ) ) {
+                    $where['content_ns'] = (int) $content_ns;
+                }
 		$res = $this->dbs->select(
 			array( 'specials.summary_tags_top_articles' ),
 			array( 'city_id, page_id, tag_id, page_name, page_url, wikiname, wikiurl, all_count' ),
-			array(
-				'tag_id' => $tag_id,
-				'city_lang' => $lang
-			),
+			$where,
 			__METHOD__,
 			array(
 				'ORDER BY' 	=> 'all_count desc',
