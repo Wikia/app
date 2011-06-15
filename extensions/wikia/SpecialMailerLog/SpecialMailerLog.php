@@ -55,7 +55,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 
 		$num_rows = 0;
 		$mail_records = array();
-		if($this::do_query()) {
+		if($this->do_query()) {
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 
 			$num_rows = $dbr->selectField( 'wikia_mailer.mail', 'COUNT(*)', $filter, __METHOD__ );
