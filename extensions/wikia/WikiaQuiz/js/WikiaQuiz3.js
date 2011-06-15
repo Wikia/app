@@ -7,7 +7,11 @@ var WikiaQuiz = {
 	imgLargeSize: '245px',
 	imgScaleFactor: '+=90',
 	score: 0,
+	trackerUrlPrefix: '',
 	init: function() {
+		// class vars
+		WikiaQuiz.trackerUrlPrefix = 'wikiaquiz/'+window.wgDBname+'/'+window.wgTitle.replace(/\//g, '_')+'/';
+			
 		//DOM
 		jQuery.fx.interval = 13; // 16 is roughly 60 fps, 32 is roughly 30 fps
 		WikiaQuiz.qSet = $('#WikiaQuiz .questions .question-set');
@@ -43,7 +47,7 @@ var WikiaQuiz = {
 		WikiaQuiz.ui.muteToggle.click(WikiaQuiz.toggleSound);
 	},
 	handleStart: function() {
-		$.tracker.byStr('wikiaquiz/start');
+		WikiaQuiz.trackByStr('start');
 		WikiaQuiz.ui.startButton.hide();
 		WikiaQuiz.ui.progressBar.show();
 		WikiaQuiz.countDown();
@@ -67,7 +71,7 @@ var WikiaQuiz = {
 		WikiaQuiz.ui.questions.add(WikiaQuiz.ui.countDown).animate({left:"-=800px"}, WikiaQuiz.animationTiming + 200);
 	},
 	initializeQuestion: function(cq) {
-		$.tracker.byStr('wikiaquiz/view/q'+WikiaQuiz.cqNum);
+		WikiaQuiz.trackByStr('view/q'+WikiaQuiz.cqNum);
 		WikiaQuiz.cq = cq;
 		WikiaQuiz.ui.questionLabel = cq.find('.question-label, .question-image');
 		WikiaQuiz.ui.questionBubble = cq.find('.question-bubble');
@@ -108,24 +112,20 @@ var WikiaQuiz = {
 			return;
 		}
 		WikiaQuiz.answered = true;
-		$().log('Answer Clicked')
-		$().log(evt);
 		var target = $(evt.target);
 		var targetClass = target.attr('class');
 		var answer = target.closest('.answer');
 		if(targetClass != 'anchor-hack' && answer.length) {
-			$().log('found:');
-			$().log(answer);
 			answer.unbind();
 			answer.addClass('selected');
 			WikiaQuiz.ui.chosenAnswer = answer;
 			if(answer.data('correct') == '1') {
-				$.tracker.byStr('wikiaquiz/correct/q'+WikiaQuiz.cqNum);
+				WikiaQuiz.trackByStr('correct/q'+WikiaQuiz.cqNum);
 				WikiaQuiz.correct = true;
 				WikiaQuiz.score++;
 				WikiaQuiz.ui.answerResponse.text(WikiaQuizVars.correctLabel);
 			} else {
-				$.tracker.byStr('wikiaquiz/wrong/q'+WikiaQuiz.cqNum);
+				WikiaQuiz.trackByStr('wrong/q'+WikiaQuiz.cqNum);
 				WikiaQuiz.correct = false;
 				WikiaQuiz.ui.answerResponse.text(WikiaQuizVars.incorrectLabel);
 			}
@@ -141,7 +141,6 @@ var WikiaQuiz = {
 			
 			var i = WikiaQuiz.ui.allAnswers.index(answer);
 			var left = (20 - (i * 190));
-			$().log(left);
 			r.animate({
 				height:WikiaQuiz.imgScaleFactor,
 				width:WikiaQuiz.imgScaleFactor,
@@ -168,7 +167,6 @@ var WikiaQuiz = {
 		}
 	},
 	handleNextClick: function(evt) {
-		$().log('Next Clicked');
 		WikiaQuiz.transition();
 	},
 	transition: function() {
@@ -184,7 +182,7 @@ var WikiaQuiz = {
 		});
 	},
 	showEnd: function() {
-		$.tracker.byStr('wikiaquiz/finalscore/'+WikiaQuiz.score);
+		WikiaQuiz.trackByStr('finalscore/'+WikiaQuiz.score);
 		var score = (WikiaQuiz.score / WikiaQuiz.totalQ) * 100;
 		var scoreUI = $("#FinalScore");
 		scoreUI.find('.number').text(score);
@@ -195,11 +193,11 @@ var WikiaQuiz = {
 		WikiaQuiz.ui.endScreen.fadeIn(WikiaQuiz.animationTiming, function() {
 			WikiaQuiz.playSound(WikiaQuiz.sound.applause);
 			WikiaQuiz.ui.endScreen.find('.continue').click(function() {
-				$.tracker.byStr('wikiaquiz/endscreen');
+				WikiaQuiz.trackByStr('endscreen');
 				WikiaQuiz.ui.endScreen.fadeOut(WikiaQuiz.animationTiming, function() {
 					WikiaQuiz.ui.thanksScreen.fadeIn(WikiaQuiz.animationTiming, function() {
 						WikiaQuiz.ui.thanksScreen.find('.more-info').click(function() {
-							$.tracker.byStr('wikiaquiz/moreinfo');
+							WikiaQuiz.trackByStr('moreinfo');
 						});
 					});
 				});
@@ -213,9 +211,11 @@ var WikiaQuiz = {
 		}
 	},
 	toggleSound: function() {
-		$().log('Mute Toggle Clicked');
 		WikiaQuiz.isMuted = $(this).find('input').attr('checked');
-		$.tracker.byStr('wikiaquiz/mute/'+WikiaQuiz.isMuted);
+		WikiaQuiz.trackByStr('mute/'+WikiaQuiz.isMuted);
+	},
+	trackByStr: function(str) {
+		$.tracker.byStr(WikiaQuiz.trackerUrlPrefix+str);
 	}
 };
 
