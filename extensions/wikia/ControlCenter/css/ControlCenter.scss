@@ -33,6 +33,7 @@ $base-z: 5;
 		background-color: #fff;
 		border-bottom: 1px solid #eee;
 		border-right: 1px solid #eee;
+		float: left;
 		padding-top: 20px;
 		position: relative;
 		width: $control-center-content-width;
@@ -122,6 +123,11 @@ $base-z: 5;
 				}
 			}
 		}
+	}
+	>aside {
+		float: right;
+		margin: 20px 15px 0 0;
+		width: 275px;
 	}
 }
 

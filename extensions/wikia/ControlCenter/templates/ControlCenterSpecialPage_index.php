@@ -90,6 +90,7 @@
 		</section>
 	</section>
 	<aside>
+		<?= $founderProgressBar ?>
 	</aside>
 	<nav class="tabs">
 		<ul>
