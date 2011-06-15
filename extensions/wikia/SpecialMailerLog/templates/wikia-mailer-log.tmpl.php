@@ -34,6 +34,7 @@ table.TablePager { border: 1px solid gray;}
 	</style>
 
 	<form id="MailerLogCreatedSelector" class="clearfix" method="post" action="<?= $scriptURL ?>?<?= $query_string ?>">
+		<input type="hidden" name="mailer_log" value="1" />
 		<div id="mailer-search-dates" style="float: right">
 		<div class="wk-form-row<?= array_key_exists('CreatedNum', $filter_roster) ? ' filter-on' : '' ?>">
  			<ul>

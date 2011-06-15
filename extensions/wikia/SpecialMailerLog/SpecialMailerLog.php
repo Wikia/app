@@ -53,11 +53,14 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 		if ($limit) $query[] = "limit=$limit";
 		if ($offset) $query[] = "offset=$offset";
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+		$num_rows = 0;
+		$mail_records = array();
+		if($this::do_query()) {
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 
-		$num_rows = $dbr->selectField( 'wikia_mailer.mail', 'COUNT(*)', $filter, __METHOD__ );
+			$num_rows = $dbr->selectField( 'wikia_mailer.mail', 'COUNT(*)', $filter, __METHOD__ );
 
-		$res = $dbr->select( 'wikia_mailer.mail',
+			$res = $dbr->select( 'wikia_mailer.mail',
 							 array( 'id', 'created', 'attempted', 'city_id', 'dst', 'hdr', 'subj', 'msg', 'transmitted', 'is_error', 'error_status', 'error_msg', 'opened'),
 							 $filter,
 							 __METHOD__,
@@ -67,11 +70,10 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 							       )
 						   );
 
-		$mail_records = array();
-		while ($row = $dbr->fetchObject($res)) {
-			$body = self::getBody($row->msg);
+			while ($row = $dbr->fetchObject($res)) {
+				$body = self::getBody($row->msg);
 
-			$mail_records[] = array('id'           => $row->id,
+				$mail_records[] = array('id'           => $row->id,
 									'created'      => $row->created,
 									'city_id'      => $row->city_id,
 									'wiki_name'    => Wikifactory::IdtoDB( $row->city_id ),
@@ -88,8 +90,9 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 									'error_msg'    => $row->error_msg,
 									'opened'       => $row->opened,
 								   );
+			}
 		}
-
+		
 		$titleObj = SpecialPage::getTitleFor( "MailerLog" );
 		$scriptURL = $titleObj->getLocalURL();
 
@@ -295,5 +298,21 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 		}
 
 		return $filter;
+	}
+	
+	private static function do_query() {
+		global $wgRequest;
+		if ($wgRequest->getVal('mailer_log'))
+			return TRUE;
+		if ($wgRequest->getVal('new_sort'))
+			return TRUE;
+		if ($wgRequest->getVal('new_sort_dir'))
+			return TRUE;
+		if ($wgRequest->getVal('new_limit'))
+			return TRUE;
+		if ($wgRequest->getVal('new_offset'))
+			return TRUE;
+		
+		return FALSE;
 	}
 }
