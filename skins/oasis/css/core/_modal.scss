@@ -35,6 +35,11 @@
 	@include bodytext;
 	display: block;
 	margin: 0 18px 18px 18px;
+        .MyToolsConfiguration {
+            .options-list {
+                line-height: 1;
+            }
+        }
 }
 
 .blackout {
