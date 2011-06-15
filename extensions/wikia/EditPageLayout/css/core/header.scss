@@ -29,11 +29,11 @@
 		}
 	}
 	> h2 {
+		color: $color-text;
 		font-size: 14px;
 		line-height: 21px;
 	}
 	> h1 {
-		color: #3a3a3a;
 		display: inline-block;
 		float: left;
 		font-size: 19px;
@@ -41,7 +41,7 @@
 		padding: 0;
 		zoom: 1; // ie
 		> a {
-			color: $color-epl-links;
+			color: $color-epl-header-links;
 		}
 	}
 }
@@ -69,10 +69,10 @@
 /* Need [Help]? */
 #HelpLink {
 	bottom: 5px;
-	color: #3a3a3a;
+	color: $color-text;
 	position: absolute;
 	right: 21px;
 	> a {
-		color: $color-epl-links;
+		color: $color-epl-header-links;
 	}
 }
