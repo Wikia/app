@@ -2,7 +2,6 @@
 	@include gradient-header;
 	border-bottom: 1px solid #cbc9ca;
 	height: $height-epl-header;
-	overflow: hidden;
 	padding-left: 20px;
 	position: relative;
 	vertical-align: top;
@@ -12,7 +11,9 @@
 		@include wordmark;
 		@include clearfix;
 		color: $color-links;
+		display: inline-block;
 		float: left;
+		height: $height-epl-header;
 		margin-right: 20px;
 		width: auto;
 		img {
@@ -40,7 +41,7 @@
 		padding: 0;
 		zoom: 1; // ie
 		> a {
-			color: #2070AD;
+			color: $color-epl-links;
 		}
 	}
 }
@@ -71,4 +72,7 @@
 	color: #3a3a3a;
 	position: absolute;
 	right: 21px;
+	> a {
+		color: $color-epl-links;
+	}
 }
