@@ -58,7 +58,7 @@ class WikiaPollTest extends PHPUnit_Framework_TestCase {
 		$result = $poll->create();
 
 		$this->assertType("array", $result, "Create result is array");
-		$this->assertEquals(true, $result["success"], "Create result is success");
+		$this->assertEquals(true, $result["success"], "Create result is not success, error: " . (isset($result['error']) ? $result['error'] : 'unknown - error message not set'));
 		$this->assertEquals('Poll:Unit Testing', $result['question'], 'Create Question matches input');
 		$this->assertType("int",  $result['pollId'], "Create returned a valid pollId");
 
