@@ -1278,7 +1278,10 @@ class Masthead {
 	private function purgeThumbnails( ) {
 		// get path to thumbnail folder
 		wfProfileIn( __METHOD__ );
-		$dir = dirname( $this->getFullPath( ) ) . "/thumb/";
+
+		// dirty hack, should work in this case
+		$dir = $this->getFullPath( );
+		$dir = str_replace( "/avatars/", "/avatars/thumb/", $dir );
 		if( is_dir( $dir )  ) {
 			$files = array();
 			// copied from LocalFile->getThumbnails
@@ -1298,9 +1301,9 @@ class Masthead {
 			$urls[] = $this->getPurgeUrl( "/thumb/" );
 			foreach( $files as $file ) {
 				@unlink( "$dir/$file" );
-				$url = $this->getPurgeUrl( '/thumb/' ) . $file ;
+				$url = $this->getPurgeUrl( '/thumb/' ) . "/$file" ;
 				$urls[] = $url;
-				wfDebugLog( "avatar", __METHOD__ . "Removing $dir/$file and purging $url\n", true );
+				wfDebugLog( "avatar", __METHOD__ . ": removing $dir/$file and purging $url\n", true );
 			}
 		}
 		else {
