@@ -74,6 +74,11 @@ class OasisModule extends Module {
 			$this->bodyClasses[] = "oasis-{$skin->themename}";
 		}
 
+		// mark dark themes
+		if (SassUtil::isThemeDark()) {
+			$this->bodyClasses[] = 'oasis-dark-theme';
+		}
+
 		$this->setupStaticChute();
 
 		// Add the wiki and user-specific overrides last.  This is a special case in Oasis because the modules run

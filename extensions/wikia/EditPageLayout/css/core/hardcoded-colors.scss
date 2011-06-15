@@ -1,0 +1,75 @@
+#EditPageHeader {
+	> h2 {
+		color: #3a3a3a;
+	}
+}
+
+#EditPage {
+	.module_page_controls {
+		.wikia-menu-button,
+		input[type="submit"] {
+			@include linear-gradient(#006CB0, top, #2094DD, 35%, #006CB0, 65%);
+			border-color: #006CB0;
+			color: #fff;
+
+			&:active,
+			&:hover {
+				@include linear-gradient(#006CB0, top, #005F9C, 35%, #1D88CB, 65%);
+			}
+
+			&.secondary {
+				@include linear-gradient(#F2F2F2, top, #fff, 35%, #F2F2F2, 65%);
+				border-color: #D9D9D9;
+				color: #3A3A3A;
+
+				&:active,
+				&:hover {
+					@include linear-gradient(#e8e8e8, top, #f5f5f5, 35%, #e8e8e8, 65%);
+				}
+
+				ul {
+					background: #fff;
+					border-color: #D9D9D9;
+					a {
+						color: #3A3A3A;
+						&:hover {
+							background-color: #cce1ef;
+						}
+					}
+				}
+				> li > a {
+					border-right-color: #D9D9D9;
+					color: #3A3A3A;
+				}
+			}
+		}
+	}
+}
+
+// fixes for dark themes follow...
+.oasis-dark-theme {
+	#EditPageHeader {
+		background: #3a3a3a;
+		> h2 {
+			color: #d5d4c9;
+		}
+		a {
+			color: #f37207
+		}
+	}
+
+	#HelpLink {
+		color: #d5d4c9;
+		> a {
+			color: #f37207
+		}
+	}
+
+	#EditPageEditorWrapper {
+		background-color: #3a3a3a;
+	}
+
+	#EditPageEditor {
+		border-left-color: #888;
+	}
+}

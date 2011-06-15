@@ -31,6 +31,7 @@
 @import "core/permission-error";
 @import "core/modals";
 @import "core/preloads"; // editor preloads
+@import "core/hardcoded-colors"; // "temporary" fix for dark wikis (BugId:6921)
 
 /* modal dialog (page title, captcha) */
 #HiddenFieldsDialog {
