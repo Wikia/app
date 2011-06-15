@@ -22,6 +22,19 @@ class ChatRailModule extends Module {
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat/css/ChatRailModule.scss'));
 	}
 	
+	public function executeAnonLoginSuccess() {
+		global $wgExtensionsPath; 
+		
+		$this->linkToSpecialChat = SpecialPage::getTitleFor("Chat")->escapeLocalUrl();
+		$this->windowFeatures = $this->getWindowFeatures();	
+		$this->buttonIconUrl = $wgExtensionsPath .'/wikia/Chat/images/chat_icon.png';
+		if ( !empty($this->totalInRoom) ) {
+			$this->buttonText = wfMsg('chat-join-the-chat');
+		} else {
+			$this->buttonText = wfMsg('chat-start-a-chat');		
+		}
+		$this->chatClickAction = "window.open('{$this->linkToSpecialChat}', 'wikiachat', '{$this->windowFeatures}'); $('.modalWrapper').closeModal();";
+	}
 	
 	/**
 	 * Render module contents - loaded via ajax only for freshness

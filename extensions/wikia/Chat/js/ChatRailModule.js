@@ -15,25 +15,14 @@ var ChatRailModule = {
 		// Since caching of modules is not ironed out yet (currently I think they all cache for 24 hours), make a cb based on the minute:
 		var currentTime = new Date();
 		var minuteTimestamp = currentTime.getFullYear() + currentTime.getMonth() + currentTime.getDate() + currentTime.getHours() + currentTime.getMinutes();
-		$(".ChatModule").load(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ChatRail&actionName=Contents&outputType=html&username=' + encodeURIComponent(wgUserName) + '&cb=' + minuteTimestamp, ChatRailModule.userStatsMenuInit);		
+		$(".ChatModule").load(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ChatRail&actionName=Contents&outputType=html&username=' + encodeURIComponent(wgUserName) + '&cb=' + minuteTimestamp, ChatRailModule.userStatsMenuInit);
 	},
 	
 	userStatsMenuInit: function() {
-		// Clicking avatar opens user stats menu
+		// Hovering on avatar opens user stats menu
 		$('.ChatModule .chat-whos-here > ul > li').hover(function(event) {
 			$('.UserStatsMenu').hide();
 			$(this).find('.UserStatsMenu').show();
-
-/*
-			// Bind event handler to body to close the menu			
-			$('body').bind('click.userStatsMenuClose', function(event) {
-				if (!$(event.target).closest('.UserStatsMenu').exists()) {
-					$('.UserStatsMenu').hide();
-					$('body').unbind('.userStatsMenuClose');
-				};
-			});
-*/
-
 		}, function() {
 			$(this).find('.UserStatsMenu').hide();		
 		});

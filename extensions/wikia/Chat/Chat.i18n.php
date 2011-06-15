@@ -37,7 +37,8 @@ $messages['en'] = array(
 	'chat-whos-here' => "Who's here ($1)",
 	'chat-join-the-chat' => 'Join the Chat',
 	'chat-edit-count' => '$1 Edits',
-	'chat-member-since' => 'Member since $1'
+	'chat-member-since' => 'Member since $1',
+	'chat-great-youre-logged-in' => "Great! You're logged in."
 );
 
 /** Message documentation (Message documentation)
@@ -464,7 +465,7 @@ Neem alstublieft contact op met deze gebruiker voor meer informatie.',
 	'chat-member-since' => 'Lid sinds $1',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel) (Nederlands (informeel))
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -476,7 +477,7 @@ $messages['nl-informal'] = array(
 	'chat-room-is-not-on-this-wiki' => 'De chatroom waar je probeert binnen te komen bestaat niet op deze wiki.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
@@ -578,7 +579,7 @@ $messages['ro'] = array(
 	'chat-member-since' => 'Membru din $1',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -646,7 +647,7 @@ $messages['vi'] = array(
 	'chat-member-since' => 'Gia nhập từ $1',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Liangent
  */
 $messages['zh-hans'] = array(
