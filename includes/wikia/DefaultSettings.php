@@ -828,3 +828,9 @@ $wgMemCachedDebugLevel = 1;
  * enable this defaultly, since we 100% include it in assetmanager now
  */
 $wgEnableMWSuggest = true;
+
+/**
+ * define binary for wgUseTex usage
+ * @name wgTexvc
+ */
+$wgTexvc = "$IP/math/texvc";
