@@ -24,7 +24,7 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 	public function __construct() {
 		parent::__construct( 'PageLayoutBuilder', 'plbmanager' );
 		// add messages (fetch them using <script> tag)
-		JSMessages::getInstance()->enqueuePackage('PageLayoutBuilder', JSMessages::EXTERNAL);
+		F::build('JSMessages')->enqueuePackage('PageLayoutBuilder', JSMessages::EXTERNAL);
 	}
 
 	protected function getWikitextForPreload() {

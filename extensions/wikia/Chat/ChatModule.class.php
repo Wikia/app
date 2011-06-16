@@ -26,21 +26,21 @@ class ChatModule extends Module {
 	public function executeIndex() {
 		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId, $wgFavicon;
 		wfProfileIn( __METHOD__ );
-		
+
 		$this->app = WF::build('App');
 
 		// String replacement logic taken from includes/Skin.php
 		$this->wgFavicon = str_replace('images.wikia.com', 'images1.wikia.nocookie.net', $wgFavicon);
 
 		// add messages (fetch them using <script> tag)
-		JSMessages::getInstance()->enqueuePackage('Chat', JSMessages::EXTERNAL); // package defined in Chat_setup.php
-		
+		F::build('JSMessages')->enqueuePackage('Chat', JSMessages::EXTERNAL); // package defined in Chat_setup.php
+
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
 		// Variables for this user
 		$this->username = $wgUser->getName();
 		$this->avatarUrl = AvatarService::getAvatarUrl($this->username, 50);
-	
+
 		// Find the chat for this wiki (or create it, if it isn't there yet).
 		$this->roomName = $this->roomTopic = "";
 		$this->roomId = NodeApiClient::getDefaultRoomId($this->roomName, $this->roomTopic);
@@ -56,7 +56,7 @@ class ChatModule extends Module {
 		// Some building block for URLs that the UI needs.
 		$this->pathToProfilePage = Title::makeTitle( NS_USER, '$1' )->getFullURL();
 		$this->pathToContribsPage = SpecialPage::getTitleFor( 'Contributions', '$1' )->getFullURL();
-		
+
 		// Some i18n'ed strings used inside of templates by Backbone. The <%= stuffInHere % > is intentionally like
 		// that & will end up in the string (substitution occurs later).
 		$this->editCountStr = wfMsg('chat-edit-count', "<%= editCount %>");
@@ -68,9 +68,9 @@ class ChatModule extends Module {
 		} else {
 			$this->isChatMod = 0;
 		}
-		
+
 		// Adding chatmoderator group for other users. CSS classes added to body tag to hide/show option in menu.
-		$userChangeableGroups = $wgUser->changeableGroups();		
+		$userChangeableGroups = $wgUser->changeableGroups();
 		if (in_array('chatmoderator', $userChangeableGroups['add'])) {
 			$this->bodyClasses .= ' can-give-chat-mod ';
 		}
@@ -79,9 +79,9 @@ class ChatModule extends Module {
 
 		//Theme Designer stuff
 		$this->themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wgCityId );
-		
+
 		// Since we don't emit all of the JS headscripts or so, fetch the URL to load the JS Messages packages.
-		$this->jsMessagePackagesUrl = JSMessages::getPackagesUrl( $this->app );
+		$this->jsMessagePackagesUrl = F::build('JSMessages')->getExternalPackagesUrl();
 
 		wfProfileOut( __METHOD__ );
 	}

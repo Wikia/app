@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Use $app->registerExtensionJSMessagePackage() to register messages package to be used in JS.
+ * Use F::build('JSMessages')->registerPackage() to register messages package to be used in JS.
  *
- * Require messages to be accessible via JS using enqueuePackage() method.
+ * Require messages to be accessible via JS using F::build('JSMessages')->enqueuePackage() method.
  */
 
 class JSMessages {
@@ -12,21 +12,49 @@ class JSMessages {
 	const INLINE = 1;
 	const EXTERNAL = 2;
 
+	// application
 	private $app;
 
-	// queue of messages packages to emit as JS script and inline
-	private $queue;
+	// instance of JSMessagesHelper class
+	private $helper;
 
-	// used by singleton
-	static private $instance;
+	// queue of messages packages to emit as JS script and inline
+	private $queue = array();
+
+	// list of registered message packages
+	private $packages = array();
 
 	function __construct() {
 		$this->app = WF::build('App');
+		$this->helper = F::build('JSMessagesHelper');
 
 		$this->queue = array(
 			'inline' => array(),
 			'external' => array(),
 		);
+	}
+
+	/**
+	 * Debug logging
+	 *
+	 * @param string $method - name of the method
+	 * @param string $msg - log message to be added
+	 */
+	private function log($method, $msg) {
+		$this->app->wf->debug(__METHOD__  . ": {$msg}\n");
+	}
+
+	/**
+	 * Registers given messages package
+	 *
+	 * This will NOT load this package, you must also use enqueuePackage() method
+	 *
+	 * @param string $packageName - name of the package
+	 * @param array $messages - list of messages in the package
+	 */
+	public function registerPackage($packageName, $messages) {
+		$this->log(__METHOD__, $packageName);
+		$this->packages[$packageName] = $messages;
 	}
 
 	/**
@@ -42,12 +70,17 @@ class JSMessages {
 		$queueName = ($mode == self::INLINE) ? 'inline' : 'external';
 		$this->queue[$queueName][] = $package;
 
-		wfDebug(__METHOD__ . ": {$package} (queue '{$queueName}')\n");
+		$this->log(__METHOD__ , "{$package} (added to '{$queueName}' queue)");
 		wfProfileOut(__METHOD__);
 	}
 
 	/**
 	 * Return list of messages matching given pattern
+	 *
+	 * Example: 'feature-foo-*'
+	 *
+	 * @param string $pattern - pattern to match against ALL messages in the system
+	 * @return array - key/value list of matching messages
 	 */
 	private function resolveMessagesPattern($pattern) {
 		wfProfileIn(__METHOD__);
@@ -60,6 +93,7 @@ class JSMessages {
 		wfProfileIn(__METHOD__ . '::getAllMessages');
 		$lang = wfGetLangObj(false /* $langCode */);
 		$messages = $lang->getAllMessages();
+
 		// append legacy data
 		if (isset(Language::$dataCache->legacyData[$lang->getCode()]['messages'])) {
 			$messages = Language::$dataCache->legacyData[$lang->getCode()]['messages'] + $messages;
@@ -79,22 +113,22 @@ class JSMessages {
 	}
 
 	/**
-	 * Get messages for given package as key => value structure
+	 * Get messages for a given package as key => value structure
 	 *
 	 * Resolve messages list (entries matching "feature-*" pattern)
+	 *
+	 * @param string $name - name of the messages package
+	 * @return array - key/value array of messages
 	 */
-	public function getPackage($name) {
+	private function getPackage($name) {
 		wfProfileIn(__METHOD__);
 		$ret = null;
 
-		// @see $app->registerExtensionJSMessagePackage
-		$packages = $this->app->getGlobal('wgJSMessagesPackages');
-
-		if (isset($packages[$name])) {
-			wfDebug(__METHOD__. ": {$name}\n");
+		if (isset($this->packages[$name])) {
+			$this->log(__METHOD__, $name);
 
 			// get messages
-			$messages = $packages[$name];
+			$messages = $this->packages[$name];
 			$ret = array();
 
 			foreach($messages as $message) {
@@ -108,7 +142,7 @@ class JSMessages {
 				}
 				// single message
 				else {
-					$msg = wfMsgGetKey($message, true /* $useDB */);
+					$msg = $this->app->wf->MsgGetKey($message, true /* $useDB */);
 
 					// check for not existing message
 					if ($msg == htmlspecialchars("<{$message}>")) {
@@ -126,12 +160,15 @@ class JSMessages {
 
 	/**
 	 * Get messages from given packages
+	 *
+	 * @param array $packages - list packages names
+	 * @return array - key/value array of messages
 	 */
 	public function getPackages($packages) {
 		$messages = array();
 
-		foreach($packages as $package) {
-			$packageMessages = $this->getPackage($package);
+		foreach($packages as $packageName) {
+			$packageMessages = $this->getPackage($packageName);
 
 			if (is_array($packageMessages)) {
 				$messages = array_merge($messages, $packageMessages);
@@ -146,15 +183,16 @@ class JSMessages {
 	 */
 	public function onMakeGlobalVariablesScript($vars) {
 		wfProfileIn(__METHOD__);
-		wfDebug(__METHOD__ . "\n");
 
 		// get items to be rendered as a variable in <head> section
-		$instance = self::getInstance();
-		$packages = $instance->queue['inline'];
+		$packages = $this->queue['inline'];
 
 		if (!empty($packages)) {
-			$vars['wgMessages'] = $instance->getPackages($packages);
+			$vars['wgMessages'] = $this->getPackages($packages);
 		}
+
+		// messages cache buster used by JSMessages (BugId:6324)
+		$vars['wgJSMessagesCB'] = $this->helper->getMessagesCacheBuster();
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -165,59 +203,53 @@ class JSMessages {
 	 */
 	public function onSkinAfterBottomScripts($skin, $text) {
 		wfProfileIn(__METHOD__);
-		wfDebug(__METHOD__ . "\n");
 
-		$url = JSMessages::getPackagesUrl( $this->app );
-		if($url != ""){
+		$url = $this->getExternalPackagesUrl();
+
+		if ($url != "") {
 			// request a script
-			$this->app->getGlobal('wgOut')->addScriptFile($url);
+			$this->app->wg->Out->addScript(Html::linkedScript($url));
 		}
 
 		wfProfileOut(__METHOD__);
 		return true;
 	}
-	
+
 	/**
-	 * Return the URL of the ajax-call to load all of the JS messages packages that are configured to be loaded.
+	 * Return the URL of the ajax-call to load all of the JS messages packages (enqueued as "external")
 	 *
 	 * If there are no packages to load, returns an empty-string.
+	 *
+	 * @return string - URL to "dynamic" JS file with messages
 	 */
-	public static function getPackagesUrl( $app ){
+	public function getExternalPackagesUrl() {
 		wfProfileIn( __METHOD__ );
-	
+
 		// get items to be loaded via JS file
-		$instance = self::getInstance();
-		$packages = $instance->queue['external'];
+		$packages = $this->queue['external'];
+		$url = '';
 
-		$url = "";
 		if (!empty($packages)) {
-			sort($packages);
+			sort(array_unique($packages));
 
-			// additional URL parameters
-			$lang = $app->getGlobal('wgLang')->getCode();
-			$cb = $app->getGlobal('wgMemc')->get(wfMemcKey('wgMWrevId'));
+			// /wikia.php?controller=HelloWorld&method=index&format=html
+			$url = $this->app->wf->AppendQuery($this->app->wg->ScriptPath . '/wikia.php', array(
+				'controller' => 'JSMessages',
+				'method' => 'getMessages',
+				'format' => 'html',
 
-			$url = wfAppendQuery($app->getGLobal('wgScript'), array(
-				'action' => 'ajax',
-				'rs' => 'JSMessagesAjax',
+				// params for controller
 				'packages' => implode(',', $packages),
-				'uselang' => $lang,
-				'cb' => intval($cb),
+
+				// cache separately for different languages
+				'uselang' => $this->app->wg->Lang->getCode(),
+
+				// cache buster
+				'cb' => $this->helper->getMessagesCacheBuster(),
 			));
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $url;
-	}
-
-	/**
-	 * Return instance of JSMessages class
-	 */
-	public static function getInstance() {
-		if (is_null(self::$instance)) {
-			self::$instance = new self();
-		}
-
-		return self::$instance;
 	}
 }

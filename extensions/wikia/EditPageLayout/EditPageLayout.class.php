@@ -75,7 +75,7 @@ class EditPageLayout extends EditPage {
 		$this->mEditNotices = F::build('EditPageNotices');
 
 		// add messages (fetch them using <script> tag)
-		JSMessages::getInstance()->enqueuePackage('EditPageLayout', JSMessages::EXTERNAL);
+		F::build('JSMessages')->enqueuePackage('EditPageLayout', JSMessages::EXTERNAL);
 	}
 
 	public function setHelper( EditPageLayoutHelper $helper ) {

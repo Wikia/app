@@ -62,11 +62,8 @@ $wgExtensionMessagesFiles['Chat'] = $dir.'/Chat.i18n.php';
 // hooks
 $wgHooks[ 'GetRailModuleList' ][] = 'ChatHelper::onGetRailModuleList';
 
-// WikiaApp
-$app = WF::build('App');
-
 // register messages package for JS
-$app->registerExtensionJSMessagePackage('Chat', array(
+F::build('JSMessages')->registerPackage('Chat', array(
 	'chat-*',
 ));
 

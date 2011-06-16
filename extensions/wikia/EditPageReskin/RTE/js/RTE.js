@@ -537,7 +537,7 @@ CKEDITOR.getUrl = function( resource ) {
 
 		// fetch JSON with language definition from backend
 		var url = window.wgServer + wgScript + '?action=ajax&rs=RTEAjax&method=i18n&uselang=' + lang +
-			'&cb=' + window.wgMWrevId + '-' + window.wgStyleVersion;
+			'&cb=' + window.wgJSMessagesCB;
 
 		return url;
 	}

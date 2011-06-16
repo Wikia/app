@@ -29,16 +29,12 @@ $wgExtensionMessagesFiles['ComboAjaxLogin'] = dirname(__FILE__) . '/ComboAjaxLog
 $wgExtensionFunctions[] = 'efSetupComboAjaxLogin';
 
 function efSetupComboAjaxLogin() {
-	JSMessages::getInstance()->enqueuePackage('ComboAjaxLogin', JSMessages::EXTERNAL);		
+	F::build('JSMessages')->enqueuePackage('ComboAjaxLogin', JSMessages::EXTERNAL);
 	return true;
 }
 
-
-// WikiaApp
-$app = WF::build('App');
-
 // register messages package for JS
-$app->registerExtensionJSMessagePackage('ComboAjaxLogin', array(
+F::build('JSMessages')->registerPackage('ComboAjaxLogin', array(
 	'comboajaxlogin-*',
 ));
 
