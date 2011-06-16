@@ -911,9 +911,6 @@ class WikiaStatsAutoHubsConsumerDB {
 				}
 			}
 
-			// fix UTF-8 encoding (BugId:929)
-			$row['page_name'] = utf8_decode($row['page_name']);
-			$row['page_url'] = utf8_decode($row['page_url']);
 
 			$row['real_pagename'] = $row['page_name'];
 			$row['page_name'] = urldecode( str_replace('_' ,' ' , $row['page_name']) );

@@ -55,9 +55,9 @@ class AutoHubsPagesArticle extends Article {
 		$pars['topBlogs'] = $temp['value'];
 
 		if ($isManager) {
-			$temp = $datafeeds->getTopArticles($tag_id, $lang, 15, 3, true, true);
+			$temp = $datafeeds->getTopArticles($tag_id, $lang, 15, 3, true, true, true);
 		} else {
-			$temp = $datafeeds->getTopArticles($tag_id, $lang, 5, 1);
+			$temp = $datafeeds->getTopArticles($tag_id, $lang, 5, 1, false, false, true);
 		}
 
 		$pars['hotSpots'] = $temp['value'];
