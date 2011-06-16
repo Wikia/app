@@ -497,7 +497,7 @@ class Masthead {
 	/**
 	 * removeFile -- remove file from directory
 	 */
-	public function removeFile() {
+	public function removeFile( $addLog = true ) {
 		wfProfileIn( __METHOD__ );
 		global $wgLogTypes, $wgUser;
 
@@ -509,14 +509,17 @@ class Masthead {
 				wfDebug( __METHOD__.": cannot remove avatar's files {$sImageFull}\n" );
 				$result = false;
 			} else {
-				/* add log */
-				$this->__setLogType();
-				$sUserText =  $this->mUser->getName();
 				$this->mUser->setOption( AVATAR_USER_OPTION_NAME, "" );
 				$this->mUser->saveSettings();
-				$mUserPage = Title::newFromText( $sUserText, NS_USER );
-				$oLogPage = new LogPage( AVATAR_LOG_NAME );
-				$oLogPage->addEntry( 'avatar_rem', $mUserPage, '', array($sUserText));
+				
+				/* add log */
+				if( !empty($addLog) ) {
+					$this->__setLogType();
+					$sUserText =  $this->mUser->getName();
+					$mUserPage = Title::newFromText( $sUserText, NS_USER );
+					$oLogPage = new LogPage( AVATAR_LOG_NAME );
+					$oLogPage->addEntry( 'avatar_rem', $mUserPage, '', array($sUserText));
+				}
 				/* */
 				$result = true;
 
@@ -1388,7 +1391,7 @@ class UserAvatarRemovePage extends SpecialPage {
 				$avUser = User::newFromName($wgRequest->getVal('av_user'));
 				if ($avUser->getID() !== 0) {
 					$this->mAvatar = Masthead::newFromUser($avUser);
-					if (!$this->mAvatar->removeFile($avUser->getID())) {
+					if (!$this->mAvatar->removeFile( true )) {
 						$this->iStatus = 'WMSG_REMOVE_ERROR';
 					}
 					$this->mUser = $avUser;
