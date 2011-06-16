@@ -1,5 +1,5 @@
 $.extend({
-	/*
+	/**
 	 * JS version of wfMsg()
 	 *
 	 * Examples:
@@ -34,5 +34,35 @@ $.extend({
 		}
 
 		return ret !== false ? ret : ('<' + key + '>');
+	},
+
+	/**
+	 * Load messages from given package(s)
+	 *
+	 * @param string/array packages - package name or list of packages
+	 * @param function callback - function to call when request is completed
+	 */
+	getMessages: function(packages, callback) {
+		// list of packages was given
+		if (typeof packages != 'string') {
+			packages = Array.prototype.join.call(packages, ',');
+		}
+
+		$().log('loading ' + packages + ' package(s)', 'JSMessages');
+
+		$.get(wgScriptPath + '/wikia.php', {
+			controller: 'JSMessages',
+			method: 'getMessages',
+			format: 'html',
+			packages: packages,
+			uselang: window.wgUserLanguage,
+			cb: window.wgJSMessagesCB
+		}, function() {
+			$().log(packages + ' package(s) loaded', 'JSMessages');
+
+			if (typeof callback == 'function') {
+				callback();
+			}
+		}, 'script');
 	}
 });
