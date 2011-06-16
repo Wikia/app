@@ -2,6 +2,7 @@
 	background-color: $color-epl-notices-background;
 	border: 1px solid $color-epl-notices-border;
 	border-top: none;
+	color: $color-epl-notices-color;
 	cursor: pointer;
 	display: block;
 	left: 50px;
@@ -10,7 +11,7 @@
 	right: 50px;
 	top: -1px;
 	z-index: 110;
-	
+
 	display: none;
 
 	li {
