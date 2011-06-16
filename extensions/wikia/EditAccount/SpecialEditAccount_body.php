@@ -62,7 +62,7 @@ class EditAccount extends SpecialPage {
 
 		$action = $wgRequest->getVal( 'wpAction' );
 		$userName = $wgRequest->getVal( 'wpUserName' );
-		$userName = str_replace("_", " ", $userName);
+		$userName = str_replace("_", " ", trim($userName));
 		$userName = ucfirst( $userName ); # user names begin with a capital letter
 
 		// check if user name is an existing user
@@ -246,12 +246,15 @@ class EditAccount extends SpecialPage {
 		# NOTE: requires FlagClosedAccounts.php to be included separately
 		if ( defined( 'CLOSED_ACCOUNT_FLAG' ) ) {
 			$this->mUser->setRealName( CLOSED_ACCOUNT_FLAG );
+		} else {
+			# magic value not found, so lets at least blank it
+			$this->mUser->setRealName( '' );
 		}
 
 		// remove users avatar
-		if ( class_exists( WikiAvatar ) ) {
-			$avatar = new WikiaAvatar($this->mUser->getID());
-			if ( !$avatar->removeAllAvatarFile( $this->mUser->getID(), false ) ) {
+		if ( class_exists( Masthead ) ) {
+			$avatar = Masthead::newFromUser( $this->mUser );
+			if ( !$avatar->removeFile( false ) ) {
 				$this->mStatusMsg = wfMsg( 'editaccount-error-close', $this->mUser->mName );
 				// Quit early on error, no use going forward
 				return false;
