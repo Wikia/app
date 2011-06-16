@@ -220,13 +220,13 @@ body .cke_dialog
 /* button */
 .cke_dialog .wikia-button
 {
-	border:1px solid #BEDDBE  !important;
 	color:#FFFFFF  !important;
 	cursor: pointer !important;
 	font-family:"Lucida Grande",sans-serif  !important;
 	font-size:12px  !important;
 	height:17px  !important;
 	line-height: 17px !important;
+	float: right;
 }
 
 .cke_dialog .wikia-button .cke_dialog_ui_button {
@@ -317,7 +317,6 @@ body .cke_dialog
 .cke_skin_wikia .cke_dialog_footer_buttons
 {
 	display: inline-table;
-	width: auto;
 	position: relative;
 }
 
@@ -361,9 +360,6 @@ body .cke_dialog
 
 .cke_skin_wikia .cke_dialog_close_button
 {
-	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100120);
-	background-repeat: no-repeat;
-	background-position: -304px 0;
 	position: absolute;
 	cursor: pointer;
 	text-align: center;

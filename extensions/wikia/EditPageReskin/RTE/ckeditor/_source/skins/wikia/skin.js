@@ -218,7 +218,7 @@ if ( CKEDITOR.dialog )
 				return;
 
 			contents.setStyles(
-				( CKEDITOR.env.ie || ( CKEDITOR.env.gecko && CKEDITOR.env.version < 10900 ) ) ?		// IE && FF2
+				( CKEDITOR.env.ie || CKEDITOR.env.opera /*wikia change - bugid:6902*/ || ( CKEDITOR.env.gecko && CKEDITOR.env.version < 10900 ) ) ?		// IE && FF2 && OPERA
 					{
 						width : width + 'px',
 						height : height + 'px'

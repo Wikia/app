@@ -1507,7 +1507,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 
 	var defaultDialogDefinition =
 	{
-		resizable : CKEDITOR.DIALOG_RESIZE_BOTH,
+		resizable : CKEDITOR.DIALOG_RESIZE_NONE, /*wikia change - bugid:6902*/
 		minWidth : 600,
 		minHeight : 400,
 		//buttons : [ CKEDITOR.dialog.okButton, CKEDITOR.dialog.cancelButton ]
