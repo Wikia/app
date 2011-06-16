@@ -117,7 +117,6 @@ packages :
 					'_source/core/dom/range.js',
 					'_source/core/dom/rangelist.js',
 					'_source/core/_bootstrap.js',
-					'_source/skins/kama/skin.js',
 
 					// CK core plugins
 					//'_source/plugins/about/plugin.js',
@@ -192,7 +191,6 @@ packages :
 					'_source/plugins/dialogui/plugin.js',
 					'_source/plugins/panel/plugin.js',
 					'_source/plugins/listblock/plugin.js',
-					'_source/themes/default/theme.js'
 
 					// Wikia plugins and dialogs
 					'../js/RTE.js',
