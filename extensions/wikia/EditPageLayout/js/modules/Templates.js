@@ -94,6 +94,7 @@
 		modeChanged: function() {
 			this.el.filter('.cke_text_links')[this.editor.mode == 'wysiwyg' ? 'show' : 'hide']();
 			this.el.find('.cke_text_links')[this.editor.mode == 'wysiwyg' ? 'show' : 'hide']();
+			this.el.find('.tmpl_other')[this.editor.mode == 'wysiwyg' ? 'show' : 'hide']();
 		},
 
 		afterRender: function() {
