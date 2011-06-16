@@ -13,8 +13,8 @@ class ControlCenterLogic {
 	 */
 	public static function displayControlCenter($title) {
 		
-		$pageList = array ("UserRights", "ListUsers", "ControlCenter");
-		//print_pre($title->getDBKey());
+		$pageList = array ( "ControlCenter", "UserRights", "ListUsers", "RecentChanges", "WikiaLabs", "Categories", "MultipleUpload", "SponsorshipDashboard");
+//		print_pre($title->getDBKey());
 		if ($title && $title->isSpecialPage() && in_array($title->getDBKey(), $pageList)) {
 			return true;
 		}
