@@ -82,9 +82,6 @@ public class ReturnToTest extends BaseTest {
 		// go to Special:SpecialPages
 		session().open("index.php?title=Special:SpecialPages");
 
-		// check link in monaco toolbar ???
-		//assertTrue(session().isElementPresent("//a[@id='dynamic-links-add-image-link' and contains(@href, 'title=Special:SignUp&returnto=Special:Upload')]"));
-
 		String rootElement = "div[@id='bodyContent']";
 		if(isOasis()){
 			rootElement = "section[@id='WikiaPage']";
