@@ -616,7 +616,6 @@ div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
 	/* CK modal tabs */
 	.cke_dialog .tabs {
 		background: transparent;
-		border-bottom: none;
 		overflow: hidden;
 		.cke_dialog_tab {
 			@include border-radius-nw(5px);
