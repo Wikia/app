@@ -789,14 +789,12 @@
 					el = el.parent(); // workaround stupid HTML markup
 					el.removeClass('cke_on cke_off cke_disabled');
 					if (this.editor.ck.mode == 'wysiwyg') {
-						this.editor.log('command.state ' + commandName + ': ' + state);
 						el.addClass('cke_' + (
 							state == CKEDITOR.TRISTATE_ON ? 'on' :
 							state == CKEDITOR.TRISTATE_DISABLED ? 'disabled' :
 							'off')
 						);
 					} else {
-						this.editor.log('command.state ' + commandName + ': off');
 						el.addClass('cke_off');
 					}
 				}
