@@ -33,6 +33,16 @@
 
 			// attach events
 			$('#wpPreview').bind('click', this.proxy(this.onPreview));
+			// Wikia change (bugid:5667) - begin
+			if ($.browser.msie) {
+				$(window).bind('keydown', function(e) {
+					if (e.altKey && String.fromCharCode(e.keyCode) == $('#wpPreview').attr('accesskey').toUpperCase()) {
+						$('#wpPreview').click();
+					}
+				});
+			}
+			// Wikia change (bugid:5667) - end
+
 			$('#wpDiff').bind('click', this.proxy(this.onDiff));
 
 			// remove placeholder text when user submits the form without providing the summary
