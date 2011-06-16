@@ -41,7 +41,7 @@ class JSMessages {
 	 * @param string $msg - log message to be added
 	 */
 	private function log($method, $msg) {
-		$this->app->wf->debug(__METHOD__  . ": {$msg}\n");
+		$this->app->wf->debug($method  . ": {$msg}\n");
 	}
 
 	/**
@@ -64,14 +64,14 @@ class JSMessages {
 	 * @param int $mode - how to emit messages (inline / external)
 	 */
 	public function enqueuePackage($package, $mode) {
-		wfProfileIn(__METHOD__);
+		$this->app->wf->ProfileIn(__METHOD__);
 
 		// add to proper queue
 		$queueName = ($mode == self::INLINE) ? 'inline' : 'external';
 		$this->queue[$queueName][] = $package;
 
 		$this->log(__METHOD__ , "{$package} (added to '{$queueName}' queue)");
-		wfProfileOut(__METHOD__);
+		$this->app->wf->ProfileOut(__METHOD__);
 	}
 
 	/**
@@ -83,22 +83,24 @@ class JSMessages {
 	 * @return array - key/value list of matching messages
 	 */
 	private function resolveMessagesPattern($pattern) {
-		wfProfileIn(__METHOD__);
-		wfDebug(__METHOD__ . ": {$pattern}\n");
+		$this->app->wf->ProfileIn(__METHOD__);
+		$this->log(__METHOD__, $pattern);
 
 		$pattern = substr($pattern, 0, -1);
 		$patternLen = strlen($pattern);
 
 		// get list of all messages loaded by MW
-		wfProfileIn(__METHOD__ . '::getAllMessages');
-		$lang = wfGetLangObj(false /* $langCode */);
+		$this->app->wf->ProfileIn(__METHOD__ . '::getAllMessages');
+
+		$lang = $this->app->wf->GetLangObj(false /* $langCode */);
 		$messages = $lang->getAllMessages();
 
 		// append legacy data
 		if (isset(Language::$dataCache->legacyData[$lang->getCode()]['messages'])) {
 			$messages = Language::$dataCache->legacyData[$lang->getCode()]['messages'] + $messages;
 		}
-		wfProfileOut(__METHOD__ . '::getAllMessages');
+
+		$this->app->wf->ProfileOut(__METHOD__ . '::getAllMessages');
 
 		// apply pattern
 		$ret = array();
@@ -108,7 +110,7 @@ class JSMessages {
 			}
 		}
 
-		wfProfileOut(__METHOD__);
+		$this->app->wf->ProfileOut(__METHOD__);
 		return $ret;
 	}
 
@@ -121,7 +123,7 @@ class JSMessages {
 	 * @return array - key/value array of messages
 	 */
 	private function getPackage($name) {
-		wfProfileIn(__METHOD__);
+		$this->app->wf->ProfileIn(__METHOD__);
 		$ret = null;
 
 		if (isset($this->packages[$name])) {
@@ -154,7 +156,7 @@ class JSMessages {
 			}
 		}
 
-		wfProfileOut(__METHOD__);
+		$this->app->wf->ProfileOut(__METHOD__);
 		return $ret;
 	}
 
@@ -182,7 +184,7 @@ class JSMessages {
 	 * Emit messages from the queue as JS object in <head> section of the page
 	 */
 	public function onMakeGlobalVariablesScript($vars) {
-		wfProfileIn(__METHOD__);
+		$this->app->wf->ProfileIn(__METHOD__);
 
 		// get items to be rendered as a variable in <head> section
 		$packages = $this->queue['inline'];
@@ -194,7 +196,7 @@ class JSMessages {
 		// messages cache buster used by JSMessages (BugId:6324)
 		$vars['wgJSMessagesCB'] = $this->helper->getMessagesCacheBuster();
 
-		wfProfileOut(__METHOD__);
+		$this->app->wf->ProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -202,7 +204,7 @@ class JSMessages {
 	 * Emit messages from the queue as external JS requested via <script> tag at the bottom of the page
 	 */
 	public function onSkinAfterBottomScripts($skin, $text) {
-		wfProfileIn(__METHOD__);
+		$this->app->wf->ProfileIn(__METHOD__);
 
 		$url = $this->getExternalPackagesUrl();
 
@@ -211,7 +213,7 @@ class JSMessages {
 			$this->app->wg->Out->addScript(Html::linkedScript($url));
 		}
 
-		wfProfileOut(__METHOD__);
+		$this->app->wf->ProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -223,7 +225,7 @@ class JSMessages {
 	 * @return string - URL to "dynamic" JS file with messages
 	 */
 	public function getExternalPackagesUrl() {
-		wfProfileIn( __METHOD__ );
+		$this->app->wf->ProfileIn( __METHOD__ );
 
 		// get items to be loaded via JS file
 		$packages = $this->queue['external'];
@@ -249,7 +251,7 @@ class JSMessages {
 			));
 		}
 
-		wfProfileOut( __METHOD__ );
+		$this->app->wf->ProfileOut( __METHOD__ );
 		return $url;
 	}
 }
