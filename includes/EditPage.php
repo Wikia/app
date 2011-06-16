@@ -384,7 +384,7 @@ class EditPage {
 		if ( $this->mTitle->isTalkPage() ) {
 			// Wikia change - start
 			// BugId:7092
-			$wgOut->wrapWikiMsg('<div id="talkpagetext">\n$1</div>',  'talkpagetext');
+			$wgOut->wrapWikiMsg('<div id="talkpagetext">$1</div>',  'talkpagetext');
 			// Wikia change - end
 		}
 
