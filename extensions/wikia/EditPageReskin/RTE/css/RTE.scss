@@ -577,7 +577,6 @@ div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
 	.cke_dialog_body {
 		background: transparent;
 		border: none;
-		border-bottom: 1px solid $color-page-border;
 		margin-bottom: 15px;
 		padding: 0;
 	}
@@ -593,19 +592,13 @@ div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
 		margin-right: 50px;
 	}
 	.cke_dialog_contents {
-		border: 1px solid $color-page-border;
-		border-bottom: none;
 		padding: 10px;
 	}
 	.cke_dialog_footer {
 		text-align: left;
-		border: 1px solid $color-page-border;
 		border-bottom: none;
 		border-top: none;
 		padding-left: 10px;
-	}
-	.cke_dialog_footer_buttons {
-		width: auto !important;
 	}
 	.cke_dialog_close_button {
 		@include border-radius(3px);
