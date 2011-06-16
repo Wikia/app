@@ -133,6 +133,6 @@
 		incorrectLabel: '<?= wfMsg('wikiaquiz-game-incorrect-label') ?>'
 	};
 </script>
-<audio id="SoundAnswerCorrect" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/correct.mp3" preload="auto"></audio>
-<audio id="SoundAnswerWrong" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/wrong.mp3" preload="auto"></audio>
-<audio id="SoundApplause" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/applause.mp3" preload="auto"></audio>
+<audio id="SoundAnswerCorrect" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/correct.ogg" preload="auto"></audio>
+<audio id="SoundAnswerWrong" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/wrong.ogg" preload="auto"></audio>
+<audio id="SoundApplause" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/applause.ogg" preload="auto"></audio>
