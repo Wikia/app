@@ -42,12 +42,13 @@ class SpoofUser {
 	 * @return array empty if no conflict, or array containing conflicting usernames
 	 */
 	public function getConflicts() {
-		$dbr = wfGetDB( DB_SLAVE );
+		/* WIKIA CHANGE BEGINS */
+		$dbr = wfGetDB( DB_SLAVE, array(), 'specials' );
 
 		// Join against the user table to ensure that we skip stray
 		// entries left after an account is renamed or otherwise munged.
 		$spoofedUsers = $dbr->select(
-			array( 'spoofuser', 'user' ),
+			array( 'spoofuser', 'events_local_users' ),
 			array( 'user_name' ),
 			array(
 				'su_normalized' => $this->mNormalized,
@@ -57,6 +58,7 @@ class SpoofUser {
 			array(
 				'LIMIT' => 5
 			) );
+		/* WIKIA CHANGE ENDS */
 
 		$spoofs = array();
 		while( $row = $dbr->fetchObject( $spoofedUsers ) ) {
@@ -92,7 +94,9 @@ class SpoofUser {
 			foreach( $items as $item ) {
 				$fields[] = $item->insertFields();
 			}
-			$dbw = wfGetDB( DB_MASTER );
+			/* WIKIA CHANGE BEGINS */
+			$dbw = wfGetDB( DB_MASTER, array(), 'specials' );
+			/* WIKIA CHANGE ENDS */
 			return $dbw->replace(
 				'spoofuser',
 				array( 'su_name' ),
