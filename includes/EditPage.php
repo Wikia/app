@@ -382,7 +382,10 @@ class EditPage {
 			$this->showIntro();
 
 		if ( $this->mTitle->isTalkPage() ) {
-			$wgOut->addWikiMsg( 'talkpagetext' );
+			// Wikia change - start
+			// BugId:7092
+			$wgOut->wrapWikiMsg('<div id="talkpagetext">\n$1</div>',  'talkpagetext');
+			// Wikia change - end
 		}
 
 		# Optional notices on a per-namespace and per-page basis

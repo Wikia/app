@@ -58,32 +58,13 @@
 							<!-- preloads -->
 							<?php
 								if (!empty($editPagePreloads)) {
-
-									// new page preload
-									if (isset($editPagePreloads['intro'])) {
+									
+									foreach($editPagePreloads as $preloadId => $preload) {
 							?>
-							<div id="EditPageIntro" class="editpage-intro">
+							<div id="<?= $preloadId ?>" class="editpage-intro">
 								<div class="editpage-intro-wrapper">
-									<div class="<?= $editPagePreloads['class'] ?>">
-										<?= $editPagePreloads['intro'] ?>
-									</div>
-								</div>
-								<a class="expand">
-									<label><?= wfMsg('editpagelayout-more') ?></label>
-									<span>+</span>
-								</a>
-							</div>
-							<div class="gap">&nbsp;</div>
-							<?php
-									}
-
-									// custom edit page preload
-									if (isset($editPagePreloads['custom-intro'])) {
-							?>
-							<div id="EditPageCustomIntro" class="editpage-intro">
-								<div class="editpage-intro-wrapper">
-									<div class="mw-custompreload">
-										<?= $editPagePreloads['custom-intro'] ?>
+									<div class="<?= $preload['class'] ?>">
+										<?= $preload['content'] ?>
 									</div>
 								</div>
 								<a class="expand">

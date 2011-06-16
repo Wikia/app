@@ -525,11 +525,13 @@ class EditPageLayout extends EditPage {
 	/**
 	 * Show all applicable editing introductions
 	 *
+	 * - new article intro
+	 * - custom intro (editintro=Foo in URL)
+	 * - talk page intro
+	 *
 	 * Handle preloads (BugId:5652)
 	 */
 	protected function showIntro() {
-		$this->showCustomIntro();
-
 		// Code based on EditPage.php
 		if (!$this->mTitle->exists() ) {
 			if ( $this->app->wg->User->isLoggedIn() ) {
@@ -558,8 +560,21 @@ class EditPageLayout extends EditPage {
 			}
 			$msg = wfMsgExt($msgName, array('parse'));
 
-			$this->mEditPagePreloads['intro'] = $msg;
-			$this->mEditPagePreloads['class'] = $class;
+			$this->mEditPagePreloads['EditPageIntro'] = array(
+				'content' => $msg,
+				'class' => $class,
+			);
+		}
+
+		// custom intro
+		$this->showCustomIntro();
+
+		// Intro text for talk pages (BugId:7092)
+		if ($this->mTitle->isTalkPage()) {
+			$this->mEditPagePreloads['EditPageTalkPageIntro'] = array(
+				'content' => $this->app->wf->msgExt('talkpagetext', array('parse')),
+				'class' => 'mw-talkpagetext',
+			);
 		}
 	}
 
@@ -580,7 +595,12 @@ class EditPageLayout extends EditPage {
 
 				// store it
 				$text = $wgOut->getHTML();
-				$this->mEditPagePreloads['custom-intro'] = trim($text);
+
+				$this->mEditPagePreloads['EditPageCustomIntro'] = array(
+					'content' => trim($text),
+					'class' => 'mw-custompreload',
+				);
+
 				return true;
 			} else {
 				return false;
