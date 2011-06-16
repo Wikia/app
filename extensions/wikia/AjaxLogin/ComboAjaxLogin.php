@@ -29,7 +29,12 @@ $wgExtensionMessagesFiles['ComboAjaxLogin'] = dirname(__FILE__) . '/ComboAjaxLog
 $wgExtensionFunctions[] = 'efSetupComboAjaxLogin';
 
 function efSetupComboAjaxLogin() {
-	F::build('JSMessages')->enqueuePackage('ComboAjaxLogin', JSMessages::EXTERNAL);
+	wfProfileIn( __METHOD__ );
+	
+	// Instead of loading this on ever page, we load it on-demand in AjaxLoginBindings.js
+	//F::build('JSMessages')->enqueuePackage('ComboAjaxLogin', JSMessages::EXTERNAL);
+
+	wfProfileOut( __METHOD__ );
 	return true;
 }
 
