@@ -39,7 +39,7 @@ class RenameUserProcess {
 	 */
 	static private $mStatsDefaults = array(
 		//user table is processed separately
-		array( 'table' => 'tags_top_users', 'userid_column' => 'tu_user_id', 'username_column' => 'tu_username' ),
+		array( 'table' => '`noreptemp`.`tags_top_users`', 'userid_column' => 'tu_user_id', 'username_column' => 'tu_username' ),
 	);
 
 	/**
