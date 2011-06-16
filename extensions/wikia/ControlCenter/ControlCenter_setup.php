@@ -7,12 +7,14 @@
  */
 
 $dir = dirname(__FILE__) . '/';
-
+$app = F::app();
 //classes
-F::build('App')->registerClass('ControlCenterSpecialPageController', $dir . 'ControlCenterSpecialPageController.class.php');
+$app->registerClass('ControlCenterSpecialPageController', $dir . 'ControlCenterSpecialPageController.class.php');
+$app->registerClass('ControlCenterModule', $dir . 'ControlCenterModule.class.php');
+$app->registerClass('ControlCenterLogic', $dir . 'ControlCenterLogic.class.php');
 
 // i18n mapping
 $wgExtensionMessagesFiles['ControlCenter'] = $dir . 'ControlCenter.i18n.php';
 
 // special pages
-F::build('App')->registerSpecialPage('ControlCenter', 'ControlCenterSpecialPageController');
+$app->registerSpecialPage('ControlCenter', 'ControlCenterSpecialPageController');

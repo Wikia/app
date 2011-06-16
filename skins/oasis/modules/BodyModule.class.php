@@ -29,7 +29,7 @@ class BodyModule extends Module {
 	var $railModuleList;
 	var $displayComments;
 	var $noexternals;
-
+	var $displayControlCenter;
 	var $isMainPage;
 
 	private static $onEditPage;
@@ -335,7 +335,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgEnableEditPageReskinExt, $wgMaximizeArticleAreaArticleIds;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgEnableEditPageReskinExt, $wgMaximizeArticleAreaArticleIds, $wgEnableControlCenterExt;
 
 		// set up global vars
 		if (is_array($wgMaximizeArticleAreaArticleIds)
@@ -434,6 +434,16 @@ class BodyModule extends Module {
 		// load CSS for Special:Preferences
 		if (!empty($wgTitle) && $wgTitle->isSpecial('Preferences')) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialPreferences.scss'));
+		}
+		
+		// Display Control Center Header on certain special pages
+		if (!empty($wgEnableControlCenterExt) && ControlCenterLogic::displayControlCenter($wgTitle)) {
+			$this->headerModuleName = null;
+			$this->wgSuppressAds = true;
+			$this->wgSuppressWikiHeader = true;
+			$this->displayControlCenter = true;
+		} else {
+			$this->displayControlCenter = false;
 		}
 	}
 }

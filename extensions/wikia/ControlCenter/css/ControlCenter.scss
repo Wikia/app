@@ -9,7 +9,7 @@ $control-center-content-width: 690px;
 $control-center-header-height: 48px;
 $base-z: 5;
 
-.ControlCenter {
+.ControlCenterHeader {
 	position: relative;
 	>header {
 		@include linear-gradient(false, top, #cde2f0, 20%, #bbd6e8, 70%, #9db9cd, 100%);
@@ -29,6 +29,47 @@ $base-z: 5;
 			right: 10px;
 		}
 	}
+	.tabs {
+		$nav-height: 18px;
+		border: 0;
+		padding: 10px 0 0 0;
+		position: absolute;
+		right: $width-outside - $control-center-content-width - 1px;
+		top: $control-center-header-height - $nav-height - 10px;
+		z-index: $base-z + 1;
+		ul {
+			@include clearfix;
+			li {
+				@include border-radius-ne(5px);
+				@include border-radius-nw(5px);
+				@include box-shadow(0, 0, 10px, #9db9cd, false, 0);
+				background: #dfdfdf;
+				float: left;
+				font-size: 12px;
+				height: $nav-height;
+				line-height: 16px;
+				margin-left: 4px;
+				padding: 2px 25px 0;
+				position: relative;
+				&.active {
+					background: white;
+					top: 0px;
+				}
+				&:hover {
+					cursor: pointer;
+				}
+			}
+		}
+	}
+	>aside {
+		float: right;
+		margin: 20px 15px 0 0;
+		width: 275px;
+	}
+}
+
+.ControlCenter {
+	position: relative;
 	.control-center-content {
 		background-color: #fff;
 		border-bottom: 1px solid #eee;
@@ -91,43 +132,6 @@ $base-z: 5;
 				}
 			}
 		}
-	}
-	.tabs {
-		$nav-height: 18px;
-		border: 0;
-		padding: 10px 0 0 0;
-		position: absolute;
-		right: $width-outside - $control-center-content-width - 1px;
-		top: $control-center-header-height - $nav-height - 10px;
-		z-index: $base-z + 1;
-		ul {
-			@include clearfix;
-			li {
-				@include border-radius-ne(5px);
-				@include border-radius-nw(5px);
-				@include box-shadow(0, 0, 10px, #9db9cd, false, 0);
-				background: #dfdfdf;
-				float: left;
-				font-size: 12px;
-				height: $nav-height;
-				line-height: 16px;
-				margin-left: 4px;
-				padding: 2px 25px 0;
-				position: relative;
-				&.active {
-					background: white;
-					top: 0px;
-				}
-				&:hover {
-					cursor: pointer;
-				}
-			}
-		}
-	}
-	>aside {
-		float: right;
-		margin: 20px 15px 0 0;
-		width: 275px;
 	}
 }
 
