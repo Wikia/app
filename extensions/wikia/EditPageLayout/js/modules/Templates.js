@@ -18,7 +18,7 @@
 				var templateName = list[i],
 					buttonId = 'Template_Popular'+i,
 					self = this,
-					label = this.msg('templates-add-tooltip', [templateName]);
+					label = this.msg('templates-add-tooltip', templateName);
 
 				this.editor.ui.addElement(buttonId,{
 					type: 'button',

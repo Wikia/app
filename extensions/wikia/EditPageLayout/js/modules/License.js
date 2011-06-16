@@ -9,7 +9,7 @@
 		icons: '<img src="' + wgBlankImgUrl + '" class="cke_license_icon icon1">' +
 				'<img src="' + wgBlankImgUrl + '" class="cke_license_icon icon2">',
 		getData: function() {
-			var text = $.msg('wikia-editor-modules-license-text', [this.icons, wgEditPageLicensingUrl]);
+			var text = $.msg('wikia-editor-modules-license-text', this.icons, wgEditPageLicensingUrl);
 			text = text.replace('<a href', '<a target="_blank" href');
 
 			return {text: text};

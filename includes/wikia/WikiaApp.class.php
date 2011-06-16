@@ -208,17 +208,6 @@ class WikiaApp {
 	}
 
 	/**
-	 * register messages package to be used in JS
-	 * @param string $name
-	 * @param string $filePath
-	 * @author macbre
-	 * @see /extensions/wikia/JSMessages
-	 */
-	public function registerExtensionJSMessagePackage($name, $messages) {
-		$this->globalRegistry->set('wgJSMessagesPackages', $messages, $name);
-	}
-
-	/**
 	 * register extension alias file
 	 * @param string $name
 	 * @param string $filePath

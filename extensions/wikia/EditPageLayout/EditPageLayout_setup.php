@@ -59,7 +59,7 @@ $app->registerHook('GetPreferences', 'EditPageLayoutHelper', 'onGetPreferences')
 $app->registerExtensionMessageFile('EditPageLayout', $dir . '/EditPageLayout.i18n.php');
 
 // register messages package for JS
-$app->registerExtensionJSMessagePackage('EditPageLayout', array(
+F::build('JSMessages')->registerPackage('EditPageLayout', array(
 	'ok',
 	'back',
 	'preview',

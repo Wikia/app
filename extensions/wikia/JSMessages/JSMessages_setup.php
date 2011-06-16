@@ -2,13 +2,16 @@
 
 /**
  * Adds support for MW messages in JS code
+ * 
+ * Provides a way to register and use packages of messages in JavaScript via $.msg() function
  *
+ * @see https://internal.wikia-inc.com/wiki/JSMessages
  * @author macbre
  */
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'JSMessages',
-	'version' => '1.0',
+	'version' => '1.1',
 	'author' => 'Maciej Brencz',
 	'description' => 'Adds support for MW messages in JS code',
 );
@@ -20,30 +23,14 @@ $app = WF::build('App');
 
 // classes
 $app->registerClass('JSMessages', $dir . '/JSMessages.class.php');
+$app->registerClass('JSMessagesHelper', $dir . '/JSMessagesHelper.class.php');
+$app->registerClass('JSMessagesController', $dir . '/JSMessagesController.class.php');
 
 // hooks
 $app->registerHook('MakeGlobalVariablesScript', 'JSMessages', 'onMakeGlobalVariablesScript');
 $app->registerHook('SkinAfterBottomScripts', 'JSMessages', 'onSkinAfterBottomScripts');
+$app->registerHook('MessageCacheReplace', 'JSMessagesHelper', 'onMessageCacheReplace');
 
-// dispatch AJAX requests
-$wgAjaxExportList[] = 'JSMessagesAjax';
-function JSMessagesAjax() {
-	global $wgRequest;
-	wfProfileIn(__METHOD__);
-
-	// get requested packages
-	$packages = explode(',', $wgRequest->getVal('packages', ''));
-
-	// get messages from given packages
-	$msgs = JSMessages::getInstance()->getPackages($packages);
-
-	// output them as JS object
-	$js = 'window.wgMessages = $.extend(window.wgMessages, ' . json_encode($msgs) . ');';
-
-	$response = new AjaxResponse($js);
-	$response->setContentType('application/javascript; charset=utf-8');
-	$response->setCacheDuration(86400 * 7);
-
-	wfProfileOut(__METHOD__);
-	return $response;
-}
+// register instances
+F::setInstance('JSMessages', new JSMessages());
+F::setInstance('JSMessagesHelper', new JSMessagesHelper());
