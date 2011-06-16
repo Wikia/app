@@ -72,35 +72,6 @@ class WikiaQuizModule extends Module {
 	public function executeSampleQuiz2() {
 		$this->executeGetQuiz();
 	}
-	
-	/**
-	 * Current version.
-	 * @author Hyun Lim
-	 */
-	public function executeSampleQuiz3() {
-		global $wgUser, $wgOut, $wgRequest, $wgSiteName;
-		$this->executeGetQuiz();
-		
-		$wgOut->setPageTitle($this->data['name']);
-		
-		$themeSettings = new ThemeSettings();
-		$settings = $themeSettings->getSettings();
-		$this->wordmarkType = $settings['wordmark-type'];
-		$this->wordmarkText = $settings['wordmark-text'];
-		if ($this->wordmarkType == 'graphic') {
-			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
-		}
-		
-		// Facebook opengraph meta data
-		$wgOut->addMeta('property:og:title', $this->data['titlescreentext']);
-		$wgOut->addMeta('property:og:type', 'game');
-		$wgOut->addMeta('property:og:url', $wgRequest->getFullRequestURL());
-		$wgOut->addMeta('property:og:site_name', $wgSiteName);
-		$wgOut->addMeta('property:og:description', wfMsg('wikiaquiz-facebook-creative', $this->data['titlescreentext']));
-		$wgOut->addMeta('property:og:image', $this->wordmarkUrl);
-		
-		$this->username = $wgUser->getName();
-	}
 
 	public function executeGetQuizElement() {
 		$wgRequest = F::app()->getGlobal('wgRequest');

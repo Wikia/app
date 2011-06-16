@@ -44,14 +44,12 @@ $wgAutoloadClasses['WikiaQuizIndexArticle'] = "{$dir}/WikiaQuizIndexArticle.clas
 $wgAutoloadClasses['WikiaQuizPlayArticle'] = "{$dir}/WikiaQuizPlayArticle.class.php";
 $wgAutoloadClasses['SpecialCreateWikiaQuiz'] = "{$dir}/SpecialCreateWikiaQuiz.class.php";
 $wgAutoloadClasses['SpecialCreateWikiaQuizArticle'] = "{$dir}/SpecialCreateWikiaQuizArticle.class.php";
-$wgAutoloadClasses['SpecialWikiaQuiz'] = "{$dir}/SpecialWikiaQuiz.class.php";
 // modules
 $wgAutoloadClasses['WikiaQuizModule'] = "{$dir}/WikiaQuizModule.class.php";
 
 // Special Page
 $wgSpecialPages['CreateQuiz'] = 'SpecialCreateWikiaQuiz';
 $wgSpecialPages['CreateQuizArticle'] = 'SpecialCreateWikiaQuizArticle';
-$wgSpecialPages['WikiaQuiz'] = 'SpecialWikiaQuiz';
 
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'WikiaQuizHooks::onArticleFromTitle';
