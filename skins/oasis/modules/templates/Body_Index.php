@@ -49,6 +49,12 @@
 	?>
 	<article id="WikiaMainContent" class="WikiaMainContent">
 		<?php
+		
+			// Needs to be above page header so it can suppress page header
+			if ($displayControlCenter) {
+				echo wfRenderModule('ControlCenter', 'Chrome');
+			}					
+			
 			// render UserPagesHeader or PageHeader or nothing...
 			if (empty($wgSuppressPageHeader) && $headerModuleName) {
 				echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
