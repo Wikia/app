@@ -48,14 +48,14 @@ $messages['en'] = array(
 	'editaccount-nouser' => 'Account "$1" does not exist!',
 	# logging
 	'editaccount-log' => 'User accounts log',
-	'editaccount-log-header' => 'This page lists changes made to user preferences by Wikia Staff.',
+	'editaccount-log-header' => 'This page lists changes made to user information by Wikia Staff.',
 	'editaccount-log-entry-email' => 'changed e-mail for user $2',
 	'editaccount-log-entry-pass' => 'changed password for user $2',
 	'editaccount-log-entry-realname' => 'changed real name for user $2',
 	'editaccount-log-entry-close' => 'disabled account $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">This account has been disabled.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">This account has been disabled globally by Wikia.</div>',
 	// For Special:ListGroupRights
-	'right-editaccount' => "Edit other users' preferences",
+	'right-editaccount' => "Edit other users' information",
 );
 
 /** Message documentation (Message documentation)
