@@ -64,7 +64,7 @@
 		labelId: 'wikia-editor-media-video',
 		titleId: 'wikia-editor-media-video-tooltip',
 		className: 'RTEVideoButton',
-		clicksource: function() { VET_show({}); },
+		clicksource: function() { VET_show({target: {id:"mw-editbutton-vet"}}); },
 		ckcommand: 'addvideo',
 		precondition: checkVET
 	};
