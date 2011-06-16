@@ -81,41 +81,45 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 	// scroll top
 	window.scrollTo(0,0);
 
-	$().getModal(window.wgScript + '?action=ajax&rs=GetComboAjaxLogin&uselang=' + window.wgUserLanguage + "&returnto=" + wgPageName + "&returntoquery=" + wgPageQuery +'&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {
+	// Load the needed i18n messages
+	$.getMessages('ComboAjaxLogin', function(){	
+		// Load the modal dialog box into the DOM
+		$().getModal(window.wgScript + '?action=ajax&rs=GetComboAjaxLogin&uselang=' + window.wgUserLanguage + "&returnto=" + wgPageName + "&returntoquery=" + wgPageQuery +'&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {
 			callback: function() {
 				$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function() {
-						//$("#loadmask").remove();
-						if (isPlaceholder) AjaxLogin.setPlaceHolder(element);
-						AjaxLogin.init( $('#AjaxLoginLoginForm form:first') );
-						AjaxLogin.show();
-						showComboAjaxForPlaceHolder.statusAjaxLogin = false;
+					//$("#loadmask").remove();
+					if (isPlaceholder) AjaxLogin.setPlaceHolder(element);
+					AjaxLogin.init( $('#AjaxLoginLoginForm form:first') );
+					AjaxLogin.show();
+					showComboAjaxForPlaceHolder.statusAjaxLogin = false;
 
-						// Show the tab that was configured to be shown first (defaults to login).
-						if((typeof showRegisterTabFirst != 'undefined') && showRegisterTabFirst){
-							AjaxLogin.showRegister($('#wpGoRegister'));
-						} else {
-							AjaxLogin.showLogin($('#wpGoLogin'));
-						}
+					// Show the tab that was configured to be shown first (defaults to login).
+					if((typeof showRegisterTabFirst != 'undefined') && showRegisterTabFirst){
+						AjaxLogin.showRegister($('#wpGoRegister'));
+					} else {
+						AjaxLogin.showLogin($('#wpGoLogin'));
+					}
 
-						if(typeof FB != 'undefined'){
-							// parse FBXML login button
-							FB.XFBML.parse();
-						}
+					if(typeof FB != 'undefined'){
+						// parse FBXML login button
+						FB.XFBML.parse();
+					}
 
-						if((typeof showLoginRequiredMessage != 'undefined') && (showLoginRequiredMessage)){
-							if (showLoginRequiredMessage == true) {
-								$('#comboajaxlogin-actionmsg').show();
-							}
-							else if (showLoginRequiredMessage == 'protected') {
-								$('#comboajaxlogin-actionmsg-protected').show();
-							}
+					if((typeof showLoginRequiredMessage != 'undefined') && (showLoginRequiredMessage)){
+						if (showLoginRequiredMessage == true) {
+							$('#comboajaxlogin-actionmsg').show();
 						}
+						else if (showLoginRequiredMessage == 'protected') {
+							$('#comboajaxlogin-actionmsg-protected').show();
+						}
+					}
 
-						if (typeof callback == 'function'){
-							callback();
-						}
-					});
-				}
+					if (typeof callback == 'function'){
+						callback();
+					}
+				});
+			}
+		});
 	});
 	return true;
 }
