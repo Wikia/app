@@ -8,6 +8,7 @@ $color-epl-inputs-borders: #adadad;
 $color-epl-module-header: #6fa7cc;
 $color-epl-notices-background: #FFFFC6;
 $color-epl-notices-border: #C4C1A2;
+$color-epl-notices-color: #000;
 $color-epl-separator-dark: #c6c6c6;
 $color-epl-separator-light: #e5e5e5;
 $color-epl-toolbar-border: #ddd;
@@ -19,10 +20,7 @@ $color-epl-text-color: #666;
 $color-epl-links: #006CBD; // module links 
 
 // page title / help link
-$color-epl-header-links: #006CBD;
-@if lightness($color-page) < 50 {
-	$color-epl-header-links: #f37207;
-}
+$color-epl-header-links: $color-links;
 
 $height-epl-header: 45px;
 $width-epl-module-input: 240px;
