@@ -1,6 +1,6 @@
 <section class="ControlCenter" id="ControlCenter">
 	<section class="control-center-content ">
-		<div id="ControlCenterGeneral">
+		<div id="ControlCenterGeneral" style="display:<?= $tab == 'general' ? 'block' : 'none'?>">
 			<section class="control-section wiki">
 				<header>
 					<h1><?= wfMsg("controlcenter-controls-wiki-header") ?></h1><span class="tooltip"></span>
@@ -69,7 +69,7 @@
 				</ul>
 			</section>
 		</div>
-		<section id="ControlCenterAdvanced">
+		<section id="ControlCenterAdvanced" style="display:<?= $tab == 'advanced' ? 'block' : 'none'?>">
 			Advanced section here
 		</section>
 		<section id="ControlCenterContentArea">

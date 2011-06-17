@@ -8,6 +8,8 @@ class ControlCenterModule extends Module {
 	
 	// Render the control center chrome
 	public function executeChrome () {
+		global $wgRequest;
+		$this->tab = $wgRequest->getVal("tab", "");
 
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/ControlCenter/css/ControlCenter.scss'));
 		$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/ControlCenter/js/ControlCenter.js');
@@ -25,8 +27,8 @@ class ControlCenterModule extends Module {
 
 		$this->founderProgressBar = (string)F::app()->sendRequest( 'FounderProgressBar', 'widget' );
 		
-		$this->controlCenterUrlGeneral = "";
-		$this->controlCenterUrlAdvanced = "";
+		$this->controlCenterUrlGeneral = Title::newFromText('ControlCenter', NS_SPECIAL)->getFullURL().'?tab=general';
+		$this->controlCenterUrlAdvanced = Title::newFromText('ControlCenter', NS_SPECIAL)->getFullURL().'?tab=advanced';
 	}
 	
 }
