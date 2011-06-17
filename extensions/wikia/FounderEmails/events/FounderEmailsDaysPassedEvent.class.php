@@ -91,24 +91,20 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		foreach ( $wgFounderEmailsExtensionConfig['events']['daysPassed']['days'] as $daysToActivate ) {
 			switch( $daysToActivate ) {
 				case 0:
-					$ctcUnsubscribe = 'FE03';
 					$dayName = 'DayZero';
 					break;
 				case 3:
-					$ctcUnsubscribe = 'FE08';
 					$dayName = 'DayThree';
 					break;
 				case 10:
-					$ctcUnsubscribe = 'FE09';
 					$dayName = 'DayTen';
 					break;
 				default:
-					$ctcUnsubscribe = 'FE03';
 					$dayName = 'DayZero';
 			}
 			// Build unsubscribe url
 			$hash_url = Wikia::buildUserSecretKey( $wikiFounder->getName(), 'sha256' );
-			$unsubscribe_url = Title::newFromText('Unsubscribe', NS_SPECIAL)->getFullURL( array( 'key' => $hash_url, 'ctc' => $ctcUnsubscribe ) );
+			$unsubscribe_url = Title::newFromText('Unsubscribe', NS_SPECIAL)->getFullURL( array( 'key' => $hash_url ) );
 			
 			$mainPage = wfMsgForContent( 'mainpage' );
 
