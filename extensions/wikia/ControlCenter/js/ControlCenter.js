@@ -4,6 +4,11 @@ var ControlCenter = {
 	init: function() {
 		// precache
 		ControlCenter.cc = $('#ControlCenter');
+		
+		if(ControlCenter.cc.length == 0) {
+			return;
+		}
+		
 		ControlCenter.allControls = ControlCenter.cc.find('.control');
 		ControlCenter.tabs = $('#ControlCenterTabs');
 		ControlCenter.allTabs = ControlCenter.tabs.find('.tab');
@@ -20,7 +25,8 @@ var ControlCenter = {
 			ControlCenter.tooltip.text('');
 		}).click(ControlCenter.handleControlClick);
 
-		ControlCenter.allTabs.click(function() {
+		ControlCenter.allTabs.click(function(e) {
+			e.preventDefault();
 			var el = $(this);
 			ControlCenter.ui.resetAll();
 			ControlCenter.ui.selectTab(el);

@@ -17,7 +17,8 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 	 * 
 	 */
 	public function index() {
-
+		global $wgRequest;
+		$this->response->setVal('tab', $wgRequest->getVal('tab', 'general'));
 	}
 	
 	/**

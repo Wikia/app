@@ -12,14 +12,8 @@
 	</nav>
 </header>
 <nav class="ControlCenterTabs" id="ControlCenterTabs">
-	<ul>
-		<li class="tab" data-section="advanced">
-			<a href="<?= $controlCenterUrlAdvanced ?>">Advanced</a>
-		</li>
-		<li class="tab active" data-section="general">
-			<a href="<?= $controlCenterUrlGeneral ?>">General</a>
-		</li>
-	</ul>
+	<a href="<?= $controlCenterUrlAdvanced ?>" class="tab <?= $tab == 'advanced' ? 'active' : '' ?>" data-section="advanced">Advanced</a>
+	<a href="<?= $controlCenterUrlGeneral ?>" class="tab <?= $tab == 'general' ? 'active' : '' ?>" data-section="general">General</a>
 </nav>
 <aside class="ControlCenterRail">
 	<?= $founderProgressBar ?>
