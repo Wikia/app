@@ -24,8 +24,8 @@ function FounderProgressBar_setup () {
 	$app = F::app();
 	
 	// Register hooks for founder events
-	$app->registerHook("ArticleSaveComplete", "FounderProgressBarHooks", "onArticleSave");
-	$app->registerHook("ImageUploadComplete", "FounderProgressBarHooks", "onImageUploadComplete");
+	$app->registerHook("ArticleSaveComplete", "FounderProgressBarHooks", "onArticleSaveComplete");
+	$app->registerHook("UploadComplete", "FounderProgressBarHooks", "onUploadComplete");
 
 	wfProfileOut(__METHOD__);	
 }
