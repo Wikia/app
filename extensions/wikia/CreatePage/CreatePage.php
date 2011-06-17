@@ -123,8 +123,8 @@ function wfCreatePageAjaxGetDialog() {
 	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$options = array();
 	$standardOptions = array();
-	
-	
+
+
 	$standardOptions['format'] = array(
 		'namespace' => NS_MAIN,
 		'label' => wfMsg( 'createpage-dialog-format' ),
@@ -140,11 +140,11 @@ function wfCreatePageAjaxGetDialog() {
 		'trackingId' => 'blankpage',
 		'submitUrl' => "{$wgScript}?title=$1&action=edit"
 	);
-	
+
 	$listtype = "short";
 	wfRunHooks( 'CreatePage::FetchOptions', array(&$standardOptions, &$options, &$listtype ) );
 
-	$options = $options + $standardOptions; 
+	$options = $options + $standardOptions;
 	$optionsCount = count( $options );
 	$detectedWidth = ( $optionsCount * CREATEPAGE_ITEM_WIDTH );
 
@@ -168,11 +168,12 @@ function wfCreatePageAjaxGetDialog() {
 
 	$defaultLayout = $wgUser->getOption( 'createpagedefaultblank', false ) ?  'blank' : 'format';
 
+	// some extensions (e.g. PLB) can remove "format" option, so fallback to first available option here
 	if(!array_key_exists($defaultLayout, $options) ) {
 		reset($options);
 		$defaultLayout = key($options);
 	}
-	
+
 	$template->set_vars( array(
 			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ) ? true : false,
 			'options' => $options,

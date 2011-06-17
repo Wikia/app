@@ -64,15 +64,15 @@ class PageLayoutBuilderHelper {
 
 		return true;
 	}
-	
+
 	/*
 	 * copyLayout - use by task to copy layouts from commuinty
-	 * 
+	 *
 	 * @author Tomasz Odrobny
 	 * @param Title
 	 * @return Parser
 	 */
-	
+
 	public static function copyLayout() {
 		global $wgCityId;
 		$list = PageLayoutBuilderModel::getLayoutsToCopy();
@@ -81,20 +81,20 @@ class PageLayoutBuilderHelper {
 			if(in_array($cat->cat_id, $cats)) {
 				PageLayoutBuilderModel::setLayoutCopy( $layout, $wgCityId );
 				$layoutInfo = PageLayoutBuilderModel::getLayoutCopyInfo( $layout );
-				
+
 				if($layoutInfo !== false) {
 					$newTitle = Title::newFromText( $layoutInfo['title'], NS_PLB_LAYOUT );
 					if(!$newTitle->exists()){
 						$article = new Article( $newTitle );
 						$article->doEdit( $layoutInfo['text'], '', EDIT_NEW | EDIT_DEFER_UPDATES | EDIT_AUTOSUMMARY );
 						PageLayoutBuilderModel::setProp($article->getId(), array('desc' => $layoutInfo['desc'] ) );
-						
+
 					}
 				}
-				
-			}		
+
+			}
 		}
-		
+
 		return true;
 	}
 
@@ -251,7 +251,7 @@ class PageLayoutBuilderHelper {
 		$optionsAdd = array();
 		foreach($out as $value) {
 			if( empty($value['not_publish']) ) {
-				$optionsAdd[$value['page_id']] = array(
+				$optionsAdd["plb".$value['page_id']] = array(
 					'label' => str_replace("_", " " ,$value['page_title']),
 					'desc' => $value['desc'],
 					'icon' => "{$wgCdnStylePath}/extensions/wikia/EditPageReskin/CreatePage/images/thumbnail_format.png",
@@ -260,7 +260,7 @@ class PageLayoutBuilderHelper {
 				);
 			}
 		}
-		
+
 		if(!empty($optionsAdd)) {
 			unset($standardOptions['format']);
 		}
@@ -281,22 +281,22 @@ class PageLayoutBuilderHelper {
 		return true;
 	}
 
-	
-	
+
+
 	/**
-	 * onArticleSave - prevent save if someone try to save plb article from api,etc. 
+	 * onArticleSave - prevent save if someone try to save plb article from api,etc.
 	 *
 	 * @author Tomek Odrobny
 	 *
 	 * @access public
 	 *
 	 */
-	
+
 	public static function onArticleSave(&$article, &$user, &$text, &$summary, $minor, $watchthis, $sectionanchor, &$flags, &$status) {
 		global $wgTitle;
 		if ( PageLayoutBuilderForm::articleIsFromPLBFull($article->getId(), $article->getContent() ) ) {
 			if ( !$wgTitle->isSpecial('PageLayoutBuilderForm') ) {
-				return false;	
+				return false;
 			}
 		}
 		return true;
