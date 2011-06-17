@@ -64,12 +64,12 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 		// Build unsubscribe url
 		$wikiFounder = FounderEmails::getInstance()->getWikiFounder();
 		$hash_url = Wikia::buildUserSecretKey( $wikiFounder->getName(), 'sha256' );
-		$unsubscribe_url = Title::newFromText('Unsubscribe', NS_SPECIAL)->getFullURL( array( 'key' => $hash_url, 'ctc' => 'FE04' ) );
+		$unsubscribe_url = Title::newFromText('Unsubscribe', NS_SPECIAL)->getFullURL( array( 'key' => $hash_url ) );
 
 		$eventData = array(
 			'userName' => $user->getName(),
-			'userPageUrl' => $user->getUserPage()->getFullUrl( 'ctc=FE01' ),
-			'userTalkPageUrl' => $user->getTalkPage()->getFullUrl( 'ctc=FE01' ),
+			'userPageUrl' => $user->getUserPage()->getFullUrl(),
+			'userTalkPageUrl' => $user->getTalkPage()->getFullUrl(),
 			'unsubscribeUrl' => $unsubscribe_url
 		);
 

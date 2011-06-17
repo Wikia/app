@@ -1125,7 +1125,7 @@ Comment faire ?
  - Pour répondre à une question, rendez-vous sur la page de la question et ajoutez quelque chose dans la zone de réponse.
  - Pour améliorer une réponse, cliquez « modifier » près d’une réponse existante et changez la !
 
-Si vous avez besoin de plus d’aide n’hésitez pas à lire $WIKIURLwiki/Help:Wikianswers?ctc=AFE18 ou discuter avec nous sur les forums à http://communaute.wikia.com/wiki/Forum:Vue_d%27ensemble?ctc=AFE19. Avant tout, amusez-vous !
+Si vous avez besoin de plus d’aide n’hésitez pas à lire $WIKIURLwiki/Help:Wikianswers ou discuter avec nous sur les forums à http://communaute.wikia.com/wiki/Forum:Vue_d%27ensemble. Avant tout, amusez-vous !
 
 ___________________________________________
 * Pour voir les derniers évènements sur Wikia, rendez-vous sur http://communaute.wikia.com
@@ -1147,7 +1147,7 @@ ___________________________________________
 <li>Pour améliorer une réponse, cliquez « modifier » près d’une réponse existante et changez la !</li>
 </ul>
 
-<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Si vous avez besoin de plus d’aide n’hésitez pas à lire <a href="$WIKIURLwiki/Help:Wikianswers?ctc=AFE18">ceci</a> ou discuter avec nous sur les <a href="http://communaute.wikia.com/wiki/Forum:Vue_d%27ensemble?ctc=AFE19">forums</a>. Avant tout, <em>amusez-vous</em> !</p>
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Si vous avez besoin de plus d’aide n’hésitez pas à lire <a href="$WIKIURLwiki/Help:Wikianswers">ceci</a> ou discuter avec nous sur les <a href="http://communaute.wikia.com/wiki/Forum:Vue_d%27ensemble">forums</a>. Avant tout, <em>amusez-vous</em> !</p>
 
 <p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">– L’équipe Wikia</p>
 <br /><hr />
@@ -1169,9 +1169,9 @@ Impliquer les autres
  - Si votre site traite d’un sujet en particulier, pourquoi ne pas vous rendre sur un forum que vous connaissez et demander de l’aide ? Exemple : Si vous avez quelques pages sur votre sites de réponses traitant de la nature, rendez-vous sur un forum qui traite du même sujet, partagez avec eux les questions et réponses que vous avez écrites jusque là et invitez-les à vous posez plus de questions, voire à répondre à certaines.
  - Envoyez des courriels à tous ceux que vous connaissez qui partagent votre passion – ce peut-être un collègue ou un camarade – et demandez-leur s’il y a des questions sur lesquelles ils peuvent aider.
 
-Tandis que les gens vous rejoignent, posent et répondent à des questions, vous pouvez garder un œil sur ce qu’ils font sur Mon accueil ($WIKIURLwiki/Special:My_Home?ctc=AFE15), qui vous permet de voir ce qu’il se passe sur votre wiki. Cliquez sur leur nom pour en savoir plus sur eux et leur souhaiter la bienvenue sur votre site !
+Tandis que les gens vous rejoignent, posent et répondent à des questions, vous pouvez garder un œil sur ce qu’ils font sur Mon accueil ($WIKIURLwiki/Special:My_Home), qui vous permet de voir ce qu’il se passe sur votre wiki. Cliquez sur leur nom pour en savoir plus sur eux et leur souhaiter la bienvenue sur votre site !
 
-Rappelez-vous, si vous avez besoin de plus d’aide n’hésitez pas à lire $WIKIURLwiki/Help:Wikianswers?ctc=AFE18 ou discuter avec nous sur les forums à http://communaute.wikia.com/wiki/Forum:Vue_d%27ensemble?ctc=AFE19.
+Rappelez-vous, si vous avez besoin de plus d’aide n’hésitez pas à lire $WIKIURLwiki/Help:Wikianswers ou discuter avec nous sur les forums à http://communaute.wikia.com/wiki/Forum:Vue_d%27ensemble.
 
 – L’équipe Wikia
 
@@ -1191,9 +1191,9 @@ ___________________________________________
 <li>Envoyez des courriels à tous ceux que vous connaissez qui partagent votre passion – ce peut-être un collègue ou un camarade – et demandez-leur s’il y a des questions sur lesquelles ils peuvent aider.</li>
 </ul>
 
-<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Tandis que les gens vous rejoignent, posent et répondent à des questions, vous pouvez garder un œil sur ce qu’ils font sur <a href="$WIKIURLwiki/Special:My_Home?ctc=AFE15">Mon Accueil</a>, qui vous permet de voir ce qu’il se passe sur votre wiki. Cliquez sur leur nom pour en savoir plus sur eux et leur souhaiter la bienvenue sur votre site !</p>
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Tandis que les gens vous rejoignent, posent et répondent à des questions, vous pouvez garder un œil sur ce qu’ils font sur <a href="$WIKIURLwiki/Special:My_Home">Mon Accueil</a>, qui vous permet de voir ce qu’il se passe sur votre wiki. Cliquez sur leur nom pour en savoir plus sur eux et leur souhaiter la bienvenue sur votre site !</p>
 
-<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Rappelez-vous, si vous avez besoin de plus d’aide n’hésitez pas à lire <a href="$WIKIURLwiki/Help:Wikianswers?ctc=AFE18">ceci</a> ou discuter avec nous sur les <a href="http://communaute.wikia.com/wiki/Forum:Vue_d%27ensemble?ctc=AFE19">forums</a>.</p>
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Rappelez-vous, si vous avez besoin de plus d’aide n’hésitez pas à lire <a href="$WIKIURLwiki/Help:Wikianswers">ceci</a> ou discuter avec nous sur les <a href="http://communaute.wikia.com/wiki/Forum:Vue_d%27ensemble">forums</a>.</p>
 
 <p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">– L’équipe Wikia</p>
 <br /><hr />

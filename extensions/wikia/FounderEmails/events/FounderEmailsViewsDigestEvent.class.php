@@ -37,7 +37,7 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 			$foundingUser = $founderEmailObj->getWikiFounder($cityID);
 			$foundingWiki = WikiFactory::getWikiById( $cityID );
 			$hash_url = Wikia::buildUserSecretKey( $foundingUser->getName(), 'sha256' );
-			$unsubscribe_url = GlobalTitle::newFromText('Unsubscribe', NS_SPECIAL, $cWikiId )->getFullURL( array( 'key' => $hash_url, 'ctc' => 'FE10' ) );
+			$unsubscribe_url = GlobalTitle::newFromText('Unsubscribe', NS_SPECIAL, $cWikiId )->getFullURL( array( 'key' => $hash_url ) );
 			$page_url = GlobalTitle::newFromText( 'Createpage', NS_SPECIAL, $cityID )->getFullUrl( array('modal' => 'AddPage') );
 
 			$emailParams = array(

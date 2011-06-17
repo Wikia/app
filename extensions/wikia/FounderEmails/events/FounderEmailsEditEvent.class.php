@@ -145,8 +145,6 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 		$isRegisteredUser = false;
 		$isRegisteredUserFirstEdit = false;
-		$ctcUserpage = 'FE02';
-		$ctcUnsubscribe = 'FE05';
 
 		if ( $oRecentChange->getAttribute( 'rc_user' ) ) {
 			$editor = ( $wgUser->getId() == $oRecentChange->getAttribute( 'rc_user' ) ) ? $wgUser : User::newFromID( $oRecentChange->getAttribute( 'rc_user' ) );
@@ -156,8 +154,6 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				$userStats = Masthead::getUserStatsData( $editor->getName(), true );
 				if ( $userStats['editCount'] == 1 ) {
 					$isRegisteredUserFirstEdit = true;
-					$ctcUserpage = 'FE06';
-					$ctcUnsubscribe = 'FE07';
 				}
 			}
 		} else {
@@ -181,19 +177,19 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		// Build unsubscribe url
 		$wikiFounder = FounderEmails::getInstance()->getWikiFounder();
 		$hash_url = Wikia::buildUserSecretKey( $wikiFounder->getName(), 'sha256' );
-		$unsubscribe_url = Title::newFromText('Unsubscribe', NS_SPECIAL)->getFullURL( array( 'key' => $hash_url, 'ctc' => $ctcUnsubscribe ) );
+		$unsubscribe_url = Title::newFromText('Unsubscribe', NS_SPECIAL)->getFullURL( array( 'key' => $hash_url ) );
 
 		$oTitle = Title::makeTitle( $oRecentChange->getAttribute( 'rc_namespace' ), $oRecentChange->getAttribute( 'rc_title' ) );
 		$eventData = array(
 			'titleText' => $oTitle->getText(),
 			'titleUrl' => $oTitle->getFullUrl(),
 			'editorName' => $editor->getName(),
-			'editorPageUrl' => $editor->getUserPage()->getFullUrl( 'ctc=' . $ctcUserpage ),
-			'editorTalkPageUrl' => $editor->getTalkPage()->getFullUrl( 'ctc=' . $ctcUserpage ),
+			'editorPageUrl' => $editor->getUserPage()->getFullUrl(),
+			'editorTalkPageUrl' => $editor->getTalkPage()->getFullUrl(),
 			'registeredUser' => $isRegisteredUser,
 			'registeredUserFirstEdit' => $isRegisteredUserFirstEdit,
 			'unsubscribeUrl' => $unsubscribe_url,
-			'myHomeUrl' => Title::newFromText( 'WikiActivity', NS_SPECIAL )->getFullUrl( 'ctc=FE20' )
+			'myHomeUrl' => Title::newFromText( 'WikiActivity', NS_SPECIAL )->getFullUrl()
 		);
 
 		FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent( $eventData ) );
