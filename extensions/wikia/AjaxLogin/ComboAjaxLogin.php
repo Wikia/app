@@ -40,7 +40,7 @@ function efSetupComboAjaxLogin() {
 
 // register messages package for JS
 F::build('JSMessages')->registerPackage('ComboAjaxLogin', array(
-	'comboajaxlogin-*',
+	'comboajaxlogin-ajaxerror',
 ));
 
 
