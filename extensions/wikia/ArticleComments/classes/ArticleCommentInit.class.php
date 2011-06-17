@@ -298,12 +298,12 @@ class ArticleCommentInit {
 	static public function HAWelcomeGetPrefixText( &$prefixedText, $title ) {
 
 		if ( ArticleComment::isTitleComment( $title ) ){
+			$title = $title->getSubjectPage();
+			$prefixedText = $title->getPrefixedText();
 
-			if ( defined('ARTICLECOMMENT_PREFIX') ){
-				$aPrefix = explode( ARTICLECOMMENT_PREFIX, $prefixedText );
-				if ( count( $aPrefix ) > 0 ){
-					$prefixedText = substr_replace( $aPrefix[0] ,"" ,-1 );
-				}
+			$aPrefix = explode( ARTICLECOMMENT_PREFIX, $prefixedText );
+			if ( count( $aPrefix ) > 0 ){
+				$prefixedText = substr_replace( $aPrefix[0] ,"" ,-1 );
 			}
 		}
 		return true;
