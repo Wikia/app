@@ -802,7 +802,7 @@
 		},
 
 		elementCreated: function( editor, element, data ) {
-			this.editor.log('elementCreated: ',element,data);
+			//this.editor.log('elementCreated: ',element,data);
 			if (element.ckcommand) {
 				var commandName = element.ckcommand;
 				// auto state by ck command
@@ -837,7 +837,7 @@
 		},
 
 		buildWysiwygClickHandler: function( editor, button ) {
-			this.editor.log('buildWysiwygClickHandler',button.name,button);
+			//this.editor.log('buildWysiwygClickHandler',button.name,button);
 			if (!button.clickwysiwyg && button.ckcommand) {
 				button.clickwysiwyg = function() {
 					editor.ck.execCommand(button.ckcommand,button.clickdatawysiwyg);
@@ -868,7 +868,7 @@
 					// auto show/hide buttons
 					this.modeAwareCommands[item.command] = true;
 				}
-				this.editor.log('ui item: ',item);
+				//this.editor.log('ui item: ',item);
 				return output.join( '' );
 			}
 			return false;
