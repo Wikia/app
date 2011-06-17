@@ -143,9 +143,6 @@ class RTE {
 		// devmode
 		self::$devMode = $wgRequest->getBool('allinone', $wgAllInOne) == false;
 
-		// used for load time reports
-		$wgOut->addInlineScript('var wgRTEStart = new Date();');
-
 		// add RTE javascript files
 		$srcs = AssetsManager::getInstance()->getGroupCommonURL('rteepl');
 		foreach($srcs as $src) {

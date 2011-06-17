@@ -256,7 +256,7 @@ window.RTE = {
 		RTE.loaded = true;
 
 		// calculate load time
-		RTE.loadTime = ( (new Date()).getTime() - window.wgRTEStart.getTime() ) / 1000;
+		RTE.loadTime = (new Date() - window.wgNow) / 1000;
 
 		RTE.log('CKEditor v' + CKEDITOR.version +
 			(window.RTEDevMode ? ' (in development mode)' : '') +
@@ -266,7 +266,7 @@ window.RTE = {
 		RTE.instance.fire('RTEready');
 
 		// let extensions do their tasks when RTE is fully loaded
-		$(document.body).add(window).trigger('rteready');
+		$(window).trigger('rteready', RTE.instance);
 		GlobalTriggers.fire('rteready', RTE.instance);
 
 		// reposition #RTEStuff
