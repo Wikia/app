@@ -58,5 +58,5 @@ i18n files:
 
 Minifying JS/CSS:
 
-* use minify.sh script to generate minified version of JS/CSS
+* use minify.sh script to generate minified version of CSS (JS is served by AssetsManager)
 * add "allinone=0" to URL of edit page to use development version of RTE (using separated JS/CSS files)
