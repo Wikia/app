@@ -36,7 +36,7 @@ $base-z: 5;
 	position: absolute;
 	right: $width-outside - $control-center-content-width - 1px;
 	top: $control-center-header-height - $nav-height - 10px;
-	z-index: $base-z - 1;
+	z-index: $base-z - 	1;
 	ul {
 		@include clearfix;
 		li {
@@ -141,19 +141,15 @@ $base-z: 5;
 
 #ControlCenterContentArea {
 	display: none;
-	// feature overwrites
-	
-	/* ListUser overwrite */
-	.lu_fieldset {
-		white-space: normal;
-	}
 }
 
 // Oasis overwrites
 .WikiaArticle {
+	background: white;
 	float: left;
 	padding: 0;
 	position: relative;
+	width: $control-center-content-width;
 	z-index: $base-z;
 	ul, ol {
 		margin: 0;
@@ -164,4 +160,10 @@ $base-z: 5;
 .WikiaPage {
 	background-color: #fff;
 	color: #464646;
+}
+
+/* Module overwrites */
+/* ListUser overwrite */
+.lu_fieldset {
+	white-space: normal;
 }
