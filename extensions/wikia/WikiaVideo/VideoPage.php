@@ -433,7 +433,7 @@ class VideoPage extends Article {
 		global $wgStylePath;
 
 		if ($frame) { // frame has always native width
-			$ratios = split( "x", $this->getTextRatio() );
+			$ratios = explode( "x", $this->getTextRatio() );
 			$width = intval( trim( $ratios[0] ) );
 		}
 
@@ -569,7 +569,7 @@ EOD;
 		}
 
 		$fixed_url = str_replace( "HTTP://", "", $fixed_url );
-		$fixed_parts = split( "/", $fixed_url );
+		$fixed_parts = explode( "/", $fixed_url );
 		$fixed_url = $fixed_parts[0];
 
 		$text = strpos( $fixed_url, "METACAFE.COM" );
@@ -589,7 +589,7 @@ EOD;
 					$id .= ".swf";
 				}
 
-				$data = split( "/", $id );
+				$data = explode( "/", $id );
 				if (is_array( $data ) ) {
 					$this->mProvider = $provider;
 					$this->mId = $data[0];
@@ -645,9 +645,9 @@ EOD;
 		$text = strpos( $fixed_url, "SEVENLOAD.COM" );
 		if( false !== $text ) { // sevenload
 			$provider = self::V_SEVENLOAD;
-			$parsed = split( "/", $url );
+			$parsed = explode( "/", $url );
 			$id = array_pop( $parsed );
-			$parsed_id = split( "-", $id );
+			$parsed_id = explode( "-", $id );
 			if( is_array( $parsed_id ) ) {
 				$this->mProvider = $provider;
 				$this->mId = $parsed_id[0];
@@ -662,7 +662,7 @@ EOD;
 		$text = strpos( $fixed_url, "MYVIDEO.DE" );
 		if( false !== $text ) { // myvideo
 			$provider = self::V_MYVIDEO;
-			$parsed = split( "/", $url );
+			$parsed = explode( "/", $url );
 			if( is_array( $parsed ) ) {
 				$mdata = array_pop( $parsed );
 				$this->mProvider = $provider;
@@ -677,7 +677,7 @@ EOD;
 		$text = strpos( $fixed_url, "GAMEVIDEOS.1UP.COM" );
 		if( false !== $text ) { // gamevideos
 			$provider = self::V_GAMEVIDEOS;
-			$parsed = split( "/", $url );
+			$parsed = explode( "/", $url );
 			if( is_array( $parsed ) ) {
 				$this->mProvider = $provider;
 				$this->mId = array_pop( $parsed );
@@ -690,7 +690,7 @@ EOD;
 		$text = strpos( $fixed_url, "VIMEO.COM" );
 		if( false !== $text ) { // vimeo
 			$provider = self::V_VIMEO;
-			$parsed = split( "/", $url );
+			$parsed = explode( "/", $url );
 			if( is_array( $parsed ) ) {
 				$this->mProvider = $provider;
 				$this->mId = array_pop( $parsed );
@@ -702,11 +702,11 @@ EOD;
 		$text = strpos( $fixed_url, "5MIN.COM" );
 		if( false !== $text ) { // 5min
 			$provider = self::V_5MIN;
-			$parsed = split( "/", $url );
+			$parsed = explode( "/", $url );
 			if( is_array( $parsed ) ) {
 				$this->mProvider = $provider;
 				$ids = array_pop( $parsed );
-				$parsed_twice = split( "-", $ids );
+				$parsed_twice = explode( "-", $ids );
 				$this->mId = array_pop( $parsed_twice );
 				$this->mData = array(
 						implode( '-', $parsed_twice ) . '-'
@@ -718,7 +718,7 @@ EOD;
 		$text = strpos( $fixed_url, "SOUTHPARKSTUDIOS.COM" );
 		if( false !== $text ) { // southparkstudios
 				$provider = self::V_SOUTHPARKSTUDIOS;
-				$parsed = split( "/", $url );
+				$parsed = explode( "/", $url );
 				if( is_array( $parsed ) ) {
 						$mdata = array_pop( $parsed );
 						if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
@@ -736,7 +736,7 @@ EOD;
 		if( false !== $text ) { // Blip TV
 			$provider = self::V_BLIPTV;
 			$blip = '';
-			$parsed = split( "/", $url );
+			$parsed = explode( "/", $url );
 			if( is_array( $parsed ) ) {
 				$mdata = array_pop( $parsed );
 				if ( '' != $mdata ) {
@@ -758,7 +758,7 @@ EOD;
 			// http://www.dailymotion.pl/video/xavqj5_NAME
 			// (example for Polish location)
 			$provider = self::V_DAILYMOTION;
-			$parsed = split( "/", $url );
+			$parsed = explode( "/", $url );
 			if( is_array( $parsed ) ) {
 				$mdata = array_pop( $parsed );
 				if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
@@ -776,7 +776,7 @@ EOD;
 		$text = strpos( $fixed_url, "VIDDLER.COM" );
 		if( false !== $text ) { // Blip TV
 			$provider = self::V_VIDDLER;
-			$parsed = split( "/explore/", strtolower($url));
+			$parsed = explode( "/explore/", strtolower($url));
 			if( is_array( $parsed ) ) {
 				$mdata = array_pop( $parsed );
 				if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
@@ -797,7 +797,7 @@ EOD;
 		$text = strpos( $fixed_url, "GAMETRAILERS" );
 		if( false !== $text ) { // Gametrailers
 			$provider = self::V_GAMETRAILERS;
-			$parsed = split( "/", $url );
+			$parsed = explode( "/", $url );
 			if( is_array( $parsed ) ) {
 				$this->mId = explode("?",array_pop( $parsed ));
 				$this->mId = $this->mId[0];
@@ -1048,7 +1048,7 @@ EOD;
 
 	// return url for the video file
 	public static function getUrl( $metadata ) {
-		$meta = split( ",", $metadata );
+		$meta = explode( ",", $metadata );
 		if ( is_array( $meta ) ) {
 			$provider = $meta[0];
 			$id = $meta[1];
@@ -1244,7 +1244,7 @@ EOD;
 			$fname
 		);
 		if ($row) {
-			$metadata = split( ",", $row->oi_metadata );
+			$metadata = explode( ",", $row->oi_metadata );
 			if ( is_array( $metadata ) ) {
 				$provider = $metadata[0];
 				$id = $metadata[1];
@@ -1321,7 +1321,7 @@ EOD;
 			$fname
 		);
 		if ($row) {
-			$metadata = split( ",", $row->img_metadata );
+			$metadata = explode( ",", $row->img_metadata );
 			if ( is_array( $metadata ) ) {
 				$this->mProvider = $metadata[0];
 				$this->mId = $metadata[1];
