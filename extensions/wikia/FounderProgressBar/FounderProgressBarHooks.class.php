@@ -13,8 +13,8 @@ class FounderProgressBarHooks {
 	 * Add 10 pages
 	 * Fill out your main page
 	 */
-	function onArticleSave () {
-		
+	function onArticleSaveComplete (&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+		return true;
 	}
 	
 	/**
@@ -23,8 +23,8 @@ class FounderProgressBarHooks {
 	 * Add a photo or gallery to the main page
 	 * 
 	 */
-	function onImageUploadComplete () {
-		
+	function onUploadComplete (&$image) {
+		return true;
 	}
 	
 }
