@@ -10,62 +10,61 @@ $control-center-header-height: 48px;
 $base-z: 5;
 
 .ControlCenterHeader {
+	@include linear-gradient(false, top, #cde2f0, 20%, #bbd6e8, 70%, #9db9cd, 100%);
 	position: relative;
-	>header {
-		@include linear-gradient(false, top, #cde2f0, 20%, #bbd6e8, 70%, #9db9cd, 100%);
-		border-bottom: 1px solid #b6c1c9;
-		border-top: 1px solid #c8d4dd;
-		height: $control-center-header-height;
-		padding: 0 15px;
-		position: relative;
-		h1 {
-			font-size: 20px;
-			margin: 0;
-		}
-		nav {
-			bottom: 5px;
-			color: #788086;
-			position: absolute;
-			right: 10px;
-		}
+	border-bottom: 1px solid #b6c1c9;
+	border-top: 1px solid #c8d4dd;
+	height: $control-center-header-height;
+	padding: 0 15px;
+	position: relative;
+	h1 {
+		font-size: 20px;
+		margin: 0;
 	}
-	.tabs {
-		$nav-height: 18px;
-		border: 0;
-		padding: 10px 0 0 0;
+	nav {
+		bottom: 5px;
+		color: #788086;
 		position: absolute;
-		right: $width-outside - $control-center-content-width - 1px;
-		top: $control-center-header-height - $nav-height - 10px;
-		z-index: $base-z + 1;
-		ul {
-			@include clearfix;
-			li {
-				@include border-radius-ne(5px);
-				@include border-radius-nw(5px);
-				@include box-shadow(0, 0, 10px, #9db9cd, false, 0);
-				background: #dfdfdf;
-				float: left;
-				font-size: 12px;
-				height: $nav-height;
-				line-height: 16px;
-				margin-left: 4px;
-				padding: 2px 25px 0;
-				position: relative;
-				&.active {
-					background: white;
-					top: 0px;
-				}
-				&:hover {
-					cursor: pointer;
-				}
+		right: 10px;
+	}
+}
+
+.ControlCenterTabs {
+	$nav-height: 18px;
+	border: 0;
+	padding: 10px 0 0 0;
+	position: absolute;
+	right: $width-outside - $control-center-content-width - 1px;
+	top: $control-center-header-height - $nav-height - 10px;
+	z-index: $base-z - 1;
+	ul {
+		@include clearfix;
+		li {
+			@include border-radius-ne(5px);
+			@include border-radius-nw(5px);
+			@include box-shadow(0, 0, 10px, #9db9cd, false, 0);
+			background: #dfdfdf;
+			float: left;
+			font-size: 12px;
+			height: $nav-height;
+			line-height: 16px;
+			margin-left: 4px;
+			padding: 2px 25px 0;
+			position: relative;
+			&.active {
+				background: white;
+				top: 0px;
+			}
+			&:hover {
+				cursor: pointer;
 			}
 		}
 	}
-	>aside {
-		float: right;
-		margin: 20px 15px 0 0;
-		width: 275px;
-	}
+}
+.ControlCenterRail {
+	float: right;
+	margin: 20px 15px 0 0;
+	width: 275px;
 }
 
 .ControlCenter {
@@ -81,7 +80,7 @@ $base-z: 5;
 		z-index: $base-z;
 		.control-section {
 			header {
-				@include linear-gradient(#ebebeb, top, #fff, 50%, #ebebeb, 100%);
+				@include linear-gradient(#ebebeb, top, #fff, 40%, #ebebeb, 100%);
 				border-bottom: 1px solid #ebebeb;
 				border-top: 1px solid #ebebeb;
 				font-size: 12px;
@@ -97,6 +96,7 @@ $base-z: 5;
 				}
 			}
 			.controls {
+				@include linear-gradient(#f5f5f5, top, #fff, 10%, #f5f5f5, 100%);
 				font-size: 11px;
 				line-height: 13px;
 				padding: 0 15px;
@@ -151,7 +151,10 @@ $base-z: 5;
 
 // Oasis overwrites
 .WikiaArticle {
+	float: left;
 	padding: 0;
+	position: relative;
+	z-index: $base-z;
 	ul, ol {
 		margin: 0;
 		list-style: none;
@@ -160,5 +163,5 @@ $base-z: 5;
 
 .WikiaPage {
 	background-color: #fff;
-	color: #000;
+	color: #464646;
 }
