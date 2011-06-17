@@ -583,11 +583,6 @@ $wgMaxThumbnailArea = 0.9e7;
  */
 $wgWikiaMaxNameChars = 50;
 
-/**
- * default directory for wikiex
- */
-$wgWikiTexDirectory = "/images/w/wikitex/images/";
-$wgWikiTexPath      = "http://images.wikia.com/wikitex/images/";
 
 /**
  * @name $IPA

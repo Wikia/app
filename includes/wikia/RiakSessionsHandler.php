@@ -71,6 +71,7 @@ class RiakSessionHandler {
 }
 
 if( $wgSessionsInRiak ) {
+	register_shutdown_function( 'session_write_close' );
 	session_set_save_handler(
 		array( "RiakSessionHandler", "open" ),
 		array( "RiakSessionHandler", "close" ),
