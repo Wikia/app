@@ -176,6 +176,12 @@ function wfCreatePageAjaxGetDialog() {
 
 	$defaultLayout = $wgUser->getOption( 'createpagedefaultblank', false ) ?  'blank' : 'format';
 
+	// some extensions (e.g. PLB) can remove "format" option, so fallback to first available option here
+	if(!array_key_exists($defaultLayout, $options) ) {
+		reset($options);
+		$defaultLayout = key($options);
+	}
+
 	$template->set_vars( array(
 			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ) ? true : false,
 			'options' => $options,
