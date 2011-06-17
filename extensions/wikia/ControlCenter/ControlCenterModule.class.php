@@ -25,6 +25,8 @@ class ControlCenterModule extends Module {
 
 		$this->founderProgressBar = (string)F::app()->sendRequest( 'FounderProgressBar', 'widget' );
 		
+		$this->controlCenterUrlGeneral = "";
+		$this->controlCenterUrlAdvanced = "";
 	}
 	
 }
