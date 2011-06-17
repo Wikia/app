@@ -25,6 +25,7 @@ window.RTE = {
 		language: window.wgUserLanguage,
 		removePlugins: 'about,elementspath,filebrowser,flash,forms,horizontalrule,image,justify,link,liststyle,maximize,newpage,pagebreak,toolbar,save,scayt,smiley,wsc',
 		resize_enabled: false,
+		richcomboCss: $.getSassCommonURL('extensions/wikia/EditPageReskin/RTE/css/richcombo.scss'),
 		skin: 'wikia',
 		startupFocus: true,
 		theme: 'wikia',
@@ -235,13 +236,15 @@ window.RTE = {
 	},
 
 	// final setup
-	onEditorReady: function() {
+	onEditorReady: function(ev) {
+		var editor = ev.editor;
+
 		// base colors: use color / background-color from .color1 CSS class
 		RTE.tools.getThemeColors();
 
 		// remove HTML indentation
-		RTE.instance.dataProcessor.writer.indentationChars = '';
-		RTE.instance.dataProcessor.writer.lineBreakChars = '';
+		editor.dataProcessor.writer.indentationChars = '';
+		editor.dataProcessor.writer.lineBreakChars = '';
 
 		// override "Source" button to send AJAX request first, instead of mode switching
 		CKEDITOR.plugins.sourcearea.commands.source.exec = function(editor) {
@@ -260,31 +263,38 @@ window.RTE = {
 
 		RTE.log('CKEditor v' + CKEDITOR.version +
 			(window.RTEDevMode ? ' (in development mode)' : '') +
-			' is ready in "' + RTE.instance.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
+			' is ready in "' + editor.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
 
 		// fire custom event for "track" plugin
-		RTE.instance.fire('RTEready');
+		editor.fire('RTEready');
 
 		// let extensions do their tasks when RTE is fully loaded
-		$(window).trigger('rteready', RTE.instance);
-		GlobalTriggers.fire('rteready', RTE.instance);
+		$(window).trigger('rteready', editor);
+		GlobalTriggers.fire('rteready', editor);
 
 		// reposition #RTEStuff
 		RTE.repositionRTEStuff();
 		$(window).
 			add('#EditPage').
 			bind('resize', RTE.repositionRTEStuff);
+
+		// preload format dropdown (BugId:4592)
+		var formatDropdown = editor.ui.create('Format');
+		if (formatDropdown) {
+			formatDropdown.createPanel(editor);
+		}
 	},
 
 	// extra setup of <body> wrapping editing area in wysiwyg mode
-	onWysiwygModeReady: function() {
+	onWysiwygModeReady: function(ev) {
 		RTE.log('onWysiwygModeReady');
 
-		var body = RTE.getEditor();
+		var body = RTE.getEditor(),
+			editor = ev.editor;
 
 		body.
 			// set ID, so CSS rules from MW can be applied
-			attr('id', RTE.instance.config.bodyId).
+			attr('id', editor.config.bodyId).
 			// set CSS class with content language of current wiki (used by RT #40248)
 			addClass('lang-' + window.wgContentLanguage);
 

@@ -50,11 +50,6 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 			attributes : panelDefinition.attributes
 		};
 
-		// Wikia - start
-		// apply custom styling for rich combo content
-		panelDefinition.css = [$.getSassCommonURL('extensions/wikia/EditPageReskin/RTE/css/richcombo.scss')];
-		// Wikia - end
-
 		this._ =
 		{
 			panelDefinition : panelDefinition,
@@ -102,8 +97,8 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 
 					if ( _.state == CKEDITOR.TRISTATE_DISABLED )
 						return;
-					
-					// Wikia - start - @author: wladek - allow open/close behavior of richcombos 
+
+					// Wikia - start - @author: wladek - allow open/close behavior of richcombos
 					if ( _.justHidden == true )
 						return;
 					// Wikia - end
@@ -233,6 +228,13 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 			if ( this._.panel )
 				return;
 
+			// Wikia - start
+			// apply custom styling for rich combo content
+			if (editor.config.richcomboCss != '') {
+				this._.panelDefinition.css = [editor.config.richcomboCss];
+			}
+			// Wikia - end
+
 			var panelDefinition = this._.panelDefinition,
 				panelBlockDefinition = this._.panelDefinition.block,
 				panelParentElement = panelDefinition.parent || CKEDITOR.document.getBody(),
@@ -278,7 +280,7 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 
 					if ( !preventOnClose && me.onClose )
 						me.onClose();
-					
+
 					// Wikia - start - @author: wladek - allow open/close behavior of richcombos
 					me._.justHidden = true;
 					setTimeout(function(){
@@ -423,3 +425,11 @@ CKEDITOR.ui.prototype.addRichCombo = function( name, definition )
 {
 	this.add( name, CKEDITOR.UI_RICHCOMBO, definition );
 };
+
+
+/**
+ * CSS to be loaded for richcombo dropdown (added by Wikia)
+ * @type string
+ * @default ''
+*/
+CKEDITOR.config.richcomboCss = '';
