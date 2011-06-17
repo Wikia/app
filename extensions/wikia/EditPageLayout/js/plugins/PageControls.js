@@ -195,6 +195,7 @@
 
 			this.titleNode.children('a').
 				attr('href', wgArticlePath.replace('$1', window.wgEditedTitle)).
+				attr('title', $.htmlentities(window.wgEditedTitle)).
 				html(shortText);
 		},
 
