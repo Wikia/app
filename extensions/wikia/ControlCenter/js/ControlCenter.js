@@ -4,9 +4,8 @@ var ControlCenter = {
 	init: function() {
 		// precache
 		ControlCenter.cc = $('#ControlCenter');
-		ControlCenter.header = $('#ControlCenterHeader');
 		ControlCenter.allControls = ControlCenter.cc.find('.control');
-		ControlCenter.tabs = ControlCenter.header.find('.tabs');
+		ControlCenter.tabs = $('#ControlCenterTabs');
 		ControlCenter.allTabs = ControlCenter.tabs.find('.tab');
 		ControlCenter.section.general = $('#ControlCenterGeneral');
 		ControlCenter.section.advanced = $('#ControlCenterAdvanced');
