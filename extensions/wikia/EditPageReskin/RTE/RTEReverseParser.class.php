@@ -416,9 +416,11 @@ class RTEReverseParser {
 					$prefix = '';
 				}
 
-				// if first child of this HTML block have data-rte-line-start, add line break before closing tag
-				if ( !empty($node->firstChild) && ($node->firstChild->nodeType == XML_ELEMENT_NODE) ) {
-					if ($node->firstChild->hasAttribute('data-rte-line-start')) {
+				// if the first / last child of this HTML block have data-rte-line-start, add line break before closing tag
+				$child = ($node->nodeName == 'div') ? $node->lastChild /* BugId:4748 */ : $node->firstChild;
+
+				if ( !empty($child) && ($child->nodeType == XML_ELEMENT_NODE) ) {
+					if ($child->hasAttribute('data-rte-line-start')) {
 						$beforeClose = "\n";
 					}
 				}
@@ -693,10 +695,14 @@ class RTEReverseParser {
 			}
 		}
 
+		// BugId:4748
+		else if (self::isChildOf($node, 'center') && self::isFirstChild($node)) {
+			$out = "\n{$out}";
+		}
+
 		$out = $this->fixForTableCell($node, $out);
 
 		wfProfileOut(__METHOD__);
-
 		return $out;
 	}
 
@@ -1229,9 +1235,10 @@ class RTEReverseParser {
 
 			$out = $this->fixForTableCell($node, $out);
 
-			// RT #38254
-			if (self::isChildOf($node, 'div') && self::isFirstChild($node)) {
-				$out = "\n{$out}";
+			if (self::isChildOf($node, 'div')) {
+				if (self::isFirstChild($node) /* RT#38254 */ || self::previousSiblingIs($node, 'center') /* BugId:4748 */) {
+					$out = "\n{$out}";
+				}
 			}
 		}
 		else {
