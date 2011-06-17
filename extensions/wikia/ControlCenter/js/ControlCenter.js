@@ -11,7 +11,7 @@ var ControlCenter = {
 		ControlCenter.section.advanced = $('#ControlCenterAdvanced');
 		ControlCenter.section.contentarea = $('#ControlCenterContentArea');
 		
-		//events
+		// events
 		ControlCenter.allControls.hover(function() {
 			var el = $(this);
 			ControlCenter.tooltip = $(this).closest('.control-section').find('header .tooltip');

@@ -58,9 +58,14 @@ $base-z: 5;
 			&:hover {
 				cursor: pointer;
 			}
+			a {
+				color: #464646;
+				text-decoration: none;
+			}
 		}
 	}
 }
+
 .ControlCenterRail {
 	float: right;
 	margin: 20px 15px 0 0;

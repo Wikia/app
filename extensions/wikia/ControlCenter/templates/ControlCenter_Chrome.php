@@ -14,10 +14,10 @@
 <nav class="ControlCenterTabs" id="ControlCenterTabs">
 	<ul>
 		<li class="tab" data-section="advanced">
-			Advanced
+			<a href="<?= $controlCenterUrlAdvanced ?>">Advanced</a>
 		</li>
 		<li class="tab active" data-section="general">
-			General
+			<a href="<?= $controlCenterUrlGeneral ?>">General</a>
 		</li>
 	</ul>
 </nav>
