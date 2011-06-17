@@ -52,14 +52,21 @@
 						'$PAGEURL' => 'http://www.wikia.com',
 						'$USERTALKPAGEURL' => 'http://www.wikia.com',
 						'$MYHOMEURL' => 'http://www.wikia.com',
+						'$ADDAPAGEURL' => 'http://www.wikia.com',
+						'$ADDAPHOTOURL' => 'http://www.wikia.com',
+						'$CUSTOMIZETHEMEURL' => 'http://www.wikia.com',
+						'$EDITMAINPAGEURL' => 'http://www.wikia.com',
+						'$EXPLOREURL' => 'http://www.wikia.com',
 					);
 	
-	$types = array('user-registered', 'anon-edit', 'general-edit', 'first-edit', 'lot-happening', 'views-digest', 'complete-digest');
+	$types = array('user-registered', 'anon-edit', 'general-edit', 'first-edit', 'lot-happening', 'views-digest', 'complete-digest','DayZero','DayThree','DayTen');
+	$days_passed_events = array('DayZero','DayThree','DayTen');
 	
 	foreach($types as $type) {
 		// get messages
 		$params['type'] = $type;
-		$mailBodyHTML = wfRenderModule("FounderEmails", "GeneralUpdate", array_merge($emailParams, $params));
+		$template = (in_array($type,$days_passed_events)) ? $type : "GeneralUpdate";
+		$mailBodyHTML = wfRenderModule("FounderEmails", $template, array_merge($emailParams, $params));
 		$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
 		
 		// send email
