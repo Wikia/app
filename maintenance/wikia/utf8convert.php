@@ -15,6 +15,11 @@
 
 ini_set( "include_path", dirname(__FILE__)."/../../maintenance/" );
 
+$optionsWithArgs = array(
+	'database',
+);
+
+
 require_once( "commandLine.inc" );
 
 class Utf8DbConvert {
@@ -25,12 +30,14 @@ class Utf8DbConvert {
 		// load command line options
 		$this->options = $options;
 		
+		global $wgDBname;
 		$this->force = isset($options['force']);
+		$this->databaseName = isset($options['database']) ? $options['database'] : $wgDBname;
 	}
 
 	protected function getDb() {
 		if (!isset($this->db)) {
-			$this->db = wfGetDb(DB_MASTER);
+			$this->db = wfGetDb(DB_SLAVE,array(),$this->databaseName);
 		}
 		return $this->db;
 	}
@@ -43,10 +50,9 @@ class Utf8DbConvert {
 	}
 
 	protected function getDatabases() {
-		global $wgDBname;
 		$db = $this->getDb();
 		$set = $db->select("`information_schema`.`schemata`",'*',array(
-			'schema_name' => $wgDBname,
+			'schema_name' => $this->databaseName,
 		),__METHOD__);
 		
 		$data = array();
@@ -57,10 +63,9 @@ class Utf8DbConvert {
 	}
 
 	protected function getFields() {
-		global $wgDBname;
 		$db = $this->getDb();
 		$set = $db->select("`information_schema`.`columns`",'*',array(
-			'table_schema' => $wgDBname,
+			'table_schema' => $this->databaseName,
 		),__METHOD__);
 		
 		$data = array();
@@ -71,10 +76,9 @@ class Utf8DbConvert {
 	}
 
 	protected function getTables() {
-		global $wgDBname;
 		$db = $this->getDb();
 		$set = $db->select("`information_schema`.`tables`",'*',array(
-			'table_schema' => $wgDBname,
+			'table_schema' => $this->databaseName,
 		),__METHOD__);
 		
 		$data = array();
@@ -112,15 +116,63 @@ class Utf8DbConvert {
 		}
 	}
 
+	protected function getIntermediateFieldType( $type, &$baseType = null ) {
+		list( $baseType ) = explode( '(', $type, 2 );
+		$typeExtra = substr( $type, strlen($baseType) );
+		$baseType = strtolower($baseType);
+		$matrix = array(
+			'tinytext' => 'tinyblob',
+			'text' => 'blob',
+			'mediumtext' => 'mediumblob',
+			'longtext' => 'longblob',
+			'char' => 'binary',
+			'varchar' => 'varbinary',
+		);
+		if (isset($matrix[$baseType])) {
+			return $matrix[$baseType] . $typeExtra;
+		}
+		return false;
+	}
+
+	protected function dumpTable( $tableName ) {
+		static $lastTableName = null;
+		if ($tableName == $lastTableName) return false;
+		$lastTableName = $tableName;
+		$db = $this->getDb();
+		$set = $db->query("SHOW CREATE TABLE `{$tableName}`;");
+		while ($row = $db->fetchRow($set)) {
+			$sqlLines = preg_split("/\r?\n/",$row[1]);
+			foreach ($sqlLines as $k => $line) {
+				$sqlLines[$k] = "-- {$line}";
+			}
+			$sql = implode("\n",$sqlLines);
+			return $sql;
+		}
+	}
+
 	protected function processFields() {
 		$sqlList = array();
 		$fields = $this->getFields();
 		foreach ($fields as $field) {
 			if (!is_null($field->COLLATION_NAME) && $field->COLLATION_NAME !== 'utf8_bin') {
+				if (!$this->force) {
+					$tableDump = $this->dumpTable($field->TABLE_NAME);
+					if ($tableDump) {
+						$sqlList[] = $tableDump;
+					}
+				}
 				$rest = ($field->IS_NULLABLE == 'YES' ? "NULL" : "NOT NULL")
 					. (!is_null($field->COLUMN_DEFAULT) ? " DEFAULT '{$field->COLUMN_DEFAULT}'" : "");
-				$sqlList[] = "ALTER TABLE `{$field->TABLE_NAME}` MODIFY {$field->COLUMN_NAME} {$field->COLUMN_TYPE} BINARY $rest;";
-				$sqlList[] = "ALTER TABLE `{$field->TABLE_NAME}` MODIFY {$field->COLUMN_NAME} {$field->COLUMN_TYPE} CHARACTER SET utf8 COLLATE utf8_bin {$rest};";
+				$baseType = null;
+				$transColumnType = $this->getIntermediateFieldType( $field->COLUMN_TYPE, $baseType );
+				if ($transColumnType) {
+					$sqlList[] = "ALTER TABLE `{$field->TABLE_NAME}` MODIFY {$field->COLUMN_NAME} {$transColumnType} $rest;";
+					$sqlList[] = "ALTER TABLE `{$field->TABLE_NAME}` MODIFY {$field->COLUMN_NAME} {$field->COLUMN_TYPE} CHARACTER SET utf8 COLLATE utf8_bin {$rest};";
+				} else if ($baseType == 'enum') {
+					$sqlList[] = "ALTER TABLE `{$field->TABLE_NAME}` MODIFY {$field->COLUMN_NAME} {$field->COLUMN_TYPE} CHARACTER SET utf8 COLLATE utf8_bin {$rest};";
+				} else {
+					$sqlList[] = "--{$field->TABLE_NAME}.{$field->COLUMN_NAME} -- could not find intermediate type for {$field->COLUMN_TYPE}\n";
+				}
 			}
 		}
 		
