@@ -54,6 +54,8 @@ function AutomaticWikiAdoptionInit() {
 
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'AutomaticWikiAdoptionHelper::onSkinTemplateOutputPageBeforeExec';
 	$wgHooks['GetPreferences'][] = 'AutomaticWikiAdoptionHelper::onGetPreferences';
+	$wgHooks['ArticleSaveComplete'][] = 'AutomaticWikiAdoptionHelper::onArticleSaveComplete';
+
 }
 
 // Ajax dispatcher

@@ -358,6 +358,22 @@ class AutomaticWikiAdoptionHelper {
 	}
 
 	/**
+	 * Hook handler
+	 * 
+	 * If a sysop makes an edit, unset any flags that have been set so far
+	 * because the adoption clock starts over again
+	 * @author Owen Davis
+	 */
+	
+	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
+		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+		global $wgCityId;
+		if (in_array('sysop', $user->getGroups())) {
+			WikiFactory::resetFlags($wgCityId, WikiFactory::FLAG_ADOPTABLE | WikiFactory::FLAG_ADOPT_MAIL_FIRST | WikiFactory::FLAG_ADOPT_MAIL_SECOND);
+		}
+		return true;
+	}	
+	/**
 	 * Dismisses notification about wiki adoption
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
