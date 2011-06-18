@@ -97,9 +97,91 @@
 					padding: 10px;
 					.actions {
 						margin-top: 10px;
+						text-align: right;
 					}
 				}
 			}
 		}
 	}
+}
+
+.FounderProgressList {
+	@include box-shadow(4px, 4px, 4px, #e2e2e2, false, 0);
+	background: green;
+	border: 1px solid #e8e8e8;
+	position: absolute;
+	right: 285px;
+	top: -20px;
+	width: 698px;
+	z-index: 7;
+	header {
+		@include linear-gradient(#f2f2f2, top, #fff, 40%, #f2f2f2, 100%);
+		padding: 20px 40px;
+		h1 {
+			font-size: 16px;
+			font-weight: bold;
+		}
+		p {
+			margin-top: 8px;
+			line-height: 20px;
+		}
+	}
+	.tasks {
+		.task {
+			border-top: 1px solid #e8e8e8;
+			.task-label {
+				@include linear-gradient(#ebebeb, top, #fff, 40%, #ebebeb, 100%);
+				color: #6aa8d1;
+				font-size: 16px;
+				font-weight: bold;
+				padding: 7px 20px;
+			}
+			.task-group {
+				@include clearfix;
+				padding: 20px 0 0 55px;
+				background: white;
+			}
+		}
+	}
+	.activities {
+		float: left;
+		width: 200px;
+		.activity {
+			cursor: default;
+			position: relative;
+			.activity-label {
+				color: #1075b5;
+				font-size: 14px;
+				margin-bottom: 10px;
+			}
+			.activity-description {
+				@include box-shadow(2px, 2px, 2px, #ccc, false, 0);
+				background: white;
+				border: 1px solid #e8e8e8;
+				bottom: 15px;
+				display: none;
+				position: absolute;
+				width: 250px;
+				z-index: 9;
+				.description {
+					font-size: 11px;
+					line-height: 18px;
+					padding: 10px;
+					h4 {
+						font-size: 13px;
+						font-weight: bold;
+					}
+				}
+				.actions {
+					background-color: #f3f3f3;
+					padding: 5px;
+					text-align: right;
+				}
+			}
+		}
+	}
+}
+
+.ControlCenterRail {
+	position: relative;
 }

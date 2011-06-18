@@ -1,3 +1,33 @@
+var FounderProgressList = {
+	isHidden: true,
+	hoverHandle: false,
+	init: function() {
+		FounderProgressList.d = $('#FounderProgressList');
+		FounderProgressList.allActivities = FounderProgressList.d.find('.activity');
+		
+		FounderProgressList.allActivities.hover(function() {
+			clearTimeout(FounderProgressList.hoverHandle);
+			var el = $(this).find('.activity-description');
+			FounderProgressList.hoverHandle = setTimeout(function() {
+				el.show();
+			}, 400);
+		}, function() {
+			clearTimeout(FounderProgressList.hoverHandle);
+			$(this).find('.activity-description').fadeOut(200);
+		});
+		
+		$('#FounderProgressListToggle').click(function(e) {
+			e.preventDefault();
+			if(FounderProgressList.isHidden) {
+				FounderProgressList.d.show();
+			} else {
+				FounderProgressList.d.hide();
+			}
+			FounderProgressList.isHidden = !FounderProgressList.isHidden;
+		});
+	}
+}
+
 var FounderProgressWidget = {
 	widget: false,
 	init: function() {
@@ -26,7 +56,7 @@ var FounderProgressBar = {
 	init: function() {
 		FounderProgressBar.canvas = document.getElementById('FounderProgressBar');
 		FounderProgressBar.c = FounderProgressBar.canvas.getContext('2d');
-		FounderProgressBar.drawAnimated(82);
+		FounderProgressBar.drawAnimated(68);
 		//FounderProgressBar.draw(90);
 	},
 	draw: function(score) {
@@ -104,6 +134,7 @@ var FounderProgressBar = {
 	}
 };
 $(function() {
+	FounderProgressList.init();
 	FounderProgressWidget.init();
 	FounderProgressBar.init();
 });
