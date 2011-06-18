@@ -690,26 +690,37 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 	if($isOuterRequest){
 		$id = requestStarted(__METHOD__, "$artist|$song");
 	}
+
 	$debug = false;$debugSuffix = "_debug";
 	$artist = rawurldecode($artist);
 	$song = rawurldecode($song);
-	$origArtist = $artist; // for logging the failed requests, record the original name before we start messing with it
-	$origSong = $song;
-	$lookedFor = ""; // which titles we looked for.  Used in SOAP failures - TODO: REFACTOR TO BE AN ARRAY... SRSLY.
 
 	// Trick to show debug output.  Just add the debugSuffix to the end of the song name, and debug output will be displayed.
 	if((strlen($song) >= strlen($debugSuffix)) && (substr($song, (0-strlen($debugSuffix))) == $debugSuffix)){
+		$debug = true;
+	}
+	//GLOBAL $debug; // Do NOT do this.  This will effectively un-set the local var.
+	if($debug){
 		// Testing the UTF8 issues with incoming values.
 		print "ARTIST: $artist\n";
 		print "ENCODE: ".utf8_encode($artist)."\n";
 		print "DECODE: ".utf8_decode($artist)."\n";
 		$song = substr($song, 0, (strlen($song)-strlen($debugSuffix)));
-		$debug = true;
-	}
-	//GLOBAL $debug; // Do NOT do this.  This will effectively un-set the local var.
-	if($debug){
 		//print "Song: $song\n";
 	}
+
+	// If this is explicitly a request for a Gracenote page, change the namespace and continue on.
+	$GRACENOTE_NS_STRING = "Gracenote"; // FIXME: Is there a more programmatic way to get this string?
+	if($artist == $GRACENOTE_NS_STRING){
+		$artist = $song; // the name will automatically get split up if we stuff the whole thing into the artist variable.
+		$song = "";
+		$ns = NS_GRACENOTE;
+		print (!$debug?"":"Gracenote page was explicitly requested. Now looking for \"$artist\" in the Gracenote namespace.");
+	}
+
+	$origArtist = $artist; // for logging the failed requests, record the original name before we start messing with it
+	$origSong = $song;
+	$lookedFor = ""; // which titles we looked for.  Used in SOAP failures - TODO: REFACTOR TO BE AN ARRAY... SRSLY.
 
 	$artist = trim(html_entity_decode($artist));
 	$song = trim(html_entity_decode($song));
@@ -721,7 +732,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 	}
 	$defaultLyrics = "Not found";
 	$defaultUrl = "http://lyrics.wikia.com";
-	$nsString = ($ns == NS_GRACENOTE ? "Gracenote:" : ""); // FIXME: Is there a more programmatic way to get this string?
+	$nsString = ($ns == NS_GRACENOTE ? $GRACENOTE_NS_STRING.":" : "");
 	$urlRoot = "http://lyrics.wikia.com/"; // may differ from default URL, should contain a slash after it.
 	$instrumental = "Instrumental";
 	$DENIED_NOTICE = "Unfortunately, due to licensing restrictions from some of the major music publishers we can no longer return lyrics through the LyricWiki API (where this application gets some or all of its lyrics).\n";
