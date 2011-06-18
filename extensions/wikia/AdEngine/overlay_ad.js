@@ -36,7 +36,7 @@ var displayOverlayAd = function(){
 						position: absolute;\
 						top: '+OverlayAd.settings.yoffset+'px;\
 						width: '+OverlayAd.settings.width+'px;\
-						z-index: 2000000;\
+						z-index: 2147483647;\
 					}\
 					#wikia_overlay_ad .clickable {\
 						cursor: pointer;\
