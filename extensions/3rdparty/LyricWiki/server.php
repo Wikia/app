@@ -685,18 +685,19 @@ function getSOTD(){
  * @param isOuterRequest is a bool which represents if this is the actual request from the SOAP or REST APIs.  It will be set to false by all recursive calls.
  */
 function getSongResult($artist, $song){ return getSong($artist,$song); } // Alias. (think it was needed for Flash or one of the SOAP libraries)
-function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterRequest=true){
+function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterRequest=true, $debug=false){
 	wfDebug("LWSOAP: inside " . __METHOD__ . "\n");
 	if($isOuterRequest){
 		$id = requestStarted(__METHOD__, "$artist|$song");
 	}
 
-	$debug = false;$debugSuffix = "_debug";
+	$debugSuffix = "_debug";
 	$artist = rawurldecode($artist);
 	$song = rawurldecode($song);
 
 	// Trick to show debug output.  Just add the debugSuffix to the end of the song name, and debug output will be displayed.
 	if((strlen($song) >= strlen($debugSuffix)) && (substr($song, (0-strlen($debugSuffix))) == $debugSuffix)){
+		$song = substr($song, 0, (strlen($song)-strlen($debugSuffix))); // remove debug-suffix
 		$debug = true;
 	}
 	//GLOBAL $debug; // Do NOT do this.  This will effectively un-set the local var.
@@ -705,8 +706,6 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 		print "ARTIST: $artist\n";
 		print "ENCODE: ".utf8_encode($artist)."\n";
 		print "DECODE: ".utf8_decode($artist)."\n";
-		$song = substr($song, 0, (strlen($song)-strlen($debugSuffix)));
-		//print "Song: $song\n";
 	}
 
 	// If this is explicitly a request for a Gracenote page, change the namespace and continue on.
@@ -884,7 +883,11 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 					// If the title wasn't found from any previous tricks, try the original song capitalization that was passed in (with the possibly-rewritten artist name).
 					// NOTE: lw_pageExists() caches results, so re-looking up the same one if capitalization is the same, is not a problem... however, if that ends up being
 					// a lot of overhead at some point, we could make it only try this again if the new $title is not in $lookedFor already.
-					$title = "$finalName:" . utf8_encode($song); // not lw_getTitle so that original capitalization survives
+					if($isOuterRequest){
+						$title = "$finalName:" . utf8_encode($song); // not lw_getTitle so that original capitalization survives
+					} else {
+						$title = "$finalName:$song"; // this was an inner (eg: recursive) request. encoding was already done.
+					}
 					print (!$debug?"":"Looking with original song capitalization for \"$title\"\n");
 				} else {
 					print (!$debug?"":"$title found.\n");
@@ -961,13 +964,13 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 			// If there was no result, give it another try without the hyphen trick.
 			if(($retVal['lyrics'] == $defaultLyrics) && ($lastHyphen !== false)){ // this logic should be kept even if isOuterRequest is false (ie: Gracenote should be tried with and without the hyphen trick
 				print (!$debug?"":"Trying again but assuming hyphens are part of the song name...\n");
-				$retVal = getSong($origArtist, $hyphenSong, false, $ns, false); // the first false stops the hyphen trick from being tried again, the second false indicates that this is a recursive call
+				$retVal = getSong($origArtist, $hyphenSong, false, $ns, false, $debug); // the first false stops the hyphen trick from being tried again, the second false indicates that this is a recursive call
 			}
 
 			// If there was no result, give it another try by going through the NS_GRACNOTE (if this is not NS_GRACENOTE already) before trying the fallback search.
 			if(($isOuterRequest) && ($retVal['lyrics'] == $defaultLyrics) && ($ns != NS_GRACENOTE)){
 				print (!$debug?"":"Trying again but using Gracenote namespace this time...\n");
-				$gnRetVal = getSong($artist, $song, true, NS_GRACENOTE, false); // since we're starting all tricks from scratch, use doHyphens=true
+				$gnRetVal = getSong($artist, $song, true, NS_GRACENOTE, false, $debug); // since we're starting all tricks from scratch, use doHyphens=true
 
 				// If we found a legit match, overwrite whole result (don't do that normally because it would mess up the URL to use the GN namespace even though song is in neither namespace).
 				if($gnRetVal['lyrics'] != $defaultLyrics){
