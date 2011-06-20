@@ -231,7 +231,6 @@ $wgAutoloadClasses["WikiaApiQueryMostAccessPages"] = "extensions/wikia/WikiaApi/
 $wgAutoloadClasses["WikiaApiQueryLastEditPages"] = "extensions/wikia/WikiaApi/WikiaApiQueryLastEditPages.php";
 $wgAutoloadClasses["WikiaApiQueryTopEditUsers"] = "extensions/wikia/WikiaApi/WikiaApiQueryTopEditUsers.php";
 $wgAutoloadClasses["WikiaApiQueryMostVisitedPages"] = "extensions/wikia/WikiaApi/WikiaApiQueryMostVisitedPages.php";
-$wgAutoloadClasses["WikiaApiQueryReferers"] = "extensions/wikia/WikiaApi/WikiaApiQueryReferers.php";
 $wgAutoloadClasses["ApiFeaturedContent"] = "extensions/wikia/FeaturedContent/ApiFeaturedContent.php";
 $wgAutoloadClasses["ApiPartnerWikiConfig"] = "extensions/wikia/FeaturedContent/ApiPartnerWikiConfig.php";
 $wgAutoloadClasses["WikiaApiAjaxLogin"] = "extensions/wikia/WikiaApi/WikiaApiAjaxLogin.php";
@@ -292,7 +291,6 @@ $wgAPIListModules[ "wkaccessart"  ] = "WikiaApiQueryMostAccessPages";
 $wgAPIListModules[ "wkeditpage"   ] = "WikiaApiQueryLastEditPages";
 $wgAPIListModules[ "wkedituser"   ] = "WikiaApiQueryTopEditUsers";
 $wgAPIListModules[ "wkmostvisit"  ] = "WikiaApiQueryMostVisitedPages";
-$wgAPIListModules[ "wkreferer"    ] = "WikiaApiQueryReferers";
 
 
 /**
