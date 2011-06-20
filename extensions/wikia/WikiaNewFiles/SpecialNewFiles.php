@@ -10,7 +10,7 @@
 function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	global $wgUser, $wgOut, $wgLang, $wgRequest, $wgMiserMode, $wgUseWikiaNewFiles;
 	global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
-	global $wmu;
+	global $wmu, $wgOasisHD;
 
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/WikiaNewFiles/js/WikiaNewFiles.js?$wgStyleVersion\"></script>\n" );
 
@@ -18,7 +18,7 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	$dbr = wfGetDB( DB_SLAVE );
 	$sk = $wgUser->getSkin();
 	$shownav = !$specialPage->including();
-	$hidebots = $wgRequest->getBool( 'hidebots' , 1 );
+	$hidebots = $wgRequest->getBool( 'hidebots', 1 );
 
 	$hidebotsql = '';
 	if ( $hidebots ) {
@@ -122,8 +122,18 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	$gallery = new WikiaPhotoGallery();
 	$gallery->parseParams( array(
 		"rowdivider" => true,
-		"hideoverflow" => true,
+		"hideoverflow" => true
 		) );
+	
+	//FB#1150 - make the images fit the whole horizontal space in Oasis and Oasis HD
+	if ( get_class( $sk ) == 'SkinOasis' ) {
+		if ( $wgOasisHD ) {
+			$gallery->setWidths( 202 );
+		} else {
+			$gallery->setWidths( 212 );
+		}
+	}
+	
 	$firstTimestamp = null;
 	$lastTimestamp = null;
 	$shownImages = 0;

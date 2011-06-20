@@ -178,6 +178,9 @@ class WikiaPhotoGallery extends ImageGallery {
 
 	/**
 	 * Parse and store attributes of parsed <gallery> tag
+	 * 
+	 * WARNING: This handles only additional parameters not handled by ImageGallery, see /includes/parser/Parser.php
+	 * for setting width use setWidths!
 	 */
 	public function parseParams($params) {
 		wfProfileIn(__METHOD__);
@@ -308,7 +311,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	 */
 	public function setWidths($width) {
 		$width = intval($width);
-
+		
 		// 100px is the smallest width for slideshows
 		if ($this->mType == self::WIKIA_PHOTO_SLIDESHOW) {
 			$width = max(100, $width);
