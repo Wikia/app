@@ -125,7 +125,7 @@ class SponsorshipDashboardBodyTest extends PHPUnit_Framework_TestCase {
 			->will(  $this->returnCallback( array( $this, 'appServiceCallbackFalse') ) );
 		F::setInstance( 'App', $app );
 
-		$db_enabled = $this->app->getGlobal( 'wgStatsDBEnabled' )
+		$db_enabled = $this->app->getGlobal( 'wgStatsDBEnabled' );
 		$db = ( $db_enabled ) ? $this->app->getGlobal('wgStatsDB') : null;
 
 		$this->assertEquals(
