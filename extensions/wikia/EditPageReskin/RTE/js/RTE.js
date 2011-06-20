@@ -21,16 +21,30 @@ window.RTE = {
 		disableObjectResizing: true,
 		entities: false,
 		format_tags: 'p;h2;h3;h4;h5;pre',
-		height: 400,
 		language: window.wgUserLanguage,
-		removePlugins: 'about,elementspath,filebrowser,flash,forms,horizontalrule,image,justify,link,liststyle,maximize,newpage,pagebreak,toolbar,save,scayt,smiley,wsc',
+		plugins :
+			'basicstyles,' +
+			'button,' +
+			'clipboard,' +
+			'contextmenu,' +
+			'enterkey,' +
+			'format,' +
+			'htmldataprocessor,' +
+			'indent,' +
+			'keystrokes,' +
+			'list,' +
+			'pastetext,' +
+			'removeformat,' +
+			'sourcearea,' +
+			'table,' +
+			'tabletools,' +
+			'undo,' +
+			'wysiwygarea',
 		resize_enabled: false,
 		richcomboCss: $.getSassCommonURL('extensions/wikia/EditPageReskin/RTE/css/richcombo.scss'),
 		skin: 'wikia',
 		startupFocus: true,
-		theme: 'wikia',
-		toolbar: 'Wikia',
-		toolbarCanCollapse: false
+		theme: 'wikia'
 	},
 
 	// reference to current CK instance
@@ -54,7 +68,6 @@ window.RTE = {
 		'comment',
 		'dialog',
 		'dragdrop',
-		'edit-buttons',
 		'entities',
 		'gallery',
 		'justify',
@@ -71,10 +84,8 @@ window.RTE = {
 		'spellchecker',
 		'template',
 		'temporary-save',
-		'toolbar',
 		'tools',
-		'track',
-		'widescreen'
+		'track'
 	],
 
 	// use firebug / opera console to log events / dump objects
@@ -271,6 +282,7 @@ window.RTE = {
 		// let extensions do their tasks when RTE is fully loaded
 		$(window).trigger('rteready', editor);
 		GlobalTriggers.fire('rteready', editor);
+		console.profileEnd();
 
 		// reposition #RTEStuff
 		RTE.repositionRTEStuff();
@@ -471,42 +483,6 @@ CKEDITOR.config.baseColor = '#000';
 
 // Wikia toolbar
 CKEDITOR.config.baseColor = '#000';
-
-CKEDITOR.config.toolbar_Wikia =
-[
-	{
-		name: "",
-		data: [
-		{
-			msg: 'textAppearance',
-			groups: [
-				['Format'],
-				['Bold','Italic','Underline','Strike'],
-				['BulletedList','NumberedList'],
-				['Link','Unlink'],
-				['Outdent','Indent'],
-				['JustifyLeft','JustifyCenter','JustifyRight']
-			]
-		},
-		{
-			msg: 'insert',
-			groups: [
-				['Image', 'Gallery', 'Poll', 'Video'],
-				['Table'],
-				['Template'],
-				['Signature']
-			]
-		},
-		{
-			msg: 'controls',
-			groups: [
-				['Undo','Redo'],
-				(window.skin == 'oasis' ? false : ['Widescreen']), // temp hack
-				['Source']
-			]
-		}
-	]}
-];
 
 //
 // extend CK core objects
