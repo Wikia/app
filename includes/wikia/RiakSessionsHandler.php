@@ -45,28 +45,52 @@ class RiakSessionHandler {
 	static public function read( $id ) {
 		global $wgRiakSessionNode;
 
-		$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode, false );
-		wfDebugLog( "session", __METHOD__ . ": reading $id from session storage\n", true );
-		return $cache->get( self::key( $id ) );
+		try {
+			$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode, true );
+			wfDebugLog( "session", __METHOD__ . ": reading $id from session storage\n", true );
+			$data = $cache->get( self::key( $id ) );
+		} catch (Exception $e) {
+			self::error($e);
+		}
+		return $data;
 	}
 
 	static public function write( $id, $data ) {
 		global $wgRiakSessionNode;
 
-		$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode, false );
-		wfDebugLog( "session", __METHOD__ . ": store on session storage with key {$id}\n", true );
-		$cache->set( self::key( $id ), $data, self::EXPIRE );
+		try {
+			$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode, true );
+			wfDebugLog( "session", __METHOD__ . ": store on session storage with key {$id}\n", true );
+			$cache->set( self::key( $id ), $data, self::EXPIRE );
+		} catch (Exception $e) {
+			self::error($e);
+		}
 	}
 
 	static public function destroy( $id ) {
 		global $wgRiakSessionNode;
 
-		$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode, false );
-		$cache->delete( self::key( $id ) );
+		try {
+			$cache = new RiakCache( self::BUCKET, $wgRiakSessionNode, true );
+			$cache->delete( self::key( $id ) );
+		} catch (Exception $e) {
+			self::error($e);
+		}
 	}
 
 	static public function gc( $maxlifetime ) {
 		return true;
+	}
+
+	static public function error( $exception = null ) {
+		$message = ($exception instanceof Exception) ? $exception->getMessage() : "Unknown error";
+		$stacktrace = ($exception instanceof Exception) ? $exception->getTraceAsString() : "";
+
+		// XXX: put log to better place
+		error_log("RIAK: {$message}\n{$stacktrace}");
+		// just die with 500
+		header("HTTP/1.0 500 Internal Server Error");
+		die("Could not reach Riak ({$message})");
 	}
 }
 
