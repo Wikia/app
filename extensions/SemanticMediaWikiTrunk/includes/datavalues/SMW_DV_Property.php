@@ -99,7 +99,7 @@ class SMWPropertyValue extends SMWDataValue {
 	 */
 	protected function parseUserValue( $value ) {
 		$this->mPropTypeValue = null;
-		unset( $this->m_wikipage );
+		$this->m_wikipage = null;
 
 		if ( $this->m_caption === false ) { // always use this as caption
 			$this->m_caption = $value;
@@ -186,19 +186,39 @@ class SMWPropertyValue extends SMWDataValue {
 	}
 
 	public function getShortWikiText( $linked = null ) {
-		return $this->isVisible() ? $this->highlightText( $this->getWikiPageValue()->getShortWikiText( $linked ) ) : '';
+		if ( $this->isVisible() ) {
+			$wikiPageValue = $this->getWikiPageValue();
+			return is_null( $wikiPageValue ) ? '' : $this->highlightText( $wikiPageValue->getShortWikiText( $linked ) );
+		} else {
+			return '';
+		}
 	}
 
-	public function getShortHTMLText( $linker = null ) {
-		return $this->isVisible() ? $this->highlightText( $this->getWikiPageValue()->getShortHTMLText( $linker ) ) : '';
+	public function getShortHTMLText( $linked = null ) {
+		if ( $this->isVisible() ) {
+			$wikiPageValue = $this->getWikiPageValue();
+			return is_null( $wikiPageValue ) ? '' : $this->highlightText( $wikiPageValue->getShortHTMLText( $linked ) );
+		} else {
+			return '';
+		}
 	}
 
 	public function getLongWikiText( $linked = null ) {
-		return $this->isVisible() ? $this->highlightText( $this->getWikiPageValue()->getLongWikiText( $linked ) ) : '';
+		if ( $this->isVisible() ) {
+			$wikiPageValue = $this->getWikiPageValue();
+			return is_null( $wikiPageValue ) ? '' : $this->highlightText( $wikiPageValue->getLongWikiText( $linked ) );
+		} else {
+			return '';
+		}
 	}
 
-	public function getLongHTMLText( $linker = null ) {
-		return $this->isVisible() ? $this->highlightText( $this->getWikiPageValue()->getLongHTMLText( $linker ) ) : '';
+	public function getLongHTMLText( $linked = null ) {
+		if ( $this->isVisible() ) {
+			$wikiPageValue = $this->getWikiPageValue();
+			return is_null( $wikiPageValue ) ? '' : $this->highlightText( $wikiPageValue->getLongHTMLText( $linked ) );
+		} else {
+			return '';
+		}
 	}
 
 	public function getWikiValue() {
