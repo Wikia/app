@@ -282,7 +282,6 @@ window.RTE = {
 		// let extensions do their tasks when RTE is fully loaded
 		$(window).trigger('rteready', editor);
 		GlobalTriggers.fire('rteready', editor);
-		console.profileEnd();
 
 		// reposition #RTEStuff
 		RTE.repositionRTEStuff();
