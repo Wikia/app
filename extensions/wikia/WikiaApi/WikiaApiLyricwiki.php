@@ -349,8 +349,13 @@ class WikiaApiLyricwiki extends ApiBase {
 				print "\n";
 
 				print Xml::openElement( 'pre' );
-				print "\n";
-				print utf8_decode(htmlspecialchars( $result['lyrics'], ENT_QUOTES, "UTF-8" ));
+					print "\n";
+					$lyricsHtml = utf8_decode(htmlspecialchars( $result['lyrics'], ENT_QUOTES, "UTF-8" ));
+
+					// Special case to make sure the gracenote copyright symbol gets parsed correctly when needed.
+					$lyricsHtml = str_replace("&amp;copy;", "&copy;", $lyricsHtml);
+
+					print $lyricsHtml;
 				print Xml::closeElement( 'pre' );
 
 				// Make it extensible by displaying any extra data in a UL.
