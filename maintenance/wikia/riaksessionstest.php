@@ -13,7 +13,7 @@ $SJC_APACHES = array( 'ap-s20', 'ap-s21', 'ap-s22', 'ap-s23', 'ap-s24', 'ap-s25'
 $IOWA_APACHES = array( 'ap-i15', 'ap-i16', 'ap-i17', 'ap-i18', 'ap-i19', 'ap-i20' );
 // Configuration - end
 
-ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
+ini_set( "include_path", dirname(__FILE__)."/../../maintenance/" );
 
 $optionsWithArgs = array(
 	'username',
@@ -158,12 +158,14 @@ class RiakSessionsTest {
 
 	protected $username;
 	protected $password;
+	protected $quiet;
 
 	public function __construct( $options ) {
 		// load command line options
 		$this->options = $options;
 		$this->username = @$this->options['username'];
 		$this->password = @$this->options['password'];
+		$this->quiet = (bool)@$this->options['quiet'];
 
 		// initialize helpers
 		if (!defined('RIAKTEST_DEVBOX')) {
@@ -180,6 +182,7 @@ class RiakSessionsTest {
 	}
 
 	protected function api( $host, $data ) {
+		$this->log("  sending request to {$host}");
 		$out = $this->mw->api($host,$data);
 		if (is_string($out))
 			$out = @Wikia::json_decode($out,true);
@@ -197,12 +200,16 @@ class RiakSessionsTest {
 		$val1 = $this->randomString(50);
 		$val2 = $this->randomString(50);
 
-		// step 1 - log in
+		// step 1
+		$this->log("Step 1 - log in");
 		$status = $this->mw->logIn($this->defaultHost, $this->username, $this->password);
-		if (!$status)
-			die('Could not log in\n');
+		if (!$status) {
+			$this->logError('FATAL: could not log in, exiting');
+			die();
+		}
 
 		// step 2
+		$this->log("Step 2 - Create session @ one of SJC apaches");
 		$data = $this->api($this->sjc->get(),array(
 			'action' => 'riakaccess',
 			'op' => 'set',
@@ -214,6 +221,7 @@ class RiakSessionsTest {
 		$this->assert($data && $data['status'],"Create session @ one of SJC apaches");
 
 		// step 3
+		$this->log("Step 3 - Read session data @ another SJC apache");
 		$data = $this->api($this->sjc->get(),array(
 			'action' => 'riakaccess',
 			'op' => 'get',
@@ -224,6 +232,7 @@ class RiakSessionsTest {
 		$this->assert($data && $data['status'] && !$data['empty'] && $data['value'] === $val1,"Read session data @ another SJC apache");
 
 		// step 4
+		$this->log("Step 4 - Read session data @ one of Iowa apaches");
 		$data = $this->api($this->iowa->get(),array(
 			'action' => 'riakaccess',
 			'op' => 'get',
@@ -234,6 +243,7 @@ class RiakSessionsTest {
 		$this->assert($data && $data['status'] && !$data['empty'] && $data['value'] === $val1,"Read session data @ one of Iowa apaches");
 
 		// step 5
+		$this->log("Step 5 - Update session data @ one of SJC apaches");
 		$data = $this->api($this->sjc->get(),array(
 			'action' => 'riakaccess',
 			'op' => 'set',
@@ -245,6 +255,7 @@ class RiakSessionsTest {
 		$this->assert($data && $data['status'],"Update session data @ one of SJC apaches");
 
 		// step 6
+		$this->log("Step 6 - Read session data @ another SJC apache");
 		$data = $this->api($this->sjc->get(),array(
 			'action' => 'riakaccess',
 			'op' => 'get',
@@ -255,6 +266,7 @@ class RiakSessionsTest {
 		$this->assert($data && $data['status'] && !$data['empty'] && $data['value'] === $val2,"Read session data @ another SJC apache");
 
 		// step 7
+		$this->log("Step 7 - Read session data @ one of Iowa apaches");
 		$data = $this->api($this->iowa->get(),array(
 			'action' => 'riakaccess',
 			'op' => 'get',
@@ -265,6 +277,7 @@ class RiakSessionsTest {
 		$this->assert($data && $data['status'] && !$data['empty'] && $data['value'] === $val2,"Read session data @ one of Iowa apaches");
 
 		// step 8
+		$this->log("Step 8 - Delete session data @ one of SJC apaches");
 		$data = $this->api($this->sjc->get(),array(
 			'action' => 'riakaccess',
 			'op' => 'delete',
@@ -275,6 +288,7 @@ class RiakSessionsTest {
 		$this->assert($data && $data['status'],"Delete session data @ one of SJC apaches");
 
 		// step 9
+		$this->log("Step 9 - Read session data @ another SJC apache");
 		$data = $this->api($this->sjc->get(),array(
 			'action' => 'riakaccess',
 			'op' => 'get',
@@ -285,6 +299,7 @@ class RiakSessionsTest {
 		$this->assert($data && $data['status'] && $data['empty'] && $data['value'] === false,"Read session data @ another SJC apache");
 
 		// step 10
+		$this->log("Step 10 - Read session data @ one of Iowa apaches");
 		$data = $this->api($this->iowa->get(),array(
 			'action' => 'riakaccess',
 			'op' => 'get',
@@ -298,10 +313,24 @@ class RiakSessionsTest {
 			exit(1);
 		}
 	}
+	
+	protected function log( $message ) {
+		$t = microtime(true);
+		$timestamp = gmdate( 'Y-m-d H:i:s.', (int)$t ) . sprintf("%06d",($t - floor($t)) * 1000000);
+		$line = "[{$timestamp}] riaksessionstest: ".$message;
+		if (!$this->quiet) {
+			echo $line."\n";
+		}
+		error_log($line);
+	}
+	
+	protected function logError( $message ) {
+		$this->log("error: ".$message);
+	}
 
 	protected function assert( $status, $message ) {
 		if (!$status) {
-			echo "error: {$message}\n";
+			$this->logError($message);
 			$this->wasError = true;
 		}
 	}
