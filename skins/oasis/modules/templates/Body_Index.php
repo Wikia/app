@@ -93,6 +93,12 @@
 			echo wfRenderModule('ArticleCategories');
 		} ?>
 		<?= wfRenderModule('ArticleInterlang') ?>
+		
+		<?php if (!empty($afterContentHookText)) { ?>
+		<div id="WikiaArticleFooter" class="WikiaArticleFooter">
+			<?= $afterContentHookText ?>
+		</div>
+		<?php } ?>
 
 		<div id="WikiaArticleBottomAd" class="noprint">
 			<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_LEFT_BOXAD')) ?>

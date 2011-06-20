@@ -21,6 +21,7 @@ class BodyModule extends Module {
 
 	// Module vars
 	var $afterBodyHtml;
+	var $afterContentHookText;
 
 	var $headerModuleName;
 	var $headerModuleAction;
@@ -355,6 +356,11 @@ class BodyModule extends Module {
 		// append your content to $html variable instead of echoing
 		// (taken from Monaco skin)
 		wfRunHooks('GetHTMLAfterBody', array ($wgUser->getSkin(), &$this->afterBodyHtml));
+		
+		// this hook is needed for SMW's factbox
+		if (!wfRunHooks('SkinAfterContent', array( &$this->afterContentHookText ) )) {
+			$this->afterContentHookText = '';
+		}
 
 		$this->headerModuleAction = 'Index';
 		$this->headerModuleParams = array ('showSearchBox' => false);
