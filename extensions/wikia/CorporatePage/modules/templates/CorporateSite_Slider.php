@@ -35,7 +35,7 @@
 <?php 
 	if ($isMainPage == true) {?>
 <section class="HomepageLink">
-	<p class="stay-connected"><?= wfMsg('corporatepage-stay-in-the-know') ?></p>
+	<span class="stay-connected"><?= wfMsg('corporatepage-stay-in-the-know') ?></span>
 	<ul>
 		<li class="facebook"><a href="<?= wfMsg('corporatepage-facebook-link') ?>"></a></li>
 		<li class="blog"><a href="<?= wfMsg('corporatepage-wikia-blog-link') ?>"></a></li>
