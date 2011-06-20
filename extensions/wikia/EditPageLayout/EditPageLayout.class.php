@@ -413,7 +413,10 @@ class EditPageLayout extends EditPage {
 	 * Emit hidden field for "watch this"
 	 */
 	protected function showStandardInputs( &$tabindex = 2 ) {
-		$this->out->addHTML(Xml::check('wpWatchthis', $this->watchthis, array('type' => 'hidden')));
+		if ($this->watchthis) {
+			// emulate checkbox
+			$this->out->addHTML(Html::hidden('wpWatchthis', 'on'));
+		}
 	}
 
 	/**
