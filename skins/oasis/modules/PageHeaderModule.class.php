@@ -14,6 +14,7 @@ class PageHeaderModule extends Module {
 	var $displaytitle; // if true - don't encode HTML
 	var $title;
 	var $subtitle;
+	var $undelete;
 
 	// RT #72366 - line with page type, redirect info, link to subject page and old revision data
 	var $pageType;
