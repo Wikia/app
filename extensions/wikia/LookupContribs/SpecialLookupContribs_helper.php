@@ -107,7 +107,7 @@ class LookupContribsCore {
 	}
 
 	public function checkUserActivity() {
-		global $wgMemc, $wgContLang, $wgStatsDB;
+		global $wgMemc, $wgContLang, $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 		
 		$userActivity = array(
@@ -117,7 +117,7 @@ class LookupContribsCore {
 
 		$memkey = __METHOD__ . ":{$this->mUserId}:data:{$this->mLimit}:{$this->mOffset}";
 		$data = $wgMemc->get($memkey);
-		if (!is_array ($data) || LOOKUPCONTRIBS_NO_CACHE) {
+		if ( ( !is_array ($data) || LOOKUPCONTRIBS_NO_CACHE ) && !empty($wgStatsDBEnabled) ) {
 			#---
 			$dbr = wfGetDB(DB_SLAVE, "stats", $wgStatsDB);
 			if (!is_null($dbr)) {

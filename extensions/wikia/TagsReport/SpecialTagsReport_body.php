@@ -61,7 +61,9 @@ class TagsReportPage extends SpecialPage {
 		$tagList = $this->getTagsList();
 
 		$timestamp = $this->getGenDate();
-		$wgOut->setSubtitle(wfMsg('tagsreportgenerated', $timestamp[0], $timestamp[1]));
+		if ( !empty( $timestamp ) ) {
+			$wgOut->setSubtitle(wfMsg('tagsreportgenerated', $timestamp[0], $timestamp[1]));
+		}
 
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
@@ -110,12 +112,12 @@ class TagsReportPage extends SpecialPage {
 	}
 
 	private function getTagsList() {
-		global $wgMemc, $wgSharedDB, $wgStatsDB;
+		global $wgMemc, $wgSharedDB, $wgStatsDB, $wgStatsDBEnabled;
 		global $wgCityId;
 		$tagsList = array();
 		$memkey = wfForeignMemcKey( $wgSharedDB, null, "TagsReport", $wgCityId );
 		$cached = $wgMemc->get($memkey);
-		if (!is_array ($cached)) {
+		if ( !is_array ($cached) && !empty( $wgStatsDBEnabled ) ) {
 			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			if (!is_null($dbs)) {
 				$query = "select ct_kind, count(*) as cnt from city_used_tags where ct_kind is not null and ct_wikia_id = {$wgCityId} group by ct_kind order by ct_kind";
@@ -127,19 +129,19 @@ class TagsReportPage extends SpecialPage {
 				$wgMemc->set( $memkey, $tagsList, 60*60 );
 			}
 		} else {
-			$tagsList = $cached;
+			$tagsList = (array)$cached;
 		}
 
 		return $tagsList;
 	}
 
 	private function getTagsInfo() {
-		global $wgMemc, $wgSharedDB, $wgStatsDB;
+		global $wgMemc, $wgSharedDB, $wgStatsDB, $wgStatsDBEnabled;
 		global $wgCityId;
 		$tagsArticles = array();
 		$memkey = wfForeignMemcKey( $wgSharedDB, null, "TagsReport", $this->mTag, $wgCityId );
 		$cached = $wgMemc->get($memkey);
-		if (!is_array ($cached)) {
+		if ( !is_array ($cached) && !empty( $wgStatsDBEnabled ) ) {
 			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			if (!is_null($dbs)) {
 				$query = "select ct_namespace, ct_page_id from city_used_tags where ct_kind = " .$dbs->addQuotes( $this->mTag ). " and ct_wikia_id = {$wgCityId} order by ct_namespace";
@@ -158,8 +160,13 @@ class TagsReportPage extends SpecialPage {
 	}
 
 	private function getGenDate() {
-		global $wgLang, $wgStatsDB, $wgCityId;
+		global $wgLang, $wgStatsDB, $wgCityId, $wgStatsDBEnabled;
 		$tagsArticles = array();
+		
+		if ( !empty( $wgStatsDBEnabled ) ) {
+			return array();
+		}
+		
 		$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 		$s = $dbs->selectRow( 
 			'city_used_tags',
@@ -167,7 +174,7 @@ class TagsReportPage extends SpecialPage {
 			array( 'ct_wikia_id' =>  $wgCityId ), 
 			__METHOD__
 		);
-
+		
 		return array(
 			$wgLang->date( wfTimestamp( TS_MW, $s->ts ), true ),
 			$wgLang->time( wfTimestamp( TS_MW, $s->ts ), true ),

@@ -224,7 +224,7 @@ class WikiStats {
 	 * @param Array : months (1 ..12, minYear, maxYear );
 	 */
 	private function __loadMonths() {
-		global $wgStatsDB, $wgMemc, $wgLang;
+		global $wgStatsDB, $wgMemc, $wgLang, $wgStatsDBEnabled;
 		#---
 		wfProfileIn( __METHOD__ );
     	#---
@@ -235,7 +235,7 @@ class WikiStats {
     	$memkey = sprintf( "%s_%d_%s", __METHOD__, intval(WIKISTATS_MIN_COUNT_STATS_YEAR), $wgLang->getCode() );
 		$this->mDateRange = $wgMemc->get( $memkey );
 
-		if ( empty($this->mDateRange) ) {
+		if ( empty($this->mDateRange) && !empty( $wgStatsDBEnabled ) ) {
 			$this->mDateRange = array("months" => $monthsArray, "minYear" => WIKISTATS_MIN_COUNT_STATS_YEAR, "maxYear" => date('Y'));
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			#---
@@ -263,7 +263,7 @@ class WikiStats {
 	 * @param
 	 */
 	private function __loadDate() {
-		global $wgStatsDB, $wgMemc, $wgLang, $wgCityId;
+		global $wgStatsDB, $wgMemc, $wgLang, $wgCityId, $wgStatsDBEnabled;
 		#---
 		wfProfileIn( __METHOD__ );
     	#---
@@ -271,7 +271,7 @@ class WikiStats {
 		$this->mUpdateDate = $wgMemc->get( $memkey );
 
 		#---
-		if ( empty($this->mUpdateDate) ) {
+		if ( empty($this->mUpdateDate) && !empty( $wgStatsDBEnabled ) ) {
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			#---
 			if ( !empty($this->mCityId) ) {
@@ -477,7 +477,7 @@ class WikiStats {
 	 * 
 	 */
 	public function loadStatsFromDB() {
-    	global $wgMemc, $wgStatsDB;
+    	global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
     	#---
 		wfProfileIn( __METHOD__ );
 		#---
@@ -508,7 +508,7 @@ class WikiStats {
     	#---
 		$columns = array();
 		$this->mMainStats = ( self::USE_MEMC ) ? $wgMemc->get($memkey) : array();
-    	if ( empty($this->mMainStats) ) {
+    	if ( empty($this->mMainStats) && !empty( $wgStatsDBEnabled ) ) {
 			#--- database instance - DB_SLAVE
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 
@@ -706,7 +706,7 @@ class WikiStats {
 	 * 
 	 */
 	public function namespaceStatsFromDB() {
-    	global $wgMemc, $wgStatsDB;
+    	global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
     	#---
 		wfProfileIn( __METHOD__ );
 		#---
@@ -747,7 +747,7 @@ class WikiStats {
     	#---
 		$columns = array();
 		$result = ( self::USE_MEMC ) ? $wgMemc->get($memkey) : array();
-    	if ( empty($result) ) {
+    	if ( empty($result) && !empty( $wgStatsDBEnabled ) ) {
 			#--- database instance - DB_SLAVE
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$result = array();
@@ -860,7 +860,7 @@ class WikiStats {
 	}
 
 	public function rollupStats($wiki_id, $by_month=null, $by_day=null) {
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 
 		$date_ranges = array();
 		if ($by_month) {
@@ -881,26 +881,28 @@ class WikiStats {
 			}
 		}
 
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-		
 		$data = array();
-		foreach ($date_ranges as $period) {
-			$start_date = $period[0];
-			$end_date   = $period[1];
+		if ( !empty( $wgStatsDBEnabled ) ) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+					
+			foreach ($date_ranges as $period) {
+				$start_date = $period[0];
+				$end_date   = $period[1];
 
-			$oRes = $dbr->select(
-					array( 'events' ),
-					array( 'page_ns', 'event_type', 'count(*) as cnt' ),
-					array( "rev_timestamp >= '$start_date 00:00:00'",
-					       "rev_timestamp < '$end_date 00:00:00'",
-					       "wiki_id = $wiki_id" ),
-					__METHOD__,
-					array( 'GROUP BY' => "page_ns, event_type",
-					       'ORDER BY' => "null")
-				);
+				$oRes = $dbr->select(
+						array( 'events' ),
+						array( 'page_ns', 'event_type', 'count(*) as cnt' ),
+						array( "rev_timestamp >= '$start_date 00:00:00'",
+							   "rev_timestamp < '$end_date 00:00:00'",
+							   "wiki_id = $wiki_id" ),
+						__METHOD__,
+						array( 'GROUP BY' => "page_ns, event_type",
+							   'ORDER BY' => "null")
+					);
 
-			while( $oRow = $dbr->fetchObject( $oRes ) ) {
-				$data[$start_date][$oRow->page_ns][$oRow->event_type] = $oRow->cnt;
+				while( $oRow = $dbr->fetchObject( $oRes ) ) {
+					$data[$start_date][$oRow->page_ns][$oRow->event_type] = $oRow->cnt;
+				}
 			}
 		}
 		
@@ -915,13 +917,13 @@ class WikiStats {
 	 * 
 	 */
 	private function excludedWikis($db_fields, $where) {
-		global $wgMemc, $wgStatsDB; 
+		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled; 
 		
 		wfProfileIn( __METHOD__ );
     	$memkey = __METHOD__ . "_" . $this->mCityId . '_v2';
     	#---
 		$this->mExcludedWikis = $wgMemc->get($memkey);
-		if ( empty($this->mExcludedWikis) ) {
+		if ( empty($this->mExcludedWikis) && !empty( $wgStatsDBEnabled ) ) {
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$where[] = "wikia_id in (" . $dbr->makeList( $this->getClosedWikis() ) . ")";
 			$options = array('GROUP BY' => 'stats_date');
@@ -1033,7 +1035,7 @@ class WikiStats {
 	 */
 	
 	public function loadMonthlyNSActions() {
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 
 		// The existing index requires a city ID, so don't try anything without it
 		if (!$this->mCityId) return array();
@@ -1049,28 +1051,30 @@ class WikiStats {
 		
 		$endDate = sprintf("%04d-%02d-01", $end_year, $end_month);
 
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-		$oRes = $dbr->select(
-				array( 'events' ),
-				array( "DATE_FORMAT(rev_timestamp, '%Y%m') AS date", 'page_ns', 'event_type', 'count(*) AS cnt' ),
-				array( 'wiki_id' => $this->mCityId,
-				       "rev_timestamp BETWEEN '$startDate' AND '$endDate'",
-					 ),
-				__METHOD__,
-				array( 'GROUP BY' => 'date, page_ns, event_type' )
-		);
-
 		$ns_actions = array();
-		while( $oRow = $dbr->fetchObject( $oRes ) ) {
-			// Initialize this namespace to an empty array if neccessary
-			if (!array_key_exists($oRow->page_ns, $ns_actions)) $ns_actions[$oRow->page_ns] = array();
-			$for_ns = &$ns_actions[$oRow->page_ns];
+		if ( !empty( $wgStatsDB ) ) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+			$oRes = $dbr->select(
+					array( 'events' ),
+					array( "DATE_FORMAT(rev_timestamp, '%Y%m') AS date", 'page_ns', 'event_type', 'count(*) AS cnt' ),
+					array( 'wiki_id' => $this->mCityId,
+						   "rev_timestamp BETWEEN '$startDate' AND '$endDate'",
+						 ),
+					__METHOD__,
+					array( 'GROUP BY' => 'date, page_ns, event_type' )
+			);
+			
+			while( $oRow = $dbr->fetchObject( $oRes ) ) {
+				// Initialize this namespace to an empty array if neccessary
+				if (!array_key_exists($oRow->page_ns, $ns_actions)) $ns_actions[$oRow->page_ns] = array();
+				$for_ns = &$ns_actions[$oRow->page_ns];
 
-			// Initialize this month to an empty array if neccessary
-			if (!array_key_exists($oRow->date, $for_ns)) $for_ns[$oRow->date] = array();
-			$for_month = &$for_ns[$oRow->date];
+				// Initialize this month to an empty array if neccessary
+				if (!array_key_exists($oRow->date, $for_ns)) $for_ns[$oRow->date] = array();
+				$for_month = &$for_ns[$oRow->date];
 
-			$for_month[$oRow->event_type] = $oRow->cnt;
+				$for_month[$oRow->event_type] = $oRow->cnt;
+			}
 		}
 
 		return $ns_actions;
@@ -1182,7 +1186,7 @@ class WikiStats {
 	 * 
 	 */
 	public function getWikiansActivity($content = 1, $anons = 0, $date = '', $limit = WIKISTATS_WIKIANS_RANK_NBR, $users = array()) {
-		global $wgMemc, $wgStatsDB;
+		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 		#---
 		$memkey = sprintf( "%s_%s", __METHOD__, md5($this->mCityId . $date . $content . $anons . $limit) );
@@ -1190,7 +1194,7 @@ class WikiStats {
 		$result = array();
 		if (self::USE_MEMC) $result = $wgMemc->get($memkey);
 
-		if (empty($result)) {
+		if ( empty($result) && !empty( $wgStatsDBEnabled ) ) {
 			if ( !empty($this->mCityId) ) {
 				$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 				
@@ -1402,54 +1406,56 @@ class WikiStats {
 	 * list of most visited pages
 	 */	
 	public function latestViewPages($namespace = -1) {
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-		
-		$where = array( 
-			"pv_city_id" => $this->mCityId,
-			"pv_ts >= '" . date('Y-m-d H-i-s', time() - self::PV_DELTA) . "'"
-		);		
-		
-		if ( $namespace > 0 ) {
-			$where['pv_namespace'] = $namespace;
-		} 
-
-		$res = $dbr->select(
-			array( 'page_views_articles' ),
-			array( 'pv_page_id', 'pv_views'  ),
-			$where,
-			__METHOD__,
-			array(
-				'ORDER BY'	=> 'pv_ts DESC',
-				'LIMIT'		=> self::PV_LIMIT
-			)
-		);
-		
-		$ids = array();
-		$count = array(); $loop = 0;
-		while ( $oRow = $dbr->fetchObject( $res ) ) {
-			if ( !isset($ids[$oRow->pv_page_id]) ) { 
-				$ids[$oRow->pv_page_id] = $loop;
-				$loop++;
-			}
-			$count[$oRow->pv_page_id] += $oRow->pv_views;
-		}
-		$dbr->freeResult( $res );
-				
-		$titles = Title::newFromIDs( array_keys($ids) );
-		
-		$urls = array();
-		foreach ( $titles as $oTitle ) {
-			$page_id = $oTitle->getArticleID();
-			$urls[$page_id] = Xml::element("a", array("href" => $oTitle->getLocalURL()), $oTitle->getFullText());
-		}
-		
 		$result = array(); 
-		foreach ( $ids as $page_id => $position ) {
-			if ( isset( $urls[$page_id] ) ) {
-				$result[] = wfSpecialList( $urls[$page_id], $count[$page_id]. "x" );
+		if ( !empty( $wgStatsDBEnabled ) ) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+			
+			$where = array( 
+				"pv_city_id" => $this->mCityId,
+				"pv_ts >= '" . date('Y-m-d H-i-s', time() - self::PV_DELTA) . "'"
+			);		
+			
+			if ( $namespace > 0 ) {
+				$where['pv_namespace'] = $namespace;
+			} 
+
+			$res = $dbr->select(
+				array( 'page_views_articles' ),
+				array( 'pv_page_id', 'pv_views'  ),
+				$where,
+				__METHOD__,
+				array(
+					'ORDER BY'	=> 'pv_ts DESC',
+					'LIMIT'		=> self::PV_LIMIT
+				)
+			);
+			
+			$ids = array();
+			$count = array(); $loop = 0;
+			while ( $oRow = $dbr->fetchObject( $res ) ) {
+				if ( !isset($ids[$oRow->pv_page_id]) ) { 
+					$ids[$oRow->pv_page_id] = $loop;
+					$loop++;
+				}
+				$count[$oRow->pv_page_id] += $oRow->pv_views;
+			}
+			$dbr->freeResult( $res );
+					
+			$titles = Title::newFromIDs( array_keys($ids) );
+			
+			$urls = array();
+			foreach ( $titles as $oTitle ) {
+				$page_id = $oTitle->getArticleID();
+				$urls[$page_id] = Xml::element("a", array("href" => $oTitle->getLocalURL()), $oTitle->getFullText());
+			}
+			
+			foreach ( $ids as $page_id => $position ) {
+				if ( isset( $urls[$page_id] ) ) {
+					$result[] = wfSpecialList( $urls[$page_id], $count[$page_id]. "x" );
+				}
 			}
 		}
 		
@@ -1466,87 +1472,99 @@ class WikiStats {
 	 * list of most visited pages
 	 */	
 	public function userViewPages($hours = 1) {
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-
-		$ts = strftime("%F %T", strtotime("-$hours hour"));
-		
-		$where = array( 
-			"pv_city_id" => $this->mCityId,
-			"pv_ts >= '$ts' "
-		);
-
-		$res = $dbr->select(
-			array( 'page_views_user' ),
-			array( 'pv_user_id', 'count(*) as cnt'  ),
-			$where,
-			__METHOD__,
-			array(
-				'GROUP BY'	=> 'pv_user_id',
-				'ORDER BY'	=> 'pv_ts desc',
-				'LIMIT'		=> self::PV_LIMIT
-			)
-		);
-		
 		$result = array(); 
-		while ( $oRow = $dbr->fetchObject( $res ) ) {
-			$oUser = User::newFromId($oRow->pv_user_id);
-			if ( is_object($oUser) ) {
-				$oTitle = Title::newFromText($oUser->getName(), NS_USER);
-				if ( $oTitle ) {
-					$oRow->page_title = Xml::element("a", array("href" => $oTitle->getLocalURL()), $oTitle->getFullText()) ;
-				} 
-				$result[$oRow->pv_user_id] = wfSpecialList( $oRow->page_title, wfMsgExt("wikistats_latest_userviews_pages", 'parsemag', $oRow->cnt) );
+		if ( !empty( $wgStatsDBEnabled ) ) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+
+			$ts = strftime("%F %T", strtotime("-$hours hour"));
+			
+			$where = array( 
+				"pv_city_id" => $this->mCityId,
+				"pv_ts >= '$ts' "
+			);
+
+			$res = $dbr->select(
+				array( 'page_views_user' ),
+				array( 'pv_user_id', 'count(*) as cnt'  ),
+				$where,
+				__METHOD__,
+				array(
+					'GROUP BY'	=> 'pv_user_id',
+					'ORDER BY'	=> 'pv_ts desc',
+					'LIMIT'		=> self::PV_LIMIT
+				)
+			);
+			
+			while ( $oRow = $dbr->fetchObject( $res ) ) {
+				$oUser = User::newFromId($oRow->pv_user_id);
+				if ( is_object($oUser) ) {
+					$oTitle = Title::newFromText($oUser->getName(), NS_USER);
+					if ( $oTitle ) {
+						$oRow->page_title = Xml::element("a", array("href" => $oTitle->getLocalURL()), $oTitle->getFullText()) ;
+					} 
+					$result[$oRow->pv_user_id] = wfSpecialList( $oRow->page_title, wfMsgExt("wikistats_latest_userviews_pages", 'parsemag', $oRow->cnt) );
+				}
 			}
+			$dbr->freeResult( $res );
 		}
-		$dbr->freeResult( $res );
-		
+			
 		wfProfileOut( __METHOD__ );
 		#---
 		return $result;				
 	}	
 	
 	public function getLatestStats() {
-		global $wgStatsDB;
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-		#---
-		$oRow = $dbr->selectRow( 
-			'wikia_monthly_stats',
-			array( 'unix_timestamp(ts) as lastdate' ),
-			array( 
-				'wiki_id' => $this->mCityId,
-				'stats_date' => date('Ym')
-			), 
-			__METHOD__
-		);
-		if ( isset($oRow) && isset($oRow->lastdate) ) {
-			$date = $oRow->lastdate;
-		} else {
-			$date = time();
-		}
+		global $wgStatsDB, $wgStatsDBEnabled;
 		
+		wfProfileIn( __METHOD__ );
+		$date = time();
+		if ( !empty( $wgStatsDBEnabled ) ) {		
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+			#---
+			$oRow = $dbr->selectRow( 
+				'wikia_monthly_stats',
+				array( 'unix_timestamp(ts) as lastdate' ),
+				array( 
+					'wiki_id' => $this->mCityId,
+					'stats_date' => date('Ym')
+				), 
+				__METHOD__
+			);
+			if ( isset($oRow) && isset($oRow->lastdate) ) {
+				$date = $oRow->lastdate;
+			} else {
+				$date = time();
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		#---
 		return $date;
 	}
 	
 	public function getLatestNSStats() {
-		global $wgStatsDB;
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-		#---
-		$oRow = $dbr->selectRow( 
-			'namespace_monthly_stats',
-			array( 'unix_timestamp(ts) as lastdate' ),
-			array( 
-				'wiki_id' => $this->mCityId,
-				'stats_date' => date('Ym')
-			), 
-			__METHOD__
-		);
-		if ( isset($oRow) && isset($oRow->lastdate) ) {
-			$date = $oRow->lastdate;
-		} else {
-			$date = time();
+		global $wgStatsDB, $wgStatsDBEnabled;
+		
+		$date = time();
+		if ( !empty( $wgStatsDBEnabled ) ) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+			#---
+			$oRow = $dbr->selectRow( 
+				'namespace_monthly_stats',
+				array( 'unix_timestamp(ts) as lastdate' ),
+				array( 
+					'wiki_id' => $this->mCityId,
+					'stats_date' => date('Ym')
+				), 
+				__METHOD__
+			);
+			if ( isset($oRow) && isset($oRow->lastdate) ) {
+				$date = $oRow->lastdate;
+			} else {
+				$date = time();
+			}
 		}
 		
 		return $date;
@@ -1560,10 +1578,15 @@ class WikiStats {
 	 * list of Wikis activity for language, category and date
 	 */		
 	public function getWikiActivity( $params = array(), $xls = 0 ) {
-		global $wgLang, $wgStatsDB, $wgUser, $wgMemc;
+		global $wgLang, $wgStatsDB, $wgUser, $wgMemc, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 		
 		if ( empty($params) ) {
+			wfProfileOut( __METHOD__ ) ;
+			return false;
+		}
+		
+		if ( empty( $wgStatsDBEnabled ) ) {
 			wfProfileOut( __METHOD__ ) ;
 			return false;
 		}

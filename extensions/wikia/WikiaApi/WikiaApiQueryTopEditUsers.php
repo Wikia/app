@@ -55,7 +55,11 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 
 	#---
 	private function getTopEditUsers() {
-		global $wgDBname, $wgCityId;
+		global $wgDBname, $wgCityId, $wgStatsDBEnabled;
+
+		if ( empty( $wgStatsDBEnabled ) ) {
+			return false;
+		}
 
         #--- blank variables
         $nspace = $user = null;

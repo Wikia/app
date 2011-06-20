@@ -201,7 +201,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 		if ( !$this->dataLoaded ) {
 			if ( !$this->loadDataFromCache() ) {
 
-				global $wgStatsDB, $wgWikiaGALogin, $wgWikiaGAPassword, $wgHTTPProxy, $wgDevEnvironment;
+				global $wgWikiaGALogin, $wgWikiaGAPassword, $wgHTTPProxy, $wgDevEnvironment;
 
 				if( count( $this->GAPImetrics ) > 0 ) {
 					$results = $this->getGapiResults();

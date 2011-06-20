@@ -129,7 +129,11 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 		$this->recalculateDateVariables();
 
 		if ( !$this->loadDataFromCache() ) {
-
+			$wgStatsDBEnabled = $this->App->getGlobal( 'wgStatsDBEnabled' );
+			if ( empty( $wgStatsDBEnabled  ) ) {
+				return false;
+			}
+			
 			$wgStatsDB = $this->App->getGlobal('wgStatsDB');
 			$returnArray = array();
 

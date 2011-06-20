@@ -666,29 +666,31 @@ class SWMSendToGroupTask extends BatchTask {
 	 * @return boolean: result of operation
 	 */
 	private function sendMessageHelperToActive(&$DB, &$wikisDB, &$params) {
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 
 		$result = true;
 
 		//step 2 of 3: get list of active users (on specified wikis)
 		$this->addLog('Step 2 of 3: get list of active users (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
 
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-
-		$dbResult = $dbr->select(
-			array('`specials`.`events_local_users`'),
-			array('user_id', 'wiki_id'),
-			array('wiki_id IN (' . implode(',', array_keys($wikisDB)) . ')'),
-			__METHOD__,
-			array('GROUP BY' => 'user_id')
-		);
-
-		//step 3 of 3: add records about new message to right users
 		$sqlValues = array();
-		while ($row = $dbr->FetchObject($dbResult)) {
-			$sqlValues[] = "({$row->wiki_id}, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+		if ( !empty( $wgStatsDBEnabled ) ) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+
+			$dbResult = $dbr->select(
+				array('`specials`.`events_local_users`'),
+				array('user_id', 'wiki_id'),
+				array('wiki_id IN (' . implode(',', array_keys($wikisDB)) . ')'),
+				__METHOD__,
+				array('GROUP BY' => 'user_id')
+			);
+
+			//step 3 of 3: add records about new message to right users
+			while ($row = $dbr->FetchObject($dbResult)) {
+				$sqlValues[] = "({$row->wiki_id}, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+			}
+			$dbr->FreeResult($dbResult);
 		}
-		$dbr->FreeResult($dbResult);
 
 		if (count($sqlValues)) {
 			$this->addLog("Step 3 of 3: add records about new message to right users [number of users = " . count($sqlValues) .	"]");
@@ -712,33 +714,34 @@ class SWMSendToGroupTask extends BatchTask {
 	 * @return boolean: result of operation
 	 */
 	private function sendMessageHelperToGroup(&$DB, &$wikisDB, &$params) {
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 
 		$result = true;
 
 		//step 2 of 3: get list of users that belong to a specified group (on specified wikis)
 		$this->addLog('Step 2 of 3: get list of users that belong to a specified group (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
-
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-		$groupName = $dbr->escapeLike($params['groupName']);
-
-		$dbResult = $dbr->select(
-			array('`specials`.`events_local_users`'),
-			array('user_id', 'wiki_id'),
-			array('wiki_id IN (' . implode(',', array_keys($wikisDB)) . ')', "(lu_singlegroup = '$groupName' OR lu_allgroups LIKE '%$groupName;%')"),
-			__METHOD__,
-			array('GROUP BY' => 'user_id')
-		);
-
-		//step 3 of 3: add records about new message to right users
+	
 		$sqlValues = array();
+		if ( !empty( $wgStatsDBEnabled ) ) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+			$groupName = $dbr->escapeLike($params['groupName']);
 
-		while ($row = $dbr->FetchObject($dbResult)) {
-			//if the group is 'staff' - display (==send) the message on a local wiki [John's request, 2008-03-06] - Marooned
-			$wikiID = $params['groupName'] == 'staff' ? 'NULL' : $row->wiki_id;
-			$sqlValues[] = "($wikiID, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+			$dbResult = $dbr->select(
+				array('`specials`.`events_local_users`'),
+				array('user_id', 'wiki_id'),
+				array('wiki_id IN (' . implode(',', array_keys($wikisDB)) . ')', "(lu_singlegroup = '$groupName' OR lu_allgroups LIKE '%$groupName;%')"),
+				__METHOD__,
+				array('GROUP BY' => 'user_id')
+			);
+
+			//step 3 of 3: add records about new message to right users
+			while ($row = $dbr->FetchObject($dbResult)) {
+				//if the group is 'staff' - display (==send) the message on a local wiki [John's request, 2008-03-06] - Marooned
+				$wikiID = $params['groupName'] == 'staff' ? 'NULL' : $row->wiki_id;
+				$sqlValues[] = "($wikiID, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+			}
+			$dbr->FreeResult($dbResult);
 		}
-		$dbr->FreeResult($dbResult);
 
 		if (count($sqlValues)) {
 			$this->addLog("Step 3 of 3: add records about new message to right users [number of users = " . count($sqlValues) .	"]");

@@ -32,6 +32,11 @@ class NewWikis {
 		$db = $this->getDb();
 		$activeWikis = array();
 
+		$is_enabled = $this->app->getGlobal( 'wgStatsDBEnabled' );
+		if ( empty( $is_enabled ) ) {
+			return array( 'wikisNum' => 0, 'pageNo' => $pageNo, 'wikis' => array() );
+		}
+
 		$row = $db->selectRow(
 			array( 'wikia_monthly_stats' ),
 			array( 'unix_timestamp(ts) as lastdate' ),

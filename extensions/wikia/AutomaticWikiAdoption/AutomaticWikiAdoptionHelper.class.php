@@ -256,21 +256,23 @@ class AutomaticWikiAdoptionHelper {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	private static function countUserEditsOnWiki($wikiId, $user) {
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn(__METHOD__);
 
 		$result = 0;
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+		if ( !empty( $wgStatsDBEnabled ) ) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 
-		$row = $dbr->selectRow(
-			'specials.events_local_users',
-			'edits',
-			array('wiki_id' => $wikiId, 'user_id' => $user->getId()),
-			__METHOD__
-		);
+			$row = $dbr->selectRow(
+				'specials.events_local_users',
+				'edits',
+				array('wiki_id' => $wikiId, 'user_id' => $user->getId()),
+				__METHOD__
+			);
 
-		if ($row !== false) {
-			$result = $row->edits;
+			if ($row !== false) {
+				$result = $row->edits;
+			}
 		}
 
 		wfProfileOut(__METHOD__);

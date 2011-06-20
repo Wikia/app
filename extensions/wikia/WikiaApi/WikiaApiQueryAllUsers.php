@@ -19,12 +19,12 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 	}
 
 	private function getUsersForGroup() {
-		global $wgMemc, $wgStatsDB;
+		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 
 		$memkey = sprintf("%s-%s-%d", __METHOD__, $this->params['group'], $this->mCityId);
 		$data = $wgMemc->get( $memkey );
-		if ( empty($data) ) {
+		if ( empty($data) && !empty( $wgStatsDBEnabled ) ) {
 			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$where = array(
 				'wiki_id' => intval($this->mCityId),
@@ -276,7 +276,12 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 	}
 
 	private function local_users() {
-		global $wgCityId;
+		global $wgCityId, $wgStatsDBEnabled;
+		
+		if ( empty( $wgStatsDBEnabled ) ) {
+			return false;
+		}
+		
 		$db = $this->getExtDB();
 		$params = $this->extractRequestParams();
 

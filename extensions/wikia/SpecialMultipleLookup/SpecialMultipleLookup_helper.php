@@ -63,13 +63,13 @@ class MultipleLookupCore {
 	}
 	
 	public function countUserActivity() {
-		global $wgMemc, $wgStatsDB;
+		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
 		
 		$countActivity = 0;
 		$ip = ip2long( $this->mUsername );
 		$memkey = __METHOD__ . ":all:" . $ip;
 		$cached = $wgMemc->get( $memkey );
-		if ( empty( $cached ) || MULTILOOKUP_NO_CACHE ) {
+		if ( ( empty( $cached ) || MULTILOOKUP_NO_CACHE ) && !empty( $wgStatsDBEnabled ) ) {
 			
 			$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 			$oRow = $dbs->selectRow(
@@ -94,14 +94,14 @@ class MultipleLookupCore {
 	}
 
 	function checkUserActivity() {
-		global $wgMemc, $wgStatsDB;
+		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
 		
 		$userActivity = array();
 		
 		$ip = ip2long( $this->mUsername );
 		$memkey = __METHOD__ . ":all:ip:" . $ip . ":limit:" . intval($this->mLimit) . ":offset:" . intval($this->mOffset);
 		$cached = $wgMemc->get( $memkey );
-		if ( !is_array ( $cached ) || MULTILOOKUP_NO_CACHE ) {
+		if ( ( !is_array ( $cached ) || MULTILOOKUP_NO_CACHE ) && !empty( $wgStatsDBEnabled ) ) {
 			$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 					
 			$oRes = $dbs->select(

@@ -18,8 +18,9 @@ class WikiaStatsAutoHubsConsumerDB {
 	 * constructor
 	 */
 	function __construct($db = DB_MASTER  ) {
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 		$this->dbs = wfGetDB( $db, array(), $wgStatsDB);
+		$this->dbEnabled = $wgStatsDBEnabled;
 	}
 
 	private function makeInsert($table, $data, $options = array(), $onUpdate = '') {
@@ -61,6 +62,12 @@ class WikiaStatsAutoHubsConsumerDB {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty($data) ) {
+			wfProfileOut( __METHOD__ );			
+			return true;
+		}
+
+		if ( empty($this->dbEnabled) ) {
+			wfProfileOut( __METHOD__ );			
 			return true;
 		}
 
@@ -92,6 +99,12 @@ class WikiaStatsAutoHubsConsumerDB {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty($data) ) {
+			wfProfileOut( __METHOD__ );			
+			return true;
+		}
+
+		if ( empty($this->dbEnabled) ) {
+			wfProfileOut( __METHOD__ );			
 			return true;
 		}
 
@@ -123,6 +136,12 @@ class WikiaStatsAutoHubsConsumerDB {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty($data) ) {
+			wfProfileOut( __METHOD__ );			
+			return true;
+		}
+
+		if ( empty($this->dbEnabled) ) {
+			wfProfileOut( __METHOD__ );			
 			return true;
 		}
 
@@ -153,6 +172,11 @@ class WikiaStatsAutoHubsConsumerDB {
 	public function deleteOld() {
 		wfProfileIn( __METHOD__ );
 
+		if ( empty($this->dbEnabled) ) {
+			wfProfileOut( __METHOD__ );			
+			return true;
+		}
+		
 		$table_to_clear = array(
 			'tags_top_users' => array('col' => 'tu_date', 'exp' => 7),
 			'tags_top_articles' => array('col' => 'ta_date', 'exp' => 3),
@@ -180,6 +204,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		global $wgMemc, $wgContLang;
 
 		wfProfileIn( __METHOD__ );
+			
 		$mcKey = wfSharedMemcKey( "auto_hubs", "blogs", $tag_id, $lang, $limit, $per_wiki );
 
 		if( !$force_reload ) {
@@ -189,6 +214,12 @@ class WikiaStatsAutoHubsConsumerDB {
 				return $out;
 			}
 		}
+		
+		if ( empty($this->dbEnabled) ) {
+			wfProfileOut( __METHOD__ );			
+			return array("value" => array(), "age" => time());
+		}
+				
 		$tag_id = (int) $tag_id;
 		$conditions = array( 'tag_id' => $tag_id, 'city_lang' => $lang );
 		// CorporatePage extension needs to get a list of staff blogs, and only has a list of page_ids
@@ -256,6 +287,11 @@ class WikiaStatsAutoHubsConsumerDB {
 			}
 		}
 
+		if ( empty($this->dbEnabled) ) {
+			wfProfileOut( __METHOD__ );			
+			return array("value" => array(), "age" => time());
+		}
+		
 		$tag_id = (int) $tag_id;
                 $where = array(
                     'tag_id' => $tag_id,
@@ -318,6 +354,11 @@ class WikiaStatsAutoHubsConsumerDB {
 			}
 		}
 
+		if ( empty($this->dbEnabled) ) {
+			wfProfileOut( __METHOD__ );			
+			return array("value" => array(), "age" => time());
+		}
+		
 		$tag_id = (int) $tag_id;
 		$limit = 40;
 		$lang_id = WikiFactory::LangCodeToId($lang);
@@ -435,6 +476,11 @@ class WikiaStatsAutoHubsConsumerDB {
 			}
 		}
 
+		if ( empty($this->dbEnabled) ) {
+			wfProfileOut( __METHOD__ );			
+			return array("value" => array(), "age" => time());
+		}
+		
 		$tag_id = (int) $tag_id;
 		$res = $this->dbs->select(
 			array( 'specials.summary_tags_top_users' ),
@@ -493,6 +539,11 @@ class WikiaStatsAutoHubsConsumerDB {
 			return $out;
 		}
 
+		if ( empty($this->dbEnabled) ) {
+			wfProfileOut( __METHOD__ );			
+			return false;
+		}
+		
 		$oUser = User::newFromId( $user_id );
 		if ( !$oUser instanceof User ) {
 			wfProfileOut( __METHOD__ );
@@ -822,6 +873,10 @@ class WikiaStatsAutoHubsConsumerDB {
 	 */
 
 	private function removeExlude($tag_id, $city_id = 0, $page_id = 0, $user_id = 0, $type ) {
+		if ( empty($this->dbEnabled) ) {
+			return true;
+		}
+				
 		$this->dbs->begin();
 		$delete_date = date("Y-m-d", mktime(0, 0, 0, date("m")  , date("d") - $date_col['exp'], date("Y")));
 
@@ -843,6 +898,10 @@ class WikiaStatsAutoHubsConsumerDB {
 	 */
 
 	private function addExlude($tag_id, $city_id = 0, $page_id = 0, $user_id = 0, $type ) {
+		if ( empty($this->dbEnabled) ) {
+			return 0;
+		}
+				
 		$this->dbs->begin();
 		$this->dbs->insert('tags_stats_filter',
 			array(
@@ -903,6 +962,10 @@ class WikiaStatsAutoHubsConsumerDB {
 		$counter = 0;
 		$out = array();
 
+		if ( empty($this->dbEnabled) ) {
+			return $out;
+		}
+		
 		while ( $row = $this->dbs->fetchRow( $res ) ) {
 			if ($type == 'blog' ) {
 				$row = array_merge($row, $this->getBlogInfoByApi($row['wikiurl'], $row['page_id']));
@@ -979,24 +1042,26 @@ class WikiaStatsAutoHubsConsumerDB {
 			}
 		}
 
-		$res = $this->dbs->select(
-			array( 'tags_stats_filter' ),
-			array( 'sf_id as id,
-					sf_city_id as city_id,
-					sf_page_id as page_id,
-					sf_tag_id as tag_id ' ),
-			array(" sf_type = '$type' "),
-			__METHOD__);
-
 		$data = array();
+		if ( !empty($this->dbEnabled) ) {
+			$res = $this->dbs->select(
+				array( 'tags_stats_filter' ),
+				array( 'sf_id as id,
+						sf_city_id as city_id,
+						sf_page_id as page_id,
+						sf_tag_id as tag_id ' ),
+				array(" sf_type = '$type' "),
+				__METHOD__);
 
-		while( $row = $this->dbs->fetchRow( $res ) ) {
-			$tag_id = $row['tag_id'];
-			unset($row['tag_id']);
-			$data[$tag_id][] = $row;
+			while( $row = $this->dbs->fetchRow( $res ) ) {
+				$tag_id = $row['tag_id'];
+				unset($row['tag_id']);
+				$data[$tag_id][] = $row;
+			}
+
+			$wgMemc->set($mcKey,$data);
 		}
-
-		$wgMemc->set($mcKey,$data);
+		
 		return $data;
 	}
 

@@ -65,13 +65,13 @@
 		 * @return array|int
 		 */
 		static protected function getPageViews( $pageIds ) {
-			global $wgStatsDB, $wgCityId, $wgDevelEnvironment;;
+			global $wgStatsDB, $wgCityId, $wgDevelEnvironment, $wgStatsDBEnabled;
 
-			if ( empty($pageIds) ) {
+			if ( empty($pageIds)  ) {
 				return is_array($pageIds) ? array() : 0;
 			}
 
-			if (empty($wgDevelEnvironment)) {
+			if ( empty($wgDevelEnvironment) && !empty( $wgStatsDBEnabled ) ) {
 				// production version
 				$dbr = wfGetDB( DB_SLAVE, null, $wgStatsDB );
 				$res = $dbr->select(

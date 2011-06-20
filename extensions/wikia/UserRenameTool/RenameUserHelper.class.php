@@ -26,7 +26,7 @@ class RenameUserHelper {
 	static public function lookupRegisteredUserActivity($userID) {
 		wfProfileIn(__METHOD__);
 
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 		
 		//check for non admitted values
 		if(empty($userID) || !is_int($userID)){
@@ -36,7 +36,7 @@ class RenameUserHelper {
 
 		wfDebugLog(__CLASS__.'::'.__METHOD__, "Looking up registered user activity for user with ID {$userID}");
 
-		if(!defined('ENV_DEVBOX')){
+		if ( !defined('ENV_DEVBOX') && !empty( $wgStatsDBEnabled ) ) {
 			$dbr =& wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$res = $dbr->select('events', 'wiki_id', array('user_id' => $userID), __METHOD__, array('DISTINCT'));
 			$result = array();

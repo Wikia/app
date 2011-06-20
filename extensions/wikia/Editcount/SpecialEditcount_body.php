@@ -144,26 +144,29 @@ class Editcount extends SpecialPage {
 	}
 
 	function editsByNsAll( $uid ) {
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 		$nscount = array();
 
-		$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-		$res = $dbs->select(
-			array( 'events' ),
-			array( 'page_ns as namespace', 'count(page_ns) as count' ),
-			array(
-				'user_id' => $uid,
-				' ( event_type = 1 ) or ( event_type = 2 ) '
-			),
-			__METHOD__,
-			array (
-				'GROUP BY' => 'page_ns',
-				'ORDER BY' => 'null'
-			)
-		);
+		if ( !empty( $wgStatsDBEnabled ) ) {
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+			$res = $dbs->select(
+				array( 'events' ),
+				array( 'page_ns as namespace', 'count(page_ns) as count' ),
+				array(
+					'user_id' => $uid,
+					' ( event_type = 1 ) or ( event_type = 2 ) '
+				),
+				__METHOD__,
+				array (
+					'GROUP BY' => 'page_ns',
+					'ORDER BY' => 'null'
+				)
+			);
 
-		while( $row = $dbs->fetchObject( $res ) ) {
-			$nscount[$row->namespace] = $row->count;
+			while( $row = $dbs->fetchObject( $res ) ) {
+				$nscount[$row->namespace] = $row->count;
+			}
+			$dbs->freeResult( $res );
 		}
 
 		return $nscount;

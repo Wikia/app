@@ -119,22 +119,27 @@ class CloakCheck extends SpecialPage {
 	}
 	
 	private function getGlobalEdits( $uid ) {
-		global $wgStatsDB;
-		$nscount = array();
+		global $wgStatsDB, $wgStatsDBEnabled;
+		$count = 0;
+		
+		if ( !empty( $wgStatsDBEnabled ) ) {
 
-		$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-		$res = $dbs->select(
-			array( 'events' ),
-			array( 'count(*) as total' ),
-			array(
-				'user_id' => $uid,
-				' ( event_type = 1 or event_type = 2 ) '
-			),
-			__METHOD__,
-			array ( )
-		);
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+			$res = $dbs->select(
+				array( 'events' ),
+				array( 'count(*) as total' ),
+				array(
+					'user_id' => $uid,
+					' ( event_type = 1 or event_type = 2 ) '
+				),
+				__METHOD__,
+				array ( )
+			);
 
-		$row = $dbs->fetchObject( $res );
-		return $row->total;
+			$row = $dbs->fetchObject( $res );
+			$count = $row->total;
+		}
+		
+		return $count;
 	}
 }

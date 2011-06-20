@@ -199,42 +199,48 @@ class FounderEmails {
 	/* stats methods */
 	
 	public function getPageViews ( $cityID ) {
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 		
 		$today = date( 'Ymd' );
-		
-		$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 
-		$oRow = $db->selectRow( 
-			array( 'page_views_wikia' ), 
-			array( 'pv_views as cnt' ),
-			array( 'pv_city_id' => $cityID, 'pv_use_date' => $today),
-			__METHOD__
-		);
-		// Only returns one row, this is just for convenience
-		$views = ( isset( $oRow->cnt ) ) ? $oRow->cnt : 0;
+		$views = 0;
+		if ( !empty( $wgStatsDBEnabled ) ) {
+			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+
+			$oRow = $db->selectRow( 
+				array( 'page_views_wikia' ), 
+				array( 'pv_views as cnt' ),
+				array( 'pv_city_id' => $cityID, 'pv_use_date' => $today),
+				__METHOD__
+			);
+			// Only returns one row, this is just for convenience
+			$views = ( isset( $oRow->cnt ) ) ? $oRow->cnt : 0;
+		}
 		
 		wfProfileOut( __METHOD__ );		
 		return $views;
 	}
 
 	public function getDailyEdits ($cityID, /*Y-m-d*/ $day = null) {
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 		
-		$today = ( empty( $day ) ) ? date( 'Y-m-d' ) : $day;
-		
-		$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+		$edits = 0;
+		if ( !empty( $wgStatsDBEnabled ) ) {
+			$today = ( empty( $day ) ) ? date( 'Y-m-d' ) : $day;
+			
+			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 
-		$oRow = $db->selectRow( 
-			array( 'events' ), 
-			array( 'count(0) as cnt' ),
-			array(  " rev_timestamp between '$today 00:00:00' and '$today 23:59:59' ", 'wiki_id' => $cityID ),
-			__METHOD__
-		);
+			$oRow = $db->selectRow( 
+				array( 'events' ), 
+				array( 'count(0) as cnt' ),
+				array(  " rev_timestamp between '$today 00:00:00' and '$today 23:59:59' ", 'wiki_id' => $cityID ),
+				__METHOD__
+			);
 
-		$edits = isset( $oRow->cnt ) ? $oRow->cnt : 0;
+			$edits = isset( $oRow->cnt ) ? $oRow->cnt : 0;
+		}
 		
 		wfProfileOut( __METHOD__ );		
 		return $edits;
@@ -273,29 +279,31 @@ class FounderEmails {
 	}
 	
 	public function getJoinedUsers ($cityID, $day = null) {
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 		
 		wfProfileIn( __METHOD__ );
 		
 		$userJoined = array();
-		$today = ( empty( $day ) ) ? date( 'Y-m-d' ) : $day;
-		
-		$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-		$oRes = $db->select(
-			array( 'user_login_history' ), 
-			array( 'user_id', 'min(ulh_timestamp) as min_ts' ),
-			array( 
-				'city_id' => $cityID,
-				'user_id > 0' 
-			),
-			__METHOD__,
-			array( 'GROUP BY' => 'user_id', 'HAVING' => "min(ulh_timestamp) like '" . $db->escapeLike( $today ) . "%'" )
-		);
+		if ( !empty( $wgStatsDBEnabled ) ) {
+			$today = ( empty( $day ) ) ? date( 'Y-m-d' ) : $day;
+			
+			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+			$oRes = $db->select(
+				array( 'user_login_history' ), 
+				array( 'user_id', 'min(ulh_timestamp) as min_ts' ),
+				array( 
+					'city_id' => $cityID,
+					'user_id > 0' 
+				),
+				__METHOD__,
+				array( 'GROUP BY' => 'user_id', 'HAVING' => "min(ulh_timestamp) like '" . $db->escapeLike( $today ) . "%'" )
+			);
 
-		while ( $oRow = $db->fetchObject ( $oRes ) ) { 
-			$userJoined[ $oRow->user_id ] = $oRow->min_ts; 
-		} 
-		$db->freeResult( $oRes );
+			while ( $oRow = $db->fetchObject ( $oRes ) ) { 
+				$userJoined[ $oRow->user_id ] = $oRow->min_ts; 
+			} 
+			$db->freeResult( $oRes );
+		}
 		
 		wfProfileOut( __METHOD__ );		
 		return $userJoined;

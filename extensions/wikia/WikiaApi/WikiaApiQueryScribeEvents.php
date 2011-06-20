@@ -18,8 +18,8 @@ class WikiaApiQueryScribeEvents extends ApiQueryBase {
 	}
 	
 	protected function getDB() {
-		global $wgStatsDB;
-		return wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+		global $wgStatsDB, $wgStatsDBEnabled;
+		return ( !empty( $wgStatsDBEnabled ) ) ? wfGetDB(DB_SLAVE, array(), $wgStatsDB) : null;
 	}
 
 	private function getEventsInfo() {
@@ -33,6 +33,10 @@ class WikiaApiQueryScribeEvents extends ApiQueryBase {
 		}
 
 		$db = $this->getDB();
+		if ( is_null ( $db  ) ) {
+			return false;
+		}
+		
 		$this->profileDBIn();
 		$oRes = $db->select( 
 			'events', 

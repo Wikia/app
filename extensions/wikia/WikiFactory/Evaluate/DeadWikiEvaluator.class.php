@@ -110,12 +110,17 @@ abstract class WikiEvaluator {
 			$table = 'page_views';
 		}
 
-		global $wgStatsDB;
-		$db = wfGetDB(DB_SLAVE,array(),$wgStatsDB);
-		return intval($db->selectField($table,'sum(pv_views)',array(
-			'pv_city_id' => $this->id,
-			"pv_use_date > $ts",
-		),__METHOD__));
+		global $wgStatsDB, $wgStatsDBEnabled;
+		$res = 0;
+		if ( !empty( $wgStatsDBEnabled ) ) {
+			$db = wfGetDB(DB_SLAVE,array(),$wgStatsDB);
+			$res = $db->selectField($table,'sum(pv_views)',array(
+				'pv_city_id' => $this->id,
+				"pv_use_date > $ts",
+			),__METHOD__);
+		}
+			
+		return intval( $res );
 	}
 
 	protected function check( $options ) {

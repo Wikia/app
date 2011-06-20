@@ -54,51 +54,54 @@ class AutomaticWikiAdoptionGatherData {
 	}
 
 	function getRecentAdminEdits() {
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 
-		$dbrStats = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 		$recentAdminEdit = array();
+		
+		if ( !empty($wgStatsDBEnabled) ) {
+			$dbrStats = wfGetDB(DB_SLAVE, array(), $wgStatsDB);			
 
-		//get wikis with pages < 1000 and admins not active in last 14 days but wit at least 1 edit
-		//260000 = ID of wiki created on 2011-05-01 so it will work for wikis created after this project has been deployed
-		$res = $dbrStats->query(
-			'select e1.wiki_id, sum(e1.edits) as sum_edits from specials.events_local_users e1 ' .
-			'where e1.wiki_id > 260000 ' .
-			'group by e1.wiki_id ' .
-			'having sum_edits < 1000 and (' .
-			'select count(0) from specials.events_local_users e2 ' .
-			'where e1.wiki_id = e2.wiki_id and ' .
-			'all_groups like "%sysop%" and ' .
-			'editdate > now() - interval 14 day ' .
-			') = 0 and (' .
-			'select count(*) from specials.events_local_users e3 ' .
-			'where e1.wiki_id = e3.wiki_id and ' .
-			'all_groups like "%sysop%" and ' .
-			'edits > 0' .
-			') > 0 LIMIT 10000',
-			__METHOD__
-		);
-
-		while ($row = $dbrStats->fetchObject($res)) {
-			if (WikiFactory::IDtoDB($row->wiki_id) === false) {
-				//check if wiki exists in city_list
-				continue;
-			}
-
-			$res2 = $dbrStats->query(
-				"select user_id, max(editdate) as lastedit from specials.events_local_users where wiki_id = {$row->wiki_id} and all_groups like '%sysop%' group by 1 order by null;",
+			//get wikis with pages < 1000 and admins not active in last 14 days but wit at least 1 edit
+			//260000 = ID of wiki created on 2011-05-01 so it will work for wikis created after this project has been deployed
+			$res = $dbrStats->query(
+				'select e1.wiki_id, sum(e1.edits) as sum_edits from specials.events_local_users e1 ' .
+				'where e1.wiki_id > 260000 ' .
+				'group by e1.wiki_id ' .
+				'having sum_edits < 1000 and (' .
+				'select count(0) from specials.events_local_users e2 ' .
+				'where e1.wiki_id = e2.wiki_id and ' .
+				'all_groups like "%sysop%" and ' .
+				'editdate > now() - interval 14 day ' .
+				') = 0 and (' .
+				'select count(*) from specials.events_local_users e3 ' .
+				'where e1.wiki_id = e3.wiki_id and ' .
+				'all_groups like "%sysop%" and ' .
+				'edits > 0' .
+				') > 0 LIMIT 10000',
 				__METHOD__
 			);
 
-			$recentAdminEdit[$row->wiki_id] = array(
-				'recentEdit' => time(),
-				'admins' => array()
-			);
-			while ($row2 = $dbrStats->fetchObject($res2)) {
-				if (($lastedit = wfTimestamp(TS_UNIX, $row2->lastedit)) < $recentAdminEdit[$row->wiki_id]['recentEdit']) {
-					$recentAdminEdit[$row->wiki_id]['recentEdit'] = $lastedit;
+			while ($row = $dbrStats->fetchObject($res)) {
+				if (WikiFactory::IDtoDB($row->wiki_id) === false) {
+					//check if wiki exists in city_list
+					continue;
 				}
-				$recentAdminEdit[$row->wiki_id]['admins'][] = $row2->user_id;
+
+				$res2 = $dbrStats->query(
+					"select user_id, max(editdate) as lastedit from specials.events_local_users where wiki_id = {$row->wiki_id} and all_groups like '%sysop%' group by 1 order by null;",
+					__METHOD__
+				);
+
+				$recentAdminEdit[$row->wiki_id] = array(
+					'recentEdit' => time(),
+					'admins' => array()
+				);
+				while ($row2 = $dbrStats->fetchObject($res2)) {
+					if (($lastedit = wfTimestamp(TS_UNIX, $row2->lastedit)) < $recentAdminEdit[$row->wiki_id]['recentEdit']) {
+						$recentAdminEdit[$row->wiki_id]['recentEdit'] = $lastedit;
+					}
+					$recentAdminEdit[$row->wiki_id]['admins'][] = $row2->user_id;
+				}
 			}
 		}
 

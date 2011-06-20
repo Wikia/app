@@ -536,6 +536,7 @@ $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
 $wgExternalStatsDB = 'dbstats';
 $wgStatsDB = 'stats';
+$wgStatsDBEnabled = true;
 $wgExternalWikiaStatsDB = 'wikiastats';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
 

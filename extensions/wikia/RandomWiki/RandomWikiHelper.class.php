@@ -24,7 +24,7 @@ class RandomWikiHelper {
 	}
 
 	static public function loadData( $forceRefresh = false, $forceLanguage = null ) {
-		global $wgMemc, $wgStatsDB, $wgContLang, $wgExternalSharedDB;
+		global $wgMemc, $wgStatsDB, $wgContLang, $wgExternalSharedDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 		
 		self::$mLanguage = ( !empty( $forceLanguage ) ) ? $forceLanguage : $wgContLang->getCode();
@@ -66,50 +66,53 @@ class RandomWikiHelper {
 				$dbr->freeResult( $res );
 			}
 			
-			$dbr = wfGetDB( DB_SLAVE, array( ), $wgStatsDB );
-			
-			$wikis = $dbr->select(
-					array(
-						'wikicities.city_list as cl',
-						'specials.page_views_summary_tags as pv'//this table stores only the last 4 weeks worth of data
-					),
-					array(
-						'pv.city_id AS city_id',
-						'sum(pv.pv_views) as pageviews'
-					),
-					array(
-						'cl.city_id = pv.city_id',
-						'cl.city_lang' => self::$mLanguage,
-						'cl.city_public' => 1,
-					),
-					__METHOD__,
-					array(
-						'GROUP BY' => 'cl.city_id'
-					)
-			);
-			
 			$counter = 0;
-			self::$mData[ 'hubs' ] = array();
-			$minPageViews = ( isset( self::$pageviewsLimits[ self::$mLanguage ] ) ) ? self::$pageviewsLimits[ self::$mLanguage ] : self::$pageviewsLimits[ 'default' ];
+			self::$mData[ 'hubs' ] = array();			
+			if ( !empty( $wgStatsDBEnabled ) ) {
+				
+				$dbr = wfGetDB( DB_SLAVE, array( ), $wgStatsDB );
+				
+				$wikis = $dbr->select(
+						array(
+							'wikicities.city_list as cl',
+							'specials.page_views_summary_tags as pv'//this table stores only the last 4 weeks worth of data
+						),
+						array(
+							'pv.city_id AS city_id',
+							'sum(pv.pv_views) as pageviews'
+						),
+						array(
+							'cl.city_id = pv.city_id',
+							'cl.city_lang' => self::$mLanguage,
+							'cl.city_public' => 1,
+						),
+						__METHOD__,
+						array(
+							'GROUP BY' => 'cl.city_id'
+						)
+				);
+				
+				$minPageViews = ( isset( self::$pageviewsLimits[ self::$mLanguage ] ) ) ? self::$pageviewsLimits[ self::$mLanguage ] : self::$pageviewsLimits[ 'default' ];
 
-			while ( ( $wiki = $dbr->fetchObject( $wikis ) ) && ( $counter < self::COUNT_LIMIT ) ) {
-				if ( $wiki->pageviews >= $minPageViews ) {
-					$hub = WikiFactory::getCategory( $wiki->city_id );
+				while ( ( $wiki = $dbr->fetchObject( $wikis ) ) && ( $counter < self::COUNT_LIMIT ) ) {
+					if ( $wiki->pageviews >= $minPageViews ) {
+						$hub = WikiFactory::getCategory( $wiki->city_id );
 
-					if ( !$hub ) {
-						continue;
+						if ( !$hub ) {
+							continue;
+						}
+
+						if ( !isset( self::$mData[ 'hubs' ][ $hub->cat_id ] ) ) {
+							self::$mData[ 'hubs' ][ $hub->cat_id ] = array( );
+						}
+
+						self::$mData[ 'hubs' ][ $hub->cat_id ][ ] = $wiki->city_id;
+						$counter++;
 					}
-
-					if ( !isset( self::$mData[ 'hubs' ][ $hub->cat_id ] ) ) {
-						self::$mData[ 'hubs' ][ $hub->cat_id ] = array( );
-					}
-
-					self::$mData[ 'hubs' ][ $hub->cat_id ][ ] = $wiki->city_id;
-					$counter++;
 				}
-			}
 
-			$dbr->freeResult( $wikis );
+				$dbr->freeResult( $wikis );
+			}
 
 			// removing entries from hubs that have a match in recommended
 			if ( !empty( self::$mData[ 'recommended' ] ) && !empty( self::$mData[ 'hubs' ] ) ) {

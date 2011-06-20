@@ -252,32 +252,34 @@ abstract class SponsorshipDashboardSource {
 		if ( $this->saveable && !empty( $this->reportId ) ) {
 
 			$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
+			
+			if ( !is_null( $db ) ) {
+				$array = array(
+						'wmso_type' => $this->getSourceKey(),
+						'wmso_report_id' => $this->reportId,
+					);
 
-			$array = array(
-				    'wmso_type' => $this->getSourceKey(),
-				    'wmso_report_id' => $this->reportId,
-				);
+				if( $this->getId() ) {
 
-			if( $this->getId() ) {
-
-				$array['wmso_id'] = $this->getId();
-				$db->update(
-					'specials.wmetrics_source',
-					$array,
-					array( 'wmso_id' => $this->sourceId ),
-					__METHOD__
-				);
-			} else {
-				$array['wmso_id'] = $this->getId();
-				$db->insert(
-					'specials.wmetrics_source',
-					$array,
-					__METHOD__
-				);
-				$this->sourceId = $db->insertId();
+					$array['wmso_id'] = $this->getId();
+					$db->update(
+						'specials.wmetrics_source',
+						$array,
+						array( 'wmso_id' => $this->sourceId ),
+						__METHOD__
+					);
+				} else {
+					$array['wmso_id'] = $this->getId();
+					$db->insert(
+						'specials.wmetrics_source',
+						$array,
+						__METHOD__
+					);
+					$this->sourceId = $db->insertId();
+				}
+				$db->commit();
+				$this->saveParams();
 			}
-			$db->commit();
-			$this->saveParams();
 		}
 		Wikia::log( __METHOD__, 'JKU', 'saveMeEnd');
 
@@ -294,23 +296,26 @@ abstract class SponsorshipDashboardSource {
 	protected function saveParams() {
 
 		$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
-		$db->delete(
-			'specials.wmetrics_source_params',
-			array( 'wmsop_source_id' => $this->sourceId )
-		);
-		foreach ( $this->getParamsArray() as $param => $value ) {
-
-			$db->insert(
+		
+		if ( !is_null( $db ) ) {
+			$db->delete(
 				'specials.wmetrics_source_params',
-				array(
-				    'wmsop_source_id' => $this->sourceId,
-				    'wmsop_type' => $param,
-				    'wmsop_value' => $value
-				),
-				__METHOD__
+				array( 'wmsop_source_id' => $this->sourceId )
 			);
+			foreach ( $this->getParamsArray() as $param => $value ) {
+
+				$db->insert(
+					'specials.wmetrics_source_params',
+					array(
+						'wmsop_source_id' => $this->sourceId,
+						'wmsop_type' => $param,
+						'wmsop_value' => $value
+					),
+					__METHOD__
+				);
+			}
+			$db->commit();
 		}
-		$db->commit();
 	}
 
 	const SD_PARAMS_REP_CITYID = 'repCityId';
@@ -459,19 +464,21 @@ abstract class SponsorshipDashboardSource {
 		if ( !empty( $this->sourceId ) ) {
 
 			$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
-			$res = $dbr->select(
-				'specials.wmetrics_source_params',
-				array( 'wmsop_value as value', 'wmsop_type as type' ),
-				array( 'wmsop_source_id = '. $this->sourceId ),
-				__METHOD__,
-				array()
-			);
+			if ( !is_null( $dbr ) ) {
+				$res = $dbr->select(
+					'specials.wmetrics_source_params',
+					array( 'wmsop_value as value', 'wmsop_type as type' ),
+					array( 'wmsop_source_id = '. $this->sourceId ),
+					__METHOD__,
+					array()
+				);
 
-			$aParams = array();
-			while ( $row = $res->fetchObject( $res ) ) {
-				$aParams[ $row->type] = $row->value;
+				$aParams = array();
+				while ( $row = $res->fetchObject( $res ) ) {
+					$aParams[ $row->type] = $row->value;
+				}
+				$this->fillFromArray( $aParams );
 			}
-			$this->fillFromArray( $aParams );
 		}
 	}
 
