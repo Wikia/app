@@ -87,7 +87,7 @@ class RiakSessionHandler {
 		$stacktrace = ($exception instanceof Exception) ? $exception->getTraceAsString() : "";
 
 		// XXX: put log to better place
-		error_log("RIAK: {$message}\n{$stacktrace}");
+		trigger_error("Could not connect to Riak: {$message}");
 		// just die with 500
 		header("HTTP/1.0 500 Internal Server Error");
 		die("Could not reach Riak ({$message})");
