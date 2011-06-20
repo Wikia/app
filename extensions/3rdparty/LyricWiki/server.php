@@ -1003,6 +1003,12 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 					$expectedSig = md5($wgFullLyricWikiApiToken . "$artist$song");
 					if($expectedSig == $fullApiAuth){
 						$allowFullLyrics = true;
+					} else if($ns == NS_GRACENOTE){
+						// If the song is in the GN Namespace, then there is one more possibility for the name of the song
+						$expectedSig = md5($wgFullLyricWikiApiToken . "Gracenote$artist$song");
+						if($expectedSig == $fullApiAuth){
+							$allowFullLyrics = true;
+						}
 					}
 				}
 
@@ -1024,7 +1030,12 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 
 				// SWC 20090802 - Neuter the actual lyrics :( - return an explanation with a link to the LyricWiki page.
 				// SWC 20091021 - Gil has determined that up to 17% of the lyrics can be returned as fair-use - we'll stick with 1/7th (about 14.3%) of the characters for safety.
-				if(!$allowFullLyrics){
+				if($allowFullLyrics){
+					// If the full lyrics are being returned (ie: to our mobile app) and the song is a Gracenote song, add the mobile branding as mentioned in the contract.
+					if($ns == NS_GRACENOTE){
+						$retVal['lyrics'] .= "\n\n&copy; Gracenote's providers";
+					}
+				} else {
 					if(($retVal['lyrics'] != $defaultLyrics) && ($retVal['lyrics'] != $instrumental) && ($retVal['lyrics'] != "")){
 						$urlLink = "\n\n<a href='".$retVal['url']."'>".$retVal['artist'].":".$retVal['song']."</a>";
 						$lyrics = $retVal['lyrics'];
