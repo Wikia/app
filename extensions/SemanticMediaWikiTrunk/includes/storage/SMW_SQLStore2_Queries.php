@@ -315,7 +315,7 @@ class SMWSQLStore2QueryEngine {
 			$entries['Auxilliary Tables Used'] = 'No auxilliary tables used.';
 		}
 
-		return SMWStore::formatDebugOutput( 'SMWSQLStore2', $entries, $query );;
+		return SMWStore::formatDebugOutput( 'SMWSQLStore2', $entries, $query );
 	}
 
 	/**
@@ -597,8 +597,9 @@ class SMWSQLStore2QueryEngine {
 		$query->jointable = $proptable->name;
 
 		if ( $property->isInverse() ) { // see if we can support inverses by inverting the proptable data
-			if ( ( count( $proptable->objectfields ) == 1 ) && ( reset( $proptable->objectfields ) == 'p' ) ) {
-				$query->joinfield = $query->alias . '.' . reset( array_keys( $proptable->objectfields ) );
+			if ( ( count( $proptable->objectfields ) == 1 ) && ( $proptable->objectfields[0] == 'p' ) ) {
+				$keys = array_keys( $proptable->objectfields );
+				$query->joinfield = $query->alias . '.' . $keys[0];
 				$objectfields = array( 's_id' => 'p' );
 				$valueindex = $labelindex = 3; // should normally not change, but let's be strict
 			} else { // no inverses supported for this property, stop here
@@ -967,7 +968,7 @@ class SMWSQLStore2QueryEngine {
 		$smwtable = $this->m_dbs->tableName( ( $query->type == SMW_SQL2_PROP_HIERARCHY ) ? 'smw_subp2':'smw_subs2' );
 
 		// Try to safe time (SELECT is cheaper than creating/dropping 3 temp tables):
-		$res = $this->m_dbs->select( $smwtable, 's_id', $valuecond, array( 'LIMIT' => 1 ) );
+		$res = $this->m_dbs->select( $smwtable, 's_id', $valuecond, __METHOD__, array( 'LIMIT' => 1 ) );
 
 		if ( !$this->m_dbs->fetchObject( $res ) ) { // no subobjects, we are done!
 			$this->m_dbs->freeResult( $res );

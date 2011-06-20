@@ -16,7 +16,7 @@ switch( $wgCityId ) {
 	case 232959:
 		$smwgSparqlQueryEndpoint = 'http://smw:smw@localhost:10035/repositories/smw';
 		$smwgSparqlUpdateEndpoint = 'http://smw:smw@localhost:10035/repositories/smw';
-		$smwgSparqlDataEndpoint = false;
+		$smwgSparqlDataEndpoint = ''; // can be empty
 		break;
 
 	default:
