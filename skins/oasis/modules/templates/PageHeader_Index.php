@@ -45,7 +45,14 @@
 	<div class="subtitle"><?= $subtitle ?></div>
 <?php
 	}
-	
+
+	// include undelete message (BugId:1137)
+	if ($undelete != '') {
+?>
+	<div id="contentSub2"><?= $undelete ?></div>
+<?php
+	}
+
 	// render search box
 	if ($showSearchBox) {
 		echo wfRenderModule('Search');
