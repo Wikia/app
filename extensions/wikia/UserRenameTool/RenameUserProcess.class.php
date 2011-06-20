@@ -677,7 +677,7 @@ class RenameUserProcess {
 	public function updateGlobal(){
 		wfProfileIn(__METHOD__);
 
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 
 		// wikicities
 		$this->addLog("Updating global shared database: wikicities.");
@@ -703,7 +703,7 @@ class RenameUserProcess {
 
 
 		//no working stats DB instance on devboxes
-		if(!defined('ENV_DEVBOX')){
+		if( !defined('ENV_DEVBOX') && !empty($wgStatsDBEnabled) ) {
 			// stats
 			$this->addLog("Updating global shared database: stats");
 			$dbw = wfGetDB(DB_MASTER, array(), $wgStatsDB);

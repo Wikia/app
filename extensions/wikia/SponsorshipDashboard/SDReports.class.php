@@ -19,22 +19,25 @@ class SponsorshipDashboardReports {
 	public function getData(){
 		
 		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
-		$res = $dbr->select(
-			'specials.wmetrics_report',
-			array( 'wmre_id as id', 'wmre_name as name', 'wmre_description as description'  ),
-			array(),
-			__METHOD__,
-			array()
-		);
-
 		$returnArray = array();
-		while ( $row = $res->fetchObject( $res ) ) {
-			$returnArray[ $row->id ] = array(
-				'id'		=>	$row->id,
-				'name'		=>	$row->name,
-				'description'	=>	$row->description
-			    
+		
+		if ( !is_null( $dbr ) ) {
+			$res = $dbr->select(
+				'specials.wmetrics_report',
+				array( 'wmre_id as id', 'wmre_name as name', 'wmre_description as description'  ),
+				array(),
+				__METHOD__,
+				array()
 			);
+
+			while ( $row = $res->fetchObject( $res ) ) {
+				$returnArray[ $row->id ] = array(
+					'id'		=>	$row->id,
+					'name'		=>	$row->name,
+					'description'	=>	$row->description
+					
+				);
+			}
 		}
 		
 		return $returnArray;

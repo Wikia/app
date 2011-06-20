@@ -53,7 +53,12 @@ class CategoryDataService extends Service {
 	
 	public function getMostVisited( $sCategoryDBKey, $mNamespace, $limit = false ){
 
-		global $wgStatsDB, $wgCityId, $wgDevelEnvironment;
+		global $wgStatsDB, $wgCityId, $wgDevelEnvironment, $wgStatsDBEnabled;
+
+		if ( empty( $wgStatsDBEnabled ) ) {
+			Wikia::log(__METHOD__, ' Stats DB is disabled');
+			return array();
+		}
 
 		if ( empty( $wgDevelEnvironment ) ) {
 			// production mode

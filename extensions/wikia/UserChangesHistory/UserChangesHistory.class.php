@@ -35,7 +35,7 @@ class UserChangesHistory {
 	 */
 	static public function LoginHistoryHook( $from, $user, $type = false ) {
 		global $wgCityId; #--- private wikia identifier, you can use wgDBname
-		global $wgEnableScribeReport, $wgStatsDB;
+		global $wgEnableScribeReport, $wgStatsDB, $wgStatsDBEnabled;
 
 		if( wfReadOnly() ) { return true; }
 
@@ -74,24 +74,26 @@ class UserChangesHistory {
 						}
 					} else {
 						# use database
-						$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
+						if ( !empty( $wgStatsDBEnabled ) ) {
+							$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
 
-						$status = $dbw->insert(
-							"user_login_history",
-							$params,
-							__METHOD__,
-							array('IGNORE')
-						);
-						
-						$status = $dbw->replace(
-							"user_login_history_summary",
-							array( 'user_id' ),
-							array( 'ulh_timestamp' => wfTimestampOrNull(), 'user_id' => $id ),
-							__METHOD__
-						);
-						
-						if ( $dbw->getFlag( DBO_TRX ) ) {
-							$dbw->commit();
+							$status = $dbw->insert(
+								"user_login_history",
+								$params,
+								__METHOD__,
+								array('IGNORE')
+							);
+							
+							$status = $dbw->replace(
+								"user_login_history_summary",
+								array( 'user_id' ),
+								array( 'ulh_timestamp' => wfTimestampOrNull(), 'user_id' => $id ),
+								__METHOD__
+							);
+							
+							if ( $dbw->getFlag( DBO_TRX ) ) {
+								$dbw->commit();
+							}
 						}
 					}
 				}
@@ -118,8 +120,7 @@ class UserChangesHistory {
 	 * @return true		process other hooks
 	 */
 	static public function SavePreferencesHook($formData, $error) {
-
-		global $wgStatsDB, $wgEnableScribeReport, $wgUser;
+		global $wgStatsDB, $wgEnableScribeReport, $wgUser, $wgStatsDBEnabled;
 
 		if( wfReadOnly() ) { return true; }
 
@@ -167,20 +168,21 @@ class UserChangesHistory {
 					Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 				}
 			} else {			 
+				if ( !empty( $wgStatsDBEnabled ) ) {
+					$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
 
-				$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
-
-				/**
-				 * so far encodeOptions is public by default but could be
-				 * private in future
-				 */
-				$status = $dbw->insert(
-					"user_history",
-					$params,
-					__METHOD__
-				);
-				if ( $dbw->getFlag( DBO_TRX ) ) {
-					$dbw->commit();
+					/**
+					 * so far encodeOptions is public by default but could be
+					 * private in future
+					 */
+					$status = $dbw->insert(
+						"user_history",
+						$params,
+						__METHOD__
+					);
+					if ( $dbw->getFlag( DBO_TRX ) ) {
+						$dbw->commit();
+					}
 				}
 			}
 		}

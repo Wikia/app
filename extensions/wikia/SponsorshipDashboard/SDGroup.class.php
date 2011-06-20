@@ -73,27 +73,28 @@ class SponsorshipDashboardGroup {
 	public function save() {
 
 		$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
+		
+		if ( !is_null( $db ) ) {
 
-		if( !empty( $this->id ) ) {
+			if( !empty( $this->id ) ) {
+				$db->update(
+					'specials.wmetrics_group',
+					$this->getTableFromParams(),
+					array( 'wmgr_id' => (int) $this->id ),
+					__METHOD__
+				);
+			} else {
+				$db->insert(
+					'specials.wmetrics_group',
+					$this->getTableFromParams(),
+					__METHOD__
+				);
+				$this->setId( $db->insertId() );
+			}
 
-			$db->update(
-				'specials.wmetrics_group',
-				$this->getTableFromParams(),
-				array( 'wmgr_id' => (int) $this->id ),
-				__METHOD__
-			);
-		} else {
-
-			$db->insert(
-				'specials.wmetrics_group',
-				$this->getTableFromParams(),
-				__METHOD__
-			);
-			$this->setId( $db->insertId() );
+			$this->saveReports();
+			$this->saveUsers();
 		}
-
-		$this->saveReports();
-		$this->saveUsers();
 	}
 
 	public function setId( $id ) {
@@ -117,32 +118,36 @@ class SponsorshipDashboardGroup {
 	public function saveReports() {
 
 		$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
-		$db->delete(
-			'specials.wmetrics_group_reports_map',
-			array( 'wmgrm_group_id' => $this->id )
-		);
-
-		foreach ( $this->reports as $report ) {
-			$db->insert(
+		if ( !is_null( $db ) ) {
+			$db->delete(
 				'specials.wmetrics_group_reports_map',
-				array( 'wmgrm_group_id' => $this->id, 'wmgrm_report_id' => $report )
+				array( 'wmgrm_group_id' => $this->id )
 			);
+
+			foreach ( $this->reports as $report ) {
+				$db->insert(
+					'specials.wmetrics_group_reports_map',
+					array( 'wmgrm_group_id' => $this->id, 'wmgrm_report_id' => $report )
+				);
+			}
 		}
 	}
 
 	public function saveUsers() {
 
 		$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
-		$db->delete(
-			'specials.wmetrics_user_group_map',
-			array( 'wmgum_group_id' => $this->id )
-		);
-
-		foreach ( $this->users as $user ) {
-			$db->insert(
+		if ( !is_null( $db ) ) {
+			$db->delete(
 				'specials.wmetrics_user_group_map',
-				array( 'wmgum_group_id' => $this->id, 'wmgum_user_id' => $user )
+				array( 'wmgum_group_id' => $this->id )
 			);
+
+			foreach ( $this->users as $user ) {
+				$db->insert(
+					'specials.wmetrics_user_group_map',
+					array( 'wmgum_group_id' => $this->id, 'wmgum_user_id' => $user )
+				);
+			}
 		}
 	}
 
@@ -153,24 +158,26 @@ class SponsorshipDashboardGroup {
 		}
 
 		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
-		$res = $dbr->select(
-			'specials.wmetrics_group',
-			array(
-			    'wmgr_id as id',
-			    'wmgr_name as name',
-			    'wmgr_description as description'
-			),
-			array( 'wmgr_id = '. $this->id ),
-			__METHOD__,
-			array()
-		);
+		if ( !is_null( $dbr ) ) {
+			$res = $dbr->select(
+				'specials.wmetrics_group',
+				array(
+					'wmgr_id as id',
+					'wmgr_name as name',
+					'wmgr_description as description'
+				),
+				array( 'wmgr_id = '. $this->id ),
+				__METHOD__,
+				array()
+			);
 
-		while ( $row = $res->fetchObject( $res ) ) {
-			$this->description = ( $row->description );
-			$this->name = ( $row->name );
+			while ( $row = $res->fetchObject( $res ) ) {
+				$this->description = ( $row->description );
+				$this->name = ( $row->name );
+			}
+			$this->loadReports();
+			$this->loadUsers();
 		}
-		$this->loadReports();
-		$this->loadUsers();
 		$this->dataLoaded = true;
 	}
 
@@ -181,20 +188,22 @@ class SponsorshipDashboardGroup {
 		}
 
 		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
-		$res = $dbr->select(
-			'specials.wmetrics_group',
-			array(
-			    'wmgr_id as id',
-			    'wmgr_name as name',
-			    'wmgr_description as description'
-			),
-			array( 'wmgr_id = '. $this->id ),
-			__METHOD__,
-			array()
-		);
+		if ( !is_null( $dbr ) ) {
+			$res = $dbr->select(
+				'specials.wmetrics_group',
+				array(
+					'wmgr_id as id',
+					'wmgr_name as name',
+					'wmgr_description as description'
+				),
+				array( 'wmgr_id = '. $this->id ),
+				__METHOD__,
+				array()
+			);
 
-		while ( $row = $res->fetchObject( $res ) ) {
-			return true;
+			while ( $row = $res->fetchObject( $res ) ) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -221,19 +230,21 @@ class SponsorshipDashboardGroup {
 		}
 
 		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
-		$res = $dbr->select(
-			'specials.wmetrics_group_reports_map',
-			array( 'wmgrm_id as id', 'wmgrm_report_id as report_id', 'wmgrm_group_id as group_id' ),
-			array( 'wmgrm_group_id = '. $this->id ),
-			__METHOD__,
-			array()
-		);
+		if ( !is_null( $dbr ) ) {
+			$res = $dbr->select(
+				'specials.wmetrics_group_reports_map',
+				array( 'wmgrm_id as id', 'wmgrm_report_id as report_id', 'wmgrm_group_id as group_id' ),
+				array( 'wmgrm_group_id = '. $this->id ),
+				__METHOD__,
+				array()
+			);
 
-		$returnArray = array();
-		while ( $row = $res->fetchObject( $res ) ) {
-			$report = new SponsorshipDashboardReport( $row->report_id);
-			$report->loadReportParams();
-			$this->reports[ $report->id ] = $report;
+			$returnArray = array();
+			while ( $row = $res->fetchObject( $res ) ) {
+				$report = new SponsorshipDashboardReport( $row->report_id);
+				$report->loadReportParams();
+				$this->reports[ $report->id ] = $report;
+			}
 		}
 	}
 
@@ -248,29 +259,33 @@ class SponsorshipDashboardGroup {
 		}
 
 		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
-		$res = $dbr->select(
-			'specials.wmetrics_user_group_map',
-			array( 'wmgum_id as id', 'wmgum_user_id as user_id', 'wmgum_user_id as user_id' ),
-			array( 'wmgum_group_id = '. $this->id ),
-			__METHOD__,
-			array()
-		);
-		$returnArray = array();
-		while ( $row = $res->fetchObject( $res ) ) {
-			$user = new SponsorshipDashboardUser( $row->user_id);
-			$user->loadUserParams();
-			$this->users[ $user->id ] = $user;
+		if ( !is_null( $dbr ) ) {
+			$res = $dbr->select(
+				'specials.wmetrics_user_group_map',
+				array( 'wmgum_id as id', 'wmgum_user_id as user_id', 'wmgum_user_id as user_id' ),
+				array( 'wmgum_group_id = '. $this->id ),
+				__METHOD__,
+				array()
+			);
+			$returnArray = array();
+			while ( $row = $res->fetchObject( $res ) ) {
+				$user = new SponsorshipDashboardUser( $row->user_id);
+				$user->loadUserParams();
+				$this->users[ $user->id ] = $user;
+			}
 		}
 	}
 	
 	public function delete() {
 		if( !empty( $this->id ) ) {
 			$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
-			$db->delete(
-				'specials.wmetrics_group',
-				array( 'wmgr_id' => $this->id )
-			);
-			$this->setId( 0 );
+			if ( !is_null( $db ) ) {
+				$db->delete(
+					'specials.wmetrics_group',
+					array( 'wmgr_id' => $this->id )
+				);
+				$this->setId( 0 );
+			}
 		}
 	}
 

@@ -1522,8 +1522,12 @@ class Wikia {
 	 * hooked up to AddNewAccount
 	 */
 	static public function ignoreUser( $user, $byEmail = false ) {
-		global $wgStatsDB;
-
+		global $wgStatsDB, $wgStatsDBEnabled;
+	
+		if ( empty( $wgStatsDBEnabled ) ) {
+			return true;
+		}
+		
 		if ( ( $user instanceof User ) && ( 0 === strpos( $user->getName(), 'WikiaTestAccount' ) ) ) {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
 

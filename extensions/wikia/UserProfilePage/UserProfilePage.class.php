@@ -384,7 +384,7 @@ class UserProfilePage {
 	}
 
 	public function getTopWikis( $limit = 5 ) {
-		global $wgMemc, $wgStatsDB, $wgDevelEnvironment, $wgCityId;
+		global $wgMemc, $wgStatsDB, $wgDevelEnvironment, $wgCityId, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 		$wikis = false;
 
@@ -395,6 +395,11 @@ class UserProfilePage {
 				return $cachedData;
 			}
 
+			$wikis = array();
+			if ( empty( $wgStatsDBEnabled ) ) {
+				wfProfileOut(__METHOD__);				
+				return $wikis;
+			}
 
 			$where = array( 'user_id' => $this->getUser()->getId() );
 			$hiddenTopWikis = $this->getHiddenTopWikis();
@@ -414,8 +419,6 @@ class UserProfilePage {
 					'LIMIT' => $limit
 				)
 			);
-
-			$wikis = array();
 
 			if ( $wgDevelEnvironment ) {//DevBox test
 				$wikis = array(
@@ -502,7 +505,7 @@ class UserProfilePage {
 	 * @return array
 	 */
 	public function getTopPages( $limit = 6 ) {
-		global $wgMemc, $wgStatsDB, $wgCityId, $wgContentNamespaces, $wgDevelEnvironment;
+		global $wgMemc, $wgStatsDB, $wgCityId, $wgContentNamespaces, $wgDevelEnvironment, $wgStatsDBEnabled;
 		wfProfileIn(__METHOD__);
 		$pages = false;
 
@@ -511,6 +514,12 @@ class UserProfilePage {
 			if( !empty( $cachedData) ) {
 				wfProfileOut(__METHOD__);
 				return $cachedData;
+			}
+			
+			$pages = array();
+			if ( empty( $wgStatsDBEnabled ) ) {
+				wfProfileOut(__METHOD__);
+				return $pages;
 			}
 
 			//select page_id, count(page_id) from stats.events where wiki_id = N and user_id = N and event_type in (1,2) group by 1 order by 2 desc limit 10;
@@ -539,8 +548,6 @@ class UserProfilePage {
 					'LIMIT' => $limit
 				)
 			);
-
-			$pages = array();
 
 			//if( $wgDevelEnvironment ) { //DevBox test
 			//	$pages = array( 4 => 28, 1883 => 16, 1122 => 14, 31374 => 11, 2335 => 8, 78622 => 3 ); // test data

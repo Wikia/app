@@ -61,31 +61,31 @@ class SponsorshipDashboardUser {
 		if ( $this->exist() ) {
 
 			$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
+			if ( !is_null( $db ) ) {
+				$aParams = $this->getTableFromParams();
 
-			$aParams = $this->getTableFromParams();
+				if ( empty( $aParams ) ) {
+					return false;
+				}
 
-			if ( empty( $aParams ) ) {
-				return false;
+				if( !empty( $this->id ) ) {
+
+					$db->update(
+						'specials.wmetrics_user',
+						$aParams,
+						array( 'wmusr_id' => (int) $this->id ),
+						__METHOD__
+					);
+				} else {
+
+					$db->insert(
+						'specials.wmetrics_user',
+						$aParams,
+						__METHOD__
+					);
+					$this->setId( $db->insertId() );
+				}
 			}
-
-			if( !empty( $this->id ) ) {
-
-				$db->update(
-					'specials.wmetrics_user',
-					$aParams,
-					array( 'wmusr_id' => (int) $this->id ),
-					__METHOD__
-				);
-			} else {
-
-				$db->insert(
-					'specials.wmetrics_user',
-					$aParams,
-					__METHOD__
-				);
-				$this->setId( $db->insertId() );
-			}
-
 			return true;
 		}
 		return false;
@@ -154,27 +154,29 @@ class SponsorshipDashboardUser {
 		}
 
 		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
-		$res = $dbr->select(
-			'specials.wmetrics_user',
-			array(
-			    'wmusr_id as id',
-			    'wmusr_user_id as user_id',
-			    'wmusr_description as description',
-			    'wmusr_name as name',
-			    'wmusr_type as type',
-			    'wmusr_status as status'
-			),
-			array( 'wmusr_id = '. $this->id ),
-			__METHOD__,
-			array()
-		);
+		if ( !is_null( $dbr ) ) {
+			$res = $dbr->select(
+				'specials.wmetrics_user',
+				array(
+					'wmusr_id as id',
+					'wmusr_user_id as user_id',
+					'wmusr_description as description',
+					'wmusr_name as name',
+					'wmusr_type as type',
+					'wmusr_status as status'
+				),
+				array( 'wmusr_id = '. $this->id ),
+				__METHOD__,
+				array()
+			);
 
-		while ( $row = $res->fetchObject( $res ) ) {
-			$this->description = ( $row->description );
-			$this->name = ( $row->name );
-			$this->userId = ( $row->user_id );
-			$this->status = ( $row->status );
-			$this->type = ( $row->type );
+			while ( $row = $res->fetchObject( $res ) ) {
+				$this->description = ( $row->description );
+				$this->name = ( $row->name );
+				$this->userId = ( $row->user_id );
+				$this->status = ( $row->status );
+				$this->type = ( $row->type );
+			}
 		}
 	}
 
@@ -187,11 +189,13 @@ class SponsorshipDashboardUser {
 	public function delete() {
 		if( !empty( $this->id ) ) {
 			$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
-			$db->delete(
-				'specials.wmetrics_user',
-				array( 'wmusr_id' => $this->id )
-			);
-			$this->setId( 0 );
+			if ( !is_null( $db ) ) {
+				$db->delete(
+					'specials.wmetrics_user',
+					array( 'wmusr_id' => $this->id )
+				);
+				$this->setId( 0 );
+			}
 		}
 	}
 
@@ -200,19 +204,20 @@ class SponsorshipDashboardUser {
 		$iId = ( int )$iId;
 
 		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
+		if ( !is_null( $dbr ) ) {
+			$res = $dbr->select(
+				'specials.wmetrics_user',
+				array(
+					'wmusr_id as id'
+				),
+				array( 'wmusr_user_id = '. $iId ),
+				__METHOD__,
+				array()
+			);
 
-		$res = $dbr->select(
-			'specials.wmetrics_user',
-			array(
-			    'wmusr_id as id'
-			),
-			array( 'wmusr_user_id = '. $iId ),
-			__METHOD__,
-			array()
-		);
-
-		if ( $row = $res->fetchObject( $res ) ) {
-			return new self( $row->id );
+			if ( $row = $res->fetchObject( $res ) ) {
+				return new self( $row->id );
+			}
 		}
 	}
 }

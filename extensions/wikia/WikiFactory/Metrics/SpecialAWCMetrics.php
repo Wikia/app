@@ -275,7 +275,7 @@ class WikiMetrics {
 	 *
 	 */
 	public function getMainStatsRecords() {
-		global $wgExternalStatsDB, $wgStatsDB;
+		global $wgExternalStatsDB, $wgStatsDB, $wgStatsDBEnabled;
 		
 		$res = array();
 		wfProfileIn( __METHOD__ );
@@ -286,25 +286,28 @@ class WikiMetrics {
 		if ( !empty( $AWCCities ) ) {
 			#--- page views 
 			$wikiList = array_keys( $AWCCities );
-			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			$oRes = $db->select( 
-				array( 'page_views' ), 
-				array( 'pv_city_id, sum(pv_views) as cnt' ),
-				array( 'pv_city_id' => $wikiList ),
-				__METHOD__,
-				array( 'GROUP BY' => 'pv_city_id' )
-			);
-			while ( $oRow = $db->fetchObject( $oRes ) ) {
-				#---
-				$page_views = array_reduce (
-					array (" ", " K", " M", " G"), create_function (
-						'$a,$b', 'return is_numeric($a)?($a>=1000?$a/1000:number_format($a,1).$b):$a;'
-					), $oRow->cnt
+			
+			if ( !empty( $wgStatsDBEnabled ) ) {
+				$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+				$oRes = $db->select( 
+					array( 'page_views' ), 
+					array( 'pv_city_id, sum(pv_views) as cnt' ),
+					array( 'pv_city_id' => $wikiList ),
+					__METHOD__,
+					array( 'GROUP BY' => 'pv_city_id' )
 				);
-				$AWCCities[ $oRow->pv_city_id ][ "pageviews" ] = $oRow->cnt;
-				$AWCCities[ $oRow->pv_city_id ][ "pageviews_txt" ] = $page_views;
+				while ( $oRow = $db->fetchObject( $oRes ) ) {
+					#---
+					$page_views = array_reduce (
+						array (" ", " K", " M", " G"), create_function (
+							'$a,$b', 'return is_numeric($a)?($a>=1000?$a/1000:number_format($a,1).$b):$a;'
+						), $oRow->cnt
+					);
+					$AWCCities[ $oRow->pv_city_id ][ "pageviews" ] = $oRow->cnt;
+					$AWCCities[ $oRow->pv_city_id ][ "pageviews_txt" ] = $page_views;
+				}
+				$db->freeResult( $oRes );
 			}
-			$db->freeResult( $oRes );
 		}
 		
 		#---
@@ -436,7 +439,7 @@ class WikiMetrics {
 	 *
 	 */
 	private function getNewWikis( $all = false ) {
-		global $wgStatsDB;
+		global $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 		$res = array();
 
@@ -460,105 +463,107 @@ class WikiMetrics {
 				$this->cityIds = array(0);
 			}
 		}
-
-		/* db */
-		$dbr = wfGetDB( DB_SLAVE, "stats", $wgStatsDB );
-		/* check params */
-		$where = $this->buildQueryOptions($dbr);
 		
-		/* number records */
-		$options = array();
-
-		$tables = array("wikicities.city_list", "stats.wikia_monthly_stats"); #, "stats.page_views");
-		$fields = array(
-			"city_id", 
-			"city_dbname", 
-			"city_url", 
-			"city_created", 
-			"city_founding_user", 
-			"city_title", 
-			"city_founding_email", 
-			"city_lang", 
-			"city_public",
-			"ifnull(round(avg(users_all), 1), 0) as all_users",
-			"ifnull(round(avg(users_content_ns), 1),0) as content_users",
-			"ifnull(round(avg(articles_edits), 1), 0) as edits",
-			"ifnull(max(articles),0) as articles",
-			"ifnull(max(images_uploaded),0) as images",
-			//"ifnull(avg(pv_views),0) as pviews"
-		);
-		
-		$join = array(
-			'stats.wikia_monthly_stats' => array( 'LEFT JOIN', 'wiki_id = city_id'),
-			//'stats.page_views' => array('LEFT JOIN', 'pv_city_id = city_id')
-		);
-		
-		$AWCCitiesCount = 0;
-		if ( $all == false ) {
-			$oRow = $dbr->selectRow( "wikicities.city_list", "COUNT(*) as cnt", $where, __METHOD__ );
-			if ( is_object($oRow) ) {
-				$AWCCitiesCount = $oRow->cnt;
-			}
-			#if ( $this->mSort != $this->axOrder ) {
-			$options['LIMIT'] = $this->mLimit;
-			$options['OFFSET'] = $this->mOffset;
-			$options['GROUP BY'] = 'city_id';
-			$options['ORDER BY'] = $this->mSort;
-			#}
-		} else {
-			$options['GROUP BY'] = 'city_id';
-			$options['ORDER BY'] = $this->mSort;
-			$AWCCitiesCount = 0; 
-		}
-
-		#----
-		$oRes = $dbr->select( 
-			$tables, 
-			$fields,
-			$where,
-			__METHOD__,
-			$options,
-			$join	
-		);
-
 		$AWCMetrics = array();
-		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-			if ( $all === false ) {
-				$oFounder = User::newFromId($oRow->city_founding_user);
-				$sFounderLink = $sFounderName = "";
-				if ($oFounder instanceof User) {
-					$sk = $oFounder->getSkin();
-					$sFounderLink = $sk->makeLinkObj( Title::newFromText($oFounder->getName(), NS_USER), $oFounder->getName());
-					$sFounderName = $oFounder->getName();
-				}		
-				$AWCMetrics[ $oRow->city_id ] = array(
-					'id' 				=> $oRow->city_id,
-					'db' 				=> $oRow->city_dbname,
-					'url' 				=> $oRow->city_url,
-					'lang'				=> $oRow->city_lang,
-					'title'				=> $oRow->city_title,
-					'created' 			=> $oRow->city_created,
-					'founder'			=> $oRow->city_founding_user,
-					'founderUrl'		=> $sFounderLink,
-					'founderName'		=> $sFounderName,
-					'founderEmail'		=> $oRow->city_founding_email,
-					'public'			=> $oRow->city_public,
-					#-- stats 
-					'articles' 			=> $oRow->articles,
-					'edits'				=> $oRow->edits,
-					'images'			=> $oRow->images,
-					'all_users'			=> $oRow->all_users,
-					'content_users'		=> $oRow->content_users,
-					//'avg_pviews'		=> $oRow->pviews,
-					'pageviews'			=> 0,
-					'pageviews_txt'		=> 0,
-				);
+		$AWCCitiesCount = 0;
+		if ( !empty( $wgStatsDBEnabled ) ) {
+			/* db */
+			$dbr = wfGetDB( DB_SLAVE, "stats", $wgStatsDB );
+			/* check params */
+			$where = $this->buildQueryOptions($dbr);
+			
+			/* number records */
+			$options = array();
+
+			$tables = array("wikicities.city_list", "stats.wikia_monthly_stats"); #, "stats.page_views");
+			$fields = array(
+				"city_id", 
+				"city_dbname", 
+				"city_url", 
+				"city_created", 
+				"city_founding_user", 
+				"city_title", 
+				"city_founding_email", 
+				"city_lang", 
+				"city_public",
+				"ifnull(round(avg(users_all), 1), 0) as all_users",
+				"ifnull(round(avg(users_content_ns), 1),0) as content_users",
+				"ifnull(round(avg(articles_edits), 1), 0) as edits",
+				"ifnull(max(articles),0) as articles",
+				"ifnull(max(images_uploaded),0) as images",
+				//"ifnull(avg(pv_views),0) as pviews"
+			);
+			
+			$join = array(
+				'stats.wikia_monthly_stats' => array( 'LEFT JOIN', 'wiki_id = city_id'),
+				//'stats.page_views' => array('LEFT JOIN', 'pv_city_id = city_id')
+			);
+			
+			if ( $all == false ) {
+				$oRow = $dbr->selectRow( "wikicities.city_list", "COUNT(*) as cnt", $where, __METHOD__ );
+				if ( is_object($oRow) ) {
+					$AWCCitiesCount = $oRow->cnt;
+				}
+				#if ( $this->mSort != $this->axOrder ) {
+				$options['LIMIT'] = $this->mLimit;
+				$options['OFFSET'] = $this->mOffset;
+				$options['GROUP BY'] = 'city_id';
+				$options['ORDER BY'] = $this->mSort;
+				#}
 			} else {
-				$AWCMetrics[ $oRow->city_id ] = $oRow->city_dbname;
-				$AWCCitiesCount++;
+				$options['GROUP BY'] = 'city_id';
+				$options['ORDER BY'] = $this->mSort;
+				$AWCCitiesCount = 0; 
 			}
+
+			#----
+			$oRes = $dbr->select( 
+				$tables, 
+				$fields,
+				$where,
+				__METHOD__,
+				$options,
+				$join	
+			);
+
+			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+				if ( $all === false ) {
+					$oFounder = User::newFromId($oRow->city_founding_user);
+					$sFounderLink = $sFounderName = "";
+					if ($oFounder instanceof User) {
+						$sk = $oFounder->getSkin();
+						$sFounderLink = $sk->makeLinkObj( Title::newFromText($oFounder->getName(), NS_USER), $oFounder->getName());
+						$sFounderName = $oFounder->getName();
+					}		
+					$AWCMetrics[ $oRow->city_id ] = array(
+						'id' 				=> $oRow->city_id,
+						'db' 				=> $oRow->city_dbname,
+						'url' 				=> $oRow->city_url,
+						'lang'				=> $oRow->city_lang,
+						'title'				=> $oRow->city_title,
+						'created' 			=> $oRow->city_created,
+						'founder'			=> $oRow->city_founding_user,
+						'founderUrl'		=> $sFounderLink,
+						'founderName'		=> $sFounderName,
+						'founderEmail'		=> $oRow->city_founding_email,
+						'public'			=> $oRow->city_public,
+						#-- stats 
+						'articles' 			=> $oRow->articles,
+						'edits'				=> $oRow->edits,
+						'images'			=> $oRow->images,
+						'all_users'			=> $oRow->all_users,
+						'content_users'		=> $oRow->content_users,
+						//'avg_pviews'		=> $oRow->pviews,
+						'pageviews'			=> 0,
+						'pageviews_txt'		=> 0,
+					);
+				} else {
+					$AWCMetrics[ $oRow->city_id ] = $oRow->city_dbname;
+					$AWCCitiesCount++;
+				}
+			}
+			$dbr->freeResult( $oRes );
 		}
-		$dbr->freeResult( $oRes );
 
 		wfProfileOut( __METHOD__ );
 		return array($AWCMetrics, $AWCCitiesCount);
@@ -731,7 +736,7 @@ class WikiMetrics {
 	 * @return array
 	 */
 	private function getWikisByNbrPageviews() {
-		global $wgMemc, $wgStatsDB;
+		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
 		
 		$pageViews = $this->axNbrPageviews;
 		$pageViewsDays = $this->axNbrPageviewsDays;
@@ -750,7 +755,7 @@ class WikiMetrics {
 
 		$memkey = __METHOD__ . "v:" . $pageViews . "vd:" . $pageViewsDays . "vc:" . md5($cityList);
 		$cities = $wgMemc->get( $memkey );
-		if ( empty($cities) ) {
+		if ( empty( $cities ) && !empty( $wgStatsDBEnabled ) ) {
 			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$oRes = $dbs->select( 
 				"page_views", 
@@ -778,7 +783,7 @@ class WikiMetrics {
 	 * @return array
 	 */
 	private function getWikisByNbrEdits( ) {
-		global $wgStatsDB, $wgMemc;
+		global $wgStatsDB, $wgMemc, $wgStatsDBEnabled;
 		
 		$nbrEdits = $this->axNbrEdits;
 		$nbrEditsDays = $this->axNbrEditsDays;
@@ -797,7 +802,7 @@ class WikiMetrics {
 				
 		$memkey = __METHOD__ . "e:" . $nbrEdits . "ed:" . $nbrEditsDays . "ids:" . md5($cityList);
 		$cities = $wgMemc->get( $memkey );
-		if ( empty($cities) ) {
+		if ( empty($cities) && !empty( $wgStatsDBEnabled ) ) {
 			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$oRes = $dbs->select( 
 				"wikia_monthly_stats", 
@@ -824,7 +829,7 @@ class WikiMetrics {
 	 * @return array
 	 */
 	private function getWikisByNbrArticles() {
-		global $wgStatsDB, $wgMemc;
+		global $wgStatsDB, $wgMemc, $wgStatsDBEnabled;
 		
 		$nbrArticles = $this->axNbrArticles;
 		#----
@@ -841,7 +846,7 @@ class WikiMetrics {
 				
 		$memkey = __METHOD__ . "a:" . $nbrArticles . "ids:" . md5($cityList);
 		$cities = $wgMemc->get( $memkey );
-		if ( empty($cities) ) {
+		if ( empty( $cities ) && !empty( $wgStatsDBEnabled ) ) {
 			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$oRes = $dbs->select( 
 				"wikia_monthly_stats as c2", 

@@ -49,24 +49,24 @@ class SponsorshipDashboardGroups {
 
 		$id = (int) $id;
 		if ( !empty( $id ) ){
-
-			$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
-			$res = $dbr->select(
-				'specials.wmetrics_user_group_map',
-				array( 'wmgum_group_id as group_id'  ),
-				array( 'wmgum_user_id' => $id ),
-				__METHOD__,
-				array()
-			);
 			$returnArray = array();
-			while ( $row = $res->fetchObject( $res ) ) {
-				$oGroup = new SponsorshipDashboardGroup( $row->group_id );
-				if ( $oGroup->exist() ){
-					$oGroup->loadGroupParams();
-					$returnArray[ $row->group_id ] = $oGroup;
+			$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
+			if ( !is_null( $dbr ) ) {
+				$res = $dbr->select(
+					'specials.wmetrics_user_group_map',
+					array( 'wmgum_group_id as group_id'  ),
+					array( 'wmgum_user_id' => $id ),
+					__METHOD__,
+					array()
+				);
+				while ( $row = $res->fetchObject( $res ) ) {
+					$oGroup = new SponsorshipDashboardGroup( $row->group_id );
+					if ( $oGroup->exist() ){
+						$oGroup->loadGroupParams();
+						$returnArray[ $row->group_id ] = $oGroup;
+					}
 				}
 			}
-
 			return $returnArray;
 		}
 
@@ -76,22 +76,24 @@ class SponsorshipDashboardGroups {
 	protected function getFromDatabase(){
 
 		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
-		$res = $dbr->select(
-			'specials.wmetrics_group',
-			array( 'wmgr_id as id', 'wmgr_name as name', 'wmgr_description as description'  ),
-			array(),
-			__METHOD__,
-			array()
-		);
-
 		$returnArray = array();
-		while ( $row = $res->fetchObject( $res ) ) {
-			$returnArray[ $row->id ] = array(
-				'id'		=>	$row->id,
-				'name'		=>	$row->name,
-				'description'	=>	$row->description
-
+		if ( !is_null( $dbr ) ) {
+			$res = $dbr->select(
+				'specials.wmetrics_group',
+				array( 'wmgr_id as id', 'wmgr_name as name', 'wmgr_description as description'  ),
+				array(),
+				__METHOD__,
+				array()
 			);
+
+			while ( $row = $res->fetchObject( $res ) ) {
+				$returnArray[ $row->id ] = array(
+					'id'		=>	$row->id,
+					'name'		=>	$row->name,
+					'description'	=>	$row->description
+
+				);
+			}
 		}
 
 		return $returnArray;

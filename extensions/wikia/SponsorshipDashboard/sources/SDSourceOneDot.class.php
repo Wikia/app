@@ -167,39 +167,44 @@ class SponsorshipDashboardSourceOneDot extends SponsorshipDashboardSource {
 			return $memcData;
 		}
 
-		$wgStatsDB = $this->App->getGlobal('wgStatsDB');
-		$returnArray = array();
+		$wgStatsDBEnabled = $this->App->getGlobal('wgStatsDBEnabled');
+		
+		$result = array(); 
+		if ( !empty( $wgStatsDBEnabled ) ) {
+			$wgStatsDB = $this->App->getGlobal('wgStatsDB');
+			$returnArray = array();
 
-		$sql = "SELECT t1.pv_user_id, t1.pv_week
-			FROM page_views_weekly_user AS t1
-			WHERE t1.pv_city_id = {$iCityId}
-			  AND t1.pv_week >= {$this->startDate}
-			  AND t1.pv_week <= {$this->endDate}
-			ORDER BY t1.pv_week";
+			$sql = "SELECT t1.pv_user_id, t1.pv_week
+				FROM page_views_weekly_user AS t1
+				WHERE t1.pv_city_id = {$iCityId}
+				  AND t1.pv_week >= {$this->startDate}
+				  AND t1.pv_week <= {$this->endDate}
+				ORDER BY t1.pv_week";
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
-		$res = $dbr->query( $sql, __METHOD__ );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+			$res = $dbr->query( $sql, __METHOD__ );
 
-		$result = array();
-		while ( $row = $res->fetchObject( $res ) ) {
-			$sDate = date("Y-m-d", strtotime("1.1.".substr( $row->pv_week, 0, 4 )." + ".substr( $row->pv_week, 4, 2 )." weeks"));
-			if ( !isset( $result[ $sDate ] ) ){
-				$result[ $sDate ] = array();
+			$result = array();
+			while ( $row = $res->fetchObject( $res ) ) {
+				$sDate = date("Y-m-d", strtotime("1.1.".substr( $row->pv_week, 0, 4 )." + ".substr( $row->pv_week, 4, 2 )." weeks"));
+				if ( !isset( $result[ $sDate ] ) ){
+					$result[ $sDate ] = array();
+				}
+				$aRow = $result[ $sDate ];
+				if ( empty( $aRow ) ){
+					$result[ $sDate ] = array( $row->pv_user_id );
+				} else {
+					$result[ $sDate ][] = $row->pv_user_id;
+				}
 			}
-			$aRow = $result[ $sDate ];
-			if ( empty( $aRow ) ){
-				$result[ $sDate ] = array( $row->pv_user_id );
-			} else {
-				$result[ $sDate ][] = $row->pv_user_id;
-			}
-		}
 
-		if ( !empty( $result ) ) {
-			$wgMemc->set(
-				$this->getLocalMCKey( $iCityId ),
-				$result,
-				( strtotime('tomorrow') - time() )
-			);
+			if ( !empty( $result ) ) {
+				$wgMemc->set(
+					$this->getLocalMCKey( $iCityId ),
+					$result,
+					( strtotime('tomorrow') - time() )
+				);
+			}
 		}
 
 		return $result;

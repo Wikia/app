@@ -457,9 +457,9 @@ class DataProvider
 	 */
 	final public static function /* array */ GetTopFiveUsers($limit = 7) {
 		wfProfileIn( __METHOD__ );
-		global $wgStatsDB, $wgMemc, $wgCityId;
+		global $wgStatsDB, $wgMemc, $wgCityId, $wgStatsDBEnabled;
 
-		if( empty( $wgStatsDB ) ) {
+		if ( empty( $wgStatsDB ) || empty( $wgStatsDBEnabled ) ) {
 			$result = array();
 		}
 		else {

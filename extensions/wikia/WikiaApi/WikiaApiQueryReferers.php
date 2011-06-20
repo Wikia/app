@@ -28,7 +28,11 @@ class WikiaApiQueryReferers extends WikiaApiQuery {
 	}
 
 	private function getWikiReferers () {
-		global $wgCityId, $wgServerName, $wgDBname;
+		global $wgCityId, $wgServerName, $wgDBname, $wgStatsDBEnabled;
+
+		if ( empty( $wgStatsDBEnabled ) ) {
+			return false;
+		}
 
 		#--- initial parameters (dbname, limit, offset ...)
 		extract($this->getInitialParams());

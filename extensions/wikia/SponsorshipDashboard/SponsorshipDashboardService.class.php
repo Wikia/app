@@ -14,9 +14,11 @@ class SponsorshipDashboardService extends Service {
 	static function getDatabase(){
 
 		$isDevBox = F::app()->getGlobal( 'wgDevEnvironment' );
+		$wgStatsDBEnabled = F::app()->getGlobal('wgStatsDBEnabled');	
+			
 		return ( $isDevBox )
 			? F::app()->getGlobal( 'wgExternalDatawareDB' )
-			: F::app()->getGlobal( 'wgStatsDB' );
+			: ( ( empty( $wgStatsDBEnabled ) ) ? null : F::app()->getGlobal( 'wgStatsDB' ) ) ;
 	}
 
 	static function getPopularHubs( $all = false ){

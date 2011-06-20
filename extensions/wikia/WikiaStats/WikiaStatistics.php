@@ -417,7 +417,7 @@ class WikiaHubStats {
 	 * @param Array $data - list of Top Wikis (by PV) in hub
 	 */
 	public function getTopPVWikis( $limit = 20 ) {
-		global $wgMemc, $wgStatsDB;
+		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 		
 		$data = array();
@@ -427,7 +427,7 @@ class WikiaHubStats {
 			$memkey = wfMemcKey( __METHOD__, $this->mName, $limit );
 			$data = $wgMemc->get( $memkey );
 			
-			if ( empty($data) ) {
+			if ( empty($data) && !empty( $wgStatsDBEnabled ) ) {
 				$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 				$oRes = $dbr->select(
 					array( 'page_views' ),
@@ -515,13 +515,13 @@ class WikiaGlobalStats {
 	private static $defaultLimit 			= 200;
 
 	public static function getEditedArticles( $days = 7, $limit = 5, $onlyContent = true, $from_db = false ) {
-    	global $wgStatsDB, $wgMemc;
+    	global $wgStatsDB, $wgMemc, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
     	
 		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
 		$memkey = wfMemcKey( "WS:getEditedArticles", intval($days), intval($onlyContent), intval($limit) );
 		$result = ( $from_db === true ) ? "" : $wgMemc->get( $memkey );
-		if ( empty($result) ) {
+		if ( empty($result) && !empty( $wgStatsDBEnabled ) ) {
 			$data = array();
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgStatsDB );
 			
@@ -582,7 +582,7 @@ class WikiaGlobalStats {
 	}
 
 	public static function getPagesEditors( $days = 7, $limit = 5, $onlyContent = true, $recalculateLimit = false, $noHubDepe = false, $from_db = false ) {
-    	global $wgStatsDB, $wgTTCache;
+    	global $wgStatsDB, $wgTTCache, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
     	
 		$dbLimit = self::$defaultLimit;
@@ -592,7 +592,7 @@ class WikiaGlobalStats {
 		$memkey = wfMemcKey( "WS:getPagesEditors", $days, $limit, intval($onlyContent), intval($recalculateLimit), intval($noHubDepe) );
 
 		$result = ( $from_db === true ) ? "" : $wgTTCache->get( $memkey );
-		if ( empty($result) ) {
+		if ( empty($result) && !empty( $wgStatsDBEnabled ) ) {
 			$data = array();
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgStatsDB );
 			
@@ -845,12 +845,12 @@ class WikiaGlobalStats {
 	}
 
 	public static function getCountEditedPages( $days = 7, $onlyContent = false ) {
-    	global $wgStatsDB, $wgTTCache;
+    	global $wgStatsDB, $wgTTCache, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
     	
 		$memkey = wfMemcKey( __METHOD__, $days, intval($onlyContent) );
 		$count = $wgTTCache->get( $memkey );
-		if ( empty($count) ) {
+		if ( empty($count) && !empty( $wgStatsDBEnabled ) ) {
 			$count = 0;
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 
@@ -887,13 +887,13 @@ class WikiaGlobalStats {
 	}
 
 	public static function getCountAverageDayCreatePages( $month ) {
-		global $wgStatsDB, $wgTTCache;
+		global $wgStatsDB, $wgTTCache, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
     	
     	$month = str_replace("-", "", $month);
 		$memkey = wfMemcKey( __METHOD__, $month );
 		$count = $wgTTCache->get( $memkey );
-		if ( empty($count) ) {
+		if ( empty($count) && !empty( $wgStatsDBEnabled ) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 			
 			$conditions = array( "stats_date" => $month );
@@ -915,13 +915,13 @@ class WikiaGlobalStats {
 	}
 
 	public static function getCountWordsInMonth( $month ) {
-		global $wgStatsDB, $wgTTCache;
+		global $wgStatsDB, $wgTTCache, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
     	
     	$month = str_replace("-", "", $month);
 		$memkey = wfMemcKey( __METHOD__, $month );
 		$count = $wgTTCache->get( $memkey );
-		if ( empty($count) ) {
+		if ( empty($count) && !empty( $wgStatsDBEnabled ) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 			
 			$conditions = array( "editdate >= '{$month}01' and editdate <= '{$month}31'" );
@@ -978,12 +978,12 @@ class WikiaGlobalStats {
 	}
 	
 	public static function countWordsInLastDays( $days = 7, $from_db = 0 ) {
-		global $wgStatsDB, $wgTTCache;
+		global $wgStatsDB, $wgTTCache, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 		
 		$result = 0;
 		$memkey = wfMemcKey( "WS:countWordsLastDays", $days );
-		if ( $from_db ) {
+		if ( $from_db && !empty( $wgStatsDBEnabled ) ) {
 
 			$date = date( 'Y-m-d', time() - $days * 24 * 60 * 60 );
 			$conditions = array( "editdate >= '{$date}'" );

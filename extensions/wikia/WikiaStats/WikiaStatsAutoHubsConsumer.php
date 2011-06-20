@@ -29,8 +29,13 @@ class WikiaStatsAutoHubsConsumer {
 	 * connect to statsdb and processing events table
 	 */
 	public function receiveFromEvents() {
-		global $wgStatsDB, $wgCityId, $wgMemc;
+		global $wgStatsDB, $wgCityId, $wgMemc, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
+		
+		if ( empty( $wgStatsDBEnabled ) {
+			wfProfileOut( __METHOD__ );	
+			return false;		
+		}
 		
 		try {	
 			while( 1 ) {
