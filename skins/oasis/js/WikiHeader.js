@@ -128,7 +128,7 @@ var WikiHeader = {
 		if($('body').data('accessible')) {
 			WikiHeader.subnav.css("top", "-9999px");
 		} else {
-			WikiHeader.subnav.hide();
+                        (function() { WikiHeader.subnav.css("display", "none"); }).delay(100);
 		}
 		$.showAds();
 	},
