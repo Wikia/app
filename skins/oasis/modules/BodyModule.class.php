@@ -443,7 +443,7 @@ class BodyModule extends Module {
 		}
 		
 		// Display Control Center Header on certain special pages
-		if (!empty($wgEnableControlCenterExt) && ControlCenterLogic::displayControlCenter($wgTitle)) {
+		if (!empty($wgEnableControlCenterExt) && ControlCenterLogic::displayControlCenter($this->app, $wgTitle)) {
 			$this->headerModuleName = null;
 			$this->wgSuppressAds = true;
 			$this->wgSuppressWikiHeader = true;

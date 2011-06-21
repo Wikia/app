@@ -27,4 +27,14 @@ class FounderProgressBarHooks {
 		return true;
 	}
 	
+	/**
+	 * @desc Counts the following actions
+	 * 
+	 * Populate the database with a starter list of tasks to complete
+	 * 
+	 */
+	
+	function onWikiCreation ($params) {
+		
+	}
 }

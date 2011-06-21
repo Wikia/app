@@ -26,6 +26,7 @@ function FounderProgressBar_setup () {
 	// Register hooks for founder events
 	$app->registerHook("ArticleSaveComplete", "FounderProgressBarHooks", "onArticleSaveComplete");
 	$app->registerHook("UploadComplete", "FounderProgressBarHooks", "onUploadComplete");
+	$app->registerHook("CreateWikiLocalJob-complete", "FounderProgressBarHooks", "onWikiCreation");
 
 	wfProfileOut(__METHOD__);	
 }
