@@ -25,12 +25,12 @@ class WikiaPollAjax {
 		if (is_object ($title_object) && $title_object->exists() ) {
 			$res = array (
 				'success' => false,
-				'error' => wfRenderModule('Error', 'Index', wfMsg('wikiapoll-error-duplicate'))
+				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiapoll-error-duplicate')))
 				);
 		} else if ($title_object == null) {
 			$res = array (
 				'success' => false,
-				'error' => wfRenderModule('Error', 'Index', wfMsg('wikiapoll-error-invalid-title'))
+				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiapoll-error-invalid-title')))
 				);			
 		} else {
 
