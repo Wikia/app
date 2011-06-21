@@ -40,15 +40,23 @@ define( 'CITE_DEFAULT_GROUP', '');
  * The emergency shut-off switch.  Override in local settings to disable
  * groups; or remove all references from this file to enable unconditionally
  */
-$wgAllowCiteGroups = true; 
+$wgAllowCiteGroups = true;
 
 /**
  * An emergency optimisation measure for caching cite <references /> output.
  */
 $wgCiteCacheReferences = false;
 
-function wfCite() {
-	new Cite;
+function wfCite($parser = null) {
+	// Wikia change - start
+	// BugId:4434 - can be removed once updated to the version from MW 1.18
+	global $wgParser;
+	if (empty($parser)) {
+		$parser = $wgParser;
+	}
+
+	new Cite($parser);
+	// Wikia change - end
 	return true;
 }
 
