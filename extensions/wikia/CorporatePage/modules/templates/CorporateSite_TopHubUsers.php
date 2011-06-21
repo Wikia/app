@@ -1,8 +1,7 @@
 	<section id="hub-top-contributors"<?php echo $hidetopeditors ?> class="module">
 		<h1><?php echo wfMsg('hub-topusers-header', $data['title']) ?></h1>
 		<?php
-			global $wgUser;
-			if( $wgUser->isAllowed( 'corporatepagemanager' ) ) {
+			if( $data['is_menager'] ) {
 				if( isset($data['var_feeds']['topeditors'] )) {
 		?>
 		<span class="toggleContainer" id="topeditors">[<a class="toggleFeed" href="#"><?php echo wfMsg('hide') ?></a>]</span>
