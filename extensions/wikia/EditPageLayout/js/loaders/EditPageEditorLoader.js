@@ -1,5 +1,5 @@
 (function(window,$){
-	
+
 	/**
 	 * Wikia Editor loader for Edit pages
 	 */
@@ -50,13 +50,18 @@
 			}
 
 			WE.fire('wikiaeditorspaceslayout',this.element,layout,data);
-			
+
 			// Wraps all modules in right rail for the plugin "railminimumheight"
 			if (layout.rail.length > 0) {
 				layout.rail = [{cls:'rail-auto-height',items:layout.rail}];
 			}
 
 			return layout;
+		},
+
+		isFormatExpanded: function() {
+			var ns = window.wgNamespaceNumber;
+			return (ns % 2 == 1 /* talk pages */) || (ns == 110/* NS_FORUM */);
 		},
 
 		getData: function() {
@@ -80,12 +85,12 @@
 					tabs: $('#EditPageTabs')
 				},
 				// shall format toolbar be expanded by default?
-				formatExpanded: window.wgNamespaceNumber >= 0 && window.wgNamespaceNumber % 2 == 1, // talk namespaces
+				formatExpanded: this.isFormatExpanded(),
 				// default UI elements which should to be registered in the editor
 				uiElements: window.wgEditorExtraButtons || {},
 				// list of popular templates used by Templates module
 				popularTemplates: window.wgEditPagePopularTemplates || [],
-				// editor auto resize mode 
+				// editor auto resize mode
 				autoResizeMode: (window.wgEditPageIsConflict || window.wgEditPageFormType == 'diff') ? 'editpage' : 'editarea',
 				// disable Categories module?
 				categoriesDisabled: (typeof window.initCatSelectForEdit != 'function'),
@@ -95,22 +100,22 @@
 				wideInSourceDisabled: window.wgEditPageHasEditPermissionError,
 				// is the current page wide in view? (adds 300px in preview popup)
 				isWidePage: !!window.wgEditPageIsWidePage,
-				// extra page width (e.g. in oasis hd) (adds extra width in preview popup) 
+				// extra page width (e.g. in oasis hd) (adds extra width in preview popup)
 				extraPageWidth: (window.sassParams && window.sassParams.hd) ? 200 : 0,
 				// initial editor mode
 				mode: mode
 			};
-			
+
 			return { plugins: plugins, config: config };
 		},
-		
+
 		init: function() {
 			var data = this.getData();
 			var e = window.editorInstance = window.WikiaEditor.create(data.plugins,data.config);
 			this.element.data('wikiaeditor',e);
 		}
 	});
-	
+
 
 	$(function(){
 		if (!window.WikiaAutostartDisabled) {
