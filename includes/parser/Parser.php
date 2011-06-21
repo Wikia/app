@@ -4557,7 +4557,7 @@ class Parser
 	 * so that an external function can call some class members with confidence
 	 * @public
 	 */
-	function startExternalParse( &$title, $options, $outputType, $clearState = true ) {
+	function startExternalParse( Title $title = null, ParserOptions $options, $outputType, $clearState = true ) {
 		$this->setTitle( $title );
 		$this->mOptions = $options;
 		$this->setOutputType( $outputType );
