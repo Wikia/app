@@ -35,7 +35,7 @@ var WikiHeader = {
 		//Hide when focus out of first and last anchor
 		WikiHeader.nav.children("ul").find("li:first-child a").focusout(WikiHeader.hideNav);
 		WikiHeader.subnav.last().find("li:last-child a").focusout(WikiHeader.hideNav);
-		
+
 		//Mouse out of browser
 		$(document).mouseout(function(e){
 			var from = e.relatedTarget || e.toElement;
@@ -128,7 +128,7 @@ var WikiHeader = {
 		if($('body').data('accessible')) {
 			WikiHeader.subnav.css("top", "-9999px");
 		} else {
-                        (function() { WikiHeader.subnav.css("display", "none"); }).delay(100);
+			WikiHeader.subnav.delay(100).css("display", "none");
 		}
 		$.showAds();
 	},
