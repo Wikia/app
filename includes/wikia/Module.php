@@ -26,6 +26,11 @@ abstract class Module extends WikiaController {
 	 * Dispatcher is none the wiser, and treats the Module as a response object
 	 */
 	protected $realResponse;
+	/**
+	 * list of controller properties that won't be passed to view layer
+	 * @var array
+	 */
+	protected $filteredVars = array( 'app', 'request', 'response', 'filteredVars' );
 
 	public function __call($method, $args)
 	{
@@ -43,25 +48,16 @@ abstract class Module extends WikiaController {
 	}
 
 	public function printText() {
-		$this->app = null;
-		$this->request = null;
-		$this->response = null;
 		$this->realResponse->setData($this->getData());
 		print $this->realResponse->toString();
 	}
 
 	public function render() {
-		$this->app = null;
-		$this->request = null;
-		$this->response = null;
 		$this->realResponse->setData($this->getData());
 		print $this->realResponse->toString();
 	}
 
 	public function toString() {
-		$this->app = null;
-		$this->request = null;
-		$this->response = null;
 		$this->realResponse->setData($this->getData());
 		return $this->realResponse->toString();
 	}
@@ -84,11 +80,20 @@ abstract class Module extends WikiaController {
 	}
 
 	public function getData($var = null) {
+		$vars = get_object_vars($this);
 		if($var === null) {
-			return get_object_vars($this);
+			return $this->filterData($vars);
 		} else {
-			$vars = get_object_vars($this);
 			return isset($vars[$var]) ? $vars[$var] : null;
 		}
+	}
+
+	private function filterData( Array $data ) {
+		foreach( $this->filteredVars as $varName ) {
+			if( isset( $data[$varName] ) ) {
+				unset( $data[$varName] );
+			}
+		}
+		return $data;
 	}
 }
