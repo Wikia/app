@@ -86,6 +86,57 @@ class WikiaApp {
 		// register ajax dispatcher
 		$this->globalRegistry->append('wgAjaxExportList', 'WikiaApp::ajax');
 	}
+	
+	/**
+	 * checks if an reference or a string refer to a WikiaService instance
+	 * 
+	 * @param mixed $controllerName a string with the name of the class or a reference to an object
+	 */
+	public function isService( $controllerName ) {
+		return ( is_object( $controllerName ) ) ? is_a( $controllerName, 'WikiaService' ) : ( ( strrpos( $controllerName, 'Service' ) === ( strlen( $controllerName ) - 7 ) ) );
+	}
+	
+	/**
+	 * checks if an reference or a string refer to a WikiaController instance
+	 * 
+	 * @param mixed $controllerName a string with the name of the class or a reference to an object
+	 */
+	public function isController( $controllerName ) {
+		return ( is_object( $controllerName ) ) ? is_a( $controllerName, 'WikiaController' ) : ( ( strrpos( $controllerName, 'Controller' ) === ( strlen( $controllerName ) - 10 ) ) );
+	}
+	
+	/**
+	 * @deprecated
+	 * 
+	 * checks if an reference or a string refer to a Module instance, this method exists only for supporting legacy code
+	 * 
+	 * @param mixed $controllerName a string with the name of the class or a reference to an object
+	 */
+	public function isModule( $controllerName ) {
+		return ( is_object( $controllerName ) ) ? is_a( $controllerName, 'Module' ) : ( ( strrpos( $controllerName, 'Module' ) === ( strlen( $controllerName ) - 6 ) ) );
+	}
+	
+	/**
+	 * @deprecated
+	 * 
+	 * returns a partial name for a WikiaController or a Module subclass name to use in dispatching requests and loading templates,
+	 * this method exists only for supporting legacy code
+	 * 
+	 * @param mixed $controllerName a string with the name of the class or a reference to an object
+	 */
+	public function getControllerLegacyName( $controllerName ) {
+		if ( is_object( $controllerName ) ) {
+			$controllerName = get_class( $controllerName );
+		}
+		
+		if ( $this->isController( $controllerName ) ) {
+			return substr( $controllerName, 0, strlen( $controllerName ) - 10 );
+		} elseif ( $this->isModule( $controllerName ) ) {
+			return substr( $controllerName, 0, strlen( $controllerName ) - 6 );
+		} else {
+			return $controllerName;
+		}
+	}
 
 	/**
 	 * get hook dispatcher
@@ -170,8 +221,8 @@ class WikiaApp {
 	 * @param array $options
 	 * @param bool $alwaysRebuild
 	 */
-	public function registerHook($hookName, $className, $methodName, array $options = array(), $alwaysRebuild = false, $object = null) {
-		$this->globalRegistry->append('wgHooks', $this->hookDispatcher->registerHook($className, $methodName, $options, $alwaysRebuild, $object), $hookName);
+	public function registerHook( $hookName, $className, $methodName, Array $options = array(), $alwaysRebuild = false, $object = null ) {
+		$this->globalRegistry->append( 'wgHooks', $this->hookDispatcher->registerHook( $className, $methodName, $options, $alwaysRebuild, $object ), $hookName );
 	}
 
 	/**
@@ -183,10 +234,10 @@ class WikiaApp {
 		//checking if $className is an array should be faster than creating a 1 element array and then use the same foreach loop
 		if ( is_array( $className ) ) {
 			foreach ( $className  as $cls ) {
-				$this->globalRegistry->set('wgAutoloadClasses', $filePath, $cls);
+				$this->globalRegistry->set( 'wgAutoloadClasses', $filePath, $cls );
 			}
 		} else {
-			$this->globalRegistry->set('wgAutoloadClasses', $filePath, $className);
+			$this->globalRegistry->set( 'wgAutoloadClasses', $filePath, $className );
 		}
 	}
 
@@ -194,8 +245,8 @@ class WikiaApp {
 	 * register extension init function
 	 * @param string $functionName
 	 */
-	public function registerExtensionFunction($functionName) {
-		$this->globalRegistry->append('wgExtensionFunctions', $functionName);
+	public function registerExtensionFunction( $functionName ) {
+		$this->globalRegistry->append( 'wgExtensionFunctions', $functionName );
 	}
 
 	/**
@@ -203,8 +254,8 @@ class WikiaApp {
 	 * @param string $name
 	 * @param string $filePath
 	 */
-	public function registerExtensionMessageFile($name, $filePath) {
-		$this->globalRegistry->set('wgExtensionMessagesFiles', $filePath, $name);
+	public function registerExtensionMessageFile( $name, $filePath ) {
+		$this->globalRegistry->set( 'wgExtensionMessagesFiles', $filePath, $name );
 	}
 
 	/**
@@ -212,8 +263,8 @@ class WikiaApp {
 	 * @param string $name
 	 * @param string $filePath
 	 */
-	public function registerExtensionAliasFile($name, $filePath) {
-		$this->globalRegistry->set('wgExtensionAliasesFiles', $filePath, $name);
+	public function registerExtensionAliasFile( $name, $filePath ) {
+		$this->globalRegistry->set( 'wgExtensionAliasesFiles', $filePath, $name );
 	}
 
 	/**
@@ -222,19 +273,20 @@ class WikiaApp {
 	 * @param string $className class name
 	 * @param string $group special page group
 	 */
-	public function registerSpecialPage($name, $className, $group = null) {
-		$this->globalRegistry->set('wgSpecialPages', $className, $name);
+	public function registerSpecialPage( $name, $className, $group = null ) {
+		$this->globalRegistry->set( 'wgSpecialPages', $className, $name );
+		
 		if( !empty( $group ) ) {
-			$this->globalRegistry->set('wgSpecialPageGroups', $group, $name);
+			$this->globalRegistry->set( 'wgSpecialPageGroups', $group, $name );
 		}
 	}
-
+	
 	/**
 	 * get global variable (alias: WikiaGlobalRegistry::get(var,'mediawiki'))
 	 * @param string $globalVarName
 	 */
-	public function getGlobal($globalVarName) {
-		return $this->globalRegistry->get($globalVarName);
+	public function getGlobal( $globalVarName ) {
+		return $this->globalRegistry->get( $globalVarName );
 	}
 
 	/**
@@ -243,8 +295,8 @@ class WikiaApp {
 	 * @param mixed $value value
 	 * @param string $key key (optional)
 	 */
-	public function setGlobal($globalVarName, $value, $key = null) {
-		return $this->globalRegistry->set($globalVarName, $value, $key);
+	public function setGlobal( $globalVarName, $value, $key = null ) {
+		return $this->globalRegistry->set( $globalVarName, $value, $key );
 	}
 
 	/**
@@ -277,9 +329,24 @@ class WikiaApp {
 	 *
 	 * @return WikiaResponse a response object with the data produced by the method call
 	 */
-	public function sendRequest( $controllerName, $methodName = null, $params = null, $internal = true ) {
-		$values = array( 'controller' => $controllerName, 'method' => $methodName );
-		$request = new WikiaRequest( array_merge( $values, (array) $params ) );
+	public function sendRequest( $controllerName = null, $methodName = null, $params = array(), $internal = true ) {
+		$values = array();
+		
+		if( !empty( $controllerName ) ) {
+			$values['controller'] = $controllerName;
+		}
+		
+		if( !empty( $methodName ) ) {
+			$values['method'] = $methodName;
+		}
+		
+		$params = array_merge( (array) $params, $values );
+		
+		if ( empty( $methodName ) || empty( $controllerName ) ) {
+			$params = array_merge( $params, $_POST, $_GET );
+		}
+		
+		$request = new WikiaRequest( $params );
 
 		$request->setInternal( $internal );
 
@@ -295,7 +362,7 @@ class WikiaApp {
 	 */
 	public function runFunction() {
 		$funcArgs = func_get_args();
-		$funcName = array_shift($funcArgs);
+		$funcName = array_shift( $funcArgs );
 		return $this->functionWrapper->run( $funcName, $funcArgs );
 	}
 
@@ -326,8 +393,8 @@ class WikiaApp {
 	 * @param array $params
 	 * @return string
 	 */
-	public function renderView($name, $action, $params = null) {
-		$response = $this->sendRequest( $name, $action, (array) $params, false );
+	public function renderView( $name, $action, Array $params = null ) {
+		$response = $this->sendRequest( $name, $action, $params, false );
 		return $response->toString();
 	}
 
@@ -337,5 +404,4 @@ class WikiaApp {
 	public static function ajax() {
 		return F::app()->sendRequest( null, null, null, false );
 	}
-
 }

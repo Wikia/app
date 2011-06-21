@@ -9,21 +9,22 @@
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
  * @author Owen Davis <owen(at)wikia-inc.com>
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
+ * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class WikiaDispatcher {
 
 	const DEFAULT_METHOD_NAME = 'index';
 
-	protected function getMethodName(WikiaRequest $request) {
+	protected function getMethodName( WikiaRequest $request ) {
 		return $request->getVal( 'method', self::DEFAULT_METHOD_NAME );
 	}
 
-	protected function getControllerName(WikiaRequest $request) {
+	protected function getControllerName( WikiaRequest $request ) {
 		return $request->getVal( 'controller' );
 	}
 
 	protected function getControllerClassName( $controllerName ) {
-		return !empty( $controllerName ) ? ( $controllerName . 'Controller' ) : null;
+		return !empty( $controllerName ) ? ( "{$controllerName}Controller" ) : null;
 	}
 
 	/**
@@ -33,93 +34,135 @@ class WikiaDispatcher {
 	 * @param WikiaRequest $request
 	 * @return WikiaResponse
 	 */
-	public function dispatch(WikiaApp $app, WikiaRequest $request = null) {
-		if (null === $request) {
-			$request = F::build( 'WikiaRequest', array( 'params' => ( $_POST + $_GET ) ) );
-		}
-
-		$format = $request->getVal('format', 'html');
+	public function dispatch( WikiaApp $app, WikiaRequest $request ) {
+		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );
 		$response = F::build( 'WikiaResponse', array( 'format' => $format ) );
+		$autoloadClasses = $app->wg->AutoloadClasses;
 
 		do {
 			$request->setDispatched(true);
+			
 			try {
 				$method = $this->getMethodName( $request );
 				$controllerName = $this->getControllerName( $request );
-				$controllerClassName = $this->getControllerClassName( $controllerName );
-				if( empty($controllerClassName) ) {
-					throw new WikiaException( sprintf('Invalid controller name: %s', $controllerName) );
+				$controllerLegacyName = $app->getControllerLegacyName( $controllerName );
+				$controllerClassName = null;
+				
+				if (
+					(
+						$app->isService( $controllerName ) ||
+						$app->isController( $controllerName ) ||
+						$app->isModule( $controllerName )
+					) &&
+					!empty( $autoloadClasses[$controllerName] )
+				) {
+					$controllerClassName = $controllerName;
+				}
+				
+				if ( empty( $controllerClassName ) ) {
+					$controllerClassName = $this->getControllerClassName( $controllerLegacyName );
+				}
+				
+				if( empty( $controllerClassName ) ) {
+					throw new WikiaException( "Invalid controller name: {$controllerName}" );
 				}
 
 				// Work around for module dispatching until modules are renamed
-				if (!class_exists($controllerClassName)) {
-					$controllerClassName = $controllerName . "Module";
-					$method = ucfirst($method);
-					$wgAutoloadClasses = $app->getGlobal( 'wgAutoloadClasses' );
-					if( isset( $wgAutoloadClasses[$controllerClassName] ) ) {
-						$moduleTemplatePath = dirname($wgAutoloadClasses[$controllerClassName]).'/templates/'.$controllerName.'_'.$method.'.php';
-						$response->getView()->setTemplatePath($moduleTemplatePath);
+				if ( empty( $autoloadClasses[$controllerClassName] ) || $app->isModule( $controllerName ) ) {
+					$controllerClassName = "{$controllerLegacyName}Module";
+					$method = ucfirst( $method );
+					
+					if ( !empty( $autoloadClasses[$controllerClassName] ) ) {
+						$moduleTemplatePath = dirname( $autoloadClasses[$controllerClassName] ) . "/templates/{$controllerLegacyName}_{$method}.php";
+						$response->getView()->setTemplatePath( $moduleTemplatePath );
 					}
-					$method = "execute" . $method;
+					
+					$method = "execute{$method}";
 					$params = $request->getParams();
 				}
-				$app->runFunction( 'wfProfileIn', ( __METHOD__ . " (" . $controllerName.'_'.$method .")" ) );
+				
+				$app->wf->profileIn ( __METHOD__ . " ({$controllerName}_{$method})" )
+				;
+				$response->setControllerName( $controllerName );
+				$response->setMethodName( $method );
 
-				$response->setControllerName($controllerName);
-				$response->setMethodName($method);
-
-				if (!class_exists($controllerClassName)) {
-					throw new WikiaException( sprintf('Controller does not exists: %s', $controllerClassName) );
+				if ( empty( $autoloadClasses[$controllerClassName] ) ) {
+					throw new WikiaException( "Controller does not exists: {$controllerClassName}" );
 				}
 
 				$controller = F::build( $controllerClassName );
 
-				if ( !method_exists($controller, $method) || !is_callable( array($controller, $method) ) ) {
-					throw new WikiaException( sprintf('Could not dispatch %s::%s', $controllerClassName, $method) );
+				if (
+					( !$request->isInternal() && !$controller->allowsExternalRequests() ) ||
+					in_array( $method, array(
+						'allowsExternalRequests',
+						'getRequest',
+						'setRequest',
+						'getResponse',
+						'setResponse',
+						'getApp',
+						'setApp',
+						'init'
+					) ) ||
+					!method_exists( $controller, $method ) ||
+					!is_callable( array( $controller, $method ) )
+				) {
+					throw new WikiaException( "Could not dispatch {$controllerClassName}::{$method}" );
 				}
-
-				$controller->setRequest($request);
-				$controller->setResponse($response);
-				$controller->setApp($app);
+				
+				$controller->setRequest( $request );
+				$controller->setResponse( $response );
+				$controller->setApp( $app );
 				$controller->init();
 
 				// BugId:5125 - keep old hooks naming convention
-				$originalMethod = ucfirst($this->getMethodName($request));
-
-				if($app->runHook( ( $controllerName . $originalMethod . 'BeforeExecute' ), array( &$controller, &$params ) )) {
-					$result = $controller->$method($params);
+				$originalMethod = ucfirst( $this->getMethodName( $request ) );
+				
+				$hookResult = $app->runHook( ( "{$controllerName}{$originalMethod}BeforeExecute" ), array( &$controller, &$params ) );
+				
+				if ( $controllerName != $controllerLegacyName ) {
+					$hookResult = ( $hookResult && $app->runHook( ( "{$controllerLegacyName}{$originalMethod}BeforeExecute" ), array( &$controller, &$params ) ) );
+				}
+				
+				if ( $hookResult ) {
+					$result = $controller->$method( $params );
+					
 					if($result === false) {
 						// skip template rendering when false returned
 						$controller->skipRendering();
 					}
 				}
-				$app->runHook( ( $controllerName . $originalMethod . 'AfterExecute' ), array( &$controller, &$params ) );
 
-			} catch (Exception $e) {
-				$app->runFunction( 'wfProfileOut', ( __METHOD__ . " (" . $controllerName.'_'.$method .")" ) );
+				$app->runHook( ( "{$controllerName}{$originalMethod}AfterExecute" ), array( &$controller, &$params ) );
+				
+				if ( $controllerName != $controllerLegacyName ) {
+					$app->runHook( ( "{$controllerLegacyName}{$originalMethod}AfterExecute" ), array( &$controller, &$params ) );
+				}
+			} catch ( Exception $e ) {
+				$app->runFunction( 'wfProfileOut', ( __METHOD__ . " ({$controllerName}_{$method})" ) );
+				
 				// Work around for errors thrown inside modules -- remove when modules go away
-				if ($response instanceof Module) {
+				if ( $response instanceof Module ) {
 					$response = F::build( 'WikiaResponse', array( 'format' => $format ) );
 				}
 
 				$response->setException($e);
 
-				if ($controllerClassName != 'WikiaErrorController' && $method != 'error') {
+				if ( $controllerClassName != 'WikiaErrorController' && $method != 'error' ) {
 					// Work around for module dispatching until modules are renamed
-					$response->getView()->setTemplatePath(null);
-
-					$request->setVal('controller', 'WikiaError');
-					$request->setVal('method', 'error');
-					$request->setDispatched(false);
+					$response->getView()->setTemplatePath( null );
+					$request->setVal( 'controller', 'WikiaError' );
+					$request->setVal( 'method', 'error' );
+					$request->setDispatched( false );
 				}
 			}
-		} while (!$request->isDispatched());
+		} while ( !$request->isDispatched() );
 
-		if ($request->isInternal() && $response->hasException()) {
+		if ( $request->isInternal() && $response->hasException() ) {
 			throw $response->getException();
 		}
 
-		$app->runFunction( 'wfProfileOut', ( __METHOD__ . " (" . $controllerName.'_'.$method .")" ) );
+		$app->runFunction( 'wfProfileOut', ( __METHOD__ . " ({$controllerName}_{$method})" ) );
 		return $response;
 	}
 }

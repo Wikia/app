@@ -8,6 +8,14 @@ class AssetsManager {
 
 	const TYPE_CSS = 'text/css';
 	const TYPE_JS = 'application/x-javascript';
+	const TYPE_SCSS = -1;
+	
+	const URL_TYPE_LOCAL = 0;
+	const URL_TYPE_COMMON = 1;
+	const URL_TYPE_FULL = 2;
+	
+	const SINGLE = 0;
+	const PACKAGE = 1;
 
 	private $mCacheBuster;
 	private $mCombine;

@@ -205,7 +205,7 @@ class GameGuidesModel{
 			$ret = $this->loadFromCache( $cacheKey );
 			
 			if ( empty( $ret ) ) {
-				$searchResponse = F::app()->sendRequest( 'SimpleSearch', 'localSearch', array(
+				$searchResponse = F::app()->sendRequest( 'SimpleSearchService', 'localSearch', array(
 					'key' => $term,
 					'limit' => $totalLimit,
 					'urlParams' => array( 'useskin' => 'wikiaapp' )

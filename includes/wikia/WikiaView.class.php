@@ -27,7 +27,7 @@ class WikiaView {
 	 * @param array $data
 	 * @param string $format
 	 */
-	public static function newFromControllerAndMethodName( $controllerName, $methodName, Array $data = array(), $format = 'html' ) {
+	public static function newFromControllerAndMethodName( $controllerName, $methodName, Array $data = array(), $format = WikiaResponse::FORMAT_HTML ) {
 		$response = F::build( 'WikiaResponse', array( $format ) );
 		$response->setControllerName( $controllerName );
 		$response->setMethodName( $methodName );
@@ -51,7 +51,7 @@ class WikiaView {
 	 * set response object
 	 * @param WikiaResponse $response
 	 */
-	public function setResponse(WikiaResponse $response) {
+	public function setResponse( WikiaResponse $response ) {
 		$this->response = $response;
 	}
 
@@ -80,22 +80,41 @@ class WikiaView {
 	 */
 	public function buildTemplatePath( $controllerName, $methodName, $forceRebuild = false ) {
 		if( ( $this->templatePath == null ) || $forceRebuild ) {
-			$autoloadClasses = F::build( 'App' )->getGlobal( 'wgAutoloadClasses' );
-			$controllerClass = $controllerName . 'Controller';
+			$app = F::app();
+			$autoloadClasses = $app->wg->AutoloadClasses;
+			
+			if (
+				(
+					$app->isService( $controllerName ) ||
+					$app->isController( $controllerName ) ||
+					$app->isModule( $controllerName )
+				) &&
+				!empty( $autoloadClasses[$controllerName] )
+			) {
+				$controllerClass = $controllerName;
+			} else {
+				$controllerClass = "{$controllerName}Controller";
+			}
 
 			// Workaround for wfRenderPartial while Module still exists
 			if( empty( $autoloadClasses[$controllerClass] ) ) {
-				$controllerClass = $controllerName . 'Module';
+				$controllerClass = "{$controllerName}Module";
 			}
 
 			if( empty( $autoloadClasses[$controllerClass] ) ) {
-				throw new WikiaException( "Invalid controller name: $controllerName" );
+				throw new WikiaException( "Invalid controller name: {$controllerName}" );
+			}
+			
+			$dirName = dirname( $autoloadClasses[$controllerClass] );
+			$templatePath = "{$dirName}/templates/{$controllerName}_{$methodName}.php";
+
+			if( !file_exists( $templatePath ) && !$app->isService( $controllerName ) ) {
+				$controllerName = $app->getControllerLegacyName($controllerName);
+				$templatePath = "{$dirName}/templates/{$controllerName}_{$methodName}.php";
 			}
 
-			$templatePath = dirname( $autoloadClasses[$controllerClass] ) . '/templates/' . $controllerName . '_' . $methodName . '.php';
-
 			if( !file_exists( $templatePath ) ) {
-				throw new WikiaException( "Template file not found: $templatePath" );
+				throw new WikiaException( "Template file not found: {$templatePath}" );
 			}
 
 			$this->setTemplatePath( $templatePath );
@@ -107,11 +126,11 @@ class WikiaView {
 	 * @param WikiaResponse $response
 	 */
 	public function prepareResponse( WikiaResponse $response ) {
-		if( ( $response->getFormat() == 'json' ) && $response->hasException() ) {
+		if( ( $response->getFormat() == WikiaResponse::FORMAT_JSON ) && $response->hasException() ) {
 			// set error header for JSON response (as requested for mobile apps)
 			$response->setHeader( self::ERROR_HEADER_NAME, $response->getException()->getMessage() );
 		}
-		if( ( $response->getFormat() == 'json' ) && !$this->response->hasContentType() ) {
+		if( ( $response->getFormat() == WikiaResponse::FORMAT_JSON ) && !$this->response->hasContentType() ) {
 			$this->response->setContentType( 'application/json; charset=utf-8' );
 		}
 	}
@@ -126,6 +145,7 @@ class WikiaView {
 		}
 
 		$method = 'render' . ucfirst( $this->response->getFormat() );
+		
 		if( method_exists( $this, $method ) ) {
 			return $this->$method();
 		}
