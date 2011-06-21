@@ -27,14 +27,14 @@ abstract class Module extends WikiaController {
 	 */
 	protected $realResponse;
 
-	public function __call($method, $args) 
-	{ 
-		if (method_exists($this->realResponse,$method)) 
-			return call_user_func_array(array($this->realResponse,$method), $args); 
-		else 
+	public function __call($method, $args)
+	{
+		if (method_exists($this->realResponse,$method))
+			return call_user_func_array(array($this->realResponse,$method), $args);
+		else
 			throw new WikiaException( sprintf('Response Proxy failed for Method: %s', $method) );
-	}		
-			
+	}
+
 	// Save the real response object so we can act as a proxy
 	public function setResponse(WikiaResponse &$response) {
 		$this->realResponse = $response;
@@ -43,24 +43,33 @@ abstract class Module extends WikiaController {
 	}
 
 	public function printText() {
+		$this->app = null;
+		$this->request = null;
+		$this->response = null;
 		$this->realResponse->setData($this->getData());
-		print $this->realResponse->toString();				
+		print $this->realResponse->toString();
 	}
-	
+
 	public function render() {
+		$this->app = null;
+		$this->request = null;
+		$this->response = null;
 		$this->realResponse->setData($this->getData());
-		print $this->realResponse->toString();		
+		print $this->realResponse->toString();
 	}
-	
+
 	public function toString() {
+		$this->app = null;
+		$this->request = null;
+		$this->response = null;
 		$this->realResponse->setData($this->getData());
 		return $this->realResponse->toString();
 	}
-	
+
 	public function getVal($key, $default = null) {
 		return isset($this->$key) ? $this->$key : $default;
 	}
-	
+
 	public static function setSkinTemplateObj(&$skinTemplate) {
 		self::$skinTemplateObj = $skinTemplate;
 	}
@@ -71,7 +80,7 @@ abstract class Module extends WikiaController {
 
 	// TODO: This function goes away when all usages are replaced by Controller::sendRequest
 	public static function get($name, $action = 'Index', $params = null) {
-		return F::app()->sendRequest($name, $action, $params);		
+		return F::app()->sendRequest($name, $action, $params);
 	}
 
 	public function getData($var = null) {
