@@ -1,7 +1,7 @@
 	<section id="wikia-global-hot-spots" class="module" style="" <?= $hidehotspots ?>>
 		<h1><?php echo wfMsg('hub-hotspot-header', $data['title']) ?></h1>
 		<?php
-			if( $wgUser->isAllowed( 'corporatepagemanager' ) ) {
+			if( $data['is_menager'] ) {
 				if( isset($data['var_feeds']['hotspots']) ) {
 		?>
 		<span class="toggleContainer" id="hotspots">[<a class="toggleFeed" href="#"><?php echo wfMsg('hide') ?></a>]</span>

@@ -5,8 +5,6 @@
  * @author owen
  */
 class CorporateSiteModule extends Module {
-	// globals
-	var $wgUser;
 
 	var $slider;
 	var $slider_class;
@@ -48,7 +46,9 @@ class CorporateSiteModule extends Module {
 	}
 
 	public function executeTopHubUsers() {
-		global $wgTitle;
+		global $wgUser, $wgTitle;
+
+		$isManager = $wgUser->isAllowed( 'corporatepagemanager' );
 		$datafeeds = new WikiaStatsAutoHubsConsumerDB(DB_SLAVE);
 
 		$lang = AutoHubsPagesHelper::getLangForHub($wgTitle);
@@ -60,7 +60,7 @@ class CorporateSiteModule extends Module {
 		}
 		$this->data['title'] = $wgTitle;
 		$this->data['topEditors'] = $temp['value'];
-
+		$this->data['is_menager'] = $isManager;
 	}
 
 	public function executePopularHubPosts () {
@@ -184,7 +184,7 @@ class CorporateSiteModule extends Module {
 		$this->data['tag_id'] = $tag_id;
 		$this->data['is_menager'] = $isManager;
 	}
-	
+
 	public function executeSlider() {
 		global $wgOut, $wgTitle, $wgStylePath;
 		wfLoadExtensionMessages( 'CorporatePage' );
@@ -195,13 +195,13 @@ class CorporateSiteModule extends Module {
 			$this->slider = CorporatePageHelper::parseMsgImg( 'hub-' . $tag_name . '-slider', true );
 		}
 		if (ArticleAdLogic::isMainPage()) {
-			
+
 			$this->isMainPage = true;
 			$this->slider_class = "big";
 			$this->slider = CorporatePageHelper::parseMsgImg('corporatepage-slider',true);
 		}
 		else {
-			$this->isMainPage = false;	
+			$this->isMainPage = false;
 		}
 	}
 }

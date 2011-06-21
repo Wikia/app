@@ -1,8 +1,8 @@
 	<section id="hub-top-wikis"<?php echo $hidetopwikis ?>>
 		<h1><?php echo wfMsg('hub-featured', $data['title']) ?></h1>
 		<?php
-			global $wgUser, $wgStylePath;
-			if( $wgUser->isAllowed( 'corporatepagemanager' ) ) {
+			global $wgStylePath;
+			if( $data['is_menager'] ) {
 				if( isset($data['var_feeds']['topwikis'] )) {
 		?>
 		<span class="toggleContainer" id="topwikis">[<a class="toggleFeed" href="#"><?php echo wfMsg('hide') ?></a>]</span>
