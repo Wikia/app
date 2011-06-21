@@ -38,8 +38,8 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 
 			$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';
 			$langCode = $founderEmails->getWikiFounder()->getOption( 'language' );
-			$mailSubject = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-user-registered-subject', $emailParams );
-			$mailBody = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-user-registered-body', $emailParams );
+			$mailSubject = strtr(wfMsgExt('founderemails' . $wikiType . '-email-user-registered-subject', array('content')), $emailParams);
+			$mailBody = strtr(wfMsgExt('founderemails' . $wikiType . '-email-user-registered-body', array('content')), $emailParams);
 			
 			if(!empty($langCode) && $langCode == 'en' && empty( $wgEnableAnswers )) { // FounderEmailv2.1
 				$mailBodyHTML = wfRenderModule("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'user-registered')));
