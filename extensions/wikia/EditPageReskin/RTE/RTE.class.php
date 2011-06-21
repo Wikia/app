@@ -515,9 +515,6 @@ HTML
 
 		RTE::$parser = new RTEParser();
 
-		RTE::$parser->mTagHooks = &$wgParser->mTagHooks;
-		RTE::$parser->mStripList = &$wgParser->mStripList;
-
 		$html = RTE::$parser->parse($wikitext, $wgTitle, $options)->getText();
 
 		wfProfileOut(__METHOD__);
