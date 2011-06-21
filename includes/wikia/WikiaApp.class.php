@@ -16,11 +16,6 @@
 class WikiaApp {
 
 	/**
-	 * globalRegistry
-	 * @var WikiaGlobalRegistry
-	 */
-	private $globalRegistry = null;
-	/**
 	 * localRegistry
 	 * @var WikiaLocalRegistry
 	 */
@@ -74,17 +69,16 @@ class WikiaApp {
 			$functionWrapper = F::build( 'WikiaFunctionWrapper' );
 		}
 
-		$this->globalRegistry = $globalRegistry;
 		$this->localRegistry = $localRegistry;
 		$this->hookDispatcher = $hookDispatcher;
 		$this->functionWrapper = $functionWrapper;
 
 		// set helper accessors
-		$this->wg = $this->globalRegistry;
+		$this->wg = $globalRegistry;
 		$this->wf = $this->functionWrapper;
 
 		// register ajax dispatcher
-		$this->globalRegistry->append('wgAjaxExportList', 'WikiaApp::ajax');
+		$this->wg->append('wgAjaxExportList', 'WikiaApp::ajax');
 	}
 	
 	/**
@@ -151,7 +145,7 @@ class WikiaApp {
 	 * @param WikiaGlobalRegistry $globalRegistry
 	 */
 	public function setGlobalRegistry(WikiaGlobalRegistry $globalRegistry) {
-		$this->globalRegistry = $globalRegistry;
+		$this->wg = $globalRegistry;
 	}
 
 	/**
@@ -159,7 +153,7 @@ class WikiaApp {
 	 * @return WikiaGlobalRegistry
 	 */
 	public function getGlobalRegistry() {
-		return $this->globalRegistry;
+		return $this->wg;
 	}
 
 	/**
@@ -222,7 +216,7 @@ class WikiaApp {
 	 * @param bool $alwaysRebuild
 	 */
 	public function registerHook( $hookName, $className, $methodName, Array $options = array(), $alwaysRebuild = false, $object = null ) {
-		$this->globalRegistry->append( 'wgHooks', $this->hookDispatcher->registerHook( $className, $methodName, $options, $alwaysRebuild, $object ), $hookName );
+		$this->wg->append( 'wgHooks', $this->hookDispatcher->registerHook( $className, $methodName, $options, $alwaysRebuild, $object ), $hookName );
 	}
 
 	/**
@@ -234,10 +228,10 @@ class WikiaApp {
 		//checking if $className is an array should be faster than creating a 1 element array and then use the same foreach loop
 		if ( is_array( $className ) ) {
 			foreach ( $className  as $cls ) {
-				$this->globalRegistry->set( 'wgAutoloadClasses', $filePath, $cls );
+				$this->wg->set( 'wgAutoloadClasses', $filePath, $cls );
 			}
 		} else {
-			$this->globalRegistry->set( 'wgAutoloadClasses', $filePath, $className );
+			$this->wg->set( 'wgAutoloadClasses', $filePath, $className );
 		}
 	}
 
@@ -246,7 +240,7 @@ class WikiaApp {
 	 * @param string $functionName
 	 */
 	public function registerExtensionFunction( $functionName ) {
-		$this->globalRegistry->append( 'wgExtensionFunctions', $functionName );
+		$this->wg->append( 'wgExtensionFunctions', $functionName );
 	}
 
 	/**
@@ -255,7 +249,7 @@ class WikiaApp {
 	 * @param string $filePath
 	 */
 	public function registerExtensionMessageFile( $name, $filePath ) {
-		$this->globalRegistry->set( 'wgExtensionMessagesFiles', $filePath, $name );
+		$this->wg->set( 'wgExtensionMessagesFiles', $filePath, $name );
 	}
 
 	/**
@@ -264,7 +258,7 @@ class WikiaApp {
 	 * @param string $filePath
 	 */
 	public function registerExtensionAliasFile( $name, $filePath ) {
-		$this->globalRegistry->set( 'wgExtensionAliasesFiles', $filePath, $name );
+		$this->wg->set( 'wgExtensionAliasesFiles', $filePath, $name );
 	}
 
 	/**
@@ -274,10 +268,10 @@ class WikiaApp {
 	 * @param string $group special page group
 	 */
 	public function registerSpecialPage( $name, $className, $group = null ) {
-		$this->globalRegistry->set( 'wgSpecialPages', $className, $name );
+		$this->wg->set( 'wgSpecialPages', $className, $name );
 		
 		if( !empty( $group ) ) {
-			$this->globalRegistry->set( 'wgSpecialPageGroups', $group, $name );
+			$this->wg->set( 'wgSpecialPageGroups', $group, $name );
 		}
 	}
 	
@@ -286,7 +280,7 @@ class WikiaApp {
 	 * @param string $globalVarName
 	 */
 	public function getGlobal( $globalVarName ) {
-		return $this->globalRegistry->get( $globalVarName );
+		return $this->wg->get( $globalVarName );
 	}
 
 	/**
@@ -296,7 +290,7 @@ class WikiaApp {
 	 * @param string $key key (optional)
 	 */
 	public function setGlobal( $globalVarName, $value, $key = null ) {
-		return $this->globalRegistry->set( $globalVarName, $value, $key );
+		return $this->wg->set( $globalVarName, $value, $key );
 	}
 
 	/**

@@ -22,7 +22,7 @@ class WikiaDispatcherTest extends PHPUnit_Framework_TestCase {
 		    ->method( 'runFunction' )
 		    ->will( $this->returnValue( true ) );
 
-		$response = $this->object->dispatch( $app );
+		$response = $this->object->dispatch( $app, F::build('WikiaRequest', array($_POST + $_GET)) );
 
 		$this->assertTrue($response->hasException());
 		$this->assertInstanceOf( 'WikiaException', $response->getException());

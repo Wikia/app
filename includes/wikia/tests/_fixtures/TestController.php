@@ -1,8 +1,8 @@
 <?php
 
 global $wgAutoloadClasses;
-$wgAutoloadClasses['TestController'] = dirname(__FILE__) . '/_fixtures/TestController.php';
-$wgAutoloadClasses['AnotherTestController'] = dirname(__FILE__) . '/_fixtures/TestController.php';
+$wgAutoloadClasses['TestController'] = dirname(__FILE__) . '/TestController.php';
+$wgAutoloadClasses['AnotherTestController'] = dirname(__FILE__) . '/TestController.php';
 
 class TestController extends WikiaController {
 

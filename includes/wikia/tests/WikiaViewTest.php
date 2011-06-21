@@ -54,11 +54,13 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider buildingTemplatePathDataProvider
 	 */
 	public function testBuildingTemplatePath( $classExists, $controllerName ) {
-		$appMock = $this->getMock( 'WikiaApp', array( 'getGlobal' ) );
-		$appMock->expects( $this->once() )
-		        ->method( 'getGlobal' )
+		$appMock = $this->getMock( 'WikiaApp', array('ajax') );
+		$registryMock = $this->getMock( 'WikiaGlobalRegistry', array('get') );
+		$registryMock->expects( $this->any() )
+		        ->method( 'get' )
 		        ->with( $this->equalTo( 'wgAutoloadClasses' ) )
 		        ->will( $classExists ? $this->returnValue( array( $controllerName . 'Controller' => dirname( __FILE__  ) . '/_fixtures/TestController.php' ) ) : $this->returnValue( array() ) );
+		$appMock->setGlobalRegistry($registryMock);
 
 		F::setInstance( 'App', $appMock );
 
@@ -76,11 +78,13 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException WikiaException
 	 */
 	public function testBuildingNonExistentTemplate() {
-		$appMock = $this->getMock( 'WikiaApp', array( 'getGlobal' ) );
-		$appMock->expects( $this->once() )
-		        ->method( 'getGlobal' )
+		$appMock = $this->getMock( 'WikiaApp', array( 'ajax' ) );
+		$registryMock = $this->getMock( 'WikiaGlobalRegistry', array('get') );
+		$registryMock->expects( $this->any() )
+		        ->method( 'get' )
 		        ->with( $this->equalTo( 'wgAutoloadClasses' ) )
 		        ->will( $this->returnValue( array( 'TestController' => dirname( __FILE__  ) . '/_fixtures/TestController.php' ) ) );
+		$appMock->setGlobalRegistry($registryMock);
 
 		F::setInstance( 'App', $appMock );
 
