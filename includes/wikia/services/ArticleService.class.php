@@ -62,12 +62,15 @@ class ArticleService extends Service {
 			$hooks = $wgParser->getTags();
 			$hooksRegExp = implode('|', array_map('preg_quote', $hooks));
 			$content = preg_replace('#<(' . $hooksRegExp . ')[^>]{0,}>(.*)<\/[^>]+>#', '', $content);
-
+			
 			$tmpParser = new Parser();
 			$content = $tmpParser->parse( $content,  $this->mArticle->getTitle(), new ParserOptions )->getText();
 
+			// remove noscript tags from wikitext (BugzId: 7295)
+			$content = preg_replace('#<noscript[^>]+>(.*?)<\/noscript>#s', '', $content);
+
 			// remove <script> tags (RT #46350)
-			$content = preg_replace('#<script[^>]+>(.*)<\/script>#', '', $content);
+			$content = preg_replace('#<script[^>]+>(.*?)<\/script>#s', '', $content);
 
 			// experimental: remove <th> tags
 			$content = preg_replace('#<th[^>]*>(.*?)<\/th>#s', '', $content);
