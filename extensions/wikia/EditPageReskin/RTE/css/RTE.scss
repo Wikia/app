@@ -182,12 +182,12 @@
 }
 
 .RTEPlaceholderPreviewTitleBar span {
-	background: transparent url(/skins/monaco/images/sprite.png) no-repeat -304px 0; /* $wgCdnStylePath */
+	background: transparent url(/skins/oasis/images/sprite.png) no-repeat -1146px -81px; /* $wgCdnStylePath */
 	cursor: pointer;
-	height: 16px;
+	height: 12px;
 	position: absolute;
 	right: 5px;
-	width: 16px;
+	width: 12px;
 }
 
 /* info line */
@@ -519,28 +519,6 @@ div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
 .RTEloading .link-suggest-container,
 .rte_wysiwyg .link-suggest-container {
 	display: none;
-}
-
-/* first run notice */
-#RTEFirstRunNotice {
-	background: #ff9;
-	color: #000;
-	display: none;
-	margin-bottom: 2px;
-	padding: 5px;
-	position: relative;
-	text-align: center;
-}
-
-#RTEFirstRunNoticeClose {
-	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100120);
-	background-position: -304px 0;
-	cursor: pointer;
-	height: 16px;
-	position: absolute;
-	right: 4px;
-	top: 6px;
-	width: 16px;
 }
 
 /* min width of editor (RT #38820) */
