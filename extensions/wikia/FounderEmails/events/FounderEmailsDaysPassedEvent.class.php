@@ -42,8 +42,8 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				// force loading messages for given languege, to make maintenance script works properly
 				wfLoadExtensionMessages( 'FounderEmails', $langCode );
 
-				$mailSubject = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-subject', $emailParams );
-				$mailBody = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body', $emailParams );
+				$mailSubject = strtr(wfMsgExt('founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-subject', array('content')), $emailParams);
+				$mailBody = strtr(wfMsgExt('founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body', array('content')), $emailParams);
 				$mailCategory = FounderEmailsEvent::CATEGORY_DEFAULT;
 				if($activateDays == 3) {
 					$mailCategory = FounderEmailsEvent::CATEGORY_3_DAY;
