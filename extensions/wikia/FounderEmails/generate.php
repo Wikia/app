@@ -25,7 +25,7 @@
 		die("Invalid email address.\n");
 
 	// set variables
-	global $wgTitle, $wgCityId, $wgPasswordSender, $wgContLang;
+	global $wgTitle, $wgCityId, $wgPasswordSender, $wgContLang, $wgEnableAnswers;
 	
 	$params['name'] = strstr($params['email'], '@', TRUE);
 
@@ -39,6 +39,7 @@
 	if (!$wgCityId)
 		$wgCityId = 177;
 	$foundingWiki = WikiFactory::getWikiById($wgCityId);
+	$wikiType = (!empty($wgEnableAnswers)) ? '-answers' : '' ;
 	
 	$emailParams = array(
 						'$FOUNDERNAME' => $params['name'],
@@ -57,23 +58,96 @@
 						'$CUSTOMIZETHEMEURL' => 'http://www.wikia.com',
 						'$EDITMAINPAGEURL' => 'http://www.wikia.com',
 						'$EXPLOREURL' => 'http://www.wikia.com',
+						'$WIKIMAINPAGEURL' => 'http://www.wikia.com',
+						'$FOUNDERPAGEEDITURL' => 'http://www.wikia.com',
 					);
 	
+	$content_types = array('html', 'text');
 	$types = array('user-registered', 'anon-edit', 'general-edit', 'first-edit', 'lot-happening', 'views-digest', 'complete-digest','DayZero','DayThree','DayTen');
 	$days_passed_events = array('DayZero','DayThree','DayTen');
 	
-	foreach($types as $type) {
-		// get messages
-		$params['type'] = $type;
-		$template = (in_array($type,$days_passed_events)) ? $type : "GeneralUpdate";
-		$mailBodyHTML = wfRenderModule("FounderEmails", $template, array_merge($emailParams, $params));
-		$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
-		
-		// send email
-		$to = new MailAddress($params['email'], $params['name'], $params['name']);
-		$sender = new MailAddress($wgPasswordSender);
-		$subject = 'Test for '.$type;
-		UserMailer::sendHTML($to, $sender, $subject, '', $mailBodyHTML);
+	$to = new MailAddress($params['email'], $params['name'], $params['name']);
+	$sender = new MailAddress($wgPasswordSender);
+	
+	foreach($content_types as $content_type) {
+		foreach($types as $type) {
+			// get messages
+			$params['type'] = $type;
+			$html_template = 'GeneralUpdate';
+			switch($params['type']) {
+				case 'user-registered':
+					$msg_key_subj = 'founderemails'.$wikiType.'-email-user-registered-subject';
+					$msg_key_body = 'founderemails'.$wikiType.'-email-user-registered-body';
+					$msg_key_body_html = 'founderemails'.$wikiType.'-email-user-registered-body-HTML';
+					break;
+				case 'anon-edit' :
+					$msg_key_subj = 'founderemails'.$wikiType.'-email-page-edited-anon-subject';
+					$msg_key_body = 'founderemails'.$wikiType.'-email-page-edited-anon-body';
+					$msg_key_body_html = 'founderemails'.$wikiType.'-email-page-edited-anon-body-HTML';
+					break;
+				case 'general-edit' :
+					$msg_key_subj = 'founderemails'.$wikiType.'-email-page-edited-reg-user-subject';
+					$msg_key_body = 'founderemails'.$wikiType.'-email-page-edited-reg-user-body';
+					$msg_key_body_html = 'founderemails'.$wikiType.'-email-page-edited-reg-user-body-HTML';
+					break;
+				case 'first-edit' :
+					$msg_key_subj = 'founderemails'.$wikiType.'-email-page-edited-reg-user-first-edit-subject';
+					$msg_key_body = 'founderemails'.$wikiType.'-email-page-edited-reg-user-first-edit-body';
+					$msg_key_body_html = 'founderemails'.$wikiType.'-email-page-edited-reg-user-first-edit-body-HTML';
+					break;
+				case 'lot-happening' :
+					$msg_key_subj = 'founderemails-lot-happening-subject';
+					$msg_key_body = 'founderemails-lot-happening-body';
+					$msg_key_body_html = 'founderemails-lot-happening-body-HTML';
+					break;
+				case 'views-digest' :
+					$msg_key_subj = 'founderemails-email-views-digest-subject';
+					$msg_key_body = 'founderemails-email-views-digest-body';
+					$msg_key_body_html = '';
+					break;
+				case 'complete-digest' :
+					$msg_key_subj = 'founderemails-email-complete-digest-subject';
+					$msg_key_body = 'founderemails-email-complete-digest-body';
+					$msg_key_body_html = '';
+					break;
+				case 'DayZero' :
+					$msg_key_subj = 'founderemails'.$wikiType.'-email-0-days-passed-subject';
+					$msg_key_body = 'founderemails'.$wikiType.'-email-0-days-passed-body';
+					$msg_key_body_html = 'founderemails'.$wikiType.'-email-0-days-passed-body-HTML';
+					$html_template = 'DayZero';
+					break;
+				case 'DayThree' :
+					$msg_key_subj = 'founderemails'.$wikiType.'-email-3-days-passed-subject';
+					$msg_key_body = 'founderemails'.$wikiType.'-email-3-days-passed-body';
+					$msg_key_body_html = 'founderemails'.$wikiType.'-email-3-days-passed-body-HTML';
+					$html_template = 'DayThree';
+					break;
+				case 'DayTen' :
+					$msg_key_subj = 'founderemails'.$wikiType.'-email-10-days-passed-subject';
+					$msg_key_body = 'founderemails'.$wikiType.'-email-10-days-passed-body';
+					$msg_key_body_html = 'founderemails'.$wikiType.'-email-10-days-passed-body-HTML';
+					$html_template = 'DayTen';
+					break;
+			}
+
+			// send email
+			$subject = "Founder Email Test for $params[type] ($params[language]/$content_type): ";
+			$subject .= strtr(wfMsgExt($msg_key_subj, array('content')), $emailParams);
+			if ($content_type=='html') {
+				if ($params['language'] == 'en' && empty($wgEnableAnswers) || empty($msg_key_body_html)) { // FounderEmailv2.1
+					$mailBodyHTML = wfRenderModule("FounderEmails", $html_template, array_merge($emailParams, $params));
+					$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
+				} else {	// old emails
+					$mailBodyHTML = strtr(wfMsgExt($msg_key_body_html, array('content', 'parseinline')), $emailParams);
+				}
+				
+				UserMailer::sendHTML($to, $sender, $subject, '', $mailBodyHTML);
+			} else {
+				$mailBody = strtr(wfMsgExt($msg_key_body, array('content')), $emailParams);
+				
+				UserMailer::send( $to, $sender, $subject, $mailBody);
+			}
+		}
 	}
 
 ?>
