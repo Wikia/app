@@ -4,7 +4,9 @@
  * 
  * @author Federico "Lox" Lucignano
  */
-class SimpleSearchController extends WikiaController {
+class SimpleSearchService extends WikiaService {
+	const DEFAULT_LIMIT = 100;
+	
 	private $mEnableCrossWikiaSearch;
 
 	public function init() {
@@ -19,7 +21,7 @@ class SimpleSearchController extends WikiaController {
 		
 		//parameters
 		$key = trim( $this->getVal( 'key' ) );
-		$limit = $this->request->getInt( 'limit', 0 );
+		$limit = $this->request->getInt( 'limit', self::DEFAULT_LIMIT );
 		$offset = $this->request->getInt( 'offset', 0 );
 		$namespaces = (array) $this->getVal( 'namespaces', array() );
 		$showRedirects = $this->request->getBool( 'redirects', true );
@@ -31,7 +33,10 @@ class SimpleSearchController extends WikiaController {
 		
 		if ( !empty( $key ) ) {
 			$search = F::build( 'SearchEngine', array(), 'create' );
-			$search->setLimitOffset( $limit, $offset );
+			
+			if ( $limit > 0 ) {
+				$search->setLimitOffset( $limit, $offset );
+			}
 			
 			$namespaces = array_merge( $search->namespaces, $namespaces );
 			$search->setNamespaces( $namespaces );

@@ -17,17 +17,17 @@ class WikiaSpecialPageController extends WikiaController {
 	}
 
 	public function execute( $par ) {
-		$app = F::build( 'App' );
-		$out = $app->wg->Out;
-		$response = $app->sendRequest( substr( get_class( $this ), 0, -10 ), null, array( 'par' => $par /* to be compatibile with MW core */ ) + $_POST + $_GET, false );
+		$this->app = F::app();
+		$out = $this->app->wg->Out;
+		$response = $this->sendRequest( get_class( $this ), null, array( 'par' => $par /* to be compatibile with MW core */ ), false );
 
-		if( $response->getFormat() == 'html' ) {
+		if( $response->getFormat() == WikiaResponse::FORMAT_HTML ) {
 			try {
 				$out->addHTML( $response->toString() );
 			} catch( Exception $exception ) {
 				// in case of exception thrown by WikiaView, just render standard error controller response
 				$response->setException( $exception );
-				$out->addHTML( $app->getView( 'WikiaError', 'error', array( 'response' => $response, 'devel' => $app->wg->DevelEnvironment ) )->render() );
+				$out->addHTML( $this->app->getView( 'WikiaError', 'error', array( 'response' => $response, 'devel' => $this->app->wg->DevelEnvironment ) )->render() );
 			}
 		}
 		else {

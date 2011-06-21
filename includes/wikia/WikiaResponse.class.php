@@ -8,13 +8,30 @@
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
  * @author Owen Davis <owen(at)wikia-inc.com>
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
+ * @author Federico "Lox" Lucignano <wojtek(at)wikia-inc.com>
  */
 class WikiaResponse {
-
+	
+	/**
+	 * Response codes
+	 */
 	const RESPONSE_CODE_OK = 200;
 	const RESPONSE_CODE_ERROR = 501;
 	const RESPONSE_CODE_FORBIDDEN = 403;
-
+	
+	/**
+	 * Output formats
+	 */
+	const FORMAT_RAW = 'raw';
+	const FORMAT_HTML = 'html';
+	const FORMAT_JSON = 'json';
+	
+	/**
+	 * Cache targets
+	 */
+	const CACHE_TARGET_BROWSER = 0;
+	const CACHE_TARGET_VARNISH = 1;
+	
 	/**
 	 * View object
 	 * @var WikiaView
@@ -124,7 +141,7 @@ class WikiaResponse {
 	 * sets response body
 	 * @param string $value
 	 */
-	public function setBody($value) {
+	public function setBody( $value ) {
 		$this->body = $value;
 	}
 
@@ -139,7 +156,7 @@ class WikiaResponse {
 	 * append something to response body
 	 * @param string $value
 	 */
-	public function appendBody($value) {
+	public function appendBody( $value ) {
 		$this->body .= $value;
 	}
 
@@ -155,7 +172,7 @@ class WikiaResponse {
 	 * set response code
 	 * @param int $value
 	 */
-	public function setCode($value) {
+	public function setCode( $value ) {
 		$this->code = $value;
 	}
 
@@ -171,7 +188,7 @@ class WikiaResponse {
 	 * set content type
 	 * @param string $value
 	 */
-	public function setContentType($value) {
+	public function setContentType( $value ) {
 		$this->contentType = $value;
 	}
 
@@ -202,16 +219,54 @@ class WikiaResponse {
 		 'replace' => $replace
 		);
 	}
+	
+	/**
+	 * Sets correct cache headers for the browser, Varnish or both
+	 *
+	 * @param integer $expiryTime validity for the Expires header in seconds
+	 * @param integer $maxAge validity for the Cache-Control max-age header in seconds
+	 * @param array $targets an array with the targets to be affected by the headers, one (or a combination) of
+	 * WikiaResponse::CACHE_TARGET_BROWSER and WikiaResponse::CACHE_TARGET_VARNISH
+	 */
+	public function setCacheValidity( $expiryTime = null, $maxAge = null, Array $targets = array() ){
+		$targetBrowser = ( in_array( self::CACHE_TARGET_BROWSER, $targets ) );
+		$targetVarnish = ( in_array( self::CACHE_TARGET_VARNISH, $targets ) );
+		
+		if ( !is_null( $expiryTime ) ){
+			$expiryTime = (int) $expiryTime;
+			
+			if ( $targetBrowser ) {
+				$this->setHeader( 'Expires', gmdate( 'D, d M Y H:i:s', time() + $expiryTime ) . ' GMT', true);
+			}
+			
+			if ( $targetVarnish) {
+				$this->setHeader( 'X-Pass-Expires', gmdate( 'D, d M Y H:i:s', time() + $expiryTime ) . ' GMT', true );
+			}
+		}
+		
+		if( !is_null( $maxAge ) ) {
+			$maxAge = (int) $maxAge;
+			
+			if ( $targetBrowser ) {
+				$this->setHeader( 'Cache-Control', "max-age={$maxAge}", true );
+			}
+			
+			if ( $targetVarnish) {
+				$this->setHeader( 'X-Pass-Cache-Control', "max-age={$maxAge}", true );
+			}
+		}
+	}
 
 	public function getHeader( $name ) {
 		$result = array();
+		
 		foreach( $this->headers as $key => $header ) {
 			if( $header['name'] == $name ) {
 				$result[] = $header;
 			}
 		}
 
-		return ( count($result) ? $result : null );
+		return ( count( $result ) ? $result : null );
 	}
 
 	public function removeHeader( $name ) {
@@ -230,11 +285,12 @@ class WikiaResponse {
 		if( isset( $this->data[$key] ) ) {
 			return $this->data[$key];
 		}
+		
 		return $default;
 	}
 
 	public function hasException() {
-		return ($this->exception == null) ? false : true;
+		return ( $this->exception == null ) ? false : true;
 	}
 
 	public function getException() {

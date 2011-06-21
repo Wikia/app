@@ -83,7 +83,9 @@ $wgAutoloadClasses['WikiaRegistry'] = $IP . '/includes/wikia/WikiaRegistry.class
 $wgAutoloadClasses['WikiaGlobalRegistry'] = $IP . '/includes/wikia/WikiaGlobalRegistry.class.php';
 $wgAutoloadClasses['WikiaLocalRegistry'] = $IP . '/includes/wikia/WikiaLocalRegistry.class.php';
 $wgAutoloadClasses['WikiaDispatcher'] = $IP . '/includes/wikia/WikiaDispatcher.class.php';
+$wgAutoloadClasses['WikiaBaseController'] = $IP . '/includes/wikia/WikiaBaseController.class.php';
 $wgAutoloadClasses['WikiaController'] = $IP . '/includes/wikia/WikiaController.class.php';
+$wgAutoloadClasses['WikiaService'] = $IP . '/includes/wikia/WikiaService.class.php';
 $wgAutoloadClasses['WikiaSpecialPageController'] = $IP . '/includes/wikia/WikiaSpecialPageController.class.php';
 $wgAutoloadClasses['WikiaErrorController'] = $IP . '/includes/wikia/WikiaErrorController.class.php';
 $wgAutoloadClasses['WikiaRequest'] = $IP . '/includes/wikia/WikiaRequest.class.php';
@@ -149,7 +151,7 @@ $wgAutoloadClasses['SpriteService'] = $IP . '/includes/wikia/services/SpriteServ
 $wgAutoloadClasses['HubService'] = $IP . '/includes/wikia/services/HubService.class.php';
 
 // controllers
-$wgAutoloadClasses['SimpleSearchController']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
+$wgAutoloadClasses['SimpleSearchService']  =  $IP.'/includes/wikia/services/SimpleSearchService.class.php';
 $wgAutoloadClasses['SimpleSearchTooManyResultsException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
 $wgAutoloadClasses['SimpleSearchDisabledException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
 $wgAutoloadClasses['SimpleSearchEngineException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
