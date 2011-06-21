@@ -22,24 +22,25 @@ window.RTE = {
 		entities: false,
 		format_tags: 'p;h2;h3;h4;h5;pre',
 		language: window.wgUserLanguage,
-		plugins :
-			'basicstyles,' +
-			'button,' +
-			'clipboard,' +
-			'contextmenu,' +
-			'enterkey,' +
-			'format,' +
-			'htmldataprocessor,' +
-			'indent,' +
-			'keystrokes,' +
-			'list,' +
-			'pastetext,' +
-			'removeformat,' +
-			'sourcearea,' +
-			'table,' +
-			'tabletools,' +
-			'undo,' +
-			'wysiwygarea',
+		plugins:
+			'basicstyles,' + 
+			'button,' + 
+			'clipboard,' + 
+			'contextmenu,' + 
+			'dialog,' + 
+			'enterkey,' + 
+			'format,' + 
+			'htmldataprocessor,' + 
+			'indent,' + 
+			'keystrokes,' + 
+			'list,' + 
+			'pastetext,' + 
+			'removeformat,' + 
+			'sourcearea,' + 
+			'table,' + 
+			'tabletools,' + 
+			'undo,' + 
+			'wysiwygarea', 
 		resize_enabled: false,
 		richcomboCss: $.getSassCommonURL('extensions/wikia/EditPageReskin/RTE/css/richcombo.scss'),
 		skin: 'wikia',
@@ -84,6 +85,7 @@ window.RTE = {
 		'spellchecker',
 		'template',
 		'temporary-save',
+		'toolbar',
 		'tools',
 		'track'
 	],
