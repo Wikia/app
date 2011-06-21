@@ -30,6 +30,9 @@ class ArticleService extends Service {
 		$content = $this->mArticle->getContent();
 
 		if( !empty( $content) ) {
+			// Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
+			wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$content, $length ) );
+
 			// Perl magic will happen! Beware! Perl 5.10 required!
 			$re_magic = '#SSX(?<R>([^SE]++|S(?!S)|E(?!E)|SS(?&R))*EE)#i';
 
@@ -67,10 +70,10 @@ class ArticleService extends Service {
 			$content = $tmpParser->parse( $content,  $this->mArticle->getTitle(), new ParserOptions )->getText();
 
 			// remove noscript tags from wikitext (BugzId: 7295)
-			$content = preg_replace('#<noscript[^>]+>(.*?)<\/noscript>#s', '', $content);
+			$content = preg_replace('/<noscript[^>]*>(.*?)<\/noscript>/', '', $content);
 
 			// remove <script> tags (RT #46350)
-			$content = preg_replace('#<script[^>]+>(.*?)<\/script>#s', '', $content);
+			$content = preg_replace('#<script[^>]*>(.*?)<\/script>#s', '', $content);
 
 			// experimental: remove <th> tags
 			$content = preg_replace('#<th[^>]*>(.*?)<\/th>#s', '', $content);
