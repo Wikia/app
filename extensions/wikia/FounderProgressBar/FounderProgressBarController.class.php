@@ -51,8 +51,10 @@ class FounderProgressBarController extends WikiaController {
 	}
 	
 	public function widget() {
+		global $wgBlankImgUrl;
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/FounderProgressBar/css/FounderProgressBar.scss'));
 		$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/FounderProgressBar/js/FounderProgressBar.js');
+		$this->response->setVal("wgBlankImgUrl", $wgBlankImgUrl);
 	}
 	
 }

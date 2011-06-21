@@ -31,14 +31,59 @@
 				<? } ?>
 			</div>
 		</li>
-		<li class="task">
+		<li class="task collapsed">
 			<div class="task-label">
-				Skipped Tasks
+				Skipped Tasks <span class="sub-label">You can come back to these later</span>
+				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
+			</div>
+			<div class="task-group" style="display:none">
+				<? for ($j = 0; $j < 3; $j++) { ?>
+					<ul class="activities">
+						<? for ($i = 0; $i < 10; $i++) { ?>
+							<li class="activity">
+								<div class="activity-label">Activity is number <?= $i ?></div>
+								<div class="activity-description">
+									<div class="description">
+										<h4>Activity whatever</h4>
+										Description of this activity.  Description of this activity.  Description of this activity.
+									</div>
+									<div class="actions">
+										<button>Do something</button>
+									</div>
+								</div>
+							</li>
+						<? } ?>
+					</ul>
+				<? } ?>
 			</div>
 		</li>
-		<li class="task">
+		<li class="task collapsed">
 			<div class="task-label">
-				Bonus Tasks
+				Bonus Tasks <span class="sub-label">Complete the tasks list to unlock bonus tasks</span>
+				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
+			</div>
+			<div class="task-group" style="display:none">
+				<? for ($j = 0; $j < 3; $j++) { ?>
+					<ul class="activities">
+						<? for ($i = 0; $i < 10; $i++) { ?>
+							<? $unlocked = false;  // this should be dynamic and data-driven later ?>
+							<li class="activity <?= $unlocked ? '' : 'locked' ?> ">
+								<div class="activity-label">Activity is number <?= $i ?></div>
+								<? if ($unlocked) { ?>
+								<div class="activity-description">
+									<div class="description">
+										<h4>Activity whatever</h4>
+										Description of this activity.  Description of this activity.  Description of this activity.
+									</div>
+									<div class="actions">
+										<button>Do something</button>
+									</div>
+								</div>
+								<? } ?>
+							</li>
+						<? } ?>
+					</ul>
+				<? } ?>
 			</div>
 		</li>
 	</ul>

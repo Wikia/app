@@ -25,6 +25,18 @@ var FounderProgressList = {
 			}
 			FounderProgressList.isHidden = !FounderProgressList.isHidden;
 		});
+		
+		FounderProgressList.d.find(".task.collapsed").click(function() {
+			var el = $(this);
+			var group = el.find('.task-group');
+			if(group.is(':visible')) {
+				el.removeClass('expanded').addClass('collapsed');
+				group.slideUp(200);
+			} else {
+				el.removeClass('collapsed').addClass('expanded');
+				group.slideDown(200);
+			}
+		});
 	}
 }
 
