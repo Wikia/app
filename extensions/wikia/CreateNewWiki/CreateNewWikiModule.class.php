@@ -3,7 +3,6 @@ class CreateNewWikiModule extends Module {
 
 	// global imports
 	var $IP;
-	//var $wgUser;
 	var $isUserLoggedIn;
 	var $wgLanguageCode;
 	var $wgOasisThemes;
