@@ -48,7 +48,7 @@ class SpoofUser {
 		// Join against the user table to ensure that we skip stray
 		// entries left after an account is renamed or otherwise munged.
 		$spoofedUsers = $dbr->select(
-			array( 'spoofuser', 'events_local_users' ),
+			array( 'specials.spoofuser', 'events_local_users' ),
 			array( 'user_name' ),
 			array(
 				'su_normalized' => $this->mNormalized,
