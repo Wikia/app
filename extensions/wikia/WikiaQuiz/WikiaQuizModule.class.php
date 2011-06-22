@@ -4,13 +4,13 @@ class WikiaQuizModule extends Module {
 
 	var $data;
 	var $wgBlankImgUrl;
-	var $wgUser;
 	var $wgExtensionsPath;
+	var $isAnonUser;
 
 	/**
 	 * Render HTML Quiz namespace pages
 	 */
-	
+
 	public function executeIndex($params) {
 		if (!$this->checkPermissions()) {
 			return;
@@ -19,9 +19,9 @@ class WikiaQuizModule extends Module {
 		if (!empty($params['quiz'])) {
 			$this->quiz = $params['quiz'];
 			$this->data = $this->quiz->getData();
-		}		
+		}
 	}
-	
+
 	public function executeArticleIndex($params) {
 		if (!$this->checkPermissions()) {
 			return;
@@ -32,12 +32,12 @@ class WikiaQuizModule extends Module {
 			$this->data = $this->quizElement->getData();
 		}
 	}
-	
+
 	public function executePlayQuiz($params) {
 		global $wgUser, $wgOut, $wgRequest, $wgSiteName;
 
-		$this->data = $params['data'];	
-		
+		$this->data = $params['data'];
+
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 		$this->wordmarkType = $settings['wordmark-type'];
@@ -45,7 +45,7 @@ class WikiaQuizModule extends Module {
 		if ($this->wordmarkType == 'graphic') {
 			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
 		}
-		
+
 		// Facebook opengraph meta data
 		$wgOut->addMeta('property:og:title', $this->data['titlescreentext']);
 		$wgOut->addMeta('property:og:type', 'game');
@@ -53,8 +53,9 @@ class WikiaQuizModule extends Module {
 		$wgOut->addMeta('property:og:site_name', $wgSiteName);
 		$wgOut->addMeta('property:og:description', wfMsg('wikiaquiz-facebook-creative', $this->data['titlescreentext']));
 		$wgOut->addMeta('property:og:image', $this->wordmarkUrl);
-		
+
 		$this->username = $wgUser->getName();
+		$this->isAnonUser = $wgUser->isAnon();
 	}
 
 	/**
@@ -91,11 +92,11 @@ class WikiaQuizModule extends Module {
 			$this->data = $quiz->getData();
 		}
 	}
-	
+
 	public function executeCreateQuiz() {
-		
+
 	}
-	
+
 	public function executeEditQuiz($params) {
 		$title = Title::newFromText ($params['title'], NS_WIKIA_QUIZ) ;
 
@@ -117,10 +118,10 @@ class WikiaQuizModule extends Module {
 			$this->data = $this->quizElement->getData();
 		}
 	}
-	
+
 	private function checkPermissions() {
 		global $wgUser, $wgOut;
-		
+
 		if ($wgUser->isBlocked()) {
 			$wgOut->blockedPage();
 			return false;
@@ -133,7 +134,7 @@ class WikiaQuizModule extends Module {
 			$wgOut->readOnlyPage();
 			return false;
 		}
-		
+
 		return true;
 	}
 
