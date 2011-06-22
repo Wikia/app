@@ -62,11 +62,13 @@ class EditPageLayout extends EditPage {
 	protected $mEditPagePreloads = array();
 
 	function __construct(Article $article) {
-		parent::__construct($article);
-
 		$this->app = F::build('App');
 		$this->out = $this->app->wg->Out;
 		$this->request = $this->app->wg->Request;
+
+		$this->app->wf->ProfileIn(__METHOD__);
+
+		parent::__construct($article);
 
 		// default setup of summary box
 		$this->mSummaryBox = array(
@@ -79,6 +81,8 @@ class EditPageLayout extends EditPage {
 
 		// add messages (fetch them using <script> tag)
 		F::build('JSMessages')->enqueuePackage('EditPageLayout', JSMessages::EXTERNAL);
+
+		$this->app->wf->ProfileOut(__METHOD__);
 	}
 
 	public function setHelper( EditPageLayoutHelper $helper ) {
@@ -134,6 +138,7 @@ class EditPageLayout extends EditPage {
 	 * Get HTML of notices shown above the editor and use show it as custom dismissable notice
 	 */
 	protected function showHeader() {
+		$this->app->wf->ProfileIn(__METHOD__);
 		$oldHtml = $this->out->getHTML();
 
 		$this->out->clearHTML();
@@ -152,6 +157,8 @@ class EditPageLayout extends EditPage {
 		// restore state of output
 		$this->out->clearHTML();
 		$this->out->addHTML($oldHtml);
+
+		$this->app->wf->ProfileOut(__METHOD__);
 	}
 
 	/**
@@ -249,6 +256,8 @@ class EditPageLayout extends EditPage {
 	 *                      near the top, for captchas and the like.
 	 */
 	function showEditForm($formCallback=null) {
+		$this->app->wf->ProfileIn(__METHOD__);
+
 		// get HTML from form callback
 		if (is_callable($formCallback)) {
 			wfDebug(__METHOD__ . ": has form callback\n");
@@ -264,7 +273,6 @@ class EditPageLayout extends EditPage {
 			$this->textbox1 = $this->preloadedText;
 		}
 
-
 		// show diff only (handle edit reverts)
 		if ($this->formtype == 'diff') {
 			$this->out->addHtml('<div id="diff">');
@@ -275,6 +283,7 @@ class EditPageLayout extends EditPage {
 
 		parent::showEditForm($formCallback);
 
+		$this->app->wf->ProfileOut(__METHOD__);
 	}
 
 	/**
@@ -285,8 +294,6 @@ class EditPageLayout extends EditPage {
 		if( $this->mPreventSave ) {
 			$this->save = false;
 		}
-
-		wfDebug(__METHOD__ . "{$this->textbox1}\n");
 	}
 
 	/**
