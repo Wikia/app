@@ -30,7 +30,7 @@ abstract class Module extends WikiaController {
 	 * list of controller properties that won't be passed to view layer
 	 * @var array
 	 */
-	protected $filteredVars = array( 'app', 'request', 'response', 'filteredVars' );
+	protected $filteredVars = array( 'app', 'request', 'response', 'realResponse', 'filteredVars' );
 
 	public function __call($method, $args)
 	{
