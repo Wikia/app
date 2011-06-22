@@ -44,6 +44,8 @@ class EditPageLayoutModule extends Module {
 	public function executeEditPage() {
 		$app = WF::build('App');
 
+		$app->wf->ProfileIn(__METHOD__);
+
 		$helper = WF::build('EditPageLayoutHelper');
 		$editPage = $helper->getEditPage();
 
@@ -122,5 +124,7 @@ class EditPageLayoutModule extends Module {
 
 			wfDebug(__METHOD__ . ": edit form disabled because read-only mode is on\n");
 		}
+
+		$app->wf->ProfileOut(__METHOD__);
 	}
 }
