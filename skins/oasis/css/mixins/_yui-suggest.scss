@@ -21,6 +21,10 @@
 			margin: 0 !important;
 			padding: 1px 0 0 3px;
 			white-space: nowrap;
+			line-height: 23px;
+		}
+		li.navigation-hover {
+			background: $color-menu-highlight;
 		}
 	}
 }
