@@ -119,7 +119,7 @@ class AccountNavigationModule extends Module {
 			$this->profileAvatar = AvatarService::renderAvatar($this->username, 20);
 
 			// dropdown items
-			$dropdownItems = array('mytalk', 'following', 'watchlist', 'preferences');
+			$dropdownItems = array('mytalk', 'following', 'preferences');
 
 			foreach($dropdownItems as $item) {
 				if (isset($this->personal_urls[$item])) {
