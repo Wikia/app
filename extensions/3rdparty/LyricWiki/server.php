@@ -1928,7 +1928,7 @@ function lw_getSearchResults($searchString, $maxResults=25){
 	$titles = array();
 	try{
 		$searchString = trim($searchString);
-		$response = F::app()->sendRequest( 'SimpleSearch', 'localSearch', array( 'key' => $searchString, 'limit' => $maxResults ) );
+		$response = F::app()->sendRequest( 'SimpleSearchService', 'localSearch', array( 'key' => $searchString, 'limit' => $maxResults ) );
 		// $numAvailResults = $response->getVal('totalCount'); // would be useful if we add paging.
 		if(is_array($response->getVal('titleResults'))){
 			foreach($response->getVal('titleResults') as $resultData){
