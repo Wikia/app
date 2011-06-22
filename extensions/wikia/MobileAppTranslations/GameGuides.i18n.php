@@ -14,33 +14,117 @@ $messages = array();
 // Lang: en
 $messages['en'] = array(
 	'activityindicator-message' => 'Loading...',
-	'windowwikis-title' => 'Our Top Games',
-	'windowwikis-titleprompt' => 'Wikia Game Guides',
-	'windowwikis-searchbar-hint' => 'Search our top games...',
-	'windowwikicontents-title' => '%s',
-	'windowwikicontents-windowtitle-leftbutton-label' => 'Games',
-	'windowcategory-title' => '%s: %s',
-	'windowcategory-searchbar-hint' => 'Search %s...',
-	'windowcategory-windowtitle-leftbutton-label' => 'Back',
-	'windowarticle-windowtitle-searchbar-hint-short' => 'Search...',
-	'windowarticle-windowtitle-searchbar-hint' => 'Search %s...',
-	'windowarticle-menu-search-label' => 'Search',
-	'windowarticle-menu-games-label' => 'Games',
-	'windowarticle-menu-dashboard-label' => 'Guide contents',
-	'windowarticle-no-search-results' => 'No results for %s',
-	'windowarticle-search-back' => 'Back to the article',
-	'alertdialog-error-title' => 'Error',
-	'alertdialog-error-button-label' => 'Close',
+	
+	//window-wikis.js
+	'window-wikis-title' => 'Wikia Game Guides',
+	'window-wikis-wikilist-header' => 'Our Top Games',
+	
+	//window-category.js
+	'window-category-load-batch' => 'More',
+	
+	//window-article.js
+	'window-article-button-close' => 'Close',
+	'window-article-button-back' => 'Back',
+	'window-article-menu-search-label' => 'Search',
+	'window-article-menu-dashboard-label' => 'Guide contents',
+	'window-article-menu-cancel-label' => 'Cancel',
+	
+	//SearchView
+	'searchview-no-results' => 'No results for "%s"',
+	'searchview-button-back-list' => 'Back to list',
+	'searchview-button-back-article' => 'Back to article',
+	
+	//SearchBar
+	'searchbar-hint' => 'Search %s...',
+	
+	//update alert
+	'alert-download-updated-wikis-message' => 'The list of available guides will be updated.',
+	'alert-download-updated-wikis-button-ok' => 'Ok',
+	
+	//errors
+	'error-update-required' => 'An update for this app is available and required.',
+	'error-no-connection' => 'No internet connection available.\\nPlease try again.',
+	'error-server' => 'Our servers responded with an error, sorry.\\nPlease try again.',
+	'error-json-parse' => 'There was a problem with the data returned from our servers, sorry.\\nPlease try again.'
+);
 
-	//  errors
-	'error-update-required' => 'An update for this app is available and required.\n%s',
-	'error-no-connection' => 'No internet connection available.\n%s',
-	'error-server' => 'Our servers responded with an error, sorry.\n%s',
-	'error-json-parse' => 'There was a problem with the data returned from our servers, sorry.\n%s',
-	'error-app-will-close' => 'It\'s not possible to continue, the application will close, try reopening it.',
-	'error-plase-close-app' => 'It\'s not possible to continue, please try closing the application and reopening it.',
-	'error-close-window-retry' => 'This window will close, please try again or pick a different item.',
-	'error-please-try-again' => 'Please try again.'
+/** Italian
+ * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+ */
+$messages['it'] = array(
+	'activityindicator-message' => 'Caricamento...',
+	
+	//window-wikis.js
+	'window-wikis-title' => 'Wikia Game Guides',
+	'window-wikis-wikilist-header' => 'Top Games',
+	
+	//window-category.js
+	'window-category-load-batch' => 'Altri',
+	
+	//window-article.js
+	'window-article-button-close' => 'Chiudi',
+	'window-article-button-back' => 'Indietro',
+	'window-article-menu-search-label' => 'Cerca',
+	'window-article-menu-dashboard-label' => 'Contenuti',
+	'window-article-menu-cancel-label' => 'Annulla',
+	
+	//SearchView
+	'searchview-no-results' => 'Nessun risultato per "%s"',
+	'searchview-button-back-list' => 'Torna alla lista',
+	'searchview-button-back-article' => 'Torna all\'articolo',
+	
+	//SearchBar
+	'searchbar-hint' => 'Cerca in %s...',
+	
+	//update alert
+	'alert-download-updated-wikis-message' => 'La lista dei giochi disponibili verrá aggiornata.',
+	'alert-download-updated-wikis-button-ok' => 'Ok',
+	
+	//errors
+	'error-update-required' => 'Una versione aggiornata è disponibile e necessaria.',
+	'error-no-connection' => 'Connessione ad internet non disponibile.\\nProva piú tardi.',
+	'error-server' => 'I nostri server hanno risposto con un errorre.\\nProva piú tardi.',
+	'error-json-parse' => 'Un errore è stato riscontrato nei dati forniti dal server.\\nProva piú tardi.'
+);
+
+/** Polish
+ * @author Jakub Olek <bukaj.kelo(at)gmail.com>
+ */
+
+ $messages['pl'] = array(
+	'activityindicator-message' => 'Ładowanie...',
+	
+	//window-wikis.js
+	'window-wikis-title' => 'Przewodniki Gier Wikia',
+	'window-wikis-wikilist-header' => 'Nasze Najlepsze Gry',
+	
+	//window-category.js
+	'window-category-load-batch' => 'Więcej',
+	
+	//window-article.js
+	'window-article-button-close' => 'Zamknij',
+	'window-article-button-back' => 'Cofnij',
+	'window-article-menu-search-label' => 'Szukaj',
+	'window-article-menu-dashboard-label' => 'Zawartość przewodnika',
+	'window-article-menu-cancel-label' => 'Anuluj',
+	
+	//SearchView
+	'searchview-no-results' => 'Brak wyników dla "%s"',
+	'searchview-button-back-list' => 'Wróć do listy',
+	'searchview-button-back-article' => 'Wróć do artykułu',
+	
+	//SearchBar
+	'searchbar-hint' => 'Szukaj %s...',
+	
+	//update alert
+	'alert-download-updated-wikis-message' => 'Lista dostępnych przewodników zostanie zaktualizowana.',
+	'alert-download-updated-wikis-button-ok' => 'Ok',
+	
+	//errors
+	'error-update-required' => 'Aktualizacja tej aplikacji jest dostępna oraz wymagana.',
+	'error-no-connection' => 'Brak połączenia z internetem.\\nProsimy spróbować ponownie.',
+	'error-server' => 'Nasze serwery odpowiedziały błędem, przepraszamy.\\nProsimy spróbować ponownie.',
+	'error-json-parse' => 'Wystąpił problem z danymi zwróconymi z naszych serwerów, przepraszamy.\\nProsimy spróbować ponownie.'	
 );
 
 /** Breton (Brezhoneg)
@@ -184,35 +268,6 @@ $messages['ia'] = array(
 	'error-please-try-again' => 'Per favor reproba.',
 );
 
-/** Italian (Italiano) */
-$messages['it'] = array(
-	'activityindicator-message' => 'Caricamento...',
-	'windowwikis-title' => 'Top Games',
-	'windowwikis-titleprompt' => 'Wikia Game Guides',
-	'windowwikis-searchbar-hint' => 'Cerca tra i nostri migliori titoli...',
-	'windowwikicontents-windowtitle-leftbutton-label' => 'Giochi',
-	'windowcategory-title' => '%s: %s',
-	'windowcategory-searchbar-hint' => 'Cerca %s...',
-	'windowcategory-windowtitle-leftbutton-label' => 'Indietro',
-	'windowarticle-windowtitle-searchbar-hint-short' => 'Cerca...',
-	'windowarticle-windowtitle-searchbar-hint' => 'Cerca %s...',
-	'windowarticle-menu-search-label' => 'Cerca',
-	'windowarticle-menu-games-label' => 'Giochi',
-	'windowarticle-menu-dashboard-label' => 'Contenuti',
-	'windowarticle-no-search-results' => 'Nessun risultato per %s',
-	'windowarticle-search-back' => "Torna all'articolo",
-	'alertdialog-error-title' => 'Errore',
-	'alertdialog-error-button-label' => 'Chiudi',
-	'error-update-required' => "Un aggiornamento per questa applicazione e' disponibile e necessario per continuare.\\n%s",
-	'error-no-connection' => 'Nessuna connessione ad internet.\\n%s',
-	'error-server' => 'Spiacenti, I nostri server hanno risposto con un errore.\\n%s',
-	'error-json-parse' => "Spiacenti, E' stato riscontrato un problema con i dati inviati dai nostri server.\\n%s",
-	'error-app-will-close' => "Non e' possibile continuare, l'applicazione verra' chiusa, prova a riaprirla.",
-	'error-plase-close-app' => "Non e' possibile continuare, prova a chiudere e riaprire l'applicazione.",
-	'error-close-window-retry' => "Questa finestra verra' chiusa, prova di nuovo o scegli un'altra voce.",
-	'error-please-try-again' => 'Prova di nuovo.',
-);
-
 /** Kurdish (Latin) (Kurdî (Latin))
  * @author George Animal
  */
@@ -350,35 +405,6 @@ $messages['no'] = array(
 	'error-plase-close-app' => 'Det er ikke mulig å fortsette, vennligst forsøk å lukke applikasjonen og gjenåpne den.',
 	'error-close-window-retry' => 'Dette vinduet vil lukkes, vennligst prøv igjen eller velg et annen element.',
 	'error-please-try-again' => 'Vennligst prøv igjen.',
-);
-
-/** Polish (Polski) */
-$messages['pl'] = array(
-	'activityindicator-message' => 'Wczytywanie...',
-	'windowwikis-title' => 'Nasze najlepsze gry',
-	'windowwikis-titleprompt' => 'Poradniki do gier',
-	'windowwikis-searchbar-hint' => 'Wyszukaj w naszych grach...',
-	'windowwikicontents-windowtitle-leftbutton-label' => 'Gry',
-	'windowcategory-title' => '%s: %s',
-	'windowcategory-searchbar-hint' => 'Wyszukuję ...',
-	'windowcategory-windowtitle-leftbutton-label' => 'Cofnij',
-	'windowarticle-windowtitle-searchbar-hint-short' => 'Wyszukuję ...',
-	'windowarticle-windowtitle-searchbar-hint' => 'Wyszukuję ...',
-	'windowarticle-menu-search-label' => 'Wyszukaj',
-	'windowarticle-menu-games-label' => 'Gry',
-	'windowarticle-menu-dashboard-label' => 'Przewodniki',
-	'windowarticle-no-search-results' => 'Brak rezultatów dla %s',
-	'windowarticle-search-back' => 'Wróc do artykułu',
-	'alertdialog-error-title' => 'Błąd',
-	'alertdialog-error-button-label' => 'Zakmnij',
-	'error-update-required' => 'Wymagana jest aktualizacja aplikacji.\\n%s',
-	'error-no-connection' => 'Brak połaczenia z Internetem.\\n%s',
-	'error-server' => 'Przepraszamy, błąd serwera.\\n%s',
-	'error-json-parse' => 'Przepraszamy, aplikacja otrzymałą błędne dane z serwera.\\n%s',
-	'error-app-will-close' => 'Dalsza praca nie jest możliwa. Aplikacja zamknie się automatycznie. Uruchom aplikacje ponownie.',
-	'error-plase-close-app' => 'Dalsza praca nie jest możliwa. Aby kontynuować zamknij aplikację i otwórz ją ponownie.',
-	'error-close-window-retry' => 'Okno zostanie zamknięte, prosze spróbuj ponownie lub wybierz inną opcję.',
-	'error-please-try-again' => 'Spróbuj ponownie.',
 );
 
 /** Portuguese (Português)
