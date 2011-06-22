@@ -461,6 +461,12 @@ class RTEReverseParser {
 			}
 		}
 
+		// special handling of headings in <div> tags (BugId:4908)
+		if (self::isHeadingNode($node) && self::isChildOf($node, 'div') && !self::isFirstChild($node)) {
+			$prefix = '';
+			$suffix = "\n";
+		}
+
 		// generate HTML
 		$attr = self::getAttributesStr($node);
 
