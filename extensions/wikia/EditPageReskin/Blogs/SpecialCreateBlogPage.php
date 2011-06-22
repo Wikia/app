@@ -1,7 +1,7 @@
 <?php
 
 class CreateBlogPage extends SpecialCustomEditPage {
-	
+
 	const FIELD_IS_COMMENTING_ENABLED = 'wpIsCommentingEnabled';
 	const STATUS_BLOG_PERMISSION_DENIED = -101;
 	protected $mFormData = array();
@@ -11,14 +11,14 @@ class CreateBlogPage extends SpecialCustomEditPage {
 		//TODO create some abstract metod to force user to get CreateBlogPage
 		parent::__construct('CreateBlogPage');
 	}
-	
+
 	protected function initializeEditPage() {
 		$editPage = parent::initializeEditPage();
 		$editPage->isCreateBlogPage = true;
 		return $editPage;
 	}
-	
-	
+
+
 	public function execute($par) {
 		if( !$this->user->isLoggedIn() ) {
 			$this->out->showErrorPage( 'create-blog-no-login', 'create-blog-login-required', array(wfGetReturntoParam()));
@@ -34,15 +34,15 @@ class CreateBlogPage extends SpecialCustomEditPage {
 			$this->out->readOnlyPage();
 			return;
 		}
-		
+
 		parent::execute($par);
 	}
-	
+
 	protected function afterArticleInitialize($mode, $title, $article) {
 		if( $mode == self::MODE_EDIT ) {
 			$aPageProps = BlogArticle::getProps($article->getId());
 			$this->mFormData['isCommentingEnabled'] = empty($aPageProps['commenting']) ? 0 :$aPageProps['commenting'];
-			
+
 			$isAllowed = $this->user->isAllowed( "blog-articles-edit" );
 			if((strtolower($this->user->getName()) != strtolower( BlogArticle::getOwner($title))) && !$isAllowed) {
 				$this->titleStatus = self::STATUS_BLOG_PERMISSION_DENIED;
@@ -52,7 +52,7 @@ class CreateBlogPage extends SpecialCustomEditPage {
 			$this->mFormData['isCommentingEnabled'] = true;
 		}
 	}
-	
+
 	/**
 	 * Return wikitext for generating preview / diff / to be saved
 	 */
@@ -63,37 +63,37 @@ class CreateBlogPage extends SpecialCustomEditPage {
 			$catName = wfMsgForContent("create-blog-post-category");
 			$sCategoryNSName = $this->contLang->getFormattedNsText( NS_CATEGORY );
 			$wikitext .= "\n[[" . $sCategoryNSName . ":" . $catName . "]]";
-		}		
-		
-		return $wikitext; 
+		}
+
+		return $wikitext;
 	}
-	
-		
+
+
 	protected function getTitlePrefix() {
 		return $this->user->getName() . '/';
 	}
-	
+
 	/**
 	 * add some default values
 	 */
 	public function beforeSave() {
 		if( empty($this->mEditPage->summary )) {
-			$this->mEditPage->summary = wfMsgForContent('create-blog-updated');	
+			$this->mEditPage->summary = wfMsgForContent('create-blog-updated');
 		}
 		$this->mEditPage->recreate = true;
 	}
-	
+
 	/**
 	 * Perform additional checks when saving an article
 	 */
-	protected function processSubmit() {	
+	protected function processSubmit() {
 		//used to set some default values */
-		
+
 		if ($this->mode != self::MODE_NEW_SETUP) {
 			if ($this->contentStatus == EditPage::AS_BLANK_ARTICLE) {
 				$this->addEditNotice(wfMsg('plb-create-empty-body-error'));
 			}
-		
+
 			switch ($this->titleStatus) {
 				case self::STATUS_EMPTY:
 					$this->addEditNotice(wfMsg( 'create-blog-empty-title-error' ));
@@ -114,28 +114,20 @@ class CreateBlogPage extends SpecialCustomEditPage {
 			return wfMsg( 'create-blog-post-title' );
 		}
 	}
-	
-	
+
 	public function renderHeader($par) {
-		$this->forceUserToProvideTitle('create-blog-form-post-title');		
-		$this->addHiddenField(array(
-			'name' => self::FIELD_IS_COMMENTING_ENABLED,
-			'type' => 'checkbox',
-			'label' => wfMsg('blog-comments-label'),
-			'valuefromrequest' => self::FIELD_IS_COMMENTING_ENABLED,
-			'value' => $this->mFormData['isCommentingEnabled'], 
-			'required' => false
-		)); 		
+		$this->forceUserToProvideTitle('create-blog-form-post-title');
+		$this->addCustomCheckbox(self::FIELD_IS_COMMENTING_ENABLED, wfMsg('blog-comments-label'), $this->mFormData['isCommentingEnabled']);
 	}
-	
+
 	protected function afterSave( $status ) {
 		switch( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
-				
+
 				$article = $this->getEditedArticle();
 				$articleId = $article->getID();
-				
+
 				$aPageProps = array();
 				$aPageProps['commenting'] = 0;
 				if( $this->getField(self::FIELD_IS_COMMENTING_ENABLED) != "" ) {
@@ -145,10 +137,10 @@ class CreateBlogPage extends SpecialCustomEditPage {
 				if( count( $aPageProps ) ) {
 					BlogArticle::setProps( $articleId, $aPageProps );
 				}
-				
+
 				$this->invalidateCacheConnected( $article );
 				$this->createListingPage();
-				
+
 				$this->out->redirect($article->getTitle()->getFullUrl());
 				break;
 
@@ -160,7 +152,7 @@ class CreateBlogPage extends SpecialCustomEditPage {
 				else {
 					$sMsg = wfMsg('create-blog-spam');
 				}
-				
+
 				$this->mFormErrors[] = $sMsg . "($status)";
 				break;
 		}
@@ -207,8 +199,8 @@ class CreateBlogPage extends SpecialCustomEditPage {
 			);
 		}
 	}
-	
-	
+
+
 	protected function setEditedTitle(Title $title) {
 		$this->setEditedArticle(new BlogArticle($title));
 	}

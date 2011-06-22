@@ -41,13 +41,19 @@
 	}
 	// page controls
 	.module_page_controls {
-		// minor edit checkbox
-		label {
-			display: block;
-			font-size: 10px;
-			text-align: right;
-			input {
-				vertical-align: middle;
+		.checkboxes {
+			@include clearfix;
+
+			> label {
+				font-size: 10px;
+				text-align: right;
+				input {
+					vertical-align: middle;
+				}
+
+				&.wpMinoredit {
+					float: right;
+				}
 			}
 		}
 

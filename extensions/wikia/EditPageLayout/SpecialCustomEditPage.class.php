@@ -107,6 +107,13 @@ class SpecialCustomEditPage extends SpecialPage {
 	}
 
 	/**
+	 * Add checkbox next to "minor edit"
+	 */
+	protected function addCustomCheckbox($name, $label, $checked) {
+		$this->mEditPage->addCustomCheckbox($name, $label, $checked);
+	}
+
+	/**
 	 * Ferce user to provide article name
 	 */
 	protected function forceUserToProvideTitle($msg) {
@@ -191,14 +198,14 @@ class SpecialCustomEditPage extends SpecialPage {
 	protected function getDefaultTitle() {
 		return new Title;
 	}
-	
+
 	/**
-	 * Get edit page object 
+	 * Get edit page object
 	 */
-	
+
 	public function getEditPage() {
 		return $this->mEditPage;
-	} 
+	}
 
 
 	/**
@@ -286,7 +293,7 @@ class SpecialCustomEditPage extends SpecialPage {
 		//set action to have some value(not empty)
 		$this->action = $this->request->getVal('action', 'edit');
 		$this->request->setVal( 'action', $this->action );
-				
+
 		$value = $this->getField($this->titleFieldName);
 
 		if($this->initializeTitle( $value ) === false) {
@@ -314,11 +321,11 @@ class SpecialCustomEditPage extends SpecialPage {
 
 		// (try to) create instance of custom EditPage class
 		$this->mEditPage = $this->initializeEditPage();
-		
+
 		if (empty($this->mEditPage)) {
 			return;
 		}
-		
+
 		$this->afterArticleInitialize($this->mode, $this->getEditedArticle()->getTitle(), $this->getEditedArticle());
 
 		$this->setUpControlButtons();
@@ -383,7 +390,7 @@ class SpecialCustomEditPage extends SpecialPage {
 		$this->mEditPage->lastSaveStatus = null;
 
 		$this->renderHeader($par);
-		
+
 		foreach ($this->editNoticesStack as $editNotice) {
 			$this->mEditPage->addEditNotice($editNotice);
 		}
@@ -391,7 +398,7 @@ class SpecialCustomEditPage extends SpecialPage {
 		foreach ($this->mHiddenFields as $field) {
 			$this->mEditPage->addHiddenField($field);
 		}
-		
+
 		// render special page setup method
 		$this->mEditPage->submit();
 
@@ -435,7 +442,7 @@ class SpecialCustomEditPage extends SpecialPage {
 
 		if ($wikitext == '') {
 			// "wpTextbox1" field used when submitting editpage (needs to be processed by Reverse Parser if saved from wysiwyg mode)
-			
+
 			$method = $this->request->getVal('method', '');
 			if($method == 'preview' || $method == 'diff') {
 				$wikitext = $this->getWikitextFromField('content');
@@ -454,7 +461,7 @@ class SpecialCustomEditPage extends SpecialPage {
 		$this->initializeTitle($title);
 		return $this->getWikitextFromRequest();
 	}
-	
+
 	/**
 	 * Override this to take action after page has been saved
 	 * @param int $status EditPage save status
@@ -481,7 +488,7 @@ class SpecialCustomEditPage extends SpecialPage {
 	 */
 	protected function setUpControlButtons() {
 	}
-	
+
 	/**
 	 * Function used to render some html instead preview or diff
 	 */

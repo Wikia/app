@@ -25,6 +25,9 @@ class EditPageLayout extends EditPage {
 	// hidden fields - shown as a dialog when "Edit title" button is clicked
 	protected $mHiddenFields = array();
 
+	// custom checkboxes shown next to minor edit in page controls module (BugId:6247)
+	protected $mCustomCheckboxes = array();
+
 	// settings for summary box (textarea in right rail's page controls)
 	protected $mSummaryBox = array();
 
@@ -145,13 +148,6 @@ class EditPageLayout extends EditPage {
 		}
 
 		$bridge->close();
-//		var_dump($this->out->getHTML());
-		/*
-		$notices = $this->out->getHTML();
-		if ($notices != '') {
-			$this->mCoreEditNotices = $notices;
-		}
-		*/
 
 		// restore state of output
 		$this->out->clearHTML();
@@ -381,6 +377,24 @@ class EditPageLayout extends EditPage {
 
 		$html .= '</fieldset>';
 		return $html;
+	}
+
+	/**
+	 * Add custom checkbox next to "minor edit"
+	 */
+	public function addCustomCheckbox($name, $label, $checked) {
+		$this->mCustomCheckboxes[] = array(
+			'name' => $name,
+			'label' => $label,
+			'checked' => !empty($checked),
+		);
+	}
+
+	/**
+	 * Get custom checkboxes
+	 */
+	public function getCustomCheckboxes() {
+		return $this->mCustomCheckboxes;
 	}
 
 	/**

@@ -103,10 +103,22 @@
 					</style></noscript>
 					<div class="module module_page_controls">
 						<div class="module_content">
-							<label>
-								<input type="checkbox" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
-								<?= wfMsg('editpagelayout-pageControls-minorEdit') ?>
-							</label>
+							<div class="checkboxes">
+								<?php
+									foreach($customCheckboxes as $checkbox) {
+								?>
+								<label class="<?= $checkbox['name'] ?>">
+									<input type="checkbox" name="<?= $checkbox['name'] ?>" id="<?= $checkbox['name'] ?>" <?= $checkbox['checked'] ? ' checked="checked"' : '' ?> />
+									<?= $checkbox['label'] ?>
+								</label>
+								<?php
+									}
+								?>
+								<label class="wpMinoredit">
+									<input type="checkbox" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
+									<?= wfMsg('editpagelayout-pageControls-minorEdit') ?>
+								</label>
+							</div>
 							<div id="wpSummaryLabel">
 								<?= $summaryBox ?>
 							</div>
