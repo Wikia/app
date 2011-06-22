@@ -1248,8 +1248,10 @@ class EditPage {
 		# Enabled article-related sidebar, toplinks, etc.
 		$wgOut->setArticleRelated( true );
 
-		if ( $this->showHeader() === false )
+		if ( $this->showHeader() === false ) {
+			wfProfileOut( __METHOD__ );
 			return;
+		}
 
 		$action = htmlspecialchars($this->getActionURL($wgTitle));
 

@@ -370,6 +370,8 @@ HTML
 	private static function checkEditorConditions() {
 		global $wgRequest, $wgUser;
 
+		wfProfileIn(__METHOD__);
+
 		// check browser compatibility
 		if (!self::isCompatibleBrowser()) {
 			RTE::log('editor is disabled because of unsupported browser');
