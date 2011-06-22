@@ -748,7 +748,11 @@ function wfSharedMemcKey( /*... */ ) {
  * Get provided message in plain and HTML versions using language as priority
  *
  * @author Inez, Marooned
- * @return array
+ * @return array containing 4 items:
+ *         - the plaintext message
+ *         - the rich-text message
+ *         - an int which is non-zero if the plaintext message fell back to the fallback language? (not sure this is the intention)
+ *         - an int which is non-zero if the rich-text message fell back to the fallback language? (not sure this is the intention)
  */
 function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(), $wantHTML = true) {
 	global $wgContLanguageCode, $wgMessageCache;
@@ -774,7 +778,7 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 	$msgPlainRaw = $wgMessageCache->get($langKey, true, $lang, $fullKey);
 	$msgPlainRawEmpty = wfEmptyMsg($langKey, $msgPlainRaw);
 	$fallbackLang = $lang;
-	while ($fallbackLang = Language::getFallbackFor($fallbackLang)) {
+	while ($fallbackLang = Language::getFallbackFor($fallbackLang)) { // NOTE: assignment
 		if ($fallbackLang == $wgContLanguageCode) {
 			$fullKey = false;
 			$langKey2 = $key;
@@ -785,14 +789,14 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 		$msgPlainRawLang = $wgMessageCache->get($langKey2, true, $fallbackLang, $fullKey);
 		$msgPlainRawLangEmpty = wfEmptyMsg($langKey2, $msgPlainRawLang);
 		//if main message is empty and fallbacked is not, get fallbacked one
-		if (!$msgPlainRawLangEmpty && wfEmptyMsg($langKey, $msgPlainRaw)) {
+		if (wfEmptyMsg($langKey, $msgPlainRaw) && !$msgPlainRawLangEmpty) {
 			//TODO: check if this ok or do we need to use $msgPlainRaw plus parsing
 			$msgPlain = wfMsgExt($key, array_merge($options, array('language' => $fallbackLang)), $params);
+			$msgPlainFallbacked++;
 		}
 		if ($msgPlainRaw != $msgPlainRawLang && !$msgPlainRawEmpty && !$msgPlainRawLangEmpty) {
 			break;
 		}
-		$msgPlainFallbacked++;
 	}
 	if ($wantHTML) {
 		$keyHTML = $key . '-HTML';
@@ -820,14 +824,14 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 			}
 			$msgRichRawLang = $wgMessageCache->get($langKeyHTML2, true, $fallbackLang, true);
 			$msgRichRawLangEmpty = wfEmptyMsg($langKeyHTML2, $msgRichRawLang);
-			if (!$msgRichRawLangEmpty && wfEmptyMsg($langKeyHTML, $msgRich)) {
+			if (wfEmptyMsg($langKeyHTML, $msgRich) && !$msgRichRawLangEmpty) {
 				//TODO: check if this ok or do we need to use $msgRichRaw plus parsing
 				$msgRich = wfMsgExt($keyHTML, array_merge($options, array('language' => $fallbackLang)), $params);
+				$msgRichFallbacked++;
 			}
 			if ($msgRichRaw != $msgRichRawLang && !$msgRichRawEmpty && !wfEmptyMsg($keyHTML, $msgRichRawLang)) {
 				break;
 			}
-			$msgRichFallbacked++;
 		}
 		if($msgRichFallbacked > $msgPlainFallbacked || wfEmptyMsg($keyHTML, $msgRich)) {
 			$msgRich = null;
@@ -851,6 +855,7 @@ function wfMsgHTMLwithLanguageAndAlternative($key, $keyAlternative, $lang, $opti
 
 	list ($msgPlainMain, $msgRichMain, $msgPlainMainFallback, $msgRichMainFallback) = wfMsgHTMLwithLanguage($key, $lang, $options, $params, $wantHTML);
 	list ($msgPlainAlter, $msgRichAlter, $msgPlainAlterFallback, $msgRichAlterFallback) = wfMsgHTMLwithLanguage($keyAlternative, $lang, $options, $params, $wantHTML);
+
 	$msgPlain = $msgPlainMainFallback > $msgPlainAlterFallback || wfEmptyMsg($key, $msgPlainMain) ? $msgPlainAlter : $msgPlainMain;
 	$msgRich = $msgRichMainFallback > $msgRichAlterFallback || wfEmptyMsg($key . '-HTML', $msgRichMain) ? $msgRichAlter : $msgRichMain;
 	return array($msgPlain, $msgRich);
