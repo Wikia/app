@@ -31,11 +31,6 @@ class WikiaApp {
 	 */
 	private $dispatcher = null;
 	/**
-	 * function wrapper
-	 * @var WikiaFunctionWrapper
-	 */
-	private $functionWrapper = null;
-	/**
 	 * global MW variables helper accessor
 	 * @var WikiaGlobalRegistry
 	 */
@@ -71,11 +66,10 @@ class WikiaApp {
 
 		$this->localRegistry = $localRegistry;
 		$this->hookDispatcher = $hookDispatcher;
-		$this->functionWrapper = $functionWrapper;
 
 		// set helper accessors
 		$this->wg = $globalRegistry;
-		$this->wf = $this->functionWrapper;
+		$this->wf = $functionWrapper;
 
 		// register ajax dispatcher
 		$this->wg->append('wgAjaxExportList', 'WikiaApp::ajax');
@@ -177,7 +171,7 @@ class WikiaApp {
 	 * @return WikiaFunctionWrapper
 	 */
 	public function getFunctionWrapper() {
-		return $this->functionWrapper;
+		return $this->wf;
 	}
 
 	/**
@@ -185,7 +179,7 @@ class WikiaApp {
 	 * @param WikiaFunctionWrapper $functionWrapeper
 	 */
 	public function setFunctionWrapper(WikiaFunctionWrapper $functionWrapper) {
-		$this->functionWrapper = $functionWrapper;
+		$this->wf = $functionWrapper;
 	}
 
 	/**
@@ -357,7 +351,7 @@ class WikiaApp {
 	public function runFunction() {
 		$funcArgs = func_get_args();
 		$funcName = array_shift( $funcArgs );
-		return $this->functionWrapper->run( $funcName, $funcArgs );
+		return $this->wf->run( $funcName, $funcArgs );
 	}
 
 	/**
