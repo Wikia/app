@@ -38,7 +38,7 @@ $messages['en'] = array(
 	'phalanx-modify-success' => 'The block was successfully modified',
 	'phalanx-modify-failure' => 'There was an error modifying the block',
 	'phalanx-modify-warning' => 'You are editing block ID #$1.
-Clicking "{{int:phalanx-add-block}}" will save your changes!',
+Clicking "{{int:phalanx-edit-block}}" will save your changes!',
 	'phalanx-test-description' => 'Test provided text against current blocks.',
 	'phalanx-test-submit' => 'Test',
 	'phalanx-test-results-legend' => 'Test results',
