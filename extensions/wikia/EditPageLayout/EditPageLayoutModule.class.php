@@ -6,7 +6,7 @@
  * Renders modified HTML for edit pages
  */
 class EditPageLayoutModule extends Module {
-	
+
 	const TITLE_MAX_LENGTH = 30;
 
 	// globals
@@ -105,6 +105,9 @@ class EditPageLayoutModule extends Module {
 
 		// extra buttons
 		$this->buttons = $editPage->getControlButtons();
+
+		// extra checkboxes
+		$this->customCheckboxes = $editPage->getCustomCheckboxes();
 
 		// dismissable notices
 		$this->notices = $editPage->getNotices();
