@@ -31,7 +31,7 @@ class ArticleService extends Service {
 
 		if( !empty( $content) ) {
 			// Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
-			wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$content, $length ) );
+			wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$this->mArticle, &$content, $length ) );
 
 			// Perl magic will happen! Beware! Perl 5.10 required!
 			$re_magic = '#SSX(?<R>([^SE]++|S(?!S)|E(?!E)|SS(?&R))*EE)#i';
