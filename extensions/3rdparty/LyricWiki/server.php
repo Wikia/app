@@ -1000,12 +1000,15 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 				$fullApiAuth = $wgRequest->getVal("fullApiAuth");
 				if(!empty($fullApiAuth)){
 					global $wgFullLyricWikiApiToken;
-					$expectedSig = md5($wgFullLyricWikiApiToken . "$artist$song");
+					print (!$debug?"":"Comparing token against artist: $artist\n");
+					print (!$debug?"":"Comparing token against song: $song\n");
+
+					$expectedSig = md5($wgFullLyricWikiApiToken . "$origArtist$origSong");
 					if($expectedSig == $fullApiAuth){
 						$allowFullLyrics = true;
 					} else if($ns == NS_GRACENOTE){
 						// If the song is in the GN Namespace, then there is one more possibility for the name of the song
-						$expectedSig = md5($wgFullLyricWikiApiToken . "Gracenote$artist$song");
+						$expectedSig = md5($wgFullLyricWikiApiToken . "Gracenote$origArtist$origSong");
 						if($expectedSig == $fullApiAuth){
 							$allowFullLyrics = true;
 						}
@@ -2133,7 +2136,7 @@ function lw_getPage($pageTitle, &$finalName='', $debug=false, $page_namespace=NS
 			}
 		}
 	}
-	print (!$debug?"":"page code\n$retVal\n");
+	//	print (!$debug?"":"page code\n$retVal\n");
 
 	return $retVal;
 } // end lw_getPage()
