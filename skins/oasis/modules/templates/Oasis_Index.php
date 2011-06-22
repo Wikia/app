@@ -11,8 +11,7 @@
 	<!-- CSS injected by extensions -->
 	<?= $csslinks ?>
 	<?php
-		global $wgUser;
-		$srcs = AssetsManager::getInstance()->getGroupLocalURL($wgUser->isLoggedIn() ? 'site_user_css' : 'site_anon_css');
+		$srcs = AssetsManager::getInstance()->getGroupLocalURL($isUserLoggedIn ? 'site_user_css' : 'site_anon_css');
 		foreach($srcs as $src) {
 			echo '<link rel="stylesheet" href="'.$src.'">';
 		}

@@ -4,14 +4,15 @@ class CorporateFooterModule extends Module {
 	var $wgBlankImgUrl;
 
 	var $footer_links;
-	var $wgUser;
 	var $hub;
+	var $copyright;
 
 	public function executeIndex() {
 		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang, $wgMemc;
 		$catId = WikiFactoryHub::getInstance()->getCategoryId($wgCityId);
 		$mKey = wfMemcKey('mOasisFooterLinks', $wgLang->getCode(), $catId);
 		$this->footer_links = $wgMemc->get($mKey);
+		$this->copyright = $wgUser->getSkin()->getCopyright();
 
 		if (empty($this->footer_links)) {
 			$this->footer_links = $this->getWikiaFooterLinks();

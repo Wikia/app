@@ -36,8 +36,8 @@ class PageHeaderModule extends Module {
 	var $isMainPage;
 	var $total;
 	var $isNewFiles;
+	var $isUserLoggedIn;
 
-	var $wgUser;
 	var $wgABTests;
 	var $wgEnableUploads;
 
@@ -174,6 +174,8 @@ class PageHeaderModule extends Module {
 	public function executeIndex($params) {
 		global $wgTitle, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgCityId, $wgABTests;
 		wfProfileIn(__METHOD__);
+
+		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// page namespace
 		$ns = $wgTitle->getNamespace();
@@ -534,10 +536,10 @@ class PageHeaderModule extends Module {
 	public function executeCorporate() {
 		global $wgTitle, $wgOut, $wgSuppressNamespacePrefix;
 		wfProfileIn( __METHOD__ );
-		
+
 		// page namespace
 		$ns = $wgTitle->getNamespace();
-                
+
 		// default title "settings" (RT #145371), don't touch special pages
 		if ($ns == NS_FORUM) {
 			$this->title = $wgTitle->getText();
@@ -569,7 +571,7 @@ class PageHeaderModule extends Module {
 			global $wgOut;
 			$wgOut->addScriptFile('../oasis/js/CorporateHub.js');
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 	}
 

@@ -27,6 +27,7 @@ class OasisModule extends Module {
 	var $printableCss;
 	var $comScore;
 	var $quantServe;
+	var $isUserLoggedIn;
 
 	// skin/template vars
 	var $pagetitle;
@@ -46,6 +47,8 @@ class OasisModule extends Module {
 
 	public function executeIndex($params) {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType, $wgEnableEditPageReskinExt;
+
+		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
 		if(!empty($wikiWelcome)) {

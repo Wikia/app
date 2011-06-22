@@ -28,7 +28,6 @@ class MenuButtonModule extends Module {
 	var $loginTitle;
 
 	var $wgOut;
-	var $wgUser;
 
 	public function executeIndex($data) {
 		global $wgTitle, $wgUser;

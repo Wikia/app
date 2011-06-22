@@ -8,13 +8,15 @@ class LatestPhotosModule extends Module {
 	var $enableScroll;
 	var $enableEmptyGallery;
 	var $total;
+	var $isUserLoggedIn;
 
 	var $wgEnableUploads;
 	var $wgStylePath;
-	var $wgUser;
 
 	public function executeIndex() {
 		global $wgUser, $wgTitle, $wgOut, $wgStylePath, $wgMemc;
+
+		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// get the count of images on this wiki
 		$this->total = SiteStats::images();
