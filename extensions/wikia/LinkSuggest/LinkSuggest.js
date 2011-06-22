@@ -396,6 +396,11 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 
 				left += YAHOO.util.Dom.getX(this._elTextbox) - YAHOO.util.Dom.getX('article');
 		}
+		var linkSuggestBoxHeight = this.getListItems().length * 23,
+			freeBottomSpace = $('body').height() - top;
+		if (freeBottomSpace <= linkSuggestBoxHeight) {
+			top -= linkSuggestBoxHeight;
+		}
 
 		top = Math.max(top, 0);
 		left = Math.min(left, this._elTextbox.scrollWidth - 161);
