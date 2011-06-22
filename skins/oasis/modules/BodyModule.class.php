@@ -4,7 +4,6 @@ class BodyModule extends Module {
 	// global vars
 	var $wgBlankImgUrl;
 	var $wgSitename;
-	var $wgUser;
 	var $wgTitle;
 	var $wgNoExternals;
 	var $wgSuppressWikiHeader;
@@ -356,7 +355,7 @@ class BodyModule extends Module {
 		// append your content to $html variable instead of echoing
 		// (taken from Monaco skin)
 		wfRunHooks('GetHTMLAfterBody', array ($wgUser->getSkin(), &$this->afterBodyHtml));
-		
+
 		// this hook is needed for SMW's factbox
 		if (!wfRunHooks('SkinAfterContent', array( &$this->afterContentHookText ) )) {
 			$this->afterContentHookText = '';
@@ -441,7 +440,7 @@ class BodyModule extends Module {
 		if (!empty($wgTitle) && $wgTitle->isSpecial('Preferences')) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialPreferences.scss'));
 		}
-		
+
 		// Display Control Center Header on certain special pages
 		if (!empty($wgEnableControlCenterExt) && ControlCenterLogic::displayControlCenter($this->app, $wgTitle)) {
 			$this->headerModuleName = null;
