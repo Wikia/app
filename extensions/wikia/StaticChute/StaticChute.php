@@ -2,7 +2,7 @@
 
 /*
  * OBSOLETE
- * 
+ *
  * This extension is OBSOLETE. It is being phased out or is kept only for backward compatibility.
  * See OBSOLETE file for details.
  */
@@ -508,7 +508,7 @@ class StaticChute {
 					foreach ($this->config[$package] as $f){
 						$file = realpath($basedir . '/' . $f);
 						if (empty($file)) {
-							Wikia::log(__FUNCTION__, __LINE__, "Empty filename for package=$package, basedir=$basedir, file=$f", true);
+							//Wikia::log(__FUNCTION__, __LINE__, "Empty filename for package=$package, basedir=$basedir, file=$f", true);
 						} else {
 							$out[] = $file;
 						}
@@ -521,7 +521,7 @@ class StaticChute {
 						foreach ($moreFiles as $f) {
 							$file = realpath($basedir . '/' . $f);
 							if (empty($file)) {
-								Wikia::log(__FUNCTION__, __LINE__, "Empty filename for package=$package, basedir=$basedir, file=$f", true);
+								//Wikia::log(__FUNCTION__, __LINE__, "Empty filename for package=$package, basedir=$basedir, file=$f", true);
 							} else {
 								$out[] = $file;
 							}
