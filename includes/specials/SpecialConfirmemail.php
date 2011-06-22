@@ -73,6 +73,8 @@ class EmailConfirmation extends UnlistedSpecialPage {
 	function showRequestForm() {
 		global $wgOut, $wgUser, $wgLang, $wgRequest;
 		if( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getText( 'token' ) ) ) {
+			// Wikia change -- only allow one email confirmation attempt per hour
+			if (($wgUser->mEmailTokenExpires - (7 * 23 * 60 * 60)) > wfTimestamp()) return;			
 			$ok = $wgUser->sendConfirmationMail();
 			if ( WikiError::isError( $ok ) ) {
 				$wgOut->addWikiMsg( 'confirmemail_sendfailed', $ok->toString() );
@@ -88,9 +90,12 @@ class EmailConfirmation extends UnlistedSpecialPage {
 				$d = $wgLang->date( $wgUser->mEmailAuthenticated, true );
 				$t = $wgLang->time( $wgUser->mEmailAuthenticated, true );
 				$wgOut->addWikiMsg( 'emailauthenticated', $time, $d, $t );
+				return;  // Wikia change -- don't show button at all if email is already confirmed (spam vector)
 			}
 			if( $wgUser->isEmailConfirmationPending() ) {
 				$wgOut->wrapWikiMsg( "<div class=\"error mw-confirmemail-pending\">\n$1</div>", 'confirmemail_pending' );
+				// Wikia change -- only allow one email confirmation attempt per hour
+				if (($wgUser->mEmailTokenExpires - (7 * 23 * 60 * 60)) > wfTimestamp()) return;
 			}
 			$wgOut->addWikiMsg( 'confirmemail_text' );
 			$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getTitle()->getLocalUrl() ) );
