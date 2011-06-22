@@ -181,7 +181,7 @@ class MathRenderer {
 				  ), __METHOD__
 				);
 			}
-			
+
 			// If we're replacing an older version of the image, make sure it's current.
 			global $wgUseSquid;
 			if ( $wgUseSquid ) {
@@ -222,12 +222,12 @@ class MathRenderer {
 			$this->mathml = $rpage->math_mathml;
 
 			$filename = $this->_getHashPath() . "/{$this->hash}.png";
-			
+
 			if( !$wgMathCheckFiles ) {
 				// Short-circuit the file existence & migration checks
 				return true;
 			}
-			
+
 			if( file_exists( $filename ) ) {
 				if( filesize( $filename ) == 0 ) {
 					// Some horrible error corrupted stuff :(
@@ -309,14 +309,14 @@ class MathRenderer {
 		$dir = $this->_getHashSubPath();
 		return "$wgMathPath/$dir/{$this->hash}.png";
 	}
-	
+
 	function _getHashPath() {
 		global $wgMathDirectory;
 		$path = $wgMathDirectory .'/' . $this->_getHashSubPath();
 		wfDebug( "TeX: getHashPath, hash is: $this->hash, path is: $path\n" );
 		return $path;
 	}
-	
+
 	function _getHashSubPath() {
 		return substr($this->hash, 0, 1)
 					.'/'. substr($this->hash, 1, 1)
