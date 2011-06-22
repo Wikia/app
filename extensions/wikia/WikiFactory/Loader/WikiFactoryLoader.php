@@ -679,7 +679,9 @@ class WikiFactoryLoader {
 									$tValue = str_replace($tKey, $this->mVariables[$tKeyParsed], $tValue);
 								}
 								else {
-									$tValue = str_replace($tKey, $GLOBALS[$tKeyParsed], $tValue);
+									if (isset($GLOBALS[$tKeyParsed])) {
+										$tValue = str_replace($tKey, $GLOBALS[$tKeyParsed], $tValue);
+									}
 								}
 							}
 						}
@@ -709,7 +711,7 @@ class WikiFactoryLoader {
 						$this->LocalToGlobalArray( $tValue, $GLOBALS["wgTrustedMediaFormats"] );
 						break;
 				}
-				
+
 				if ($key == 'wgServer') {
 					$headers = Wikia::getAllHeaders();
 					if (array_key_exists('X-Original-Host', $headers) &&
