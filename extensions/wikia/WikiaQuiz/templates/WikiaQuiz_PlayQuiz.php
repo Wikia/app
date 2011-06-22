@@ -21,10 +21,10 @@
 		</div>
 	</div>
 	<ul class="questions" id="Questions">
-		
-		<? 
+
+		<?
 		$numOfQuestions = count($data['elements']);
-		for ($i = 0; $i < $numOfQuestions; $i++) { 
+		for ($i = 0; $i < $numOfQuestions; $i++) {
 			$q = $data['elements'][$i]; ?>
 			<li class="question-set">
 				<div class="question-number">
@@ -72,11 +72,11 @@
 	</ul>
 	<div class="quiz-end">
 		<div class="congratulations quiz-bubble">
-			<? if($wgUser->isAnon()) {
+			<? if($isAnonUser) {
 					echo wfMsg('wikiaquiz-game-congratulations-anon', $username);
 			   } else {
 					echo wfMsg('wikiaquiz-game-congratulations', $username);
-			   } 
+			   }
 			?>
 		</div>
 		<div class="score-panel">
