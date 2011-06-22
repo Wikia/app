@@ -32,8 +32,9 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $wgHooks['BeforePageDisplay'][] = 'efPerPageSEO';
 
-$wgPPSEOCustomKeywords = array();
-$wgPPSEOCustomDescriptions = array();
+// defaults, WikiFactory overrides
+if ( empty( $wgPPSEOCustomKeywords ) ) $wgPPSEOCustomKeywords = array();
+if ( empty( $wgPPSEOCustomDescriptions ) ) $wgPPSEOCustomDescriptions = array();
 
 function efPerPageSEO( $out ) {
 	global $wgPPSEOCustomKeywords, $wgPPSEOCustomDescriptions;
