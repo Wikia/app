@@ -10,44 +10,195 @@ class FounderProgressBarController extends WikiaController {
 	
 	public function init() {
 		// Messages defined in i18n file
+		// If the message name has a % in it that means a $1 substitution is done
 		$this->messages = array ( 
-				1 => "add_10_pages",
-				2 => "do_something",
-				10 => "advanced_thing"
+				FT_PAGE_ADD_10 => "page_add%",
+				FT_PHOTO_ADD_10 => "photo_add%",
+				FT_MAINPAGE_EDIT => "mainpage_edit",
+				FT_MAINPAGE_ADDPHOTO => "mainpage_addphoto",
+				FT_CATEGORY_ADD3 => "category_add%",
+				FT_THEMEDESIGNER_VISIT => "themedesigner_visit",
+				FT_LAYOUT_ADD_1 => "layout_add%",
+				FT_WIKIALABS_VISIT => "wikialabs_visit",
+				FT_TOTAL_EDIT_75 => "total_edit%",
+				FT_PAGE_ADD_20 => "page_add%",
+				FT_PHOTO_ADD_20 => "photo_add%",
+				FT_MAINPAGE_ADDSLIDER => "mainpage_addslider",
+				FT_WORDMARK_EDIT => "wordmark_edit",
+				FT_CATEGORY_ADD_5 => "category_add%",
+				FT_COMMCORNER_EDIT => "commcorner_edit",
+				FT_TOTAL_EDIT_200 => "total_edit%",
+				FT_LAYOUT_ADD_2 => "layout_add%",
+				FT_FEATURETOGGLE_VISIT => "featuretoggle_visit",
+				FT_TOPNAV_VISIT => "topnav_visit",
+				FT_USERADD_10 => "user_add%",
+				FT_PROFILE_EDIT_5 => "profile_edit%",
+				FT_ADMINPROFILE_EDIT => "adminprofile_edit",
+				FT_FB_CONNECT => "fb_connect",
+				FT_COMMCORNER_MESSAGE => "commcorner_message",
+				FT_TOTAL_EDIT_300 => "total_edit%",
+				FT_FB_LIKES_5 => "fb_likes%",
+				FT_COMMCENTRAL_VISIT => "commcentral_visit",
+				FT_USERLIST_VISIT => "userlist_visit"				
 			);
 
+		// This list says how many times an item needs to be counted to be finished
+		$this->counters = array (
+				FT_PAGE_ADD_10 => 10,
+				FT_PHOTO_ADD_10 => 10,
+				FT_MAINPAGE_EDIT => 1,
+				FT_MAINPAGE_ADDPHOTO => 1,
+				FT_CATEGORY_ADD3 => 3,
+				FT_THEMEDESIGNER_VISIT => 1,
+				FT_LAYOUT_ADD_1 => 1,
+				FT_WIKIALABS_VISIT => 1,
+				FT_TOTAL_EDIT_75 => 75,
+				FT_PAGE_ADD_20 => 20,
+				FT_PHOTO_ADD_20 => 20,
+				FT_MAINPAGE_ADDSLIDER => 1,
+				FT_WORDMARK_EDIT => 1,
+				FT_CATEGORY_ADD_5 => 5,
+				FT_COMMCORNER_EDIT => 1,
+				FT_TOTAL_EDIT_200 => 200,
+				FT_LAYOUT_ADD_2 => 2,
+				FT_FEATURETOGGLE_VISIT => 1,
+				FT_USERADD_10 => 10,
+				FT_PROFILE_EDIT_5 => 5,
+				FT_ADMINPROFILE_EDIT => 1,
+				FT_FB_CONNECT => 1,
+				FT_COMMCORNER_MESSAGE => 1,
+				FT_TOTAL_EDIT_300 => 300,
+				FT_FB_LIKES_5 => 5,
+				FT_COMMCENTRAL_VISIT => 1,
+				FT_USERLIST_VISIT => 1				
+		);
 
+		// This list associates an action with a hook ?
+		$this->hooks = array (
+				"onArticleSaveComplete" => array ( 10 ),
+				"UploadComplete" => array ( 20 ),
+		);
 	}
 	
 	/**
-	 * @desc Get the next 2 available founder actions
+	 * @desc Get the short list of available founder tasks
 	 * 
-	 * @responseParam array of Founder actions in the format:
+	 * @responseParam list array of 2 Founder tasks
 	 */
 
-	
-	public function getShortList () {
-		
+	public function getShortTaskList () {
+		// try to get cached data
+		$memKey = $this->wf->MemcKey('FounderShortTaskList');
+		$list = $this->wg->Memc->get($memKey);
+		if (empty($list)) {
+			$this->wf->ProfileIn(__METHOD__ . '::miss');
+
+			$list = array();
+
+			// get the next two available non-skipped, non-completed items
+			$dbr = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+			$res = $dbr->select(
+				'founder_progress_bar_tasks',
+				array('task_id', 'task_count'),
+				array('task_skipped' => 0, 'task_completed' => 0, 'wiki_id' => $this->wg->CityId),
+				__METHOD__,
+				array( 'LIMIT' => 2, 'ORDER BY' => 'task_id ASC' )
+			);
+			while($row = $dbr->fetchObject($res)) {
+				$task_id = $row->task_id;
+				$list[$task_id] = array (
+					"task_id" => $task_id,
+					"task_count" => $row->task_count,
+					"task_label" => $this->getMsgForTask($task_id, "label"),
+					"task_description" => $this->getMsgForTask($task_id, "description"),
+					"task_action" => $this->getMsgForTask($task_id, "action"),
+					);
+			}
+
+			if (!empty($list)) {
+				$this->wg->Memc->set($memKey, $list, 3600);
+			}
+
+			$this->wf->ProfileOut(__METHOD__ . '::miss');
+		}
+		$this->response->setVal("list", $list);
 	}
 
 	/**
-	 * @desc Get all founder actions with details (available, completed, skipped)
+	 * @desc Get all founder tasks with more details (available, completed, skipped)
 	 * 
-	 * @responseParam array of Founder actions in the format:
+	 * @responseParam list array of Founder actions in the format:
 	 */
 	
-	public function getLongList () {
+	public function getLongTaskList () {
+		// try to get cached data
+		$memKey = $this->wf->MemcKey('FounderLongTaskList');
+		$list = $this->wg->Memc->get($memKey);
+		$list = null;  // no memcache for now while developing
+		if (empty($list)) {
+			$this->wf->ProfileIn(__METHOD__ . '::miss');
+
+			$list = array();
+
+			// get the next two available non-skipped, non-completed items
+			$dbr = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+			$res = $dbr->select(
+				'founder_progress_bar_tasks',
+				array('task_id', 'task_count', 'task_completed', 'task_skipped', 'task_timestamp'),
+				array('wiki_id' => $this->wg->CityId)
+				);
+
+			while($row = $dbr->fetchObject($res)) {
+				$task_id = $row->task_id;
+				$list[$task_id] = array (
+					"task_id" => $task_id,
+					"task_count" => $row->task_count,
+					"task_completed" => $row->task_completed,
+					"task_skipped" => $row->task_skipped,
+					"task_timestamp" => $this->wf->TimeFormatAgo($row->task_timestamp),
+					"task_label" => $this->getMsgForTask($task_id, "label"),
+					"task_description" => $this->getMsgForTask($task_id, "description"),
+					"task_action" => $this->getMsgForTask($task_id, "action"),
+					);
+			}
+
+			if (!empty($list)) {
+				$this->wg->Memc->set($memKey, $list, 3600);
+			}
+
+			$this->wf->ProfileOut(__METHOD__ . '::miss');
+		}
+		$this->response->setVal("list", $list);
 		
 	}
 	
 	/**
 	 * @desc
-	 * @requestParam type action_id The ID of the action to skip 
-	 * @responseParam string OK or error
+	 * @requestParam int task_id The ID of the task to skip 
+	 * @requestParam int task_skipped 1 to skip, 0 to "un-skip"
+	 * @responseParam string result OK or error
 	 */
 	
-	public function skipAction() {
+	public function skipTask() {
 		
+		$task_id = $this->request->getVal("task_id");
+		$task_skipped = $this->request->getVal("task_skipped");
+		//if (empty($task_id)) throw error;
+		//if (empty($task_skipped)) throw error;
+		
+		$dbw = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$dbw->update(
+			'founder_progress_bar_tasks',
+			array(
+					'task_skipped' => $task_skipped
+			),
+			array(
+					'task_id' => $task_id,
+					'wiki_id' => $this->wg->CityId
+			)
+		);
+
+		$this->response->setVal("result", "OK");
 	}
 	
 	public function widget() {
@@ -58,4 +209,27 @@ class FounderProgressBarController extends WikiaController {
 		$this->response->setVal("wgBlankImgUrl", $wgBlankImgUrl);
 	}
 	
+	// Messages defined in i18n file
+	// Each message in i18n has a -label -description and -action version
+	// This helper function will get the proper message for the proper type
+	// If a task has a % at the end of the name then a $1 substitution is done,  
+	private function getMsgForTask($task_id, $type) {
+
+		// For development, return placeholder messages if a message is not defined
+		if (! isset($this->messages[$task_id]) ) {
+			if ($type == "label") return "Task $type";
+			if ($type == "description") return "Task $type Description Placeholder";
+			if ($type == "action") return "Button Label";
+		}
+
+		$messageStr = $this->messages[$task_id];
+		if (substr($messageStr, -1) == '%') {
+			$messageStr = substr($messageStr, 0, -1) . "-" . $type;  // Chop off the %
+			$number = $this->counters[$task_id];
+			return wfMsg($messageStr, $number);
+		} 
+		// Default case
+		$messageStr = $messageStr . "-" . $type;			
+		return wfMsg($messageStr);
+	}
 }
