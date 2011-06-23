@@ -194,7 +194,7 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 
 		$action = $this->request->getVal('action','');
 		if ($action == 'list') {
-			$this->out->addStyle(  $this->app->getGlobal('wgExtensionsPath')."/wikia/EditPageReskin/PageLayoutBuilder/js/list.js");
+			$this->out->addScriptFile(  $this->app->getGlobal('wgExtensionsPath')."/wikia/EditPageReskin/PageLayoutBuilder/js/list.js");
 			$this->out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageReskin/PageLayoutBuilder/css/list.scss'));
 			$this->executeList();
 			return;
@@ -215,7 +215,9 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 				$articleId = $article->getID();
 				PageLayoutBuilderModel::setProp($articleId, $addData);
 
-				PageLayoutBuilderModel::saveElementList($articleId, empty($this->parse->mPlbFormElements) ? array():$this->parse->mPlbFormElements);
+				$elementList = empty($this->app->wg->Parser->mPlbFormElements) ? array():$this->app->wg->Parser->mPlbFormElements;
+
+				PageLayoutBuilderModel::saveElementList($articleId, $elementList);
 
 				$published = true;
 				if ($status == EditPage::AS_SUCCESS_NEW_ARTICLE || PageLayoutBuilderModel::layoutIsNoPublish($articleId)) {
