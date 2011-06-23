@@ -16,7 +16,9 @@ var UploadPhotos = {
 		}
 	},
 	showDialog: function(evt) {
-		evt.preventDefault();
+		if(evt) {
+			evt.preventDefault();
+		}
 		$.get(wgScript, {
 			action: 'ajax',
 			rs: 'moduleProxy',
