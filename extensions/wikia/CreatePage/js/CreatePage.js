@@ -32,7 +32,9 @@ CreatePage.openDialog = function(e, titleText) {
 		return;
 	}
 
-	e.preventDefault();
+	if(e) {
+		e.preventDefault();
+	}
 	if( false == CreatePageEnabled ) {
 		CreatePageEnabled = true;
 		jQuery.ajax({
