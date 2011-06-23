@@ -18,11 +18,11 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 	 * @param array $events 
 	 */
 	public function process ( Array $events ) {
-		global $wgSharedDB, $wgCityId;		
+		global $wgSharedDB, $wgCityId, $wgTitle;		
 		wfProfileIn( __METHOD__ );
 
 		$cWikiId = ( $wgSharedDB ) ? WikiFactory::DBtoID( $wgSharedDB ) : $wgCityId;
-
+		$wgTitle = Title::newMainPage();
 		$founderEmailObj = FounderEmails::getInstance();
 		// Get list of founders with digest mode turned on (defined in FounderEmailsEvent		
 		$cityList = $founderEmailObj->getFoundersWithPreference('founderemails-complete-digest');
