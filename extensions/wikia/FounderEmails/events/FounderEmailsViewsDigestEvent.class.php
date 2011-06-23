@@ -22,12 +22,12 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 	 * @param array $events Events is empty for this type
 	 */
 	public function process ( Array $events ) {
-		global $wgSharedDB, $wgCityId;
+		global $wgSharedDB, $wgCityId, $wgTitle;
 		wfProfileIn( __METHOD__ );
 		$founderEmailObj = FounderEmails::getInstance();
 
 		$cWikiId = ( $wgSharedDB ) ? WikiFactory::DBtoID( $wgSharedDB ) : $wgCityId;
-
+		$wgTitle = Title::newMainPage();
 		// Get list of founders with digest mode turned on
 		$cityList = $founderEmailObj->getFoundersWithPreference('founderemails-views-digest');
 		
