@@ -12,9 +12,10 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 	}
 	
 	public function process( Array $events ) {
-		global $wgExternalSharedDB, $wgEnableAnswers;
+		global $wgExternalSharedDB, $wgEnableAnswers, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
+		$wgTitle = Title::newMainPage();		
 		$founderEmails = FounderEmails::getInstance();
 		foreach ( $events as $event ) {
 			$wikiId = $event['wikiId'];
