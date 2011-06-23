@@ -1,4 +1,5 @@
 <section id="FounderProgressList" class="FounderProgressList" style="display:none;">
+	<canvas height="45" width="25" class="tail"></canvas>
 	<header>
 		<h1>Glee Wiki's Tasks</h1>
 		<p class="task-description">
@@ -24,6 +25,7 @@
 									<div class="actions">
 										<button>Do something</button>
 									</div>
+									<canvas class="tail" height="15" width="25"></canvas>
 								</div>
 							</li>
 						<? } ?>
