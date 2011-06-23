@@ -189,6 +189,7 @@ class AutomaticWikiAdoptionHelper {
 			}
 			//log
 			self::addLogEntry($user, $oldGroups, $newGroups);
+			WikiFactory::log(WikiFactory::LOG_STATUS, $user->getName()." adopted wiki ".  WikiFactory::IDtoDB($wikiId));
 		}
 		//set date of adoption - this will be used to check when next adoption is possible
 		$user->setOption('LastAdoptionDate', time());
@@ -371,7 +372,7 @@ class AutomaticWikiAdoptionHelper {
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		global $wgCityId;
 		if (in_array('sysop', $user->getGroups())) {
-			WikiFactory::resetFlags($wgCityId, WikiFactory::FLAG_ADOPTABLE | WikiFactory::FLAG_ADOPT_MAIL_FIRST | WikiFactory::FLAG_ADOPT_MAIL_SECOND);
+			WikiFactory::resetFlags($wgCityId, WikiFactory::FLAG_ADOPTABLE | WikiFactory::FLAG_ADOPT_MAIL_FIRST | WikiFactory::FLAG_ADOPT_MAIL_SECOND, true);
 		}
 		return true;
 	}	

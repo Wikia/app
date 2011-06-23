@@ -2010,10 +2010,11 @@ class WikiFactory {
 	 *
 	 * @param integer	$city_id		wikia identifier in city_list
 	 * @param integer	$city_flags		binary flags
+	 * @param boolean	$skip			skip logging
 	 *
 	 * @return boolean, usually true when success
 	 */
-	static public function resetFlags( $city_id, $city_flags ) {
+	static public function resetFlags( $city_id, $city_flags, $skip=false ) {
 		global $wgWikicitiesReadOnly;
 
 		if( ! self::isUsed() ) {
@@ -2035,7 +2036,10 @@ class WikiFactory {
 			array( "city_id" => $city_id ),
 			__METHOD__
 		);
-		self::log( self::LOG_STATUS, sprintf("Binary flags %s removed from city_flags", decbin( $city_flags ) ), $city_id );
+		if ($skip)
+			Wikia::log( __METHOD__, "", "skip logging.");
+		else
+			self::log( self::LOG_STATUS, sprintf("Binary flags %s removed from city_flags", decbin( $city_flags ) ), $city_id );
 
 		wfProfileOut( __METHOD__ );
 
@@ -2053,10 +2057,11 @@ class WikiFactory {
 	 *
 	 * @param integer	$city_id		wikia identifier in city_list
 	 * @param integer	$city_flags		binary flags
+	 * @param boolean	$skip			skip logging
 	 *
 	 * @return boolean, usually true when success
 	 */
-	static public function setFlags( $city_id, $city_flags ) {
+	static public function setFlags( $city_id, $city_flags, $skip=false ) {
 		global $wgWikicitiesReadOnly;
 
 		if( ! self::isUsed() ) {
@@ -2078,7 +2083,11 @@ class WikiFactory {
 			array( "city_id" => $city_id ),
 			__METHOD__
 		);
-		self::log( self::LOG_STATUS, sprintf("Binary flags %s added to city_flags", decbin( $city_flags ) ), $city_id );
+		
+		if ($skip)
+			Wikia::log( __METHOD__, "", "skip logging.");
+		else
+			self::log( self::LOG_STATUS, sprintf("Binary flags %s added to city_flags", decbin( $city_flags ) ), $city_id );
 
 		wfProfileOut( __METHOD__ );
 
