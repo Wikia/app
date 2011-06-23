@@ -43,7 +43,6 @@ class SpecialCustomEditPage extends SpecialPage {
 		$this->out = $this->app->getGlobal('wgOut');
 		$this->request = $this->app->getGlobal('wgRequest');
 		$this->user = $this->app->getGlobal('wgUser');
-		$this->parse = $this->app->getGlobal('wgParser');
 		$this->contLang = $this->app->getGlobal('wgContLang');
 	}
 
