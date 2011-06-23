@@ -112,6 +112,10 @@ $base-z: 5;
 					height: 95px;
 					padding-top: 20px;
 					width: 80px;
+					.set {
+						color: inherit;
+						text-decoration: none;
+					}
 					.representation {
 						@include border-radius(7px);
 						@include linear-gradient(#ebebeb, top, #fff, 50%, #ebebeb, 100%);
@@ -122,6 +126,7 @@ $base-z: 5;
 						width: 50px;
 						.icon {
 							background: url(http://placekitten.com/30/30) no-repeat 10px 10px;
+							display: block;
 							height: 50px;
 							width: 50px;
 						}
