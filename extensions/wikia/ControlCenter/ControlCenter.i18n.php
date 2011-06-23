@@ -31,4 +31,12 @@ $messages['en'] = array(
 	'controlcenter-control-community-corner-tooltip' => 'Edit the Community Corner section of your wiki and notify users.',
 	'controlcenter-control-categories-list-label' => 'All Categories',
 	'controlcenter-control-categories-list-tooltip' => 'View all of the categories currently listed on your wiki.',
+	'controlcenter-control-add-page-label' => 'Add a Page',
+	'controlcenter-control-add-page-tooltip' => 'Add a new page to your wiki.',
+	'controlcenter-control-add-photo-label' => 'Add a Photo',
+	'controlcenter-control-add-photo-tooltip' => 'Add new photos to your wiki.',
+	'controlcenter-control-add-blog-label' => 'Add a Blog Post',
+	'controlcenter-control-add-blog-tooltip' => 'Add a blog post to your wiki.',
+	'controlcenter-control-multiple-upload-label' => 'Multiple Photo Upload',
+	'controlcenter-control-multiple-upload-tooltip' => 'Upload more than one photo at once with the multiple photo upload tool.',
 );

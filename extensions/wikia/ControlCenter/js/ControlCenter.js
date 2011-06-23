@@ -42,6 +42,11 @@ var ControlCenter = {
 			ControlCenter.ui.showSection('contentarea');
 			ControlCenter.contentload['load'+control]();
 		}
+		var modal = $(this).data('modal');
+		if (modal) {
+			e.preventDefault();
+			ControlCenter.modalLoad['load'+modal]();
+		}
 	},
 	ui: {
 		resetAll: function() {
@@ -90,6 +95,17 @@ var ControlCenter = {
 		},
 		loadCategories: function() {
 			ControlCenter.contentload.loadSpecialPage('Categories');
+		},
+		loadMultipleUpload: function() {
+			ControlCenter.contentload.loadSpecialPage('MultipleUpload');
+		}
+	},
+	modalLoad: {
+		loadAddPage: function() {
+			CreatePage.openDialog();
+		},
+		loadAddPhoto: function() {
+			UploadPhotos.showDialog();
 		}
 	}
 };

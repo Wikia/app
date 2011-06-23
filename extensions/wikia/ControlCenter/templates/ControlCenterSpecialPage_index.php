@@ -67,19 +67,45 @@
 						</a>
 					</li>
 					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-categories-list-tooltip") ?>" data-control="Categories">
-						<span class="representation">
-							<span class="icon"></span>
-						</span>
-						<?= wfMsg("controlcenter-control-categories-list-label") ?>
+						<a href="<?= $urlAllCategories ?>" class="set">
+							<span class="representation">
+								<span class="icon"></span>
+							</span>
+							<?= wfMsg("controlcenter-control-categories-list-label") ?>
+						</a>
 					</li>
-					<? for($i = 0; $i < 4; $i++) { ?>
-						<li class="control" data-tooltip="This is <?= $i ?>">
-							<div class="representation">
-								<div class="icon"></div>
-							</div>
-							Theme Designer
-						</li>
-					<? } ?>
+					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-add-page-tooltip") ?>" data-modal="AddPage">
+						<a href="<?= $urlAddPage ?>" class="set">
+							<span class="representation">
+								<span class="icon"></span>
+							</span>
+							<?= wfMsg("controlcenter-control-add-page-label") ?>
+						</a>
+					</li>
+					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-add-photo-tooltip") ?>" data-modal="AddPhoto">
+						<a href="<?= $urlAddPhoto ?>" class="set">
+							<span class="representation">
+								<span class="icon"></span>
+							</span>
+							<?= wfMsg("controlcenter-control-add-photo-label") ?>
+						</a>
+					</li>
+					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-add-blog-tooltip") ?>">
+						<a href="<?= $urlCreateBlogPage ?>" class="set">
+							<span class="representation">
+								<span class="icon"></span>
+							</span>
+							<?= wfMsg("controlcenter-control-add-blog-label") ?>
+						</a>
+					</li>
+					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-multiple-upload-tooltip") ?>" data-control="MultipleUpload">
+						<a href="<?= $urlMultipleUpload ?>" class="set">
+							<span class="representation">
+								<span class="icon"></span>
+							</span>
+							<?= wfMsg("controlcenter-control-multiple-upload-label") ?>
+						</a>
+					</li>
 				</ul>
 			</section>
 		</div>

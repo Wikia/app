@@ -21,8 +21,12 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 		$this->response->setVal('tab', $wgRequest->getVal('tab', 'general'));
 		
 		// links
-		$urlCommunityCorner = Title::newFromText('Community-corner', NS_MEDIAWIKI);
-		$this->response->setVal('urlCommunityCorner', $urlCommunityCorner->getFullURL('action=edit'));
+		$this->response->setVal('urlCommunityCorner', Title::newFromText('Community-corner', NS_MEDIAWIKI)->getFullURL('action=edit'));
+		$this->response->setVal('urlAllCategories', Title::newFromText('Categories', NS_SPECIAL)->getFullURL());
+		$this->response->setVal('urlAddPage', Title::newFromText('CreatePage', NS_SPECIAL)->getFullURL());
+		$this->response->setVal('urlAddPhoto', Title::newFromText('Upload', NS_SPECIAL)->getFullURL());
+		$this->response->setVal('urlCreateBlogPage', Title::newFromText('CreateBlogPage', NS_SPECIAL)->getFullURL());
+		$this->response->setVal('urlMultipleUpload', Title::newFromText('MultipleUpload', NS_SPECIAL)->getFullURL());
 	}
 	
 	/**
