@@ -12,6 +12,7 @@ var FounderProgressList = {
 			var el = $(this).find('.activity-description');
 			FounderProgressList.hoverHandle = setTimeout(function() {
 				el.show();
+				FounderProgressList.drawActivityTail(el);
 			}, 400);
 		}, function() {
 			clearTimeout(FounderProgressList.hoverHandle);
@@ -23,6 +24,7 @@ var FounderProgressList = {
 			if(FounderProgressList.isHidden) {
 				FounderProgressList.d.show();
 				FounderProgressList.article.hide()
+				FounderProgressList.drawMainTail();
 			} else {
 				FounderProgressList.d.hide();
 				FounderProgressList.article.show()
@@ -41,6 +43,44 @@ var FounderProgressList = {
 				group.slideDown(200);
 			}
 		});
+	},
+	drawMainTail: function() {
+		var el = FounderProgressList.d.find('>.tail');
+		if(!el.data('drawn')){
+			var c = (el[0]).getContext('2d');
+			c.fillStyle = '#f2f2f2';
+			c.shadowOffsetX = 2;
+			c.shadowOffsetY = 0;
+			c.shadowBlur = 5;
+			c.shadowColor = '#ccc';
+			c.moveTo(0, 0);
+			c.lineTo(20, 20);
+			c.lineTo(0, 40);
+			c.lineTo(0, 0);
+			c.fill();
+			c.stroke;
+			c.closePath();
+			el.data('drawn', true);
+		}
+	},
+	drawActivityTail: function(activity) {
+		var el = activity.find('.tail');
+		if(!el.data('drawn')){
+			var c = (el[0]).getContext('2d');
+			c.fillStyle = '#f3f3f3';
+			c.shadowOffsetX = 0;
+			c.shadowOffsetY = 2;
+			c.shadowBlur = 5;
+			c.shadowColor = '#ccc';
+			c.moveTo(0, 0);
+			c.lineTo(10, 10);
+			c.lineTo(20, 0);
+			c.lineTo(0, 0);
+			c.fill();
+			c.stroke;
+			c.closePath();
+			el.data('drawn', true);
+		}
 	}
 }
 
@@ -84,8 +124,8 @@ var FounderProgressBar = {
 					if(retry > 20) {
 						clearInterval(iHook);
 					}
-					retry++;
 				}
+				retry++;
 			}, 500);
 		}
 	},

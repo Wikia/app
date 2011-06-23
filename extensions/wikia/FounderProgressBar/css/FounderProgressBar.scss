@@ -223,32 +223,18 @@
 					text-align: right;
 					z-index: 9;
 				}
-				&:before {
-					@include box-shadow(2px, 2px, 2px, #ccc, false, 0);
-					@include transform-rotate(45deg);
-					background: #f3f3f3;
-					bottom: -10px;
-					content: "";
-					height: 20px;
+				>.tail {
+					bottom: -15px;
 					left: 25px;
 					position: absolute;
-					width: 20px;
-					z-index: 8;
 				}
 			}
 		}
 	}
-	&:before {
-		@include box-shadow(2px, 2px, 2px, #e2e2e2, false, 0);
-		@include transform-rotate(-45deg);
-		background: #f2f2f2;
-		content: "";
-		height: 32px;
+	>.tail {
 		position: absolute;
-		right: -16px;
-		top: 79px;
-		width: 32px;
-		z-index: 4;
+		right: -25px;
+		top: 76px;
 	}
 }
 
