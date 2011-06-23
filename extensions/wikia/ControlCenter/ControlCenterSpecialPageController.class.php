@@ -51,7 +51,12 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 				
 		// Construct special page object
 		try {
-			$sp = new $pageName(); 
+			$basePages = array("Categories");
+			if (in_array($pageName, $basePages)) {
+				$sp = SpecialPage::getPage($pageName);
+			} else {
+				$sp = new $pageName(); 
+			}
 		} catch (Exception $e) {
 			print_pre("Could not construct special page object");
 		}

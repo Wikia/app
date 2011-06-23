@@ -89,7 +89,7 @@ var ControlCenter = {
 			ControlCenter.contentload.loadSpecialPage('UserRightsPage');
 		},
 		loadCategories: function() {
-			ControlCenter.contentload.loadSpecialPage('CategoryPage');
+			ControlCenter.contentload.loadSpecialPage('Categories');
 		}
 	}
 };
