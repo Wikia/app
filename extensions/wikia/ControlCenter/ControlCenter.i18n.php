@@ -27,4 +27,8 @@ $messages['en'] = array(
 	'controlcenter-control-invite-tooltip' => 'Invite needs a tooltip.  Add me.',
 // Content Controls
 	'controlcenter-controls-content-header' => 'Content',
+	'controlcenter-control-community-corner-label' => 'Community Corner',
+	'controlcenter-control-community-corner-tooltip' => 'Edit the Community Corner section of your wiki and notify users.',
+	'controlcenter-control-categories-list-label' => 'All Categories',
+	'controlcenter-control-categories-list-tooltip' => 'View all of the categories currently listed on your wiki.',
 );

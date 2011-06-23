@@ -33,13 +33,13 @@ var ControlCenter = {
 			ControlCenter.ui.showSection(el.data('section'));
 		});
 	},
-	handleControlClick: function() {
-		ControlCenter.ui.resetAll();
-		ControlCenter.ui.showSection('contentarea');
-		
-		// load content
+	handleControlClick: function(e) {
 		var control = $(this).data('control');
 		if(control) {
+			e.preventDefault();
+			// load content
+			ControlCenter.ui.resetAll();
+			ControlCenter.ui.showSection('contentarea');
 			ControlCenter.contentload['load'+control]();
 		}
 	},
@@ -65,7 +65,7 @@ var ControlCenter = {
 		}
 	},
 	contentload: {
-		loadPage: function(page, callback) {
+		loadSpecialPage: function(page, callback) {
 			ControlCenter.section.contentarea.load(wgScriptPath + '/wikia.php', {
 				controller: 'ControlCenterSpecialPage',
 				method: 'GetSpecialPage',
@@ -82,11 +82,14 @@ var ControlCenter = {
 				wgScriptPath + '/extensions/wikia/Listusers/css/table.css',
 				sassUrl
 			], function() {
-				ControlCenter.contentload.loadPage('ListUsers');
+				ControlCenter.contentload.loadSpecialPage('ListUsers');
 			});
 		},
 		loadUserRights: function() {
-			ControlCenter.contentload.loadPage('UserRightsPage');
+			ControlCenter.contentload.loadSpecialPage('UserRightsPage');
+		},
+		loadCategories: function() {
+			ControlCenter.contentload.loadSpecialPage('CategoryPage');
 		}
 	}
 };

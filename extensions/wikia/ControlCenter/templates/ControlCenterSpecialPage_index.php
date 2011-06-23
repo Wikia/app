@@ -28,9 +28,9 @@
 				</header>
 				<ul class="controls">
 					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-user-list-tooltip") ?>" data-control="ListUsers">
-						<div class="representation">
-							<div class="icon"></div>
-						</div>
+						<span class="representation">
+							<span class="icon"></span>
+						</span>
 						<?= wfMsg("controlcenter-control-user-list-label") ?>
 					</li>
 					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-user-rights-tooltip") ?>" data-control="UserRights">
@@ -58,7 +58,21 @@
 					<h1><?= wfMsg("controlcenter-controls-content-header") ?></h1><span class="tooltip"></span>
 				</header>
 				<ul class="controls">
-					<? for($i = 0; $i < 6; $i++) { ?>
+					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-community-corner-tooltip") ?>">
+						<a href="<?= $urlCommunityCorner ?>" class="set">
+							<span class="representation">
+								<span class="icon"></span>
+							</span>
+							<?= wfMsg("controlcenter-control-community-corner-label") ?>
+						</a>
+					</li>
+					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-categories-list-tooltip") ?>" data-control="Categories">
+						<span class="representation">
+							<span class="icon"></span>
+						</span>
+						<?= wfMsg("controlcenter-control-categories-list-label") ?>
+					</li>
+					<? for($i = 0; $i < 4; $i++) { ?>
 						<li class="control" data-tooltip="This is <?= $i ?>">
 							<div class="representation">
 								<div class="icon"></div>
