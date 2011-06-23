@@ -3,22 +3,26 @@
 	transform: $transforms;
 	-webkit-transform: $transforms;
 	-moz-transform: $transforms;
+	-ms-transform: $transforms;
 }
 
 @mixin transform-scale($ratio) {
   transform: scale($ratio);
   -webkit-transform: scale($ratio);
   -moz-transform: scale($ratio);
+  -ms-transform: scale($ratio);
 }
 
 @mixin transform-rotate($degrees) {
   transform: rotate($degrees);
   -webkit-transform: rotate($degrees);
   -moz-transform: rotate($degrees);
+  -ms-transform: rotate($degrees);
 }
 
 @mixin transform-translate($x, $y) {
   transform: translate($x, $y);
   -webkit-transform: translate($x, $y);
   -moz-transform: translate($x, $y);
+  -ms-transform: translate($x, $y);
 }
