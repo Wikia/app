@@ -44,6 +44,9 @@
 			print $jsFiles . "\n";
 		}
 	?>
+	<? if($displayControlCenter) { ?>
+		<!--[if IE]><script src="<?= $wgStylePath ?>/common/excanvas.js"></script><![endif]-->
+	<? } ?>
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars($body_ondblclick) . '"' : '' ?>>
 <?= $body ?>

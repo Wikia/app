@@ -3,6 +3,8 @@ var FounderProgressList = {
 	hoverHandle: false,
 	init: function() {
 		FounderProgressList.d = $('#FounderProgressList');
+		FounderProgressList.article = $('#WikiaArticle');
+		FounderProgressList.article.after(FounderProgressList.d);
 		FounderProgressList.allActivities = FounderProgressList.d.find('.activity');
 		
 		FounderProgressList.allActivities.hover(function() {
@@ -20,8 +22,10 @@ var FounderProgressList = {
 			e.preventDefault();
 			if(FounderProgressList.isHidden) {
 				FounderProgressList.d.show();
+				FounderProgressList.article.hide()
 			} else {
 				FounderProgressList.d.hide();
+				FounderProgressList.article.show()
 			}
 			FounderProgressList.isHidden = !FounderProgressList.isHidden;
 		});
@@ -66,10 +70,24 @@ var FounderProgressBar = {
 	outerRadius: 45,
 	separation: 5,
 	init: function() {
-		FounderProgressBar.canvas = document.getElementById('FounderProgressBar');
-		FounderProgressBar.c = FounderProgressBar.canvas.getContext('2d');
-		FounderProgressBar.drawAnimated(68);
-		//FounderProgressBar.draw(90);
+		if(Modernizr.canvas) {
+			FounderProgressBar.c = document.getElementById('FounderProgressBar').getContext('2d');
+			FounderProgressBar.drawAnimated(68);
+		} else {
+			var retry = 0;
+			var iHook = setInterval(function() {
+				try {
+					FounderProgressBar.c = document.getElementById('FounderProgressBar').getContext('2d');
+					FounderProgressBar.draw(68);
+					clearInterval(iHook);
+				} catch (e) {
+					if(retry > 20) {
+						clearInterval(iHook);
+					}
+					retry++;
+				}
+			}, 500);
+		}
 	},
 	draw: function(score) {
 		FounderProgressBar.score = score;
@@ -78,7 +96,6 @@ var FounderProgressBar = {
 	},
 	drawBackground: function() {
 		var c = FounderProgressBar.c;
-		c.clearRect(0, 0, 95, 95);
 		c.save();
 		FounderProgressBar.drawSlice();
 		c.restore();
@@ -139,6 +156,7 @@ var FounderProgressBar = {
 			if(score > finalScore) {
 				clearInterval(i);
 			} else {
+				FounderProgressBar.c.clearRect(0, 0, 95, 95);
 				FounderProgressBar.draw(score);
 			}
 			score++;

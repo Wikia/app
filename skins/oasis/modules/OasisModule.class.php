@@ -40,13 +40,15 @@ class OasisModule extends Module {
 	var $pageclass;
 	var $skinnameclass;
 	var $bottomscripts;
+	var $displayControlCenter;
 
 	// global vars
 	var $wgEnableOpenXSPC;
 	var $wgEnableCorporatePageExt;
+	var $wgStylePath;
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType, $wgEnableEditPageReskinExt;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType, $wgEnableEditPageReskinExt, $wgEnableControlCenterExt;
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
@@ -187,6 +189,12 @@ class OasisModule extends Module {
 		$this->mainsassfile = 'skins/oasis/css/oasis.scss';
 		if ( !empty($wgEnableEditPageReskinExt) ) {
 			$this->mainsassfile = 'skins/oasis/css/oasis-epl.scss';
+		}
+		
+		if (!empty($wgEnableControlCenterExt) && ControlCenterLogic::displayControlCenter($this->app, $wgTitle)) {
+			$this->displayControlCenter = true;
+		} else {
+			$this->displayControlCenter = false;
 		}
 
 	} // end executeIndex()
