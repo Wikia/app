@@ -58,14 +58,18 @@ function wfCreatePageInit() {
 	$wgHooks['EditPage::showEditForm:initial'][] = 'wfCreatePageLoadPreformattedContent';
 	$wgHooks['GetPreferences'][] = 'wfCreatePageOnGetPreferences';
 	$wgHooks['BeforeInitialize'][] = 'wfCreatePageOnBeforeInitialize';
+	$wgHooks['AfterInitialize'][] = 'wfCreatePageOnAfterInitialize';
 
 	$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
 	$wgAjaxExportList[] = 'wfCreatePageAjaxCheckTitle';
 }
 
 // use different code for Special:CreatePage when using monobook (BugId:6601)
-function wfCreatePageOnBeforeInitialize(&$title, &$article, &$output, &$user, $request, $mw) {
+function wfCreatePageOnBeforeInitialize(&$title, &$article, &$output, &$user, $request, $mediaWiki) {
 	global $wgAutoloadClasses;
+
+	// this line causes initialization of the skin
+	// title before redirect handling is passed causing BugId:7282 - it will be fixed in "AfterInitialize" hook
 	$skinName = get_class($user->getSkin());
 
 	if ($skinName == 'SkinMonoBook') {
@@ -76,6 +80,12 @@ function wfCreatePageOnBeforeInitialize(&$title, &$article, &$output, &$user, $r
 		$wgAutoloadClasses['SpecialEditPage'] = $dir . '/SpecialEditPage.class.php';
 	}
 
+	return true;
+}
+
+// and now use "redirected" title in the skin (BugId:7282)
+function wfCreatePageOnAfterInitialize(&$title, &$article, &$output, &$user, $request, $mediaWiki) {
+	$user->getSkin()->setTitle($title);
 	return true;
 }
 

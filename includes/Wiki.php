@@ -75,6 +75,12 @@ class MediaWiki {
 				throw new MWException( "Shouldn't happen: MediaWiki::initializeArticle() returned neither an object nor a URL" );
 			}
 		}
+
+		// Wikia change - begin
+		// BugId:7282
+		wfRunHooks( 'AfterInitialize', array( &$title, &$article, &$output, &$user, $request, $this ) );
+		// Wikia change - end
+
 		wfProfileOut( __METHOD__ );
 	}
 
