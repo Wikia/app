@@ -307,7 +307,7 @@ function gracenote_getNoscriptTag(){
 // if there was not a previous impression earlier on the page (from a 'lyrics'
 // tag or 'gracenotelyrics' tag).
 ////
-function gracenote_outputGoogleAnalytics(&$skin, &$text){
+function gracenote_outputGoogleAnalytics($skin, &$text){
 	$text .= gracenote_getAnalyticsHtml(GRACENOTE_VIEW_NOT_LYRICS);
 	return true;
 } // end gracenote_outputGoogleAnalytics()
