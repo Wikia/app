@@ -1222,7 +1222,7 @@ EOD;
 					), __METHOD__
 			);
 			$log = new LogPage( 'upload' );
-			$log->addEntry( 'overwrite', $this->mTitle, 'updated video' );
+			$log->addEntry( 'overwrite', $this->mTitle, $desc );
 			$saved_text = $this->getContent();
 		}
 
