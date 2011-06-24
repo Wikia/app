@@ -15,13 +15,9 @@ class GlobalHeaderModule extends Module {
 
 	public function executeIndex() {
 		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgLang;
-
-
-
-		// generate link to central wiki for language of this wiki
-		$wikiLang = $wgLang->getCode();
-		$langCode = ($wikiLang == 'en') ? '': '/'.$wikiLang;
-		$this->centralUrl = 'http://www.wikia.com/go' .$langCode;
+		
+		// generate link to hompage; bugId:7452
+		$this->centralUrl = 'http://www.wikia.com/Wikia';
 
 		// generate link to AutoWikiCreate
 		$userlang = ($wikiLang == 'en') ? '' : "?uselang=$wikiLang";
