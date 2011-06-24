@@ -1023,7 +1023,7 @@ class WikiaPhotoGalleryHelper {
 				$ret[] = array(
 					'name' => $image->getText(),
 					'thumb' => $thumb,
-					'strict' =>self:: isImageStrict( $image )
+					'strict' => self::isImageStrict( $image )
 				);
 			}
 		}
@@ -1050,6 +1050,7 @@ class WikiaPhotoGalleryHelper {
 					$images[] = array(
 						'name' => $oImageTitle->getText(),
 						'thumb' => $thumb,
+						'strict' => self::isImageStrict( $oImageTitle )
 					);
 				}
 			}
