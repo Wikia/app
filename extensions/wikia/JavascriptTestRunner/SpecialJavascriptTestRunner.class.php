@@ -126,7 +126,7 @@ class JavascriptTestRunner_TestSuite {
 		if ($contents === false)
 			return false;
 
-		$lines = split("\r?\n",$contents);
+		$lines = preg_split("/\r?\n/",$contents);
 		foreach ($lines as $line) {
 			$matches = array();
 			if (preg_match("/^@test-([^ \t]+)[ \t]+(.*)\$/",trim($line),$matches)) {

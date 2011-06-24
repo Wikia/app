@@ -1,15 +1,21 @@
+/**
+ * Test explaining how to create mocked ajax response
+ */
+
 /*
+// Set framework to QUnit
 @test-framework QUnit
+// Specify dependency list
 @test-require-module mockjax
 */
 
-/**
- * This is an example test of mocking ajax requests
- */
+// Define new QUnit test module
 module("Ajax Test");
+
+// Add the following test to current test module
 test("example test", function() {
 	
-	// prepare the mocked response and behavior
+	// prepare the mocked response
 	$.mockjax({
 		// define which ajax requests should be intercepted by this rule
 		url: '/restful/fortune',
@@ -23,8 +29,8 @@ test("example test", function() {
 	});
 
 	// we need to notify QUnit about asynchronous operation
-	// 1500 is the timeout (which is set to be greater than "responseTime"
-	//   setting from mocked request
+	// 1500ms is the timeout (which needs to be greater than "responseTime"
+	//   setting for mocked response)
 	stop(1500);
 	
 	// do the actual request
@@ -34,7 +40,7 @@ test("example test", function() {
 		equal( response.fortune, 'Are you a turtle?', 'fortune' );
 		// clear ajax mocking configuration
 		$.mockjaxClear();
-		// continue processing next tests
+		// continue tests processing by QUnit
 		start();
 	});
 	
