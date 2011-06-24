@@ -136,7 +136,7 @@ function modifyCategory(e) {
 					sortkey = extractedParams['sort'] + sortkey;
 					categories[catId].sortkey = sortkey;
 				}
-				
+
 				$('#sortDialog').closeModal();
 			}}
 		]
@@ -248,7 +248,7 @@ function addCategoryBase(category, params, index) {
 	elementImg = document.createElement('img');
 	elementImg.src = wgBlankImgUrl;
 	elementImg.className = 'sprite-small delete';
-	
+
 	elementImg.onclick = function(e) {if (csDraggingEvent) return; csTrack('deleteCategory'); deleteCategory(this); return false;};
 	elementA.appendChild(elementImg);
 
@@ -414,9 +414,9 @@ function inputKeyPress(e) {
 
 		//TODO: stop AJAX call for AutoComplete
 		e.preventDefault();
-		category = $('#csCategoryInput').attr('value');
+		var category = $('#csCategoryInput').val();
 
-		if( category != '' ) {
+		if (category != '' && (window.oAutoComp && window.oAutoComp._oCurItem == null) /* BugId:5671 */) {
 			addCategory(category);
 		}
 
