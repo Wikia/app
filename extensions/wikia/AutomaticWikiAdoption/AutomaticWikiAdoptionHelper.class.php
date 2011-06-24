@@ -144,6 +144,8 @@ class AutomaticWikiAdoptionHelper {
 		$removedGroup = 'bureaucrat';
 		//groups to add
 		$addGroups = array('sysop', 'bureaucrat');
+		
+		$wiki_name = WikiFactory::IDtoDB($wikiId);
 
 		//remove bureacrat for current admins
 		while ($row = $dbr->fetchObject($res)) {
@@ -160,14 +162,23 @@ class AutomaticWikiAdoptionHelper {
 				if ($oldGroups != $newGroups) {
 					//remove group
 					$admin->removeGroup($removedGroup);
+					
+					// get email params
+					$magicwords = array('#WIKINAME' => $wiki_name);
+					$admin_name = $admin->getName();
+					$globalTitleUserRights = GlobalTitle::newFromText('UserRights', -1, $wikiId);
+					$specialUserRightsUrl = $globalTitleUserRights->getFullURL();
+					$globalTitlePreferences = GlobalTitle::newFromText('Preferences', -1, $wikiId);
+					$specialPreferencesUrl = $globalTitlePreferences->getFullURL();
+					
 					//sent e-mail
 					$admin->sendMail(
-						wfMsgForContent("wikiadoption-mail-adoption-subject"),
-						wfMsgForContent("wikiadoption-mail-adoption-content"),
+						strtr(wfMsgForContent("wikiadoption-mail-adoption-subject"), $magicwords),
+						strtr(wfMsgForContent("wikiadoption-mail-adoption-content", $admin_name, $specialUserRightsUrl, $specialPreferencesUrl), $magicwords),
 						null, //from
 						null, //replyto
 						'AutomaticWikiAdoption',
-						wfMsgForContent("wikiadoption-mail-adoption-content-HTML")
+						strtr(wfMsgForContent("wikiadoption-mail-adoption-content-HTML", $admin_name, $specialUserRightsUrl, $specialPreferencesUrl), $magicwords)
 					);
 					//log
 					self::addLogEntry($admin, $oldGroups, $newGroups);
@@ -189,7 +200,7 @@ class AutomaticWikiAdoptionHelper {
 			}
 			//log
 			self::addLogEntry($user, $oldGroups, $newGroups);
-			WikiFactory::log(WikiFactory::LOG_STATUS, $user->getName()." adopted wiki ".  WikiFactory::IDtoDB($wikiId));
+			WikiFactory::log(WikiFactory::LOG_STATUS, $user->getName()." adopted wiki ".  $wiki_name);
 		}
 		//set date of adoption - this will be used to check when next adoption is possible
 		$user->setOption('LastAdoptionDate', time());
