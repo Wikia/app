@@ -167,6 +167,7 @@ jQuery.tracker = function() {
 	if (wgIsArticle && wgArticleId > 0) {
 		// catch all clicks inside article content, but track clicks on links only
 		content.click(function(e) {
+			
 			var track = function(fakeUrl) {
 				var root = isOasis ? 'contentpage/contentlink/' : 'articleActions/contentLink/';
 				$.tracker.byStr(root + fakeUrl);
@@ -186,6 +187,11 @@ jQuery.tracker = function() {
 			// RT #68550
 			if (!isOasis) {
 				$.tracker.byStr("articleAction/contentLink-all");
+			}
+
+			// Do not track category galleries. FB:955
+			if ( link.closest('.category-gallery').length > 0 ){
+				return;
 			}
 
 			var _href = link.attr("href") || "";

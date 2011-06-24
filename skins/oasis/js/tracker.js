@@ -479,7 +479,10 @@ var initTracker = function() {
 		if (node.closest('.cke_editor').length > 0) {
 			return;
 		}
-
+		// do not track category gallery links - they are tracked elsewhere
+		if (node.closest('.category-gallery').length > 0) {
+			return;
+		}
 		// redlinks
 		if (node.hasClass('new')) {
 			$.tracker.byStr(fakeUrl + 'redlink');
