@@ -16,6 +16,8 @@ class GlobalHeaderModule extends Module {
 	public function executeIndex() {
 		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgLang;
 		
+		$wikiLang = $wgLang->getCode();
+		
 		// generate link to hompage; bugId:7452
 		$this->centralUrl = 'http://www.wikia.com/Wikia';
 
