@@ -3,6 +3,7 @@ $(function() {
 });
 
 var WikiHeader = {
+	isDisplayed: false,
 
 	settings: {
 		mouseoverDelay: 300,
@@ -38,9 +39,11 @@ var WikiHeader = {
 
 		//Mouse out of browser
 		$(document).mouseout(function(e){
-			var from = e.relatedTarget || e.toElement;
-			if(!from || from.nodeName == 'HTML'){
-				WikiHeader.hideNav();
+			if(WikiHeader.isDisplayed) {
+				var from = e.relatedTarget || e.toElement;
+				if(!from || from.nodeName == 'HTML'){
+					WikiHeader.hideNav();
+				}
 			}
 		});
 	},
@@ -116,6 +119,7 @@ var WikiHeader = {
 		var subnav = $(parent).children('ul');
 
 		if (subnav.exists()) {
+			WikiHeader.isDisplayed = true;
 			subnav.css("top", WikiHeader.navtop).show();
 			$.hideAds();
 
@@ -124,6 +128,7 @@ var WikiHeader = {
 	},
 
 	hideNav: function() {
+		WikiHeader.isDisplayed = false;
 		//Hide subnav
 		if($('body').data('accessible')) {
 			WikiHeader.subnav.css("top", "-9999px");
