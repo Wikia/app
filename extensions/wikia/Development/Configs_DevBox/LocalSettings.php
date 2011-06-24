@@ -142,3 +142,6 @@ $wgRC2UDPEnabled = false;
 
 // macbre: set proper proxy for dev boxes
 $wgHTTPProxy = "squid-proxy.local:3128";
+
+// antispoof extension needs statsdb setup, only on prod for now	
+$wgEnableAntiSpoofExt = false;
