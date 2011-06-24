@@ -51,7 +51,12 @@ class UserStatsService extends Service {
 
 		if (!empty($stats)) {
 			$stats['edits']++;
-			$stats['date'] = wfTimestampNow();
+
+			// populate 'member since' date if it's not set (i.e. it's the first edit)
+			if ( empty( $stats['date'] ) && $stats['edits'] == 1 ) {
+				$stats['date'] = wfTimestampNow();
+			}
+
 			$wgMemc->set($key, $stats, self::CACHE_TTL);
 
 			wfDebug(__METHOD__ . ": user #{$this->userId}\n");
