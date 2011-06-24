@@ -13,6 +13,14 @@ $messages['en'] = array(
 	'controlcenter-header-exit' => '<a href="$1">Exit</a>',
 // Wiki Controls
 	'controlcenter-controls-wiki-header' => 'Wiki',
+	'controlcenter-control-theme-designer-label' => 'Theme Designer',
+	'controlcenter-control-theme-designer-tooltip' => 'Theme Designer allows you to customize your wiki colors, background, and more.',
+	'controlcenter-control-recent-changes-label' => 'Recent Changes',
+	'controlcenter-control-recent-changes-tooltip' => 'Recent Changes displays all of the changes made on your wiki in a single timeline.',
+	'controlcenter-control-top-navigation-label' => 'Top Navigation',
+	'controlcenter-control-top-navigation-tooltip' => 'Top Navigation allows you to customize the navigation menu at the top of your wiki.',
+	'controlcenter-control-wikia-labs-label' => 'Top Navigation',
+	'controlcenter-control-wikia-labs-tooltip' => 'Top Navigation allows you to customize the navigation menu at the top of your wiki.',
 	'controlcenter-control-page-layout-builder-label' => 'Page Layout Builder',
 	'controlcenter-control-page-layout-builder-tooltip' => 'Page Layout Builder allows you to create page outlines for users to choose from and use to create new pages.',
 // Community Controls

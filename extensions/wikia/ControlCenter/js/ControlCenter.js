@@ -98,6 +98,9 @@ var ControlCenter = {
 		},
 		loadMultipleUpload: function() {
 			ControlCenter.contentload.loadSpecialPage('MultipleUpload');
+		},
+		loadRecentChanges: function() {
+			ControlCenter.contentload.loadSpecialPage('Recentchanges');
 		}
 	},
 	modalLoad: {
