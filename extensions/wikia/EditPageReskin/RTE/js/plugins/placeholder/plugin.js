@@ -35,6 +35,9 @@ CKEDITOR.plugins.add('rte-placeholder',
 			return;
 		}
 
+		var chevron = '<img class="chevron chevronBackground" src="'+wgBlankImgUrl+'" />'
+			+'<img class="chevron" src="'+wgBlankImgUrl+'" />';
+
 		// get node in which preview is / will be stored
 		var preview = placeholder.data('preview');
 
@@ -42,7 +45,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 		if (typeof preview == 'undefined') {
 			// create preview node
 			preview = $('<div>').addClass('RTEPlaceholderPreview RTEPlaceholderPreviewLoading');
-			preview.html('<div class="RTEPlaceholderPreviewInner">&nbsp;</div>');
+			preview.html(chevron + '<div class="RTEPlaceholderPreviewInner">&nbsp;</div>');
 
 			// setup events
 			preview.bind('mouseover', function() {
@@ -147,7 +150,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 				//
 				// render HTML
 				//
-				var html = '';
+				var html = chevron;
 
 				// preview "header"
 				html += '<div class="RTEPlaceholderPreviewInner ' + className + '">';
@@ -236,10 +239,20 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 		// position preview node
 		var position = RTE.tools.getPlaceholderPosition(placeholder);
+		var tempTop,
+			freeBottomSpace = $(RTE.instance.getThemeSpace('contents').$).height() - position.top;
+		if (freeBottomSpace <= preview.height()) { 
+			tempTop = position.top - preview.height() - placeholder.height();
+			preview.addClass('bottom');
+			
+		} else {
+			tempTop = position.top + placeholder.height() + 6;
+			preview.removeClass('bottom');
+		}
 
 		preview.css({
 			'left': position.left + 'px',
-			'top': parseInt(position.top + placeholder.height() + 6) + 'px'
+			'top': parseInt(tempTop) + 'px'
 		});
 
 		// hide remaining previews
