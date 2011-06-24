@@ -154,11 +154,40 @@
 }
 
 .RTEPlaceholderPreview {
-	background: transparent url('/extensions/wikia/EditPageReskin/RTE/images/templatePreviewBg.png') no-repeat -519px 0; /* $wgCdnStylePath */
 	display: none;
 	font-size: 12px;
 	padding-top: 9px;
 	position: absolute;
+	.chevron {
+		display: block;
+		position: absolute;
+		top: -6px;
+		left: 0;
+		border-width: 7px;
+		border-bottom-color: #d5d5d5;
+		z-index: 5;
+	}
+	.chevronBackground {
+		border-width: 6px;
+		border-bottom-color: #fff;
+		z-index: 6;
+		top: -3px;
+		left: 1px;
+	}
+	&.bottom {
+		padding: 0 0 9px 0;
+		.chevron {
+			bottom: -6px;
+			top: auto;
+			border-top-color: #d5d5d5;
+			border-bottom-color: transparent;
+		}
+		.chevronBackground {
+			bottom: -3px;
+			border-top-color: #fff;
+			border-bottom-color: transparent;
+		}
+	}
 }
 
 .RTEPlaceholderPreviewLoading .RTEPlaceholderPreviewInner {
