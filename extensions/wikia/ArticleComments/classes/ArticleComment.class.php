@@ -756,6 +756,16 @@ class ArticleComment {
 		global $wgUser, $wgRC2UDPEnabled, $wgMaxCommentsToMove, $wgEnableMultiDeleteExt, $wgCityId;
 		wfProfileIn( __METHOD__ );
 
+		if ( !$wgUser->isAllowed( 'move' ) ) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
+		if ( $wgUser->isBlocked() ) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
 		$commentList = ArticleCommentList::newFromTitle( $oOldTitle );
 		$comments = $commentList->getCommentPages(true, false);
 
