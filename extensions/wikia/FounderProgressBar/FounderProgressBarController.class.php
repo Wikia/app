@@ -33,7 +33,7 @@ class FounderProgressBarController extends WikiaController {
 				FT_MAINPAGE_ADDSLIDER => "mainpage_addslider",
 				FT_COMMCORNER_EDIT => "commcorner_edit",
 				FT_VIDEO_ADD_1 => "video_add%",
-				FT_USERADD_5 => "user_add%",
+				FT_USER_ADD_5 => "user_add%",
 				FT_RECENTCHANGES_VISIT => "recentchanges_visit",
 				FT_WORDMARK_EDIT => "wordmark_edit",
 				FT_MOSTVISITED_VISIT => "mostvisited_visit",
@@ -67,7 +67,7 @@ class FounderProgressBarController extends WikiaController {
 				FT_MAINPAGE_ADDSLIDER => 1,
 				FT_COMMCORNER_EDIT => 1,
 				FT_VIDEO_ADD_1 => 1,
-				FT_USERADD_5 => 5,
+				FT_USER_ADD_5 => 5,
 				FT_RECENTCHANGES_VISIT => 1,
 				FT_WORDMARK_EDIT => 1,
 				FT_MOSTVISITED_VISIT => 1,
@@ -176,6 +176,56 @@ class FounderProgressBarController extends WikiaController {
 		$this->response->setVal("list", $list);
 		
 	}
+
+	/**
+	 * @desc
+	 * @requestParam int task_id The ID of the task completed
+	 * @responseParam string result OK or completed error
+	 * @responseParam int tasks_completed number of tasks completed so far
+	 * @responseParam int tasks_remaining number of tasks remaining
+	 */
+	
+	public function doTask() {
+		$wiki_id = $this->wg->CityId;
+		$task_id = $this->request->getVal("task_id");
+		// TODO: validate the task_id is not yet completed
+		if (! isset($this->counters[$task_id])) {
+			$this->setVal('result', 'invalid task_id');
+			return true;
+		}
+		$dbw = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$sql = "INSERT INTO founder_progress_bar_tasks 
+			SET wiki_id=$wiki_id, 
+				task_id=$task_id, 
+				task_count=1
+			ON DUPLICATE KEY UPDATE task_count = task_count + 1";
+		$dbw->query ($sql);
+		print_pre($dbw);
+		$res = $dbw->select (
+				'founder_progress_bar_tasks',
+				array('task_id', 'task_count'),
+				array('wiki_id' => $wiki_id, 'task_id' => $task_id)
+			);
+		// TODO: make sure we got a row
+		// if ($row...)
+		$row = $dbw->fetchRow($res);
+		$tasks_completed = $row['task_count'];
+		$tasks_remaining = $this->counters[$task_id] - $tasks_completed;
+
+		$this->setVal('tasks_completed', $tasks_completed);
+		$this->setVal('tasks_remaining', $tasks_remaining);
+		$this->setVal('result', 'OK');
+		if ($tasks_remaining <= 0) {
+			$dbw->update(
+				'founder_progress_bar_tasks',
+				array('task_completed' => '1'),
+				array('wiki_id' => $wiki_id, 'task_id' => $task_id)
+			);
+			$this->setVal('result', "completed");
+		}
+		$dbw->commit();
+		// else error
+	}
 	
 	/**
 	 * @desc
@@ -223,7 +273,7 @@ class FounderProgressBarController extends WikiaController {
 		// For development, return placeholder messages if a message is not defined
 		if (! isset($this->messages[$task_id]) ) {
 			if ($type == "label") return "Task $type";
-			if ($type == "description") return "Task $type Description Placeholder";
+			if ($type == "description") return "Task $type Placeholder";
 			if ($type == "action") return "Button Label";
 		}
 
