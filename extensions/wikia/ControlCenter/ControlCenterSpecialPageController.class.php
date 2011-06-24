@@ -21,6 +21,15 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 		$this->response->setVal('tab', $wgRequest->getVal('tab', 'general'));
 		
 		// links
+		$this->response->setVal('urlThemeDesigner', Title::newFromText('ThemeDesigner', NS_SPECIAL)->getFullURL());
+		$this->response->setVal('urlRecentChanges', Title::newFromText('RecentChanges', NS_SPECIAL)->getFullURL());
+		$this->response->setVal('urlTopNavigation', Title::newFromText('Wiki-navigation', NS_MEDIAWIKI)->getFullURL('action=edit'));
+		$this->response->setVal('urlWikiaLabs', Title::newFromText('WikiaLabs', NS_SPECIAL)->getFullURL());
+		$this->response->setVal('urlPageLayoutBuilder', Title::newFromText('PageLayoutBuilder', NS_SPECIAL)->getFullURL());
+		
+		$this->response->setVal('urlListUsers', Title::newFromText('ListUsers', NS_SPECIAL)->getFullURL());
+		$this->response->setVal('urlUserRights', Title::newFromText('UserRights', NS_SPECIAL)->getFullURL());
+		
 		$this->response->setVal('urlCommunityCorner', Title::newFromText('Community-corner', NS_MEDIAWIKI)->getFullURL('action=edit'));
 		$this->response->setVal('urlAllCategories', Title::newFromText('Categories', NS_SPECIAL)->getFullURL());
 		$this->response->setVal('urlAddPage', Title::newFromText('CreatePage', NS_SPECIAL)->getFullURL());
@@ -55,7 +64,7 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 				
 		// Construct special page object
 		try {
-			$basePages = array("Categories");
+			$basePages = array("Categories", "Recentchanges");
 			if (in_array($pageName, $basePages)) {
 				$sp = SpecialPage::getPage($pageName);
 			} else {

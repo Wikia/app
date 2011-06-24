@@ -6,20 +6,46 @@
 					<h1><?= wfMsg("controlcenter-controls-wiki-header") ?></h1><span class="tooltip"></span>
 				</header>
 				<ul class="controls">
-					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-page-layout-builder-tooltip") ?>">
-						<div class="representation">
-							<div class="icon"></div>
-						</div>
-						<?= wfMsg("controlcenter-control-page-layout-builder-label") ?>
+					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-theme-designer-tooltip") ?>">
+						<a href="<?= $urlThemeDesigner ?>" class="set">
+							<span class="representation">
+								<span class="icon"></span>
+							</span>
+							<?= wfMsg("controlcenter-control-theme-designer-label") ?>
+						</a>
 					</li>
-					<? for($i = 0; $i < 12; $i++) { ?>
-						<li class="control" data-tooltip="This is <?= $i ?>">
-							<div class="representation">
-								<div class="icon"></div>
-							</div>
-							Theme Designer
-						</li>
-					<? } ?>
+					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-recent-changes-tooltip") ?>" data-control="RecentChanges">
+						<a href="<?= $urlRecentChanges ?>" class="set">
+							<span class="representation">
+								<span class="icon"></span>
+							</span>
+							<?= wfMsg("controlcenter-control-recent-changes-label") ?>
+						</a>
+					</li>
+					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-top-navigation-tooltip") ?>">
+						<a href="<?= $urlTopNavigation ?>" class="set">
+							<span class="representation">
+								<span class="icon"></span>
+							</span>
+							<?= wfMsg("controlcenter-control-top-navigation-label") ?>
+						</a>
+					</li>
+					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-wikia-labs-tooltip") ?>">
+						<a href="<?= $urlWikiaLabs ?>" class="set">
+							<span class="representation">
+								<span class="icon"></span>
+							</span>
+							<?= wfMsg("controlcenter-control-wikia-labs-label") ?>
+						</a>
+					</li>
+					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-page-layout-builder-tooltip") ?>">
+						<a href="<?= $urlPageLayoutBuilder ?>" class="set">
+							<span class="representation">
+								<span class="icon"></span>
+							</span>
+							<?= wfMsg("controlcenter-control-page-layout-builder-label") ?>
+						</a>
+					</li>
 				</ul>
 			</section>
 			<section class="control-section community">
@@ -28,17 +54,22 @@
 				</header>
 				<ul class="controls">
 					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-user-list-tooltip") ?>" data-control="ListUsers">
-						<span class="representation">
-							<span class="icon"></span>
-						</span>
-						<?= wfMsg("controlcenter-control-user-list-label") ?>
+						<a href="<?= $urlListUsers ?>" class="set">
+							<span class="representation">
+								<span class="icon"></span>
+							</span>
+							<?= wfMsg("controlcenter-control-user-list-label") ?>
+						</a>
 					</li>
 					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-user-rights-tooltip") ?>" data-control="UserRights">
-						<div class="representation">
-							<div class="icon"></div>
-						</div>
-						<?= wfMsg("controlcenter-control-user-rights-label") ?>
+						<a href="<?= $urlUserRights ?>" class="set">
+							<span class="representation">
+								<span class="icon"></span>
+							</span>
+							<?= wfMsg("controlcenter-control-user-rights-label") ?>
+						</a>
 					</li>
+					<!--
 					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-group-rights-tooltip") ?>">
 						<div class="representation">
 							<div class="icon"></div>
@@ -51,6 +82,7 @@
 						</div>
 						<?= wfMsg("controlcenter-control-invite-label") ?>
 					</li>
+					-->
 				</ul>
 			</section>
 			<section class="control-section content">
