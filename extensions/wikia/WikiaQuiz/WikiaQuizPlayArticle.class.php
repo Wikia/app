@@ -28,9 +28,6 @@ class WikiaQuizPlayArticle extends Article {
 		
 		wfLoadExtensionMessages('WikiaQuiz');
 
-		// let MW handle basic stuff
-		parent::view();
-
 		// quiz doesn't exist
 		if (empty($this->mQuiz)) {
 			wfProfileOut(__METHOD__);
