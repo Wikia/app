@@ -807,6 +807,40 @@ EOD;
 			}
 		}
 
+		$text = strpos( $fixed_url, "HULU.COM" );
+		if( false !== $text ) { // Hulu
+			// Hulu goes like
+			// http://www.hulu.com/watch/252775/[seo terms]
+			$provider = self::V_HULU;
+			$url = trim($url, "/");
+			$parsed = explode( "/", $url );
+			if( is_array( $parsed ) ) {
+				// mId is a number, and it is either last or second to last element of $parsed
+				$last = explode('?', array_pop( $parsed ) );
+				$last = $last[0];
+				if (is_numeric($last)) {
+					$this->mId = $last;
+				}
+				else {
+					$this->mId = array_pop($parsed);
+					$seo = $last;
+				}
+				$this->mProvider = $provider;
+				$this->mData = null;	// getHuluData() works only if mData is null
+				$huluData = $this->getHuluData();
+				$this->mData = array();
+				if (is_array($huluData)) {
+					foreach ($huluData as $key=>$value) {
+						$this->mData[] = $value;
+					}
+				}
+				if (!empty($seo)) {
+					$this->mData[] = $seo;
+				}
+				return true;
+			}
+		}
+
 		return false;
 	}
 
@@ -849,6 +883,9 @@ EOD;
 				break;
 			case self::V_GAMETRAILERS:
 				$ratio = (480 / 392);
+				break;
+			case self::V_HULU:
+				$ratio = (512 / 296);
 				break;
 			default:
 				$ratio = 1;
@@ -896,6 +933,9 @@ EOD;
 				break;
 			case self::V_MYVIDEO:
 				$ratio = "470 x 406";
+				break;
+			case self::V_HULU:
+				$ratio = "512 x 296";
 				break;
 			default:
 				$ratio = "300 x 300";
@@ -990,6 +1030,9 @@ EOD;
 				}
 				return true;
 				break;
+			case self::V_HULU:
+				$exists = $this->getHuluData() != false;
+				break;					
 			default:
 				break;
 		}
@@ -1034,6 +1077,8 @@ EOD;
 				return 'http://www.viddler.com';
 			case self::V_GAMETRAILERS:
 				return 'http://www.gametrailers.com';
+			case self::V_HULU:
+				return 'http://www.hulu.com';
 			default:
 				return '';
 		}
@@ -1097,6 +1142,9 @@ EOD;
 			case self::V_GAMETRAILERS:
 				$url = 'http://www.gametrailers.com/video/play/' . $id;
 				break;
+			case self::V_HULU:
+				$url = 'http://www.hulu.com/watch/' . $id;
+				break;
 			default:
 				$url = '';
 				break;
@@ -1157,6 +1205,9 @@ EOD;
 			case self::V_VIDDLER:
 			case self::V_GAMETRAILERS:
 				$metadata = $this->mProvider . ',' . $this->mId . ',';
+				break;
+			case self::V_HULU:
+				$metadata = $this->mProvider . ',' . $this->mId . ',' . implode(',', $this->mData);
 				break;
 			default:
 				$metadata = '';
@@ -1457,6 +1508,38 @@ EOD;
 		$wgMemc->set( $cacheKey, $obj,60*60*24 );
 		return $obj;
 	}
+	
+	private function getHuluData() {
+		$huluData = array();
+		if (!empty($this->mData)) {
+			// metadata could be a one-element array, expressed in serialized form.
+			// If so, deserialize
+			if (sizeof($this->mData) == 1) {
+				$this->mData = explode(',', $this->mData[0]);
+			}
+			$huluData['embedId'] = $this->mData[0];
+			$huluData['thumbnailUrl'] = $this->mData[1];
+			$huluData['videoName'] = $this->mData[2];
+			if (sizeof($this->mData) > 3) {
+				$huluData['seo'] = $this->mData[3];
+			}
+		}
+		else {
+			$file = @Http::get( "http://www.hulu.com/api/oembed.xml?url=" . urlencode("http://www.hulu.com/watch/".$this->mId), FALSE );
+			if ($file) {
+				$doc = new DOMDocument( '1.0', 'UTF-8' );
+				@$doc->loadXML( $file );
+				$embedUrl = trim( $doc->getElementsByTagName('embed_url')->item(0)->textContent );
+				$embedUrlParts = explode('/', $embedUrl);
+				$huluData['embedId'] = array_pop($embedUrlParts);
+				$huluData['thumbnailUrl'] = trim( $doc->getElementsByTagName('thumbnail_url')->item(0)->textContent );
+				$huluData['videoName'] = trim( $doc->getElementsByTagName('title')->item(0)->textContent );
+			}			
+		}
+		
+		return $huluData;		
+	}
+	
 	public function getUrlToEmbed() {
 
 		// todo switch through providers, make an API call and return proper stuff
@@ -1471,6 +1554,9 @@ EOD;
 			case self::V_VIDDLER:
 				return "http://www.viddler.com/player/" . $this->getViddlerTrueID() . "/";
 				break;
+			case self::V_HULU:
+				$huluData = $this->getHuluData();
+				return "http://www.hulu.com/embed/" . $huluData['embedId'];
 			default:
 				// no other providers up to date will make use of this function anyway...
 				break;
@@ -1541,6 +1627,8 @@ EOD;
 					<embed src="http://www.gametrailers.com/remote_wrap.php?mid='.$this->mId.'" swLiveConnect="true" name="gtembed" align="middle" allowScriptAccess="sameDomain" allowFullScreen="true" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="'.$width.'" height="'.$height.'"></embed> ]
 				</object>' ;
 				break;
+			case self::V_HULU:
+				$url = $this->getUrlToEmbed();
 			default: break;
 		}
 		if( 'custom' != $code ) {
@@ -1592,7 +1680,11 @@ EOD;
 				break;
 			case self::V_VIDDLER:
 				$thumb =  "http://cdn-thumbs.viddler.com/thumbnail_2_".$this->getViddlerTrueID().".jpg";
-			break;
+				break;
+			case self::V_HULU:
+				$huluData = $this->getHuluData();
+				$thumb = $huluData['thumbnailUrl'];
+				break;
 			default:
 				break;
 		}
