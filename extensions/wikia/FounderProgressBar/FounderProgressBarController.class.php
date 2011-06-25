@@ -93,41 +93,25 @@ class FounderProgressBarController extends WikiaController {
 	 */
 
 	public function getShortTaskList () {
-		// try to get cached data
-		$memKey = $this->wf->MemcKey('FounderShortTaskList');
-		$list = $this->wg->Memc->get($memKey);
-		if (empty($list)) {
-			$this->wf->ProfileIn(__METHOD__ . '::miss');
 
-			$list = array();
+		// Long list is cached, and also generates some data we need as a side effect
+		// so just use it instead of writing a different query
+		$response = $this->sendSelfRequest("getLongTaskList");
 
-			// get the next two available non-skipped, non-completed items
-			$dbr = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-			$res = $dbr->select(
-				'founder_progress_bar_tasks',
-				array('task_id', 'task_count'),
-				array('task_skipped' => 0, 'task_completed' => 0, 'wiki_id' => $this->wg->CityId),
-				__METHOD__,
-				array( 'LIMIT' => 2, 'ORDER BY' => 'task_id ASC' )
-			);
-			while($row = $dbr->fetchObject($res)) {
-				$task_id = $row->task_id;
-				$list[$task_id] = array (
-					"task_id" => $task_id,
-					"task_count" => $row->task_count,
-					"task_label" => $this->getMsgForTask($task_id, "label"),
-					"task_description" => $this->getMsgForTask($task_id, "description"),
-					"task_action" => $this->getMsgForTask($task_id, "action"),
-					);
+		$list = $response->getVal('list');
+		$data = $response->getVal('data');
+		
+		$short_list = array();
+		// Grab the first two available items from the long list
+		foreach ($list as $id => $item) {
+			if ($item['task_skipped'] == 0 && $item['task_completed'] == 0) {
+				$short_list[$id] = $item;
 			}
-
-			if (!empty($list)) {
-				$this->wg->Memc->set($memKey, $list, 3600);
-			}
-
-			$this->wf->ProfileOut(__METHOD__ . '::miss');
+			if (count($short_list) == 2) break; 
 		}
-		$this->response->setVal("list", $list);
+		
+		$this->setVal('list', $short_list);
+		$this->setVal('data', $data);
 	}
 
 	/**
@@ -145,6 +129,7 @@ class FounderProgressBarController extends WikiaController {
 			$this->wf->ProfileIn(__METHOD__ . '::miss');
 
 			$list = array();
+			$tasks_completed = 0;			
 
 			// get the next two available non-skipped, non-completed items
 			$dbr = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
@@ -153,8 +138,7 @@ class FounderProgressBarController extends WikiaController {
 				array('task_id', 'task_count', 'task_completed', 'task_skipped', 'task_timestamp'),
 				array('wiki_id' => $this->wg->CityId)
 				);
-			$total_tasks = count($this->messages);
-			$tasks_completed = 0;			
+			
 			while($row = $dbr->fetchObject($res)) {
 				$task_id = $row->task_id;
 				$list[$task_id] = array (
@@ -171,9 +155,7 @@ class FounderProgressBarController extends WikiaController {
 					$tasks_completed ++;
 				}
 			}
-			$list['tasks_completed'] = $tasks_completed;
-			$list['total_tasks'] = $total_tasks;
-			$list['completion_percent'] = round(100 * ($tasks_completed / $total_tasks), 0, ROUND_HALF_EVEN);
+			$data = $this->getCompletionData($tasks_completed);
 			if (!empty($list)) {
 				$this->wg->Memc->set($memKey, $list, 3600);
 			}
@@ -181,7 +163,7 @@ class FounderProgressBarController extends WikiaController {
 			$this->wf->ProfileOut(__METHOD__ . '::miss');
 		}
 		$this->response->setVal("list", $list);
-		
+		$this->response->setVal("data", $data);
 	}
 
 	/**
@@ -216,21 +198,24 @@ class FounderProgressBarController extends WikiaController {
 		// TODO: make sure we got a row
 		// if ($row...)
 		$row = $dbw->fetchRow($res);
-		$tasks_completed = $row['task_count'];
-		$tasks_remaining = $this->counters[$task_id] - $tasks_completed;
+		$actions_completed = $row['task_count'];
+		$actions_remaining = $this->counters[$task_id] - $actions_completed;
 
-		$this->setVal('tasks_completed', $tasks_completed);
-		$this->setVal('tasks_remaining', $tasks_remaining);
+		$this->setVal('actions_completed', $actions_completed);
+		$this->setVal('actions_remaining', $actions_remaining);
 		$this->setVal('result', 'OK');
-		if ($tasks_remaining <= 0) {
+		if ($actions_remaining <= 0) {
 			$dbw->update(
 				'founder_progress_bar_tasks',
 				array('task_completed' => '1'),
 				array('wiki_id' => $wiki_id, 'task_id' => $task_id)
 			);
-			$this->setVal('result', "completed");
+			$this->setVal('result', "task_completed");
 		}
 		$dbw->commit();
+		// Clear task list from memcache
+		$memKey = $this->wf->MemcKey('FounderLongTaskList');
+		$this->wg->Memc->delete($memKey);
 		// else error
 	}
 	
@@ -293,5 +278,19 @@ class FounderProgressBarController extends WikiaController {
 		// Default case
 		$messageStr = "founderprogressbar-". $messageStr . "-" . $type;			
 		return wfMsg($messageStr);
+	}
+
+	/**
+	 * Returns nothing, modifies $list param
+	 * @param type $list
+	 * @param type $tasks_completed 
+	 */
+	private function getCompletionData($tasks_completed) {
+		$data = array();
+		$total_tasks = count($this->messages);		
+		$data['tasks_completed'] = $tasks_completed;
+		$data['total_tasks'] = $total_tasks;
+		$data['completion_percent'] = round(100 * ($tasks_completed / $total_tasks), 0, PHP_ROUND_HALF_EVEN);
+		return $data;
 	}
 }
