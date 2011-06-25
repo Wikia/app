@@ -9,10 +9,10 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	public function enabled ( $wgCityId ) {
  		
 		// If digest mode is enabled, do not create edit event notifications
-		if ( FounderEmails::getInstance()->getWikiFounder()->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
+		if ( FounderEmails::getInstance()->getWikiFounder( $wgCityId )->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
 			return false;
 		}
-		if ( FounderEmails::getInstance()->getWikiFounder()->getOption( "founderemails-edits-$wgCityId" ) ) {
+		if ( FounderEmails::getInstance()->getWikiFounder( $wgCityId )->getOption( "founderemails-edits-$wgCityId" ) ) {
 			return true;
 		}
 		return false;
