@@ -7,10 +7,10 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 
 	public function enabled ( $wgCityId ) {
 		// If complete digest mode is enabled, do not send views only digest
-		if ( FounderEmails::getInstance()->getWikiFounder()->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
+		if ( FounderEmails::getInstance()->getWikiFounder( $wgCityId )->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
 			return false;
 		}
-		if ( FounderEmails::getInstance()->getWikiFounder()->getOption( "founderemails-views-digest-$wgCityId" ) ) {
+		if ( FounderEmails::getInstance()->getWikiFounder( $wgCityId )->getOption( "founderemails-views-digest-$wgCityId" ) ) {
 			return true;
 		}
 		return false;

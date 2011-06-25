@@ -9,10 +9,10 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 	public function enabled ( $wgCityId ) {
  		
 		// If digest mode is enabled, do not create user registration event notifications
-		if ( FounderEmails::getInstance()->getWikiFounder()->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
+		if ( FounderEmails::getInstance()->getWikiFounder( $wgCityId )->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
 			return false;
 		}
-		if ( FounderEmails::getInstance()->getWikiFounder()->getOption( "founderemails-joins-$wgCityId" ) ) {
+		if ( FounderEmails::getInstance()->getWikiFounder( $wgCityId )->getOption( "founderemails-joins-$wgCityId" ) ) {
 			return true;
 		}
 		return false;

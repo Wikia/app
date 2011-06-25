@@ -7,7 +7,7 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 
 	public function enabled ( $wgCityId ) {
  		
-		if ( FounderEmails::getInstance()->getWikiFounder()->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
+		if ( FounderEmails::getInstance()->getWikiFounder( $wgCityId )->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
 			return true;
 		}
 		return false;
