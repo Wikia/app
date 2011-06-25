@@ -5,7 +5,7 @@
  *
  * @author Piotr Molski (moli) <moli@wikia.com>
  *
- * @todo
+ * @todo document this
  *
  */
 
