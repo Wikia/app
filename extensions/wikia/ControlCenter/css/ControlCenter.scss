@@ -19,7 +19,13 @@ $base-z: 5;
 	position: relative;
 	h1 {
 		font-size: 20px;
+		line-height: 48px;
 		margin: 0;
+		vertical-align: middle;
+		img {
+			float: left;
+			margin-right: 20px;
+		}
 	}
 	nav {
 		bottom: 5px;
