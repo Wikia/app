@@ -10,38 +10,39 @@ class FounderProgressBarController extends WikiaController {
 	
 	public function init() {
 		// Messages defined in i18n file
+		// Each message in i18n has a -label -description and -action version
 		// If the message name has a % in it that means a $1 substitution is done
 		$this->messages = array ( 
-				FT_PAGE_ADD_10 => "page_add%",
-				FT_THEMEDESIGNER_VISIT => "themedesigner_visit",
-				FT_MAINPAGE_EDIT => "mainpage_edit",
-				FT_PHOTO_ADD_10 => "photo_add%",
-				FT_CATEGORY_ADD3 => "category_add%",
-				FT_COMMCENTRAL_VISIT => "commcentral_visit",
-				FT_WIKIACTIVITY_VISIT => "wikiactivity_visit",
-				FT_PROFILE_EDIT_1 => "profile_edit%",
-				FT_PHOTO_ADD_20 => "photo_add%",
-				FT_TOTAL_EDIT_75 => "total_edit%",
-				FT_PAGE_ADD_20 => "page_add%",
-				FT_CATEGORY_EDIT => "category_edit%",
-				FT_WIKIALABS_VISIT => "wikialabs_visit",
-				FT_FB_CONNECT => "fb_connect",
-				FT_CATEGORY_ADD_5 => "category_add%",
-				FT_PAGELAYOUT_VISIT => "pagelayout_visit",
-				FT_GALLERY_ADD_1 => "gallery_add%",
-				FT_TOPNAV_EDIT => "topnav_edit",
-				FT_MAINPAGE_ADDSLIDER => "mainpage_addslider",
-				FT_COMMCORNER_EDIT => "commcorner_edit",
-				FT_VIDEO_ADD_1 => "video_add%",
-				FT_USER_ADD_5 => "user_add%",
-				FT_RECENTCHANGES_VISIT => "recentchanges_visit",
-				FT_WORDMARK_EDIT => "wordmark_edit",
-				FT_MOSTVISITED_VISIT => "mostvisited_visit",
-				FT_TOPTENLIST_ADD_1 => "toptenlist_add%",
-				FT_BLOGPOST_ADD_1 => "blogpost_add%",
-				FT_FB_LIKES_3 => "fb_likes%",
-				FT_UNCATEGORIZED_VISIT => "uncategorized_visit",
-				FT_TOTAL_EDIT_300 => "total_edit%",
+				FT_PAGE_ADD_10 => "page-add%",
+				FT_THEMEDESIGNER_VISIT => "themedesigner-visit",
+				FT_MAINPAGE_EDIT => "mainpage-edit",
+				FT_PHOTO_ADD_10 => "photo-add%",
+				FT_CATEGORY_ADD3 => "category-add%",
+				FT_COMMCENTRAL_VISIT => "commcentral-visit",
+				FT_WIKIACTIVITY_VISIT => "wikiactivity-visit",
+				FT_PROFILE_EDIT => "profile-edit",
+				FT_PHOTO_ADD_20 => "photo-add%",
+				FT_TOTAL_EDIT_75 => "total-edit%",
+				FT_PAGE_ADD_20 => "page-add%",
+				FT_CATEGORY_EDIT => "category-edit",
+				FT_WIKIALABS_VISIT => "wikialabs-visit",
+				FT_FB_CONNECT => "fb-connect",
+				FT_CATEGORY_ADD_5 => "category-add%",
+				FT_PAGELAYOUT_VISIT => "pagelayout-visit",
+				FT_GALLERY_ADD => "gallery-add",
+				FT_TOPNAV_EDIT => "topnav-edit",
+				FT_MAINPAGE_ADDSLIDER => "mainpage-addslider",
+				FT_COMMCORNER_EDIT => "commcorner-edit",
+				FT_VIDEO_ADD => "video-add",
+				FT_USER_ADD_5 => "user-add%",
+				FT_RECENTCHANGES_VISIT => "recentchanges-visit",
+				FT_WORDMARK_EDIT => "wordmark-edit",
+				FT_MOSTVISITED_VISIT => "mostvisited-visit",
+				FT_TOPTENLIST_ADD => "toptenlist-add",
+				FT_BLOGPOST_ADD => "blogpost-add",
+				FT_FB_LIKES_3 => "fb-likes%",
+				FT_UNCATEGORIZED_VISIT => "uncategorized-visit",
+				FT_TOTAL_EDIT_300 => "total-edit%",
 			);
 
 		// This list says how many times an item needs to be counted to be finished
@@ -53,7 +54,7 @@ class FounderProgressBarController extends WikiaController {
 				FT_CATEGORY_ADD3 => 3,
 				FT_COMMCENTRAL_VISIT => 1,
 				FT_WIKIACTIVITY_VISIT => 1,
-				FT_PROFILE_EDIT_1 => 1,
+				FT_PROFILE_EDIT => 1,
 				FT_PHOTO_ADD_20 => 20,
 				FT_TOTAL_EDIT_75 => 75,
 				FT_PAGE_ADD_20 => 20,
@@ -62,17 +63,17 @@ class FounderProgressBarController extends WikiaController {
 				FT_FB_CONNECT => 1,
 				FT_CATEGORY_ADD_5 => 5,
 				FT_PAGELAYOUT_VISIT => 1,
-				FT_GALLERY_ADD_1 => 1,
+				FT_GALLERY_ADD => 1,
 				FT_TOPNAV_EDIT => 1,
 				FT_MAINPAGE_ADDSLIDER => 1,
 				FT_COMMCORNER_EDIT => 1,
-				FT_VIDEO_ADD_1 => 1,
+				FT_VIDEO_ADD => 1,
 				FT_USER_ADD_5 => 5,
 				FT_RECENTCHANGES_VISIT => 1,
 				FT_WORDMARK_EDIT => 1,
 				FT_MOSTVISITED_VISIT => 1,
-				FT_TOPTENLIST_ADD_1 => 1,
-				FT_BLOGPOST_ADD_1 => 1,
+				FT_TOPTENLIST_ADD => 1,
+				FT_BLOGPOST_ADD => 1,
 				FT_FB_LIKES_3 => 3,
 				FT_UNCATEGORIZED_VISIT => 1,
 				FT_TOTAL_EDIT_300 => 300,
@@ -152,7 +153,8 @@ class FounderProgressBarController extends WikiaController {
 				array('task_id', 'task_count', 'task_completed', 'task_skipped', 'task_timestamp'),
 				array('wiki_id' => $this->wg->CityId)
 				);
-
+			$total_tasks = count($this->messages);
+			$tasks_completed = 0;			
 			while($row = $dbr->fetchObject($res)) {
 				$task_id = $row->task_id;
 				$list[$task_id] = array (
@@ -165,8 +167,13 @@ class FounderProgressBarController extends WikiaController {
 					"task_description" => $this->getMsgForTask($task_id, "description"),
 					"task_action" => $this->getMsgForTask($task_id, "action"),
 					);
+				if ($row->task_completed == 1) {
+					$tasks_completed ++;
+				}
 			}
-
+			$list['tasks_completed'] = $tasks_completed;
+			$list['total_tasks'] = $total_tasks;
+			$list['completion_percent'] = round(100 * ($tasks_completed / $total_tasks), 0, ROUND_HALF_EVEN);
 			if (!empty($list)) {
 				$this->wg->Memc->set($memKey, $list, 3600);
 			}
@@ -274,17 +281,17 @@ class FounderProgressBarController extends WikiaController {
 		if (! isset($this->messages[$task_id]) ) {
 			if ($type == "label") return "Task $type";
 			if ($type == "description") return "Task $type Placeholder";
-			if ($type == "action") return "Button Label";
+			if ($type == "action") return "Call to action Label";
 		}
 
 		$messageStr = $this->messages[$task_id];
 		if (substr($messageStr, -1) == '%') {
-			$messageStr = substr($messageStr, 0, -1) . "-" . $type;  // Chop off the %
 			$number = $this->counters[$task_id];
+			$messageStr = "founderprogressbar-". str_replace('%', $number, $messageStr) . "-" . $type;  // Chop off the %
 			return wfMsg($messageStr, $number);
 		} 
 		// Default case
-		$messageStr = $messageStr . "-" . $type;			
+		$messageStr = "founderprogressbar-". $messageStr . "-" . $type;			
 		return wfMsg($messageStr);
 	}
 }
