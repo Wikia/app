@@ -1,12 +1,6 @@
 function WikiaPhoneOldTracker(str) {
-	if(typeof wgEnableGA != "undefined" && wgEnableGA == true) {
-		_gaq.push(['_setAccount', 'UA-2871474-1']);
-		_gaq.push(['_trackPageview', str]);
-	} else if(typeof urchinTracker !== 'undefined') {
-		_uff = 0;
-		_uacct = "UA-2871474-1";
-		urchinTracker(str);
-	}
+	_gaq.push(['_setAccount', 'UA-2871474-1']);
+	_gaq.push(['_trackPageview', str]);
 }
 
 username = wgUserName == null ? 'anon' : 'user';

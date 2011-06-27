@@ -28,17 +28,15 @@ class AnalyticsEngine {
 		if ( !empty($wgDevelEnvironment) ) {
 			return '<!-- DevelEnvironment -->';
 		}
-		
+
 		if ( !empty($wgNoExternals) ) {
 			return '<!-- AnalyticsEngine::track - externals disabled -->';
 		}
 
 		switch ($provider){
-	//	  case 'GAT': $AP = new AnalyticsProviderGAT(); break;
 		  case 'GA_Urchin': $AP = new AnalyticsProviderGA_Urchin(); break;
 		  case 'QuantServe': $AP = new AnalyticsProviderQuantServe(); break;
 		  case 'Comscore': $AP = new AnalyticsProviderComscore(); break;
-	//	  case 'MessageQueue': $AP = new AnalyticsProviderMessageQueue(); break;
 		  case 'Exelate': $AP = new AnalyticsProviderExelate(); break;
 		  default: return '<!-- Invalid provider for AnalyticsEngine::getTrackCode -->';
 		}

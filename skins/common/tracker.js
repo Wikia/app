@@ -88,17 +88,10 @@ YAHOO.Wikia.Tracker = {
 	},
 	
 	trackStr: function(str, account) {
-		if(typeof wgEnableGA != "undefined" && wgEnableGA == true) {
-			if(typeof account != 'undefined') {
-				_gaq.push(['_setAccount', account]);
-			}
-			_gaq.push(['_trackPageview', str]);
-		} else if(typeof urchinTracker != 'undefined') {
-			if(typeof account != 'undefined') {
-				_uacct = account;
-			}
-			urchinTracker(str);
+		if(typeof account != 'undefined') {
+			_gaq.push(['_setAccount', account]);
 		}
+		_gaq.push(['_trackPageview', str]);
 		YAHOO.log(str, "info", "tracker");
 	},
 

@@ -283,25 +283,11 @@ jQuery.tracker.byId = function(e) {
 };
 
 jQuery.tracker.trackStr = function(str, account) {
-	//if (typeof OneDot != "undefined") {
-	//	OneDot.track(str);
-	//}
-
-	if(typeof wgEnableGA != "undefined" && wgEnableGA == true) {
-		if(typeof account != 'undefined') {
-			_gaq.push(['_setAccount', account]);
-		}
-		_gaq.push(['_trackPageview', str]);
-		$().log('tracker: ' + str);
-	} else if(typeof urchinTracker != 'undefined') {
-		if(typeof account != 'undefined') {
-			_uacct = account;
-		}
-		urchinTracker(str);
-		$().log('tracker: ' + str);
-	} else {
-		$().log('tracker [void]: ' + str);
+	if(typeof account != 'undefined') {
+		_gaq.push(['_setAccount', account]);
 	}
+	_gaq.push(['_trackPageview', str]);
+	$().log('tracker: ' + str);
 };
 
 jQuery.tracker.track = function(fakeurl) {
@@ -347,17 +333,11 @@ jQuery.tracker.trackEvent = function(category, action, opt_label, opt_value) {
 		gaqArgs.push(arguments[i]);
 	}
 
-	if(window.wgEnableGA) {
-		_gaq.push(
-			['_setAccount', 'UA-2871474-1'],
-			gaqArgs
-		);
-
-		$().log(logStr, 'tracker [event]');
-	}
-	else {
-		$().log(logStr, 'tracker [event void]');
-	}
+	_gaq.push(
+		['_setAccount', 'UA-2871474-1'],
+		gaqArgs
+	);
+	$().log(logStr, 'tracker [event]');
 };
 
 // macbre: temporary fix
