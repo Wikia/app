@@ -8,22 +8,26 @@
  * wikia settings which differ from default.
  */
 
-if( empty( $_GET[ "smwsql"] ) ) {
-	$smwgDefaultStore = "SMWSparqlStore";
 
-	switch( $wgCityId ) {
+switch( $wgCityId ) {
 
-		// familypedia2/allegrograph
-		case 232959:
-			$smwgSparqlQueryEndpoint = 'http://smw:smw@localhost:10035/repositories/smw';
-			$smwgSparqlUpdateEndpoint = 'http://smw:smw@localhost:10035/repositories/smw';
-			$smwgSparqlDataEndpoint = ''; // can be empty
-			break;
+	// familypedia3/mysql
+	case 233065:
+		break;
 
-		default:
-			$smwgSparqlDatabase = 'SMWSparqlDatabase4Store';
-			$smwgSparqlQueryEndpoint = 'http://localhost:9000/sparql/';
-			$smwgSparqlUpdateEndpoint = 'http://localhost:9000/update/';
-			$smwgSparqlDataEndpoint = 'http://localhost:9000/data/';
-	}
+	// familypedia2/allegrograph
+	case 232959:
+		$smwgDefaultStore = "SMWSparqlStore";
+		$smwgSparqlQueryEndpoint = 'http://smw:smw@localhost:10035/repositories/smw';
+		$smwgSparqlUpdateEndpoint = 'http://smw:smw@localhost:10035/repositories/smw';
+		$smwgSparqlDataEndpoint = ''; // can be empty
+		break;
+
+	default:
+		$smwgDefaultStore = "SMWSparqlStore";
+		$smwgSparqlDatabase = 'SMWSparqlDatabase4Store';
+		$smwgSparqlQueryEndpoint = 'http://localhost:9000/sparql/';
+		$smwgSparqlUpdateEndpoint = 'http://localhost:9000/update/';
+		$smwgSparqlDataEndpoint = 'http://localhost:9000/data/';
 }
+
