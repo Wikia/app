@@ -328,4 +328,21 @@ class FounderEmails {
 		
 		return $result;		
 	}
+	
+	/**
+	 * add link (<a> tag) to the param
+	 * @param array $params
+	 * @param array $links
+	 * @return array 
+	 */
+	public static function addLink($params, $links) {
+		if (is_array($params) && is_array($links)) {
+			foreach($links as $key => $value) {
+				if (array_key_exists($key, $params))
+					$params[$key] = '<a href="'.$value.'">'.$params[$key].'</a>';
+			}
+		}
+		return $params;
+	}
+	
 }

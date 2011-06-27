@@ -26,6 +26,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 			// get just one event when we have more... for now, just randomly
 			$eventData = $events[rand( 0, count( $events ) -1 )];
 
+			$foundingWiki = WikiFactory::getWikiById($wgCityId);
 			$founderEmails = FounderEmails::getInstance();
 			$emailParams = array(
 				'$FOUNDERNAME' => $founderEmails->getWikiFounder()->getName(),
@@ -34,16 +35,20 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 				'$USERTALKPAGEURL' => $eventData['data']['userTalkPageUrl'],
 				'$UNSUBSCRIBEURL' => $eventData['data']['unsubscribeUrl'],
 				'$WIKINAME' => $wgSitename,
+				'$WIKIURL' => $foundingWiki->city_url,
 			);
-
 			$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';
 			$langCode = $founderEmails->getWikiFounder()->getOption( 'language' );
 			$mailSubject = strtr(wfMsgExt('founderemails' . $wikiType . '-email-user-registered-subject', array('content')), $emailParams);
 			$mailBody = strtr(wfMsgExt('founderemails' . $wikiType . '-email-user-registered-body', array('content')), $emailParams);
 			
 			if(!empty($langCode) && $langCode == 'en' && empty( $wgEnableAnswers )) { // FounderEmailv2.1
+				$links = array(
+					'$USERNAME' => $emailParams['$USERPAGEURL'],
+					'$WIKINAME' => $emailParams['$WIKIURL'],
+				);
 				$mailBodyHTML = wfRenderModule("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'user-registered')));
-				$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
+				$mailBodyHTML = strtr($mailBodyHTML, FounderEmails::addLink($emailParams,$links));
 			} else {
 				$mailBodyHTML = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-user-registered-body-HTML', $emailParams );
 			}
