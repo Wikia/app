@@ -8,7 +8,7 @@
 	<ul class="wikia-menu-button">
 		<li>
 			<a href="#" data-id="edit"><?= wfMsg('sponsorship-dashboard-download') ?></a>
-			<img src="http://images1.wikia.nocookie.net/__cb34566/common/skins/common/blank.gif" class="chevron">
+			<img src="<?=F::app()->wf->blankImgUrl(); ?>" class="chevron">
 			<ul style="min-width: 117px; ">
 				<li><a href="#" id="sponsorshipDashboardDownloadChart" ><?= wfMsg('sponsorship-dashboard-download-chart') ?></a></li>
 				<li><a href="<?=$path ?>" id="sponsorshipDashboardDownloadCSV" ><?= wfMsg('sponsorship-dashboard-download-csv') ?></a></li>
