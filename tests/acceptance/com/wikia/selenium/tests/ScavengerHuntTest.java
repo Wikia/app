@@ -21,205 +21,327 @@ import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStor
 import static org.testng.AssertJUnit.*;
 
 import org.testng.annotations.Test;
+import org.testng.annotations.BeforeMethod;
 
 public class ScavengerHuntTest extends BaseTest {
-	private boolean waitForElementBool(String xpath) throws Exception {
-		for (int second = 0;; second++) {
-			if (second >= 60) return false;
-			try {
-				if (session().isElementPresent(xpath)) return true;
-			}
-			catch (Exception e) {}
-			Thread.sleep(500);
-		}
-	}
 
-	@Test(groups={"oasis", "CI"})
-	public void testGame() throws Exception {
-		//prepare some data
-		DateFormat df = new SimpleDateFormat("yyyyMMDDHHmm");
-		String date = df.format(new Date());
-		//general
-		String generalGameName = "WikiaScavengerHuntGame " + date;
-		String generalLanding = "ScavengerTestLanding";
-		String generalButton = "Start a game!";
-		String imageTop = "150";
-		String imageLeft = "-150";
-		//starting
-		String startingClueTitle = "Starting title " + date;
-		String startingClueText = "Starting clue text " + date;
-		String startingClueImage = "http://images2.wikia.nocookie.net/__cb20101125134213/lukasztest/pl/images/8/84/Test_picture_1.png";
-		String startingButtonText = "Starting clue button " + date;
-		String startingButtonTarget = "http://wikia.com/?target=starting&date=" + date;
-		//article
-		String articleTitle = "ScavengerTest1";
-		String articleTitle2 = "ScavengerTest2";
-		String articleHiddenImage = "http://images2.wikia.nocookie.net/__cb20101125134214/lukasztest/pl/images/f/f6/Test_picture_2.png";
-		String articleHiddenImage2 = "http://images3.wikia.nocookie.net/__cb20101125134215/lukasztest/pl/images/4/44/Test_picture_6.png";
-		String articleClueTitle = "Article clue title " + date;
-		String articleClueText = "Article clue text " + date;
-		String articleClueImage = "http://images4.wikia.nocookie.net/__cb20101125134214/lukasztest/pl/images/d/da/Test_picture_3.png";
-		String articleButtonText = "Article clue button " + date;
-		String articleButtonTarget = "http://wikia.com/?target=article1&date=" + date;
-		String articleButtonTarget2 = "http://wikia.com/?target=article2&date=" + date;
-		//entry form
-		String entryModalTitle = "Entry title " + date;
-		String entryModalText = "Entry modal text " + date;
-		String entryModalImage = "http://images1.wikia.nocookie.net/__cb20101125134214/lukasztest/pl/images/8/8c/Test_picture_4.png";
-		String entryQuestion = "Entry question " + date;
-		//entry form data
-		String entryFormQuestion = "Entry form question " + date;
-		String entryFormName = "Entry form name " + date;
-		String entryFormEmail = date + "@EntryFormMail.pl";
-		//goodbye
-		String goodbyeModalTitle = "Goodbye title " + date;
-		String goodbyeModalText = "Goodbye text " + date;
-		String goodbyeModalImage = "http://images1.wikia.nocookie.net/__cb20101125134214/lukasztest/pl/images/8/88/Test_picture_5.png";
-
+	@BeforeMethod(alwaysRun = true)
+	public void deleteAllHunts() throws Exception {
 		loginAsStaff();
-
-		//prepare - create articles
-		editArticle(generalLanding, "some content");
-		editArticle(articleTitle, "some content");
-		editArticle(articleTitle2, "some content");
-
-		//go to the list
-		session().open("index.php?title=Special:ScavengerHunt");
+		/*
+		session().open("wiki/Special:ScavengerHunt");
 		session().waitForPageToLoad(this.getTimeout());
+		this.waitForElement("link=Add a game");
 
-		//click `add` button
-		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[contains(@class, 'scavengerhunt-add-button')]"));
-		session().click("//header[@id='WikiaPageHeader']//a[contains(@class, 'scavengerhunt-add-button')]");
-		session().waitForPageToLoad(this.getTimeout());
-
-		//fill in the form
-		//general
-		session().type("gameName", generalGameName);
-		session().type("//input[@name='landingTitle']", generalLanding);
-		session().type("//input[@name='landingButtonText']", generalButton);
-		//starting
-		session().type("//input[@name='startingClueTitle']", startingClueTitle);
-		session().type("//textarea[@name='startingClueText']", startingClueText);
-		session().type("//input[@name='startingClueImage']", startingClueImage);
-		session().type("//input[@name='startingClueImageTopOffset']", imageTop);
-		session().type("//input[@name='startingClueImageLeftOffset']", imageLeft);
-		session().type("//input[@name='startingClueButtonText']", startingButtonText);
-		session().type("//input[@name='startingClueButtonTarget']", startingButtonTarget);
-		//article #1
-		session().type("//input[@name='articleTitle[]']", articleTitle);
-		session().type("//input[@name='articleHiddenImage[]']", articleHiddenImage);
-		session().type("//input[@name='articleClueTitle[]']", articleClueTitle);
-		session().type("//textarea[@name='articleClueText[]']", articleClueText);
-		session().type("//input[@name='articleClueImage[]']", articleClueImage);
-		session().type("//input[@name='articleClueImageTopOffset[]']", imageTop);
-		session().type("//input[@name='articleClueImageLeftOffset[]']", imageLeft);
-		session().type("//input[@name='articleClueButtonText[]']", articleButtonText);
-		session().type("//input[@name='articleClueButtonTarget[]']", articleButtonTarget);
-		//add article #2 (invoke onblur() on articleTitle)
-		session().getEval("window.$('input[name=\"articleTitle[]\"]').blur()");
-		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleTitle[]']", articleTitle2);
-		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleHiddenImage[]']", articleHiddenImage2);
-		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleClueTitle[]']", articleClueTitle);
-		session().type("//fieldset[@class='scavenger-article'][2]//textarea[@name='articleClueText[]']", articleClueText);
-		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleClueImage[]']", articleClueImage);
-		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleClueImageTopOffset[]']", imageTop);
-		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleClueImageLeftOffset[]']", imageLeft);
-		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleClueButtonText[]']", articleButtonText);
-		session().type("//fieldset[@class='scavenger-article'][2]//input[@name='articleClueButtonTarget[]']", articleButtonTarget2);
-		//entry
-		session().type("//input[@name='entryFormTitle']", entryModalTitle);
-		session().type("//textarea[@name='entryFormText']", entryModalText);
-		session().type("//input[@name='entryFormImage']", entryModalImage);
-		session().type("//input[@name='entryFormImageTopOffset']", imageTop);
-		session().type("//input[@name='entryFormImageLeftOffset']", imageLeft);
-		session().type("//textarea[@name='entryFormQuestion']", entryQuestion);
-		//goodbye
-		session().type("//input[@name='goodbyeTitle']", goodbyeModalTitle);
-		session().type("//textarea[@name='goodbyeText']", goodbyeModalText);
-		session().type("//input[@name='goodbyeImage']", goodbyeModalImage);
-		session().type("//input[@name='goodbyeImageTopOffset']", imageTop);
-		session().type("//input[@name='goodbyeImageLeftOffset']", imageLeft);
-		//finish
-		session().click("//form[@class='scavenger-form']//input[@name='save']");
-		session().waitForPageToLoad(this.getTimeout());
-
-		//check confirmation (Oasis only)
-//		assertTrue(session().isElementPresent("//section[@id='WikiaPage']/div[@class='WikiaConfirmation']"));
-
-		//go to the last page if we have more than one
-		if (session().isElementPresent("//div[@id='WikiaArticle']/a[@class='mw-lastlink']")) {
-			session().click("//div[@id='WikiaArticle']/a[@class='mw-lastlink']");
+		while (session().isElementPresent("//table[contains(@class, 'scavengerhunt-list-table')]//tr[2]/td[3]/a")) {
+			session().click("//table[contains(@class, 'scavengerhunt-list-table')]//tr[2]/td[3]/a");
+			session().waitForPageToLoad(this.getTimeout());
+			session().click("delete");
+			this.waitForElement("//section[@id='WikiaConfirm']");
+			session().click("//a[@id='WikiaConfirmOk']");
 			session().waitForPageToLoad(this.getTimeout());
 		}
-
-		//check if new game is on the list
-		assertTrue(session().isElementPresent("//div[@id='WikiaArticle']/table/tbody/tr/td[contains(text(), '" + generalGameName + "')]"));
-		//click edit
-		session().click("//div[@id='WikiaArticle']/table/tbody/tr[td[contains(text(), '" + generalGameName + "')]]/td[3]/a");
-		session().waitForPageToLoad(this.getTimeout());
-		//enable the game
-		session().click("//form[@class='scavenger-form']//input[@name='enable']");
-		session().waitForPageToLoad(this.getTimeout());
-
-		//go to article with game data (starting point)
-		session().open("index.php?title=" + generalLanding);
-		session().waitForPageToLoad(this.getTimeout());
-		//check presence of start button
-		assertTrue(session().isElementPresent("//div[@id='WikiaArticle']//input[@value='" + generalButton + "']"));
-		//click it
-		session().click("//div[@id='WikiaArticle']//input[@value='" + generalButton + "']");
-		//wait for modal and check presence of the button
-		assertTrue(waitForElementBool("//div[@class='scavenger-clue-button']/a[@href='" + startingButtonTarget + "']"));
-
-		//go to article with game data (1st article)
-		session().open("index.php?title=" + articleTitle);
-		session().waitForPageToLoad(this.getTimeout());
-		//wait for hidden image
-		assertTrue(waitForElementBool("//img[@class='scavenger-hidden-image' and @src='" + articleHiddenImage + "']"));
-		//click on it
-		session().click("//img[@class='scavenger-hidden-image' and @src='" + articleHiddenImage + "']");
-		//wait for modal and check presence of the button
-		assertTrue(waitForElementBool("//div[@class='scavenger-clue-button']/a[@href='" + articleButtonTarget + "']"));
-
-		//go to article with game data (2st article)
-		session().open("index.php?title=" + articleTitle2);
-		session().waitForPageToLoad(this.getTimeout());
-		//wait for hidden image
-		assertTrue(waitForElementBool("//img[@class='scavenger-hidden-image' and @src='" + articleHiddenImage2 + "']"));
-		//click on it
-		session().click("//img[@class='scavenger-hidden-image' and @src='" + articleHiddenImage2 + "']");
-		//wait for modal - it's the last article so we should get entry form
-		assertTrue(waitForElementBool("//form[@class='scavenger-entry-form']"));
-		//fill in the form
-		session().type("//form[@class='scavenger-entry-form']/textarea[@name='answer']", entryFormQuestion);
-		session().type("//form[@class='scavenger-entry-form']/input[@name='name']", entryFormName);
-		session().type("//form[@class='scavenger-entry-form']/input[@name='email']", entryFormEmail);
-		//unblock submit button
-		session().getEval("window.$('#scavengerEntryFormModal').find('.scavenger-clue-button input[type=submit]').attr('disabled', '');");
-		//send it
-		session().click("//form[@class='scavenger-entry-form']//input[@type='submit']");
-
-		//wait for goodbye form
-		assertTrue(waitForElementBool("//section[@id='scavengerGoodbyeModal']"));
-
-		//clear after test - delete the game
-		//go to the list
-		session().open("index.php?title=Special:ScavengerHunt");
-		session().waitForPageToLoad(this.getTimeout());
-		//go to the last page if we have more than one
-		if (session().isElementPresent("//div[@id='WikiaArticle']/a[@class='mw-lastlink']")) {
-			session().click("//div[@id='WikiaArticle']/a[@class='mw-lastlink']");
+		*/
+	}
+		
+		public void deleteQAHunts() throws Exception {
+			loginAsStaff();
+			session().open("wiki/Special:ScavengerHunt");
 			session().waitForPageToLoad(this.getTimeout());
+			this.waitForElement("link=Add a game");
+
+			while (session().isElementPresent("//table[contains(@class, 'scavengerhunt-list-table')]//tr[2]/td[3]/a")) {
+				session().click("//table[contains(@class, 'scavengerhunt-list-table')]//tr[2]/td[3]/a");
+				session().waitForPageToLoad(this.getTimeout());
+				session().click("delete");
+				this.waitForElement("//section[@id='WikiaConfirm']");
+				session().click("//a[@id='WikiaConfirmOk']");
+				session().waitForPageToLoad(this.getTimeout());
+			}
+	
+			//session().getTable("css=table.scavengerhunt-list-table.0.1"), "Disabled");
 		}
-		//click edit
-		session().click("//div[@id='WikiaArticle']/table/tbody/tr[td[contains(text(), '" + generalGameName + "')]]/td[3]/a");
+	
+
+	/**
+	 * Create hunt
+	 * Verify user is redirected to list of hunts
+	 * Verify it is visible on the list of hunts
+	 * Verify it is disabled
+	*/
+	//@Test(groups={"CI"})
+	public void testCreatingAHunt() throws Exception {
+			session().open("wiki/Special:ScavengerHunt");
 		session().waitForPageToLoad(this.getTimeout());
-		//click delete
-		session().click("//form[@class='scavenger-form']//input[@name='delete']");
-		//wait for confirm modal
-		assertTrue(waitForElementBool("//section[@id='WikiaConfirm']"));
-		//click ok
-		session().click("//a[@id='WikiaConfirmOk']");
+		session().click("link=Add a game");
 		session().waitForPageToLoad(this.getTimeout());
+		String gameName = "Test game " + (new Date()).toString();
+		session().type("gameName", gameName);
+		session().click("save");
+		session().waitForPageToLoad(this.getTimeout());
+		assertTrue("After creating game user should be redirected to list of games", session().getLocation().contains("wiki/Special:ScavengerHunt"));
+		assertFalse("After creating game user should be redirected to list of games", session().getLocation().contains("wiki/Special:ScavengerHunt/add"));
+		assertFalse("After creating game user should be redirected to list of games", session().getLocation().contains("wiki/Special:ScavengerHunt/edit"));
+		assertTrue("Could not find newly created game on list of games", session().isTextPresent(gameName));
+		assertTrue("Created hunt  message not displayed", session().isTextPresent("New Scavenger Hunt game has been created."));
+		
+		assertEquals("Created game is not disabled", session().getTable("css=table.scavengerhunt-list-table.2.1"), "Disabled");
+	}
+	
+	@Test(groups={"CI"})
+	public void testCreateAnExampleHunt() throws Exception {
+		session().open("wiki/Special:ScavengerHunt");
+		session().waitForPageToLoad(this.getTimeout());
+		session().click("link=Add a game");
+		session().waitForPageToLoad(this.getTimeout());
+		String gameName = "Example Hunt " + (new Date()).toString();
+        //General
+		//Name
+		session().type("gameName", gameName);
+		//Landing page name (article URL on any wiki): 
+		session().type("landingTitle", "http://firefly.patrick.wikia-dev.com/wiki/Main_Page");
+		
+		//Landing page button text: 
+		String landingButton = "landing button" +(gameName);
+		session().type("landingButtonText", (landingButton));
+		
+		//Sprite Image path
+		session().type("spriteImg", "http://img215.imageshack.us/img215/2686/shsprite3.png");
+	//Progress Bar
+	//Progress bar background sprite 
+		//Element Position
+		session().type("progressBarBackgroundSpriteX", "-350");
+		session().type("progressBarBackgroundSpriteY", "-200");
+		//Sprite top-left
+		session().type("progressBarBackgroundSpriteX1", "0");
+		session().type("progressBarBackgroundSpriteY1", "462");
+		//Sprite bottom-right
+		session().type("progressBarBackgroundSpriteX2", "317");
+		session().type("progressBarBackgroundSpriteY2", "601");
+	
+	//Exit button sprite coordinates 
+		//Element Position
+		session().type("progressBarExitSpriteX", "-60");
+		session().type("progressBarExitSpriteY", "-190");
+		//Sprite top-left
+		session().type("progressBarExitSpriteX1", "304");
+		session().type("progressBarExitSpriteY1", "356");
+		//Sprite bottom-right
+		session().type("progressBarExitSpriteX2", "324");
+		session().type("progressBarExitSpriteY2", "376");
+
+	
+	//Clue label coordinates 
+		//Element Position
+		session().type("progressBarHintLabelX", "-350");
+		session().type("progressBarHintLabelY", "-100");
+		//Sprite top-left
+		session().type("progressBarHintLabelX1", "0");
+		session().type("progressBarHintLabelY1", "716");		
+		//Sprite bottom-right
+		session().type("progressBarHintLabelX2", "317");
+		session().type("progressBarHintLabelY2", "754");
+
+		
+		//Starting Clue popup
+		//Popup title: 
+		//String popuptitle = ("Start clue title " + gamename);
+		String startingClueTitle = "starting Clue Title " +(gameName);
+		session().type("startingClueTitle", startingClueTitle);
+	//	Popup text: (text in <div> will have link color) 
+		String startingClueText = "starting Clue Text " +(gameName);
+		session().type("startingClueText", startingClueText);
+		//Popup button text 
+		String startingClueButtonText = "starting Clue Button Text " +(gameName);
+		session().type("startingClueButtonText", startingClueButtonText);
+				//Popup button target (URL address)
+		session().type("startingClueButtonTarget", "http://firefly.patrick.wikia-dev.com/wiki/Category:Serenity_crewmembers");
+		//Popup image sprite coordinates 
+		//Element Position
+		session().type("startPopupSpriteX", "0");
+		session().type("startPopupSpriteY", "0");
+		
+		//Sprite top-left
+		session().type("startPopupSpriteX1", "0");
+		session().type("startPopupSpriteY1", "0");
+		//Sprite bottom-right
+		session().type("startPopupSpriteX2", "2");
+		session().type("startPopupSpriteY2", "2");
+		
+	//Article (in-game page) #1
+		//Page title (article URL on any wiki) 
+		session().type("articleTitle[0]", "http://firefly.patrick.wikia-dev.com/wiki/Kaywinnit_Lee_Frye");
+		//Hunt item sprite coordinates 
+		//Element Position
+		session().type("spriteNotFoundX[0]", "400");
+		session().type("spriteNotFoundY[0]", "400");
+		//Sprite top-left
+		session().type("spriteNotFoundX1[0]", "0");
+		session().type("spriteNotFoundY1[0]", "7");
+		
+		//Sprite bottom-right
+		session().type("spriteNotFoundX2[0]", "85");
+		session().type("spriteNotFoundY2[0]", "247");
+		
+		//		Progress bar item sprite coordinates 
+		//Element Position
+		session().type("spriteInProgressBarX[0]", "-330");
+		session().type("spriteInProgressBarY[0]", "-170");
+		//Sprite top-left
+		session().type("spriteInProgressBarX1[0]", "0");
+		session().type("spriteInProgressBarY1[0]", "258");
+		//Sprite bottom-right
+		session().type("spriteInProgressBarX2[0]", "59");
+		session().type("spriteInProgressBarY2[0]", "365");
+		
+		//Progress bar item on hover sprite coordinates 
+		//Element Position
+		session().type("spriteInProgressBarHoverX[0]", "-335");
+		session().type("spriteInProgressBarHoverY[0]", "-175");
+		//Sprite top-left
+		session().type("spriteInProgressBarHoverX1[0]", "0");
+		session().type("spriteInProgressBarHoverY1[0]", "604");
+		//Sprite bottom-right
+		session().type("spriteInProgressBarHoverX2[0]", "59");
+		session().type("spriteInProgressBarHoverY2[0]", "706");
+		
+		//Progress bar item not found 
+		//Element Position
+		session().type("spriteInProgressBarNotFoundX[0]", "-330");
+		session().type("spriteInProgressBarNotFoundY[0]", "-170");
+		//Sprite top-left
+		session().type("spriteInProgressBarNotFoundX1[0]", "0");
+		session().type("spriteInProgressBarNotFoundY1[0]", "361");
+		//Sprite bottom-right
+		session().type("spriteInProgressBarNotFoundX2[0]", "60");
+		session().type("spriteInProgressBarNotFoundY2[0]", "463");
+		
+		//Clue popup text 
+		String articleFirstClueText = "Article first clue test " +(gameName);
+		session().type("articleClueText[0]", articleFirstClueText);
+		
+		
+		//Congratulations message 
+		String CongratsFirstClueText = "Congrats first clue " +(gameName);
+		session().type("congrats[0]", CongratsFirstClueText);
+
+		
+		//Article (in-game page) #2
+		
+		session().click("addSection");
+		//Page title (article URL on any wiki) 
+		session().type("articleTitle[1]", "http://firefly.patrick.wikia-dev.com/wiki/Hoban_Washburne");
+		//Hunt item sprite coordinates 
+		//Element Position
+		session().type("spriteNotFoundX[1]", "400");
+		session().type("spriteNotFoundY[1]", "400");
+		//Sprite top-left
+		session().type("spriteNotFoundX1[1]", "85");
+		session().type("spriteNotFoundY1[1]", "18");
+		
+		//Sprite bottom-right
+		session().type("spriteNotFoundX2[1]", "154");
+		session().type("spriteNotFoundY2[1]", "244");
+		
+		//		Progress bar item sprite coordinates 
+		//Element Position
+		session().type("spriteInProgressBarX[1]", "-250");
+		session().type("spriteInProgressBarY[1]", "-170");
+		//Sprite top-left
+		session().type("spriteInProgressBarX1[1]", "59");
+		session().type("spriteInProgressBarY1[1]", "261");
+		//Sprite bottom-right
+		session().type("spriteInProgressBarX2[1]", "107");
+		session().type("spriteInProgressBarY2[1]", "716");
+		
+		//Progress bar item on hover sprite coordinates 
+		//Element Position
+		session().type("spriteInProgressBarHoverX[1]", "-255");
+		session().type("spriteInProgressBarHoverY[1]", "-168");
+		//Sprite top-left
+		session().type("spriteInProgressBarHoverX1[1]", "70");
+		session().type("spriteInProgressBarHoverY1[1]", "612");
+		//Sprite bottom-right
+		session().type("spriteInProgressBarHoverX2[1]", "127");
+		session().type("spriteInProgressBarHoverY2[1]", "716");
+		
+		//Progress bar item not found 
+		//Element Position
+		session().type("spriteInProgressBarNotFoundX[1]", "-250");
+		session().type("spriteInProgressBarNotFoundY[1]", "-170");
+		//Sprite top-left
+		session().type("spriteInProgressBarNotFoundX1[1]", "59");
+		session().type("spriteInProgressBarNotFoundY1[1]", "361");
+		//Sprite bottom-right
+		session().type("spriteInProgressBarNotFoundX2[1]", "107");
+		session().type("spriteInProgressBarNotFoundY2[1]", "462");
+		
+
+
+		
+		//Clue popup text 
+		String articleSecondClueText = "Article Second clue test " +(gameName);
+		session().type("articleClueText[1]", articleSecondClueText);
+		
+		
+		//Congratulations message 
+		String CongratsSecondClueText = "Congrats Second clue " +(gameName);
+		session().type("congrats[1]", CongratsSecondClueText);
+		
+		
+		//Entry form
+		//Popup title 
+		String entryFormTitle = "Entry form title " +(gameName);
+		session().type("entryFormTitle", entryFormTitle);
+		
+		//Popup text
+		String entryFormText = "Entry form title " +(gameName);
+		session().type("entryFormText", entryFormText);
+		
+		//Popup question
+		String entryFormQuestion = "Entry form question " +(gameName);
+		session().type("entryFormQuestion", entryFormQuestion);
+		
+		//User email
+		session().type("entryFormEmail", "p_archbold@hotmail.com");
+// Uaer Name
+		session().type("entryFormUsername", "User name 123");
+		
+		//Goodbye popup
+		//Popup title
+	
+		String goodbyeTitle = "Good bye title " +(gameName);
+		session().type("goodbyeTitle", goodbyeTitle);
+	
+		
+		//Popup message
+
+		String goodbyeText = "Good bye Text " +(gameName);
+		session().type("goodbyeText", goodbyeText);
+	
+		//Popup image sprite coordinates 
+		//Element Position
+		session().type("finishPopupSpriteX", "0");
+		session().type("finishPopupSpriteY", "0");
+		//Sprite top-left
+		session().type("finishPopupSpriteX1", "0");
+		session().type("finishPopupSpriteY1", "0");
+		//Sprite bottom-right
+		session().type("finishPopupSpriteX2", "2");
+		session().type("finishPopupSpriteY2", "2");
+		session().click("save");
+		session().waitForPageToLoad(this.getTimeout());
+		//assertTrue("After creating game user should be redirected to list of games", session().getLocation().contains("wiki/Special:ScavengerHunt"));
+		//assertFalse("After creating game user should be redirected to list of games", session().getLocation().contains("wiki/Special:ScavengerHunt/add"));
+		//assertFalse("After creating game user should be redirected to list of games", session().getLocation().contains("wiki/Special:ScavengerHunt/edit"));
+		//assertTrue("Could not find newly created game on list of games", session().isTextPresent(gameName));
+		//assertEquals("Created game is not disabled", session().getTable("css=table.scavengerhunt-list-table.1.1"), "Disabled");
+	//	session().click("//table[contains(@class, 'scavengerhunt-list-table')]//tr[2]/td[3]/a");
+	//	session().waitForPageToLoad(this.getTimeout());
+	//	session().click("enable");
+	//().waitForPageToLoad(this.getTimeout());
+	//	session().click("save");
+	//().waitForPageToLoad(this.getTimeout());
+		//assertEquals("Created game is enabled", session().getTable("css=table.scavengerhunt-list-table.2.1"), "Enabled");
 	}
 }
