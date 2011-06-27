@@ -127,6 +127,84 @@ $messages['it'] = array(
 	'error-json-parse' => 'Wystąpił problem z danymi zwróconymi z naszych serwerów, przepraszamy.\\nProsimy spróbować ponownie.'	
 );
 
+/** Dutch
+ * @author Vicky Carlsson <vicky(at)wikia-inc.com>
+ */
+$messages['nl'] = array(
+	'activityindicator-message' => 'Laden...',
+	
+	//window-wikis.js
+	'window-wikis-title' => 'Wikia Game Guides',
+	'window-wikis-wikilist-header' => 'Onze Top Games',
+	
+	//window-category.js
+	'window-category-load-batch' => 'Meer',
+	
+	//window-article.js
+	'window-article-button-close' => 'Sluit',
+	'window-article-button-back' => 'Terug',
+	'window-article-menu-search-label' => 'Zoek',
+	'window-article-menu-dashboard-label' => 'Inhoud Gids',
+	'window-article-menu-cancel-label' => 'Annuleren',
+	
+	//SearchView
+	'searchview-no-results' => 'Geen resultaten voor "%s"',
+	'searchview-button-back-list' => 'Terug naar lijst',
+	'searchview-button-back-article' => 'Terug naar artikel',
+	
+	//SearchBar
+	'searchbar-hint' => 'Zoek %s...',
+	
+	//update alert
+	'alert-download-updated-wikis-message' => 'Het lijst met beschikbare gidsen zal bijgewerkt worden.',
+	'alert-download-updated-wikis-button-ok' => 'Oké',
+	
+	//errors
+	'error-update-required' => 'Een nieuwe versie van deze gids is nodig en beschikbaar.',
+	'error-no-connection' => 'Geen internet-verbinding gevonden.\\nProbeer nogmaals.',
+	'error-server' => 'Onze servers gereageerde met een error, sorry.\\nProbeer nogmaals.',
+	'error-json-parse' => 'Er was een probleem met de data van onze servers, sorry.\\nProbeer nogmaals.'
+);
+
+/** Swedish
+ * @author Vicky Carlsson <vicky(at)wikia-inc.com>
+ */
+$messages['sv'] = array(
+	'activityindicator-message' => 'Laddar...',
+	
+	//window-wikis.js
+	'window-wikis-title' => 'Wikia Game Guides',
+	'window-wikis-wikilist-header' => 'Våra Topp-spel',
+	
+	//window-category.js
+	'window-category-load-batch' => 'Mer',
+	
+	//window-article.js
+	'window-article-button-close' => 'Stäng',
+	'window-article-button-back' => 'Tillbaka',
+	'window-article-menu-search-label' => 'Sök',
+	'window-article-menu-dashboard-label' => 'Guidens innehåll',
+	'window-article-menu-cancel-label' => 'Avbryt',
+	
+	//SearchView
+	'searchview-no-results' => 'Inga resultat for "%s"',
+	'searchview-button-back-list' => 'Tillbaka till listan',
+	'searchview-button-back-article' => 'Tillbaka till artikeln',
+	
+	//SearchBar
+	'searchbar-hint' => 'Sök %s...',
+	
+	//update alert
+	'alert-download-updated-wikis-message' => 'Listan med tillgängliga guider kommer att uppdateras.',
+	'alert-download-updated-wikis-button-ok' => 'OK',
+	
+	//errors
+	'error-update-required' => 'En uppdatering för den app är tillgänglig och nödvändig.',
+	'error-no-connection' => 'Ingen internetförbindelse tillgänglig.\\nVänligen försök igen.',
+	'error-server' => 'Tyvärr, våra servrar svarade med ett fel.\\nVänligen försök igen.',
+	'error-json-parse' => 'Tyvärr, ett problem uppstod med data från våra servrar.\\nVänligen försök igen.'
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -342,38 +420,6 @@ $messages['ms'] = array(
 	'error-plase-close-app' => 'Tidak boleh bersambung, sila cuba menutup dan membuka semula aplikasi ini.',
 	'error-close-window-retry' => 'Tetingkap ini akan tutup, sila cuba lagi atau pilih benda lain.',
 	'error-please-try-again' => 'Sila cuba lagi.',
-);
-
-/** Dutch (Nederlands)
- * @author SPQRobin
- * @author Siebrand
- */
-$messages['nl'] = array(
-	'activityindicator-message' => 'Bezig met laden...',
-	'windowwikis-title' => 'Onze topspellen',
-	'windowwikis-titleprompt' => 'Wikia Spelhandleidingen',
-	'windowwikis-searchbar-hint' => 'Onze topspellen doorzoeken...',
-	'windowwikicontents-windowtitle-leftbutton-label' => 'Spelletjes',
-	'windowcategory-title' => '%s: %s',
-	'windowcategory-searchbar-hint' => 'Bezig met zoeken naar %s...',
-	'windowcategory-windowtitle-leftbutton-label' => 'Terug',
-	'windowarticle-windowtitle-searchbar-hint-short' => 'Bezig met zoeken...',
-	'windowarticle-windowtitle-searchbar-hint' => 'Bezig met zoeken naar %s...',
-	'windowarticle-menu-search-label' => 'Zoeken',
-	'windowarticle-menu-games-label' => 'Spelletjes',
-	'windowarticle-menu-dashboard-label' => 'Gidsinhoud',
-	'windowarticle-no-search-results' => 'Geen resultaten voor %s',
-	'windowarticle-search-back' => 'Terug naar het artikel',
-	'alertdialog-error-title' => 'Fout',
-	'alertdialog-error-button-label' => 'Sluiten',
-	'error-update-required' => 'Er is een update voor deze toepassing beschikbaar en vereist. \\n%s',
-	'error-no-connection' => 'Geen internetverbinding beschikbaar. \\n%s',
-	'error-server' => 'Onze servers reageerden met een foutmelding, sorry. \\n%s',
-	'error-json-parse' => 'Er was een probleem met de gegevens die door onze servers zijn verzonden.\\n%s',
-	'error-app-will-close' => 'Het is niet mogelijk om door te gaan. Het programma wordt afgesloten. Probeer het opnieuw te openen.',
-	'error-plase-close-app' => 'Het is niet mogelijk om door te gaan. Probeer het programma af te sluiten en opnieuw te openen.',
-	'error-close-window-retry' => 'Dit venster wordt gesloten. Probeer het opnieuw of kies een ander item.',
-	'error-please-try-again' => 'Probeer het opnieuw.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
