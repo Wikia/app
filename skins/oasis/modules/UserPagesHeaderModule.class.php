@@ -158,7 +158,7 @@ class UserPagesHeaderModule extends Module {
 		if (!empty($user) && $user->isLoggedIn()) {
 			$userStatsService = new UserStatsService($user->getId());
 			$stats = $userStatsService->getStats();
-			
+
 			if (!empty($stats)) {
 				// date and points formatting
 				if ( !empty( $stats['date'] ) ) {
@@ -578,14 +578,14 @@ class UserPagesHeaderModule extends Module {
 	public function executeBlogListing() {
 		wfProfileIn(__METHOD__);
 		
-		wfLoadExtensionMessages('Blogs');
-		global $wgCreateBlogPagePreload;
+		global $wgTitle, $wgCreateBlogPagePreload;
 		// "Create blog post" button
 		$this->actionButton = array(
 				'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl( !empty($wgCreateBlogPagePreload) ? "preload=$wgCreateBlogPagePreload" : "" ),
 				'text' => wfMsg('blog-create-post-label'),
 				);
-		$this->title = wfMsg('create-blog-post-category');
+		$this->title = $wgTitle->getText();
+		$this->subtitle = wfMsg('create-blog-post-category');
 		
 		wfProfileOut(__METHOD__);
 	}
