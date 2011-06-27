@@ -23,14 +23,14 @@ var WikiHeader = {
 		WikiHeader.nav.children("ul").children("li")
 			.hover(WikiHeader.mouseover, WikiHeader.mouseout)
 			.children("a").focus(function(){
-				WikiHeader.hideNav();
+				setTimeout( function() { WikiHeader.hideNav(); }, 350 );
 				WikiHeader.showSubNav($(this).parent("li"));
 			});
 
 		//Accessibility Events
 		//Show when any inner anchors are in focus
 		WikiHeader.subnav.find("a").focus(function(event) {
-			WikiHeader.hideNav();
+			setTimeout( function() { WikiHeader.hideNav(); }, 350 );
 			WikiHeader.showSubNav($(event.currentTarget).closest(".subnav").parent("li"));
 		});
 		//Hide when focus out of first and last anchor
@@ -133,7 +133,7 @@ var WikiHeader = {
 		if($('body').data('accessible')) {
 			WikiHeader.subnav.css("top", "-9999px");
 		} else {
-			WikiHeader.subnav.delay(100).css("display", "none");
+                    WikiHeader.subnav.css("display", "none");
 		}
 		$.showAds();
 	},
