@@ -19,7 +19,7 @@ class SpecialJavascriptTestRunner extends SpecialPage {
 	}
 
 	function execute() {
-		global $wgRequest, $wgOut, $wgTitle, $wgUser, $wgServer, $wgScriptPath;
+		global $wgRequest, $wgOut, $wgUser, $wgServer, $wgScriptPath, $IP;
 
 		$this->setHeaders();
 
@@ -32,7 +32,6 @@ class SpecialJavascriptTestRunner extends SpecialPage {
 		$testFile = $wgRequest->getVal('test','');
 
 		if ($testFile) {
-			global $IP;
 			$testSuite = new JavascriptTestRunner_TestSuite($IP,$testFile);
 		}
 
@@ -135,6 +134,7 @@ class JavascriptTestRunner_TestSuite {
 					case 'require-group':
 						if (class_exists('AssetsManager')) {
 							$srcs = AssetsManager::getInstance()->getGroupLocalURL($value);
+							if (!is_array($srcs)) $srcs = array( $srcs );
 							$this->requiredFiles = array_merge($this->requiredFiles,$srcs);
 						}
 						break;
