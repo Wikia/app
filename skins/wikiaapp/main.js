@@ -18,19 +18,13 @@ var MobileAppSkin = {
 	},
 	
 	track: function(str) {
-		if(typeof wgEnableGA != "undefined" && wgEnableGA == true) {
-			if(!MobileAppSkin.sampleSet) {
-				_gaq.push(['_setSampleRate', '10']);
-				MobileAppSkin.sampleSet = true;
-			}
-			_gaq.push(
-				['_setAccount', MobileAppSkin.uacct],
-				['_trackPageview', str]
-			);
-		} else if(typeof urchinTracker !== 'undefined') {
-			_uff = 0;
-			_uacct = MobileAppSkin.uacct;
-			urchinTracker(str);
-		}		
+		if(!MobileAppSkin.sampleSet) {
+			_gaq.push(['_setSampleRate', '10']);
+			MobileAppSkin.sampleSet = true;
+		}
+		_gaq.push(
+			['_setAccount', MobileAppSkin.uacct],
+			['_trackPageview', str]
+		);
 	}
 };

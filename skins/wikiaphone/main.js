@@ -13,18 +13,12 @@ var MobileSkin = {
 	b: null,
 	
 	track: function(str) {
-		if(typeof wgEnableGA != "undefined" && wgEnableGA == true) {
-			if(!MobileSkin.sampleSet) {
-				_gaq.push(['_setSampleRate', '10']);
-				MobileSkin.sampleSet = true;
-			}
-			_gaq.push(['_setAccount', MobileSkin.uacct]);
-			_gaq.push(['_trackPageview', str]);
-		} else if(typeof urchinTracker !== 'undefined') {
-			_uff = 0;
-			_uacct = MobileSkin.uacct;
-			urchinTracker(str);
-		}		
+		if(!MobileSkin.sampleSet) {
+			_gaq.push(['_setSampleRate', '10']);
+			MobileSkin.sampleSet = true;
+		}
+		_gaq.push(['_setAccount', MobileSkin.uacct]);
+		_gaq.push(['_trackPageview', str]);
 	},
 	
 	initTracking: function(){
