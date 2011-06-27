@@ -27,7 +27,7 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 				break;
 
 			case AnalyticsEngine::EVENT_PAGEVIEW:
-				return '<script type="text/javascript">_uff=0;_uacct="UA-288915-1";urchinTracker();</script>';
+				return '<script type="text/javascript">_gaq.push([\'_setAccount\', \'UA-288915-1\']);_gaq.push([\'_trackPageview\']);_gaq.push([\'_trackPageLoadTime\']);</script>';
 
 			case 'hub':
 				if (empty($eventDetails['name'])){
