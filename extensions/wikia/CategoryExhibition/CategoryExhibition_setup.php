@@ -49,6 +49,7 @@ define('CATEXHIBITION_DISABLED', 'CATEXHIBITION_DISABLED');
 $wgHooks['LanguageGetMagic'][] = 'CategoryExhibitionHelper::onLanguageGetMagic';
 $wgHooks['InternalParseBeforeLinks'][] = 'CategoryExhibitionHelper::onInternalParseBeforeLinks';
 $wgHooks['ArticleFromTitle'][] = 'CategoryExhibitionHelper::onArticleFromTitle';
+$wgHooks['ArticlePurge'][] = 'CategoryExhibitionHelper::onArticlePurge';
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'CategoryExhibitionAjax';

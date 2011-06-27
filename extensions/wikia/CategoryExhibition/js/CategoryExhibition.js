@@ -55,7 +55,7 @@ var CategoryExhibition = {
 
 	mediaThumbnailClick : function(e) {
 		var url = $(this).attr('data-ref');
-		var desc = $(this).attr('title');
+		var link = $(this).attr('href');
 
 		// catch doubleclicks on video thumbnails
 		if (CategoryExhibition.videoPlayerLock) {
@@ -72,6 +72,9 @@ var CategoryExhibition = {
 						'id': 'activityfeed-video-player',
 						'width': res.width
 					});
+				} else {
+					// redirect if modal seems to be broken
+					window.location.href = link;
 				}
 				CategoryExhibition.videoPlayerLock = false;
 			}

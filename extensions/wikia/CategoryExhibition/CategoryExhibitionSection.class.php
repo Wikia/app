@@ -263,26 +263,49 @@ class CategoryExhibitionSection {
 	protected function getArticles( $aTmpData ){
 
 		$aData = array();
-		foreach( $aTmpData as $item ){
-			$snippetText = '';
-			$imageUrl = $this->getImageFromPageId( $item['page_id'] );
-
-			if ( $imageUrl == '' ){
-				if ( empty( $snippetText ) && empty( $imageUrl ) ){
-					$snippetService = new ArticleService ( $item['page_id'] );
-					$snippetText = $snippetService->getTextSnippet();
-				}
-			}
-
-			$aData[] = array(
-			    'id'	=> $item['page_id'],
-			    'title'	=> Title::newFromID( $item['page_id'] )->getText(),
-			    'img'	=> $imageUrl,
-			    'url'	=> Title::newFromID( $item['page_id'] )->getFullURL(),
-			    'snippet'	=> $snippetText
-			);
+		foreach( $aTmpData as $item ){			
+			$aData[] = $this->getArticleData( $item['page_id'] );
 		};		
 		return $aData;
+	}
+
+	protected function getArticleData( $pageId ){
+
+		$oMemCache = F::App()->wg->memc;
+		$sKey = F::App()->wf->sharedMemcKey(
+			'category_exhibition_category_cache',
+			$pageId,
+			F::App()->wg->cityId
+		);
+
+		$cachedResult = $oMemCache->get( $sKey );
+
+		if ( !empty( $cachedResult ) ) {
+			return $cachedResult;
+		}
+
+		$snippetText = '';
+		$imageUrl = $this->getImageFromPageId( $pageId );
+
+		if ( empty( $imageUrl ) ){
+			$snippetService = new ArticleService ( $pageId );
+			$snippetText = $snippetService->getTextSnippet();
+		}
+
+		$oTitle = Title::newFromID( $pageId );
+
+		$returnData = array(
+			'id'		=> $pageId,
+			'img'		=> $imageUrl,
+			'snippet'	=> $snippetText,
+			'title'		=> $oTitle->getText(),
+			'url'		=> $oTitle->getFullURL()
+		);
+
+		// will be purged elsewhere after edit
+		$oMemCache->set( $sKey, $returnData, 60*60*24*7 );
+		
+		return $returnData ;
 	}
 
 	/**
@@ -333,6 +356,7 @@ class CategoryExhibitionSection {
 	}
 
 	protected function saveToCache( $content ) {
+		
 		global $wgMemc;
 		$memcData = $this->getFromCache( );
 		if ( empty($memcData) ){

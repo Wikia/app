@@ -56,6 +56,8 @@ function wfOasisSetup() {
 
 	$wgHooks['ArticleViewHeader'][]  = 'UserPagesHeaderModule::saveFacebookConnectProfile';
 
+	$wgHooks['ArticlePurge'][] = 'ArticleService::onArticlePurge';
+
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);

@@ -52,4 +52,24 @@
 			}
 			return true;
 		}
+
+		/**
+		 * Hook entry when article is purged (purge the gallery cache if purging the category page
+		 */
+		static public function onArticlePurge( Article $article ) {
+			$title = $article->getTitle();
+
+			$a = new Title;
+
+			$oMemCache = F::App()->wg->memc;
+			$sKey = F::App()->wf->sharedMemcKey(
+				'category_exhibition_article_cache',
+				$title->getArticleId(),
+				F::App()->wg->cityId
+			);
+
+			$oMemCache->delete( $sKey );
+
+			return true;
+		}
 	}

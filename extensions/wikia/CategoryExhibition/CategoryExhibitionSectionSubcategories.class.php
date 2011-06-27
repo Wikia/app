@@ -39,42 +39,51 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 		return $this->executeTemplate( $oTmpl );
 	}
 
-	/**
-	 * Overides parent class. Returns data displayed in category.
-	 * This class uses not only images from page itself, but also form its sub articles and images.
-	 *
-	 * @param $aTmpData array Array returned by getTemplateFromNameSpace()
-	 * @return array
-	 */
+	protected function getArticleData( $pageId ){
 
-	protected function getArticles( $aTmpData ){
+		$oMemCache = F::App()->wg->memc;
+		$sKey = F::App()->wf->sharedMemcKey(
+			'category_exhibition_article_cache',
+			$pageId,
+			F::App()->wg->cityId
+		);
 
-		$aData = array();
-		foreach( $aTmpData as $item ){
-			$snippetText = '';
-			$imageUrl = $this->getImageFromPageId( $item['page_id'] );
+		$cachedResult = $oMemCache->get( $sKey );
 
-			// if category has no images in page content, look for images and articles in category
-			if ( $imageUrl == '' ){
-				$resultArray = $this->getCategoryImageOrSnippet( $item['page_id'] );
-				$snippetText = $resultArray['snippetText'];
-				$imageUrl = $resultArray['imageUrl'];
-				if ( empty($snippetText) && empty($imageUrl) ){
-					$snippetService = new ArticleService ( $item['page_id'] );
-					$snippetText = $snippetService->getTextSnippet();
-				}
+		if ( !empty( $cachedResult ) ) {
+			return $cachedResult;
+		}
+
+		$snippetText = '';
+		$imageUrl = $this->getImageFromPageId( $pageId );
+
+		// if category has no images in page content, look for images and articles in category
+		if ( $imageUrl == '' ){
+			$resultArray = $this->getCategoryImageOrSnippet( $pageId );
+			$snippetText = $resultArray['snippetText'];
+			$imageUrl = $resultArray['imageUrl'];
+			if ( empty($snippetText) && empty($imageUrl) ){
+				$snippetService = new ArticleService ( $pageId );
+				$snippetText = $snippetService->getTextSnippet();
 			}
-			$aData[] = array(
-			    'id'		=> $item['page_id'],
-			    'title'		=> Title::newFromID($item['page_id'])->getText(),
-			    'img'		=> $imageUrl,
-			    'url'		=> Title::newFromID($item['page_id'])->getFullURL(),
-			    'snippet'		=> $snippetText,
-			    'sortType'		=> $this->getSortType(),
-			    'displayType'	=> $this->getDisplayType()
-			);
-		};
-		return $aData;
+		}
+
+		$oTitle = Title::newFromID( $pageId );
+
+		$returnData = array(
+		    'id'		=> $pageId,
+		    'title'		=> $oTitle->getText(),
+		    'url'		=> $oTitle->getFullURL(),
+		    'img'		=> $imageUrl,
+		    'sortType'		=> $this->getSortType(),
+		    'displayType'	=> $this->getDisplayType(),
+		    'snippet'		=> $snippetText
+		);
+
+		// will be purged elsewhere after edit
+		$oMemCache->set( $sKey, $returnData, 60*60*24*7 );
+
+		return $returnData ;
 	}
 
 	/**
@@ -92,40 +101,48 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 
 		// tries to get image from images in category
 		$result = CategoryDataService::getMostVisited( $sCategoryDBKey , NS_FILE, 1 );
-		if ( !empty($result) ){
-			foreach($result as $item){
-				$imageServing = new imageServing( array($item['page_id']), $this->thumbWidth , array( "w" => $this->thumbWidth, "h" => $this->thumbHeight ) );
-				$itemTitle = Title::newFromID($item['page_id']);
+		if ( !empty( $result ) ){
+			$counter = 0;
+			foreach( $result as $item ){
+				if ( $counter > F::App()->wg->maxCategoryExhibitionSubcatChecks ){
+					break;
+				}
+				$imageServing = new imageServing( array( $item['page_id'] ), $this->thumbWidth , array( "w" => $this->thumbWidth, "h" => $this->thumbHeight ) );
+				$itemTitle = Title::newFromID( $item['page_id'] );
 				$image = wfFindFile( $itemTitle );
 				if ( !empty( $image ) ){
 					$imageSrc = wfReplaceImageServer(
 						$image->getThumbUrl(
-							$imageServing->getCut($image->width,$image->height)."-".$image->getName()
+							$imageServing->getCut( $image->width, $image->height )."-".$image->getName()
 						)
 					);
-					return array('imageUrl' => (string)$imageSrc, 'snippetText' => '');
+					return array( 'imageUrl' => (string)$imageSrc, 'snippetText' => '' );
 				}
+				$counter++;
 			}
 		}
 
 		// if no images found, tries to get image or snippet from artice
-		unset($result);
+		unset( $result );
 		$result = CategoryDataService::getMostVisited( $sCategoryDBKey , NS_MAIN, 10 );
-		if ( !empty($result) ){
+		if ( !empty( $result ) ){
+			$counter = 0;
 			$snippetText = '';
 			$imageUrl = '';
 			$pageIdList = array();
-			foreach($result as $item){
-				foreach($result as $item){
-					$imageUrl = $this->getImageFromPageId( $item['page_id'] );
-					if ( !empty($imageUrl) ){
-						break;
-					}
-					if ( empty($snippetText) ){
-						$snippetService = new ArticleService ( $item['page_id'] );
-						$snippetText = $snippetService->getTextSnippet();;
-					}
+			foreach( $result as $item ){
+				if ( $counter > F::App()->wg->maxCategoryExhibitionSubcatChecks ){
+					break;
 				}
+				$imageUrl = $this->getImageFromPageId( $item['page_id'] );
+				if ( !empty( $imageUrl ) ){
+					break;
+				}
+				if ( empty($snippetText) ){
+					$snippetService = new ArticleService ( $item['page_id'] );
+					$snippetText = $snippetService->getTextSnippet();;
+				}
+				$counter++;
 			}
 			return array('imageUrl' => $imageUrl, 'snippetText' => $snippetText);
 		} else {
