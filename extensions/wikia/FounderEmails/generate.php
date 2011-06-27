@@ -36,9 +36,8 @@
 
 	$wgTitle = Title::newMainPage();
 	$wgContLang = wfGetLangObj($params['language']);
-	if (!$wgCityId)
-		$wgCityId = 177;
-	$foundingWiki = WikiFactory::getWikiById($wgCityId);
+	$city_id = ($wgCityId) ? $wgCityId : 177;
+	$foundingWiki = WikiFactory::getWikiById($city_id);
 	$wikiType = (!empty($wgEnableAnswers)) ? '-answers' : '' ;
 	
 	$emailParams = array(
@@ -49,6 +48,7 @@
 						'$USERJOINS' => 456,
 						'$USEREDITS' => 123,
 						'$USERNAME' => 'Someone',
+						'$USERURL' => 'http://www.wikia.com',
 						'$PAGETITLE' => 'Main Page',
 						'$PAGEURL' => 'http://www.wikia.com',
 						'$USERTALKPAGEURL' => 'http://www.wikia.com',
@@ -135,8 +135,14 @@
 			$subject .= strtr(wfMsgExt($msg_key_subj, array('content')), $emailParams);
 			if ($content_type=='html') {
 				if ($params['language'] == 'en' && empty($wgEnableAnswers) || empty($msg_key_body_html)) { // FounderEmailv2.1
-					$mailBodyHTML = wfRenderModule("FounderEmails", $html_template, array_merge($emailParams, $params));
-					$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
+					$links = array(
+								'$WIKINAME' => $emailParams['$WIKIURL'],
+								'$USERNAME' => $emailParams['$USERURL'],
+								'$PAGETITLE' => $emailParams['$PAGEURL'],
+							);
+					$emailParams_new = FounderEmails::addLink($emailParams, $links);
+					$mailBodyHTML = wfRenderModule("FounderEmails", $html_template, array_merge($emailParams_new, $params));
+					$mailBodyHTML = strtr($mailBodyHTML, $emailParams_new);
 				} else {	// old emails
 					$mailBodyHTML = strtr(wfMsgExt($msg_key_body_html, array('content', 'parseinline')), $emailParams);
 				}

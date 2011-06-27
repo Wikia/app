@@ -52,10 +52,13 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 			$langCode = $foundingUser->getOption( 'language' );
 			// Only send digest emails for English users until translation is done 
 			if ($langCode == 'en') {
+				$links = array(
+					'$WIKINAME' => $emailParams['$WIKIURL'],
+				);
 				$mailSubject = strtr(wfMsgExt('founderemails-email-views-digest-subject', array('content')), $emailParams);
 				$mailBody = strtr(wfMsgExt('founderemails-email-views-digest-body', array('content')), $emailParams);
 				$mailBodyHTML = wfRenderModule("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'views-digest')));
-				$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
+				$mailBodyHTML = strtr($mailBodyHTML, FounderEmails::addLink($emailParams,$links));
 				$mailCategory = FounderEmailsEvent::CATEGORY_VIEWS_DIGEST.(!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
 
 				$founderEmailObj->notifyFounder( $this, $mailSubject, $mailBody, $mailBodyHTML, $cityID, $mailCategory );

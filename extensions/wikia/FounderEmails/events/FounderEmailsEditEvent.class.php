@@ -26,6 +26,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			// get just one event when we have more... for now, just randomly
 			$eventData = $events[ rand( 0, count( $events ) -1 ) ];
 
+			$foundingWiki = WikiFactory::getWikiById($wgCityId);
 			$founderEmails = FounderEmails::getInstance();
 			$emailParams = array(
 				'$FOUNDERNAME' => $founderEmails->getWikiFounder()->getName(),
@@ -37,6 +38,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				'$WIKINAME' => $wgSitename,
 				'$PAGETITLE' => $eventData['data']['titleText'],
 				'$PAGEURL' => $eventData['data']['titleUrl'],
+				'$WIKIURL' => $foundingWiki->city_url,
 			);
 
 			$msgKeys = array();
@@ -118,8 +120,13 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$mailBody = strtr(wfMsgExt($msgKeys['body'], array('content')), $emailParams);
 
 			if(!empty($langCode) && $langCode == 'en' && empty( $wgEnableAnswers )) { // FounderEmailv2.1
+				$links = array(
+					'$USERNAME' => $emailParams['$USERPAGEURL'],
+					'$PAGETITLE' => $emailParams['$PAGEURL'],
+					'$WIKINAME' => $emailParams['$WIKIURL'],
+				);
 				$mailBodyHTML = wfRenderModule("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => $mailKey)));
-				$mailBodyHTML = strtr($mailBodyHTML, $emailParams);
+				$mailBodyHTML = strtr($mailBodyHTML, FounderEmails::addLink($emailParams,$links));
 			} else {	// old emails
 				$mailBodyHTML = $this->getLocalizedMsg( $msgKeys['body-html'], $emailParams );
 			}
