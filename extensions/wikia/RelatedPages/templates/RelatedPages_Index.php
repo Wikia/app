@@ -1,5 +1,5 @@
 <?php if( !$skipRendering ) { ?>
-	<nav class="RelatedPagesModule"<?= !is_null($addAfterSection) ? " data-add-after-section=\"{$addAfterSection}\"" : '' ?>>
+	<nav class="RelatedPagesModule noprint"<?= !is_null($addAfterSection) ? " data-add-after-section=\"{$addAfterSection}\"" : '' ?>>
 		<h2><?= wfMsgForContent('wikiarelatedpages-heading') ?></h2>
 		<ul>
 		<?php foreach($pages as $page) { ?>
