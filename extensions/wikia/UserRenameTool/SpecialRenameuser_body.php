@@ -94,6 +94,7 @@ class SpecialRenameuser extends SpecialPage {
 				"warnings"      	=> $warnings,
 				"errors"        	=> $errors,
 				"infos"         	=> $infos,
+				"show_confirm"  	=> ( empty( $errors ) && empty( $infos ) ),
 				"token"         	=> $token,
 				"notify_renamed" 	=> $notifyRenamed,
 			)
