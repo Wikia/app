@@ -164,6 +164,7 @@
 		top: -6px;
 		left: 0;
 		border-width: 7px;
+		border-color: transparent;
 		border-bottom-color: #d5d5d5;
 		z-index: 5;
 	}
@@ -177,13 +178,13 @@
 	&.bottom {
 		padding: 0 0 9px 0;
 		.chevron {
-			bottom: -6px;
+			bottom: -4px;
 			top: auto;
 			border-top-color: #d5d5d5;
 			border-bottom-color: transparent;
 		}
 		.chevronBackground {
-			bottom: -3px;
+			bottom: -2px;
 			border-top-color: #fff;
 			border-bottom-color: transparent;
 		}
@@ -198,7 +199,6 @@
 .RTEPlaceholderPreviewInner {
 	background-color: #fff;
 	border: solid 1px #d5d5d5;
-	border-top: none;
 	padding: 2px;
 	width: 350px;
 }
