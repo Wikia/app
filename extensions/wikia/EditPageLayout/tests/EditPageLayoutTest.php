@@ -33,5 +33,6 @@ class EditPageLayoutTest extends PHPUnit_Framework_TestCase {
 
 		$editPage->setCustomFormHandler($customHandler);
 		$this->assertEquals($customHandler, $editPage->getCustomFormHandler());
+		$this->assertEquals($customHandler->getLocalURL('action=submit'), $editPage->getFormAction());
 	}
 }
