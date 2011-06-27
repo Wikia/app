@@ -115,7 +115,7 @@ Liftium.buildChain = function(slotname) {
 
 
 	// Do we have this slot?
-	if (Liftium.e(Liftium.config.sizes) || Liftium.e(Liftium.config.sizes[size])){
+	if (Liftium.e(Liftium.config.sizes[size])){
 		Liftium.reportError("Unrecognized size in Liftium: " + size, "publisher");
 		return false;
 	}
