@@ -4,7 +4,7 @@
 	<ul class="wikia-menu-button secondary">
 		<li>
 			<a id="category-exhibition-form-current" href="<?=$path; ?>"><?=wfMsg('category-exhibition-'.$current); ?></a>
-			<img src="http://images1.wikia.nocookie.net/__cb27571/common/skins/common/blank.gif" class="chevron">
+			<img src="<?=F::app()->wf->blankImgUrl(); ?>" class="chevron">
 			<ul style="min-width: 116px; ">
 			<? foreach ( $sortTypes as $sortType ){?>
 				<li<? if( $current==$sortType ){?> class="selected" <?}?>><a href="<?=$path; ?>?sort=<?=$sortType; ?>&display=<?=$displayType; ?>" id="category-exhibition-form-<?=$sortType; ?>"><?=wfMsg('category-exhibition-'.$sortType); ?></a></li>
