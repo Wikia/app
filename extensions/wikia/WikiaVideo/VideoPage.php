@@ -1536,6 +1536,7 @@ EOD;
 				$huluData['videoName'] = trim( $doc->getElementsByTagName('title')->item(0)->textContent );
 			}			
 		}
+		$this->mVideoName = $huluData['videoName'];
 		
 		return $huluData;		
 	}
