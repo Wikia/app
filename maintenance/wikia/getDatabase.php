@@ -148,7 +148,7 @@ if (array_key_exists( 'i', $opts )) {
 	}
 
 	print "Loading \"$fullpath\" into \"$wgDBdevboxServer\"...<br/>\n";
-	$response = `zcat $fullpath | mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer $dbname 2>&1`;
+	$response = `zcat $fullpath | mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer $dbname 2>&1`;
 	if(trim($response) != ""){
 		print "Error loading the database dump into $wgDBdevboxServer:\n$response\n";
 	} else {
