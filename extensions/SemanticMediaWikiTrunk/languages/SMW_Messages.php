@@ -1164,8 +1164,7 @@ $messages['be-tarask'] = array(
 	'smw_wantedproperty_template' => '$1 ($2 {{PLURAL:$2|выкарыстаньне|выкарыстаньні|выкарыстаньняў}})',
 	'smw_purge' => 'Абнавіць',
 	'types' => 'Тыпы',
-	'smw_types_docu' => 'Ніжэй пададзены сьпіс усіх тыпаў зьвестак, якія можна выкарыстоўваць для ўласьцівасьцяў.
-Кожны тып зьвестак мае старонку, дзе можа знаходзіцца дадатковая інфармацыя.',
+	'smw_types_docu' => 'Ніжэй пададзены сьпіс усіх тыпаў зьвестак, якія можна выкарыстоўваць для ўласьцівасьцяў.',
 	'smw_typeunits' => 'Адзінкі вымярэньня тыпу «$1»: $2',
 	'semanticstatistics' => 'Сэмантычная статыстыка',
 	'smw_semstats_text' => "{{SITENAME}} утрымлівае '''$1''' {{PLURAL:$1|значэньне|значэньні|значэньняў}} для '''$2''' [[Special:Properties|{{PLURAL:$1|уласьцівасьці|уласьцівасьцяў|ўласьцівасьцяў}}]].
@@ -1192,6 +1191,13 @@ $messages['be-tarask'] = array(
 	'smw_ask_show_embed' => 'Паказаць убудаваны код',
 	'smw_ask_hide_embed' => 'Схаваць убудаваны код',
 	'smw_ask_embed_instr' => 'Каб убудаваць гэты запыт у старонку, выкарыстоўвайце код пададзены ніжэй.',
+	'querycreator' => 'Стваральнік запыту',
+	'smw_show_addnal_opts' => 'Паказаць дадатковыя магчымасьці',
+	'smw_hide_addnal_opts' => 'Схаваць дадатковыя магчымасьці',
+	'smw_qc_query_help' => 'Увядзіце запыт з дапамогай формы пададзенай ніжэй для выбару вікі-старонкі па
+Катэгорыям (<strong>[[{{ns:category}}:Актор]]</strong>), 
+Уласьцівасьцям (<strong>[[Знаходзіцца ў::Нямеччыне]]</strong>), 
+Назвам(<strong>[[Нямеччына]]</strong>) і Прасторам назваў (<strong>[[{{ns:help}}:+]]</strong>)',
 	'searchbyproperty' => 'Шукаць па ўласьцівасьцях',
 	'smw_sbv_docu' => 'Шукаць усе старонкі, якія ўтрымліваюць пададзеную ўласьцівасьць і значэньне.',
 	'smw_sbv_novalue' => 'Увядзіце значэньне для ўласьцівасьці, ці паглядзіце ўсе значэньні ўласьцівасьцяў для «$1».',
@@ -6381,7 +6387,7 @@ $messages['lb'] = array(
 	'smw_paramdesc_link' => "D'Werter als Linke weisen",
 	'smw_paramdesc_intro' => 'Den Text dee virun de Resultater vun der Ufro gewise gëtt, wann et der gëtt',
 	'smw_paramdesc_outro' => 'Den Text deen no de Resultater vun der Ufro gewise gëtt, wann et der gëtt',
-	'smw_paramdesc_default' => 'Den Text den ugewise gëtt wann et keng Resultater vun der Sich gëtt',
+	'smw_paramdesc_default' => 'Den Text den ugewise gëtt wann et keng Resultater beim Siche gëtt',
 	'smw_paramdesc_searchlabel' => "Den Text am Link op d'Resultater",
 	'smw_paramdesc_sep' => "D'Trennzeeche fir Wäerter",
 	'smw_paramdesc_template' => "Den Numm vun enger Schabloun mat där d'Drockversioune gewise ginn",
@@ -6393,7 +6399,6 @@ $messages['lb'] = array(
 	'smw_paramdesc_rsstitle' => 'Den Text deen als Iwwerschrëft vun der Rubrik benotzt gëtt',
 	'smw_paramdesc_rssdescription' => 'Den Text deen als Beschreiwung vum Feed benotzt gëtt',
 	'smw_iq_moreresults' => '… weider Resultater',
-	'smw_unknown_importns' => 'Importfonctioune si fir den Nummraum "$1" net disponibel.',
 	'smw_nonright_importtype' => '$1 kann nëmme fir Säiten am Nummraum "$2" benotzt ginn.',
 	'smw_wrong_importtype' => '$1 kann net fir Säiten am Nummraum "$2" benotzt ginn.',
 	'smw_no_importelement' => 'D\'Element "$1" kann net importéiert ginn.',
@@ -6436,7 +6441,7 @@ Et gët en RDF ugeluecht dee liicht duerchsicht ka ginn.',
 	'types' => 'Typen',
 	'smw_typeunits' => 'Moosseenheete vum Typ "$1": $2',
 	'semanticstatistics' => 'Semantesch Statistiken',
-	'ask' => 'Semantesch Sich',
+	'ask' => 'Semantesch sichen',
 	'smw_ask_sortby' => 'No der Colonne sortéieren (optional)',
 	'smw_ask_ascorder' => 'Vu kleng op grouss (croissant)',
 	'smw_ask_descorder' => 'vu grouss op kleng (décroissant)',
@@ -6454,7 +6459,7 @@ Et gët en RDF ugeluecht dee liicht duerchsicht ka ginn.',
 	'smw_ask_show_embed' => 'Agebonnene Code weisen',
 	'smw_ask_hide_embed' => 'Agebonnene Code verstoppen',
 	'searchbyproperty' => 'No Eegeschafte sichen',
-	'smw_sbv_docu' => 'Sich no alle Säiten déi eng bestëmmten Eegeschaft mat engem bestëmmte Wäert hunn.',
+	'smw_sbv_docu' => 'Sichen no alle Säiten déi eng bestëmmten Eegeschaft mat engem bestëmmte Wäert hunn.',
 	'smw_sbv_displayresult' => 'Eng Lëscht vun alle Säiten déi d\'Eegeschaft "$1" mam Wäert "$2" hunn',
 	'smw_sbv_property' => 'Eegeschaft:',
 	'smw_sbv_value' => 'Wäert:',
@@ -7020,6 +7025,7 @@ $messages['nah'] = array(
  * @author Kghbln
  * @author SPQRobin
  * @author Siebrand
+ * @author Tjcool007
  */
 $messages['nl'] = array(
 	'smw-desc' => "Maakt uw wiki toegankelijker - voor machines ''en'' mensen ([http://semantic-mediawiki.org/wiki/Help:User_manual online documentatie])",
@@ -7176,8 +7182,13 @@ Eigenschappen waar nog geen pagina voor is zijn te vinden op de [[Special:Wanted
 	'smw_ask_show_embed' => 'Ingesloten code weergeven',
 	'smw_ask_hide_embed' => 'Ingesloten code verbergen',
 	'smw_ask_embed_instr' => 'Gebruik de onderstaande code om deze zoekopdracht op te nemen in een wikipagina.',
+	'querycreator' => 'Query Maker',
 	'smw_show_addnal_opts' => 'Extra opties weergeven',
 	'smw_hide_addnal_opts' => 'Extra opties verbergen',
+	'smw_qc_query_help' => 'Maak een Query met het onderstaande formulier, gebaseerd op:
+Categorieën (<strong>[[{{ns:category}}:Acteur]]</strong>),
+Eigenschappen (<strong>[[Gelegen in::Duitsland]]</strong>),
+Namen (<strong>[[Duitsland]]</strong>) en Naamruimtes (<strong>[[{{ns:help}}:+]]</strong>)',
 	'searchbyproperty' => 'Zoek op eigenschap',
 	'smw_sbv_docu' => "Zoek naar alle pagina's die een bepaalde eigenschap en waarde hebben.",
 	'smw_sbv_novalue' => 'Voer een geldige waarde in voor de eigenschap, of bekijk alle waarden voor eigenschap “$1.”',
