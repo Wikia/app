@@ -4,7 +4,7 @@
 	<input type="hidden" name="token" value="<?=$token;?>"/>
 	<fieldset>
 		<legend><?=wfMsgForContent( 'renameuser' )?></legend>
-		<p><strong><?=wfMsgExt('userrenametool-warning', array('parse'));?></strong></p>
+		<p><?=wfMsgExt('userrenametool-warning', array('parse'));?></p>
 		<table id='mw-renameuser-table'>
 			<tr>
 				<td class='mw-label'>
@@ -45,21 +45,25 @@
 				<tr>
 					<td class='mw-label'><?= wfMsgWikiHtml( 'userrenametool-warnings' ); ?></td>
 					<td class='mw-input'>
-						<ul style="color: red; font-weight: bold">
+						<ul style="color: orange; font-weight: bold">
 							<li>
 								<?= implode( '</li><li>', $warnings ); ?>
 							</li>
 						</ul>
-						<p><strong><?=wfMsgForContent('userrenametool-confirm-intro');?></strong></p>
+						<?if($show_confirm):?>
+							<p><strong><?=wfMsgForContent('userrenametool-confirm-intro');?></strong></p>
+						<?endif;?>
 					</td>
 				</tr>
-				<tr>
-					<td><input type="hidden" name="confirmaction" value="1"/>&nbsp;</td>
-					<td class='mw-submit'>
-						<input id="submit" type="submit" name="submit" tabindex="4" value="<?=wfMsgForContent( 'userrenametool-confirm-yes' );?>"/>
-						<input id="cancel" type="button" name="cancel" tabindex="5" value="<?=wfMsgForContent( 'userrenametool-confirm-no' );?>" onclick="window.location.href='<?=$wgTitle->getFullURL();?>';"/>
-					</td>
-				</tr>
+				<?if($show_confirm):?>
+					<tr>
+						<td><input type="hidden" name="confirmaction" value="1"/>&nbsp;</td>
+						<td class='mw-submit'>
+							<input id="submit" type="submit" name="submit" tabindex="4" value="<?=wfMsgForContent( 'userrenametool-confirm-yes' );?>"/>
+							<input id="cancel" type="button" name="cancel" tabindex="5" value="<?=wfMsgForContent( 'userrenametool-confirm-no' );?>" onclick="window.location.href='<?=$wgTitle->getFullURL();?>';"/>
+						</td>
+					</tr>
+				<?endif;?>
 			<?else:?>
 				<tr>
 					<td>&nbsp;
