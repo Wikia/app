@@ -39,7 +39,7 @@ class CategoryExhibitionAjax {
 	 */
 
 	static private function getSection( $class ){
-		global $wgRequest, $wgUser, $wgTitle;
+		global $wgRequest;
 		
 		$pageText = $wgRequest->getVal( 'articleId' );
 		$iPaginatorPosition = (int)$wgRequest->getVal( 'page' );
@@ -64,20 +64,26 @@ class CategoryExhibitionAjax {
 		wfProfileIn( __METHOD__ );
 		global $wgTitle;
 
-		$video = new VideoPage($wgTitle);
-		$video->load();
+		if ( ( $wgTitle instanceof Title ) && ( $wgTitle->exists() ) && ( $wgTitle->getNamespace() == NS_VIDEO ) ){
 
-		// get default video dimensions
-		$dimensions = explode( 'x', $video->getTextRatio() );
-		$width = intval( $dimensions[0] );
-		$height = intval( $dimensions[1] );
+			$video = new VideoPage( $wgTitle );
+			$video->load();
 
-		$return = array(
-			'width' => $width,
-			'height' => $height,
-			'html' => $video->getEmbedCode( $width, true ),
-			'title' => $wgTitle->getText(),
-		);
+			// get default video dimensions
+			$dimensions = explode( 'x', $video->getTextRatio() );
+			$width = intval( $dimensions[0] );
+			$height = intval( $dimensions[1] );
+
+			$return = array(
+				'width' => $width,
+				'height' => $height,
+				'html' => $video->getEmbedCode( $width, true ),
+				'title' => $wgTitle->getText(),
+			);
+
+		} else {
+			$return = array();
+		}
 
 		wfProfileOut( __METHOD__ );
 		return $return;

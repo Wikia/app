@@ -1,6 +1,9 @@
 <?php
 class ArticleService extends Service {
 
+	const MAX_CACHED_TEXT_LENGTH = 500;
+	const CACHE_KEY = 'article_service_cache';
+
 	private $mArticle = null;
 
 	public function __construct( $articleId = 0 ) {
@@ -19,17 +22,28 @@ class ArticleService extends Service {
 	 * @return string
 	 */
 	public function getTextSnippet( $length = 100 ) {
-		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgParser, $wgContLang;
 
+		wfProfileIn(__METHOD__);
+		
+		$wgParser = F::App()->wg->parser;
+		$wgContLang = F::App()->wg->contLang;
+		
 		// it may sometimes happen that the aricle is just not there
 		if ( is_null( $this->mArticle ) ) {
 			return '';
 		}
 
-		$content = $this->mArticle->getContent();
+		$oMemCache = F::App()->wg->memc;
+		$sKey = F::App()->wf->sharedMemcKey(
+			self::CACHE_KEY,
+			$this->mArticle->getID(),
+			F::App()->wg->cityId
+		);
 
-		if( !empty( $content) ) {
+		$cachedResult = self::MAX_CACHED_TEXT_LENGTH <= $length ? $oMemCache->get( $sKey ) : '';
+		$content = empty( $cachedResult ) ? $this->mArticle->getContent() : $cachedResult;
+
+		if( !empty( $content ) || empty( $cachedResult ) ) {
 			// Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
 			wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$this->mArticle, &$content, $length ) );
 
@@ -85,13 +99,22 @@ class ArticleService extends Service {
 			$content = mb_substr($content, 0, $length + 200);
 			$content = strtr($content, array('&nbsp;' => ' ', '&amp;' => '&'));
 			$content = preg_replace('/\s+/',' ',$content);
+			$content = trim( $content );
+			$cacheContent = mb_substr( $content, 0, self::MAX_CACHED_TEXT_LENGTH );
 
-			// store first x characters of parsed content
-			$content = trim(mb_substr($content, 0, $length));
-
-			if ($content == '') {
-				wfDebug(__METHOD__ . ": got empty snippet for article #{$this->mArticle->getID()}\n");
+			if ( $length <= self::MAX_CACHED_TEXT_LENGTH ){
+				$oMemCache->set( $sKey, $cacheContent, 60*60*24 );
+			} else {
+				wfDebug(__METHOD__ . ": requested string to long to be cached. Served without cache \n");
 			}
+		}
+
+		$content = mb_substr( $content, 0, $length );
+
+		// store first x characters of parsed content
+
+		if ($content == '') {
+			wfDebug(__METHOD__ . ": got empty snippet for article #{$this->mArticle->getID()}\n");
 		}
 
 		wfProfileOut(__METHOD__);
@@ -105,5 +128,22 @@ class ArticleService extends Service {
 			}
 		}
 		return null;
+	}
+
+	static public function onArticlePurge( Article $article ) {
+		$title = $article->getTitle();
+
+		$a = new Title;
+
+		$oMemCache = F::App()->wg->memc;
+		$sKey = F::App()->wf->sharedMemcKey(
+			self::CACHE_KEY,
+			$article->getID(),
+			F::App()->wg->cityId
+		);
+
+		$oMemCache->delete( $sKey );
+
+		return true;
 	}
 }
