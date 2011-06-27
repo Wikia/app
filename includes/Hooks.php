@@ -121,6 +121,10 @@ function wfRunHooks($event, $args = array()) {
 			$callback = array( $object, $method );
 		} elseif ( false !== ( $pos = strpos( $func, '::' ) ) ) {
 			$callback = array( substr( $func, 0, $pos ), substr( $func, $pos + 2 ) );
+			/* Wikia change begin - @author: Macbre */
+			/* BugId:6970 */ 
+			$func .= ' (called by hook)';
+			/* Wikia change end */
 		} else {
 			$callback = $func;
 		}
@@ -134,7 +138,7 @@ function wfRunHooks($event, $args = array()) {
 		wfProfileOut( $func );
 
 		/* String return is an error; false return means stop processing. */
-		
+
 		if ( is_string( $retval ) ) {
 			global $wgOut;
 			$wgOut->showFatalError( $retval );
