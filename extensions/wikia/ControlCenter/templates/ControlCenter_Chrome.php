@@ -15,6 +15,6 @@
 	<a href="<?= $controlCenterUrlAdvanced ?>" class="tab <?= $tab == 'advanced' ? 'active' : '' ?>" data-section="advanced">Advanced</a>
 	<a href="<?= $controlCenterUrlGeneral ?>" class="tab <?= $tab == 'general' ? 'active' : '' ?>" data-section="general">General</a>
 </nav>
-<aside class="ControlCenterRail">
+<aside class="ControlCenterRail" id="ControlCenterRail">
 	<?= $founderProgressBar ?>
 </aside>

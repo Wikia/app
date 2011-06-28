@@ -1,3 +1,20 @@
+var ControlCenterChrome = {
+	init: function() {
+		ControlCenterChrome.rail = $('#ControlCenterRail');
+		ControlCenterChrome.drawer = $('#ControlCenterDrawer');
+		ControlCenterChrome.wikiaArticle = $('#WikiaArticle');
+		ControlCenterChrome.drawer.click(function() {
+			if(ControlCenterChrome.rail.is(':visible')) {
+				ControlCenterChrome.rail.hide();
+				ControlCenterChrome.wikiaArticle.addClass('expanded');
+			} else {
+				ControlCenterChrome.wikiaArticle.removeClass('expanded');
+				ControlCenterChrome.rail.show();
+			}
+		});
+	}
+};
+
 var ControlCenter = {
 	controls: {},
 	section: {},
@@ -15,6 +32,7 @@ var ControlCenter = {
 		ControlCenter.section.general = $('#ControlCenterGeneral');
 		ControlCenter.section.advanced = $('#ControlCenterAdvanced');
 		ControlCenter.section.contentarea = $('#ControlCenterContentArea');
+		ControlCenter.wikiaArticle = $('#WikiaArticle');
 		
 		// events
 		ControlCenter.allControls.hover(function() {
@@ -53,6 +71,8 @@ var ControlCenter = {
 			ControlCenter.ui.deselectAllTabs();
 			ControlCenter.ui.hideAllSections();
 			ControlCenter.section.contentarea.html('Loading...');	//i18n this later
+			ControlCenter.wikiaArticle.removeClass('ControlCenterChromedArticle');
+			$('.ControlCenterDrawer, .ControlCenterNavigation, .ControlCenterArticleHeader').remove();
 		},
 		hideAllSections: function() {
 			for(var s in ControlCenter.section) {
@@ -71,6 +91,15 @@ var ControlCenter = {
 	},
 	contentload: {
 		loadSpecialPage: function(page, callback) {
+			$.post(wgScriptPath + '/wikia.php', {
+				controller: 'ControlCenterSpecialPage',
+				method: 'chromedArticleHeader',
+				headerText: 'Replace Me'
+			}, function(html) {
+				ControlCenter.wikiaArticle.addClass('ControlCenterChromedArticle');
+				ControlCenter.wikiaArticle.prepend(html);
+				ControlCenterChrome.init();
+			});
 			ControlCenter.section.contentarea.load(wgScriptPath + '/wikia.php', {
 				controller: 'ControlCenterSpecialPage',
 				method: 'GetSpecialPage',
@@ -115,4 +144,5 @@ var ControlCenter = {
 
 $(function() {
 	ControlCenter.init();
+	ControlCenterChrome.init();
 });

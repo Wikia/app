@@ -60,7 +60,10 @@
 				echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
 			}
 		?>
-		<div id="WikiaArticle" class="WikiaArticle">
+		<div id="WikiaArticle" class="WikiaArticle<?= $displayControlCenterChromedArticle ? ' ControlCenterChromedArticle' : '' ?>">
+			<? if($displayControlCenterChromedArticle) { ?>
+				<?= (string)F::app()->sendRequest( 'ControlCenterSpecialPage', 'chromedArticleHeader', array('headerText' => $wgTitle->getText() )) ?>
+			<? } ?>
 			<div class="home-top-right-ads">
 			<?php 
 				if (in_array('leaderboard', $wgABTests)) {

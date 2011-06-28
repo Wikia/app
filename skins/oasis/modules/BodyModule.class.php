@@ -30,6 +30,7 @@ class BodyModule extends Module {
 	var $displayComments;
 	var $noexternals;
 	var $displayControlCenter;
+	var $displayControlCenterChromedArticle;
 	var $isMainPage;
 
 	private static $onEditPage;
@@ -447,8 +448,10 @@ class BodyModule extends Module {
 			$this->wgSuppressAds = true;
 			$this->wgSuppressWikiHeader = true;
 			$this->displayControlCenter = true;
+			$this->displayControlCenterChromedArticle = ($wgTitle->getText() != Title::newFromText("ControlCenter", NS_SPECIAL)->getText());
 		} else {
 			$this->displayControlCenter = false;
+			$this->displayControlCenterChromedArticle = false;
 		}
 	}
 }
