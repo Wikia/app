@@ -38,6 +38,11 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 		$this->response->setVal('urlMultipleUpload', Title::newFromText('MultipleUpload', NS_SPECIAL)->getFullURL());
 	}
 	
+	public function chromedArticleHeader() {
+		$this->response->setVal('headerText', $this->request->getVal('headerText'));
+		$this->response->setVal('backLink', Title::newFromText('ControlCenter', NS_SPECIAL)->getFullURL());
+	}
+	
 	/**
 	 * @brief This returns the HTML output of any SpecialPage::execute function
 	 * @details

@@ -47,4 +47,6 @@ $messages['en'] = array(
 	'controlcenter-control-add-blog-tooltip' => 'Add a blog post to your wiki.',
 	'controlcenter-control-multiple-upload-label' => 'Multiple Photo Upload',
 	'controlcenter-control-multiple-upload-tooltip' => 'Upload more than one photo at once with the multiple photo upload tool.',
+// Chrome
+	'controlcenter-back-to-dashboard' => 'Show Dashboard'
 );

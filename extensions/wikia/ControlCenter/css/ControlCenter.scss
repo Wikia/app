@@ -79,14 +79,7 @@ $base-z: 5;
 .ControlCenter {
 	position: relative;
 	.control-center-content {
-		background-color: #fff;
-		border-bottom: 1px solid #eee;
-		border-right: 1px solid #eee;
-		float: left;
-		padding-top: 20px;
-		position: relative;
-		width: $control-center-content-width;
-		z-index: $base-z;
+		
 		.control-section {
 			header {
 				@include linear-gradient(#ebebeb, top, #fff, 40%, #ebebeb, 100%);
@@ -158,17 +151,70 @@ $base-z: 5;
 	padding: 10px;
 }
 
+.ControlCenterDrawer {
+	background: #ebebeb;
+	bottom: 0;
+	cursor: pointer;
+	position: absolute;
+	right: 0;
+	top: 71px;
+	width: 7px;
+}
+
+.ControlCenterArticleHeader {
+	@include linear-gradient(#ebebeb, top, #fff, 40%, #ebebeb, 100%);
+	border-bottom: 1px solid #ebebeb;
+	border-top: 1px solid #ebebeb;
+	font-size: 12px;
+	font-style: italic;
+	height: 25px;
+	margin: 0 -12px 5px -5px;
+	padding-top: 5px;
+	h1 {
+		color: #6aa8d1;
+		float: left;
+		font-size: 16px;
+		font-style: normal;
+		margin: 0 30px 0 20px;
+	}
+}
+
+.ControlCenterNavigation {
+	height: 40px;
+	p {
+		margin: 0;
+	}
+}
+
 // Oasis overwrites
 .WikiaArticle {
+	/*
 	background: white;
 	float: left;
 	padding: 0;
 	position: relative;
 	width: $control-center-content-width;
 	z-index: $base-z;
+	*/
+	background-color: #fff;
+	border-bottom: 1px solid #eee;
+	border-right: 1px solid #eee;
+	float: left;
+	padding: 20px 0 0 0;
+	position: relative;
+	width: $control-center-content-width;
+	z-index: $base-z;
 	ul, ol {
 		margin: 0;
 		list-style: none;
+	}
+	&.ControlCenterChromedArticle {
+		padding: 0 12px 0 5px;
+		width: $control-center-content-width - 17px;
+	}
+	&.expanded {
+		float: none;
+		width: auto;
 	}
 }
 
