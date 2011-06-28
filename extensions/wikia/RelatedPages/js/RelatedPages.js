@@ -1,5 +1,5 @@
 $(function() {
-	    RelatedPages.init.call(RelatedPages);
+	    RelatedPages.init();
 	    RelatedPages.attachLazyLoaderEvents();
 });
 
@@ -19,12 +19,23 @@ RelatedPages = {
 			return;
 		}
 
-		//this.log('init');
+		// add click handler for article snippets (BugId:1322)
+		this.module.find('.articleSnippet').
+			css('cursor', 'pointer').
+			bind('click', function(ev) {
+				var target = $(this),
+					href = target.next('.more').attr('href');
+	
+				if (href) {
+					window.location = href;
+				}
+			});
 
 		var content = $('#WikiaArticle');
 		var contentWidth = content.width();
 
 		// move the module after (at least) #x <h2> section (RT #84264)
+		// TODO: is the following code stil needed?
 		var addAfter = parseInt(this.module.attr('data-add-after-section'));
 
 		// module is configured to stay at the bottom of the page
