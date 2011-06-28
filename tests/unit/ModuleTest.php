@@ -1,8 +1,5 @@
 <?php
 
-/**
- * @group Broken
- */
 class ModuleTest extends PHPUnit_Framework_TestCase {
 
 	function setUp() {
@@ -80,6 +77,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testNotExistingModule() {
+		$this->setExpectedException('WikiaException');
 		$this->assertNull(Module::get('ModuleThatDoesNotExist'));
 	}
 

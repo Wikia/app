@@ -1,4 +1,5 @@
 <?php
+global $wgAutoloadClasses;
 require_once dirname(__FILE__) . '/../SponsorshipDashboard_setup.php';
 wfLoadAllExtensions();
 
