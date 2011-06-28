@@ -29,10 +29,17 @@ var WikiHeader = {
 
 		//Accessibility Events
 		//Show when any inner anchors are in focus
+                
+                // IE9 focus handling fix - see BugId:5914.
+                // Assume keyboard-based navigation (IE9 focus handling fix).
                 var suppressOnFocus = false;
+                
 		WikiHeader.subnav.find("a")
+                    // Switch to browser's default onfocus behaviour when mouse-based navigation is detected  (IE9 focus handling fix).
                     .bind('mousedown', function() { suppressOnFocus = true; })
+                    // Switch back to keyboard-based navigation mode  (IE9 focus handling fix).
                     .bind('mouseup', function() { suppressOnFocus = false; })
+                    // The onfocus behaviour intended only for keyboard-based navigation (IE9 focus handling fix).
                     .focus(function(event) {
                         if ( !suppressOnFocus ) {
                             WikiHeader.hideNav();
