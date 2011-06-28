@@ -45,6 +45,11 @@ var WikiaPhotoGallerySlideshow = {
 				// tracking
 				WikiaPhotoGalleryView.track('/slideshow/basic/addImage');
 
+				// BugId:7453
+				if (WikiaPhotoGalleryView.forceLogIn()) {
+					return;
+				}
+
 				WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, title:wgPageName}, function(data) {
 					if (data && data.info == 'ok') {
 						data.gallery.id = params.id;
