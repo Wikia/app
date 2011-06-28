@@ -1,21 +1,17 @@
 <?php
 
-/**
- * Seg fault
- * @group Broken
- */
 class ModuleTest extends PHPUnit_Framework_TestCase {
 
 	function setUp() {
 		global $wgAutoloadClasses, $wgWikiaTemplateDir, $IP;
 
-		$wgAutoloadClasses['TestModule'] = dirname( __FILE__ ) . '/modules/TestModule.class.php';
+		$wgAutoloadClasses['UnitTestModule'] = dirname( __FILE__ ) . '/modules/UnitTestModule.class.php';
 		$wgAutoloadClasses['OasisTemplate'] = $IP . '/skins/Oasis.php';
-		$wgWikiaTemplateDir['Test'] = dirname( __FILE__ ) . '/modules';
+		$wgWikiaTemplateDir['UnitTest'] = dirname( __FILE__ ) . '/modules';
 	}
 
 	function testModuleGet() {
-		$result = F::app()->renderView('Test', 'Index');
+		$result = F::app()->renderView('UnitTest', 'Index');
 		$this->assertEquals(
 			'Foo',
 			$result
@@ -25,14 +21,14 @@ class ModuleTest extends PHPUnit_Framework_TestCase {
 	function testRenderModule() {
 		$this->assertEquals(
 			'Foo',
-			wfRenderModule('Test')
+			wfRenderModule('UnitTest')
 		);
 	}
 
 	function testRenderPartial() {
 		$this->assertEquals(
 			'Foo',
-			wfRenderPartial('Test', 'Index', array('foo' => 'Foo'))
+			wfRenderPartial('UnitTest', 'Index', array('foo' => 'Foo'))
 		);
 	}
 
@@ -52,7 +48,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase {
 
 	function testGetDataAll() {
 		$random = rand();
-		$data = Module::get('Test', 'Index2', array('foo2' => $random))->getData();
+		$data = Module::get('UnitTest', 'Index2', array('foo2' => $random))->getData();
 
 		$this->assertEquals(
 			$random,
@@ -65,7 +61,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(
 			$random,
-			Module::get('Test', 'Index2', array('foo2' => $random))->getData('foo2')
+			Module::get('UnitTest', 'Index2', array('foo2' => $random))->getData('foo2')
 		);
 	}
 
@@ -95,7 +91,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase {
 
 		Module::setSkinTemplateObj($template);
 
-		$data = Module::get('Test', 'Index3')->getData();
+		$data = Module::get('UnitTest', 'Index3')->getData();
 
 		$this->assertEquals(
 			'bar',
