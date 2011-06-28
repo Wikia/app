@@ -14,7 +14,7 @@
 		border-bottom: solid 1px $color-headline-border;
 		font-size: 18px;
 		margin-top: 14px;
-		overflow: hidden;
+		*overflow: hidden;
 	}
 	h3 {
 		font-size: 16px;
@@ -146,11 +146,13 @@
 		clear: right;
 		float: right;
 		margin: 0 0 16px 16px;
+		outline: 10px solid $color-page;
 	}
 	.tleft {
 		float: left;
 		clear: left;
 		margin: 0 16px 16px 0;
+		outline: 10px solid $color-page;
 	}
 	.magnify {
 		float: right;
