@@ -23,16 +23,22 @@ var WikiHeader = {
 		WikiHeader.nav.children("ul").children("li")
 			.hover(WikiHeader.mouseover, WikiHeader.mouseout)
 			.children("a").focus(function(){
-				setTimeout( function() { WikiHeader.hideNav(); }, 350 );
+                                WikiHeader.hideNav();
 				WikiHeader.showSubNav($(this).parent("li"));
 			});
 
 		//Accessibility Events
 		//Show when any inner anchors are in focus
-		WikiHeader.subnav.find("a").focus(function(event) {
-			setTimeout( function() { WikiHeader.hideNav(); }, 350 );
-			WikiHeader.showSubNav($(event.currentTarget).closest(".subnav").parent("li"));
-		});
+                var suppressOnFocus = false;
+		WikiHeader.subnav.find("a")
+                    .bind('mousedown', function() { suppressOnFocus = true; })
+                    .bind('mouseup', function() { suppressOnFocus = false; })
+                    .focus(function(event) {
+                        if ( !suppressOnFocus ) {
+                            WikiHeader.hideNav();
+                            WikiHeader.showSubNav($(event.currentTarget).closest(".subnav").parent("li"));
+                        }
+                    });
 		//Hide when focus out of first and last anchor
 		WikiHeader.nav.children("ul").find("li:first-child a").focusout(WikiHeader.hideNav);
 		WikiHeader.subnav.last().find("li:last-child a").focusout(WikiHeader.hideNav);
