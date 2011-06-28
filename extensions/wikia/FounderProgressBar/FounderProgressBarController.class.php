@@ -2,8 +2,6 @@
 
 class FounderProgressBarController extends WikiaController {
 	
-	protected $actions;
-	
 	/**
 	 * Initialize static data
 	 */
@@ -177,10 +175,18 @@ class FounderProgressBarController extends WikiaController {
 	public function doTask() {
 		$wiki_id = $this->wg->CityId;
 		$task_id = $this->request->getVal("task_id");
-		// TODO: validate the task_id is not yet completed
+		
 		if (! isset($this->counters[$task_id])) {
 			$this->setVal('result', 'invalid task_id');
+//			file_put_contents("/tmp/founder.log", "Invalid Task $task_id\n", FILE_APPEND);
 			return true;
+		}
+		$response = $this->sendSelfRequest('isTaskComplete', array("task_id" => $task_id));
+		if ($response->getVal('task_completed', 0) == "1") {
+			$this->setVal('result', 'error');
+			$this->setVal('result', 'task_completed');
+//			file_put_contents("/tmp/founder.log", "Task Complete $task_id\n", FILE_APPEND);
+			return;
 		}
 		$dbw = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 		$sql = "INSERT INTO founder_progress_bar_tasks 
@@ -189,7 +195,7 @@ class FounderProgressBarController extends WikiaController {
 				task_count=1
 			ON DUPLICATE KEY UPDATE task_count = task_count + 1";
 		$dbw->query ($sql);
-		print_pre($dbw);
+//		file_put_contents("/tmp/founder.log", "doing INSERT sql\n", FILE_APPEND);
 		$res = $dbw->select (
 				'founder_progress_bar_tasks',
 				array('task_id', 'task_count'),
@@ -213,10 +219,10 @@ class FounderProgressBarController extends WikiaController {
 			$this->setVal('result', "task_completed");
 		}
 		$dbw->commit();
-		// Clear task list from memcache
+		// Task data was updated so clear task list from memcache
 		$memKey = $this->wf->MemcKey('FounderLongTaskList');
 		$this->wg->Memc->delete($memKey);
-		// else error
+		// else error?
 	}
 	
 	/**
@@ -246,6 +252,22 @@ class FounderProgressBarController extends WikiaController {
 		);
 
 		$this->response->setVal("result", "OK");
+	}
+	
+	/**
+	 * @requestParam int task_id
+	 * @responseParam int task_completed 0 or 1
+	 */
+	public function isTaskComplete() {
+		$task_id = $this->getVal("task_id");
+		// Long list is cached so just use it instead of writing a different query
+		$response = $this->sendSelfRequest("getLongTaskList");
+		$list = $response->getVal('list');
+//		file_put_contents("/tmp/founder.log", print_r($list, true), FILE_APPEND);
+		if (isset($list[$task_id])) {
+			$this->setVal('task_completed', $list[$task_id]['task_completed']);
+//			file_put_contents("/tmp/founder.log", "task completed\n", FILE_APPEND);
+		} 	
 	}
 	
 	public function widget() {

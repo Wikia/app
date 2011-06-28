@@ -17,9 +17,13 @@ $app->registerClass('FounderProgressBarHooks', $dir . '/FounderProgressBarHooks.
 $app->registerExtensionMessageFile('FounderProgressBar', $dir . '/FounderProgressBar.i18n.php');
 
 // Hooks
-$app->registerHook("ArticleSaveComplete", "FounderProgressBarHooks", "onArticleSaveComplete");
-$app->registerHook("UploadComplete", "FounderProgressBarHooks", "onUploadComplete");
-$app->registerHook("CreateWikiLocalJob-complete", "FounderProgressBarHooks", "onWikiCreation");
+$wgHooks[ 'ArticleSaveComplete' ][] = 'FounderProgressBarHooks::onArticleSaveComplete';
+$wgHooks[ 'UploadComplete' ][] = 'FounderProgressBarHooks::onUploadComplete';
+$wgHooks[ 'AddNewAccount' ][] = 'FounderProgressBarHooks::onAddNewAccount';
+$wgHooks[ 'CategoryPage::AddPage' ][] = 'FounderProgressBarHooks::onAddCategoryPage';
+
+//FIXME: new way does ugly stuff to Special:Version
+//$app->registerHook("CreateWikiLocalJob-complete", "FounderProgressBarHooks", "onWikiCreation");
 
 // Define founder event constants
 define('FT_PAGE_ADD_10', 10);
