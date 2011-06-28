@@ -284,8 +284,8 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 
 			F::setInstance( 'LogPage', $log );
 
-			$project->expects( $this->exactly(3) )
-			        ->method( 'getExtension' )
+			$project->expects( $this->atLeastOnce() )
+			        ->method( 'getName' )
 			        ->will( $this->returnValue( $extension ) );
 		}
 
