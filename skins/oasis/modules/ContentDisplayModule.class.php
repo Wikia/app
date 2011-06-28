@@ -87,7 +87,7 @@ class ContentDisplayModule extends Module {
 			$class .= " loginToEditProtectedPage";
 		}
 
-		$result .= Xml::openElement( 'span', array( 'class' => $class ) );
+		$result .= Xml::openElement( 'button', array( 'class' => $class ) );
 
 		$result .= Xml::openElement( 'a', array( 'href' => $url ) );
 		$result .= Xml::element(
@@ -102,7 +102,7 @@ class ContentDisplayModule extends Module {
 
 		$result .= Xml::element( 'a', array( 'href' => $url ), wfMsg( 'oasis-section-edit' ) );
 
-		$result .= Xml::closeElement( 'span' );
+		$result .= Xml::closeElement( 'button' );
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -110,11 +110,10 @@ class ContentDisplayModule extends Module {
 
 	public function executeIndex() {
 		$this->bodytext = preg_replace(
-			'#<span class="editsection(.*)</span>\s?<span(.*)</span>\s?</h#',
-			'<span$2</span><span class="editsection$1</span></h',
+			'#<button class="editsection(.*)</button>\s?<span(.*)</span>\s?</h#',
+			'<span$2</span><button class="editsection$1</button></h',
 			$this->bodytext
 		);
-
 	}
 
 }

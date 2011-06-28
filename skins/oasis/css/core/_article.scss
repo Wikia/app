@@ -29,9 +29,11 @@
 		font-size: 11px;
 	}
 	.editsection {
+		border: none;
+		background: none;
+		display: inline;
 		float: none;
 		font-size: 13px;
-		margin-left: 10px;
 		vertical-align: baseline;
 		img {
 			vertical-align: text-bottom;

@@ -268,3 +268,10 @@ body.ajax * {
 	display: none;
 }
 
+h2 .editsection,
+h3 .editsection,
+h4 .editsection {
+	background: none;
+	border: none;
+	display: inline;
+}

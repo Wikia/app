@@ -1802,3 +1802,11 @@ p.mw-ipb-conveniencelinks {
 	padding-left: 12.2em;
 	background: none;
 }
+
+h2 .editsection,
+h3 .editsection,
+h4 .editsection {
+	background: none;
+	border: none;
+	display: inline;
+}
