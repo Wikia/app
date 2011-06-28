@@ -3,7 +3,7 @@
 	<article id="WikiaMainContent" class="WikiaMainContent" style="float:none">
 		<header id="EditPageHeader">
 			<span class="wordmark <?= $wordmark['wordmarkSize'] ?> <?= $wordmark['wordmarkType'] ?> font-<?= $wordmark['wordmarkFont'] ?>" <?= $wordmark['wordmarkStyle'] ?>>
-				<a accesskey="z" href="<?= htmlspecialchars($wordmark['mainPageURL']) ?>">
+				<a accesskey="z" href="<?= htmlspecialchars($wordmark['mainPageURL']) ?>" title="<?= htmlspecialchars($wordmark['wordmarkText']) ?>">
 				<? if (!empty($wordmark['wordmarkUrl'])) { ?>
 					<img src="<?= $wordmark['wordmarkUrl'] ?>" alt="<?= htmlspecialchars($wordmark['wordmarkText']) ?>">
 				<? } else { ?>
