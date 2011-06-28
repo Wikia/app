@@ -217,10 +217,13 @@ $.fn.extend({
 		}
 
 		wrapper.data('blackout', blackout);
-		
+
 		if (typeof settings.onCreate == 'function') {
 			settings.onCreate(this,wrapper);
 		}
+
+		// BugId:7498
+		$(document.body).addClass('modalShown');
 
 		return wrapper;
 	},
@@ -242,6 +245,9 @@ $.fn.extend({
 		});
 
 		$.showAds();
+
+		// BugId:7498
+		$(document.body).removeClass('modalShown');
 	},
 
 	// just hide the modal - don't remove DOM node
@@ -259,6 +265,9 @@ $.fn.extend({
 
 		//show ads again
 		$.showAds();
+
+		// BugId:7498
+		$(document.body).removeClass('modalShown');
 	},
 
 	// show previously hidden modal
@@ -290,17 +299,8 @@ $.fn.extend({
 
 		$.hideAds();
 
-		/*
-		//Defined twice in different scopes. This is bad. Figure out how to define just once.
-		function getModalTop() {
-			var modalTop = (($(window).height() - wrapper.outerHeight()) / 2) + $(window).scrollTop();
-			if (modalTop < $(window).scrollTop() + 20) {
-				return $(window).scrollTop() + 20;
-			} else {
-				return modalTop;
-			}
-		}
-		*/
+		// BugId:7498
+		$(document.body).addClass('modalShown');
 	},
 
 	// change the width of modal and reposition it (refs RT #55210)
