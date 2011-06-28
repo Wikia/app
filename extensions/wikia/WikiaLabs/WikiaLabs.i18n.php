@@ -72,6 +72,9 @@ $messages['en'] = array(
 	'wikialabs-feedback-validator-spam-attempt' => 'Please wait 60 seconds before submitting next feedback',
 	
 	'wikialabs-feedback-validator-notification-ok' => 'Your feedback has been added. Thank you!',
+    
+        'wikialabs-log-enabled-extension' => 'enabled $1',
+        'wikialabs-log-disabled-extension' => 'disabled $1',
 );
 
 $messages['qqq'] = array(
