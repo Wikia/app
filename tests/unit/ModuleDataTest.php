@@ -392,10 +392,11 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 	function testAchievementsModule() {
 		global $wgUser, $wgTitle, $wgEnableAchievementsExt;
+		$userName = 'WikiaUser';
 		if (!$wgEnableAchievementsExt) $this->markTestSkipped();
 
-		$wgUser = $this->getMock('User', array('isBlocked', 'isLoggedIn'));
-		$wgUser->mName = 'WikiaStaff';
+		$wgUser = $this->getMock('User', array('isBlocked', 'isLoggedIn', 'getId', 'isBot'));
+		$wgUser->mName = $userName;
 		$wgUser->mFrom = 'name';
 		$wgUser->expects($this->any())
 			   ->method('isBlocked')
@@ -403,14 +404,20 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$wgUser->expects($this->any())
 			   ->method('isLoggedIn')
 			   ->will($this->returnValue(true));
+		$wgUser->expects($this->any())
+			   ->method('getId')
+			   ->will($this->returnValue(1));
+		$wgUser->expects($this->any())
+			   ->method('isBot')
+			   ->will($this->returnValue(false));
 
 		F::setInstance( 'User', $wgUser );
 
-		$wgTitle = Title::newFromText('User:WikiaStaff');
+		$wgTitle = Title::newFromText('User:' . $userName);
 
 		$moduleData = Module::get('Achievements')->getData();
 
-		$this->assertEquals ($moduleData['ownerName'], 'WikiaStaff');
+		$this->assertEquals ($moduleData['ownerName'], $userName);
 		$this->assertEquals ($moduleData['viewer_is_owner'], true);
 		$this->assertEquals ($moduleData['max_challenges'], 'all');
 		$this->assertType ('array', $moduleData['challengesBadges'][0]);
