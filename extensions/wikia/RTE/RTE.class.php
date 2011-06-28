@@ -801,12 +801,12 @@ HTML
 	private static function isCompatibleBrowser() {
 		wfProfileIn(__METHOD__);
 
-		if ( isset( $_SERVER ) ) {
+		if ( isset( $_SERVER ) && isset($_SERVER['HTTP_USER_AGENT'])) {
 			$sAgent = $_SERVER['HTTP_USER_AGENT'] ;
 		}
 		else {
 			global $HTTP_SERVER_VARS ;
-			if ( isset( $HTTP_SERVER_VARS ) ) {
+			if ( isset( $HTTP_SERVER_VARS ) && isset($HTTP_SERVER_VARS['HTTP_USER_AGENT']) ) {
 				$sAgent = $HTTP_SERVER_VARS['HTTP_USER_AGENT'] ;
 			}
 			else {
