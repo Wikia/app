@@ -1,6 +1,6 @@
 <?php
 
-class TestModule extends Module {
+class UnitTestModule extends Module {
 
 	public $foo;
 
