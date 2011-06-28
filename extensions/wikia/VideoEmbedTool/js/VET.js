@@ -1032,7 +1032,9 @@ function VET_close(e) {
 			$G( 'VideoEmbedPageWindow' ).style.visibility = '';
 		}
 	}
-	if(typeof FCK == 'undefined' && $G('wpTextbox1')) $G('wpTextbox1').focus();
+	if (typeof RTE == 'undefined' && $G('wpTextbox1')) {
+		$G('wpTextbox1').focus();
+	}
 	VET_switchScreen('Main');
 	VET_loadMain();
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'block');
