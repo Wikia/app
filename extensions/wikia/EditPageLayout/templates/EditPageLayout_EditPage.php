@@ -7,7 +7,13 @@
 				<? if (!empty($wordmark['wordmarkUrl'])) { ?>
 					<img src="<?= $wordmark['wordmarkUrl'] ?>" alt="<?= htmlspecialchars($wordmark['wordmarkText']) ?>">
 				<? } else { ?>
-					<?= htmlspecialchars($wordmark['wordmarkText']) ?>
+					<?php if (mb_substr($wordmark['wordmarkText'], 0, 10) == $wordmark['wordmarkText']) {
+						$wordmarkShortText = htmlspecialchars($wordmark['wordmarkText']);
+					} else {
+						$wordmarkShortText = htmlspecialchars(mb_substr($wordmark['wordmarkText'], 0, 10)).'&hellip;';
+					} ?>
+					<?= $wordmarkShortText ?>
+					
 				<? } ?>
 				</a>
 			</span>
