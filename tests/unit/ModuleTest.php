@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Seg fault
+ * @group Broken
+ */
 class ModuleTest extends PHPUnit_Framework_TestCase {
 
 	function setUp() {
