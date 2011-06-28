@@ -50,6 +50,18 @@ var WikiaPhotoGalleryView = {
 		this.lazyLoadGalleryImages();
 	},
 
+	// force user to log in before using gallery editor in view mode (BugId:7453)
+	// returns true when log in dialog is shown
+	forceLogIn: function() {
+		if (window.showComboAjaxForPlaceHolder) {
+			// element, isPlaceholder, callback, showRegisterTabFirst, showLoginRequiredMessage
+			if (showComboAjaxForPlaceHolder("",false, "", false, true)) {
+				return true;
+			}
+		}
+		return false;
+	},
+
 	initGalleries: function () {
 		var self = this;
 
@@ -76,6 +88,11 @@ var WikiaPhotoGalleryView = {
 						    return false;
 						}
 
+						// BugId:7453
+						if (self.forceLogIn()) {
+							return;
+						}
+
 						var gallery = $(this).closest('.wikia-gallery');
 						var hash = gallery.attr('hash');
 						var id = gallery.attr('id');
@@ -97,6 +114,7 @@ var WikiaPhotoGalleryView = {
 										target: $(ev.target).closest('.wikia-gallery')
 									});
 								} else {
+									// something went wrong - gallery not found / user not allowed to edit
 									WikiaPhotoGallery.showAlert(
 										data.errorCaption,
 										data.error
