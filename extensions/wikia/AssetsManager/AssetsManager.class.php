@@ -22,6 +22,7 @@ class AssetsManager {
 	private $mMinify;
 	private $mCommonHost;
 	private $mAssetsConfig;
+	private $mAllowedAssetExtensions = array( 'js', 'css', 'scss' );
 	private static $mInstance = false;
 
 	public static function getInstance() {
@@ -181,5 +182,9 @@ class AssetsManager {
 			/* 3 */ urlencode(http_build_query($params)),
 			/* 4 */ $this->mCacheBuster);
 	}
-
+	
+	
+	public function getAllowedAssetExtensions(){
+		return $this->mAllowedAssetExtensions;
+	}
 }

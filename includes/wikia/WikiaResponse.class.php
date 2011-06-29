@@ -346,6 +346,70 @@ class WikiaResponse {
 
 	}
 	
+	public function addAsset( $assetName ){
+		if ( $this->format == 'html' ) {
+			//check if is a configured package
+			$app = F::app();
+			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+			$type = $app->getAssetsConfig()->getGroupType( $assetName );
+			$isGroup = true;
+			
+			if ( empty( $type ) ) {
+				//single asset
+				$isGroup = false;
+				
+				//get the resource type from the file extension
+				$tokens = explode( '.', $assetName );
+				$tokensCount = count( $tokens );
+				
+				if ( $tokensCount > 1 ) {
+					$extension = strtolower( $tokens[$tokensCount - 1] );
+					
+					if( in_array( $extension, $assetsManager->getAllowedAssetExtensions() ) ){
+						switch ( $extension ) {
+							case 'js':
+								$type = AssetsManager::TYPE_JS;
+								break;
+							case 'css':
+								$type = AssetsManager::TYPE_CSS;
+								break;
+							case 'scss':
+								$type = AssetsManager::TYPE_SCSS;
+								break;
+						}
+					}
+				}
+			}
+			
+			//asset type not recognized
+			if ( empty( $type ) ) {
+				throw new WikiaException( 'Unknown asset type' );
+			}
+			
+			$src = '';
+			
+			if ( $isGroup ) {
+				$src =  $assetsManager->getGroupCommonURL( $assetName );
+			} else {
+				if ( $type == AssetsManager::TYPE_SCSS ) {
+					$src =  $assetsManager->getSassCommonURL( $assetName );
+				} else {
+					$src =  $assetsManager->getOneCommonURL( $assetName );
+				}
+			}
+			
+			switch ( $type ) {
+				case AssetsManager::TYPE_CSS:
+				case AssetsManager::TYPE_SCSS:
+					$app->wg->Out->addStyle( $src );
+					break;
+				case AssetsManager::TYPE_JS:
+					$app->wg->Out->addScript( "<script type=\"{$app->wg->JsMimeType}\" src=\"{$src}\"></script>" );
+					break;
+			}
+		}
+	}
+	
 	private function isStandardHTTPCode($code){
 		return in_array( $code, array(
 			100, 101,
