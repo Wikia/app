@@ -4,13 +4,13 @@ $(function() {
 		function simpleHash(s, tableSize) {
 			var i, hash = 0;
 			for (i = 0; i < s.length; i++) {
-				hash += (s[i].charCodeAt() * (i+1));
+				hash += (String.prototype.charCodeAt.call(s[i]) * (i+1));
 			}
 			return Math.abs(hash) % tableSize;
 		}
 		if(simpleHash(window.beacon_id, 10) === 0) {
 			Liftium.trackEvent('SamplingPageview', 'UA-2871474-1');
-		}	
+		}
 	}
 });
 
@@ -607,7 +607,7 @@ var initTracker = function() {
 			$.tracker.byStr('mweditor/save');
 		});
 	}
-	
+
 	// store timestamp when user left the page
 	$(window).unload(function(ev) {
 		if ($.storage) {
