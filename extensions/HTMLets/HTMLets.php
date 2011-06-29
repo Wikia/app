@@ -53,11 +53,13 @@ $wgHTMLetsHack = HTMLETS_BYPASS_HACK; #hack to use to work around bug #8997. see
 # This is set by WikiFactory earlier
 #$wgHTMLetsDirectory = NULL;
 
-$wgExtensionFunctions[] = "wfHTMLetsExtension";
+//$wgExtensionFunctions[] = "wfHTMLetsExtension";
+$wgHooks['ParserFirstCallInit'][] = "wfHTMLetsExtension";
 
-function wfHTMLetsExtension() {
-    global $wgParser;
+function wfHTMLetsExtension( $wgParser ) {
+//    global $wgParser;
     $wgParser->setHook( "htmlet", "wfRenderHTMLet" );
+    return true;
 }
 
 # The callback function for converting the input text to HTML output

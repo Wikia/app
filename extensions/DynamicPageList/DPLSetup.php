@@ -1102,8 +1102,8 @@ class ExtDynamicPageList {
 		self::$functionalRichness = $level;
 	}
 
-	public static function setupDPL() {
-		global $wgParser;
+	public static function setupDPL( $wgParser ) {
+//		global $wgParser;
 
 		// DPL offers the same functionality as Intersection; so we register the <DynamicPageList> tag
 		// in case LabeledSection Extension is not installed we need to remove section markers
@@ -1117,14 +1117,16 @@ class ExtDynamicPageList {
 		$wgParser->setFunctionHook( 'dplmatrix',  array( __CLASS__, 'dplMatrixParserFunction'  ) );
 
 		self::commonSetup();
+		return true;
 	}
 
-	public static function setupMigration() {
+	public static function setupMigration( $wgParser ) {
 		// DPL offers the same functionality as Intersection under the tag name <Intersection>
-		global $wgParser;
+//		global $wgParser;
 		$wgParser->setHook( 'Intersection', array( __CLASS__, 'intersectionTag' ) );
 
 		self::commonSetup();
+		return true;
 	}
 
 	private static function commonSetup() {

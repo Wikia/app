@@ -20,7 +20,8 @@ if ( ! defined( 'MEDIAWIKI' ) )
 # Standard initialisation code
 ##
 
-$wgExtensionFunctions[] = array( 'LabeledSectionTransclusion', "setup" );
+//$wgExtensionFunctions[] = array( 'LabeledSectionTransclusion', "setup" );
+$wgHooks['ParserFirstCallInit'][] = 'LabeledSectionTransclusion::setup';
 $wgHooks['LanguageGetMagic'][] = 'LabeledSectionTransclusion::setupMagic';
 
 $wgExtensionCredits['parserhook'][] = array(
@@ -40,9 +41,9 @@ $wgLstLocal = null;
 
 class LabeledSectionTransclusion {
 
-  static function setup() 
+  static function setup( $wgParser ) 
   {
-    global $wgParser;
+//    global $wgParser;
     
     $wgParser->setHook( 'section', array( __CLASS__, 'noop' ) );
     if ( defined( get_class( $wgParser ) . '::SFH_OBJECT_ARGS' ) ) {
@@ -52,6 +53,7 @@ class LabeledSectionTransclusion {
         $wgParser->setFunctionHook( 'lst', array( __CLASS__, 'pfuncInclude' ) );
         $wgParser->setFunctionHook( 'lstx', array( __CLASS__, 'pfuncExclude' ) );
     }
+    return true;
   }
 
   /// Add the magic words - possibly with more readable aliases
