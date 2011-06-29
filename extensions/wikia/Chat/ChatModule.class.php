@@ -3,6 +3,7 @@ class ChatModule extends Module {
 
 	var $wgStylePath;
 	var $wgExtensionsPath;
+	var $wgBlankImgUrl;
 	var $globalVariablesScript;
 	var $username;
 	var $roomId;
@@ -78,7 +79,8 @@ class ChatModule extends Module {
 		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
 
 		//Theme Designer stuff
-		$this->themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wgCityId );
+		$themeSettings = new ThemeSettings();
+		$this->themeSettings = $themeSettings->getSettings();
 
 		// Since we don't emit all of the JS headscripts or so, fetch the URL to load the JS Messages packages.
 		$this->jsMessagePackagesUrl = F::build('JSMessages')->getExternalPackagesUrl();

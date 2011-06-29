@@ -31,6 +31,17 @@ var STATUS_STATE_AWAY = 'away';
 			'command': ''
 		}
 	});
+	
+	models.OpenPrivateRoom = models.Command.extend({
+		initialize: function(options){
+			this.set({
+				command: 'openprivate',
+				roomId: options.roomId,
+				users: options.users
+			});
+		}
+	});
+	
 	models.KickBanCommand = models.Command.extend({
 		initialize: function(options){
 			this.set({
@@ -39,6 +50,7 @@ var STATUS_STATE_AWAY = 'away';
 			});
 		}
 	});
+	
 	models.GiveChatModCommand = models.Command.extend({
 		initialize: function(options){
 			this.set({
@@ -47,6 +59,7 @@ var STATUS_STATE_AWAY = 'away';
 			});
 		}
 	});
+	
 	models.SetStatusCommand = models.Command.extend({
 		initialize: function(options){
 			this.set({
@@ -61,10 +74,13 @@ var STATUS_STATE_AWAY = 'away';
 	models.ChatEntry = Backbone.Model.extend({
 		defaults: {
 			'msgType': 'chat', // used by the server to determine how to handle one of these objects.
+			'roomId' : 0,
 			'name': '',
 			'text': '',
 			'avatarSrc': '',
-			'timeStamp': ''
+			'timeStamp': '',
+			'continued': false,
+			'temp': false //use for long time connection with private
 		}
 	});
 	/**
@@ -86,30 +102,72 @@ var STATUS_STATE_AWAY = 'away';
 		}
 	});
 
+	
+	var modelInit = function() {
+		this.chats = new models.ChatCollection();
+		this.users = new models.UserCollection();
+		this.privateUsers = new models.UserCollection();
+		this.blockedUsers = new models.UserCollection();
+		this.blockedByUsers = new models.UserCollection();
+		
+		this.chats.bind('add', function(current) {
+			var last = this.at(this.length - 2);
+			
+			if(typeof(last) == 'object' ) {
+				if(last.get('name') == current.get('name') && current.get('msgType') == 'chat' && current.get('msgType') == 'chat') {
+					current.set({'continued': true});
+				}
+				
+				if(last.get('temp') != current.get('temp')) {
+					current.set({'continued': false});		
+				}
+			} else {
+				current.set({'continued': false});
+			}
+			
+			this.trigger('afteradd', current);
+		});
+		
+		this.chats.bind('remove', function(current) {
+			current.set({'continued': false });
+		});
+	}
+	
 	models.NodeChatModel = Backbone.Model.extend({
 		defaults: {
 			"clientId": 0
 		},
 
 		initialize: function() {
-			this.chats = new models.ChatCollection();
-			this.users = new models.UserCollection();
+			modelInit.apply(this,arguments);
+		}
+	});
+
+	models.NodeChatModelCS = models.NodeChatModel.extend({
+		initialize: function() {
+			modelInit.apply(this,arguments);
+			this.room = new models.ChatRoom();	
 		}
 	});
 
 	models.User = Backbone.Model.extend({
 		defaults: {
 			'name': '',
-			'statusState': STATUS_STATE_PRESENT,
+			'since': '',
 			'statusMessage': '',
+			'statusState': STATUS_STATE_PRESENT,
 			'isModerator': false,
 			'isStaff': false,
+			'isCanGiveChatMode': false,
 			'avatarSrc': "http://placekitten.com/50/50",
 			'editCount': '?',
-			'since': ''
+			'isPrivate': false,
+			'active': false,
+			'privateRoomId': false
 		},
 
-		initialize: function(){
+		initialize: function(options){
+
 		},
 
 		isAway: function(){
@@ -117,18 +175,54 @@ var STATUS_STATE_AWAY = 'away';
 		}
 	});
 
+	models.PrivateUser = models.User.extend({
+		initialize: function(options){
+			this.set({
+				privateRoomId: options.privateRoomId,
+				isPrivate: true
+			});
+		}
+	});
+
+	models.ChatRoom = Backbone.Model.extend({
+		defaults: {
+			'roomId': 0,
+			'unreadMessage': 0,
+			'blockedMessageInput': false,
+			'isActive': false, 
+			'privateUser': false
+		}
+	});
+	
 	//
 	//Collections
 	//
-
+	
 	models.ChatCollection = Backbone.Collection.extend({
 		model: models.ChatEntry
 	});
 
+	var findByName = function(name) {
+		var userObject = this.find(function(user){
+			return (user.get('name') == name);
+		});
+		return userObject;
+	}
+	
 	models.UserCollection = Backbone.Collection.extend({
-		model: models.User
+		model: models.User,
+		initialize: function() {
+			this.findByName = findByName;
+		} 
 	});
-
+	
+	models.PrivateUserCollection = Backbone.Collection.extend({
+		model: models.PrivateUser,
+		initialize: function() {
+			this.findByName = findByName;
+		} 
+	});
+	
 	//
 	//Model exporting/importing
 	//
@@ -163,7 +257,7 @@ var STATUS_STATE_AWAY = 'away';
 
 		process(result, this);
 
-		return JSON.stringify(result);
+		return typeof($) != 'undefined' ? $.toJSON(result):JSON.stringify(result);
 	};
 
 
@@ -178,7 +272,7 @@ var STATUS_STATE_AWAY = 'away';
 				_.each(data.collections, function (collection, name) {
 					targetObj[name].id = collection.id;
 					_.each(collection.models, function (modelData, index) {
-						var newObj = targetObj[name]._add({}, {silent: silent});
+						var newObj = targetObj[name]._add(modelData.attrs, {silent: silent});
 						process(newObj, modelData);
 					});
 				});
@@ -192,7 +286,7 @@ var STATUS_STATE_AWAY = 'away';
 		}
 
 		try{
-			process(this, JSON.parse(data));
+			process(this, typeof($) != 'undefined' ? $.parseJSON(data):JSON.parse(data) );
 		} catch (e){
 			if (typeof console != 'undefined') {
 				console.log("Unable to parse message in mport. Data attempted to parse was: ");

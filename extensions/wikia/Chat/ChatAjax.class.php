@@ -12,7 +12,13 @@ class ChatAjax {
 	 * on lyrics.wikia.com, but interestingly, isn't in document.cookie in the javascript on lyrics.wikia.com).
 	 */
 	static public function echoCookies(){
-		return $_COOKIE;
+		global $wgUser, $wgMemc;
+		if($wgUser->getId() < 1) {
+			return array("key" => false ) ;	
+		}
+		$key = md5( $wgUser->getId() . "_" . time() );
+		$wgMemc->set($key, array( "user_id" => $wgUser->getId(), "cookie" => $_COOKIE) , 60*60*24);
+		return array("key" => $key ) ;
 	} // end echoCookies()
 
 	/**
@@ -33,17 +39,36 @@ class ChatAjax {
 	 * If the user is not allowed to chat, an error message is returned (which can be shown to the user).
 	 */
 	static public function getUserInfo(){
-		global $wgUser, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang;
+		global $wgMemc, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang;
 		wfProfileIn( __METHOD__ );
+		
+		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
 
+		if(!empty($data)) {
+			$user = User::newFromId( $data['user_id'] );	
+		}
+	
+		if(empty($user)) {
+			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
+			wfProfileOut( __METHOD__ );
+		}
+		
+		$isCanGiveChatMode = false;
+		$userChangeableGroups = $user->changeableGroups();		
+		if (in_array('chatmoderator', $userChangeableGroups['add'])) {
+			$isCanGiveChatMode = true;
+		}
+		
 		// First, check if they can chat on this wiki.
 		$retVal = array(
-			'canChat' => Chat::canChat($wgUser),
-			'isLoggedIn' => $wgUser->isLoggedIn(),
-			'isChatMod' => $wgUser->isAllowed( 'chatmoderator' ),
-			'isStaff' => $wgUser->isAllowed( 'staff' ),
-			'username' => $wgUser->getName(),
-			'avatarSrc' => AvatarService::getAvatarUrl($wgUser->getName(), self::CHAT_AVATAR_DIMENSION),
+			'canChat' => Chat::canChat($user),
+			'isLoggedIn' => true,
+			'isChatMod' => $user->isAllowed( 'chatmoderator' ),
+			'isCanGiveChatMode' => $isCanGiveChatMode, 
+			'isStaff' => $user->isAllowed( 'staff' ),
+			'cookie' => $data['cookie'],
+			'username' => $user->getName(),
+			'avatarSrc' => AvatarService::getAvatarUrl($user->getName(), self::CHAT_AVATAR_DIMENSION),
 			'editCount' => "",
 			'since' => '',
 
@@ -72,7 +97,7 @@ class ChatAjax {
 
 		// If the user can chat, dig up some other stats which are a little more expensive to compute.
 		if($retVal['canChat']){
-			$userStatsService = new UserStatsService($wgUser->getId());
+			$userStatsService = new UserStatsService($user->getId());
 			$stats = $userStatsService->getStats();
 
 			// NOTE: This is attached to the user so it will be in the wiki's content language instead of wgLang (which it normally will).
@@ -94,6 +119,24 @@ class ChatAjax {
 	} // end getUserInfo()
 
 	/**
+	 * Ajax endpoint for createing / accessing  private rooms  
+	 */
+		
+	static public function getPrivateRoomID() {
+		global $wgRequest;
+		$users = explode( ',', $wgRequest->getVal('users'));
+		
+		//TODO: change this
+		$roomName = 'private room name';
+		$roomTopic = 'private room topic';
+		
+		$roomId = NodeApiClient::getDefaultRoomId($roomName, $roomTopic, 'private', $wgRequest->getVal('users') );
+		
+		return array("id" => $roomId);
+	} 
+	
+	
+	/**
 	 * Ajax endpoint for kickbanning a user. This will change their permissions so that
 	 * they are not allowed to chat on the current wiki.
 	 *
@@ -105,29 +148,54 @@ class ChatAjax {
 	 * the caller is trying to kickBan a user who is already banned.  They might have been
 	 * banned on the wiki & now are still logged in... if this is the case, they should be kicked!
 	 */
-	static public function kickBan(){
-		global $wgRequest;
+	static public function kickBan($private = false){
+		global $wgRequest, $wgUser, $wgMemc;
 		wfProfileIn( __METHOD__ );
-
+		
+		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
+		if( !empty($data) ) {
+			$kickingUser = User::newFromId( $data['user_id'] );
+		} else {
+			$kickingUser = $wgUser;
+		}
+		
 		$retVal = array();
 		$userToBan = $wgRequest->getVal('userToBan');
-		$doKickAnyway = false; // might get changed by reference
 		if(empty($userToBan)){
 			$retVal["error"] = wfMsg('chat-missing-required-parameter', 'usertoBan');
 		} else {
-			$result = Chat::banUser($userToBan, $doKickAnyway);
+			if($private) {
+				$dir = $wgRequest->getVal('dir', 'add');
+				$result = Chat::blockPrivate($userToBan, $dir, $kickingUser);
+			} else {
+				$doKickAnyway = false; // might get changed by reference
+				$result = Chat::banUser($userToBan, $doKickAnyway, $kickingUser);
+				$retVal["doKickAnyway"] = ($doKickAnyway?"1":"0");	
+			}
 			if($result === true){
 				$retVal["success"] = true;
 			} else {
 				$retVal["error"] = $result;
 			}
 		}
-		$retVal["doKickAnyway"] = ($doKickAnyway?"1":"0");
 
 		wfProfileOut( __METHOD__ );
 		return $retVal;
 	} // end kickBan()
 
+	
+	/**
+	 * Ajax endpoint for blocking private chat with user
+	 **/
+	
+	static public function blockPrivate(){
+		return self::kickBan(true);
+	}
+	
+	static public function getListOfBlockedPrivate() {
+		return Chat::getListOfBlockedPrivate();
+	}
+	
 	/**
 	 * Ajax endpoint to set a user as a chat moderator (ie: add them to the 'chatmoderator' group).
 	 *
@@ -135,16 +203,23 @@ class ChatAjax {
 	 * returns "error" => [error message].
 	 */
 	static public function giveChatMod(){
-		global $wgRequest, $wgUser;
+		global $wgRequest, $wgUser, $wgMemc;
 		wfProfileIn( __METHOD__ );
-
+		
+		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
+		if( !empty($data) ) {
+			$promottingUser = User::newFromId( $data['user_id'] );
+		} else {
+			$promottingUser = $wgUser;
+		}
+		
 		$retVal = array();
 		$PARAM_NAME = "userToPromote";
 		$userToPromote = $wgRequest->getVal( $PARAM_NAME );
 		if(empty($userToPromote)){
 			$retVal["error"] = wfMsg('chat-missing-required-parameter', $PARAM_NAME);
 		} else {
-			$result = Chat::promoteChatModerator($userToPromote);
+			$result = Chat::promoteChatModerator($userToPromote, $promottingUser);
 			if($result === true){
 				$retVal["success"] = true;
 			} else {

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Even though the Predis 5.2 backport works swimmingly, given the layout of our network (chat server and its local redis instance running in the public network)
  * and the fact that redis is essentially unsecured, it is not safe for our MediaWiki server to make requests to redis.
@@ -53,13 +52,14 @@ class NodeApiClient {
 	 * @param roomName - will be filled with the name of the chat (a string stored in VARCHAR(255), so it's reasonable length)
 	 * @param roomTopic - will be filled with the topic of the chat (a string stored in a blob, so it might be fairly large).
 	 */
-	static public function getDefaultRoomId(&$roomName, &$roomTopic){
+	static public function getDefaultRoomId(&$roomName, &$roomTopic, $roomType = "open", $roomUsers = array() ){
 		global $wgCityId, $wgSitename, $wgServer, $wgArticlePath, $wgMemc;
 		wfProfileIn(__METHOD__);
 
 		$memcKey = wfMemcKey( "NodeApiClient::getDefaultRoomId", $wgCityId );
-		$roomData = $wgMemc->get($memcKey);
-		if(!$roomData){
+		//$roomData = $wgMemc->get($memKey);
+		
+		if(empty($roomData)){
 			// Add some extra data that the server will want in order to store it in the room's hash.
 			$extraData = array(
 				'wgServer' => $wgServer,
@@ -71,10 +71,13 @@ class NodeApiClient {
 			$roomJson = NodeApiClient::makeRequest(array(
 				"func" => "getDefaultRoomId",
 				"wgCityId" => $wgCityId,
+				"roomType" => $roomType,
+				"roomUsers" => $roomUsers,
 				"defaultRoomName" => $wgSitename,
 				"defaultRoomTopic" => wfMsg('chat-default-topic', $wgSitename),
 				"extraDataString" => $extraDataString
 			));
+			
 			$roomData = json_decode($roomJson);
 
 			$wgMemc->set($memcKey, $roomData, 60 * 60 * 24); // right now, this probably won't be changing at all for a given wiki
@@ -150,7 +153,6 @@ class NodeApiClient {
 	/**
 	 * Return the appropriate host and port for the client to connect to.
 	 * This is based on whether this is dev or prod, but can be overridden
-	 * completely using 'wgNodeHostAndPort'.
 	 */
 	static protected function getHostAndPort(){
 		global $wgDevelEnvironment;

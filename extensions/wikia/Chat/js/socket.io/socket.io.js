@@ -193,7 +193,7 @@ if (typeof window != 'undefined'){
 		} else if (message.substr(0, 3) == '~h~'){
 			this._onHeartbeat(message.substr(3));
 		} else if (message.substr(0, 3) == '~j~'){
-			this.base._onMessage(JSON.parse(message.substr(3)));
+			this.base._onMessage($.parseJSON(message.substr(3)));
 		} else {
 			this.base._onMessage(message);
 		}
@@ -691,7 +691,7 @@ JSONPPolling.prototype._send = function(data){
 		form.action = this._prepareUrl() + '/' + (+new Date) + '/' + this._index;
 		area.name = 'data';
 		form.appendChild(area);
-		this._insertAt.parentNode.insertBefore(form, this._insertAt);
+		this._insertAt.parentNode.insertBefore(form, null);
 		document.body.appendChild(form);
 
 		this._form = form;
@@ -753,7 +753,7 @@ JSONPPolling.prototype._get = function(){
 	script.onerror = function(){
 		self._onDisconnect();
 	};
-	this._insertAt.parentNode.insertBefore(script, this._insertAt);
+	this._insertAt.parentNode.insertBefore(script, null);
 	this._script = script;
 };
 
@@ -798,7 +798,7 @@ JSONPPolling.xdomainCheck = function(){
 			},
 			connectTimeout: 5000,
 			tryTransportsOnConnectTimeout: true,
-			rememberTransport: true
+			rememberTransport: false 
 		};
 		io.util.merge(this.options, options);
 		this.connected = false;
