@@ -76,21 +76,34 @@
 				.label {
 					@include clearfix;
 					@include linear-gradient(#ebebeb, top, #fff, 40%, #ebebeb, 100%);
+					color: #6aa8d1;
 					padding: 10px;
+					position: relative;
 					.activity-name {
 						float: left;
 						font-weight: bold;
 						width: 190px;
 					}
-					.activity-score {
-						float: right;
+					.chevron {
+						border: 5px solid transparent;
+						border-top: 5px solid #6aa8d1;
+						height: 0;
+						right: 12px;
+						position: absolute;
+						top: 12px;
+						width: 0;
 					}
 					&:hover {
 						cursor: pointer;
 					}
 				}
 				&.active .label {
-					color: #6aa8d1;
+					color: #2070AD;
+					.chevron {
+						border-top: 5px solid transparent;
+						border-bottom: 5px solid #6aa8d1;
+						top: 7px;
+					}
 				}
 				.description {
 					background: white;
@@ -141,9 +154,7 @@
 			}
 			&.collapsed {
 				.chevron {
-					border-top-style: solid;
-					border-top-width: 5px;
-					border-top-color: #72a6d0;
+					border-top: 5px solid #72a6d0;
 					top: 10px;
 				}
 				&:hover {
@@ -152,9 +163,7 @@
 			}
 			&.expanded {
 				.chevron {
-					border-bottom-style: solid;
-					border-bottom-width: 5px;
-					border-bottom-color: #72a6d0;
+					border-bottom: 5px solid #72a6d0;
 					top: 5px;
 				}
 				&:hover {

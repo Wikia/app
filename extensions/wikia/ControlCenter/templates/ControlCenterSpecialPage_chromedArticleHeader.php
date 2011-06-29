@@ -1,4 +1,6 @@
-<div id="ControlCenterDrawer" class="ControlCenterDrawer"></div>
+<div id="ControlCenterDrawer" class="ControlCenterDrawer">
+	<span class="arrow"></span>
+</div>
 <nav class="ControlCenterNavigation">
 	<a href="<?= $backLink ?>"><?= wfMsg('controlcenter-back-to-dashboard') ?></a>
 </nav>

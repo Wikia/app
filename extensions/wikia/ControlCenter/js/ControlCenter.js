@@ -3,13 +3,27 @@ var ControlCenterChrome = {
 		ControlCenterChrome.rail = $('#ControlCenterRail');
 		ControlCenterChrome.drawer = $('#ControlCenterDrawer');
 		ControlCenterChrome.wikiaArticle = $('#WikiaArticle');
+		ControlCenterChrome.arrow = $('#ControlCenterDrawer .arrow');
 		ControlCenterChrome.drawer.click(function() {
 			if(ControlCenterChrome.rail.is(':visible')) {
 				ControlCenterChrome.rail.hide();
 				ControlCenterChrome.wikiaArticle.addClass('expanded');
+				ControlCenterChrome.arrow.addClass('expanded');
+				/*
+				ControlCenterChrome.rail.hide();
+				ControlCenterChrome.wikiaArticle.addClass('expanded').animate({width: '982px'}, 200, function() {
+				});
+				*/
 			} else {
+				ControlCenterChrome.arrow.removeClass('expanded');
 				ControlCenterChrome.wikiaArticle.removeClass('expanded');
 				ControlCenterChrome.rail.show();
+				//setTimeout(function(){ControlCenterChrome.rail.show()}, 250);
+				/*
+				ControlCenterChrome.wikiaArticle.removeClass('expanded').animate({width: '673px'}, 200, function() {
+					ControlCenterChrome.rail.show();
+				});
+				*/
 			}
 		});
 	}
@@ -71,7 +85,7 @@ var ControlCenter = {
 			ControlCenter.ui.deselectAllTabs();
 			ControlCenter.ui.hideAllSections();
 			ControlCenter.section.contentarea.html('Loading...');	//i18n this later
-			ControlCenter.wikiaArticle.removeClass('ControlCenterChromedArticle');
+			ControlCenter.wikiaArticle.removeClass('ControlCenterChromedArticle expanded');
 			$('.ControlCenterDrawer, .ControlCenterNavigation, .ControlCenterArticleHeader').remove();
 		},
 		hideAllSections: function() {

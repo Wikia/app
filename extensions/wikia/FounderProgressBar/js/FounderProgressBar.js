@@ -32,8 +32,8 @@ var FounderProgressList = {
 			FounderProgressList.isHidden = !FounderProgressList.isHidden;
 		});
 		
-		FounderProgressList.d.find(".task.collapsed").click(function() {
-			var el = $(this);
+		FounderProgressList.d.find(".task .task-label").click(function() {
+			var el = $(this).closest(".task");
 			var group = el.find('.task-group');
 			if(group.is(':visible')) {
 				el.removeClass('expanded').addClass('collapsed');

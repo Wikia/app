@@ -3,6 +3,7 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/transition";
 @import "../../../../skins/oasis/css/core/layout";
 
 $control-center-content-width: 690px;
@@ -152,23 +153,40 @@ $base-z: 5;
 }
 
 .ControlCenterDrawer {
-	background: #ebebeb;
+	background: #eaeaea;
+	border-left: 1px solid #cacaca;
 	bottom: 0;
 	cursor: pointer;
 	position: absolute;
 	right: 0;
-	top: 71px;
+	top: 72px;
 	width: 7px;
+	.arrow {
+		border: 4px solid transparent;
+		border-left: 4px solid #72a6cf;
+		bottom: 50%;
+		content: "";
+		display: block;
+		left: 2px;
+		position: absolute;
+		width: 0;
+		&.expanded {
+			left: 1px;
+			border-left: 1px solid transparent;
+			border-right: 4px solid #72a6cf;
+		}
+	}
 }
 
 .ControlCenterArticleHeader {
+	@include box-shadow(0, 2px, 2px, #ddd);
 	@include linear-gradient(#ebebeb, top, #fff, 40%, #ebebeb, 100%);
 	border-bottom: 1px solid #ebebeb;
 	border-top: 1px solid #ebebeb;
 	font-size: 12px;
 	font-style: italic;
 	height: 25px;
-	margin: 0 -12px 5px -5px;
+	margin: 0 -12px 7px -5px;
 	padding-top: 5px;
 	h1 {
 		color: #6aa8d1;
@@ -180,22 +198,29 @@ $base-z: 5;
 }
 
 .ControlCenterNavigation {
-	height: 40px;
+	height: 20px;
+	padding: 10px;
 	p {
 		margin: 0;
+	}
+	a {
+		padding-left: 5px;
+		&:before {
+			border: 6px solid transparent;
+			border-right: 6px solid #c5c5c5;
+			content: "";
+			display: block;
+			float: left;
+			left: -5px;
+			position: relative;
+			top: 5px;
+			width: 0;
+		}
 	}
 }
 
 // Oasis overwrites
 .WikiaArticle {
-	/*
-	background: white;
-	float: left;
-	padding: 0;
-	position: relative;
-	width: $control-center-content-width;
-	z-index: $base-z;
-	*/
 	background-color: #fff;
 	border-bottom: 1px solid #eee;
 	border-right: 1px solid #eee;
@@ -209,12 +234,13 @@ $base-z: 5;
 		list-style: none;
 	}
 	&.ControlCenterChromedArticle {
+		/*@include transition-shorthand(width 200ms ease-in);*/
 		padding: 0 12px 0 5px;
 		width: $control-center-content-width - 17px;
 	}
 	&.expanded {
 		float: none;
-		width: auto;
+		width: 982px;
 	}
 }
 
