@@ -149,7 +149,7 @@ class TaskManagerArchive extends Maintenance {
 
 		$dbw = WikiFactory::db( DB_MASTER );
 
-		foreach( $this->mData as $num => $task ) {
+		foreach( $this->mData as $task ) {
 			if( !empty( $task->moved ) ) {
 				$dbw->delete(
 					"wikia_tasks",

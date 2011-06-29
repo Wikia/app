@@ -115,7 +115,6 @@ class SponsorshipDashboardAjax {
 	}
 
 	static public function axDownloadCSV() {
-
 		$SponsorshipDashboard = new SponsorshipDashboard();
 
 		if ( isset( $_GET['elementId'] ) && !empty( $_GET['elementId'] ) && $SponsorshipDashboard->isAllowed() ){

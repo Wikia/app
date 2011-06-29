@@ -102,7 +102,7 @@ class PageGrabberDumpTask extends BatchTask {
 	 * @author Inez Korczynski (inez@wikia.com)
 	 */
 	function getForm ($title, $data = false ) {
-		global $wgOut, $wgExternalSharedDB;
+		global $wgExternalSharedDB;
 
 		$dbr = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 		$oRes = $dbr->select(

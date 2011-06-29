@@ -51,7 +51,7 @@ $wgExtensionMessagesFiles['WikiaPhotoGallery'] = $dir.'/WikiaPhotoGallery.i18n.p
 // Ajax dispatcher
 $wgAjaxExportList[] = 'WikiaPhotoGalleryAjax';
 function WikiaPhotoGalleryAjax() {
-	global $wgUser, $wgRequest;
+	global $wgRequest;
 	$method = $wgRequest->getVal('method', false);
 
 	if (method_exists('WikiaPhotoGalleryAjax', $method)) {

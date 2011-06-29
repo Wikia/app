@@ -126,9 +126,9 @@ class SearchNearMatch {
 
 		$not_exists = true;
 		if (!empty($searchTitleId)) {
-			$t = Title::newFromId($searchTitleId);
-			if ($t && $t->exists()) {
-				$title = $t;
+			$searchTitleObj = Title::newFromId($searchTitleId);
+			if ($searchTitleObj && $searchTitleObj->exists()) {
+				$title = $searchTitleObj;
 				$not_exists = false;
 			}
 		}

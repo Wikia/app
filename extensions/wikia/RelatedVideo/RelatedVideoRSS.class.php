@@ -15,8 +15,6 @@ class RelatedVideoRSS {
 	private $feed;
 
 	public function __construct( $url ) {
-
-		$itemCount = 0;
 		$rssContent = Http::get( $url );
 		$this->feed = new SimplePie();
 		$this->feed->set_raw_data($rssContent);

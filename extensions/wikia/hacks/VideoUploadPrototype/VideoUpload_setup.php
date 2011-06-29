@@ -52,7 +52,7 @@ $wgSpecialPages['VideoUploadHelper'] = 'SpecialVideoUploadHelper';
 //Ajax dispatcher
 $wgAjaxExportList[] = 'VideoUpload';
 function VideoUpload() {
-	global $wgUser, $wgRequest;
+	global $wgRequest;
 	$method = $wgRequest->getVal('method', false);
 
 	if (method_exists('VideoUploadAjax', $method)) {

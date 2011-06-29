@@ -45,7 +45,7 @@ function wfMetaKeywordLoadMessages ( ){
 //Adds customised keywords after the pagename of the <meta keywords> tag
 function wfMetaKeywordOutput( &$out ){
 	global $wgTitle, $wgMemc;
-	$ns = $wgTitle->getNamespace();
+	$namespace = $wgTitle->getNamespace();
 	
 	//Keywords
 	$opts = $wgMemc->get( "metakeywords-opts" );
@@ -54,8 +54,8 @@ function wfMetaKeywordOutput( &$out ){
 	}
 	$pagename = array_shift( $out->mKeywords );
 
-	if( array_key_exists( $ns, $opts ) && $opts[$ns] ){ //Namespace specific keywords
-		array_unshift( $out->mKeywords, $opts[$ns]);
+	if( array_key_exists( $namespace, $opts ) && $opts[$namespace] ){ //Namespace specific keywords
+		array_unshift( $out->mKeywords, $opts[$namespace]);
 	}elseif( array_key_exists( '*', $opts ) && $opts['*'] ){ //Global keywords
 		array_unshift( $out->mKeywords, $opts['*']);
 	}
@@ -68,8 +68,8 @@ function wfMetaKeywordOutput( &$out ){
 	if($opts === null ){ //Reload if not in cache
 		$opts = wfMetaKeywordInput( 'description' );
 	}
-	if( array_key_exists( $ns, $opts ) && $opts[$ns] ){ //Namespace specific descrption
-		$out->addMeta('description',str_replace("$1", $pagename, $opts[$ns]));
+	if( array_key_exists( $namespace, $opts ) && $opts[$namespace] ){ //Namespace specific descrption
+		$out->addMeta('description',str_replace("$1", $pagename, $opts[$namespace]));
 	}elseif( array_key_exists( '*', $opts ) && $opts['*'] ){ //Otherwise global description
 		$out->addMeta('description', str_replace("$1", $pagename, $opts['*']));
 	}
@@ -78,8 +78,6 @@ function wfMetaKeywordOutput( &$out ){
 
 //Reads [[MediaWiki:Meta$page]]
 function wfMetaKeywordInput( $type ){
-	global $wgContLang, $wgMemc, $wgDBname;
-	
 	$params = wfMsgForContentNoTrans("meta$type");
 	
 	$opts = array(0);
@@ -98,18 +96,18 @@ function wfMetaKeywordParse( $params ){
 	foreach( $lines as $l ){
 		if( preg_match( '/^\s*([^#\|]*)\s*\|\s*(.*)\s*$/',$l,$m ) ){
 		    $name = trim($m[1]);
-			$ns=false;
+			$namespace=false;
 			if($name == '(main)'){
-				$ns=0;
+				$namespace=0;
 			}elseif($name == '(all)'){
-				$ns='*';
+				$namespace='*';
 			}elseif(is_numeric($name)){ //a namespace number
-				$ns=$name;
+				$namespace=$name;
 			}else{ //normal namespace name
-				$ns = $wgContLang->getNsIndex($name);
+				$namespace = $wgContLang->getNsIndex($name);
 			}
-			if($ns !== false ){
-				$opts[$ns] = trim($m[2]);
+			if($namespace !== false ){
+				$opts[$namespace] = trim($m[2]);
 			}
 		}
 	}
@@ -119,14 +117,14 @@ function wfMetaKeywordParse( $params ){
 //Updates the cache if [[MediaWiki:Metakeywords]] or [[MediaWiki:Metadescription]] has been edited
 function wfMetaKeywordClearCache( &$article, &$wgUser, &$text ) {
 	global $wgMemc;
-		$title = $article->mTitle;
+	$title = $article->mTitle;
 
-		if( $title->getNamespace() == NS_MEDIAWIKI){
-			$tt = $title->getText();
-			if( $tt == 'metakeywords' || $tt == 'metadescription' ) {
-				$opts = wfMetaKeywordParse( $text );
-				$wgMemc->set($tt.'-opts',$opts,900);
-			}
+	if( $title->getNamespace() == NS_MEDIAWIKI){
+		$tt = $title->getText();
+		if( $tt == 'metakeywords' || $tt == 'metadescription' ) {
+			$opts = wfMetaKeywordParse( $text );
+			$wgMemc->set($tt.'-opts',$opts,900);
 		}
-		return true;
+	}
+	return true;
 }

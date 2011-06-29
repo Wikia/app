@@ -2,6 +2,9 @@
 /* 
  * API module that allows for selected Wiki Factory settings to be viewed/changed
  *
+ * @TODO: Comments / docs
+ * @TODO: Is this file even used anymore? It's pretty attrocious... would be nice to either clean it up or remove it.  Since
+ * there are many versions of NewWikiBuilder/WikiCreator/AutoWikiCreate/etc., it's possible this whole extension is unused.
  */
 
 class ApiFounderSettings extends ApiBase {
@@ -9,8 +12,8 @@ class ApiFounderSettings extends ApiBase {
 	protected $readSettings;
 	protected $writeSettings;
 
-        public function __construct($main, $action) {
-                parent :: __construct($main, $action);
+	public function __construct($main, $action) {
+		parent :: __construct($main, $action);
 		$this->writeSettings = array(
 			'wgDefaultTheme',
 			'wgDefaultSkin',
@@ -22,10 +25,17 @@ class ApiFounderSettings extends ApiBase {
 			'wgLanguageCode','wgCityId','wgContentNamespaces'
 			)
 		);
-        }
+	}
 
+	/**
+	 * Changes a wiki factory variable and returns either the string "success" or the
+	 * string "fail".
+	 *
+	 * Expects 'params' array to have a value for key 'changesetting' (name of the setting to change) and
+	 * the value to change that setting to is kept in the value for the key 'value'.
+	 */
 	private function changeSetting($params){
-                $this->getMain()->requestWriteMode();
+		$this->getMain()->requestWriteMode();
 
 		// Logged in?
 		global $wgUser;
@@ -33,20 +43,20 @@ class ApiFounderSettings extends ApiBase {
 			$this->dieUsageMsg(array("badaccess-groups"));
 		} 
 
-                if (empty($params['changesetting'])){ 
-                        $this->dieUsageMsg(array('missingparam', 'changesetting'));
-                } else if (empty($params['value'])){ 
-                        $this->dieUsageMsg(array('missingparam', 'value'));
-                }
+		if (empty($params['changesetting'])){ 
+			$this->dieUsageMsg(array('missingparam', 'changesetting'));
+		} else if (empty($params['value'])){ 
+			$this->dieUsageMsg(array('missingparam', 'value'));
+		}
 
 		if (! in_array($params['changesetting'], $this->writeSettings)){
-                        $this->dieUsageMsg(array("readonlysetting"));
+			$this->dieUsageMsg(array("readonlysetting"));
 		}
 
 		global $wgCityId;
 		if (empty($wgCityId)) { 
 			// WTF?
-                        $this->dieUsageMsg(array('Missing wgCityId'));
+			$this->dieUsageMsg(array('Missing wgCityId'));
 		}
 
 		if ( WikiFactory::setVarByName( $params['changesetting'], $wgCityId, $params['value'], 'NWB') ){
@@ -58,8 +68,8 @@ class ApiFounderSettings extends ApiBase {
 	}
 
 	private function getSettings($params){
-                if (empty($params['settingnames'])){ 
-                        $this->dieUsageMsg(array('missingparam', 'settingnames'));
+		if (empty($params['settingnames'])){ 
+			$this->dieUsageMsg(array('missingparam', 'settingnames'));
 		}
 
 		$out = array();
@@ -79,18 +89,17 @@ class ApiFounderSettings extends ApiBase {
 
 
 	public function execute() {
-
-                $params = $this->extractRequestParams();
+		$params = $this->extractRequestParams();
 
 		if (!empty($params['changesetting'])){
-			$r = $this->changeSetting($params);
+			$result = $this->changeSetting($params);
 		} else if (!empty($params['settingnames'])){
-			$r = $this->getSettings($params);
+			$result = $this->getSettings($params);
 		} else {
-                        $this->dieUsageMsg(array('notarget'));
+			$this->dieUsageMsg(array('notarget'));
 		}
 		
-		$this->getResult()->addValue(null, "settings", $r);
+		$this->getResult()->addValue(null, "settings", $result);
 	}
 
 	public function mustBePosted() { 
@@ -131,8 +140,6 @@ class ApiFounderSettings extends ApiBase {
 			'api.php?action=foundersettings&changesetting=wgDefaultTheme&value=slate'
 		);
 	}
-        public function getVersion() { return __CLASS__ . ': $Id: '.__CLASS__.'.php '.filesize(dirname(__FILE__)."/".__CLASS__.".php").' '.strftime("%Y-%m-%d %H:%M:%S", time()).'Z wikia $'; }
 
+	public function getVersion() { return __CLASS__ . ': $Id: '.__CLASS__.'.php '.filesize(dirname(__FILE__)."/".__CLASS__.".php").' '.strftime("%Y-%m-%d %H:%M:%S", time()).'Z wikia $'; }
 }
-
-
