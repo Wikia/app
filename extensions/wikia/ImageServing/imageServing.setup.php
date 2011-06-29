@@ -11,17 +11,17 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 /*Auto loader setup */
-$wgAutoloadClasses['imageServing']  = $dir . 'imageServing.class.php';
-$wgAutoloadClasses['imageServingHelper']  = $dir . 'imageServingHelper.class.php';
-$wgHooks['LinksUpdateComplete'][] = 'imageServingHelper::buildIndexOnPageEdit';
+$wgAutoloadClasses['ImageServing']  = $dir . 'imageServing.class.php';
+$wgAutoloadClasses['ImageServingHelper']  = $dir . 'imageServingHelper.class.php';
+$wgHooks['LinksUpdateComplete'][] = 'ImageServingHelper::buildIndexOnPageEdit';
 /* parser hook */
 
-$wgHooks['ImageBeforeProduceHTML'][] = 'imageServingHelper::replaceImages';
+$wgHooks['ImageBeforeProduceHTML'][] = 'ImageServingHelper::replaceImages';
 
 if (isset($wgHooks['BeforeParserrenderImageGallery'])) {
-	$wgHooks['BeforeParserrenderImageGallery'] = array_merge(array( 'imageServingHelper::replaceGallery' ), $wgHooks['BeforeParserrenderImageGallery'] );
+	$wgHooks['BeforeParserrenderImageGallery'] = array_merge(array( 'ImageServingHelper::replaceGallery' ), $wgHooks['BeforeParserrenderImageGallery'] );
 } else {
-	$wgHooks['BeforeParserrenderImageGallery'] = array( 'imageServingHelper::replaceGallery' );
+	$wgHooks['BeforeParserrenderImageGallery'] = array( 'ImageServingHelper::replaceGallery' );
 }
 
 // i18n
