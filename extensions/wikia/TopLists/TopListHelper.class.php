@@ -310,7 +310,7 @@ class TopListHelper {
 			if( !empty( $title ) && $title->exists() ) {
 				$articleId = $title->getArticleId();
 
-				$source = new imageServing(
+				$source = new ImageServing(
 					array( $articleId ),
 					120,
 					array(
@@ -328,7 +328,7 @@ class TopListHelper {
 		}
 
 		if( !empty( $selectedImageTitle ) ) {
-			$source = new imageServing(
+			$source = new ImageServing(
 				null,
 				120,
 				array(
@@ -485,7 +485,7 @@ class TopListHelper {
 						} else {
 							$ret[ 'success' ] = true;
 
-							$source = new imageServing(
+							$source = new ImageServing(
 								null,
 								120,
 								array(
@@ -524,7 +524,7 @@ class TopListHelper {
 			if( !empty( $title ) && $title->exists() ) {
 				$articleId = $title->getArticleId();
 
-				$source = new imageServing(
+				$source = new ImageServing(
 					array( $articleId ),
 					120,
 					array(

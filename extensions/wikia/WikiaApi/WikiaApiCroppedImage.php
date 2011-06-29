@@ -22,7 +22,7 @@ class WikiaApiCroppedImage extends ApiBase {
 		extract( $this->extractRequestParams() );
 		
 		wfProfileIn(__METHOD__);
-		$imageServing = new imageServing( array( $Id ), $Size, array("w" => $Size, "h" => $Height));
+		$imageServing = new ImageServing( array( $Id ), $Size, array("w" => $Size, "h" => $Height));
 		foreach ( $imageServing->getImages( 1 ) as $key => $value ){
 			$tmpTitle = Title::newFromText( $value[0]['name'], NS_FILE );
 			$image = wfFindFile( $tmpTitle );

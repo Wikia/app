@@ -156,7 +156,7 @@
 		protected function findImages( $articles ) {
 			$articleIds = array_keys($articles);
 
-			$imageServing = new imageServing( $articleIds, $this->confThumbWidth, $this->confThumbProportion );
+			$imageServing = new ImageServing( $articleIds, $this->confThumbWidth, $this->confThumbProportion );
 
 			return $imageServing->getImages(1);
 		}

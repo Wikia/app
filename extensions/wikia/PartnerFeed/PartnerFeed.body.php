@@ -346,7 +346,7 @@ class PartnerFeed extends SpecialPage {
 		$defaultWidth = 124;
 		$defaultHeight = 72;
 
-		$imageServing = new imageServing( array(), $defaultWidth, array( "w" => $defaultWidth, "h" => $defaultHeight ) );
+		$imageServing = new ImageServing( array(), $defaultWidth, array( "w" => $defaultWidth, "h" => $defaultHeight ) );
 		$dbw = wfGetDB( DB_SLAVE );
 
 		$res = $dbw->select( 'image',

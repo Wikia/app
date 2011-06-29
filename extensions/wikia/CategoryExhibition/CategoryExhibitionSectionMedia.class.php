@@ -61,7 +61,7 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 							$forceWidth	= floor($calculatedWidth);
 							$forceHeight	= floor($calculatedWidth / $proportions);
 
-							$imageServing = new imageServing( array( $item['page_id'] ), $calculatedWidth , array( "w" => $image->width, "h" => $image->height ) );
+							$imageServing = new ImageServing( array( $item['page_id'] ), $calculatedWidth , array( "w" => $image->width, "h" => $image->height ) );
 							$imageSrc = wfReplaceImageServer(
 								$image->getThumbUrl(
 									$imageServing->getCut( $image->width, $image->height )."-".$image->getName()

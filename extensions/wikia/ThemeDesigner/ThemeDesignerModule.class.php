@@ -270,7 +270,7 @@ class ThemeDesignerModule extends Module {
 						$this->backgroundImageName = $file->getName();
 	
 						//get cropped URL
-						$is = new imageServing( null, 120, array( "w"=>"120", "h"=>"100" ) );
+						$is = new ImageServing( null, 120, array( "w"=>"120", "h"=>"100" ) );
 						$this->backgroundImageThumb = wfReplaceImageServer( $file->getThumbUrl( $is->getCut( $file->width, $file->height, "origin" ) . "-" . $file->name ) );
 					}
 	

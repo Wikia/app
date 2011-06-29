@@ -4,7 +4,7 @@
  * Class to serving list of top 5 images for article use for indexing and keep index up to date
  */
 
-class imageServingHelper{
+class ImageServingHelper{
 	static private $hookOnOff = false; // parser hook are off 
 	
 	public static function buildIndexOnPageEdit( $self ) {

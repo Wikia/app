@@ -69,7 +69,7 @@ class UserProfileRailModule extends Module {
 
 			if( !empty( $this->topPages ) && class_exists( 'imageServing' ) ) {
 				// ImageServing extension enabled, get images
-				$imageServing = new imageServing( array_keys( $this->topPages ), 70, array( 'w' => 2, 'h' => 3 ) );//80px x 120px
+				$imageServing = new ImageServing( array_keys( $this->topPages ), 70, array( 'w' => 2, 'h' => 3 ) );//80px x 120px
 				$this->topPageImages = $imageServing->getImages(1); // get just one image per article
 			}
 		}

@@ -79,7 +79,7 @@ class LatestPhotosModule extends Module {
 
 		$file = $element['file'];
 		// crop the images correctly using extension:imageservice
-		$is = new imageServing(array(), 82);
+		$is = new ImageServing(array(), 82);
 		$thumb_url = $is->getThumbnails(array($file));
 		$thumb_url = array_pop($thumb_url);
 		$thumb_url = $thumb_url['url'];

@@ -336,7 +336,7 @@ class SpecialEditTopList extends SpecialPage {
 		$selectedImage = null;
 
 		if( !empty( $selectedPictureName ) ) {
-			$source = new imageServing(
+			$source = new ImageServing(
 					null,
 					120,
 					array(

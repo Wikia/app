@@ -3,7 +3,7 @@
  * Author: Tomek Odrobny
  * Class to serving list of top 5 images for article
  */
-class imageServing{
+class ImageServing{
 	private $maxCount = 10;
 	private $minSize = 75;
 	private $queryLimit = 50; 
