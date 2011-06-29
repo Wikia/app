@@ -9,7 +9,7 @@ $color-chat-live-corner: mix($color-chat-live, #000);
 $color-chat-avatar-border: $color-page-border;
 
 .ChatModule {
-
+	
 	.chat-live {
 		@include border-radius-nw(3px);
 		@include border-radius-ne(3px);
@@ -56,8 +56,10 @@ $color-chat-avatar-border: $color-page-border;
 			margin: 0;
 		}
 		>ul {
+			@include clearfix;
 			>li {
-				display: inline-block;
+				display: block;
+				float: left;
 				margin: 0 0 0 10px;
 				position: relative;
 				&:first-child {
@@ -79,5 +81,16 @@ $color-chat-avatar-border: $color-page-border;
 	.UserStatsMenu {
 		right: 30px;
 		top: 0;
+		z-index: 1000;
 	}
+}
+
+/* IE7 hackery */
+.WikiaRail {
+	*position: relative;
+	*z-index: 1;
+}
+.ChatModule {
+	*position: relative;
+	*z-index: 1;
 }

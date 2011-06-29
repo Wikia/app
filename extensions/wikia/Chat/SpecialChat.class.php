@@ -17,6 +17,7 @@ class SpecialChat extends UnlistedSpecialPage {
 		if($wgUser->isLoggedIn()){
 			if( Chat::canChat($wgUser) ){
 				Wikia::setVar( 'OasisEntryModuleName', 'Chat' );
+				Chat::logChatWindowOpenedEvent();
 			} else {
 				$wgOut->showErrorPage( 'chat-you-are-banned', 'chat-you-are-banned-text' );
 			}

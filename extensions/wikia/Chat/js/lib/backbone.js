@@ -176,7 +176,6 @@
     // Set a hash of model attributes on the object, firing `"change"` unless you
     // choose to silence it.
     set : function(attrs, options) {
-
       // Extract attributes and options.
       options || (options = {});
       if (!attrs) return this;

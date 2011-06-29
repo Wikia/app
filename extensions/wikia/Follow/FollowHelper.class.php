@@ -200,7 +200,6 @@ class FollowHelper {
 
 		$dbw = wfGetDB( DB_SLAVE );
 		if (defined('NS_BLOG_ARTICLE') && $article->getTitle()->getNamespace() == NS_BLOG_ARTICLE ) {
-			$title = Title::makeTitle( NS_CATEGORY, $key );
 			$cat =  array_keys( Wikia::getVar( 'categoryInserts' ) );
 			$catIn = array();
 

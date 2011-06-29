@@ -15,14 +15,14 @@ rc.on('error', function(err) {
     console.log('Error ' + err);
 });
 
-
-
 // Create the API server (which fills requests from the MediaWiki server).
 http.createServer(function (req, res) {
-	apiDispatcher(req, res, function(result){
+	var reqData = urlUtil.parse(req.url, true);
+	apiDispatcher(req, res, reqData, function(result){
+		resg = res;
 		// SUCCESS CALLBACK
 		res.writeHead(200, {'Content-Type': 'application/json'});
-		res.write( JSON.stringify(result) );
+		res.write( JSON.stringify( result ) );
 		res.end();
 	}, function(errMsg){
 		// ERROR CALLBACK
@@ -30,7 +30,7 @@ http.createServer(function (req, res) {
 		var errorData = {
 			'errorMsg': errMsg
 		}
-		res.write( JSON.stringify(errorData) );
+		res.write( JSON.stringify(errorData ) );
 		res.end();
 	});
 
@@ -41,23 +41,24 @@ console.log("API server running on port " + config.API_SERVER_PORT);
  * Dispatch the request to the correct destination and instruct them to end up in the
  * resulting callbacks.
  */
-function apiDispatcher(req, res, successCallback, errorCallback){
-	var reqData = urlUtil.parse(req.url, true);
+function apiDispatcher(req, res, reqData, successCallback, errorCallback){
 	if(reqData.query.func){
 		var func = reqData.query.func.toLowerCase();
 		
 		if(func == "getdefaultroomid"){
 			// TODO: FIXME: ADD SOME TOKEN-VERIFICATION. This would make sure that only the MediaWiki app is creating rooms (it can check permissions, make sure the extraDataString is good, etc.).
 			// TODO: FIXME: ADD SOME TOKEN-VERIFICATION. This would make sure that only the MediaWiki app is creating rooms (it can check permissions, make sure the extraDataString is good, etc.).
-
+			
 			api_getDefaultRoomId(reqData.query.wgCityId, reqData.query.defaultRoomName,
-								 reqData.query.defaultRoomTopic, reqData.query.extraDataString,
+								 reqData.query.defaultRoomTopic, reqData.query.extraDataString, reqData.query.roomType, reqData.query.roomUsers, 
 								 successCallback, errorCallback);
 
 		} else if(func == "getcityidforroom"){
 			api_getCityIdForRoom(reqData.query.roomId, successCallback, errorCallback);
 		} else if(func == "getusersinroom"){
 			api_getUsersInRoom(reqData.query.roomId, successCallback, errorCallback);
+		} else if(func == "getroomslist"){
+			api_getRoomsList(successCallback, errorCallback);
 		} else if(func == "getstats"){
 			api_getStats(successCallback, errorCallback);
 		} else {
@@ -81,20 +82,23 @@ function apiDispatcher(req, res, successCallback, errorCallback){
  * As per the API convention, passes json on success to the successCallback or an error message (a string) to
  * the errorCallback on error.
  */
-function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDataString, successCallback, errorCallback){
+function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDataString, type, users, successCallback, errorCallback){
 	// See if there are any rooms for this wiki and if there are, get the first one.
 	var roomId = "";
 	var roomName = "";
 	var roomTopic = "";
-
-	var keyForListOfRooms = config.getKey_listOfRooms(cityId);
+	
+	users = typeof(users) == 'undefined' ? []:users.split(',');	 
+	
+	var keyForListOfRooms = config.getKey_listOfRooms(cityId, type, users);
+	
 	//console.log("About to get rooms using key: " + keyForListOfRooms);
 	rc.llen(keyForListOfRooms, function(err, numRooms){
 		if (err) {
 			console.log('Warning: while getting length of list of rooms for wiki with cityId "'+ cityId + '": ' + err);
 
 			// No luck loading the room... create it.
-			api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, successCallback, errorCallback);
+			api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, type, users, successCallback, errorCallback);
 		} else if (numRooms && (numRooms != 0)) {
 			//console.log("Found " + numRooms + " rooms on wiki with city '" + cityId + "'...");
 			var roomIds = rc.lrange(keyForListOfRooms, 0, 1, function(err, roomIds){
@@ -102,7 +106,7 @@ function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDa
 					console.log('Warning: while getting first room for cityId "'+ cityId + '": ' + err);
 
 					// No luck loading the room... create it.
-					api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, successCallback, errorCallback);
+					api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, type, users,  successCallback, errorCallback);
 				} else if(roomIds){
 					// For now, if there is more than one wiki in the room, we just grab the first as the default room.
 					roomId = roomIds[0];
@@ -112,13 +116,15 @@ function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDa
 							console.log("Warning: couldn't get hash data for room w/key '"+ roomKey + "': " + err);
 
 							// No luck loading the room... create it.
-							api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, successCallback, errorCallback);
+							api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, type, users, successCallback, errorCallback);
 						} else {
 						
 							console.log("Room data loaded for " + roomData.room_name);
 							//console.log(roomData);
 						
 							var result = {
+								'type' : users,
+								'key' :	keyForListOfRooms,
 								'roomId': roomId,
 								'roomName': roomData.room_name,
 								'roomTopic': roomData.room_topic
@@ -130,12 +136,13 @@ function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDa
 					console.log("Warning: First room not found even though there were rooms a moment ago for cityId: " + cityId);
 
 					// No luck loading the room... create it.
-					api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, successCallback, errorCallback);
+					api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, type, users, successCallback, errorCallback);
 				}
 			});
 		} else {
-			// No luck loading the room... create it.
-			api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, successCallback, errorCallback);
+			console.log("Warning: First room not found even though there were rooms a moment ago for cityId: " + cityId);
+			
+			api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, type, users, successCallback, errorCallback);
 		}
 	});
 } // end api_getDefaultRoomId()
@@ -146,7 +153,7 @@ function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDa
  * The 'extraDataString' is a json string of a hash of data which should be stored in the 'room'
  * object for use in the chat server later.
  */
-function api_createChatRoom(cityId, roomName, roomTopic, extraDataString, successCallback, errorCallback){
+function api_createChatRoom(cityId, roomName, roomTopic, extraDataString, type, users, successCallback, errorCallback) {
 	var roomId = "";
 
 	// Get the next id that a new room should have.
@@ -180,7 +187,7 @@ function api_createChatRoom(cityId, roomName, roomTopic, extraDataString, succes
 			});
 
 			// Add the room to the list of rooms on this wiki.
-			rc.rpush(config.getKey_listOfRooms(cityId), roomId);
+			rc.rpush(config.getKey_listOfRooms(cityId, type, users), roomId);
 
 			var result = {
 				'roomId': roomId,
@@ -188,6 +195,20 @@ function api_createChatRoom(cityId, roomName, roomTopic, extraDataString, succes
 				'roomTopic': roomTopic
 			};
 			successCallback(result);
+
+			if(type == 'private') {
+				for(var index in users){
+					rc.hset( config.getKey_usersAllowedInPrivRoom( roomId ) , users[index], users[index], function(err, data){
+						if (err) {
+							var errorMsg = 'Error: when save users list of chat room "'+ cityId + '": ' + err;
+							console.log(errorMsg);
+							errorCallback(errorMsg);
+							return true;
+						}
+					});
+				}
+
+			}
 		}
 	});
 } // end api_createChatRoom()
@@ -196,6 +217,7 @@ function api_createChatRoom(cityId, roomName, roomTopic, extraDataString, succes
  * Given a roomId, returns the cityId which it has in redis (as JSON).
  */
 function api_getCityIdForRoom(roomId, successCallback, errorCallback){
+	
 	rc.hget(config.getKey_room(roomId), 'wgCityId', function(err, cityId){
 		if (err) {
 			var errorMsg = 'Error: while getting wgCityId of room: "'+ roomId + '": ' + err;
@@ -226,6 +248,22 @@ function api_getUsersInRoom(roomId, successCallback, errorCallback){
 	});
 } // end api_getUsersInRoom()
 
+/**
+ * Returns some JSON of stats about the server (to help judge the usage-level for making scaling estimations).
+ */
+function api_getRoomsList(successCallback, errorCallback){
+	var test = [];
+	rc.keys(config.getKey_room("*"), function(err, roomKeys){
+		test.push( roomKeys );
+			for(var index in roomKeys){
+				test.push( roomKeys[index] );	
+				rc.hgetall( 'room:13' , function(err, data) {	
+					test.push( data );	
+					successCallback( test );
+				});
+		}
+	});
+}
 /**
  * Returns some JSON of stats about the server (to help judge the usage-level for making scaling estimations).
  */

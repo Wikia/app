@@ -14,15 +14,15 @@ var ChatView = Backbone.View.extend({
 	},
 
 	render: function(type){
-		//NodeChatHelper.log("ABOUT TO RENDER THIS CHAT MESSAGE: " + JSON.stringify(this.model));
+		//$().log("ABOUT TO RENDER THIS CHAT MESSAGE: " + JSON.stringify(this.model));
 		
 		// Inline Alerts have may have i18n messages in them. If so (and they don't have 'text' yet), process the message and cache it in 'text'.
 		// This needs to be done before the template processing below so that 'text' will be set by then.
 		if(this.model.get('text') == ''){
-			NodeChatHelper.log("Found an i18n message with msg name " + this.model.get('wfMsg') + " and params: " + this.model.get('msgParams'));
+			$().log("Found an i18n message with msg name " + this.model.get('wfMsg') + " and params: " + this.model.get('msgParams'));
 			var i18nText = $.msg(this.model.get('wfMsg'), this.model.get('msgParams'));
 			this.model.set({text: i18nText});
-			NodeChatHelper.log("Message translated to: " + i18nText);
+			$().log("Message translated to: " + i18nText);
 		}
 
 		if(this.model.get('isInlineAlert')){
@@ -34,6 +34,8 @@ var ChatView = Backbone.View.extend({
 			$(this.el).html(this.template(this.model.toJSON()));
 		}
 		
+		$(this.el).attr('id', 'entry-' + this.model.cid );
+		
 		// Add username as a class in li element
 		if (this.model.get('name')) {
 			$(this.el).attr('data-user', this.model.get('name'));
@@ -41,9 +43,7 @@ var ChatView = Backbone.View.extend({
 
 		// Add "continued" class if this user also typed the last message (combines in UI)
 		if (type == 'change' || typeof(type) == 'undefined') {
-			var compareTo = (type == 'change') ? $('#Chat li:last').prev().data('user') : $('#Chat li:last').data('user');
-
-			if (this.model.get('name') == compareTo) {
+			if (this.model.get('continued') === true) {
 				$(this.el).addClass('continued');
 			}
 		}
@@ -70,7 +70,7 @@ var ChatView = Backbone.View.extend({
 				hours = date.getHours();
 			}
 			var minutes = (date.getMinutes().toString().length == 1) ? '0' + date.getMinutes() : date.getMinutes();
-			$(this.el).find('time').text(hours + ':' + minutes);
+			$(this.el).find('.time').text(hours + ':' + minutes);
 		}
 		
 		return this;
@@ -95,11 +95,14 @@ var UserView = Backbone.View.extend({
 	},
 
 	render: function(){
-		//NodeChatHelper.log("ABOUT TO RENDER THIS USER: " + JSON.stringify(this.model));
+		//$().log("ABOUT TO RENDER THIS USER: " + JSON.stringify(this.model));
 		$(this.el).html( this.template(this.model.toJSON()) );
 		
 		// Set the id by username so that we can remove it when the user parts.
-		$(this.el).attr('id', NodeChatHelper.liIdByUsername( this.model.get('name') ));
+		
+		
+		$(this.el).attr('id', this.liId());
+		$(this.el).attr('data-user', this.model.get('name'));
 
 		// If this is a chat moderator, add the chat-mod class so that kick-ban links don't show up, etc.
 		if(this.model.get('isModerator') === true){
@@ -120,396 +123,325 @@ var UserView = Backbone.View.extend({
 
 		// If this is you, render your content on top.
 		if( this.model.get('name') == wgUserName ){
-			NodeChatHelper.log("Attempting to render self. Copying up to other div.");
+			$().log("Attempting to render self. Copying up to other div.");
 			$(this.el).css('display', 'none');
 			$('#ChatHeader .User').html( $(this.el).html() )
 								  .attr('class', $(this.el).attr('class') );
 		}
 
 		return this;
+	},
+	
+	liId: function(){
+		var prefix = "";
+		
+		if( this.model.get('isPrivate') === true ) { 
+			prefix = "priv-";
+		}
+		username = this.model.get('name').replace(/ /g, "_"); // encodeURIComponent would add invalid characters
+		return prefix + 'user-' + username;
+	},
+	
+	getUserElement: function() {
+		return $("[id='" + this.liId() + "']");
 	}
 });
 
-var NodeChatView = Backbone.View.extend({
+var NodeChatDiscussion = Backbone.View.extend({
 	initialize: function(options) {
-		this.isInitialized = false; // so that init only happens once and not again upon any reconnections.
-		this.autoReconnect = true;
-		this.comingBackFromAway = false; // to prevent us from spamming "back" commands when we're in the process of coming back from away
-		this.model.chats.bind('add', this.addChat);
-		this.model.users.bind('add', this.addUser);
-		this.model.users.bind('remove', this.removeUser);
-		this.model.users.bind('all', this.beautifyUserList);
-		
-	//	this.model.users.bind('all', function(eventName){ // just a wrapper which outputs the event to the console.
-	//		NodeChatHelper.log("User list event: " + eventName);
-	//		object.trigger(eventName); // call actual handler.
-	//	});
-
-		this.socket = options.socket;
-		//this.clientCountView = new ClientCountView({model: new models.ClientCountModel(), el: $('#client_count')});
-		$(window).focus(function() {
-			// set focus on the text input
-			NodeChatHelper.focusTextInput();
+		this.roomId = options.roomId;
+		this.model = options.model;
+		this.model.chats.bind('afteradd', $.proxy(this.addChat, this));
+		this.model.chats.bind('clear', $.proxy(this.clear, this));
+		        
+		this.delegateEventsToTrigger(this.triggerEvents, function(e){
+			return e;
 		});
-	},
+		
+		$("#WikiaPage").append($('<div style="display:none" id="Chat_' + this.roomId + '" class="Chat"><ul></ul></div>'));
+		this.chatDiv = $("#Chat_" + this.roomId );
+		this.chatUL = $("#Chat_" + this.roomId + " ul");
 
-	events: {
-		"submit #Write": "sendMessage",
-		"click .kickban": "kickBan",
-		"click .give-chat-mod": "giveChatMod"
+		$("#Chat_" + this.roomId + " a").live('click', $.proxy(function(e) { 
+			this.trigger('clickAnchor', e); 
+			e.preventDefault(); 
+        },this)); 
+		
+		this.model.room.bind('change', $.proxy(this.updateRoom, this));
+	},
+	//TODO: divide to NodeChatDiscussion and NodeChatUsers
+	updateRoom: function(status) {
+		var count = $('#MsgCount_' + status.get('roomId'));
+		var room = count.closest('.User, .wordmark');
+		var privateHeader = $('#Rail > .private');
+		
+		if(status.get('unreadMessage') > 0 ) {
+			count.text(status.get('unreadMessage'));	
+			room.addClass('unread');
+		} else {
+			room.removeClass('unread');	
+		}
+		
+		if(status.get('isActive') === true) {
+			room.addClass('selected');
+			
+			if(status.get('blockedMessageInput') === true ) {
+
+				$('#Write').addClass('blocked');
+				$('#Write textarea').attr("disabled", "disabled");
+			} else {
+				$('#Write').removeClass('blocked');
+				$('#Write textarea').removeAttr("disabled");
+			}	
+			
+			this.show();
+			if(status.get('privateUser') === false ) {
+		 		$('#ChatHeader .public').show();
+		 		$('#ChatHeader .private').hide();
+			} else {
+		 		$('#ChatHeader .public').hide();
+		 		$('#ChatHeader .private').text($.msg('chat-private-headline').replace('$1', status.get('privateUser').get('name'))).show();
+			}
+		} else {
+			room.removeClass('selected');
+			this.hide();
+		}
+		
+		if(status.get('blockedMessageInput') === true ) {
+			room.addClass('blocked');
+		} else {
+			room.removeClass('blocked');
+		}
+		
+		if(status.get('hidden') === true ) {
+			room.hide();
+		} else {
+			room.show();
+		}
+		
+		// Handle hiding/showing private chat header
+		($('#PrivateChatList .User:visible').length) ? privateHeader.show() : privateHeader.hide();
+		
 	},
 	
-	// When the user list changes, make sure it is built the way we want (no duplicates, etc.).
-	beautifyUserList: function(eventName){
-		NodeChatHelper.log("Beautifying the user list...");
-
-		var mylist = $("#Users > ul");
-		var listitems = mylist.children('li').get();
-
-		listitems.sort(function(a, b) {		
-			var compA = $(a).children(".username").text().toUpperCase();
-			var compB = $(b).children(".username").text().toUpperCase();
-			return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
-		})
-
-		mylist.children().remove();
-
-		$.each(listitems, function(idx, itm) {
-			if ($("#Users #" + $(itm).attr("id")).length == 0) {
-				mylist.append(itm); 
-			}
-		});	
+	getTextInput: function() {
+		return $('#Write [name="message"]');
 	},
 
+	show: function() {
+		this.chatDiv.show();
+		this.scrollToBottom();
+	},
+	
+	hide: function() {
+		this.chatDiv.hide();
+	},
+	
+	triggerEvents: {
+			"keypress #Write": "sendMessage"
+	},
+	
+	clear: function(chat) {
+		this.chatUL.empty(); 	
+	},
+	
 	addChat: function(chat) {
 		// Determine if chat view is presently scrolled to the bottom
 		var isAtBottom = false;				
-		if (($("#Chat").scrollTop() + 1) >= ($("#Chat ul").outerHeight() - $("#Chat").height())) {
+		if (( this.chatDiv.scrollTop() + 1) >= (this.chatUL.outerHeight() - this.chatDiv.height())) {
 			isAtBottom = true;
 		}
 		
 		// Add message to chat
 		var view = new ChatView({model: chat});
-		$('#Chat ul').append(view.render().el);
+		this.chatUL.append(view.render().el);
 
 		// Scroll chat to bottom
 		if (chat.attributes.name == wgUserName || isAtBottom) {
-			NodeChatHelper.scrollToBottom();
+			this.scrollToBottom();
 		}
-		
 	},
-
+	
+	scrollToBottom: function() {
+		this.chatDiv.scrollTop(this.chatDiv.get(0).scrollHeight);	
+	}
+});
+//TODO: raname it to frame NodeChatFrame ? 
+var NodeChatUsers = Backbone.View.extend({
+	actionTemplate: _.template( $('#user-action-template').html() ),
+	initialize: function(options) {
+		this.model.users.bind('add', this.addUser);
+		this.model.users.bind('remove', this.removeUser);
+		
+		this.model.privateUsers.bind('add', this.addUser);
+		this.model.privateUsers.bind('remove', this.removeUser);
+		
+        $("#ChatHeader a").click($.proxy(function(e) { 
+            this.trigger('clickAnchor', e); 
+            e.preventDefault(); 
+        },this)); 
+		
+		this.delegateEventsToTrigger(this.triggerEvents, function(e) {
+    		e.preventDefault();
+    		var name = $(e.target).closest('.UserStatsMenu').find('.username').text();
+    		if(!(name.length > 0)) {
+    			name = $(e.target).closest('li').find('.username').first().text();
+    		}
+    		return { 'name': name, 'event': e, 'target': $(e.target).closest('li')}; 
+		});
+		
+		$("#Rail .wordmark").live("click", function(event) {
+			event.preventDefault();
+			window.mainRoom.showRoom('main');
+		});
+		
+		// Hide/show main chat user list
+		$('#Rail .chevron').click(function() {
+			if ($('#WikiChatList').is(':visible')) {
+				$(this).addClass('closed');
+				$('#WikiChatList').slideUp('fast');
+			} else {
+				$(this).removeClass('closed');
+				$('#WikiChatList').slideDown('fast');
+			}
+		});
+	},
+	
+	triggerEvents: {
+			"click .kickban": "kickBan",
+			"click .give-chat-mod": "giveChatMod",
+			"click .private-block": "blockPrivateMessage",
+			"click .private-allow": "allowPrivateMessage",
+			"click .private": "showPrivateMessage",
+			"click #WikiChatList li": "mainListClick",
+			"click #PrivateChatList li": "privateListClick"
+	},
+	
+ 	clearPrivateChatActive: function() {
+ 		$("#PrivateChatList li").removeClass('selected');
+ 	},
+		
 	addUser: function(user) {
 		var view = new UserView({model: user});
-		$('#Users > ul').append(view.render().el);
+		var list = (user.attributes.isPrivate) ? $('#PrivateChatList') : $('#WikiChatList');
+		
+		var el = $(view.render().el);
+
+		// For private chats, show private headline and possibly select the chat		
+		if(user.get('isPrivate')) {
+			$('#Rail h1.private').show();
+			if(user.get('active')) {
+				el.addClass('selected');	
+			}
+		}
+		
+		// Add users to list
+		if (list.children().length) {
+			// The list is not empty. Arrange alphabetically.
+			var compareA = el.data('user').toUpperCase();
+			var wasAdded = false;
+			list.children().each(function(idx, itm) {
+				compareB = $(itm).data('user').toUpperCase();
+				if (compareA < compareB) {
+					$(itm).before(el);
+					wasAdded = true;
+					return false;
+				}
+			});
+			if (!wasAdded) {
+				list.append(el);
+			}
+		} else {
+			// The list is empty. Append this user.
+			list.append(el);
+		}
+		
+		// Scroll the list down if a new private chat is being added
+		if (user.get('isPrivate')) {
+			$().log('UserView SCROLL DOWN!!!');
+			$('#Rail').scrollTop($('#Rail').get(0).scrollHeight);		
+		}
+		
+		// Only show chevron in public chat if there is anyone to talk to
+		if (list.children().length > 1) {
+			$('#Rail .public .chevron').show();
+		} else {
+			$('#Rail .public .chevron').hide();
+		}		
 	},
 	
 	removeUser: function(user) {
-		//NodeChatHelper.log("Trying to remove " + user.get('name') + " from the list.");
-		//NodeChatHelper.log("Matches found: " + $('[id="' + NodeChatHelper.liIdByUsername( user.get('name') ) + '"]').length);
-		$('[id="' + NodeChatHelper.liIdByUsername( user.get('name') ) + '"]').remove();
+		var view = new UserView({model: user});
+		view.getUserElement().remove();
 	},
 
-	msgReceived: function(message){
-		switch(message.event) {
-			case 'auth':
-				// Server has requested that the client send its authentication data (Wikia session cookies).
-
-				// We can't access the second-level-domain cookies from Javascript, so we make a request to wikia's
-				// servers (which we trust) to echo back the session info which we then send to node via socket.io
-				// (which doesn't reliably get cookies directly from clients since they may be on flash, etc. and
-				// there isn't good support for getting cookies anyway).
-				var mySocket = this.socket;
-				NodeChatHelper.log("Getting full session info from Apache.");
-				$.get(wgScript + '?action=ajax&rs=ChatAjax&method=echoCookies', {}, function(data) {
-					NodeChatHelper.log("Got full session info from Apache: ");
-					NodeChatHelper.log(data);
-
-					var authInfo = new models.AuthInfo({
-						'name': wgUserName, // for debugging only
-						'cookie': data,
-						'roomId': roomId // this is set in the js by Chat_Index.php
-					});
-					mySocket.send(authInfo.xport());
-
-					NodeChatHelper.log("Sent auth info");
-				});
-				break;
-			case 'initial':
-				if(!this.isInitialized){
-					// On first connection, just update the entire model.
-					this.model.mport(message.data);
-					this.isInitialized = true;
-				} else {
-					// If this is a reconnect... go through the model that was given and selectively, only add ChatEntries that were not already in the collection of chats.
-					var jsonObj = JSON.parse(message.data);
-					var chatEntries = this.model.chats;
-					_.each(jsonObj.collections.chats.models, function(item, index){
-						var match = chatEntries.get(item.id);
-						if(typeof match == "undefined"){
-							NodeChatHelper.log("Found a ChatEntry that must have occurred during reconnection. Adding it to the model...");
-							var additionalEntry = new models.ChatEntry();
-							additionalEntry.mport( JSON.stringify(item) );
-							chatEntries.add(additionalEntry);
-						}
-					});
-					
-					// TODO: update the entire userlist (if the server went down or something, you're not going to get "part" messages for the users who are gone).
-					// See BugzId 6107 for more info & partially completed code.
-				}
-
-				break;
-			case 'disableReconnect':
-				this.autoReconnect = false;
-				break;
-			case 'forceReconnect':
-				NodeChatController.socket.disconnect();
-				break;
-			case 'chat:add':
-				var newChatEntry;
-				var dataObj = JSON.parse(message.data);
-				if(dataObj.attrs.isInlineAlert){
-					newChatEntry = new models.InlineAlert();
-				} else {
-					newChatEntry = new models.ChatEntry();
-				}
-				newChatEntry.mport(message.data);
-				this.model.chats.add(newChatEntry);
-				break;
-			case 'join': // A user joined the chat.
-				var joinedUser = new models.User();
-				joinedUser.mport(message.joinData);
-
-				// Check to see if the user already exists in the users list:
-				var connectedUser = this.model.users.find(function(user){
-										return (user.get('name') == joinedUser.get('name'));
-									});
-				if(typeof connectedUser == "undefined"){
-					this.model.users.add(joinedUser);
-
-					// Create the inline-alert (on client side so that we only display it if the user actually IS new to the room and not just disconnecting/reconnecting).
-					var newChatEntry = new models.InlineAlert({text: joinedUser.get('name') + ' has joined the chat.'});
-					this.model.chats.add(newChatEntry);
-				} else {
-					// The user is already in the room... just update them (in case they have changed).
-					this.model.users.remove(connectedUser);
-					this.model.users.add(joinedUser);
-				}
-				break;
-			case 'part': // A user left the chat.
-				var partedUser = new models.User();
-				partedUser.mport(message.data);
-				var connectedUser = this.model.users.find(function(user){
-										return user.get('name') == partedUser.get('name');
-									});
-				if(typeof connectedUser != "undefined"){
-					this.model.users.remove(connectedUser);
-				}
-				break;
-			case 'updateUser': // A user in the room changed (eg: their status changed)
-				var updatedUser = new models.User();
-				updatedUser.mport(message.data);
-				var connectedUser = this.model.users.find(function(user){
-										return user.get('name') == updatedUser.get('name');
-									});
-				if(typeof connectedUser != "undefined"){
-					// Is this the right way to do it?
-					this.model.users.remove(connectedUser);
-					this.model.users.add(updatedUser);
-					
-					// If it was the current user who changed (and they are "back") set them as no longer in the process of comingBackFromAway.
-					if((this.comingBackFromAway) && (connectedUser.get('name') == wgUserName) && (connectedUser.get('statusState') != STATUS_STATE_AWAY)){
-						this.comingBackFromAway = false;
-					}
-				}
-				break;
-			default:
-				NodeChatHelper.log("UNRECOGNIZED EVENT IN views.js:msgRecieved: " + message.event);
-				break;
+	showMenu: function(element, actions) {
+		var menu = $("#UserStatsMenu");
+		
+		menu
+			.html($(element).find('.UserStatsMenu').html())
+			.css('left', $(element).offset().left - menu.outerWidth() + 10)
+			.css('top', $(element).offset().top);
+		
+		var menuActions = $("#UserStatsMenu .actions");
+		
+		for( var i in actions ) {
+			menuActions.append( this.actionTemplate( {actionName: actions[i] , actionDesc: $.msg('chat-user-manu-' + actions[i]) } ) );	
 		}
-	},
-
-	sendMessage: function(){
-		var inputField = $('[name=message]');
-		var nameField = $('input[name=user_name]');
-		if (inputField.val()) {
-			var chatEntry = new models.ChatEntry({name: nameField.val(), text: inputField.val()});
-			this.socket.send(chatEntry.xport());
-			inputField.val('');
+		
+		// Is the menu falling below the viewport? If so, move it!				
+		if (parseInt(menu.css('top')) + menu.outerHeight() > $(window).height()) {
+			menu.css('top', $(window).height() - menu.outerHeight());
 		}
-		NodeChatHelper.focusTextInput();
-	},
-	
-	// Set the current user's status to 'away' and set an away message if provided.
-	setAway: function(){
-		var msg = '';
-		//var msg = $(e.target).parent().find('.user').html();
-		//if(!msg){msg = '';}
-		NodeChatHelper.log("Attempting to go away with message: " + msg);
-		var setStatusCommand = new models.SetStatusCommand({
-			statusState: STATUS_STATE_AWAY,
-			statusMessage: msg
+		
+		// Add chat-mod class if necessary
+		($(element).hasClass('chat-mod')) ? menu.addClass('chat-mod') : menu.removeClass('chat-mod');
+		
+		menu.show();
+
+		// Bind event handler to body to close the menu			
+		$('body').bind('click.menuclose', function(event) {
+			if (!$(event.target).closest('#UserStatsMenu').length) {
+				$('#UserStatsMenu').hide();
+				$('body').unbind('.menuclose');
+			};
 		});
-		this.socket.send(setStatusCommand.xport());
-	},
-	
-	// Set the user as being back from their "away" state (they are here again) and remove the status message.
-	setBack: function(){
-		if( ! this.comingBackFromAway){ // if we have sent this command (but just haven't finished coming back yet), don't keep spamming the server w/this command
-			NodeChatHelper.log("Telling the server that I'm back.");
-			this.comingBackFromAway = true;
-			var setStatusCommand = new models.SetStatusCommand({
-				statusState: STATUS_STATE_PRESENT,
-				statusMessage: ''
-			});
-			this.socket.send(setStatusCommand.xport());
-		}
-	},
-
-	kickBan: function(e){
-		e.preventDefault();
-		var userToBan = $(e.target).closest('.UserStatsMenu').find('.username').text();
-		NodeChatHelper.log("Attempting to kickban user: " + userToBan);
-		var kickBanCommand = new models.KickBanCommand({userToBan: userToBan});
-		this.socket.send(kickBanCommand.xport());
-
-		$("#UserStatsMenu").hide();
-
-		// TODO: LATER: Some sort of indicator that the ban is underway. 50% opacity on the user's li?
-		// TODO: LATER: Some sort of indicator that the ban is underway. 50% opacity on the user's li?
-	},
-
-	giveChatMod: function(e){
-		e.preventDefault();
-		var user = $(e.target).closest('.UserStatsMenu').find('.username').text();
-		NodeChatHelper.log("Attempting to give chat mod to user: " + user);
-		var giveChatModCommand = new models.GiveChatModCommand({userToPromote: user});
-		this.socket.send(giveChatModCommand.xport());
-
+		
+		// Handle clicking the profile and contrib links
+		menu.find('.profile').add('.contribs').click(function(event) {
+			event.preventDefault();
+			var target = $(event.currentTarget);
+			var menu = target.closest('.UserStatsMenu');
+			var username = menu.find('.username').text();
+			var location = '';
+			
+			if (target.hasClass('profile')) {
+				location = pathToProfilePage.replace('$1', username);
+			} else if (target.hasClass('contribs')) {
+				location = pathToContribsPage.replace('$1', username);
+			}
+							
+			window.open(location);
+			menu.hide();
+		});		
+	}, 
+	hideMenu: function() {
 		$("#UserStatsMenu").hide();
 	}
-
 });
 
-NodeChatHelper = {
-	init: function() {
-		// Make links open in the parent window
-		$("#Chat a, .wordmark a").live("click", function(event) {
-			event.preventDefault();
-			window.open($(this).attr("href"));
-		});
+/*
+ * add method to Backbone to give possibility to export events to controler
+ */
 
-		// Focus on the text input
-		NodeChatHelper.focusTextInput();
-
-		// Handle user stats menu
-		NodeChatHelper.userStatsMenuInit();
-		
-		// Handle Away status
-		$(window)
-			.mousemove(NodeChatHelper.resetActivityTimer)
-			.keypress(NodeChatHelper.resetActivityTimer)
-			.focus(NodeChatHelper.resetActivityTimer);
-			
-		// Pressing enter in the message entry box submits form, shift-enter adds newline
-		$('#Write [name="message"]').keypress(function(event) {
-			if (event.which == 13 && !event.shiftKey) {
-				event.preventDefault();
-				NodeChatHelper.log('submitting form');
-				$(event.target).closest('form').submit();
-			}
-		});
-	},
-	
-	startActivityTimer: function() {
-		NodeChatHelper.activityTimer = setTimeout(NodeChatHelper.setAway, 5 * 60 * 1000); // the first number is minutes.
-	},
-
-	resetActivityTimer: function() {
-		clearTimeout(NodeChatHelper.activityTimer);
-		NodeChatHelper.startActivityTimer();
-		
-		// If user had been set to away, ping server to unset away.
-		if($('#ChatHeader .User').hasClass('away')){
-			NodeChatHelper.setBack();
-		}
-	},
-	
-	setAway: function() {
-		NodeChatHelper.log("Telling the server that I'm away.");
-		NodeChatController.view.setAway();
-	},
-	
-	setBack: function() {
-		NodeChatController.view.setBack();
-	},
-
-	scrollToBottom: function() {
-		$("#Chat").scrollTop($("#Chat").get(0).scrollHeight);	
-	},
-	
-	log: function(msg){
-		if (typeof console != 'undefined') {
-			console.log(msg);
-		}
-	},
-
-	/**
-	 * WARNING: When using this id in jQuery, remember that the name may contain periods which triggers a jQuery bug.
-	 * Searching for $('#some.id') won't work, but $('[id="some.id"]') will.
-	 */
-	liIdByUsername: function(username){
-		username = username.replace(/ /g, "_"); // encodeURIComponent would add invalid characters
-		return 'user-' + username;
-	},
-
-	focusTextInput: function() {
-		$('#Write [name="message"]').focus();
-	},	
-	
-	userStatsMenuInit: function() {
-		$('#Users li').live('click', function() {
-			var menu = $("#UserStatsMenu");
-			menu
-				.html($(this).find('.UserStatsMenu').html())
-				.css('left', $(this).offset().left - menu.outerWidth() + 10)
-				.css('top', $(this).offset().top);
-			
-			// Is the menu falling below the viewport? If so, move it!				
-			if (parseInt(menu.css('top')) + menu.outerHeight() > $(window).height()) {
-				menu.css('top', $(window).height() - menu.outerHeight());
-			}
-			
-			// Add chat-mod class if necessary
-			($(this).hasClass('chat-mod')) ? menu.addClass('chat-mod') : menu.removeClass('chat-mod');
-			
-			menu.show();
-
-			// Bind event handler to body to close the menu			
-			$('body').bind('click.menuclose', function(event) {
-				if (!$(event.target).closest('#UserStatsMenu').length) {
-					$('#UserStatsMenu').hide();
-					$('body').unbind('.menuclose');
-				};
-			});
-			
-			// Handle clicking the profile and contrib links
-			menu.find('.profile').add('.contribs').click(function(event) {
-				event.preventDefault();
-				var target = $(event.currentTarget);
-				var menu = target.closest('.UserStatsMenu');
-				var username = menu.find('.username').text();
-				var location = '';
-				
-				if (target.hasClass('profile')) {
-					location = pathToProfilePage.replace('$1', username);
-				} else if (target.hasClass('contribs')) {
-					location = pathToContribsPage.replace('$1', username);
-				}
-								
-				window.open(location);
-				menu.hide();
-			});			
-		});
-	}
+Backbone.View.prototype.delegateEventsToTrigger = function(events, preProcess) {
+    for (var key in events) {
+    	var event = events[key];
+    	var view = this;
+    	this[ event ] = (function(event){ return function(e) {  
+    		view.trigger( event, preProcess(e) ); }; 
+    	})(event);
+    }	
+   
+	this.delegateEvents(this.triggerEvents);
 };

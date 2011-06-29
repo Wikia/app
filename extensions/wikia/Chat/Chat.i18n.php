@@ -11,6 +11,9 @@ $messages['en'] = array(
 	
 	// Many of these are sent from server.js to the client (which uses $.msg() to translate the message).
 	'chat-user-parted' => '$1 has left the chat.',
+	'chat-user-joined' => '$1 has joined the chat.',
+	'chat-user-blocked' => '$1 has blocked $2.',
+	'chat-user-allow' => '$1 has allowed $2.',
 	'chat-user-was-kickbanned' => '$1 was kickbanned.',
 	'chat-inlinealert-a-made-b-chatmod' => "$1 has made <strong>$2</strong> a chat moderator.",
 	'chat-err-connected-from-another-browser' => 'You have connected from another browser. This connection will be closed.',
@@ -37,8 +40,20 @@ $messages['en'] = array(
 	'chat-whos-here' => "Who's here ($1)",
 	'chat-join-the-chat' => 'Join the Chat',
 	'chat-edit-count' => '$1 Edits',
+
 	'chat-member-since' => 'Member since $1',
-	'chat-great-youre-logged-in' => "Great! You're logged in."
+	'chat-great-youre-logged-in' => "Great! You're logged in.",
+
+	'chat-user-manu-profile' => 'User Profile',
+	'chat-user-manu-contribs' => 'Contributions',
+	'chat-user-manu-private' => 'Private Message',
+	'chat-user-manu-give-chat-mod' => 'Give ChatMod Status',
+	'chat-user-manu-kickban' => 'Kickban',
+
+	'chat-user-manu-private-block' => 'Block Private Messages',
+	'chat-user-manu-private-allow' => 'Allow Private Messages',
+	'chat-user-manu-private-close' => 'Close Private Room',
+	'chat-private-headline' => 'Private chat with $1',
 );
 
 /** Message documentation (Message documentation)

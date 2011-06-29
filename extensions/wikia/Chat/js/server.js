@@ -133,6 +133,10 @@ function messageDispatcher(client, socket, data){
 							console.log("Kickbanning user: " + dataObj.attrs.userToBan);
 							kickBan(client, socket, data);
 							break;
+						case 'openprivate':
+							console.log( "openPrivateRoom" );
+							openPrivateRoom(client, socket, data);
+							break;
 						case 'givechatmod':
 							console.log("Giving chatmoderator status to user: " + dataObj.attrs.userToPromote);
 							giveChatMod(client, socket, data);
@@ -155,6 +159,24 @@ function messageDispatcher(client, socket, data){
 	}
 } // end messageDispatcher()
 
+
+/**
+ *  open private chat with other users 
+ */
+
+function openPrivateRoom(client, socket, data){
+	var roomInfo = new models.OpenPrivateRoom();	
+	roomInfo.mport(data);
+	
+	rc.hkeys( config.getKey_usersAllowedInPrivRoom( roomInfo.get('roomId') ),  function(err, users){
+		var privateRoom = new models.OpenPrivateRoom( { roomId : roomInfo.get('roomId'), users: users } );
+		broadcastToRoom(client, socket, {
+			event: 'openPrivateRoom',
+			data: privateRoom.xport()
+		}, users);
+	});
+}
+
 /**
  * After the initial connection, the client will be expected to send its auth
  * info (essentially: the Wikia authentication cookies) so that we can then
@@ -167,11 +189,14 @@ function messageDispatcher(client, socket, data){
  * are used - since users could be banned on one wiki and not another).
  */
 function authConnection(client, socket, authData){
-	var auth = new models.AuthInfo();
-	auth.mport(authData);
-
+	console.log(new Date().getTime());
+	var authJson = JSON.parse( authData );
+	var auth = new models.AuthInfo( authJson.attrs );
+	if(typeof  authJson.attrs != "undefined"){
+		auth.set(authJson.attrs);
+	}
 	console.log("Authentication info recieved from client. Verifying with Wikia MediaWiki app server...");
-
+	
 	// Need to auth with the correct wiki. Lookup the hostname for the chat in redis.
 	console.log("Trying to find the wgServer for the room key: " + config.getKey_room( auth.get('roomId') ));
 	rc.hget(config.getKey_room( auth.get('roomId') ), 'wgServer', function(err, data) {
@@ -184,23 +209,20 @@ function authConnection(client, socket, authData){
 
 			// Format the cookie-data into the correct string for sending the data as a header.
 			var roomId = auth.get('roomId');
-			var cookieData = auth.get('cookie');
-			var cookieStr = "";
-			for(var index in cookieData){
-				cookieStr += (cookieStr === "" ? "" : " ");
-				cookieStr += index + "=" + cookieData[index] + ";"
-			}
-			client.cookieStr = cookieStr;
-			var claimName = auth.get('name');
-			if(!claimName){claimName = "[not set]";}
-			console.log("SessionId '"+ client.sessionId + "' is saying that they are " + claimName);
-			console.log("Auth data for client w/sessionId '" + client.sessionId + "': " + client.cookieStr);
+
+			console.log("Auth data for client w/sessionId '" + client.sessionId + "': " + auth.get('key') );
+			client.authKey = auth.get('key');
+			
 			// Send auth cookies to apache to make sure this user is authorized & get the user information.
+			
+			client.userKey = auth.get('key');
+			
 			var requestHeaders = {
-				'Cookie': client.cookieStr,
 				'Host': wikiHostname
 			};
-			var requestUrl = config.AUTH_URL + "&roomId=" + roomId;
+
+			var requestUrl = config.AUTH_URL + "&roomId=" + roomId ;			
+			requestUrl +=  "&key=" + client.userKey ;
 			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching this (at least on dev boxes) when we don't want it to... so cachebust it.
 
 			console.log("Requesting user info from: " + requestUrl);
@@ -208,72 +230,99 @@ function authConnection(client, socket, authData){
 			// NOTE: Swap back if we want to use a proxy again.
 			var httpClient = http.createClient(config.WIKIA_PROXY_PORT, config.WIKIA_PROXY_HOST);
 			//var httpClient = http.createClient(80, wikiHostname); // TODO: Swap this in for ALL INSTANCES of createClient if we don't want to use local proxy anymore.
-			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
-			httpRequest.addListener("response", function (response) {
-				//debugObject(client.request.headers);
-
-				var responseBody = "";
-				//response.setBodyEncoding("utf8");
-				response.addListener("data", function(chunk) {
-					responseBody += chunk;
-				});
-				response.addListener("end", function() {
-					try{
-						data = JSON.parse(responseBody);
-					} catch(e){
-						console.log("Error: while parsing result of getUserInfo(). Error was: ");
-						console.log(e);
-						console.log("Response that didn't parse was:\n" + responseBody);
-
-						data = {
-							error: '',
-							errorWfMsg: 'chat-err-communicating-with-mediawiki',
-							errorMsgParams: []
-						};
-					}
-					if( (data.canChat) && (data.isLoggedIn) ){
-						client.isAuthenticated = true;
-						client.isChatMod = data.isChatMod;
-						client.isStaff = data.isStaff;
-						client.roomId = roomId;
-						// TODO: REFACTOR THIS TO TAKE ANY FIELDS THAT data GIVES IT.
-						client.ATTEMPTED_NAME = data.username;
-						
-						// User has been approved & their data has been set on the client. Put them into the chat.
-
-						// TODO: REFACTOR THESE TO USE THE VALUE STORED IN THE 'chat' OBJ IN REDIS (remove the setting of these client vars from the ajax request also).
-						// Extra wg variables that we'll need.
-						client.wgServer = data.wgServer;
-						client.wgArticlePath = data.wgArticlePath;
-						// TODO: REFACTOR THESE TO USE THE VALUE STORED IN THE 'chat' OBJ IN REDIS (remove the setting of these client vars from the ajax request also).
-
-						client.on('disconnect', function(){clientDisconnect(client)});
-
-						// BugzId 5752 - clear chat buffer if this is the first user in the room (to avoid confusion w/past chats).
-						rc.hlen(config.getKey_usersInRoom(client.roomId), function(err, numInRoom){
-							if (err) {
-								console.log('Error: while trying to find number of people in room "' + client.roomId + '": ' + err);
-							} else if((numInRoom) && (numInRoom > 0)){
-								finishConnectingUser(client, socket, data);
-							} else {
-								// Nobody is in the room yet, so clear the back-buffer before doing the rest of the setup (as per BugzId 5752).
-								console.log(data.username + " is the first person to re-enter a now-empty room " + client.roomId + ".");
-								console.log("Deleting the back-buffer before connecting them the rest of the way.");
-
-								rc.del(config.getKey_chatEntriesInRoom(client.roomId), function(err, delData){
+			
+			var callback = function(data) {
+				if( (data.canChat) && (data.isLoggedIn) ){
+					rc.hkeys( config.getKey_usersAllowedInPrivRoom( auth.get('roomId') ),  function(err, users){
+						if(users.length == 0 || _.indexOf(users, data.username) !== -1 ) { //
+							client.isAuthenticated = true;
+							client.isChatMod = data.isChatMod;
+							client.isCanGiveChatMode = data.isCanGiveChatMode;
+							client.isStaff = data.isStaff;
+							client.roomId = roomId;
+							// TODO: REFACTOR THIS TO TAKE ANY FIELDS THAT data GIVES IT.
+							client.ATTEMPTED_NAME = data.username;
+							
+							// User has been approved & their data has been set on the client. Put them into the chat.
+	
+							// TODO: REFACTOR THESE TO USE THE VALUE STORED IN THE 'chat' OBJ IN REDIS (remove the setting of these client vars from the ajax request also).
+							// Extra wg variables that we'll need.
+							client.wgServer = data.wgServer;
+							client.wgArticlePath = data.wgArticlePath;
+							// TODO: REFACTOR THESE TO USE THE VALUE STORED IN THE 'chat' OBJ IN REDIS (remove the setting of these client vars from the ajax request also).
+	
+							client.on('disconnect', function(){clientDisconnect(client)});
+							// BugzId 5752 - clear chat buffer if this is the first user in the room (to avoid confusion w/past chats).
+							rc.hlen(config.getKey_usersInRoom(client.roomId), function(err, numInRoom){
+								if (err) {
+									console.log('Error: while trying to find number of people in room "' + client.roomId + '": ' + err);
+								} else if((numInRoom) && (numInRoom > 0)){
 									finishConnectingUser(client, socket, data);
-								});
-							}
+								} else {
+									// Nobody is in the room yet, so clear the back-buffer before doing the rest of the setup (as per BugzId 5752).
+									console.log(data.username + " is the first person to re-enter a now-empty room " + client.roomId + ".");
+									console.log("Deleting the back-buffer before connecting them the rest of the way.");
+	
+									rc.del(config.getKey_chatEntriesInRoom(client.roomId), function(err, delData){
+										finishConnectingUser(client, socket, data);
+									});
+								}
+							});
+						} else {
+							console.log("User try to conect with someone else private room");
+							//it is hack attempts no meesage for this
+						}});
+				} else {
+					console.log("User failed authentication. Error from server was: " + data.errorMsg);
+					sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
+					console.log("Entire data was: ");
+					console.log(data);
+				}
+			};
+			
+			
+			rc.hgetall(config.getKey_sessionData( client.userKey ), function(err, data){
+				if(typeof(data.isLoggedIn) != 'undefined') {
+					callback(data);
+				} else {
+					var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
+					httpRequest.addListener("response", function (response) {
+						//debugObject(client.request.headers);
+						var responseBody = "";
+						//response.setBodyEncoding("utf8");
+						response.addListener("data", function(chunk) {
+							responseBody += chunk;
 						});
-					} else {
-						console.log("User failed authentication. Error from server was: " + data.errorMsg);
-						sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
-						console.log("Entire data was: ");
-						console.log(data);
-					}
-				});
+						response.addListener("end", function() {
+							try{
+								data = JSON.parse(responseBody);
+							} catch(e){
+								console.log("Error: while parsing result of getUserInfo(). Error was: ");
+								console.log(e);
+								console.log("Response that didn't parse was:\n" + responseBody);
+
+								data = {
+									error: '',
+									errorWfMsg: 'chat-err-communicating-with-mediawiki',
+									errorMsgParams: []
+								};
+							}
+							
+							rc.hmset(config.getKey_sessionData( client.userKey ), data, function() {});
+							
+							console.log("=============Session data================");
+							console.log(data);
+							console.log("=============/Session data================");
+							
+							callback(data);
+						});
+					});
+					httpRequest.end();
+				}
+				console.log("=============Session data from cache================");
+				console.log(data);
+				console.log("=============/Session data from cache================");
 			});
-			httpRequest.end();
 		} else {
 			console.log("Didn't get data for the roomId so it probably doesn't exist anymore: " + auth.get('roomId'));
 		}
@@ -287,8 +336,10 @@ function authConnection(client, socket, authData){
  * This adds the user to the room in redis and sends the initial state to the client.
  */
 function finishConnectingUser(client, socket, rawUserInfo){
+	console.log(new Date().getTime());
 	var nodeChatModel = new models.NodeChatModel();
 	rc.lrange(config.getKey_chatEntriesInRoom(client.roomId), (-1 * config.NUM_MESSAGES_TO_SHOW_ON_CONNECT), -1, function(err, data) {
+		console.log(new Date().getTime());
 		if (err) {
 			console.log('Error: ' + err);
 		} else if (data) {
@@ -333,10 +384,12 @@ function finishConnectingUser(client, socket, rawUserInfo){
 					name: rawUserInfo.username,
 					avatarSrc: rawUserInfo.avatarSrc,
 					isModerator: client.isChatMod,
+					isCanGiveChatMode: client.isCanGiveChatMode,
 					isStaff: client.isStaff,
 					editCount: rawUserInfo.editCount,
 					since: rawUserInfo.since
 				});
+			
 				nodeChatModel.users.add(connectedUser);
 				console.log('[getConnectedUser] new user: ' + connectedUser.get('name') + ' on client: ' + client.sessionId);
 			}
@@ -391,6 +444,7 @@ function formallyAddClient(client, socket, connectedUser){
 	sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)] = client.sessionId;
 	rc.hset(hashOfUsersKey, client.myUser.get('name'), JSON.stringify(userData), function(err, data){
 		// Broadcast the join to all clients.
+		console.log(new Date().getTime());
 		broadcastToRoom(client, socket, {
 			event: 'join',
 			joinData: connectedUser.xport()
@@ -442,8 +496,6 @@ function broadcastDisconnectionInfo(client, socket){
 					event: 'part',
 					data: client.myUser.xport()
 				});
-
-				broadcastInlineAlert(client, socket, 'chat-user-parted', [client.myUser.get('name')]);
 			}
 		});
 	}, DELAY_MILLIS);
@@ -453,15 +505,6 @@ function broadcastDisconnectionInfo(client, socket){
 // Start the main chat server listening.
 app.listen(config.CHAT_SERVER_PORT);
 console.log("Chat server running on port " + config.CHAT_SERVER_PORT);
-
-
-
-
-
-
-
-
-
 
 
 /** MESSAGE HANDLERS **/
@@ -492,12 +535,14 @@ function kickBan(client, socket, msg){
 			var wikiHostname = data.replace(/^https?:\/\//i, "");
 
 			// Ban the user via request to Wikia MediaWiki server ajax-endpoint.
+		
 			var requestHeaders = {
-				'Cookie': client.cookieStr,
-				'Host': wikiHostname
-			};
+					'Host': wikiHostname
+				};
+			
 			var requestUrl = config.KICKBAN_URL;
 			requestUrl += "&userToBan=" + encodeURIComponent(userToBan);
+			requestUrl +=  "&key=" + client.userKey ;
 			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching ajax requests (at least on dev boxes) when we don't want it to... so cachebust it.
 			var httpClient = http.createClient(config.WIKIA_PROXY_PORT, config.WIKIA_PROXY_HOST);
 			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
@@ -565,12 +610,18 @@ function giveChatMod(client, socket, msg){
 
 			// Ban the user via request to Wikia MediaWiki server ajax-endpoint.
 			var requestHeaders = {
-				'Cookie': client.cookieStr,
 				'Host': wikiHostname
 			};
 			var requestUrl = config.GIVECHATMOD_URL;
+			requestUrl +=  "&key=" + client.userKey ;
 			requestUrl += "&userToPromote=" + encodeURIComponent(userToPromote);
 			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching ajax requests (at least on dev boxes) when we don't want it to... so cachebust it.
+			
+			
+			console.log('================giveChatMod===============');
+			console.log(requestUrl);
+			console.log('================/giveChatMod==============');
+			
 			var httpClient = http.createClient(config.WIKIA_PROXY_PORT, config.WIKIA_PROXY_HOST);
 			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
 			httpRequest.addListener("response", function (response) {
@@ -813,7 +864,7 @@ function broadcastChatEntryToRoom(client, socket, chatEntry, callback){
 	broadcastToRoom(client, socket, {
 		event: 'chat:add',
 		data:chatEntry.xport()
-	}, callback);
+	},[], callback);
 } // end broadcastChatEntryToRoom()
 
 /**
@@ -822,9 +873,8 @@ function broadcastChatEntryToRoom(client, socket, chatEntry, callback){
  *
  * 'callback' is optional, if defined it will be called after the broadcasting is complete.
  */
-function broadcastToRoom(client, socket, data, callback){
+function broadcastToRoom(client, socket, data, users, callback){
 	var roomId = client.roomId;
-
 	// Get the set of members from redis.
 	console.log("Broadcasting to room " + roomId);
 	rc.hgetall(config.getKey_usersInRoom( roomId ), function(err, usernameToData){
@@ -833,7 +883,27 @@ function broadcastToRoom(client, socket, data, callback){
 		} else {
 			//console.log("Raw data from key " + config.getKey_usersInRoom( roomId ) + ": ");
 			//console.log(usernameToData);
-			_.each(usernameToData, function(userData){
+			//(input instanceof Array)
+			console.log("usernameToData:");
+
+			console.log(users);
+			console.log(usernameToData);
+			
+			var usernameToDataFilterd = {};
+			
+			if((users instanceof Array) && users.length > 0) {
+				for( var i in users ) {
+					if(typeof(usernameToData[users[i]]) != 'undefined') {
+						usernameToDataFilterd[users[i]] = usernameToData[users[i]];	
+					}
+				}
+			} else {
+				usernameToDataFilterd = usernameToData;
+			}
+			
+			console.log(usernameToDataFilterd);
+			
+			_.each(usernameToDataFilterd, function(userData){
 				var userModel = new models.User( JSON.parse(userData) );
 				
 				console.log("\tSENDING TO " + userModel.get('name'));
