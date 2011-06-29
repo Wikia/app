@@ -81,8 +81,9 @@ class WikiaLabsSpecialController extends WikiaSpecialPageController {
 		$wikialabs = new WikiaLabs();
 		$this->setVal('categories', $wikialabs->getFeedbackCategories());
 		
-		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaLabs/css/wikialabs.scss'));
-		$this->wg->Out->addScriptFile($this->extensionsPath.'/wikia/WikiaLabs/js/main.js');
+		$this->response->addAsset( 'extensions/wikia/WikiaLabs/css/wikialabs.scss' );
+		$this->response->addAsset( 'extensions/wikia/WikiaLabs/js/main.js' );
+		
 		$this->wg->Out->setPageTitle($this->app->runFunction('wfMsg', 'wikialabs-list-project-title'));
 		
 		$this->wf->profileOut( __METHOD__ );
@@ -118,7 +119,7 @@ class WikiaLabsSpecialController extends WikiaSpecialPageController {
 		
 		$this->setVal('wikialabUrl', $this->title->getFullUrl('method=index'));
 		
-		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaLabs/css/wikialabs.scss'));
+		$this->response->addAsset( 'extensions/wikia/WikiaLabs/css/wikialabs.scss' );
 		
 		$this->wf->profileOut( __METHOD__ );
 	}
@@ -133,7 +134,7 @@ class WikiaLabsSpecialController extends WikiaSpecialPageController {
 		$this->setVal('wikialabUrl', $this->title->getFullUrl('method=index'));
 		
 		$this->wg->Out->setPageTitle($this->wf->msg('wikialabs-list-wikias-list-title'));
-		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaLabs/css/wikialabs.scss'));
+		$this->response->addAsset( 'extensions/wikia/WikiaLabs/css/wikialabs.scss' );
 		
 		$this->wf->profileOut( __METHOD__ );
 	}

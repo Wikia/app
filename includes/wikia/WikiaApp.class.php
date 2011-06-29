@@ -31,6 +31,11 @@ class WikiaApp {
 	 */
 	private $dispatcher = null;
 	/**
+	 * reference for AssetsConfig
+	 * @var AssetsConfig
+	 */
+	private $assetsConfig = null;
+	/**
 	 * global MW variables helper accessor
 	 * @var WikiaGlobalRegistry
 	 */
@@ -52,14 +57,17 @@ class WikiaApp {
 		if(is_null($globalRegistry)) {
 			$globalRegistry = F::build('WikiaGlobalRegistry');
 		}
+		
 		if(is_null($localRegistry)) {
 			F::setInstance('WikiaLocalRegistry', new WikiaLocalRegistry());
 			$localRegistry = F::build('WikiaLocalRegistry');
 		}
+		
 		if(is_null($hookDispatcher)) {
 			F::setInstance('WikiaHookDispatcher', new WikiaHookDispatcher());
 			$hookDispatcher = F::build( 'WikiaHookDispatcher' );
 		}
+		
 		if(is_null($functionWrapper)) {
 			$functionWrapper = F::build( 'WikiaFunctionWrapper' );
 		}
@@ -200,7 +208,27 @@ class WikiaApp {
 	public function setDispatcher(WikiaDispatcher $dispatcher) {
 		$this->dispatcher = $dispatcher;
 	}
+	
+	/**
+	 * get global AssetsConfig
+	 * @return AssetsConfig
+	 */
+	public function getAssetsConfig() {
+		if ( empty( $this->assetsConfig ) ) {
+			$this->assetsConfig = F::build( 'AssetsConfig' );
+		}
+		
+		return $this->assetsConfig;
+	}
 
+	/**
+	 * set global AssetsConfig
+	 * @param AssetsConfig $assetsConfig
+	 */
+	public function setAssetsConfig(AssetsConfig $assetsConfig) {
+		$this->assetsConfig = $assetsConfig;
+	}
+	
 	/**
 	 * register hook (alias: WikiaHookDispatcher::registerHook)
 	 * @param string $hookName

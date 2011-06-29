@@ -276,9 +276,9 @@ class FounderProgressBarController extends WikiaController {
 	
 	public function widget() {
 		global $wgBlankImgUrl, $IP;
-		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/FounderProgressBar/css/FounderProgressBar.scss'));
-		$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/FounderProgressBar/js/modernizr.custom.founder.js');
-		$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/FounderProgressBar/js/FounderProgressBar.js');
+		$this->response->addAsset( 'extensions/wikia/FounderProgressBar/css/FounderProgressBar.scss' );
+		$this->response->addAsset( 'extensions/wikia/FounderProgressBar/js/modernizr.custom.founder.js' );
+		$this->response->addAsset( 'extensions/wikia/FounderProgressBar/js/FounderProgressBar.js' );
 		$this->response->setVal("wgBlankImgUrl", $wgBlankImgUrl);
 		
 		$activityListPreview = F::app()->sendRequest( 'FounderProgressBar', 'getShortTaskList', array())->getData();
