@@ -137,11 +137,37 @@ $wgGroupPermissions['sysop'][ 'blog-auto-follow' ] = false;
 $wgGroupPermissions['staff'][ 'blog-auto-follow' ] = true;
 $wgGroupPermissions['helper'][ 'blog-auto-follow' ] = false;
 
-/**
- * Special pages
- */
-extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogPage.php', 'CreateBlogPage', 'CreateBlogPage');
-extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogListingPage.php', 'CreateBlogListingPage', 'CreateBlogListingPage');
+// special pages
+$wgAutoloadClasses['CreateBlogListingPage'] = dirname(__FILE__) . '/SpecialCreateBlogListingPage.php';
+$wgSpecialPages['CreateBlogListingPage'] = 'CreateBlogListingPage';
+
+$wgAutoloadClasses['SpecialBlogPage'] = dirname(__FILE__) . '/SpecialBlogPage.php';
+$wgAutoloadClasses['CreateBlogPage'] = dirname(__FILE__) . '/SpecialCreateBlogPage.php';
+$wgSpecialPages['CreateBlogPage'] = 'CreateBlogPage';
+
+// initialize blogs special pages (BugId:7604)
+$wgHooks['BeforeInitialize'][] = 'wfBlogsOnBeforeInitialize';
+$wgHooks['AfterInitialize'][] = 'wfBlogsOnAfterInitialize';
+
+function wfBlogsOnBeforeInitialize(&$title, &$article, &$output, &$user, $request, $mediaWiki) {
+	global $wgAutoloadClasses;
+
+	// this line causes initialization of the skin
+	// title before redirect handling is passed causing BugId:7282 - it will be fixed in "AfterInitialize" hook
+	$skinName = get_class($user->getSkin());
+
+	if ($skinName == 'SkinMonoBook') {
+		$wgAutoloadClasses['CreateBlogPage'] = dirname(__FILE__) . '/monobook/SpecialCreateBlogPage.php';
+	}
+
+	return true;
+}
+
+// and now use "redirected" title in the skin (BugId:7282)
+function wfBlogsOnAfterInitialize(&$title, &$article, &$output, &$user, $request, $mediaWiki) {
+	$user->getSkin()->setTitle($title);
+	return true;
+}
 
 $wgSpecialPageGroups['CreateBlogPage'] = 'wikia';
 $wgSpecialPageGroups['CreateBlogListingPage'] = 'wikia';
