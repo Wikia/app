@@ -75,9 +75,11 @@ class WikiaAppMock {
 
 		if( in_array( 'getGlobal', $this->methods )) {
 			$globalRegistryMock = $this->testCase->getMock( 'WikiaGlobalRegistry', array( 'get', 'set' ) );
-			$globalRegistryMock->expects( $this->testCase->exactly( count( $this->mockedGlobals ) ) )
-			    ->method( 'get' )
-			    ->will( $this->testCase->returnCallback(array( $this, 'getGlobalCallback')) );
+			foreach( $this->mockedGlobals as $globalName => $globalData ) {
+				$globalRegistryMock->expects( $this->testCase->exactly( $globalData['calls'] ) )
+					->method( 'get' )
+					->will( $this->testCase->returnCallback(array( $this, 'getGlobalCallback')) );
+			}
 		}
 		if( in_array( 'runFunction', $this->methods ) ) {
 			$functionWrapperMock = $this->testCase->getMock( 'WikiaFunctionWrapper' );
