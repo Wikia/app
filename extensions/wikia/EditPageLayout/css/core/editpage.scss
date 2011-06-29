@@ -1,7 +1,8 @@
 #EditPage {
 	@include clearfix;
 	@include gradient-module;
-	
+
+	overflow: hidden;
 	position: relative;
 
 	// trick to overcome reseting CSS from Oasis core
