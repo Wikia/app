@@ -647,4 +647,15 @@ class EditPageLayout extends EditPage {
 	protected function getCopywarn() {}
 	protected function showSummaryInput( $isSubjectPreview, $summary = "" ) {}
 	protected function displayPreviewArea( $previewOutput, $isOnTop = false ) {}
+
+	/**
+	 * Should we show a preview when the edit form is first shown?
+	 *
+	 * We should always return false, so that it's never shown (BugId:7370)
+	 *
+	 * @return bool
+	 */
+	protected function previewOnOpen() {
+		return false;
+	}
 }
