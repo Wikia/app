@@ -299,13 +299,13 @@ function VET_showPreview(e) {
 		constraintoviewport: true,
 		draggable: false,
 		close: false,
-		fixedcenter: true,
 		underlay: "none",
 		visible: false,
 		zIndex: 1600
 	});
 	VET_previewPanel.render();
 	VET_previewPanel.show();
+	VET_panel.center();
 	if(VET_refid != null && VET_wysiwygStart == 2) {
 		VET_editVideo();
 	} else {
