@@ -22,8 +22,10 @@ $wgHooks[ 'UploadComplete' ][] = 'FounderProgressBarHooks::onUploadComplete';
 $wgHooks[ 'AddNewAccount' ][] = 'FounderProgressBarHooks::onAddNewAccount';
 $wgHooks[ 'CategoryPage::AddPage' ][] = 'FounderProgressBarHooks::onAddCategoryPage';
 
-//FIXME: new way does ugly stuff to Special:Version
-//$app->registerHook("CreateWikiLocalJob-complete", "FounderProgressBarHooks", "onWikiCreation");
+
+// On wiki creation or WikiFactory enable add db columns
+$wgHooks['CreateWikiLocalJob-complete'][] = "FounderProgressBarHooks::onWikiCreation";
+$wgHooks['WikiFactoryChanged'][] = "FounderProgressBarHooks::onWikiFactoryChanged";
 
 // Define founder event constants
 define('FT_PAGE_ADD_10', 10);

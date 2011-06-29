@@ -79,13 +79,39 @@ class FounderProgressBarController extends WikiaController {
 				FT_COMPLETION => 1
 		);
 
-		// This list associates an action with a hook ?
-		/*
-		$this->hooks = array (
-				"onArticleSaveComplete" => array ( 10 ),
-				"UploadComplete" => array ( 20 ),
+		// This list contains rules to build URLs for all the actions
+		$this->urls = array (
+				FT_PAGE_ADD_10 => array("newFromText", "CreatePage", NS_SPECIAL),
+				FT_THEMEDESIGNER_VISIT => array("newFromText", "ThemeDesigner", NS_SPECIAL),
+				FT_MAINPAGE_EDIT => array("newMainPage"),
+				FT_PHOTO_ADD_10 => array("newFromText", "Upload", NS_SPECIAL),
+				FT_CATEGORY_ADD3 => array("newFromText", "Browse", NS_CATEGORY),
+				FT_COMMCENTRAL_VISIT => array("newFromURL", "community.wikia.com"),
+				FT_WIKIACTIVITY_VISIT => "http://community.wikia.com/wiki/Community_Central",
+				FT_PROFILE_EDIT => array("newFromText", $this->wg->User, NS_USER),
+				FT_PHOTO_ADD_20 => array("newFromText", "Upload", NS_SPECIAL),
+				FT_TOTAL_EDIT_75 => array("newFromText", "CreatePage", NS_SPECIAL),
+				FT_PAGE_ADD_20 => array("newFromText", "CreatePage", NS_SPECIAL),
+				FT_CATEGORY_EDIT => array("newFromText", "Browse", NS_CATEGORY),
+				FT_WIKIALABS_VISIT => array("newFromText", "WikiaLabs", NS_SPECIAL),
+				FT_FB_CONNECT => array("newFromText", "Connect", NS_SPECIAL),
+				FT_CATEGORY_ADD_5 => array("newFromText", "Browse", NS_CATEGORY),
+				FT_PAGELAYOUT_VISIT => array("newFromText", "LayoutBuilder", NS_SPECIAL),
+				FT_GALLERY_ADD => "http://community.wikia.com/wiki/Help:Gallery",
+				FT_TOPNAV_EDIT => array("newFromText", "Wiki-navigation", NS_MEDIAWIKI),
+				FT_MAINPAGE_ADDSLIDER => array("newMainPage"),
+				FT_COMMCORNER_EDIT => array("newFromText", "Community-corner", NS_MEDIAWIKI),
+				FT_VIDEO_ADD => array("newFromText", "Upload", NS_SPECIAL),
+				FT_USER_ADD_5 => "http://help.wikia.com/wiki/Advice:Building_a_Community",
+				FT_RECENTCHANGES_VISIT => array("newFromText", "RecentChanges", NS_SPECIAL),
+				FT_WORDMARK_EDIT => array("newFromText", "ThemeDesigner", NS_SPECIAL),
+				FT_MOSTVISITED_VISIT => array("newFromText", "Mostvisitedpages", NS_SPECIAL),
+				FT_TOPTENLIST_ADD => array("newFromText", "CreatePage", NS_SPECIAL),
+				FT_BLOGPOST_ADD => array("newFromText", $this->wg->User, NS_BLOG_ARTICLE),
+				FT_FB_LIKES_3 => array("newMainPage"),
+				FT_UNCATEGORIZED_VISIT => array("newFromText", "UncategorizedPages", NS_SPECIAL),
+				FT_TOTAL_EDIT_300 => array("newFromText", "CreatePage", NS_SPECIAL),
 		);
-		 */
 	}
 	
 	/**
@@ -152,6 +178,7 @@ class FounderProgressBarController extends WikiaController {
 					"task_label" => $this->getMsgForTask($task_id, "label"),
 					"task_description" => $this->getMsgForTask($task_id, "description"),
 					"task_action" => $this->getMsgForTask($task_id, "action"),
+					"task_url" => $this->getURLForTask($task_id)
 					);
 				if ($row->task_completed == 1) {
 					$tasks_completed ++;
@@ -275,7 +302,7 @@ class FounderProgressBarController extends WikiaController {
 	}
 	
 	public function widget() {
-		global $wgBlankImgUrl, $IP;
+		global $wgBlankImgUrl;
 		$this->response->addAsset( 'extensions/wikia/FounderProgressBar/css/FounderProgressBar.scss' );
 		$this->response->addAsset( 'extensions/wikia/FounderProgressBar/js/modernizr.custom.founder.js' );
 		$this->response->addAsset( 'extensions/wikia/FounderProgressBar/js/FounderProgressBar.js' );
@@ -307,6 +334,21 @@ class FounderProgressBarController extends WikiaController {
 		// Default case
 		$messageStr = "founderprogressbar-". $messageStr . "-" . $type;			
 		return wfMsg($messageStr);
+	}
+	
+	// URL list defined above in init()
+	private function getURLForTask($task_id) {
+
+		if (!isset($this->urls[$task_id])) return "";
+		// Entry can be an array of function, params or a string which is just a plain URL to use
+		if (is_array($this->urls[$task_id])) {
+			$method = array_shift($this->urls[$task_id]);
+			$params = $this->urls[$task_id];
+			$title = call_user_func_array("Title::$method", $params);
+			return $title->getFullURL();
+		} else {
+			return $this->urls[$task_id];
+		}
 	}
 
 	/**
