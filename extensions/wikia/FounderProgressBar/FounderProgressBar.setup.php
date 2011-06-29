@@ -56,3 +56,4 @@ define('FT_BLOGPOST_ADD', 270);
 define('FT_FB_LIKES_3', 280);
 define('FT_UNCATEGORIZED_VISIT', 290);
 define('FT_TOTAL_EDIT_300', 300);
+define('FT_COMPLETION', 1000);    // special internal flag for "all tasks complete"
