@@ -7,9 +7,10 @@
 		</p>
 	</header>
 	<ul class="tasks">
-		<li class="task">
+		<li class="task expanded">
 			<div class="task-label">
 				Tasks
+				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 			</div>
 			<div class="task-group">
 				<? for ($j = 0; $j < 3; $j++) { ?>
@@ -103,14 +104,30 @@
 			<a href="#" class="list-toggle" id="FounderProgressListToggle"><?= wfMsg('founderprogressbar-progress-see-full-list') ?></a>
 		</header>
 		<ul class="activities">
+			<? $index = 0; ?>
+			<? foreach($activityListPreview as $activity) { ?>
+				<li class="activity<?= $index == 0 ? ' active' : '' ?>">
+					<div class="label">
+						<div class="activity-name">
+							<?= $activity['task_label'] ?>
+						</div>
+						<img class="chevron" src="<?= $wgBlankImgUrl ?>">
+					</div>
+					<div class="description" style="<?= $index++ == 0 ? '' : 'display:none'?>">
+						<?= $activity['task_description'] ?>
+						<div class="actions">
+							<button><?= $activity['task_action'] ?></button>  <span style="">Skip for now</span>
+						</div>
+					</div>
+				</li>
+			<? } ?>
+<!--
 			<li class="activity active">
 				<div class="label">
 					<div class="activity-name">
 						Add 10 pages
 					</div>
-					<div class="activity-score">
-						+ 5%
-					</div>
+					<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 				</div>
 				<div class="description">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id nunc mi. Maecenas elit velit, tempus quis pharetra a, fringilla blandit neque.
@@ -124,9 +141,7 @@
 					<div class="activity-name">
 						I am a placeholder
 					</div>
-					<div class="activity-score">
-						+ 5%
-					</div>
+					<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 				</div>
 				<div class="description" style="display:none">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id nunc mi. Maecenas elit velit, tempus quis pharetra a, fringilla blandit neque.
@@ -135,6 +150,7 @@
 					</div>
 				</div>
 			</li>
+			-->
 		</ul>
 	</sction>
 </section>

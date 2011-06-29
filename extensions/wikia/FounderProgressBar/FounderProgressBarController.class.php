@@ -276,6 +276,9 @@ class FounderProgressBarController extends WikiaController {
 		$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/FounderProgressBar/js/modernizr.custom.founder.js');
 		$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/FounderProgressBar/js/FounderProgressBar.js');
 		$this->response->setVal("wgBlankImgUrl", $wgBlankImgUrl);
+		
+		$activityListPreview = F::app()->sendRequest( 'FounderProgressBar', 'getShortTaskList', array())->getData();
+		$this->response->setVal('activityListPreview', $activityListPreview['list']);
 	}
 	
 	// Messages defined in i18n file
@@ -312,7 +315,7 @@ class FounderProgressBarController extends WikiaController {
 		$total_tasks = count($this->messages);		
 		$data['tasks_completed'] = $tasks_completed;
 		$data['total_tasks'] = $total_tasks;
-		$data['completion_percent'] = round(100 * ($tasks_completed / $total_tasks), 0, PHP_ROUND_HALF_EVEN);
+		$data['completion_percent'] = round(100 * ($tasks_completed / $total_tasks), 0);
 		return $data;
 	}
 }
