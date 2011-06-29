@@ -264,8 +264,8 @@ $(window).bind('popstate', function(event) {
 	}
 })
 
-if ( $.event.props.indexOf('state') < 0 )
-	$.event.props.push('state')
+if ( $.inArray('state', $.event.props) < 0 )
+	Array.prototype.push.call($.event.props, 'state');
 
 if ( !window.history || !window.history.pushState ) {
 	$.pjax = $.noop
