@@ -61,12 +61,7 @@ class ImageServing{
 
 			foreach ( $articles as $key => $value ) {
 				$mcOut = $wgMemc->get( $this->_makeKey( $value, $n ), null );
-# TODO: REMOVE WHOLE OUTDENTED PART
-#print "MCOUT (memcached result): $mcOut<br/>\n";
-$mcOut = null;
-#print "IGNORING CACHE!!!<br/>\n";
 				if($mcOut != null) {
-// TODO: IS IT SAFE TO UNSET WHILE ITERATING LIKE THIS?
 					unset( $articles[ $key ] );
 					$cache_return[ $value ] = $mcOut;
 				}
@@ -101,11 +96,8 @@ $mcOut = null;
 
 			/* build list of images to get info about it */
 			while ($row =  $db->fetchRow( $res ) ) {
-print "ROW: ";
-print_r($row);
 				$props = unserialize( $row['props'] );
 				if ( is_array( $props ) && count( $props ) ) {
-print " - HAS PROPERTIES<br/><br/>\n";
 					$count = 0;
 					foreach ( $props as $key => $value ) {
 						if ( !isset($image_list[$value][$row['page_id']]) ) {
@@ -132,7 +124,6 @@ print " - HAS PROPERTIES<br/><br/>\n";
 			$db_out = array();
 			if ( !empty($images_name) ) {
 				foreach ( $images_name as $img_name ) {
-print "TRYING TO GET INFO FOR $img_name<br/>\n";
 					$result = $db->select(
 						array( 'imagelinks' ),
 						array( 'il_from' ),
@@ -144,8 +135,6 @@ print "TRYING TO GET INFO FOR $img_name<br/>\n";
 					);
 
 					# skip images which are too popular
-print "NUM ROWS: {$result->numRows()}<br/>\n";
-print "MAX COUNT: {$this->maxCount}<br/>\n";
 					if ($result->numRows() > $this->maxCount ) continue;
 					# check image table
 					$oRowImg = $db->selectRow(
@@ -158,7 +147,6 @@ print "MAX COUNT: {$this->maxCount}<br/>\n";
 					);
 
 					if ( empty ( $oRowImg ) ) {
-print "NO INFO ABOUT IMAGE<br/>\n";
 						continue;
 					}
 
