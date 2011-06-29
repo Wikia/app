@@ -8,7 +8,7 @@ window.RTE = {
 			td: true,
 			th: true
 		},
-		baseFloatZIndex: 1000,
+		baseFloatZIndex: 20000001, // $zTop from _layout.scss
 		bodyClass: 'WikiaArticle',
 		bodyId: 'bodyContent',
 		contentsCss: $.getSassCommonURL('/extensions/wikia/EditPageReskin/RTE/css/content.scss'),
@@ -23,24 +23,24 @@ window.RTE = {
 		format_tags: 'p;h2;h3;h4;h5;pre',
 		language: window.wgUserLanguage,
 		plugins:
-			'basicstyles,' + 
-			'button,' + 
-			'clipboard,' + 
-			'contextmenu,' + 
-			'dialog,' + 
-			'enterkey,' + 
-			'format,' + 
-			'htmldataprocessor,' + 
-			'indent,' + 
-			'keystrokes,' + 
-			'list,' + 
-			'pastetext,' + 
-			'removeformat,' + 
-			'sourcearea,' + 
-			'table,' + 
-			'tabletools,' + 
-			'undo,' + 
-			'wysiwygarea', 
+			'basicstyles,' +
+			'button,' +
+			'clipboard,' +
+			'contextmenu,' +
+			'dialog,' +
+			'enterkey,' +
+			'format,' +
+			'htmldataprocessor,' +
+			'indent,' +
+			'keystrokes,' +
+			'list,' +
+			'pastetext,' +
+			'removeformat,' +
+			'sourcearea,' +
+			'table,' +
+			'tabletools,' +
+			'undo,' +
+			'wysiwygarea',
 		resize_enabled: false,
 		richcomboCss: $.getSassCommonURL('extensions/wikia/EditPageReskin/RTE/css/richcombo.scss'),
 		skin: 'wikia',
