@@ -41,6 +41,7 @@ class FounderProgressBarController extends WikiaController {
 				FT_FB_LIKES_3 => "fb-likes%",
 				FT_UNCATEGORIZED_VISIT => "uncategorized-visit",
 				FT_TOTAL_EDIT_300 => "total-edit%",
+				FT_COMPLETION => "completion"
 			);
 
 		// This list says how many times an item needs to be counted to be finished
@@ -75,19 +76,22 @@ class FounderProgressBarController extends WikiaController {
 				FT_FB_LIKES_3 => 3,
 				FT_UNCATEGORIZED_VISIT => 1,
 				FT_TOTAL_EDIT_300 => 300,
+				FT_COMPLETION => 1
 		);
 
 		// This list associates an action with a hook ?
+		/*
 		$this->hooks = array (
 				"onArticleSaveComplete" => array ( 10 ),
 				"UploadComplete" => array ( 20 ),
 		);
+		 */
 	}
 	
 	/**
 	 * @desc Get the short list of available founder tasks
 	 * 
-	 * @responseParam list array of 2 Founder tasks
+	 * @responseParam list array of Founder tasks that are not completed or skipped, max of 2
 	 */
 
 	public function getShortTaskList () {
@@ -188,7 +192,7 @@ class FounderProgressBarController extends WikiaController {
 //			file_put_contents("/tmp/founder.log", "Task Complete $task_id\n", FILE_APPEND);
 			return;
 		}
-		$dbw = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$dbw = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 		$sql = "INSERT INTO founder_progress_bar_tasks 
 			SET wiki_id=$wiki_id, 
 				task_id=$task_id, 
@@ -239,7 +243,7 @@ class FounderProgressBarController extends WikiaController {
 		//if (empty($task_id)) throw error;
 		//if (empty($task_skipped)) throw error;
 		
-		$dbw = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$dbw = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 		$dbw->update(
 			'founder_progress_bar_tasks',
 			array(
