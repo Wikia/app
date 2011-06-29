@@ -546,18 +546,19 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			document.body.appendChild(element);
 		}
 
+		// @see http://developer.yahoo.com/yui/docs/YAHOO.widget.Overlay.html
 		WMU_panel = new YAHOO.widget.Panel('WMU_div', {
 			modal: true,
 			constraintoviewport: true,
 			draggable: false,
 			close: false,
-			fixedcenter: true,
 			underlay: "none",
 			visible: false,
 			zIndex: 900
 		});
 		WMU_panel.render();
 		WMU_panel.show();
+		WMU_panel.center();
 		if(WMU_refid != null && WMU_wysiwygStart == 2) {
 			WMU_loadDetails();
 		} else {
