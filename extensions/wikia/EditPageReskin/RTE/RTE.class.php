@@ -334,10 +334,6 @@ class RTE {
 
 <noscript>
 	<style type="text/css">
-		#editform {
-			display: none;
-		}
-
 		.RTEFallback,
 		#page_bar {
 			display: block !important;
