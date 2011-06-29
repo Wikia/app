@@ -151,5 +151,14 @@ CKEDITOR.plugins.add('rte-dialog',
 				}
 			}
 		};
+
+		// always show body's scrollbars when modal is shown (BugId:7498)
+		editor.on('dialogShow', function(ev) {
+			$(document.body).addClass('modalShown');
+		});
+
+		editor.on('dialogHide', function(ev) {
+			$(document.body).removeClass('modalShown');
+		});
 	}
 });
