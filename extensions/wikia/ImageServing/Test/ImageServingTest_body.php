@@ -31,7 +31,7 @@ class ImageServingTest extends SpecialPage {
 
 		if( $wgRequest->getVal("article","") != "")  {
 			$title = Title::newFromText($wgRequest->getVal("article"),NS_MAIN);
-			$test = new imageServing(array($title->getArticleId()), $this->size, $this->prop);
+			$test = new ImageServing(array($title->getArticleId()), $this->size, $this->prop);
 			foreach ($test->getImages(20) as $key => $value){
 				$wgOut->addHTML( "<b>".$title->getText()."</b><br><br>");
 				foreach ($value as $value2) {
@@ -94,7 +94,7 @@ class MostvisitedpagesPageIS extends MostvisitedpagesPage {
 			$article_name = $title->getText();
 			if ($title) {
 				$result->title = Xml::element("a", array("href" => $title->getLocalURL()), $title->getFullText()."(".$title->getArticleId().")") ;
-				$is = new imageServing(array($title->getArticleId()), $this->size, $this->prop );
+				$is = new ImageServing(array($title->getArticleId()), $this->size, $this->prop );
 				$result->title .= "<div>";
 				foreach ($is->getImages(1) as $key => $value){
 					foreach ($value as $value2) {

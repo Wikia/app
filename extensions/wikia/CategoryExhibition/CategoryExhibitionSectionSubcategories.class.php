@@ -107,7 +107,7 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 				if ( $counter > F::App()->wg->maxCategoryExhibitionSubcatChecks ){
 					break;
 				}
-				$imageServing = new imageServing( array( $item['page_id'] ), $this->thumbWidth , array( "w" => $this->thumbWidth, "h" => $this->thumbHeight ) );
+				$imageServing = new ImageServing( array( $item['page_id'] ), $this->thumbWidth , array( "w" => $this->thumbWidth, "h" => $this->thumbHeight ) );
 				$itemTitle = Title::newFromID( $item['page_id'] );
 				$image = wfFindFile( $itemTitle );
 				if ( !empty( $image ) ){

@@ -57,7 +57,7 @@ class FBPush_OnAddImage extends FBConnectPushEvent {
 	public static function uploadNews($image, $name, $url) {
 		global $wgSitename;
 
-		$is = new imageServing(array(), 90);
+		$is = new ImageServing(array(), 90);
 		$thumb_url = $is->getThumbnails(array($image));
 		$thumb_url = array_pop($thumb_url);
 		$thumb_url = $thumb_url['url'];

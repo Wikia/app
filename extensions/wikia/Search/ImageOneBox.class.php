@@ -127,7 +127,7 @@ class ImageOneBox {
 		}
 		$resultSet->rewind( true );
 
-		$imageServing = new imageServing( $pages );
+		$imageServing = new ImageServing( $pages );
 		$images = $imageServing->getImages(  ); // get just one image per article
 		foreach( $pages as $pageId ) {
 			if( isset( $images[$pageId] ) ) {

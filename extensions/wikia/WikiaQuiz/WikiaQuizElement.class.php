@@ -185,7 +185,7 @@ class WikiaQuizElement {
 			return $imageSrc;
 		} else {
 			$thumbDim = ($image->height > $image->width) ? $image->width : $image->height;
-			$imageServing = new imageServing( array( $fileTitle->getArticleID() ), $thumbDim, array( "w" => $thumbDim, "h" => $thumbDim ) );
+			$imageServing = new ImageServing( array( $fileTitle->getArticleID() ), $thumbDim, array( "w" => $thumbDim, "h" => $thumbDim ) );
 			$imageSrc = wfReplaceImageServer(
 				$image->getThumbUrl(
 					$imageServing->getCut( $thumbDim, $thumbDim )."-".$image->getName()

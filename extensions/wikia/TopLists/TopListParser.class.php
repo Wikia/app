@@ -46,7 +46,7 @@ class TopListParser {
 			self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] = $args[ TOPLIST_ATTRIBUTE_PICTURE ];
 
 			if( !empty( self::$mAttributes[ TOPLIST_ATTRIBUTE_PICTURE ] ) ) {
-				$source = new imageServing(
+				$source = new ImageServing(
 					null,
 					200
 				);

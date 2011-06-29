@@ -91,7 +91,7 @@ class RelatedPages {
 				!in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaphone', 'SkinWikiaApp' ) )
 			){
 				// ImageServing extension enabled, get images
-				$imageServing = new imageServing( array_keys($pages), 200, array( 'w' => 2, 'h' => 1 ) );
+				$imageServing = new ImageServing( array_keys($pages), 200, array( 'w' => 2, 'h' => 1 ) );
 				$images = $imageServing->getImages(1); // get just one image per article
 
 				// TMP: always remove last article to get a text snippeting working example

@@ -1236,7 +1236,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$img->getWidth() == WikiaPhotoGalleryHelper::STRICT_IMG_WIDTH
 			) {
 				$pageId = $nt->getArticleID();
-				$imageServing = new imageServing( array( $pageId ), $thumbDimensions['w'] ,$thumbDimensions );
+				$imageServing = new ImageServing( array( $pageId ), $thumbDimensions['w'] ,$thumbDimensions );
 				$thumbUrl = wfReplaceImageServer(
 					$img->getThumbUrl(
 						$imageServing->getCut( $img->getWidth(), $img->getHeight() )."-".$img->getName()

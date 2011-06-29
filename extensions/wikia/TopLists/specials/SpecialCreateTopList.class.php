@@ -76,7 +76,7 @@ class SpecialCreateTopList extends SpecialPage {
 					$errors[ 'selected_picture_name' ] = array( wfMsg( 'toplists-error-invalid-picture' ) );
 				} else {
 					$text = $imageTitle->getText();
-					$source = new imageServing(
+					$source = new ImageServing(
 						null,
 						120,
 						array(

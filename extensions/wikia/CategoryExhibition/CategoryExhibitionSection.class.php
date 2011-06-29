@@ -234,7 +234,7 @@ class CategoryExhibitionSection {
 			$mPageId = array( $mPageId );
 		}
 
-		$imageServing = new imageServing( $mPageId, $this->thumbWidth , array( "w" => $this->thumbWidth, "h" => $this->thumbHeight ) );
+		$imageServing = new ImageServing( $mPageId, $this->thumbWidth , array( "w" => $this->thumbWidth, "h" => $this->thumbHeight ) );
 		$imageUrl = '';
 
 		foreach ( $imageServing->getImages( 1 ) as $key => $value ){
