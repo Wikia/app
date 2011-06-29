@@ -36,7 +36,8 @@
 // A call to ExtDynamicPageList::setFunctionalRichness(n) with n>0 will provide additional functionality
 // for the <Intersection> tag; so you can try out additional features without bothering anyone. 
 
-$wgExtensionFunctions[]        = array( 'ExtDynamicPageList', 'setupMigration' );
+//$wgExtensionFunctions[]        = array( 'ExtDynamicPageList', 'setupMigration' );
+$wgHooks['ParserFirstCallInit'][] = 'ExtDynamicPageList::setupMigration';
 
 $wgHooks['LanguageGetMagic'][] = 'ExtDynamicPageList__languageGetMagic';
 
