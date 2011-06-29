@@ -100,5 +100,13 @@ class FounderProgressBarHooks {
 		
 		return true;
 	}
+
+	// Initialize schema
+	function onWikiCreation ( $params ) {
+		
+	}
 	
+	// Initialize schema
+	function onWikiFactoryChanged( $cv_name, $city_id, $value ) {
+	}
 }
