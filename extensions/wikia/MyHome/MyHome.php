@@ -52,7 +52,7 @@ if (!empty($wgEnableActivityFeedApiFeed)) {
 // Ajax dispatcher
 $wgAjaxExportList[] = 'MyHomeAjax';
 function MyHomeAjax() {
-	global $wgUser, $wgRequest;
+	global $wgRequest;
 	$method = $wgRequest->getVal('method', false);
 
 	if (method_exists('MyHomeAjax', $method)) {

@@ -13,7 +13,6 @@ class WatchlistFeedRenderer extends FeedRenderer {
 	 */
 	public static function formatTimestamp($stamp) {
 		wfProfileIn(__METHOD__);
-		global $wgContLang;
 
 		$ago = time() - strtotime($stamp) + 1;
 

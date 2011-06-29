@@ -37,7 +37,7 @@ class ImageServingHelper{
 		$editInfo = $article->prepareTextForEdit( $content, $title->getLatestRevID() );
 		self::hookSwitch(false);
 		$out = array();
-		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out ); 
+		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out );
 
 		self::bulidIndex($article->getID(), $out[0], $ignoreEmpty);
 		wfProfileOut(__METHOD__);

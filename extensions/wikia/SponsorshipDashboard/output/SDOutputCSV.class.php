@@ -17,17 +17,13 @@ class SponsorshipDashboardOutputCSV extends SponsorshipDashboardOutputTable {
 	protected $actualDate;
 
 	static function newFromReport( $oReport ){
-
 		$obj = new self;
 		$obj->set( $oReport );
 		return $obj;
 	}
 
 	public function getHTML(){
-
 		wfProfileIn( __METHOD__ );
-
-		$wgOut = $this->App->getGlobal('wgOut');
 
 		$this->report->loadSources();
 
@@ -77,7 +73,6 @@ class SponsorshipDashboardOutputCSV extends SponsorshipDashboardOutputTable {
 	}
 
 	function beforePrint(){
-
 		header("HTTP/1.0 200 OK");
 		header("Pragma: public");
 		header("Expires: 0");

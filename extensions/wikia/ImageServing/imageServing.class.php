@@ -36,14 +36,14 @@ class ImageServing{
 	}
 
 	/**
-	 * getImages - get array with list of top images for all article pass to construct
+	 * getImages - get array with list of top images for all article passed into the constructor
 	 *
 	 * @author Tomek Odrobny
 	 *
 	 * @access public
 	 *
-	 * @param $n \type{\arrayof{\int}} number of images get of each of article
-	 * @param $article_lp \int lp number of article pass to construct for 0 get all
+	 * @param $n \type{\arrayof{\int}} number of images to get for each article
+	 * @param $article_lp \int NOT USED
 	 *
 	 * @return  \type{\arrayof{\topImage}}
 	 */
@@ -61,7 +61,12 @@ class ImageServing{
 
 			foreach ( $articles as $key => $value ) {
 				$mcOut = $wgMemc->get( $this->_makeKey( $value, $n ), null );
+# TODO: REMOVE WHOLE OUTDENTED PART
+#print "MCOUT (memcached result): $mcOut<br/>\n";
+$mcOut = null;
+#print "IGNORING CACHE!!!<br/>\n";
 				if($mcOut != null) {
+// TODO: IS IT SAFE TO UNSET WHILE ITERATING LIKE THIS?
 					unset( $articles[ $key ] );
 					$cache_return[ $value ] = $mcOut;
 				}
@@ -96,8 +101,11 @@ class ImageServing{
 
 			/* build list of images to get info about it */
 			while ($row =  $db->fetchRow( $res ) ) {
+print "ROW: ";
+print_r($row);
 				$props = unserialize( $row['props'] );
 				if ( is_array( $props ) && count( $props ) ) {
+print " - HAS PROPERTIES<br/><br/>\n";
 					$count = 0;
 					foreach ( $props as $key => $value ) {
 						if ( !isset($image_list[$value][$row['page_id']]) ) {
@@ -124,6 +132,7 @@ class ImageServing{
 			$db_out = array();
 			if ( !empty($images_name) ) {
 				foreach ( $images_name as $img_name ) {
+print "TRYING TO GET INFO FOR $img_name<br/>\n";
 					$result = $db->select(
 						array( 'imagelinks' ),
 						array( 'il_from' ),
@@ -135,6 +144,8 @@ class ImageServing{
 					);
 
 					# skip images which are too popular
+print "NUM ROWS: {$result->numRows()}<br/>\n";
+print "MAX COUNT: {$this->maxCount}<br/>\n";
 					if ($result->numRows() > $this->maxCount ) continue;
 					# check image table
 					$oRowImg = $db->selectRow(
@@ -147,6 +158,7 @@ class ImageServing{
 					);
 
 					if ( empty ( $oRowImg ) ) {
+print "NO INFO ABOUT IMAGE<br/>\n";
 						continue;
 					}
 

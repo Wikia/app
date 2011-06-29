@@ -62,7 +62,7 @@ F::addClassConstructor( 'Title', array(), 'newFromText' );
 // Ajax dispatcher
 $wgAjaxExportList[] = 'ScavengerHuntAjax';
 function ScavengerHuntAjax() {
-	global $wgUser, $wgRequest;
+	global $wgRequest;
 	$method = $wgRequest->getVal('method', false);
 
 	if (method_exists('ScavengerHuntAjax', $method)) {

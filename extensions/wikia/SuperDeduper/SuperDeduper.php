@@ -14,8 +14,8 @@ $wgAjaxExportList[] = 'efGetRankedMatches';
 
 function efGetRankedMatches() {
 	global $wgRequest;
-	$sd = new AwesomeDeduper( $wgRequest->getVal('lang'), $wgRequest->getVal('db') );
-	$results = $sd->getRankedmatches( $wgRequest->getVal('query'), $wgRequest->getVal('limit',10) );
+	$superDeduper = new AwesomeDeduper( $wgRequest->getVal('lang'), $wgRequest->getVal('db') );
+	$results = $superDeduper->getRankedmatches( $wgRequest->getVal('query'), $wgRequest->getVal('limit',10) );
 	$out = array();
 	foreach( $results as $title => $rank ) {
 		$out['ResultSet']['Result'][] = array( 'title' => $title, 'rank' => $rank );

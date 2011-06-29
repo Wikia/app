@@ -187,9 +187,9 @@ class RTEAjax {
 		global $wgLang;
 		$lang = $wgLang->getCode();
 
-		$js = "CKEDITOR.lang['{$lang}'] = " . Wikia::json_encode($messages) . ';';
+		$rawJavascript = "CKEDITOR.lang['{$lang}'] = " . Wikia::json_encode($messages) . ';';
 
-		$ret = new AjaxResponse($js);
+		$ret = new AjaxResponse($rawJavascript);
 		$ret->setContentType('application/x-javascript');
 		$ret->setCacheDuration(86400 * 365 * 10); // 10 years
 

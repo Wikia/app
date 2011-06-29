@@ -125,7 +125,6 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 	}
 
 	protected function getResults() {
-
 		$this->recalculateDateVariables();
 
 		if ( !$this->loadDataFromCache() ) {
@@ -135,7 +134,6 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 			}
 			
 			$wgStatsDB = $this->App->getGlobal('wgStatsDB');
-			$returnArray = array();
 
 			$this->recalculateDateVariables();
 			
@@ -155,7 +153,6 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 			$res = $dbr->query( $sql, __METHOD__ );
 			
-			$result = array();
 			while ( $row = $res->fetchObject( $res ) ) {
 				$sDate = $row->mobile_date;
 				$this->dataAll[ $sDate ][ 'date' ] = $sDate;
@@ -163,7 +160,6 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 			}
 			$this->dataTitles[ 'a'.md5( $this->serieName ) ] = $this->serieName;
 
-			$i = 0;
 			$this->saveDataToCache();
 		}
 		$numberOfRecords = count( $this->dataAll );
@@ -196,7 +192,6 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 	 */
 
 	protected function getLocalParamsArray() {
-
 		$aData = array();
 
 		$aData[ self::SD_ACTION ] = $this->action;
@@ -220,9 +215,6 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 	 */
 
 	public function fillFromArray( $aParams ) {
-
-		$sources = array();
-
 		$this->action = ( isset( $aParams[ self::SD_ACTION ] ) && in_array( $aParams[ self::SD_ACTION ], self::$allowedActions ) )? $aParams[ self::SD_ACTION ]: '';
 		$this->operatingsystem = ( isset( $aParams[ self::SD_OS ] ) && in_array( $aParams[ self::SD_OS ], self::$allowedOS ) )? $aParams[ self::SD_OS ]: '';
 		$this->application = ( isset( $aParams[ self::SD_OS ] ) && in_array( $aParams[ self::SD_OS ], self::$allowedApp ) )? $aParams[ self::SD_OS ]: '';
@@ -237,7 +229,6 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 	}
 
 	public function validFrequency( $frequency ) {
-
 		return in_array(
 			$frequency,
 			array(

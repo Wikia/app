@@ -31,7 +31,7 @@ $wgAPIModules['createmultiplepages'] = 'ApiCreateMultiplePages';
 // Ajax dispatcher
 $wgAjaxExportList[] = 'WikiBuilderAjax';
 function WikiBuilderAjax() {
-	global $wgUser, $wgRequest;
+	global $wgRequest;
 	$method = $wgRequest->getVal('method', false);
 
 	if (method_exists('SpecialWikiBuilder', $method)) {
