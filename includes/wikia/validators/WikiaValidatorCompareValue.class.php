@@ -7,7 +7,7 @@ class WikiaValidatorCompareValue extends WikiaValidatorCompare {
 	
 	protected function config( array $options = array() ) {
 		$this->setOption( 'expression', '==' );	
-		$this->setOption( 'refvalue', '' );	
+		$this->setOption( 'value', '' );	
 	}
 	
 	public function isValidInternal($value = null) {
@@ -19,7 +19,7 @@ class WikiaValidatorCompareValue extends WikiaValidatorCompare {
 			$this->throwException( 'WikiaValidatorCompare: value need to be array with two elements' );
 		}
 
-		$valid = $this->doCompare( $expression, $value, $this->getOption( ) );
+		$valid = $this->doCompare( $expression, $value, $this->getOption('value' ) );
 		
 		if(!$valid) {
 			$this->createError( 'compare_fail' );
