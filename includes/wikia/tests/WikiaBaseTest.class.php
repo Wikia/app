@@ -75,11 +75,15 @@ class WikiaAppMock {
 
 		if( in_array( 'getGlobal', $this->methods )) {
 			$globalRegistryMock = $this->testCase->getMock( 'WikiaGlobalRegistry', array( 'get', 'set' ) );
+			// Add up how many globals we are mocking, and how many times each one is supposed to be called
+			// If this number doesn't match, we will get different errors depending on order, but it's the best we can do
+			$total_calls = 0;
 			foreach( $this->mockedGlobals as $globalName => $globalData ) {
-				$globalRegistryMock->expects( $this->testCase->exactly( $globalData['calls'] ) )
-					->method( 'get' )
-					->will( $this->testCase->returnCallback(array( $this, 'getGlobalCallback')) );
+				$total_calls += $globalData['calls'];
 			}
+			$globalRegistryMock->expects( $this->testCase->exactly( $total_calls ) )
+				->method( 'get' )
+				->will( $this->testCase->returnCallback(array( $this, 'getGlobalCallback')) );
 		}
 		if( in_array( 'runFunction', $this->methods ) ) {
 			$functionWrapperMock = $this->testCase->getMock( 'WikiaFunctionWrapper' );
