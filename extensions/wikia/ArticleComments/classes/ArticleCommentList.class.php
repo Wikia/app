@@ -146,7 +146,6 @@ class ArticleCommentList {
 		if ( empty( $this->mCommentsAll ) ) {
 			$pages = array();
 			$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
-			$namespace = $this->getTitle()->getNamespace();
 
 			$res = $dbr->select(
 				array( 'page' ),
@@ -232,7 +231,7 @@ class ArticleCommentList {
 		return $pages;
 	}
 
-	//TODO: review
+	//TODO: review - CruiseControl says this is unused.
 	private function getRemovedCommentPages( $oTitle ) {
 		wfProfileIn( __METHOD__ );
 
@@ -305,14 +304,14 @@ class ArticleCommentList {
 		}
 
 		$groups = $wgUser->getEffectiveGroups();
-		$isSysop = in_array('sysop', $groups) || in_array('staff', $groups);
+		//$isSysop = in_array('sysop', $groups) || in_array('staff', $groups);
 		$canEdit = $wgUser->isAllowed( 'edit' );
 		$isBlocked = $wgUser->isBlocked();
 		$isReadOnly = wfReadOnly();
-		$showall = $wgRequest->getText( 'showall', false );
+		//$showall = $wgRequest->getText( 'showall', false );
 
 		//default to using slave. comments are posted with ajax which hits master db
-		$commentList = $this->getCommentList(false);
+		//$commentList = $this->getCommentList(false);
 		$countComments = $this->getCountAll();
 		$countCommentsNested = $this->getCountAllNested();
 		$countPages = ceil($countComments / $wgArticleCommentsMaxPerPage);
@@ -353,7 +352,7 @@ class ArticleCommentList {
 		);
 
 		return $retVal;
-	}
+	} // end getData();
 
 	/**
 	 * doPagination -- return HTML code for pagination
@@ -656,7 +655,7 @@ class ArticleCommentList {
 	 */
 	//TODO: review - blogs only?
 	static public function makeChangesListKey( &$oChangeList, &$currentName, &$oRCCacheEntry ) {
-		global $wgUser, $wgEnableGroupedArticleCommentsRC, $wgTitle, $wgEnableBlogArticles;
+		global $wgEnableGroupedArticleCommentsRC, $wgEnableBlogArticles;
 		wfProfileIn( __METHOD__ );
 
 		if ( empty($wgEnableGroupedArticleCommentsRC) ) {
@@ -666,8 +665,8 @@ class ArticleCommentList {
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
 
-		$allowed = !( $wgEnableBlogArticles && in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) );
-		if (!is_null($oTitle) && MWNamespace::isTalk($oTitle->getNamespace()) && ArticleComment::isTitleComment($oTitle) && $allowed) {
+		$allowed = !( $wgEnableBlogArticles && in_array($namespace, array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) );
+		if (!is_null($oTitle) && MWNamespace::isTalk($namespace) && ArticleComment::isTitleComment($oTitle) && $allowed) {
 			$parts = ArticleComment::explode($oTitle->getText());
 			if ($parts['title'] != '') {
 				$currentName = 'ArticleComments' . $parts['title'];
@@ -691,7 +690,7 @@ class ArticleCommentList {
 	 * @return true -- because it's a hook
 	 */
 	static public function setHeaderBlockGroup(&$oChangeList, &$header, Array /*of oRCCacheEntry*/ &$oRCCacheEntryArray) {
-		global $wgLang, $wgContLang, $wgEnableGroupedArticleCommentsRC, $wgTitle, $wgEnableBlogArticles;
+		global $wgLang, $wgContLang, $wgEnableGroupedArticleCommentsRC;
 
 		if ( empty($wgEnableGroupedArticleCommentsRC) ) {
 			return true;
@@ -755,7 +754,7 @@ class ArticleCommentList {
 			}
 		}
 		return true;
-	}
+	} // end setHeaderBlockGroup()
 
 	/**
 	 * formatList
@@ -793,7 +792,7 @@ class ArticleCommentList {
 	 */
 	static public function ArticleFromTitle( &$title, &$article ) {
 		if (MWNamespace::isTalk($title->getNamespace()) && ArticleComment::isTitleComment($title)) {
-			global $wgRequest, $wgTitle, $wgOut;
+			global $wgRequest, $wgOut;
 			$redirect = $wgRequest->getText('redirect', false);
 			$diff = $wgRequest->getText('diff', '');
 			$oldid = $wgRequest->getText('oldid', '');
@@ -860,6 +859,9 @@ class ArticleCommentList {
 		return true;
 	}
 
+	/**
+	 * TODO: Document what the parameters are.
+	 */
 	static function ChangesListInsertArticleLink($changeList, &$articlelink, &$s, &$rc, $unpatrolled, $watched) {
 		$rcTitle = $rc->getAttribute('rc_title');
 		$rcNamespace = $rc->getAttribute('rc_namespace');
