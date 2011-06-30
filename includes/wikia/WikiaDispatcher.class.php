@@ -38,7 +38,9 @@ class WikiaDispatcher {
 		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );
 		$response = F::build( 'WikiaResponse', array( 'format' => $format ) );
 		$autoloadClasses = $app->wg->AutoloadClasses;
-
+		if (empty($autoloadClasses)) {
+			throw new WikiaException( "wgAutoloadClasses is empty, cannot dispatch Request" );
+		}
 		do {
 			$request->setDispatched(true);
 			
@@ -87,7 +89,7 @@ class WikiaDispatcher {
 				$response->setMethodName( $method );
 
 				if ( empty( $autoloadClasses[$controllerClassName] ) ) {
-					throw new WikiaException( "Controller does not exists: {$controllerClassName}" );
+					throw new WikiaException( "Controller does not exist: {$controllerClassName}" );
 				}
 
 				$controller = F::build( $controllerClassName );
