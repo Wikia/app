@@ -204,36 +204,41 @@
 				color: #e2e2e2;
 			}
 			.activity-description {
-				@include box-shadow(2px, 2px, 2px, #ccc, false, 0);
-				background: white;
-				border: 1px solid #e8e8e8;
-				bottom: 30px;
+				bottom: 0px;
 				display: none;
+				padding-bottom: 30px;
 				position: absolute;
 				width: 250px;
 				z-index: 9;
 				.description {
-					font-size: 11px;
-					line-height: 18px;
-					padding: 10px;
+					@include box-shadow(2px, 2px, 2px, #ccc, false, 0);
+					background: white;
+					border: 1px solid #e8e8e8;
 					position: relative;
-					z-index: 9;
+					p {
+						font-size: 11px;
+						line-height: 18px;
+						padding: 0 10px 10px 10px;
+						position: relative;
+						z-index: 9;
+					}
 					h4 {
 						font-size: 13px;
 						font-weight: bold;
+						margin: 10px 10px 0 10px;
 					}
-				}
-				.actions {
-					background-color: #f3f3f3;
-					padding: 5px;
-					position: relative;
-					text-align: right;
-					z-index: 9;
-				}
-				>.tail {
-					bottom: -15px;
-					left: 25px;
-					position: absolute;
+					.actions {
+						background-color: #f3f3f3;
+						padding: 5px;
+						position: relative;
+						text-align: right;
+						z-index: 9;
+					}
+					>.tail {
+						bottom: -15px;
+						left: 25px;
+						position: absolute;
+					}
 				}
 			}
 		}

@@ -13,29 +13,7 @@
 				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 			</div>
 			<div class="task-group">
-				<? $itemsPerRow = floor(count($activeTaskList) / 3); ?>
-				<? $extraItems = count($activeTaskList) % 3; ?>
-				<? $index = 0; ?>
-				<? for ($j = 0; $j < 3; $j++) { ?>
-					<ul class="activities">
-						<? $itemsInThisRow = $extraItems > 0 ? ($itemsPerRow + $extraItems--) : $itemsPerRow?>
-						<? for ($i = 0; $i < $itemsInThisRow; $i++) { ?>
-							<li class="activity">
-								<div class="activity-label"><?= $activeTaskList[$index]['task_label'] ?></div>
-								<div class="activity-description">
-									<div class="description">
-										<h4><?= $activeTaskList[$index]['task_label'] ?></h4>
-										<?= $activeTaskList[$index]['task_description'] ?>
-									</div>
-									<div class="actions">
-										<a href="<?= $activeTaskList[$index]['task_action'] ?>" class="wikia-button"><?= $activeTaskList[$index]['task_action'] ?></a>
-									</div>
-									<canvas class="tail" height="15" width="25"></canvas>
-								</div>
-							</li>
-						<? $index++; } ?>
-					</ul>
-				<? } ?>
+				<?= F::app()->sendRequest( 'FounderProgressBar', 'widgetTaskGroup', array('taskList' => $activeTaskList )) ?>
 			</div>
 		</li>
 		<li class="task collapsed">
@@ -44,24 +22,7 @@
 				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 			</div>
 			<div class="task-group" style="display:none">
-				<? for ($j = 0; $j < 3; $j++) { ?>
-					<ul class="activities">
-						<? for ($i = 0; $i < 10; $i++) { ?>
-							<li class="activity">
-								<div class="activity-label">Activity is number <?= $i ?></div>
-								<div class="activity-description">
-									<div class="description">
-										<h4>Activity whatever</h4>
-										Description of this activity.  Description of this activity.  Description of this activity.
-									</div>
-									<div class="actions">
-										<button>Do something</button>
-									</div>
-								</div>
-							</li>
-						<? } ?>
-					</ul>
-				<? } ?>
+				<?= F::app()->sendRequest( 'FounderProgressBar', 'widgetTaskGroup', array('taskList' => $skippedTaskList )) ?>
 			</div>
 		</li>
 		<li class="task collapsed">
@@ -70,27 +31,7 @@
 				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 			</div>
 			<div class="task-group" style="display:none">
-				<? for ($j = 0; $j < 3; $j++) { ?>
-					<ul class="activities">
-						<? for ($i = 0; $i < 10; $i++) { ?>
-							<? $unlocked = false;  // this should be dynamic and data-driven later ?>
-							<li class="activity <?= $unlocked ? '' : 'locked' ?> ">
-								<div class="activity-label">Activity is number <?= $i ?></div>
-								<? if ($unlocked) { ?>
-								<div class="activity-description">
-									<div class="description">
-										<h4>Activity whatever</h4>
-										Description of this activity.  Description of this activity.  Description of this activity.
-									</div>
-									<div class="actions">
-										<button>Do something</button>
-									</div>
-								</div>
-								<? } ?>
-							</li>
-						<? } ?>
-					</ul>
-				<? } ?>
+				<?= F::app()->sendRequest( 'FounderProgressBar', 'widgetTaskGroup', array('taskList' => $bonusTaskList )) ?>
 			</div>
 		</li>
 	</ul>

@@ -326,6 +326,11 @@ class FounderProgressBarController extends WikiaController {
 		$this->response->setVal('activityListPreview', $activityListPreview['list']);
 		$this->response->setVal('activeTaskList', $activeTaskList);
 		$this->response->setVal('skippedTaskList', $skippedTaskList);
+		$this->response->setVal('bonusTaskList', $bonusTaskList);
+	}
+	
+	public function widgetTaskGroup() {
+		$this->response->setVal('taskList', $this->request->getVal('taskList'));
 	}
 	
 	// Messages defined in i18n file
