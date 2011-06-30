@@ -107,7 +107,7 @@ class FounderProgressBarController extends WikiaController {
 				FT_WORDMARK_EDIT => array("newFromText", "ThemeDesigner", NS_SPECIAL),
 				FT_MOSTVISITED_VISIT => array("newFromText", "Mostvisitedpages", NS_SPECIAL),
 				FT_TOPTENLIST_ADD => array("newFromText", "CreatePage", NS_SPECIAL),
-				FT_BLOGPOST_ADD => array("newFromText", $this->wg->User, NS_BLOG_ARTICLE),
+				FT_BLOGPOST_ADD => array("newFromText", $this->wg->User->getName(), NS_BLOG_ARTICLE),
 				FT_FB_LIKES_3 => array("newMainPage"),
 				FT_UNCATEGORIZED_VISIT => array("newFromText", "UncategorizedPages", NS_SPECIAL),
 				FT_TOTAL_EDIT_300 => array("newFromText", "CreatePage", NS_SPECIAL),
