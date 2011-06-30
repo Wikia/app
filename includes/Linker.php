@@ -1508,6 +1508,7 @@ class Linker {
 		if ( $legacyAnchor !== false ) {
 			$ret = "<a{$nofollow} id=\"$legacyAnchor\"></a>$ret";
 		}
+		wfRunHooks('Linker::makeHeadLine', array(&$ret, $level, $attribs, $anchor, $text, $link, $legacyAnchor));
 		return $ret;
 	}
 
