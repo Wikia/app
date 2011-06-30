@@ -53,6 +53,7 @@ class WikiaApiLyricwiki extends ApiBase {
 				$this->rest_getArtist( $artist, $fmt );
 				break;
 			case 'getTopSongs':
+				$limit = getVal($_GET, 'limit');
 				$this->rest_getTopSongs( $limit, $fmt );
 				break;
 			case 'getSOTD':
@@ -61,6 +62,9 @@ class WikiaApiLyricwiki extends ApiBase {
 				break;
 			case 'getSong':
 			default:
+				// Phase 'title' out (deprecated).  this is not the same as the soap.  I was coding too fast whilst in an IRC discussion and someone said artist/title just for the sake of argument and I didn't check against the SOAP :[ *embarassing*
+				$songName = getVal($_GET, 'song', getVal($_GET, 'title'));
+				$artist = getVal($_GET, 'artist');
 				$this->rest_getSong( $artist, $song, $fmt );
 				break;
 		}
@@ -165,7 +169,7 @@ class WikiaApiLyricwiki extends ApiBase {
 	} // end rest_getArtist()
 
 	// Returns the current most popular songs (right now, powered by iTunes).
-	function rest_getTopSongs( $limit, $fmt ) {
+	function rest_getTopSongs( $limit=100, $fmt ) {
 		if(empty( $fmt )){
 			$fmt = 'html';
 		}
@@ -223,11 +227,8 @@ class WikiaApiLyricwiki extends ApiBase {
 		}
 	} // end rest_getSotd()
 
-	function rest_getSong( $artist, $song, $fmt ) {
+	function rest_getSong( $artist, $songName, $fmt ) {
 		global $wgRequest;
-		// Phase 'title' out (deprecated).  this is not the same as the soap.  I was coding too fast whilst in an IRC discussion and someone said artist/title just for the sake of argument and I didn't check against the SOAP :[ *embarassing*
-		$songName = getVal($_GET, 'song', getVal($_GET, 'title'));
-		$artist = getVal($_GET, 'artist');
 
 		// I'm not sure why, but in this context underscores don't behave like spaces automatically.
 		$artist = str_replace("_", " ", $artist);
