@@ -109,11 +109,26 @@ class ContentDisplayModule extends Module {
 	}
 
 	public function executeIndex() {
-		$this->bodytext = preg_replace(
-			'#<button class="editsection(.*)</button>\s?<span(.*)</span>\s?</h#',
-			'<span$2</span><button class="editsection$1</button></h',
-			$this->bodytext
-		);
+	}
+	
+	public static function onLinkerMakeHeadLine($ret, $level, $attribs, $anchor, $text, $link, $legacyAnchor) {
+		$levelClass = ($level == '2') ? '-h2' : '';
+		if (Wikia::isOasis()) {
+			$ret = "<div class=\"headline-wrapper$levelClass\">"
+				. "<h$level$attribs"
+				. " <span class=\"mw-headline\" id=\"$anchor\">$text</span>"
+				. "</h$level>"
+				. $link
+				. '</div>';
+		} else {
+			$ret = "<div class=\"headline-wrapper$levelClass\">"
+				. $link
+				. "<h$level$attribs"
+				. " <span class=\"mw-headline\" id=\"$anchor\">$text</span>"
+				. "</h$level>"
+				. '</div>';
+		}
+		return true;
 	}
 
 }

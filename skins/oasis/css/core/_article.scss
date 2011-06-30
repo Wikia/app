@@ -6,15 +6,15 @@
 	z-index: 1;
 	h1, h2, h3, h4, h5, h6 {
 		margin: .5em 0 .2em;
+		display: inline;
+		vertical-align: baseline;
 	}
 	h1 {
 		font-size: 24px;
 	}
 	h2 {
-		border-bottom: solid 1px $color-headline-border;
 		font-size: 18px;
 		margin-top: 14px;
-		*overflow: hidden;
 	}
 	h3 {
 		font-size: 16px;
@@ -27,6 +27,15 @@
 	}
 	h6 {
 		font-size: 11px;
+	}
+	.headline-wrapper button, .headline-wrapper-h2 button {
+		vertical-align: baseline;
+	}
+	.headline-wrapper h2, .headline-wrapper-h2 {
+		*overflow: hidden;
+	}
+	.headline-wrapper-h2 {
+		border-bottom: solid 1px $color-headline-border;
 	}
 	.editsection {
 		border: none;
