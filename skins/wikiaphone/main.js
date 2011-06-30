@@ -1,7 +1,11 @@
-$(document).ready(function(){
-	MobileSkin.init();
-	MobileSkin.initTracking();
-});
+//KISSmetrics
+var _kmq = _kmq || [];
+function _kms(u){
+	setTimeout(function(){
+		var s = document.createElement('script'); var f = document.getElementsByTagName('script')[0]; s.type = 'text/javascript'; s.async = true;
+		s.src = u; f.parentNode.insertBefore(s, f);
+	}, 1);
+}
 
 var MobileSkin = {
 	uacct: "UA-2871474-1",
@@ -21,8 +25,19 @@ var MobileSkin = {
 		_gaq.push(['_trackPageview', str]);
 	},
 	
+	initKISSmetrics: function(){
+		if(!DevelEnvironment){
+			if(wgUserName && wgUserName != null){
+				_kmq.push(['identify', wgUserName]);
+			}
+			
+			_kms('//i.kissmetrics.com/i.js');
+			_kms('//doug1izaerwt3.cloudfront.net/75c26d2ec025f6ed12c4c2445579713061eea5e3.1.js');
+		}
+	},
+	
 	initTracking: function(){
-		MobileSkin.trackEvent(MobileSkin.username + '/view');
+		MobileSkin.trackEvent(MobileSkin.username + '/view', true);
 		
 		$('#mobile-search-btn').bind('click', function(event){
 			MobileSkin.trackClick('search');
@@ -47,13 +62,23 @@ var MobileSkin = {
 	},
 	
 	trackClick: function(eventName){
-		MobileSkin.trackEvent(MobileSkin.username + '/click/' + eventName);
+		MobileSkin.trackEvent(MobileSkin.username + '/click/' + eventName, true);
+		
+		//KISSmetrics
+		_kmq.push(['record', 'Clicked', {'Source': eventName}]);
 	},
 	
-	trackEvent: function(eventName) {
+	trackEvent: function(eventName, indirectCall) {
+		indirectCall = indirectCall || false;
+		
 		MobileSkin.track('/1_mobile/' + eventName);
 		if(wgPrivateTracker) {
 			MobileSkin.track('/1_mobile/' + wgDB + '/' + eventName);
+		}
+		
+		//KISSmetrics
+		if(!indirectCall){
+			_kmq.push(['record', 'Event fired', {'Name': eventName}]);
 		}
 	},
 	
@@ -104,3 +129,11 @@ var MobileSkin = {
 		}
 	}
 };
+
+//KISSmetrics
+MobileSkin.initKISSmetrics();
+
+$(document).ready(function(){
+	MobileSkin.init();
+	MobileSkin.initTracking();
+});

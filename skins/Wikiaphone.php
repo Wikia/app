@@ -91,8 +91,9 @@ class SkinWikiaphone extends SkinTemplate {
 	}
 
 	public static function onMakeGlobalVariablesScript( $vars ) {
-		global $wgContLang;
-
+		global $wgContLang, $wgDevelEnvironment;
+		
+		$vars['DevelEnvironment'] = $wgDevelEnvironment;
 		$vars['CategoryNamespaceMessage'] = $wgContLang->getNsText(NS_CATEGORY);
 		$vars['SpecialNamespaceMessage'] = $wgContLang->getNsText(NS_SPECIAL);
 
