@@ -336,7 +336,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgEnableEditPageReskinExt, $wgMaximizeArticleAreaArticleIds, $wgEnableControlCenterExt;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgMaximizeArticleAreaArticleIds, $wgEnableControlCenterExt;
 
 		// set up global vars
 		if (is_array($wgMaximizeArticleAreaArticleIds)
@@ -385,10 +385,8 @@ class BodyModule extends Module {
 			}
 		} else {
 			$this->headerModuleName = 'PageHeader';
-			if (empty($wgEnableEditPageReskinExt)) {
-				if (self::isEditPage()) {
-					$this->headerModuleAction = 'EditPage';
-				}
+			if (self::isEditPage()) {
+				$this->headerModuleAction = 'EditPage';
 			}
 
 			// FIXME: move to separate module
