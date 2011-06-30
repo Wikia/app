@@ -9,7 +9,7 @@ class MyHomeAjax {
 		wfProfileIn(__METHOD__);
 		// get request params
 		global $wgRequest;
-		$type  = $wgRequest->getVal('type', false);
+		//$type  = $wgRequest->getVal('type', false);
 		$since = $wgRequest->getVal('since', wfTimestamp(TS_MW, time()));
 		$limit = $wgRequest->getInt('limit', 60);
 
