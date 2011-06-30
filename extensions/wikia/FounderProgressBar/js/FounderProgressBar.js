@@ -6,6 +6,8 @@ var FounderProgressList = {
 		FounderProgressList.article = $('#WikiaArticle');
 		FounderProgressList.article.after(FounderProgressList.d);
 		FounderProgressList.allActivities = FounderProgressList.d.find('.activity');
+		FounderProgressList.seeFullList = $('#FounderProgressListToggle .see-full-list');
+		FounderProgressList.hideFullList = $('#FounderProgressListToggle .hide-full-list');
 		
 		FounderProgressList.allActivities.hover(function() {
 			clearTimeout(FounderProgressList.hoverHandle);
@@ -22,10 +24,14 @@ var FounderProgressList = {
 		$('#FounderProgressListToggle').click(function(e) {
 			e.preventDefault();
 			if(FounderProgressList.isHidden) {
+				FounderProgressList.seeFullList.hide();
+				FounderProgressList.hideFullList.show();
 				FounderProgressList.d.show();
 				FounderProgressList.article.hide()
 				FounderProgressList.drawMainTail();
 			} else {
+				FounderProgressList.seeFullList.show();
+				FounderProgressList.hideFullList.hide();
 				FounderProgressList.d.hide();
 				FounderProgressList.article.show()
 			}
@@ -109,16 +115,18 @@ var FounderProgressBar = {
 	innerRadius: 30,
 	outerRadius: 45,
 	separation: 5,
+	score: 0, 
 	init: function() {
+		FounderProgressBar.score = parseInt($('#FounderProgressWidget .numeric-progress .score').text());
 		if(Modernizr.canvas) {
 			FounderProgressBar.c = document.getElementById('FounderProgressBar').getContext('2d');
-			FounderProgressBar.drawAnimated(68);
+			FounderProgressBar.drawAnimated(FounderProgressBar.score);
 		} else {
 			var retry = 0;
 			var iHook = setInterval(function() {
 				try {
 					FounderProgressBar.c = document.getElementById('FounderProgressBar').getContext('2d');
-					FounderProgressBar.draw(68);
+					FounderProgressBar.draw(FounderProgressBar.score);
 					clearInterval(iHook);
 				} catch (e) {
 					if(retry > 20) {

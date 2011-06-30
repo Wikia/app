@@ -4,9 +4,17 @@ $messages = array();
 
 $messages['en'] = array(
 	'founderprogressbar-credits' => 'A task hub and guide for new wiki founders',
+	'founderprogressbar-widget-label' => "{{SITENAME}}'s Progress",
 	'founderprogressbar-progress-label' => 'Activities completed',
 	'founderprogressbar-progress-see-full-list' => 'See full list',
 	'founderprogressbar-progress-hide-full-list' => 'Hide full list',
+	'founderprogressbar-skip-for-now' => 'Skip for now',
+	'founderprogressbar-list-label' => "{{SITENAME}}'s Tasks",
+	'founderprogressbar-list-task-label' => "Tasks",
+	'founderprogressbar-list-skipped-task-label' => "Skipped Tasks",
+	'founderprogressbar-list-skipped-task-desc' => "You can come back to these later.",
+	'founderprogressbar-list-bonus-task-label' => "Bonus Tasks",
+	'founderprogressbar-list-bonus-task-desc' => "Complete the tasks list to unlock bonus tasks",
 	# Each task has a label(short description), action(button text) and long description.  Initial task list has 30 actions.
 	'founderprogressbar-page-add10-label' => 'Add $1 pages',
 	'founderprogressbar-page-add10-action' => 'Add a page',	

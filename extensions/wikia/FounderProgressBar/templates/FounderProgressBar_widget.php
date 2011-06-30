@@ -1,7 +1,7 @@
 <section id="FounderProgressList" class="FounderProgressList" style="display:none;">
 	<canvas height="45" width="25" class="tail"></canvas>
 	<header>
-		<h1>Glee Wiki's Tasks</h1>
+		<h1><?= wfMsg('founderprogressbar-list-label') ?></h1>
 		<p class="task-description">
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id nunc mi. Maecenas elit velit, tempus quis pharetra a, fringilla blandit neque.
 		</p>
@@ -9,34 +9,38 @@
 	<ul class="tasks">
 		<li class="task expanded">
 			<div class="task-label">
-				Tasks
+				<?= wfMsg('founderprogressbar-list-task-label') ?>
 				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 			</div>
 			<div class="task-group">
+				<? $itemsPerRow = floor(count($activeTaskList) / 3); ?>
+				<? $extraItems = count($activeTaskList) % 3; ?>
+				<? $index = 0; ?>
 				<? for ($j = 0; $j < 3; $j++) { ?>
 					<ul class="activities">
-						<? for ($i = 0; $i < 10; $i++) { ?>
+						<? $itemsInThisRow = $extraItems > 0 ? ($itemsPerRow + $extraItems--) : $itemsPerRow?>
+						<? for ($i = 0; $i < $itemsInThisRow; $i++) { ?>
 							<li class="activity">
-								<div class="activity-label">Activity is number <?= $i ?></div>
+								<div class="activity-label"><?= $activeTaskList[$index]['task_label'] ?></div>
 								<div class="activity-description">
 									<div class="description">
-										<h4>Activity whatever</h4>
-										Description of this activity.  Description of this activity.  Description of this activity.
+										<h4><?= $activeTaskList[$index]['task_label'] ?></h4>
+										<?= $activeTaskList[$index]['task_description'] ?>
 									</div>
 									<div class="actions">
-										<button>Do something</button>
+										<a href="<?= $activeTaskList[$index]['task_action'] ?>" class="wikia-button"><?= $activeTaskList[$index]['task_action'] ?></a>
 									</div>
 									<canvas class="tail" height="15" width="25"></canvas>
 								</div>
 							</li>
-						<? } ?>
+						<? $index++; } ?>
 					</ul>
 				<? } ?>
 			</div>
 		</li>
 		<li class="task collapsed">
 			<div class="task-label">
-				Skipped Tasks <span class="sub-label">You can come back to these later</span>
+				<?= wfMsg('founderprogressbar-list-skipped-task-label') ?> <span class="sub-label"><?= wfMsg('founderprogressbar-list-skipped-task-desc') ?></span>
 				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 			</div>
 			<div class="task-group" style="display:none">
@@ -62,7 +66,7 @@
 		</li>
 		<li class="task collapsed">
 			<div class="task-label">
-				Bonus Tasks <span class="sub-label">Complete the tasks list to unlock bonus tasks</span>
+				<?= wfMsg('founderprogressbar-list-bonus-task-label') ?> <span class="sub-label"><?= wfMsg('founderprogressbar-list-bonus-task-desc') ?></span>
 				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 			</div>
 			<div class="task-group" style="display:none">
@@ -92,16 +96,19 @@
 	</ul>
 </section>
 <section id="FounderProgressWidget">
-	<h1>Glee Wiki's Progress</h1>
+	<h1><?= wfMsg('founderprogressbar-widget-label') ?></h1>
 	<section class="preview">
 		<canvas id="FounderProgressBar" class="founder-progress-bar" height="95" width="95">
 		</canvas>
 		<div class="numeric-progress">
-			<span class="score">68</span><span class="percentage">%</span>
+			<span class="score"><?= $progressData['completion_percent'] ?></span><span class="percentage">%</span>
 		</div>
 		<header>
 			<h1><?= wfMsg('founderprogressbar-progress-label') ?></h1>
-			<a href="#" class="list-toggle" id="FounderProgressListToggle"><?= wfMsg('founderprogressbar-progress-see-full-list') ?></a>
+			<a href="#" class="list-toggle" id="FounderProgressListToggle">
+				<span class="see-full-list"><?= wfMsg('founderprogressbar-progress-see-full-list') ?></span>
+				<span class="hide-full-list"><?= wfMsg('founderprogressbar-progress-hide-full-list') ?></span>
+			</a>
 		</header>
 		<ul class="activities">
 			<? $index = 0; ?>
@@ -116,41 +123,11 @@
 					<div class="description" style="<?= $index++ == 0 ? '' : 'display:none'?>">
 						<?= $activity['task_description'] ?>
 						<div class="actions">
-							<button><?= $activity['task_action'] ?></button>  <span style="">Skip for now</span>
+							<span style=""><?= wfMsg('founderprogressbar-skip-for-now') ?></span> <a class="wikia-button" href="<?= $activity['task_url']?>"><?= $activity['task_action'] ?></a>
 						</div>
 					</div>
 				</li>
 			<? } ?>
-<!--
-			<li class="activity active">
-				<div class="label">
-					<div class="activity-name">
-						Add 10 pages
-					</div>
-					<img class="chevron" src="<?= $wgBlankImgUrl ?>">
-				</div>
-				<div class="description">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id nunc mi. Maecenas elit velit, tempus quis pharetra a, fringilla blandit neque.
-					<div class="actions">
-						<button>Do Something Useful</button>  <span style="">Skip for now</span>
-					</div>
-				</div>
-			</li>
-			<li class="activity">
-				<div class="label">
-					<div class="activity-name">
-						I am a placeholder
-					</div>
-					<img class="chevron" src="<?= $wgBlankImgUrl ?>">
-				</div>
-				<div class="description" style="display:none">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id nunc mi. Maecenas elit velit, tempus quis pharetra a, fringilla blandit neque.
-					<div class="actions">
-						<button>Do Something Useful</button>  <span style="">Skip for now</span>
-					</div>
-				</div>
-			</li>
-			-->
 		</ul>
 	</sction>
 </section>
