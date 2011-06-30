@@ -52,6 +52,9 @@
 				color: #7b7b7b;
 				font-size: 11px;
 				font-style: italic;
+				.hide-full-list {
+					display: none;
+				}
 			}
 			&:after {
 				border: 35px solid transparent;
@@ -157,22 +160,17 @@
 					border-top: 5px solid #72a6d0;
 					top: 10px;
 				}
-				&:hover {
-					cursor: pointer;
-				}
 			}
 			&.expanded {
 				.chevron {
 					border-bottom: 5px solid #72a6d0;
 					top: 5px;
 				}
-				&:hover {
-					cursor: pointer;
-				}
 			}
 			.task-label {
 				@include linear-gradient(#ebebeb, top, #fff, 40%, #ebebeb, 100%);
 				color: #6aa8d1;
+				cursor: pointer;
 				font-size: 16px;
 				font-weight: bold;
 				padding: 7px 20px;
