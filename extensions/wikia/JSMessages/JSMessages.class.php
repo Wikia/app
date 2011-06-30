@@ -106,7 +106,7 @@ class JSMessages {
 		$ret = array();
 		foreach($messages as $msg => $val) {
 			if (substr($msg, 0, $patternLen) == $pattern) {
-				$ret[$msg] = $val;
+				$ret[$msg] = $this->app->wf->msgExt( $msg, array( 'language' => $lang->getCode() ) );
 			}
 		}
 
