@@ -16,11 +16,11 @@ $color-chat-avatar-border: $color-page-border;
 		@include border-radius-sw(3px);
 		background: $color-chat-live;
 		color: $color-chat-live-text;
+		float: right;
 		font-size: 14px;
+		margin-right: -13px;
 		padding: 5px 12px;
-		position: absolute;
-		right: -4px;
-		top: 21px;
+		position: relative;
 		&:before {
 			border-width: 2px;
 			border-style: solid;
@@ -71,7 +71,6 @@ $color-chat-avatar-border: $color-page-border;
 	
 	&.module h1 {
 		margin-bottom: 15px;
-		margin-right: 50px;
 	}
 	&.module h2 {
 		font-size: 13px;

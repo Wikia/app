@@ -1,5 +1,5 @@
-<h1><?= $chatHeadline ?></h1>
 <div class="chat-live"><?= wfMsg('chat-live') ?></div>
+<h1><?= $chatHeadline ?></h1>
 
 <? //print_r($chatters) ?>
 
