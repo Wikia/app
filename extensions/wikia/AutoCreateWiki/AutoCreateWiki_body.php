@@ -144,8 +144,8 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function execute( $subpage ) {
-		global $wgRequest, $wgAuth, $wgUser, $wgOut, $wgDevelEnvironment,
-			$wgContLanguageCode, $wgContLang, $wgABTests;
+		global $wgRequest, $wgAuth, $wgUser, $wgOut, $wgContLanguageCode;
+		wfProfileIn( __METHOD__ );
 
 		wfLoadExtensionMessages( "AutoCreateWiki" );
 
@@ -162,6 +162,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		if(!($wgRequest->wasPosted()) && empty($this->mAction) && empty($this->mType)) {
 			$cnwTitle = Title::newFromText("CreateNewWiki", NS_SPECIAL);
 			$wgOut->redirect($cnwTitle->getFullURL().'?uselang='.$this->mLang);
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -169,11 +170,13 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		if ( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -190,6 +193,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				wfMsgExt( "autocreatewiki-limit-day",
 					array( "language" => $this->mUserLanguage ), array( $this->mNbrCreated )
 			));
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -251,9 +255,11 @@ class AutoCreateWikiPage extends SpecialPage {
 					#--- restriction
 					if ( $wgUser->isAnon() ) {
 						$this->displayRestrictionError();
+						wfProfileOut( __METHOD__ );
 						return;
 					} elseif ( $wgUser->isBlocked() ) {
 						$wgOut->blockedPage();
+						wfProfileOut( __METHOD__ );
 						return;
 					}
 					if( isset( $_SESSION['mAllowToCreate'] ) ) {
@@ -266,6 +272,7 @@ class AutoCreateWikiPage extends SpecialPage {
 								wfMsgExt( "autocreatewiki-limit-creation",
 									array( "language" => $this->mUserLanguage ), array(	$this->mNbrUserCreated )
 							));
+							wfProfileOut( __METHOD__ );
 							return;
 						} else {
 							if( $this->setVarsFromSession( ) > 0 ) {
@@ -318,6 +325,7 @@ class AutoCreateWikiPage extends SpecialPage {
 						#-- restriction
 						if ( $wgUser->isBlocked() ) {
 							$wgOut->blockedPage();
+							wfProfileOut( __METHOD__ );
 							return;
 						} else {
 							#-- user logged in or just create
@@ -338,6 +346,7 @@ class AutoCreateWikiPage extends SpecialPage {
 									if ( $this->mLang != 'en' ) $query[ "uselang" ] = $this->mLang;
 									if ( !empty(  $this->mType ) ) $query[ "type" ] = $this->mType;
 									$wgOut->redirect( $this->mTitle->getLocalURL() . '/Wiki_create?' . wfArrayToCGI( $query ) );
+									wfProfileOut( __METHOD__ );
 									return;
 								}
 							} else {
@@ -356,7 +365,9 @@ class AutoCreateWikiPage extends SpecialPage {
 					break;
 			}
 		}
-	}
+
+		wfProfileOut( __METHOD__ );
+	} // end execute()
 
 	/**
 	 * main function for extension -- create wiki in wikifactory cluster
@@ -364,10 +375,9 @@ class AutoCreateWikiPage extends SpecialPage {
 	 *
 	 */
 	private function createWiki() {
-		global $wgOut, $wgUser, $IP, $wgDBname, $wgDevelDomains, $wgDBadminuser, $wgDBadminpassword;
-		global $wgSharedDB, $wgExternalSharedDB, $wgDBcluster, $wgDevelEnvironment;
-		global $wgDBserver, $wgDBuser,	$wgDBpassword, $wgWikiaLocalSettingsPath;
-		global $wgHubCreationVariables, $wgLangCreationVariables, $wgUniversalCreationVariables;
+		global $wgOut, $wgUser, $IP, $wgDevelDomains, $wgDBadminuser, $wgDBadminpassword;
+		global $wgSharedDB, $wgExternalSharedDB, $wgDevelEnvironment;
+		global $wgWikiaLocalSettingsPath, $wgLangCreationVariables, $wgUniversalCreationVariables;
 
 		wfProfileIn( __METHOD__ );
 
@@ -943,7 +953,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 */
 	public function createWikiForm() {
 		global $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath, $wgStylePath;
-		global $wgCaptchaTriggers, $wgRequest, $wgDBname, $wgMemc;
+		global $wgRequest, $wgDBname, $wgMemc;
 		wfProfileIn( __METHOD__ );
 		#-
 		$aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
@@ -959,7 +969,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$key = wfMemcKey( self::CACHE_LOGIN_KEY, $wgDBname, $ip );
 			$params = $wgMemc->get($key);
 		}
-		$f = new FancyCaptcha();
+		$fancyCaptcha = new FancyCaptcha();
 		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
 		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/wikia_ui/tabs.css?{$wgStyleVersion}\" />" );
 		// RT #19245
@@ -995,7 +1005,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			"mLanguage"        => $this->mLang,
 			"mPostedErrors"    => $this->mPostedErrors,
 			"wgStylePath"      => $wgStylePath,
-			"captchaForm"      => $f->getForm(),
+			"captchaForm"      => $fancyCaptcha->getForm(),
 			"params"           => $params,
 			"subName"          => $this->mDefSitename,
 			"defaultDomain"    => self::DEFAULT_DOMAIN,
@@ -1019,14 +1029,11 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function processCreatePage() {
-		global $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath, $wgStylePath;
-		global $wgCaptchaTriggers, $wgRequest;
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgStylePath;
 
 		wfProfileIn( __METHOD__ );
 
-		$aLanguages  = wfGetFixedLanguageNames();
 		$hubs        = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getCategories();
 
 		/**
 		 * run template
@@ -1102,7 +1109,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		$params = array();
 		if ( !empty($__params) && is_array($__params) ) {
 			foreach ($__params as $key => $value) {
-				$k = trim($key);
 				if ( strpos($key, "wiki-") !== false ) {
 					$params[$key] = htmlspecialchars($value);
 				}
@@ -1122,7 +1128,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$res = 0;
 		if ( !empty($_SESSION) && is_array($_SESSION) ) {
 			foreach ($_SESSION as $key => $value) {
-				if ( preg_match('/^awc/', $key, $m) ) {
+				if ( preg_match('/^awc/', $key, $matches) ) {
 					unset($_SESSION[$key]);
 					$res++;
 				}
@@ -1191,8 +1197,8 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->makeError( "wiki-staff-username", wfMsg('autocreatewiki-invalid-username') );
 				$res = false;
 			} else {
-				$u = User::newFromId($user_id);
-				if ( $u->isBlocked() ) {
+				$user = User::newFromId($user_id);
+				if ( $user->isBlocked() ) {
 					$this->makeError( "wiki-staff-username", wfMsg('autocreatewiki-invalid-username') );
 					$res = false;
 				}
@@ -1210,8 +1216,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		global $wgUser, $wgOut;
 		global $wgEnableSorbs, $wgProxyWhitelist;
 		global $wgMemc, $wgAccountCreationThrottle;
-		global $wgAuth, $wgMinimalPasswordLength;
-		global $wgEmailConfirmToEdit;
+		global $wgAuth;
 
 		wfProfileIn( __METHOD__ );
 
@@ -1460,7 +1465,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * common log function
 	 */
 	private function log( $info ) {
-		global $wgOut, $wgUser, $wgErrorLog;
+		global $wgErrorLog;
 
 		$oldValue = $wgErrorLog;
 		$wgErrorLog = true;
@@ -1491,7 +1496,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * set form fields values to memc
 	 */
 	private function setValuesToSession() {
-		global $wgDBname, $wgRequest,$wgMemc;
+		global $wgDBname, $wgMemc;
 		$params = $this->fixSessionKeys();
 		if (!empty($params)) {
 			$ip = wfGetIP();
