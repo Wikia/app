@@ -582,12 +582,17 @@ class EditPageLayout extends EditPage {
 					$this->mEditNotices->add( $notice, 'recreate-moveddeleted-warn' );
 				}
 			}
-			$msg = wfMsgExt($msgName, array('parse'));
 
-			$this->mEditPagePreloads['EditPageIntro'] = array(
-				'content' => $msg,
-				'class' => $class,
-			);
+			// check for empty message (BugId:6923)
+			$parsedMsg = wfMsg($msgName);
+			if (!wfEmptyMsg($msgName, $parsedMsg) && strip_tags($parsedMsg) != '') {
+				$msg = wfMsgExt($msgName, array('parse'));
+
+				$this->mEditPagePreloads['EditPageIntro'] = array(
+					'content' => $msg,
+					'class' => $class,
+				);
+			}
 		}
 
 		// custom intro
