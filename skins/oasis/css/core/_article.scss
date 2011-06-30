@@ -243,6 +243,9 @@
 		a {
 			background-image: none;
 			padding-right: 0;
+			&:after {
+				display: none;
+			}
 		}
 	}
 
