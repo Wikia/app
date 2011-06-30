@@ -1508,7 +1508,9 @@ class Linker {
 		if ( $legacyAnchor !== false ) {
 			$ret = "<a{$nofollow} id=\"$legacyAnchor\"></a>$ret";
 		}
+		/* Wikia change begin - @author: Marcin */
 		wfRunHooks('Linker::makeHeadLine', array(&$ret, $level, $attribs, $anchor, $text, $link, $legacyAnchor));
+		/* Wikia change end */
 		return $ret;
 	}
 
