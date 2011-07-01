@@ -142,7 +142,7 @@
 			</section>
 		</div>
 		<section id="ControlCenterAdvanced" style="display:<?= $tab == 'advanced' ? 'block' : 'none'?>">
-			Advanced section here
+			<?= $advancedSection ?>
 		</section>
 		<section id="ControlCenterContentArea">
 			Loading...
