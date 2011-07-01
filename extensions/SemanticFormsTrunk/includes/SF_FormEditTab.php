@@ -33,6 +33,7 @@ class SFFormEditTab {
 		if ( count( $form_names ) == 0 ) {
 			return true;
 		}
+
 		global $wgRequest, $wgUser;
 		global $sfgRenameEditTabs, $sfgRenameMainEditTab;
 
@@ -108,8 +109,9 @@ class SFFormEditTab {
 	}
 
 	/**
-	 * Function currently called only for the 'Vector' skin - will
-	 * possibly be called for additional skins later.
+	 * Like displayTab(), but called with a different hook - this one is
+	 * called for the 'Vector' skin in MW 1.16, as well as all skins
+	 * starting with MW 1.17 (?).
 	 */
 	static function displayTab2( $obj, &$links ) {
 		// the old '$content_actions' array is thankfully just a
@@ -143,7 +145,7 @@ class SFFormEditTab {
 		}
 		if ( count( $form_names ) > 1 ) {
 			SFUtils::loadMessages();
-			$warning_text = '    <div class="warningMessage">' . wfMsg( 'sf_formedit_morethanoneform' ) . "</div>\n";
+			$warning_text = "\t" . '<div class="warningMessage">' . wfMsg( 'sf_formedit_morethanoneform' ) . "</div>\n";
 			$wgOut->addHTML( $warning_text );
 		}
 		$form_name = $form_names[0];
@@ -161,15 +163,13 @@ class SFFormEditTab {
 		$msg = SFFormEdit::printForm( $form_name, $page_name );
 
 		if ( $msg ) {
-			// some error occurred
-
+			// Some error occurred - display it.
 			$msgdata = null;
-
 			if ( is_array( $msg ) ) {
 				if ( count( $msg ) > 1 ) {
-					$msgdata = $msg[ 1 ];
+					$msgdata = $msg[1];
 				}
-				$msg = $msg[ 0 ];
+				$msg = $msg[0];
 			}
 
 			$wgOut->addHTML( Xml::element( 'p', array( 'class' => 'error' ), wfMsg( $msg, $msgdata ) ) );

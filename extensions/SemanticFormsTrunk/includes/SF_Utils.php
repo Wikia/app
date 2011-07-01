@@ -7,8 +7,6 @@
  * @ingroup SF
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
-
 class SFUtils {
 
 	/**
@@ -154,18 +152,41 @@ class SFUtils {
 
 	public static function initProperties() {
 		global $sfgContLang;
+
+		// Register all the special properties, in both the wiki's
+		// language and, as a backup, in English.
+		// For every special property, if it hasn't been translated
+		// into the wiki's current language, use the English-language
+		// value for both the main special property and the backup.
 		$sf_props = $sfgContLang->getPropertyLabels();
-		if ( array_key_exists( SF_SP_HAS_DEFAULT_FORM, $sf_props ) )
+		if ( array_key_exists( SF_SP_HAS_DEFAULT_FORM, $sf_props ) ) {
 			self::registerProperty( '_SF_DF', '__spf', $sf_props[SF_SP_HAS_DEFAULT_FORM] );
-		if ( array_key_exists( SF_SP_HAS_ALTERNATE_FORM, $sf_props ) )
+		} else {
+			self::registerProperty( '_SF_DF', '__spf', 'Has default form' );
+		}
+		if ( array_key_exists( SF_SP_HAS_ALTERNATE_FORM, $sf_props ) ) {
 			self::registerProperty( '_SF_AF', '__spf', $sf_props[SF_SP_HAS_ALTERNATE_FORM] );
-		if ( array_key_exists( SF_SP_CREATES_PAGES_WITH_FORM, $sf_props ) )
+		} else {
+			self::registerProperty( '_SF_AF', '__spf', 'Has alternate form' );
+		}
+		if ( array_key_exists( SF_SP_CREATES_PAGES_WITH_FORM, $sf_props ) ) {
 			self::registerProperty( '_SF_CP', '__spf', $sf_props[SF_SP_CREATES_PAGES_WITH_FORM] );
-		if ( array_key_exists( SF_SP_PAGE_HAS_DEFAULT_FORM, $sf_props ) )
+		} else {
+			self::registerProperty( '_SF_CP', '__spf', 'Creates pages with form' );
+		}
+		if ( array_key_exists( SF_SP_PAGE_HAS_DEFAULT_FORM, $sf_props ) ) {
 			self::registerProperty( '_SF_PDF', '__spf', $sf_props[SF_SP_PAGE_HAS_DEFAULT_FORM] );
-		if ( array_key_exists( SF_SP_HAS_FIELD_LABEL_FORMAT, $sf_props ) )
+		} else {
+			self::registerProperty( '_SF_PDF', '__spf', 'Page has default form' );
+		}
+		if ( array_key_exists( SF_SP_HAS_FIELD_LABEL_FORMAT, $sf_props ) ) {
 			self::registerProperty( '_SF_FLF', '_str', $sf_props[SF_SP_HAS_FIELD_LABEL_FORMAT] );
-		// also initialize hardcoded English values, if it's a non-English-language wiki
+		} else {
+			self::registerProperty( '_SF_FLF', '_str', 'Has field label format' );
+		}
+
+		// Use hardcoded English values as a backup, in case it's a
+		// non-English-language wiki.
 		self::registerProperty( '_SF_DF_BACKUP', '__spf', 'Has default form' );
 		self::registerProperty( '_SF_AF_BACKUP', '__spf', 'Has alternate form' );
 		self::registerProperty( '_SF_CP_BACKUP', '__spf', 'Creates pages with form' );
@@ -219,10 +240,12 @@ END;
 		$form_body .= "\t" . Html::hidden( 'wpEditToken', $wgUser->isLoggedIn() ? $wgUser->editToken() : EDIT_TOKEN_SUFFIX ) . "\n";
 		$form_body .= "\t" . Html::hidden( $action, null ) . "\n";
 
-		if ( $is_minor_edit )
+		if ( $is_minor_edit ) {
 			$form_body .= "\t" . Html::hidden( 'wpMinoredit' , null ) . "\n";
-		if ( $watch_this )
+		}
+		if ( $watch_this ) {
 			$form_body .= "\t" . Html::hidden( 'wpWatchthis', null ) . "\n";
+		}
 		$text .= Xml::tags(
 			'form',
 			array(
@@ -269,7 +292,7 @@ END;
 
 	/**
 	 * Javascript files to be added regardless of the MediaWiki version
-	 * (i.e., even if the ResourceLoader is installed).
+	 * (i.e., even if the ResourceLoader exists).
 	 */
 	public static function addJavascriptFiles( $parser ) {
 		global $wgOut, $wgFCKEditorDir, $wgScriptPath, $wgJsMimeType;
@@ -297,7 +320,7 @@ END;
 
 	/**
 	 * Includes the necessary Javascript and CSS files for the form
-	 * to display and work correctly
+	 * to display and work correctly.
 	 * 
 	 * Accepts an optional Parser instance, or uses $wgOut if omitted.
 	 */
@@ -589,13 +612,13 @@ END;
 	}
 
 	/**
-	 * Creates an array of values that match the specified source name and type,
-	 * for use by both Javascript autocompletion and comboboxes.
+	 * Creates an array of values that match the specified source name and
+	 * type, for use by both Javascript autocompletion and comboboxes.
 	 */
 	public static function getAutocompleteValues( $source_name, $source_type ) {
 		$names_array = array();
-		// the query depends on whether this is a property, category, concept
-		// or namespace
+		// The query depends on whether this is a property, category,
+		// concept or namespace.
 		if ( $source_type == 'property' || $source_type == 'attribute' || $source_type == 'relation' ) {
 			$names_array = self::getAllValuesForProperty( $source_name );
 		} elseif ( $source_type == 'category' ) {
@@ -702,6 +725,32 @@ END;
 		if ( version_compare( $wgVersion, '1.16', '<' ) ) {
 			wfLoadExtensionMessages( 'SemanticForms' );
 		}
+	}
+
+	/**
+	 * Gets the word in the wiki's language, as defined in Semantic
+	 * MediaWiki, for either the value 'yes' or 'no'.
+	 */
+	public static function getWordForYesOrNo( $isYes ) {
+		global $wgVersion;
+		// Manually load SMW's message values here, in case they
+		// didn't get loaded before.
+		if ( version_compare( $wgVersion, '1.16', '<' ) ) {
+			wfLoadExtensionMessages( 'SemanticMediaWiki' );
+		}
+
+		$wordsMsg = ( $isYes ) ? 'smw_true_words' : 'smw_false_words';
+		$possibleWords = explode( ',', wfMsgForContent( $wordsMsg ) );
+		// Get the value in the series that tends to be "yes" or "no" -
+		// generally, that's the third word.
+		$preferredIndex = 2;
+		if ( count( $possibleWords ) > $preferredIndex ) {
+			return ucwords( $possibleWords[$preferredIndex] );
+		} elseif ( count( $possibleWords ) > 0 ) {
+			return ucwords( $possibleWords[0] );
+		}
+		// If no values are found, just return a number.
+		 return ( $isYes ) ? '1' : '0';
 	}
 
 	/**

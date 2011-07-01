@@ -7,6 +7,7 @@
  * @author Jeffrey Stuckman
  * @author Harold Solbrig
  * @author Daniel Hansch
+ * @author Stephan Gambke
  * @file
  * @ingroup SF
  */
@@ -119,9 +120,17 @@ class SFFormPrinter {
 
 	public function getDefaultInputType( $isList, $propertyType ) {
 		if ( $isList ) {
-			return $this->mDefaultInputForPropTypeList[$propertyType];
+			if ( array_key_exists( $propertyType, $this->mDefaultInputForPropTypeList ) ) {
+				return $this->mDefaultInputForPropTypeList[$propertyType];
+			} else {
+				return null;
+			}
 		} else {
-			return $this->mDefaultInputForPropType[$propertyType];
+			if ( array_key_exists( $propertyType, $this->mDefaultInputForPropType ) ) {
+				return $this->mDefaultInputForPropType[$propertyType];
+			} else {
+				return null;
+			}
 		}
 	}
 
@@ -615,7 +624,7 @@ END;
 					if ( $source_is_page ) {
 						// Add any unhandled template fields in the page as hidden variables.
 						if ( isset( $template_contents ) ) {
-							$form_text .= SFFormUtils::unhandledFieldsHTML( $template_contents );
+							$form_text .= SFFormUtils::unhandledFieldsHTML( $template_name, $template_contents );
 							$template_contents = null;
 						}
 					}
@@ -673,6 +682,10 @@ END;
 								// add handling for single-value params, for custom input types
 								$field_args[$sub_components[0]] = null;
 							} elseif ( count( $sub_components ) == 2 ) {
+								// First, set each value as its own entry in $field_args.
+								$field_args[$sub_components[0]] = $sub_components[1];
+
+								// Then, do all special handling.
 								if ( $sub_components[0] == 'input type' ) {
 									$input_type = $sub_components[1];
 								} elseif ( $sub_components[0] == 'default' ) {
@@ -749,11 +762,10 @@ END;
 									$semantic_property = $sub_components[1];
 								} elseif ( $sub_components[0] == 'default filename' ) {
 									$default_filename = str_replace( '&lt;page name&gt;', $page_name, $sub_components[1] );
+									// Parse value, so default filename can include parser functions.
+									$default_filename = $wgParser->recursiveTagParse( $default_filename );
 									$field_args['default filename'] = $default_filename;
 								}
-
-								// Also set each value as its own entry in $field_args
-								$field_args[$sub_components[0]] = $sub_components[1];
 							}
 						}
 					} // end for
@@ -772,15 +784,25 @@ END;
 						$field_args['part_of_multiple'] = $allow_multiple;
 					if ( count( $show_on_select ) > 0 )
 						$field_args['show on select'] = $show_on_select;
-					// get the value from the request, if it's there, and if it's not
-					// an array
+					// Get the value from the request, if
+					// it's there, and if it's not an array.
 					$escaped_field_name = str_replace( "'", "\'", $field_name );
 					if ( isset( $template_instance_query_values ) &&
-							$template_instance_query_values != null &&
-							is_array( $template_instance_query_values ) &&
-							array_key_exists( $escaped_field_name, $template_instance_query_values ) ) {
-						$field_query_val = $template_instance_query_values[$escaped_field_name];
-						if ( $form_submitted || ( ! is_null( $field_query_val ) && ! is_array( $field_query_val ) ) ) {
+						$template_instance_query_values != null &&
+						is_array( $template_instance_query_values ) ) {
+							// If the field name contains an
+							// apostrophe, the array sometimes
+							// has the apostrophe escaped, and
+							// sometimes not. For now, just check
+							// for both versions.
+							// @TODO - figure this out.
+							$field_query_val = null;
+							if ( array_key_exists( $escaped_field_name, $template_instance_query_values ) ) {
+								$field_query_val = $template_instance_query_values[$escaped_field_name];
+							} elseif ( array_key_exists( $field_name, $template_instance_query_values ) ) {
+								$field_query_val = $template_instance_query_values[$field_name];
+							}
+						if ( $form_submitted || ( ! empty( $field_query_val ) && ! is_array( $field_query_val ) ) ) {
 							$cur_value = $field_query_val;
 						}
 					} else {
@@ -811,11 +833,8 @@ END;
 						}
 					}
 
-					// Handle the free text field - if it was declared as
-					// "field|free text" (a deprecated usage), it has to be outside
-					// of a template.
-					if ( ( $template_name == '' && $field_name == 'free text' ) ||
-							$field_name == '<freetext>' ) {
+					// Handle the free text field.
+					if ( $field_name == '<freetext>' ) {
 						// Add placeholders for the free text in both the form and
 						// the page, using <free_text> tags - once all the free text
 						// is known (at the end), it will get substituted in.
@@ -886,42 +905,9 @@ END;
 								// - this handling will have to get more complex if other
 								// possibilities get added
 								if ( count( $cur_value ) == 1 ) {
-									// manually load SMW's message values here, in case they
-									// didn't get loaded before
-									global $wgVersion;
-									if ( version_compare( $wgVersion, '1.16', '<' ) ) {
-										wfLoadExtensionMessages( 'SemanticMediaWiki' );
-									}
-									$words_for_false = explode( ',', wfMsgForContent( 'smw_false_words' ) );
-									// for each language, there's a series of words that are
-									// equal to false - get the word in the series that matches
-									// "no"; generally, that's the third word
-									$index_of_no = 2;
-									if ( count( $words_for_false ) > $index_of_no ) {
-										$no = ucwords( $words_for_false[$index_of_no] );
-									} elseif ( count( $words_for_false ) == 0 ) {
-										$no = "0"; // some safe value if no words are found
-									} else {
-										$no = ucwords( $words_for_false[0] );
-									}
-									$cur_value_in_template = $no;
+									$cur_value_in_template = SFUtils::getWordForYesOrNo( false );
 								} elseif ( count( $cur_value ) == 2 ) {
-									global $wgVersion;
-									if ( version_compare( $wgVersion, '1.16', '<' ) ) {
-										wfLoadExtensionMessages( 'SemanticMediaWiki' );
-									}
-									$words_for_true = explode( ',', wfMsgForContent( 'smw_true_words' ) );
-									// get the value in the 'true' series that tends to be "yes",
-									// and go with that one - generally, that's the third word
-									$index_of_yes = 2;
-									if ( count( $words_for_true ) > $index_of_yes ) {
-										$yes = ucwords( $words_for_true[$index_of_yes] );
-									} elseif ( count( $words_for_true ) == 0 ) {
-										$yes = "1"; // some safe value if no words are found
-									} else {
-										$yes = ucwords( $words_for_true[0] );
-									}
-									$cur_value_in_template = $yes;
+									$cur_value_in_template = SFUtils::getWordForYesOrNo( true );
 								// if it's 3 or greater, assume it's a date or datetime
 								} elseif ( count( $cur_value ) >= 3 ) {
 									$month = $cur_value['month'];
@@ -966,14 +952,15 @@ END;
 						} else { // value is not an array
 							$cur_value_in_template = $cur_value;
 						}
-						if ( $template_name == null || $template_name == '' )
+						if ( $template_name == null || $template_name == '' ) {
 							$input_name = $field_name;
-						elseif ( $allow_multiple )
+						} elseif ( $allow_multiple ) {
 							// 'num' will get replaced by an actual index, either in PHP
 							// or in Javascript, later on
 							$input_name = $template_name . '[num][' . $field_name . ']';
-						else
+						} else {
 							$input_name = $template_name . '[' . $field_name . ']';
+						}
 
 						// if we're creating the page name from a formula based on
 						// form values, see if the current input is part of that formula,
@@ -1216,8 +1203,8 @@ END;
 				// =====================================================
 				// default outer level processing
 				// =====================================================
-				} else { // tag is not one of the three allowed values
-					// ignore tag
+				} else { // Tag is not one of the three allowed values -
+					// ignore the tag.
 					$start_position = $brackets_end_loc;
 				} // end if
 			} // end while
@@ -1236,7 +1223,7 @@ END;
 					// If we're editing an existing page, and there were fields in
 					// the template call not handled by this form, preserve those.
 					if ( !$allow_multiple ) {
-						$template_text .= SFFormUtils::addUnhandledFields();
+						$template_text .= SFFormUtils::addUnhandledFields( $template_name );
 					}
 					$template_text .= "}}";
 					$data_text .= $template_text . "\n";
@@ -1311,8 +1298,8 @@ END;
 		if ( ! $free_text_was_included ) {
 			$form_text .= SFFormUtils::hiddenFieldHTML( 'free_text', '!free_text!' );
 		}
-		// get free text, and add to page data, as well as retroactively
-		// inserting it into the form
+		// Get free text, and add to page data, as well as retroactively
+		// inserting it into the form.
 
 		// If $form_is_partial is true then either:
 		// (a) we're processing a replacement (param 'partial' == 1)

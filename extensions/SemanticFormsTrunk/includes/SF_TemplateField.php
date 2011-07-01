@@ -2,7 +2,7 @@
 /**
  * Defines a class, SFTemplateField, that represents a field in a template,
  * including any possible semantic aspects it may have. Used in both creating
- * templates and displaying user-created forms
+ * templates and displaying user-created forms.
  *
  * @author Yaron Koren
  * @file
@@ -31,11 +31,11 @@ class SFTemplateField {
 	 * in the template definition (which we first have to find)
 	 */
 	static function createFromList( $field_name, $all_fields, $strict_parsing ) {
-		// see if this field matches one of the fields defined for
+		// See if this field matches one of the fields defined for
 		// the template it's part of - if it is, use all available
 		// information about that field; if it's not, either create
 		// an object for it or not, depending on whether the
-		// template has a 'strict' setting in the form definition
+		// template has a 'strict' setting in the form definition.
 		$the_field = null;
 		foreach ( $all_fields as $cur_field ) {
 			if ( $field_name == $cur_field->field_name ) {
@@ -62,8 +62,8 @@ class SFTemplateField {
 		// this returns an array of objects
 		$allowed_values = SFUtils::getSMWPropertyValues( $store, $proptitle, "Allows value" );
 		$label_formats = SFUtils::getSMWPropertyValues( $store, $proptitle, "Has field label format" );
-		// SMW 1.6+
 		if ( class_exists( 'SMWDIProperty' ) ) {
+			// SMW 1.6+
 			$propValue = SMWDIProperty::newFromUserLabel( $this->semantic_property );
 			$this->property_type = $propValue->findPropertyTypeID();
 		} else {
@@ -91,7 +91,8 @@ class SFTemplateField {
 	}
 
 	/**
-	 * Called when template is parsed during the creation of a form
+	 * Called if a matching property is found for a template field when
+	 * a template is parsed during the creation of a form.
 	 */
 	function setSemanticProperty( $semantic_property ) {
 		$this->semantic_property = str_replace( '\\', '', $semantic_property );
@@ -136,7 +137,7 @@ END;
 			$setInternalText = null;
 		}
 
-  		// Topmost part of table depends on format
+ 		// Topmost part of table depends on format.
 		if ( $template_format == 'infobox' ) {
 			// A CSS style can't be used, unfortunately, since most
 			// MediaWiki setups don't have an 'infobox' or

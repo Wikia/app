@@ -90,7 +90,7 @@ class SFFormInput {
  */
 class SFEnumInput extends SFFormInput {
 	public static function getOtherPropTypesHandled() {
-		return array( 'enumeration' );
+		return array( 'enumeration', '_boo' );
 	}
 
 	public static function getValuesParameters() {
@@ -255,7 +255,7 @@ class SFTextInput extends SFFormInput {
 			} else {
 				$delimiter = null;
 			}
-		 if ( array_key_exists( 'default filename', $other_args ) ) {
+			if ( array_key_exists( 'default filename', $other_args ) ) {
 				$default_filename = $other_args['default filename'];
 			} else {
 				$default_filename = "";
@@ -451,7 +451,7 @@ class SFDropdownInput extends SFEnumInput {
 	}
 
 	public static function getOtherPropTypesHandled() {
-		return array();
+		return array( '_boo' );
 	}
 
 	public static function getHTML( $cur_value, $input_name, $is_mandatory, $is_disabled, $other_args ) {
@@ -481,7 +481,16 @@ class SFDropdownInput extends SFEnumInput {
 			$innerDropdown .= "	<option value=\"\"></option>\n";
 		}
 		if ( ( $possible_values = $other_args['possible_values'] ) == null ) {
-			$possible_values = array();
+			// If it's a Boolean property, display 'Yes' and 'No'
+			// as the values.
+			if ( array_key_exists( 'property_type', $other_args ) && $other_args['property_type'] == '_boo' ) {
+				$possible_values = array(
+					SFUtils::getWordForYesOrNo( true ),
+					SFUtils::getWordForYesOrNo( false ),
+				);
+			} else {
+				$possible_values = array();
+			}
 		}
 		foreach ( $possible_values as $possible_value ) {
 			$optionAttrs = array( 'value' => $possible_value );
@@ -523,8 +532,18 @@ class SFRadioButtonInput extends SFEnumInput {
 	public static function getHTML( $cur_value, $input_name, $is_mandatory, $is_disabled, $other_args ) {
 		global $sfgTabIndex, $sfgFieldNum, $sfgShowOnSelect;
 
-		if ( ( $possible_values = $other_args['possible_values'] ) == null )
-			$possible_values = array();
+		if ( ( $possible_values = $other_args['possible_values'] ) == null ) {
+			// If it's a Boolean property, display 'Yes' and 'No'
+			// as the values.
+			if ( $other_args['property_type'] == '_boo' ) {
+				$possible_values = array(
+					SFUtils::getWordForYesOrNo( true ),
+					SFUtils::getWordForYesOrNo( false ),
+				);
+			} else {
+				$possible_values = array();
+			}
+		}
 
 		// Add a "None" value at the beginning, unless this is a
 		// mandatory field and there's a current value in place (either
@@ -947,7 +966,7 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 
 		if ( array_key_exists( 'is_uploadable', $other_args ) && $other_args['is_uploadable'] == true ) {
 			if ( array_key_exists( 'default filename', $other_args ) ) {
-					$default_filename = $other_args['default filename'];
+				$default_filename = $other_args['default filename'];
 			} else {
 				$default_filename = "";
 			}
@@ -1062,7 +1081,7 @@ class SFTextAreaWithAutocompleteInput extends SFTextAreaInput {
 		$text .= $textarea_input;
 
 		if ( array_key_exists( 'is_uploadable', $other_args ) && $other_args['is_uploadable'] == true ) {
-		 if ( array_key_exists( 'default filename', $other_args ) ) {
+			if ( array_key_exists( 'default filename', $other_args ) ) {
 				$default_filename = $other_args['default filename'];
 			} else {
 				$default_filename = "";
@@ -1444,6 +1463,7 @@ class SFCategoryInput extends SFFormInput {
 			// escape - we can't do anything
 			return null;
 		}
+		$hideroot = array_key_exists( 'hideroot', $other_args );
 		if ( array_key_exists( 'height', $other_args ) ) {
 			$height = $other_args['height'];
 		} else {
@@ -1472,7 +1492,7 @@ class SFCategoryInput extends SFFormInput {
 
 		global $wgCategoryTreeMaxDepth;
 		$wgCategoryTreeMaxDepth = 10;
-		$tree = efCategoryTreeParserHook( $top_category, array( 'mode' => 'categories', 'depth' => 10 ) );
+		$tree = efCategoryTreeParserHook( $top_category, array( 'mode' => 'categories', 'depth' => 10, 'hideroot' => $hideroot ) );
 
 		// Capitalize the first letter, if first letters always get
 		// capitalized.
@@ -1488,6 +1508,10 @@ class SFCategoryInput extends SFFormInput {
 		if ( $is_disabled ) {
 			$tree = str_replace( 'type="radio"', 'type="radio" disabled', $tree );
 		}
+
+		// Get rid of all the 'no subcategories' messages.
+		$tree = str_replace( '<div class="CategoryTreeChildren" style="display:block"><i class="CategoryTreeNotice">' . wfMsg( 'categorytree-no-subcategories' ) . '</i></div>', '', $tree );
+
 		$text .= $tree . '</div>';
 
 		$spanClass = "radioButtonSpan";
@@ -1500,6 +1524,7 @@ class SFCategoryInput extends SFFormInput {
 	public static function getParameters() {
 		$params = parent::getParameters();
 		$params[] = array( 'name' => 'top category', 'type' => 'string', 'description' => wfMsg( 'sf_forminputs_topcategory' ) );
+		$params[] = array( 'name' => 'hideroot', 'type' => 'boolean', 'description' => wfMsg( 'sf_forminputs_hideroot' ) );
 		$params[] = array( 'name' => 'height', 'type' => 'int', 'description' => wfMsg( 'sf_forminputs_height' ) );
 		$params[] = array( 'name' => 'width', 'type' => 'int', 'description' => wfMsg( 'sf_forminputs_width' ) );
 		return $params;
@@ -1543,6 +1568,7 @@ class SFCategoriesInput extends SFCategoryInput {
 			// escape - we can't do anything
 			return null;
 		}
+		$hideroot = array_key_exists( 'hideroot', $other_args );
 		if ( array_key_exists( 'height', $other_args ) ) {
 			$height = $other_args['height'];
 		} else {
@@ -1556,7 +1582,7 @@ class SFCategoriesInput extends SFCategoryInput {
 
 		global $wgCategoryTreeMaxDepth;
 		$wgCategoryTreeMaxDepth = 10;
-		$tree = efCategoryTreeParserHook( $top_category, array( 'mode' => 'categories', 'depth' => 10 ) );
+		$tree = efCategoryTreeParserHook( $top_category, array( 'mode' => 'categories', 'depth' => 10, 'hideroot' => $hideroot ) );
 		// Some string that will hopefully never show up in a category,
 		// template or field name.
 		$dummy_str = 'REPLACE THIS STRING!';
@@ -1582,6 +1608,10 @@ class SFCategoriesInput extends SFCategoryInput {
 		if ( $is_disabled ) {
 			$tree = str_replace( 'type="checkbox"', 'type="checkbox" disabled', $tree );
 		}
+
+		// Get rid of all the 'no subcategories' messages.
+		$tree = str_replace( '<div class="CategoryTreeChildren" style="display:block"><i class="CategoryTreeNotice">' . wfMsg( 'categorytree-no-subcategories' ) . '</i></div>', '', $tree );
+
 		$text = '<div style="overflow: auto; padding: 5px; border: 1px #aaaaaa solid; max-height: ' . $height . 'px; width: ' . $width . 'px;">' . $tree . '</div>';
 
 		$text .= "\t" . Html::Hidden( $input_name . '[is_list]', 1 ) . "\n";

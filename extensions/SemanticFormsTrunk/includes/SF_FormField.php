@@ -152,11 +152,17 @@ class SFFormField {
 		}
 		// If it's not a semantic field - don't add any text.
 		$form_label_text = wfMsg( 'sf_createform_formlabel' );
-		$field_label = $template_field->label;
+		$form_label_input = Xml::element( 'input',
+			array(
+				'type' => 'text',
+				'name' => 'label_' . $field_form_text,
+				'size' => 20,
+				'value' => $template_field->label,
+			), null );
 		$input_type_text = wfMsg( 'sf_createform_inputtype' );
 		$text .= <<<END
 	<div class="formField">
-	<p>$form_label_text <input type="text" name="label_$field_form_text" size=20 value="$field_label" />
+	<p>$form_label_text $form_label_input
 	&#160; $input_type_text
 
 END;
@@ -190,7 +196,7 @@ END;
 			}
 		}
 
-		$text .= "<fieldset><legend>Other parameters</legend>\n";
+		$text .= "<fieldset class=\"sfCollapsibleFieldset\"><legend>Other parameters</legend>\n";
 		$text .= Xml::tags( 'div', array( 'class' => 'otherInputParams' ),
 			SFCreateForm::showInputTypeOptions( $cur_input_type, $field_form_text, $paramValues ) ) . "\n";
 		$text .= "</fieldset>\n";
@@ -262,8 +268,11 @@ END;
 			$other_args['value_labels'] = $this->template_field->value_labels;
 		}
 		$other_args['is_list'] = ( $this->is_list || $this->template_field->is_list );
-		if ( $this->template_field->semantic_property != '' && ! array_key_exists( 'semantic_property', $other_args ) )
+		if ( $this->template_field->semantic_property != '' &&
+			! array_key_exists( 'semantic_property', $other_args ) ) {
 			$other_args['semantic_property'] = $this->template_field->semantic_property;
+			$other_args['property_type'] = $this->template_field->property_type;
+		}
 		// If autocompletion hasn't already been hardcoded in the form,
 		// and it's a property of type page, or a property of another
 		// type with 'autocomplete' specified, set the necessary

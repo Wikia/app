@@ -25,7 +25,7 @@ class SFCreateTemplate extends SpecialPage {
 
 	public function execute( $query ) {
 		$this->setHeaders();
-		self::printCreateTemplateForm();
+		$this->printCreateTemplateForm();
 	}
 
 	public static function getAllPropertyNames() {
@@ -37,18 +37,29 @@ class SFCreateTemplate extends SpecialPage {
 		$options = new SMWRequestOptions();
 		$options->limit = 500;
 		$used_properties = smwfGetStore()->getPropertiesSpecial( $options );
-		
 		foreach ( $used_properties as $property ) {
-			$all_properties[] = $property[0]->getWikiValue();
-		}
-		
-		$unused_properties = smwfGetStore()->getUnusedPropertiesSpecial( $options );
-		
-		foreach ( $unused_properties as $property ) {
-			$all_properties[] = $property->getWikiValue();
+			if ( $property[0] instanceof SMWDIProperty ) {
+				// SMW 1.6+
+				$propName = $property[0]->getKey();
+				if ( $propName{0} != '_' ) {
+					$all_properties[] = str_replace( '_', ' ', $propName );
+				}
+			} else {
+				$all_properties[] = $property[0]->getWikiValue();
+			}
 		}
 
-		// sort properties list alphabetically
+		$unused_properties = smwfGetStore()->getUnusedPropertiesSpecial( $options );
+		foreach ( $unused_properties as $property ) {
+			if ( $property instanceof SMWDIProperty ) {
+				// SMW 1.6+
+				$all_properties[] = str_replace( '_' , ' ', $property->getKey() );
+			} else {
+				$all_properties[] = $property->getWikiValue();
+			}
+		}
+
+		// Sort properties list alphabetically.
 		sort( $all_properties );
 		return $all_properties;
 	}
@@ -138,7 +149,7 @@ END;
 		$wgOut->addScript( $jsText );
 	}
 
-	static function printCreateTemplateForm() {
+	function printCreateTemplateForm() {
 		global $wgOut, $wgRequest, $wgUser, $sfgScriptPath;
 
 		SFUtils::loadMessages();
@@ -181,10 +192,8 @@ END;
 		}
 
 		$text .= '	<form id="createTemplateForm" action="" method="post">' . "\n";
-
 		// Set 'title' field, in case there's no URL niceness
-		$ct = Title::makeTitleSafe( NS_SPECIAL, 'CreateTemplate' );
-		$text .= "\t" . Html::Hidden( 'title', SFUtils::titleURLString( $ct ) ) . "\n";
+		$text .= "\t" . Html::hidden( 'title', $this->getTitle()->getPrefixedText() ) . "\n";
 		$text .= "\t<p id=\"template_name_p\">" . wfMsg( 'sf_createtemplate_namelabel' ) . ' <input size="25" id="template_name" name="template_name" /></p>' . "\n";
 		$text .= "\t<p>" . wfMsg( 'sf_createtemplate_categorylabel' ) . ' <input size="25" name="category" /></p>' . "\n";
 		$text .= "\t<fieldset>\n";
