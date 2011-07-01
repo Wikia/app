@@ -17,16 +17,27 @@ $wgDBdevboxServer2 = 'dev-db-b1';
 $databaseDirectories = array ("database_A", "database_B", "database_C");
 
 $USAGE =
-	"Usage:\tphp getDatabase.php -c [cluser A,B,C] [-f [dbname] | -i [filename] | -?]\n" .
+	"Usage:\tphp getDatabase.php -c [cluser A,B,C] [ -l[config] ] [-f [dbname] | -i [filename] | -?]\n" .
 	"\toptions:\n" .
 	"\t\t--help      show this message\n" .
 	"\t\t-f          Fetch a new database dump from s3\n" .
-	"\t\t-i          Import a downloaded file to dev db\n";
+	"\t\t-i          Import a downloaded file to dev db\n" .
+	"\t\t-l          Read settings from external file (by default: ~/.getDatabase.conf.php)\n";
 
-$opts = getopt ("i:f:c:?::");
+$opts = getopt ("l::i:f:c:?::");
 
 if( count($opts) == 0 || in_array( 'help', $opts )) die( $USAGE );
 // Grind through s3 for a bit and figure out what the most recent dump is
+
+if (array_key_exists( 'l', $opts )) {
+	if ($opts['l'] === false) $opts['l'] = "~/.getDatabase.conf.php";
+	if (is_readable($opts['l'])) 
+		include_once "~/.getDatabase.conf.php";
+	else {
+		echo "error: configuration file could not be read: {$opts['l']}\n";
+		die();
+	}
+}
 
 if(array_key_exists( 'c', $opts )) {
 	$databaseDirectories = array("database_".trim($opts['c']));
@@ -123,17 +134,21 @@ if (array_key_exists( 'i', $opts )) {
 
 	// Figure out which cluster we need to load this into	$response =  `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer1 -s -N -e "SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';" 2>&1`;
 
-	$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer1 -s -N -e "SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';" 2>&1`;
-	if (trim($response) != "" && substr($response, 0, 5) != 'ERROR') {
-		$cluster_name = trim($response);
-	} else {
-		die ("Database error: " . $response);
-	}
-	if ($cluster_name == "NULL") $cluster_name = null;  // whee!
-	if ($cluster_name == null) {
+	if ($dbname == 'wikicities') {
 		$wgDBdevboxServer = $wgDBdevboxServer1;
 	} else {
-		$wgDBdevboxServer = $wgDBdevboxServer2;
+		$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer1 -s -N -e "SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';" 2>&1`;
+		if (trim($response) != "" && substr($response, 0, 5) != 'ERROR') {
+			$cluster_name = trim($response);
+		} else {
+			die ("Database error: " . $response);
+		}
+		if ($cluster_name == "NULL") $cluster_name = null;  // whee!
+		if ($cluster_name == null) {
+			$wgDBdevboxServer = $wgDBdevboxServer1;
+		} else {
+			$wgDBdevboxServer = $wgDBdevboxServer2;
+		}
 	}
 
 	echo "That database is supposed to live on server:" . $wgDBdevboxServer . "\n";
