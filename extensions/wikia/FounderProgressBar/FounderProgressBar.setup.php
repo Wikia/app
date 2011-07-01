@@ -27,6 +27,7 @@ $wgHooks['CreateWikiLocalJob-complete'][] = "FounderProgressBarHooks::onWikiCrea
 $wgHooks['WikiFactoryChanged'][] = "FounderProgressBarHooks::onWikiFactoryChanged";
 
 // Define founder event constants
+// FIXME: Right now you must edit FounderProgressBarHooks::initRecords() if you add new tasks
 define('FT_PAGE_ADD_10', 10);
 define('FT_THEMEDESIGNER_VISIT', 20);
 define('FT_MAINPAGE_EDIT', 30);
