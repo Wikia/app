@@ -6,6 +6,7 @@ var AIC2 = {
 	magicNumber     : 800,
 	WMCbaseWidth    : 680,
 	marginLeft      : 190,
+	isRightToLeft   : false,
 	visible         : false
 };
 		
@@ -17,12 +18,12 @@ AIC2.init = function() {
 		AIC2.marginLeft = AIC2.marginLeft + parseInt( ($("#WikiaMainContent").width() - AIC2.baseWidth) / 2 );
 		Liftium.d("AIC2: non standard width, new marginLeft set to " + AIC2.marginLeft, 5);
 	}
+	if ($('body').hasClass('rtl')) {
+		Liftium.d("AIC2: rtl wiki", 7);
+		AIC2.isRightToLeft = true;
+	}
 
 // FIXME
-if ($('body').hasClass('rtl')) {
-	Liftium.d("AIC2: rtl wiki, bailing out", 3);
-	return;
-}
 if ($.getViewportWidth() < 1010) {
 	Liftium.d("AIC2: window too narrow, bailing out", 3);
 	return;
@@ -113,6 +114,11 @@ AIC2.onScroll = function() {
 					'left': '50%',
 					'margin-left': AIC2.marginLeft + 'px'
 				});
+				if (AIC2.isRightToLeft) {
+					$('#INCONTENT_BOXAD_1').css({
+						'left': ''
+					});
+				}
 				$('#INCONTENT_BOXAD_1').css('visibility', 'visible');
 				
 				AIC2.visible = true;
