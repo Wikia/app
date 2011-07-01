@@ -280,6 +280,9 @@ class HAWelcomeJob extends Job {
 						while( $row = $dbr->fetchObject( $res ) ) {
 							if( $row->ug_group == "bot" ) {
 								$bots[] = $row->ug_user;
+							} elseif ( in_array( $row->ug_group, array( "staff", "helper" ) ) ) {
+								$staff[] = $row->ug_user;
+								$admins[] = $row->ug_user;
 							}
 							else {
 								$admins[] = $row->ug_user;
@@ -291,7 +294,7 @@ class HAWelcomeJob extends Job {
 						 * remove bots from admins
 						 */
 						$admins = array( "rev_user" => array_unique( array_diff( $admins, $bots ) ) );
-						$row = $dbr->selectRow(
+						$res = $dbr->select(
 							array( "revision" ),
 							array( "rev_user", "rev_user_text"),
 							array(
@@ -299,13 +302,29 @@ class HAWelcomeJob extends Job {
 								"rev_timestamp > " . $dbr->addQuotes(  $dbr->timestamp( time() - 5184000 ) ) // 60 days ago (24*60*60*60)
 							),
 							__METHOD__,
-							array( "ORDER BY" => "rev_timestamp DESC")
+							array( "ORDER BY" => "rev_timestamp DESC", "DISTINCT", "LIMIT" => 10 )
 						);
 						Wikia::log( __METHOD__, "query", $dbr->lastQuery() );
-						if( $row->rev_user ) {
-							$this->mSysop = User::newFromId( $row->rev_user );
-							$wgMemc->set( wfMemcKey( "last-sysop-id" ), $row->rev_user, 86400 );
+						while ( $row = $dbr->fetchObject( $res ) ) {
+							if ( in_array( $row->rev_user, $staff ) ) {
+								if ( empty( $backupUser ) ) {
+									$backupUser = $row->rev_user;
+								}
+								continue;
+							}
+
+							$user = $row->rev_user;
+							break;
 						}
+												
+						if ( empty( $user ) && !empty( $backupUser ) ) {
+							$user = $backupUser;
+						} else {
+							$user = self::WELCOMEUSER;
+						}
+
+						$this->mSysop = User::newFromId( $user );
+						$wgMemc->set( wfMemcKey( "last-sysop-id" ), $user, 86400 );	
 					}
 				}
 				else {
