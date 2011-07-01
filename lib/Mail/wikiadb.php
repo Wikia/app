@@ -22,6 +22,10 @@ class Mail_wikiadb extends Mail {
 			$priority = $headers['X-Priority'];
 		}
 		
+		if (isset($headers['X-Msg-Category'])) {
+			$category = $headers['X-Msg-Category'];
+		}
+		
 		global $wgCityId, $wgExternalDatawareDB;
 		$wgCityId = ($wgCityId == null?0:$wgCityId); // fake city-id for contractor/staff.
 		// FB:4431 Write mail to archive database now
@@ -40,6 +44,7 @@ class Mail_wikiadb extends Mail {
 					'msg'     => $body,
 					'city_id' => $wgCityId,
 					'priority' => $priority,
+					'category' => $category,
 				)
 			);
 			

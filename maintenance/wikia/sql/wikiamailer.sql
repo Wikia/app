@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS mail (
        msg TEXT NOT NULL,
        city_id INT NOT NULL,
        priority INT NOT NULL DEFAULT FALSE, 
+       category VARCHAR(255) DEFAULT NULL,
        locked_by VARCHAR(255),  # which sender has it    
        locked DATETIME,         # when the sender grabbed it
        attempted DATETIME,      # The first time we attempt to send this message
@@ -30,7 +31,8 @@ CREATE TABLE IF NOT EXISTS mail (
        INDEX(created),
        INDEX(attempted),
        INDEX(transmitted),
-       INDEX(transmitted,locked_by)
+       INDEX(transmitted,locked_by),
+       INDEX(category)
 );
 
 ####
