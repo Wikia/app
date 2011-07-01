@@ -158,11 +158,14 @@ if (array_key_exists( 'i', $opts )) {
 	if(trim($response) != ""){
 		print "CREATE DATABASE attempt returned the error:\n$response\n";
 	} else {
-		print "\"$dbname\" created on \"$wgDBdevboxServer\".<br/>\n";
+		print "\"$dbname\" created on \"$wgDBdevboxServer\".\n";
 	}
 
-	print "Loading \"$fullpath\" into \"$wgDBdevboxServer\"...<br/>\n";
-	$response = `zcat $fullpath | mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer $dbname 2>&1`;
+	print "Loading \"$fullpath\" into \"$wgDBdevboxServer\"...\n";
+	$source = "zcat $fullpath";
+	if (is_executable("/usr/bin/bar"))
+		$source = "cat $fullpath | bar | zcat";
+	$response = `$source | mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer $dbname 2>&1`;
 	if(trim($response) != ""){
 		print "Error loading the database dump into $wgDBdevboxServer:\n$response\n";
 	} else {
