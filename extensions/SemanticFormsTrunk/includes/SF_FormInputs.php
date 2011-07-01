@@ -351,6 +351,11 @@ class SFTextAreaInput extends SFFormInput {
 			$textarea_attrs['onKeyDown'] = $maxLengthJSCheck;
 			$textarea_attrs['onKeyUp'] = $maxLengthJSCheck;
 		}
+		// Bug in Xml::element()? It doesn't close the textarea tag
+		// properly if the text inside is null - set it to '' instead.
+		if ( is_null( $cur_value ) ) {
+			$cur_value = '';
+		}
 		$text = Xml::element( 'textarea', $textarea_attrs, $cur_value, false );
 		$spanClass = "inputSpan";
 		if ( $is_mandatory ) { $spanClass .= " mandatoryFieldSpan"; }
@@ -1492,7 +1497,14 @@ class SFCategoryInput extends SFFormInput {
 
 		global $wgCategoryTreeMaxDepth;
 		$wgCategoryTreeMaxDepth = 10;
-		$tree = efCategoryTreeParserHook( $top_category, array( 'mode' => 'categories', 'depth' => 10, 'hideroot' => $hideroot ) );
+		$tree = efCategoryTreeParserHook( $top_category,
+			array(
+				'mode' => 'categories',
+				'namespaces' => array( NS_CATEGORY ),
+				'depth' => 10,
+				'hideroot' => $hideroot,
+			)
+		);
 
 		// Capitalize the first letter, if first letters always get
 		// capitalized.
@@ -1582,7 +1594,14 @@ class SFCategoriesInput extends SFCategoryInput {
 
 		global $wgCategoryTreeMaxDepth;
 		$wgCategoryTreeMaxDepth = 10;
-		$tree = efCategoryTreeParserHook( $top_category, array( 'mode' => 'categories', 'depth' => 10, 'hideroot' => $hideroot ) );
+		$tree = efCategoryTreeParserHook(
+			$top_category, array(
+				'mode' => 'categories',
+				'namespaces' => array( NS_CATEGORY ),
+				'depth' => 10,
+				'hideroot' => $hideroot,
+			)
+		);
 		// Some string that will hopefully never show up in a category,
 		// template or field name.
 		$dummy_str = 'REPLACE THIS STRING!';
