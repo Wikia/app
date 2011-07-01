@@ -17,22 +17,21 @@ $wgDBdevboxServer2 = 'dev-db-b1';
 $databaseDirectories = array ("database_A", "database_B", "database_C");
 
 $USAGE =
-	"Usage:\tphp getDatabase.php -c [cluser A,B,C] [ -l[config] ] [-f [dbname] | -i [filename] | -?]\n" .
+	"Usage:\tphp getDatabase.php -c [cluser A,B,C] [ -l [config] ] [-f [dbname] | -i [filename] | -?]\n" .
 	"\toptions:\n" .
 	"\t\t--help      show this message\n" .
 	"\t\t-f          Fetch a new database dump from s3\n" .
 	"\t\t-i          Import a downloaded file to dev db\n" .
-	"\t\t-l          Read settings from external file (by default: ~/.getDatabase.conf.php)\n";
+	"\t\t-l          Read settings from external file\n";
 
-$opts = getopt ("l::i:f:c:?::");
+$opts = getopt ("l:i:f:c:?::");
 
 if( count($opts) == 0 || in_array( 'help', $opts )) die( $USAGE );
 // Grind through s3 for a bit and figure out what the most recent dump is
 
 if (array_key_exists( 'l', $opts )) {
-	if ($opts['l'] === false) $opts['l'] = "~/.getDatabase.conf.php";
 	if (is_readable($opts['l'])) 
-		include_once "~/.getDatabase.conf.php";
+		include_once $opts['l'];
 	else {
 		echo "error: configuration file could not be read: {$opts['l']}\n";
 		die();
