@@ -15,7 +15,7 @@ class FounderProgressBarController extends WikiaController {
 				FT_THEMEDESIGNER_VISIT => "themedesigner-visit",
 				FT_MAINPAGE_EDIT => "mainpage-edit",
 				FT_PHOTO_ADD_10 => "photo-add%",
-				FT_CATEGORY_ADD3 => "category-add%",
+				FT_CATEGORY_ADD_3 => "category-add%",
 				FT_COMMCENTRAL_VISIT => "commcentral-visit",
 				FT_WIKIACTIVITY_VISIT => "wikiactivity-visit",
 				FT_PROFILE_EDIT => "profile-edit",
@@ -50,7 +50,7 @@ class FounderProgressBarController extends WikiaController {
 				FT_THEMEDESIGNER_VISIT => 1,
 				FT_MAINPAGE_EDIT => 1,
 				FT_PHOTO_ADD_10 => 10,
-				FT_CATEGORY_ADD3 => 3,
+				FT_CATEGORY_ADD_3 => 3,
 				FT_COMMCENTRAL_VISIT => 1,
 				FT_WIKIACTIVITY_VISIT => 1,
 				FT_PROFILE_EDIT => 1,
@@ -85,7 +85,7 @@ class FounderProgressBarController extends WikiaController {
 				FT_THEMEDESIGNER_VISIT => array("newFromText", "ThemeDesigner", NS_SPECIAL),
 				FT_MAINPAGE_EDIT => array("newMainPage"),
 				FT_PHOTO_ADD_10 => array("newFromText", "Upload", NS_SPECIAL),
-				FT_CATEGORY_ADD3 => array("newFromText", "Browse", NS_CATEGORY),
+				FT_CATEGORY_ADD_3 => array("newFromText", "Browse", NS_CATEGORY),
 				FT_COMMCENTRAL_VISIT => array("newFromURL", "community.wikia.com"),
 				FT_WIKIACTIVITY_VISIT => "http://community.wikia.com/wiki/Community_Central",
 				FT_PROFILE_EDIT => array("newFromText", $this->wg->User->getName(), NS_USER),
@@ -112,6 +112,9 @@ class FounderProgressBarController extends WikiaController {
 				FT_UNCATEGORIZED_VISIT => array("newFromText", "UncategorizedPages", NS_SPECIAL),
 				FT_TOTAL_EDIT_300 => array("newFromText", "CreatePage", NS_SPECIAL),
 		);
+		
+		// This list contains additional "bonus" tasks that can be completed if other tasks are skipped
+		$this->bonus_tasks = array ();
 	}
 	
 	/**
@@ -157,7 +160,7 @@ class FounderProgressBarController extends WikiaController {
 			$this->wf->ProfileIn(__METHOD__ . '::miss');
 
 			$list = array();
-			$tasks_completed = 0;			
+			$data = array();		
 
 			// get the next two available non-skipped, non-completed items
 			$dbr = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
@@ -180,13 +183,11 @@ class FounderProgressBarController extends WikiaController {
 					"task_action" => $this->getMsgForTask($task_id, "action"),
 					"task_url" => $this->getURLForTask($task_id)
 					);
-				if ($row->task_completed == 1) {
-					$tasks_completed ++;
-				}
 			}
-			$data = $this->getCompletionData($tasks_completed);
+			
+			$data = $this->getCompletionData($list);
 			if (!empty($list)) {
-				$this->wg->Memc->set($memKey, $list, 3600);
+				$this->wg->Memc->set($memKey, $list, 24*60*60); // 1 day
 			}
 
 			$this->wf->ProfileOut(__METHOD__ . '::miss');
@@ -208,15 +209,14 @@ class FounderProgressBarController extends WikiaController {
 		$task_id = $this->request->getVal("task_id");
 		
 		if (! isset($this->counters[$task_id])) {
-			$this->setVal('result', 'invalid task_id');
-//			file_put_contents("/tmp/founder.log", "Invalid Task $task_id\n", FILE_APPEND);
-			return true;
+			$this->setVal('result', 'error');
+			$this->setVal('error', 'invalid task_id');
+			return;
 		}
 		$response = $this->sendSelfRequest('isTaskComplete', array("task_id" => $task_id));
 		if ($response->getVal('task_completed', 0) == "1") {
 			$this->setVal('result', 'error');
-			$this->setVal('result', 'task_completed');
-//			file_put_contents("/tmp/founder.log", "Task Complete $task_id\n", FILE_APPEND);
+			$this->setVal('error', 'task_completed');
 			return;
 		}
 		$dbw = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
@@ -232,9 +232,14 @@ class FounderProgressBarController extends WikiaController {
 				array('task_id', 'task_count'),
 				array('wiki_id' => $wiki_id, 'task_id' => $task_id)
 			);
-		// TODO: make sure we got a row
-		// if ($row...)
+		
 		$row = $dbw->fetchRow($res);
+		if (!$row) {
+			// Some kind of crazy error happened?
+			$this->setVal('result', 'error');
+			$this->setVal('error', 'invalid task_id');
+			return;
+		}
 		$actions_completed = $row['task_count'];
 		$actions_remaining = $this->counters[$task_id] - $actions_completed;
 
@@ -294,10 +299,8 @@ class FounderProgressBarController extends WikiaController {
 		// Long list is cached so just use it instead of writing a different query
 		$response = $this->sendSelfRequest("getLongTaskList");
 		$list = $response->getVal('list');
-//		file_put_contents("/tmp/founder.log", print_r($list, true), FILE_APPEND);
 		if (isset($list[$task_id])) {
 			$this->setVal('task_completed', $list[$task_id]['task_completed']);
-//			file_put_contents("/tmp/founder.log", "task completed\n", FILE_APPEND);
 		} 	
 	}
 	
@@ -326,11 +329,6 @@ class FounderProgressBarController extends WikiaController {
 		$this->response->setVal('activityListPreview', $activityListPreview['list']);
 		$this->response->setVal('activeTaskList', $activeTaskList);
 		$this->response->setVal('skippedTaskList', $skippedTaskList);
-		$this->response->setVal('bonusTaskList', $bonusTaskList);
-	}
-	
-	public function widgetTaskGroup() {
-		$this->response->setVal('taskList', $this->request->getVal('taskList'));
 	}
 	
 	// Messages defined in i18n file
@@ -373,16 +371,27 @@ class FounderProgressBarController extends WikiaController {
 	}
 
 	/**
-	 * Returns nothing, modifies $list param
-	 * @param type $list
-	 * @param type $tasks_completed 
+	 * Returns array of task data
+	 * @param Array $list
+	 * @param Arra $data 
 	 */
-	private function getCompletionData($tasks_completed) {
+	private function getCompletionData(Array $list) {
 		$data = array();
-		$total_tasks = count($this->messages);		
-		$data['tasks_completed'] = $tasks_completed;
-		$data['total_tasks'] = $total_tasks;
-		$data['completion_percent'] = round(100 * ($tasks_completed / $total_tasks), 0);
+		$total_tasks = count($list);
+		$tasks_completed = 0;
+		$tasks_skipped = 0;
+		$bonus_tasks = 0;
+		foreach ($list as $task) {
+			if ($task['task_skipped'] == 1) $tasks_skipped ++;
+			if ($task['task_completed'] == 1) $tasks_completed ++;
+			if (isset($this->bonus_tasks[$task['task_id']])) {
+				$bonus_tasks ++;
+			}
+		}
+		$data['tasks_completed'] = $tasks_completed;  // bonus tasks do count as completed tasks, like any task
+		$data['tasks_skipped'] = $tasks_skipped;
+		$data['total_tasks'] = $total_tasks - $bonus_tasks;  // bonus tasks do NOT count against total # of tasks
+		$data['completion_percent'] = min(100, round(100 * ($tasks_completed / $total_tasks), 0));
 		return $data;
 	}
 }
