@@ -30,7 +30,7 @@ var PageHeader = {
 		}
 
 		// RT #83920: make <fb:like> tags work in IE
-		if (typeof $.browser.msie != 'undefined') {
+		if (typeof $.browser.msie != 'undefined' && typeof $.browser.version != 'undefined' && $.browser.version && $.browser.version.substring(0, $.browser.version.indexOf('.')) < 9) {
 			GlobalTriggers.bind('fbinit', function() {
 				$('.likes').each(function() {
 					var node = $(this),
