@@ -61,6 +61,13 @@ $messages['br'] = array(
 	'mostpopularcategories' => 'Rummadoù ar poblekañ',
 );
 
+/** Catalan (Català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'mostpopularcategories' => 'Categories més populars',
+);
+
 /** Chechen (Нохчийн)
  * @author Sasan700
  */

@@ -570,6 +570,7 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Farewell
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

@@ -391,7 +391,7 @@ $messages['bo'] = array(
  */
 $messages['br'] = array(
 	'myhome-desc' => 'Ur bajenn degemer prevez evit an implijerien kevreet',
-	'myhome' => 'Va Degemer',
+	'myhome' => 'Ma fajenn degemer',
 	'wikiactivity' => 'Oberiantiz ar wiki',
 	'myhome-activity-more' => 'Gwelet an oberoù neveshañ',
 	'myhome-activity-feed' => 'Gwazh obererezh',
@@ -407,7 +407,7 @@ Klikit war '''[[Special:CreatePage|Pajenn nevez]]''' evit kregiñ da skrivañ !"
 	'myhome-hot-spots-newest' => 'Pajennoù nevez war ar wiki',
 	'myhome-hot-spots-brandnew' => "Ur wiki nevez eo. Klikit war '''[[Special:CreatePage|Pajenn nevez]]''' evit kregiñ da skrivañ !",
 	'tog-myhomedisableredirect' => 'Diweredekaat an adkas davet Ma Degemer',
-	'prefs-myhome' => 'Va Degemer',
+	'prefs-myhome' => 'Ma fajenn degemer',
 	'myhome-feed-newpage' => 'pajenn nevez',
 	'myhome-feed-edit' => 'kemmañ',
 	'myhome-feed-move' => 'pajenn bet fiñvet',
@@ -1189,13 +1189,14 @@ Todos poden facer cambios, engadir información ou corrixir un erro.
 O wiki está construído pola comunidade, e unha vez que faga clic no botón de edición converterase en parte dela.
 Anímese a intentalo!',
 	'myhome-hot-spots-number-of-editors' => 'editores',
-	'myhome-log-in' => "<center>A función \"a miña páxina de inicio\" só está dispoñible se antes accedeu ao sistema.<br /><br /><big>'''[{{fullurl:Special:Signup|\$1}} Por favor, conéctese para ollar esta páxina!]'''</big></center>",
-	'myhome-switch-to-monaco' => "A función \"a miña páxina de inicio\" só está dispoñible se emprega a aparencia Mónaco. Se quere ver a miña páxina de inicio, por favor, visite as '''[[Special:Preferences|súas preferencias]]''' para cambiar a súa aparencia.",
+	'myhome-log-in' => "<center>A función \"A miña páxina de inicio\" só está dispoñible se antes accedeu ao sistema.<br /><br /><big>'''[{{fullurl:Special:Signup|\$1}} Por favor, conéctese para ollar esta páxina!]'''</big></center>",
+	'myhome-switch-to-monaco' => "A función \"Actividade do wiki\" só está dispoñible se emprega a aparencia Wikia.
+Se quere ver \"A miña páxina de inicio\", visite as '''[[Special:Preferences|súas preferencias]]''' para cambiar a súa aparencia.",
 	'myhome-namespace-blog' => 'Blogue',
 	'myhome-community-corner-header' => 'Mensaxes da comunidade',
 	'oasis-myhome-community-corner-edit' => 'editar a mensaxe &gt;',
 	'myhome-community-corner-edit' => 'editar a mensaxe',
-	'community-corner' => "'''Benvido á miña páxina de inicio!'''
+	'community-corner' => "'''Benvido a \"A miña páxina de inicio\"!'''
 
 Esta páxina axuda a estar informado sobre o que está a suceder no wiki.
 
@@ -1961,9 +1962,9 @@ U kunt uw volglijst gebruiken om de laatste wijzigingen aan pagina\'s waar u bij
 	'myhome-hot-spots-feed' => "Populaire pagina's",
 	'myhome-hot-spots-feed-empty' => "Werk nu mee aan deze wiki.
 Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!",
-	'myhome-hot-spots-newest' => "Nieuwe pagina's op de Wiki",
-	'myhome-hot-spots-brandnew' => "Dit is een splinternieuwe Wiki. Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!",
-	'tog-myhomedisableredirect' => 'Doorverwijzing naar Wikiactiviteit uitschakelen',
+	'myhome-hot-spots-newest' => "Nieuwe pagina's op de wiki",
+	'myhome-hot-spots-brandnew' => "Dit is een splinternieuwe wiki. Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!",
+	'tog-myhomedisableredirect' => 'Doorverwijzing naar wikiactiviteit uitschakelen',
 	'prefs-myhome' => 'Mijn startpagina',
 	'myhome-feed-newpage' => 'nieuwe pagina',
 	'myhome-feed-edit' => 'bewerken',
@@ -1978,38 +1979,36 @@ Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!
 	'myhome-feed-added-by' => 'toegevoegd door $1',
 	'myhome-feed-edited-by' => 'bewerkt door $1',
 	'myhome-feed-posted-by' => 'geplaatst door $1',
-	'myhome-feed-comment-by' => 'reactie door $1',
+	'myhome-feed-comment-by' => 'reactie van $1',
 	'myhome-feed-deleted-by' => 'verwijderd door $1',
 	'myhome-feed-moved-by' => 'hernoemd door $1',
-	'myhome-feed-article-comment-created-by' => 'nieuwe reactie door $1',
+	'myhome-feed-article-comment-created-by' => 'nieuwe reactie van $1',
 	'myhome-feed-article-comment-edited-by' => 'reactie door $1 bewerkt',
 	'myhome-feed-by' => 'door $1',
-	'myhome-feed-diff-alt' => 'weergeef me de veranderingen op deze pagina',
+	'myhome-feed-diff-alt' => 'wijzigingen op deze pagina weergeven',
 	'myhome-feed-new-page-details' => 'Nieuwe pagina',
 	'myhome-feed-summary-details' => 'Samenvatting',
-	'myhome-feed-section-edit-details' => 'Bewerkte de sectie',
+	'myhome-feed-section-edit-details' => 'Heeft de paragraaf bewerkt',
 	'myhome-feed-new-blog-post-details' => 'Nieuwe blog',
-	'myhome-feed-new-blog-comment-details' => 'reactie',
+	'myhome-feed-new-blog-comment-details' => 'Reactie',
 	'myhome-feed-new-article-comment-details' => 'Reactie',
 	'myhome-feed-move-details' => 'Hernoemd',
 	'myhome-feed-redirect-details' => 'Doorverwijzing',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Afbeelding toegevoegd|Afbeeldingen toegevoegd}}',
 	'myhome-feed-inserted-video-details' => "{{PLURAL:$1|Video toegevoegd|Video's toegevoegd}}",
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categorie toegevoegd|Categorieën toegevoegd}}',
-	'myhome-user-contributions-empty' => 'U kunt meewerken aan deze wiki door op "bewerken" te klikken op een pagina en daarna toe te voegen wat u weet.
+	'myhome-user-contributions-empty' => 'U kunt meewerken aan deze wiki door op "{{int:editthispage}}" te klikken op een pagina en daarna toe te voegen wat u weet.
 Iedereen kan wijzigingen maken, informatie toevoegen of een fout verbeteren.
-De wiki is gebouwd door de gemeenschap, en zo gauw u op de knop "bewerken" klikt, maakt u ook
-onderdeel uit van de gemeenschap.
+De wiki is gebouwd door de gemeenschap, en zo gauw u op de knop "{{int:editthispage}}" klikt, maakt u ook onderdeel uit van de gemeenschap.
 Probeer het maar!',
 	'myhome-hot-spots-number-of-editors' => 'bewerkers',
-	'myhome-log-in' => "<center>De functie Mijn Startpagina is alleen beschikbaar als u bent aangemeld.<br /><br />
-<big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Meld u aan om deze pagina te bekijken!]</span>'''</big></center>",
+	'myhome-log-in' => "<center>De functie Mijn Startpagina is alleen beschikbaar als u bent aangemeld.<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Meld u aan om deze pagina te bekijken!]</span>'''</big></center>",
 	'myhome-switch-to-monaco' => "De functie \"Mijn startpagina\" is alleen beschikbaar als uw de Wikia-vormgeving gebruikt.
 Als u \"Mijn startpagina\" wilt bekijken, wijzig in '''[[Special:Preferences|uw voorkeuren]]''' het siteuiterlijk.",
 	'myhome-namespace-blog' => 'Blog',
-	'myhome-community-corner-header' => 'Communityberichten',
+	'myhome-community-corner-header' => 'Gemeenschapsberichten',
 	'oasis-myhome-community-corner-edit' => 'bericht bewerken &gt;',
-	'myhome-community-corner-edit' => 'bewerk bericht',
+	'myhome-community-corner-edit' => 'bericht bewerken',
 	'community-corner' => "'''Welkom bij Mijn startpagina!'''
 
 Deze pagina helpt u om op de hoogte te blijven van wat er gebeurt in de wiki.
@@ -2026,9 +2025,9 @@ Als u de oprichter of een beheerder van deze wiki bent, kunt u dit bericht gebru
 
 * Of gewoon wat schrijven om mensen aan te moedigen!",
 	'myhome-hot-spots-definition' => "Pagina's met de meeste bewerkers in de afgelopen {{PLURAL:$1|dag|$1 dagen}}.",
-	'myhome-default-view-checkbox' => 'Maak $1 mijn standaard weergave',
+	'myhome-default-view-checkbox' => '$1 mijn standaard weergave maken',
 	'myhome-default-view-success' => 'De nieuwe instellingen zijn opgeslagen',
-	'tooltip-pt-myhome' => 'Naar Mijn startpagina',
+	'tooltip-pt-myhome' => 'Naar Mijn startpagina gaan',
 	'activityfeed' => 'Activiteitenfeed',
 );
 
@@ -2662,6 +2661,7 @@ $messages['rue'] = array(
 );
 
 /** Sinhala (සිංහල)
+ * @author Singhalawap
  * @author තඹරු විජේසේකර
  * @author පසිඳු කාවින්ද
  */
@@ -2672,7 +2672,7 @@ $messages['si'] = array(
 	'myhome-watchlist-feed' => 'මුර-ලැයිස්තුව',
 	'myhome-user-contributions-feed' => 'දායකත්‍වයන්',
 	'myhome-hot-spots-newest' => 'විකියේ නව පිටු',
-	'tog-myhomedisableredirect' => 'විකී සක්‍රීයතා වෙත මගේ ආපසු හරවා යැවීම අක්‍රීය කරන්න',
+	'tog-myhomedisableredirect' => 'විකී සක්‍රීයතා (Wiki Activity) වෙත මගේ යලියොමු අක්‍රීය කරන්න',
 	'myhome-feed-newpage' => 'නව පිටුව',
 	'myhome-feed-edit' => 'සංස්කරණය කරන්න',
 	'myhome-feed-move' => 'පිටුව ගෙනයන ලදී.',
@@ -2682,9 +2682,9 @@ $messages['si'] = array(
 	'myhome-namespace-blog' => 'බ්ලෝග්',
 	'myhome-community-corner-header' => 'ප්‍රජා පණිවුඩ',
 	'myhome-community-corner-edit' => 'පණිවුඩය සංස්කරණය කරන්න',
-	'myhome-default-view-checkbox' => '$1 මගේ සාමාන්‍ය නැරඹීම් විදිහ කරන්න',
+	'myhome-default-view-checkbox' => '$1 මගේ සාමාන්‍ය දසුන (default view) කරන්න',
 	'myhome-default-view-success' => 'හරි, දැන් මෙය ඔබේ සාමාන්‍ය විදිහයි',
-	'tooltip-pt-myhome' => 'මගේ නිවස වෙත යන්න',
+	'tooltip-pt-myhome' => 'මගේ ප්‍රධාන පිටුවට යන්න',
 );
 
 /** Slovenian (Slovenščina)
@@ -2781,9 +2781,12 @@ $messages['sr-ec'] = array(
  * @author Lokal Profil
  * @author McDutchie
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'myhome-desc' => 'En privat hemsida för inloggade användare',
 	'myhome' => 'Mitt Hem',
+	'wikiactivity' => 'Wiki-aktivitet',
 	'myhome-activity-more' => 'se mer senaste aktivitet',
 	'myhome-activity-feed' => 'Aktivitet påfyllning',
 	'myhome-activity-feed-empty' => "Denna wiki väntar på att du engagerar dig. Klicka på '''[[Special:CreatePage|Ny sida]]''' för att börja skriva!",
@@ -2804,6 +2807,7 @@ $messages['sv'] = array(
 	'myhome-feed-delete' => 'raderad',
 	'myhome-feed-image' => 'bild tillagd',
 	'myhome-feed-video' => 'video tillagd',
+	'myhome-feed-categorization' => 'kategorisering',
 	'myhome-feed-created-by' => 'skapad av $1',
 	'myhome-feed-added-by' => 'tillagt av $1',
 	'myhome-feed-edited-by' => 'redigerad av $1',
@@ -2831,7 +2835,7 @@ $messages['sv'] = array(
 	'myhome-log-in' => "<center>My Home funktionen är bara tillgänglig om du är inloggad.<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:UserLogin|\$1}} Vänligen logga in för att se denna sida!]</span>'''</big></center>",
 	'myhome-switch-to-monaco' => "My Home funktionen är bara tillgänglig om du använder Monaco utseenden. Om du vill se My Home, går du till '''[[Special:Preferences|dina Inställningar]]''' för att ändra din utseende.",
 	'myhome-namespace-blog' => 'Blogg',
-	'myhome-community-corner-header' => 'Community Hörn',
+	'myhome-community-corner-header' => 'Gemenskapsmeddelanden',
 	'oasis-myhome-community-corner-edit' => 'redigera meddelande &gt;',
 	'myhome-community-corner-edit' => 'ändra meddelande',
 	'community-corner' => "'''Välkommen till My Home!'''
@@ -2849,10 +2853,11 @@ Om du är grundaren eller en administratör på denna wiki kan du ändra detta b
 * Ge en anrop till en medarbetare som tillför något speciellt till wikin
 
 * Eller bara lägga upp några uppmuntrande ord!",
-	'myhome-hot-spots-definition' => 'Sidor med flest redigerare i sista $1 dagar.',
+	'myhome-hot-spots-definition' => 'Sidor med flest redigerare {{PLURAL:$1|den senaste dagen|de senaste $1 dagarna}}.',
 	'myhome-default-view-checkbox' => 'Gör $1 min standardvy',
 	'myhome-default-view-success' => 'Okej, detta är din standard nu',
 	'tooltip-pt-myhome' => 'Gå till Mitt Hem',
+	'activityfeed' => 'Aktivitetsfeed',
 );
 
 /** Swahili (Kiswahili) */
@@ -3099,6 +3104,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

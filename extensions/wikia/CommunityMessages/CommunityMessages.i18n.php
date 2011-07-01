@@ -253,9 +253,11 @@ $messages['ru'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Community Meddelanden har uppdaterats]].',
+	'communitymessages-desc' => 'Hjälpförlängning för gemenskapsmeddelanden',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Gemenskapsmeddelanden har uppdaterats]].',
 );
 
 /** Tagalog (Tagalog)
@@ -267,6 +269,7 @@ $messages['tl'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

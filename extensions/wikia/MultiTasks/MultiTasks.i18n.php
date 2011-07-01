@@ -261,6 +261,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -295,7 +296,7 @@ $messages['br'] = array(
 	'multiwikiedit_from_form' => 'eus ar furmskrid',
 	'multiwikiedit_summary_text' => 'Maezienn an diverradenn',
 	'multiwikiedit_this_wiki' => 'ar wiki-mañ',
-	'multiwikiedit_inbox_caption' => 'dispartiet gant virgulennoù',
+	'multiwikiedit_inbox_caption' => 'dispartiet gant skejoù',
 	'multiwikiedit_all_wikis' => 'an holl wikioù',
 	'multiwikiedit_selected_wikis' => 'ar wikioù diuzhet',
 	'multiwikiedit_success_subtitle' => 'evit $1',
@@ -306,7 +307,7 @@ $messages['br'] = array(
 	'multiwikiedit_file_missing' => "ne c'haller ket lenn ar restr roet",
 	'multiwikiedit_select_script' => 'Skript kemmañ pajenn',
 	'multiwikiedit_select_yourself' => "c'hwi",
-	'multiwikiedit_no_page' => 'Spisait, mar plij,  ur bajenn da nebeutañ PE dibabit ur restr zo roll ar pajennoù enni.',
+	'multiwikiedit_no_page' => 'Spisait, mar plij, ur bajenn da nebeutañ PE dibabit ur restr zo roll ar pajennoù enni.',
 	'multiwikiedit_split_results' => "Re vras eo ho kont pennad evit bezañ sevenet en un trevell hepken. Dispartiet eo bet an dra-se e '''$1''' trevell, gant '''$2''' pennad dre drevell da nebeutañ.",
 	'multiwikiedit_max_display_size' => "En embanner lies wikioù emañ an niver brasañ a bennadoù a c'haller kaout er frazenn gadarnaat. Degemeret eo bet ho reked met troc'het eo bet e '''$1''' pennad. Dibabit ar pennadoù ha saveteit an trevell. Gallout a reot, da c'houde, seveniñ ar peurrest eus ar pennadoù en-dro.",
 	'multiwikiedit_add_text' => 'Spisait skrid ar pennad da gentañ',
@@ -331,12 +332,12 @@ $messages['br'] = array(
 	'multidelete_task_none_selected' => "N'hoc'h eus ouzhpennet pennad ebet. N'eo ket bet ouzhpennet an trevell.",
 	'multidelete_task_link' => 'Gallout a rit gwiriañ ho trevell',
 	'multidelete_select_all' => 'Diuzañ pep tra',
-	'multidelete_page' => 'Pajennoù da zilemel',
+	'multidelete_page' => 'Pajennoù da vezañ diverket',
 	'multidelete_list_caption' => 'en ur roll a wikioù dispartiet',
 	'multidelete_choose_articles' => 'dibabit ar pennadoù kavet zo da zilemel',
 	'multidelete_processing' => 'dilamadenn pajennoù',
 	'multidelete_this_wiki' => 'ar wiki-mañ',
-	'multidelete_inbox_caption' => 'pe dispartiet gant virgulennoù',
+	'multidelete_inbox_caption' => 'pe dispartiet gant skejoù',
 	'multidelete_all_wikis' => 'an holl wikioù',
 	'multidelete_selected_wikis' => 'ar wikioù diuzet',
 	'multidelete_success_subtitle' => 'evit $1',
@@ -349,7 +350,7 @@ $messages['br'] = array(
 	'multidelete_no_page' => "Mar plij roit ur bajenn da zilemel d'an nebeutañ PE dibabit ur restr ennañ ur roll pajennoù",
 	'multidelete_split_results' => "Re vras eo ho kont pennad evit bezañ sevenet en un trevell hepken. Dispartiet eo bet an dra-se e '''$1''' trevell, gant '''$2''' pennad dre drevell da nebeutañ.",
 	'multidelete_max_display_size' => "En dilamadenn lies emañ an niver brasañ a bennadoù a c'haller kaout bremañ er frazenn gadarnaat. Demegeret eo bet ho reked met troc'het eo bet e '''$1''' pennad. Dibabit ar pennadoù ha saveteit an trevell. Gallout a reot, da choude, en seveniñ en-dro evit ar peurrest eus ar pennadoù.",
-	'multidelete_brazilian_portuguese_wikis' => 'an holl wikioù e portugalek brazilian',
+	'multidelete_brazilian_portuguese_wikis' => 'an holl wikioù e portugaleg Brazil',
 	'multidelete_hebrew_wikis' => 'an holl wikioù hebraek',
 	'multidelete_chinese_wikis' => 'an holl wikioù sinaek',
 	'multidelete_polish_wikis' => 'an holl wikioù polonek',
@@ -357,13 +358,13 @@ $messages['br'] = array(
 	'multidelete_portuguese_wikis' => 'an holl wikioù portugalek',
 	'multidelete_dutch_wikis' => 'an holl wikioù alamanek',
 	'multidelete_italian_wikis' => 'an holl wikioù italianek',
-	'multidelete_russian_wikis' => 'an holl wikioù rusek',
+	'multidelete_russian_wikis' => 'an holl wikioù rusianek',
 	'multidelete_english_wikis' => 'an holl wikioù saoznek',
 	'multidelete_japanese_wikis' => 'an holl wikioù japanek',
 	'multidelete_finnish_wikis' => 'an holl wikioù finnek',
 	'multidelete_spanish_wikis' => 'an holl wikioù spagnolek',
 	'multidelete_french_wikis' => 'an holl wikioù gallek',
-	'multidelete_swedish_wikis' => 'an holl wikioù svedat',
+	'multidelete_swedish_wikis' => 'an holl wikioù svedek',
 	'multidelete_german_wikis' => 'an holl wikioù alamanek',
 	'multiwikifinder' => 'Klasker titloù lieswiki',
 	'multiwikifindpagenames' => 'Kavout anvioù pajennoù',

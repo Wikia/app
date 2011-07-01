@@ -341,11 +341,14 @@ Du kannst die Änderungsbenachrichtigungen zu dieser Liste <a href="$4">abbestel
 /** Spanish (Español)
  * @author Bola
  * @author Peter17
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'toplists-desc' => 'Los 10 mejores',
 	'right-toplists-create-edit-list' => 'Crea y edita páginas de los 10 mejores',
 	'right-toplists-create-item' => 'Crea y añade elementos a una página de los 10 mejores',
+	'right-toplists-edit-item' => 'Editar elementos de una lista',
+	'right-toplists-delete-item' => 'Borrar elementos de una lista',
 	'createtoplist' => 'Crea una nueva lista de los 10 mejores',
 	'edittoplist' => 'Editar los 10 mejores',
 	'toplists-category' => 'Los 10 mejores',
@@ -579,7 +582,7 @@ $messages['fr'] = array(
 	'toplists-list-add-item-label' => 'Ajouter un élément',
 	'toplists-list-add-item-name-label' => 'Continuer la liste...',
 	'toplists-list-item-voted' => 'Voté',
-	'toplists-createpage-dialog-label' => 'Liste du top 10',
+	'toplists-createpage-dialog-label' => 'Liste de top 10',
 	'toplists-email-subject' => 'Une liste de top 10 a été modifiée',
 	'toplists-email-body' => 'Bonjour de Wikia !
 
@@ -607,6 +610,7 @@ Vous pouvez <a href="$4">vous désinscrire</a> des modifications de cette liste.
  * @author Xanocebreiro
  */
 $messages['gl'] = array(
+	'toplists-desc' => 'Os 10 mellores',
 	'toplists-editor-title-label' => 'Nome de lista',
 	'toplists-editor-related-article-label' => 'Páxina relacionada <small>(opcional, pero selecciona unha imaxe)</small>',
 	'toplists-editor-related-article-placeholder' => 'Introduza un nome de páxina existente',
@@ -616,13 +620,19 @@ $messages['gl'] = array(
 	'toplists-create-button' => 'Crear unha lista',
 	'toplists-update-button' => 'Gardar a lista',
 	'toplists-cancel-button' => 'Cancelar',
+	'toplists-image-browser-upload-btn' => 'Elixir',
 	'toplists-image-browser-upload-label' => 'Cargar a súa',
 	'toplists-list-related-to' => 'Relacionado con:',
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />voto|$1<br />votos}}',
+	'toplists-list-created-by' => 'por [[User:$1|$1]]',
+	'toplists-list-add-item-label' => 'Engadir un elemento',
+	'toplists-list-item-voted' => 'Votado',
 	'toplists-seconds' => '$1 {{PLURAL:$1|segundo|segundos}}',
 	'toplists-minutes' => '$1 {{PLURAL:$1|minuto|minutos}}',
 	'toplists-hours' => '$1 {{PLURAL:$1|hora|horas}}',
 	'toplists-days' => '$1 {{PLURAL:$1|día|días}}',
 	'toplists-weeks' => '$1 {{PLURAL:$1|semana|semanas}}',
+	'toplists-create-button-msg' => 'Crear unha lista',
 );
 
 /** Hungarian (Magyar) */
@@ -1524,8 +1534,17 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'toplists-desc' => 'Topp 10-listor',
+	'right-toplists-create-edit-list' => 'Skapa och redigera Topp 10-listsidor',
+	'right-toplists-create-item' => 'Skapa och lägga till objekt till en Topp 10-listsida',
+	'right-toplists-edit-item' => 'Redigera objekt i en Topp 10-listsida',
+	'right-toplists-delete-item' => 'Ta bort objekt från en Topp 10-listsida',
+	'createtoplist' => 'Skapa en ny Topp 10-lista',
+	'edittoplist' => 'Redigera Topp 10-lista',
+	'toplists-category' => 'Topp 10-listor',
 	'toplists-error-invalid-title' => 'Den medföljande texten är inte giltig.',
 	'toplists-error-invalid-picture' => 'Den valda bilden är inte giltig.',
 	'toplists-error-title-exists' => 'Den här sidan finns redan. Du kan gå till <a href="$2" target="_blank">$1</a> eller ge den ett annat namn.',
@@ -1539,6 +1558,7 @@ $messages['sv'] = array(
 	'toplists-error-image-already-exists' => 'En bild med samma namn finns redan.',
 	'toplists-error-add-item-anon' => 'Anonyma användare är inte tillåtna att lägga till objekt i listor. Vänligen <a class="ajaxLogin" id="login" href="$1">logga in</a> eller <a class="ajaxLogin" id="signup" href="$2">registrera ett konto</a>.',
 	'toplists-error-add-item-permission' => 'Tillståndsfel: Ditt konto har inte beviljats rätten att skapa nya objekt.',
+	'toplists-error-add-item-list-not-exists' => 'Topp 10-listan "$1" finns inte.',
 	'toplists-error-backslash-not-allowed' => 'Tecknet "/" är inte tillåtet i rubriken till en Topp 10 lista.',
 	'toplists-upload-error-unknown' => 'Ett fel uppstod vid bearbetningen av uppladdningen. Försök igen.',
 	'toplists-editor-title-label' => 'Listnamn',
@@ -1558,6 +1578,7 @@ $messages['sv'] = array(
 	'toplists-items-updated' => '$1 {{PLURAL:$1|objekt|objekt}} uppdaterade',
 	'toplists-items-nochange' => 'Inga objekt ändrades',
 	'toplits-image-browser-no-picture-selected' => 'Ingen bild markerad',
+	'toplits-image-browser-clear-picture' => 'Rensa bild',
 	'toplits-image-browser-selected-picture' => 'Markerade: $1',
 	'toplists-image-browser-upload-btn' => 'Välj',
 	'toplists-image-browser-upload-label' => 'Ladda upp dina egna',
@@ -1576,6 +1597,7 @@ $messages['sv'] = array(
 	'toplists-list-add-item-name-label' => 'Håll igång listan...',
 	'toplists-list-item-voted' => 'Röstat',
 	'toplists-createpage-dialog-label' => 'Topp 10-lista',
+	'toplists-email-subject' => 'En Topp 10-lista har ändrats',
 	'toplists-email-body' => 'Ett hej från Wikia!
 
 Listan <a href="$1">$2</a> på Wikia har blivit ändrad.

@@ -348,6 +348,7 @@ $messages['bg'] = array(
 	'wmu-name' => 'Име',
 	'wmu-license' => 'Лиценз',
 	'wmu-size' => 'Размер',
+	'wmu-fullsize' => 'Пълен размер ($1x$2px)',
 	'wmu-width' => 'Ширина',
 	'wmu-optional' => '(незадължително)',
 	'wmu-prev' => 'Предишни 8',
@@ -1010,6 +1011,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'wmu-upload-image' => 'Cargar unha foto',
 	'wmu-upload' => 'Cargar',
 	'wmu-notlogged' => 'Acceda ao sistema ou rexístrese para cargar imaxes do seu ordenador',
 	'wmu-find' => 'Atopar',
@@ -1026,6 +1028,7 @@ $messages['gl'] = array(
 	'wmu-details-inf' => '<h1>Detalles do ficheiro</h1>Especifique un nome para este ficheiro. Escolla un que sexa descritivo.',
 	'wmu-name' => 'Nome',
 	'wmu-license' => 'Licenza',
+	'wmu-licensing' => 'Licenza',
 	'wmu-details-inf2' => '<h1>Opcións do artigo</h1>Elixa como quere que se mostre este ficheiro no seu artigo.',
 	'wmu-size' => 'Tamaño',
 	'wmu-thumbnail' => 'Miniatura',
@@ -1073,6 +1076,11 @@ $messages['gl'] = array(
 	'wmu-no-preview' => 'Non pode engadir unha imaxe ao artigo no modo de vista previa',
 	'wmu-no-protect' => 'Esta páxina está protexida, non pode engadir imaxes nela',
 	'wmu-no-rights' => 'Non ten os permisos necesarios para engadir imaxes nesta páxina',
+	'wmu-more-options' => 'Máis opcións',
+	'wmu-fewer-options' => 'Menos opcións',
+	'wmu-replace-default-caption' => 'substituír o pé de foto por defecto',
+	'wmu-appearance-in-article' => 'Aspecto na páxina',
+	'wmu-alignment' => 'Aliñamento',
 );
 
 /** Hebrew (עברית)
@@ -1504,6 +1512,8 @@ $messages['lb'] = array(
 	'wmu-imagelink' => '<b>Nei!</b> Biller derbäisetzenimages',
 	'wmu-imagebutton' => 'Biller derbäisetzen',
 	'wmu-gallery' => 'Gallerie',
+	'wmu-more-options' => 'Méi Optiounen',
+	'wmu-fewer-options' => 'Manner Optiounen',
 );
 
 /** Latvian (Latviešu)
@@ -2406,7 +2416,7 @@ $messages['sw'] = array(
 	'wmu-thumbnail' => 'Picha ndogo',
 	'wmu-fullsize' => 'Ukubwa-wote ($1x$2px)',
 	'wmu-width' => 'Upana',
-	'wmu-caption' => 'Kichwa cha picha',
+	'wmu-caption' => 'Maelezo ya picha',
 	'wmu-link' => 'Kiungo',
 );
 

@@ -428,8 +428,10 @@ $messages['bg'] = array(
 	'create-blog-post-recent-listing-title' => 'Последни публикации',
 	'create-blog-invalid-title-error' => 'Невалидно заглавие',
 	'create-blog-categories-textinput' => 'Добавяне на нова категория',
+	'create-blog-listing-preview' => 'Предварителен преглед',
 	'create-blog-listing-sortby-author' => 'Автор',
 	'blog-defaulttitle' => 'Блогове',
+	'blog-readfullpost' => 'Прочетете повече',
 	'blog-olderposts' => 'По-стари публикации',
 	'blog-newerposts' => 'По-нови публикации',
 	'blog-nbrcomments' => '{{PLURAL:$1|Един коментар|$1 коментара}}',
@@ -1915,6 +1917,13 @@ $messages['ja'] = array(
 	'blog-by' => '$1 by $2',
 );
 
+/** Khmer (ភាសាខ្មែរ)
+ * @author Lovekhmer
+ */
+$messages['km'] = array(
+	'blog-comment-delete' => 'លុប',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
@@ -1963,6 +1972,7 @@ $messages['lb'] = array(
 	'create-blog-invalid-title-error' => 'Net valabelen Titel',
 	'create-blog-categories-textinput' => 'Eng Kategorie derbäisetzen',
 	'create-blog-save' => 'Säit späicheren',
+	'create-blog-listing-preview' => 'Kucken ouni ofzespäicheren',
 	'create-blog-listing-matches-calculate' => 'Berechnen',
 	'create-blog-listing-matches-recalculate' => 'Nei berechnen',
 	'create-blog-listing-sortby' => 'Zortéiert no',
@@ -2229,7 +2239,7 @@ Cipta laman senarai blog untuk kategori-kategori seperti "Barack Obama", "Cereka
 	'create-blog-listing-matches-calculate' => 'Kira',
 	'create-blog-listing-matches-recalculate' => 'Kira semula',
 	'create-blog-listing-matches-info' => '{{PLURAL:$1|kiriman|kiriman-kiriman}} blog berpadan dijumpai',
-	'create-blog-listing-sortby' => 'Susun ikut',
+	'create-blog-listing-sortby' => 'Isih mengikut',
 	'create-blog-listing-sortby-date' => 'Terbaru',
 	'create-blog-listing-sortby-author' => 'Pengarang',
 	'create-blog-listing-sortby-comments' => 'Kiraan Ulasan',
@@ -2947,7 +2957,7 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 	'blog-create-label' => 'Criar entrada',
 	'blog-create-next-label' => 'Criar entrada nova',
 	'blog-create-listing-label' => 'Criar listagem de blogues',
-	'blog-refresh-label' => 'Refrescar',
+	'blog-refresh-label' => 'Actualizar',
 	'blog-widgets-label' => 'Painel de widgets',
 	'blog-listing-zero-other' => 'Este utilizador ainda não criou nenhuma entrada no blogue!',
 	'blog-listing-created' => 'A página de listagem de blogues foi criada',
@@ -3089,6 +3099,7 @@ Crie uma lista de blogs para categorias como "Barack Obama", "Humor" ou, até me
 );
 
 /** Romanian (Română)
+ * @author Minisarm
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -3115,6 +3126,8 @@ $messages['ro'] = array(
 	'blog-writeone' => 'Scrie una!',
 	'blog-empty-user-blog' => 'Acest utilizator n-a scris nicio postare pe blog încă!',
 	'blog-last-edited' => '<strong>Ultima modificare:</strong> $1',
+	'blog-added' => 'adăugată',
+	'blog-edited' => 'modificată',
 	'blog-page' => 'Blog',
 	'blog-zero-comments' => 'Niciun comentariu încă!',
 	'blog-comment-post' => 'Postează comentariu',
@@ -3367,9 +3380,14 @@ $messages['sv'] = array(
 	'create-blog-listing-form-info' => 'Sidor om blogg-listor används för att samla ihop blogg-listor från olika författare tillsammans på en enda sida.
 Skapa blogg-listor för kategorier som "Barack Obama", "Fan Fiction", eller kombinera flera kategorier.',
 	'create-blog-listing-preview' => 'Förhandsgranska',
+	'create-blog-listing-matches' => 'Träffar',
+	'create-blog-listing-matches-calculate' => 'Beräkna',
+	'create-blog-listing-matches-recalculate' => 'Beräkna igen',
 	'create-blog-listing-sortby' => 'Sortera efter',
 	'create-blog-listing-sortby-date' => 'Senaste',
 	'create-blog-listing-sortby-author' => 'Författare',
+	'create-blog-listing-sortby-comments' => 'Antal kommentarer',
+	'create-blog-listing-output-as-box' => 'Generera kod för att kopiera och klistra',
 	'blog-defaulttitle' => 'Bloggar',
 	'blog-continuereading' => 'Fortsätt läsa &raquo;',
 	'blog-readfullpost' => 'Läs mer',
@@ -3384,7 +3402,7 @@ Skapa blogg-listor för kategorier som "Barack Obama", "Fan Fiction", eller komb
 	'blog-edited' => 'redigerad',
 	'blog-page' => 'Blogg',
 	'blog-zero-comments' => 'Inga kommentarer än!',
-	'blog-comment-post' => 'Posta kommentar',
+	'blog-comment-post' => 'Skicka kommentar',
 	'blog-comments' => 'Kommentarer',
 	'blog-rc-comments' => 'Bloggkommentarer',
 	'blog-comments-new' => 'Ny kommentar på bloggen',
@@ -3459,8 +3477,8 @@ $messages['sw'] = array(
 	'create-blog-article-already-exists' => 'Ipo mchango wa blogu wenye jina hili tayari, kwa hiyo uchague jina tofauti tafadhali',
 	'create-blog-listing-title' => 'Anzisha ukurasa mpya wa kuorodhesha blogu',
 	'create-blog-listing-form-title' => 'Ukurasa wa kuorodhesha blogu ni nini?',
-	'create-blog-listing-form-info' => 'Kurasa za kuorodhesha blogu zinorodhesha pamoja blogu zilizoandikwa na waandishi mbalimbali.
-Anzisha kurasa za kuorodhesha blogu kwa ajili ya jamii kama "Barack Obama", "Muziki ya Afrika", au orodhesha jamii nyingi pamoja.',
+	'create-blog-listing-form-info' => 'Kurasa za kuorodhesha blogu zinorodhesha pamoja na blogu zilizoandikwa na waandishi mbalimbali katika ukurasa mmoja.
+Anzisha kurasa za kuorodhesha blogu kwa ajili ya jamii fulani kama vile "Barack Obama", "Muziki wa Afrika", au orodhesha jamii nyingi pamoja.',
 	'create-blog-listing-page-title' => 'Jina la ukurasa wa kuorodhesha blogu',
 	'create-blog-listing-preview' => 'Hakiki',
 	'create-blog-listing-matches' => 'Vifananisho',
@@ -3471,7 +3489,7 @@ Anzisha kurasa za kuorodhesha blogu kwa ajili ya jamii kama "Barack Obama", "Muz
 	'create-blog-listing-sortby-author' => 'Mwandishi',
 	'blog-defaulttitle' => 'Blogu',
 	'blog-continuereading' => 'Endelea kusoma &raquo;',
-	'blog-readfullpost' => 'Soma mchango mzima wa blogu',
+	'blog-readfullpost' => 'Soma zaidi',
 	'blog-olderposts' => 'Michango ya zamani zaidi',
 	'blog-newerposts' => 'Michango ya karibu zaidi',
 	'blog-nopostfound' => 'Hakuna michango.',
@@ -3506,7 +3524,7 @@ Anzisha kurasa za kuorodhesha blogu kwa ajili ya jamii kama "Barack Obama", "Muz
 	'blogs-recent-url-text' => 'Michango ya blogu ya hivi karibuni',
 	'blog-desc' => 'Makala za blogu',
 	'blog-movepage-badtitle' => 'Jina la mchango wa blogu ni batili.',
-	'blog-comment-sending' => 'Inatumiwa...',
+	'blog-comment-sending' => 'Inatumwa...',
 );
 
 /** Tamil (தமிழ்)
@@ -3730,6 +3748,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

@@ -302,6 +302,7 @@ $messages['es'] = array(
 	'scavengerhunt-game-has-been-enabled' => 'El juego seleccionado ha sido habilitado.',
 	'scavengerhunt-game-has-been-disabled' => 'El juego seleccionado ha sido deshabilitado.',
 	'scavengerhunt-game-has-not-been-saved' => 'El juego Scavenger Hunt no ha sido guardado.',
+	'scavengerhunt-edit-token-mismatch' => 'Token inválido. Inténtalo nuevamente.',
 	'scavengerhunt-entry-form-name' => 'Tu nombre:',
 	'scavengerhunt-entry-form-email' => 'Tu dirección de correo electrónico:',
 	'scavengerhunt-entry-form-submit' => 'Enviar entrada',
@@ -384,6 +385,37 @@ $messages['fr'] = array(
 	'scavengerhunt-entry-form-name' => 'Votre nom :',
 	'scavengerhunt-entry-form-email' => 'Votre adresse de courriel :',
 	'scavengerhunt-entry-form-submit' => 'Soumettre l’entrée',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'scavengerhunt-list-header-name' => 'Nome do xogo',
+	'scavengerhunt-list-header-is-enabled' => 'Activado?',
+	'scavengerhunt-list-header-actions' => 'Accións',
+	'scavengerhunt-list-enabled' => 'Activado',
+	'scavengerhunt-list-disabled' => 'Desactivado',
+	'scavengerhunt-list-edit' => 'editar',
+	'scavengerhunt-label-dialog-check' => '(mostrar o diálogo)',
+	'scavengerhunt-label-image-check' => '(mostrar a imaxe)',
+	'scavengerhunt-label-general' => 'Xeral',
+	'scavengerhunt-label-name' => 'Nome:',
+	'scavengerhunt-label-article-hidden-image' => 'Imaxe agochada:',
+	'scavengerhunt-label-entry-form' => 'Formulario de inscrición',
+	'scavengerhunt-button-add' => 'Engadir un xogo',
+	'scavengerhunt-button-save' => 'Gardar',
+	'scavengerhunt-button-disable' => 'Desactivar',
+	'scavengerhunt-button-enable' => 'Activar',
+	'scavengerhunt-button-delete' => 'Borrar',
+	'scavengerhunt-button-export' => 'Exportar a CSV',
+	'scavengerhunt-form-error' => 'Corrixa os seguintes erros:',
+	'scavengerhunt-form-error-no-landing-title' => 'Introduza o título da páxina inicial.',
+	'scavengerhunt-form-error-invalid-title' => 'O título da seguinte páxina non se atopou: "$1".',
+	'scavengerhunt-form-error-landing-button-text' => 'Introduza o texto do botón de inicio.',
+	'scavengerhunt-entry-form-name' => 'O seu nome:',
+	'scavengerhunt-entry-form-email' => 'O seu enderezo de correo electrónico:',
+	'scavengerhunt-entry-form-submit' => 'Enviar a entrada',
 );
 
 /** Hungarian (Magyar)
@@ -492,6 +524,7 @@ $messages['ku-latn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'scavengerhunt-list-header-name' => 'Numm vum Spill',
 	'scavengerhunt-label-name' => 'Numm:',
 	'scavengerhunt-button-save' => 'Späicheren',
 	'scavengerhunt-button-delete' => 'Läschen',
@@ -889,6 +922,24 @@ $messages['sr-ec'] = array(
 	'scavengerhunt-button-disable' => 'Онемогући',
 	'scavengerhunt-button-enable' => 'Омогући',
 	'scavengerhunt-button-delete' => 'Обриши',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'scavengerhunt-list-header-name' => 'Spelnamn',
+	'scavengerhunt-list-header-is-enabled' => 'Aktiverat?',
+	'scavengerhunt-label-name' => 'Namn:',
+	'scavengerhunt-button-add' => 'Lägg till ett spel',
+	'scavengerhunt-button-save' => 'Spara',
+	'scavengerhunt-button-disable' => 'Inaktivera',
+	'scavengerhunt-button-enable' => 'Aktivera',
+	'scavengerhunt-button-delete' => 'Radera',
+	'scavengerhunt-button-export' => 'Exportera till CSV',
+	'scavengerhunt-form-error' => 'Vänligen rätta följande fel:',
+	'scavengerhunt-entry-form-name' => 'Ditt namn:',
+	'scavengerhunt-entry-form-email' => 'Din e-postadress:',
 );
 
 /** Telugu (తెలుగు)

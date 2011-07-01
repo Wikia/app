@@ -47,6 +47,7 @@ $messages['ar'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'category-exhibition-page-header' => 'Страници в категория „$1“',
 	'category-exhibition-subcategories-header' => 'Подкатегории',
 );
 

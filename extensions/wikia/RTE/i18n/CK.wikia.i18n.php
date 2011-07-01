@@ -796,9 +796,9 @@ $messages['fr'] = array(
 	'rte-ck-bucket-controls' => 'Contrôles',
 	'rte-ck-commentEditor-title' => 'Éditeur de commentaires',
 	'rte-ck-errorPopupTitle' => 'Erreur !',
-	'rte-ck-hoverPreview-codedElement-intro' => "S'il vous plaît passez en mode source pour modifier !",
-	'rte-ck-hoverPreview-codedElement-title' => 'élément codé',
-	'rte-ck-hoverPreview-comment-intro' => "Cela ne peut être vu que lors de l'édition.",
+	'rte-ck-hoverPreview-codedElement-intro' => 'Veuillez passer en mode source pour modifier !',
+	'rte-ck-hoverPreview-codedElement-title' => 'Élément codé',
+	'rte-ck-hoverPreview-comment-intro' => 'Cela ne peut être vu que pendant la modification.',
 	'rte-ck-hoverPreview-comment-title' => 'Commentaire',
 	'rte-ck-hoverPreview-confirmDelete' => 'Souhaitez-vous vraiment supprimer cet élément de cette page ?',
 	'rte-ck-hoverPreview-delete' => 'supprimer',
@@ -820,14 +820,14 @@ $messages['fr'] = array(
 	'rte-ck-link-external-linkText' => 'Texte du lien',
 	'rte-ck-link-external-numberedLink' => 'Créer un lien numéroté (par exemple « [1] »)',
 	'rte-ck-link-external-tab' => 'Lien externe',
-	'rte-ck-link-external-url' => 'adresse URL',
+	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-link-internal-linkText' => 'Texte du lien',
 	'rte-ck-link-internal-pageName' => 'Nom de la page',
 	'rte-ck-link-internal-tab' => 'Lien interne',
 	'rte-ck-link-title' => 'Créer ou modifier un lien',
-	'rte-ck-link-label-target' => 'page cible ou URL',
+	'rte-ck-link-label-target' => 'Page cible ou URL',
 	'rte-ck-link-label-display' => 'Texte du lien',
-	'rte-ck-link-label-internal' => 'Vers une page wiki',
+	'rte-ck-link-label-internal' => 'Vers une page du wiki',
 	'rte-ck-link-label-external' => 'Vers un lien externe',
 	'rte-ck-link-status-checking' => "Vérification de l'état",
 	'rte-ck-link-status-exists' => 'La page existe',
@@ -835,8 +835,8 @@ $messages['fr'] = array(
 	'rte-ck-link-status-external' => 'Lien externe',
 	'rte-ck-media-delete' => 'supprimer',
 	'rte-ck-media-edit' => 'modifier',
-	'rte-ck-modeSwitch-toSource' => 'Basculer en mode source',
-	'rte-ck-modeSwitch-toWysiwyg' => 'Basculer en mode wysiwyg',
+	'rte-ck-modeSwitch-toSource' => 'Mode source',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Mode visuel',
 	'rte-ck-modeSwitch-error' => 'Une erreur s’est produite lors du changement de mode. Veuillez réessayer.',
 	'rte-ck-photoGallery-add' => 'Ajouter une galerie photo ou un diaporama',
 	'rte-ck-photoGallery-confirmDelete' => 'Souhaitez-vous vraiment supprimer la galerie photo de cette page ?',
@@ -847,8 +847,8 @@ $messages['fr'] = array(
 	'rte-ck-signature-add' => 'Ajouter votre signature',
 	'rte-ck-signature-label' => 'Signature',
 	'rte-ck-table-alignNotSet' => 'Non définie',
-	'rte-ck-table-invalidCols' => 'Le nombre de colonnes doit être un nombre supérieur à 0.',
-	'rte-ck-table-invalidRows' => 'Le nombre de rangées doit être un nombre supérieur à 0.',
+	'rte-ck-table-invalidCols' => 'Le nombre de colonnes doit être supérieur à 0.',
+	'rte-ck-table-invalidRows' => 'Le nombre de lignes doit être supérieur à 0.',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Autre modèle / mot magique',
 	'rte-ck-templateDropDown-label' => 'Modèle',
 	'rte-ck-templateDropDown-title' => 'Choisissez un modèle',
@@ -928,11 +928,13 @@ $messages['gl'] = array(
 	'rte-ck-media-edit' => 'modificar',
 	'rte-ck-modeSwitch-toSource' => 'Cambiar ao modo fonte',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Cambiar ao modo WYSIWYG',
+	'rte-ck-modeSwitch-error' => 'Houbo un erro durante o cambio de modo. Inténteo de novo.',
 	'rte-ck-photoGallery-add' => 'Engadir unha galería de fotos ou presentación de diapositivas',
 	'rte-ck-photoGallery-confirmDelete' => 'Está seguro de querer eliminar a galería da páxina?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Quere eliminar a galería?',
 	'rte-ck-photoGallery-tooltip' => 'Isto é unha galería.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Isto é unha presentación de diapositivas.',
+	'rte-ck-poll-add' => 'Engadir unha enquisa',
 	'rte-ck-signature-add' => 'Engadir a súa sinatura',
 	'rte-ck-signature-label' => 'Sinatura',
 	'rte-ck-table-alignNotSet' => 'Sen definir',
@@ -962,6 +964,9 @@ $messages['gl'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Quere eliminar o marcador de posición do vídeo?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Isto é un marcador de posición de vídeo.',
 	'rte-ck-widescreen-toggle' => 'Activar ou desactivar a pantalla completa',
+	'rte-ck-poll-confirmDelete' => 'Está seguro de querer eliminar a enquisa da páxina?',
+	'rte-ck-poll-confirmDeleteTitle' => 'Quere eliminar a enquisa?',
+	'rte-ck-spellchecker-moreSuggestions' => 'Máis suxestións',
 );
 
 /** Hungarian (Magyar)
@@ -2586,6 +2591,7 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author NavaRose
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

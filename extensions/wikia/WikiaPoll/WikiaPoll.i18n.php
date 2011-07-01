@@ -96,10 +96,13 @@ $messages['az'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'wikiapoll-desc' => 'Предоставя лесен начин за създаване и управление на анкети',
 	'wikiapoll-question' => '$1?',
 	'wikiapoll-thanks-for-vote' => 'Благодарности!',
 	'wikiapoll-vote' => 'Гласуване!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 глас|$1 гласа}}',
+	'wikiapoll-createpoll-headline' => 'Създаване на анкета',
+	'wikiapoll-editpoll-headline' => 'Редактиране на анкета',
 	'wikiapoll-question-label' => 'Въпрос',
 	'wikiapoll-cancel-label' => 'Отказване',
 	'wikiapoll-publish-label' => 'Публикуване',
@@ -114,6 +117,8 @@ $messages['br'] = array(
 	'wikiapoll-thanks-for-vote' => 'Trugarez !',
 	'wikiapoll-vote' => 'Votiñ !',
 	'wikiapoll-votes' => '({{PLURAL:$1|$1 vouezh|$1 mouezh}})',
+	'wikiapoll-question-label' => 'Goulenn',
+	'wikiapoll-addnewitem-label' => 'Ouzhpennañ un elfenn nevez',
 	'wikiapoll-cancel-label' => 'Nullañ',
 	'wikiapoll-publish-label' => 'Embann',
 );
@@ -240,6 +245,26 @@ $messages['fr'] = array(
 	'wikiapoll-publish-label' => 'Publier',
 	'wikiapoll-error-duplicate' => 'Un sondage portant ce nom existe déjà.',
 	'wikiapoll-error-invalid-title' => 'L’intitulé de la question n’est pas valide.',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'wikiapoll-desc' => 'Proporciona un xeito doado de crear e xestionar enquisas',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 persoa votou|$1 persoas votaron}}',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Grazas!',
+	'wikiapoll-vote' => 'Votar!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 voto|$1 votos}}',
+	'wikiapoll-createpoll-headline' => 'Crear a enquisa',
+	'wikiapoll-editpoll-headline' => 'Editar a enquisa',
+	'wikiapoll-question-label' => 'Pregunta',
+	'wikiapoll-addnewitem-label' => 'Engadir un elemento novo',
+	'wikiapoll-cancel-label' => 'Cancelar',
+	'wikiapoll-publish-label' => 'Publicar',
+	'wikiapoll-error-duplicate' => 'Xa existe unha enquisa con ese nome.',
+	'wikiapoll-error-invalid-title' => 'O texto da pregunta non é válido.',
 );
 
 /** Hungarian (Magyar)
@@ -492,6 +517,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'wikiapoll-desc' => 'Ger ett enkelt sätt att skapa och hantera omröstningar',
@@ -500,6 +526,11 @@ $messages['sv'] = array(
 	'wikiapoll-thanks-for-vote' => 'Tack!',
 	'wikiapoll-vote' => 'Rösta!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 röst|$1 röster}}',
+	'wikiapoll-question-label' => 'Fråga',
+	'wikiapoll-addnewitem-label' => 'Lägg till ett nytt objekt',
+	'wikiapoll-cancel-label' => 'Avbryt',
+	'wikiapoll-publish-label' => 'Publicera',
+	'wikiapoll-error-invalid-title' => 'Frågetexten är ogiltig.',
 );
 
 /** Telugu (తెలుగు)

@@ -59,7 +59,17 @@ $messages['fr'] = array(
 	'skinchooser-desc' => 'Permet aux utilisateurs de choisir des habillages dans leurs préférences',
 	'skinchooser-customcss' => 'Pour des thèmes personnalisés, sélectionnez l’option « personnalisé » dans le menu ci-dessus et spécifiez le code CSS personnalisé dans [[MediaWiki:Monaco.css]].',
 	'new-look' => 'Nouvelle apparence de Wikia',
-	'site-layout' => 'Gabarits du site',
+	'site-layout' => 'Apparences du site',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'skinchooser-desc' => 'Permite aos usuarios seleccionar a aparencia nas súas preferencias',
+	'skinchooser-customcss' => 'Para os temas personalizados, seleccione a opción personalizada no menú superior e especifique o CSS personalizado en [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Nova aparencia de Wika',
+	'site-layout' => 'Deseño do sitio',
 );
 
 /** Interlingua (Interlingua)

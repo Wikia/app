@@ -160,7 +160,7 @@ $messages['lad'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'tog-disablelinksuggest' => 'Déi proposéiert Linken net weisen',
+	'tog-disablelinksuggest' => 'Déi proposéiert Linken am Quellcode-Modus net weisen',
 );
 
 /** Latvian (Latviešu)
@@ -253,7 +253,7 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
-	'tog-disablelinksuggest' => "No fà vedè 'u collegamende suggerite",
+	'tog-disablelinksuggest' => "No fà vedè 'u collegamende suggerite jndr'à 'u mode Sorgende",
 );
 
 /** Russian (Русский) */
@@ -278,9 +278,17 @@ $messages['su'] = array(
 
 /** Swedish (Svenska)
  * @author Sertion
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'tog-disablelinksuggest' => 'Visa inte länkförslag',
+	'tog-disablelinksuggest' => 'Visa inte länkförslag i källäge',
+);
+
+/** Thai (ไทย)
+ * @author Akkhaporn
+ */
+$messages['th'] = array(
+	'tog-disablelinksuggest' => 'การเชื่อมโยงไม่แสดงให้เห็นในโหมดต้นแบบ',
 );
 
 /** Tagalog (Tagalog)

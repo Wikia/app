@@ -94,6 +94,41 @@ $messages['qqq'] = array(
 	'wikiaquiz-game-cadence-1' => 'Third part of "Ready - Set - Go!" (sports countdown)',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'wikiaquiz-title-label' => 'Заглавие',
+	'wikiaquiz-moreinfoarticle-label' => 'Статия',
+	'wikiaquiz-image-label' => 'Изображение (незадължително)',
+	'wikiaquiz-cancel-label' => 'Отказване',
+	'wikiaquiz-game-question-label' => 'ВЪПРОС',
+	'wikiaquiz-game-next-button' => 'Следващ въпрос',
+	'wikiaquiz-game-finish-button' => 'Приключване',
+	'wikiaquiz-game-continue-button' => 'Продължаване',
+);
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'wikiaquiz-title-label' => 'Titl',
+	'wikiaquiz-questions-label' => 'Goulennoù',
+	'wikiaquiz-answers-label' => 'Respontoù',
+	'wikiaquiz-answer-label' => 'Respont',
+	'wikiaquiz-correct-label' => 'Reizh ?',
+	'wikiaquiz-addnewitem-label' => 'Ouzhpennañ un elfenn nevez',
+	'wikiaquiz-cancel-label' => 'Nullañ',
+	'wikiaquiz-publish-label' => 'Embann',
+	'wikiaquiz-game-start-button' => "Kregiñ da c'hoari",
+	'wikiaquiz-game-cadence-3' => 'Prest',
+	'wikiaquiz-game-cadence-1' => "Kit de'i!",
+	'wikiaquiz-game-question-label' => 'GOULENN',
+	'wikiaquiz-game-next-button' => 'Goulenn da-heul',
+	'wikiaquiz-game-finish-button' => 'Echuiñ',
+	'wikiaquiz-game-continue-button' => "Kenderc'hel",
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -204,6 +239,97 @@ $messages['es'] = array(
 	'wikiaquiz-facebook-creative' => 'Ven a jugar $1 en {{SITENAME}}',
 );
 
+/** French (Français)
+ * @author Cmarget
+ * @author Crochet.david
+ * @author Wyz
+ */
+$messages['fr'] = array(
+	'wikiaquiz-desc' => 'Fournit un moyen facile de créer et de gérer des quizz',
+	'wikiaquiz-createquiz-headline' => 'Créer un quizz',
+	'wikiaquiz-editquiz-headline' => 'Modifier le quizz',
+	'wikiaquiz-createquizarticle-headline' => 'Créer les questions et les réponses du quizz',
+	'wikiaquiz-editquizarticle-headline' => 'Modifier les questions et les réponses du quizz',
+	'wikiaquiz-title-label' => 'Titre',
+	'wikiaquiz-titlescreentext-label' => 'Texte de l’écran de titre',
+	'wikiaquiz-titlescreenimages-label' => 'Images de l’écran de titre',
+	'wikiaquiz-moreinfoheading-label' => 'En-tête « Plus d’informations »',
+	'wikiaquiz-moreinfolinks-label' => "Liens « Plus d'informations »",
+	'wikiaquiz-moreinfoarticle-label' => 'Article',
+	'wikiaquiz-moreinfolinktext-label' => 'Texte du lien',
+	'wikiaquiz-question-label' => 'Question',
+	'wikiaquiz-image-label' => 'Image (facultatif)',
+	'wikiaquiz-explanation-label' => 'Explication de la réponse (facultatif)',
+	'wikiaquiz-quiz-label' => 'Quizz',
+	'wikiaquiz-questions-label' => 'Questions',
+	'wikiaquiz-answers-label' => 'Réponses',
+	'wikiaquiz-answer-label' => 'Réponse',
+	'wikiaquiz-correct-label' => 'Correct ?',
+	'wikiaquiz-addnewitem-label' => 'Ajouter un nouvel élément',
+	'wikiaquiz-cancel-label' => 'Annuler',
+	'wikiaquiz-publish-label' => 'Publier',
+	'wikiaquiz-error-duplicate-quiz' => 'Il existe déjà un questionnaire avec ce nom.',
+	'wikiaquiz-error-duplicate-question' => 'Il existe déjà une question avec ce nom.',
+	'wikiaquiz-error-invalid-question' => 'L’intitulé de la question n’est pas valide.',
+	'wikiaquiz-error-invalid-image' => 'L’image n’est pas valide : $1',
+	'wikiaquiz-error-missing-answers' => 'Vous devez fournir au moins une réponse.',
+	'wikiaquiz-error-invalid-correct-answer' => 'Vous devez donner une réponse correcte.',
+	'wikiaquiz-error-invalid-quiz' => 'Le nom de ce quizz n’est pas valide.',
+	'wikiaquiz-error-invalid-article' => 'L’ID article n’est pas valide.',
+	'wikiaquiz-error-invalid-article-with-details' => 'L’article n’est pas valide : $1',
+	'wikiaquiz-game-start-button' => 'Démarrer le jeu',
+	'wikiaquiz-game-cadence-3' => 'À vos marques',
+	'wikiaquiz-game-cadence-2' => 'Prêt',
+	'wikiaquiz-game-cadence-1' => 'Partez !',
+	'wikiaquiz-game-question-label' => 'QUESTION',
+	'wikiaquiz-game-next-button' => 'Question suivante',
+	'wikiaquiz-game-finish-button' => 'Terminer',
+	'wikiaquiz-game-correct-label' => 'Correct ! Vous assurez.',
+	'wikiaquiz-game-incorrect-label' => 'FAUX. Hou !',
+	'wikiaquiz-game-congratulations' => 'Bien joué, $1 !',
+	'wikiaquiz-game-congratulations-anon' => 'Bien joué !',
+	'wikiaquiz-game-your-score' => 'VOTRE SCORE EST DE',
+	'wikiaquiz-game-continue-button' => 'Continuer',
+	'wikiaquiz-game-thanks' => 'Merci d’avoir participé !',
+	'wikiaquiz-game-challenge' => 'Défiez vos amis d’y participer !',
+	'wikiaquiz-game-mute' => 'Muet',
+	'wikiaquiz-facebook-creative' => '$1, venez jouer sur {{SITENAME}}',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'wikiaquiz-title-label' => 'Título',
+	'wikiaquiz-moreinfoarticle-label' => 'Artigo',
+	'wikiaquiz-moreinfolinktext-label' => 'Texto da ligazón',
+	'wikiaquiz-question-label' => 'Pregunta',
+	'wikiaquiz-image-label' => 'Imaxe (opcional)',
+	'wikiaquiz-explanation-label' => 'Explicación da resposta (opcional)',
+	'wikiaquiz-questions-label' => 'Preguntas',
+	'wikiaquiz-answers-label' => 'Respostas',
+	'wikiaquiz-answer-label' => 'Resposta',
+	'wikiaquiz-correct-label' => 'Correcto?',
+	'wikiaquiz-addnewitem-label' => 'Engadir un elemento novo',
+	'wikiaquiz-cancel-label' => 'Cancelar',
+	'wikiaquiz-publish-label' => 'Publicar',
+	'wikiaquiz-game-start-button' => 'Comezar o xogo',
+	'wikiaquiz-game-cadence-3' => 'Preparado',
+	'wikiaquiz-game-cadence-2' => 'Listo',
+	'wikiaquiz-game-cadence-1' => 'Xa!',
+	'wikiaquiz-game-question-label' => 'PREGUNTA',
+	'wikiaquiz-game-next-button' => 'Seguinte pregunta',
+	'wikiaquiz-game-finish-button' => 'Rematar',
+	'wikiaquiz-game-correct-label' => 'Correcto! Moi ben.',
+	'wikiaquiz-game-incorrect-label' => 'INCORRECTO. Fóra.',
+	'wikiaquiz-game-congratulations' => 'Bo traballo, $1!',
+	'wikiaquiz-game-congratulations-anon' => 'Bo traballo!',
+	'wikiaquiz-game-your-score' => 'A SÚA PUNTUACIÓN É',
+	'wikiaquiz-game-continue-button' => 'Continuar',
+	'wikiaquiz-game-thanks' => 'Grazas por xogar!',
+	'wikiaquiz-game-mute' => 'Silenciar',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -257,6 +383,110 @@ $messages['ia'] = array(
 	'wikiaquiz-game-challenge' => 'Defia tu amicos a jocar!',
 	'wikiaquiz-game-mute' => 'Assurdar',
 	'wikiaquiz-facebook-creative' => 'Veni jocar al $1 a {{SITENAME}}',
+);
+
+/** Italian (Italiano)
+ * @author Minerva Titani
+ */
+$messages['it'] = array(
+	'wikiaquiz-createquiz-headline' => 'Crea Quiz',
+	'wikiaquiz-editquiz-headline' => 'Modifica Quiz',
+	'wikiaquiz-createquizarticle-headline' => 'Crea domanda e risposte del Quiz',
+	'wikiaquiz-editquizarticle-headline' => 'Modifica domanda e risposte del Quiz',
+	'wikiaquiz-title-label' => 'Titolo',
+	'wikiaquiz-question-label' => 'Domanda',
+	'wikiaquiz-image-label' => 'Immagine (opzionale)',
+	'wikiaquiz-questions-label' => 'Domande',
+	'wikiaquiz-answers-label' => 'Risposte',
+	'wikiaquiz-cancel-label' => 'Annulla',
+	'wikiaquiz-publish-label' => 'Pubblica',
+	'wikiaquiz-error-invalid-quiz' => 'Il nome del Quiz non è valido.',
+	'wikiaquiz-game-start-button' => 'Inizia il gioco',
+	'wikiaquiz-game-cadence-3' => 'Pronti',
+	'wikiaquiz-game-cadence-2' => 'Partenza',
+	'wikiaquiz-game-cadence-1' => 'Via!',
+	'wikiaquiz-game-question-label' => 'DOMANDA',
+	'wikiaquiz-game-next-button' => 'Domanda successiva',
+	'wikiaquiz-game-finish-button' => 'Termina',
+	'wikiaquiz-game-correct-label' => 'Giusto! Sei forte!',
+	'wikiaquiz-game-incorrect-label' => 'SBAGLIATO. Buuh...',
+	'wikiaquiz-game-your-score' => 'IL TUO PUNTEGGIO È',
+	'wikiaquiz-game-continue-button' => 'Continua',
+	'wikiaquiz-game-thanks' => 'Grazie per aver giocato!',
+	'wikiaquiz-game-mute' => 'Muto',
+);
+
+/** Kurdish (Latin) (Kurdî (Latin))
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'wikiaquiz-title-label' => 'Sernav',
+	'wikiaquiz-answer-label' => 'Bersiv',
+	'wikiaquiz-cancel-label' => 'Betal bike',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wikiaquiz-title-label' => 'Titel',
+	'wikiaquiz-moreinfoarticle-label' => 'Artikel',
+	'wikiaquiz-question-label' => 'Fro',
+	'wikiaquiz-questions-label' => 'Froen',
+	'wikiaquiz-answers-label' => 'Äntwerten',
+	'wikiaquiz-answer-label' => 'Äntwert',
+	'wikiaquiz-game-question-label' => 'FRO',
+	'wikiaquiz-game-next-button' => 'Nächst Fro',
+);
+
+/** Maithili (मैथिली)
+ * @author Vinitutpal
+ */
+$messages['mai'] = array(
+	'wikiaquiz-createquiz-headline' => 'प्रश्नोतरी बनाऊ',
+	'wikiaquiz-editquiz-headline' => 'प्रश्नोतरी के संपादन करू',
+	'wikiaquiz-createquizarticle-headline' => 'प्रश्नोतरीक प्रश्न आ उत्तर के बनाऊ',
+	'wikiaquiz-editquizarticle-headline' => 'प्रश्नोतरीक प्रश्न आ उत्तर के सम्पादित करू',
+	'wikiaquiz-title-label' => 'शीर्षक',
+	'wikiaquiz-moreinfoheading-label' => 'बेसी जानकारी बला शीर्षक',
+	'wikiaquiz-moreinfolinks-label' => 'बेसी जानकारी बला लिंक',
+	'wikiaquiz-moreinfoarticle-label' => 'लेख',
+	'wikiaquiz-question-label' => 'प्रश्न',
+	'wikiaquiz-image-label' => 'तस्वीर (वैकल्पिक)',
+	'wikiaquiz-explanation-label' => 'उत्तरक व्याख्या (वैकल्पिक)',
+	'wikiaquiz-quiz-label' => 'प्रश्नोतरी',
+	'wikiaquiz-questions-label' => 'प्रश्न',
+	'wikiaquiz-answers-label' => 'उत्तर',
+	'wikiaquiz-answer-label' => 'उत्तर',
+	'wikiaquiz-correct-label' => 'सही?',
+	'wikiaquiz-addnewitem-label' => 'नब चीज जोडू',
+	'wikiaquiz-cancel-label' => 'समाप्त',
+	'wikiaquiz-publish-label' => 'प्रकाशित करू',
+	'wikiaquiz-error-duplicate-quiz' => 'अहि प्रश्नोतरीक नाम पहिने से उपलब्ध अछि.',
+	'wikiaquiz-error-duplicate-question' => 'ई प्रश्न पहिने से उपलब्ध अछि',
+	'wikiaquiz-error-invalid-question' => 'लिखल प्रश्न मौजूद नहि अछि.',
+	'wikiaquiz-error-invalid-image' => 'तस्वीर उपलब्ध नहि अछि.: $1',
+	'wikiaquiz-error-missing-answers' => 'अहां के एकटा उत्तर दिये परत.',
+	'wikiaquiz-error-invalid-correct-answer' => 'अहां के एकटा सही उत्तर दिये परत.',
+	'wikiaquiz-error-invalid-quiz' => 'प्रश्न गलत अछि.',
+	'wikiaquiz-error-invalid-article' => 'लेख क आईडी गलत अछि',
+	'wikiaquiz-error-invalid-article-with-details' => 'लेख गलत अछि: $1',
+	'wikiaquiz-game-start-button' => 'खेल शुरू करू',
+	'wikiaquiz-game-cadence-3' => 'शुरू',
+	'wikiaquiz-game-cadence-2' => 'सेट भ गेल',
+	'wikiaquiz-game-cadence-1' => 'जाऊ',
+	'wikiaquiz-game-question-label' => 'प्रश्न',
+	'wikiaquiz-game-next-button' => 'दोसर प्रश्न',
+	'wikiaquiz-game-finish-button' => 'पूर्ण',
+	'wikiaquiz-game-incorrect-label' => 'गलत. छी-छी',
+	'wikiaquiz-game-congratulations' => 'बड़ बढ़िया,$1!',
+	'wikiaquiz-game-congratulations-anon' => 'बड़ बढ़िया!',
+	'wikiaquiz-game-your-score' => 'अहां के स्कोर भेल',
+	'wikiaquiz-game-continue-button' => 'जारी',
+	'wikiaquiz-game-thanks' => 'खेलहि लेल धन्यवाद.',
+	'wikiaquiz-game-challenge' => 'खेलहि लेल अप्पन मित्र के बजाऊ.',
+	'wikiaquiz-game-mute' => 'चुप',
+	'wikiaquiz-facebook-creative' => 'आऊ, खेलहु$1',
 );
 
 /** Macedonian (Македонски)
@@ -371,33 +601,58 @@ $messages['ms'] = array(
 
 /** Dutch (Nederlands)
  * @author SPQRobin
+ * @author Siebrand
  */
 $messages['nl'] = array(
+	'wikiaquiz-desc' => 'Maakt het aanmaken en beheren van peilingen mogelijk',
 	'wikiaquiz-createquiz-headline' => 'Quiz aanmaken',
 	'wikiaquiz-editquiz-headline' => 'Quiz bewerken',
+	'wikiaquiz-createquizarticle-headline' => 'Vragen en antwoorden aanmaken',
+	'wikiaquiz-editquizarticle-headline' => 'Vragen en antwoorden bewerken',
 	'wikiaquiz-title-label' => 'Titel',
-	'wikiaquiz-moreinfoarticle-label' => 'Artikel',
+	'wikiaquiz-titlescreentext-label' => 'Koptekst voor het scherm',
+	'wikiaquiz-titlescreenimages-label' => 'Afbeeldingen voor het scherm',
+	'wikiaquiz-moreinfoheading-label' => 'Koptekst voor meer informatie',
+	'wikiaquiz-moreinfolinks-label' => 'Verwijzingen voor meer informatie',
+	'wikiaquiz-moreinfoarticle-label' => 'Pagina',
 	'wikiaquiz-moreinfolinktext-label' => 'Linktekst',
 	'wikiaquiz-question-label' => 'Vraag',
 	'wikiaquiz-image-label' => 'Afbeelding (optioneel)',
+	'wikiaquiz-explanation-label' => 'Toelichting op het antwoord (optioneel)',
 	'wikiaquiz-quiz-label' => 'Quiz',
 	'wikiaquiz-questions-label' => 'Vragen',
 	'wikiaquiz-answers-label' => 'Antwoorden',
 	'wikiaquiz-answer-label' => 'Antwoord',
+	'wikiaquiz-correct-label' => 'Correct?',
 	'wikiaquiz-addnewitem-label' => 'Nieuw item toevoegen',
 	'wikiaquiz-cancel-label' => 'Annuleren',
 	'wikiaquiz-publish-label' => 'Publiceren',
 	'wikiaquiz-error-duplicate-quiz' => 'Een quiz met die naam bestaat al.',
 	'wikiaquiz-error-duplicate-question' => 'Een vraag met die naam bestaat al.',
+	'wikiaquiz-error-invalid-question' => 'De vraagtekst is ongeldig.',
+	'wikiaquiz-error-invalid-image' => 'Afbeelding is ongeldig: $1',
 	'wikiaquiz-error-missing-answers' => 'U moet ten minste één antwoord opgeven.',
+	'wikiaquiz-error-invalid-correct-answer' => 'U moet één correct antwoord aangeven.',
+	'wikiaquiz-error-invalid-quiz' => 'De naam is ongeldig.',
+	'wikiaquiz-error-invalid-article' => 'Het artikel-ID is ongeldig.',
+	'wikiaquiz-error-invalid-article-with-details' => 'Pagina is ongeldig: $1',
 	'wikiaquiz-game-start-button' => 'Spel starten',
 	'wikiaquiz-game-cadence-3' => 'Klaar',
+	'wikiaquiz-game-cadence-2' => 'Instellen',
+	'wikiaquiz-game-cadence-1' => 'OK',
 	'wikiaquiz-game-question-label' => 'VRAAG',
 	'wikiaquiz-game-next-button' => 'Volgende vraag',
+	'wikiaquiz-game-finish-button' => 'Afronden',
+	'wikiaquiz-game-correct-label' => 'Correct! Heel goed.',
+	'wikiaquiz-game-incorrect-label' => 'Fout. Niet zo mooi.',
 	'wikiaquiz-game-congratulations' => 'Goed gedaan, $1!',
 	'wikiaquiz-game-congratulations-anon' => 'Goed gedaan!',
 	'wikiaquiz-game-your-score' => 'UW SCORE IS',
 	'wikiaquiz-game-continue-button' => 'Doorgaan',
+	'wikiaquiz-game-thanks' => 'Dank u wel voor uw deelname!',
+	'wikiaquiz-game-challenge' => 'Daag uw vrienden uit om deel te nemen!',
+	'wikiaquiz-game-mute' => 'Dempen',
+	'wikiaquiz-facebook-creative' => 'Doe mee aan "$1" op {{SITENAME}}',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -453,5 +708,133 @@ $messages['no'] = array(
 	'wikiaquiz-game-challenge' => 'Utfordre vennene dine til å spille!',
 	'wikiaquiz-game-mute' => 'Demp',
 	'wikiaquiz-facebook-creative' => 'Kom og spill $1 på {{SITENAME}}',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'wikiaquiz-desc' => 'Uma forma fácil de criar e gerir testes',
+	'wikiaquiz-createquiz-headline' => 'Criar Teste',
+	'wikiaquiz-editquiz-headline' => 'Editar Teste',
+	'wikiaquiz-createquizarticle-headline' => 'Criar Pergunta e Respostas de Teste',
+	'wikiaquiz-editquizarticle-headline' => 'Editar Pergunta e Respostas de Teste',
+	'wikiaquiz-title-label' => 'Título',
+	'wikiaquiz-titlescreentext-label' => 'Texto da página de título',
+	'wikiaquiz-titlescreenimages-label' => 'Imagens da página de título',
+	'wikiaquiz-moreinfoheading-label' => 'Cabeçalho para mais informações',
+	'wikiaquiz-moreinfolinks-label' => 'Links para mais informações',
+	'wikiaquiz-moreinfoarticle-label' => 'Artigo',
+	'wikiaquiz-moreinfolinktext-label' => 'Texto do Link',
+	'wikiaquiz-question-label' => 'Pergunta',
+	'wikiaquiz-image-label' => 'Imagem (opcional)',
+	'wikiaquiz-explanation-label' => 'Explicação da resposta (opcional)',
+	'wikiaquiz-quiz-label' => 'Teste',
+	'wikiaquiz-questions-label' => 'Perguntas',
+	'wikiaquiz-answers-label' => 'Respostas',
+	'wikiaquiz-answer-label' => 'Resposta',
+	'wikiaquiz-correct-label' => 'Correcta?',
+	'wikiaquiz-addnewitem-label' => 'Acrescentar um elemento',
+	'wikiaquiz-cancel-label' => 'Cancelar',
+	'wikiaquiz-publish-label' => 'Publicar',
+	'wikiaquiz-error-duplicate-quiz' => 'Já existe um teste com esse nome.',
+	'wikiaquiz-error-duplicate-question' => 'Já existe uma pergunta com esse nome.',
+	'wikiaquiz-error-invalid-question' => 'O texto da pergunta é inválido.',
+	'wikiaquiz-error-invalid-image' => 'A imagem é inválida: $1',
+	'wikiaquiz-error-missing-answers' => 'Tem de dar pelo menos uma resposta.',
+	'wikiaquiz-error-invalid-correct-answer' => 'Tem de escolher uma resposta correcta.',
+	'wikiaquiz-error-invalid-quiz' => 'O nome do teste é inválido.',
+	'wikiaquiz-error-invalid-article' => 'A identificação do artigo é inválida.',
+	'wikiaquiz-error-invalid-article-with-details' => 'O artigo é inválido: $1',
+	'wikiaquiz-game-start-button' => 'Iniciar Jogo',
+	'wikiaquiz-game-cadence-3' => 'Pronto?',
+	'wikiaquiz-game-cadence-2' => 'Atenção',
+	'wikiaquiz-game-cadence-1' => 'Partida!',
+	'wikiaquiz-game-question-label' => 'PERGUNTA',
+	'wikiaquiz-game-next-button' => 'Próxima Pergunta',
+	'wikiaquiz-game-finish-button' => 'Terminar',
+	'wikiaquiz-game-correct-label' => 'Correcto! Muito bem.',
+	'wikiaquiz-game-incorrect-label' => 'ERRADO.',
+	'wikiaquiz-game-congratulations' => 'Muito bem, $1!',
+	'wikiaquiz-game-congratulations-anon' => 'Muito bem!',
+	'wikiaquiz-game-your-score' => 'A SUA PONTUAÇÃO É',
+	'wikiaquiz-game-continue-button' => 'Continuar',
+	'wikiaquiz-game-thanks' => 'Obrigado por ter jogado!',
+	'wikiaquiz-game-challenge' => 'Desafie os seus amigos a jogar!',
+	'wikiaquiz-game-mute' => 'Mudo',
+	'wikiaquiz-facebook-creative' => 'Venha jogar $1 na {{SITENAME}}',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'wikiaquiz-desc' => 'Ger ett enkelt sätt att skapa och hantera quizar (frågesporter)',
+	'wikiaquiz-createquiz-headline' => 'Skapa quiz',
+	'wikiaquiz-editquiz-headline' => 'Redigera quiz',
+	'wikiaquiz-createquizarticle-headline' => 'Skapa frågor och svar för quizet',
+	'wikiaquiz-editquizarticle-headline' => 'Redigera frågor och svar för quizet',
+	'wikiaquiz-title-label' => 'Titel',
+	'wikiaquiz-titlescreentext-label' => 'Titelskärmstext',
+	'wikiaquiz-titlescreenimages-label' => 'Titelskärmsbilder',
+	'wikiaquiz-moreinfoheading-label' => 'Mer info-rubrik',
+	'wikiaquiz-moreinfolinks-label' => 'Mer info-länkar',
+	'wikiaquiz-moreinfoarticle-label' => 'Artikel',
+	'wikiaquiz-moreinfolinktext-label' => 'Länktext',
+	'wikiaquiz-question-label' => 'Fråga',
+	'wikiaquiz-image-label' => 'Image (valfritt)',
+	'wikiaquiz-explanation-label' => 'Förklaring till svar  (valfritt)',
+	'wikiaquiz-quiz-label' => 'Quiz',
+	'wikiaquiz-questions-label' => 'Frågor',
+	'wikiaquiz-answers-label' => 'Svar',
+	'wikiaquiz-answer-label' => 'Svar',
+	'wikiaquiz-correct-label' => 'Korrekt?',
+	'wikiaquiz-addnewitem-label' => 'Lägg till nytt objekt',
+	'wikiaquiz-cancel-label' => 'Avbryt',
+	'wikiaquiz-publish-label' => 'Publicera',
+	'wikiaquiz-error-duplicate-quiz' => 'Ett quiz med det namnet finns redan.',
+	'wikiaquiz-error-duplicate-question' => 'En fråga med det namnet finns redan.',
+	'wikiaquiz-error-invalid-question' => 'Frågetexten är ogiltig.',
+	'wikiaquiz-error-invalid-image' => 'Bilden är ogiltig: $1',
+	'wikiaquiz-error-missing-answers' => 'Du måste ange minst ett svar.',
+	'wikiaquiz-error-invalid-correct-answer' => 'Du måste ange ett korrekt svar.',
+	'wikiaquiz-error-invalid-quiz' => 'Quiznamnet är ogiltigt.',
+	'wikiaquiz-error-invalid-article' => 'Artikel-ID är ogiltigt.',
+	'wikiaquiz-error-invalid-article-with-details' => 'Artikel är ogiltig: $1',
+	'wikiaquiz-game-start-button' => 'Starta spelet',
+	'wikiaquiz-game-cadence-3' => 'Klara',
+	'wikiaquiz-game-cadence-2' => 'Färdiga',
+	'wikiaquiz-game-cadence-1' => 'Gå!',
+	'wikiaquiz-game-question-label' => 'FRÅGA',
+	'wikiaquiz-game-next-button' => 'Nästa fråga',
+	'wikiaquiz-game-finish-button' => 'Slutför',
+	'wikiaquiz-game-correct-label' => 'Rätt! Du rockar!',
+	'wikiaquiz-game-incorrect-label' => 'FEL. Buu.',
+	'wikiaquiz-game-congratulations' => 'Bra jobbat, $1!',
+	'wikiaquiz-game-congratulations-anon' => 'Snyggt jobbat!',
+	'wikiaquiz-game-your-score' => 'DIN POÄNGSUMMA ÄR',
+	'wikiaquiz-game-continue-button' => 'Fortsätt',
+	'wikiaquiz-game-thanks' => 'Tack för att du spelar!',
+	'wikiaquiz-game-challenge' => 'Utmana dina vänner att spela!',
+	'wikiaquiz-game-mute' => 'Tyst',
+	'wikiaquiz-facebook-creative' => 'Kom och spela $1 på {{SITENAME}}',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'wikiaquiz-moreinfolinktext-label' => 'లంకె పాఠ్యం',
+	'wikiaquiz-question-label' => 'ప్రశ్న',
+	'wikiaquiz-image-label' => 'బొమ్మ (ఐచ్చికం)',
+	'wikiaquiz-explanation-label' => 'జవాబు వివరణ (ఐచ్చికం)',
+	'wikiaquiz-questions-label' => 'ప్రశ్నలు',
+	'wikiaquiz-answers-label' => 'జవాబులు',
+	'wikiaquiz-answer-label' => 'జవాబు',
+	'wikiaquiz-cancel-label' => 'రద్దుచేయి',
+	'wikiaquiz-publish-label' => 'ప్రచురించు',
+	'wikiaquiz-game-cadence-1' => 'వెళ్ళు!',
+	'wikiaquiz-game-next-button' => 'తర్వాతి ప్రశ్న',
+	'wikiaquiz-game-continue-button' => 'కొనసాగించు',
 );
 

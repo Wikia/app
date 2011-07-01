@@ -119,6 +119,20 @@ $messages['fr'] = array(
 	'loggernoresult' => 'Aucun résultat trouvé',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'logger-desc' => 'Rexistro para escrituras traseiras',
+	'logger' => 'Rexistro traseiro',
+	'loggertitle' => 'Rexistro traseiro',
+	'loggerselectlogname' => 'Seleccione o nome do rexistro:',
+	'loggerrecordswithpercent' => "'''$1''' rexistros ('''$2''' por cento completado)",
+	'loggerrecords' => '$1 rexistros',
+	'loggergo' => 'Mostrar',
+	'loggernoresult' => 'Non se atopou ningún resultado',
+);
+
 /** Hungarian (Magyar)
  * @author Dani
  */

@@ -565,6 +565,19 @@ $messages['sv'] = array(
 	'ajaxpoll-submitting' => 'Du skickar in din röst, var god vänta...',
 );
 
+/** Thai (ไทย)
+ * @author Akkhaporn
+ */
+$messages['th'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbspของคะแนนเสียงทั้งหมด',
+	'ajaxpoll-thankyou' => 'ขอบคุณสำหรับออกเสียงของคุณ',
+	'ajaxpoll-error' => 'มีปัญหากับการประมวลผลการลงคะแนนเสียงของคุณ, โปรดลองใหม่อีกครั้ง',
+	'ajaxpoll-summary' => 'แบบสำรวจถูกสร้างขึ้นที่ $1 เมื่อ $2, และมี $3 คนเข้าลงคะแนนเสียง',
+	'ajaxpoll-submit' => 'ลงคะแนน!',
+	'ajaxpoll-closed' => 'ขณะนี้แบบสำรวจได้ถูกปิดลงแล้ว. และเพลิดเพลินกับผลการสำรวจ',
+	'ajaxpoll-submitting' => 'กรุณารอสักครู่, กำลังลงคะแนนเสียงของคุณ',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -603,6 +616,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

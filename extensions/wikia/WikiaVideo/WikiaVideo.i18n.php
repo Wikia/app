@@ -25,10 +25,9 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'wikiavideo-updated' => '$1 is the title of the updated file',
 	'wikiavideo-back' => '{{Identical|Back}}',
 	'wikiavideo-links' => '{{Identical|Link}}',
-	'wikiavideo-updated' => '$1 is the title of the updated file',
-	'wikiavideo-details' => '$1 is a link with the videotitle as contents, $2 is dimensions in pixels, $3 is a URL of the provider, $4 is the provider\'s name',
 	'wikiavideo-deleted-old' => 'Message displayed when you succeed in deleting a version of a video.
 
 Parameters:
@@ -42,6 +41,7 @@ Parameters:
 * $3 is the date the old video version was created
 * $4 is the URL of the old video version
 * $5 is the video title',
+	'wikiavideo-details' => "$1 is a link with the videotitle as contents, $2 is dimensions in pixels, $3 is a URL of the provider, $4 is the provider's name",
 );
 
 /** Afrikaans (Afrikaans)
@@ -59,7 +59,6 @@ $messages['af'] = array(
 	'wikiavideo-placeholder' => 'Plekhouer',
 	'wikiavideo-gallery-template' => "Hierdie videogalery is by 'n sjabloon gevoeg en kan nie in die wys-modus gewysig word nie. Wysig asseblief die sjabloon.",
 	'wikiavideo-not-supported' => 'Hierdie omslag ("skin") ondersteun nie die byvoeging van video\'s na galerye in die wys-modus nie.',
-	'wikiavideo-pixel' => ' piksel',
 	'wikiavideo-deleted-old' => "Die weergawe van '''[$1 $2]''' per $4, $3 is verwyder.",
 	'wikiavideo-intro-old' => "U is besig om die weergawe van '''[$1 $5]''' per [$4 $3, $2] te verwyder.",
 );
@@ -84,7 +83,6 @@ $messages['az'] = array(
 	'wikiavideo-create' => 'Video əlavə et',
 	'wikiavideo-category' => 'Videolar',
 	'wikiavideo-links' => 'Keçidlər',
-	'wikiavideo-pixel' => 'piksel',
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
@@ -103,7 +101,6 @@ $messages['be-tarask'] = array(
 	'wikiavideo-placeholder' => 'Запаўняльнік',
 	'wikiavideo-gallery-template' => 'Гэтая відэа-галерэя знаходзіцца ў шаблёне, і ня можа рэдагавацца ў рэжыме прагляду. Калі ласка, рэдагуйце адпаведны шаблён.',
 	'wikiavideo-not-supported' => 'Гэтае афармленьне не падтрымлівае ўстаўку відэа ў галерэі ў рэжыме прагляду.',
-	'wikiavideo-pixel' => '  піксэлі',
 	'wikiavideo-deleted-old' => "Вэрсія '''[$1 $2]''' ад $4, $3 была выдаленая.",
 	'wikiavideo-intro-old' => "Вы выдаляеце вэрсію '''[$1 $5]''' ад [$4 $3, $2].",
 );
@@ -141,7 +138,6 @@ $messages['br'] = array(
 	'wikiavideo-placeholder' => "Lec'hier",
 	'wikiavideo-gallery-template' => "Ar videaoueg-mañ zo en ur patrom, ha ne c'haller ket kemmañ anezhi er mod gwelet. Kemmit ar patrom a zere, mar plij",
 	'wikiavideo-not-supported' => "Gant ar fichadur-se ne c'haller ket ensoc'hañ videoioù er videaouegoù adal ar mod gwelet",
-	'wikiavideo-pixel' => ' piksel',
 	'wikiavideo-deleted-old' => "Dilamet eo bet an doare '''[$1 $2]''' eus $4, $3",
 	'wikiavideo-intro-old' => "!Emaoc'h o tilemel an doare '''[$1 $5]''' eus ($4 $3, $2).",
 );
@@ -157,7 +153,6 @@ $messages['bs'] = array(
 	'wikiavideo-category' => 'Videa',
 	'wikiavideo-links' => 'Linkovi',
 	'wikiavideo-placeholder' => 'Rezervirano mjesto',
-	'wikiavideo-pixel' => 'piksel',
 );
 
 /** Catalan (Català)
@@ -170,7 +165,6 @@ $messages['ca'] = array(
 	'wikiavideo-create' => 'Afegir vídeo',
 	'wikiavideo-category' => 'Vídeos',
 	'wikiavideo-links' => 'Enllaços',
-	'wikiavideo-pixel' => 'píxel',
 );
 
 /** Czech (Česky)
@@ -188,7 +182,6 @@ $messages['cs'] = array(
 	'wikiavideo-placeholder' => 'Výplň',
 	'wikiavideo-gallery-template' => 'Toto video se nachází v šabloně a nemůžete ho upravovat z prohlížecího módu. Editujte prosím příslušnou šablonu.',
 	'wikiavideo-not-supported' => 'Toto nastavení nepodporuje vkládání videí do galerií z prohlížecího módu.',
-	'wikiavideo-pixel' => 'pixel',
 	'wikiavideo-deleted-old' => "Verze $3, $4 souboru '''[$1 $2]''' byla vymazána.",
 	'wikiavideo-intro-old' => "Chystáte se smazat verzi [$4 $3, $2] souboru '''[$1 $5]'''.",
 );
@@ -208,7 +201,6 @@ $messages['cy'] = array(
 	'wikiavideo-placeholder' => 'Dalfan',
 	'wikiavideo-gallery-template' => "Mae'r galeri hwn o fideos wedi ei osod oddi mewn i nodyn, ac ni ellir ei olygu yn y modd gwylio. Golygwch y nodyn perthnasol os gwelwch yn dda.",
 	'wikiavideo-not-supported' => "Nid yw'r wedd hon yn gadael i chi osod fideo mewn oriel tra eich bod yn y modd gweld.",
-	'wikiavideo-pixel' => '  picsel',
 	'wikiavideo-deleted-old' => "Mae'r diwygiad o '''[$1 $2]''' a wnaethpwyd am $3, $4, wedi cael ei ddileu.",
 	'wikiavideo-intro-old' => "Rydych yn dileu hen fersiwn o'r ffeil '''[$1 $5]''' fel ag yr oedd ar [$4 $3, am $2].",
 );
@@ -228,7 +220,6 @@ $messages['de'] = array(
 	'wikiavideo-placeholder' => 'Platzhalter',
 	'wikiavideo-gallery-template' => 'Diese Video-Galerie ist Teil einer Vorlage, und ist aus dem Ansichtsmodus nicht editierbar. Bitte ändere die entsprechende Vorlage.',
 	'wikiavideo-not-supported' => 'Dieses Skin unterstützt kein Einfügen von Videos in Galerien vom Ansichtsmodus aus.',
-	'wikiavideo-pixel' => ' Pixel',
 	'wikiavideo-deleted-old' => "Die Version von '''[$1 $2]''' vom $4, $3 wurde gelöscht.",
 	'wikiavideo-intro-old' => "Du löschst die Version von '''[$1 $5]''' vom [$4 $3, $2].",
 );
@@ -248,7 +239,6 @@ $messages['de-formal'] = array(
 	'wikiavideo-placeholder' => 'Platzhalter',
 	'wikiavideo-gallery-template' => 'Diese Video-Galerie ist Teil einer Vorlage, und ist aus dem Ansichtsmodus nicht editierbar. Bitte ändern Sie die entsprechende Vorlage.',
 	'wikiavideo-not-supported' => 'Dieses Skin unterstützt kein Einfügen von Videos in Galerien vom Ansichtsmodus aus.',
-	'wikiavideo-pixel' => ' Pixel',
 	'wikiavideo-deleted-old' => "Die Version von '''[$1 $2]''' vom $4, $3 wurde gelöscht.",
 	'wikiavideo-intro-old' => "Sie löschsen die Version von '''[$1 $5]''' vom [$4 $3, $2].",
 );
@@ -269,7 +259,6 @@ $messages['es'] = array(
 	'wikiavideo-placeholder' => 'Posicionador',
 	'wikiavideo-gallery-template' => 'Esta galería de vídeos está sin plantillas, y no es editable desde este modo de vista. Por favor, edita la plantilla apropiada.',
 	'wikiavideo-not-supported' => 'Esta piel no soporta insertar vídeos desde este modo de vista en las galerías.',
-	'wikiavideo-pixel' => 'píxel',
 	'wikiavideo-deleted-old' => "La versión de '''[$1 $2]''' así como de $4, $3 ha sido borrada.",
 	'wikiavideo-intro-old' => "Estás borrando la versión de '''[$1 $5]''' así como la de [$4 $3, $2].",
 );
@@ -282,7 +271,6 @@ $messages['eu'] = array(
 	'wikiavideo-create' => 'Bideoa Gehitu',
 	'wikiavideo-category' => 'Bideoak',
 	'wikiavideo-links' => 'Loturak',
-	'wikiavideo-pixel' => '  pixel',
 );
 
 /** Persian (فارسی) */
@@ -303,11 +291,11 @@ $messages['fi'] = array(
 	'wikiavideo-replace' => 'Korvaa video',
 	'wikiavideo-category' => 'Videot',
 	'wikiavideo-links' => 'Linkit',
-	'wikiavideo-pixel' => ' kuvapiste',
 );
 
 /** French (Français)
  * @author IAlex
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'wikiavideo-reverted' => 'La vidéo $1 a été révoquée avec succès. Revenir à $2.',
@@ -318,10 +306,9 @@ $messages['fr'] = array(
 	'wikiavideo-replace' => 'Remplacer la vidéo',
 	'wikiavideo-category' => 'Vidéos',
 	'wikiavideo-links' => 'Liens',
-	'wikiavideo-placeholder' => 'Positionneur',
+	'wikiavideo-placeholder' => 'Espace réservé',
 	'wikiavideo-gallery-template' => "Ce galerie de vidéos se trouve dans un modèle, et n'est pas modifiable dans le mode vue. Veuillez modifier le modèle approprié.",
 	'wikiavideo-not-supported' => "Cet habillage ne supporte pas l'insertion de vidéos dans des galeries depuis le mode vue.",
-	'wikiavideo-pixel' => '  pixel',
 	'wikiavideo-deleted-old' => "La version de '''[$1 $2]''' du $3 à $4 a été supprimée.",
 	'wikiavideo-intro-old' => "Vous êtes en train de supprimer la version de '''[$1 $5]''' en date du [$4 $2 à $3].",
 );
@@ -341,7 +328,6 @@ $messages['gl'] = array(
 	'wikiavideo-placeholder' => 'Marcador de posición',
 	'wikiavideo-gallery-template' => 'Esta galería de vídeo está dentro dun modelo e non se pode editar no modo de visualización. Por favor, edite o modelo axeitado.',
 	'wikiavideo-not-supported' => 'Esta aparencia non permite a inserción de vídeos en galerías no modo de visualización.',
-	'wikiavideo-pixel' => '  píxel',
 	'wikiavideo-deleted-old' => "A versión de '''[$1 $2]''' do $3 ás $4 foi borrada.",
 	'wikiavideo-intro-old' => "Está a piques de borrar a versión de '''[$1 $5]''' a data de [$4 $3 ás $2].",
 );
@@ -361,7 +347,6 @@ $messages['he'] = array(
 	'wikiavideo-placeholder' => 'מציין מיקום',
 	'wikiavideo-gallery-template' => 'גלריית הסרטונים הזו נמצאת בתבנית ואינה ניתנת לעריכה במצב תצוגה. נא לערוך את התבנית המתאימה.',
 	'wikiavideo-not-supported' => 'אין תמיכה בהוספת סרטוני וידאו ממצב תצוגה אל הגלריות.',
-	'wikiavideo-pixel' => 'פיקסל',
 	'wikiavideo-deleted-old' => "הגרסה של '''[$1 $2]''' מתאריך $4, $3 נמחקה.",
 	'wikiavideo-intro-old' => "אתם מוחקים את הגרסה  '''[$1 $5]''' מתאריך [$4 $3, $2].",
 );
@@ -378,7 +363,6 @@ $messages['hu'] = array(
 	'wikiavideo-category' => 'Videók',
 	'wikiavideo-links' => 'Hivatkozások',
 	'wikiavideo-placeholder' => 'Helyfoglaló',
-	'wikiavideo-pixel' => '  képpont',
 );
 
 /** Armenian (Հայերեն)
@@ -405,7 +389,6 @@ $messages['ia'] = array(
 	'wikiavideo-placeholder' => 'Spatio reservate',
 	'wikiavideo-gallery-template' => 'Iste galeria de videos es intra un patrono, e non es modificabile in le modo de visualisation. Per favor modifica le patrono appropriate.',
 	'wikiavideo-not-supported' => 'Iste apparentia non supporta le insertion de videos in galerias ex le modo de visualisation.',
-	'wikiavideo-pixel' => '  pixel',
 	'wikiavideo-deleted-old' => "Le version de '''[$1 $2]''' del $3 a $4 ha essite delite.",
 	'wikiavideo-intro-old' => "Tu es al puncto de deler le version de '''[$1 $5]''' del [$4 $3 a $2].",
 );
@@ -426,7 +409,6 @@ $messages['id'] = array(
 	'wikiavideo-placeholder' => 'Penyangga',
 	'wikiavideo-gallery-template' => 'Galeri video ini dalam template, dan tidak dapat disunting dari modus tampilan. Silahkan menunting template yang sesuai.',
 	'wikiavideo-not-supported' => 'kulit ini tidak mendukung untuk memasukkan video dalam modus tampilan ke dalam galeri.',
-	'wikiavideo-pixel' => ' piksel',
 	'wikiavideo-deleted-old' => "Versi dari  '''[$1 $2]''' hingga $4, $3 telah di hapus.",
 	'wikiavideo-intro-old' => "Anda menghapus versi '''[$1 $5]''' hingga [$4 $3, $2].",
 );
@@ -449,7 +431,6 @@ $messages['it'] = array(
 	'wikiavideo-replace' => 'Sostituisci video',
 	'wikiavideo-category' => 'Video',
 	'wikiavideo-links' => 'Collegamenti',
-	'wikiavideo-pixel' => ' pixel',
 );
 
 /** Japanese (日本語)
@@ -467,7 +448,6 @@ $messages['ja'] = array(
 	'wikiavideo-placeholder' => 'プレースホルダ',
 	'wikiavideo-gallery-template' => 'この動画ギャラリーはテンプレート内に組み込まれており、このページの閲覧モードからは編集できません。適切なテンプレートを編集してください。',
 	'wikiavideo-not-supported' => 'このスキンは閲覧モードでのギャラリーへの動画挿入をサポートしていません。',
-	'wikiavideo-pixel' => ' ピクセル',
 	'wikiavideo-deleted-old' => "'''[$1 $2]'''の $3 $4 の版は削除されました。",
 	'wikiavideo-intro-old' => "あなたは'''[$1 $5]'''の[$4 $2 $3]の版を削除しようとしています。",
 );
@@ -484,7 +464,6 @@ $messages['ka'] = array(
 	'wikiavideo-replace' => 'ვიდეოს შეცვლა',
 	'wikiavideo-category' => 'ვიდეოები',
 	'wikiavideo-links' => 'ბმულები',
-	'wikiavideo-pixel' => 'პიქსელი',
 );
 
 /** Karachay-Balkar (Къарачай-Малкъар)
@@ -502,7 +481,6 @@ $messages['krc'] = array(
 	'wikiavideo-placeholder' => 'Толтур',
 	'wikiavideo-gallery-template' => 'Бу видео галлерея шаблонда барды, ол себебден къарау режимде тюрлендирилмейди. Тилейбиз, алгъын шаблонну тюрлендиригиз.',
 	'wikiavideo-not-supported' => 'Бу скин къарау режимде видеону къошуллуун джакъламайды.',
-	'wikiavideo-pixel' => 'пиксель',
 	'wikiavideo-deleted-old' => "$4 $3 тамалы болгъан  '''[$1 $2]'''  версия кетерилгенди.",
 	'wikiavideo-intro-old' => "Сиз [$4 $3, $2] тамалы болгъан  '''[$1 $5]''' версияны кетересиз .",
 );
@@ -523,7 +501,6 @@ $messages['lb'] = array(
 	'wikiavideo-replace' => 'Video ersetzen',
 	'wikiavideo-category' => 'Videoen',
 	'wikiavideo-links' => 'Linken',
-	'wikiavideo-pixel' => 'Pixel',
 	'wikiavideo-intro-old' => "Dir läscht  d'Versioun vum '''[$1 $5]''' vum [$4 $3, $2].",
 );
 
@@ -542,7 +519,6 @@ $messages['mk'] = array(
 	'wikiavideo-placeholder' => 'Пополнувач',
 	'wikiavideo-gallery-template' => 'Оваа видео-галерија стои во шаблон, и не може да се уредува од прегледен режим. Уредете го соодветниот шаблон.',
 	'wikiavideo-not-supported' => 'Овој изглед не поддржува вметнување видеоснимки од прегледниот режим во галерии.',
-	'wikiavideo-pixel' => '  пиксел',
 	'wikiavideo-deleted-old' => "Верзијата на '''[$1 $2]''' од $4, $3 е избришана.",
 	'wikiavideo-intro-old' => "Ја бришете верзијата на '''[$1 $5]''' од [$4 $3, $2].",
 );
@@ -562,7 +538,6 @@ $messages['ms'] = array(
 	'wikiavideo-placeholder' => 'Pemegang tempat',
 	'wikiavideo-gallery-template' => 'Video galeri ini terletak di dalam templat, dan tidak boleh disunting daripada mod papar. Sila sunting templat berkenaan.',
 	'wikiavideo-not-supported' => 'Kulit ini tidak menyokong penyisipan video daripada mod papar ke dalam galeri.',
-	'wikiavideo-pixel' => 'piksel',
 	'wikiavideo-deleted-old' => "Versi '''[$1 $2]''' pada $4, $3 telah dihapuskan.",
 	'wikiavideo-intro-old' => "Anda akan menghapuskan versi '''[$1 $5]''' pada [$4 $3, $2].",
 );
@@ -590,7 +565,6 @@ $messages['nl'] = array(
 	'wikiavideo-placeholder' => 'Tijdelijke aanduiding',
 	'wikiavideo-gallery-template' => 'Deze videogalerij is toegevoegd aan een sjabloon en kan niet bewerkt worden in de modus bekijken. Bewerk alstublieft het sjabloon.',
 	'wikiavideo-not-supported' => 'In deze vormgeving kunt u geen video toevoegen vanuit de modus bekijken in een galerij.',
-	'wikiavideo-pixel' => ' pixel',
 	'wikiavideo-deleted-old' => "De versie van '''[$1 $2]''' per $4, $3 is verwijderd.",
 	'wikiavideo-intro-old' => "U bent de versie van '''[$1 $5]''' per [$4 $3, $2] aan het verwijderen.",
 );
@@ -619,7 +593,6 @@ $messages['no'] = array(
 	'wikiavideo-placeholder' => 'Plassholder',
 	'wikiavideo-gallery-template' => 'Dette videogalleriet er innenfor en mal og er kan ikke redigeres fra visningsmodusen. Vennligst rediger den gjeldende malen.',
 	'wikiavideo-not-supported' => 'Dette utseendet støtter ikke innsetting av videoer i gallerier fra visningsmodus.',
-	'wikiavideo-pixel' => '  piksel',
 	'wikiavideo-deleted-old' => "Versjonen av '''[$1 $2]''' fra $4, $3 har blitt slettet.",
 	'wikiavideo-intro-old' => "Du sletter versjonen av '''[$1 $5]''' fra [$4 $3, $2].",
 );
@@ -660,7 +633,6 @@ $messages['pl'] = array(
 	'wikiavideo-placeholder' => 'Wypełniacz',
 	'wikiavideo-gallery-template' => 'Ta galeria filmów tworzona jest poprzez szablon; nie ma możliwości modyfikacji jej w trybie podglądu. Zmiany należy wprowadzić do odpowiedniego szablonu.',
 	'wikiavideo-not-supported' => 'Skórka w trybie przeglądania nie obsługuje dodawania filmów do galerii.',
-	'wikiavideo-pixel' => ' pikseli',
 	'wikiavideo-deleted-old' => "Film '''[$1 $2]''' w wersji z dnia $4 o $3 został usunięty.",
 	'wikiavideo-intro-old' => "Usuwasz wersję '''[$1 $5]''' z [$4 $3, $2].",
 );
@@ -681,7 +653,6 @@ $messages['pms'] = array(
 	'wikiavideo-placeholder' => 'Marcapòst',
 	'wikiavideo-gallery-template' => "Sta galarìa ëd filmà a l'é andrinta në stamp, e a l'é pa modificàbil an modalità visualisa. Për piasì, ch'a modìfica lë stamp aproprià.",
 	'wikiavideo-not-supported' => "Costa pel a manten pa l'anseriment ëd filmà da la modalità visualisa an galarìe.",
-	'wikiavideo-pixel' => '   pontin',
 	'wikiavideo-deleted-old' => "La version '''[$1 $2]''' ëd $4, $3 a l'é stàita scancelà.",
 	'wikiavideo-intro-old' => "A l'é dapress a scancelé la version ëd '''[$1 $5]''' dij [$4 $3, $2].",
 );
@@ -696,7 +667,6 @@ $messages['ps'] = array(
 	'wikiavideo-replace' => 'ويډيو ځايناستول',
 	'wikiavideo-category' => 'ويډيوګانې',
 	'wikiavideo-links' => 'تړنې',
-	'wikiavideo-pixel' => 'پېکسل',
 );
 
 /** Portuguese (Português)
@@ -715,7 +685,6 @@ $messages['pt'] = array(
 	'wikiavideo-placeholder' => 'Reserva de espaço',
 	'wikiavideo-gallery-template' => 'Esta galeria de vídeo está numa predefinição e não é editável a partir do modo de visionamento. Edite a devida predefinição, por favor.',
 	'wikiavideo-not-supported' => 'Este tema não permite inserir vídeos nas galerias a partir o modo de visionamento.',
-	'wikiavideo-pixel' => 'pixel',
 	'wikiavideo-deleted-old' => "A versão do vídeo '''[$1 $2]''' de $4, às $3 foi eliminada.",
 	'wikiavideo-intro-old' => "Está a eliminar a versão do vídeo '''[$1 $5]''' de [$4 $3, às $2].",
 );
@@ -735,7 +704,6 @@ $messages['pt-br'] = array(
 	'wikiavideo-placeholder' => 'Espaço reservado',
 	'wikiavideo-gallery-template' => 'Esta galeria de vídeo está em uma predefinição, e não é editável pelo modo de exibição. Por favor edite a predefinição  apropriada.',
 	'wikiavideo-not-supported' => 'Este estilo não suporta inserção de vídeos do modo de exibição nas galerias.',
-	'wikiavideo-pixel' => '  pixel',
 	'wikiavideo-deleted-old' => "Desde $4, $3, a versão de '''[$1 $2]''' foi deletada.",
 	'wikiavideo-intro-old' => "Você está eliminando a versão de '''[$1 $5]''' de [$4 $3, $2]",
 );
@@ -749,7 +717,6 @@ $messages['ro'] = array(
 	'wikiavideo-replace' => 'Înlocuieşte videoclipul',
 	'wikiavideo-category' => 'Videoclipuri',
 	'wikiavideo-links' => 'Legături',
-	'wikiavideo-pixel' => ' pixeli',
 );
 
 /** Russian (Русский)
@@ -769,7 +736,6 @@ $messages['ru'] = array(
 	'wikiavideo-placeholder' => 'Заполнитель',
 	'wikiavideo-gallery-template' => 'Эта видео-галерея находится в шаблоне, и не может быть изменена в режиме просмотра. Пожалуйста, измените соответствующий шаблон.',
 	'wikiavideo-not-supported' => 'Эта тема оформления не поддерживает вставку видео в галерею в режиме просмотра.',
-	'wikiavideo-pixel' => 'пиксел',
 	'wikiavideo-deleted-old' => "Версия '''[$1 $2]''' от $4 $3 была удалена.",
 	'wikiavideo-intro-old' => "Вы удаляете версию '''[$1 $5]''' от [$4 $3, $2].",
 );
@@ -781,7 +747,6 @@ $messages['si'] = array(
 	'wikiavideo-back' => 'ආපස්සට යන්න',
 	'wikiavideo-category' => 'වීඩියෝ',
 	'wikiavideo-links' => 'සබැඳි',
-	'wikiavideo-pixel' => 'pixel',
 );
 
 /** Slovenian (Slovenščina)
@@ -809,13 +774,13 @@ $messages['sr-ec'] = array(
 	'wikiavideo-placeholder' => 'Чувар места',
 	'wikiavideo-gallery-template' => 'Ова видео галерија је унутар шаблона, тако да се не може уредити из режима приказа. Измените одређени шаблон.',
 	'wikiavideo-not-supported' => 'Ова пресвлака не подржава убацивање видео снимака из режима приказа у галерије.',
-	'wikiavideo-pixel' => 'пиксел',
 	'wikiavideo-deleted-old' => "Издање '''[$1 $2]''', као и $4, $3 је обрисано.",
 	'wikiavideo-intro-old' => "Управо ћете да обришете '''[$1 $5]''' издање, као и [$4 $3, $2].",
 );
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'wikiavideo-reverted' => 'Videon $1 har återställts. Gå tillbaka till $2.',
@@ -829,7 +794,6 @@ $messages['sv'] = array(
 	'wikiavideo-placeholder' => 'Platshållare',
 	'wikiavideo-gallery-template' => 'Detta videogalleri är inne i en mall, och kan inte redigeras från visningsläget. Var god redigera mallen istället.',
 	'wikiavideo-not-supported' => 'Detta skal har inte stöd för att sätta in videor från visningsläget i gallerier.',
-	'wikiavideo-pixel' => ' bildpunkt',
 	'wikiavideo-deleted-old' => "Versionen av '''[$1 $2]''' från $4, $3 har raderats.",
 	'wikiavideo-intro-old' => "Du håller på att radera versionen av '''[$1 $5]''' från [$4 $3, $2].",
 );
@@ -857,7 +821,6 @@ $messages['tl'] = array(
 	'wikiavideo-placeholder' => 'Tagahawak ng lugar',
 	'wikiavideo-gallery-template' => 'Nasa loob ng isang suleras ang tanghalang ng bidyong ito, at hindi mababago mula sa modalidad na pagtanaw.  Pakibago ang naaangkop na suleras.',
 	'wikiavideo-not-supported' => 'Hindi tinatangkilik ng pabalat na ito ang pagsisingit ng mga bidyo mula sa modalidad na napapanood papunta sa mga galerya.',
-	'wikiavideo-pixel' => 'piksel',
 	'wikiavideo-deleted-old' => "Nabura na ang bersyon ng '''[$1 $2]''' noon pang  $4, $3.",
 	'wikiavideo-intro-old' => "Binubura mo ang bersyong '''[$1 $5]''' noon pang [$4 $3, $2].",
 );

@@ -80,6 +80,18 @@ $messages['fr'] = array(
 	'wikipayment-paypal-profile-name' => 'Wiki payé',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'wikipayment-desc' => 'Permite o pagamento por wiki para desactivar a publicidade.',
+	'wikipayment-paypal-redirect' => 'Redirixindo ao PayPal; agarde&hellip;',
+	'wikipayment-paypal-error' => 'Erro de pagamento PayPal (código: $1)',
+	'wikipayment-paypal-return-ok' => 'Pagamento ao PayPal efectuado correctamente',
+	'wikipayment-paypal-return-cancel' => 'Pagamento ao PayPal cancelado',
+	'wikipayment-paypal-profile-name' => 'Wiki pagado',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

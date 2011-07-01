@@ -516,7 +516,7 @@ Probeer het nog een keer of [[Special:Contact|rapporteer dit]].',
 Als u al een gebruiker hebt, kunt u <a href="#">aanmelden</a> zoals altijd, maar bewerken is op het moment niet mogelijk.</p>',
 );
 
-/** Nederlands (informeel) (Nederlands (informeel))
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -543,7 +543,7 @@ Nadat je dit hebt uitgevoerd, kan je eenvoudig aanmelden met de knop Facebook Co
 Als je al een gebruiker hebt, kan je <a href="#">aanmelden</a> zoals altijd, maar bewerken is op het moment niet mogelijk.</p>',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
 $messages['no'] = array(
@@ -645,7 +645,7 @@ Për piasì, ch'a preuva torna o [[Special:Contact|ch'a lo signala]].",
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'comboajaxlogin-createlog' => 'ننوتل او يا نوی کارن-حساب جوړول',
+	'comboajaxlogin-createlog' => 'ننوتل او يا يو ګڼون جوړول',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; پر شا کېدل',
 	'comboajaxlogin-connectmarketing-forward' => 'پيلول &raquo;',
 );
@@ -766,7 +766,7 @@ $messages['ru'] = array(
 (Если у вас уже есть учётная запись, вы можете <a href="#">войти</a> как обычно, но вы не сможете редактировать.)</p>',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -851,6 +851,7 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
@@ -884,7 +885,7 @@ Sau đó, bạn có thể đặng nhập dễ dàng dùng bất cứ nút Facebo
 (Nếu bạn có tài khoản, bạn có thể <a href="#">đăng nhập</a> như bình thường, nhưng có thể bạn không thể chỉnh sửa trong một thời gian ngắn.)</p>',
 );
 
-/** Simplified Chinese (中文(简体))
+/** Simplified Chinese (‪中文(简体)‬)
  * @author Wilsonmess
  */
 $messages['zh-hans'] = array(

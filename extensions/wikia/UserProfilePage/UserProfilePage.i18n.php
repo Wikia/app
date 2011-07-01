@@ -328,6 +328,13 @@ $messages['bg'] = array(
 	'userprofilepage-user-group-bot-tooltip' => 'Този потребител е Бот',
 	'userprofilepage-user-group-bureaucrat-tooltip' => 'Този потребител е Бюрократ в това уики',
 	'userprofilepage-user-group-helper-tooltip' => 'Този потребител е Помощник',
+	'userprofilepage-activity-edit' => 'редактира страницата $1',
+	'userprofilepage-activity-new' => 'създаде $1',
+	'userprofilepage-activity-comment' => 'коментира $1',
+	'userprofilepage-activity-image' => 'качи файл в $1',
+	'userprofilepage-activity-video' => 'качи видео в $1',
+	'userprofilepage-activity-delete' => 'изтри страницата $1',
+	'userprofilepage-activity-talk' => 'остави съобщение на беседата на $1',
 	'recipes-template-user-description-label' => 'Описание',
 	'recipes-template-user-birthdate-label' => 'Дата на раждане',
 	'recipes-template-user-birthdate-hint' => 'Дата на раждане (в какъв да е формат)',
@@ -735,6 +742,57 @@ $messages['fr'] = array(
 	'right-editprofile' => "Modifier le profil d'autres utilisateurs",
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'userprofilepage-edit-avatar-label' => 'Editar a imaxe',
+	'userprofilepage-users-notes-title' => 'Acerca de min',
+	'userprofilepage-edit-button' => 'Editar',
+	'userprofilepage-about-article-title' => 'Acerca de',
+	'userprofilepage-edit-permision-denied' => 'Permisos de edición rexeitados',
+	'userprofilepage-leave-message' => 'Deixar unha mensaxe',
+	'userprofilepage-user-group-sysop' => 'Administrador',
+	'userprofilepage-user-group-staff' => 'Membro do equipo',
+	'userprofilepage-user-group-bot' => 'Bot',
+	'userprofilepage-user-group-bureaucrat' => 'Burócrata',
+	'userprofilepage-user-group-helper' => 'Axudante',
+	'userprofilepage-user-group-vstf' => 'Membro do grupo contra o vandalismo',
+	'userprofilepage-user-group-sysop-tooltip' => 'Este usuario é un administrador deste wiki',
+	'userprofilepage-user-group-staff-tooltip' => 'Este usuario é un membro do persoal de Wikia',
+	'userprofilepage-user-group-bot-tooltip' => 'Este usuario é un bot',
+	'userprofilepage-user-group-bureaucrat-tooltip' => 'Este usuario é un burócrata deste wiki',
+	'userprofilepage-user-group-helper-tooltip' => 'Este usuario é un axudante',
+	'userprofilepage-user-group-vstf-tooltip' => 'Este usuario é un membro do grupo contra o vandalismo',
+	'userprofilepage-top-wikis-edit-count' => 'Número de edicións',
+	'userprofilepage-top-wikis-unhide-label' => 'mostrar',
+	'userprofilepage-top-wikis-hide-label' => 'agochar',
+	'userprofilepage-activity-edit' => 'editou a páxina $1',
+	'userprofilepage-activity-new' => 'creou $1',
+	'userprofilepage-activity-comment' => 'comentou en $1',
+	'userprofilepage-top-recent-activity-see-more' => 'Ollar todos &gt;',
+	'userprofilepage-top-page-unhide-label' => 'mostrar',
+	'recipes-template-user-description-label' => 'Descrición',
+	'recipes-template-user-description-hint' => 'Breve información do usuario',
+	'recipes-template-user-birthdate-label' => 'Data de nacemento',
+	'recipes-template-user-birthdate-hint' => 'Data de nacemento (en calquera formato)',
+	'recipes-template-user-species-label' => 'Especie',
+	'recipes-template-user-species-hint' => 'Especie',
+	'recipes-template-user-abilities-label' => 'Habilidades',
+	'recipes-template-user-abilities-hint' => 'Habilidades',
+	'recipes-template-user-gender-label' => 'Sexo',
+	'recipes-template-user-gender-hint' => 'Sexo',
+	'recipes-template-user-affiliation-label' => 'Afiliación',
+	'recipes-template-user-affiliation-hint' => 'Afiliación',
+);
+
+/** Hebrew (עברית)
+ * @author שומבלע
+ */
+$messages['he'] = array(
+	'userprofilepage-leave-message' => 'להשאיר הודעה',
+);
+
 /** Hungarian (Magyar)
  * @author Dani
  */
@@ -858,6 +916,7 @@ $messages['la'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'userprofilepage-edit-button' => 'Änneren',
 	'userprofilepage-about-article-title' => 'Iwwer',
 	'userprofilepage-top-wikis-hide-label' => 'verstoppen',
 	'userprofilepage-top-pages-hidden-see-more' => 'Dir hutt {{PLURAL:$1|eng Säit|$1 Säite}} verstoppt',
@@ -1023,6 +1082,13 @@ $messages['my'] = array(
 	'recipes-template-user-gender-hint' => 'ကျား/မ',
 );
 
+/** Mazanderani (مازِرونی)
+ * @author محک
+ */
+$messages['mzn'] = array(
+	'userprofilepage-about-article-title' => 'درباره',
+);
+
 /** Nepali (नेपाली)
  * @author Bhawani Gautam
  */
@@ -1098,6 +1164,7 @@ $messages['nl'] = array(
 	'recipes-template-user-gender-hint' => 'Geslacht',
 	'recipes-template-user-affiliation-label' => 'Voorkeuren en interesses',
 	'recipes-template-user-affiliation-hint' => 'Voorkeuren en interesses',
+	'right-editprofile' => 'Profielen van andere gebruikers bewerken',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -1415,6 +1482,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'userprofilepage-desc' => 'Ger en användarsida som är rolig och lätt att uppdatera',
@@ -1423,7 +1491,7 @@ $messages['sv'] = array(
 	'userprofilepage-about-section-title' => 'Min $1 intervju',
 	'userprofilepage-edit-button' => 'Redigera',
 	'userprofilepage-about-article-title' => 'Om',
-	'userprofilepage-about-empty-section' => 'Detta avsnitt är tomt. Klicka på redigera för att lägga till lite saker här!',
+	'userprofilepage-about-empty-section' => 'Detta avsnitt är tomt. Klicka på {{int:userprofilepage-edit-button}} för att lägga till lite saker här!',
 	'userprofilepage-edit-permision-denied' => 'Redigeringstillstånd nekad',
 	'userprofilepage-edit-permision-denied-info' => 'Du har inte behörighet att redigera någons användarsida eller delsida',
 	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Alla på denna wiki skulle vilja veta mera om dig!</div><a href="$1">Redigera detta avsnitt</a> för att lägga till mer information om dig själv och berätta om saker som du gillar att göra.',
@@ -1479,6 +1547,7 @@ $messages['sv'] = array(
 	'recipes-template-user-gender-hint' => 'Kön',
 	'recipes-template-user-affiliation-label' => 'Tillhörighet',
 	'recipes-template-user-affiliation-hint' => 'Tillhörighet',
+	'right-editprofile' => 'Redigera andra användares profiler',
 );
 
 /** Telugu (తెలుగు)
@@ -1575,6 +1644,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
@@ -1584,10 +1654,10 @@ $messages['vi'] = array(
 	'userprofilepage-user-group-bureaucrat' => 'Hành chính viên',
 	'userprofilepage-user-group-helper' => 'Thành viên trợ giúp',
 	'userprofilepage-user-group-vstf' => 'Đội tình nguyện chống phá hoại',
-	'userprofilepage-user-group-sysop-tooltip' => 'Người dùng này là Bảo quản viên tại wiki đây',
+	'userprofilepage-user-group-sysop-tooltip' => 'Người dùng này là Bảo quản viên tại {{SITENAME}}',
 	'userprofilepage-user-group-staff-tooltip' => 'Người dùng này là nhân viên Wikia',
 	'userprofilepage-user-group-bot-tooltip' => 'Người dùng này là một Robot',
-	'userprofilepage-user-group-bureaucrat-tooltip' => 'Người dùng này là Hành chính viên tại wiki đây',
+	'userprofilepage-user-group-bureaucrat-tooltip' => 'Người dùng này là Hành chính viên tại {{SITENAME}}',
 	'userprofilepage-user-group-helper-tooltip' => 'Người dùng này là thành viên trợ giúp',
 	'userprofilepage-user-group-vstf-tooltip' => 'Người dùng này là thành viên đội tình nguyện chống phá hoại',
 );

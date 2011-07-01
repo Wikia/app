@@ -102,6 +102,23 @@ Vérifiez l'orthographe.",
 	'piggyback-issysopto' => 'Vous ne pouvez pas vous connecter de manière superposée sur le compte d’un utilisateur ayant lui-même ce droit.',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'piggybac-desc' => 'Permite iniciar sesión como outro usuario',
+	'piggyback' => 'Acceso non autorizado',
+	'piggyback-otherusername' => 'Outro nome de usuario:',
+	'piggyback-nosuchuser' => 'Non hai ningún usuario co nome "$1".
+Os nomes de usuario distinguen entre maiúsculas e minúsculas.
+Comprobe a ortografía.',
+	'piggyback-wronguser' => '$1 non é o seu nome de usuario',
+	'piggyback-loginprompt' => 'Introduza de novo o seu nome de usuario e contrasinal.',
+	'piggyback-firstlogout' => 'Saia primeiro da conta e volva á súa.',
+	'piggyback-itisyou' => 'Non pode acceder sen autorización á súa propia conta.',
+	'piggyback-issysopto' => 'Non pode acceder sen autorización á conta dun usuario con dereitos de acceso sen autorización.',
+);
+
 /** Interlingua (Interlingua) */
 $messages['ia'] = array(
 	'piggybac-desc' => 'Permitte aperir session como altere usator',

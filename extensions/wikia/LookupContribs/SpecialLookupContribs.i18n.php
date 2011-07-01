@@ -1239,6 +1239,11 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'lookupcontribsselectuser' => 'Välj användare:',
+	'lookupcontribsselectfor' => 'Välj för:',
+	'lookupcontribsdisplaymode' => 'Visningsläge:',
+	'lookupcontribsselectmodenormal' => 'senaste bidragen för användaren',
+	'lookupcontribsgo' => 'Gå',
 	'lookupcontribsnoresultfound' => 'Inga resultat hittades',
 	'lookupcontribsinvalidresults' => 'Ogiltiga resultat!',
 	'lookupcontribswiki' => 'Wiki',
@@ -1247,10 +1252,17 @@ $messages['sv'] = array(
 	'lookupcontribswikititle' => 'Titel',
 	'lookupcontribswikioptions' => 'Alternativ',
 	'lookupcontribslastedited' => 'Senast redigerad',
+	'lookupcontribscontribs' => 'bidrag',
 	'lookupcontribsnext' => 'nästa',
 	'lookupcontribsprevious' => 'föregående',
 	'lookupcontribsrestore' => 'återställ',
+	'lookupcontribslog' => 'logg',
+	'lookupcontribshist' => 'historik',
+	'lookupcontribsdiff' => 'skillnad',
+	'right-lookupcontribs' => 'Visa användarens globala redigeringar',
 	'lookupcontribscontent' => 'innehåll',
+	'lookupcontribsfinal' => 'sista',
+	'lookupcontribsall' => 'alla',
 );
 
 /** Swahili (Kiswahili) */

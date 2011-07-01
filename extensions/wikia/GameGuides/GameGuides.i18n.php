@@ -60,6 +60,13 @@ $messages['fr'] = array(
 	'wikiagameguides-desc' => 'Modules de l’application mobile Wikia Game Guides',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'wikiagameguides-desc' => 'Módulos de aplicacións móbiles Wikia Game Guides',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

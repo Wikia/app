@@ -67,6 +67,18 @@ $messages['qqq'] = array(
 	'app-tab-sotd' => 'SotD = Song of the Day',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'app-loading' => 'Зареждане...',
+	'app-tab-search' => 'Търсене',
+	'app-async-error-title' => 'Опа',
+	'login-username-hint' => 'Потребителско име',
+	'login-password-hint' => 'Парола',
+	'login-submit-button' => 'Влизане',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -283,6 +295,38 @@ $messages['fr'] = array(
 	'gracenote-takedown' => "Désolé ! Nous n'avons pas les droits pour afficher les paroles complètes pour cette chanson actuellement (cela n'arrive que pour moins d'1% de nos chansons). Veuillez réessayer la semaine prochaine.",
 	'lyrics-artist-byline' => 'par %s',
 	'ringtone-matcher-by-song' => 'Envoyer la sonnerie %s sur votre mobile',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'app-loading' => 'Cargando...',
+	'app-tab-search' => 'Procura',
+	'app-tab-about' => 'Acerca de',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'Canción do día',
+	'app-async-error-title' => 'Vaites!',
+	'app-async-error-message' => 'Hai un problema temporal coa conexión. Inténteo de novo máis tarde.',
+	'app-nonetwork-dialog-title' => 'Rede non dispoñible',
+	'app-nonetwork-dialog-message' => 'Non se detectou ningunha conexión de rede.',
+	'app-nonetwork-dialog-close-button' => 'De acordo',
+	'search-go' => 'Ir!',
+	'search-hint-text' => 'por exemplo: "John Lennon:Imagine"',
+	'search-no-match-found' => 'Non se atoparon coincidencias.',
+	'search-no-match-found-query' => 'Procurou: %s',
+	'search-results-title' => 'Resultados da procura de: %s',
+	'login-label' => 'Entrar en LyricWiki',
+	'login-username-hint' => 'Nome de usuario',
+	'login-password-hint' => 'Contrasinal',
+	'login-submit-button' => 'Rexistro',
+	'about-heading' => 'LyricWiki',
+	'about-credits' => 'por %s',
+	'about-heading-tips' => 'Procurando',
+	'about-heading-licensing' => 'Dereitos de autor',
+	'about-heading-feedback' => 'Comentarios',
+	'about-heading-rate' => 'Valore a aplicación!',
+	'lyrics-artist-byline' => 'por %s',
 );
 
 /** Interlingua (Interlingua)
@@ -564,6 +608,7 @@ $messages['pl'] = array(
 
 /** Swedish (Svenska)
  * @author Nghtwlkr
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'app-loading' => 'Laddar...',
@@ -580,6 +625,7 @@ $messages['sv'] = array(
 	'search-hint-text' => "ex: 'John Lennon:Imagine'",
 	'search-no-match-found' => 'Inga sökresultat funna.',
 	'search-no-match-found-query' => 'Sökte efter: %s',
+	'search-results-title' => 'Sökresultat för: %s',
 	'login-label' => 'Logga in på LyricWiki',
 	'login-username-hint' => 'Användarnamn',
 	'login-password-hint' => 'Lösenord',

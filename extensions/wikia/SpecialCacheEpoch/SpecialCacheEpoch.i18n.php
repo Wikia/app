@@ -82,6 +82,21 @@ $messages['fr'] = array(
 	'cacheepoch-no-wf' => "WikiFactory n'est pas activé sur ce wiki. Impossible de modifier wgCacheEpoch.",
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'cacheepoch-desc' => 'Proporciona unha interface para cambiar wgCacheEpoch por wiki',
+	'cacheepoch' => 'Interface da caché Epoch',
+	'cacheepoch-header' => 'Aumentar wgCacheEpoch',
+	'cacheepoch-value' => 'O valor actual de wgCacheEpoch é "$1". Prema sobre o botón para configuralo no valor de data e hora actuais.',
+	'cacheepoch-submit' => 'Actualizar o valor',
+	'cacheepoch-updated' => 'wgCacheEpoch actualizado a "$1".',
+	'cacheepoch-not-updated' => 'Non se puido actualizar wgCacheEpoch.',
+	'cacheepoch-wf-reason' => 'Valor actualizado mediante Special:CacheEpoch',
+	'cacheepoch-no-wf' => 'WikiFactory non está activado neste wiki. Non se pode de cambiar wgCacheEpoch.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

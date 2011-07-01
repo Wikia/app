@@ -85,6 +85,22 @@ $messages['fr'] = array(
 	'userdata-no-wf' => "WikiFactory n'est pas activé sur ce wiki. Impossible de modifier wgUserData.",
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'userdata' => 'Obter datos de usuario',
+	'userdata-userid-label' => 'Dea o identificador de usuario:',
+	'userdata-submit' => 'Obter os datos',
+	'specialuserdata-desc' => 'Proporciona unha interface para cambiar wgUserData por wiki.',
+	'userdata-header' => 'Aumentar wgUserData',
+	'userdata-value' => 'O valor actual de wgUserData é "$1". Prema sobre o botón para configuralo no valor de data e hora actuais.',
+	'userdata-updated' => 'wgUserData actualizado a "$1".',
+	'userdata-not-updated' => 'Non se puido actualizar wgUserData.',
+	'userdata-wf-reason' => 'Valor actualizado mediante [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory non está activado neste wiki. Non se pode de cambiar wgUserData.',
+);
+
 /** Hungarian (Magyar)
  * @author Dani
  */

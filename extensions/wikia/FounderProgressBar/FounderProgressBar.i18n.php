@@ -107,3 +107,4 @@ $messages['en'] = array(
 	'founderprogressbar-total-edit300-action' => 'Add a page',
 	'founderprogressbar-total-edit300-description' => '$1 edits is an awesome milestone, and with that many changes being made and content being added your wiki will be well on the way to achieving success!',
 );
+

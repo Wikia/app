@@ -281,7 +281,7 @@ Attention, les avatars sont globaux. Retirer l’avatar d’un utilisateur prend
 	'blog-avatar-error-size' => 'Le fichier téléversé est trop gros, la taille maximale autorisée est de $1 Kio.',
 	'blog-avatar-error-cantwrite' => 'Une erreur s’est produite ; impossible d’enregistrer le fichier.',
 	'blog-avatar-error-type' => 'Type MIME invalide. Fourni : $1 - Autorisés : $2',
-	'blog-avatar-changed-log' => 'a ajouté ou modifié avatar',
+	'blog-avatar-changed-log' => 'a ajouté ou modifié son avatar',
 	'blog-avatar-removed-log' => 'A retiré l’avatar de $1',
 	'blog-avatar-save-info' => 'Pour enregistrer l’avatar <a href="#prefcontrol">allez au bas de cette page</a> et cliquez sur le bouton « {{int:saveprefs}} ».',
 	'masthead-edits-since' => 'modifications depuis le',
@@ -483,6 +483,7 @@ $messages['lb'] = array(
 	'blog-avatar-edit' => 'Änneren',
 	'blog-avatar-delete' => 'Läschen',
 	'prefs-avatarupload' => 'Avatar',
+	'blog-avatar-getuser' => 'Sichen',
 );
 
 /** Macedonian (Македонски)

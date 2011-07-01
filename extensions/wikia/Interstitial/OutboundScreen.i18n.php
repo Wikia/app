@@ -330,6 +330,13 @@ $messages['sr-ec'] = array(
 	'outbound-screen-you-are-leaving' => 'Напуштате Викију.',
 );
 
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'outbound-screen-you-are-leaving' => 'Du lämnar nu Wikia.',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

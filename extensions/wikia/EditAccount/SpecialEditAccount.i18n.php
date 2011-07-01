@@ -124,6 +124,8 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'editaccount-submit-pass' => 'Съхраняване на паролата',
+	'editaccount-invalid-email' => '"$1" не е валиден адрес за електронна поща!',
+	'right-editaccount' => 'Редактиране на настройките на други потребители',
 );
 
 /** Bihari (भोजपुरी)
@@ -897,7 +899,7 @@ Probeer het opnieuw of neem contact op met het Tech Team.',
 	'editaccount-log-entry-pass' => 'heeft het wachtwoord voor gebruiker $2 aangepast',
 	'editaccount-log-entry-realname' => 'heeft de echte naam voor gebruiker $2 aangepast',
 	'editaccount-log-entry-close' => 'heeft gebruiker $2 uitgeschakeld',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Deze gebruiker is afgelsoten.</div>',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Deze gebruiker is uitgeschakeld.</div>',
 	'right-editaccount' => 'Voorkeuren van gebruikers bewerken',
 );
 
@@ -1475,10 +1477,12 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Dream
  * @author Horacewai2
  * @author Waihorace
  */
 $messages['zh-hant'] = array(
 	'editaccount' => '編輯帳戶',
+	'editaccount-submit-account' => '管理帳戶',
 );
 

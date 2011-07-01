@@ -77,6 +77,8 @@ $messages['en'] = array(
         'wikialabs-log-disabled-extension' => 'disabled $1',
 );
 
+/** Message documentation (Message documentation) */
 $messages['qqq'] = array(
 	'wikialabs-list-project-add-give-feedback' => 'keep it short, size limitation',
 );
+

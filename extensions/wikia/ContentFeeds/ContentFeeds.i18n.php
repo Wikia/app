@@ -130,6 +130,10 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'contentfeeds-desc' => 'Proporciona información enriquecida e actualizada a través de varias etiquetas ou "fontes de novas".',
+	'contentfeeds-newimages-rss-title' => 'Fonte de novas RSS de {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Fonte de novas de $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Cree as súas primeiras páxinas!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Título',
 	'contentfeeds-firstfewarticles-tag-next' => 'Seguinte',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Erro: O título da páxina é necesario',
@@ -334,7 +338,9 @@ $messages['sv'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fel: Sidans kropp krävs',
 );
 
-/** Swahili (Kiswahili) */
+/** Swahili (Kiswahili)
+ * @author Muddyb Blast Producer
+ */
 $messages['sw'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Jina',
 	'contentfeeds-firstfewarticles-tag-next' => 'Ijayo',

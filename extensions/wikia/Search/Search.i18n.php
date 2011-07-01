@@ -174,6 +174,7 @@ $messages['gd'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'search-desc' => 'Motor de procuras a través de Wikia que emprega tecnoloxía Solr',
 	'wikiasearch-titles-only' => 'Procurar só nos títulos das páxinas',
 	'wikiasearch-system-error-msg' => 'Debido a un erro do sistema, non se puido completar a súa procura',
 	'wikiasearch-search-this-wiki' => 'Procurar só en Wikia Central',
@@ -296,7 +297,7 @@ $messages['ku-latn'] = array(
  */
 $messages['lb'] = array(
 	'wikiasearch-titles-only' => 'Nëmmen an de Säitentitele sichen',
-	'wikiasearch-system-error-msg' => 'Duerch e Feeler am System konnt Är Sich net fäerdeg gemaach ginn',
+	'wikiasearch-system-error-msg' => 'Duerch e Feeler am System konnt net fäerdeg gesicht ginn',
 	'wikiasearch-search-this-wiki' => 'Nëmmen a Wikia Central sichen',
 	'wikiasearch-search-wikia' => 'A Wikia sichen',
 	'wikiasearch-image-results' => 'Resultater vun de Biller fir "$1"',
@@ -482,8 +483,10 @@ $messages['sr-ec'] = array(
 /** Swedish (Svenska)
  * @author Dafer45
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'search-desc' => 'Kryss-Wikia sökmotor använder Solr backend',
 	'wikiasearch-titles-only' => 'Sök endast i sidtitlar',
 	'wikiasearch-system-error-msg' => 'På grund av ett systemfel kunde sökningen inte slutföras',
 	'wikiasearch-search-this-wiki' => 'Sök endast på Wikia Central',
@@ -510,6 +513,18 @@ $messages['te'] = array(
 	'wikiasearch-titles-only' => 'కేవలం పుటల శీర్శికలలో వెతుకు',
 	'wikiasearch-search-wikia' => 'వికియాను వెతకండి',
 	'wikiasearch-image-results' => '"$1" కొరకు బొమ్మల ఫలితాలు',
+);
+
+/** Thai (ไทย)
+ * @author Akkhaporn
+ */
+$messages['th'] = array(
+	'search-desc' => 'เครื่องมือการค้นหาข้าม Wikia ใช้ Solr backend',
+	'wikiasearch-titles-only' => 'ค้นหาเฉพาะในชื่อหน้า',
+	'wikiasearch-system-error-msg' => 'เนื่องจากการผิดพลาดของระบบ การค้นหาของคุณอาจไม่เสร็จสมบูรณ์',
+	'wikiasearch-search-this-wiki' => 'ค้นหา Wikia Central เท่านั้น',
+	'wikiasearch-search-wikia' => 'ค้นหา Wikia',
+	'wikiasearch-image-results' => 'ผลการค้นหารูปภาพสำหรับ "$1"',
 );
 
 /** Tagalog (Tagalog)
@@ -547,6 +562,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

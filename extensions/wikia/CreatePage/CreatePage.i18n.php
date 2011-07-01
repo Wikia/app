@@ -157,6 +157,7 @@ $messages['ba'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'createpage-desc' => 'Позволява създаване на нова страница чрез визуалния редактор на Wikia',
 	'createpage-sp-title' => 'Създаване на нова страница',
 	'createpage_title' => 'Създаване на нова страница',
 	'createpage_title_caption' => 'Заглавие:',
@@ -1070,12 +1071,16 @@ $messages['pa'] = array(
 );
 
 /** Polish (Polski)
+ * @author Cloudissimo
  * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'createpage-desc' => 'Pozwala na utworzenie nowej strony za pomocą edytora WYSIWYG',
+	'createpage-sp-title' => 'Utwórz nową stronę',
 	'createpage_title' => 'Stwórz Stronę',
 	'createpage_title_caption' => 'Tytuł',
+	'createpage_enter_text' => 'Tekst:',
+	'createpage_empty_title_error' => 'Wymagany tytuł',
 	'createpage_invalid_title_error' => 'Nieprawidłowy tytuł',
 	'createpage_article_already_exists' => 'Strona o zadanej nazwie już istnieje.
 Wybierz inną nazwę.',
@@ -1090,6 +1095,8 @@ Wybierz inną nazwę.',
 	'createpage-error-empty-title' => 'Podaj tytuł strony',
 	'createpage-error-invalid-title' => 'Tytuł strony jest nieprawidłowy.
 Podaj inny tytuł.',
+	'createpage-error-article-exists' => 'Strona o tym tytule już istnieje.
+Możesz przejść do <a href="$1">$2</a>, lub zmienić nazwę strony',
 	'createpage-error-article-spam' => 'Tytuł strony został odrzucony przez nasz filtr antyspamowy.
 Podaj inny tytuł.',
 	'createpage-error-article-blocked' => 'Nie można utworzyć strony w tej chwili.',
@@ -1538,6 +1545,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

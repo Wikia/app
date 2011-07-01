@@ -102,6 +102,17 @@ $messages['fr'] = array(
 	'timeago-second' => 'il y a une minute',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'timeagomessaging-desc' => 'Proporciona internacionalización para o complemento jquery.timeago.js',
+	'timeago-day' => 'hai {{PLURAL:$1|un día|$1 días}}',
+	'timeago-hour' => 'hai {{PLURAL:$1|unha hora|$1 horas}}',
+	'timeago-minute' => 'hai {{PLURAL:$1|un minuto|$1 minutos}}',
+	'timeago-second' => 'hai un minuto',
+);
+
 /** Hungarian (Magyar)
  * @author Dani
  */

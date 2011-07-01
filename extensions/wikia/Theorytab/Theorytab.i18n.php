@@ -227,10 +227,12 @@ $messages['ne'] = array(
 	'theorytab-parent-title' => 'मूल लेख',
 );
 
-/** Dutch (Nederlands) */
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
 $messages['nl'] = array(
-	'theorytab-title' => 'Theorieen',
-	'theorytab-parent-title' => 'Hoofd Artikel',
+	'theorytab-title' => 'Theorieën',
+	'theorytab-parent-title' => 'Bovenliggende pagina',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)

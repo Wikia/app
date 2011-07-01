@@ -144,6 +144,13 @@ $messages['roa-tara'] = array(
 	'ezapi-desc' => 'Module de sviluppe AJAX API none comblecate',
 );
 
+/** Thai (ไทย)
+ * @author Akkhaporn
+ */
+$messages['th'] = array(
+	'ezapi-desc' => 'การพัฒนาโมดูล AJAX API ที่ไม่ซับซ้อน',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

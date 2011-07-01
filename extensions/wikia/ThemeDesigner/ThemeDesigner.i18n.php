@@ -168,9 +168,11 @@ $messages['be-tarask'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'themedesigner-background' => 'Фон',
 	'themedesigner-color' => 'цвят',
 	'themedesigner-buttons' => 'бутони',
 	'themedesigner-links' => 'препратки',
+	'themedesigner-tab-theme' => 'Тема',
 	'themedesigner-button-cancel' => 'Отказване',
 	'themedesigner-pick-a-color' => 'Избиране на цвят',
 	'themedesigner-button-upload' => 'Качване',
@@ -214,13 +216,14 @@ $messages['br'] = array(
 	'themedesigner-dont-use-a-background' => 'Non pas implijout a drekleur',
 	'themedesigner-upload-your-own' => 'Enporzhiañ ho hini',
 	'themedesigner-button-upload' => 'Enporzhiañ',
+	'themedesigner-button-upload-wordmark' => 'Enporzhiañ',
 	'themedesigner-rules-background' => 'jpg, gif pe png. Bevenn : 100 Ko',
 	'themedesigner-default' => 'Dre ziouer',
 	'themedesigner-font' => 'font',
 	'themedesigner-size' => 'ment',
 	'themedesigner-button-save' => 'Enrollañ',
 	'themedesigner-upload-a-graphic' => 'enporzhiañ ur grafik',
-	'themedesigner-rules-wordmark' => '250x65 piksel (restroù .png hepken)',
+	'themedesigner-rules-wordmark' => 'betek 250x65 piksel (restroù .png hepken)',
 	'themedesigner-dont-use-a-graphic' => 'Non pas implijout a grafik',
 	'themedesigner-history-item' => '$1 dre $2',
 	'themedesigner-button-change-text' => 'Kemmañ an destenn',
@@ -245,8 +248,61 @@ $messages['bs'] = array(
 	'themedesigner-large' => 'Veliko',
 );
 
+/** Catalan (Català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'themedesigner-desc' => 'Permet als administradors del wiki dissenyar un tema per a un wiki',
+	'themedesigner-title' => 'Wikia Theme Designer',
+	'themedesigner-background' => 'Fons',
+	'themedesigner-page' => 'Pàgina',
+	'themedesigner-color' => 'color',
+	'themedesigner-graphic' => 'gràfic',
+	'themedesigner-buttons' => 'botons',
+	'themedesigner-links' => 'enllaços',
+	'themedesigner-header' => 'encapçalament',
+	'themedesigner-text-wordmark' => 'Text del logotip',
+	'themedesigner-graphic-wordmark' => 'Gràfic del logotip',
+	'themedesigner-small' => 'Petit',
+	'themedesigner-medium' => 'Mitjà',
+	'themedesigner-large' => 'Gran',
+	'themedesigner-tile-background' => 'fons de rajoles',
+	'themedesigner-tab-theme' => 'Tema',
+	'themedesigner-tab-customize' => 'Personalitzar',
+	'themedesigner-tab-wordmark' => 'Logotip',
+	'themedesigner-preview-mode' => 'Mode de vista prèvia ...',
+	'themedesigner-previous-versions' => 'Versions anteriors',
+	'themedesigner-button-save-im-done' => 'Desa, he acabat',
+	'themedesigner-button-cancel' => 'Cancel·la',
+	'themedesigner-pick-a-color' => 'Tria un color',
+	'themedesigner-enter-your-own' => 'Introdueixi el seu propi',
+	'themedesigner-color-name-or-hex-code' => 'Color de nom o el codi hexadecimal',
+	'themedesigner-button-ok' => "D'acord",
+	'themedesigner-pick-an-image' => 'Tria una imatge',
+	'themedesigner-dont-use-a-background' => 'No utilitzeu un fons',
+	'themedesigner-upload-your-own' => 'Carrega el teu propi disseny',
+	'themedesigner-button-upload' => 'Carrega',
+	'themedesigner-button-upload-wordmark' => 'Carrega',
+	'themedesigner-rules-background' => 'jpg, gif or png. Límit de 100 kilobyte',
+	'themedesigner-default' => 'Per defecte',
+	'themedesigner-font' => 'tipus de lletra',
+	'themedesigner-size' => 'mida',
+	'themedesigner-button-save' => 'Desa',
+	'themedesigner-upload-a-graphic' => 'carrega un gràfic',
+	'themedesigner-rules-wordmark' => 'fins a 250 x 65 píxels (només arxius .png)',
+	'themedesigner-dont-use-a-graphic' => 'No utilitzeu un gràfic',
+	'themedesigner-history-item' => '$1 de $2',
+	'themedesigner-button-change-text' => 'Canvia el text',
+	'themedesigner-reason' => 'Theme Designer - guardat de $1',
+	'themedesigner-size-error' => 'Mida del fitxer incorrecta',
+	'themedesigner-dimensions-error' => 'La imatge supera els límits de les dimensions',
+	'themedesigner-type-error' => 'Tipus de fitxer incorrecte',
+	'themedesugber-uknown-error' => "S'ha produït un error, per desgràcia no hem estat capaços d'identificar-lo, si us plau provi una altra vegada",
+);
+
 /** Czech (Česky)
  * @author Dontlietome7
+ * @author Utar
  */
 $messages['cs'] = array(
 	'themedesigner-desc' => 'Umožňuje administrátorům wiki změnit motiv wiki',
@@ -279,6 +335,7 @@ $messages['cs'] = array(
 	'themedesigner-dont-use-a-background' => 'Nepoužívat pozadí',
 	'themedesigner-upload-your-own' => 'Nahrát své vlastní',
 	'themedesigner-button-upload' => 'Nahrát',
+	'themedesigner-button-upload-wordmark' => 'Odeslat',
 	'themedesigner-rules-background' => 'jpg, gif nebo png. Limit 100 kilobyte',
 	'themedesigner-default' => 'Standartní',
 	'themedesigner-font' => 'písmo',
@@ -576,6 +633,7 @@ $messages['gl'] = array(
 	'themedesigner-dont-use-a-background' => 'Non usar unha imaxe de fondo',
 	'themedesigner-upload-your-own' => 'Cargar o seu',
 	'themedesigner-button-upload' => 'Cargar',
+	'themedesigner-button-upload-wordmark' => 'Cargar',
 	'themedesigner-rules-background' => 'jpg, gif ou png. Máximo de 100 kB',
 	'themedesigner-default' => 'Por defecto',
 	'themedesigner-font' => 'Fonte de letra',
@@ -587,6 +645,10 @@ $messages['gl'] = array(
 	'themedesigner-history-item' => '$1 por $2',
 	'themedesigner-button-change-text' => 'Cambiar o texto',
 	'themedesigner-reason' => 'Deseñador de temas visuais; gardado por $1',
+	'themedesigner-size-error' => 'Tamaño de ficheiro incorrecto',
+	'themedesigner-dimensions-error' => 'O tamaño da imaxe supera os límites',
+	'themedesigner-type-error' => 'Tipo de ficheiro incorrecto',
+	'themedesugber-uknown-error' => 'Houbo un erro. Por desgraza, non fomos capaces de identificalo. Inténteo de novo',
 );
 
 /** Hungarian (Magyar)
@@ -794,6 +856,8 @@ $messages['ku-latn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'themedesigner-background' => 'Hannergrond',
+	'themedesigner-page' => 'Säit',
 	'themedesigner-button-ok' => 'OK',
 	'themedesigner-button-upload' => 'Eroplueden',
 	'themedesigner-button-save' => 'Späicheren',
@@ -1385,6 +1449,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'themedesigner-desc' => 'Allows wiki administrators to design a theme for a wiki',
@@ -1413,6 +1478,7 @@ $messages['sv'] = array(
 	'themedesigner-dont-use-a-background' => 'Använd inte en bakgrund',
 	'themedesigner-upload-your-own' => 'Ladda upp din egen',
 	'themedesigner-button-upload' => 'Ladda upp',
+	'themedesigner-button-upload-wordmark' => 'Ladda upp',
 	'themedesigner-rules-background' => 'jpg, gif eller png. Gräns på 100 kilobyte',
 	'themedesigner-default' => 'Standard',
 	'themedesigner-font' => 'teckensnitt',
@@ -1521,6 +1587,8 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
@@ -1556,7 +1624,7 @@ $messages['vi'] = array(
 	'themedesigner-size' => 'Dung lượng, kích cỡ',
 	'themedesigner-button-save' => 'Lưu trang',
 	'themedesigner-upload-a-graphic' => 'tải lên một hình ảnh',
-	'themedesigner-rules-wordmark' => 'tải lên giới hạn đến 250x65 điểm ảnh (chỉ tập tin .png)',
+	'themedesigner-rules-wordmark' => 'tải lên giới hạn đến 250×65 điểm ảnh (chỉ tập tin .png)',
 	'themedesigner-dont-use-a-graphic' => 'Không dùng đồ họa',
 	'themedesigner-button-change-text' => 'Thay đổi văn bản',
 	'themedesigner-reason' => 'Thiết kế giao diện - đã xong bởi $1',

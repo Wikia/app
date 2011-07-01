@@ -39,6 +39,7 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Aiman titi
  */
 $messages['ar'] = array(
 	'wva-success' => 'صفحة الفيديو $1 تم إضافتها بنجاح',
@@ -50,6 +51,7 @@ $messages['ar'] = array(
 	'wva-title' => 'إضافة فيديو بسرعة من العنوان (URL)',
 	'wva-notlogged' => 'يجب أن تكون مسجلا إذا أرد إضافة فيديو',
 	'wva-notallowed' => 'لا يمكنك إضافة فيديو في هذه الويكي',
+	'wva-protected' => 'هذا الفيديو. محمي',
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
@@ -191,6 +193,7 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author Ebraminio
+ * @author Huji
  */
 $messages['fa'] = array(
 	'wva-success' => 'فیلم صفحهٔ $1 موفقیت‌آمیز اضافه شد.',
@@ -202,7 +205,7 @@ $messages['fa'] = array(
 	'wva-title' => 'به سرعت فیلم را از نشانی اینترنتی واردکردن',
 	'wva-notlogged' => 'برای وارد کردن فیلم، شما باید به سامانه وارد شوید یا ثبت نام کنید.',
 	'wva-notallowed' => 'شما نمی‌توانید در این ویکی فیلم وارد کنید.',
-	'wva-protected' => 'این ویدیو حفاظت شده است.',
+	'wva-protected' => 'این ویدیو محافظت شده است.',
 );
 
 /** Finnish (Suomi)

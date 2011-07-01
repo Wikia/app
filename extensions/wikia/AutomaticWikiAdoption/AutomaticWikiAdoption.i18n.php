@@ -134,6 +134,7 @@ $messages['br'] = array(
 	'wikiadoption' => 'Degemer ur wiki ez-emgefre',
 	'wikiadoption-header' => 'Degemer ar wiki-mañ',
 	'wikiadoption-button-adopt' => 'Degemer bremañ',
+	'wikiadoption-adopt-inquiry' => "Gouzout hiroc'h !",
 	'wikiadoption-know-more-header' => "C'hoant gouzout hiroc'h ?",
 	'wikiadoption-know-more-description' => "Sellit ouzh al liammoù-se evit gouzout hiroc'h. Ha deuit hardizh e darempred ganimp m'ho peus goulenn pe c'houlenn !",
 	'wikiadoption-adoption-successed' => "Gourc'hemennoù ! Merour oc'h bremañ war ar wiki-mañ !",
@@ -144,8 +145,8 @@ $messages['br'] = array(
 	'wikiadoption-log-reason' => 'Degemer ur wiki ez-emgefre',
 	'wikiadoption-notification' => "$1 a zo prest da vezañ degemeret ! Gellout a rit bezañ ar perc'henn nevez. '''Degemer bremañ !'''",
 	'wikiadoption-mail-first-subject' => "N'hon eus ket gwelet ac'hanoc'h abaoe pell",
-	'wikiadoption-mail-second-subject' => 'Lakaat a raimp ho wiki da zegemer a-benn nebeut',
-	'wikiadoption-mail-adoption-subject' => 'Degemeret eo bet ho wiki !',
+	'wikiadoption-mail-second-subject' => '#WIKINAME a vo lakaet da zegemer a-benn nebeut',
+	'wikiadoption-mail-adoption-subject' => '#WIKINAME a zo bet degemeret',
 	'tog-adoptionmails' => 'Kasit din ur gemennadenn ma vez dieub $1 da zegemer',
 	'wikiadoption-pref-label' => 'Kemmañ an dibarzhioù-mañ en do un efed war posteloù $1 hepken.',
 );
@@ -484,8 +485,19 @@ Outils très utiles :
  * @author Toliño
  */
 $messages['gl'] = array(
+	'wikiadoption' => 'Adopción de wiki automática',
+	'wikiadoption-desc' => 'Unha extensión AutomaticWikiAdoption para MediaWiki',
 	'wikiadoption-header' => 'Adoptar este wiki',
+	'wikiadoption-button-adopt' => 'Si, quero adoptar {{SITENAME}}!',
+	'wikiadoption-adopt-inquiry' => 'Descubra máis!',
+	'wikiadoption-know-more-header' => 'Quere descubrir máis?',
+	'wikiadoption-adoption-successed' => 'Parabéns! Agora xa é un administrador deste wiki!',
+	'wikiadoption-not-allowed' => 'Sentímolo. Nestes intres non pode adoptar este wiki.',
+	'wikiadoption-not-enough-edits' => 'Vaites! Necesita facer máis de 10 edicións para adoptar o wiki.',
+	'wikiadoption-log-reason' => 'Adopción de wiki automática',
+	'wikiadoption-mail-first-subject' => 'Levamos sen velo bastante tempo',
 	'wikiadoption-mail-adoption-subject' => 'Adoptaron #WIKINAME',
+	'wikiadoption-welcome-header' => 'Parabéns! Adoptou {{SITENAME}}!',
 );
 
 /** Hungarian (Magyar)
@@ -616,6 +628,7 @@ $messages['it'] = array(
 $messages['lb'] = array(
 	'wikiadoption-adopt-inquiry' => 'Fir méi ze wëssen!',
 	'wikiadoption-know-more-header' => 'Wann Dir méi wësse wëllt.',
+	'wikiadoption-mail-first-subject' => 'Mir hunn Iech schonn eng Zäit net méi gesinn.',
 );
 
 /** Macedonian (Македонски)
@@ -860,30 +873,40 @@ Bent u klaar om de volgende stap te zetten in uw carrière bij {{SITENAME}}?",
 	'wikiadoption-mail-first-subject' => 'We hebben u al een tijdje niet gezien',
 	'wikiadoption-mail-first-content' => 'Hallo $1,
 
-Het is al weer een aantal weken geleden dat we een beheerder in uw wiki hebben gezien. Bedenk u dat uw gemeenschap naar u kijkt als het gaat om een soepel draaiende wiki.
+Het is al weer een aantal weken geleden dat we een beheerder in uw wiki #WIKINAME hebben gezien. Beheerders zijn een integraal onderdeel van #WIKINAME en het is belangrijk dat ze regelmatig aanwezig zijn. Als er langere tijd geen actieve beheerders zijn, dan wordt de wiki opgegeven voor adoptie, zodat er een andere beheerder kan komen.
 
-Als u hulp nodig hebt bij het zorgen voor uw wiki, dan kunt u ook andere gemeenschapsleden beheerder maken door te gaan naar $2.
+Als u hulp nodig hebt bij het zorgen voor uw wiki, dan kunt u ook andere gemeenschapsleden beheerder maken door te gaan naar $2. We hopen u snel te zien op #WIKINAME!
 
 Het Wikia-team
 
 Klik op de volgende verwijzing om u uit te schrijven van wijzigingen op deze lijst: $3.',
 	'wikiadoption-mail-first-content-HTML' => 'Hallo $1,<br /><br />
-Het is al weer een aantal weken geleden dat er een beheerder actief is geweest op uw wiki. Denk er alstublieft aan dat uw gemeenschap naar u kijkt als het gaat om het soepel laten draaien van de wiki.<br /><br />
-Als u hulp nodig hebt bij het zorgen voor de wiki, dan kunt u ook andere gemeenschapsleden beheerder maken via <a href="$2">Gebruikersrechtenbeheer</a>.<br /><br />
-<b>Het Wikia-team</b><br /><br />
-<small>U kunt zich van wijzigingen op deze lijst <a href="$3">uitschrijven</a>.</small>',
+
+Het is al weer een aantal weken geleden dat we een beheerder in uw wiki #WIKINAME hebben gezien. Beheerders zijn een integraal onderdeel van #WIKINAME en het is belangrijk dat ze regelmatig aanwezig zijn. Als er langere tijd geen actieve beheerders zijn, dan wordt de wiki opgegeven voor adoptie, zodat er een andere beheerder kan komen.<br /><br />
+
+Als u hulp nodig hebt bij het zorgen voor uw wiki, dan kunt u ook andere gemeenschapsleden beheerder maken door te gaan naar $2. We hopen u snel te zien op #WIKINAME!<br /><br />
+
+Het Wikia-team<br /><br />
+
+Klik op de volgende verwijzing om u <a href="$3">uit te schrijven</a> van wijzigingen op deze lijst.',
 	'wikiadoption-mail-second-subject' => '#WIKINAME wordt binnenkort voor adoptie opgegeven',
 	'wikiadoption-mail-second-content' => 'Hallo $1,
 
-Het is al weer even geleden dat we een beheerder hebben zien langskomen bij uw wiki. Het is voor de gemeenschap belangrijk dat er actieve beheerders zijn om ervoor te zorgen dat de wiki lekker blijft draaien. Daarom wordt uw wiki binnenkort beschikbaar gemaakt voor adoptie zodat er weer een kans op actieve beheerders gaat bestaan.
+Het is al weer dertig dagen geleden dat we een beheerder op #WIKINAME hebben gezien. Het is belangrijk dat beheerders regelmatig aanwezig zijn en dat ze bijdragen zodat de wiki soepel kan lopen.
+
+Omdat er zo lang geen beheerder actief is geweest, komt #WIKINAME nu beschikbaar voor adoptie door andere gebruikers.
 
 Het Wikia-team
 
-U kunt zich van wijzigingen op deze lijst uitschrijven: $3.',
+Klik op de volgende verwijzing om u uit te schrijven van wijzigingen op deze lijst: $3.',
 	'wikiadoption-mail-second-content-HTML' => 'Hallo $1,<br /><br />
-Het is al weer even geleden dat we een beheerder hebben zien langskomen bij uw wiki. Het is voor de gemeenschap belangrijk dat er actieve beheerders zijn om ervoor te zorgen dat de wiki lekker blijft draaien. Daarom wordt uw wiki binnenkort beschikbaar gemaakt voor adoptie zodat er weer een kans op actieve beheerders gaat bestaan.<br /><br />
-<b>Het Wikia-team</b><br /><br />
-<small>U kunt zich van wijzigingen op deze lijst <a href="$3">uitschrijven</a>.</small>',
+Het is al weer dertig dagen geleden dat we een beheerder op #WIKINAME hebben gezien. Het is belangrijk dat beheerders regelmatig aanwezig zijn en dat ze bijdragen zodat de wiki soepel kan lopen.<br /><br />
+
+Omdat er zo lang geen beheerder actief is geweest, komt #WIKINAME nu beschikbaar voor adoptie door andere gebruikers.<br /><br />
+
+Het Wikia-team<br /><br />
+
+Klik op de volgende verwijzing om u <a href="$3">unsubscribe</a>uit te schrijven</a> van wijzigingen op deze lijst.',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME is geadopteerd',
 	'wikiadoption-mail-adoption-content' => 'Hallo $1,
 
@@ -940,30 +963,40 @@ Klinkt goed?",
 	'wikiadoption-mail-first-subject' => 'We hebben je al een tijdje niet gezien',
 	'wikiadoption-mail-first-content' => 'Hallo $1,
 
-Het is al weer een aantal weken geleden dat we een beheerder in je wiki hebben gezien. Bedenk je dat jouw gemeenschap naar jou kijkt als het gaat om een soepel draaiende wiki.
+Het is al weer een aantal weken geleden dat we een beheerder in je wiki #WIKINAME hebben gezien. Beheerders zijn een integraal onderdeel van #WIKINAME en het is belangrijk dat ze regelmatig aanwezig zijn. Als er langere tijd geen actieve beheerders zijn, dan wordt de wiki opgegeven voor adoptie, zodat er een andere beheerder kan komen.
 
-Als je hulp nodig hebt bij het zorgen voor uw wiki, dan kan je ook andere gemeenschapsleden beheerder maken door te gaan naar $2.
+Als je hulp nodig hebt bij het zorgen voor je wiki, dan kan je ook andere gemeenschapsleden beheerder maken door te gaan naar $2. We hopen je snel te zien op #WIKINAME!
 
 Het Wikia-team
 
 Klik op de volgende verwijzing om je uit te schrijven van wijzigingen op deze lijst: $3.',
-	'wikiadoption-mail-first-content-HTML' => 'Hoi $1,<br /><br />
-Het is al weer een aantal weken geleden dat er een beheerder actief is geweest op je wiki. Denk er alsjeblieft aan dat je gemeenschap naar jou kijkt als het gaat om het soepel laten draaien van de wiki.<br /><br />
-Als je hulp nodig hebt bij het zorgen voor de wiki, dan kan je ook andere gemeenschapsleden beheerder maken via <a href="$2">Gebruikersrechtenbeheer</a>.<br /><br />
-<b>Het Wikia-team</b><br /><br />
-<small>Je kunt je van wijzigingen op deze lijst <a href="$3">uitschrijven</a>.</small>',
-	'wikiadoption-mail-second-subject' => 'Je wiki wordt binnenkort voor adoptie opgegeven',
-	'wikiadoption-mail-second-content' => 'Hoi $1,
+	'wikiadoption-mail-first-content-HTML' => 'Hallo $1,<br /><br />
 
-Het is al weer even geleden dat we een beheerder hebben zien langskomen bij je wiki. Het is voor de gemeenschap belangrijk dat er actieve beheerders zijn om ervoor te zorgen dat de wiki lekker blijft draaien. Daarom wordt je wiki binnenkort beschikbaar gemaakt voor adoptie zodat er weer een kans op actieve beheerders gaat bestaan.
+Het is al weer een aantal weken geleden dat we een beheerder in je wiki #WIKINAME hebben gezien. Beheerders zijn een integraal onderdeel van #WIKINAME en het is belangrijk dat ze regelmatig aanwezig zijn. Als er langere tijd geen actieve beheerders zijn, dan wordt de wiki opgegeven voor adoptie, zodat er een andere beheerder kan komen.<br /><br />
+
+Als je hulp nodig hebt bij het zorgen voor je wiki, dan kan je ook andere gemeenschapsleden beheerder maken door te gaan naar $2. We hopen je snel te zien op #WIKINAME!<br /><br />
+
+Het Wikia-team<br /><br />
+
+Klik op de volgende verwijzing om je <a href="$3">uit te schrijven</a> van wijzigingen op deze lijst.',
+	'wikiadoption-mail-second-subject' => 'Je wiki wordt binnenkort voor adoptie opgegeven',
+	'wikiadoption-mail-second-content' => 'Hallo $1,
+
+Het is al weer dertig dagen geleden dat we een beheerder op #WIKINAME hebben gezien. Het is belangrijk dat beheerders regelmatig aanwezig zijn en dat ze bijdragen zodat de wiki soepel kan lopen.
+
+Omdat er zo lang geen beheerder actief is geweest, komt #WIKINAME nu beschikbaar voor adoptie door andere gebruikers.
 
 Het Wikia-team
 
-Je kunt je van wijzigingen op deze lijst uitschrijven: $3.',
+Klik op de volgende verwijzing om je uit te schrijven van wijzigingen op deze lijst: $3.',
 	'wikiadoption-mail-second-content-HTML' => 'Hoi $1,<br /><br />
-Het is al weer even geleden dat we een beheerder hebben zien langskomen bij je wiki. Het is voor de gemeenschap belangrijk dat er actieve beheerders zijn om ervoor te zorgen dat de wiki lekker blijft draaien. Daarom wordt je wiki binnenkort beschikbaar gemaakt voor adoptie zodat er weer een kans op actieve beheerders gaat bestaan.<br /><br />
-<b>Het Wikia-team</b><br /><br />
-<small>Je kunt je van wijzigingen op deze lijst <a href="$3">uitschrijven</a>.</small>',
+Het is al weer dertig dagen geleden dat we een beheerder op #WIKINAME hebben gezien. Het is belangrijk dat beheerders regelmatig aanwezig zijn en dat ze bijdragen zodat de wiki soepel kan lopen.<br /><br />
+
+Omdat er zo lang geen beheerder actief is geweest, komt #WIKINAME nu beschikbaar voor adoptie door andere gebruikers.<br /><br />
+
+Het Wikia-team<br /><br />
+
+Klik op de volgende verwijzing om je <a href="$3">unsubscribe</a>uit te schrijven</a> van wijzigingen op deze lijst.',
 	'wikiadoption-mail-adoption-subject' => 'Je wiki is geadopteerd',
 	'wikiadoption-mail-adoption-content' => 'Hoi $1,
 
@@ -1305,7 +1338,7 @@ $messages['sv'] = array(
 	'wikiadoption-not-allowed' => 'Vi ber om ursäkt. Du kan inte adoptera denna wiki just nu.',
 	'wikiadoption-not-enough-edits' => 'Hoppsan! Du måste ha mer än 10 redigeringar för att adoptera denna wiki.',
 	'wikiadoption-log-reason' => 'Automatisk Wiki-Adoption',
-	'wikiadoption-notification' => "$1 är tillgänglig för adoption! Du kan bli den nya ägaren. '''Adoptera nu!'''",
+	'wikiadoption-notification' => '{{SITENAME}} är tillgänglig för adoption! Intressant att bli en ledare här? Adoptera denna wiki för att komma igång! $2',
 	'wikiadoption-mail-first-subject' => 'Vi har inte sett dig på ett tag',
 	'wikiadoption-mail-first-content-HTML' => 'Hej $1,<br /><br />
 Det har varit ett par veckor sen vi såg en administratör på din wiki. Kom ihåg att din commynity kommer att titta till er för att se om wikin fungerar som den ska.<br /><br />

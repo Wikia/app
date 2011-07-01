@@ -282,6 +282,35 @@ Si vous préférez utiliser la messagerie électronique classique ou souhaitez j
 	'specialcontact-submitcomplete' => 'Merci d’avoir contacté Wikia.',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'contact' => 'Contactar con Wikia',
+	'specialcontact-wikia' => 'Contactar con Wikia',
+	'specialcontact-pagetitle' => 'Contactar con Wikia',
+	'specialcontact-username' => 'Nome de usuario',
+	'specialcontact-wikiname' => 'Que wiki',
+	'specialcontact-realname' => 'O seu nome',
+	'specialcontact-yourmail' => 'Enderezo de correo electrónico',
+	'specialcontact-problem' => 'Asunto',
+	'specialcontact-problemdesc' => 'Mensaxe',
+	'specialcontact-mail' => 'Enviar a Wikia',
+	'specialcontact-filledin' => 'Esta información foi cuberta a partir das preferencias da súa conta',
+	'specialcontact-ccme' => 'Enviádeme unha copia desta mensaxe',
+	'specialcontact-ccdisabled' => 'Desactivado: Valide o seu enderezo de correo electrónico para empregar esta función',
+	'specialcontact-notyou' => 'Non é vostede?',
+	'specialcontact-captchainfo' => 'Introduza o texto da imaxe.',
+	'specialcontact-captchatitle' => 'Palabra borrosa',
+	'specialcontact-formtitle' => 'Contactar co persoal de axuda de Wikia',
+	'specialcontact-nomessage' => 'Encha unha mensaxe',
+	'specialcontact-captchafail' => 'Falta o código de confirmación ou é incorrecto.',
+	'specialcontact-mailsub' => 'Correo de contacto de Wikia',
+	'specialcontact-mailsubcc' => 'Copia do correo de contacto de Wikia',
+	'specialcontact-ccheader' => 'Esta é unha copia da mensaxe que enviou ao persoal de axuda de Wikia',
+	'specialcontact-submitcomplete' => 'Grazas por poñerse en contacto con Wikia.',
+);
+
 /** Hungarian (Magyar)
  * @author Dani
  */
@@ -695,6 +724,7 @@ Kung mas nais mong gamitin ang pangkaraniwang e-liham o maglagay ng mga kalakip,
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

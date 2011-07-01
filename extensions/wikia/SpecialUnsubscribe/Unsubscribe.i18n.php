@@ -128,6 +128,16 @@ $messages['fr'] = array(
 	'unsubscribe-working-done' => 'Terminé.',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'unsubscribe' => 'Cancelar a subscrición',
+	'unsubscribe-confirm-legend' => 'Confirmar',
+	'unsubscribe-confirm-button' => 'Si, estou seguro',
+	'unsubscribe-working-done' => 'Completo.',
+);
+
 /** Hungarian (Magyar)
  * @author Dani
  */

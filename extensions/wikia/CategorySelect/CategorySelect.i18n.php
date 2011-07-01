@@ -774,6 +774,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article',
@@ -784,7 +785,7 @@ $messages['sv'] = array(
 	'categoryselect-addcategory-button' => 'Lägg till kategori',
 	'categoryselect-suggest-hint' => 'Tryck Enter när du är klar',
 	'categoryselect-edit-summary' => 'Lägg till kategorier',
-	'categoryselect-empty-name' => 'Ge kategorinamn (del innan |)',
+	'categoryselect-empty-name' => 'Ange kategorinamn (del innan |)',
 	'categoryselect-button-save' => 'Spara',
 	'categoryselect-button-cancel' => 'Avbryt',
 	'categoryselect-error-not-exist' => 'Artikel [id=$1] finns inte.',
@@ -880,6 +881,7 @@ $messages['ur'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

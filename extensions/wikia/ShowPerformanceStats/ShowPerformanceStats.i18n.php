@@ -89,6 +89,16 @@ $messages['fr'] = array(
 	'performancestat-cpu' => 'Processeur : $1s',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'showperformancestats-desc' => 'Devolve estatísticas de rendemento',
+	'performancestat-total' => 'Total: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
+);
+
 /** Hungarian (Magyar)
  * @author Dani
  */
