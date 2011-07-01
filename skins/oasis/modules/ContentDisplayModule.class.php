@@ -87,7 +87,7 @@ class ContentDisplayModule extends Module {
 			$class .= " loginToEditProtectedPage";
 		}
 
-		$result .= Xml::openElement( 'button', array( 'class' => $class ) );
+		$result .= Xml::openElement( 'span', array( 'class' => $class ) );
 
 		$result .= Xml::openElement( 'a', array( 'href' => $url ) );
 		$result .= Xml::element(
@@ -102,7 +102,7 @@ class ContentDisplayModule extends Module {
 
 		$result .= Xml::element( 'a', array( 'href' => $url ), wfMsg( 'oasis-section-edit' ) );
 
-		$result .= Xml::closeElement( 'button' );
+		$result .= Xml::closeElement( 'span' );
 
 		wfProfileOut(__METHOD__);
 		return true;
