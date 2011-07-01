@@ -59,7 +59,8 @@ class MultiDeleteTask extends BatchTask {
 			$this->log("Page " . $article . " is invalid - task was terminated ");
 			return true;
 		}
-		$this->title = str_replace( ' ', '_', $page->getPrefixedText() );
+		$this->prefixedTitle = str_replace( ' ', '_', $page->getPrefixedText() );
+		$this->title = str_replace( ' ', '_', $page->getText() );
 		$this->namespace = intval($page->getNamespace());
 		$resultTitle = $page->getFullText();
 
@@ -96,7 +97,7 @@ class MultiDeleteTask extends BatchTask {
 				# command
 				$sCommand  = "SERVER_ID={$city_id} php $IP/maintenance/wikia/deleteOn.php ";
 				$sCommand .= "-u " . $username . " ";
-				$sCommand .= "-t " . escapeshellarg($this->title) . " ";
+				$sCommand .= "-t " . escapeshellarg($this->prefixedTitle) . " ";
 				if ( $reason ) {
 					$sCommand .= "-r " . $reason . " ";
 				}
