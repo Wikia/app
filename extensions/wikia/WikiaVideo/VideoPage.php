@@ -1696,46 +1696,54 @@ EOD;
 				break;
 			case self::V_SCREENPLAY:
 				$player = '/extensions/wikia/JWPlayer/player.swf';
+				$swfobject = '/extensions/wikia/JWPlayer/swfobject.js';
 				$file = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.$this->mData[0].'&vendorid='.$this->mData[1].'&type='.$this->mData[2];
+				$hdfile = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::$SCREENPLAY_HIGHDEF_BITRATE_ID.'&vendorid='.$this->mData[1].'&type='.$this->mData[2];
 				$image = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid=382&vendorid='.$this->mData[1].'&type=.jpg';
-
-				// swfobject
-				$playerId = 'player-'.$this->mId;
-//				$callback = 'function() { 
-//					var so = new SWFObject("/extensions/wikia/JWPlayer/player.swf", "'.$playerId.'", "'.$width.'", "'.$height.'", "9");
-//					so.addVariable("file","'.urlencode($file).'");
-//					so.addVariable("image","'.urlencode($image).'");
-//					so.addVariable("type","video");
-//					so.addVariable("provider","video");
-//					so.addParam("allowfullscreen","true");
-//					so.addParam("allowscriptaccess", "always");
-//					so.addParam("wmode", "opaque");
-//					so.addVariable("stretching", "fill");
-//					so.write("'.$playerId.'");
-//					}';
-				//@todo add title, description variables
 				
 				$flashvars = 'file='.urlencode($file).'&image='.urlencode($image).'&provider=video&type=video&stretching=fill';		//@todo add title, description variables
+//				$embed = '<object 
+//				    width="'.$width.'"
+//				    height="'.$height.'">
+//				    <param name="movie" value="'.$player.'">
+//				    <param name="allowfullscreen" value="true">
+//				    <param name="allowscriptaccess" value="always">
+//				    <param name="wmode" value="opaque">
+//				    <param name="flashvars" value="file='.urlencode($file).'&image='.urlencode($image).'&provider=video&type=video&stretching=fill">
+//				    <embed
+//				      src="'.$player.'"
+//				      width="'.$width.'"
+//				      height="'.$height.'"
+//				      allowfullscreen="true"
+//				      allowscriptaccess="always"
+//				      wmode="opaque"
+//				      flashvars="'.$flashvars.'"
+//				    />
+//				</object>';
+				//@todo add title, description variables
+				//@todo show object in Add Video flow. show swfobject in article mode
+				// swfobject
+				$playerId = 'player-'.$this->mId;
+				$embed = '<script type="text/javascript" src="'.$swfobject.'"></script>
+				<div id="'.$playerId.'"></div>
+				<script type="text/javascript">
+					var so = new SWFObject("'.$player.'","'.$playerId.'","'.$width.'","'.$height.'","9");
+					so.addParam("allowfullscreen","true");
+					so.addParam("allowscriptaccess","always");
+					so.addParam("wmode", "opaque");
+					so.addVariable("file", "'.urlencode($file).'");
+					so.addVariable("image","'.urlencode($image).'");
+					so.addVariable("type","video");
+					so.addVariable("provider","video");
+					so.addVariable("stretching", "fill");
+					so.addVariable("plugins", "hd-1");
+					so.addVariable("hd.file", "'.urlencode($hdfile).'");
+					so.addVariable("hd.state", "false");
+					so.write("'.$playerId.'");
+				</script>';
+				//@todo load HD only if it exists
 
 				$code = 'custom';
-				$embed = '<object 
-				    width="'.$width.'"
-				    height="'.$height.'">
-				    <param name="movie" value="'.$player.'">
-				    <param name="allowfullscreen" value="true">
-				    <param name="allowscriptaccess" value="always">
-				    <param name="wmode" value="opaque">
-				    <param name="flashvars" value="file='.urlencode($file).'&image='.urlencode($image).'&provider=video&type=video&stretching=fill">
-				    <embed
-				      src="'.$player.'"
-				      width="'.$width.'"
-				      height="'.$height.'"
-				      allowfullscreen="true"
-				      allowscriptaccess="always"
-				      wmode="opaque"
-				      flashvars="'.$flashvars.'"
-				    />
-				</object>';
 				break;
 			default: break;
 		}
