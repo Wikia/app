@@ -4,7 +4,6 @@ $wgExtensionMessagesFiles['WikiaVideo'] = dirname(__FILE__).'/WikiaVideo.i18n.ph
 
 class VideoPage extends Article {
 
-	const V_GAMETRAILERS = 20;
 	const V_GAMEVIDEOS = 1;
 	const V_GAMESPOT = 2;
 	const V_MTVGAMES = 3;
@@ -24,6 +23,11 @@ class VideoPage extends Article {
 	const V_DAILYMOTION = 18;
 	const V_VIDDLER	 = 19;
 	const K_VIDDLER = "hacouneo6n6o3nysn0em";
+	const V_GAMETRAILERS = 20;
+	const V_SCREENPLAY = 21;
+	
+	private static $SCREENPLAY_HIGHDEF_BITRATE_ID = 449;	// 720p
+	private static $SCREENPLAY_STANDARD_BITRATE_ID = 461;	// 360
 
 	var	$mName,
 		$mVideoName,
@@ -39,8 +43,37 @@ class VideoPage extends Article {
 
 	// used when displaying the video page, wrapper for view
 	function render() {
-		global $wgOut;
+		global $wgOut, $wgRequest;
 		$wgOut->setArticleBodyOnly(true);
+		// this article has no content. simulate a Video tag
+		// width, align and caption may be specified as params. let's 
+		// overload the article title to have a quasi-query string
+		$params = array();
+
+		$vars = $wgRequest->getValues();
+		if (sizeof($vars)) {
+			if (!empty($vars['thumb']) && $vars['thumb']) {
+				$params[] = 'thumb';
+			}
+			if (!empty($vars['width'])) {
+				$params[] = $vars['width'];
+			}
+			if (!empty($vars['align'])) {
+				$params[] = $vars['align'];
+			}
+			if (!empty($vars['caption'])) {
+				$params[] = $vars['caption'];
+			}
+		}
+		
+		$paramsStr = '';
+		if (sizeof($params)) {
+			$paramsStr = '|' . implode('|', $params);
+		}
+
+		$this->mContent = '[[' . $this->getTitle()->getFullText() . $paramsStr .']]';
+		$this->mContentLoaded = true;
+		
 		parent::view();
 	}
 
@@ -841,6 +874,20 @@ EOD;
 			}
 		}
 
+		$text = strpos( $fixed_url, "TOTALECLIPS.COM" );
+		if( false !== $text ) { // Screenplay
+			$provider = self::V_SCREENPLAY;
+			$qsvars = array();
+			parse_str( parse_url($url, PHP_URL_QUERY), $qsvars );
+			if( !empty( $qsvars['eclipid'] ) ) {
+				$this->mId = $qsvars['eclipid'];
+				$this->mProvider = $provider;
+				$this->mData = array($qsvars['bitrateid'], $qsvars['vendorid'], $qsvars['type']);
+				//@todo get name and description
+				return true;
+			}
+		}
+
 		return false;
 	}
 
@@ -886,6 +933,9 @@ EOD;
 				break;
 			case self::V_HULU:
 				$ratio = (512 / 296);
+				break;
+			case self::V_SCREENPLAY:
+				$ratio = (480 / 270);
 				break;
 			default:
 				$ratio = 1;
@@ -936,6 +986,9 @@ EOD;
 				break;
 			case self::V_HULU:
 				$ratio = "512 x 296";
+				break;
+			case self::V_SCREENPLAY:
+				$ratio = "480 x 270";
 				break;
 			default:
 				$ratio = "300 x 300";
@@ -1032,7 +1085,11 @@ EOD;
 				break;
 			case self::V_HULU:
 				$exists = $this->getHuluData() != false;
-				break;					
+				break;	
+			case self::V_SCREENPLAY:
+				//@todo verify if exists
+				$exists = true;
+				break;
 			default:
 				break;
 		}
@@ -1079,6 +1136,8 @@ EOD;
 				return 'http://www.gametrailers.com';
 			case self::V_HULU:
 				return 'http://www.hulu.com';
+			case self::V_SCREENPLAY:
+				return 'http://www.screenplayinc.com';
 			default:
 				return '';
 		}
@@ -1145,6 +1204,9 @@ EOD;
 			case self::V_HULU:
 				$url = 'http://www.hulu.com/watch/' . $id;
 				break;
+			case self::V_SCREENPLAY:
+				$url = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$id.'&bitrateid='.$mData[0].'&vendorid='.$mData[1].'&type='.$mData[2];
+				break;
 			default:
 				$url = '';
 				break;
@@ -1207,6 +1269,7 @@ EOD;
 				$metadata = $this->mProvider . ',' . $this->mId . ',';
 				break;
 			case self::V_HULU:
+			case self::V_SCREENPLAY:
 				$metadata = $this->mProvider . ',' . $this->mId . ',' . implode(',', $this->mData);
 				break;
 			default:
@@ -1630,6 +1693,50 @@ EOD;
 				break;
 			case self::V_HULU:
 				$url = $this->getUrlToEmbed();
+				break;
+			case self::V_SCREENPLAY:
+				$player = '/extensions/wikia/JWPlayer/player.swf';
+				$file = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.$this->mData[0].'&vendorid='.$this->mData[1].'&type='.$this->mData[2];
+				$image = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid=382&vendorid='.$this->mData[1].'&type=.jpg';
+
+				// swfobject
+				$playerId = 'player-'.$this->mId;
+//				$callback = 'function() { 
+//					var so = new SWFObject("/extensions/wikia/JWPlayer/player.swf", "'.$playerId.'", "'.$width.'", "'.$height.'", "9");
+//					so.addVariable("file","'.urlencode($file).'");
+//					so.addVariable("image","'.urlencode($image).'");
+//					so.addVariable("type","video");
+//					so.addVariable("provider","video");
+//					so.addParam("allowfullscreen","true");
+//					so.addParam("allowscriptaccess", "always");
+//					so.addParam("wmode", "opaque");
+//					so.addVariable("stretching", "fill");
+//					so.write("'.$playerId.'");
+//					}';
+				//@todo add title, description variables
+				
+				$flashvars = 'file='.urlencode($file).'&image='.urlencode($image).'&provider=video&type=video&stretching=fill';		//@todo add title, description variables
+
+				$code = 'custom';
+				$embed = '<object 
+				    width="'.$width.'"
+				    height="'.$height.'">
+				    <param name="movie" value="'.$player.'">
+				    <param name="allowfullscreen" value="true">
+				    <param name="allowscriptaccess" value="always">
+				    <param name="wmode" value="opaque">
+				    <param name="flashvars" value="file='.urlencode($file).'&image='.urlencode($image).'&provider=video&type=video&stretching=fill">
+				    <embed
+				      src="'.$player.'"
+				      width="'.$width.'"
+				      height="'.$height.'"
+				      allowfullscreen="true"
+				      allowscriptaccess="always"
+				      wmode="opaque"
+				      flashvars="'.$flashvars.'"
+				    />
+				</object>';
+				break;
 			default: break;
 		}
 		if( 'custom' != $code ) {
@@ -1686,6 +1793,9 @@ EOD;
 				$huluData = $this->getHuluData();
 				$thumb = $huluData['thumbnailUrl'];
 				break;
+			case self::V_SCREENPLAY:
+				$thumb = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid=382&vendorid='.$this->mData[1].'&type=.jpg';
+				break;
 			default:
 				break;
 		}
@@ -1721,9 +1831,9 @@ EOD;
 		global $wgOut, $wgWikiaVideoProviders;
 		$data = array(
 			$this->mProvider,
-			$this->mId,
-			$this->mData[0]
+			$this->mId		    
 		);
+		$data = array_merge($data, $this->mData);
 		$data = implode( ",", $data ) ;
 		$url = self::getUrl( $data );
 		$provider = $wgWikiaVideoProviders[$this->mProvider];
@@ -1756,6 +1866,7 @@ $wgWikiaVideoProviders = array(
 		VideoPage::V_SOUTHPARKSTUDIOS => 'southparkstudios',
 		VideoPage::V_DAILYMOTION => 'dailymotion',
 		VideoPage::V_VIDDLER => 'viddler',
+		VideoPage::V_SCREENPLAY => 'Screenplay, Inc.',
 		);
 
 class VideoHistoryList {
