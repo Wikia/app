@@ -178,7 +178,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 	/**
 	 * Parse and store attributes of parsed <gallery> tag
-	 * 
+	 *
 	 * WARNING: This handles only additional parameters not handled by ImageGallery, see /includes/parser/Parser.php
 	 * for setting width use setWidths!
 	 */
@@ -311,7 +311,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	 */
 	public function setWidths($width) {
 		$width = intval($width);
-		
+
 		// 100px is the smallest width for slideshows
 		if ($this->mType == self::WIKIA_PHOTO_SLIDESHOW) {
 			$width = max(100, $width);
@@ -1681,7 +1681,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	/**
 	 * Get object for given image (and call hook)
 	 *
-	 * TODO: Document what 'nt' is.
+	 * @param $title Title object of the image
 	 */
 	private function getImage($nt) {
 		wfProfileIn(__METHOD__);
