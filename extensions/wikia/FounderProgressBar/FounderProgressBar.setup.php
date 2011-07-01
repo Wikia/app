@@ -20,6 +20,7 @@ $app->registerExtensionMessageFile('FounderProgressBar', $dir . '/FounderProgres
 $wgHooks[ 'ArticleSaveComplete' ][] = 'FounderProgressBarHooks::onArticleSaveComplete';
 $wgHooks[ 'UploadComplete' ][] = 'FounderProgressBarHooks::onUploadComplete';
 $wgHooks[ 'AddNewAccount' ][] = 'FounderProgressBarHooks::onAddNewAccount';
+$wgHooks[ 'CategoryPage::AddPage' ][] = 'FounderProgressBarHooks::onAddCategoryPage';
 
 
 // On wiki creation or WikiFactory enable add db columns
@@ -31,7 +32,7 @@ define('FT_PAGE_ADD_10', 10);
 define('FT_THEMEDESIGNER_VISIT', 20);
 define('FT_MAINPAGE_EDIT', 30);
 define('FT_PHOTO_ADD_10', 40);
-define('FT_CATEGORY_ADD_3', 50);
+define('FT_CATEGORY_ADD3', 50);
 define('FT_COMMCENTRAL_VISIT', 60);
 define('FT_WIKIACTIVITY_VISIT', 70);
 define('FT_PROFILE_EDIT', 80);
