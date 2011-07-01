@@ -165,17 +165,18 @@ $messages['el'] = array(
 
 /** Spanish (Español)
  * @author Bola
+ * @author Fitoschido
  */
 $messages['es'] = array(
 	'our404handler' => 'Error 404: ¡Página no encontrada!',
-	'our404handler-oops' => 'Esta no es el tipo de páginas que estás buscando. Sal de aquí, por favor.',
+	'our404handler-oops' => 'Este no es el tipo de páginas que estás buscando. Sal de aquí, por favor.',
 	'message404' => "'''Por alguna razón la página por la que preguntaste no existe.'''
 
 El artículo '''$1''' no pudo ser encontrado.
 
-* Puedes reintentarlo con el artículo [[$2]]
+* Puedes intentarlo con el artículo [[$2]]
 * Puedes usar el cajón de búsqueda en el lado izquierdo de la página
-* Para ir a la portada de este sitio, haz click en el vínculo: [{{SERVER}} {{SITENAME}}]",
+* Para ir a la portada de este sitio, haz clic en el vínculo: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Estonian (Eesti)
@@ -638,10 +639,19 @@ $messages['ru'] = array(
 );
 
 /** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
  * @author බිඟුවා
  */
 $messages['si'] = array(
-	'our404handler' => 'වැරැද්ද 404: පිටුව සොයා ගත නොහැකි විය!',
+	'our404handler' => 'දෝෂය 404: පිටුව හමු නොවුණි!',
+	'our404handler-oops' => 'මේවා ඔබ සොයන පිටු නොවේ. කරුණාකර, මෙතනින් ඉවත් වන්න.',
+	'message404' => "'''අපට ඇත්තටම කණගාටුයි, සමහර හේතු නිසා ඔබ සොයන පිටුව මෙහි නොමැත.'''
+
+'''$1''' ලිපිය සොයා ගත නොහැකි විය.
+
+* ඔබට [[$2]] ලිපිය බැලිය හැක
+* ඔබට පිටුවෙහි වම් පස ඇති සෙවුම් කොටුව භාවිතා කල හැක
+* මෙම අඩවියෙහි මුල් පිටුව වෙත යාම සඳහා, මෙම සබැදිය ඔබන්න: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Slovenian (Slovenščina)

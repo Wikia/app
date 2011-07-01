@@ -13,6 +13,13 @@ $messages['qqq'] = array(
 	'signup' => 'The Special:Userlogin/signup page is displayed if a user chooses login, but is not signed up for the wiki.',
 );
 
+/** Bengali (বাংলা)
+ * @author Usarker
+ */
+$messages['bn'] = array(
+	'signup' => 'নিবন্ধিত হউন',
+);
+
 /** Breton (Brezhoneg) */
 $messages['br'] = array(
 	'signup' => 'En em enskrivañ',
@@ -58,6 +65,14 @@ $messages['es'] = array(
 $messages['fr'] = array(
 	'signup-desc' => 'Ajoute l’alias [[{{#Special:Signup}}]] pour [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Connexion',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'signup-desc' => 'Engade o pseudónimo [[{{#Special:Signup}}]] para [[{{#Special:UserLogin}}/signup]]',
+	'signup' => 'Crear unha conta',
 );
 
 /** Hungarian (Magyar)
@@ -186,6 +201,7 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

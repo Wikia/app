@@ -59,6 +59,13 @@ $messages['fr'] = array(
 	'imageserving-desc' => 'Sélectionne les images dans un ensemble défini de pages, en fonction des besoins visuels',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'imageserving-desc' => 'Selecciona as imaxes a partir dun conxunto especificado de páxinas en base ás necesidades visuais',
+);
+
 /** Hebrew (עברית) */
 $messages['he'] = array(
 	'imageserving-desc' => 'בחירת תמונות ממערך מסוים של דפים בהתאם לדרישות החזותיות',
@@ -130,6 +137,20 @@ $messages['roa-tara'] = array(
 /** Russian (Русский) */
 $messages['ru'] = array(
 	'imageserving-desc' => 'Выбирает изображений из указанного массива страниц на основе визуальных требований',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'imageserving-desc' => 'Väljer bilder från en given mängd sidor baserade på visuella krav',
+);
+
+/** Thai (ไทย)
+ * @author Akkhaporn
+ */
+$messages['th'] = array(
+	'imageserving-desc' => 'เลือกรูปภาพจากการลำดับที่ระบุของหน้าตามความต้องการภาพ',
 );
 
 /** Tagalog (Tagalog)

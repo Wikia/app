@@ -93,8 +93,10 @@ $messages['br'] = array(
 
 /** Czech (Česky)
  * @author Dontlietome7
+ * @author Utar
  */
 $messages['cs'] = array(
+	'interwikiedit' => 'Interwiki Editor',
 	'iwedit-title' => 'Editor Interwiki',
 	'iwedit-language-interwikis' => 'pouze jazyková interwiki',
 	'iwedit-all-interwikis' => 'všechna interwiki',

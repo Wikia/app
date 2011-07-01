@@ -117,6 +117,8 @@ $messages['gl'] = array(
 	'taskmanager' => 'Mostrar e xestionar as tarefas de fondo',
 	'taskmanager_title' => 'Mostrar e xestionar as tarefas de fondo',
 	'taskmanager_tasklist' => 'Volver á lista de tarefas',
+	'right-taskmanager' => 'Pode ver as tarefas en segundo plano',
+	'right-taskmanager-action' => 'Pode xestionar as tarefas en segundo plano',
 );
 
 /** Hebrew (עברית) */

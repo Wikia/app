@@ -221,6 +221,20 @@ $messages['sl'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Posebna stran]] za preverjanje stanja strežnika',
 );
 
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'healthcheck-desc' => 'En [[Special:HealthCheck|specialsida]] för att kolla serverns stauts',
+);
+
+/** Thai (ไทย)
+ * @author Akkhaporn
+ */
+$messages['th'] = array(
+	'healthcheck-desc' => '[[Special:HealthCheck|หน้าพิเศษ]] สำหรับการตรวจสอบสถานะเซิร์ฟเวอร์',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

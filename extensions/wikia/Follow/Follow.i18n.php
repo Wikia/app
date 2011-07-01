@@ -325,6 +325,7 @@ $messages['ce'] = array(
 /** Czech (Česky)
  * @author Darth Daron
  * @author Dontlietome7
+ * @author Utar
  */
 $messages['cs'] = array(
 	'follow-desc' => 'Vylepšení funkce seznamu sledovaných stránek',
@@ -339,7 +340,7 @@ $messages['cs'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'Stránky MediaWiki ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Obrázky a videa ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 stránka)',
-	'wikiafollowedpages-special-empty' => 'Seznam sledovaných stránek tohoto uživatele je prázdný.
+	'wikiafollowedpages-special-empty' => 'Váš seznam sledovaných stránek je prázdný.
 Přidejte stránky do tohoto seznamu klepnutím na tlačítko "{{int:watch}}" v horní části stránky.',
 	'wikiafollowedpages-special-anon' => 'Chcete-li vytvořit nebo zobrazit seznam sledovaných stránek, [[Special:Signup|přihlašte se]].',
 	'oasis-wikiafollowedpages-special-seeall' => 'Zobrazit vše >',
@@ -885,7 +886,7 @@ $messages['gl'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'Páxinas de MediaWiki ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Imaxes e vídeos ($1)',
 	'wikiafollowedpages-special-namespace' => '(páxina $1)',
-	'wikiafollowedpages-special-empty' => 'A lista de vixilancia deste usuario está baleira.
+	'wikiafollowedpages-special-empty' => 'A súa lista de páxinas seguidas está baleira.
 Engada páxinas a esta lista premendo no botón "{{int:watch}}" que aparecerá na parte superior das páxinas.',
 	'wikiafollowedpages-special-anon' => '[[Special:Signup|Acceda ao sistema]] para crear ou ollar a súa lista de vixilancia.',
 	'oasis-wikiafollowedpages-special-seeall' => 'Ollar todos >',
@@ -902,6 +903,8 @@ Engada páxinas a esta lista premendo no botón "{{int:watch}}" que aparecerá n
 	'wikiafollowedpages-special-title-userbar' => 'Páxinas vixiadas',
 	'tog-enotiffollowedpages' => 'Enviádeme unha mensaxe de correo electrónico cando unha páxina da miña lista de vixilancia cambie',
 	'tog-enotiffollowedminoredits' => 'Enviádeme unha mensaxe de correo electrónico cando fagan unha edición pequena nalgunha páxina que vixío',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Opcións avanzadas',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Lista de vixilancia soamente',
 	'tog-hidefollowedpages' => 'Facer privada a miña lista de vixilancia',
 	'follow-categoryadd-summary' => 'Páxina engadida á categoría',
 	'follow-bloglisting-summary' => 'Blogue publicado na páxina do blogue',
@@ -2821,6 +2824,13 @@ ___________________________________________
 <li>Бажаєте змінити параметри отримання повідомлень електронною поштою? Перейдіть до <a href="{{fullurl:{{ns:special}}:Preferences}}">налаштувань користувача</a></li>
 </ul>
 </p>',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'oasis-wikiafollowedpages-special-seeall' => 'Xem tất cả >',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

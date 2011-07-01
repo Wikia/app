@@ -2475,6 +2475,7 @@ $messages['lb'] = array(
 	'awc-metrics-db-size' => 'Gréisst vun der DB',
 	'awc-metrics-images' => 'Biller',
 	'awc-metrics-close' => 'Zoumaachen',
+	'awc-metrics-close-action' => 'zoumaachen',
 	'awc-metrics-active' => 'aktiv',
 	'awc-metrics-closed' => 'zougemaach',
 	'awc-metrics-this-month' => 'dëse Mount',
@@ -4024,6 +4025,7 @@ $messages['sr-ec'] = array(
  * @author Dafer45
  * @author Per
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'wikifactorypagetitle' => 'Wiki Factory Konfigurator',
@@ -4055,6 +4057,7 @@ $messages['sv'] = array(
 	'wikifactory-label-masstags' => 'MassTags',
 	'wikifactory-label-findtags' => 'HittaTaggar',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'Jämför',
 	'right-wikifactory' => 'Ändra interna inställningar för wikis',
 	'wikifactory-domain-edit' => 'redigera denna URL',
 	'wikifactory-domain-remove' => 'ta bort denna URL från wikin',
@@ -4098,6 +4101,7 @@ $messages['sv'] = array(
 	'awc-metrics-articles' => 'Artiklar',
 	'awc-metrics-articles-per-day' => 'Artiklar<br />(genomsnittlig per dag)',
 	'awc-metrics-revisions-per-page' => 'Revideringar<br />(genomsnittlig per sida)',
+	'awc-metrics-article-avg-size' => 'Genomsnittlig<br />artikelstorlek',
 	'awc-metrics-edits' => 'Redigeringar',
 	'awc-metrics-db-size' => 'DB-storlek',
 	'awc-metrics-images' => 'Bilder',
@@ -4113,8 +4117,8 @@ $messages['sv'] = array(
 	'awc-metrics-removed' => 'borttagen',
 	'awc-metrics-hubs' => 'Nya wikis (månatliga)',
 	'awc-metrics-news-day' => 'Nya wikis (dagligen)',
-	'awc-metrics-sum-month' => 'Räknad (per månad)',
-	'awc-metrics-sum-day' => 'Räknad (per dag)',
+	'awc-metrics-sum-month' => 'Summa (per månad)',
+	'awc-metrics-sum-day' => 'Summa (per dag)',
 	'awc-metrics-fewer-than' => 'som har färre än {{PLURAL:$1|$1 artikel|$1 artiklar}},',
 	'awc-metrics-edits-label' => '{{PLURAL:$1|$1 redigering|$1 redigeringar}} i $2,',
 	'awc-metrics-this-month' => 'denna månad',

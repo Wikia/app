@@ -130,6 +130,23 @@ $messages['fr'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Suggestions d’orthographe pour « $1 » : $2',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'spellchecker-desc' => 'Proporciona unha interface con corrector ortográfico para o módulo PHP enchant',
+	'enablespellchecker' => 'Activar o corrector ortográfico no modo visual',
+	'spellchecker-info' => 'Información sobre o corrector ortográfico',
+	'spellchecker-info-languages' => 'Linguas dispoñibles ($1)',
+	'spellchecker-info-provider' => 'Provedor',
+	'spellchecker-info-dictionaries' => 'Dicionarios dispoñibles',
+	'spellchecker-info-spellcheck-text' => 'Texto a comprobar',
+	'spellchecker-info-spellcheck-languages' => 'Lingua',
+	'spellchecker-info-spellcheck-submit' => 'Comprobar a ortografía',
+	'spellchecker-info-spellcheck-is-correct' => 'A palabra "$1" está escrita correctamente',
+	'spellchecker-info-spellcheck-suggestions' => 'Suxestións de ortografía para "$1": $2',
+);
+
 /** Hungarian (Magyar)
  * @author Dani
  */
@@ -339,6 +356,7 @@ $messages['tl'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

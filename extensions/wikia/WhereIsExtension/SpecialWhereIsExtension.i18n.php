@@ -620,6 +620,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'whereisextension-submit' => 'Sök',
@@ -627,7 +628,9 @@ $messages['sv'] = array(
 	'whereisextension-isset' => 'är inställd på',
 	'whereisextension-filter' => 'Filter',
 	'whereisextension-all-groups' => 'Alla grupper',
+	'whereisextension-search-like-value' => 'Gilla:',
 	'whereisextension-search-type' => 'Typ:',
+	'whereisextension-search-type-full' => 'Gilla',
 );
 
 /** Telugu (తెలుగు)
@@ -666,6 +669,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

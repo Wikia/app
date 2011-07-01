@@ -323,27 +323,28 @@ Schreibe den zweiten Abschnitt deiner Seite hier. Vergiss nicht eine Kategorie h
 );
 
 /** Spanish (Español)
+ * @author Fitoschido
  * @author VegaDark
  */
 $messages['es'] = array(
 	'wikibuilder-desc' => '[[Special:WikiBuilder|Asistente de creación de wiki]]',
-	'owb-title' => 'Creador de Wikis',
+	'owb-title' => 'Creador de wikis',
 	'owb-headline' => 'Hola, $1',
-	'owb-button-skip' => 'Saltar',
-	'owb-button-save-intro' => 'Guardar Introducción',
-	'owb-button-save-theme' => 'Guardar Tema',
-	'owb-button-save-pages' => 'Guardar Páginas',
+	'owb-button-skip' => 'Omitir',
+	'owb-button-save-intro' => 'Guardar intro',
+	'owb-button-save-theme' => 'Guardar tema',
+	'owb-button-save-pages' => 'Guardar páginas',
 	'owb-button-done' => 'Continuar a tu wiki',
 	'owb-button-plus' => 'Seleccionar Wikia+Plus',
 	'owb-step1' => 'Paso 1',
-	'owb-step1-label' => '¿De qué trata?',
-	'owb-step1-label-formatted' => '¿De<br />qué trata?',
-	'owb-step1-instruction' => 'Escribe una breve introducción para tu página principal. Que sea clara y divertida para atraer usuarios a tu proyecto.',
-	'owb-step1-sample' => 'Muestra de una Página Principal',
+	'owb-step1-label' => '¿De qué se trata?',
+	'owb-step1-label-formatted' => '¿De<br />qué se trata?',
+	'owb-step1-instruction' => 'Escribe una breve introducción para tu página principal. Hazla clara y divertida para atraer usuarios a tu proyecto.',
+	'owb-step1-sample' => 'Muestra de una página principal',
 	'owb-step2' => 'Paso 2',
 	'owb-step2-label' => 'Elige un tema',
 	'owb-step2-label-formatted' => 'Elige<br />un tema',
-	'owb-step2-instruction1' => 'Es fácil hacer que tu wiki parezca única. Solo escoge un tema que se adapte a tu proyecto.',
+	'owb-step2-instruction1' => 'Es fácil hacer que tu wiki luzca única. Solo elige un tema que se adapte a tu proyecto.',
 	'owb-step2-instruction2' => 'Puedes cambiar el tema o diseñar uno propio en cualquier momento.',
 	'owb-step2-gallery' => 'Galería de temas',
 	'owb-step3' => 'Paso 3',
@@ -356,7 +357,7 @@ $messages['es'] = array(
 <li>El Hombre Lobo</li>
 <li>El Aullido</li>
 <li>La Momia</li>
-<li>La Cas de Cera</li>
+<li>La Casa de Cera</li>
 <li>La Cosa del Pantano</li>',
 	'owb-step3-examples2-title' => 'Muestra: Nombres de página de juegos de mesa',
 	'owb-step3-examples2' => '<li>Monopoly</li>
@@ -378,17 +379,17 @@ $messages['es'] = array(
 	'owb-step4-plus-details' => '<ul><li><strong>¡Sin anuncios!<small><em>(los límites aplican a wikis grandes)</em></small></strong></li>
 <li>Páginas e imágenes ilimitadas</li>
 <li>Herramientas fáciles de edición</li>
-<li>Conectarse en Facebook</li>
+<li>Conectarse con Facebook</li>
 <li>Sin límite en ancho de banda</li></ul>',
 	'owb-step4-error-caption' => 'Error',
-	'owb-step4-error-upgrade-content' => 'Esta wiki no puede ser actualizada a la versión Plus.',
+	'owb-step4-error-upgrade-content' => 'Este wiki no puede ser actualizado a la versión Plus.',
 	'owb-step4-error-token-content' => 'No se pudo obtener un token apropiado para PayPal.',
 	'owb-status-saving' => 'Guardando',
-	'owb-unable-to-edit-description' => 'La descripción no se puede editar con el Creador de Wikis',
-	'owb-readonly-try-again' => 'La wiki está actualmente en modo se sólo lectura. Por favor, inténtalo de nuevo en unos momentos',
+	'owb-unable-to-edit-description' => 'La descripción no se puede editar con el Creador de wikis',
+	'owb-readonly-try-again' => 'La wiki está actualmente en modo de sólo lectura. Por favor, inténtalo de nuevo en unos momentos',
 	'owb-error-saving-articles' => 'Error al guardar las páginas',
 	'owb-api-error-title' => 'Error al procesar tu solicitud',
-	'owb-api-error' => 'Por favor, inténtalo una vez o salta este paso',
+	'owb-api-error' => 'Por favor, inténtalo una vez más u omite este paso',
 	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
 Escribe el primer párrafo de tu página aquí.
 
@@ -490,6 +491,34 @@ quelques pages',
 ==En-tête de section==
 
 Écrivez la deuxième section de la page ici. N'oubliez pas d’ajouter une catégorie pour aider les gens à trouver la page.",
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'owb-title' => 'Construtor do wiki',
+	'owb-headline' => 'Ola, $1',
+	'owb-button-skip' => 'Saltar',
+	'owb-button-save-intro' => 'Gardar a introdución',
+	'owb-button-save-theme' => 'Gardar o tema visual',
+	'owb-button-save-pages' => 'Gardar as páxinas',
+	'owb-button-done' => 'Continuar cara ao seu wiki',
+	'owb-button-plus' => 'Seleccionar Wikia+Plus',
+	'owb-step1' => 'Paso 1',
+	'owb-step1-label' => 'De que vai?',
+	'owb-step1-label-formatted' => 'De que<br />vai?',
+	'owb-step2' => 'Paso 2',
+	'owb-step2-label' => 'Escolla un tema visual',
+	'owb-step2-label-formatted' => 'Escolla un<br />tema visual',
+	'owb-step2-gallery' => 'Galería de temas',
+	'owb-step3' => 'Paso 3',
+	'owb-step3-label' => 'Comece algunhas páxinas',
+	'owb-step3-label-formatted' => 'Comece<br />algunhas páxinas',
+	'owb-step4' => 'Paso 4',
+	'owb-step4-plus-price' => '<strong>$1</strong> dólares/mes',
+	'owb-step4-error-caption' => 'Erro',
+	'owb-status-saving' => 'Gardando',
 );
 
 /** Hungarian (Magyar)

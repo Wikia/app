@@ -36,6 +36,13 @@ $messages['af'] = array(
 	'batchuserrights-userload-error' => "Die gebruiker \"'''\$1'''\" kon nie gelaai word nie.",
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'batchuserrights-add-groups' => 'Добавяне на {{PLURAL:$1|един потребител|$1 потребителя}} в {{PLURAL:$2|следната група|следните групи}}: <strong>$3</strong>.',
+);
+
 /** Breton (Brezhoneg)
  * @author Fohanno
  * @author Y-M D
@@ -343,6 +350,13 @@ $messages['ru'] = array(
 	'batchuserrights-no-groups' => 'Вы не выбрали группы. 
 Ничего не будет выполнено.
 Оставшаяся часть страницы будет обработана, чтобы показать какие учётные записи не могут быть загружены.',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'batchuserrights-userload-error' => "Kunde inte läsa in användaren \"'''\$1'''\".",
 );
 
 /** Tagalog (Tagalog)

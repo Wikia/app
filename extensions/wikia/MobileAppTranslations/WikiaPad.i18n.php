@@ -32,6 +32,17 @@ $messages['en'] = array(
 	'browser-loading-message' => 'Loading...'
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'main-tab-search' => 'Търсене',
+	'main-tab-offline' => 'Офлайн',
+	'tab-discover-loading-message' => 'Зареждане...',
+	'tab-search-loading-message' => 'Търсене...',
+	'browser-loading-message' => 'Зареждане...',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -96,6 +107,22 @@ $messages['fr'] = array(
 	'browser-loading-message' => 'Chargement...',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'main-tab-discover' => 'Descubrir',
+	'main-tab-personal' => 'A miña Wikia',
+	'main-tab-search' => 'Procurar',
+	'main-tab-offline' => 'Desconectado',
+	'tab-discover-loading-message' => 'Cargando...',
+	'tab-discover-no-network-dialog-title' => 'Rede non dispoñible',
+	'tab-discover-no-network-dialog-message' => 'Non se detectou ningunha conexión de rede',
+	'tab-discover-no-network-dialog-close-button' => 'De acordo',
+	'tab-search-loading-message' => 'Procurando...',
+	'browser-loading-message' => 'Cargando...',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -126,6 +153,13 @@ $messages['it'] = array(
 	'browser-loading-message' => 'Caricamento...',
 );
 
+/** کھوار (کھوار)
+ * @author Rachitrali
+ */
+$messages['khw'] = array(
+	'main-tab-offline' => 'آف لاین',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -140,7 +174,7 @@ $messages['mk'] = array(
 	'main-tab-discover' => 'Откријте',
 	'main-tab-personal' => 'Моја Викија',
 	'main-tab-search' => 'Пребарај',
-	'main-tab-offline' => 'Безмрежно',
+	'main-tab-offline' => 'Вонмрежно',
 	'tab-discover-loading-message' => 'Вчитувам...',
 	'tab-discover-no-network-dialog-title' => 'Мрежата е недостапна',
 	'tab-discover-no-network-dialog-message' => 'Не пронајдов мрежна врска',

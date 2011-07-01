@@ -194,8 +194,8 @@ $messages['gl'] = array(
 	'tagsreportnoresults' => 'Non se atopou ningún resultado',
 	'tagsreportmainnspace' => 'Principal',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|páxina|páxinas}})',
-	'tagsreportpagesfound' => 'Atopáronse <strong>$1</strong> páxinas que conteñen a etiqueta especial (dpl, youtube etc.)',
-	'tagsreportgenerated' => 'Xerado o $1 $2',
+	'tagsreportpagesfound' => '{{PLURAL:$1|Atopouse <strong>$1</strong> páxina que contén|Atopáronse <strong>$1</strong> páxinas que conteñen}} unha etiqueta especial (DPL, YouTube etc.)',
+	'tagsreportgenerated' => 'Xerado o $1 ás $2',
 );
 
 /** Hausa (هَوُسَ) */

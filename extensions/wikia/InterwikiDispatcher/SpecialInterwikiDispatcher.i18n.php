@@ -44,11 +44,12 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
-	'interwikidispatcher' => 'Interwiki dispatcher',
-	'interwikidispatcher-desc' => 'Diskoulmañ a ra al liammoù etrewiki evit reduiñ an adkasoù Apache',
+	'interwikidispatcher' => 'Dasparzher etrewiki',
+	'interwikidispatcher-desc' => 'Diskoulmañ a ra al liammoù etrewiki evit bihanaat an adkasoù Apache',
 );
 
 /** Czech (Česky)

@@ -177,10 +177,11 @@ $messages['id'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Nemo bis
  * @author Pietrodn
  */
 $messages['it'] = array(
-	'sharefeature-desc' => 'Permette agli utenti di linkare le pagine di siti popolari.',
+	'sharefeature-desc' => 'Permette agli utenti di aggiungere collegamenti alle pagine da siti popolari.',
 	'sf-link' => 'Condividi questo articolo',
 	'sf-link-popup' => 'Condividi questo articolo',
 	'sf-link-tooltip' => 'Condividi questo articolo con i tuoi amici',

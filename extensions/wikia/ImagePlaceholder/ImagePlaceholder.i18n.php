@@ -121,10 +121,11 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Peter17
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'imgplc-create' => 'Ajouter une image',
-	'imgplc-placeholder' => 'Positionneur',
+	'imgplc-placeholder' => 'Espace réservé',
 	'imgplc-image' => 'Image',
 	'imgplc-notinhistory' => "Vous ne pouvez pas ajouter d'image en mode historique.",
 );

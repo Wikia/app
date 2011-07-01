@@ -50,3 +50,4 @@ $messages['en'] = array(
 // Chrome
 	'controlcenter-back-to-dashboard' => 'Show Dashboard'
 );
+

@@ -65,6 +65,15 @@ $messages['fr'] = array(
 	'scribeeventsrecords' => 'Enregistrements',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Ferramenta]] para procurar un título de páxina específico a través de varios wikis',
+	'scribeevents' => 'Acontecementos recentes',
+	'scribeeventsrecords' => 'Rexistros',
+);
+
 /** Interlingua (Interlingua) */
 $messages['ia'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Instrumento]] pro cerar un titulo de pagina specific trans wikis',

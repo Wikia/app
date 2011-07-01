@@ -639,13 +639,18 @@ $messages['be-tarask'] = array(
 $messages['bg'] = array(
 	'wikiaPhotoGallery-back' => 'Връщане',
 	'wikiaPhotoGallery-finish' => 'Приключване',
+	'wikiaPhotoGallery-feed-caption' => '$1, чрез <a href="$2">$3</a>',
 	'wikiaPhotoGallery-lightbox-caption' => 'Чрез $1',
 	'wikiaPhotoGallery-viewmode-addphoto' => 'Добавяне на снимка в тази галерия',
 	'wikiaPhotoGallery-error-caption' => 'Грешка',
 	'wikiaPhotoGallery-upload-uploadbutton' => 'Качване на снимка',
 	'wikiaPhotoGallery-upload-page-next' => 'Следващи 8',
 	'wikiaPhotoGallery-upload-page-prev' => 'Предишни 8',
+	'wikiaPhotoGallery-upload-error-title' => 'Качването не може да бъде завършен',
 	'wikiaPhotoGallery-upload-error-filetype-incorrect' => 'Файлът има неправилно файлово разширение.',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'На качения файл му липсва файловото разширение.',
+	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Преименуване на снимката',
+	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Използване на съществуващата снимка',
 	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Вмъкване',
 	'wikiaPhotoGallery-upload-select-images' => 'Избиране',
 	'wikiaPhotoGallery-photooptions-done' => 'Готово',
@@ -679,6 +684,8 @@ $messages['bg'] = array(
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'тази страница',
 	'wikiaPhotoGallery-upload-existingtext-recentupload' => 'най-скорошни качвания',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Избиране',
+	'wikiaPhotoGallery-search-tooltip' => 'Търсене на снимки в това уики',
+	'galery-slider-read-more' => ' Прочетете повече >',
 );
 
 /** Bahasa Banjar (Bahasa Banjar)
@@ -4784,6 +4791,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'wikiaphotogallery-desc' => 'Provides an interface for managing galleries and slideshows in pages',
@@ -4946,6 +4954,7 @@ Alternativt kan du klicka på "$2" för att se sidan i sin uppdaterade form.',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Länk till (klistra in sidans namn eller URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Bilddetaljer.',
 	'wikiaPhotoGallery-search-tooltip' => 'Sök efter bilder på denna wiki',
+	'wikiaPhotoGallery-upload-image-size-error' => 'Fel bildstorlek. Bilder måste vara 673x410 pixlar.',
 	'wikiaPhotoGallery-not-displayed' => 'Visas inte',
 	'galery-slider-read-more' => ' Läs mer >',
 );
@@ -5260,6 +5269,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

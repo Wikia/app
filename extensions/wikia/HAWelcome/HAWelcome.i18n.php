@@ -67,7 +67,7 @@ $messages['br'] = array(
 
 * [[Special:Contributions/{{PAGENAME}}|Degasadennoù an implijer]]
 
-==Ar pajennoù plijtañ ==
+==Ar pajennoù plijetañ ==
 
 * Ouzhpennañ liammoù d'ar pajennoù plijetañ  war ar wiki amañ!
 * Pajennoù plijetañ #2
@@ -1197,6 +1197,50 @@ Lämna ett meddelande på [[$2|min diskussionssida]] om jag kan hjälpa till med
 	'welcome-message-log' => 'välkomna nya bidragsgivare',
 );
 
+/** Thai (ไทย)
+ * @author Akkhaporn
+ */
+$messages['th'] = array(
+	'welcome-user-page' => "==เกี่ยวกับฉัน==
+
+''นี่เป็นหน้าผู้ใช้ของคุณ. กรุณาแก้ไขหน้านี้เพื่อบอกให้ชุมชนรู้เรื่องเกี่ยวกับตัวคุณ!''
+
+== ผลงานของฉัน==
+* [[Special:Contributions/{{PAGENAME}}|ผลงานของผู้ใช้]]
+
+==หน้าโปรดของฉัน==
+
+* เพิ่มการเชื่อมโยงไปยังหน้าโปรดบนวิกิ นี้!
+* หน้ารายการโปรด #2
+* หน้ารายการโปรด #3",
+	'welcome-message-user' => 'สวัสดี, ยินดีต้อนรับสู่ {{SITENAME}}! ขอบคุณสำหรับการแก้ไขหน้า [[:$1]]
+
+กรุณาฝากข้อความบน [[$2|หน้าพูดคุยของฉัน]] ถ้าฉันสามารถช่วยบางเรื่องได้! $3',
+	'welcome-message-anon' => "สวัสดี, ยินดีต้อนรับสู่ {{SITENAME}}!n ขอบคุณสำหรับการแก้ไขหน้า [[:$1]]
+
+'''[[Special:Userlogin|กรุณาเข้าสู่ระบบและสร้างชื่อผู้ใช้]]'''
+มันเป็นทางที่ง่ายในการติดตามผลงานของคุณและให้ความช่วยเหลือการติดต่อกับบุคคลที่เหลือนบนชุมชน
+
+กรุณาฝากข้อความบน [[$2|หน้าพูดคุยของฉัน]] ถ้าฉันสามารถช่วยบางเรื่องได้! $3",
+	'welcome-message-log' => 'พร้อมรับผู้ร่วมงานใหม่',
+	'welcome-message-user-staff' => '==ยินดีต้อนรับ==
+
+สวัสดี, ยินดีต้อนรับสู่ {{SITENAME}}! ขอบคุณสำหรับการแก้ไขหน้า [[:$1]]
+
+ถ้าคุณต้องการให้ช่วย, และไม่มีผู้ดูแลที่นี่ คุณอาจจำเป็นต้องไปที่เยี่ยมชม [[wikia:Forum:Community Central Forum|ฟอรั่มบนศูนย์กลางชุมชนวิกิ]] $3',
+	'welcome-message-anon-staff' => "==ยินดีต้อนรับ==
+
+สวัสดี, ยินดีต้อนรับสู่ {{SITENAME}}
+ขอบคุณสำหรับการแก้ไขหน้า [[:$1]]
+
+'''[[Special:UserLogin|กรุณาเข้าสู่ระบบและสร้างชื่อผู้ใช้]]'''
+มันเป็นทางที่ง่ายในการติดตามผลงานของคุณและให้ความช่วยเหลือการติดต่อกับบุคคลที่เหลือนบนชุมชน
+
+ถ้าคุณต้องการให้ช่วย และไม่มีผู้ดูแลที่นี่ คุณอาจจำเป็นต้องไปที่เยี่ยมชม [[wikia:Forum:Community Central Forum|ฟอรั่มบนศูนย์กลางชุมชนวิกิ]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|กระดานช่วยเหลือ]] | [[w:sblog|บล๊อก]])</small>',
+	'hawelcomeedit' => 'ยินดีต้อนรับสู่ HA',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -1278,6 +1322,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

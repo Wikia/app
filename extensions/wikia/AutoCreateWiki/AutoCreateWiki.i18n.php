@@ -328,6 +328,7 @@ $messages['bg'] = array(
 	'autocreatewiki' => 'Създаване на ново уики',
 	'autocreatewiki-page-title-default' => 'Заявка за ново уики',
 	'createwiki' => 'Създаване на уики',
+	'autocreatewiki-required' => '$1 = задължително',
 	'autocreatewiki-web-address' => 'Уеб адрес:',
 	'autocreatewiki-language-all' => 'Всички езици',
 	'autocreatewiki-birthdate' => 'Дата на раждане:',
@@ -1399,9 +1400,9 @@ $messages['gl'] = array(
 	'autocreatewiki-bad-name' => 'O nome non pode conter caracteres especiais (como $ ou @) e debe ser unha soa palabra en minúsculas e sen espazos.',
 	'autocreatewiki-invalid-wikiname' => 'O nome non pode conter caracteres especiais (como $ ou @) e non pode estar baleiro',
 	'autocreatewiki-violate-policy' => 'O nome deste wiki contén unha palabra que viola a nosa política de nomes',
-	'autocreatewiki-name-taken' => 'Xa existe un wiki con este nome. Animámolo a unirse a nós en <a href="http://$1.wikia.com">http://$1.wikia.com</a>',
-	'autocreatewiki-name-too-short' => 'Este nome é moi curto, por favor, escolla un nome cun mínimo de 3 caracteres.',
-	'autocreatewiki-name-too-long' => 'Este nome é moi longo, por favor, escolla un nome cun máximo de 50 caracteres.',
+	'autocreatewiki-name-taken' => 'Xa existe un wiki con este enderezo. Comece a editar en <a href="http://$1.wikia.com">http://$1.wikia.com</a> ou escolla outro enderezo.',
+	'autocreatewiki-name-too-short' => 'Este enderezo é curto de máis; escolla un enderezo cun mínimo de 3 caracteres.',
+	'autocreatewiki-name-too-long' => 'Este enderezo é longo de máis; escolla un enderezo cun máximo de 50 caracteres.',
 	'autocreatewiki-similar-wikis' => 'A continuación móstranse os wikis existentes sobre este tema. Suxerímoslle que edite nalgún deles.',
 	'autocreatewiki-invalid-username' => 'Este nome de usuario non é válido.',
 	'autocreatewiki-busy-username' => 'Este nome de usuario xa está en uso.',
@@ -2281,6 +2282,7 @@ $messages['lb'] = array(
 	'autocreatewiki-success-get-started' => 'Ufänken',
 	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-invalid-username' => 'Dëse Benotzernumm ass net valabel.',
+	'autocreatewiki-busy-username' => 'Dëse Benotzernumm gëtt scho benotzt.',
 	'autocreatewiki-empty-username' => 'De Benotzernumm kann net eidel sinn.',
 	'autocreatewiki-empty-password' => "D'Passwuert kann net eidel sinn.",
 	'autocreatewiki-category-label' => 'Kategorie:',
@@ -2298,6 +2300,39 @@ $messages['lb'] = array(
  */
 $messages['lez'] = array(
 	'autocreatewiki-page-title-default' => 'Туькlурун цlийи вики',
+);
+
+/** Lithuanian (Lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'autocreatewiki' => 'Sukurti naują wiki',
+	'autocreatewiki-desc' => 'Sukurti wiki WikiFactory pagal vartotojų prašymus',
+	'autocreatewiki-page-title-default' => 'Sukurti naują wiki',
+	'autocreatewiki-page-title-answers' => 'Sukurti naują atsakymų svetainę',
+	'createwiki' => 'Sukurti naują wiki',
+	'autocreatewiki-chooseone' => 'Pasirinkite vieną',
+	'autocreatewiki-required' => '$1 = būtina',
+	'autocreatewiki-web-address' => 'Tinklalapio adresas:',
+	'autocreatewiki-language-all' => 'Visos kalbos',
+	'autocreatewiki-birthdate' => 'Gimimo data:',
+	'autocreatewiki-remember' => 'Prisiminti mane',
+	'autocreatewiki-create-account' => 'Sukurti sąskaitą',
+	'autocreatewiki-done' => 'atlikta',
+	'autocreatewiki-error' => 'klaida',
+	'autocreatewiki-haveaccount-question' => 'Ar jau turite Wikia sąskaitą?',
+	'autocreatewiki-success-title-default' => 'Jūsų wiki buvo sukurta!',
+	'autocreatewiki-success-title-answers' => 'Jūsų atsakymų svetainė buvo sukurta!',
+	'autocreatewiki-success-subtitle' => 'Dabar galite pradėti dirbti su jūsų wiki, apsilankę:',
+	'autocreatewiki-success-has-been-created' => 'buvo sukurta!',
+	'autocreatewiki-success-get-started' => 'Pradėkite',
+	'autocreatewiki-info-topic' => 'Pridėkite trumpą aprašymą, pavyzdžiui, "Žvaigždžių karai" ar "TV šou".',
+	'autocreatewiki-info-category-default' => 'Tai padės lankytojams rasti jūsų wiki.',
+	'autocreatewiki-info-category-answers' => 'Tai padės lankytojams rasti jūsų Atsakymų svetainę.',
+	'autocreatewiki-info-language' => 'Tai bus numatytosi kalbą lankytojams jūsų wiki.',
+	'autocreatewiki-info-email-address' => 'Jūsų elektroninio pašto adresas niekada nebus rodomas betkam Wikia svetainėje.',
+	'autocreatewiki-info-terms-agree' => 'Kuriant wiki ir vartotojo abonementą, jūs sutinkate su <a href="http://www.wikia.com/wiki/Terms_of_use">Naudojimosi Wikia sąlygomis</a>',
+	'autocreatewiki-title-template' => '$1 Wiki',
 );
 
 /** Macedonian (Македонски)
@@ -2318,7 +2353,7 @@ $messages['mk'] = array(
 	'autocreatewiki-birthdate' => 'Датум на раѓање:',
 	'autocreatewiki-blurry-word' => 'Заматен збор:',
 	'autocreatewiki-remember' => 'Запомни ме',
-	'autocreatewiki-create-account' => 'Создај сметка',
+	'autocreatewiki-create-account' => 'Направи сметка',
 	'autocreatewiki-done' => 'готово',
 	'autocreatewiki-error' => 'грешка',
 	'autocreatewiki-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
@@ -3910,6 +3945,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'autocreatewiki' => 'Skapa en ny wiki',
@@ -3932,7 +3968,7 @@ $messages['sv'] = array(
 	'autocreatewiki-success-title-default' => 'Din wiki har skapats!',
 	'autocreatewiki-success-subtitle' => 'Du kan nu börja arbeta med din wiki genom att besöka:',
 	'autocreatewiki-success-has-been-created' => 'har skapats!',
-	'autocreatewiki-success-get-started' => 'Kom Igång',
+	'autocreatewiki-success-get-started' => 'Kom igång',
 	'autocreatewiki-info-domain' => 'Det är bäst att använda ett ord är ett sannolikt sökord för ditt ämne.',
 	'autocreatewiki-info-topic' => 'Lägg till en kort beskrivning, som "Star Wars" eller "TV-program".',
 	'autocreatewiki-info-category-default' => 'Detta kommer att hjälpa besökare att hitta din wiki.',
@@ -3950,9 +3986,9 @@ $messages['sv'] = array(
 	'autocreatewiki-bad-name' => 'Namnet får inte innehålla specialtecken (som $ eller @) och måsta vara ett enda ord med små bokstäver utan mellanslag.',
 	'autocreatewiki-invalid-wikiname' => 'Namnet får inte innehålla specialtecken (som $ eller @) och får inte vara tomt',
 	'autocreatewiki-violate-policy' => 'Detta wikinamn innehåller ett ord som bryter mot vår namngivnings-politik',
-	'autocreatewiki-name-taken' => 'En wiki med detta namn existerar redan. Du är välkommen att gå med oss på <a href="http://$1.wikia.com">http://$1.wikia.com</a>',
-	'autocreatewiki-name-too-short' => 'Detta namn är för kort. Välj ett namn med minst 3 tecken.',
-	'autocreatewiki-name-too-long' => 'Detta namn är för långt. Välj ett namn med högst 50 tecken.',
+	'autocreatewiki-name-taken' => 'En wiki med denna adress finns redan. Börja redigera på <a href="http://$1.wikia.com">http://$1.wikia.com</a> eller välj en annan adress.',
+	'autocreatewiki-name-too-short' => 'Denna adress är för kort. Välj en adress med minst 3 tecken.',
+	'autocreatewiki-name-too-long' => 'Denna adress är för långt. Välj en adress med högst 50 tecken.',
 	'autocreatewiki-similar-wikis' => 'Nedan visas de wikis som redan skapats på detta ämne. Vi föreslår att du redigerar en av dem.',
 	'autocreatewiki-invalid-username' => 'Detta användarnamn är ogiltigt.',
 	'autocreatewiki-busy-username' => 'Detta användarnamn är upptaget.',
@@ -4199,6 +4235,7 @@ $messages['tr'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author AS
  * @author Ahonc
  * @author NickK
  * @author Prima klasy4na
@@ -4212,12 +4249,19 @@ $messages['uk'] = array(
 	'autocreatewiki-required' => "$1 = обов'язково",
 	'autocreatewiki-web-address' => 'Веб-адреса:',
 	'autocreatewiki-category-select' => 'Виберіть одну',
+	'autocreatewiki-language-top' => '$1 {{PLURAL:$1|найважливіша мова|найважливіші мови|найважливіших мов}}',
 	'autocreatewiki-language-all' => 'Всі мови',
 	'autocreatewiki-birthdate' => 'Дата народження:',
+	'autocreatewiki-blurry-word' => 'Розмите слово:',
+	'autocreatewiki-remember' => "Запам'ятати мене",
 	'autocreatewiki-create-account' => 'Створити обліковий запис',
+	'autocreatewiki-done' => 'готово',
 	'autocreatewiki-error' => 'помилка',
+	'autocreatewiki-haveaccount-question' => 'Ви вже маєте обліковий запис у Вікії?',
+	'autocreatewiki-success-title-default' => 'Вашу вікі створено!',
 	'autocreatewiki-info-topic' => 'Додайте короткий опис, наприклад, "Зоряні війни" або "ТВ-шоу".',
 	'autocreatewiki-info-category-default' => 'Це допоможе відвідувачам знайти вашу вікі.',
+	'autocreatewiki-title-template' => 'Вікі $1',
 	'autocreatewiki-empty-field' => 'Будь ласка, заповніть це поле.',
 	'autocreatewiki-name-too-short' => 'Ця адреса занадто коротка. Будь ласка, оберіть адресу, що містить щонайменше 3 символи.',
 	'autocreatewiki-name-too-long' => 'Ця адреса занадто довга. Будь ласка, оберіть адресу, яка має не більше 50 символів.',

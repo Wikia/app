@@ -108,6 +108,19 @@ $messages['fr'] = array(
 	'exitstitial-button' => 'Ignorer cette annonce',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'interstitial-default-campaign-code' => 'Wikia quérete!',
+	'interstitial-skip-ad' => 'Saltar este anuncio',
+	'interstitial-already-logged-in-no-link' => 'Xa está conectado e non hai ningún destino fixado.',
+	'interstitial-disabled-no-link' => 'Non hai ningún destino fixado e as páxinas intersticiais non están activadas neste wiki.',
+	'interstitial-link-away' => 'Non hai nada que ver aquí!<br /><br />Desexa ir á [[{{MediaWiki:Mainpage}}|páxina principal]] ou quizais a unha [[Special:Random|páxina ao chou]]?',
+	'exitstitial-register' => '<a href="#" class="register">Rexístrexe</a> ou <a href="#" class="login">acceda ao sistema</a> para saltar os anuncios.',
+	'exitstitial-button' => 'Saltar este anuncio',
+);
+
 /** Hungarian (Magyar)
  * @author Dani
  */

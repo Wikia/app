@@ -812,6 +812,7 @@ $messages['da'] = array(
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author LWChris
  * @author Lyzzy
  * @author Raimond Spekking
@@ -869,8 +870,8 @@ Du wirst per E-Mail benachrichtigt, wenn alles abgeschlossen ist.',
 	'userrenametool-confirm-yes' => 'Ja',
 	'userrenametool-confirm-no' => 'Nein',
 	'userrenametool-page-exists' => 'Die Seite $1 existiert bereits und kann nicht automatisch überschrieben werden.',
-	'userrenametool-page-moved' => 'Die Seite $1 wurde nach $2 verschoben.',
-	'userrenametool-page-unmoved' => 'Die Seite $1 konnte nicht nach $2 verschoben werden.',
+	'userrenametool-page-moved' => 'Die Seite „$1“ wurde nach „$2“ verschoben.',
+	'userrenametool-page-unmoved' => 'Die Seite „$1“ konnte nicht nach „$2“ verschoben werden.',
 	'userrenametool-finished-email-subject' => 'Umbenennung ist abgeschlossen für [$ 1]',
 	'userrenametool-finished-email-body-text' => 'Des Verschiebungs-Prozess  für "<nowiki>$1</nowiki>" auf "<nowiki>$2</nowiki>" ist abgeschlossen.',
 	'userrenametool-finished-email-body-html' => 'Des Verschiebungs-Prozess  für "<nowiki>$1</nowiki>" auf "<nowiki>$2</nowiki>" ist abgeschlossen.',
@@ -878,7 +879,7 @@ Du wirst per E-Mail benachrichtigt, wenn alles abgeschlossen ist.',
 	'userrenametool-logpagetext' => 'In diesem Logbuch werden die Änderungen von Benutzernamen protokolliert.',
 	'userrenametool-logentry' => 'hat „$1“ in „$2“ umbenannt',
 	'userrenametool-log' => '{{PLURAL:$1|1 Bearbeitung|$1 Bearbeitungen}}. Grund: $2',
-	'userrenametool-move-log' => 'durch die Umbenennung von „[[User:$1|$1]]“ in „[[User:$2|$2]]“ automatisch verschobene Seite',
+	'userrenametool-move-log' => 'Seite während der Benutzerkontoumbenennung von „[[User:$1|$1]]“ in „[[User:$2|$2]]“ automatisch verschoben',
 	'right-renameuser' => 'Benutzer umbenennen',
 );
 
@@ -1359,11 +1360,13 @@ $messages['gl'] = array(
 	'userrenametool-errordoesnotexist' => 'O usuario "<nowiki>$1</nowiki>" non existe.',
 	'userrenametool-errorexists' => 'O usuario "<nowiki>$1</nowiki>" xa existe.',
 	'userrenametool-errorinvalid' => 'O nome de usuario "<nowiki>$1</nowiki>" non é válido.',
+	'userrenametool-errorinvalidnew' => 'O nome de usuario "<nowiki>$1</nowiki>" non é válido.',
 	'userrenametool-errortoomany' => 'O usuario "<nowiki>$1</nowiki>" ten {{PLURAL:$2|unha contribución|$2 contribucións}}; mudar o nome dun usuario con máis {{PLURAL:$3|dunha contribución|de $3 contribucións}} podería afectar negativamente ao rendemento do sitio.',
 	'userrenametool-error-request' => 'Houbo un problema coa recepción da solicitude.
 Volva atrás e inténteo de novo.',
 	'userrenametool-error-same-user' => 'Non pode mudar o nome dun usuario ao mesmo nome que tiña antes.',
 	'userrenametool-success' => 'O usuario "<nowiki>$1</nowiki>" mudou o nome a "<nowiki>$2</nowiki>"',
+	'userrenametool-confirm-intro' => 'Está seguro de querer facelo?',
 	'userrenametool-confirm-yes' => 'Si',
 	'userrenametool-confirm-no' => 'Non',
 	'userrenametool-page-exists' => 'A páxina "$1" xa existe e non pode ser sobrescrita automaticamente.',
@@ -2817,7 +2820,7 @@ $messages['oc'] = array(
 	'right-renameuser' => "Tornar nomenar d'utilizaires",
 );
 
-/** Ossetic (Иронау)
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
@@ -3355,9 +3358,32 @@ $messages['sk'] = array(
 	'right-renameuser' => 'Premenovávať používateľov',
 );
 
-/** Slovenian (Slovenščina) */
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
 $messages['sl'] = array(
+	'userrenametool' => 'Spreminjanje uporabniškega imena',
 	'renameuser' => 'Preimenovanje uporabnika',
+	'userrenametool-old' => 'Trenutno uporabniško ime:',
+	'userrenametool-new' => 'Novo uporabniško ime:',
+	'userrenametool-reason' => 'Razlog za preimenovanje:',
+	'userrenametool-warnings' => 'Opozorila:',
+	'userrenametool-confirm' => 'Da, preimenuj uporabnika',
+	'userrenametool-submit' => 'Spremeni uporabniško ime',
+	'userrenametool-errordoesnotexist' => 'Uporabnik »<nowiki>$1</nowiki>« ne obstaja.',
+	'userrenametool-errorexists' => 'Uporabnik »<nowiki>$1</nowiki>« že obstaja.',
+	'userrenametool-errorinvalid' => '»<nowiki>$1</nowiki>« ni veljavno uporabniško ime.',
+	'userrenametool-errorinvalidnew' => '»<nowiki>$1</nowiki>« ni veljavno novo uporabniško ime.',
+	'userrenametool-success' => 'Uporabnik »$1« je preimenovan v »$2«.',
+	'userrenametool-confirm-intro' => 'Ali to res želite storiti?',
+	'userrenametool-confirm-yes' => 'Da',
+	'userrenametool-confirm-no' => 'Ne',
+	'userrenametool-page-moved' => 'Stran $1 je bila prestavljena na $2.',
+	'userrenametool-page-unmoved' => 'Strani $1 ni mogoče prestaviti na $2.',
+	'userrenametool-logpage' => 'Dnevnik preimenovanj uporabnikov',
+	'userrenametool-logentry' => 'preimenoval(-a) $1 v »$2«',
+	'userrenametool-log' => '$1 {{PLURAL:$1|urejanje|urejanji|urejanja|urejanj}}.
+Razlog: $2',
 	'right-renameuser' => 'Preimenovanje uporabnikov',
 );
 
@@ -3862,6 +3888,7 @@ $messages['vep'] = array(
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  * @author Vinhtantran
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

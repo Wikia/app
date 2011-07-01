@@ -507,16 +507,24 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'unhide' => 'Ta fram',
+	'hub-blog-header' => 'Topp $1 inlägg',
+	'hub-hotspot-header' => 'Hot spots',
+	'hub-topusers-header' => 'Topp $1 användare',
+	'hub-featured' => 'Topp $1 wikis',
 	'hub-header' => '$1 Wikis',
 	'hub-hotspot-info' => 'Dessa är de hetaste sidorna den här veckan, rankas av flesta redaktörer.',
 	'hub-blog-comments' => '{{PLURAL:$1|en kommentar|$1 kommentarer}}',
 	'hub-blog-continue' => 'Fortsätt läsa',
 	'hub-blog-showarticle' => 'Visa sida',
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">redigerings{{PLURAL:$1|poäng|poäng}}</span>',
 	'hub-hotspot-from' => 'från',
 	'hub-hide-feed' => 'Göm feed',
+	'hub-show-feed' => 'Visa feed',
+	'hub-contributors-info' => 'Dessa är veckans toppanvändare, rangordnade efter flest redigeringar.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|redaktör|redaktörer}}</span>',
 );
 

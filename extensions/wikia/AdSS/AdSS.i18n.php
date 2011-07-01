@@ -304,15 +304,25 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'adss-sponsor-links' => 'Спонсорирани препратки в Wikia',
+	'adss-form-linktext' => 'Текст за показване в препратката:',
+	'adss-form-additionaltext' => 'Текст за показване под препратката:',
+	'adss-form-type' => 'Тип спонсорство:',
 	'adss-form-email' => 'Електронна поща:',
 	'adss-form-password' => 'Парола:',
 	'adss-form-login-link' => 'Влизане',
 	'adss-form-field-empty-errormsg' => 'Това поле не може да бъде празно',
 	'adss-form-non-existent-title-errormsg' => 'Тази страница не съществува',
+	'adss-form-banner-upload-errormsg' => 'Необходимо е да изберете картинка за качване',
 	'adss-form-pick-plan-errormsg' => 'Необходимо е да се избере план',
 	'adss-form-pick-plan' => 'Избиране на рекламен пакет',
+	'adss-form-page-plan-price' => '$1 за една препратка',
+	'adss-form-reviews-page-year-plan-header' => 'Годишно спонсорство',
+	'adss-form-reviews-page-month-plan-header' => 'Месечно спонсорство',
 	'adss-form-reviews-page-day-plan-header' => 'Спонсориране на този бизнес',
 	'adss-form-or' => '- или -',
+	'adss-upsell-yes' => 'Да, искам!',
+	'adss-upsell-no' => 'Не, благодаря',
+	'adss-button-preview' => 'Предварителен преглед',
 	'adss-button-edit' => 'Редактиране',
 	'adss-button-login' => 'Влизане',
 	'adss-button-save-pay' => 'Съхраняване и плащане',
@@ -322,6 +332,12 @@ $messages['bg'] = array(
 	'adss-button-cancel' => 'Отказване',
 	'adss-button-yes' => 'Да',
 	'adss-button-no' => 'Не',
+	'adss-paypal-error' => 'В момента не може да бъде извършено плащане чрез PayPal. Опитайте отново по-късно.
+
+Връщане към [[Special:AdSS|{{int:Adss}}]].',
+	'adss-error' => 'Възникна грешка. Опитайте отново по-късно.
+
+Връщане към [[Special:AdSS|{{int:Adss}}]]',
 	'adss-per-site' => 'Всички страници',
 	'adss-close' => 'Затваряне',
 	'adss-cancel' => 'Отказване',
@@ -1527,6 +1543,7 @@ $messages['gl'] = array(
 	'adss-form-additionaltext' => 'Texto a mostrar baixo a súa ligazón:',
 	'adss-form-type' => 'Tipo de patrocinio:',
 	'adss-form-page' => 'Páxina a patrocinar:',
+	'adss-form-banner' => 'Cargue o seu cartel aquí:',
 	'adss-form-price' => 'Cantidade do patrocinio:',
 	'adss-form-shares' => 'Número de accións:',
 	'adss-form-email' => 'O seu enderezo de correo electrónico:',
@@ -1536,23 +1553,32 @@ $messages['gl'] = array(
 	'adss-form-usd-per-day' => '$1 dólar estadounidense ao día',
 	'adss-form-usd-per-week' => '$1 dólar estadounidense á semana',
 	'adss-form-usd-per-month' => '$1 dólar estadounidense ao mes',
+	'adss-form-usd-per-quarter' => '$1$ por trimestre',
 	'adss-form-usd-per-year' => '$$1 ao ano',
 	'adss-form-field-empty-errormsg' => 'Este campo non pode estar baleiro',
 	'adss-form-non-existent-title-errormsg' => 'Esta páxina non existe',
+	'adss-form-banner-upload-errormsg' => 'Cómpre seleccionar unha imaxe para cargar',
 	'adss-form-pick-plan-errormsg' => 'Ten que seleccionar un plan',
-	'adss-form-pick-plan' => 'Escolla o seu plan',
+	'adss-form-pick-plan' => 'Escolla un paquete de anuncios',
 	'adss-form-site-plan-header' => 'Comprar unha ligazón en todo o wiki',
 	'adss-form-site-plan-price' => '$1 por unha acción',
-	'adss-form-page-plan-header' => 'Comprar unha ligazón soamente nesta páxina',
+	'adss-form-site-premium-plan-price' => 'Só $1 por catro accións!',
+	'adss-form-page-plan-header' => 'Comprar unha ligazón soamente nunha páxina',
 	'adss-form-page-plan-price' => '1 ligazón custa $1',
 	'adss-form-hub-plan-header' => 'Comprar unha ligazón patrocinada no conxunto de $1 wikis',
 	'adss-form-hub-plan-price' => '$1 por unha acción',
+	'adss-form-reviews-page-year-plan-header' => 'Patrocinio anual',
+	'adss-form-reviews-page-year-plan-price' => 'Aforre máis: por $1',
+	'adss-form-reviews-page-month-plan-header' => 'Patrocinio mensual',
+	'adss-form-reviews-page-month-plan-price' => 'Aforre un 50%: por $1',
+	'adss-form-reviews-page-day-plan-header' => 'Patrocinar esta empresa',
+	'adss-form-reviews-page-day-plan-price' => 'Por só $1',
 	'adss-form-or' => '- ou -',
-	'adss-form-thanks' => 'Grazas polo seu patrocinio! O seu anuncio xa está comprado e comezará a aparecer despois da aprobación manual (nas vindeiras 48 horas).
-
-Por que non [[Special:AdSS|merca]] outro anuncio?',
+	'adss-form-thanks' => 'Finalizou a súa compra. O seu anuncio comezará a aparecer despois da aprobación (nas vindeiras 48 horas, a miúdo menos).',
+	'adss-upsell-header' => 'Oferta especial limitada',
 	'adss-upsell-yes' => 'Si, quero!',
 	'adss-upsell-no' => 'Non, grazas',
+	'adss-upsell-thanks' => 'Grazas por elixir a oferta!',
 	'adss-upsell-error' => 'Houbo un erro!',
 	'adss-button-preview' => 'Vista previa',
 	'adss-button-edit' => 'Editar',
@@ -1561,10 +1587,12 @@ Por que non [[Special:AdSS|merca]] outro anuncio?',
 	'adss-button-save-pay' => 'Gardar',
 	'adss-button-pay-paypal' => 'Pagar mediante o PayPal',
 	'adss-button-select' => 'Seleccionar',
+	'adss-button-buy-now' => 'Mercar AGORA',
 	'adss-button-save' => 'Gardar',
 	'adss-button-cancel' => 'Cancelar',
 	'adss-button-yes' => 'Si',
 	'adss-button-no' => 'Non',
+	'adss-buy-another' => 'Mercar outro anuncio!',
 	'adss-preview-header' => 'Vista previa',
 	'adss-preview-prompt' => 'Así aparecerá o seu patrocinio; prema sobre "Editar" para volver e facer algún cambio ou sobre "Gardar" para deixalo como esta e ir ao PayPal.',
 	'adss-click-here' => 'Prema aquí',
@@ -1578,6 +1606,8 @@ Por que non [[Special:AdSS|merca]] outro anuncio?',
 	'adss-admin-tab-adList' => 'Lista de anuncios',
 	'adss-admin-tab-billing' => 'Facturación',
 	'adss-admin-tab-reports' => 'Informes',
+	'adss-not-logged-in' => 'Ten que estar conectado',
+	'adss-wrong-id' => 'Identificador incorrecto',
 	'adss-no-permission' => 'Non ten permisos',
 	'adss-canceled' => 'Cancelado',
 	'adss-rejected' => 'Rexeitado',
@@ -1585,14 +1615,22 @@ Por que non [[Special:AdSS|merca]] outro anuncio?',
 	'adss-pending' => 'Pendente',
 	'adss-wikia' => 'Wikia',
 	'adss-type' => 'Tipo',
+	'adss-no-shares' => 'Nº de accións',
 	'adss-price' => 'Prezo',
 	'adss-ad' => 'Anuncio',
 	'adss-status' => 'Estado',
 	'adss-created' => 'Creado',
+	'adss-your-balance' => 'Saldo debido:',
+	'adss-your-billing-agreement' => 'Acordo de facturación do PayPal:',
+	'adss-create-billing-agreement' => 'Crear un acordo de facturación',
+	'adss-paypal-payment' => 'Pagamento PayPal',
+	'adss-adss-fee' => 'Taxas de AdSS',
+	'adss-adss-refund' => 'Reembolso de AdSS',
 	'adss-fee' => 'Custo',
 	'adss-paid' => 'Pagado',
 	'adss-timestamp' => 'Data e hora',
 	'adss-description' => 'Descrición',
+	'adss-amount' => '$1$',
 	'adss-cancel-confirmation' => 'Está seguro de querer borrar este anuncio?',
 	'adss-welcome-subject' => '[AdSS] Grazas polo seu patrocinio!',
 );
@@ -2020,6 +2058,8 @@ $messages['ku-latn'] = array(
 	'adss-form-usd-per-week' => 'hefteyê $$1',
 	'adss-form-usd-per-month' => 'mehê $$1',
 	'adss-form-or' => '-an-',
+	'adss-upsell-yes' => 'Erê, ez dixwazim!',
+	'adss-upsell-no' => 'Na, spas',
 	'adss-button-preview' => 'Pêşdîtin',
 	'adss-button-edit' => 'Biguherîne',
 	'adss-button-login' => 'Têkeve',
@@ -2031,7 +2071,9 @@ $messages['ku-latn'] = array(
 	'adss-button-no' => 'Na',
 	'adss-preview-header' => 'Pêşdîtin',
 	'adss-per-site' => 'Hêmû rûpel',
+	'adss-close' => 'Bigre',
 	'adss-cancel' => 'Betal bike',
+	'adss-canceled' => 'Hate betalkirin',
 );
 
 /** Latin (Latina)
@@ -3412,12 +3454,13 @@ $messages['ru'] = array(
 );
 
 /** Sinhala (සිංහල)
+ * @author Singhalawap
  * @author පසිඳු කාවින්ද
  */
 $messages['si'] = array(
-	'adss-form-password' => 'ඔබගේ මුර පදය:',
-	'adss-form-login-link' => 'ප්‍රවිෂ්ට වන්න',
-	'adss-timestamp' => 'කාලමුද්‍රාව',
+	'adss-form-password' => 'ඔබගේ මුරපදය:',
+	'adss-form-login-link' => 'පිවිසෙන්න',
+	'adss-timestamp' => 'වේලාව-මුද්‍රාව',
 	'adss-description' => 'විස්තරය',
 );
 
@@ -3453,6 +3496,7 @@ $messages['sr-ec'] = array(
 /** Swedish (Svenska)
  * @author Lokal Profil
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'adss-desc' => 'Ad Self Service',
@@ -3477,6 +3521,8 @@ $messages['sv'] = array(
 	'adss-form-usd-per-day' => '$$1 per dag',
 	'adss-form-usd-per-week' => '$$1 per vecka',
 	'adss-form-usd-per-month' => '$$1 per månad',
+	'adss-form-usd-per-quarter' => '$$1 per kvartal',
+	'adss-form-usd-per-year' => '$$1 per år',
 	'adss-form-auth-errormsg' => 'Din e-postadress eller lösenord är felaktig.',
 	'adss-form-field-empty-errormsg' => 'Detta fält får inte vara tomt',
 	'adss-form-non-existent-title-errormsg' => 'Denna sidan existerar inte',
@@ -3495,10 +3541,12 @@ $messages['sv'] = array(
 	'adss-form-site-premium-plan-price' => 'Endast $1 för fyra aktier!',
 	'adss-form-page-plan-header' => 'Köp en länk på en enda sida',
 	'adss-form-page-plan-price' => '$1 för en länk',
+	'adss-form-reviews-page-month-plan-price' => 'Spara 50 %: för $1',
+	'adss-form-reviews-page-day-plan-header' => 'Sponsra denna verksamhet',
+	'adss-form-reviews-page-day-plan-price' => 'För endast $1',
 	'adss-form-or' => '- eller -',
-	'adss-form-thanks' => 'Tack för din sponsring! Din annons har köpts in och kommer att släppas live efter ett manuellt godkännande (inom 48 timmar).
-
-	 Gå och [[Special:AdSS|köp]] en till annons!',
+	'adss-form-thanks' => 'Du har slutfört ditt köp! Din annons kommer att släppas live efter ett manuellt godkännande (inom 48 timmar, vanligtvis mindre).',
+	'adss-form-buy-another' => 'Vill du köpa en andra annons nu? [[Special:AdSS|Klicka här]]',
 	'adss-upsell-yes' => 'Ja, jag vill det!',
 	'adss-upsell-no' => 'Nej tack',
 	'adss-upsell-error' => 'Ett fel inträffade!',
@@ -3527,6 +3575,7 @@ $messages['sv'] = array(
 
 Återgå till [[Special:AdSS|{{int:Adss}}]].',
 	'adss-per-site' => 'Alla sidor',
+	'adss-per-hub' => 'Hub',
 	'adss-per-page' => 'Bara en sida',
 	'adss-close' => 'Stäng',
 	'adss-cancel' => 'Avbryt',
@@ -3769,6 +3818,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(

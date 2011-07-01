@@ -89,6 +89,18 @@ $messages['fr'] = array(
 	'right-stafflog' => 'Peut afficher le journal de l’équipe d’administration',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'stafflog-desc' => 'Rexistro centralizado para o persoal',
+	'stafflog' => 'Rexistro do persoal',
+	'stafflog-blockmsg' => '$1 $2 intentou bloquear o membro do persoal $3 no wiki $4. Motivo: $5',
+	'stafflog-piggybackloginmsg' => '$1 acceso non autorizado; usuario $2 conectado como $3',
+	'stafflog-piggybacklogoutmsg' => '$1 acceso non autorizado; usuario $2 desconectado da conta $3',
+	'right-stafflog' => 'Pode ollar o rexistro do persoal',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

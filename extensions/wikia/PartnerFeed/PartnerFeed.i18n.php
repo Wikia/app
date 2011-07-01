@@ -169,6 +169,7 @@ $messages['fr'] = array(
  * @author Xanocebreiro
  */
 $messages['gl'] = array(
+	'partner-feed-recent-changes' => 'Cambios recentes',
 	'feed-title-blogposts' => 'Entradas de blogue recentes',
 	'feed-title-recent-badges' => 'Insignias recentes',
 	'feed-title-recent-images' => 'Imaxes recentes',

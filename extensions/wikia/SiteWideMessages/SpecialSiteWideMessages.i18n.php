@@ -1414,6 +1414,8 @@ $messages['my'] = array(
  */
 $messages['mzn'] = array(
 	'swm-label-edit' => 'دچی‌ین',
+	'swm-label-language' => 'زوون',
+	'swm-list-table-lang' => 'زوون',
 );
 
 /** Nepali (नेपाली)
@@ -1571,6 +1573,14 @@ $messages['no'] = array(
 	'swm-error-long-message' => 'Meldinger er begrenset til 500 tegn.',
 	'swm-error-empty-group' => 'Skriv inn navnet på gruppen.',
 	'swm-lang-other' => 'alle gjenværende språk',
+);
+
+/** Ossetic (Ирон)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'swm-label-language' => 'Æвзаг',
+	'swm-list-table-lang' => 'Æвзæгтæ',
 );
 
 /** Deitsch (Deitsch)
@@ -1990,6 +2000,7 @@ $messages['sr-ec'] = array(
 /** Swedish (Svenska)
  * @author Lokal Profil
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'swm-label-preview' => 'Förhandsgranska',
@@ -2015,11 +2026,24 @@ $messages['sv'] = array(
 	'swm-label-language' => 'Språk',
 	'swm-button-lang-checkall' => '[ Kontrollera alla ]',
 	'swm-button-lang-checknone' => '[ Kontrollera ingen ]',
+	'swm-button-preview' => '[ Förhandsgranska ]',
+	'swm-button-send' => '[ Skicka ]',
+	'swm-button-save' => '[ Spara ]',
+	'swm-button-new' => '[ Ny ]',
+	'swm-msg-sent-ok' => '<h3>Meddelandet har skickats.</h3>',
+	'swm-list-no-messages' => 'Inga meddelanden.',
+	'swm-list-table-group' => 'Grupp',
+	'swm-list-table-content' => 'Innehåll',
+	'swm-list-table-tools' => 'Verktyg',
+	'swm-list-table-lang' => 'Språk',
+	'swm-yes' => 'Ja',
 	'swm-no' => 'Nej',
+	'swm-lang-other' => 'alla återstående språk',
 );
 
 /** Swahili (Kiswahili)
  * @author Lloffiwr
+ * @author Muddyb Blast Producer
  */
 $messages['sw'] = array(
 	'swm-label-preview' => 'Hakikisha',
