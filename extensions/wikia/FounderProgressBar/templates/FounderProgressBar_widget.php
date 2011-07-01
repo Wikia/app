@@ -13,7 +13,7 @@
 				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 			</div>
 			<div class="task-group">
-				<?= F::app()->sendRequest( 'FounderProgressBar', 'widgetTaskGroup', array('taskList' => $activeTaskList )) ?>
+				<?= F::app()->getView( 'FounderProgressBar', 'widgetTaskGroup', array('taskList' => $activeTaskList ) ) ?>
 			</div>
 		</li>
 		<li class="task collapsed">
@@ -22,7 +22,7 @@
 				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 			</div>
 			<div class="task-group" style="display:none">
-				<?= F::app()->sendRequest( 'FounderProgressBar', 'widgetTaskGroup', array('taskList' => $skippedTaskList )) ?>
+				<?= F::app()->getView( 'FounderProgressBar', 'widgetTaskGroup', array('taskList' => $skippedTaskList )) ?>
 			</div>
 		</li>
 		<li class="task collapsed">
@@ -31,7 +31,7 @@
 				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 			</div>
 			<div class="task-group" style="display:none">
-				<?= F::app()->sendRequest( 'FounderProgressBar', 'widgetTaskGroup', array('taskList' => $bonusTaskList )) ?>
+				<?= F::app()->getView( 'FounderProgressBar', 'widgetTaskGroup', array('taskList' => $bonusTaskList )) ?>
 			</div>
 		</li>
 	</ul>
