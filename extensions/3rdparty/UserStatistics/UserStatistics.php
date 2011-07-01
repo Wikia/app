@@ -406,7 +406,7 @@ function editLastDate( $uid ) {
 
   $fname = 'UserStatistics::editLastDate';
 
-  $dbr =& wfGetDB( DB_SLAVE );
+  $dbr = wfGetDB( DB_SLAVE );
   $timestamp = $dbr->selectField( 
 	'revision', 
 	'rev_timestamp',
