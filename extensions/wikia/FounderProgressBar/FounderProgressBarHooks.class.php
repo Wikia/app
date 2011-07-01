@@ -128,13 +128,37 @@ class FounderProgressBarHooks {
 	
 	// Initialize schema for a new wiki
 	function onWikiCreation ( $params ) {
-		
+
+		// Always initialize for new wikis
+		if (isset($params['city_id'])) {
+			FounderProgressBarHooks::initRecords($params['city_id']);
+		}
+
+		return true;
 	}
 	
 	// Initialize schema if not already initialized
-	function onWikiFactoryChanged( $cv_name, $city_id, $value ) {
+	function onWikiFactoryChanged( $cv_name, $wiki_id, $value ) {
+
+		Wikia::log( __METHOD__, $wiki_id, "{$cv_name} = {$value}" );
+		// Initialize data if extension is enabled. Safe to do multiple times, just gives a warning
+		if( $cv_name == 'wgEnableFounderProgressBarExt' && $value == true ){
+			FounderProgressBarHooks::initRecords($wiki_id);
+		}
+		return true;
 	}
 	
+	public static function initRecords($wiki_id) {
+		// Records go into global wikicites table
+		$app = F::app();
+		$dbw = $app->wf->GetDB(DB_MASTER, array(), $app->wg->ExternalSharedDB);
+
+		// FIXME: this has to be updated when new tasks are added
+		for($task_id = 10; $task_id <= 300; $task_id+=10) {
+			$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$task_id";
+			$dbw->query ($sql);
+		}		
+	}
 	/**
 	 * This helper function checks to see if all tasks are completed.
 	 * Skipped tasks do NOT count against this total, but bonus tasks do
