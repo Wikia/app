@@ -459,7 +459,26 @@ function WikiaVideo_isMovable($result, $index) {
 
 $wgHooks['ArticleFromTitle'][] = 'WikiaVideoArticleFromTitle';
 function WikiaVideoArticleFromTitle($title, $article) {
+	global $wgRequest, $wgEnableParserCache;
+	
 	if(NS_VIDEO == $title->getNamespace()) {
+		// overloading subpages to encode query string parameters
+		// i.e. Video:Foo/width=480px&caption=Hello World
+		$parts = explode('/', $title->getFullText());
+		if (sizeof($parts) > 1) {
+			$wgEnableParserCache = false;
+			$vars = array();
+			parse_str($parts[1], $vars);
+			
+			$allVars = array_merge($wgRequest->getValues(), $vars);
+			foreach ($allVars as $key=>$val) {
+				$wgRequest->setVal($key, $val);
+			}
+			
+			$newTitle = Title::newFromText($parts[0], $title->getNamespace());
+			$title = $newTitle;
+		}
+		
 		$article = new VideoPage($title);
 	}
 	return true;
