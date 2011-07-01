@@ -9,21 +9,10 @@ var ControlCenterChrome = {
 				ControlCenterChrome.rail.hide();
 				ControlCenterChrome.wikiaArticle.addClass('expanded');
 				ControlCenterChrome.arrow.addClass('expanded');
-				/*
-				ControlCenterChrome.rail.hide();
-				ControlCenterChrome.wikiaArticle.addClass('expanded').animate({width: '982px'}, 200, function() {
-				});
-				*/
 			} else {
 				ControlCenterChrome.arrow.removeClass('expanded');
 				ControlCenterChrome.wikiaArticle.removeClass('expanded');
 				ControlCenterChrome.rail.show();
-				//setTimeout(function(){ControlCenterChrome.rail.show()}, 250);
-				/*
-				ControlCenterChrome.wikiaArticle.removeClass('expanded').animate({width: '673px'}, 200, function() {
-					ControlCenterChrome.rail.show();
-				});
-				*/
 			}
 		});
 	}

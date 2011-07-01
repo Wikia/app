@@ -36,6 +36,105 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 		$this->response->setVal('urlAddPhoto', Title::newFromText('Upload', NS_SPECIAL)->getFullURL());
 		$this->response->setVal('urlCreateBlogPage', Title::newFromText('CreateBlogPage', NS_SPECIAL)->getFullURL());
 		$this->response->setVal('urlMultipleUpload', Title::newFromText('MultipleUpload', NS_SPECIAL)->getFullURL());
+		
+		// special:specialpages
+		$advancedSection = (string)F::app()->sendRequest( 'ControlCenterSpecialPage', 'getAdvancedSection', array());
+		$this->response->setVal('advancedSection', $advancedSection);
+	}
+	
+	/**
+	 * @brief Copied and pasted code from wfSpecialSpecialpages() that have been modified and refactored.  Also removes some special pages from list.
+	 *
+	 */
+	public function getAdvancedSection() {
+		global $wgOut, $wgUser, $wgMessageCache, $wgSortSpecialPages, $wgSpecialPagesRequiredLogin;
+		
+		$excludedPages = array(
+			'ThemeDesigner' => true,
+			'Recentchanges' => true,
+			'WikiaLabs' => true,
+			'PageLayoutBuilder' => true,
+			'Listusers' => true,
+			'UserRights' => true,
+			'Categories' => true,
+			'CreatePage' => true,
+			'Upload' => true,
+			'CreateBlogPage' => true,
+			'MultipleUpload' => true,
+		);
+
+		$wgMessageCache->loadAllMessages();
+	
+		$sk = $wgUser->getSkin();
+		
+		$pages = SpecialPage::getUsablePages();
+	
+		if( count( $pages ) == 0 ) {
+			return;
+		}
+	
+		/** Put them into a sortable array */
+		$groups = array();
+		foreach ( $pages as $pagename => $page ) {
+			if ( !isset($excludedPages[$pagename]) && $page->isListed() ) {
+				$group = SpecialPage::getGroup( $page );
+				if( !isset($groups[$group]) ) {
+					$groups[$group] = array();
+				}
+				$groups[$group][$page->getDescription()] = array( $page->getTitle(), $page->isRestricted() );
+			}
+		}
+	
+		/** Sort */
+		if ( $wgSortSpecialPages ) {
+			foreach( $groups as $group => $sortedPages ) {
+				ksort( $groups[$group] );
+			}
+		}
+	
+		/** Always move "other" to end */
+		if( array_key_exists('other',$groups) ) {
+			$other = $groups['other'];
+			unset( $groups['other'] );
+			$groups['other'] = $other;
+		}
+
+		$this->setVal('sk', $sk);
+		$this->setVal('groups', $groups);
+		/*
+	
+		$includesRestrictedPages = false;
+		foreach ( $groups as $group => $sortedPages ) {
+			$middle = ceil( count($sortedPages)/2 );
+			$total = count($sortedPages);
+			$count = 0;
+	
+			$wgOut->wrapWikiMsg( "<h4 class=\"mw-specialpagesgroup\" id=\"mw-specialpagesgroup-$group\">$1</h4>\n", "specialpages-group-$group" );
+			$wgOut->addHTML( "<table style='width: 100%;' class='mw-specialpages-table'><tr>" );
+			$wgOut->addHTML( "<td width='30%' valign='top'><ul>\n" );
+			foreach( $sortedPages as $desc => $specialpage ) {
+				list( $title, $restricted ) = $specialpage;
+				$link = $sk->linkKnown( $title , htmlspecialchars( $desc ) );
+				if( $restricted ) {
+					$includesRestrictedPages = true;
+					$wgOut->addHTML( "<li class='mw-specialpages-page mw-specialpagerestricted'><strong>{$link}</strong></li>\n" );
+				} else {
+					$wgOut->addHTML( "<li>{$link}</li>\n" );
+				}
+	
+				# Split up the larger groups
+				$count++;
+				if( $total > 3 && $count == $middle ) {
+					$wgOut->addHTML( "</ul></td><td width='10%'></td><td width='30%' valign='top'><ul>" );
+				}
+			}
+			$wgOut->addHTML( "</ul></td><td width='30%' valign='top'></td></tr></table>\n" );
+		}
+	
+		if ( $includesRestrictedPages ) {
+			$wgOut->wrapWikiMsg( "<div class=\"mw-specialpages-notes\">\n$1\n</div>", 'specialpages-note' );
+		}
+		*/
 	}
 	
 	public function chromedArticleHeader() {
@@ -69,7 +168,7 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 				
 		// Construct special page object
 		try {
-			$basePages = array("Categories", "Recentchanges");
+			$basePages = array("Categories", "Recentchanges", "Specialpages");
 			if (in_array($pageName, $basePages)) {
 				$sp = SpecialPage::getPage($pageName);
 			} else {
