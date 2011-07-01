@@ -3,7 +3,8 @@
 <? $index = 0; ?>
 <? for ($j = 0; $j < 3; $j++) { ?>
 	<ul class="activities">
-		<? $itemsInThisRow = $extraItems > 0 ? ($itemsPerRow + $extraItems--) : $itemsPerRow?>
+		<? $itemsInThisRow = $extraItems > 0 ? ($itemsPerRow + 1) : $itemsPerRow; ?>
+		<? $extraItems--; ?>
 		<? for ($i = 0; $i < $itemsInThisRow; $i++) { ?>
 			<li class="activity<?= empty($taskList[$index]['task_completed']) ? '' : ' completed' ?>">
 				<div class="activity-label"><?= $taskList[$index]['task_label'] ?></div>
