@@ -1,27 +1,38 @@
 <?php
-/*
- * Author: Jakub Kurcek
- * Needs ImageServing extension to be usable.
+/**
+ * WikiaApiImageService
+ *
+ * @author Sean Colombo <sean@wikia-inc.com>
+ * @author Jakub Kurcek
+ *
+ * This API function returns a full-size image URL given the article name.
+ *
+ * Requires the wikia ImageServing extension.
+ *
+ * If you have an article id and would like a thumbnail for an article, use
+ * WikiaApiCroppedImage instead.
  */
 
-if (!defined('MEDIAWIKI')) {
-	die();
-}
+$wgAPIModules['imageserving'] = 'WikiaApiImageServing';
 
-class WikiaApiCroppedImage extends ApiBase {
+class WikiaApiImageService extends ApiBase {
 
 	public function __construct( $main, $action ) {
 		parent :: __construct( $main, $action, 'img' );
 	}
 
+	/**
+	 * See functions below for expected URL params
+	 */
 	public function execute() {
 		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		extract( $this->extractRequestParams() );
-		
-		$imageServing = new ImageServing( array( $Id ), $Size, array("w" => $Size, "h" => $Height));
+
+		$imageServing = new ImageServing( array( $Id ) );
 		foreach ( $imageServing->getImages( 1 ) as $key => $value ){
+/*
 			$tmpTitle = Title::newFromText( $value[0]['name'], NS_FILE );
 			$image = wfFindFile( $tmpTitle );
 			$imageInfo = getimagesize( $image->getPath() );
@@ -30,7 +41,7 @@ class WikiaApiCroppedImage extends ApiBase {
 					$imageServing->getCut( $imageInfo[0], $imageInfo[1] )."-".$image->getName()
 				)
 			);
-
+*/
 		}
 		$result = $this->getResult();
 		$result->addValue( 'image', $this->getModuleName(), $imageUrl );
@@ -76,5 +87,4 @@ class WikiaApiCroppedImage extends ApiBase {
 			" No example because article id is specific for every wikia ",
 		);
 	}
-
 }
