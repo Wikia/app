@@ -8,161 +8,105 @@
 class FounderProgressBarHooks {
 
 	/**
-	 * @desc Counts actions involve adding or editing articles
+	 * @desc Counts the following actions
+	 * 
+	 * Add 10 pages
+	 * Fill out your main page
 	 */
 	function onArticleSaveComplete (&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 
-		// Quick exit if we are already done with Founder Progress Bar (memcache key set for 30 days)
-		if (FounderProgressBarHooks::allTasksComplete()) {
-			return true;
-		}
-		
 		$app = F::app();
-		$title = $article->getTitle();
-		
-		if ($flags & EDIT_NEW) {
-			// Tasks related to adding new pages X
-			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PAGE_ADD_10));			
-			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PAGE_ADD_20));			
+		//$request = $app::build("WikiaRequest");
 
-			// if blogpost
-			if ($app->wg->EnableBlogArticles && $title->getNamespace() == NS_BLOG_ARTICLE) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_BLOGPOST_ADD));				
-			}			
-			// if topten list
-			if ($app->wg->EnableTopListsExt && $title->getNamespace() == NS_TOPLIST) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOPTENLIST_ADD));				
-			}				
-			// Category pages X
-			if ($title->getNamespace() == NS_CATEGORY) {			
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_CATEGORY_ADD_3));
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_CATEGORY_ADD_5));
-			}
+		// Tasks related to article editing content
+		if ($article->getTitle()->getNamespace() == NS_CONTENT) {
+			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOTAL_EDIT_75));
+
+			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOTAL_EDIT_300));		
 		}
-		
+
+		if ($flags & EDIT_NEW) {
+			// Tasks related to adding new pages
+			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PAGE_ADD_10));
+			
+			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PAGE_ADD_20));			
+		}
 		// Tasks related to updating existing pages
 		if ($flags & EDIT_UPDATE) {
 
-			// Tasks related to editing any article content X
-			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOTAL_EDIT_75));
-			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOTAL_EDIT_300));		
-			
 			// if main page
-			if (ArticleAdLogic::isMainPage()) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_MAINPAGE_EDIT));				
-				
-				// Is there a better way to detect if there's a slider on the main page?
-				if (stripos($text, "slider") > 0) {
-					$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_MAINPAGE_ADDSLIDER));				
-				}
-			}
+				// FT_MAINPAGE_EDIT
+				// FT_MAINPAGE_ADDSLIDER
 			
-			// edit category page X
-			if ($title->getNamespace() == NS_CATEGORY) {
+			// if category page
+			if ($article->getTitle()->getNamespace() == NS_CATEGORY) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_CATEGORY_EDIT));
 			}		
 
-			// edit TOP_NAV Wiki-navigation X
-			if ($title->getNamespace() == NS_MEDIAWIKI && $title->getText() == "Wiki-navigation") {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOPNAV_EDIT));
-			}
-
-			// if commcorner X
-			if ($title->getNamespace() == NS_MEDIAWIKI && $title->getText() == "Community-corner") {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_COMMCORNER_EDIT));				
-			}
+			// if topnav edit
+			//if () {
+			//$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOPNAV_EDIT));
+			//}
 			
-			// edit profile page X
-			if ($title->getNamespace() == NS_USER && $title->getText() == $app->wg->User->getName()) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PROFILE_EDIT));				
-			}
+			// if wordmark edit?
+			// FT_WORDMARK_EDIT
+
+			// if topten list
+			// FT_TOPTENLIST_ADD
+			
+			// if blogpost
+			// FT_BLOGPOST_ADD
+			
+			// if commcorner
+			// FT_COMMCORNER_EDIT
+
 			// if page contains gallery tag
-			if (stripos ($text, "<gallery") > 0) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_GALLERY_ADD));			
-			}
+			// FT_GALLERY_ADD
 			
 			// if page contains video tag
-			if (stripos ($text, "<video") > 0) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_VIDEO_ADD));			
-			}
+			// FT_VIDEO_ADD
 			
-		}						
+			// if profile page
+			// FT_PROFILE_EDIT
+			
+		}
+						
 		return true;
 	}
 	
 	/**
 	 * @desc Counts the following actions
 	 * 
-	 * Adding a photo or uploading a new wordmark X
+	 * Adding a photo
 	 * 
 	 */
 	function onUploadComplete (&$image) {
-
-		// Quick exit if tasks are all completed
-		if (FounderProgressBarHooks::allTasksComplete()) {
-			return true;
-		}
-		
 		$app = F::app();		
-		// Any image counts for these
 		$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PHOTO_ADD_10));
 		$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PHOTO_ADD_20));
-		// Only workmark counts for this one
-		if ($image && $image->getTitle()->getText() == "Wiki-wordmark.png") {
-			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_WORDMARK_EDIT));
-		}
-				
 		return true;
 	}
 	
 	function onAddNewAccount ($user) {
-
-		// Quick exit if tasks are all completed
-		if (FounderProgressBarHooks::allTasksComplete()) {
-			return true;
-		}
-		
-		F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_USER_ADD_5));
+		$app = F::app();		
+		$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_USER_ADD_5));
 		return true;
 	}
 	
-	// Initialize schema for a new wiki
+	function onAddCategoryPage (&$categoryPage, &$title, &$titletext, &$sortkey) {		
+		$app = F::app();		
+		$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_CATEGORY_ADD_3));
+		$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_CATEGORY_ADD_5));
+		
+		return true;
+	}
+
+	// Initialize schema
 	function onWikiCreation ( $params ) {
 		
 	}
 	
-	// Initialize schema if not already initialized
+	// Initialize schema
 	function onWikiFactoryChanged( $cv_name, $city_id, $value ) {
 	}
-	
-	/**
-	 * This helper function checks to see if all tasks are completed.
-	 * Skipped tasks do NOT count against this total, but bonus tasks do
-	 * If all tasks are complete, award that event (if not awarded already) and set a memcache flag
-	 */
-	public static function allTasksComplete() {
-		$app = F::app();
-		$memKey = $app->wf->MemcKey('FounderTasksComplete');
-		$task_complete = $app->wg->Memc->get($memKey);
-		if (empty($task_complete)) {
-			$response = $app->sendRequest('FounderProgressBar',"getLongTaskList");
-			$list = $response->getVal('list');
-			// Completion task set, and once set it can never be undone
-			if (isset($list[FT_COMPLETION])) {
-				$app->wg->Memc->set($memKey, true, 86400*30 );
-				return true;				
-			}
-			$data = $response->getVal('data');
-			// Completion task NOT set but all other tasks are complete, so set it.  
-			// TODO: display some kind of YAY YOU DID IT! message here
-			if ($data['tasks_completed'] == $data['total_tasks']) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_COMPLETION));
-				$app->wg->Memc->set($memKey, true, 86400*30 );
-				return true;
-			}
-			return false;
-		}
-		return $task_complete;
-	}
-	
 }
