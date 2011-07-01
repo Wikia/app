@@ -30,6 +30,8 @@ Batch User Rights
 file = SpecialBatchUserRights/BatchUserRights.i18n.php
 aliasfile = SpecialBatchUserRights/BatchUserRights.alias.php
 
+Campfire 
+
 Category Exhibition
 file = CategoryExhibition/i18n/CategoryExhibition.i18n.php
 
@@ -45,6 +47,14 @@ Community Messages
 
 Content Feeds
 
+Control Center
+
+#Commented out 2010-02-01 -- tor
+#Dropping in favour of CreatePage (below)
+#Create A Page
+#file = CreateAPage/MultiEdit.i18n.php
+#optional = createplate-Blank, createplate-list
+
 Create New Wiki
 ignored = cnw-name-wiki-language, cnw-name-wiki-domain
 
@@ -56,6 +66,7 @@ Edit Account
 file = EditAccount/SpecialEditAccount.i18n.php
 
 Edit Page Layout
+ignored = anoneditwarning-notice
 
 Ez API
 
@@ -63,6 +74,12 @@ Follow
 aliasfile = Follow/Follow.alias.php
 
 Founder Emails
+
+Founder Progress Bar
+
+Game Guides
+
+Global Notification
 
 Global Watchlist
 
@@ -109,6 +126,7 @@ Masthead
 
 Mobile - Game Guides
 file = MobileAppTranslations/GameGuides.i18n.php
+ignored = windowwikicontents-title
 
 Mobile - Lyric Wiki
 file = MobileAppTranslations/lyricwiki.i18n.php
@@ -135,7 +153,8 @@ ignored = accesskey-pt-myhome
 Oasis
 optional = oasis-latest-photos-single, oasis-corporatefooter-hub-Entertainment-link, oasis-corporatefooter-hub-Gaming-link, oasis-corporatefooter-hub-Lifestyle-link
 optional = oasis-corporatefooter-hub-Food and Drink-link
-ignored = wiki-navigation, categoryblacklist, photosblacklist
+ignored = wiki-navigation, categoryblacklist, photosblacklist, oasis-button-random-page-tooltip
+ignored = oasis-button-wiki-activity-tooltip
 
 Our 404 Handler
 file = Our404Handler/SpecialOur404Handler.i18n.php
@@ -167,7 +186,6 @@ file = RelatedVideo/i18n/RelatedVideo.i18n.php
 
 RTE - Base
 file = RTE/i18n/RTE.i18n.php
-ignored = editor-template-list
 
 RTE - CK Wikia
 file = RTE/i18n/CK.wikia.i18n.php
@@ -244,9 +262,7 @@ ignored = theorytab-subpage
 Time Ago Messaging
 descmsg = timeago-desc
 
-Top 10 Lists
-file = TopLists/TopLists.i18n.php
-aliasfile = TopLists/TopLists.namespaces.php
+Top Lists
 ignored = toplists-msg-fb-OnRateArticle-link, toplists-msg-fb-OnRateArticle
 
 Unsubscribe
@@ -281,6 +297,8 @@ Wikia Poll
 optional = wikiapoll-question-mark-before, wikiapoll-question-mark-after
 
 Wikia Photo Gallery
+
+Wikia Quiz
 
 Wikia Video
 
