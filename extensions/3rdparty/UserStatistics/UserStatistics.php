@@ -407,20 +407,16 @@ function editLastDate( $uid ) {
   $fname = 'UserStatistics::editLastDate';
 
   $dbr =& wfGetDB( DB_SLAVE );
-  $rev  = $dbr->tableName( 'revision' );
-  $sql  = "SELECT MAX(rev_id) AS number FROM $rev WHERE rev_user = $uid";
-  $res  = $dbr->query( $sql, $fname );
+  $timestamp = $dbr->selectField( 
+	'revision', 
+	'rev_timestamp',
+	array( 'rev_user' => $uid ),
+	__METHOD__,
+	array( 'ORDER BY' => 'rev_timestamp DESC', 'LIMIT' => 1 ) 
+  );
 
-  $revid = $dbr->fetchObject( $res );
-
-  if ($revid)  {
-    $sql  = "SELECT rev_timestamp FROM $rev WHERE rev_id = $revid->number";
-    $res  = $dbr->query( $sql, $fname );
-
-    $row = $dbr->fetchObject( $res );
-    if ($row)  {
-      $ret = $wgLang->timeanddate( wfTimestamp(TS_MW, $row->rev_timestamp), true);
-    }
+  if ($timestamp)  {
+    $ret = $wgLang->timeanddate( wfTimestamp(TS_MW, $timestamp), true);
   }
 
   return $ret;
