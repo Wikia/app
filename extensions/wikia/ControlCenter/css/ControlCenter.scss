@@ -125,10 +125,51 @@ $base-z: 5;
 						margin: 0px auto 5px;
 						width: 50px;
 						.icon {
-							background: url(http://placekitten.com/30/30) no-repeat 10px 10px;
+							background-image: url(/extensions/wikia/ControlCenter/images/icons.png);	/* $wgCdnStylePath */
+							background-repeat: no-repeat;
 							display: block;
 							height: 50px;
 							width: 50px;
+							&.themedesigner {
+								background-position: 0 0;
+							}
+							&.recentchanges {
+								background-position: -50px 0;
+							}
+							&.topnavigation {
+								background-position: -100px 0;
+							}
+							&.wikialabs {
+								background-position: -150px 0;
+							}
+							&.pagelayoutbuilder {
+								background-position: -200px 0;
+							}
+							&.userlist {
+								background-position: -250px 0;
+							}
+							&.userrights {
+								background-position: -300px 0;
+							}
+							
+							&.communitycorner {
+								background-position: -350px 0;
+							}
+							&.categories {
+								background-position: -400px 0;
+							}
+							&.addpage {
+								background-position: -450px 0;
+							}
+							&.addphoto {
+								background-position: -500px 0;
+							}
+							&.createblog {
+								background-position: -550px 0;
+							}
+							&.multipleupload {
+								background-position: -600px 0;
+							}
 						}
 					}
 					&:hover {
