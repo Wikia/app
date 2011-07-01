@@ -46,12 +46,12 @@ class SFFormUtils {
 	 * Add a hidden input for each field in the template call that's
 	 * not handled by the form itself
 	 */
-	static function unhandledFieldsHTML( $template_contents ) {
+	static function unhandledFieldsHTML( $templateName, $templateContents ) {
 		$text = "";
-		foreach ( $template_contents as $key => $value ) {
+		foreach ( $templateContents as $key => $value ) {
 			if ( !is_null( $key ) && !is_numeric( $key ) ) {
 				$key = urlencode( $key );
-				$text .= self::hiddenFieldHTML( "_unhandled_$key", $value );
+				$text .= self::hiddenFieldHTML( '_unhandled_' . $templateName . '_' . $key, $value );
 			}
 		}
 		return $text;
@@ -61,12 +61,15 @@ class SFFormUtils {
 	 * Add unhandled fields back into the template call that the form
 	 * generates, so that editing with a form will have no effect on them
 	 */
-	static function addUnhandledFields() {
+	static function addUnhandledFields( $templateName ) {
 		global $wgRequest;
+
+		$prefix = '_unhandled_' . $templateName . '_';
+		$prefixSize = strlen( $prefix );
 		$additional_template_text = "";
 		foreach ( $wgRequest->getValues() as $key => $value ) {
-			if ( substr( $key, 0, 11 ) == '_unhandled_' ) {
-				$field_name = urldecode( substr( $key, 11 ) );
+			if ( strpos( $key, $prefix ) === 0 ) {
+				$field_name = urldecode( substr( $key, $prefixSize ) );
 				$additional_template_text .= "|$field_name=$value\n";
 			}
 		}
@@ -119,7 +122,7 @@ END;
 
 		$sfgTabIndex++;
 		$checked = "";
-		// figure out if the checkbox should be checked - 
+		// figure out if the checkbox should be checked -
 		// this code borrowed from /includes/EditPage.php
 		if ( $wgUser->getOption( 'watchdefault' ) ) {
 			# Watch all edits
@@ -269,7 +272,7 @@ END;
 		$text = "		<span class='editHelp'>$cancel</span>\n";
 		return $text;
 	}
-	
+
 	static function runQueryButtonHTML( $is_disabled = false, $label = null, $attr = array() ) {
 		// is_disabled is currently ignored
 		global $sfgTabIndex;
@@ -424,7 +427,7 @@ var popup = false;		//pointer to popup document
 var firstLoad = true;
 var editorMsgOn = "' . wfMsg( 'textrichditor' ) . '";
 var editorMsgOff = "' . wfMsg( 'tog-riched_disable' ) . '";
-var editorLink = "' . ( ( $showFCKEditor & RTE_VISIBLE ) ? wfMsg( 'tog-riched_disable' ): wfMsg( 'textrichditor' ) ) . '";		
+var editorLink = "' . ( ( $showFCKEditor & RTE_VISIBLE ) ? wfMsg( 'tog-riched_disable' ): wfMsg( 'textrichditor' ) ) . '";
 var saveSetting = ' . ( $wgUser->getOption( 'riched_toggle_remember_state' ) ?  1 : 0 ) . ';
 var RTE_VISIBLE = ' . RTE_VISIBLE . ';
 var RTE_TOGGLE_LINK = ' . RTE_TOGGLE_LINK . ';
@@ -448,7 +451,7 @@ var RTE_POPUP = ' . RTE_POPUP . ';
 		if ( substr( $wgFCKEditorDir, -1 ) != '/' ) {
 			$wgFCKEditorDir .= '/';
 		}
-		
+
 		$javascript_text .= <<<END
 var oFCKeditor = new FCKeditor( "free_text" );
 
@@ -458,7 +461,7 @@ oFCKeditor.Config["CustomConfigurationsPath"] = "$wgScriptPath/$wgFCKEditorExtDi
 oFCKeditor.Config["EditorAreaCSS"] = "$wgScriptPath/$wgFCKEditorExtDir/css/fckeditor.css" ;
 oFCKeditor.Config["showreferences"] = '$showRef';
 oFCKeditor.Config["showsource"] = '$showSource';
-oFCKeditor.ToolbarSet = "$wgFCKEditorToolbarSet"; 
+oFCKeditor.ToolbarSet = "$wgFCKEditorToolbarSet";
 oFCKeditor.ready = true;
 
 //IE hack to call func from popup
@@ -499,7 +502,7 @@ function getWindowHeight4editor() {
 
 function onLoadFCKeditor()
 {
-	if (!(showFCKEditor & RTE_VISIBLE)) 
+	if (!(showFCKEditor & RTE_VISIBLE))
 		showFCKEditor += RTE_VISIBLE;
 	firstLoad = false;
 	realTextarea = document.getElementById('free_text');
@@ -515,7 +518,7 @@ function onLoadFCKeditor()
 		}
 		oFCKeditor.Height = height;
 		oFCKeditor.ReplaceTextarea() ;
-		
+
 		FCKeditorInsertTags = function (tagOpen, tagClose, sampleText, oDoc)
 		{
 			var txtarea;
@@ -536,16 +539,16 @@ function onLoadFCKeditor()
 							SRCdoc = window.frames[SRCiframe].oDoc ;
 						else
 							SRCdoc = SRCiframe.contentDocument ;
-							
+
 						var SRCarea = SRCdoc.getElementById ('xEditingArea').firstChild ;
-						
+
 						if (SRCarea)
 							txtarea = SRCarea ;
 						else
 							return false ;
-							
-					} 
-					else 
+
+					}
+					else
 					{
 						return false ;
 					}
@@ -564,7 +567,7 @@ function onLoadFCKeditor()
 
 			var selText, isSample = false ;
 
-			if ( oDoc.selection  && oDoc.selection.createRange ) 
+			if ( oDoc.selection  && oDoc.selection.createRange )
 			{ // IE/Opera
 
 				//save window scroll position
@@ -595,8 +598,8 @@ function onLoadFCKeditor()
 				else if ( oDoc.body )
 					oDoc.body.scrollTop = winScroll ;
 
-			} 
-			else if ( txtarea.selectionStart || txtarea.selectionStart == '0' ) 
+			}
+			else if ( txtarea.selectionStart || txtarea.selectionStart == '0' )
 			{ // Mozilla
 
 				//save textarea scroll position
@@ -606,27 +609,27 @@ function onLoadFCKeditor()
 				var startPos = txtarea.selectionStart ;
 				var endPos = txtarea.selectionEnd ;
 				selText = txtarea.value.substring( startPos, endPos ) ;
-				
+
 				//insert tags
-				if (!selText) 
+				if (!selText)
 				{
 					selText = sampleText ;
 					isSample = true ;
-				} 
+				}
 				else if (selText.charAt(selText.length - 1) == ' ')
 				{ //exclude ending space char
 					selText = selText.substring(0, selText.length - 1) ;
 					tagClose += ' ' ;
 				}
-				txtarea.value = txtarea.value.substring(0, startPos) + tagOpen + selText + tagClose + 
+				txtarea.value = txtarea.value.substring(0, startPos) + tagOpen + selText + tagClose +
 								txtarea.value.substring(endPos, txtarea.value.length) ;
 				//set new selection
-				if (isSample) 
+				if (isSample)
 				{
 					txtarea.selectionStart = startPos + tagOpen.length ;
 					txtarea.selectionEnd = startPos + tagOpen.length + selText.length ;
-				} 
-				else 
+				}
+				else
 				{
 					txtarea.selectionStart = startPos + tagOpen.length + selText.length + tagClose.length ;
 					txtarea.selectionEnd = txtarea.selectionStart;
@@ -645,16 +648,16 @@ function checkSelected()
 	} else if (selText.charAt(selText.length - 1) == ' ') { //exclude ending space char
 		selText = selText.substring(0, selText.length - 1);
 		tagClose += ' '
-	} 
+	}
 }
 function initEditor()
-{	
+{
 	var toolbar = document.getElementById('free_text');
 	//show popup or toogle link
 	if (showFCKEditor & (RTE_POPUP|RTE_TOGGLE_LINK)){
 		var fckTools = document.createElement('div');
 		fckTools.setAttribute('id', 'fckTools');
-		
+
 		var SRCtextarea = document.getElementById( "free_text" ) ;
 		if (showFCKEditor & RTE_VISIBLE) SRCtextarea.style.display = "none";
 	}
@@ -714,7 +717,7 @@ function ToggleFCKEditor(mode, objId)
 		FCKeditor_OpenPopup('oFCKeditor',objId);
 		return true;
 	}
-	
+
 	var oToggleLink = document.getElementById('toggle_'+ objId );
 	var oPopupLink = document.getElementById('popup_'+ objId );
 
@@ -747,7 +750,7 @@ function ToggleFCKEditor(mode, objId)
 		});
 		return true;
 	}
-	
+
 	if (!oFCKeditor.ready) return false;		//sajax_do_call in action
 	if (!FCKeditorAPI) return false;			//not loaded yet
 	var oEditorIns = FCKeditorAPI.GetInstance( objId );

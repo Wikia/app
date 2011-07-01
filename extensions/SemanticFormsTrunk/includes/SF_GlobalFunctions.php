@@ -10,13 +10,12 @@
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
 /**
- *  Do the actual intialization of the extension. This is just a delayed init that makes sure
- *  MediaWiki is set up properly before we add our stuff.
+ *  This is a delayed init that makes sure that MediaWiki is set up
+ *  properly before we add our stuff.
  */
-function sfgSetupExtension() {
-	// this global variable is needed so that other extensions (such
-	// as Semantic Google Maps) can hook into it to add their own input
-	// types
+function sffSetupExtension() {
+	// This global variable is needed so that other extensions can hook
+	// into it to add their own input types.
 	global $sfgFormPrinter;
 	$sfgFormPrinter = new StubObject( 'sfgFormPrinter', 'SFFormPrinter' );
 }
@@ -73,29 +72,4 @@ function sffInitContentLanguage( $langcode ) {
 	}
 
 	$sfgContLang = new $cont_lang_class();
-}
-
-/**
- * Initialize the global language object for user language. This
- * must happen after the content language was initialised, since
- * this language is used as a fallback.
- */
-function sffInitUserLanguage( $langcode ) {
-	global $sfgIP, $sfgLang;
-
-	if ( !empty( $sfgLang ) ) { return; }
-
-	$sfLangClass = 'SF_Language' . str_replace( '-', '_', ucfirst( $langcode ) );
-
-	if ( file_exists( $sfgIP . '/languages/' . $sfLangClass . '.php' ) ) {
-		include_once( $sfgIP . '/languages/' . $sfLangClass . '.php' );
-	}
-
-	// fallback if language not supported
-	if ( !class_exists( $sfLangClass ) ) {
-		global $sfgContLang;
-		$sfgLang = $sfgContLang;
-	} else {
-		$sfgLang = new $sfLangClass();
-	}
 }

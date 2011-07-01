@@ -35,7 +35,7 @@ class SFFormLinker {
 		$store = smwfGetStore();
 		// SMW 1.6+
 		if ( class_exists( 'SMWDataItem' ) ) {
-			$value = new SMWDIWikiPage( $title->getText(), $title->getNamespace(), null );
+			$value = SMWDIWikiPage::newFromTitle( $title );
 		} else {
 			$title_text = SFUtils::titleString( $title );
 			$value = SMWDataValueFactory::newTypeIDValue( '_wpg', $title_text );

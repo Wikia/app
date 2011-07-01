@@ -321,6 +321,13 @@ function showDiv(div_id, instanceWrapperDiv) {
 // Hide a div due to "show on select". The CSS class is there so that SF can
 // ignore the div's contents when the form is submitted.
 function hideDiv(div_id, instanceWrapperDiv) {
+	// IDs can't contain spaces, and jQuery won't work with such IDs - if
+	// this one has a space, display an alert.
+	if ( div_id.indexOf( ' ' ) > -1 ) {
+		// TODO - this should probably be a language value, instead of
+		// hardcoded in English.
+		alert( "Warning: this form has \"show on select\" pointing to an invalid element ID (\"" + div_id + "\") - IDs in HTML cannot contain spaces." );
+	}
 	if (instanceWrapperDiv != null) {
 		instanceWrapperDiv.find('[origID=' + div_id + ']').find("span, div").addClass('hiddenBySF');
 		instanceWrapperDiv.find('[origID=' + div_id + ']').hide();

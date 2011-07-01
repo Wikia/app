@@ -347,7 +347,7 @@ class UploadWindowForm {
 				return;
 			}
 			$this->mainUploadWindowForm();
-		} else if ( 'submit' == $this->mAction || $this->mUploadClicked ) {
+		} elseif ( 'submit' == $this->mAction || $this->mUploadClicked ) {
 			$this->processUpload();
 		} else {
 			$this->mainUploadWindowForm();
@@ -465,7 +465,6 @@ class UploadWindowForm {
 		 */
 		if ( !$this->mStashed ) {
 			$this->mFileProps = File::getPropsFromPath( $this->mTempPath, $finalExt );
-			$this->checkMacBinary();
 			$veri = $this->verify( $this->mTempPath, $finalExt );
 
 			if ( $veri !== true ) { // it's a wiki error...
@@ -543,7 +542,7 @@ class UploadWindowForm {
 			if ( $this->mWatchthis ) {
 				global $wgUser;
 				$wgUser->addWatch( $this->mLocalFile->getTitle() );
-				
+
 			}
 			// Success, redirect to description page
 			// $wgOut->redirect( $this->mLocalFile->getTitle()->getFullURL() );
@@ -601,7 +600,7 @@ END;
 		// Check for uppercase extension. We allow these filenames but check if an image
 		// with lowercase extension exists already
 		$warning = '';
-		
+
 		if ( strpos( $file->getName(), '.' ) == false ) {
 			$partname = $file->getName();
 			$rawExtension = '';
@@ -711,7 +710,7 @@ END;
 		}
 		return $s;
 	}
-	
+
 	/**
 	 * Render a preview of a given license for the AJAX preview on upload
 	 *
@@ -723,11 +722,11 @@ END;
 		$text = '{{' . $license . '}}';
 		$title = Title::makeTitle( NS_IMAGE, 'Sample.jpg' );
 		$options = ParserOptions::newFromUser( $wgUser );
-		
+
 		// Expand subst: first, then live templates...
 		$text = $wgParser->preSaveTransform( $text, $title, $wgUser, $options );
 		$output = $wgParser->parse( $text, $title, $options );
-		
+
 		return $output->getText();
 	}
 
@@ -895,10 +894,10 @@ END;
 
 		$useAjaxDestCheck = $wgUseAjax && $wgAjaxUploadDestCheck;
 		$useAjaxLicensePreview = $wgUseAjax && $wgAjaxLicensePreview;
-		
+
 		$adc = wfBoolToStr( $useAjaxDestCheck );
 		$alp = wfBoolToStr( $useAjaxLicensePreview );
-		
+
 		$wgOut->addScript( "<script type=\"text/javascript\">
 wgAjaxUploadDestCheck = {$adc};
 wgAjaxLicensePreview = {$alp};
@@ -911,7 +910,7 @@ wgAjaxLicensePreview = {$alp};
 			wfDebug( "Hook 'UploadForm:initial' broke output of the upload form" );
 			return false;
 		}
-		
+
 		if ( $this->mDesiredDestName && $wgUser->isAllowed( 'deletedhistory' ) ) {
 			$title = Title::makeTitleSafe( NS_IMAGE, $this->mDesiredDestName );
 			if ( $title instanceof Title && ( $count = $title->isDeleted() ) > 0 ) {
@@ -1029,14 +1028,14 @@ wgAjaxLicensePreview = {$alp};
 		<tr>
 			<td align='$align1'><label for='wpDestFile'>{$destfilename}</label></td>
 			<td align='$align2'>
-				<input tabindex='2' type='text' name='wpDestFile' id='wpDestFile' size='40' 
+				<input tabindex='2' type='text' name='wpDestFile' id='wpDestFile' size='40'
 					value="$encDestName" $destOnkeyup />
 			</td>
 		</tr>
 		<tr>
 			<td align='$align1'><label for='wpUploadDescription'>{$summary}</label></td>
 			<td align='$align2'>
-				<textarea tabindex='3' name='wpUploadDescription' id='wpUploadDescription' rows='4' 
+				<textarea tabindex='3' name='wpUploadDescription' id='wpUploadDescription' rows='4'
 					cols='{$cols}'{$ew}>$encComment</textarea>
 		{$this->uploadFormTextAfterSummary}
 			</td>
@@ -1074,12 +1073,12 @@ EOT
 
 			$wgOut->addHTML( "
 					<td align='$align1' nowrap='nowrap'><label for='wpUploadCopyStatus'>$filestatus:</label></td>
-					<td><input tabindex='5' type='text' name='wpUploadCopyStatus' id='wpUploadCopyStatus' 
+					<td><input tabindex='5' type='text' name='wpUploadCopyStatus' id='wpUploadCopyStatus'
 					  value=\"$copystatus\" size='40' /></td>
 			</tr>
 			<tr>
 					<td align='$align1'><label for='wpUploadCopyStatus'>$filesource:</label></td>
-					<td><input tabindex='6' type='text' name='wpUploadSource' id='wpUploadCopyStatus' 
+					<td><input tabindex='6' type='text' name='wpUploadSource' id='wpUploadCopyStatus'
 					  value=\"$uploadsource\" size='40' /></td>
 			</tr>
 			<tr>
@@ -1246,7 +1245,7 @@ EOT
 		}
 	}
 
-	/** 
+	/**
 	 * Heuristic for detecting files that *could* contain JavaScript instructions or
 	 * things that may look like HTML to a browser and are thus
 	 * potentially harmful. The present implementation will produce false positives in some situations.
@@ -1344,7 +1343,7 @@ EOT
 		return false;
 	}
 
-	/** 
+	/**
 	 * Generic wrapper function for a virus scanner program.
 	 * This relies on the $wgAntivirus and $wgAntivirusSetup variables.
 	 * $wgAntivirusRequired may be used to deny upload if the scan fails.
@@ -1417,11 +1416,11 @@ EOT
 			} else {
 				return null;
 			}
-		} else if ( $mappedCode === AV_SCAN_ABORTED ) {
+		} elseif ( $mappedCode === AV_SCAN_ABORTED ) {
 			# scan failed because filetype is unknown (probably imune)
 			wfDebug( __METHOD__ . ": unsupported file type $file (code $exitCode).\n" );
 			return null;
-		} else if ( $mappedCode === AV_NO_VIRUS ) {
+		} elseif ( $mappedCode === AV_NO_VIRUS ) {
 			# no virus found
 			wfDebug( __METHOD__ . ": file passed virus scan.\n" );
 			return false;
@@ -1443,32 +1442,6 @@ EOT
 			wfDebug( __METHOD__ . ": FOUND VIRUS! scanner feedback: $output" );
 			return $output;
 		}
-	}
-
-	/**
-	 * Check if the temporary file is MacBinary-encoded, as some uploads
-	 * from Internet Explorer on Mac OS Classic and Mac OS X will be.
-	 * If so, the data fork will be extracted to a second temporary file,
-	 * which will then be checked for validity and either kept or discarded.
-	 *
-	 * @access private
-	 */
-	function checkMacBinary() {
-		$macbin = new MacBinary( $this->mTempPath );
-		if ( $macbin->isValid() ) {
-			$dataFile = tempnam( wfTempDir(), "WikiMacBinary" );
-			$dataHandle = fopen( $dataFile, 'wb' );
-
-			wfDebug( "SpecialUpload::checkMacBinary: Extracting MacBinary data fork to $dataFile\n" );
-			$macbin->extractData( $dataHandle );
-
-			$this->mTempPath = $dataFile;
-			$this->mFileSize = $macbin->dataForkLength();
-
-			// We'll have to manually remove the new file if it's not kept.
-			$this->mRemoveTempFile = true;
-		}
-		$macbin->close();
 	}
 
 	/**
@@ -1529,7 +1502,7 @@ EOT
 			return true; // non-conditional
 		if ( !$user->isAllowed( 'reupload-own' ) )
 			return false;
-		
+
 		$dbr = wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow( 'image',
 		/* SELECT */ 'img_user',

@@ -50,18 +50,16 @@ END;
 		global $wgOut, $wgRequest, $wgUser, $sfgScriptPath;
 		global $wgLang, $smwgContLang;
 
-                # Check permissions
-                if ( !$wgUser->isAllowed( 'createclass' ) ) {
-                        $this->displayRestrictionError();
-                        return;
-                }
+		# Check permissions
+		if ( !$wgUser->isAllowed( 'createclass' ) ) {
+			$this->displayRestrictionError();
+			return;
+		}
 
 		$this->setHeaders();
 		$wgOut->addExtensionStyle( $sfgScriptPath . "/skins/SemanticForms.css" );
 		$numStartingRows = 10;
 		self::addJavascript( $numStartingRows );
-
-		$create_button_text = wfMsg( 'create' );
 
 		$property_name_error_str = '';
 		$save_page = $wgRequest->getCheck( 'save' );
@@ -70,8 +68,7 @@ END;
 			$form_name = trim( $wgRequest->getVal( "form_name" ) );
 			$category_name = trim( $wgRequest->getVal( "category_name" ) );
 			if ( $template_name == '' | $form_name == '' || $category_name == '' ) {
-				$text = Xml::element( 'p', null, wfMsg( 'sf_createclass_missingvalues' ) );
-				$wgOut->addHTML( $text );
+				$wgOut->addWikiMsg( 'sf_createclass_missingvalues' );
 				return;
 			}
 			$fields = array();
@@ -106,7 +103,7 @@ END;
 			// create the template, and save it
 			$full_text = SFTemplateField::createTemplateText( $template_name, $fields, null, $category_name, null, null, null );
 			$template_title = Title::makeTitleSafe( NS_TEMPLATE, $template_name );
-			$template_article = new Article( $template_title );
+			$template_article = new Article( $template_title, 0 );
 			$edit_summary = '';
 			$template_article->doEdit( $full_text, $edit_summary );
 
@@ -130,8 +127,7 @@ END;
 			$jobs[] = new SFCreatePageJob( $category_title, $params );
 			Job::batchInsert( $jobs );
 
-			$text = Xml::element( 'p', null, wfMsg( 'sf_createclass_success' ) );
-			$wgOut->addHTML( $text );
+			$wgOut->addWikiMsg( 'sf_createclass_success' );
 			return;
 		}
 
@@ -147,24 +143,24 @@ END;
 		$creation_links[] = SFUtils::linkForSpecialPage( $sk, 'CreateCategory' );
 		$create_class_docu = wfMsg( 'sf_createclass_docu', $wgLang->listToText( $creation_links ) );
 		$leave_field_blank = wfMsg( 'sf_createclass_leavefieldblank' );
-		$form_name_label = wfMsg( 'sf_createform_nameinput' );
+		$form_name_label = wfMsg( 'sf_createclass_nameinput' );
 		$template_name_label = wfMsg( 'sf_createtemplate_namelabel' );
 		$category_name_label = wfMsg( 'sf_createcategory_name' );
 		$property_name_label = wfMsg( 'sf_createproperty_propname' );
 		$field_name_label = wfMsg( 'sf_createtemplate_fieldname' );
 		$type_label = wfMsg( 'sf_createproperty_proptype' );
-		$allowed_values_label = wfMsg( 'sf_createclass_allowedvalues' ) . wfMsg( 'colon-separator' );
-		$list_of_values_label = wfMsg( 'sf_createclass_listofvalues' ) . '?';
+		$allowed_values_label = wfMsg( 'sf_createclass_allowedvalues' );
+		$list_of_values_label = wfMsg( 'sf_createclass_listofvalues' );
 
 		$text = <<<END
 <form action="" method="post">
 	<p>$create_class_docu</p>
 	<p>$leave_field_blank</p>
 	<p>$template_name_label <input type="text" size="30" name="template_name"></p>
-	<p>$form_name_label: <input type="text" size="30" name="form_name"></p>
+	<p>$form_name_label <input type="text" size="30" name="form_name"></p>
 	<p>$category_name_label <input type="text" size="30" name="category_name"></p>
 	<div>
-                <table id="mainTable">
+		<table id="mainTable">
 		<tr>
 			<th colspan="2">$property_name_label</th>
 			<th>$field_name_label</th>
@@ -194,10 +190,10 @@ END;
 			<select name="property_type_$n">
 
 END;
-                        $optionsStr ="";                       
+			$optionsStr ="";
 			foreach ( $datatype_labels as $label ) {
-				$text .= "				<option>$label</option>\n";                                
-                                $optionsStr .= $label . ",";
+				$text .= "				<option>$label</option>\n";
+				$optionsStr .= $label . ",";
 			}
 			$text .= <<<END
 			</select>
@@ -222,13 +218,13 @@ END;
 		);
 		$text .= Xml::tags( 'p', null, $add_another_button ) . "\n";
 		// Set 'title' as hidden field, in case there's no URL niceness
-		$cc = Title::makeTitleSafe( NS_SPECIAL, 'CreateClass' );
+		$cc = $this->getTitle();
 		$text .= Html::Hidden( 'title', SFUtils::titleURLString( $cc ) ) . "\n";
 		$text .= Xml::element( 'input',
 			array(
 				'type' => 'submit',
 				'name' => 'save',
-				'value' => $create_button_text
+				'value' => wfMsg( 'sf_createclass_create' )
 			)
 		);
 		$text .= "</form>\n";

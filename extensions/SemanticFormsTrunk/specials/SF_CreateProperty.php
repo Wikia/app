@@ -49,13 +49,8 @@ class SFCreateProperty extends SpecialPage {
 			foreach ( $allowed_values_array as $i => $value ) {
 				// replace beep back with comma, trim
 				$value = str_replace( "\a", $sfgListSeparator, trim( $value ) );
-				if ( method_exists( $smwgContLang, 'getPropertyLabels' ) ) {
-					$prop_labels = $smwgContLang->getPropertyLabels();
-					$text .= "\n* [[" . $prop_labels['_PVAL'] . "::$value]]";
-				} else {
-					$spec_props = $smwgContLang->getSpecialPropertiesArray();
-					$text .= "\n* [[" . $spec_props[SMW_SP_POSSIBLE_VALUE] . "::$value]]";
-				}
+				$prop_labels = $smwgContLang->getPropertyLabels();
+				$text .= "\n* [[" . $prop_labels['_PVAL'] . "::$value]]";
 			}
 		}
 		return $text;
