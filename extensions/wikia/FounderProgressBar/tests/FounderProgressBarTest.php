@@ -106,7 +106,7 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 		public function testLongTaskList() {
 			global $wgCityId;
 			
-			$wgCityId = $this::TEST_CITY_ID;
+			$wgCityId = self::TEST_CITY_ID;
 			
 			$fetch_obj1 = array(
 				'task_id' => '10',
@@ -170,7 +170,7 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 		public function testDoTask($task_id, $result, $sql_result) {
 			global $wgCityId;
 			
-			$wgCityId = $this::TEST_CITY_ID;
+			$wgCityId = self::TEST_CITY_ID;
 			$this->task_id = $task_id;
 			
 			$this->mock_db->expects($this->any())
