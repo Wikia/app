@@ -413,6 +413,19 @@ class FounderProgressBarController extends WikiaController {
 		$this->response->setVal('activeTaskList', $activeTaskList);
 		$this->response->setVal('skippedTaskList', $skippedTaskList);
 		$this->response->setVal('bonusTaskList', $bonusTaskList);
+		
+		$clickEvents = array(
+				FT_THEMEDESIGNER_VISIT => true,
+				FT_COMMCENTRAL_VISIT => true,
+				FT_WIKIACTIVITY_VISIT => true,
+				FT_WIKIALABS_VISIT => true,
+				FT_PAGELAYOUT_VISIT => true,
+				FT_RECENTCHANGES_VISIT => true,
+				FT_MOSTVISITED_VISIT => true,
+				FT_UNCATEGORIZED_VISIT => true,
+		);
+		
+		$this->response->setVal('clickEvents', $clickEvents);
 	}
 	
 	// Messages defined in i18n file
