@@ -54,7 +54,7 @@
 		<ul class="activities">
 			<? $index = 0; ?>
 			<? foreach($activityListPreview as $activity) { ?>
-				<li class="activity<?= $index == 0 ? ' active' : '' ?>">
+				<li class="activity<?= $index == 0 ? ' active' : '' ?><?= isset($clickEvents[$activity['task_id']]) ? ' clickevent' : '' ?>" data-task-id="<?= $activity['task_id'] ?>">
 					<div class="label">
 						<div class="activity-name">
 							<?= $activity['task_label'] ?>
