@@ -389,7 +389,7 @@ class FounderProgressBarController extends WikiaController {
 		// Bonus tasks don't exist in the DB until they are opened up.  display them but default to "locked" status
 		// If they exist in the task list from the DB, they are by definition unlocked (skipTask contains that biz logic)
 		foreach ($this->bonus_tasks as $task_id) {
-			$bonusTaskList[$task_id] = array (
+			$bonusTask = array (
 					"task_id" => $task_id,
 					"task_label" => $this->getMsgForTask($task_id, "label"),
 					"task_description" => $this->getMsgForTask($task_id, "description"),
@@ -398,14 +398,16 @@ class FounderProgressBarController extends WikiaController {
 				);
 			// Task is opened up
 			if (isset($activityFull[$task_id])) {
-				$bonusTaskList[$task_id]["task_count"] = $activityFull[$task_id]["task_count"];
-				$bonusTaskList[$task_id]["task_completed"] = $activityFull[$task_id]["task_completed"];
-				$bonusTaskList[$task_id]["task_timestamp"] = $this->wf->TimeFormatAgo($activityFull[$task_id]["task_timestamp"]);
-				$bonusTaskList[$task_id]["task_locked"] = 0;	
+				$bonusTask["task_count"] = $activityFull[$task_id]["task_count"];
+				$bonusTask["task_completed"] = $activityFull[$task_id]["task_completed"];
+				$bonusTask["task_timestamp"] = $this->wf->TimeFormatAgo($activityFull[$task_id]["task_timestamp"]);
+				$bonusTask["task_locked"] = 0;	
 			} else {				
-				$bonusTaskList[$task_id]["task_completed"] = 0;
-				$bonusTaskList[$task_id]["task_locked"] = 1;
+				$bonusTask["task_completed"] = 0;
+				$bonusTask["task_locked"] = 1;
 			}
+			
+			$bonusTaskList[] = $bonusTask;
 		}
 		
 		$this->response->setVal('progressData', $activityListPreview['data']);
