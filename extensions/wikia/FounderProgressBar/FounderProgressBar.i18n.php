@@ -115,8 +115,8 @@ $messages['en'] = array(
 	'founderprogressbar-bonus-pagelayout-add-label' => 'Create a page layout',
 	'founderprogressbar-bonus-pagelayout-add-action' => 'Go to Page Layout Builder',
 	'founderprogressbar-bonus-pagelayout-add-description' => 'Adding page layouts is a great way to help more people contribute quickly and easily to your wiki. The more editors you have the more content you have for people to read! Add a page layout to earn credit for one bonus task.',
-	'founderprogressbar-bonus-edit-label' => 'Edit $1 more pages',
-	'founderprogressbar-bonus-edit-action' => 'Go to Special:WikiActivity',
-	'founderprogressbar-bonus-edit-description' => 'Shoot for the stars and get 50 more edits than you already have to complete this bonus task.',
+	'founderprogressbar-bonus-edit50-label' => 'Edit $1 more pages',
+	'founderprogressbar-bonus-edit50-action' => 'Go to Special:WikiActivity',
+	'founderprogressbar-bonus-edit50-description' => 'Shoot for the stars and get 50 more edits than you already have to complete this bonus task.',
 );
 
