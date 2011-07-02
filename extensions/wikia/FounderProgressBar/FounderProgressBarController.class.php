@@ -161,6 +161,14 @@ class FounderProgressBarController extends WikiaController {
 		$this->setVal('list', $short_list);
 		$this->setVal('data', $data);
 	}
+	
+	public function getDb($db_type=DB_SLAVE) {
+		return $this->app->runFunction( 'wfGetDB', $db_type, array(), $this->wg->ExternalSharedDB);
+	}
+	
+	public function getMCache() {
+		return $this->app->getGlobal('wgMemc');
+	}
 
 	/**
 	 * @desc Get all founder tasks with more details (available, completed, skipped)
@@ -179,14 +187,14 @@ class FounderProgressBarController extends WikiaController {
 		if ($use_master == true) {
 			$db_type = DB_MASTER;
 		} else {  // memcache ok for non-master requests
-			$list = $this->wg->Memc->get($memKey);			
+			$list = $this->getMCache()->get($memKey);
 		}
 		if (empty($list)) {
 			$this->wf->ProfileIn(__METHOD__ . '::miss');
 			$list = array();
 
 			// get the next two available non-skipped, non-completed items
-			$dbr = $this->wf->GetDB($db_type, array(), $this->wg->ExternalSharedDB);
+			$dbr = $this->getDB($db_type);
 			$res = $dbr->select(
 				'founder_progress_bar_tasks',
 				array('task_id', 'task_count', 'task_completed', 'task_skipped', 'task_timestamp'),
@@ -209,7 +217,7 @@ class FounderProgressBarController extends WikiaController {
 			}
 			
 			if (!empty($list)) {
-				$this->wg->Memc->set($memKey, $list, 24*60*60); // 1 day
+				$this->getMCache()->set($memKey, $list, 24*60*60); // 1 day
 			}
 
 			$this->wf->ProfileOut(__METHOD__ . '::miss');
@@ -242,7 +250,7 @@ class FounderProgressBarController extends WikiaController {
 			$this->setVal('error', 'task_completed');
 			return;
 		}
-		$dbw = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$dbw = $this->getDB(DB_MASTER);
 		$sql = "INSERT INTO founder_progress_bar_tasks 
 			SET wiki_id=$wiki_id, 
 				task_id=$task_id, 
@@ -280,7 +288,7 @@ class FounderProgressBarController extends WikiaController {
 		$dbw->commit();
 		// Task data was updated so clear task list from memcache
 		$memKey = $this->wf->MemcKey('FounderLongTaskList');
-		$this->wg->Memc->delete($memKey);
+		$this->getMCache()->delete($memKey);
 		// else error?
 	}
 	
