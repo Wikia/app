@@ -58,4 +58,9 @@ define('FT_BLOGPOST_ADD', 270);
 define('FT_FB_LIKES_3', 280);
 define('FT_UNCATEGORIZED_VISIT', 290);
 define('FT_TOTAL_EDIT_300', 300);
+// Bonus tasks start at ID 500 just to keep them separate if we add more "base" tasks
+define('FT_BONUS_PHOTO_ADD_10', 510);
+define('FT_BONUS_PAGE_ADD_5', 520);
+define('FT_BONUS_PAGELAYOUT_ADD', 530);
+define('FT_BONUS_EDIT_50', 540);
 define('FT_COMPLETION', 1000);    // special internal flag for "all tasks complete"
