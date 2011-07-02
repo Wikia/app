@@ -51,21 +51,22 @@ var FounderProgressList = {
 			}
 		});
 		
-		FounderProgressList.trackedActivities.find('.actions .wikia-button').click(function(e) {
-			e.preventDefault();
-			var el = $(this);
-			var url = el.attr('href');
-			var taskId = el.closest('.activity').data('task-id');
-			$.post(wgScriptPath + '/wikia.php', {
-				controller: 'FounderProgressBar',
-				method: 'doTask',
-				format: 'json',
-				task_id: taskId
-			}, function(res) {
-				$().log('event tracked');
-				$().log(res);
-				window.location.href = url;
-			});
+		FounderProgressList.trackedActivities.find('.actions .wikia-button').click(FounderProgressList.trackActivity);
+	},
+	trackActivity: function(e) {
+		e.preventDefault();
+		var el = $(this);
+		var url = el.attr('href');
+		var taskId = el.closest('.activity').data('task-id');
+		$.post(wgScriptPath + '/wikia.php', {
+			controller: 'FounderProgressBar',
+			method: 'doTask',
+			format: 'json',
+			task_id: taskId
+		}, function(res) {
+			$().log('event tracked');
+			$().log(res);
+			window.location.href = url;
 		});
 	},
 	drawMainTail: function() {
@@ -118,6 +119,7 @@ var FounderProgressWidget = {
 		
 		// events
 		FounderProgressWidget.allActivityPreviews.find('.label').click(FounderProgressWidget.handleActivityPreview);
+		FounderProgressWidget.allActivityPreviews.find('.actions .wikia-button').click(FounderProgressList.trackActivity);
 	},
 	handleActivityPreview: function() {
 		var el = $(this);
