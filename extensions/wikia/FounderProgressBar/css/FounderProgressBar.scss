@@ -200,7 +200,8 @@
 				font-size: 14px;
 				margin-bottom: 10px;
 			}
-			&.completed .activity-label {
+			&.completed .activity-label,
+			&.locked .activity-label {
 				color: #ccc;
 			}
 			&.locked .activity-label {
