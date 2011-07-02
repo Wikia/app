@@ -7,7 +7,7 @@ class FounderProgressBarController extends WikiaController {
 	 */
 	
 	public function init() {
-		// Messages defined in i18n file
+		// Messages are defined in the i18n file
 		// Each message in i18n has a -label -description and -action version
 		// If the message name has a % in it that means a $1 substitution is done
 		$this->messages = array ( 
@@ -41,6 +41,10 @@ class FounderProgressBarController extends WikiaController {
 				FT_FB_LIKES_3 => "fb-likes%",
 				FT_UNCATEGORIZED_VISIT => "uncategorized-visit",
 				FT_TOTAL_EDIT_300 => "total-edit%",
+				FT_BONUS_PHOTO_ADD_10 => "bonus-photo-add%",
+				FT_BONUS_PAGE_ADD_5 => "bonus-page-add%",
+				FT_BONUS_PAGELAYOUT_ADD => "bonus-pagelayout-add",
+				FT_BONUS_EDIT_50 => "bonus-edit%",			
 				FT_COMPLETION => "completion"
 			);
 
@@ -76,6 +80,10 @@ class FounderProgressBarController extends WikiaController {
 				FT_FB_LIKES_3 => 3,
 				FT_UNCATEGORIZED_VISIT => 1,
 				FT_TOTAL_EDIT_300 => 300,
+				FT_BONUS_PHOTO_ADD_10 => 10,
+				FT_BONUS_PAGE_ADD_5 => 5,
+				FT_BONUS_PAGELAYOUT_ADD => 1,
+				FT_BONUS_EDIT_50 => 50,			
 				FT_COMPLETION => 1
 		);
 
@@ -110,11 +118,20 @@ class FounderProgressBarController extends WikiaController {
 				FT_BLOGPOST_ADD => array("newFromText", $this->wg->User->getName(), NS_BLOG_ARTICLE),
 				FT_FB_LIKES_3 => array("newMainPage"),
 				FT_UNCATEGORIZED_VISIT => array("newFromText", "UncategorizedPages", NS_SPECIAL),
+				FT_BONUS_PHOTO_ADD_10 => array("newFromText", "Upload", NS_SPECIAL),
+				FT_BONUS_PAGE_ADD_5 => array("newFromText", "CreatePage", NS_SPECIAL),
+				FT_BONUS_PAGELAYOUT_ADD => array("newFromText", "LayoutBuilder", NS_SPECIAL),
+				FT_BONUS_EDIT_50 => array("newFromText", "WikiActivity", NS_SPECIAL),		
 				FT_TOTAL_EDIT_300 => array("newFromText", "CreatePage", NS_SPECIAL),
 		);
 		
-		// This list contains additional "bonus" tasks that can be completed if other tasks are skipped
-		$this->bonus_tasks = array ();
+		// This list contains additional "bonus" tasks that can be completed if all other tasks are skipped or completed
+		$this->bonus_tasks = array (
+				FT_BONUS_PHOTO_ADD_10,
+				FT_BONUS_PAGE_ADD_5,
+				FT_BONUS_PAGELAYOUT_ADD,
+				FT_BONUS_EDIT_50			
+		);
 	}
 	
 	/**
@@ -152,10 +169,18 @@ class FounderProgressBarController extends WikiaController {
 	 */
 	
 	public function getLongTaskList () {
-		// try to get cached data
+
+		// Defeat potential race conditions by connecting to master for reads, default to slave
+		$use_master = $this->request->getval("use_master", false);
+		$list = null;
+		$db_type = DB_SLAVE;
 		$memKey = $this->wf->MemcKey('FounderLongTaskList');
-		$list = $this->wg->Memc->get($memKey);
-		$list = null;  // no memcache for now while developing
+		// try to get cached data, also use slave
+		if ($use_master == true) {
+			$db_type = DB_MASTER;
+		} else {  // memcache ok for non-master requests
+			$list = $this->wg->Memc->get($memKey);			
+		}
 		if (empty($list)) {
 			$this->wf->ProfileIn(__METHOD__ . '::miss');
 
@@ -163,7 +188,7 @@ class FounderProgressBarController extends WikiaController {
 			$data = array();		
 
 			// get the next two available non-skipped, non-completed items
-			$dbr = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+			$dbr = $this->wf->GetDB($db_type, array(), $this->wg->ExternalSharedDB);
 			$res = $dbr->select(
 				'founder_progress_bar_tasks',
 				array('task_id', 'task_count', 'task_completed', 'task_skipped', 'task_timestamp'),
@@ -271,9 +296,15 @@ class FounderProgressBarController extends WikiaController {
 	public function skipTask() {
 		
 		$task_id = $this->request->getVal("task_id");
-		$task_skipped = $this->request->getVal("task_skipped");
+		$task_skipped = $this->request->getVal("task_skipped", 1);
 		//if (empty($task_id)) throw error;
 		//if (empty($task_skipped)) throw error;
+		//if (Task_Completed) throw error;
+		$response = $this->sendSelfRequest('isTaskComplete');
+		if ($this->response->getVal('task_completed')) {
+			$this->response->setVal("error", "task_completed");
+			$this->response->setVal("result", "error");
+		}
 		
 		$dbw = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 		$dbw->update(
@@ -286,7 +317,32 @@ class FounderProgressBarController extends WikiaController {
 					'wiki_id' => $this->wg->CityId
 			)
 		);
-
+		
+		//TODO: If everything is completed or skipped, open up a bonus task
+		$response = $this->sendSelfRequest("getLongTaskList", array("use_master" => true));
+		$list = $response->getVal('list');
+		$total_tasks = count($list);
+		$tasks_skipped = 0; 
+		$tasks_completed = 0;
+		foreach ($list as $task) {
+			$tasks_skipped += $task["task_skipped"];
+			$tasks_completed += $task["task_completed"];
+		}
+		if ($total_tasks <= ($tasks_skipped + $tasks_completed)) {
+			$wiki_id = $this->wg->CityId;
+			// Special case, unlock one bonus task, in the order in which they appear in our bonus_tasks array
+			foreach ($this->bonus_tasks as $bonus_task_id) {
+				if (!isset($list[$bonus_task_id])) {
+					$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$bonus_task_id";
+					$dbw->query ($sql);
+					break;
+				}
+			}
+		}
+		$dbw->commit();
+		// DB updated so clear memcache val
+		$memKey = $this->wf->MemcKey('FounderLongTaskList');
+		$this->wg->Memc->delete($memKey);
 		$this->response->setVal("result", "OK");
 	}
 	
@@ -324,11 +380,33 @@ class FounderProgressBarController extends WikiaController {
 				$activeTaskList[] = $activity;
 			}
 		}
+		// Bonus tasks don't exist in the DB until they are opened up.  display them but default to "locked" status
+		// If they exist in the task list from the DB, they are by definition unlocked (skipTask contains that biz logic)
+		foreach ($this->bonus_tasks as $task_id) {
+			$bonusTaskList[$task_id] = array (
+					"task_id" => $task_id,
+					"task_label" => $this->getMsgForTask($task_id, "label"),
+					"task_description" => $this->getMsgForTask($task_id, "description"),
+					"task_action" => $this->getMsgForTask($task_id, "action"),
+					"task_url" => $this->getURLForTask($task_id)
+				);
+			// Task is opened up
+			if (isset($activityFull[$task_id])) {
+				$bonusTaskList[$task_id]["task_count"] = $activityFull[$task_id]["task_count"];
+				$bonusTaskList[$task_id]["task_completed"] = $activityFull[$task_id]["task_completed"];
+				$bonusTaskList[$task_id]["task_timestamp"] = $this->wf->TimeFormatAgo($activityFull[$task_id]["task_timestamp"]);
+				$bonusTaskList[$task_id]["task_locked"] = 0;	
+			} else {				
+				$bonusTaskList[$task_id]["task_completed"] = 0;
+				$bonusTaskList[$task_id]["task_locked"] = 1;
+			}
+		}
 		
 		$this->response->setVal('progressData', $activityListPreview['data']);
 		$this->response->setVal('activityListPreview', $activityListPreview['list']);
 		$this->response->setVal('activeTaskList', $activeTaskList);
 		$this->response->setVal('skippedTaskList', $skippedTaskList);
+		$this->response->setVal('bonusTaskList', $bonusTaskList);
 	}
 	
 	// Messages defined in i18n file
