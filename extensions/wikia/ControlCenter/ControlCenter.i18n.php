@@ -20,7 +20,7 @@ $messages['en'] = array(
 	'controlcenter-control-top-navigation-label' => 'Top Navigation',
 	'controlcenter-control-top-navigation-tooltip' => 'Top Navigation allows you to customize the navigation menu at the top of your wiki.',
 	'controlcenter-control-wikia-labs-label' => 'Wikia Labs',
-	'controlcenter-control-wikia-labs-tooltip' => 'Top Navigation allows you to customize the navigation menu at the top of your wiki.',
+	'controlcenter-control-wikia-labs-tooltip' => 'Wikia Labs lets you be the first to try out new beta features on your wiki.',
 	'controlcenter-control-page-layout-builder-label' => 'Page Layout Builder',
 	'controlcenter-control-page-layout-builder-tooltip' => 'Page Layout Builder allows you to create page outlines for users to choose from and use to create new pages.',
 // Community Controls
