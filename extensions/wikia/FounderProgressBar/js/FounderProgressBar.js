@@ -8,6 +8,7 @@ var FounderProgressList = {
 		FounderProgressList.allActivities = FounderProgressList.d.find('.activity');
 		FounderProgressList.seeFullList = $('#FounderProgressListToggle .see-full-list');
 		FounderProgressList.hideFullList = $('#FounderProgressListToggle .hide-full-list');
+		FounderProgressList.trackedActivities = FounderProgressList.d.find('.clickevent');
 		
 		FounderProgressList.allActivities.hover(function() {
 			clearTimeout(FounderProgressList.hoverHandle);
@@ -48,6 +49,23 @@ var FounderProgressList = {
 				el.removeClass('collapsed').addClass('expanded');
 				group.slideDown(200);
 			}
+		});
+		
+		FounderProgressList.trackedActivities.find('.actions .wikia-button').click(function(e) {
+			e.preventDefault();
+			var el = $(this);
+			var url = el.attr('href');
+			var taskId = el.closest('.activity').data('task-id');
+			$.post(wgScriptPath + '/wikia.php', {
+				controller: 'FounderProgressBar',
+				method: 'doTask',
+				format: 'json',
+				task_id: taskId
+			}, function(res) {
+				$().log('event tracked');
+				$().log(res);
+				window.location.href = url;
+			});
 		});
 	},
 	drawMainTail: function() {

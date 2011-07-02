@@ -6,7 +6,7 @@
 		<? $itemsInThisRow = $extraItems > 0 ? ($itemsPerRow + 1) : $itemsPerRow; ?>
 		<? $extraItems--; ?>
 		<? for ($i = 0; $i < $itemsInThisRow; $i++) { ?>
-			<li class="activity<?= empty($taskList[$index]['task_completed']) ? '' : ' completed' ?>">
+			<li class="activity<?= empty($taskList[$index]['task_completed']) ? '' : ' completed' ?><?= isset($clickEvents[$taskList[$index]['task_id']]) ? ' clickevent' : '' ?>" data-task-id="<?= $taskList[$index]['task_id'] ?>">
 				<div class="activity-label"><?= $taskList[$index]['task_label'] ?></div>
 				<div class="activity-description">
 					<div class="description">
