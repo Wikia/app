@@ -183,9 +183,7 @@ class FounderProgressBarController extends WikiaController {
 		}
 		if (empty($list)) {
 			$this->wf->ProfileIn(__METHOD__ . '::miss');
-
 			$list = array();
-			$data = array();		
 
 			// get the next two available non-skipped, non-completed items
 			$dbr = $this->wf->GetDB($db_type, array(), $this->wg->ExternalSharedDB);
@@ -210,13 +208,13 @@ class FounderProgressBarController extends WikiaController {
 					);
 			}
 			
-			$data = $this->getCompletionData($list);
 			if (!empty($list)) {
 				$this->wg->Memc->set($memKey, $list, 24*60*60); // 1 day
 			}
 
 			$this->wf->ProfileOut(__METHOD__ . '::miss');
 		}
+		$data = $this->getCompletionData($list);
 		$this->response->setVal("list", $list);
 		$this->response->setVal("data", $data);
 	}
