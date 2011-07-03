@@ -195,9 +195,9 @@ HTML;
 		}
 
 		if( empty( $ret ) ) {
-			$ret = $wgOut->parse( wfMsg( 'shared-News_box' ) );
+			$ret = wfMsgExt( 'shared-News_box', array('parseinline', 'content') );
 			if( $cacheWikiaMessages ) {
-				$wgMemc->set( $memcKey, $ret, 5*60 );
+				$wgMemc->set( $memcKey, $ret, 60*60 );
 			}
 		}
 		wfProfileOut( __METHOD__ );
