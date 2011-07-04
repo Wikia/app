@@ -89,6 +89,7 @@ $messages['qqq'] = array(
 	'editpagelayout-edit-info' => 'Tooltip for title and description edit popup icon',
 	'editpagelayout-diff-header-url' => 'See interwiki links (below categories) on http://help.wikia.com/wiki/Help:Diff for eventually an appropiate page name. {{doc-important|Do not change the "<tt>Help:</tt>" part.}}',
 	'wikia-editor-media-slider' => 'This refers to a special kind of slideshow which is intended for the main page. See http://help.wikia.com/wiki/Help:Galleries_and_slideshows#Creating_a_main_page_slider.',
+	'wikia-editor-modules-license-text' => 'The first parameter is a placeholder for the license logo/image',
 );
 
 /** Bulgarian (Български)
