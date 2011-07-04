@@ -491,7 +491,14 @@ class EditPageLayout extends EditPage {
 		// and fallback to the raw wpTextbox1
 		// Wikia: in visual mode we want to show HTML (BugId:5428)
 		if ($this->isConflict) {
-			$textoverride = $this->textbox1;
+			$textoverride = $this->getContent();
+
+			// parse it for visual editor (if needed) - BugId:7956
+			if ($this->app->wg->Request->wasPosted()) {
+				if ($this->app->wg->Request->getVal('RTEMode') == 'wysiwyg') {
+					$textoverride = RTE::WikitextToHtml($textoverride);
+				}
+			}
 		}
 
 		parent::showTextbox1($customAttribs, $textoverride );
