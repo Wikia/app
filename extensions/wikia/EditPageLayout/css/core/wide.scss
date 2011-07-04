@@ -16,10 +16,10 @@
 		width: $width-outside;
 	}
 	#EditPageToolbar {
-		padding-right: 15px + $width-rail - 10;
+		padding-right: 15px + $width-rail-epl  - 10;
 		.cke_toolbar_expand {
 			> a {
-				right: 20px + $width-rail - 10;
+				right: 20px + $width-rail-epl  - 10;
 			}
 		}
 	}
@@ -31,7 +31,7 @@
 .editpage-sourcewidemode.mode-source {
 
 	#EditPageMain {
-		width: $width-outside - $width-rail;  // remove right rail "indent"
+		width: $width-outside - $width-rail-epl ;  // remove right rail "indent"
 	}
 
 	/* vertical bar with an arrow to show/hide the rail */
@@ -44,7 +44,7 @@
 		display: block;
 		margin-left: 1px;
 		position: absolute;
-		right: $width-rail;
+		right: $width-rail-epl ;
 		top: 0;
 		width: 7px;
 		z-index: 1;
@@ -103,11 +103,11 @@
 		}
 		#EditPageToolbar {
 			margin-right: -6px;
-			padding-right: 15px + $width-rail - 10;
+			padding-right: 15px + $width-rail-epl  - 10;
 		}
 		.cke_toolbar_expand {
 			> a {
-				right: 20px + $width-rail - 10;
+				right: 20px + $width-rail-epl  - 10;
 			}
 		}
 	}
