@@ -89,7 +89,7 @@
 	</div>
 	<div class="lightbox-share-area" data-func="email" style="display:none">
 		<label><?= wfMsg('lightbox-share-email-label') ?><br/>
-			<input type="text" id="lightbox-share-email-text" /><input type="button" value="Send" id="lightbox-share-email-button" />
+			<input type="text" id="lightbox-share-email-text" /><input type="button" value="<?= wfMsg('lightbox-send') ?>" id="lightbox-share-email-button" />
 			<img src="<?= $stylePath ?>/common/images/ajax.gif" class="throbber" style="display:none" />
 		</label>
 	</div>
@@ -111,7 +111,7 @@
 			</colspan>
 			<tr>
 				<td>
-					<label for="lightbox-share-embed-standard">Standard link</label>
+					<label for="lightbox-share-embed-standard"><?= wfMsg('lightbox-standard-link') ?></label>
 				</td>
 				<td>
 					<input type="text" id="lightbox-share-embed-standard" value="<?= $linkStd ?>" data-func="standard" />
@@ -119,7 +119,7 @@
 			</tr>
 			<tr>
 				<td>
-					<label for="lightbox-share-embed-blog">Blog link</label>
+					<label for="lightbox-share-embed-blog"><?= wfMsg('lightbox-blog-link') ?></label>
 				</td>
 				<td>
 					<input type="text" id="lightbox-share-embed-blog" value="<?= htmlspecialchars($linkWWW) ?>" data-func="blog" />
@@ -127,7 +127,7 @@
 			</tr>
 			<tr>
 				<td>
-					<label for="lightbox-share-embed-forum">Forum</label>
+					<label for="lightbox-share-embed-forum"><?= wfMsg('lightbox-forum' ) ?></label>
 				</td>
 				<td>
 					<input type="text" id="lightbox-share-embed-forum" value="<?= $linkBBcode ?>" data-func="forum" />

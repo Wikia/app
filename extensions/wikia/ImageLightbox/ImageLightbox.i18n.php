@@ -2,6 +2,10 @@
 $messages = array();
 $messages['en'] = array(
 	'lightbox_details_tooltip' => 'View photo details',
+	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Standard link',
+	'lightbox-blog-link' => 'Blog link',
+	'lightbox-send' => 'Send',
 	'lightbox-share-description' => 'Photo in $1 on $2',
 	'lightbox-share-email-subject' => '$1 has sent you a photo on Wikia',
 	'lightbox-share-email-body' => 'Hi,
