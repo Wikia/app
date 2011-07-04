@@ -256,11 +256,12 @@ class EditAccount extends SpecialPage {
 		// remove users avatar
 		if ( class_exists( Masthead ) ) {
 			$avatar = Masthead::newFromUser( $this->mUser );
-			if ( !$avatar->removeFile( false ) ) {
-				// $this->mStatusMsg = wfMsg( 'editaccount-error-close', $this->mUser->mName );
-				// dont quit here, since the avatar is a non-critical part of closing.
-				// temp fix: move this to i18n message after looking into ->removeFile
-				$outMsg = "Problem removing avatar (or no avatar to remove) Use dedicated tool.<br/>\n";
+			if ( !$avatar->isDefault() ) {
+				if( !$avatar->removeFile( false ) ) {
+					# dont quit here, since the avatar is a non-critical part of closing.
+					# temp fix: move this to i18n message after looking into ->removeFile
+					$outMsg = "Problem removing avatar. Use dedicated tool.\n";
+				}
 			}
 		}
 
