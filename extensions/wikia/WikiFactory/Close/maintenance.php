@@ -29,7 +29,7 @@ class CloseWikiMaintenance {
 			$this->mTarget = "root@127.0.0.1:/tmp/dumps";
 		}
 		else {
-			$this->mTarget = "root@10.6.32.35:/backup/dumps";
+			$this->mTarget = "root@file-i6:/backup/dumps";
 		}
 		$this->mOptions = $options;
 	}
