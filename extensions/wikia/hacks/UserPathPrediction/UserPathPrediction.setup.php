@@ -35,11 +35,12 @@ $app->wg->append(
 /**
  * classes
  */
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/Configure.class.php", 'Configure' );
 
 /**
  * services
  */
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/UserPathPredictionSerivce.class.php", 'UserPathPredictionService' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/UserPathPredictionService.class.php", 'UserPathPredictionService' );
 
 /**
  * controllers
