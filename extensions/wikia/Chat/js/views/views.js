@@ -334,7 +334,7 @@ var NodeChatUsers = Backbone.View.extend({
 				el.addClass('selected');	
 			}
 		}
-		
+	
 		// Add users to list
 		if (list.children().length) {
 			// The list is not empty. Arrange alphabetically.
@@ -342,6 +342,10 @@ var NodeChatUsers = Backbone.View.extend({
 			var wasAdded = false;
 			list.children().each(function(idx, itm) {
 				compareB = $(itm).data('user').toUpperCase();
+				//TODO: check it
+				if (compareA == compareB) {
+					return false;
+				}
 				if (compareA < compareB) {
 					$(itm).before(el);
 					wasAdded = true;

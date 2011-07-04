@@ -13,10 +13,10 @@ class ChatAjax {
 	 */
 	static public function echoCookies(){
 		global $wgUser, $wgMemc;
-		if($wgUser->getId() < 1) {
+		if(!$wgUser->isLoggedIn()) {
 			return array("key" => false ) ;	
 		}
-		$key = md5( $wgUser->getId() . "_" . time() );
+		$key = md5( $wgUser->getId() . "_" . time() . '_' .  mt_rand(0, 65535) );
 		$wgMemc->set($key, array( "user_id" => $wgUser->getId(), "cookie" => $_COOKIE) , 60*60*24);
 		return array("key" => $key ) ;
 	} // end echoCookies()
@@ -44,11 +44,13 @@ class ChatAjax {
 		
 		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
 
-		if(!empty($data)) {
-			$user = User::newFromId( $data['user_id'] );	
+		if(empty($data)) {
+			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 		}
 	
-		if(empty($user)) {
+		$user = User::newFromId( $data['user_id'] );
+		
+		if(empty($user) || !$user->isLoggedIn() || $user->getName() !=  $wgRequest->getVal('name', '') ) {
 			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 			wfProfileOut( __METHOD__ );
 		}
@@ -62,7 +64,7 @@ class ChatAjax {
 		// First, check if they can chat on this wiki.
 		$retVal = array(
 			'canChat' => Chat::canChat($user),
-			'isLoggedIn' => true,
+			'isLoggedIn' => $user->isLoggedIn(),
 			'isChatMod' => $user->isAllowed( 'chatmoderator' ),
 			'isCanGiveChatMode' => $isCanGiveChatMode, 
 			'isStaff' => $user->isAllowed( 'staff' ),

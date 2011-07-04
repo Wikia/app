@@ -18,7 +18,7 @@ var STATUS_STATE_AWAY = 'away';
 	
 	models.AuthInfo = Backbone.Model.extend({
 		defaults: {
-			'name': '', // username, NOT trusted (comes from client) but helpful w/debugging.
+			'name': '', // username, NOT trusted (comes from client) but helpful w/debugging and double check.
 			'cookie': '', // the full string of cookies from the user
 			'roomId': '' // the room the user is trying to get into
 		}
