@@ -8,7 +8,7 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 abstract class WikiaService extends WikiaBaseController {
-	public function allowsExternalRequests(){
+	final public function allowsExternalRequests(){
 		return false;
 	}
 }
