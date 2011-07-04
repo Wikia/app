@@ -238,10 +238,7 @@ class EditPageLayout extends EditPage {
 		$buttons = $this->mControlButtons;
 		$seqNo = 0;
 		foreach ($buttons as $k => $v) {
-			$buttons[$k] = array_merge(array(
-				// defaults
-				'enabled' => true,
-			),$v,array(
+			$buttons[$k] = array_merge($v,array(
 				// overrides
 				'seqNo' => $seqNo++,
 			));
