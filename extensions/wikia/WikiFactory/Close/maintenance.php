@@ -9,7 +9,7 @@
 
 ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
 
-$optionsWithArgs = array( "limit" );
+$optionsWithArgs = array( "limit", "sleep" );
 
 require_once( "commandLine.inc" );
 require_once( "Archive/Tar.php" );
@@ -50,7 +50,9 @@ class CloseWikiMaintenance {
 		global $wgUploadDirectory, $wgDBname, $wgSolrIndexer;
 
 		$first     = isset( $this->mOptions[ "first" ] ) ? true : false;
+		$sleep     = isset( $this->mOptions[ "sleep" ] ) ? $this->mOptions[ "sleep" ] : 1;
 		$condition = array( "ORDER BY" => "city_id" );
+
 		/**
 		 * if $first is set skip limit checking
 		 */
@@ -282,6 +284,7 @@ class CloseWikiMaintenance {
 			if( $first ) {
 				break;
 			}
+			sleep( $sleep );
 		}
 	}
 
