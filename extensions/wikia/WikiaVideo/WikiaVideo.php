@@ -183,7 +183,7 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 
 		for($i = 0; $i < count($videos); $i++) {
 			$videoID = $videos[$i][0]->getArticleID();
-			$style = $descr = '';
+			$descr = '';
 
 			if ($videoID > 0) {
 				$video = new VideoPage($videos[$i][0]);
