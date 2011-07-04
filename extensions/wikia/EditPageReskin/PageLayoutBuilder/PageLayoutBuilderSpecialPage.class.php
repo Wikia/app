@@ -63,8 +63,11 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 			$this->description = $prop['desc'];
 		}
 
-		if ( ($mode == self::MODE_NEW_SETUP || $mode == self::MODE_NEW) && $this->action == self::ACTION_CREATE_FROM_ARTICLE) {
-				$this->preloadedText = $this->getWikitextFromRequest();
+		if ( $mode == self::MODE_NEW_SETUP || $mode == self::MODE_NEW ) {
+			$this->isNoPublish = true;
+			if( $this->action == self::ACTION_CREATE_FROM_ARTICLE ) {
+				$this->preloadedText = $this->getWikitextFromRequest();	
+			}
 		}
 	}
 
@@ -242,14 +245,13 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 				'type' => 'submit',
 				'name' => self::FIELD_BUTTON_SAVE_DRAFT,
 				'caption' => wfMsg('plb-special-form-save-as-draft'),
-				'enabled' => true,// $this->isNoPublish,
+				'disabled' => !$this->isNoPublish,
 			),
 			$buttons[1],
 			array(
 				'name' => self::FIELD_BUTTON_PREVIEW_FORM,
 				'caption' => wfMsg('plb-special-form-preview-form'),
 				'className' => 'secondary',
-				'enabled' => true,
 			),
 		),array($buttons[0]),array_slice($buttons,2));
 		$this->mEditPage->setControlButtons($buttons);

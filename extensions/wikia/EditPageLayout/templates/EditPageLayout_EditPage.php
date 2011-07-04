@@ -134,7 +134,6 @@
 	 	$buttonType = !empty($button['type']) ? $button['type'] : 'button';
 		$buttonClasses = 'control-button'
 			. ($button['seqNo'] % 2 == 1 ? ' even' : '')
-			. (!$button['enabled'] ? ' disabled' : '')
 			. (!empty($button['className']) ? ' ' . $button['className'] : '');
 	 	switch ($buttonType) {
 	 		case 'save':
@@ -159,7 +158,7 @@
 	 			break;
 	 		default:
 ?>
-								<input class="<?=$buttonClasses?>"  id="<?=$button['name']?>" name="<?=$button['name']?>" type="<?=$buttonType?>" value="<?=$button['caption']?>" />
+								<input class="<?=$buttonClasses?>"<?= !empty($button['disabled']) ? ' disabled="disabled"' : '' ?> id="<?=$button['name']?>" name="<?=$button['name']?>" type="<?=$buttonType?>" value="<?=$button['caption']?>" />
 <?php
 	 	}
 	}
