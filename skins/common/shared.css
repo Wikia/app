@@ -725,12 +725,12 @@ table.gallery caption {
 }
 
 div.gallerybox {
-	margin: 2px;
+	margin: 4px;
 }
 
 div.gallerybox div.thumb {
 	text-align: center;
-	margin: 2px;
+	padding: 5px;
 }
 
 div.gallerytext {

@@ -183,18 +183,29 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 
 		for($i = 0; $i < count($videos); $i++) {
 			$videoID = $videos[$i][0]->getArticleID();
-			$style = '';
+			$style = $descr = '';
 
-			if ($videoID > 0){
+			if ($videoID > 0) {
 				$video = new VideoPage($videos[$i][0]);
 				$video->load();
-				$html = $video->getEmbedCode().'</div></div><div class="gallerytext">'.(!empty($videos[$i][1]) ? $videos[$i][1] : '');
-			} else {
+
+				$html = $video->getEmbedCode();
+				$class = 'thumb';
+
+				if (!empty($videos[$i][1])) {
+					$descr = '<div class="gallerytext">'. $videos[$i][1] . '</div>';
+				}
+			}
+			else {
 				$sk = $wgUser->getSkin();
 				$html = $sk->makeColouredLinkObj(Title::newFromText('WikiaVideoAdd', NS_SPECIAL), 'new', $videos[$i][0]->getPrefixedText(), 'name=' . $videos[$i][0]->getDBKey());;
-				$style = "height: 250px;";
+				$class = 'thumb video-add-wrapper';
 			}
-			$out .= '<td><div class="gallerybox" style="width: 335px;"> <div class="thumb" style="padding: 13px 0pt; width: 330px;'.$style.'">'.$html.'</div></div></td>';
+
+			$out .= '<td>' .
+				'<div class="gallerybox"><div class="' . $class . '">' . $html . '</div></div>' .
+				$descr .
+				'</td>';
 
 			if($i%2 == 1) {
 				$out .= '</tr><tr>';
@@ -214,6 +225,7 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 			if (count($videos) < 4) { // fill up
 				global $wgUser;
 				for($i = count($videos); $i < 4; $i++) {
+					// TODO: use JSSnippets to load JS on-demand
 					$show = ' VET_show( $.getEvent(), ' . $args['id'] . ', ' . $i . ' ); ';
 					$onclick = '$.loadYUI(  function() {if (typeof VET_show != \'function\' ){ $.getScript(wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, function() { '.$show.' importStylesheetURI( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion ) } ) } else {'.$show.'} } )';
 
@@ -221,18 +233,15 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 					$out .= Xml::openElement('td');
 					$out .= Xml::openElement('div', array(
 						'class' => 'gallerybox',
-						'style' => 'width: 335px', // TODO: move to static CSS file
 					));
 					$out .= Xml::openElement('div', array(
-						'class' => 'thumb',
-						'style' => 'height: 250px; padding: 13px 0; width: 330px', // TODO: move to static CSS file
+						'class' => 'thumb video-add-wrapper',
 					));
 
 					// "Add video" green button
 					$out .= Xml::openElement('a', array(
 						'id' => "WikiaVideoGalleryPlaceholder{$args['id']}x{$i}",
 						'class' => 'wikia-button',
-						'style' => "top: 110px;position:relative;",
 						'href' => '#',
 						'onclick' => $onclick,
 					));
@@ -460,7 +469,7 @@ function WikiaVideo_isMovable($result, $index) {
 $wgHooks['ArticleFromTitle'][] = 'WikiaVideoArticleFromTitle';
 function WikiaVideoArticleFromTitle($title, $article) {
 	global $wgRequest, $wgEnableParserCache;
-	
+
 	if(NS_VIDEO == $title->getNamespace()) {
 		// overloading subpages to encode query string parameters
 		// i.e. Video:Foo/width=480px&caption=Hello World
@@ -469,16 +478,16 @@ function WikiaVideoArticleFromTitle($title, $article) {
 			$wgEnableParserCache = false;
 			$vars = array();
 			parse_str($parts[1], $vars);
-			
+
 			$allVars = array_merge($wgRequest->getValues(), $vars);
 			foreach ($allVars as $key=>$val) {
 				$wgRequest->setVal($key, $val);
 			}
-			
+
 			$newTitle = Title::newFromText($parts[0], $title->getNamespace());
 			$title = $newTitle;
 		}
-		
+
 		$article = new VideoPage($title);
 	}
 	return true;

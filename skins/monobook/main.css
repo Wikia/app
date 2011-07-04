@@ -1188,25 +1188,17 @@ table.gallery caption {
 	font-weight: bold;
 }
 
-div.gallerybox {
-	margin: 2px;
-}
-
 div.gallerybox div.thumb {
-	text-align: center;
-	border: 1px solid #ccc;
-	margin: 2px;
+	border-color: 1px solid #ccc;
 }
-
 
 
 /*BARTEK*/
-
 .gallerybox .thumbcaption {
-        position: absolute !important;
-        bottom: 0px !important;
-        padding: 5px !important;
-        font-size: 88%;
+    position: absolute !important;
+    bottom: 0px !important;
+    padding: 5px !important;
+    font-size: 88%;
 }
 
 .gallerybox .bigButton {
