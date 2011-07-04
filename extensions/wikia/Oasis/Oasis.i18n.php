@@ -226,6 +226,8 @@ Example output: edited by Avatar 3 hours ago',
 * $2 is a point in time
 
 Example output: deleted by Avatar 3 hours ago',
+
+	'oasis-toolbar-devinfo' => 'This is a label for information for developers (site speed statistics, etc.)',
 );
 
 /** Afrikaans (Afrikaans)
