@@ -25,11 +25,11 @@ $messages['en'] = array(
 	'app-async-error-message' => 'Temporary problem with connection. Please try again later.',
 	'app-nonetwork-dialog-title' => 'Network unavailable',
 	'app-nonetwork-dialog-message' => 'No network connection detected.',
-	'app-nonetwork-dialog-close-button' => 'Ok',
+	'app-nonetwork-dialog-close-button' => 'OK',
 
 	//  Search tab 
 	'search-go' => 'Go!',
-	'search-hint-text' => 'ex: \'John Lennon:Imagine\'',
+	'search-hint-text' => 'e.g. \'John Lennon:Imagine\'',
 	'search-no-match-found' => 'No match found.',
 	'search-no-match-found-query' => 'Searched for: %s',
 	'search-results-title' => 'Search results for: %s',
