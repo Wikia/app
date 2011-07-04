@@ -106,11 +106,15 @@ class UserRenameLocalTask extends BatchTask {
 		$process->addLog("Fetching email addresses for notification of completed process.");
 
 		$requestorUser = User::newFromId($requestorID);
-		
+
+		//mark user as renamed
+		$renamedUser = User::newFromName( $newUsername );
+		$renamedUser->setOption('wasRenamed', true);
+		$renamedUser->saveSettings();
+	
 		//send e-mail to the user that rename process has finished
 		$notify = array( $requestorUser );
 		if ( $notifyRenamed ) {
-			$renamedUser = User::newFromName( $newUsername );
 			$notify[] = $renamedUser;
 		}
 
