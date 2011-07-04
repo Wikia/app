@@ -24,12 +24,20 @@ global $IP;
 
 echo( "Initializing data analysis for User Path Prediction\n\n" );
 
-if( isset( $options['help'] ) && $options['help'] ) {
+if ( isset( $options['help'] ) && $options['help'] ) {
 	echo( "Usage: SERVER_ID=177 php UserPathPrediction_initData.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php\n\n" );
 	exit( 0 );
 }
 
-require_once("$IP/extensions/wikia/hacks/UserPathPrediction/UserPathPrediction.setup.php");
+require_once( "$IP/extensions/wikia/hacks/UserPathPrediction/UserPathPrediction.setup.php" );
 
-//TODO: code here
+
+
+
+
+$app = F::app();
+
+echo $app->wg->AutoloadClasses['UserPathPredictionService'];
+
+$app->sendRequest( "UserPathPredictionService", "Download" );
 ?>
