@@ -272,6 +272,9 @@ class EditAccount extends SpecialPage {
 		if ( $this->mUser->setPassword( wfGenerateToken() ) ) {
 			global $wgUser, $wgTitle;
 
+			// Mark as disabled in a more real way, that doesnt depend on the real_name text
+			$this->mUser->setOption( 'disabled', 1 );
+
 			// Save the new settings
 			$this->mUser->saveSettings();
 
