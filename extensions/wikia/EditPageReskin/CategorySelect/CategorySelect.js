@@ -426,7 +426,7 @@ function inputKeyPress(e) {
 			csTrack('enterCategoryEmpty');
 			$('#csCategoryInput').blur();
 			inputBlur();
-		}
+		} 
 	}
 	if(e.keyCode == 27) {
 		csTrack('escapeCategory');
@@ -438,7 +438,7 @@ function inputKeyPress(e) {
 
 function submitAutoComplete(comp, resultListItem) {
 	addCategory(resultListItem[2][0]);
-	positionSuggestBox();
+	replaceAddToInput();
 }
 
 function collapseAutoComplete() {
@@ -495,6 +495,8 @@ function initAutoComplete() {
 		oAutoComp.autoHighlight = false;
 		oAutoComp.queryDelay = 0;
 		oAutoComp.highlightClassName = 'CSsuggestHover';
+		//fix for some ff problem
+		oAutoComp._selectText = function() {}; 
 		oAutoComp.queryMatchContains = true;
 		oAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
 		oAutoComp.containerCollapseEvent.subscribe(collapseAutoComplete);
