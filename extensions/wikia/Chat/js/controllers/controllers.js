@@ -190,14 +190,14 @@ var NodeRoomController = $.createClass(Observable,{
 			this.isInitialized = true;
 		} else {
 			// If this is a reconnect... go through the model that was given and selectively, only add ChatEntries that were not already in the collection of chats.
-			var jsonObj = JSON.parse(message.data);
+			var jsonObj = $.parseJSON(message.data);
 			var chatEntries = this.model.chats;
 			_.each(jsonObj.collections.chats.models, function(item, index){
 				var match = chatEntries.get(item.id);
 				if(typeof match == "undefined"){
 					$().log("Found a ChatEntry that must have occurred during reconnection. Adding it to the model...");
 					var additionalEntry = new models.ChatEntry();
-					additionalEntry.mport( JSON.stringify(item) );
+					additionalEntry.mport( $.toJSON(item) );
 					chatEntries.add(additionalEntry);
 				}
 			});
@@ -267,7 +267,8 @@ var NodeRoomController = $.createClass(Observable,{
 	
 	onChatAdd: function(message) {
 		var newChatEntry;
-		var dataObj = JSON.parse(message.data);
+		var dataObj = $.parseJSON(message.data);
+
 		if(dataObj.attrs.isInlineAlert){
 			newChatEntry = new models.InlineAlert();
 		} else {
@@ -275,7 +276,7 @@ var NodeRoomController = $.createClass(Observable,{
 		}
 		newChatEntry.mport(message.data);
 		
-		this.model.chats.add(newChatEntry);
+		this.model.chats.add(newChatEntry); 
 	},
 	
 	onJoin: function(message) {
