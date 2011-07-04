@@ -67,20 +67,22 @@ class ChatRailModule extends Module {
 			
 			// get stats for edit count and member since
 			$user = User::newFromName($chatters[$i]['username']);
-			$userStatsService = new UserStatsService($user->getId());
-			$stats = $userStatsService->getStats();
+			if(is_object($user)){
+				$userStatsService = new UserStatsService($user->getId());
+				$stats = $userStatsService->getStats();
 
-			// edit count
-			$chatters[$i]['editCount'] = $wgContLang->formatNum($stats['edits']);
-			
-			// member since
-			$chatters[$i]['since'] = date("M Y", strtotime($stats['date']));
-			
-			// profile page
-			$chatters[$i]['profileUrl'] = Title::makeTitle( NS_USER, $chatters[$i]['username'] )->getFullURL();
-			
-			// contribs page
-			$chatters[$i]['contribsUrl'] = SpecialPage::getTitleFor( 'Contributions', $chatters[$i]['username'] )->getFullURL();
+				// edit count
+				$chatters[$i]['editCount'] = $wgContLang->formatNum($stats['edits']);
+				
+				// member since
+				$chatters[$i]['since'] = date("M Y", strtotime($stats['date']));
+				
+				// profile page
+				$chatters[$i]['profileUrl'] = Title::makeTitle( NS_USER, $chatters[$i]['username'] )->getFullURL();
+				
+				// contribs page
+				$chatters[$i]['contribsUrl'] = SpecialPage::getTitleFor( 'Contributions', $chatters[$i]['username'] )->getFullURL();
+			}
 		}
 		$this->chatters = $chatters;
 

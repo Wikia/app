@@ -16,7 +16,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		
 		this.roomId = roomId;
 		
-		this.socket = new io.Socket(WIKIA_NODE_HOST, {port: WIKIA_NODE_PORT, transports: ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling'], });
+		this.socket = new io.Socket(WIKIA_NODE_HOST, {port: WIKIA_NODE_PORT, transports: ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling'] });
 		
 		this.socket.on('message', this.proxy( this.onMsgReceived, this ) );		
 		this.socket.on('connect', this.proxy( this.onConnect, this ) );
@@ -345,7 +345,7 @@ var NodeRoomController = $.createClass(Observable,{
 	},
 	
 	clickAnchor: function(event) {
-		window.open($(event.target).attr("href"));
+		window.open($(event.target).closest('a').attr("href"));
 	},
 	
 	init: function() {
@@ -359,7 +359,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 	chats: {
 		main: null,
 		opens: {}, //to store more than one open chat in one window not supported yet (for now only one) 
-		privates: {},
+		privates: {}
 	},
 	activeRoom: null,
 	constructor: function(roomId) {
@@ -467,6 +467,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 	},
 	
 	showRoom: function(roomId) {
+		$().log(roomId);
 		if( this.activeRoom == roomId ) {
 			return false;
 		}

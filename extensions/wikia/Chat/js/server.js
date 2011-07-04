@@ -221,7 +221,8 @@ function authConnection(client, socket, authData){
 				'Host': wikiHostname
 			};
 
-			var requestUrl = config.AUTH_URL + "&roomId=" + roomId ;			
+			var requestUrl = config.AUTH_URL + "&roomId=" + roomId ;	
+			requestUrl +=  "&name=" + encodeURIComponent(auth.get('name'));
 			requestUrl +=  "&key=" + client.userKey ;
 			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching this (at least on dev boxes) when we don't want it to... so cachebust it.
 
@@ -232,7 +233,7 @@ function authConnection(client, socket, authData){
 			//var httpClient = http.createClient(80, wikiHostname); // TODO: Swap this in for ALL INSTANCES of createClient if we don't want to use local proxy anymore.
 			
 			var callback = function(data) {
-				if( (data.canChat) && (data.isLoggedIn) ){
+				if( (data.canChat) && (data.isLoggedIn) && data.username == auth.get('name') ){
 					rc.hkeys( config.getKey_usersAllowedInPrivRoom( auth.get('roomId') ),  function(err, users){
 						if(users.length == 0 || _.indexOf(users, data.username) !== -1 ) { //
 							client.isAuthenticated = true;
@@ -281,48 +282,46 @@ function authConnection(client, socket, authData){
 			};
 			
 			
-			rc.hgetall(config.getKey_sessionData( client.userKey ), function(err, data){
-				if(typeof(data.isLoggedIn) != 'undefined') {
-					callback(data);
-				} else {
-					var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
-					httpRequest.addListener("response", function (response) {
-						//debugObject(client.request.headers);
-						var responseBody = "";
-						//response.setBodyEncoding("utf8");
-						response.addListener("data", function(chunk) {
-							responseBody += chunk;
-						});
-						response.addListener("end", function() {
-							try{
-								data = JSON.parse(responseBody);
-							} catch(e){
-								console.log("Error: while parsing result of getUserInfo(). Error was: ");
-								console.log(e);
-								console.log("Response that didn't parse was:\n" + responseBody);
-
-								data = {
-									error: '',
-									errorWfMsg: 'chat-err-communicating-with-mediawiki',
-									errorMsgParams: []
-								};
-							}
-							
-							rc.hmset(config.getKey_sessionData( client.userKey ), data, function() {});
-							
-							console.log("=============Session data================");
-							console.log(data);
-							console.log("=============/Session data================");
-							
-							callback(data);
-						});
+			if(typeof(data.isLoggedIn) != 'undefined') {
+				callback(data);
+			} else {
+				var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
+				httpRequest.addListener("response", function (response) {
+					//debugObject(client.request.headers);
+					var responseBody = "";
+					//response.setBodyEncoding("utf8");
+					response.addListener("data", function(chunk) {
+						responseBody += chunk;
 					});
-					httpRequest.end();
-				}
-				console.log("=============Session data from cache================");
-				console.log(data);
-				console.log("=============/Session data from cache================");
-			});
+					response.addListener("end", function() {
+						try{
+							data = JSON.parse(responseBody);
+						} catch(e){
+							console.log("Error: while parsing result of getUserInfo(). Error was: ");
+							console.log(e);
+							console.log("Response that didn't parse was:\n" + responseBody);
+
+							data = {
+								error: '',
+								errorWfMsg: 'chat-err-communicating-with-mediawiki',
+								errorMsgParams: []
+							};
+						}
+						
+						rc.hmset(config.getKey_sessionData( client.userKey ), data, function() {});
+						
+						console.log("=============Session data================");
+						console.log(data);
+						console.log("=============/Session data================");
+						
+						callback(data);
+					});
+				});
+				httpRequest.end();
+			}
+			console.log("=============Session data from cache================");
+			console.log(data);
+			console.log("=============/Session data from cache================");
 		} else {
 			console.log("Didn't get data for the roomId so it probably doesn't exist anymore: " + auth.get('roomId'));
 		}

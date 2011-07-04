@@ -56,9 +56,6 @@ class NodeApiClient {
 		global $wgCityId, $wgSitename, $wgServer, $wgArticlePath, $wgMemc;
 		wfProfileIn(__METHOD__);
 
-		$memcKey = wfMemcKey( "NodeApiClient::getDefaultRoomId", $wgCityId );
-		//$roomData = $wgMemc->get($memKey);
-		
 		if(empty($roomData)){
 			// Add some extra data that the server will want in order to store it in the room's hash.
 			$extraData = array(
@@ -79,8 +76,6 @@ class NodeApiClient {
 			));
 			
 			$roomData = json_decode($roomJson);
-
-			$wgMemc->set($memcKey, $roomData, 60 * 60 * 24); // right now, this probably won't be changing at all for a given wiki
 		}
 
 		if(isset($roomData->{'roomId'})){

@@ -100,13 +100,12 @@
 		</div>
 	</script>
 	<script type='text/template' id='user-action-template'><li class="<%= actionName %>"><a href="#"><%= actionDesc %></a></li></script>
-	
+	<?php //TODO: use AM ?>
 	<!-- Load these after the DOM is built -->
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.5.2.js"></script>
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.js"></script>
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery.json-1.3.js"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/JSMessages/js/JSMessages.js"></script>
-	<script src="<?= $jsMessagePackagesUrl ?>"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/lib/underscore.js"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/lib/backbone.js"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/socket.io/socket.io.js"></script>
