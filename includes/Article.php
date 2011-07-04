@@ -847,7 +847,7 @@ class Article {
 				case 3:
 					$text = $this->getContent();
 					$fakeReturn404 = false;
-					if ( ($text === false || $this->getID() == 0) 
+					if ( ($text === false || $this->getID() == 0)
 							&& wfRunHooks( 'ArticleNonExistentPage', array( $this, $wgOut, &$text, &$fakeReturn404 ) ) ) {
 						wfDebug( __METHOD__ . ": showing missing article\n" );
 						$this->showMissingArticle();
@@ -1127,24 +1127,19 @@ class Article {
 			if ( wfRunHooks( 'ArticleViewRedirect', array( &$this ) ) ) {
 				// wikia change
 				global $wgWikiaUseNoFollow;
+				$redirAttribs = array();
 				if( !empty( $wgWikiaUseNoFollow ) ) {
-					$redir = $sk->link(
-						$this->mRedirectedFrom,
-						null,
-						array(),
-						array( 'redirect' => 'no', 'rel' => 'nofollow' ),
-						array( 'known', 'noclasses' )
-					);
+					$redirAttribs['rel'] = 'nofollow';
 				}
-				else {
-					$redir = $sk->link(
-						$this->mRedirectedFrom,
-						null,
-						array(),
-						array( 'redirect' => 'no' ),
-						array( 'known', 'noclasses' )
-					);
-				}
+
+				$redir = $sk->link(
+					$this->mRedirectedFrom,
+					null,
+					$redirAttribs,
+					array( 'redirect' => 'no' ),
+					array( 'known', 'noclasses' )
+				);
+
 				$s = wfMsgExt( 'redirectedfrom', array( 'parseinline', 'replaceafter' ), $redir );
 				$wgOut->setSubtitle( $s );
 
@@ -1161,7 +1156,7 @@ class Article {
 				 * http://muppet.wikia.com/index.php/Kermit_the_Frog
 				 * http://muppet.wikia.com/index.php?title=Kermit_the_Frog
 				 * http://muppet.wikia.com/wiki/Kermit_the_Frog?action=view
-				 * 
+				 *
 				// Add a <link rel="canonical"> tag
 				$wgOut->addLink( array( 'rel' => 'canonical',
 					'href' => $this->mTitle->getLocalURL() )
