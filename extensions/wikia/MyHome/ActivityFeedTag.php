@@ -16,7 +16,7 @@ function ActivityFeedTag_setup(&$parser) {
 }
 
 function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
-	global $wgOut, $wgStyleVersion, $wgExtensionsPath;
+	global $wgStyleVersion, $wgExtensionsPath;
 
 	if (!class_exists('ActivityFeedHelper')) {
 		return '';

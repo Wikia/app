@@ -78,7 +78,7 @@ function WikiaPollAjax() {
 //Edit page
 $wgHooks['EditPage::showEditForm:initial2'][] = 'CreatePollSetup';
 function CreatePollSetup($editform) {
-	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgStylePath;
+	global $wgOut, $wgExtensionsPath, $wgStylePath;
 	$wgOut->addScript('<script src="'.$wgStylePath.'/common/jquery/jquery-ui-1.8.13.custom.js"></script>');
 	$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaPoll/js/CreateWikiaPoll.js"></script>');
 	return true;

@@ -101,7 +101,7 @@ class AVSSpecialPage extends SpecialPage {
 	}
 	
 	function execute() {
-		global $wgRequest, $wgOut, $wgAVStag;
+		global $wgOut, $wgAVStag;
 		
 		$dataMaper = new Amazon_DataMapper();
 		

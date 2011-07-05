@@ -45,7 +45,7 @@ class Listusers extends SpecialPage {
 	 * show form 
 	 */
 	public function execute( $subpage ) {
-		global $wgUser, $wgOut, $wgRequest, $wgCityId;
+		global $wgOut, $wgRequest, $wgCityId;
 
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
