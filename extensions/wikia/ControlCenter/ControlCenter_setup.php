@@ -18,3 +18,10 @@ $wgExtensionMessagesFiles['ControlCenter'] = $dir . 'ControlCenter.i18n.php';
 
 // special pages
 $app->registerSpecialPage('ControlCenter', 'ControlCenterSpecialPageController');
+
+$wgAvailableRights[] = 'controlcenter';
+
+$wgGroupPermissions['*']['controlcenter'] = false;
+$wgGroupPermissions['staff']['controlcenter'] = true;
+$wgGroupPermissions['sysop']['controlcenter'] = true;
+$wgGroupPermissions['bureaucrat']['controlcenter'] = true;
