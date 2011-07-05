@@ -24,10 +24,6 @@ CKEDITOR.plugins.add('rte-paste',
 		// @see clipboard CK core plugin
 		if (!editor.config.forcePasteAsPlainText) {
 			editor.on('beforePaste', function(ev) {
-				if (ev.data.mode && ev.data.mode == 'text') {
-					return true;
-				}
-
 				// store HTML before paste
 				self.htmlBeforePaste = self.getHtml();
 
